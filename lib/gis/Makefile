@@ -60,6 +60,7 @@ LIB_OBJS = \
 	datum.o\
 	debug.o\
 	distance.o\
+	done_msg.o\
 	eigen_tools.o\
 	endian.o\
 	env.o\
