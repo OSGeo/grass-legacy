@@ -3,11 +3,12 @@
 # d.m.tcl
 #
 # Primary tcltk script for GIS Manager: GUI for GRASS 6 
+# Author: Michael Barton (Arizona State University)
 # Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
 # and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)
-# with contributions by Glynn Clemments
+# with contributions by Glynn Clemments, Markus Neteler, Lorenzo, Moretti and others
 #
-# COPYRIGHT:	(C) 1999 - 2004 by the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -205,6 +206,7 @@ proc Dm::create { } {
 proc Dm::_create_intro { } {
     global dmpath
     global GRASSVERSION
+    global location_name
     variable max_prgindic
 
     set top [toplevel .intro -relief raised -borderwidth 2]
@@ -215,7 +217,7 @@ proc Dm::_create_intro { } {
     set ximg  [label $top.x -image [image create photo -file "$dmpath/intro.gif"] ]
 
     set frame [frame $ximg.f -background white]
-    set lab1  [label $frame.lab1 -text "GRASS $GRASSVERSION - GIS Manager" \
+    set lab1  [label $frame.lab1 -text "GRASS $GRASSVERSION GIS Manager - $location_name" \
                      -background white -foreground black -font {times 16}]
     set lab2  [label $frame.lab2 -textvariable Dm::prgtext -background white -font {times 12} -width 35]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
@@ -845,9 +847,10 @@ proc Dm::SaveFileBox {w} {
 proc main {argc argv} {
     global auto_path
     global GRASSVERSION
+    global location_name
 
     wm withdraw .
-    wm title . [G_msg "GRASS $GRASSVERSION GIS Manager"]
+    wm title . [G_msg "GRASS $GRASSVERSION GIS Manager - $location_name"]
 
     bind . <Control-Key-o> {
 	Dm::OpenFileBox {}

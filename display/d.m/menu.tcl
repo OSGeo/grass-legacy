@@ -1,4 +1,4 @@
-# Updated 15-10-2004 by Michael Barton, Arizona State University
+# Updated 8-March-2005 by Michael Barton, Arizona State University
 # menu.tcl
 # produces menu bar for d.m
 
@@ -85,7 +85,7 @@
  "&GIS" all options 1 {
  	{cascad "Manage maps and grid3D files" {} "" 1 {			
  	 {command "Copy maps" {} "g.copy" {} -command {execute g.copy }}
- 	 {command "List maps" {} "g.list" {} -command {execute g.list }}
+ 	 {command "List maps" {} "g.list" {} -command {execute g.list}}
  	 {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {execute g.mlist }}
  	 {command "Rename maps" {} "g.rename" {} -command {execute g.rename }}
  	 {command "Remove maps" {} "g.remove" {} -command {execute g.remove }}
@@ -151,6 +151,7 @@
 		 	{command "Display text labels for paint output" {} "d.paint.labels" {} -command {execute d.paint.labels }}
  	 {separator}
 		 	{command "Select text font" {} "d.font" {} -command {execute d.font }}
+            {command "Select freetype text font" {} "" {} -command {execute d.font.freetype }}
  	 {separator}
  	 		{command "Draw text" {} "d.text" {} -command {execute d.text }}
 		 	{command "Draw text using TrueType fonts" {} "d.text.freetype" {} -command {execute d.text.freetype }}
@@ -172,8 +173,8 @@
  	 {separator}
 	 		{command "Overlay slope arrows on aspect raster map" {} "d.rast.arrow" {} -command {execute d.rast.arrow }}
  	 {separator}
-	 		{command "Draw simple graphics in active display monitor (display coordinates)" {} "d.graph" {} -command {execute d.graph }}
-	 		{command "Draw simple graphics in active display monitor (map coordinates)" {} "d.mapgraph" {} -command {execute d.mapgraph }}
+	 		{command "Draw simple graphics using display coordinates" {} "d.graph" {} -command {execute d.graph }}
+	 		{command "Draw simple graphics using map coordinates" {} "d.mapgraph" {} -command {execute d.mapgraph }}
  	}}
 			{command "Split active display and show maps in each half" {} "d.split" {} -command {execute d.split }}
  	{separator}
@@ -181,8 +182,8 @@
 			{command "Manage display frames" {} "d.frame" {} -command {execute d.frame }}
 			{command "Display information about active display monitor" {} "d.info" {} -command {execute d.info }}
  	{separator}
-			{command "Redraw active display (Note: some items may not be redrawn)" {} "d.redraw" {} -command {execute d.redraw }}
-			{command "Save file of commands to recreate active display" {} "d.save" {} -command {execute d.save }}
+			{command "Redraw active display" {} "d.redraw" {} -command {execute d.redraw }}
+			{command "Save file of display commands" {} "d.save" {} -command {execute d.save }}
  	{separator}
 			{command "Measure lengths and areas" {} "d.measure" {} -command {term d.measure -s}}
 			{command "Show geographical position" {} "d.where" {} -command {execute d.where }}
@@ -429,7 +430,7 @@
 			 {command "Ortho photo rectification" {} "i.ortho.photo" {} -command {term i.ortho.photo }}
 			}}
 			{separator}
-			{command "Brovey transformation and pan sharpening for Landsat ETM, SPOT, and Quickbird" {} "i.fusion.brovey" {} -command {execute i.fusion.brovey }}
+			{command "Brovey transformation and pan sharpening" {} "i.fusion.brovey" {} -command {execute i.fusion.brovey }}
 			{cascad "Classify image" {} "" 1 {			
 			 {command "Clustering input for unsupervised classification" {} "i.cluster" {} -command {execute i.cluster }}
 			 {separator}
