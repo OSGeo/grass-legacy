@@ -1,0 +1,10 @@
+This is Rim documentation in LaTeX format.
+ 
+rimref.tex        source to user reference
+rimint.tex        source to internals document
+ACSman.sty        style file
+ 
+rim_words         list of rim keywords for spelling checker
+rimhlist          hash list to use with rim documents
+                  % spellin /usr/dict/hlista <rim_words >rimhlist
+check spelling by % delatex doc.tex | spell -d rimhlist  
