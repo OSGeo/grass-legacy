@@ -134,10 +134,6 @@ int
 main(int argc, char *argv[])
 {
 
- struct Key_Value *in_proj_info, *in_unit_info;
- struct Key_Value *out_proj_info, *out_unit_info;
- char *ellps;
-
  struct GModule *module;
  struct
   {
@@ -389,6 +385,11 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
    
 	if (latin == NULL && lt == NULL && (G_projection() != PROJECTION_LL)) {
 
+                struct Key_Value *in_proj_info, *in_unit_info;
+                struct Key_Value *out_proj_info, *out_unit_info;
+                double a, es;
+                char buf[50];
+
                 if((in_proj_info = G_get_projinfo()) == NULL)
                 G_fatal_error("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!");
 
@@ -404,11 +405,11 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
 	    
                 G_set_key_value("proj", "ll", out_proj_info);
 
-                ellps = G_find_key_value("ellps", in_proj_info);
-                if( ellps != NULL )
-                    G_set_key_value("ellps", ellps, out_proj_info);
-                else
-                    G_set_key_value("ellps", "wgs84", out_proj_info);
+                G_get_ellipsoid_parameters(&a, &es);
+                sprintf(buf, "%.16g", a);
+                G_set_key_value("a", buf, out_proj_info);
+                sprintf(buf, "%.16g", es);
+                G_set_key_value("es", buf, out_proj_info);
 	    
                 G_set_key_value("unit", "degree", out_unit_info);
                 G_set_key_value("units", "degrees", out_unit_info);
