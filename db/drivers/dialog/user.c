@@ -6,6 +6,8 @@
 #include <tk.h>
 #include "gis.h"
 
+#ifdef HAVE_TCLTK
+
 int code = -1;
 char user[100], password[100];
 
@@ -88,4 +90,18 @@ dbd_user ( char *driver,  char *database, char **usr, char **pwd )
 
     return code;
 }
+#else
 
+/* Open dialog for user/password for driver/database
+*
+*  returns:  1 OK
+*            0 cancel 
+*           -1 error
+*/
+int 
+dbd_user ( char *driver,  char *database, char **usr, char **pwd ) 
+{
+    return -1;
+}
+
+#endif

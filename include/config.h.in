@@ -176,6 +176,9 @@
 /* define if <X11/GLw/GLwMDrawA.h> exists */
 #undef HAVE_X11_GLW_GLWMDRAWA_H
 
+/* define if TclTk exists */
+#undef HAVE_TCLTK
+
 /* define if putenv() exists */
 #undef HAVE_PUTENV
 
