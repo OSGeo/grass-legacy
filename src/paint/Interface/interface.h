@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 #define TABLE_SIZE 50
 
