@@ -1,0 +1,7 @@
+# %W% %G%
+LIST = main.o percent.o usage.o
+
+$(BIN_CONTRIB_CMD)/r.to.rlc: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(SHAREDLIB)
+
+$(GISLIB): #
