@@ -169,7 +169,7 @@ int main (int argc, char **argv)
 	{
 	    if (!fgets (buffr, 39, in)) break;
 	    G_chop(buffr); /* eliminate some white space, we accept numbers and dashes only */
-	    sscanf (buffr, "%[- 0-9]", text);
+	    sscanf (buffr, "%[-0-9]", text);
 	    if (strlen(text) == 0) G_warning("Ignored text entry: %s", buffr);
 
 	    scan_cats (text, &x, &y);
