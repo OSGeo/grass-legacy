@@ -127,31 +127,31 @@ Output tangential curvature filename</dd>
 <b>dx=</b><i>name</i></dt>
 
 <dd>
-Output E-W slope filename</dd>
+Output first order partial derivative dx (E-W slope) filename</dd>
 
 <dt>
 <b>dy=</b><i>name</i></dt>
 
 <dd>
-Output N-S slope filename</dd>
+Output first order partial derivative dy (N-S slope) filename</dd>
 
 <dt>
 <b>dxx=</b><i>name</i></dt>
 
 <dd>
-Output partial derivative dxx filename</dd>
+Output second order partial derivative dxx filename</dd>
 
 <dt>
 <b>dyy=</b><i>name</i></dt>
 
 <dd>
-Output partial derivative dyy filename</dd>
+Output second order partial derivative dyy filename</dd>
 
 <dt>
 <b>dxy =</b><i>name</i></dt>
 
 <dd>
-Output partial derivative dxy filename</dd>
+Output second order partial derivative dxy filename</dd>
 
 <dt>
 <b>min_slp_allowed</b> =<i>value</i></dt>
@@ -171,6 +171,9 @@ options: default,double,float,int</dd>
 </dl>
 The raster <i>elevation</i> map layer specified by the user must contain
 true elevation values, <i>not</i> rescaled or categorized data.
+If the elevation values are in feet or other units than meters (with a conversion
+factor defined in PROJ_UNITS), they must be converted to meters using the 
+parameter <i>zfactor</i>.
 <br>The raster <i>aspect</i> map layer which is created indicates the direction
 that slopes are facing. The aspect categories represent the number degrees
 of east. Category and color table files are also generated for the aspect
