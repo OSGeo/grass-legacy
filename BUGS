@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.117 2001-02-24 17:06:02 markus Exp $
+                 $Id: BUGS,v 1.118 2001-02-26 09:27:42 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -36,19 +36,24 @@ RC-Bug list:
   (being worked on by ?)
 
 [RC]r.poly
-bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
-category areas. This was correct in GRASS 4, but not in GRASS 5. 
-I don't know if it works correctly with null values.
+- bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
+  category areas. This was correct in GRASS 4, but not in GRASS 5. 
+  I don't know if it works correctly with null values.
 
-RC bugreport 2: I've noticed that v.support complains about labels when
-r.poly exports polygons with islands. In fact, I've seen that in
-dig_att's file there is one label for each island (that's correct),
-but the container +polygon is associated with n+1 labels, where n is
-the number of contained islands. Everithing seems to work fine anyway,
-but I may be related with another bug on v.trim that I'm going to
-point out in a separate bug report
-(reported by: Andrea Aime <aaime@comune.modena.it>)
+- bugreport 2: I've noticed that v.support complains about labels when
+  r.poly exports polygons with islands. In fact, I've seen that in dig_att's
+  file there is one label for each island (that's correct), but the container
+  +polygon is associated with n+1 labels, where n is the number of contained
+  islands. Everithing seems to work fine anyway, but I may be related with
+  another bug on v.trim that I'm going to point out in a separate bug report
+  (reported by: Andrea Aime <aaime@comune.modena.it>)
 
+[RC]r.proj 
+ It needs a small rewrite to not read the entire raster into
+ memory.  It is useless with large rasters and will seriously bog down your
+ machine.  I haven't had a chance to really grok it, but I think "rowio"
+ would be appropriate -- although, even that wouldn't be required.  I think
+ at most it needs three rows in memory for cubic interpolation.
 
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
