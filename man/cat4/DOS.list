@@ -6,19 +6,19 @@ DOS.list <contrib>   GRASS Reference Manual    <contrib> DOS.list
 
 
 NAME
-     DOS.list - Lists stored screen images residing on the PC6300
+     DOS.list -	Lists stored screen images residing on the PC6300
      MS-DOS hard disk.
-     (SCS GRASS Graphics File Management Program)
-     (Available for PC6300 workstations, only)
+     (SCS GRASS	Graphics File Management Program)
+     (Available	for PC6300 workstations, only)
 
 SYNOPSIS
      DOS.list
      DOS.list help
 
 DESCRIPTION
-     This program allows a user to interactively list PC6300
-     screen images that were saved using DOS.save, on the PC6300
-     hard disk.  DOS.list will find MS-DOS files with the
+     This program allows a user	to interactively list PC6300
+     screen images that	were saved using DOS.save, on the PC6300
+     hard disk.	 DOS.list will find MS-DOS files with the
      extension ".GRS" in the current DOS directory.
 
 NOTES
@@ -28,13 +28,13 @@ SEE ALSO
      DOS.delete, DOS.save, DOS.show
 
 AUTHOR
-     P.W.Carlson, USDA, SCS, NHQ-CGIS
+     P.W.Carlson, USDA,	SCS, NHQ-CGIS
 
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
-     that has not been examined or tested by the Office of GRASS
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -60,7 +60,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
