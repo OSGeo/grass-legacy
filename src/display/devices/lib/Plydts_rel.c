@@ -9,7 +9,7 @@ Polydots_rel (int *xarray, int *yarray, int number)
 	for(i=0; i<number; i++)
 	{
 		Move_rel(*xptr,*yptr) ;
-		Cont_rel(*xptr,*yptr) ;
+		Cont_rel(0,0) ;
 		xptr++ ;
 		yptr++ ;
 	}
