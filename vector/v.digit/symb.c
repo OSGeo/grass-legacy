@@ -31,10 +31,10 @@ struct symb {
 };
 
 struct symb default_symb_table[] = {
-    { "background", SYMB_BACKGROUND,   0,   0,   0 }, /* black */
+    { "background", SYMB_BACKGROUND, 255, 255, 255 }, /* white */
     { "highlight",  SYMB_HIGHLIGHT,  255, 255,   0 }, /* yellow */
-    { "point",      SYMB_POINT,      255, 255, 255 }, /* white */
-    { "line",       SYMB_LINE,       255, 255, 255 }, /* white */ 
+    { "point",      SYMB_POINT,        0,   0,   0 }, /* black */
+    { "line",       SYMB_LINE,         0,   0,   0 }, /* black */ 
     { "boundary_0", SYMB_BOUNDARY_0, 255,   0,   0 }, /* red */
     { "boundary_1", SYMB_BOUNDARY_1, 255, 125,   0 }, /* orange */
     { "boundary_2", SYMB_BOUNDARY_2,   0, 255,   0 }, /* green */
@@ -43,7 +43,7 @@ struct symb default_symb_table[] = {
     { "centroid_dupl", SYMB_CENTROID_DUPL, 255,   0, 255 }, /* magenta */
     { "node_1",     SYMB_NODE_1,     255,   0,   0 }, /* red */
     { "node_2",     SYMB_NODE_2,       0, 255,   0 }, /* green */
-    { "",           0,                 0,   0,   0 }
+    { "",           0,               255, 255, 255 }
 };
 
 /* Convert symbology  name to code */
