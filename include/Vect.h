@@ -3,6 +3,33 @@
 #include "vect/digit.h"
 
 /*   ANSI prototypes for the libes/vect32/Vlib functions */
+/* set/get header info */
+char *Vect_get_name (struct Map_info *);
+char *Vect_get_mapset (struct Map_info *);
+char *Vect_get_full_name (struct Map_info *);
+int Vect_set_organization (struct Map_info *, char *);
+char *Vect_get_organization (struct Map_info *);
+int Vect_set_date (struct Map_info *, char *);
+char *Vect_get_date (struct Map_info *);
+int Vect_set_person (struct Map_info *, char *);
+char *Vect_get_person (struct Map_info *);
+int Vect_set_map_name (struct Map_info *, char *);
+char *Vect_get_map_name (struct Map_info *);
+int Vect_set_map_date (struct Map_info *, char *);
+char *Vect_get_map_date (struct Map_info *);
+int Vect_set_comment (struct Map_info *, char *);
+char *Vect_get_comment (struct Map_info *);
+int Vect_set_scale (struct Map_info *, int );
+int Vect_get_scale (struct Map_info *);
+int Vect_set_zone (struct Map_info *, int );
+int Vect_get_zone (struct Map_info *);
+int Vect_set_thresh (struct Map_info *, double );
+double Vect_get_thresh (struct Map_info *);
+
+/* set/get fatal error behaviour */
+int Vect_set_fatal_error (int);
+int Vect_get_fatal_error ();
+
 int Vect_close (struct Map_info *);
 int V1_close_nat (struct Map_info *);
 int V1_close_shp (struct Map_info *);
@@ -19,6 +46,8 @@ int Vect_get_area_centroid ( struct Map_info *, int );
 int Vect_get_area_num_isles ( struct Map_info *, int );
 int Vect_get_area_isle ( struct Map_info *, int, int );
 int Vect_get_isle_points (struct Map_info *, int, struct line_pnts *);
+int Vect_get_line_nodes (struct Map_info *, int, int *, int *);
+int Vect_get_node_n_lines (struct Map_info *, int );
 int Vect_find_line (struct Map_info *, double, double, int, double);
 int Vect_find_area (struct Map_info *, double, double);
 int Vect_point_in_area (struct Map_info *, int, double, double);
@@ -26,14 +55,14 @@ int Vect_tin_get_z (struct Map_info *, double, double, double *, double *, doubl
 
 
 int Vect_print_header (struct Map_info *);
-int Vect__init_head (struct dig_head *);
-int Vect_copy_head_data (struct dig_head *, struct dig_head *);
+int Vect__init_head (struct Map_info *);
+int Vect_copy_head_data (struct Map_info *, struct  Map_info *);
 int Vect_level (struct Map_info *);
-int V2_num_nodes (struct Map_info *);
-int V2_num_lines (struct Map_info *);
-int V2_num_areas (struct Map_info *);
-int V2_get_area_bbox (struct Map_info *, int, double *, double *, double *, double *);
-int V2_get_line_bbox (struct Map_info *, int, double *, double *, double *, double *);
+int Vect_get_num_nodes (struct Map_info *);
+int Vect_get_num_lines (struct Map_info *);
+int Vect_get_num_areas (struct Map_info *);
+int Vect_get_area_bbox (struct Map_info *, int, double *, double *, double *, double *);
+int Vect_get_line_bbox (struct Map_info *, int, double *, double *, double *, double *);
 struct line_pnts *Vect_new_line_struct (void);
 struct line_cats *Vect_new_cats_struct (void);
 struct cat_list *Vect_new_cat_list (void);
@@ -99,10 +128,6 @@ int Vect_find_poly_centroid (struct line_pnts *, double *, double *);
 int Vect_point_in_islands (struct Map_info *, int, double, double);
 int Vect_get_point_in_poly_isl (struct line_pnts *, struct line_pnts **, int, double *, double *);
 int Vect_init (void);
-/*
-int Vect__write_head_binary (struct Map_info *, struct dig_head *);
-int Vect__read_head_binary (struct Map_info *, struct dig_head *);
-*/
 int Vect__write_head (struct Map_info *);
 int Vect__read_head (struct Map_info *);
 
@@ -117,7 +142,7 @@ int dig_Wr_P_isle (struct Plus_head *, int i, FILE *);
 int dig_Rd_Plus_head (FILE *, struct Plus_head *);
 int dig_Wr_Plus_head (FILE *, struct Plus_head *);
 
-int V1_read_line (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+int Vect_read_line_by_offset (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_post (struct Map_info *, struct line_pnts *, struct line_cats *, long);

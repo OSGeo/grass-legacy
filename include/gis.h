@@ -75,6 +75,22 @@ static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
 #define YES           1
 #define NO            0
 
+typedef enum {
+    G_OPT_WHERE,    /* SQL where conditions */
+
+    G_OPT_R_INPUT,  /* old input raster */
+    G_OPT_R_OUTPUT, /* new output raster */
+    G_OPT_R_MAP,    /* old input raster */
+
+    G_OPT_V_INPUT,  /* old input vector */
+    G_OPT_V_OUTPUT, /* new output vector */
+    G_OPT_V_MAP,    /* old input vector */
+    G_OPT_V_TYPE,   /* primitive type */
+    G_OPT_V_FIELD,  /* field number */
+    G_OPT_V_CAT,    /* one category */
+    G_OPT_V_CATS    /* more categories */
+} STD_OPT;
+
 /* Icon types */
 #define G_ICON_CROSS  0
 #define G_ICON_BOX    1
