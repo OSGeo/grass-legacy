@@ -49,7 +49,7 @@ OBJ =\
 ######### DEPENDENCIES #########
 
 $(PROG): $(OBJ) $(LIBES)
-	 $(CC) $(COMPILER_FLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB) 
+	 $(CC) $(COMPILER_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB) 
 #
 #-----^ This compiles the whole program bringing all labels together.
 

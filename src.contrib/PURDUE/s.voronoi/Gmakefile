@@ -25,7 +25,7 @@ $(BIN_MAIN_CMD)/s.voronoi: $(VORO) $(LIBES)
  
 $(ETC)/s.sweep: $(XSWO) sw_defs.h
 #s.sweep: $(XSWO) sw_defs.h
-	$(CC) -o $@ $(XSWO) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(XSWO) $(LIBES)
 
 $(LIBES): #
 
