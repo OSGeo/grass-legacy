@@ -43,7 +43,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 OGRBASED = v.out.ogr v.in.ogr
 
 #compile if OGR present:
-ifneq ($(strip $(GDALLIBS)),)
+ifneq ($(strip $(OGR_LIB)),)
     SUBDIRS2 = $(OGRBASED)
 endif
 
