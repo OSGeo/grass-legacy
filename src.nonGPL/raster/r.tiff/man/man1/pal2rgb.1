@@ -1,0 +1,94 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/pal2rgb.1,v 1.4 90/11/25 11:15:44 sam Exp $
+.\"
+.\" Copyright (c) 1989 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH PAL2RGB 1 "May 2, 1990"
+.SH NAME
+pal2rgb \- convert a ``palette color''
+.SM TIFF
+image to a ``full color'' image
+.SH SYNOPSIS
+.B pal2rgb
+[
+.B \-none
+] [
+.B \-packbits
+] [
+.B \-lzw
+] [
+.B \-contig
+] [
+.B \-separate
+] [
+.B \-8bit
+] [
+.B \-16bit
+] [
+.B \-rowsperstrip
+.I n
+]
+.I "from-file to-file"
+.SH DESCRIPTION
+.I Pal2rgb
+converts a ``palette color''
+.SM TIFF
+image to a ``full color'' image by
+applying the colormap of the palette image to each sample
+to generate a full color
+.SM RGB
+image.
+By default, 
+.I pal2rgb
+inspects the colormap values and assumes either 16-bit
+or 8-bit values according to the maximum value.
+That is, if no colormap entry greater than 255 is found,
+.I pal2rgb
+assumes the colormap has only 8-bit values; otherwise
+it assumes 16-bit values (as required by the
+.SM TIFF
+specification).
+To force the colormap to be treated as having 8-bit or
+16-bit values, the
+.B \-8bit
+or
+.B \-16bit
+flag may be specified, respectively.
+.PP
+The output image can be compressed with one of the
+compression algorithms supported by 
+.IR libtiff :
+.B \-packbits
+for Macintosh Packbits,
+.B \-lzw
+for Lempel-Ziv & Welch,
+.B \-none
+for no compression.
+If no compression-related option is specified, the input
+file's compression algorithm is used.
+.PP
+As for
+.IR tiffcp (1),
+the 
+.SM TIFF
+directory information of the input image is copied through
+to the output image. 
+The
+.BR \-contig ,
+.BR \-separate ,
+and
+.B \-rowsperstrip
+options may be used to control the data organization of
+the output image.
+.SH BUGS
+Only 8-bit images are handled.
+.SH "SEE ALSO"
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
