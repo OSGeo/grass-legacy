@@ -23,9 +23,9 @@ for i
 do
 	case $i in
 		nsteps=*)
-			nsteps=`echo $i | sed s/^nsteps=//` ;;
+			nsteps=`echo $i | sed 's/^nsteps=//'` ;;
 		*)
-			map=`echo $i | sed s/^map=//` ;;
+			map=`echo $i | sed 's/^map=//'` ;;
 	esac
 done
 
