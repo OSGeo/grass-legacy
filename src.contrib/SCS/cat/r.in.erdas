@@ -1,0 +1,65 @@
+.\" @(#)MAN	1.1 3/05/91  GRASS4.0
+.\" @(#)MAN	1.0 2/15/89
+.TH r.erd2grass 1M GRASS
+.SH NAME
+r.erd2grass \- creates raster files from ERDAS files.
+      \- creates one raster file for each band.
+	  \- creates color support if an erdas trailer file is specified.
+.br
+.I (Image Development Tool)
+.SH SYNOPSIS
+.B r.erd2grass erdas=Name of erdas input file
+               prefix=Prefix of the GRASS raster files to be created.
+			   trl=erdas trailer file if color support is wanted.
+		GRASS raster files will be named prefix.band
+.SH DESCRIPTION
+.B r.erd2grass
+.nf
+This command prompts the user twice:
+
+	First the user is asked if he/she wants to select a subset of
+	the bands available in the ERDAS file for output. The default
+	is all bands.
+
+	Secondly the user is asked if he/she wants to select a subwindow 
+	of the image available in the ERDAS file. The default is the
+	complete image.
+
+Note: Remeber that it is necessary to run:
+	support : To create the histogram or change the color table.
+	group: To associate the individual raster files as an image group.
+.fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.FI
+.SH "AUTHOR"
+M.L.Holko, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				1
