@@ -29,7 +29,7 @@ main (int argc, char *argv[])
 	struct Colors colors;
 	FILE *infp;
 	char buf[80];
-	int magic;
+	unsigned char magic;
 	int maxval;
 	int nrows, ncols;
 	struct Cell_head cellhd;
