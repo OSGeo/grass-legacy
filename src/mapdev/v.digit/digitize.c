@@ -250,11 +250,13 @@ int do_digitize (
 			return(0) ;
 	    }
 	}
+/*
 	else
         {
  	    _Clear_base () ;
 	    Write_base(10, "Site digitizing") ;
         }
+*/
 
 recollect:
 	if (Digtiz_Device == MOUSE)

@@ -12,9 +12,9 @@
 
 
 /*  these correspond to the cursor keys */
-#define		DIG_POINT	1
-#define		BACKUP		2
-#define		STOP_DIG	3
+#define		DIG_POINT	LEFTB
+#define		BACKUP		MIDDLEB
+#define		STOP_DIG	RIGHTB
 
 static int mouse_get_point (int *, int *, int);
 
@@ -71,10 +71,17 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
     {
 /*-->*/ if (type == DOT)		/* scs added code */
 	{
+ 	   _Clear_base () ;
+	   Write_base(10, "Site digitizing") ;
 	   Write_base(12, "    Buttons:") ;
-	   Write_base(13, "       left:  Digitize a site") ;
-	   Write_base(14, "       Middle:  Zoom") ;
-	   Write_base(15, "       Right:   Abort/Quit") ;
+	   Write_base(13, "       Left:   Digitize a site") ;
+#ifdef ANOTHER_BUTTON
+	   Write_base(14, "       Middle: Abort/Quit") ;
+	   Write_base(15, "       Right:  Zoom") ;
+#else
+	   Write_base(14, "       Middle: Zoom") ;
+	   Write_base(15, "       Right:  Abort/Quit") ;
+#endif
 
 	   Write_info(2, "") ;
 
@@ -87,7 +94,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 
 
 	switch (button) {
-	    case STOP_DIG:
+	    case STOP_DIG:				/* RIGHTB */
 		if (type == DOT)
 		    return (mode);
 		loop = 0 ;
@@ -96,7 +103,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 		continue ;
 		break ;
 
-	    case BACKUP:
+	    case BACKUP:				/* MIDDLEB */
 		if (type == DOT){	/* abort */
 			zoom_window (type, Points);
 
@@ -133,7 +140,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 		continue ;
 		break ;
 
-	    case DIG_POINT:
+	    case DIG_POINT:				/* LEFTB */
 	    default:
 		break ;
 
@@ -229,11 +236,19 @@ static int mouse_get_point (int *screen_x, int *screen_y, int cnt)
     _Write_base(10, header);
     _Write_base(12, "    Buttons:                                    ");
     _Write_base(13, "       Left:   Mark a point                     ");
+#ifdef ANOTHER_BUTTON
+    _Write_base (14, "       Middle: Quit digitizing                  ");
+    if (cnt)
+	Write_base(15, "       Right:  Backup one point                 ");
+    else
+	Write_base(15, "       Right:  (Backup one point)               ");
+#else
     if (cnt)
 	_Write_base(14, "       Middle: Backup one point                 ");
     else
 	_Write_base(14, "       Middle: (Backup one point)               ");
     Write_base (15, "       Right:  Quit digitizing                  ");
+#endif
 
 
     if (cnt)

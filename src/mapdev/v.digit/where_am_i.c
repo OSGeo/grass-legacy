@@ -21,9 +21,9 @@ int where_am_i (struct Map_info *map)
 
     _Clear_base ();
     _Write_base(10, "Buttons:");
-    _Write_base(11, "Left:   where am i");
-    _Write_base(12, "Middle: quit");
-     Write_base(13, "Right:  quit");
+    _Write_base(11, "   Left:   Where am i");
+    _Write_base(12, "   Middle: Quit");
+     Write_base(13, "   Right:  Quit");
 
     thresh =  map->head.map_thresh;
 
@@ -35,11 +35,11 @@ int where_am_i (struct Map_info *map)
 
 	switch(button)
 	{
-	    case 1:
+	    case LEFTB:
 		sprintf(buffer,"EAST: %12.2f   NORTH: %12.2f", ux, uy);
 		Write_info(1, buffer);
 		break;
-	    case 2:
+	    case MIDDLEB:
 #ifdef FOO
 		/* Check to see if we are pointing to an area */
 		Write_info(2, "Checking areas");
@@ -85,7 +85,7 @@ int where_am_i (struct Map_info *map)
 		break;
 
 #endif
-	    case 3:
+	    case RIGHTB:
 		return(0);
 		break;
 	    default:

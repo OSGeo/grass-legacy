@@ -1,7 +1,7 @@
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
-EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DASIAN_CHARS)
+EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DANOTHER_BUTTON) $(DASIAN_CHARS)
 
 OBJ = \
 	add_scale.o \

@@ -1,9 +1,9 @@
 /* 10/2000 Huidae Cho <hdcho@geni.knu.ac.kr>
  * Input Korean Characters with Get_curses_[char|text]().
  *
- * #define ASIAN_CHARS in dig_curses.c file.
+ * #define ASIAN_CHARS in local_proto.h file.
  *
- * See dig_curses.c for more infomation.
+ * See local_proto.h for more infomation.
  */
 
 
