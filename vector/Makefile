@@ -13,7 +13,6 @@ SUBDIRS = \
 	v.digit \
 	v.distance \
 	v.extract \
-	v.format \
 	v.hull \
 	v.info \
 	v.in.ascii \
@@ -48,7 +47,7 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-OGRBASED = v.out.ogr v.in.ogr
+OGRBASED = v.out.ogr v.in.ogr v.external
 
 #compile if OGR present:
 ifneq ($(USE_OGR),)
