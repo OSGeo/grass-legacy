@@ -95,7 +95,6 @@ int main (int argc, char **argv)
 
     G_gisinit (argv[0]);
 
-    /* heeeerrrrrre's the PARSER */
     if (G_parser (argc, argv))
         exit (-1);
 
@@ -180,9 +179,9 @@ int main (int argc, char **argv)
          fi->database = dbdatabase->answer;
          fi->driver   = dbdriver->answer;
        
-         ret = Vect_map_check_dblink ( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver);
-         G_debug(3, "Vect_map_check_dblink: %d", ret);
-         if ( ret == 0) {
+         ret = Vect_map_check_dblink ( &Map, atoi(field_opt->answer) );
+         G_debug(3, "Vect_map_check_dblink = %d", ret);
+         if ( ret == 1) {
            /* field already defined */
            if( !overwrite->answer )
                G_fatal_error("Use -o to overwrite existing link for field <%d>",atoi(field_opt->answer));
@@ -190,8 +189,13 @@ int main (int argc, char **argv)
            {
                if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
                    G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
-               if( Vect_map_replace_dblink( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver) == 0)
-                   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted or overwritten by GRASS modules.", dbtable->answer, input);
+	       ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
+               if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
+			                 fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
+	       {
+                   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
+			       "or overwritten by GRASS modules.", dbtable->answer, input);
+	       }
            }
          }
          else
@@ -199,8 +203,12 @@ int main (int argc, char **argv)
             if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
                G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
 
-            if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver) == 0)
-               G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted or overwritten by GRASS modules.", dbtable->answer, input);
+            if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
+			              fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
+	    {
+               G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
+		           "or overwritten by GRASS modules.", dbtable->answer, input);
+	    }
          }
        }
        else /* incomplete parameters given */
