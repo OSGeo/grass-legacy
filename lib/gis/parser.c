@@ -476,10 +476,10 @@ int G_parser (int argc, char **argv)
 	    }
 	}
 	else if (argc < 2 && isatty(0))
-		{
-			G_usage();
-			return -1;
-		}
+	{
+	    G_usage();
+	    return -1;
+	}
 	else if (argc >= 2)
 	{
 
@@ -1095,6 +1095,7 @@ int G_gui (void)
     if (!pgm_name)
 	pgm_name = "??";
 
+/*    fp = popen("tee dump.tcl | $GRASS_WISH", "w"); */
     fp = popen("$GRASS_WISH", "w");
     if (!fp)
 	    G_fatal_error("unable to spawn wish");
@@ -1128,86 +1129,60 @@ int G_gui (void)
 	    }
 	    
 	    /* Set key name and type */
-	    fprintf(fp, "set optname(%d) \"%s\" \n", optn, opt->key);
-	    if(opt->multiple && opt->options)
-	        fprintf(fp, "set opttype(%d) \"multi\" \n", optn);
-	    else
-	        fprintf(fp, "set opttype(%d) \"opt\" \n", optn);
+	    fprintf(fp, "set optname(%d) {%s}\n", optn, opt->key);
+	    fprintf(fp, "set opttype(%d) %s\n", optn,
+		    opt->multiple && opt->options ? "multi" : "opt");
 
 	    /* Option label */ 
-	    fprintf(fp, "label $suf.lab%d -text {%s (%s, %s):} -anchor w -justify left\n", 
-		          optn, opt->description, 
-			  type, opt->required == YES ? "required" : "optional");
-	    fprintf(fp, "pack $suf.lab%d -side top -fill x\n", optn );
-
+	    fprintf(fp, "do_label %d {%s} {%s} %d\n",
+		    optn, opt->description, type, opt->required == YES);
 	    
 	    /* Option value */
-	    fprintf(fp, "frame $suf.val%d \n", optn );
+	    fprintf(fp, "frame $suf.val%d\n", optn );
 	    if(opt->options) {
-	        if(!opt->multiple) {
-		    fprintf(fp, "ComboBox $suf.val%d.val -underline 0 -labelwidth 0 -width 25 -textvariable optval(%d) -values { ", optn, optn );
-		}
-		    
-		top = G_calloc(strlen(opt->options) + 1,1);
+		top = G_calloc(strlen(opt->options) + 1, 1);
 		strcpy(top, opt->options);
 		s = strtok(top, ",");
 		p1 = s;
 		i = 1;
-		while (s) {
-		    if(opt->multiple) {
-			fprintf(fp, "checkbutton $suf.val%d.val%d -text {%s} -variable optval(%d,%d) -onvalue 1 -offvalue 0\n", optn, i, s, optn, i );    
-			fprintf(fp, "pack $suf.val%d.val%d -side left\n", optn, i);
-			fprintf(fp, "set optvalname(%d,%d) \"%s\" \n", optn, i, s);    
-		    } else {
-			fprintf(fp, " \"%s\" ", s );
-		    }
-		    s = strtok(NULL, ",");
-		    i++;
-		}
-	        if(!opt->multiple) {
-		    fprintf(fp, " } \n");
-		    fprintf(fp, "pack $suf.val%d.val -side left\n", optn);
-		    if ( opt->answer )
-		        fprintf(fp, " set optval(%d) \"%s\" \n", optn, opt->answer );
-		    else
-		        fprintf(fp, " set optval(%d) \"%s\" \n", optn, p1 );
-		}
-		fprintf(fp, "set nmulti(%d) %d \n", optn, i - 1 );
-		G_free (top);
-	    } else {
-		if ( opt->gisprompt ) {
-		    if ( !strncmp(opt->gisprompt, "file", 3) ) {
-		        strcpy(buf, opt->gisprompt);
-		        s = strtok(buf, ",");
-		        s = strtok(NULL, ",");
-			fprintf(fp, "button $suf.val%d.sel -text \">\" -command {\n"
-				"    set filename [tk_getOpenFile -title {Load File}]\n"
-				"    if { [string length $filename] > 0 } {\n"
-                        	"        set optval(%d) $filename\n"
-				"    }\n"
-				"}\n", optn, optn);
-	                fprintf(fp, "pack $suf.val%d.sel -side left -fill x\n", optn);
-		    }
-		    if ( !strncmp(opt->gisprompt, "old", 3) ) {
-		        strcpy(buf, opt->gisprompt);
-		        s = strtok(buf, ",");
-		        s = strtok(NULL, ",");
-			fprintf(fp, "button $suf.val%d.sel -text \">\" -command {\n"
-				"    set val [GSelect_::create \"%s\"]\n"
-				"    if { [string length $val] > 0 } {\n"
-                        	"        set optval(%d) $val\n"
-				"    }\n"
-				"}\n", optn, s, optn );
-	                fprintf(fp, "pack $suf.val%d.sel -side left -fill x\n", optn);
+	        if(opt->multiple) {
+		    while (s) {
+			fprintf(fp, "do_check %d %d {%s}\n", optn, i, s);
+			s = strtok(NULL, ",");
+			i++;
 		    }
 		}
-	        fprintf(fp, "Entry $suf.val%d.val -textvariable optval(%d)\n", optn, optn );
-	        fprintf(fp, "pack $suf.val%d.val -side left -fill x -expand yes\n", optn);
-		if(opt->def) {
-		    fprintf(fp, " set optval(%d) {%s} \n", optn, opt->def );
-		} 
+		else {
+		    fprintf(fp, "do_combo %d {\n");
+		    while (s) {
+			fprintf(fp, "\t{%s}\n", s);
+			s = strtok(NULL, ",");
+			i++;
+		    }
+		    fprintf(fp, "}\n");
+		    fprintf(fp, "set optval(%d) {%s}\n",
+			    optn, opt->answer ? opt->answer : p1);
+		}
+		fprintf(fp, "set nmulti(%d) %d\n", optn, i - 1);
+		G_free(top);
 	    }
-	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn );
+	    else {
+		if ( opt->gisprompt ) {
+		    if (strncmp(opt->gisprompt, "file", 4) == 0)
+			fprintf(fp, "do_button_file %d\n", optn);
+		    if (strncmp(opt->gisprompt, "old", 3) == 0) {
+		        strcpy(buf, opt->gisprompt);
+		        s = strtok(buf, ",");
+		        s = strtok(NULL, ",");
+			fprintf(fp, "do_button_old %d {%s}\n", optn, s);
+		    }
+		}
+	        fprintf(fp, "do_entry %d\n", optn);
+		if(opt->def)
+		    fprintf(fp, "set optval(%d) {%s}\n", optn, opt->def);
+
+	    }
+	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn);
 
 	    opt = opt->next_opt ;
 	    optn++;
@@ -1219,13 +1194,7 @@ int G_gui (void)
 	flag= &first_flag;
 	while(flag != NULL)
 	{
-	    fprintf(fp, "set opttype(%d) \"flag\" \n", optn);
-	    
-	    fprintf(fp, "frame $suf.val%d \n", optn );
-	    fprintf(fp, "checkbutton $suf.val%d.chk -text {%s} -variable optval(%d) -onvalue 1 -offvalue 0 -anchor w\n", optn, flag->description, optn );    
-	    fprintf(fp, "pack $suf.val%d.chk -side left\n", optn);
-	    fprintf(fp, "set optname(%d) \"%c\" \n", optn, flag->key);    
-	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn );
+	    fprintf(fp, "do_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
 	    flag = flag->next_flag ;
 	    optn++;
 	}
