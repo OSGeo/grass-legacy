@@ -16,7 +16,7 @@ int zoom_window (void)
     int mode, next_mode = 1; /* 1 - first corner; 2 - first or second corner */
     double x1, y1, x2, y2;
     
-    G_debug (2, "zoom()");
+    G_debug (2, "zoom_window()");
 
     i_prompt ( "Zoom by window"); 
     i_prompt_buttons ( "1. corner", "1. corner", "Quit"); 
@@ -117,6 +117,113 @@ int zoom_centre ( double factor)
     driver_close();
     
     G_debug (3, "zoom_centre(): End");
+
+    return 1;
+}
+
+/* Zoom - pan */
+int zoom_pan (void)
+{
+    int sxn, syn;
+    int button;
+    double dx, dy, x, y;
+    
+    G_debug (2, "zoom_pan()");
+
+    i_prompt ( "Pan"); 
+    i_prompt_buttons ( "New center", "", "Quit"); 
+    
+    driver_open();
+
+    sxn = COOR_NULL; syn = COOR_NULL; 
+    while ( 1 ) {
+        R_set_update_function ( update );
+	R_get_location_with_pointer ( &sxn, &syn, &button); 
+	
+	G_debug (2, "button = %d x = %d y = %d", button, sxn, syn);
+
+	if ( button == 0 || button == 3 ) break;
+	
+	if ( button == 1 ) {
+	    x =  D_d_to_u_col ( sxn );
+	    y =  D_d_to_u_row ( syn );
+	
+	    dx = (window.east - window.west) / 2;
+	    dy = (window.north - window.south) / 2;
+    
+	    window.north = y + dy;
+	    window.south = y - dy;
+	    window.east  = x + dx;
+	    window.west  = x - dx;
+
+	    G_debug (2, "w = %f e = %f n = %f s = %f", window.west, window.east, window.north, window.south);
+	    G_adjust_Cell_head (&window, 0, 0);
+	    G_put_window(&window);
+	    G_set_window(&window);
+
+	    display_redraw();
+	}
+    }
+
+    driver_close();
+    
+    i_prompt (""); 
+    i_prompt_buttons ( "", "", ""); 
+    i_coor ( COOR_NULL, COOR_NULL);
+    
+    G_debug (3, "zoom_pan(): End");
+
+    return 1;
+}
+
+/* Zoom - default region */
+int zoom_default ( void )
+{
+    struct Cell_head defwin;
+    
+    G_debug (2, "zoom_default()");
+
+    driver_open();
+    R_set_update_function ( update );
+
+    G_get_default_window ( &defwin );
+    G_put_window(&defwin);
+    G_set_window(&defwin);
+    
+    display_redraw();
+
+    driver_close();
+    
+    G_debug (3, "zoom_default(): End");
+
+    return 1;
+}
+
+/* Zoom - to region */
+int zoom_region ( void )
+{
+    struct Cell_head win;
+    char *mapset;
+    
+    G_debug (2, "zoom_region()");
+
+    driver_open();
+    R_set_update_function ( update );
+
+    mapset = G_find_file2 ( "windows", var_getc (VAR_ZOOM_REGION), NULL);
+    if (mapset == NULL ) {
+	G_warning ("Cannot find window '%s'", var_getc (VAR_ZOOM_REGION) );
+	return 0;
+    }
+    G__get_window ( &win, "windows", var_getc (VAR_ZOOM_REGION), mapset );
+    G_put_window(&win);
+    G_set_window(&win);
+    
+    display_redraw();
+
+    driver_close();
+    
+    G_debug (3, "zoom_region(): End");
 
     return 1;
 }

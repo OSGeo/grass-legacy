@@ -1,8 +1,14 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1 
 
+source $env(GISBASE)/etc/gtcltk/select.tcl
+
 set vdpath $env(GISBASE)/etc/v.digit/ 
 source $vdpath/settings.tcl
+
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 set prompt "Welcome to v.digit"
 set prompt_left "Left"
@@ -100,6 +106,11 @@ $bbox add -image [image create photo -file "$vdpath/rm.vertex.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
         -helptext "Remove vertex"
 
+$bbox add -image [image create photo -file "$vdpath/split.line.gif"] \
+        -command "c_next_tool split_line" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Split line"
+
 $bbox add -image [image create photo -file "$vdpath/move.line.gif"] \
         -command "c_next_tool move_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
@@ -121,10 +132,39 @@ $bbox add -image [image create photo -file "$vdpath/zoom.out.centre.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
         -helptext "Zoom out"
 
+$bbox add -image [image create photo -file "$vdpath/zoom.pan.gif"] \
+        -command "c_next_tool zoom_pan" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Pan"
+
+$bbox add -image [image create photo -file "$vdpath/zoom.default.gif"] \
+        -command "c_next_tool zoom_default" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Zoom to default region"
+
+proc zoom_region { } {
+    set reg [GSelect windows]
+    if { $reg != "" } {
+        c_var_set zoom_region $reg 
+        c_next_tool zoom_region
+    }
+}
+
+$bbox add -image [image create photo -file "$vdpath/zoom.region.gif"] \
+        -command "zoom_region" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Zoom to region"
+
 $bbox add -image [image create photo -file "$vdpath/redraw.gif"] \
         -command "c_next_tool redraw" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
         -helptext "Redraw"
+
+# --- Attributes ---
+$bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
+        -command "c_next_tool display_attributes" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Display attributes"
 
 # --- Stop ---
 #$bbox add -image [image create photo -file "$vdpath/stop.gif"] \

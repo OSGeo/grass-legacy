@@ -52,16 +52,26 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_ADD_VERTEX;
     else if ( strcmp ( tl, "rm_vertex" ) == 0 )
 	Tool_next = TOOL_RM_VERTEX;
+    else if ( strcmp ( tl, "split_line" ) == 0 )
+	Tool_next = TOOL_SPLIT_LINE;
     else if ( strcmp ( tl, "move_line" ) == 0 )
 	Tool_next = TOOL_MOVE_LINE;
     else if ( strcmp ( tl, "delete_line" ) == 0 )
 	Tool_next = TOOL_DELETE_LINE;
+    else if ( strcmp ( tl, "display_attributes" ) == 0 )
+	Tool_next = TOOL_DISPLAY_ATTRIBUTES;
     else if ( strcmp ( tl, "exit" ) == 0 )
 	Tool_next = TOOL_EXIT;
     else if ( strcmp ( tl, "zoom_window" ) == 0 )
 	Tool_next = TOOL_ZOOM_WINDOW;
     else if ( strcmp ( tl, "zoom_out_centre" ) == 0 )
 	Tool_next = TOOL_ZOOM_OUT_CENTRE;
+    else if ( strcmp ( tl, "zoom_pan" ) == 0 )
+	Tool_next = TOOL_ZOOM_PAN;
+    else if ( strcmp ( tl, "zoom_default" ) == 0 )
+	Tool_next = TOOL_ZOOM_DEFAULT;
+    else if ( strcmp ( tl, "zoom_region" ) == 0 )
+	Tool_next = TOOL_ZOOM_REGION;
     else if ( strcmp ( tl, "redraw" ) == 0 )
 	Tool_next = TOOL_REDRAW;
     else {
@@ -270,7 +280,6 @@ c_create_table ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     return TCL_OK;
 }
 
-
 /* set variable */
 int
 c_var_set ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
@@ -280,7 +289,7 @@ c_var_set ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     G_debug (5, "c_var_set()");
 
     if ( argc != 3 ) {
-	G_warning ( "c_var_set(): inicorrect number of parameters" );
+	G_warning ( "c_var_set(): incorrect number of parameters" );
 	return TCL_ERROR;
     }
 
@@ -299,6 +308,46 @@ c_var_set ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	    var_setc ( code, argv[2] );
             break;
     }
+
+    return TCL_OK;
+}
+
+/* Create bgcmd records in GUI */
+int
+c_create_bgcmd ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    int i;
+    
+    G_debug (3, "c_create_bgcmd()");
+
+    for (i = 0; i < nbgcmd; i++ ) {
+	i_add_bgcmd ( i );
+    }
+
+    return TCL_OK;
+}
+
+/* set bgcmd */
+int
+c_set_bgcmd ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    int index, on;
+    
+    G_debug (3, "c_bgcmd_set()");
+
+    if ( argc != 4 ) {
+	G_warning ( "c_bgcmd_set(): incorrect number of parameters" );
+	return TCL_ERROR;
+    }
+
+    index = atoi ( argv[1] );
+    on = atoi ( argv[2] );
+    
+    G_debug (3, "  index = %d on = %d cmd = %s", index, on, argv[3]);
+    
+    Bgcmd[index].on = on;
+    G_free ( Bgcmd[index].cmd );
+    Bgcmd[index].cmd = G_store ( argv[3] );
 
     return TCL_OK;
 }

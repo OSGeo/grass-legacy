@@ -28,12 +28,17 @@ void symb_updated_nodes_set_from_map ( void );
 void updated_lines_and_nodes_erase_refresh_display(void); 
 
 /* Edit */
+int snap ( double *, double * );
 int new_line (int);
 int move_vertex (void);
 int add_vertex (void);
 int rm_vertex (void);
+int split_line (void);
 int move_line (void);
 int delete_line (void);
+
+/* Attributes */
+int display_attributes (void);
 
 /* Display */
 void display_points ( struct line_pnts *, int );
@@ -50,6 +55,9 @@ void display_redraw ( void );
 /* Zoom */
 int zoom_window (void);
 int zoom_centre (double factor);
+int zoom_pan (void);
+int zoom_default (void);
+int zoom_region (void);
 
 int c_cancel (ClientData , Tcl_Interp *, int, char **);
 int c_next_tool (ClientData , Tcl_Interp *, int, char **);
@@ -59,6 +67,8 @@ int c_set_on (ClientData , Tcl_Interp *, int, char **);
 int c_create_table (ClientData , Tcl_Interp *, int, char **);
 int c_table_definition (ClientData , Tcl_Interp *, int, char **);
 int c_var_set (ClientData , Tcl_Interp *, int, char **);
+int c_create_bgcmd (ClientData , Tcl_Interp *, int, char **);
+int c_set_bgcmd (ClientData , Tcl_Interp *, int, char **);
 
 int i_prompt (char *);
 int i_prompt_buttons (char *, char *, char *);
@@ -72,6 +82,7 @@ void i_var_seti ( int, int );
 void i_var_setd ( int, double ); 
 void i_var_setc ( int, char* ); 
 int i_message ( int, int, char*);
+void i_add_bgcmd ( int );
 
 /* Cats */
 void cat_init ( void );

@@ -65,6 +65,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		rm_vertex ();
 		break;
+	    case TOOL_SPLIT_LINE :
+		Tool_next = TOOL_NOTHING;
+		split_line ();
+		break;
 	    case TOOL_MOVE_LINE :
 		Tool_next = TOOL_NOTHING;
 		move_line ();
@@ -73,6 +77,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		delete_line ();
 		break;
+	    case TOOL_DISPLAY_ATTRIBUTES :
+		Tool_next = TOOL_NOTHING;
+		display_attributes ();
+		break;
 	    case TOOL_ZOOM_WINDOW :
 		Tool_next = TOOL_NOTHING;
 		zoom_window ();
@@ -80,6 +88,18 @@ tool_centre ( void )
 	    case TOOL_ZOOM_OUT_CENTRE :
 		Tool_next = TOOL_NOTHING;
 		zoom_centre ( 2 );
+		break;
+	    case TOOL_ZOOM_PAN :
+		Tool_next = TOOL_NOTHING;
+		zoom_pan ();
+		break;
+	    case TOOL_ZOOM_DEFAULT :
+		Tool_next = TOOL_NOTHING;
+		zoom_default ();
+		break;
+	    case TOOL_ZOOM_REGION :
+		Tool_next = TOOL_NOTHING;
+		zoom_region ();
 		break;
 	    case TOOL_REDRAW :
 		Tool_next = TOOL_NOTHING;

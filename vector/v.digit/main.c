@@ -54,6 +54,10 @@ int Tcl_AppInit(Tcl_Interp* interp)
 	                      (Tcl_CmdDeleteProc*) NULL);
     Tcl_CreateCommand(interp, "c_var_set", (Tcl_CmdProc*) c_var_set, (ClientData) NULL, 
 	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_create_bgcmd", (Tcl_CmdProc*) c_create_bgcmd, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_bgcmd", (Tcl_CmdProc*) c_set_bgcmd, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
 
     /* Init variables */
     var_init ();
