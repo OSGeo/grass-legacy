@@ -15,8 +15,9 @@
 <BR>
 <B>s.to.rast help</B>
 <BR>
-<B>s.to.rast</B> [<B>-v</B>] <B>input=</B><EM>name</EM> 
-<B>output=</B><EM>name</EM>
+<B>s.to.rast</B> [<B>-qs</B>] <B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> <B>size=</B><EM>value</EM>
+<B>title=</B><EM>"phrase"</EM> <B>field=</B><EM>value</EM>
 
 <H2>DESCRIPTION</H2>
 
@@ -35,8 +36,10 @@ already exists, the program exits gracefully.
 <H3>Flag:</H3>
 
 <DL>
-<DT><B>-v</B>
-<DD>Run the program verbosely.
+<DT><B>-q</B>
+<DD>Run the module quietly.
+<DT><B>-s</B>
+<DD>Create a single-valued (0/1) raster map
 </DL>
 
 <H3>Parameters:</H3>
@@ -48,6 +51,16 @@ already exists, the program exits gracefully.
 
 <DT><B>output=</B><EM>name</EM> 
 <DD>Name of output cell file
+
+<DT><B>size=</B><EM>value</EM> 
+<DD>Number of cells to surround site cell
+
+<DT><B>title=</B><EM>"phrase"</EM> 
+<DD>Title for the resulting raster map
+
+<DT><B>field=</B><EM>value</EM> 
+<DD>Attribute field number to use for operation<br>
+           default: 1
 
 </DL>
 

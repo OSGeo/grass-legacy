@@ -1,6 +1,6 @@
 .TH s.to.rast 1 "" "" "" ""
 .SH NAME
-s.to.rast  - Converts a site file to a cell file
+\*Ls.to.rast\*O  - Converts a site file to a cell file
 .br
 (GRASS Sites Program)
 .SH SYNOPSIS
@@ -8,8 +8,9 @@ s.to.rast  - Converts a site file to a cell file
 .br
 \*Ls.to.rast help\*O
 .br
-\*Ls.to.rast\*O [\*L-v\*O] \*Linput=\*Oname 
+\*Ls.to.rast\*O [\*L-qs\*O] \*Linput=\*Oname 
 \*Loutput=\*Oname
+\*Ltitle=\*O"phrase"
 .SH DESCRIPTION
 s.to.rast converts a GRASS site file to a GRASS cell
 file. The program uses a subset of the functions in
@@ -21,8 +22,10 @@ already exists, the program exits gracefully.
 .SH OPTIONS
 .SH Flag:
 .VL 4m
-.LI "\*L-v\*O
-Run the program verbosely.
+.LI "\*L-q\*O
+Run the module quietly.
+.LI "\*L-s\*O
+Create a single-valued (0/1) raster map
 .LE
 .SH Parameters:
 .VL 4m
@@ -30,6 +33,15 @@ Run the program verbosely.
 Name of input site list
 .LI "\*Loutput=\*Oname 
 Name of output cell file
+.LI "\*Lsize=\*Ovalue 
+Number of cells to surround site cell
+.LI "\*Ltitle=\*O"phrase" 
+Title for the resulting raster map
+.LI "\*Lfield=\*Ovalue 
+Attribute field number to use for operation
+.br
+
+default: 1
 .LE
 .SH SEE ALSO
 \*Ls.menu\*O
