@@ -38,7 +38,8 @@ void convert(char *fileout, int, int, int);
 /* globals */
 void *map = NULL;
 paramType param;
-
+G3D_Region region;
+   
 /*---------------------------------------------------------------------------*/
 /* Simple error handling routine, will eventually replace this with
  * G3D_fatalError.
@@ -117,9 +118,13 @@ void convert(char *fileout, int rows, int cols, int depths) {
    float *f1p;
    int x, y, z;
    int typeIntern;
-   G3D_Region region;
 
-  typeIntern = G3d_tileTypeMap (map);
+   /* copy setting from global variable MN 1/2001*/
+   rows = region.rows;
+   cols=region.cols;
+   depths=region.depths;
+   
+   typeIntern = G3d_tileTypeMap (map);
 
 #ifdef DEBUG
 fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
@@ -142,6 +147,7 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    
 /* ********* */     
 /* add here grass region/window settings from region struct */
+/* BUG: vis5d display one row/col/depth less that volume */
 
    strcpy(VarName[0], "S");
    TimeStamp[0] = DateStamp[0] = 0;
@@ -181,12 +187,14 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
  */
 
   /* taken from r3.out.ascii: but modified x and y order
-      MN 2001 */
+      MN 1/2001. Now results comparable to r3.showdspf but 
+      for loops are different to r3.out.ascii and r3.to.sites - hmpf*/
+
    for (z = 0; z < depths; z++) {
     G_percent(z, depths, 1);
     for (x = 0; x < cols; x++) {
-          for (y = rows-1; y >= 0; y--) {  /* north to south */
-                 
+      for (y = rows-1; y >= 0; y--) {  /* north to south */
+
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
         if (typeIntern == G3D_FLOAT) {
           if (G3d_isNullValueNum(f1p, G3D_FLOAT)){
@@ -242,7 +250,6 @@ int main(int argc, char *argv[]) {
   double nullValue;
   int useTypeDefault, type, useLzwDefault, doLzw, useRleDefault, doRle;
   int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
-  G3D_Region region;
   FILE *fp;
   int cacheSize;
 
@@ -268,8 +275,7 @@ int main(int argc, char *argv[]) {
   /* Use default region */
   /*  G3d_getRegionStructMap(map, &region); */
   /* Figure out the region from current settings:*/
- /* G3d_getWindow(&region);*/
-    G3d_readWindow(&region,NULL); /* read current region from WIND3, MN 1/2001 */
+    G3d_getWindow(&region);
 
 #ifdef DEBUG
 fprintf(stderr, "cols: %i rows: %i layers: %i\n", region.cols, region.rows, region.depths);
