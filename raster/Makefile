@@ -97,7 +97,7 @@ PNGBASED = r.out.png
 CXXBASED = r.terraflow
 
 #compile if GDAL present:
-ifneq ($(strip $(GDALLIBS)),)
+ifneq ($(USE_GDAL),)
     SUBDIRS += $(GDALBASED)
 endif
 

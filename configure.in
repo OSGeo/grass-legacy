@@ -242,9 +242,6 @@ LOC_ARG_WITH_LIB(proj, External PROJ.4)
 LOC_ARG_WITH_INC(opendwg, openDWG)
 LOC_ARG_WITH_LIB(opendwg, openDWG)
 
-#Needed to set LD_LIBRARY_PATH_VAR
-SC_CONFIG_CFLAGS
-
 # Enable SysV option
 
 AC_MSG_CHECKING(for SysV)
@@ -616,9 +613,9 @@ AC_SUBST(JPEGLIB)
 
 # Done checking JPEG
 
-# Do we want to build with a static GDAL?  
+# GDAL option
 
-AC_MSG_CHECKING(if we should build directly against GDAL)
+AC_MSG_CHECKING(whether to use GDAL)
 
 if test "`basename xx/$with_gdal`" = "gdal-config" ; then
   GDAL_CONFIG="$with_gdal"
@@ -636,23 +633,24 @@ else
   fi
 fi
 
+GDAL_LIBS=
+GDAL_CFLAGS=
+USE_GDAL=
+USE_OGR=
+
 if test "$GDAL_CONFIG" != "" ; then
-  GDAL_LIBS="`$GDAL_CONFIG --libs`"
-  GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
+  GDAL_LIBS=`"$GDAL_CONFIG" --libs`
+  GDAL_CFLAGS=`"$GDAL_CONFIG" --cflags`
   USE_GDAL=1
-  if test `$GDAL_CONFIG --ogr-enabled` = "yes" ; then
+  if test `"$GDAL_CONFIG" --ogr-enabled` = "yes" ; then
     AC_DEFINE(HAVE_OGR)
     USE_OGR=1
   fi
-else
-  GDAL_LIBS=$DLLIB
-  GDAL_CFLAGS=
-  USE_GDAL=
-  USE_OGR=
 fi
 
 AC_SUBST(GDAL_LIBS)
 AC_SUBST(GDAL_CFLAGS)
+AC_SUBST(USE_GDAL)
 AC_SUBST(USE_OGR)
 
 # Enable TIFF option

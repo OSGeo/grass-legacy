@@ -44,26 +44,6 @@ USGS SDTS DEM                                        Yes
 SAR CEOS                                             No
 </pre>
 
-If GDAL doesn't support the indicated file it will report it with a
-message like <tt>ERROR 4: `abc.e00' not recognised as a supported file format
-</tt>.  This means either that the file doesn't exist, that it isn't supported
-by GDAL, or that the format wasn't built into the version of libgdal.1.1.so
-being used.<P>
-
-<B>r.in.gdal</B> will only operate correctly if the GDAL shared library is
-installed on the system and accessable (normally via LD_LIBRARY_PATH).  If
-not, r.in.gdal will report <TT>Unable to initialize GDAL bridge</TT>.  If
-this occurs it means that you either don't have GDAL installed (ie.
-libgdal.1.1.so), it isn't in the LD_LIBRARY_PATH, or it is the wrong
-version.  Recent builds of libgdal may be available at
-<a href="http://gdal.velocet.ca/projects/grass/">http://gdal.velocet.ca/projects/grass</a>, and the shared library should be copied into $GISBASE/lib. 
-Binary distributions of GRASS will normally include libgdal.
-
-<P> r.in.gdal uses a number of strategies to find the GDAL shared
-library.  It first looks in $GISBASE/lib/.  Then it looks for $GDAL_HOME and
-finally it searches without a path letting all the standard Unix dlopen()
-search rules apply (which normally includes LD_LIBRARY_PATH).
-
 <H2>Location Creation</H2>
 
 <B>r.in.gdal</B> attempts to preserve projection information when importing
