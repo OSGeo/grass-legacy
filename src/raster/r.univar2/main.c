@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     int fd;
 
     struct Option *inputfile;
-    struct Flag *quiet;        /* , *extended; */
+    struct Flag *quiet, *shell_style;   /* , *extended; */
     struct GModule *module;
 
 
@@ -64,7 +64,11 @@ int main(int argc, char *argv[]) {
 
     quiet = G_define_flag();
     quiet->key = 'q';
-    quiet->description = "Quiet mode (good for parsing)";
+    quiet->description = "Quiet mode";
+
+    shell_style = G_define_flag();
+    shell_style->key = 'g';
+    shell_style->description = "Print the stats in shell script style";
 
     /*** Not yet implemented: Median, 1st Quartile, 3rd Quartile ***
     extended = G_define_flag();
@@ -94,7 +98,7 @@ int main(int argc, char *argv[]) {
 
     raster_row = G_calloc(G_window_cols()+1, G_raster_size(map_type));
 
-    if(! quiet->answer) {
+    if( ! (quiet->answer || shell_style->answer) ) {
 	fprintf(stderr, "\nProcessing .. ");
 	fflush(stderr);
     }
@@ -170,10 +174,10 @@ int main(int argc, char *argv[]) {
 	    }
 	    ptr = G_incr_void_ptr(ptr, G_raster_size(map_type));
 	}
-	if(! quiet->answer)
+	if( ! (quiet->answer || shell_style->answer) )
 	    G_percent(row, rows, 2);
     }
-    if(! quiet->answer)
+    if( ! (quiet->answer || shell_style->answer) )
 	G_percent(row, rows, 2);  /* finish it off */
 
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
@@ -183,19 +187,31 @@ int main(int argc, char *argv[]) {
     var_coef = (stdev/mean)*100;  /* perhaps stdev/fabs(mean) ? */
 
 
-    if(! quiet->answer) {
+    if( ! (quiet->answer || shell_style->answer) ) {
 	fprintf(stdout, "\ntotal null and non-null cells: %d\n\n", rows * cols);
 	fprintf(stdout, "Of the non-null cells:\n----------------------\n");
     }
 
-    fprintf(stdout, "n: %d\n", n);
-    fprintf(stdout, "minimum: %f\n", min);
-    fprintf(stdout, "maximum: %f\n", max);
-    fprintf(stdout, "range: %f\n", max - min);
-    fprintf(stdout, "mean: %f\n", mean);
-    fprintf(stdout, "standard deviation: %f\n", stdev);
-    fprintf(stdout, "sample variance: %f\n", variance);
-    fprintf(stdout, "variation coefficient: %f %%\n", var_coef);
+    if(shell_style->answer) {
+    	fprintf(stdout, "n=%d\n", n);
+	fprintf(stdout, "min=%f\n", min);
+	fprintf(stdout, "max=%f\n", max);
+	fprintf(stdout, "range=%f\n", max - min);
+	fprintf(stdout, "mean=%f\n", mean);
+	fprintf(stdout, "stddev=%f\n", stdev);
+	fprintf(stdout, "variance=%f\n", variance);
+	fprintf(stdout, "coeff_var=%f\n", var_coef);
+    }
+    else {
+	fprintf(stdout, "n: %d\n", n);
+	fprintf(stdout, "minimum: %f\n", min);
+	fprintf(stdout, "maximum: %f\n", max);
+	fprintf(stdout, "range: %f\n", max - min);
+	fprintf(stdout, "mean: %f\n", mean);
+	fprintf(stdout, "standard deviation: %f\n", stdev);
+	fprintf(stdout, "sample variance: %f\n", variance);
+	fprintf(stdout, "variation coefficient: %f %%\n", var_coef);
+    }
 
 /*  if(extended->answer) {
 	bin_sort();
@@ -205,7 +221,7 @@ int main(int argc, char *argv[]) {
     }
 */
 
-    if(! quiet->answer)
+    if( ! ( quiet->answer || shell_style->answer) )
 	fprintf(stdout, "\n");
 
     return 0;
