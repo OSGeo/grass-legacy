@@ -5,10 +5,10 @@ EXTRA_CFLAGS = -I../libes
 IMAGERYLIB2  = ../libes/libortho.a
 
 LIST = main.o ask_target.o
-LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES) $(IMAGERYLIB2): #
 

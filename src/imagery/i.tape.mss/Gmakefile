@@ -12,10 +12,10 @@ LIST = main.o \
 	tape_vol.o\
 	tapename.o
 
-LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h
 $(LIBES): #

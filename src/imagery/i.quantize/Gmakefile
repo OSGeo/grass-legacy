@@ -1,6 +1,6 @@
 PGM = i.quantize
 
-LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 OBJ =\
 	main.o\
@@ -10,6 +10,6 @@ OBJ =\
 	median.o
 
 $(BIN_ALPHA_INTER)/$(PGM): ${OBJ}
-	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} $(MATHLIB) $(XDRLIB)
+	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(IMAGERYLIB) $(GISLIB) $(VASK): #

@@ -30,7 +30,7 @@ PGM = $(BIN_ALPHA_CMD)/r.out.hdf
 OFILES = r.out.hdf.o
 
 $(PGM):	$(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(CURSES)
 	@rm -f a.out
 	cp doc/catman $(MAN4)/r.out.hdf
 

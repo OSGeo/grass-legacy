@@ -2,8 +2,8 @@ PGM=i.group
 LIST = main.o\
 	menu.o\
 	run.o
-LIBES=$(GISLIB) $(IMAGERYLIB) $(VASK)
+LIBES=$(GISLIB) $(IMAGERYLIB) $(VASKLIB)
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,6 +1,6 @@
 PGM = r.surf.random
 
-LIBES = $(GISLIB) $(VASK)
+LIBES = $(GISLIB) $(VASKLIB)
 
 OBJ =\
 	main.o		\
@@ -8,6 +8,6 @@ OBJ =\
 	rand1.o 
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
-	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

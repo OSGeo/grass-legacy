@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.14 2000-12-27 10:50:18 justin Exp $
+# $Id: Gmakefile,v 1.15 2001-01-04 09:38:56 justin Exp $
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -44,7 +44,7 @@ $(ETC)/Init.sh: init.sh version.sed $(SRC)/CMD/VERSION
 	chmod +x $@
 
 $(ETC)/set_data: $(SET_DATA) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/echo: echo.o
 	$(CC) $(LDFLAGS) echo.o -o $@

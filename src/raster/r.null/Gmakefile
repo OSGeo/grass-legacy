@@ -5,6 +5,5 @@ $(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
-$(VASKLIB): #
 
 mask.o: mask.h

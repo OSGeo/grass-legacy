@@ -62,7 +62,7 @@ $(LIST): globals.h defs.h camera_ref.h
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-	 $(GISLIB) $(VASK)
+	 $(GISLIB) $(VASKLIB)
 
 ####	libarary dependencies
 $(LIBES): 			# in case of lib changes
@@ -77,5 +77,5 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 ####	the rules
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 

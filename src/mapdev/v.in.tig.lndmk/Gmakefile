@@ -1,6 +1,6 @@
 PGM=v.in.tig.lndmk
 
-LIBES = $(VECTLIB) $(GPROJLIB) $(COORCNVLIB) $(GISLIB) $(VASK) $(COORCNVLIB) $(DATETIMELIB) $(DIG_ATTLIB)
+LIBES = $(VECTLIB) $(GPROJLIB) $(COORCNVLIB) $(GISLIB) $(VASKLIB) $(COORCNVLIB) $(DATETIMELIB) $(DIG_ATTLIB)
 
 EXTRA_CFLAGS = $(DIGITFLAGS)
 
@@ -9,7 +9,7 @@ OFILES = main.o parse_input.o cats_stuff.o tig_control.o tig_record.o \
 	match_text.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(OFILES): globals.h
 cats_stuff.o: cats.h

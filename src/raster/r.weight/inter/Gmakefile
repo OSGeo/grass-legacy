@@ -27,7 +27,7 @@ shell: $(BIN_MAIN_INTER)/r.weight
 pgm: $(ETC)/r.weight
 
 $(ETC)/r.weight: $(OFILES) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB) $(LEXLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
 $(BIN_MAIN_INTER)/r.weight: weight.sh
 	rm -f $@ ; cp $? $@ ; chmod 0755 $@

@@ -17,7 +17,8 @@
  *   Screen oriented user interactive session for modifying a cell header
  *   or region.
  *   Uses the visual_ask V_ask routines.  As such, programs including
- *   this must load the GRASS library $(VASK)
+ *   this must load the GRASS library $(VASKLIB) and include $(CURSES) in
+ *   in the compile line
  *
  *   returns:
  *      -1 error of some sort, or user cancels the edit

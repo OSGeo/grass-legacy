@@ -18,10 +18,10 @@ LIST =	main.o \
         do_label.o\
         update.o
 
-LIBES=$(GISLIB) $(VASK) $(DISPLAYLIB) $(RASTERLIB)
+LIBES=$(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(RASTERLIB)
 
 $(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h
 check_resp.o : check_resp.c helptext.h

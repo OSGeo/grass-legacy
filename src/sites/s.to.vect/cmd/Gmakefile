@@ -4,9 +4,9 @@ LIST =  main.o\
 	new_screen.o\
 	head_info.o
 
-LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(DATETIMELIB)
+LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASKLIB) $(DATETIMELIB)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(TERMLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

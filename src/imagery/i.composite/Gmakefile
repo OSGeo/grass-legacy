@@ -1,5 +1,5 @@
 PGM=i.composite
-LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 OBJ =\
 	main.o\
 	ask_levels.o\
@@ -7,6 +7,6 @@ OBJ =\
 	gen_colors.o
 
 $(BIN_MAIN_INTER)/$(PGM): $(OBJ) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

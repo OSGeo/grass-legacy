@@ -20,7 +20,8 @@ all: $(BIN_MAIN_INTER)/s.db.rim
 
 $(BIN_MAIN_INTER)/s.db.rim: $(OBJFILES)
 	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) \
-	$(MYLIBS) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
+	$(MYLIBS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) \
+	$(DATETIMELIB)
 
 clear_value.c: ../cmd/clear_value.c
 	ln $? $@

@@ -7,10 +7,10 @@ IMAGERYLIB2  = ../libes/libortho.a
 LIST =  menu.o\
 	run.o
 
-LIBES= $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASK)
+LIBES= $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASKLIB)
 
 $(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
 

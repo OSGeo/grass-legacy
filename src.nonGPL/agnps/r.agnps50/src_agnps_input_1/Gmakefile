@@ -1,4 +1,4 @@
-LIBES  = $(GISLIB) $(VASK)
+LIBES  = $(GISLIB) $(VASKLIB)
 
 
 PGM = $(GISBASE)/etc/agnps50/agnps_input_1 
@@ -32,6 +32,6 @@ LIST = \
 
 
 $(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
