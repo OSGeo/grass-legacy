@@ -1,4 +1,4 @@
-$Id: TODO,v 1.40 2000-10-23 16:32:02 markus Exp $
+$Id: TODO,v 1.41 2000-10-23 17:20:32 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -65,6 +65,16 @@ Libraries:
 
 - Parallel CPU support
   (Being worked on by ?) 
+
+- remove LZW compression from rasterlib/g3dlib and use libz:
+  src/libes/gis > grep -l lzw *                                                 
+   G.h                                                                           
+   G_dump.c                                                                      
+   closecell.c                                                                   
+   get_row.c                                                                     
+   lzw.c        <- !!!!!!                                                        
+   put_row.c          
+  (Being worked on by ?)
 
 ---------------------------------------------------------------------
 XDriver
