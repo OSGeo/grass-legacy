@@ -35,6 +35,7 @@ int main (argc, argv)
   double stop, **smoothed, **normalized, **ipf(), **elimzero();
   FILE *fd;
 
+  struct GModule *module;
   struct
   {
     struct Option *input, *format, *stop;
@@ -45,6 +46,10 @@ int main (argc, argv)
   } flag;
 
   G_gisinit (argv[0]);
+
+  	module = G_define_module();
+	module->description =
+		"Iterative proportional fitting for error matrices.";
 
   parm.input = G_define_option ();
   parm.input->key = "input";

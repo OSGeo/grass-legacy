@@ -7,6 +7,8 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
+
     char *infile;
     char *outfile;
     int in,out;
@@ -24,6 +26,11 @@ int main (int argc, char *argv[])
     {
 	struct Flag *q;
     } flag;
+
+	module = G_define_module();
+	module->description =
+		"Flips elevation data extracted from systems that retrieve "
+		"data by rows from south to north.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

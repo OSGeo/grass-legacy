@@ -42,6 +42,7 @@ int main (argc, argv)
   PARAM parameters;
   HGN *list;
   FILE *fd;
+  struct GModule *module;
   struct
   {
     struct Flag *q, *p, *w;
@@ -52,6 +53,10 @@ int main (argc, argv)
   } parm;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Semivariogram model fitting.";
 
   parm.input = G_define_option ();
   parm.input->key = "input";

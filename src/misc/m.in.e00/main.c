@@ -69,6 +69,7 @@ int main( int argc, char *argv[])
     char buf[1024];
     char msg[256];
 
+	struct GModule *module;
     struct {
 	struct Option *input, *mapset, *action, *verbose, *logfile;
     } parm;
@@ -79,6 +80,10 @@ int main( int argc, char *argv[])
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Read an ESRI e00 file.";
 
     /* define the different options */
 
