@@ -39,27 +39,29 @@ B_A_OFILES = \
 
 PROG = $(ETC)/v.build 
 
-all:    $(BUILD_LIB) $(PROG)
+#all:    $(BUILD_LIB) $(PROG)
 
-#all:    $(BUILD_LIB) $(ETC)/build.vect $(ETC)/b.a.plus
+all:    $(BUILD_LIB) $(PROG) $(ETC)/b.a.plus
 
 
 
 $(BUILD_LIB): $(OBJ)
 	$(AR)
 
-$(BIN_MAIN_INTER)/v.build: front_end.o 
+$(BIN_MAIN_INTER)/v.build: front_end.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ front_end.o $(GISLIB)
 
-$(PROG): main.o $(BUILD_LIB) $(VECTLIB)
+$(PROG): main.o $(BUILD_LIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) main.o $(BUILD_LIB) $(VECTLIB) $(VECTLIB)  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
 	mv a.out $@
 
-#b.a.plus: $(B_A_OFILES) $(VECTLIB)
-#	rm -f a.out $@
-#	$(CC) $(LDFLAGS) $(B_A_OFILES) $(VECTLIB) $(GISLIB)
-#	mv a.out $@
+$(ETC)/b.a.plus: $(B_A_OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(B_A_OFILES) $(VECTLIB) $(VECTLIB) $(GISLIB)
+	mv a.out $@
+
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
 
 #$(OFILES):	
 #$(B_A_OFILES):	
