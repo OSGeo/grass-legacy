@@ -47,7 +47,7 @@ read_sites(buffer)
     SLEEP3;
     return (-1);
   }
-  /* Identify the decsription field in the data base */
+  /* Identify the description field in the data base */
   desc_field_num = 0;
   if (desc_field) {
     G_tolcase(desc_field);
