@@ -12,7 +12,7 @@ LOC_DIR = $(GISBASE)/locale
 MSGFMT = msgfmt
 LOCALES = ru
 
-all: mofiles tcltkgrass textintro
+all: mofiles
 
 mofiles:
 	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
@@ -29,9 +29,10 @@ mofiles:
 	    done); \
 	done
 
+# doesn't work - blindly installs Russian tcltkgrass
 tcltkgrass:
 	@test -d $(GISBASE)/tcltkgrass || echo "ERROR: TCLTKGRASS not found"
-	
+
 	for LCL in $(LOCALES) ; do \
 	    test -d $$LCL/tcltkgrass/main && (cd $$LCL/tcltkgrass/main; \
 	    for h in *.tcl; do \
@@ -48,6 +49,7 @@ tcltkgrass:
 	    done); \
 	done
 
+# doesn't work - version.sed missing
 textintro:
 	for LCL in $(LOCALES) ; do \
 		test -f $$LCL/init.sh && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
