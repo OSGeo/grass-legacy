@@ -108,6 +108,9 @@ AMI_sort(AMI_STREAM<T> *instream, AMI_STREAM<T> **outstream, Compare *cmp,
 
   if (instreamLength == 0) {
     *outstream = new AMI_STREAM<T>();
+    if (deleteInputStream) {
+      delete instream;
+    }
     return AMI_ERROR_NO_ERROR;
   }
   

@@ -41,10 +41,11 @@
 
 #include <sys/types.h>
 #include <sys/mman.h>
-#include <iostream.h>
 #include <ctype.h>
-#include <ostream.h>
 
+#include <ostream>
+#include <iostream>
+using namespace std;
 
 #include "common.h"
 

@@ -47,7 +47,6 @@
 
 /* watershed analysis related structures */
 
-#include <iostream.h>
 #include "types.h"
 #include "plateau.h"
 #include "nodata.h"

@@ -41,7 +41,8 @@
 #ifndef SORTUTILS_H
 #define SORTUTILS_H
 
-#include <fstream.h>
+#include <fstream>
+using namespace std;
 
 #include <ami.h>
 #include "common.h"
@@ -61,15 +62,14 @@ sort(AMI_STREAM<T> **str, FUN fo) {
   stats->recordLength("pre-sort", *str);
   rt_start(rt);
 
-  /* let AMI_sort create its output stream */
+  /* let AMI_sort create its output stream and delete the inout stream */
   int eraseInputStream = 1;
   AMI_sort(*str,&sortedStr, &fo, eraseInputStream);
   rt_stop(rt);
-  /* delete *str; */
-  
+
   stats->recordLength("sort", sortedStr);
   stats->recordTime("sort", rt);
-  
+
   sortedStr->seek(0);
   *str = sortedStr;
 
@@ -81,7 +81,7 @@ sort(AMI_STREAM<T> **str, FUN fo) {
 
 /* ********************************************************************** */
 
-/* warning - creates a new stream!! */
+/* warning - creates a new stream and returns it !! */
 template<class T, class FUN>
 AMI_STREAM<T> *
 sort(AMI_STREAM<T> *strIn, FUN fo) {
@@ -91,25 +91,13 @@ sort(AMI_STREAM<T> *strIn, FUN fo) {
   stats->recordLength("pre-sort", strIn);
   rt_start(rt);
 
-  /* #ifdef TPIE
-	 strOut = new AMI_STREAM<T>();
- 
-	 #ifdef FO_SORT
-	 AMI_sort(strIn, strOut, &fo);
-	 #else
-	 AMI_sort(strIn, strOut, FUN::compare);
-	 #endif
-
-	 #else
-  */ 
   AMI_sort(strIn, &strOut, &fo);
   assert(strOut);
-  /* #endif */
-  
+
   rt_stop(rt);
   stats->recordLength("sort", strOut);
   stats->recordTime("sort", rt);
-  
+
   strOut->seek(0);
   return strOut;
 }

@@ -42,7 +42,6 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
-#include <iostream.h>
 #include <assert.h>
 
 #include <ami.h>

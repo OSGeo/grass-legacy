@@ -41,7 +41,8 @@
 #ifndef __3SCAN_H
 #define __3SCAN_H
 
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 
 #include <ami.h>
 #include "types.h"

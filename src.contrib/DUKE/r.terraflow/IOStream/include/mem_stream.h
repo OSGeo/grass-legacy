@@ -43,8 +43,9 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include <iostream.h>
 
+#include <iostream>
+using namespace std;
 
 template<class T>
 class MEM_STREAM {

@@ -42,7 +42,6 @@
 #ifndef NODATA_H
 #define NODATA_H
 
-#include <iostream.h>
 #include <assert.h>
 
 #include <ami.h>

@@ -42,8 +42,8 @@
 #define _types_H
 
 #include <limits.h>
-#include <iostream.h>
-
+#include <iostream>
+using namespace std;
 
 
 /* input parameters type */

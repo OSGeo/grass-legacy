@@ -45,8 +45,9 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include <strstream>
 
+#include <sstream>
+using namespace std;
 
 #include "mm_utils.h"
 #include "ami_config.h"  //for SAVE_MEMORY flag
