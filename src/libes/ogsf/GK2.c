@@ -201,10 +201,11 @@ if (NULL == (fp = fopen (name, "w")))
 
 	for (k = Keys; k; k=k->next) {
 
-	fprintf(fp, "{%f {{FromX %f} {FromY %f} {FromZ %f} {DirX %f} {DirY %f} {DirZ %f} {FOV fov} {TWIST twist} {cplane-0 {{pos_x 0.000000} {pos_y 0.000000} {pos_z 0.000000} {blend_type OFF} {rot 0.000000} {tilt 0.000000}}}} keyanimtag%d 0} ", 
+	fprintf(fp, "{%f {{FromX %f} {FromY %f} {FromZ %f} {DirX %f} {DirY %f} {DirZ %f} {FOV %f} {TWIST %f} {cplane-0 {{pos_x 0.000000} {pos_y 0.000000} {pos_z 0.000000} {blend_type OFF} {rot 0.000000} {tilt 0.000000}}}} keyanimtag%d 0} ", 
 	k->pos,
 	k->fields[KF_FROMX], k->fields[KF_FROMY], k->fields[KF_FROMZ],
 	k->fields[KF_DIRX], k->fields[KF_DIRY], k->fields[KF_DIRZ],
+	k->fields[KF_FOV] / 10., k->fields[KF_TWIST],
 	cnt );
 	cnt++;
 	}

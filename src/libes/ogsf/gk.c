@@ -135,13 +135,6 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
     	}
     	#endif
 
-/* Fails ??	
-	if(!GS_get_focus(NULL))
-	{
-*/
-/* Replace View dir with get_focus (center */
-/*	    GS_get_viewdir(tmp); */
-
             GS_get_focus(tmp);
 	    if((mask & KF_DIRX_MASK))
 	    {
@@ -156,8 +149,7 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
 		tmp[Z] = v->fields[KF_DIRZ];
 	    } 
 	    GS_set_focus(tmp);
-/*	    GS_set_viewdir(tmp); */
-/*	} */
+
 	
     	#ifdef KDEBUG
 	{

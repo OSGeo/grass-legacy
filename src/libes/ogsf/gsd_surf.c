@@ -126,6 +126,12 @@ int gsd_surf_map(geosurf *surf)
     int em_src, sh_src, trans_src, col_src, curcolor;
     gsurf_att *ematt, *shatt, *tratt, *coloratt;
 
+
+    /* Viewport variables for accelerated drawing */
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
+    GLint window[4];
+
     #ifdef CALC_AREA
     float sz, mag, tedge1[3], tedge2[3], crossp[3], triv[3][3];
     double asurf=0.0, axsurf=0.0;
@@ -174,6 +180,14 @@ int gsd_surf_map(geosurf *surf)
 
     xcnt =  VCOLS(surf);
     ycnt =  VROWS(surf);
+
+    /* Get viewport */
+    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    /* adjust window */
+    window[0] += (int)(yres*2);
+    window[1] -= (int)(yres*2);
+    window[2] -= (int)(xres*2);
+    window[3] += (int)(xres*2);
 
     gsd_colormode(CM_DIFFUSE);
     gsd_pushmatrix();
@@ -404,7 +418,7 @@ int gsd_surf_map(geosurf *surf)
 	    
 	    if (check_mask)
 	    {
-		if (BM_get(surf->curmask, datacol1, datarow1))\
+		if (BM_get(surf->curmask, datacol1, datarow1))
 		{
 		    /*TL*/
 		    ++zeros; 
@@ -455,8 +469,16 @@ int gsd_surf_map(geosurf *surf)
 		    pt[X] = x1; pt[Y] = y1;
 		    GET_MAPATT(buff, offset, pt[Z]);
 		    pt[Z] *= zexag;
-		
-		    if (check_color)
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
+           
+		  if (check_color)
 		    {
 			curcolor = gs_mapcolor(cobuff, coloratt, offset);
 		    }
@@ -507,7 +529,15 @@ int gsd_surf_map(geosurf *surf)
 		    pt[X] = x1; pt[Y] = y2;
 		    GET_MAPATT(buff, offset, pt[Z]);
 		    pt[Z] *= zexag;
-		
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
+
 		    if (check_color)
 		    {
 			curcolor = gs_mapcolor(cobuff, coloratt, offset);
@@ -560,7 +590,15 @@ int gsd_surf_map(geosurf *surf)
 		pt[X] = x2; pt[Y] = y1;
 		GET_MAPATT(buff, offset, pt[Z]);
 		pt[Z] *= zexag;
-		
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
+
 		if (check_color)
 		{
 		    curcolor = gs_mapcolor(cobuff, coloratt, offset);
@@ -628,6 +666,14 @@ int gsd_surf_map(geosurf *surf)
 		pt[X] = x2; pt[Y] = y2;
 		GET_MAPATT(buff, offset, pt[Z]);
 		pt[Z] *= zexag;
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
 		
 		if (check_color)
 	    	{
@@ -722,6 +768,11 @@ int gsd_surf_const(geosurf *surf, float k)
     int col_src, curcolor;
     gsurf_att *coloratt;
 
+    /* Viewport variables */
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
+    GLint window[4];
+
     int zeros, dr1, dr2, dr3, dr4;
     int datarow1, datacol1, datarow2, datacol2;
 
@@ -756,6 +807,15 @@ int gsd_surf_const(geosurf *surf, float k)
     xcnt =  VCOLS(surf);
     ycnt =  VROWS(surf);
     ymax = (surf->rows - 1) * surf->yres;
+
+   /* Get Viewport */
+   gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    /* adjust window */
+    window[0] += (int)(yres*2);
+    window[1] -= (int)(yres*2);
+    window[2] -= (int)(xres*2);
+    window[3] += (int)(xres*2);
+
 
     gsd_colormode(CM_DIFFUSE);
     gsd_pushmatrix();
@@ -976,6 +1036,14 @@ int gsd_surf_const(geosurf *surf, float k)
 		{
 		    offset = y1off+datacol1; /* TL */
 		    pt[X] = x1; pt[Y] = y1;
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
 		
 		    if (check_color)
 		    {
@@ -995,6 +1063,14 @@ int gsd_surf_const(geosurf *surf, float k)
 		{
 		    offset = y2off+datacol1; /* BL */
 		    pt[X] = x1; pt[Y] = y2;
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
 		
 		    if (check_color)
 		    {
@@ -1015,6 +1091,14 @@ int gsd_surf_const(geosurf *surf, float k)
 	    {
 		offset = y1off+datacol2; /* TR */
 		pt[X] = x2; pt[Y] = y1;
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
 		
 		if (check_color)
 		{
@@ -1034,6 +1118,14 @@ int gsd_surf_const(geosurf *surf, float k)
 	    {
 		offset = y2off+datacol2; /* BR */
 		pt[X] = x2; pt[Y] = y2;
+
+                if (gsd_checkpoint(pt, window, viewport, modelMatrix, projMatrix) )
+                {
+                gsd_endtmesh();
+                cnt = 0;
+                gsd_bgntmesh();
+                continue;
+                }
 		
 		if (check_color)
 		{
