@@ -1,11 +1,7 @@
 #include <curses.h>
-
 #include "dig_menu.h"
-#include "digit.h"
-#include "menu.h"
-#include "head.h"
+#include "../../v.digit/digit.h"
+#include "../../v.digit/menu.h"
 
 
-#include "curses.c"
-
-
+#include "../../v.digit/curses.C"
