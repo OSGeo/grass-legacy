@@ -246,11 +246,13 @@ proc DmVector::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
-    # region
+    # display only in limited region size range
     set row [ frame $frm.region ]
-    LabelEntry $row.a -label "Minimum region" -textvariable DmVector::opt($id,minreg) -width 8
-    LabelEntry $row.b -label "Maximum region" -textvariable DmVector::opt($id,maxreg) -width 8
-    pack $row.a $row.b -side left
+    Label $row.a -text "Display constraints:"
+    LabelEntry $row.b -label "Min" -textvariable DmVector::opt($id,minreg) -width 8
+    LabelEntry $row.c -label "Max" -textvariable DmVector::opt($id,maxreg) -width 8
+    Label $row.d -text "region size"
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 }
 

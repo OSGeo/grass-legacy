@@ -68,7 +68,7 @@ proc DmToolBar::create { tb  } {
     $bbox2 add -image [image create photo -file "$dmpath/add.labels.gif"] \
         -command "Dm::add labels" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Add paint labels (from directory paint/labes)"
+        -helptext "Add paint labels (from directory paint/labels)"
 
     $bbox2 add -image [image create photo -file "$dmpath/add.cmd.gif"] \
         -command "Dm::add cmd" \
