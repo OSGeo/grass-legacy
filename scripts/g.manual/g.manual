@@ -44,7 +44,7 @@ fi
 
 start_browser()
 {
-  if test ! -f "$GISBASE"/docs/html/$1.html -a $1 != "(null)" ; then
+  if test ! -f "$GISBASE"/docs/html/$1.html -a -n $1 ; then
     echo "ERROR: no HTML manual page entry for <$1>."
     exit 1
   else
@@ -55,7 +55,7 @@ start_browser()
 
 start_man()
 {
-  if test ! -f "$GISBASE"/man/man1/$1.1 -a $1 != "(null)" ; then
+  if test ! -f "$GISBASE"/man/man1/$1.1 -a -n $1 ; then
     echo "ERROR: no MAN page entry for <$1>."
     exit 1
   else
