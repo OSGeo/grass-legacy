@@ -5,6 +5,8 @@ x() easting at center of column
 y() northing at center of row
 z() topping at center of depth;
 
+3/2002: Bugfix for segfault from Alfonso Vitti <alfa.v@infinito.it>
+
 ****************************************************************/
 
 extern double G_col_to_easting();
@@ -65,12 +67,11 @@ x_z (argc, argv, cell, ncols)
 {
     double z;
 
-    z=current_region.bottom+0.5*current_region.tb_res;
+    z=current_region.bottom+(0.5+current_depth)*current_region.tb_res;
     
     while (ncols-- > 0)
     {
 	*cell++ = z;
-	z += current_region.tb_res;
     }
 }
 
