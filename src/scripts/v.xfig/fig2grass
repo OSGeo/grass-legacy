@@ -1,0 +1,94 @@
+#!/bin/awk -f
+
+# Name       : fig2grass
+# Version    : 0.3
+# Date       : Mon Jan 25 1999
+# Author     : Jacques Bouchard
+#
+# Description: convert a file in FIG 3.2 format
+#              to an ASCII vector file to be imported in GRASS
+#
+# Usage      : fig2grass [inputfile ...] [> outputfile]
+
+function formerr() {
+    printf "*** WRONG FIG 3.2 FORMAT ! ***\n"
+    exit 1
+}
+
+BEGIN {
+
+    # CUSTOMIZATION PARAMETERS - BEGIN
+
+    x0 = 0.5       # x0, y0 = coordinates (cm) of the map upper left corner
+    y0 = 0.5       # x0, y0 MUST have the same value as in grass2fig
+
+    type[0] = "L"  # These values MUST be coherent with those in grass2fig
+    type[1] = "A"  # If   pen ["L"] =  n  in grass2fig,
+    type[4] = "l"  # then type[ n ] = "L" in fig2grass
+    type[2] = "a"
+
+    # CUSTOMIZATION PARAMETERS - END
+
+    if (ARGC == 1) {
+        ARGC=2
+        ARGV[1]="-"
+    }
+    for (i = 1; i < ARGC; i++) {
+        while (getline <ARGV[i]) {
+            if (NF == 19 && /SCALE=/) {
+                geometry=1
+                scale=substr($14,7,20)
+                west =substr($15,3,20)
+                east =substr($16,3,20)
+                south=substr($17,3,20)
+                north=substr($18,3,20)
+            }
+        }
+        close(ARGV[i])
+    }
+    if (!geometry) {
+        printf "*** No SCALE record has been found ! ***\n"
+        exit 1
+    }
+
+    printf "\
+ORGANIZATION: ?\n\
+DIGIT DATE:   ?\n\
+DIGIT NAME:   ?\n\
+MAP NAME:     Output from fig2grass\n\
+MAP DATE:     ?\n\
+MAP SCALE:    %s\n\
+OTHER INFO:   ?\n\
+ZONE:         ?\n\
+WEST EDGE:    %s\n\
+EAST EDGE:    %s\n\
+SOUTH EDGE:   %s\n\
+NORTH EDGE:   %s\n\
+MAP THRESH:   ?\n\
+VERTI:\n", scale, west, east, south, north
+}
+
+/^[^#]/ && NF > 0 {
+    if (ncoord > 0) {
+        if (NF % 2 != 0 || fact == 0) formerr()
+        for (i = 1; i < NF; i += 2) {
+            x =  ($i - x0) / fact + west
+            y = north - ($(i+1) - y0) / fact
+            printf " %.2f %.2f\n",y,x
+            ncoord --
+        }
+    } else {
+        if (NF == 2 && dpi == 0) {
+            dpi = $1
+            if (dpi == 0) formerr()
+            x0 = x0 / 2.54 * dpi
+            y0 = y0 / 2.54 * dpi
+            fact=100./scale/2.54*dpi
+        } else {
+            if (NF == 16 && $1 == 2) {
+                ncoord = $16
+                printf "%s  %s\n",type[$5],ncoord
+            }
+        }
+    }
+}
