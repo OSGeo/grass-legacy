@@ -19,8 +19,8 @@ double krig_var_est (void)
 
   sum_var_z = 0.0;
   for (i = 0; i < nsearch; i++)
-    sum_var_z += G_get_matrix_element(x, i, 1) * 
-      G_get_matrix_element(sv_to_cell, i, 1);
+    sum_var_z += G_matrix_get_element(x, i, 0) * 
+      G_matrix_get_element(sv_to_cell, i, 0);
   if (sum_var_z < 0)
     sum_var_z = 0;
 

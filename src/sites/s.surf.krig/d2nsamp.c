@@ -33,12 +33,14 @@ dist_to_n_smpls (double new_east, double new_north)
 
   /* Would use G_distance() here if it was behaving. (???) */
 
+  /*
   for( indx = 0; indx < npoints; indx++ ) {
     points[indx].dist = G_distance(points[indx].east,
 				   points[indx].north, new_east, new_north);
   }
+  */
 
-  /* switch(ptype) {
+  switch(ptype) {
   case 0:
     {
       fprintf(stderr, "Projection not defined for location. Aborting.\n");
@@ -69,7 +71,6 @@ dist_to_n_smpls (double new_east, double new_north)
       exit(1);
     }
   }
-  */
   
 
 
@@ -85,40 +86,40 @@ dist_to_n_smpls (double new_east, double new_north)
       if (points[indx].east > new_east && points[indx].north >= new_north
 	  && points[indx].dist > 0)
       {
-	G_set_matrix_element(smpl_dist, cnt, 1, points[indx].dist);
-	G_set_matrix_element(smpl_north, cnt, 1, points[indx].north);
-	G_set_matrix_element(smpl_east, cnt, 1, points[indx].east);
-	G_set_matrix_element(smpl_z, cnt, 1, points[indx].z);
+	G_matrix_set_element(smpl_dist, cnt, 0, points[indx].dist);
+	G_matrix_set_element(smpl_north, cnt, 0, points[indx].north);
+	G_matrix_set_element(smpl_east, cnt, 0, points[indx].east);
+	G_matrix_set_element(smpl_z, cnt, 0, points[indx].z);
 	cnt++;
       }
       /* Search the 2nd quadrant      */
       else if (points[indx].east >= new_east && points[indx].north < new_north
 	       && points[indx].dist > 0)
       {
-	G_set_matrix_element(smpl_dist, cnt, 1, points[indx].dist);
-	G_set_matrix_element(smpl_north, cnt, 1, points[indx].north);
-	G_set_matrix_element(smpl_east, cnt, 1, points[indx].east);
-	G_set_matrix_element(smpl_z, cnt, 1, points[indx].z);
+	G_matrix_set_element(smpl_dist, cnt, 0, points[indx].dist);
+	G_matrix_set_element(smpl_north, cnt, 0, points[indx].north);
+	G_matrix_set_element(smpl_east, cnt, 0, points[indx].east);
+	G_matrix_set_element(smpl_z, cnt, 0, points[indx].z);
 	cnt++;
       }
       /* Search the 3rd quadrant      */
       else if (points[indx].east < new_east && points[indx].north <= new_north
 	       && points[indx].dist > 0)
       {
-	G_set_matrix_element(smpl_dist, cnt, 1, points[indx].dist);
-	G_set_matrix_element(smpl_north, cnt, 1, points[indx].north);
-	G_set_matrix_element(smpl_east, cnt, 1, points[indx].east);
-	G_set_matrix_element(smpl_z, cnt, 1, points[indx].z);
+	G_matrix_set_element(smpl_dist, cnt, 0, points[indx].dist);
+	G_matrix_set_element(smpl_north, cnt, 0, points[indx].north);
+	G_matrix_set_element(smpl_east, cnt, 0, points[indx].east);
+	G_matrix_set_element(smpl_z, cnt, 0, points[indx].z);
 	cnt++;
       }
       /* Search the 4th quadrant      */
       else if (points[indx].east <= new_east && points[indx].north > new_north
 	       && points[indx].dist > 0)
       {
-	G_set_matrix_element(smpl_dist, cnt, 1, points[indx].dist);
-	G_set_matrix_element(smpl_north, cnt, 1, points[indx].north);
-	G_set_matrix_element(smpl_east, cnt, 1, points[indx].east);
-	G_set_matrix_element(smpl_z, cnt, 1, points[indx].z);
+	G_matrix_set_element(smpl_dist, cnt, 0, points[indx].dist);
+	G_matrix_set_element(smpl_north, cnt, 0, points[indx].north);
+	G_matrix_set_element(smpl_east, cnt, 0, points[indx].east);
+	G_matrix_set_element(smpl_z, cnt, 0, points[indx].z);
 	cnt++;
       }
     }

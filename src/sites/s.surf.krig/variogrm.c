@@ -38,28 +38,28 @@ void variogram_model (int model_num, double range, double sill,
     {
       for (i = 0; i < nsearch; i++)
 	{
-	  d1 = G_get_matrix_element(smpl_dist, i, 1);
+	  d1 = G_matrix_get_element(smpl_dist, i, 0);
 	  if(d1 > 0.0 && d1 < range)
 	    {
 	      d1 /= range;
-	      G_set_matrix_element(sv_to_cell, i, 1, mid * ((1.5 * d1) -
+	      G_matrix_set_element(sv_to_cell, i, 0, mid * ((1.5 * d1) -
 							    (0.5 * pow(d1, 3.0)))
 				   + nugget);
 	    }
 	  else
-	    G_set_matrix_element(sv_to_cell, i, 1, mid + nugget);
+	    G_matrix_set_element(sv_to_cell, i, 0, mid + nugget);
 
 	  for (j = i + 1; j < nsearch; j++)
 	    {
-	      d1 = G_get_matrix_element(dist_btw_smpl, i, j);
+	      d1 = G_matrix_get_element(dist_btw_smpl, i, j);
 	      if (d1 > 0 && d1 <= range) {
 		d1 /= range;
-		G_set_matrix_element(sv_btw_smpl, i, j, mid * ((1.5 * d1) -
+		G_matrix_set_element(sv_btw_smpl, i, j, mid * ((1.5 * d1) -
 							       (0.5 * pow (d1, 3.0)))
 				     + nugget);
 	      }
 	      else if (d1 > 1.0)
-		G_set_matrix_element(sv_btw_smpl, i, j, mid + nugget);
+		G_matrix_set_element(sv_btw_smpl, i, j, mid + nugget);
 	      else { /* SHOULDN'T GET HERE ? */
 		fprintf(stderr, "Error: Code shouldn't be reached.\n");
 		exit(-1);
@@ -74,12 +74,12 @@ void variogram_model (int model_num, double range, double sill,
     {
       for (i = 0; i < nsearch; i++)
 	{
-	  G_set_matrix_element(sv_to_cell, i, 1, (mid / pow (max_lag, power)) *
-			       pow (G_get_matrix_element(smpl_dist, i, 1), power) + nugget);
+	  G_matrix_set_element(sv_to_cell, i, 0, (mid / pow (max_lag, power)) *
+			       pow (G_matrix_get_element(smpl_dist, i, 0), power) + nugget);
 	  for (j = i + 1; j < nsearch; j++)
 	    {
-	      G_set_matrix_element(sv_btw_smpl, i, j, (mid / pow (max_lag, power)) *
-				   pow (G_get_matrix_element(dist_btw_smpl, i, j), power) + nugget);
+	      G_matrix_set_element(sv_btw_smpl, i, j, (mid / pow (max_lag, power)) *
+				   pow (G_matrix_get_element(dist_btw_smpl, i, j), power) + nugget);
 	    }
 	}
       break;
@@ -90,13 +90,13 @@ void variogram_model (int model_num, double range, double sill,
     {
       for (i = 0; i < nsearch; i++)
 	{
-	  G_set_matrix_element(sv_to_cell, i, 1, 
-			       mid * (1 - exp (-3 * pow (G_get_matrix_element(smpl_dist, i, 1) / range, 2.0)))
+	  G_matrix_set_element(sv_to_cell, i, 0, 
+			       mid * (1 - exp (-3 * pow (G_matrix_get_element(smpl_dist, i, 0) / range, 2.0)))
 			       + nugget);
 	  for (j = i + 1; j < nsearch; j++)
 	    {
-	      G_set_matrix_element(sv_btw_smpl, i, j,  mid * 
-				   (1 - exp (-3 *  pow (G_get_matrix_element(dist_btw_smpl, i, j) 
+	      G_matrix_set_element(sv_btw_smpl, i, j,  mid * 
+				   (1 - exp (-3 *  pow (G_matrix_get_element(dist_btw_smpl, i, j) 
 							/ range, 2.0))) + nugget);
 	    }
 	}
@@ -108,13 +108,13 @@ void variogram_model (int model_num, double range, double sill,
     {
       for (i = 0; i < nsearch; i++)
 	{
-	  G_set_matrix_element(sv_to_cell, i, 1, mid * 
-			       (1 - exp (-G_get_matrix_element(smpl_dist, i, 1) / range)) 
+	  G_matrix_set_element(sv_to_cell, i, 0, mid * 
+			       (1 - exp (-G_matrix_get_element(smpl_dist, i, 0) / range)) 
 			       + nugget);
 	  for (j = i + 1; j < nsearch; j++)
 	    {
-	      G_set_matrix_element(sv_btw_smpl, i, j, mid * 
-				   (1 - exp (-G_get_matrix_element(dist_btw_smpl, i, j) / range))
+	      G_matrix_set_element(sv_btw_smpl, i, j, mid * 
+				   (1 - exp (-G_matrix_get_element(dist_btw_smpl, i, j) / range))
 				   + nugget);
 				   }
 	    }
@@ -126,12 +126,12 @@ void variogram_model (int model_num, double range, double sill,
     {
       for (i = 0; i < nsearch; i++)
 	{
-	  G_set_matrix_element(sv_to_cell, i, 1, (mid / log10 (max_lag)) * 
-			       log10 (G_get_matrix_element(smpl_dist, i, 1)) + nugget);
+	  G_matrix_set_element(sv_to_cell, i, 0, (mid / log10 (max_lag)) * 
+			       log10 (G_matrix_get_element(smpl_dist, i, 0)) + nugget);
 	  for (j = i + 1; j < nsearch; j++)
 	    {
-	      G_set_matrix_element(sv_btw_smpl, i, j, (mid / log10 (max_lag)) *
-				   log10 (G_get_matrix_element(dist_btw_smpl, i, j)) + nugget);
+	      G_matrix_set_element(sv_btw_smpl, i, j, (mid / log10 (max_lag)) *
+				   log10 (G_matrix_get_element(dist_btw_smpl, i, j)) + nugget);
 	    }
 	}
       break;
