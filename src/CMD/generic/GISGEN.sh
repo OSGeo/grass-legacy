@@ -18,8 +18,10 @@ errorlog=error.log
 rm -f $SRC/../$errorlog     # remove old log
 
 # Start a new error log file:
-echo "GRASS GIS compilation log:" > $SRC/../$errorlog
-date >> $SRC/../$errorlog
+echo "GRASS GIS compilation log"  > $SRC/../$errorlog
+echo "-------------------------" >> $SRC/../$errorlog
+STARTTIME=`date`
+echo "Start of compilation: $STARTTIME" >> $SRC/../$errorlog
 
 echo '####################################################################'
 echo "GISGEN                             " `date`
