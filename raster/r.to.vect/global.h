@@ -1,0 +1,137 @@
+/* Global variables: */
+/*    direction     indicates whether we should use fptr or bptr to */
+/*                  move to the "next" point on the line */
+/*    first_read    flag to indicate that we haven't read from input */
+/*                  file yet */
+/*    last_read     flag to indicate we have reached EOF on input */
+/*    cell_name     input cell file name */
+/*    row_length    length of each row of the cell file (i.e., number of */
+/*                  columns) */
+/*    n_rows        number of rows in the cell file */
+/*    row_count     number of the row just read in--used to prevent reading */
+/*                  beyond end of the cell file */
+/*    equivs        pointer to allocated equivalence table made by */
+/*                  write_equiv() */
+/*    areas         pointer to allocated array of area information passed */
+/*                  from bound.c */
+/*    total_areas   number of distinct areas found */
+
+/* Entry points: */
+/*    write_line    write a line out to the digit files */
+/*    write_boundary  write a line out to the digit files */
+/*    write_area    make table of area mappings and write dlg label file */
+
+#ifdef MAIN
+  #define Global
+#else
+  #define Global extern
+#endif
+
+#define BACKWARD 1
+#define FORWARD 2
+#define OPEN 1
+#define END 2
+#define LOOP 3
+
+#define SMOOTH 1
+#define NO_SMOOTH 0
+
+#define CATNUM 0
+#define CATLABEL 1
+
+Global char *cell_name;
+Global char *mapset;
+Global int data_type;
+Global int data_size;
+Global struct Map_info Map;
+Global int input_fd;                 /*    input_fd     input cell file descriptor */
+Global struct line_pnts *Points;
+Global struct line_cats *Cats;
+Global struct Cell_head cell_head;
+
+Global int direction;
+Global int first_read, last_read;
+Global int input_fd;
+Global int row_length, row_count, n_rows;
+Global int total_areas;
+
+Global int smooth_flag;  /* this is 0 for no smoothing, 1 for smoothing of lines */
+Global int value_flag;    /* use raster values as categories */
+
+Global struct Categories RastCats;
+Global int has_cats;     /* Category labels available */
+Global struct field_info *Fi;
+Global dbDriver *driver;
+Global dbString sql, label;
+
+struct COOR
+{
+  struct COOR *bptr, *fptr;		/* pointers to neighboring points */
+  int row, col, node;			/* row, column of point; node flag */
+  CELL right, left;			/* areas to right and left of line */
+
+};
+
+struct line_hdr
+{
+  struct COOR *left;
+  struct COOR *right;
+  struct COOR *center;
+};
+
+#define NULPTR ((struct COOR *) NULL)
+
+/* area_table - structure to store stuff associated with each */
+/* area number */
+
+struct area_table
+{
+  int free;				/* this entry is not taken yet */
+  CELL cat;				/* category number for this area */
+  int row;				/* row and column of point where the */
+  int col;				/*   area is widest */
+  int width;				/*   and width there */
+};
+
+/* equiv_table - structure in which to compile equivalences between area */
+/* numbers */
+
+struct equiv_table
+{
+  int mapped;				/* is this area number mapped? */
+  int where;				/* if so, where */
+  int count;				/* if not, number mapped here */
+  int length;
+  int *ptr;				/*   and pointer to them */
+};
+
+
+/* lines.c */
+int alloc_lines_bufs(int);
+int extract_lines(void);
+
+/* lines_io.c */
+int write_line(struct COOR *seed);
+
+/* areas.c */
+int alloc_areas_bufs(int);
+int extract_areas(void);
+int more_equivs(void);
+
+/* areas_io.c */
+int write_boundary(struct COOR *seed);
+int write_area(struct area_table *, struct equiv_table *, int, int);
+    
+/* points.c */
+int extract_points(void);
+
+/* util.c */
+struct COOR *move(struct COOR *);
+struct COOR *find_end(struct COOR *, int, int *, int *);
+int at_end(struct COOR *);
+int read_row (void *);
+int blank_line(void *buf);
+
+void *xmalloc(int, char *);
+int xfree(void *, char *);
+void *xrealloc(char *, int, char *);
