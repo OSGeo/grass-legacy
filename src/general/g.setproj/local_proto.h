@@ -35,3 +35,6 @@ int leave(int);
 int init_table(void);
 int get_proj_index(char *);
 int init_unit_table(void);
+
+/* get_datum.c */
+int ask_datum(char *);
