@@ -8,7 +8,6 @@ SUBDIRS = \
 	v.category \
 	v.clean \
 	v.convert \
-	v.database \
 	v.db.connect \
 	v.digit \
 	v.distance \
