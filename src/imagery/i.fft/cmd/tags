@@ -1,0 +1,9 @@
+Mfftmain	fftmain.c	/^main(argc,argv)$/
+Mifftmain	ifftmain.c	/^main(argc,argv)$/
+do_histogram	do_histogram.c	/^do_histogram (name, mapset)$/
+fft	fft.c	/^fft(i_sign,DATA,NN,dimc,dimr)$/
+fft_colors	fft_colors.c	/^fft_colors()$/
+get_orig_window	orig_wind.c	/^int get_orig_window(hd, rmapset, imapset)$/
+max_pow2	fftmain.c	/^long max_pow2(n)$/
+put_orig_window	orig_wind.c	/^put_orig_window(hd)$/
+save_fft	save_fft.c	/^save_fft(total, data, maximum, minimum)$/
