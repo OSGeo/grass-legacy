@@ -16,9 +16,11 @@ dig:vect:vector:binary vector files
   dig_att:attributes
   dig_plus:topology
   dig_cats:category
+  dig_misc:misc
   reg:point registration
 icons:icon:icon:paint icon files
 paint/labels:labels:label:paint label files
 site_lists:sites:site list:site list files
 windows:region:region definition:region definition files
 group:group:imagery group:imagery group files
+3d.view:3dview:3D viewing parameters:3D view parameters
