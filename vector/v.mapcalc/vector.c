@@ -1,6 +1,7 @@
 #define _ISOC99_SOURCE			/* to get isfinite() */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "list.h"
 #include "mapcalc.h"
