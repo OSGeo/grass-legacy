@@ -1,0 +1,132 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.grid                                       make.grid
+            
+            
+            NAME 
+            make.grid - Draws a latitude/longitude coordinate grid
+            system on the map composition.
+            
+            SYNOPSIS
+            make.grid [filename]
+            
+            DESCRIPTION 
+            make.grid generates a latitude/longitude coordinate grid 
+            system for the map composition using the data window.  The
+            user designs the appearance of the grid by responding to a
+            series of questions regarding the use of grid lines or
+            ticks, major and minor subdivisions of the grid, and
+            descriptions for the grid annotation text.  If given,
+            [filename] is used for the name of the overlay file
+            generated.
+            
+            The user is required to provide the following:
+            
+                 - map definition
+                 - overlay file name (if not specified on the command
+                      line)
+                 - text/character font
+                 - plotter pen number
+                 - text/character size
+                 - offset distance for annotation
+                 - sides to show annotation
+                 - major/minor grid intervals
+                 - tick sizes
+                      - use of lines or ticks
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the misc directory; graphic elements to draw
+            the map on the screen or plotter are stored in the ovm 
+            directory.  The default file name for both directories is
+            grid.
+            
+            Changing the appearance of the grid (e.g. intervals,
+            text/character size, etc.) can be done by regenerating the
+            make.grid command and overwriting the initial file, or by
+            editing the text definition file, then executing it
+            directly, or by using the redo.misc command.
+            
+                 (edit) example:          vi misc/[filename]
+                                          vi misc/grid 
+            
+            Information entered through the interactive make.grid 
+            command has been reformatted to meet the requirements of the
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.grid                                       make.grid 
+
+
+
+            MAPGEN command grid, prefacing the element characteristics  
+            with options for the grid command.  All options available in 
+            the grid command are available for use in the GRASS-MAPGEN 
+            Interface.  Commonly used grid options associated with 
+            making grids are:
+                 
+                 -f (font/style) [font=-alphanumeric]
+                 -b (linework pen) [plotter pen location=value]
+                 -c (character pen) [plotter pen location=value]
+                 -d (offset distance) [centimeter=value] 
+                 -s (size) [centimeter=value]
+                 -a (annotation) [top=t][bottom=b][left=l][right=r] 
+                 -(m|p)i (major meridian/parallel intervals) [dms]
+                 -(m|p)j (minor intervals) [value]
+                 -(m|p)u (ticks instead of lines) [centimeter=value]
+                 -(m|p)v (minor grid tick size) [centimeter=value]
+            
+            
+            EXAMPLE 
+            The file misc/grid will construct a 2-1/2 minute major 
+            interval of parallels and meridians.  There are no minor
+            intervals; the tick size is .2 cm and the major grid lines
+            have been generated as ticks .2 cm.  The linework and
+            character annotation have been plotted with the pen in
+            position one on the plotter.  The annotation is positioned
+            .125 cm from the ticks, .125 cm in height, and is shown on
+            all sides of the data window.  The text font used for
+            character annotation is the default font (sr).
+            
+                 grid -m map.def -o ovm/grid << EOF
+                 -f -
+                 -b 1
+                 -c 1
+                 -d .125
+                 -s .125
+                 -pi 2'30 -mi 2'30
+                 -pj 1 -mj 1
+                 -pv .2 -mv .2
+                 -pu .2 -mu .2
+                 -a tblr
+                 EOF
+            
+            NOTE 
+            The MAPGEN grid command draws the grid to the full extents 
+            of the maps data window.
+            
+            If only one map element will be drawn on the map
+            composition, the default selection for the file name is
+            recommended for use.
+            
+            The delete key will abort the make.grid command.
+
+                                   APPENDIX I                    3
+                              GRASS-MAPGEN User's Guide
+            make.grid                                       make.grid
+
+
+            
+            SEE ALSO 
+                 grid           User Manual for MAPGEN (UNIX Version),
+                                USGS, p. 23.
+                 TASK 10        GRASS-MAPGEN User's Guide, USDA-SCS. 
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I, 
+                                USDA-SCS.
+                 redo.misc      (Same)
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
