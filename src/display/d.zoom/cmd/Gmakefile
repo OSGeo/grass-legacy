@@ -5,7 +5,8 @@ LIST   = main.o \
 	 box.o\
 	 center.o\
 	 returns.o \
-	 zoom.o
+	 zoom.o \
+	 redraw.o
 
 $(BIN_MAIN_CMD)/d.zoom: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
