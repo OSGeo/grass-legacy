@@ -28,13 +28,8 @@ proc DmVector::legend { id } {
     set y2  [expr $yc + $size / 2 + 1 ]
 
     if { $opt($id,type_point) || $opt($id,type_centroid) } {
-	if { $opt($id,icon) == "cross" } {
-	    $leg create line $x1 $yc $x2 $yc -fill $opt($id,color)
-	    $leg create line $xc $y1 $xc $y2 -fill $opt($id,color)
-	} 
-        if { $opt($id,icon) == "box" } {
-	    $leg create rectangle $x1 $y1 $x2 $y2 -outline $opt($id,color)
-	}
+        $leg create line $x1 $yc $x2 $yc -fill $opt($id,color)
+	$leg create line $xc $y1 $xc $y2 -fill $opt($id,color)
     }
     # line    
     if { $opt($id,type_line) || $opt($id,type_boundary) || $opt($id,type_face) } {
@@ -194,9 +189,10 @@ proc DmVector::options { id frm } {
 
     # point icon / size
     set row [ frame $frm.icon ]
-    ComboBox $row.a -label "Icon:" \
-                    -width 5  -textvariable DmVector::opt($id,icon) \
-                    -values {"cross" "box"} -modifycmd "DmVector::legend $id"
+    ComboBox $row.a -label "Symbol:" \
+                    -width 20  -textvariable DmVector::opt($id,icon) \
+                    -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
+                    -modifycmd "DmVector::legend $id"
     Label $row.b -text "Size:" 
     SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,size) \
                    -width 2 -helptext "Icon size" -modifycmd "DmVector::legend $id"

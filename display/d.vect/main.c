@@ -13,6 +13,7 @@
 #include "Vect.h"
 #include "colors.h"
 #include "plot.h"
+#include "symbol.h"
 #include "dbmi.h"
 #include "local_proto.h"
 
@@ -27,7 +28,7 @@ main (int argc, char **argv)
 	int chcat = 0;
 	int color, fcolor, r, g, b;
 	int colornum = MAX_COLOR_NUM;
-	int icon, size;
+	int size;
 	char map_name[128] ;
 	struct GModule *module;
 	struct Option *map_opt, *color_opt, *fcolor_opt;
@@ -49,6 +50,7 @@ main (int argc, char **argv)
 	struct Cell_head window;
 	BOUND_BOX box;
 	double overlap;
+	SYMBOL *Symb;
 	
 	module = G_define_module();
 	module->description =
@@ -80,8 +82,7 @@ main (int argc, char **argv)
 	icon_opt->type       = TYPE_STRING ;
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
-	icon_opt->answer     = "cross" ;
-	icon_opt->options    = "cross,box";
+	icon_opt->answer     = "basic/cross" ;
 	icon_opt->description= "Point and centroid symbol" ;
 	
 	size_opt = G_define_option() ;
@@ -175,26 +176,29 @@ main (int argc, char **argv)
 	/* Read map options */
 	strcpy(map_name, map_opt->answer);
 	color = WHITE;
-	if ( G_str_to_color(color_opt->answer, &r, &g, &b) ) {
+	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
+	if ( ret == 1 ) {
 	    colornum++;
 	    R_reset_color (r, g, b, colornum); 
 	    color = colornum;
+	} else if ( ret == 2 ) { /* none */
+	    color = -1;
 	}
 	fcolor = WHITE;
-	if ( G_str_to_color(fcolor_opt->answer, &r, &g, &b) ) {
+	ret = G_str_to_color(fcolor_opt->answer, &r, &g, &b);
+        if ( ret == 1 ) {
 	    colornum++;
 	    R_reset_color (r, g, b, colornum); 
 	    fcolor = colornum;
+	} else if ( ret == 2 ) { /* none */
+	    fcolor = -1;
 	}
 	quiet = !_quiet->answer;
 
-	icon = G_ICON_CROSS;
-	if ( strcmp (icon_opt->answer, "cross") == 0 )
-	    icon = G_ICON_CROSS;
-	else if ( strcmp (icon_opt->answer, "box") == 0 )
-	    icon = G_ICON_BOX;
-
 	size = atoi (size_opt->answer);
+	Symb = S_read ( icon_opt->answer );
+        if ( Symb == NULL ) G_warning ("Cannot read symbol, cannot display points");
+	else S_stroke ( Symb, size, 0, 0 );
 
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, "") ; 
@@ -379,14 +383,16 @@ main (int argc, char **argv)
 	    if ( id_flag->answer && level < 2 ) {
 		G_warning ("Cannot display lines by id, topology not available");
 	    } else {
-	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, icon, size, (int) id_flag->answer );
+	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer );
 	    }
 	}
 
-        R_color(color);
-	if ( display & DISP_DIR )
-	    stat = dir ( &Map, type, Clist, chcat );
-	
+	if ( color > -1 ) {
+	    R_color(color);
+	    if ( display & DISP_DIR )
+		stat = dir ( &Map, type, Clist, chcat );
+	}
+
 	if ( display & DISP_CAT )
 	    stat = label ( &Map, type, area, Clist, &lattr, chcat);
 	
@@ -395,10 +401,10 @@ main (int argc, char **argv)
 
 	if ( display & DISP_ZCOOR )
 	    stat = zcoor ( &Map, type, &lattr);
-
+	
 	if ( display & DISP_TOPO ) {
 	    if (level >= 2 )
-	        stat = topo ( &Map, type, area, &lattr);
+		stat = topo ( &Map, type, area, &lattr);
 	    else
 		G_warning ("Cannot display topology, not available");
 	}

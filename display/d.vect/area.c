@@ -61,20 +61,24 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    Vect_append_point ( Points, xl, yl, 0 ); /* ??? */
 	}
 	
-        R_color(fcolor) ;
-	G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	if ( fcolor > -1 ) {
+            R_color(fcolor) ;
+	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	}
 	
 	/* boundary */
-	Vect_get_area_points ( Map, area, Points );   
-        R_color(bcolor) ;
-	for ( i = 0; i < Points->n_points - 1; i++) { 
-            G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
-	}
-        for ( i = 0; i < n_isles; i++) {
-	    isle = Vect_get_area_isle ( Map, area, i );   
-	    Vect_get_isle_points ( Map, isle, Points );
-	    for ( j = 0; j < Points->n_points - 1; j++) { 
-		G_plot_line (Points->x[j], Points->y[j], Points->x[j+1], Points->y[j+1]);
+	if ( bcolor > -1 ) {
+	    Vect_get_area_points ( Map, area, Points );   
+	    R_color(bcolor) ;
+	    for ( i = 0; i < Points->n_points - 1; i++) { 
+		G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
+	    }
+	    for ( i = 0; i < n_isles; i++) {
+		isle = Vect_get_area_isle ( Map, area, i );   
+		Vect_get_isle_points ( Map, isle, Points );
+		for ( j = 0; j < Points->n_points - 1; j++) { 
+		    G_plot_line (Points->x[j], Points->y[j], Points->x[j+1], Points->y[j+1]);
+		}
 	    }
 	}
     }
