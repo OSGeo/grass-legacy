@@ -51,7 +51,7 @@ parse_command_line (int argc, char *argv[])
 				 "\tlength - line length\n"
 				 "\tcount - number of features for each category\n"
 				 "\tcoor - point coordinates\n"
-				 "\tsides - categories of areas on the left and right side of the boundary, "
+				 "\tsides - categories of areas on the left and right side of the boundary,\n"
     					   "\t\t'qfield' is used for area category.\n"
 				 "\tquery - result of a database query for all records of the geometry\n"
 				           "\t\t(or geometries) from table specified by 'qfield' option";	
