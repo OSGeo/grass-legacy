@@ -25,10 +25,6 @@
 
 trap "echo 'User break!' ; exit" 2 3 15
 
-# Set the GRASS_PERL variable
-GRASS_PERL=PERL_COMMAND
-export GRASS_PERL
-
 # Get the command name
 CMD_NAME=`basename "$0"`
 
@@ -130,31 +126,6 @@ fi
 
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
-
-# Set LD_LIBRARY_PATH.  For GRASS we don't depend on this much, though
-# r.in.gdal may use it to find some things.  Over time we intend to put
-# more GRASS related shared libraries in $GISBASE/lib.
-# first search local libs, then in GRASS lib/
-#
-# MacOSX wants it's private solution:
-if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" ] ; then
-  if [ ! "$DYLD_LIBRARY_PATH" ] ; then
-    DYLD_LIBRARY_PATH=$GISBASE/lib
-    export DYLD_LIBRARY_PATH
-  else
-    DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$GISBASE/lib
-    export DYLD_LIBRARY_PATH
-  fi
-else
-  if [ ! "$LD_LIBRARY_PATH" ] ; then
-    LD_LIBRARY_PATH=$GISBASE/lib
-    export LD_LIBRARY_PATH
-  else
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
-    export LD_LIBRARY_PATH
-  fi
-fi
-   
 
 # Check for concurrent use
 "$ETC/lock" "$lockfile" $$
