@@ -1,5 +1,4 @@
-PGM = r.linear.regression
-HOME = $(BIN_CONTRIB_CMD)
+PGM = $(BIN_CONTRIB_CMD)/r.linear.regression
 LIST = 	main.o\
 	utils.o \
 	read_data.o\
@@ -21,7 +20,7 @@ LIST = 	main.o\
 	tscore.o\
 	errfun.o
 
-./$(PGM): $(LIST) $(GISLIB)
+$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): # 
