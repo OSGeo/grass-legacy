@@ -78,6 +78,18 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 int
 Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, char *db, char *driver )
 {
+    int i;
+    
+    /* Check if field already exists */
+    for (i = 0; i < p->n_fields; i++) {
+        if ( p->field[i].number == number || 
+	     ( name != NULL && strlen(name) > 0 && strcmp(name, p->field[i].name) == 0  ) )
+	{
+            G_warning ("Field number or name already exists");
+	    return -1;
+	}
+    }
+    
     if ( p->n_fields == p->alloc_fields ) {
        p->alloc_fields += 10;
        p->field = ( struct field_info *) G_realloc ( (void *) p->field, 
