@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
     }
     if (write(lock, &lockpid, sizeof lockpid) != sizeof lockpid)
     {
-	fprintf (stderr, "%s: can't write lockfile %s\n", argv[0], file);
+	fprintf (stderr, "%s: can't write lockfile %s (disk full? Permissions?)\n", argv[0], file);
 	exit(-1);
     }
     close (lock);
