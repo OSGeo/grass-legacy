@@ -1,0 +1,12 @@
+PGM = corridor 
+LIBES = $(DISPLAYLIB) $(GISLIB)
+
+SOURCES =   corridor.c dialog.c process_map.c dispatche.c  main.c
+
+OBJECTS =    corridor.o dialog.o process_map.o dispatche.o  main.o 
+
+$(BIN)/$(PGM):  $(OBJECTS)  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBES) -lXaw -lXt -lX $(MATHLIB)
+
+
+$(LIBES): #
