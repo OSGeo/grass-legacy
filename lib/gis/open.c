@@ -142,15 +142,61 @@ int G__open (
     return -1;
 }
 
+
+/*!
+ * \brief open a new database file
+ *
+ * The database file <b>name</b> under the <b>element</b> in the
+ * current mapset is created and opened for writing (but not reading).
+ * The UNIX open( ) routine is used to open the file. If the file does not exist,
+ * -1 is returned. Otherwise the file is positioned at the end of the file and
+ * the file descriptor from the open( ) is returned.
+ *
+ *  \param element
+ *  \param name
+ *  \return int
+ */
+
 int G_open_new (char *element,char *name)
 {
     return G__open (element, name, G_mapset(), 1);
 }
 
+
+/*!
+ * \brief open a database file for reading
+ *
+ * The database file <b>name</b> under the
+ * <b>element</b> in the specified <b>mapset</b> is opened for reading (but
+ * not for writing).
+ * The UNIX open( ) routine is used to open the file. If the file does not exist,
+ * -1 is returned. Otherwise the file descriptor from the open( ) is returned.
+ *
+ *  \param element
+ *  \param name
+ *  \param mapset
+ *  \return int
+ */
+
 int G_open_old (char *element,char *name,char *mapset)
 {
     return G__open (element, name, mapset, 0);
 }
+
+
+/*!
+ * \brief open a database file for update
+ *
+ * The database file <b>name</b> under the <b>element</b> in the
+ * current mapset is opened for reading and writing.
+ * The UNIX open( ) routine is used to open the file. If the file does not exist,
+ * -1 is returned. Otherwise the file is positioned at the end of the file and
+ * the file descriptor from the open( ) is returned.
+ *
+ *  \param element
+ *  \param name
+ *  \return int
+ */
 
 int G_open_update (char *element,char *name)
 {
@@ -159,6 +205,22 @@ int G_open_update (char *element,char *name)
     if (fd >= 0) lseek (fd, 0L, 2);
     return fd;
 }
+
+
+/*!
+ * \brief open a new database file
+ *
+ * The database file <b>name</b> under the <b>element</b> in the
+ * current mapset is created and opened for writing (but not reading).
+ * The UNIX fopen( ) routine, with "w" write mode, is used to open the file.  If
+ * the file does not exist, the NULL pointer is returned. Otherwise the file is
+ * positioned at the end of the file and the file descriptor from the fopen( ) is
+ * returned.
+ *
+ *  \param element
+ *  \param name
+ *  \return FILE * 
+ */
 
 FILE *G_fopen_new (char *element,char *name)
 {
@@ -170,6 +232,23 @@ FILE *G_fopen_new (char *element,char *name)
 
     return fdopen (fd, "w");
 }
+
+
+/*!
+ * \brief open a database file for reading
+ *
+ * The database file <b>name</b> under the
+ * <b>element</b> in the specified <b>mapset</b> is opened for reading (but
+ * not for writing).
+ * The UNIX fopen( ) routine, with "r" read mode, is used to open the file.  If
+ * the file does not exist, the NULL pointer is returned. Otherwise the file
+ * descriptor from the fopen( ) is returned.
+ *
+ *  \param element
+ *  \param name
+ *  \param mapset
+ *  \return FILE * 
+ */
 
 FILE *
 G_fopen_old (char *element,char *name,char *mapset)

@@ -1,5 +1,4 @@
 /*
-* $Id$
 *
 *****************************************************************************
 *
@@ -336,6 +335,22 @@ void G_set_d_null_value (DCELL *dcellVals, int numVals)
 *   	    	data_type   =>	type of raster - CELL, FCELL, DCELL
 * RETURN VAL:	TRUE if raster value is NULL FALSE otherwise
 *****************************************************************************/
+
+/*!
+ * \brief 
+ *
+ * If the <em>data_type</em> is CELL_TYPE, calls G_is_c_null_value ((CELL *)
+ * rast);
+ * If the <em>data_type</em> is FCELL_TYPE, calls G_is_f_null_value ((FCELL
+ * *) rast);
+ * If the <em>data_type</em> is DCELL_TYPE, calls G_is_d_null_value ((DCELL
+ * *) rast);
+ *
+ *  \param rast
+ *  \param data_type
+ *  \return int
+ */
+
 int G_is_null_value (const void *rast, RASTER_MAP_TYPE data_type)
 {
     switch(data_type)
@@ -356,12 +371,24 @@ int G_is_null_value (const void *rast, RASTER_MAP_TYPE data_type)
 }
 
 /****************************************************************************
+* 
 * int G_is_c_null_value (CELL *cellVal)
 *
 * PURPOSE: 	To check if a CELL raster value is set to NULL
 * INPUT VARS:	cellVal    =>	CELL raster value to check
 * RETURN VAL:	TRUE if CELL raster value is NULL FALSE otherwise
 *****************************************************************************/
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if <em>cell</em> is
+ * NULL, 0 otherwise. This will test if the value <em>cell</em> is the largest <tt>int</tt>.
+ *
+ *  \param cell
+ *  \return int
+ */
+
 int G_is_c_null_value (const CELL *cellVal)
 {
     int     i;	    /* counter */
@@ -386,12 +413,36 @@ int G_is_c_null_value (const CELL *cellVal)
 }
 
 /****************************************************************************
+* 
 * int G_is_f_null_value (FCELL *fcellVal)
 *
 * PURPOSE: 	To check if a FCELL raster value is set to NULL
 * INPUT VARS:	fcellVal    =>	FCELL raster value to check
 * RETURN VAL:	TRUE if FCELL raster value is NULL FALSE otherwise
 *****************************************************************************/
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if <em>fcell</em>
+ * is NULL, 0 otherwise. This will test if the value <em>fcell</em> is a NaN. It
+ * isn't good enough to test for a particular NaN bit pattern since the machine
+ * code may change this bit pattern to a different NaN. The test will be
+ \code
+  if(fcell==0.0) return 0;
+  if(fcell>0.0) return 0;
+  if(fcell<0.0) return 0;
+  return 1;
+ \endcode
+ * or (as suggested by Mark Line)
+ \code
+  return (fcell != fcell);
+ \endcode
+ *
+ *  \param fcell
+ *  \return int
+ */
+
 int G_is_f_null_value (const FCELL *fcellVal)
 {
     int     i;	    /* counter */
@@ -416,12 +467,25 @@ int G_is_f_null_value (const FCELL *fcellVal)
 }
 
 /****************************************************************************
+* 
 * int G_is_d_null_value (DCELL *dcellVal)
 *
 * PURPOSE: 	To check if a DCELL raster value is set to NULL
 * INPUT VARS:	dcellVal    =>	DCELL raster value to check
 * RETURN VAL:	TRUE if DCELL raster value is NULL FALSE otherwise
 *****************************************************************************/
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if <em>dcell</em> is
+ * NULL, 0 otherwise. This will test if the value <em>dcell</em> is a NaN. Same
+ * test as in <tt>G_is_f_null_value()</tt>.
+ *
+ *  \param dcell
+ *  \return int
+ */
+
 int G_is_d_null_value (const DCELL *dcellVal)
 {
     int     i;	    /* counter */
@@ -446,6 +510,7 @@ int G_is_d_null_value (const DCELL *dcellVal)
 }
 
 /****************************************************************************
+* 
 * int G_insert_null_values (void *rast, char *null_row, int ncols,
 *   RASTER_MAP_TYPE data_type)
 *
@@ -456,6 +521,24 @@ int G_is_d_null_value (const DCELL *dcellVal)
 *   	    	data_type   =>	type of raster - CELL, FCELL, DCELL
 * RETURN VAL:	??
 *****************************************************************************/
+
+/*!
+ * \brief Insert NULL value
+ *
+ * If the <em>data_type</em> is
+ * CELL_TYPE, calls G_insert_c_null_values ((CELL *) rast, flags, count);
+ * If the <em>data_type</em> is FCELL_TYPE, calls G_insert_f_null_values
+ * ((FCELL *) rast, flags, count);
+ * If the <em>data_type</em> is DCELL_TYPE, calls G_insert_d_null_values
+ * ((DCELL *) rast, flags, count);
+ *
+ *  \param rast
+ *  \param flags
+ *  \param count
+ *  \param data_type
+ *  \return int
+ */
+
 int G_insert_null_values (void *rast, char *null_row, int ncols,
     RASTER_MAP_TYPE data_type)
 {
@@ -463,6 +546,7 @@ int G_insert_null_values (void *rast, char *null_row, int ncols,
 }
 
 /****************************************************************************
+* 
 * int G_insert_c_null_values (CELL *cellVal, char *null_row, int ncols)
 *
 * PURPOSE: 	To insert null values into a CELL map. Needs more.....
@@ -471,12 +555,26 @@ int G_insert_null_values (void *rast, char *null_row, int ncols,
 *   	    	ncols	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
+
+/*!
+ * \brief Insert CELL NULL value
+ *
+ * For each of the <em>count</em> <em>flags</em>
+ * which is true(!=0), set the corresponding <em>cell</em> to the NULL value.
+ *
+ *  \param cell
+ *  \param flags
+ *  \param count
+ *  \return int
+ */
+
 int G_insert_c_null_values (CELL *cellVal, char *null_row, int ncols)
 {
     return (EmbedGivenNulls((void *) cellVal, null_row, CELL_TYPE, ncols));
 }
 
 /****************************************************************************
+* 
 * int G_insert_f_null_values (FCELL *fcellVal, char *null_row, int ncols)
 *
 * PURPOSE: 	To insert null values into a FCELL map. Needs more.....
@@ -485,12 +583,26 @@ int G_insert_c_null_values (CELL *cellVal, char *null_row, int ncols)
 *   	    	ncols	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
+
+/*!
+ * \brief Insert FCELL NULL value
+ *
+ * For each of the <em>count</em> <em>flags</em>
+ * which is true(!=0), set the corresponding <em>fcell</em> to the NULL value.
+ *
+ *  \param fcell
+ *  \param flags
+ *  \param count
+ *  \return int
+ */
+
 int G_insert_f_null_values (FCELL *fcellVal, char *null_row, int ncols)
 {
     return (EmbedGivenNulls((void *) fcellVal, null_row, FCELL_TYPE, ncols));
 }
 
 /****************************************************************************
+* 
 * int G_insert_d_null_values (DCELL *dcellVal, char *null_row, int ncols)
 *
 * PURPOSE: 	To insert null values into a DCELL map. Needs more.....
@@ -499,6 +611,19 @@ int G_insert_f_null_values (FCELL *fcellVal, char *null_row, int ncols)
 *   	    	ncols	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
+
+/*!
+ * \brief Insert DCELL NULL value
+ *
+ * For each for the <em>count</em> <em>flag</em>
+ * which is true(!=0), set the corresponding <em>dcell</em> to the NULL value.
+ *
+ *  \param dcell
+ *  \param flags
+ *  \param count
+ *  \return int
+ */
+
 int G_insert_d_null_values (DCELL *dcellVal, char *null_row, int ncols)
 {
     return (EmbedGivenNulls((void *) dcellVal, null_row, DCELL_TYPE, ncols));

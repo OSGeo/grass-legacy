@@ -1,5 +1,4 @@
 /******************************************************************************
- * $Id$
  *
  * Project:  libgrass
  * Purpose:  Function to create a new location automatically given a 
