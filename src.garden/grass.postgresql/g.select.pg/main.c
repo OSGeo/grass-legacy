@@ -75,6 +75,11 @@ char **argv ;
 	listdb(pghost->answer);
 	exit(0) ;
 	}
+
+  if(!opt1->answer){
+	  opt1->answer=getenv("USER");
+  }
+
      hit=getdbname(opt1->answer);
   
   if (hit == 0)
