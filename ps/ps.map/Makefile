@@ -3,7 +3,7 @@ MODULE_TOPDIR = ../..
 PGM=ps.map
 PROLOG=$(ETC)/paint/prolog.ps
 
-LIBES     = $(VECTLIB) $(GPROJLIB) $(SYMBLIB) $(GISLIB) $(DATETIMELIB) $(IMAGERYLIB) $(VASKLIB) $(CURSES)
+LIBES     = $(VECTLIB) $(GPROJLIB) $(SYMBLIB) $(GISLIB) $(DATETIMELIB) $(IMAGERYLIB) $(VASKLIB) $(CURSES) $(GMATHLIB)
 DEPENDENCIES = $(VECTDEP) $(SYMBDEP) $(GISDEP) $(DATETIDEP) $(IMAGERYDEP) $(VASKDEP) $(GMATHDEP) \
                colortable.h group.h labels.h map_info.h ps_info.h vector.h \
                comment.h header.h local_proto.h
