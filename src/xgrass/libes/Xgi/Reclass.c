@@ -17,6 +17,7 @@
 #include <Xm/Frame.h>
 #include <Xm/Form.h>
 #include <Xm/DialogS.h>
+#include "XmLinux.h"
 
 #include <stdio.h>
 #include <ctype.h>
