@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 /*
 
    Chris Rewerts, Agricultural Engineering, Purdue University
@@ -8,7 +7,7 @@
    cell layer's data that we can read and write to
    randomly. We also get the original cell layer's 
    other pertinent data (colr, cats) into memory
-   since we'd loose it otherwise
+   since we'd lose it otherwise
 
 */
 
@@ -21,7 +20,7 @@ make_temporary_file()
     CELL *cell;
     int cellfd;
     int tmpfd;
-    int row, col;
+    int row;
     char line[200];
 
     G_set_window(&real_window);
