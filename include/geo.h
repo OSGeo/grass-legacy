@@ -1,12 +1,12 @@
-#include <ctype.h>
-#include <stdio.h>
+#ifndef GEO_H_ 
+#define GEO_H_ 1
 
 /* exit codes */
-#define SP_FATAL     1	 [ G_fata_error () returns 1 ]
+#define SP_FATAL     1	 /* [ G_fatal_error () returns 1 ] */
 #define SP_NOCHANGE  2
 #define SP_UNKOWN    3
 
-#define NUNITS 12
+#define NUNITS 16
 #define UNIT_LENGTH 30
 
 #define LL       0
@@ -148,8 +148,8 @@
 #define LATHIGH  9
 
 /* LONSTUFF -180 <> 180 */
-#define LONLOW   8
-#define LON0     9
+#define LONLOW   OLATP    /* 8 */
+#define LON0     LATHIGH  /* 9 */
 #define LON1    10
 #define OLON1   11
 #define LON2    12
@@ -164,8 +164,8 @@
 #define LONHIGH 21
 
 /* DECIMAL DEGREES */
-#define FLOLOW  20
-#define AZIM    21
+#define FLOLOW  THETA    /* 20 */
+#define AZIM    LONHIGH  /* 21 */
 #define TILT    22
 
 /* FLOATS */
@@ -181,15 +181,15 @@
 #define FLOHIGH 32
 
 /* INTEGERS */
-#define INTLOW  31
-#define ZONE    32
+#define INTLOW  Y0       /* 31 */
+#define ZONE    FLOHIGH  /* 32 */
 #define SNUM    33
 #define SPATH   34
 #define INTHIGH 35
 
 /* BOOLEAN */
-#define BOOLOW  34
-#define GUAM    35
+#define BOOLOW  SPATH    /* 34 */
+#define GUAM    INTHIGH  /* 35 */
 #define LOTSA   36
 #define NOCUT   37
 #define NODEFS  38
@@ -210,11 +210,13 @@
 
 #define RADIUS_DEF 6370997.
 
-int ier, proj_index, zone, snum, spath;
+#if 0
+extern int ier, proj_index, zone, snum, spath;
 
-double radius, kfact, mfact, msfact, nfact, qfact, wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
+extern double radius, kfact, mfact, msfact, nfact, qfact, wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
 
 double prompt_num_double();
+#endif
 
 struct opt_req {
 	int ask;
@@ -228,21 +230,25 @@ struct conv_fact {
 	double fact;
 };
 
-
+#if 0
 struct used_opt {
 	int was;
 	double val;
 };
 
-struct used_opt USED_in[NOPTIONS];
-struct used_opt USED_out[NOPTIONS];
+extern struct used_opt USED_in[NOPTIONS];
+extern struct used_opt USED_out[NOPTIONS];
+extern double LLSTUFF[NLLSTUFF];
+#endif
 
-struct conv_fact UNITS[NUNITS];
+extern const struct conv_fact UNITS[NUNITS];
 
-struct opt_req TABLE[NPROJES][NOPTIONS];
+extern struct opt_req TABLE[NPROJES][NOPTIONS];
 
-char DESC[NOPTIONS][63];
+extern const char DESC[NOPTIONS][63];
 
-double LLSTUFF[NLLSTUFF];
+int G_geo_init_table(void);
+int G_geo_get_proj_index(char *);
 
+#endif /* #ifndef GEO_H_ */
 
