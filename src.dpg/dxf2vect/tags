@@ -1,0 +1,12 @@
+Mmain	main.c	/^main (argc, argv)$/
+dxf_add_extents	dxf_add_extents.c	/^dxf_add_extents ()$/
+dxf_add_line	dxf_add_line.c	/^dxf_add_line (dxf_file)$/
+dxf_add_point	dxf_add_point.c	/^dxf_add_point (dxf_file)$/
+dxf_add_polyline	dxf_add_polyline.c	/^dxf_add_polyline (dxf_file)$/
+dxf_check_ext	dxf_check_ext.c	/^dxf_check_ext (x, y)$/
+dxf_entities	dxf_entities.c	/^dxf_entities (dxf_file)$/
+dxf_find_lines	dxf_find_lines.c	/^dxf_find_lines (dxf_file)$/
+dxf_init_chars	dxf_init_chars.c	/^dxf_init_chars ()$/
+dxf_make_header	dxf_make_header.c	/^dxf_make_header (vect_file)$/
+dxf_open_layer	dxf_open_layer.c	/^dxf_open_layer ()$/
+dxf_which_layer	dxf_which_layer.c	/^dxf_which_layer (layer_name)$/
