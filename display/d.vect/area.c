@@ -87,8 +87,16 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	
 	/* Check box */
 	Vect_get_area_box (Map, area, &box);
-	if ( box.N < window->south || box.S > window->north || box.E < window->west || box.W > window->east)
-	    continue;
+	if ( box.N < window->south || box.S > window->north || 
+		box.E < window->west || box.W > window->east) {
+
+	    if ( window->proj != PROJECTION_LL )
+		continue;
+	    else {   /* out of bounds for -180 to 180, try 0 to 360 as well */
+		if ( box.E+360 < window->west || box.W+360 > window->east )
+		    continue;
+	    }
+	}
 
         if ( chcat ) /* check category: where_opt or cat_opt used */
         { 
