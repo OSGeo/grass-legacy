@@ -21,7 +21,7 @@ default: \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
 	$(HOME)/db.connect \
-	html
+	htmlcmd
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -73,7 +73,7 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o
 
 PROGRAMS = db.columns db.copy db.createdb db.dropdb db.droptable db.databases db.describe db.drivers db.execute db.select db.tables db.connect
 
-html:
+htmlcmd:
 	for prog in $(PROGRAMS) ; do \
 		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
