@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 
 		B[i].opt_name = opt = G_define_option();
 
-		sprintf(buff, "%c_map", color_names[i][0]);
+		sprintf(buff, "%s", color_names[i]);
 		opt->key        = G_store(buff);
 
 		opt->type       = TYPE_STRING;
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
 		B[i].opt_levels = opt = G_define_option();
 
-		sprintf(buff, "lev_%c", color_names[i][0]);
+		sprintf(buff, "lev_%s", color_names[i]);
 		opt->key        = G_store(buff);
 
 		opt->type       = TYPE_INTEGER;
