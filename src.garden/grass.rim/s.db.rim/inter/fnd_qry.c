@@ -7,6 +7,7 @@
 static double local_target_dist=0.0;
 static double local_target_e=0.0, local_target_n=0.0;
 
+static char str_e[20],str_n[20];
 static char local_target_site[12]="";
 static char count_sites[10]="";
 static char current[2]="";
@@ -34,6 +35,8 @@ set_coord_menu(caller)
 
   G_get_window(&window);        /* get current window */
 
+  G_format_easting(local_target_e,str_e,Projection);
+  G_format_northing(local_target_n,str_n,Projection);
 
   while(1)                      /* create screen */
     {
@@ -60,6 +63,9 @@ set_coord_menu(caller)
       n += 2;
       V_line(n,  "A.  Find all sites within (or outside) a circular target ");
       V_ques(target_yes,'s',n,59,1);
+      if (Projection==PROJECTION_UTM || Projection==PROJECTION_LL)
+      V_line(++n,"     and give the radius in meters (negative for outside)");
+      else
       V_line(++n,"               and give the radius (negative for outside)");
       V_ques(&local_target_dist,'d',n,59,12);
 
@@ -89,11 +95,13 @@ set_coord_menu(caller)
       sprintf(buf, "        3. Target coordinates %16s",
               Field_info[East_field].column_name);
       V_line(++n,buf);
-      V_ques(&local_target_e,'d',n,50,12);
+      /*V_ques(&local_target_e,'d',n,50,12);*/
+      V_ques(str_e,'s',n,50,18);
       sprintf(buf1,"                              %16s",
               Field_info[North_field].column_name);
       V_line(++n,buf1);
-      V_ques(&local_target_n,'d',n,50,12);
+      /*V_ques(&local_target_n,'d',n,50,12);*/
+      V_ques(str_n,'s',n,50,18);
 
       n += 2;
       if (Last_site != NULL) {
@@ -109,8 +117,11 @@ set_coord_menu(caller)
       if (! V_call() ) return (-1);
 
       if (*reset_yes == 'x') {reset_all(); continue; }
-      else
+      else {
+        G_scan_easting(str_e,&local_target_e,Projection);
+        G_scan_northing(str_n,&local_target_n,Projection);
         break;
+      }
     }
   if (*mouse == 'x')            /* Get east and north with pointer */
     get_e_n_with_mouse();
@@ -122,6 +133,7 @@ reset_all()
   *current=0;  *respect_mask=0; *target_yes=0;
   *nearest_yes=0; *mouse=0; *append_list=0;
   *local_target_site = 0; *count_sites = 0;
+  *str_e = 0;  *str_n = 0;
   local_target_dist = local_target_e = local_target_n = 0.0;
 }
 
@@ -199,7 +211,8 @@ disp_maps(line1)
       }
       if (*curr_sites && (Last_site != NULL)) {
         sprintf(work,
-                "d.points size=%s type=%s color=%s",size2,type2,colr2 );
+                "%s/bin/d.points size=%s type=%s color=%s",
+		G_gisbase(),size2,type2,colr2 );
         fp = popen(work,"w");
         for(s=Site_list; s<=Last_site; s++)
           fprintf(fp,"%lf %lf\n",s->east,s->north);
@@ -218,9 +231,12 @@ get_e_n_with_mouse()
         button=0;
         while (button != 2){
           fp = popen("d.where -1","r");
-          fscanf(fp,"%lf %lf %d",&local_target_e,&local_target_n,&button);
+/*        fscanf(fp,"%lf %lf %d",&local_target_e,&local_target_n,&button);*/
+          fscanf(fp,"%s %s %d",str_e,str_n,&button);
           pclose (fp);
         }
+	G_scan_easting(str_e,&local_target_e,Projection);
+	G_scan_northing(str_n,&local_target_n,Projection);
 }
 
 do_find()
@@ -237,31 +253,34 @@ if (*append_list=='a') strcpy(tmpstr,"-a");
 if (*append_list=='d') strcpy(tmpstr,"-d");
 /* call find_init with proper mask, window, append request */
 sprintf(cmd,".find %s %s %s",
-  (*respect_mask=='x')? "-m" : " ", (*current=='x')? "-w" : " ", tmpstr);
+  (*respect_mask=='x')? "-m" : " ", (*current=='x')? "-r" : " ", tmpstr);
 printf("\nWorking...");
 find_init(cmd);
 
 *cmd = '\0';
 
-if (*target_yes == 'x')
-        if (sscanf(local_target_site,"%d",&n)==1)
-                sprintf(cmd,"distance from site %d %f", n, local_target_dist);
+if (*target_yes == 'x') {
+        if (*local_target_site)
+                sprintf(cmd,"distance from site %s %f",
+			local_target_site, local_target_dist);
         else
                 sprintf(cmd,"distance from %f %f %f",
                         local_target_e,local_target_n,local_target_dist);
-
-if (*nearest_yes=='x' && *local_target_site) {
+}
+else {
+  if (*nearest_yes=='x' && *local_target_site) {
         if (sscanf(count_sites,"%d",&n)==1)
                 sprintf(cmd,"site %s %d", local_target_site , n);
         else
                 sprintf(cmd,"site %s", local_target_site);
         }
-if (*nearest_yes=='x' && !*local_target_site) {
+  if (*nearest_yes=='x' && !*local_target_site) {
         if (sscanf(count_sites,"%d", &n)==1)
                 sprintf(cmd,"%f %f %d",local_target_e,local_target_n, n);
         else
                 sprintf(cmd,"%f %f",local_target_e,local_target_n);
         }
+}
 if(*cmd && (find(cmd) != -1))
         view_sites();
 else {
@@ -295,7 +314,7 @@ if (*append_list=='d') strcpy(buf,"-d");
         if (sscanf(local_target_site,"%d",&n)==1)
                 sprintf(cmd,"distance from site %d %f", n, local_target_dist);
         else
-                sprintf(cmd,"distance from %.2f %.2f %.2f",
+                sprintf(cmd,"distance from %f %f %f",
                         local_target_e,local_target_n,local_target_dist);
 
  for (n=0;n<LINES;n++)
