@@ -12,7 +12,7 @@ Del_isle (map, isle)
     struct Map_info *map;
     int isle;
 {
-    isle = ABS (isle);
+    isle = abs (isle);
 
     if (! ISLE_ALIVE (&(map->Isle[isle])))
 	return (-1);
