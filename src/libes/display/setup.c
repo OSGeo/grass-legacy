@@ -23,6 +23,39 @@
 #include "display.h"
 #include "raster.h"
 
+
+/*!
+ * \brief initialize/create a frame
+ *
+ * This routine
+ * performs a series of initialization steps for the current frame. It also
+ * creates a full screen frame if there is no current frame. The <b>clear</b>
+ * flag, if set to 1, tells this routine to clear any information associated with
+ * the frame: graphics as well as region information.
+ * This routine relieves the programmer of having to perform the following
+ * idiomatic function call sequence
+ *
+ *  \param clear
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief graphics frame setup
+ *
+ * Performs a full setup
+ * for the current graphics frame: 1) Makes sure there is a current graphics
+ * frame (will create a full-screen one, if not); 2) Sets the region coordinates
+ * so that the graphics frame and the active module region agree (may change
+ * active module region to do this); and 3) performs graphic frame/region
+ * coordinate conversion initialization.
+ * If <b>clear</b> is true, the frame is cleared (same as running
+ * <i>d.erase.</i>) Otherwise, it is not cleared.
+ *
+ *  \param clear
+ *  \return int
+ */
+
 int D_setup (int clear)
 {
     struct Cell_head region;
