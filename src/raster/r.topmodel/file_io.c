@@ -22,12 +22,12 @@ get_line(fp, buffer)
 	char	*str;
 
 
-	buf[0]=0;
-	fscanf(fp, "%[^\n]", buf);
+	buffer[0]=0;
+	fscanf(fp, "%[^\n]", buffer);
 
-	if(!buf[0])
+	if(!buffer[0])
 		getc(fp);
-	if((str = (char *) strchr(buf, '#')))
+	if((str = (char *) strchr(buffer, '#')))
 		*str=0;
 
 
@@ -71,7 +71,7 @@ read_inputs(void)
 	for(; !feof(fp); ){
 		buffer[0]=0;
 		get_line(fp, buf);
-		sprintf(buffer, " %s",buf);
+		sprintf(buffer, " %s", buf);
 		sscanf(buffer, "%*[ \t]%[^\0]", buf);
 
 		i=strlen(buf)-1;
