@@ -33,9 +33,9 @@ int Digitize (void)
     int Pass;
     int ret;
     int chr;
-#ifdef SCS_MODS
+    int catn;
+    int ans = 0;
     struct Categories lcats;
-#endif /* SCS_MODS */
 
 
     /* if mouse digitizing, STREAM mode is disabled */
@@ -99,7 +99,19 @@ int Digitize (void)
 		    break;
 		case MDC_LABEL:
 #ifndef SCS_MODS
+		    if(Cat_name)
+		    {
+			G_free(Cat_name);
+			Cat_name = NULL;
+		    }
+		    ans = ask_for_name(type, &lcats);
 		    auto_label = ask_cat ();
+		    if (auto_label && ans)
+		    {
+			catn = ask_name(auto_label, &lcats);
+			auto_label = (catn ? catn : auto_label);
+		    }
+
 		    show_mode(mode, type, auto_label);
 		    break;
 #else

@@ -109,6 +109,9 @@ Global char *N_backdrop_mapset;
 
 Global char *N_subj_file;	/* scs */
 
+Global char *Cat_name;
+Global double pan_threshold;
+
 
 /* these are a hack to get the point used to select a line
 **  in find_line_with_mouse ()

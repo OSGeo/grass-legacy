@@ -24,7 +24,6 @@ slid_window_w_mouse (unsigned char type, struct line_pnts *Xpoints)
     double N, S, E, W;
     int yn;
     double tmp1, tmp2, tmp3, tmp4;
-    extern double pan_threshold;
 
 
     Clear_info ();
