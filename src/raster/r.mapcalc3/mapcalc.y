@@ -71,6 +71,7 @@ void yyerror(char *s);
 %%
 
 program		: stmts			{ $$ = result = $1;		}
+		;
 
 stmts		: exp_let		{ $$ = list($1,NULL);		}
 		| exp_let ';'		{ $$ = list($1,NULL);		}
