@@ -3,7 +3,6 @@ ask_levels()
     char buf[100];
     int n;
 
-    return 6;
     while(1)
     {
 	printf ("How many color levels? ");
