@@ -4,7 +4,7 @@ LEX                 = flex
 YACC                = bison -y
 ARCH                = i686-pc-cygwin32
 
-GISBASE             = /usr/local/grass-5.0b
+GISBASE             = /usr/local/grass5
 UNIX_BIN            = /usr/local/bin
 
 DEFAULT_DATABASE    =
