@@ -146,7 +146,7 @@ $ELEV.shade = eval( \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
  a=if(isnull(a),1,a), \\
- aspect=if(x||y,if(a,a,360.)), \\
+ aspect=if(x!=0||y!=0,if(a,a,360.)), \\
  cang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($az-aspect), \\
  if(cang < 0.,0.,100.*cang), \\
  if(isnull(cang), null(), 100.*cang))

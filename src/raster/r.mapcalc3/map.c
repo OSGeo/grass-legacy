@@ -352,6 +352,8 @@ static void read_map(map *m, void *buf, int res_type, int row, int col)
 			G_fatal_error("read_map: unknown type: %d", res_type);
 			break;
 		}
+
+		return;
 	}
 
 	set_read_row_type(res_type);
