@@ -14,7 +14,7 @@ query (struct Map_info *Map )
     struct line_pnts *Points;
     struct line_cats *Cats;
     struct field_info *Fi;
-    dbString stmt;
+    dbString stmt, value_string;
     dbDriver *driver;
 
     /* Initialize the Point struct */
@@ -48,6 +48,7 @@ query (struct Map_info *Map )
     }
 
     db_init_string (&stmt);
+    db_init_string (&value_string);
 
     if ( (Fi = Vect_get_field ( Map, options.qfield)) == NULL)
 	G_fatal_error("Database connection not defined for field <%d>", options.qfield);
@@ -118,20 +119,25 @@ query (struct Map_info *Map )
 	        db_convert_column_value_to_string(column, &stmt);
 	        G_debug (4, "  value = %s", db_get_string(&stmt) );
 
-		switch ( ctype ) {
-		    case ( DB_C_TYPE_INT ):
-			Values[i].i1 = db_get_value_int(value);
-			break;
-		    case ( DB_C_TYPE_DOUBLE ):
-			Values[i].d1 = db_get_value_double(value);
-			break;
-		    case ( DB_C_TYPE_STRING ):
-			Values[i].str1 = G_store( db_get_value_string(value) );
-			break;
-		    case ( DB_C_TYPE_DATETIME ):
-			G_fatal_error ("Datetime not supported");
+		if ( db_test_value_isnull(value) ) {
+		    Values[i].null = 1;
+		} else {
+		    switch ( ctype ) {
+			case ( DB_C_TYPE_INT ):
+			    Values[i].i1 = db_get_value_int(value);
+			    break;
+			case ( DB_C_TYPE_DOUBLE ):
+			    Values[i].d1 = db_get_value_double(value);
+			    break;
+			case ( DB_C_TYPE_STRING ):
+			    Values[i].str1 = G_store( db_get_value_string(value) );
+			    break;
+			case ( DB_C_TYPE_DATETIME ):
+			    db_convert_column_value_to_string (column, &value_string);
+			    Values[i].str1 = G_store( db_get_string(&value_string) );
+		    }
+		    Values[i].null = 0;
 		}
-		Values[i].null = 0;
 	    }
 	    db_close_cursor (&cursor);
 	} else {  /* no qcats -> upload NULL */
