@@ -29,6 +29,7 @@
 #include "Vect.h"
 #include "dbmi.h"
 
+#define	POINT2D_C
 #include "interpf.h"
 
 int IL_check_at_points_2d (
