@@ -1,6 +1,5 @@
 MODULE_TOPDIR = ../../..
 
-include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 EXTRA_CFLAGS=$(FTINC)
@@ -55,6 +54,8 @@ FREETYPEBASED = Text3.o font_freetype.o
 ifneq ($(strip $(FTLIB)),)
     LIB_OBJS += $(FREETYPEBASED)
 endif
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: stlib
 
