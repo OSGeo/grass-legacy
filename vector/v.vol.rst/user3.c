@@ -33,12 +33,16 @@
 #include <fcntl.h> 
 #include "gis.h"
 
+#include "site.h"
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
+#include "G3d.h"
+
+G3D_Region current_region;
 
 int secpar_loop(ngstc,nszc,i)
 	int    ngstc;
@@ -443,23 +447,18 @@ C
 		    xx2 = xx * xx;
                     if ((cellinp != NULL) && (cellout != NULL)&&(i==ngstl)) {
                       zcon = (double)(cell[l-1]*zmult-z_or)-z_orig_in*zmult; /* bug fix 02/03/00 jh */
-/*printf("\n %d %d %d %f %d %f %f %f", i,k,l, zcon, cell[l-1], z_or, dnorm, points[m-1].z);*/
                       zcon = zcon/dnorm;
                       zzcell = zcon - points[m-1].z;
-/*printf("%d %f\n",m,zzcell);*/
                       zzcell2 = zzcell*zzcell;
                       rcell = sqrt(xx2 + w2[m] + zzcell2);
                       etarcell = (fi*rcell)/2.;
                       hcell = hcell + b[m] * crs (etarcell);
-/*printf("\n%d %f %f %f %f %f %f\n",ngstl, hcell,etarcell,b[m],xx2,w2[m],zzcell2);*/
-/*printf("\n %d %d %d %f",i,k,l,hcell+wmin);*/
                     }
 		    r2 = xx2 + w2[m] + wz2[m];
 	            r = sqrt(r2);
 		    etar = (fi*r)/2.;
 
 		    h = h + b[m] * crs (etar);
-/*printf("n: %d %f %f %f %f %f %f\n",i, h,etar,b[m],xx2,w2[m],wz2[m]);*/
 		    /* partial derivatives */
                     bmgd1 = b[m] * crsd(etar,fi);
 		    dx = dx + bmgd1 * xx;
@@ -522,7 +521,6 @@ C
   		  if(!(secpar_loop(ngstc, nszc, l))) clean_fatal_error("Secpar_loop failed");
 		if ((cellinp != NULL)&&(cellout != NULL)&&(i==ngstl)) {
 	 	  zero_array_cell[l-1] = (FCELL)(wwcell);
-/*	printf("\n%d %d %d %f",i,k,l,wwcell);*/
                 }
 		if (outz != NULL) {
 		  zero_array1[l-1] = (float) (az[l] * sciz);
@@ -608,6 +606,7 @@ POINT (n_points, points)
 
     int             n_points;
     struct quadruple *points;
+
 /*
 c  interpolation check of z-values in given points
 c
@@ -616,9 +615,11 @@ c
 {
     double          rfsta2, errmax, h, xx, yy, r2, hz, zz, ww, err, xmm, ymm,
                     zmm, wmm, r, etar;
-    int             n1, mm, m, mmax;
+    int             n1, mm, m, mmax,inside;
+    Site *site;
 
-
+  if ((site = G_site_new_struct (-1, 3, 0, 1)) == NULL)
+    G_fatal_error ("Memory error for site struct");
     errmax = .0;
     n1 = n_points + 1;
     for (mm = 1; mm <= n_points; mm++)
@@ -637,6 +638,28 @@ c
 	hz = h + wmin; 
 	ww = points[mm - 1].w + wmin; 
 	err = hz - ww;
+
+        xmm = (points[mm - 1].x * dnorm) + xmn + current_region.west;
+        ymm = (points[mm - 1].y * dnorm) + ymn + current_region.south;
+        zmm = (points[mm - 1].z * dnorm) /zmult + zmn / zmult + current_region.bottom;
+
+    if ((xmm >= xmn+ current_region.west) && (xmm <= xmx+ current_region.west) &&
+      (ymm >= ymn+ current_region.south) && (ymm <= ymx+ current_region.south) &&
+      (zmm >= zmn/zmult+ current_region.bottom) && (zmm <= zmx/zmult+ current_region.bottom))
+      inside = 1;
+    else
+      inside = 0;
+
+    if (dev != NULL)
+    {
+      site->dbl_att[0] = err;
+      site->east = xmm;
+      site->north = ymm;
+      site->dim[0] = zmm;
+      if (inside)           /*     if the point is inside the region */
+        G_site_put (dev, site);
+     }
+
 	if (err < 0)
 	{
 	    err = -err;
