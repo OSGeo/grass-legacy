@@ -30,7 +30,9 @@ main (int argc, char *argv[])
     struct   field_info *Fi=NULL;
     char     buf[1000];
     dbString stmt;
+    dbString sql, value_string, col_defs;
     dbDriver *driver;
+    ATTRIBUTES attr[2];
 
     G_gisinit (argv[0]);
 
@@ -83,7 +85,7 @@ main (int argc, char *argv[])
     ofield_opt = G_define_standard_option(G_OPT_V_FIELD);
     ofield_opt->key = "olayer";
     ofield_opt->multiple = YES;
-    ofield_opt->answer = "1,2,3";
+    ofield_opt->answer = "1,0,0";
     ofield_opt->description = "Output layer for new category, ainput and binput. If 0 or not given, "
 	                      "the category is not written.";
 
@@ -131,10 +133,13 @@ main (int argc, char *argv[])
         Fi = Vect_default_field_info ( &Out, ofield[0], NULL, GV_1TABLE );
     }
 
+    db_init_string ( &sql );
+    db_init_string ( &value_string );
+    db_init_string ( &col_defs );
+
     /* Open database */
     if ( ofield[0] > 0 && !(table_flag->answer) ) {
 	fprintf (stderr, SEP );
-	fprintf ( stderr, "Writing attributes ...\n" );
 	
 	db_init_string (&stmt);
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -143,30 +148,14 @@ main (int argc, char *argv[])
 	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
 	}
 	
-	sprintf ( buf, "create table %s (cat integer, cata integer, catb integer)", Fi->table );
-	db_set_string ( &stmt, buf);
-	G_debug ( 2, db_get_string ( &stmt ) );
-	
-	if (db_execute_immediate (driver, &stmt) != DB_OK ) { 
-	    Vect_close (&Out);
-	    db_close_database_shutdown_driver ( driver );
-	    G_fatal_error ( "Cannot create table: %s", db_get_string (&stmt) );
-	}
-
-	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	    G_warning ( "Cannot create index" );
-
-	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
-
-	/* Table created, now we can write dblink */
-	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     } else {
 	driver = NULL;
     }
     
     /* Copy lines to output */
     for ( input = 0; input < 2; input++ ) {
+	int ncats, index;
+	
 	fprintf (stderr, "Copying %sinput lines ... ", pre[input]);
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
@@ -193,7 +182,222 @@ main (int argc, char *argv[])
 
 	    Vect_write_line ( &Out, ltype, Points, Cats );
 	}
+
+	/* Allocate attributes */
+	attr[input].n = 0;
+	attr[input].attr = (ATTR *) G_calloc ( Vect_cidx_get_type_count( &(In[input]), 
+		            field[input], type[input]) , sizeof(ATTR) ); /* this may be more than necessary */
+
+	index = Vect_cidx_get_field_index (  &(In[input]), field[input] );
+	ncats = Vect_cidx_get_num_cats_by_index ( &(In[input]), index );
+	for ( i = 0; i < ncats; i++ ) {
+	    int cat, ctype, id;
+
+	    Vect_cidx_get_cat_by_index ( &(In[input]), index, i, &cat, &ctype, &id );
+	    if ( !(ctype & type[input]) ) continue;
+		  
+	    if ( attr[input].n == 0 || cat != attr[input].attr[attr[input].n-1].cat ) {
+		attr[input].attr[attr[input].n].cat = cat;
+		attr[input].n++;
+	    }
+	}
+
+	G_debug ( 3, "%d cats read from index", attr[input].n );
+
+        fprintf (stderr, "Collecting input attributes ...\n");
+
+	attr[input].null_values = NULL;
+	attr[input].columns = NULL;
+	
+	/* Attributes */
+	if ( driver ) {
+	    int ncol, more;
+	    struct field_info *inFi;
+	    dbDriver *in_driver;
+	    dbCursor cursor;
+	    dbTable  *Table;
+	    dbColumn *Column;
+	    dbValue  *Value;
+	    int sqltype, ctype;
+
+	    inFi = Vect_get_field ( &(In[input]), field[input] );
+	    if (!inFi ) {
+		G_warning ( "Database connection not defined for layer %d", field[input]);
+		continue;
+	    }
+
+	    in_driver = db_start_driver_open_database ( inFi->driver, inFi->database );
+	    if ( in_driver == NULL ) {
+		G_fatal_error ( "Cannot open database %s by driver %s", inFi->database, inFi->driver );
+	    }
+
+	    sprintf ( buf, "select * from %s", inFi->table );
+	    db_set_string( &sql, buf );
+
+	    if ( db_open_select_cursor( in_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK )
+		G_fatal_error ( "Cannot select attributes");
+
+	    Table = db_get_cursor_table (&cursor);
+	    ncol = db_get_table_number_of_columns(Table);
+	    G_debug ( 3, "ncol = %d", ncol );
+	       
+	    db_set_string( &sql, "" );
+	    db_set_string( &col_defs, "" );
+	    for (i = 0; i < ncol; i++) {
+	       db_append_string( &sql, ", null" );
+
+	       Column = db_get_table_column (Table, i);
+	       sqltype = db_get_column_sqltype (Column);
+	       ctype = db_sqltype_to_Ctype(sqltype);
+	       
+	       if ( input == 0 )
+	           db_append_string ( &col_defs, ", a_" );
+	       else
+	           db_append_string ( &col_defs, ", b_" );
+
+	       db_append_string ( &col_defs, db_get_column_name (Column) );
+	       db_append_string ( &col_defs, " " );
+	       switch ( sqltype ) {
+		    case DB_SQL_TYPE_CHARACTER:
+			sprintf (buf, "varchar(%d)", db_get_column_length (Column) );
+			db_append_string ( &col_defs, buf);
+			break;
+		    case DB_SQL_TYPE_SMALLINT:
+		    case DB_SQL_TYPE_INTEGER:
+			db_append_string ( &col_defs, "integer");
+			break;
+		    case DB_SQL_TYPE_REAL:
+		    case DB_SQL_TYPE_DOUBLE_PRECISION:
+		    case DB_SQL_TYPE_DECIMAL:
+		    case DB_SQL_TYPE_NUMERIC:
+		    case DB_SQL_TYPE_INTERVAL:
+			db_append_string ( &col_defs, "double precision");
+			break;
+		    case DB_SQL_TYPE_DATE:
+			db_append_string ( &col_defs, "date");
+			break;
+		    case DB_SQL_TYPE_TIME:
+			db_append_string ( &col_defs, "time");
+			break;
+		    case DB_SQL_TYPE_TIMESTAMP:
+			db_append_string ( &col_defs, "datetime");
+			break;
+		    default:
+			G_warning ( "Unknown column type (%s)", db_get_column_name (Column));
+			sprintf (buf, "varchar(250)" );
+		}
+	    }
+	    attr[input].null_values = G_store ( db_get_string ( &sql ) );
+	    attr[input].columns = G_store ( db_get_string ( &col_defs) );
+		
+  	    while (1) {
+	       int cat ;
+	       ATTR *at;
+
+	       if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
+		   G_fatal_error ("Cannot fetch data");
+
+	       if (!more) break;
+
+	       db_set_string( &sql, "" );
+
+	       for (i = 0; i < ncol; i++) {
+		   
+		   Column = db_get_table_column (Table, i);
+		   sqltype = db_get_column_sqltype (Column);
+		   ctype = db_sqltype_to_Ctype(sqltype);
+		   Value  = db_get_column_value(Column);
+	    
+
+		   if ( G_strcasecmp ( db_get_column_name (Column), inFi->key)  == 0 ) {
+		       cat = db_get_value_int ( Value );
+		       G_debug ( 3, "cat = %d", cat );
+		   }
+
+		   db_append_string ( &sql, ", " ); 
+
+		   db_convert_value_to_string( Value, sqltype, &value_string);
+		   
+		   G_debug ( 3, "%d: %s : %s", i, db_get_column_name (Column), db_get_string(&value_string));
+
+		   switch ( ctype ) {
+			case DB_C_TYPE_STRING:
+			case DB_C_TYPE_DATETIME:
+			    if ( db_test_value_isnull(Value) ) {
+				db_append_string ( &sql, "null" );
+			    } else {
+				db_double_quote_string ( &value_string );
+				sprintf (buf, "'%s'", db_get_string(&value_string) );
+				db_append_string ( &sql, buf);
+			    }
+			    break;
+			case DB_C_TYPE_INT:
+			case DB_C_TYPE_DOUBLE:
+			    if ( db_test_value_isnull(Value) ) {
+				db_append_string ( &sql, "null" );
+			    } else {
+				db_append_string ( &sql, db_get_string(&value_string) );
+			    }
+			    break;
+			default:
+			    G_warning ( "Unknown column type (%s), values lost", db_get_column_name (Column) );
+			    db_append_string ( &sql, "null" );
+		   }
+	       }
+
+	       at = find_attr( &(attr[input]), cat );
+	       if ( !at ) continue;
+	       
+	       /* if ( !at->used ) continue; */ /* We don't know yet */
+
+	       at->values = G_store ( db_get_string ( &sql ) );
+	       G_debug ( 3, "values: %s", at->values );
+	    }
+
+	    db_table_to_sql ( Table, &sql );
+	
+	    db_close_database_shutdown_driver ( in_driver );
+	}
+	
         fprintf (stderr, SEP );
+    }
+
+    if ( driver ) {
+	sprintf ( buf, "create table %s (cat integer ", Fi->table );
+	db_set_string ( &stmt, buf);
+	
+	if ( attr[0].columns )
+	    db_append_string ( &stmt, attr[0].columns);
+	else {
+	    sprintf ( buf, ", a_cat integer" );
+	    db_append_string ( &stmt, buf );
+	}
+
+	if ( attr[1].columns )
+	    db_append_string ( &stmt, attr[1].columns);
+	else {
+	    sprintf ( buf, ", b_cat integer" );
+	    db_append_string ( &stmt, buf );
+	}
+
+	db_append_string ( &stmt, " )" );
+	
+	G_debug ( 3, db_get_string ( &stmt ) );
+	
+	if (db_execute_immediate (driver, &stmt) != DB_OK ) { 
+	    Vect_close (&Out);
+	    db_close_database_shutdown_driver ( driver );
+	    G_fatal_error ( "Cannot create table: %s", db_get_string (&stmt) );
+	}
+
+	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
+	    G_warning ( "Cannot create index" );
+
+	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+
+	/* Table created, now we can write dblink */
+	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     }
 
     fprintf ( stderr, "Buiding partial topology ...\n" );
@@ -202,18 +406,18 @@ main (int argc, char *argv[])
 
     /* AREA x AREA */
     if ( type[0] == GV_AREA ) { 
-	area_area ( In, field, &Out, Fi, driver, operator, ofield );
+	area_area ( In, field, &Out, Fi, driver, operator, ofield, attr );
     } else { /* LINE x AREA */
-	line_area ( In, field, &Out, Fi, driver, operator, ofield );
+	line_area ( In, field, &Out, Fi, driver, operator, ofield, attr );
     }
 
     fprintf (stderr, SEP );
     fprintf ( stderr, "Rebuilding topology ...\n" );
     Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
     Vect_build (&Out, stderr); /* Build topology to show the final result and prepare for Vect_close() */
-    
-    /* Close table */
+
     if ( driver ) {
+        /* Close table */
 	db_close_database_shutdown_driver ( driver );
     }
     

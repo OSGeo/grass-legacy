@@ -15,7 +15,7 @@
 #include "local.h"
 
 int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
-	        dbDriver *driver, int operator, int *ofield )
+	        dbDriver *driver, int operator, int *ofield, ATTRIBUTES *attr )
 {
     int    ret, input, line, nlines, area, nareas;
     int    in_area, in_centr, out_cat;
@@ -89,7 +89,15 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 		    /* Add all cats with original field number */
 		    for ( i = 0 ; i < Cats->n_cats; i++ ) {
 			if ( Cats->field[i] == field[input] ) {
+			    ATTR *at;
 			    Vect_cat_set ( Centr[area].cat[input], field[input], Cats->cat[i]);
+
+			    /* Mark as used */
+			    at = find_attr( &(attr[input]), Cats->cat[i] );
+			    if ( !at )
+				G_fatal_error ("Attribute not found");
+				
+			    at->used = 1;
 			}
 		    }
 		}
@@ -142,29 +150,65 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 
 		/* attributes */
 		if ( driver ) {
+		    ATTR *at;
+
 		    sprintf ( buf, "insert into %s values ( %d", Fi->table, out_cat ); 
 		    db_set_string ( &stmt, buf);
 
 		    /* cata */
-		    if ( i >= 0 )
-			 sprintf ( buf, ", %d", Centr[area].cat[0]->cat[i]);
-		    else
-			 sprintf ( buf, ", null");
-		    
-		    db_append_string ( &stmt, buf);
+		    if ( i >= 0 ) {
+			if (  attr[0].columns ) {
+			    at = find_attr( &(attr[0]), Centr[area].cat[0]->cat[i] );
+			    if ( !at )
+				G_fatal_error ("Attribute not found");
+
+			    if ( at->values )
+				db_append_string ( &stmt, at->values );
+			    else
+				db_append_string ( &stmt, attr[0].null_values );
+			} else {
+			    sprintf ( buf, ", %d", Centr[area].cat[0]->cat[i] );
+			    db_append_string ( &stmt, buf);
+			}
+		    } else {
+			if (  attr[0].columns ) {
+		            db_append_string ( &stmt, attr[0].null_values );
+			} else {
+			    sprintf ( buf, ", null");
+			    db_append_string ( &stmt, buf);
+			}
+		    }
 
 		    /* catb */
-		    if ( j >= 0 )
-			 sprintf ( buf, ", %d )", Centr[area].cat[1]->cat[j] );
-		    else
-			 sprintf ( buf, ", null )");
+		    if ( j >= 0 ) {
+			if (  attr[1].columns ) {
+			    at = find_attr( &(attr[1]), Centr[area].cat[1]->cat[j] );
+			    if ( !at )
+				G_fatal_error ("Attribute not found");
+
+			    if ( at->values )
+				db_append_string ( &stmt, at->values );
+			    else
+				db_append_string ( &stmt, attr[1].null_values );
+			} else {
+			    sprintf ( buf, ", %d", Centr[area].cat[1]->cat[j] );
+			    db_append_string ( &stmt, buf);
+			}
+		    } else {
+			if (  attr[1].columns ) {
+			    db_append_string ( &stmt, attr[1].null_values );
+			} else {
+			    sprintf ( buf, ", null");
+			    db_append_string ( &stmt, buf);
+			}
+		    }
 		    
-		    db_append_string ( &stmt, buf);
+		    db_append_string ( &stmt, " )");
 
 		    G_debug ( 3, db_get_string ( &stmt ) );
 
 		    if (db_execute_immediate (driver, &stmt) != DB_OK )
-			G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+		    	G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
 		}
 		out_cat++;
 	    }
