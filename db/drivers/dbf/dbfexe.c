@@ -76,7 +76,7 @@ int execute(char *sql, cursor * c)
 	}
     }
 
-    if ((st->command == SQLP_DROP) || (st->command == SQLP_DROP) ||
+    if ((st->command == SQLP_DROP) || (st->command == SQLP_DELETE) ||
         (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE)
     ) {
 	if ( db.tables[tab].write == FALSE ) {
