@@ -577,10 +577,19 @@ const char *GPJ_set_csv_loc(const char *name)
     return buf;
 }
 
-/* N.B. The order of these pairs is different from that in 
+
+/* The list below is only for files that use a non-standard name for a 
+ * datum that is already supported in GRASS. The number of entries must be even;
+ * they are all in pairs. The first one in the pair is the non-standard name;
+ * the second is the GRASS name. If a name appears more than once (as for
+ * European_Terrestrial_Reference_System_1989) then it means there was more
+ * than one non-standard name for it that needs to be accounted for. 
+ *
+ * N.B. The order of these pairs is different from that in 
  * ogr/ogrfromepsg.cpp in the GDAL source tree! GRASS uses the EPSG
  * names in its WKT representation except WGS_1984 and WGS_1972 as
- * these shortened versions seem to be standard */
+ * these shortened versions seem to be standard
+ */
 
 static const char *papszDatumEquiv[] =
 {
