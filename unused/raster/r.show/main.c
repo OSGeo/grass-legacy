@@ -16,6 +16,7 @@
 				(t == FCELL_TYPE ?  "%f" : \
 				(t == DCELL_TYPE ? "%lf" : "")))
 
+
 union	RASTER_PTR
 {
 	void	*v;
@@ -31,7 +32,14 @@ struct	RASTER_MAP_PTR
 };
 
 
+#ifdef	RASTER_VALUE_FUNC
 double	raster_value(struct RASTER_MAP_PTR buf, int col);
+#else
+#define	raster_value(buf, col)	((double)(buf.type == CELL_TYPE ? buf.c[col] : \
+					(buf.type == FCELL_TYPE ? buf.f[col] : \
+								  buf.d[col])))
+#endif
+
 int	is_null_value(struct RASTER_MAP_PTR buf, int col);
 int	value2str(char *str, int width, int prec,
 		struct RASTER_MAP_PTR buf, int col);
@@ -135,6 +143,7 @@ main(argc, argv)
 }
 
 
+#ifdef	RASTER_VALUE_FUNC
 double
 raster_value(buf, col)
 	struct	RASTER_MAP_PTR buf;
@@ -157,6 +166,7 @@ raster_value(buf, col)
 
 	return retval;
 }
+#endif
 
 
 int
