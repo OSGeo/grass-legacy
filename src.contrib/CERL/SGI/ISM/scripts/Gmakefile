@@ -1,6 +1,5 @@
 
-
-
-$(BIN)/ISMcell2scat:  cell2scat
+$(GISBASE)/scripts/ISMcell2scat:  cell2scat
 	rm -f $@
 	cp cell2scat $@
+	chmod 755 $@
