@@ -20,14 +20,22 @@ print_unit(i,ns,nl)
 	    k--;
 	k++;
 	area = area_sum (&k, nl-1);
-	format_double (100.0 * area_sum (&ns, nl) / area,
-	    num, unit[i].len, unit[i].eformat, unit[i].dp);
+        if(unit[i].eformat)
+	    scient_format (100.0 * area_sum (&ns, nl) / area,
+	        num, unit[i].len, unit[i].dp);
+        else
+	    format_double (100.0 * area_sum (&ns, nl) / area,
+	        num, unit[i].len, unit[i].dp);
 
     }
     else
     {
-	format_double (area_sum (&ns, nl) * unit[i].factor,
-	    num, unit[i].len, unit[i].eformat, unit[i].dp);
+       if(unit[i].eformat)
+            scient_format (area_sum (&ns, nl) * unit[i].factor,
+                num, unit[i].len, unit[i].dp);
+       else
+            format_double (area_sum (&ns, nl) * unit[i].factor,
+                num, unit[i].len, unit[i].dp);
     }
     printf ("|%s", num);
 }
