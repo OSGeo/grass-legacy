@@ -26,6 +26,10 @@ main (int argc, char *argv[])
     struct Map_info Map;
     int    i, build = 0, dump = 0, sdump = 0, cdump = 0;
     
+    G_gisinit(argv[0]);
+
+    module = G_define_module(); 
+    module->description = "Creates topology for GRASS vector data.";
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -45,14 +49,10 @@ main (int argc, char *argv[])
 	"\t\tdupm  - write topology to stdout\n"
 	"\t\tsdump - write spatial index to stdout\n"
 	"\t\tcdump - write category index to stdout\n";
-    
-    G_gisinit(argv[0]);
+   
     if (G_parser (argc, argv))
 	exit(-1); 
-   
-    module = G_define_module(); 
-    module->description = "Creates topology for GRASS vector data.";
-  
+
     i = 0; 
     while (opt->answers[i]) {
 	if ( *opt->answers[i] == 'b')  build = 1;
