@@ -96,7 +96,9 @@ static void RTreePickSeeds(struct PartitionVars *p)
 	{
 		for (j=i+1; j<p->total; j++)
 		{
-			struct Rect one_rect = RTreeCombineRect(
+			struct Rect one_rect;
+		   
+			one_rect = RTreeCombineRect(
 						&BranchBuf[i].rect,
 						&BranchBuf[j].rect);
 			waste = RTreeRectSphericalVolume(&one_rect) -
