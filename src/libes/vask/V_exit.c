@@ -18,19 +18,25 @@ ALGORITHM:
 CALLS:		
 			clear ()       curses
 			refresh ()     curses
+			endwin ()     curses
 
 ***********************************************************************/
 
 #include "vask.h"
 V_exit()
 {
-	fflush (stdout);
-	fflush (stderr);
-	clear () ;
-	refresh () ;
-	V_set_old_tty();
+	clear() ;
+	refresh() ;
+    /* added for Mips' braindead implementation of curses 
+     * and the ordering is important
+     */
+	    echo();
+	    nl();
+	    noraw();
 
-	fflush (stdout);
+	endwin();
+	fflush(stdout);
+	fflush(stderr);
 
 /* Added 17 Sep 1990  dpg.  is a hack we have been using on Sys V machines
 **  it is not the correct way, but it seems to do the job.
