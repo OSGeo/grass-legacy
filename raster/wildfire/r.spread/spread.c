@@ -28,13 +28,14 @@
  *		   simulated cumulative cost (time) is reached - spread().
  *
  ***********************************************************************/
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "gis.h"
-#define MAIN
 #include "cmd_line.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"
-#include <math.h>
+#include "local_proto.h"
 
 #ifndef PI
 #define PI 3.1415926535897932
@@ -55,7 +56,8 @@ extern struct 	Cell_head window;
 
 struct cell_ptrHa *front_cell = NULL, *rear_cell = NULL;
 
-spread ()
+void
+spread (void)
 {
 	float			min_cost;
 	int			ros_max, ros_base, dir;
@@ -155,12 +157,10 @@ printf("\nend spread");
 
 /******* function computing cumulative spread time/cost, ***************
  ******* good for both adjacent cell links and non-adjacent cell links */
- 
-cumulative (pres_cell, to_cell, ros_max, ros_base, dir, min_cost)
-struct costHa 		*pres_cell;
-struct cell_ptrHa 	*to_cell;
-float			*min_cost;
-int			ros_max, ros_base, dir;
+
+int
+cumulative (struct costHa *pres_cell, struct cell_ptrHa *to_cell,
+            int ros_max, int ros_base, int dir, float *min_cost)
 {
 	float 		ros, xros, cost;
         float		xstep_len, rrow, rcol, rstart_row, rstart_col;
@@ -217,17 +217,16 @@ printf ("\n		in cumulatvie() cost=%.2f pre min_cost=%.2f", cost, *min_cost);
 #ifdef DEBUG
 printf ("\n		in cumulatvie() 	 post min_cost=%.2f", *min_cost);
 #endif
+
+        return 0;
 }
 
 
 /****** function for updating the cumulative cost/time, possibaly     ********
  ****** back path x,y coordinates, both in the output(s) and the heap ********/
 
-update (pres_cell, row, col, angle, min_cost)
-struct 	costHa 	*pres_cell;
-int	row, col;
-double	angle;
-float	min_cost;
+void
+update (struct costHa *pres_cell, int row, int col, double angle, float min_cost)
 {
         if ( DATA(map_out, row, col) < -1.0 ) 
         {
