@@ -65,7 +65,12 @@ is used to add GRASS GIS command or command list. An existing command may be
 selected by single click on command name. User can rename the command  
 by double click on command name and retyping text. Further command may be 
 added pressing the 'Create new command' button again. Selected commands 
-may be removed pressing 'Cut selection' button.
+may be removed pressing 'Cut selection' button. For a command list use pipe
+"|" as separator.
+
+<p>
+
+E.g.:  <em>d.rast soils | d.rast -o roads | d.vect streams col=blue</em>
 
 <h3>Digitize vector map (select or create new vector first)</h3>
 
