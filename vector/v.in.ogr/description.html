@@ -13,6 +13,9 @@ The optional <em>spatial</em> parameter defines spatial query extents.
 This parameter allows to restrict the region to a spatial subset while
 importing the data. All vector completely or partially falling into
 this rectangle subregion are imported.
+<P>
+Topology cleaning on areas is automatically performed, but may fail in
+special cases (then use <a href="v.clean.html">v.clean</a>).
 
 <h3>Supported OGR Vector Formats</h3>
 
@@ -21,10 +24,12 @@ Shapefile</a><br>
 <a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_mitab.html">Mapinfo File</a>
 
 <p>
-Further available drivers depend on the local installation, for details see 
-<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">OGR web site</a>
+Further available drivers such as UK .NTF, SDTS, TIGER, IHO S-57 (ENC),
+DGN, GML, AVCBin, REC, Memory, OGDI, and PostgreSQL depend on the local
+installation (OGR library), for details see
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">OGR web site</a>.
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
 <B>SHAPE files</B><BR>
 <b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
@@ -33,6 +38,9 @@ Further available drivers depend on the local installation, for details see
 <B>MapInfo files</B><BR>
 <b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
 <b>output=</b><em>grass_map</em> 
+<P>
+<B>SDTS files</B> (you have to select the CATD file)<BR>
+<b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
 
 <h2>NOTES</h2>
 
@@ -47,12 +55,6 @@ column names. Also a table name must start with a character, not a number.<br>
 
 <P>
 
-The import of areas requires a subsequent run of 
-<a HREF="v.clean.html">v.clean</a> to update the map to a topologically
-valid structure (removal of duplicate collinear lines etc). The tools
-used for that are 'rmdupl' and 'bpol':
-<p>
-<b>v.clean input=</b><em>areamap</em> <b>output=</b><em>areamap_clean</em> <b>tool=</b><em>rmdupl,bpol</em> <br>
 
 
 <H2>REFERENCES</H2>

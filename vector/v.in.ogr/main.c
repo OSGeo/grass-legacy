@@ -36,7 +36,7 @@ main (int argc, char *argv[])
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt;
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
     char   buf[2000], namebuf[2000];
-    char   *namebuf2, *namebuf3;
+    char   *namebuf2, *namebuf3, *namebuf4;
     char   *separator;
 
     /* Vector */
@@ -286,8 +286,20 @@ main (int argc, char *argv[])
 		sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
 		namebuf2      = G_strchg(namebuf , '#', '_');
 		namebuf3      = G_strchg(namebuf2, '-', '_');
-		Ogr_fieldname = G_strchg(namebuf3, '.', '_');
-
+		
+		/* check if we start with '_', in this case add a leading 'a' */
+		if (*namebuf3 == '_')
+		{
+		    G_debug(3, "init: %s",namebuf3);
+		    sprintf(namebuf4,"%s","a");      /* Is this a good idea? */
+		    strcat(namebuf4,namebuf3);
+		}
+		else
+		    sprintf(namebuf4,"%s",namebuf3); /* just copy over */
+		G_debug(3, "fixed names: %s",namebuf4);
+		
+		Ogr_fieldname = G_strchg(namebuf4, '.', '_');
+		
 		/** Simple 32bit integer                     OFTInteger = 0        **/
 		/** List of 32bit integers                   OFTIntegerList = 1    **/
 		/** Double Precision floating point          OFTReal = 2           **/
