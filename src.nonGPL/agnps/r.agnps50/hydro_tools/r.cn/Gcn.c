@@ -202,18 +202,18 @@ char	*argv[];
 	land_use_rbuf = G_allocate_cell_buf();
 	cn_rbuf = G_allocate_cell_buf();
 
-	for(i = 0; i < window.rows; i++) 
+	for(i = 0; i < nrows; i++) 
 	{
 	/*
 	*/
-	    G_get_map_row(veg_cover_id,veg_cover_rbuf,i);
-	    G_get_map_row(hy_soil_group_id,hy_soil_group_rbuf,i);
-	    G_get_map_row(hy_cond_id,hy_cond_rbuf,i);
-	    G_get_map_row(land_use_id,land_use_rbuf,i);
+	    G_get_c_raster_row(veg_cover_id,veg_cover_rbuf,i);
+	    G_get_c_raster_row(hy_soil_group_id,hy_soil_group_rbuf,i);
+	    G_get_c_raster_row(hy_cond_id,hy_cond_rbuf,i);
+	    G_get_c_raster_row(land_use_id,land_use_rbuf,i);
 
 	    G_zero_cell_buf(cn_rbuf);
 
-	    for(j=0;j < window.cols;j++) 
+	    for(j=0;j < ncols;j++) 
 	    {
 	        if(hy_soil_group_rbuf[j] > 0)
 		{
@@ -238,7 +238,7 @@ char	*argv[];
 		       cn_rbuf[j] = amc_conversion(hy_soil_cover[row_id][col_id],amc);
 		 }
 	    }
-	    G_put_map_row(cn_id,cn_rbuf);
+	    G_put_c_raster_row(cn_id,cn_rbuf);
 	 }
 
 	 G_close_cell(hy_soil_group_id);
