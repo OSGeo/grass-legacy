@@ -275,6 +275,7 @@ struct line_cats
 
 struct cat_list
   {
+    GRASS_V_FIELD field;      /* category field */	  
     GRASS_V_CAT *min;         /* pointer to array of minimun values */
     GRASS_V_CAT *max;         /* pointer to array of maximum values */
     int         n_ranges;     /* number ranges */
