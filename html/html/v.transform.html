@@ -8,7 +8,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>v.transform</b></EM>  - Transforms an ASCII vector map layer 
+<EM><b>v.transform</b></EM>  - Transforms an binary vector map layer 
 from one coordinate system into another coordinate system. 
 <BR>
 <EM>(GRASS Vector Program)</EM>
@@ -44,9 +44,9 @@ to standard output.
 
 <DL>
 <DT><B>input=</B><EM>name</EM>
-<DD>Name of the ASCII vector map layer to be transformed. 
+<DD>Name of the binary vector map layer to be transformed. 
 <DT><B>output=</B><EM>name</EM>
-<DD>Name to be assigned to the resultant (transformed) ASCII vector map layer. 
+<DD>Name to be assigned to the resultant (transformed) binary vector map layer. 
 <DT><B>pointsfile=</B><EM>name</EM>
 <DD>Name of a file containing transformation points, 
 whose format is given below. 
@@ -80,7 +80,7 @@ average</EM> (RMS).  (An acceptable RMS for a 1:24,000 UTM
 map would be 1.2 to 2.4 (meters).) It will then ask if the
 transformation RMS value is acceptable.  After an RMS is
 accepted by the user, <EM>v.transform</EM> will transform
-the ASCII (<EM>dig_ascii</EM>) vector map and its
+the binary vector (<EM>dig</EM>) map and its
 associated attribute (<EM>dig_att</EM>) file into the
 requested coordinate system.
 
@@ -89,10 +89,6 @@ requested coordinate system.
 Remember to run 
 
 <EM><A HREF="v.support.html">v.support</A></EM> 
-
-or 
-
-<EM><A HREF="v.import.html">v.import</A></EM> 
 
 on the output map. 
 
@@ -200,7 +196,6 @@ transformed relatively small.
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="v.digit.html">v.digit</A></EM><br>
-<EM><A HREF="v.import.html">v.import</A></EM><br>
 <EM><A HREF="v.support.html">v.support</A></EM>
 
 <H2>AUTHOR</H2>
