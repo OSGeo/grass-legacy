@@ -27,7 +27,7 @@ int readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
   s = G_site_new_struct (map_type, dims, strs, dbls);
 
   if(field >= dbls){
-      G_fatal_error("decimal field not present in sites file");
+      G_fatal_error("\n decimal field %i not present in sites file", field + 1 );
   }
 
   if (dbls==0)
