@@ -1,9 +1,7 @@
-
 #include "vizual.h" 
-
 #include "G3d.h"
 
-viz_make_header(hf, dmin, dmax, g3reg)
+int viz_make_header(hf, dmin, dmax, g3reg)
 file_info *hf;
 double dmin, dmax;
 G3D_Region *g3reg;
@@ -41,5 +39,3 @@ G3D_Region *g3reg;
 
 
 }
-
-

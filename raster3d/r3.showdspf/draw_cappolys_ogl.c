@@ -5,7 +5,7 @@
 
 #define COLOR3
 
-draw_cappolys (Headp, D_spec, D_Cap,poly,x,y,direction,index)
+int draw_cappolys (Headp, D_spec, D_Cap,poly,x,y,direction,index)
     file_info *Headp;
   struct dspec *D_spec;
     struct Cap *D_Cap;
@@ -16,7 +16,7 @@ draw_cappolys (Headp, D_spec, D_Cap,poly,x,y,direction,index)
     int index;
 {
     int yloc, xloc;
-    int s,t; 
+    int t; 
     double *vertices;
     double tmpvt[20][3];/* these are going to be sent to v3d */
     float norm[3];

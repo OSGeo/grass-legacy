@@ -10,12 +10,11 @@ draw_cap_side (D_spec, Headp, G3header, D_Cap, type)
     struct Cap *D_Cap;
     int type;
 {
-    int t,x,y,z;	
+    int t,y,z;	
     int xdim,ydim,zdim;
     int xysize;
     FILE *fp;
     float *DB;
-    int tmp;
     int old = 0;
     int yloop, zloop;
     int ystart, zstart;

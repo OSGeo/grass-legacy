@@ -6,7 +6,7 @@
 */
 
 
-build_thresh_arrays (D_spec, headp)
+int build_thresh_arrays (D_spec, headp)
     struct dspec *D_spec;
     file_info *headp;
 {
@@ -42,17 +42,19 @@ build_thresh_arrays (D_spec, headp)
 	    for (a = 0; a < headp->linefax.nthres; a++)
 	    {
 		if (!i)
+		{
 		    if(min_thresh >= headp->linefax.tvalue[a]) 
 		    {
 		      D_spec->threshes[i].tvalue[b++] = headp->linefax.tvalue[a];
 		      D_spec->threshes[i].nthres++;
 		    }
 		    else
-		    if(max_thresh <= headp->linefax.tvalue[a]) 
-		    {
-		      D_spec->threshes[i].tvalue[b++] = headp->linefax.tvalue[a];
-		      D_spec->threshes[i].nthres++;
-		    }
+		     if(max_thresh <= headp->linefax.tvalue[a]) 
+		     {
+		       D_spec->threshes[i].tvalue[b++] = headp->linefax.tvalue[a];
+		       D_spec->threshes[i].nthres++;
+		     }
+		 } /* is this brace correct? MN 2001 */
 	    }
 	}
     }

@@ -43,7 +43,6 @@ void Ball_Mouse(BallData *ball, HVect vNow)
 void Ball_Update(BallData *ball)
 {
     Quat qout,qout2;
-    int i;
 
     ball->vFrom = MouseOnSphere(ball->vDown, ball->center, ball->radius);
     ball->vTo = MouseOnSphere(ball->vNow, ball->center, ball->radius);

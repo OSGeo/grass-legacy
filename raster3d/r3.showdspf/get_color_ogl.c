@@ -1,9 +1,11 @@
+#ifndef HUGE_VAL
 #define HUGE_VAL 10000000.0
+#endif
 #include "vizual.h"
 
 extern GLuint Material_1_Dlist;
 /******************************************************************************
-get_color_table(file, ctable):
+int get_color_table(file, ctable):
 reads color table from file & stores values in ctable.
 
 color table files must have the form:
@@ -19,7 +21,7 @@ where values 1-n are floats listed in increasing order,
 r, g, & b are integer 0 <= r, g, b <= 255,
 number of lines in table N <= 100.
 ******************************************************************************/
-get_color_table (file, ctable)
+int get_color_table (file, ctable)
     char *file;
     struct color_entry ctable[];
 {
@@ -73,7 +75,7 @@ get_color_table (file, ctable)
 get_cat_color (cat, ctable, color):
 fills color array with color value for cat calculated from values in ctable.
 ******************************************************************************/
-get_cat_color (cat, ctable, color)
+void get_cat_color (cat, ctable, color)
     float cat;
     struct color_entry ctable[];
     short color[3];
@@ -82,7 +84,6 @@ get_cat_color (cat, ctable, color)
     float cat1, cat2;
     short *color1, *color2;
     float delta;
-    int i;
 
 /*DEBUG
 fprintf (stderr, "TABLE\n");
@@ -141,7 +142,7 @@ prints error message & uses original (per threshold) color table
 (i.e. gets out of per cube color mode).
 ******************************************************************************/
 
-new_color_file (file, cfile, D_spec)
+int new_color_file (file, cfile, D_spec)
     char *file, *cfile;
     struct dspec *D_spec;
 {
@@ -171,7 +172,7 @@ which is the original (per threshold) color table
 If unable to open cfile (colortable file), prints error message 
 andd uses default color table.
 ******************************************************************************/
-no_color_file (D_spec, cfile)
+void no_color_file (D_spec, cfile)
     struct dspec *D_spec;
     char *cfile;
 {
@@ -189,12 +190,11 @@ get_default_table (head, ctable):
 Calculates values for ctable to produce a rainbow color table from
 range of  threshold values  stored in head.
 ******************************************************************************/
-get_default_table (head, ctable)
+void get_default_table (head, ctable)
     file_info *head;
     struct color_entry ctable[];
 {
     float min, max;
-    int i;
 
     get_min_max (head, &min, &max);
 
@@ -227,8 +227,7 @@ get_default_table (head, ctable)
 get_min_max (head, min, max)
 assigns min & max the minimum & maximum threshold values stored in head.
 ******************************************************************************/
-
-get_min_max (head, min, max)
+void get_min_max (head, min, max)
     file_info *head;
     float *min, *max;
 {
@@ -246,7 +245,8 @@ get_min_max (head, min, max)
 	    *max = head->linefax.tvalue[i];  
     }
 }
-change_spec(spec)
+
+void change_spec(spec)
     float spec;
 {
    static float material[] = {
@@ -266,5 +266,4 @@ change_spec(spec)
   glCallList(Material_1_Dlist);
   glEnable(GL_LIGHTING);
 }
-
 

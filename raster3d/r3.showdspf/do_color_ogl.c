@@ -2,7 +2,7 @@
 extern GLuint Material_1_Dlist;
 void winset_main();
 void winset_colortable();
-do_lights()
+void do_lights()
 {
 
       GLfloat light_position[] = {-150.0, 100.0,200.0, 0.0};
@@ -11,7 +11,7 @@ do_lights()
       GLfloat light_diffuse2[] = {0.40, 0.40, 0.40,1.};
       GLfloat light_ambient[] = {0.2,0.2,0.2, 1.0 };
       GLfloat light_ambient2[] = {0.3,0.3,0.3, 1.0 };
-   GLfloat lmodel_ambient[] = { 2.,2.,2., 1.0 };
+   /* GLfloat lmodel_ambient[] = { 2.,2.,2., 1.0 };*/
 
 
   static float material[]={
@@ -52,17 +52,15 @@ do_lights()
 
 /************************************  make_matcolors  ************************/
 /* this code came from GRASS color code written by M.Shapiro USACERL */
-draw_colortable (D_spec, Headfax, Window)
+void draw_colortable (D_spec, Headfax, Window)
     struct dspec *D_spec;
     file_info *Headfax;
     long Window[];
 {
-    int max; /* the number of colors in the colortable = number of thresholds*/
-    short t,z;
+    short t;
     short x1,x2,y1,y2;
     short vert[4][2]; /* the vertices of the colorsquares */
     int yadd;
-    long tmp_wid;
     short color[3];
         
 
