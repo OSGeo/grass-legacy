@@ -1,0 +1,64 @@
+Color	Color.c	/^Color(number)$/
+Color_offset	Color.c	/^Color_offset(n)$/
+Dcolor	Dcolor.c	/^Dcolor (number)$/
+Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, wx, wy, button)$/
+Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, wx, wy, button)$/
+Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_num_colors	Returns.c	/^Get_num_colors(index)$/
+Graph_Close	Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	Graph_Set.c	/^Graph_Set() $/
+LESSER	Panel.c	/^#define LESSER(a,b)  ((a) < (b) ? (a) : (b))$/
+MSWITCHER	SWITCHER.c	/^main(argc,argv)$/
+Panel_delete	Panel.c	/^Panel_delete(name)$/
+Panel_restore	Panel.c	/^Panel_restore(name)$/
+Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polygon_abs	Polygn_abs.c	/^Polygon_abs (xarray, yarray, number)$/
+REC	SWITCHER.c	/^#define REC(x,y) if (eof=rec(x,y)) break$/
+RECTEXT	SWITCHER.c	/^#define RECTEXT(x) if (eof=rectext(x)) break$/
+RESULT	SWITCHER.c	/^RESULT(n)$/
+RGB_color	Color.c	/^RGB_color(r, g, b)$/
+Raster_int_def	Raster_def.c	/^Raster_int_def (num, nrows, array, withzeros, colo/
+Screen_bot	Returns.c	/^Screen_bot(index)$/
+Screen_left	Returns.c	/^Screen_left(index)$/
+Screen_rite	Returns.c	/^Screen_rite(index)$/
+Screen_top	Returns.c	/^Screen_top(index)$/
+Standard_color	Color.c	/^Standard_color(number)$/
+_get_color_index	Color.c	/^_get_color_index(number)$/
+_get_color_index_array	Color.c	/^_get_color_index_array(a, num)$/
+_rectext	SWITCHER.c	/^_rectext (s)$/
+_save_screen	Graph_Set.c	/^_save_screen ()$/
+_setsize	Graph_Set.c	/^_setsize ()$/
+append_item	SWITCHER.c	/^append_item (pad, name, value)$/
+can_do_float	Can_do.c	/^can_do_float()$/
+catch	SWITCHER.c	/^static catch (n)$/
+check_connection	connect.c	/^check_connection(me, link)$/
+clear_all_pads	SWITCHER.c	/^clear_all_pads()$/
+close_mon	SWITCHER.c	/^close_mon()$/
+create_pad	SWITCHER.c	/^create_pad (name)$/
+delete_item	SWITCHER.c	/^delete_item (pad, name)$/
+delete_pad	SWITCHER.c	/^delete_pad (pad)$/
+delink_pad	SWITCHER.c	/^delink_pad (pad)$/
+do_nothing	Raster_def.c	/^do_nothing(n)$/
+draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+find_item	SWITCHER.c	/^find_item (pad, name)$/
+find_pad	SWITCHER.c	/^find_pad (name)$/
+free_item	SWITCHER.c	/^free_item (item)$/
+get1	SWITCHER.c	/^get1 (c)$/
+get_color_offset	Color.c	/^get_color_offset()$/
+get_command	SWITCHER.c	/^get_command(c)$/
+get_connection	connect.c	/^get_connection(files,rfd, wfd)$/
+get_num_colors	Returns.c	/^get_num_colors()$/
+invent_pad	SWITCHER.c	/^invent_pad (name)$/
+migrate_pad	SWITCHER.c	/^migrate_pad (pad)$/
+new_item	SWITCHER.c	/^new_item (pad, name)$/
+prepare_connection	connect.c	/^prepare_connection()$/
+read1	SWITCHER.c	/^read1 (c)$/
+rec	SWITCHER.c	/^rec (buf, n)$/
+rectext	SWITCHER.c	/^rectext (s)$/
+reset_color	Reset_clr.c	/^reset_color(number, red, grn, blu)$/
+send	SWITCHER.c	/^static send (buf, n)$/
+sendtext	SWITCHER.c	/^static sendtext (s)$/
+store	SWITCHER.c	/^store (s) char *s;$/
+swap	Panel.c	/^swap (a, b)$/
+timeout	connect.c	/^static timeout()$/
+xalloc	SWITCHER.c	/^xalloc (buf, cur, new, len)$/
