@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 
 #include <stdio.h>
 #include <libpq-fe.h>
