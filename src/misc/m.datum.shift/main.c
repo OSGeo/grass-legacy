@@ -1,45 +1,26 @@
-/***********************************************************************
- * GRASS 5.0 module m.datum.shift
- * main.c, main 
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 21 2000 
- * modified Oct 20 2000
+ ****************************************************************************
  *
- ***********************************************************************/
-
-/***********************************************************************
- * name
- *    m.datum.shift
+ * MODULE:       m.datum.shift
+ * AUTHOR(S):    Michael Shapiro, CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 Convert latitude/longitude from one datum to another
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
  *
- * function
- *    convert latitude/longitude from one datum to another
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
  *
- * usage
- *    m.datum.shift lat=dd.mm.ss{n|s} lon=dd.mm.ss{e|w} [h=#]
- *                  [id=input-datum
- *                  od=output-datum] || 
- *                  [is=input-spheroid 
- *                  os=output-spheroid
- *                  dx=# dy=# dz=# [Rx=# Ry=# Rz=# M=#]] 
- *    -b blockshift/CC transformation (default)
- *    -m use molodensky transformation
- *   (-w use bursa-wolf transformation, not fully implemented yet)
- *
- * changed/rewritten by Andreas Lange, andreas.lange@rhein-main.de
- * 06/2000
- * beware: typical spaghetti code!
- *
- ***********************************************************************/
+ *****************************************************************************/
 
 #include "gis.h"
 #include "CC.h"
 
-/* if you want support for Bursa Wolf transformation, uncomment the following: */
+/* if you want support for Bursa Wolf transformation,
+ * uncomment the following: */
 /* #define BURSAWOLF */
-
-const char rcsid[] = "@(#)$Id$"; 
 
 int
 main (int argc, char *argv[]) 
@@ -63,6 +44,8 @@ main (int argc, char *argv[])
       struct Flag *method_b, *method_m, *method_w;
     } flags; 
 
+    struct GModule *module;
+
     enum method { NO_M, BLOCK_M, MOLOD_M, BURSA_M };
 
     int use_method;
@@ -78,6 +61,12 @@ main (int argc, char *argv[])
 #endif
 
     (void) G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+      "Datum shift program. Return geographic coordinates "
+      "based on a different datum that the one used to obtain "
+      "the original coordinates. "; 
 
     sphlist = spheroid_list();
     datumlist = datum_list();
@@ -232,7 +221,8 @@ main (int argc, char *argv[])
 
     /* test:    (input datum && output datum) 
      *       || (input sph && output sph && shift params) 
-    */
+     */
+
     datum_spheroid = -1;
     use_method = BLOCK_M;
     if ( ((parm.id->answer != NULL) && (parm.od->answer != NULL)) ) 
