@@ -32,7 +32,13 @@
 
 /*=========================== Constants/Defines ============================*/
 
-static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
+#if !defined __GNUC__ || __GNUC__ < 2
+#undef __attribute__
+#define __attribute__(x)
+#endif
+
+static const char *GRASS_copyright __attribute__((unused))
+	= "GRASS GNU GPL licensed Software" ;
 
 /* Define TRUE and FALSE for boolean comparisons */
 #ifndef TRUE
