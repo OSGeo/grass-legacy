@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.6 2000-11-21 08:41:11 justin Exp $
+$Id: SUBMITTING,v 1.7 2000-11-22 08:44:30 justin Exp $
 
 NOTE: Please improve this list!
 
@@ -115,14 +115,18 @@ care of following rules:
     Use instead:
        /* C-comments */
 
-9.  Platform dependent code:
+9.  PLEASE take the time to add comments throughout your code explaining what
+    the code is doing. It will save a HUGE amount of time and frustration for
+    other programmers that may have to change your code in the future.
+    
+10. Platform dependent code:
     Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
-10. Make sure a new line is at the end of each file
+11. Make sure a new line is at the end of each file
 
-11. When writing Gmakefiles, use the current standard
+12. When writing Gmakefiles, use the current standard
     [insert module example here]
 
     Someone please take care of this:
@@ -133,24 +137,24 @@ care of following rules:
      	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
           into the $(CC) line.
 
-12. Add the module's directory name (pointing to the local Gmakefile)
+13. Add the module's directory name (pointing to the local Gmakefile)
     to the compile list at src/CMD/lists/GRASS
 
-13. Place the documentation in HTML format into html/html/ and
+14. Place the documentation in HTML format into html/html/ and
     add it to the module's list in html/ The easiest way to do this is to copy
     an existing HTML page and modify it for your purposes
     (to get the page style). There is a local README containing more details.
     The online WWW man pages will be updated over-night by CVS.
 
-14. For consistency, use README rather than README.txt for any README files.
+15. For consistency, use README rather than README.txt for any README files.
 
-15. Tell the other developers about the new code using the following e-mail:
+16. Tell the other developers about the new code using the following e-mail:
     grass5@geog.uni-hannover.de
  
     To subscribe to this mailing list, see
     http://www.geog.uni-hannover.de/grass/grassdevel.html
 
-16. In case of questions feel free to contact the developers at the above
+17. In case of questions feel free to contact the developers at the above
     mailing list.
 
 ...
