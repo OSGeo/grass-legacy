@@ -64,11 +64,13 @@ int check_connection (char *me, char *link)
 		fprintf(stderr,"Sorry, <%s> not available\n",in_fifo) ;
 		goto error ;
 	}
+#ifdef S_IFIFO
 	if (!(buf.st_mode & S_IFIFO))
 	{
 		fprintf(stderr,"Sorry, <%s> is not a fifo file\n",in_fifo) ;
 		goto error ;
 	}
+#endif
 	if ((buf.st_mode & 0666) != 0666)
 	{
 		fprintf(stderr,"Sorry, permissions on <%s> (%o) should be 0666\n",
@@ -81,11 +83,13 @@ int check_connection (char *me, char *link)
 		goto error ;
 	}
 /* Check existence and access of out_fifo */
+#ifdef S_IFIFO
 	if (!(buf.st_mode & S_IFIFO))
 	{
 		fprintf(stderr,"Sorry, <%s> is not a fifo file\n",out_fifo) ;
 		goto error ;
 	}
+#endif
 	if ((buf.st_mode & 0666) != 0666)
 	{
 		fprintf(stderr,"Sorry, permissions on <%s> (%o) should be 0666\n",
