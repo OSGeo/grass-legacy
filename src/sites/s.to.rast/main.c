@@ -142,11 +142,8 @@ int main (int argc, char *argv[])
     {
         if (sscanf (size->answer, "%d", &quad_size) != 1 || quad_size < 0)
         {
-            fprintf(stderr,
-            "\n%s: <%s> is an illegal size option.\n",
+            G_fatal_error ("%s: <%s> is an invalid size option.\n",
             G_program_name(), size->answer);
-            G_usage();
-            exit(1);
         }
     }
     else
@@ -159,41 +156,30 @@ int main (int argc, char *argv[])
     else if (strncmp(field->answer, "cat", 3) == 0)
         num_type = SITE_COL_NUL;
     else { /* Shouldn't happen */
-       char msg[256];
-       snprintf(msg, 256, "%s: \"%s\" is an unknown field type.\n",
+       G_fatal_error("%s: \"%s\" is an unknown field type",
                        G_program_name(), field->answer);
-       G_fatal_error(msg);
     }
 
     scan_int=sscanf(findex->answer,"%d",&num_index);
     if ((scan_int <= 0) || num_index < 1)
     {
-        char msg[256];
-        sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
+        G_fatal_error("%s: \"%s\" is an incorrect value for attribute field number.\n",
         G_program_name(), findex->answer );
-        G_fatal_error (msg);
-        exit(1);
     }
     num_index--;
     
     scan_int = sscanf(sindex->answer, "%d", &str_index);
     if ((scan_int <= 0) || str_index < 1)
     {
-        char msg[256];
-        sprintf(msg,"%s: \"%s\" is an incorrect value "
-                        "for attribute field number.\n",
+        G_fatal_error("%s: \"%s\" is an incorrect value "
+                        "for attribute field number",
                         G_program_name(), findex->answer );
-        G_fatal_error (msg);
-        exit(1);
     }
     str_index--;
 	    
     if (G_legal_filename(layer) < 0)
     {
-        fprintf (stderr, "\n%s: <%s> - illegal name\n", 
-        G_program_name (), layer);
-        G_usage ();
-        exit(1);
+        G_fatal_error("\n%s: <%s> - illegal name\n", G_program_name (), layer);
     }
 
     G_get_window (&window);
@@ -209,21 +195,19 @@ int main (int argc, char *argv[])
     mapset = G_find_sites(name, "");
     if (!mapset)
     {
-	fprintf (stderr, "\n%s: site list <%s> not found.\n",
+	G_fatal_error ("%s: site list <%s> not found.\n",
 	G_program_name(), name);
-	exit(1);
     }
 
     fd = G_fopen_sites_old (name, mapset);
     if (fd == NULL)
     {
-        fprintf (stderr, "\n%s: could not open sites file <%s>",
+        G_fatal_error("%s: could not open sites file <%s>",
 	G_program_name(), name);
-	exit(1);
     }
     if(G_site_describe (fd, &dims, &map_type, &strs, &dbls) != 0)
     {
-	fprintf (stderr, "\n%s: wrong site format",G_program_name());
+	G_fatal_error ("%s: bad sites format",G_program_name());
     }
     real_map_type = map_type;
 
