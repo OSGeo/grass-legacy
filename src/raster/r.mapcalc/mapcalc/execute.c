@@ -16,7 +16,7 @@ execute(outfd)
 
     for (row = 0; row < nrows; row++)
     {
-	percent (row, nrows, 2);
+	G_percent (row, nrows, 2);
 
 	execute_stack_depth = 0;
 	if(!evaluate(row,nrows,ncols))
@@ -47,7 +47,7 @@ execute(outfd)
 	find_min_max (execute_stack[0].cell, ncols);
 	return_buffer_to_pool (execute_stack[0].n);
     }
-    percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
     if (mask)
 	free (mask);
     return 1;
