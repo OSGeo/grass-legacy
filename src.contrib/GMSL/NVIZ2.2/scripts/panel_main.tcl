@@ -125,11 +125,17 @@ proc mkmainPanel { BASE } {
 
     button $BASE.midf.lookat.center -text center -command { look_center
 	if {[Nauto_draw] == 1} {Ndraw_all} }
-    button $BASE.midf.lookat.top -text top -command { Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
+    button $BASE.midf.lookat.top -text top -command { 
+# Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
 # note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
-	update_eye_position 0.496802 0.50100
+#	update_eye_position 0.496802 0.50100
+	set val2 [$Nv_(main_BASE).midf.height.f.entry get]
+	Nset_focus_top $val2
+	change_display 1
 	update
-        if {[Nauto_draw] == 1} {Ndraw_all} }
+
+        if {[Nauto_draw] == 1} {Ndraw_all} 
+}
     button $BASE.midf.lookat.cancel -text cancel -command no_focus
     pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
 	$BASE.midf.lookat.center $BASE.midf.lookat.top $BASE.midf.lookat.cancel \

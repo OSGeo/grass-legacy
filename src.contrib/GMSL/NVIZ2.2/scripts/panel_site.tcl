@@ -41,6 +41,7 @@ proc mksitePanel { BASE } {
 	set width [Nsite$curr get_att width]
 	set size [Nsite$curr get_att size]
 	set Nv_(siteshape) [Nsite$curr get_att marker]
+        set Nv_(sitedisplay) [Nsite$curr get_att display]
 	set maplist [Nget_map_list surf]
 	set longdim [expr int([Nget_longdim]) / 50 ]
 
