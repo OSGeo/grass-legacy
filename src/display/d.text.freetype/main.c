@@ -357,28 +357,37 @@ main(int argc, char **argv)
 	else
 	{
 		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed,
-			displayed;
+			setx, sety, setl;
 		FILE	*fp;
-		int	d, sx, sy;
+		int	d, sx, sy, px, py;
+		double	dd;
 
-		x = sx = win.l;
-		y = sy = win.t + size;
+		sx = win.l;
+		sy = win.t;
+
 		linefeed = 1;
-		displayed = 0;
+		setx = sety = setl = 0;
 
-		if(param.east_north->answer &&
-				get_coordinates(win, param.east_north->answers,
-					flag.p->answer, &east, &north, &x, &y))
+		if(param.east_north->answer)
 		{
-			deinit();
-			exit(0);
+			if(get_coordinates(win, param.east_north->answers,
+					flag.p->answer, &east, &north, &x, &y))
+			{
+				deinit();
+				exit(0);
+			}
+			sx = x;
+			sy = y;
 		}
-
-		y -= size;
-		pen.x *= 64;
-		pen.y = - pen.y * 64;
-
+		else
+		{
+			east  = D_d_to_u_col((double)sx);
+			north = D_d_to_u_row((double)sy);
+		}
 		strncpy(align, param.align->answer, 2);
+
+		x = px = sx;
+		y = py = sy;
 
 		tmpfile = G_tempfile();
 		if(!(fp = fopen(tmpfile, "w")))
@@ -386,6 +395,9 @@ main(int argc, char **argv)
 
 		while(fgets(buf, 512, stdin))
 		{
+			l = strlen(buf);
+			buf[l-1] = 0;
+
 			fprintf(fp, "%s", buf);
 			if(buf[0] == '.' && buf[1] != '.')
 			{
@@ -438,26 +450,33 @@ main(int argc, char **argv)
 						get_color(tcolor, &color);
 						break;
 					case 'S':
-						size = atoi(p);
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						d = atoi(p);
 						if(p[l-1] != 'p')
-							size = (int)(size/100.0 * (double)(win.b-win.t));
+							d = (int)(d/100.0 * (double)(win.b-win.t));
+						size = d + (i ? size : 0);
 						if(face && FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
-						if(!displayed)
-							sy = win.t + size;
 						break;
 					case 'A':
 						strncpy(align, p, 2);
 						break;
 					case 'R':
-						rotation = atof(p);
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						dd = atof(p);
 						if(p[l-1] != 'r')
-							rotation *= M_PI / 180.0;
-						rotation = fmod(rotation, 2 * M_PI);
+							dd *= M_PI / 180.0;
+						dd += (i ? rotation : 0.0);
+						rotation = fmod(dd, 2 * M_PI);
 						if(rotation < 0.0)
 							rotation += 2 * M_PI;
 						break;
 					case 'X':
+						setx = 1;
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
@@ -466,11 +485,16 @@ main(int argc, char **argv)
 							d = (int)(d/100.0 * (double)(win.r-win.l));
 						else
 						if(p[l-1] != 'p')
+						{
+							setx = 0;
 							d *= size;
+						}
 						x = d + (i ? x : sx);
-						pen.x = x * 64;
+						if(!setx)
+							px = x;
 						break;
 					case 'Y':
+						sety = 1;
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
@@ -479,12 +503,41 @@ main(int argc, char **argv)
 							d = (int)(d/100.0 * (double)(win.b-win.t));
 						else
 						if(p[l-1] != 'p')
+						{
+							sety = 0;
 							d *= size;
-						y = d + (i ? y : sy) - size;
-						pen.y = - y * 64;
+						}
+						y = d + (i ? y : sy);
+						if(!sety)
+							py = y;
 						break;
 					case 'L':
+						setl = 1;
 						linefeed = (atoi(p) ? 1 : 0);
+						break;
+					case 'E':
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						dd = atof(p);
+						if(p[l-1] == '%')
+							dd = dd/100.0 * (double)(win.r-win.l);
+						else
+						if(p[l-1] != 'p')
+							dd = D_u_to_d_col(dd);
+						x = px = sx = (int)dd + (i ? sx : win.l);
+						break;
+					case 'N':
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						dd = atof(p);
+						if(p[l-1] == '%')
+							dd = dd/100.0 * (double)(win.b-win.t);
+						else
+						if(p[l-1] != 'p')
+							dd = D_u_to_d_row(dd);
+						y = py = sy = (int)dd + (i ? sy : win.t);
 						break;
 				}
 			}
@@ -501,15 +554,14 @@ main(int argc, char **argv)
 				if(ol == -2)
 					error("Text conversion error");
 
-				if(linefeed)
+				if(linefeed || setl)
 				{
-					x += size * sin(rotation);
-					y += size * cos(rotation);
-				}
-				else
-				{
-					x = pen.x / 64;
-					y = - pen.y / 64;
+					if(!setx)
+						x = px + size * sin(rotation);
+					if(!sety)
+						y = py + size * cos(rotation);
+					px = x;
+					py = y;
 				}
 
 				pen.x = x;
@@ -520,7 +572,13 @@ main(int argc, char **argv)
 				draw_text(win, face, &pen, out, ol,
 						color, rotation);
 
-				displayed = 1;
+				if(!linefeed)
+				{
+					x = pen.x / 64;
+					y = - pen.y / 64;
+				}
+
+				setx = sety = setl = 0;
 			}
 			else
 				G_warning("No font selected");
@@ -529,17 +587,9 @@ main(int argc, char **argv)
 		fclose(fp);
 
 		l = strlen(G_recreate_command()) + 4 + strlen(tmpfile);
-
-		if(!param.east_north->answers)
-			l += 25;
-
 		p = (char *) G_malloc(l);
-		sprintf(p, "%s", G_recreate_command());
 
-		if(!param.east_north->answers)
-			sprintf(p + strlen(p), " east_north=%d,%d", sx, sy);
-
-		sprintf(p + strlen(p), " < %s", tmpfile);
+		sprintf(p, "%s < %s", G_recreate_command(), tmpfile);
 
 		D_add_to_list(p);
 		G_free(p);
