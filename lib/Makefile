@@ -11,18 +11,21 @@ SUBDIRS = \
 	edit \
 	external \
 	fonts \
+	form \
+	front.end \
 	gis \
 	image \
+	imagery \
+	init \
 	linkm \
+	ogsf \
 	proj \
 	raster \
-	vask \
-	vector \
-	ogsf \
+	rowio \
 	rst \
-	init \
-	form \
-	front.end
+	segment \
+	vask \
+	vector
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
