@@ -122,12 +122,9 @@ expression *variable(const char *name)
 	expression *e;
 
 	if (!var)
-	{
-		fprintf(stderr, "undefined variable: %s\n", name);
-		return NULL;
-	}
+		syntax_error("undefined variable: %s", name);
 
-	e = allocate(expr_type_variable, var->res_type);
+	e = allocate(expr_type_variable, var ? var->res_type : CELL_TYPE);
 	e->data.var.name = name;
 	e->data.var.bind = var;
 	return e;
@@ -169,30 +166,31 @@ expression *function(const char *name, expr_list *arglist)
 	for (i = 1; i <= argc; i++)
 		argt[i] = args[i]->res_type;
 
-	switch (d->check_args(argc, argt))
+	argt[0] = CELL_TYPE;
+
+	switch (!d ? -1 : d->check_args(argc, argt))
 	{
+	case -1:
+		syntax_error("undefined function: %s", name);
+		break;
 	case 0:
 		break;
 	case E_ARG_LO:
-		fprintf(stderr,
-			"Too few arguments (%d) to function %s()\n",
-			argc, name);
-		return NULL;
+		syntax_error("Too few arguments (%d) to function %s()",
+			     argc, name);
+		break;
 	case E_ARG_HI:
-		fprintf(stderr,
-			"Too many arguments (%d) to function %s()\n",
-			argc, name);
-		return NULL;
+		syntax_error("Too many arguments (%d) to function %s()",
+			     argc, name);
+		break;
 	case E_ARG_TYPE:
-		fprintf(stderr,
-			"Incorrect argument types to function %s()\n",
-			name);
-		return NULL;
+		syntax_error("Incorrect argument types to function %s()",
+			     name);
+		break;
 	default:
-		fprintf(stderr,
-			"Internal error for function %s()\n",
-			name);
-		return NULL;
+		G_fatal_error("Internal error for function %s()",
+			      name);
+		break;
 	}
 
 	for (i = 1; i <= argc; i++)
@@ -208,7 +206,7 @@ expression *function(const char *name, expr_list *arglist)
 
 	e = allocate(expr_type_function, argt[0]);
 	e->data.func.name = name;
-	e->data.func.func = d->func;
+	e->data.func.func = d ? d->func : NULL;
 	e->data.func.argc = argc;
 	e->data.func.args = args;
 	e->data.func.argt = argt;

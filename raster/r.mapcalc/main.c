@@ -123,6 +123,9 @@ main(int argc, char **argv)
 		? parse_string(join(argc - 1, argv + 1))
 		: parse_stream(stdin);
 
+	if (!result)
+		return 1;
+
 	pre_exec();
 	execute(result);
 	post_exec();
