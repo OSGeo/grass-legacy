@@ -1,8 +1,0 @@
-SQLPLIB = $(LIBDIR)/libsqlp.a
-LIBES = $(LIBDIR)/libsqlp.a $(LEXLIB) 
-
-
-sqlptest: sqlptest.o $(LIBDIR)/libsqlp.a 
-	$(CC) $(LDFLAGS) -o $@ sqlptest.o  $(LIBES)  
-
-
