@@ -1,3 +1,11 @@
+/* 
+*
+* Michael Shapiro,
+* U.S. Army Construction Engineering
+* Research Laboratory
+*
+*/
+
 #include "gis.h"
 #include "Vect.h"
 
