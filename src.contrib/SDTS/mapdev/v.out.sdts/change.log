@@ -1,0 +1,13 @@
+12/9/94  - removed unused parameter  (Map_info *map) from 
+	  init_SDTS_proj_info in spatial_ref.c
+12/9/94  - removed unused parameter  (Map_info *map) from 
+	  write_SDTS_quality_mods in wr_globals.c
+12/9/94  - removed unused parameter  (Map_info *map) from 
+	  write_quality_mod in spatial_ref.c
+12/9/94  - removed unused parameter  (Map_info *map) from 
+	  call to write_SDTS_quality_mods in v.out.sdts.c
+
+1/27/95 - data_quality.c - added (int) to strlen call, l. 68
+5/2/95 - v.out.sdts.c - fixed interactive mode problems with parser option 
+		   prompts; including change so that checking for legal_SDTS_prefix 
+		   now called from parser allowing try again in interactive mode
