@@ -31,21 +31,22 @@ Everything should be Endian safe, so the resultant file can be simply
 copied between different system architectures without binary translation.
 <BR><BR>
 
-As there is no IEEE value for NaN within integer maps, GRASS's null value 
-is used to represent it for these maps. You'll have to do something 
-like this to clean them once they are in Matlab:
+As there is no IEEE value for <tt>NaN</tt> for integer maps, GRASS's null 
+value is used to represent it within these maps. You'll have to do something 
+like this to clean them once the map is loaded into Matlab:
 <pre>    map_data(find(map_data < -1e9)) = NaN;</pre>
 
 Null values in maps containing either floating point or double-precision 
-floating point data should translate into NaN values as expected.<BR><BR>
+floating point data should translate into <tt>NaN</tt> values as expected.
+<BR><BR>
 
 
 <EM>r.out.mat</EM> must load the entire map into memory before writing, 
 therefore it might have problems with <i>huge</i> maps.
 (a 3000x4000 DCELL map uses about 100mb RAM)<BR><BR>
 
-GRASS defines its map bounds at the outer-edge of the bounding cells, not 
-the coodinates of their centroids. Thus, the following Matlab commands may 
+GRASS defines its map bounds at the outer-edge of the bounding cells, not at
+the coordinates of their centroids. Thus, the following Matlab commands may 
 be used to determine the map's resolution information:
 <pre>    [rows cols] = size(map_data)
     x_range = map_eastern_edge - map_western_edge
@@ -74,8 +75,8 @@ stored in a single structured array.
 
 <i>
 <a href="r.in.mat.html">r.in.mat</a><BR>
-<a href="r.out.ascii.html">r.out.ascii</a><BR>
-<a href="r.out.bin.html">r.out.bin</a><BR>
+<a href="r.out.ascii.html">r.out.ascii</a>, <a href="r.out.bin.html">r.out.bin</a><BR>
+<a href="r.null.html">r.null</a><BR>
 The <a href="http://www.octave.org">Octave</a> project
 </i>
 
