@@ -24,9 +24,17 @@ to column <B>areacat</B> in attribute table attached to vector map
 <br>
 <tt>v.distance from=pnt to=ar upload=cat column=areacat</tt>
 
+<p>
+3) Create a new vector map which contains the line connections nearest
+features of maps <B>pnt</B> and map <B>ln</B>. The resulting vector map
+can be used for example to connect points to a network as needed for
+network analysis:
+<br>
+<tt>v.distance -p from=pnt to=ln out=connections upload=dist column=dist</tt>
+
 
 <H2>NOTES</H2>
-If nearest feature does not have a category, column is updated to <B>null</B>.
+If a nearest feature does not have a category, column is updated to <B>null</B>.
 This is true also for areas, which means for example, that if point is in island
 (area WITHOUT category), v.distance does not search for nearest area WITH category,
 island is identified as nearest and category updated to null.

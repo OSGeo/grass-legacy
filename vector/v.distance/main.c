@@ -125,7 +125,7 @@ int main (int argc, char *argv[])
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
     out_opt->required    = NO;
-    out_opt->description = "Write the lines connecting nearest elements here.";
+    out_opt->description = "New vector map containing lines connecting nearest elements";
     
     max_opt = G_define_option();
     max_opt->key = "max";
