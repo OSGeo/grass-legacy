@@ -99,6 +99,7 @@ struct Cell_head
     double west;
 };
 
+#ifndef SWIGGING
 struct _Color_Rule_
 {
     struct
@@ -112,6 +113,7 @@ struct _Color_Rule_
     struct _Color_Rule_ *next;
     struct _Color_Rule_ *prev;
 };
+#endif
 
 struct _Color_Info_
 {
