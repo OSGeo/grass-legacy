@@ -2,7 +2,7 @@
 
 
 <EM>s.in.ascii</EM> converts an ASCII listing of site
-locations and category labels into a file in GRASS vector format.
+locations and category labels into GRASS vector format.
 
 <P>
 
@@ -15,16 +15,14 @@ either a character, a space, or a tab) can be used to
 specify the use of a particular field separator between
 these three input fields. This is useful when input is
 obtained from other programs (see NOTES, below).  Output is
-stored in the file <B>output=</B><EM>name</EM> and placed in
-the site_lists/ directory under the user's current mapset.
+stored in the vector file <B>output=</B><EM>name</EM>.
 
 <P>
 
 The GRASS program <EM><a href="s.out.ascii.html">s.out.ascii</a></EM>
 can be used to perform the reverse function, converting a file in GRASS
-site list format into an ASCII listing of eastings,
-northings, and category labels associated with site
-locations.
+vector sites format into an ASCII listing of eastings, northings, and 
+category labels associated with site locations.
 
 
 <H3>Parameters:</H3>
@@ -99,8 +97,6 @@ spaces are the default field separator assumed by
 Data may be imported from many spreadsheet programs by saving the spreadsheet
 as a comma separated variable (.csv) text file, and then using 
 the "<b>fs=</b><EM>,</EM>" command line parameter with <EM>s.in.ascii</EM>.
-Note <EM>s.in.ascii</EM> currently requires there to be at least three 
-columns of data for the import to work properly.
 <p>
 <b>Importing latitude/longitude data</b>
 <p>
