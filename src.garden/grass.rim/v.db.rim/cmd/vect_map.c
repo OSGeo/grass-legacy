@@ -1,6 +1,6 @@
 
 #define VECT_MAP
-
+#include <strings.h>
 #include "gis.h"
 #include "Vect.h"
 #include "dig_atts.h"
