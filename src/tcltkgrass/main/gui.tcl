@@ -402,7 +402,7 @@ proc scale_adjust {var x0 dx x} {
 proc feature_get {feature variable} {
     regexp {[^()]+} $variable array
     global $array env group subgroup
-    global colors Colors 3Dcolors fonts distance_units area_units spheroids
+    global colors Colors 3Dcolors fonts distance_units area_units spheroids types
     global monitors featuredir Featuredir methods
 
     regexp -- {[+-].*} [wm geometry .$array] geometry
@@ -419,6 +419,9 @@ proc feature_get {feature variable} {
         }
         Color {
             set var [list_select $geometry {} Color $Colors]
+        }
+        type {
+        	set var [list_select $geometry {} Type $types]
         }
         3Dcolor {
             set var [list_select $geometry {} Color $3Dcolors]
@@ -1750,6 +1753,13 @@ set colors {
 	grey
 	black
 	brown
+}
+
+set types {
+	x
+	diamond
+	box
+	+
 }
 
 set Colors "$colors none"
