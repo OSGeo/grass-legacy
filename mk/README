@@ -6,34 +6,21 @@ Alternate Build Mechanism
 
 Building everything:
 
-cd /usr/src/grass5
-mk/mkmakefiles
 mkdir ~/grass-build
 cd ~/grass-build
-/usr/src/grass5/configure ...
-cp -f mk/Makefile Makefile
-make all		# all == dirs gmake binaries links documents
+/usr/src/grass5/configure --enable-gmake=no ...
+make all	# all == dirs gmake documents binaries links post-compile
 sudo make install
 
 Building a single directory:
 
 mkdir ~/grass-build
 cd ~/grass-build
-/usr/src/grass5/configure ...
-cp -f mk/Makefile .
+/usr/src/grass5/configure --enable-gmake=no ...
 make dirs gmake
-./gmake5 <subdir>
+./gmake5x <subdir>
 
-Building everything using shared libraries (Linux only):
-
-cd /usr/src/grass5
-mk/mkmakefiles
-mkdir ~/grass-build
-cd ~/grass-build
-/usr/src/grass5/configure ...
-cp -f mk/Makefile Makefile
-cp /usr/src/grass5/mk/mid.mk.shlib mk/mid.mk		# xxx
-make all		# all == dirs gmake binaries links documents
-cp -af src/libes/*.so* dist.i686-pc-linux-gnu/lib	# xxx
-sudo make install
+Shared libraries are built by default. Use
+/usr/src/grass5/configure --enable-gmake=no --enable-shared=no ...
+for static libraries.
 
