@@ -900,7 +900,7 @@ int G_put_window(struct Cell_head *);
 int G__put_window(struct Cell_head *, char *, char *);
 
 /* putenv.c */
-int G_putenv(char *, char *);
+void G_putenv(const char *, const char *);
 
 /* quant.c */
 void G_quant_clear(struct Quant *);
