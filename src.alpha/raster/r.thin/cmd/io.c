@@ -28,12 +28,14 @@
 #include "gis.h"
 #include "rowio.h"
 
-#define PAD 5
+#define PAD 2
 #define MAX_ROW 7
 
 extern int errno;
 extern char *error_prefix;
 static int n_rows, n_cols;
+static int work_file;
+static char *work_file_name;
 static ROWIO row_io;
 
 CELL *get_a_row(row)
@@ -73,8 +75,7 @@ open_file(name)
 char *name;
 {
 	char *mapset, *G_find_cell();
-	char *temp_file;
-	int cell_file, work_file, read_row(), write_row(), buf_len;
+	int cell_file,  read_row(), write_row(), buf_len;
 	int i, row, col;
 	char cell[100];
 	CELL *buf;
@@ -84,11 +85,13 @@ char *name;
 	if ((mapset = G_find_cell2(cell,"")) == NULL)
 	{
 		fprintf(stderr,"%s:  open_file:  cell file %s not found\n",error_prefix,name);
+	        unlink(work_file_name);
 		exit(-1);
 	}
 	if ((cell_file = G_open_cell_old(cell,mapset)) < 0)
 	{
 		fprintf(stderr,"%s:  open_file:  could not open cell file %s in %s\n",error_prefix,cell,mapset);
+	        unlink(work_file_name);
 		exit(-1);
 	}
 	n_rows = G_window_rows();
@@ -96,14 +99,15 @@ char *name;
 	fprintf(stdout,"File %s -- %d rows X %d columns\n",name,n_rows,n_cols);
 	n_cols += (PAD << 1);
 	/* copy cell file into our read/write file */
-	temp_file = G_tempfile();
+	work_file_name = G_tempfile();
 
 	/* create the file and then open it for read and write */
-	close(creat(temp_file,0666));
-	if ((work_file = open(temp_file,2)) < 0)
+	close(creat(work_file_name,0666));
+	if ((work_file = open(work_file_name,2)) < 0)
 	{
-		fprintf(stderr,"%s:  open_file:  could not create temporary file %s\n",error_prefix,temp_file);
+		fprintf(stderr,"%s:  open_file:  could not create temporary file %s\n",error_prefix,work_file_name);
 		fprintf(stderr,"errno = %d\n",errno);
+	        unlink(work_file_name);
 		exit(-1);
 	}
 	buf = (CELL *) G_malloc(buf_len = n_cols * sizeof(CELL));
@@ -114,6 +118,7 @@ char *name;
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
+	                unlink(work_file_name);
 			exit(-1);
 		}
 	}
@@ -122,11 +127,13 @@ char *name;
 		if (G_get_map_row(cell_file,buf + PAD,row) < 0)
 		{
 			fprintf(stderr,"%s:  open_file:  error reading from %s in %s\n",error_prefix,cell,mapset);
+	                unlink(work_file_name);
 			exit(-1);
 		}
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
+	                unlink(work_file_name);
 			exit(-1);
 		}
 	}
@@ -137,6 +144,7 @@ char *name;
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
+	                unlink(work_file_name);
 			exit(-1);
 		}
 	}
@@ -156,6 +164,7 @@ char *name;
 	if ((cell_file = G_open_cell_new(name)) < 0)
 	{
 		fprintf(stderr,"%s:  close_cell:  could not open output file %s\n",error_prefix,name);
+	        unlink(work_file_name);
 		exit(-1);
 	}
 	row_count = n_rows - (PAD << 1);
@@ -170,7 +179,8 @@ char *name;
 	G_close_cell(cell_file);
 	rowio_flush(&row_io);
 	close(rowio_fileno(&row_io));
-	/*  rowio_release(&row_io); */
+	rowio_release(&row_io); 
+	unlink(work_file_name);
 }
 
 map_size(r,c,p)
