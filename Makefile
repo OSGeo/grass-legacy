@@ -64,6 +64,10 @@ BIN_DIST_FILES = $(FILES) \
 	tcltkgrass
 
 default:
+	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
+	@echo "-------------------------"    >> $(GRASS_HOME)/error.log
+	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
+	@echo "Errors in:"                   >> $(GRASS_HOME)/error.log
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
@@ -71,6 +75,8 @@ default:
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.html")
+	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
+	@echo "See $(GRASS_HOME)/error.log for potential compilation errors."
 
 LIBDIRS = \
 	lib/external/shapelib \
