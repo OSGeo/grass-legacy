@@ -9,8 +9,14 @@
 #define PG_CHAR   1
 #define PG_INT    2
 #define PG_DOUBLE 3
+#define PG_DATE   4
+#define PG_TIME   5
 
 #define NAMELEN 1024
+
+/* Definitions in:
+ *   /usr/include/pgsql/server/catalog/pg_type.h
+ */
 
 #define BOOLOID                 16
 #define BYTEAOID                17
@@ -48,13 +54,14 @@
 #define VARCHAROID              1043
 #define DATEOID                 1082
 #define TIMEOID                 1083
-#define TIMESTAMPOID    	1184
+#define TIMESTAMPOID    	1114
+#define TIMESTAMPTZOID  	1184
 #define INTERVALOID             1186
 #define TIMETZOID               1266
-#define ZPBITOID         	1560
+#define BITOID   		1560
 #define VARBITOID         	1562
 #define NUMERICOID              1700
-
+#define REFCURSOROID    	1790
 
 typedef struct
 {
@@ -69,6 +76,7 @@ typedef union
     char *c;
     int i;
     double d;
+    dbDateTime t;
 }
 VALUE;
 
