@@ -1,0 +1,26 @@
+PGM = Gtraj
+LIST =  main.o \
+	command.o \
+	make_point.o \
+	delete.o \
+	mark_pts.o \
+	calc_angles.o \
+	pts_elim.o \
+	sort_list.o \
+	make_list.o
+
+all: $(BIN)/$(PGM) copy-data 
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(LIBDIR)/libsegment.a $(MATHLIB)
+
+copy-data::
+	rm -rf $(GIS)/weapon_data
+	tar cf - weapon_data | (cd $(GIS); tar xf -)
+
+help:
+	cp HELP $(HELP)/$(PGM); chmod +r $(HELP)/$(PGM)
+	cp MAN.cat $(MAN2)/$(PGM); chmod +r $(MAN2)/$(PGM)
+
+MAN.cat: MAN.nroff
+	$(MANROFF)
+$(GISLIB): #
