@@ -84,13 +84,9 @@ int main (int argc, char **argv)
     	} parm;
 
 
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
+	G_init_locale(PACKAGE);
 
-	G_gisinit(_("ARC/INFO -  import from UNGENERATE"));
+	G_gisinit(argv[0]);
 
 	if (argc != 2)
 	{                 /* get name for grass vector file from user */

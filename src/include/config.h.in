@@ -157,9 +157,6 @@
 /* define if X is disabled or unavailable */
 #undef X_DISPLAY_MISSING
 
-/* define to path of locale directory */
-#undef LOCALEDIR
-
 /* define if libintl.h exists */
 #undef HAVE_LIBINTL_H
 

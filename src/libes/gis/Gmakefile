@@ -1,7 +1,5 @@
-#libgis
+
 SLIBDEPS = $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
-#libedit
-#SLIBDEPS = $(GISLIB) $(VASKLIB)
 
 EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS)
 
@@ -108,6 +106,7 @@ OBJ = \
     line_dist.o\
     ll_format.o\
     ll_scan.o\
+    locale.o\
     location.o\
     lu.o\
     mach_name.o\
@@ -187,14 +186,8 @@ OBJ = \
     zone.o\
     G_dump.o
 
-EOBJ = \
-    edit_cats.o\
-    edit_cellhd.o\
-    edit_hist.o
-
 all: \
 	$(DEPGISLIB) \
-	$(DEPEDITLIB) \
 	$(ETC)/ellipse.table \
 	$(ETC)/datum.table \
 	$(ETC)/projections \
@@ -207,9 +200,6 @@ all: \
 	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
 $(DEPGISLIB): $(OBJ)
-	$(SLIBRULE)
-
-$(DEPEDITLIB): $(EOBJ)
 	$(SLIBRULE)
 
 $(ETC)/ellipse.table: ellipse.table

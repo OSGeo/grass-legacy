@@ -3,6 +3,7 @@ html
 src/libes/datetime
 src/libes/gis
 src/libes/vask
+src/libes/edit
 src/libes/segment
 src/libes/rowio
 src/libes/raster

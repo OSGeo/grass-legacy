@@ -33,14 +33,10 @@ char **argv ;
     
 
 
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
-
 	selPassed = 0;
 
+
+	G_init_locale(PACKAGE);
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;

@@ -44,11 +44,7 @@ char **argv ;
     char *dbname;
     int res= 99;
 
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
+	G_init_locale(PACKAGE);
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;

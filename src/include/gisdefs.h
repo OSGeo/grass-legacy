@@ -650,6 +650,9 @@ int G_lat_scan(char *, double *);
 int G_lon_scan(char *, double *);
 int G_llres_scan(char *, double *);
 
+/* locale.c */
+void G_init_locale(const char *);
+
 /* location.c */
 char *G_location_path(void);
 char *G_location(void);
