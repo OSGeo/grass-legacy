@@ -605,38 +605,38 @@ else
   if test "$GDAL_CONFIG" = "no" ; then
     AC_MSG_ERROR([*** couldn't find gdal-config])
   fi
-fi
 
-GDAL_LIBS=
-GDAL_CFLAGS=
-USE_GDAL=
-USE_OGR=
+  GDAL_LIBS=
+  GDAL_CFLAGS=
+  USE_GDAL=
+  USE_OGR=
 
-if test "$GDAL_CONFIG" != "" ; then
-  GDAL_LIBS=`"$GDAL_CONFIG" --libs`
-  GDAL_DEP_LIBS=`"$GDAL_CONFIG" --dep-libs`
-  GDAL_CFLAGS=`"$GDAL_CONFIG" --cflags`
-  USE_GDAL=1
-  if test `"$GDAL_CONFIG" --ogr-enabled` = "yes" ; then
-    AC_DEFINE(HAVE_OGR)
-    USE_OGR=1
+  if test "$GDAL_CONFIG" != "" ; then
+    GDAL_LIBS=`"$GDAL_CONFIG" --libs`
+    GDAL_DEP_LIBS=`"$GDAL_CONFIG" --dep-libs`
+    GDAL_CFLAGS=`"$GDAL_CONFIG" --cflags`
+    USE_GDAL=1
+    if test `"$GDAL_CONFIG" --ogr-enabled` = "yes" ; then
+      AC_DEFINE(HAVE_OGR)
+      USE_OGR=1
+    fi
   fi
+
+  ac_save_libs="$LIBS"
+  LIBS="$GDAL_LIBS $LIBS"
+  AC_CHECK_FUNC(GDALOpen,[],[
+  LIBS="$GDAL_DEP_LIBS $LIBS"
+  AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
+      AC_MSG_ERROR([*** Unable to locate GDAL library.])
+  ])
+  ])
+  LIBS=$ac_save_libs
+
+  AC_SUBST(GDAL_LIBS)
+  AC_SUBST(GDAL_CFLAGS)
+  AC_SUBST(USE_GDAL)
+  AC_SUBST(USE_OGR)
 fi
-
-ac_save_libs="$LIBS"
-LIBS="$GDAL_LIBS $LIBS"
-AC_CHECK_FUNC(GDALOpen,[],[
-LIBS="$GDAL_DEP_LIBS $LIBS"
-AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
-    AC_MSG_ERROR([*** Unable to locate GDAL library.])
-])
-])
-LIBS=$ac_save_libs
-
-AC_SUBST(GDAL_LIBS)
-AC_SUBST(GDAL_CFLAGS)
-AC_SUBST(USE_GDAL)
-AC_SUBST(USE_OGR)
 
 # Enable TIFF option
 
