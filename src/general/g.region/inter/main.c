@@ -16,6 +16,7 @@ main(argc,argv) char *argv[];
     int modify_db();
     int from_cellhd();
     int from_vect();
+    int from_view();
     char *G_database_projection_name();
     char *G__get_window();
     char *prj;
@@ -67,13 +68,14 @@ main(argc,argv) char *argv[];
 	fprintf (stderr, "PROJECTION: %d (%s)\n", cur_window.proj, prj);
 	fprintf (stderr, "ZONE:       %d\n", cur_window.zone);
 
-	fprintf (stderr, "\n\n\nPlease select one of the following options\n\n");
+	fprintf (stderr, "\n\nPlease select one of the following options\n\n");
 	fprintf (stderr, "   Current Region                           Region Database\n\n");
-	fprintf (stderr, "1  Modify current region directly        6  Save current region in the database\n");
-	fprintf (stderr, "2  Set from default region               7  Create a new region\n");
-	fprintf (stderr, "3  Set from a database region            8  Modify an existing region\n");
+	fprintf (stderr, "1  Modify current region directly        7  Save current region in the database\n");
+	fprintf (stderr, "2  Set from default region               8  Create a new region\n");
+	fprintf (stderr, "3  Set from a database region            9  Modify an existing region\n");
 	fprintf (stderr, "4  Set from a raster map\n");
 	fprintf (stderr, "5  Set from a vector map\n");
+	fprintf (stderr, "6  Set from 3d.view file\n");
 	fprintf (stderr, "\n");
 	fprintf (stderr, "RETURN to quit\n\n");
 	fprintf (stderr, "> ");
@@ -87,9 +89,10 @@ main(argc,argv) char *argv[];
 	else if (selection("3"))   option = cur_from_db;
 	else if (selection("4"))   option = from_cellhd ;
 	else if (selection("5"))   option = from_vect ;
-	else if (selection("6"))   option = cur_to_db;
-	else if (selection("7"))   option = new_db;
-	else if (selection("8"))   option = modify_db;
+	else if (selection("7"))   option = cur_to_db;
+	else if (selection("8"))   option = new_db;
+	else if (selection("9"))   option = modify_db;
+	else if (selection("6"))   option = from_view;
 
 	else
 	{
