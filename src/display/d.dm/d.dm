@@ -1,4 +1,9 @@
 #!/bin/sh
+
+#Moritz
+#This is based on Radim's d.dm with just one additional (quick and dirty) hack to create button allowing the export of the map to a "map.png" file.
+
+
 # the next line restarts using wish \
 exec $GRASS_WISH "$0" "$@"
 
@@ -62,6 +67,7 @@ proc mon_open { mon } {
 	return    
     }
 }
+
 
 proc set_display { dtype } {
     global set sset smon map
@@ -129,6 +135,34 @@ proc set_display { dtype } {
 	execute $cmd
     }
 }
+
+
+#Moritz' hack for creating png map
+proc set_display_png { } {
+    global set sset smon map
+    set s $sset
+    if { $s < 0 } { puts stdout "Set not selected."; return }
+
+    set f $set($s,frame)
+
+    set cmd "d.mon PNG"
+    execute $cmd
+
+    #set cmd "d.erase white"
+    #execute $cmd
+    foreach mw [pack slaves $f] {
+      regexp -- {.*\.([^.]*)$} $mw p m 
+          if { $map($s,$m,_disp) } {
+              map_display $s $m
+          }
+      }
+    
+
+    set cmd "d.mon stop=PNG"
+    execute $cmd
+}
+
+
 
 proc set_query { } {
     global set sset smon slb map
@@ -777,3 +811,7 @@ pack $df.pan -side left -padx 2 -pady 5
 
 button $df.query -text "Query"  -command { set_query } 
 pack $df.query -side left -padx 2 -pady 5
+
+#Moritz' hack for creating png map
+button $df.png -text "PNG"  -command { set_display_png} 
+pack $df.png -side left -padx 2 -pady 5
