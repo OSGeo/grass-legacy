@@ -1,11 +1,17 @@
 
 MODULE_TOPDIR = ../../../..
 
-PGM=sqltest
-LIBES     = $(SQLP_LIBNAME)
- 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
+include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-#default: cmd
-#sorry, I don't get this working here (MN) - please fix
-default:
+LIBES = $(SQLPLIB) $(LEXLIB) 
+
+EXTRA_CLEAN_FILES = sqlptest
+
+default: sqlptest
+
+
+sqlptest: sqlptest.c 
+	$(CC) $(CFLAGS) -static -o $@ sqlptest.c $(LIBES)  
+
