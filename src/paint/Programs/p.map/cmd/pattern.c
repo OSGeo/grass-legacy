@@ -318,7 +318,7 @@ printf ("pattternfile is %s\n", patternfile);
 close_pattern_file()
 {
     if (patternfd)
-	close (patternfd);
+	fclose (patternfd);
     patternfd = NULL;
     cur_file = -1;
     cur_mode = -1;
