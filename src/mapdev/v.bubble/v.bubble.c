@@ -25,6 +25,7 @@
 
 int main( int argc, char **argv )
  {
+  struct GModule *module;
   char *vect_mapset;
   char *site_mapset;
   struct Option *opt_radius;
@@ -51,6 +52,11 @@ int main( int argc, char **argv )
 /* Initialize the GIS calls */
   G_gisinit(argv[0]) ;
 
+  module = G_define_module();
+  module->description =
+	"Creates a vector file which consists of "
+	"bubble(s)  for each point in a site-file and with a "
+	"size relative to the z value of that point.";
 
 /* Request a pointer to memory for each option. */
   opt_input = G_define_option();

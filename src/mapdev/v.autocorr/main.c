@@ -48,6 +48,7 @@ int main (int argc, char **argv)
   FILE *fp_att;
   struct Map_info *Map;
 
+  struct GModule *module;
   struct
   {
     struct Flag *wmatrix, *cmatrix, *stats, *q, *h;
@@ -57,6 +58,10 @@ int main (int argc, char **argv)
     struct Option *input, *mapset, *output;
   } parm;
 
+
+  module = G_define_module();
+  module->description =
+	"Calculate spatial autocorrelation statistics for GRASS vector file.";
 
   /* Define the different options */
 

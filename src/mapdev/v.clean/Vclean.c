@@ -30,17 +30,21 @@ double dig_unit_conversion ();
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     char *mapset;
     char *dig_name;
 
+    G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Cleans out dead lines in GRASS vector files.";
 
 /*  check args and set flags  */
 	
     parse_command_line (argc, argv, &dig_name);
      
 /* Show advertising */
-    G_gisinit(argv[0]);
-
     fprintf (stdout,"\n\n   v.clean:\n\n");
 
     if ((mapset = G_find_file2 ("dig", dig_name, "")) == NULL)
