@@ -33,8 +33,10 @@ G_set_window (window)
     struct Cell_head twindow;
 
 /* adjust window, check for valid window */
+/* adjust the real one, not a copy
     G_copy (&twindow, window, sizeof(struct Cell_head));
     window = &twindow;
+*/
 
     if (err = G_adjust_Cell_head (window, 0,0))
     {
@@ -57,7 +59,7 @@ G_set_window (window)
 		    continue;
 	    if (i != maskfd)
 	    {
-		G_warning ("G_set_window(): projection/zone differs from that of currently open cell files");
+		G_warning ("G_set_window(): projection/zone differs from that of currently open raster files");
 		return -1;
 	    }
 	}
