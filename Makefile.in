@@ -5,6 +5,8 @@ SHELL=			/bin/sh
 
 PREFIX=			@prefix@
 
+exec_prefix=            @exec_prefix@
+
 BINDIR=			@BINDIR@
 
 SRCDIR=			@SRCDIR@
