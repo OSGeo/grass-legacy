@@ -1,5 +1,4 @@
 #!/bin/sh
-# g.mremove: script for g.remove
 #
 # $Id$
 #
@@ -7,7 +6,7 @@
 #
 # MODULE:	g.mremove
 # AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
-# PURPOSE:	applied wildcard for g.remove
+# PURPOSE:	applied wildcard to g.remove
 # COPYRIGHT:	(C) 2000 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
