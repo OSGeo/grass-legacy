@@ -1,7 +1,8 @@
-#include "gis.h"
-#include "site.h"
-#include "local_proto.h"
 #include <stdlib.h>
+#include "gis.h"
+#include "dbmi.h"
+#include "Vect.h"
+#include "local_proto.h"
 
 void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 
         struct RASTER_MAP_PTR *to, int tcol);
@@ -15,10 +16,16 @@ int execute_random (struct rr_state *theState)
     struct Cell_head window;
     int nrows, ncols, row, col;
     int infd, outfd;
-    FILE *sitefd;
     char msg[256];
-    Site *mysite;
-    Site_head site_info;
+    struct Map_info Out;
+    struct field_info *fi;
+    dbTable *table;
+    dbColumn *column;
+    dbString sql;
+    dbDriver *driver;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    int cat;
 
     G_get_window (&window);
 
@@ -48,32 +55,37 @@ int execute_random (struct rr_state *theState)
     }
     if (theState->outsites)
     {
-        mysite=G_site_new_struct(-1,2,0,1);
-        sitefd = G_sites_open_new (theState->outsites);
-        if (sitefd == NULL)
-        {
-            sprintf (msg, "%s: unable to create site file [%s]",
-                G_program_name() , theState->outsites);
-            G_fatal_error (msg);
-            exit(1);
-        }
-        else
-        {
-            theState->fsites = sitefd;
-            site_info.form=NULL;
-            site_info.labels=NULL;
-            site_info.time=NULL;
-            site_info.stime=NULL;
-            site_info.name=(char *)G_malloc(80*sizeof(char));
-            site_info.desc=(char *)G_malloc(80*sizeof(char));
-            if (site_info.desc==NULL || site_info.name==NULL)
-              G_fatal_error("memory allocation error");
-            sprintf (site_info.desc, 
-                     "Random sites from [%s in %s]", 
-                     theState->inraster, theState->mapset);
-            sprintf (site_info.name, "%s", theState->outsites);
-            G_site_put_head (sitefd, &site_info);
-        }
+        Vect_open_new (&Out, theState->outsites, 0);
+        Vect_hist_command ( &Out );
+
+        fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
+
+        driver = db_start_driver_open_database ( fi->driver, Vect_subst_var(fi->database,&Out) );
+        if ( !driver )
+            G_fatal_error ( "Cannot open database %s with driver %s", 
+                             Vect_subst_var(fi->database,&Out), fi->driver );
+        
+        Vect_map_add_dblink ( &Out, 1, NULL, fi->table, "cat", fi->database, fi->driver);
+
+        table = db_alloc_table ( 2 );
+        db_set_table_name ( table, fi->table );
+        
+        column = db_get_table_column (table, 0);
+        db_set_column_name ( column,  "cat" );
+        db_set_column_sqltype ( column, DB_SQL_TYPE_INTEGER ); 
+
+        column = db_get_table_column (table, 1);
+        db_set_column_name ( column,  "value" );
+        db_set_column_sqltype ( column, DB_SQL_TYPE_DOUBLE_PRECISION ); 
+
+        if ( db_create_table ( driver, table ) != DB_OK )
+            G_warning ( "Cannot create new table" );
+
+        db_begin_transaction ( driver );
+        
+        Points = Vect_new_line_struct ();
+        Cats = Vect_new_cats_struct ();
+        db_init_string (&sql);
     }
 
     if (theState->verbose)
@@ -93,6 +105,7 @@ int execute_random (struct rr_state *theState)
     nc = (theState->use_nulls) ? theState->nCells : 
             theState->nCells - theState->nNulls ;
     nt = theState->nRand;
+    cat = 1;
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
@@ -116,10 +129,27 @@ int execute_random (struct rr_state *theState)
 
                 if (theState->outsites)
                 {
-                    mysite->north = window.north - (row + .5) * window.ns_res;
-                    mysite->east  = window.west  + (col + .5) * window.ew_res;
-                    mysite->dbl_att[0] = cell_as_dbl(&theState->buf, col);
-                    G_site_put (sitefd, mysite);
+                    double x, y, val;
+                    char buf[500];
+
+                    Vect_reset_line ( Points );
+                    Vect_reset_cats ( Cats );
+                    
+                    x = window.west  + (col + .5) * window.ew_res;
+                    y = window.north - (row + .5) * window.ns_res;
+                    
+                    val = cell_as_dbl(&theState->buf, col);
+
+                    Vect_append_point ( Points, x, y, 0.0 );
+                    Vect_cat_set (Cats, 1, cat++);
+
+                    Vect_write_line ( &Out, GV_POINT, Points, Cats );
+
+                    sprintf (buf, "insert into %s values ( %d, %f )", fi->table, cat, val );
+                    db_set_string ( &sql, buf );
+                    
+                    if (db_execute_immediate (driver, &sql) != DB_OK )
+                        G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
                 }
                 G_percent ((theState->nRand - nt), theState->nRand, 2);
             }
@@ -152,8 +182,12 @@ int execute_random (struct rr_state *theState)
 
     /* close files */
     G_close_cell(infd);
-    if (theState->outsites)
-        G_sites_close (sitefd);
+    if (theState->outsites) {
+        db_commit_transaction ( driver );
+        db_close_database_shutdown_driver ( driver );
+        Vect_build (&Out, stderr);
+        Vect_close (&Out);
+    }
     if (theState->outraster)
         G_close_cell(outfd);
 

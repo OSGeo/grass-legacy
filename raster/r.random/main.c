@@ -43,11 +43,11 @@ main (int argc, char *argv[])
     parm.input->description= "Name of existing raster map" ;
 
     parm.npoints = G_define_option() ;
-    parm.npoints->key        = "nsites" ;
+    parm.npoints->key        = "n" ;
     parm.npoints->key_desc   = "number[%]";
     parm.npoints->type       = TYPE_STRING ;
     parm.npoints->required   = YES ;
-    parm.npoints->description= "The number of sites to allocate";
+    parm.npoints->description= "The number of points to allocate";
 
     parm.raster = G_define_option() ;
     parm.raster->key        = "raster_output" ;
