@@ -3,6 +3,8 @@
    
    Chris Rewerts, Agricultural Engineering, Purdue University
    May 1991
+   
+   -- alex 02/2004 - added input to zoom command to avoid other options 
 
  */
 #include <string.h>
@@ -11,6 +13,7 @@
 
 char new_color[28];
 char arrow_layer[128];
+char tmpbuf[128];
 
 int 
 main_menu (void)
@@ -20,6 +23,7 @@ main_menu (void)
         "  edit",
         "  redraw",
         "  zoom",
+	"  zoom options",
         "  arrow",
         "  number",
         "  vector",
@@ -66,7 +70,7 @@ main_menu (void)
                     strcpy(current_mapset, user_mapset);
                     }
                 Dcell(current_name, current_mapset, 0);
-                }
+                } else unlink(tempfile);
             use_mouse();
             break;
     case 2:
@@ -80,18 +84,29 @@ main_menu (void)
     case 3:
     /* zoom */
            R_close_driver();
-           G_system("d.zoom");
-           if (R_open_driver() != 0)
+           /* G_system("d.zoom");*/
+	   memset(tmpbuf, '\0', sizeof(tmpbuf));
+	   snprintf(tmpbuf, 128, "d.zoom -f %s@%s", current_name, current_mapset);
+           G_system(tmpbuf);
+	   if (R_open_driver() != 0)
 	       G_fatal_error ("No graphics device selected");
            use_mouse();
            break;
     case 4:
+    /* zoom options */
+           R_close_driver();
+           G_system("d.zoom");
+	   if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
+           use_mouse();
+           break;
+    case 5:
     /* arrow */
            get_arrow_inputs();
            use_mouse();
            break;
         
-    case 5:
+    case 6:
     /* number */
            R_close_driver();
            G_system("d.rast.num g=black");
@@ -100,7 +115,7 @@ main_menu (void)
            use_mouse();
            break;
         
-    case 6:
+    case 7:
     /* vector overlay */
            R_close_driver();
            G_system("d.vect");
@@ -109,13 +124,13 @@ main_menu (void)
            use_mouse();
            break;
         
-    case 7:
+    case 8:
     /* options */
            option_menu();
            use_mouse();
            break;
 
-    case 8:
+    case 9:
     /* exit */
           Dcell(orig_name, orig_mapset, 0);
           return(0);
