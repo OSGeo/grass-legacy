@@ -210,5 +210,8 @@ translate_Operator( char *oper)
 	return SQLP_GE;
     else if ( strcmp ( oper, "<>") == 0 )
 	return SQLP_NE;
+    else if ( strcmp ( oper, "~") == 0 )
+	return SQLP_MTCH;
+
     else return 0;
 }
