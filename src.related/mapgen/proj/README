@@ -1,0 +1,80 @@
+
+>>>>>>>>    @(#)README	USGS/OEMG Rel. 3 Ver. 1 - 90/07/07 (lev. 9)  <<<<<<<<
+
+This directory contains all source code for the cartographic projection
+program 'proj' as well as some useful utilities.  Although often distributed
+as part of the MAPGEN package, proj is a useful utility in its own right.
+
+Examine first screenful of Makefile before proceeding with installation.
+
+Unfortunately, there is not a consistent mechanism for handling librarys
+for various flavors of UNIX 'make' programs.  This is System V's and
+the installer may be required to hack the Makefile for other flavors.
+Sorry! (It works best on uPort System V/386 and reasonably well on
+Masscomp, DEC ultrix and Sun's).
+
+To install 'proj':
+	make install
+
+To install 'for/inv[27|83]':
+	make nad
+
+The supplementary installation is not part of the normal 'graph'
+install operation.  There may be discrepancies between its
+results and "official" state plane conversions.  Unfortunately,
+standards for comparison are unknown at this moment.
+
+For more complete desription of 'proj' see:
+	"Cartographic Projection Procedures for the UNIX
+	Environment---A User's Manual" by G.I.Evenden,
+	USGS Open-File Report 90-284.
+
+	A copy can be obtained from:
+		USGS Books and Reports Sales
+		Federal Center, Box 25425
+		Denver, CO  80225
+		(303) 236-7476
+		FTS 776-7476
+
+Release notes:
+Rel. 2	Improved precision for meridian distance computation thus
+	affecting accuracy of transverse mercator (& UTM), polyconic,
+	bonne, sinusoidal, ...
+
+	New option to specify precision of seconds in DMS output.
+
+	Added projects.h id to 'what' key.
+
+	Minor corrections to other projections.
+
+Rel. 3	Revised and simplified general structure of individual projection
+	procedures.
+
+	Simplified proj program by eliminating some functions which
+	are better performed with other UNIX utilities.
+
+	Removed program 'ellipse' and included ellipsoidal selection
+	within the projection program itself.
+
+	Added geocentric latitude capability and over ranging for latitude.
+
+	Binary I/O individually selectable for input and output.
+
+	Improved error diagnostics.  Options included to list available
+	projections and standard ellipsoids.
+
+	Expanded tutorial documentation: see reference above.
+
+	Both NAD27 and NAD83 SPCS procedures included.
+
+	Man files simplified to allow for simple tty type output.
+
+Rel. 3, Version 1:
+	Chebyshev coefficient output added to 'proj' with -T switch.
+
+	Program 'fproj' added which employs above Chebyshev coefficients and,
+	except for + commands and some - switches, performs like 'proj'.
+
+	These elements are to be considered beta at the moment (11 May 90).
+
+	Geodesic ("Great Circle") computation procedure `geod' added.
