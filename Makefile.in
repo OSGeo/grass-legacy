@@ -50,8 +50,8 @@ do-install:
 # There are three options for cleaning the GRASS source code. Each option
 # performs the following operations:
 #
-# make clean     - delete all object files and the next step file - good for
-#                  saving disk space
+# make clean     - delete all object files and the next step file, keep the
+#                  compiled GRASS libraries - good for saving disk space
 # make distclean - delete object files, next step file, libraries, and
 # 		   generated directories like etc/ and dev/ - good for
 #                  recompiling on the same system (keep configure files)
