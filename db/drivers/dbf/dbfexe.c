@@ -67,7 +67,8 @@ int execute(char *sql, cursor * c)
 	return DB_FAILED;
     }
 
-    if ((st->command != SQLP_CREATE) && (st->command != SQLP_DROP)) {
+    /* For DROP we have to call load_table_head() because it reads permissions */
+    if ((st->command != SQLP_CREATE)) {
 	ret = load_table_head(tab);
 	if ( ret == DB_FAILED ) { 
 	    sprintf(errMsg, "%sCannot load table head.\n", errMsg);
