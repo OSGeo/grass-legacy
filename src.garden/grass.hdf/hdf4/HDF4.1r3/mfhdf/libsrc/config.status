@@ -1,6 +1,0 @@
-#!/bin/sh
-# This file was generated automatically by configure.  Do not edit.
-# This directory was configured as follows:
-cd ../../
-./configure --host=i586-unknown-linux --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion --norecursion 
-# using "config/mh-linux"
