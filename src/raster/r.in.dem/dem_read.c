@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <values.h>
+#include <limits.h>
+#include <float.h>
 #include "dem.h"
 
 /***************************************************************************/
@@ -83,7 +84,7 @@ return 1;
 signed char read_dem_record(struct dem_data *record, const unsigned int row, const unsigned int col, FILE *dem_ascii){
   char *chrptr, d_str[4][30];
   unsigned int i;
-  double realmax = MINDOUBLE, realmin = MAXDOUBLE; /* defined in values.h */
+  double realmax = DBL_MIN, realmin = DBL_MAX; /* defined in limits.h */
 
   /* Get record header info */
   if (fscanf(dem_ascii, "%u %u %u %u %29s %29s %f %29s %29s ",
