@@ -406,13 +406,17 @@ static void close_map(map *m)
 
 int map_type(const char *name, int mod)
 {
-	char *mapset;
+	char *mapset, *tmpname;
+	int result;
 
 	switch (mod)
 	{
 	case 'M':
-		mapset = G_find_cell2((char *) name, "");
-		return G_raster_map_type((char *) name, mapset);
+		tmpname = G_store((char *) name);
+		mapset = G_find_cell2(tmpname, "");
+		result = mapset ? G_raster_map_type(tmpname, mapset) : -1;
+		G_free(tmpname);
+		return result;
 	case '@':
 		return DCELL_TYPE;
 	case 'r':
@@ -594,42 +598,36 @@ void close_output_map(int fd)
 
 /****************************************************************************/
 
-void copy_cats(const char *dst, const char *src)
+void copy_cats(const char *dst, int idx)
 {
+	const map *m = &maps[idx];
 	struct Categories cats;
-	char *mapset;
 
-	mapset = G_find_cell2((char *) src, "");
-
-	if (G_read_cats((char *) src, mapset, &cats) < 0)
+	if (G_read_cats((char *) m->name, (char *) m->mapset, &cats) < 0)
 		return;
 
 	G_write_cats((char *) dst, &cats);
 	G_free_cats(&cats);
 }
 
-void copy_colors(const char *dst, const char *src)
+void copy_colors(const char *dst, int idx)
 {
+	const map *m = &maps[idx];
 	struct Colors colr;
-	char *mapset;
 
-	mapset = G_find_cell2((char *) src, "");
-
-	if (G_read_colors((char *) src, mapset, &colr) <= 0)
+	if (G_read_colors((char *) m->name, (char *) m->mapset, &colr) <= 0)
 		return;
 
 	G_write_colors((char *) dst, G_mapset(), &colr);
 	G_free_colors(&colr);
 }
 
-void copy_history(const char *dst, const char *src)
+void copy_history(const char *dst, int idx)
 {
+	const map *m = &maps[idx];
 	struct History hist;
-	char *mapset;
 
-	mapset = G_find_cell2((char *) src, "");
-
-	if (G_read_history ((char *) src, mapset, &hist) < 0)
+	if (G_read_history ((char *) m->name, (char *) m->mapset, &hist) < 0)
 		return;
 
 	G_write_history((char *) dst, &hist);
