@@ -30,10 +30,12 @@ input=</b><EM>name</EM>
 [<b>verbose=</b><EM>debug level</EM>] 
 [<b>logfile=</b><EM>name</EM>]
 [<b>snapdist=</b><EM>snap distance</EM>]
-<br>[<b>sliver=</b><EM>min. angle</EM>] 
+[<b>sliver=</b><EM>min. angle</EM>] 
 [<b>scale=</b><EM>orig. scale</EM>] 
 [<b>attribute=</b><EM>attribute category</EM>]
-<br>[<b>label=</b><EM>category label</EM>]
+[<b>label=</b><EM>category label</EM>]
+[<b>select=</b><EM>field to use</EM>]
+[<b>maxshapes=</b><EM>maximum number</EM>]
 
 
 <h2>DESCRIPTION</h2>
@@ -144,6 +146,14 @@ writes out results if a meaningful category field is given, otherwise no action
 is taken. If the same attribute is re-assigned a new category, the value is 
 over-written.
 
+<DT><B>select=</B><EM>field:value</EM>
+
+<DD>Name of dbf-file field to use for selection. The format of the filter is
+select=<field>:<value> as above, but the -s flag is required also.<br>
+Example: <br>
+<tt>v.in.shape -s input=map select=FOLIE:118 label=ALIASFOLIE</tt>
+imports only shape vectors with value "118" in dfb-table field "FOLIE".<br>
+This feature may be used for selective data import.
 </DL>
 
 <h2>BUGS AND CAVEAT</h2>
