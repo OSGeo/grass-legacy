@@ -43,3 +43,19 @@ db_get_default_database_name ( void )
 
     return NULL;
 }
+
+/*!
+ \fn char * db_get_default_schema_name ( void )
+ \brief returns pointer to default schema name
+ \return returns pointer to default schema name or NULL if not set
+*/
+char *
+db_get_default_schema_name ( void )
+{
+    char *sch;
+    
+    if ( (  sch = G__getenv2("DB_SCHEMA", G_VAR_MAPSET) )  )
+	  return G_store(sch);
+
+    return NULL;
+}

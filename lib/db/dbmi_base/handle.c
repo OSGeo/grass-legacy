@@ -12,7 +12,7 @@ db_init_handle (handle)
     dbHandle *handle;
 {
     db_init_string (&handle->dbName);
-    db_init_string (&handle->dbPath);
+    db_init_string (&handle->dbSchema);
 }
 
 /*!
@@ -21,17 +21,17 @@ db_init_handle (handle)
  \return 
  \param 
 */
-db_set_handle (handle, dbName, dbPath)
+db_set_handle (handle, dbName, dbSchema)
     dbHandle *handle;
     char *dbName;
-    char *dbPath;
+    char *dbSchema;
 {
     int stat;
 
     stat = db_set_string (&handle->dbName, dbName);
     if (stat != DB_OK)
 	return stat;
-    stat = db_set_string (&handle->dbPath, dbPath);
+    stat = db_set_string (&handle->dbSchema, dbSchema);
     return stat;
 }
 
@@ -55,10 +55,10 @@ db_get_handle_dbname(handle)
  \param 
 */
 char *
-db_get_handle_dbpath(handle)
+db_get_handle_dbschema(handle)
     dbHandle *handle;
 {
-    return db_get_string (&handle->dbPath);
+    return db_get_string (&handle->dbSchema);
 }
 
 /*!
@@ -72,7 +72,7 @@ db_free_handle(handle)
     dbHandle *handle;
 {
     db_free_string (&handle->dbName);
-    db_free_string (&handle->dbPath);
+    db_free_string (&handle->dbSchema);
 }
 
 /*!

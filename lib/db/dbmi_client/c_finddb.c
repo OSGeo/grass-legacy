@@ -37,7 +37,7 @@ db_find_database (dbDriver *driver, dbHandle *handle, int *found)
 	DB_RECV_HANDLE (&temp);
 	stat = db_set_handle (handle,
 	               db_get_handle_dbname(&temp),
-	               db_get_handle_dbpath(&temp)
+	               db_get_handle_dbschema(&temp)
 		      );
 	db_free_handle (&temp);
     }
