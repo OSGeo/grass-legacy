@@ -126,7 +126,7 @@ int new_line ( int type )
     
     sprintf ( buf, "Digitize new %s:", get_line_type_name (type) );
     i_prompt ( buf ); 
-    i_prompt_buttons ( "New point", "New point", "Quit tool"); 
+    i_prompt_buttons ( "New point", "", "Quit tool"); 
     
     i_new_line_options ( 1 );
     
@@ -187,7 +187,7 @@ int new_line ( int type )
 		    syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
 		}
 		if ( Points->n_points == 0 ) {
-                    i_prompt_buttons ( "New point", "New point", "Quit tool"); 
+		    i_prompt_buttons ( "New point", "", "Quit tool"); 
 		    first = 1;
 		}
 	    } else { /* button = 3 -> write the line and quit */
