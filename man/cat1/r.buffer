@@ -1,0 +1,198 @@
+
+
+
+r.buffer             GRASS Reference Manual              r.buffer
+
+
+
+NAME
+     r.buffer - Creates a raster map layer showing buffer zones
+     surrounding cells that contain non-zero category values.
+     (GRASS Raster Program)
+
+SYNOPSIS
+     r.buffer
+     r.buffer help
+     r.buffer input=name output=name distances=value[,value,...]
+     [units=name]
+
+DESCRIPTION
+     r.buffer creates a new raster map layer showing buffer (aka,
+     "distance" or "proximity") zones around all cells that
+     contain non-zero category values in an existing raster map
+     layer.  The distances of buffer zones from cells with non-
+     zero category values are user-chosen.  Suppose, for example,
+     that you want to place buffer zones around roads.  This
+     program could create the raster map layer shown below on the
+     right based on road information contained in the raster map
+     layer shown on the left.
+
+     000000000000000000000000   111122222222222222333333
+     111000000000000000000000   000111111111112222222222
+     000111111111100000000000   111000000000011112222222
+     000000001000011100000000   221111110111100011111111
+     000000001000000011111111   222222210122111100000000
+     000000001000000000000000   322222210122222111111111
+     000000001000000000000000   333332210122222222222222
+     000000001000000000000000   333332210122332222222222
+     000000001000000000000000   333332210122333333333333
+     Category 0: No roads       Category 0: Road location
+     Category 1: Roads          Category 1: Buffer Zone 1 around roads
+                                Category 2: Buffer Zone 2 around roads
+                                Category 3: Buffer Zone 3 around roads
+
+INTERACTIVE PROGRAM USE
+     The user can run the program interactively by simply typing
+     r.buffer without program arguments on the command line.  The
+     program then prompts the user for parameter values.
+
+     (1) You are requested to identify the existing raster map
+     layer from which distance-from calculations shall be based,
+     and a name (of your choice) for the new raster map layer
+     which will contain the results.
+
+     (2) Then, identify the units of measurement in which buffer
+     (distance) zones are to be calculated, and the distance of
+     each buffer zone from each non-zero cell in the input map.
+     The user has the option of identifying up to 60 continuous
+     zones.  The zones are identified by specifying the upper
+     limit of each desired zone (r.buffer assumes that 0 is the
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+r.buffer             GRASS Reference Manual              r.buffer
+
+
+
+     starting point).  ("Continuous" is used in the sense that
+     each category zone's lower value is the previous zone's
+     upper value.  The first buffer zone always has distance 0 as
+     its lower bound.)  Distances can be entered in one of four
+     units:  meters, kilometers, feet, and miles.
+
+     (3) Last, calculate distances from cells containing user-
+     specified category values, using the "fromcell" method.
+     [The "fromcell" method goes to each cell that contains a
+     category value from which distances are to be calculated,
+     and draws the requested distance rings around them.  This
+     method works very fast when there are few cells containing
+     the category values of interest, but works slowly when there
+     are numerous cells containing the category values of
+     interest spread throughout the area.]
+
+     The r.buffer program now runs the process in "background"
+     and returns keyboard control to the user.  These processes
+     can occasionally take up to an hour or more to finish;
+     however, because they run in the background, you are free to
+     do other things with the computer in the interim.
+
+
+
+NON-INTERACTIVE PROGRAM USE
+     The user can run r.buffer specifying all parameter values on
+     the command line, using the form:
+
+          r.buffer input=name output=name
+          distances=value[,value,...] [units=name]
+
+
+     Parameters:
+
+     input=name        The name of an existing raster map layer
+                       whose non-zero category value cells are to
+                       be surrounded by buffer zones in the
+                       output map.
+
+     output=name       The name assigned to the new raster map
+                       layer containing program output.  The
+                       output map will contain buffer zones at
+                       the user-specified distances from non-zero
+                       category value cell in the input map.
+
+     distances=value[,value,...]
+                       The distance of each buffer zone from
+                       cells having non-zero category values in
+                       the input map.
+
+     units=name        The unit of measurement in which distance
+                       zone values are to be calculated.
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
+
+
+
+r.buffer             GRASS Reference Manual              r.buffer
+
+
+
+                       Possible choices for name are: meters,
+                       kilometers, feet, and miles.  The default
+                       units used, if unspecified by the user,
+                       are meters.
+
+EXAMPLE
+     In the example below, the buffer zones would be (in the
+     default units of meters): 0-10, 11-20, 21-30, 31-40 and 41-
+     50.
+
+          Format:
+          r.buffer  input=name  output=name  distances=value[,value,...]  [units=name]
+
+          Example:
+          r.buffer  input=map.in  output=map.out  distances=10,20,30,40,50  units=meters
+
+NOTES
+     r.buffer measures distances from center of cell to center of
+     cell using Euclidean distance measure for planimetric
+     databases (like UTM) and using ellipsoidal geodesic distance
+     measure for latitude/longitude databases.
+
+     r.buffer calculates distance zones from all cells having
+     non-zero category values in the input map.  If the user
+     wishes to calculate distances from only selected input map
+     layer category values, the user should run (for example)
+     r.reclass prior to r.buffer, to reclass all categories from
+     which distance zones are not desired to be calculated into
+     category zero.
+
+SEE ALSO
+     r.region, r.mapcalc, r.reclass
+
+AUTHORS
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         3
+
+
+
