@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include  "gis.h"
 #include "projects.h"
 
 /********************* PARMS FOR PROJ **********************/ 
