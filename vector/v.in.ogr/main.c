@@ -29,7 +29,7 @@ main (int argc, char *argv[])
     int    i, layer;
     int    ncols;
     struct GModule *module;
-    struct Option *out_opt, *dsn_opt, *layer_opt;
+    struct Option *dsn_opt, *out_opt, *layer_opt;
     char   buf[2000];
 
     /* Vector */
@@ -65,7 +65,6 @@ main (int argc, char *argv[])
     module->description = G_store(buf);
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-    out_opt->required = NO;
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
