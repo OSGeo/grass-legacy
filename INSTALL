@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.7 2000-11-13 09:55:49 markus Exp $)
+($Id: INSTALL,v 1.8 2000-11-23 06:54:20 justin Exp $)
 
 To compile GRASS, please read the file REQUIREMENTS. Note: If your
 system does not fullfil all requirements, some modules won't be
@@ -145,7 +145,7 @@ This is accomplished by the --with-SYSV option to `configure'.
 CLEANING UP
 
 There are five options for cleaning the GRASS source code. The first four
-options are based on the GNU guidlines at:
+options are based on the GNU guidelines at:
 
 http://www.gnu.org/manual/make-3.77/html_node/make_118.html
 
