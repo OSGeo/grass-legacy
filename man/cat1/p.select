@@ -1,7 +1,7 @@
 
 
 
-p.select             GRASS Reference Manual              p.select
+p.select <main>      GRASS Reference Manual       <main> p.select
 
 
 
@@ -42,6 +42,10 @@ INTERACTIVE MODE
      arguments on the command line, the program will prompt the
      user for the name of a hardcopy output device to select.
 
+NOTE
+     The options available with p.select vary from system to
+     system and depend upon which drivers have been compiled.
+
 SEE ALSO
      p.chart, p.labels, p.map
 
@@ -56,11 +60,7 @@ AUTHOR
 
 
 
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
