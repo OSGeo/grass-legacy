@@ -8,6 +8,9 @@
 #include "gis.h"
 #include "driverlib.h"
 
+/* sreen dimensions defined in Graph_Set.c */
+extern int SCREEN_RIGHT;
+extern int SCREEN_BOTTOM;
 
 
 /* point in polygon test by Randolph Franklin */
@@ -97,6 +100,7 @@ Graph_Close (void)
                 for (i = 0; i < poly->num_pts; i++) {
                     fprintf(output," %d,%d", poly->x_pts[i], poly->y_pts[i]);
                 }
+                fprintf(output," %d,%d", poly->x_pts[0], poly->y_pts[0]);
                 fprintf(output,"\n");
                 break;
 
@@ -105,17 +109,24 @@ Graph_Close (void)
                 for (i = 0; i < poly->num_pts; i++) {
                     fprintf(output," %d %d", poly->x_pts[i], poly->y_pts[i]);
                 }
+                fprintf(output," %d %d", poly->x_pts[0], poly->y_pts[0]);
                 fprintf(output,"\n");
                 break;
 
               case CLIENT:
-                fprintf(output,"<AREA SHAPE=\"POLY\"\n HREF=\"%s\"\n COORDS=\"", 
-			poly->url);
+                fprintf(output,
+                "<AREA SHAPE=\"POLY\"\n HREF=\"%s\"\n  ALT=\"%s\"\n  COORDS=\"",
+			poly->url, poly->url);
                 for (i = 0; i < poly->num_pts; i++) {
                     if (i > 0) fprintf(output,", ");
-                    if (i % 8 == 0) fprintf(output,"\n  ");
+                    /* 
+		     * don't add newlines, which confuses the weak-minded
+		     * i.e., ms internet exploder :-(
+ 		     * was: if (i % 8 == 0 && i != 0) fprintf(output,"\n  ");
+		     */ 
                     fprintf(output,"%d,%d", poly->x_pts[i], poly->y_pts[i]);
                 }
+                fprintf(output,", %d,%d", poly->x_pts[0], poly->y_pts[0]);
                 fprintf(output,"\">\n");
                 break;
 
@@ -136,6 +147,8 @@ Graph_Close (void)
         break;
 
       case CLIENT:
+	fprintf(output,"<AREA SHAPE=\"RECT\" NOHREF COORDS=\"0,0 %d,%d\">\n",
+		SCREEN_RIGHT, SCREEN_BOTTOM);
 	fprintf(output,"</MAP>\n");
         break;
 

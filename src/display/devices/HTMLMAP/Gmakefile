@@ -26,9 +26,8 @@ $(GISBASE)/driver/HTMLMAP: HTMLMAP
 	cat moncap.entry | sed -e s:BASEDIR:$(GISBASE):g >>$(ETC)/monitorcap ; \
 	fi
 
-LIBES=$(DRIVERLIB) $(GISLIB) $(GRAPH)
-HTMLMAP: $(OFILES) $(LIBES)
-	$(CC) $(LDFLAGS) -o $(GISBASE)/driver/HTMLMAP $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+HTMLMAP: $(OFILES) $(DRIVERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $(GISBASE)/driver/HTMLMAP $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DRIVERLIB): #
 $(GISLIB): #

@@ -6,6 +6,12 @@
 
 #define RAD_DEG 57.29578
 
+/* max points & bbox minimum dimension defined in Graph_Set.c */
+extern int MAX_POINTS;
+extern int BBOX_MINIMUM;
+extern int MINIMUM_DIST;
+
+
 static void delete_point (int *x, int *y, int count)
 {
     int i;
@@ -49,35 +55,79 @@ int Polygon_abs (int *x, int *y, int n)
 {
     struct MapPoly *new;
     int i;
+    int delta_x, delta_y;
+    int min_x, max_x, min_y, max_y;
  
     double min_azimuth = 1.0;
     double azimuth1, azimuth2, diff1, diff2;
 
 
     /* 
-     * remove points that have adjacent duplicates, including first and last
+     * remove points that have adjacent duplicates or have differences of
+     * less the the minimum allowed.  remove end points that are same as
+     * the begin point (ending point = starting point is added 
+     * during Graph_Clse)
      */
 
     i = 0;
     while (i < (n-1)) {
-        if (x[i] == x[i+1] && y[i] == y[i+1]) {
+        delta_x = x[i] - x[i+1];
+	if (delta_x < 0) delta_x = -delta_x;
+        delta_y = y[i] - y[i+1];
+	if (delta_y < 0) delta_y = -delta_y;
+
+        if ((x[i] == x[i+1] && y[i] == y[i+1]) || 
+	    (delta_x <= MINIMUM_DIST && delta_y <= MINIMUM_DIST)  ) {
             delete_point(&x[i+1], &y[i+1], n-i-1);
             --n;
         } else {
             ++i;
         }
     }
-    /* check if last point is same as first point */
-    if (x[0] == x[n-1] && y[0] == y[n-1]) {
-        --n;
+
+    /* perform same checks for last point & first point */
+    while (1) {
+        delta_x = x[0] - x[n-1];
+	if (delta_x < 0) delta_x = -delta_x;
+        delta_y = y[0] - y[n-1];
+	if (delta_y < 0) delta_y = -delta_y;
+
+        if ((x[0] == x[n-1] && y[0] == y[n-1]) ||
+            (delta_x <= MINIMUM_DIST && delta_y <= MINIMUM_DIST) ) {
+            --n;
+        } else {
+	    break;
+        }
+    }
+
+
+
+    /* 
+     * if a polygon has either x or y extents less than the bounding box 
+     * minimum, ignore it
+     *
+     */
+
+    min_x = max_x = x[0];
+    min_y = max_y = y[0];
+    for (i = 0; i < n; i++) {
+	if (x[i] < min_x) min_x = x[i];
+	if (x[i] > max_x) max_x = x[i];
+	if (y[i] < min_y) min_y = y[i];
+	if (y[i] > max_y) max_y = y[i];
+    }
+    delta_x = max_x - min_x;
+    delta_y = max_y - min_y;
+    if (delta_x < BBOX_MINIMUM || delta_y < BBOX_MINIMUM) {
+	n = 0;
     }
 
 
     /* 
-     * remove points in excess of 100 vertices
+     * remove points in excess of MAX_POINTS vertices
      */
 
-    while (n > 100) {
+    while (n > MAX_POINTS) {
 
         for (i = 0; i < (n-2); i++) {
             
@@ -120,10 +170,10 @@ int Polygon_abs (int *x, int *y, int n)
 
     if (n >= 3) {
 
-	new = (struct MapPoly *) G_malloc(sizeof(struct MapPoly));
+	new = (struct MapPoly *) malloc(sizeof(struct MapPoly));
 
 	/* grab the last text string written as url */
-	new->url = (char *) G_malloc(strlen(last_text)+1);
+	new->url = (char *) malloc(strlen(last_text)+1);
 	strcpy(new->url, last_text);
 
 	/* hook up new MapPoly into list */
@@ -132,8 +182,8 @@ int Polygon_abs (int *x, int *y, int n)
 	tail  = &(new->next_poly);
 
 	new->num_pts = n;
-	new->x_pts = (int *) G_malloc(sizeof(int) * n);
-	new->y_pts = (int *) G_malloc(sizeof(int) * n);
+	new->x_pts = (int *) malloc(sizeof(int) * n);
+	new->y_pts = (int *) malloc(sizeof(int) * n);
 
 	for (i = 0; i < n; i++) {
 	    new->x_pts[i] = x[i];
