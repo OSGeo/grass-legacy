@@ -42,6 +42,7 @@ SUBDIRS = \
 	v.to.points \
 	v.to.rast \
 	v.type \
+	v.univar \
 	v.what.rast\
 	v.vol.rst
 
