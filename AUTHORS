@@ -45,7 +45,7 @@ GRASS 5 Core Team (most have CVS access):
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 coordination, ...)
  Bernhard Reiter <bernhard@intevation.de>      (License, CVS, Bugfixes)
  Alexander Shevlakov <sixote@yahoo.com>        (PostgreSQL/GRASS interface)
- Jan-Oliver Wagner <jan@intevation.de>         (Module descriptions)
+ Jan-Oliver Wagner <jan@intevation.de>         (XML-support, Module descriptions)
  Frank Warmerdam <warmerda@home.com>           (GDAL, SHAPE implementation, 
                                                 new GRASS I/O library)
  Michel Wurtz    <mw@teledetection.fr>         (ESRI E00 support)
