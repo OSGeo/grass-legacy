@@ -66,7 +66,10 @@ then
 	exit
 fi
 
-GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`/grass5
+#old:
+##GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`/grass5
+
+GISBASE=`grep GISBASE Makefile | head -1 | tr -s ' ' '|' | cut -d'|' -f2`
 
 if [ ! -d $GISBASE/dev ]
 then
