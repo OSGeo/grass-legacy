@@ -1,0 +1,13 @@
+#  %W%  %G%
+
+PGM=s.dotmap
+
+OFILES = \
+	main.o\
+	sfactor.o
+
+all:  $(BIN_CONTRIB_INTER)/$(PGM)
+
+$(BIN_CONTRIB_INTER)/$(PGM): $(OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB)
+
