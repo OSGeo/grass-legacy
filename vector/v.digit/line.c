@@ -63,7 +63,7 @@ write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
 
 	/* First check if already exists */
         driver = db_start_driver_open_database ( Fi->driver, Fi->database );
-	if ( Fi == NULL ) {
+	if ( driver == NULL ) {
 	    sprintf (buf, "Cannot open database %s by driver %s", Fi->database, Fi->driver );
 	    i_message ( MSG_OK, MSGI_ERROR, buf );
             return -1;
