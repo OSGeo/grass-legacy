@@ -56,11 +56,13 @@ if(lake_cat[vect] == 0)
       }
    }
 
+/* To force dqq < current flow: cho
    if(dqq > 0 && dqov[vect] < dqq)
 	dqq = dqov[vect];
 
    if(dqq < 0 && qtolake[lake_cat[vect2]] < abs(dqq))
 	dqq = - qtolake[lake_cat[vect2]];
+*/
 
    dqov[vect]=dqov[vect]-dqq;
    qtolake[lake_cat[vect2]]= qtolake[lake_cat[vect2]]+dqq;
