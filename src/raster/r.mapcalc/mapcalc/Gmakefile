@@ -14,7 +14,6 @@ LIST = main.o\
 	math.o\
 	maps.o\
 	min_max.o\
-	percent.o\
 	polish.o\
 	pool.o\
 	round.o\
@@ -67,3 +66,4 @@ xatan.o: glob.h
 
 $(GISLIB): #
 $(BTREELIB): #
+$(ROWIOLIB): #
