@@ -1,2 +1,13 @@
-GRAPH Installation on Wed Nov 21 10:18:22 CST 1990
-/home/grass3.1/src.related/mapgen.new/src/graphics/plotter INSTALL: ERROR
+GRAPH Installation on Wed Jul 10 09:48:51 CDT 1991
+/grass.src/4.0/src.related/mapgen/graphics/plotter INSTALL: OK
+/grass.src/4.0/src.related/mapgen/graphics/tests INSTALL: OK
+troff directory /usr/lib/font/devGRAPH doen't exist
+/grass.src/4.0/src.related/mapgen/graphics/fonts INSTALL: OK
+/grass.src/4.0/src.related/mapgen/lib/Libgen INSTALL: OK
+/grass.src/4.0/src.related/mapgen/plotgen INSTALL: OK
+/grass.src/4.0/src.related/mapgen/proj INSTALL: OK
+/grass.src/4.0/src.related/mapgen/mapgen INSTALL: OK
+/grass.src/4.0/src.related/mapgen/mapgen/coast INSTALL: OK
+/grass.src/4.0/src.related/mapgen/mapgen/bivar INSTALL: OK
+/grass.src/4.0/src.related/mapgen/mapgen/mapdef INSTALL: OK
+MAPGEN/PLOTGEN install complete on Wed Jul 10 09:57:33 CDT 1991
