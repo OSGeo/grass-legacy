@@ -10,11 +10,11 @@ int main (int argc, char *argv[])
 {
 	FILE *ascii;
 	struct Option *old, *new;
-	struct Flag *verf;
+	struct Flag *verf, *pntf;
 	char *mapset;
 	char errmsg[200];
 	struct Map_info Map;
-	int    ver=5; 
+	int    ver=5, pnt=0; 
 
 	G_gisinit(argv[0]);
 
@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
 	new = G_define_option();
 	new->key		= "output";
 	new->type		=  TYPE_STRING;
-	new->required		=  YES;
+	new->required		=  NO;
 	new->multiple		=  NO;
 	new->gisprompt  	= "new,dig_ascii,ascii vector" ;
 	new->description	= "name of resulting ascii file";
@@ -38,12 +38,18 @@ int main (int argc, char *argv[])
         verf->key               = 'o';
         verf->description       = "create old (version 4) ascii file"; 
 
+	/*
+        pntf = G_define_flag ();
+        pntf->key               = 'p';
+        pntf->description       = "writes points and centroids only, one on one row"; 
+	*/
+	
 	if (G_parser (argc, argv))
 		exit(-1);
 
-	if (!*(old->answer)  || !*(new->answer))
+	if (!*(old->answer))
 	{
-    	    fprintf (stderr, "%s: Command line error: missing input or output name.\n\n", argv[0]);
+    	    fprintf (stderr, "%s: Command line error: missing input name.\n\n", argv[0]);
 	    G_usage();
     	    exit (-1);
 	}
@@ -64,75 +70,29 @@ int main (int argc, char *argv[])
 	if ( verf->answer )
  	    ver = 4;	
 		
+	if ( new->answer != NULL ) {
+	    if ( (ascii = G_fopen_new("dig_ascii", new->answer) ) == NULL )
+	    {
+		    sprintf(errmsg, "Not able to open ascii file <%s>\n", new->answer) ;
+		    G_fatal_error (errmsg);
+	    }
+	    pnt = 0;
+	    
+	    dig_write_head_ascii(ascii, &(Map.head)) ;
+	    fprintf (ascii, "VERTI:\n");
 
-	if ( (ascii = G_fopen_new("dig_ascii", new->answer) ) == NULL )
-	{
-		sprintf(errmsg, "Not able to open ascii file <%s>\n", new->answer) ;
-		G_fatal_error (errmsg);
-	}
+	} else { /* write points to stdout */
+	    ascii = stdout;
+	    pnt = 1;
+        }
 
-	dig_write_head_ascii(ascii, &(Map.head)) ;
+	bin_to_asc (ascii, &Map, ver, pnt) ;
 
-	fprintf (ascii, "VERTI:\n");
+	if ( !pnt )
+	    fclose(ascii) ;
 
-	bin_to_asc (ascii, &Map, ver) ;
-
-	fclose(ascii) ;
 	Vect_close (&Map);
 
-	if (strcmp (mapset, G_mapset()) || strcmp (new->answer, old->answer))
-	{				 /* not same name and mapset ? */
-	    char file1[300], file2[300];
-
-	    G__make_mapset_element( "dig_att") ;
-
-	    G__file_name (file1, "dig_att", old->answer, mapset);
-	    if (0 == access (file1, 0))
-	    {
-		G__file_name (file2, "dig_att", new->answer, G_mapset());
-		if (0 > cp_file (file1, file2))
-		    fprintf (stderr, "Error, dig_att file not created\n");
-	    }
-
-
-	}
-
-
 	exit(0) ;
-}
-
-
-/*  1 successs
-**  0 no in file to read
-** -1 cant open output
-*/
-int cp_file (char *from, char *to)
-{
-    FILE *in, *out;
-    char buf[BUFSIZ];
-    int red;
-    int no_file = 0;
-
-    if (NULL == (in = fopen (from, "r")))
-    {
-        no_file = 1;
-	return 0;
-    }
-    if (NULL == (out = fopen (to, "w")))
-    {
-        if (!no_file)
-            fclose (in);
-        return (-1);
-    }
-
-    if (!no_file)
-    {
-        while (red = fread (buf, 1, BUFSIZ, in))
-            fwrite (buf, 1, red, out);
-        fclose (in);
-    }
-    fclose (out);
-
-    return (1);
 }
 
