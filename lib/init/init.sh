@@ -191,14 +191,14 @@ if [ ! "$GRASS_TCLSH" ] ; then
 fi
 
 if [ ! "$GRASS_WISH" ] ; then
-   if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" ] ; then
-      #force X11 tcl on Mac:
-      GRASS_WISH=/usr/bin/wish
-      export GRASS_WISH
+   WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
+   if [ "$?" = 0 -a "$WISH_OS" = macintosh ] ; then
+     #force X11 tcl on Mac:
+     GRASS_WISH=/usr/bin/wish
    else
-      GRASS_WISH=wish
-      export GRASS_WISH
+     GRASS_WISH=wish
    fi
+   export GRASS_WISH
 fi
 
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
@@ -288,22 +288,9 @@ if [ "$DISPLAY" ] ; then
     # Check if we need to find wish
     if [ "$GRASS_GUI" = "tcltk" ] ; then
 
-	# Search for a wish program
-	WISH=
-
-	for i in `echo "$PATH" | sed 's/^:/.:/
-    	    	    		    s/::/:.:/g
-				    s/:$/:./
-				    s/:/ /g'`
-	do
-	    if [ -f "$i/$GRASS_WISH" ] ; then
-    		WISH=$GRASS_WISH
-		break
-	    fi
-	done
-
-	# Check if wish was found
-	if [ "$WISH" ] ; then
+	# Check if wish is working properly
+	echo 'exit 0' | "$GRASS_WISH" >/dev/null 2>&1
+	if [ "$?" = 0 ] ; then
 
 	    # Set the tcltkgrass base directory
 	    TCLTKGRASSBASE="$ETC"
@@ -312,7 +299,7 @@ if [ "$DISPLAY" ] ; then
 
 	    # Wish was not found - switch to text interface mode
 	    echo 
-    	    echo "WARNING: The wish command ($GRASS_WISH) was not found!"
+    	    echo "WARNING: The wish command does not work as expected!"
 	    echo "Please check your GRASS_WISH environment variable."
 	    echo "Use the -help option for details."
 	    echo "Switching to text based interface mode."
@@ -449,7 +436,7 @@ if [ ! "$LOCATION" ] ; then
 	
 	# Check for tcltk interface
 	tcltk)
-	    eval `"$WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
+	    eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
 	    
 	    case $? in
      	    	1)
