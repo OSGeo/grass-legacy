@@ -1,0 +1,10 @@
+:
+
+# runs findx on the named directory looking for executable programs
+
+if [ $# = 0 ]
+then
+	echo Usage: `basename $0` directory
+	exit
+fi
+(findx $* | xargs file) | grep executable | awk -F: '{print $1}'
