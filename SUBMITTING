@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.7 2000-11-22 08:44:30 justin Exp $
+$Id: SUBMITTING,v 1.8 2000-11-23 14:37:48 michel Exp $
 
 NOTE: Please improve this list!
 
@@ -140,10 +140,12 @@ care of following rules:
 13. Add the module's directory name (pointing to the local Gmakefile)
     to the compile list at src/CMD/lists/GRASS
 
-14. Place the documentation in HTML format into html/html/ and
-    add it to the module's list in html/ The easiest way to do this is to copy
-    an existing HTML page and modify it for your purposes
-    (to get the page style). There is a local README containing more details.
+14. Place the documentation in HTML format into html/html/ and add it to
+    the module's list in html/...  The easiest way to do this is to copy
+    an existing HTML page or the template page template.ht and modify it for
+    your purposes (to get the page style). The shell script makemanpage.sh
+    make things easier : look at html/README.txt for more details and the
+    rules to be used.
     The online WWW man pages will be updated over-night by CVS.
 
 15. For consistency, use README rather than README.txt for any README files.
