@@ -58,8 +58,7 @@ interior_lines (		/* ==ISLE== */
 	
       Line = &(Map->Line[line]);
 
-      if (Line->type == AREA)	/* only lines and sites  */
-	continue;
+      if( Line->type != ltype && ltype != BOTH)continue;
 
       /* check to see if line had intersection */
       if (!BM_get (intersect_bitmap, line, 0))

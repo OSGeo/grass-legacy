@@ -64,8 +64,7 @@ struct table_base *build_line_table (
 	LineB = &(MapB->Line[j]);
 
 	/* only doing lines and sites here */
-	if (LineB->type == AREA)
-	    continue;		
+	if(LineB->type != ltype && ltype != BOTH)continue;
 
 	for (i = 1 ; i <= MapA->n_lines ; i++)
 	{
