@@ -48,7 +48,7 @@ FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused \
 	src/include src/CMD src/fonts src/gui src/sites/cdhc \
 	src/libes/libimage src/libes/vect32_64/shapelib-1.2.8 \
 	src/libes/dbmi/drivers/odbc src.garden/grass.postgresql\
-	src/libes/gmath"
+	src/libes/gmath src/libes/ogsf"
 
 
 #tag it...
