@@ -47,12 +47,19 @@ src/fonts
 src/front.end
 src/general/g.gisenv
 src/general/g.mapsets
+src/general/g.copy
+src/general/g.list
+src/general/g.region
+src/general/g.remove
+src/general/g.rename
+src/display/d.frame
 src/display/d.mon
 src/display/d.rast
 src/display/d.vect
 src/display/d.sites
 src/display/d.erase
 src/display/d.site.labels
+src/display/d.text
 src/display/d.vect.labels
 src/display/d.what.rast
 src/display/d.what.vect
@@ -60,6 +67,8 @@ src/display/d.what.sites
 src/display/d.measure
 src/display/d.pan
 src/display/d.zoom
+src/imagery/i.gensigset
+src/imagery/i.smap
 src/mapdev/v.alabel
 src/mapdev/v.llabel
 src/mapdev/v.build
@@ -68,7 +77,9 @@ src/mapdev/v.digit
 src/general/g.region/cmd
 src/general/manage
 src/raster/r.in.ascii
-src/sites/s.in.ascii'
+src/raster/r.texture
+src/sites/s.in.ascii
+src/scripts'
 
 #generate list string:
 FullList=""
@@ -86,7 +97,8 @@ tar cf - $FullList | (cd ./babyGRASS_src; tar xf -)
 cp AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS.html TODO.txt Makefile.in config* install-sh INSTALL babyGRASS_compile.sh babyGRASS_src/
 
 #keep rubbish outside:
-EXCLUDE="--exclude=CVS* --exclude=*.o --exclude=makefile --exclude=OBJ.* --exclude=LIB.* --exclude=lib*.a"
+#EXCLUDE="--exclude=CVS* --exclude=*.o --exclude=makefile --exclude=OBJ.* --exclude=LIB.* --exclude=lib*.a"
+EXCLUDE="--exclude=*.o --exclude=makefile --exclude=OBJ.* --exclude=LIB.* --exclude=lib*.a"
 
 #packaging:
 echo Packaging...
