@@ -1,0 +1,7 @@
+These are all variations on the basic driver. The driver 
+only produces a sun rasterfile and then calls the versatek program
+"sprint" to print the rasterfile. There are many options to "sprint".
+These variations can only be invoked by changing the driver script,
+which is what you find in this directory - various attempts by users at
+CERL to get the colors they wanteed from the "sprint" utility.
+
