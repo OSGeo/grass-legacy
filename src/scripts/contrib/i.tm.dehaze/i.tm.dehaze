@@ -1,0 +1,133 @@
+#!/bin/sh
+
+# $Id$
+# copyright Markus Neteler <neteler@geog.uni-hannover.de>
+# License: GNU GPL
+#
+# Methodology:
+# Bandwise correction using tasscap4 (haze) and linear regression.
+#
+# The regression based technique which determines a 'best fit' line for
+# multispectral plots of pixels within homogenous cover types. The slope of
+# the plot is proportional to the ratio of the reflective material (Crippen
+# 1987).
+#
+# http://www.forestry.umt.edu/academics/courses/FOR503/rs1.htm:
+# The correction technique is based on the fact that Thematic Mapper (TM)
+# band 7 is essentially free from atmospheric effects. Upon examining an
+# area in the image that is in deep shadow or a body of homogeneous deep
+# nonturbid water, the resulting reflectance value in band 7 is either 0 or
+# 1. A histogram of the reflectivity values in band 7 for this area starts
+# from 0 or 1. On the contrary, a histogram of the reflectivity values in
+# bands 1, 2 and 3 for the same area starts from much higher values as a
+# result of haze. This offset, characteristic for each one of the three
+# bands is subtracted from the initial reflectance values and the result is
+# a haze corrected image (Sabins 1987).
+#
+#       The formular of linear regression is (r.linear.regression):
+#                                y=a[0]x[0] + a[1]
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program."
+ exit
+fi   
+     
+if test "$1" = "" ; then
+        echo ""
+        echo "LANDSAT TM haze removal (Crippen 1987 approach)"
+        echo "for LANDSAT-5 TM"
+        echo ""
+        echo "Usage: i.tm.dehaze tm1 tm2 tm3 tm4 tm5 tm7"
+	echo ""
+	echo "The script calculated the 4 tasscap images and"
+	echo "dehazes tm1 tm2 tm3 tm4 tm5 (the tm7 is considered haze-free)"
+        exit 1
+fi
+
+if [ $# -lt 6 ] ; then
+	echo "ERROR: not enough channels specified."
+	echo "Usage: i.tm.dehaze tm1 tm2 tm3 tm4 tm5 tm7"
+	exit 1
+fi
+
+
+#define the names:
+tm1=$1
+tm2=$2
+tm3=$3
+tm4=$4
+tm5=$5
+tm7=$6
+tasscap=tasscap
+
+#calc the tasseled cap images:
+i.tasscap.tm5 in=$tm1 $tm2 $tm3 $tm4 $tm5 $tm7 $tasscap
+
+#get the stats:
+function getstats()
+{
+ r.stats -1 $tasscap.4,$1 > $2
+ r.linear.regression in=$2 out=$3
+# result="`tail $3 | grep a\[1\] | cut -d' ' -f2,3 | tr -s '=' ' '`"
+  result="`tail $3 | grep "a\[1\]" | tr -s '=' ' '`"
+}
+
+
+getstats $tm1 $tasscap.plot1 $tasscap.regress1
+slope_tm1=`echo $result | cut -d' ' -f2`
+intercept_tm1=`echo $result | cut -d' ' -f4`
+# clean up the tmp stuff:
+rm -f $tasscap*
+echo "Result for channel $tm1: sl:$slope_tm1 i:$intercept_tm1"
+echo ""
+
+getstats $tm2 $tasscap.plot2 $tasscap.regress2
+slope_tm2=`echo $result | cut -d' ' -f2`
+intercept_tm2=`echo $result | cut -d' ' -f4`
+# clean up the tmp stuff:
+rm -f $tasscap*
+echo "Result for channel $tm2: $slope_tm2 i:$intercept_tm2"
+echo ""
+
+getstats $tm3 $tasscap.plot3 $tasscap.regress3
+slope_tm3=`echo $result | cut -d' ' -f2`
+intercept_tm3=`echo $result | cut -d' ' -f4`
+# clean up the tmp stuff:
+rm -f $tasscap*
+echo "Result for channel $tm3: $slope_tm3 i:$intercept_tm3"
+echo ""
+
+getstats $tm4 $tasscap.plot4 $tasscap.regress4
+slope_tm4=`echo $result | cut -d' ' -f2`
+intercept_tm4=`echo $result | cut -d' ' -f4`
+# clean up the tmp stuff:
+rm -f $tasscap*
+echo "Result for channel $tm4: $slope_tm4 i:$intercept_tm4"
+echo ""
+
+getstats $tm5 $tasscap.plot5 $tasscap.regress5
+slope_tm5=`echo $result | cut -d' ' -f2`
+intercept_tm5=`echo $result | cut -d' ' -f4`
+# clean up the tmp stuff:
+rm -f $tasscap*
+echo "Result for channel $tm5: $slope_tm5 i:$intercept_tm5"
+echo ""
+
+# do the correction:
+echo "Running the dehaze formula: tm_corr = tm - [ (tass4 - tm_i) * tm_s]"
+
+r.mapcalc $tm1.corr="$tm1 - ( ($tasscap.4 - $intercept_tm1) * $slope_tm1)"
+r.support -r $tm1.corr
+
+r.mapcalc $tm2.corr="$tm2 - ( ($tasscap.4 - $intercept_tm2) * $slope_tm2)"
+r.support -r $tm2.corr
+
+r.mapcalc $tm3.corr="$tm3 - ( ($tasscap.4 - $intercept_tm3) * $slope_tm3)"
+r.support -r $tm3.corr
+
+r.mapcalc $tm4.corr="$tm4 - ( ($tasscap.4 - $intercept_tm4) * $slope_tm4)"
+r.support -r $tm4.corr
+
+r.mapcalc $tm5.corr="$tm5 - ( ($tasscap.4 - $intercept_tm5) * $slope_tm5)"
+r.support -r $tm5.corr
+
