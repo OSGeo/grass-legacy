@@ -1,12 +1,12 @@
 PGM=s.o2n.tps
 HOME=$(ETC)
-LIBES=$(GISLIB) $(DATETIMELIB) $(XDRLIB)
+LIBES=$(GISLIB) $(DATETIMELIB)
 
 #EXTRA_CFLAGS=-g
 #LDFLAGS=-g
 
 $(HOME)/$(PGM): convert.o $(LIBES)
-	$(CC) -o $@ convert.o  $(LIBES) $(MATHLIB)
+	$(CC) -o $@ convert.o  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(DATETIMELIB): #
