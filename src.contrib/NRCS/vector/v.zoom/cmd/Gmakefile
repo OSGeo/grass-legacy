@@ -1,0 +1,17 @@
+# %W%  %G%
+
+PGM      = v.zoom
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+LIST =  main.o
+
+all: $(BIN_CONTRIB_CMD)/$(PGM)
+
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(VASKLIB) $(GISLIB) $(CURSES) $(MATHLIB)
+
+
+$(GISLIB): #
+$(VECTLIB): #
