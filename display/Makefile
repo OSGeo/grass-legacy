@@ -11,6 +11,7 @@ SUBDIRS = \
 	d.colors \
 	d.colortable \
 	d.erase \
+	d.extend \
 	d.font \
 	d.frame \
 	d.geodesic \

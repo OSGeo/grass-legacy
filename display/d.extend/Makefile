@@ -1,0 +1,10 @@
+MODULE_TOPDIR = ../..
+
+PGM = d.extend
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(SITESLIB) $(GISLIB)
+DEPENDENCIES = $(DISPLAYDEP) $(RASTERDEP) $(VECTDEP) $(SITESDEP) $(GISDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
