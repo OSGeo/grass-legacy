@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
     parm.dumpmode->required = NO;
     parm.dumpmode->description =
 	_("Admin/normal user dump mode (Default = Postgres super-user)");
+    parm.dumpmode->options = "admin,normal";
+    parm.dumpmode->answer     = "admin";
 
 
     /* get options and test their validity */
