@@ -22,6 +22,8 @@ int get_wind_y_pos(float);
 int get_wind_x_pos(float);
 /* zoom.c */
 int zoomwindow(int, int, double, char);
+/* redraw.c */
+int redraw(void);
 
 #ifdef MAIN
 #define	GLOBAL
