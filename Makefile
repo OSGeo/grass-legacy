@@ -76,3 +76,15 @@ bindist:
 	    binaryInstall.src > grass51-$$date-${ARCH}-install.sh ; \
 	    chmod a+x grass51-$$date-${ARCH}-install.sh 2>/dev/null ; true
 
+htmldocs:
+	(cd lib/db/ ; make htmldocs)
+	(cd lib/vector/ ; make htmldocs)
+	#next runs only on grass51refman.dox (as defined in ./Doxyfile)
+	doxygen
+
+packagehtmldocs:
+	tar cvfz grass51refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html
+
+pdfdocs:
+#	(cd lib/db/ ; make pdfdocs)
+	(cd lib/vector/ ; make pdfdocs)
