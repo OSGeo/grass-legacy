@@ -1,3 +1,20 @@
+/*
+ * r.in.gridatb: imports GRIDATB.FOR map file. 
+ *
+ * GRIDATB.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
+ *
+ * $Id$
+ *
+ *	Copyright (C) 2000 by the GRASS Development Team
+ *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *		Hydro Laboratory, Kyungpook National University
+ *		South Korea
+ *
+ *	This program is free software under the GPL (>=v2)
+ *	Read the file COPYING coming with GRASS for details.
+ *
+ */
+
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN

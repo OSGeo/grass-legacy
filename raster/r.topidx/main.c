@@ -1,12 +1,25 @@
 /*
  * r.topidx: creates topographic index map from elevation map.
+ * 	     Based on GRIDATB.FOR.
  *
- *  Contact: Huidae Cho <hdcho@geni.knu.ac.kr>
+ * GRIDATB.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
  * $Id$
  *
+ *	Copyright (C) 2000 by the GRASS Development Team
+ *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *		Hydro Laboratory, Kyungpook National University
+ *		South Korea
+ *
+ *	This program is free software under the GPL (>=v2)
+ *	Read the file COPYING coming with GRASS for details.
+ *
+ *
  * $Log$
- * Revision 1.1  2000-08-20 05:57:16  cho
+ * Revision 1.2  2000-11-01 17:26:35  cho
+ * updated copyleft
+ *
+ * Revision 1.1  2000/08/20 05:57:16  cho
  * Huidae Cho <hdcho@geni.knu.ac.kr>: TOPMODEL simulation and other stuff
  *
  *
