@@ -151,7 +151,7 @@ main (int argc, char *argv[])
 
     /* fetch PROJ info */
     G_get_default_window(&cellhd);
-    if( cellhd.proj == 0 ) /* XY Location */
+    if( cellhd.proj == PROJECTION_XY )
         Ogr_projection = NULL;
     else
     {
