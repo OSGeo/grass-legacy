@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 
 Pdata (buf, n) 
