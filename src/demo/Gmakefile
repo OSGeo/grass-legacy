@@ -1,0 +1,15 @@
+DEMODIR = $(ETC)/demo.scripts
+
+
+all: text demo
+
+text:
+	rm -rf $(DEMODIR)
+	mkdir $(DEMODIR)
+	cp scripts/* $(DEMODIR)
+	chmod +x $(DEMODIR)/*
+
+demo:
+	rm -f $(BIN)/demo
+	cp demo.sh $(BIN)/demo
+	chmod 0755 $(BIN)/demo
