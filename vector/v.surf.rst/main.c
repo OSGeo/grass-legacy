@@ -31,8 +31,6 @@
 #include <unistd.h>
 #include <math.h>
 
-#define MAIN
-
 #include "Vect.h"
 #include "dbmi.h"
 

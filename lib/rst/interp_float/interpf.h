@@ -16,7 +16,7 @@ struct fcell_triple   {
       double smooth;
 };
 
-#ifdef MAIN
+#ifdef POINT2D_C
   struct line_pnts *Pnts;
   struct line_cats *Cats2;
   dbDriver *driver2;
