@@ -5,6 +5,6 @@ HOME     = $(BIN_CONTRIB_CMD)
 LIST     = main.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB):   #

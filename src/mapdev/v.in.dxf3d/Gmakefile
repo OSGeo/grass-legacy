@@ -8,9 +8,10 @@ MUTL=$(SRC)/../man/utilities
 MSEC2=3
 MDIR2=$(SRC)/../man/man$(MSEC2)
 
-$(PROG): main.o  $(GISLIB) 
-	rm -f a.out $@
-	$(CC) main.o -o $@ $(GISLIB) $(MATHLIB)
+OBJ= main.o
+
+$(PROG): main.o  $(GISLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 	cp v.in.dxf3d.sh $(GISBASE)/scripts/
 
 #	cp man $(MDIR)/$(NAME)
