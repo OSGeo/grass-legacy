@@ -336,13 +336,13 @@ int main ( int argc, char *argv[])
   parm.theta ->key = "theta";
   parm.theta ->type = TYPE_DOUBLE;
   parm.theta ->required = NO;
-  parm.theta ->description = _("Anisotropy angle (in degrees)");
+  parm.theta ->description = _("Anisotropy angle (in degrees measured from East counterclockwise)");
 
   parm.scalex = G_define_option ();
   parm.scalex ->key = "scalex";
   parm.scalex ->type = TYPE_DOUBLE;
   parm.scalex ->required = NO;
-  parm.scalex ->description = _("Anisotropy scaling factor");
+  parm.scalex ->description = _("Anisotropy scaling factor (values 0 and 1 give no anisotropy)");
 
   flag.deriv = G_define_flag ();
   flag.deriv->key = 'd';
