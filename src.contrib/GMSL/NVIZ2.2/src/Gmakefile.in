@@ -26,7 +26,7 @@ XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS) $(PQLIBPATH) $(P
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
 	position.o quick_draw.o anim_support.o cutplane_obj.o \
-	script_support.o \
+	script_support.o do_zoom.o \
 	label.o nvizMain.o togl.o togl_cb.o\
 	query_postgr.o $(PQ_OBJS)
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
