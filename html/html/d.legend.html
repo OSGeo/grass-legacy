@@ -20,8 +20,8 @@ active frame on the graphics monitor.
 <B>d.legend help</B> 
 <BR>
 <B>d.legend</B> [<B>-vcsom</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
-[<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>] 
-
+[<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>]
+[<B>maxfontsize=</B><EM>value</EM>]
 <H2>DESCRIPTION</H2>
 
 <EM>d.legend</EM> displays a legend for a user-specified
@@ -98,6 +98,14 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 <BR>
 <DD>Default: 5
 
+<DT><B>maxfontsize</B>
+<DD>Max font size for text labels
+<BR>
+<DD>Options: 0-1000
+<BR>
+<DD>Default: 20
+
+
 </DL>
 
 <H2>NOTE</H2>
@@ -110,6 +118,9 @@ display frame, the legend may appear in unreadably small text.
 <p>
 The flag <EM>-o</EM> is useful for categorial maps, it suppresses the
 drawing of non-existing categories (otherwise the full range is shown).
+<p>
+Font size for text labels may be adjusted with <EM>maxfontsize</EM>
+parameter.
 
 <H2>SEE ALSO</H2>
 
