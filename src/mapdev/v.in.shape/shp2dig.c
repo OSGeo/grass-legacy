@@ -565,6 +565,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
   int tryAgain = 1; /* Loop flag for determining if the calculation needs to be 
 		       aborted and restarted on the second pass (to find
 		       centroid  */
+  int rej_val;  /* Flag to follow whether a centroid is alive */
 
   /* How many intersects? */
   int nIntersects;
@@ -582,6 +583,12 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
   /* Pointer to pntDescript struct for creating array of intersects */
   pntDescript *pd0;
+
+
+  /* Mark centroid as alive by default and store this */
+
+  rej_val = 0;
+  proc_reject_centroid( SET_VAL, &rej_val );
 
   /* Shapefile does not provide bounding-box information for a part
      :(
@@ -748,6 +755,11 @@ void partCalcFieldsPolygon( partDescript *partd ) {
      */
 
     locateNewCentroid( &newx1, &newx2, tmpCentroidx, partd->intersects, partd->numIntersects );
+    proc_reject_centroid(GET_VAL, &rej_val);
+    if(rej_val) {
+      totalCirc = 0.0;
+      goto end;
+    }
     assert( fabs(newx1) < 1.0e10 && fabs(newx2) < 1.0e10 );
 
     /* Third pass. Have to redetermine the circulation to see if we have an
@@ -790,6 +802,8 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     if(totalCirc < 1.0 && totalCirc > -1.0 ) {
       totalCirc = 0;
     }
+
+  end:
   }
 
   /* Next, dispose situation where circulation is positive ( ie. anti-clockwise, an island
@@ -1017,7 +1031,7 @@ void thirdPoint( pntDescript *pntArray ) {
 
 /* This function gets the x position of significant intersects */
 
-void locateNewCentroid( double *xpos1, double *xpos2, 
+int locateNewCentroid( double *xpos1, double *xpos2, 
 			double xcentre, pntDescript *isects, int nIsects ) {
 
   /* This shouldn't be called if there are less than two intersects */
@@ -1027,7 +1041,7 @@ void locateNewCentroid( double *xpos1, double *xpos2,
   int i0;
 
   /* Status Check variable */
-  int moretodo;
+  int moretodo, rej_val;
   
   /* Hold temporary switch (double) value */
   double tmpIsect;
@@ -1079,6 +1093,11 @@ void locateNewCentroid( double *xpos1, double *xpos2,
 	  /* Quick check that the west/east intersect populations are
 	     even-numbered */
 	  assert( i0 % 2 == 0 );
+	  if( i0 % 2 == 0 ) {  /* Oops! We've moved outside the ring. Skip it! */
+	    rej_val = 1;
+	    proc_reject_centroid( SET_VAL, &rej_val );
+	    return 1;
+	  }
 	  *xpos1 = xIsects[i0-2];
 	  *xpos2 = xIsects[i0-1];
 	  break;
@@ -1087,6 +1106,9 @@ void locateNewCentroid( double *xpos1, double *xpos2,
     }
 
   }
+
+
+  return 0;
 }
 
 
@@ -1306,4 +1328,25 @@ int procMapType( int iswitch, int *mtype ) {
     return 0;
   }
   else return 1;
+}
+
+
+int proc_reject_centroid( int procflag, int *rejflag ) {
+
+  static rej_ = 0;
+
+
+  if(procflag == SET_VAL) {
+    if(*rejflag) rej_ = 1;
+    else rej_ = 0;
+    return 0;
+  }
+
+  else if(procflag == GET_VAL) {
+    *rejflag = rej_;
+    return 0;
+  }
+
+  else return 1;  /* Unknown operation requested */
+
 }
