@@ -36,7 +36,7 @@ esac
 
 if [ ! -f $GISRC ]
 then
-	cat $ETC/gis_intro
+	cat $ETC/grass_intro
 	echo ""
 	echo "Hit RETURN to continue"
 	read ans
@@ -44,7 +44,7 @@ fi
 
 # user selects LOCATION and MAPSET
 
-$ETC/gis_set
+$ETC/set_data
 case $? in
  0) ;;
  *) exit ;;
