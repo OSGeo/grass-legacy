@@ -6,9 +6,11 @@
  * Copyright Jaro Hofierka
  * GeoModel,s.r.o., Bratislava, 1999
  * hofierka@geomodel.sk
- * 
- * Region sensivity by MN 1/2001
- * Fixed coordinate being reversed MN 1/2001
+ *
+ * Improvements: 
+ * - added true coordinates support Markus Neteler 1/2001
+ * - Region sensivity by MN 1/2001
+ * - Fixed coordinate being reversed MN 1/2001
  */
 
 /* uncomment to get some debug output */
@@ -119,7 +121,7 @@ void convert(char *fileout, int rows, int cols, int depths) {
    int x, y, z;
    int typeIntern;
 
-   /* copy setting from global variable MN 1/2001*/
+   /* copy setting from global variables MN 1/2001*/
    rows = region.rows;
    cols=region.cols;
    depths=region.depths;
@@ -152,14 +154,14 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    strcpy(VarName[0], "S");
    TimeStamp[0] = DateStamp[0] = 0;
    CompressMode = 4;
-   Projection = 0;      /*linear, rectangular, generic units*/
-   ProjArgs[0] = 0.0;   /*North boundary of 3-D box*/
-   ProjArgs[1] = 0.0;   /*West boundary of 3-D box */
-   ProjArgs[2] = 1.0;   /*Increment between rows */
-   ProjArgs[3] = 1.0;   /*Increment between columns*/
-   Vertical    = 0;     /*equally spaced levels in generic units*/
-   VertArgs[0] = 0.0;   /*height of bottom level*/
-   VertArgs[1] = 1.0;   /*spacing between levels*/
+   Projection = 0;               /*linear, rectangular, generic units*/
+   ProjArgs[0] = region.north;   /*North boundary of 3-D box*/
+   ProjArgs[1] = region.west;    /*West boundary of 3-D box */
+   ProjArgs[2] = region.ns_res * (-1);   /*Increment between rows */
+   ProjArgs[3] = region.ew_res * (-1);   /*Increment between columns*/
+   Vertical    = 0;               /*equally spaced levels in generic units*/
+   VertArgs[0] = region.bottom;   /*height of bottom level*/
+   VertArgs[1] = region.tb_res;   /*spacing between levels*/
 
 /* put here some g3d functions */
         LatInc = 1.0;
