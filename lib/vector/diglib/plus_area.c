@@ -446,7 +446,7 @@ dig_angle_next_line (
   
   G_debug (3, "  current position = %d", next );
   while (1) {
-      if (side == GV_RIGHT) {  /* go up (bigger angle) */
+      if (side == GV_RIGHT) {  /* go up (greater angle) */
 	  if (next == Node->n_lines - 1)
 	    next = 0;
 	  else
@@ -461,7 +461,10 @@ dig_angle_next_line (
 
       if ( Node->angles[next] == -9. ) { /* skip points and degenerated */
           G_debug (3, "  point/degenerated -> skip" );
-	  continue; 
+          if ( Node->lines[next] == current_line  ) 
+	      break; /* Yes, that may happen if input line is degenerated and isolated and this breaks loop */ 
+	  else 
+	      continue; 
       }
       
       line = abs ( Node->lines[next] );
