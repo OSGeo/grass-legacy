@@ -142,7 +142,7 @@ main (int argc, char *argv[])
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
     snap_opt->required = NO;
-    snap_opt->answer = "0.001";
+    snap_opt->answer = "-1";
     snap_opt->description = "Snapping threshold for boundaries. -1 for no snap.";
 
     outloc_opt = G_define_option();
@@ -651,6 +651,10 @@ main (int argc, char *argv[])
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Remove duplicates:\n" );
 	Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
+
+	fprintf ( stderr, separator );
+	fprintf ( stderr, "Clean boundaries at nodes:\n" );
+	Vect_clean_small_angles_at_nodes ( &Map, GV_BOUNDARY, NULL, stderr );
 
         fprintf ( stderr, separator );
 	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
