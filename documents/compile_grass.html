@@ -1,0 +1,233 @@
+<html>
+<pre>
+Compiling GRASS 4.3 using a UNIX platform 
+(Linux/Solaris/HP/...)                               (25. Oct. 1999)
+
+from Markus Neteler
+       Department of Geography
+       Institute of Physical Geography
+       University of Hannover
+       Germany
+       email: neteler@geog.uni-hannover.de
+
+This is a text which should show you how to compile 
+this new GRASS 4.3 version on a UNIX platform.
+
+So - now we start. First you have to get the 4.3 source code 
+from internet (http://www.geog.uni-hannover.de/grass/). 
+Store the package in a new directory and uncompress the package
+like:
+
+   mkdir /usr/local/grass42
+
+        (store source code there)
+
+   gunzip grass_src43.tar.gz
+   tar xvf grass_src43.tar        # Take parameter "x"!!
+
+If you succeed (it is really easy) you get a tree
+
+../src43/src
+../src43/src.alpha
+../src43/src.contrib
+etc.
+
+The dots ../ are your path like /usr/local where you
+have stored all the stuff.
+
+First we have to adjust a few things:
+
+0. create a new link (GRASS expects mknod in /etc):
+
+ cd /etc
+ ln -s /bin/mknod mknod
+
+Otherwise the GISGEN-script will not work properly.
+
+Then, if ".h"-files (header files) will not be found 
+during compilation, do following:
+
+ cd /usr/lib
+ ln -s /usr/openwin/share/include/X11 X11
+
+ cd /usr/include
+ ln -s /usr/openwin/share/include/X11 X11
+
+Then proceed with GRASS compilation:
+
+GRASS compiling instructions are stored in a specific file.
+You have to take one of the already stored files there (file
+collection for several platforms) or you must create a new head
+file, if your platform is missing there. The easiest way is to
+edit an existing file for that purpose.
+
+1. Check the compiler instructions file (called "head"-file)
+
+   cd  grass43/src43/src/CMD/head/
+
+   Look out for your platform there (solaris2.6 etc.). You may 
+   change compiler, paths etc. in this file if required. Usually 
+   you don't have to change anything here.
+
+
+2. Go to /usr/local/bin
+   create a new file
+      gmake4.3
+   there. This file is also stored in the 
+   ../src43/ directory and can be copied from there.
+   The contents are: (text between lines, including colon,
+   change the SRC and CMD path to your installation)
+
+------------------------------------------------------------
+:
+SRC=/usr/local/grass43/src43/src
+CMD=/usr/local/grass43/src43/src/CMD
+HEADER=xxxxxx
+HASX=yes
+HASMotif=no
+. $CMD/generic/gmake.sh
+------------------------------------------------------------
+
+
+Change "xxxxxxx" to the file name of your head file:
+Example:
+  platform SUN Solaris2.6 -> head file: src/CMD/head/solaris2.6
+                          -> gmake4.3 file: replace xxxxxxx with solaris2.6 
+                                            (HEADER=solaris2.6)
+  platform Linux          -> head file: src/CMD/head/linux
+                          -> gmake4.3 file: replace xxxxxxx with linux
+                                            (HEADER=linux)
+ 
+
+3. If required, change the paths in
+   grass43/src43/src/CMD/GISGEN.my
+     and
+   grass43/src43/src/CMD/MAKELINKS.my
+   
+   to point on the gmake4.3 script.
+
+4. In the file src43/src/CMD/lists/GRASS the modules are specified 
+   to be compiled and the modules which shall be ignored (commented out).
+   Usually you do not have to change anything here.
+
+5. Begin the process of compiling. Start the script GISGEN.my:
+
+   cd src43/src/CMD/
+     GISGEN.my
+
+   
+So - now you can relax and go for tea.
+
+
+[after some time...]
+ 
+The source code should be compiled without problems.
+Otherwise read <a href=linux_tips.html>here</a> or <a
+href=solaris_tips.html>here</a>.
+
+If you are on Linux, the ps.map package needs to be recompiled:
+Due to different compiler options, you have to compile the 
+ps.map-package again (only required, if you will use it!) with an 
+additional compiling flag:
+
+ All the ps.map modules need to be compiled with the -fwritable-strings
+ flag. Do the following:
+  (a) Edit the src/CMD/head/linux header-file 
+             + add -fwritable-strings at the end of COMPILE_FLAGS line
+               COMPILE_FLAGS = -O -fwritable-strings
+  (b) cd to src.alpha/ps.map
+             + remove all OBJ.linux directories (search recursive)
+  (c) run gmake4.3 again in src.alpha/ps.map
+
+
+6. Now we proceed with standard GRASS installation.
+
+Start the script
+ src43/src/CMD/MAKELINKS.my
+
+to create the links onto the binaries. It will run some
+seconds to minutes depending on your machine's speed.
+
+Then you have to create the start-script for GRASS. (You can
+take the file stored in the ../src43/ directory):
+
+Copy it to: /usr/local/bin
+
+or create it there, if it does not exist:
+ textedit grass4.3
+
+with following contents (text between the lines incl. colon, 
+change GISBASE path to your installation):
+
+---------------------------------------------------------
+:
+GISBASE=/usr/local/grass43
+export GISBASE
+sh $GISBASE/etc/GIS.sh
+---------------------------------------------------------
+
+It must be executable:
+
+  chmod ugo+x grass4.3
+
+
+7. Then some files have to be created to control the digitizer
+   and the graphical output windows (called "GRASS monitors"):
+
+   cd ../grass43/etc/
+   cp digcap.sampl digcap
+   cp moncap.sample monitorcap
+
+8. After that activate the monitors within the monitorcap file:
+
+   textedit monitorcap
+  
+    Here you have to delete the # character for the
+    drivers x0 - x6 and the CELL driver. The paths will be alright 
+    (look for it).
+
+9. Finally... create the lock-directory:
+
+  cd ../grass43/locks
+  mkdir <machine_name>
+  chmod 1777 <machine_name>
+
+e.g.
+  mkdir apollo
+  chmod 1777 apollo
+
+Fid out the machine's name with
+  uname -n
+
+
+10. OPTIONAL:
+
+  - How to install a digitizer:
+        read instructions in 
+         - src43/src/mapdev/INSTALL-digitizer.txt
+         - documents/instructions/admin/digitizer.html
+
+  - How to install the postscript drivers for printing (used by
+    ps.select, ps.map):
+        read instructions in
+          src43/files_for_binary_installation/README
+  
+  - compile XGRASS with lesstif:
+       read <a href=comp_xgrass.html>XGRASS instructions</A>
+
+  - install extra modules (e.g. from untested section):
+     Follow the instructions <a href=INSTALL_extra_modules.html>here</a>.
+
+------------------------------------------------------
+Yeah! Have fun. And write nice new modules for GRASS community. The
+GRASS-world is waiting for your ideas...
+
+
+Markus Neteler
+ neteler@geog.uni-hannover.de  
+
+You have found this file here:
+    http://www.geog.uni-hannover.de/grass/
+
+</pre>
+</html>
