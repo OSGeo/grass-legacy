@@ -113,13 +113,17 @@ void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat,
 		along = i * dlen;
 		Vect_point_on_line ( LPoints, along, &x, &y, &z, NULL, NULL );
 	    } else { /* first and last vertex */
-		x = LPoints->x[LPoints->n_points-1];
-		y = LPoints->y[LPoints->n_points-1];
-		z = LPoints->z[LPoints->n_points-1];
-		if ( i == 0 )
+		if ( i == 0 ) {
 		    along = 0;
-		else /* last */
+		    x = LPoints->x[0];
+		    y = LPoints->y[0];
+		    z = LPoints->z[0];
+	        } else { /* last */
 		    along = len;
+		    x = LPoints->x[LPoints->n_points-1];
+		    y = LPoints->y[LPoints->n_points-1];
+		    z = LPoints->z[LPoints->n_points-1];
+		}
 	    }
 	    G_debug ( 3, "  i = %d along = %f", i, along );
 	    write_point ( Out, x, y, z, cat, along, table );
