@@ -22,6 +22,7 @@
 <BR>
 <B>d.save</B> [<B>-ca</B>] [<B>frame=</B><EM>name</EM>[,<EM>name</EM>,...]]
 [<B>remove=</B><EM>val</EM>[,<EM>val</EM>,...]]
+[<B>move=</B><EM>from,to</EM>[,<EM>from,to</EM>,...]]
 
 <H2>DESCRIPTION</H2>
 
@@ -73,10 +74,18 @@ Options: All available frames
 Default: Active frame 
 
 <DT><B>remove=</B><EM>val</EM>[,<EM>val</EM>,...]
-<DD>List no's to be removed, which are displayed right-most comments.
+<DD>List no's to be removed.
+
+<DT><B>move=</B><EM>from,to</EM>[,<EM>from,to</EM>,...]
+<DD>List no's to be moved, "from" to "to".
+remove option will be done first, if any.
 </DL>
 
 <H2>NOTES</H2>
+
+List no's are displayed in right-most comments.
+
+<P>
 
 Display commands used interactively, and those that take
 their graphic instructions from standard input, will not be
