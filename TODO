@@ -1,4 +1,4 @@
-$Id: TODO,v 1.17 2000-09-05 20:45:02 markus Exp $
+$Id: TODO,v 1.18 2000-09-08 14:00:30 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -22,6 +22,12 @@ Configure:
      - search for "yacc" and "(f)lex"
      - search, if odbc driver lib is present (src/libes/dbms/drivers/odbc/)
   (Being worked on by )
+
+
+--------------------------------------------------------------------
+Removal of absolute path codings:
+ - etc/monitorcap:
+   Here the paths should be replaced by $GISBASE environment
 
 --------------------------------------------------------------------
 Regression test suite:
