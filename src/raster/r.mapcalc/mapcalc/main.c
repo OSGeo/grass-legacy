@@ -9,6 +9,7 @@ main(argc,argv) char *argv[];
     char result[100];
     int outfd;
     int ok;
+    int allok = 0;
     int interactive;
     int fpe();
     int i;
@@ -16,6 +17,7 @@ main(argc,argv) char *argv[];
     FILE *exp_fd;
 
     G_gisinit (argv[0]);
+
     tempfile = G_tempfile();
 
     max_rows_in_memory = 3;
@@ -80,7 +82,9 @@ system (buf);
 	    continue;
 	}
 	fseek (exp_fd, 0L, 0);
+	/*
 	printf ("\nPARSING EXPRESSION ... "); fflush (stdout);
+	*/
 	if (polish (exp_fd, result))
 	{
 	    fclose (exp_fd);
@@ -97,37 +101,48 @@ system (buf);
 #ifdef SIGFPE
 		signal (SIGFPE, fpe);
 #endif
-		printf ("\nEXECUTING %s = ... ", result); fflush(stdout);
+		fprintf (stderr, "\nEXECUTING %s = ... ", result); fflush(stdout);
 		ok = execute (outfd);
+		if ( !ok ) {
+		    allok = ok;
+		}
 #ifdef SIGFPE
 		signal (SIGFPE, SIG_DFL);
 #endif
 		if(ok)
 		{
 		    printf ("CREATING SUPPORT FILES FOR %s\n",result);
-		    if (floating_point_exception_occurred)
+		    if (floating_point_exception_occurred) {
 			fprintf (stderr, "NOTE: floating point error(s) occured in the calculation\n");
-		    if (overflow_occurred)
+			allok = 1;
+		    }
+		    if (overflow_occurred) {
 			fprintf (stderr, "NOTE: overflow occured in the calculation\n");
+			allok = 1;
+		    }
 		    G_close_cell (outfd);
 		    create_support_files (result, tempfile);
 
 		    printf ("minimum value %ld, maximum value %ld\n",
 			(long) min_value, (long) max_value);
+		    /*
 		    printf ("expression stack size %d, execute stack size %d\n",
 			expression_stack_depth, execute_stack_depth_max);
+		    */
 		}
 		else
 		    G_unopen_cell (outfd); /* do not create the cell file! */
 		free_execute_stack();
 	    }
-	    else
+	    else {
 		fprintf (stderr, "OOPS can't create cell file <%s>\n", result);
+		allok = 1;
+	    }
 	}
 	else
 	    fclose (exp_fd);
 	free_expression_stack();
 	if (argc >= 2) break;
     }
-    exit(0);
+    exit(!allok);
 }
