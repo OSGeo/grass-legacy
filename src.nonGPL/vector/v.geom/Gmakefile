@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) ../../libes/geom
+	$(GMAKE) cmd

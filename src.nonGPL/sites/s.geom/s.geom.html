@@ -1,0 +1,151 @@
+<TITLE>s.geom</TITLE> 
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.geom</b></EM>  - Computes Delaunay triangulation,
+MinMax-Angle triangulation, MinMax-Slope triangulation,
+MaxMin-Height triangulation, Regular triangulation,
+planesweep triangulation, Voronoi diagram, and convex hull
+of sites in 2 and 2 1/2 dimensions.
+
+<H2>SYNOPSIS</H2>
+
+<B>s.geom</B>
+<BR>
+<B>s.geom help</B>
+<BR>
+
+<B>s.geom</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+[<B>precision=</B><EM>value</B></em>] [<B>operation=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.geom</EM> takes a sites file as input and computes
+various triangulations, the Voronoi diagram, or the convex
+hull of the sites. The z-coordinate is read from the
+description field if it is specified, otherwise 0 is
+assumed. The z-coordinate is used for the MinMax-slope
+triangulation and for the regular triangulation (where it
+is interpreted as the weight of the site). For all other
+computations the z-coordinate is ignored.
+
+<P>
+
+The MinMax-angle triangulation is the triangulation for the
+sites which minmizes (lexicographically) the sorted vector
+of all the angles of triangles in the triangulation. The
+MaxMin-height and MinMax-slope triangulations are similar.
+The algorithms used for the computations are not
+heuristics, they actually achieve the optimum.
+
+<P>
+
+The regular triangulation is the weighted version of the
+delaunay triangulation (weights are assigned to the sites,
+the delaunay triangulation corresponds to the regular
+triangulation where all the sites have identical weights).
+
+<P>
+
+The output is saved in vector file format. 
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Input vector (level 2) file.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Output vector file.
+
+<DT><B>precision=</B><EM>value</EM>
+<DD>Number of significant positions after the decimal point. (default is 0).
+
+<DT><B>operation=</B><EM>name</EM>
+
+<DD>One of the following: <EM>sweep</EM>,
+<EM>delaunay</EM>, <EM>angle</EM>, <EM>height</EM>,
+<EM>slope</EM>, <EM>hull</EM>. These correspond to the
+planesweep triangulation, Delaunay triangulation,
+MinMax-angle triangulation, MaxMin-height triangulation,
+MinMax-slope triangulation, regular triangulation, Voronoi
+diagram, and convex hull, respectively.  (default is
+Delaunay triangulation).
+
+</DL>
+
+
+<H2>NOTE</H2>
+
+Only the sites which fall into the current region are used
+for the computations.
+
+<P>
+
+The computation times for the various operations depends
+strongly on the algorithm used.
+
+<P>
+
+The plansweep triangulation and convex hull computation
+require <EM>O(n log n)</EM> operations in the worst case
+[<A HREF="#Ed">Ed</A>].  The Delaunay heuristic needs
+<EM>O(n^2)</EM> time in the worst case, however it performs
+much faster in practice. The MinMax-angle and MaxMin-height
+triangulations need <EM>O(n^2 log n)</EM> operations
+[<A HREF="#BeEd">BeEd</A>, <A HREF="#EdTa">EdTa</A>], and the
+MinMax-slope triangulation needs <EM>O(n^3)</EM> operations
+[<A HREF="#BeEd">BeEd</A>].
+
+<P>
+
+Internally, the coordinates of the sites are stored in
+fix-point format.  Therefore, the number of decimal digits
+cannot exceed 64 bit (or apprx.  16 decimal digits).
+
+<H2>BUGS</H2>
+
+Some fields of the header in the output file are not properly set.
+
+<H2>REFERENCES</H2>
+
+<A NAME="BeEd">[BeEd]</A>
+M.Bern, H. Edelsbrunner, D. Eppstein, S. Mitchel,
+T.S. Tan.  Edge Insertion for Optimal Triangulations.
+<EM>In Proc. 1st Latin American Sympos. Theoret.
+Informatics 1992</EM>, 46--60.
+
+<P>
+
+<A NAME="Ed">[Ed]</A>
+H. Edelsbrunner.  <EM>Algorithms in Combinatorial
+Geometry.</EM> Springer-Verlag, Heidelberg, Germany, 1987.
+
+<P>
+
+<A NAME="BeSh">[EdSh]</A>
+H. Edelsbrunner, N. R. Shah.
+Incremental Flipping Works for Regular Triangulations.
+<EM>In Proc. 8th Ann. Sympos. Comput. Geom. 1992</EM>, 43-52.
+
+<P>
+
+<A NAME="EdTa">[EdTa] </A>
+H. Edelsbrunner, T.S. Tan and R. Waupotitsch.
+An O(n^2 log n) Time Algorithm for the MinMax Angle Triangulation.
+<EM>SIAM J. Sci. Statist. Comput. 13 1992</EM>, 994-1008.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="v.geom.html">v.geom</A></EM>
+
+
+<H2>AUTHOR</H2>
+Roman Waupotitsch
