@@ -1,6 +1,6 @@
 
 LIBTRANS	= ../../libes/libtrans.a
-LIBDIGIT	= ../../v.digit/libdigit.a
+LIBDIGIT	= ../../v.digit2/libdigit.a
 
 DIG_DRIVER		= $(ETC)/dig_drivers
 #  specific driver we are compiling
@@ -52,20 +52,22 @@ $(DRIVER_DIR):
 mk_driver_dev:
 	@echo "";   echo	'  Compiling  NONE  driver.';  echo ""
 #  make sure libdigit.a is there
-	$(GMAKE)  $(SRC)/mapdev/v.digit
+	$(GMAKE)  $(SRC)/mapdev/v.digit2
 
-mk_driver_dig: $(OBJ) $(DRIVER_DIR)
+mk_driver_dig: $(OBJ) $(DRIVER_DIR) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB)
 #  compile driver into the program
 	$(CC) $(COMPILE_DIGIT)
 	rm -f $(DRIVER_DIR)/digit
 	mv digit $(DRIVER_DIR)/digit
 
+$(RASTERLIB) $(DISPLAYLIB) (VASKLIB) $(GISLIB): #
+$(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB): #
 
-coll_pts.o: ../../v.digit/digit.h  ../../v.digit/globals.h 
+coll_pts.o: ../../v.digit2/digit.h  ../../v.digit2/globals.h 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  ../../v.digit/digit.h
-dig_curses.o:  ../../v.digit/menu.h
-dig_curses.o:  ../../v.digit/curses.C
+dig_curses.o:  ../../v.digit2/digit.h
+dig_curses.o:  ../../v.digit2/menu.h
+dig_curses.o:  ../../v.digit2/curses.C
 
 saber_src:
-	#load $(CFLAGS) $(EXTRA_CFLAGS) $(CSRC) ../../v.digit/*.c ../../Vlib/*.c ../../diglib/*.c  $(LIBTRANS) $(DIG_ATTLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB)  $(GISLIB) $(CURSES) $(MATHLIB)
+	#load $(CFLAGS) $(EXTRA_CFLAGS) $(CSRC) ../../v.digit2/*.c ../../Vlib/*.c ../../diglib/*.c  $(LIBTRANS) $(DIG_ATTLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB)  $(GISLIB) $(CURSES) $(MATHLIB)
