@@ -53,7 +53,7 @@ fi
 
 # parsing argument to get LOCATION
 
-if [ "$1" = "-" ]
+if [ ! "$1" ]
 then
 
 	# try interactive startup
@@ -65,11 +65,13 @@ else
 	# try non-interactive startup
 
 	L=
-	if [ "$LOCATION" -a ! "$1" ]
+	if [ "$1" = "-" ]
 	then
-		L=$LOCATION
-	elif [ "$1" ]
-	then
+		if [ "$LOCATION" ]
+		then
+			L=$LOCATION
+		fi
+	else
 		L=$1
 	fi
 
@@ -115,9 +117,9 @@ else
 			echo "LOCATION_NAME: $LOCATION_NAME" >> $GISRC
 			echo "MAPSET: $MAPSET" >> $GISRC
 		fi
-	elif [ "$L" ]
-	then
-		echo "GISDBASE, LOCATION_NAME and MAPSET variables not set properly"
+	else
+		echo "GISDBASE, LOCATION_NAME and MAPSET variables not set properly."
+		echo "Interactive startup needed."
 		exit
 	fi
 
