@@ -1,29 +1,21 @@
-This code written by Dave Gerdes  USA-CERL   1990
 
-This program is written for the GL language on Silicon Graphics 4D 
-workstations.  It is an interactive program to display 3D (2.5D) GRASS
-data.
+NOTE that the Panel library must first be compiled.
+This is in:
+	src.contrib/CERL/SGI/panel/9.6/src
+	simply type 'make' in that directory 
+	(you may need to make changes to Makefile.defs in that directory)
 
-It requires that the panel library be compiled before compiling this
-program.
-
-
-Usage:
-
-SG3d elev.file color.file [vector.file]
-    or
-SG3d elev.file Red.file Green.file Blue.file [vector.file]
+ALSO, the Image library must be compiled.
+This is in: 
+	src.contrib/CERL/SGI/libimage
+	also type 'make' in that directory 
 
 
-*** One usage note:   after loading, you need to use the Z Scale buttons
-to get the image in the view screen.  This is a multiplier that allows for
-data where the Z values are not in the same scale as the X and Y values.
-It is still rather buggy, and needs to be improved.
 
+When compiling under IRIX 3.x, you *must* comment out the line:
+    #define FOUR_OH 
+in the externs.h file.  
 
-    Although this code is released to the Public Domain, it is considered
-sleazy and in bad taste to take credit for other programmer's work.
-I request that due credit be given to the original author in this, and
-all other GRASS related software, or any derivative works.  This should 
-go without saying, but I have seen my name replaced with the name of one 
-alleged sleazy programmer on the author line of several of my programs.
+If compiling under IRIX 4.0 and above, the line must exist and not be
+commented out.
+    (this is the default)
