@@ -47,6 +47,8 @@ agd84	"Australian Geodetic 1984"	  australian    dx=-134     dy=-48      dz=149
 # GDA94 (nearly the same as wgs84)
 # International Union of Geodesy and Geophysics Geographic Reference System 1980
 grs80	"Geographic Reference System 1980" wgs84        dx=0.0      dy=0.0      dz=0.0
+# Rome 1940
+rome40	"Rome 1940"			  international	dx=-225     dy=-65      dz=9
 
 # from Geodetic Datum List, Peter H. Dana, 07/12/97, dlist.html
 # South Asia
