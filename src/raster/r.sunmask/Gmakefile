@@ -1,7 +1,7 @@
 PGM    = r.sunmask
-LIBES  = $(GISLIB) $(DATETIMELIB)
+LIBES  = $(GISLIB) $(DATETIMELIB) $(GPROJLIB)
 
-LIST   = main.o
+LIST   = main.o solpos.o g_solposition.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	$(MATHLIB) $(XDRLIB)
