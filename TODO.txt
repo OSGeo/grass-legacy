@@ -521,7 +521,10 @@ Modules:
 - r3.mapcalc:
   add option to read 2D cells. Could be very useful to generate
   mask etc.
-  
+
+- r3.timestamp: write it
+  (Being worked on by "Pelizzari, Michael" <michael.pelizzari@lmco.com> )
+
 - v.buffer: write it
   (Being worked on by ?)
 
