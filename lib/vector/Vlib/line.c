@@ -225,23 +225,24 @@ Vect_line_delete_point (struct line_pnts *Points, int index)
 int 
 Vect_line_prune (struct line_pnts *Points)
 {
-  int i, j;
+    int i, j;
 
-  for ( i = 0; i < Points->n_points - 1; i++ ) {
-      if ( Points->x[i] == Points->x[i+1] && Points->y[i] == Points->y[i+1] && 
-	   Points->z[i] == Points->z[i+1])
-      {
-	  for ( j = i; j < Points->n_points - 1; j++ ) {
-	      Points->x[j] = Points->x[j+1];
-	      Points->y[j] = Points->y[j+1];
-	      Points->y[j] = Points->y[j+1];
-	  }
-	  Points->n_points--;
-	  i--; /* to continue at the same index */
-      }
-  }
-
-  return (Points->n_points);
+    if ( Points->n_points > 0 ) {
+	j = 1;
+	for (i = 1; i < Points->n_points; i++) {
+	    if ( Points->x[i] != Points->x[j-1] || Points->y[i] != Points->y[j-1] 
+		 || Points->z[i] != Points->z[j-1])
+	    {
+		Points->x[j] = Points->x[i];
+		Points->y[j] = Points->y[i];	
+		Points->z[j] = Points->z[i];	
+		j++;
+	    }
+	}
+	Points->n_points = j;
+    }
+  
+    return (Points->n_points);
 }
 
 /*!
@@ -673,5 +674,32 @@ Vect_line_box ( struct line_pnts *Points, BOUND_BOX *Box )
 {
     dig_line_box ( Points, Box );
     return 0;
+}
+
+/*!
+ \fn void Vect_line_reverse ( struct line_pnts *Points )
+ \brief reverse the order of vertices
+ \param Points line to be changed
+*/
+/* reverse_line - reverse order of Points ( direction of line ) */
+void Vect_line_reverse ( struct line_pnts *Points )
+{
+    int    i, j, np;
+    double x, y, z;
+
+    np = (int) Points->n_points/2 ;
+
+    for ( i=0; i<np; i++) {
+	j = Points->n_points - i - 1;
+	x = Points->x[i];  
+	y = Points->y[i];
+	z = Points->z[i];
+	Points->x[i] = Points->x[j];  
+	Points->y[i] = Points->y[j];
+	Points->z[i] = Points->z[j];
+	Points->x[j] = x;
+	Points->y[j] = y;
+	Points->z[j] = z;
+    }
 }
 
