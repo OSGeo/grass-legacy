@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.12 2000-12-22 15:16:26 justin Exp $
+# $Id: Gmakefile,v 1.13 2000-12-27 06:24:42 justin Exp $
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -28,6 +28,7 @@ all: unix \
      $(ETC)/lock \
      $(ETC)/run \
      $(ETC)/echo \
+     $(ETC)/getModTime \
      $(ETC)/grass_intro
 
 unix:
@@ -56,6 +57,9 @@ $(ETC)/run: run.o
 
 $(ETC)/lock: lock.o
 	$(CC) $(LDFLAGS) lock.o -o $@
+
+$(ETC)/getModTime: getModTime.o
+	$(CC) $(LDFLAGS) getModTime.o -o $@
 
 $(BIN)/exit:
 	touch $@
