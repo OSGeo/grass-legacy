@@ -62,6 +62,7 @@
 #define VARBITOID         	1562
 #define NUMERICOID              1700
 #define REFCURSOROID    	1790
+#define POSTGISPOINTOID		17409 /* PostGIS */
 
 typedef struct
 {

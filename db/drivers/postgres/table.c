@@ -150,6 +150,7 @@ int load_table(int t, char *stmt)
 	case BPCHAROID:
 	case VARCHAROID:
 	case TEXTOID:
+	case POSTGISPOINTOID:
 	    type = PG_CHAR;
 	    fsize = PQfmod(res, i) - 4; /* Looks strange but works, something better? */
 	    break;
