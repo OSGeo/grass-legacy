@@ -1,0 +1,16 @@
+PGM = Xmapgraph
+OFILES = \
+	allocation.o \
+	command.o \
+	do_graph.o \
+	graphics.o \
+	main.o
+LIBES = $(GISLIB) $(XDISPLAYLIB) $(DISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
+
+command.o:	options.h
+main.o:	options.h
