@@ -18,7 +18,7 @@
 <H2>SYNOPSIS</H2>
 <B>r3.in.ascii [type =</B><EM> default | double | float</EM><B>]
 [precision = </B><EM>default | max | 0 - 52</EM><B>]
-[compression = </B><EM>default | rle | lzw | rle+lzw | none</EM><B>]
+[compression = </B><EM>default | rle | none</EM><B>]
 [tiledimension = </B><EM>XxYxZ</EM><B>]
 [nv = </B>none | <EM>double</EM><B>]
 input = </B><EM>ascii-file</EM><B>
@@ -41,7 +41,7 @@ output = </B><EM>g3d-map</EM>
 that neither LZW nor RLE is used for compression.  It 
 does not turn off the compression all together.  G3D does
 not support non-compressed files.
-<DD>Options: default, rle, lzw, rle+lzw, none
+<DD>Options: default, rle, none
 
 <DT><B>tiledimension</B>
 <DD>The dimension of the tiles used in the output file.  The format is: XxYxZ

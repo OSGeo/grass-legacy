@@ -17,7 +17,7 @@ format into G3D format.<BR>
 <H2>SYNOPSIS</H2>
 <B>r3.in.grid3 [type = </B><EM>default | double | float</EM><B>]
 [precision = </B><EM>default | max | 0 - 52</EM><B>]
-[compression = </B><EM>default | rle | lzw | rle+lzw | none</EM><B>]
+[compression = </B><EM>default | rle | none</EM><B>]
 [tiledimension = </B><EM>XxYxZ</EM><B>]
 [nv = </B><EM>yes | no</EM><B>]
 input = </B><EM>grid3-file</EM><B>
@@ -39,7 +39,7 @@ output = </B><EM>g3d-map</EM>
 that neither LZW nor RLE is used for compression.  It 
 does not turn off the compression all together.  G3D does
 not support non-compressed files.
-<DD>Options: default, rle, lzw, rle+lzw, none
+<DD>Options: default, rle, none
 
 <DT><B>tiledimension</B>
 <DD>Format: XxYxZ
