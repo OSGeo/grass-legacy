@@ -268,6 +268,16 @@ c_create_table ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	return TCL_OK;
     }
 
+    if (db_create_index2 (driver, Fi->table, argv[3] ) != DB_OK ) {
+	G_warning ( "Cannot create index" );
+	db_set_string ( &err, "Cannot create index:\n" );
+	db_append_string ( &err, db_get_error_msg() );
+        db_close_database(driver);
+	db_shutdown_driver(driver);
+	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string ( &err), TCL_GLOBAL_ONLY);
+	return TCL_OK;
+    }
+
     if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK ) {
 	G_warning ( "Cannot grant privileges on table %s", Fi->table );
 	db_set_string ( &err, "Cannot grant privileges on table:\n" );

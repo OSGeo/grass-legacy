@@ -160,6 +160,9 @@ int main (int argc, char *argv[])
 	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
     }
 
+    if ( db_create_index2(driver, fi->table, "cat" ) != DB_OK )
+	G_warning ( "Cannot create index" );
+
     if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	G_fatal_error ( "Cannot grant privileges on table %s", fi->table );
 
