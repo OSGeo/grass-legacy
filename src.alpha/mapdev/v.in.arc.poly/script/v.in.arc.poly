@@ -1,0 +1,58 @@
+bindir=$GISBASE/etc
+tempfile=/tmp/temp.ply
+
+if [ $# = 0 ] ; then
+	echo 'usage:'
+	echo '    <v.in.arc.poly  ARC-ungenerate-polygon-file  GRASS-vectorfile>'
+        echo '    (The module calls v.in.arc itself.)'
+        exit
+fi
+
+if [ -z "$GISDBASE" ]  ; then
+	echo "please start GRASS to define LOCATION and MAPSET"
+	exit
+fi
+	
+if [ -z "$2" ]  ; then
+	echo "you have to specify the name of a GRASS vectorfile"
+	exit
+fi
+
+echo 'start program execution'
+
+if [ ! -d $GISDBASE/$LOCATION_NAME/$MAPSET/arc ] ; then
+	echo 'create directory'  $GISDBASE/$LOCATION_NAME/$MAPSET/arc
+	mkdir  $GISDBASE/$LOCATION_NAME/$MAPSET/arc
+fi	
+
+echo 'start extracting ply, pnt and txt information from ' $1
+$bindir/in_arc $1 $GISDBASE/$LOCATION_NAME/$MAPSET/arc/temp 
+
+if [ "$?" -ne 0 ] ; then
+	return 1
+fi
+
+echo 'start eliminating double nodes in ' $1
+$bindir/permut $GISDBASE/$LOCATION_NAME/$MAPSET/arc/temp.ply $tempfile
+rm $tempfile
+
+if [ "$?" -ne 0 ] ; then
+	return 1
+fi
+
+echo 'start importing files into GRASS'
+v.in.arc type=polygon lines_in=temp.ply points_in=temp.pnt text_in=temp.txt vector_out=$2 idcol=1 catcol=2 attcol=3
+
+if [ "$?" -ne 0 ] ; then
+	return 1
+fi
+
+echo 'start building topology information'
+v.support -r map=$2 option=build
+
+if [ "$?" -ne 0 ] ; then
+	return 1
+fi
+
+echo 'importing finished'
+
