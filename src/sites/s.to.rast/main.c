@@ -185,7 +185,7 @@ int main (int argc, char *argv[])
     if(map_type == 0)
     {
         zero_one = 0;
-	map_type = CELL_TYPE;
+	map_type = FCELL_TYPE;
     }
     
     s = G_site_new_struct (map_type, dims, strs, dbls);
