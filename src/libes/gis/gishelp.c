@@ -18,8 +18,8 @@ G_gishelp(helpfile, request)
     char *helpfile ;
     char *request ;
 {
-    char file[512] ;
-    char buffer[512] ;
+    char file[1024] ;
+    char buffer[1024] ;
 
     if (request == NULL)
 	request = GEN_HELP ;
