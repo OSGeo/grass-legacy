@@ -34,7 +34,8 @@ db_start_driver(name)
     if( name == '\0' )
     {
 	db_get_connection( &connection );
-	name = connection.driverName;
+	if(NULL == (name = connection.driverName) )
+	   return (dbDriver *) NULL;
     }
 
 /* find this system name */
