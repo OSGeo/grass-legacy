@@ -109,6 +109,10 @@ load_table_head( int t)
 
     ncol = DBFGetFieldCount(dbf);
 
+    if ( drv_mode == DBF_MODE_SHP ) {
+	add_column ( t, DBF_INT, DBF_FID_NAME, 11, 0);
+    }
+    
     for( i = 0; i < ncol; i++ )
       {
          dtype = DBFGetFieldInfo( dbf, i, fname, &width, &decimals );
@@ -138,7 +142,7 @@ load_table_head( int t)
 int
 load_table ( int t)
 {
-    int  i, j, ncols, nrows;
+    int  i, j, ncols, nrows, dbfcol;
     DBFHandle   dbf;
     char *buf;
     ROW  *rows;
@@ -165,17 +169,28 @@ load_table ( int t)
          for( j = 0; j < ncols; j++ )
            {
              val = &(rows[i].values[j]);		   
+	     
+             if ( drv_mode == DBF_MODE_SHP ) {
+                 if ( j == 0 ) {
+		     val->i = i + 1; 
+		     continue;
+		 } else {
+		     dbfcol = j - 1;
+		 }
+	     } else {
+		 dbfcol = j;
+	     }
 	     switch ( db.tables[t].cols[j].type )
 	       {
                  case DBF_INT:    
-                     val->i = DBFReadIntegerAttribute( dbf, i, j );
+                     val->i = DBFReadIntegerAttribute( dbf, i, dbfcol );
                      break;
                  case DBF_CHAR:    
-                     buf = (char *) DBFReadStringAttribute( dbf, i, j );
+                     buf = (char *) DBFReadStringAttribute( dbf, i, dbfcol );
 		     save_string ( val, buf);
                      break;
                  case DBF_DOUBLE:    
-                     val->d = DBFReadDoubleAttribute( dbf, i, j );
+                     val->d = DBFReadDoubleAttribute( dbf, i, dbfcol );
                      break;
                }
              

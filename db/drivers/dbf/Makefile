@@ -6,6 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/dbf
+SHPDRIVER=$(DBDRIVERDIR)/shp
 
 LIBES = $(DBMILIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
@@ -51,6 +52,7 @@ default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	cp $(DRIVER) $(SHPDRIVER)
 
 
 
