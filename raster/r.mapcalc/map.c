@@ -50,7 +50,7 @@ static int compare_ints(int *a, int *b)
 	return *a - *b;
 }
 
-static int init_colors(map *m)
+static void init_colors(map *m)
 {
 	if (!red) red = G_malloc(columns);
 	if (!grn) grn = G_malloc(columns);
@@ -58,39 +58,26 @@ static int init_colors(map *m)
 	if (!set) set = G_malloc(columns);
 
 	if (G_read_colors((char *) m->name, (char *) m->mapset, &m->colors) < 0)
-	{
-		fprintf(stderr, "Error reading color file for [%s in %s]\n",
-			m->name, m->mapset);
-		return -1;
-	}
+		G_fatal_error("error reading color file for [%s in %s]\n",
+			      m->name, m->mapset);
 
 	m->have_colors = 1;
-
-	return 0;
 }
 
-static int init_cats(map *m)
+static void init_cats(map *m)
 {
 	if (G_read_cats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
-	{
-		fprintf(stderr, "Error reading category file for [%s in %s]\n",
-			m->name, m->mapset);
-		return -1;
-	}
+		G_fatal_error("error reading category file for [%s in %s]\n",
+			      m->name, m->mapset);
 
 	if (!btree_create(&m->btree, compare_ints, 1))
-	{
-		fprintf(stderr, "Unable to create btree for [%s in %s]\n",
-			m->name, m->mapset);
-		return -1;
-	}
+		G_fatal_error("unable to create btree for [%s in %s]\n",
+			      m->name, m->mapset);
 
 	m->have_cats = 1;
-
-	return 0;
 }
 
-int translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
+static void translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
 {
 	int i;
 
@@ -127,11 +114,9 @@ int translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
 	case 'M':
 	case '@':
 	default:
-		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
-		exit(1);
+		G_fatal_error("invalid map modifier: '%c'\n", mod);
+		break;
 	}
-
-	return 0;
 }
 
 /* convert cell values to double based on the values in the
@@ -157,7 +142,7 @@ int translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
 #define SHIFT 6
 #define NCATS (1<<SHIFT)
 
-int translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
+static void translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 {
 	struct Categories *pcats;
 	BTREE *btree;
@@ -213,11 +198,9 @@ int translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 		else
 			*xcell = values[idx];
 	}
-
-	return 0;
 }
 
-static int column_shift(void *buf, int res_type, int col)
+static void column_shift(void *buf, int res_type, int col)
 {
 	CELL *ibuf = buf;
 	FCELL *fbuf = buf;
@@ -307,8 +290,6 @@ static int column_shift(void *buf, int res_type, int col)
 			break;
 		}
 	}
-
-	return 0;
 }
 
 static void set_read_row_type(int res_type)
@@ -318,10 +299,13 @@ static void set_read_row_type(int res_type)
 
 static int read_row(int fd, char *buf, int row, int dummy)
 {
-	return G_get_raster_row(fd, (DCELL *) buf, row, read_row_type) >= 0;
+	if (G_get_raster_row(fd, (DCELL *) buf, row, read_row_type) < 0)
+		G_fatal_error("read_row: error reading data");
+
+	return 0;
 }
 
-static int setup_map(map *m)
+static void setup_map(map *m)
 {
 	int nrows = m->max_row - m->min_row + 1;
 	int size = (sizeof(CELL) > sizeof(double))
@@ -332,16 +316,14 @@ static int setup_map(map *m)
 	{
 		if (rowio_setup(&m->rowio, m->fd, nrows,
 				columns * size, read_row, NULL) < 0)
-			exit(1); /* out of memory - diagnostic printed by rowio */
+			G_fatal_error("setup_map: rowio_setup failed");
 		m->use_rowio = 1;
 	}
 	else
 		m->use_rowio = 0;
-
-	return 0;
 }
 
-static int read_map(map *m, void *buf, int res_type, int row, int col)
+static void read_map(map *m, void *buf, int res_type, int row, int col)
 {
 	CELL *ibuf = buf;
 	FCELL *fbuf = buf;
@@ -367,10 +349,9 @@ static int read_map(map *m, void *buf, int res_type, int row, int col)
 				SET_NULL_D(&dbuf[i]);
 			break;
 		default:
-			return E_INV_TYPE;
+			G_fatal_error("read_map: unknown type: %d", res_type);
+			break;
 		}
-
-		return 0;
 	}
 
 	set_read_row_type(res_type);
@@ -379,25 +360,25 @@ static int read_map(map *m, void *buf, int res_type, int row, int col)
 	{
 		bp = rowio_get(&m->rowio, row);
 		if (!bp)
-			return -1;
+			G_fatal_error("read_map: rowio_get failed");
 
 		G_copy(buf, bp, columns * G_raster_size(res_type));
 	}
-	else if (!read_row(m->fd, buf, row, 0))
-		return 0;
+	else
+		read_row(m->fd, buf, row, 0);
 
 	if (col)
 		column_shift(buf, res_type, col);
-
-	return 0;
 }
 
-static int close_map(map *m)
+static void close_map(map *m)
 {
 	if (m->fd < 0)
-		return -1;
+		return;
 
-	G_close_cell (m->fd);
+	if (G_close_cell(m->fd) < 0)
+		G_fatal_error("unable to close map [%s in %s]",
+			      m->name, m->mapset);
 
 	if (m->have_cats)
 	{
@@ -417,8 +398,6 @@ static int close_map(map *m)
 		rowio_release(&m->rowio);
 		m->use_rowio = 0;
 	}
-
-	return 0;
 }
 
 /****************************************************************************/
@@ -442,8 +421,8 @@ int map_type(const char *name, int mod)
 	case 'i':
 		return CELL_TYPE;
 	default:
-		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
-		return DCELL_TYPE;
+		G_fatal_error("invalid map modifier: '%c'", mod);
+		return -1;
 	}
 }
 
@@ -461,12 +440,8 @@ int open_map(const char *name, int mod, int row, int col)
 	if (col > max_col) max_col = col;
 
 	mapset = G_find_cell2((char *) name, "");
-
 	if (!mapset)
-	{
-		fprintf(stderr, "<%s> - not found\n", name);
-		return -1;
-	}
+		G_fatal_error("open_map: map [%s] not found", name);
 
 	switch (mod)
 	{
@@ -484,8 +459,8 @@ int open_map(const char *name, int mod, int row, int col)
 		use_colors = 1;
 		break;
 	default:
-		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
-		return -1;
+		G_fatal_error("internal error: open_map: invalid map modifier: '%c'", mod);
+		break;
 	}
 
 	for (i = 0; i < num_maps; i++)
@@ -500,12 +475,10 @@ int open_map(const char *name, int mod, int row, int col)
 		if (row > m->max_row) m->max_row = row;
 
 		if (use_cats && !m->have_cats)
-			if (init_cats(m) < 0)
-				return -1;
+			init_cats(m);
 
 		if (use_colors && !m->have_colors)
-			if (init_colors(m) < 0)
-				return -1;
+			init_colors(m);
 
 		return i;
 	}
@@ -528,31 +501,27 @@ int open_map(const char *name, int mod, int row, int col)
 	m->max_row = row;
 
 	if (use_cats)
-		if (init_cats(m) < 0)
-			return -1;
+		init_cats(m);
 	if (use_colors)
-		if (init_colors(m) < 0)
-			return -1;
+		init_colors(m);
 
 	m->fd = G_open_cell_old((char *) name, mapset);
 
-	if(m->fd < 0)
-		return -1;
+	if (m->fd < 0)
+		G_fatal_error("unable to open map [%s in %s]", name, mapset);
 
 	return num_maps++;
 }
 
-int setup_maps(void)
+void setup_maps(void)
 {
 	int i;
 
 	for (i = 0; i < num_maps; i++)
 		setup_map(&maps[i]);
-
-	return 0;
 }
 
-int get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
+void get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 {
 	static CELL *ibuf;
 	static DCELL *fbuf;
@@ -561,14 +530,12 @@ int get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 	switch (mod)
 	{
 	case 'M':
-		if (read_map(m, buf, res_type, row, col) < 0)
-			return -1;
+		read_map(m, buf, res_type, row, col);
 		break;
 	case '@':
 		if (!ibuf)
 			ibuf = G_malloc(columns * sizeof(CELL));
-		if (read_map(m, ibuf, 0, row, col) < 0)
-			return -1;
+		read_map(m, ibuf, 0, row, col);
 		translate_from_cats(m, ibuf, buf, columns);
 		break;
 	case 'r':
@@ -579,19 +546,16 @@ int get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 	case 'i':
 		if (!fbuf)
 			fbuf = G_malloc(columns * sizeof(CELL));
-		if (read_map(m, fbuf, 0, row, col) < 0)
-			return -1;
+		read_map(m, fbuf, 0, row, col);
 		translate_from_colors(m, fbuf, buf, columns, mod);
 		break;
 	default:
-		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
-		return -1;
+		G_fatal_error("internal error: get_map_row: invalid map modifier: '%c'", mod);
+		break;
 	}
-
-	return 0;
 }
 
-int close_maps(void)
+void close_maps(void)
 {
 	int i;
 
@@ -599,8 +563,6 @@ int close_maps(void)
 		close_map(&maps[i]);
 
 	num_maps = 0;
-
-	return 0;
 }
 
 /****************************************************************************/
@@ -610,31 +572,22 @@ int open_output_map(const char *name, int res_type)
 	int fd;
 
 	fd = G_open_raster_new((char *) name, res_type);
-
 	if (fd < 0)
-	{
-		fprintf(stderr, "Can't create output file [%s]\n", name);
-		return -1;
-	}
+		G_fatal_error("cannot create output map [%s]", name);
 
 	return fd;
 }
 
-int put_map_row(int fd, void *buf, int res_type)
+void put_map_row(int fd, void *buf, int res_type)
 {
-	int stat;
-
-	stat = G_put_raster_row(fd, buf, res_type);
-
-	if (stat < 0)
-		return -1;
-
-	return 0;
+	if (G_put_raster_row(fd, buf, res_type) < 0)
+		G_fatal_error("error writing data");
 }
 
-int close_output_map(int fd)
+void close_output_map(int fd)
 {
-	return G_close_cell(fd);
+	if (G_close_cell(fd) < 0)
+		G_fatal_error("unable to close output map");
 }
 
 /****************************************************************************/
