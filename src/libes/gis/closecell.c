@@ -41,6 +41,39 @@ static int close_old (int);
 static int close_new (int,int);
 static char CELL_DIR[100];
 
+
+/*!
+ * \brief close a raster file
+ *
+ * The raster file
+ * opened on file descriptor <b>fd</b> is closed. Memory allocated for raster
+ * processing is freed. If open for writing, skeletal support files for the new
+ * raster file are created as well.
+ * <b>Note.</b> If a module wants to explicitly write support files (e.g., a
+ * specific color table) for a raster file it creates, it must do so after the
+ * raster file is closed. Otherwise the close will overwrite the support files.
+ * See Raster_Map_Layer_Support_Routines for routines which write
+ * raster support files.
+ *
+ *  \param fd
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * If the map is a new floating point, move the
+ * <tt>.tmp</tt> file into the <tt>fcell</tt> element, create an empty file in the
+ * <tt>cell</tt> directory; write the floating-point range file; write a default
+ * quantization file quantization file is set here to round fp numbers (this is
+ * a default for now). create an empty category file, with max cat = max value
+ * (for backwards compatibility). Move the <tt>.tmp</tt> NULL-value bitmap file to
+ * the <tt>cell_misc</tt> directory.
+ *
+ *  \return int
+ */
+
 int G_close_cell (int fd)
 {
     if (fd < 0 || fd >= MAXFILES || FCB.open_mode <= 0)
@@ -50,6 +83,27 @@ int G_close_cell (int fd)
 
     return close_new (fd, 1);
 }
+
+
+/*!
+ * \brief unopen a raster file
+ *
+ * The raster file
+ * opened on file descriptor <b>fd</b> is closed. Memory allocated for raster
+ * processing is freed. If open for writing, the raster file is not created and
+ * the temporary file created when the raster file was opened is removed (see
+ * Creating_and_Opening_New_Raster_Files).
+ * This routine is useful when errors are detected and it is desired to not
+ * create the new raster file. While it is true that the raster file will not be
+ * created if the module exits without closing the file, the temporary file will
+ * not be removed at module exit. GRASS database management will eventually
+ * remove the temporary file, but the file can be quite large and will take up
+ * disk space until GRASS does remove it. Use this routine as a courtesy to the
+ * user.  
+ *
+ *  \param fd
+ *  \return int
+ */
 
 int G_unopen_cell (int fd)
 {

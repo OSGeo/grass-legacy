@@ -37,6 +37,14 @@ G_set_d_color_range (DCELL min, DCELL max, struct Colors *colors)
    if the co,lor table is defined on floating cell values and
    not on categories */
 
+
+/*!
+ * \brief
+ *
+ *  \param G_get_color_range
+ *  \return int
+ */
+
 int 
 G_get_color_range (CELL *min, CELL *max, struct Colors *colors)
 {

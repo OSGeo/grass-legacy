@@ -2,6 +2,39 @@
 #include "gis.h"
 
 /* old 4.1 routine */
+
+/*!
+ * \brief lookup an array of colors
+ *
+ * Extracts colors for an array of <b>raster</b> values. The
+ * colors for the <b>n</b> values in the <b>raster</b> array are stored in
+ * the <b>red, green</b>, and <b>blue</b> arrays. The values in the
+ * <b>set</b> array will indicate if the corresponding <b>raster</b> value
+ * has a color or not (1 means it does, 0 means it does not). The programmer
+ * must allocate the <b>red, green, blue</b>, and <b>set</b> arrays to be at
+ * least dimension <b>n.</b>
+ * <b>Note.</b> The <b>red, green</b>, and <b>blue</b> intensities will be
+ * in the range 0 -­ 255.
+ *
+ *  \param raster
+ *  \param red
+ *  \param green
+ *  \param blue
+ *  \param set
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Modified to return a color for NULL-values.
+ *
+ * \return int
+ */
+
 int G_lookup_colors (
     CELL *cell,
     unsigned char *red,unsigned char *grn,unsigned char *blu,
@@ -26,6 +59,22 @@ int G_lookup_rgb_colors(map, mapset, r, g, b)
 }
 */
 
+
+/*!
+ * \brief 
+ *
+ *  The same as G_lookup_colors(cell, r, g, b, set, n, colors).
+ *
+ *  \param cell
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param set
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
+
 int G_lookup_c_raster_colors (
     CELL *cell,
     unsigned char *red, unsigned char *grn, unsigned char *blu,
@@ -45,6 +94,28 @@ int G_lookup_c_raster_colors (
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * If the <em>cell_type</em> is CELL_TYPE, calls G_lookup_colors((CELL *)cell, r,
+ * g, b, set, n, colors);
+ * If the <em>cell_type</em> is FCELL_TYPE, calls
+ * G_lookup_f_raster_colors(FCELL *)cell, r, g, b, set, n, colors);
+ * If the <em>cell_type</em> is DCELL_TYPE, calls
+ * G_lookup_d_raster_colors(DCELL *)cell, r, g, b, set, n, colors);
+ *
+ *  \param rast
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param set
+ *  \param n
+ *  \param colors
+ *  \param cell_type
+ *  \return int
+ */
 
 int G_lookup_raster_colors (
     void *raster,
@@ -68,6 +139,24 @@ int G_lookup_raster_colors (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Converts the <em>n</em>
+ * floating-point values in the <em>fcell</em> array to their <em>r,g,b</em> color
+ * components. Embedded NULL-values are handled properly as well.
+ *
+ *  \param fcell
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param set
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
+
 int G_lookup_f_raster_colors (fcell, red, grn, blu, set, n, colors)
     FCELL *fcell;
     unsigned char *red, *grn, *blu, *set;
@@ -87,6 +176,24 @@ int G_lookup_f_raster_colors (fcell, red, grn, blu, set, n, colors)
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Converts the <em>n</em>
+ * floating-point values in the <em>dcell</em> array to their <em>r,g,b</em> color
+ * components. Embedded NULL-values are handled properly as well.
+ *
+ *  \param dcell
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param set
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
 
 int G_lookup_d_raster_colors (dcell, red, grn, blu, set, n, colors)
     DCELL *dcell;

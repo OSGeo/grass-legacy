@@ -12,8 +12,18 @@
 
 #include <ctype.h>
 
-char *G_chop (line)
-    char *line;
+
+/*!
+ * \brief 
+ *
+ * Chop leading and trailing white spaces:
+ * space, \f, \n, \r, \t, \v - returns pointer to string
+ *
+ *  \param s
+ *  \return char * 
+ */
+
+char *G_chop (char *line)
 {
     register char *f = line, *t = line;
 

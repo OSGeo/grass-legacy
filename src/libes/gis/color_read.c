@@ -29,6 +29,34 @@ static int read_colors(char *,char *,char *,struct Colors *);
 static int read_new_colors(FILE *,struct Colors *);
 static int read_old_colors(FILE *,struct Colors *);
 
+
+/*!
+ * \brief read map layer color table
+ *
+ * The color table for the raster file
+ * <b>name</b> in the specified <b>mapset</b> is read into the
+ * <b>colors</b> structure.
+ * If the data layer has no color table, a default color table is generated and
+ * 0 is returned. If there is an error reading the color table, a diagnostic
+ * message is printed and -1 is returned. If the color table is read ok, 1 is
+ * returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param colors
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * This routine reads the rules from the color
+ * file. If the input raster map is is a floating-point map it calls <tt>G_mark_colors_as_fp()</tt>.
+ *
+ *  \return int
+ */
+
 int G_read_colors (
     char *name ,
     char *mapset ,
@@ -348,6 +376,19 @@ static int read_old_colors ( FILE *fd, struct Colors *colors )
 
     return 0 ;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Sets a flag in
+ * the <em>colors</em> structure that indicates that these colors should only be
+ * looked up using floating-point raster data (not integer data).
+ * In particular if this flag is set, the routine <tt>G_get_colors_min_max()</tt> should return min=-255$^3$ and max=255$^3$.
+ *
+ *  \param colors
+ *  \return int
+ */
 
 int G_mark_colors_as_fp(struct Colors *colors)
 {

@@ -8,6 +8,17 @@
 
 #include "gis.h"
 
+
+/*!
+ * \brief initialize color structure
+ *
+ * The <b>colors</b> structure is initialized for subsequent calls
+ * to <i>G_add_color_rule</i> and<i>G_set_color.</i>
+ *
+ *  \param colors
+ *  \return int
+ */
+
 int G_init_colors (struct Colors *colors)
 {
     colors->version = 0;
