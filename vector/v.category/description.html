@@ -4,7 +4,7 @@
 
 <h2>EXAMPLES</h2>
 
-<em>report vector categories</em><br>
+<em>1) Report vector categories</em><br>
 <b>v.category in=</b><em>testmap</em> <b>option=</b><em>report</em>
 <pre>
 FIELD 1:
@@ -16,14 +16,14 @@ centroid       0          0          0
 area           0          0          0
 all         1379          1       1379
 </pre>
+<P>
 
-<em>delete all vector categories in field 1</em><br>
+<em>2) Delete all vector categories in field 1</em><br>
 <b>v.category in=</b><em>testmap</em> out=</b><em>outmap</em>
 <b>option=</b><em>del</em> 
-
 <p>
 
-<em>add vector categories in field 1 with step=2</em><br>
+<em>3) Add vector categories in field 1 with step=2</em><br>
 <b>v.category in=</b><em>outmap</em> out=</b><em>stepmap</em>
 <b>option=</b><em>add</em> <b>step=</b><em>2</em>
 <pre>
@@ -36,8 +36,15 @@ centroid       0          0          0
 area           0          0          0
 all         1379          1       2757
 </pre>
+<P>
 
+<em>4) Add categories/centroids to a vector map without categories</em><br>
+<b>v.category in=</b><em>wkt</em> out=</b><em>wktnew</em>
+<b>option=</b><em>add</em>
+<P>
 Results can be tested using <em><a HREF="d.what.vect.html">d.what.vect</a></em>. 
+
+<P>
 
 <h2>AUTHOR</h2>
 
