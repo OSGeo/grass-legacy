@@ -223,7 +223,7 @@ static int write_env ( int loc )
     int n;
     char dummy[2];
     void (*sigint)()
-#ifndef __MINGW32__
+#ifdef SIGQUIT
         , (*sigquit)()
 #endif
 ;
@@ -235,7 +235,7 @@ static int write_env ( int loc )
  * If interrupted, it can wipe out the GISRC file
  */
     sigint  = signal (SIGINT,  SIG_IGN);
-#ifndef __MINGW32__    
+#ifdef SIGQUIT
     sigquit = signal (SIGQUIT, SIG_IGN);
 #endif
     if((fd = open_env ("w", loc)))
@@ -248,7 +248,7 @@ static int write_env ( int loc )
     }
 
     signal (SIGINT,  sigint);
-#ifndef __MINGW32__    
+#ifdef SIGQUIT
     signal (SIGQUIT, sigquit);
 #endif
 
@@ -279,13 +279,11 @@ static FILE *open_env ( char *mode, int loc)
 char *G_getenv( char *name)
 {
     char *value;
-    char rsbbuf[40]; 
 
     if ((value = G__getenv(name)))
 	return value;
 
-    sprintf(rsbbuf, _("%s not set"), name);
-    G_fatal_error(rsbbuf);
+    G_fatal_error(_("%s not set"), name);
     return NULL;
 }
 
@@ -293,13 +291,11 @@ char *G_getenv( char *name)
 char *G_getenv2( char *name, int loc )
 {
     char *value;
-    char rsbbuf[40]; 
 
     if ((value = G__getenv2(name, loc)))
 	return value;
 
-    sprintf(rsbbuf, _("%s not set"), name);
-    G_fatal_error(rsbbuf);
+    G_fatal_error(_("%s not set"), name);
     return NULL;
 }
 
