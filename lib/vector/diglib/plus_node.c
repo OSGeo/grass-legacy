@@ -85,7 +85,7 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
 **          number of node
 */
 int 
-dig_add_node ( struct Plus_head *plus, double x, double y) {
+dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
     int  nnum;
     char *p;
     P_NODE *node;
@@ -106,8 +106,9 @@ dig_add_node ( struct Plus_head *plus, double x, double y) {
     node = plus->Node[nnum];
     node->x = x;
     node->y = y;
+    node->z = z;
  
-    dig_spidx_add_node (plus, nnum, x, y, 0); 
+    dig_spidx_add_node (plus, nnum, x, y, z); 
     
     plus->n_nodes++;
     
