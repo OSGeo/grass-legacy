@@ -13,7 +13,13 @@
 
 /*-
  * $Log$
- * Revision 1.12  2002-01-22 04:51:10  glynn
+ * Revision 1.12.2.1  2002-05-10 08:06:07  glynn
+ * Sync more recent fixes
+ *
+ * Revision 1.13  2002/05/06 09:49:17  eric
+ * Check errno after strtod() usage against ERANGE to catch overflow errors.
+ *
+ * Revision 1.12  2002/01/22 04:51:10  glynn
  * Merge releasebranch_11_april_2001_5_0_0 with HEAD
  *
  * Revision 1.11.4.1  2001/04/29 04:01:22  glynn
@@ -215,6 +221,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "gis.h"
 #include "site.h"
 
@@ -425,8 +432,9 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
     case '%':			/* decimal attribute */
       if (d < s->dbl_alloc) {
 	p1 = ++buf;
+        errno = 0;
 	s->dbl_att[d++] = strtod(buf, &p1);
-	if (p1 == buf) {
+	if (p1 == buf || errno == ERANGE) {
 		/* replace with:
 		 * s->dbl_att[d - 1] = NAN
 		 * when we add NULL attribute support
