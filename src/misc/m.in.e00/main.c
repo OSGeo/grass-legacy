@@ -312,10 +312,10 @@ int main( int argc, char *argv[])
 	if (!strncmp( line, "IFO  ", 5)) {     /* INFO SECTION */
 	/* Allways at end, but we want read it just after projection */
 	/* to find wether it's a polygone or line coverage           */
-	    if (todo == VECTOR || todo == ALL)
+	    if (todo == VECTOR || todo == ALL) {
 		if (todo == ANALYSE)
 		     cover = getinfo( name, 0, 0);
-		else
+		else {
 	/* If we have only offset_lab != 0, it's a point coverage.  Don't */
 	/* create a dig_cat file, but keep attributes for site file       */
 	    	     if (offset_lab != 0 && offset_arc == 0 && offset_pal == 0)
@@ -327,7 +327,8 @@ int main( int argc, char *argv[])
     			    cat_management++;
 		    }
 		    cover = getinfo( name, cat_management, 1 + (newmapset != NULL));
-	    else
+		}
+	    } else
 		ignore( "EOI", 1);
 	    continue;
 	}
