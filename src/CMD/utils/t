@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cc=cc
+if $cc X.c -I/usr/include/X11 -L/usr/lib -lX11 -o /tmp/$$ 
+then
+    echo nonzero
+else
+    echo zero
+fi
