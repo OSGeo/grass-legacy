@@ -24,10 +24,24 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 </head>
 <body bgcolor=\"#FFFFFF\">
 <h2>GRASS GIS $GRASSVERSION Reference Manual</h2>
+
+Geographic Resources Analysis Support System, commonly referred to as GRASS, 
+is a Geographic Information System (GIS) used for geospatial data management
+and analysis, image processing, graphics/maps production, spatial modeling,
+and visualization. GRASS is currently used in academic and commercial settings
+around the world, as well as by many governmental agencies and environmental
+consulting companies.
+<P>
 This reference manual details the use of modules distributed with
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).
 <p>
+
+<h3>Quick Introduction</h3>
+
+<a href="../start/helptext.html">How to start with GRASS</a>
+<P>
+
 " > $1
 }
 
@@ -107,7 +121,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
 write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual"
-echo "<b>Full command index:</b>" >> $FULLINDEX
+echo "<h3>Full command index:</h3>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>db.* </td><td>database commands</td></tr>" >> $FULLINDEX
@@ -187,7 +201,7 @@ FILENAME=index.html
 write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual"
 
 #modules:
-echo "<b>Manual sections:</b>" >> $FILENAME
+echo "<h3>Manual sections:</h3>" >> $FILENAME
 echo "<ul>" >> $FILENAME
 #for all module groups:
 for k in $CMDLIST
@@ -225,7 +239,7 @@ echo "<p>"   >> $FILENAME
 #############
 #variables:
 
-echo "<b>GRASS and environment variables:</b>" >> $FILENAME
+echo "<b>GRASS variables and environment variables:</b>" >> $FILENAME
 echo "<ul>" >> $FILENAME
 #for all drivers:
 for k in $VARIABLES
