@@ -585,10 +585,8 @@ echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
     echo "Start the graphical user interface with: d.m &"
-    echo "Start the graphical menu system with:    tcltkgrass &"
 else
     echo "If required, restart the graphical user interface with: d.m &"
-    echo "Start the graphical menu system with:            tcltkgrass &"
 fi
 
 echo "When ready to quit enter:                exit"
