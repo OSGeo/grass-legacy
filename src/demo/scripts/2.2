@@ -1,0 +1,139 @@
+#!/bin/sh
+Dclear.screen
+Dnew a 95 99 1 99
+Dchoose a
+Dtext << EOF
+.F romant
+.S 90
+.C green
+                           What is a VECTOR based GIS?
+EOF
+Dnew graph 1 40 1 40
+Dnew text 41 94 1 40
+Dnew name 1 5 41 99
+Dnew map 6 94 41 99
+Dchoose text
+Dtext << EOF
+.F romans
+.S 7
+.C white
+Features:
+*Data stored by tracing
+ lines and areas using
+.C red
+    * nodes
+.C yellow
+    * lines
+      (made of points)
+EOF
+Dchoose graph
+Dgraph << EOF
+color yellow
+move 10 10
+draw 20 20
+draw 20 30
+draw 10 50
+draw 60 80
+move 10 10
+draw 10 90
+draw 90 90
+draw 90 10
+draw 10 10
+move 40 90
+draw 60 80
+draw 90 82
+move 20 20
+draw 33 40
+draw 60 40
+draw 80 10
+color red
+icon o 2 10 10
+icon o 4 10 10
+icon o 2 10 50
+icon o 4 10 50
+icon o 2 20 20
+icon o 4 20 20
+icon o 2 40 90
+icon o 4 40 90
+icon o 2 60 80
+icon o 4 60 80
+icon o 2 80 10
+icon o 4 80 10
+icon o 2 90 82
+icon o 4 90 82
+color yellow
+icon o 2 10 90
+icon o 2 20 30
+icon o 2 33 40
+icon o 2 60 40
+icon o 2 90 10
+icon o 2 90 90
+# Identify areas
+size 5 5
+move 50 50
+text area A
+move 15 75
+text area B
+move 60 85
+text area C
+move 30 20
+text area D
+move 11 20
+text E
+EOF
+
+if ./continue
+then
+	Derase
+	exit 1
+fi
+
+Dchoose text
+Dtext << EOF
+.F romans
+.S 7
+.C white
+
+
+
+
+
+
+*GRASS uses vector
+ data for:
+    * digitizing
+    * display
+EOF
+Dchoose name
+Derase white
+Dtext << EOF
+.C red
+.S 90
+         ROADS
+EOF
+Dchoose map
+Derase white
+Dvect roads red
+Dchoose name
+Dtext << EOF
+.C blue
+.S 90
+                    WATER
+EOF
+Dchoose map
+Dvect streams.dead blue
+Dvect streams.spear blue
+
+# Dnew note 42 52 2 39
+# Dchoose note
+# Derase yellow
+# Dtext << EOF
+# .S 40
+# .C red
+# GRASS CAN NOT DO ANY
+# ANALYSES ON VECTORS
+# EOF
+
+./continue.yes
+
+exit 1
