@@ -1,0 +1,132 @@
+
+
+
+Dcolormode(2D)       GRASS Reference Manual        Dcolormode(2D)
+
+
+
+NAME
+     Dcolormode - Tool for viewing map
+     (D Language Tool)
+
+SYNOPSIS
+     Dcolormode fixed
+     or
+     Dcolormode float
+
+DESCRIPTION
+     Dcolormode sets the type of color look-up table used on the
+     graphics monitor.  The command Dcolormode fixed requests
+     that the monitor's color look-up table be fixed (i.e.,
+     static).  The effect is that colors drawn on the screen by
+     graphics calls will not change when subsequent maps are
+     drawn to the screen.  Each time a new map is drawn on the
+     screen, a color table associated with that map is loaded.
+     When the fixed option is used, the colors in the map's color
+     table are mapped to the nearest colors available in the
+     monitor's fixed color table.  With the float option, the
+     color table associated with the map is loaded directly into
+     the monitor's color look-up table.
+
+     There are advantages to using each option.  The display
+     program allows the user to interactively modify the colors
+     on the screen.  This can only be done by directly modifying
+     the monitor's color look-up table.  Hence, to accommodate
+     this option in display, the float option is chosen.
+     However, this option has the sometimes undesirable effect of
+     changing the colors used in another map on the screen.  It
+     is best used with one or more maps having the same color
+     table.  The fixed option allows any number of maps to be
+     displayed on the screen, where each uses different colors,
+     but all use the same fixed color look-up table.  You cannot
+     toggle the color table in fixed mode.
+
+     Some devices support only a fixed color look-up; e.g., ink-
+     jet printers, plotters, and the AT&T 6300 (running a DEB
+     board).  The number of color categories capable of being
+     displayed is also device-dependent.  If your colors fall
+     outside this range when in float mode, they may not be
+     represented (this is device-dependent).
+
+BUGS
+     It is strongly recommended that the user run Dscreen
+     immediately after changing the mode between fixed and float.
+
+SEE ALSO
+     DINTRO[2D]        Introduction to the GRASS D tools
+     Dcolortable[2D]   To alter the color table associated with a map
+     Dscreen[2D]       Clear monitor, and create and choose a new window
+     display[1]        To display and generate final map products
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Dcolormode(2D)       GRASS Reference Manual        Dcolormode(2D)
+
+
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
