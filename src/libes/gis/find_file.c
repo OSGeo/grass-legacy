@@ -50,8 +50,10 @@ static char *G__find_file (
  */
     if (G__name_is_fully_qualified(name, xname, xmapset))
     {
-	strcpy(name, xname);
-	strcpy(mapset, xmapset);
+	if(name && *name)
+	    strcpy(name, xname);
+	if(mapset && *mapset)
+	    strcpy(mapset, xmapset);
     }
 
 /*
@@ -98,8 +100,10 @@ char *G_find_file (
     mp = G__find_file (element, name, mapset);
     if (mp)
     {
-	if (G__name_is_fully_qualified(name, xname, xmapset))
-	    strcpy (name, xname);
+	if (G__name_is_fully_qualified(name, xname, xmapset)){
+	    if(name && *name)
+	        strcpy (name, xname);
+	}
     }
 
     return mp;
