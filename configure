@@ -2529,6 +2529,7 @@ fi
 
 
 CURSESLIB=
+if eval "test \"`uname -s`\" != FreeBSD"; then
 if test -z "${CURSESLIB}"; then
 echo $ac_n "checking for initscr in -lncurses""... $ac_c" 1>&6
 echo "configure:2535: checking for initscr in -lncurses" >&5
@@ -2569,7 +2570,7 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
 else
   echo "$ac_t""no" 1>&6
 fi
-
+fi
 fi
 if test -z "${CURSESLIB}"; then
 echo $ac_n "checking for initscr in -lcurses""... $ac_c" 1>&6
