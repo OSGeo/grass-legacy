@@ -1,5 +1,4 @@
 #include "globals.h"
-/* %W% %G% */
 /*
  * call a subroutine, but as a child process
  * allowing interrupts for the child
