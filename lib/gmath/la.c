@@ -38,11 +38,11 @@
  ************************************************************/
 
 mat_struct *
-G_matrix_init(int rows, int cols, int ldim=0) {
+G_matrix_init(int rows, int cols, int ldim ) {
 
   mat_struct *tmp_arry;
 
-  if( rows < 1 || cols < 1 || ldim < 0 ) {
+  if( rows < 1 || cols < 1 || ldim < rows ) {
     fprintf(stderr, "Error: Matrix dimensions out of range\n");
     return NULL;
   }
@@ -50,10 +50,7 @@ G_matrix_init(int rows, int cols, int ldim=0) {
   tmp_arry = (mat_struct *)G_malloc( sizeof(mat_struct) );
   tmp_arry->rows = rows;
   tmp_arry->cols = cols;
-  if( ldim == 0 )
-    tmp_arry->ldim = rows;
-  else
-    tmp_arry->ldim = ldim;
+  tmp_arry->ldim = ldim;
   
   tmp_arry->vals = (doublereal *)G_calloc( ldim * cols,
 					   sizeof(doublereal) );
@@ -74,7 +71,7 @@ G_matrix_init(int rows, int cols, int ldim=0) {
  ************************************************************/
 
 int
-G_matrix_set(mat_struct *A, int rows, int cols, int ldim=0) {
+G_matrix_set(mat_struct *A, int rows, int cols, int ldim) {
 
   if( rows < 1 || cols < 1 || ldim < 0 ) {
     fprintf(stderr, "Error: Matrix dimensions out of range\n");
@@ -83,10 +80,7 @@ G_matrix_set(mat_struct *A, int rows, int cols, int ldim=0) {
 
   A->rows = rows;
   A->cols = cols;
-  if( ldim == 0 )
-    A->ldim = rows;
-  else
-    A->ldim = ldim;
+  A->ldim = ldim;
   
   A->vals = (doublereal *)G_calloc( ldim * cols,
 					   sizeof(doublereal) );
@@ -147,7 +141,7 @@ mat_struct *
 G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
 
   mat_struct *mt3;
-  integer unity = 1, zero = 0;
+  doublereal unity = 1, zero = 0;
   integer rows, cols, interdim, lda, ldb;
   integer1 no_trans = 'n';
 
@@ -203,7 +197,7 @@ G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
 
 int
 G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
-	   mat_type mtype=NONSYM) {
+	   mat_type mtype) {
 
   int i; /* loop */
   mat_struct *wmat;  /* ptr to working matrix */
@@ -233,7 +227,7 @@ G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
 
   if(xmat->is_init == 0) {
     if( G_matrix_set(xmat, bmat->rows, bmat->cols, bmat->ldim) < 0 ) {
-      fprintf("Could not allocate space for solution matrix\n");
+      fprintf(stderr, "Could not allocate space for solution matrix\n");
       return -1;
     }
   }
@@ -268,6 +262,7 @@ G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
     {
       integer *perm, res_info;
       int indx; /* loop variable */
+      integer num_eqns, nrhs, lda, ldb;
 
       perm = (integer *)G_malloc(bmat->ldim);
 
@@ -303,12 +298,12 @@ G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
       }
       break;
     }
-
+    /*
   case default:
     {
       fprintf(stderr, "Procedure not yet available for selected matrix type\n");
       return -1;
-    }
+      } */
   }  /* end switch */
 
   return 0;
@@ -333,6 +328,7 @@ mat_struct *
 G_matrix_inverse(mat_struct *mt) {
 
   mat_struct *mt0, *res;
+  int i, j, k; /* loop */
 
   if(mt->rows != mt->cols) {
       fprintf(stderr, "Error matrix is not square. Cannot determine inverse\n");
@@ -363,7 +359,7 @@ G_matrix_inverse(mat_struct *mt) {
 
   /* Solve system */
 
-  if( (k = G_LU_solve(mt, res, mt0)) == 1 ) {
+  if( (k = G_LU_solve(mt, res, mt0, NONSYM)) == 1 ) {
       fprintf(stderr, "Error: matrix is singular\n");
       G_matrix_free(mt0);
       return NULL;        
@@ -461,6 +457,8 @@ G_get_matrix_element(mat_struct *mt, int rowval, int colval) {
   /* Should do some checks, but this would require an error control
      system: later?
   */
+
+  double val;
 
   return val = (double)mt->vals[rowval + colval * mt->ldim];
 
