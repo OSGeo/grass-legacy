@@ -156,6 +156,7 @@ src/mapdev/v.cadlabel
 src/mapdev/v.clean
 src/mapdev/v.cutter
 src/mapdev/v.digit
+src/mapdev/v.distance
 src/mapdev/v.export
 src/mapdev/v.extract
 src/mapdev/v.from.3
