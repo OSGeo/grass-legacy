@@ -1,0 +1,132 @@
+
+
+
+Dnew(2D)             GRASS Reference Manual              Dnew(2D)
+
+
+
+NAME
+     Dnew - To create new windows on the monitor
+     (D Language Tool)
+
+SYNOPSIS
+     Dnew
+     Dnew [option=value] [option=value] ...
+
+DESCRIPTION
+     Dnew creates new graphics windows on the graphics monitor.
+     Options are
+
+     name=name
+          Name to be assigned to newly created window.  If the
+          user provides no name, Dnew will generate a unique
+          name.
+     top=number
+          Sets the vertical coordinate of the top of the window
+          to the specified number.
+     bottom=number
+          Sets the vertical coordinate of the bottom of the
+          window to the specified number.
+     left=number
+          Sets the horizontal coordinate of the left of the
+          window to the specified number.
+     right=number
+          Sets the horizontal coordinate of the right of the
+          window to the specified number.
+
+     Coordinates use a percentage scale; values are in the range
+     0-100 with the coordinate 0,0 being the lower left corner of
+     the screen.
+
+     Dnew runs interactively if window coordinates are not
+     provided on the command line.  It uses the pointing device
+     (mouse) to construct the new window, and returns the name of
+     the new window upon completion (usually a number).  Dnew can
+     be used to create multiple windows on the monitor;  these
+     windows can overlap.  Note, however, that Dnew will not
+     choose a window for display of graphics (see Dchoose[2D]).
+
+     Dnew exits with the name of the new window.  A unique name
+     is also given to the window if not specified on the command
+     line.
+
+SEE ALSO
+     DINTRO[2D]          Introduction to the GRASS D tools
+
+     Dchoose[2D]         To choose a window in which to display graphics
+     Dclear.screen[2D]   To clear all windows from the monitor, and from memory
+     Derase[2D]          To erase the contents of the current window
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Dnew(2D)             GRASS Reference Manual              Dnew(2D)
+
+
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
