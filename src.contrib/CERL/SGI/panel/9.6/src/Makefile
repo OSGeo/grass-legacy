@@ -46,7 +46,7 @@ ${LIB}:	${LIBOBJS} ${HEADER}
 	${RANLIB} ${LIB}
 
 ${LIBOBJS}:
-	@ if (! -d ${LIBDIR}) mkdir ${LIBDIR}
+	@if (! -d ${LIBDIR}) mkdir ${LIBDIR}
 	${CC} -c ${CFLAGS} ${INCLUDES} $<
 	${LD} -r $*.o
 	/bin/mv a.out $*.o
