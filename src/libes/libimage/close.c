@@ -8,6 +8,11 @@
 #include	<stdlib.h>
 #include	"image.h"
 
+#ifdef __FreeBSD__
+#	define	DOREV
+#endif
+
+
 int
 iclose(image)
 register IMAGE 	*image;
@@ -18,7 +23,7 @@ register IMAGE 	*image;
     iflush(image);
     img_optseek(image, 0);
     if (image->flags&_IOWRT) {
-#ifdef __FreeBSD__
+#ifdef DOREV
 	if(!image->dorev)
 #else
 	if(image->dorev)
@@ -28,7 +33,7 @@ register IMAGE 	*image;
 	    i_errhdlr("iclose: error on write of image header\n");
 	    return EOF;
 	}
-#ifdef __FreeBSD__
+#ifdef DOREV
 	if(!image->dorev)
 #else
 	if(image->dorev)
@@ -37,7 +42,7 @@ register IMAGE 	*image;
 	if(ISRLE(image->type)) {
 	    img_optseek(image, 512L);
 	    tablesize = image->ysize*image->zsize*sizeof(long);
-#ifdef __FreeBSD__
+#ifdef DOREV
 	    if(!image->dorev)
 #else
 	    if(image->dorev)
@@ -47,7 +52,7 @@ register IMAGE 	*image;
 		i_errhdlr("iclose: error on write of rowstart\n");
 		return EOF;
 	    }
-#ifdef __FreeBSD__
+#ifdef DOREV
 	    if(!image->dorev)
 #else
 	    if(image->dorev)
