@@ -1,0 +1,14 @@
+Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
+
+Geographic Resources Analysis Support System (GRASS) is Copyright,
+1999-2003 by the GRASS Development Team, and licensed under terms of the
+GNU General Public License (GPL).
+ 
+This GRASS VERSION_NUMBER release is coordinated and produced by the
+GRASS Development Team headquartered at ITC-irst (Trento, Italy) with
+contributions from all over the world.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.

@@ -29,13 +29,14 @@ SET_DATA = $(OBJDIR)/set_data.o $(OBJDIR)/mke_mapset.o \
 	   $(OBJDIR)/mke_loc.o $(OBJDIR)/chk_dbase.o $(OBJDIR)/other.o
 
 default: $(ARCH_BINDIR)/$(START_UP) \
-     $(ETC)/Init.sh \
-     $(ETC)/set_data \
-     $(ETC)/clean_temp \
-     $(ETC)/lock \
-     $(ETC)/run \
-     $(ETC)/echo \
-     $(ETC)/grass_intro
+	$(ETC)/Init.sh \
+	$(ETC)/set_data \
+	$(ETC)/clean_temp \
+	$(ETC)/lock \
+	$(ETC)/run \
+	$(ETC)/echo \
+	$(ETC)/grass_intro \
+	$(ETC)/license
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
@@ -73,3 +74,7 @@ $(ETC)/grass_intro: grass_intro.txt version.sed
 	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $@
 	chmod +r $@
 
+$(ETC)/license: license.txt version.sed
+	rm -f $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" license.txt > $@
+	chmod +r $@
