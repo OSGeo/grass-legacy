@@ -39,7 +39,7 @@ db_driver_open_database (handle)
     name = db_get_handle_dbname(handle);
     
     /* if name is empty use connection.databaseName*/
-    if( strlen(db.name) == 0 )
+    if( strlen(name) == 0 )
     {
         name = connection.databaseName;
     } 
