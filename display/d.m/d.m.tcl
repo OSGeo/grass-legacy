@@ -303,6 +303,14 @@ proc Dm::add { type } {
     }
 }
 
+# autoname layer when a map is selected
+proc Dm::autoname { name } {
+	variable tree
+	variable node
+	set node [ lindex [$tree selection get] 0 ]
+	DmTree::autoname $tree $node $name
+}
+
 # selected node ( show options )
 proc Dm::select { node } {
     variable tree
