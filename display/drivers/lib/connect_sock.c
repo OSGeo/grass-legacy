@@ -15,21 +15,18 @@
 #ifdef USE_G_SOCKS
 
 int
-get_connection_sock(int listenfd, int *rfd, int *wfd, int nonblock)
+get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
 {
     int fd;
 
-    if (nonblock)
+    if (other_fd >= 0)
     {
 	fd_set waitset;
-	struct timeval tv;
-
-	tv.tv_sec = 0;
-	tv.tv_usec = 10000;
 
 	FD_ZERO(&waitset);
 	FD_SET(listenfd, &waitset);
-	if (select(FD_SETSIZE, &waitset, NULL, NULL, &tv) < 0)
+	FD_SET(other_fd, &waitset);
+	if (select(FD_SETSIZE, &waitset, NULL, NULL, NULL) < 0)
 	{
 	    perror("get_connection_sock: select");
 	    exit(EXIT_FAILURE);
