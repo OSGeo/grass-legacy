@@ -62,24 +62,21 @@ main (int argc, char **argv)
 		mapset = G_find_file ("mapgraph", opt1->answer, "");
 		if (mapset == NULL)
 		{
-			fprintf (stdout,"Mapgraph file [%s] not available", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error("Mapgraph file [%s] not available", opt1->answer);
 		}
 		Infile = G_fopen_old ("mapgraph", opt1->answer, mapset);
 		if (Infile == NULL)
 		{
-			fprintf (stdout,"Graph file <%s> not available\n", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error ("Graph file <%s> not available", opt1->answer);
 		}
 		*/
 		/* using fopen instead to facilitate finding the file */
 		if ((Infile = fopen(opt1->answer,"r")) == NULL) 
 		    {
-			fprintf (stdout,"Mapgraph file [%s] not available", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error ("Mapgraph file [%s] not available", opt1->answer);
 		}
 	}
 	else

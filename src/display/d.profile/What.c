@@ -27,19 +27,13 @@ buf = G_allocate_cell_buf();
 
 fd = G_open_cell_old(name,mapset);
 if (fd < 0)
-   {
-   fprintf(stderr,"warning: unable to open [%s] in [%s]\n",name,mapset);
-   return(-2);
-   }
+   G_fatal_error("warning: unable to open [%s] in [%s]",name,mapset);
 
 if (G_read_cats(name,mapset,&cat) < 0)
    NoCatStrings = 1;
 
 if (G_get_map_row (fd,buf,row) < 0)
-   {
-   fprintf(stderr,"error reading cell file\n");
-   exit(-1);
-   }
+   G_fatal_error("error reading cell file");
 else
    {
    R_standard_color(D_translate_color("black"));

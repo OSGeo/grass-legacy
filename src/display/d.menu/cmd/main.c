@@ -94,25 +94,22 @@ int main(int argc, char **argv )
 	backcolor = D_translate_color(opt1->answer) ;
 	if (backcolor == 0)
 	{
-		fprintf (stdout,"Don't know the color %s", opt1->answer);
 		R_close_driver() ;
-		exit(-1) ;
+		G_fatal_error("Don't know the color %s", opt1->answer);
 	}
 
 	textcolor = D_translate_color(opt2->answer) ;
 	if (textcolor == 0)
 	{
-		fprintf (stdout,"Don't know the color %s", opt2->answer);
 		R_close_driver() ;
-		exit(-1) ;
+		G_fatal_error("Don't know the color %s", opt2->answer);
 	}
 
 	dividercolor = D_translate_color(opt3->answer) ;
 	if (dividercolor == 0)
 	{
-		fprintf (stdout,"Don't know the color %s", opt3->answer);
 		R_close_driver() ;
-		exit(-1) ;
+		G_fatal_error("Don't know the color %s", opt3->answer);
 	}
 
 
@@ -167,9 +164,8 @@ int main(int argc, char **argv )
 	options[i] = NULL ;
 	if (i<2)
 	{
-		fprintf(stderr,"ERROR: Must be a title and at least one option\n") ;
-		R_close_driver();
-		exit(-1) ;
+		R_close_driver() ;
+		G_fatal_error("ERROR: Must be a title and at least one option") ;
 	}
 
 	i = D_popup(

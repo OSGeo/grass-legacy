@@ -63,27 +63,23 @@ int main (int argc, char *argv[])
     {
         if (!G_scan_easting (parm.coor->answers[0], &lon1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[0]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[0]);
 	}
         if (!G_scan_northing (parm.coor->answers[1], &lat1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[1]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[1]);
 	}
         if (!G_scan_easting (parm.coor->answers[2], &lon2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[2]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[2]);
 	}
         if (!G_scan_northing (parm.coor->answers[3], &lat2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[3]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[3]);
 	}
 	use_mouse = 0;
     }

@@ -81,9 +81,8 @@ main (int argc, char **argv)
 	infile = fopen(opt4->answer, "r") ;
 	if (infile == NULL)
 	{
-	    fprintf(stderr, "File %s not available\n", opt4->answer) ;
 	    G_usage() ;
-	    exit(-1);
+	    G_fatal_error("File %s not available", opt4->answer) ;
 	}
     }
 
