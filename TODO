@@ -1,4 +1,4 @@
-$Id: TODO,v 1.15 2000-08-26 13:01:56 markus Exp $
+$Id: TODO,v 1.16 2000-09-05 20:44:13 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -20,14 +20,13 @@ Configure:
      - search, if odbc driver lib is present (src/libes/dbms/drivers/odbc/)
   (Being worked on by )
 
-- extended "autoconf" for entire package (new Makefiles)
-  (Being worked on by Eric Mitchell <emitchell@altaira.com>)
-
 --------------------------------------------------------------------
 Regression test suite:
  There are already some testing programs in the source code (e. g.               
  src/libes/gis/TESTS, src/libes/datetime/tests). Not a real regression           
  testing suite, but may be good as a starting point.   
+ A testgrass.sh is stored in this directory. Please add further test
+ routines.
  (Being worked on by )
 
 --------------------------------------------------------------------
@@ -52,9 +51,6 @@ Libraries:
   (assuming multi-attribute sites lists).
   (Being worked on by Markus, assistance wanted)
 
-- projection datum support for maps
-  (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
-
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
   (Being worked on by )
 
@@ -68,10 +64,6 @@ Libraries:
 - Parallel CPU support
 
 ---------------------------------------------------------------------
-XDRIVER
-- remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
-  (Being worked on by Carl Anderson <candrsn@mindspring.com>)
-
 CELL driver
 - update to 24bit
   (Being worked on by )                  
@@ -82,11 +74,6 @@ Package:
   (Being worked on by )
 
 - reorganize directory structure
-
-- release import/export routines separately under LGPL
-  add GDAL support
-  (Being worked on by Frank Warmerdam <warmerda@home.com> /
-   Bernhard Reiter <bernhard@intevation.de>)
 
 ---------------------------------------------------------------------
 Lock system:
@@ -130,18 +117,6 @@ Modules:
 
     - fix legend, scale and box drawings
 
-- v.out.e00: make it working
-  (Being worked on by Michel Wurtz)
-
-- r.out.e00: write it
-  (Being worked on by Michel Wurtz)
-
-- Reorganize initialization routines and write a Tcl/Tk interface
-  for initialization
-  (Being worked on by Justin)
-
-- Create a Tcl/Tk interface for v.digit
-  (Being worked on by Justin)
 
 - Change the tcltkgrass code so that lists of choices appear as
   a list instead of needing to use a push button to create the
@@ -155,5 +130,3 @@ Modules:
   set CC option "-fwritable-strings" on Linux or, better, update ps.map!
   (Being worked on by )
 
-- Stereo Visualization
-  (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
