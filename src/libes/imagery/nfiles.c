@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /*************************************************************
 * I_number_of_group_ref_files (group)
 * I_number_of_subgroup_ref_files (group, subgroup)
