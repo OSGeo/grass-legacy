@@ -3,6 +3,7 @@
 #include "codes.h"
 #include "gis.h"
 #include <stdlib.h>
+#include "glocale.h"
 
 void parse_command_line();
 
@@ -20,13 +21,13 @@ main(int argc, char *argv[])
 
     list = db_read_dbmscap();
     if (list == NULL) {
-      fprintf (stderr, "Error trying to read dbmscap file\n");
+      fprintf (stderr, _("Error trying to read dbmscap file\n"));
       exit(ERROR);
     }
 
     for (p = list; p; p = p->next) {
-      fprintf (stdout,"%s", p->driverName);
-      if (parms.f) fprintf (stdout,":%s", p->comment);
+      fprintf (stdout,_("%s"), p->driverName);
+      if (parms.f) fprintf (stdout,_(":%s"), p->comment);
       fprintf (stdout,"\n");
     }
     exit(OK);

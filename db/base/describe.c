@@ -9,6 +9,7 @@
 #include "dbmi.h"
 #include "codes.h"
 #include <stdlib.h>
+#include "glocale.h"
 
 struct {
 	char *driver, *database, *table, *printcolnames;
@@ -49,11 +50,11 @@ main(int argc, char *argv[])
     else
     {
         ncols = db_get_table_number_of_columns(table);
-        fprintf (stdout, "ncols:%d\n", ncols);
+        fprintf (stdout, _("ncols:%d\n"), ncols);
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
-          fprintf (stdout, "Column %d: %s\n", (col+1), db_get_column_name (column));
+          fprintf (stdout, _("Column %d: %s\n"), (col+1), db_get_column_name (column));
         }
         fflush (stdout);
     }

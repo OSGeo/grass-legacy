@@ -19,6 +19,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
+#include "glocale.h"
 
 struct {
 	char *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
@@ -122,7 +123,7 @@ sel (dbDriver *driver,
 	for (col = 0; col < ncols; col++)
 	{
 	    column = db_get_table_column(table, col);
-	    if (col) fprintf (stdout,"%s", parms.fs);
+	    if (col) fprintf (stdout,_("%s"), parms.fs);
 	    fprintf (stdout,"%s", db_get_column_name (column));
 	}
 	fprintf (stdout,"\n");
@@ -303,11 +304,11 @@ stmt_is_empty(dbString *stmt)
 void
 print_column_definition(dbColumn *column)
 {
-    fprintf (stdout,"column%s%s\n", parms.fs, db_get_column_name(column));
-    fprintf (stdout,"type%s%s\n", parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
-    fprintf (stdout,"len%s%d\n", parms.fs, db_get_column_length(column));
-    fprintf (stdout,"scale%s%d\n", parms.fs, db_get_column_scale(column));
-    fprintf (stdout,"precision%s%d\n", parms.fs, db_get_column_precision(column));
+    fprintf (stdout,_("column%s%s\n"), parms.fs, db_get_column_name(column));
+    fprintf (stdout,_("type%s%s\n"), parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
+    fprintf (stdout,_("len%s%d\n"), parms.fs, db_get_column_length(column));
+    fprintf (stdout,_("scale%s%d\n"), parms.fs, db_get_column_scale(column));
+    fprintf (stdout,_("precision%s%d\n"), parms.fs, db_get_column_precision(column));
     if (parms.vs)
 	fprintf (stdout,"%s\n", parms.vs);
 }
