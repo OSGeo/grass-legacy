@@ -66,7 +66,7 @@
 %
 %  -----------  Title page -----------------------------------
 %
-\def\UCSauthor#1{\gdef\@UCSauthor{#1}}
+\def\UCSauthor#1{\gdef\jUCSauthor{#1}}
 \def\UCScopy#1{\gdef\@UCScopy{#1}}
 \def\UCStitle#1{\gdef\@UCStitle{#1}}
 \def\UCSdoc#1{\gdef\@UCSdoc{#1}}
@@ -250,7 +250,7 @@
 % (except in math made)
 %
 \def\ArrowIt{\ifmmode\def\next{<}\else\let\next\ArrowIIt\fi\next}
-\def\ArrowIIt#1>{{\it@und\it #1\/}}
+\def\ArrowIIt#1>{{\itjund\it #1\/}}
 \catcode`\<=\active
 \def<{\protect\ArrowIt}
 \def\it@und{\def\_{\rule{.5em}{.1ex}}}
