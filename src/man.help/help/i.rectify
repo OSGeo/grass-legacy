@@ -1,0 +1,4 @@
+An imagery function that rectifies an image by computing a
+coordinate transformation for each pixel in the image using
+the transformation coefficient matrix created by the GRASS
+program i.points
