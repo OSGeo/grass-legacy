@@ -30,8 +30,8 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2000-09-26 17:47:50  frankw
- * added imagery support
+ * Revision 1.3  2001-08-08 21:10:17  frankw
+ * updated
  *
  * Revision 1.10  2000/09/26 15:20:32  warmerda
  * added GDALGetRasterBand{X,Y}Size
@@ -206,6 +206,12 @@ int GDALBridgeInitialize( const char * pszTargetDir )
 
     GDALGetOverview = (GDALRasterBandH (*)(GDALRasterBandH, int))
         GBGetSymbol( szPath, "GDALGetOverview" );
+
+    GDALGetRasterNoDataValue = (double (*)(GDALRasterBandH, int*))
+        GBGetSymbol( szPath, "GDALGetRasterNoDataValue" );
+
+    GDALSetRasterNoDataValue = (CPLErr (*)(GDALRasterBandH, double))
+        GBGetSymbol( szPath, "GDALSetRasterNoDataValue" );
 
     GDALGetRasterColorInterpretation = (GDALColorInterp (*)(GDALRasterBandH))
         GBGetSymbol( szPath, "GDALGetRasterColorInterpretation" );
