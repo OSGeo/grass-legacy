@@ -88,6 +88,10 @@ int init_table(void)
 	TABLE[TMERC][X0].def_exists = 1;
 	TABLE[TMERC][X0].deflt = 0.0;
 
+	TABLE[TMERC][Y0].ask = 1;
+	TABLE[TMERC][Y0].def_exists = 1;
+	TABLE[TMERC][Y0].deflt = 0.0;
+
 	TABLE[TMERC][KFACT].ask = 1;
 	TABLE[TMERC][KFACT].def_exists = 1;
 	TABLE[TMERC][KFACT].deflt = 1.0;
