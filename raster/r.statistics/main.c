@@ -164,7 +164,12 @@ main (int argc, char **argv)
              is_ok(method->answer, outputmap->answer);
              o_max(basemap->answer, covermap->answer,
                     outputmap->answer,usecats,&cats); 
-             break;       
+             break;
+        case SUM:
+             is_ok(method->answer, outputmap->answer);
+             o_sum(basemap->answer, covermap->answer,
+                    outputmap->answer,usecats,&cats); 
+             break;	            
 	default:
           printf("Not yet implemented!\n"); 
     }    		
