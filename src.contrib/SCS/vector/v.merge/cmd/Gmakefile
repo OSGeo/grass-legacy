@@ -16,6 +16,6 @@ all:  $(PROG)
 
 $(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB)
 	mv a.out $@
 
