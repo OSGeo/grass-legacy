@@ -1,0 +1,84 @@
+.\" %W% %G%
+.TH Mimportcell 2M GRASSmapdev
+.SH NAME
+Mimportcell \- Convert an ascii text file into a cell
+.CT file map
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B Mimportcell
+.I "inputfile layer [title]"
+.SH DESCRIPTION
+.I Mimportcell
+allows a user to create a 
+.CT map "cell map"
+\fIlayer\fR from an ascii \fIinputfile\fR
+with (optional) \fItitle\fR.
+The \fIinputfile\fR has a header section which describes the location
+and size of the data, followed by the data itself.
+
+The header has 6 lines:
+
+.in +.5i
+.TS
+l l.
+north:	xxxxxx.xx
+south:	xxxxxx.xx
+east:	xxxxxx.xx
+west:	xxxxxx.xx
+rows:	r
+cols:	c
+.TE
+.in -.5i
+
+The north, south, east, and west fields are GRASS 
+.CT window map
+coordinates.
+The rows and cols
+fields describe the dimension of the matrix of data to follow.
+The data which follows is \fIr\fR rows of \fIc\fR integers.
+.SH EXAMPLE
+The following is a sample \fIinputfile\fR:
+
+.ne 20
+.TS
+box;
+l n.
+north:	4299000.00
+south:	4247000.00
+east:	528000.00
+west:	500000.00
+rows:	10
+cols:	15
+
+.T&
+l s.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+.TE
+
+.SH NOTES
+The 
+.CT window map
+coordinates north, south, east, and west describe the
+outer edges of the 
+.CT "window." "geographic window."
+They run along the edges of the cells
+at the edge of the 
+.CT "window" "geographic window"
+and NOT thru the center of the cells at the
+edges.
+
+The data (which follows the header section) must contain r x c integers,
+but it is not necessary that all the data for a row be on one line.
+A row may be split over many lines.
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
