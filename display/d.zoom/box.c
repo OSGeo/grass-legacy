@@ -12,7 +12,7 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
     int screen_x, screen_y ;
     double ux1, uy1 ;
     double ux2, uy2 ;
-    double north,south,east,west;
+    double north,south,east,west, ns, ew;
     int len_n, len_s, len_e, len_w;
     int t;
     int button ;
@@ -79,10 +79,32 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 		   U_south < window->south ||
 		   U_north > window->north)
 		{
+			/* ALTERNATIVE
+			 *
 			if(pan)
 			    make_window_center(window, magnify, ux2, uy2);
 			else
 			    make_window_center(window, magnify, -1.0, -1.0);
+			 */
+
+			if(pan)
+			{
+				ew = (window->east - window->west) / 2;
+				ns = (window->north - window->south) / 2;
+
+				window->east = ux2 + ew;
+				window->west = ux2 - ew;
+				window->north = uy2 + ns;
+				window->south = uy2 - ns;
+			}
+
+			ew = (window->east - window->west)/magnify;
+			ns = (window->north - window->south)/magnify;
+
+			ux1 = window->east + ew/2;
+			ux2 = window->west - ew/2;
+			uy1 = window->north + ns/2;
+			uy2 = window->south - ns/2;
 		}
 		else
 		{
@@ -101,7 +123,11 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 	}
 
 	if(quitonly==2)
+	/* ALTERNATIVE
+	 *
 	   prebutton = 2;
+	 */
+	   prebutton = 1;
 	else
 	   prebutton = button;
 
@@ -136,13 +162,18 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 
     if(quitonly != 1)
     {
+    /* ALTERNATIVE
+     *
 	if(prebutton == 2)
 	{
 	   east = window->east;
 	   west = window->west;
 	   south = window->south;
 	   north = window->north;
-	}else{
+	}
+	else
+     */
+	{
 	   north = uy1>uy2?uy1:uy2 ;
 	   south = uy1<uy2?uy1:uy2 ;
 	   west  = ux1<ux2?ux1:ux2 ;
