@@ -72,7 +72,7 @@ Vect_get_area_points (
       if ( line > 0 )
           dir = GV_FORWARD;
       else 
-	  dir = GV_BACKWORD;
+	  dir = GV_BACKWARD;
 
       Vect_append_points ( BPoints, Points, dir);  
       if ( i != (Area->n_lines - 1) ) /* all but not last */
@@ -131,7 +131,7 @@ Vect_get_isle_points (
       if ( line > 0 )
           dir = GV_FORWARD;
       else 
-	  dir = GV_BACKWORD;
+	  dir = GV_BACKWARD;
 
       Vect_append_points ( BPoints, Points, dir);  
       if ( i != (Isle->n_lines - 1) ) /* all but not last */

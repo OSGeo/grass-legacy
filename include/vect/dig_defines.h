@@ -117,7 +117,7 @@
 #define GV_RIGHT 2
 
 #define GV_FORWARD 1
-#define GV_BACKWORD 2
+#define GV_BACKWARD 2
 
 /* These are from mode.h which is no longer supported w/ digit 3.0 */
 /*                               ^     for the most part...        */
