@@ -6,6 +6,9 @@ Compilation:
 make mix   
 make       
 
+--with-grass50    must be full path to MAIN branch (not release) of
+                  grass 5.0
+
 All targets:
 make mix           - create symbolic links to grass50 for not yet uploaded files
 make copymix       - copy files from grass50
