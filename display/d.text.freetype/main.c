@@ -292,8 +292,7 @@ main(int argc, char **argv)
 	bold = flag.b->answer;
 #ifdef	DEBUG
 	if(!flag.c->answer)
-		fprintf(stderr, "Font=<%s:%s:%s:%.2f>\n\n",
-				path, charset, tcolor, size);
+		fprintf(stderr, "Font=<%s:%s>\n\n", path, charset);
 #endif
 
 	rotation = atof(param.rotation->answer);
