@@ -1422,8 +1422,8 @@ static int contains (char *s, int c)
 
 static int set_option (char *string)
 {
-	struct Option *at_opt ;
-	struct Option *opt ;
+	struct Option *at_opt = NULL;
+	struct Option *opt = NULL;
 	int got_one ;
 	int key_len ;
 	char the_key[64] ;

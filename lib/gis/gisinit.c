@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 #include "gis.h"
 #include "G.h"
-#include "version.h"
 #include "glocale.h"
 
 struct G__ G__ ;

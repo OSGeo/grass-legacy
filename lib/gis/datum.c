@@ -154,7 +154,7 @@ int G_ask_datum_params(char *datumname, char *params)
     char *Tmp_file;
     FILE  *Tmp_fd = NULL;
     struct datum_transform_list *list, *listhead, *old;
-    int transformcount, currenttransform, i;
+    int transformcount, currenttransform;
 
     if( G_strcasecmp(datumname, "custom") != 0)
     {
@@ -437,7 +437,6 @@ read_datum_table(void)
     for (line = 1; G_getl(buf, sizeof(buf), fd); line++)
     {
         char name[100], descr[100], ellps[100];
-        double dx, dy, dz;
         struct table *t;
 
         G_strip(buf);
