@@ -54,6 +54,28 @@ int D_get_cell_name(char *name )
 	return(0) ;
 }
 
+int D_set_digit_name( char *name )
+{
+	R_pad_delete_item("digit") ;
+
+	return(R_pad_set_item ("digit", name)) ;
+}
+
+int D_get_digit_name(char *name )
+{
+	int stat ;
+	char **list ;
+	int count ;
+
+	if(stat = R_pad_get_item ("digit", &list, &count))
+		return(-1) ;
+
+	strcpy(name, list[0]) ;
+
+	R_pad_freelist (list,count) ;
+	return(0) ;
+}
+
 int D_add_to_list( char *string)
 {
 	return(R_pad_append_item("list", string)) ;
@@ -63,6 +85,7 @@ int D_clear_window()
 {
 	R_pad_delete_item("list") ;
 	R_pad_delete_item("cell") ;
+	R_pad_delete_item("digit") ;
 	R_pad_delete_item("off") ;
 	R_pad_delete_item("m_win") ;
 	R_pad_delete_item("erase");
