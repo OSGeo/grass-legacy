@@ -163,7 +163,7 @@ Node *
 makeArithmExpr(int opname, Node *lexpr, Node *rexpr)
 {
 	ArithmExpr *a = makeNode(ArithmExpr);
-	a->oper = OP;
+	a->oper = SQLP_OP;
 	a->opname = opname;
 	a->lexpr = lexpr;
 	a->rexpr = rexpr;
