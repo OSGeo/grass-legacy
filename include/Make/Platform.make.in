@@ -100,9 +100,9 @@ ZLIBINCPATH         = @ZLIBINCPATH@
 ZLIBLIBPATH         = @ZLIBLIBPATH@
 
 #DBM:
-DBMINCPATH          = @DBMINCPATH@
-DBMLIBPATH          = @DBMLIBPATH@
-DBMLIB              = @DBMLIB@
+#DBMINCPATH          = @DBMINCPATH@
+#DBMLIBPATH          = @DBMLIBPATH@
+#DBMLIB              = @DBMLIB@
 DBMIEXTRALIB        = @DBMIEXTRALIB@
 
 #readline
@@ -149,6 +149,7 @@ OPENGLwINC          = @OPENGLwINC@
 OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 LGLWM               = @LGLWM@
+#USE_GLWM            = @USE_GLWM@
 
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@
