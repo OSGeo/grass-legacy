@@ -1,7 +1,0 @@
-
-Move g3d to src/libes and compile.
-Add G3DLIB to src/CMD/generic/make.mid if it isn't already there
- G3DLIB      = $(LIBDIR)/libg3d.a
-
-Leave dspf libe here, as it is still system-dependent, using IRIS GL.
-
