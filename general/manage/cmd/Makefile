@@ -17,7 +17,7 @@ default: \
 	$(HOME)/g.list \
 	$(HOME)/g.remove \
 	$(HOME)/g.rename \
-	allhtml
+	html
 
 $(HOME)/g.copy: $(OBJDIR)/copy.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -37,7 +37,7 @@ $(HOME)/g.rename: $(OBJDIR)/rename.o $(LIST)
 
 PROGRAMS = g.copy g.list g.remove g.rename
 
-allhtml: *.html
+html:
 	for prog in $(PROGRAMS) ; do \
 		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
