@@ -415,7 +415,7 @@ char **argv ;
             switch(cell[col]) 
             {
                 case 15:
-                    arrow_n();
+                    arrow_e();
                     break;
                 case 30:
                 case 45:
@@ -425,17 +425,17 @@ char **argv ;
                 case 75:
                 case 90:
                 case 105:
-                    arrow_e();
+                    arrow_n();
                     break;
                 case 120:
                 case 135:
                 case 150:
-                    arrow_se();
+                    arrow_nw();
                     break;
                 case 165:
                 case 180:
                 case 195:
-                    arrow_s();
+                    arrow_w();
                     break;
                 case 210:
                 case 225:
@@ -445,16 +445,16 @@ char **argv ;
                 case 255:
                 case 270:
                 case 285:
-                    arrow_w();
+                    arrow_s();
                     break;
                 case 300:
                 case 315:
                 case 330:
-                    arrow_nw();
+                    arrow_se();
                     break;
                 case 345:
                 case 360:
-                    arrow_n();
+                    arrow_e();
                     break;
                 case 400:
                     R_standard_color(unknown_color);
