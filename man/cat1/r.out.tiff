@@ -9,40 +9,47 @@ NAME
      r.out.tiff (GRASS Raster Data Export Program)
 
 GRASS VERSION
-     4.x, 5.x
+     4.x, 5.x (versions differ)
 
 SYNOPSIS
-     r.out.tiff [-pcv] input=name
+     r.out.tiff [-ptv] input=name
 
 DESCRIPTION
-     This program converts a TIFF raster file (8bit) to a GRASS
-     raster file.  Output is placed in the /cell directory under
-     the user's current GRASS mapset.
+     This program converts a GRASS raster file to a TIFF raster
+     file. Output may be 8 or 24 bit (TrueColor).  Optionally, a
+     TIFF World file compatible with ESRI's and other's products
+     may be output.
 
 OPTIONS
 Flags:
-     TIFF Palette output (8bit instead of 24bit).  Compress with
-     LZW routine.  Verbose mode.
+     TIFF Palette output (8bit instead of 24bit).  Output TIFF
+     world file (output.tfw) Verbose mode.
 
 Parameters:
      Name of an existing GRASS raster file to be exported.  Name
-     of new TIFF image file.  The program prompts the user to
-     enter the name of the TIFF raster file to be converted and
-     the name to be assigned to the GRASS raster file to contain
-     the resultant image. Currently "TIFF/uncompressed",
-     "TIFF/LZW-compression" and TIFF/PackBits-compression"
-     formats are supported.
+     of new TIFF image file.  Type of compression to use for TIFF
+     file.
+
+     Options: none, packbit, deflate
+
+     Default: none The program prompts the user for the name of a
+     GRASS raster file, an output TIFF file, whether an 8 or 24
+     bit format is desired, and whether or not to create a TIFF
+     world file.  Currently only uncompressed, packpit, or
+     deflate TIFF files are written.  These output formats are
+     known to be compatible with r.in.tiff.
 
      The user may adjust region and resolution before export
      using g.region.
 
 SEE ALSO
-     g.region
+     g.region r.in.tiff.html
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
 
+     GRASS 5.0 team
 
 
 
@@ -53,14 +60,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-GRASS 5.0beta6	      GRASS Development Team			1
+GRASS 5.0beta9	      GRASS Development Team			1
 
 
 

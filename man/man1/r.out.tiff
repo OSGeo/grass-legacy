@@ -3,18 +3,20 @@
 \*Lr.out.tiff
 (GRASS Raster Data Export Program) 
 .SH GRASS VERSION
-4.x, 5.x
+4.x, 5.x (versions differ)
 .SH SYNOPSIS
-\*Lr.out.tiff\*O [\*L-pcv\*O] \*Linput=\*Oname 
+\*Lr.out.tiff\*O [\*L-ptv\*O] \*Linput=\*Oname
 .SH DESCRIPTION
-This program converts a TIFF raster file (8bit) to a GRASS raster file.  Output is placed in the /cell directory under the user's current GRASS mapset. 
+This program converts a GRASS raster file to a TIFF raster file. Output may be
+8 or 24 bit (TrueColor).  Optionally, a TIFF World file compatible with ESRI's
+and other's products may be output.
 .SH OPTIONS
 .SH Flags:
 .VL 4m
 .LI "\*L-p\*O
 TIFF Palette output (8bit instead of 24bit). 
-.LI "\*L-c\*O
-Compress with LZW routine. 
+.LI "\*L-t\*O
+Output TIFF world file (\*Loutput\*O.tfw) 
 .LI "\*L-v\*O
 Verbose mode.
 .LE
@@ -24,11 +26,26 @@ Verbose mode.
 Name of an existing GRASS raster file to be exported. 
 .LI "\*Loutput=name\*O
 Name of new TIFF image file.
+.LI "\*Lcompression=name\*O
+Type of compression to use for TIFF file.
+.br
+
+\*LOptions:\*O none, packbit, deflate
+.br
+
+\*LDefault:\*O none
 .LE
-The program prompts the user to enter the name of the TIFF raster file to be converted and the name to be assigned to the GRASS raster file to contain the resultant image. Currently "TIFF/uncompressed", "TIFF/LZW-compression" and TIFF/PackBits-compression" formats are supported. 
+The program prompts the user for the name of a GRASS raster file, an output TIFF
+file, whether an 8 or 24 bit format is desired, and whether or not to create a
+TIFF world file.  Currently only uncompressed, packpit, or
+deflate TIFF files are written.  These output formats are known to be
+compatible with r.in.tiff.  
 .PP
 The user may adjust region and resolution before export using g.region.
 .SH SEE ALSO
 \*Lg.region\*O
+\*Lr.in.tiff.html\*O
 .SH AUTHOR
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+.PP
+GRASS 5.0 team

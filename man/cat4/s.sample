@@ -12,55 +12,55 @@ NAME
 SYNOPSIS
      s.sample
      s.sample help
-     s.sample [-BCcdlq] input=name [output=name] rast=name
-     [z=name]
+     s.sample [-BClq] input=name [attr=type] [output=name]
+     rast=name]
 
 DESCRIPTION
      s.sample samples a GRASS raster map at the site locations in
      the input file by either cubic convolution interpolation,
      bilinear interpolation, or nearest neighbor sampling
-     (default).	 Categories values are sampled.
+     (default).  Category label values may sampled.
 
      This program may be especially useful when sampling for
      cross validation of interpolations whose output is a raster
      map.
 
 OPTIONS
-     Flags:
+Flags:
+     Use bilinear interpolation.  Use cubic convolution
+     interpolation.  Use raster category label values instead of
+     cell values. Labels must be numeric.  Quiet. Cut out the
+     chatter.
 
-     -B		       Use bilinear interpolation.
+Parameters:
+     Name of sites list defining sample points.  Site attribute
+     type to use for comparison.
 
-     -C		       Use cubic convolution interpolation.
+     Options: none, dim, cat, decimal If none is chosen no
+     comparison will be done.  Site attribute index to use for
+     comparison.
 
-     -c		       Use numeric category labels instead of
-		       category values.
+     Ignored when the attribute is none.  Optional name of sites
+     list in which output will be stored.  Standard output is
+     used if this is missing.  Name of raster map to be sampled.
+     Option scaling factor for values read from raster map.
+     Sampled values will be multiplied by this factor. If
+     omitted, this is set to 1.0.
 
-     -d		       Calculate difference between raster value
-		       and site value (raster minus site).
-
-     -l		       If site is in the E|N|#n label format
-		       (instead of the E|N|label format), use the
-		       numeric label as the site value. Implies
-		       the -d flag.
-
-     -q		       Quiet. Cut out the chatter.
-
-     Parameters:
-
-     input=name	       Name of sites list defining sample points.
-
-     output=name       Optional name of sites list in which
-		       output will be stored.  Standard output is
-		       used if this is missing.
-
-     rast=name	       Name of raster map to be sampled.
-
-     z=value	       Option scaling factor for values read from
-		       raster map. Sampled values will be
-
+NOTES
+     The output site list will have the easting and northing of
+     the input site list.  The category value will either be the
+     same as the value in the input site list or a unique value
+     if there were no categories in the input site list.  One
+     decimal attribute will be output containing either, the cell
+     value of the raster if no comparison was done (i.e.
+     attr=none) or it will be the difference between the cell
+     value and the site list attribute value.
 
 
-GRASS 5.0beta6	      GRASS Development Team			1
+
+
+GRASS 5.0beta9	      GRASS Development Team			1
 
 
 
@@ -71,15 +71,14 @@ s.sample <contrib>    GRASS Reference Manual   <contrib> s.sample
 
 
 
-		       multiplied by this factor. If omitted,
-		       this is set to 1.0.
-
-NOTES
-     If any of -cdl are specified, it is important that the
-     raster category label and/or the site description are
-     numeric. No error checking is done except for "no data"
-     values as raster category labels. In this instance, a
+     If -l is specified, it is important that the raster category
+     label is numeric. No error checking is done except for "no
+     data" values as raster category labels. In this instance, a
      warning is issued and a zero value is assumed.
+
+     When NULL values are encountered for a cell, zero value is
+     used instead.  In these cases, more acurrate results may be
+     obtained by using the default nearest neighbor comparisons.
 
      This program may not work properly with lat-long data when
      the -BC flags are used.
@@ -90,16 +89,23 @@ NOTES
      important.
 
 SEE ALSO
-     s.rand, s.kcv, g.region and Image Sampling Methods - GRASS
-     Tutorial on s.sample (available as s.sample-tutorial.ps)
+     s.random s.kcv g.region Image Sampling Methods (available as
+     s.sample-tutorial.ps.gz)
 
 BUGS
-     Please send all bug fixes and comments to the author.
+     Please send all bug fixes and comments to the author or the
+     grass development team.
+
+     <a href="http://www.geog.uni-
+     hannover.de/grass/">http://www.geog.uni-hannover/grass/
 
 AUTHOR
-     James Darrell McCauley, Agricultural Engineering, Purdue
-     University
-     (mccauley@ecn.purdue.edu)
+     James Darrell McCauley <A HREF="mailto:darrell@mccauley-
+     usa.com">,
+
+     when he was at: Agricultural Engineering Purdue University
+
+     Updated for GRASS 5.0 by Eric G. Miller
 
 NOTICE
      This program is part of the contrib section of the GRASS
@@ -120,13 +126,7 @@ NOTICE
 
 
 
-
-
-
-
-
-
-2		      GRASS Development Team	   GRASS 5.0beta6
+2		      GRASS Development Team	   GRASS 5.0beta9
 
 
 
