@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.png} 0
+    {Imports a PNG palette color file as a GRASS raster file.}
+    {entry input {PNG file (input):} 0 file}
+    {entry output {GRASS raster file (output):} 0 raster}
+    {entry title {Title for GRASS raster file (optional):} 0 ""}
+    {checkbox -v {Verbose mode on.} "" -v}
+}
