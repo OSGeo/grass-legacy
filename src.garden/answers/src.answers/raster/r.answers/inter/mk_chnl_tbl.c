@@ -81,8 +81,8 @@ mk_chnl_tbl()
     G_clear_screen();
     i = 0;
     while (intro_screen[i])
-	fprintf (stdout,"%s\n", intro_screen[i++]);
-    fprintf (stdout,"\n\n\n\n\n");
+	fprintf (stderr,"%s\n", intro_screen[i++]);
+    fprintf (stderr,"\n\n\n\n\n");
 
     if (complete[8] == 0)
         hit_return();
@@ -117,7 +117,7 @@ mk_chnl_tbl()
 
 	    if (cat_tbl[i].cat != check_digit)
 	    {
-		fprintf (stdout,"\nWARNING: Expecting category <%d> but found category <%d>\n", 
+		fprintf (stderr,"\nWARNING: Expecting category <%d> but found category <%d>\n", 
 		cat_tbl[i].cat, check_digit);
 		strcpy(buf, "Categories found in channel layer do not match those\n");
 		strcat(buf, "in the parameters saved in the project database.\n");
@@ -137,7 +137,7 @@ mk_chnl_tbl()
    
 	    if (err != 3)
 	    {
-		fprintf (stdout,"\nWARNING: Expecting <3> data items but found <%d>\n", err);
+		fprintf (stderr,"\nWARNING: Expecting <3> data items but found <%d>\n", err);
 		strcpy(buf, "Problem with previously stored parameters in project\n");
 		strcat(buf, "database. You can continue, but previously saved \n");
 		strcat(buf, "parameters will be lost.\n");
@@ -281,7 +281,7 @@ LOOP:
     }
     else
     {
-        fprintf (stdout,"\n\nANSWERS input data extraction complete.\n\n");
+        fprintf (stderr,"\n\nANSWERS input data extraction complete.\n\n");
         complete[8] = 1;
     }
 
@@ -297,7 +297,7 @@ LOOP:
 
 /* see if the user wants a copy, if so make one */
 
-    fprintf (stdout,"\nParameters now stored in the project database.\n");
+    fprintf (stderr,"\nParameters now stored in the project database.\n");
     if(G_yes("Would you like to review, copy or print this information?", 0))
         user_file(tmpname);
     return (0);

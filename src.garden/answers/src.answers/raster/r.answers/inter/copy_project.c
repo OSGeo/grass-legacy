@@ -86,11 +86,11 @@ copy_project()
 
 /* courtesy confirm */
 
-    fprintf (stdout,"\n\nCopying project <%s> to <%s>\n", old_proj_name, proj_name);
+    fprintf (stderr,"\n\nCopying project <%s> to <%s>\n", old_proj_name, proj_name);
     if (!G_yes("\nIs this ok? ", 1))
         return(0);
 
-    fprintf (stdout,"\nworking...\n");
+    fprintf (stderr,"\nworking...\n");
         
 /* write new project file */
 

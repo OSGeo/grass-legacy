@@ -36,22 +36,22 @@ get_chnl_slp()
     char        line[200];
 
     G_clear_screen();
-    fprintf (stdout,"\n\n          ANSWERS on GRASS Channel Slope Utility \n\n");
-    fprintf (stdout,"An optional input to ANSWERS is the slope of channels. If a channel\n");
-    fprintf (stdout,"slope input is not given, ANSWERS assumes the slope for the channel\n");
-    fprintf (stdout,"is the same as the overland slope for the element.\n");
-    fprintf (stdout,"\n");
-    fprintf (stdout,"If desired, a raster map may be used to define channel slope values.\n");
-    fprintf (stdout,"To do so, a raster map should be prepared with catgory values for\n");
-    fprintf (stdout,"channel slopes in tenths of a percent (i.e. a category value of 31 \n");
-    fprintf (stdout,"would indicate a channel slope of 3.1 percent).\n");
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n\n          ANSWERS on GRASS Channel Slope Utility \n\n");
+    fprintf (stderr,"An optional input to ANSWERS is the slope of channels. If a channel\n");
+    fprintf (stderr,"slope input is not given, ANSWERS assumes the slope for the channel\n");
+    fprintf (stderr,"is the same as the overland slope for the element.\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"If desired, a raster map may be used to define channel slope values.\n");
+    fprintf (stderr,"To do so, a raster map should be prepared with catgory values for\n");
+    fprintf (stderr,"channel slopes in tenths of a percent (i.e. a category value of 31 \n");
+    fprintf (stderr,"would indicate a channel slope of 3.1 percent).\n");
+    fprintf (stderr,"\n");
 
     if(complete[8] == 0)
     {
-        fprintf (stdout,"Before this step can be completed, the channel element\n");
-        fprintf (stdout,"locations must be identified. (Step 8)\n");
-        fprintf (stdout,"\n\n");
+        fprintf (stderr,"Before this step can be completed, the channel element\n");
+        fprintf (stderr,"locations must be identified. (Step 8)\n");
+        fprintf (stderr,"\n\n");
         hit_return();
         return(0);
     }
@@ -64,16 +64,16 @@ get_chnl_slp()
     check = 0;
     if ((complete[9] > 0) && (chnl_slp_layer)) {
         check = 1;
-        fprintf (stdout,"This utility was previously completed. You can:\n\n");
-        fprintf (stdout,"- Use a different map layer \n");
-        fprintf (stdout,"- Use no layer (hence no channel slope inputs)\n");
-        fprintf (stdout,"- Leave things as they are currently set.\n\n");
+        fprintf (stderr,"This utility was previously completed. You can:\n\n");
+        fprintf (stderr,"- Use a different map layer \n");
+        fprintf (stderr,"- Use no layer (hence no channel slope inputs)\n");
+        fprintf (stderr,"- Leave things as they are currently set.\n\n");
         
         if(strcmp(chnl_slp_layer, "none") == 0)
         {
             if(!G_yes("Use channel slope data?", 0))
             {
-                fprintf (stdout,"\n<No channel slope input>\n\n");
+                fprintf (stderr,"\n<No channel slope input>\n\n");
                 option = 1;
             }
             else
@@ -94,25 +94,25 @@ get_chnl_slp()
         {
             strcpy(chnl_slp_layer, "none");
             option = 1;
-            fprintf (stdout,"\n<No channel slope input>\n\n");
+            fprintf (stderr,"\n<No channel slope input>\n\n");
             complete[9] = 1;
         }
         else
         {
-            fprintf (stdout,"\n\nEnter the name of the CHANNEL SLOPE raster map.\n");
+            fprintf (stderr,"\n\nEnter the name of the CHANNEL SLOPE raster map.\n");
             chnl_slp_mapset = G_ask_cell_old ("",chnl_slp_layer);
             if(!chnl_slp_mapset) 
             {
                 complete[9] = 0;
                 return(0);
             }
-            fprintf (stdout,"\n");
+            fprintf (stderr,"\n");
             if(mk_cat_tbl(0, chnl_slp_layer, chnl_slp_mapset) == -1)
             {
                 complete[9] = 0;
                 return(0);
             }
-            fprintf (stdout,"\nNumber of channel categories found: %d \n", cat_tbl[0].cat);
+            fprintf (stderr,"\nNumber of channel categories found: %d \n", cat_tbl[0].cat);
             for (i = 1, j = 0; i <= cat_tbl[0].cat; i++, j++)
             {
                 if (j > 9) 
@@ -120,12 +120,12 @@ get_chnl_slp()
                     j = 0;
                     hit_return();
                 }
-            fprintf (stdout," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
+            fprintf (stderr," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
             }
         }
     }
     
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
 
 /* if this step was previously completed and the user currently tells
    us that no chnl slope input is to be used, we will make sure that
@@ -147,7 +147,7 @@ get_chnl_slp()
         }
         else
         {
-            fprintf (stdout,"\n\nANSWERS input data creation complete.\n\n");
+            fprintf (stderr,"\n\nANSWERS input data creation complete.\n\n");
             complete[9] = 1;
         }
     }

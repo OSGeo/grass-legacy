@@ -24,7 +24,7 @@ hit_return()
     char buf[100];
     extern char *gets();
     
-    fprintf (stdout,"hit RETURN to continue -->");
+    fprintf (stderr,"hit RETURN to continue -->");
     if (!gets(buf)) exit(0); 
     G_strip (buf);
     if (strcmp (buf, "exit") == 0) exit(0);

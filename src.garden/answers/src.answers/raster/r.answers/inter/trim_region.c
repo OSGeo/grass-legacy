@@ -62,11 +62,11 @@ double north,
     if (complete[1] == 1) 
         {
         G_clear_screen();
-        fprintf (stdout,"\n      ANSWERS on GRASS REGION Utility \n\n");
-        fprintf (stdout,"You have already defined a region for this project.\n");
-        fprintf (stdout,"If current project region is changed, all previously\n");
-        fprintf (stdout,"completed steps must be run again to resample ANSWERS\n");
-        fprintf (stdout,"inputs.\n\n");
+        fprintf (stderr,"\n      ANSWERS on GRASS REGION Utility \n\n");
+        fprintf (stderr,"You have already defined a region for this project.\n");
+        fprintf (stderr,"If current project region is changed, all previously\n");
+        fprintf (stderr,"completed steps must be run again to resample ANSWERS\n");
+        fprintf (stderr,"inputs.\n\n");
         if(!G_yes("Do you wish to re-define the region at this time?",0)) 
             return(0);
         else
@@ -76,25 +76,25 @@ double north,
     G_clear_screen();
 
 
-    fprintf (stdout,"\n      ANSWERS on GRASS REGION Utility \n\n");
-    fprintf (stdout,"The purpose of this utility is to delineate the geographical\n");
-    fprintf (stdout,"region of the watershed. Once set, all ANSWERS on GRASS programs\n");
-    fprintf (stdout,"will automatically use the region for subsequent operations.\n");
-    fprintf (stdout,"Also, each time you work on this project, the MASK and REGION\n");
-    fprintf (stdout,"will be automatically set.\n");
-    fprintf (stdout,"\n");
-    fprintf (stdout,"This utility scans <%s> looking for all cells with\n", mask_layer);
-    fprintf (stdout,"non-zero values, while at the same time keeping track of the\n");
-    fprintf (stdout,"north-, east-, west-, and south-most cells. Thus an optimal\n");
-    fprintf (stdout,"region can be determined for the project.\n");
-    fprintf (stdout,"\n");
-    fprintf (stdout,"The next screen will display the region that has been derived\n");
-    fprintf (stdout,"(and allow you to modify the region coordinates, if desired).\n");
-    fprintf (stdout,"\n");
-    fprintf (stdout,"Note: this utility ignors and overrides any currently set mask\n");
-    fprintf (stdout,"or region.\n");
-    fprintf (stdout,"\n");
-    fprintf (stdout,"Scanning...\n");
+    fprintf (stderr,"\n      ANSWERS on GRASS REGION Utility \n\n");
+    fprintf (stderr,"The purpose of this utility is to delineate the geographical\n");
+    fprintf (stderr,"region of the watershed. Once set, all ANSWERS on GRASS programs\n");
+    fprintf (stderr,"will automatically use the region for subsequent operations.\n");
+    fprintf (stderr,"Also, each time you work on this project, the MASK and REGION\n");
+    fprintf (stderr,"will be automatically set.\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"This utility scans <%s> looking for all cells with\n", mask_layer);
+    fprintf (stderr,"non-zero values, while at the same time keeping track of the\n");
+    fprintf (stderr,"north-, east-, west-, and south-most cells. Thus an optimal\n");
+    fprintf (stderr,"region can be determined for the project.\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"The next screen will display the region that has been derived\n");
+    fprintf (stderr,"(and allow you to modify the region coordinates, if desired).\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"Note: this utility ignors and overrides any currently set mask\n");
+    fprintf (stderr,"or region.\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"Scanning...\n");
 
 /* set the region to the MASK layer's cell head listing */
  
@@ -214,7 +214,7 @@ double north,
 /* make it the current window */
 
     G_set_window(&window);
-    fprintf (stdout,"done   \n\n");
+    fprintf (stderr,"done   \n\n");
     hit_return();
 
 /* call edit_region. if it is passing back a flag (from user backing out

@@ -46,7 +46,7 @@ mk_cat_tbl(zero, layer, mapset)
     struct Cell_stats statf;
 
 G_clear_screen();     
-fprintf (stdout,"\n<reading categories in project MASK and REGION>\n");
+fprintf (stderr,"\n<reading categories in project MASK and REGION>\n");
 
   /* get the category numbers */
     if (G_read_cats (layer, mapset, &cats) < 0) {
