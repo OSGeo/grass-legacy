@@ -210,15 +210,24 @@ int
 save_table ( int t)
 {
     int  i, j, ncols, nrows, ret, field;
+    char name[2000], cmd[2000];
     DBFHandle   dbf;
     ROW  *rows;
     VALUE *val;
     int  dbftype, width, decimals;
 
+    /* Note: because if driver is killed during the time the table is written, the process
+    *        is not completed and DATA ARE LOST. To minimize this, data are first written
+    *        to 'database/.table.dbf' and then this file is renamed to 'database/table.dbf'.
+    *        GRASS temporary file is not used because it may be on another disk and
+    *        copy would be long */
+    
     if ( !(db.tables[t].alive) || !(db.tables[t].updated) )
         return DB_OK;
     
-    dbf = DBFCreate( db.tables[t].file );
+    sprintf ( name, "%s/.%s.dbf", db.name, db.tables[t].name );
+    
+    dbf = DBFCreate( name );
     if( dbf == NULL )
         return DB_FAILED;
 
@@ -280,7 +289,13 @@ save_table ( int t)
            }
       }
 
-   DBFClose ( dbf );
+    DBFClose ( dbf );
+
+    /* Copy */
+    sprintf (cmd, "mv %s %s", name, db.tables[t].file );
+    if ( system (cmd) != 0 ) {
+	return DB_FAILED;
+    }
     
     return DB_OK;
 }
