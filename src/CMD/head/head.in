@@ -3,6 +3,7 @@ FC                  = @F77@
 LEX                 = @LEX@
 YACC                = yacc
 ARCH                = @host@
+MAKE                = make
 
 GISBASE             = @prefix@
 UNIX_BIN            = @BINDIR@
