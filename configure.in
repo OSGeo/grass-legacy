@@ -120,13 +120,17 @@ AC_SUBST(TERMLIB)
 
 XDRLIB=
 if test -z "${XDRLIB}"; then
-AC_CHECK_LIB(sun, xdr_int, XDRLIB=-lsun)
+AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun)
 fi
 if test -z "${XDRLIB}"; then
-AC_CHECK_LIB(nsl, xdr_int, XDRLIB=-lnsl)
+AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl)
 fi
 if test -z "${XDRLIB}"; then
-AC_CHECK_LIB(rpclib, xdr_int, XDRLIB=-lrpclib)
+AC_CHECK_LIB(rpclib, xdrmem_create, XDRLIB=-lrpclib)
+fi
+# IRIX and glibc2.2 have this in C lib as well, so check
+if test "${XDRLIB}"; then
+AC_CHECK_LIB(c, xdrmem_create, XDRLIB="")
 fi
 AC_SUBST(XDRLIB)
 
@@ -348,24 +352,24 @@ TCLTKLIBPATH=
 if test "$tcltk_lib_dirs"; then
 	for dir in $tcltk_lib_dirs; do
 		if test -d "$dir"; then
-			TCLTKLIBS="$TCLTKLIBS -L$dir"
+			TCLTKLIBPATH="$TCLTKLIBPATH -L$dir"
 		else
 			AC_MSG_WARN([*** TCL/TK library directory $dir does not exist.])
 		fi
 	done
 	AC_MSG_CHECKING(additional TCL and TK library dirs)
-	AC_MSG_RESULT($TCLTKLIBS)
+	AC_MSG_RESULT($TCLTKLIBPATH)
 fi
 
-ldflags_save="$LDFLAGS"
-LDFLAGS="$LDFLAGS $TCLTKLIBS"
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt"
 AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
 if test "$has_tk_lib"; then
 	TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
 else
 	AC_MSG_WARN([*** Failed to find TCL/TK libraries])
 fi
-LDFLAGS="$ldflags_save"
+LDFLAGS=${ac_save_ldflags}
 AC_SUBST(TCLTKLIBS)
 AC_SUBST(TCLTKLIBPATH)
 
