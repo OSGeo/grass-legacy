@@ -1,6 +1,9 @@
-/* setup:  Program for GRASS user to first use.  Sets environment
- * variables:  LOCATION_NAME MAPSET GISDBASE
- */
+/*
+* $Id$
+*
+* setup:  Program for GRASS user to first use.  Sets environment
+* variables:  LOCATION_NAME MAPSET GISDBASE
+*/
 
 
 /* these defines come from the Gmakefile, but are defined here to allow
@@ -40,11 +43,14 @@ static char *loc_text=
 static char *map_text=
 "MAPSET:                                (or mapsets within a location)";
 
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <errno.h>
+
 #include "gis.h"
 #include "vask.h"
 #include "local_proto.h"
@@ -60,194 +66,286 @@ int main (int argc, char *argv[])
     int yes;
     struct Cell_head window;
 
+    char *GISBASE;
     char *GISDBASE;
     char *LOCATION_NAME;
     char *MAPSET;
+    char msg[512];
 
     int  repeat ;
 
-/* GISBASE
- *   comes from the unix environment and must be set
- *   make sure it is NOT in the .gisrc file
- *   note: G_getenv() make a special case of this variable
- */
-    G_no_gisinit();
-    umask(0);
-    G_unsetenv ("GISBASE");      /* this cleans the variable */
-    G_getenv ("GISBASE") ;         /* this reads it from the unix environment */
-
-/* Gather all existing variables **********************************************/
-    GISDBASE      =	G__getenv("GISDBASE") ;
-    LOCATION_NAME =	G__getenv("LOCATION_NAME") ;
-    MAPSET        =	G__getenv("MAPSET") ;
-
-    if (!MAPSET)        MAPSET        = G_whoami() ;
-    if (!LOCATION_NAME) LOCATION_NAME = D_LOCATION_NAME ;
-    if (!GISDBASE)      GISDBASE      = D_GISDBASE ;
-
-    strcpy (mapset,        MAPSET);
-    strcpy (location_name, LOCATION_NAME);
-    strcpy (gisdbase,      GISDBASE);
-    G__setenv ("GISDBASE",      gisdbase) ;
-
-    sprintf (version, "                            GRASS %s", VERSION_NUMBER);
-
-    for (repeat = 1; repeat ; hit_return())
+    /* The call to G_no_gisinit() will try to read the GISRC file. However, */
+    /* for first time users, this file does not exist. Normally the function */
+    /* that reads the GISRC file terminates the program if the file does not */
+    /* exist. For this program, a non-existant file is valid, so we need a */
+    /* way to prevent the program from terminating. This is accomplished by */
+    /* setting an environment variable in the UNIX environment (not part of */
+    /* the Grass internal environment structure) which is checked by the */
+    /* function that reads the GISRC file. Therefore, program termination */
+    /* can be avoided, since this will be the only program that sets this */
+    /* environment variable. */
+    if (putenv("GRASS_CALLING_PROG=set_data") != 0)
     {
-	V_clear() ;
-	V_line (0, version);
+	/* Grass is not initialized yet so we can't use G_fatal_error() */
+	fprintf(stderr, "Error adding GRASS_CALLING_PROG to environment: %s\n",
+	    strerror(errno));
+	exit(-1);
+    }
+    
+    G_no_gisinit();
+
+    umask(0); /* I think we should delete this - justin */
+
+    /* GISBASE comes from the unix environment and must be set */
+    GISBASE = G_getenv("GISBASE");
+    
+    if (GISBASE == NULL || GISBASE[0] == '\0')
+    {
+	/* Exit program with proper message, note that the return */
+	/* statement is there to keep compilers from complaining - it is */
+	/* never executed */
+	strcpy(msg, "GISBASE environment variable not set.\n");
+	strcat(msg, "Please advise GRASS developers of this error.\n");
+	G_fatal_error(msg);
+	return(-1);
+    }
+    
+    /* Make sure GISBASE is NOT in the .gisrc file */
+    if (G_is_perm_env("GISBASE"))
+    {
+	/* Exit program with proper message, note that the return */
+	/* statement is there to keep compilers from complaining - it is */
+	/* never executed */
+	strcpy(msg, "GISBASE environment variable is stored in the GISRC ");
+	strcat(msg, "file.\nPlease delete the GISBASE entry from your ");
+	strcat(msg, "GISRC file\nand run grass again.\n");
+	G_fatal_error(msg);
+	return(-1);
+    }
+
+    /* Gather all existing variables **************************************/
+    GISDBASE = G_getenv("GISDBASE");
+    LOCATION_NAME = G_getenv("LOCATION_NAME");
+    MAPSET = G_getenv("MAPSET");
+
+    if (!MAPSET)
+    {
+    	MAPSET = G_whoami();
+    }
+    
+    if (!LOCATION_NAME)
+    {
+    	LOCATION_NAME = D_LOCATION_NAME;
+    }
+    
+    if (!GISDBASE)
+    {
+    	GISDBASE = D_GISDBASE;
+    }
+
+    strcpy(mapset, MAPSET);
+    strcpy(location_name, LOCATION_NAME);
+    strcpy(gisdbase, GISDBASE);
+    G_set_perm_env("GISDBASE", gisdbase);
+
+    sprintf(version, "                            GRASS %s", VERSION_NUMBER);
+
+    for (repeat = 1; repeat; hit_return())
+    {
+	V_clear();
+	V_line(0, version);
+	
 	for (line = 1; intro[line]; line++)
-	    V_line (line, intro[line]);
+	{
+	    V_line(line, intro[line]);
+	}
 
 	line++;
-	V_line (line, loc_text);
-	V_ques (location_name, 's', line++, 12, 14);
+	V_line(line, loc_text);
+	V_ques(location_name, 's', line++, 12, 14);
 
-	V_line (line, map_text);
-	V_ques (mapset, 's', line++, 12, 14);
+	V_line(line, map_text);
+	V_ques(mapset, 's', line++, 12, 14);
 
 	line++;
-	V_line (line, "DATABASE:");
-	V_ques (gisdbase, 's', line++, 12, sizeof(gisdbase) - 1);
+	V_line(line, "DATABASE:");
+	V_ques(gisdbase, 's', line++, 12, sizeof(gisdbase) - 1);
 
 	V_intrpt_ok();
+	
 	if (!V_call())
-	    exit(1) ;
+	{
+	    exit(1);
+	}
 
-	G_strip (gisdbase);
+	G_strip(gisdbase);
+	
 	if (*gisdbase == 0)
 	{
-	    fprintf (stderr, "No DATABASE specified\n");
-	    strcpy (gisdbase, D_GISDBASE);
+	    fprintf(stderr, "No DATABASE specified\n");
+	    strcpy(gisdbase, D_GISDBASE);
 	    continue;
 	}
+	
 	if (*gisdbase != '/')
 	{
 	    char temp[200];
-	    fprintf (stderr, "DATABASE <%s> - must start with /\n", gisdbase);
-	    sprintf (temp, " %s", gisdbase);
-	    strcpy (gisdbase, temp);
+	    fprintf(stderr, "DATABASE <%s> - must start with /\n", gisdbase);
+	    sprintf(temp, " %s", gisdbase);
+	    strcpy(gisdbase, temp);
 	    continue;
 	}
-	if (access (gisdbase,0) != 0)
+	
+	if (access(gisdbase,0) != 0)
 	{
-	    fprintf (stderr, "DATABASE <%s> - not found\n", gisdbase);
+	    fprintf(stderr, "DATABASE <%s> - not found\n", gisdbase);
 	    continue;
 	}
-	G__setenv ("GISDBASE",      gisdbase) ;
+	
+	G_set_perm_env("GISDBASE", gisdbase);
 
 	/* take only first word of responses */
-	first_word (location_name);
-	first_word (mapset);
+	first_word(location_name);
+	first_word(mapset);
 
 	if (*location_name && (G_legal_filename(location_name) < 0))
 	{
-	    fprintf (stderr, "LOCATION <%s> - illegal name\n", location_name);
+	    fprintf(stderr, "LOCATION <%s> - illegal name\n", location_name);
 	    continue;
 	}
+	
 	if (*mapset && (G_legal_filename(mapset) < 0))
 	{
-	    fprintf (stderr, "MAPSET <%s> - illegal name\n", mapset);
+	    fprintf(stderr, "MAPSET <%s> - illegal name\n", mapset);
 	    continue;
 	}
 
 	if (*location_name == 0 || strcmp (location_name, "list") == 0)
 	{
-	    list_locations (gisdbase);
+	    list_locations(gisdbase);
 	    *location_name = 0;
 	    continue;
 	}
-	sprintf (location,"%s/%s",gisdbase,location_name);
-	if (access (location,0) != 0)
+	
+	sprintf(location,"%s/%s",gisdbase,location_name);
+	
+	if (access(location, 0) != 0)
 	{
-	    fprintf (stderr, "LOCATION <%s> - doesn't exist\n", location_name);
-	    list_locations (gisdbase);
+	    fprintf(stderr, "LOCATION <%s> - doesn't exist\n", location_name);
+	    list_locations(gisdbase);
+	    
 	    if (!can_make_location (gisdbase, location_name))
+	    {
 		continue;
-	    fprintf (stderr, "\nWould you like to create location <%s> ? ", location_name);
+	    }
+	    
+	    fprintf(stderr, "\nWould you like to create location <%s> ? ", location_name);
 	    if (yes_no())
 	    {
 		if(make_location (gisdbase, location_name))
                 {
 
-	            G__setenv ("LOCATION_NAME", location_name);
-	            G__setenv ("MAPSET", "PERMANENT");
-                    G__write_env();
-
+	            G_set_perm_env("LOCATION_NAME", location_name);
+	            G_set_perm_env("MAPSET", "PERMANENT");
+                    G_write_gisrc();
                     
                     if (system("g.setproj"))
 		    {
                         G_get_default_window (&window);
-                        if(G_edit_cellhd(&window, -1) < 0)
-			   fprintf(stderr, "WARNING: You did not provide default region for %s!\n", location_name);
                         
-                        G__put_window (&window, "", "DEFAULT_WIND");
-                        G__put_window (&window, "", "WIND");
-			fprintf (stderr, "LOCATION <%s> created\n", location_name);
-			fprintf (stderr, "\nBut the PROJECTION information files were not created!\n");
-			fprintf (stderr, "You must run g.setproj successfully before projection software will work%c%c%c\n", 7,7,7);
+			if(G_edit_cellhd(&window, -1) < 0)
+			{
+			   fprintf(stderr, "WARNING: You did not provide default region for %s!\n", location_name);
+			}
+                        
+                        G__put_window(&window, "", "DEFAULT_WIND");
+                        G__put_window(&window, "", "WIND");
+			fprintf(stderr, "LOCATION <%s> created\n", location_name);
+			fprintf(stderr, "\nBut the PROJECTION information files were not created!\n");
+			fprintf(stderr, "You must run g.setproj successfully before projection software will work%c%c%c\n", 7,7,7);
 			continue;
 		    }
 		    else
 		    {
-                        G_get_default_window (&window);
+                        G_get_default_window(&window);
+
                         if(G_edit_cellhd(&window, -1) < 0)
+			{
 			   fprintf(stderr, "WARNING: You did not provide default region for %s!\n", location_name);
-                        G__put_window (&window, "", "DEFAULT_WIND");
-                        G__put_window (&window, "", "WIND");
-			fprintf (stderr, "LOCATION <%s> created!\n", location_name);
+			}
+
+                        G__put_window(&window, "", "DEFAULT_WIND");
+                        G__put_window(&window, "", "WIND");
+			fprintf(stderr, "LOCATION <%s> created!\n", location_name);
 			continue;
                     }
                 }
-		fprintf (stderr, "LOCATION <%s> NOT created\n", location_name);
+		
+		fprintf(stderr, "LOCATION <%s> NOT created\n", location_name);
 	    }
+	    
 	    continue;
 	}
-	G__setenv ("LOCATION_NAME", location_name);
-	if (*mapset == 0 || strcmp (mapset, "list") == 0)
+	
+	G_set_perm_env("LOCATION_NAME", location_name);
+	
+	if (*mapset == 0 || strcmp(mapset, "list") == 0)
 	{
-	    list_mapsets (location_name, location);
+	    list_mapsets(location_name, location);
 	    *mapset = 0;
 	    continue;
 	}
-	G__setenv ("MAPSET",        mapset) ;
+	
+	G_set_perm_env("MAPSET", mapset) ;
 
-	repeat = 0 ;
+	repeat = 0;
 
 	switch (mapset_permissions(mapset) )
 	{
-	case -1:
+	    case -1:
+		
 		if(strcmp(mapset, G_whoami()) == 0)
 		{
 		    yes = 1;
 		}
 		else
 		{
-		    repeat = 1 ;
+		    repeat = 1;
 		    fprintf(stderr, "\n\nMapset <<%s>> is not available\n", mapset) ;
-		    list_mapsets (location_name, location);
+		    list_mapsets(location_name, location);
 		    fprintf(stderr, "\nWould you like to create < %s > as a new mapset? ",
-				mapset ) ;
+				mapset );
 		    yes = yes_no();
 		}
 
 		if (yes && (make_mapset(location, mapset) == 0))
-		    repeat = 0 ;
-		break ;
-	case 0:
-		fprintf(stderr, "\n\nSorry, no access to <<%s>>.\n", mapset) ;
-		list_mapsets (location_name, location);
-		repeat = 1 ;
-		break ;
-	case 1:
+		{
+		    repeat = 0;
+		}
+		
+		break;
+	    
+	    case 0:
+		
+		fprintf(stderr, "\n\nSorry, no access to <<%s>>.\n", mapset);
+		list_mapsets(location_name, location);
+		repeat = 1;
+		break;
+	    
+	    case 1:
+		
 		mapset_message(mapset);
 		if (!mapset_question(mapset)) repeat = 1;
 		break ;
 	}
-	if (!repeat) break;
+	
+	if (!repeat)
+	{
+	    break;
+	}
     }
 
-    G__write_env() ;
+    G_write_gisrc();
     exit(0);
 }
 
