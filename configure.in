@@ -74,7 +74,7 @@ AC_PATH_PROG(pwd, pwd, pwd)
 AC_MSG_CHECKING(for source directory)
 
 if test -z "$srcdir" ; then
-  SRCDIR=`pwd`
+  SRCDIR=`$pwd`
 else
   SRCDIR=`(cd "$srcdir" ; $pwd)`
 fi
@@ -83,7 +83,7 @@ AC_MSG_RESULT("$SRCDIR")
 
 AC_MSG_CHECKING(for build directory)
 
-DSTDIR=`pwd`
+DSTDIR=`$pwd`
 
 AC_MSG_RESULT("$DSTDIR")
 
@@ -377,7 +377,9 @@ AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
 AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
 AC_CHECK_FUNCS(drand48)
 AC_CHECK_FUNCS(putenv setenv)
+if test "$cross_compiling" != "yes" ; then
 AC_FUNC_SETPGRP
+fi
 
 AC_MSG_CHECKING(for W11)
 case "$enable_w11" in
