@@ -175,7 +175,8 @@ double up[3];
     {GLint mm;glGetIntegerv(GL_MATRIX_MODE, &mm);
 glMatrixMode(GL_PROJECTION);glLoadIdentity();gluPerspective(.1*(gv->fov),gd->aspect,gd->nearclip,gd->farclip);
 glMatrixMode(mm);};
-    glLoadMatrixf((const GLfloat *) ID_matrix);
+   /* glLoadMatrixf(ID_matrix); */ /* changed to: */
+    glLoadIdentity();
 	/* OGLXXX lookat: replace UPx with vector */
     gluLookAt(gv->from_to[FROM][X], gv->from_to[FROM][Y], gv->from_to[FROM][Z],
 	      gv->from_to[TO][X], gv->from_to[TO][Y], gv->from_to[TO][Z], 
