@@ -10,38 +10,36 @@
 SECT = 1
 GRASS_MANDIR=$(GISBASE)/man/$(SECT)
 GRASS_HTMLDIR=$(GISBASE)/documents
-HTML_DIR = ./html
+HTML_DIR = html
 HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
 
-# set HTML_FILES to the set of .html files in HTML_DIR
-HTML_FILES = $(wildcard $(HTML_DIR)/*.html)
 
-# transform HTML_FILES to MAN_FILES
-# substitute .man for .html in HTML_FILES
-MAN_TMP = $(patsubst %.html,%.$(SECT),$(HTML_FILES))
-
-# substitute MAN_DIR for HTML_DIR in MAN_TMP
-MAN_FILES = $(subst $(HTML_DIR),$(GRASS_MANDIR),$(MAN_TMP))
-
-#
-# the files we want to create/update are now MAN_FILES
 all: htmlpages manpages
 
 # copy the HTML pages only and related images
-# (must be updated to copy only modified files...)
 htmlpages:
 	@test -d $(GRASS_HTMLDIR) || mkdir $(GRASS_HTMLDIR)
-	@(echo Copying html pages; tar -cf - $(HTML_DIR) nviz *.html *.gif | (cd $(GRASS_HTMLDIR); tar -xf - ); true )
+	@test -d $(GRASS_HTMLDIR)/html || mkdir $(GRASS_HTMLDIR)/html
+	@(for i in `find nviz -type d | grep -v /CVS$$`; \
+	  do \
+	  	test -d $(GRASS_HTMLDIR)/$$i || mkdir $(GRASS_HTMLDIR)/$$i; \
+	  done)
+	@echo Copying html pages
+	@(for h in `find $(HTML_DIR) nviz *.html *.gif | grep -v /CVS`; \
+	  do \
+	  	test -d $$h && continue; \
+		d=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
+		if [ ! -f $$d -o $$d -ot $$h ]; then echo Generating: $$d; cp -p $$h $$d; fi; \
+	  done)
 
-manpages: mandir $(MAN_FILES)
-
-# make sure the man directory exists
-mandir:
+# generate the man pages
+manpages:
 	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
 	@echo Creating man pages
-
-# horrible rule, but it works ;-)
-$(MAN_FILES): $(HTML_FILES)
-	@( cd $(HTML_DIR); h="`basename $@ .$(SECT)`.html" ; \
-	  if [ ! -f $@ -o $@ -ot $$h ] ; then $(HTML2MAN) $$h $@ $(SECT); fi )
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+		if [ ! -f $$m -o $$m -ot $$h ]; then $(HTML2MAN) $$h $$m $(SECT); fi; \
+	  done)
 
