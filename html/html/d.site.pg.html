@@ -18,7 +18,7 @@
 
 <H2>ALTERNATE</H2>
 <B>d.site.pg -s help</B><BR>
-<B>d.site.pg -s pql</B><EM>=filename</EM> [<B>map</B><EM>=name</EM>][<B>plot</B><EM>=color,icon,size</EM>]
+<B>d.site.pg -s sql</B><EM>=filename</EM> [<B>map</B><EM>=name</EM>][<B>plot</B><EM>=color,icon,size</EM>]
 
 <H2>DESCRIPTION</H2>
 <EM>d.site.pg</EM> displays select point location information returned from a database query.  The site locations returned from the database query are displayed as icons in the active frame. The user controls the color, size and icon used in the graphic output. At the users option a site list of the database output is generated and placed in the current mapset/location.
@@ -35,8 +35,8 @@
 <DD>Columns containing x,y coordinate values.
 <P>
 
-<DT><B>where=postQUELwhereclause</B>
-<DD>postQUEL "where" clause which specifies the query criteria to be used in subsetting the database. The information specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
+<DT><B>where=SQLwhereclause</B>
+<DD>SQL "where" clause which specifies the query criteria to be used in subsetting the database. The information specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
 </DL>
 <P>
 For example, if you want to select only those records from the table well where the value for depth is either 58 or 75 the following could be entered:
@@ -60,7 +60,8 @@ The examples presented above were created using the command line parser.  If <EM
 <DD><EM>d.site.pg tab=well coords=utme,utmy
 <DD>where=ad.info='"NONE"'map=$1 plot=green,plus,2  join=rds2,rds2.cat2,well.cat</EM>
 <P>
-Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared postQUEL file.
+Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared
+SQL file.
 
 <DL>
 <DT><B>map=list</B>
@@ -75,7 +76,7 @@ Queries which are more complex than these are best implemented using the <EM>-s<
 <P>
 
 <DT><B>join=tab,tabkey,pkey</B>
-<DD>Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+<DD>Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
 </DL>
 <P>
 For instance, assume that well is a table containing X,Y coordinate values and that wellowners is a table containing ownership.pgormation associated with well logs.  To base a query on site location which would return attribute data on ownership and locational.pgormation in the table well the following join would be needed on the command line:
@@ -88,7 +89,8 @@ The column wellid is common to both the well and the wellowners table.  Because 
 This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join require­ments, from a file.
 
 <H2>ALTERNATE COMMAND LINE USAGE</H2>
-The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
+SQL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
 <P>
 The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
 <P>
@@ -99,13 +101,13 @@ The user must also specify the name of the GRASS data layer containing these cat
 <H3>Flag:</H3>
 <DL>
 <DT><B>-s</B>
-<DD>postQUEL retrieve statements are input from a prepared file.
+<DD>SQL retrieve statements are input from a prepared file.
 </DL>
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>pql=filename</B>
-<DD>PostQUEL statements specifying well formed selection criteria
+<DT><B>sql=filename</B>
+<DD>SQL statements specifying well formed selection criteria
 <P>
 
 <DT><B>map=list</B>

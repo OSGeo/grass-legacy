@@ -17,7 +17,7 @@
 
 <H2>ALTERNATE</H2>
 <B>d.vect.pg -s help</B><BR>
-<B>d.vect.pg -s pql</B><EM>=filename</EM> <B>input</B><EM>=name</EM> [<B>color</B><EM>=name</EM>]
+<B>d.vect.pg -s sql</B><EM>=filename</EM> <B>input</B><EM>=name</EM> [<B>color</B><EM>=name</EM>]
 
 <H2>DESCRIPTION</H2>
 <EM>d.vect.pg</EM> displays select vectors from an existing vector map based on the unique values in a database column.  Each row returned by a user constructed database query will be associated with a vector feature which is subsequently drawn on the graphics display in the active frame.  The user can control the color of the vector draw by specifying a color on the command line.
@@ -34,8 +34,8 @@
 <DD>Table in the currently selected database containing a column which has values corresponding to vector category values in the map designated by map=map.
 <P>
 
-<DT><B>where=postQUELwhereclause</B>
-<DD>PostQUEL "where" clause which specifies the query criteria to be used in subsetting the database.  The.pgormation specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
+<DT><B>where=SQLwhereclause</B>
+<DD>SQL "where" clause which specifies the query criteria to be used in subsetting the database.  The.pgormation specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
 </DL>
 For example, if you want to select only those records where the value for cfcc code is either A21 or A31 the following could be entered:
 <P>
@@ -68,7 +68,8 @@ The examples presented above were created using the command line parser.  If <EM
 <DD>where=cfcclookup.classname ~ '"Divided"' map=$1 color=green join=cfcclookup,cfcclookup.cfcc,feature.cat</EM>
 
 <P>
-Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared postQUEL file.
+Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared
+SQL file.
 
 <DL>
 <DT><B>map=map</B>
@@ -81,7 +82,7 @@ Queries which are more complex than these are best implemented using the <EM>-s<
 <P>
 
 <DT><B>join=tab,tabkey,pkey</B>
-<DD>Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+<DD>Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
 </DL>
 <P>
 
@@ -97,7 +98,8 @@ Specifying these conditions would insure that all rows from table cfcclookup whi
 This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
 
 <H2>ALTERNATE COMMAND LINE USAGE</H2>
-The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
+SQL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
 <P>
 
 The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
@@ -109,13 +111,13 @@ The user must also specify the name of the GRASS data layer containing these cat
 <H3>Flag:</H3>
 <DL>
 <DT><B>-s</B>
-<DD>PostQUEL select statements are input from a prepared file.
+<DD>SQL select statements are input from a prepared file.
 </DL>
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>pql=filename</B>
-<DD>PostQUEL statements specifying well formed selection criteria.
+<DT><B>sql=filename</B>
+<DD>SQL statements specifying well formed selection criteria.
 <P>
 
 <DT><B>input=map</B>
