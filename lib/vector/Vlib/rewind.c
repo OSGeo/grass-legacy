@@ -34,12 +34,12 @@ static int (*Rewind_array[][3]) () =
 #ifdef HAVE_POSTGRES
    ,{ rew_dummy, V1_rewind_post, V2_rewind_post }
 #else
-   ,{ open_old_dummy, format, format }
+   ,{ rew_dummy, format, format }
 #endif
 #ifdef HAVE_OGR
    ,{ rew_dummy, V1_rewind_ogr, V2_rewind_ogr }
 #else
-   ,{ open_old_dummy, format, format }
+   ,{ rew_dummy, format, format }
 #endif
 };
 

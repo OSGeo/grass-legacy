@@ -17,6 +17,8 @@
 *****************************************************************************/
 #include "Vect.h"
 
+#ifdef HAVE_OGR
+
 /* Rewind vector data file to cause reads to start at beginning. 
 ** returns 0 on success
 **        -1 on error
@@ -42,3 +44,4 @@ V2_rewind_ogr (struct Map_info *Map)
     return V1_rewind_ogr (Map);	
 }
 
+#endif 
