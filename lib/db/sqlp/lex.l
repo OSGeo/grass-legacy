@@ -62,6 +62,7 @@
 [Ii][Nn][Tt][Ee][Gg][Ee][Rr]	{ return INTEGER; }
 [Dd][Oo][Uu][Bb][Ll][Ee]	{ return DOUBLE; }
 [Pp][Rr][Ee][Cc][Ii][Ss][Ii][Oo][Nn]	{ return PRECISION; }
+[Dd][Aa][Tt][Ee]		{ return DATE; }
 [Oo][Rr]			{ return OR; }
 [Nn][Oo][Tt]			{ return NOT; }
  /* [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt]	{ return DISTINCT; } */

@@ -10,4 +10,9 @@ UPDATE WHERE
 DELETE FROM WHERE
 CREATE TABLE
 DROP TABLE
+[...]
+
+New types have to be added in yac.y and lex.l.
+In ./test/ is a test program to the the SQL parser (see
+README there).
 

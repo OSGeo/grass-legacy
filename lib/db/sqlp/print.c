@@ -71,6 +71,9 @@ int sqpPrintStmt(SQLPSTMT *st)
 	        case (SQLP_DOUBLE):
                     fprintf( stderr, "type:double" );
 	            break;			
+	        case (SQLP_DATE):
+                    fprintf( stderr, "type:date" );
+	            break;			
 	        default:
                     fprintf( stderr, "type:unknown" );
 	            break;			
