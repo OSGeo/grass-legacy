@@ -5,7 +5,7 @@
 
 #exclude following list of modules from help index:
 # escape it properly:
-EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target"
+EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html"
 
 ############# nothing to configure below ############
 
