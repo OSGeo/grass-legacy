@@ -115,7 +115,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
     if (G_parser(argc, argv))
 	exit(0);
-/* Exit status is zero to avoid TCL complaints */
+    /* Exit status is zero to avoid TCL complaints */
 
     {
 	float defs[MAX_ATTS];
@@ -157,8 +157,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     fprintf(stderr, "\n");
     fprintf(stderr,
 	    "Mitasova, H., W.M. Brown, J. Hofierka, 1994, Multidimensional\n");
-    fprintf(stderr,
-	    "dynamic cartography. Kartograficke listy, 2, p. 37-50.\n");
+    fprintf(stderr, "dynamic cartography. Kartograficke listy, 2, p. 37-50.\n");
     fprintf(stderr, "\n");
     fprintf(stderr,
 	    "Mitas L., Brown W. M., Mitasova H., 1997, Role of dynamic\n");
@@ -230,7 +229,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 	aload = 0;
 
     /* Parse answeres from user */
-/* Run check to make sure elev == colr */
+    /* Run check to make sure elev == colr */
     if (elev->answers && colr->answers) {
 	int ee, cc;
 	for (i = 0; elev->answers[i]; i++) {
@@ -292,11 +291,11 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
 
 /*
-   Ngetargs: gets command line args from tcl. Tcl stores argv[0] by
-   itself and the rest of the args as a single string so Ngetargs goes 
-   through some string manipulation to put all the args back into a single array
-   so that G_parser can deal with them without getting sick. 
-   */
+ * Ngetargs: gets command line args from tcl. Tcl stores argv[0] by
+ * itself and the rest of the args as a single string so Ngetargs goes 
+ * through some string manipulation to put all the args back into a single array
+ * so that G_parser can deal with them without getting sick. 
+ */
 
 int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
 	     char ***args)
@@ -306,8 +305,7 @@ int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
 
     argv0 = Tcl_GetVar(interp, "argv0", TCL_LEAVE_ERR_MSG);
     tmp = Tcl_GetVar(interp, "argv", TCL_LEAVE_ERR_MSG);
-    tmp2 =
-	(char *) malloc((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
+    tmp2 = (char *)malloc((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
     sprintf(tmp2, "%s %s", argv0, tmp);
 
     if (TCL_ERROR == Tcl_SplitList(interp, tmp2, &argc, args))
@@ -331,9 +329,9 @@ int make_red_yellow_ramp(int *ramp, int num, int minval, int maxval)
 
 
 /* Sorts surfaces by mid elevation, lowest to highest.
-   Puts ordered id numbers in id_sort, leaving surfs unchanged.
-   Puts ordered indices of surfaces from id_orig in indices.
-   */
+ * Puts ordered id numbers in id_sort, leaving surfs unchanged.
+ * Puts ordered indices of surfaces from id_orig in indices.
+ */
 int sort_surfs_mid(int *id_sort, int *indices, int num)
 {
     int i, j;
