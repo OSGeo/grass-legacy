@@ -1,0 +1,32 @@
+ABS	do_v_stats.c	/^ABS (x)$/
+INIT	global.h	/^# define INIT(x)$/
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+area_sum	sums.c	/^area_sum (ns,nl)$/
+cmp	do_v_stats.c	/^cmp (a, b)$/
+codes	do_v_stats.c	/^codes (ctype)$/
+count_sum	sums.c	/^count_sum (ns,nl)$/
+die	stats.c	/^die()$/
+divider	header.c	/^divider(edge)$/
+do_v_stats	do_v_stats.c	/^do_v_stats(verbose, lay_no, fd)$/
+format_double	format.c	/^format_double (v, buf, n, eformat, dp)$/
+format_parms	format.c	/^format_parms (v,n,eformat,dp)$/
+get_stats	stats.c	/^get_stats()$/
+header	header.c	/^header(unit1, unit2)$/
+isle_area	do_v_stats.c	/^isle_area (map, isle, totalarea)$/
+lcr	header.c	/^lcr(left,center,right,buf,n)$/
+len_sum	sums.c	/^len_sum (ns,nl)$/
+match	parse.c	/^match (s, key, min)$/
+max	header.c	/^max(a,b)$/
+newline	header.c	/^newline()$/
+parse_command_line	parse.c	/^parse_command_line (argc, argv)$/
+parse_layer	parse.c	/^parse_layer(s)$/
+parse_type	parse.c	/^parse_type (s)$/
+parse_units	parse.c	/^parse_units (s,t)$/
+pbuf	header.c	/^pbuf(buf)$/
+perimeter	perimeter.c	/^perimeter(np,x,y)$/
+print_label	label.c	/^print_label (s, len, pflag, spacing, dot)$/
+print_report	prt_report.c	/^print_report(unit1, unit2)$/
+print_unit	prt_unit.c	/^print_unit(i,ns,nl)$/
+report	report.c	/^report()$/
+same_cats	sums.c	/^same_cats (a,b,nl)$/
+trailer	header.c	/^trailer()$/
