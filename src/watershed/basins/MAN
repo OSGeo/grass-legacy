@@ -1,0 +1,33 @@
+.\" %W% %G%
+.TH catch 1
+.SH NAME
+catch \- generate map layer depicting subbasins within a watershed
+.br
+.I (GRASS-GRID Tool)
+.SH SYNOPSIS
+.nf
+catch
+.fi
+.SH DESCRIPTION
+Catch
+generates an output layer containing a unique category number
+and area for each subbasin within a given watershed and for
+a given stream network.  This is meant to be run as part of
+the watershed software series, and needs an input map layer
+of corrected drainage directions (from "river") and the name
+of the thinned stream network, for which the nodes file
+(from "clcode") will be obtained.  Output basins are numbered 
+according to the needs of input for the MULTSED modelling
+system.
+.SH NOTES
+Output from catch may be a supercell file,
+depending on the number of channel segments
+in the stream network.
+The current window setting is ignored.  Instead,
+the window of the stream network input map layer
+is used.
+
+.SH "AUTHOR"
+Marjorie Larson, U.S. Army Construction Engineering Research Laboratory
+.br
+Larry Band, Dept. of Geography, University of Toronto
