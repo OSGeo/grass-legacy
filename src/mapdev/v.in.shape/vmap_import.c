@@ -845,7 +845,8 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 
     case FTInteger:
       {
-	snprintf(buffer2, f_size + 1, "%d", DBFReadIntegerAttribute(hDBF, rec_num, cat_num));
+	sprintf(buffer2, "%d", DBFReadIntegerAttribute(hDBF, rec_num, cat_num));
+	buffer2[f_size] = '\0';
 	break;
       }
 
