@@ -1,12 +1,25 @@
 /*
  * r.topmodel: simulates TOPMODEL.
+ * 	       Based on TMOD9502.FOR.
  *
- *    Contact: Huidae Cho <hdcho@geni.knu.ac.kr>
+ * TMOD9502.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
  * $Id$
  *
+ *	Copyright (C) 2000 by the GRASS Development Team
+ *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *		Hydro Laboratory, Kyungpook National University
+ *		South Korea
+ *
+ *	This program is free software under the GPL (>=v2)
+ *	Read the file COPYING coming with GRASS for details.
+ *
+ *
  * $Log$
- * Revision 1.4  2000-09-05 08:58:10  cho
+ * Revision 1.5  2000-11-01 17:26:36  cho
+ * updated copyleft
+ *
+ * Revision 1.4  2000/09/05 08:58:10  cho
  * added Qobs parameter and cosmetics
  *
  * Revision 1.3  2000/08/21 04:21:21  cho
