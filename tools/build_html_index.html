@@ -1,7 +1,12 @@
 #!/bin/sh
 
-#generates man page index.html
-# Markus Neteler, 2003
+#generates HTML man page docs/html/index.html
+#Markus Neteler, 2003
+
+#exclude following list of modules from help index:
+EXCLUDEHTML="v.topo.check"
+
+############# nothing to configure below ############
 
 #are we in the tools/ dir?
 ls build_html_index.html 2> /dev/null
@@ -44,13 +49,15 @@ echo " ]
 <p>
 <ul>" >> index.html
 
+#for all module groups:
 for i in $CMDLIST
 do 
   echo "<a name="$i"></a>" >> index.html
   echo "<b>$i.* commands:</b>" >> index.html
   echo "<ul>" >> index.html
-  
-  for i in `ls -1 $i.*.html`
+
+  #for all modules:  
+  for i in `ls -1 $i.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $i .html`
     echo "<li><a href=\"$i\">$BASENAME</a>" >> index.html
