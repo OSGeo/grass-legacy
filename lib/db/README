@@ -9,7 +9,7 @@ The DBMI drivers are stored in
 
 
 NOTE:
-Please read grass51/db/drivers/README
+Please read grass6/db/drivers/README
 
 To generate dbmi_driver/dbstubs.h automatically, run './mk_dbstubs' in
 dbmi_driver/ directory.
