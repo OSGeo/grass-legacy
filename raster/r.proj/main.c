@@ -260,6 +260,12 @@ int main (int argc, char **argv)
 
 	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of input map");
+   
+        G_free_key_value( in_proj_info );	   
+        G_free_key_value( in_unit_info );
+        G_free_key_value( out_proj_info );	   
+        G_free_key_value( out_unit_info );	   
+        pj_print_proj_params(&iproj, &oproj);
 
 	/* this call causes r.proj to read the entire map into memeory */
 	G_get_cellhd(inmap->answer, setname, &incellhd);
