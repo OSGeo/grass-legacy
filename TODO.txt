@@ -12,6 +12,155 @@ Wishlist for GRASS 5
 
 ---------------------------------------------------------------------
 
+Modules which need to be updated to FP (raster floating point):
+
+ The following files are candidates as using the old
+ G_get_map_row() function which is deprecated!
+
+ Probably no updated is required, but G_get_c_raster_row() should
+ be used instead.
+
+ -> question: shall all CELL, FCELL and DCELL be supported?
+    The prog.man states that DCELL is better than FCELL.
+    At time a wild mixture is used.
+
+./display/d.profile/What.c
+./display/d.rast.arrow/arrow.c
+./display/d.rgb/cmd/main.c
+./imagery/i.cca/cmd/transform.c
+./imagery/i.class/draw_match.c
+./imagery/i.class/readbands.c
+./imagery/i.composite/compose.c
+./imagery/i.fft/cmd/do_histogram.c
+./imagery/i.fft/cmd/fftmain.c
+./imagery/i.fft/cmd/ifftmain.c
+./imagery/i.grey.scale/grey_scale.c
+./imagery/i.ortho.photo/photo.2image/drawcell.c
+./imagery/i.ortho.photo/photo.2target/drawcell.c
+./imagery/i.ortho.photo/photo.rectify/perform.c
+./imagery/i.ortho.photo/photo.rectify/rectify.c
+./imagery/i.out.erdas/cmd/main.c
+./imagery/i.pca/cmd/main.c
+./imagery/i.points3/inter/draw_cell.c
+./imagery/i.points3/inter/read_elev.c
+./imagery/i.quantize/compose.c
+./imagery/i.rectify3/cmd/perform.c
+./imagery/i.rectify3/cmd/matrix.c
+./imagery/i.rectify3/cmd/read_elev.c
+./imagery/i.rectify3/inter/matrix.c
+./imagery/i.rectify3/inter/perform.c
+./imagery/i.rectify3/inter/read_elev.c
+./imagery/i.rgb.his/cmd/getinput.c
+./imagery/i.rgb.his/cmd/h2rmain.c
+./imagery/i.rgb.his/cmd/r2hmain.c
+./imagery/i.zc/cmd/main.c
+./libes/rst_gmsl/interp_float/input2d.c
+./libes/rst_gmsl/interp_float/ressegm2d.c
+./mapdev/v.digit/eq.c
+./mapdev/v.digit/drawcell.c
+./mapdev/v.out.dxf/backup/cell.to.dat.c
+./mapdev/v.out.dxf/cell.to.dat.c
+./paint/Programs/p.map/cmd/SAVE/map.sf.c
+./paint/Programs/p.map/cmd/mask_vctrs.c
+./paint/Programs/p.map.new/cmd/mask_grid.c
+./paint/Programs/p.map.new/cmd/mask_vctrs.c
+./paint/p.vrml1.1/put_grid.c
+./ps.map/ps.map/cmd/rast_plot.c
+./raster/r.agnps50/hydro_tools/r.cn/Gcn.c
+./raster/r.agnps50/hydro_tools/r.cn2/Gcn.c
+./raster/r.agnps50/hydro_tools/r.weighted.cn/r.weighted.cn.c
+./raster/r.agnps50/src_agnps_input_1/create_grid_map.c
+./raster/r.agnps50/src_agnps_input_1/cell_num_id.c
+./raster/r.agnps50/src_agnps_input_1/drain_num.c
+./raster/r.agnps50/src_agnps_input_1/misc_routines.c
+./raster/r.agnps50/src_agnps_input_1/slope_aspect.c
+./raster/r.agnps50/src_agnps_input_2a/agnps_input.c
+./raster/r.agnps50/src_agnps_input_2a/create_grid_map.c
+./raster/r.agnps50/src_agnps_input_2a/cell_num_id.c
+./raster/r.agnps50/src_agnps_input_2a/drain_num.c
+./raster/r.agnps50/src_agnps_input_2a/misc_routines.c
+./raster/r.agnps50/src_agnps_input_2a/slope_aspect.c
+./raster/r.basins.fill/read_map.c
+./raster/r.bilinear/main.c
+./raster/r.binfer/engine.c
+./raster/r.buffer/cmd/write_map.c
+./raster/r.clump/cmd/clump.c
+./raster/r.combine/cmd/r_rd_line.c
+./raster/r.cross/cross.c
+./raster/r.cross/renumber.c
+./raster/r.grow/cmd/main.c
+./raster/r.infer/cmd/run_maps.c
+./raster/r.los/cmd/main.c
+./raster/r.mask.points/cmd/main.c
+./raster/r.mfilter/cmd/getrow.c
+./raster/r.out.pov/cmd/main.c
+./raster/r.out.tga/main.c
+./raster/r.poly/cmd/io.c
+./raster/r.random.cells/init.c
+./raster/r.random.surface/calcsurf.c
+./raster/r.random.surface/init.c
+./raster/r.random.surface/save.c
+./raster/r.rescale/cmd/get_range.c
+./raster/r.rescale/inter/get_range.c
+./raster/r.rescale.eq/cmd/get_stats.c
+./raster/r.support/inter/histo.c
+./raster/r.support/cmd/histo.c
+./raster/r.surf.contour/cmd/bseg_read.c
+./raster/r.surf.contour/cmd/cseg_read.c
+./raster/r.surf.contour/cmd/main.c
+./raster/r.surf.idw/cmd/main.c
+./raster/r.surf.idw2/cmd/read_cell.c
+./raster/r.surf.idw2/cmd/main.c
+./raster/r.thin/cmd/io.c
+./raster/r.volume/cmd/centroids.c
+./raster/r.volume/cmd/main.c
+./raster/r.water.outlet/main.c
+./raster/r.weight/inter/execute.c
+./raster/wildfire/src/r.ros/main.c
+./raster/wildfire/src/r.spread/collect_ori.c
+./raster/wildfire/src/r.spread/main.c
+./raster/wildfire/src/r.spreadpath/main.c
+./raster/r.fill.dir2/r.fill.dir/cmd/fill_dir.c
+./sites/s.sample/nearest.c
+./sites/s.surf.idw/cmd/main.c
+./sites/s.surf.idw/cmd/read_cell.c
+
+
+Further modules:
+- i.points3:
+   update to FP    
+
+- r.water.outlet
+  - needs FP update
+
+r.fill.dir:
+ - stops working somewhere in the map if DEM contains NULL holes
+   (reported by Markus Neteler)
+ - requires FP update
+   (being worked on by Roger S. Miller <rgrmill@rt66.com>)
+
+- r.random.surface
+  needs to be updated to GRASS 5 FP/NULL
+  (being worked on by ?)
+
+- r.water.outlet:
+  needs to be updated to GRASS 5 FP/NULL
+  (being worked on by ?)
+
+- r.watershed:
+  needs to be *partly* updated to GRASS 5 FP/NULL:
+  Helena Mitasova wrote:
+   Drainage map should be INT, there is no reason for it to be FP 
+   because the program uses D8 algorithm, there are only 8 directions
+   of flow. only L and S factor could be output as FP (here they are
+   multiplied by 100) but I am not sure whether it is worth the effort 
+   because they are not very good anyway.
+ (being worked on by ?)
+
+
+---------------------------------------------------------------------
+TODO cont'ed...
+
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
      - libg2c is required to make r.fill.dir, but configure doesn't check 
@@ -262,9 +411,6 @@ Modules:
   not to "status" of module (which is even confused at time)
   (Being worked on by ?)
 
-- i.points3:
-   update to FP
-
 - i.rectify/2
    - option 1 to transform the data should be extended: GRASS should
      calculate from the original rows/cols and the target coordinates
@@ -366,9 +512,6 @@ Modules:
   Meanwhile r.buffer generates defined buffers, we need continuous
   distance values, too.
   (Being worked on by)
-
-- r.water.outlet
-  - needs FP update
 
 - r3.mapcalc:
   add option to read 2D cells. Could be very useful to generate
