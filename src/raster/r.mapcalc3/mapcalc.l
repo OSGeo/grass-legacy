@@ -181,6 +181,8 @@ F		[fF]
 ","		{	return ',';	}
 
 "\n\n"		{	yyterminate();	}
+\n{W}*"end"{W}*\n	{	yyterminate();	}
+\n{W}*"exit"{W}*\n	{	yyterminate();	}
 
 ";"		|
 "\n"		{	return ';';	}
