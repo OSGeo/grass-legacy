@@ -135,7 +135,7 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"re-project a raster map from one location to the current location.";
+		"Re-projects a raster map from one location to the current location.";
 
 
 	inmap = G_define_option();
