@@ -1,0 +1,30 @@
+OBJ = \
+	PJ_aea.o PJ_aeqd.o PJ_airy.o PJ_aitoff.o \
+	PJ_august.o PJ_bacon.o PJ_bipc.o PJ_boggs.o \
+	PJ_bonne.o PJ_cass.o PJ_cc.o PJ_cea.o \
+	PJ_collg.o PJ_dense.o PJ_eck1.o PJ_eck2.o \
+	PJ_eck3.o PJ_eck4.o PJ_eck5.o PJ_eck6.o \
+	PJ_eisen.o PJ_eqc.o PJ_eqdc.o PJ_fourn.o \
+	PJ_gall.o PJ_gnom.o PJ_hammer.o PJ_hataea.o \
+	PJ_laea.o PJ_lagrng.o PJ_lcc.o PJ_loxim.o \
+	PJ_mbtfpp.o PJ_mbtfpq.o PJ_mbtfps.o PJ_merc.o \
+	PJ_mill.o PJ_moll.o PJ_nocol.o PJ_nsper.o \
+	PJ_ocea.o PJ_omerc.o PJ_ortho.o PJ_parab.o \
+	PJ_pconic.o PJ_poly.o PJ_putp2.o PJ_putp5.o \
+	PJ_quau.o PJ_robin.o PJ_rpoly.o PJ_sinu.o \
+	PJ_stere.o PJ_tcc.o PJ_tcea.o PJ_tmerc.o \
+	PJ_vandg.o PJ_vandg2.o PJ_vandg4.o PJ_wag7.o \
+	PJ_wink1.o PJ_goode.o PJ_chamb.o PJ_lsat.o \
+	PJ_mod_ster.o PJ_tpeqd.o \
+	pj_auth.o pj_fwd.o pj_init.o pj_inv.o \
+	pj_msfn.o pj_mlfn.o pj_phi2.o pj_qsfn.o \
+	pj_tsfn.o gen_cheby.o bchgen.o pj_list.o \
+	pj_ellps.o pj_factors.o pj_deriv.o aasincos.o \
+	emess.o \
+	adjlon.o dmstor.o rtodms.o \
+	get_proj.o do_proj.o 
+
+$(GPROJLIB): $(OBJ)
+	$(AR)
+
+
