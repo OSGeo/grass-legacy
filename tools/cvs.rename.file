@@ -5,7 +5,7 @@
 # written by Markus Neteler 5/2000
 # May 30, 2000
 
-if [ "$#" -lt 2 ]
+if [ "$#" -lt 2 ] || [ $1 = "" ] || [ $1 = "help" ] || [ $1 = "-h" ] || [ $1 = "-help" ]
     then
      echo "USAGE: cvs.rename.file old_file_name  new_file_name  comment"
      echo ""
