@@ -29,16 +29,25 @@ static struct {
 *  Parses color string and sets red,green,blue
 * 
 *  Returns: 1 - OK
+*           2 - NONE 
 *           0 - Error 
 * 
 */
 int G_str_to_color (char *str, int *red, int *green, int *blue)
 {
     int i, ret;
+    char buf[100], temp[10]; 
 
-    ret = sscanf (str, "%d:%d:%d", red, green, blue);
+    strcpy (buf, str );
+    G_chop (buf);
+    
+    G_debug (3, "G_str_to_color(): str = '%s'", buf );
+
+    if ( G_strcasecmp ( buf, "NONE" ) == 0 ) return 2;
+    
+    ret = sscanf (buf, "%d%[,:; ]%d%[,:; ]%d", red, temp, green, temp, blue);
    
-    if ( ret == 3 ) { 
+    if ( ret == 5 ) { 
 	if ( *red < 0 || *red > 255 || *green < 0 || *green > 255 ||
 	     *blue < 0 || *blue > 255 ) 
 	{ 
@@ -46,13 +55,8 @@ int G_str_to_color (char *str, int *red, int *green, int *blue)
 	}
         return 1;
     } else {
-        ret = D_translate_color( str ); 	
-        if ( ret == 0 ) {
-	    return 0; 
-	}
-	
 	for (i = 0; i < NUM_COLORS; i++) {
-	    if (strcmp(str, _colors[i].name) == 0) {
+	    if ( G_strcasecmp(buf, _colors[i].name) == 0) {
 		*red   = _colors[i].r;
 		*green = _colors[i].g;
 		*blue  = _colors[i].b;
