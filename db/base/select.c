@@ -173,14 +173,11 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
-    driver->options     = db_list_drivers();
-    driver->required 	= NO;          
-    driver->description = "driver name";
-    if ( (drv=db_get_default_driver_name()) )
-        driver->answer = drv;
+    table 		= G_define_option();
+    table->key 	        = "table";
+    table->type 	= TYPE_STRING;
+    table->required 	= NO;         
+    table->description  = "Table name, select all from this table";
 
     database 		= G_define_option();
     database->key 	= "database";
@@ -190,11 +187,14 @@ parse_command_line(int argc, char *argv[])
     if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
-    table 		= G_define_option();
-    table->key 	        = "table";
-    table->type 	= TYPE_STRING;
-    table->required 	= NO;         
-    table->description  = "Table name, select all from this table";
+    driver 		= G_define_option();
+    driver->key 	= "driver";
+    driver->type 	= TYPE_STRING;
+    driver->options     = db_list_drivers();
+    driver->required 	= NO;          
+    driver->description = "driver name";
+    if ( (drv=db_get_default_driver_name()) )
+        driver->answer = drv;
 
     sql 		= G_define_option();
     sql->key 	        = "sql";
@@ -238,7 +238,7 @@ parse_command_line(int argc, char *argv[])
 
     v			= G_define_flag();
     v->key		= 'v';
-    v->description	= "vertical output (instead of vertical)";
+    v->description	= "vertical output (instead of horizontal)";
 
     /* Set description */
     module              = G_define_module();
