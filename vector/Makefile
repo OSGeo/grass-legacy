@@ -34,6 +34,7 @@ SUBDIRS1 = \
 	v.surf.rst \
 	v.transform \
 	v.to.db \
+	v.to.points \
 	v.to.rast \
 	v.type \
 	v.what.rast
