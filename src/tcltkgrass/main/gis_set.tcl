@@ -212,7 +212,7 @@ proc SetDatabase {widget top entryWidget locList mapList} \
 	}
     }
     
-    .frame0.frame4.ok configure -state disabled
+    .frame0.frameBUTTONS.ok configure -state disabled
     destroy $top
 }
 
@@ -286,170 +286,172 @@ proc gisSetWindow {} {
     pack .frame0.intro.msg -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version5.0\n\n"]
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version 5.0\n\n"]
     .frame0.intro.msg insert end [G_msg "Please select location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
 
     # -----------------------------------
-    # build .frame0.frame1
+    # build .frame0.frameDB
     # -----------------------------------
 
-    frame .frame0.frame1 \
+    frame .frame0.frameDB \
     	-borderwidth {2}
 
-    frame .frame0.frame1.left \
+    frame .frame0.frameDB.left \
     	-borderwidth {2}
 
-    frame .frame0.frame1.mid \
+    frame .frame0.frameDB.mid \
     	-borderwidth {2}
 
-    frame .frame0.frame1.right \
+    frame .frame0.frameDB.right \
     	-borderwidth {2}
 
-    label .frame0.frame1.left.label \
+    label .frame0.frameDB.left.label \
     	-anchor {n} \
     	-text [G_msg "Database : "]
 
-    entry .frame0.frame1.mid.entry \
+    entry .frame0.frameDB.mid.entry \
     	-relief {sunken} \
     	-textvariable database \
-    	-xscrollcommand { .frame0.frame1.mid.hscrollbar set}
+    	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set}
     
-    scrollbar .frame0.frame1.mid.hscrollbar \
-    	-command { .frame0.frame1.mid.entry xview} \
+    scrollbar .frame0.frameDB.mid.hscrollbar \
+    	-command { .frame0.frameDB.mid.entry xview} \
     	-relief {raised} \
     	-width 12 \
     	-orient {horizontal}
  
-    button .frame0.frame1.right.button \
+    button .frame0.frameDB.right.button \
     	-text "Browse..." \
-    	-command {GetDir .frame0.frame1.mid.entry .frame0.frame2.listbox \
-    	    .frame0.frame3.listbox}
+    	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
+    	    .frame0.frameMS.listbox}
 
 
-    pack .frame0.frame1.left.label -side top
-    pack .frame0.frame1.mid.entry -side top -fill x
-    pack .frame0.frame1.mid.hscrollbar -side bottom -fill x
-    pack .frame0.frame1.right.button -side left -fill x
-    pack .frame0.frame1.left -side left  -anchor n -fill x
-    pack .frame0.frame1.mid -side left -fill x
-    pack .frame0.frame1.right -side left -anchor n -fill x
+    pack .frame0.frameDB.left.label -side top
+    pack .frame0.frameDB.mid.entry -side top -fill x
+    pack .frame0.frameDB.mid.hscrollbar -side bottom -fill x
+    pack .frame0.frameDB.right.button -side left -fill x
+    pack .frame0.frameDB.left -side left  -anchor n -fill x
+    pack .frame0.frameDB.mid -side left -fill x
+    pack .frame0.frameDB.right -side left -anchor n -fill x
 
     # -----------------------------------
-    # build .frame0.frame2
+    # build .frame0.frameLOC
     # -----------------------------------
-    frame .frame0.frame2 \
+    frame .frame0.frameLOC \
     	-borderwidth {2}
 
-    label .frame0.frame2.label \
+    label .frame0.frameLOC.label \
     	-anchor {w} \
     	-text [G_msg "Location"] 
 
-    listbox .frame0.frame2.listbox \
+    listbox .frame0.frameLOC.listbox \
     	-relief {raised} \
     	-exportselection false \
-    	-yscrollcommand {.frame0.frame2.vscrollbar set} \
-    	-xscrollcommand {.frame0.frame2.hscrollbar set}
+    	-yscrollcommand {.frame0.frameLOC.vscrollbar set} \
+    	-xscrollcommand {.frame0.frameLOC.hscrollbar set}
 
-    scrollbar .frame0.frame2.vscrollbar -width 12 \
-    	-command {.frame0.frame2.listbox yview} \
+    scrollbar .frame0.frameLOC.vscrollbar -width 12 \
+    	-command {.frame0.frameLOC.listbox yview} \
     	-relief {raised}
 
-    scrollbar .frame0.frame2.hscrollbar -width 12 \
-    	-command {.frame0.frame2.listbox xview} \
+    scrollbar .frame0.frameLOC.hscrollbar -width 12 \
+    	-command {.frame0.frameLOC.listbox xview} \
     	-orient {horizontal} \
     	-relief {raised}
 
-    pack append .frame0.frame2 \
-    	.frame0.frame2.label { top fill } \
-    	.frame0.frame2.vscrollbar { right filly } \
-    	.frame0.frame2.hscrollbar { bottom fillx } \
-    	.frame0.frame2.listbox { left expand fill }
+    pack append .frame0.frameLOC \
+    	.frame0.frameLOC.label { top fill } \
+    	.frame0.frameLOC.vscrollbar { right filly } \
+    	.frame0.frameLOC.hscrollbar { bottom fillx } \
+    	.frame0.frameLOC.listbox { left expand fill }
 
 
     # -----------------------------------
-    # build .frame0.frame3
+    # build .frame0.frameMS
     # -----------------------------------
-    frame .frame0.frame3 \
+    frame .frame0.frameMS \
     	-borderwidth {2}
 
-    label .frame0.frame3.label \
+    label .frame0.frameMS.label \
     	-anchor {w} \
     	-text [G_msg "Mapset"] 
 
-    listbox .frame0.frame3.listbox \
+    listbox .frame0.frameMS.listbox \
     	-relief {raised} \
-    	-yscrollcommand {.frame0.frame3.vscrollbar set} \
-    	-xscrollcommand {.frame0.frame3.hscrollbar set}
+    	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
+    	-xscrollcommand {.frame0.frameMS.hscrollbar set}
 
-    scrollbar .frame0.frame3.vscrollbar -width 12 \
-    	-command {.frame0.frame3.listbox yview} \
+    scrollbar .frame0.frameMS.vscrollbar -width 12 \
+    	-command {.frame0.frameMS.listbox yview} \
     	-relief {raised}
 
-    scrollbar .frame0.frame3.hscrollbar -width 12 \
-    	-command {.frame0.frame3.listbox xview} \
+    scrollbar .frame0.frameMS.hscrollbar -width 12 \
+    	-command {.frame0.frameMS.listbox xview} \
     	-orient {horizontal} \
     	-relief {raised}
 
-    pack append .frame0.frame3 \
-    	.frame0.frame3.label { top fill } \
-    	.frame0.frame3.vscrollbar { right filly } \
-    	.frame0.frame3.hscrollbar { bottom fillx } \
-    	.frame0.frame3.listbox { left expand fill }
+    pack append .frame0.frameMS \
+    	.frame0.frameMS.label { top fill } \
+    	.frame0.frameMS.vscrollbar { right filly } \
+    	.frame0.frameMS.hscrollbar { bottom fillx } \
+    	.frame0.frameMS.listbox { left expand fill }
 
     # -----------------------------------
-    # build .frame0.frame5
+    # build .frame0.frameNMS
     # -----------------------------------
-    frame .frame0.frame5 \
+    frame .frame0.frameNMS \
     	-borderwidth {2}
 
-    frame .frame0.frame5.left \
+    frame .frame0.frameNMS.left \
     	-borderwidth {2}
 
-    frame .frame0.frame5.mid \
+    frame .frame0.frameNMS.mid \
     	-borderwidth {2}
 
-    frame .frame0.frame5.right \
+    frame .frame0.frameNMS.right \
     	-borderwidth {2}
 
-    label .frame0.frame5.left.label \
+    label .frame0.frameNMS.left.label \
     	-anchor {n} \
-    	-text [G_msg "New mapset : "]
+    	-text [G_msg "Create new mapset : "]
 
-    entry .frame0.frame5.mid.entry \
+    entry .frame0.frameNMS.mid.entry \
     	-relief {sunken} \
     	-textvariable mymapset \
     	-width 15
 	
-    button .frame0.frame5.right.button \
+    button .frame0.frameNMS.right.button \
     	-text "Create..." \
      	-command { 
-            if { $mymapset != "" } {
+            .frame0.frameNMS.right.button configure -state disabled
+	    if { $mymapset != "" } {
             	CheckLocation
 		cd $database
         	cd $location
                 file mkdir $mymapset
+		.frame0.frameMS.listbox insert end $mymapset
+		#TODO: select new MAPSET
             }
 	}
-#TODO: the MAPSET list should be refreshed
 
-    pack append .frame0.frame5
-    pack .frame0.frame5.left.label -side top
-    pack .frame0.frame5.mid.entry -side top -fill x
-    pack .frame0.frame5.right.button -side left -fill x
-    pack .frame0.frame5.left -side top  -anchor n
-    pack .frame0.frame5.mid -side top -expand yes
-    pack .frame0.frame5.right -side bottom -anchor n -expand yes
+    pack append .frame0.frameNMS
+    pack .frame0.frameNMS.left.label -side top
+    pack .frame0.frameNMS.mid.entry -side top -fill x
+    pack .frame0.frameNMS.right.button -side left -fill x
+    pack .frame0.frameNMS.left -side top  -anchor n
+    pack .frame0.frameNMS.mid -side top -expand yes
+    pack .frame0.frameNMS.right -side bottom -anchor n -expand yes
 
     # ----------------------------------
-    # build .frame0.frame4
+    # build .frame0.frameBUTTONS
     # ----------------------------------
-    frame .frame0.frame4 \
+    frame .frame0.frameBUTTONS \
     	-borderwidth {2}
 
-    button .frame0.frame4.ok \
+    button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Use Selection"] \
     	-relief raised \
      	-padx 10 \
@@ -466,7 +468,7 @@ proc gisSetWindow {} {
             } 
         }
 
-    button .frame0.frame4.newLoc \
+    button .frame0.frameBUTTONS.newLoc \
     	-text [G_msg "Create New Location"] \
     	-relief raised \
     	-padx 10 \
@@ -483,7 +485,7 @@ proc gisSetWindow {} {
 	    destroy . 
       	}
 
-    button .frame0.frame4.cancel \
+    button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Cancel"] \
     	-relief raised \
     	-padx 10 \
@@ -492,10 +494,10 @@ proc gisSetWindow {} {
             destroy . 
         }
 
-    pack append .frame0.frame4 \
-    	.frame0.frame4.ok { left expand } \
-    	.frame0.frame4.newLoc {left expand } \
-    	.frame0.frame4.cancel { right expand }
+    pack append .frame0.frameBUTTONS \
+    	.frame0.frameBUTTONS.ok { left expand } \
+    	.frame0.frameBUTTONS.newLoc {left expand } \
+    	.frame0.frameBUTTONS.cancel { right expand }
 
 
 
@@ -505,18 +507,18 @@ proc gisSetWindow {} {
 
     # pack widget .frame0
     pack append .frame0 \
-    	.frame0.frame1 { top expand fill } \
-    	.frame0.frame4 { bottom expand fill } \
-    	.frame0.frame2 { left expand  } \
-   	.frame0.frame3 { left expand  } \
-     	.frame0.frame5 { right expand fill }
+    	.frame0.frameDB { top expand fill } \
+    	.frame0.frameBUTTONS { bottom expand fill } \
+    	.frame0.frameLOC { left expand  } \
+   	.frame0.frameMS { left expand  } \
+     	.frame0.frameNMS { right expand fill }
 
-    .frame0.frame5.right.button configure -state disabled
+    .frame0.frameNMS.right.button configure -state disabled
 
     pack append . \
     	.frame0 { top frame center expand fill }
 
-    .frame0.frame1.mid.entry xview moveto 1
+    .frame0.frameDB.mid.entry xview moveto 1
     
     if { ! [file exists $database] } \
     {
@@ -535,15 +537,15 @@ proc gisSetWindow {} {
       	if { [string compare $i "."] != 0 && \
             [string compare $i ".."] != 0 && \
             [file isdirectory $i] } {
-            .frame0.frame2.listbox insert end $i
+            .frame0.frameLOC.listbox insert end $i
       	}
     }
         
     set i 0
     set curSelected 0
-    set length [.frame0.frame2.listbox size]
+    set length [.frame0.frameLOC.listbox size]
     while { $i <  $length } {
-    	if { $location == [.frame0.frame2.listbox get $i] } {
+    	if { $location == [.frame0.frameLOC.listbox get $i] } {
             set curSelected $i
             break
       	}
@@ -551,7 +553,7 @@ proc gisSetWindow {} {
 	incr i 1
     }
     
-    .frame0.frame2.listbox select set $curSelected
+    .frame0.frameLOC.listbox select set $curSelected
 
     cd $database
     if { [file exists $location] } \
@@ -561,15 +563,15 @@ proc gisSetWindow {} {
      	    if { [string compare $i "."] != 0 && \
         	[string compare $i ".."] != 0 && \
         	[file isdirectory $i] && [file owned $i] } {
-        	.frame0.frame3.listbox insert end $i
+        	.frame0.frameMS.listbox insert end $i
       	    }
 	}
 
 	set i 0
 	set curSelected 0
-	set length [.frame0.frame3.listbox size]
+	set length [.frame0.frameMS.listbox size]
 	while { $i <  $length } {
-    	    if { $mapset == [.frame0.frame3.listbox get $i] } {
+    	    if { $mapset == [.frame0.frameMS.listbox get $i] } {
         	set curSelected $i
         	break
             }
@@ -577,84 +579,84 @@ proc gisSetWindow {} {
 	    incr i 1
 	}
 
-	.frame0.frame3.listbox yview $curSelected
-	.frame0.frame3.listbox select set $curSelected
+	.frame0.frameMS.listbox yview $curSelected
+	.frame0.frameMS.listbox select set $curSelected
     }
     
 
 
-  bind .frame0.frame1.mid.entry <Return> {
+  bind .frame0.frameDB.mid.entry <Return> {
         set new_path [%W get]
         if { "$new_path" != "" \
              && [file exists $new_path] && [file isdirectory $new_path] } {
            %W delete 0 end
            %W insert 0 $new_path
            cd $new_path
-           .frame0.frame2.listbox delete 0 end
+           .frame0.frameLOC.listbox delete 0 end
            foreach i [exec ls -a [exec pwd]] {
                if { [string compare $i "."] != 0 && \
                     [string compare $i ".."] != 0 && \
                     [file isdirectory $i] } {
-                   .frame0.frame2.listbox insert end $i
+                   .frame0.frameLOC.listbox insert end $i
                }
            }
-           .frame0.frame3.listbox delete 0 end
+           .frame0.frameMS.listbox delete 0 end
            set database [exec pwd]
         }
-	.frame0.frame4.ok configure -state disabled
-	.frame0.frame5.right.button configure -state disabled
+	.frame0.frameBUTTONS.ok configure -state disabled
+	.frame0.frameNMS.right.button configure -state disabled
   }
 
-  bind .frame0.frame5.mid.entry <KeyRelease> {
-	.frame0.frame5.right.button configure -state active
-  }
-
-  bind .frame0.frame2.listbox <Double-ButtonPress-1> {
+  bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
         %W select set [%W nearest %y]
-        cd $database
+	cd $database
         set location [%W get [%W nearest %y]]
         cd $location
-        .frame0.frame3.listbox delete 0 end
+        .frame0.frameMS.listbox delete 0 end
         foreach i [exec ls -a [exec pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } { 
-                .frame0.frame3.listbox insert end $i
+                .frame0.frameMS.listbox insert end $i
            }
         }
         set mapset ""
-	.frame0.frame4.ok configure -state disabled
+	.frame0.frameBUTTONS.ok configure -state disabled
   }
 
-  bind .frame0.frame2.listbox <ButtonPress-1> {
+  bind .frame0.frameLOC.listbox <ButtonPress-1> {
         %W select set [%W nearest %y]
         cd $database
         set location [%W get [%W nearest %y]]
         cd $location
-        .frame0.frame3.listbox delete 0 end
+        .frame0.frameMS.listbox delete 0 end
         foreach i [exec ls -a [exec pwd]] {
            if { [string compare $i "."] != 0 && \
                 [string compare $i ".."] != 0 && \
                 [file isdirectory $i] && [file owned $i] } {
-                .frame0.frame3.listbox insert end $i
+                .frame0.frameMS.listbox insert end $i
            }
         }
         set mapset ""
-	.frame0.frame4.ok configure -state disabled
+	.frame0.frameBUTTONS.ok configure -state disabled
   }
 
-  bind .frame0.frame3.listbox <Double-ButtonPress-1> {
+  bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
         %W select set [%W nearest %y]
         set mapset [%W get [%W nearest %y]]
-	.frame0.frame4.ok configure -state normal
+	.frame0.frameBUTTONS.ok configure -state normal
   }
 
-  bind .frame0.frame3.listbox <ButtonPress-1> {
+  bind .frame0.frameMS.listbox <ButtonPress-1> {
         %W select set [%W nearest %y]
         set mapset [%W get [%W nearest %y]]
-	.frame0.frame4.ok configure -state normal
+	.frame0.frameBUTTONS.ok configure -state normal
   }
 
+  bind .frame0.frameNMS.mid.entry <KeyRelease> {
+	.frame0.frameNMS.right.button configure -state active
+  }
+  
   grab .
   tkwait window . 
 
