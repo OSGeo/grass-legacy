@@ -55,6 +55,14 @@ int init_table(void)
 	TABLE[LCC][LAT2].ask = 1;
 	TABLE[LCC][LAT2].def_exists = 1;
 	TABLE[LCC][LAT2].deflt = 45.0;
+	
+	TABLE[LCC][X0].ask = 1;
+	TABLE[LCC][X0].def_exists = 1;
+	TABLE[LCC][X0].deflt = 0.0;
+	
+	TABLE[LCC][Y0].ask = 1;
+	TABLE[LCC][Y0].def_exists = 1;
+	TABLE[LCC][Y0].deflt = 0.0;
 
 	TABLE[MERC][LON0].ask = 1;
 	TABLE[MERC][LON0].def_exists = 1;
