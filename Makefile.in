@@ -82,7 +82,7 @@ install: pre-install do-install
 pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
-	mv src/CMD/head/head src/CMD/head/head.${ARCH}
+	test ! -f src/CMD/head/head && mv src/CMD/head/head src/CMD/head/head.${ARCH}
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH}
 	${SHELL} ${IS64BIT} ${ARCH}
 	@ echo "Now proceed with make install"
