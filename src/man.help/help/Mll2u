@@ -1,0 +1,3 @@
+Conversion of geographic to UTM coordinates. Geographic coordinates
+are in latitude and longitude. UTM coordinates are in northings and
+eastings.
