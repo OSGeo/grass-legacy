@@ -128,17 +128,17 @@ if [ $GIS_FLAG_v -eq 1 ] ; then
     VERBOSE=1
 fi
 
-if [ "$GIS_OPT_output" != "(null)" ] ; then
+if [ -n "$GIS_OPT_output" ] ; then
     NAME="$GIS_OPT_output"
     if [ $VERBOSE -eq 1 ] ; then
 	echo "output=$NAME" 1>&2
     fi
-    if [ ! -z `g.findfile elem=vector file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
+    if [ -n `g.findfile elem=vector file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
 	echo "<$NAME> already exists! Aborting."
 	exit 1
     fi
 fi
-if [ "$GIS_OPT_port" != "(null)" ] ; then
+if [ -n "$GIS_OPT_port" ] ; then
     GPSPORT="-p$GIS_OPT_port"
     if [ $VERBOSE -eq 1 ] ; then
 	echo "port=$GIS_OPT_port" 1>&2
