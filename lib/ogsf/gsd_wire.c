@@ -556,7 +556,7 @@ int gsd_coarse_surf_map(geosurf * surf)
     unsigned int ktrans;
     
     int step_val = 2 * surf->x_modw; /* should always be factor of 2 for fan */
-    int start_val = 1;
+    int start_val = surf->x_modw;
 
     /* ensure normals are correct */
     gs_calc_normals(surf);
@@ -673,7 +673,7 @@ int gsd_coarse_surf_map(geosurf * surf)
 
     /* would also be good to check if colormap == surfmap, to increase speed */
     /* will also need to set check_transp, check_shine, etc & fix material */
-    for (row = 1; row < ycnt; row+=step_val) {
+    for (row = start_val; row <= ycnt-start_val; row+=step_val) {
 	
 		datarow1 = row * ymod; 
 		datarow2 = (row - (step_val/2)) * ymod;
@@ -687,9 +687,8 @@ int gsd_coarse_surf_map(geosurf * surf)
 	y1off = row * ymod * surf->cols;
 	y2off =  (row - (step_val/2)) * ymod * surf->cols;
 	y3off =  (row + (step_val/2)) * ymod * surf->cols;
-	
-	
-	for (col = start_val; col < xcnt; col+=step_val) {
+
+	for (col = start_val; col <= xcnt-start_val; col+=step_val) {
 
 	datacol1 = col * xmod;
 	datacol2 = (col - (step_val/2)) * xmod;
@@ -710,7 +709,6 @@ int gsd_coarse_surf_map(geosurf * surf)
 			continue; /* masked */
 	pt[Z] *= zexag;
 		
-	
 	offset2[1] = y2off+datacol2;
 	offset2[2] = y2off+datacol1;
 	offset2[3] = y2off+datacol3;
@@ -731,21 +729,21 @@ int gsd_coarse_surf_map(geosurf * surf)
 	pt2[8][X] = x2;	pt2[8][Y] = y1;
 	pt2[9][X] = x2;	pt2[9][Y] = y2; /* repeat 1st corner to close */
 	
-	
 	/* Run through triangle fan */
 		gsd_bgntfan();
 		for (ii = 0; ii < 10; ii++) {
+
 		
 			if ( ii > 0) {
 			pt[X]=pt2[ii][X]; pt[Y] = pt2[ii][Y];
-				if (!GET_MAPATT(buff, offset2[ii], pt[Z]) )
-					continue;
+			if ( !GET_MAPATT(buff, offset2[ii], pt[Z]) )
+				continue;
 			pt[Z] *= zexag;
 			}
-			
+		
 			FNORM(surf->norms[offset2[ii]], n);
 											
-			if (check_color)
+			if (check_color) 
 				curcolor = gs_mapcolor(cobuff, coloratt, offset2[ii]);
 
 		    if (check_transp) {
@@ -753,6 +751,7 @@ int gsd_coarse_surf_map(geosurf * surf)
 			ktrans = (char) SCALE_ATT(tratt, ttr, 0, 255);
 			ktrans = (char) (255 - ktrans) << 24;
 		    }
+
 
 		    if (check_material) {
 			if (check_emis) {
@@ -773,6 +772,7 @@ int gsd_coarse_surf_map(geosurf * surf)
 					     ksh, kem, curcolor);
 			}
 		    }
+
 
 		    gsd_litvert_func(n, ktrans | curcolor, pt);
 		    
