@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.54 2000-10-26 13:26:31 markus Exp $
+$Id: BUGS,v 1.55 2000-10-27 09:45:23 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -135,6 +135,9 @@ g3.region:
    as if all values become negative. Incr the zexagg just stretches the values
    towards the bottom of the screen. Any suggestions?
    (reported by Phil <P.Atkinson@cdsc.nthames.nhs.uk>)
+   Note: This bug can be easily reproduced by:
+     r.mapcalc sine="sin(row()) * sin(col())"
+     nviz2.2 el=sine
    (being worked on by ?)
 
  - I am unable to view data from a Latitude-Longitude database. No matter
