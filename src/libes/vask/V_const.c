@@ -29,7 +29,7 @@ CALLS:
 
 #include "vask.h"
 V_const(src, var_type, row, col, length) 
-    int   *src   ;
+    int  *src   ;
     char  var_type ;
     int   row      ;
     int   col      ;
