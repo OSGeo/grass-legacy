@@ -1,0 +1,29 @@
+
+              Imagery Georeferencing Programs
+
+ Three programs are created from this directory:
+
+   ../bin/geo.quest    (used to tell if there is a digitizer) 
+   ../bin/geo.reg      (calls  etc/dig_drivers/<digitizer_name>/geo.reg)
+   ../bin/geo.point    (calls  etc/dig_drivers/<digitizer_name>/geo.point)
+   ../bin/geo.unlock   (used to unlock digitizer)
+
+
+ libgeo.a is also created from this directory.
+
+
+ In /usr/grass3/etc there is a directory 'dig_drivers' for storing programs
+ related to the digitizers.  Inside the 'dig_drivers' directory, each digitizer
+ has its own directory with its own programs.
+
+ There are two other programs that are created:
+ (../etc/dig_drivers/<digitizer_name>/geo.reg,
+ (../etc/dig_drivers/<digitizer_name>/geo.point,
+ but they are created by each driver's Gmakefile and they happen to link with
+ 'libgeo.a' at compile time.
+
+ All the programs in ../bin exit with a 0 if all went well otherwise they
+ exit with a non-zero value.
+
+  -mh
+
