@@ -26,11 +26,13 @@ int quiet = 1;
 static char *icon_files(void)
 {
 	char path[4096];
+	char *buf = NULL;
 	char *list = NULL;
 	int size = 0;
 	int len = 0;
 	DIR *dir;
 
+  /* TODO: loop over directories in /etc/symbol */
 	sprintf(path, "%s/etc/symbol/basic", G_gisbase());
 
 	dir = opendir(path);
@@ -48,7 +50,11 @@ static char *icon_files(void)
 		if (d->d_name[0] == '.')
 			continue;
 
+		
 		n = strlen(d->d_name);
+		buf = G_realloc(buf, 6 + n);
+		sprintf(buf, "basic/%s", d->d_name);
+		n = strlen(buf);
 
 		if (size < len + n + 2)
 		{
@@ -59,68 +65,15 @@ static char *icon_files(void)
 		if (len > 0)
 			list[len++] = ',';
 
-		memcpy(&list[len], d->d_name, n + 1);
+		memcpy(&list[len], buf, n + 1);
 		len += n;
 	}
 
-	closedir(dir);
+	/*closedir(dir);*/ 
 
 	return list;
 }
 
-static int cmp_names(const void *aa, const void *bb)
-{
-	char * const *a = aa;
-	char * const *b = bb;
-	return strcmp(*a, *b);
-}
-
-static void list_icon_files(void)
-{
-	static char **names;
-	static int names_size;
-	char path[4096];
-	DIR *dir;
-	int names_len = 0;
-	int i;
-
-	sprintf(path, "%s/etc/symbol/basic", G_gisbase());
-
-	dir = opendir(path);
-	if (!dir)
-		G_fatal_error("Symbol directory doesn't exist");
-
-	for (;;)
-	{
-		struct dirent *d = readdir(dir);
-		int n;
-
-		if (!d)
-			break;
-
-		if (d->d_name[0] == '.')
-			continue;
-
-		if (names_len >= names_size)
-		{
-			names_size = names_len + 20;
-			names = G_realloc(names, names_size * sizeof(char *));
-		}
-
-		names[names_len++] = G_store(d->d_name);
-	}
-
-	closedir(dir);
-
-	qsort(names, names_len, sizeof(char *), cmp_names);
-
-	for (i = 0; i < names_len; i++)
-	{
-		printf("%s\n", names[i]);
-		G_free(names[i]);
-		names[i] = NULL;
-	}
-}
 
 int 
 main (int argc, char **argv)
@@ -187,7 +140,7 @@ main (int argc, char **argv)
 	icon_opt->type       = TYPE_STRING ;
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
-	icon_opt->answer     = "basic/cross" ;
+	icon_opt->answer     = "basic/x" ;
 	icon_opt->description= "Point and centroid symbol" ;
 	icon_opt->options     = icon_files();
 
