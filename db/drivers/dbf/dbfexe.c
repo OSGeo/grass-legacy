@@ -24,7 +24,10 @@
 
 int sel(SQLPSTMT * st, int tab, int **set);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
-int eval_node(Node * nodeptr, int tab, int row);
+double eval_node(Node * nodeptr, int tab, int row);
+int eval_arithmvalue_type(Node * nodeptr, int tab);
+double get_arithmvalue(Node * nodeptr, int tab, int row, SQLPVALUE * res);
+void free_all_nodes(Node * nodeptr);
 
 int execute(char *sql, cursor * c)
 {
@@ -251,9 +254,11 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	for (i = 0; i < db.tables[tab].nrows; i++) {
 
 
-	    if ((group_condition = eval_node( st->upperNodeptr, tab, i)) < 0)
+	    if ((group_condition = (int) eval_node( st->upperNodeptr, tab, i)) < 0) {
+		free_all_nodes ( st->upperNodeptr);
 		return (-1);
-
+	    }
+	    
 	    G_debug(3, "for row %d total condition is %d", i,
 		    group_condition);
 
@@ -266,6 +271,8 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 		nset++;
 	    }
 	}
+		    free_all_nodes ( st->upperNodeptr);
+
     }
     else {
 	aset = db.tables[tab].nrows;
@@ -280,96 +287,36 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     return nset;
 }
 
-int eval_node(Node * nptr, int tab, int i)
+double eval_node(Node * nptr, int tab, int i)
 {
 
     int ccol, condition, leval = 0, reval = 0;
     COLUMN *col = NULL;
     VALUE *val = NULL;
     double dc, dv;
-
-    Comparison *cmpptr = NULL;
+    double dleval, dreval;
+    SQLPVALUE lstr, rstr;
+    int lres = 0, rres = 0;
+    
     A_Expr *aexprptr = NULL;
+    ArithmExpr *arithmptr = NULL;
     
     if ( nptr == NULL) return 1; /* empty is true */
+
+    memset (&lstr, '\0', sizeof(SQLPVALUE));
+    memset (&rstr, '\0', sizeof(SQLPVALUE));
 
     condition = TRUE;
 
     switch (nptr->type) {
 
-    case T_Comparison:
-
-	cmpptr = (Comparison *) nptr;
-
-	ccol = find_column(tab, cmpptr->lexpr->s);
-	col = &(db.tables[tab].cols[ccol]);
-
-	if (((cmpptr->rexpr->type == SQLP_I) && (col->type == DBF_CHAR))
-	    || ((cmpptr->rexpr->type == SQLP_D) && (col->type == DBF_CHAR))
-	    || ((cmpptr->rexpr->type == SQLP_S) && (col->type == DBF_INT))
-	    || ((cmpptr->rexpr->type == SQLP_S) && (col->type == DBF_DOUBLE))) {
-	    sprintf(errMsg, "Incompatible types for column: %s\n", col->name);
-	    return (-1);
-	}
-
-	col = &(db.tables[tab].cols[ccol]);
-	val = &(db.tables[tab].rows[i].values[ccol]);
-
-	if (cmpptr->rexpr->type == SQLP_I)
-	    dc = cmpptr->rexpr->i;
-	else if (cmpptr->rexpr->type == SQLP_D)
-	    dc = cmpptr->rexpr->d;
-
-	if (col->type == DBF_INT)
-	    dv = val->i;
-	else if (col->type == DBF_DOUBLE)
-	    dv = val->d;
-
-	switch (cmpptr->rexpr->type) {
-	case (SQLP_S):
-	    if (cmpptr->opname != SQLP_EQ) {
-		sprintf(errMsg, "Operator not supported for strings\n");
-		return (-1);
-	    }
-	    if (strcmp(val->c, cmpptr->rexpr->s) != 0)
-		condition = FALSE;
-	    break;
-	case (SQLP_I):
-	case (SQLP_D):
-	    switch (cmpptr->opname) {
-	    case (SQLP_EQ):
-		if (!(dv == dc))
-		    condition = FALSE;
-		break;
-	    case (SQLP_LT):
-		if (!(dv < dc))
-		    condition = FALSE;
-		break;
-	    case (SQLP_LE):
-		if (!(dv <= dc))
-		    condition = FALSE;
-		break;
-	    case (SQLP_GT):
-		if (!(dv > dc))
-		    condition = FALSE;
-		break;
-	    case (SQLP_GE):
-		if (!(dv >= dc))
-		    condition = FALSE;
-		break;
-	    case (SQLP_NE):
-		if (!(dv != dc))
-		    condition = FALSE;
-		break;
-	    }
-	    break;
-	}
-	break;
      case T_A_Expr:
 	aexprptr = (A_Expr *) nptr;
 	
-	if ( (leval = eval_node(aexprptr->lexpr, tab, i)) != 0 && leval != 1) return (-1);
-	if ( (reval = eval_node(aexprptr->rexpr, tab, i)) != 0 && reval != 1) return (-1);
+	if (aexprptr->oper != OP){
+	    if ( (leval = (int) eval_node(aexprptr->lexpr, tab, i)) != 0 && leval != 1) return (-1);
+	    if ( (reval = (int) eval_node(aexprptr->rexpr, tab, i)) != 0 && reval != 1) return (-1);
+	}
 	
 	switch (aexprptr->oper) {
 	case OR:	    
@@ -381,8 +328,249 @@ int eval_node(Node * nptr, int tab, int i)
 	case NOT:
 	    condition = !reval;		
 	    break;
+	case OP:
+
+	leval = eval_arithmvalue_type(aexprptr->lexpr, tab);
+	reval = eval_arithmvalue_type(aexprptr->rexpr, tab);
+	
+	if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
+	    G_debug(0,"Incompatible types in comparison."); 
+	    G_debug(3,"Exiting in eval_node, T_A_Expr."); 
+	    exit (-1);
+	}
+	if ( leval == reval == SQLP_S) {
+	    if ( aexprptr->opname != SQLP_EQ) {
+	        G_debug(0,"Impossible operator for string values."); 
+		exit(-1);
+	    } 
+
+	    lres = (int) get_arithmvalue(aexprptr->lexpr, tab, i, &lstr);
+	    rres = (int) get_arithmvalue(aexprptr->rexpr, tab, i, &rstr);
+	    
+	    if (!lres && !rres)
+	        if ( strcmp(lstr.s,rstr.s) != 0) condition = FALSE;
+	    
+	} else {
+	    dleval = eval_node(aexprptr->lexpr, tab, i);
+	    dreval = eval_node(aexprptr->rexpr, tab, i);
+	
+	    switch (aexprptr->opname) {
+	    case (SQLP_EQ):
+		if (!(dleval == dreval))
+		    condition = FALSE;
+		break;
+	    case (SQLP_LT):
+		if (!(dleval < dreval))
+		    condition = FALSE;
+		break;
+	    case (SQLP_LE):
+		if (!(dleval <= dreval))
+		    condition = FALSE;
+		break;
+	    case (SQLP_GT):
+		if (!(dleval > dreval))
+		    condition = FALSE;
+		break;
+	    case (SQLP_GE):
+		if (!(dleval >= dreval))
+		    condition = FALSE;
+		break;
+	    case (SQLP_NE):
+		if (!(dleval != dreval))
+		    condition = FALSE;
+		break;
+	    }
+	 } 
+	    break;
+	}		/* case OP*/
+	break;
+    case T_ArithmExpr:
+        arithmptr = (ArithmExpr *) nptr;
+	leval = eval_arithmvalue_type(arithmptr->lexpr, tab);
+	dleval = get_arithmvalue(arithmptr->lexpr, tab, i, &lstr);
+
+	if (arithmptr->rexpr != NULL ) {
+	    reval = eval_arithmvalue_type(arithmptr->rexpr, tab);
+	    if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
+	        G_debug(0,"Incompatible types in comparison."); 
+		G_debug(3,"Exiting in eval_node, T_ArithmExpr."); 
+		exit (-1);
+	    }
+	}
+
+	if (arithmptr->rexpr != NULL ) 
+	    dreval = get_arithmvalue(arithmptr->rexpr, tab, i, &rstr);
+	else dreval = 0.0;
+	switch (arithmptr->opname) {
+	case SQLP_ADD:	    
+	    (double) condition = dleval + dreval;		
+	    break;
+	case SQLP_SUBTR:
+	    (double) condition = dleval - dreval;		
+	    break;
+	case SQLP_MLTP:
+	    (double) condition = dleval * dreval;		
+	    break;
+	case SQLP_DIV:
+	    if (dreval != 0.0) (double) condition = dleval / dreval;
+	    else {
+	    G_debug(0,"Floating point exception - division by zero inside comparison\n");
+	    return ((double) 0xfffffffe);
+	    }		
+	    break;
+	}
+    }				/* switch node type */
+    return (double) condition;
+}
+
+int eval_arithmvalue_type(Node * nptr, int tab) {
+    int leval = 0, reval = 0;
+    int ccol;
+    COLUMN *col = NULL;
+
+    ArithmExpr *arithmptr = NULL;
+    ArithmValue *valueptr = NULL;
+    
+    switch (nptr->type) {
+    case T_ArithmExpr:
+        arithmptr = (ArithmExpr *) nptr;
+	leval = eval_arithmvalue_type(arithmptr->lexpr, tab);
+
+	if (arithmptr->rexpr != NULL ) {
+	    reval = eval_arithmvalue_type(arithmptr->rexpr, tab);
+	    if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
+	        G_debug(0,"Incompatible types in comparison."); 
+	        G_debug(3,"Exiting in eval_arithmvalue_type"); 
+		exit (-1);
+	    }
+	}
+
+	return (leval);
+	break;
+    case T_ArithmValue:
+        valueptr = (ArithmValue *) nptr;
+	leval = valueptr->vtype;
+	if (leval != SQLP_COL) return leval;
+	else {
+	    ccol = find_column(tab, valueptr->s);
+	    col = &(db.tables[tab].cols[ccol]);
+	    switch (col->type) {
+	    case DBF_CHAR:
+	        return (SQLP_S);
+		break;
+	    case DBF_INT:
+	    case DBF_DOUBLE:
+	        return (SQLP_D);
+		break;
+	    }
 	}
 	break;
-    }				/* switch type */
-    return condition;
+    }
+}
+
+double get_arithmvalue(Node * nptr, int tab, int i, SQLPVALUE * res) {
+    int ccol, leval;
+    COLUMN *col = NULL;
+    VALUE *val = NULL;
+    double dleval, dreval;
+    
+    ArithmExpr *arithmptr = NULL;
+    ArithmValue *valueptr = NULL;
+    switch (nptr->type) {
+    case T_ArithmExpr:
+        arithmptr = (ArithmExpr *) nptr;
+	dleval = get_arithmvalue(arithmptr->lexpr, tab, i, res);
+	
+	if (arithmptr->rexpr != NULL )
+	    dreval = get_arithmvalue(arithmptr->rexpr, tab, i, res);
+	else dreval = 0.0;
+	
+	switch (arithmptr->opname) {
+	case SQLP_ADD:	    
+	    return (dleval + dreval);		
+	    break;
+	case SQLP_SUBTR:
+	    return (dleval - dreval);		
+	    break;
+	case SQLP_MLTP:
+	    return (dleval * dreval);		
+	    break;
+	case SQLP_DIV:
+	    if (dreval != 0.0) return (dleval / dreval);
+	    else {
+	    G_debug(0,"Floating point exception - division by zero inside comparison\n");
+	    return ((double) 0xfffffffe);
+	    }		
+	    break;
+	}
+	break;
+    case T_ArithmValue:
+        valueptr = (ArithmValue *) nptr;
+	switch (valueptr->vtype) {
+	case SQLP_D: 
+	    return (valueptr->d);
+	    break;
+	case SQLP_I: 
+	    return ((double) valueptr->i);
+	    break;
+	case SQLP_S:
+	    res->s = valueptr->s; 
+	    return (0);
+	    break;
+	case SQLP_COL:
+	    ccol = find_column(tab, valueptr->s);
+	    col = &(db.tables[tab].cols[ccol]);
+	    val = &(db.tables[tab].rows[i].values[ccol]);
+	    switch (col->type) {
+	    case DBF_CHAR:
+
+		res->s = val->c; 
+	        return (0);
+		break;
+	    case DBF_INT:
+	        return ((double) val->i);
+		break;
+	    case DBF_DOUBLE:
+	        return (val->d);
+		break;
+	    }
+	    break;
+	}
+	break;
+    }
+}
+
+void free_all_nodes(Node * nptr)
+{
+    A_Expr *aexprptr = NULL;
+    ArithmExpr *arithmptr = NULL;
+    ArithmValue *valueptr = NULL;
+
+    if ( nptr == NULL) return;
+
+    switch (nptr->type) {
+
+     case T_A_Expr:
+	aexprptr = (A_Expr *) nptr;
+	
+	free_all_nodes(aexprptr->lexpr);
+	free_all_nodes(aexprptr->rexpr);
+	
+	free (aexprptr);
+	break;
+	
+    case T_ArithmExpr:
+        arithmptr = (ArithmExpr *) nptr;
+	
+	free_all_nodes(arithmptr->lexpr);
+	free_all_nodes(arithmptr->rexpr);
+	
+	free (arithmptr);
+	break;
+    case T_ArithmValue:
+        valueptr = (ArithmValue *) nptr;
+	
+	free (valueptr);
+	break;
+   }
 }

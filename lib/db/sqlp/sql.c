@@ -149,53 +149,6 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
 }
 
 Node *
-parseComparison( char *col, char *oper, char *strval, int intval, double dblval, int type)
-{
-    int ComparisonOperator;
-    static SQLPVALUE ComparisonLeftValue, ComparisonRightValue;
-    Node *nptr;
-    
-    memset(&ComparisonLeftValue, '\0', sizeof(ComparisonLeftValue));
-    memset(&ComparisonRightValue, '\0', sizeof(ComparisonRightValue));
-        
-    sqpSaveStr ( &ComparisonLeftValue, col );
-
-    if ( strcmp ( oper, "=") == 0 )
-	ComparisonOperator = SQLP_EQ;
-    else if ( strcmp ( oper, "<") == 0 )
-	ComparisonOperator = SQLP_LT;
-    else if ( strcmp ( oper, "<=") == 0 )
-	ComparisonOperator = SQLP_LE;
-    else if ( strcmp ( oper, ">") == 0 )
-	ComparisonOperator = SQLP_GT;
-    else if ( strcmp ( oper, ">=") == 0 )
-	ComparisonOperator = SQLP_GE;
-    else if ( strcmp ( oper, "<>") == 0 )
-	ComparisonOperator = SQLP_NE;
-    
-    ComparisonRightValue.type = type;
-    
-    switch ( type  )
-      {
-        case (SQLP_S):
-            sqpSaveStr ( &ComparisonRightValue, strval );
-            break;	
-        case (SQLP_I):
-            ComparisonRightValue.i = intval;
-            break;	
-        case (SQLP_D):
-            ComparisonRightValue.d = dblval;
-            break;	
-      }
-
-	nptr = makeComparison(OP, ComparisonOperator, &ComparisonLeftValue, &ComparisonRightValue);
-	if (sqlpStmt->upperNodeptr == NULL) 
-	    sqlpStmt->upperNodeptr = nptr;
-
-	return nptr;
-}
-
-Node *
 makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr)
 {
 	A_Expr *a = makeNode(A_Expr);
@@ -203,6 +156,28 @@ makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr)
 	a->opname = opname;
 	a->lexpr = lexpr;
 	a->rexpr = rexpr;
+	return (Node *)a;
+}
+
+Node *
+makeArithmExpr(int opname, Node *lexpr, Node *rexpr)
+{
+	ArithmExpr *a = makeNode(ArithmExpr);
+	a->oper = OP;
+	a->opname = opname;
+	a->lexpr = lexpr;
+	a->rexpr = rexpr;
+	return (Node *)a;
+}
+
+Node *
+makeArithmValue(char *strval, int intval, double dblval, int type, int factor)
+{
+	ArithmValue *a = makeNode(ArithmValue);
+	a->vtype = type;
+	a->s = strval;
+	a->i = factor * intval;
+	a->d = (double) (factor * dblval);	
 	return (Node *)a;
 }
 
@@ -219,19 +194,21 @@ newNode(int size, NodeTag tag)
 	return newNode;
 }
 
-static Node *
-makeComparison(int oper, int opname, SQLPVALUE *lexpr, SQLPVALUE *rexpr)
+int
+translate_Operator( char *oper)
 {
-    SQLPVALUE * ComparisonField, * ComparisonValue;
-    Comparison * a;
-    
-    ComparisonField  = ( SQLPVALUE *) malloc(sizeof(*lexpr));
-    ComparisonValue  = ( SQLPVALUE *) malloc(sizeof(*rexpr));
-    
-	a = makeNode(Comparison);
-	a->oper = oper;
-	a->opname = opname;
-	a->lexpr = memcpy(ComparisonField, lexpr, sizeof(*lexpr));
-	a->rexpr = memcpy(ComparisonValue, rexpr, sizeof(*rexpr));
-	return (Node *)a;
+
+    if ( strcmp ( oper, "=") == 0 )
+	return SQLP_EQ;
+    else if ( strcmp ( oper, "<") == 0 )
+	return SQLP_LT;
+    else if ( strcmp ( oper, "<=") == 0 )
+	return SQLP_LE;
+    else if ( strcmp ( oper, ">") == 0 )
+	return SQLP_GT;
+    else if ( strcmp ( oper, ">=") == 0 )
+	return SQLP_GE;
+    else if ( strcmp ( oper, "<>") == 0 )
+	return SQLP_NE;
+    else return 0;
 }
