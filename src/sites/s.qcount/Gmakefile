@@ -1,10 +1,4 @@
-NAME=s.qcount
-
-PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
+PGM=s.qcount
  
 TUTORIAL = s.qcount-tutorial
 
@@ -22,40 +16,8 @@ LIST = \
 
 LIBES= $(GISLIB) $(DATETIMELIB) 
 
-#all: $(PGM) man hello
-all: $(PGM)
-
-$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
- 
-man:  
-	-cp $(NAME).man $(MDIR)/$(NAME)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	$(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
-	> $(GISBASE)/man/$(MSEC)/$(NAME)
-
-manps:  
-	troff -Tpsc $(MUTL)/man.version $(MDIR)/.class-header \
-	$(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
-	| psdit > $(NAME).ps
-
-hello:
-	cat README
- 
-lint:
-	lint $(CFLAGS) $(SOURCE)
- 
-clean: 
-	-rm -f *.BAK core *~ s.qcount tags s.qcount.cat
- 
-realclean: clean
-	-rm -rf OBJ* 
-	$(GMAKE) tutorial realclean
- 
-veryclean: realclean
- 
-dist: veryclean
-	(cd .. ; tar cvf s.qcount.tar s.qcount; gzip s.qcount.tar; mv s.qcount.tar.gz /home/pasture/ftp/pub/mccauley/grass)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 count.o:  quaddefs.h 
 findquads.o: quaddefs.h 

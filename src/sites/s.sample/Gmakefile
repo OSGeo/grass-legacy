@@ -1,10 +1,4 @@
-NAME=s.sample
-
-PROGRAM = $(BIN_CONTRIB_CMD)/$(NAME)
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
+PGM=s.sample
 
 LIBES = $(GISLIB) $(DATETIMELIB)
 
@@ -24,39 +18,14 @@ LIST  = \
 	nearest.o \
 	utils.o
 
-all: $(PROGRAM)
-
-$(PROGRAM): $(LIST) $(LIBES) 
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-man:  
-	-cp $(NAME).man $(MDIR)/$(NAME)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
-	   > $(GISBASE)/man/$(MSEC)/$(NAME)
-
-hello:
-	cat README
 
 tutorial:
 	latex $(TUTORIAL).tex
 	latex $(TUTORIAL).tex
 	dvips $(TUTORIAL).dvi
 	compress -f $(TUTORIAL).ps
-
-lint:
-	lint $(CFLAGS) $(SOURCE)
-
-clean: 
-	-rm -f *.BAK core *~ $(NAME) tags $(NAME).cat *.dvi *.aux *.log
-
-realclean: clean
-	-rm -rf OBJ* 
-
-veryclean: realclean
-
-dist: veryclean
-	(cd .. ; tar cvf $(NAME).tar $(NAME); gzip $(NAME).tar; mv $(NAME).tar.gz /home/pasture/a/ftp/pub/mccauley/grass)
 
 bilinear.o:     methods.h
 cubic.o:        methods.h

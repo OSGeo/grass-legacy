@@ -1,16 +1,12 @@
-# %W% %G%
-
-
 PGM = s.to.vect
 
 LIST =  main.o\
 	new_screen.o\
 	head_info.o
 
-all: $(BIN_CONTRIB_CMD)/$(PGM)
+LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(DATETIMELIB)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(TERMLIB) $(EXTRALIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
-
-$(GISLIB):	#
+$(GISLIB): #
