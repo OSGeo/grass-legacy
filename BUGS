@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.32 2000-10-17 11:44:13 markus Exp $
+$Id: BUGS,v 1.33 2000-10-17 17:18:49 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -308,17 +308,6 @@ v.to.rast:
  marco  <scurra@infinito.it>
 
 --------------------------------------------------
-
-Platform specific stuff:
-
-src/raster/r.combine:
-make[2]: Entering directory /data3/grass5/src5/src/raster/r.combine/cmd'
-rm -f gis_lxcl.c gis_pars.c gis_pars.h gis_pars.out
-yacc -v -d gis_pars.y
-1 rules never reduced
-conflicts: 1 reduce/reduce
-rm -f gis_pars.c gis_pars.h gis_pars.out
-
 
 Further discussion:
 -----------------------------------------------------------------------
