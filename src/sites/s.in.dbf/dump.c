@@ -364,7 +364,10 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		if (iField < dimension) /* treat coordinate columns differently */
 			sprintf(fbuf,"%s", pszStringField);
 		else
+		{
+			G_chop(pszStringField); /* elim white space for int */
 			sprintf(fbuf,"%%%s ", pszStringField);
+		}
 		sprintf(pszStringField, fbuf);
 		if(strlen(pszStringField) == 0)  /* this is crazy, but I don't know how to fix MN */
 			sprintf(pszStringField,"%%0 ");
@@ -377,7 +380,10 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		if (iField < dimension) /* treat coordinate columns differently */
 			sprintf(fbuf,"%f", atof(pszStringField));
 		else
+		{
+			G_chop(pszStringField); /* elim white space for float */
 			sprintf(fbuf,"%%%f ", atof(pszStringField));
+		}
 		sprintf(pszStringField,fbuf);
 		break;
 	case 3: /* error */
