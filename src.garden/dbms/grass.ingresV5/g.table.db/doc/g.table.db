@@ -1,0 +1,132 @@
+
+
+
+g.table.db           GRASS Reference Manual            g.table.db
+
+
+
+NAME
+     g.table.db - Generate a list of database tables in the
+     currently selected database.
+     (GRASS-RDBMS General Interface Program)
+
+SYNOPSIS
+     g.table.db
+     g.table.db help
+
+DESCRIPTION
+     g.table.db is used to generate a list of the tables in the
+     currently selected SQL database. The currently selected
+     database is identified by the GRASS environment variable
+     $DATABASE which is set using the g.select.db GRASS-RDBMS
+     interface tool. If this environment variable is not set the
+     program terminates with a message to the user. Otherwise,
+     the names of the tables in the currently selected database
+     are displayed on the screen in three columns. The names of
+     the tables in the current database are needed to construct
+     query criteria for use in many of the other dbSQL tools.
+     This command can be run at any time and is provided for
+     reference purposes, to be used while performing GRASS-RDBMS
+     applications.
+
+
+COMMAND LINE OPTIONS
+     None
+
+
+EXAMPLE
+     g.table.db
+     The following tables are available in database: nri
+
+     county            cover             geoaggs
+     hydros            landclass         locks
+     mlra              nri_fld_vals      point
+     practices         priors            psu
+     psu_trends        recorders         state
+     std_rpts          streams           treatments
+     trends82          trends87          ud_rpt
+     ud_subj           utm               value_list
+     water             windbreaks
+
+BUGS
+     None known.
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.stats.db, d.rast.db, d.site.db,
+     d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+g.table.db           GRASS Reference Manual            g.table.db
+
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick Limp University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
