@@ -109,9 +109,11 @@ int draw_scale(char *save, int toptext)
 	if(save)
 		R_panel_save(save,pt,pb,pl,pr);
 
-	R_standard_color(color1) ;
-	R_box_abs(pl, pt, pr, pb);
-
+	if(do_background) {
+		R_standard_color(color1) ;
+		R_box_abs(pl, pt, pr, pb);
+	}
+	
 	/* Draw legend */
 	R_standard_color(color2) ;
 	R_move_abs (x_pos + 5, y_pos + 20) ;
