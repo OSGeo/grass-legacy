@@ -108,15 +108,14 @@
 /* define if PNG support exists */
 #undef HAVE_PNG
 
+/* define if postgres client header exists */
+#undef HAVE_LIBPQ_FE_H
+
 /* define if PQcmdTuples in lpq */
 #undef HAVE_PQCMDTUPLES
 
 /* define if jpeglib.h exists */
 #undef HAVE_JPEGLIB_H
-
-/* define if postgres exists */
-#undef HAVE_POSTGRES
-#undef HAVE_POSTGRES_H
 
 /* define if ODBC exists */
 #undef HAVE_SQL_H
