@@ -1,21 +1,21 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.clean
- * * 
- * * AUTHOR(S):    CERL, updated to 5.1 by Markus Neteler
- * *               
- * * PURPOSE:      Clean lines
- * *               
- * * COPYRIGHT:    (C) 2002 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * * TODO:  improve this, check for level 1 data
- * *
- * **************************************************************/
+/***************************************************************
+ *
+ * MODULE:       v.clean
+ * 
+ * AUTHOR(S):    CERL, updated to 5.1 by Markus Neteler
+ *               
+ * PURPOSE:      Clean lines
+ *               
+ * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ * TODO:  improve this, check for level 1 data, check for categories
+ *
+ **************************************************************/
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
@@ -52,7 +52,8 @@ main (int argc, char *argv[])
   module->description =
 	"Outputs basic information about a user-specified vector map layer.";
 
-  in_opt = G_define_standard_option(G_OPT_V_INPUT);
+  /* get G_OPT_ from include/gis.h */
+  in_opt = G_define_standard_option(G_OPT_V_MAP);
 
   /* is the G_gisinit() position correct here? see also v.clean */
   G_gisinit (argv[0]);
