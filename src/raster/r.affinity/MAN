@@ -1,0 +1,103 @@
+.TH r.affinity 1 "" "" "" ""
+.SH NAME
+\*Lr.affinity\*O - An raster function that classifies remote 
+sensing images as well as other kinds of maps.
+.br
+(GRASS Raster Processing Program)
+.SH SYNOPSIS
+\*Lr.affinity\*O
+.br
+\*Lr.affinity help\*O
+
+.br
+ 
+.SH DESCRIPTION
+r.affinity is an  analysis	classifier based on affinity
+index of David W. Goodall,	which is quite different with
+other indices by taking into account the order of the value
+instead of	the value itself. See AFFINITY BETWEEN AN
+INDIVIDUAL	AND A CLUSTER IN NUMERICAL TAXONOMY  by	David W.
+Goodall 1968 for details. The advantage of this program is
+that it can deal with multi source data. Three kinds of data
+are supported by this program: 
+.br
+
+1.  quantitative map such as image or DTM data
+.br
+
+2.  qualitative data such as a landcover map
+.br
+
+3.  ranked data such as a slope class map
+It should be used as a supervised classification which 
+determines to which category each cell in the image 
+has the highest probability of belonging based on training areas
+(groups of	image pixels) chosen by	the user.
+The raster	map layer output by r.affinity is a classified
+image in which each cell has been assigned	to a spectral
+class (i.e., a category).	The spectral classes (categories)
+can be related to specific	land cover types on the	ground.
+The program will run only interactively.
+The user should first create the rast map with all the training areas
+using i.digit or in other way. Then simply type r.affinity in the
+command line without program arguments.
+
+.SH Parameters:
+.VL 4m
+.LI " \*Ltraining_map \*O     The rast map with all the training areas
+
+.LI "\*L group\*O	       The imagery group contains the subgroup to
+be classified.
+.LI " \*L subgroup\*O          The subgroup contains image files and maps, which
+are goning to be classified.
+.LI " \*L class_map\*O	       The name	of a raster map	holds the
+classification results. This new	raster
+map layer will contain categories that can
+be related to land cover	categories on the
+ground.
+.LI "\*L  reject_name \*O      The optional name of a raster map holds
+the reject threshold results. It	is the
+reject threshold	map layer, and contains
+one calculated confidence level for each
+classified cell in the classified image.
+Generally those cells whose confidence
+level is	less than  0.05	can be reguarded
+as well classified.  One	of the possible
+uses for	this map layer is as a mask, to
+identify	cells in the classified	image
+that have the lowest probability	of being
+assigned	to the correct class.
+.LI "\*L   data_type \*O     The data type for every file within subgroup
+input one number for each file.
+1. quantitative data
+.br
+
+2. quanlitative data
+.br
+
+3. ranked data
+.SH NOTES
+The affinity classifier assumes that the attributes used in
+classification are	independent with each other. It	is better
+to	choose those images and maps which are related as less as
+possible.
+This program respects the region and the mask set by the user.
+.SH SEE ALSO
+Grass Tutorial: Raster Processing
+r.digit i.group, r.mask
+.SH AUTHOR
+Tian Qing,	Institute of Remote Sensing Application, Chinese
+Academy of	Science
+.SH ACKNOWLEDGEMENTS
+I wrote this program in Department	of Biology, University of
+Trieste, Italy under a fellowship from ICS/UNIDO .
+My	superviser is  Prof. Enrico Feoli (Department of Biology,
+University	of Trieste, Italy)
+I also would like to thank	 Prof. Paola Ganis (Department of
+Biology, University of Trieste, Italy) and	Dr. Cristina
+Milesi (Centre for	Theoretical and	Applied	Ecology) etc.
+.SH NOTICE
+This program is part of the contrib section of the	GRASS
+distribution.  As such, it	is externally contributed code
+that has not been examined	or tested by the Office	of GRASS
+Integration.
