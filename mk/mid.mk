@@ -97,7 +97,7 @@ D_LIB          = -lgrass_D
 DEPDATETIMELIB = $(LIBDIR)/$(LIB_PREFIX)grass_datetime$(LIB_SUFFIX)
 DATETIMELIB    = -lgrass_datetime
 
-DEPDRIVERLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_driver$(LIB_SUFFIX)
+DEPDRIVERLIB   = $(LIBDIR)/$(STLIB_PREFIX)grass_driver$(STLIB_SUFFIX)
 DRIVERLIB      = -lgrass_driver
 
 DEPLINKMLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_linkm$(LIB_SUFFIX)
@@ -109,17 +109,11 @@ BITMAPLIB      = -lgrass_bitmap
 DEPDIGLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_dig$(LIB_SUFFIX)
 DIGLIB         = -lgrass_dig
 
-DEPDIG2LIB     = $(LIBDIR)/$(LIB_PREFIX)grass_dig2$(LIB_SUFFIX)
-DIG2LIB        = -lgrass_dig2
-
-DEPVECTLIB_REAL= $(LIBDIR)/$(LIB_PREFIX)grass_vect$(LIB_SUFFIX)
-VECTLIB_REAL   = -lgrass_vect
-
 DEPDIG_ATTLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_dig_atts$(LIB_SUFFIX)
 DIG_ATTLIB     = -lgrass_dig_atts
 
-DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
-VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
+DEPVECTLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_vect_combined$(LIB_SUFFIX)
+VECTLIB        = -lgrass_vect_combined
 
 # Cannot be made shared
 DEPDBMILIB     = $(LIBDIR)/$(STLIB_PREFIX)dbmi$(STLIB_SUFFIX)

@@ -104,17 +104,11 @@ BITMAPLIB      = -lbitmap
 DEPDIGLIB      = $(LIBDIR)/libdig.a
 DIGLIB         = -ldig
 
-DEPDIG2LIB     = $(LIBDIR)/libdig2.a
-DIG2LIB        = -ldig2
-
-DEPVECTLIB_REAL= $(LIBDIR)/libvect.a
-VECTLIB_REAL   = -lvect
-
 DEPDIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
 DIG_ATTLIB     = -ldig_atts
 
-DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
-VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
+DEPVECTLIB     = $(LIBDIR)/libvect_combined.a
+VECTLIB        = -lvect_combined
 
 DEPDBMILIB     = $(LIBDIR)/libdbmi.a
 DBMILIB        = -ldbmi
