@@ -1,20 +1,21 @@
 #!/bin/sh
 
 # $Id$
+# 2/2001 fixes markus
 # 2000: updated to GRASS 5
 # 1998 from NRCS, slightly modified for GRASS 4.2.1
 
 file=$1
 
-if ( test "$1" = "help" ) || ( test "$1" = "" ) ( test "$1" = "-help" ); then
+if [ "$1" = "help"  -o "$1" = "" -o "$1" = "-help" ] ; then
 echo ""
 echo "GRASS script to reclass a raster map greater or less than "
 echo "user specified area size (in hectares)."
 echo ""
 echo "Usage: r.reclass.area [-l val] [-g val] rast_file out_file
 where 
-  -l val option that sets the <= area size limit [hectares]
-  -g val option that sets the >= area size limit [hectares]
+  -l (less) val option that sets the <= area size limit [hectares]
+  -g (greater) val option that sets the >= area size limit [hectares]
   rast_file sets the raster file name
   out_file sets the output raster file name
 "
@@ -22,7 +23,7 @@ exit
 fi
 
 g.region -p |head -1 |grep 0 > /dev/null
-if test $? ;
+if ! test $? ;
 then
  echo ""
  echo "Sorry: xy-locations are not supported."
