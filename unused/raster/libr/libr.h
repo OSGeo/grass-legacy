@@ -59,5 +59,47 @@ int	r_str_value2(char *str, int width, int prec,
 void	r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
 		RASTER_MAP_TYPE dtype, RASTER_MAP_ROW ddata, int dcol);
 
+/***** new approach *****/
+double	r_get_c(RASTER_MAP_ROW data, int col);
+double	r_get_f(RASTER_MAP_ROW data, int col);
+double	r_get_d(RASTER_MAP_ROW data, int col);
+
+void	r_set_c(RASTER_MAP_ROW data, int col, double val);
+void	r_set_f(RASTER_MAP_ROW data, int col, double val);
+void	r_set_d(RASTER_MAP_ROW data, int col, double val);
+
+int	r_is_null_c(RASTER_MAP_ROW data, int col);
+int	r_is_null_f(RASTER_MAP_ROW data, int col);
+int	r_is_null_d(RASTER_MAP_ROW data, int col);
+
+int	r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col);
+int	r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col);
+int	r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col);
+
+static	double	(*rp_get[])(RASTER_MAP_ROW data, int col) =
+{
+	r_get_c, r_get_f, r_get_d
+};
+static	void	(*rp_set[])(RASTER_MAP_ROW data, int col, double val) =
+{
+	r_set_c, r_set_f, r_set_d
+};
+static	int	(*rp_is_null[])(RASTER_MAP_ROW data, int col) =
+{
+	r_is_null_c, r_is_null_f, r_is_null_d
+};
+static	int	(*rp_str[])(char *str, int width, int prec,
+			RASTER_MAP_ROW data, int col) =
+{
+	r_str_c, r_str_f, r_str_d
+};
+
+#define	rm_get(buf, col)	(rp_get[(buf).type])((buf).row, col)
+#define	rm_set(buf, col, val)	(rp_set[(buf).type])((buf).row, col, val)
+#define	rm_is_null(buf, col)	(rp_is_null[(buf).type])((buf).row, col)
+#define	rm_str(str, width, prec, buf, col)				\
+				(rp_str[(buf).type])(str, width, prec,	\
+					(buf).row, col)
+
 #endif
 
