@@ -13,7 +13,8 @@
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
- * TODO: add DB file management here
+ * TODO: - fix -o flag (needs fix in Vect lib)
+ *       - add check that key is INTEGER (needs test for column type)
  *
  **************************************************************/
 
@@ -72,7 +73,7 @@ int main (int argc, char **argv)
     dbkey->required   = NO  ;
     dbkey->multiple   = NO ;
     dbkey->answer    = "cat";
-    dbkey->description= "key name:" ;
+    dbkey->description= "key name (integer column):" ;
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
@@ -123,7 +124,8 @@ int main (int argc, char **argv)
       {
         fprintf(stderr,"Vector map <%s> is connected by:\n", input);
         for (i = 1; i <= num_dblinks; i++) {
-          fi = Vect_get_field( &Map, i);
+          if ( (fi = Vect_get_field( &Map, i)) == NULL)
+             G_fatal_error("Database connection not defined");
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
               G_warning("Cannot open driver %s", fi->driver) ; /* error ? */
