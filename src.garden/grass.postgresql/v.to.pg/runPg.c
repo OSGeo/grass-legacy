@@ -125,7 +125,7 @@ int runPg(SQL_stmt, map, mapset, color, fillcolor)
 	    printf("Executing\n%s;\n\n", buf1);
 
 	res = PQexec(pg_conn, buf1);
-	if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	    fprintf(stderr, _("Could not add geometry column:%sExiting.\n"),
 		   PQerrorMessage(pg_conn));
 	    PQclear(res);
