@@ -8,6 +8,8 @@
  *
  * input: DEM (int, float, double)
  * output: binary shadow map
+ *    no shadow: null()
+ *    shadow:    1
  *
  * Author: Janne Soimasuo, Finland 1994
  *
@@ -174,7 +176,7 @@ int main(int argc, char *argv[])
 
     while (row1 < window.rows) 
 	  {
-            fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
+            G_percent(row1, window.rows, 2);
 	    col1=0;
 	    drow=-1;
 	    if (G_get_raster_row(elev_fd, elevbuf.v, row1, data_type) < 0)
@@ -183,7 +185,8 @@ int main(int argc, char *argv[])
 	    while (col1<window.cols)
 	      {
 		dvalue=raster_value(elevbuf, data_type, col1);
-		outbuf.c[col1]=1;
+/*		outbuf.c[col1]=1;*/
+		G_set_null_value(&outbuf.c[col1],1,data_type);
 		OK=1;
 		east=G_col_to_easting(col1+0.5,&window);
 		north=G_row_to_northing(row1+0.5,&window);
@@ -217,7 +220,7 @@ int main(int argc, char *argv[])
 				  if ((dvalue2-dvalue)>(maxh))
 					{
 					OK=0;
-					outbuf.c[col1]=0;
+					outbuf.c[col1]=1;
 					}
 				  }
 				}
@@ -227,7 +230,6 @@ int main(int argc, char *argv[])
 	    G_put_raster_row(output_fd, outbuf.c, CELL_TYPE);
 	    row1+=1;
 	  }
-    fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
     
     G_close_cell(output_fd);
     G_close_cell(elev_fd);
