@@ -18,7 +18,10 @@ main(argc, argv) char *argv[];
     struct Option *ppmfile;
     struct Flag *flagi, *flagf;
 
+    G_no_gisinit (argv[0]);
+    /* dpg 2/92
     G_gisinit (argv[0]);
+    */
     pgm = G_program_name();
 
     ppmfile = G_define_option();
