@@ -22,14 +22,16 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
-<h3><font color="#00A000">What's new in GRASS 5.3/CVS comparing to 5.0.3</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.3.0 compared to 5.0.3</font></h3>
+[GRASS 5.3.0 released 15 May 2004]<p>
+
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
 <li>All re-projection modules support datum transformations now:
     r.proj, s.proj, v.proj (Paul Kelly)</li>
 <li>d.grid: added optional border marks plotting (Markus Neteler)
 <li>d.legend: new parameters added, better horizontal legends (Hamish Bowman)
-<li>d.scale: DEPRECIATED. Use 'd.barscale -l' instead (Hamish Bowman)
+<li>d.scale: DEPRECATED. Use 'd.barscale -l' instead (Hamish Bowman)
 <li>d.site.labels: add precision option for numerical attributes (Hamish Bowman)
 <li>d.text: new placement option, bold option (Hamish Bowman)
 <li>d.text.freetype: new placement option (Hamish Bowman)
@@ -40,7 +42,6 @@ Many thanks to all contributors!
     improved datum support (Paul Kelly)</li>
 <li>GUI startup: 'grass5 -gui' alias added, support for creating new mapset added
     (Markus Neteler)
-<li>m.kappa: fix bug 2076 (Paul Kelly)</li>
 <li>m.proj2: updated for easy WGS84 input/output (Hamish Bowman)
 <li>NVIZ: various updates and add-ons in kanimator and main window (Bob
     Covill)
@@ -52,11 +53,12 @@ Many thanks to all contributors!
    (Paul Kelly)</li>
 <li>s.in.garmin.sh: automatic transformation from WGS84 to current projection (Hamish Bowman)
 <li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
+<li>tcltkgrass: Updated version 4.0 now included, new menu structure and
+bugfixes (Michael Barton and others)
 <li>v.out.e00: Number of areas corrected to number of active areas,
     unlabeled areas will only optionally be exported  (option -A) like in
     v.out.shape (H. Wziontek)
 <li>v.what: substract islands (Thierry Laronde)
-<li>tcltkgrass: some updates (Hamish Bowman, others)
 </ul>
 
 <b>Source Code:</b><br>
@@ -64,10 +66,11 @@ Many thanks to all contributors!
 <li>GD dependency removed (Glynn Clements)
 <li>GLw fixes for SUN/Solaris (Beverly Wallace, Glynn Clements)
 <li>added GIPs - GRASS Improvement Proposals in grass5/gip/
-<li>C++ compilation support added (Glynn Clements)
+<li>C++ compilation support added
 <li>GCC 3.3 support for r.terraflow (Laura I. Toma)
 <li>Fixes to alternate build system for gcc 3.x (Glynn Clements)
-<li>Build with shared libraries resulting in a much smaller binary package (Paul Kelly)
+<li>Build with shared libraries resulting in a much smaller binary package
+(Glynn Clements, Paul Kelly)
 <li>proj: major overhaul, datum transformation cleaned and general support added (Paul Kelly)
 <li>proj: external PROJ.4 (libproj) support added (Paul Kelly)
 <li>coorcnv library: DEPRECATED.  Replaced by gislib and proj in all modules that appear 
