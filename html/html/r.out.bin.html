@@ -1,0 +1,61 @@
+<html>
+<A NAME="r.out.bin">
+<TITLE>r.out.bin</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.out.bin</EM></B> - writes a binary array to standard output<BR>
+<EM>(GRASS Raster Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.out.bin [-i] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>null</B><EM>=value</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.out.bin</EM> writes a binary array to standard output. 
+Depending on the data type the program will output a integer, 
+float, or double array, unless "-i" is specified, then it will be 
+forced to integer. The region parameters are printed to stderr. 
+This file is compatible with the generic mapping tools (GMT) 
+program xyz2grd if the user wants to convert to netCDF format (see below). 
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-i</B>
+<DD>Output integer category values, not raster cell values
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>Name of an existing raster map
+
+<DT><B>output</B>
+<DD>Name of an output binary map (use out=- for stdout)
+
+<DT><B>null</B>
+<DD>Value to write out for null
+<DD>Default: 0
+</DL>
+
+<H2>AUTHOR</H2>
+This program is derived from <EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM> 
+with a few modifications. <BR>
+Author: <A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
+<P>
+
+<H2>NOTE</H2>
+If exported data is moved between platforms byte swapping may be required.
+<P>
+The exported data can be converted to netCDF GMT format with 
+<pre>xyz2grd .... -ZTLf -F</pre>
+
+<H2>TODO</H2>
+- Add optional fixed size header (1024) with region specs.<P>
+- Add byte swapping export routine.
+
+</BODY>
+</HTML>
