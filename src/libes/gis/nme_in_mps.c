@@ -11,14 +11,59 @@
  *              name_out and mapset are undefined (changed)
  ****************************************************************/
 
+#ifndef COMMENTED_OUT
 G__name_in_mapset (name_in, name_out, mapset)
     char *name_in;
     char *name_out;
     char *mapset;
 {
-    char in[20];
+    char in[1024];
 
     *in = 0;
     return (sscanf (name_in,"%s %s %s", name_out, in, mapset) == 3 &&
 	    strcmp (in,"in") == 0);
+}
+#endif
+
+G__name_is_fully_qualified (fullname, name, mapset)
+    char *fullname;
+    char *name, *mapset;
+{
+    char *p,*q;
+
+/* search for name@mapset */
+
+    *name = *mapset = 0;
+
+    for (p = fullname; *p ; p++)
+	if (*p == '@')
+	    break;
+
+    if (*p == 0)
+	return 0;
+
+/* copy the name part */
+    q = name;
+    while (fullname != p)
+	*q++ = *fullname++;
+    *q = 0;
+
+/* copy the mapset part */
+    p++;	/* skip the @ */
+    q = mapset;
+    while (*q++ = *p++) 
+	{}
+
+    return (*name && *mapset);
+}
+
+char *
+G_fully_qualified_name (name, mapset)
+    char *name;
+    char *mapset;
+{
+    static char fullname[1024];
+
+    sprintf (fullname, "%s@%s", name, mapset);
+    return fullname;
 }
