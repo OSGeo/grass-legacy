@@ -164,12 +164,20 @@ or to define a new location.  Internally GDAL represents projections in
 OpenGIS Well Known Text format.  A large subset of the total set of GRASS
 projections are supported.<BR>
 
+<DT> Null Values
+<DD> Raster bands for which a null value is recognised by GDAL will have
+the null pixels transformed into GRASS style nulls during import.  Many
+generic formats (and formats poorly supported by GDAL) do not have a way
+of recognising null pixels in which case r.null should be used after the
+import.<BR>
+
 </DL>
 
 <H2>SEE ALSO</H2>
 <EM>
 <A HREF="r.in.ascii.html">r.in.ascii</A>,
 <A HREF="r.in.arc.html">r.in.arc</A>,
+<A HREF="r.in.bin.html">r.null</A>,
 <A HREF="r.in.bin.html">r.in.bin</A>
 </EM>
 
