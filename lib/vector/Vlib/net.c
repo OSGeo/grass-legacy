@@ -22,20 +22,20 @@
 #include "dbmi.h"
 #include "Vect.h"
 
-static int clipper ( gnGrpGraph_s    *pgraph ,
-                     gnGrpSPClipInput_s  * pargIn ,
-                     gnGrpSPClipOutput_s * pargOut ,
+static int clipper ( dglGraph_s    *pgraph ,
+                     dglSPClipInput_s  * pargIn ,
+                     dglSPClipOutput_s * pargOut ,
                      void *          pvarg )         /* caller's pointer */
 {
     double cost;
     
     G_debug ( 2, "Net: clipper()" );
 
-    if ( gnGrpGet_NodeAttrSize(pgraph) > 0 ) {
-	memcpy( &cost, gnGrpGetNode_Attr(pgraph, pargIn->pnNodeFrom), sizeof(cost) );
+    if ( dglGet_NodeAttrSize(pgraph) > 0 ) {
+	memcpy( &cost, dglNodeGet_Attr(pgraph, pargIn->pnNodeFrom), sizeof(cost) );
 	G_debug ( 2, "  node = %d pcost = %d + %f (arc + node)", 
-		           gnGrpGetNode_Id(pgraph, pargIn->pnNodeFrom), pargOut->nLinkCost, cost );
-	pargOut->nLinkCost += (gnInt32_t) cost;
+		           dglNodeGet_Id(pgraph, pargIn->pnNodeFrom), pargOut->nEdgeCost, cost );
+	pargOut->nEdgeCost += (dglInt32_t) cost;
     }
     return 0;   
 }																															
@@ -60,9 +60,9 @@ Vect_net_build_graph (  struct Map_info *Map,
     struct line_pnts *Points;
     struct line_cats *Cats;
     double dcost, ll;
-    gnInt32_t  cost, bcost;
-    gnGrpGraph_s *gr;
-    gnInt32_t opaqueset[ 16 ] = { 360000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    dglInt32_t  cost, bcost;
+    dglGraph_s *gr;
+    dglInt32_t opaqueset[ 16 ] = { 360000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     struct    field_info *Fi;
     dbDriver  *driver;
     dbHandle  handle;
@@ -82,9 +82,9 @@ Vect_net_build_graph (  struct Map_info *Map,
 	
     gr = &(Map->graph);
     if ( nfield > 0 )
-        gnGrpInitialize ( gr, 1, sizeof(double), 0, opaqueset ); 
+        dglInitialize ( gr, 1, sizeof(double), 0, opaqueset ); 
     else
-        gnGrpInitialize ( gr, 1, 0, 0, opaqueset ); 
+        dglInitialize ( gr, 1, 0, 0, opaqueset ); 
 
     if ( gr == NULL )
         G_fatal_error ("Cannot build network graph"); 
@@ -156,24 +156,24 @@ Vect_net_build_graph (  struct Map_info *Map,
 	} else {
 	    if ( ll ) { 
 		if ( geo )
-	            cost = (gnInt32_t) Vect_line_geodesic_length ( Points );
+	            cost = (dglInt32_t) Vect_line_geodesic_length ( Points );
 		else
-	            cost = (gnInt32_t) 1000000 * Vect_line_length ( Points );
+	            cost = (dglInt32_t) 1000000 * Vect_line_length ( Points );
 	    } else
-	        cost = (gnInt32_t) Vect_line_length ( Points );
+	        cost = (dglInt32_t) Vect_line_length ( Points );
 	    
 	    bcost = cost;
 	}
 	if ( dofw ) {
             G_debug (3, "Add arc %d from %d to %d cost = %d", i, from, to, cost); 
-	    ret = gnGrpAddLink ( gr, from, to, cost, i );
+	    ret = dglAddEdge ( gr, from, to, cost, i );
             if ( ret < 0 )
                 G_fatal_error ("Cannot add network arc");
 	}
 	
 	if ( dobw ) {
             G_debug (3, "Add arc %d from %d to %d bcost = %d", -i, to, from, bcost); 
-	    ret = gnGrpAddLink ( gr, to, from, bcost, -i );
+	    ret = dglAddEdge ( gr, to, from, bcost, -i );
             if ( ret < 0 )
                 G_fatal_error ("Cannot add network arc");
         }
@@ -238,7 +238,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	    }
 	    G_debug ( 2, "Set node's cost to %d", cost);
 	    dcost = cost;
-	    gnGrpSetNode_Attr(gr, gnGrpGetNode(gr,i), (gnInt32_t*)&dcost); 
+	    dglNodeSet_Attr(gr, dglGetNode(gr,i), (dglInt32_t*)&dcost); 
 	}
         G_debug ( 2, "Nodes' costs were set");
     }
@@ -249,12 +249,12 @@ Vect_net_build_graph (  struct Map_info *Map,
     }
 
     G_debug (1, "Flattening the graph ..."); 
-    ret = gnGrpFlatten ( gr );
+    ret = dglFlatten ( gr );
     if ( ret < 0 )  
         G_fatal_error ("GngFlatten error");
     
     /* init SP cache */
-    gnGrpInitializeSPCache( gr, &(Map->spCache) );
+    dglInitializeSPCache( gr, &(Map->spCache) );
 
     G_debug (1, "Graph was build."); 
 
@@ -275,8 +275,8 @@ int
 Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
 {
     int i, line, *pclip, cArc, nRet;
-    gnGrpSPReport_s * pSPReport;
-    gnInt32_t nDistance;
+    dglSPReport_s * pSPReport;
+    dglInt32_t nDistance;
 
     if ( List != NULL )
         Vect_reset_list ( List);
@@ -284,9 +284,9 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 
     pclip = NULL;
     if ( List != NULL ) 
-        nRet = gnGrpShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));
+        nRet = dglShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));
     else 
-        nRet = gnGrpShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));
+        nRet = dglShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));
 
     if ( nRet == 0 ) {
         /* G_warning( "Destination node %d is unreachable from node %d\n" , to , from ); */	    
@@ -295,20 +295,20 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 	return -1;
     }
     else if ( nRet < 0 ) {
-        fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
+        fprintf( stderr , "dglShortestPath error: %s\n", dglStrerror( &(Map->graph) ) );
 	return -1;
     }
 
     if ( List != NULL ) {
 	for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
-	    line = gnGrpGetLink_UserId(&(Map->graph), pSPReport->pArc[i].Link);
+	    line = dglEdgeGet_Id(&(Map->graph), pSPReport->pArc[i].pnEdge);
 	    G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
-			  pSPReport->pArc[i].From,
-			  pSPReport->pArc[i].To,
-			  gnGrpGetLink_Cost(&(Map->graph), 
-			  pSPReport->pArc[i].Link), /* this is the cost from clip() */
+			  pSPReport->pArc[i].nFrom,
+			  pSPReport->pArc[i].nTo,
+			  dglEdgeGet_Cost(&(Map->graph), 
+			  pSPReport->pArc[i].pnEdge), /* this is the cost from clip() */
 			  line,
-			  pSPReport->pArc[i].Distance );
+			  pSPReport->pArc[i].nDistance );
 	    Vect_list_append ( List, line );
 	}
     }
@@ -316,14 +316,14 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 	
     if ( cost != NULL ) {
         if ( List != NULL ) 
-	    *cost = (double) pSPReport->distance;
+	    *cost = (double) pSPReport->nDistance;
 	else    
 	    *cost = (double) nDistance;
     }
 	
     if ( List != NULL ) {
         cArc = pSPReport->cArc;
-        gnGrpFreeSPReport( &(Map->graph), pSPReport );
+        dglFreeSPReport( &(Map->graph), pSPReport );
     } else
 	cArc = 0;
 

@@ -230,8 +230,8 @@ struct Map_info
     //char *coor_file;		/* Point registration file */
     
     struct Plus_head plus;      /* topo file *head; */
-    gnGrpGraph_s   graph;       /* graph structure */
-    gnGrpSPCache_s spCache;     /* Shortest path cache */ 
+    dglGraph_s   graph;       	/* graph structure */
+    dglSPCache_s spCache;     /* Shortest path cache */ 
 
     //double snap_thresh;
     //double prune_thresh;
