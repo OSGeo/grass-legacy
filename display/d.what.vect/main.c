@@ -142,7 +142,8 @@ int main(int argc, char **argv)
 
   R_close_driver();
   R_pad_freelist(vect, nvects);
-  
+
+  fprintf(stderr, "Done.\n");
   exit(0);
 }
 
