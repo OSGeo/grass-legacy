@@ -6,10 +6,15 @@
 #include "gis.h"
 #include "la.h"
 
+#define G_vector_free(x) G_matrix_free( (x) )
+#define G_vector_print(x) G_matrix_print( (x) )
+
 int main(int argc, char *argv[]) {
 
   int i, j;
   mat_struct *m1, *m2, *m_sum, *m_sub, *m_scale, *m3, *m4;
+  vec_struct *v1, *v2;
+  double maxval, minval, absval, euclid;
 
   double testmat1[5][3] = {  1.0, 3.4, 8.1,
 			     1.5, 1.5, 2.3,
@@ -25,6 +30,8 @@ int main(int argc, char *argv[]) {
 			     0.5, 3.1, 3.8
   };
 
+  double testvec1[5] = { 1., 2., -3., 4., 5. };
+  
   double testc = 4.3;
 
   
@@ -59,6 +66,27 @@ int main(int argc, char *argv[]) {
   m4 = G_matrix_product(m3, m2);
 
 
+
+  /* Get vector from Matrix column */
+  
+  v1 = G_matvect_get_column(m1, 1);
+
+  /* Init and set new vector */
+  
+  v2 = G_vector_init(5, 5, CVEC);
+
+  for( i = 0; i < 5; i++ ) {
+            G_matrix_set_element(v2, i, 0, testvec1[i]);
+  }
+  
+  maxval = G_vector_norm_maxval(v2, 1);
+  minval = G_vector_norm_maxval(v2, -1);
+  absval = G_vector_norm_maxval(v2, 0);
+
+  /* Euclidean vector norm */
+  
+  euclid = G_vector_norm_euclid(v2);
+
   /* Print out the results */
 
   printf("*** TEST OF MATRIX WRAPPER FUNCTIONS ***\n\n");
@@ -82,7 +110,27 @@ int main(int argc, char *argv[]) {
 
   printf("    Multiply transpose of M1 by M2 (m1~ x m2):\n");
   G_matrix_print(m4);
+  
+  printf("*** TEST OF VECTOR WRAPPER FUNCTIONS ***\n\n");
 
+  printf("    Get vector from Matrix M1 column 1:\n");
+  G_vector_print(v1);
+
+  printf("    Vector v2:\n");
+  G_vector_print(v2);
+  
+  printf("    Get maximum of vector v2:\n");
+  printf("    %g\n", maxval);
+  
+  printf("    Get minimum of vector v2:\n");
+  printf("    %g\n", minval);
+
+  printf("    Get abs val of vector v2:\n");
+  printf("    %g\n", absval);
+
+  printf("    Euclidean vector norm of v2:\n");
+  printf("    %g\n", euclid);
+  
   G_matrix_free(m1);
   G_matrix_free(m2);
   G_matrix_free(m_sum);
@@ -90,6 +138,8 @@ int main(int argc, char *argv[]) {
   G_matrix_free(m_scale);
   G_matrix_free(m3);
   G_matrix_free(m4);
+  G_vector_free(v1);
+  G_vector_free(v2);
 
   return 0;
 
