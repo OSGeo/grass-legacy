@@ -117,7 +117,7 @@ Window ()
 		    break;
 		case MWC_SCALE:
 		    add_scale ();
-		    R_flush ();
+		    V_flush ();
 		    break;
 		case MWC_BACKDROP:
 		    display_backdrop ();
@@ -188,7 +188,7 @@ display_cents (map)
 	}
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
     return (ret);
 }
 
@@ -220,7 +220,7 @@ display_alabels (map)
 	}
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
     return (ret);
 }
 
@@ -237,7 +237,7 @@ highlight_llabel (map, i)
 	    sprintf (buf, "%d", map->Att[Line->att].cat);
 	    Adot (&(map->Att[Line->att].x), &(map->Att[Line->att].y), buf); 
 	}
-    R_flush ();
+    V_flush ();
 }
 
 
@@ -254,7 +254,7 @@ display_llabel (map, i)
 	    sprintf (buf, "%d", map->Att[Line->att].cat);
 	    Adot (&(map->Att[Line->att].x), &(map->Att[Line->att].y), buf); 
 	}
-    R_flush ();
+    V_flush ();
 }
 
 display_llabels (map)
@@ -274,7 +274,7 @@ display_llabels (map)
 	    Adot (&(map->Att[Line->att].x), &(map->Att[Line->att].y), buf); 
 	}
     }
-    R_flush ();
+    V_flush ();
 }
 
 /* highlight all lines of category */
@@ -300,7 +300,7 @@ display_llines (map)
 	    _highlight_line (map->Line[i].type, &Gpoints, i, map);
 	}
     }
-    R_flush ();
+    V_flush ();
 }
 
 /* highlight all areas of category */
@@ -324,12 +324,12 @@ display_lareas (map)
 	{
 /*		This could get messy 
 	    if (Auto_Window && area_outside_window (Area))
-		expand_window (Area->N, Area->S, Area->E, Area->W);
+		expand_window (Area->N, Area->S, Area->E, Area->W, 1);
 */
 	    _highlight_area (Area, map);
 	}
     }
-    R_flush ();
+    V_flush ();
 }
 
 display_unlabeled_areas (map)
@@ -357,7 +357,7 @@ display_unlabeled_areas (map)
 	    _highlight_area (Area, map);
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
 }
 
 
@@ -391,14 +391,17 @@ display_islands (map)
 	}
     }
     unset_keyboard ();   
-    R_flush ();
+    V_flush ();
 }
 
 /* expand current window to include new boundries */
 /* window only expands, does not shrink */
-expand_window (N, S, E, W)
+expand_window (N, S, E, W, plus)
     double N, S, E, W;
+    int plus;
 {
+    double diff;
+
     R_standard_color (dcolors[CLR_ERASE]);
     erase_window();
 
@@ -413,6 +416,53 @@ expand_window (N, S, E, W)
     /*
     window_conversions (N, S, E, W);
     */
+    if (plus)
+    {
+	diff = (N - S) * .05;
+	N += diff;
+	S -= diff;
+	diff = (E - W) * .05;
+	E += diff;
+	W -= diff;
+    }
+    window_rout (N, S, E, W);
+    outline_window();
+
+    replot(CM);
+}
+
+/* change current window to new boundries */
+move_window (N, S, E, W, plus)
+    double N, S, E, W;
+    int plus;
+{
+    double diff;
+
+    R_standard_color (dcolors[CLR_ERASE]);
+    erase_window();
+
+    /*
+    if (N < U_north)
+	N = U_north;
+    if (S > U_south)
+	S = U_south;
+    if (E < U_east)
+	E = U_east;
+    if (W > U_west)
+	W = U_west;
+    */
+    /*
+    window_conversions (N, S, E, W);
+    */
+    if (plus)
+    {
+	diff = (N - S) * .05;
+	N += diff;
+	S -= diff;
+	diff = (E - W) * .05;
+	E += diff;
+	W -= diff;
+    }
     window_rout (N, S, E, W);
     outline_window();
 
@@ -426,6 +476,8 @@ expand_window (N, S, E, W)
 area_outside_window (Area)
     P_AREA *Area;
 {
+/*DEBUG fprintf (stderr, "Checking (%lf,%lf,%lf,%lf) - \n	(%lf,%lf,%lf,%lf), Area->N, Area->S, Area->E, Area->W, U_north, U_south, U_east, U_west); */
+
     if (Area->N > U_north)
 	return (1);
     if (Area->S < U_south)
@@ -433,6 +485,20 @@ area_outside_window (Area)
     if (Area->E > U_east)
 	return (1);
     if (Area->W < U_west)
+	return (1);
+    return (0);
+}
+
+line_outside_window (Line)
+    P_LINE *Line;
+{
+    if (Line->N > U_north)
+	return (1);
+    if (Line->S < U_south)
+	return (1);
+    if (Line->E > U_east)
+	return (1);
+    if (Line->W < U_west)
 	return (1);
     return (0);
 }
@@ -464,7 +530,7 @@ erase_window ()
 
     R_standard_color (dcolors[CLR_ERASE]);
     R_polygon_abs (screenx, screeny, 4);
-    R_flush ();
+    V_flush ();
 /*	this replaces:
     D_erase_window ();
 */
