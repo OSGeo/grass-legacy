@@ -1,4 +1,3 @@
-/* %W% %G% */
 flush_keyboard ()
 {
     char buf[100];
