@@ -1,4 +1,5 @@
 #include "report.h"
+#include "gis.h"
 
 #define POINT_NUMBER points->field[1]
 #define POINT_EAST   points->field[2]
@@ -13,13 +14,20 @@ process (out, points, ref, cats_list)
     int point_num;
     int layer_num;
     int i;
+    char *N, *E;
+    double atof();
 
     point_num = atoi (POINT_NUMBER);
 
     fprintf (out, ".blocktitle\n");
     fprintf (out, "Site: ");
     fprintf (out, "%-44.44s ", points->nfields > 4 ? POINT_DESC : " ");
-    fprintf (out, "  %7d(E) %7d(N)\n", atoi(POINT_EAST), atoi(POINT_NORTH));
+    N = "(N)";  E = "(E)";
+    if(G_projection()==PROJECTION_LL)
+      {
+         N = "";  E = "";
+       }
+    fprintf (out, "  %s%s %s%s\n", POINT_EAST, E, POINT_NORTH, N);
     fprintf (out, "Size: %d cell%s\n", points->matrix.size,
 	    points->matrix.size == 1 ? "" : "s");
     fprintf (out,".end\n");
