@@ -125,7 +125,7 @@ main(argc,argv) char *argv[];
     }
 }
 
-static max(a,b)
+extern max(a,b)
 {
     return a>b ? a:b;
 }
