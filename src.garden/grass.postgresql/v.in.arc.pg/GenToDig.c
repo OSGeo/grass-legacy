@@ -45,15 +45,7 @@
 #include "config.h"
 
 #include <string.h>
-
-#ifdef HAVE_LIMITS_H
 #include <limits.h>
-#endif
-
-#ifdef HAVE_VALUES_H
-#include "values.h"
-#endif
-
 #include "gis.h"
 #include "Vect.h"
 #include "v_in_arc.h"
