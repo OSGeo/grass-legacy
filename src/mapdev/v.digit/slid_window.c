@@ -37,7 +37,7 @@ slid_window_w_mouse (void)
 	_Write_base (14, "Middle: Abort/Quit");
 	Write_base  (15, "Right:  Specify new window CENTER") ;
 
-	button=-1;
+	button = (pan_threshold != 0.0 ? -1 : 0);
 	R_get_location_with_pointer (&screen_x, &screen_y, &button);
 	flush_keyboard (); /*ADDED*/
 	Clear_info ();
