@@ -1,0 +1,10 @@
+all: transform.lib 
+
+#  Not all the sub-directories are being made.
+
+dev:
+	$(GMAKE) dev
+
+transform.lib:
+	$(GMAKE) transform
+
