@@ -2,12 +2,17 @@
 <head>
 <TITLE>v.in.arc.poly</TITLE>
 </head>
-<body>
-GRASS vector module
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<EM><b>v.in.arc.poly</b></EM>  - Import areas from ARC/INFO ungenerate format.
+<BR>
+<EM>(GRASS Vector Data Import Program)</EM>
 <p>
 <h2>SYNOPSIS</h2>
 </p>	
-	v.in.arc.poly ARC/INFO-file GRASS-vectorfile
+<b>v.in.arc.poly</b> <EM>ARC/INFO-file GRASS-vectorfile</EM>
 <p>
 <h2>OBJECTIVES:</h2>
 The two programs and the shell-script are made for importing area data created by ARC/INFO-UNGENERATE to GRASS. The main problems when using v.in.arc followed by v.support directly are errors in the assignment of the area labels to the polygons. This is caused by polygons with identical starting points (first data pair), which are used for assigning the nodes. During this node creation in v.support the node of polygon 1 may be located within the area of polygon2 due to internal approximation processes. In this case, no area labels are assigned.

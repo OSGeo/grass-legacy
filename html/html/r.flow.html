@@ -12,16 +12,14 @@
 <hr width=100% align=center size=6 no shade>
 
 
-<H2>
-<B>NAME</B></H2>
+<H2>NAME</H2>
 <B><I>r.flow </I></B>- construction of slope curves (flowlines), flowpath
 lengths, and flowline densities (upslope areas) from a raster digital elevation
 model(DEM)
 
 <P><I>(GRASS Raster/Vector Program)</I>
 <BR>&nbsp;
-<H2>
-SYNOPSIS</H2>
+<H2>SYNOPSIS</H2>
 <B>r.flow</B>
 <BR><B>r.flow </B>help
 <BR><B>r.flow [ -u3mMqh ] elevin </B>= name [ <B>aspin </B>= name ] [ <B>barin
@@ -30,8 +28,7 @@ val ] [ <B>flout </B>= name ] [ <B>lgout </B>= name ] [ <B>dsout </B>=
 name ]
 <BR>&nbsp;
 <BR>&nbsp;
-<H2>
-DESCRIPTION</H2>
+<H2>DESCRIPTION</H2>
 This program<B> </B>generates flowlines using a combined raster-vector
 approach (see<A HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/hmg.rev1.ps"> Mitasova and Hofierka
 1993 </A>and <A HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/ijgis.html">Mitasova et al. 1995)</A>) from an input
@@ -70,8 +67,7 @@ is taken into account in calculating the length of each segment.
 pass through that grid cell, that means the number of flowlines from the
 entire map which have segment endpoints within that cell.
 <BR>&nbsp;
-<H2>
-OPTIONS</H2>
+<H2>OPTIONS</H2>
 The program will run non-interactively&nbsp; if the user specifies program
 arguments and flag settings on the command line using the following form:
 
@@ -84,8 +80,7 @@ name ].
 line and the program will ask for parameter values and flag settings interactively,
 using the standard GRASS parser interface.
 <BR>&nbsp;
-<H3>
-<B>Flags:</B></H3>
+<H3>Flags:</H3>
 <B>-u</B> Generate flowlines uphill (default generates flowlines downhill).
 
 <P><B>-3</B> Compute three-dimensional lengths (default is two-dimensional).
@@ -104,8 +99,7 @@ progress.
 
 <P><B>-h</B> Display reference information.
 <BR>&nbsp;
-<H3>
-<B>Parameters:</B></H3>
+<H3>Parameters:</H3>
 <B>elevin</B>=<I>name</I>
 <BR>&nbsp;&nbsp;&nbsp; Use the existing raster file name with elevations
 as input (required).
@@ -133,8 +127,7 @@ name.
 <BR>&nbsp;&nbsp;&nbsp; Output flowline density values to a raster file
 name.
 <BR>&nbsp;
-<H2>
-NOTES</H2>
+<H2>NOTES</H2>
 For best results, use input elevation maps with high precision units (e.g.,
 centimeters) so that flowlines do not terminate prematurely in flat areas.
 To prevent the creation of tiny flowline segments with imperceivable changes
@@ -223,8 +216,7 @@ Slovakia,
 <BR>Joshua Caplan, Mark Ruesink, Helena Mitasova, University of Illinois
 at Urbana-Champaign with support from USA CERL.
 <BR>&nbsp;
-<H2>
-REFERENCES</H2>
+<H2>REFERENCES</H2>
 
 
 <P>Mitasova and Hofierka 1993 : Interpolation by Regularized Spline with
