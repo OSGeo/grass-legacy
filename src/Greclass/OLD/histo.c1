@@ -1,0 +1,82 @@
+#include "gis.h"
+
+#define LIST struct Histogram_list
+
+new_histogram (name, reclass, range)
+    char *name;
+    struct Reclass *reclass;
+    struct Range *range;
+{
+    struct Histogram histo, histo2;
+    CELL cat, cat2;
+    int i, neg, zero, pos;
+    CELL min,max;
+    CELL pmin, pmax, nmin, nmax;
+
+    min = reclass->min;
+    max = reclass->max;
+
+    pmin = range->pmin;
+    pmax = range->pmax;
+    nmin = range->nmin;
+    nmax = range->nmax;
+
+printf ("neg(%d,%d) pos(%d,%d)\n", nmin, nmax, pmin, pmax);
+/* read histogram for original file */
+    G_suppress_warnings (1);
+    i = G_read_histogram (reclass->name, reclass->mapset, &histo);
+    G_suppress_warnings (0);
+    if (i <= 0) return;
+
+/* now generate a histogram from the original */
+
+/* allocate histogram list */
+    histo2.num = 1;                             /* for cat 0 */
+    if (nmin)                                   /* negative cats */
+	histo2.num += nmax - nmin + 1;
+    if (pmin)                                   /* positive cats */
+	histo2.num += pmax - pmin + 1;
+
+printf ("histo2.num = %d\n", histo2.num);
+    histo2.list = (LIST *) G_calloc (histo2.num, sizeof (LIST));
+
+/* set all counts to 0 */
+    i = 0;
+    neg = i - nmin;
+    if (nmin)
+	for (cat = nmin; cat <= nmax; cat++)
+	{
+	    histo2.list[i].cat = cat;
+	    histo2.list[i++].count = 0;
+	}
+
+    zero = i;
+    histo2.list[i].cat = 0;
+    histo2.list[i++].count = 0;
+
+    if (pmin)
+	for (cat = pmin; cat <= pmax; cat++)
+	{
+	    histo2.list[i].cat = cat;
+	    histo2.list[i++].count = 0;
+	}
+    pos = i - pmin;
+
+printf ("neg=%d zero=%d pos=%d\n", neg, zero, pos);
+/* go thru original histogram and add into histo2 */
+    for (i = 0; i < histo.num; i++)
+    {
+	cat = histo.list[i].cat;
+	if (cat < min || cat > max)
+	    cat2 = 0;
+	else
+	    cat2 = reclass->table[cat - min];
+	if (cat2 > 0)
+	    histo2.list[pos+cat2].count += histo.list[i].count;
+	else if (cat2 == 0)
+	    histo2.list[zero].count += histo.list[i].count;
+	else
+	    histo2.list[neg+cat2].count += histo.list[i].count;
+    }
+    G_write_histogram (name, &histo2);
+}
