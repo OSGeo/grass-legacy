@@ -220,8 +220,8 @@ INPUT()
     if (barierin != NULL)
     cell3=G_allocate_f_raster_buf();
  
-    z = (float **)malloc(sizeof(float)*(m));
-    o = (float **)malloc(sizeof(float)*(m));
+    z = (float **)malloc(sizeof(float*)*(m));
+    o = (float **)malloc(sizeof(float*)*(m));
 
   for(l=0;l<m;l++) 
    {
@@ -257,14 +257,14 @@ INPUT()
   }
 
 /*  for (row=0; row<m; ++row)*/
-  for (row=0; row<m; row++)
+  for (row=1; row<m-1; row++)
   {
       G_get_f_raster_row(fd1,cell1,row);
       G_get_f_raster_row(fd2,cell2,row);
       if (barierin != NULL)
       G_get_f_raster_row(fd3,cell3,row);
 
-    for (j=0; j<n; j++)
+    for (j=1; j<n-1; j++)
     {
        row_rev = m - row - 1;
        z[row_rev][j] = (float ) cell1[j];
@@ -288,9 +288,9 @@ INPUT()
         to 0 to north clocwise, for ori=0 upslope flowlines
         turn the orientation 2*M_PI ************/
 
-  for (i = 0; i < m; i++)
+  for (i = 1; i < m-1; i++)
   {
-      for (j = 0; j < n; j++)
+      for (j = 1; j < n-1; j++)
       { 
         if ( o[i][j] == 0 )
              o[i][j] = 365;
