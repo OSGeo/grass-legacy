@@ -1,0 +1,106 @@
+                 WELCOME TO THE GRASS ON-LINE GLOSSARY 
+
+Listed below is a compilation of the most commonly used GIS and GRASS 
+terms.  To access information on a term, highlight the term using the
+RETURN key, then press ESC.
+
+                                A
+ \arc\                   \arc-node\                \area\
+ \aspect\                \attribute\
+
+                                B
+ \band\                  \band file\               \Boolean operations\
+
+                                C
+ \Cartesian coordinate system\                    \category\
+ \category label\        \category value\          \Cathode Ray Tube\
+ \cell\                  \cell file\               \cell map\
+ \centroid\              \class\                   \classification\
+ \control points\          
+
+                                D
+ \DBMS\                  \DEM\                     \DLG\
+ \DMA\                   \DTED\
+ \Data Base Management System\                    \database\
+ \database element\      \digit file\              \digital data\ 
+ \Digital Elevation Model\                        \digital imagery\
+ \Digital Line Graph\    \Digital Terrain Elevation Data\
+ \digitize\              \digitizer\              
+ \digitizing threshold\  \display coordinate system\
+ \driver\  
+
+                                E
+ \easting\               \editing\                 \element\
+
+                                F
+ \file\
+
+                                G
+ \GIS\                   \geocoding\              
+ \Geographic Information System\                  \geographic region\
+ \graphics display frame\\graphics monitor\        \grid format\ 
+ \grid map\              \grouping\
+
+                                H
+  \hardcopy\
+
+                                I
+ \image\                 \image processing\        \import\
+ \interactive\           \island\
+
+                                J
+ \join\
+
+                                L
+ \LANDSAT\               \label\                   \layer\
+ \legend\                \line\                    \location\
+ \LOCATION\
+
+                                M
+ \MSS\                   \map coordinate system\   \map database\ 
+ \map feature\           \map generalization\      \map layer\   
+ \map threshold\         \mapset\                  \mask\ 
+ \menu\                  \monitor\                 \mouse\    
+ \Multispectral Scanning System\
+
+                                N
+ \neighborhood analysis\ \no data category\        \node\
+ \northing\              \null category\
+
+                                O
+ \overlay\
+
+                                P
+ \plane coordinates\     \point\                   \pointing device\
+ \polygon\               \projection\              \pruning\
+
+                                R
+ \raster data\           \raster file\             \raster map\
+ \raster-to-vector\      \reclass\                 \rectification\
+ \registration\          \remote sensing\          \residual\
+ \resolution\             
+
+                                S
+ \SPOT\                  \scale\                   \scanning\  
+ \screen coordinates\    \search path\             \site\
+ \site map\              \snap\                    \snapping threshold\
+ \state plane coordinate system\                  \support files\           
+
+                                T
+ \TM\                    \tablet\                  \target\        
+ \threshold\             \topographic map\         \topology\
+ \transform\
+
+                                U
+ \UNIX\                  \UTM\                     \UTM zone\
+ \Universal Transverse Mercator\
+
+                                V
+ \vector\                \vector data\             \vector file\
+ \vector map\            \vi\
+
+                                W
+ \window\                \workstation\
+
+                                Z
+ \zone\                  \zoom\
