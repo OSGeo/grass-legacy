@@ -18,4 +18,5 @@ typedef struct {
 #define DISP_CAT   0x02
 #define DISP_TOPO  0x04
 #define DISP_DIR   0x08
+#define DISP_ATTR  0x10
 

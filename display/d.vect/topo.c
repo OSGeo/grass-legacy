@@ -11,7 +11,6 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     struct line_pnts *Points;
     struct line_cats *Cats;
     int X, Y, T, B, L, R, Xoffset, Yoffset, xarr[5], yarr[5];
-    int cat;
     char text[50];
     
     G_debug (1, "display topo:");
