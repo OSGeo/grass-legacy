@@ -45,6 +45,7 @@ main (int argc, char *argv[])
     dbDriver *driver;
     dbHandle handle;
     dbString sql, strval;
+    int dim, with_z;
     
     /* OGR */
     OGRDataSourceH Ogr_ds;
@@ -139,7 +140,7 @@ main (int argc, char *argv[])
 
 	/* in theory this could be a irregular polygon */
 	poSpatialFilter = OGR_G_CreateGeometry( wkbPolygon );
-	Ogr_oRing = OGR_G_CreateGeometry( wkbLinearRing );
+	Ogr_oRing = OGR_G_CreateGeometry( wkbLineString );
         OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0);
         OGR_G_AddPoint(Ogr_oRing, xmin, ymax, 0);
         OGR_G_AddPoint(Ogr_oRing, xmax, ymax, 0);
@@ -153,16 +154,31 @@ main (int argc, char *argv[])
     db_init_string (&sql);
     db_init_string (&strval);
 
+    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer );
+    Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
+
+    /* Get dimension */
+    with_z = 0;
+    while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
+        /* Geometry */
+        Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
+	if ( Ogr_geometry == NULL ) continue;
+	dim = OGR_G_GetCoordinateDimension ( Ogr_geometry );
+        OGR_F_Destroy( Ogr_feature );
+	if ( dim > 2 ) {
+	    fprintf (stderr, "The layer contains 3D features, 3D vector will be created.\n");
+	    with_z = 1;
+	    break;
+	}
+    }
+    
     /* open output vector */
-    Vect_open_new (&Map, out_opt->answer, 0 ); 
+    Vect_open_new (&Map, out_opt->answer, with_z ); 
     Vect_hist_command ( &Map );
 
     /* Add DB link */
     Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
     Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
-
-    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer );
-    Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
 
     ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
     G_debug ( 2, "%d columns\n", ncols );
@@ -217,6 +233,7 @@ main (int argc, char *argv[])
 
     /* Import feature */
     cat = 1;
+    OGR_L_ResetReading ( Ogr_layer ); 
     while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
         /* Geometry */
         Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
@@ -274,7 +291,7 @@ main (int argc, char *argv[])
     
     Vect_build ( &Map, stdout );
     if (Vect_get_num_areas(&Map) > 0)
-        G_warning ("Area boundaries are not cleaned by this module. Run v.clean (tool=rmdupl,bpol) on imported vector on new map <%s>.", out_opt->answer);
+        G_warning ("Area boundaries are not cleaned by this module. Run v.clean (tool=bpol,rmdupl) on imported vector on new map <%s>.", out_opt->answer);
 
     Vect_close ( &Map );
 
