@@ -1,11 +1,8 @@
 # definitions for SUN rim
 PILE = f77
-EXTRA = csystem.o system.o
-LIBEXTRA = csystem.o system.o
-#AR = /usr/5bin/ar cqs
-#RAN = touch
-AR = ar -rcv
-# make rim (generic instructions)
+AR = ar rcv
+RAN = ranlib
+# make rim (generic instructions to be customized for each installation)
 #
 # Rim executable
 #
@@ -50,7 +47,7 @@ help::
 #
 librim.a::
 	(cd src;     make librim.a)
-	mv src/librim.a .
+	cp src/librim.a .
 #
 # install everything
 #
@@ -60,9 +57,13 @@ install::
 	install rim_help.rimdb3 /usr/local/lib
 	install rim /usr/local/bin
 	install librim.a /usr/lib
+	install rim.1 /usr/man/manl/rim.l
 #
 # clean-up
 #
 clean::
 	rm -f rimh
+	rm -f lxtest
 	rm -f src/*.o
+	rm -f src/rimlib
+	rm -f doc/*.dvi *.log
