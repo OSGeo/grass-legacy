@@ -2,7 +2,7 @@
 
 # reclasses an input sites file based upon a rulesfile
 
-if [ $# = 0 -o "$1" = "-help" ]
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
 	echo "Usage:"
 	echo "s.reclass input=name output=name rules=name"
