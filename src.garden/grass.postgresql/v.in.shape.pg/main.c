@@ -49,6 +49,8 @@
 #include "cleanup.h"
 
 
+#define	round(x)	(int)((x) + 0.5)
+
 
 static char *extract_base_name( char *, const char * );
 
