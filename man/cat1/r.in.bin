@@ -71,34 +71,34 @@ r.in.bin <main>	      GRASS Reference Manual	  <main> r.in.bin
 
 
 
+     Notes on (non)signed data:.PP
+
+     If you use the -s flag the highest bit is the sign bit. If
+     this is 1 the data is negative, and the data interval is
+     half of the unsigned (not exactly). For example: Data: 2
+     byte
+
+     Unsigned interval: 0x0000 -> 0xFFFF = 0 -> 65535 decimal =
+     00000000 00000000 ->11111111 11111111 binary.
+
+     Signed interval: 0x8000 -> 0xFFFF; 0x0000 -> 0x7FFF = -32768
+     -> -1;  0 -> 32767 = 10000000 00000000 -> 11111111 11111111;
+     00000000 00000000 -> 01111111 11111111 binary..PP
+
+     This is the 2's complement represetation.
+
+     So if the data 1 byte the integer range is -128 -> 127, if 2
+     byte (16 bit, word) -32768 -> 32767, if 4 byte (32 bit,
+     doubleword, Dword) -2^31 -> 2^31-1.  And of course the value
+     zero has a positive sign.
+
 SEE ALSO
      r.out.arc
 
 AUTHOR
      Jacques Bouchard, France
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     Man page: Felker Zsolt
 
 
 
