@@ -3,6 +3,7 @@
 	in the calling routine back to the previous color 
 	making quick 'flash' --alex, nov/02
 */
+#include <stdlib.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"

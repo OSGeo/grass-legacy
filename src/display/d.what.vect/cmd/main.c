@@ -8,6 +8,7 @@
 
 #define MAIN
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
@@ -19,11 +20,11 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse;
+  struct Flag *once, *terse, *dontflash;
   struct Option *opt1;
   struct Option *opt_table, *opt_key;
   struct GModule *module;
-  char *mapset, *openvect();
+  char *mapset;
   char temp[128], *str;
   int i, j, level, width, mwidth;
   int dodbmi;  
@@ -61,6 +62,10 @@ int main(int argc, char **argv)
   terse = G_define_flag();
   terse->key = 't';
   terse->description = "Terse output. For parsing by programs";
+ 
+  dontflash = G_define_flag();
+  dontflash->key = 'd';
+  dontflash->description = "Disable flashing. Useful over a slow network.";
  
   opt_table               = G_define_option();
   opt_table->key          = "table";
@@ -147,7 +152,8 @@ int main(int argc, char **argv)
     G_fatal_error ("No graphics device selected");
   D_setup(0);
 
-  what(once->answer, terse->answer, width, mwidth, dodbmi, opt_table->answer, opt_key->answer); 
+  what(once->answer, terse->answer, !(dontflash->answer),
+       width, mwidth, dodbmi, opt_table->answer, opt_key->answer); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);

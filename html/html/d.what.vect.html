@@ -22,7 +22,7 @@ within the current geographic region.
 <BR>
 <B>d.what.vect help</B> 
 <BR>
-<B>d.what.vect</B> [<B>-1t</B>] <B>map=</B><EM>name</EM> 
+<B>d.what.vect</B> [<B>-1td</B>] <B>map=</B><EM>name</EM> 
 [<B>table=</B><EM>name</EM>] [<B>key=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -62,6 +62,11 @@ that want to obtain only one point from the user.
 <DD>Provide only terse output. This option is provided to simplify the 
 parsing of output by other programs. Database connection must be set up
 by <A HREF="db.connect.html">db.connect</A> first. 
+<DT><B>-d</B></DT>
+<DD>Disable flashing of vectors. Normally vectors flash when clicked on.
+This can be a useful graphical aid, but can severely degrade performance
+on a slow computer or over a network. This option allows the program
+to run at normal speed.</DD>
 </DL>
 
 
