@@ -65,27 +65,43 @@ codes etc.</P>
 
 <H2>EXAMPLES</H2>
 
-Print the projection information for the current location <br>
-<b>g.proj -p</b> <br>
-Create a '.prj' file in ESRI format corresponding to the current location <br>
-<b>g.proj -wef ></b> <em>irish_grid.prj</em> <br>
+Print the projection information for the current location:<br>
+<b>g.proj -p</b> 
+
+<p>
+Create a '.prj' file in ESRI format corresponding to the current location:<br>
+<b>g.proj -wef ></b> <em>irish_grid.prj</em>
+
+<p>
 Read the projection information from a geotiff file and print it in PROJ.4
-format <br>
-<b>g.proj -jf georef=</b><em>ASTER_DEM20020508161837.tif</em> </br>
+format:<br>
+<b>g.proj -jf georef=</b><em>ASTER_DEM20020508161837.tif</em>
+
+<p>
 Convert the PROJ.4 projection description contained in a text file to WKT
-format <br>
-<b>cat</b> <em>proj4.description</em> <b>| g.proj -w proj4=</b><em>-</em> <br>
+format:<br>
+<b>cat</b> <em>proj4.description</em> <b>| g.proj -w proj4=</b><em>-</em>
+
+<p>
 Create a new location with the co-ordinate system referred to by EPSG code
-29900 (Irish Grid) <br>
+4326 (Latitude-Longitude/WGS84):<br>
+<b>g.proj -c proj4=</b><em>'+init=epsg:4326'</em>
+ <b>location=</b><em>latlong</em>
+
+<p>
+Create a new location with the co-ordinate system referred to by EPSG code
+29900 (Irish Grid):<br>
 <b>g.proj -c proj4=</b><em>'+init=epsg:29900'</em>
-<b>location=</b><em>irish_grid</em> <br>
+ <b>location=</b><em>irish_grid</em>
+
+<p>
 Create a new location with the same co-ordinate system as the current
-location <br>
+location:<br>
 <b>g.proj -c location=</b><em>newloc</em> <br>
 
 <H2>REFERENCES</H2>
 
-<a href=http://www.remotesensing.org/proj/>PROJ 4</a>: 
+<a href=http://proj.maptools.org>PROJ 4</a>: 
 Projection/datum support library.
 
 <H2>SEE ALSO</H2>
