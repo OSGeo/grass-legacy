@@ -1,7 +1,7 @@
 
 
 
-r.support            GRASS Reference Manual             r.support
+r.support <main>     GRASS Reference Manual      <main> r.support
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.support            GRASS Reference Manual             r.support
+r.support <main>     GRASS Reference Manual      <main> r.support
 
 
 
@@ -126,14 +126,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.support            GRASS Reference Manual             r.support
+r.support <main>     GRASS Reference Manual      <main> r.support
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
