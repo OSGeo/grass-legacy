@@ -1,0 +1,67 @@
+.ds X Gpoints.surf2
+.TH \*X 2G
+.SH NAME
+\*X - Surface interpolation utility
+.br
+(G Language Tool)
+.SH SYNOPSIS
+\*X input output points
+.SH DESCRIPTION
+\*X fills a grid cell matrix with interpolated values
+generated from a set of input layer data points.  It uses a
+numerical approximation technique based on distance 
+squared weighting of the values of nearest data points. The
+number of nearest data points used to determined the
+interpolated value of a cell can be specified by the user
+(default:  12 nearest data points).
+
+If there is a current working mask, it applies to the output
+cell file.  Only those cells falling within the mask will be
+assigned interpolated values.  The search procedure for the
+selection of nearest neighboring points will consider all 
+input data, without regard to the mask.
+
+In comparison with other methods, numerical
+approximation allows representation of more complex surfaces
+(particularly those with anomalous features), restricts the
+spatial influence of any errors, and generates the
+interpolated surface from the data points. It is the most
+appropriate method to apply to most spatial data.
+
+The command line arguments are as follows:
+
+.IP input 7
+grid cell map that contains an incomplete set of 
+data values.  (i.e., some grid cells contain
+known data values while the rest contain zero (0)).
+
+.IP output 
+grid cell map that represents a smooth surface
+generated from the known data values in the input
+layer.
+
+.IP points
+number of nearest data points used to determine the
+interpolated value of an output layer cell.  If this
+argument is not included, a default of 12 is used.
+
+.SH NOTES
+\*X uses a customized data
+structure to enhance the efficiency with which nearest data
+points are selected.  Execution speed is a
+function of the search effort, and does not increase with
+the number of input data points.  
+
+The mask, if set, has the following effect on the
+interpolation. The input file is read as if no mask were set,
+but interpolation only occurs within the mask.
+
+The degree of smoothing produced by the interpolation will
+increase relative to the number of nearest data points con-
+sidered.  The utility may be used with regularly or irregu-
+larly spaced input data.  However, the output result for 
+the former may include unacceptable nonconformities in the
+surface pattern.
+.SH AUTHOR
+Greg Koerper, Global Climate Research Project, Oregon State
+University (koerper@cs.orst.edu).
