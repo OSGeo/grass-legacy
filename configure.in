@@ -186,6 +186,7 @@ AC_SUBST(DLLIB)
 my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include"
 my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib"
 
+ZLIB=
 # With zlib includes directory:
 AC_MSG_CHECKING(for location of zlib includes)
 AC_ARG_WITH(zlib-includes,
@@ -203,43 +204,29 @@ AC_ARG_WITH(zlib-includes,
 ZLIBINCPATH=
 if test "$zlib_inc_dirs"; then
     for dir in $zlib_inc_dirs; do
+#        if test -d "$dir" && test -f "$dir/zlib.h"; then
         if test -d "$dir"; then
-            ZLIBINCPATH="-I${dir}"
+            ZLIBINCPATH="$ZLIBINCPATH -I${dir}"
         else
-            AC_MSG_ERROR([*** zlib includes directory $dir does not exist.])
+            AC_MSG_WARN([*** zlib includes directory $dir does not exist.])
         fi
     done
-fi
-
-if test "$ZLIBINCPATH"; then
-    for dir in $zlib_inc_dirs; do
-        if test -d "$dir" && test -f "$dir/zlib.h"; then
-            ZLIBINCPATH="-I$dir"
-        else
-            ZLIBINCPATH=""
-        fi
-    done
-    if test -z "$ZLIBINCPATH"; then
-       AC_MSG_ERROR([*** Could not find zlib includes in $dir.])
-    fi
-fi
-
-if test -z "$ZLIBINCPATH"; then
+else
     for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/zlib.h"; then
-            ZLIBINCPATH="-I$dir"
+            ZLIBINCPATH="$ZLIBINCPATH -I$dir"
         fi
     done
-    if test -z "$ZLIBINCPATH"; then
-       AC_MSG_ERROR([*** Could not find zlib includes.])
-    fi
 fi
+
+
 AC_MSG_RESULT($ZLIBINCPATH)
 AC_SUBST(ZLIBINCPATH)
 
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $ZLIBINCPATH"
 AC_CHECK_HEADERS(zlib.h)
+CPPFLAGS=${ac_save_cppflags}
 
 # With zlib library directory:
 AC_MSG_CHECKING(for location of zlib lib)
@@ -258,49 +245,32 @@ AC_ARG_WITH(zlib-libs,
 ZLIBLIBPATH=
 if test "$zlib_dirs"; then
     for dir in $zlib_dirs; do
+#        if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
         if test -d "$dir"; then
             ZLIBLIBPATH="$ZLIBLIBPATH -L${dir}"
         else
-            AC_MSG_ERROR([*** zlib lib directory $dir does not exist.])
+            AC_MSG_WARN([*** zlib lib directory $dir does not exist.])
         fi
     done
-fi
-
-if test "$ZLIBLIBPATH"; then
-    for dir in $zlib_dirs; do
-        if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
-           ZLIBLIBPATH="-L$dir"
-        else
-            ZLIBLIBPATH=""
-        fi
-    done
-    if test -z "$ZLIBLIBPATH"; then
-       AC_MSG_ERROR([*** Could not find zlib lib in $dir.])
-    fi
-fi
-
-if test -z "$ZLIBLIBPATH"; then
+else
     for dir in $my_lib_dirs; do
         if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
-           ZLIBLIBPATH="-L$dir"
+           ZLIBLIBPATH="$ZLIBLIBPATH -L$dir"
         fi
     done
-    if test -z "$ZLIBLIBPATH"; then
-       AC_MSG_ERROR([*** Could not find zlib lib.])
-    fi
 fi
 
-if test -z "$ZLIBLIBPATH"; then
-        AC_MSG_RESULT($ZLIBLIBPATH)
-	AC_MSG_ERROR([*** Could not find zlib library. This lib is required.])
-fi
 AC_MSG_RESULT($ZLIBLIBPATH)
 AC_SUBST(ZLIBLIBPATH)
 
+if test -z "$ZLIBINCPATH" || test -z "$ZLIBLIBPATH" ; then
+    AC_MSG_ERROR([*** Could not find zlib library. This lib is required.])
+fi
+
 
 if test -z "${ZLIB}"; then
- #AC_CHECK_LIB(z, deflate, ZLIB=-lz)
- ZLIB=-lz
+    AC_CHECK_LIB(z, deflate, ZLIB=-lz)
+    ZLIB=-lz
 fi
 AC_SUBST(ZLIB)
 
@@ -837,7 +807,13 @@ if test -n "$opengl_includes"; then
     if test -z "$OPENGLwINC"; then
         AC_MSG_WARN([*** Didn't find GL/GLwMDrawA.h])
     fi
-    AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
+    if test -n "$OPENGLINC" && test -n "$OPENGLwINC"; then
+        AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
+    elif test -n "$OPENGLINC"; then
+        AC_MSG_RESULT($OPENGLINC)
+    elif test -n "$OPENGLwINC"; then
+        AC_MSG_RESULT($OPENGLwINC)
+    fi
 fi
 
 if test -z "$opengl_libs" && test -n "$USE_OPENGL"; then
@@ -979,6 +955,22 @@ else
     done
 fi                         
 
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $JPEGINCPATH"
+AC_CHECK_HEADERS(jpeglib.h)
+CPPFLAGS=${ac_save_cppflags}
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $JPEGLIBPATH"
+AC_CHECK_LIB(jpeg,jpeg_start_compress,JPEGLIB=-ljpeg)
+LDFLAGS=${ac_save_ldflags}
+
+AC_SUBST(JPEGLIB)
+AC_SUBST(JPEGLIBPATH)
+AC_SUBST(JPEGINCPATH)
+# Done with JPEG library
+
+
 XDRIVER=fifo
 AC_ARG_WITH(ipc,
     [  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)],
@@ -1011,20 +1003,5 @@ else
     env GRASS_IN_CONFIGURE=yes ./README.ipc orig
 fi
 
-
-ac_save_cppflags="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $JPEGINCPATH"
-AC_CHECK_HEADERS(jpeglib.h)
-CPPFLAGS=${ac_save_cppflags}
-
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $JPEGLIBPATH"
-AC_CHECK_LIB(jpeg,jpeg_start_compress,JPEGLIB=-ljpeg)
-LDFLAGS=${ac_save_ldflags}
-
-AC_SUBST(JPEGLIB)
-AC_SUBST(JPEGLIBPATH)
-AC_SUBST(JPEGINCPATH)
-# Done with JPEG library
 
 AC_OUTPUT(Makefile src/CMD/head/head)
