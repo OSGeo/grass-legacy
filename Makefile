@@ -61,7 +61,8 @@ BIN_DIST_FILES = $(FILES) \
 	fonts \
 	include \
 	lib \
-	scripts 
+	scripts \
+	tcltkgrass
 
 default:
 	@list='$(SUBDIRS)'; \
@@ -118,6 +119,7 @@ cleandistdirs:
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null ; true"
 	${SHELL} -c "rmdir ${ARCH_DISTDIR} ; true"
 	${SHELL} -c "rm -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} 2>/dev/null ; true"
