@@ -93,3 +93,38 @@ db_driver(argc, argv)
 
     exit (stat == DB_OK ? 0 : 1);
 }
+
+
+/*!
+ \fn char *db_driver_list(void)
+ \brief return character list of existing DB drivers, used for driver parameter options
+ \return return character list
+ \param void
+*/
+char *
+db_driver_list(void)
+{
+    dbDbmscap *list, *cur;
+    dbString dbstring;
+
+    db_init_string(&dbstring);
+/* read the dbmscap info */
+    if(NULL == (list = db_read_dbmscap()))
+	return NULL;
+    else
+    {
+	for (cur = list; cur; cur = cur->next)
+	{
+	    if (cur->driverName == '\0')
+	       break;
+	    else
+	    {
+	       if(cur != list)
+	          db_append_string ( &dbstring, ",");
+	       db_append_string ( &dbstring, cur->driverName);
+	    }
+	}
+    }
+    
+    return db_get_string (&dbstring);
+}
