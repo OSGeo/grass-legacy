@@ -10,6 +10,7 @@
 
 #include "gis.h"
 #include "G3d.h"
+#include "site.h"
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
