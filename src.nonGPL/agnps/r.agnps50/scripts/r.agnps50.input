@@ -44,5 +44,7 @@ fi
 # 
 
 $GISBASE/etc/agnps50/copy_cell_num.sh
-echo "Now run"
+echo "Check for More than one outlet cell! If present, use d.rast.edit"
+echo "on aspect map to fix this."
+echo "If o.k., run"
 echo "    r.agnps50.run"
