@@ -12,7 +12,7 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
      (GRASS Raster Program)
 
-     &nbsp;
+
 
 
      SYNOPSIS r.slope.aspect
@@ -20,12 +20,11 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      r.slope.aspect help
 
      r.slope.aspect [-aq] elevation=name [slope=name]
-     [aspect=name] [format=name] [zfactor=value]
-     [prec=name]&nbsp; [pcurv=name] [tcurv=name] [dx=name]
-     [dy=name] [dxx=name] [dyy=name] [dxy=name]&nbsp;
-     [min_slp_allowed=value]
+     [aspect=name] [format=name] [zfactor=value] [prec=name]
+     [pcurv=name] [tcurv=name] [dx=name] [dy=name] [dxx=name]
+     [dyy=name] [dxy=name]  [min_slp_allowed=value]
 
-     &nbsp;
+
 
 
      DESCRIPTION r.slope.aspect generates raster maps of slope,
@@ -37,15 +36,15 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      and zfactor: multiplicative factor to convert elevation
      units to meters; (default 1.0).
 
-     &nbsp;
+
 
 
      OPTIONS The program will be run non-interactively if the
      user specifies program inputs and any desired options on the
      command line, using the form r.slope.aspect [-aq]
      elevation=name [slope=name] [aspect=name] [format=name]
-     [zfactor=value] [prec=name]&nbsp; [pcurv=name] [tcurv=name]
-     [dx=name] [dy=name] [dxx=name] [dyy=name] [dxy=name]&nbsp;
+     [zfactor=value] [prec=name]  [pcurv=name] [tcurv=name]
+     [dx=name] [dy=name] [dxx=name] [dyy=name] [dxy=name]
      [min_slp_allowed=value] If the user runs: r.slope.aspect
      without command line arguments, the program will prompt the
      user for flag settings and parameter values.
@@ -56,6 +55,7 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      be set) to those of the elevation layer. See NOTES.  Run
      quietly, and suppress the printing of information on program
      operations during execution.
+
 
 
 
@@ -82,46 +82,46 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      zfactor=value Multiplicative factor to convert elevation
      units to meters (default: 1.0).
 
-     &nbsp;pcurv =name
+      pcurv =name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output profile curvature filename
+	       Output profile curvature filename
 
-     &nbsp;tcurv =name
+      tcurv =name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output tangential curvature filename
+	       Output tangential curvature filename
 
-     &nbsp;dx=name
+      dx=name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output E-W slope filename
+	       Output E-W slope filename
 
-     &nbsp;dy=name
+      dy=name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output N-S slope filename
+	       Output N-S slope filename
 
      dxx=name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output partial derivative dxx filename
+	       Output partial derivative dxx filename
 
      dyy=name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Output partial derivative dyy filename
+	       Output partial derivative dyy filename
 
      dxy =name
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output
-     partial derivative dxy filenam
+	      Output partial derivative dxy filenam
 
      min_slp_allowed =value
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     Minimum slope value (in percent) for which aspect is
-     computed.(default: 0.0)
+	       Minimum slope value (in percent) for which aspect
+     is computed.(default: 0.0)
+
+     prec=name
+
+	       type of output aspect and slope maps
+
+	       options: default,double,float,int The raster
+     elevation map layer specified by the user must contain true
+     elevation values, not rescaled or categorized data.
 
 
 
@@ -136,16 +136,6 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
-
-     prec=name
-
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type
-     of output aspect and slope maps
-
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     options: default,double,float,int The raster elevation map
-     layer specified by the user must contain true elevation
-     values, not rescaled or categorized data.
 
      The raster aspect map layer which is created indicates the
      direction that slopes are facing. The aspect categories
@@ -169,26 +159,36 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      r.reclass. An example of a useful reclassification is given
      below:
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     (in degrees)&nbsp;&nbsp;&nbsp; (in percent)
+			  (in degrees)	  (in percent)
 
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0-&nbsp;
-     1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0-&nbsp; 2%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2-&nbsp;
-     3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     3-&nbsp; 5%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4-&nbsp;
-     5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     6- 10%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6-&nbsp;
-     8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     11- 15%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  1	    0-	1	      0-  2%
+		  2	    2-	3	      3-  5%
+		  3	    4-	5	      6- 10%
+		  4	    6-	8	     11- 15%
+		  5	    9- 11	     16- 20%
+		  6	   12- 14	     21- 25%
+		  7	   15- 90	     26% and higher
+
+	  The following color table works well with the above
+	  reclassification.
+
+	       category	  red	green	blue
+
+		  0	  179	 179	 179
+		  1	    0	 102	   0
+		  2	    0	 153	   0
+		  3	  128	 153	   0
+		  4	  204	 179	   0
+		  5	  128	  51	  51
+		  6	  255	   0	   0
+		  7	    0	   0	   0
+
+
+
+     NOTES To ensure that the raster elevation map layer is not
+     inappropriately resampled, the settings for the current
+     region are modified slightly (for the execution of the
+     program only): the resolution is set to match the resolution
 
 
 
@@ -203,75 +203,6 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
 
-     5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9-
-     11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     16- 20%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12-
-     14&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     21- 25%
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15-
-     90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     26% and higher
-
-     &nbsp;&nbsp;&nbsp;&nbsp; The following color table works
-     well with the above &nbsp;&nbsp;&nbsp;&nbsp;
-     reclassification.
-
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     category&nbsp;&nbsp; red&nbsp;&nbsp; green&nbsp;&nbsp; blue
-
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp;
-     179&nbsp;&nbsp;&nbsp;&nbsp; 179
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp; 102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp; 153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128&nbsp;&nbsp;&nbsp;
-     153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 204&nbsp;&nbsp;&nbsp;
-     179&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     128&nbsp;&nbsp;&nbsp;&nbsp; 51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     51
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-
-
-
-     NOTES To ensure that the raster elevation map layer is not
-
-
-
-4		      GRASS Development Team	   GRASS 5.0beta6
-
-
-
-
-
-
-r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
-
-
-
-     inappropriately resampled, the settings for the current
-     region are modified slightly (for the execution of the
-     program only): the resolution is set to match the resolution
      of the elevation map and the edges of the region (i.e. the
      north, south, east and west) are shifted, if necessary, to
      line up along edges of the nearest cells in the elevation
@@ -322,9 +253,12 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
      r.reclass
 
+     r.rescale
 
 
-GRASS 5.0beta6	      GRASS Development Team			5
+
+
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -334,8 +268,6 @@ GRASS 5.0beta6	      GRASS Development Team			5
 r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
-
-     r.rescale
 
 
      AUTHORS Michael Shapiro, U.S.Army Construction Engineering
@@ -390,7 +322,9 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta6
+
+
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 

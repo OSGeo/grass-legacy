@@ -9,7 +9,7 @@ values.
 \*W(GRASS Raster Program)\*O
 
 .br
-&nbsp;
+ 
 .SH 
 SYNOPSIS
 \*Lr.slope.aspect\*O
@@ -20,12 +20,12 @@ SYNOPSIS
 .br
 \*Lr.slope.aspect \*O[\*L-aq\*O] \*Lelevation=\*O\*Wname \*O[\*Lslope=\*O\*Wname\*O]
 [\*Laspect=\*O\*Wname\*O] [\*Lformat=\*O\*Wname\*O] [\*Lzfactor=\*O\*Wvalue\*O]
-[\*Lprec\*O=\*Wname]\*O&nbsp; [\*Lpcurv\*O=\*Wname\*O] [\*Ltcurv\*O=\*Wname]\*O
+[\*Lprec\*O=\*Wname]\*O  [\*Lpcurv\*O=\*Wname\*O] [\*Ltcurv\*O=\*Wname]\*O
 [\*Ldx\*O=\*Wname\*O] [\*Ldy\*O=\*Wname\*O] [\*Ldxx\*O=\*Wname\*O]
-[\*Ldyy\*O=\*Wname\*O] [\*Ldxy\*O=\*Wname\*O]&nbsp; [\*Lmin_slp_allowed\*O=\*Wvalue\*O]
+[\*Ldyy\*O=\*Wname\*O] [\*Ldxy\*O=\*Wname\*O]  [\*Lmin_slp_allowed\*O=\*Wvalue\*O]
 
 .br
-&nbsp;
+ 
 .SH 
 DESCRIPTION
 \*Lr.slope.aspect \*Ogenerates raster maps of slope, aspect, curvatures
@@ -36,7 +36,7 @@ the \*Wformat\*O for slope (degrees, percent; default=degrees), and \*Wzfactor\*
 multiplicative factor to convert elevation units to meters; (default 1.0).
 
 .br
-&nbsp;
+ 
 .SH 
 OPTIONS
 The program will be run non-interactively if the user specifies program
@@ -44,9 +44,9 @@ inputs and any desired options on the command line, using the form
 .VL 4m
 \*Lr.slope.aspect \*O[\*L-aq\*O] \*Lelevation=\*O\*Wname \*O[\*Lslope=\*O\*Wname\*O]
 [\*Laspect=\*O\*Wname\*O] [\*Lformat=\*O\*Wname\*O] [\*Lzfactor=\*O\*Wvalue\*O]
-[\*Lprec\*O=\*Wname]\*O&nbsp; [\*Lpcurv\*O=\*Wname\*O] [\*Ltcurv\*O=\*Wname]\*O
+[\*Lprec\*O=\*Wname]\*O  [\*Lpcurv\*O=\*Wname\*O] [\*Ltcurv\*O=\*Wname]\*O
 [\*Ldx\*O=\*Wname\*O] [\*Ldy\*O=\*Wname\*O] [\*Ldxx\*O=\*Wname\*O]
-[\*Ldyy\*O=\*Wname\*O] [\*Ldxy\*O=\*Wname\*O]&nbsp; [\*Lmin_slp_allowed\*O=\*Wvalue\*O]
+[\*Ldyy\*O=\*Wname\*O] [\*Ldxy\*O=\*Wname\*O]  [\*Lmin_slp_allowed\*O=\*Wvalue\*O]
 .LE
 If the user runs:
 .VL 4m
@@ -84,70 +84,70 @@ format for reporting the slope; options: degrees,percent; default: degrees.
 Multiplicative factor to convert elevation units to meters (default: 1.0).
 
 .br
-&nbsp;\*Lpcurv =\*O\*Wname\*O
+ \*Lpcurv =\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output profile
+          Output profile
 curvature filename
 
 .br
-&nbsp;\*Ltcurv =\*O\*Wname\*O
+ \*Ltcurv =\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output tangential
+          Output tangential
 curvature filename
 
 .br
-&nbsp;\*Ldx=\*O\*Wname\*O
+ \*Ldx=\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output E-W slope
+          Output E-W slope
 filename
 
 .br
-&nbsp;\*Ldy=\*O\*Wname\*O
+ \*Ldy=\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output N-S slope
+          Output N-S slope
 filename
 
 .br
 \*Ldxx=\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial
+          Output partial
 derivative dxx filename
 
 .br
 \*Ldyy=\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial
+          Output partial
 derivative dyy filename
 
 .br
 \*Ldxy =\*O\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial derivative
+         Output partial derivative
 dxy filenam
 
 .br
 \*Lmin_slp_allowed\*O =\*Wvalue\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum slope
+          Minimum slope
 value (in percent) for which aspect is computed.(default: 0.0)
 
 .br
 \*Lprec\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type of output
+          type of output
 aspect and slope maps
 
 .br
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; options: default,double,float,int
+          options: default,double,float,int
 .LE
 The raster \*Welevation\*O map layer specified by the user must contain
 true elevation values, \*Wnot\*O rescaled or categorized data.
@@ -173,30 +173,30 @@ layer of slope that groups slope values into ranges of slope. This can
 be done using \*W\*Lr.reclass\*O\*O. An example
 of a useful reclassification is given below:
 \*C
-.DS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; range&nbsp;&nbsp; category labels
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (in degrees)&nbsp;&nbsp;&nbsp; (in percent)
+.DS          category      range   category labels
+                     (in degrees)    (in percent)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0-&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0-&nbsp; 2%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2-&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3-&nbsp; 5%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4-&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6- 10%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6-&nbsp; 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11- 15%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9- 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16- 20%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12- 14&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 21- 25%
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15- 90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26% and higher
+             1         0-  1             0-  2%
+             2         2-  3             3-  5%
+             3         4-  5             6- 10%
+             4         6-  8            11- 15%
+             5         9- 11            16- 20%
+             6        12- 14            21- 25%
+             7        15- 90            26% and higher
 
-&nbsp;&nbsp;&nbsp;&nbsp; The following color table works well with the above
-&nbsp;&nbsp;&nbsp;&nbsp; reclassification.
+     The following color table works well with the above
+     reclassification.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; category&nbsp;&nbsp; red&nbsp;&nbsp; green&nbsp;&nbsp; blue
+          category   red   green   blue
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp;&nbsp; 179
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128&nbsp;&nbsp;&nbsp; 153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 204&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128&nbsp;&nbsp;&nbsp;&nbsp; 51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 51
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+             0       179    179     179
+             1         0    102       0
+             2         0    153       0
+             3       128    153       0
+             4       204    179       0
+             5       128     51      51
+             6       255      0       0
+             7         0      0       0
 
 .SH 
 NOTES

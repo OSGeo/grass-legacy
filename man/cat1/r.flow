@@ -12,7 +12,7 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
      (GRASS Raster/Vector Program)
 
-     &nbsp;
+
 
 
      SYNOPSIS r.flow
@@ -23,9 +23,9 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      name ] [ skip = val ] [ bound = val ] [ offset = val ] [
      flout = name ] [ lgout = name ] [ dsout = name ]
 
-     &nbsp;
 
-     &nbsp;
+
+
 
 
      DESCRIPTION This program generates flowlines using a
@@ -55,8 +55,8 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      a barrier, or arrive at a cell with undefined elevation or
      aspect. Another option, skip=val, indicates that only the
      flowlines from every val-th cell are to be included in
-     flout.  The default skip is max(1,&nbsp;elevin/50).  A high
-     skip usually speeds up processing time and often improves
+     flout.  The default skip is max(1, elevin/50).  A high skip
+     usually speeds up processing time and often improves the
 
 
 
@@ -71,7 +71,7 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
 
 
-     the readability of a visualization of flout.
+     readability of a visualization of flout.
 
      Flowpath length output is given in a raster map lgout. The
      value in each grid cell is the sum of the planar lengths of
@@ -85,12 +85,12 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      the number of flowlines from the entire map which have
      segment endpoints within that cell.
 
-     &nbsp;
 
 
-     OPTIONS The program will run non-interactively&nbsp; if the
-     user specifies program arguments and flag settings on the
-     command line using the following form:
+
+     OPTIONS The program will run non-interactively  if the user
+     specifies program arguments and flag settings on the command
+     line using the following form:
 
      r.flow [ -u3mMqh ] elevin = name [ aspin = name ] [ barin =
      name ] [ skip = val ] [ bound = val ] [ offset = val ] [
@@ -101,7 +101,7 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      and flag settings interactively, using the standard GRASS
      parser interface.
 
-     &nbsp;
+
 
 
      Flags: -u Generate flowlines uphill (default generates
@@ -139,56 +139,56 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
      -h Display reference information.
 
-     &nbsp;
+
 
 
      Parameters: elevin=name
 
-     &nbsp;&nbsp;&nbsp; Use the existing raster file name with
-     elevations as input (required).
+	 Use the existing raster file name with elevations as
+     input (required).
 
      aspin=name
 
-     &nbsp;&nbsp;&nbsp; Use the existing raster file name with
-     aspects as input.
+	 Use the existing raster file name with aspects as input.
 
      barin=name
 
-     &nbsp;&nbsp;&nbsp; Use the existing raster file name with
-     non-zero values representing barriers as input.
+	 Use the existing raster file name with non-zero values
+     representing barriers as input.
 
      skip=val
 
-     &nbsp;&nbsp;&nbsp; Set the number of cells between flowlines
-     in the flout output map to val.
+	 Set the number of cells between flowlines in the flout
+     output map to val.
 
      bound=val
 
-     &nbsp;&nbsp;&nbsp; Set the maximum number of segments of
-     each flowline to val (default is the maximum possible).
+	 Set the maximum number of segments of each flowline to
+     val (default is the maximum possible).
 
      offset=val
 
-     &nbsp;&nbsp;&nbsp; Maximum magnitude of random grid point
-     offset (default is 0).
+	 Maximum magnitude of random grid point offset (default
+     is 0).
 
      flout=name
 
-     &nbsp;&nbsp;&nbsp; Output coordinates of flowlines to a
-     vector file name.
+	 Output coordinates of flowlines to a vector file name.
 
      lgout=name
 
-     &nbsp;&nbsp;&nbsp; Output flowpath length values to a raster
-     file name.
+	 Output flowpath length values to a raster file name.
 
      dsout=name
 
-     &nbsp;&nbsp;&nbsp; Output flowline density values to a
-     raster file name.
+	 Output flowline density values to a raster file name.
 
-     &nbsp;
 
+
+
+     NOTES For best results, use input elevation maps with high
+     precision units (e.g., centimeters) so that flowlines do not
+     terminate prematurely in flat areas.  To prevent the
 
 
 
@@ -203,10 +203,6 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
 
 
-
-     NOTES For best results, use input elevation maps with high
-     precision units (e.g., centimeters) so that flowlines do not
-     terminate prematurely in flat areas.  To prevent the
      creation of tiny flowline segments with imperceivable
      changes in elevation, an endpoint which would land very
      close to the center of a grid cell is quantized to the exact
@@ -255,6 +251,10 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
      Invalid options were specified on the command line.
 
+     ERROR: r.flow: error getting current region
+
+     ERROR: r.flow: unable to reset current region
+
 
 
 
@@ -268,10 +268,6 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
 
-
-     ERROR: r.flow: error getting current region
-
-     ERROR: r.flow: unable to reset current region
 
      ERROR: r.flow: cannot open vector file
 
@@ -294,14 +290,14 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      cell is so great that quantization error is larger than one
      of the dimensions. Resample the map and try again.
 
-     &nbsp;
+
 
 
      SEE ALSO
 
      r.basins.fill, r.water.outlet.html , r.watershed
 
-     &nbsp;
+
 
 
      AUTHORS
@@ -316,11 +312,15 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
      Joshua Caplan, Mark Ruesink, Helena Mitasova, University of
      Illinois at Urbana-Champaign with support from USA CERL.
 
-     &nbsp;
+
 
 
      REFERENCES
 
+     Mitasova and Hofierka 1993 : Interpolation by Regularized
+     Spline with Tension: II. Application to Terrain Modeling and
+     Surface Geometry Analysis.	 Mathematical Geology 25(6),
+     641-650.
 
 
 
@@ -335,11 +335,6 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
 
 
-     Mitasova and Hofierka 1993 : Interpolation by Regularized
-     Spline with Tension: II. Application to Terrain Modeling and
-     Surface Geometry Analysis.	 Mathematical Geology 25(6),
-     641-650.
-
      Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P.,
      Kosinovsky, I., Baker, T., 1995: Modeling spatially and
      temporally distributed phenomena: New methods and tools for
@@ -352,6 +347,11 @@ r.flow <main>	      GRASS Reference Manual	    <main> r.flow
 
      Mitasova, H.(1993): Surfaces and modeling. Grassclippings
      (winter and spring) p.18-19.
+
+
+
+
+
 
 
 

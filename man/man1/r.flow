@@ -8,7 +8,7 @@ model(DEM)
 \*W(GRASS Raster/Vector Program)\*O
 
 .br
-&nbsp;
+ 
 .SH 
 SYNOPSIS
 \*Lr.flow\*O
@@ -23,10 +23,10 @@ val ] [ \*Lflout \*O= name ] [ \*Llgout \*O= name ] [ \*Ldsout \*O=
 name ]
 
 .br
-&nbsp;
+ 
 
 .br
-&nbsp;
+ 
 .SH 
 DESCRIPTION
 This program\*L \*Ogenerates flowlines using a combined raster-vector
@@ -53,7 +53,7 @@ stops if its next segment would reverse the direction of flow (from up
 to down or vice-versa), cross a barrier, or arrive at a cell with undefined
 elevation or aspect. Another option, \*Wskip\*O=val, indicates that only
 the flowlines from every val-th cell are to be included in \*Wflout\*O.
-The default \*Wskip\*O is max(1,&nbsp;elevin/50).
+The default \*Wskip\*O is max(1, elevin/50).
 A high \*Wskip\*O usually speeds up processing time and often improves
 the readability of a visualization of \*Wflout\*O.
 .PP
@@ -68,10 +68,10 @@ pass through that grid cell, that means the number of flowlines from the
 entire map which have segment endpoints within that cell.
 
 .br
-&nbsp;
+ 
 .SH 
 OPTIONS
-The program will run non-interactively&nbsp; if the user specifies program
+The program will run non-interactively  if the user specifies program
 arguments and flag settings on the command line using the following form:
 .PP
 \*Lr.flow [ -u3mMqh ] elevin \*O= name [ \*Laspin \*O= name ] [ \*Lbarin
@@ -84,7 +84,7 @@ line and the program will ask for parameter values and flag settings interactive
 using the standard GRASS parser interface.
 
 .br
-&nbsp;
+ 
 .SH 
 \*LFlags:\*O
 \*L-u\*O Generate flowlines uphill (default generates flowlines downhill).
@@ -106,72 +106,72 @@ progress.
 \*L-h\*O Display reference information.
 
 .br
-&nbsp;
+ 
 .SH 
 \*LParameters:\*O
 \*Lelevin\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Use the existing raster file name with elevations
+    Use the existing raster file name with elevations
 as input (required).
 
 .br
 \*Laspin\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Use the existing raster file name with aspects as
+    Use the existing raster file name with aspects as
 input.
 
 .br
 \*Lbarin\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Use the existing raster file name with non-zero
+    Use the existing raster file name with non-zero
 values representing barriers as input.
 
 .br
 \*Lskip\*O=\*Wval\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Set the number of cells between flowlines in the
+    Set the number of cells between flowlines in the
 \*Lflout\*O output map to val.
 
 .br
 \*Lbound\*O=\*Wval\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Set the maximum number of segments of each flowline
+    Set the maximum number of segments of each flowline
 to val (default is the maximum possible).
 
 .br
 \*Loffset\*O=\*Wval\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Maximum magnitude of random grid point offset (default
+    Maximum magnitude of random grid point offset (default
 is 0).
 
 .br
 \*Lflout\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Output coordinates of flowlines to a vector file
+    Output coordinates of flowlines to a vector file
 name.
 
 .br
 \*Llgout\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Output flowpath length values to a raster file name.
+    Output flowpath length values to a raster file name.
 
 .br
 \*Ldsout\*O=\*Wname\*O
 
 .br
-&nbsp;&nbsp;&nbsp; Output flowline density values to a raster file
+    Output flowline density values to a raster file
 name.
 
 .br
-&nbsp;
+ 
 .SH 
 NOTES
 For best results, use input elevation maps with high precision units (e.g.,
@@ -241,7 +241,7 @@ in length between the two axes of a grid cell is so great that quantization
 error is larger than one of the dimensions. Resample the map and try again.
 
 .br
-&nbsp;
+ 
 .SH 
 SEE ALSO
 .PP
@@ -250,7 +250,7 @@ SEE ALSO
 , \*Lr.watershed\*O
 
 .br
-&nbsp;
+ 
 .SH 
 AUTHORS
 .PP
@@ -267,7 +267,7 @@ Joshua Caplan, Mark Ruesink, Helena Mitasova, University of Illinois
 at Urbana-Champaign with support from USA CERL.
 
 .br
-&nbsp;
+ 
 .SH 
 REFERENCES
 .PP

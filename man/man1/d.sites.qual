@@ -20,19 +20,19 @@ DESCRIPTION
 criteria established by \*Lrules\*O.
 Syntax of rule string is:
 \*C
-.DS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [D|C|A]#.RANGE
+.DS               [D|C|A]#.RANGE
 where D, C, or A specify Dimension, Category, or Attribute and RANGE is
 one of:
 \*C
-.DS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #-#, ge#, le#, eq#
+.DS               #-#, ge#, le#, eq#
 examples:
 .RS
 \*C
-.DS&nbsp; \*LD1.le-88.125\*O&nbsp;&nbsp;&nbsp; \*Weasting <= -88.125
-\*O&nbsp; \*LD3.100-200\*O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \*Wdimension 3 in range 100 to 200
-\*O&nbsp; \*LC.eq7.2\*O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \*Wcategory equal 7.2 (note no number after C)
-\*O&nbsp; \*LA2.ge5000\*O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \*W2nd double attribute >= 5000
-\*O&nbsp; \*LA1.-2.0--1.0\*O&nbsp;&nbsp;&nbsp; \*W1st double attribute in range -2.0 to -1.0\*O
+.DS  \*LD1.le-88.125\*O    \*Weasting <= -88.125
+\*O  \*LD3.100-200\*O      \*Wdimension 3 in range 100 to 200
+\*O  \*LC.eq7.2\*O         \*Wcategory equal 7.2 (note no number after C)
+\*O  \*LA2.ge5000\*O       \*W2nd double attribute >= 5000
+\*O  \*LA1.-2.0--1.0\*O    \*W1st double attribute in range -2.0 to -1.0\*O
 .RE
 If an output filename is provided, a new sites file containing the subset
 defined by the command will be written in the user's mapset. Header information
@@ -85,10 +85,10 @@ default: gray
 \*Lsize\*O
 .br
 
-Size, in pixels, in which the icon is to be drawn&nbsp;
+Size, in pixels, in which the icon is to be drawn 
 
 .br
-options: 0-1000&nbsp;
+options: 0-1000 
 
 .br
 default: 5
@@ -96,10 +96,10 @@ default: 5
 <p>\*Ltype\*O
 .br
 
-Specify the type of the icon&nbsp;
+Specify the type of the icon 
 
 .br
-options: x, diamond, box, +&nbsp;
+options: x, diamond, box, + 
 
 .br
 default: x
@@ -108,7 +108,7 @@ default: x
 \*Lrules\*O
 .br
 
-qualifying rules for display: [D|C|A]#.RANGE&nbsp;
+qualifying rules for display: [D|C|A]#.RANGE 
 
 .br
 where RANGE is one of #-#, ge#, le#, eq#
