@@ -132,13 +132,13 @@ struct field_info
 
     if ( drv == NULL && db == NULL ) { /* Set default values and create dbf db dir */
 	G_warning ( "Default driver / database set to:\n"
-		    "driver: dbf\ndatabase: $LOCATION/$MAPSET/dbf/" );
+		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
 	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
-	G_setenv2 ( "GV_DATABASE", "$LOCATION/$MAPSET/dbf/", G_VAR_MAPSET );
+	G_setenv2 ( "GV_DATABASE", "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/", G_VAR_MAPSET );
 	sprintf ( buf, "%s/%s/dbf", G_location_path(), G_mapset() );
 	G__make_mapset_element ( "dbf" );
 	drv = G_store ( "dbf" );
-	db = G_store ( "$LOCATION/$MAPSET/dbf" );
+	db = G_store ( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
     } else if ( drv == NULL ) {
        G_fatal_error ( "Default driver is not set" ); 
     } else if ( db == NULL ) {
@@ -423,13 +423,6 @@ Vect_subst_var ( char *in, char *map, char *mapset )
         sprintf (str, "%s%s%s", buf, G_location(), c+14);
     }
 
-    strcpy ( buf, str );
-    c = (char *) strstr ( buf, "$LOCATION" );
-    if ( c != NULL ) {
-        *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, G_location_path(), c+9);
-    }
-    
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$MAPSET" );
     if ( c != NULL ) {
