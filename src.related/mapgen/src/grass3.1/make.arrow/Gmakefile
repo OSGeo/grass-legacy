@@ -1,0 +1,16 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+
+
+UNIX_BIN = $(GRAPH)/macros
+
+
+all: $(UNIX_BIN)/make.arrow
+
+$(UNIX_BIN)/make.arrow: make.arrow
+	cp make.arrow $(UNIX_BIN)/make.arrow
+
+make.arrow:#
