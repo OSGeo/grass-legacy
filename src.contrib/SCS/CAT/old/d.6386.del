@@ -1,0 +1,66 @@
+
+
+
+d.6386.delete(1)  	     GRASS Reference Manual	    d.6386.delete(1)
+
+
+
+NAME
+     d.6386.delete - deletes images from a PC6386 workstation hard
+     disk, that were created by save.display.
+     (Available for PC6386 workstations, only)
+
+SYNOPSIS
+     d.6386.delete 
+
+DESCRIPTION
+     delete.display allows a user to :
+     interactively remove PC6386 saved images from the 
+     disk. Save.display will store an image produced by "display",
+     "Dcell", etc. from the screen to the 6386 hard disk. 
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
