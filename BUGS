@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.77 2000-11-13 14:16:48 markus Exp $
+$Id: BUGS,v 1.78 2000-11-14 14:39:35 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -247,14 +247,6 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - segm. fault (same thing with r.binfer)
   (reported by Stephan Holl <Stephan.Holl@stud.uni-hannover.de>)
   (being worked on by David D Gray)
-
-r.line 
- bugreport: r.line properly extracts geometry, but it doesn't attach
- any label to the vector file generated. I've read the manual page, but
- it doesn't speaks about attributes. In my application I also need
- attributes.  
- (reported by: Andrea Aime <aaime@comune.modena.it>)
-
 
 [RC]r.los:
   r.los seems to work perfectly if the elevation data is UTM.  But if the         

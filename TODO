@@ -1,4 +1,4 @@
-$Id: TODO,v 1.51 2000-11-13 04:26:17 cho Exp $
+$Id: TODO,v 1.52 2000-11-14 14:39:35 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -211,6 +211,7 @@ Modules:
 
 - ps.map:
   set CC option "-fwritable-strings" on Linux or, better, update ps.map!
+  -> still TODO??
   (Being worked on by ?)
 
 - r.buffer: should save info about used buffers into map history
@@ -226,9 +227,26 @@ Modules:
   (merge function of r.univar into r.info)
   (Being worked on by ?)
 
-- r.out.bin
-   write it
-  (Being worked on by ?)
+- r.line 
+ r.line properly extracts geometry, but it doesn't attach
+ any label to the vector file generated. I've read the manual page, but
+ it doesn't speaks about attributes. In my application I also need
+ attributes.  
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+ Comment from David:
+  The problem with the r.line issue is that it is not immediately obvious 
+  what should be assigned as an attribute, because attribute (and           
+  category) values will depend largely on what produces the lines and what  
+  information you would expect to get out of it, and this will vary with    
+  usage.                                                                    
+  The results of r.watershed was an example you gave. Also you might want   
+  to autodigitise a raster layer from a drawing package (eg. gimp - the    
+  new gimp is quite good at this as it handles large image files better).   
+  This can produce good results with some care, though I don't know how    
+  scalable it is. Another option might be to extract features from a       
+  scanned map based on colour, such as rivers or contours (untested). The   
+  different usages here mean that we would need different 'Methods' as      
+  options for data extraction I think.
 
 - r.profile
    r.profile only give the values of the cell between the two 
@@ -238,6 +256,7 @@ Modules:
      1 Km        200m                                                                
      2 Km        210m                                                                
      3 Km        150m  
+  (Being worked on by Bob Covill) 
 
 - r.surf.distance: write it
   this module would generate a distance surface (improved version of
