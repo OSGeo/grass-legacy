@@ -27,10 +27,12 @@ do
 	if [ ! -p ${DEV}/fifo.${i}a ]; then
 		rm -f ${DEV}/fifo.${i}a
 		${MKFIFO} ${DEV}/fifo.${i}a ${MKNOD_ARG}
+		touch ${DEV}/fifo.${i}a
 	fi
 	if [ ! -p ${DEV}/fifo.${i}b ]; then
 		rm -f ${DEV}/fifo.${i}b
 		${MKFIFO} ${DEV}/fifo.${i}b ${MKNOD_ARG}
+		touch ${DEV}/fifo.${i}b
 	fi
 	i=`expr $i + 1`
 done
