@@ -10,7 +10,8 @@ SUBDIRS1 = \
 	r.gdal \
 	r.his \
 	r.mapcalc \
-	r.neighbors
+	r.neighbors \
+	r.stats
 
 GDALBASED = r.gdal
 
