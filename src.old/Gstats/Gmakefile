@@ -1,0 +1,14 @@
+LIBES = $(GISLIB) 
+
+LIST  = main.o percent.o results.o tree.o \
+	raw_stats.o cell_stats.o
+
+$(BIN)/Gstats: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+
+$(LIST): global.h
+
+$(LIBES): #
+
+try: try.o
+	cc try.o $(LIBES) $(MATHLIB) -o $@
