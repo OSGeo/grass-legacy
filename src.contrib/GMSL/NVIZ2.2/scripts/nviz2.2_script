@@ -310,6 +310,7 @@ proc menu2 { menu } {
 	appBusy
          Nstart_zoom $fname [winfo screenwidth .] [winfo screenheight .]
 	 .top.canvas makecurrent
+	 Ndraw_all
 	appNotBusy
 	}	
 	} -underline 0 -label "Save Max. Resolution PPM(s)"
@@ -689,9 +690,6 @@ proc display_error { err_string } {
 	@/usr/local/lib/tk/bitmaps/error \
 	0 "Dismiss"
 }
-
-# Set the cancel function for drawing
-Nset_cancel_func update
 
 # and start the ball rolling...
 Nv_makeGUI .top

@@ -189,13 +189,8 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 	}
     }
 
-
-/* Done */
-/* Reset viewport and draw orinanl view */
     GS_set_viewport(a_orig, c_orig, b_orig, d_orig);
-    Ndraw_all_cmd(data, interp, argc, argv);
 
-      
 #if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
     Destroy_OS_Ctx();
 #endif
