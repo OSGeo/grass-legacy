@@ -42,7 +42,7 @@ db_d_open_database()
 /* record the open in the driver state */
     db__mark_database_open (
     	db_get_handle_dbname (&handle),
-    	db_get_handle_dbpath (&handle));
+    	db_get_handle_dbschema (&handle));
 /* DO NOT free the handle since we saved the pointers to the name,path */
 
 /* no results */

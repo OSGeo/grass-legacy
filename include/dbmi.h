@@ -141,7 +141,8 @@ typedef struct _db_driver {
 
 typedef struct _db_handle {
     dbString dbName;            /* database name               */
-    dbString dbPath;            /* directory containing dbName */
+    /* dbString dbPath; */            /* directory containing dbName */
+    dbString dbSchema;          /* database schema */
 } dbHandle;
 
 typedef struct _db_date_time {
@@ -208,7 +209,7 @@ typedef struct _db_index {
 typedef struct _db_driver_state 
 {
     char *dbname;
-    char *dbpath;
+    char *dbschema;
     int  open;
     int  ncursors;
     dbCursor **cursor_list;
@@ -249,6 +250,7 @@ typedef struct _db_connection
     char *driverName;
     /* char *hostName; */
     char *databaseName;
+    char *schemaName;
     char *location;
     char *user;
     char *password;

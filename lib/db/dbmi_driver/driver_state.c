@@ -22,12 +22,12 @@ db__test_database_open ()
 }
 
 void
-db__mark_database_open (dbname, dbpath)
+db__mark_database_open (dbname, dbschema)
     char *dbname;
-    char *dbpath;
+    char *dbschema;
 {
     state.dbname = dbname;
-    state.dbpath = dbpath;
+    state.dbschema = dbschema;
     state.open = 1;
 }
 
@@ -35,7 +35,7 @@ void
 db__mark_database_closed ()
 {
     free(state.dbname);
-    free(state.dbpath);
+    free(state.dbschema);
     state.open = 0;
 }
 
