@@ -102,10 +102,11 @@ int main(int argc, char **argv)
 	int oldval;
 	int newval;
 	char *mapset;
+	RASTER_MAP_TYPE type;
 	int in_fd;
 	int out_fd;
-	CELL **in_rows;
-	CELL *out_row;
+	DCELL **in_rows;
+	DCELL *out_row;
 	int nrows, row;
 	int ncols, col;
 
@@ -177,7 +178,7 @@ int main(int argc, char **argv)
 
 	verbose = !flag.q->answer;
 
-	mapset = G_find_cell2(in_name, "");
+	mapset = G_find_cell(in_name, "");
 	if (!mapset)
 		G_fatal_error("input file [%s] not found", in_name);
 
@@ -197,14 +198,16 @@ int main(int argc, char **argv)
 	if (in_fd < 0)
 		G_fatal_error("unable to open input file <%s@%s>", in_name, mapset);
 
-	out_fd = G_open_cell_new(out_name);
+	type = G_raster_map_type(in_name, mapset);
+
+	out_fd = G_open_raster_new(out_name, type);
 	if (out_fd < 0)
 		G_fatal_error("unable to open output file <%s>", out_name);
 
 	if (G_read_cats(in_name, mapset, &cats) == -1)
 	{
-		G_fatal_error("error in reading cats file for %s", in_name);
-		exit(1);
+		G_warning("error in reading cats file for %s", in_name);
+		G_init_cats(0, "", &cats);
 	}
 
 	if (G_read_colors(in_name, mapset, &colr) == -1)
@@ -221,34 +224,34 @@ int main(int argc, char **argv)
 	if (opt.new->answer)
 		G_set_cat(newval, "grown cells", &cats);
 
-	in_rows = G_malloc((size * 2 + 1) * sizeof(CELL *));
+	in_rows = G_malloc((size * 2 + 1) * sizeof(DCELL *));
 
 	for (row = 0; row <= size * 2; row++)
-		in_rows[row] = G_allocate_cell_buf();
+		in_rows[row] = G_allocate_d_raster_buf();
 
-	out_row = G_allocate_cell_buf();
+	out_row = G_allocate_d_raster_buf();
 
 	for (row = 0; row < size; row++)
-		G_get_c_raster_row(in_fd, in_rows[size + row], row);
+		G_get_d_raster_row(in_fd, in_rows[size + row], row);
 
 	for (row = 0; row < nrows; row++)
 	{
-		CELL *tmp;
+		DCELL *tmp;
 		int i;
 
 		if (row + size < nrows)
-			G_get_c_raster_row(in_fd, in_rows[size * 2], row + size);
+			G_get_d_raster_row(in_fd, in_rows[size * 2], row + size);
 
 		for (col = 0; col < ncols; col++)
 		{
-			CELL *c = &in_rows[size][col];
+			DCELL *c = &in_rows[size][col];
 
-			if (!G_is_c_null_value(c))
+			if (!G_is_d_null_value(c))
 			{
 				if (opt.old->answer)
 				{
 					if (oldval < 0)
-						G_set_c_null_value(&out_row[col], 1);
+						G_set_d_null_value(&out_row[col], 1);
 					else
 						out_row[col] = oldval;
 				}
@@ -270,7 +273,7 @@ int main(int argc, char **argv)
 
 				c = &in_rows[size + dy][x];
 
-				if (!G_is_c_null_value(c))
+				if (!G_is_d_null_value(c))
 				{
 					out_row[col] = opt.new->answer
 						? newval
@@ -280,10 +283,10 @@ int main(int argc, char **argv)
 			}
 
 			if (i == count)
-				G_set_c_null_value(&out_row[col], 1);
+				G_set_d_null_value(&out_row[col], 1);
 		}
 
-		G_put_c_raster_row(out_fd, out_row);
+		G_put_d_raster_row(out_fd, out_row);
 
 		if (verbose)
 			G_percent(row, nrows, 2);
