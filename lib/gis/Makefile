@@ -96,6 +96,7 @@ LIB_OBJS = \
     history.o\
     home.o\
     ialloc.o\
+    icon.o\
     index.o\
     init_map.o\
     intersect.o\
