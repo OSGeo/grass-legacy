@@ -1,0 +1,61 @@
+.TH pbmmask 1 "08 August 1989"
+.SH NAME
+pbmmask - create a mask bitmap from a regular bitmap
+.SH SYNOPSIS
+.B pbmmask
+.RB [ -expand ]
+.RI [ pbmfile ]
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Creates a corresponding mask bitmap and writes it out.
+.PP
+The color to be interpreted as "background" is determined automatically.
+Regardless of which color is background, the mask will be white where
+the background is and black where the figure is.
+.PP
+This lets you do a masked paste like this, for objects with a black background:
+.nf
+    pbmmask obj > objmask
+    pbmpaste < dest -and objmask <x> <y> | pbmpaste -or obj <x> <y>
+.fi
+For objects with a white background, you can either invert them or
+add a step:
+.nf
+    pbmmask obj > objmask
+    pnminvert objmask | pbmpaste -and obj 0 0 > blackback
+    pbmpaste < dest -and objmask <x> <y> | pbmpaste -or blackback <x> <y>
+.fi
+Note that this three-step version works for objects with black backgrounds
+too, if you don't care about the wasted time.
+.PP
+You can also use masks with graymaps and pixmaps, using the
+.I pnmarith
+tool.  For instance:
+.nf
+    ppmtopgm obj.ppm | pgmtopbm -threshold | pbmmask > objmask.pbm
+    pnmarith -multiply dest.ppm objmask.pbm > t1.ppm
+    pnminvert objmask.pbm | pnmarith -multiply obj.ppm - > t2.ppm
+    pnmarith -add t1.ppm t2.ppm
+.fi
+An interesting variation on this is to pipe the mask through the
+.I pnmsmooth
+script before using it.  This makes the boundary between the two images less
+sharp.
+.OPTIONS
+.TP
+.B -expand
+Expands the mask by one pixel out from the image.
+This is useful if you want a little white border around your image.
+(A better solution might be to turn the
+.I pbmlife
+tool into a general cellular automaton tool...)
+.SH "SEE ALSO"
+pbmpaste(1), pnminvert(1), pbm(5), pnmarith(1), pnmsmooth(1)
+.SH AUTHOR
+Copyright (C) 1988 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
