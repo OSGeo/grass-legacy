@@ -1,0 +1,10 @@
+MODULE_TOPDIR = ../..
+
+PGM = d.where
+
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+DEPENDENCIES= $(DISPLAYDEP) $(RASTERDEP) $(COORCNVLIBDEP) $(GISDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
