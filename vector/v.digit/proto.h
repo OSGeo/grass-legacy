@@ -7,11 +7,13 @@ int end (void);
 
 /* Edit */
 int new_line (void);
+int delete_line (void);
 
 /* Display */
-int display_points ( struct line_pnts *, int );
-int display_line ( int );
+int display_points ( struct line_pnts *, int, int );
+int display_line ( int , int , int );
 int display_map ( void );
+int blot_point (double *, double *);
 
 int c_cancel (ClientData , Tcl_Interp *, int, char **);
 int c_next_tool (ClientData , Tcl_Interp *, int, char **);
