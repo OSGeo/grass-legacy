@@ -11484,9 +11484,14 @@ if test -n "${USE_TCLTK}" -a -n "${USE_OPENGL}" ; then
     USE_TOGL="1"
 fi
 
+USE_GLWM=
+if test -n "${USE_GLW}" -a -n "${USE_MOTIF}" ; then
+    USE_GLWM="1"
+fi
+
 
 echo $ac_n "checking whether to build W11""... $ac_c" 1>&6
-echo "configure:11490: checking whether to build W11" >&5
+echo "configure:11495: checking whether to build W11" >&5
 if test -n "$USE_W11" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_W11="src/display/devices/windows"
@@ -11499,7 +11504,7 @@ fi
 
 
 echo $ac_n "checking whether to build XDRIVER""... $ac_c" 1>&6
-echo "configure:11503: checking whether to build XDRIVER" >&5
+echo "configure:11508: checking whether to build XDRIVER" >&5
 if test -n "$USE_X11" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_XDRIVER="src/display/devices/XDRIVER"
@@ -11512,7 +11517,7 @@ fi
 
 
 echo $ac_n "checking whether to build NVIZ""... $ac_c" 1>&6
-echo "configure:11516: checking whether to build NVIZ" >&5
+echo "configure:11521: checking whether to build NVIZ" >&5
 if test -n "$USE_TOGL" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_NVIZ="src.contrib/GMSL/NVIZ2.2"
@@ -11525,7 +11530,7 @@ fi
 
 
 echo $ac_n "checking whether to build PNGdriver""... $ac_c" 1>&6
-echo "configure:11529: checking whether to build PNGdriver" >&5
+echo "configure:11534: checking whether to build PNGdriver" >&5
 if test -n "$USE_PNG" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_PNGDRIVER="src/display/devices/PNGdriver"
@@ -11538,7 +11543,7 @@ fi
 
 
 echo $ac_n "checking whether to build PostgreSQL programs""... $ac_c" 1>&6
-echo "configure:11542: checking whether to build PostgreSQL programs" >&5
+echo "configure:11547: checking whether to build PostgreSQL programs" >&5
 if test -n "$USE_POSTGRES" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_POSTGRESQL="src.garden/grass.postgresql"
@@ -11551,7 +11556,7 @@ fi
 
 
 echo $ac_n "checking whether to build ODBC library""... $ac_c" 1>&6
-echo "configure:11555: checking whether to build ODBC library" >&5
+echo "configure:11560: checking whether to build ODBC library" >&5
 if test -n "$USE_ODBC" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_ODBC="src/libes/dbmi/drivers/odbc"
@@ -11564,7 +11569,7 @@ fi
 
 
 echo $ac_n "checking whether to build xganim""... $ac_c" 1>&6
-echo "configure:11568: checking whether to build xganim" >&5
+echo "configure:11573: checking whether to build xganim" >&5
 if test -n "$USE_MOTIF" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_XGANIM="src.contrib/GMSL/xganim"
@@ -11577,7 +11582,7 @@ fi
 
 
 echo $ac_n "checking whether to build FreeType programs""... $ac_c" 1>&6
-echo "configure:11581: checking whether to build FreeType programs" >&5
+echo "configure:11586: checking whether to build FreeType programs" >&5
 if test -n "$USE_FREETYPE" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_FREETYPE="src/display/d.text.freetype"
@@ -11590,7 +11595,7 @@ fi
 
 
 echo $ac_n "checking whether to build NLS support""... $ac_c" 1>&6
-echo "configure:11594: checking whether to build NLS support" >&5
+echo "configure:11599: checking whether to build NLS support" >&5
 if test -n "$USE_NLS" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_NLS="locale"
@@ -11603,7 +11608,7 @@ fi
 
 
 echo $ac_n "checking whether to build Panel Library""... $ac_c" 1>&6
-echo "configure:11607: checking whether to build Panel Library" >&5
+echo "configure:11612: checking whether to build Panel Library" >&5
 if test -n "$USE_GL" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_PANELLIB="src.contrib/CERL/SGI/panel/9.6/src"
@@ -11615,7 +11620,7 @@ fi
 
 
 echo $ac_n "checking whether to build SG3d""... $ac_c" 1>&6
-echo "configure:11619: checking whether to build SG3d" >&5
+echo "configure:11624: checking whether to build SG3d" >&5
 if test -n "$USE_GL" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_SG3D="src.contrib/GMSL/SG3d"
@@ -11626,12 +11631,25 @@ fi
 
 
 
+
+echo $ac_n "checking whether to build GLw programs""... $ac_c" 1>&6
+echo "configure:11637: checking whether to build GLw programs" >&5
+if test -n "$USE_GLWM" ; then
+	echo "$ac_t""yes" 1>&6
+	BUILD_GLWM="src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL"
+else
+	echo "$ac_t""no" 1>&6
+	BUILD_GLWM=
+fi
+
+
+
 echo $ac_n "checking whether to build FFTW programs""... $ac_c" 1>&6
-echo "configure:11631: checking whether to build FFTW programs" >&5
+echo "configure:11649: checking whether to build FFTW programs" >&5
 echo "$ac_t""" 1>&6
 
 echo $ac_n "checking whether to build i.fft""... $ac_c" 1>&6
-echo "configure:11635: checking whether to build i.fft" >&5
+echo "configure:11653: checking whether to build i.fft" >&5
 if test -n "$USE_FFTW" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_I_FFT="src/imagery/i.fft"
@@ -11643,7 +11661,7 @@ fi
 
 
 echo $ac_n "checking whether to build i.zc""... $ac_c" 1>&6
-echo "configure:11647: checking whether to build i.zc" >&5
+echo "configure:11665: checking whether to build i.zc" >&5
 if test -n "$USE_FFTW" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_I_ZC="src/imagery/i.zc"
@@ -11655,7 +11673,7 @@ fi
 
 
 echo $ac_n "checking whether to build r.surf.fractal""... $ac_c" 1>&6
-echo "configure:11659: checking whether to build r.surf.fractal" >&5
+echo "configure:11677: checking whether to build r.surf.fractal" >&5
 if test -n "$USE_FFTW" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_R_SURF_FRACTAL="src/raster/r.surf.fractal"
@@ -11667,7 +11685,7 @@ fi
 
 
 echo $ac_n "checking whether to build i.shape""... $ac_c" 1>&6
-echo "configure:11671: checking whether to build i.shape" >&5
+echo "configure:11689: checking whether to build i.shape" >&5
 if test -n "$USE_FFTW" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_I_SHAPE="src.contrib/CERL/imagery/i.shape"
@@ -11679,11 +11697,11 @@ fi
 
 
 echo $ac_n "checking whether to build C++ programs""... $ac_c" 1>&6
-echo "configure:11683: checking whether to build C++ programs" >&5
+echo "configure:11701: checking whether to build C++ programs" >&5
 echo "$ac_t""" 1>&6
 
 echo $ac_n "checking whether to build r.terraflow""... $ac_c" 1>&6
-echo "configure:11687: checking whether to build r.terraflow" >&5
+echo "configure:11705: checking whether to build r.terraflow" >&5
 if test -n "$USE_CXX" ; then
 	echo "$ac_t""yes" 1>&6
 	BUILD_R_TERRAFLOW="src.contrib/DUKE/r.terraflow"
@@ -11920,6 +11938,7 @@ s%@BUILD_FREETYPE@%$BUILD_FREETYPE%g
 s%@BUILD_NLS@%$BUILD_NLS%g
 s%@BUILD_PANELLIB@%$BUILD_PANELLIB%g
 s%@BUILD_SG3D@%$BUILD_SG3D%g
+s%@BUILD_GLWM@%$BUILD_GLWM%g
 s%@BUILD_I_FFT@%$BUILD_I_FFT%g
 s%@BUILD_I_ZC@%$BUILD_I_ZC%g
 s%@BUILD_R_SURF_FRACTAL@%$BUILD_R_SURF_FRACTAL%g

@@ -1140,6 +1140,11 @@ if test -n "${USE_TCLTK}" -a -n "${USE_OPENGL}" ; then
     USE_TOGL="1"
 fi
 
+USE_GLWM=
+if test -n "${USE_GLW}" -a -n "${USE_MOTIF}" ; then
+    USE_GLWM="1"
+fi
+
 LOC_OPTIONAL(W11,W11,W11,src/display/devices/windows)
 
 LOC_OPTIONAL(XDRIVER,X11,XDRIVER,src/display/devices/XDRIVER)
@@ -1160,6 +1165,8 @@ LOC_OPTIONAL(NLS support,NLS,NLS,locale)
 
 LOC_OPTIONAL(Panel Library,GL,PANELLIB,src.contrib/CERL/SGI/panel/9.6/src)
 LOC_OPTIONAL(SG3d,GL,SG3D,src.contrib/GMSL/SG3d)
+
+LOC_OPTIONAL(GLw programs,GLWM,GLWM,src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
 
 AC_MSG_CHECKING(whether to build FFTW programs)
 AC_MSG_RESULT()
