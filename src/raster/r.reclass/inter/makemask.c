@@ -35,7 +35,7 @@ makemask()
     table = (long *) G_calloc (i, sizeof(long));
 
 /* let the user build reclass table */
-    maketable (&cats, table, 1) ; 
+    maketable (&cats, table, 0, cats.num, 1) ; 
     ncats = -1;
     for (i=0; i <= cats.num; i++)
 	if (table[i])
@@ -57,7 +57,7 @@ makemask()
     G_set_cat ((CELL)1, "Mask data", &new_cats);
 
 /* run reclass now */
-    do_reclass (old_name, old_mapset, "MASK", &cats, &new_cats, table);
+    do_reclass (old_name, old_mapset, "MASK", &cats, &new_cats, table, 0, cats.num);
     G_free_cats (&cats);
     G_free_cats (&new_cats);
     free(table);
