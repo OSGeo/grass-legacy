@@ -9,9 +9,9 @@
 
 int plot1 (
     struct Map_info *Map, int type, int area, 
-    struct cat_list *Clist, int color, int fcolor, int chcat, int icon, int size)
+    struct cat_list *Clist, int color, int fcolor, int chcat, int icon, int size, int id_flag)
 {
-    int i, ltype;
+    int i, ltype, nlines, line;
     double *x, *y;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -29,27 +29,43 @@ int plot1 (
 
     R_color(color) ;
 
+    if ( Vect_level ( Map ) >= 2 )
+	nlines = Vect_get_num_lines ( Map );
+
+    line = 0;
     while (1)
      {
-	ltype =  Vect_read_next_line (Map, Points, Cats);   
-        switch ( ltype )
-	{
-	case -1:
-	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
-	    return -1;
-	case -2: /* EOF */
-	    return  0;
+	if ( Vect_level ( Map ) >= 2 ) { 
+	    line++;
+	    if ( line > nlines ) return 0;
+	    if ( !Vect_line_alive (Map, line) ) continue;
+	    ltype =  Vect_read_line (Map, Points, Cats, line);   
+	} else {
+	    ltype =  Vect_read_next_line (Map, Points, Cats);   
+	    switch ( ltype )
+	    {
+	    case -1:
+		fprintf (stderr, "\nERROR: vector file - can't read\n" );
+		return -1;
+	    case -2: /* EOF */
+		return  0;
+	    }
 	}
 
 	if ( !(type & ltype) ) continue;
 
 	if ( chcat ) {
-	     if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
-		 if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+	     if ( id_flag ) { /* use line id */
+		 if ( !(Vect_cat_in_cat_list ( line, Clist)) )
 		     continue;
 	     } else {
-		 continue;
-	     } 
+		 if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
+		     if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+			 continue;
+		 } else {
+		     continue;
+		 } 
+	     }
 	}
 	
 	x = Points->x;

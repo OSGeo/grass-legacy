@@ -37,7 +37,7 @@ main (int argc, char **argv)
 	struct Option *field_opt, *cat_opt, *lfield_opt;
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
-	struct Flag   *_quiet;
+	struct Flag   *_quiet, *id_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -152,6 +152,10 @@ main (int argc, char **argv)
 	_quiet->key		= 'v';
 	_quiet->description	= "Run verbosely";
 
+	id_flag = G_define_flag ();
+	id_flag->key		= 'i';
+	id_flag->description	= "Use values from 'cat' option as line id";
+	
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
@@ -351,13 +355,18 @@ main (int argc, char **argv)
          
 	if ( area ) {
 	    if ( level >= 2 )
-	        stat = darea ( &Map, Clist, color, fcolor, chcat );
+	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer );
 	    else
 		G_warning ("Cannot display areas, topology not available");
         }
 
-	if ( display & DISP_SHAPE ) 
-	    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, icon, size);
+	if ( display & DISP_SHAPE ) {
+	    if ( id_flag->answer && level < 2 ) {
+		G_warning ("Cannot display lines by id, topology not available");
+	    } else {
+	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, icon, size, (int) id_flag->answer );
+	    }
+	}
 
         R_color(color);
 	if ( display & DISP_DIR )
