@@ -764,7 +764,7 @@ G_set_null_rs2(RASTER_ROW2 row2, int row, int col, int num)
  * METHOD 2
  *****************************************************************************/
 
-/* All macros are defined in libtir.h. */
+/* All macro functions are defined in libtir.h. */
 
 #endif			/* End of method 2 */
 
