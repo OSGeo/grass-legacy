@@ -5,6 +5,7 @@
 
 **
 **  Modified for Vectlib 3/1991  dpg
+**  Added Vect_get_isle_points ()  5/1992 dpg
 */
 
 #include "V_.h"
@@ -13,6 +14,10 @@
 **  returns the polygon array of points  in BPoints
 **   returns  number of points or -1 on error
 */
+
+static int first_time = 1;	/* zero at startup */
+static struct line_pnts Points;
+
 int
 Vect_get_area_points (Map, area, BPoints)
     struct Map_info *Map;
@@ -23,9 +28,6 @@ Vect_get_area_points (Map, area, BPoints)
 	int start, end, to, from, inc;
 	P_AREA *Area;
 	int done_yet;
-
-	static int first_time = 1;	/* zero at startup */
-	static struct line_pnts Points;
 
 
 	BPoints->n_points = 0;
@@ -40,7 +42,7 @@ Vect_get_area_points (Map, area, BPoints)
 
 	for (i = 0 ; i < Area->n_lines ; i++)
 	{
-		line = ABS(Area->lines[i]);
+		line = abs(Area->lines[i]);
 
 		if (0 > V2_read_line (Map, &Points, line))
 			return (-1);
@@ -49,6 +51,67 @@ Vect_get_area_points (Map, area, BPoints)
 			return(-1) ;
 
 		if (Area->lines[i] < 0)
+		{
+			start = Points.n_points - 1;
+			inc = -1 ;
+			end = 0;
+		}
+		else
+		{
+			end = Points.n_points - 1;
+			inc = 1 ;
+			start = 0;
+		}
+
+		done_yet = 0;
+		for(from = start, to = BPoints->n_points ; !done_yet ; from+=inc, to++)
+		{
+			if (from == end)
+				done_yet = 1;
+			BPoints->x[to] = Points.x[from];
+			BPoints->y[to] = Points.y[from];
+		}
+		BPoints->n_points = Points.n_points + BPoints->n_points ;
+
+	}
+
+	return (BPoints->n_points);
+}
+
+int
+Vect_get_isle_points (Map, isle, BPoints)
+    struct Map_info *Map;
+    int isle;
+    struct line_pnts *BPoints;
+{
+	register int i, line;
+	int start, end, to, from, inc;
+	P_ISLE *Isle;
+	int done_yet;
+
+
+
+	BPoints->n_points = 0;
+	Isle =  &(Map->Isle[isle]) ;
+
+	if (first_time == 1)
+	{
+		Points.alloc_points = 0;	/* executed only once */
+		first_time = 0; 
+	}
+
+
+	for (i = 0 ; i < Isle->n_lines ; i++)
+	{
+		line = abs(Isle->lines[i]);
+
+		if (0 > V2_read_line (Map, &Points, line))
+			return (-1);
+
+		if (0 > dig_alloc_points (BPoints, Points.n_points + BPoints->n_points + 1))
+			return(-1) ;
+
+		if (Isle->lines[i] < 0)
 		{
 			start = Points.n_points - 1;
 			inc = -1 ;
