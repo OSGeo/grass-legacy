@@ -224,7 +224,9 @@ if [ $VERBOSE -eq 1 ] ; then
     echo Coordinate format: ${PROJ} 1>&2
 fi
 if [ "$PROJ" != "DDD" ] ; then
-    # Why??
+    # Why? Because v.in.ascii cannot, and cs2cs with trouble deals with DMS 
+    # or DM.MM formatted input and I'm not going to start doing that sort
+    # of math in a shell script.
     echo "Only DDD coordinates currently supported. [$PROJ]"
     rm -f ${TMP}*
     exit 1
@@ -275,21 +277,24 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	#### import into new ascii points file
 	if [ $WPT -eq 1 ] ; then
 	    echo "Importing Waypoints..."
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" catcol=0 \
+	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 	    	columns='x double precision, y double precision, type varchar(1), name varchar(10), comments varchar(40)'
+	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
 	    echo "Importing Routes as points..."
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" catcol=0 \
+	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 	    	columns='x double precision, y double precision, type varchar(1), name varchar(10), comments varchar(40)'
+	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    echo "Importing Track as points..."
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" catcol=0 \
+	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 	    	columns='x double precision, y double precision, type varchar(1), localtime varchar(40)'
+	    EXITCODE=$?
 	fi
 
-	if [ $? -ne 0 ] ; then
+	if [ $EXITCODE -ne 0 ] ; then
 	    echo "$PROG: Error importing data" 1>&2
 	    rm -f ${TMP}*
 	    exit 1
