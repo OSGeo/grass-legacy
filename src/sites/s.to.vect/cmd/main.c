@@ -68,12 +68,12 @@ int main (int argc, char *argv[])
     outvect->multiple     = NO;
     outvect->gisprompt    = "new,dig,vector";
 
-	opt_desc = G_define_option();
-	opt_desc->key         = "desc";
-	opt_desc->description = "String field in site_list to use in vector file";
-	opt_desc->type        = TYPE_INTEGER;
-	opt_desc->required    = NO;
-	opt_desc->answer      = "1";
+    opt_desc = G_define_option();
+    opt_desc->key         = "desc";
+    opt_desc->description = "String field in site_list to use in vector file";
+    opt_desc->type        = TYPE_INTEGER;
+    opt_desc->required    = NO;
+    opt_desc->answer      = "1";
 	
     G_gisinit(argv[0]);
     if (G_parser(argc, argv)) exit(-1);
@@ -122,38 +122,38 @@ int main (int argc, char *argv[])
 
     if ((site = fopen (N_site_file, "r+")) == NULL)
     {
-		sprintf (buf, "Not able to open site file <%s>\n", N_site_file);
-		G_fatal_error (buf);
+        sprintf (buf, "Not able to open site file <%s>\n", N_site_file);
+        G_fatal_error (buf);
     }
 
     if ( (attr = fopen(N_att_file, "w+") ) == NULL )
-       {
-       sprintf (buf, "Not able to open attribute file <%s>\n", N_att_file);
-       G_fatal_error (buf);
-       }
+    {
+        sprintf (buf, "Not able to open attribute file <%s>\n", N_att_file);
+        G_fatal_error (buf);
+    }
 
     temp_file = G_tempfile();
     if ( (tmp = fopen(temp_file, "w+") ) == NULL )
-       {
+    {
        sprintf (buf, "Not able to open temporary category file <%s>\n", temp_file);
        G_fatal_error (buf);
-       }
+    }
 
                     /* Create new digit file */
     if ((vect_read = Vect_open_new (&Map, map_name)) < 0)
-	{
+    {
 	G_fatal_error("Creating new vector file.\n") ;
 	exit(-1) ;
-	}
+    }
 
 	/* added for string field description */
-	index = atoi(opt_desc->answer);
-	if(index <= 0) {
-			G_warning("Got field number less than 1 for string attribute.\n"
-							"Setting to 1...\n");
-			index = 1;
-	}
-	index--;
+    index = atoi(opt_desc->answer);
+    if(index <= 0) {
+        G_warning("Got field number less than 1 for string attribute.\n"
+                                        "Setting to 1...\n");
+        index = 1;
+    }
+    index--;
 	
     get_head_info(&(Map.head));
 
@@ -174,63 +174,63 @@ int main (int argc, char *argv[])
 
     n_points = 2;
 
-	/******** Modified for 5.0 sites API EGM 10/2000 ********/
-	count = 0;
-	if (G_site_describe(site, &dims, &map_type, &strs, &dbls) != 0) {
-			G_fatal_error("Unable to guess site_list format!\n");
-	}
-	s = G_site_new_struct(map_type, dims, strs, dbls);
-	
-	if ((index + 1) > s->str_alloc) {
-			if(s->str_alloc <= 0) {
-					G_warning("No string attributes in site_list\n");
-					index = -1;
-			}
-			else {
-					index = 0;
-					G_warning("String attribute index out of range.\n"
-								"Using first attribute instead.\n");
-			}
-	}
-	while (G_site_get(site,s) >= 0) {
-			xarray[1] = xarray[0] = s->east;
-			yarray[1] = yarray[0] = s->north;
-			count++;
-			
-			switch (s->cattype) {
-					case CELL_TYPE:
-							fprintf(attr,"P %15.6f %15.6f %d\n",
-										s->east, s->north, s->ccat);
-							fprintf(tmp, "%d:", s->ccat);
-							break;
-					case FCELL_TYPE:
-							fprintf(attr,"P %15.6f %15.6f %-15.6f\n",
-										s->east, s->north, s->fcat);
-							fprintf(tmp, "%f:", s->fcat);
-							break;
-					case DCELL_TYPE:
-							fprintf(attr,"P %15.6f %15.6f %15.6f\n",
-										s->east, s->north, s->dcat);
-							fprintf(tmp, "%f:", s->dcat);
-							break;
-					default:
-							fprintf(attr,"P %15.6f %15.6f %d\n",
-										s->east, s->north, count);
-							fprintf(tmp, "%d:", count);
-			}
+    /******** Modified for 5.0 sites API EGM 10/2000 ********/
+    count = 0;
+    if (G_site_describe(site, &dims, &map_type, &strs, &dbls) != 0) {
+        G_fatal_error("Unable to guess site_list format!\n");
+    }
+    s = G_site_new_struct(map_type, dims, strs, dbls);
+    
+    if ((index + 1) > s->str_alloc) {
+        if(s->str_alloc <= 0) {
+            G_warning("No string attributes in site_list\n");
+            index = -1;
+        }
+        else {
+            index = 0;
+            G_warning("String attribute index out of range.\n"
+                                    "Using first attribute instead.\n");
+        }
+    }
+    while (G_site_get(site,s) >= 0) {
+        xarray[1] = xarray[0] = s->east;
+        yarray[1] = yarray[0] = s->north;
+        count++;
+        
+        switch (s->cattype) {
+            case CELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %d\n",
+                                        s->east, s->north, s->ccat);
+                fprintf(tmp, "%d:", s->ccat);
+                break;
+            case FCELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %-15.6f\n",
+                                        s->east, s->north, s->fcat);
+                fprintf(tmp, "%f:", s->fcat);
+                break;
+            case DCELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %15.6f\n",
+                                        s->east, s->north, s->dcat);
+                fprintf(tmp, "%f:", s->dcat);
+                break;
+            default:
+                fprintf(attr,"P %15.6f %15.6f %d\n",
+                                        s->east, s->north, count);
+                fprintf(tmp, "%d:", count);
+        }
 
-			if (index >= 0) {
-					fprintf(tmp, "%s\n", s->str_att[index]);
-			}
-			else {
-					fprintf(tmp, "\n");
-			}
+        if (index >= 0) {
+            fprintf(tmp, "%s\n", s->str_att[index]);
+        }
+        else {
+            fprintf(tmp, "\n");
+        }
 
-		     /* make a vector dig record */
-	    if (0 > Vect_copy_xy_to_pnts (Points, xarray, yarray, n_points))
-	    	G_fatal_error ("Vect_copy error\n");
-	    Vect_write_line (&Map,  (unsigned int) type, Points);
-	}
+                 /* make a vector dig record */
+        if (0 > Vect_copy_xy_to_pnts (Points, xarray, yarray, n_points))
+            G_fatal_error ("Vect_copy error\n");
+        Vect_write_line (&Map,  (unsigned int) type, Points);
+    }
     fprintf(stderr,"\n");
     fclose(attr);
     fclose(site);
@@ -260,7 +260,7 @@ int main (int argc, char *argv[])
     fprintf(cats,"# %d categories\n%s\n\n0.00 0.00 0.00 0.00\n0:no data\n",
 					count,N_name);
     while (fgets (buf, sizeof(buf), tmp) != NULL)
-            fprintf(cats,"%s",buf);
+        fprintf(cats,"%s",buf);
 
     fclose(cats);
     fclose(tmp);
@@ -276,3 +276,4 @@ int main (int argc, char *argv[])
     fprintf (stdout,"\n<%s> vector file complete\n", N_name); 
     exit (1);
 }
+/* vim: softtabstop=4 shiftwidth=4 expandtab */
