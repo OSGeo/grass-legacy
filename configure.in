@@ -1206,9 +1206,6 @@ AC_SUBST(STRIPFLAG)
 GRASS_HOME=${DSTDIR}
 AC_SUBST(GRASS_HOME)
 
-INST_DIR="${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}"
-AC_SUBST(INST_DIR)
-
 #remove first to avoid link tool problems (5.0 links):
 
 \rm -f include/version.h include/winname.h
@@ -1233,7 +1230,7 @@ LOC_MSG([GRASS is now configured for:  ${host}])
 LOC_MSG()
 LOC_MSG([ Source directory:            ${SRCDIR}])
 LOC_MSG([ Build directory:             ${DSTDIR}])
-LOC_MSG([ Installation directory:      ${INST_DIR}])
+LOC_MSG([ Installation directory:      ${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}])
 LOC_MSG([ Startup script in directory: ${bindir}])
 LOC_MSG([ C compiler:                  ${CC} ${CFLAGS}])
 LOC_MSG([ C++ compiler:                ${CXX} ${CXXFLAGS}])
