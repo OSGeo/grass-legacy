@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	buildSQL.c	/^char *buildSQL(key, col, table, input, output, joi/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+readSQLout	readSQLout.c	/^int readSQLout(tmpfile_out, outFlag, key, col, inp/
+row_or_col	row_or_col.c	/^int row_or_col(tmpfile_out, ALLOPTS) $/
+runSQL	runSQL.c	/^runSQL(sqlin, input, output, key, col, ALLOPTS )$/
