@@ -46,9 +46,11 @@ int parse_conn ( char *str, PGCONN *pgconn )
 	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
 	       pgconn->dbname = G_store ( tokens[i] + 7 );
 	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
-	       pgconn->user = G_store ( tokens[i] + 5 );
+	       G_warning ( "'user' in database definition is not supported, use db.connect" );
+	       /* pgconn->user = G_store ( tokens[i] + 5 ); */
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
-	       pgconn->password = G_store ( tokens[i] + 9 );
+	       /* pgconn->password = G_store ( tokens[i] + 9 ); */
+	       G_warning ( "'password' in database definition is not supported, use db.connect" );
 	   else {
 	       append_error ( "Unknown option in database definition for postgres: ");
 	       append_error ( tokens[i] );

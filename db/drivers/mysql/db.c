@@ -63,9 +63,11 @@ int parse_conn ( char *str, MYCONN *myconn )
 	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
 	       myconn->dbname = G_store ( tokens[i] + 7 );
 	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
-	       myconn->user = G_store ( tokens[i] + 5 );
+	       G_warning ( "'user' in database definition is not supported, use db.connect" );
+	      /* myconn->user = G_store ( tokens[i] + 5 ); */
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
-	       myconn->password = G_store ( tokens[i] + 9 );
+	       G_warning ( "'password' in database definition is not supported, use db.connect" );
+	      /* myconn->password = G_store ( tokens[i] + 9 ); */
 	   else 
                G_warning ( "Unknown option in database definition for mysql: '%s'", tokens[i] );
 	   
@@ -80,7 +82,7 @@ int parse_conn ( char *str, MYCONN *myconn )
 int db__driver_open_database(handle)
      dbHandle *handle;
 {
-    char *name;
+    char *name, *user, *password;
     char emsg[MYSQL_MSG];
     dbConnection connection;
     MYCONN myconn;
@@ -112,10 +114,15 @@ int db__driver_open_database(handle)
 	    
     strcpy(db.name, myconn.dbname);
 
+    db_get_login ( "mysql", name, &user, &password );
+
     /* Try to connect first maybe without user/password */
     mysql_init(&mysql_conn);
-    ret_conn = mysql_real_connect(&mysql_conn, myconn.host, myconn.user, myconn.password, myconn.dbname, 
+    ret_conn = mysql_real_connect(&mysql_conn, myconn.host, user, password, myconn.dbname, 
 		myconn.port, myconn.socket, 0);
+
+    free ( user );
+    free ( password );
 
     if ( ret_conn == NULL ) {  
 	  snprintf(emsg, sizeof(emsg), "mysql_real_connect() error (%d): %s\n",
