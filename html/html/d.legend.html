@@ -19,9 +19,10 @@ active frame on the graphics monitor.
 <BR>
 <B>d.legend help</B> 
 <BR>
-<B>d.legend map=</B><EM>name</EM> 
+<B>d.legend [<B>-n</B>] map=</B><EM>name</EM> 
 [<B>color=</B><EM>name</EM>] 
 [<B>lines=</B><EM>value</EM>] 
+[<B>show=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -52,6 +53,14 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 
 <P>
 
+<H3>Flag:</H3>
+   
+<DL>
+<DT><B>-n</B>
+<DD>Do not display no data (NULL) values in legend.
+</DL>
+
+
 <H3>Parameters:</H3>
 
 <DL>
@@ -80,7 +89,12 @@ lines.
 Options: 1 - 1000 
 <BR>
 Default: Set <EM>lines</EM> value equal to the number of
-<EM>map</EM> categories </DL>
+<EM>map</EM> categories
+<DT><B>show=</B><EM>name</EM>
+<DD> Show either values or categories. Or both
+<BR>      options: val,cat
+<BR>      default: val,cat
+</DL>
 
 <H2>NOTES</H2>
 
