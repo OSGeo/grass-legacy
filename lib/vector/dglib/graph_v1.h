@@ -112,6 +112,12 @@ __BEGIN_DECLS
 
 
 
+int 		gngrp_add_node_V1(
+			gnGrpGraph_s *  pgraph,
+			gnInt32_t       lNodeId,
+			void * 			pvNodeAttr,	
+			gnInt32_t 		nFlags
+			);
 int 		gngrp_add_link_V1 (
 			gnGrpGraph_s * 	pgraph ,
 			gnInt32_t 		lFrom,

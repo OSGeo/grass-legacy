@@ -729,7 +729,6 @@ void * gngrp_dijkstra_V1	(
 	gnGrpSPReport_s *	pReport = NULL;
 
 
-
 	if ( ! (pgraph->Flags & 0x1) )
 	{
 		pgraph->iErrno = GNGRP_ERR_BadOnTreeGraph;
@@ -747,15 +746,23 @@ void * gngrp_dijkstra_V1	(
 		pCache->nFromNode = from;
 	}
 	else {
-		if ( pCache->nFromNode != from ) {
+		if ( (pReport = gngrp_sp_cache_report( pgraph, pCache, from, to )) != NULL ) {
+			return pReport;
+		}
+		if ( pgraph->iErrno == GNGRP_ERR_FromNodeNotFound ) {
 			gngrp_release_sp_cache_V1( pgraph, pCache );
 			gngrp_initialize_sp_cache_V1( pgraph, pCache );
 			pCache->nFromNode = from;
 		}
-		else { /* try to seek into the cache */
-			if ( (pReport = gngrp_sp_cache_report( pgraph, pCache, from, to )) != NULL ) return pReport;
+		else if ( pgraph->iErrno != GNGRP_ERR_ToNodeNotFound ) {
+			goto sp_error;
 		}
 	}
+
+	/*
+	 * reset error status after using the cache
+	 */
+	pgraph->iErrno = 0;
 
 	if ( (pfrom = gngrp_get_node_V1( pgraph , from )) == NULL )
 	{
@@ -774,7 +781,6 @@ void * gngrp_dijkstra_V1	(
 		  (GNGRP_NODE_STATUS_v1(pfromnode) & GNGRP_NS_ALONE) ||
 		  (GNGRP_NODE_STATUS_v1(ptonode) & GNGRP_NS_ALONE) )
 	{
-		pgraph->iErrno = 0;
 		goto sp_error;
 	}
 
