@@ -1,0 +1,62 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffcmp.1,v 1.10 90/11/25 16:43:57 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFCMP 1 "November 24, 1990"
+.SH NAME
+tiffcmp \- compare two
+.SM TIFF
+files
+.SH SYNOPSIS
+.B tiffcmp
+[
+.B \-l
+] [
+.B \-t
+]
+.I "file1 file2"
+.SH DESCRIPTION
+.I Tiffcmp
+compares the tags and data in two files created according
+to the Tagged Image File Format, Revision 5.0.
+The schemes used for compressing data in each file
+are immaterial when data are compared\-data are compared on
+a scanline-by-scanline basis after decompression.
+Most directory tags are checked; notable exceptions are:
+.IR GrayResponseCurve ,
+.IR ColorResponseCurve ,
+and
+.IR ColorMap
+tags.
+Data will not be compared if any of the
+.IR BitsPerSample ,
+.IR SamplesPerPixel ,
+or
+.I ImageWidth
+values are not equal.
+By default,
+.I tiffcmp
+will terminate if it encounters any difference.
+If the
+.B \-t
+option is specified, any differences in directory tags
+will be ignored.
+If the
+.B \-l
+option is specified, each data byte that differs
+will be shown.
+.SH BUGS
+Tags that are not recognized by the library are not
+compared; they may also generate spurious diagnostics.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
