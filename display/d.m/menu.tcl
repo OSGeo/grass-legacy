@@ -390,7 +390,7 @@
     			{cascad "Generate areas from points" {} "" 1 {			
     			    {command "Generate convex hull for point set" {} "" {} -command {execute  v.hull }}
     			    {command "Generate Delaunay triangles for point set" {} "" {} -command {execute  v.delaunay }}
-    			    {command "Generate Voronoi diagram/Thiessen polygons for point set" {} "" {} -command {execute  v.voroni }}
+    			    {command "Generate Voronoi diagram/Thiessen polygons for point set" {} "" {} -command {execute  v.voronoi }}
     			}}
     			{cascad "Sample raster maps" {} "" 1 {			
         			{command "Sample raster map at point locations" {} "" {} -command {execute  v.what.rast }}
