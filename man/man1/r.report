@@ -1,0 +1,184 @@
+.TH r.report
+.SH NAME
+\fIr.report\fR \- Reports statistics for raster map layers.
+.br
+.I (GRASS Raster Program)
+.SH SYNOPSIS
+\fBr.report\fR
+.br
+\fBr.report help\fR
+.br
+\fBr.report \fR[\fB-hmfq\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
+[\fBpl\*=\fIvalue\fR] [\fBpw\*=\fIvalue\fR] [\fBoutput\*=\fIname\fR]
+.SH DESCRIPTION
+.I r.report
+allows the user to set up a series of report parameters to be applied to
+a raster map layer, and creates a report.
+If invoked with command line arguments, the report will print out
+to the screen only.  However, output may be
+redirected to a file or another program using the UNIX redirection
+mechanism.  If invoked without command line arguments, the user
+is given the option of printing out each report and/or saving
+output to a file.
+
+The program will be run non-interactively, if the user specifies
+the names of raster map layers and any desired options on the
+command line, using the form
+.LP
+.RS
+\fBr.report \fR[\fB-hmfq\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
+[\fBpl\*=\fIvalue\fR] [\fBpw\*=\fIvalue\fR]
+.RE
+.LP
+where each map \fIname\fR is the name of a raster map layer on which to report,
+each unit \fIname\fR is a unit of measure in which results are to be reported,
+the pl \fIvalue\fR gives the page length,
+the pw \fIvalue\fR gives the page width, and the (optional) flags
+\fI-h\fR, \fI-m\fR, \fI-f\fR, and \fI-q\fR have the meanings stated below.
+
+.LP
+\fBFlags:\fR
+.IP \fB-h\fR 20
+Suppress the print-out of page headers.
+.IP \fB-m\fR 20
+Report on zero values, because a mask is being used.
+.IP \fB-f\fR 20
+Use formfeeds between pages when printing report output.
+.IP \fB-q\fR 20
+Run quietly, without printing program messages to standard output.
+.LP
+\fBParameters:\fR
+.IP "\fBmap\*=\fIname,name,...\fR" 20
+Names of raster map(s) on which to report.
+.IP "\fBunits\*=\fIname\fR" 20
+Units of measure in which results are to be reported.
+These units are based on the number of cells in the user's
+\fIarea of interest\fR (i.e., cells within the current 
+geographic region definition, and the current mask [if any]).
+These are established with the programs
+\fIg.region\fR and \fIr.mask\fR, respectively.
+.br
+Options:  Possible units of measurement are:
+.br
+\fBmi\fR   (cover measured in square \fImiles\fR)
+.br
+\fBme\fR   (cover measured in square \fImeters\fR)
+.br
+\fBk\fR    (cover measured in square \fIkilometers\fR)
+.br
+\fBa\fR    (cover measured in \fIacres\fR)
+.br
+\fBh\fR    (cover measured in \fIhectares\fR)
+.br
+\fBc\fR    (the number of \fIcells\fR in the area of interest)
+.br
+\fBp\fR    (the \fIpercent cover\fR, excluding no data areas)
+.IP "\fBpl\*=\fIvalue\fR" 20
+Page length, in lines, in which report will be output.
+.br
+Default:  0   (lines)
+.IP "\fBpw\*=\fIvalue\fR" 20
+Page width, in characters, in which report will be output.
+.br
+Default:  79   (characters)
+.IP "\fBoutput\*=\fIname\fR" 20
+The name of a file to store the report in. If not specified, the report is printed
+on the terminal screen.
+
+.LP
+Alternately, the user can simply type \fBr.report\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+program flag settings and parameter values.
+.LP
+The report itself consists of two parts, a header section and the main
+body of the report.
+.LP
+The header section of the report identifies the raster map layer(s)
+(by map layer name and title), location, mapset, report date,
+and the region of interest.  The area of interest is described
+in two parts:  the user's current geographic region is presented,
+and the mask is presented (if any is used).
+.LP
+The main body of the report consists of from one to three tables
+which present the statistics for
+each category and the totals for each unit column.
+.LP
+Note that, unlike \fIr.stats\fR, \fIr.report\fR allows
+the user to select the specific units of measure in which
+statistics will be reported.
+.LP
+Following is the result of a
+.I r.report
+run on the raster map layer
+\fIgeology\fR (located in the Spearfish, SD sample data base),
+with the units expressed in square miles and acres.
+Here, \fIr.report\fR
+output is directed into the file \fIreport.file\fR.
+.SH EXAMPLE:
+.RS
+\fBr.report  map\*=geology  units\*=miles,acres  >  report.file\fR
+.RE
+
+.in +.2i
+.TS
+box tab(X);
+c s s s s s
+l s s s s l.
+RASTER MAP CATEGORY REPORT
+LOCATION: spearfishXFri Sep 2 09:20:09
+_
+.T&
+l l n l n l.
+Xnorth:X4928000.00Xeast:X609000.00
+REGION:Xsouth:X4914000.00Xwest:X590000.00
+Xres:X100.00Xres:X100.00
+_
+.T&
+l l s s s s.
+MASK:Xnone
+_
+.T&
+l l s s s s.
+MAP:Xgeology in PERMANENT
+_
+.T&
+c s s s|r r
+l|l s s|r r.
+Category InformationX X X XAcresXSquare
+#XdescriptionX X X XMiles
+_
+.T&
+n|l s s|n|n.
+0Xno dataX415.13X0.65
+1XmetamorphicX2597.02X4.06
+2XtransitionX32.12X0.05
+3XigneousX8117.24X12.68
+4XsandstoneX16691.60X26.08
+5XlimestoneX13681.93X21.38
+6XshaleX10304.07X16.10
+7Xsandy shaleX2517.95X3.93
+8XclaysandX3229.60X5.05
+9XsandX8141.95X12.72
+_
+.T&
+c|s s s|n|n.
+TOTALX X X X65728.60X102.70
+.TE
+.in -.5i
+.SH NOTES
+If the user runs \fIr.report\fR interactively and saves the report output
+in a file, this file will be placed
+into the user's current working directory.
+.LP
+If the user runs \fIr.report\fR non-interactively, report output can
+be saved by redirecting it to a file or a printer using the
+UNIX redirection mechanism.
+.SH SEE ALSO
+.I g.region,
+.I r.coin,
+.I r.describe,
+.I r.info,
+.I r.mask,
+.I r.stats
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
