@@ -22,7 +22,8 @@ graphics monitor.
 <BR>
 <B>d.vect help</B> 
 <BR>
-<B>d.vect [-v] map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+<B>d.vect [-fv] map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+<B>cat</B><EM>=value[,value,...]</EM>
 
 <H2>DESCRIPTION</H2>
 
@@ -42,17 +43,15 @@ no vector color on the command line, the named vector map
 layer will be displayed in the default color
 <EM>white</EM>.) Alternately, the user can simply type
 <B>d.vect</B> on the command line; in this case, the
-program will prompt the user for parameter values using the
-standard GRASS <A HREF="parser.html">parser</A>
-interface.
+program will prompt the user for parameter values.
 
 <H3>Flags:</H3>
 <DL>
-<DT><B>-m</B>
-<DD>Makes <B>d.vect</B> use less memory.
+<DT><B>-f</B>
+<DD>Fill areas of selected polygons
 
 <DT><B>-v</B>
-<DD>Sets verbose mode.
+<DD>Run verbosely
 </DL>
 
 <H3>Parameters:</H3>
@@ -70,6 +69,10 @@ Options: white, red, orange, yellow, green, blue, indigo, violet, magenta,
 brown, gray, and black 
 <BR>
 Default: <EM>white</EM> 
+
+<DT><B>catnum=value[,value,...]</B>
+<DD>Category vnumbers to be displayed
+
 </DL>
 
 <H2>NOTES</H2>
@@ -77,8 +80,9 @@ Default: <EM>white</EM>
 To display text labels, the <A HREF="d.vect.labels.html">d.vect.labels</A>
 module may be used.<P>
 
-To fill vector polygons with colors, use <A
-HREF="d.area.html">d.area</A>.<P>
+Selected vector polygons can be optionally filled with color.
+To fill all vector polygons with colors, <A
+HREF="d.area.html">d.area</A> can be used.<P>
 
 This program needs to be upgraded with features that would: 
 <OL>
@@ -104,7 +108,7 @@ This program needs to be upgraded with features that would:
 Michael Shapiro, 
 U.S. Army Construction Engineering 
 Research Laboratory
-
+<p>Merge with d.vect.cats: Markus Neteler
 
 <p><i>Last changed: $Date$</i>
 </body>
