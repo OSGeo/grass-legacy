@@ -421,6 +421,12 @@ proc DmVector::print { file node } {
 	puts $file "  color $color"
 	#puts $file "width $opt($id,ps_width)"
 
+        if { $opt($id,_use_fcolor) } { 
+	    puts $file "  fcolor $fcolor"
+        } else { 
+	    puts $file "  fcolor none"
+        }
+
         puts $file "  symbol $opt($id,icon)"
         puts $file "  size $opt($id,size)"
 
