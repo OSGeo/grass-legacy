@@ -18,7 +18,8 @@ main (int argc, char **argv)
     struct Option *action;
     char **rast, **vect, **site;
     int nrasts, nvects, nsites;
-    struct Option *rmap, *vmap, *smap;
+    struct Option *rmap, *vmap, *smap, *zoom;
+    double magnify;
     char command[128];
     int i;
     char *mapset;
@@ -96,12 +97,22 @@ main (int argc, char **argv)
     action->required = NO;
     action->answer = NULL; /* do NOT set a default, please */
 
+    zoom = G_define_option() ;
+    zoom->key        = "zoom" ;
+    zoom->type       = TYPE_DOUBLE ;
+    zoom->required   = NO ;
+    zoom->answer     = "0.75" ;
+    zoom->options    = "0.001-1000.0" ;
+    zoom->description= "magnification: >1.0 zooms in, <1.0 zooms out" ;
+
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = "Quiet";
 
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
+
+    sscanf(zoom->answer,"%lf", &magnify);
 
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
@@ -186,7 +197,7 @@ main (int argc, char **argv)
     }
 
 /* Do the zoom */
-    stat = zoom(quiet->answer, rotate);
+    stat = zoomwindow(quiet->answer, rotate, magnify);
 
     R_close_driver();
 
