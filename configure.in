@@ -153,7 +153,7 @@ AC_SUBST(MATHLIB)
 
 
 BINDIR=/usr/local/bin
-if test -z "${exec_prefix}"; then
+if test -z "${exec_prefix}" = "NONE"; then
 exec_prefix="/usr/local"
 fi
 if test "${bindir}"; then
@@ -646,12 +646,16 @@ if test -n "$opengl_includes"; then
 		fi
 	done
 	if test -z "$OPENGLINC"; then
-		AC_MSG_ERROR([*** Didn't find GL/gl.h])
+		AC_MSG_WARN([*** Didn't find GL/gl.h])
 	fi
 	if test -z "$OPENGLwINC"; then
-		AC_MSG_ERROR([*** Didn't find GL/GLwMDrawA.h])
+		AC_MSG_WARN([*** Didn't find GL/GLwMDrawA.h])
 	fi
 	AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
+fi
+
+if test -z "$OPENGLINC" ; then
+        AC_MSG_WARN([*** Didn't find GL/gl.h, maybe okay...])
 fi
 
 if test -z "$opengl_libs" && test -n "$USE_OPENGL"; then
