@@ -17,6 +17,7 @@
             		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
             		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.in.gridatb" {} -command { execute r.in.mat }}
+            		{command "STRM hgt files" {} "r.in.strm" {} -command { execute r.in.strm }}
         	    }}
         	    {cascad "Vector map" {} "" 1 {			
             		{command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -24,6 +25,7 @@
             		{command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
             		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
         		    {separator}
+        	    	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.v00 }}
         	    	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
             		{command "MATLAB MapGen files" {} "v.in.mapgen.sh" {} -command { execute v.in.mapgen.sh }}
             		{separator}
@@ -145,7 +147,6 @@
 			    {command "Slide show of all raster maps in current mapset" {} "" {} -command {execute d.slide.show }}
 	        }}
 			{command "Display vector maps" {} "" {} -command {execute d.vect }}
-			{command "Display grid3D volumes" {} "" {} -command {execute r3.showdspf }}
 			{cascad "Display text on maps" {} "" 1 {			
 		    	{command "Display legend for raster maps" {} "" {} -command {execute d.legend }}
 		    	{command "Display category values in raster map cells" {} "" {} -command {execute d.rast.num }}
@@ -357,7 +358,6 @@
 			{cascad "Vector<->database connections" {} "" 1 {			
 			    {command "Create new vector as link to external OGR layer" {} "" {} -command {execute  v.external }}
 			    {command "Set database connection for vector attributes" {} "" {} -command {execute  v.db.connect }}
-			    {command "Set database and driver for vector attributes" {} "" {} -command {execute  v.database }}
 			}}
 			{command "Rectify and georeference vector map" {} "" {} -command {execute  v.transform }}
 			{separator}
