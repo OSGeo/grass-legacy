@@ -6,9 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char *runPg(SQL_stmt)
-     char *SQL_stmt;
-
+char *runPg(char *SQL_stmt)
 {
     char buf[QRY_LENGTH];
     char chunk[QRY_LENGTH];
@@ -94,9 +92,7 @@ char *runPg(SQL_stmt)
     return long_str;
 }
 
-char *do_query(SQL_stmt, pts)
-     char *SQL_stmt;
-     struct Sql *pts;
+char *do_query(char *SQL_stmt, struct Sql *pts)
 {
     char buf[QRY_LENGTH];
     char chunk[QRY_LENGTH];
