@@ -90,10 +90,11 @@ V2_close_nat (struct Map_info *Map)
       
       Vect_save_topo ( Map );
       Vect_save_spatial_index ( Map );
-      dig_free_plus ( Plus );
 
       Vect_write_dblinks ( Map );
   }
+      
+  dig_free_plus ( Plus );
 
   free (Map->name);
   free (Map->mapset);

@@ -81,10 +81,10 @@ V2_close_post (struct Map_info *Map)
       
       Vect_save_topo (Map);
       Vect_save_spatial_index ( Map );
-      dig_free_plus (Plus);
 
       Vect_write_dblinks ( Map );
   }
+  dig_free_plus (Plus);
 
   return (V1_close_post (Map));
 
