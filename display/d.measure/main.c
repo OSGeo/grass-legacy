@@ -33,7 +33,7 @@ int main (int argc, char **argv)
 	parm.c1->type = TYPE_STRING;
 	parm.c1->required = NO;
 	parm.c1->options=D_color_list();
-	parm.c1->answer = "black";
+	parm.c1->answer = DEFAULT_BG_COLOR;
 
 	parm.c2 = G_define_option();
 	parm.c2->key = "c2";
@@ -41,7 +41,7 @@ int main (int argc, char **argv)
 	parm.c2->type = TYPE_STRING;
 	parm.c2->required = NO;
 	parm.c2->options=D_color_list();
-	parm.c2->answer = "white";
+	parm.c2->answer = DEFAULT_FG_COLOR;
 
 	parm.s = G_define_flag();
 	parm.s->key = 's';
