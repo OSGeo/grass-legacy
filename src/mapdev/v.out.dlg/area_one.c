@@ -67,7 +67,7 @@ open_space (map)
 	{
 	    if (Node[to].lines[line] < 0)
 	    {
-		Line[ABS(Node[to].lines[line])].N2 = to;
+		Line[abs(Node[to].lines[line])].N2 = to;
 	    }
 	    else
 	    {
@@ -95,10 +95,10 @@ open_space (map)
 	node1 = Line[to].N1;
 	node2 = Line[to].N2;
 	for (line = 0 ; line < Node[node1].n_lines ; line++)
-	    if (ABS (Node[node1].lines[line]) == from)
+	    if (abs (Node[node1].lines[line]) == from)
 		Node[node1].lines[line] = Node[node1].lines[line] < 0 ? -to : to;
 	for (line = 0 ; line < Node[node2].n_lines ; line++)
-	    if (ABS (Node[node2].lines[line]) == from)
+	    if (abs (Node[node2].lines[line]) == from)
 		Node[node2].lines[line] = Node[node2].lines[line] < 0 ? -to : to;
 
 	/* FIXUP atts */
@@ -117,7 +117,7 @@ open_space (map)
 	    area = Line[to].right;
 	    for (i = 0 ; i < Area[area].n_lines ; i++)
 	    {
-		if (from == ABS(Area[area].lines[i]))
+		if (from == abs(Area[area].lines[i]))
 		{
 		    Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 		    break;
@@ -131,7 +131,7 @@ open_space (map)
 	    area = Line[to].left;
 	    for (i = 0 ; i < Area[area].n_lines ; i++)
 	    {
-		if (from == ABS(Area[area].lines[i]))
+		if (from == abs(Area[area].lines[i]))
 		{
 		    Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 		    break;
@@ -144,10 +144,10 @@ open_space (map)
 	/* FIXUP ISLES */
 	if (Line[to].right < 0)
 	{
-	    isle = ABS (Line[to].right);
+	    isle = abs (Line[to].right);
 	    for (i = 0 ; i < Isle[isle].n_lines ; i++)
 	    {
-		if (from == ABS(Isle[isle].lines[i]))
+		if (from == abs(Isle[isle].lines[i]))
 		{
 		    Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 		    break;
@@ -158,10 +158,10 @@ open_space (map)
 	}
 	if (Line[to].left < 0)
 	{
-	    isle = ABS (Line[to].left);
+	    isle = abs (Line[to].left);
 	    for (i = 0 ; i < Isle[isle].n_lines ; i++)
 	    {
-		if (from == ABS(Isle[isle].lines[i]))
+		if (from == abs(Isle[isle].lines[i]))
 		{
 		    Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 		    break;
@@ -198,12 +198,12 @@ open_space (map)
 	/* FIXUP lines */
 	for (i = 0 ; i < Area[to].n_lines ; i++)
 	{
-	    if (LINE_ALIVE (&(Line[ABS(Area[to].lines[i])])))
+	    if (LINE_ALIVE (&(Line[abs(Area[to].lines[i])])))
 	    {
-		if (Line[ABS(Area[to].lines[i])].right == from)
-		    Line[ABS(Area[to].lines[i])].right = to;
-		if (Line[ABS(Area[to].lines[i])].left == from)
-		    Line[ABS(Area[to].lines[i])].left = to;
+		if (Line[abs(Area[to].lines[i])].right == from)
+		    Line[abs(Area[to].lines[i])].right = to;
+		if (Line[abs(Area[to].lines[i])].left == from)
+		    Line[abs(Area[to].lines[i])].left = to;
 	    }
 	}
 
@@ -299,7 +299,8 @@ fill_univ_info (map, N, S, E, W)
     {
 	if (map->Isle[i].area == 0)  /* universe island */
 	{
-	    dig_area_alloc_line (Area, 1);
+	    /* dig_area_alloc_line (Area, 1);  dpg 1/2/92 */
+	    dig_area_alloc_isle (Area, Area->n_isles+1);
 	    Area->isles[Area->n_isles++] = i;
 	    map->Isle[i].area = 2;
 	}
