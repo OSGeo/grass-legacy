@@ -48,9 +48,8 @@ main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *out_opt, *in_opt;
-    struct Flag *without_z;
+    struct Flag *z_flag, *circle_flag, *l_flag;
     char   buf[2000];
-    dbHandle handle;
 
     /* DWG */
     char   path[2000];
@@ -72,10 +71,30 @@ main (int argc, char *argv[])
     in_opt->description = "DWG or DXF file.";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+    out_opt->required = NO;
 
-    without_z = G_define_flag();
-    without_z->key               = 'n';
-    without_z->description       = "no 3D vector support (import only 2D vectors from file)";
+    layers_opt= G_define_option();
+    layers_opt->key = "layers";
+    layers_opt->type =  TYPE_STRING;
+    layers_opt->required = NO;
+    layers_opt->multiple = YES;
+    layers_opt->description = "List of layers to import.";
+
+    invert_flag = G_define_flag();
+    invert_flag->key         = 'i';
+    invert_flag->description = "Invert selection by layers (don't import layers in list)";
+    
+    z_flag = G_define_flag();
+    z_flag->key         = 'z';
+    z_flag->description = "Create 3D vector";
+
+    circle_flag = G_define_flag();
+    circle_flag->key               = 'c';
+    circle_flag->description       = "Write circles as points (centre)";
+
+    l_flag = G_define_flag();
+    l_flag->key               = 'l';
+    l_flag->description       = "List available layers and exit.";
 
     if (G_parser (argc, argv)) exit(-1); 
 
@@ -106,11 +125,38 @@ main (int argc, char *argv[])
 	G_fatal_error ("Cannot open input file. Error %d: %s", adError(),adErrorStr(adError()) );
     }
 
+    if ( l_flag->answer ) { /* List layers */
+	PAD_TB adtb;
+	AD_DWGHDR adhd;
+	int i;
+	char on, frozen, vpfrozen, locked;
+
+	adtb=(PAD_TB)malloc(sizeof(AD_TB));
+
+	G_debug (2, "%d layers", (int) adNumLayers(dwghandle) );
+	adReadHeaderBlock(dwghandle,&adhd);
+	adStartLayerGet(dwghandle);
+
+        fprintf(stdout, "%d layers:\n", (int) adNumLayers(dwghandle));
+	for ( i = 0; i < (int) adNumLayers(dwghandle); i++) {
+	    adGetLayer(dwghandle, &(adtb->lay));
+	    if (!adtb->lay.purgedflag) {
+	        fprintf( stdout, "%s COLOR %d, ", adtb->lay.name, adtb->lay.color);
+	    }
+	    adGetLayerState ( dwghandle,adtb->lay.objhandle, &on, &frozen, &vpfrozen, &locked);
+	    if (on) fprintf(stdout, "ON, "); else fprintf(stdout, "OFF, ");
+	    if (frozen) fprintf(stdout, "FROZEN, "); else fprintf(stdout, "THAWED, ");
+	    if (vpfrozen) fprintf(stdout, "VPFROZEN, "); else fprintf(stdout, "VPTHAWED, ");
+	    if (locked) fprintf(stdout, "LOCKED\n"); else fprintf(stdout, "UNLOCKED\n");
+	}
+	adCloseFile(dwghandle);
+	adCloseAd2();
+ 	exit(0);	
+    }
+
+
     /* open output vector */
-    if (without_z->answer)
-       Vect_open_new (&Map, out_opt->answer, 0 );
-    else
-       Vect_open_new (&Map, out_opt->answer, 1 );
+    Vect_open_new (&Map, out_opt->answer, z_flag->answer );
 
     Vect_hist_command ( &Map );
 
@@ -118,20 +164,19 @@ main (int argc, char *argv[])
     Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
     Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
+    driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
+    if ( driver == NULL ) {
+        G_fatal_error ( "Cannot open database %s by driver %s",
+	                   Vect_subst_var(Fi->database,&Map), Fi->driver );
+    }
+    db_begin_transaction ( driver );
+    
     /* Create table */
     sprintf ( buf, "create table %s ( cat integer, entity_name varchar(20), color int, weight int, "
 	           "layer varchar(100), block varchar(100), txt varchar(100) )", Fi->table );
     db_set_string ( &sql, buf);
     G_debug ( 3, db_get_string ( &sql ) );
 
-    driver = db_start_driver( Fi->driver );
-    if (driver == NULL) G_fatal_error ( "Cannot open driver %s", Fi->driver );
-    db_init_handle (&handle);
-    db_set_handle (&handle, Vect_subst_var(Fi->database,&Map), NULL);
-    if (db_open_database(driver, &handle) != DB_OK) {
-	db_shutdown_driver(driver);
-	G_fatal_error ( "Cannot open database %s", Fi->database );
-    }
     if (db_execute_immediate (driver, &sql) != DB_OK ) {
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -139,6 +184,7 @@ main (int argc, char *argv[])
     }
 
     cat = 1;
+    n_elements = n_skipped = 0;
     /* Write each entity. Some entities may be composed by other entities (like INSERT or BLOCK) */
     /* Set transformation for first (index 0) level */
     Trans[0].dx = Trans[0].dy = Trans[0].dz = 0;
@@ -150,7 +196,7 @@ main (int argc, char *argv[])
 	for (entset=0; entset<2; entset++) {
 	    do {
 	        if (!(retval=adGetEntity(entlist,adenhd,aden))) continue;
-	        wrentity(adenhd,aden, 0, entlist);
+	        wrentity(adenhd,aden, 0, entlist, circle_flag->answer);
 	    } while (retval==1);
 	    if (entset==0) {
 	        if (adGetBlockHandle(dwghandle, mspace, AD_MODELSPACE_HANDLE)) {
@@ -161,14 +207,15 @@ main (int argc, char *argv[])
 	}
     }
 
-    free(aden);
-    free(adenhd);
+    fprintf ( stderr, "%d elements processed\n", n_elements);
+    if ( n_skipped > 0 )
+	fprintf ( stderr, "%d elements skipped (layer name was not in list)\n", n_skipped );
+
+    db_commit_transaction ( driver );
+    db_close_database_shutdown_driver ( driver );
 	
-    adCloseFile(dwghandle);
+    adCloseFile(dwghandle); 
     adCloseAd2();
-    
-    db_close_database(driver);
-    db_shutdown_driver(driver);
     
     Vect_build ( &Map, stdout );
     Vect_close ( &Map );

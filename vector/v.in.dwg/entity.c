@@ -205,28 +205,62 @@ int write_line ( PAD_ENT_HDR adenhd, int type, int level )
     return 0;
 }
 
-void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
+/* Returns 1 if element has geometry and may be written to vector */
+int is_low_level ( PAD_ENT_HDR adenhd )
+{
+    if ( adenhd->enttype == AD_ENT_BLOCK || adenhd->enttype == AD_ENT_ENDBLK ||
+	 adenhd->enttype == AD_ENT_SEQEND || adenhd->enttype == AD_ENT_INSERT )
+    {
+	return 0;
+    }
+    return 1;
+}
+
+void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist, int circle_as_point )
 {
   short ret;
   PAD_BLOB_CTRL bcptr;
-  AD_LAY layer;
   PAD_ENT_HDR adenhd2;
   PAD_ENT aden2;
   OdaLong il;
   double tempdouble[2],tempbulge,tempwidth[2];
   double x, y, z, ang;
   PAD_BLKH adblkh;
+  int layer_found = 1;
 
-  Txt = NULL;
-  adenhd2=(PAD_ENT_HDR)malloc(sizeof(AD_ENT_HDR));
-  aden2=(PAD_ENT)malloc(sizeof(AD_ENT));
-  adblkh=(PAD_BLKH)malloc(sizeof(AD_BLKH));
-  
-  ret=adSeekLayer(dwghandle,adenhd->entlayerobjhandle,&layer);
+  if ( is_low_level(adenhd) ) n_elements++;
+
+  /* Check layer name */
+  if ( layers_opt->answers ) { 
+      int i = 0;
+      
+      adSeekLayer ( dwghandle, adenhd->entlayerobjhandle, Layer );
+    
+      layer_found = 0;
+      if ( !Layer->purgedflag ) {
+	  while (layers_opt->answers[i]) {
+	      if( strcmp( Layer->name ,layers_opt->answers[i]) == 0 ) {
+		  layer_found = 1;
+		  break;
+	      }
+	      i++;
+	  }
+      }
+
+      if ( (!invert_flag->answer && !layer_found) || (invert_flag->answer && layer_found) ) {
+	  if ( is_low_level(adenhd) ) n_skipped++;
+	  if ( adenhd->enttype != AD_ENT_INSERT && adenhd->enttype != AD_ENT_POLYLINE )
+	      return;
+      }
+  }
 
   getEntTypeName ( adenhd, buf );
   G_debug( 1, "Entity: %s", buf);
       
+  Txt = NULL;
+  adenhd2=(PAD_ENT_HDR)malloc(sizeof(AD_ENT_HDR));
+  aden2=(PAD_ENT)malloc(sizeof(AD_ENT));
+  adblkh=(PAD_BLKH)malloc(sizeof(AD_BLKH));
   Vect_reset_line ( Points );
   
   /* Check space for lower level */
@@ -280,19 +314,24 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
     x = aden->arc.pt0[0] + aden->arc.radius * cos ( aden->arc.endang );
     y = aden->arc.pt0[1] + aden->arc.radius * sin ( aden->arc.endang );
     z = aden->arc.pt0[2] ; 
-   Vect_append_point ( Points, x, y, z );
+    Vect_append_point ( Points, x, y, z );
     write_line ( adenhd, GV_LINE, level );
     break;
 
   case AD_ENT_CIRCLE: 
-    for ( ang = 0; ang < 2 * LOCPI; ang += 2 * LOCPI / 360 ) {
-	x = aden->circle.pt0[0] + aden->circle.radius * cos ( ang );
-	y = aden->circle.pt0[1] + aden->circle.radius * sin ( ang );
-	z = aden->circle.pt0[3] ;
-	Vect_append_point ( Points, x, y, z );
+    if ( circle_as_point ) {
+        Vect_append_point ( Points, aden->circle.pt0[0], aden->circle.pt0[1], aden->circle.pt0[3] );
+        write_line ( adenhd, GV_POINT, level );
+    } else {
+	for ( ang = 0; ang < 2 * LOCPI; ang += 2 * LOCPI / 360 ) {
+	    x = aden->circle.pt0[0] + aden->circle.radius * cos ( ang );
+	    y = aden->circle.pt0[1] + aden->circle.radius * sin ( ang );
+	    z = aden->circle.pt0[3] ;
+	    Vect_append_point ( Points, x, y, z );
+	}
+	Vect_append_point ( Points, Points->x[0], Points->y[0], Points->z[0] );
+        write_line ( adenhd, GV_LINE, level );
     }
-    Vect_append_point ( Points, Points->x[0], Points->y[0], Points->z[0] );
-    write_line ( adenhd, GV_LINE, level );
     break;
 
   /* BLOCK starts block of entities but makes no transformation - is it right ? 
@@ -334,7 +373,7 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
 		Trans[level+1].yscale = aden->insert.yscale;
 		Trans[level+1].zscale = aden->insert.zscale;
 		Trans[level+1].rotang = aden->insert.rotang;
-	        wrentity(adenhd2,aden2, level + 1, adblkh->entitylist); 
+	        wrentity(adenhd2,aden2, level + 1, adblkh->entitylist, circle_as_point); 
 	    }
         }
     }
@@ -359,7 +398,8 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
             Vect_append_point ( Points, aden2->vertex.pt0[0], aden2->vertex.pt0[1], aden2->vertex.pt0[2] );
 	}
     };
-    write_line ( adenhd, GV_LINE, level );
+    if ( (!invert_flag->answer && layer_found) || (invert_flag->answer && !layer_found) )
+        write_line ( adenhd, GV_LINE, level );
     break;
 
   default: 
