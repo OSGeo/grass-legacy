@@ -52,6 +52,7 @@ TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
+OPENGLwINC          = @OPENGLwINC@
 OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 LGLWM               = @LGLWM@
