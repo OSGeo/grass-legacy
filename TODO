@@ -1,4 +1,4 @@
-$Id: TODO,v 1.31 2000-10-17 17:30:13 markus Exp $
+$Id: TODO,v 1.32 2000-10-18 12:59:50 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -277,6 +277,7 @@ Regards
 David
 
 ---------------------------------------------------------------------
+Further local TODO files:
 ./src/libes/coorcnv/TODO
 ./src/libes/dbmi/clients/TODO
 ./src/libes/dbmi/drivers/odbc/TODO
@@ -308,3 +309,31 @@ David
 ./src.garden/grass.postgresql/v.in.shape.pg/TODO
 ./src.garden/grass.postgresql/TODO
 ./src/tcltkgrass/todo
+
+---------------------------------------------------------------------
+New GRASS help system concept:
+
+Andreas Lange <Andreas.Lange@Rhein-Main.de>
+Re: [GRASS5] keep g.help ?
+
+I recently discovered that the GRASS man pages/help system contain a lot        
+of information that is not included in the html-pages, e. g. "Glossary          
+of GIS Terms" etc.                                                              
+I think that the organization of the help system (topic and task                
+oriented rather than sorted by module name) is a lot better than the            
+html-system.                                                                    
+                                                                                
+For the GRASS/GIS beginner the html-pages are very confusing, because           
+one does not know how to find a certain functionality.                          
+                                                                                
+I can imagine a html-based help system that starts from the opening             
+screen in tcltkgrass. It should be possible to integrate html-output (or        
+xml) into tcltkgrass in a manner that allows to navigate the                    
+documentation.                                                                  
+                                                                                
+But all that would require someone who can update the contents and the          
+structure of the help system from roff to html.                                 
+                                                                                
+So my conclusion is: Keep it for grass5.0stable as it is.                       
+For grass5.1 we should discuss how this can be improved. 
+---------------------------------------------------------------------
