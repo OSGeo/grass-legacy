@@ -66,7 +66,7 @@ main (int argc, char *argv[])
 	    "'x double precision, y double precision, cat int, name varchar(10)'";
 
 	xcol_opt = G_define_option();
-	xcol_opt->key = "xcol";
+	xcol_opt->key = "xcolumn";
 	xcol_opt->type = TYPE_INTEGER;
 	xcol_opt->required = NO;
 	xcol_opt->multiple = NO;
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
 	xcol_opt->description = "Number of column used as x coordinate (first column is 1) for points mode.";
 
 	ycol_opt = G_define_option();
-	ycol_opt->key = "ycol";
+	ycol_opt->key = "ycolumn";
 	ycol_opt->type = TYPE_INTEGER;
 	ycol_opt->required = NO;
 	ycol_opt->multiple = NO;
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
 	ycol_opt->description = "Number of column used as y coordinate (first column is 1) for points mode.";
 
 	zcol_opt = G_define_option();
-	zcol_opt->key = "zcol";
+	zcol_opt->key = "zcolumn";
 	zcol_opt->type = TYPE_INTEGER;
 	zcol_opt->required = NO;
 	zcol_opt->multiple = NO;
@@ -91,7 +91,7 @@ main (int argc, char *argv[])
 	            "If 0, z coordinate is not used.";
 
 	catcol_opt = G_define_option();
-	catcol_opt->key = "catcol";
+	catcol_opt->key = "catcolumn";
 	catcol_opt->type = TYPE_INTEGER;
 	catcol_opt->required = NO;
 	catcol_opt->multiple = NO;
