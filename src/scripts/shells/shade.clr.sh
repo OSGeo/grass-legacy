@@ -1,4 +1,14 @@
 #!/bin/sh
+#
+# 8/2003 fixes for Lat/Long Gordon Keith <gordon.keith@csiro.au>
+#   If n is a number then the ewres and nsres are mulitplied by that scale
+#    to calculate the shading.
+#   If n is the letter M (either case) the number of metres is degree of
+#    latitude is used as the scale.
+#   If n is the letter f then the number of feet in a degree is used.
+#   It scales latitude and longitude equally, so it's only approximately
+#   right, but for shading its close enough. It makes the difference
+#   between an unusable and usable shade.
 # 10/2001 fix for testing for dashes in raster file name
 #        by Andreas Lange <andreas.lange@rhein-main.de>
 # 10/2001 added parser support - Markus Neteler
@@ -23,7 +33,8 @@ then
         echo Might we suggest 60 for red, 180 for green and 300 for blue.
         echo
         echo Usage:
-        echo      shade.clr.sh [altitude=value] [r_azimuth=value] [g_azimuth=value] [b_azimuth=value] [elevation=name]
+        echo "     shade.clr.sh [altitude=value] [r_azimuth=value] [g_azimuth=value]"
+        echo "                  [b_azimuth=value] [elevation=name] [scale=value|m|f]"
 	echo
 	exit 1
 fi
@@ -33,6 +44,7 @@ gotitRAZ=0
 gotitGAZ=0
 gotitBAZ=0
 gotitELEV=0
+scale=1
 
 for i
 do
@@ -55,7 +67,14 @@ do
                                        echo "ERROR: raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
                                        exit 1
                                     fi ;;
-
+		scale=*)
+			scale=`echo $i | awk -F '=' '{print $2}'` ;
+			case $scale in
+				"m"|"M")
+					scale=111120;;
+				"f"|"F")
+					scale=370400;;
+			esac;;
 	esac
 done
 
@@ -173,7 +192,7 @@ if [ "$elev" != "$elev2" ] ; then
     exit 1
 fi
 
-echo Using altitude:$alt  r_azimuth:$raz g_azimuth:$gaz b_azimuth:$baz  elevation:$elev
+echo "Using altitude:$alt  r_azimuth:$raz g_azimuth:$gaz b_azimuth:$baz  elevation:$elev"
 
 #correct azimuths to East (GRASS convention):
 raz=`expr $raz - 90`
@@ -181,19 +200,20 @@ gaz=`expr $gaz - 90`
 baz=`expr $baz - 90`
 
 echo ""
-echo Running r.mapcalc, please stand by.
-echo Your new map will be named $ELEV.shade. Please consider renaming.
+echo "Running r.mapcalc, please stand by."
+echo "Your new map will be named $ELEV.shade. Please consider renaming."
 echo ""
 
 r.mapcalc << EOF
 $ELEV.shade = eval( \\
  x=($elev[-1,-1] + 2.*$elev[0,-1] + $elev[1,-1] \\
-   -$elev[-1,1] - 2.*$elev[0,1] - $elev[1,1])/(8.* ewres()) , \\
+   -$elev[-1,1] - 2.*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\
  y=($elev[-1,-1] + 2.*$elev[-1,0] + $elev[-1,1] \\
-   -$elev[1,-1] - 2.*$elev[1,0] - $elev[1,1])/(8.* nsres()) , \\
+   -$elev[1,-1] - 2.*$elev[1,0] - $elev[1,1])/(8.*nsres()*$scale) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
- aspect=if(x||y,if(a,a,360.)), \\
+ a=if(isnull(a),1,a), \\
+ aspect=if(x!=0||y!=0, if(a,a,360.)), \\
  rang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($raz-aspect), \\
  red = int(if(rang < 0.,0.,4.9*rang)), \\
  gang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($gaz-aspect), \\
@@ -259,5 +279,5 @@ r.colors $ELEV.shade color=rules 2>&1 > /dev/null << EOF
 EOF
 
 echo ""
-echo "Shaded relief map created and named $ELEV.shade. Consider renaming.
+echo "Shaded relief map created and named $ELEV.shade. Consider renaming."
 
