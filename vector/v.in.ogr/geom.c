@@ -25,7 +25,7 @@
 int 
 geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
 {
-    int    i, j, type, np, nr, ret;
+    int    i, j, np, nr, ret;
     struct line_pnts *Points, **IPoints;
     struct line_cats *BCats, *Cats ;
     OGRwkbGeometryType eType;

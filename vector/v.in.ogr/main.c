@@ -26,32 +26,23 @@ int geom(OGRGeometryH hGeom, struct Map_info *Map, int cat );
 int 
 main (int argc, char *argv[])
 {
-    int    i, j, k, centroid, otype, wkbtype, donocat, layer;
-    char   *mapset;
-    int    ncols, field;
+    int    i, layer;
+    int    ncols;
     struct GModule *module;
-    struct Option *out_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt, *field_opt;
-    struct Flag   *cat_flag;
-    char   buf[2000], *pbuf;
-    char   key1[200], key2[200];
+    struct Option *out_opt, *dsn_opt, *layer_opt;
+    char   buf[2000];
 
     /* Vector */
     struct Map_info Map;
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-    int    type, cat;
+    int    cat;
 
     /* Attributes */
-    int doatt, ncol, colsqltype, colctype, keycol;
     struct field_info *Fi;
     dbDriver *driver;
     dbHandle handle;
-    dbTable *Table;
     dbString sql;
-    dbColumn *Column;
     
     /* OGR */
-    int drn, ogr_ftype;
     OGRDataSourceH Ogr_ds;
     OGRSFDriverH Ogr_driver;  
     OGRLayerH Ogr_layer;	
