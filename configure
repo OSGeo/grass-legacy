@@ -4555,7 +4555,7 @@ case "$XDRIVER" in
        xdriver=socks
     ;;
     *)
-       xdriver=old
+       xdriver=orig
     ;;
 esac
 
