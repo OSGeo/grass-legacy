@@ -8,6 +8,7 @@
         fprintf(out,"-");\
     fprintf (out,"%c\n",x)
 
+extern char * G_find_grid3 ();
 
 static char *name;
 
