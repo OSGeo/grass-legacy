@@ -50,12 +50,15 @@ DETAILED PROCEDURE:
 1. Define/check language settings
 
    echo $LANG
- 
+   echo $LANGUAGE
+
    Maybe you have to change it (example for Japanese):
    - for bash shell:
        export LANG=ja_JP
+       export $LANGUAGE=ja_JP
    - for (t)csh shell:
        setenv LANG ja_JP
+       setenv LANGUAGE ja_JP
 
 2. CREATE POT FILES
    run
@@ -130,15 +133,8 @@ DETAILED PROCEDURE:
    READY.
 
 
-6. Now run GRASS (maybe recompile first).
-   To test the language, check
-     echo $LANG
-
-   It should be sufficient to modify this variable (example):
-     export LANG=de_DE
-
-   to enable (German) language support if present in the system.
-   
+6. Now recompile, install and run GRASS.
+   It should work :-)
 
 7. Send the updated .po files to a GRASS Development Team member.
    If you already updated .c files with _(...) macro as explained
