@@ -516,7 +516,7 @@ proc Dm::print_node { file node } {
 
 # query selected map
 proc Dm::query { } {
-    Variable tree
+    variable tree
     variable options
 
     set sel [ lindex [$tree selection get] 0 ]
