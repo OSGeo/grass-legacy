@@ -8,13 +8,49 @@
 #endif
 
 
+/* data type string */
 #define G_TYPE_NAME(t)		(t ==  CELL_TYPE ?  "CELL" : \
 				(t == FCELL_TYPE ? "FCELL" : \
 				(t == DCELL_TYPE ? "DCELL" : NULL)))
 
-#define G_TYPE_FORMAT(t)	(t ==  CELL_TYPE ?  "%d" : \
-				(t == FCELL_TYPE ?  "%f" : \
-				(t == DCELL_TYPE ? "%lf" : "")))
+/* data type format:
+ * In fact this can not be used directly in *printf().
+ * 
+ * 	printf("This value is "G_TYPE_FORMAT(buf.type)"\n",
+ * 						(buf.type == CELL_TYPE ?
+ * 							buf.data.c[col] :
+ * 						(buf.type == FCELL_TYPE ?
+ * 							buf.data.f[col] :
+ * 							buf.data.d[col])));
+ *
+ * 	printf(G_TYPE_FORMAT(buf.type),
+ * 						(buf.type == CELL_TYPE ?
+ * 							buf.data.c[col] :
+ * 						(buf.type == FCELL_TYPE ?
+ * 							buf.data.f[col] :
+ * 							buf.data.d[col])));
+ *
+ * Unfortunately for two cases two arguments to printf() do not work at all.
+ *
+ *	for(i=0; i<3; i++)
+ * 		printf((i==0 ? "%d" : (i==1 ? "%5.2f" : "%10.2lf")),
+ * 				(i==0 ? 123 : (i==1 ? 99.23 : 100.32)));
+ *
+ * when i == 0, printf() won't work. I don't know why.
+ *
+ * 
+ * Then?
+ *
+ * 	sprintf(buf, "This value is %s\n", G_TYPE_FORMAT(buf.type));
+ * 	printf(buf, buf.data.f[col]);
+ *
+ * Hmm, how can we know that we should use buf.data.f[col] for G_TYPE_FORMAT()?
+ *
+ * So it's useless at all.
+ */
+#define G_TYPE_FORMAT(t)	(t ==  CELL_TYPE ?  "%%d" : \
+				(t == FCELL_TYPE ?  "%%f" : \
+				(t == DCELL_TYPE ? "%%lf" : "")))
 
 
 union	RASTER_PTR
