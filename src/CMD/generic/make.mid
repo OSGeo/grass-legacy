@@ -23,7 +23,8 @@ MAN6            = $(GISBASE)/man/6
 HELP            = $(GISBASE)/man/help
 
 # other
-CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) $(USE_TERMIO)
+CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) \
+		$(INCLUDE_CURSES)  $(USE_TERMIO)
 AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
 #MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
 MANROFF     = # 
