@@ -119,6 +119,12 @@ care of following rules:
 
     TODO: clarify when to use G_message(_("..."),...); instead
 
+    G_message should be used for messages - informations about
+    the process for user while fprintf(stdout,...) for data output.
+    G_message output is not expected to be send to pipe or file.
+    fprintf(stdout,...) output is usually send to pipe or file.
+
+
 9.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
     good programming practice (eg always checking if memory was allocated)
