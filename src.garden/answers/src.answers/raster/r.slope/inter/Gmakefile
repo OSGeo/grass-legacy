@@ -4,6 +4,6 @@ HOME=$(BIN_INTER)
 LIST = main.o
 
 $(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@ $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #
