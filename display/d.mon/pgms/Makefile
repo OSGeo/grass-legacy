@@ -15,7 +15,7 @@ default:$(ETC)/mon.list \
 
 $(ETC)/mon.list:	$(OBJDIR)/list.o 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.start:	$(OBJDIR)/start.o
+$(ETC)/mon.start:	$(OBJDIR)/start.o 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/start.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 $(ETC)/mon.status:	$(OBJDIR)/status.o 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/status.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
