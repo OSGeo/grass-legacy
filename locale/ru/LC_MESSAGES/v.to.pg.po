@@ -2,38 +2,38 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
-#: buildInfxQry.c:13 getAllOpts.c:101 getSopts.c:101 main.c:38 plotCat.c:43
+#: getAllOpts.c:101 getSopts.c:102 plotCat.c:39
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-04-30 16:32+0400\n"
+"POT-Creation-Date: 2002-11-23 23:24+0300\n"
 "PO-Revision-Date: 2002-03-05 19:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: buildInfxQry.c:18
+#: buildPg.c:20
 msgid " where "
 msgstr ""
 
-#: buildInfxQry.c:21
+#: buildPg.c:23
 #, c-format
 msgid "SELECT Distinct %s from %s %s %s and %s is not null"
 msgstr ""
 
-#: buildInfxQry.c:23
+#: buildPg.c:28
 #, c-format
 msgid "SELECT Distinct %s from %s where %s is not null"
 msgstr ""
 
-#: getAllOpts.c:20 getSopts.c:30
+#: getAllOpts.c:20 getSopts.c:31
 msgid "map"
 msgstr ""
 
-#: getAllOpts.c:21 getSopts.c:32
+#: getAllOpts.c:21 getSopts.c:33
 msgid "old,dig,vector"
 msgstr ""
 
@@ -41,15 +41,15 @@ msgstr ""
 msgid "Vector map:"
 msgstr "Векторная карта:"
 
-#: getAllOpts.c:28 getSopts.c:38
+#: getAllOpts.c:28 getSopts.c:39
 msgid "type"
 msgstr ""
 
-#: getAllOpts.c:32 getSopts.c:42
+#: getAllOpts.c:32 getSopts.c:43
 msgid "area,line"
 msgstr ""
 
-#: getAllOpts.c:33 getSopts.c:43
+#: getAllOpts.c:33 getSopts.c:44
 msgid "Select area or line."
 msgstr "Выберите area или line."
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Query clause (e.g. obj='paved'):"
 msgstr "Условие запроса (напр.,obj='paved'): "
 
-#: getAllOpts.c:58 getSopts.c:54
+#: getAllOpts.c:58 getSopts.c:55
 msgid "color"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgstr ""
 msgid "Color to draw selected vectors:"
 msgstr "Цвет прорисовки выбранных линий/площадей:"
 
-#: getAllOpts.c:67 getSopts.c:62
+#: getAllOpts.c:67 getSopts.c:63
 msgid "Fill polygons"
 msgstr "Закрасить полигоны"
 
@@ -93,11 +93,11 @@ msgstr "Закрасить полигоны"
 msgid "Without reference table, i.e., all vectors"
 msgstr "Без соответствия с др. таблицей, т.е., все векторы"
 
-#: getAllOpts.c:75 getSopts.c:66
+#: getAllOpts.c:75 getSopts.c:67
 msgid "Verbose mode"
 msgstr "Вывод статистики на экран"
 
-#: getAllOpts.c:79 getSopts.c:70
+#: getAllOpts.c:79 getSopts.c:71
 msgid "Create and populate PostGIS table instead"
 msgstr "Создать и заполнить данными табл. PostGIS"
 
@@ -105,11 +105,11 @@ msgstr "Создать и заполнить данными табл. PostGIS"
 msgid "v.to.pg -s help"
 msgstr ""
 
-#: getAllOpts.c:90 getSopts.c:89
+#: getAllOpts.c:90 getSopts.c:90
 msgid "white"
 msgstr ""
 
-#: getAllOpts.c:101 getSopts.c:101
+#: getAllOpts.c:101 getSopts.c:102
 msgid "dig"
 msgstr ""
 
@@ -118,90 +118,90 @@ msgstr ""
 msgid "Vector map %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
 
-#: getSopts.c:27
+#: getSopts.c:28
 msgid "Use [s] flag to select db records using an input file."
 msgstr "Используйте флаг [s] для выборки записей через командный файл SQL."
 
-#: getSopts.c:35
+#: getSopts.c:36
 msgid "Name of existing vector file."
 msgstr "Название существующей векторной карты."
 
-#: getSopts.c:46
+#: getSopts.c:47
 msgid "sql"
 msgstr ""
 
-#: getSopts.c:47
+#: getSopts.c:48
 msgid "file"
 msgstr ""
 
-#: getSopts.c:51
+#: getSopts.c:52
 msgid "SQL statements specifying selection criteria. "
 msgstr "SQL команды в файле."
 
-#: getSopts.c:58
+#: getSopts.c:59
 msgid "Color for vector draw."
 msgstr "Цвет прорисовки."
 
-#: getSopts.c:76 getSopts.c:77
+#: getSopts.c:77 getSopts.c:78
 msgid "help"
 msgstr ""
 
-#: getSopts.c:79 main.c:60
+#: getSopts.c:80 main.c:54
 msgid "-s"
 msgstr ""
 
-#: getSopts.c:102
+#: getSopts.c:103
 #, c-format
 msgid "Vector file %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
 
-#: getSopts.c:106
+#: getSopts.c:107
 msgid "r"
 msgstr ""
 
-#: getSopts.c:107
+#: getSopts.c:108
 #, fuzzy, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: main.c:51 runInfxFile.c:56 runInfxFile.c:101 runInfxFile.c:105
+#: main.c:45 runPg.c:54 runPg.c:113 runPg.c:119
 msgid "PG_DBASE"
 msgstr ""
 
-#: main.c:53
+#: main.c:47
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: plotCat.c:64 runInfxFile.c:66 runInfxFile.c:97
+#: plotCat.c:59 runPg.c:67 runPg.c:108
 msgid "area"
 msgstr ""
 
-#: plotCat.c:102
+#: plotCat.c:100
 #, c-format
 msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','t','("
 msgstr ""
 
-#: plotCat.c:112 plotCat.c:157 plotCat.c:350
+#: plotCat.c:111 plotCat.c:176 plotCat.c:414
 #, c-format
 msgid "(%f,%f),"
 msgstr ""
 
-#: plotCat.c:114 plotCat.c:159 plotCat.c:353
+#: plotCat.c:114 plotCat.c:179 plotCat.c:418
 #, c-format
 msgid "(%f,%f)"
 msgstr ""
 
-#: plotCat.c:120 plotCat.c:165
+#: plotCat.c:122 plotCat.c:188
 msgid ")')"
 msgstr ""
 
-#: plotCat.c:125 plotCat.c:212 plotCat.c:369
+#: plotCat.c:127 plotCat.c:251 plotCat.c:438
 #, c-format
 msgid "n_points is %d, v_att is %d, count is %d\n"
 msgstr "число точек %d, v_att %d, count %d\n"
 
-#: plotCat.c:127 plotCat.c:172 plotCat.c:271 plotCat.c:371 runInfxFile.c:85
-#: runInfxFile.c:110 runInfxFile.c:125
+#: plotCat.c:129 plotCat.c:195 plotCat.c:323 plotCat.c:440 runPg.c:94
+#: runPg.c:125 runPg.c:143
 #, c-format
 msgid ""
 "Executing\n"
@@ -212,50 +212,55 @@ msgstr ""
 "%s;\n"
 "\n"
 
-#: plotCat.c:147
+#: plotCat.c:136 plotCat.c:201 plotCat.c:327 plotCat.c:446
+#, c-format
+msgid "Error executing command:%sExiting.\n"
+msgstr ""
+
+#: plotCat.c:165
 #, c-format
 msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','("
 msgstr ""
 
-#: plotCat.c:170 plotCat.c:258
+#: plotCat.c:193 plotCat.c:306
 #, c-format
 msgid "n_points_i is %d, v_att is %d, count is %d\n"
 msgstr "число точек %d, v_att %d, count %d\n"
 
-#: plotCat.c:185
+#: plotCat.c:219
 #, c-format
 msgid ""
-"INSERT into %s_mpoly (%s, num, grass_poly) values "
-"('%d','%d',GeometryFromText('POLYGON(("
+"INSERT into %s_mpoly (%s, num, grass_poly) values ('%d','%d',GeometryFromText"
+"('POLYGON(("
 msgstr ""
 
-#: plotCat.c:195 plotCat.c:240 plotCat.c:351
+#: plotCat.c:230 plotCat.c:284 plotCat.c:416
 #, c-format
 msgid "%f %f,"
 msgstr ""
 
-#: plotCat.c:197 plotCat.c:242 plotCat.c:354
+#: plotCat.c:233 plotCat.c:287 plotCat.c:420
 #, c-format
 msgid "%f %f"
 msgstr ""
 
-#: plotCat.c:204 plotCat.c:250
+#: plotCat.c:242 plotCat.c:297
 msgid "))',-1))"
 msgstr ""
 
-#: plotCat.c:206 plotCat.c:252
+#: plotCat.c:245 plotCat.c:300
 msgid "),"
 msgstr ""
 
-#: plotCat.c:230
+#: plotCat.c:274
 msgid "("
 msgstr ""
 
-#: plotCat.c:303
+#: plotCat.c:364
 msgid "line"
 msgstr ""
 
-#: plotCat.c:313
+#: plotCat.c:372
 #, c-format
 msgid ""
 "\n"
@@ -264,107 +269,107 @@ msgstr ""
 "\n"
 "WARNING: векторная карта [%s]-ошибка чтения\n"
 
-#: plotCat.c:323
+#: plotCat.c:382
 msgid "Read error - EOF\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: plotCat.c:327
+#: plotCat.c:386
 msgid "Read error\n"
 msgstr "Ошибка чтения\n"
 
-#: plotCat.c:336
+#: plotCat.c:397
 #, c-format
 msgid "INSERT into %s_arc (%s, num, segment) values ('%d','%d','["
 msgstr ""
 
-#: plotCat.c:338
+#: plotCat.c:401
 #, c-format
 msgid ""
 "INSERT into %s_mstring (%s, num, grass_line) values ('%d','%d', "
 "GeometryFromText('LINESTRING("
 msgstr ""
 
-#: plotCat.c:363
+#: plotCat.c:431
 msgid "]')"
 msgstr ""
 
-#: plotCat.c:364
+#: plotCat.c:433
 msgid ")',-1))"
 msgstr ""
 
-#: runInfxFile.c:46
+#: runPg.c:45
 #, c-format
 msgid "Error opening vector map %s in mapset %s\n"
 msgstr "Ошибка открытия векторной карты %s в наборе %s\n"
 
-#: runInfxFile.c:54
+#: runPg.c:52
 msgid "PG_HOST"
 msgstr ""
 
-#: runInfxFile.c:58
+#: runPg.c:56
 #, c-format
 msgid "Error Connecting to Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:69
+#: runPg.c:71
 #, c-format
 msgid "CREATE TABLE %s_bnd (%s int4, num int2, ex bool, boundary polygon)"
 msgstr ""
 
-#: runInfxFile.c:72
+#: runPg.c:76
 #, c-format
 msgid "CREATE TABLE %s_mpoly (%s int4, num int2)"
 msgstr ""
 
-#: runInfxFile.c:77
+#: runPg.c:83
 #, c-format
 msgid "CREATE TABLE %s_arc (%s int4, num int2, segment path)"
 msgstr ""
 
-#: runInfxFile.c:80
+#: runPg.c:88
 #, c-format
 msgid "CREATE TABLE %s_mstring (%s int4, num int2)"
 msgstr ""
 
-#: runInfxFile.c:89
+#: runPg.c:98
 #, c-format
 msgid "Could not create new table:%sExiting.\n"
 msgstr "Невозможно создать таблицу:%sВыход.\n"
 
-#: runInfxFile.c:100
+#: runPg.c:112
 #, c-format
 msgid ""
 "SELECT AddGeometryColumn ('%s', '%s_mpoly', 'grass_poly', -1,'POLYGON',2)"
 msgstr ""
 
-#: runInfxFile.c:104
+#: runPg.c:118
 #, c-format
 msgid ""
 "SELECT AddGeometryColumn ('%s', '%s_mstring', 'grass_line', -1, "
 "'LINESTRING',2)"
 msgstr ""
 
-#: runInfxFile.c:114
+#: runPg.c:129
 #, fuzzy, c-format
 msgid "Could not add geometry column:%sExiting.\n"
 msgstr "Невозможно создать таблицу:%sВыход.\n"
 
-#: runInfxFile.c:129
+#: runPg.c:147
 #, c-format
 msgid "Error Selecting from Postgres:%s\n"
 msgstr "Ошибка: Selecting from Postgres:%s\n"
 
-#: runInfxFile.c:133
+#: runPg.c:154
 #, c-format
 msgid "%d Rows\n"
 msgstr "%d записей\n"
 
-#: runInfxFile.c:143 runInfxFile.c:155
+#: runPg.c:163 runPg.c:176
 #, c-format
 msgid "Error plotting category %d\n"
 msgstr "Ошибка рисования категории %d\n"
 
-#: runInfxFile.c:168
+#: runPg.c:191
 #, c-format
 msgid "Total number of vectors inserted = %d, with average of %d vertices\n"
 msgstr "Общее число векторов вставлено %d, в среднем %d вертексов\n"

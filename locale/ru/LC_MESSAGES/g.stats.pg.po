@@ -6,33 +6,35 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-02 12:00+0300\n"
+"POT-Creation-Date: 2002-11-23 19:21+0300\n"
 "PO-Revision-Date: 2002-03-02 12:00+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: infxStats.c:32
-#, c-format
-msgid "Error: select Postgres:%s\n"
-msgstr "Ошибка: select Postgres:%s\n"
+#: main.c:51
+msgid "table"
+msgstr ""
 
-#: infxStats.c:63
-#, c-format
-msgid "Error: connect Postgres:%s\n"
-msgstr "Ошибка: connect Postgres:%s\n"
-
-#: main.c:56
+#: main.c:55
 msgid "Name of the table in the selected database:"
 msgstr "Название таблицы в выбранной БД"
 
-#: main.c:63
+#: main.c:58
+msgid "column"
+msgstr ""
+
+#: main.c:62
 msgid "Column in [table]."
 msgstr "Столбец в [table]"
 
-#: main.c:70
+#: main.c:65
+msgid "where"
+msgstr ""
+
+#: main.c:69
 msgid "Clause (where) for the query, without WHERE"
 msgstr "Условие запроса (where), без WHERE"
 
@@ -48,6 +50,109 @@ msgstr ""
 msgid "Use -v for full output."
 msgstr "Используйте -v для полного вывода"
 
-#: main.c:83
+#: main.c:81 pgStats.c:30
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:84
 msgid "Please run g.select.pg to identify a current database..\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: pgStats.c:26
+#, c-format
+msgid " WHERE %s "
+msgstr ""
+
+#: pgStats.c:28
+msgid "PG_HOST"
+msgstr ""
+
+#: pgStats.c:32
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr "Ошибка: connect Postgres:%s\n"
+
+#: pgStats.c:39
+#, c-format
+msgid "SELECT count(*) as count, %s from %s %s "
+msgstr ""
+
+#: pgStats.c:40
+msgid ", col, tab, wherecl, col);"
+msgstr ""
+
+#: pgStats.c:43
+#, c-format
+msgid "select avg(%s) from %s where oid is null"
+msgstr ""
+
+#: pgStats.c:51
+#, c-format
+msgid "SELECT min(%s) as Min, max(%s) as Max, avg(%s) as Mean"
+msgstr ""
+
+#: pgStats.c:52
+msgid ", col, col, col, tab,"
+msgstr ""
+
+#: pgStats.c:56
+#, c-format
+msgid "SELECT min(%s) as Min, max(%s) as Max"
+msgstr ""
+
+#: pgStats.c:57
+msgid ", col, col, tab, wherecl);"
+msgstr ""
+
+#: pgStats.c:63
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: pgStats.c:68
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Postgres:%s\n"
+
+#: pgStats.c:78 pgStats.c:81
+#, c-format
+msgid "%10s, %-25.25s\n"
+msgstr ""
+
+#: pgStats.c:78
+msgid "Count"
+msgstr ""
+
+#: pgStats.c:79 pgStats.c:87
+msgid "-------------------------------------\n"
+msgstr ""
+
+#: pgStats.c:86 pgStats.c:95
+#, c-format
+msgid "%10s, %10s, %10s\n"
+msgstr ""
+
+#: pgStats.c:86
+msgid "Min"
+msgstr ""
+
+#: pgStats.c:86
+msgid "Max"
+msgstr ""
+
+#: pgStats.c:86
+msgid "Mean"
+msgstr ""
+
+#: pgStats.c:93
+msgid "undefined"
+msgstr ""
+
+#: pgStats.c:105
+msgid "\n"
+msgstr ""
