@@ -1,9 +1,27 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	v.out.atlas
+ * AUTHOR(S):	R. L. Glenn ?, unknown GRASS author
+ * PURPOSE: 	Export GRASS vector file to ATLAS GIS vector file ?
+ *             
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ * $Log$
+ * Revision 1.5  2000-11-06 19:43:39  andreas
+ * added header
+ *
+ */
+
+
 #define MAIN
 #include "gis.h"
 #include "Vect.h"
 #include <stdio.h>
 
-#define  USAGE  "v.out.atlas dig_file atlas_file type\n"
 
 struct Map_info Map;
 
