@@ -1,0 +1,177 @@
+/* *
+ * * Dglib (Directed Graph Library) aims at giving support to network analysis.
+ * * Each graph is stored in a graph-context of type gnGrpGraph_s.
+ * * At any given point in time a graph can be in one of three states: EMPTY, TREE, FLAT.
+ * * We take a look of what these states mean:
+ * *
+ * * 1) EMPTY state
+ * *    This is the state of a graph after initialization and before any network data
+ * *	is put into it. In EMPTY state the only reasonable thing to do with the graph
+ * *	is to add links (also called arcs) into it. This is done by gnGrpAddLink().
+ * *	After the first link has been added the state of the graph changes to TREE.
+ * *
+ * * 2) TREE state
+ * *	This is the state optimized to support graph modifications, since all data is
+ * *	kept internally stored in binary search trees. The operations that can be performed
+ * *	on a TREE graph are:
+ * *	- gnGrpAddLink() - add links;
+ * *	- gnGrpFlatten() - convert the graph to FLAT state;
+ * *	- gnGrp{Set|Get}NodeAttr() - set/get extended attributes for a node;
+ * *	- gnGrp{Set|Get}LinkAttr() - set/get extended attributes for a link;
+ * *	- gnGrpRelease() - discard it.
+ * *
+ * * 3) FLAT state
+ * *	In this state the graph is 'serializable', which is: it can be written to
+ * *	a file or a stream. The binaru tree data representation is
+ * *	transformed into arrays of 32 bit words with pointers stored as offsets.
+ * *	Network analysis functions apply to FLAT state graphs. When a FLAT graph is
+ * *	read from a file or stream it is ready for analisys with no further initialization.
+ * *	The operations that can be performed on a FLAT graph are:
+ * *	- gnGrpUnflatten() - convert the graph back to TREE state;
+ * *	- gnGrpWrite() - write the graph to a user supplied file descriptor;
+ * *	- gnGrpRead() - read the graph from a user supplied file descriptor;
+ * *	- gnGrp{Set|Get}NodeAttr() - set/get extended attributes for a node;
+ * *	- gnGrp{Set|Get}LinkAttr() - set/get extended attributes for a link;
+ * *	- gnGrpShortestPath() - perform a shortest path search;
+ * *	- gnGrpRelease() - discard the graph.
+ * *
+ * * Considerations:
+ * * The memory area of type gnGrpGraph_s that holds a graph is always handled
+ * * by the application. All dglib functions take as first argument a pointer
+ * * to gnGrpGraph_s and use its internal data. The structure is not hidden
+ * * and programs can access it. It is responsability of the application to
+ * * control the life cycle of a graph structure in the case it was malloced,
+ * * gnGrpRelease() doesn't free it but just clean its internals.
+ * * Keeping all data related to a graph into a stackable execution context
+ * * helps in getting dglib thread-safe at multi-graph level. Nor global 
+ * * neither static data delarations exist into dglib.
+ * * At single-graph level multhread safety is so far provided for shortest
+ * * path computations that can be parallelized.
+ * * After a function has reported an error condition, diagnostic status
+ * * can be obtained as an integer with gnGrpErrno() or in readable form with
+ * * gnGrpStrerror().
+ * *
+ * * API functions:
+ * *
+ * * In order to initialize a new EMPTY graph use:
+ * *
+ * * int gnGrpInitialize(
+ * *					gnGrpGraph_s *		pgraph ,
+ * *					gnByte_t 			Version ,
+ * *					gnInt32_t			NodeAttrSize ,
+ * *					gnInt32_t			LinkAttrSize ,
+ * *					gnInt32_t * 		pOpaqueSet
+ * *					);
+ * *
+ * * 'pgraph'       pointer to the user supplied graph context
+ * * 'Version'      is always 1;
+ * * 'NodeAttrSize' defines how many bytes to keep for each node attributes, if one
+ * *                doesn't plan to use node attributes then 0 must be given;
+ * * 'LinkAttrSize' defines how many bytes to keep for each link attrubutes, if one
+ * *                doesn't plan to use link attributes then 0 must be given;
+ * * 'pOpaqueSet'   is the pointer to a user supplied array of 16 32bit words that comes
+ * *                stored with the graph and that can be used to save user's graph properties.
+ * *
+ * * Initialization is implicit when reading an existing graph from a source.
+ * *
+ * * In order to add links on a EMPTY or TREE graph we use:
+ * * 
+ * * int 				gnGrpAddLink(
+ * * 								gnGrpGraph_s * 		pgraph ,
+ * * 								gnInt32_t 			lFrom ,
+ * * 								gnInt32_t 			lTo ,
+ * * 								gnInt32_t 			lCost ,
+ * * 								gnInt32_t 			lUser
+ * * 								void *				pvFnodeAttr ,
+ * * 								void *				pvTnodeAttr ,
+ * * 								void *				pvLinkAttr
+ * * 								);
+ * * 
+ * * 'pgraph'       pointer to the user supplied graph context
+ * * 'lFrom'        the node-id of the from node
+ * * 'lTo'          the node-id of the to node (this couple of values defines an intrinsic arc direction).
+ * * 'lCost'        the cost to travel from/to in user defined units.
+ * * 'lUser'        a user assigned attribute assigned to this link, it's usually a unique identifier for
+ * *                the link. 
+ * * 'pvFnodeAttr'  user supplied from-node extended attributes. The supplied memory size must
+ * *                match the NodeAttrSize used the first time to initialize the graph.
+ * * 'pvFnodeAttr'  user supplied to-node extended attributes. The supplied memory size must
+ * *                match the NodeAttrSize used the first time to initialize the graph.
+ * * 'pvFnodeAttr'  user supplied link extended attributes. The supplied memory size must
+ * *                match the LinkAttrSize used the first time to initialize the graph.
+ * *
+ * * Nodes cannot be added alone, but only as part of an arc.
+ * *
+ * * We have two ways for assigning extended attributes to nodes and links: 1) pass attribute data as last
+ * * three gnGrpAddLink parameters; 2) use gnGrpSetNodeAttr() and gnGrpSetLinkAttr() respectively.
+ * * 
+ * * int gnGrpSetNodeAttr	(
+ * * 						gnGrpGraph_s * pgraph ,
+ * * 						void * pattr ,
+ * * 						gnInt32_t nodeid
+ * * 						);
+ * *
+ * * 'pgraph'       pointer to the user supplied graph context
+ * * 'pattr'        user supplied node extended attributes. The supplied memory size must
+ * *                match the NodeAttrSize used the first time to initialize the graph.
+ * * 'nodeid'		the recipient node identifier. The node must already exist in the graph.
+ * * 
+ * *
+ * * To convert a TREE graph to FLAT state we use:
+ * *
+ * * int gnGrpFlatten	(
+ * * 					gnGrpGraph_s * 	pgraph
+ * * 					);
+ * * 
+ * * After flattening we can serialize it to a file descriptor:
+ * *
+ * * int gnGrpWrite		(
+ * * 					gnGrpGraph_s * 	pgraph,
+ * * 					int 			fd
+ * * 					);
+ * *
+ * * In order to release resources reserved by a graph we use:
+ * *
+ * * int gnGrpRelease	(
+ * *					gnGrpGraph_s * 	pgraph
+ * *					);
+ * * 
+ * *
+ * * When we want to read a FLAT graph we use:
+ * *
+ * *
+ * * int gnGrpRead	(
+ * *				gnGrpGraph_s *  pgraph,
+ * *				int 			fd
+ * *				);
+ * *
+ * * In this case no gnGrpInitialize() is needed on pgraph.
+ * *
+ * * The only network analysis function so far supported is:
+ * *
+ * * gnGrpSPReport_s *	gnGrpDijkstra	(
+ * * 									gnGrpGraph_s * 	pgraph ,
+ * * 			 						gnInt32_t 		from ,
+ * * 			 						gnInt32_t 		to ,
+ * * 			 						int (*clip)	(
+ * * 												gnGrpGraph_s * 	pgraph ,
+ * * 												gnInt32_t * 	pprevlink ,
+ * * 												gnInt32_t * 	pnodefrom ,
+ * * 												gnInt32_t * 	plink ,
+ * * 												gnInt32_t * 	pnodeto ,
+ * * 												gnInt32_t * 	pcost ,
+ * * 												void * 			pvarg
+ * * 												) ,
+ * * 			 						void * 			pvcliparg
+ * * 			 						);
+ * * 
+ * * 'pgraph'       pointer to the user supplied graph context
+ * * 'from'         start node identifier
+ * * 'to'           arrival node identifier
+ * * 'clip'         user supplied clipping function, see below - can be a NULL pointer
+ * * 'pvcliparg'    user supplied parameter, passed back to clip as pvarg - can be a NULL pointer
+ * * 
+ * */
+
+
+

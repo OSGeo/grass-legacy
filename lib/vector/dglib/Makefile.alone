@@ -1,0 +1,14 @@
+CFLAGS =
+LNFLAGS =
+OBJECTS = tree.o heap.o graph.o
+INCLUDES = tree.h heap.h graph.h type.h
+LIBRARY = libdgl.a
+
+$(LIBRARY): $(OBJECTS) $(INCLUDES)
+	ar r $@ $(OBJECTS); ranlib $@
+
+.c.o:
+	cc -c $(CFLAGS) $< -o $@
+
+clean:
+	rm -f *.o *.a

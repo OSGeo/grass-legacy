@@ -1,0 +1,37 @@
+# GRAPH VERSION AND NODE-ATTRIBUTE SIZE (3*32bit words for X Y and Z in bytes)
+1 12
+
+#
+# ARCS
+#
+#    FROM    TO     COST   ARCID
+#
+
+A    1       2      1000   1
+A    1       3      20     2
+A    1       4      21     8
+A    1       5      8      9
+A    3       4      1      10
+A    3       5      100    11
+A    3       10     100    12
+A    2       80     8      13
+A    2       81     22     14
+A    2       5      7      15
+A    3       1      22     16
+A    3       80     10     17
+A    4       5      10     17
+
+#
+# Node X Y Z coordinates
+#
+# NODEID    X      Y      Z
+#
+
+N      1   10     42      0
+N      2   11     43      0
+N      3   12     44      0
+N      4   12     45      0
+N      5   20     45      0
+N     10    8     40      0
+N     80    9     40      0
+N     81    9     42      0
