@@ -1,0 +1,53 @@
+/*!
+\mainpage GRASS 5.1 DataBase Management Interface
+
+by GRASS Development Team
+
+http://grass.itc.it
+
+\section intro Introduction
+
+The attribute management was completely changed in GRASS 5.1 to achieve
+multi-attribute capabilities managed within external databases.  The former
+dig_cats files are not used any more and all vector attributes are stored
+in external database. Connection with database is done through DBMI library
+(DataBase Management Interface) with its integrated drivers. At time of this
+writing drivers for ODBC and DBF files are available. A PostgreSQL driver is
+planned (note that PostgreSQL can already be accessed through ODBC).
+
+In general records in table are linked to vector entities by field number
+and category number.  The field number identifies a database table and the
+category number identifies the record record. I.e. for unique combination
+<tt>mapset + map + field + category</tt> exists one unique combination
+<tt>driver + database + table + row</tt>. Each element may have none, one or
+more categories (cats). More cats are distinguished by field number (field).
+The flexibility of this approach even supports the extreme case, that one
+vector entity may be linked to attributes in different tables in different
+databases connected by different drivers at the same time.
+
+The DBMI library contains drivers such as DBF, ODBC, and PostgreSQL
+(planned). The functionality of the database support varies with the
+capabilities of the underlying RDBMS. Main features are multi-attributes
+support for various data types, also multiple tables may optionally be
+linked to one or many vector entity/ies. SQL (Structured Query Language) is
+used for all drivers.
+
+
+
+For details please read Blazek et al. 2002 (see below).
+
+
+\section contacts Contacts
+
+ Radim Blazek <blazek@itc.it>
+
+
+\section references References
+
+Text based on: R. Blazek, M. Neteler, and R. Micarelli. The new GRASS 5.1
+ vector architecture. In Open source GIS - GRASS users conference 2002,
+ Trento, Italy, 11-13 September 2002. University of Trento, Italy, 2002.
+ http://www.ing.unitn.it/~grass/proceedings/proceedings/pdfs/Blazek_Radim.pdf
+
+Last change: $Date$
+*/
