@@ -1,0 +1,24 @@
+X
+create table grass_test1 (i1 int, d1 double precision, c1 varchar(20))
+
+X
+insert into grass_test1 values ( 1, 123.456, 'abcd' )
+
+X
+insert into grass_test1 values ( 2, null, 'xxx' )
+
+S
+select * from grass_test1
+1|123.456000|abcd
+2||xxx
+
+S
+select c1 from grass_test1 where d1 < 500 / 2 and i1 <> 2  and c1 ~ 'bc' 
+abcd
+
+X
+insert into grass_test1 values ( 3, 0.0, '_\''_' )
+
+X
+drop table grass_test1
+
