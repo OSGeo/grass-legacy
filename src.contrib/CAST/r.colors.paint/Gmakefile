@@ -2,10 +2,10 @@ PGM = r.colors.paint
 
 LIST = main.o readfile.o range.o assign_color.o
 
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a $(SRC)/paint/Interface/driverlib/lib.a
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERFACE)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(DISPLAYLIB) $(INTERFACE) -o $@ $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERFACE) -o $@ $(XDRLIB) $(MATHLIB) 
 	rm -rf $(ETC)/Gcolortab
 	mkdir $(ETC)/Gcolortab
 	mkdir $(ETC)/Gcolortab/tek4695
