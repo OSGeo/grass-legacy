@@ -1,5 +1,0 @@
-
-\r.grow\ - Generates an output raster map layer
-with contiguous areas grown by one cell (pixel).
-
-(GRASS Raster Program)

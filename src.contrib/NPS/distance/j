@@ -1,5 +1,0 @@
-SRC=/home/archive/grass3/src
-CMD=/home/archive/grass3/src/CMD
-HEADER=sun4
-
-. $CMD/generic/gmake.sh

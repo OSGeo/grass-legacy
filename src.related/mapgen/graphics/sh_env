@@ -1,2 +1,0 @@
-GRAPHB=/usr/mapgen/bin/plotter:/usr/mapgen/gfonts/:sr:
-export GRAPHB

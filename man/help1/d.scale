@@ -1,6 +1,0 @@
-
-\d.scale\ - Displays a map scale and north arrow relevant to a the user's
-current geographic region setting in the active display frame
-on the graphics monitor.
-
-(GRASS Display Program)

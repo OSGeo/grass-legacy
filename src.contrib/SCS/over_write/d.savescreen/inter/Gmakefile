@@ -1,7 +1,0 @@
-PGM=d.savescreen
-HOME=$(BIN_CONTRIB_INTER)
-
-$(HOME)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) main.o $(GISLIB) $(RASTERLIB) -o $@
-
-$(GISLIB): #

@@ -1,3 +1,0 @@
-Mdem.extract
-    Will extract current user window from DEM terrain elevation
-    tape.  Any data not found is assigned zero category.

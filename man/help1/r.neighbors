@@ -1,6 +1,0 @@
-
-\r.neighbors\ - Makes each cell category value a function of the
-category values assigned to the cells around it,
-and stores new cell values in an output raster map layer.
-
-(GRASS Raster Program)

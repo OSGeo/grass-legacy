@@ -1,4 +1,0 @@
-$(BIN_ALPHA_CMD)/v.in.tiger: main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
-
-$(GISLIB): #

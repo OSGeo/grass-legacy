@@ -1,3 +1,0 @@
- Edit Menu
-   Go to the Edit menu.  This one of the primary menus
-   in Digit.

@@ -1,4 +1,0 @@
- Auto Label    		Automatically label lines and sites
-    This option allows you to choose an attribute before digitizing a 
- line.  All lines digitized afterwards, and before changing it again 
- will automatically be labeled with the specified value.

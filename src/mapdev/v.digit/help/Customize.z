@@ -1,4 +1,0 @@
- TOGGLE DIGITIZING DEVICE
-    Select either the mouse or, if map is registered, the digitizer as the
- device to digitize with.  If using 'none' driver, the mouse is the only
- valid digitizing device.
