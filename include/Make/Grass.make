@@ -200,7 +200,8 @@ RTREELIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(RTREE_LIBNAME).$(LIB_SUFFIX)
 VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 	       $(GRASS_INCDIR)/vect/dig_defines.h \
                $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
-               $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h
+               $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h \
+	       $(VECTLIB)
 
 ##################### driver names #####################################
 
