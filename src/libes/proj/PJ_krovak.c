@@ -30,7 +30,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2003-04-01 09:54:28  radim
+ * Revision 1.3  2003-05-21 19:41:38  glynn
+ * Fix #include directives
+ *
+ * Revision 1.2  2003/04/01 09:54:28  radim
  * krovakgis removed, krovak updated to PROJ.4
  *
  * Revision 1.4  2002/12/15 22:31:04  warmerda
@@ -48,9 +51,11 @@
 	double	C_x;
 #define PJ_LIB__
 
-#include <projects.h>
+#ifdef DEBUG
 #include <string.h>
 #include <stdio.h>
+#endif
+#include "projects.h"
 
 /* PJ_CVSID("$Id$"); */
 
