@@ -30,7 +30,7 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 
     G_debug (3, "c_next_tool()");
     if ( argc < 2 ) {
-	G_warning ( "c_next_tool(): inicorrect number of parameters" );
+	G_warning ( "c_next_tool(): incorrect number of parameters" );
 	return TCL_ERROR;
     }
     tl = argv[1];
@@ -41,6 +41,10 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_EXIT;
     else if ( strcmp ( tl, "delete_line" ) == 0 )
 	Tool_next = TOOL_DEL_LINE;
+    else if ( strcmp ( tl, "move_line" ) == 0 )
+	Tool_next = TOOL_MV_LINE;    
+    else if ( strcmp ( tl, "move_node" ) == 0 )
+	Tool_next = TOOL_MV_NODE;    
     else {
 	G_warning ( "c_next_tool(): Unknown tool: %s", tl );
 	return TCL_ERROR;

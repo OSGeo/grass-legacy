@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
@@ -25,12 +26,23 @@ int display_points(struct line_pnts *Points, int color, int ends_color)
 
     if (ends_color != 0) {
 	R_color(ends_color);
-	blot_point(Points->x, Points->y);
+	blot_point(Points->x, Points->y, 0);
 	blot_point(Points->x + Points->n_points - 1,
-		   Points->y + Points->n_points - 1);
+		   Points->y + Points->n_points - 1, 0);
     }
 
     R_flush();
+
+    return 1;
+}
+
+/* Display point */
+int display_point(double xcoor, double ycoor, int node_color, int size)
+{
+    G_debug(3, "display_point()");
+
+    R_color(node_color);
+    blot_point(&xcoor, &ycoor, size);
 
     return 1;
 }
@@ -76,12 +88,17 @@ int display_map(void)
     return 1;
 }
 
-/* Draw a 3-pixel box at point*/
-int blot_point(double *x, double *y)
+/* Draw a (size+1)-pixel box at point*/
+int blot_point(double *x, double *y, int size)
 {
     int xpos, ypos;
     int top, bot, left, right;
     double Xs, Ys;
+
+    size = abs(size);
+    ++size;
+
+    G_debug(3, "blot_point(): at %f, %f", *x, *y);
 
     D_get_screen_window(&top, &bot, &left, &right);
 
@@ -102,10 +119,10 @@ int blot_point(double *x, double *y)
 	ypos = (int) ((*y - D_d_to_u_row(bot)) / Ys + bot);
 
 	D_move_abs(xpos, ypos);
-	D_cont_abs(xpos, ypos - 1);
-	D_cont_abs(xpos - 1, ypos);
-	D_cont_abs(xpos, ypos + 1);
-	D_cont_abs(xpos + 1, ypos);
+	D_cont_abs(xpos, ypos - size);
+	D_cont_abs(xpos - size, ypos);
+	D_cont_abs(xpos, ypos + size);
+	D_cont_abs(xpos + size, ypos);
 
     }
     return 0;
