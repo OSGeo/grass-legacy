@@ -23,7 +23,7 @@
 
    static int (*tstp_old)();
    static int (*tstp_new)();
-#  define get_tstp(x) x=signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
+#  define get_tstp(x) x = (int (*)()) signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
 #  define set_tstp(x) signal(SIGTSTP,x)
 
 #else
