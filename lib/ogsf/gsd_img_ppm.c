@@ -62,6 +62,7 @@ int GS_write_ppm(char *name)
 	}
 
     }
+    free(pixbuf);
     fclose (fp);
 
     return(0);
