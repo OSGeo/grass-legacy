@@ -34,14 +34,16 @@ char *G__file_name (
  * must split the name into name, mapset if it is
  * in the name@mapset format
  */
-	if (name && *name)
-		if (G__name_is_fully_qualified(name, xname, xmapset))
-		{
-			strcpy(name, xname);
-			strcpy(mapset, xmapset);
-		}
-
-	sprintf(path,"%s/%s", G__location_path(), mapset);
+	if (name && *name && G__name_is_fully_qualified(name, xname, xmapset))
+	{
+		strcpy(name, xname);
+		sprintf(path,"%s/%s", G__location_path(), xmapset);
+	}
+	else
+	if (mapset && *mapset)
+		sprintf(path,"%s/%s", G__location_path(), mapset);
+	else
+		sprintf(path,"%s/%s", G__location_path(), G_mapset());
 
 	if (element && *element)
 	{

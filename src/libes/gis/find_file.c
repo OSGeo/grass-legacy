@@ -23,7 +23,7 @@
  *  G_find_file2 (element, name, mapset)
  *
  *      exactly the same as G_find_file() except that if name is in the
- *      form nnn in ppp, and is found, name is changed to nnn.
+ *      form nnn in ppp, and is found, name is changed to nnn by G_find_file().
  **********************************************************************/
 
 #include <string.h>
@@ -36,8 +36,8 @@ static char *G__find_file (
     char *mapset)
 {
     char path[1000];
-    char xname[512];
-    char xmapset[512];
+    char xname[512], xmapset[512];
+    char *pname, *pmapset;
     int n;
 
     if (*name == 0)
@@ -50,30 +50,33 @@ static char *G__find_file (
  */
     if (G__name_is_fully_qualified(name, xname, xmapset))
     {
-	if(name && *name)
-	    strcpy(name, xname);
-	if(mapset && *mapset)
-	    strcpy(mapset, xmapset);
+	pname = xname;
+	pmapset = xmapset;
+    }
+    else
+    {
+	pname = name;
+        pmapset = mapset;
     }
 
 /*
  * reject illegal names and mapsets
  */
-    if (G_legal_filename (name) == -1)
+    if (G_legal_filename (pname) == -1)
 	    return NULL;
 
-    if (mapset && *mapset && G_legal_filename (mapset) == -1)
+    if (pmapset && *pmapset && G_legal_filename (pmapset) == -1)
 	    return NULL;
 
 /*
 * if no specific mapset is to be searched
 * then search all mapsets in the mapset search list
 */
-    if (mapset == NULL || *mapset == 0)
+    if (pmapset == NULL || *pmapset == 0)
     {
-	for (n = 0; mapset = G__mapset_name(n); n++)
-	    if (access(G__file_name (path, element, name, mapset), 0) == 0)
-		    return mapset;
+	for (n = 0; pmapset = G__mapset_name(n); n++)
+	    if (access(G__file_name (path, element, pname, pmapset), 0) == 0)
+		    return pmapset;
     }
 /*
  * otherwise just look for the file in the specified mapset.
@@ -83,8 +86,8 @@ static char *G__find_file (
  */
     else
     {
-	if (access(G__file_name (path, element, name, mapset),0) == 0)
-		return G_store (mapset);
+	if (access(G__file_name (path, element, pname, pmapset),0) == 0)
+		return G_store (pmapset);
     }
     return NULL;
 }
@@ -100,10 +103,8 @@ char *G_find_file (
     mp = G__find_file (element, name, mapset);
     if (mp)
     {
-	if (G__name_is_fully_qualified(name, xname, xmapset)){
-	    if(name && *name)
-	        strcpy (name, xname);
-	}
+	if (G__name_is_fully_qualified(name, xname, xmapset))
+            strcpy (name, xname);
     }
 
     return mp;
