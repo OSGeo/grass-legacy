@@ -6,7 +6,7 @@
 
 /*--------------------------------------------------------------------------*/
 
-#define max_a(R)  (MAXINT / powerof2 (bitsof (Basic_byte)) / (R))
+#define max_a(R)  (MAXINT / __powerof2 (bitsof (Basic_byte)) / (R))
         /* To avoid overflow w/i uhash_function(). */
 
 /*--------------------------------------------------------------------------*/
