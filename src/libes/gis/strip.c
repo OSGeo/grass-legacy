@@ -1,3 +1,5 @@
+/* Correction from Clifton Wood <cbwood@vt.edu> in Row 25, if condition
+ * 6/1998 */
 /*******************************************************************
  *  G_strip(buf)
  *     char *buf         buffer to be worked on
@@ -20,7 +22,7 @@ G_strip (buf)
 /* remove trailing white space */
     for (a = buf; *a; a++)
 	    ;
-    if (a != buf)
+    if ((a != buf) && *a)
     {
 	for (a--; *a == ' ' || *a == '\t'; a--)
 		;
