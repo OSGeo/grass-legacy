@@ -54,6 +54,6 @@ $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 $(OBJDIR)/test: test.c $(DEPENDENCIES) $(ARCH_LIB_OBJS)
 	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
 				$(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) 
-	cd $(OBJDIR); $(LD_LIBRARY_PATH_VAR)=$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib ./test; diff ./test.tmp ../test.ok
+	cd $(OBJDIR); $(LD_LIBRARY_PATH_VAR)="$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib" ./test; diff ./test.tmp ../test.ok
 
 
