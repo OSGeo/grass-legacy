@@ -25,8 +25,7 @@ of the PNG driver.
   notation (hex values). Default is <b>000000</b> (black).<br><br>
   <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE,
   default).</LI>
-  <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>sets true-color support if
-  built with GD-2.0
+  <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>sets true-color support
 </UL>
 
 <H3>Example</H3>
@@ -50,15 +49,10 @@ file named <i>map.png</i> to be created in your current directory:
 
 <H2>NOTES</H2> 
 
-The PNG driver uses the <a href="http://www.boutell.com/gd/">Gd library</a>
-(http://www.boutell.com/gd/) developed by Boutell.Com, Inc. The Gd library
-in turn relies on libpng (see the <a href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib (see
+The PNG driver uses the libpng (see the <a href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib (see
 the <a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home
 page), all which needs to be installed for the PNG driver to work (it's
 worth it).
-<p>
-Note that the PNG driver is limited to 8bit colors when compiled against libgd1.x.
-From libgd2.x onwards true color support is optionally provided.
 <p>
 The resolution of the <i>PNG</i> raster map is defined by the map
 extents. Use <em>g.region -p</em> to get the number of rows and cols and
@@ -75,7 +69,9 @@ use the environment variables to set the PNG size.<p>
 </EM>
 
 <H2>AUTHOR</H2>
-Per Henrik Johansen<BR>
+Original version: Per Henrik Johansen<BR>
 <I>phj@norgit.no</I><BR> 
 <I><a href="http://www.norgit.no">NORGIT AS</a></I>
+<P>
+Rewritten by Glynn Clements, 2003
 <p><i>Last changed: $Date$</i>
