@@ -328,9 +328,9 @@ SEE ALSO
 \*Lv.to.sites\*O,
 \*Lg.region\*O,
 \*Lr.mask\*O,
-\*Ls.surf.tps,
-v.surf.rst,
-r.resamp.rst
+\*Ls.surf.tps\*O,
+\*Lv.surf.rst\*O,
+\*Lr.resamp.rst\*O
 
 .br
 &nbsp;
