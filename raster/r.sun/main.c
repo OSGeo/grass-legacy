@@ -310,7 +310,7 @@ int main(int argc, char *argv[])
     parm.step->type = TYPE_DOUBLE;
     parm.step->answer = STEP;
     parm.step->required = NO;
-    parm.step->description = _("Time step computing all-day radiation sums [decimal hours]");
+    parm.step->description = _("Time step when computing all-day radiation sums [decimal hours]");
 
     parm.declin = G_define_option();
     parm.declin->key = "declin";
