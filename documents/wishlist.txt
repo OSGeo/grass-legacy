@@ -1,0 +1,11 @@
+$Id$
+
+Wishlist for GRASS 5
+
+- r.buffer: the history should contain info about used buffers
+- r.in.tiff/r.out.tiff: removal of LZW support
+
+- etc/monitorcap: use relative paths based on $GISBASE
+- fix s.to.rast and s.to.vect to accept site lists created
+  by r.to.sites
+
