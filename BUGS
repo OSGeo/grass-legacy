@@ -28,6 +28,11 @@ d.legend:
 
 d.mon: hangs with "-L" option
    (would be nice to fix to improve "d.monsize" script
+  Andreas Lange wrote:
+  The d.mon -L bug only occurs on Linux, on IRIX
+  everything is ok. I read the code and experimented with it, but i
+  couldn't find the problem. This is something for the signal
+  specialists/system programmers from BSD and SYSV.
 
 d.param.scale
  - lower axis description not readable
@@ -284,7 +289,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.4  2000-07-25 11:43:58  markus
+ Revision 1.5  2000-07-26 09:38:21  markus
+ added d.mon -L comment
+
+ Revision 1.4  2000/07/25 11:43:58  markus
  added v.surf.rst bug
 
  Revision 1.3  2000/07/12 14:56:33  markus
