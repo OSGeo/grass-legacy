@@ -1,12 +1,12 @@
 
 
 
-d.legend <main>      GRASS Reference Manual       <main> d.legend
+d.legend <main>	     GRASS Reference Manual	  <main> d.legend
 
 
 
 NAME
-     d.legend - Displays a legend for a raster map layer in the
+     d.legend -	Displays a legend for a	raster map layer in the
      active frame on the graphics monitor.
      (GRASS Display Program)
 
@@ -16,75 +16,75 @@ SYNOPSIS
      d.legend map=name [color=name] [lines=value]
 
 DESCRIPTION
-     d.legend displays a legend for a user-specified raster map
-     layer in the active frame on the graphics monitor.  The
-     legend's size is based on the height of the active frame.
+     d.legend displays a legend	for a user-specified raster map
+     layer in the active frame on the graphics monitor.	 The
+     legend's size is based on the height of the active	frame.
      The user should therefore take care to create a display
      frame of suitable dimensions before running d.legend.
-     d.legend will only obscure those portions of the active
-     frame that directly underlie the legend.
+     d.legend will only	obscure	those portions of the active
+     frame that	directly underlie the legend.
 
-     The user can run d.legend either non-interactively or
-     interactively.  If the user specifies the name of a raster
-     map layer on the command line, the program will run non-
+     The user can run d.legend either non-interactively	or
+     interactively.  If	the user specifies the name of a raster
+     map layer on the command line, the	program	will run non-
      interactively.  Default legend text color and number of
-     lines will be used unless the user specifies other values on
+     lines will	be used	unless the user	specifies other	values on
      the command line.
 
      Alternately, the user can simply type d.legend on the
      command line; in this case, the program will prompt the user
-     for parameter values using the standard GRASS parser
-     interface described in the manual entry for parser.
+     for parameter values using	the standard GRASS parser
+     interface described in the	manual entry for parser.
 
      Parameters:
 
-     map=name          Name of a raster map layer whose legend is
-                       to be displayed in the active display
-                       frame.
+     map=name	       Name of a raster	map layer whose	legend is
+		       to be displayed in the active display
+		       frame.
 
-     color=name        Sets the legend text color to the name
-                       stated.
-                       Options:  red, orange, yellow, green,
-                       blue, indigo, violet, magenta, brown,
-                       gray, white, and black.
-                       Default:  white
+     color=name	       Sets the	legend text color to the name
+		       stated.
+		       Options:	 red, orange, yellow, green,
+		       blue, indigo, violet, magenta, brown,
+		       gray, white, and	black.
+		       Default:	 white
 
-     lines=value       Number of lines to appear in the map
-                       legend.
-                       The number of lines refers to the maximum
-                       number of lines of type that can be
-                       displayed given the height of the active
-                       display frame.  If unspecified by the
-                       user, the program will divide the display
-                       frame into the number of lines required to
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+     lines=value       Number of lines to appear in the	map
+		       legend.
+		       The number of lines refers to the maximum
+		       number of lines of type that can	be
+		       displayed given the height of the active
+		       display frame.  If unspecified by the
+		       user, the program will divide the display
+		       frame into the number of	lines required to
 
 
+
+GRASS 4.2		Baylor University			1
 
 
 
 
-d.legend <main>      GRASS Reference Manual       <main> d.legend
+
+
+d.legend <main>	     GRASS Reference Manual	  <main> d.legend
 
 
 
-                       display all of the category labels and
-                       colors associated with the named map.  To
-                       decrease the size of the displayed text,
-                       increase the number of lines.
-                       Options:  1 - 1000
-                       Default:  Set lines value equal to the
-                       number of map categories
+		       display all of the category labels and
+		       colors associated with the named	map.  To
+		       decrease	the size of the	displayed text,
+		       increase	the number of lines.
+		       Options:	 1 - 1000
+		       Default:	 Set lines value equal to the
+		       number of map categories
 
 NOTES
-     The legend text size is based on the number of lines
-     requested (or, by default, on the number of lines needed to
-     display the legend).  If the user attempts to display a very
+     The legend	text size is based on the number of lines
+     requested (or, by default,	on the number of lines needed to
+     display the legend).  If the user attempts	to display a very
      long legend in a relatively short display frame, the legend
-     may appear in unreadably small text.
+     may appear	in unreadably small text.
 
 SEE ALSO
      d.colormode, d.colors, d.colortable, d.display, d.erase,
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
