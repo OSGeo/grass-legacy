@@ -105,12 +105,13 @@ add    {
 		return(ADD_TKN) ;
 	}
 
-"-"     |
-for		|
-the		|
-please	|
+"-"     ;
+
+for     |
+the     |
+please  |
 to		{
-	}
+                }
 
 {N}     {
 		yylval.str_val = (char *)falloc(yyleng + 1, sizeof(char),
