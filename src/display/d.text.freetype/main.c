@@ -266,10 +266,12 @@ main(int argc, char **argv)
 			continue;
 		if(FT_Render_Glyph(face->glyph, 0))
 			continue;
+
 		k = face->glyph->bitmap.rows * face->glyph->bitmap.width;
 		for(j=0; j<k; j++)
 			if(face->glyph->bitmap.buffer[j])
 				face->glyph->bitmap.buffer[j] = color;
+
 		x += face->glyph->bitmap_left;
 		y -= face->glyph->bitmap_top;
 
@@ -280,8 +282,12 @@ main(int argc, char **argv)
 					face->glyph->bitmap.buffer
 					+ face->glyph->bitmap.width * j);
 		}
-		x += face->glyph->advance.x >> 6;
+
+		x -= face->glyph->bitmap_left;
 		y += face->glyph->bitmap_top;
+
+		x += face->glyph->advance.x >> 6;
+		y += face->glyph->advance.y >> 6;
 	}
 
 	if (opt2->answer)
