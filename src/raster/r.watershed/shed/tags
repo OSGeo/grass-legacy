@@ -1,0 +1,16 @@
+Mmain	main.c	/^main(argc, argv) int argc; char *argv[]; {$/
+accum_down	accum_down.c	/^accum_down (output)$/
+ar_file_in	file_in.c	/^ar_file_in (file_name, output)$/
+basin_com_add	com_line.c	/^basin_com_add (com_line, d, modifier, window)$/
+basin_maps	basin_maps.c	/^basin_maps (input, output)$/
+com_add	com_line.c	/^com_add (com_line, prompt, ril_value)$/
+com_line_Gwater	com_line.c	/^com_line_Gwater (input, output)$/
+com_line_add	com_line.c	/^com_line_add (com_line, prompt, map_layer, mapset)/
+free_input	free.c	/^free_input (input)$/
+free_output	free.c	/^free_output (output)$/
+insert_cat	insert_cat.c	/^insert_cat (cat, value, num_cells)$/
+intro	intro.c	/^intro ()$/
+new_cat	insert_cat.c	/^new_cat (value, num_cat)$/
+print_output	print.c	/^print_output (output)$/
+read_basins	read.c	/^read_basins (haf_name, output)$/
+valid_basins	valid.c	/^valid_basins (accum_name, output)$/
