@@ -1,7 +1,7 @@
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -126,14 +126,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -192,14 +192,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -258,14 +258,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -324,14 +324,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -390,14 +390,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         6
+GRASS 4.1                U.S. Army CERL                         6
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -456,14 +456,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         7
+GRASS 4.1                U.S. Army CERL                         7
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -522,14 +522,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         8
+GRASS 4.1                U.S. Army CERL                         8
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -588,14 +588,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                         9
+GRASS 4.1                U.S. Army CERL                         9
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -654,14 +654,14 @@ r.combine            GRASS Reference Manual             r.combine
 
 
 
-GRASS 4.0                U.S. Army CERL                        10
+GRASS 4.1                U.S. Army CERL                        10
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -720,14 +720,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                        11
+GRASS 4.1                U.S. Army CERL                        11
 
 
 
 
 
 
-r.combine            GRASS Reference Manual             r.combine
+r.combine <main>     GRASS Reference Manual      <main> r.combine
 
 
 
@@ -786,7 +786,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                        12
+GRASS 4.1                U.S. Army CERL                        12
 
 
 
