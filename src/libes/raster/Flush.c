@@ -1,5 +1,5 @@
 
 R_flush()
 {
-	flushout() ;
+	R_stabilize() ;
 }
