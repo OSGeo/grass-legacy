@@ -52,7 +52,7 @@
 */
 static int swap_re_uids (void);
 
-#ifndef
+#ifndef PRIO_PROCESS
   #define    PRIO_PROCESS    0
 #endif
 
