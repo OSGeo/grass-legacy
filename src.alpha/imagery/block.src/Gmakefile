@@ -1,0 +1,7 @@
+all:
+	$(GMAKE) lib.ortho 
+	$(GMAKE) i.build.block
+	$(GMAKE) i.rectify.block
+	$(GMAKE) i.mod.camera
+	$(GMAKE) i.camera
+
