@@ -7,7 +7,7 @@ compose ()
     int red_fd, grn_fd, blu_fd;
     int out_fd;
     char *name, *mapset;
-    int row, nrows, ncols;
+    int row, nrows, col, ncols;
 
     red_fd = grn_fd = blu_fd = -1;
 
@@ -58,12 +58,13 @@ compose ()
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    printf ("percent complete: ");
+    fprintf (stderr, "%s: ", G_program_name());
     for (row = 0; row < nrows; row++)
     {
-	G_percent (row, nrows, 10);
+	G_percent (row, nrows, 2);
 
-	G_zero_cell_buf (out_buf);
+	for (col = 0; col < ncols; col++)
+	    out_buf[col] = 1;
 
 	if (red_fd >= 0)
 	{
@@ -85,7 +86,7 @@ compose ()
 
 	G_put_map_row (out_fd, out_buf, row);
     }
-    G_percent (row, nrows, 10);
+    G_percent (row, nrows, 2);
 
     printf ("creating support files for %s\n", result);
     G_close_cell (out_fd);
@@ -104,7 +105,7 @@ make_lookup(table, min, max, level, mult)
     lookup = (int *) G_calloc (n, sizeof(int));
     for (x=0; x < n; x++)
     {
-	z = table[x] * level / 255;
+	z = (int) table[x] * level / 255;
 	if (z == level) z--;
 	lookup[x] = z * mult;
     }
