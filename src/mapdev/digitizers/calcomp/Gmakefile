@@ -1,5 +1,5 @@
 LIBTRANS	= $(SRC)/mapdev/libes/libtrans.a
-LIBDIGIT	= $(SRC)/mapdev/digit/libdigit.a
+LIBDIGIT	= $(SRC)/mapdev/v.digit/libdigit.a
 LIBGEO		= $(SRC)/mapdev/georef/libgeo.a
 
 DIG_DRIVER		= $(ETC)/dig_drivers
@@ -8,9 +8,9 @@ DRIVER_DIR	= $(DIG_DRIVER)/calcomp
 DRIVER_NAME	= CALCOMP
 
 
-COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(DIGLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
+COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-EXTRA_CFLAGS	= $(DIGIFLAGS)  -I$(SRC)/mapdev/digit -I$(SRC)/mapdev/libes
+EXTRA_CFLAGS	= $(DIGIFLAGS)  $(VECT_INCLUDE)
 
 OBJ = \
 	coll_pts.o \
@@ -56,7 +56,7 @@ $(DRIVER_DIR):
 mk_driver_dev:
 	@echo "";   echo	'  Compiling  $(DRIVER_NAME)  driver.';  echo ""
 #  make sure libdigit.a is there
-	$(GMAKE)  $(SRC)/mapdev/digit
+	$(GMAKE)  $(SRC)/mapdev/v.digit
 
 mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 #  compile driver into the program
@@ -72,7 +72,7 @@ mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 #    geo.reg goes to etc/dig_drivers/? and is called by geo.reg in etc
 
 geo.reg: $(GEO_REG) $(DRIVER_DIR)
-	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(DIGLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 	rm -f $(DRIVER_DIR)/geo.reg
 	mv geo.reg $(DRIVER_DIR)/geo.reg
 
@@ -85,11 +85,10 @@ geo.point: $(GEO_POINT) $(DRIVER_DIR)
 	mv geo.point $(DRIVER_DIR)/geo.point
 
 
-coll_pts.o: $(SRC)/mapdev/libes  $(SRC)/mapdev/digit/digit.h  $(SRC)/mapdev/digit/globals.h 
-coll_pts.o: $(SRC)/mapdev/libes  $(SRC)/mapdev/digit/digit.h  $(SRC)/mapdev/digit/globals.h 
+coll_pts.o: 
+coll_pts.o: 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  $(SRC)/mapdev/digit/digit.h
-dig_curses.o:  $(SRC)/mapdev/digit/menu.h
-dig_curses.o:  $(SRC)/mapdev/digit/curses.c
-dig_curses.o:  $(SRC)/mapdev/libes/head.h
+dig_curses.o:  $(SRC)/mapdev/v.digit/digit.h
+dig_curses.o:  $(SRC)/mapdev/v.digit/menu.h
+dig_curses.o:  $(SRC)/mapdev/v.digit/curses.C
 
