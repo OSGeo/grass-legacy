@@ -1,0 +1,100 @@
+.\" %W% %G%
+.TH Gask 2G G-language
+.SH NAME
+Gask  \- Prompt the user for database files
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Gask
+.I type
+.I prompt
+.I element
+.I desc
+.I unixfile
+.SH DESCRIPTION
+.B Gask
+is designed for shell scripts that need to prompt the user for
+a database file. The parameters are:
+
+.IP \fItype\fR 12
+The type of query:
+
+.nf
+\fIold\fR - For existing data files anywhere in the user's mapset search path
+\fInew\fR - For files that must not exist in the current mapset
+\fIany\fR - For files that may/or may not exist in the current mapset
+\fImapset\fR - For files that must exist in the current mapset
+.fi
+
+
+.IP \fIprompt\fR
+The prompt to be displayed to the user. If specified as a dash
+.B -
+an appropriate prompt will be constructed.
+.IP \fIelement\fR
+The database element (i.e., directory) to be queried.
+.IP \fIdesc\fR
+A short description of the database element which is meaningful to the
+user.
+.IP \fIunixfile\fR
+The name of a UNIX file to store the user's response. See next section
+for what is written to this file and how it can be used by shell scripts.
+.SH OUTPUT
+After querying the user for the requested information,
+.I Gask
+writes 3 lines to the
+.I unixfile:
+
+.nf
+.RS
+\fIname\fR=[somename]
+\fImapset\fR=[somemapset]
+\fIfile\fR=[filename]
+.RE
+.fi
+
+The output is /bin/sh commands to set the variable
+.I name
+to the database file name, 
+.I mapset
+to the mapset in which the file
+resides (or will be created), and 
+.I file
+to the full UNIX name
+for the database file. These variables may be set in the /bin/sh as follows:
+
+.RS
+\fI\&. unixfile\fR
+.RE
+
+The . is a shell command which means read the
+.I unixfile
+and execute the commands found there. It is NOT part of the 
+.I unixfile
+name and MUST be followed by a space.
+.SH NOTES
+The user may choose to simply hit the return key
+and not enter a file name. If this happens the variables will be set as
+follows:
+
+.nf
+.RS
+\fIname\fR=
+\fImapset\fR=
+\fIfile\fR=
+.RE
+.fi
+
+The following is a way to test for this case:
+
+.nf
+.RS
+if [ ! \*(lq$file\*(rq ]
+then
+.RS
+exit
+.RE
+fi
+.RE
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
