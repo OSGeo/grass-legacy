@@ -8,7 +8,7 @@
  *       useful for i.(i)fft filters
  */
 
-
+#include <stdlib.h>
 #include <strings.h>
 #include <math.h>
 #include "gis.h"
@@ -135,6 +135,8 @@ int main(
 		c = col;
 		cur[0] = G_col_to_easting(col+0.5,&w);
 		int_buf[c] = (int)(distance(pt, cur, fmin, fmax, binary) * fmult);
+		if (int_buf[c] == 0)
+		   G_set_null_value(&int_buf[c],1,CELL_TYPE);
 	    }
 	    G_put_raster_row(cellfile, int_buf, CELL_TYPE);
 

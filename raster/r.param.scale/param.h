@@ -15,7 +15,6 @@
 #define EDGE ((wsize-1)/2)	/* Number of rows/cols that make up the	*/
 				/* 'blank' edge around raster.		*/
 #define MAX_WSIZE 69		/* Maximum dimensions of window.	*/
-
 				/* Some useful labels.			*/
 #define TRUE 1
 #define FALSE 0
@@ -25,14 +24,15 @@
 
 #define TINY 1.0e-20;
 
-#define FLAT ((CELL)0)
-#define PIT ((CELL)1)
-#define CHANNEL ((CELL)2)
-#define PASS ((CELL)3)
-#define RIDGE ((CELL)4)
-#define PEAK ((CELL)5)
+/* Bug? start with 1 as G_set_cats() doesn't accept 0 category */
+#define FLAT ((CELL)1)
+#define PIT ((CELL)2)
+#define CHANNEL ((CELL)3)
+#define PASS ((CELL)4)
+#define RIDGE ((CELL)5)
+#define PEAK ((CELL)6)
 
-#define NUM_CATS ((CELL)6)
+#define NUM_CATS ((CELL)7)
 
 #define ELEV   1
 #define SLOPE  2
@@ -56,7 +56,7 @@
 
 /* ------ Declare functions ----- */
 
-CELL param(int ptype, double *coeff);	/* Calculates terrain parameters. */
+DCELL param(int ptype, double *coeff);	/* Calculates terrain parameters. */
 void interface(int argc, char **argv);
 void open_files(void);
 void process(void);
@@ -65,11 +65,11 @@ void write_cols(void);
 void write_cats(void);
 void find_normal(double **normal,	/* Matrix of cross-products.	*/
 		 double *w);		/* Weights matrix.		*/
-void find_obs(CELL  *z,			/* Local window of elevs.	*/
+void find_obs(DCELL  *z,			/* Local window of elevs.	*/
 	      double *obs,		/* Observed column vector.	*/
 	      double  *w);		/* Weighting matrix.		*/
 void find_weight(double *weight_ptr);
-CELL feature(double *coeff);	/* Set of six quadratic coefficents. 	*/
+DCELL feature(double *coeff);	/* Set of six quadratic coefficents. 	*/
 
 /* ------ Global variables ------ */
 

@@ -7,6 +7,7 @@
 /*********************************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "param.h"
 
@@ -28,10 +29,12 @@ void interface(int argc, char **argv)
     struct Flag		*constr;	/* Forces quadratic through the central	*/
 					/* cell of local window if selected.	*/
     struct GModule      *module;	/* GRASS module description */
+    char buf[128];
 
     G_gisinit (argv[0]);                /* GRASS function which MUST be called	*/
                                       	/* first to check for valid database 	*/
 					/* and mapset and prompt user for input.*/
+
 
     /*--------------------------------------------------------------------------*/
     /*                            SET PARSER OPTIONS 				*/
@@ -79,14 +82,15 @@ void interface(int argc, char **argv)
     tol2_val->required	  = NO;
     tol2_val->answer	  = "1.0";
 
+    sprintf(buf, "Size of processing window (odd number only, max: %i)", MAX_WSIZE);
     win_size->key	  = "size";
-    win_size->description = "Size of processing window (odd number only)";
+    win_size->description = buf;
     win_size->type	  = TYPE_INTEGER;
     win_size->required	  = NO;
     win_size->answer	  = "3";
 
     parameter->key	  = "param";
-    parameter->description= "Morphometric parameter to calculate";
+    parameter->description= "Morphometric parameter in 'size' window to calculate";
     parameter->type	  = TYPE_STRING;
     parameter->required	  = NO;
     parameter->options	  = "elev,slope,aspect,profc,planc,longc,crosc,minic,maxic,feature";
@@ -188,12 +192,15 @@ void interface(int argc, char **argv)
     }
     else
     {
-        if (G_find_cell2(rast_out_name,mapset_out) !=NULL)
+
+ /* commented for overall consistency */
+ /*       if (G_find_cell2(rast_out_name,mapset_out) !=NULL)
         {
             char err[256];
             sprintf(err,"Raster map [%s] exists.\nPlease try another\n",rast_out_name);
             G_fatal_error(err);
         }
+  */
     }
 
     /*--------------------------------------------------------------------------*/

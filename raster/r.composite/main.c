@@ -246,7 +246,7 @@ int main(int argc, char **argv)
 					val[i] = quantize(i, v);
 			}
 
-			out_array[atcol] =
+			out_array[atcol] = (CELL)
 				(val[2] * B[1].levels + val[1]) * B[0].levels +
 				val[0];
 		}

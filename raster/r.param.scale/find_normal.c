@@ -101,7 +101,7 @@ void find_normal(double **normal,	/* Matrix of cross-products.	*/
 /* 		V.1.0, Jo Wood, 11th December, 1994.	 	*/
 /****************************************************************/
 
-void find_obs(CELL  *z,		/* Local window of elevs.	*/
+void find_obs(DCELL  *z,		/* Local window of elevs.	*/
 	 double *obs,		/* Observed column vector.	*/
 	 double  *w)		/* Weighting matrix.		*/
 {

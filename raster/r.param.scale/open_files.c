@@ -22,10 +22,21 @@ void open_files(void)
 
     /* Open new file and set the output file descriptor. */
 
-    if ( (fd_out=G_open_cell_new(rast_out_name)) <0)
+    if (mparam != FEATURE)
     {
-        char err[256];
-        sprintf(err,"ERROR: Problem opening output file.");
-        G_fatal_error(err);
+	    if ( (fd_out=G_open_raster_new(rast_out_name, DCELL_TYPE)) <0)
+	    {
+        	char err[256];
+	        sprintf(err,"ERROR: Problem opening output file.");
+        	G_fatal_error(err);
+	    }
     }
+    else
+	    if ( (fd_out=G_open_raster_new(rast_out_name, CELL_TYPE)) <0)
+	    {
+        	char err[256];
+	        sprintf(err,"ERROR: Problem opening output file.");
+        	G_fatal_error(err);
+	    }
+
 }
