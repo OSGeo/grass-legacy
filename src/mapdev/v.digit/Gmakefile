@@ -1,5 +1,5 @@
 PGM = v.digit
-LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
+LIBTRANS	= $(LIBDIR)/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
 EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS)

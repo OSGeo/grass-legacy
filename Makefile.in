@@ -39,7 +39,7 @@ SERVERNAME=		`uname -n`
 ARCH=			@ARCH@
 
 # Version - NAME_VER is the major number - eg VERSION = 5.0beta8 NAME_VER = 5
-VERSION=		@VERSION@
+VERSION=		@VERSION_NUMBER@
 NAME_VER=   	    	@NAME_VER@
 
 # Shell commands

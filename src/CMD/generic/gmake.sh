@@ -247,12 +247,8 @@ fi
 (
 # build the make.rules file
 # 
-# define VERSION, SRC, UNUSED, OBJARCH for .o files, LIBARCH for .a files
-echo VERSION_NUMBER="$VERSION_NUMBER"
-echo VERSION_DATE="$VERSION_DATE"
-echo VERSION_UPDATE_PKG="$VERSION_UPDATE_PKG"
-echo VERSION_FILE="$VERSION_FILE"
-echo SRC=$SRC
+# define UNUSED, OBJARCH for .o files, LIBARCH for .a files
+
 echo UNUSED=$UNUSED
 echo OBJARCH=$OBJARCH
 echo LIBARCH=$LIBARCH

@@ -23,20 +23,29 @@
 
 ############################## Make Variables ###############################
 
+SRCDIR              = @SRCDIR@
+DSTDIR              = @DSTDIR@
+
 CC                  = @CC@
 FC                  = @F77@
 LEX                 = @LEX@
 YACC                = @YACC@
 PERL                = @PERL@
-ARCH                = @host@
 MAKE                = make
+
+ARCH                = @ARCH@
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
+SRC                 = @SRCDIR@/src
 
 GISBASE             = @GISBASE@
 GRASS_BIN           = @GRASS_BIN@
-#VERSION             = @VERSION@
+
+VERSION_NUMBER      = @VERSION_NUMBER@
+VERSION_DATE        = @VERSION_DATE@
+VERSION_UPDATE_PKG  = @VERSION_UPDATE_PKG@
+VERSION_FILE        = @VERSION_FILE@
 NAME_VER            = @NAME_VER@
 
 DEFAULT_DATABASE    =

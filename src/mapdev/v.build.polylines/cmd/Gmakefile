@@ -1,4 +1,4 @@
-LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
+LIBTRANS	= $(LIBDIR)/vect32/libes/libtrans.a
 
 PGM = v.build.polylines
 LIST =  main.o \

@@ -1,5 +1,5 @@
 PGM=v.transform
-TRANSLIB        = $(SRC)/libes/vect32/libes/libtrans.a
+TRANSLIB        = $(LIBDIR)/vect32/libes/libtrans.a
 EXTRA_CFLAGS	= -I../libes -I$(SRC)/libes/vect32/libes
 
 O_FILES = \

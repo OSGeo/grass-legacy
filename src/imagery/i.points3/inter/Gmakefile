@@ -6,7 +6,7 @@ PGM  	= i.points3
 
 ####	required - suplimental imagery libary 
 IMAGERY_SUBINC = $(SRC)/libes/image3
-IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
+IMAGERYLIB_SUP = $(LIBDIR)/image3/libimage_sup.a
 
 ####	object files
 LIST	=\

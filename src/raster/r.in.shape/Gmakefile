@@ -1,7 +1,7 @@
 PGM = r.in.shape
 
 SHAPELIB_DIR=$(SRC)/libes/vect32_64/shapelib-1.2.8
-SHAPELIB=$(SHAPELIB_DIR)/libshape.a
+SHAPELIB=$(LIBDIR)/vect32_64/shapelib-1.2.8/libshape.a
 
 EXTRA_CFLAGS = -I../../libes/vect32_64/shapelib-1.2.8/
 LIST = 	main.o
