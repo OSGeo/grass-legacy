@@ -76,7 +76,7 @@ int         db_d_open_insert_cursor   P((void ));
 int         db_d_open_select_cursor   P((void ));
 int         db_d_open_update_cursor   P((void ));
 int         db_driver                 P((int argc , char *argv []));
-char *	    db_driver_list            P((void ));
+
 int         db_driver_mkdir           P((char *path , int mode , int parentdirs ));
 int         db_drop_column            P((dbDriver *driver , dbString *tableName , dbString *columnName ));
 void        db__drop_cursor_from_driver_state P((dbCursor *cursor ));
@@ -159,6 +159,7 @@ int         db_insert                 P((dbCursor *cursor ));
 void        db_interval_range         P((int sqltype , int *from , int *to ));
 int         db_isdir                  P((char *path ));
 int         db_list_databases         P((dbDriver *driver , dbString *path , int npaths , dbHandle **handles , int *count ));
+char *	    db_list_drivers           P((void ));
 int         db_list_indexes           P((dbDriver *driver , dbString *table_name , dbIndex **list , int *count ));
 int         db_list_tables            P((dbDriver *driver , dbString **names , int *count , int system ));
 void *      db_malloc                 P((int n ));
