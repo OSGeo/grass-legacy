@@ -45,6 +45,7 @@ htmlpages:
 g.help-manpages:
 	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
 	@echo Creating man pages
+	@chown man $(GRASS_MANDIR)
 	@(cd $(HTML_DIR); \
 	  for h in *.html; \
 	  do \
