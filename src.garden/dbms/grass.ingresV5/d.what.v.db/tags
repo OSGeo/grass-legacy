@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	buildSQL.c	/^buildSQL(ktab,keycat, joinargs, curcat)$/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getCat	getCat.c	/^getCat (Map, Cats)$/
+getSelectOpts	getSopts.c	/^getSelectOpts(argc, argv)$/
+openvect	openvect.c	/^openvect (name)$/
+runSQL	runSQL.c	/^runSQL(sqlin, keycat, curcat)$/
