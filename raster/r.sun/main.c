@@ -1423,8 +1423,8 @@ void calculate(void)
              {
 
                 if((in_proj_info = G_get_projinfo()) == NULL)
-                G_fatal_error("Can't get projection info of current location: 
-				please set latitude via 'lat' or 'latin' option!");
+                G_fatal_error("Can't get projection info of current location:\n"
+			      "please set latitude via 'lat' or 'latin' option!");
 
                 if((in_unit_info = G_get_projunits()) == NULL)
                 G_fatal_error("Can't get projection units of current location");
