@@ -1,5 +1,8 @@
+#include "gis.h"
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 modify_cur()
 {
   G3D_Region window;

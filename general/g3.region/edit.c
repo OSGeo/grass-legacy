@@ -1,5 +1,7 @@
 #include "gis.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 edit_window (window)
     G3D_Region *window;
 {
@@ -7,7 +9,7 @@ edit_window (window)
 
     G3d_regionCopy (&temp_window, window);
 
-    if(edit_3dcellhd (&temp_window, 0) == 0)
+    if(edit_3dcellhd (&temp_window) == 0)
     {
         G3d_regionCopy (window, &temp_window);
 	return 1;

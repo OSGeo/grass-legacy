@@ -1,5 +1,7 @@
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 cur_from_def()
 {
     struct Cell_head window2d;
