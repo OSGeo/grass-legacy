@@ -1,0 +1,11 @@
+interface_build {
+    {d.points} 0
+    {Displays point graphics.}
+    {entry color {Current color [gray]:} 0 color}
+    {entry size {Icon size, in pixels (0-1000) [5]:} 0 ""}
+    {entry file {Input file [standard input]:} 0 file}
+    {checkbox type {x icon.} "" x}
+    {checkbox type {diamond icon.} "" diamond}
+    {checkbox type {box icon.} "" box}
+    {checkbox type {+ icon [default].} "" +}
+}
