@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.27 2001-04-04 12:49:26 markus Exp $
+# $Id: Gmakefile,v 1.28 2001-04-04 12:52:50 markus Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -10,11 +10,12 @@
 #   	    	  later...) 
 #		o Copies html tree (without the other files) in
 #   	    	  $(GISBASE)/documents The manual in html format will be in
-#   	    	  $(GISBASE)/documents/html (default in tcltkgrass) The
-#		  manual in postscript format will be in
-#   	    	  $(GISBASE)/documents/postscript, the manual in pdf will
-#		  be in $(GISBASE)/documents/pdf
+#   	    	  $(GISBASE)/documents/html (default in tcltkgrass) 
+#		o The manual in postscript will be in
+#		  $(GISBASE)/documents/postscript
+#		o The manual in pdf will be in $(GISBASE)/documents/pdf
 #
+#		Usage:
 #		default: html
 #		ps:      gmake5 . postscript-docs
 #		pdf:     gmake5 . pdf-docs
@@ -43,7 +44,6 @@ HTML2PS  = html2ps -n
 HTML2PDF = htmldoc
 
 all: htmlpages g.help-manpages
-#all: htmlpages g.help-manpages pdf-docs
 
 # copy the HTML pages only and related images
 htmlpages:
@@ -107,7 +107,7 @@ postscript-docs:
 	$(HTML2PS) html/v*.html > $(GRASS_PSDIR)/grass5vector.ps
 	$(HTML2PS) html/?3*.html html/*.vol.*.html > $(GRASS_PSDIR)/grass5grid3d.ps
 	$(HTML2PS) html/db*.html html/*pg.html > $(GRASS_PSDIR)/grass5database.ps
-	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5shells.ps
+	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5scripts.ps
 
 #PDF-docs:
 # GPL2 software: htmldoc needed
