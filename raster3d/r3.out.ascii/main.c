@@ -63,7 +63,7 @@ void setParams() {
   param.output->description = "Name for ascii output file";
 
   param.decimals = G_define_option();
-  param.decimals->key = "decimals";
+  param.decimals->key = "dp";
   param.decimals->type = TYPE_INTEGER;
   param.decimals->required = NO;
   param.decimals->multiple = NO;
@@ -173,7 +173,7 @@ void G3dToascii(FILE *fp, G3D_Region *region, int decim) {
 	  if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
 	    fprintf (fp, "%s ", param.null_val->answer);
 	  else
-	    fprintf (fp, "%.*lf ", 2*decim, d1);
+	    fprintf (fp, "%.*lf ", decim, d1);
 	}
       }
       fprintf (fp, "\n");
