@@ -273,7 +273,8 @@ proc DmPrint::window { } {
 
     Button $but.print -text [G_msg "Print"] -command { DmPrint::print "print" }
     Button $but.preview -text [G_msg "Preview"] -command { DmPrint::print "preview" }
-    pack $but.print $but.preview -side left 
+    Button $but.close -text [G_msg "Close"] -command { destroy .printwin }
+    pack $but.print $but.preview $but.close -side left 
 
     tkwait visibility $PW
 
