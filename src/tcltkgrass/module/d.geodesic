@@ -1,0 +1,7 @@
+interface_build {
+    {d.geodesic} 0
+    {Displays a geodesic line, in a longitude/latitude data set.}
+    {entry coor {Starting and ending coordinates (lon1,lat1,lon2,lat2):} 0 ""}
+    {entry lcolor {Line color [white]:} 0 color}
+    {entry tcolor {Text color [red]:} 0 color}
+}
