@@ -23,7 +23,7 @@ OFILES = \
 	vect_map.o \
 	zoom.o
 
-$(BIN_MAIN_INTER)/d.display: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_MAIN_INTER)/d.display: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB)
 
 cell3d.o: windows.h
@@ -56,3 +56,4 @@ $(RASTERLIB): #
 $(DISPLAYLIB): #
 $(GISLIB): #
 $(D_LIB): #
+$(VASKLIB): #
