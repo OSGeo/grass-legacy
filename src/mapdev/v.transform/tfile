@@ -1,0 +1,46 @@
+  SRC     = /grass.src/4.0/src
+  CMD     = /grass.src/4.0/src/CMD
+  HEADER  = sun4
+  ARCH    = sun4
+  GISBASE = /grass.src/4.0/sun4
+  VERSION = 4.0 Summer 1991
+#################################################################
+/grass.src/4.0/src/mapdev/transform
+  make -f OBJ.sun4/make.rules 
+
+rm -f OBJ.sun4/main.o
+cc -O -I/grass.src/4.0/src/libes  -I/grass.src/4.0/src/mapdev/lib   -I/grass.src/4.0/src/mapdev/libes -I/grass.src/4.0/src/libes -c main.c
+"./options.h", line 13: undefined structure or union
+"./options.h", line 13: initialization with bogus structure
+"./options.h", line 15: undefined structure or union
+"./options.h", line 15: operands of = have incompatible types
+"./options.h", line 15: illegal initialization
+"./options.h", line 15: initialization with bogus structure
+"./options.h", line 15: } expected
+"./options.h", line 16: undefined structure or union
+"./options.h", line 16: operands of = have incompatible types
+"./options.h", line 16: illegal initialization
+"./options.h", line 16: initialization with bogus structure
+"./options.h", line 16: } expected
+"./options.h", line 17: undefined structure or union
+"./options.h", line 17: operands of = have incompatible types
+"./options.h", line 17: illegal initialization
+"./options.h", line 17: initialization with bogus structure
+"./options.h", line 17: } expected
+"./options.h", line 18: undefined structure or union
+"./options.h", line 18: operands of = have incompatible types
+"./options.h", line 18: illegal initialization
+"./options.h", line 18: initialization with bogus structure
+"./options.h", line 18: } expected
+"./options.h", line 19: undefined structure or union
+"./options.h", line 19: operands of = have incompatible types
+"./options.h", line 19: illegal initialization
+"./options.h", line 19: initialization with bogus structure
+"./options.h", line 19: } expected
+"./options.h", line 20: undefined structure or union
+"./options.h", line 20: operands of = have incompatible types
+"./options.h", line 20: illegal initialization
+"./options.h", line 20: initialization with bogus structure
+"./options.h", line 20: fatal error: too many errors
+*** Error code 1
+make: Fatal error: Command failed for target `OBJ.sun4/main.o'
