@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.32 2000-10-10 10:17:17 cho Exp $
+# $Id: configure,v 1.33 2000-10-13 04:58:15 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3003,7 +3003,7 @@ fi
 fi
 
 
-BINDIR=/usr/local/bin
+WITH_BINDIR=/usr/local/bin
 # Check whether --with-bindir or --without-bindir was given.
 if test "${with_bindir+set}" = set; then
   withval="$with_bindir"
@@ -3021,6 +3021,9 @@ fi
 if test "$WITH_BINDIR"; then
 	for dir in $WITH_BINDIR; do
 		if test -d "$dir"; then
+			if test ! -w "$dir"; then
+				echo "configure: warning: *** installation directory $dir not writeable." 1>&2
+			fi
 			BINDIR="$dir"
 		else
 			echo "configure: warning: *** installation directory $dir does not exist." 1>&2
