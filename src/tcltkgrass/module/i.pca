@@ -1,0 +1,7 @@
+interface_build {
+    {i.pca} 0
+    {Principal components analysis (pca) program for image processing.}
+    {entry input {Input raster maps (name[,name,...]):} 0 +raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry rescale {Rescaling range output (min,max) [1,255]:} 0 ""}
+}
