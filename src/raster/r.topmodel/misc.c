@@ -22,6 +22,34 @@ run(cmd)
 
 
 void
+gregion(void)
+{
+	char	*hdmap;
+
+
+	hdmap = NULL;
+	if(!flg.input){
+		hdmap = map.elev;
+	}else{
+		if(map.belev)
+			hdmap = map.belev;
+		else if(map.topidx)
+			hdmap = map.topidx;
+	}
+
+	if(hdmap){
+		sprintf(buf, "%s/bin/g.region rast=%s > /dev/null",
+				gisbase, hdmap);
+		fprintf(stderr, "g.region rast=%s ... ",
+				hdmap);
+
+		if(run(buf))
+			exit(1);
+	}
+}
+
+
+void
 depressionless(void)
 {
 	sprintf(buf, "%s/bin/r.fill.dir "
