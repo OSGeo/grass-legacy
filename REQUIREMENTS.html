@@ -11,12 +11,12 @@
 
 A workstation running some flavor of UNIX like Solaris, IRIX, Linux, BSD,
 Mac OS X or cygwin (on Win32). Ideally, you should have at least 500 Mb for data
-and 32 Mb RAM. The source code package needs around 80 MB uncompressed.
+and 32 Mb RAM. The source code package needs around 50 MB uncompressed.
 The resulting binaries may need between 20 MB and 180 MB depending on your
-platform. During a full compilation you need temporarily 550MB including the
-source code.
+platform. During a full compilation you may need temporarily up to 550MB including
+the source code.
 <p>
-To disable features please read the INSTALL file.
+To disable features please read the <a href="INSTALL">INSTALL</a> file.
 
 <br>&nbsp;
 
@@ -26,35 +26,35 @@ To disable features please read the INSTALL file.
 to install some of them.)
 
 <ul>
-<li>C-compiler (cc, gcc, egcs, ...)</li>
+<li><B>C-compiler</B> (cc, gcc, egcs, ...)</li>
 <br>gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
 <br><br>
 
-<li>GNU make is recommended</li>
+<li><B>GNU make</B> is recommended</li>
 <br><a href="http://www.gnu.org/software/make/make.html">http://www.gnu.org/software/make/make.html</a>
 <br><br>
 
-<li>zlib compression library (already installed on modern systems)</li>
+<li><B>zlib</B> compression library (already installed on most modern systems)</li>
 <br>It is used to internally compress GRASS raster files:
-<br>libz: <a href="http://www.gzip.org/zlib/">http://www.gzip.org/zlib/</a>
-<!-- freesoftware.com is broken! <br><a href="ftp://ftp.freesoftware.com/pub/infozip/zlib/">ftp://ftp.freesoftware.com/pub/infozip/zlib/</a> -->
+<br>libz: <a href="http://www.gzip.org/zlib/">http://www.gzip.org/zlib</a>
+<!-- freesoftware.com is broken! <br><a href="ftp://ftp.freesoftware.com/pub/infozip/zlib/">ftp://ftp.freesoftware.com/pub/infozip/zlib</a> -->
 <br><br>
 
-<li>lexical analyzer generator (flex),</li>
+<li><B>flex</B> lexical analyzer generator (flex),</li>
 <br>(lex is no longer supported, please use flex instead)
 <br>flex: <a href="http://www.gnu.org/software/flex/flex.html">http://www.gnu.org/software/flex/flex.html</a>
 <br><br>
 
-<li>parser generator (yacc, bison)</li>
+<li><B>parser generator</B> (yacc, bison)</li>
 <br>bison: <a href="http://www.gnu.org/software/bison/bison.html">http://www.gnu.org/software/bison/bison.html</a>
 <br><br>
 
-<li>libncurses4.x/5.x (already installed on modern systems)</li>
+<li><B>libncurses4.x/5.x</B> (already installed on modern systems)</li>
 <br><a href="http://www.gnu.org/software/ncurses/ncurses.html">http://www.gnu.org/software/ncurses/ncurses.html</a>
-<br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses/</a>
+<br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses</a>
 <br><br>
 
-<li>X11 window system for graphical output, development libraries (X development
+<li><B>X11</B> window system for graphical output, development libraries (X development
 libraries, in some linux distributions they are separate packages, e.g. xlibs-dev)</li>
 <br><a href="http://www.xfree.org">http://www.xfree.org</a>
 <br><br>
@@ -63,8 +63,8 @@ libraries, in some linux distributions they are separate packages, e.g. xlibs-de
 construction which does not require X11</li>
 <br><br>
 
-<li>PROJ4 - Projection Library<br>
-<a href="http://www.remotesensing.org/proj/">http://www.remotesensing.org/proj/</a>
+<li><B>PROJ4</B> - Projection Library<br>
+<a href="http://www.remotesensing.org/proj/">http://www.remotesensing.org/proj</a>
 <br></li>
 </ul>
 
@@ -73,65 +73,75 @@ construction which does not require X11</li>
 Optional requirements:</h3>
 
 <ul>
-<li>Tcl/Tk 8.x libraries (they include 'wish') to use TclTkGRASS Interface and to compile src.contrib/GMSL/NVIZ2.2/<br>
-see <a href="http://tcl.sourceforge.net/">http://tcl.sourceforge.net/</a>
+<li><B>Tcl/Tk 8.x libraries</B> (including the 'wish' program) to use the GRASS GUI
+interface and the NVIZ visualization suite<br>
+see <a href="http://tcl.sourceforge.net">http://tcl.sourceforge.net</a>
 <br></li>
 
-<li>r.in.gdal requires GDAL - Geospatial Data Abstraction Library<br>
-<a href="http://www.remotesensing.org/gdal/">http://www.remotesensing.org/gdal/</a>
+<li><B>GDAL and OGR</B> for import and export of most external raster and vector
+map formats<br>
+<a href="http://www.gdal.org">http://www.gdal.org</a>
 <br></li>
 
-<li>If hardware openGL support is missing in the X Server, Mesa-3.x (openGL clone) may be required for NVIZ2.2<br>
-<a href="http://mesa3d.sourceforge.net/">http://mesa3d.sourceforge.net/</a>
+<li>If hardware openGL support is missing in the X Server, <B>Mesa-3.x</B>
+(openGL clone) may be required for NVIZ<br>
+<a href="http://mesa3d.sourceforge.net">http://mesa3d.sourceforge.net</a>
 <br></li>
 
-<li>FFTW 2.x (library for computing the Discrete Fourier Transform) required for
-i.fft and i.ifft modules<br>
+<li><B>C++ Compiler</B> (required for the r.terraflow module)<br>
+gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
+<br></li>
+
+<li><B>FFTW 2.x</B> (library for computing the Discrete Fourier Transform), required
+for i.fft and i.ifft modules<br>
 <a href="http://www.fftw.org">http://www.fftw.org</a>
 <br></li>
 
+<!-- uncomment when implemented
 <li>LAPACK / BLAS (libraries for numerical computing) required for
 GMATH library (GRASS numerical lib)<br>
-[<a href="http://www.netlib.org/lapack/">http://www.netlib.org/lapack/</a>] (usually on Linux distros)
+[<a href="http://www.netlib.org/lapack/">http://www.netlib.org/lapack</a>] (usually on Linux distros)
 <br>
 Note: the support is intended for future module implementations
 <br></li>
+-->
 
-<li>libpng (for r.in.png, r.out.png), usually already installed.<br>
+<li><B>libpng</B> (for r.out.png), usually already installed.<br>
 <a href="http://www.libpng.org/pub/png/libpng.html">http://www.libpng.org/pub/png/libpng.html</a>
 <br></li>
 
-<li>libjpeg (for r.in.tiff, r.out.tiff), usually already installed.<br>
-<a href="http://www.ijg.org/">http://www.ijg.org</a><br>
-<a href="ftp://ftp.uu.net/graphics/jpeg/">ftp://ftp.uu.net/graphics/jpeg/</a>
+<li><B>libjpeg</B> (for r.out.tiff), usually already installed.<br>
+<a href="http://www.ijg.org">http://www.ijg.org</a><br>
+<a href="ftp://ftp.uu.net/graphics/jpeg/">ftp://ftp.uu.net/graphics/jpeg</a>
 <br></li>
 
-<li>libtiff (for r.in.tiff, r.out.tiff), usually already installed.<br>
+<li><B>libtiff</B> (for r.out.tiff), usually already installed.<br>
 <a href="http://www.libtiff.org">http://www.libtiff.org</a>
 <br></li>
 
-<li>PostgreSQL libraries (for the PostgreSQL database interface)<br>
+<li><B>PostgreSQL libraries</B> (for the PostgreSQL database interface)<br>
 <a href="http://www.postgresql.org">http://www.postgresql.org</a>
 <br></li>
 
-<li>mySQL libraries (for the mySQL database interface)<br>
+<li><B>mySQL libraries</B> (for the mySQL database interface)<br>
 <a href="http://www.mysql.org">http://www.mysql.org</a>
 <br></li>
 
-<li>unixODBC (for the ODBC database interface)<br>
+<li><B>unixODBC</B> (for the ODBC database interface)<br>
 <a href="http://www.unixodbc.org">http://www.unixodbc.org</a>
 <br></li>
 
-<li>Only required for "xanim" and "ogl3d": the Motif or Lesstif libraries<br>
+<li><B>Motif or Lesstif libraries</B> (for the "xanim" <!-- and ogl3d -->
+module)<br>
 <a href="http://www.lesstif.org">http://www.lesstif.org</a>
 <br></li>
 
-<li>R language (for the R language interface)<br>
+<li><B>R language</B> (for the R statistical language interface)<br>
 <a href="http://cran.r-project.org">http://cran.r-project.org</a>
 <br></li>
 
-<li>FreeType2 (for d.text.freetype)<br>
-<a href="http://www.freetype.org/">http://www.freetype.org/</a>
+<li><B>FreeType2</B> (for TrueType font support and d.text.freetype)<br>
+<a href="http://www.freetype.org">http://www.freetype.org</a>
 <br></li>
 
 </ul>
@@ -139,20 +149,20 @@ Note: the support is intended for future module implementations
 <h3>Note:</h3>
 
 SUN Solaris users may go here to download precompiled libraries etc.:
-<br><a href="http://www.sunfreeware.com/">http://www.sunfreeware.com/</a>
+<br><a href="http://www.sunfreeware.com">http://www.sunfreeware.com</a>
 
 <p>
 SGI IRIX users may go here to download precompiled libraries etc.:
-<br><a href="http://freeware.sgi.com/">http://freeware.sgi.com/</a>
+<br><a href="http://freeware.sgi.com">http://freeware.sgi.com</a>
 
 <p>
 MacOSX users may go here to download precompiled libraries etc.:
-<br><a href="http://fink.sourceforge.net/">http://fink.sourceforge.net/</a>
+<br><a href="http://fink.sourceforge.net">http://fink.sourceforge.net</a>
 
 <p>
 
 <hr WIDTH="100%">
-<br><i>GRASS Development Team 2001-2003</i>
+<br><i>&copy; GRASS Development Team 2001-2005</i>
 <p>Please report bugs here:
 <br><a href="http://grass.itc.it/bugtracking/bugreport.html">http://grass.itc.it/bugtracking/bugreport.html</a>
 
