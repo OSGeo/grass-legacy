@@ -6,7 +6,7 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: grassmods fr 5.7.0\n"
+"Project-Id-Version: grassmods_fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-25 17:33+0100\n"
 "PO-Revision-Date: 2004-11-25 17:42+0100\n"
