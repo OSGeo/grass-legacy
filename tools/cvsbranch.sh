@@ -55,11 +55,12 @@ FURTHER_FILES="config.guess \
 	src/libes/README"
 
 #list of extra directories not in compile list:
-FURTHER_DIRECTORIES="documents ALPHA64 testsuite \
+FURTHER_DIRECTORIES="documents ALPHA64 testsuite cygwin\
 	src/include src/CMD src/fonts src/gui src/sites/cdhc \
 	src/libes/libimage src/libes/vect32_64/shapelib-1.2.8 \
 	src/libes/dbmi/drivers/odbc src.garden/grass.postgresql\
-	src/libes/gmath src/libes/ogsf"
+	src/libes/gmath src/libes/ogsf\
+	src/display/devices/PNGdriver"
 
 
 #tag it...
