@@ -48,6 +48,10 @@
  *      replace all occurencies of character in string(inplace) with new
  *
  * Author: Bernhard Reiter (Intevation GmbH, Germany)
+ *
+ * char * G_str_replace(char* buffer, char* old_str, char* new_str)
+ *  Replace all occurencies of old_str in buffer with new_str
+ *  Author Beverly Wallace (LMCO)
  */
 
 #include <string.h>
@@ -220,9 +224,9 @@ char * G_strchg(char* bug, char character, char new) {
 
 /*--------------------------------------------------------------------
   \brief Replace all occurencies of old_str in buffer with new_str.
-  \return Returns the newly allocated string, buffer is unchanged 
+  \return Returns the newly allocated string, input buffer is unchanged 
   
-   Author Beverly Wallace (LMSSC) 3/11/04, slightly modified RB/MN
+   Author Beverly Wallace (LMCO) 3/11/04, slightly modified RB/MN
 --------------------------------------------------------------------*/
 char * G_str_replace(char* buffer, char* old_str, char* new_str) 
 {
@@ -233,7 +237,7 @@ char * G_str_replace(char* buffer, char* old_str, char* new_str)
 
 	/* Make sure old_str and new_str are not NULL */
 	if (old_str == NULL || new_str == NULL)
-		return buffer;
+		return G_strdup (buffer);
 	/* Make sure buffer is not NULL */
 	if (buffer == NULL)
 		return NULL;
