@@ -248,18 +248,14 @@ map or across multiple maps.
 <H2>RASTER MAP LAYER VALUES FROM THE CATEGORY FILE</H2>
 
 Sometimes it is desirable to use a value associated with a category's
-<EM>contents</EM> instead of the category value itself.  If a raster
-map layer name is preceded by the
-<B>@</B>
+<EM>label</EM> instead of the category value itself.  If a raster
+map layer name is preceded by the <B>@</B>
 operator, then the labels in the category file for the raster map layer
 are used in the expression instead of the category value.
 
-
 <P>
-
 For example, suppose that the raster map layer <EM>soil.ph</EM>
 (representing soil pH values) has a category file with labels as follows:
-
 
 <P>
 
@@ -284,31 +280,26 @@ cat	label
 
 
 <P>
-
 Then the expression:
-
-
 <P>
 
 <DL>
 <DD>
-result = @soils.ph * 10
+result = @soils.ph
 </DL>
 
-
 <P>
-
 would produce a result with category values
-0, 14, 24, 35, 58, 72, 88 and 94.
-
+0, 1.4, 2.4, 3.5, 5.8, 7.2, 8.8 and 9.4.
 
 <P>
-
 Note that this operator may only be applied to raster map layers
 and produces a floating point value in the expression.
-Also the category label must start with a valid number.
-Missing labels, or labels that do not start with a number will
-(silently) produce a 0 value for that category.
+Therefore, the category label must start with a valid number.
+If the category label is integer, it will be represented by
+a floating point number. I the category label does not start
+with a number or is missing, it will be represented by NULL
+(no data) in the resulting raster file. 
 
 <H2>GREY SCALE EQUIVALENTS AND COLOR SEPARATES</H2>
 
