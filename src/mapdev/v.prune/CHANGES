@@ -1,3 +1,21 @@
+added v.support check - 7/98 Markus Neteler neteler@geog.uni-hannover.de
+
+-----------------------------------------------------------------
+So for the benefit of the grass community, there is a new
+dig_prune function, commented (in bad english), that should
+replace src421/src/mapdev/diglib/prune.c (and not only for
+linux version, the code is no linux dependant)
+
+Also edited: src421/src/mapdev/v.prune/v.prune.c, replacing
+the comparaison "==" by "<" in line 114 (test for Threshold != 0)
+A null value just eliminates duplicate points.
+
+The code is shorter, but the source bigger (many comments).
+
+Michel Wurtz    mw@engees.u-strasbg.fr Feb 18, 1998
+
+
+-------------------------------------------------------------------
 4.0 conversion note -- 12-90 dks
 
 v.prune:
@@ -19,3 +37,5 @@ misc. changes fr0m 3.2:
 
 5. fixed bug in fatal_error message when dig src file isn't found
 
+
+-----------------------------------
