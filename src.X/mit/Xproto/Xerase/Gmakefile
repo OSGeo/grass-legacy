@@ -1,0 +1,5 @@
+PGM = Xerase
+OFILES =  erase.o 
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
+	cc -g $(LDFLAGS) -o $@ $(OFILES) -I$(INCLUDE) -I$(LIBDIR) $(D_LIB) $(XDISPLAYLIB) $(GISLIB) -lX11
