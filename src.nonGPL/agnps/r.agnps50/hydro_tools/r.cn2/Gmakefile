@@ -1,6 +1,6 @@
 PROG = $(BIN_ALPHA_CMD)/r.cn2
 
-LIBES  = $(GISLIB) $(MATHLIB) $(DATETIMELIB)
+LIBES  = $(GISLIB) $(DATETIMELIB)
 
 OBJ = \
 	Gcn.o\
