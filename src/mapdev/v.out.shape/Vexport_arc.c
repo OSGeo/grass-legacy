@@ -12,8 +12,8 @@
  * http://gdal.velocet.ca/projects/shapelib/index.html
  */
 
-/* Vexport_arc.c	1.0   04/90 */
-/*  Written by  Dave Johnson
+/* based on Vexport_arc.c 1.0 04/90
+**  Written by  Dave Johnson
 **  DBA Systems, Inc.
 **
 **  modified by R.L.Glenn
@@ -100,7 +100,7 @@ main (int argc, char **argv)
 	opt2->key        = "vect";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = YES;
-	opt2->description= "input vector file for ARC/INFO conversion";
+	opt2->description= "input vector file to convert to SHAPE format";
 	opt2->gisprompt  ="old,dig,vector";
 
 	opt3 = G_define_option() ;
@@ -109,13 +109,14 @@ main (int argc, char **argv)
 	opt3->required   = YES;
 	opt3->description= "prefix for SHAPE filenames";
 
-	opt4 = G_define_option() ;
+/* not required for SHAPE:*/
+/*	opt4 = G_define_option() ;
 	opt4->key        = "separator";
 	opt4->type       = TYPE_STRING;
 	opt4->required   = NO;
 	opt4->description= "field separator";
 	opt4->answer     = "space";
-	
+*/	
 	/*global flags, zero until respective files are actually written to*/
 	pol_flg = 0; /*apparent BUG--.pol suffix never implemented*/
 	lin_flg = 0;
@@ -157,7 +158,9 @@ main (int argc, char **argv)
 		G_usage();
 		exit (-1);
 	}
-	if ((opt4->answer == NULL)||(strcmp(opt4->answer, "space")==0))
+
+/* not required for SHAPE:*/
+/*	if ((opt4->answer == NULL)||(strcmp(opt4->answer, "space")==0))
 	{
 	   separator = ' ';
 	   space = 1;
@@ -168,7 +171,10 @@ main (int argc, char **argv)
 	       G_fatal_error("A separator field must consist of one character only!");
 	   else      separator = *(opt4->answer);
         }
-
+*/
+	separator = ' ';
+	space = 1;
+	
 	if ((mapset = G_find_vector2 (dig_name, "")) == NULL)
 	{
 		sprintf (errmsg, "Could not find vector file <%s>\n", dig_name);
