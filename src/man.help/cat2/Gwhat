@@ -1,0 +1,66 @@
+
+
+
+Gwhat(2G)            GRASS Reference Manual             Gwhat(2G)
+
+
+
+NAME
+     Gwhat - queries
+     (G Language Tool)
+
+SYNOPSIS
+     Gwhat [-f] layer1 [layer2] ...
+
+DESCRIPTION
+     Gwhat is a tool that allows the user to input one or more
+     (i.e., pair of eastings and northings), and then be shown
+     what is on this or other at the selected
+
+     The input to Gwhat can be typed in at the keyboard,
+     redirected from a file, or piped from another program (such
+     as Gsites ). Each line of the input consists of an easting
+     and a northing and an optional label. For example:
+
+          635342.21 7654321.09 site 1
+          653324.88 7563412.42 site 2
+
+     Gwhat output consists of the input and label, and, for each
+     the category and (if -f is specified) the category label the
+     cell(s) at this Here is a sample output from Gwhat (with
+     input as above).
+
+     Gwhat soils aspect
+
+          635342.21|7654321.09|site 1|45|21
+          653324.88|7563412.42|site 2|44|20
+
+     Gwhat -f soils aspect
+
+          635342.21|7654321.09|site 1|45|NaC|21|30 degrees NW
+          653324.88|7563412.42|site 2|44|NdC|20|15 degrees NW
+
+
+NOTES
+     The maximum number of which can be queried at one time is
+     14.
+
+     Gwhat can be used with Gsites ; for example:
+
+          Gsites bugsites | Gwhat slope landover
+
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
