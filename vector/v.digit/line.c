@@ -14,17 +14,14 @@
 int 
 write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
 {
-    int i, cat, ret;
+    int i, field, cat, ret;
     static int first_form = 1;
-    char buf[2000], *form;
+    char *form;
     struct line_cats *Cats;
     struct field_info *Fi;
-    dbDriver *driver;
-    dbValue value;
-    dbString sql, html;
+    dbString html;
     
     Cats = Vect_new_cats_struct ();
-    db_init_string (&sql);
     db_init_string (&html);
     
     cat = var_geti(VAR_CAT);
@@ -52,48 +49,22 @@ write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
     if ( var_geti(VAR_CAT_MODE) != CAT_MODE_NO && var_geti(VAR_INSERT) && cat > 0 ) {
 	G_debug (2, "Insert new record" );
         db_set_string (&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>");
-	Fi = Vect_get_field( Map, var_geti(VAR_FIELD) );
-	if ( Fi == NULL ) { 
-	    i_message ( MSG_OK, MSGI_ERROR, "Database table for this field is not defined" );
-            return -1;
-	}
 
-	/* Note: some drivers (dbf) writes date when db is closed so it is better open
-	 * and close database for each record, so that data may not be lost later */
-
-	/* First check if already exists */
-        driver = db_start_driver_open_database ( Fi->driver, Fi->database );
-	if ( driver == NULL ) {
-	    sprintf (buf, "Cannot open database %s by driver %s", Fi->database, Fi->driver );
-	    i_message ( MSG_OK, MSGI_ERROR, buf );
-            return -1;
-	}
-        ret = db_select_value ( driver, Fi->table, Fi->key, cat, Fi->key, &value );
-	if ( ret == -1 ) {
-            db_close_database_shutdown_driver ( driver );
-	    sprintf (buf, "Cannot select record from table %s", Fi->table );
-	    i_message ( MSG_OK, MSGI_ERROR, buf );
-            return -1;
-	}
-	if ( ret == 0 ) { /* insert new record */
-	    sprintf ( buf, "insert into %s (%s) values (%d)", Fi->table, Fi->key, cat );
-	    db_set_string ( &sql, buf);
-	    G_debug ( 2, db_get_string ( &sql ) );
-	    ret = db_execute_immediate (driver, &sql);
-	    if ( ret != DB_OK ) {	
-                db_close_database_shutdown_driver ( driver );
-	        sprintf (buf, "Cannot insert new record: %s", db_get_string(&sql) );
-	        i_message ( MSG_OK, MSGI_ERROR, buf );
-                return -1;
-	    }
+	field = var_geti(VAR_FIELD);
+	ret = new_record(field, cat); 
+	if ( ret == -1 ) { 
+	    return -1;
+	} else if ( ret == 0 ) {
 	    db_append_string (&html, "New record was created.<BR>");
-        } else { /* record already existed */
+	} else { /* record already existed */
 	    db_append_string (&html, "Record for this category already existed.<BR>");
 	}
-	
-        db_close_database_shutdown_driver ( driver );
 
 	/* Open form */
+	Fi = Vect_get_field( Map, field );
+	if ( Fi == NULL ) {
+	    return -1;   
+	}
         F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, cat, NULL, NULL, 
 		                  F_EDIT, F_HTML, &form);
 	db_append_string (&html, form );

@@ -38,7 +38,11 @@ int move_line (void);
 int delete_line (void);
 
 /* Attributes */
+int display_cats (void);
+int del_cat (int, int, int);
+int add_cat (int, int, int);
 int display_attributes (void);
+int new_record (int, int);
 
 /* Display */
 void display_points ( struct line_pnts *, int );
@@ -70,6 +74,8 @@ int c_var_set (ClientData , Tcl_Interp *, int, char **);
 int c_create_bgcmd (ClientData , Tcl_Interp *, int, char **);
 int c_set_bgcmd (ClientData , Tcl_Interp *, int, char **);
 int c_add_blank_bgcmd (ClientData , Tcl_Interp *, int, char **);
+int c_del_cat (ClientData , Tcl_Interp *, int, char **);
+int c_add_cat (ClientData , Tcl_Interp *, int, char **);
 
 int i_prompt (char *);
 int i_prompt_buttons (char *, char *, char *);

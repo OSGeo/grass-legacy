@@ -4,6 +4,7 @@ MODULE_TOPDIR = ../..
 PGM=v.digit
 TBOX=$(GISBASE)/etc/v.digit/toolbox.tcl
 SET=$(GISBASE)/etc/v.digit/settings.tcl
+CAT=$(GISBASE)/etc/v.digit/cats.tcl
 
 LIBES     = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(FORMLIB) \
 $(GISLIB) $(TCLTKLIBPATH) $(TCLTKLIBS)
@@ -15,7 +16,7 @@ EXTRA_INC = $(VECT_INC)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd $(TBOX) $(SET) ico
+default: cmd $(TBOX) $(SET) $(CAT) ico
 
 $(TBOX): toolbox.tcl
 	if [ ! -d $(GISBASE)/etc ]; then mkdir $(GISBASE)/etc; fi
@@ -26,6 +27,10 @@ $(TBOX): toolbox.tcl
 $(SET): settings.tcl
 	cp settings.tcl $(SET)
 	chmod 0755 $(SET)
+
+$(CAT): cats.tcl
+	cp cats.tcl $(CAT)
+	chmod 0755 $(CAT)
 
 ico:
 	cp icons/*.gif $(GISBASE)/etc/v.digit/

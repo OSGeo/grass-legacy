@@ -1,7 +1,7 @@
-#include "global.h"
-#include "dbmi.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "global.h"
+#include "dbmi.h"
 
 static int srch(); 
 
@@ -45,6 +45,7 @@ update (struct Map_info *Map)
         case O_COUNT:
         case O_LENGTH:
 	case O_AREA:
+	case O_QUERY:
 	    sprintf (buf1, "update %s set %s =", Fi->table, options.col1);
             break;
         case O_COOR:
@@ -81,6 +82,24 @@ update (struct Map_info *Map)
 		}
     		sprintf (buf2, "%s %s = %f, %s = %f  where %s = %d", buf1, options.col1, Values[i].d1, 
 			    options.col2, Values[i].d2, Fi->key,  Values[i].cat);    		
+		break;
+
+    	    case O_QUERY:
+		if ( Values[i].null ) {
+		    sprintf (buf2, "%s null where %s = %d", buf1, Fi->key, Values[i].cat);
+		} else { 
+		    switch ( vstat.qtype ) {
+			case ( DB_C_TYPE_INT ):
+			    sprintf (buf2, "%s %d where %s = %d", buf1, Values[i].i1, Fi->key, Values[i].cat);
+			    break;
+			case ( DB_C_TYPE_DOUBLE ):
+			    sprintf (buf2, "%s %f where %s = %d", buf1, Values[i].d1, Fi->key, Values[i].cat);
+			    break;
+			case ( DB_C_TYPE_STRING ):
+			    sprintf (buf2, "%s '%s' where %s = %d", buf1, Values[i].str1, Fi->key, Values[i].cat);
+			    break;
+		    }
+		}
 		break;
 	} 
 

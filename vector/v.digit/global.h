@@ -23,6 +23,7 @@ typedef enum
     TOOL_SPLIT_LINE,
     TOOL_MOVE_LINE,  
     TOOL_DELETE_LINE,  
+    TOOL_DISPLAY_CATS,  
     TOOL_DISPLAY_ATTRIBUTES,  
     TOOL_ZOOM_WINDOW,    /* zoom by window */
     TOOL_ZOOM_OUT_CENTRE, 

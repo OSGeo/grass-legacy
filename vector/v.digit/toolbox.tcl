@@ -5,6 +5,7 @@ source $env(GISBASE)/etc/gtcltk/select.tcl
 
 set vdpath $env(GISBASE)/etc/v.digit/ 
 source $vdpath/settings.tcl
+source $vdpath/cats.tcl
 
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
@@ -161,6 +162,11 @@ $bbox add -image [image create photo -file "$vdpath/redraw.gif"] \
         -helptext "Redraw"
 
 # --- Attributes ---
+$bbox add -image [image create photo -file "$vdpath/display.cats.gif"] \
+        -command "c_next_tool display_cats" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Display categories"
+
 $bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
         -command "c_next_tool display_attributes" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \

@@ -68,28 +68,42 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	R_font(lattr->font) ;
 		  
         if ( chcat ) {
-	    Vect_cat_get(Cats, Clist->field, &cat);
-	    if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-	         continue;
+	     int found = 0;
+
+	     for ( i = 0; i < Cats->n_cats; i++ ) {
+		 if ( Cats->field[i] == Clist->field && Vect_cat_in_cat_list ( Cats->cat[i], Clist) ) {
+		     found = 1;
+		     break;
+		 }
+	     }
+	     if (!found) continue;
         }
 	
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
 	  {	    
 	    /* Read attribute from db */
-            db_init_string (&stmt);
-	    sprintf (buf, "select %s from %s where %s = %d", attrcol, fi->table, fi->key, cat);
-	    G_debug (2, "SQL: %s", buf);
-	    db_append_string ( &stmt, buf);   
-	    
-	    if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-	        G_fatal_error ("Cannot select attributes from cat %d.", cat);
+	    text[0] = '\0';
+	    for ( i = 0; i < Cats->n_cats; i++ ) {
+		if ( Cats->field[i] != lattr->field ) continue;
+		db_init_string (&stmt);
+		sprintf (buf, "select %s from %s where %s = %d", attrcol, fi->table, fi->key, Cats->cat[i]);
+		G_debug (2, "SQL: %s", buf);
+		db_append_string ( &stmt, buf);   
+		
+		if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
+		    G_fatal_error ("Cannot select attributes from cat %d.", cat);
 
-            table = db_get_cursor_table (&cursor);
-	    column = db_get_table_column(table, 0); /* first column */
-	    
-	    if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
-	    db_convert_column_value_to_string (column, &valstr); 
-	    sprintf (text, "%s", db_get_string(&valstr));
+		table = db_get_cursor_table (&cursor);
+		column = db_get_table_column(table, 0); /* first column */
+		
+		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
+		db_convert_column_value_to_string (column, &valstr); 
+
+		if ( strlen(text) > 0 ) sprintf (text, "%s/", text);
+		sprintf (text, "%s%s", text, db_get_string(&valstr));
+
+		db_close_cursor(&cursor);
+	    }
 	    
 	    if ( (ltype & GV_POINTS) || Points->n_points == 1 )
 	      /* point/centroid or line/boundary with one coor */     

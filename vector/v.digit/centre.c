@@ -77,6 +77,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		delete_line ();
 		break;
+	    case TOOL_DISPLAY_CATS :
+		Tool_next = TOOL_NOTHING;
+		display_cats ();
+		break;
 	    case TOOL_DISPLAY_ATTRIBUTES :
 		Tool_next = TOOL_NOTHING;
 		display_attributes ();

@@ -22,8 +22,10 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "ogr_api.h"
+#include "global.h"
 
-int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type );
+int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
+int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
 
 int 
 main (int argc, char *argv[])
@@ -37,7 +39,7 @@ main (int argc, char *argv[])
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
-
+    
     /* Vector */
     struct Map_info Map;
     int    cat;
@@ -246,9 +248,13 @@ main (int argc, char *argv[])
     else 
         Vect_open_new (&Map, out_opt->answer, 0 ); 
 
-	
     Vect_hist_command ( &Map );
 
+    /* Points and lines are written immediately with categories. Boundaries of polygons are
+     * written to the vector then cleaned and centroids are calculated for all areas in clean vector.
+     * Then second pass through finds all centroids in each polygon feature and adds its category
+     * to the centroid. The result is that one centroids may have 0, 1 ore more categories
+     * of one ore more (more input layers) fields. */
     with_z = 0;
     for ( layer = 0; layer < nlayers; layer++ ) {
 	fprintf (stderr, "Layer: %s\n", layer_names[layer]);
@@ -362,7 +368,7 @@ main (int argc, char *argv[])
 		if ( dim > 2 ) 
 		    with_z = 1;
 
-		geom ( Ogr_geometry, &Map, layer+1, cat, min_area, type );
+		geom ( Ogr_geometry, &Map, layer+1, cat, min_area, type, no_clean_flag->answer );
 	    }
 
 	    /* Attributes */
@@ -417,13 +423,21 @@ main (int argc, char *argv[])
 	    G_warning ("%d %s without geometry.", nogeom, nogeom == 1 ? "feature" : "features" );
     }
     
-    OGR_DS_Destroy( Ogr_ds );
     
     separator = "-----------------------------------------------------\n";
     fprintf ( stderr, separator );
     Vect_build ( &Map, stderr );
     
     if ( !no_clean_flag->answer && Vect_get_num_primitives(&Map, GV_BOUNDARY) > 0) {
+	int ret, centr, ncentr, otype;
+        CENTR  *Centr;
+	SPATIAL_INDEX si;
+	double x, y;
+	BOUND_BOX box;
+	struct line_pnts *Points;
+
+	Points = Vect_new_line_struct ();
+
         fprintf ( stderr, separator );
 	G_warning ( "Cleaning polygons, result is not guaranteed!\n");
 
@@ -480,11 +494,68 @@ main (int argc, char *argv[])
 	    fprintf ( stderr, "Remove bridges:\n" );
 	    Vect_remove_bridges ( &Map, NULL, stderr ); 
 	}
-	
+
+	/* Boundaries are hopefully clean, build areas */
+        fprintf ( stderr, separator );
+        Vect_build_partial ( &Map, GV_BUILD_ATTACH_ISLES, stderr );
+
+	/* Calculate new centroids for all areas */
+	ncentr = Vect_get_num_areas ( &Map );
+	Centr = (CENTR *) G_calloc ( ncentr+1, sizeof(CENTR) );
+	Vect_spatial_index_init ( &si );
+	for ( centr = 1; centr <= ncentr; centr++ ) {
+	    Centr[centr].cats = Vect_new_cats_struct ();
+	    ret = Vect_get_point_in_area ( &Map, centr, &x, &y );
+	    if ( ret < 0 ) {
+		G_warning ("Cannot calculate area centroid" );
+		continue;
+	    }
+	    Centr[centr].x = x;
+	    Centr[centr].y = y;
+	    box.N = box.S = y;
+	    box.E = box.W = x;
+	    box.T = box.B = 0;
+	    Vect_spatial_index_add_item (&si, centr, &box );
+	}
+
+	/* Go through all layers and find centroids for each polygon */
+	for ( layer = 0; layer < nlayers; layer++ ) {
+	    fprintf (stderr, "Layer: %s\n", layer_names[layer]);
+	    layer_id = layers[layer];
+	    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
+	    OGR_L_ResetReading ( Ogr_layer ); 
+
+	    cat = 0; /* field = layer + 1 */
+	    while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
+		cat++;
+		/* Geometry */
+		Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
+		if ( Ogr_geometry != NULL ) {
+		    centroid ( Ogr_geometry, Centr, &si, layer+1, cat, min_area, type );
+		} 
+	        
+		OGR_F_Destroy( Ogr_feature );
+	    }
+	}
+
         fprintf ( stderr, separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
+
+	/* Write centroids */
+	for ( centr = 1; centr <= ncentr; centr++ ) {
+	    if ( Centr[centr].cats->n_cats == 0 ) continue;
+
+	    Vect_reset_line ( Points );
+	    Vect_append_point ( Points, Centr[centr].x, Centr[centr].y, 0.0 );
+	    if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID;
+	    Vect_write_line ( &Map, otype, Points, Centr[centr].cats);
+	}
+	
+        fprintf ( stderr, separator );
         Vect_build ( &Map, stderr );
     }
+    
+    OGR_DS_Destroy( Ogr_ds );
 
     Vect_close ( &Map );
 
