@@ -17,7 +17,7 @@
 int G_fork()
 {
 #ifdef __MINGW32__
-  return 1;
+  return -1;
 #else /* __MINGW32__ */
     int pid;
 

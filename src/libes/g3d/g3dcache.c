@@ -195,7 +195,7 @@ disposeCacheWrite (map)
       G3d_error ("disposeCacheWrite: could not close file");
       return 0;
     }
-    unlink (map->cacheFileName);
+    remove ( map->cacheFileName );
     G3d_free (map->cacheFileName);
   }
 
