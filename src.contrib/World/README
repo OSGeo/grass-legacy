@@ -1,0 +1,49 @@
+World coast-line projection program.  The user can display any part of the
+globe in any of several projections.
+
+This code was extracted off a tape thrown away about 1980.  It has no
+documentation either in the directories or in the source code.  Seems
+that there was some indication that this was possibly an implementation
+of the original CIA World Data Base.  Note that the data is byte order
+dependent (see below).
+
+To compile for use in a GRASS graphics window:  run make in this directory.
+  This will compile a library of projection routines in the directory "proj"
+  and then link the library with some routines in this directory creating
+  the executable "Wmap".   Compiler error messages abound.
+
+To create world pictures:
+  Run GRASS as usual at your site.
+  Start your favorite "monitor".
+  Select the monitor.
+  Create a grahics window on the monitor (e.g. run Dscreen)
+  Choose (Dchoose) the graphics window.
+  Run "Wmap" piping its output into "Dgraph".
+
+For starters, run any of the following commands:
+ Mercator projection of world -
+	Wmap  mercator -g 5 -d 1  | Dgraph
+ Orthogonal projection of world -
+	Wmap  orthographic -g 20 -d 35 -o 35 55 0 | Dgraph
+ Albers equal area of North America -
+	Wmap  albers  40 50 -g 1  -o 90 85 0 -d 1 -l 20 60 60 130 | Dgraph
+ Albers equal area of Carribean -
+	Wmap  albers  40 50 -g 10  -o 90 85 0 -d 1 -l 10 30 70 90 | Dgraph
+ Mercator projection of South America -
+	Wmap mercator -g 30  -o 90 85 0 -d 10 -l -60 -30 30 90 | Dgraph
+ Albers equal area of Great Lakes region -
+	Wmap  albers  40 50 -g 1 1 -o 90 85 0 -d 1 -l 40 50 80 90 | Dgraph
+
+If these result in garbage, you may have to reverse the byte order of the
+data.   Wmap uses the data in usr/dict/world.  You may try to replace this
+file with usr/dict/world.new.   Note that usr/dict/world.x is also used, but is
+an ascii index into usr/dict/world.
+
+Documentation?  None found.  The only help available is obtained by simply
+running:
+   Wmap   -or-
+   Wmap help
+
+Core dumps are not unusual, but the occasional interesting picture is worth
+the time.
+
