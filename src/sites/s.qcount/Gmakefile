@@ -1,4 +1,4 @@
-NAME=s.qcount
+NAME=s.qcount.new
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
 
@@ -13,14 +13,12 @@ SOURCE = \
 	findquads.c \
 	indices.c \
 	main.c \
-	readsite.c 
 
 LIST = \
 	count.o \
 	findquads.o \
 	indices.o \
 	main.o \
-	readsite.o 
 
 LIBES= $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
 
@@ -59,10 +57,9 @@ veryclean: realclean
 dist: veryclean
 	(cd .. ; tar cvf s.qcount.tar s.qcount; gzip s.qcount.tar; mv s.qcount.tar.gz /home/pasture/ftp/pub/mccauley/grass)
 
-count.o: s_struct.h quaddefs.h 
-findquads.o: s_struct.h quaddefs.h 
-indices.o: s_struct.h quaddefs.h 
-main.o: s_struct.h quaddefs.h 
-readsite.o: s_struct.h quaddefs.h 
+count.o:  quaddefs.h 
+findquads.o: quaddefs.h 
+indices.o:  quaddefs.h 
+main.o:  quaddefs.h 
 
 $(LIBES): #

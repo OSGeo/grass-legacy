@@ -11,7 +11,6 @@
 #include <stdlib.h> 
 #include <math.h>
 #include "gis.h"
-#include "s_struct.h"
 #include "quaddefs.h"
 
 #ifndef RAND_MAX 
@@ -19,7 +18,7 @@
 #endif
 
 #define R_INIT srand
-#define RANDOM(lo,hi) ((double)rand()/RAND_MAX*(hi-lo)+lo)
+#define RANDOM(lo,hi) ((double) rand() / (double)RAND_MAX * (hi-lo) + lo)
 
 /*
 #define R_MAX 1.0
@@ -27,24 +26,22 @@
 #define RANDOM(lo,hi) (drand48()/R_MAX*(hi-lo)+lo)
 */
 
-Z *find_quadrats ( int n, double r, struct Cell_head window,int verbose)
 /*
  * returns Z struct filled with centers of n non-overlapping circles of
  * radius r contained completely within window
  */
+SITE_XYZ *find_quadrats (int n, double r, struct Cell_head window, int verbose)
 {
   int i = 1, j, overlapped;
   unsigned k;
   double east, north, e_max, e_min, n_max, n_min;
-  Z *quads=NULL;
+  SITE_XYZ *quads=NULL;
 
-#ifndef lint
-  quads = (Z *) G_malloc (n * sizeof (Z));
-#endif
+  quads = G_alloc_site_xyz(n);
   if (quads == NULL)
     G_fatal_error ("cannot allocate memory for quadrats");
 
-   R_INIT ((int)getpid()); 
+   srand ((unsigned int)getpid()); 
   /* R_INIT (1); */
 
   e_max = window.east - r;
@@ -91,3 +88,4 @@ Z *find_quadrats ( int n, double r, struct Cell_head window,int verbose)
   }
   return quads;
 }
+/* vim: softtabstop=2 shiftwidth=2 expandtab */
