@@ -1,3 +1,4 @@
+#include "gis.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
@@ -80,9 +81,9 @@ first = 0;
 #endif
         bytes_per_pixel = (grimage->bits_per_pixel + 7)/8;
         if (alloc == 0)
-            grimage->data =  (XImage *) G_malloc((size_t) (num * bytes_per_pixel));
+            grimage->data =  (char *) G_malloc((size_t) (num * bytes_per_pixel));
         else
-            grimage->data =  (XImage *) G_realloc((void *)grimage->data, (size_t) (num * bytes_per_pixel));
+            grimage->data =  (char *) G_realloc((void *)grimage->data, (size_t) (num * bytes_per_pixel));
         if (grimage->data == NULL)
             return (-1);        /* not enough space left */
     }

@@ -16,7 +16,7 @@ extern Display *dpy;
 extern Window grwin;
 extern Cursor grcurse;
 
-static u_long mask;
+/* static u_long mask; */
 
 int Get_location_with_pointer (int *wx, int *wy, int *button)
 {

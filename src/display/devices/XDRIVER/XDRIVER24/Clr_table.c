@@ -7,7 +7,7 @@
  * example; nlev=8 means 8bit for each R, G, B equal to 24bit truecolor
 */
      
-     
+#include "gis.h"     
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
@@ -216,7 +216,7 @@ Colormap InitColorTableFixed (Colormap cmap)
             Blu[i] = (int) ((i / 256.0) * n_levels);
         }
 	/* allocate xpixels array */
-	xpixels = (u_long *) calloc(n_levels*n_levels*n_levels, sizeof(u_long));
+	xpixels = (u_long *) G_calloc((size_t) (n_levels*n_levels*n_levels), (size_t)sizeof(u_long));
     }
 /*    cmap = DefaultColormap(dpy, scrn);  */
 
