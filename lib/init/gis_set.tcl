@@ -526,7 +526,7 @@ proc gisSetWindow {} {
                      return
                 }
                 set help [toplevel .help]
-		help::init $env(GISBASE)/docs/start/helptext.html "" $help 500 400
+		help::init $env(GISBASE)/docs/html/helptext.html "" $help 500 400
 		wm title $help "GRASS Help"
         }
 	
