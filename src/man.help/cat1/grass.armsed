@@ -1,0 +1,330 @@
+
+
+
+grass.armsed(1)      GRASS Reference Manual       grass.armsed(1)
+
+
+
+NAME
+     grass.armsed - Menu-driven user interface from GRASS to
+     ARMSED
+     (GRASS Tool)
+
+SYNOPSIS
+     grass.armsed
+
+DESCRIPTION
+     grass.armsed is a menu for various routines which complete
+     the GRASS to ARMSED interface.  It is assumed that the user
+     has previously completed the steps of the watershed analysis
+     provided in the program watershed.
+
+     ARMSED is a modeling routine which calculates water and
+     sediment runoff for a given watershed and a specified
+     rainfall simulation.  It is the Army's version of a model
+     originally entitled MULTSED. The GRASS system is used to aid
+     in the collection and/or estimation of input values for
+     running the ARMSED model.
+
+     For the purpose of completing all steps of the process with
+     a minimum of input required at each step, and in order to
+     maintain a record of all parameters used to obtain a
+     particular result, a "project" file is created to hold
+     information pertaining to names and input parameter values.
+
+     Upon entry of the grass.armsed program, the user will first
+     see the following:
+
+     GRASS.ARMSED
+
+      This program provides a menu for completing the interface
+      to ARMSED.  If you have not yet finished the series of steps
+      provided in program 'watershed', exit now and do so.
+
+      If you have completed the 'watershed' series, please
+      denote your choice below.
+
+
+       CHOOSE DESIRED OPTION
+
+      _x_  Start new armsed project using 'watershed' products
+      ___  Continue an existing armsed project
+
+
+
+
+
+
+                   AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                                  (OR <Ctrl-C> TO EXIT)
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+grass.armsed(1)      GRASS Reference Manual       grass.armsed(1)
+
+
+
+     After choosing an option, the user will then be prompted for
+     the project name, and then the main menu will appear.  The
+     available steps are shown below.
+
+
+
+     PROJECT NAME:    demo
+
+
+
+     Choose desired option:
+
+     1.  Partition into left/right half-planes
+     2.  Collect statistics for armsed
+     3.  Provide remaining armsed input
+     4.  Run armsed
+
+     5.  Quit
+
+
+         Desired option number:   0__
+
+
+
+
+
+                   AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                                  (OR <Ctrl-C> TO QUIT)
+
+
+     The user can exit from the program after completing any
+     number of steps. Hence, the option to "Work on an existing
+     project" allows for finishing any remaining steps, or for
+     redoing particular steps, or both.
+
+     The steps are presented in the order they should be used to
+     complete the interface.
+
+
+1. PARTITION INTO LEFT/RIGHT HALF-PLANES
+     This function needs as input a depicting the subbasins
+     within a specific watershed (referred to as a "partitioned"
+     and a depicting a stream network where all segments have
+     been extended to ridge boundaries.  The subbasin should be a
+     product of the watershed series of routines, or could have
+     been derived using an alternate method with program
+     'basins.fill'.  The stream network can also be a product
+     from the watershed series, but must have the stream
+     extensions added, and the segment coding step run on the
+     with extensions.  (See WATERSHED -- A Proposed Method for
+     Automated Extraction of Watershed Geometric and Topologic
+     Information from Digital Elevation Data by Dale White and
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+grass.armsed(1)      GRASS Reference Manual       grass.armsed(1)
+
+
+
+     Marjorie Larson.)
+
+     The output from this step will be another partitioned where
+     subbasins have been divided into left and right half-planes.
+     Due to limitations with the clumping routine used, some
+     reclassification of category values may be necessary.  When
+     an "hourglass" situation is encountered (where a subbasin is
+     "pinched" in the middle due to the stream network depiction
+     running next to a boundary), a subbasin may be artificially
+     divided into pieces (where either the left half-plane or the
+     right half-plane will be given as two or more pieces).  All
+     pieces representing one half-plane need to be renumbered
+     ("reclassed") into one category in order to prepare the
+     input for the next step.  The final category used to
+     represent the half-plane should be the category of one of
+     the pieces in order to follow the renumbering scheme
+     attempted by the program, which relates the new category
+     back to the original subbasin
+
+NOTES
+     The current window setting is ignored.  Instead, the window
+     for the entire input is used.
+
+
+2. COLLECT STATISTICS FOR ARMSED
+     The ARMSED modeling system takes input relating to soils,
+     geometry, topography, and rainfall, and calculates water and
+     sediment runoff related to the given watershed.  Input must
+     be provided per plane or subbasin.  This step of the
+     interface collects and/or estimates many of the input
+     parameters needed for ARMSED using the partitioned output
+     from step 1.  In order for this step to produce the maximum
+     possible number of parameters, a true elevation a soil
+     texture and a cover are also needed.  If any of these three
+     input is missing, some statistics (input parameters) will
+     still be calculated, but some will be missing and the user
+     will have to input field collected data or estimates from
+     other sources.  (The opportunity to change or add input
+     parameters is given in the next step of this menu.)
+
+     Statistics collected by this program will be given in an
+     output file which can then be used in the next step to
+     create input files for ARMSED. Statistical output will be
+     given for whatever input are available:  if an elevation
+     (with true elevation values) is available, overland slope
+     and channel slope will be provided with the output; if a
+     soils texture is available, output will include values for
+     parameters such as porosity and hydraulic conductivity; if a
+     cover is available for input, percent cover will be
+     calculated.  Values will also be given for channel segment
+     length and overland flow length.
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
+
+
+
+grass.armsed(1)      GRASS Reference Manual       grass.armsed(1)
+
+
+
+     SOIL LAYER: The soil texture specified by the user must
+     contain the following soils texture categories (which most
+     likely will have been reclassed from a soils survey):
+
+     Category #        Soil Texture Represented
+     ----------        ------------------------
+         0                 no data
+         1                 Sand
+         2                 Loamy Sand
+         3                 Sandy Loam
+         4                 Loam
+         5                 Silty Loam
+         6                 Sandy Clay Loam
+         7                 Clay Loam
+         8                 Silty Clay Loam
+         9                 Sandy Clay
+        10                 Silty Clay
+        11                 Clay
+
+     COVER LAYER: The cover should be given with the following
+     category representations:
+
+     Category #        Cover Type Represented
+     ----------        ----------------------
+         0                 no data
+         1                 Canopy cover
+         2                 Ground cover
+         3                 Impervious cover
+
+
+NOTES
+     The current window setting is ignored.  Instead, the window
+     for the partitioned is used.
+
+     If 'no data' values in either the soil texture or cover
+     cover more than 50 percent of any given division area,
+     statistics will not be estimated for that area.  Otherwise,
+     all no data values are combined with the soil texture or
+     cover type which comprises the majority of that division
+     area.
+
+3. PROVIDE REMAINING ARMSED INPUT
+     This step is highly interactive.  Some information from the
+     output of the watershed series will be used as input to this
+     program (channel lengths, drainage pattern, and subbasin
+     areas) along with whatever statistics were gathered in step
+     number 2.  The user will be prompted for information that is
+     needed to run the ARMSED model, and estimates or calculated
+     values will be provided whenever possible.  Output from this
+     step will include input files which have been formatted
+     according to the FORTRAN requirements of the ARMSED code.
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         4
+
+
+
+
+
+
+grass.armsed(1)      GRASS Reference Manual       grass.armsed(1)
+
+
+
+     The user has the option of making files for a new
+     simulation, or of modifying input from a previous simulation
+     run.  It is usually the case that a user will want output
+     for the same watershed depiction and the same soils and
+     cover information, but for various rainfall statistics.  The
+     option for modifying an old run makes this convenient.
+
+4. RUN ARMSED
+     This step runs the ARMSED modeling routine using the
+     formatted input files from step 3.
+
+AUTHOR
+     Marjorie Larson, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         5
+
+
+
