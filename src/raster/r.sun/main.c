@@ -370,7 +370,7 @@ int main(int argc, char *argv[])
 	sscanf(parm.ltime->answer, "%lf", &timo);
     }
     else {
-	if(incidout != NULL) G_fatal_error("incidout requres time parameter to be set");
+	if(incidout != NULL) G_fatal_error("incidout requires time parameter to be set");
 	fprintf(stdout, "Mode 2: integrated daily irradiation\n");
 	fflush(stdout);
     }
