@@ -1,5 +1,6 @@
 #include <math.h>
 #include "gis.h"
+#define TINF_MAIN
 #include "tinf.h"
 #include <limits.h>
 #include <float.h>

@@ -41,7 +41,12 @@
 #define  SML   0.5
 #define EQ(a, b)    (a-b < 0.01 && a-b > -0.01 )
 #define BIG   1000000000.0
+
+#ifdef MAIN
 jmp_buf jmp;
+#else
+extern jmp_buf jmp;
+#endif
 
 struct  dirent {
 	off_t           d_off;          /* offset of next disk dir entry */
