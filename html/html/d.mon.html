@@ -26,7 +26,6 @@
 [<B>stop=</B><EM>name</EM>] 
 [<B>select=</B><EM>name</EM>] 
 [<B>unlock=</B><EM>name</EM>] 
-[<B>nlev=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -76,9 +75,6 @@ desired flags on the command line.
 
 <DT><B>unlock=</B><EM>name</EM> 
 <DD>Name of graphics monitor to unlock 
-
-<DT><B>nlev=</B><EM>value</EM>
-<DD>Number of color levels for each R/G/B (default: nlev=32: 32768 colors)
 
 </DL>
 
@@ -134,21 +130,6 @@ The desired monitor should be started once and need not be restarted unless
 it is stopped (option <EM>2</B>)</EM> for some reason. A monitor may continue 
 to run for any length of time, even when no GRASS session is being run. 
 The monitor program runs in the background. 
-
-<p>
-
-Using the <EM>nlev</EM> parameter the user can define the number of
-color levels to be used. nlev can be a value between 1 and 256.
-nlev=256 means 8bit for each R, G, B color channel equal to 24bit 
-truecolor (16.7 million colors). The calculation of number of colors 
-(ncolors) is performed by calculating:
-
-<pre>
- ncolors = nlev^3
-</pre>
-
-Starting a monitor with a high number of colors may take some time
-to allocate the required memory.
 
 <LI><B>Stop a Monitor.</B> 
 <BR>
