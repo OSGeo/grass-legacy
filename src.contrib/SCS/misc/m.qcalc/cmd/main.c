@@ -90,7 +90,7 @@ char *argv[];
        initopt = G_define_option();
        initopt->key              = "init";
        initopt->type             =  TYPE_DOUBLE;
-       initopt->required         =  YES;
+       initopt->required         =  NO;
        initopt->description      =  "Initial value ";
 
        endopt = G_define_option();
@@ -119,6 +119,11 @@ char *argv[];
 
         if (s_flag->answer)         /* check size table flag */
 	   {
+	   if (initopt->answer == NULL)
+              {		
+	      fprintf (stderr,"\n An init value is required for this option\n");
+	      exit(1);
+	      }
 	   sprintf(buffr,"%s",initopt->answer);
 	   sscanf(buffr,"%d",&range);
 	   size_rng = range+1.005; rincr=1;   /* relieve roundoff pressure */
@@ -146,6 +151,11 @@ char *argv[];
 
         if (a_flag->answer)         /* check acre table flag */
 	   {
+	   if (initopt->answer == NULL)
+              {		
+	      fprintf (stderr,"\n An init value is required for this option\n");
+	      exit(1);
+	      }
 	   sprintf(buffr,"%s",initopt->answer);
 	   sscanf(buffr,"%lf",&acres);
 	   acre_rng = acres+1.005; rincr=.1;   /* relieve roundoff pressure */
@@ -173,6 +183,11 @@ char *argv[];
 
         if (h_flag->answer)          /* check hectare table flag */
 	   {
+	   if (initopt->answer == NULL)
+              {		
+	      fprintf (stderr,"\n An init value is required for this option\n");
+	      exit(1);
+	      }
 	   sprintf(buffr,"%s",initopt->answer);
 	   sscanf(buffr,"%lf",&hectares);
 	   hect_rng = hectares+1.005; rincr=.1;  /* relieve roundoff pressure */
@@ -203,13 +218,13 @@ char *argv[];
 
         if (c_flag->answer)
 	   {  
-	   if (unitopt->answer == NULL)
+	   if (initopt->answer == NULL || unitopt->answer == NULL)
               {		
-	      fprintf (stderr,"\n Units are required for this option\n");
+	      fprintf (stderr,"\n An init value and a unit value are required for this option\n");
 	      exit(1);
 	      }
-           sprintf(units,"%2s",unitopt->answer);
            sprintf(buffr,"%s",initopt->answer);
+           sprintf(units,"%2s",unitopt->answer);
            if ((strcmp(units,"ft") == 0) || (strcmp(units,"FT") == 0))
 	      {
 	      sscanf(buffr,"%lf",&feet);
