@@ -1,9 +1,9 @@
 NAME=NULL
 LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
 PAINT = $(ETC)/paint
-LIST = main.o alpha.o close.o colornum.o colorvalue.o data.o flush.o \
-       ncolors.o open.o out.o pictsize.o raster.o rle.o text.o\
-       init.o npixels.o colorlevel.o finish.o
+LIST = main.o alpha.o close.o data.o flush.o \
+       open.o out.o pictsize.o raster.o rle.o text.o\
+       init.o npixels.o finish.o
 
 all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
 
