@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /* Three programs take part in the dlg to cell conversion:
  *
  *   dlg_file
@@ -51,7 +50,7 @@ main(argc, argv)
 	}
 
 /* Initialize gis library */
-	G_gisinit("DLG_TO_CELL") ;
+	G_gisinit(argv[0]) ;
 
 	cell_type = sizeof(CELL) - 1 ;
 
