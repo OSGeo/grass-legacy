@@ -1,0 +1,257 @@
+.\" @(#)GIS.1	2.2 6/26/87
+.TH GIS 1
+.SH NAME
+gis \- Menu of Geographic Information System Programs
+.br
+.I (GRASS-GRID Tool)
+.SH SYNOPSIS
+.B gis
+.SH DESCRIPTION
+The commands
+.I GIS
+and
+.I gis
+prepare and make available the CERL-EN set of
+Geographical Resources Analysis Support System - Grid Cell Analysis
+(GRASS-GRID) analysis tools.
+The command
+.I gis
+is intended
+for the new and occasional user, while
+.I GIS
+is the quick access version which is more comfortable for those
+who are frequent users of the GIS.    Definitions of GIS terms
+used in this manual are reviewed in the manual entry
+.I DEFINITIONS.
+.PP
+After entering either command (
+.I gis or GIS
+) you are first presented with a page of prompts in a "visual-ask"
+question-answer session.  "Visual" refers to the fact that several questions
+are presented at once; you, the user, have the opportunity to answer these
+prompts in whatever order you choose.  When you are satisfied with all
+answers, you ask the program to continue.
+.PP
+This first interaction with GIS looks like this:
+.in -5
+.nf
+.cs R 36 4
+
+---------------------------------------------------------------------------
+                 PLEASE SET GIS SESSION INFORMATION
+LOCATION: This is the name of an available geographic location -spearfish-
+          is the sample data base for which all tutorials are written.
+MAPSET:   Every GIS session runs under the name of a MAPSET.  Associated
+          with each MAPSET is a rectangular COORDINATE WINDOW and a list
+          of any new maps created.
+
+          The WINDOW defaults to the entire area of the chosen LOCATION.
+          You may change it later with the command:  window
+---------------------------------------------------------------------------
+
+LOCATION:..............   spearfish_______________________________
+
+
+MAPSET:................   login-name______________________________
+
+
+
+           AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                     (OR INTERRUPT TO CANCEL)
+---------------------------------------------------------------------------
+.cs R
+.fi
+You are asked to identify the following:
+.in +3
+
+LOCATION:  This is the code name for the area you are interested in
+working with.
+
+MAPSET:  This is a code name, of your choice, for the particular set of
+maps you may be working with.  It
+is permissible to have several mapsets going on at once.  Mapsets
+carry over from one GIS session to another whether left for days or weeks.
+A mapset is removed only at your request at the end of a session.
+
+.in -3
+Your answers are automatically confined to the answer blanks.  Letters and
+numbers can be typed into the blanks.  Several other key combinations
+result in different effects:
+
+.in +3
+.I return
+\&. 
+This will advance the cursor to the next prompt.  If the cursor was
+on the last prompt, hitting the return key will advance the cursor to the
+first prompt.  Whatever was typed into the space is evaluated.  The accepted
+answer is then left in the prompt.  (Letters typed into a number prompt will
+be read as zeros.)
+
+.I cntrl-H
+\&. 
+(The letter "h" typed with the control key held down.) This is
+the common key combination used to backspace the cursor.
+
+.I t
+\&. 
+Typing the letter "t" will take you to the top of the hierarchical menu.
+
+.I e
+\&. 
+Typing the letter "e" will take you to the end of a body of text.
+
+.I d
+\&. 
+Typing the letter "d" will take you down one line of text.
+
+.I u
+\&. 
+Typing the letter "u" will take you up one line of text.
+
+.I f
+\&. 
+Typing the letter "f" will take you forward one page in the text.
+
+.I b
+\&. 
+Typing the letter "b" will take you back one page in the text.
+
+
+.I cntrl-L
+\&. 
+Results in the entire screen being replotted.  Useful in the case of a screen
+getting messed up with line noise.
+
+.I esc
+\&..... Once you are completely happy with all answers, hit the "escape" key.
+The program will then take and process your answers.
+
+.I cntrl-A
+\&.
+(The letter "a" typed with the control key held down.)
+The entire screen is appended to the file "visual_ask" in your home
+directory.  This is useful for putting screen images in documents.
+.in \-3
+
+Once your answers are acceptable, you will be given access to the 
+GIS capabilities.  Access to these capabilities comes in two flavors depending
+on which of the two commands you used,
+.I gis 
+or
+.I GIS.
+The command 
+.I gis
+gives the new or occasional user a friendly menu driven interactive session, 
+while
+.I GIS
+gives the more experienced user rapid and direct access to the gis capabilities.
+The two options are discussed separately below.  
+.SH RUNNING \"gis\"
+The 
+.I
+gis
+command actually runs a program which "crawls" up and down a menu tree,
+executing GIS commands at your request.  The menu is completely
+visually oriented.  The first information you see will look similar to
+the next diagram.  This screenfull provides the user with various
+pieces of information and several options.  You will first notice that
+the screen has been divided into 4 boxed windows.  The top box is
+reserved for a one-line system message which provides the current time,
+the user's terminal device and directions on what kind of response the
+user should enter.  The second box is used to display the
+structure of the hierarchical menu.  Your current location in the
+window is noted by the menu entry that is capitalized.  The third
+window provides the current user with command options available to him
+at this point in the menu hierarchy.  These options are
+actual
+.I gis
+programs and/or sub-menus.  Finally, the bottom window provides the
+user with a place to type his next request.
+
+.bp
+.cs R 36 4
+.NF
+.I RESULT:
+|---------------------------------------------------------------------------|
+| One word response      Sun Apr 26 13:47:25 1987                rc -       |
+|----------------------------------------------------------------------------
+| DIRECTORY OF MENUS                                                        |
+|                                                                           |
+|     _______________________ MAIN MENU ___________________________         |
+|    /            /               /                  /            /         |
+| analysis    graphics          mapset            map_info      map_mgmt    |
+|                                                                           |
+|                                                                           |
+|                                                                           |
+|                                                                           |
+| COMMANDS:       ?    exit    back    top    help    manual                |
+|---------------------------------------------------------------------------|
+|                                                                           |
+| GRASS-GRID <MAIN MENU> SUBMENUS:                                          |
+|                                              . . . . . . . . . . . . .    |
+|        analysis       map_info               . For MORE Information, .    |
+|        graphics       map_mgmt               . type a question mark: .    |
+|        mapset                                .          (?)          .    |
+|                                              . . . . . . . . . . . . .    |
+|                                                                           |
+|---------------------------------------------------------------------------|
+| ENTER DESIRED SUBMENU:                                                    |
+|---------------------------------------------------------------------------|
+.cs R
+.FI
+
+.PP
+Regardless of where the user is in the menu, he always has available several
+options beyond those listed in window 3 of the screen above:
+
+.in +3
+"?" .... Typing a question mark results in more detailed information about the
+current options displayed on the screen.
+
+"help" . Typing "help" will provide you with access to the on-line GIS
+help facility and verbose command listings.  
+
+"back" . Typing "back" will cause you to back up one notch in the menu.
+
+"top" . Typing "top" will cause you to move immediately to the top of the
+menu.
+
+"exit" . "exit" will always take a user completely out of the
+.I gis
+menu.
+"manual" . Typing "manual" will provide you with access to the on-line GIS
+reference manual.  
+.in \-3
+
+.PP
+Information at the various stages in the menu is designed to provide the
+user with easy signposts through the
+.I gis
+tools.
+.SH RUNNING \"GIS\"
+Accessing the GIS capabilities via the command
+.I GIS
+provides the user with direct access to the individual GIS programs and 
+utilities.  Instead of working one's way through several layers in the menu to 
+a program, "display" for example, the user need only enter the command
+"display" at the prompt.  All programs are accessed with the same command
+names that are used in the menu access version,
+.I gis.
+When finished with a GIS session, the user enters the exit command: "exit".
+.SH FINISHING A GIS SESSION
+Whether the user is running the gis programs via 
+.I gis
+or
+.I GIS,
+exiting will always invoke a short "clean-up" session.  You will be asked if
+your mapset should be saved or removed.  Because cellmap files can be 
+exceptionally large, it is best to remove your mapsets whenever reasonable.
+.SH SEE ALSO
+.I GRASS Tutorial: GIS Tool Access
+.SH DIAGNOSTICS
+If the user desires, diagnostic messages written by GIS programs
+can be logged. If the
+file GIS_ERROR_LOG exists either in the user's home directory, or in the
+GISBASE directory, with write permission, diagnostics
+will also be written to these log files.
+
