@@ -487,29 +487,17 @@ int main ( int argc, char *argv[])
     G_fatal_error ("cannot create tree info");
 
   if ((mapset = G_find_vector2 (input, "")) == NULL)
-  {
-    sprintf (msg, "Could not find vector file %s\n", input);
-    G_fatal_error (msg);
-  }
+    G_fatal_error ("Could not find vector file %s\n", input);
 
   open_check = Vect_open_old (&Map, input, mapset);
   if (open_check < 1)
-  {
-    sprintf (msg, "Could not open vector file <%s>\n", input);
-    G_fatal_error (msg);
-  }
+    G_fatal_error ("Could not open vector file <%s>\n", input);
   if (open_check < 2)
-  {
-    sprintf (msg, "You first need to run v.support on vector file <%s>\n", input);
-    G_fatal_error (msg);
-  }
+    G_fatal_error ("You first need to run v.build on vector file <%s>\n", input);
   if (flag.cat->answer)
   {
     if (G_read_vector_cats (input, mapset, &cats) < 0)
-    {
-      sprintf (msg, "Could not find category file for %s\n", input);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Could not find category file for %s\n", input);
   }
 
   /* we can't read the input file's timestamp as they don't exist in   */
@@ -525,10 +513,7 @@ int main ( int argc, char *argv[])
   {
     fprintf(stderr, "Attempting to open deviation file in old sites format ..\n");
     if ((fddevi = G_fopen_sites_new (devi)) == NULL)
-    {
-      sprintf (msg, "Cannot open %s", devi);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Cannot open %s", devi);
     else
     {
       devihead.name = devi;
@@ -578,10 +563,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_z != NULL)
   {
     if (NULL == (Tmp_fd_z = fopen (Tmp_file_z, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_z);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_z);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_z)))
@@ -591,10 +573,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_dx != NULL)
   {
     if (NULL == (Tmp_fd_dx = fopen (Tmp_file_dx, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_dx);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_dx);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_dx)))
@@ -604,10 +583,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_dy != NULL)
   {
     if (NULL == (Tmp_fd_dy = fopen (Tmp_file_dy, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_dy);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_dy);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_dy)))
@@ -618,10 +594,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_xx != NULL)
   {
     if (NULL == (Tmp_fd_xx = fopen (Tmp_file_xx, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_xx);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_xx);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_xx)))
@@ -631,10 +604,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_yy != NULL)
   {
     if (NULL == (Tmp_fd_yy = fopen (Tmp_file_yy, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_yy);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_yy);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_yy)))
@@ -644,10 +614,7 @@ int main ( int argc, char *argv[])
   if (Tmp_file_xy != NULL)
   {
     if (NULL == (Tmp_fd_xy = fopen (Tmp_file_xy, "w+")))
-    {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_xy);
-      G_fatal_error (msg);
-    }
+      G_fatal_error ("Can't open temp file [%s] ", Tmp_file_xy);
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_xy)))
