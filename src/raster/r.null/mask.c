@@ -56,6 +56,9 @@ int mask_d_select (DCELL *x, d_Mask *mask)
 
 int mask_match_d_interval (DCELL x, d_Interval *I)
 {
+    if (G_is_d_null_value(&x))
+	return 0;
+
     if (I->inf < 0)
 	return x <= I->low;
 
