@@ -1705,7 +1705,13 @@ void GS_set_global_exag(float exag)
 #endif
 
     Gv.vert_exag = exag;
+    /* GL_NORMALIZE */
+    /* Only need to update norms gs_norms.c
+     * if exag is used in norm equation which
+     * it is not! If GL_NORMALIZE is disabled
+     * will need to include.
     gs_setall_norm_needupdate();
+    */
 
     return;
 }
@@ -2182,6 +2188,22 @@ void GS_set_focus(float *realto)
     return;
 }
 
+void GS_set_focus_real(float *realto)
+{
+
+    G_get_set_window(&wind);
+    realto[X] = realto[X] - wind.west - (wind.ew_res/2.);
+    realto[Y] = realto[Y] - wind.south - (wind.ns_res/2.);
+    
+    Gv.infocus = 1;
+    GS_v3eq(Gv.real_to, realto);
+
+    gsd_set_view(&Gv, &Gd);
+
+    return;
+}
+
+
 /***********************************************************************/
 /* OK to call with NULL argument if just want to check state */
 int GS_get_focus(float *realto)
@@ -2341,6 +2363,21 @@ void GS_get_from_real(float *fr)
 
     return;
 }
+
+/***********************************************************************/
+void GS_get_to_real(float *to)
+{
+float realto[3];
+
+    G_get_set_window(&wind);
+    GS_get_focus(realto);
+    to[X] = realto[X] + wind.west + (wind.ew_res/2.);
+    to[Y] = realto[Y] + wind.south + (wind.ns_res/2.);
+    to[Z] = realto[Z];
+
+    return;
+}
+
 
 /***********************************************************************/
 /* This function returns current viewport settings (tmp) and */

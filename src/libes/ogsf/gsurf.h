@@ -38,6 +38,9 @@
 #define DM_POLY      0x00000004
 #define DM_WIRE_POLY 0x00000008
 
+#define DM_GRID_WIRE 0x00000400
+#define DM_GRID_SURF 0x00000800
+
 #define WC_COLOR_ATT 0xFF000000
 
 #define IFLAG unsigned int
