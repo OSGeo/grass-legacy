@@ -204,13 +204,13 @@ main (int argc, char *argv[])
 
           flag.shade = G_define_flag();
           flag.shade->key = 's';
-          flag.shade->description = "Do you want to incorporate the shading effect of terrain? ";
+          flag.shade->description = "Incorporate shadowing effect of terrain";
 
 		
-		if(G_parser(argc,argv)) exit(1);
+	if(G_parser(argc,argv))
+		exit(1);
 
-		shd=flag.shade->answer;
-
+	  shd=flag.shade->answer;
           elevin = parm.elevin->answer;
           aspin = parm.aspin->answer; 
           slopein = parm.slopein->answer;
