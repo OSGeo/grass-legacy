@@ -13,7 +13,7 @@
 #endif
 #include <sys/stat.h>
 
-#define BUFFERSIZ   2048
+#define BUFFERSIZ   1024
 
 extern int errno;
 
@@ -194,7 +194,7 @@ _rec (buf)
     if (atbuf == n_read)
     {
 	atbuf = 0;
-        n_read = msgrcv (_rfd, (struct msgbuff *) &rb, sizeof rb.outbuf , 0L ,0);
+        n_read = msgrcv (_rfd, (struct msgbuf *) &rb, sizeof rb.outbuf , 0L ,0);
     }
     *buf = rb.outbuf[atbuf++];
 
@@ -207,7 +207,7 @@ flushout(void)
     sb.mtype = 1L;
     if (cursiz)
     {
-        msgsnd (_wfd, (struct msgbuff *) &sb, (size_t) cursiz, 0);
+        msgsnd (_wfd, (struct msgbuf *) &sb, (size_t) cursiz, 0);
         cursiz = 0 ;
     }
 
@@ -409,7 +409,7 @@ sync_driver(name)
         alarm(try?10:5);
         while(no_mon == 0)
         {
-            if (msgrcv (_rfd, (struct msgbuff *) &cb, (size_t) 1, 0L, 0 ) != 1)
+            if (msgrcv (_rfd, (struct msgbuf *) &cb, (size_t) 1, 0L, 0 ) != 1)
             {
                 if (no_mon)
                     break; /* from while */
