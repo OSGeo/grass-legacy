@@ -10,20 +10,16 @@ Any vectors that are duplicated among the maps being
 patched together (e.g., border lines) will have to be
 edited or removed after <em>v.patch</em> is run.  Such
 editing can be done automatically using
-<em><a HREF="v.clean.html">v.clean</a></em>.
-After running <em>v.patch</em> the user must run 
-<em><a HREF="v.build.html">v.build</a></em> on
-the composite vector map layer in order to 
-update topology.
+<em><a HREF="v.clean.html">v.clean</a></em> (tool=svtlx).
 
 <h2>EXAMPLE</h2>
 
-<b>v.patch vect=</b>geology,roads <b>out=</b>georoad
+<b>v.patch vect=</b><em>geology,roads</em> <b>out=</b><em>georoad</em>
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
-<em><a HREF="v.build.html">v.build</a></em>,
+<em><a HREF="v.build.html">v.build</a></em>
 
 <h2>AUTHORS</h2>
 
