@@ -1,0 +1,12 @@
+Mmain	main.c	/^main(argc, argv)$/
+add_edge_cell	edges.c	/^add_edge_cell (map, cat, row, col)$/
+cmp	edges.c	/^cmp (a, b)$/
+find_edge_cells	edges.c	/^find_edge_cells(map, verbose)$/
+find_minimum_distance	distance.c	/^find_minimum_distance (list1, list2, east1, north1/
+get_label	labels.c	/^get_label (map, cat)$/
+init_edge_list	edges.c	/^init_edge_list (map)$/
+parse	parse.c	/^parse (argc, argv, parms)$/
+print_edge_info	edges.c	/^print_edge_info (map)$/
+read_labels	labels.c	/^read_labels (map)$/
+report	report.c	/^report(parms)$/
+sort_edge_list	edges.c	/^sort_edge_list (map)$/
