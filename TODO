@@ -1,4 +1,4 @@
-$Id: TODO,v 1.14 2000-08-26 13:00:51 markus Exp $
+$Id: TODO,v 1.15 2000-08-26 13:01:56 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -154,3 +154,6 @@ Modules:
 - ps.map:
   set CC option "-fwritable-strings" on Linux or, better, update ps.map!
   (Being worked on by )
+
+- Stereo Visualization
+  (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
