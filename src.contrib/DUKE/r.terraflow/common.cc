@@ -43,7 +43,7 @@
 #include <sys/mman.h>
 #include <ctype.h>
 
-#include <ostream>
+#include <ostream.h>
 #include <iostream>
 using namespace std;
 
