@@ -7,6 +7,7 @@ package require BWidget
 
 set dmpath $env(GISBASE)/etc/dm/
 
+source $dmpath/cmd.tcl
 source $dmpath/group.tcl
 source $dmpath/raster.tcl
 source $dmpath/select.tcl
@@ -152,7 +153,8 @@ proc Dm::add { type } {
         vector {
             DmVector::create $tree $parent_node
         }
-        raster {
+        cmd {
+            DmCmd::create $tree $parent_node
         }
     }
 }
@@ -178,6 +180,9 @@ proc Dm::select { node } {
         vector {
             DmVector::options $id $opt
         }
+        cmd {
+            DmCmd::options $id $opt
+        }
     }
 }
 
@@ -201,9 +206,22 @@ proc Dm::delete { } {
     destroy $options.fr
 }
 
+# open monitor if no one is runnning
+proc Dm::monitor { } {
+    if ![catch {open "|d.mon -L" r} input] {
+        while {[gets $input line] >= 0} {
+            if {[regexp -nocase {(x.).*display *running} $line buffer monitor]} {
+                return
+            }
+        }
+    }
+    Dm::execute "d.mon start=x0"
+}
+
 # display
 proc Dm::display { } {
 
+    Dm::monitor
     Dm::execute "d.erase"
     DmGroup::display "root"
 }
@@ -241,6 +259,9 @@ proc Dm::display_node { node } {
 	vector {
 	    DmVector::display $node
 	}
+	cmd {
+	    DmCmd::display $node
+	}
     } 
 }
 
@@ -260,6 +281,9 @@ proc Dm::query { } {
         }
         vector {
             DmVector::query $sel
+        }
+        cmd {
+            DmCmd::query $sel
         }
     }
 
@@ -302,6 +326,11 @@ proc Dm::save_node { depth node } {
             Dm::rc_write $depth Vector $name
             incr depth
 	    DmVector::save $tree $depth $node
+	}
+	cmd {
+            Dm::rc_write $depth Cmd $name
+            incr depth
+	    DmCmd::save $tree $depth $node
 	}
     } 
     set depth [expr $depth - 1]
@@ -350,6 +379,10 @@ proc Dm::load { } {
                 set current_node [DmVector::create $tree $parent]
                 $tree itemconfigure $current_node -text $val 
             }
+            Cmd {
+                set current_node [DmCmd::create $tree $parent]
+                $tree itemconfigure $current_node -text $val 
+            }
             End {
                 set type [Dm::node_type $current_node]
                 if { $type == "group"  } {
@@ -368,6 +401,9 @@ proc Dm::load { } {
                     }
                     vector { 
                         DmVector::set_option $current_node $key $val
+                    }
+                    cmd { 
+                        DmCmd::set_option $current_node $key $val
                     }
                 }
 
@@ -414,6 +450,9 @@ proc Dm::node_type { node } {
     }  
     if { [string compare -length 6 $node "vector"] == 0 } {
        return "vector"
+    }  
+    if { [string compare -length 3 $node "cmd"] == 0 } {
+       return "cmd"
     }  
     
     return ""

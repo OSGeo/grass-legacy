@@ -59,6 +59,11 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Create new vector"
 
+    $bbox2 add -image [image create photo -file "$dmpath/add.cmd.gif"] \
+        -command "Dm::add cmd" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Create new command"
+
     $bbox2 add -image [Bitmap::get cut] -command "Dm::delete" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Cut selection"
