@@ -1,4 +1,4 @@
-$Id: README,v 1.4 2000-11-01 17:15:37 markus Exp $
+$Id: README,v 1.5 2000-11-14 17:22:45 bernhard Exp $
 
 Contents of this directory:
 
@@ -12,11 +12,18 @@ python/
 	descriptions.
 
         Requirements:
-         Python     (python.rpm)   V.1.5
-         Python-XML (pyxml.rpm)    V.0.5.5
-         wxPython   (wxPython.rpm) V.2.2.2
-         wxgtk      (wxGTK.rpm)    V.2.2.2
-         wxGTK-gl   (wxGTK-gk.rpm) V.2.2.2
+         Python         >= V1.5.2
+         Python-XML     >= V0.5.5
 
-Useful search engine:
- http://rpmfind.net/
+		www.python.org
+		www.python.org/sigs/xml-sig/
+
+
+         wxPython    	>= V2.2.2
+	 (you will need something additional like wxGTK)
+
+		www.wxpython.org
+
+
+It was originally done by Jan-Oliver Wagner
+as part of milestone three in the ossim-grass bridge project.
