@@ -1,0 +1,15 @@
+           MULTI-CELL COINCIDENCE TABULATIONS AND COMPARISONS
+
+In their \raster\ format, data are stored on a grid having rectangular
+cells of uniform size.  Each \cell\ within the grid can be assigned a
+data value.  The programs listed below report back information about
+multiple cells in one or more raster map layers, in a way useful for
+making correlations among data.  These programs may also serve other
+functions. 
+
+     \-  d.what.rast \              \-  r.stats \ 
+     \-  r.coin \                   \-  r.what \ 
+     \-  r.report \  
+
+For more information on a specific command, select a command and press
+ESC.
