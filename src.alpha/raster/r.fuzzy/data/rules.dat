@@ -1,0 +1,7 @@
+IF ( ELEVATION_lrg AND Slope ) THEN  Land_Suitability
+elev_low_lrg     slope_low    suitability_medium
+elev_low_lrg     slope_high   suitability_low
+elev_medium_lrg  slope_low    suitability_medium
+elev_medium_lrg  slope_high   suitability_high
+elev_high_lrg    slope_low    suitability_medium
+elev_high_lrg    slope_high   suitability_low
