@@ -44,13 +44,20 @@ write_dlg_areas (map, fp)
 	    }
 	    else
 	    {
-		double totalarea;
-		/*
-		** use this to calculate centroid for area 
-		** NOTE! this in not guaranteed to be inside the 
-		** polygon.  Or anywhere near it for that matter.
+/*
+	double totalarea;
+	dig_find_area (map, Area, &totalarea, &x, &y, 0.0);
+*/
+
+		/* this returns a point inside area and outside all islands
+		of the area */
+		y = 0.0; x = 0.0;
+		Vect_get_point_in_area(map, area , &x, &y);
+		/* dbug:
+		if((Vect_point_in_islands(map,area,x,y))
+		  || ( dig_point_in_area(map,x,y, Area) == 0.0))
+		    printf(" 2 point is not inside the area! %f  %f\n", x, y);
 		*/
-		dig_find_area (map, Area, &totalarea, &x, &y, 0.0);
 	    }
 	}
 
