@@ -297,6 +297,7 @@ src/raster/r.in.bin
 src/raster/r.in.dem
 src/raster/r.in.doq
 src/raster/r.in.dted/r.in.dted
+src/raster/r.in.gdal
 src/raster/r.in.gridatb
 src/raster/r.in.ll
 #src/raster/r.in.pbm # replaced by r.in.ppm
