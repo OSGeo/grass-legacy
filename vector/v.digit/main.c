@@ -26,108 +26,147 @@
 #include "global.h"
 #include "proto.h"
 
-int Tcl_AppInit(Tcl_Interp * interp)
+int Tcl_AppInit(Tcl_Interp* interp)
 {
     int ret;
     char buf[1024];
-
+    
     ret = Tcl_Init(interp);
-    if (ret != TCL_OK) {
-	return TCL_ERROR;
-    }
+    if (ret != TCL_OK) { return TCL_ERROR; }
     ret = Tk_Init(interp);
-    if (ret != TCL_OK) {
-	return TCL_ERROR;
-    }
+    if (ret != TCL_OK) { return TCL_ERROR; }
 
     Toolbox = interp;
 
-    Tcl_CreateCommand(interp, "c_tool_centre", (Tcl_CmdProc *) c_tool_centre,
-		      (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);
-    Tcl_CreateCommand(interp, "c_next_tool", (Tcl_CmdProc *) c_next_tool,
-		      (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);
-    Tcl_CreateCommand(interp, "c_cancel", (Tcl_CmdProc *) c_cancel,
-		      (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);
+    Tcl_CreateCommand(interp, "c_tool_centre", (Tcl_CmdProc*) c_tool_centre, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_next_tool", (Tcl_CmdProc*) c_next_tool, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_cancel", (Tcl_CmdProc*) c_cancel, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_color", (Tcl_CmdProc*) c_set_color, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_on", (Tcl_CmdProc*) c_set_on, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_snap", (Tcl_CmdProc*) c_set_snap, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_cat", (Tcl_CmdProc*) c_set_cat, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_cat_mode", (Tcl_CmdProc*) c_set_cat_mode, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
 
-    sprintf(buf, "%s/etc/v.digit/toolbox.tcl", G_gisbase());
+    sprintf(buf,"%s/etc/v.digit/toolbox.tcl", G_gisbase());
     ret = Tcl_EvalFile(interp, buf);
-    if (ret == TCL_ERROR) {
-	if (interp->result != NULL)
-	    sprintf(buf, "Cannot open toolbox: %s\n", interp->result);
-	else
-	    sprintf(buf, "Cannot open toolbox.\n");
-	G_fatal_error(buf);
+    if ( ret == TCL_ERROR) {
+        if (interp->result != NULL) 
+            sprintf(buf,"Cannot open toolbox: %s\n", interp->result);
+	else 
+            sprintf(buf,"Cannot open toolbox.\n");
+        G_fatal_error(buf) ;
     }
     return TCL_OK;
 }
 
-int main(int argc, char *argv[])
+int 
+main (int argc, char *argv[])
 {
-    int level;
+    int    i;
     struct GModule *module;
-    struct Option *map_opt;
-    char *mapset;
-
+    struct Option *map_opt, *bgcmd_opt;
+    struct Flag *new_f;
+    char   *mapset;
+    char   **tokens; 
+    
     map_opt = G_define_standard_option(G_OPT_V_MAP);
-
-    /*
-       opt = G_define_option();
-       opt->key = "display";
-       opt->type =  TYPE_STRING;
-       opt->required = NO;
-       opt->multiple = NO;
-       opt->description  = "d.* commands to be use for background separated by ';'";
-     */
-
+    
+    bgcmd_opt = G_define_option();
+    bgcmd_opt->key = "bgcmd";
+    bgcmd_opt->type =  TYPE_STRING;
+    bgcmd_opt->required = NO;
+    bgcmd_opt->multiple = NO;
+    bgcmd_opt->answer = "";
+    bgcmd_opt->description  = "d.* commands to be used for background separated by ';'";
+    
+    new_f = G_define_flag ();
+    new_f->key             = 'n';
+    new_f->description     = "Create new file if it does not exist.";
+    
     G_gisinit(argv[0]);
-    if (G_parser(argc, argv))
-	exit(-1);
-
-    module = G_define_module();
+    if (G_parser (argc, argv)) exit(-1); 
+   
+    module = G_define_module(); 
     module->description = "Edit GRASS vector.";
-
+ 
+    /* Read background commands */
+    if ( bgcmd_opt->answer ) {
+        tokens = G_tokenize (bgcmd_opt->answer, ";");
+        for (i = 0; tokens[i] != NULL ; i++) {
+	    G_debug (2, "cmd %d : %s", i, tokens[i]);
+	    bg_add ( tokens[i] ); 
+	}
+        G_free_tokens (tokens);
+    }
+    
+    for ( i = 0; i < nbgcmd; i++ ) G_debug (2, "cmd %d : %s", i, Bgcmd[i]);
+    
     Tool_next = TOOL_NOTHING;
     G_get_window(&Region);
-    G_debug(1, "Region: N = %f S = %f E = %f W = %f", Region.north,
-	    Region.south, Region.east, Region.west);
-
+    G_debug (1, "Region: N = %f S = %f E = %f W = %f", Region.north, Region.south, Region.east, Region.west);
+    
     /* Check driver */
-    if (R_open_driver() != 0)
-	G_fatal_error("No graphics device selected");
+    if (R_open_driver() != 0) G_fatal_error ("No graphics device selected");
     R_close_driver();
 
-    G_debug(0, "Driver opened");
-
+    G_debug (1, "Driver opened");
+    
     /* Open map */
-    Vect_set_open_level(2);
+    mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
+    if ( mapset == NULL ) {
+       fprintf (stderr, "Map does not exist.\n");	
+       if ( new_f->answer ) {
+           fprintf (stderr, "New empty map created.\n");	
+	   Vect_open_new (&Map, map_opt->answer, 0 ); 
+           Vect_build ( &Map, NULL );
+       } else {
+	   exit ( 1 );
+       }
+    } else {
+        Vect_set_open_level(2);
+        Vect_open_update (&Map, map_opt->answer, mapset);
+    }
 
-    if ( (mapset = G_find_vector2(map_opt->answer, G_mapset())) == NULL)
-	G_fatal_error("Could not find input %s\n", map_opt->answer);
+    G_debug (1, "Map opened");
 
-    level = Vect_open_update(&Map, map_opt->answer, mapset);
+    /* Init cats and maximum categories */
+    cat_init ();
 
-    if (level < 2)
-	G_fatal_error("Cannot open the map");
-    G_debug(0, "Map opened");
+    /* Init symbology for lines and nodes */
+    symb_lines_init (); 
+    symb_nodes_init (); 
 
     /* Display the map */
-    open_driver();
-    display_map();
-    close_driver();
+    symb_init ();
+    G_get_window(&window);
+    driver_open ();
+    display_erase ();
+    display_bg ();
+    display_map ();
+    driver_close ();
 
+    G_get_window(&window);
+    
+    /* Init snap */
+    Snap = 1;
+    Snap_mode = SNAP_SCREEN;
+    Snap_screen = 10;
+    Snap_map = 10;  
+    
     /* Open toolbox */
     Tk_Main(0, argv, Tcl_AppInit);
-
+    
     /* Not reached */
-    exit(0);
+    exit(0) ;
 }
 
-int end(void)
+int
+end ( void ) 
 {
-    G_debug(0, "end()");
+    G_debug (1, "end()");
     /* Enable this later (not usefull for debugging) */
-    Vect_build(&Map, stdout);
-    Vect_close(&Map);
-
+    Vect_build ( &Map, stdout );
+    Vect_close (&Map);
+    
     return 1;
 }
