@@ -38,7 +38,7 @@ double scale = 1.0;
 
 extern void getraster( char*, int, int);
 extern long read_e00_line( char*);
-extern int getinfo( char*, int, int);
+extern int getinfo( char*, char **, int, int);
 extern int getarcs( char*, int, int);
 extern void getproj( void);
 extern void getsites( char*, int);
@@ -70,12 +70,16 @@ int main( int argc, char *argv[])
     				/* 2 : use an unique dig_cat file for atts */
     				/* 3 : we use a database for cats (todo)   */
 
+    int i;			/* count the number of command line items */
+    int nitems;			/* count the total number of items */
+    char **itemlist;		/* store the items */
+
     char buf[1024];
     char msg[256];
 
 	struct GModule *module;
     struct {
-	struct Option *input, *mapset, *action, *verbose, *logfile;
+	struct Option *input, *mapset, *action, *verbose, *logfile, *items;
     } parm;
     struct {
 	struct Flag *db, *link, *table, *support;
@@ -123,6 +127,13 @@ int main( int argc, char *argv[])
     parm.logfile->type       = TYPE_STRING;
     parm.logfile->required   = NO;
     parm.logfile->description= "Name of file where log operations";
+
+    parm.items = G_define_option() ;
+    parm.items->key	= "list";
+    parm.items->type	= TYPE_STRING;
+    parm.items->required	= NO;
+    parm.items->multiple	= YES;
+    parm.items->description	= "list of items to extract";
 
     flag.link = G_define_flag() ;
     flag.link->key         = 'i';
@@ -177,6 +188,41 @@ int main( int argc, char *argv[])
     if (debug > 5)
 	fprintf( fdlog, "input=%s\nnewmapset=%s\naction=%s\nverbose=%d\n",
 	    infile, newmapset, parm.action->answer, debug);
+
+/* get a list of items from either the command line or stdin */
+    nitems=0;
+    itemlist=NULL;
+    if(parm.items->answers)
+    {
+        itemlist=(char **)G_malloc(sizeof(char *));
+        for(i=0;parm.items->answers[i];i++)
+        {
+            if(*parm.items->answers[i]=='-')
+            {
+                while(fgets(buf,sizeof(buf),stdin))
+                {
+                    if(nitems)
+                       itemlist=(char **)G_realloc(itemlist,(nitems+1)*sizeof(char *));
+                    itemlist[nitems]=G_malloc(1+strlen(buf));
+                    strcpy(itemlist[nitems],buf);
+		    G_tolcase(itemlist[nitems]);
+                    nitems++;
+                }
+            }
+            else
+            {
+                if(nitems)
+                   itemlist=(char **)G_realloc(itemlist,(nitems+1)*sizeof(char *));
+                itemlist[nitems]=G_malloc(1+strlen(parm.items->answers[i]));
+                strcpy(itemlist[nitems],parm.items->answers[i]);
+                G_tolcase(itemlist[nitems]);
+                nitems++;
+            }
+        }
+        itemlist=G_realloc(itemlist,(nitems+1)*sizeof(char *));
+        itemlist[nitems]=G_malloc(1);
+        *itemlist[nitems]=0;
+    }
 
     /* Open input file and verify that's a good e00 file */
 
@@ -315,7 +361,7 @@ int main( int argc, char *argv[])
 	/* to find wether it's a polygone or line coverage           */
 	    if (todo == VECTOR || todo == ALL) {
 		if (todo == ANALYSE)
-		     cover = getinfo( name, 0, 0);
+		     cover = getinfo( name, itemlist, 0, 0);
 		else {
 	/* If we have only offset_lab != 0, it's a point coverage.  Don't */
 	/* create a dig_cat file, but keep attributes for site file       */
@@ -327,7 +373,7 @@ int main( int argc, char *argv[])
     			if (flag.db->answer)
     			    cat_management = 3;
 		    }
-		    cover = getinfo( name, cat_management, 1 + (newmapset != NULL));
+		    cover = getinfo( name, itemlist, cat_management, 1 + (newmapset != NULL));
 		}
 	    } else
 		ignore( "EOI", 1);
