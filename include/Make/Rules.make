@@ -50,3 +50,13 @@ htmlscript:
 	echo "</body></html>" >> $(PGM).html
 	mkdir -p $(GISBASE)/docs/html
 	mv $(PGM).html $(GISBASE)/docs/html
+
+# html rules for inter commands
+#(fakestart doesn't work here)
+htmlinter:
+	@test ! -f description.html || ( cat description.html >> $(PGM).html )
+	echo "<HR>" >> $(PGM).html
+	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
+	echo "</body></html>" >> $(PGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(PGM).html $(GISBASE)/docs/html
