@@ -53,7 +53,6 @@ Graph_Close()
     G_close_cell (newmap);
 
     /* and now color table */
-    putenv ("FORCE_GRASS3_COLORS");   /* GRASS3 colors for compatibilty*/
     G_init_colors (&Color);
     for (i = 0 ; i < 256 ; i++)
     {
