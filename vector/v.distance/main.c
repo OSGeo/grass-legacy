@@ -75,6 +75,7 @@ int main (int argc, char *argv[])
     struct line_pnts *FPoints, *TPoints;
     struct line_cats *FCats, *TCats;
     NEAR   *Near, *near;
+    int    anear; /* allocated space, used only for all */
     UPLOAD *Upload; /* zero terminated */
     int ftype, fcat, tcat, count;
     int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
@@ -301,7 +302,9 @@ int main (int argc, char *argv[])
     nfrom = Vect_get_num_lines ( &From );
     nto = Vect_get_num_lines ( &To );
     if ( all ) {
-        Near = (NEAR *) G_calloc ( nfrom * nto , sizeof (NEAR) );
+	/* Attention with space for all, it can easily run out of memory */
+	anear = 2*nfrom;
+        Near = (NEAR *) G_calloc ( anear, sizeof (NEAR) );
     } else {
         Near = (NEAR *) G_calloc ( nfrom, sizeof (NEAR) );
     }
@@ -374,7 +377,10 @@ int main (int argc, char *argv[])
 	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
 		if ( all ) {
-		    /* find near by cat */ 
+		    if ( anear <= count ) {
+			anear += 10 + nfrom/10;
+                        Near = (NEAR *) G_realloc ( Near, anear * sizeof (NEAR) );
+		    }
 		    near = &(Near[count]); 
 
 		    /* store info about relation */
@@ -491,7 +497,10 @@ int main (int argc, char *argv[])
 	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
 		if ( all ) {
-		    /* find near by cat */ 
+		    if ( anear <= count ) {
+			anear += 10 + nfrom/10;
+                        Near = (NEAR *) G_realloc ( Near, anear * sizeof (NEAR) );
+		    }
 		    near = &(Near[count]); 
 
 		    /* store info about relation */
