@@ -17,22 +17,13 @@ chmod -R 1777 $GISBASE/locks
 echo ""
 echo "GRASS GIS source code compiled successfully."
 
-# do warning about ps.map compilation:
-echo "HINT for ps.map on Linux: "
-echo "  You have to recompile this module with additional compile flag:"
-echo "  COMPILE_FLAGS = -fwritable-strings"
-echo "Add the flag in src/CMD/head/head.$ARCH and clean ps.map OBJ-files before"
-echo "recompiling."
-echo ""
-
 # talk about stuff not yet compiled:
-echo "* GRID3D raster volume support please compile here:"
-echo "          src.contrib/GMSL/g3d/"
-echo "   To compile GRID3D, change to this directory and run 'gmake5'"
+echo "* GRID3D raster volume support please compile as:"
+echo "       gmake5 src.contrib/GMSL/g3d"
 echo ""
-echo "* PostgreSQL support please compile here:"
-echo "          src.garden/grass.postgresql/"
-echo "   To compile SQL-support, change to this directory and run 'gmake5'"
+echo "* PostgreSQL support please compile as:"
+echo "       gmake5 src.garden/grass.postgresql"
 echo ""
-echo "* Finally run 'gmakelinks5' to finish the installation process."
+echo "* If you additionally compiled GRID3D and PostgreSQL support,"
+echo "  then run 'gmakelinks5' to finish the installation process."
 echo "* Check file error.log for modules not been compiled due to error."

@@ -1,4 +1,4 @@
-$Id: TODO,v 1.53 2000-11-16 04:39:36 eric Exp $
+$Id: TODO,v 1.54 2000-11-17 08:53:52 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -262,11 +262,6 @@ Modules:
     ./src.contrib/GMSL/NVIZ2.2/src/TODO
     ./src.contrib/GMSL/NVIZ2.2/TODO.linux
     ./src.contrib/GMSL/NVIZ2.2/TODO
-
-- ps.map:
-  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
-  -> still TODO??
-  (Being worked on by ?)
 
 - r.buffer: should save info about used buffers into map history
   (Being worked on by ?)
