@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
     data_format = 5; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int(text) */
     data_type = 1;   /* 0=numbers  1=text */
 
-    fprintf(stdout, "Exporting <%s>\n", infile);
+    fprintf(stderr, "Exporting <%s>\n", infile);
 
     /* 4 byte data format */
     format_block = endianness*1000 + data_format*10 + data_type;
@@ -184,15 +184,15 @@ int main(int argc, char *argv[]) {
 
     /***** Write bounds *****/
     if(verbose->answer) {
-	fprintf(stdout, "\nUsing the Current Region settings:\n");
-	fprintf(stdout, "northern edge=%f\n", region.north);
-	fprintf(stdout, "southern edge=%f\n", region.south);
-	fprintf(stdout, "eastern edge=%f\n", region.east);
-	fprintf(stdout, "western edge=%f\n", region.west);
-	fprintf(stdout, "nsres=%f\n", region.ns_res);
-	fprintf(stdout, "ewres=%f\n", region.ew_res);
-	fprintf(stdout, "rows=%d\n", region.rows);
-	fprintf(stdout, "cols=%d\n\n", region.cols);
+	fprintf(stderr, "\nUsing the Current Region settings:\n");
+	fprintf(stderr, "northern edge=%f\n", region.north);
+	fprintf(stderr, "southern edge=%f\n", region.south);
+	fprintf(stderr, "eastern edge=%f\n", region.east);
+	fprintf(stderr, "western edge=%f\n", region.west);
+	fprintf(stderr, "nsres=%f\n", region.ns_res);
+	fprintf(stderr, "ewres=%f\n", region.ew_res);
+	fprintf(stderr, "rows=%d\n", region.rows);
+	fprintf(stderr, "cols=%d\n\n", region.cols);
     }
 
     for (i=0; i<4; i++) {
@@ -260,19 +260,19 @@ int main(int argc, char *argv[]) {
         case CELL_TYPE:
 	    data_format = 2;
 	    if(verbose->answer)
-		fprintf(stdout, "Exporting raster as integer values\n\n");
+		fprintf(stderr, "Exporting raster as integer values\n\n");
 	    break;
 
 	case FCELL_TYPE:
 	    data_format = 1;
 	    if(verbose->answer)
-		fprintf(stdout, "Exporting raster as floating point values\n\n");
+		fprintf(stderr, "Exporting raster as floating point values\n\n");
 	    break;
 
 	case DCELL_TYPE:
 	    data_format = 0;
 	    if(verbose->answer)
-		fprintf(stdout, "Exporting raster as double FP values\n\n");
+		fprintf(stderr, "Exporting raster as double FP values\n\n");
 	    break;
 
 	default:
