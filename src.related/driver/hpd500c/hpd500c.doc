@@ -1,0 +1,80 @@
+hp500c    Grass Paint Driver for the HP DeskJet 500c
+
+Author: Garth Tier
+Address: CSIRO Division of Wildlife and Ecology,
+         PO Box 2111, Alice Springs  NT  0871
+         Australia.
+         Phone (089) 500142   Fax (089) 529587
+         Email: tie013@its.csiro.au
+
+1. History
+
+This driver was written using my hpd550c paint driver as the
+base.  Many routines are untouched.  It has been tested under
+Grass 4.0 running Interactive Unix Version V Release 3.2.  The
+main difference between this driver and the hpd550c is that it
+uses the CYM palette creating a composite black from the three
+colours.
+
+2. Limitations
+
+Since the HP DeskJet 500c cannot print on continuous paper the
+length of a single paint job is limited by the media size. 
+The maximum page length is 14" reduced by the required bottom
+margin of 1/2" and by space for the header and footer.
+
+A workaround for this limitation is to calculate the length of
+the plot and set your region to this vertical dimension. 
+Splitting of the plot into panels in the horizontal dimension
+is handled by the paint software in the usual fashion.  
+
+The following script file plots a large area calling p.map
+four times - once for each horizontal strip:
+
+     g.region n=7461700 s=7403300 w=242300 e=498300 res=100
+     p.map input=pmap.inp
+     g.region n=n-58400 s=s-58400
+     p.map input=pmap.inp
+     g.region n=n-58400 s=s-58400
+     p.map input=pmap.inp
+     g.region n=n-58400 s=s-58400
+     p.map input=pmap.inp
+
+where the file pmap.inp contains
+
+     vect geology@102
+       color black
+       width 1
+       end
+     vect wholestr@102
+       color blue
+       width 1
+       end
+     scale 1:250000
+     grid 10000
+      numbers 1
+      end
+     verbose 0
+
+3. Installation
+
+The installation is straight forward, following the
+installation manual procedures for other paint drivers.
+
+
+[Edit the makefile and Gmakefile to reflect your own system
+directory structure]
+make
+
+[You may need to be logged in as root to execute the following
+commands]
+ln /dev/lp1 /dev/hpd500c      [substitute the name of the port
+                              where the DeskJet is attached
+                              for lp1]
+chmod 0666 /dev/hpd500c
+
+The driver is now available on the system.  Since the printer
+is able to print at 300 dpi which, on an 8" wide page, gives
+2400 dots, the array sizes in P.h have been increased.
+
+The painter hpd500c is now available for use in p.map.
