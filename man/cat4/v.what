@@ -19,7 +19,6 @@ DESCRIPTION
      v.what outputs the category value(s) associated with user-
      specified location(s) in a vector map layer.
 
-OPTIONS
      If the -i flag is specified, the program activates the
      mouse, and expects the user to indicate the location(s) to
      be queried by depressing a mouse button over desired
@@ -51,16 +50,17 @@ EXAMPLE
      interactive queries.
 
 
+     d.vect map=roads.24000
+
      v.what -i map=roads.24000
 		       After typing this, the user moves the
 		       mouse to a desired location on the
 		       displayed roads map layer, and presses the
 		       left mouse button to query the category
-		       value of the roads vector map at this
 
 
 
-GRASS 5.0beta6	      GRASS Development Team			1
+GRASS 5.0beta7	      GRASS Development Team			1
 
 
 
@@ -71,6 +71,7 @@ v.what <contrib>      GRASS Reference Manual	 <contrib> v.what
 
 
 
+		       value of the roads vector map at this
 		       location.  The program then outputs the
 		       category value of a line type
 		       corresponding to this user-selected map
@@ -103,20 +104,18 @@ NOTES
      category contents of multiple raster map layers at user-
      selected locations.
 
-     v.what was created from d.what.vect so that non-
+     v.what was created from d.what.rast so that non-
      interactively queries could be made. Specifying the -i flag
-     makes v.what behave just as d.what.vect does.
+     makes v.what behave just as d.what.rast did.
 
 SEE ALSO
      d.vect, d.what.rast, d.what.vect, g.region, and parser
 
 AUTHORS
-     Jim Hinthorn, Central Washington University, was the
-     original author.
-     Dennis Finch, National Park Service, made some changes (?)
-     James Darrell McCauley, Agricultural Engineering, Purdue
-     University added the non-interactive part and renamed to
-     v.what
+     Jim Hinthorn, Central Washington University
+     Dennis Finch, National Park Service
+     Darrell McCauley, Purdue University
+
 
 NOTICE
      This program is part of the contrib section of the GRASS
@@ -126,7 +125,8 @@ NOTICE
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta6
+
+2		      GRASS Development Team	   GRASS 5.0beta7
 
 
 
