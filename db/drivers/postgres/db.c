@@ -64,9 +64,12 @@ int db_driver_open_database(handle)
     }
 
     /* Read internal codes */
-    res = PQexec(pg_conn, "select oid, typname from pg_type where typname in ("
-	         " 'int2', 'int4', 'serial', 'oid', 'real', 'float8', 'char', 'bpchar', 'varchar', "
-		 " 'text', 'time', 'date', 'timestamp' ) order by oid" );
+    res = PQexec(pg_conn, "select oid, typname from pg_type where typname in ( "
+	         "'int2', 'int4', 'int8', 'serial', 'oid', "
+		 "'float4', 'float8', 'numeric', "
+		 "'char', 'bpchar', 'varchar', 'text', "
+		 "'time', 'date', 'timestamp', "
+	   	 "'bool' ) order by oid" );
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	append_error ( "Cannot select data types" );
@@ -89,12 +92,14 @@ int db_driver_open_database(handle)
 	    type = PG_TYPE_INT2;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int4" ) == 0 )
 	    type = PG_TYPE_INT4;
+	else if ( strcmp( PQgetvalue(res, row, 1), "int8" ) == 0 )
+	    type = PG_TYPE_INT8;
 	else if ( strcmp( PQgetvalue(res, row, 1), "serial" ) == 0 )
 	    type = PG_TYPE_SERIAL;
 	else if ( strcmp( PQgetvalue(res, row, 1), "oid" ) == 0 )
 	    type = PG_TYPE_OID;
-	else if ( strcmp( PQgetvalue(res, row, 1), "real" ) == 0 )
-	    type = PG_TYPE_REAL;
+	else if ( strcmp( PQgetvalue(res, row, 1), "float4" ) == 0 )
+	    type = PG_TYPE_FLOAT4;
 	else if ( strcmp( PQgetvalue(res, row, 1), "float8" ) == 0 )
 	    type = PG_TYPE_FLOAT8;
 	else if ( strcmp( PQgetvalue(res, row, 1), "numeric" ) == 0 )
@@ -105,16 +110,16 @@ int db_driver_open_database(handle)
 	    type = PG_TYPE_BPCHAR;
 	else if ( strcmp( PQgetvalue(res, row, 1), "varchar" ) == 0 )
 	    type = PG_TYPE_VARCHAR;
-	/*
 	else if ( strcmp( PQgetvalue(res, row, 1), "text" ) == 0 )
 	    type = PG_TYPE_TEXT;
-	*/
 	else if ( strcmp( PQgetvalue(res, row, 1), "date" ) == 0 )
 	    type = PG_TYPE_DATE;
 	else if ( strcmp( PQgetvalue(res, row, 1), "time" ) == 0 )
 	    type = PG_TYPE_TIME;
 	else if ( strcmp( PQgetvalue(res, row, 1), "timestamp" ) == 0 )
 	    type = PG_TYPE_TIMESTAMP;
+	else if ( strcmp( PQgetvalue(res, row, 1), "bool" ) == 0 )
+	    type = PG_TYPE_BOOL;
 	else 
 	    type = PG_TYPE_UNKNOWN;
 
