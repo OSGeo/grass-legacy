@@ -147,15 +147,12 @@ if test "$MATHLIB"; then
 fi
 AC_SUBST(MATHLIB)
 
-# BINDIR=/usr/local/bin
 
-BINDIR=
+BINDIR=/usr/local/bin
 if test -z "${exec_prefix}"; then
 exec_prefix="/usr/local"
 fi
-if test -z "${bindir}"; then
-BINDIR=$(exec_prefix)/bin
-else
+if test "${bindir}"; then
 BINDIR="${bindir}"
 fi
 AC_SUBST(BINDIR)
@@ -346,10 +343,10 @@ fi
 
 ldflags_save="$LDFLAGS"
 LDFLAGS="$LDFLAGS $TCLTKLIBS"
-tk_try="8.3 8.2 8.1 8.0"
+tk_try="3 2 1 0"
 for tk_ver in $tk_try; do
 	if test -z "$has_tk_lib"; then
-		AC_CHECK_LIB("tk$tk_ver", Tk_MainWindow, has_tk_lib=1)
+		AC_CHECK_LIB("tk8.$tk_ver", Tk_MainWindow, has_tk_lib="1")
 		if test "$has_tk_lib"; then
 			TCLTKLIBS="$TCLTKLIBS -ltk$tk_ver -ltcl$tk_ver"
 		fi
@@ -416,10 +413,10 @@ ARCH="${host}"
 fi
 AC_SUBST(ARCH)
 
-# Enable/Disable PostgreSQL
+# Enable PostgreSQL always ...
 AC_ARG_ENABLE(postgres,
   [  --enable-postgres       Support PostgreSQL functionality],
-  enable_POSTGRES="1",enable_POSTGRES="")
+  enable_POSTGRES="1",enable_POSTGRES="1")
 
 # With/Without PostgreSQL root:
 AC_ARG_WITH(postgres-root,
@@ -518,7 +515,7 @@ if test "$enable_POSTGRES"; then
 		done
 		AC_MSG_RESULT($PQINCPATH)
 		if test -z "$PQINCPATH"; then
-			AC_MSG_ERROR([*** --enable-postgres was specified, but libpq-fe.h not found!])
+			AC_MSG_WARN([*** libpq-fe.h not found, but needed for PostgreSQL support])
 		fi
 	fi
 	if test -z "$PQLIB"; then
@@ -536,7 +533,7 @@ if test "$enable_POSTGRES"; then
 			fi
 		done
 		if test -z "$PQLIB"; then
-			AC_MSG_ERROR([*** --enable-postgres was specified, but library 'pq' not found!])
+			AC_MSG_WARN([*** library 'pq' not found, but needed for PostgreSQL support])
 		fi
 	fi
 fi
@@ -545,5 +542,124 @@ fi
 AC_SUBST(PQINCPATH)
 AC_SUBST(PQLIBPATH)
 AC_SUBST(PQLIB)
+
+# OpenGL
+AC_ARG_WITH(opengl-includes,
+  [  --with-opengl-includes=DIR
+                           Specify the directory for OpenGL (or Mesa) headers],
+   [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-opengl-includes.])
+	;;
+	esac
+	opengl_includes="$withval"
+   ])
+
+AC_ARG_WITH(opengl-libs,
+  [  --with-opengl-libs=DIR
+                           Specify the directory for OpenGL (or Mesa) libraries],
+   [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-opengl-libs.])
+	;;
+	esac
+	opengl_libs="$withval"
+   ])
+
+OPENGLINC=
+OPENGLwINC=
+OPENGLLIB=
+OPENGLULIB=
+LGLWM=
+
+if test -z "$opengl_includes"; then
+	opengl_includes="/usr/include/GL /usr/local/include/GL \
+	/usr/include/Mesa/GL /usr/local/include/Mesa/GL \
+	/usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
+	/usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include"
+fi
+if test "$opengl_includes"; then
+	AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
+	for dir in $opengl_includes; do
+		if test -d "$dir" && test -f "$dir/gl.h"; then
+			OPENGLINC="$OPENGLINC -I$dir"
+		fi
+		if test -d "$dir" && test -f "$dir/GLwMDrawA.h"; then
+			OPENGLwINC="$OPENGLwINC -I$dir"
+		fi
+	done
+	if test -z "$OPENGLINC"; then
+		AC_MSG_ERROR([*** Didn't find GL/gl.h])
+	fi
+	if test -z "$OPENGLwINC"; then
+		AC_MSG_ERROR([*** Didn't find GL/GLwMDrawA.h])
+	fi
+	AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
+fi
+
+if test -z "$opengl_libs"; then
+	opengl_libs="/usr/lib /usr/local/lib /usr/lib/X11 \
+	/usr/local/Mesa/lib /usr/X11R6/lib /usr/local/X11/lib \
+	/usr/local/X11R6/lib /usr/lib/Mesa /opt/lib /opt/Mesa \
+	/opt/Mesa/lib"
+fi
+
+if test "$opengl_libs"; then
+	for dir in $opengl_libs; do
+		if test -z "$OPENGLLIB" && test -d "$dir"; then
+			ac_save_ldflags=${LDFLAGS}
+			LDFLAGS="-L$dir"
+			AC_CHECK_LIB(GL,glBegin,
+			[
+			  OPENGLLIB="$OPENGLLIB -L$dir -lGL"
+			])
+			LDFLAGS=${ac_save_ldflags}
+		fi
+		if test -z "$OPENGLULIB" && test -d "$dir"; then
+			ac_save_ldflags=${LDFLAGS}
+			LDFLAGS="$LDFLAGS -L$dir $OPENGLLIB"
+			AC_CHECK_LIB(GLU,gluBeginCurve,
+			[
+			  OPENGLULIB="$OPENGLULIB -L$dir -lGLU"
+			])
+			LDFLAGS=${ac_save_ldflags}
+		fi
+# This is not working...
+#		if test -z "$LGLWM" && test -d "$dir"; then
+#			ac_save_ldflags=${LDFLAGS}
+#			LDFLAGS="$LDFLAGS -L/usr/X11R6/lib -lXm -L$dir $OPENGLLIB $OPENGLULIB"
+#			AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,
+#			[
+#			  LGLWM="$LGLWM -L$dir -lGLwM"
+#			])
+#			AC_CHECK_LIB(MesaGLwM,GLwCreateMDrawingArea,
+#			[
+#			  LGLWM="$LGLWM -L$dir -lMesaGLwM"
+#			])
+#			LDFLAGS=${ac_save_ldflags}
+#		fi
+		if test "$OPENGLLIB" && test "$OPENGLULIB" && test "$OPENGLwINC"; then
+			LGLWM=-lGLwM
+		fi
+	done
+	if test -z "$OPENGLLIB"; then
+		AC_MSG_ERROR([*** libGL not found, though required])
+	fi
+	if test -z "$OPENGLULIB"; then
+		AC_MSG_ERROR([*** libGLU not found, though required])
+	fi
+	if test -z "LGLWM"; then
+		AC_MSG_ERROR([*** libGLwM not found, though required])
+	fi
+fi
+
+
+AC_SUBST(OPENGLINC)
+AC_SUBST(OPENGLwINC)
+AC_SUBST(OPENGLLIB)
+AC_SUBST(OPENGLULIB)
+AC_SUBST(LGLWM)
 
 AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
