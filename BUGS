@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.43 2000-10-20 15:11:42 markus Exp $
+$Id: BUGS,v 1.44 2000-10-21 15:24:00 andreas Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -290,6 +290,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
 [RC]r.reclass:
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
  - does not accept "*" to reclass NULL values
+   Andreas Lange: if "*" is used, segmentation fault (signal 11) occurs.
 
 r.resamp.rst:
   When processing quite a big DEM file with r.resamp.rst I got the  
@@ -300,12 +301,17 @@ r.resamp.rst:
   (Reported by Rado Bonk <rado@cosmos.dsc.unomaha.edu>)
   (being worked on by ?)
 
-[RC]r.rescale:
+r.rescale:
   r.rescale input=asp1 from=0,180 output=test_north to=1,1                      
   r.rescale does not set cells outside the "from" range to 0 (described in the    
   help), but to NULL
   (reported by timcera@earthlink.net)
-  (being worked on by ?)
+  Andreas Lange, 10/2000: This is IMHO not a bug, but a feature. All modules
+  should write NULL instead of 0 (zero) for missing values for patching 
+  maps or display overlays. 
+  But if the problem with r.reclass is solved i can add a "-z" flag that
+  switches this behaviour from writing NULL to writing "0" (zero).
+  (being worked on by Andreas Lange)
 
 r.surf.contour
   (supports currently CELL type only)
