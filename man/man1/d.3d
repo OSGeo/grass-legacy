@@ -27,11 +27,9 @@ in the manual entry for \fIparser\fR.
 .LP
 Three-dimensional images can also be generated
 through the GRASS \fId.display\fR program.
-enter short description of d.3d here
 
 .SH "COMMAND LINE OPTIONS"
 .LP
-\fBFlags:\fR
 .IP \fB-l\fR 18
 Display \fIlines\fR only, without displaying the raster base \fImap\fR.
 .IP \fB-0\fR 18
