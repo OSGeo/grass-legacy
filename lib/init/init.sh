@@ -568,7 +568,7 @@ trap "" 2 3 15
 if [ "$CYGWIN" ] ; then
     sh="cygwin"
     shellname="GNU Bash (Cygwin)"
-    export SHELL=/bin/bash.exe
+    export SHELL=/usr/bin/bash.exe
     export OSTYPE=cygwin
 else 
     sh=`basename "$SHELL"`
