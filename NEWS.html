@@ -24,6 +24,33 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
+<h3><font color="#00FE00">What's new in GRASS 5.0.0/CVS comparing to 5.0.0.pre5</font></h3>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.dm: added PNG snapshot functionality (Moritz Lennert)
+<li>d.vect: fixed that small areas on level1 were not plotted (Radim Blazek)
+<li>m.in.e00: Added the list= parameter and corrected a format that was 
+    invalid for large INFO tables (Roger Miller)
+<li>NVIZ: fix for z scale range: bug #1202, fix for bug #1196 (remove mask)
+   (Bob Covill)
+<li>ps.map: pattern support for vector maps added (Radim Blazek)
+<li>r.info: -r flag added to only print the range (Markus Neteler)
+<li>r.proj: bordwalk() calls now controlled by -n switch (Glynn Clements)
+<li>r.to.pg: cats/ID support added (Otto Dassau)
+<P>
+<li>CELL driver: fixed crash bug (Glynn Clements)
+<li>deprecated v.in.shape.pg: use v.in.shape + pg.in.dbf instead
+</ul>
+ 
+<b>Source Code:</b><br>
+<ul>
+<li>bugfix for src/libes/edit/ (compile error on some platforms, Eric
+    Miller, Glynn Clements)
+<li>gcc3.x compliance improved (Pavol Cvengros)
+</ul>
+
+<hr>
 <h3><font color="#00FE00">What's new in GRASS 5.0.0pre5 comparing to 5.0.0.pre4</font></h3>
 [GRASS 5.0.0pre5 released 25 June 2002]<p>
 
@@ -49,6 +76,7 @@ Many thanks to all contributors!
 <li>projection software: "Krovakgis" projection implemented for Czech and
    Slovak users (Jaro Hofierka, Markus Neteler)
 </ul>
+
 
 
 <hr>
