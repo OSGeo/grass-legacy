@@ -1,0 +1,17 @@
+PROGRAM      = i.ortho.photo
+
+PRG_HOME     = $(BIN_ALPHA_INTER)
+
+EXTRA_CFLAGS = -I../libes
+IMAGERYLIB2  = ../libes/libortho.a
+
+
+LIST =  menu.o\
+	run.o
+
+$(PRG_HOME)/$(PROGRAM): $(LIST) $(GISLIB) $(IMAGERYLIB) $(IMAGERYLIB2) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASK)
+
+$(GISLIB) $(IMAGERYLIB) $(IMAGERYLIB2) $(VASKLIB): #
+
+
