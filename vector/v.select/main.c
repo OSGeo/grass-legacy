@@ -1,0 +1,400 @@
+/* ****************************************************************************
+ *
+ *  MODULE: v.select - select features from one map by features in another map.
+ *  
+ *
+ *  AUTHOR(S): Radim Blazek
+ *  
+ ******************************************************************************/
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "gis.h"
+#include "dbmi.h"
+#include "Vect.h"
+
+#define OP_OVERLAP 0
+
+/* Add all elements of area A to the list */
+void add_aarea ( struct Map_info *In, int aarea, int *ALines )
+{
+    int i, j, aline, naisles, aisle, acentroid;
+    static struct ilist *BoundList = NULL;
+
+    if ( !BoundList )
+        BoundList = Vect_new_list ();
+
+    acentroid = Vect_get_area_centroid ( In, aarea );
+    ALines[acentroid] = 1;
+
+    Vect_get_area_boundaries ( In, aarea, BoundList );
+    for ( i = 0; i < BoundList->n_values; i++ ) {
+	aline = abs(BoundList->value[i]);
+	ALines[aline] = 1;
+    }
+
+    naisles = Vect_get_area_num_isles (  In, aarea );
+
+    for ( j = 0; j < naisles; j++ ) {
+	aisle = Vect_get_area_isle ( In, aarea, j );
+
+	Vect_get_isle_boundaries ( In, aisle, BoundList );
+	for ( i = 0; i < BoundList->n_values; i++ ) {
+	    aline = abs(BoundList->value[i]);
+	    ALines[aline] = 1;
+	}
+    }
+}
+/* Returns 1 if line1 from Map1 overlaps area2 from Map2,
+ *         0 otherwise */
+int line_overlap_area ( struct Map_info *LMap, int line, struct Map_info *AMap, int area ) 
+{
+    int i, nisles, isle;
+    static struct line_pnts *LPoints = NULL;
+    static struct line_pnts *APoints = NULL;
+
+    G_debug (4, "line_overlap_area line = %d area = %d", line, area);
+    
+    if ( !LPoints ) {
+        LPoints = Vect_new_line_struct();
+        APoints = Vect_new_line_struct();
+    }
+
+    /* Read line coordinates */    
+    Vect_read_line (LMap, LPoints, NULL, line);
+
+    /* Try if any of line vertices is within area */
+    for (i = 0; i < LPoints->n_points; i++ ) {
+	if ( Vect_point_in_area(AMap, area, LPoints->x[i], LPoints->y[i]) ) {
+            G_debug (4, "  -> line vertex inside area");
+	    return 1;
+	}
+    }
+
+    /* Try intersections of line with area/isles boundary */
+    /* Outer boundary */
+    Vect_get_area_points ( AMap, area, APoints );
+
+    if ( Vect_line_check_intersection(LPoints, APoints, 0) ) {
+        G_debug (4, "  -> line intersects outer area boundary");
+	return 1;
+    }
+
+    nisles = Vect_get_area_num_isles ( AMap, area );
+
+    for ( i = 0; i < nisles; i++ ) {
+	isle = Vect_get_area_isle ( AMap, area, i );
+	Vect_get_isle_points ( AMap, isle, APoints );
+
+	if ( Vect_line_check_intersection(LPoints, APoints, 0) ) {
+            G_debug (4, "  -> line intersects area island boundary");
+	    return 1;
+	}
+    }
+    return 0;
+}
+
+int 
+main (int argc, char *argv[])
+{
+    int    input, operator;
+    int    aline, nalines;
+    int    type[2], field[2];
+    char   *mapset[2], *pre[2];
+    struct GModule *module;
+    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
+    struct Flag *table_flag;
+    struct Map_info In[2], Out;
+    struct field_info *IFi, *OFi;
+    struct line_pnts *APoints, *BPoints;
+    struct line_cats *ACats, *BCats;
+    int    *ALines;  /* List of lines: 0 do not output, 1 - write to output */
+    struct ilist *List, *TmpList, *BoundList;
+
+    G_gisinit (argv[0]);
+
+    pre[0] ="a";
+    pre[1] ="b";
+
+    module = G_define_module();
+    module->description = "Select features from ainput by features from binput.";
+
+    in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
+    in_opt[0]->key = "ainput";
+
+    in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
+    in_opt[1]->key = "binput";
+
+    type_opt[0] = G_define_standard_option(G_OPT_V_TYPE) ;
+    type_opt[0]->key = "atype";
+
+    type_opt[1] = G_define_standard_option(G_OPT_V_TYPE) ;
+    type_opt[1]->key = "btype";
+
+    field_opt[0] = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt[0]->key = "afield";
+    
+    field_opt[1] = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt[1]->key = "bfield";
+    
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+
+    operator_opt = G_define_option();
+    operator_opt->key = "operator";
+    operator_opt->type = TYPE_STRING;
+    operator_opt->required = NO;
+    operator_opt->multiple = NO;
+    operator_opt->options = "overlap";
+    operator_opt->answer = "overlap";
+    operator_opt->description = "Operator defines required relation between features. "
+	"A feature is written to output if the result of operation 'ainput operator binput' is true. "
+	"An input feature is considered to be true, if category of given field is defined.\n"
+	"\t overlap : features partialy or completely overlap\n";
+
+    table_flag = G_define_flag ();
+    table_flag->key             = 't';
+    table_flag->description     = "Do not create attribute table.";
+
+    if (G_parser (argc, argv)) exit(-1);
+
+    if ( operator_opt->answer[0] == 'o' ) operator = OP_OVERLAP;
+
+    for ( input = 0; input < 2; input++ ) {
+	type[input] = Vect_option_to_types (type_opt[input]);
+        field[input] = atoi(field_opt[input]->answer);
+
+	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
+	    G_fatal_error ("Could not find vector '%s'\n", in_opt[input]->answer);
+	}
+
+	Vect_set_open_level (2);
+	Vect_open_old (&(In[input]), in_opt[input]->answer, mapset[input] );
+    }
+    
+    /* Read field info */
+    IFi = Vect_get_field(&(In[0]), field[0]);
+    
+    APoints = Vect_new_line_struct();
+    BPoints = Vect_new_line_struct();
+    ACats = Vect_new_cats_struct();
+    BCats = Vect_new_cats_struct();
+    List = Vect_new_list ();
+    TmpList = Vect_new_list ();
+    BoundList = Vect_new_list ();
+
+    /* Open output */
+    Vect_open_new (&Out, out_opt->answer, 0);
+    Vect_set_map_name ( &Out, "Output from v.select");
+    Vect_set_person ( &Out, G_whoami ());
+    Vect_hist_command ( &Out );
+
+    nalines = Vect_get_num_lines ( &(In[0]) );
+    
+    /* Alloc space for input lines array */
+    ALines = (int *) G_calloc ( nalines+1, sizeof(int) );
+    
+    /* Lines in A. Go through all lines and mark those that meets condition */
+    if ( type[0] & (GV_POINTS | GV_LINES) ) {
+	fprintf ( stderr, "Processing ainput lines ... " );
+
+	for ( aline = 1; aline <= nalines; aline++ ) {
+	    BOUND_BOX abox;
+	    
+	    G_debug (3, "aline = %d", aline);
+	    G_percent ( aline, nalines, 1 ); /* must be before any continue */
+	    
+	    /* Check category */
+	    if ( !Vect_get_line_cat(&(In[0]), aline, field[0]) ) continue;
+	    
+	    /* Read line and check type */
+	    if ( !(Vect_read_line(&(In[0]), APoints, NULL, aline) & type[0]) ) continue;
+
+	    /* Check if this line overlaps any feature in B */
+
+	    /* x Lines in B */
+	    if ( type[1] & (GV_POINTS | GV_LINES) ) {
+		int i;
+		int found = 0;
+
+		Vect_get_line_box ( &(In[0]), aline, &abox );
+
+		/* Lines */
+		Vect_select_lines_by_box ( &(In[1]), &abox, type[1], List);
+		for (i = 0; i < List->n_values; i++) {
+		    int bline;
+		    
+		    bline = List->value[i];
+		    G_debug (3, "  bline = %d", bline);
+		    
+		    /* Check category */
+		    if ( !Vect_get_line_cat(&(In[1]), bline, field[1]) ) continue;
+
+		    Vect_read_line ( &(In[1]), BPoints, NULL, bline);
+
+		    if ( Vect_line_check_intersection ( APoints, BPoints, 0 ) ) {
+			found = 1;
+			break;
+		    }
+		}
+		
+		if ( found ) {
+		    ALines[aline] = 1;
+		    continue; /* Go to next A line */
+		}
+	    }
+
+	    /* x Areas in B. */
+	    if ( type[1] & GV_AREA ) {
+		int i;
+
+		Vect_select_areas_by_box ( &(In[1]), &abox, List);
+		for (i = 0; i < List->n_values; i++) {
+		    int barea;
+
+		    barea = List->value[i];
+		    G_debug (3, "  barea = %d", barea);
+
+		    if ( Vect_get_area_cat(&(In[1]), barea, field[1]) < 1 ) continue;
+
+		    if ( line_overlap_area(&(In[0]), aline, &(In[1]), barea) ) {
+		        ALines[aline] = 1;
+			break;
+		    }
+		}
+	    }
+	}
+    }
+    
+    /* Areas in A. */
+    if ( type[0] & GV_AREA ) {
+        int  aarea, naareas;
+
+	fprintf ( stderr, "Processing ainput areas ... " );
+
+	naareas = Vect_get_num_areas (  &(In[0]) );
+
+	for ( aarea = 1; aarea <= naareas; aarea++ ) {
+            int  i;
+	    BOUND_BOX abox;
+	    
+	    G_percent ( aarea, naareas, 1 ); /* must be before any continue */
+
+	    if ( Vect_get_area_cat(&(In[0]), aarea, field[0]) < 1 ) continue;
+	    Vect_get_area_box ( &(In[0]), aarea, &abox );
+
+	    /* x Lines in B */
+	    if ( type[1] & (GV_POINTS | GV_LINES) ) {
+		Vect_select_lines_by_box ( &(In[1]), &abox, type[1], List);
+
+		for (i = 0; i < List->n_values; i++) {
+		    int bline;
+		    
+		    bline = List->value[i];
+		
+		    if ( !Vect_get_line_cat(&(In[1]), bline, field[1]) ) continue;
+
+		    if ( line_overlap_area(&(In[1]), bline, &(In[0]), aarea) ) {
+			add_aarea ( &(In[0]), aarea, ALines );
+			continue;
+		    }
+		}
+	    }
+
+	    /* x Areas in B */
+	    if ( type[1] & GV_AREA ) {
+		int naisles;
+		int found = 0;
+
+		/* Make a list of features forming area A */
+		Vect_reset_list ( List );
+
+		Vect_get_area_boundaries ( &(In[0]), aarea, BoundList );
+		for ( i = 0; i < BoundList->n_values; i++ ) {
+		    Vect_list_append ( List, abs(BoundList->value[i]) );
+		}
+
+		naisles = Vect_get_area_num_isles (  &(In[0]), aarea );
+
+		for ( i = 0; i < naisles; i++ ) {
+		    int j, aisle;
+
+		    aisle = Vect_get_area_isle ( &(In[0]), aarea, i );
+
+		    Vect_get_isle_boundaries ( &(In[0]), aisle, BoundList );
+		    for ( j = 0; j < BoundList->n_values; j++ ) {
+			Vect_list_append ( List, BoundList->value[j] );
+		    }
+		}
+
+		/* Check intersectin of lines from List with area B */
+		Vect_select_areas_by_box ( &(In[1]), &abox, TmpList);
+
+		for (i = 0; i < List->n_values; i++) {
+		    int j, aline;
+			
+		    aline = List->value[i];
+
+		    for (j = 0; j < TmpList->n_values; j++) {
+			int barea;
+		    
+			barea = TmpList->value[j];
+			G_debug (3, "  barea = %d", barea);
+			
+			if ( Vect_get_area_cat(&(In[1]), barea, field[1]) < 0 ) continue;
+
+			if ( line_overlap_area(&(In[0]), aline, &(In[1]), barea) ) {
+			    found = 1;
+			    break;
+			}
+		    }
+		    if ( found ) {
+                        add_aarea ( &(In[0]), aarea, ALines );
+			break;
+		    }
+		}
+	    }
+	}
+    }
+        
+    Vect_close ( &(In[1]) ); 
+
+    /* Write lines */
+    for ( aline = 1; aline <= nalines; aline++ ) {
+	int atype;
+
+        G_debug (4, "aline = %d ALines[aline] = %d", aline, ALines[aline]);
+
+	if ( !(ALines[aline]) ) continue;
+	
+	atype = Vect_read_line ( &(In[0]), APoints, ACats, aline);
+        Vect_write_line ( &Out, atype, APoints, ACats );
+    }
+
+    Vect_close ( &(In[0]) ); 
+
+    Vect_build (&Out, stderr); 
+
+    /* Create table */
+    if ( !(table_flag->answer) && (IFi != NULL) ) {
+	int ret; 
+
+	fprintf ( stderr, "Writing attributes ...\n" );
+	
+        OFi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
+	
+
+        ret = db_copy_table ( IFi->driver, IFi->database, IFi->table,
+                              OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table );
+
+	if ( ret == DB_FAILED ) {
+	    G_warning ( "Cannot copy table" );
+	} else {
+	    Vect_map_add_dblink ( &Out, 1, NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
+	}
+    }
+    
+    Vect_close (&Out);
+    
+    exit (0);
+}
+
