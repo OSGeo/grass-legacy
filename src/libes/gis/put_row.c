@@ -805,7 +805,25 @@ static int convert_and_write_if(int fd, CELL *buf)
     int i;
 
     for (i = 0; i < fcb->cellhd.cols; i++)
-	p[i] = (FCELL) buf[i];
+	if (G_is_c_null_value(&buf[i]))
+	    G_set_f_null_value(&p[i], 1);
+	else
+	    p[i] = (FCELL) buf[i];
+
+    return G_put_f_raster_row(fd, p);
+}
+
+static int convert_and_write_df(int fd, DCELL *buf)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    FCELL *p = (FCELL *) fcb->data;
+    int i;
+
+    for (i = 0; i < fcb->cellhd.cols; i++)
+	if (G_is_d_null_value(&buf[i]))
+	    G_set_f_null_value(&p[i], 1);
+	else
+	    p[i] = (FCELL) buf[i];
 
     return G_put_f_raster_row(fd, p);
 }
@@ -817,21 +835,12 @@ static int convert_and_write_id(int fd, CELL *buf)
     int i;
 
     for (i = 0; i < fcb->cellhd.cols; i++)
-	p[i] = (DCELL) buf[i];
+	if (G_is_c_null_value(&buf[i]))
+	    G_set_d_null_value(&p[i], 1);
+	else
+	    p[i] = (DCELL) buf[i];
 
     return G_put_d_raster_row(fd, p);
-}
-
-static int convert_and_write_df(int fd, DCELL *buf)
-{
-    struct fileinfo *fcb = &G__.fileinfo[fd];
-    FCELL *p = (FCELL *) fcb->data;
-    int i;
-
-    for (i = 0; i < fcb->cellhd.cols; i++)
-	p[i] = (FCELL) buf[i];
-
-    return G_put_f_raster_row(fd, p);
 }
 
 static int convert_and_write_fd(int fd, FCELL *buf)
@@ -841,9 +850,42 @@ static int convert_and_write_fd(int fd, FCELL *buf)
     int i;
 
     for (i = 0; i < fcb->cellhd.cols; i++)
-	p[i] = (DCELL) buf[i];
+	if (G_is_f_null_value(&buf[i]))
+	    G_set_d_null_value(&p[i], 1);
+	else
+	    p[i] = (DCELL) buf[i];
 
     return G_put_d_raster_row(fd, p);
+}
+
+static int convert_and_write_fi(int fd, FCELL *buf)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    CELL *p = (CELL *) fcb->data;
+    int i;
+
+    for (i = 0; i < fcb->cellhd.cols; i++)
+	if (G_is_f_null_value(&buf[i]))
+	    G_set_c_null_value(&p[i], 1);
+	else
+	    p[i] = (CELL) buf[i];
+
+    return G_put_c_raster_row(fd, p);
+}
+
+static int convert_and_write_di(int fd, DCELL *buf)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    CELL *p = (CELL *) fcb->data;
+    int i;
+
+    for (i = 0; i < fcb->cellhd.cols; i++)
+	if (G_is_d_null_value(&buf[i]))
+	    G_set_c_null_value(&p[i], 1);
+	else
+	    p[i] = (CELL) buf[i];
+
+    return G_put_c_raster_row(fd, p);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -854,24 +896,16 @@ static int put_raster_row(
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
     static int (*convert_and_write_FtypeOtype[3][3])() = {
-	{NULL, convert_and_write_if, convert_and_write_id},
-	{NULL, NULL                , convert_and_write_fd},
-	{NULL, convert_and_write_df, NULL                }
+	{NULL                , convert_and_write_if, convert_and_write_id},
+	{convert_and_write_fi, NULL                , convert_and_write_fd},
+	{convert_and_write_di, convert_and_write_df, NULL                }
     };
 
     if (!check_open("put_raster_row", fd, 0))
         return -1;
 
     if (fcb->map_type != data_type)
-    {
-	if (fcb->map_type == CELL_TYPE)
-	{
-	    G_warning(_("can't put FP row into integer map"));
-	    return -1;
-	}
-
         return convert_and_write_FtypeOtype[data_type][fcb->map_type](fd, buf);
-    }
 
     G_zero(G__.null_buf, fcb->cellhd.cols * sizeof(char));
 
