@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "global.h"
 #include "local_proto.h"
 
 FILE *Tmp_fd = NULL;
