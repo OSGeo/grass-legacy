@@ -132,6 +132,7 @@ dig_Rd_P_line (
 		  FILE * fp)
 {
   P_LINE *ptr; 
+  P_NODE *Node;
 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_line()");
@@ -146,8 +147,12 @@ dig_Rd_P_line (
 
   if (0 >= dig__fread_port_P (&(ptr->N1), 1, fp))
     return -1;
-  if (0 >= dig__fread_port_P (&(ptr->N2), 1, fp))
-    return -1;
+  
+  if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) {
+      if (0 >= dig__fread_port_P (&(ptr->N2), 1, fp))
+	return -1;
+  } else 
+      ptr->N2 = ptr->N1;
   
   if ( ptr->type & (GV_BOUNDARY | GV_CENTROID) ) 
     if (0 >= dig__fread_port_P (&(ptr->left), 1, fp))
@@ -157,8 +162,7 @@ dig_Rd_P_line (
     if (0 >= dig__fread_port_P (&(ptr->right), 1, fp))
       return -1;
 
-  /* TODO - do not read box; prepared below */
-  //if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) { 
+  if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) { 
     if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
       return -1;
     if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
@@ -174,7 +178,6 @@ dig_Rd_P_line (
       if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
         return -1;
     }
-  /*  
   } else {
     Node = Plus->Node[ptr->N1];
     ptr->N = Node->y;
@@ -184,7 +187,6 @@ dig_Rd_P_line (
     ptr->T = Node->z;
     ptr->B = Node->z;
   }
-  */
   
   Plus->Line[n] = ptr;
   return (0);
@@ -207,8 +209,10 @@ dig_Wr_P_line (
 
   if (0 >= dig__fwrite_port_P (&(ptr->N1), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_P (&(ptr->N2), 1, fp))
-    return (-1);
+  
+  if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) 
+      if (0 >= dig__fwrite_port_P (&(ptr->N2), 1, fp))
+	return (-1);
   
   if ( ptr->type & (GV_BOUNDARY | GV_CENTROID) ) 
     if (0 >= dig__fwrite_port_P (&(ptr->left), 1, fp))
@@ -218,8 +222,7 @@ dig_Wr_P_line (
     if (0 >= dig__fwrite_port_P (&(ptr->right), 1, fp))
       return (-1);
 
-  /* TODO - do not write dox for points as prepared */
-  //if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) {
+  if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) {
     if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
       return (-1);
     if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
@@ -235,7 +238,7 @@ dig_Wr_P_line (
       if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
         return (-1);
     }
-  //}
+  }
 
   return (0);
 }
@@ -455,22 +458,6 @@ dig_Rd_Plus_head (   FILE * fp,
   byte_order         = buf[4];
   ptr->with_z        = buf[5];
   
-  /* TODO - enable following box reading */
-  /*
-  if (0 >= dig__fread_port_D (&(ptr->box.N), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->box.S), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->box.E), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->box.W), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->box.T), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->box.B), 1, fp))
-    return (-1);
-  */
-    
   /* check version numbers */
   /*
   if (ptr->Version_Major != GRASS_V_VERSION_MAJOR ||
@@ -486,8 +473,22 @@ dig_Rd_Plus_head (   FILE * fp,
 	}
     }
   */
+
   dig_init_portable ( &(ptr->port), byte_order); 
   dig_set_cur_port ( &(ptr->port) );
+
+  if (0 >= dig__fread_port_D (&(ptr->box.N), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.S), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.E), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.W), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.T), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.B), 1, fp))
+    return (-1);
   
   if (0 >= dig__fread_port_P (&(ptr->n_nodes), 1, fp))
     return (-1);
@@ -550,8 +551,6 @@ dig_Wr_Plus_head ( FILE * fp,
   if (0 >= dig__fwrite_port_C (buf, 6, fp))
     return (-1);
  
-  /* TODO - enable following box saving */
-  /*
   if (0 >= dig__fwrite_port_D (&(ptr->box.N), 1, fp))
     return (-1);
   if (0 >= dig__fwrite_port_D (&(ptr->box.S), 1, fp))
@@ -564,7 +563,6 @@ dig_Wr_Plus_head ( FILE * fp,
     return (-1);
   if (0 >= dig__fwrite_port_D (&(ptr->box.B), 1, fp))
     return (-1);
-  */
   
   if (0 >= dig__fwrite_port_P (&(ptr->n_nodes), 1, fp))
     return (-1);

@@ -1,5 +1,6 @@
 #ifndef GRASS_VECT_H
 #define GRASS_VECT_H
+#include "gis.h"
 #include "vect/digit.h"
 
 /* --- ANSI prototypes for the lib/vector/Vlib functions --- */
@@ -15,8 +16,10 @@ int Vect_reset_line (struct line_pnts *);
 int Vect_destroy_line_struct (struct line_pnts *);
 int Vect_point_on_line ( struct line_pnts *, double, double *, double *, double *, double *, double *);
 double Vect_line_length ( struct line_pnts *);
+double Vect_line_geodesic_length ( struct line_pnts *);
 int Vect_line_distance ( struct line_pnts *, double, double, double, int, 
 	                 double *, double *, double *, double *, double *, double *);
+int Vect_line_box ( struct line_pnts *, BOUND_BOX * );
 
       /* Categories */
 struct line_cats *Vect_new_cats_struct (void);
@@ -37,6 +40,9 @@ int Vect_destroy_cat_list (struct cat_list *);
       /* List of FID (feature ID) (integers) */
 struct ilist *Vect_new_list (void);
 int Vect_list_append ( struct ilist *, int);
+int Vect_list_append_list ( struct ilist *, struct ilist *);
+int Vect_list_delete ( struct ilist *, int);
+int Vect_list_delete_list ( struct ilist *, struct ilist *);
 int Vect_reset_list (struct ilist *);
 int Vect_destroy_list (struct ilist *);
 
@@ -45,11 +51,13 @@ int Vect_point_in_box (double, double, double, BOUND_BOX *);
 int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_copy (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_extend (BOUND_BOX *, BOUND_BOX *);
+int Vect_region_box ( struct Cell_head *, BOUND_BOX * );
 
     /* Set/get Map header info */
 char *Vect_get_name (struct Map_info *);
 char *Vect_get_mapset (struct Map_info *);
 char *Vect_get_full_name (struct Map_info *);
+int  Vect_is_3d (struct Map_info *);
 int  Vect_set_organization (struct Map_info *, char *);
 char *Vect_get_organization (struct Map_info *);
 int  Vect_set_date (struct Map_info *, char *);
@@ -90,7 +98,7 @@ int Vect_open_old (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
 int Vect_copy_head_data (struct Map_info *, struct  Map_info *);
 int Vect_build ( struct Map_info *, FILE *);
-int Vect_set_constraint_region (struct Map_info *, double, double, double, double);
+int Vect_set_constraint_region (struct Map_info *, double, double, double, double, double, double);
 int Vect_set_constraint_type (struct Map_info *, int);
 int Vect_remove_constraints (struct Map_info *);
 int Vect_rewind (struct Map_info *);
@@ -138,7 +146,7 @@ int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
 
     /* Network (graph) */
-int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int);
+int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int, int);
 int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist * );
 
     /* Miscellaneous */
