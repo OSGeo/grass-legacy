@@ -1,0 +1,66 @@
+
+
+
+Glist(2G)            GRASS Reference Manual             Glist(2G)
+
+
+
+NAME
+     Glist  - List available database files
+     (G Language Tool)
+
+SYNOPSIS
+     Glist element
+
+DESCRIPTION
+     Glist allows the user to list available files from the
+     mapsets  in the user's search path. The user specifies the
+     type of data file (i.e., the data element) from the
+     following list:
+
+
+          cell          (cell files)
+
+          vect          (vector files)
+
+          icon          (paint icon files)
+
+          labels        (paint labels files)
+
+          sites         (site list files)
+
+          window        (window files)
+
+          group         (imagery group files)
+
+
+SEE ALSO
+     list[1], mapsets[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
