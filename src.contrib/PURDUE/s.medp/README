@@ -1,0 +1,75 @@
+WHAT IS THIS FILE?
+This file contains random ramblings that I jotted down (usually late
+at night) while coding this program. General comments, stuff for
+programmers reading my code, wish list of features, etc.
+
+GENERAL DESCRIPTION OF MEDIAN POLISH
+For the median polish, you have some sites and a vector grid.  The first
+step is to overlay the sites on the grid and associate each site with
+the closest node.  A node can have zero, one, or more sites.
+Then, you subtract medians from rows and columns until convergence
+(see the man page).  Effectively, it removes the large-scale variation
+(trend) from the data.  Then, the residuals can be used for kriging.
+
+DOCUMENTATION
+See Cressie (1991) and the doc directory (sites/s.medp/doc).  There's
+some results from a book that I've reproduced using this software.
+Further documentation regarding median polish, its uses, etc, may 
+come later.
+
+COMMENTS ABOUT CODE
+The code may be a little messy in some parts, but it has plenty
+of comments. Doing the median polish would have been difficult
+using existing structs, so I rolled my own.  There are some places
+where I should have probably stuck to grass structs, but...
+
+ADDITIONS THAT NEVER MADE IT
+It would be good if this could output three gnuplot surface plot data 
+files: original, trend, residuals.  Maybe if there was a way to
+have a "hidden" flag (something that wouldn't show up when you
+use "help" as the sole arg)...
+
+Cressie (1991) gives interpolation/extrapolation equations that could
+be used to create raster map at the current resolution.  
+
+  Foreach (cell in the output map)
+    find corresponding x & y values,
+    determine z from interpolation/extrapolation eqns.
+    record value as new category
+  end.
+  Then, reclassify similar values into same category.
+
+This would probably take about 2 or 3 coding sessions to complete
+(add -rast=filename option).
+
+REFERENCES
+@Book{ cressie91,
+  author =       "Noel A. C. Cressie",
+  title =        "Statistics for Spatial Data",
+  publisher =    "John Wiley \& Sons",
+  year =         "1991",
+  series =       "Wiley Series in Probability and Mathematical Statistics",
+  address =      "New York, NY"
+}
+
+ROTATION
+\documentstyle{article}
+\begin{document}
+% so I don't forget these
+If $P$ has coordinates $(x,y)$, then after rotating, we get
+$P'$ with coordinates $(x',y')$, where
+\begin{displaymath}
+x'=x \cos \phi - y \sin \phi \:\:\:\:\:\: \mbox{and} \:\:\:\:\:\: 
+y'=x\sin\phi+y\cos\phi
+\end{displaymath}
+or
+\begin{displaymath}
+x=x'\cos \phi + y' \sin \phi \:\:\:\:\:\: \mbox{and}\:\:\:\:\:\:  
+y=-x'\sin\phi+y'\cos\phi
+\end{displaymath}
+This rotates $P$ counterclockwise through an angle $\phi$ about
+the origin or a Cartesian coordinate system.
+\end{document}
+--
+Darrell McCauley (mccauley@ecn.purdue.edu)
+<04 Jun 1992> 
