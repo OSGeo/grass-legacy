@@ -24,7 +24,7 @@ db_driver_list_tables (tlist, tcount, system)
     if (c == NULL)
         return DB_FAILED;  
 
-    // Execute SQL 
+    /* Execute SQL */
     if (system)
 	sprintf(ttype,"SYSTEM TABLE");
     else
@@ -40,20 +40,33 @@ db_driver_list_tables (tlist, tcount, system)
 
     SQLBindCol( c->stmt, 3, SQL_C_CHAR, tableName, sizeof(tableName),  &indi );
 
-    // Get number of rows
+    /* Get number of rows */
+    /* WARNING: it seems that after SQLTables() SQLRowCount() sets nrow
+     * to -1, instead of number of tables. Because of that the following solution
+     * is used, may be removed when ODBC works OK.
+     */
+    /*
     ret = SQLRowCount(c->stmt, &nrow);
     if ( ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
     {
         report_error("SQLRowCount()");
 	return DB_FAILED;  
     }
+    */
+    nrow = 0;
+    ret = SQLFetch( c->stmt );
+    while ( ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO ) {
+	nrow++;
+	ret = SQLFetch( c->stmt );
+    }
     
     list = db_alloc_string_array(nrow);
     if (list == NULL)
 	return DB_FAILED;       
 
-    // Get table names	
-    ret = SQLFetch( c->stmt );
+    /* Get table names */
+    /* ret = SQLFetch( c->stmt ); */
+    ret = SQLFetchScroll( c->stmt, SQL_FETCH_FIRST, 0 );
     while ( ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO )  
     {
 	if ( indi == SQL_NULL_DATA )
@@ -76,3 +89,4 @@ db_driver_list_tables (tlist, tcount, system)
     *tcount = count;
     return DB_OK;
 }
+
