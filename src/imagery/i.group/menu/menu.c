@@ -29,10 +29,10 @@ menu (group, new)
 	fprintf (stderr, "\n");
 	fprintf (stderr, "       2.     Edit group title\n");
 	fprintf (stderr, "\n");
-	fprintf (stderr, "       3.     Include new cell files in the group\n");
+	fprintf (stderr, "       3.     Include new raster files in the group\n");
 	if (nfiles > 0)
 	{
-	    fprintf (stderr, "              or remove cell files from the group\n");
+	    fprintf (stderr, "              or remove raster files from the group\n");
 	    fprintf (stderr, "\n");
 	    fprintf (stderr, "       4.     Assign colors to the group\n");
 	    fprintf (stderr, "\n");
