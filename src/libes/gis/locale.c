@@ -29,7 +29,7 @@ locale_dir(void)
 char *
 G_gettext(const char *package, const char *msgid)
 {
-#ifdef HAVE_LIBINTL_H
+#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
 	static char now_bound[4096];
 	static int initialized;
 
@@ -46,6 +46,8 @@ G_gettext(const char *package, const char *msgid)
 	}
 
 	return dgettext(package, msgid);
+#else
+	return (char *) msgid;
 #endif
 }
 

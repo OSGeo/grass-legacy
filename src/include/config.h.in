@@ -163,6 +163,9 @@
 /* define if iconv.h exists */
 #undef HAVE_ICONV_H
 
+/* define if NLS requested */
+#undef USE_NLS
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
