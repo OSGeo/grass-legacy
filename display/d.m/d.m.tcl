@@ -53,10 +53,15 @@ proc Dm::create { } {
     # Menu description
     set descmenu {
         "&File" all file 0 {
-            {command "E&xit" {} "Exit BWidget demo" {} -command { DmPrint::clean;  exit } }
+            {command "E&xit" {} "Exit d.m" {} -command { DmPrint::clean;  exit } }
         }
         "&Options" all options 0 {
         }
+        "&Help" all options 0 {
+            {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
+            {command "&About GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
+        }
+
     }
 
     set prgtext   "Creating MainFrame..."
