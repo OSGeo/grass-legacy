@@ -1,0 +1,122 @@
+/****************************************************************
+ *
+ * MODULE:       v.net.path
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      Shortest path on vector network
+ *               
+ * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ****************************************************************/
+#include "gis.h"
+#include "Vect.h"
+
+int path ( struct Map_info *, struct Map_info *, int );
+
+int main(int argc, char **argv)
+{
+    struct Option *input_opt, *output_opt, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
+    struct Flag   *geo_f;
+    struct GModule *module;
+    char   *mapset;
+    struct Map_info In, Out;
+    int    type, afield, nfield, geo;
+
+    /* Initialize the GIS calls */
+    G_gisinit (argv[0]) ;
+
+    module = G_define_module();
+    module->description = "Find shortest path on vector network. Reads start/end points"
+	    "from standard input in format:\n"
+	    "start_point_category end_point_category\n"
+	    "Points must be exactly on network nodes.";
+
+    input_opt = G_define_standard_option(G_OPT_V_INPUT);
+    output_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+
+    type_opt =  G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->options    = "line,boundary";
+    type_opt->answer     = "line,boundary";
+    type_opt->description = "Arc type";
+
+    afield_opt = G_define_standard_option(G_OPT_V_FIELD);
+    afield_opt->key = "afield";
+    afield_opt->answer = "1";
+    afield_opt->description = "Arc field";
+    
+    nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
+    nfield_opt->key = "nfield";
+    nfield_opt->answer = "2";
+    nfield_opt->description = "Node field";
+
+    afcol = G_define_option() ;
+    afcol->key         = "afcol" ;
+    afcol->type        = TYPE_STRING ;
+    afcol->required    = NO ; 
+    afcol->description = "Arc forward/both direction(s) cost column" ;
+    
+    abcol = G_define_option() ;
+    abcol->key         = "abcol" ;
+    abcol->type        = TYPE_STRING ;
+    abcol->required    = NO ; 
+    abcol->description = "Arc backward direction cost column" ;
+    
+    ncol = G_define_option() ;
+    ncol->key         = "ncol" ;
+    ncol->type        = TYPE_STRING ;
+    ncol->required    = NO ; 
+    ncol->description = "Node cost column" ;
+    
+    geo_f = G_define_flag ();
+    geo_f->key             = 'g';
+    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
+    
+    if(G_parser(argc,argv))
+        exit(-1);
+
+    type = Vect_option_to_types ( type_opt ); 
+    afield = atoi (afield_opt->answer);
+    nfield = atoi (nfield_opt->answer);
+
+    if ( geo_f->answer ) {
+       geo = 1; 
+       if (G_projection () != PROJECTION_LL)
+          G_warning("The current projection is not longitude-latitude");
+    }
+    else geo = 0;
+    
+    mapset = G_find_vector2 (input_opt->answer, NULL); 
+      
+    if ( mapset == NULL) 
+      G_fatal_error ("Could not find input vector '%s'\n", input_opt->answer);
+
+    Vect_set_open_level(2);
+    Vect_open_old (&In, input_opt->answer, mapset); 
+
+    Vect_set_fatal_error (GV_FATAL_PRINT);
+    if (1 > Vect_open_new (&Out, output_opt->answer, Vect_is_3d(&In) )){
+        Vect_close (&In);
+	G_fatal_error ("Failed opening output vector file");
+    }
+
+    Vect_net_build_graph ( &In, type, afield, nfield, afcol->answer, abcol->answer, 
+	                   ncol->answer, geo, 0 );
+
+    path ( &In, &Out, nfield ); 
+
+    Vect_close(&In);
+
+    Vect_build (&Out, stdout);
+    Vect_close(&Out);
+
+    exit(0);
+}
+
+
+
