@@ -87,4 +87,10 @@ int R_pad_invent (char *);
 int R_pad_list ( char ***, int *);
 int R_pad_select (char *);
 int R_pad_perror (char *,int);
+
+/* freetype */
+int R_font_freetype(char *);
+int R_font_freetype_release();
+int R_charset(char *);
+
 #endif
