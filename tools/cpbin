@@ -4,7 +4,7 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 
 use File::Basename;
 
-print "Copying binary modules from 5.0 to 5.1\n";
+print "Copying binary modules from 5.0 to 5.7\n";
 
 $newdir="..";
 $map="./cpbin.conf";
@@ -13,8 +13,8 @@ for $arg (@ARGV) {
     { 
         print "Usage: link [options]\n";
         print "Options\n";	 
-        print "-old=DIR   grass 5.0 ARCH_DISTDIR (required)\n"; 
-        print "-new=DIR   grass 5.1 ARCH_DISTDIR (required)\n";
+        print "-old=DIR   grass 5.3.0 ARCH_DISTDIR (required)\n"; 
+        print "-new=DIR   grass 5.7 ARCH_DISTDIR (required)\n";
         print "-conf=FILE  list of modules\n";
         print "           (default is ./cpbin.conf)\n";		 
 	exit;

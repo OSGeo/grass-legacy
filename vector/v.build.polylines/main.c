@@ -13,7 +13,7 @@
 
   Email: mark.lake@ucl.ac.uk
 
-  Updated to grass 5.1 by Radim Blazek
+  Updated to grass 5.7 by Radim Blazek
   
   *****
 

@@ -1,4 +1,4 @@
-GRASS 5.1 authors
+GRASS 5.7 authors
 (please complete this list)
 $Date$
 
@@ -15,13 +15,12 @@ VECTOR
      supervised by Prof. Giuliano Antoniol (antoniol@ieee.org)
 
 DBMI
- - based on original code from GRASS 5.0
- - Radim Blazek <blazek@itc.it>: core developer of 5.1 enhancements
+ - based on original code from GRASS 5.0 (developer unknown)
+ - Radim Blazek <blazek@itc.it>: core developer of 5.7 enhancements
  - Alexander Shevlakov: drivers and sqlp contributions
 
 DGLib: vector networking
  - Roberto Micarelli: LIBDGL - graph library for vector network analysis
-
 
 FORMS library
  - Radim Blazek <blazek@itc.it>: core developer 

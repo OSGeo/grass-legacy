@@ -6,7 +6,7 @@
 * MODULE:       Vector library 
 *   	    	
 * AUTHOR(S):    Original author CERL, probably Dave Gerdes.
-*               Update to GRASS 5.1 Radim Blazek.
+*               Update to GRASS 5.7 Radim Blazek.
 *
 * PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
 *
@@ -61,7 +61,7 @@ dig_calc_begin_angle (
 
   short_line = 1;
   if (n_points != 2) {
-      /* Search for next different coord. Note that in >= g5.1, threshold
+      /* Search for next different coord. Note that in >= g5.7, threshold
       * is not used for build process. */
       /* 4.1 but do not use opposite node if there are other points */
       for (i = 1; i < n_points - 1; i++) {
@@ -113,7 +113,7 @@ dig_calc_end_angle (struct line_pnts *points, double thresh)
 
   if (n_points != 2)
     {
-      /* Search for next different coord. Note that in >= g5.1, threshold
+      /* Search for next different coord. Note that in >= g5.7, threshold
       * is not used for build process. */
       /* 4.1 but do not use opposite node if there are other points */
       for (i = n_points - 2; i > 0; i--) {

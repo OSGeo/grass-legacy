@@ -10,7 +10,7 @@
 
 /*
 **  Written by Dave Gerdes  8/1988, US Army Construction Engineering Research Lab
-**  Upgrade to 5.1 Radim Blazek
+**  Upgrade to 5.7 Radim Blazek
 */
 #include <stdlib.h>
 #include <string.h>

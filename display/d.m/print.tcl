@@ -147,7 +147,7 @@ proc DmPrint::window { } {
     }
 
     set PW [toplevel .printwin]
-    wm title $PW "Print / Plot (Display Manager - GRASS 5.1)"
+    wm title $PW "Print / Plot (Display Manager - GRASS 5.7)"
 
     # Left part paper + output
     set PWid(left) [ frame $PW.left ]  
@@ -367,7 +367,7 @@ proc DmPrint::print { ptype } {
 	    raise $PWid(preview)
 	} else {
 	    toplevel $PWid(preview)
-	    wm title $PWid(preview) "Preview ( Print / Plot - Display Manager - GRASS 5.1)"
+	    wm title $PWid(preview) "Preview ( Print / Plot - Display Manager - GRASS 5.7)"
         }
 	image create photo preview_image -format PPM -file $PVar(tmpppmfile)
 	set pv [ label $PWid(preview).pvl -image preview_image -bd 1 -relief sunken -width $size -height $size ]

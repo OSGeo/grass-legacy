@@ -1,11 +1,11 @@
 #!/bin/sh
 
-#fetch the description stuff from HTML pages for 5.1
+#fetch the description stuff from HTML pages for 5.7
 
-GRASS51=$HOME/grass51
+GRASS57=$HOME/grass57
 
 ########################
-PATHGRASS50=`grep GRASS50 $GRASS51/include/Make/Platform.make | sed 's+ ++g' |cut -d '=' -f2`
+PATHGRASS50=`grep GRASS50 $GRASS57/include/Make/Platform.make | sed 's+ ++g' |cut -d '=' -f2`
 
 if [ $# -ne 1 ] ; then
  echo g51.extract_description.sh htmlfile

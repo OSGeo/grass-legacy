@@ -38,8 +38,8 @@ pdfdocs: checkdoxygen generatelocaldox
 	test ! -d latex || (cd ./latex && make clean)
 	doxygen ./Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && make pdf && mv refman.pdf grass51vlib_`date '+%Y_%m_%d'`_refman.pdf)
-	@echo "PDF reference in directory ./latex/grass51vlib_`date '+%Y_%m_%d'`_refman.pdf"
+	(cd ./latex && make pdf && mv refman.pdf grass57vlib_`date '+%Y_%m_%d'`_refman.pdf)
+	@echo "PDF reference in directory ./latex/grass57vlib_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
 	rm -rf ./latex ./html Vlib/*.dox

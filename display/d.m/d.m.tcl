@@ -131,7 +131,7 @@ proc Dm::_create_intro { } {
     set ximg  [label $top.x -image [image create photo -file "$dmpath/intro.gif"] ]
 
     set frame [frame $ximg.f -background white]
-    set lab1  [label $frame.lab1 -text "GRASS 5.1 - Display Manager" \
+    set lab1  [label $frame.lab1 -text "GRASS 5.7 - Display Manager" \
                      -background white -foreground black -font {times 16}]
     set lab2  [label $frame.lab2 -textvariable Dm::prgtext -background white -font {times 12} -width 35]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
@@ -730,7 +730,7 @@ proc main {} {
     global auto_path
 
     wm withdraw .
-    wm title . "GRASS 5.1 Display Manager"
+    wm title . "GRASS 5.7 Display Manager"
 
     bind . <Control-Key-o> {
 	Dm::OpenFileBox {}

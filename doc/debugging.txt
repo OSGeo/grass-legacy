@@ -10,3 +10,33 @@ Levels: (recommended levels)
  * 1 - message is printed once or few times per module
  * 3 - each row (raster) or line (vector)
  * 5 - each cell (raster) or point (vector)
+
+Further hints:
+> How can I force gcc, to complain about missing header file?
+ 
+'-Wimplicit-function-declaration'
+'-Werror-implicit-function-declaration'
+     Give a warning (or error) whenever a function is used before being
+     declared.
+
+----------------------------------------------------
+
+To make gcc less tolerant in accepting errors and code flaws, compile
+with:
+
+export CFLAGS='-g -ansi -Wall -D_BSD_SOURCE=1 -D_SVID_SOURCE=1 -D_POSIX_SOURCE=1 -D_POSIX_C_SOURCE=199506L'
+
+Also nice to emulate gcc/MacOSX compiler:
+CFLAGS='-fno-common'
+
+----------------------------------------------------
+A good idea is maybe to use '-Wall -Werror' for the gcc options. This means
+it treats the warnings as errors, i.e. it stops on them. So you have time
+to read them then.
+
+The gcc switch -Wimplicit-function-declaration (implied by -Wall) should
+report missing prototypes (use -Werror-implicit-function-declaration to
+make it an error rather than a warning).
+ 
+The linker switch --warn-common (e.g. LDFLAGS='-Wl,--warn-common') might
+be useful for catching multiply-defined symbols.

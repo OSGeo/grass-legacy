@@ -1,5 +1,5 @@
 /*!
-\mainpage GRASS 5.1 Programmer's Manual
+\mainpage GRASS 5.7 Programmer's Manual
 
 by GRASS Development Team
 
@@ -14,7 +14,7 @@ Library functions API:
 For details please read Blazek et al. 2002 (see below) as well as the
 references in this document.
 
-The Vect_*() functions are the programmer's API for GRASS 5.1 vector
+The Vect_*() functions are the programmer's API for GRASS 5.7 vector
 programming. For details see:
 
 <a href="../lib/vector/html/index.html">Vector library

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# Generate GRASS 5.1 ascii file containing random closed polygons
+# Generate GRASS 5.7 ascii file containing random closed polygons
 # Generated vector may be used for tests of v.clean 
 
 $gisdbase = `g.gisenv get=GISDBASE`;

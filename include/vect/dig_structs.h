@@ -119,7 +119,7 @@ struct dig_head
     int plani_zone;
     /* double W, E, S, N; */
     double digit_thresh;
-    /* double map_thresh; */ /* not used in g51 */
+    /* double map_thresh; */ /* not used in g57 */
 
     /* Programmers should NOT touch any thing below here */
     /* Library takes care of everything for you          */

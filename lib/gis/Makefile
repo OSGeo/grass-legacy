@@ -254,7 +254,7 @@ $(OBJDIR)/gisinit.o: G.h
 $(OBJDIR)/gisinit.o: $(ARCH_INCDIR)/version.h
 $(OBJDIR)/maskfd.o: G.h
 $(OBJDIR)/opencell.o: G.h
-# openvect.o ***DEPRECATED*** delete next line for 5.1
+# openvect.o ***DEPRECATED*** delete next line for 5.7
 $(OBJDIR)/openvect.o: G.h
 $(OBJDIR)/put_row.o: G.h
 $(OBJDIR)/radii.o: pi.h

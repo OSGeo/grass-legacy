@@ -1,11 +1,11 @@
 $Id$
 
 
-Rules to migrate GRASS 5.0 modules into GRASS 5.1
+Rules to migrate GRASS 5.0 modules into GRASS 5.7
 
-While implementing GRASS 5.1 a major cleanup of GRASS modules
+While implementing GRASS 5.7 a major cleanup of GRASS modules
 has to be done. The following rules shall help the programmer
-to migrate a 5.0 module into the 5.1 environment.
+to migrate a 5.0 module into the 5.7 environment.
 
 
 1. Add GPL statement
@@ -16,7 +16,7 @@ to migrate a 5.0 module into the 5.1 environment.
    o consistent return types. Situation in 5.0:
      The majority of functions return 0 on error and 1 on success, but there
      are many which return 0 on success and a negative value on failure.
-     Proposal for 5.1? see below
+     Proposal for 5.7? see below
 
    o Copying input parameters into a buffer, i.e.:
 

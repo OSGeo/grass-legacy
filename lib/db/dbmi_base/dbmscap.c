@@ -82,7 +82,7 @@ db_copy_dbmscap_entry(dst, src)
  \param 
 */
 /* dbmscap file was used in grass5.0 but it is not used in
- * grass5.1 until we find it necessary. All code for dbmscap
+ * grass5.7 until we find it necessary. All code for dbmscap
  * file is commented here. 
  *
  * Instead of in dbmscap file db_read_dbmscap() searches 

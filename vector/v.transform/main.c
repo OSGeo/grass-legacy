@@ -3,7 +3,7 @@
 * MODULE:       v.transform
 * AUTHOR(S):    See below also.
 *               Eric G. Miller <egm2@jps.net>
-*               Upgrade to 5.1 Radim Blazek
+*               Upgrade to 5.7 Radim Blazek
 * PURPOSE:      To transform a vector layer's coordinates via a set of tie
 *               points.
 * COPYRIGHT:    (C) 2002 by the GRASS Development Team

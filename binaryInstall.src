@@ -6,7 +6,7 @@
 # executable shell script!! Used to generate grass5install.sh by
 # make bindist
 #  
-# GRASS 5 binary package installation tool
+# GRASS 5.7 binary package installation tool
 # platform independent
 #
 # $Id$
@@ -23,6 +23,8 @@ TEST_STR=
 NAME_VER=BIN_DIST_VERSION
 TAR_FILE_SIZE=SIZE_TAR_FILE
 ARCH=ARCHITECTURE
+
+GRASSPRG=grass57
 
 # Set the default BINDIR and DESTDIR directories
 BINDIR=/usr/local/bin
@@ -282,11 +284,11 @@ cd $CURR_DIR
 
 # Creating start script
 echo "Creating start script:"
-echo "$BINDIR/grass51 -> $BINDIR/grass$NAME_VER"
+echo "$BINDIR/$GRASSPRG -> $BINDIR/grass$NAME_VER"
 
 STRING="s|^GISBASE.*|GISBASE\=\'$DESTDIR\'|g"
 
-sed -e $STRING $DESTDIR/grass51.tmp > $BINDIR/grass$NAME_VER
+sed -e $STRING $DESTDIR/$GRASSPRG.tmp > $BINDIR/grass$NAME_VER
 if [ $? -eq 1 ] ; then
   echo "An error occured trying to create the grass start script! Exiting."
   echo "You probably do not have permission to install into $BINDIR."
@@ -294,7 +296,7 @@ if [ $? -eq 1 ] ; then
   exit
 fi
 
-ln -s $BINDIR/grass$NAME_VER $BINDIR/grass51
+ln -s $BINDIR/grass$NAME_VER $BINDIR/$GRASSPRG
 chmod ugo+x $BINDIR/grass$NAME_VER
 
 if [ $? -eq 1 ] ; then
@@ -319,7 +321,7 @@ echo""
 
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"
-echo "    grass51"
+echo "    $GRASSPRG"
 echo ""
 #echo "The graphical user interface can be started within GRASS GIS."
 #echo ""
@@ -329,4 +331,3 @@ echo ""
 echo ""
 echo "Welcome to GRASS GIS. Enjoy this open source GRASS GIS!"
 echo ""
-

@@ -4,3 +4,35 @@ write Vect_map_exists() and implement in:
  -> g.remove
  -> v.digit -n flag
 
+-g57-demo10:
+  - bug in line 97
+  - z value of tin: d.what.vect does not work
+  - .dmrc: icons entries
+
+Missing modules:
+- r.to.sites -> r.to.vect
+
+- g.access: update code from INTER to CMD
+- r. support: update code from INTER to CMD
+
+- change default color white to black:
+   (better define DEFAULT_FG_COLOR, DEFAULT_BG_COLOR in gis.h, update in 5.0 and 5.7)
+display/d.erase/main.c:	color->answer = "white";	/* set default color! */
+display/d.path/main.c:    bgcolor_opt->answer     = "white" ;
+display/d.barscale/main.c:	opt2->answer     = "white" ;
+display/d.legend/main.c:	opt2->answer     = "white" ;
+display/d.colortable/main.c:	opt2->answer     = "white" ;
+display/d.geodesic/main.c:    parm.lcolor->answer     = "white";
+display/d.geodesic/main.c:	line_color = D_translate_color (parm.lcolor->answer = "white");
+display/d.geodesic/main.c:    if(strcmp (parm.lcolor->answer, "white") == 0)
+display/d.graph/main.c:	opt2->answer     = "white" ;
+display/d.histogram/main.c:	opt2->answer     = "white" ;
+display/d.mapgraph/main.c:	opt2->answer     = "white" ;
+display/d.measure/main.c:	parm.c2->answer = "white";
+display/d.rast.arrow/arrow.c:    opt5->answer     = "white" ;
+display/d.rhumbline/main.c:	parm.lcolor->answer     = "white";
+display/d.rhumbline/main.c:		line_color = D_translate_color (parm.lcolor->answer = "white");
+display/d.rhumbline/main.c:	if(strcmp (parm.lcolor->answer, "white") == 0)
+display/d.scale/main.c:	opt2->answer     = "white" ;
+display/d.title/main.c:	opt2->answer     = "white" ;
+display/d.linegraph/linegraph.c:    t_color_opt->answer     = "white" ;

@@ -5,7 +5,7 @@
  * AUTHOR(S):    - J.Soimasuo 15.9.1994, University of Joensuu,
  *                 Faculty of Forestry, Finland
  *               - some additions 2002 Markus Neteler
- *               - updated to 5.1 by Radim Blazek 2003
+ *               - updated to 5.7 by Radim Blazek 2003
  *               
  * PURPOSE:      Calculates distance from a point to nearest line or point in vector layer. 
  *               

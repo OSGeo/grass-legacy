@@ -14,8 +14,8 @@ for $arg (@ARGV) {
     { 
         print "Usage: link [options]\n";
         print "Options\n";	 
-        print "-old=DIR   grass 5.0 source directory (required)\n"; 
-        print "-new=DIR   grass 5.1 source directory (default is ..)\n";
+        print "-old=DIR   grass 5.3.0 source directory (required)\n"; 
+        print "-new=DIR   grass 5.7 source directory (default is ..)\n";
         print "-conf=FILE  file mapping old directory structure to new\n";
         print "-copy      copy files instead of create symbolic links\n";
         print "           (default is ./link.conf)\n";		 
