@@ -20,6 +20,8 @@ int getSelectOpts(argc, argv)
     struct Option *map, *vtype, *color, *sql;
     struct Flag *select, *flag1, *flag3, *flag4;
 
+    memset(SQL_stmt, '\0', sizeof(SQL_stmt));
+
     retval = 0;
 
     select = G_define_flag();

@@ -31,6 +31,7 @@ int getSelectOpts(argc, argv)
     struct Flag *select;
     FILE *fp;
 
+    memset(SQL_stmt, '\0', sizeof(SQL_stmt));
 
     select = G_define_flag();
     select->key = 's';
