@@ -32,9 +32,9 @@ static int clipper ( gnGrpGraph_s    *pgraph ,
     G_debug ( 2, "Net: clipper()" );
 
     if ( gnGrpGet_NodeAttrSize(pgraph) > 0 ) {
-	memcpy( &cost, GNGRP_NODE_ATTR_PTR(pargIn->pnNodeFrom), sizeof(cost) );
+	memcpy( &cost, gnGrpGetNode_Attr(pgraph, pargIn->pnNodeFrom), sizeof(cost) );
 	G_debug ( 2, "  node = %d pcost = %d + %f (arc + node)", 
-		           GNGRP_NODE_ID(pargIn->pnNodeFrom), pargOut->nLinkCost, cost );
+		           gnGrpGetNode_Id(pgraph, pargIn->pnNodeFrom), pargOut->nLinkCost, cost );
 	pargOut->nLinkCost += (gnInt32_t) cost;
     }
     return 0;   
@@ -165,14 +165,14 @@ Vect_net_build_graph (  struct Map_info *Map,
 	}
 	if ( dofw ) {
             G_debug (3, "Add arc %d from %d to %d cost = %d", i, from, to, cost); 
-	    ret = gnGrpAddLink ( gr, from, to, cost, i, NULL, NULL, NULL);
+	    ret = gnGrpAddLink ( gr, from, to, cost, i );
             if ( ret < 0 )
                 G_fatal_error ("Cannot add network arc");
 	}
 	
 	if ( dobw ) {
             G_debug (3, "Add arc %d from %d to %d bcost = %d", -i, to, from, bcost); 
-	    ret = gnGrpAddLink ( gr, to, from, bcost, -i, NULL, NULL, NULL);
+	    ret = gnGrpAddLink ( gr, to, from, bcost, -i );
             if ( ret < 0 )
                 G_fatal_error ("Cannot add network arc");
         }
@@ -238,7 +238,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	    }
 	    G_debug ( 2, "Set node's cost to %d", cost);
 	    dcost = cost;
-	    gnGrpSetNodeAttr  ( gr, &dcost, i); 
+	    gnGrpSetNode_Attr(gr, gnGrpGetNode(gr,i), (gnInt32_t*)&dcost); 
 	}
         G_debug ( 2, "Nodes' costs were set");
     }
@@ -267,6 +267,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 *              ? sum of costs is better return value
 *           -1 : destination unreachable
 */
+#include<fcntl.h>
 int
 Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
 {
@@ -276,7 +277,7 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     Vect_reset_list ( List);
     
     pclip = NULL;
-    if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip )) == NULL ) {
+    if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip, NULL )) == NULL ) {
         if (  gnGrpErrno( &(Map->graph) ) == 0  ) {
             /* printf( "Destination node %d is unreachable from node %d\n" , to , from ); */
 	    if ( cost != NULL )
@@ -288,11 +289,11 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
                  fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
     }
     for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
-	line = GNGRP_LINK_USER(pSPReport->pArc[i].Link);
+	line = gnGrpGetLink_UserId(&(Map->graph), pSPReport->pArc[i].Link);
         G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
-                      GNGRP_NODE_ID(pSPReport->pArc[i].From),
-                      GNGRP_NODE_ID(pSPReport->pArc[i].To),
-                      GNGRP_LINK_COST(pSPReport->pArc[i].Link), /* this is the cost from clip() */
+                      pSPReport->pArc[i].From,
+                      pSPReport->pArc[i].To,
+                      gnGrpGetLink_Cost(&(Map->graph), pSPReport->pArc[i].Link), /* this is the cost from clip() */
                       line,
                       pSPReport->pArc[i].Distance );
         Vect_list_append ( List, line );
