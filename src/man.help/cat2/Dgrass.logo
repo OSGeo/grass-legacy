@@ -1,0 +1,66 @@
+
+
+
+Dgrass.logo(2D)      GRASS Reference Manual       Dgrass.logo(2D)
+
+
+
+NAME
+     Dgrass.logo - Paints a GRASS logo in the current graphics
+     window
+     (D Language Tool)
+
+SYNOPSIS
+     Dgrass.logo
+
+DESCRIPTION
+     Dgrass.logo is primarily a demonstration of the GRASS Dgraph
+     tool in a UNIX Bourne shell macro, which generates the USA-
+     CERL logo.  Users are encouraged to generate their own
+     unique logos by similarly writing such macro shell scripts.
+     Refer to the input file Dgrass.logo located in the GRASS
+     command bin to see how the GRASS logo was generated using
+     Dgraph graphics commands.  The coordinates for this logo
+     were taken from a drawing done on graph paper.  A future
+     option will be to use a local graphics editor to generate a
+     picture.  A translator program would have to be written for
+     each such editor to turn its language into Dgraph language.
+
+NOTES
+     Dgrass.logo will overwrite whatever is in the current
+     window.
+
+SEE ALSO
+     DINTRO[2D]      Introduction to the GRASS D tools
+     Dgraph[2D]      Tool for generating simple graphics
+     Dmapgraph[2D]   Tool for generating simple map graphics
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
