@@ -1,0 +1,49 @@
+.TH g3topbm 1 "02 October 1989"
+.SH NAME
+g3topbm - convert a Group 3 FAX file into a portable bitmap
+.SH SYNOPSIS
+.B g3topbm
+.RB [ -kludge ]
+.RB [ -reversebits ]
+.RB [ -stretch ]
+.RI [ g3file ]
+.SH DESCRIPTION
+Reads a Group 3 FAX file as input.
+Produces a portable bitmap as output.
+.SH OPTIONS
+.TP
+.B -kludge
+Tells
+.I g3topbm
+to ignore the first few lines of the file;
+sometimes FAX files have some junk at the beginning.
+.TP
+.B -reversebits
+Tells
+.I g3topbm
+to interpret bits least-significant
+first, instead of the default most-significant first.
+Apparently some FAX modems do it one way and others do it the other way.
+If you get a whole bunch of "bad code word" messages, try using this
+flag.
+.TP
+.B -stretch
+Tells
+.I g3topbm
+to stretch the image vertically by
+duplicating each row.
+This is for the low-quality transmission mode.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH REFERENCES
+The standard for Group 3 FAX is defined in CCITT Recommendation T.4.
+.SH "SEE ALSO"
+pbmtog3(1), pbm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Paul Haeberli <paul@manray.sgi.com>.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
