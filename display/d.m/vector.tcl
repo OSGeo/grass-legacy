@@ -51,6 +51,7 @@ proc DmVector::legend { id } {
 }
 
 proc DmVector::create { tree parent } {
+    global form_mode
     variable opt
     variable count
 
@@ -113,7 +114,13 @@ proc DmVector::create { tree parent } {
     set opt($count,minreg) "" 
     set opt($count,maxreg) "" 
 
-    set opt($count,_query_text) 1 
+    # Default form mode used for vectors, it can be 'gui' (default) or 'txt'
+    set form_mode [exec g.gisenv get=DM_FORM_MODE]
+    if { $form_mode == "txt" } {
+        set opt($count,_query_text) 1 
+    } else {
+        set opt($count,_query_text) 0
+    }
     set opt($count,_query_edit) 0 
 
     set opt($count,_width) 1
