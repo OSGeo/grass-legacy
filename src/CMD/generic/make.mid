@@ -31,6 +31,7 @@ X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
 
 VASKLIB     = $(LIBDIR)/libvask.a
+EDITLIB     = $(LIBDIR)/libedit.a
 
 GISLIB      = $(LIBDIR)/libgis.a
 G3DLIB      = $(LIBDIR)/libg3d.a

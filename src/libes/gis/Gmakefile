@@ -51,13 +51,9 @@ OBJ = \
     dalloc.o\
     date.o\
     datum.o\
-    def_window.o\
     dig_title.o\
     distance.o\
     done_msg.o\
-    edit_cats.o\
-    edit_cellhd.o\
-    edit_hist.o\
     eigen_tools.o\
     endian.o\
     env.o\
@@ -186,8 +182,14 @@ OBJ = \
     zone.o\
     G_dump.o
 
+EOBJ = \
+    edit_cats.o\
+    edit_cellhd.o\
+    edit_hist.o
+
 all: \
 	$(GISLIB) \
+	$(EDITLIB) \
 	$(ETC)/ellipse.table \
 	$(ETC)/datum.table \
 	$(ETC)/projections \
@@ -200,6 +202,9 @@ all: \
 	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
 $(GISLIB): $(OBJ)
+	$(AR)
+
+$(EDITLIB): $(EOBJ)
 	$(AR)
 
 $(ETC)/ellipse.table: ellipse.table

@@ -1,7 +1,7 @@
 /*
  **********************************************************************
  *
- *   G_edit_history (hist)
+ *   E_edit_history (hist)
  *      struct History *hist 
  *
  *   Interactively prompts the user for history information.
@@ -14,10 +14,11 @@
  *
  **********************************************************************/
 
-#include "vask.h"
 #include "gis.h"
+#include "vask.h"
+#include "edit.h"
 
-int G_edit_history ( struct History *phist )
+int E_edit_history ( struct History *phist )
 {
     int len;
     int i;

@@ -1,6 +1,6 @@
 /**********************************************************************
  *
- *   G_edit_cats (name, cats, option)
+ *   E_edit_cats (name, cats, option)
  *      char *name
  *      struct Categories *cats 
  *
@@ -30,10 +30,11 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "vask.h"
+#include "edit.h"
 
 #define NLINES 10
 
-int G_edit_cats (
+int E_edit_cats (
     char *name,
     struct Categories *cats, int option)
 {
@@ -175,7 +176,7 @@ int G_edit_cats (
 
 /**********************************************************************
  *
- *   G_edit_fp_cats (name, cats)
+ *   E_edit_fp_cats (name, cats)
  *      char *name
  *      struct Categories *cats 
  *
@@ -196,11 +197,10 @@ int G_edit_cats (
  *      string. If it is necessary to let the user edit this
  *      a separate interface must be used
  **********************************************************************/
-#include "gis.h"
 
 #define NLINES 10
 
-int G_edit_fp_cats (
+int E_edit_fp_cats (
     char *name,
     struct Categories *cats )
 {

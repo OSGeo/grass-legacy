@@ -7,7 +7,7 @@
 /*
  **********************************************************************
  *
- *   G_edit_cellhd (cellhd, type)
+ *   E_edit_cellhd (cellhd, type)
  *      struct Cell_head *cellhd   (cellhd to be defined)
  *      int type 
  *        0 = region - user input resolutions
@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include "vask.h"
 #include "gis.h"
+#include "edit.h"
 
 #if 0
 /* never used...? */
@@ -125,7 +126,7 @@ static void format_resolution(double res, char *buf, int projection)
 	format_value(G_format_resolution, res, buf, projection);
 }
 
-int G_edit_cellhd (struct Cell_head *cellhd , int type)
+int E_edit_cellhd (struct Cell_head *cellhd , int type)
 {
     char ll_north[20];
     char ll_south[20];
@@ -153,7 +154,7 @@ int G_edit_cellhd (struct Cell_head *cellhd , int type)
 
     if (type == AS_CELLHD && (cellhd->rows <= 0 || cellhd->cols <= 0))
     {
-	fprintf (stderr, "G_edit_cellhd() - programmer error\n");
+	fprintf (stderr, "E_edit_cellhd() - programmer error\n");
 	fprintf (stderr, "  ** rows and cols must be positive **\n");
 	return -1;
     }

@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include "gis.h"
+#include "edit.h"
 
 int 
 main (int argc, char *argv[])
@@ -26,7 +27,7 @@ main (int argc, char *argv[])
 	}
     }
     G_read_history (name, mapset, &hist);
-    if(G_edit_history (&hist) > 0 && G_write_history (name, &hist) >= 0)
+    if(E_edit_history (&hist) > 0 && G_write_history (name, &hist) >= 0)
 	fprintf (stdout,"History file for [%s] updated\n", name);
     else
 	fprintf (stdout,"History file for [%s] not updated\n", name);

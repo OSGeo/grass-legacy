@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #endif
 #include "gis.h"
+#include "edit.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
@@ -288,7 +289,7 @@ hitreturn();
 	hitreturn();
     }
 
-    if(G_edit_cellhd (&cellhd,1) < 0)
+    if(E_edit_cellhd (&cellhd,1) < 0)
 	exit(0);
 
 /* adjust from nbytes to nbytes-1 */

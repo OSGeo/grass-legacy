@@ -358,9 +358,6 @@ char *G_datum_name(int);
 char *G_datum_description(int);
 char *G_datum_ellipsoid(int);
 
-/* def_window.c */
-int G_def_window(struct Cell_head *);
-
 /* dig_title.c */
 char *G_get_dig_title(char *, char *);
 
@@ -374,16 +371,6 @@ double G_distance_point_to_line_segment(double, double, double, double, double,
 
 /* done_msg.c */
 int G_done_msg(char *);
-
-/* edit_cats.c */
-int G_edit_cats(char *, struct Categories *, int);
-int G_edit_fp_cats(char *, struct Categories *);
-
-/* edit_cellhd.c */
-int G_edit_cellhd(struct Cell_head *, int);
-
-/* edit_hist.c */
-int G_edit_history(struct History *);
 
 /* eigen_tools.c */
 int G_tqli(double [], double [], int, double **);
