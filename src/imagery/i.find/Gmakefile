@@ -1,0 +1,6 @@
+LIST = main.o
+
+$(ETC)/i.find: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
