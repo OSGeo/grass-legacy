@@ -29,15 +29,28 @@ fi
 if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
         echo
-	g.remove help 2>&1 | sed "s/g.remove/$program/g"
+	g.remove help 2>&1 | sed "s/g.remove/$program [-f]/"
 	echo
 	echo "Note:"
-	echo "  You can use wildcard for name."
+	echo "  You can use wildcard for name. Use -f flag to force removal."
+	echo "  ? or * wildcards should be enclosed with '...' to avoid being expanded"
+	echo "  by the shell."
+	echo "          e.g., g.mremove rast='*.dem'"
+	echo
+	echo "Warning:"
+	echo "  Use -f flag only when you know what you're doing."
 	exit 1
 fi
 
+force=
 for i
 do
+	if [ "$i" = "-f" ]
+	then
+		force=1
+		continue
+	fi
+
 	echo $i | grep '=' > /dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
@@ -65,6 +78,17 @@ do
 done
 
 echo g.remove rast=$rast vect=$vect icon=$icon labels=$labels sites=$sites region=$region group=$group 3dview=$dview
-echo
-g.remove rast=$rast vect=$vect icon=$icon labels=$labels sites=$sites region=$region group=$group 3dview=$dview
+
+yn=y
+if [ ! "$force" ]
+then
+	echo
+	echo "Did you mean this(y/n)?"
+	read yn
+fi
+
+if [ "$yn" = "y" -o "$yn" = "Y" ]
+then
+	echo g.remove rast=$rast vect=$vect icon=$icon labels=$labels sites=$sites region=$region group=$group 3dview=$dview
+fi
 
