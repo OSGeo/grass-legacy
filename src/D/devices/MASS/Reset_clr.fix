@@ -1,0 +1,53 @@
+/*  %W%  %G%  */
+
+#define FUDGE 30.
+reset_color(number, red, grn, blu)
+	int number ;
+	unsigned char red, grn, blu ;
+{
+	int INDEX ;
+	int _norm() ;
+	float r,g,b, fudge();
+
+/* silently wrap numbers around available colors */
+	number = number % (get_num_colors() - 1) ;
+
+/* normalize the RGB values each to the range FUDGE to 256
+ * as the MASSCOMP shows low intensities much too weak
+ */
+	r = fudge(red);
+	g = fudge(grn);
+	b = fudge(blu);
+
+
+	INDEX = 
+		(_norm(r/256.) << 20) +
+		(_norm(g/256.) << 12) +
+		(_norm(b/256.) <<  4) ;
+
+	mgicm(number, INDEX) ;
+	return 0 ;
+}
+
+_norm(intensity)
+	float intensity ;
+{
+	return ( (unsigned int)(intensity * 15 +.5) & 0x00ff) ;
+}
+
+static
+float
+fudge(x)
+    unsigned char x;
+{
+    int i;
+    float f;
+
+    i = (int) x;
+    f = (float) i;
+    f = (256. - FUDGE) * f / 256. + FUDGE ;
+    if (f < 0.0) f= 0.0;
+    if (f > 255.0) f= 255.0;
+
+    return f;
+}
