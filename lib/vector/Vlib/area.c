@@ -372,3 +372,30 @@ Vect_get_area_area (
   return ( size );
 }
 
+/*!
+\param vmap: Map input
+\param varea: area number
+\param vfield: field number
+\return -1: no centroid, 0: no category, >0: category
+*/
+int
+Vect_get_area_cat ( struct Map_info *Map, int area, int field ) {
+
+    static struct line_cats *cats = NULL;
+    int centroid, cat;
+
+    if ( cats == NULL ) 
+	cats = Vect_new_cats_struct ();
+    
+    centroid = Vect_get_area_centroid ( Map, area );
+    if( centroid > 0 ) {
+	Vect_read_line (Map, NULL, cats, centroid );
+	Vect_cat_get(cats, field, &cat);
+	G_debug (3, "Vect_get_area_cat: display area %d, centroid %d, cat %d", area, centroid, cat);
+    }
+    else
+	cat=-1; /* no centroid */
+    
+     
+    return cat;
+}
