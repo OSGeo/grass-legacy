@@ -24,18 +24,21 @@ do not need to be spcified each time.
 <P>
 <em>Update attribute entries to new value based on SQL rule:</em><br>
 <tt>echo "UPDATE roads SET travelcost=5 WHERE cat=1" | db.execute</tt>
+<P>
+<em>Update attribute entries to new value based on SQL rule:</em><br>
+<tt>echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute</tt>
 
 <P>
 <em>Add new column to attribute table:</em><br>
 <tt>echo "ALTER TABLE roads ADD COLUMN length double" | db.execute</tt>
 
 <h2>SEE ALSO</h2>
-<em><a HREF="http://grass.itc.it/grass51/tutorial/ex_complex.html#shortestpath">GRASS 5.7
-tutorial pages</a>,
+<em><a HREF="http://grass.itc.it/grass57/tutorial/index.html">GRASS 5.7 tutorial pages</a>,
 <em><a HREF="db.columns.html">db.columns</a>,
 <a HREF="db.describe.html">db.describe</a>,
 <a HREF="db.drivers.html">db.drivers</a>,
 <a HREF="db.droptable.html">db.droptable</a>,
+<a HREF="db.select.html">db.select</a>,
 <a HREF="db.tables.html">db.tables</a></em>
 
 <h2>AUTHOR</h2>
