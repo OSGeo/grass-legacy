@@ -69,6 +69,8 @@ OBJ = \
     geodesic.o\
     geodist.o\
     get_cellhd.o\
+    get_datum.o\
+    get_datum_name.o\
     get_ellipse.o\
     get_ell_name.o\
     get_projname.o\
