@@ -461,13 +461,11 @@ int Get_curses_text (char answer[])
     {
 #ifdef ASIAN_CHARS
 	newchar = wgetch(INFO_WIN);
-#else
-	newchar = wgetch(INFO_WIN) & 0177;
-#endif
 
-#ifdef ASIAN_CHARS
 	if (((newchar > 037) && (newchar < 0177)) || newchar < 0)
 #else
+	newchar = wgetch(INFO_WIN) & 0177;
+
 	if ((newchar > 037) && (newchar < 0177))
 #endif
 	{
