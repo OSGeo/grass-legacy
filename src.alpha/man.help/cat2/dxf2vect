@@ -1,0 +1,66 @@
+
+
+
+dxf2vect(2G)         GRASS Reference Manual          dxf2vect(2G)
+
+
+
+NAME
+     dxf2vect - DXF format to GRASS vector format conversion
+     program
+     (G Language Tool)
+
+SYNOPSIS
+     dxf2vect dxf_filename output_directory
+
+DESCRIPTION
+     dxf2vect generates a set of ascii dig maps, one for each DXF
+     layer in the dig directory.  dxf2vect will only recognize
+     points, lines, and polylines in the DXF format, and will
+     translate these to the GRASS vector format;  other types of
+     data are ignored.  The input to the program is as follows:
+
+     dxf_filename
+          The name of the DXF file, including its full pathname.
+
+     output_directory
+          This is the name of the directory in which dxf2vect
+          will place the output files it creates.  An output file
+          in ascii dig format will be created for each unique DXF
+          "map layer" (aka "level") present in the DXF file.  The
+          name of each output file will be the same as that of
+          the DXF "map layer" from which it was created.
+
+NOTES
+     dxf2vect only converts DXF files to the GRASS vector format.
+     dxf2vect does not contain any of the quality control
+     functions available in digit that will prevent improper data
+     from getting into GRASS.  Also, this program does not create
+     new labels nor other means to identify the points or lines
+     that occur in the DXF file, except for those entities
+     present in the original DXF file.  If present, entities are
+     placed in output file(s) corresponding to the levels
+     (layers) on which they occurred in the DXF input file.  The
+     resulting data in vector format will probably have to be
+     massaged in digit to make it useful for something other than
+     graphic display.
+
+     dxf2vect does not truncate map layer names to the maximum
+     file name size of the operating system in use.
+
+AUTHOR
+     Charles Ehlschlaeger, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+Printed 3/28/90            G-language                           1
+
+
+
