@@ -5,7 +5,7 @@
  *
  * MODULE:       s.in.ascii
  * AUTHOR(S):    Original author unknown - probably CERL
- *               Markus Neteler - neteler@geog.uni-hannover.de
+ *               Markus Neteler - neteler@geog.uni-hannover.de (improvements)
  * PURPOSE:      Import ASCII sites lists and their descriptions into
  *               a GRASS sites list file. 
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
@@ -17,13 +17,9 @@
  *****************************************************************************/
 
 #include <string.h>
+#include <stdio.h>
 #include "gis.h"
 #include "local_proto.h"
-
-/* 
- * $Id$ */
-
-/* 12/99 removed elev data flag. MN. not required any more */
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
                   * required for s.to.vect and s.to.rast */
@@ -31,7 +27,7 @@ static int loop; /* added #cat support for site_list 11/99 M. Neteler
 int 
 main (int argc, char *argv[])
 {
-    char me;
+    char *me;
     char *output, *input;
     char *fs;
     int dims, i, has_cat;
@@ -47,7 +43,6 @@ main (int argc, char *argv[])
     G_gisinit (me = argv[0]);
 
     module = G_define_module();
-
     module->description = 
       "Convert an ASCII listing of site locations "
       "into a GRASS site list file.";
@@ -80,7 +75,8 @@ main (int argc, char *argv[])
     parm.fs->answer = "space";
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(-1);
+	
     if((input = parm.input->answer))
     {
 	in_fd = fopen (input, "r");
