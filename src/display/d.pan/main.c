@@ -12,28 +12,31 @@
 int main (int argc, char **argv)
 {
     int stat;
-    char rast[128], vect[128];
+    char **rast, **vect;
+    int nrasts, nvects;
     char command[128];
     struct Flag *quiet;
     struct Option *rmap, *vmap, *zoom;
     double magnify;
     char *mapset;
+    int i;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
     R_open_driver();
 
-    if(D_get_cell_name (rast) < 0)
-               *rast = 0;
-    if(D_get_dig_name (vect) < 0)
-               *vect = 0;
+    if(D_get_cell_list (&rast, &nrasts) < 0)
+               rast = NULL;
+    if(D_get_dig_list (&vect, &nvects) < 0)
+               vect = NULL;
     R_close_driver();
                     
     rmap = G_define_option();
     rmap->key = "rast";
     rmap->type = TYPE_STRING;
-    if (*rast)
-          rmap->answer = rast;
+    rmap->multiple = YES;
+    if (nrasts)
+          rmap->answers = rast;
     rmap->required = NO;
     rmap->gisprompt = "old,cell,raster" ;
     rmap->description = "Name of raster map";
@@ -41,13 +44,14 @@ int main (int argc, char **argv)
     vmap = G_define_option();
     vmap->key = "vector";
     vmap->type = TYPE_STRING;
-    if (*vect)
-          vmap->answer = vect;
+    vmap->multiple = YES;
+    if (nrasts)
+          vmap->answers = vect;
     vmap->required = NO;
     vmap->gisprompt = "old,dig,vector" ;
     vmap->description = "Name of vector map";
                                                         
-    if(!*rast && !*vect)
+    if(!rast && !vect)
     {
 	    rmap->required = YES;
     }
@@ -70,36 +74,50 @@ int main (int argc, char **argv)
     sscanf(zoom->answer,"%lf", &magnify); 
 
 /* Make sure map is available */
-    if (rmap->required == YES && rmap->answer == NULL)
+    if (rmap->required == YES && rmap->answers == NULL)
 	exit(0);
 
-    if (rmap->answer)
+    if (rmap->answers)
     {
-    	mapset = G_find_cell2 (rmap->answer, "");
-    	if (mapset == NULL)
-    	{
-		char msg[256];
-		sprintf(msg,"Raster file [%s] not available", rmap->answer);
-		G_fatal_error(msg) ;
+	if (!nrasts)
+	{
+		for(i=0; rmap->answers[i]; i++);
+		nrasts = i;
+	}
+	for(i=0; i<nrasts; i++){
+    		mapset = G_find_cell2 (rmap->answers[i], "");
+    		if (mapset == NULL)
+    		{
+			char msg[256];
+			sprintf(msg,"Raster file [%s] not available", rmap->answers[i]);
+			G_fatal_error(msg) ;
+		}
 	}
     }
 
-    if (vmap->required == YES && vmap->answer == NULL)
+    if (vmap->required == YES && vmap->answers == NULL)
 	exit(0);
 
-    if (vmap->answer)
+    if (vmap->answers)
     {
-    	mapset = G_find_vector2 (vmap->answer, "");
-    	if (mapset == NULL)
-    	{
-		char msg[256];
-		sprintf(msg,"Vector file [%s] not available", vmap->answer);
-		G_fatal_error(msg) ;
+	if (!nvects)
+	{
+		for(i=0; vmap->answers[i]; i++);
+		nvects = i;
+	}
+	for(i=0; i<nvects; i++){
+    		mapset = G_find_vector2 (vmap->answers[i], "");
+    		if (mapset == NULL)
+    		{
+			char msg[256];
+			sprintf(msg,"Vector file [%s] not available", vmap->answers[i]);
+			G_fatal_error(msg) ;
+		}
 	}
     }
 
     /* if map was found in monitor: */
-    if (*rast || *vect) 
+    if (rast || vect) 
        quiet->answer=1;
         
     R_open_driver();
@@ -119,17 +137,23 @@ int main (int argc, char **argv)
     system(command);
 
 /* Redraw raster map */
-    if (*rast)
+    if (rast)
     {
-      sprintf(command, "d.rast map=%s", rmap->answer);
-      system(command);
+      for(i=0; i<nrasts; i++)
+      {
+      	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
+      	system(command);
+      }
     }
 
 /* Redraw vector map */
-    if (*vect)
+    if (vect)
     {
-      sprintf(command, "d.vect map=%s", vmap->answer);
-      system(command);
+      for(i=0; i<nvects; i++)
+      {
+      	sprintf(command, "d.vect map=%s", vmap->answers[i]);
+      	system(command);
+      }
     }
     
 
