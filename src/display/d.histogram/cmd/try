@@ -1,0 +1,62 @@
+bar.c:/* bar.c 
+bar.c: * bar(dist_stats) 
+bar.c: * PURPOSE: To draw a bar-chart representing the histogram
+bar.c: * 2) see bar.h for normalized coordinates of the different parts
+bar.c: *    of the bar-chart, like the origin of the chart, the label
+bar.c:#include "bar.h"
+bar.c:bar(dist_stats, name, mapset)
+bar.c:	long int bar_height;     /* height, in pixels, of a histogram bar */
+bar.c:	long int bar_color;      /* color/category number of a histogram bar */
+bar.c:	int x_box[5];             /* for histogram bar coordinates */
+bar.c:	/* figure tic_every and tic_units for the x-axis of the bar-chart.
+bar.c: * legend bar on each iteration evenly divisible, a tic-mark
+bar.c:		/* figure bar color and height 
+bar.c:    * determines the bar height.  if a stat cannot be found for the
+bar.c:    * cat, then the bar color will be black and its height will be 0.
+bar.c:				bar_color = ptr->cat;
+bar.c:				bar_height =
+bar.c:					bar_color = ptr->cat;
+bar.c:					bar_height =
+bar.c:					bar_color = D_translate_color("black");
+bar.c:					bar_height = yoffset; /* zero */
+bar.c:		/* draw the bar */
+bar.c:				/* draw the bar as a box */
+bar.c:				R_color(bar_color);
+bar.c:				y_box[1]= y_box[2] = bar_height;
+bar.c:				/* draw the bar as a line */
+bar.c:				D_color(bar_color, colors);
+bar.c:				y_box[1] = bar_height;
+bar.c: * first, figure tic_every and tic_units for the x-axis of the bar-chart.
+main.c: * PURPOSE: To draw a bar-chart or a pie-chart representing the
+main.c: * is "count" The style option is either "pie" or "bar," the default
+main.c: * is "bar"  
+main.c: *   upgrades both the get_stats() and the pie() and bar() routines
+main.c:	opt4->description= "Indicate if a pie or bar chart is desired" ;
+main.c:	opt4->answer     = "bar" ;
+main.c:	if (strcmp(opt4->answer,"bar") == 0)
+main.c:		bar(dist_stats);
+pie.c:long int bar_height;     /* height, in pixels, of a histogram bar */
+pie.c:long int bar_color;      /* color/category number of a histogram bar */
+pie.c:int x_box[6];             /* for histogram bar coordinates */
+pie.c:bar_height = y_line[1] = y_line[2] = b-(int)(BAR_Y2*height);
+pie.c:/* figure tic_every and tic_units for the x-axis of the bar-chart.
+pie.c: * legend bar on each iteration evenly divisible, a tic-mark
+pie.c:    * determines the bar height.  if a stat cannot be found for the
+pie.c:    * cat, then the bar color will be black and its height will be 0.
+pie.c:         bar_color = ptr->cat; 
+pie.c:         R_color(bar_color);
+pie.c:         draw_slice_filled((int)bar_color,(int)color,(double)ORIGIN_X,
+pie.c:         R_color(bar_color);
+pie.c:            bar_color = ptr->cat;    
+pie.c:            R_color(bar_color);
+pie.c:            draw_slice_filled((int)bar_color,(int)color,(double)ORIGIN_X,
+pie.c:            R_color(bar_color);
+pie.c:            bar_color = D_translate_color("black");  
+pie.c:            R_standard_color(bar_color);
+pie.c:   /* draw the bar */
+pie.c:         /* draw the bar as a box */
+pie.c:         y_box[1] = y_box[2] = bar_height; 
+pie.c:         /* draw the bar as a line */
+pie.c:         R_color(bar_color);
+pie.c:         y_box[1] = bar_height;
+pie.c:/* draw border around legend bar */
