@@ -23,6 +23,7 @@
 
 #searching for wish8.x:
 SEARCHCOMMAND=wish8
+CURR_DIR=`pwd`
 
 k=0
 PATHLIST=""
@@ -40,6 +41,8 @@ for i in $SEARCHPATHS ; do
       PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
    fi
 done
+
+cd $CURR_DIR
 
 #now all wish8.x are stored in $PATHLIST
 #take the first and start tcltkgrass
@@ -125,8 +128,6 @@ stty -tabs
 
 echo "Please select location and mapset."
 eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
-
- 
 
 # unset the MONITOR variable to force user to select one if they are going
 # to do graphics.
