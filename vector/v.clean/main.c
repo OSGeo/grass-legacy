@@ -53,8 +53,8 @@ main (int argc, char *argv[])
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
-			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line"
-			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n";
+			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line\n"
+			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
