@@ -1,0 +1,7 @@
+$(BIN)/Dclear.screen: clr_scr.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ clr_scr.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(D_LIB): #
