@@ -299,8 +299,14 @@ srcdist: FORCE distclean
 	echo "   initial CVS import" >> ChangeLog.cut
 	${SHELL} -c "mv ChangeLog.cut ChangeLog"
 	${SHELL} -c "rm -f ChangeLog.bak"
-	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
-	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+	${SHELL} -c "mkdir ./grass-${VERSION}" ; true
+	@ # needed to store code in package with grass-version path:
+	${SHELL} -c "mv * ./grass-${VERSION} " ; true
+	tar cvfz grass-${VERSION}_src.tar.gz ./grass-${VERSION}/* --exclude=CVS
+	@ # restore src code location:
+	${SHELL} -c "mv ./grass-${VERSION}/* ." ; true
+	${SHELL} -c "rmdir ./grass-${VERSION}" ; true
+	@ echo "Distribution source package: grass-${VERSION}_src.tar.gz ready."
 
 # make a binary package for distribution:
 bindist: FORCE
@@ -444,8 +450,6 @@ clean: FORCE mostlyclean
 	@ echo "Performing clean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
-	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h  2>/dev/null ; true"
-	${SHELL} -c "rm -f ${SRCDIR}/src/include/winname.h  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmake${NAME_VER}    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmakelinks${NAME_VER}  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/grass${NAME_VER}    2>/dev/null ; true"
@@ -470,6 +474,8 @@ clean: FORCE mostlyclean
 distclean: FORCE clean
 	@ echo "Performing distclean step..."
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/include/winname.h  2>/dev/null ; true"
 	${SHELL} -c "rm -f config.cache config.log               2>/dev/null ; true"
 	${SHELL} -c "rm -f config.status config.status.${ARCH}   2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"

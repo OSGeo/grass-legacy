@@ -13,9 +13,9 @@ f_not(int argc, const int *argt, void **args)
 	CELL *arg1 = args[1];
 	int i;
 
-	if (argc < 2)
+	if (argc < 1)
 		return E_ARG_LO;
-	if (argc > 2)
+	if (argc > 1)
 		return E_ARG_HI;
 
 	if (argt[1] != CELL_TYPE)

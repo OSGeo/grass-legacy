@@ -6,9 +6,7 @@
 #include "raster.h"
 #include "local_proto.h"
 
-static int max(int,int);
-
-double round(double in, int sd) {
+static double round_to(double in, int sd) {
     double mult = 1, out;
     
     while ( rint(in * mult) < pow(10,sd-1)  )
@@ -52,8 +50,8 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     
     resetres = 1;
     while ( resetres ) {
-	nsr = round(window->ns_res, 3); 
-	ewr = round(window->ew_res, 3); 
+	nsr = round_to(window->ns_res, 3); 
+	ewr = round_to(window->ew_res, 3); 
 
 	td = ceil (north / nsr);
 	tnorth = td * nsr;
@@ -67,8 +65,8 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	ns = tnorth - tsouth;
 	ew = teast - twest;
 	if ( ( ns < 2 * window->ns_res  || ew < 2 * window->ew_res )  && !hand )   {
-	    nsr = round (nsr/10.0, 3);
-	    ewr = round (ewr/10.0, 3);
+	    nsr = round_to (nsr/10.0, 3);
+	    ewr = round_to (ewr/10.0, 3);
 	    if ( nsr < 0.00000001 || ewr < 0.00000001 ) {
 		fprintf(stderr, "Minimum resolution supported by d.zoom reached.\n") ;
 		resetwin = 0;
@@ -102,8 +100,8 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     nrow = ( tnorth - tsouth ) / window->ns_res; 
     ncol = ( teast - twest ) / window->ew_res; 
     if ( ( nrow > 10000000 || ncol > 10000000 ) && !hand ) {
-	nsr = round ( window->ns_res * 10, 3); 
-	ewr = round ( window->ew_res * 10, 3); 
+	nsr = round_to ( window->ns_res * 10, 3); 
+	ewr = round_to ( window->ew_res * 10, 3); 
 	fprintf(stderr, "\nResolution is too high for selected region.\n") ;
 	fprintf(stderr, "Buttons:\n") ;
 	fprintf(stderr, "%s Decrease resolution to n-s = %.20f e-w = %.20f\n", LBTN, nsr, ewr);

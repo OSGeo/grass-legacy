@@ -180,7 +180,9 @@ F		[fF]
 
 ","		{	return ',';	}
 
-"\n\n"		{	yyterminate();	}
+^{W}*\n			{	yyterminate();	}
+^{W}*"end"{W}*\n	{	yyterminate();	}
+^{W}*"exit"{W}*\n	{	yyterminate();	}
 
 ";"		|
 "\n"		{	return ';';	}

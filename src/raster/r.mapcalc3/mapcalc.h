@@ -24,6 +24,8 @@ extern void initialize_scanner_stream(FILE *);
 extern expr_list *parse_string(const char *);
 extern expr_list *parse_stream(FILE *);
 
+extern void syntax_error(const char *fmt, ...);
+
 /* expression.c */
 
 extern int is_var(const char *);
@@ -45,9 +47,9 @@ extern int open_output_map(const char *name, int res_type);
 extern void put_map_row(int fd, void *buf, int res_type);
 extern void close_output_map(int fd);
 
-extern void copy_cats(const char *dst, const char *src);
-extern void copy_colors(const char *dst, const char *src);
-extern void copy_history(const char *dst, const char *src);
+extern void copy_cats(const char *dst, int idx);
+extern void copy_colors(const char *dst, int idx);
+extern void copy_history(const char *dst, int idx);
 
 /****************************************************************************/
 

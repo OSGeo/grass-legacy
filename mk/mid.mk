@@ -37,8 +37,8 @@ GISLIB         = -lgis
 DEPVASKLIB     = $(LIBDIR)/libvask.a
 VASKLIB        = -lvask
 
-DEPEDITLIB     = $(LIBDIR)/libedit.a
-EDITLIB        = -ledit
+DEPEDITLIB     = $(LIBDIR)/libgedit.a
+EDITLIB        = -lgedit
 
 DEPG3DLIB      = $(LIBDIR)/libg3d.a
 G3DLIB         = -lg3d

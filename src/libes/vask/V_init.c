@@ -51,7 +51,9 @@ int V_init()
 
     clear()  ;
     refresh();
+#ifdef HAVE_KEYPAD
     keypad(stdscr, 1);
+#endif
 
     return(0) ;
 }
