@@ -1,0 +1,75 @@
+# %W% %G%
+PGM      = mapmask
+
+LIST  = main.o \
+		UTMtoARAY.o \
+		arcdef.o \
+		centroid.o \
+		circle.o \
+		circlefill.o \
+		find_area.o \
+		flipflop.o \
+		front_end.o \
+		get_centrd.o \
+		get_circle.o \
+		get_coors.o \
+		give_intro.o \
+		gripsfill.o \
+		method_txt.o \
+		save_area.o \
+		vask3.o \
+		vask4.o \
+		vask5.o \
+		vask6.o \
+		vask7.o \
+		vask8.o \
+		vask9_up.o \
+		write_recd.o \
+		xy_verify.o \
+		yadjust.o
+
+FULLLIST  = main.o \
+		UTMtoARAY.o \
+		arcdef.o \
+		centroid.o \
+		circle.o \
+		circlefill.o \
+		erase.o \
+		find_area.o \
+		flipflop.o \
+		front_end.o \
+		get_centrd.o \
+		get_circle.o \
+		get_coors.o \
+		get_poly_nam.o \
+		give_intro.o \
+		greatest.o \
+		gripsfill.o \
+		less_great.o \
+		method_txt.o \
+		rotate.o \
+		save_area.o \
+		vask3.o \
+		vask4.o \
+		vask5.o \
+		vask6.o \
+		vask7.o \
+		vask8.o \
+		vask9_up.o \
+		write_recd.o \
+		xy_verify.o \
+		yadjust.o
+
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(MATHLIB)
+
+#==============================================================
+# include dependencies
+
+$(LIST): mapmask.h
+
+#==============================================================
+
+$(GISLIB):      # in case library changes
+$(VASKLIB): #
