@@ -33,7 +33,7 @@ int stmt_is_empty ( dbString *stmt );
 void print_column_definition ( dbColumn *column );
     
 int
-main(argc, argv) char *argv[];
+main (int argc, char *argv[])
 {
     dbString stmt;
     dbDriver *driver;
@@ -88,9 +88,9 @@ main(argc, argv) char *argv[];
     exit(stat);
 }
 
-sel (driver, stmt)
-    dbDriver *driver;
-    dbString *stmt;
+int
+sel (dbDriver *driver,
+    dbString *stmt)
 {
     dbCursor cursor;
     dbTable *table;
@@ -162,7 +162,7 @@ sel (driver, stmt)
 }
 
 void
-parse_command_line(argc, argv) char *argv[];
+parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*v;
@@ -264,9 +264,8 @@ parse_command_line(argc, argv) char *argv[];
 }
 
 int
-get_stmt(fd, stmt)
-    FILE *fd;
-    dbString *stmt;
+get_stmt(FILE *fd,
+    dbString *stmt)
 {
     char buf[1024];
     int n;
@@ -289,8 +288,7 @@ get_stmt(fd, stmt)
 }
 
 int
-stmt_is_empty(stmt)
-    dbString *stmt;
+stmt_is_empty(dbString *stmt)
 {
     char dummy[2];
 
@@ -298,8 +296,7 @@ stmt_is_empty(stmt)
 }
 
 void
-print_column_definition(column)
-    dbColumn *column;
+print_column_definition(dbColumn *column)
 {
     fprintf (stdout,"column%s%s\n", parms.fs, db_get_column_name(column));
     fprintf (stdout,"type%s%s\n", parms.fs, db_sqltype_name(db_get_column_sqltype(column)));

@@ -1,5 +1,5 @@
 /**************************************************************
- * db.describe driver=name database=name [location=name] table=name
+ * db.describe driver=name database=name table=name
  *
  *
  *   describe a table
@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 struct {
-	char *driver, *database, *location, *table, *printcolnames;
+	char *driver, *database, *table, *printcolnames;
 } parms;
 
 void parse_command_line();
@@ -32,7 +32,7 @@ main(int argc, char *argv[])
 	exit(ERROR);
 
     db_init_handle (&handle);
-    db_set_handle (&handle, parms.database, parms.location);
+    db_set_handle (&handle, parms.database, NULL );
     if (db_open_database(driver, &handle) != DB_OK)
 	exit(ERROR);
 
@@ -65,7 +65,7 @@ main(int argc, char *argv[])
 void
 parse_command_line(int argc, char *argv[])
 {
-    struct Option *driver, *database, *location, *table;
+    struct Option *driver, *database, *table;
     struct Flag *cols;
     struct GModule *module;
 
@@ -95,13 +95,6 @@ parse_command_line(int argc, char *argv[])
     database->required 	= NO;
     database->description = "database name";
 
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->description= "database location";
-
-
     /* Set description */
     module              = G_define_module();
     module->description = ""\
@@ -113,7 +106,6 @@ parse_command_line(int argc, char *argv[])
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
-    parms.location	= location->answer;
     parms.table		= table->answer;
     parms.printcolnames = cols->answer;
 }
