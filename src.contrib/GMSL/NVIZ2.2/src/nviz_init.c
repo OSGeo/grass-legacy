@@ -63,7 +63,15 @@ module = G_define_module();
   elev->multiple               = YES;
   elev->gisprompt              = "old,cell,Raster";
   elev->description            = "Raster file(s) for Elevation";
-  
+ 
+  colr = G_define_option();
+  colr->key                    = "color";
+  colr->type                   = TYPE_STRING;
+  colr->required               = NO;
+  colr->multiple               = YES;
+  colr->gisprompt              = "old,cell,Raster";
+  colr->description            = "Raster file(s) for Color";
+ 
   vct = G_define_option();
   vct->key                    = "vector";
   vct->type                   = TYPE_STRING;
@@ -159,7 +167,7 @@ module = G_define_module();
 
   /* Look for quickstart flag */
    if (no_args->answer) {
-    elev->answers=vct->answers=site->answers=NULL;
+    elev->answers=colr->answers=vct->answers=site->answers=NULL;
 	}
 
 
@@ -211,6 +219,22 @@ module = G_define_module();
     aload=0;
   
   /* Parse answeres from user */
+/* Run check to make sure elev == colr */
+	if(elev->answers && colr->answers) {
+	int ee, cc;
+		for (i = 0; elev->answers[i] ; i++){
+		ee = i;
+		}
+		for (i = 0; colr->answers[i] ; i++){
+		cc = i;
+		}
+	if ( ee != cc) {
+		fprintf(stderr, "ERROR: Number of elevation files does
+		not match number of colors files\n");
+		exit(-1);
+		}
+	}
+
   if(elev->answers){
     char tmp[30];
     
@@ -222,10 +246,18 @@ module = G_define_module();
       /* See if we should autoload the color file */
       if (aload) {
 	strncpy(tmp, interp->result, 29);
+	if (colr->answers) {
+	if (Tcl_VarEval(interp, tmp, " set_att color ",
+		colr->answers[i], NULL) != TCL_OK) {
+		fprintf(stderr, "ERROR: %s\n", interp->result);
+		exit(-1);
+		}
+	} else {
 	if (Tcl_VarEval(interp, tmp, " set_att color ",
 			elev->answers[i], NULL) != TCL_OK) {
 	  fprintf(stderr, "ERROR: %s\n", interp->result);
 	  exit(-1);
+		}
 	}
       }
     }
