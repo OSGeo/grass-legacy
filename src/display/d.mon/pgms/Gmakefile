@@ -1,17 +1,10 @@
-all:	$(LIBDIR)/monitors.h \
-	$(ETC)/mon.list \
+all:	$(ETC)/mon.list \
 	$(ETC)/mon.release \
 	$(ETC)/mon.select \
 	$(ETC)/mon.start \
 	$(ETC)/mon.status \
 	$(ETC)/mon.stop \
 	$(ETC)/mon.which
-
-$(LIBDIR)/monitors.h:	monitors.h
-	rm -f $@
-	cp $? $@
-	chmod +r $@
-monitors.h: #
 
 $(ETC)/mon.list:	list.o $(RASTERLIB) $(GISLIB)
 	rm -f a.out
