@@ -21,6 +21,7 @@ char **argv ;
         char *gets() ;
         char buff[512] ;
         char window_name[64] ;
+	char *D_color_list();
         float size ;
         int bold ;
         int color ;
@@ -47,7 +48,7 @@ char **argv ;
         opt2->type       = TYPE_STRING ;
         opt2->answer     = "gray" ;
         opt2->required   = NO ;
-        opt2->options="red,orange,yellow,green,blue,indigo,violet,brown,gray,white,black";
+        opt2->options    = D_color_list();
         opt2->description= "Color desired for drawing text" ;
 
         opt3 = G_define_option() ;
@@ -66,7 +67,7 @@ char **argv ;
         if (G_parser(argc, argv))
                 exit(-1);
 
-		if (isatty())
+		if (isatty(0))
 			printf("\nPlease enter text instructions.  Enter EOF on last line to quit\n") ;
 
         sscanf(opt1->answer,"%f",&size);
