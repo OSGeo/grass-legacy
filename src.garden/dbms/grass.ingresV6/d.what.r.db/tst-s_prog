@@ -1,0 +1,7 @@
+:
+# test for d.what.r.db using prebuilt SQL command file
+# DB=seco_soils, GISdb=SECO
+#
+#
+
+d.what.r.db  -s sql=tst_dwr.sql map=seco.soils 
