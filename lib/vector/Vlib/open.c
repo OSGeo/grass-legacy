@@ -295,7 +295,7 @@ Vect_open_new (
 
     /* Check if map already exists */
     if ( G_find_file(GRASS_VECT_DIRECTORY, name, G_mapset()) != NULL ) {
-       G_warning ("Vector '%s' already exists and will be overwritten.");
+       G_warning ("Vector '%s' already exists and will be overwritten.", name);
        ret = Vect_delete ( name );
        if ( ret == -1 ) {
 	  switch ( ferror ) {
