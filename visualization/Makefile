@@ -1,16 +1,21 @@
 MODULE_TOPDIR = ..
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+SUBDIRS =
+
 OPENGLBASED = nviz
+MOTIFBASED = xganim
 
 #compile if OPENGLBASED present:
 ifneq ($(strip $(OPENGLLIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
-SUBDIRS = \
-	nviz
-
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+#compile if MOTIFBASED present:
+ifneq ($(strip $(XMLIB)),)
+    SUBDIRS += $(MOTIFBASED)
+endif
 
 default: subdirs
 
