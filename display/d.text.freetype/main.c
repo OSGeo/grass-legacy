@@ -263,9 +263,9 @@ main(int argc, char **argv)
 
 		if(!(index = FT_Get_Char_Index(face, ch)))
 			continue;
-		if(FT_Load_Glyph(face, index, 0))
+		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
 			continue;
-		if(FT_Render_Glyph(face->glyph, 0))
+		if(FT_Render_Glyph(face->glyph, ft_render_mode_normal))
 			continue;
 
 		k = face->glyph->bitmap.rows * face->glyph->bitmap.width;
