@@ -1,0 +1,19 @@
+all:	progs
+
+progs:	$(ETC)/DOS.delete\
+	$(ETC)/DOS.show\
+	$(ETC)/DOS.list\
+	$(ETC)/DOS.save\
+	$(BIN_CONTRIB_CMD)/m.dos
+
+$(BIN_CONTRIB_CMD)/m.dos: main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(CFLAGS) main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/DOS.delete: DOS_delete.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(CFLAGS) DOS_delete.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/DOS.show: DOS_show.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(CFLAGS) DOS_show.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/DOS.list: DOS_list.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(CFLAGS) DOS_list.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(ETC)/DOS.save: DOS_save.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(CFLAGS) DOS_save.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+
