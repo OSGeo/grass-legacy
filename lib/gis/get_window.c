@@ -25,6 +25,24 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief read the database region
+ *
+ * Reads the database region as stored in the WIND file in the user's
+ * current mapset <b>into region.</b>
+ * An error message is printed and exit( ) is called if there is a problem reading
+ * the region.
+ * <b>Note.</b> GRASS applications that read or write raster files should not
+ * use this routine since its use implies that the active module region will not
+ * be used. Programs that read or write raster file data (or vector data) can
+ * query the active module region <i>using G_window_rows and
+ * G_window_cols..</i>
+ *
+ *  \param region
+ *  \return int
+ */
+
 int G_get_window (struct Cell_head *window )
 {
     static int first = 1;
@@ -52,6 +70,19 @@ int G_get_window (struct Cell_head *window )
 
     return 1;
 }
+
+
+/*!
+ * \brief read the default region
+ *
+ * Reads the default region for the location into
+ * <b>region.</b>
+ * An error message is printed and exit( ) is called if there is a problem
+ * reading the default region.
+ *
+ *  \param region
+ *  \return int
+ */
 
 int G_get_default_window ( struct Cell_head *window )
 {

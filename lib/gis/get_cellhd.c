@@ -27,6 +27,22 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief read the raster header
+ *
+ * The raster header for the raster file
+ * <b>name</b> in the specified <b>mapset</b> is read into the
+ * <b>cellhd</b> structure.
+ * If there is an error reading the raster header file, a diagnostic message is 
+ * printed and -1 is returned. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param cellhd
+ *  \return int
+ */
+
 int G_get_cellhd (name, mapset, cellhd)
     char *name ;
     char *mapset ;
