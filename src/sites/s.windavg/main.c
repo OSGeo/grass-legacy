@@ -32,13 +32,15 @@
 #include <string.h>
 #include "gis.h"
 
+#define XYZ_SIZE 10000
+
 int main (argc, argv)
   char **argv;
   int argc;
 {
   char *isiteslist, *ositeslist, errmsg[256], *mapset;
   double avg,N,S,E,W;
-  int i, j, k, n, verbose, suppress_zeros,gnuplot;
+  int i, j, k, n, nread, verbose, suppress_zeros,gnuplot;
   struct Cell_head window;
   struct Categories cats;
   struct
@@ -50,7 +52,7 @@ int main (argc, argv)
     struct Flag *z, *p, *q;
   } flag;
   FILE *fdisite = NULL, *fdosite = NULL;
-  SITE_XYZ xyz;
+  SITE_XYZ xyz[XYZ_SIZE];
   int ftype, findex;
   Site *theSite = G_site_new_struct(CELL_TYPE, 2, 0, 1);
 
@@ -191,25 +193,30 @@ int main (argc, argv)
       avg=0.0;
       n=0;
       rewind(fdisite); /* Make sure were at the beginning */
-      while (G_readsites_xyz(fdisite, ftype, findex, 1, &window, &xyz) == 1)
+      while ((nread = 
+            G_readsites_xyz(fdisite, ftype, findex, XYZ_SIZE, &window, &(xyz[0]))) > 0)
       {
-        if (xyz.x <= E && xyz.x >= W && xyz.y <= N && xyz.y >= S)
+        for (nread-- ; nread > 0; nread--)
         {
-          n++;
-          if (ftype == SITE_COL_NUL) /* Use cat */
-            switch (xyz.cattype) {
-              case CELL_TYPE:
-                avg+=(double)xyz.cat.c; break;
-              case FCELL_TYPE:
-                avg+=(double)xyz.cat.f; break;
-              case DCELL_TYPE:
-                avg+=xyz.cat.d; break;
-              default: /* Programmer Error ?? */
-                G_fatal_error("%s: No cat values exist in sites_list",
-                    G_program_name());
-            }
-          else
-            avg+=xyz.z;
+          if (xyz[nread].x <= E && xyz[nread].x >= W 
+              && xyz[nread].y <= N && xyz[nread].y >= S)
+          {
+            n++;
+            if (ftype == SITE_COL_NUL) /* Use cat */
+              switch (xyz[nread].cattype) {
+                case CELL_TYPE:
+                  avg+=(double)xyz[nread].cat.c; break;
+                case FCELL_TYPE:
+                  avg+=(double)xyz[nread].cat.f; break;
+                case DCELL_TYPE:
+                  avg+=xyz[nread].cat.d; break;
+                default: /* Programmer Error ?? */
+                  G_fatal_error("%s: No cat values exist in sites_list",
+                      G_program_name());
+              }
+            else
+              avg+=xyz[nread].z;
+          }
         }
       }
       if (n>0)
