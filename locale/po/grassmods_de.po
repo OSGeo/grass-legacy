@@ -1,0 +1,103 @@
+# translation of grassmods_de.po to deutsch
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Markus Neteler <neteler@itc.it>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grassmods_de\n"
+"POT-Creation-Date: 2004-07-09 16:14+0200\n"
+"PO-Revision-Date: 2004-07-09 17:00+0200\n"
+"Last-Translator: Markus Neteler <neteler@thuille>\n"
+"Language-Team: deutsch <grass5@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0\n"
+
+#: ../raster/r.colors/rules.c:45
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr "Geben Sie Regeln ein, \"end\" zum Beenden, \"help\" wenn Sie Hilfe brauchen.\n"
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr "fp: Datenbereich ist %.25f bis %.25f\n"
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+msgid "Data range is %ld to %ld\n"
+msgstr "Datenbereich ist %ld bis %ld\n"
+
+#: ../raster/r.colors/rules.c:109
+msgid "Your color rules do not cover the whole range of data!"
+msgstr "Die Regeln umfassen nicht den ganzen Datenbereich!"
+
+#: ../raster/r.colors/rules.c:182
+msgid "Enter a rule in one of these formats:\n"
+msgstr "Geben Sie eine Regel in einem der folgenden Formate ein:\n"
+
+#: ../raster/r.colors/rules.c:184
+msgid " val color\n"
+msgstr " val Farbe\n"
+
+#: ../raster/r.colors/rules.c:185
+#, c-format
+msgid " n%% color\n"
+msgstr " n%% Farbe\n"
+
+#: ../raster/r.colors/rules.c:186
+msgid " nv color\n"
+msgstr " nv Farbe\n"
+
+#: ../raster/r.colors/rules.c:187
+msgid " default color\n"
+msgstr " Standardfarbe\n"
+
+#: ../raster/r.colors/rules.c:188
+msgid "color can be one of:\n"
+msgstr "Farbe kann eine der folgenden Möglichkeiten sein:\n"
+
+#: ../raster/r.colors/rules.c:190
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr "oder ein R:G:B Triplett, z.B.: 0:127:255\n"
+
+#: ../raster/r.colors/rules.c:231
+#, c-format
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr "** Warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+
+#: ../raster/r.colors/rules.c:232 ../raster/r.colors/rules.c:248
+#: ../raster/r.colors/rules.c:261 ../raster/r.colors/rules.c:273
+#: ../raster/r.colors/rules.c:283 ../raster/r.colors/rules.c:295
+#: ../raster/r.colors/rules.c:370 ../raster/r.colors/rules.c:398
+msgid "** rule is not added **\n"
+msgstr "** Regel wurde nicht angewendet **\n"
+
+#: ../raster/r.colors/rules.c:247
+#, c-format
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr " ** warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+
+#: ../raster/r.colors/rules.c:260 ../raster/r.colors/rules.c:282
+msgid "** warning: no such value **\n"
+msgstr "** Warnung: kein solcher Wert **\n"
+
+#: ../raster/r.colors/rules.c:396
+#, c-format
+msgid "%s:line %d:%s\n"
+msgstr "%s:Zeile %d:%s\n"
+
+#: ../raster/r.colors/rules.c:397
+msgid "** bad color specification **\n"
+msgstr "** fehlerhafte Farbspezifikation **\n"
+
+#: ../raster/r.colors/rules.c:418
+#, c-format
+msgid "%s - unknown color\n"
+msgstr "%s - unbekannte Farbe\n"
+
+#: ../raster/r.colors/rules.c:419
+msgid "Valid colors are:\n"
+msgstr "Gültige Farben sind:\n"
+
