@@ -1,4 +1,4 @@
-$Id: TODO,v 1.42 2000-10-25 12:07:55 markus Exp $
+$Id: TODO,v 1.43 2000-10-25 15:02:40 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -348,6 +348,7 @@ Further local TODO files:
 ./src.garden/grass.postgresql/v.in.shape.pg/TODO
 ./src.garden/grass.postgresql/TODO
 ./src/tcltkgrass/todo
+./src/scripts/contrib/r.out.arctiff/TODO
 
 ---------------------------------------------------------------------
 New GRASS help system concept:
