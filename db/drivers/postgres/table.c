@@ -220,7 +220,6 @@ int load_table(int t, char *stmt)
 
 		    if ( ! PQgetisnull(res, i, j) ) {
 			buf = (char *) PQgetvalue(res, i, j);
-			fprintf ( stderr, "buf = '%s'\n", buf );
 			tokens = G_tokenize (buf, "-"); /* depends on LOCALE ? */
 			ntokens = G_number_of_tokens (tokens);
 			if ( ntokens >= 3 ) {
