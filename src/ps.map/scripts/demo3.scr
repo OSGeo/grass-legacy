@@ -9,11 +9,7 @@ colortable
   font Helvetica
   fontsize 10
   end
-vector streams.spear
-  width 1
-  color black
-  end
-vector streams.dead
+vector streams
   width 1
   color black
   end
