@@ -183,7 +183,7 @@ main (int argc, char **argv)
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
-	cats_acolors_flag->description	= "Fill area with random colors according to cateory number";
+	cats_acolors_flag->description	= "Fill areas with random colors according to category number";
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
