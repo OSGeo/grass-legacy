@@ -1,0 +1,7 @@
+interface_build {
+    {r.out.mat} 0
+    {Output binary MAT-File that can be read by Matlab or Octave.}
+    {entry input {Input GRASS raster file:} 0 file}
+    {entry output {Output MAT-File:} 0 raster}
+    {checkbox -v {Verbose mode.} "" -v}
+}
