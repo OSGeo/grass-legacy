@@ -25,7 +25,8 @@ LIB_COMPONENTS = $(patsubst %.cc,$(LIBRARY)(%.o),$(SRC))
 
 all : $(LIBRARY)
 
-include $(SRC:.cc=.d)
+# Don't assume that source directory is writable
+# include $(SRC:.cc=.d)
 
 $(LIBRARY): $(LIB_COMPONENTS)
 
