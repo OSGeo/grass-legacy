@@ -25,7 +25,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <errno.h>
 
 #define DGL_V2 1
