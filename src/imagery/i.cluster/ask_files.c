@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 char title[80];
 static char *info[]=
@@ -40,9 +39,9 @@ ask_files (me) char *me;
 	    if (G_find_cell (name, mapset) == NULL)
 	    {
 		if (!any)
-		    printf ("\7\n** The following cell files in subgroup [%s] do not exist\n", subgroup);
+		    printf ("\7\n** The following raster files in subgroup [%s] do not exist\n", subgroup);
 		any = 1;
-		printf ("       %s in %s\n", name, mapset);
+		printf ("       %s@%s\n", name, mapset);
 	    }
 	}
 	if (any) continue;
