@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.7 2000-11-02 09:18:43 justin Exp $
 
 Please improve this list!
  
@@ -48,19 +48,19 @@ GRASS GIS programming style standards
        /* C-comments */
 
 9. If you add   
-    $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
+    $Id: STYLE_PROGRAMMING,v 1.7 2000-11-02 09:18:43 justin Exp $
 
     to a file for CVS-versioning, note that this is not allowed in the
     *first* line of a comment. Some compilers will get confused.
 
     Forbidden:
 
-    /* $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $ */
+>    /* $Id: STYLE_PROGRAMMING,v 1.7 2000-11-02 09:18:43 justin Exp $ */
  
     Allowed:
-    /*
-     * $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
-     */
+>    /*
+>     * $Id: STYLE_PROGRAMMING,v 1.7 2000-11-02 09:18:43 justin Exp $
+>     */
 
 ...
 [add further hints]
