@@ -24,12 +24,13 @@ main (int argc, char **argv)
 #ifdef QUIET
     struct Flag *quiet;
 #endif
-    struct Flag *just;
+    struct Flag *just, *full, *hand;
     struct Option *rmap, *vmap, *smap, *zoom;
     struct GModule *module;
     double magnify;
     int i, first=1;
     char *mapset;
+    struct Cell_head window;
     
     /* Initialize globals */
     rast = vect = site = NULL;
@@ -121,7 +122,15 @@ main (int argc, char **argv)
     just = G_define_flag();
     just->key = 'j';
     just->description = "Just redraw given maps using default colors";
+    
+    full = G_define_flag();
+    full->key = 'f';
+    full->description = "Full menu (zoom + pan)";
 
+    hand = G_define_flag();
+    hand->key = 'h';
+    hand->description = "Handheld mode";
+    
     if(!rast && !vect && !site)
     {
 	  rmap->required = YES;
@@ -386,21 +395,23 @@ main (int argc, char **argv)
     
     D_setup(0);
 
-    do
-    {
-
+    if ( !hand->answer ) {
         fprintf(stderr, "%d raster%s, %d vector%s, %d site file%s\n",
-		    nrasts, (nrasts > 1 ? "s":""),
-		    nvects, (nvects > 1 ? "s":""),
-		    nsites, (nsites > 1 ? "s":""));
+		nrasts, (nrasts > 1 ? "s":""),
+		nvects, (nvects > 1 ? "s":""),
+		nsites, (nsites > 1 ? "s":""));
+    }
+
     /* Do the zoom */
-#ifndef QUIET
-        stat = zoomwindow(1, magnify );
-#else
-        stat = zoomwindow(quiet->answer, magnify);
-#endif
-    
-    } while(stat == 2);
+    G_get_window(&window);
+    if ( full->answer == 1 )
+	    stat = zoomwindow(&window, 1, magnify);
+    else {
+	if ( hand->answer == 0 )
+	    make_window_box (&window, magnify, 0, 0); 
+        else 
+	    make_window_box (&window, magnify, 0, 1); 
+    }
 
     R_close_driver();
 
