@@ -23,7 +23,3 @@ study basin extracted elevation map.
 
 	r.mapcalc "belev = if(isnull(basin), basin, elev)"
 
-
-[r.avgstats]
-prints out averaged statistics for topographic index.
-
