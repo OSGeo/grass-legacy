@@ -39,17 +39,24 @@ int execute(char *sql, cursor * c)
     int *selset;
     int dtype, stype;
     int width, decimals;
+    char *tmpsql;
 
     /* parse sql statement */
+    /* I don't know why, but if the statement ends by string in quotes 'xxx' and is not 
+    *  followed by space or '\n' it is not parsed properly -> */
+    tmpsql = (char*) G_malloc ( strlen(sql) + 2 );
+    sprintf ( tmpsql, "%s ", sql );
     st = sqpInitStmt();
-    st->stmt = sql;
+    st->stmt = tmpsql;
     sqpInitParser(st);
 
     if (yyparse() != 0) {
 	sqpFreeStmt(st);
+	free ( tmpsql) ;
 	sprintf(errMsg, "SQL parser error in statement:\n%s\n", sql);
 	return DB_FAILED;
     }
+    free ( tmpsql) ;
 
 /* sqpPrintStmt(st); *//* debug output only */
 
