@@ -18,7 +18,7 @@ ask_map_coor (n_points)
 	 *  close down curses so that Vask will work
 	 */
 
-	suspend() ;
+	vask_suspend() ;
 
 	/*  number of coordinates we can handle.  this may be the second time
 	*   to this menu and some points may have been registered
@@ -62,7 +62,9 @@ ask_map_coor (n_points)
 	/* add message before exit */
 	if (!V_call()) 
 	{
+/*
 		Old_tty ();
+*/
 		fprintf(stderr,"ask_map_coor:  Leaving session.. \n");
 		sleep(2);
 		return(-1);
@@ -72,7 +74,7 @@ ask_map_coor (n_points)
 	/*
 	 * back to CURSES environment
 	 */
-	respend() ;
+	vask_respend() ;
 
 	return ( shrink_map_coor()) ;
 }
@@ -85,7 +87,7 @@ shrink_map_coor()
 
 	for ( i = 0, k = 0; i < MAX_COOR; i++)
 	{
-		if ( bx[i] == 0.0  ||  by[i] == 0.0)
+		if ( bx[i] == 0.0  &&  by[i] == 0.0)
 			continue ;
 
 		/*  same place count it, but skip it  */
