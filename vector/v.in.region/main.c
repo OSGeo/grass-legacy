@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     
     /* Open output segments */
     Vect_open_new ( &Out, out_opt->answer, 0 );
+    Vect_hist_command ( &Out );
 
     /* Rectangle */
     
