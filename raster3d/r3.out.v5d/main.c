@@ -115,7 +115,8 @@ void convert(char *fileout, int rows, int cols, int depths) {
    double *d1p;
    float *f1p;
    int x, y, z;
-   int typeIntern; 
+   int typeIntern;
+   G3D_Region region;
 
 /*  G3d_getCoordsMap (map, &rows, &cols, &depths);*/
   typeIntern = G3d_tileTypeMap (map);
@@ -136,26 +137,27 @@ fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
 	 exit(1);
 
   	}
-/* add here grass region/window */
 
-        Nl[0]=depths;
-
+   Nl[0]=depths;
+   G3d_getWindow(&region);
 
 /* ********* */     
+/* add here grass region/window settings from region struct */
 
-  strcpy(VarName[0], "S");
+   strcpy(VarName[0], "S");
    TimeStamp[0] = DateStamp[0] = 0;
    CompressMode = 4;
-   Projection = 0;/*linear, rectangular, generic units*/
-   ProjArgs[0] = 50.0;/*North boundary of 3-D box*/
-   ProjArgs[1] = 100.0;/*West boundary of 3-D box */
-   ProjArgs[2] = 1.0;/*Increment between rows */
-   ProjArgs[3] = 1.0;/*Increment between columns*/
-   Vertical = 0;/*equally spaced levels in generic units*/
-  VertArgs[0] = 0.0;/* height of bottom level*/
-   VertArgs[1] = 1.0;/*spacing between levels*/
+   Projection = 0;      /*linear, rectangular, generic units*/
+   ProjArgs[0] = 0.0 + rows;   /*North boundary of 3-D box*/
+   ProjArgs[1] = 0.0 + cols;   /*West boundary of 3-D box */
+   ProjArgs[2] = 1.0;   /*Increment between rows */
+   ProjArgs[3] = 1.0;   /*Increment between columns*/
+   Vertical = 0;        /*equally spaced levels in generic units*/
+   VertArgs[0] = 0.0;   /*height of bottom level*/
+   VertArgs[1] = 1.0;   /*spacing between levels*/
+
 /* put here some g3d functions */
-    LatInc = 1.0;
+        LatInc = 1.0;
         LonInc = 1.0;
         HgtInc = 1.0;
         NorthLat = 50.0;
@@ -171,10 +173,21 @@ fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
 
   d1p = &d1; f1p = (float *) &d1;
 	cnt=0;
+
+/* originally written in 1999. Bug: displays reversed in Vis5D:   
   for (z = 0; z < depths; z++) {
     G_percent(z, depths, 1);
     for (y = 0; y < rows; y++) {  
       for (x = 0; x < cols; x++) {
+ */
+
+   /* taken from r3.out.ascii: modified x and y order
+      MN 2001 */
+   for (z = 0; z < depths; z++) {
+    G_percent(z, depths, 1);
+    for (x = 0; x < cols; x++) {
+          for (y = 0; y < rows; y++) {
+                 
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
         if (typeIntern == G3D_FLOAT) {
           if (G3d_isNullValueNum(f1p, G3D_FLOAT)){
