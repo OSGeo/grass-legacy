@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.6  2000-11-23 08:46:19  cho
+# Revision 1.7  2000-11-26 16:47:17  cho
+# added help
+#
+# Revision 1.6  2000/11/23 08:46:19  cho
 # indentation
 #
 # Revision 1.5  2000/11/23 08:41:12  markus
@@ -45,7 +48,9 @@ fi
 if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
         echo
-        echo "Usage: g.mlist"
+        echo "Usage: g.mlist [type=name] [mapset=name] [sep=name] map_pattern"
+	echo
+	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") i=1; if(i) print $0}'
 	exit 1
 fi
 
