@@ -1,5 +1,5 @@
 /*
- * $ID$
+ * $Id$
  *
  * PROGRAM:     v.in.gshhs (based on gshhstograss.c)
  * AUTHOR:      Simon Cox (simon@ned.dem.csiro.au) & (gshhstograss.c)
