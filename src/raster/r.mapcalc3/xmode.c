@@ -22,38 +22,32 @@ static int dcmp(const void *aa, const void *bb)
 
 static double mode(double *value, int argc)
 {
-	static int *count;
-	static int n_count;
-	int i, j, k;
-
-	if (argc > n_count)
-	{
-		n_count = argc;
-		count = G_realloc(count, n_count * sizeof(int));
-	}
+	double mode_v;
+	int mode_n = 0;
+	int i;
 
 	qsort(value, argc, sizeof(double), dcmp);
 
-	for (i = j = 0; i < argc; j++)
+	for (i = 0; i < argc; )
 	{
-		count[j] = 1;
+		int n = 1;
+		double v = value[i];
 
-		value[j] = value[i];
-
-		for (; i < argc; i++)
+		for (i++; i < argc; i++)
 		{
-			if (value[i] != value[j])
+			if (value[i] != v)
 				break;
-			count[j]++;
+			n++;
 		}
+
+		if (n < mode_n)
+			continue;
+
+		mode_v = v;
+		mode_n = n;
 	}
 
-	for (k = 0, i = 1; i < j; i++)
-		if (count[i] > count[k])
-			k = i;
-
-
-	return value[k];
+	return mode_v;
 }
 
 int 
@@ -61,7 +55,7 @@ f_mode(int argc, const int *argt, void **args)
 {
 	static double *value;
 	static int value_size;
-	int size = argc * G_raster_size(argt[0]);
+	int size = argc * sizeof(double);
 	int i, j;
 
 	if (size > value_size)
@@ -85,7 +79,7 @@ f_mode(int argc, const int *argt, void **args)
 				if (IS_NULL_C(&argv[j][i]))
 					nv = 1;
 				else
-					value[i] = (double) argv[j][i];
+					value[j] = (double) argv[j][i];
 			}
 
 			if (nv)
@@ -108,7 +102,7 @@ f_mode(int argc, const int *argt, void **args)
 				if (IS_NULL_F(&argv[j][i]))
 					nv = 1;
 				else
-					value[i] = (double) argv[j][i];
+					value[j] = (double) argv[j][i];
 			}
 
 			if (nv)
@@ -131,7 +125,7 @@ f_mode(int argc, const int *argt, void **args)
 				if (IS_NULL_D(&argv[j][i]))
 					nv = 1;
 				else
-					value[i] = (double) argv[j][i];
+					value[j] = (double) argv[j][i];
 			}
 
 			if (nv)
