@@ -9,7 +9,7 @@
 <hr width="100%" align=center size=6 noshade>
 
 <H2>NAME</H2>
-<B><EM>d.area</EM></B> - Draws filled vector areas to the GRASS display<BR>
+<B><EM>d.area</EM></B> - Draws vector areas to the GRASS display<BR>
 <EM>(GRASS Display/Vector Program)</EM>
 
 <H2>SYNOPSIS</H2>
@@ -18,7 +18,7 @@
 <B>map</B><EM>=name</EM> 
 [<B>fillcolor</B><EM>=name|R:G:B</EM>]
 [<B>linecolor</B><EM>=name|R:G:B</EM>]
-[<B>catnum</B><EM>=i[,j,k,...,n]</EM>]
+[<B>catnum</B><EM>=value[,value,...]</EM>]
 [<B>legend</B><EM>=filename|"-"</EM>]
 
 
@@ -26,7 +26,8 @@
 <DL>
 <DT><B>-r</B> 
 <DD>Fill all areas with a randomly selected color from a small color palette,
-and draw all boundaries in black.
+and draw all boundaries in black. The palette is similar to the GRASS named
+colors, but replaces white and black with other colors.
 </DL>
 
 <H3>Parameters:</H3>
@@ -37,12 +38,14 @@ and draw all boundaries in black.
 
 <DT><B>fillcolor</B>
 <DD>Color desired for filling polygons. May be specified as a standard
-grass color name, or as an RGB triplet (e.g. 80:198:255).
+grass color name, or as an RGB triplet (e.g. 80:198:255).  Fill can
+be disabled by specifying a color of "none".
 <DD>Default: white
 
 <DT><B>linecolor</B>
 <DD>Color desired for drawing area boundaries.  May be specified as a
 standard grass color name, or as an RGB triplet (e.g. 127:127:127).
+Line drawing can be disabled by specifying a color of "none".
 <DD>Default: black
 
 <DT><B>catnum</B>
@@ -59,8 +62,8 @@ will be read from standard input.
 <H2>DESCRIPTION</H2>
 
 Use <EM>d.vect.area</EM> to draw labelled areas from a vector map to the GRASS
-display.  Using, the "<EM>-r</EM>" flag, the program will cycle through the
-standard GRASS named colors, overriding any <EM>fillcolor</EM> or
+display.  Using, the "<EM>-r</EM>" flag, the program will cycle through
+a small color palette, overriding any <EM>fillcolor</EM> or
 <EM>linecolor</EM> argument.  If a <EM>legend</EM> file is specified, it will
 be used.  Otherwise, the color used for filling areas is as specified.
 
@@ -69,12 +72,14 @@ be used.  Otherwise, the color used for filling areas is as specified.
 The <EM>fillcolor</EM> argument may be any of the standard named GRASS colors,
 or and RGB (red, green, blue) triplet.  An RGB triplet must have the
 form <EM>&lt;num&gt;:&lt;num&gt;:&lt;num&gt;</EM> where <EM>num</EM> is
-between 0 and 255.
+between 0 and 255.  If "none" is specified, no fill will be done.  Specifying
+"none" does not make sense for the random color option, since it always draws
+lines in black.
 <P>
 
-The <EM>linecolor</EM> argument is used in conjunction with the
-<EM>fillcolor</EM> argument for drawing boundaries and has the
-same format.
+The <EM>linecolor</EM> argument specifies the color to use for drawing
+area boundary lines.  It has the same format as <EM>fillcolor</EM>, and
+also accepts the "none" color to disable line drawing.
 
 <P>
 An optional list of category numbers may be used to restrict which areas are
@@ -95,7 +100,9 @@ If a category for a map is not included
 in this file, it will not be drawn unless there is a special "default"
 entry with a category of -1.  Boundary lines are not drawn unless
 either a boundary color is specified for the category, or there is
-a default boundary color.
+a default boundary color.  Using the keyword "none" for either
+<EM>fillcolor</EM> or <EM>linecolor</EM> in conjunction with a legend
+will override drawing fill or boundary lines.
 
 <DL>
 <DT><B>Example Legend File</B>
