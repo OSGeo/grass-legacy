@@ -1,81 +1,94 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD><TITLE>GRASS GIS on WINDOWS/Cygnus</TITLE>
-<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
-<META content="MSHTML 5.00.2920.0" name=GENERATOR></HEAD>
-<BODY>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [de] (WinNT; I) [Netscape]">
+   <meta name="Author" content="Andreas C. Lange">
+   <title>GRASS GIS on Windows/Cygwin</title>
+</head>
+<body>
+
+<center>
+<h1>
+
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=+4>GRASS
+GIS on Windows/Cygwin</font></font></h1></center>
+
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<p><font face="Arial,Helvetica">This directory contains the latest Win32
+binary distribution of GRASS 5.0 as a gzipped tape archive (<a href="grass5.0beta12_CYGWIN_NT_5.0bin.tar.gz">grass5.0beta12_CYGWIN_NT-5.0_bin.tar.gz</a>).
+The script <a href="grass5install.sh">grass5install.sh</a> should be run
+from within the cygwin shell to install the binary package. Please read
+the <a href="grass5_0bininstall-cygnus.html">detailed installation instruction</a>.
+If you want to compile yourself, you can get the latest GRASS source code
+from the <a href="grasscvs.html">CVS-Server</a> and follow the <a href="grass5_0compile-cygwin.html">compiling
+instruction</a>.</font>
+<p><font face="Arial,Helvetica">The port is compiled with the <a href="http://sources.redhat.com/cygwin/">Cygnus
+compiler</a> (gcc) from the same source code as the UNIX version. The port
+was done by John Huddleston (<i>John.Huddleston@usda.gov</i>).</font>
+<p><font face="Arial,Helvetica">GRASS on Windows is still experimental.
+Please expect some functionality missing or not working. Please assist
+us to identify and fix bugs and help us to improve the Windows port.</font>
+<p><font face="Arial,Helvetica">For general information about running GRASS
+the first time <a href="http://www.geog.uni-hannover.de/grass/firsttime.html">read
+here</a>.</font>
+<h2>
+<font face="Arial,Helvetica">Prerequisites:</font></h2>
+<font face="Arial,Helvetica">You need three major requirements to run GRASS
+5 on Windows:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">Windows NT 4.0 or Windows 2000 Professional
+with NTFS</font></li>
+
+<br><font face="Arial,Helvetica">(Windows 9x and Windows ME are unsupported),</font>
+<li>
+<font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/">Cygwin</a>
+installation (Cygnus tools for Windows),</font></li>
+
+<li>
+<font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/xfree/">X
+Window</a> Server.</font></li>
+</ul>
+
+<h2>
+<font face="Arial,Helvetica">Status of GRASS 5.0:</font></h2>
+<u><font face="Arial,Helvetica">Working:</font></u>
+<blockquote><font face="Arial,Helvetica">GRASS libraries and modules, commandline
+input/output and data manipulation,</font>
+<br><font face="Arial,Helvetica">shell scripting within GRASS.</font></blockquote>
+<font face="Arial,Helvetica">All the GRASS modules work from within the
+cygwin shell (UNIX shell).</font>
+<p><u><font face="Arial,Helvetica">Partly working/functional:</font></u>
+<blockquote><font face="Arial,Helvetica">X Window display system</font></blockquote>
+<font face="Arial,Helvetica">The X Window display system (GRASS monitors)
+works, but is not very well tested.</font>
+<br><font face="Arial,Helvetica">You can use the GRASS monitors only from
+within the X Window system on top of cygwin.</font>
+<p><u><font face="Arial,Helvetica">Not working:</font></u>
+<blockquote><font face="Arial,Helvetica">menu system tcltkgrass (needs
+to be ported to cygwin wish)</font>
+<br><font face="Arial,Helvetica">tcl/tk scripts (could be ported with minor
+effort)</font>
+<br><font face="Arial,Helvetica">nviz (togl needs to be ported, cygwin
+wish)</font>
+<br><font face="Arial,Helvetica">postgreSQL-Interface (not tested)</font>
+<br><font face="Arial,Helvetica">ODBC-Interface (not tested)</font>
+<br><font face="Arial,Helvetica">R-interface (not tested)</font></blockquote>
+<font face="Arial,Helvetica">These parts do currently not work and require
+some work and user feedback.</font>
+<p><i><font face="Arial,Helvetica">We are searching for developers to assist
+in finalizing the Windows port: If you are (somewhat) experienced, join
+the <a href="grassdevel.html">development team</a> to speed up the port!</font></i>
+<p><font face="Arial,Helvetica"><a href="cygwin_grass50bininstall.html">Installation
+instruction</a></font>
+<p><font face="Arial,Helvetica"><a href="cygwin_grass50compile.html">Compiling
+instruction</a></font>
 <p>
-This directory contains the latest WINDOWS/Cygwin binary code of
-GRASS 5.0 in zipped format.
-<p>
-This is the first version with experimental graphical map output.
-<p>
-<HR>
-<b>REQUIREMENTS:</b><br>
-There are three major requirements to run GRASS 5 on WINDOWS: The "CygWin"
-which provides a UNIX compliant environment and the Xserver which allows
-to use GRASS' graphical output. Finally the "IPC" package is needed to
-allow GRASS communication with graphical driver.<p>
-
-a) You must have installed Cygwin for WINDOWS from
-<a
-href=http://sources.redhat.com/cygwin/download.html>http://sources.redhat.com/cygwin/download.html</a><br>
-Get "Cygwin" package there (setup.exe).
-
-Cygnus is required to run UNIX compliant applications on WINDOWS.<p>
-
-b) Additionally get the XWindows precompiled client (Xfree) from
-<a
-href=http://sources.redhat.com/cygwin/xfree/>http://sources.redhat.com/cygwin/xfree/</a>.
-Get the packages: DLLs, fonts, Xterm, Xwin, Prog.
-(<a href=http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm>Xfree install guide</a>)
-<p>
-
-c) Building IPC for Grass5:<br>
- You will need the Inter-process communication (IPC) code:
- <a href=http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/>
-http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/</a>
-These binaries are included in the grass5 zip file; however
-you will need the .a archive to build on your own.
-<br>
-See <a href=http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/documents/compile_grass_with_wincygnus.txt>
-See compile_grass_with_wincygnus.txt</a>
-for more details.
-
-<hr>
-
-Installation of GRASS 5 Windows binaries:<br>
- It is a relative root path so someone can unzip it to
- their D: drive if necessary.   Depending upon where
- you have your cygwin installed, it could go under that
- root directory:
-
- - store GRASS 5 zip into the main directory of CygWin<br>
-   (e.g. /programs/cygwin)<br>
- - unzip grass5-xxxxxxxxx.zip (replace xxx with current version number)
-   using your favourite "unzip" software
- - change to: /programs/cygwin/usr/local/grass5/ and double click
-   "StartGrass"
- 
-<p>
-Starting Grass5:<br>
- The package includes a StartGrass script in the /usr/local/grass5.
- This sets the PATH, start the ipc daemon, and spawns an xterm
-   window.  From within that window run 'grass5'. 
-
-<HR>
-Compiling the GRASS 5 locally - CVS Grass5:<br>
-See Grass5 from a version control perspective on
-<a href=http://freegis.org/cgi-bin/viewcvs.cgi/>
-http://freegis.org/cgi-bin/viewcvs.cgi/</a>
-and 
-<a href=http://freegis.org/cgi-bin/viewcvs.cgi/grass/>
-http://freegis.org/cgi-bin/viewcvs.cgi/grass/</a>
-<p>
-<HR>
-
-<HR>
-<A href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/README_cygwin.html">Save this text.</A>
-<HR>
-
-</BODY></HTML>
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/README_cygwin.html">Save
+this text.</a></font>
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<br><font face="Arial,Helvetica"><font size=-2>Andreas Lange, andreas.lange@rhein-main.de,
+28.03.2001</font></font>
+</body>
+</html>
