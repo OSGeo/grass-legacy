@@ -121,7 +121,7 @@ fprintf(stderr,"main\n");
   if (argc != 2 && argc != 3)
    {
     strcpy(prog_name,argv[0]);
-    D_usage(prog_name,usage);
+    G_usage(prog_name,usage);
     exit(0);
    }
 /* Set variables: "name" */
@@ -132,7 +132,7 @@ fprintf(stderr,"main\n");
 fprintf(stderr,"\nFile name:  '%s' is LONGER than the allowable 19 characters.\n\n",
     argv[1]);
     strcpy(prog_name,argv[0]);
-    D_usage(prog_name,usage);
+    G_usage(prog_name,usage);
     exit(0);
    }
   strcpy(name,argv[1]);
@@ -174,7 +174,7 @@ fprintf(stderr,"\nFile name:  '%s' is LONGER than the allowable 19 characters.\n
    {
     fprintf(stderr,"\nVector file name:  '%s' NOT found.\n\n",name);
     strcpy(prog_name,argv[0]);
-    D_usage(prog_name,usage);
+    G_usage(prog_name,usage);
     exit(0);
    }
   exit ( a_n_distance(map,p,mapset,name,overlay_flag) );
