@@ -3,32 +3,35 @@
 
 char percent[] = "%";
 
-draw_slice_unfilled(tc,cx,cy,r,a1,a2)
+draw_slice_unfilled(colors,tc,cx,cy,r,a1,a2)
 
+struct Colors *colors;
 int    tc;
 double cx, cy, /* circle center, in normalized coords. */
        r;      /* circle radius, in normalized units */ 
 double a1,     /* arc start position, in degrees */ 
        a2;     /* arc size, in degrees */
 {
-draw_slice(0,0,tc,cx,cy,r,a1,a2);
+draw_slice(colors,0,0,tc,cx,cy,r,a1,a2);
 }
 
 
-draw_slice_filled(fc,tc,cx,cy,r,a1,a2)
+draw_slice_filled(colors,fc,tc,cx,cy,r,a1,a2)
 
-int    fc,     /* fill color */
-       tc;     /* text color */
+struct Colors *colors;
+int   fc,     /* fill color */
+      tc;     /* text color */
 double cx, cy, /* circle center, in normalized coords. */
        r;      /* circle radius, in normalized units */ 
 double a1,     /* arc start position, in degrees */ 
        a2;     /* arc size, in degrees */
 {
-draw_slice(1,fc,tc,cx,cy,r,a1,a2);
+draw_slice(colors, 1,fc,tc,cx,cy,r,a1,a2);
 }
 
 
-draw_slice(fill_flag,fill_color,txt_color,cx,cy,r,a1,a2)
+draw_slice(colors, fill_flag,fill_color,txt_color,cx,cy,r,a1,a2)
+struct Colors *colors;
 double cx, cy, r;          /* in normalized coords. */
 double a1, a2;             /* in degrees */
 {
@@ -78,7 +81,7 @@ if (!fill_flag)
    }
 else 
    {
-   R_color(fill_color);
+   D_color(fill_color, colors);
    R_polygon_abs(x,y,i);
    if (a2>15.0) 
       {
