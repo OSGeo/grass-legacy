@@ -42,9 +42,15 @@ int label (
 		  
         if ( chcat )
           {
-	    Vect_cat_get(Cats, Clist->field, &cat);
-	    if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-	         continue;
+	     int found = 0;
+
+	     for ( i = 0; i < Cats->n_cats; i++ ) {
+		 if ( Cats->field[i] == Clist->field && Vect_cat_in_cat_list ( Cats->cat[i], Clist) ) {
+		     found = 1;
+		     break;
+		 }
+	     }
+	     if (!found) continue;
 	  }
 	
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
@@ -73,7 +79,16 @@ int label (
             Y = Y + 1.5 * lattr->size;
 	
             R_move_abs(X, Y) ;
-	    sprintf (text, "%d", cat);
+	    text[0] = '\0';
+	    for ( i = 0; i < Cats->n_cats; i++ ) {
+		G_debug (3, "cat lab: field = %d, cat = %d", Cats->field[i], Cats->cat[i]);
+	        if ( Cats->field[i] == lattr->field ) { /* all cats of given lfield */
+		     if ( strlen(text) > 0 )
+			 sprintf (text, "%s/", text);
+
+	             sprintf (text, "%s%d", text,  Cats->cat[i]);
+		}
+	    }
             R_get_text_box(text, &T, &B, &L, &R);
 		
             /* Expand border 1/2 of text size */

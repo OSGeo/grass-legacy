@@ -11,7 +11,7 @@
 int 
 read_lines(struct Map_info *Map )
 {
-    int idx, cat_no, nlines, type;
+    int    i, idx, nlines, type, found;
     register int line_num;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -28,24 +28,38 @@ read_lines(struct Map_info *Map )
 	type = Vect_read_line ( Map, Points, Cats, line_num);
 	if ( !(type & options.type ) ) continue;
 		
-	Vect_cat_get ( Cats, options.field, &cat_no );
-	/* Go on even if cat is 0, values for cat 0 are reported at the end */
+	found = 0;
 
-	idx = find_cat( cat_no);
-	
-	if (  options.option == O_CAT ) {
-	    /* Do nothing because find_cat() already inserted new cat */
-	} else if (  options.option == O_COUNT ) {
-	    Values[idx].i1++;
-	} else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
-	    /* Calculate line length */
-	    len = length (Points->n_points, Points->x, Points->y);
-	    Values[idx].d1 += len;
-	} else if ( options.option == O_COOR && (type & GV_POINTS) ) {
-	    /* overwrite by last one, count is used in update */ 
-	    Values[idx].d1 = Points->x[0];
-	    Values[idx].d2 = Points->y[0];
-	    Values[idx].i1++;
+	for ( i = 0; i < Cats->n_cats; i++ ) {
+	    if ( Cats->field[i] == options.field ) {
+		idx = find_cat(Cats->cat[i]);
+		if (  options.option == O_COUNT ) {
+		    Values[idx].i1++;
+		} else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
+		    /* Calculate line length */
+		    len = length (Points->n_points, Points->x, Points->y);
+		    Values[idx].d1 += len;
+		} else if ( options.option == O_COOR && (type & GV_POINTS) ) {
+		    /* overwrite by last one, count is used in update */ 
+		    Values[idx].d1 = Points->x[0];
+		    Values[idx].d2 = Points->y[0];
+		    Values[idx].i1++;
+		}
+	    }
+	}
+
+	if ( !found ) {  /* Values for cat 0 are reported at the end */
+	    idx = find_cat(0);
+	    if (  options.option == O_COUNT ) {
+		Values[idx].i1++;
+	    } else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
+		len = length (Points->n_points, Points->x, Points->y);
+		Values[idx].d1 += len;
+	    } else if ( options.option == O_COOR && (type & GV_POINTS) ) {
+		Values[idx].d1 = Points->x[0];
+		Values[idx].d2 = Points->y[0];
+		Values[idx].i1++;
+	    }
 	}
     }
 

@@ -15,7 +15,6 @@ int plot1 (
     double *x, *y, xd, yd, xd0, yd0;
     struct line_pnts *Points, *PPoints;
     struct line_cats *Cats;
-    int cat;
     double msize;
     SYMBPART *part;
     SYMBCHAIN *chain;
@@ -58,16 +57,19 @@ int plot1 (
 	if ( !(type & ltype) ) continue;
 
 	if ( chcat ) {
+	     int found = 0;
+
 	     if ( id_flag ) { /* use line id */
 		 if ( !(Vect_cat_in_cat_list ( line, Clist)) )
 		     continue;
 	     } else {
-		 if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
-		     if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-			 continue;
-		 } else {
-		     continue;
-		 } 
+		 for ( i = 0; i < Cats->n_cats; i++ ) {
+		     if ( Cats->field[i] == Clist->field && Vect_cat_in_cat_list ( Cats->cat[i], Clist) ) {
+			 found = 1;
+                         break;
+                     }
+                 }
+                 if (!found) continue;
 	     }
 	}
 	

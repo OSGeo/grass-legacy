@@ -7,7 +7,7 @@
 int 
 read_areas(struct Map_info *Map)
 {
-	int idx, cat_no;
+	int i, idx, cat_no, found;
 	int area_num, nareas, centr;
 	double area;
 	struct line_cats *Cats;
@@ -20,18 +20,25 @@ read_areas(struct Map_info *Map)
 	{
 	    area = Vect_get_area_area ( Map, area_num );
 
-	    /* get the category number for area_num */
+	    found = 0;
 	    centr = Vect_get_area_centroid ( Map, area_num );
 	    if ( centr > 0 ) {
 		Vect_read_line ( Map, NULL, Cats, centr);
 		Vect_cat_get ( Cats, options.field, &cat_no );
-	    } else { 
-		cat_no = 0;
-	    }
 
-	    idx = find_cat( cat_no);
+		for ( i = 0; i < Cats->n_cats; i++ ) {
+		    if ( Cats->field[i] == options.field ) {
+			idx = find_cat(Cats->cat[i]);
+			Values[idx].d1 += area;
+			found = 1;
+		    }
+		}
+	    }
 	    
-	    Values[idx].d1 += area;
+	    if ( !found ) {  /* no category found */
+		idx = find_cat(0);
+		Values[idx].d1 += area;
+	    }
 	}
 
 	return 0;

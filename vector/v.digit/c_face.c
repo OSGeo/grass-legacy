@@ -58,6 +58,8 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_MOVE_LINE;
     else if ( strcmp ( tl, "delete_line" ) == 0 )
 	Tool_next = TOOL_DELETE_LINE;
+    else if ( strcmp ( tl, "display_cats" ) == 0 )
+	Tool_next = TOOL_DISPLAY_CATS;
     else if ( strcmp ( tl, "display_attributes" ) == 0 )
 	Tool_next = TOOL_DISPLAY_ATTRIBUTES;
     else if ( strcmp ( tl, "exit" ) == 0 )
@@ -372,3 +374,58 @@ c_add_blank_bgcmd ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[]
     
     return TCL_OK;
 }
+
+/* Delete line category, parameters: line field cat */
+int
+c_del_cat ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    int line, field, cat;
+    
+    G_debug (3, "c_del_cat()");
+
+    if ( argc != 4 ) {
+	G_warning ( "c_del_cat(): incorrect number of parameters" );
+	return TCL_ERROR;
+    }
+
+    line = atoi ( argv[1] );
+    field = atoi ( argv[2] );
+    cat = atoi ( argv[3] );
+
+    G_debug (3, "  line = %d field = %d cat = %d", line, field, cat);
+
+    del_cat (line, field, cat);
+    
+    return TCL_OK;
+}
+
+/* Add new category to the current line */
+int
+c_add_cat ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    int field, cat, newrec;
+    
+    G_debug (3, "c_add_cat()");
+
+    if ( argc != 4 ) {
+	G_warning ( "c_del_cat(): incorrect number of parameters" );
+	return TCL_ERROR;
+    }
+
+    field = atoi ( argv[1] );
+    cat = atoi ( argv[2] );
+    newrec = atoi ( argv[3] );
+
+    if ( field < 1 || cat < 1 ) {
+	Tcl_Eval(Toolbox, "MessageDlg .msg -icon error -type ok "
+		          "-message \"Field and category must be greater than 0\"");
+    	return TCL_OK;
+    }
+
+    G_debug (3, "  field = %d cat = %d newrec = %d", field, cat, newrec);
+
+    add_cat (field, cat, newrec);
+    
+    return TCL_OK;
+}
+

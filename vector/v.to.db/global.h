@@ -1,9 +1,7 @@
-/*
- * $Id$
- */
-
 #ifndef MAIN
-# define MAIN extern
+# define EXT extern
+#else 
+# define EXT
 #endif
 
 #include "gis.h"
@@ -11,29 +9,36 @@
 
 typedef struct {
     int     cat;   /* category */
-    int     i1;    /* value (count) */
-    double  d1,d2; /* values (length or area or x,y) */
+    int     i1;    /* value (count, query) */
+    double  d1,d2; /* values (length, area, x/y, query) */
+    char    *str1;  /* string value (query) */
+    int     *qcat; /* array query categories */
+    int     nqcats; /* number of query cats */
+    int     aqcats; /* number of allocated query cats */
+    char    null;   /* no records selected by query */
 }VALUE;
 
-MAIN VALUE   *Values;
+EXT VALUE   *Values;
 
 #define OPTIONS struct _options_
-MAIN OPTIONS
+EXT OPTIONS
 {
     char *name;
     char *mapset;
     int  field;    
     char *col1;
     char *col2;
+    char *qcol;
     int  type;
     int  option;
     int  print;     /* print only */
     int  sql;       /* print only sql statements */
     int  units;
+    int  qfield;    /* query field */
 } options;
 
 #define VSTAT struct _vstat_
-MAIN VSTAT
+EXT VSTAT
 {
     int  rcat;      /* number of categories read from map */
     int  select;    /* number of categories selected from DB */
@@ -42,6 +47,7 @@ MAIN VSTAT
     int  dupl;      /* number of cats with duplicate elements (currently O_COOR only) */
     int  update;    /* number of updated rows */
     int  error;     /* number of errors */
+    int  qtype;     /* C type of query column */
 } vstat;
 
 #define O_CAT		1
@@ -49,6 +55,7 @@ MAIN VSTAT
 #define O_LENGTH	3
 #define O_COUNT		4
 #define O_COOR		5
+#define O_QUERY		6
 
 #define U_ACRES		1
 #define U_HECTARES	2
@@ -71,6 +78,9 @@ int read_lines(struct Map_info *);
 
 /* parse.c */
 int parse_command_line(int, char *[]);
+
+/* query.c */
+int query(struct Map_info *);
 
 /* report.c */
 int report(void);

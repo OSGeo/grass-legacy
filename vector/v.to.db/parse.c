@@ -14,9 +14,11 @@ parse_command_line (int argc, char *argv[])
 	    struct Option *option;
 	    struct Option *type;
 	    struct Option *field;
+	    struct Option *qfield;
 	    struct Option *col1;
 	    struct Option *col2;
 	    struct Option *units;		
+	    struct Option *qcol;		
     } parms;
     struct {
 	    struct Flag *p, *s;
@@ -33,13 +35,24 @@ parse_command_line (int argc, char *argv[])
     
     parms.field = G_define_standard_option(G_OPT_V_FIELD);
 
+    parms.qfield = G_define_standard_option(G_OPT_V_FIELD);
+    parms.qfield->key = "qfield";
+    parms.qfield->description = "Query field. Used by 'query' option.";
+
     parms.option = G_define_option();
     parms.option->key          = "option";
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,length,count,coor";
-    parms.option->description  = "what to load";		
+    parms.option->options      = "cat,area,length,count,coor,query";
+    parms.option->description  = "Uploaded value:\n"
+				 "\tcat - insert new row for each category if doesn't exist yet\n"
+	                         "\tarea - area size\n"
+				 "\tlength - line length\n"
+				 "\tcount - number of features for each category\n"
+				 "\tcoor - point coordinates\n"
+				 "\tquery - result of a database query for all records of the geometry\n"
+				           "\t\t(or geometries) from table specified by 'qfield' option";	
 
     parms.units = G_define_option();
     parms.units->key   = "units";
@@ -65,6 +78,14 @@ parse_command_line (int argc, char *argv[])
     parms.col2->gisprompt  = "column 2" ;
     parms.col2->description = "column 2";
 
+    parms.qcol = G_define_option();
+    parms.qcol->key    = "qcol";
+    parms.qcol->type   = TYPE_STRING ;
+    parms.qcol->required = NO ;
+    parms.qcol->multiple = NO ;
+    parms.qcol->gisprompt  = "query column";
+    parms.qcol->description = "Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'";
+
     flags.p = G_define_flag();
     flags.p->key = 'p';
     flags.p->description = "print only";
@@ -86,11 +107,13 @@ parse_command_line (int argc, char *argv[])
 
     options.type = Vect_option_to_types ( parms.type ); 
     options.field = atoi( parms.field->answer );
+    options.qfield = atoi( parms.qfield->answer );
 
     options.option = parse_option (parms.option->answer);
     options.units = parse_units (parms.units->answer);
     options.col1 = parms.col1->answer;
     options.col2 = parms.col2->answer;
+    options.qcol = parms.qcol->answer;
 
     return 0;
 }
@@ -118,6 +141,7 @@ int parse_option (char *s)
     else if (strcmp (s, "length") == 0) x = O_LENGTH;
     else if (strcmp (s, "count") == 0) x = O_COUNT;
     else if (strcmp (s, "coor") == 0) x = O_COOR;
+    else if (strcmp (s, "query") == 0) x = O_QUERY;
 
     return x;
 }

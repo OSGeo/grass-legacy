@@ -2,7 +2,7 @@
 /*                                                                  */
 /* v.to.db - load values from vector to database                    */
 /*                                                                  */
-/* Radim Blazek, Radim.Blazek@dhv.cz, 6/2000                        */
+/* Radim Blazek, 6/2000                                             */
 /*                                                                  */
 /* This file is part of GRASS GIS. It is free software. You can     */
 /* redistribute it and/or modify it under the terms of              */ 
@@ -42,7 +42,9 @@ main (int argc, char *argv[])
     vstat.rcat = 0;
 
     /* Read values from map */
-    if ( options.option == O_AREA ){
+    if ( options.option == O_QUERY ){
+	query(&Map);
+    } else if ( options.option == O_AREA ){
 	read_areas(&Map);
     } else { 
         read_lines(&Map); 
