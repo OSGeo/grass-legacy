@@ -1,0 +1,12 @@
+#
+IMAGERYLIB2  = ../lib.ortho/libI.a
+EXTRA_CFLAGS = -I../lib.ortho
+
+LIST = main.o 
+   
+$(BIN_ALPHA_INTER)/i.camera: $(LIST) $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
+
+$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
+
+main.o:	camera.h
