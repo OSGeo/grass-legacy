@@ -1,0 +1,24 @@
+scale 1 inch equals 1 mile
+maploc 1.5 1.3
+raster geology
+colortable
+  where 5.0 2.5
+  font Helvetica
+  fontsize 20
+  end
+vector fields
+  width 2
+  color black
+  end
+vector streams.spear
+  width 1
+  color white
+  end
+labels rush.lbl
+  font Helvetica
+  end
+mapinfo
+  end
+vlegend
+  end
+end
