@@ -1,5 +1,7 @@
 Update history:
 
  - This version of shapelib is taken from GDAL 1.2.6 (2005)
+   including GDAL bugfix #809 (http://208.24.120.44/show_bug.cgi?id=809)
+
  - This version of shapelib is taken from GDAL 1.1.9 (2003)
 
