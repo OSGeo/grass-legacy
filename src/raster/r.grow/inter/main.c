@@ -38,7 +38,7 @@ main(argc, argv) char *argv[];
 
     sprintf(command, "r.grow input='%s' output='%s'", 
 	G_fully_qualified_name(input, mapset), output);
-    if (G_yes("Should the result map be binary? ",-1))
+    if (G_yes("Should the result be a 0/1 map? (non-zero values would become 1)",-1))
 	strcat (command, " -b");
     exit(system(command));
 }
