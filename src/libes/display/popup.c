@@ -41,7 +41,7 @@ D_popup(back_colr, text_colr, div_colr, top, left, percent_per_line, options)
     int max_len ;
     int len ;
     char *panel ;
-    int dots_per_line ;
+    int dots_per_line, dots_per_char, height, width ;
 
 /* Figure the number of options and the max length of options */
     max_len = 0 ;
@@ -51,13 +51,21 @@ D_popup(back_colr, text_colr, div_colr, top, left, percent_per_line, options)
 	if (max_len < len) max_len = len ;
     }
 
-/* Figure the dots per line */
-    dots_per_line = (R_screen_bot() - R_screen_top()) * percent_per_line / 100 ;
+/* Figure the dots per line and dots_per_char */
+    height = R_screen_bot() - R_screen_top();
+    width = R_screen_rite() - R_screen_left();
+    dots_per_line = height * percent_per_line / 100 ;
+    dots_per_char = width / (max_len + 2);
+    /* we want the box to fit into window horizontally */
+
     t = R_screen_bot() - (R_screen_bot() - R_screen_top()) * top / 100 ;
     l = R_screen_left() + (R_screen_rite() - R_screen_left()) * left / 100 ;
 
 /* Figure the bottom and right of the window */
     text_size = (int)(.8 * (float)dots_per_line) ;
+    if(text_size > dots_per_char)
+	 text_size = dots_per_char;
+
     text_raise = (dots_per_line - text_size + 1) / 2;
     if (text_raise == 0)
 	text_raise = 1;
@@ -89,7 +97,15 @@ D_popup(back_colr, text_colr, div_colr, top, left, percent_per_line, options)
 		r = R_screen_rite() ;
 	}
 	if (l < R_screen_left())
-		G_fatal_error("popup window too big horizontally\n") ;
+	{
+	/* actually, this should never happen */
+		fprintf(stderr, "ERROR:\n") ;
+		fprintf(stderr, "popup window too big horizontally\n");
+		fprintf(stderr,"to fit into the graphics window.\n");
+		fprintf(stderr, "Widen the graphics window.") ;
+		fprintf(stderr, "\nExiting...\n") ;
+		exit(1);
+        }
 
 /* Make sure text is not drawn outside of window */
     R_set_window(t, b, l, r) ;
