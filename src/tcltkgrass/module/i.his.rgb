@@ -1,0 +1,10 @@
+interface_build {
+    {i.his.rgb} 0
+    {HIS to RGB raster map color transformation function.}
+    {entry hue_input {Input raster map representing HUE:} 0 raster}
+    {entry intensity_input {Input raster map representing INTENSITY:} 0 raster}
+    {entry saturation_input {Input raster map representing SATURATION:} 0 raster}
+    {entry red_output {Output raster map representing RED:} 0 raster}
+    {entry green_ouput {Output raster map representing GREEN:} 0 raster}
+    {entry blue_output {Output raster map representing BLUE:} 0 raster}
+}
