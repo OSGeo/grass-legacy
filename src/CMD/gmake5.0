@@ -1,4 +1,4 @@
-:
+#!/bin/sh
 SRC=${GRASSSRC}
 CMD=${SRC}/CMD
 HEADER=${HEADER}
