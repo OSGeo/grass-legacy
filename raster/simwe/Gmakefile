@@ -1,4 +1,0 @@
-all:	
-	$(GMAKE) simlib
-	$(GMAKE) r.sim.water
-	$(GMAKE) r.sim.sediment
