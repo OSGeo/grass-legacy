@@ -224,7 +224,18 @@ if [ ! "$LOCATION" ] ; then
     	    
 	    case $? in
      	    	0) ;;
-     	    	*) exit ;;
+     	    	*) 
+		    # Check for an invalid GISRC file
+		    if [ -f $GISRC ] ; then
+			VALUE=`grep "GISDBASE" $GISRC`
+			if [ "$VALUE" = "" ] ; then
+    			    echo "Invalid resource file, removing $GISRC" 
+			    rm -f $GISRC
+			fi
+		    fi
+		    
+		    exit
+		    ;;
     	    esac
 	    
 	    eval `g.gisenv`
@@ -255,7 +266,18 @@ if [ ! "$LOCATION" ] ; then
 
 		    case $? in
      	    		0) ;;
-     	    		*) exit ;;
+     	    		*) 
+			    # Check for an invalid GISRC file
+			    if [ -f $GISRC ] ; then
+				VALUE=`grep "GISDBASE" $GISRC`
+				if [ "$VALUE" = "" ] ; then
+    				    echo "Invalid resource file, removing $GISRC" 
+				    rm -f $GISRC
+				fi
+			    fi
+
+			    exit
+			    ;;
     		    esac
 	    
 		    eval `g.gisenv`
