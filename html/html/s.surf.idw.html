@@ -14,7 +14,8 @@ Inverse Distance Weighted algorithm.
 
 <B>s.surf.idw input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
-[<B>npoints=</B><EM>count</EM>] 
+<B>[npoints=</B><EM>count</EM><B>]</B>
+<B>[field=</B><EM>value</EM><B>]</B>
 
 <H2>DESCRIPTION</H2>
 
@@ -48,7 +49,8 @@ using the form:
 <DD>
 <B>s.surf.idw input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
-[<B>npoints=</B><EM>count</EM>] 
+<B>[npoints=</B><EM>count</EM><B>]</B>
+<B>[field=</B><EM>value</EM><B>]</B>
 </DL>
 
 Alternately, the user can simply type <B>s.surf.idw</B> on the command line, 
@@ -66,24 +68,25 @@ interface.
 
 <DL>
 <DT><B>input=</B><EM>name</EM>
-
 <DD>Name of an input site list file that contains a set of
 irregularly spaced data values; i.e., some cells contain
 known data values while the rest contain zero (0).
 
 <DT><B>output=</B><EM>name</EM>
-
 <DD>Name to be assigned to the new output raster map layer
 containing a smooth surface generated from the known data
 values in the input site list file.
 
 <DT><B>npoints=</B><EM>count</EM>
-
 <DD>The number of points to use for interpolation.  By
 default, the 12 nearest points are used for interpolation.
 <BR>
 Default: 12 
 
+<DT><B>field</B>
+<DD>Number of z-field attribute to use for calculation
+<DD>default: 1
+</DL>
 </DL>
 
 <H2>NOTES</H2>
@@ -115,8 +118,7 @@ if they fall outside the mask.
 <EM><A HREF="r.surf.fractal.html">r.surf.fractal</A></EM><br>
 <EM><A HREF="r.surf.random.html">r.surf.random</A></EM><br>
 <EM><A HREF="v.surf.rst.html">v.surf.rst</A></EM><br>
-<EM><A HREF="s.db.rim.html">s.db.rim</A></EM><br>
-<EM><A HREF="s.menu.html">s.menu</A></EM><br>
+<EM><A HREF="s.surf.rst.html">s.surf.rst</A></EM><br>
 <EM><A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHOR</H2>
