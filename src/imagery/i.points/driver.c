@@ -14,7 +14,7 @@ driver()
     {
 	MENU("QUIT",really_quit,&use),
 	MENU("ZOOM",zoom,&use),
-	MENU("PLOT CELL",plotcell,&use),
+	MENU("PLOT RASTER",plotcell,&use),
 	MENU("ANALYZE",analyze,&use),
 	INFO("  Input method -> ", &from_flag),
 	OPTION("DIGITIZER",2,&from_digitizer),
