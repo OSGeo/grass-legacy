@@ -1,0 +1,20 @@
+OFILES = main.o bound.o io.o
+DIGINC = $(SRC)/mapdev/lib
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PROG = $(BIN_MAIN_CMD)/r.poly
+
+all: $(PROG)
+
+$(PROG): $(OFILES)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(OFILES):	extr_areas.h
+
+$(MAN2)/r.poly: Gpoly2.man
+	$(MANROFF)
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) *.c ../../../mapdev/Vlib/*.c ../../../mapdev/diglib/*.c $(DIG_ATTLIB) $(GISLIB)
