@@ -7,6 +7,7 @@
     October 1993
 */
 
+#include <stdio.h>
 #include "gis.h"
 #include "gstypes.h"
 #include "gsget.h"
