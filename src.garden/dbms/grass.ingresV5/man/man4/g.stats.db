@@ -1,0 +1,32 @@
+.TH g.stats.db
+.SH NAME
+\fIg.stats.db\fR \- Generate a statistics for a specified column in the currently selected database.
+.br
+.I "(GRASS Relational Database Management Interface Program)"
+.SH SYNOPSIS
+\fBg.stats.db\fR
+.br
+\fBg.stats.db help\fR
+.br
+\fBg.stats.db\fR \fBtable=\fIname\fR \fBcolumn=\fIname\fR
+.SH DESCRIPTION
+g.stats.db generates a series of simple statistics for a numeric column in the specified table of the currenty selected database. Statics generated for the column include count, sum, average, minimum value and maximum value.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fItable\fR
+Name of table in currently selected  database.
+.IP \fIcolumn\fR
+Column in [table] which is numeric in type.
+
+.SH BUGS
+None
+
+.SH "SEE ALSO"
+g.column.db, g.select.db, g.table.db, d.rast.db, d.site.db, d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db, r.reclass.db, r.rescale.db, v.reclass.db
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
