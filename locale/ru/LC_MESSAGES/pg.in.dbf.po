@@ -2,61 +2,197 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
+#: pgdump.c:81 pgdump.c:124 pgdump.c:139 pgdump.c:207 pgdump.c:217
+#: pgdump.c:265 pgdump.c:344
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-06 15:40+0300\n"
+"POT-Creation-Date: 2002-11-24 09:14+0300\n"
 "PO-Revision-Date: 2002-03-06 15:40+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: main.c:42
+#: dbfopen.c:66
+msgid "$Id$"
+msgstr ""
+
+#: dbfopen.c:193 pgdump.c:254
+msgid "r"
+msgstr ""
+
+#: dbfopen.c:193
+msgid "r+"
+msgstr ""
+
+#: dbfopen.c:194
+msgid "rb"
+msgstr ""
+
+#: dbfopen.c:194
+msgid "r+b"
+msgstr ""
+
+#: dbfopen.c:204
+msgid ".shp"
+msgstr ""
+
+#: dbfopen.c:205
+msgid ".shx"
+msgstr ""
+
+#: dbfopen.c:207
+msgid ".dbf"
+msgstr ""
+
+#: dbfopen.c:209
+msgid ".SHP"
+msgstr ""
+
+#: dbfopen.c:210
+msgid ".SHX"
+msgstr ""
+
+#: dbfopen.c:212
+msgid ".DBF"
+msgstr ""
+
+#: dbfopen.c:360
+msgid "wb"
+msgstr ""
+
+#: dbfopen.c:367
+msgid "rb+"
+msgstr ""
+
+#: dbfopen.c:555
+#, c-format
+msgid "%lf"
+msgstr ""
+
+#: dbfopen.c:764
+#, c-format
+msgid "%%%dd"
+msgstr ""
+
+#: dbfopen.c:773
+#, c-format
+msgid "%%%d.%df"
+msgstr ""
+
+#: main.c:34
+msgid "input"
+msgstr ""
+
+#: main.c:37
 msgid "Name of .dbf file to be imported"
 msgstr "Название .dbf файла для импорта"
 
-#: main.c:49
+#: main.c:41
+msgid "dumpmode"
+msgstr ""
+
+#: main.c:45
 msgid "Admin/normal user dump mode (Default = Postgres super-user)"
 msgstr "Способ импорта - admin/normal (Default = Postgres super-user)"
 
-#: pgdump.c:52 pgdump.c:68
+#: pgdump.c:54 pgdump.c:71
 msgid "Failed to allocate new memory.\n"
 msgstr "Не смог выделить необходимую память.\n"
 
-#: pgdump.c:191
+#: pgdump.c:178 pgdump.c:357
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: pgdump.c:180
+#, c-format
+msgid ",%s\n"
+msgstr ""
+
+#: pgdump.c:182
+#, c-format
+msgid ",%s"
+msgstr ""
+
+#: pgdump.c:192
 msgid "Error occurred while writing to tmp file!\n"
 msgstr "Ошибка записи данных во временный файл!\n"
 
-#: pgdump.c:238
+#: pgdump.c:233 pgdump.c:319
+msgid "PG_DBASE"
+msgstr ""
+
+#: pgdump.c:236
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: pgdump.c:259
+#: pgdump.c:257
 #, c-format
 msgid "%s - DBF not found, or wrong format.\n"
 msgstr "%s - DBF не найден, или имеет неправильный формат.\n"
 
-#: pgdump.c:288 pgdump.c:468
+#: pgdump.c:274
+msgid "text"
+msgstr ""
+
+#: pgdump.c:278
+msgid "int4"
+msgstr ""
+
+#: pgdump.c:280
+msgid "int8"
+msgstr ""
+
+#: pgdump.c:283
+msgid "float4"
+msgstr ""
+
+#: pgdump.c:286 pgdump.c:469
 msgid "Invalid field type - bailing out"
 msgstr "Неправильный тип поля - выход"
 
-#: pgdump.c:329
+#: pgdump.c:292
+msgid " "
+msgstr ""
+
+#: pgdump.c:294 pgdump.c:299 pgdump.c:472
+msgid ","
+msgstr ""
+
+#: pgdump.c:311
+msgid "create table "
+msgstr ""
+
+#: pgdump.c:313 pgdump.c:482
+msgid " ("
+msgstr ""
+
+#: pgdump.c:315 pgdump.c:486
+msgid ")"
+msgstr ""
+
+#: pgdump.c:317
+msgid "PG_HOST"
+msgstr ""
+
+#: pgdump.c:321
 #, c-format
 msgid "Error Quering Postgres:%s\n"
 msgstr "Ошибка запроса Postgres:%s\n"
 
-#: pgdump.c:333 pgdump.c:401 pgdump.c:491
+#: pgdump.c:326 pgdump.c:397 pgdump.c:488
 #, c-format
 msgid "Executing %s\n"
 msgstr "Выполняется %s\n"
 
-#: pgdump.c:337
-#, c-format
+#: pgdump.c:332
+#, fuzzy, c-format
 msgid ""
-"FIXME: Postgres Says:\n"
+"\n"
 "**********************\n"
 "%s\n"
 "Please make sure that created table name is not used by another table.\n"
@@ -64,21 +200,25 @@ msgstr ""
 "FIXME: Postgres:\n"
 "**********************\n"
 "%s\n"
-"Убедитесь в том, что имя новой таблицы не существует.\n"
+"Убедитесь в том, что такой таблицы не существует.\n"
 
-#: pgdump.c:359
+#: pgdump.c:349
 msgid ""
 "Additionally dump to ASCII file (enter full Unix name or hit <Enter> for "
 "none):\n"
 msgstr ""
-"Дополнительно записать в ASCII file (введите полный адрес файла или <Enter>, если "
-"нет):\n"
+"Дополнительно записать в ASCII file (введите полный адрес файла или <Enter>, "
+"если нет):\n"
 
-#: pgdump.c:361 pgdump.c:369
+#: pgdump.c:351 pgdump.c:361
 msgid "OK, writing to temporary file\n"
 msgstr "OK, запись во временный файл\n"
 
-#: pgdump.c:377
+#: pgdump.c:368
+msgid "w"
+msgstr ""
+
+#: pgdump.c:370
 #, c-format
 msgid ""
 "File write error on temporary file %s\n"
@@ -87,20 +227,42 @@ msgstr ""
 "Ошибка записи во временный файл %s\n"
 "Проверьте, есть ли права на запись в каталог"
 
-#: pgdump.c:409
+#: pgdump.c:372 pgdump.c:409
+msgid "drop table "
+msgstr ""
+
+#: pgdump.c:377 pgdump.c:414
 #, c-format
+msgid "Error: drop table:%s\n"
+msgstr ""
+
+#: pgdump.c:391
+msgid "copy "
+msgstr ""
+
+#: pgdump.c:393
+msgid " from '"
+msgstr ""
+
+#: pgdump.c:395
+msgid "' using delimiters ','"
+msgstr ""
+
+#: pgdump.c:404
+#, fuzzy, c-format
 msgid ""
 "********************\n"
-"FIXME: Postgres ERROR:%s\n"
+"ERROR:%s\n"
 "The table has NOT been created.\n"
 "You must be Postgres superuser to COPY table. Choose normal user dumpmode.\n"
 msgstr ""
 "********************\n"
 "FIXME: Postgres ERROR:%s\n"
 "Таблица не была создана.\n"
-"Вы должны быть администратором Postgres, чтобы COPY table. Выберите способ normal.\n"
+"Вы должны быть администратором Postgres, чтобы COPY table. Выберите способ "
+"normal.\n"
 
-#: pgdump.c:427
+#: pgdump.c:428
 #, c-format
 msgid ""
 "\n"
@@ -109,7 +271,34 @@ msgstr ""
 "\n"
 "Таблица %s успешно скопирована в Postgres. Поздравления!\n"
 
-#: pgdump.c:497
+#: pgdump.c:453 pgdump.c:455
+msgid "'"
+msgstr ""
+
+#: pgdump.c:458
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: pgdump.c:464
+#, c-format
+msgid "%f"
+msgstr ""
+
+#: pgdump.c:480
+msgid "insert into "
+msgstr ""
+
+#: pgdump.c:484
+msgid ") values ("
+msgstr ""
+
+#: pgdump.c:492
+#, c-format
+msgid "Error in INSERT:%s\n"
+msgstr ""
+
+#: pgdump.c:498
 #, c-format
 msgid ""
 "\n"

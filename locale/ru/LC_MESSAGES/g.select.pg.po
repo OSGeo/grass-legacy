@@ -6,40 +6,73 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-02-26 13:40+0300\n"
+"POT-Creation-Date: 2002-11-23 16:26+0300\n"
 "PO-Revision-Date: 2002-02-26 13:40+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: getdbname.c:30 listdb.c:21
-#, c-format
-msgid "Error: select Postgres:%s\n"
-msgstr "Ошибка: select Postgres:%s\n"
+#: getdbname.c:22 main.c:63
+msgid "PG_HOST"
+msgstr ""
 
-#: getdbname.c:38 listdb.c:28
+#: getdbname.c:24 listdb.c:15
+msgid "template1"
+msgstr ""
+
+#: getdbname.c:28 listdb.c:18
 #, c-format
 msgid "Error: connect Postgres:%s\n"
 msgstr "Ошибка: connect Postgres:%s\n"
 
-#: main.c:47
-msgid "Use -l flag for list of databases."
-msgstr "Флаг -l для вывода списка БД."
+#: getdbname.c:34 listdb.c:23
+msgid "select datname from pg_database"
+msgstr ""
 
-#: main.c:54
+#: getdbname.c:37 listdb.c:25
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Postgres:%s\n"
+
+#: listdb.c:38
+#, c-format
+msgid "%s\n"
+msgstr ""
+
+#: main.c:37
+msgid "Use -l flag for list of databases."
+msgstr "Флаг -l для вывода списка БД"
+
+#: main.c:40
+msgid "host"
+msgstr ""
+
+#: main.c:44
 msgid "Postgres server name:"
 msgstr "Сервер Postgres"
 
-#: main.c:61
+#: main.c:47
+msgid "database"
+msgstr ""
+
+#: main.c:51
 msgid "Postgres database name:"
 msgstr "БД Postgres"
 
-#: main.c:81 main.c:101
+#: main.c:66 main.c:84
 msgid "The following databases are in the Unix catalogue:\n"
 msgstr "На сервере имеются следующие БД:\n"
 
-#: main.c:100
+#: main.c:73
+msgid "USER"
+msgstr ""
+
+#: main.c:79
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:83
 msgid "This database does not exist."
 msgstr "Эта БД не существует."
