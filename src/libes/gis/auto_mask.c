@@ -26,7 +26,7 @@ G__check_for_auto_masking ()
         return G__.auto_mask ;  /* TRUE or FALSE */
 
 /* look for the existence of the MASK file */
-    G__.auto_mask = (G_find_file ("cell", "MASK", G_mapset()) != 0);
+    G__.auto_mask = (G_find_cell ("MASK", G_mapset()) != 0);
 
     if (G__.auto_mask <= 0)
         return 0;
