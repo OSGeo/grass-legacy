@@ -44,9 +44,11 @@ int main( int argc , char ** argv )
 	/* program options
 	 */
  	char	*	pszGraph;
+ 	char	*	pszGraphOut;
  
-	GNO_BEGIN/* short   long        default     variable        help */
- 	GNO_OPTION( "g", 	"graph", 	NULL ,  	& pszGraph ,	"Output Graph file" )
+	GNO_BEGIN/* short   long        	default     variable        help */
+ 	GNO_OPTION( "g", 	"graph", 		NULL ,  	& pszGraph ,	"Input Graph file" )
+ 	GNO_OPTION( "o", 	"graphout", 	NULL ,  	& pszGraphOut ,	"Output Graph file" )
  	GNO_END
  
 
@@ -58,6 +60,7 @@ int main( int argc , char ** argv )
 	 * options parsed
 	 */
 
+	printf( "Graph read:\n" );
 	if ( (fd = open( pszGraph , O_RDONLY )) < 0 )
 	{
 		perror( "open" ); return 1;
@@ -68,6 +71,8 @@ int main( int argc , char ** argv )
 		return 1;
 	}
 	close( fd );
+	printf( "Done.\n" );
+
 
 	printf( "Graph unflatten:\n" );
 	nret = gnGrpUnflatten( & graph );
@@ -76,6 +81,29 @@ int main( int argc , char ** argv )
 		return 1;
 	}
 	printf( "Done.\n" );
+
+
+	printf( "Graph flatten:\n" );
+	nret = gnGrpFlatten( & graph );
+	printf( "Done.\n" );
+
+
+	if ( pszGraphOut ) {
+		printf( "Graph write:\n" );
+		if ( (fd = open( pszGraphOut , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 )
+		{
+			perror( "open" ); return 1;
+		}
+		gnGrpWrite( & graph, fd );
+		if ( nret < 0 )
+		{
+			fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
+			return 1;
+		}
+		close( fd );
+		printf( "Done.\n" );
+	}
+
 	gnGrpRelease( & graph );
 	return 0;
 }
