@@ -9,6 +9,8 @@
 # with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
 # Florian Goessmann, and others
 #
+# 18 March 2005
+#
 # COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -29,6 +31,25 @@ set location_name [exec g.gisenv get=LOCATION_NAME]
 set mapset [exec g.gisenv get=MAPSET]
 
 set dmpath $env(GISBASE)/etc/dm/
+
+set keycontrol "Control"
+set tmenu "1"
+set keyctrl "Ctrl"
+set execom "execute"
+
+# add for OSX aqua
+if {[info exists env(osxaqua)]} {
+    set osxaqua $env(osxaqua)
+} else {
+    set osxaqua "0"
+}
+
+if { $osxaqua == "1"} {
+    set keycontrol "Command"
+    set tmenu "0"
+    set keyctrl "Command"
+    set execom "spawn"
+}
 
 #fetch GRASS Version number:
 set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
@@ -159,7 +180,8 @@ proc Dm::create { } {
     
     # eval "exec sleep 20"
 
-    source $dmpath/menu.tcl 
+    global env
+	source $dmpath/menu.tcl
 
     set prgtext   "Creating MainFrame..."
     set mainframe [MainFrame .mainframe \
@@ -305,10 +327,10 @@ proc Dm::add { type } {
 
 # autoname layer when a map is selected
 proc Dm::autoname { name } {
-	variable tree
-	variable node
-	set node [ lindex [$tree selection get] 0 ]
-	DmTree::autoname $tree $node $name
+    variable tree
+    variable node
+    set node [ lindex [$tree selection get] 0 ]
+    DmTree::autoname $tree $node $name
 }
 
 # selected node ( show options )
@@ -906,31 +928,33 @@ proc main {argc argv} {
     global auto_path
     global GRASSVERSION
     global location_name
+    global keycontrol
 
     wm withdraw .
     wm title . [G_msg "GRASS $GRASSVERSION GIS Manager - $location_name"]
 
-    bind . <Control-Key-o> {
+    bind . <$keycontrol-Key-o> {
 	Dm::OpenFileBox {}
     }
-    bind . <Control-Key-n> {
+    bind . <$keycontrol-Key-n> {
 	Dm::new
     }
-    bind . <Control-Key-s> {
+    bind . <$keycontrol-Key-s> {
 	Dm::SaveFileBox {}
     }
-    bind . <Control-Key-q> {
+    bind . <$keycontrol-Key-q> {
 	DmPrint::clean;  exit
     }
-    bind . <Control-Key-x> {
+    bind . <$keycontrol-Key-x> {
 	Dm::delete
     }
-    bind . <Control-Key-w> {
+    bind . <$keycontrol-Key-w> {
 	Dm::FileClose {}
     }
-    bind . <Control-Key-p> {
+    bind . <$keycontrol-Key-p> {
     Dm::print
     }
+
 
     Dm::create
     DmPrint::init
