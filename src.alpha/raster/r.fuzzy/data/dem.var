@@ -1,0 +1,18 @@
+#
+4
+1 ELEVATION_tri
+1 0 1000 1200 1500 elev_low_tri
+1 0 1200 1500 1700 elev_medium_tri
+1 0 1500 1700 2000 elev_high_tri
+2 ELEVATION_tra
+2 1 1000 1100 1300 1400 elev_low_tra
+2 1 1300 1400 1600 1700 elev_medium_tra
+2 1 1600 1700 1900 2000 elev_high_tra
+3 ELEVATION_lr
+3 2 1000 1200 1500 2 0.5 elev_low_lr
+3 2 1200 1500 1700 0.5 2 elev_medium_lr
+3 2 1500 1700 2000 0.8 1.5 elev_high_lr
+4 ELEVATION_lrg
+4 3 1000 1150 1250 1400 0.5 0.5 elev_low_lrg
+4 3 1300 1450 1550 1700 0.8 0.2 elev_medium_lrg
+4 3 1600 1750 1850 2000 0.1 2   elev_high_lrg
