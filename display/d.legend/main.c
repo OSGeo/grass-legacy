@@ -128,7 +128,7 @@ int main( int argc, char **argv )
 	opt9->key_desc   = "min,max";
 	opt9->type       = TYPE_DOUBLE;		/* should it be type_double or _string ??*/
 	opt9->required   = NO;
-	opt9->description= "Use a subset of the map range for the legend" ;
+	opt9->description= "Use a subset of the map range for the legend (min,max)" ;
 
 
 	hidestr = G_define_flag ();
