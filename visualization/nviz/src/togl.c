@@ -11,7 +11,11 @@
 
 /*
  * $Log$
- * Revision 1.2  2002-01-22 04:51:41  glynn
+ * Revision 1.3  2002-05-09 20:58:46  glynn
+ * Add tkInt8.0.5.h
+ * Rename tkInt8.0p2.h to tkInt8.0.2.h for consistency
+ *
+ * Revision 1.2  2002/01/22 04:51:41  glynn
  * Merge releasebranch_11_april_2001_5_0_0 with HEAD
  *
  * Revision 1.1.1.1.4.4  2001/10/03 15:47:44  markus
@@ -138,11 +142,9 @@
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==0
 #  include "tkInt8.0.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==2
-#  include "tkInt8.0p2.h"
-#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==4
-#  include "tkInt8.0p2.h"
+#  include "tkInt8.0.2.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==5
-#  include "tkInt8.0p2.h"
+#  include "tkInt8.0.5.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==1
 #  include "tkInt8.1.1.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==2
