@@ -47,6 +47,12 @@
 #include "local_proto.h"
 #define MAIN
 
+/* some global variables */
+int ier, proj_index, zone, snum, spath;
+
+double radius, kfact, mfact, msfact, nfact, 
+       qfact, wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
+
 int main(int argc, char *argv[])
 {
 	int Out_proj;
@@ -78,8 +84,11 @@ int main(int argc, char *argv[])
 
 	G_gisinit(argv[0]);
 
-	init_table();
-	init_unit_table();
+	G_geo_init_table();
+        /***
+         * no longer necessary, table is a static struct 
+	 * init_unit_table();
+        ***/
 	sprintf(set_name, "PERMANENT");
 	G__file_name(path, "", PROJECTION_FILE, set_name);
 
@@ -152,7 +161,7 @@ int main(int argc, char *argv[])
 				leave(SP_NOCHANGE);
 			}
 			Out_proj = 4;
-			proj_index = get_proj_index(proj_out);
+			proj_index = G_geo_get_proj_index(proj_out);
 			if (proj_index == LL || proj_index == UTM)
 				fprintf(stderr, "%c\nProjection 99 does not support UTM or LL\n\n", 7);
 			else
@@ -163,7 +172,7 @@ int main(int argc, char *argv[])
 		G_fatal_error("Unknown projection");
 	}
 
-	proj_index = get_proj_index(proj_out);
+	proj_index = G_geo_get_proj_index(proj_out);
 	if (proj_index < 0) {
 		sprintf(buff, "Projection %s is not specified in the table", proj_out);
 		G_fatal_error(buff);

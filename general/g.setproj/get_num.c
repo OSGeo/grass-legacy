@@ -5,6 +5,7 @@
 #include "local_proto.h"
 
 char answer[200];
+double LLSTUFF[NLLSTUFF];
 
 int get_KFACT(int indx)
 {
