@@ -679,7 +679,7 @@ float *fcur;
     fcur = fbuf;
     icur = ibuf;
     for(i=0; i<rows; i++){
-	G_lookup_f_raster_colors (fcur, r, g, b, set, cols, &colrules);
+	G_lookup_f_raster_colors ((DCELL *)fcur, r, g, b, set, cols, &colrules);
 	for(j=0; j<cols; j++){
 	    if(set[j])
 		icur[j] = r[j] & 0xff | ((g[j] & 0xff)<<8) | ((b[j] & 0xff)<<16);
@@ -1114,11 +1114,11 @@ int found;
 	    char *p; 
 
 	    size = gs->rows * gs->cols;
-	    p = tb->cb;
+	    p = (char *) tb->cb;
 	    INIT_MINMAX(p, nm, size, min, max, found);
 	    if(!found) return(-1);  /* all nulls! */
 	    size = gs->rows * gs->cols;
-	    p = tb->cb;
+	    p = (char *) tb->cb;
 	    SET_MINMAX(p, nm, size, min, max); 
 	}
 	else if(tb->fb){
