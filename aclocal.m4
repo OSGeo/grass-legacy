@@ -894,14 +894,18 @@ dnl AC_CHECK_TOOL(AR, ar)
 	FreeBSD-*)
 	    # FreeBSD 3.* and greater have ELF.
 	    SHLIB_CFLAGS="-fPIC"
-	    SHLIB_LD="ld -Bshareable -x"
+	    SHLIB_LD="-shared"
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX="so"
 	    DL_OBJS=""
 	    DL_LIBS=""
-	    LDFLAGS="-export-dynamic"
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
+	    # this is where most installed packages go
+	    CPPFLAGS="$CPPFLAGS -I/usr/local/include"
+	    LDFLAGS="$LDFLAGS -pthread -L/usr/local/lib"
+	    # require this for GL probe to work
+	    CFLAGS="$CFLAGS -pthread"
 	    if test "${GRASS_THREADS}" = "1" ; then
 		# The -pthread needs to go in the CFLAGS, not LIBS
 		LIBS=`echo $LIBS | sed s/-pthread//`
