@@ -53,7 +53,7 @@ main (int argc, char *argv[])
 	if (i%2) /* must be even number of names */
 	{
 	    G_usage();
-	    exit(1);
+	    G_fatal_error("must be even number of names");
 	}
     }
 

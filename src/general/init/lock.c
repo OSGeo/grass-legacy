@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include "local_proto.h"
+#include "gis.h"
 
 /******************************************************************
 *lock file pid
@@ -32,10 +33,7 @@ int main (int argc, char *argv[])
     int locked;
 
     if (argc != 3 || sscanf (argv[2],"%d",&lockpid) != 1)
-    {
-	fprintf (stderr, "usage: %s file pid\n", argv[0]);
-	exit(-1);
-    }
+        G_fatal_error("usage: %s file pid", argv[0]);
 
 #define file argv[1]
 
@@ -52,15 +50,11 @@ int main (int argc, char *argv[])
     umask (0);
     if ((lock = creat (file, 0666)) < 0)
     {
-	fprintf (stderr, "%s: ", argv[0]);
 	perror (file);
-	exit(-1);
+	G_fatal_error("%s: ", argv[0]);
     }
     if (write(lock, &lockpid, sizeof lockpid) != sizeof lockpid)
-    {
-	fprintf (stderr, "%s: can't write lockfile %s (disk full? Permissions?)\n", argv[0], file);
-	exit(-1);
-    }
+        G_fatal_error("%s: can't write lockfile %s (disk full? Permissions?)", argv[0], file);
     close (lock);
     exit(0);
 }
