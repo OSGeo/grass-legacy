@@ -17,7 +17,9 @@ NAME</h2>
 
 <table COLS=2 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape input=</b><i>name</i>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
+<b>-l</b>
+]&nbsp; [<b>-r </b>]&nbsp; [ <b>-p</b> ]&nbsp; [ <b>-n</b> ]&nbsp; <b>in=</b><i>name</i>
 [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
@@ -39,8 +41,10 @@ user specifies program arguments on the command line, using the form:</font>
 <br>&nbsp;
 <table COLS=2 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape input=</b><i>name</i>
-[<b>mapset=</b><i>name</i>]</font>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
+<b>-l</b>
+]&nbsp; [<b>-r </b>]&nbsp; [ <b>-p</b> ]&nbsp; [ <b>-n</b> ]&nbsp;&nbsp;
+<b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
 <br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
@@ -63,19 +67,40 @@ GRASS user interface described in the manual entry for <i>parser</i>.</font>
 of the shapefile.</font>
 <p><font size=+0>The import filter attempts to correct some common errors
 that are frequently met with in shapefiles.</font>
+<br><a NAME="FLAGS"></a>
+<h2>
+<font size=+0>FLAGS</font></h2>
+<font size=+0><b>-l</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List the fields contained
+in the DBF file associated with the input shapefile, then exit.</font>
+<p><font size=+0><b>-r</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create a reject
+lines file. During import some lines are not imported for a variety of
+reasons.</font>
+<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+This option creates a new Level 1 vector map (ie. without topology), which
+can be</font>
+<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+used to display these lines.</font>
+<p><font size=+0><b>-p</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dump the fields
+of the shapefile from DBF to a postgres table.</font>
+<p><font size=+0><b>-n</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Access postgres
+as a normal user (the default is as postgres superuser).</font>
+<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Most users will want to select this option. If postgres cannot be accessed</font>
+<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+as postgres superuser, an ASCII database is dumped.</font>
 <br><a NAME="OPTIONS"></a>
 <h2>
 <font size=+0>OPTIONS</font></h2>
 
 <table COLS=3 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="18%"><font size=+0><b>input=</b><i>name</i></font></td>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="18%"><font size=+0><b>in=</b><i>name</i></font></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of input shape
 file. Provide a full path name or the name of a file in the current directory.
-The <i>.shp</i> extension is required.</font></td>
+Any of the full pathname, basename, or prefix only will suffice.</font></td>
 </tr>
 
 <tr ALIGN=LEFT VALIGN=TOP>
@@ -84,7 +109,7 @@ The <i>.shp</i> extension is required.</font></td>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>For creating a new
-mapset for the data imported. This may be usefull, since we cannot create
+mapset for the data imported. This may be useful, since we cannot create
 a projection info file and a default window in an existing mapset. When
 a file is imported in the current mapset, you should take care that they
 are in the same projection.</font>
@@ -156,8 +181,8 @@ scale</i></font></td>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>This sets an original
-scale that will be specified in the header of the vector map file pro-
-duced. It can be edited later with <b>v.digit</b>.</font>
+scale that will be specified in the header of the vector map file produced.
+It can be edited later with <b>v.digit</b>.</font>
 <p><font size=+0>The value defaults to 1:2400</font></td>
 </tr>
 
@@ -167,8 +192,9 @@ duced. It can be edited later with <b>v.digit</b>.</font>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of the attribute
-to use as the category number in dig_att. Give a value of <b>list</b> to
-see a list of available attributes.</font></td>
+to use as the category number in dig_att. Defaults to using the record
+ID number as a category value if no value is assigned or a non-integer
+field is given.</font></td>
 </tr>
 
 <tr ALIGN=LEFT VALIGN=TOP>
@@ -177,37 +203,37 @@ see a list of available attributes.</font></td>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
 <td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of the attribute
-to use as the category label in dig_cats. Give a value of <b>list</b> to
-see a</font>
-<br><font size=+0>list of available attributes.</font></td>
-</tr>
-
-<tr ALIGN=LEFT VALIGN=TOP>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"></td>
-
-<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
-
-<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"></td>
+to use as the category label in dig_cats. Only writes out results if a</font>
+<br><font size=+0>meaningful category field is given, otherwise no action
+is taken.</font></td>
 </tr>
 </table>
 
-<p><a NAME="BUGS AND CAVEAT"></a>
+<p><!-- Page: 2  --><!-- left  margin: 100 --><!-- right margin: 750 --><a NAME="BUGS AND CAVEAT"></a>
 <h2>
 <font size=+0>BUGS AND CAVEAT</font></h2>
 <font size=+0>There is no support for projection.</font>
 <p><font size=+0>Multipatch data is not yet supported. Point data (sites)
-also is not handled by this module. New module <i>s.in.shape</i></font>
-<br><!-- Page: 2  --><!-- left  margin: 100 --><!-- right margin: 750 -->
-<p><font size=+0>imports site data.</font>
+also is not handled by this module. New module <i>s.in.shape</i> imports
+site data.</font>
+<p><font size=+0>Resource hog. The filtration process uses a lot of memory
+in large files. The size of files that can be imported sufficiently depends
+on the resources of the local system, but performance degrades rapidly
+when you go into swap. On a system with 128MB physical RAM, files of up
+to 4000 polygons are typically imported easily.</font>
+<p><font size=+0>Area and perimeter fields in input data may no longer
+be quite correct if the lines have been adjusted to correct topology problems.</font>
 <br><a NAME="SEE ALSO"></a>
 <h2>
 <font size=+0>SEE ALSO</font></h2>
 <i><font size=+0><a href="m.in.e00.html">m.in.e00</a>, <a href="g.mapset.html">g.mapset</a>,
-<a href="g.region.html">g.region</a>, <a href="v.digit.html">v.digit</a>,
+<a href="g.region.html">g.region</a>,
+<a href="v.digit.html">v.digit</a>,
 <a href="v.proj.html">v.proj</a>,
 <a href="s.in.shape.html">s.in.shape</a>,
 <a href="v.support.html">v.support</a>,
 <a href="v.to.rast.html">v.to.rast</a>,
+
 <a href="v.out.shape.html">v.out.shape</a></font></i>
 <br><a NAME="AUTHORS"></a>
 <h2>
