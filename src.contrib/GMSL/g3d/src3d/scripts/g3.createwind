@@ -74,7 +74,7 @@ echo "t-b resol: $3" >> $LOCATION/WIND3
 echo "t-b resol: $3"
 
 # check bottom_height > top_height:
-if [ $1 -gt $2 ]
+if [ $1 -ge $2 ]
 then
  echo "----- ERROR: bottom_height must be less than top_height."
  rm -f $LOCATION/WIND3
