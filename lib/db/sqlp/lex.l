@@ -64,6 +64,7 @@
 [Pp][Rr][Ee][Cc][Ii][Ss][Ii][Oo][Nn]	{ return PRECISION; }
 [Oo][Rr]			{ return OR; }
 [Nn][Oo][Tt]			{ return NOT; }
+[Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt]	{ return DISTINCT; }
  /***************************************
   * EQUAL
   ***************************************/
