@@ -37,7 +37,14 @@ The coordinates are listed following the initial line containing the
 primitive code and the total number of vertices in the series. 
 The order of coordinates is <BR><BR>
   X Y [Z]
-<BR><BR>
+<P>
+<b>Import of files without ID column</b><br>
+
+In case that the input files does not contain any vector ID column,
+there is the possibility to auto-generate these IDs (categories). 
+For that, to automatically add an additional column 'cat', the 
+<em>catcol</em> parameter has to be set to the virtual column number 0 
+(<em>catcol=0</em>). The name for the auto-generated column is set to 'cat'.
 
 <P>
 <b>Importing from a spreadsheet</b><br>
@@ -101,6 +108,8 @@ Import into GRASS:
 <pre>
 cat coords.txt | v.in.ascii out=mymap
 </pre>
+As <em>catcol</em> is set to 0 by default, an extra column 'cat' containing the IDs will be
+auto-generated.
 
 <p><BR>
 <b>Example 3</b><br>
@@ -147,13 +156,13 @@ Generate a 3D points vector file 'points3d.dat' with attributes as ASCII file:
 <P>
 Import into GRASS:
 <pre>
+#As <em>catcol</em> is set to 0 by default, an extra column 'cat' containing
+#the IDs will be auto-generated (no need to define that):
 cat points3d.dat | v.in.ascii -z zcol=3 catcol=0 out=mypoints3D \
                    columns='x double, y double, z double, label_cz varchar(20), label_en varchar(20)'
 v.info -c mypoints3D
 v.info mypoints3D
 </pre>
-An additional column 'cat' will be automatically added when <em>catcol=0</em> (in case that no IDs are present in the
-input file).
 
 <P>
 The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
