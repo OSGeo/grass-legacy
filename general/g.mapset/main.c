@@ -34,7 +34,7 @@ main (int argc, char *argv[])
     char   *gis_lock; 
     char   mapset_old_path[2000], mapset_new_path[2000];
     char   lock_prog[2000], buf[2000];
-    char   *shell;
+    char   *shell, *monitor;
     struct MON_CAP *cap;
 
     G_gisinit (argv[0]);
@@ -71,6 +71,7 @@ main (int argc, char *argv[])
     location_old = G_store ( G__getenv ("LOCATION_NAME") );
     mapset_old = G_store ( G__getenv ("MAPSET") );
     sprintf ( mapset_old_path, "%s/%s/%s", gisdbase_old, location_old, mapset_old );
+    monitor = G_store ( G__getenv ("MONITOR") );
 
     /* New values */
     if ( gisdbase_opt->answer )
@@ -137,6 +138,8 @@ main (int argc, char *argv[])
 	    R_release_driver();
 	}
     }
+    if ( monitor )
+	G_setenv ( "MONITOR", monitor );
 
     /* Clean temporary directory */
     sprintf ( buf, "%s/etc/clean_temp > /dev/null", G_gisbase() );
