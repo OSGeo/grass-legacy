@@ -1,0 +1,13 @@
+PGM = v.category
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+LIST = 	main.o
+
+
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB): #
+$(GISLIB): # 
