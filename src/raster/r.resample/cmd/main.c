@@ -7,8 +7,11 @@ char *argv[];
 {
 	struct History hist;
 	struct Categories cats;
+	struct Categories newcats;
+	struct Cell_stats stats;
 	struct Colors colr;
 	struct Cell_head cellhd;
+	struct Range range;
 	int hist_ok, colr_ok, cats_ok;
 	char name[100], *mapset;
 	char result[100];
@@ -20,7 +23,6 @@ char *argv[];
 	struct Flag *flag1 ;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
-
 
 	/* Define the different options */
 
@@ -73,14 +75,16 @@ char *argv[];
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
 	colr_ok = G_read_colors (name, mapset, &colr) > 0;
 	cats_ok = G_read_cats (name, mapset, &cats) >= 0;
-
+	if (cats_ok)
+		G_init_cats((CELL)0,G_get_cats_title(&cats),&newcats);
+		
 	infd = G_open_cell_old (name, mapset);
 	if (infd < 0)
 		exit(1);
 
 	if (G_get_cellhd (name, mapset, &cellhd) < 0)
 		exit(1);
-
+	G_init_cell_stats(&stats);
 	cell = G_allocate_cell_buf();
 	nrows = G_window_rows();
 	ncols = G_window_cols();
@@ -91,20 +95,21 @@ char *argv[];
 		exit(1);
 
 	if (verbose)
-		printf ("percent complete: ");
+		fprintf (stderr, "percent complete: ");
 
 	for (row = 0; row < nrows; row++)
 	{
 		if (verbose)
-			percent (row, nrows, 10);
+			G_percent (row, nrows, 2);
 		if (G_get_map_row (infd, cell, row) < 0)
 			exit(1);
 		if (G_put_map_row (outfd, cell) < 0)
 			exit(1);
+		G_update_cell_stats(cell,ncols,&stats);	
 	}
 
 	if (verbose)
-		percent (row, nrows, 10);
+		G_percent (row, nrows, 2);
 
 	G_close_cell (infd);
 
@@ -113,11 +118,34 @@ char *argv[];
 
 	G_close_cell (outfd);
 
-	if (cats_ok)
-		G_write_cats (result, &cats);
+	G_rewind_cell_stats(&stats);
+
+	if (cats_ok) {
+		long count;
+
+		while (G_next_cell_stat(cell, &count, &stats)) 
+			G_set_cat(*cell, G_get_cat(*cell,&cats), &newcats);
+			
+		G_write_cats (result, &newcats);
+		G_free_cats (&cats);
+		G_free_cats (&newcats);
+		}
+
+	G_free_cell_stats(&stats);
 
 	if (colr_ok)
+	{
+		if(G_read_range (result, G_mapset(), &range) > 0)
+		{
+		    CELL min, max, cmin, cmax;
+		    G_get_range_min_max (&range, &min, &max);
+		    G_get_color_range (&cmin, &cmax, &colr);
+		    if (min > cmin) cmin = min;
+		    if (max < cmax) cmax = max;
+		    G_set_color_range (cmin, cmax, &colr);
+		}
 		G_write_colors (result, G_mapset(), &colr);
+	}
 
 	if (hist_ok)
 		G_write_history (result, &hist);
