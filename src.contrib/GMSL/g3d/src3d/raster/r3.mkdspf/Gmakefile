@@ -27,7 +27,7 @@ OBJ	=	\
 
 
 $(PGM): $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(OBJ) $(LDFLAGS) -o $@ $(MATHLIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB)
 
 fill_cfax.o: vizual.h $(LDIR)/cell_table.h
 
