@@ -1,20 +1,21 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.in.ogr
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Import OGR vectors
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * * TODO: make fixed field length of OFTIntegerList dynamic
- * **************************************************************/
+/****************************************************************
+ *
+ * MODULE:       v.in.ogr
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               Markus Neteler (spatial parm)
+ *               
+ * PURPOSE:      Import OGR vectors
+ *               
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ * TODO: make fixed field length of OFTIntegerList dynamic
+ **************************************************************/
 #include <stdlib.h> 
 #include <string.h> 
 #include "gis.h"
@@ -27,10 +28,11 @@ int geom(OGRGeometryH hGeom, struct Map_info *Map, int cat );
 int 
 main (int argc, char *argv[])
 {
-    int    i, layer;
+    int    i, layer, arg_s_num;
+    float  xmin=0., ymin=0., xmax=0., ymax=0.;
     int    ncols;
     struct GModule *module;
-    struct Option *dsn_opt, *out_opt, *layer_opt;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt;
     char   buf[2000], namebuf[2000];
     char   *namebuf2, *namebuf3;
 
@@ -54,6 +56,7 @@ main (int argc, char *argv[])
     OGRFeatureH Ogr_feature;  
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
+    OGRGeometryH Ogr_oRing=NULL, poSpatialFilter=NULL;
 
     G_gisinit(argv[0]);
 
@@ -66,7 +69,6 @@ main (int argc, char *argv[])
     }
     module = G_define_module();
     module->description = G_store(buf);
-
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
@@ -85,6 +87,13 @@ main (int argc, char *argv[])
     layer_opt->description = "OGR layer name. If not given, available layers are printed + exit.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name";
+
+    spat_opt = G_define_option();
+    spat_opt->key = "spatial";
+    spat_opt->type = TYPE_DOUBLE;
+    spat_opt->multiple = YES;
+    spat_opt->required = NO;
+    spat_opt->description = "xmin,ymin,xmax,ymax";
     
     if (G_parser (argc, argv)) exit(-1); 
 
@@ -113,6 +122,33 @@ main (int argc, char *argv[])
 	exit (0);
     }
     if ( layer == -1 ) G_fatal_error ("Layer not found");
+
+    if ( spat_opt->answer && layer_opt->answer ) {
+        /* cut out a piece of the map */
+        /* order: xmin,ymin,xmax,ymax */
+        arg_s_num = 0; i = 0;
+        while ( spat_opt->answers[i] ) {
+	   if ( i == 0 ) xmin=atof(spat_opt->answers[i]);
+	   if ( i == 1 ) ymin=atof(spat_opt->answers[i]);
+	   if ( i == 2 ) xmax=atof(spat_opt->answers[i]);
+	   if ( i == 3 ) ymax=atof(spat_opt->answers[i]);
+           arg_s_num++; i++;
+        }
+        if ( arg_s_num != 4 ) G_fatal_error (" 4 parameters required for 'spatial' parameter.");
+	G_debug( 2, "cut out with boundaries: %f %f %f %f",xmin,ymin,xmax,ymax);
+
+	/* in theory this could be a irregular polygon */
+	poSpatialFilter = OGR_G_CreateGeometry( wkbPolygon );
+	Ogr_oRing = OGR_G_CreateGeometry( wkbLinearRing );
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0);
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymax, 0);
+        OGR_G_AddPoint(Ogr_oRing, xmax, ymax, 0);
+        OGR_G_AddPoint(Ogr_oRing, xmax, ymin, 0);
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0);
+        OGR_G_AddGeometryDirectly(poSpatialFilter, Ogr_oRing);
+	
+        OGR_L_SetSpatialFilter(Ogr_layer, poSpatialFilter );
+     }
 
     db_init_string (&sql);
     db_init_string (&strval);

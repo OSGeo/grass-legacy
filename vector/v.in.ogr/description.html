@@ -8,6 +8,11 @@ install GDAL to use <em>v.in.ogr</em>.
 <P>
 If a layer is not given, the available layers are printed and the module
 exits.
+<P>
+The optional <em>spatial</em> parameter defines spatial query extents.
+This parameter allows to restrict the region to a spatial subset while
+importing the data. All vector completely or partially falling into
+this rectangle subregion are imported.
 
 <h3>Supported OGR Vector Formats</h3>
 
@@ -16,9 +21,8 @@ Shapefile</a><br>
 <a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_mitab.html">Mapinfo File</a>
 
 <p>
-
-For further available drivers go 
-<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">here</a>
+Further available drivers depend on the local installation, for details see 
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">OGR web site</a>
 
 <h2>EXAMPLE</h2>
 
