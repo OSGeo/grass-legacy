@@ -25,5 +25,7 @@ $(PROG): v.stats.o  $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) v.stats.o $(VECTLIB) $(GISLIB) $(MATHLIB)
 	mv a.out $@
 
+$(VECTLIB) $(GISLIB): #
+
 saber_src:
 	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c v.stats.c  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
