@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.2 2000-10-01 16:46:10 markus Exp $
+$Id: SUBMITTING,v 1.3 2000-10-31 16:10:14 markus Exp $
 
 Dear (new) GRASS Developer,
 
@@ -13,6 +13,18 @@ care of following rules:
 
   or (better) grab it from CVS server (Latex):
     cvs -z3 co progmangrass50
+
+- add your copyright into your module code like this:
+  Example:
+
+      /*
+       * Copyright (C) 2000 by the GRASS Development Team
+       * Author: Jan-Oliver Wagner <jan@intevation.de>
+       *
+       * This program is free software under the GPL (>=v2)
+       * Read the file COPYING coming with GRASS for details.
+       */
+  This protects your rights according to GNU GPL (www.gnu.org).
 
 - place your module into the appropriate directory:
   - libes go into src/libes/
