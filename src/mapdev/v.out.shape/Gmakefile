@@ -1,6 +1,6 @@
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-PGM =	v.out.shape2
+PGM =	v.out.shape
 
 OBJ =	extract.o\
 	database.o\
