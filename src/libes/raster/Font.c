@@ -4,7 +4,7 @@
 #include "graph.h"
 
 static int select_font(char *);
-
+static int select_font_freetype(char *name);
 
 /*!
  * \brief choose font
@@ -55,6 +55,40 @@ static int select_font(char *name)
 
 	_send_ident(FONT) ;
 	_send_text(filename) ;
+	_get_int (&stat);
+
+	return stat == 0;
+}
+
+int R_font_freetype(char *name) {
+	return select_font_freetype(name);
+}
+
+static int select_font_freetype(char *name) {
+	char filename[1024];
+	int stat;
+
+	_send_ident(FONT_FREETYPE) ;
+	_send_text(name) ;
+	_get_int (&stat);
+
+	return stat == 0;
+}
+
+int R_charset(char *name) {
+	int stat;
+
+	_send_ident(CHARSET) ;
+	_send_text(name) ;
+	_get_int (&stat);
+
+	return stat == 0;
+}
+
+int R_font_freetype_release() {
+	int stat;
+
+	_send_ident(FONT_FREETYPE_RELEASE) ;
 	_get_int (&stat);
 
 	return stat == 0;
