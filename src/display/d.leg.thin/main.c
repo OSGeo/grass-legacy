@@ -286,7 +286,10 @@ int main( int argc, char **argv )
 		x0 = x1;
 		x1 = xyTemp;
 	}
-	
+
+	if(x0 == x1)  x1++;	/* avoid 0 width boxes */
+	if(y0 == y1)  y1++;
+
 	if((x0 < l) || (x1 > r) || (y0 < t) || (y1 > b))	/* for mouse or at= 0- or 100+; needs to be after order check */
 		fprintf(stderr, "Warning: legend box lies outside of frame. Text may not display properly.\n");
 

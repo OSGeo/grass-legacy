@@ -35,14 +35,16 @@
  * Since we can't, we do the following
  * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  */
-#if !defined(uint8_t)
-  typedef unsigned char uint8_t;
-#endif
-#if !defined(uint32_t)
-  typedef unsigned long uint32_t;
-#endif
+#if !defined ( __CYGWIN32__ )
 
+#  if !defined(uint8_t)
+      typedef unsigned char uint8_t;
+#  endif
+#  if !defined(uint32_t)
+      typedef unsigned long uint32_t;
+#  endif
 
+#endif 
 /* ------------------------------------ *
  * The SCREENPOINT and SCREENPOLY types
  * ------------------------------------ */
