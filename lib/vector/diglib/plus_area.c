@@ -187,6 +187,7 @@ dig_add_area (struct Plus_head *plus,
         line = lines[i];
         Area->lines[i] = line;	
         Line = plus->Line[abs(line)];
+	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
         if (line < 0) { /* revers direction -> area on left */
 	    if ( Line->left != 0 ) {
 	        G_warning ("Line %d already has area/isle %d to left.", line, Line->left);
@@ -321,6 +322,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
     for (i = 0; i < Area->n_lines; i++) {
         line = Area->lines[i]; /* >0 = clockwise -> right, <0 = counterclockwise ->left */
 	Line = plus->Line[abs(line)];
+	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
 	if ( line > 0 ) {
 	    G_debug ( 3, "  Set line %d right side to 0", line );
 	    Line->right = 0; 
@@ -346,6 +348,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
     if ( line > 0 ) {
         Line = plus->Line[line];
 	Line->left = 0;           
+	if ( plus->do_uplist ) dig_line_add_updated ( plus, line );
     }
     
     /* Find the area this area is within */
@@ -575,6 +578,7 @@ dig_add_isle (struct Plus_head *plus,
         G_debug (3, " i = %d line = %d", i, line);
         Isle->lines[i] = line;	
         Line = plus->Line[abs(line)];
+	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
         if (line < 0) { /* revers direction -> isle on left */
 	    if ( Line->left != 0 ) {
 	        G_warning ("Line %d already has area/isle %d to left.", line, Line->left);
@@ -645,6 +649,7 @@ dig_del_isle (struct Plus_head *plus, int isle ) {
     for (i = 0; i < Isle->n_lines; i++) {
         line = Isle->lines[i]; /* >0 = clockwise -> right, <0 = counterclockwise ->left */
 	Line = plus->Line[abs(line)];
+	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
 	if ( line > 0 ) Line->right = 0; else Line->left = 0;
     }
 

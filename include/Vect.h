@@ -142,6 +142,12 @@ int Vect_get_isle_points (struct Map_info *, int, struct line_pnts *);
 
 int Vect_get_centroid_area ( struct Map_info *, int );
 
+      /* Level 2 update only */
+int Vect_get_num_updated_lines (struct Map_info *map);
+int Vect_get_updated_line (struct Map_info *map, int idx);
+int Vect_get_num_updated_nodes (struct Map_info *map);
+int Vect_get_updated_node (struct Map_info *map, int idx);
+
       /* Selecting features */
 int Vect_select_lines_by_box (struct Map_info *, BOUND_BOX *, int, struct ilist *);
 int Vect_select_areas_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);

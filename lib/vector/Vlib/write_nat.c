@@ -197,6 +197,7 @@ V2_write_line_nat (  struct Map_info *Map,
 	}
     }
 
+    G_debug ( 3, "updated lines : %d , updated nodes : %d", plus->n_uplines, plus->n_upnodes );
     return line;
 }
 
@@ -507,6 +508,7 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
       
   }
 
+  G_debug ( 3, "updated lines : %d , updated nodes : %d", plus->n_uplines, plus->n_upnodes );
   return ret;
 }
 

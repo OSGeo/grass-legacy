@@ -123,6 +123,14 @@ int dig_point_to_area (struct Map_info *, double, double);
 int dig_point_to_next_area (struct Map_info *, double, double, double *);
 int dig_point_to_line (struct Map_info *, double, double, char);
 
+/* list of updated */
+void dig_line_reset_updated ( struct Plus_head *Plus );
+void dig_line_add_updated ( struct Plus_head *Plus, int line );
+void dig_node_reset_updated ( struct Plus_head *Plus );
+void dig_node_add_updated ( struct Plus_head *Plus, int node );
+
+/* spatial index */
+
 int dig_spidx_add_node ( struct Plus_head *, int, double, double, double);
 int dig_spidx_add_line ( struct Plus_head *, int, BOUND_BOX *);
 int dig_spidx_add_area ( struct Plus_head *, int, BOUND_BOX *);
