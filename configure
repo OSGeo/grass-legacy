@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.13 2000-10-04 15:11:43 markus Exp $
+# $Id: configure,v 1.14 2000-10-04 16:18:49 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3476,7 +3476,7 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 
     if test "$FOUND" = "0"; then
 	echo "$ac_t""not found" 1>&6
-	{ echo "configure: error: cannot continue" 1>&2; exit 1; }
+	{ echo "configure: error: tcltkgrass and nviz2.2 won't run!" 1>&2; }
     fi
 
     echo "$ac_t""$TCLTKLIBS" 1>&6
