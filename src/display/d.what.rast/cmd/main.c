@@ -36,7 +36,7 @@ int main (int argc, char **argv)
 	fs->description = "Field separator (terse mode only)";
 
 	once = G_define_flag();
-	once->key = '1';
+	once->key         = '1';
 	once->description = "Identify just one location";
 
 	terse = G_define_flag();
