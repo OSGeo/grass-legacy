@@ -7,7 +7,7 @@
 # Markus Neteler
 # $Id$
 
-TAG="testbranch_5.0.0"
+TAG="testbranch_5_0_0stable"
 
 #catch all modules from compile list:
 FILE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
