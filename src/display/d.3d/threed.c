@@ -108,27 +108,38 @@ threed(interactive)
 		break ;
 	}
 
-	if(interactive)
-	{
-		setbuf(stdout,0) ;
-		printf("\nRows %d to %d at:    ", row_beg, row_end) ;
-	}
-
 	initialize_arrays() ;
 
 	/* Provide for plotting from north and south if necessary */
-	if ((from_northing > window.south) && (from_northing < window.north))
+	break_row = (int)((window.north - from_northing) / window.ns_res + .5);
+
+
+	if (((break_row < row_end) && (break_row > row_beg)) ||
+	    ((break_row > row_end) && (break_row < row_beg)))
 	{
-		break_row = (int)((window.north - from_northing) / window.ns_res + .5) ;
-fprintf(stderr,"%.2lf %.2lf %.2lf %.2lf %d\n", window.north, window.south,
-from_northing, window.ns_res, break_row) ;
-		do_plot(row_end,break_row,-row_dir,col_beg,
+		if (interactive)
+		{
+			setbuf(stdout,0);
+			printf("\nRows %d to %d at:    "   ,row_end, break_row);
+		}
+		do_plot(row_end, break_row + row_dir, -row_dir,col_beg,
 			col_end,col_dir,interactive,&colors) ;
-		do_plot(row_beg,break_row-row_dir, row_dir,col_beg,
+
+		if (interactive)
+		{
+			setbuf(stdout,0);
+			printf("\nRows %d to %d at:    "   ,row_beg,break_row);
+		}
+		do_plot(row_beg, break_row, row_dir,col_beg,
 			col_end,col_dir,interactive,&colors) ;
 	}
 	else
 	{
+		if (interactive)
+		{
+			setbuf(stdout,0);
+			printf("\nRows %d to %d at:    "   ,row_beg, row_end);
+		}
 		do_plot(row_beg,row_end,row_dir,col_beg,col_end,col_dir,
 			interactive,&colors) ;
 	}
@@ -172,7 +183,6 @@ do_plot(row_beg,row_end,row_dir,col_beg,col_end,col_dir, interactive,colors)
 	int atcol, atrow ;
 	int atcol_plus ;
 	int line_col_end ;
-	char junk[128] ;
 
 	if (interactive)
 	    set_signals() ;
