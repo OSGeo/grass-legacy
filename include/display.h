@@ -7,10 +7,6 @@
 int D_clip(register double, register double, register double, register double, register double *, register double *, register double *, register double *);
 /* cnversions.c */
 int D_do_conversions(struct Cell_head *, int, int, int, int);
-double D_get_u_to_a_yconv(void);
-double D_get_u_to_a_xconv(void);
-double D_get_a_to_d_xconv(void);
-double D_get_a_to_d_yconv(void);
 double D_get_u_to_d_xconv(void);
 double D_get_u_to_d_yconv(void);
 double D_get_u_west(void);

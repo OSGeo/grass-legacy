@@ -87,7 +87,7 @@ int draw_scale(char *save)
 	if (!incr)
 		return(-1) ;
 
-	line_len = D_get_a_to_d_xconv() * (scales[incr].size / D_get_ew_resolution())
+	line_len = D_get_u_to_d_xconv() * scales[incr].size
 		/ G_database_units_to_meters_factor();
 	seg_len = line_len / scales[incr].seg;
 
