@@ -24,6 +24,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include "gis.h"
 #include "la.h"
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -112,17 +114,61 @@ G_matrix_set(mat_struct *A, int rows, int cols, int ldim) {
 mat_struct *
 G_matrix_add(mat_struct *mt1, mat_struct *mt2) {
 
+
+  return G__matrix_add(mt1, mt2, 1, 1);
+}
+
+mat_struct *
+G_matrix_subtract(mat_struct *mt1, mat_struct *mt2) {
+
+
+  return G__matrix_add(mt1, mt2, 1, -1);
+}
+
+mat_struct *
+G_matrix_scale(mat_struct *mt1, const double c) {
+
+
+  return G__matrix_add(mt1, NULL, c, 0);
+}
+
+mat_struct *
+G__matrix_add(mat_struct *mt1, mat_struct *mt2, const double c1, const double c2) {
+
+  /* General add/subtract/scalar multiply routine:
+
+     c2 may be zero, but c1 must be non-zero 
+
+  */
+
   mat_struct *mt3;
   int i, j; /* loop variables */
 
-  if( (mt1->is_init) || (mt2->is_init) ) {
-    fprintf(stderr, "Error: One or both input matrices uninitialised\n");
+  if( c1 == 0 ) {
+    fprintf(stderr, "Error: First scalar multiplier must be non-zero\n");
     return NULL;
   }
 
-  if(mt1->rows != mt2->rows || mt1->cols != mt2->cols) {
-    fprintf(stderr, "Error: Matrix order does not match\n");
-    return NULL;
+  if( c2 == 0 ) {
+    if( !mt1->is_init ) {
+      fprintf(stderr, "Error: One or both input matrices uninitialised\n");
+      return NULL;
+    }
+
+  }
+
+  else {
+
+    if( !( (mt1->is_init) && (mt2->is_init) ) ) {
+      fprintf(stderr, "Error: One or both input matrices uninitialised\n");
+      return NULL;
+    }
+
+    if(mt1->rows != mt2->rows || mt1->cols != mt2->cols) {
+      fprintf(stderr, "Error: Matrix order does not match\n");
+      return NULL;
+    }
+
   }
 
   if( (mt3 = G_matrix_init(mt1->rows, mt1->cols, mt1->ldim)) == NULL ) {
@@ -130,11 +176,25 @@ G_matrix_add(mat_struct *mt1, mat_struct *mt2) {
     return NULL;
   }
 
-  for( i = 0; i < mt3->rows; i++ ) {
-    for( j = 0; j < mt3->cols; j++) {
-      mt3->vals[i + mt3->ldim * j] = mt1->vals[i + mt1->ldim * j] +
-	mt2->vals[i + mt2->ldim * j];
+
+  if( c2 == 0 ) {
+
+    for( i = 0; i < mt3->rows; i++ ) {
+      for( j = 0; j < mt3->cols; j++) {
+	mt3->vals[i + mt3->ldim * j] = c1 * mt1->vals[i + mt1->ldim * j];
+      }
     }
+  }
+
+  else {
+
+    for( i = 0; i < mt3->rows; i++ ) {
+      for( j = 0; j < mt3->cols; j++) {
+	mt3->vals[i + mt3->ldim * j] = c1 * mt1->vals[i + mt1->ldim * j] +
+	  c2 * mt2->vals[i + mt2->ldim * j];
+      }
+    }
+
   }
 
   return mt3;
@@ -185,7 +245,61 @@ G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
 
 /************************************************************
  *                                                          *
- * G_LU_solve()                                             *
+ * G_matrix_transpose()                                     *
+ *                                                          *
+ * Transpose a matrix by creating a new one and populating  *
+ * with transposed elements                                 *
+ *                                                          *
+ ************************************************************/
+
+mat_struct *
+G_matrix_transpose(mat_struct *mt) {
+
+  mat_struct *mt1;
+  int ldim, ldo;
+  doublereal *dbo, *dbt, *dbx, *dby;
+  int cnt, cnt2;
+
+  /* Word align the workspace blocks */
+  if( mt->cols % 2 == 0 )
+    ldim = mt->cols;
+  else
+    ldim = mt->cols + 1;
+
+  mt1 = G_matrix_init(mt->cols, mt->rows, ldim);
+
+  /* Set initial values for reading arrays */
+
+  dbo = &mt->vals[0];
+  dbt = &mt1->vals[0];
+  ldo = mt->ldim;
+
+  for( cnt = 0; cnt < mt->cols; cnt++ ) {
+
+    dbx = dbo;
+    dby = dbt;
+
+    for( cnt2 = 0; cnt2 < ldo - 1; cnt2++ ) {
+      *dby = *dbx;
+      dby += ldim;
+      dbx++;
+    }
+
+    *dby = *dbx;
+
+    if( cnt < mt->cols - 1 ) {
+      dbo += ldo;
+      dbt++;
+    }
+    
+  }
+
+  return mt1;
+}
+
+/************************************************************
+ *                                                          *
+ * G_matrix_LU_solve()                                      *
  *                                                          *
  * Solve a general system A.X=B, where A is a NxN matrix,   *
  * X and B are NxC matrices, and we are to solve for C      *
@@ -411,6 +525,44 @@ G_matrix_free(mat_struct *mt) {
 
 /************************************************************
  *                                                          *
+ * G_matrix_print()                                         *
+ *                                                          *
+ * Print out a representation of the matrix to standard     *
+ * output                                                   *
+ *                                                          *
+ ************************************************************/
+
+
+void
+G_matrix_print(mat_struct *mt) {
+
+  int i, j;
+  char buf[64], numbuf[64];
+
+  for( i = 0; i < mt->rows; i++ ) {
+
+    strcpy(buf, "");
+    for( j = 0; j < mt->cols; j++ ) {
+
+      sprintf( numbuf, "%14.6lf", G_matrix_get_element(mt, i, j) );
+      strcat(buf, numbuf);
+      if( j < mt->cols - 1 )
+	strcat(buf, ", ");
+    }
+
+    printf( "%s\n", buf );
+  }
+
+  printf("\n");
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+/************************************************************
+ *                                                          *
  * G_matrix_set_element()                                   *
  *                                                          *
  * Set the value of the (i,j)th element to a double         *
@@ -514,6 +666,129 @@ G_matvect_get_column(mat_struct *mt, int col) {
 
 
 
+
+
+
+/************************************************************
+ *                                                          *
+ * G_matvect_get_row()                                      *
+ *                                                          *
+ * Retrieve a row of the matrix to a vector structure       *
+ *                                                          *
+ ************************************************************/
+
+vec_struct *
+G_matvect_get_row(mat_struct *mt, int row) {
+
+  int i; /* loop */
+  vec_struct *vc1;
+
+  if(row < 0 || row >= mt->cols) {
+    fprintf(stderr, "Specified matrix row index is outside range\n");
+    return NULL;
+  }
+
+  if(!mt->is_init) {
+    fprintf(stderr, "Error: matrix is not initialised\n");
+    return NULL;
+  }
+
+  if( (vc1 = G_vector_init(mt->cols, mt->ldim, RVEC)) == NULL ) {
+    fprintf(stderr, "Couldn't allocate space for vector structure\n");
+    return NULL;
+  }
+
+  for ( i = 0; i < mt->cols; i++ )
+    G_matrix_set_element( (mat_struct *)vc1, 0, i, 
+			  G_matrix_get_element(mt, row, i) );
+
+  return vc1;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+/************************************************************
+ *                                                          *
+ * G_matvect_extract_vector()                               *
+ *                                                          *
+ * Convert the current structure to a vector structure      *
+ *                                                          *
+ ************************************************************/
+
+
+int
+G_matvect_extract_vector( mat_struct *mt, vtype vt, int indx ) {
+
+  if(vt == RVEC && indx >= mt->rows) {
+    fprintf(stderr, "Specified row index is outside range");
+    return -1;
+  }
+
+  else if(vt == CVEC && indx >= mt->cols) {
+    fprintf(stderr, "Specified column index is outside range");
+    return -1;
+  }
+
+  switch(vt) {
+
+  case RVEC:
+    {
+      mt->type = ROWVEC_;
+      mt->v_indx = indx;
+    }
+
+  case CVEC:
+    {
+      mt->type = COLVEC_;
+      mt->v_indx = indx;
+    }
+
+  default:
+    {
+      fprintf(stderr, "Unknown vector type.\n");
+      return -1;
+    }
+
+  }
+
+  return 0;
+  
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+
+/************************************************************
+ *                                                          *
+ * G_matvect_retrieve_matrix()                              *
+ *                                                          *
+ * Revert a vector structure to a matrix                    *
+ *                                                          *
+ ************************************************************/
+
+int
+G_matvect_retrieve_matrix(vec_struct *vc) {
+
+
+  /* We have to take the integrity of the vector structure
+     largely on trust
+  */
+
+  vc->type = MATRIX_;
+  vc->v_indx = -1;
+
+  return 0;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
 /************************************************************
  *                                                          *
  * G_vector_init()                                          *
@@ -549,7 +824,7 @@ G_vector_init(int cells, int ldim, vtype vt) {
     tmp_arry->type = COLVEC_;
   }
 
-  tmp_arry->v_indx = -1;
+  tmp_arry->v_indx = 0;
   
   tmp_arry->vals = (doublereal *)G_calloc( ldim * tmp_arry->cols,
 					   sizeof(doublereal) );
@@ -570,12 +845,18 @@ G_vector_init(int cells, int ldim, vtype vt) {
  ************************************************************/
 
 int
-G_vector_set(vec_struct *A, int cells, int ldim, vtype vt) {
+G_vector_set(vec_struct *A, int cells, int ldim, vtype vt, int vindx) {
 
   if( (cells < 1) || (vt == RVEC && ldim < 1)
       || (vt == CVEC && ldim < cells) || ldim < 0 ) {
     fprintf(stderr, "Error: Vector dimensions out of range\n");
     return -1;
+  }
+
+  if(vt == RVEC && vindx >= A->cols ||
+     vt == CVEC && vindx >= A->rows) {
+    fprintf(stderr, "Error: Row/column out of range\n");
+    return -1;    
   }
 
   if (vt == RVEC) {
@@ -591,7 +872,10 @@ G_vector_set(vec_struct *A, int cells, int ldim, vtype vt) {
     A->type = COLVEC_;
   }
 
-  A->v_indx = -1;
+  if(vindx < 0)
+    A->v_indx = 0;
+  else
+    A->v_indx = vindx;
   
   A->vals = (doublereal *)G_calloc( ldim * A->cols,
 					   sizeof(doublereal) );
@@ -733,3 +1017,146 @@ G_vector_norm_maxval(vec_struct *vc, int vflag) {
 
 
 
+/************************************************************
+ *                                                          *
+ * G_vector_copy()                                          *
+ *                                                          *
+ * Copy a vector to a new structure                         *
+ * This preserves the underlying structure                  *
+ * unless you specify DO_COMPACT                            *
+ *                                                          *
+ ************************************************************/
+
+vec_struct *
+G_vector_copy(const vec_struct *vc1, int comp_flag) {
+
+  vec_struct *tmp_arry;
+  int incr1, incr2;
+  doublereal *startpt1, *startpt2, *curpt1, *curpt2;
+  int cnt;
+
+  if( !vc1->is_init ) {
+    fprintf(stderr, "Error: Vector structure is not initialised\n");
+    return NULL;
+  }
+
+  tmp_arry = (vec_struct *)G_malloc( sizeof(vec_struct) );
+
+  if(comp_flag = DO_COMPACT) {
+
+    if(vc1->type == ROWVEC_) {
+      tmp_arry->rows = 1;
+      tmp_arry->cols = vc1->cols;
+      tmp_arry->ldim = 1;
+      tmp_arry->type = ROWVEC_;
+      tmp_arry->v_indx = 0;
+    }
+
+    else if(comp_flag = DO_COMPACT) {
+
+      if(vc1->type == COLVEC_) {
+	tmp_arry->rows = vc1->rows;
+	tmp_arry->cols = 1;
+	tmp_arry->ldim = vc1->ldim;
+	tmp_arry->type = COLVEC_;
+	tmp_arry->v_indx = 0;
+      }
+
+      else {
+	fprintf(stderr, "Type is not vector.\n");
+	return NULL;
+      }
+
+    }
+
+    else if(comp_flag == NO_COMPACT) {
+      tmp_arry->v_indx = vc1->v_indx;    
+      tmp_arry->rows = vc1->rows;
+      tmp_arry->cols = vc1->cols;
+      tmp_arry->ldim = vc1->ldim;
+      tmp_arry->type = vc1->type;
+    }
+
+  
+    tmp_arry->vals = (doublereal *)G_calloc( tmp_arry->ldim * tmp_arry->cols,
+					     sizeof(doublereal) );
+
+    if(comp_flag == DO_COMPACT) {
+    
+      if(tmp_arry->type == ROWVEC_) {
+	startpt1 = tmp_arry->vals;
+	startpt2 = vc1->vals + vc1->v_indx;
+	curpt1 = startpt1;
+	curpt2 = startpt2;
+	incr1 = 1;
+	incr2 = vc1->ldim;
+	cnt = vc1->cols;
+      }
+
+      else if(tmp_arry->type == COLVEC_) {
+	startpt1 = tmp_arry->vals;
+	startpt2 = vc1->vals + vc1->v_indx * vc1->ldim;
+	curpt1 = startpt1;
+	curpt2 = startpt2;
+	incr1 = 1;
+	incr2 = 1;
+	cnt = vc1->rows;
+      }
+
+      else {
+	fprintf(stderr, "Structure type is not vector.\n");
+	return NULL;
+      }
+
+    }
+
+    else if(comp_flag == NO_COMPACT) {
+
+      startpt1 = tmp_arry->vals;
+      startpt2 = vc1->vals;
+      curpt1 = startpt1;
+      curpt2 = startpt2;
+      incr1 = 1;
+      incr2 = 1;
+      cnt = vc1->ldim * vc1->cols;
+    }
+
+    else {
+      fprintf(stderr, "Copy method must be specified: [DO,NO]_COMPACT.\n");
+      return NULL;
+    }
+
+    while(cnt > 0) {
+      memcpy(curpt1, curpt2, sizeof(doublereal));
+      curpt1 += incr1;
+      curpt2 += incr2;
+      cnt--;
+    }
+
+    tmp_arry->is_init = 1;
+
+    return tmp_arry;
+  }
+
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+
+/************************************************************
+ *                                                          *
+ * G_vector_copy()                                          *
+ *                                                          *
+ * Copy a vector to a new structure                         *
+ * This preserves the underlying structure                  *
+ * unless you specify COMPACT                               *
+ *                                                          *
+ ************************************************************/
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */

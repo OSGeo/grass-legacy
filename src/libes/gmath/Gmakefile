@@ -4,7 +4,10 @@ OBJ = \
 all: $(GMATHLIB)
 
 $(GMATHLIB): $(OBJ)
-	$(AR)
+	$(AR) 
 
-$(OBJ): $(INCLUDE_DIR)/gmath.h
+$(OBJ): $(INCLUDE_DIR)/la.h
+
+LIBES = $(GISLIB)
+
 
