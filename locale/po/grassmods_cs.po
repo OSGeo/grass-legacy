@@ -1,11 +1,17 @@
 # translation of grasslibs_cs.po to czech
 # Radim Blazek <blazek@itc.it>, 2004.
+# 
+
+# translation of grassmods_cs.po to czech
+# Jachym Cepicky <jachym.cepicky@centrum.cz>, 2005.
 #
+
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
-"POT-Creation-Date: 2004-11-17 18:05+0100\n"
-"PO-Revision-Date: 2004-10-29 15:58+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-11 15:51+0100\n"
+"PO-Revision-Date: 2005-01-13 14:08+0100\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -13,310 +19,529 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
 
-#: ../db/base/connect.c:107
+#: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
+#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
+#: ../db/base/select.c:63 ../db/base/tables.c:34
 #, c-format
-msgid "driver:%s\n"
-msgstr ""
+msgid "No db connection for driver <%s> defined. Run db.connect"
+msgstr "Pro ovladaè <%s> nebylo definováno ¾ádné pøipojení. Spus»te db.connect"
 
-#: ../db/base/connect.c:108
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+msgid "table name"
+msgstr "jméno tabulky"
+
+#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
+#: ../db/base/select.c:195 ../db/base/tables.c:69
+msgid "driver name"
+msgstr "jméno ovladaèe"
+
+#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
+#: ../db/base/tables.c:77
+msgid "database name"
+msgstr "jméno databáze"
+
+#: ../db/base/columns.c:90
+msgid "list all columns for a given table."
+msgstr "vypí¹e v¹echny sloupce ze zadané tabulky."
+
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr "vypi¹ parametry souèasného pøipojení a ukonèi se"
+
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr "jméno ovladaèe:"
+
+#: ../db/base/connect.c:43
+msgid "Database name:"
+msgstr "Jméno databáze"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr ""
+"Schéma databáze. Tuto volbu nepou¾ívejte, pokud schémata nejsoupodporována "
+"ovladaèem/databázovým serverem."
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr "Výchozí skupina u¾ivatelù databáze, které jsou pøiøazeny práva na select."
+
+#: ../db/base/connect.c:81
+msgid "Connect to the database through DBMI."
+msgstr "Pøipojení k databázi pomocí DBMI."
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr "Spojení s databází nebylo nastaveno. Nastavte je pomocí db.connect"
+
+#: ../db/base/copy.c:27
+msgid ""
+"Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+"Kopíruj tabulku. Pou¾ita mù¾e být buï volba 'from_table' (volitelnì s 'where')"
+"nebo volba 'select', ale ne 'from_table' a 'select' najednou."
+
+#: ../db/base/copy.c:35
+msgid "Input driver name"
+msgstr "Jméno vstupního ovladaèe"
+
+#: ../db/base/copy.c:43
+msgid "Input database name"
+msgstr "Jméno vstupní databáze"
+
+#: ../db/base/copy.c:51
+msgid "Input table name (only if select is not specified)"
+msgstr "Jméno vstupní tabulky (pouze pokud není specifikováno select)"
+
+#: ../db/base/copy.c:58
+msgid "Output driver name"
+msgstr "Jméno výstupního ovladaèe"
+
+#: ../db/base/copy.c:66
+msgid "Output database name"
+msgstr "Jméno výstupní databáze"
+
+#: ../db/base/copy.c:74
+msgid "Output table name"
+msgstr "Jméno výstupní tabulky"
+
+#: ../db/base/copy.c:80
+msgid ""
+"Optional where condition (without WHERE key word), e.g.:\n"
+"\t\tobec = 'Liptakov'"
+msgstr ""
+"Volitelná podmínka where (bez klíèového slova WHERE), napø.:\n"
+"\t\tobec = 'Liptakov'"
+
+#: ../db/base/copy.c:87
+msgid ""
+"Full select statement (only if from_table and where is not used), e.g.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+msgstr ""
+"Plný pøíkaz select (pouze pokud from_table a where nebyly pou¾ity), napø.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+
+#: ../db/base/copy.c:95
+msgid "Cannot combine 'from_table' and 'select' options"
+msgstr "Nelze kombinovat volby 'from_table' a 'select'."
+
+#: ../db/base/copy.c:107
+msgid "Either 'from_table' or 'select' option must be given."
+msgstr "Musíte zadat buï 'from_table' nebo 'select'."
+
+#: ../db/base/copy.c:110
+msgid "Cannot combine 'select' and 'where' options"
+msgstr "Nelze kombinovat volby 'select' a 'where'"
+
+#: ../db/base/copy.c:118
+msgid "Copy table failed"
+msgstr "Kopírování tabulky se nezdaøilo"
+
+#: ../db/base/databases.c:34
 #, c-format
-msgid "database:%s\n"
-msgstr ""
+msgid "Cannot start driver '%s'."
+msgstr "Nelze spustit ovladaè '%s'."
 
-#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
-#: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
-#, c-format
-msgid "%s"
-msgstr ""
+#: ../db/base/databases.c:37
+msgid "Cannot list databases."
+msgstr "Nelze vypsat databáze."
 
-#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
-msgid "\n"
-msgstr ""
+#: ../db/base/databases.c:69
+msgid "database location"
+msgstr "umístìní databáze"
 
-#: ../db/base/describe.c:53 ../db/base/printtab.c:17
-#, c-format
-msgid "ncols:%d\n"
-msgstr ""
+#: ../db/base/databases.c:74
+msgid "List all databases for a given driver and location."
+msgstr "Vypi¹ v¹echny databáze pro daný ovladaè a umístìní."
 
-#: ../db/base/describe.c:57
-#, c-format
-msgid "Column %d: %s\n"
-msgstr ""
+#: ../db/base/describe.c:45
+msgid "Cannot describe table"
+msgstr "Nelze popsat tabulku"
+
+#: ../db/base/describe.c:81
+msgid "print column names only instead of full column descriptions"
+msgstr "vypí¹e jména sloupcù místo plného popisu sloupcù"
+
+#: ../db/base/describe.c:108
+msgid "Describe a table (in detail)."
+msgstr "Popi¹ tabulku (detailnì)."
 
 #: ../db/base/drivers.c:24
 msgid "Error trying to read dbmscap file\n"
-msgstr ""
+msgstr "Chyba pøi pokusu èíst soubor dbmscap\n"
 
-#: ../db/base/drivers.c:30
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr "Plný výstup"
+
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr "vypi¹ tabulky a ukonèi se."
+
+#: ../db/base/drivers.c:55
+msgid "List all database drivers."
+msgstr "Vypi¹ v¹echny databázové ovladaèe."
+
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
 #, c-format
-msgid ":%s"
-msgstr ""
+msgid "Error while executing: \"%s\"\n"
+msgstr "Chyba pøi vykonávání: \"%s\"\n"
 
-#: ../db/base/printtab.c:11
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr "ignoruj chyby v SQL a pokraèuj"
+
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr "Jméno tabulky, vyber v¹e z této tabulky"
+
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr ""
+"Pøíkaz SQL select, napø.: 'select * from rybniky where kapri  = "
+"'hodne'"
+
+#: ../db/base/select.c:209
+msgid "output field separator"
+msgstr "výstupní oddìlovaè sloupcù"
+
+#: ../db/base/select.c:216
+msgid "output vertical record separator"
+msgstr "výstupní vertikální oddìlovaè záznamù"
+
+#: ../db/base/select.c:222
+msgid "null value indicator"
+msgstr "indikátor '¾ádného' záznamu"
+
+#: ../db/base/select.c:229
+msgid "filename with sql statement"
+msgstr "jméno souboru s pøíkazy sql"
+
+#: ../db/base/select.c:234
+msgid "do not include column names in output"
+msgstr "nezahrnuj jména sloupcù do výstupu"
+
+#: ../db/base/select.c:238
+msgid "describe query only (don't run it)"
+msgstr "dotaz pouze popi¹ (neprovádìj)"
+
+#: ../db/base/select.c:242
+msgid "vertical output (instead of horizontal)"
+msgstr "vertikální výstup (místo horizontálního)"
+
+#: ../db/base/select.c:246
+msgid "Select data from database."
+msgstr "Vyber data z databáze"
+
+#: ../db/base/tables.c:87
+msgid "system tables instead of user tables"
+msgstr "systémové tabulky místo u¾ivatelských"
+
+#: ../db/base/tables.c:91
+msgid "List all tables for a given database."
+msgstr "Vypí¹e v¹echny tabulky pro danou databázi."
+
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Nelze nastavit u¾ivatele/heslo"
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
+msgstr "Heslo bylo ulo¾eno v souboru."
+
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
+msgid "'user' in database definition is not supported, use db.login"
+msgstr "'u¾ivatel' v definici databáze není podporován, pou¾ijte db.login"
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
+msgid "'password' in database definition is not supported, use db.login"
+msgstr "'heslo' v definici databáze není podporováno, pou¾ijte db.login"
+
+#: ../db/drivers/mysql/db.c:75
 #, c-format
-msgid "table:%s\n"
-msgstr ""
+msgid "Unknown option in database definition for mysql: '%s'"
+msgstr "Neznámá volba v definici databáze pro mysql: '%s'"
 
-#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#: ../db/drivers/ogr/describe.c:87
 #, c-format
-msgid "description:%s\n"
-msgstr ""
+msgid "OGR driver: column '%s', OGR type %d  is not supported"
+msgstr "Ovladaè OGR: sloupec '%s', typu %d není podporován"
 
-#: ../db/base/printtab.c:34
+#: ../db/drivers/ogr/describe.c:143
 #, c-format
-msgid "column:%s\n"
+msgid ""
+"column '%s', type 'string': unknown width -> stored as varchar(250) some "
+"data may be lost"
 msgstr ""
+"sloupec '%s' typu 'string': neznámá ¹íøka -> ulo¾eno jako varchar(250), nìkterá "
+"data mohou být ztracena"
 
-#: ../db/base/printtab.c:36
+#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+msgid "Unknown type"
+msgstr "Neznámý typ"
+
+#: ../db/drivers/postgres/describe.c:102
 #, c-format
-msgid "type:%s\n"
-msgstr ""
+msgid "pg driver: column '%s', type %d  is not supported"
+msgstr "ovladaè pg: sloupec '%s', typu %d není podporován"
 
-#: ../db/base/printtab.c:37
+#: ../db/drivers/postgres/describe.c:107
 #, c-format
-msgid "len:%d\n"
+msgid ""
+"column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
+"may be damaged"
 msgstr ""
+"sloupec '%s' : typ int8 (bigint) byl ulo¾en jako integer (celé èíslo - 4 byty) nìkterá data "
+"mohou být po¹kozena"
 
-#: ../db/base/printtab.c:38
+#: ../db/drivers/postgres/describe.c:111
 #, c-format
-msgid "scale:%d\n"
-msgstr ""
+msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
+msgstr "sloupec '%s' : typ text byl ulo¾en jako varchar(250), nìkterá data"
+"mohou být ztracena"
 
-#: ../db/base/printtab.c:39
+#: ../db/drivers/postgres/describe.c:117
 #, c-format
-msgid "precision:%d\n"
+msgid ""
+"column '%s' : type character varying is stored as varchar(250) some data may "
+"be lost"
 msgstr ""
+"sloupec '%s' : typ characeter varying byl ulo¾en jako varchar(250), nìkterá"
+"data mohou být ztracena"
 
-#: ../db/base/printtab.c:40
-msgid "default:"
-msgstr ""
-
-#: ../db/base/printtab.c:48
+#: ../db/drivers/postgres/describe.c:123
 #, c-format
-msgid "nullok:%s\n"
+msgid ""
+"column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
+"(true)"
 msgstr ""
+"sloupec '%s' : typ boolean je ulo¾en jako char(1), hodnoty: 0 (false),"
+"1 (true)"
 
-#: ../db/base/printtab.c:62
-msgid "yes"
-msgstr ""
+#: ../db/drivers/postgres/fetch.c:163
+msgid "Cannot recognize boolean value"
+msgstr "Nelze rozpoznat booleanovskou hodnotu"
 
-#: ../db/base/printtab.c:63
-msgid "no"
-msgstr ""
-
-#: ../db/base/printtab.c:64
-msgid "?"
-msgstr ""
-
-#: ../db/base/select.c:311
-#, c-format
-msgid "column%s%s\n"
-msgstr ""
-
-#: ../db/base/select.c:312
-#, c-format
-msgid "type%s%s\n"
-msgstr ""
-
-#: ../db/base/select.c:313
-#, c-format
-msgid "len%s%d\n"
-msgstr ""
-
-#: ../db/base/select.c:314
-#, c-format
-msgid "scale%s%d\n"
-msgstr ""
-
-#: ../db/base/select.c:315
-#, c-format
-msgid "precision%s%d\n"
-msgstr ""
+#: ../db/drivers/postgres/parse.c:61
+msgid "Unknown option in database definition for PostgreSQL: "
+msgstr "Neznámá volba v definici databáze pro PostgreSQL: "
 
 #: ../display/d.font.freetype/main.c:52
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
 "monitor."
 msgstr ""
+"Vyber font, který bude zobrazen na u¾ivatelském monitoru."
 
 #: ../display/d.font.freetype/main.c:60
 msgid ""
 "Font name (not supported interactively, see also -l flag) or path to "
 "TrueType font (including file name)"
 msgstr ""
+"Jméno fontu (není podporováno interaktivne, viz také volba -l) nebo cesta"
+"k TrueType fontùm (vèetnì jména souboru)"
 
 #: ../display/d.font.freetype/main.c:62
 msgid "Path to TrueType font (including file name)"
-msgstr ""
+msgstr "Cesta k TrueType fontùm (vèetnì jména souboru)"
 
 #: ../display/d.font.freetype/main.c:71
 msgid "Character encoding"
-msgstr ""
+msgstr "Kódování"
 
 #: ../display/d.font.freetype/main.c:102
 msgid "No graphics device selected"
-msgstr ""
+msgstr "Grafické zaøízení nebylo vybráno"
 
 #: ../display/d.font.freetype/main.c:170
+#, c-format
 msgid ""
 "\n"
 "Setting release of FreeType\n"
 msgstr ""
+"\n"
+"Nastavuji verzi FreeType\n"
 
 #: ../display/d.paint.labels/do_labels.c:143
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Chyba: %s\n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
+#, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr ""
+msgstr "Velikost oblasti je men¹í, ne¾ minreg, zobrazeno není nic.\n"
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
+#, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr ""
+msgstr "Velikost regionu je vìt¹í, ne¾ maxreg, zobrazeno není nic.\n"
 
 #: ../display/d.path/select.c:32
+#, c-format
 msgid "L: from  M: to R: quit\n"
-msgstr ""
+msgstr "L: z M: a¾ do R: konec\n"
 
 #: ../display/d.path/select.c:57
 #, c-format
 msgid "Node %d: %f %f\n"
-msgstr ""
+msgstr "Uzel %d: %f %f\n"
 
 #: ../display/d.path/select.c:133
+#, c-format
 msgid "Destination unreachable\n"
-msgstr ""
+msgstr "Místo urèení nedosa¾itelné\n"
 
 #: ../display/d.path/select.c:136
 #, c-format
 msgid "Costs on the network = %f\n"
-msgstr ""
+msgstr "Cena v síti = %f\n"
 
 #: ../display/d.path/select.c:137
 #, c-format
 msgid "  Distance to the network = %f, distance from the network = %f\n"
-msgstr ""
+msgstr "  Vzdálenost k síti = %f, vzdálenost ze sítì = %f\n"
 
 #: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
+#, c-format
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
 msgstr ""
+"\n"
+"CHYBA: vektorový soubor - nelze èíst\n"
 
-#: ../display/d.vect/main.c:417
+#: ../display/d.vect/main.c:501
+#, c-format
 msgid "Plotting ... "
-msgstr ""
+msgstr "Tisknu ... "
 
-#: ../display/d.vect/main.c:426
+#: ../display/d.vect/main.c:510
+#, c-format
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
+"Ohranièení mapy je mimo souèasný region, nic není vykresleno.\n"
 
-#: ../display/d.vect/main.c:480
+#: ../display/d.vect/main.c:567
+#, c-format
 msgid "Done\n"
-msgstr ""
+msgstr "Dokonáno jest\n"
 
-#: ../display/d.what.vect/main.c:150
+#: ../display/d.what.vect/main.c:139
+msgid "Building spatial index ..."
+msgstr "Vytváøím prostorový index ..."
+
+#: ../display/d.what.vect/main.c:157
+#, c-format
 msgid "Done.\n"
-msgstr ""
+msgstr "Dokonáno jest.\n"
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
 msgid "warning: %s - vector file not found\n"
-msgstr ""
+msgstr "varování: %d - vektorový soubor nenalezen\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+#, c-format
 msgid "Nothing Found.\n"
-msgstr ""
+msgstr "Nic nebylo nalezeno.\n"
 
 #: ../display/d.what.vect/what.c:203
 #, c-format
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr ""
+msgstr "Linie: %d Typ: %s  Nalevo: %d Napravo: %d  "
 
 #: ../display/d.what.vect/what.c:206
 #, c-format
 msgid "Length: %f\n"
-msgstr ""
+msgstr "Délka: %f\n"
 
 #: ../display/d.what.vect/what.c:216
 #, c-format
 msgid "  Node[%d]: %d  Number of lines: %d\n"
-msgstr ""
+msgstr "  Uzel[%d]: %d Poèet linií: %d\n"
 
 #: ../display/d.what.vect/what.c:221
 #, c-format
 msgid "    Line: %5d  Angle: %.8f\n"
-msgstr ""
+msgstr "    Linie: %5d Úhel: %.8f\n"
 
 #: ../display/d.what.vect/what.c:227
 #, c-format
 msgid "length %f\n"
-msgstr ""
+msgstr "délka %f\n"
 
 #: ../display/d.what.vect/what.c:245
 #, c-format
 msgid "Point height: %f\n"
-msgstr ""
+msgstr "Vý¹ka bodu: %f\n"
 
 #: ../display/d.what.vect/what.c:257
 #, c-format
 msgid "Line height: %f\n"
-msgstr ""
+msgstr "Vý¹ka linie: %f\n"
 
 #: ../display/d.what.vect/what.c:263
 #, c-format
 msgid "Line height min: %f max: %f\n"
-msgstr ""
+msgstr "Vý¹ka linie min: %f max: %f\n"
 
 #: ../display/d.what.vect/what.c:280
 #, c-format
 msgid "Area height: %f\n"
-msgstr ""
+msgstr "Vý¹ka plochy: %f\n"
 
 #: ../display/d.what.vect/what.c:287
+#, c-format
 msgid "Area\n"
-msgstr ""
+msgstr "Plocha\n"
 
 #: ../display/d.what.vect/what.c:300
 #, c-format
 msgid "Area: %d  Number of isles: %d\n"
-msgstr ""
+msgstr "Plocha: %d Poèet ostrovù: %d\n"
 
 #: ../display/d.what.vect/what.c:304
 #, c-format
 msgid "  Isle[%d]: %d\n"
-msgstr ""
+msgstr "  Ostrov[%d]: %d\n"
 
 #: ../display/d.what.vect/what.c:311
 #, c-format
 msgid "Island: %d  In area: %d\n"
-msgstr ""
+msgstr "Ostrov: %d V plo¹e: %d\n"
 
 #: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
 #, c-format
 msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
-msgstr ""
+msgstr "Velikost - ètvereèní metry: %.3f\t\thektary: %.3f\n"
 
 #: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
 #, c-format
 msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
-msgstr ""
+msgstr "           Akry: %.3f\t\tètvereèní míle: %.4\n"
 
 #: ../display/d.what.vect/what.c:353
 #, c-format
 msgid ""
-"field: %d\n"
+"Layer: %d\n"
 "category: %d\n"
 msgstr ""
+"Vrstva: %d\n"
+"kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
+#, c-format
 msgid "Database connection not defined\n"
-msgstr ""
+msgstr "Spojení s databází nebylo definováno\n"
 
 #: ../display/d.what.vect/what.c:370
 #, c-format
@@ -326,520 +551,778 @@ msgid ""
 "table: %s\n"
 "key column: %s\n"
 msgstr ""
+"ovladaè: %s\n"
+"databáze: %s\n"
+"tabulka: %s\n"
+"sloupec s klíèem: %s\n"
 
 #: ../display/d.what.vect/what.c:421
+#, c-format
 msgid ""
 "\n"
 "Click mouse button on desired location\n"
 "\n"
 msgstr ""
+"\n"
+"Kliknìte my¹í na po¾adovanou oblast\n"
 
 #: ../display/d.what.vect/what.c:426
+#, c-format
 msgid "Buttons\n"
-msgstr ""
+msgstr "Tlaèítka\n"
 
 #: ../display/d.what.vect/what.c:427
+#, c-format
 msgid " Left:  what's here\n"
-msgstr ""
+msgstr " Levé:   copak je zde\n"
 
 #: ../display/d.what.vect/what.c:429
+#, c-format
 msgid " Middle: toggle flash color\n"
-msgstr ""
+msgstr " Prostøední: zmìnit barvu\n"
 
 #: ../display/d.what.vect/what.c:434
+#, c-format
 msgid " Right: quit\n"
-msgstr ""
+msgstr " Pravé: ukonèit\n"
 
-#: ../display/d.zoom/main.c:158
+#: ../display/d.zoom/main.c:161
+#, c-format
 msgid "ERROR: can not get \"list\" items\n"
-msgstr ""
+msgstr "CHYBA: nelze dostat polo¾ky \"list\"\n"
 
-#: ../display/d.zoom/main.c:159
+#: ../display/d.zoom/main.c:162
+#, c-format
 msgid "-j flag forced\n"
-msgstr ""
+msgstr "volba -j byla nastavena nucenì\n"
 
-#: ../display/d.zoom/main.c:196
+#: ../display/d.zoom/main.c:200
+#, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
-msgstr ""
+msgstr "CHYBA: Nebyla zobrazena ¾ádná mapa v monitoru GRASSu\n"
 
-#: ../display/d.zoom/main.c:320
+#: ../display/d.zoom/main.c:324
 #, c-format
 msgid "%d raster%s, %d vector%s\n"
-msgstr ""
+msgstr "%d rastr%s, %d vektor%s\n"
 
-#: ../display/d.zoom/main.c:346
+#: ../display/d.zoom/main.c:334
+#, c-format
+msgid "this is the first d.zoom run; no previous zoom availible\n"
+msgstr "toto je první spu¹tìní d.zoom; ¾ádné pøedchozí zvìt¹ení není dostupné\n"
+
+#: ../display/d.zoom/main.c:380
+#, c-format
 msgid "Zooming finished.\n"
-msgstr ""
+msgstr "Zvìt¹ování dokonèeno.\n"
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+#, c-format
 msgid ""
 "\n"
 "\n"
 "Buttons:\n"
 msgstr ""
+"\n"
+"\n"
+"Tlaèítka: \n"
 
 #: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
 #, c-format
 msgid "%s Pan\n"
-msgstr ""
+msgstr "%s Posun\n"
 
-#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#: ../display/d.zoom/pan.c:22
 #, c-format
 msgid "%s Quit\n"
-msgstr ""
+msgstr "%s Konec\n"
 
 #: ../display/d.zoom/zoom.c:16
 #, c-format
 msgid "%s Zoom menu\n"
-msgstr ""
+msgstr "%s Menu zvìt¹ování\n"
+
+#: ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit menu\n"
+msgstr "%s Menu ukonèení\n"
 
 #: ../display/d.zoom/zoom.c:41
+#, c-format
 msgid ""
 "This region now saved as current region.\n"
 "\n"
 msgstr ""
+"Tento region byl ulo¾en jako souèasný region.\n"
+"\n"
 
 #: ../display/d.zoom/zoom.c:42
+#, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr ""
+msgstr "Poznámka: pro nový region spus»te 'd.erase', aby zmìna postihla"
+"grafiku.\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+#, c-format
 msgid "Monitor: interactive command in redraw\n"
-msgstr ""
+msgstr "Monitor: interaktivní pøíkaz v pøekreslení\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
 #, c-format
 msgid "found %d visuals of type TrueColor\n"
-msgstr ""
+msgstr "nalezeno %d zobrazení typu TrueColor\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+#, c-format
 msgid "searching for highest bit depth\n"
-msgstr ""
+msgstr "hledám nejvìt¹í bitovou hloubku\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
 #, c-format
 msgid "selected %d bit depth\n"
-msgstr ""
+msgstr "vybrána hloubka %d bitù\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
 #, c-format
 msgid "using default visual which is %s\n"
-msgstr ""
+msgstr "pou¾ívám výchozí zobrazení, co¾ je %s\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
 #, c-format
 msgid "Monitor: waitpid: expected %d but got %d\n"
-msgstr ""
+msgstr "Monitor: waitpid: oèekával jsem %d, ale dostal jsem %d\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+#, c-format
 msgid "Monitor: XGetWMName failed\n"
-msgstr ""
+msgstr "Monitor: XgetWMName selhalo\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+#, c-format
 msgid "Monitor: XGetWMName: bad result\n"
-msgstr ""
+msgstr "Monitor: XGetWMName: ¹patný výsledek\n"
 
 #: ../imagery/i.group/main.c:86
 msgid "No input map(s) specified."
-msgstr ""
+msgstr "Nebyla zadána ¾ádná vstupní mapa(y)."
 
 #: ../raster/r.colors/rules.c:45
+#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
-msgstr ""
+msgstr "Zadejte pravidla, \"end\" pro ukonèení, \"help\" pro nápovìdu.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
-msgstr ""
+msgstr "fp: Rozsah dat je %.25f a¾ %.25f\n"
 
 #: ../raster/r.colors/rules.c:49
 #, c-format
 msgid "Data range is %ld to %ld\n"
-msgstr ""
+msgstr "Rozsah dat je %ld a¾ %ld\n"
 
 #: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
 msgid "Your color rules do not cover the whole range of data!"
-msgstr ""
+msgstr "Va¹e pravidla pro barvy nepokrývají celou oblast dat!"
 
 #: ../raster/r.colors/rules.c:188
+#, c-format
 msgid "Enter a rule in one of these formats:\n"
-msgstr ""
+msgstr "Zadejte pravidlo v jednom z tìchto formátù:\n"
 
 #: ../raster/r.colors/rules.c:190
+#, c-format
 msgid " val color\n"
-msgstr ""
+msgstr " hodnota barva\n"
 
 #: ../raster/r.colors/rules.c:191
 #, c-format
 msgid " n%% color\n"
-msgstr ""
+msgstr " n%% barva\n"
 
 #: ../raster/r.colors/rules.c:192
+#, c-format
 msgid " nv color\n"
-msgstr ""
+msgstr " nv barva\n"
 
 #: ../raster/r.colors/rules.c:193
+#, c-format
 msgid " default color\n"
-msgstr ""
+msgstr " výchozí barva\n"
 
 #: ../raster/r.colors/rules.c:194
+#, c-format
 msgid "color can be one of:\n"
-msgstr ""
+msgstr "barva mù¾e být jednou z:\n"
 
 #: ../raster/r.colors/rules.c:196
+#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
-msgstr ""
+msgstr "nebo trojce R:G:B, napø.: 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:237
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr ""
+msgstr "** varování: hodnota(y) R:G:B jsou mimo rozsah [0..255]: %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
 #: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
 #: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#, c-format
 msgid "** rule is not added **\n"
-msgstr ""
+msgstr "** pravidlo nebylo pøidáno **\n"
 
 #: ../raster/r.colors/rules.c:253
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
-msgstr ""
+msgstr "** varování: R G B hodnota(y) jsou mimo rozsah [0..255]: %d %d %d **\n"
 
 #: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+#, c-format
 msgid "** warning: no such value **\n"
-msgstr ""
+msgstr "** varování: taková hodnota neexistuje **\n"
 
 #: ../raster/r.colors/rules.c:402
 #, c-format
 msgid "%s:line %d:%s\n"
-msgstr ""
+msgstr "%s: linie %d:%s\n"
 
 #: ../raster/r.colors/rules.c:403
+#, c-format
 msgid "** bad color specification **\n"
-msgstr ""
+msgstr "** ¹patná specifikace barvy **\n"
 
 #: ../raster/r.colors/rules.c:424
 #, c-format
 msgid "%s - unknown color\n"
-msgstr ""
+msgstr "%s - neznámá barva\n"
 
 #: ../raster/r.colors/rules.c:425
+#, c-format
 msgid "Valid colors are:\n"
+msgstr "Platné barvy jsou:\n"
+
+#: ../raster/r.sunmask/main.c:225
+msgid "Using map center coordinates\n"
+msgstr "Pou¾ívám souøadnice støedu mapy\n"
+
+#: ../raster/r.sunmask/main.c:234
+msgid "Empty east coordinate specified!"
+msgstr "Východní souøadnice je prázdná!"
+
+#: ../raster/r.sunmask/main.c:236
+msgid "Empty north coordinate specified!"
+msgstr "Severní souøadnice je prázdná!"
+
+#: ../raster/r.sunmask/main.c:255
+msgid "Either define sun position or location/date/time parameters."
+msgstr "Buï zadejte pozici slunce nebo parametry místo/datum/èas."
+
+#: ../raster/r.sunmask/main.c:258
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
 msgstr ""
+"Pozice slunce ani východ/sever, specifikace datumu/èasu/èasová zóny "
+"není kompletní."
+
+#: ../raster/r.sunmask/main.c:263
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr "Poèítám pozici slunce... (pou¾ívám solpos (V. %d) z NREL)\n"
+
+#: ../raster/r.sunmask/main.c:268
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr ""
+"Pou¾ívám sluneèní azimut zadaný u¾ivatelem, nastavení zem. ¹íøky (ingnoruji" 
+"pøípadné dal¹í hodnoty)\n"
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr " %d.%02d.%02d, èíslo dne %d, èas: %02i:%02i:%02i (decimálnì: %f)\n"
+
+#: ../raster/r.sunmask/main.c:342
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr " délka: %f, ¹íøka: %f, èasová zóna: %f\n"
+
+#: ../raster/r.sunmask/main.c:343
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+" Pozice slunce: sluneèní azimut: %f,\n"
+"   úhel slunce nad horizontem. (odraz opraven): %f\n"
+
+#: ../raster/r.sunmask/main.c:347
+#, c-format
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas východu slunce (bez refrakce): %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:348
+#, c-format
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas západu slunce (bez refrakce): %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:357
+msgid "Please correct settings."
+msgstr "Opravte prosím hodnoty."
+
+#: ../raster/r.sunmask/main.c:374
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je pøed východem slunce (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:377
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr "Èas (%02i:%02i:%02i) je pøed západem slunce!\n"
+
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr "Není co poèítat. Ovìøte prosím nastavení."
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je po západu slunce (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr "Èas (%02i:%02i:%02i) je po západu slunce!\n"
+
+#: ../raster/r.sunmask/main.c:394
+msgid "No map calculation requested. Finished.\n"
+msgstr "Není po¾adována ¾ádná kalkulace mapy. Konèím.\n"
+
+#: ../raster/r.sunmask/main.c:401
+msgid "You already know the sun position.\n"
+msgstr "Pozice slunce je ji¾ známa.\n"
+
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
+#, c-format
+msgid "can't open %s"
+msgstr "nemohu otevøít %s"
+
+#: ../raster/r.sunmask/main.c:421
+#, c-format
+msgid "can't open range file for %s"
+msgstr "nemohu otevøít soubor s rozsahem pro %s"
+
+#: ../raster/r.sunmask/main.c:438
+msgid "Calculating shadows from DEM..."
+msgstr "Poèítám stíny pro DMT..."
+
+#: ../raster/r.sunmask/main.c:446
+#, fuzzy
+msgid "can't read row in input elevation map"
+msgstr "nemohu èíst øádek ze vstupní mapy reliéfu"
+
+#: ../raster/r.sunmask/main.c:511
+msgid "Finished.\n"
+msgstr "Dokonáno jest.\n"
+
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr "Pro tuto operaci je pøíli¹ mnoho vrstev"
+
+#: ../vector/v.category/main.c:176
+msgid "2 layers must be specified"
+msgstr "Musí být zadány 2 vrstvy"
+
+#: ../vector/v.category/main.c:180
+msgid "Output vector wasn't entered."
+msgstr "Výstupní vektor nebyl zadán."
 
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 msgid "Input vector was not found."
-msgstr ""
+msgstr "Vstupní vektor nebyl nalezen."
 
 #: ../vector/v.convert/att.c:36
 msgid "No category labels (dig_cats) found, no table created.\n"
-msgstr ""
+msgstr "®ádné ¹títky kategorií (dig_cats) nebyly nalezeny, nebyla vytvoøena"
+"tabulka.\n"
 
 #: ../vector/v.convert/att.c:41
 msgid "Cannot open dig_cats file."
-msgstr ""
+msgstr "Nelze otevøít soubor dig_cats."
 
 #: ../vector/v.convert/att.c:68
 #, c-format
 msgid "Cannot open database %s"
-msgstr ""
+msgstr "Nelze otevøít databázi %s"
 
-#: ../vector/v.convert/att.c:74
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
-msgstr ""
+msgstr "Nelze vytvoøit tabulku: %s"
 
-#: ../vector/v.convert/att.c:92
+#: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
-msgstr ""
+msgstr "Nemohu vlo¾it do tabulky: %s"
 
 #: ../vector/v.convert/old2new.c:32
 msgid "Failed opening input dig file."
-msgstr ""
+msgstr "Otevøení vstupního souboru dig selhalo."
 
 #: ../vector/v.convert/old2new.c:47
 msgid "dig_att file doesn't exist."
-msgstr ""
+msgstr "Soubor dig_att neexistuje."
 
 #: ../vector/v.convert/old2new.c:50
 msgid "Failed opening input dig_att file."
-msgstr ""
+msgstr "Otevøení vstupního souboru dig_att selhalo."
 
 #: ../vector/v.convert/old2new.c:71
 msgid "Attaching categories...\n"
-msgstr ""
+msgstr "Pøidávám kategorie...\n"
 
 #: ../vector/v.convert/old2new.c:89
 #, c-format
 msgid "Failed to attach an attribute (category %d) to a line."
-msgstr ""
+msgstr "Selhalo pøidávání atributu (kategorie %d) k linii."
 
 #: ../vector/v.convert/old2new.c:92
 #, c-format
 msgid "WARNING: line %d label: %d matched another label: %d."
-msgstr ""
+msgstr "VAROVÁNÍ: linie %d ¹títek: %d odpovídá jinému ¹títku: %d."
 
 #: ../vector/v.convert/old2new.c:100
 msgid "Writing new file...\n"
-msgstr ""
+msgstr "Zapisuji nový soubor...\n"
 
 #: ../vector/v.convert/old2new.c:121
 #, c-format
 msgid "%-5d points and lines written to output file.\n"
-msgstr ""
+msgstr "%-5d body a linie byly zapsány do výstupního souboru.\n"
 
 #: ../vector/v.convert/old2new.c:135
 #, c-format
 msgid "%-5d centroids written to output file.\n"
-msgstr ""
+msgstr "%-5d centroidy byly zapsány do výstupního souboru.\n"
 
 #: ../vector/v.convert/read.c:41
 msgid "Reading dig file...\n"
-msgstr ""
+msgstr "Naèítám soubor dig...\n"
 
 #: ../vector/v.convert/read.c:75
 msgid "Input file is version 3.\n"
-msgstr ""
+msgstr "Vstupní soubor je verze 3.\n"
 
 #: ../vector/v.convert/read.c:78
 msgid "Input file is version 4.\n"
-msgstr ""
+msgstr "Vstupní soubor je verze 4.\n"
 
 #: ../vector/v.convert/read.c:87
 msgid "Input file is portable.\n"
-msgstr ""
+msgstr "Vstupní soubor je pøenosný.\n"
 
 #: ../vector/v.convert/read.c:89
 msgid ""
 "WARNING: Input file is not portable.We will attempt to convert anyway but "
 "conversion may fail.Please read manual for detail information."
 msgstr ""
+"VAROVÁNÍ: Vstupní soubor není pøenosný. Pokusím se jej zmìnit tak jako tak, ale "
+"pøevod mù¾e selhat. Prosím, pøeètìte si manuál pro detailnìj¹í informace."
 
 #: ../vector/v.convert/read.c:161
 #, c-format
 msgid "%-5d points read to memory\n"
-msgstr ""
+msgstr "%-5d bodù naèteno do pamìti\n"
 
 #: ../vector/v.convert/read.c:162
 #, c-format
 msgid "%-5d lines read to memory\n"
-msgstr ""
+msgstr "%-5d linií naèteno do pamìti\n"
 
 #: ../vector/v.convert/read.c:164
 #, c-format
 msgid "%-5d points read and written to output\n"
-msgstr ""
+msgstr "%-5d bodù naèteno a zapsáno do výstupu\n"
 
 #: ../vector/v.convert/read.c:165
 #, c-format
 msgid "%-5d lines read and written to output\n"
-msgstr ""
+msgstr "%-5d linií naèteno a zapsáno do výstupu\n"
 
 #: ../vector/v.convert/read.c:167
 #, c-format
 msgid "%-5d area boundaries read and written to output\n"
-msgstr ""
+msgstr "%-5d hranic oblasti bylo naèteno a zapsáno do výstupu\n"
 
 #: ../vector/v.convert/read.c:168
 #, c-format
 msgid "%-5d dead points skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých bodù pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:169
 #, c-format
 msgid "%-5d dead lines skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých linií pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:170
 #, c-format
 msgid "%-5d dead area boundaries skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých hranic oblastí pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:171
 #, c-format
 msgid "%-5d elements of unknown type skipped\n"
-msgstr ""
+msgstr "%-5d prvkù neznámého typu pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:173
 #, c-format
 msgid "%-5d elements read to memory.\n"
-msgstr ""
+msgstr "%-5d prvkù naèteno do pamìti.\n"
 
 #: ../vector/v.convert/read.c:212
 msgid "Reading dig_att file...\n"
-msgstr ""
+msgstr "Naèítám soubor dig_att...\n"
 
 #: ../vector/v.convert/read.c:220
 #, c-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Chyba: %s"
 
 #: ../vector/v.convert/read.c:241
 #, c-format
 msgid "Unknown type: %c"
-msgstr ""
+msgstr "Neznámý typ: %c"
 
 #: ../vector/v.convert/read.c:260
 #, c-format
 msgid "%-5d point categories read\n"
-msgstr ""
+msgstr "%-5d kategorií bodù naèteno\n"
 
 #: ../vector/v.convert/read.c:261
 #, c-format
 msgid "%-5d line categories read\n"
-msgstr ""
+msgstr "%-5d kategorií linií naèteno\n"
 
 #: ../vector/v.convert/read.c:262
 #, c-format
 msgid "%-5d centroids read\n"
-msgstr ""
+msgstr "%-5d centroidù naèteno\n"
 
 #: ../vector/v.convert/read.c:263
 #, c-format
 msgid "%-5d dead point categories skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých bodù kategorií pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:264
 #, c-format
 msgid "%-5d dead line categories skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých kategorií linií pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:265
 #, c-format
 msgid "%-5d dead centroids skipped\n"
-msgstr ""
+msgstr "%-5d mrtvých centroidù pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:266
 #, c-format
 msgid "%-5d categories of unknown type skipped\n"
-msgstr ""
+msgstr "%-5d kategorií neznámého typu pøeskoèeno\n"
 
 #: ../vector/v.convert/read.c:268
 #, c-format
 msgid "%-5d categories read into memory.\n"
-msgstr ""
+msgstr "%-5d kategorií naèteno do pamìti.\n"
 
 #: ../vector/v.convert/type.c:29
 #, c-format
 msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
-msgstr ""
+msgstr "SYSTÉMOVÁ CHYBA: OLD_T_NEW dostala ¹patný typ kódu %x"
 
 #: ../vector/v.convert/type.c:50
 #, c-format
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
-msgstr ""
+msgstr "SYSTÉMOVÁ CHYBA: NEW_T_OLD dostala ¹patný kód %x"
+
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr "Vyberte typ: linie nebo plocha"
 
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
-msgstr ""
+msgstr "Nemohu èíst informace o poli"
 
-#: ../vector/v.surf.idw/read_sites.c:38
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
 #, c-format
 msgid "Cannot open database %s by driver %s"
-msgstr ""
+msgstr "Nemohu otevøít databázi %s ovladaèem %s"
 
 #: ../vector/v.surf.idw/read_sites.c:45
 msgid "Column type not supported"
-msgstr ""
+msgstr "Typ sloupce není podporován"
 
 #: ../vector/v.surf.idw/read_sites.c:48
 msgid "Cannot select data from table"
-msgstr ""
+msgstr "Nemohu vybrat data z tabulky"
 
 #: ../vector/v.surf.idw/read_sites.c:50
 #, c-format
 msgid "%d records selected from table"
-msgstr ""
+msgstr "%d záznamù bylo vybráno z tabulky"
 
 #: ../vector/v.surf.idw/read_sites.c:80
 #, c-format
 msgid "No record for line (cat = %d)"
-msgstr ""
+msgstr "Pro linii není záznam (cat = %d)"
 
-#: ../vector/v.surf.idw/read_sites.c:91
+#: ../vector/v.surf.idw/read_sites.c:92
 #, c-format
 msgid "%d points loaded\n"
-msgstr ""
+msgstr "%d bodù naèteno\n"
+
+#: ../vector/v.to.points/main.c:54
+#, c-format
+msgid "Cannot insert new row: %s"
+msgstr "Nemohu vlo¾it nový øádek: %s"
+
+#: ../vector/v.to.points/main.c:152
+msgid "Create points along input lines."
+msgstr "Vytvoøí body podél vstupních linií."
+
+#: ../vector/v.to.points/main.c:155
+msgid "Input map containing lines"
+msgstr "Vstupní mapa obsahující linie"
+
+#: ../vector/v.to.points/main.c:161
+msgid "Output map where points will be written"
+msgstr "Výstupní mapa, do které budou zapsány body"
+
+#: ../vector/v.to.points/main.c:170
+msgid "Write line vertices."
+msgstr "Zapí¹e opìrné body linií."
+
+#: ../vector/v.to.points/main.c:174
+msgid "Interpolate points between line vertices."
+msgstr "Interpoluje body mezi opìrnými body linií."
+
+#: ../vector/v.to.points/main.c:181
+msgid "Maximum distance between points in map units."
+msgstr "Maximální vzdálenost mezi body v jednotkách mapy."
+
+#: ../vector/v.to.points/main.c:185
+msgid "Do not create attribute table."
+msgstr "Nevytváøej tabulku atributù."
+
+#: ../vector/v.to.points/main.c:203
+#, c-format
+msgid "Could not find input %s\n"
+msgstr "Nemohl jsem nalézt vstup %s\n"
+
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:298
+msgid "Cannot copy table"
+msgstr "Nemohu kopírovat tabulku"
+
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr "Nemohu vytvoøit seznam"
+
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "Nemohu poskytnou práva na tabulku %s"
+
+#: ../vector/v.to.points/main.c:321
+#, c-format
+msgid "%d points written to output map\n"
+msgstr "%d bodù zapsáno do výstupní mapy\n"
 
 #: ../vector/v.transform/ask_trans.c:83
 msgid "ask_transform_coor():  Leaving session.. \n"
-msgstr ""
+msgstr "sk_transform_coor():  Opou¹tím sezení...\n"
 
 #: ../vector/v.transform/creat_trans.c:69
 #, c-format
 msgid " Number of points that have been entered: %d\n"
-msgstr ""
+msgstr " Poèet zadaných bodù: %d\n"
+
+#: ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
+msgstr "%s"
 
 #: ../vector/v.transform/creat_trans.c:100
 msgid "Please answer yes or no"
-msgstr ""
+msgstr "Odpovìzte prosím yes (ano) nebo no (ne)"
 
 #: ../vector/v.transform/creat_trans.c:123
 #, c-format
 msgid "Number of points that have been entered: %d\n"
-msgstr ""
+msgstr "Poèet zadaných bodù: %d\n"
 
 #: ../vector/v.transform/main.c:166
 #, c-format
 msgid "Could not open file with coordinates : %s\n"
-msgstr ""
+msgstr "Nemohl jsem otevøít soubor se souøadnicemi : %s\n"
 
 #: ../vector/v.transform/main.c:172
 #, c-format
 msgid "Could not find input map <%s>\n"
-msgstr ""
+msgstr "Nemohl jsem nalézt vstupní mapu <%s>\n"
 
 #: ../vector/v.transform/main.c:206
 msgid ""
 "\n"
 "Now transforming the vectors ...\n"
 msgstr ""
+"\n"
+"Nyní transformuji vektory ...\n"
 
 #: ../vector/v.transform/main.c:224
 #, c-format
 msgid "New vector map <%s> boundary coordinates:\n"
-msgstr ""
+msgstr "Vektorová mapa <%s> má nové hranièní souøadnice:\n"
 
 #: ../vector/v.transform/main.c:225
-#, c-format
+#, c-format, fuzzy
 msgid " N: %-10.3f    S: %-10.3f\n"
-msgstr ""
+msgstr " S: %-10.3f     J: %-10.3f\n"
 
 #: ../vector/v.transform/main.c:226
 #, c-format
 msgid " E: %-10.3f    W: %-10.3f\n"
-msgstr ""
+msgstr " V: %-10.3f     Z: %-10.3f\n"
 
 #: ../vector/v.transform/main.c:227
 #, c-format
 msgid " B: %6.3f    T: %6.3f\n"
-msgstr ""
+msgstr " B: %6.3f    T: %6.3f\n"
 
 #: ../vector/v.transform/main.c:232
 #, c-format
 msgid "'%s' has finished the transformation of the vectors.\n"
-msgstr ""
+msgstr "'%s' dokonèil transformaci vektorù.\n"
 
 #: ../vector/v.transform/print_trans.c:29
 msgid ""
 "                          CHECK MAP RESIDUALS\n"
 "\n"
-msgstr ""
+msgstr "                        ZKOU©ÍM TRANSFORMAÈNÍ PARAMETRY\n\n"
 
 #: ../vector/v.transform/print_trans.c:30
 msgid "                Current Map                  New Map\n"
-msgstr ""
+msgstr "                Souèasná mapa                Nová mapa\n"
 
 #: ../vector/v.transform/print_trans.c:31
 msgid ""
 " POINT      X coord    Y coord  |        X coord   Y coord    |      "
 "residuals\n"
 msgstr ""
+" BOD        souø. x    souø. y  |        souø. x   souø. y    |      "
+"zbytky\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
@@ -848,47 +1331,54 @@ msgid ""
 "\n"
 "  Number of points: %d\n"
 msgstr ""
+"\n"
+"\n"
+"  Poèet bodù: %d\n"
 
 #: ../vector/v.transform/print_trans.c:44
 #, c-format
 msgid "  Residual mean average   : %f\n"
-msgstr ""
+msgstr "   Prùmìr transformaèních parametrù   : %f\n"
 
 #: ../vector/v.transform/setup_trans.c:88
 msgid "The points weren't spread out enough."
-msgstr ""
+msgstr "Body nebyly dostateènì rozprostøeny."
 
 #: ../vector/v.transform/setup_trans.c:91
 #, c-format
 msgid "You need to enter at least %d points."
-msgstr ""
+msgstr "Musíte zadat alespoò %d bodù."
+
+#: ../vector/v.voronoi/dt_main.c:119
+msgid "Cannot calculate area centroid"
+msgstr "Nemohu spoèítat centroid oblasti"
 
 #: ../vector/v.what.rast/main.c:330
 #, c-format
 msgid "%d categories loaded from table\n"
-msgstr ""
+msgstr "%d kategorií bylo naèteno z tabulky\n"
 
 #: ../vector/v.what.rast/main.c:331
 #, c-format
 msgid "%d categories loaded from vector\n"
-msgstr ""
+msgstr "%d kategorií bylo naèteno z vektoru\n"
 
 #: ../vector/v.what.rast/main.c:332
 #, c-format
 msgid "%d categories from vector missing in table\n"
-msgstr ""
+msgstr "%d kategorií z vektoru chybí v tabulce\n"
 
 #: ../vector/v.what.rast/main.c:333
 #, c-format
 msgid "%d duplicate categories in vector\n"
-msgstr ""
+msgstr "%d duplicitních kategorií ve vektoru\n"
 
 #: ../vector/v.what.rast/main.c:334
 #, c-format
 msgid "%d records updated\n"
-msgstr ""
+msgstr "%d záznamù aktualizováno\n"
 
 #: ../vector/v.what.rast/main.c:335
 #, c-format
 msgid "%d update errors\n"
-msgstr ""
+msgstr "%d chyb pøi aktualizaci\n"
