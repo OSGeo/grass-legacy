@@ -1,0 +1,18 @@
+*******************************************
+d.vect.db
+             
+(m) means modified for INGRES 
+
+Katarina Johnsson, 930415
+*******************************************
+
+main
+	getAllOpts (m)
+		buildSQL (m, <=> buildInfxQry)
+			ingresUnTable (new)
+			plotCat
+	getSelectOpts (m)
+		runSQL (m, <=> runInfxFile)
+			ingresUnTable       
+			plotCat
+
