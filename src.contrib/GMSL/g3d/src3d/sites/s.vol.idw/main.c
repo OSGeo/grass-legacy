@@ -202,147 +202,127 @@ int main(argc, argv)
      
     cnt=0;
 
-    z = current_region.top + lev_res/2.0;
+    z = current_region.top + lev_res/2.0;  // start at TOP
 
-  for (lev = 0; lev < Nl; lev++)
-  {
-    fprintf (stderr, "\n  Calculating level no. %-10d ", Nl-lev);
+    for (lev = 0; lev < Nl; lev++) {       // T->B
 
-    z -=lev_res;/* daj input*/
+      fprintf (stderr, "\n  Calculating level no. %-10d ", Nl-lev);
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-    north = current_region.north + current_region.ns_res/2.0;
-*/
-/* END OF ORIGINAL CODE */
+      z -=lev_res;  /* daj input*/
 
-/*AV*/
-/* BEGIN OF MY CODE */
-		north = current_region.south - current_region.ns_res/2.0;
-/* END OF MY CODE */
+      north = current_region.north + current_region.ns_res/2.0;  // start at NORTH
 
-/*AV*/
-/* BEGIN OF ORIGINL CODE */
-/*
-    for (row = 0; row < Nr; row++)
-*/
-/* END OF ORIGINAL CODE */
+      // JCH restored above line; AV replaced above with following line to be
+      // consistent with loop.  JCH modified loop as well.
 
-/*AV*/
-/* BEGIN OF MY CODE */
-    for (row = Nr-1; row >= 0; row--)
-/* END OF MY CODE */
+//    north = current_region.south - current_region.ns_res/2.0;  // AV version
 
-    {
+
+//    for (row = Nr-1; row >= 0; row--) // AV version
+      for (row = 0; row < Nr; row++) {  // N->S
+
         /*fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);*/
         G_percent (row, Nr, 2);
-	if (mask)
-	{
+
+	if (mask) {
 	    if(G_get_map_row(maskfd, mask, row) < 0)
 		exit(1);
 	}
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
 	north -= current_region.ns_res;
-*/
-/* END OF ORIGINAL CODE */
+//	north += current_region.ns_res;  // AV version
 
-/*AV*/
-/* BEGIN OF MY CODE */
-	north += current_region.ns_res;
-/* END OF MY CODE */
+	east = current_region.west - current_region.ew_res/2.0;  // start in WEST
 
-	east = current_region.west - current_region.ew_res/2.0;
-	for (col = 0; col < Nc; col++)
-	{
-	    east += current_region.ew_res;
-		/* don't interpolate outside of the mask */
-	    if (mask && mask[col] == 0)
-	    {
-		cell[col] = 0;
-		continue;
-	    }
-		/* fill list with first nsearch points */
-	    for (i = 0; i < nsearch ; i++)
-	    {
-		dy = points[i].north - north;
-		dx = points[i].east  - east;
-		dz = points[i].z - z;
-		list[i].dist = dy*dy + dx*dx + dz*dz;
-		list[i].w = points[i].w;
-	    }
-		/* find the maximum distance */
-	    maxdist = list[max=0].dist;
-	    for (n = 1; n < nsearch; n++)
-	    {
-		if (maxdist < list[n].dist)
-		    maxdist = list[max=n].dist;
-	    }
-		/* go thru rest of the points now */
-	    for ( ; i < npoints; i++)
-	    {
-		dy = points[i].north - north;
-		dx = points[i].east  - east;
-		dz = points[i].z - z;
-		dist = dy*dy + dx*dx + dz*dz;
+	for (col = 0; col < Nc; col++) {
 
-		if (dist < maxdist)
+	  east += current_region.ew_res;
+	  /* don't interpolate outside of the mask */
+	  if (mask && mask[col] == 0)
+	    {
+	      cell[col] = 0;
+	      continue;
+	    }
+	  /* fill list with first nsearch points */
+	  for (i = 0; i < nsearch ; i++)
+	    {
+	      dy = points[i].north - north;
+	      dx = points[i].east  - east;
+	      dz = points[i].z - z;
+	      list[i].dist = dy*dy + dx*dx + dz*dz;
+	      list[i].w = points[i].w;
+	    }
+	  /* find the maximum distance */
+	  maxdist = list[max=0].dist;
+	  for (n = 1; n < nsearch; n++)
+	    {
+	      if (maxdist < list[n].dist)
+		maxdist = list[max=n].dist;
+	    }
+	  /* go thru rest of the points now */
+	  for ( ; i < npoints; i++)
+	    {
+	      dy = points[i].north - north;
+	      dx = points[i].east  - east;
+	      dz = points[i].z - z;
+	      dist = dy*dy + dx*dx + dz*dz;
+
+	      if (dist < maxdist)
 		{
-			/* replace the largest dist */
-		    list[max].w = points[i].w;
-		    list[max].dist = dist;
-		    maxdist = list[max=0].dist;
-		    for (n = 1; n < nsearch; n++)
+		  /* replace the largest dist */
+		  list[max].w = points[i].w;
+		  list[max].dist = dist;
+		  maxdist = list[max=0].dist;
+		  for (n = 1; n < nsearch; n++)
 		    {
-			if (maxdist < list[n].dist)
-			    maxdist = list[max=n].dist;
+		      if (maxdist < list[n].dist)
+			maxdist = list[max=n].dist;
 		    }
 		}
 	    } 
 
-		/* interpolate */
-	    sum1 = 0.0;
-	    sum2 = 0.0;
-	    for (n = 0; n < nsearch; n++)
+	  /* interpolate */
+	  sum1 = 0.0;
+	  sum2 = 0.0;
+	  for (n = 0; n < nsearch; n++)
 	    {
-		if(dist = list[n].dist)
+	      if(dist = list[n].dist)
 		{
-		    sum1 += list[n].w / dist;
-		    sum2 += 1.0/dist;
+		  sum1 += list[n].w / dist;
+		  sum2 += 1.0/dist;
 		}
-		else
+	      else
 		{
-		    sum1 = list[n].w;
-		    sum2 = 1.0;
-		    break;
+		  sum1 = list[n].w;
+		  sum2 = 1.0;
+		  break;
 		}
 	    }
-	 /*   cell[col] = (CELL) (sum1/sum2 + .5);*/
+	  /*   cell[col] = (CELL) (sum1/sum2 + .5);*/
 
-		data[cnt] = (sum1/sum2);
-                value = data[cnt];
-/*printf("\n %f", value);*/
-		cnt++;
+	  data[cnt] = (sum1/sum2);
+	  value = data[cnt];
+	  /*printf("\n %f", value);*/
+	  cnt++;
 
-        G3d_putFloat (map, col, row, lev, value);
+	  G3d_putFloat (map, col, row, lev, value);
 
 	}/* cols */
-    }/*rows*/
- } /* levs*/
+      }/*rows*/
+    } /* levs*/
 
-        free(data);
+    free(data);
 
-  if (! G3d_closeCell (map))
-    fprintf(stderr, "main: error closing new g3d file");
+    if (! G3d_closeCell (map))
+      fprintf(stderr, "main: error closing new g3d file");
 
 /*  end of g3d write output */
 
     fprintf (stderr, "Done          \n");
     exit(0);
 }
+
+
 newpoint (w, z, east, north)
     double w, z, east, north;
 {

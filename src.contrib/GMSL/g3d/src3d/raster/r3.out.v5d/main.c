@@ -207,86 +207,91 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
       exit(1);
    }
 
-  d1p = &d1; f1p = (float *) &d1;
-	cnt=0;
+   d1p = &d1; f1p = (float *) &d1;
+   cnt=0;
 
- /* originally written in 1999. Bug: displays reversed in Vis5D:
-  for (z = 0; z < depths; z++) {
-    G_percent(z, depths, 1);
-    for (y = 0; y < rows; y++) {
+   /* originally written in 1999. Bug: displays reversed in Vis5D:
+      for (z = 0; z < depths; z++) {
+      G_percent(z, depths, 1);
+      for (y = 0; y < rows; y++) {
       for (x = 0; x < cols; x++) {
- */
+   */
 
-  /* taken from r3.out.ascii: but modified x and y order
+   /* taken from r3.out.ascii: but modified x and y order
       MN 1/2001. Now results comparable to r3.showdspf but
       for loops are different to r3.out.ascii and r3.to.sites - hmpf */
 
-/*AV*/
-/* IT WORKS WHIT A PARTICULAR FOR LOOP PROBABLY BECAUSE THE DATA
-	ARE NOT STORED IN A 3D MATRIX [z,y,x] BUT IN A POINTER
-	MANAGED AS (z,x,y) */
+   /*AV*/
+   /* IT WORKS WHIT A PARTICULAR FOR LOOP PROBABLY BECAUSE THE DATA
+      ARE NOT STORED IN A 3D MATRIX [z,y,x] BUT IN A POINTER
+      MANAGED AS (z,x,y) */
 
-  for (z = 0; z < depths; z++) {
-    G_percent(z, depths, 1);
-    for (x = 0; x < cols; x++) {
-      for (y = rows-1; y >= 0; y--) {  /* north to south */
+   for (z = 0; z < depths; z++) {
+     G_percent(z, depths, 1);
+     for (x = 0; x < cols; x++) {
+//     for (y = rows-1; y >= 0; y--) {  /* north to south */  WRONG!
+       for (y = 0; y < rows; y++) {  /* north to south */
 
-        G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
+	 G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
 
-        if (typeIntern == G3D_FLOAT) {
-          if (G3d_isNullValueNum(f1p, G3D_FLOAT)) {
-						g[cnt] = MISSING;
-						cnt++;
-					}
-          else {
-            g[cnt] = *f1p;
-						cnt++;
-					}
-        }
-				else { /*double*/
-      		if (G3d_isNullValueNum(d1p, G3D_DOUBLE)){
-						g[cnt]= MISSING;
-						cnt++;
-	  			}
-					else {
-						g[cnt] = (float) *d1p;
-						cnt++;
-					}
-       	}
-      }
-    }
-  }
-
-/************/
-
-  /* Create the output v5d file */
-
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-if (!v5dCreate(fileout, NumTimes, NumVars, cols, rows, Nl, VarName, TimeStamp, DateStamp,CompressMode, Projection, ProjArgs, Vertical, VertArgs )) {
-      fprintf(stderr, "Error: couldn't create %s\n", fileout);
-      exit(1);
+	 if (typeIntern == G3D_FLOAT) {
+	   if (G3d_isNullValueNum(f1p, G3D_FLOAT)) {
+	     g[cnt] = MISSING;
+	     cnt++;
+	   }
+	   else {
+	     g[cnt] = *f1p;
+	     cnt++;
+	   }
+	 }
+	 else { /*double*/
+	   if (G3d_isNullValueNum(d1p, G3D_DOUBLE)){
+	     g[cnt]= MISSING;
+	     cnt++;
+	   }
+	   else {
+	     g[cnt] = (float) *d1p;
+	     cnt++;
+	   }
+	 }
+       }
+     }
    }
-*/
-/* END OF ORIGINAL CODE */
 
-/*AV*/
-/* BEGIN OF MY CODE */
-if (!v5dCreate(fileout, NumTimes, NumVars, rows, cols, Nl, VarName, TimeStamp, DateStamp,CompressMode, Projection, ProjArgs, Vertical, VertArgs )) {
-      fprintf(stderr, "Error: couldn't create %s\n", fileout);
-      exit(1);
+   /************/
+
+   /* Create the output v5d file */
+
+   /*AV*/
+   /* BEGIN OF ORIGINAL CODE */
+   /*
+     if (!v5dCreate(fileout, NumTimes, NumVars, cols, rows, Nl, VarName, 
+     TimeStamp,DateStamp,CompressMode, Projection, ProjArgs, 
+     Vertical, VertArgs )) {
+     fprintf(stderr, "Error: couldn't create %s\n", fileout);
+     exit(1);
+     }
+   */
+   /* END OF ORIGINAL CODE */
+
+   /*AV*/
+   /* BEGIN OF MY CODE */
+   if (!v5dCreate(fileout, NumTimes, NumVars, rows, cols, Nl, VarName, 
+		  TimeStamp, DateStamp,CompressMode, Projection, ProjArgs, 
+		  Vertical, VertArgs )) {
+     fprintf(stderr, "Error: couldn't create %s\n", fileout);
+     exit(1);
    }
-/* END OF MY CODE */
+   /* END OF MY CODE */
 
 
-/* Write the v5d file */
+   /* Write the v5d file */
 
-if (!v5dWrite(1,1, g )) {
-            printf("Error while writing grid.  Disk full?\n");
-            exit(1);
-	}
-  /* Close the v5d file */
+   if (!v5dWrite(1,1, g )) {
+     printf("Error while writing grid.  Disk full?\n");
+     exit(1);
+   }
+   /* Close the v5d file */
 
    v5dClose();
 
