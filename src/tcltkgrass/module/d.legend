@@ -4,4 +4,11 @@ interface_build {
     {entry map {Raster map, required:} 0 raster}
     {entry color {Legend text color [white]:} 0 color}
     {entry lines {Number of lines in the legend (0-1000) [0]:} 0 ""}
+    {entry thin {Thinning factor (thin=10 gives cats 0,10,20...) [1]:} 0 ""}
+    {entry labelnum {Number of labels for legend description (2-100) [5]:} 0 ""}
+    {checkbox -v {Do not show category labels.} "" -v}
+    {checkbox -c {Do not show category numbers.} "" -c}
+    {checkbox -s {Draw smooth gradient.} "" -s}
+    {checkbox -o {Draw entries only for existing categories.} "" -o}
+    {checkbox -m {Use mouse to size & place legend.} "" -m}
 }
