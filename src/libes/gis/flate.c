@@ -115,6 +115,9 @@ break_compile (void)
 #include <unistd.h>
 #include "gis.h"
 
+#define G_ZLIB_COMPRESSED_NO (unsigned char)'0'
+#define G_ZLIB_COMPRESSED_YES (unsigned char)'1'
+
 static void
 _init_zstruct (z)
     z_stream *z;
@@ -160,8 +163,28 @@ G_zlib_read (fd, rbytes, dst, nbytes)
         return -1;
     }
 
-    /* Just call G_zlib_expand() with the buffer we read */
-    err = G_zlib_expand (b, bsize, dst, nbytes);
+    /* Test if row is compressed */
+    if (b[0] == G_ZLIB_COMPRESSED_NO)
+    {
+        /* Then just copy it to dst */
+        for (err = 0; err < nread - 1 && err < nbytes; err++)
+            dst[err] = b[err + 1];
+        
+        G_free (b);
+        return (nread - 1);
+    }
+    else if (b[0] != G_ZLIB_COMPRESSED_YES)
+    {
+        /* We're not at the start of a row */
+        G_free (b);
+        return -1;
+    }
+    /* Okay it's a compressed row */
+    
+    /* Just call G_zlib_expand() with the buffer we read,
+     * Account for first byte being a flag
+     */
+    err = G_zlib_expand (b+1, bsize-1, dst, nbytes);
 
     /* We're done with b */
     G_free (b);
@@ -178,15 +201,13 @@ G_zlib_write (fd, src, nbytes)
     unsigned char *src;
 {
     int dst_sz, nwritten, err;
-    unsigned char *dst;
+    unsigned char *dst, compressed;
     
     /* Catch errors */
     if (src == NULL || nbytes < 0)
         return -1;
     
-    /* set dst_sz equal to 1.01 * input size + 12 bytes in case
-     * compression actually makes the data larger !! */
-    dst_sz = (int) ((double)nbytes * (double)1.01 + (double)12);
+    dst_sz = nbytes;
     if (NULL == (dst = (unsigned char *) 
                 G_calloc (dst_sz, sizeof (unsigned char))))
         return -1;
@@ -194,30 +215,55 @@ G_zlib_write (fd, src, nbytes)
     /* Now just call G_zlib_compress() */
     err = G_zlib_compress (src, nbytes, dst, dst_sz);
 
-    /* If nothing got compressed, return the error, or zero byte count */
-    if (err <= 0)
+    /* If compression succeeded write compressed row,
+     * otherwise write uncompressed row. Compression will fail
+     * if dst is too small (i.e. compressed data is larger)
+     */
+    if (err > 0 && err <= dst_sz)
     {
-        G_free (dst);
-        return err;
+        dst_sz = err;
+        /* Write the compression flag */
+        compressed = G_ZLIB_COMPRESSED_YES;
+        if (write (fd, &compressed, 1) != 1)
+        {
+            G_free (dst);
+            return -1;
+        }
+        nwritten = 0;
+        do
+        {
+            err = write (fd, dst + nwritten, dst_sz - nwritten);
+            if (err >= 0)
+                nwritten += err;
+        } while (err > 0 && nwritten < dst_sz);
+        /* Account for extra byte */
+        nwritten++;
     }
-
-    /* set dst_sz to the bytes of compressed data in dst */
-    dst_sz = err;
-    
-    /* Write to the "file" (could be a socket ...) */
-    nwritten = 0;
-    do
+    else
     {
-        err = write (fd, dst + nwritten, dst_sz - nwritten);
-        if (err >= 0)
-            nwritten += err;
-    } while (err >= 0 && nwritten < dst_sz);
+        /* Write compression flag */
+        compressed = G_ZLIB_COMPRESSED_NO;
+        if (write (fd, &compressed, 1) != 1)
+        {
+            G_free (dst);
+            return -1;
+        }
+        nwritten = 0;
+        do
+        {
+            err = write (fd, src + nwritten, nbytes - nwritten);
+            if (err >= 0)
+                nwritten += err;
+        } while (err > 0 && nwritten < nbytes);
+        /* Account for extra byte */
+        nwritten++;
+    } /* if (err > 0) */
 
     /* Done with the dst buffer */
     G_free (dst);
     
     /* If we didn't write all the data return an error */
-    if (nwritten != dst_sz)
+    if (err < 0)
         return -2;
 
     return nwritten;
