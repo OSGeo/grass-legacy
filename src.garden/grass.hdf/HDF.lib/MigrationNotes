@@ -1,0 +1,820 @@
+The following "migration notes" should help you switch over
+from HDF 3.1 to HDF 3.2.  These notes should be used as a
+supplement the the manuals "HDF Calling Interfaces and Utilities"
+and "HDF Vset."
+
+This file is an updated version of the MigrationNotes in HDF3.2 
+Release 2. (The file ./CODECHANGES highlights the major code changes 
+between Release 2 and Release 3.)  This version of MigrationNotes
+supercedes the version that was distributed with HDF 3.2 Release 1.  
+It contains the following additional material:
+
+         1. Description of a calibration tag that can be
+            used to store information about how data in 
+            an SDS has been calibrated, or normalized. Two
+            new routines are available for storing and
+            retrieving calibration information.
+
+         2. Description of a routine to test whether an SDS
+            in a file was written by HDF3.2 or a previous release. 
+            Note: the function names and parameters are different 
+            from those in HDF3.2 Release 2.  
+            
+         3. Explanation of changes in the return values for 
+            VSsetfields() and VSinquire().
+
+         4. Explanation of changes in argument types
+            for the routines VSwrite and VSread.
+
+
+
+
+
+                       HDF 3.2 Release 3
+                        Migration Notes
+                        ===============
+
+This is a preliminary document describing the differences 
+between HDF 3.2 and earlier versions of HDF.  
+It is written for people who already use HDF 3.1 (or earlier 
+versions), and wish to migrate to HDF 3.2.  Special emphasis 
+is given to changes that might be required in existing code.  
+HDF3.2r1  and HDF3.2r2 users will find in these notes the 
+information about the changes between HDF3.2r3 and
+previous releases of HDF3.2.
+
+Documentation is now being written that more fully explains 
+this new version of HDF.  If you have any questions or 
+comments, please send them to sxu@ncsa.uiuc.edu.
+
+Table of contents:
+
+         Platforms Supported
+         SDS Interface
+            New number types
+            Arrays no longer transposed
+            Calibration tag
+         RIS8 Interface
+         RIS24 Interface
+         Palette Interface
+         Annotations Interface
+         Vset Interface
+         General Purpose Interface
+         Old General Purpose Interface
+         Test Modules
+
+
+
+                      Platforms Supported
+                      ===================
+
+HDF 3.2 is supported on the following platforms:
+
+        Platform        Machine Type
+        --------        ------------
+        Sun-4           SUN
+        Cray-2          UNICOS
+        Cray-Y/MP       UNICOS
+        Convex          CONVEX
+        SGI Iris 4D     IRIS4
+        IBM RS/6000     IBM6000
+        DECstation 3100 MIPSEL
+        DECstation 5000 MIPSEL
+        Vax/VMS         VMS
+        HP 9000         HP9000
+        Macintosh       MAC    
+        IBM PC/clone    PC    
+        NeXT            NEXT
+        Convex native   CONVEXNATIVE
+          format
+
+These ports include the full HDF library (C and FORTRAN interfaces, 
+where appropriate), and the following utilities: hdfls, hdfrseq, 
+ristosds, hdfpack, hdfcomp, hdftor8, r8tohdf, hdf24hdf8, hdftopal, 
+and paltohdf.  Hdfed has been ported to some platforms.  Fp2hdf 
+has not yet been ported.
+
+
+                         SDS Interface
+                         =============
+
+This interface has undergone the most changes that affect 
+typical users. Some of them may necessitate changes to 
+your code.  Here is an outline of this section:
+
+    (1) New number types
+
+         - DFSDsetNT (dssnt) and DFSDgetNT (dsgnt)
+         - DFSDsetrange (dssrang) and DFSDgetrange (dsgrang)
+         - New Tag
+         - Backward compatibility
+
+    (2) Arrays no longer transposed
+         - Implications of change to "no-transpose"
+         - DFSDpre32sdg (dsp32sd)
+
+    (3) Calibration tag
+
+
+    The two biggest changes are: (1) the addition of 
+support for new number types in SDS, and (2) changes to SDS 
+so that the code no longer transposes arrays. 
+
+These changes, which are described in detail below, have 
+necessitated some changes in the SDS interface.
+
+THE FOLLOWING ROUTINES ARE NO LONGER SUPPORTED:
+
+   DFSDsettype (dsstype)
+   DFSDsetmaxmin (dssmaxm)
+   DFSDgetmaxmin (dsgmaxm)
+
+THE FOLLOWING NEW ROUTINES HAVE BEEN ADDED:
+
+   DFSDsetNT (dssnt)      tells which number type is to be 
+                          used for next DFSDadddata or 
+                          DFSDputdata; replaces DFSDsettype
+
+   DFSDgetNT (dsgnt)      determines number type of current 
+                          SDS
+
+   DFSDsetrange (dssrang) specifies max and min values of 
+                          next SDS to be written; replaces
+                          DFSDsetmaxmin
+
+   DFSDgetrange (dsgrang) determines max and min values of 
+                          current SDS; replaces DFSDgetmaxmin
+
+   DFSDpre32sdg (dsp32sd) tests if the current SDS was written 
+                          by HDF3.2 or a previous release. 
+
+(NOTE: DFSDsettype also was used to set the storage order of 
+SDS data.  This function is no longer needed, as explained in 
+the section "(2) Arrays no longer transposed.")
+
+
+
+(1) New number types
+    ----------------
+
+The previous SDS interface allowed storage of 32-bit floats 
+and Cray native mode floats only.  The HDF 3.2 SDS interface 
+has been expanded to handle  8-bit, 16- bit, and 32-bit 
+integers, 32-bit and 64-bit floats, and native mode for all 
+of these.
+
+In the C interface, integers can be signed or unsigned.  In 
+the FORTRAN interface, there is no distinction, so all 
+integers are assumed to be signed.  The names used to 
+describe the new data types are
+
+    int8        8-bit signed integer
+    uint8       8-bit unsigned integer (C only)
+    int16      16-bit signed integer
+    uint16     16-bit unsigned integer (C only)
+    int32      32-bit signed integer
+    uint32     32-bit unsigned integer (C only)
+    float32    32-bit float
+    float64    64-bit float
+
+DFSDsetNT (dssnt) and DFSDgetNT (dsgnt)
+---------------------------------------
+
+To handle the new data types, the DFSDsettype routine has 
+been replaced by DFSDsetNT.  DFSDsetNT must be called if a 
+number type other than float32 is to be stored.  DFSDsetNT 
+and DFSDsetdims can be called in any order, but they should 
+be called before any other  "DFSDset" functions and before 
+DFSDputdata or DFSDadddata.
+
+Valid parameter values for DFSDsetNT (e.g. DFNT_INT8) are 
+defined in the file hdf.h.  They are of the general form 
+"DFNT_<numbertype>", all capital letters.  
+
+DFSDgetNT allows you to query about the number type of the 
+SDS that is current.  As with other "DFSDget..." routines, 
+you must call DFSDgetdims, or DFSDgetdata to "move to" a 
+particular SDS before calling DFSDgetNT.  
+
+These routines are illustrated in the following examples:
+
+For example:
+
+C:
+    DFSDsetNT(DFNT_INT8);
+    DFSDadddata("myfile.hdf", rank, dims, i8data);
+    ...
+    DFSDgetdims("myfile.hdf", rank, dimsizes, 3);
+    DFSDgetNT(&numtype);
+
+
+FORTRAN:
+    ret  = dssnt(DFNT_INT8)
+    ret = dsadata('myfile.hdf', rank, dims, i8data)
+    ...
+    ret = dsgdims('myfile.hdf', rank, dimsizes, 3)
+    ret = dsgnt(numtype)
+
+
+DFSDsetrange (dssrang) and DFSDgetrange (dsgrang)
+-------------------------------------------------
+
+The obsolete routines DFSDsetmaxmin and DFSDgetmaxmin assumed
+ that all numbers were floating point, and these routines were 
+hard- coded accordingly.  Now that the maximum and minimum 
+values can be of different number types, the corresponding 
+parameters can have different number types.  Because of this 
+it was necessary to redefine the parameters in the C versions 
+of the routines from 'floats' to pointers.  To avoid 
+confusion, and possible undetected errors, these routines 
+have been replaced by DFSDsetrange and DFSDgetrange, as 
+illustrated in the following examples, in which 16-bit data 
+is written to an HDF file.
+
+C:
+    int16 max, min;  /* max and min must be the same */
+                     /* data type as the SDS array */
+     .
+     .
+    DFSDsetrange(&max, &min);
+    DFSDadddata("myfile.hdf", rank, dims, data);
+    ...
+    DFSDgetdims("myfile.hdf", rank, dimsizes, 3);
+    DFSDgetrange(&max, &min);
+
+    NOTE: The arguments to DFSDsetrange and DFSDgetrange
+          are now pointers, rather than simple variables.
+          This is required because they must be able to
+          pass different types of variables.
+
+FORTRAN:
+    ret = dssrang(max, min)
+    ret = dsadata('myfile.hdf', rank, dims, data)
+    ...
+    ret = dsgdims('yourfile.hdf', rank, dimsizes, 3)
+    ret = dsgrang(max, min)
+
+Since the max/min values are supposed to relate to the data 
+itself, it is assumed that the type of max/min is the same as 
+the type of the data.  The same assumption is made for 
+scales, although eventually an option is planned to allow 
+scale number types that are different from data number types.
+
+
+New tag
+-------
+
+In order to support the new number types and at the same time 
+make it easier to add new features (e.g. data compression) to 
+future versions of SDS, a new structure for the SDG 
+(scientific data group) and some new tags have been 
+implemented.  The new structure is called NDG, for "numeric 
+data group", and has the tag DFTAG_NDG (720).  The NDG 
+structure will be described in detail in the next edition of 
+the manual "HDF Specifications."
+
+
+Backward compatibility
+----------------------
+
+To maintain backward compatibility, HDF examines each new NDG 
+that it writes to a file to determine whether it is backward 
+compatible with the old SDG structure (float32 data only, 
+etc.), and if it is, writes out an SDG as well as an NDG.  A 
+new "link tag" (710) stored in the NDG tells HDF that it 
+represents the same SDS as the corresponding SDG.
+
+
+(2) Arrays no longer transposed
+    ---------------------------
+
+In earlier versions of HDF the SDS interface would, by 
+default, transpose arrays written by FORTRAN programs so that 
+matrices that were declared the same way in C and FORTRAN 
+programs would be stored with the same physical ordering in 
+an HDF file.  This caused a great deal of confusion among HDF 
+users, and often resulted in very inefficient program 
+execution, so it was decided with release 3.2 to eliminate 
+array transposition.  This means that the way you dimension 
+arrays, and the way you pass dimensions to HDF routines may 
+have to change.
+
+Implications of change to "no-transpose"
+---------------------------------------
+
+Here is a synopsis of the implications of this change.
+
+  1. SDS C calls should appear the same as they appeared in 
+HDF 3.1 and earlier versions.
+
+  2. SDS FORTRAN calls should appear the same as they 
+appeared in HDF 3.1 and earlier versions.  (NOTE: For users 
+of HDF 3.2 beta dfsd_notranspose.c, see point No. 5 below.) 
+
+  3. HDF 3.2 stores SDS data arrays in HDF files in the same 
+order as they are stored in memory, without transposition. 
+This is done even when the SDS are written by the FORTRAN 
+interface.
+
+  4.  Dimension sizes, scales, labels, units and formats for 
+each dimension are written to 3.2 HDF files in C order, from 
+slowest changing dimension to the fastest changing dimension.  
+It follows from this that if you want to maintain 
+compatibility between C and FORTRAN (for instance, when an 
+SDS is written out by a C program, then read in by a FORTRAN 
+program), you'll need to reverse, in Fortran programs, the 
+dimension specifications for dimension-related information 
+(array dimensions, scales, labels, units, and formats) 
+from what they were in the corresponding C program.  
+
+For example, suppose the following calls are made in a C 
+program:
+
+   float data[4][5][6];
+   int dimsizes[3];
+   dimsizes[0] = 4;
+   dimsizes[1] = 5;
+   dimsizes[2] = 6;
+   strcpy(label1, "pressure");
+
+   DFSDsetdims(3, dimsizes);
+   DFSDsetdimstrs(1, label1, unit1, format1);
+   DFSDadddata("myfile.hdf", 3, dimsizes, data);
+
+In a FORTRAN program that reads back this information, 
+references to dimensions are reversed, as illustrated in the 
+following:
+
+   real data(6,5,4)
+   integer dimsizes(3)
+   dimsizes(1) = 6
+   dimsizes(2) = 5
+   dimsizes(3) = 4
+
+
+   dsgdat('myfile.hdf', 3, dimsizes, data)
+   dsgdist(3, label, unit, format)
+
+After calling dsgdist, the value assigned to label is 
+"pressure."
+
+5. FOR USERS OF HDF 3.2 BETA, dfsd_notranspose.c:  In 
+dfsd_notranspose.c, the ordering of dimensions in the 
+'dimsizes' parameter was the reverse of what it had been in 
+HDF 3.1.  The confusion that this caused for users led to our 
+changing back, so that now the dimensions in the dimsizes 
+parameter are the same as they were in HDF 3.1 and before, 
+where the order of dimensions in dimsizes is the same as it 
+is in array declarations.  This is illustrated in the example 
+above.  (We sincerely regret the inconvenience that this 
+causes early users of HDF 3.2beta dfsd_notranspose.c.)
+
+
+  6. HDF 3.2 will read an SDS from HDF 3.1 files in the way 
+that HDF 3.1 does, so that old files can be read by the new 
+library without any extra programming.  This means that 
+aberrations in the way HDF 3.1 read old, transposed files 
+continue in HDF 3.2.  This is done to maintain consistency 
+for those users who wrote their code specifically to 
+accommodate these aberrations.
+
+NOTE: Although we have made our best effort with HDF 3.2 to 
+maintain backward compatibility, we are aware that some of 
+these changes will cause difficulty, especially when old 
+programs need to be changed to accommodate the new ordering.  
+Please contact us if we can help you smooth the transition 
+to HDF 3.2.
+
+DFSDpre32sdg (dsp32sd)
+---------------------
+
+In HDF 3.1 and earlier versions, when an SDS is written from 
+a Fortran program, the data is transposed to keep the dimension 
+and data arrays in C order. Accordingly, when a Fortran program 
+reads an SDS from an hdf file, it transposes the data back. 
+This is fine as long as a FORTRAN program is reading the data
+back. But, when a C program reads the SDS, the data is transposed 
+compared to the original array. In order to handle this problem, 
+some C programmers have written their own routines to transpose 
+the data array and the dimensions.
+
+HDF3.2 no longer transposes data when it is written from Fortran 
+programs. So now, some C programmers need to know whether the 
+SDS was written by HDF3.1 or HDF3.2, and then decide whether or
+not to call the transpose routine. HDF3.2r2 supplied a function 
+DFSDpre32() to do the test. DFSDpre32() requires a preceding call
+of DFSDgetdims() or DFSDgetdata() or DFSDgetslice(). In some 
+applications, the SDS should not be read in if it was/wasn't 
+written by HDF3.1. In those cases, it is desired to test the version
+number before DFSDgetdata()/DFSDgetslice()/DFSDgetdims() is called.
+Therefore, HDF3.2r3 replaces DFSDpre32() with DFSDpre32sdg(), and,
+for Fortran interface, dspre32() with dsp32sd().
+DFSDpre32sdg() and dsp32sd() tests whether the current SDS was 
+written by HDF3.2 or by HDF3.1r5 and previous releases. 
+
+Function: 
+   C interface:
+          int DFSDpre32sdg(char *filename, uint16 ref, int *ispre32)
+          and 
+   Fortran interface:
+          integer dsp32sd(filename, ref, ispre32)
+          character*(*) filename
+          integer ref, ispre32          
+
+returns: SUCCEED--0 on sucess; FAIL (-1) otherwise 
+         ispre32 will be set to TRUE if the SDG was written using 
+          HDF3.1, to FALSE otherwise.
+
+These routines do not require preceding calls as far as 
+the reference number of the SDS is known. If the ref is unknown,
+DFANlablist() or the combination of DFSDgetdims() and DFSDlastref() 
+can be called to get the reference number for an SDS.
+
+(3) Calibration Tag
+    ---------------
+
+HDF 3.2 release 2 supports a new tag for calibrating the data in 
+an SDS.  The  calibration tag has the following specification:
+
+
+  SDCAL   Scientific data offset and calibration
+          record size: 36 bytes
+          tag number:731
+
+          This record contains four 64-bit floating point
+          values followed by a 32-bit integer, to be interpreted 
+          as follows:
+
+           cal       calibration factor
+           cal_err   calibration error
+           ioff      uncalibrated offset
+           ioff_err  uncalibrated offset error
+           cal_nt    numbertype of uncalibrated data
+
+The relationship between a value 'iy' stored in an SDS and the 
+actual value is defined as:
+
+    y = cal * (iy - ioff)
+
+The variable ioff_err contains a potential error of ioff, and 
+cal_err contains  a potential error of cal.  Currently the tag is 
+provided for information only.   The SDS interface performs no 
+operations on the data based on the calibration  tag.
+
+Two new routines have been added to the SDS interface for storing 
+and  retrieving calibration information. The C versions are 
+defined as follows:
+
+    int DFSDsetcal(float64 cal, float64 cal_err, float64 ioff,
+                                 float64 ioff_err, int32 cal_nt)
+
+    int DFSDgetcal(float64 *pcal, float64 *pcal_err, 
+               float64 *pioff,  float64 *pioff_err, int32 *cal_nt)
+
+The FORTRAN versions are defined as follows:
+
+      integer function dsscal(cal, calerr, ioff, iofferr, ctype)
+      real*8    cal,  calerr,  ioff,  iofferr
+      integer*4 ctype
+
+      int DFSDgetcal(cal, calerr, ioff, iofferr, ctype)
+      real*8 ical, icale, iioff, iioffe
+      integer*4 ctype
+
+DFSDsetcal works like other SDS 'set' routines, with one  
+exception: calibration information is automatically cleared 
+after call to  DFSDputdata or DFSDadddata.  Hence, DFSDsetcal 
+must be called anew for each  data set that is to be written.
+
+In the following examples a 100x100 array of 16-bit integers is 
+stored in an  SDS, together with calibration information 
+indicating that the values in the  array should be converted to 
+32-bit floats, and each value should be  multiplied by 10.0 then 
+added to 16.75.
+
+/************************* C example **************************/
+/*                                                            */
+
+#include "hdf.h"
+    ...
+    int16   i16[100][100], ti16[100][100];
+    float64 cal, cale, ioff, ioffe, ical, icale, iioff, iioffe
+    int32   calNT, icalNT
+    ...
+    cal   = 10.0;
+    cale  =  0.0;
+    ioff  = 16.75;
+    ioffe = 7.8
+    calNT = DFNT_FLOAT32;
+    ...
+    DFSDsetNT(DFNT_INT16);
+    DFSDsetcal(cal, cale, ioff, ioffe, calNT);
+    DFSDputdata("myfile.hdf", rank, dims, i16);
+    ...
+    DFSDgetdata("ntcheck.hdf", rank, dims, tf32);
+    DFSDgetcal(&ical,&icale, &iioff, &iioffe, &icalNT);
+    ...
+
+C******************** FORTRAN example ***********************
+C 
+
+      integer dsadata, dspdata, dssnt, dsscal, dsgcal
+      integer DFNT_FLOAT32, DFNT_INT16
+      real*8 cal,  cale,  ioff,  ioffe, ical, icale, iioff, iioffe
+      integer*4 ctype, ictype
+      integer*2 i16(100,100), ti16(100,100)
+
+      DFNT_INT16 = 22
+      DFNT_FLOAT32 = 5
+      ...
+C
+C Set up calibration info
+C
+      cal   = 10.0
+      cale  = 0.0
+      ioff  = 16.75
+      ioffe = 47.8
+      ctype = DFNT_FLOAT32
+C
+C  Write array and calibration information to HDF file
+C
+      err1  = dssnt(DFNT_INT16)
+      err2 = dsscal(cal, cale, ioff, ioffe, ctype)
+      err3 = dsadata('of.hdf', rank, dims, i16)
+      ...
+C
+C  Read back array and calibration information from HDF file
+C
+      err1 = dsgdata('of.hdf', rank, dims, ti16)
+      err2 = dsgcal(ical, icale, iioff, iioffe, ictype)
+      ...
+
+
+                         RIS8 Interface
+                         ==============
+
+Only one small change: DFR8lastref is now available in both C 
+and FORTRAN.
+
+
+                        RIS24 Interface
+                        ===============
+
+No changes.
+
+
+                       Palette Interface
+                       =================
+
+No changes.
+
+
+                     Annotations Interface
+                     =====================
+
+
+The following annotations interface routines require 
+programmers to explicitly handle the opening and closing of 
+files.  
+
+   DFANaddfid
+   DFANaddfds
+   DFANgetfidlen
+   DFANgetfid
+   DFANgetfdslen
+   DFANgetfds
+
+In the past, this was accomplished by calling DFopen() and 
+DFclose(), which use a structure called a DF.  In HDF 3.2 the 
+DF structure is no longer in use, and the annotation routines 
+mentioned above have instead been modified to accept the new-
+style int32 "file handle" (discussed in the section "General 
+Purpose Interface").  
+
+For this reason, 
+
+   PROGRAMMERS WHO PREVIOUSLY USED DFopen() AND DFclose() 
+   IN CONJUNCTION WITH THE ANNOTATIONS INTERFACE SHOULD USE 
+   Hopen() AND Hclose() TO DO FILE OPENING AND CLOSING. 
+
+Hopen() takes the same arguments as DFopen(), but returns an 
+int32 file handle, which is suitable for use with the newly 
+modified annotations routines and Hclose().
+
+
+These changes are illustrated in the following examples.
+
+C:
+    #include "hdf.h"
+    #define MAXLEN 50
+    #define ISFIRST 1
+    int32 file_id, ret;
+    char  tempstr[MAXLEN];
+    .
+    .
+    .
+    file_id = Hopen("myfile.hdf", DFACC_WRITE, 0);
+    ret = DFANaddfid(file_id, "some label");         
+    ret = DFANaddfds(file_id, "some description", 
+                      strlen("some description"));
+    ret = Hclose(file_id);
+    .
+    .
+    .
+    file_id = Hopen("myfile.hdf", DFACC_READ, 0);
+    ret = DFANgetfidlen(file_id, 1);
+    ret = DFANgetfid(file_id, tempstr, MAXLEN, ISFIRST);
+    ret = DFANgetfdslen(file_id, 1);
+    ret = DFANgetfds(file_id, tempstr, MAXLEN, ISFIRST);
+    ret = Hclose(file_id);
+
+
+FORTRAN:
+
+      integer DFACC_WRITE, DFACC_READ, MAXLEN, ISFIRST
+      integer fid, ret
+      character*100 tempstr
+      MAXLEN = 50
+      ISFIRST = 1
+      DFACC_WRITE = 2
+      DFACC_READ = 1
+      .
+      .
+      .
+      fid = hopen('myfile.hdf', DFACC_WRITE, 0)
+      ret = daafid(fid, 'some label')
+      ret = daafds(fid, 'a description',len('a description'))
+      ret = hclose(fid)
+      .
+      .
+      .
+      fid = hopen('myfile.hdf', DFACC_READ, 0)
+      ret = dagfidl(fid, ISFIRST)
+      ret = dagfid(fid, templab, MAXLEN, ISFIRST)
+      ret = dagfdsl(fid, ISFIRST)
+      ret = dagfds(fid, tempstr, MAXLEN, ISFIRST)
+      ret = hclose(fid)
+
+
+                        Vset Interface
+                        ==============
+
+
+Several changes are to be noted in the Vset interface:
+
+
+1. Previously, the Vset calling interface had its own 
+library.In HDF 3.2, the Vset calling interface is contained 
+in the same library as the other HDF interfaces.
+
+2. The most important change to the Vset interface is that the 
+constants for data types have changed.  Previously the types 
+of data had been specified with constants such as 
+'LOCAL_INTTYPE'.  This was a problem in two ways:
+
+  1) Not every machine's local integer is the same size, but
+     Vsets treated them all as the same.
+
+  2) It made the Vset interface incompatible with the new
+     data conversion routines used by all of the other
+     interfaces.
+
+So, with this release, rather than specifying the type of 
+data as 'LOCAL_XXXTYPE' you should now use the same type 
+specifier as if you were storing the data through the SDS 
+interface:
+
+DFNT_INT8, DFNT_INT16, DFNT_INT32, DFNT_FLOAT32, etc.
+
+
+Vsets also now allow the modification of existing VDatas.  By 
+attaching to an existing VData with write access you are now 
+able to seek (via VSseek()) to any location and place new 
+data (via VSwrite()).  
+
+It is also possible to seek beyond the end of an existing 
+vdata and write data leaving gaps of non-data areas with a 
+vdata. The Vset interface does not keep track of the gaps, 
+and as such, care must be taken when reading in from such 
+vdatas.
+
+3.  When opening a file for vset operations, you need to
+open the file using Hopen, then perform some initialization 
+for the vset operations.  Hence, you will need to make the 
+following sequence of calls:
+
+     f = Hopen (fname, access, defDDs);
+     Vinitialize(f);
+
+Similarly, before closing a file on which vset operations
+were performed, call Vfinish before calling Hclose, as in:
+
+     Vfinish(f);
+     Hclose(f);
+
+
+4. VSsetfields() and VSinquire() now return the value SUCCEED 
+(0) on success.  This used to be 1.
+
+
+5. The new versions of some VSET functions require a (BYTE *) 
+cast in their actual argument list, most notably:
+
+       VSwrite(vs, (BYTE *) buf, nv4, NO_INTERLACE);
+
+       VSread(vs, (BYTE *) buf, nelt, interlace);
+
+
+
+                 General Purpose Interface
+                 =========================
+
+The lower layer of HDF has been completely redesigned and re-
+implemented, and all application interfaces, such as RIS8 and
+SDS, have been re-implemented on this layer.  The new lower
+layer incorporates the following improvements:
+
+    - More consistent data and function types
+    - More meaningful and extensive reporting of errors.
+    - Simplification of key lower level functions
+    - Improved techniques for facilitating portability
+    - Support for alternate forms of physical storage, such
+      as linked blocks storage, and storage of the data
+      portion of an object in an external file.
+    - A version tag indicating which version of the HDF
+      library last changed an HDF file.
+    - Hooks to support simultaneous access to multiple files
+
+Changes most likely to affect users' programs
+---------------------------------------------
+
+Since users do not normally access the general purpose layer 
+of HDF, most changes will not affect users.  However, a few 
+changes should be noted:
+
+  (1) Hopen should be used instead of DFopen
+
+  (2) Hclose should now be used instead of DFclose
+
+  (3) File handles are now of type int32, rather than
+      pointers.  Thus, Hopen returns a value of type
+      int32, and all routines that previously had arguments
+      of type "DF *" now take arguments of type int32
+      instead.  The routines that this is most likely to
+      affect for most users are DFfindnextref and the 
+      annotation routines that involve file labels and 
+      descriptions (see "Annotations Interface").
+
+  (4) There is no FORTRAN version of this interface.
+
+  (5) Hnumber should now be used instead of DFnumber.
+
+  (6) Hishdf should now be used instead of DFishdf.
+
+Details of the new interface are currently being documented 
+and will be available soon.
+
+
+                  Old General Purpose Interface
+                  =============================
+
+Although the previous general purpose interface has been 
+replaced by the new general purpose routines, backward 
+compatibility is maintained by a set of routines that emulate 
+the old routines.  All of the old routines that begin with 
+the letters "DF" (DFopen, DFclose, DFgetelement, etc.) have 
+been rewritten on top of the new "H" layers.  Users who 
+currently use the "DF" routines should be able to continue to 
+use them, although they are encouraged to switch to using the 
+new "H" routines as soon as possible.
+
+
+                        Test Modules
+                        ============
+
+In an effort to work towards having an HDF "test suite", a 
+number of test modules are included with HDF 3.2. Following 
+is a list of the test files currently in the test suite.  
+There are C and a FORTRAN versions for all of these test 
+routines, except those that test general purpose routines.
+
+trig       RIS8, RIS24, and Palette interface
+tan        Object annotations
+tanfile    File annotations
+tsdmms     SDS max/min and scales
+tsdnmms    SDS max/min and scales, new number types
+tsdnt      SDS new number types (HDF standard formats)
+tsdnnt     SDS new number types (native mode)
+tsdstr     SDS dimstrs and datastrs routines
+tv1        Vsets:  vgroup and vdata creation routines
+tv2        Vsets: creating vsets in 2 different files
+egchi      Vsets: high level routines
+tvers      Version tag reading and writing
+thfile     General purpose routines
+thfile1    Limits on open files and access elements
+terr       Err-handling routines
+thblocks   Routines for storing objects as linked blocks
+thextelt   Storing HDF objects as external elements
+tlinkage   Test linkage of functions
+tstubs     Stubs that emulate old general routines
+
