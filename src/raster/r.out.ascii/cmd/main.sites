@@ -1,0 +1,143 @@
+#include "gis.h"
+#include <stdio.h>
+
+main(argc,argv) 
+int   argc;
+char *argv[];
+{
+    CELL *cell;
+    struct Cell_head Wind;
+    char *name; 
+    char *mapset;
+    int fd;
+    int row,col;
+    int nrows, ncols;
+    int number;
+    char fmt[20];
+    struct
+    {
+	struct Option *map ;
+	struct Option *digits ;
+    } parm;
+    struct
+    {
+	struct Flag *noheader;
+	struct Flag *sites;
+    } flag;
+
+/* Define the different options */
+
+    parm.map = G_define_option() ;
+    parm.map->key        = "map";
+    parm.map->type       = TYPE_STRING;
+    parm.map->required   = YES;
+    parm.map->gisprompt  = "old,cell,raster" ;
+    parm.map->description= "Name of an existing raster map" ;
+
+    parm.digits = G_define_option() ;
+    parm.digits->key        = "digits";
+    parm.digits->type       = TYPE_INTEGER;
+    parm.digits->required   = NO;
+    parm.digits->description= "The minimum number of digits (per cell) to be printed";
+
+    flag.noheader = G_define_flag();
+    flag.noheader->key = 'h';
+    flag.noheader->description = "Suppress printing of header information";
+
+    flag.sites = G_define_flag ();
+    flag.sites->key = 's';
+    flag.sites->description = "Output data in ASCII site format instead";
+
+    G_gisinit (argv[0]);
+
+    if (G_parser(argc, argv))
+       	exit (-1);
+
+    strcpy (fmt, "%ld ");
+    if (parm.digits->answer != NULL)
+    {
+        sscanf (parm.digits->answer, "%ld", &number);
+        if (number > 0)
+            sprintf (fmt, "%%%dld ", number);
+	else
+	    sprintf (fmt, "%%%dld", number);
+    }
+	
+    name = parm.map->answer;
+    mapset = G_find_cell2 (name, "");
+    if (mapset == NULL)
+    {
+        char msg[100];	
+		
+	sprintf (msg, "%s: <%s> cellfile not found\n", G_program_name(), name);
+		G_fatal_error (msg);
+        exit(1);
+    }
+
+    fd = G_open_cell_old (name, mapset);
+    if (fd < 0)
+    	exit(1);
+
+    cell = G_allocate_cell_buf();
+
+    G_get_window (&Wind);
+    nrows = Wind.rows;
+    ncols = Wind.cols;
+
+    if (!flag.noheader->answer && !flag.sites->answer)
+    {
+	char buf[128];
+
+	G_format_northing (Wind.north, buf, Wind.proj);
+	printf ("north: %s\n", buf);
+	G_format_northing (Wind.south, buf, Wind.proj);
+	printf ("south: %s\n", buf);
+	G_format_easting (Wind.east, buf, Wind.proj);
+	printf ("east: %s\n", buf);
+	G_format_easting (Wind.west, buf, Wind.proj);
+	printf ("west: %s\n", buf);
+
+	printf ("rows: %d\n", Wind.rows);
+	printf ("cols: %d\n", Wind.cols);
+    }
+
+
+    if (flag.sites->answer)
+    {
+	double northing, easting;
+	char buf1[100];
+	char buf2[100];
+	char buf3[100];
+
+	sprintf (buf3, "%s%s\n", " %-12s %-12s ", fmt);
+
+	for (row = 0; row < nrows; row++)
+	{
+	    northing = Wind.north - (row * Wind.ns_res);
+	   G_format_northing (northing, buf1, -1);
+	    if (G_get_map_row (fd, cell, row) < 0)
+		exit(1);
+
+	    for (col = 0; col < ncols; col++)
+	    {
+		easting = Wind.west + ((col-1) * Wind.ew_res);
+		G_format_easting (easting, buf2, -1);
+
+		printf (buf3, buf2, buf1, (long) cell[col]);
+	    }
+	}
+    }
+    else
+    {
+	for (row = 0; row < nrows; row++)
+	{
+	    if (G_get_map_row (fd, cell, row) < 0)
+		exit(1);
+	    for (col = 0; col < ncols; col++)
+		printf (fmt, (long)cell[col]);
+	    printf ("\n");
+	}
+    }
+
+    exit(0);
+}
