@@ -32,14 +32,20 @@ int zoomwindow (int quiet, int rotate, double magnify)
           G_put_window(&window) ;
           G_set_window(&window) ;
 	  redraw();
-	  if (yes("Accept new region?"))
-	    break;
+	  
+	  if (!quitonly)
+	  {
+	    if (yes("Accept new region?"))
+	      break;
 
-          G_put_window(&oldwindow) ;
-	  G_set_window(&oldwindow);
-	  redraw();
-	  if (!yes("Try again?"))
-	    return 1;
+            G_put_window(&oldwindow) ;
+	    G_set_window(&oldwindow);
+	    redraw();
+	    if (!yes("Try again?"))
+	      return 1;
+	  }
+	  else
+	    break;
 	}
     }
 
