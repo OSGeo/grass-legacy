@@ -3,7 +3,8 @@
 
 Please read *all* text below.
 
-Note: This version was previously called GRASS 5.1 and 5.7
+Note: During the development stages, this version of GRASS (6.0) was
+      previously called GRASS 5.1 and 5.7.
 
 
 SOURCE CODE DISTRIBUTION
@@ -17,9 +18,9 @@ GRASS source code is currently distributed in 2 forms:
   package) and the version is composed of 3 numbers, e.g. 6.0.0, 6.0.1
   etc.
 
-2) CVS or CVS Snapshots source code (CVS or CVS snapshot)
+2) CVS or CVS Snapshots of source code (CVS or CVS snapshot)
 
-  This version of source code can be acquired either from CVS
+  This version of the source code can be acquired either from the CVS
   repository (intevation.de:/grassrepository/grass6) or as a snapshot
   (*.tar.gz package) of that CVS repository. The CVS snapshot name
   contains the date when the snapshot was created (checked out from
@@ -83,9 +84,9 @@ or run
 
 RUNNING GRASS
 
-Download a sample data package from the GRASS web site, for example
-the Spearfish57 data set. Extract the data set and point GRASS in the
-startup menu to the directory.
+Download a sample data package from the GRASS web site, for example the
+Spearfish57 data set. Extract the data set and point "database" in the
+GRASS startup menu to the directory.
 
 Enjoy.
 
@@ -102,18 +103,19 @@ In detail:
 
 cd /where/your/grass57sourcecode/lives/
 cvs update -dP
-configure ...
+./configure ...
 make
 make install
 
 
 COMPILING INDIVIDUAL MODULES - OWN MODULES
 
-Compiling own GRASS modules or modified modules:
+Compiling self-made GRASS modules or modified modules:
 Simply run "make" in the appropriate directory
 and then install with "INST_NOW=y make".
 It is not necessary to install the full distribution.
 You may want to make an alias: alias gmake='INST_NOW=y make'
+
 
 CODE OPTIMIZATION
 
@@ -126,12 +128,12 @@ or,
 	./configure
 
 whichever works on your shell. Use -O2 instead of -O if your compiler
-supports this (note: O is the letter, not zero). Using "gcc" compiler, you
-can also specify processor specific flags (examples):
+supports this (note: O is the letter, not zero). Using the "gcc" compiler,
+you can also specify processor specific flags (examples):
 
-  CFLAGS="-mcpu=k6 -O2"     # AMD K6 processor
+  CFLAGS="-mcpu=athlon -O2" # AMD Athlon processor with code optimisations
   CFLAGS="-mcpu=pentium"    # Intel Pentium processor
-  CFLAGS="-mcpu=pentiumpro" # Intel PentiumPro processor
+  CFLAGS="-mcpu=pentium4"   # Intel Pentium4 processor
 
 To find out optional CFLAGS for your platform, enter:
   gcc -dumpspecs
@@ -141,12 +143,12 @@ See also: http://gcc.gnu.org/
 A real fast GRASS version (and small binaries) will be created with
 LDFLAGS set to "stripping" (but this disables debugging):
 
-  CFLAGS="-O3 -mcpu=pentiumpro -Wall" LDFLAGS="-s" ./configure
+  CFLAGS="-O3 -mcpu=pentium4 -Wall" LDFLAGS="-s" ./configure
 
 
 DEBUGGING OPTIONS
 
-The LDFLAGS="" must be undefined as "-s" will strip the debugging 
+The LDFLAGS="" part must be undefined as "-s" will strip the debugging 
 information.
 
 Don't use -O for CFLAGS if you want to be able to step through function
@@ -154,26 +156,41 @@ bodies. When optimisation is enabled, the compiler will re-order statements
 and re-arrange expressions, resulting in object code which barely resembles
 the source code.
 
+The -g and -Wall compiler flags are often useful for assisting debugging:
+
+  CFLAGS="-g -Wall" ./configure
+
 See also the file
 ./doc/debugging.txt
 
 
+LARGE FILE SUPPORT (for raster maps)
+
+GRASS 6.0 includes experimental support for reading and writing large files
+(> 2GB) if it is possible in your operating system. If you compile with
+CFLAGS="-D_FILE_OFFSET_BITS=64", you should be able to have raster maps
+which are larger than 2Gb.
+
+Note that the support currently only applies to the core raster I/O code.
+Individual programs may or may not work with large files - please report.
+
+
 SUPPORT
 
-Note that this code is still somewhat experimental. Data formats and
-functionality may change in future versions. DO NOT USE THIS VERSION
-FOR PRODUCTION (ok, we do it...)!
+Note that this code is still actively being developed and errors inevitably
+turn up. If you find a bug, please report it to the GRASS bug tracking system
+so we can fix it. see  http://grass.itc.it/bugtracking/bugreport.html
 
-If interested to develop GRASS, please join the GRASS developers 
-mailing list:
-http://grass.itc.it/devel/index.php
+If you are interested in helping to develop GRASS, please join the GRASS
+developers mailing list. see  http://grass.itc.it/devel/index.php
 
 
 GRASS PROGRAMMER'S MANUAL
 
 The Programmer's manual is generated with doxygen from the source code.
 Please see the README file and the files at:
-http://grass.itc.it/grass57/index.html#docs
+http://grass.itc.it/grass60/#docs
+
 
 Draft TUTORIAL
 
