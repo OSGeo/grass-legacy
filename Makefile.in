@@ -97,7 +97,7 @@ BIN_DIST_FILES =    	AUTHORS \
 
 all: binaries
 
-binaries:
+binaries: FORCE
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -119,9 +119,9 @@ binaries:
 	fi; \
 	${MAKE} real-binaries
 
-real-binaries: pre-compile do-compile
+real-binaries: FORCE pre-compile do-compile
 
-pre-compile:
+pre-compile: FORCE
 	test -d ${GISBASE} || ${MAKE_DIR_CMD} ${GISBASE}
 	test -d ${GRASS_BIN} || ${MAKE_DIR_CMD} ${GRASS_BIN}
 	test -d src/CMD/next_step || ${MAKE_DIR_CMD} src/CMD/next_step
@@ -129,7 +129,7 @@ pre-compile:
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH} ${GRASS_BIN}
 	${SHELL} ${IS64BIT} ${ARCH}
 
-do-compile:
+do-compile: FORCE
 	@ rm -f src/CMD/next_step/${ARCH}
 	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
@@ -187,7 +187,7 @@ install: FORCE
 	fi; \
 	${MAKE} real-install
 	
-real-install:
+real-install: FORCE
 	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
 	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
@@ -218,7 +218,7 @@ real-install:
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
-uninstall:
+uninstall: FORCE
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -262,7 +262,7 @@ uninstall:
 	fi; \
 	${MAKE} real-uninstall
 	
-real-uninstall:
+real-uninstall: FORCE
 	@ # Only recursively remove directories under INST_DIR any other
 	@ # directory needs to have the grass files removed individually
 	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER} ; true"
@@ -289,7 +289,7 @@ real-uninstall:
 	${SHELL} -c "rmdir ${INST_DIR} ; true"
 
 # make a source package for distribution:
-srcdist: distclean
+srcdist: FORCE distclean
 	@ echo "create Changelog file without initial messages..."
 	@ # cvs2cl.pl creates a GNU style ChangeLog file:
 	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
@@ -304,7 +304,7 @@ srcdist: distclean
 
 # make a binary package for distribution:
 #  Bug: VER is not expanded properly (wrong directory):
-bindist:
+bindist: FORCE
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -312,14 +312,22 @@ bindist:
 	@ # Make creates a new shell for each action listed for a target.
 	@ # Therefore, the only way exit will quit Make is if there is only
 	@ # a single action for the target.
-	@ # Check if the user is root and check if grass has been installed
-	@ if [ `whoami` != "root" ] ; then \
-		echo "ERROR: You need to be user root to create a binary distribution."; \
+	@ # Check if the user needs root permission and check if grass has
+	@ # been installed
+	@ if [ ! -d ${INST_DIR} ] ; then \
+		echo "ERROR: It seems your install directory ${INST_DIR} does not exist."; \
+		echo "  Grass has not been installed yet. Try \"make install\" first."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -w ${INST_DIR} ] ; then \
+		echo "ERROR: It seems you do not have the correct permissions to create"; \
+		echo "  a binary distribution. Perhaps you need root access."; \
 		echo "  Creation of binary distribution aborted, exiting Make."; \
 		exit; \
 	fi; \
 	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
-		echo "ERROR: Grass has not been installed yet."; \
+		echo "ERROR: Grass has not been installed yet. Try \"make install\" first."; \
 		echo "  Creation of binary distribution aborted, exiting Make."; \
 		exit; \
 	fi; \
@@ -349,7 +357,7 @@ bindist:
 	fi; \
 	${MAKE} real-bindist
 
-real-bindist:
+real-bindist: FORCE
 	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
 	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
 	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
@@ -363,7 +371,7 @@ real-bindist:
 
 # automatically run DejaGNU tests:
 # added 10/2000 by Andreas Lange
-check: binaries
+check: FORCE binaries
 	@ echo "running tests on GRASS ${VERSION}"
 	@ echo "logfile for all tests is in ./testsuite/grass.log,"
 	@ echo "a summary of all test results is in ./testsuite/grass.sum"
@@ -403,7 +411,7 @@ check: binaries
 #   	    	    	  install script if it exists, libraries, head.${ARCH} file,
 #   	    	    	  configure files, and Makefile - good for deleting
 #   	    	    	  everything but the binary files
-mostlyclean:
+mostlyclean: FORCE
 	@ echo "Performing mostlyclean step..."
 	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
@@ -413,7 +421,7 @@ mostlyclean:
 	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/core                   2>/dev/null ; true"
 
-clean: mostlyclean
+clean: FORCE mostlyclean
 	@ echo "Performing clean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
@@ -437,14 +445,14 @@ clean: mostlyclean
 	${SHELL} -c "rmdir ${GISBASE} ; true"
 	${SHELL} -c "rmdir ${GRASS_BIN} ; true"
 
-distclean: clean
+distclean: FORCE clean
 	@ echo "Performing distclean step..."
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 
-maintainer-clean: distclean
+maintainer-clean: FORCE distclean
 	@ echo "Performing maintainer-clean step..."
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
@@ -461,7 +469,7 @@ maintainer-clean: distclean
 	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/lex.yy.c 2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/y.tab.c 2>/dev/null ; true"
 
-savebinclean: mostlyclean
+savebinclean: FORCE mostlyclean
 	@ echo "Performing savebinclean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
