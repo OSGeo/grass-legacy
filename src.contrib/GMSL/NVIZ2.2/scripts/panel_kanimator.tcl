@@ -493,7 +493,7 @@ proc keyanimChangeKeytime { BASE } {
     
     set keyanimCurrentKeyTime $minutes
     append keyanimCurrentKeyTime : $seconds : $frames
-    
+
     # Finally pop down the widget and restore the focus
     destroy $name
     focus $oldFocus
@@ -593,7 +593,7 @@ proc keyanimDrawKeys { BASE {old_tags {} } } {
     foreach i $keyanimChannelList {
 	set rname $BASE
 	append rname .keycontrol.key_channels.hold_channels. [lindex $i 1]
-	
+
 	foreach j $keyanimKeyList {
 	    # Extract tag name
 	    set key_tag [lindex $j 2]
@@ -1029,7 +1029,7 @@ proc keyanimAddKey { BASE } {
     set tm [expr int([string trimleft [lindex $time 0] 0]0/10.0)]
     set ts [expr int([string trimleft [lindex $time 1] 0]0/10.0)]
     set tf [expr int([string trimleft [lindex $time 2] 0]0/10.0)]
-    set new_time [expr $tm*60 + $ts + ($tf/$keyanimFrameRate) + 0.0]
+    set new_time [expr $tm*60. + $ts + (1.0*$tf/$keyanimFrameRate) + 0.0]
     lappend new_key $new_time
     incr tm 
     set keyanimCurrentKeyTime [keyanimPadNumber $tm]
@@ -1244,9 +1244,30 @@ proc keyanimSpecialHScroll { BASE args } {
 #
 ############################################################################
 proc keyanimGenTag {} {
-    global keyanimUniqueTag
+    global keyanimUniqueTag keyanimKeyList
     
     set name "keyanimtag"
+    set new 0
+    set old_num 0
+#Added check for identical keytags
+    if {[llength $keyanimKeyList] > 0} {
+    	foreach j $keyanimKeyList {
+		set tmp [lindex [split [lindex $j 2] g] 1]
+		if {$tmp > $old_num} {
+		set max_num $tmp
+		} else {
+		set max_num $old_num
+		}
+    		if { $tmp == $keyanimUniqueTag} {
+    			puts "Correcting identical tag ID"
+			set new 1
+    		}
+		set old_num $tmp
+    	}
+    }
+    if {$new > 0} {
+	set keyanimUniqueTag [expr $max_num + 1]
+    }
     append name $keyanimUniqueTag
     incr keyanimUniqueTag
     
@@ -1823,7 +1844,7 @@ proc keyanimSaveAnim { base } {
 #
 ############################################################################
 proc keyanimLoadAnim { base } {
-    global keyanimKeyList keyanimFrameRate keyanimSaved
+    global keyanimKeyList keyanimFrameRate keyanimSaved keyanimUniqueTag
 
     if {($keyanimSaved == 0) && ([llength $keyanimKeyList] != 0)} then {
 	set status [tk_dialog .ka_check "Verify" \
@@ -1866,8 +1887,23 @@ proc keyanimLoadAnim { base } {
 
 	#Attempt to set Key Frame positions from Mask
 	#TODO get and set other mask features
+
+	#Run through new frames and extract max ID number
+	set max_id 0
+	foreach i $tempKeyList {
+		set id_num [lindex [split [lindex $i 2] g] 1]
+		if {$id_num > $max_id} {
+			set max_id $id_num
+		}
+	}
+
+	#Use maxID number to set new UniqueTag
+	set keyanimUniqueTag [expr $max_id + 1]
+	set cnt 0
+
         foreach i $tempKeyList {
 		set time [lindex $i 0]
+		set id_num [lindex [split [lindex $i 2] g] 1]
                 set k [lindex $i 1] 
                         set name [lindex $k 0]
                         set value1 [lindex $name 1]
@@ -1893,12 +1929,29 @@ proc keyanimLoadAnim { base } {
                         set name [lindex $k 7]
                         set value1 [lindex $name 1]
                 if {$value1 != "twist"} {Nset_twist $value1}
-
+              
+		#Compare tag id to all other Tag ID's and replace with
+		#UnigieTag if duplicate
+		set tag "keyanimtag" 
+                foreach m $tempKeyList {
+                	if {$m != $i} {
+                		set id_num_tmp [lindex [split [lindex $m 2] g] 1]
+                		if {$id_num == $id_num_tmp} {
+				puts "Replacing duplicate tag ID"
+				append tag $keyanimUniqueTag
+				set i [lreplace $i 2 2 $tag]
+				set tempKeyList [lreplace $tempKeyList $cnt $cnt $i]
+				incr keyanimUniqueTag
+				break
+                		}
+                	}
+                }
+ 
 	
 	Nadd_key $time KF_ALL_MASK 1 0.0
+	incr cnt
 
 		}
-
     set keyanimKeyList $tempKeyList
     keyanimDrawKeys $base $old_tag_list
 
