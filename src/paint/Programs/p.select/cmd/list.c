@@ -19,14 +19,15 @@ ls_painters()
     char name[256];
     int len;
 
-    list = NULL;
+    list = G_malloc(1);
+    *list = 0;
     len = 0;
     sprintf (command, "ls %s\n", drivers(""));
     if(fd = popen (command, "r"))
     {
 	while (fscanf (fd, "%s", name) == 1)
 	{
-	    if (list) strcat(list,",");
+	    if (len > 0) strcat(list,",");
 	    len += strlen(name)+2;
 	    list = G_realloc (list, len);
 	    strcat (list,name);
