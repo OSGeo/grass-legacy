@@ -10,12 +10,18 @@ int main (int argc, char *argv[])
 	int use_mouse;
 	double lon1,lat1,lon2,lat2;
 	char msg[100];
+	struct GModule *module;
 	struct
 	    {
 		struct Option *lcolor, *tcolor, *coor;
 	} parm;
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Displays the rhumbline joining two user-specified "
+		"points, in the active frame on the user's graphics monitor.";
 
 	parm.coor = G_define_option() ;
 	parm.coor->key        = "coor" ;

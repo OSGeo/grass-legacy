@@ -30,9 +30,14 @@ main (int argc, char **argv)
         int start_line ;
         int t, b, l, r ;
         int tsize ;
+		struct GModule *module;
         struct Option *opt1, *opt2, *opt3;
         char *wind_file_name;
         FILE *wind_file;
+
+		module = G_define_module();
+		module->description =
+			"Draws text in the active display frame on the graphics monitor.";
 
         opt1 = G_define_option() ;
         opt1->key        = "size" ;

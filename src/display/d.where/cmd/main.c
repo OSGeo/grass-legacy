@@ -7,6 +7,7 @@
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     struct Option *spheroid;
     struct Flag *once;
     char s_names[2048];
@@ -18,6 +19,11 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Identifies the geographic coordinates associated with "
+		"point locations in the active frame on the graphics monitor.";
 
     once = G_define_flag() ;
     once->key        = '1' ;

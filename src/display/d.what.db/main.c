@@ -16,6 +16,7 @@ int main(int argc ,char **argv )
 	int once=0, idx, button, d_x, d_y ;
 	double   coor, dx, dy, dsq, tdsq, maxdsq, u_x, u_y ;
 	char b_x[40], b_y[40];
+		struct GModule *module;
         struct {
             struct Option *table, *key, *x, *y;
         } par;  
@@ -37,6 +38,10 @@ int main(int argc ,char **argv )
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
 
+	module = G_define_module();
+	module->description =
+		"View/edit attributes of selected DB site.";
+						
         par.table               = G_define_option();
         par.table->key          = "table";
         par.table->type         = TYPE_STRING;
