@@ -46,7 +46,6 @@
 
 #include <sys/time.h>
 #include <sys/resource.h>
-/*#include <iostream.h>*/
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>

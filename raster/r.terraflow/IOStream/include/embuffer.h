@@ -45,7 +45,6 @@
 
 
 #include <stdio.h>
-#include <iostream.h>
 #include <assert.h>
 #include <stdlib.h>
 
@@ -315,9 +314,9 @@ public:
   //return the nominal size of a stream (nb of items): 
   //arity^{level-1}*basesize;
   unsigned long get_stream_maxlen() const {
-    return (unsigned long)pow(arity,level-1)*basesize;
+    return (unsigned long)pow((double)arity,(double)level-1)*basesize;
   }
-  
+
   //return the actual size of stream i; i must be the index of a valid
   //stream
   unsigned long get_stream_len(unsigned int i) {

@@ -41,11 +41,11 @@
 
 // A simple registration based memory manager.
 
-#include <iostream.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
+#include <iostream>
+using namespace std;
 #include <mm.h>
 
 #define MM_DEBUG if(0)

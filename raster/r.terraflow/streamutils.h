@@ -41,7 +41,8 @@
 #ifndef STREAMUTILS_H
 #define STREAMUTILS_H
 
-#include <fstream.h>
+#include <fstream>
+using namespace std;
 
 #include <ami.h>
 #include "types.h"

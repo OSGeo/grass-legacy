@@ -42,7 +42,6 @@
 #ifndef REPLACEMENT_QUEUE_H
 #define REPLACEMENT_QUEUE_H 
 
-#include <iostream.h>
 #include <assert.h>
 
 #include "queue.h"

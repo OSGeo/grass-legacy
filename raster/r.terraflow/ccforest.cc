@@ -147,7 +147,7 @@ void ccforest<T>::findAllRoots(int depth) {
   assert(!superTree);
   superTree = new ccforest<T>();
 
-  DEBUG_CCFOREST cout << "sort edgeStream (by cclabel)): ";
+  DEBUG_CCFOREST *stats << "sort edgeStream (by cclabel)): ";
   keyCmpKeyvalueType<T> fo;
   sort(&edgeStream, fo); /* XXX -changed this to use a cmp obj  */
 
@@ -165,18 +165,18 @@ void ccforest<T>::findAllRoots(int depth) {
 	assert(ae == AMI_ERROR_NO_ERROR);
 
 #if(0)
-	DEBUG_CCFOREST cout << "------------------------------" << endl;
-	DEBUG_CCFOREST cout << "processing edge " << *e << endl;
+	DEBUG_CCFOREST *stats << "------------------------------" << endl;
+	DEBUG_CCFOREST *stats << "processing edge " << *e << endl;
 	DEBUG_CCFOREST pq->print();
 #endif
 
 	if(*e == prevEdge) {
-	  DEBUG_CCFOREST cout << "\tduplicate " << *e << " removed\n";
+	  DEBUG_CCFOREST *stats << "\tduplicate " << *e << " removed\n";
 	  continue; /* already have this done */
 	}
 	prevEdge = *e;
 
-	DEBUG_CCFOREST cout << "processing edge " << *e << endl;
+	DEBUG_CCFOREST *stats << "processing edge " << *e << endl;
 
 	/* find root (assign parent) */
 	if(e->src() != prevSrc) {
@@ -222,12 +222,12 @@ void ccforest<T>::findAllRoots(int depth) {
   }
 
   /* drain the priority queue */
-  DEBUG_CCFOREST cout << "draining priority queue" << endl;
+  DEBUG_CCFOREST *stats << "draining priority queue" << endl;
   while (!pq->is_empty()) {
 	cckeyvalue kv;
 	pq->extract_min(kv);
 	assert(kv.src() >= kv.dst());
-	DEBUG_CCFOREST cout << "processing edge " << kv << endl;
+	DEBUG_CCFOREST *stats << "processing edge " << kv << endl;
 
 	removeDuplicates(kv.src(), kv.dst(), *pq);
 	AMI_err ae = rootStream->write_item(kv);
@@ -238,9 +238,9 @@ void ccforest<T>::findAllRoots(int depth) {
   /* note that rootStream is naturally ordered by src */
 
   if(superTree->size()) {
-	DEBUG_CCFOREST cout << "resolving cycles..." << endl;
+	DEBUG_CCFOREST *stats << "resolving cycles..." << endl;
 	/* printStream(rootStream); */
-	DEBUG_CCFOREST cout << "sort rootStream: ";
+	DEBUG_CCFOREST *stats << "sort rootStream: ";
 
 	AMI_STREAM<cckeyvalue> *sortedRootStream; 
 	dstCmpKeyvalueType<T> dstfo;
@@ -267,7 +267,7 @@ void ccforest<T>::findAllRoots(int depth) {
 	}
 	delete sortedRootStream;
 
-	DEBUG_CCFOREST cout << "sort relabeledRootStream: ";
+	DEBUG_CCFOREST *stats << "sort relabeledRootStream: ";
 	rootStream = sort(relabeledRootStream, fo);
 	/* laura: changed  this
 	   rootStream = new AMI_STREAM<cckeyvalue>();
@@ -276,14 +276,14 @@ void ccforest<T>::findAllRoots(int depth) {
 	*/
 	delete relabeledRootStream;
 
-	DEBUG_CCFOREST cout << "resolving cycles... done." << endl;
+	DEBUG_CCFOREST *stats << "resolving cycles... done." << endl;
   }
   rootStream->seek(0);
 
-  DEBUG_CCFOREST cout << "Rootstream length="
+  DEBUG_CCFOREST *stats << "Rootstream length="
 					  << rootStream->stream_len() << endl;
-  DEBUG_CCFOREST printStream(cout, rootStream);
-  DEBUG_CCFOREST cout << "Explicit root count=" << explicitRootCount << endl;
+  DEBUG_CCFOREST printStream(*stats, rootStream);
+  DEBUG_CCFOREST *stats << "Explicit root count=" << explicitRootCount << endl;
 
   rt_stop(rt);
   stats->recordTime("ccforest::findAllRoots",  (long int)rt_seconds(rt));
@@ -314,7 +314,7 @@ ccforest<T>::findNextRoot(const T& i) {
   
   findAllRoots();   /* find all the roots if not done */
   
-  DEBUG_CCFOREST cout << "looking for " << i << endl;
+  DEBUG_CCFOREST *stats << "looking for " << i << endl;
   if(!savedRootValid || savedRoot.src() < i) { /* need to read more */
     ae = rootStream->read_item(&kroot);
 	while(ae == AMI_ERROR_NO_ERROR && kroot->src() < i) {
@@ -330,12 +330,12 @@ ccforest<T>::findNextRoot(const T& i) {
   
   if(savedRootValid==1 && savedRoot.src() == i) { /* check savedRoot */
     retRoot = savedRoot.dst();
-    DEBUG_CCFOREST cout << "using saved/found value" << endl;
+    DEBUG_CCFOREST *stats << "using saved/found value" << endl;
   } else {
-    DEBUG_CCFOREST cout << "not found" << endl;
+    DEBUG_CCFOREST *stats << "not found" << endl;
     retRoot = i;
   }
-  DEBUG_CCFOREST cout << "lookup for " << i << " gives " << retRoot
+  DEBUG_CCFOREST *stats << "lookup for " << i << " gives " << retRoot
 		      << "; saved = " << savedRoot << endl;
   return retRoot;
 }

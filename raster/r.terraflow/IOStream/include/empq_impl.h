@@ -40,7 +40,8 @@
 #ifndef __EMPQ_IMPL_H
 #define __EMPQ_IMPL_H
 
-#include <ostream.h>
+#include <ostream>
+using namespace std;
 
 #include "empq.h"
 

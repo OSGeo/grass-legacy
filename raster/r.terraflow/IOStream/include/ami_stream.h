@@ -51,11 +51,13 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-#include <iostream.h>
+
+#include <iostream>
+using namespace std;
 
 #include "mm.h" // Get the memory manager.
 
-
+#define DEBUG_DELETE if(0)
 
 // The name of the environment variable which keeps the name of the
 // directory where streams are stored
@@ -432,8 +434,8 @@ AMI_err AMI_STREAM<T>::main_memory_usage(size_t *usage,
 /**********************************************************************/
 template<class T>
 AMI_STREAM<T>::~AMI_STREAM(void)  {
-  
-  //cerr << "~AMI_STREAM: " << path << "(" << this << ")\n";
+
+  DEBUG_DELETE cerr << "~AMI_STREAM: " << path << "(" << this << ")\n";
   delete buf;
   assert(fp);
   fclose(fp);

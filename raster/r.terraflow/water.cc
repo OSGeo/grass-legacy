@@ -39,8 +39,9 @@
 
 
 
-#include <iostream.h>
 #include <assert.h>
+#include <iostream>
+using namespace std;
 
 #include <ami.h>
 
@@ -430,7 +431,7 @@ public:
 };
 
 template<class T>
-T max(T a, T b) {
+T mymax(T a, T b) {
   return (a>b?a:b);
 }
 
@@ -439,7 +440,7 @@ boundaryDetector::processPair(labelElevType &pt,
 			      dimension_type i, dimension_type j,
 			      labelElevType &n) {
   if(n.getLabel() != LABEL_UNDEF && pt.getLabel() != n.getLabel()) {
-    boundaryType bt(pt, max(pt.getElevation(), n.getElevation()), 
+    boundaryType bt(pt, mymax(pt.getElevation(), n.getElevation()), 
 		    n.getLabel());
     AMI_err ae = boundaryStr->write_item(bt);
     assert(ae == AMI_ERROR_NO_ERROR);
