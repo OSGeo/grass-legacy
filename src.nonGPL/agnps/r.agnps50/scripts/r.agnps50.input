@@ -1,19 +1,20 @@
-#!/bin/csh
+#!/bin/sh
 #
 # Remove any temp files from previous runs
-#
+
 unalias rm
-#
+
 rm -f tmpoutfile 
 $GISBASE/etc/agnps50/remove_old_tmp_files.sh >tmpoutfile
-#
+
 # Eliminate the MASK from the previous execution so that
 # the program can start a new MASK (with correct resolution,
 # etc.)
+
 g.remove MASK >>tmpoutfile
-#
+
 # Run the first excecutable
-#
+
 agnps_input_1
 # agnps_input_1 exits with a status of 1 if
 # the flow map was not present and had to be created.
@@ -25,10 +26,13 @@ agnps_input_1
 
 # Changed agnps_input_2 to agnps_input_2a to use new r.cn2 and other
 # changes                       19.12.96 Markus Neteler
+# check error status:
 
-if ($status != 1) then 
+if [ $? -eq 1 ]
+then 
   agnps_input_2a
-endif
+fi
+
 ##
 ## ADDED BY MIKE FOSTER 3-24-96
 ## MAKE SURE YOU HAVE A COPY OF temp_cell_num called cell_num.map.res
@@ -40,3 +44,5 @@ endif
 # 
 
 $GISBASE/etc/agnps50/copy_cell_num.sh
+echo "Now run"
+echo "    r.agnps50.run"
