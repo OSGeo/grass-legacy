@@ -81,7 +81,7 @@ clump(in_fd, out_fd, verbose)
 	for (row = 0; row < nrows; row++)
 	{
 	    if (G_get_map_row (in_fd, cur_in+1, row) < 0)
-		G_fatal_error ("Gclump: error reading cell file");
+		G_fatal_error ("can't properly read input raster file");
 
 	    X = 0;
 	    for (col = 1; col <= ncols; col++)
@@ -210,7 +210,7 @@ clump(in_fd, out_fd, verbose)
 		    out_cell[col] = index[cur_clump[col]];
 
 		if (G_put_map_row (out_fd, out_cell+1) < 0)
-		    G_fatal_error ("Gclump: error writing cell file");
+		    G_fatal_error ("can't properly write output raster file");
 	    */
 		col = ncols;
 		temp_clump = cur_clump + 1;       /* skip left edge */
@@ -220,7 +220,7 @@ clump(in_fd, out_fd, verbose)
 		    *temp_cell++ = index[*temp_clump++];
 
 		if (G_put_map_row (out_fd, out_cell) < 0)
-		    G_fatal_error ("Gclump: error writing cell file");
+		    G_fatal_error ("can't properly write output raster file");
 	    }
 
     /* switch the buffers so that the current buffer becomes the previous */
