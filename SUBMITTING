@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.26 2002-12-04 14:16:05 markus Exp $
+$Id: SUBMITTING,v 1.27 2002-12-05 15:10:43 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -272,6 +272,10 @@ care of following rules:
     diffs (the default format) are risky, because they will apply without
     warning to code which has been substantially changed; they are also
     harder to read than unified or context diffs.
+
+    Such diffs should be made from the top-level directory, e.g.
+    "cvs diff src/display/d.leg.thin/main.c"; that way, the diff will
+    include the pathname rather than just "main.c".
 
 26. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
