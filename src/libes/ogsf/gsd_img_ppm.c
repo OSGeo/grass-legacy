@@ -2,10 +2,11 @@
  * -modified to PPM by Bob Covill <bcovill@tekmap.ns.ca>
  *
  * $Id$ 
+ *
+ * changed 10/99 Jaro
+ * Created new function GS_write_ppm based
+ * on RGB dump 
  */
-/* changed 10/99 Jaro*/
-/* Created new function GS_write_ppm based
- * on RGB dump */
 
 #include "image.h"
 #include "gstypes.h"
@@ -22,28 +23,10 @@ int GS_write_ppm(char *name)
     unsigned long *pixbuf;
     char all_buf[3];
 
-    /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
-    * Markus Neteler
-    */
-    
-    union
-    {
-        int testWord;
-        char testByte[4];
-    } endianTest;
-    
     int swapFlag;
 
-    endianTest.testWord = 1;
-    
-    if (endianTest.testByte[0] == 1)
-    {
-        swapFlag = 1; /*true: little endian */
-    }
-    else
-    {
-        swapFlag = 0;
-    }
+    /* endian test */
+    swapFlag = G_is_little_endian();    
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
