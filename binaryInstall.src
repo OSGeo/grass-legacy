@@ -327,6 +327,6 @@ echo ""
 #echo "    sh $UNINSTALL"
 #echo "in the directory $BINDIR"
 echo ""
-echo "Welcome to GRASS GIS. Enjoy this open source GNU GRASS GIS!"
+echo "Welcome to GRASS GIS. Enjoy this open source GRASS GIS!"
 echo ""
 
