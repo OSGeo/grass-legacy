@@ -22,6 +22,7 @@ int main (int argc, char *argv[])
     int count;
     int step, nsteps;
     int quiet;
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
     struct Flag *flag1;
     struct Flag *flag2;
@@ -31,6 +32,11 @@ int main (int argc, char *argv[])
 
 
     init_grass(pgm_name = argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates a raster map layer showing buffer zones "
+		"surrounding cells that contain non-NULL category values.";
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;

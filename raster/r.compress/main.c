@@ -30,10 +30,15 @@ int main (int argc, char *argv[])
     int stat ;
     int n;
     char *name;
+	struct GModule *module;
     struct Option *map;
     struct Flag *uncompress;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Compresses and decompresses raster files.";
 
     map = G_define_option();
     map->key = "map";
