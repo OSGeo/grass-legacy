@@ -1,0 +1,107 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+#PROG =   ./v.cutter
+PROG =   $(BIN_ALPHA_CMD)/v.cutter
+
+OBJS = \
+	alloc.o \
+	area.o \
+	array.o \
+	bbox.o \
+	build.o \
+	lbuild.o \
+	dump.o \
+	init.o \
+	interior.o \
+	interline.o \
+	intersect.o \
+	label.o \
+	linecent.o \
+	linecros.o \
+	linepnts.o \
+	lsort.o \
+	ltable.o \
+	main.o \
+	mod.o \
+	readline.o \
+	sort.o \
+	table.o \
+	theta.o \
+	tools.o \
+	parse.o \
+	point.o \
+	poly.o \
+	vertex.o \
+	write.o
+
+SRCS = \
+	alloc.c \
+	area.c \
+	array.c \
+	bbox.c \
+	build.c \
+	lbuild.c \
+	dump.c \
+	init.c \
+	interior.c \
+	interline.c \
+	intersect.c \
+	label.c \
+	linecent.c \
+	linecros.c \
+	linepnts.c \
+	lsort.c \
+	ltable.c \
+	main.c \
+	mod.c \
+	readline.c \
+	sort.c \
+	table.c \
+	theta.c \
+	tools.c \
+	parse.c \
+	point.c \
+	poly.c \
+	vertex.c \
+	write.c
+
+
+all:  $(PROG)
+
+cross: cross.o intersect.o
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) cross.o intersect.o $(MATHLIB) 
+	mv a.out $@
+
+line: line.o plane.o
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) line.o plane.o $(MATHLIB)
+	mv a.out $@
+
+ccw: ccw.o intersect.o
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) ccw.o intersect.o $(MATHLIB)
+	mv a.out $@
+
+$(PROG): $(OBJS)  $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OBJS) $(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+table.o: macros.h
+
+$(VECTLIB): #
+$(DIG_ATTLIB): #
+$(BITMAPLIB): #
+$(LINKMLIB): #
+$(GISLIB): #
+
+saber_src:
+	#load -C $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB) $(MATHLIB)
+
+#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(SRC)/mapdev/Vlib/*.c $(SRC)/mapdev/diglib/*.c $(GISLIB) $(MATHLIB)
+
+#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(SRCS)  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+
+#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(VECTLIB) $(GISLIB) $(GISLIB) $(MATHLIB)
+
