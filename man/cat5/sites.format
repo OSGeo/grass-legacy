@@ -1,16 +1,16 @@
 
 
 
-sites.format         GRASS Reference Manual          sites.format
+sites.format	     GRASS Reference Manual	     sites.format
 
 
 
 NAME
-     sites.format - Description of GRASS site list file format.
+     sites.format - Description	of GRASS site list file	format.
 
 DESCRIPTION
-     This is a description of the site list files found in the
-     GRASS data base.  The files are kept in the site_lists
+     This is a description of the site list files found	in the
+     GRASS data	base.  The files are kept in the site_lists
      directory under the current mapset.
 
 SAMPLE SITES LIST
@@ -25,24 +25,24 @@ SAMPLE SITES LIST
 
 
 EXPLANATION
-     Each record of data begins with a named field describing the
-     record type, followed by fields of information.  The fields
+     Each record of data begins	with a named field describing the
+     record type, followed by fields of	information.  The fields
      are separated by the pipe character |.
 
 name
-     This field contains the name of the site list file, and is
-     printed on all the reports.
+     This field	contains the name of the site list file, and is
+     printed on	all the	reports.
 
-     It is permissible for this field to be missing, since the
-     sites software will force this field to agree with the name
-     of the site list file itself.
+     It	is permissible for this	field to be missing, since the
+     sites software will force this field to agree with	the name
+     of	the site list file itself.
 
 desc
-     This field contains a description of the site list file, and
-     is printed on all the reports.
+     This field	contains a description of the site list	file, and
+     is	printed	on all the reports.
 
-     It is permissible for this field to be missing, in which
-     case the site list will have no description.
+     It	is permissible for this	field to be missing, in	which
+     case the site list	will have no description.
 
 point
      Each site is described by a 'point' record.  The fields for
@@ -50,24 +50,24 @@ point
 
      <east> <north> <description>
 
-     <east>           easting for the site
-     <north>          northing for the site
+     <east>	      easting for the site
+     <north>	      northing for the site
      <description>    site description
 
-     The east and north fields, which are integers, must be
+     The east and north	fields,	which are integers, must be
      present and valid or the record itself will be skipped by
-     the sites software.  The description field is optional, but
+     the sites software.  The description field	is optional, but
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-sites.format         GRASS Reference Manual          sites.format
+sites.format	     GRASS Reference Manual	     sites.format
 
 
 
@@ -75,11 +75,11 @@ sites.format         GRASS Reference Manual          sites.format
 
 
 BUGS?
-     Invalid records will be (silently) ignored by the sites
-     software.  Other record types may be added in the future.
+     Invalid records will be (silently)	ignored	by the sites
+     software.	Other record types may be added	in the future.
 
 SEE ALSO
-     s.db.rim, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
+     s.db.rim, s.in.ascii, s.menu, s.out.ascii,	s.surf.idw,
      sites.S, sites.occur, sites.report
 
 
@@ -126,7 +126,7 @@ SEE ALSO
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
