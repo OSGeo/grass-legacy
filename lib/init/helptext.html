@@ -15,7 +15,7 @@
 
 Commonly referred to as GRASS, this is a Geographic Information System
 (GIS) used for geospatial data management and analysis, image
-processing, graphics/maps production, spatial modeling, and
+processing, graphics/map production, spatial modelling, and
 visualization. GRASS is currently used in academic and commercial
 settings around the world, as well as by many governmental agencies
 and environmental consulting companies.
@@ -23,7 +23,7 @@ and environmental consulting companies.
 <h2>Introduction</h2>
 GRASS data are stored in a directory referred to as DATABASE
 (also called ``GISDBASE'').  This directory has to be created
-with <tt>mkdir</tt> or a filemanager, before starting to work
+with <tt>mkdir</tt> or a file manager, before starting to work
 with GRASS.  Within this DATABASE, the projects are organized
 by project areas stored in subdirectories called LOCATIONs.
 <P>
@@ -48,13 +48,16 @@ stored. Data in the PERMANENT MAPSET can only be added, modified or
 removed by the owner of the PERMANENT MAPSET; however, they can be
 accessed, analyzed, and copied into their own MAPSET by the other
 users. The PERMANENT MAPSET is useful for providing general spatial
-data such as elevation model write-protected to other users who are
-working in the same LOCATION. To import data into PERMANENT, just
-start GRASS with the relevant LOCATION and the PERMANENT MAPSET.  This
-mapset also contains the DEFAULT_WIND file which holds the default
-region boundary coordinate values. Additionally, in all mapsets a WIND
-file is kept for storing the current boundary coordinate values and
-the currently selected raster resolution.
+data (e.g. an elevation model), accessible but write-protected to all 
+users who are working in the same LOCATION as the database owner.
+To manipulate or add data to PERMANENT, the owner would start
+GRASS and choose the relevant LOCATION and the PERMANENT MAPSET.  This
+mapset also contains the DEFAULT_WIND file, which holds the default
+region boundary coordinate values for the location (which all users
+will inherit when they start using the database). Additionally, in 
+all mapsets a WIND file is kept, for storing the current boundary 
+coordinate values and the currently selected raster resolution.  Users
+have the option of switching back to the default region at any time.
 
 <h2>Creating a GRASS database</h2>
 
@@ -69,16 +72,17 @@ To create the GRASS database:
 </OL>
 
 <P>
-Sample data such as the Spearfish sample dataset</A> may be downloaded from
+Sample data such as the Spearfish sample dataset may be downloaded from
 <A HREF="http://grass.itc.it/download/data.php">http://grass.itc.it/download/data.php</A>
 and placed in the new database directory.
 <P>
 
-Click on the "Create New Location" button which will take you to a
-text screen on which you can enter a non-existing location name and
-continue with "ESC"-"RETURN".
+Click on the "Create New Location" button, which will take you to a
+text screen on which you can enter a new location name, and then
+continue by pressing "ESC"-"RETURN" - i.e. press (NOT hold) the ESC key,
+and then press the RETURN key on your keyboard.
 <P>
-Next you will need to assign different parameters to the location such
+Next you will need to assign parameters to the location such
 as the coordinate system and datum you want to use, the project area's
 boundary coordinates, and the default resolution for raster data:
 
@@ -92,7 +96,7 @@ boundary coordinates, and the default resolution for raster data:
 
 <P>
 Next you are requested for some more information about the projection.
-Note that the prompts vary from projection to projection:
+Note that the prompts vary from projection to projection, an example follows:
 
 <UL>
 <LI> (if you chose "D - Other Projection") "specify projection name": 
@@ -114,14 +118,14 @@ The next step is the description of the project area's boundary coordinates
 and the definition of the default raster resolution:
 <P>
 The default raster resolution (GRID RESOLUTION) has to be chosen
-according to the needs. Generally, it is advisable to work in steps of
+according to your needs. Generally, it is advisable to work in steps of
 0.25 (0.25, 0.5, 1.75, 2.00, 12.25 etc.). This resolution does not
 concern vector and site data since these are stored with their exact
 coordinate values. Note that every raster map may have its own
 resolution. You can leave this screen with "ESC"-"RETURN" and then
 if everything is correct accept the list of parameters that appears.
 <P>
-You will then be back to the startup screen again to enter the mapset's
+You will then be back to the startup screen to enter the mapset's
 name (if not already entered). Another "ESC"-"RETURN" will finally
 let you leave this screen. This mapset is created within the new
 location by answering "yes" to the next question. The mapset will
