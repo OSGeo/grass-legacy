@@ -2,6 +2,8 @@
 #include "Pixel.h"
 #include "color.h"
 
+int xmUseVersion;
+
 #ifdef _NO_PROTO
 static void _XgCvtStringToScaleTypeMask ();
 #else
