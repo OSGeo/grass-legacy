@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <malloc.h>
 #include "gis.h"
 #include "site.h"
 #include "userglobs.h"
