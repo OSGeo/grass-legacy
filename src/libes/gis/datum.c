@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 static struct table
 {
@@ -133,7 +134,7 @@ read_datum_table(void)
     fd = fopen(file, "r");
     if (!fd)
     {
-	G_warning("unable to open datum table file: %s", file);
+	G_warning(_("unable to open datum table file: %s"), file);
 	return;
     }
 
@@ -158,7 +159,7 @@ read_datum_table(void)
 	if (sscanf(buf, "%s \"%99[^\"]\" %s dx=%lf dy=%lf dz=%lf",
 		   name, descr, ellps, &t->dx, &t->dy, &t->dz) != 6)
 	{
-	    G_warning("error in datum table file, line %d", line);
+	    G_warning(_("error in datum table file, line %d"), line);
 	    continue;
 	}
 

@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include "gis.h"
+#include "glocale.h"
 #include "G.h"
 
 #define FCB G__.fileinfo[fd]
