@@ -20,8 +20,9 @@
 
 #define SQLP_MAIN 
 
-#include "sqlp.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include "sqlp.h"
 
 /* alloc structure */
 SQLPSTMT * sqpInitStmt( void  )
