@@ -29,9 +29,6 @@ int main(argc, argv)
 int argc ;
 char **argv ;
 {
-  char  *getenv(), *strtok(), *strcat() ;
-  
-
 	int hit;  
 	struct Option *opt1;
         struct Option* pghost;

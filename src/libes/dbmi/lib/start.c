@@ -6,8 +6,6 @@
 #define READ  0
 #define WRITE 1
 
-extern char *getenv();
-
 dbDriver *
 db_start_driver(name)
     char *name;

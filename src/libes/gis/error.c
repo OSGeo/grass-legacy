@@ -58,7 +58,6 @@ static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
 static int no_sleep = 1;
 
-extern char *getenv();
 static int print_word (FILE *,char **,int *,int);
 static int print_error(char *,int);
 static int mail_msg (char *,int);

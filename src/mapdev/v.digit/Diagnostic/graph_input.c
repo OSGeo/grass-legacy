@@ -1894,7 +1894,6 @@ dig_input(x, y)
     static long i;                    /*  counter                        */
     static long rtn;
     static int first_time = 1;
-    char *getenv();
 
     if (first_time)
     {

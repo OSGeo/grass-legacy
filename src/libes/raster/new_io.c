@@ -1,6 +1,6 @@
-char *getenv();
 #include "raster.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <pwd.h>
 #include "graph.h"
@@ -150,7 +150,7 @@ int R_open_driver()
     int try, key, lock;
     char our_input_file[512], our_output_file[512];
     struct MON_CAP *mon, *R_parse_monitorcap();
-    char *name, *G__getenv(), *getenv(), *key_string;
+    char *name, *G__getenv(), *key_string;
     char *user, *who_locked_driver();
     struct passwd *pw, *getpwuid();
 
