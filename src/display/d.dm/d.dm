@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using wish \
-exec wish "$0" "$@"
+exec $GRASS_WISH "$0" "$@"
 
 lappend auto_path $env(GISBASE)/bwidget
 package require BWidget 
