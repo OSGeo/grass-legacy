@@ -92,6 +92,8 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
     BOUND_BOX box;
     VARRAY *Varray = NULL;
 
+    fprintf(PS.fp, "1 setlinejoin\n"); /* set line join to round */
+
     Cats = Vect_new_cats_struct ();
   
     /* Create vector array if required */
@@ -188,6 +190,7 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 	}
     }
     fprintf(PS.fp, "\n");
+    fprintf(PS.fp, "0 setlinejoin\n"); /* reset line join to miter */
     return 1;
 }
 
