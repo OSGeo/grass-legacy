@@ -1,52 +1,67 @@
-.TH r.watershed
+.TH r.watershed4.0
 .SH NAME
-\fIr.watershed\fR \- Watershed basin analysis program.
+\fIr.watershed4.0\fR \- Watershed basin analysis program.
 .br
 .I "(GRASS Raster Program)"
 .SH SYNOPSIS
-.nf
-\fBr.watershed\fR
-\fBr.watershed help\fR
-\fBr.watershed\fR [\fB\-m4\fR] \fBelevation\*=\fIname\fR [\fBdepression\*=\fIname\fR] \fB[flow\*=\fIname\fR] 
-   [\fBdisturbed.land\*=\fIname|value\fR] [\fBblocking\*=\fIname\fR] [\fBthreshold\*=\fIvalue\fR] [\fBmax.slope.length\*=\fIvalue\fR] 
-   [\fBaccumulation\*=\fIname\fR] [\fBdrainage\*=\fIname\fR] [\fBbasin\*=\fIname\fR] [\fBstream\*=\fIname\fR] 
-   [\fBhalf.basin\*=\fIname\fR] [\fBvisual\*=\fIname\fR] [\fBlength.slope\*=\fIname\fR] [\fBslope.steepness\*=\fIname\fR] [\fBarmsed\*=\fIname\fR]
-.fi
+\fBr.watershed4.0\fR
+.br
+\fBr.watershed4.0 help\fR
+.br
+.in +3
+.ti -3
+\fBr.watershed4.0\fR [\fB\-m4\fR]
+\fBelevation\*=\fIname\fR
+[\fBdepression\*=\fIname\fR]
+\fB[flow\*=\fIname\fR]
+[\fBdisturbed.land\*=\fIname|value\fR]
+[\fBblocking\*=\fIname\fR]
+[\fBthreshold\*=\fIvalue\fR]
+[\fBmax.slope.length\*=\fIvalue\fR]
+[\fBaccumulation\*=\fIname\fR]
+[\fBdrainage\*=\fIname\fR]
+[\fBbasin\*=\fIname\fR]
+[\fBstream\*=\fIname\fR] 
+[\fBhalf.basin\*=\fIname\fR]
+[\fBvisual\*=\fIname\fR]
+[\fBlength.slope\*=\fIname\fR]
+[\fBslope.steepness\*=\fIname\fR]
+.in
 .RE
 .SH DESCRIPTION
-\fIr.watershed\fR generates a set of maps indicating: 1) the
-location of watershed basins, 2) information to interface with ARMSED, 
-a storm-water runoff and sedimentation yield model, and 3) the LS and S 
+\fIr.watershed4.0\fR generates a set of maps indicating: 1) the
+location of watershed basins, and
+2) the LS and S 
 factors of the Revised Universal Soil Loss Equation (RUSLE).
 .LP
-\fIr.watershed\fR can be run either interactively or non-interactively.
+\fIr.watershed4.0\fR can be run either interactively or non-interactively.
 If the user types
 .LP
 .RS
-\fBr.watershed\fR
+\fBr.watershed4.0\fR
 .RE
 .LP
 on the command line without program arguments, the program will prompt the user
 with a verbose description of the input maps.  The interactive version of
-\fIr.watershed\fR can prepare inputs to lumped-parameter hydrologic models.
-After a verbose interactive session, \fIr.watershed\fR will query the user for a number of
+\fIr.watershed4.0\fR can prepare inputs to lumped-parameter hydrologic models.
+After a verbose interactive session, \fIr.watershed4.0\fR will query the user for a number of
 map layers.  Each map layer's values will be tabulated by watershed basin and sent
 to an output file.  This output file is organized to ease data entry into a
 lumped-parameter hydrologic model program.  The non-interactive version of
-\fIr.watershed\fR cannot create this file.
+\fIr.watershed4.0\fR cannot create this file.
 
 The user can run the program non-interactively, by
 specifying input map names on the command line.
 Parameter names may be specified by their
 full names, or by any initial string that distinguish them from other parameter names.
-In \fIr.watershed\fR's case, the first two letters of each name sufficiently
+In \fIr.watershed4.0\fR's case, the first two letters of each name sufficiently
 distinguishes parameter names.
-For example, the two expressions below are equivalent inputs to \fIr.watershed\fR:
+For example, the two expressions below are equivalent inputs to \fIr.watershed4.0\fR:
 .LP
 .in +.2i
-\fBr.watershed el\*=elev.map th\*=100 st\*=stream.map ba\*=basin.map \fR
+\fBr.watershed4.0 el\*=elev.map th\*=100 st\*=stream.map ba\*=basin.map \fR
 
-\fBr.watershed elevation\*=elev.map threshold\*=100 stream\*=stream.map basin\*=basin.map \fR
+\fBr.watershed4.0 elevation\*=elev.map threshold\*=100 stream\*=stream.map basin\*=basin.map \fR
 .in -.2i
 .SH OPTIONS
 .IP \fI-m\fR
@@ -75,7 +90,7 @@ value of one (1) is assumed.
 .IP \fIdisturbed.land\fR
 Raster map input layer or value containing the percent of disturbed
 land (i.e., croplands, and construction sites) where the raster or input
-value of 17 equals 17%.  If no map or value is given, \fIr.watershed\fR
+value of 17 equals 17%.  If no map or value is given, \fIr.watershed4.0\fR
 assumes no disturbed land.  This input is used for the RUSLE calculations.
 .IP \fIblocking\fR
 Input map: terrain that will block overland surface flow.  Terrain
@@ -88,7 +103,7 @@ overland flow units.
 Input value indicating the maximum length of overland surface flow
 in meters.  If overland flow travels greater than the maximum length,
 the program assumes the maximum length (it assumes that landscape
-characteristics not discernable in the digital elevation model exist
+characteristics not discernible in the digital elevation model exist
 that maximize the slope length).  This input is used for the RUSLE calculations
 and is a sensitive parameter.
 .IP \fIaccumulation\fR
@@ -147,14 +162,9 @@ Loss Equation.  Equations taken from article entitled
 Loss Equation\fR (see SEE ALSO section).  Since the S factor
 is a small number (usually less than one), it is multiplied
 by 100 for the GRASS output map layer.
-.IP \fIarmsed\fR
-Output file:  Useful as input to \fIr.grass.armsed\fR.
-ASCII file output that can be fed into the \fIr.grass.armsed\fR program
-to help calculate sedimentation yields and unit hydro-graphs.
-As of 01/17/91, this option had not yet been fully tested.
 .SH NOTES
 There are two versions of this program: \fIram\fR and \fIseg\fR.
-Which is run by \fIr.watershed\fR depends on whether the \fI-m\fR
+Which is run by \fIr.watershed4.0\fR depends on whether the \fI-m\fR
 flag is set.
 \fIram\fR uses virtual memory managed by the operating system to store
 all the data structures and is faster than
@@ -175,7 +185,7 @@ produces results similar to those obtained when running \fIr.cost\fR
 and \fIr.drain\fR on every cell on the map.
 
 In many situations, the elevation data will be too finely detailed for
-the amount of time or memory available.  Running \fIr.watershed\fR will
+the amount of time or memory available.  Running \fIr.watershed4.0\fR will
 require use of a coarser resolution.  To make the results more closely
 resemble the finer terrain data, create a map layer containing the
 lowest elevation values at the coarser resolution.  This is done by:
@@ -183,10 +193,10 @@ lowest elevation values at the coarser resolution.  This is done by:
 layer, and 2) Using the \fIneighborhood\fR command to find the lowest
 value for an area equal in size to the desired resolution.  For
 example, if the resolution of the elevation data is 30 meters and the
-resolution of the geographic region for \fIr.watershed\fR will be 90
+resolution of the geographic region for \fIr.watershed4.0\fR will be 90
 meters:  use the minimum function for a 3 by 3 neighborhood.  After
-going to the resolution at which \fIr.watershed\fR will be run,
-\fIr.watershed\fR will be taking values from the \fIneighborhood\fR
+going to the resolution at which \fIr.watershed4.0\fR will be run,
+\fIr.watershed4.0\fR will be taking values from the \fIneighborhood\fR
 output map layer that represents the minimum elevation within the
 region of the coarser cell.
 
@@ -196,7 +206,7 @@ basins).  An interior drainage basin has the area that flows into an
 interior stream segment.  Thus, interior drainage basins can be of any
 size.
 
-The \fIr.watershed\fR program does not require the user to have the
+The \fIr.watershed4.0\fR program does not require the user to have the
 current geographic region filled with elevation values.  Areas without
 elevation data MUST be masked out using the \fIr.mask\fR command.  Areas
 masked out will be treated as if they are off the edge of the region.
@@ -212,7 +222,7 @@ If there are incomplete data in the elevation map layer, users should mask out
 those areas.
 
 .SH "SEE ALSO"
-The A\uT\d least-cost search algorithm used by \fIr.watershed\fR is described in
+The A\uT\d least-cost search algorithm used by \fIr.watershed4.0\fR is described in
 \fIUsing the A\uT\d Search Algorithm to Develop Hydrologic Models from
 Digital Elevation Data\fR, in \fBProceedings of International Geographic
 Information Systems (IGIS) Symposium '89\fR, pp 275-281 (Baltimore, MD,
@@ -234,7 +244,6 @@ Universal Soil Loss Equation\fR, in \fBTransactions of the ASAE\fR
 .LP
 .I r.cost,
 .I r.drain,
-.I r.grass.armsed
 .I r.mask
 .SH "AUTHOR"
 Charles Ehlschlaeger, U.S. Army Construction Engineering Research Laboratory
