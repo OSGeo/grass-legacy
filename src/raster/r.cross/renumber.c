@@ -25,4 +25,5 @@ renumber (in, out, verbose)
     }
     if (verbose)
 	G_percent (row, nrows, 10);
+    free(cell);
 }
