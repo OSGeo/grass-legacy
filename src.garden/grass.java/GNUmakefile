@@ -1,6 +1,6 @@
 #
 # Copyright (C) 1998 The Information-technology Promotion Agency, Japan(IPA), LGPL
-# $Id: GNUmakefile,v 1.1 2000-03-13 13:08:18 markus Exp $
+# $Id: GNUmakefile,v 1.2 2000-03-14 14:29:32 markus Exp $
 #
 
 SHELL = /bin/sh
@@ -12,14 +12,18 @@ SHELL = /bin/sh
 ## GRASS-related variables ####
 
 # GRASS home directory
-GRASS_HOME = /export/home0/grass
+#GRASS_HOME = /usr/local/grass-5.0b # not required when using gmake5 to build
+GRASS_HOME = $(GISBASE)
 
 # Root of the GRASS source tree
-GRASS_SRC = $(GRASS_HOME)/4.2/src42/src
+#GRASS_SRC = $(GRASS_HOME)/grass5src # not required when using gmake5 to build
+GRASS_SRC = ../../src
 
 # GRASS compilation name ('architecture' in terminology of GRASS
 # installation documentation)
-GRASS_ARCH = sun4my1
+#GRASS_ARCH = sun4my1
+#GRASS_ARCH = $(ARCH)
+GRASS_ARCH = i586-linux-elf
 
 # directory in the GRASS source tree that contains GIS library header files
 # if previous variables were set this should be ok
@@ -27,8 +31,8 @@ GISH = $(GRASS_SRC)/include
 
 # directories in the GRASS source tree that contain Vector library header files
 # if previous variables were set this should be ok
-VECTH1 = $(GRASS_SRC)/mapdev/Vlib
-VECTH2 = $(GRASS_SRC)/mapdev/diglib
+VECTH1 = $(GRASS_SRC)/libes/vect32/Vlib
+VECTH2 = $(GRASS_SRC)/libes/vect32/diglib
 
 # directory that contains a libgis.a for your grass compilation 
 # if previous variables were set this should be ok
@@ -37,7 +41,7 @@ GISLIB = $(GRASS_SRC)/libes/LIB.$(GRASS_ARCH)
 ## Settings to run the test programs
 
 # Location of GRASS programs 
-GISBASE = $(GRASS_HOME)/4.2
+#GISBASE = $(GRASS_HOME) # not required when using gmake5 to build
 
 # GRASS data base
 GISDBASE = $(GRASS_HOME)/data
@@ -60,17 +64,17 @@ DOCDEST = htmls
 
 # location of JDK, uncomment this line and set variable to an appropriate 
 # value if it is not set in your environment
-JDK_HOME = /usr/local/jdk1.1.6
+JDK_HOME = /usr/lib/jdk1.1.7
 
 ## OS dependent settings (default to Solaris) ####
 
 # instructs gcc to produce shared library instead of executable module
-SO_FLAGS = -G         # Solaris 2.5.1
-#SO_FLAGS = -shared   # Linux 2.x
+#SO_FLAGS = -G         # Solaris 2.5.1
+SO_FLAGS = -shared   # Linux 2.x
 
 # location of OS dependent JNI headers for C programs
-JNI_H = $(JDK_HOME)/include/solaris   # Solaris 2.5.1
-#JNI_H = $(JDK_HOME)/include/genunix   # Linux 2.x
+#JNI_H = $(JDK_HOME)/include/solaris   # Solaris 2.5.1
+JNI_H = $(JDK_HOME)/include/genunix   # Linux 2.x
 
 ## C-related settings ####
 CC	= gcc $(DEBUG)
@@ -89,7 +93,7 @@ JAVAH   = $(JDK_HOME)/bin/javah -jni
 JAVADOC = $(JDK_HOME)/bin/javadoc $(JAVADOCFLAGS) 
 JAR     = $(JDK_HOME)/bin/jar
 
-FIND  = /bin/find
+FIND  = find
 STRIP = strip
 
 EXTRA_CFLAGS = -I$(JDK_HOME)/include -I$(JNI_H) -I$(GISH) \
@@ -269,6 +273,4 @@ print:	.printm .prints
 .prints: $(filter-out %akefile, $(DISTSRC) $(DISTSUB) $(DISTAUX) )
 	a2ps -g $?
 	touch $@
-
-
 

@@ -1,0 +1,5 @@
+all:
+	make jar
+	make check1
+	make check2
+	make docs
