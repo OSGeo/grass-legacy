@@ -37,7 +37,7 @@ proc new_line_options { create } {
 	set row1 [frame $lineopt.row1]
 	pack $row1 -fill x -side top
 
-	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Field"]
+	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Layer"]
 	set GWidget(field) [Entry $row1.fval -width 10 -textvariable GVariable(field) \
 			    -command { c_var_set field $GVariable(field) } ]
         bind $GWidget(field) <KeyRelease> { c_var_set field $GVariable(field) } 

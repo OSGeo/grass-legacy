@@ -438,7 +438,7 @@ c_add_cat ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 
     if ( field < 1 || cat < 1 ) {
 	Tcl_Eval(Toolbox, "MessageDlg .msg -icon error -type ok "
-		          "-message \"Field and category must be greater than 0\"");
+		          "-message \"Layer and category must be greater than 0\"");
     	return TCL_OK;
     }
 
