@@ -21,6 +21,7 @@ parse_command_line (int argc, char *argv[])
 		struct Flag *h;
 		struct Flag *q;
 		struct Flag *e;
+		struct Flag *d;         /* data report mode */
 	} flags;
 	
 	struct GModule *module;
@@ -84,6 +85,10 @@ parse_command_line (int argc, char *argv[])
 	flags.e->key = 'e';
 	flags.e->description = "scientific format";
 
+	flags.d = G_define_flag();
+	flags.d->key = 'd';
+	flags.d->description = "data only-suppress all headers";
+
 	if (G_parser(argc,argv))
 		exit(-1);
 
@@ -91,6 +96,7 @@ parse_command_line (int argc, char *argv[])
 	with_headers = !flags.h->answer;
 	verbose      = !flags.q->answer;
 	e_format     = flags.e->answer;
+	d_format     = flags.d->answer;
 
 	if (parms.vect->answer)
 		{

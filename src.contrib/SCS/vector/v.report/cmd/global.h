@@ -54,6 +54,7 @@ GLOBAL int with_headers INIT(1);
 GLOBAL int verbose INIT(1);
 GLOBAL int type INIT(0);
 GLOBAL int e_format INIT(0);
+GLOBAL int d_format INIT(0);
 
 GLOBAL char *stats_file;
 GLOBAL int stats_flag INIT(0);

@@ -16,6 +16,8 @@ int header (int unit1, int unit2)
     int len1, len2;
     char *label;
 
+    if (d_format) return; /* no header if -d flag! */
+    
     nlines = page_length;
     if (date == NULL)
 	date = G_date();
@@ -124,6 +126,8 @@ static int max (int a, int b)
 int 
 trailer (void)
 {
+    if (d_format) return; /* no trailer if -d flag! */
+    
     divider("+");
     while (nlines > 0)
 	newline();
