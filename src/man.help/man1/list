@@ -1,0 +1,56 @@
+.\" %W% %G%
+.TH list 1
+.SH NAME
+list  \- List available 
+.CT database "data base"
+.CT files elements
+.br
+.I (Available through
+.B grass3
+.I menu)
+.SH SYNOPSIS
+.B list
+.SH DESCRIPTION
+The GRASS tool \fIlist\fR prompts the user for the type of data
+(i.e., the data element) to be listed from the 
+.B mapsets 
+in the user's search path.  The following data elements may
+be listed by selecting the appropriate number:
+
+.RS
+.TP 12
+\ \ 1
+cell maps
+.TP 12
+\ \ 2
+binary vector maps    
+.TP 12
+\ \ 3
+paint icon files
+.TP 12
+\ \ 4
+paint label files
+.TP 12
+\ \ 5
+site maps
+.TP 12
+\ \ 6
+window files
+.TP 12
+\ \ 7
+imagery group files
+.TP 12
+RETURN
+exit
+.RE
+
+.PP
+After the desired data element number is selected, the available 
+.CT files "maps/files"
+are listed,
+and the user is returned to the above menu.
+
+.SH "SEE ALSO"
+\fImapsets[1], Glist[2G]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
