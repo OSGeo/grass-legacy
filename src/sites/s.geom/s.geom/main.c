@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 #include "optri.h"
@@ -20,19 +23,16 @@ struct dig_head header;
 /*--------------------------------------------------------------------------*/
 
 static void
-read_sites (name, g, nofDeci)
+my_read_sites (name, g, nofDeci, ftype, findex)
 
      char *name;
      void **g;
-
-     int nofDeci;
+     int nofDeci, ftype, findex;
 {
   char *mapset;
   FILE *fd;
-  double east, north;
-  char *desc;
-  double z;
-  int count, errors;
+  SITE_XYZ *theSite;
+  int count;
   void *s;
 
   G_get_window (&REGION);
@@ -49,30 +49,61 @@ read_sites (name, g, nofDeci)
 	     name);
     exit (1);
   }
-    
+  
+  if (NULL == (theSite = G_alloc_site_xyz(1)))
+	  G_fatal_error("%s: Can't allocate memory!", G_program_name());
+  
   fprintf (stderr, "Reading sites map (%s) ...\n", name);
   
   count = 0;
-  while (G_get_site (fd, &east, &north, &desc) > 0) 
+  while (G_readsites_xyz(fd, (ftype != -1) ? ftype : SITE_COL_NUL,
+			  findex, 1, &REGION, theSite) == 1) 
     count++;
+  fprintf(stderr, "Found %d sites ...\n", count);
   *g = grNew (count, nofDeci);
   s = grSI (*g);
 
   rewind (fd);
 
-  count = errors = 0;
-  while (G_get_site (fd, &east, &north, &desc) > 0) {
-    if (sscanf (desc, "%lf", &z) == 1 || sscanf (desc, "#%lf", &z) == 1) {
-      count++;
-      siSITEload (s, east, north, z);
-    } else {
-      count++;
-      siSITEload (s, east, north, (double) 0);
-      errors++;
+  count = 0;
+  while (G_readsites_xyz(fd, (ftype != -1) ? ftype : SITE_COL_NUL,
+			  findex, 1, &REGION, theSite) == 1) {
+    switch(ftype) {
+        case -1:
+            siSITEload(s, theSite->x, theSite->y, (double) 0.0);
+            break;
+        case SITE_COL_NUL:
+            switch(theSite->cattype) {
+                case CELL_TYPE:
+                    siSITEload(s, theSite->x, theSite->y,
+                            (double) theSite->cat.c);
+                    break;
+                case FCELL_TYPE:
+                    siSITEload(s, theSite->x, theSite->y,
+                            (double) theSite->cat.f);
+                    break;
+                case DCELL_TYPE:
+                    siSITEload(s, theSite->x, theSite->y, theSite->cat.d);
+                    break;
+                default: /* No cat */
+                    G_warning("%s: Missing category value, using 0.0",
+                            G_program_name());
+                    siSITEload(s, theSite->x, theSite->y, (double) 0.0);
+            }
+            break;
+        case SITE_COL_DIM:
+        case SITE_COL_DBL:
+        case SITE_COL_STR:
+            siSITEload(s, theSite->x, theSite->y, theSite->z);
+            break;
+        default:
+            G_fatal_error("Programmer error!");
     }
+    count++;
   }
 
   fclose (fd);
+  G_free_site_xyz(theSite);
 
   fprintf (stderr, "\nRemoving duplicate vertices ...\n");
   siRemoveDuplicateSites (s);
@@ -83,12 +114,7 @@ read_sites (name, g, nofDeci)
   NORTH = MAX (REGION.north, siMaxY (s));
 
   fprintf (stderr, "\n");
-    
-  if (errors) {
-    fprintf (stderr, 
-	     "Warning: %s - %sdid not contain %svalid elevation values\n",
-	     name, count?"some sites ":"", count?"":"any ");
-  }
+
 }
 
 /*--------------------------------------------------------------------------*/
@@ -354,6 +380,7 @@ write_vect (out_name, q, s, doConvexHull)
 
 /*--------------------------------------------------------------------------*/
 
+int
 main (argc, argv)
 
      int argc;
@@ -361,9 +388,9 @@ main (argc, argv)
 
 {
   void * graph;
-  int nofDeci;
+  int nofDeci, field_type, field_index;
   struct {
-    struct Option *input, *output, *precision, *operation;
+    struct Option *input, *output, *zfield, *zindex, *precision, *operation;
   } parm;
   
   extern void convexHull ();
@@ -392,6 +419,20 @@ main (argc, argv)
   parm.output->required   = YES;
   parm.output->description= "Name of output vector map";
   parm.output->gisprompt  = "any,dig,vector";
+
+  parm.zfield = G_define_option();
+  parm.zfield->key        = "zfield" ;
+  parm.zfield->type       = TYPE_STRING;
+  parm.zfield->required   = NO ;
+  parm.zfield->options    = "none,dim,cat,decimal,string" ;
+  parm.zfield->answer     = "none" ;
+ 
+  parm.zindex = G_define_option();
+  parm.zindex->key        = "zindex" ;
+  parm.zindex->type       = TYPE_INTEGER;
+  parm.zindex->required   = NO;
+  parm.zindex->description = "Field index for 'zfield'";
+  parm.zindex->answer     = "1";
 
   parm.precision = G_define_option () ;
   parm.precision->key        = "precision" ;
@@ -431,7 +472,42 @@ main (argc, argv)
     exit (1);
   }
 
-  read_sites (parm.input->answer, &graph, nofDeci);
+  if ((strncmp(parm.zfield->answer, "none", 4)) == 0)
+	  field_type = -1;
+  else if ((strncmp(parm.zfield->answer, "dim", 3)) == 0)
+	  field_type = SITE_COL_DIM;
+  else if ((strncmp(parm.zfield->answer, "cat", 3)) == 0)
+	  field_type = SITE_COL_NUL;
+  else if ((strncmp(parm.zfield->answer, "decimal", 7)) == 0)
+	  field_type = SITE_COL_DBL;
+  else if ((strncmp(parm.zfield->answer, "string", 6)) == 0)
+	  field_type = SITE_COL_STR;
+  else
+	  G_fatal_error("%s: Unknown field type %s", G_program_name(),
+			  parm.zfield->answer);
+
+  field_index = atoi(parm.zindex->answer);
+  
+  switch(field_type) {
+	  case -1:
+	  case SITE_COL_NUL:
+		  field_index = -1; break;
+	  case SITE_COL_DIM:
+		  if (field_index < 3)
+			  G_fatal_error("%s: Dimension column index must "
+				"be greater than 2", G_program_name());
+		  field_index -= 3; break;
+          case SITE_COL_DBL:
+	  case SITE_COL_STR:
+		  if (field_index < 1)
+			  G_fatal_error("%s: Field index must be greater "
+				"than zero.", G_program_name());
+		  field_index--; break;
+	  default: /* Nada */
+  }
+  
+  my_read_sites (parm.input->answer, &graph, nofDeci, 
+		  field_type, field_index);
 
   for (i = 0; i < nofOperations; i++)
     if (strcmp (parm.operation->answer, operations [i]) == 0)
@@ -467,5 +543,7 @@ main (argc, argv)
   else
     write_vect (parm.output->answer, grQE (graph), grSI (graph), (i == 6));
   grDispose (graph);
+
+  return 0;
 }
   
