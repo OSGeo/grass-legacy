@@ -12,6 +12,6 @@ typedef struct {
 } CENTR; 
 
 int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi,
-	                dbDriver *driver, int operator  );
+	                dbDriver *driver, int operator, int *ofield );
 int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi,
-	                dbDriver *driver, int operator  );
+	                dbDriver *driver, int operator, int *ofield );

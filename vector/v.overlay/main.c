@@ -16,12 +16,12 @@
 int 
 main (int argc, char *argv[])
 {
-    int    input, line, nlines, operator;
-    int    type[2], field[2];
+    int    i, input, line, nlines, operator;
+    int    type[2], field[2], ofield[3];
     char   *mapset[2];
     char   *pre[2];
     struct GModule *module;
-    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
+    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *ofield_opt, *operator_opt;
     struct Flag *table_flag;
     struct Map_info In[2], Out;
     struct line_pnts *Points;
@@ -79,6 +79,13 @@ main (int argc, char *argv[])
 	"\t not : features from ainput not overlayed by features from binput\n"
 	"\t xor : features from either ainput or binput but not those from ainput overlayed by binput "
 	"\t       (only for atype=area)";
+    
+    ofield_opt = G_define_standard_option(G_OPT_V_FIELD);
+    ofield_opt->key = "ofield";
+    ofield_opt->multiple = YES;
+    ofield_opt->answer = "1,2,3";
+    ofield_opt->description = "Output field for new category, ainput and binput. If 0 or not given, "
+	                      "the category is not written.";
 
     table_flag = G_define_flag ();
     table_flag->key             = 't';
@@ -89,6 +96,13 @@ main (int argc, char *argv[])
     for ( input = 0; input < 2; input++ ) {
         type[input] = Vect_option_to_types ( type_opt[input] );
 	field[input] = atoi(field_opt[input]->answer);
+    }
+
+    ofield[0] = ofield[1] = ofield[2] = 0;
+    i = 0;
+    while ( ofield_opt->answers[i] && i < 3 ) {
+	ofield[i] = atoi ( ofield_opt->answers[i] );
+	i++;
     }
 
     if ( operator_opt->answer[0] == 'a' ) operator = OP_AND;
@@ -110,10 +124,12 @@ main (int argc, char *argv[])
     Vect_hist_command ( &Out );
 
     /* Create dblinks */
-    Fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
+    if ( ofield[0] > 0 ) {
+        Fi = Vect_default_field_info ( &Out, ofield[0], NULL, GV_1TABLE );
+    }
 
     /* Open database */
-    if ( !(table_flag->answer) ) {
+    if ( ofield[0] > 0 && !(table_flag->answer) ) {
 	fprintf (stderr, SEP );
 	fprintf ( stderr, "Writing attributes ...\n" );
 	
@@ -135,7 +151,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Table created, now we can write dblink */
-	Vect_map_add_dblink ( &Out, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
+	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     } else {
 	driver = NULL;
     }
@@ -182,9 +198,9 @@ main (int argc, char *argv[])
 
     /* AREA x AREA */
     if ( type[0] == GV_AREA ) { 
-	area_area ( In, field, &Out, Fi, driver, operator );
+	area_area ( In, field, &Out, Fi, driver, operator, ofield );
     } else { /* LINE x AREA */
-	line_area ( In, field, &Out, Fi, driver, operator );
+	line_area ( In, field, &Out, Fi, driver, operator, ofield );
     }
 
     fprintf (stderr, SEP );
@@ -193,7 +209,7 @@ main (int argc, char *argv[])
     Vect_build (&Out, stderr); /* Build topology to show the final result and prepare for Vect_close() */
     
     /* Close table */
-    if ( !(table_flag->answer) ) {
+    if ( driver ) {
 	db_close_database_shutdown_driver ( driver );
     }
     
