@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -60,7 +61,8 @@ main (int argc, char **argv)
 	opt4->key        = "font" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO ;
-	opt4->options="romand,romanp,romant,romans,scriptc,scripts,romancs,italicc,italiccs,gothitt,gothgrt,gothgbt" ;
+
+        opt4->options="cyrilc,gothitt,gothgrt,gothgbt,greekc, greekcs, greekp, greeks,italicc,italiccs,italict,romanc,romancs,romand,romans,romant,scriptc,scripts" ;
 	opt4->description= "Sets the font" ;
 
 	/* Check command line */
