@@ -2,6 +2,7 @@
 #include "glocale.h"
 
 /***********************************************************
+
 char *
 G_adjust_Cell_head (cellhd, row_flag, col_flag)
     struct Cell_head *cellhd;
@@ -35,6 +36,27 @@ G_adjust_Cell_head (cellhd, row_flag, col_flag)
  returns an error message, or NULL if ok
  note: don't free this error message.
 ************************************************************/
+
+
+/*!
+ * \brief adjust cell header
+ *
+ * This function fills in missing parts of the input
+ * cell header (or region).  It also makes projection-specific adjustments. The
+ * <b>cellhd</b> structure must have its <i>north, south, east, west</i>,
+ * and <i>proj</i> fields set. If <b>row_flag</b> is true, then the north-south
+ * resolution is computed from the number of <i>rows</i> in the
+ * <b>cellhd</b> structure. Otherwise the number of <i>rows</i> is computed
+ * from the north-south resolution in the structure, similarly for
+ * <b>col_flag</b> and the number of columns and the east-west resolution. This
+ * routine returns NULL if execution occurs without error, otherwise it returns
+ * an error message.
+ *
+ *  \param cellhd
+ *  \param row_flag
+ *  \param col_flag
+ *  \return char * 
+ */
 
 char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 {

@@ -1,25 +1,4 @@
-/***************************************************************************
- * G_begin_cell_area_calculations ()
- *
- *    perform all inititalizations needed to do area calculations for
- *    grid cells, based on the current window "projection" field.
- * 
- *    returns: 0 if "projection" is not measurable (i.e, imagery or xy)
- *             1 if planimetric (i.e, UTM or SP) all cells are the same size,
- *               value from G_area_of_cell_at_row(row=0) good for all rows
- *             2 if non-planimetric (i.e, Lat-Long)
- *               must call G_area_of_cell_at_row() for each row
- *
- *
- * double
- * G_area_of_cell_at_row (row)
- *
- *    returns area of one cell in the specified row of the current window
- *    in square meters
- ***************************************************************************/
-
 #include "gis.h"
-
 
 static struct Cell_head window;
 static double square_meters;
@@ -32,6 +11,24 @@ static int next_row;
 static double north_value;
 static double north;
 static double (*darea0)();
+
+
+/*!
+ * \brief begin cell area calculations
+ *
+ * This routine must be called once before any call to
+ * <i>G_area_of_cell_at_row.</i> It perform all inititalizations needed to do area calculations for
+ * grid cells, based on the current window "projection" field. It can be used in either planimetric
+ * projections or the latitude-longitude projection. It returns 
+ *   2 if the projection is non-planimetric (i.e, latitude-longitude),
+ *   1 if the projection is planimetric (i.e, UTM or SP) all cells are the same size, and 
+ *   0 if the projection "projection" is not measurable (i.e, imagery or xy)
+ * If the return value is 1 or 0, all the grid cells in the map have the same area. 
+ * Otherwise the area of a grid cell varies with the row.
+ *
+ *  \param void
+ *  \return int
+ */
 
 int G_begin_cell_area_calculations()
 {
@@ -65,6 +62,18 @@ int G_begin_cell_area_calculations()
     }
 }
 
+
+/*!
+ * \brief cell area in specified row
+ *
+ *  This routine returns the area in square meters of a cell in the
+ * specified <b>row.</b> This value is constant for planimetric grids and
+ * varies with the row if the projection is latitude-longitude.
+ *
+ *  \param row
+ *  \return double
+ */
+
 double
 G_area_of_cell_at_row ( register int row)
 {
@@ -86,6 +95,21 @@ G_area_of_cell_at_row ( register int row)
     return cell_area;
 }
 
+
+/*!
+ * \brief begin polygon area calculations
+ *
+ *  This initializes the polygon area calculation routines. It is
+ * used both for planimetric and latitude-longitude projections.
+ * It returns 2 if the projection is latitude-longitude, 1 if the projection is
+ * planimetric, and 0 if the projection doesn't hav e a metric (e.g. imagery.)
+ *
+ *  \param a
+ *  \param e2
+ *  \param factor
+ *  \return int
+ */
+
 int G_begin_polygon_area_calculations()
 {
     double a, e2;
@@ -106,6 +130,28 @@ int G_begin_polygon_area_calculations()
     units_to_meters_squared = 1.0;
     return 0;
 }
+
+
+/*!
+ * \brief area in square meters of polygon
+ *
+ * Returns the area in square meters of the polygon
+ * described by the <b>n</b> pairs of <b>x,y</b> coordinate vertices. It is
+ * used both for planimetric and latitude-longitude projections.
+ * <b>Note.</b> If the database is planimetric with the non-meter grid, this
+ * routine performs the required unit conversion to produce square meters.
+ * double <b>G_planimetric_polygon_area</b> (x, y, n) <i>area in
+ * coordinate units</i> double *x, *y ; int n ;
+ * Returns the area in coordinate units of the polygon described by the
+ * <b>n</b> pairs of <b>x,y</b> coordinate vertices for planimetric grids.
+ * If the units for <b>x,y</b> are meters, then the area is in square meters.
+ * If the units are feet, then the area is in square feet, and so on.
+ *
+ *  \param x
+ *  \param y
+ *  \param n
+ *  \return double
+ */
 
 double G_area_of_polygon(double *x,double *y,int n)
 {

@@ -29,6 +29,19 @@ static double Qbar(double x)
     return cosx * (QbarA + cosx2 * (QbarB + cosx2 * (QbarC + cosx2 * QbarD)));
 }
 
+
+/*!
+ * \brief begin area calculations
+ *
+ *  This initializes the polygon area calculations for the
+ * ellipsoid with semi-major axis <b>a</b> (in meters) and ellipsoid
+ * eccentricity squared <b>e2.</b>
+ *
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
 int G_begin_ellipsoid_polygon_area (double a,double e2)
 {
     double e4, e6;
@@ -55,6 +68,22 @@ int G_begin_ellipsoid_polygon_area (double a,double e2)
 
     return 0;
 }
+
+
+/*!
+ * \brief area of lat-long polygon
+ *
+ *  Returns the area in square meters of the
+ * polygon described by the <b>n</b> pairs of <b>lat,long</b> vertices for
+ * latitude-longitude grids.
+ * <b>Note.</b> This routine assumes grid lines on the connecting the vertices
+ * (as opposed to geodesics.)
+ *
+ *  \param lon
+ *  \param lat
+ *  \param n
+ *  \return double
+ */
 
 double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
 {

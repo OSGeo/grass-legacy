@@ -36,6 +36,18 @@
 
 static int lister(char *,char *,char *);
 
+
+/*!
+ * \brief prompt for new raster file
+ *
+ * Asks the user to enter a name for a raster file which does not
+ * exist in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
+
 char *
 G_ask_cell_new (prompt,name)
 
@@ -46,6 +58,18 @@ G_ask_cell_new (prompt,name)
 	return G_ask_new_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
+
+/*!
+ * \brief prompt for existing raster file
+ *
+ * Asks the user to enter the name of an existing raster
+ * file in any mapset in the database.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
+
 char *
 G_ask_cell_old (prompt,name)
 
@@ -54,6 +78,18 @@ G_ask_cell_old (prompt,name)
 {
 	return G_ask_old_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
+
+
+/*!
+ * \brief prompt for existing raster file
+ *
+ * Asks the user to enter the name of an existing raster
+ * file in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
 
 char *
 G_ask_cell_in_mapset (prompt,name)
