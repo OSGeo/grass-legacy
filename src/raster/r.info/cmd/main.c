@@ -38,6 +38,7 @@ main (int argc, char *argv[])
     struct Option *opt1;
     struct Flag *rflag;
     struct Flag *sflag;
+    struct Flag *tflag;
 
     G_gisinit(argv[0]);
 
@@ -60,6 +61,10 @@ main (int argc, char *argv[])
     sflag = G_define_flag();
     sflag->key            = 's';
     sflag->description    = "print resolution (NS-res, EW-res) only.";
+
+    tflag = G_define_flag();
+    tflag->key            = 't';
+    tflag->description    = "print raster map type only.";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -84,7 +89,7 @@ main (int argc, char *argv[])
 
     out = stdout;
 
-  if (!rflag->answer && !sflag->answer)
+  if (!rflag->answer && !sflag->answer && !tflag->answer)
   {
     divider ('+');
 
@@ -238,7 +243,7 @@ main (int argc, char *argv[])
 
     fprintf(out,"\n");
    }
-   else /* rflag or sflag */
+   else /* rflag or sflag or tflag */
    {
 
      if (rflag->answer){
@@ -255,14 +260,20 @@ main (int argc, char *argv[])
      } else {
       if (sflag->answer){
 	G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
-        fprintf (out, "nsres=%s\n",
-	    tmp3);
+        fprintf (out, "nsres=%s\n", tmp3);
 
 	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
-        fprintf (out, "ewres=%s\n",
-	    tmp3);
+        fprintf (out, "ewres=%s\n", tmp3);
+      } else {
+      if (tflag->answer){
+         fprintf (out, "datatype=%s\n",
+			(data_type ==  CELL_TYPE ?  "CELL" :
+			(data_type == DCELL_TYPE ? "DCELL" :
+			(data_type == FCELL_TYPE ? "FCELL" : "??"))));
       }
-     }
-   }
-    return 0;
+     } /* else sflag */
+    } /* else rflag */
+   } /* else rflag or sflag or tflag */
+   
+   return 0;
 }
