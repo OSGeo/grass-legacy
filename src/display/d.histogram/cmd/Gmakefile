@@ -1,0 +1,18 @@
+OFILES = \
+	get_stats.o\
+	draw_slice.o\
+	pie.o\
+	bar.o\
+	main.o
+
+$(BIN_MAIN_CMD)/d.histogram: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(MATHLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+bar.o: 		bar.h dhist.h
+pie.o: 		pie.h dhist.h
+main.o:		options.h dhist.h
