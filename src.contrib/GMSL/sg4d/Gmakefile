@@ -5,7 +5,6 @@ EXTRA_CFLAGS= -I${PANEL_INCDIR} $(VECT_INCLUDE)
 PANELLIB= ${PANEL_LIBDIR}/libpanel.\a
 DSPLIB= showd/libe/libdsp3.a
 VOLLIB= showd/libvol.a
-DTLIB= ${LIBDIR}/libdatetime.a
 
 OFILES = main.o \
 	Dcell.o \
@@ -35,7 +34,7 @@ OFILES = main.o \
 PGM = sg4dnew
 
 $(BIN_CMD)/$(PGM): $(OFILES) $(DEPVECTLIB) $(DSPLIB) $(VOLLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VOLLIB) $(DSPLIB) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DTLIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm_s -lgl_s
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VOLLIB) $(DSPLIB) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm_s -lgl_s
 #	cp doc/catman $(MAN1)/SG3d
 
 main.o: externs.h 

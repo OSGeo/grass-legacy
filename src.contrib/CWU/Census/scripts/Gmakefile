@@ -1,5 +1,3 @@
-LIB = $(LIBDIR)/libcoorcnv.a
-
 SCRIPTS = $(GISBASE)/scripts
 
 all:	$(SCRIPTS)/Gen.bgs.sh \
@@ -14,8 +12,3 @@ $(SCRIPTS)/stf1.labels.sh: stf1.labels.sh
 	rm -f $(SCRIPTS)/stf1.labels.sh
 	cp stf1.labels.sh $(SCRIPTS)/stf1.labels.sh
 	chmod +x $(SCRIPTS)/stf1.labels.sh
-
-$(LIB): # in case LIB changes
-$(DEPGISLIB): #
-$(DEPVECTLIB): #
-$(DEPDIG_ATTLIB): #
