@@ -7,11 +7,14 @@
  * Author: Michael Shapiro. US Army CERL.
  */
 
-#define GLOBAL
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "distance.h"
 #include "local_proto.h"
-#include <stdio.h>
-#include <string.h>
+
+#define GLOBAL
 
 int main (int argc, char *argv[])
 {
