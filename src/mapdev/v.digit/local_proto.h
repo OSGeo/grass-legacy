@@ -145,6 +145,7 @@ int draw_default_window(double, double, double, double);
 /* mouse_yn.c */
 int mouse_yes_no(char *);
 int mouse_next_prev(char *);
+int mouse_yes_no_zoom(char *, unsigned char, struct line_pnts *);
 /* node_color.c */
 int dig_node_color(int);
 /* oplot.c */
