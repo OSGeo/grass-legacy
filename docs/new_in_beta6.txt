@@ -5,6 +5,8 @@ $Id$
 Modules:
 - d.area: fixed. Now dynamic allocation to remove the 4096 vector
     line limit (Bill Hughes)
+- d.legend: fixed bug on shifted numbers. Optional flag to suppress
+            display of "no data" now (Markus Neteler)
 
 - i.in.erdas: "-m" reads in map coordinate info (reference) now (Angus Carr)
 - i.out.erdas added (Angus Carr)
@@ -14,14 +16,19 @@ Modules:
 - r.coin fixed (hopefully) (Markus Neteler)
 
 - again general sites import bug (in beta6a-d) fixed
-- s.surf.idw import routine updated (Job Spijker, Markus Neteler)
 - s.in.ascii fixed for x y z datasets (like DEM) (Markus Neteler)
+- s.surf.idw import routine updated (Job Spijker, Markus Neteler)
+- s.probplt: bugfix on sites read (Job Spijker)
 - s.sample fix (Markus Neteler)
 
+- v.bubble: added (Job Spijker)
 - v.in.arc should be fixed (Werner Droege, Alex Shevlakov)
 - v.in.dxf2 added (Ben Johnson)
+- v.report: fixed km conversion factor (Markus Neteler)
 
 Shells:
+- d.monsize: script to (re-)set GRASS monitor size (Anantha Prasad)
+- d.rast.leg2 added (display raster map with legend)
 - i.tasscap.tm5: updated for GRASS 5 (Markus Neteler)
 - r.reclass.area: updated for GRASS 5 (Markus Neteler)
 - slide.show.sh: addec parameter "prefix" to display only selected
