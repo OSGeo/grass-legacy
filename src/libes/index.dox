@@ -46,7 +46,7 @@ Main web site: http://grass.itc.it
 <li>dlg <!-- a href="dlglib.html" -->library to manage DLG files</a>
 <li>dspf <!-- a href="dspflib.html" -->G3D display files library</a>
 <li>curses <!-- a href="editlib.html" -->curses (in gis/ directory)</a>
-<li>g3d <!-- a href="g3dlib.html" -->G3D raster volume library</a>
+<li>g3d <a href="g3dlib.html">G3D raster volume library</a>
 <li>gis <a href="gislib.html">GRASS GIS library</a>, with following main subsections:
 <ul>
  <li> <a href="gisrasterlib.html">Raster File Processing</a>
