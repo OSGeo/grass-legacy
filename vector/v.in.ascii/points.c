@@ -242,12 +242,16 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
 	    for ( i = 0; i < ntokens; i++ ) {
 		if ( i > 0 ) db_append_string (&sql, ", " );
 
-		if ( coltype[i] == DB_C_TYPE_INT || coltype[i] == DB_C_TYPE_DOUBLE ) {
-		    sprintf ( buf2, "%s", tokens[i] );
-		} else { 
-		    db_set_string (&val, tokens[i]);
-		    db_double_quote_string ( &val );
-		    sprintf ( buf2, "'%s'", db_get_string ( &val ) );
+		if ( strlen(tokens[i]) > 0 ) {
+		    if ( coltype[i] == DB_C_TYPE_INT || coltype[i] == DB_C_TYPE_DOUBLE ) {
+			sprintf ( buf2, "%s", tokens[i] );
+		    } else { 
+			db_set_string (&val, tokens[i]);
+			db_double_quote_string ( &val );
+			sprintf ( buf2, "'%s'", db_get_string ( &val ) );
+		    }
+		} else {
+		    sprintf ( buf2, "null" );
 		}
 		db_append_string (&sql, buf2 );
 	    }
