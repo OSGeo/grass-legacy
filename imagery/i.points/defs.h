@@ -27,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-    char name[100];
+    char *name;
     struct Ref ref;
     struct Control_Points points;
     double E12[3], N12[3], E21[3], N21[3];
