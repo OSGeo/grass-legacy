@@ -61,13 +61,13 @@ int main(
     min->key                    = "min";
     min->type                   = TYPE_DOUBLE;
     min->required               = NO;
-    min->description            = "minimum radius for ring/circle map";
+    min->description            = "minimum radius for ring/circle map (in meters)";
 
     max = G_define_option();
     max->key                    = "max";
     max->type                   = TYPE_DOUBLE;
     max->required               = NO;
-    max->description            = "maximum radius for ring/circle map";
+    max->description            = "maximum radius for ring/circle map (in meters)";
 
     mult = G_define_option();
     mult->key                    = "mult";
