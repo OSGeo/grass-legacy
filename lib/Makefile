@@ -12,8 +12,8 @@ SUBDIRS = \
 	edit \
 	external \
 	fonts \
-	form \
 	gis \
+	form \
 	image \
 	imagery \
 	linkm \
