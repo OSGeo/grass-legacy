@@ -1,0 +1,9 @@
+PGM=r3.in.grid3
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): main.o grid3_data.o grid3_header.o $(GISLIB) $(G3DLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o grid3_data.o grid3_header.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(G3DLIB): #
+$(GISLIB): #
+

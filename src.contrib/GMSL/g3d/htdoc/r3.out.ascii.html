@@ -1,0 +1,58 @@
+
+<A NAME="r3.out.ascii">
+<!-- This file added 4/11/96 -->
+<H2>r3.out.ascii</H2>
+<H4>
+<B>Usage:</B><BR>
+ r3.out.ascii [-h] map=name [output=name]<BR>
+<BR>
+<B>Flags:</B><BR>
+<TABLE compact>
+<TD align=right> <I>-h</I> <TD align=left> Suppress printing of header information <TR>
+</TABLE>
+<BR>
+<B>Parameters:</B><BR>
+<TABLE compact>
+<TD align=right> <I>map</I> <TD align=left> G3d raster map to be converted to ascii <TR>
+<TD align=right> <I>output</I> <TD> Name for ascii output file <TR> 
+<TD align=right> <I>null</I> <TD> Char string to represent no data cell <BR> default: *<TR>
+</TABLE>
+</H4>
+
+<P>
+Outputs <I>G3D</I> maps in <I>ascii</I> format.  <I>map</I> is
+a valid G3D map in the current mapset.  <I>output</I> is the name of
+an ascii file which will be written in the current working directory.
+If <I>output</I> is not specified then <B>stdout</B> is used.  The
+<I>-h</I> flag may be used to suppress header information.
+</P>
+
+<P>
+The default format for the ascii file is equivalent to that required
+by <B>r3.in.ascii</B>.  In particular, files output by
+<B>r3.out.ascii</B> with header information may be converted back to
+G3D maps with <B>r3.in.ascii</B>.
+</P>
+
+<P>
+The format for the ascii file is:
+<TABLE>
+<TD align=left> north: <TD align=let> <EM>floating point</EM> <TR>
+<TD> <TT>south:</TT> 	<TD> <EM>floating point</EM> <TR>
+<TD> <TT>east:</TT> 	<TD> <EM>floating point</EM> <TR>
+<TD> <TT>west:</TT> 	<TD> <EM>floating point</EM> <TR>
+<TD> <TT>top:</TT> 	<TD> <EM>floating point</EM> <TR>
+<TD> <TT>bottom:</TT> 	<TD> <EM>floating point</EM> <TR>
+<TD> <TT>rows:</TT> 	<TD> <EM>integer</EM> <TR>
+<TD> <TT>cols:</TT>	<TD> <EM>integer</EM> <TR>
+<TD> <TT>levels:</TT> 	<TD> <EM>integer</EM> <TR>
+</TABLE>
+The header is followed by cell values in <I>floating point</I> format.
+Cell values are output as a series of horizontal slices in row-major
+order.  That is, 
+<TABLE>
+<TD align=center> (x, y, z) <TD align=center> (x + 1, y, z) <TD align=center> ... <TD align=center> (x + cols, y, z) <TR>
+<TD> (x, y + 1, z) <TD> (x + 1, y + 1, z) <TD> ... <TD> and so on <TR>
+</TABLE>
+
+<HR>

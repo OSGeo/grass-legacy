@@ -1,0 +1,9 @@
+PGM=r3.in.ascii
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): main.o $(G3DLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(G3DLIB): #
+$(GISLIB): #
+
