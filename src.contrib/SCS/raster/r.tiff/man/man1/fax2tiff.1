@@ -1,0 +1,234 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/fax2tiff.1,v 1.7 90/11/25 11:34:11 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH FAX2TIFF 1 "May 2, 1990"
+.SH NAME
+fax2tiff \- create a
+.SM TIFF
+Class F fax file from raw fax data
+.SH SYNOPSIS
+.B fax2tiff
+[
+.B \-1
+] [
+.B \-2
+] [
+.B \-4
+] [
+.B \-c
+] [
+.B \-f
+] [
+.B \-k
+] [
+.B \-l
+] [
+.B \-o
+.I tiff-file
+] [
+.B \-p
+] [
+.B \-r
+] [
+.B \-s
+] [
+.B \-v
+] [
+.B \-w
+] [
+.B \-O
+]
+.I fax-files
+.SH DESCRIPTION
+.I Fax2tiff
+creates a
+.SM TIFF
+file containing 
+.SM CCITT
+Group 3 or Group 4 encoded data from one or more files containing ``raw''
+Group 3 encoded data (typically obtained directly from a fax modem).
+Each row of data in the resultant
+.SM TIFF
+file is 2-dimensionally encoded and
+padded or truncated to 1728 pixels, as needed.
+The resultant image is series of medium resolution (200 lpi)
+pages, each of which is a single strip of data.
+By default, the image conforms to the proposed
+.SM TIFF
+Class F (\c
+.SM FAX )
+specification for storing facsimile data.
+This means, in particular, that each page of the data does
+.B not
+include the leading blank line or trailing 
+.I "return to control"
+(\c
+.SM RTC\c
+) code; as required
+for transmission by the
+.SM CCITT
+Group 3 specifications.
+The old, ``classic'', format is created if the
+.B \-c
+option is used.
+(The Class F format can also be requested with the
+.B \-f
+option.)
+.PP
+The default name of the output image is
+.IR fax.tif ;
+this can be changed with the
+.B \-o
+option.
+Each input file is assumed to be a separate page of facsimile data
+from the same document.
+The order in which input files are specified on the command
+line is the order in which the resultant pages appear in the
+output file.
+.PP
+By default, the output file is compressed with the 2-dimensional
+version of the
+.SM CCITT
+Group 3 Huffman encoding algorithm.
+If the
+.B \-1
+option is specified, 1-dimensional Huffman encoding will be used.
+If the
+.B \-4
+option is specified,
+.SM CCITT
+Group 4 Huffman encoding will be used.
+.PP
+By default, the output file is created with bits filled from
+least significant bit (\c
+.SM LSB\c
+) to least significant bit (\c
+.SM MSB\c
+).
+This 
+.I "fill order"
+can be reversed with the
+.B \-O
+option.
+.I Fax2tiff
+expects that the bit ordering of data in the input file are
+likewise set from
+.SM LSB
+to
+.SM MSB.
+If the reverse is true, the
+.B \-r
+flag should be specified.
+.PP
+To force the last bit of each
+.I "End Of Line"
+(\c
+.SM EOL\c
+) code to land on a byte boundary, the
+.B \-p
+flag should be specified.
+This ``zero padding'' will be reflected in the contents of the
+.I Group3Options
+tag of the resultant
+.SM TIFF
+file.
+.PP
+By default,
+.I fax2tiff
+assumes that alll input files contain 1-dimensionally
+encoded Group 3 data.
+If the
+.B \-2
+option is specified,
+.I fax2tiff
+will assume the input files contain 2-dimensionally
+encoded Group 3 data.
+.PP
+The input data are assumed to have a vertical
+resolution of 200 lines/inch.
+If the images are low resolution facsimile (100 lpi),
+the
+.B \-l
+flag should be specified.
+.PP
+By default,
+.I fax2tiff
+prints only diagnostics about badly formed input rows.
+If the
+.B \-w
+flag is supplied,
+additional warning information will be printed 
+about input data rows that are longer or shorter than 1728 pixels.
+.PP
+If the
+.B \-v
+option is specified,
+.I fax2tiff
+will print the number of rows of data it retrieved from the input file.
+If this option is given twice, voluminous information about the
+length of each encoded run in the input file will be printed.
+.PP
+Some fax files have garbage information at their front.
+The
+.B \-k
+flag causes
+.I fax2tiff
+to skip three rows of input data before starting to its normal operation.
+(It
+.B should
+skip rows until a row with a just an
+.SM EOL
+is encountered.)
+.PP
+For viewing, a one-to-one row conversion of fax data results
+in an image that appears squashed.
+If the
+.B \-s
+flag is supplied,
+.I fax2tiff
+will ``stretch'' the image vertically by writing each row of
+input data twice in the output file.
+.SH DIAGNOSTICS
+.BR "%s: Warning, row %d short (len %d).\en" .
+The input data had a row that was shorter than the expected value of 1728.
+The row is padded with white.
+.PP
+.BR "%s: Bad code word at row %d, x %d (len %d code 0x%x), skipping to EOL\en" .
+An invalid Group 3 
+.I code
+was encountered while decoding the input file. 
+The length of the code (in bits) and its value is displayed.
+The row number and horizontal position is also given.
+The remainder of the input row is discarded, while
+the corresponding output row is padded with white.
+.PP
+Some internal errors that should never happen.
+.SH NOTES
+This program is derived from a similar program by Paul Haeberli
+and uses code written by Jef Poskanzer.
+.SH BUGS
+Should synchronize finding the top of the input file by looking for
+a row with just an
+.SM EOL .
+Should not have the constant width 1728 built into it.
+Input data are assumed to have a a ``top left'' orientation;
+it should be possible to override this assumption
+from the command line.
+.SH "SEE ALSO"
+.SM CCITT
+Recommendation T.4 (Standardization of Group 3 Facsimile Apparatus for Document Transmission)
+.br
+.IR "The Spirit of TIFF Class F" ,
+an appendix to the TIFF 5.0 specification prepared by Cygnet Technologies.
+.br
+.IR tiffinfo (1),
+.IR tiffdither (1),
+.IR tiffgt (1),
+.IR libtiff (3).
