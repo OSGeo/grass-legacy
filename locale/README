@@ -47,64 +47,73 @@ module messages (this might be split in future).
 ------------------------------------------------------
 DETAILED PROCEDURE:
 
-1. CREATE POT FILES
+1. Define/check language settings
+
+   echo $LANG
+ 
+   Maybe you have to change it (example for Japanese):
+   - for bash shell:
+       export LANG=ja_JP
+   - for (t)csh shell:
+       setenv LANG ja_JP
+
+2. CREATE POT FILES
    run
     make pot
     
    This will create
     ./templates/grasslibs.pot
     ./templates/grassmods.pot
+       
     
-    
-    
-2. CREATE LANGUAGE FILES
+3. CREATE LANGUAGE FILES
 
    Two cases have to be distinguished:
     a) Messages have not yet been translated to your language.
     b) Some messages have already been translated to your language,
        so you want to merge your efforts into the existing translation.
        
-2.a) First CASE: Messages have not yet been translated to your language.
-     No .po file is present for your language in the ./po/ directory.
+  3.a) First CASE: Messages have not yet been translated to your language.
+       No .po file is present for your language in the ./po/ directory.
       
-   Run:
-    make pot
-    make update-po
+       Run:
+        make pot
+        make update-po
  
-   Rename the generated file in the ./po/ directory:
+       Rename the generated file in the ./po/ directory:
    
-   For example (German):
-    mv ./po/grasslibs.pot ./po/grasslibs_de.po
-    mv ./po/grassmods.pot ./po/grassmods_de.po
+       For example (German):
+        mv ./po/grasslibs.pot ./po/grasslibs_de.po
+        mv ./po/grassmods.pot ./po/grassmods_de.po
 
 
-2.b) Second CASE: Some messages have already been translated to 
-      your language (files present in ./po/ directory), and
-      you want to continue with translating new and still
-      untranslated messages.
+  3.b) Second CASE: Some messages have already been translated to 
+       your language (files present in ./po/ directory), and
+       you want to continue with translating new and still
+       untranslated messages.
 
-    First we have to merge new messages into existing .po files 
-    (which contain already translated messages) as new messages
-    might have been added into the GRASS system. 
-    To do so, run:
+       First we have to merge new messages into existing .po files 
+       (which contain already translated messages) as new messages
+       might have been added into the GRASS system. 
+       To do so, run:
     
-    make pot
-    make update-po
+       make pot
+       make update-po
     
-    This will update all existing files in the .po directory.
+       This will update all existing files in the .po directory.
     
 
 
-3. TRANSLATE MESSAGES
+4. TRANSLATE MESSAGES
    Run 'kbabel' or equivalent program
-    kbabel ./po/grasslibs_$LANG.po
-    kbabel ./po/grassmods_$LANG.po
+    kbabel ./po/grasslibs_<LANGUAGE>.po
+    kbabel ./po/grassmods_<LANGUAGE>.po
 
    For example (German):
     kbabel ./po/grasslibs_de.po
     kbabel ./po/grassmods_de.po
 
-   KBABEL: You may load .po files from other projects [1]
+   KBABEL: You may load .po files from other projects [see footnote 1]
    
    Pay attention to keep '%s', '\n' and other stuff also 
    in the translated messages!
@@ -113,7 +122,7 @@ DETAILED PROCEDURE:
 
 
      
-4. CREATE MO FILES
+5. CREATE MO FILES
 
    run
     make mo
@@ -121,7 +130,7 @@ DETAILED PROCEDURE:
    READY.
 
 
-5. Now run GRASS (maybe recompile first).
+6. Now run GRASS (maybe recompile first).
    To test the language, check
      echo $LANG
 
@@ -131,7 +140,7 @@ DETAILED PROCEDURE:
    to enable (German) language support if present in the system.
    
 
-6. Send the updated .po files to a GRASS Development Team member.
+7. Send the updated .po files to a GRASS Development Team member.
    If you already updated .c files with _(...) macro as explained
    above, please send diffs against CVS:
    
@@ -146,7 +155,12 @@ PLEASE HELP TO TRANSLATE GRASS MESSAGES!
 
 NOTES
 
-[1] TS files -> PO files converter:
+[1] To load existing .po files (eg from older GRASS versions) into
+    Kbabel, use
+    KBABEL -> SETTINGS -> CONFIGURE DIRECTORY -> PO AUXILIARY
+
+[2] To use QGIS' TS files, you have to convert them to PO format.
+    TS files -> PO files converter:
     To translate the .ts files e.g. from QGIS to .po files, 
     use
       http://oss.erdfunkstelle.de/ts2msg/index.shtml
@@ -154,7 +168,3 @@ NOTES
     cd qgis/i18n
     ts2msg utf8 qgis_de.ts
     -> qgis_de.po
-
-    To load such existing .po files, use 
-    KBABEL -> SETTINGS -> CONFIGURE DIRECTORY -> PO AUXILIARY
-
