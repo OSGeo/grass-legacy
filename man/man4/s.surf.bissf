@@ -1,0 +1,82 @@
+.TH s.surf.bissf
+.SH NAME
+\fIs.surf.bissf\fR \- Bivariate Interpolation and Smooth Surface Fitting.
+.br
+.I (GRASS Sites Program)
+.SH SYNOPSIS
+\fBs.surf.bissf\fR
+.br
+\fBs.surf.bissf help\fR
+.br
+." \fBs.surf.bissf \fR[\fB-alq\fR] \fBinput\*=\fIname1\fR [\fBcv\*=\fIname2\fR] [\fBoutput\*=\fIname3\fR]
+\fBs.surf.bissf \fR[\fB-alq\fR] \fBinput\*=\fIname\fR [\fBoutput\*=\fIname\fR]
+.SH DESCRIPTION
+.I s.surf.bissf
+uses a method of bivariate interpolation and smooth surface fitting
+to interpolate sites list to a grid defined by the current region.
+The interpolating function
+is a fifth\-degree polynomial determined by given z values
+and estimated partial derivatives at the vertices of triangulated
+cells. 
+.LP
+\fBFlags:\fR
+.IP \fB-l\fR 18
+Use site descriptions (category labels) for z values (see \fBNOTES\fR).
+.IP \fB-q\fR 18
+Quiet. Cut out the chatter.
+.LP
+\fBParameters:\fR
+.IP \fBinput\*=\fIname\fR 18
+Name of an existing sites list containing data points.
+." .IP \fBcv\*=\fIname\fR 18
+." Optional name of an existing sites list containing interpolation points.
+." Default is to define the grid from the current region, set using
+." .I g.region. 
+." This option is useful for cross\-validation (perhaps in conjunction with
+." .I s.kcv).
+.IP \fBoutput\*=\fIname\fR 18
+Optional name of a new sites list to store results. 
+If no name is given for the output,
+results are written to standard output (in a format suitable for
+use with \fIg.gnuplot\fR).
+.SH NOTES
+Default format for sites list is just three pipe-separated floating point
+numbers (\fBE|N|\fIlabel\fR). If sites have \fI#n\fR inserted
+between the northing and the label (\fBE|N|\fI#n label\fR), then the 
+\fB-l\fR flag will skip over the \fI#n\fR. Non-numeric labels may
+either be ignored or cause errors.
+.LP
+Interpolation grid is defined by the current region settings.
+Sites not falling within the current region are ignored.
+.LP
+\fIs.surf.bissf\fR was adapted from FORTRAN subroutines \fIIDSFFT\fR
+and \fIIDBVIP\fR by Akima (1978a). Details of the method are given in the
+accompanying paper (Akima, 1978b).  This GRASS program is the result 
+of converting his code (Akima, 1978a) from FORTRAN to C using \fIf2c\fR.
+.SH SEE ALSO
+.I g.region,
+.I s.kcv,
+.I g.gnuplot,
+.I s.delaunay,
+.LP
+Akima, Hiroshi. 1978a. ALGORITHM 526. Bivariate Interpolation
+and Smooth Surface Fitting for Irregularly Distributed Data Points.
+.I ACM Trans. Math. Software
+4(2):160-164, 
+.LP
+and
+.LP
+Akima, Hiroshi. 1978b. A Method of Bivariate Interpolation
+and Smooth Surface Fitting for Irregularly Distributed Data Points.
+.I ACM Trans. Math. Software
+4(2):148-159.
+.SH BUGS
+The cross validation module still needs to be included.
+.LP
+Please send all bug fixes and comments to the author.
+.SH AUTHOR
+FORTRAN to C conversion and incorporation into GRASS by
+.br
+James Darrell McCauley, Purdue University 
+.if n .br 
+(mccauley@ecn.purdue.edu)
