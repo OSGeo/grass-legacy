@@ -1,0 +1,66 @@
+
+
+
+Dslide.show(2D)      GRASS Reference Manual       Dslide.show(2D)
+
+
+
+NAME
+     Dslide.show - Displays a series of mapset cell files on the
+     monitor
+     (D Language Tool)
+
+SYNOPSIS
+     Dslide.show [across=num] [down=num] [mapsets=list]
+
+DESCRIPTION
+     Dslide.show is a UNIX Bourne shell macro which clears the
+     entire screen, creates a series of windows on the screen,
+     and displays in slideshow format each of the cell files in
+     the user's mapset.  This is a shell script example which
+     makes extensive use of GRASS and UNIX commands.
+
+     The arguments control the execution:
+
+
+     across=     The number of display windows across the screen.
+                 Defaults to four.
+
+     down=       The number of display windows down the screen.
+                 Defaults to three.
+
+     mapsets=    The names of the mapsets to be displayed.
+                 Defaults to those set by the GRASS mapsets
+                 program.
+
+
+SEE ALSO
+     DINTRO[2D], mapsets[1]
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
