@@ -97,7 +97,7 @@ proc set_display { dtype } {
     }	
 
     if { $dtype == "z" } {
-	set cmd "d.zoom -q"
+	set cmd "d.zoom"
 	execute $cmd
     }	
 
