@@ -1,109 +1,110 @@
-<html>
+<HTML>
 
-<title>d.sites.label</title>
+<TITLE>d.sites.label</TITLE>
 
-<body bgcolor="white">
+<BODY bgcolor="white">
 
-<img src="grass.smlogo.gif">
+<IMG src="grass.smlogo.gif">
 
-<hr width="100%" align=center size=6 noshade>
+<HR width="100%" align=center size=6 noshade>
 
-<h2>NAME</h2>
+<H2>NAME</H2>
 
-<em><b>d.sites.label</b></em> - Labels sites using a string or double 
+<EM><B>d.sites.label</B></EM> - Labels sites using a string or double 
 attribute value or the category value on the current graphics monitor.
-<br>
-<em>(GRASS Display Program)</em>
+<BR>
+<EM>(GRASS Display Program)</EM>
 
-<h2>SYNOPSIS</h2>
+<H2>SYNOPSIS</H2>
 
-<b>d.sites.label</b><br>
-<b>d.sites.label sitefile=</b><em>name</em>
-	[<b>attr=</b>string|cat|double|coords|dim]
-	[<b>index=</b><em>number</em>]
-	[<b>anchor=</b>c|n|s|e|w|ne|nw|se|sw]
-	[<b>color=</b><em>colorname</em>]
-	[<b>font=</b><em>fontname</em>]
-	[<b>width=</b><em>number</em>]
-	[<b>height=</b><em>number</em>]
+<B>d.sites.label</B><BR>
+<B>d.sites.label sitefile=</B><EM>name</EM>
+	[<B>attr=</B>string|cat|double|coords|dim]
+	[<B>index=</B><EM>number</EM>]
+	[<B>anchor=</B>c|n|s|e|w|ne|nw|se|sw]
+	[<B>color=</B><EM>colorname</EM>]
+	[<B>font=</B><EM>fontname</EM>]
+	[<B>width=</B><EM>number</EM>]
+	[<B>height=</B><EM>number</EM>]
 
-<h2>DESCRIPTION</h2>
+<H2>DESCRIPTION</H2>
 
-<p>
+<P>
 
-<em>d.sites.label</em> displays labels for a GRASS <em>sites_list</em> on the
+<EM>d.sites.label</EM> displays labels for a GRASS <EM>sites_list</EM> on the
 current graphics monitor.  Labels can be chosen from the category value, a
 double attribute or a string attribute, the coordinates, or a dimension.  The
-default uses the first string attribute. The <em>index</em> is a number greater
+default uses the first string attribute. The <EM>index</EM> is a number greater
 than zero for the attribute to use as a label.  The user may select the
 position, color and sizing of the labels.  Labels are only drawn within the
 current region.
 
-</p>
-<p>
+ 
+<P>
 This program can be run non-interactively or interactively.  If the user
-gives the name of a GRASS <em>sites_list</em> and (optionally) any other
+gives the name of a GRASS <EM>sites_list</EM> and (optionally) any other
 parameters, the command will be run non-interactively.  Any parameter
 left unspecified will be set to its default value (see below). Alternatively,
-the user can type <em>d.sites.label</em> at the command line and be prompted
+the user can type <EM>d.sites.label</EM> at the command line and be prompted
 for the parameter values using the standard GRASS 
-<em><a href="parser.html">parser</a></em> interface.
-</p>
+<EM><A HREF="parser.html">parser</A></EM> interface.
+ 
 
-<h3>Parameters:</h3>
+<H3>Parameters:</H3>
 
-<dl>
-<dt><b>sitefile=</b><em>name</em>
-<dd>Name of a GRASS <em>sites_list</em> map in the user's current mapset
+<DL>
+<DT><B>sitefile=</B><EM>name</EM>
+<DD>Name of a GRASS <EM>sites_list</EM> map in the user's current mapset
 	search path.
-<dt><b>attr=</b>string|cat|double|coords|dim
-<dd>Type of attribute to use for the label.<br>
-Default: <em>string</em>
-<dt><b>index=</b><em>number</em>
-<dd>Index number to the attribute. For instance, <em>3</em> would request
+<DT><B>attr=</B>string|cat|double|coords|dim
+<DD>Type of attribute to use for the label.<BR>
+Default: <EM>string</EM>
+<DT><B>index=</B><EM>number</EM>
+<DD>Index number to the attribute. For instance, <EM>3</EM> would request
 values from the third attribute column. This option is ignored if the
-<em>attr</em> option is set to <em>cat</em> or <em>coords</em>.<br>
-Default: <em>1</em>
-<dt><b>anchor=</b>c|n|s|e|w|ne|nw|se|sw
-<dd>Where to place the label in relation to the site point.<br>
-Default: <em>c</em> (Center)
-<dt><b>color=</b><em>colorname</em>
-<dd>The GRASS <em>colorname</em> to use for the label text.<br>
+<EM>attr</EM> option is set to <EM>cat</EM> or <EM>coords</EM>.<BR>
+Default: <EM>1</EM>
+<DT><B>anchor=</B>c|n|s|e|w|ne|nw|se|sw
+<DD>Where to place the label in relation to the site point.<BR>
+Default: <EM>c</EM> (Center)
+<DT><B>color=</B><EM>colorname</EM>
+<DD>The GRASS <EM>colorname</EM> to use for the label text.<BR>
 Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
-	gray, white or black<br>
-Default: <em>green</em>
-<dt><b>font=</b><em>fontname</em>
-<dd>The GRASS <em>fontname</em> to use for the label.<br>
+	gray, white or black<BR>
+Default: <EM>green</EM>
+<DT><B>font=</B><EM>fontname</EM>
+<DD>The GRASS <EM>fontname</EM> to use for the label.<BR>
 Options: cyrilc, gothgbt, gothgrt, gothitt, greekc, greekcs, greekp,
 	greeks, italicc, italiccs, italict, romanc, romancs, romand, 
-	romans, romant, scriptc or scripts<br>
-Default: <em>romanp</em>
-<dt><b>width=</b><em>number</em>
-<dd>The width of letters in pixels.<br>
-Default: <em>10</em>
-<dt><b>height=</b><em>number</em>
-<dd>The height of letters in pixels.<br>
-Default: <em>10</em>
-</dl>
+	romans, romant, scriptc or scripts<BR>
+Default: <EM>romanp</EM>
+<DT><B>width=</B><EM>number</EM>
+<DD>The width of letters in pixels.<BR>
+Default: <EM>10</EM>
+<DT><B>height=</B><EM>number</EM>
+<DD>The height of letters in pixels.<BR>
+Default: <EM>10</EM>
+</DL>
 
-<h2>SEE ALSO</h2>
+<H2>SEE ALSO</H2>
 
-<em><a href="d.display.html">d.display</a></em><br>
-<em><a href="d.icons.html">d.icons</a></em><br>
-<em><a href="d.points.html">d.points</a></em><br>
-<em><a href="d.rast.html">d.rast</a></em><br>
-<em><a href="d.vect.html">d.vect</a></em><br>
-<em><a href="g.region.html">g.region</a></em><br>
-<em><a href="parser.html">parser</a></em>
+<EM><A HREF="d.display.html">d.display</A></EM><BR>
+<EM><A HREF="d.icons.html">d.icons</A></EM><BR>
+<EM><A HREF="d.sites.html">d.sites</A></EM><BR>
+<EM><A HREF="d.points.html">d.points</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.vect.html">d.vect</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
 
 
-<h2>AUTHOR</h2>
-<p>
-Eric G. Miller, <em>Unknown others</em>
-</p><p>
-<em>$Id$</em>
-</p>
-</body>
-</html>
+<H2>AUTHOR</H2>
+<P>
+Eric G. Miller, <EM>Unknown others</EM>
+ <P>
+<EM>$Id$</EM>
+ 
+</BODY>
+</HTML>
 
 
