@@ -1,0 +1,11 @@
+/* %W% %G% */
+#include <stdio.h>
+
+usage(me)
+{
+    char buf[300];
+
+    sprintf (buf, "usage: %s [-v] elev=file", me);
+    G_fatal_error (buf);
+    exit(1);
+}
