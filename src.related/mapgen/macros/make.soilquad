@@ -1,0 +1,241 @@
+#!/bin/sh
+#CHECK.MAP
+tmp=`date +%H%M%S`
+for i in  fills lines misc labels ovm
+do
+if test ! -d $i; then
+	mkdir $i
+fi
+done
+if test ! -d fills/cat; then
+	mkdir fills/cat
+fi
+
+############## SET projection information for converting GRASS data ############
+cat $LOCATION/WIND | awk '/zone:/ {print "ZONE="$2}
+/proj:/ {print "PROJ="$2}
+/east:/ {printf "EAST=`expr %.0f + 100`\n",$2}
+/west:/ {printf "WEST=`expr %.0f - 100`\n",$2}
+/north:/ {printf "NORTH=`expr %.0f + 100`\n",$2}
+/south:/ {printf "SOUTH=`expr %.0f - 100`\n",$2}' > mapwin
+
+#set window and change projection
+echo export PROJ ZONE EAST WEST NORTH SOUTH >> mapwin
+. mapwin
+
+proj=$PROJ
+
+if test $PROJ = 1
+	then
+	PROJ=utm
+	PARMS=+zone=$ZONE
+	echo +proj=$PROJ $PARMS > .PARMS
+	proj +proj=$PROJ $PARMS +inv - << EOF > mapwin
+$WEST $NORTH
+$EAST $SOUTH
+EOF
+elif test $PROJ = 4; then
+	PROJ=aea
+	echo "Your current window indicates an Alberts Equal-Area Projection."
+	echo -n "Enter the latitude and longitude for the central meridian [23 -96] "
+	read LAT LON
+	echo
+	LAT=${LAT:-23}; LON=${LON:--96}
+	echo -n "Enter the standard parallels [29.5 45.5] "
+	read LAT1 LAT2
+	echo
+	LAT1=${LAT1:-29.5}; LAT2=${LAT2:-45.5}
+	echo "+proj=$PROJ +inv +lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2" > .PARMS
+	proj +proj=$PROJ +inv +lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2 -  << EOF > mapwin
+$WEST $NORTH
+$EAST $SOUTH
+EOF
+	echo -n "Enter the MAPGEN projection abreviation for the output map [aea] "
+	read PROJ
+	echo
+	PROJ=${PROJ:-aea}
+	echo "Enter the appropriate MAPGEN parameters for this projection"
+	echo -n "[+lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2] "
+	read PARMS
+	echo
+	PARMS=${PARMS:-"+lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2"}
+else 
+	echo "Current window is not UTM or AEA assuming LAT/LON"
+	cat $LOCATION/WIND | awk '/zone:/ {print "ZONE="$2}
+	/proj:/ {print "PROJ="$2}
+	/east:/ {printf "EAST=%.4f\n",$2}
+	/west:/ {printf "WEST=%.4f\n",$2}
+	/north:/ {printf "NORTH=%.4f\n",$2}
+	/south:/ {printf "SOUTH=%.4f\n",$2}' > mapwin
+	. mapwin
+	echo ${WEST}d ${NORTH}d > mapwin
+	echo ${EAST}d ${SOUTH}d >> mapwin
+	echo -n "Enter the projection abreviation for the output map: "
+	read PROJ
+	echo
+	echo "Enter the appropriate parameters for this projection"
+	echo -n ": "
+	read PARMS
+	echo
+	echo > .PARMS
+fi
+
+rm mapwin
+
+########## create the map definition file ########################
+
+echo "Enter the latitude and longitude in degrees and minutes for the"
+echo -n "lower left corner of this quad (35 52.5 81 22.5): "
+read Dlat Mlat Dlon Mlon
+echo
+
+WEST=`cal.degree $Dlon $Mlon + 0`
+WEST="${WEST}dw"
+EAST=`cal.degree $Dlon $Mlon - 7.5`
+EAST="${EAST}dw"
+SOUTH=`cal.degree $Dlat $Mlat - 0`
+SOUTH="${SOUTH}dn"
+NORTH=`cal.degree $Dlat $Mlat + 7.5`
+NORTH="${NORTH}dn"
+
+ANGLE=`get_angle $WEST`
+sed -e "s/WEST/$WEST/" -e "s/EAST/$EAST/" -e "s/SOUTH/$SOUTH/" -e "s/NORTH/$NORTH/" -e "s/ANGLE/$ANGLE/" $GRAPH/etc/soilsquad/map.def.par > map.def.par
+
+mapdef -csm map.def < map.def.par
+
+
+########## Get the QUAD name and GRASS digit file name ################
+
+echo -n "Enter the name of this Quadrangle: "
+read QUAD
+echo
+
+Gask old "" dig "" $tmp
+. $tmp
+rm $tmp
+
+
+echo -n "Is this a check plot [y]es or (n)o: "
+read CHECK
+CHECK=${CHECK:-y}
+echo
+if test "$CHECK" = y; then
+	CHECK="CHECK PLOT"
+else
+	CHECK=""
+fi
+
+echo -n "Do you want the water areas filled [y]es or (n)o:"
+read WATER
+WATER=${WATER:-y}
+echo
+if test "$WATER" = "y"; then
+	echo scale=24000.0 > fills/water
+	echo pat="solid" >> fills/water
+	echo pen=3 >> fills/water
+	echo name=$name >> fills/water
+	echo zone=$ZONE >> fills/water
+	echo proj=$proj >> fills/water
+	echo mapset=$mapset >> fills/water
+	echo map=map.def >> fills/water
+	echo catfile=$LOCATION/../$mapset/dig_cats/$name >> fills/water
+	echo cattype=d >> fills/water
+	echo W > fills/cat/water
+	echo water >> fills/cat/water
+fi
+
+echo -n "Do you want the unlabeled areas filled [y]es or (n)o:"
+read UNLAB
+UNLAB=${UNLAB:-y}
+echo
+if test "$UNLAB" = "y"; then
+	echo scale=24000.0 > fills/holes
+	echo pat="solid" >> fills/holes
+	echo pen=2 >> fills/holes
+	echo name=$name >> fills/holes
+	echo zone=$ZONE >> fills/holes
+	echo proj=$proj >> fills/holes
+	echo mapset=$mapset >> fills/holes
+	echo map=map.def >> fills/holes
+	echo catfile=$LOCATION/../$mapset/dig_cats/$name >> fills/xxx
+	echo cattype=n >> fills/holes
+	echo 0 > fills/cat/holes
+fi
+
+echo -n "Do you want the bad areas filled [y]es or (n)o:"
+read UNLAB
+UNLAB=${UNLAB:-y}
+echo
+if test "$UNLAB" = "y"; then
+	echo scale=24000.0 > fills/xxx
+	echo pat="solid" >> fills/xxx
+	echo pen=2 >> fills/xxx
+	echo name=$name >> fills/xxx
+	echo zone=$ZONE >> fills/xxx
+	echo proj=$proj >> fills/xxx
+	echo mapset=$mapset >> fills/xxx
+	echo map=map.def >> fills/xxx
+	echo catfile=$LOCATION/../$mapset/dig_cats/$name >> fills/xxx
+	echo cattype=d >> fills/xxx
+	echo xxx > fills/cat/xxx
+fi
+
+DATE="`date +'%h %d 19%y'`"
+
+
+echo "Enter one line for state and county information"
+echo -n ": "
+read STATE
+STATE=`echo $STATE | tr \[a-z\] \[A-Z\]`
+echo Please wait while I process the map....
+
+cp $GRAPH/etc/soilsquad/misc/* misc
+
+sed -e "s/STATE_C/$STATE/" -e "s/DATE/$DATE/" -e "s/QUADN/$QUAD/" \
+-e "s/CHECK/$CHECK/" $GRAPH/etc/soilsquad/misc/text > misc/text
+chmod 755 misc/*
+
+if test ! -f ../sites_geo/$name; then
+cat.to.geo << EOF > /dev/null
+$name
+EOF
+fi
+
+if test ! -f ../dig_geo/$name; then
+dig.to.geo << EOF > /dev/null
+$name
+EOF
+fi
+
+echo "mdef=map.def
+name=$name
+pen=1
+size=.2
+rot=0
+just=l
+font=sr
+x=0
+y=0 " > labels/$name.l
+
+
+echo pen=1 > lines/$name
+echo name=$name >> lines/$name
+echo mdef=map.def >> lines/$name
+echo ltype=s >> lines/$name
+echo dsize= >> lines/$name
+
+redo << EOF > /dev/null
+fills misc lines labels
+EOF
+
+tput clear
+echo
+echo "	To plot this map the following colors must be in the pen indicated"
+echo
+echo "	PEN 		COLOR"
+echo "	---		-----"
+echo "	 1		black"
+echo "	 2		red"
+echo "	 3		blue"
+echo
+
