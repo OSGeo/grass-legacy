@@ -7,7 +7,7 @@ OBJ = r.weighted.cn.o\
 	cell_open_new.o
 
 $(BIN)/$(PGM): $(OBJ) $(GISLIB)
-	$(CC) -o $(BIN)/$(PGM) $(LDFLAGS) $(OBJ) $(GISLIB) $(XDRLIB)
+	$(CC) -o $(BIN)/$(PGM) $(LDFLAGS) $(OBJ) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 
 $(GISLIB): #
