@@ -861,7 +861,7 @@
 *
 .SELECT
  +----------------------------------------------------------------------+
- |  SELECT  | * | <link:>column<@format><%title><=S> ...  +             |
+ |  SELECT  | * | <link:>column<jformat><%title><=S> ...  +             |
  |        <FROM table> +                                                |
  |        <WHERE conditions> +                                          |
  |        <SORT <BY> columns> +                                         |
