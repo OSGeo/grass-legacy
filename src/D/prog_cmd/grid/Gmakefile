@@ -1,0 +1,13 @@
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+OFILES = \
+	command.o \
+	plot.o \
+	main.o
+
+$(BIN)/Dgrid: $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB)
+
+command.o: options.h
+main.o:    options.h
+
+$(LIBES): #
