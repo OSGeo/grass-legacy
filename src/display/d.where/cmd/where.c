@@ -7,10 +7,10 @@
 #include "local_proto.h"
 
 static int nlines = 4 ;
-static int header (int,int);
-static int show (char *,int,int);
+static int header (int,int,int);
+static int show (char *,int,int,int);
 
-int where_am_i (int once, int have_spheroid, int decimal)
+int where_am_i (int once, int have_spheroid, int decimal, int wgs84)
 {
 	char buffer[200] ;
 	char buf1[50], buf2[50];
@@ -33,7 +33,7 @@ int where_am_i (int once, int have_spheroid, int decimal)
 	screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 	draw_on = 0 ;
 
-	header(once, have_spheroid);
+	header(once, have_spheroid, wgs84);
 
 	for(;;)
 	{
@@ -79,7 +79,7 @@ int where_am_i (int once, int have_spheroid, int decimal)
 		    sprintf (temp, " %d", button);
 		    strcat (buffer, temp);
 		}
-		show (buffer, once, have_spheroid);
+		show (buffer, once, have_spheroid, wgs84);
 		if (button != 2)
 			draw_on = 0 ;
 
@@ -105,7 +105,7 @@ int where_am_i (int once, int have_spheroid, int decimal)
 	return 0;
 }
 
-static int show (char *buf,int once,int have_spheroid)
+static int show (char *buf,int once,int have_spheroid,int wgs84)
 {
 	fprintf (stdout,"%s\n", buf);
 	if (!isatty(1))
@@ -113,14 +113,14 @@ static int show (char *buf,int once,int have_spheroid)
 
 	if ( nlines >= 21 )
 	{
-	  header(once, have_spheroid);
+	  header(once, have_spheroid, wgs84);
 	  nlines=4;
 	}
 
 	return 0;
 }
 
-static int header (int once,int have_spheroid)
+static int header (int once,int have_spheroid,int wgs84)
 {
   int projection = G_projection() ;
 
@@ -134,6 +134,8 @@ static int header (int once,int have_spheroid)
   else
     fprintf (stderr, "\nClick mouse button on desired location\n\n");
 
+  if (wgs84)
+      fprintf(stderr,"%69s\n","WGS84 Co-ordinates") ;
   if (projection == PROJECTION_LL)
     fprintf(stderr,"%18s %18s","LON:","LAT:") ;
   else
