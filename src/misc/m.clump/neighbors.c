@@ -6,6 +6,13 @@
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #endif
 #endif
+
+#ifdef CRAY
+#ifndef MAX
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#endif
+#endif
+
 /*--------------------------------------------------------------------------*/
 
 void
