@@ -32,6 +32,9 @@ write_ep (struct Edge *e )
 	    if( !Vect_point_in_box(x1,y1,0.0,&Box) || !Vect_point_in_box(x2,y2,0.0,&Box) ) {
 		D_clip( Box.S, Box.N, Box.W, Box.E, &x1, &y1, &x2, &y2 );
 	    }
+
+	    /* Don't write zero length */
+	    if ( x1 == x2 && y1 == y2 ) return 0;
 	    
 	    Vect_reset_line ( Points );
 	    Vect_append_point ( Points, x1, y1, 0.0 );
@@ -54,6 +57,9 @@ write_ep (struct Edge *e )
                              e->a, e->b, e->c, x1, y1, &x2, &y2,
 			     knownPointAtLeft)
 	    ) { 
+		/* Don't write zero length */
+		if ( x1 == x2 && y1 == y2 ) return 0;
+
 		Vect_reset_line ( Points );
 		Vect_append_point ( Points, x1, y1, 0.0 );
 		Vect_append_point ( Points, x2, y2, 0.0 );
