@@ -1,0 +1,5 @@
+interface_build {
+    {d.erase} 0
+    {Erases the contents of the active display frame on the user's graphics monitor.}
+    {entry color {Color to erase with [black]:} 0 color}
+}
