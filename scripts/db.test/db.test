@@ -40,7 +40,7 @@ result=`g.tempfile pid=$$`
 
 while read TYPE
 do
-    read -r SQL
+    read SQL
     echo "$SQL"
 
     # Copy expected result to temp file
@@ -61,7 +61,7 @@ do
         echo "EXECUTE: OK"
     fi
 
-    while read -r RES
+    while read RES
     do
 	if [ -z $RES ]
         then
