@@ -16,8 +16,8 @@
 #include "pad.h"
 #include "utils.h"
 
-#define REC(a,b)    if ((eof=rec((a),(b)))) break
-#define RECTEXT(x,s)  if ((eof=rectext(&x,&s))) break
+#define REC(a,b)    if ((eofile=rec((a),(b)))) break
+#define RECTEXT(x,s)  if ((eofile=rectext(&x,&s))) break
 #define SEND(a,b)   _send((a),(b))
 #define SENDTEXT(x)  sendtext((x))
 
@@ -36,7 +36,7 @@ static int atbuf;
 
 static char current_command;
 
-static int eof;
+static int eofile;
 
 static PAD *curpad;       /* current selected pad */
 
@@ -65,7 +65,7 @@ command_init(int rfd, int wfd)
     atbuf = n_read = 0;
     current_command = 0;
 
-    eof = 0;
+    eofile = 0;
 }
 
 int
@@ -523,7 +523,7 @@ process_command(int c)
     }
     lc = c;
 
-    return eof;
+    return eofile;
 }
 
 static int read1(char *c)

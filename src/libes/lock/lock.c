@@ -46,11 +46,17 @@
 
 extern int errno;
 
+#ifndef __MINGW32__
 static int get_pid(char *,int *);
 static int find_process(int);
+#endif
 
 int lock_file(char *file, int lock_pid)
 {
+#ifdef __MINGW32__
+    /* Bad move but quick fix for the time being */
+    return ( OK );
+#else    
     int fd;
     int locked;
     int mask;
@@ -90,8 +96,10 @@ int lock_file(char *file, int lock_pid)
     }
     close (fd);
     return OK;
+#endif    
 }
 
+#ifndef __MINGW32__
 static int get_pid(
     char *file,
     int *old_pid)
@@ -119,3 +127,4 @@ static int find_process (int pid)
 	return 1;
     return errno != ESRCH;
 }
+#endif /* __MINGW32__ */
