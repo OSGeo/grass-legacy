@@ -21,13 +21,14 @@ To updated s.* to v.*, it is typically necessary:
 4) G_find_file ("site_lists",,) 	=> G_find_sites (,)
 5) fclose() 				=> G_sites_close()
    (Hint: to find close(), search for related G_fopen_sites_old())
+6) add
+    #include "site.h"
+7) The Makefile needs a reference to $(SITESLIB).
 
 New version is slower (dbf driver, 10000 points): 
                  time(200x200cells)   time(667x667cells)
 s.surf.idw              0.43                10.71
 v.surf.idw              1.76                11.35
-
-The Makefile needs a reference to $(SITESLIB).
 
 Radim
 
