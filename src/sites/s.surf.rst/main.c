@@ -66,6 +66,7 @@
 
 #include "interpf.h"
 #include "surf.h"
+#include "glocale.h"
 
 struct Map_info TreeMap, OverMap;
 
@@ -165,14 +166,14 @@ int main ( int argc, char *argv[])
     struct Flag *deriv, *cprght;
   } flag;
   int dims = 0, cat = 0, strs = 0, dbls = 0;
-
+  
   G_gisinit (argv[0]);
 
   module = G_define_module();
   module->description =        
-                  "Interpolation and topographic analysis from given site "
-                  "data to GRASS floating point raster format using "
-                  "regularized spline with tension";
+                  _("Interpolation and topographic analysis from given site "
+                    "data to GRASS floating point raster format using "
+                    "regularized spline with tension");
                   
   if (G_get_set_window (&cellhd) == -1)
     exit (0);
@@ -193,10 +194,10 @@ int main ( int argc, char *argv[])
   sprintf (dminchar, "%f", dmin);
 
   fprintf (stdout, "\n");
-  fprintf (stdout, "Authors: original version L.Mitas, H.Mitasova\n");
-  fprintf (stdout, "         GRASS implementation I.Kosinovsky, D.P.Gerdes\n"); 
-  fprintf (stdout, "see references in manual page or at:\n");
-  fprintf (stdout, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
+  fprintf (stdout, _("Authors: original version L.Mitas, H.Mitasova\n"));
+  fprintf (stdout, _("         GRASS implementation I.Kosinovsky, D.P.Gerdes\n")); 
+  fprintf (stdout, _("see references in manual page or at:\n"));
+  fprintf (stdout, _("http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n"));
   fprintf (stdout, "\n");
   fflush(stdout);
 
@@ -205,28 +206,28 @@ int main ( int argc, char *argv[])
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->gisprompt = "old,site_lists,sites";
-  parm.input->description = "Name of the site file with input x|y|%z [%sm]";
+  parm.input->description = _("Name of the site file with input x|y|%z [%sm]");
 
   parm.elev = G_define_option ();
   parm.elev->key = "elev";
   parm.elev->type = TYPE_STRING;
   parm.elev->required = NO;
   parm.elev->gisprompt = "new,cell,raster";
-  parm.elev->description = "Output z-file (elevation)";
+  parm.elev->description = _("Output z-file (elevation)");
 
   parm.slope = G_define_option ();
   parm.slope->key = "slope";
   parm.slope->type = TYPE_STRING;
   parm.slope->required = NO;
   parm.slope->gisprompt = "new,cell,raster";
-  parm.slope->description = "Slope";
+  parm.slope->description = _("Slope");
 
   parm.aspect = G_define_option ();
   parm.aspect->key = "aspect";
   parm.aspect->type = TYPE_STRING;
   parm.aspect->required = NO;
   parm.aspect->gisprompt = "new,cell,raster";
-  parm.aspect->description = "Aspect";
+  parm.aspect->description = _("Aspect");
 
   parm.elatt = G_define_option ();
   parm.elatt->key = "field";
@@ -235,7 +236,7 @@ int main ( int argc, char *argv[])
   parm.elatt->answer = "1";
   parm.elatt->required = NO;
   parm.elatt->description = 
-	  "decimal attribute to use for elevation (1=first)";
+	  _("decimal attribute to use for elevation (1=first)");
 
   parm.smatt = G_define_option ();
   parm.smatt->key = "smatt";
@@ -243,7 +244,7 @@ int main ( int argc, char *argv[])
   parm.smatt->options = "1-100";
   parm.smatt->required = NO;
   parm.smatt->description = 
-  "Which fp site attribute to use for smoothing (or use smooth= for constant)";
+  _("Which fp site attribute to use for smoothing (or use smooth= for constant)");
 
   parm.rsm = G_define_option ();
   parm.rsm->key = "smooth";
@@ -252,35 +253,35 @@ int main ( int argc, char *argv[])
   parm.rsm->options = "0.00-1000.00";
   */
   parm.rsm->required = NO;
-  parm.rsm->description = "Smoothing parameter";
+  parm.rsm->description = _("Smoothing parameter");
 
   parm.fi = G_define_option ();
   parm.fi->key = "tension";
   parm.fi->type = TYPE_DOUBLE;
   parm.fi->answer = TENSION;
   parm.fi->required = NO;
-  parm.fi->description = "Tension";
+  parm.fi->description = _("Tension");
 
   parm.devi = G_define_option ();
   parm.devi->key = "devi";
   parm.devi->type = TYPE_STRING;
   parm.devi->required = NO;
   parm.devi->gisprompt = "new,site_lists,sites";
-  parm.devi->description = "Name of the output deviations site file";
+  parm.devi->description = _("Name of the output deviations site file");
 
   parm.treefile = G_define_option ();
   parm.treefile->key = "treefile";
   parm.treefile->type = TYPE_STRING;
   parm.treefile->required = NO;
   parm.treefile->gisprompt = "new,dig,vector";
-  parm.treefile->description = "Output vector file showing segmentation";
+  parm.treefile->description = _("Output vector file showing segmentation");
 
   parm.overfile = G_define_option ();
   parm.overfile->key = "overfile";
   parm.overfile->type = TYPE_STRING;
   parm.overfile->required = NO;
   parm.overfile->gisprompt = "new,dig,vector";
-  parm.overfile->description = "Output vector file showing overlapping segments";
+  parm.overfile->description = _("Output vector file showing overlapping segments");
 
  
   parm.pcurv = G_define_option ();
@@ -288,76 +289,76 @@ int main ( int argc, char *argv[])
   parm.pcurv->type = TYPE_STRING;
   parm.pcurv->required = NO;
   parm.pcurv->gisprompt = "new,cell,raster";
-  parm.pcurv->description = "Profile curvature";
+  parm.pcurv->description = _("Profile curvature");
 
   parm.tcurv = G_define_option ();
   parm.tcurv->key = "tcurv";
   parm.tcurv->type = TYPE_STRING;
   parm.tcurv->required = NO;
   parm.tcurv->gisprompt = "new,cell,raster";
-  parm.tcurv->description = "Tangential curvature";
+  parm.tcurv->description = _("Tangential curvature");
 
   parm.mcurv = G_define_option ();
   parm.mcurv->key = "mcurv";
   parm.mcurv->type = TYPE_STRING;
   parm.mcurv->required = NO;
   parm.mcurv->gisprompt = "new,cell,raster";
-  parm.mcurv->description = "Mean curvature";
+  parm.mcurv->description = _("Mean curvature");
 
   parm.maskmap = G_define_option ();
   parm.maskmap->key = "maskmap";
   parm.maskmap->type = TYPE_STRING;
   parm.maskmap->required = NO;
   parm.maskmap->gisprompt = "old,cell,raster";
-  parm.maskmap->description = "Name of the raster file used as mask";
+  parm.maskmap->description = _("Name of the raster file used as mask");
 
   parm.dmin1 = G_define_option ();
   parm.dmin1->key = "dmin";
   parm.dmin1->type = TYPE_DOUBLE;
   parm.dmin1->answer = dminchar;
   parm.dmin1->required = NO;
-  parm.dmin1->description = "Min distance between points (extra points ignored)";
+  parm.dmin1->description = _("Min distance between points (extra points ignored)");
 
   parm.zmult = G_define_option ();
   parm.zmult->key = "zmult";
   parm.zmult->type = TYPE_DOUBLE;
   parm.zmult->answer = ZMULT;
   parm.zmult->required = NO;
-  parm.zmult->description = "Conversion factor for z-values";
+  parm.zmult->description = _("Conversion factor for z-values");
 
   parm.segmax = G_define_option ();
   parm.segmax->key = "segmax";
   parm.segmax->type = TYPE_INTEGER;
   parm.segmax->answer = MAXSEGM;
   parm.segmax->required = NO;
-  parm.segmax->description = "Max number of points in segment";
+  parm.segmax->description = _("Max number of points in segment");
 
   parm.npmin = G_define_option ();
   parm.npmin->key = "npmin";
   parm.npmin->type = TYPE_INTEGER;
   parm.npmin->answer = MINPOINTS;
   parm.npmin->required = NO;
-  parm.npmin->description = "Min number of points for interpolation(>segmax)";
+  parm.npmin->description = _("Min number of points for interpolation(>segmax)");
 
   parm.theta = G_define_option ();
   parm.theta ->key = "theta";
   parm.theta ->type = TYPE_DOUBLE;
   parm.theta ->required = NO;
-  parm.theta ->description = "Anisotropy angle (in degrees)";
+  parm.theta ->description = _("Anisotropy angle (in degrees)");
 
   parm.scalex = G_define_option ();
   parm.scalex ->key = "scalex";
   parm.scalex ->type = TYPE_DOUBLE;
   parm.scalex ->required = NO;
-  parm.scalex ->description = "Anisotropy scaling factor";
+  parm.scalex ->description = _("Anisotropy scaling factor");
 
   flag.deriv = G_define_flag ();
   flag.deriv->key = 'd';
-  flag.deriv->description = "Output partial derivatives instead";
+  flag.deriv->description = _("Output partial derivatives instead");
 
   flag.cprght = G_define_flag ();
   flag.cprght->key = 't';
-  flag.cprght->description = "Use dnorm-independent tension (experimental)";
+  flag.cprght->description = _("Use dnorm-independent tension (experimental)");
 
 
   if (G_parser (argc, argv))
@@ -380,7 +381,7 @@ int main ( int argc, char *argv[])
    */
   if ((elev == NULL) && (pcurv == NULL) && (tcurv == NULL) && (mcurv == NULL)
       && (slope == NULL) && (aspect == NULL) && (devi == NULL))
-    fprintf (stderr, "Warning -- you are not outputing any raster or site files\n");
+    fprintf (stderr, _("Warning -- you are not outputing any raster or site files\n"));
 
   cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
   cond1 = ((slope != NULL) || (aspect != NULL) || cond2);
@@ -401,15 +402,15 @@ int main ( int argc, char *argv[])
   if(parm.scalex->answer) {
   sscanf (parm.scalex->answer, "%lf", &scalex);
 	if (!parm.theta->answer)
-      	G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+      	G_fatal_error(_("Using anisotropy - both theta and scalex have to be specified"));
 	}
 
   if(parm.rsm->answer){
       sscanf (parm.rsm->answer, "%lf", &rsm);
       if(rsm < 0.0)
-	  G_fatal_error("Smoothing must be a positive value");
+	  G_fatal_error(_("Smoothing must be a positive value"));
       if(parm.smatt->answer){
-	  G_warning("Both smatt and smooth options specified - using constant");
+	  G_warning(_("Both smatt and smooth options specified - using constant"));
 	  smattr = 0;
       }
   }
@@ -421,7 +422,7 @@ int main ( int argc, char *argv[])
       }
   }
   if (npmin > MAXPOINTS - 50){
-    G_warning("The computation will last too long - lower npmin is suggested");
+    G_warning(_("The computation will last too long - lower npmin is suggested"));
     KMAX2 = 2 * npmin; /* was: KMAX2 = npmin + 50;*/
   }
   else
@@ -433,81 +434,81 @@ int main ( int argc, char *argv[])
   az = G_alloc_vector (n_cols + 1);
   if (!az)
   {
-    G_fatal_error ("Not enough memory for az");
+    G_fatal_error (_("Not enough memory for az"));
   }
   if (cond1)
   {
     adx = G_alloc_vector (n_cols + 1);
     if (!adx)
     {
-      G_fatal_error ("Not enough memory for adx");
+      G_fatal_error (_("Not enough memory for adx"));
     }
     ady = G_alloc_vector (n_cols + 1);
     if (!ady)
     {
-      G_fatal_error ("Not enough memory for ady");
+      G_fatal_error (_("Not enough memory for ady"));
     }
     if (cond2)
     {
       adxx = G_alloc_vector (n_cols + 1);
       if (!adxx)
       {
-	G_fatal_error ("Not enough memory for adxx");
+	G_fatal_error (_("Not enough memory for adxx"));
       }
       adyy = G_alloc_vector (n_cols + 1);
       if (!adyy)
       {
-	G_fatal_error ("Not enough memory for adyy");
+	G_fatal_error (_("Not enough memory for adyy"));
       }
       adxy = G_alloc_vector (n_cols + 1);
       if (!adxy)
       {
-	G_fatal_error ("Not enough memory for adxy");
+	G_fatal_error (_("Not enough memory for adxy"));
       }
     }
   }
   if ((data = quad_data_new (x_orig, y_orig, xm, ym, n_rows, n_cols, 0, KMAX)) == NULL)
-    G_fatal_error ("cannot create quaddata");
+    G_fatal_error (_("cannot create quaddata"));
   if ((functions = MT_functions_new (quad_compare, quad_divide_data, quad_add_data, quad_intersect, quad_division_check, quad_get_points)) == NULL)
-    G_fatal_error ("cannot create quadfunc");
+    G_fatal_error (_("cannot create quadfunc"));
   if ((tree = MT_tree_new (data, NULL, NULL, 0)) == NULL)
-    G_fatal_error ("cannot create tree");
+    G_fatal_error (_("cannot create tree"));
   root = tree;
   if ((info = MT_tree_info_new (root, functions, dmin, KMAX)) == NULL)
-    G_fatal_error ("cannot create tree info");
+    G_fatal_error (_("cannot create tree info"));
 
   mapset = G_find_file ("site_lists", input, "");
   if (mapset == NULL)
   {
-    sprintf (msg, "Cannot find sites file [%s]", input);
+    sprintf (msg, _("file [%s] not found"), input);
     G_fatal_error (msg);
   }
   if ((fdinp = G_fopen_sites_old (input, mapset)) == NULL)
   {
-    sprintf (msg, "Cannot open sites file %s", input);
+    sprintf (msg, _("Cannot open %s"), input);
     G_fatal_error (msg);
   }
   if (G_site_describe (fdinp, &dims, &cat, &strs, &dbls) != 0)
-    G_fatal_error ("failed to guess site format");
+    G_fatal_error (_("failed to guess site format"));
   if (G_site_get_head (fdinp, &inhead) != 0)
-    G_fatal_error ("failed to read site header");
+    G_fatal_error (_("failed to read site header"));
 
   if (dbls == 0)
   {
     if (cat != -1)
     {
-      fprintf (stdout, "\nWARNING: old data format detected.\n");
+      fprintf (stdout, _("\nWARNING: old data format detected.\n"));
       if ((mapset = G_find_file ("site_lists", input, G_mapset ())) == NULL)
       {
 	fprintf (stdout,
-	       "%sSite list [%s] cannot be used in its current format\n",
-		 "ERROR:\t", input);
-	fprintf (stdout, "\tIt cannot be converted to the new format ");
-	fprintf (stdout, "since it is not\n\tin the current mapset\n");
+	       _("%sSite list [%s] cannot be used in its current format\n"),
+	       "ERROR:\t", input);
+	fprintf (stdout, _("\tIt cannot be converted to the new format "));
+	fprintf (stdout, _("since it is not\n\tin the current mapset\n"));
 	exit (-1);
       }
-      fprintf (stdout,"Convert site file to new format?\n");
-      cat = G_yes ("Answering yes will modify your site list file.", 1);
+      fprintf (stdout,_("Convert site file to new format?\n"));
+      cat = G_yes (_("Answering yes will modify your site list file."), 1);
       if (cat == 1)
       {
 	fclose (fdinp);
@@ -515,22 +516,22 @@ int main ( int argc, char *argv[])
 	G_system (msg);
 	if ((fdinp = G_fopen_sites_old (input, mapset)) == NULL)
 	{
-	  sprintf (msg, "Cannot open %s", input);
+	  sprintf (msg, _("Cannot open %s"), input);
 	  G_fatal_error (msg);
 	}
       }
       else
-	G_fatal_error ("no decimal attributes found in site list");
+	G_fatal_error (_("no decimal attributes found in site list"));
     }
     else
-      G_fatal_error ("no decimal attributes found in site list");
+      G_fatal_error (_("no decimal attributes found in site list"));
   }
 
   if (devi != NULL)
   {
     if ((fddevi = G_fopen_sites_new (devi)) == NULL)
     {
-      sprintf (msg, "Cannot open %s", devi);
+      sprintf (msg, _("Cannot open %s"), devi);
       G_fatal_error (msg);
     }
     else
@@ -566,7 +567,7 @@ int main ( int argc, char *argv[])
 
   zero_array_cell = (FCELL *) malloc (sizeof (FCELL) * n_cols);
   if (!zero_array_cell)
-    G_fatal_error ("Not enough memory for zero_array_cell");
+    G_fatal_error (_("Not enough memory for zero_array_cell"));
 
   for (i = 0; i < n_cols; i++)
   {
@@ -577,39 +578,39 @@ int main ( int argc, char *argv[])
   {
     if (NULL == (Tmp_fd_z = fopen (Tmp_file_z, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_z);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_z);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_z)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
   if (Tmp_file_dx != NULL)
   {
     if (NULL == (Tmp_fd_dx = fopen (Tmp_file_dx, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_dx);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_dx);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_dx)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
   if (Tmp_file_dy != NULL)
   {
     if (NULL == (Tmp_fd_dy = fopen (Tmp_file_dy, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_dy);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_dy);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_dy)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
 
@@ -617,39 +618,39 @@ int main ( int argc, char *argv[])
   {
     if (NULL == (Tmp_fd_xx = fopen (Tmp_file_xx, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_xx);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_xx);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_xx)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
   if (Tmp_file_yy != NULL)
   {
     if (NULL == (Tmp_fd_yy = fopen (Tmp_file_yy, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_yy);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_yy);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_yy)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
   if (Tmp_file_xy != NULL)
   {
     if (NULL == (Tmp_fd_xy = fopen (Tmp_file_xy, "w+")))
     {
-      sprintf (msg, "Can't open temp file [%s] ", Tmp_file_xy);
+      sprintf (msg, _("Can't open temp file [%s] "), Tmp_file_xy);
       G_fatal_error (msg);
     }
     for (i = 0; i < n_rows; i++)
     {
       if (!(fwrite (zero_array_cell, sizeof (FCELL), n_cols, Tmp_fd_xy)))
-	G_fatal_error ("Not enough disk space -- cannot write files");
+	G_fatal_error (_("Not enough disk space -- cannot write files"));
     }
   }
 
@@ -675,13 +676,13 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 
   totsegm = IL_input_data_2d (&params, info, &xmin, &xmax, &ymin, &ymax, &zmin, &zmax, &NPOINT);
   if (totsegm <= 0)
-    G_fatal_error ("Input failed");
+    G_fatal_error (_("Input failed"));
 
   if (treefile != NULL)
   {
     if (0 > Vect_open_new (&TreeMap, treefile))
     {
-      sprintf (msg, "Not able to open vector file <%s>\n", treefile);
+      sprintf (msg, _("Not able to open vector file <%s>\n"), treefile);
       G_fatal_error (msg);
     }
 
@@ -712,8 +713,8 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
     ddisk += disk;
   ddisk += sddisk;
   fprintf (stdout, "\n");
-  fprintf (stdout, "Processing all selected output files \n");
-  fprintf (stdout, "will require %d bytes of disk space for temp files \n", ddisk
+  fprintf (stdout, _("Processing all selected output files \n"));
+  fprintf (stdout, _("will require %d bytes of disk space for temp files \n"), ddisk
     );
   fprintf (stdout, "\n");
 
@@ -724,7 +725,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   if(dtens)
  {
   params.fi = params.fi * dnorm / 1000.;
-  fprintf (stdout, "dnorm = %f, rescaled tension = %f\n", dnorm, params.fi);
+  fprintf (stdout, _("dnorm = %f, rescaled tension = %f\n"), dnorm, params.fi);
   }
 
   if (maskmap != NULL)
@@ -732,15 +733,15 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 
   IL_create_bitmask (&params, bitmask);
   if (totsegm <= 0)
-    G_fatal_error ("Input failed");
+    G_fatal_error (_("Input failed"));
   ertot = 0.;
   if (per)
-    fprintf (stdout, "Percent complete: ");
+    fprintf (stdout, _("Percent complete: "));
   if (!IL_interp_segments_2d (&params, info, info->root, bitmask,
 		      zmin, zmax, &zminac, &zmaxac, &gmin, &gmax, &c1min,
 		 &c1max, &c2min, &c2max, &ertot, totsegm, n_cols, dnorm))
 
-    G_fatal_error ("Interp_segmets failed");
+    G_fatal_error (_("Interp_segmets failed"));
 
   G_free_vector (az);
   if (cond1)
@@ -757,7 +758,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   ii = IL_output_2d (&params, &cellhd, zmin, zmax, zminac, zmaxac, c1min, c1max, c2min, c2max,
 		     gmin, gmax, ertot, input, dnorm, dtens, 0, NPOINT);
   if (ii < 0)
-    G_fatal_error ("Cannot write cell files -- try to increase resolution");
+    G_fatal_error (_("Cannot write cell files -- try to increase resolution"));
   free (zero_array_cell);
   if (elev != NULL)
     fclose (Tmp_fd_z);
@@ -776,7 +777,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   {
     if (0 > Vect_open_new (&OverMap, overfile))
     {
-      sprintf (msg, "Not able to open vector file <%s>\n", overfile);
+      sprintf (msg, _("Not able to open vector file <%s>\n"), overfile);
       G_fatal_error (msg);
     }
 
@@ -843,7 +844,7 @@ static int print_tree (struct multtree *tree,
     yarray[4] = yarray[0];
     xarray[4] = xarray[0];
     if (0 > Vect_copy_xy_to_pnts (Points, xarray, yarray, 5))
-      G_fatal_error ("Out of memory");
+      G_fatal_error (_("Out of memory"));
     Vect_write_line (Map, (unsigned int) type, Points);
 
     free (Points);

@@ -7,7 +7,7 @@ DATALIB = $(LIBDIR)/rst_gmsl/data/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(LIBDIR)/rst_gmsl/interp_float/libinterpfl.a
 
-EXTRA_CFLAGS = -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
+EXTRA_CFLAGS = -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) -DPACKAGE=\"$(PGM)\"
 
 LIST   =  main.o 
 SRCS   =  main.c 
