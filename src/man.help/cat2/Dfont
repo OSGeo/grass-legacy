@@ -1,0 +1,132 @@
+
+
+
+Dfont(2D)            GRASS Reference Manual             Dfont(2D)
+
+
+
+NAME
+     Dfont - Selects text fonts to be used on the monitor
+     (D Language Tool)
+
+SYNOPSIS
+     Dfont font
+
+DESCRIPTION
+     Dfont allows the user to select use of a specific text font
+     on the monitor.  The GRASS tool Dshow.fonts is a UNIX Bourne
+     shell macro which names and displays the fonts that can be
+     selected using Dfont.  If no font is specified when using
+     other GRASS tools that display text, the font type romanp is
+     used by default.  This default font can also be selected by
+     inserting a dash - in place of a specific font (i.e., Dfont
+     -).  Font options are:
+
+         cyrilc - cyrillic
+         gothgbt - Gothic Great Britain triplex
+         gothgrt - Gothic German triplex
+         gothitt - Gothic Italian triplex
+         greekc - Greek complex
+         greekcs - Greek complex script
+         greekp - Greek plain
+         greeks - Greek simplex
+         italicc - Italian complex
+         italiccs - Italian complex small
+         italict - Italian triplex
+         romanc - Roman complex
+         romancs - Roman complex small
+         romand - Roman duplex
+         romanp - Roman plain
+         romans - Roman simplex
+         romant - Roman triplex
+         scriptc - Script complex
+         scripts - Script simplex
+
+
+NOTES
+     The font romans is the fastest font.
+
+SEE ALSO
+     DINTRO[2D]        Introduction to the GRASS D tools
+     Dshow.fonts[2D]   To list and display available font types
+     Dtext[2D]         To draw text in the current graphics window
+     Dtitle[2D]        Create a title for a grid cell map
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+     Dfont uses the public domain version of the Hershey Fonts
+     created by Dr. A.V. Hershey while working at the U.S.
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Dfont(2D)            GRASS Reference Manual             Dfont(2D)
+
+
+
+     National Bureau of Standards.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
