@@ -45,7 +45,7 @@ GRASS 5 Core Team (most have CVS access):
  Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, spline interpolation)
  Eric Mitchell   <emitchell@altaira.com>      (new Makefile system)
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 organization, ...)
- Bernhard Reiter <bernhard@csd.uwm.edu>       (license, CVS)
+ Bernhard Reiter <bernhard@intevation.de>       (license, CVS)
  Alexander Shevlakov <sixote@yahoo.com>       (PostgreSQL/GRASS interface)
  Frank Warmerdam <warmerda@home.com>          (GDAL, SHAPE implementation, new GRASS I/O library)
  Michel Wurtz    <mw@engees.u-strasbg.fr>     (ESRI E00 support)
