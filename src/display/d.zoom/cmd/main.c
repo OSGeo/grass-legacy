@@ -219,9 +219,8 @@ main (int argc, char **argv)
     if (smap->answers)
     {
 	FILE *fp;
-	Site mysite;
-
-	mysite.dim_alloc = mysite.dbl_alloc = mysite.str_alloc = 0;
+	Site *s;
+	int rtype, ndim, nstr, ndec;
 
 	if (!nsites)
 	{
@@ -240,35 +239,49 @@ main (int argc, char **argv)
 		{
 			if(NULL != (fp = G_fopen_sites_old(smap->answers[i], mapset)))
 			{
+				rtype = -1;
+				G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
+				s = G_site_new_struct(rtype, ndim, nstr, ndec);
 				/*
+				while(G_site_get(fp, s) == 0)
+				{
+				*/
 				while(!feof(fp))
 				{
-					if(G_site_get(fp, &mysite))
+					if(G_site_get(fp, s))
 						continue;
-				*/
-				while(G_site_get(fp, &mysite) == 0)
-				{
-					fprintf(stderr,"NEVER REACH HERE, STRANGE !!!");
 					if(first)
 					{
+					fprintf(stderr, "A");
 						first = 0;
-						U_east = mysite.east;
-						U_west = mysite.east;
-						U_south = mysite.north;
-						U_north = mysite.north;
+						U_east = s->east;
+						U_west = s->east;
+						U_south = s->north;
+						U_north = s->north;
 					}
 					else
 					{
-						if(mysite.east > U_east)
-							U_east = mysite.east;
-						if(mysite.east < U_west)
-							U_west = mysite.east;
-						if(mysite.north < U_south)
-							U_south = mysite.north;
-						if(mysite.north > U_north)
-							U_north = mysite.north;
+					fprintf(stderr, "B");
+						if(s->east > U_east)
+							U_east = s->east;
+						if(s->east < U_west)
+							U_west = s->east;
+						if(s->north < U_south)
+							U_south = s->north;
+						if(s->north > U_north)
+							U_north = s->north;
 					}
 				}
+
+				/* is 100 enough to contain one point from
+				 * boundary?
+				 */
+				U_east += 100;
+				U_west -= 100;
+				U_south -= 100;
+				U_north += 100;
+
+				G_free(s);
 				fclose(fp);
 			}
 		}
