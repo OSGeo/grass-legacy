@@ -17,10 +17,10 @@ if [ "$#" -lt 1 ]; then
       echo ""
       echo "Import of GLOBE DEM file as GRASS raster map"
       echo ""
-      echo "Usage: r.in.globe globe_mapname (without extension!)"
+      echo "Usage: r.in.globedem globe_mapname (without extension!)"
       echo ""
       echo "Note: Download GLOBE DEM data in Unix format."
-      echo "http://www.ngdc.noaa.gov/seg/topo/globe.shtml"
+      echo "http://www.ngdc.noaa.gov/cgi-bin/seg/ff/nph-demo.pl"
       exit
 fi
 
