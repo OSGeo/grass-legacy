@@ -32,7 +32,7 @@ parse_command_line (int argc, char *argv[])
 	parms.vect->type   = TYPE_STRING ;
 	parms.vect->required = YES ;
 	parms.vect->multiple = NO ;
-	parms.vect->gisprompt  = "vector" ;
+	parms.vect->gisprompt  = "old,dig,Vector" ;
 	parms.vect->description = "vector map";
 
         parms.type = G_define_option();
