@@ -22,3 +22,12 @@ invert A^-1, solve simple linear system A.X=B for X given B. Others are
 easy to add as required.
 
 David
+-----------------------------------
+
+Getting BLAS/LAPACK:
+
+http://netlib.bell-labs.com/netlib/master/readme.html
+http://www.netlib.org
+
+http://netlib.bell-labs.com/netlib/blas/index.html
+http://netlib.bell-labs.com/netlib/lapack/index.html
