@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
 {
     char *mapset;
     struct Cell_head window;
-    void *cellbuf*tmpcellbuf, *outcellbuf;
+    void *cellbuf, *tmpcellbuf, *outcellbuf;
     CELL value,value2 ,min, max;
     DCELL dmin, dmax;
     RASTER_MAP_TYPE data_type;
     struct Range range;
     struct FPRange fprange;
     double drow, dcol;
-    int elev, output, zeros;
+    int elev_fd, output_fd, zeros;
     char buf[1024];
     char buf1[100], buf2[100];
     char **ptr;
@@ -103,19 +103,14 @@ int main(int argc, char *argv[])
       sprintf (buf,"%s not found", name);
       G_fatal_error(buf);
     }
-    if((elev = G_open_cell_old (name, mapset)) < 0)
+    if((elev_fd = G_open_cell_old (name, mapset)) < 0)
     {
       sprintf (buf,"can't open %s", name);
       G_fatal_error(buf);
     }
-    if((output = G_open_cell_new(name2)) < 0)
+    if((output_fd = G_open_cell_new(name2)) < 0)
     {
       sprintf (buf,"can't open %s", name2);
-      G_fatal_error(buf);
-    }
-    if ((G_read_range(name, mapset,&range))<0)
-    {
-      sprintf (buf,"can't open range file for %s",name);
       G_fatal_error(buf);
     }
 
@@ -126,8 +121,12 @@ int main(int argc, char *argv[])
 
     if(data_type == CELL_TYPE)
     {
-        G_read_range(name, mapset, &range);
-        G_get_range_min_max(&range,&min,&max);
+       if ((G_read_range(name, mapset,&range))<0)
+       {
+         sprintf (buf,"can't open range file for %s",name);
+         G_fatal_error(buf);
+       }
+       G_get_range_min_max(&range,&min,&max);
     }
     else
     {
@@ -146,13 +145,13 @@ int main(int argc, char *argv[])
 fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 	    col1=0;
 	    drow=-1;
-	    if (G_get_raster_row(elev, cell, row1, data_type) < 0)
+	    if (G_get_raster_row(elev_fd, cellbuf, row1, data_type) < 0)
 	      G_fatal_error("can't read row in input elevation map");
 
 	    while (col1<window.cols)
 	      {
-		value = cell[col1];
-		outcell[col1]=1;
+		value = cellbuf[col1];
+		outcellbuf[col1]=1;
 		OK=1;
 		east=G_col_to_easting(col1+0.5,&window);
 		north=G_row_to_northing(row1+0.5,&window);
@@ -180,23 +179,23 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 				  if(drow!=G_northing_to_row(north,&window))
 					{
 					drow=G_northing_to_row(north,&window);
-	    				G_get_raster_row(elev, tmpcell,(int) drow, data_type);
+	    				G_get_raster_row(elev_fd, tmpcellbuf,(int) drow, data_type);
 					}
-				  value2=tmpcell[(int)dcol];
+				  value2=tmpcellbuf[(int)dcol];
 				  if ((value2-value)>(maxh))
 					{
 					OK=0;
-					outcell[col1]=0;
+					outcellbuf[col1]=0;
 					}
 				  }
 				}
 			}	
 		col1+=1;
 	      }
-	    G_put_raster_row(output,outcell, data_type);
+	    G_put_raster_row(output_fd, outcellbuf, data_type);
 	    row1+=1;
 	  }
     
-G_close_cell(output);
-G_close_cell(elev);    
+ G_close_cell(output_fd);
+ G_close_cell(elev_fd);
 }
