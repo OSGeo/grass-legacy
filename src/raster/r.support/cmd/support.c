@@ -9,11 +9,6 @@
 * PURPOSE:      Build support file for raster map
 *               - Edit the header
 *               - Update the stats (histogram,range)
-*               - Edit the category fil
-*               - Create/Update the color table
-*               - Edit the history file
-*               - create/reset null file
-*               - delete null file
 * COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public 
@@ -43,7 +38,7 @@ int main (int argc, char *argv[])
     char question[100];
     struct GModule *module;
     struct Option *map;
-    struct Flag *rangeflag, *colorflag;
+    struct Flag *rangeflag;
     
     G_gisinit (argv[0]);
 
@@ -63,10 +58,6 @@ int main (int argc, char *argv[])
     rangeflag = G_define_flag() ;
     rangeflag->key         = 'r';
     rangeflag->description = "Calculate range";
-
-    colorflag = G_define_flag() ;
-    colorflag->key         = 'c';
-    colorflag->description = "Update color table";
 
     if (G_parser(argc,argv))
             exit(1);
