@@ -231,7 +231,10 @@ main (int argc, char **argv)
 	    color = colornum;
 	} else if ( ret == 2 ) { /* none */
 	    color = -1;
+	} else if ( ret == 0 ) { /* error */
+	    G_fatal_error("Unknown color: [%s]", color_opt->answer);
 	}
+	
 	fcolor = WHITE;
 	ret = G_str_to_color(fcolor_opt->answer, &r, &g, &b);
         if ( ret == 1 ) {
@@ -240,7 +243,10 @@ main (int argc, char **argv)
 	    fcolor = colornum;
 	} else if ( ret == 2 ) { /* none */
 	    fcolor = -1;
+	} else if ( ret == 0 ) { /* error */
+	    G_fatal_error("Unknown color: [%s]", fcolor_opt->answer);
 	}
+
 	quiet = !_quiet->answer;
 
 	size = atoi (size_opt->answer);
