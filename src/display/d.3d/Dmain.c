@@ -94,7 +94,10 @@ main(argc, argv)  char *argv[] ;
     opt10->key        = "color" ;
     opt10->type       = TYPE_STRING ;
     opt10->required   = NO ;
-    opt10->options    = D_color_list();
+/*    opt10->options    = D_color_list(); */ /* added missing color parameter for
+                                                command line use- M. Neteler 6/98 */
+    opt10->options    = G_malloc(strlen(D_color_list()) + 6);
+    sprintf (opt10->options, "%s,color", D_color_list());
     opt10->answer     = "gray" ;
     opt10->description= "Color of vector lines" ;
 
