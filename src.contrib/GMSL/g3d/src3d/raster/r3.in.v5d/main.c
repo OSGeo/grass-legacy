@@ -27,11 +27,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "binio.h"
 #include "v5d.h"
-#include <gis.h>
-#include <G3d.h>
+#include "gis.h"
+#include "G3d.h"
+
+#define MAX(a,b) (a > b ? a : b)
 
 /*---------------------------------------------------------------------------*/
 
@@ -189,8 +192,7 @@ void convert (openFile, region, convertNull, nullValue)
 
 /*---------------------------------------------------------------------------*/
 
-#define MAX(a,b) (a > b ? a : b)
-
+int
 main (argc, argv) 
      
      int argc;
@@ -204,10 +206,14 @@ main (argc, argv)
   int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
   G3D_Region region;
   FILE *fp;
+  struct GModule *module;
 
   map = NULL;
 
   G_gisinit(argv[0]);
+  module = G_define_module();
+  module->description =
+   "  import of 3-dimensional Vis5D files (i.e. the v5d file with 1 variable and 1 time step)";
 
   setParams ();
   G3d_setStandard3dInputParams ();
