@@ -8,10 +8,11 @@
 #include <sys/types.h>
 #endif
 
-#ifdef sgi
-#include <malloc.h> /* we need the M_DEBUG macro below */
-#endif
-
+/* changed 11/2000 by andreas lange
+ * #ifdef sgi
+ * #include <malloc.h> */ /* we need the M_DEBUG macro below */ /*
+ * #endif
+ */
 /*---------------------------------------------------------------------------*/
 
 #define REPORT_THRESHOLD  1000000
@@ -151,9 +152,13 @@ basic_malloc_debug (int level)
         4 ... mallopt (M_DEBUG, 1); works on SGI's only! */
 {
   debug_level = level;
-#ifdef sgi  
-  mallopt (M_DEBUG, If ((level > 3), 1, 0));
-#endif  
+/* changed 11/2000 by andreas lange
+ * the mallopt is for debugging only, so we don't need 
+ * this trouble spot.
+ * #ifdef sgi  
+ * mallopt (M_DEBUG, If ((level > 3), 1, 0));
+ * #endif  
+ */
 }
 
 /*---------------------------------------------------------------------------*/
