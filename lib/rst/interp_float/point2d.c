@@ -25,7 +25,9 @@
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
+#include "dbmi.h"
 
 #include "interpf.h"
 
@@ -35,7 +37,8 @@ int IL_check_at_points_2d (
     double *b,			/* solution of linear equations */
     double *ertot,		/* total error */
     double zmin,			/* min z-value */
-    double dnorm
+    double dnorm,
+    struct triple skip_point
 )
 
 /*
@@ -52,14 +55,16 @@ int IL_check_at_points_2d (
   double north = data->ymax;
   double south = data->y_orig;
   double rfsta2, errmax, h, xx, yy, r2, hz, zz, err, xmm, ymm, r;
-  int n1, mm, m;
+  double skip_err;
+  int n1, mm, m, cat;
   double fstar2;
   int inside;
-  struct line_pnts *Points;
-  struct line_cats *Cats;
+  Site *site;
+  char   buf[1024];
 
-  Points = Vect_new_line_struct ();
-  Cats = Vect_new_cats_struct ();
+
+  if ((site = G_site_new_struct (-1, 2, 0, 1)) == NULL)
+    G_fatal_error ("Memory error for site struct");
 
   fstar2 = params->fi * params->fi / 4.;
   errmax = .0;
@@ -97,22 +102,93 @@ int IL_check_at_points_2d (
 
     if (params->fddevi != NULL)
     {
-	Vect_reset_line (Points);
-	Vect_append_point (Points, xmm, ymm, err);
-      
-	if (inside) {		/* if the point is inside the region */
-	    Vect_write_line (params->fddevi, GV_POINT, Points, Cats);
-	}
-    }
-    if (inside)
-      (*ertot) += err * err;
 
-    /*
-     * if (err >= errmax) { errmax = err; mmax = mm; }
-     */
-  }
-  /*
-   * ertot = amax1 (errmax, *ertot);
-   */
+      if (inside)               /* if the point is inside the region */
+      {
+       Vect_reset_line ( Pnts );
+       Vect_reset_cats ( Cats2 );
+
+       Vect_append_point ( Pnts, xmm, ymm, 0.0);
+       cat = count;
+       Vect_cat_set ( Cats2, 1, cat);
+       Vect_write_line (&Map2, GV_POINT, Pnts, Cats2);
+
+       db_zero_string ( &sql2 );
+       sprintf (buf, "insert into %s values ( %d ", ff->table, cat );
+       db_append_string ( &sql2, buf);
+
+       sprintf (buf, ", %f", err );
+       db_append_string ( &sql2, buf);
+       db_append_string ( &sql2, ")" );
+       G_debug ( 3, db_get_string ( &sql2 ) );
+
+       if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
+	       db_close_database(driver2);
+	       db_shutdown_driver(driver2);
+	       G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql2 ));
+       }
+       count++;
+
+      (*ertot) += err * err;
+  	}
+    }
+    }
+
+     /* cv stuff */
+  if (params->cv) {
+    h = b[0];
+    for (m = 1; m <= n_points-1; m++)
+    {
+      xx = points[m - 1].x - skip_point.x;
+      yy = points[m - 1].y - skip_point.y;
+      r2 = yy * yy + xx * xx;
+      if (r2 != 0.)
+      {
+        rfsta2 = fstar2 * r2;
+        r = r2;
+        h = h + b[m] * params->interp (r, params->fi);
+      }
+    }
+    hz = h + zmin;
+    zz = skip_point.z + zmin;
+    skip_err = hz - zz;
+    xmm = skip_point.x * dnorm + params->x_orig + west;
+    ymm = skip_point.y * dnorm + params->y_orig + south;
+
+    if ((xmm >= west + params->x_orig) && (xmm <= east + params->x_orig) &&
+      (ymm >= south + params->y_orig) && (ymm <= north + params->y_orig))
+      inside = 1;
+    else
+      inside = 0;
+
+      if (inside)               /* if the point is inside the region */
+      {
+       Vect_reset_line ( Pnts );
+       Vect_reset_cats ( Cats2 );
+
+       Vect_append_point ( Pnts, xmm, ymm, 0.0);
+       cat = count;
+       Vect_cat_set ( Cats2, 1, cat);
+       Vect_write_line (&Map2, GV_POINT, Pnts, Cats2);
+
+       db_zero_string ( &sql2 );
+       sprintf (buf, "insert into %s values ( %d ", ff->table, cat );
+       db_append_string ( &sql2, buf);
+
+       sprintf (buf, ", %f", skip_err );
+       db_append_string ( &sql2, buf);
+       db_append_string ( &sql2, ")" );
+       G_debug ( 3, db_get_string ( &sql2 ) );
+
+       if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
+	       db_close_database(driver2);
+	       db_shutdown_driver(driver2);
+	       G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql2 ));
+       }
+       count++;
+      }
+   } /* cv */
+   
+
   return 1;
 }

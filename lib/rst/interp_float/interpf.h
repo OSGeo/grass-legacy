@@ -6,6 +6,7 @@
 #include "bitmap.h"
 #include "dataquad.h"
 #include "qtree.h"
+#include "dbmi.h"
 
 /* for resample program */
 struct fcell_triple   {
@@ -14,6 +15,14 @@ struct fcell_triple   {
       FCELL z;
       double smooth;
 };
+
+  struct line_pnts *Pnts;
+  struct line_cats *Cats2;
+  dbDriver *driver2;
+  dbString sql2;
+  struct Map_info Map2;
+  struct field_info *ff;
+  int count;
 
 struct interp_params 
 {
@@ -33,13 +42,13 @@ struct interp_params
    char   *elev,*slope,*aspect,*pcurv,*tcurv,*mcurv; /* output files */
    double dmin;                             /* min distance between points */
    double x_orig, y_orig;                   /* origin */
-   int    deriv;                            /* 1 if compute partial derivs */
+   int    deriv,cv;                            /* 1 if compute partial derivs */
    double theta;			   /* anisotropy angle, 0=East,counter-clockwise */
    double scalex;			   /* anisotropy scaling factor */
    struct TimeStamp *ts;                      /* timestamp for raster files */
    FILE   *Tmp_fd_z,*Tmp_fd_dx,*Tmp_fd_dy,  /* temp files for writing interp.*/
           *Tmp_fd_xx,*Tmp_fd_yy,*Tmp_fd_xy; /* values */
-   struct Map_info *fddevi;     	    /* pointer to deviations vector */
+   FILE   *fddevi;     /* pointer to deviations file */
 
    int    (*grid_calc) ();                  /*calculates grid for given segm*/
    int    (*matrix_create) ();              /*creates matrix for a given segm*/
@@ -62,7 +71,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
    double, int, int, int, int, double,
    char *, char *, char *, char *, char *, char *,
    double, double, double, int, double, double,
-   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct Map_info *, struct TimeStamp *);
+   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct TimeStamp *,int);
 
 void IL_init_func_2d(struct interp_params *, int (*)(), int (*)(), int (*)(), int (*)(), double (*)(), int (*)(), int (*)());
 /* input2d.c */
@@ -83,7 +92,7 @@ int IL_interp_segments_new_2d(struct interp_params *, struct tree_info *, struct
 /* output2d.c */
 int IL_output_2d(struct interp_params *, struct Cell_head *, double, double, double, double, double, double, double, double, double, double, double, char *, double, int, int, int);
 /* point2d.c */
-int IL_check_at_points_2d(struct interp_params *, struct quaddata *, double *, double *, double, double);
+int IL_check_at_points_2d(struct interp_params *, struct quaddata *, double *, double *, double, double, struct triple);
 /* resout2d.c */
 /* resout2dmod.c */
 int IL_resample_output_2d(struct interp_params *, double, double, double, double, double, double, double, double, double, double, double, char *, double *, struct Cell_head *, struct Cell_head *, char *, int);
