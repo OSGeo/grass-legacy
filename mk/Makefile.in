@@ -8,7 +8,7 @@ SERVERNAME=		`uname -n`
 ARCH=			@ARCH@
 MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 
-all: dirs gmake docs binaries links
+all: dirs gmake docs binaries links post-compile
 
 makefiles:
 	@echo "making makefiles ..."
@@ -70,10 +70,11 @@ links:
 			rm -f ${GISBASE}/bin/$$file ; \
 			ln ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
 		done
+
+post-compile:
 ifeq ($(GRASS_LIBRARY_TYPE),shlib)
-	cp -af ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib	
+	cp -af ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib
 endif	
-	@cp -f error.log ${SRCDIR}/error.log
 	@( cd ${SRCDIR}; \
 	   ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}; )
 
