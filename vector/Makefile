@@ -15,6 +15,7 @@ SUBDIRS1 = \
 	v.format \
 	v.info \
 	v.in.sites \
+	v.net.alloc \
 	v.patch \
 	v.surf.rst \
 	v.transform \
