@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.79 2000-11-14 14:42:33 markus Exp $
+$Id: BUGS,v 1.80 2000-11-14 15:35:52 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -141,6 +141,10 @@ g3.region:
    for a Lat.-Long. database? Does it prefer integer, floating point, or           
    double elevation values?
    (reported by Bob Covill" <bcovill@tekmap.ns.ca>)
+   -> hint: If you go into a lat/long location, load a surface
+            and display it, you get a dark surface as described.
+            If you go to the panel "lights" then and set
+            "Height" to 0.0, the colors are o.k. !
   (being worked on by ?)  
 
  - If loading a region too large for the memory available, the nviz
