@@ -113,7 +113,7 @@ main (int argc, char **argv)
 	flg1->description = "Overwrite output maps" ;
 
 	nulldraw = G_define_flag();
-	nulldraw->key = 'i';
+	nulldraw->key = 'n';
 	nulldraw->description = "Respect NULL values while drawing";
 
 	if (G_parser(argc, argv))
