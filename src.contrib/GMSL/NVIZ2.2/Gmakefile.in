@@ -28,8 +28,8 @@ nvwish:
 	cd src ; $(GMAKE) 
 
 nviz:
-	'rm' -rf $(NV_VER)
-	mkdir $(NV_VER)
+#	'rm' -rf $(NV_VER)
+#	mkdir $(NV_VER)
 	'rm' -rf $(GISBASE)/etc/$(NV_VER)
 	mkdir $(GISBASE)/etc/$(NV_VER)
 
