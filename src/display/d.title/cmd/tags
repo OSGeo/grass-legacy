@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc, argv)$/
+fancy	fancy.c	/^fancy(mapset, window, cats)$/
+normal	normal.c	/^normal(mapset, window, cats)$/
