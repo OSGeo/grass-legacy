@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.40 2000-11-13 11:00:24 markus Exp $
+# $Id: configure,v 1.41 2000-11-14 13:36:44 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -517,6 +517,8 @@ if test -z "$srcdir"; then
   srcdir=$ac_confdir
   if test ! -r $srcdir/$ac_unique_file; then
     srcdir=..
+  else
+    srcdir=`pwd`
   fi
 else
   ac_srcdir_defaulted=no
@@ -3903,6 +3905,8 @@ s%@PQINCPATH@%$PQINCPATH%g
 s%@PQLIBPATH@%$PQLIBPATH%g
 s%@PQLIB@%$PQLIB%g
 s%@ODBCINC@%$ODBCINC%g
+s%@SRCDIR@%$srcdir%g
+s%@ARCH@%$host%g
 CEOF
 EOF
 
