@@ -23,7 +23,7 @@ G_system (command)
     char *command;
 {
     int status, pid, w;
-    int (*sigint)(), (*sigquit)() ;
+    void (*sigint)(), (*sigquit)() ;
 
     sigint  = signal (SIGINT,  SIG_IGN);
     sigquit = signal (SIGQUIT, SIG_IGN);
