@@ -1,0 +1,21 @@
+TO DO LIST :
+
+1.  create support file (that is implement support.vect) is requested on
+on the command line.  Default: no support file created.s 
+
+2.  must have att file to enable vect to cell conversion (raster version of
+the vector file).  The info is printed to att file simultaneously as arc
+output occurs.  
+	? what is the format of an att file
+	? what GRASS commands do I use
+
+3.  Michael says not to worry about nodes not snapping at this point.
+
+4.  write out info as one long line instead of two point lines
+
+5.  write prgm to remove xtra lines (duplicate) only allow 2 lines to be writtenout if nodes = thresholds.
+
+6.  support % done while prgm is running.
+
+7.  correct the USAGE message in main.c
+
