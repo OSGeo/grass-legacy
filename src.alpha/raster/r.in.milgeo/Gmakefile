@@ -1,0 +1,16 @@
+PGM    = $(BIN_MAIN_CMD)/r.in.milgeo
+
+LIST   = \
+	main.o\
+	accread.o\
+	atoint.o\
+	dataread.o\
+	dsiread.o\
+	error.o
+
+$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
+
