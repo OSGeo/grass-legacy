@@ -1,0 +1,63 @@
+
+
+
+v.make.subj(1)	     GRASS Reference Manual	   v.make.subj(1)
+
+
+
+NAME
+     v.make.subj - Create a "subject" file from all category
+		   labels found in the maps listed
+
+SYNOPSIS
+     v.make.subj map=name[,name,...] subj=name
+
+DESCRIPTION
+     v.make.subj will read the dig_cats file for each named map.
+     The program then creates ( or appends to, if the subj file
+     exists) a "subject" file of all of the labels, giving a unique
+     category value to each.
+     
+     This program was designed to create a common category file
+     from mapsets of areas that have unique category labels, 
+     but similar category values; and that must be joined/combined
+     together.
+
+
+SELL ALSO
+     v.combine 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AUTHOR
+     R.L.Glenn , U.S.D.A, Soil Conservation Service
+     Carto. and Geographic Informations Systems Division, NHQ
+
+GRASS 4.0		 U.S.D.A.				1
