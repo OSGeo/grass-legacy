@@ -23,17 +23,16 @@ htmldocs: checkdoxygen
 # NOTE: dglib, diglib and rtree are excluded in ./Doxyfile_arch_latex
 # currently only Vect_*() functions in document:
 latexdocs: checkdoxygen
-	if test -d ./latex ; then (cd ./latex && make clean) ; fi
+	test ! -d latex || (cd ./latex && make clean)
 	doxygen ./Doxyfile_arch_latex
 	(cd ./latex && make)
 	@echo "Latex reference in directory ./latex/refman.dvi"
 
 pdfdocs: checkdoxygen
-	if test -d ./latex ; then (cd ./latex && make clean) ; fi
-	(cd ./latex && make clean)
+	test ! -d latex || (cd ./latex && make clean)
 	doxygen ./Doxyfile_arch_latex
-	(cd ./latex && make pdf)
-	@echo "PDF reference in directory ./latex/refman.pdf"
+	(cd ./latex && make pdf && mv refman.pdf grass51_`date '+%Y_%m_%d'`_refman.pdf)
+	@echo "PDF reference in directory ./latex/grass51_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
 	rm -rf ./latex ./html
