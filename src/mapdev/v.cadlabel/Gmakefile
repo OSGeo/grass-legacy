@@ -1,4 +1,4 @@
-
+PGM=v.cadlabel
 
 SOURCE = v.cadlabel.c \
 	interval.c \
@@ -10,17 +10,8 @@ OBJ = v.cadlabel.o \
 	label_lines.o \
 	line_center.o 
 
-PROG = $(BIN_MAIN_CMD)/v.cadlabel
-all:  $(PROG)
-	
-
-
-
-$(PROG): $(OBJ) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(DIG_ATTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(SOURCE) $(CFLAGS) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
-

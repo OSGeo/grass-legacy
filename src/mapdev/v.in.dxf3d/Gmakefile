@@ -1,9 +1,7 @@
-NAME=v.in.dxf3d
-NAME2=v.in.dxf3d.sh
-PROG =  $(BIN_CONTRIB_CMD)/v.in.dxf3d
+PGM = v.in.dxf3d
 
 OBJ= main.o
 
-$(PROG): main.o  $(GISLIB) $(VECTLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): main.o  $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 	cp v.in.dxf3d.sh $(GISBASE)/scripts/

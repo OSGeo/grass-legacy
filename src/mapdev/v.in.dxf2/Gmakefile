@@ -1,5 +1,4 @@
-
-PROG = $(BIN_MAIN_CMD)/v.in.dxf2
+PGM = v.in.dxf2
 
 SOURCES =	\
 		add_bounds.c \
@@ -45,16 +44,7 @@ OBJ =	\
 	label_box.o \
 	main.o
 
-
-all:	$(PROG)
-
-$(PROG): $(OBJ)  $(GISLIB) $(VECTLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(CFLAGS) $(SOURCES) ../Vlib/*.c ../diglib/*.c $(GISLIB) $(MATHLIB)
-
-saber_obj:
-	#load $(OBJ)

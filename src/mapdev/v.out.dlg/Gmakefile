@@ -1,3 +1,4 @@
+PGM=v.out.dlg
 COMP_LIBES = $(VECTLIB) $(GISLIB) $(LINKMLIB)
 
 
@@ -23,21 +24,10 @@ CFILES = \
 	write_head.c\
 	write.c
 
-
-
-PROG = $(BIN_MAIN_CMD)/v.out.dlg
-
-all:  $(PROG)
-
-
-$(PROG): $(OFILES) $(COMP_LIBES) $(LINKMLIB) 
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(COMP_LIBES) $(LINKMLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(COMP_LIBES) $(MATHLIB) $(XDRLIB)
 
 $(COMP_LIBES): #
-
-
-saber_src:
-	#load $(CFLAGS) $(CFILES) $(COMP_LIBES) $(MATHLIB)
 
 write_lines.o: export_dlg.h
 write_areas.o: export_dlg.h

@@ -1,15 +1,9 @@
-
-
-PROG = $(BIN_MAIN_CMD)/v.support
+PGM = v.support
 
 OFILES = \
 	support.o
 
-
-
-all:  $(PROG)
-
-$(PROG): $(OFILES) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

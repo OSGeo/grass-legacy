@@ -1,6 +1,4 @@
 
-
-
 INTERFILES = \
 	mkgrid_inter.o \
 	ask_for.o \
@@ -18,8 +16,6 @@ CMDFILES = \
 
 PROG_CMD = $(BIN_MAIN_CMD)/v.mkgrid 
 PROG_INT = $(BIN_MAIN_INTER)/v.mkgrid 
-
-#all:  $(PROG_CMD)
 
 all:  $(PROG_CMD) $(PROG_INT)
 

@@ -1,3 +1,4 @@
+PGM = v.digit
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
@@ -193,25 +194,17 @@ SOURCE = \
 
 COMPILE_DIGIT 	= $(LDFLAGS) $(OBJ) $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-LIBES = $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB) $(XDRLIB)
+LIBES = $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB)
 
 DIGITIZERS = $(ETC)/digitizers
 HELP_FILES = $(TXT)/DIGIT
 
+all:  $(BIN_MAIN_INTER)/$(PGM) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
 
-PROG = $(BIN_MAIN_INTER)/v.digit
-
-all:  $(PROG) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
-
-$(PROG):  $(OBJ) $(LIBES)
-#  compile driver into the program
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB)
+$(BIN_MAIN_INTER)/$(PGM):  $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
-
-saber_src:  
-	#load $(CFLAGS) $(SOURCE) $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB) $(CURSES) $(MATHLIB)
-
 
 # Copy over v.digit help files
 $(HELP_FILES)/Main:
@@ -225,15 +218,12 @@ $(DIGITIZERS)/cc95f5_16:
 	if [ ! -d $(DIGITIZERS) ]; then mkdir $(DIGITIZERS); fi
 	(cd digitizers ; tar -cf - * | (cd $(DIGITIZERS); tar -xf - 2>/dev/null ); true )
 
-
-
 #  update the digitcap file
 
 $(ETC)/digcap.sample:  digcap
 	rm -f $(ETC)/digcap.sample
 	cp  digcap  $(ETC)/digcap.sample
 	chmod  644  $(ETC)/digcap.sample
-
 
 
 coll_pts.o: 

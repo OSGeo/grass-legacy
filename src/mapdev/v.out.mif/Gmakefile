@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/v.out.mif
+PGM       = v.out.mif
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
 
@@ -10,7 +10,7 @@ CFILES = \
 	main.c \
 	plot.c
 
-$(PGM): $(OBJS) $(LIBES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

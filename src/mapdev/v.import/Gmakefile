@@ -1,12 +1,6 @@
+PGM = v.import
 
-
-PROG =   $(BIN_MAIN_INTER)/v.import
-all:  $(PROG)
-	
-
-#  interactive version
-
-$(PROG): import_vect.o $(GISLIB)
+$(BIN_MAIN_INTER)/$(PGM): import_vect.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ import_vect.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

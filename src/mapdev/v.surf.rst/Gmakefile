@@ -1,6 +1,4 @@
-PBIN = /usr/tmp 
 PGM    = v.surf.rst
-HOME = $(BIN_CONTRIB_CMD)
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
@@ -16,10 +14,7 @@ SRCS   =  main.c
 
 LIBES = $(DATALIB) $(TREELIB) $(INTERPFLIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
  
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(XDRLIB) $(MATHLIB) 
-
-saber_src:
-	load $(CFLAGS) $(LDFLAGS) $(SRCS)  $(LIBES) 
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

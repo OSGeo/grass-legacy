@@ -1,4 +1,4 @@
-
+PGM=v.area
 OFILES = \
 	main.o \
 	where_am_i.o\
@@ -13,16 +13,9 @@ CFILES = \
 	perimeter.c\
 	clip.c
 
-PROG = $(BIN_MAIN_CMD)/v.area 
+LIBES=$(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB)
 
-$(PROG): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(COORCNVLIB): #
-$(GISLIB): #
-$(VECTLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES) ../Vlib/*.c ../diglib/*.c $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) $(MATHLIB)
+$(LIBES): #

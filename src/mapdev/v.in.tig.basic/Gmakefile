@@ -1,14 +1,10 @@
-# @(#)Gmakefile	1.1.2.1  1/15/93
+PGM=v.in.tig.basic
+LIBES = $(LIBDIR)/libcoorcnv.a $(GISLIB) $(DIG_ATTLIB) $(VECTLIB)
 
-LIB = $(LIBDIR)/libcoorcnv.a
+$(BIN_ALPHA_CMD)/$(PGM): v.in.tig.bas.o $(GISLIB) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ v.in.tig.bas.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-all:	$(BIN_ALPHA_CMD)/v.in.tig.basic
-
-$(BIN_ALPHA_CMD)/v.in.tig.basic: v.in.tig.bas.o $(GISLIB) $(LIB) $(DIG_ATTLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) v.in.tig.bas.o $(LIB) $(DIG_ATTLIB) $(VECTLIB) \
-		$(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
-
-$(LIB): # in case LIB changes
+$(LIBES): # in case LIB changes
 $(GISLIB): #
 $(VECTLIB): #
 $(DIG_ATTLIB): #

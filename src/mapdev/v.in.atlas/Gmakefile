@@ -1,9 +1,7 @@
-
+PGM=v.in.atlas
 VFILES = vinatnrcs.o atl2dig2.o atl2dig1.o isle.o grfix.o
 
-all:	$(BIN_CONTRIB_CMD)/v.in.atlas
-
-$(BIN_CONTRIB_CMD)/v.in.atlas: $(VFILES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(VFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

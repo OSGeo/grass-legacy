@@ -1,12 +1,11 @@
 PGM = v.timestamp
-HOME=$(BIN_MAIN_CMD)
 EXTRA_CFLAGS    = $(VECTLIBFLAGS)
 
 LIST = main.o
 
 LIBES = $(GISLIB) $(DATETIMELIB) $(VECTLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,14 +1,14 @@
-PGM = $(BIN_MAIN_CMD)/v.what
+PGM = v.what
 OFILES = \
 	main.o \
 	openvect.o\
 	what.o
 
+# VECTLIB entry *twice* needed:
+LIBES=$(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-
-$(PGM): $(OFILES) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #

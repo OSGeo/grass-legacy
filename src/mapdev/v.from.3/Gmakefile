@@ -1,16 +1,10 @@
-
-
 PROG=$(ETC)/v.from.3
 
 OBJ = 324.o
 
 all:  $(PROG)
-	
 
 $(PROG): $(OBJ) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) 324.c ../Vlib/*.c ../diglib/*.c $(GISLIB)

@@ -1,26 +1,14 @@
-EXTRA_CFLAGS	= $(VECTLIBFLAGS)
+PGM=v.alabel
 
 # include VECTLIBFLAGS for the PORTABLE_3 flag
+EXTRA_CFLAGS    = $(VECTLIBFLAGS)
 
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
 
-
-PROG =   $(BIN_ALPHA_CMD)/v.alabel
-
-all:  $(PROG)
-
-
-#   interactive version
-
-
-#   command line programs
-
-$(PROG): main.o  $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_ALPHA_CMD)/$(PGM): main.o  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(GISLIB): #
 $(LINKMLIB): #
 $(DIG_ATTLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRC)/mapdev//Vlib/*.c $(SRC)/mapdev/diglib/*.c main.c  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(LINKMLIB) 

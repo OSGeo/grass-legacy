@@ -1,6 +1,4 @@
-
-#PROG =   ./v.cutter
-PROG =   $(BIN_ALPHA_CMD)/v.cutter
+PGM = v.cutter
 
 OBJS = \
 	alloc.o \
@@ -64,20 +62,19 @@ SRCS = \
 	vertex.c \
 	write.c
 
+#cross: cross.o intersect.o
+#	$(CC) $(LDFLAGS) -o $@ cross.o intersect.o $(MATHLIB) $(XDRLIB)
 
-all:  $(PROG)
+#line: line.o plane.o
+#	$(CC) $(LDFLAGS) -o $@ line.o plane.o $(MATHLIB) $(XDRLIB)
 
-cross: cross.o intersect.o
-	$(CC) $(LDFLAGS) -o $@ cross.o intersect.o $(MATHLIB) $(XDRLIB)
+#ccw: ccw.o intersect.o
+#	$(CC) $(LDFLAGS) -o $@ ccw.o intersect.o $(MATHLIB) $(XDRLIB)
 
-line: line.o plane.o
-	$(CC) $(LDFLAGS) -o $@ line.o plane.o $(MATHLIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB)
 
-ccw: ccw.o intersect.o
-	$(CC) $(LDFLAGS) -o $@ ccw.o intersect.o $(MATHLIB) $(XDRLIB)
-
-$(PROG): $(OBJS)  $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 table.o: macros.h
 
@@ -86,13 +83,3 @@ $(DIG_ATTLIB): #
 $(BITMAPLIB): #
 $(LINKMLIB): #
 $(GISLIB): #
-
-saber_src:
-	#load -C $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB) $(MATHLIB)
-
-#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(SRC)/mapdev/Vlib/*.c $(SRC)/mapdev/diglib/*.c $(GISLIB) $(MATHLIB)
-
-#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(SRCS)  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
-
-#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCS) $(VECTLIB) $(GISLIB) $(GISLIB) $(MATHLIB)
-

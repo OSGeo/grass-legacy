@@ -17,9 +17,3 @@ label.o: null.h
 
 $(GISLIB): #
 $(VECTLIB): #
-
-saber:
-	#unload -lgis
-	#load *.c $(VECTLIB)
-	#load $(LIBDIR)/gis/area_poly1.c
-	#load -lgis

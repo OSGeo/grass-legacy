@@ -1,3 +1,4 @@
+PGM = v.spag
 
 BUILD_LIB = $(SRC)/mapdev/v.build/libbuild.a
 
@@ -52,23 +53,7 @@ B_A_OFILES = \
 	b_a_plus.o \
 	write_ascii.o 
 
-
-PROG =    $(BIN_MAIN_CMD)/v.spag
-all:    $(PROG)
-
-
-
-$(PROG): $(OFILES) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(BUILD_LIB) $(VECTLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
 
 $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
-
-#$(BIN)/spag2: $(OFILES2) $(VECTLIB)
-#	$(CC) $(LDFLAGS) -o $@ $(OFILES2) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
-#
-
-saber_src:
-	#load $(CFLAGS) $(CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
-
-saber_src2:
-	#load $(CFLAGS) $(CFILES2) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)

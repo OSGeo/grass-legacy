@@ -1,16 +1,8 @@
 EXTRA_CFLAGS	= $(VECTLIBFLAGS)
 
-PROG =   $(BIN_ALPHA_CMD)/v.llabel
+PGM = v.llabel
 
-all:  $(PROG)
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
 
-#   interactive version
-
-
-#   command line programs
-
-$(PROG): main.o  $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(DIG_ATTLIB) $(XDRLIB)
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRC)/mapdev//Vlib/*.c $(SRC)/mapdev/diglib/*.c main.c  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(LINKMLIB) 
+$(BIN_ALPHA_CMD)/$(PGM): main.o  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,7 +1,6 @@
 PGM = v.in.shape
 # SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
 
-HOME = $(BIN_CONTRIB_CMD)
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 # EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
 LIST = 	main.o \
@@ -17,8 +16,10 @@ LIST = 	main.o \
 # LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
 # 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASK)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(GISLIB): # 
