@@ -746,10 +746,8 @@ LOC_CHECK_INC_PATH(postgres,PostgreSQL,PQINCPATH)
 LOC_CHECK_INCLUDES(libpq-fe.h,PostgreSQL,$PQINCPATH)
 
 LOC_CHECK_INCLUDES(postgres.h,PostgreSQL,$PQINCPATH,[
-LOC_CHECK_INCLUDES(postgres_fe.h,PostgreSQL,,[
-LOC_CHECK_INCLUDES(internal/postgres_fe.h,PostgreSQL,,)])
+LOC_CHECK_INCLUDES(postgres_fe.h,PostgreSQL,,)
 ])
-
 
 fi # $USE_POSTGRES
 
