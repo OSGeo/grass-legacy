@@ -1,4 +1,5 @@
 EXTRA_CFLAGS	= $(VECT_INCLUDE)
+COMP_LIBES = $(VECTLIB) $(GISLIB) $(LINKMLIB)
 
 
 OFILES = \
@@ -13,6 +14,7 @@ OFILES = \
 	write.o
 
 CFILES = \
+	v.export_dlg.c \
 	area_one.c\
 	shuffle_dots.c\
 	struct_swap.c\
@@ -29,16 +31,16 @@ PROG = $(BIN_MAIN_CMD)/v.out.dlg
 all:  $(PROG)
 
 
-$(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
+$(PROG): $(OFILES) $(COMP_LIBES) $(LINKMLIB) 
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(COMP_LIBES) $(MATHLIB)
 	mv a.out $@
 
+$(COMP_LIBES): #
 
 
 saber_src:
-	#load $(CFLAGS) v.export_dlg.c $(CFILES) $(LIBFILES) $(LIBTRANS) $(LIBATTS) $(GISLIB) $(MATHLIB)
-
+	#load $(CFLAGS) $(CFILES) $(COMP_LIBES) $(MATHLIB)
 
 write_lines.o: export_dlg.h
 write_areas.o: export_dlg.h
