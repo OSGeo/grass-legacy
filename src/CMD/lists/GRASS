@@ -273,7 +273,6 @@ src/paint/p.vrml1.1
 # do we need this?:
 src/paint/Tests
 src/ps.map
-src/raster/r.agnps50
 src/raster/r.average
 src/raster/r.basins.fill
 src/raster/r.bilinear
@@ -466,7 +465,6 @@ src.contrib/CERL/raster/r.water.fea/src
 # src.contrib/CWU/Census/scripts # requires RIM DBMS
 # src.contrib/EPA/grass.ipw/grass.to.ipw # needs Image Processing Workbench
 # src.contrib/EPA/grass.ipw/ipw.to.grass # needs Image Processing Workbench
-# src.nonGPL/src.contrib/NMSU/WRAT    # not working
 # src.contrib/NPS/d.distance # needs dig_P_*() functions
 # src.contrib/NPS/d.distance/curses # um, huh?
 src.contrib/NPS/r.in.elas
@@ -549,7 +547,3 @@ src.contrib/SDTS
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3 # needs 5.0 update
-#src.nonGPL/display/d.param.scale
-#src.nonGPL/libes/geom
-#src.nonGPL/sites/s.geom # needs 5.0 update
-#src.nonGPL/vector/v.geom
