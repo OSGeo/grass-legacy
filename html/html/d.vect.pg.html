@@ -1,149 +1,194 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<A NAME="d.vect.pg">
-<TITLE>d.vect.pg</TITLE>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>d.vect.pg</title>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
-
-<img src="grass.smlogo.gif">
-
+<a NAME="d.vect.pg"></a><img SRC="grass.smlogo.gif" >
 <hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.vect.pg</i></b> - Display select vectors from an existing vector
+map. (GRASS-RDBMS Interface Display Program)
+<h2>
+SYNOPSIS</h2>
+<b>d.vect.pg</b>
+<br><b>d.vect.pg help</b>
+<br><b>d.vect.pg [-f]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i>
+[<b>where</b>=<i>name</i>] <b>map</b>=<i>name</i> [<b>color</b>=<i>name</i>]
+<h2>
+ALTERNATE</h2>
+<b>d.vect.pg -s help</b>
+<br><b>d.vect.pg -s sql</b><i>=filename</i> <b>map</b><i>=name</i> [<b>color</b><i>=name</i>]
+<h2>
+DESCRIPTION</h2>
+<i>d.vect.pg</i> displays select vectors from an existing vector map based
+on the unique values in a database column. Each row returned by a user
+constructed database query will be associated with a vector feature which
+is subsequently drawn on the graphics display in the active frame. The
+user can control the color of the vector draw by specifying a color on
+the command line.
+<h2>
+COMMAND LINE OPTIONS</h2>
 
-<H2>NAME</H2>
-<EM><B>d.vect.pg</B></EM> - Display select vectors from an existing vector map. (GRASS-RDBMS Interface Display Program)
+<h3>
+Flag:</h3>
 
-<H2>SYNOPSIS</H2>
-<B>d.vect.pg</B><BR>
-<B>d.vect.pg help</B><BR>
-<B>d.vect.pg key</B><EM>=name</EM> <B>tab</B><EM>=name</EM> <B>where</B><EM>=name</EM> <B>map</B><EM>=name</EM> [<B>color</B><EM>=name</EM>] [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+<dl>
+<dt>
+<b>-f</b></dt>
 
-<H2>ALTERNATE</H2>
-<B>d.vect.pg -s help</B><BR>
-<B>d.vect.pg -s sql</B><EM>=filename</EM> <B>input</B><EM>=name</EM> [<B>color</B><EM>=name</EM>]
+<dd>
+Fill polygons selected on the query criteria</dd>
+</dl>
 
-<H2>DESCRIPTION</H2>
-<EM>d.vect.pg</EM> displays select vectors from an existing vector map based on the unique values in a database column.  Each row returned by a user constructed database query will be associated with a vector feature which is subsequently drawn on the graphics display in the active frame.  The user can control the color of the vector draw by specifying a color on the command line.
+<h3>
+Parameters:</h3>
 
-<H2>COMMAND LINE OPTIONS</H2>
+<dl>
+<dt>
+<b>key=databasecolumnname</b></dt>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>key=databasecolumnname</B>
-<DD>Column in table "tab" of the currently selected database containing values corresponding to the vector maps category values.  Table is designated on the command line by tab=tablename and vector is designated on the command line by map=mapname.
-<P>
+<dd>
+Column in table "tab" of the currently selected database containing values
+corresponding to the vector maps category values. Table is designated on
+the command line by tab=tablename and vector is designated on the command
+line by map=mapname.</dd>
 
-<DT><B>tab=databasetablename</B>
-<DD>Table in the currently selected database containing a column which has values corresponding to vector category values in the map designated by map=map.
-<P>
+<dt>
+<b>tab=databasetablename</b></dt>
 
-<DT><B>where=SQLwhereclause</B>
-<DD>SQL "where" clause which specifies the query criteria to be used in subsetting the database.  The.pgormation specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
-</DL>
-For example, if you want to select only those records where the value for cfcc code is either A21 or A31 the following could be entered:
-<P>
+<dd>
+Table in the currently selected database containing a column which has
+values corresponding to vector category values in the map designated by
+map=map.</dd>
 
-<DD><EM>cfcclookup.code = "A21" or cfcclookup.code = "A31"</EM>
+<dt>
+<b>where=SQLwhereclause</b></dt>
 
-<P>
-To select all cfcclookup.codes the value for cfcclookup.code is of cfcc type A (ie. roads):
-<P>
+<dd>
+SQL "where" clause which specifies the query criteria to be used in subsetting
+the database. The field names specified in the where option must indicate
+the column(s) to be used, the operators to be used in the evaluation and
+the values which the data in the column will be evaluated against.</dd>
+</dl>
+If the database column used as the selection criteria is a character field
+then the associated value must be placed in quotes. To determine the data
+types associated with columns in the currently selected database use the
+<i>g.column.pg</i> command with the <i>-v</i> flag.
+<p>Queries which are more complex are best implemented using the <i>-s</i>
+flag and a prepared SQL file.
+<dl>
+<dt>
+<b>map=map</b></dt>
 
-<DD><EM>cfcclookup.code ~ "A"</EM>
+<dd>
+Name of an existing vector map with category values which correspond to
+values in a specified column in the currently selected database.</dd>
 
-<P>
-To select all cfcclookup.codes except those for roads:
-<P>
+<dt>
+<b>color=name</b></dt>
 
-<DD><EM>cfcclookup.code !~ "A"</EM>
-<P>
+<dd>
+Color to draw vectors in</dd>
 
-If the database column used as the selection criteria is a character field then the associated value must be placed in double quotes. To determine the data types associated with columns in the currently selected database use the <EM>g.column.pg</EM> command with the <EM>-v</EM> flag.
-<P>
+<dd>
+Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+gray, white, black</dd>
 
-In addition to the operators presented in the examples above a range of relational operators including and, or, etc. are supported. There may be some differences in the relational operators which are supported with different database drivers.
-<P>
+<dd>
+</dd>
 
-The examples presented above were created using the command line parser.  If <EM>d.vect.pg</EM> is being called from a shell script remember to escape quoted strings.  The follwing example presents a component of a shell script used to join two tables and display vector features where the database column cfcclookup.classname is set to "Divided" (eg. all tiger features identified as divided highways).
-<P>
+<br><b>EXAMPLE:</b>
+<p><b>1.</b><i> d.vect.pg -f key=rec_id map=kuruma_id tab=info_kuruma where='type_id
+>32 and type_id &lt; 38'&nbsp; color=red</i>
+<br><i></i>&nbsp;
+<p><b>Result:</b> only polygons with type in 33-37 range would be displayed
+in red color..
+<p><b>2.</b> <i>d.vect.pg -f -s sql=oak.sql map=kuruma_id</i>
+<p>oak.sql is:
+<p><i>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</i>
+<p><b>Result: </b>this would the same as in the first example.</dl>
 
-<DD><EM>d.vect.pg key=recordnum tab=feature
-<DD>where=cfcclookup.classname ~ '"Divided"' map=$1 color=green join=cfcclookup,cfcclookup.cfcc,feature.cat</EM>
+<h2>
+ALTERNATE COMMAND LINE USAGE</h2>
+The alternate command line usage is provided to simplify the process of
+retrieving.pgormation from more than one table in the query criteria. The
+alternate command line structure is selected using the the <i>[-s]</i>
+flag on the command line. When using this flag the user must include the
+name of a text file on the command line as well. This file must include
+a complete, well formed SQL SELECT statement specifying the query criteria
+to retrieve values which correspond to category values in a GRASS data
+layer.
+<dd>
+</dd>
 
-<P>
-Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared
-SQL file.
+<h3>
+Flag:</h3>
 
-<DL>
-<DT><B>map=map</B>
-<DD>Name of an existing vector map with category values which correspond to values in a specified column in the currently selected database.
-<P>
+<dl>
+<dt>
+<b>-s</b></dt>
 
-<DT><B>color=name</B>
-<DD>Color to draw vectors in
-<DD>Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
-<P>
+<dd>
+SQL select statements are input from a prepared file</dd>
 
-<DT><B>join=tab,tabkey,pkey</B>
-<DD>Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
-</DL>
-<P>
+<dt>
+<b>-f</b></dt>
 
-For instance, assume that feature is a table containing column values (recordnum), associated with category values in a GRASS vector file.  In addition, assume that cfcclookup.cfcccodes is a table containing attribute data on the transportation network in the same area.  In this example recordnum is the column linking feature to the GRASS category file and cfcclookup.cfcc is the column linking cfcclookup with the feature.  To specify a query based on attribute values in the table cfcclookup.cfcccodes the join statement would be:
-<P>
+<dd>
+Fill polygons selected on the query criteria</dd>
+</dl>
 
-<DD><EM>join=cfcclookup,cfcclookup.cfcc,feature.cfcc</EM>
+<h3>
+Parameters:</h3>
 
-<P>
-Specifying these conditions would insure that all rows from table cfcclookup which satisfy the query criteria would be matched with the corresponding rows in table feature, which are then related to the spatial features in the GRASS data layer via the database column feature.recordnum which is related to the GRASS category values.
+<dl>
+<dt>
+<b>sql=filename</b></dt>
 
-<P>
-This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+<dd>
+SQL statements specifying well formed selection criteria.</dd>
 
-<H2>ALTERNATE COMMAND LINE USAGE</H2>
-The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
-SQL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
-<P>
+<dt>
+<b>map=name</b></dt>
 
-The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
-<P>
+<dd>
+Name of an existing vector map</dd>
 
-<DD><EM>retrieve unique (feature.recordnum)
-<DD>where cfcclookup.classname ~ "Divided" and cfcclookup.cfcc.= feature.cfcc and feature.recordnum NOTNULL sort by feature.recordnum</EM>
+<dt>
+<b>color=name</b></dt>
 
-<H3>Flag:</H3>
-<DL>
-<DT><B>-s</B>
-<DD>SQL select statements are input from a prepared file.
-</DL>
+<dd>
+Color to draw vectors in</dd>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>sql=filename</B>
-<DD>SQL statements specifying well formed selection criteria.
-<P>
+<dd>
+Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+gray, white, black</dd>
+</dl>
 
-<DT><B>input=map</B>
-<DD>Name of an existing vector map
-<P>
-
-<DT><B>color=name</B>
-<DD>Color to draw vectors in
-<DD>Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
-</DL>
-
-<H2>BUGS</H2>
+<h2>
+BUGS</h2>
 None known.
-
-<H2>NOTE</H2>
+<h2>
+NOTE</h2>
 This program requires the Postgres database software.
-
-<H2>SEE ALSO</H2>
-<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
-
-<H2>AUTHOR</H2>
-Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
-<P>
-Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
-<P>
-Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
-</BODY>
-</HTML>
-
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>
