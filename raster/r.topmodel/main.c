@@ -97,7 +97,7 @@ main(argc, argv)
 	param.belev			= G_define_option();
 	param.belev->key		= "belevation";
 	param.belev->description	=
-		_("(o/i) Basin elevation map (extracted)");
+		_("(o) Basin elevation map (extracted)");
 	param.belev->type		= TYPE_STRING;
 	param.belev->required		= NO;
 	param.belev->gisprompt		= "new,cell,raster";
@@ -105,7 +105,7 @@ main(argc, argv)
 	param.topidx			= G_define_option();
 	param.topidx->key		= "topidx";
 	param.topidx->description	=
-		_("(o/i) Topographic index ln(a/tanB) map (extracted)");
+		_("(o) Topographic index ln(a/tanB) map (extracted)");
 	param.topidx->type		= TYPE_STRING;
 	param.topidx->required		= NO;
 	param.topidx->gisprompt		= "new,cell,raster";

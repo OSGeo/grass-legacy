@@ -22,9 +22,9 @@ Parameters:
 
 (o)	direction:	This should be given with the [depressionless] map.
 
-(o/i)	belevation:	Study basin extracted elevation map
+(o)	belevation:	Study basin extracted elevation map
 
-(o/i)	topidx:		Study basin extracted topographic index map
+(o)	topidx:		Study basin extracted topographic index map
 
 (i)	nidxclass:	Number of topographic index classes
 
@@ -49,16 +49,11 @@ Parameters:
 
 
 Flags:
-	-i:		Without this flag, all input data (i) and intermediate
-			output (o/i) should be given and intermediate output can
-			not be input for run.
-
-			For example, [belevation] map will be created from 
-			[elevation] and [basin] in every run.  However, every 
-			[belevation] output is the same and this is useless
-			process if [belevation] map is already given.
-
-			With this flag, intermediate output can be input for
-			run.  (o/i) parameters will be affected by the flag.
+	-i:		r.topmodel requires at least idxstats, parameters,
+			input, and output options. The -i flag means that the
+			model doesn't need any input raster maps because the
+			idxstats file is already ready for run. This also means
+			that any other options are used only to create the
+			idxstats file.
 
 	-o:		Overwrite outputs
