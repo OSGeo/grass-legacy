@@ -1,0 +1,39 @@
+Terrain Analysis	Hydrology		Pollution
+_________________	_________________	_________________
+|               |       |		|	|		|
+| Elevation     |	| Land Cover	|	| Land Cover	|
+| Model         |	|		|	|		|
+--------+--------	| Hydrologic	|	| Soils		|
+        |		| Soil Group	|	| K factor	|
+________V________	--------+--------	| Texture	|
+|		|	        |		--------+--------	
+| Idealized	|		|			|
+| Elevation	|		|			|
+| Model		|		|			|
+|		|		|			|
+| Drainage	|		|			|
+| Direction	|		|			|
+|		|		|			|
+| Drainage	|	________V________		|
+| Accumulation	|	|		|		|
+|		|	| Runoff Map	|		|
+| Slope		|	-+------+--------		|
+--------+--------	 |	|			|
+	|	     +----	|			|
+	--------+----(--------->|<-----------------------	
+		|    |	________V________	_________________
+		|<---+	|		|	|		|
+		|	| Contaminant   |	| Best 		|
+		|	| Source Areas  |	| Management	|
+		|	--------+--------	| Practices	|
+	________V________	|		--------+--------
+	|		|	|			|
+	| Peak 		|	------------+------------
+	| Discharge	|		    |
+	-----------------	    ________V________
+				    |		    |
+				    | Contaminant   |
+				    | Routing	    |
+				    -----------------
+
+			figure X1.
