@@ -1,0 +1,40 @@
+CC                  = cc
+ARCH                = sun4
+
+GISBASE             = /export/data/softail/loechl/grass_up4/grass.bin/sun4
+UNIX_BIN            = /data/softail/loechl/grass_up4/grass.bin
+
+DEFAULT_DATABASE    = /data/softail/loechl/grass_up4/grass.data
+DEFAULT_LOCATION    = spearfish
+
+COMPILE_FLAGS       = -O
+LDFLAGS             = -s
+
+XCFLAGS             = -D_NO_PROTO
+XLDFLAGS            =
+XINCPATH            = -I/data/diego/X11R5/include
+XMINCPATH           = -I/data/diego/X11R5/include
+XLIBPATH            = -L/data/diego/X11R5/lib
+XTLIBPATH           = -L/data/diego/X11R5/lib
+XMLIBPATH           = -L/data/diego/X11R5/lib
+XLIB                = -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          =
+
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+
+#                   LIBRULE = ar ruv $@ $?
+#                   LIBRULE = ar ruv $@ $?; ranlib $@
+#                   LIBRULE = ar ruv $@ $?; ar ts $@
+#                   LIBRULE = ar rc $@ `lorder $(OBJ) | tsort`
+LIBRULE             = ar ruv $@ $?; ranlib $@
+
+USE_TERMIO          =
+USE_MTIO            = -DUSE_MTIO
+USE_FTIME           = -DUSE_FTIME
+DIGITFLAGS          = -DUSE_SETREUID -DUSE_SETEUID -DUSE_SETPRIORITY
+VECTLIBFLAGS        =
+GETHOSTNAME         = -DGETHOSTNAME_OK
