@@ -1,4 +1,5 @@
 unix_cmd (pgm, raw_report, report)
+    char *pgm;
     char *raw_report;
     char *report;
 {
