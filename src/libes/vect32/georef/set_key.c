@@ -19,10 +19,14 @@
 #include <unistd.h>
 #include "config.h"
 
-#ifdef  HAVE_TERMIO_H
-#include	<termio.h>
+#ifdef __MINGW32__
+#  include <conio.h>
 #else
-#include	<sgtty.h>
+#  ifdef  HAVE_TERMIO_H
+#    include	<termio.h>
+#  else
+#    include	<sgtty.h>
+#  endif
 #endif
 
 #define		KEYBOARD	0
@@ -86,7 +90,13 @@ unset_keyboard (void) {}
 int 
 key_hit (char *buf)
 {
-
+#ifdef __MINGW32__
+    int Keyhit = _kbhit ();
+    if ( Keyhit ) {
+        *buf = _getch();
+    }
+    return (Keyhit);
+#else    
 	int	Keyhit ;
 
 #ifdef	HAVE_TERMIO_H
@@ -108,7 +118,7 @@ key_hit (char *buf)
 #endif
 
 	return (Keyhit) ;
-
+#endif /* __MINGW32__ */
 }
 
 

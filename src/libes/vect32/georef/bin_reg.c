@@ -22,8 +22,11 @@ main (int argc, char *argv[])
 	int   pid ;
 	int   lock ;
 	int   return_value ;
-	void   (*sigint)(),  (*sigquit)() ;
-
+	void   (*sigint)()
+#ifndef __MINGW32__
+            ,  (*sigquit)()
+#endif
+                ;
 	char  *env_digitizer ;
 
 	char  lock_name[128] ;
@@ -74,10 +77,12 @@ main (int argc, char *argv[])
 
 	fclose(fp) ;
 
+#ifndef __MINGW32__
 #ifdef DEBUG
-fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
+    fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
 	Driver.name, Driver.device, Driver.dig_program, Driver.dig_desc) ;
 #endif DEBUG
+#endif
 
 
 	pid = atoi(argv[2]) ;
@@ -89,8 +94,10 @@ fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
 /********  everything is okay, block signals and lock the digitizer  */
 
 	sigint = signal(SIGINT, SIG_IGN) ;
+#ifndef __MINGW32__
 	sigquit = signal(SIGQUIT, SIG_IGN) ;
-
+#endif
+    
 	lock = lock_file( lock_name, pid) ;
 	if ( ! lock)
 	{

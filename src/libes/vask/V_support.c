@@ -1,5 +1,7 @@
 #include <stdio.h>
+#ifndef __MINGW32__
 #include <pwd.h>
+#endif
 #include <unistd.h>
 #include <sys/types.h>
 #include <curses.h>
@@ -13,8 +15,13 @@ int V__dump_window()
 	char home[80] ;
 	int curx, cury ;
 
+#ifdef __MINGW32__
+        /* Quick hack in absence of understanding */ 
+        sprintf(home,"c:/visual_ask" ) ;
+#else        
 	sprintf(home,"%s/visual_ask", getpwuid(getuid())->pw_dir ) ;
-
+#endif
+    
 	if ((file=fopen(home, "a")) == NULL)
 	{
 		fprintf (stdout,"No Copy\n") ;

@@ -203,7 +203,11 @@ static int write_env (void)
     FILE *fd;
     int n;
     char dummy[2];
-    void (*sigint)(), (*sigquit)() ;
+    void (*sigint)()
+#ifndef __MINGW32__
+        , (*sigquit)()
+#endif
+;
 
 
 /*
@@ -211,8 +215,9 @@ static int write_env (void)
  * If interrupted, it can wipe out the GISRC file
  */
     sigint  = signal (SIGINT,  SIG_IGN);
+#ifndef __MINGW32__    
     sigquit = signal (SIGQUIT, SIG_IGN);
-
+#endif
     if((fd = open_env ("w")))
     {
 	for (n = 0; n < count; n++)
@@ -223,7 +228,9 @@ static int write_env (void)
     }
 
     signal (SIGINT,  sigint);
+#ifndef __MINGW32__    
     signal (SIGQUIT, sigquit);
+#endif
 
     return 0;
 }

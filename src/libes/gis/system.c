@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#ifndef __MINGW32__
 #include <sys/wait.h>
+#endif
 #include "gis.h"
 #include "glocale.h"
 /****************************************************************
@@ -28,10 +30,16 @@
 int G_system ( char *command)
 {
     int status, pid, w;
-    void (*sigint)(), (*sigquit)() ;
+    void (*sigint)()
+#ifndef __MINGW32__
+        , (*sigquit)()
+#endif
+            ;
 
     sigint  = signal (SIGINT,  SIG_IGN);
+#ifndef __MINGW32__
     sigquit = signal (SIGQUIT, SIG_IGN);
+#endif
 
     fflush (stdout);
     fflush (stderr);
@@ -39,8 +47,10 @@ int G_system ( char *command)
     if ( (pid = fork()) == 0)
     {
 	signal (SIGINT,  SIG_DFL);
+#ifndef __MINGW32__
 	signal (SIGQUIT, SIG_DFL);
-
+#endif
+    
 	execl ("/bin/sh", "sh", "-c", command, 0);
 	_exit(127);
     }
@@ -60,7 +70,9 @@ int G_system ( char *command)
     }
 
     signal (SIGINT,  sigint);
+#ifndef __MINGW32__
     signal (SIGQUIT, sigquit);
+#endif
 
     return (status);
 }
