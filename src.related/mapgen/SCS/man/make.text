@@ -1,0 +1,143 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.text                                       make.text
+
+
+            
+            
+            NAME
+            make.text - Generates text on the map composition.
+            
+            SYNOPSIS
+            make.text [filename]
+            
+            DESCRIPTION
+            make.text generates text in block units on the map 
+            composition.  A block unit is text (i.e. character, word,
+            line or group of lines) that maintains the same
+            characteristics (i.e. font, size, pen, etc).  Text is
+            provided through standard input by responding to a series of
+            questions addressing file identities, text characteristics,
+            and positional locations.  Each series of responses pertains
+            to a block unit of text.  If given, [filename] is used for
+            the name of the overlay file generated.  Multiple text files
+            may be generated for the map composition by using unique
+            overlay file names.
+            
+            The user is required to provide the following:
+            
+                 - map definition file name
+                 - overlay file name (if not specified in the command
+                      line)
+                 - text characteristics for block unit
+                      - plotter pen number
+                      - text font
+                      - text size
+                      - text leading
+                      - relationship of the text to a window within the
+                           map composition
+                      - location to start the text
+                      - text justification
+                      - text string
+            
+            After entering the information for the first text unit, the
+            user is given the option to change the text characteristics
+            for the next text unit.
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the misc directory; graphic elements to draw 
+            the map element are stored in the ovm directory.  The
+            default file name for both directories is text.  
+            
+            Changing the appearance of any text (e.g. position,
+            spelling, etc.) can be done by regenerating the make.text
+            command or by editing the text definition file and executing
+            the redo.misc command.
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.text                                       make.text
+
+
+
+            
+                 (edit) example:          vi misc/[filename] 
+                                          vi misc/text 
+            
+            Information entered through the interactive make.text
+            command has been reformatted to meet the requirements of the
+            MAPGEN command legend, prefacing the element characteristics 
+            with options for the legend command.  All options available
+            in the legend command are available for use in the GRASS-
+            MAPGEN Interface.  Commonly used legend options associated 
+            with making a text file(s) are:
+                 
+                 -w (window/region) [data=d][map plot=p]
+                 -f (style) [font=-alphanumeric]
+                 -p (pen) [plotter pen location=value]
+                 -s (size) [centimeter=value]
+                 -l (leading/vertical spacing) [centimeter=value]
+                 -j (justify) [center=c][right=r][left=l] 
+                 -x (horizontal coordinate) [right=>[centimeter=value]]
+                                          [left=<[centimeter=value]]
+                                          [center=|[centimeter=value]] 
+                 -y (vertical coordinate) [top=>[centimeter=value]]
+                                        [bottom=<[centimeter=value]]
+                                        [center=|[centimeter=value]]
+                 -t (text)
+                 [text string]
+                 . (end text)
+            
+            EXAMPLE 
+            The file misc/mytext will print the text block "The GRASS-
+            MAPGEN Interface can make text!" in the current GRASS mapset
+            and location window using the red pen in location 2 on the
+            plotter, in the -crp font, 1/2 cm high, right justified at
+            one inch away from the lower right corner of the map
+            composition plotting area:
+                 
+                 legend map.def -o ovm/mytext << EOF
+                 -w p
+                 -p 2
+                 -f -crp
+                 -s 1.270
+                 -l 1.650
+                 -j r
+                 -x >-2.540
+                 -y 2.540
+                 -t
+                 The GRASS-MAPGEN Interface
+                 can make text!
+                 .
+                 EOF
+
+
+                                   APPENDIX I                    3
+                              GRASS-MAPGEN User's Guide
+            make.text                                       make.text
+
+
+
+            NOTE  
+            If only one text file will be drawn on the map composition,
+            the default selection for the file name is recommended for
+            use.
+            
+            The delete key will abort the make.text command. 
+            
+            SEE ALSO            
+                 legend         User Manual for MAPGEN (UNIX Version), 
+                                USGS, p. 29.
+                 TASK 8         GRASS-MAPGEN User's Guide, USDA-SCS.
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,
+                                USDA-SCS.
+                 redo.misc      (Same)
+                 getting loca-  GRASS-MAPGEN User's Guide, APPENDIX I-A,
+                   tions        USDA-SCS. 
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
