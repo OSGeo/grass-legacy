@@ -1,0 +1,28 @@
+###########################################################
+
+EXTRA_CFLAGS	= -I../include
+
+BASIC_LIB = libbasic.a
+
+CFILES = basic.c malloc.c files.c \
+         getarg.c cb.c cb_doprnt.c \
+         isort.c qsort.c istaque.c \
+         prime.c uhash.c \
+         time.c tokenize.c counter.c \
+         math2.c 
+
+OBJ = basic.o malloc.o files.o \
+         getarg.o cb.o cb_doprnt.o \
+         isort.o qsort.o istaque.o \
+         prime.o uhash.o \
+         time.o tokenize.o counter.o \
+         math2.o 
+
+
+all: $(BASIC_LIB)
+
+$(BASIC_LIB): $(OBJ)
+	$(AR)
+
+
+
