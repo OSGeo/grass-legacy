@@ -96,7 +96,7 @@ echo "Installing to $DESTDIR"
 if [ ! -d "$DESTDIR" ] ;
 then
         #check if a word "grass" is in string $DESTDIR
-        echo $DESTDIR |grep -w "grass"
+        echo $DESTDIR |grep -v "grass"
         if [ $? -eq 1 ] ; then
             echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
             echo "Continue (y/n)?"
@@ -119,7 +119,7 @@ else
           exit
      else
           #check if a word "grass" is in string $DESTDIR
-          echo $DESTDIR |grep -w "grass"
+          echo $DESTDIR |grep -v "grass"
           if [ $? -eq 1 ] ; then
             echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
             echo "Continue (y/n)?"
