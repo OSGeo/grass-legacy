@@ -1,0 +1,5 @@
+
+@man("i.tape.other") - An imagery function that extracts scanned aerial imagery
+(NHAP, etc.) and SPOT imagery from half-inch magnetic tape.
+
+(GRASS Imagery Program)
