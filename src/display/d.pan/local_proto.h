@@ -1,4 +1,24 @@
 #include "gis.h"
+#include "config.h"
+
+
+/* left button */
+#define	LEFTB	1
+/* left button string */
+#define	LEFTS	"Left:  "
+
+#ifndef	ANOTHER_BUTTON
+#	define	MIDDLEB	2
+#	define	RIGHTB	3
+#	define	MIDDLES	"Middle:"
+#	define	RIGHTS	"Right: "
+#else
+#	define	MIDDLEB	3
+#	define	RIGHTB	2
+#	define	MIDDLES	"Right: "
+#	define	RIGHTS	"Middle:"
+#endif
+
 
 /* ask.c */
 int yes(char *);
@@ -28,17 +48,6 @@ int get_wind_x_pos(float);
 int zoom(int, int);
 /* redraw.c */
 int redraw(void);
-
-
-#define LEFTB	1
-
-#ifndef ANOTHER_BUTTON
-#	define MIDDLEB	2
-#	define RIGHTB	3
-#else
-#	define MIDDLEB	3
-#	define RIGHTB	2
-#endif
 
 #ifdef MAIN
 #define GLOBAL

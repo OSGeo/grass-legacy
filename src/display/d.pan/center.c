@@ -21,9 +21,9 @@ int make_window_center (struct Cell_head *window, double mag)
 
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
-    fprintf(stderr, "Left:   Mark point to be at the center of the new region\n") ;
-    fprintf(stderr, "Middle: Where am I?\n") ;
-    fprintf(stderr, "Right:  Quit\n\n") ;
+    fprintf(stderr, "%s Mark point to be at the center of the new region\n", LEFTS);
+    fprintf(stderr, "%s Where am I?\n", MIDDLES);
+    fprintf(stderr, "%s Quit\n\n", RIGHTS);
 
     len_n = len_e = 0;
     do
