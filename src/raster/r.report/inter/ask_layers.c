@@ -8,7 +8,7 @@ ask_layers()
     G_clear_screen();
     printf ("You may run a report on a single raster map, or on many maps.\n");
     printf ("A single map will produce a simple tabulation report.\n");
-    printf ("Multiple maps will produce a multi-level coincidence tabluation report.\n");
+    printf ("Multiple maps will produce a multi-level coincidence tabulation report.\n");
 
     layer = NULL;
 
@@ -18,7 +18,7 @@ ask_layers()
 	    prompt="";
 	else if (nlayers==1)
 	{
-	    prompt="Enter a second map, if you want a coincidence tabluation";
+	    prompt="Enter a second map, if you want a coincidence tabulation";
 	    G_set_ask_return_msg("if you only want a simple report");
 	}
 	else
