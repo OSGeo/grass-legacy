@@ -1,10 +1,9 @@
 #include "gis.h"
 
 final_check(window,name, mapset)
-	struct Cell_head window ;
+	struct Cell_head *window ;
 	char name[128], *mapset;
 {
-	struct Cell_head cur_from_db() ;
 	char buffer[64] ;
 	double x, y ;
 	int screen_x, screen_y ;
@@ -18,9 +17,9 @@ final_check(window,name, mapset)
 
 	R_open_driver();
 
-	G_set_window(&window);
-	G_get_set_window(&window);
-	D_check_map_window(&window);
+	G_set_window(window);
+	G_get_set_window(window);
+	D_check_map_window(window);
 
 	Dcell (name,mapset,0);
 
@@ -52,7 +51,7 @@ final_check(window,name, mapset)
 			D_erase_window();
 			D_clear_window();
 			R_close_driver();
-			window = cur_from_db();
+			cur_from_db(window, name, mapset);
 			unzoom(window,name,mapset);
 			exit(0);
 		case 3:
@@ -60,10 +59,10 @@ final_check(window,name, mapset)
 			D_clear_window();
 			R_close_driver();
 			R_open_driver();
-			window = cur_from_db();
-			G_set_window(&window);
-			G_get_set_window(&window);
-			D_check_map_window(&window);
+			cur_from_db(window, name, mapset);
+			G_set_window(window);
+			G_get_set_window(window);
+			D_check_map_window(window);
 
 			Dcell (name,mapset,0);
 			R_close_driver();
