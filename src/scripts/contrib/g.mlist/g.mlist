@@ -91,7 +91,6 @@ if [ "$w" -a "$search" ]
 then
 	search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
 fi
-echo $search
 
 for i in `g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
 do
