@@ -313,7 +313,6 @@ int main (int argc, char *argv[])
 			     G_set_raster_value_d(rast, s->dcat, map_type);
 			     break;
 		    }
-		    fprintf(stderr, "Setting cell for cat\n");
 		    break;
 		case SITE_COL_DBL:
 		    G_set_raster_value_d(rast, s->dbl_att[num_index], map_type);
