@@ -1,0 +1,11 @@
+
+------------------------------------------------------------------
+KEYWORD: analysis
+    "analysis" refers to the current analysis request
+
+EXAMPLE:
+    list analysis
+
+ALIASES: table
+------------------------------------------------------------------
+
