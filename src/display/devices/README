@@ -1,4 +1,3 @@
-
 Markus,
 
 XDRIVER is now actually XDRIVER_24 and the libes are done.
@@ -14,18 +13,12 @@ Contents:
    Gmakefile     GRASS makefile which drives the compilation
    lib           Code which provides the main body of the drivers
    GENERIC       Documentation describing device dependent code in any driver
-   MASS          The MASSCOMP driver
-   SUN           The SUN color driver for SUN windows
-   4105          For Tektronix 4105
    CELL          For creating images in a GRASS raster file
-   IGRAPH        Intergraph driver
-   IRIS          IRIS Personal Workstation - Silicon Graphics
    XDRIVER       X-windows driver
    monitorcap    generic monitorcap file installed in $GISBASE/etc
 
-To install a driver on your system, simply run the gmake  command
-on  that directory (after you have run GISGEN to build the entire
-system).
+To install a driver on your system, simply run the gmake5  command
+on  that directory.
 
 After you have compiled the driver, you will need to  tell  GRASS
 about  it.  To  do  this,  edit the $GISBASE/etc/monitorcap file
