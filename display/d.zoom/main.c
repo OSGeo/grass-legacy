@@ -324,6 +324,7 @@ main (int argc, char **argv)
     if (vect)
       R_pad_freelist(vect, nvects);
 
+    fprintf(stdout,"Zooming finished.\n");
     exit(stat);
 }
 
