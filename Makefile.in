@@ -46,6 +46,7 @@ NAME_VER=   	    	@NAME_VER@
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
 MAKE=			make
+INSTALL=    	    	cp
 
 # Miscellaneous variables
 ENV=			@ENV@
@@ -185,8 +186,8 @@ real-install:
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
 	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
-	${SHELL} -c "cp ${GRASS_BIN}/gmake${NAME_VER} ${BINDIR} ; true"
-	${SHELL} -c "cp ${GRASS_BIN}/gmakelinks${NAME_VER} ${BINDIR} ; true"
+	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmake${NAME_VER} ${BINDIR} ; true"
+	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmakelinks${NAME_VER} ${BINDIR} ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - documents/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
@@ -206,7 +207,7 @@ real-install:
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_fifos.sh ${INST_DIR} 2>/dev/null ; true"
-	${SHELL} -c "cp ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
@@ -342,7 +343,6 @@ clean: mostlyclean
 	${SHELL} -c "rm -rf ${GISBASE}/txt/        	    2>/dev/null ; true"
 	${SHELL} -c "rmdir ${GISBASE} ; true"
 	${SHELL} -c "rmdir ${GRASS_BIN} ; true"
-	${SHELL} -c "rm -f error.log     	    	    2>/dev/null ; true"
 
 distclean: clean
 	@ echo "Performing distclean step..."
