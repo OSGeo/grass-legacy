@@ -19,8 +19,9 @@
 #%End
 #%option
 #% key: size
-#% type: string
+#% type: double
 #% description: type point size (default 5 points)
+#% options: 1-100
 #% required : no
 #%end
 #%option
@@ -48,37 +49,38 @@
 #% description: bold text
 #%end
 
-if  [ -z $GISBASE ] ; then
- echo "You must be in GRASS GIS to run this program."
- exit 1
+if  [ -z "$GISBASE" ] ; then
+   echo "You must be in GRASS GIS to run this program."
+   exit 1
 fi   
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+   exec g.parser "$0" "$@"
 fi
 
 cmd="d.text"
 
-if [ $GIS_OPT_size ] ; then
-    cmd=$cmd" size="$GIS_OPT_size
+if [ -n "$GIS_OPT_size" ] ; then
+    cmd="$cmd size=$GIS_OPT_size"
 fi
 
-if [ $GIS_OPT_color ] ; then
-    cmd=$cmd" color="$GIS_OPT_color
+if [ -n "$GIS_OPT_color" ] ; then
+    cmd="$cmd color=$GIS_OPT_color"
 fi
 
-if [ $GIS_OPT_line ] ; then
-    cmd=$cmd" line="$GIS_OPT_line
+if [ -n "$GIS_OPT_line" ] ; then
+    cmd="$cmd line=$GIS_OPT_line"
 fi
 
-if [ $GIS_OPT_at ] ; then
-    cmd=$cmd" at="$GIS_OPT_at
+if [ -n "$GIS_OPT_at" ] ; then
+    cmd="$cmd at="$GIS_OPT_at"
 fi
 
-if [ $GIS_FLAG_b = 1 ] ; then
-    cmd=$cmd" -b"
+if [ $GIS_FLAG_b -eq 1 ] ; then
+    cmd="$cmd -b"
 fi
 
-echo $comd
+echo $cmd
 
 eval `exec xterm -e $cmd`
+
