@@ -157,7 +157,8 @@ main (int argc, char *argv[])
     cnames_opt->type = TYPE_STRING;
     cnames_opt->required = NO;
     cnames_opt->multiple = YES;
-    cnames_opt->description = "List of column names to be used instead of original names.";
+    cnames_opt->description = "List of column names to be used instead of original names, "
+	                      "first is used for category column.";
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
@@ -442,19 +443,24 @@ main (int argc, char *argv[])
 	
 	/* Add DB link */
 	if ( !notab_flag->answer ) {
+	    char *cat_col_name = "cat";
+	    
 	    if ( nlayers == 1 ) { /* one layer only */
 		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_1TABLE );
 	    } else {
 		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_MTABLE );
 	    }
-		
-	    Vect_map_add_dblink ( &Map, layer+1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
+	
+     	    if ( ncnames > 0 ) {
+    		cat_col_name = cnames_opt->answers[0];
+	    }
+	    Vect_map_add_dblink ( &Map, layer+1, NULL, Fi->table, cat_col_name, Fi->database, Fi->driver);
 
 	    ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
 	    G_debug ( 2, "%d columns", ncols );
 	    
 	    /* Create table */
-	    sprintf ( buf, "create table %s (cat integer", Fi->table );
+	    sprintf ( buf, "create table %s (%s integer", Fi->table, cat_col_name );
 	    db_set_string ( &sql, buf);
 	    for ( i = 0; i < ncols; i++ ) {
 		char *c;
@@ -464,8 +470,8 @@ main (int argc, char *argv[])
 		
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
 
-		if ( i < ncnames ) {
-		    Ogr_fieldname = cnames_opt->answers[i];
+		if ( i < ncnames-1 ) {
+		    Ogr_fieldname = cnames_opt->answers[i+1];
 		} else {
 		    /* Change column names to [A-Za-z][A-Za-z0-9_]* */
 		    Ogr_fieldname = strdup ( OGR_Fld_GetNameRef( Ogr_field ) );
