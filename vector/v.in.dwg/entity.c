@@ -168,8 +168,12 @@ int write_line ( PAD_ENT_HDR adenhd, int type, int level )
 
     /* Layer name */
     if (!Layer->purgedflag && Layer->name != NULL ) { 
-	sprintf ( buf, ", '%s'", Layer->name ); 
-    } else { sprintf ( buf, ", ''"); }
+	db_set_string( &str, Layer->name);
+	db_double_quote_string ( &str );
+	sprintf ( buf, ", '%s'", db_get_string ( &str) ); 
+    } else { 
+	sprintf ( buf, ", ''"); 
+    }
     db_append_string (  &sql, buf);
 
     /* Block name */
