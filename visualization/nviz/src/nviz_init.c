@@ -406,7 +406,7 @@ int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
 
     GS_libinit();
 
-	GVL_libinit(); // TODO
+	GVL_libinit(); /* TODO */
 
 	GS_set_swap_func(swap_togl);
     data->NumCplanes = 0;
