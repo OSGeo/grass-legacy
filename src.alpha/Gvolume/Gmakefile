@@ -1,0 +1,8 @@
+# %W%  %G%
+
+OBJS = main.o centroids.o
+
+$(BIN)/Gvolume: $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) -o $@
+
+$(GISLIB): #
