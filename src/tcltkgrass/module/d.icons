@@ -1,0 +1,9 @@
+interface_build {
+    {d.icons} 0
+    {Displays points, as icons, at user-defined locations.}
+    {entry icon {Icon file name:} 0 icon}
+    {entry color {Current icon color [white]:} 0 color}
+    {entry size {Icon scaling factor (1-1000) [1]:} 0 ""}
+    {entry points {File containing the geographic coordinates:} 0 file}
+    {checkbox -r {Input coordinates reversed (northing  easting).} "" -r}
+}
