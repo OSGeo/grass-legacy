@@ -238,6 +238,18 @@ int main (int argc, char **argv)
 		{
 		   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted "
 			       "or overwritten by GRASS modules.", dbtable->answer, input);
+
+		   driver = db_start_driver_open_database (fi->driver, Vect_subst_var (fi->database, &Map) );
+
+		   if ( !driver )
+		       G_fatal_error("Cannot open database %s by driver %s", fi->database, fi->driver);
+
+		   if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+		       G_fatal_error ( "Cannot grant privileges on table %s", fi->table );
+
+		   G_warning ( "Select privileges were granted on the table." );
+
+		   db_close_database_shutdown_driver(driver);
 		}
 	     }
 	   }

@@ -153,6 +153,9 @@ main (int argc, char *argv[])
 	    G_fatal_error ( "Cannot create table: %s", db_get_string (&stmt) );
 	}
 
+	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+
 	/* Table created, now we can write dblink */
 	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     } else {
