@@ -123,13 +123,13 @@ int main (int argc, char **argv)
       else /* num_dblinks > 0 */
       {
         fprintf(stderr,"Vector map <%s> is connected by:\n", input);
-        for (i = 1; i <= num_dblinks; i++) {
-          if ( (fi = Vect_get_field( &Map, i)) == NULL)
+        for (i = 0; i < num_dblinks; i++) {
+          if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
              G_fatal_error("Database connection not defined");
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
               G_warning("Cannot open driver %s", fi->driver) ; /* error ? */
-          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", i, fi->table, fi->database, fi->driver, fi->key);
+          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
         }
       } /* else */
 
