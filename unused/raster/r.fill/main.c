@@ -231,6 +231,7 @@ main(int argc, char **argv)
 	}
 	if(verbose)
 		G_percent(row, rows, 2);
+	G_close_cell(fd);
 
 	exit(0);
 }
