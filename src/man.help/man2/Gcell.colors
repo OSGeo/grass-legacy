@@ -1,0 +1,220 @@
+.TH Gcell.colors 2G G-language
+.SH NAME
+Gcell.colors \- create/modify color table for cell files
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGcell.colors\fR [-] \fIlayer\fR \fIcolor-type\fR
+.SH DESCRIPTION
+.I Gcell.colors
+allows the user to create and/or modify the color table for any cell file.
+The data
+.I layer
+may be in the current mapset or in any other mapset. The
+.I color-type
+must be one of the following:
+.sp 2
+.TS
+l l.
+color-type	description
+=
+aspect	aspect oriented grey scale
+grey	grey scale
+print	print color table   
+ramp	red, green, blue color ramps
+random	random colors
+specify	create new color table
+wave	red, green, blue color wave
+_
+.TE      
+
+Color-types aspect, grey, ramp, random and wave are
+pre-defined color tables that Gcell.colors knows how
+to create without any further input.
+
+The specify color-type will cause 
+Gcell.colors to read color table specifications from
+stdin and will build the color table accordingly.  
+The print color-type will cause Gcell.colors to
+print the cell file's color-table to stdout.
+
+Using color-type specify, there are three ways to build
+a color table: by color list, by category values and 
+by "percent" values.
+     
+Building a color table by color list is the simplest
+of the three methods: just list the colors you wish 
+to appear in the color table in the order that you
+wish them to appear.  Use the standard GRASS color 
+names: red, green, blue, yellow, magenta, indigo, 
+black, grey, brown, orange, purple, cyan, aqua and
+violet.  For example, to create a color table for cell
+file map layer elevation starting with green, going 
+to brown and then to yellow one would type:
+
+GRASS-GRID > Gcell.colors elevation specify 
+.br
+green
+.br
+brown
+.br
+yellow
+.br
+^D
+.br
+
+To build a color table by category values indicies
+you should determine the range of category values
+in a cell file that the color table will be used
+with.  Specific category values will be associated
+with specific colors.  Note that a color does not
+have to be assigned for every valid category value
+because Gcell.colors will interpolate a color ramp
+to fill in where specifications have been left out. 
+The format of such a specification is as follows:
+
+.br
+category_value color_name 
+.br
+category_value color_name
+.br
+      ..          ..    
+.br
+      ..          ..   
+.br
+category_value color_name
+.br
+
+Each category value must be valid for the cell file layer,
+category values must be in ascending order and only use 
+standard GRASS color names (see above).  Colors can also
+be specified by color numbers each in the range 0-255. 
+The format of a category value color table specification 
+using color numbers instead of color names is as follows:
+
+.br
+category_value red_number green_number blue_number
+.br
+category_value red_number green_number blue_number
+.br
+       ..          ..          ..          ..
+.br
+       ..          ..          ..          ..
+.br
+category_value red_number green_number blue_number
+.br
+
+Specifying a color table by "percent" values allows one
+to treat a color table as if it were numbered from
+0 to 100.  The format of a "percent" value color table
+specification is the same as for a category value
+color specification, except the category values are
+replaced by "percent" values, each from 0-100, in
+ascending order.  The format is as follows:
+
+.br
+%percent_value color_name 
+.br
+%percent_value color_name
+.br
+      ..          ..    
+.br
+      ..          ..   
+.br
+%percent_value color_name
+.br
+
+Using "percent" value color table specification, colors
+can also be specified by color numbers each in the range
+0-255. The format of a category value color table
+specification using color numbers instead of color 
+names is as follows:
+
+.br
+%percent_value red_number green_number blue_number
+.br
+%percent_value red_number green_number blue_number
+.br
+       ..          ..          ..          ..
+.br
+       ..          ..          ..          ..
+.br
+%percent_value red_number green_number blue_number
+.br
+
+Note that you can also mix these three methods of color-table
+specification, for example:
+
+.br
+0 black
+.br
+%10 yellow
+.br
+78 blue
+.br
+magenta
+.br
+purple
+.br
+brown
+.br
+%100 0 255 230
+
+.SH OPTIONS
+If the \- option is specified, then the color table is created only if the
+.i layer
+does not already have a color table.
+If this option is not specified, the color table will be created if one
+does not exist, modified if does.
+.SH EXAMPLES
+
+(1)
+To specify colors for a three category map: assigning red to
+category 1, green to category 2 and blue to category 3.  Start
+by using the vi editor to create the following specification
+file.  Save it with the name spec.file.
+
+.br
+1 red 
+.br
+2 green 
+.br
+3 blue 
+.br
+
+The color table can then by assigned to map threecats by typing
+the following command at the GRASS-GRID> prompt:
+
+.br
+GRASS-GRID> cat spec.file | Gcell.colors threecats specify 
+
+(2) 
+To create a natural looking LUT for map elevation use the following
+specification file.  It will assign light green shades to the lower
+elevations (first 20% of the LUT), and then darker greens (next 15%)
+and light browns (next 15%) for middle elevations, and finally yellow
+for the highest peaks (last 10% of LUT).
+
+.br
+%0     0 230   0
+.br
+%20    0 160   0
+.br
+%35   50 130   0
+.br
+%55  120 100  30
+.br
+%75  120 130  40 
+.br
+%90  170 160  50
+.br
+%100 255 255 100 
+.br
+
+.SH SEE ALSO
+support[1]
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army C.E.R.L.
+.br
+David Johnson, DBA Systems, Inc.
+.br
