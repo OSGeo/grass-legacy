@@ -1,0 +1,36 @@
+c$large:ant,asp,cchs,ccod,cd,chanin,chss,coef,cro,cron,crop,df
+c$large:dist1,dist2,ero,n2,rcel,scod,sedy,sltp,sme,smero
+c$large:smro1,soln,solp,ttllbs,uf,pcell,area,adrain,numdiv
+
+
+      integer asp, n2, pcell, sltp, chanin
+      integer rcel
+      integer
+     &    numdiv,
+     &    ant, cchs, chss, coef, cron, crop,
+     &    lastps, maxps, mxcl, mxcl1,
+     &    ptsnum, uf
+      real
+     &    adrain, area, ccod, cd, cro, df, dist1, dist2,
+     &    ero, ptsc, ptsc1, ptsflw, ptsn, ptsn1, ptsp, ptsp1,
+     &    scod, sedy, sme, smero, smro1, soln, solp, ttllbs
+
+c  mxcl=maximum number of cells allowed
+      parameter(mxcl=2500)
+c  mxcl1=maximum number of cells allowed + 1
+      parameter(mxcl1=2501)
+c  maxps=max number of cells which can have a non-feedlot point source.
+      parameter(maxps=30)
+
+      common /blk/ant(mxcl),cchs(mxcl),ccod(mxcl),cd(mxcl),
+     *chss(mxcl),coef(mxcl),cro(mxcl),cron(mxcl),crop(mxcl),df(mxcl),
+     *dist1(mxcl),dist2(mxcl),ero(mxcl),rcel(mxcl),
+     *scod(mxcl),sedy(mxcl,5),sme(mxcl,5),smero(mxcl),
+     *smro1(mxcl),soln(mxcl),solp(mxcl),ttllbs(mxcl),uf(mxcl),
+     *area(mxcl),adrain(mxcl1),numdiv(mxcl),
+c this line is at the end for data/memory alignment purposes
+     *asp(mxcl), n2(mxcl), sltp(mxcl), pcell(mxcl1), chanin(mxcl)
+
+      common /psourc/ptsnum(maxps),ptsp(maxps),ptsn(maxps),
+     *ptsc(maxps),ptsflw(maxps),lastps,ptsp1(maxps),ptsn1(maxps),
+     *ptsc1(maxps)
