@@ -60,7 +60,7 @@ DESCRIPTION
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ THE COMMAND MODE OF OPERATION
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -172,7 +172,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
      D1 (meaning D10 through D19) or just D (meaning D00 through
      D99).
 
-     If matching text strings are desired (see .strings´fR), they
+     If matching text strings are desired (see .stringsfR), they
      must be specified prior to the .points command.
 
      .areas mapname begins the process of making a GRASS4.1
@@ -183,7 +183,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
      the line(s) following .areas and should conclude with a line
      containing .end, which begins the map generation process.
 
-     If matching text strings are desired (see .strings´fR), they
+     If matching text strings are desired (see .stringsfR), they
      must be specified prior to the .areas command.
 
      .lines mapname begins the process of making a GRASS4.1
@@ -192,7 +192,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -210,7 +210,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
      following .areas and should conclude with a line containing
      .end, which begins the map generation process.
 
-     If matching text strings are desired (see .strings´fR), they
+     If matching text strings are desired (see .stringsfR), they
      must be specified prior to the .lines command.
 
      .codes searches the Type 7 Landmark file and sends to
@@ -258,7 +258,7 @@ THE INTERACTIVE MODE OF OPERATION
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ v.in.tig.lndmk <alpha>GRASS Reference Manua<alpha> v.in.tig.lndmk
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ BUGS/RESTRICTIONS
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 
@@ -522,7 +522,7 @@ AUTHOR
 
 
 
-8		      GRASS Development Team	   GRASS 5.0beta2
+8		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -588,7 +588,7 @@ APPENDIX
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			9
+GRASS 5.0beta6	      GRASS Development Team			9
 
 
 
@@ -654,7 +654,7 @@ NOTICE
 
 
 
-10		      GRASS Development Team	   GRASS 5.0beta2
+10		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
