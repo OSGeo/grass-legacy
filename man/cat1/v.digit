@@ -1,7 +1,7 @@
 
 
 
-v.digit              GRASS Reference Manual               v.digit
+v.digit <main>       GRASS Reference Manual        <main> v.digit
 
 
 
@@ -34,6 +34,17 @@ DESCRIPTION
      that all vector creation occurs.
 
 NOTES
+     The GRASS 4.1 version of v.digit has been upgraded so that
+     it now no longer requires drivers to be written for each
+     digitizer supported.  Instead we are using device
+     independent code written originally by John Dabritz formerly
+     of the Forest Service, which uses ascii description files to
+     define how to communicate with the digitizer.  The result is
+     that we should be able to support just about any digitizer
+     out there now with a minimum of work.  Refer to the
+     "digitizer definition manual" for information on the format
+     of these files.
+
      v.digit was written to optimize digitizing speed and
      performance.  It has a convenient graphic display format and
      very convenient windowing capabilities.  Features are
@@ -47,6 +58,19 @@ NOTES
      editing are done from within v.digit, rather than through a
      separate set of programs.
 
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+v.digit <main>       GRASS Reference Manual        <main> v.digit
+
+
+
      v.digit has capabilities that allow users to convert vector
      map layers to GRASS raster format, to overlay already
      existing vector map layers onto the feature being digitized,
@@ -57,20 +81,6 @@ NOTES
      options are available if no digitizer is used.
 
      All options available within v.digit are contained within
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-v.digit              GRASS Reference Manual               v.digit
-
-
-
      ten menus.  Movement from menu to menu is done by chosing
      the movement options specified at the bottom of each menu.
 
@@ -116,17 +126,7 @@ AUTHORS
 
 
 
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
