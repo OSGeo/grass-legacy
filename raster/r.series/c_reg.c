@@ -34,13 +34,13 @@ static void regression(DCELL *result, DCELL *values, int n, int offset)
 	for (i = 0; i < n; i++)
 		if (!G_is_d_null_value(&values[i]))
 			numer += i * values[i];
-	numer -= n * xbar * ybar;
+	numer -= count * xbar * ybar;
 
 	denom = 0.0;
 	for (i = 0; i < n; i++)
 		if (!G_is_d_null_value(&values[i]))
 			denom += (DCELL) i * i;
-	denom -= n * xbar * xbar;
+	denom -= count * xbar * xbar;
 
 	*result = offset
 		? (ybar - xbar * numer / denom)
