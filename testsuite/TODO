@@ -1,0 +1,23 @@
+write a on-the-fly location creation function (grass_create_location)
+grass_rm_location
+write externally, compiled version with library support 
+
+ok.	write start and stop procedures 
+
+ok.	init module: config/*-grass.exp
+
+ok.	tie in the src and bindir variables from the global configure procedure
+	into configure/Makefile from testsuite
+
+command line options to runtest:
+--srcdir ./testsuite/grass.test --tool grass
+
+write coorcnv test routine
+
+ok.	write r_mapcalc test routine
+
+write test routine for all modules/listofmodules
+
+write example test routine
+
+extend grass_switch_location
