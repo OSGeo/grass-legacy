@@ -1,0 +1,5 @@
+if test -f /usr/bin/tput; then
+	/usr/bin/tput $*
+else
+	$*
+fi
