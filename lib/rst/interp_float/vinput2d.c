@@ -243,7 +243,8 @@ int IL_vector_input_data_2d (
 	           &npoint, &OUTRANGE, iselev, &k);
   }
 
-  db_CatValArray_free ( &zarray );
+  if ( field > 0 && zcol != NULL )
+      db_CatValArray_free ( &zarray );
   if ( scol != NULL ) {
       db_CatValArray_free ( &sarray );
   }
