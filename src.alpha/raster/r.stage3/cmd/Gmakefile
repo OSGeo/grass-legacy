@@ -1,0 +1,18 @@
+PGM= r.stage3
+HOME=$(BIN_ALPHA_CMD)
+NETCDF_LIB=-lnetcdf
+NETCDF_LIB_LOCATION= -L/usr/local/lib
+NETCDF_INCLUDES= -I/usr/local/include
+LIBES= $(NETCDF_LIB) $(MATHLIB) $(GISLIB) $(RASTERLIB) 
+EXTRA_CFLAGS= $(NETCDF_INCLUDES) 
+LDFLAGS= $(NETCDF_LIB_LOCATION)
+LIST= main.o\
+	readvals.o\
+	process.o\
+	conv.o\
+	georef.o
+
+$(HOME)/$(PGM): $(LIST) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$LIBES: #
