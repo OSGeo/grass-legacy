@@ -102,7 +102,7 @@ main (int argc, char **argv)
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
-	color_opt->answer     = "white" ;
+	color_opt->answer     = "black" ;
 	color_opt->description= "Line color" ;
 
 	fcolor_opt = G_define_option() ;
