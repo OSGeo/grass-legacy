@@ -4,6 +4,7 @@
 #include <fcntl.h> 
 #include <tcl.h>
 #include <tk.h>
+#include <locale.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "form.h"
@@ -180,6 +181,10 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 		continue;
 	    else {
 		G_setenv("GRASS_DB_ENCODING", Cols[i].value);
+		if ( Tcl_SetSystemEncoding(interp, Cols[i].value) == TCL_ERROR ) {
+			fprintf(stderr, 
+				"Could not set Tcl system encoding to %s\n", Cols[i].value);
+		}
 		db_close_database(driver);
 		db_shutdown_driver(driver);
 		sprintf(buf,
@@ -245,11 +250,13 @@ main ( int argc, char *argv[] )
     char        *child_html, *child_title;
     static FILE *child_send, *child_recv;
     static      Tcl_Interp *interp;
-    static int  frmid = 0; 
-    char *encoding_val;
-    
+    static int  frmid = 0;
+    char * encoding_val; 
+
     G_debug ( 2, "Form: main()" );
     
+    setlocale(LC_CTYPE, "");
+        
     child_recv = stdin;
     child_send = stdout;
 
@@ -258,7 +265,7 @@ main ( int argc, char *argv[] )
 	ret = read ( fileno(stdin) , &(buf[0]), 1);
 	if ( ret == 0 ) break; /* Pipe was closed by parent -> quit */
 	if ( ret == 1 ) {
-	    G_debug ( 3, "Form: recieved = '%c'", buf[0] );
+	    G_debug ( 3, "Form: received = '%c'", buf[0] );
 	    if ( buf[0] == 'O' ) { 
 		if ( !form_open ) {
 	            G_debug ( 3, "Form is not opened" ); 
@@ -306,14 +313,18 @@ main ( int argc, char *argv[] )
 		child_html[length] = '\0';
 		
 		memset(buf, '\0', strlen(buf));
-
-		encoding_val = G__getenv("GRASS_DB_ENCODING");
 		
+		encoding_val =  G__getenv("GRASS_DB_ENCODING");
 		Tcl_ExternalToUtf(interp,
 		Tcl_GetEncoding(interp, encoding_val),
 		child_html, strlen(child_html), 0, NULL,
 		buf, strlen(child_html) * 2, NULL, NULL,
 			NULL);
+			
+	        if ( Tcl_SetSystemEncoding(interp, encoding_val) == TCL_ERROR ) {
+	 		fprintf(stderr, 
+			"Could not set Tcl system encoding to %s\n", encoding_val);
+    		}
 
 		G_debug ( 2, "Form: html = %s", buf );
 

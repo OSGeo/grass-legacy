@@ -83,7 +83,7 @@ F_open ( char *title,  char *html )
         
 	/* Wait for response */
 	c = fgetc ( parent_recv );
-	G_debug ( 2, "PARENT: recieved %c\n", c );
+	G_debug ( 2, "PARENT: received %c\n", c );
     }
     
     return 0;
@@ -104,6 +104,6 @@ F_clear ( void )
     fprintf ( parent_send, "C" );
     fflush ( parent_send );
     c = fgetc ( parent_recv );
-    G_debug ( 2, "PARENT: recieved %c\n", c );
+    G_debug ( 2, "PARENT: received %c\n", c );
 }
 
