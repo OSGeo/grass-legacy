@@ -102,8 +102,8 @@ int show_utm (char *name, char *mapset, double north, double east,
 {
     char e[50], n[50];
     int e_col, n_row;
+    static char once = 1;
     static struct Cell_head cellhd;
-/*    static char *mapset = NULL; */
 
     if (window->proj == PROJECTION_LL && !isatty (fileno (stdout)))
     {
@@ -117,9 +117,10 @@ int show_utm (char *name, char *mapset, double north, double east,
 	G_format_easting  (east,  e, window->proj);
     }
 
-    if(!mapset)
+    if (once)
     {
-        mapset = G_mapset();
+        /* speed up? */
+        once = 0;
         G_get_cellhd(name, mapset, &cellhd);
     }
 
