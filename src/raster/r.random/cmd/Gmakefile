@@ -1,0 +1,8 @@
+OFILES = main.o count.o creat_rand.o random.o support.o
+
+$(BIN_MAIN_CMD)/r.random: $(OFILES) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
