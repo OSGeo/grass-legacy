@@ -1,0 +1,100 @@
+Date: Mon, 12 Mar 2001 19:46:06 -0600
+From: Helena <hmitaso@unity.ncsu.edu>
+Organization: NCSU
+
+Markus,
+
+this is what Bill says, including the description of the algorithm.
+The original r.contour worked pretty well, so I assume that most
+problems may be due to the floating point and NULL (which would
+change the handling of special cases and which probably wasn't taken
+care of.)
+I don't remeber who ported r.contour to FP - it might have been Olga
+Waupotitsch (she did most of the FP port).  Bill is right, I don't believe
+that Terry (she is a woman, BTW) could help too much here. I use r.contour
+occasionally and I don't remember any problems, although I usually run it
+without mask, so NULLs may be the most problematic issue (Terry left before
+those were introduced.) I hope that Bill's description of the algorithm will
+be helpfull,
+
+Helena
+--------------------------------------------------
+
+Helena,
+
+I don't know if Terry is still at the same place in Texas or not.
+I looked at her code - the algorithm is fairly straight forward, it's
+the NULL and special cases that might be a little tricky.  I'm sure
+she wouldn't remember much about it after 7 years, and I don't think
+she made the changes for NULL anyway.
+
+Here's the general algorithm for the type of grid contouring Terry used:
+
+- Bill
+
+for each contour level{
+    /* scan borders */
+    for each edge on perimeter{
+      check edge for crossing with check_edge;
+      if crossing{
+        start line at crossing;
+        while not done{
+          mark crossing;
+          find exit crossing and record segment with findcrossing;
+          crossing=exit_crossing;
+          if exit_crossing on perimeter
+            {
+             mark exit_crossing;
+             done=true;
+             write line;
+            }
+          move into next cell;
+        }
+      }
+    }
+    /* scan interior */
+    for each vertical interior edge {
+      check edge for crossing with check_edge;
+      if crossing and not marked {
+        start line at crossing;
+        while not done {
+          mark crossing;
+          find exit crossing and record segment with findcrossing;
+          crossing = exit_crossing;
+          if exit_crossing == start_crossing{
+            done=true
+            write line;
+          }
+        }
+      }
+    }
+}
+
+
+findcrossing()
+{
+
+  check remaining 3 cell edges for crossings using check_edge
+
+  if ONE other edge crossed (total crossings == 2)
+        return edge crossing point;
+  else if crossings = 4{
+      evaluate middle point as mean of 4 surrounding values;
+      use an "X" through the "cell" (actually corners are 4 surrounding
+      cell center points) to determine saddle configuration by
+      checking edges of 4 triangles with check_edge;
+      return edge crossing point;
+  }
+}
+
+check_edge()
+{
+
+  if left endpoint < threshold <= right endpoint
+  or left endpoint >= threshold > right endpoint{
+      crossing = linear interpolate;
+      return crossing;
+  }
+  else
+      return no crossing;
+}

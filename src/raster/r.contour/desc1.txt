@@ -1,0 +1,140 @@
+Date: Mon, 12 Mar 2001 17:35:54 +0700
+From: Justin Hickey <jhickey@hpcc.nectec.or.th>
+Organization: HPCC, NECTEC
+
+Hi Andrea & Markus
+
+"aaime@libero.it" wrote:
+> 
+> Hi Justin, hi Markus,
+> I would like to discuss a point of r.contour behaviour with you.
+> There are two problems with r.contour: ridges and plates.
+> For ridge I mean a depression that would be traced by a degenerated
+> isoline:
+> 
+> 222222222
+> 211111112
+> 222222212
+> 222222212
+> 211111112
+> 222222222
+> 
+> If you try to trace that one you'll end with an open line, and
+> that's not good: I asked a geologist, and he told me that in such
+> a case the map should only report some point at the minimum value,
+> not a contour. With my fix I think that the algorithm would not 
+> output anything, which should be correct: peak a ridge detection
+> should be made by another program that looks for local minimum and
+> local maximum points.
+
+I tried these maps with our combined changes and I have attached maps of
+the isoline with values 15 (yellow) and 25 (red) (oops, that's backwards
+to your case, but the results should be the same). One map has step=20
+the other has step=25. As you can see, step=20 surrounds the 25 region
+as expected. With step=25 we see that the algorithm created a similar
+loop but all the points were the same except for the corners. So, what
+do we do?
+
+Since we are dealing with raster maps and not point data, we can turn
+the line for step=25 into a proper loop by offsetting the points that
+are similar to previous points. The validity for this from a computer
+science point of view is that we have the width and height of the cell
+to work with instead of only the center of the cell. Thus creating a
+loop inside the red band is doable. However, is this valid from a
+geographic point of view?
+
+Another option is to treat the data as point data and as Andrea states,
+ignore the contour. The next question is then, do we also ignore the
+contour if step=20 (producing a valid contour line in terms that it is a
+closed loop) since the geographic structure is an isoline according to
+the point data? The only problem with throwing away this line is how do
+we detect it in the first place?
+
+I'm not sure on this one.
+
+> The other problem is a "plate" (I don't know if that is the correct
+> term):
+> 
+> 222222222222
+> 211111111112
+> 211111111112
+> 211111111112
+> 211111111112
+> 222222222222
+> 
+> In that case I think r.contour should report the boundary of the 
+> plate, but with my fix it won't report anything... should this case
+> be handled separately?
+
+Yep, my test showed exactly that, nothing. But again, I'm not sure what
+to do.
+
+> Justin, any description of the current algorithm would be welcomed.
+
+OK, I'll try and I hope I don't confuse anyone. Terry uses the term cell
+in his code, but it does not refer to a single raster cell. It is a 2x2
+cell "window" of the raster map. He defines the upper left cell as the
+"origin" and goes clockwise around the four cells to define their order.
+That is, the order would be as follows:
+
+*---*---*
+| 0 | 1 |
+*---*---*
+| 3 | 2 |
+*---*---*
+
+He also defines an "edge" which are the edges of this 2x2 cell. He uses
+this window to scan the file for a contour line using sub-cell 0 as an
+index reference. Once he finds one, he follows the line until it goes
+outside the map edge or comes back to the starting point, keeping track
+of which edge the contour line enters and leaves the window (thus
+following the line). The line can be followed in either clockwise or
+counter-clockwise direction. I assume this is determined by the current
+"edge" but I didn't check it.
+
+The scanning order for the map is top, bottom, left, right (at this
+point all contour lines that go past the edge of the map are defined
+leveing only complete loops inside), and then the inside of the map.
+
+One problem is that he keeps track of a "hit" array which indicates
+which raster cell indices (row and column coordinates) have been used to
+define a contour point for this particular level. He mainly uses this to
+find the starting point of a contour. The problem is that he does not
+use the hit array while calculating the contour points. Thus, we get
+duplicate points causing the problems we see. In trying to use this hit
+array to detect duplicate points, I found that although the hit array is
+indexed on sub-cell 0, the calculated contour point can be indexed on
+any of the four sub-cells or even fractions of the cells due to the
+interpolation of the contour point. Basically, the calculated contour
+point in raster cell coordinates (before the conversion to UTM
+coordinates) does not necessarily match the coordinates used for the hit
+array. I have come up with a way to still use the hit array to detect
+duplicates, but haven't tested it yet.
+
+As he calculates points for the contour line, he appends them to a
+line_pnts structure and then writes the new vector line to the vector
+file. One thing I fixed was that his algorithm could sometimes create
+consecutive duplicate points. I changed this so that only points
+different from the previous point are appended to the line.
+
+That's it in a nutshell, the only other thing to add is that he finds
+all contour lines for a level, then cleans the hit array and goes to the
+next level.
+
+As I said, I still don't understand all of the algorithm but at least I
+have a general idea of how it works. Please let me know if either of you
+have questions or comments.
+
+-- 
+Sincerely,
+
+Jazzman (a.k.a. Justin Hickey)  e-mail: jhickey@hpcc.nectec.or.th
+High Performance Computing Center
+National Electronics and Computer Technology Center (NECTEC)
+Bangkok, Thailand
+==================================================================
+People who think they know everything are very irritating to those
+of us who do.  ---Anonymous
+
+Jazz and Trek Rule!!!
+==================================================================
