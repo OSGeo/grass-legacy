@@ -82,6 +82,7 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     struct pj_info pjinfo;
     char *proj4, *proj4mod, *wkt, *modwkt, *startmod, *lastpart;
     OGRSpatialReferenceH *hSRS, *hSRS2;
+    OGRErr errcode;
     struct gpj_datum dstruct;
     size_t len;
     char *ellps, *datum, *params, *towgs84, *datumlongname, *start, *end,
@@ -112,14 +113,15 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     else
 	proj4mod = proj4;
 
-    if (OSRImportFromProj4(hSRS, proj4mod) != 0) {
+    if ((errcode = OSRImportFromProj4(hSRS, proj4mod)) != OGRERR_NONE) {
 	G_warning("OGR can't parse PROJ.4-style parameter string:\n" 
-		      "%s", proj4mod);
+		      "%s\n(Error code was %d)", proj4mod, errcode);
 	return NULL;
     }
 
-    if (OSRExportToWkt(hSRS, &wkt) != 0) {
-	G_warning("OGR can't get WKT-style parameter string");
+    if ((errcode = OSRExportToWkt(hSRS, &wkt)) != OGRERR_NONE) {
+	G_warning("OGR can't get WKT-style parameter string\n"
+		  "(Error code was %d)", errcode);
 	return NULL;
     }
 
