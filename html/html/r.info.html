@@ -2,6 +2,12 @@
 <html>
 <TITLE>r.info</TITLE>
 
+<body bgcolor="white">
+ 
+<img src="grass.smlogo.gif">
+ 
+<hr width="100%" align=center size=6 noshade>
+
 <H2>NAME</H2>
 
 <EM>r.info</EM>  - Outputs basic information about a 
@@ -15,7 +21,7 @@ user-specified raster map layer.
 <BR>
 <B>r.info help</B> 
 <BR>
-<B>r.info map=</B><EM>name</EM> 
+<B>r.info </B>[<B>-r</B>] map=</B><EM>name</EM> 
 
 <H2>DESCRIPTION</H2>
 
@@ -30,7 +36,18 @@ in the <EM>cats</EM>, <EM>cellhd</EM>, and <EM>hist</EM>
 directories under the mapset in which the named map is
 stored.
 
-<P>
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-r</B> 
+<DD>print range only and exit
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map=</B><EM>name</EM> 
+<DD>name of an existing raster map layer
+</DL>
 
 The program will be run non-interactively if the user specifies 
 the name of a raster map layer on the command line, using the form: 

@@ -36,6 +36,7 @@ main (int argc, char *argv[])
     char *G_program_name();
 	struct GModule *module;
     struct Option *opt1;
+    struct Flag *rflag;
 
     G_gisinit(argv[0]);
 
@@ -50,6 +51,10 @@ main (int argc, char *argv[])
     opt1->required   = YES ;
     opt1->gisprompt  = "old,cell,raster" ;
     opt1->description= "Name of existing raster map" ;
+
+    rflag = G_define_flag();
+    rflag->key            = 'r';
+    rflag->description    = "print range only.";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -74,6 +79,8 @@ main (int argc, char *argv[])
 
     out = stdout;
 
+  if (!rflag->answer)
+  {
     divider ('+');
 
     sprintf (line, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
@@ -225,5 +232,19 @@ main (int argc, char *argv[])
     divider ('+');
 
     fprintf(out,"\n");
+   }
+   else /* rflag->answer */
+   {
+        if (data_type ==  CELL_TYPE)
+        {
+	  fprintf(out, "min=%i\n", (CELL)zmin);
+	  fprintf(out, "max=%i\n", (CELL)zmax);
+	}
+        else
+        {
+	  fprintf(out, "min=%f\n", zmin);
+	  fprintf(out, "max=%f\n", zmax);
+	}
+   }
     return 0;
 }
