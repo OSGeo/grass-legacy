@@ -1,0 +1,27 @@
+#Gmakefile
+# destination finale des binaires : $GISBASE/etc/bin/contrib/cmd
+PGM=r.fuz.map
+HOME=$(BIN_MAIN_CMD)
+ 
+	OBJ=r.fuz.map.o commun.o affiche_fuzzy.o grafnull.o
+
+	FUZZY=../../fuzzy
+	FUZINC=$(FUZZY)/include
+	FUZLIB=$(FUZZY)/lib/$(LIBARCH)
+
+	EXTRA_CFLAGS = -I$(FUZINC)
+
+$(HOME)/$(PGM):	$(OBJ) $(RASTERLIB) $(GISLIB) $(VASKLIB) $(DISPLAYLIB)
+		$(CC) $(LDFLAGS) -o $@ $(OBJ) $(DISPLAYLIB) $(VASK) $(RASTERLIB) $(GISLIB) \
+		-L$(FUZLIB) -lfuzzy -lm
+		cp $@ $(GISBASE)/etc/bin/contrib/cmd
+
+
+
+$(GISLIB) : 
+$(RASTERLIB) : 
+$(DISPLAYLIB) : 
+$(VASKLIB) : 
+$(FUZLIB) :
+$(FUZINC) :
+
