@@ -95,12 +95,14 @@ main (int argc, char **argv)
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
 	color_opt->answer     = "white" ;
+	color_opt->options    = D_COLOR_LIST ;
 	color_opt->description= "Line color" ;
 
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
 	fcolor_opt->answer     = "white" ;
+	fcolor_opt->options    = D_COLOR_LIST ;
 	fcolor_opt->description= "Area fill color" ;
 
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
@@ -111,18 +113,21 @@ main (int argc, char **argv)
 	lcolor_opt->key        = "lcolor" ;
 	lcolor_opt->type       = TYPE_STRING ;
 	lcolor_opt->answer     = "white" ;
+	lcolor_opt->options    = D_COLOR_LIST ;
 	lcolor_opt->description= "Label color" ;
 	
 	bgcolor_opt = G_define_option() ;
 	bgcolor_opt->key        = "bgcolor" ;
 	bgcolor_opt->type       = TYPE_STRING ;
 	bgcolor_opt->answer     = "none" ;
+	bgcolor_opt->options    = D_COLOR_LIST ;
 	bgcolor_opt->description= "Label background color" ;
 
 	bcolor_opt = G_define_option() ;
 	bcolor_opt->key        = "bcolor" ;
 	bcolor_opt->type       = TYPE_STRING ;
 	bcolor_opt->answer     = "none" ;
+	bcolor_opt->options    = D_COLOR_LIST ;
 	bcolor_opt->description= "Label border color" ;
 
 	lsize_opt = G_define_option() ;
