@@ -23,11 +23,15 @@
 
 CC                  = @CC@
 FC                  = @F77@
+CXX                 = @CXX@
 LEX                 = @LEX@
 YACC                = @YACC@
 PERL                = @PERL@
-ARCH                = @host@
 MAKE                = make
+AR                  = @AR@
+RANLIB              = @RANLIB@
+
+ARCH                = @host@
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
@@ -45,31 +49,43 @@ GRASS50             = @GRASS50@
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
-COMPILE_FLAGS       = @CFLAGS@ -Wall @INCLUDE_DIRS@
-LD_FLAGS            = @STRIPFLAG@ @LDFLAGS@
+COMPILE_FLAGS       = @CPPFLAGS@ @CFLAGS@ -Wall @INCLUDE_DIRS@
+COMPILE_FLAGS_CXX   = @CPPFLAGS@ @CXXFLAGS@ @INCLUDE_DIRS@
+LINK_FLAGS          = @LDFLAGS@
 
 DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
-# XXX - replace SYSV in code with configure results in config.h
-# XXX - need SYSV defined for hpux10
 XLDFLAGS            = @SYSV@
-XINCPATH            = 
-XMINCPATH           = 
+XMINC               = @XMINC@
 XLIBPATH            = @X_LIBS@
-XTLIBPATH           = 
-XMLIBPATH           = 
-XLIB                = @X_PRE_LIBS@ -lX11
-XTLIB               = -lXt
-XMLIB               = -lXm
+XLIB                = @X_PRE_LIBS@ @XLIB@
+XTLIB               = @XTLIB@
+XMLIB               = @XMLIB@
 XEXTRALIBS          = @X_EXTRA_LIBS@
 
 COMPATLIB           = @COMPATLIB@
 CURSES              = @CURSESLIB@ $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
+ICONVLIB            = @ICONVLIB@
+INTLLIB             = @INTLLIB@
+SOCKLIB             = @SOCKLIB@
+
+#ZLIB:
 ZLIB                = @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
 ZLIBINCPATH         = @ZLIBINCPATH@
 ZLIBLIBPATH         = @ZLIBLIBPATH@
+
+#DBM:
+DBMINCPATH          = @DBMINCPATH@
+DBMLIBPATH          = @DBMLIBPATH@
+DBMLIB              = @DBMLIB@
+
+#readline
+READLINEINCPATH     = @READLINEINCPATH@
+READLINELIBPATH     = @READLINELIBPATH@
+READLINELIB         = @READLINELIB@
+HISTORYLIB          = @HISTORYLIB@
 
 #PostgreSQL:
 PQINCPATH           = @PQINCPATH@
@@ -95,6 +111,11 @@ JPEGLIB             = @JPEGLIB@
 
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
+TIFFLIB             = @TIFFLIB@
+
+#GD library (for PNGdriver):
+GDINC               = @GDINC@
+GDLIB               = @GDLIB@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
@@ -109,14 +130,21 @@ TKINCDIR            = @TKINCDIR@
 TCLTKLIBPATH        = @TCLTKLIBPATH@
 TCLTKLIBS           = @TCLTKLIBS@
 
+#FFTW:
+FFTWINC             = @FFTWINC@
+FFTWLIB             = @FFTWLIB@
+
+#LAPACK/BLAS stuff for gmath lib:
+BLASLIB             = @BLASLIB@
+LAPACKLIB           = @LAPACKLIB@
+
 #GDAL
 GDALLIBS            = @GDAL_LIBS@
 GDALCFLAGS          = @GDAL_CFLAGS@
 
-#LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
-RANLIB              = @RANLIB@
-USE_TERMIO          = @USE_TERMIO@
-
+#FreeType:
+FTINC               = @FTINC@
+FTLIB               = @FTLIB@
 
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
@@ -125,5 +153,3 @@ USE_TERMIO          = @USE_TERMIO@
 # Situation is worse, if it requires continuous clicking.
 # In this case uncomment below.
 #DANOTHER_BUTTON     = -DANOTHER_BUTTON
-
-

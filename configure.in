@@ -140,7 +140,7 @@ AC_ARG_ENABLE(another-button,
 
 AC_ARG_ENABLE(socket,
 [  --enable-socket         use socket XDriver (default)],,
-[enable_socket=yes])
+[enable_socket=no])
 
 AC_ARG_ENABLE(fifo,
 [  --enable-fifo           use FIFO XDriver instead of sockets],,
@@ -152,6 +152,7 @@ AC_ARG_ENABLE(w11,
 
 # With options
 
+LOC_ARG_WITH(cxx, C++, no)
 LOC_ARG_WITH(dbm, DBM, no)
 LOC_ARG_WITH(jpeg, JPEG)
 LOC_ARG_WITH(tiff, TIFF)
@@ -474,6 +475,12 @@ AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
 ])])
 AC_SUBST(INTLLIB)
 
+AC_CHECK_FUNC(socket, SOCKLIB=, [
+AC_CHECK_LIB(socket, socket, SOCKLIB=-socket, [
+    AC_MSG_WARN([*** Unable to locate socket() function.])
+])])
+AC_SUBST(SOCKLIB)
+
 # Mandatory zlib dependency
 
 ZLIBLIBPATH=
@@ -556,8 +563,8 @@ LOC_CHECK_INCLUDES(readline/history.h,Readline,$READLINEINCPATH)
 
 LOC_CHECK_LIB_PATH(readline,Readline,READLINELIBPATH)
 
-LOC_CHECK_LIBS(readline,readline,Readline,$READLINELIBPATH,READLINELIB,,,,$TERMLIB)
-LOC_CHECK_LIBS(history,add_history,History,$READLINELIBPATH,HISTORYLIB,,,,$TERMLIB)
+LOC_CHECK_LIBS(readline,readline,Readline,$READLINELIBPATH,READLINELIB,,,)
+LOC_CHECK_LIBS(history,add_history,History,$READLINELIBPATH,HISTORYLIB,,,)
 
 fi # $USE_READLINE
 
@@ -897,7 +904,7 @@ LOC_CHECK_LIB_PATH(opengl,OpenGL,OPENGL_LIB_PATH)
 
 LOC_CHECK_LIBS(GL,glBegin,OpenGL,$OPENGL_LIB_PATH,OPENGLLIB,$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,,-lpthread)
 
-LOC_CHECK_LIBS(GLU,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,)
+LOC_CHECK_LIBS(GLU,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,,-lstdc++)
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
@@ -1130,6 +1137,21 @@ if test -n "${USE_NLS}" ; then
     AC_DEFINE(USE_NLS)
 fi
 
+# Enable C++ option
+ 
+LOC_CHECK_USE(cxx,C++,USE_CXX)
+
+if test -n "$USE_CXX"; then
+	AC_PROG_CXX
+else
+	CXX=
+	CXXFLAGS=
+	AC_SUBST(CXX)
+	AC_SUBST(CXXFLAGS)
+fi
+
+# Done checking C++
+
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
 
@@ -1165,6 +1187,7 @@ LOC_MSG([  Source directory:          ${SRCDIR}])
 LOC_MSG([  Build directory:           ${DSTDIR}])
 LOC_MSG([  Installation directory:    ${prefix}/grass${NAME_VER}])
 LOC_MSG([  C compiler:                ${CC} ${CFLAGS}])
+LOC_MSG([  C++ compiler:              ${CXX} ${CXXFLAGS}])
 LOC_MSG([  FORTRAN compiler:          ${F77}])
 LOC_MSG()
 LOC_MSG_USE(NVIZ,USE_TOGL)
@@ -1188,4 +1211,5 @@ LOC_MSG_USE(FreeType support,USE_FREETYPE)
 LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG_USE(NLS support,USE_NLS)
 LOC_MSG_USE(Readline support,USE_READLINE)
+LOC_MSG_USE(C++ support,USE_CXX)
 LOC_MSG()
