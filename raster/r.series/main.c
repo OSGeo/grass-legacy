@@ -21,6 +21,8 @@ struct menu
 	{c_sum,    "sum",       "sum of values"},
 	{c_var,    "variance",  "statistical variance"},
 	{c_divr,   "diversity", "number of different values"},
+	{c_reg_m,  "slope",     "linear regression slope"},
+	{c_reg_c,  "offset",    "linear regression offset"},
 	{NULL,     NULL,        NULL}
 };
 
@@ -58,6 +60,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct {
 		struct Flag *quiet;
+		struct Flag *nulls;
 	} flag;
 	int verbose;
 	int method;
@@ -105,6 +108,10 @@ int main (int argc, char *argv[])
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = "Run quietly";
+
+	flag.nulls = G_define_flag();
+	flag.nulls->key = 'n';
+	flag.nulls->description = "Propagate NULLs";
 
 	if (G_parser(argc,argv))
 		exit(1);
@@ -173,19 +180,22 @@ int main (int argc, char *argv[])
 
 		for (col = 0; col < ncols; col++)
 		{
-			int n;
+			int null = 0;
 
-			for (i = n = 0; i < num_inputs; i++)
+			for (i = 0; i < num_inputs; i++)
 			{
 				DCELL v = inputs[i].buf[col];
-				if (!G_is_d_null_value(&v))
-					values[n++] = v;
+
+				if (G_is_d_null_value(&v))
+					null = 1;
+
+				values[i] = v;
 			}
 
-			if (n > 0)
-				out_buf[col] = (*method_fn)(values, n);
-			else
+			if (null && flag.nulls->answer)
 				G_set_d_null_value(&out_buf[col], 1);
+			else
+				(*method_fn)(&out_buf[col], values, num_inputs);
 		}
 
 		G_put_d_raster_row(out_fd, out_buf);

@@ -1,16 +1,24 @@
 #include "gis.h"
 
-DCELL c_min(DCELL *values, int n)
+void c_min(DCELL *result, DCELL *values, int n)
 {
 	DCELL min;
 	int i;
 
-	min = values[0];
+	G_set_d_null_value(&min, 1);
 
-	for (i = 1; i < n; i++)
-		if (min > values[i])
+	for (i = 0; i < n; i++)
+	{
+		if (G_is_d_null_value(&values[i]))
+			continue;
+
+		if (G_is_d_null_value(&min) || min > values[i])
 			min = values[i];
+	}
 
-	return min;
+	if (G_is_d_null_value(&min))
+		G_set_d_null_value(result, 1);
+	else
+		*result = min;
 }
 

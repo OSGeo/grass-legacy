@@ -1,16 +1,24 @@
 #include "gis.h"
 
-DCELL c_max(DCELL *values, int n)
+void c_max(DCELL *result, DCELL *values, int n)
 {
 	DCELL max;
 	int i;
 
-	max = values[0];
+	G_set_d_null_value(&max, 1);
 
-	for (i = 1; i < n; i++)
-		if (max < values[i])
+	for (i = 0; i < n; i++)
+	{
+		if (G_is_d_null_value(&values[i]))
+			continue;
+
+		if (G_is_d_null_value(&max) || max < values[i])
 			max = values[i];
+	}
 
-	return max;
+	if (G_is_d_null_value(&max))
+		G_set_d_null_value(result, 1);
+	else
+		*result = max;
 }
 
