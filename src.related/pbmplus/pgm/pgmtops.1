@@ -1,0 +1,50 @@
+.TH pgmtops 1 "04 March 1989"
+.SH NAME
+pgmtops - convert portable graymap to Encapsulated PostScript
+.SH SYNOPSIS
+.B pgmtops
+.RB [ -rle | -runlength ]
+.RB [ -scale
+.IR s ]
+.RI [ pgmfile ]
+.SH DESCRIPTION
+Reads a portable graymap as input.
+Produces Encapsulated PostScript as output.
+.PP
+Note that there is no pstopgm
+tool - this transformation is one-way, because a pstopgm tool would
+be a full-fledged PostScript interpreter, which is beyond the scope
+of this package.
+However, see the
+.I psidtopgm
+tool.
+.SH OPTIONS
+.PP
+The
+.B -scale
+flag controls the scale of the result.  The default scale is 1,
+which on a 300 dpi printer such as the Apple LaserWriter makes
+the output look about the same size as the input would if it was displayed
+on a typical 72 dpi screen.
+.PP
+The
+.B -rle
+or
+.B -runlength
+flag specifies run-length compression.  This may save
+time if the host-to-printer link is slow; but normally the printer's processing
+time dominates, so
+.B -rle
+makes things slower.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+psidtopgm(1), pgm(5), ppmtops(1)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
