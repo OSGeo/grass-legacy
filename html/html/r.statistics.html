@@ -1,0 +1,106 @@
+<html>
+<A NAME="r.statistics">
+<TITLE>r.statistics</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.statistics</B></EM> - Category or object oriented statistics (GRASS Raster Program)
+
+<H2>SYNOPSIS</H2>
+<B>r.statistics</B>
+<B>r.statistics help</B>
+<B>r.statistics [-c] base</B><EM>=name</EM> <B>cover</B><EM>=name</EM> <B>method</B><EM>=name</EM> [<B>output</B><EM>=name</EM>]
+
+
+<H2>DESCRIPTION</H2>
+<EM>r.statistics</EM> is a tool, where different class, resp. object oriented statistical analysis methods are possible.<BR>
+The methods are the following:
+<P>
+<DD>[english] - [german]
+<P>
+<DD>distribution - Verteilung in Prozent
+<P>
+<DD>average - Durchschnitt
+<P>
+<DD>mode - Modalwert
+<P>
+<DD>median - Median
+<P>
+<DD>average deviation - Durchschnittliche Abweichung
+<P>
+<DD>standard deviation - Standardabweichung
+<P>
+<DD>variance - Varianz
+<P>
+<DD>skewness - Schiefe der Verteilung
+<P>
+<DD>kurtosis - Relative Abflachung (-) oder Zuspitzung (+)
+<P>
+<DD>minimum - Minimum
+<P>
+<DD>maximum - Maximum
+<P>
+<DD>sum - Summe
+
+<H2>COMMAND LINE OPTIONS</H2>
+<H3>Flag:</H3>
+<DL>
+<DT><B>-c</B>
+<DD>Values are taken from category lables of the covering-layer, instead of covering-layer itself.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>base</B>
+<DD>Base raster map
+
+<DT><B>cover</B>
+<DD>Cover raster map
+
+<DT><B>method</B>
+<DD>Statistical method
+<DD>Options: distribution, average, mode, median, avedev, stddev, variance, skewness, kurtosis, min, max, sum
+
+<DT><B>output</B>
+<DD>Name of the new layer (not when using 'distribution')
+</DL>
+
+The calculations will be performed for areas with data of the covering-layers which belong in the base-layer o the same category.
+<P>
+Setting the <EM>-c</EM> flag the category lables of the covering raster layer will be used.  This is nice to avoid the GRASS limitation to interger in raster maps because using category values floating point numbers can be stored.
+<P>
+The output-layer is a reclassified version of the base-layer with identical category values.  The results of the calculations are stored in the category labels of the output-layer.
+<P>
+The described output is valid for all calculations with exception of distribution. Here the output is given to stdout. A file name eventually specified will be ignored. The result will be a table with three columns.  In the 1. column are the category values of the base-layer (a), in the 2. column the associated value of the cover-Layers (b) and in the 3. column the percentage of b from a. Example:
+<PRE>
+                                 1   124  23
+                                 1   201  47
+                                 1   273  30
+                                 2   101  5
+                                 2   152  16
+                                 2   167  60
+                                 2   187  19
+                                      .
+                                      .
+                                      .
+</PRE>
+
+
+<H2>REMARK</H2>
+The source code of average, mode and median was taken from some GRASS raster modules.
+
+<H2>BUGS</H2>
+unkown
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.mode.html">r.mode</A>, <A HREF="r.median.html">r.median</A>, <A HREF="r.average.html">r.average</A>, <A HREF="r.neighbors.html">r.neighbors</A></EM>
+
+<H2>AUTHOR</H2>
+Martin Schroeder, Geographisches Institut Heidelberg, Germany
+
+</BODY>
+</HTML>
