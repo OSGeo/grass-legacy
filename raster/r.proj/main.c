@@ -308,11 +308,9 @@ int main (int argc, char **argv)
 	orows = outcellhd.rows;
 	ocols = outcellhd.cols;
 
-#if 0
 	/* Cut non-overlapping parts of input map */
-	if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
-		G_fatal_error(errbuf);
-#endif
+	if (!nocrop->answer)
+		bordwalk(&outcellhd, &incellhd, &oproj, &iproj);
 
 	/* Add 2 cells on each side for bilinear/cubic & future interpolation methods */
 	/* (should probably be a factor based on input and output resolution) */
@@ -334,8 +332,7 @@ int main (int argc, char **argv)
 	/* Adjust borders of output map */
 
 	if (!nocrop->answer)
-		if (bordwalk(&incellhd, &outcellhd, &iproj, &oproj, errbuf) < 0)
-			G_fatal_error("%s", errbuf);
+		bordwalk(&incellhd, &outcellhd, &iproj, &oproj);
 
 #if 0
 	outcellhd.west=outcellhd.south=HUGE_VAL;
