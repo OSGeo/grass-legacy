@@ -1,0 +1,17 @@
+BuildDig	Build_cmd.c	/^BuildDig(cov_type,neatline,$/
+CountCats	CountCats.c	/^int CountCats(fp,col)$/
+CountColumns	Col.c	/^int CountColumns(txt)$/
+CountLines	CountLines.c	/^int CountLines(fp)$/
+DO_txt_file	DO_txt_file.c	/^int DO_txt_file(fp_nam1, fp_nam2)$/
+FindAttAndCat	FindAtt_Cat.c	/^int FindAttAndCat(fp,AttCol,CatCol,IDCol,IDNum,Att/
+FindIDColumn	FindIDColumn.c	/^int FindIDColumn(fp)$/
+GenToDig	GenToDig.c	/^GenToDig(type, ascii, VectMap, neatline, filename)/
+GenToDigArea	GenToDig.c	/^GenToDigArea(ascii,VectMap,neatline,filename)$/
+GenToDigAreaLabels	A_labs_cmd.c	/^GenToDigAreaLabels(pts_file,txt_file,atts_file,cat/
+GenToDigLine	GenToDig.c	/^GenToDigLine(ascii,VectMap,neatline,filename)$/
+GenToLabelledDigLines	L_labs_cmd.c	/^GenToLabelledDigLines(lin_file,txt_file,atts_file,/
+GetColumn	Col.c	/^int GetColumn(txt,colnum,coltxt)$/
+Mmain2	main2.c	/^main(argc, argv)$/
+Mmain_cmd	main_cmd.c	/^main(argc, argv)$/
+Mmain_inter	main_inter.c	/^main(argc, argv)$/
+load_args	main2.c	/^load_args (position, str)$/
