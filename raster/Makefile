@@ -43,7 +43,6 @@ SUBDIRS1 = \
 	r.out.bin \
 	r.out.gridatb \
 	r.out.mpeg \
-	r.out.png \
 	r.out.pov \
 	r.out.ppm \
 	r.out.ppm3 \
@@ -88,6 +87,8 @@ GDALBASED = r.in.gdal
 
 FFTWBASED = r.surf.fractal
 
+PNGBASED = r.out.png
+
 #compile if GDAL present:
 ifneq ($(strip $(GDALLIBS)),)
     SUBDIRS2 = $(GDALBASED)
@@ -98,7 +99,12 @@ ifneq ($(strip $(FFTWLIB)),)
     SUBDIRS3 = $(FFTWBASED)
 endif
 
-SUBDIRS = $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3)
+#compile if PNG present:
+ifneq ($(strip $(PNGLIB)),)
+    SUBDIRS4 = $(PNGBASED)
+endif
+
+SUBDIRS = $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4)
 
 default: subdirs
 
