@@ -43,6 +43,12 @@ Vect_get_num_areas (struct Map_info *map)
 }
 
 int 
+Vect_get_num_islands (struct Map_info *map)
+{
+  return (map->plus.n_isles);
+}
+
+int 
 Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
 {
     P_NODE *Node;
@@ -103,6 +109,7 @@ Vect_get_node_n_lines ( struct Map_info *Map, int node )
 
 }
 
+/* TODO: fix explanation - difference to Vect_get_node_n_lines? */
 /* returns number of lines for node */
 int 
 Vect_get_node_line ( struct Map_info *Map, int node, int line )
