@@ -1,0 +1,11 @@
+MAP-NAME
+
+MAP-NAME is any currently available map layer name.  For a list
+of available names run:
+
+    ! list cell
+
+Map names can be used as MAP_EXPR's.  When doing so you must surround
+the map name with parentheses.  For example:
+
+	(GROUP 1-3 5 7 (soils) )
