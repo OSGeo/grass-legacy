@@ -112,8 +112,9 @@ int IL_vector_input_data_2d (
 	db_CatValArray_init ( &sarray );
 	db_select_CatValArray ( driver, Fi->table, Fi->key, scol, NULL, &sarray );
     }
-  }
+
   db_close_database_shutdown_driver ( driver );
+  }
 	
   /* Lines without nodes */
   fprintf (stderr, "Reading lines from vector map ... ");
