@@ -1,0 +1,20 @@
+#  %W%  %G%
+
+PGM = Dvhat
+OFILES = \
+	main.o \
+	opencell.o\
+	show.o\
+	what.o
+
+
+all: $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(DIGLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(CURSES)
+
+$(OFILES): what.h
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
