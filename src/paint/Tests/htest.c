@@ -13,7 +13,7 @@ usage:	the user is prompted for the horizontal resolution of the
 ************************************************************/
 
 #include <stdio.h>
-main()
+main(argc,argv) char *argv[];
 {
     char buf[100];
     double atof ();
@@ -29,6 +29,7 @@ main()
     unsigned char BLACK;
 
 
+    G_gisinit(argv[0]);
     Pconnect();
     Plock();
     Popen();
