@@ -1,0 +1,12 @@
+INIT	global.h	/^# define INIT(x)$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+NewNode	stats.c	/^struct Node *NewNode(area)$/
+allocate_values	stats.c	/^allocate_values()$/
+cell_stats	cell_stats.c	/^cell_stats (fd, verbose, non_zero, with_counts, wi/
+initialize_cell_stats	stats.c	/^initialize_cell_stats(n)$/
+node_compare	stats.c	/^node_compare(p,q)$/
+print_cell_stats	stats.c	/^print_cell_stats (fmt, non_zero, with_counts, with/
+print_node_count	stats.c	/^print_node_count()$/
+raw_stats	raw_stats.c	/^raw_stats (fd, verbose, non_zero, with_coordinates/
+sort_cell_stats	stats.c	/^sort_cell_stats()$/
+update_cell_stats	stats.c	/^update_cell_stats(cell,mask,ncols,area)$/
