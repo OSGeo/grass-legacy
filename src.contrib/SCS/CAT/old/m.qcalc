@@ -1,0 +1,126 @@
+
+
+
+g.qcalc(1)  	     GRASS Reference Manual	       g.qcalc(1)
+
+
+
+NAME
+     g.qcalc - create tables for cell sizes, acres, and hectares.
+             - performs conversions on feet, meters, miles, and kilometers.
+	     - performs simple math calculations.
+               (SCS map Development Tool)
+
+SYNOPSIS
+     g.qcalc -[sahcm] init=value [end=value] [incr=value] [unit=name]
+             -s init=initial size [end=ending size] incr=[size increment]
+             -a init=intial acres [end= ending acres] [incr=acre increment]
+             -h init=initial hectares [end= ending hectares] [incr=hectare increment]
+             -c init=some value units=[ft,mt,mi,km]
+             -m init=0 enters desk calculator
+
+DESCRIPTION
+     g.qcalc:
+       s  - allows a user to create a table of cell sizes, showing how 
+             many sq. feet, acres, and hectacres each cell would represent.
+       a - allows a user to create a table of acreage sizes, showing how 
+	     many sq. feet, hectacres, and what cell size would be represented.
+       h - allows a user to create a table of hectare sizes, showing how 
+ 	     many sq. feet, acres, and what cell size would represented.
+       c - allows a user to convert ft, meters, miles, and kilometers.
+       m - allows a user to use UNIX "bc" simple math calculator.
+
+     g.qcalc arguements are:
+
+       -s intial size - a value for a single size x size cell table
+          options:
+          ending size - a second value for a range of cell sizes table
+          size increment - a incrementing value for the range of cells
+                          ( default increment value is one (1) )
+
+       -a and -h     arguements are represented similarly to -s.
+
+       -c init=value  - value to be converted.
+	  unit of conversion - ft, mt, mi, or km
+
+       -m init=0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+
+
+
+g.qcalc(1)  	     GRASS Reference Manual	       g.qcalc(1)
+
+
+
+EXAMPLE
+      The command "g.qcalc -s init=100 end=400 incr=100" produces 
+      the following table:
+
+        Cell Size           Sq.Ft.           Acres         Hectares
+        100 x 100        107639.31           2.47            1.00
+        200 x 200        430557.23           9.88            4.00
+        300 x 300        968753.77          22.24            9.00
+        400 x 400       1722228.93          39.54           16.00
+
+      The command "g.qcalc -c init=100 unit=ft" produces the following:
+
+        Feet          Meters        Miles      Kilometers
+        100.0         30.4          0.02        0.03 
+
+AUTHOR
+     R.L.Glenn, USDA, SCS, Cart. / Geo. Information Systems Division, NHQ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0		 U.S.D.A. SCS  				2
