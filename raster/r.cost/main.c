@@ -352,11 +352,11 @@ int main (int argc, char *argv[])
 		fflush (stderr);
 	}
 
-	in_fd = creat(in_file,0600);
+	in_fd = creat(in_file,0666);
 	segment_format(in_fd, nrows, ncols, srows, scols, sizeof(double));
 	close(in_fd);
 
-	out_fd = creat(out_file,0600);
+	out_fd = creat(out_file,0666);
 	segment_format(out_fd, nrows, ncols, srows, scols, sizeof(double));
 	close(out_fd);
 
