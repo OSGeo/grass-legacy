@@ -185,14 +185,14 @@ The user can display program output using GRASS display functions like <EM>d.map
                           label=*) eval $arg ;;
                           file=*) eval $arg;;
                           *)
-                           echo "Usage: $0 [fs=c] file=filename [label=#]" >& 2
+                           echo "Usage: $0 [fs=c] file=filename [label=#]" &gt;&amp; 2
                            exit 1
                            ;;
                        esac
                    done
                    if [ "$file" = "" ]
                    then
-                       echo "Usage: $0 [fs=c] file=filename [label=#]" >& 2
+                       echo "Usage: $0 [fs=c] file=filename [label=#]" &gt;&amp; 2
                        exit 1
                    fi
 

@@ -68,18 +68,18 @@ of projecting coordinates from a geographic reference frame
 (latitude-longitude) into a projected cartesian reference frame (eg metres)
 is governed by these equations.  Inverse projections can also be achieved. 
 The public-domain Unix software package <I>proj</I> [1] has been designed to
-perform these transformations, and the user&#39;s manual contains a detailed
+perform these transformations, and the user's manual contains a detailed
 description of over 100 useful projections.  This also includes a
 programmers library of the projection methods to support other software
 development.  
-<P>Thus, converting a &#34;vector&#34; map - in which objects are located
+<P>Thus, converting a &quot;vector&quot; map - in which objects are located
 with arbitrary spatial precision - from one projection into another is
 usually accomplished by a simple two-step process:  first the location of
 all the points in the map are converted from the source through an inverse
 projection into latitude-longitude, and then through a forward projection
 into the target.  (Of course the procedure will be one-step if either the
 source or target is in geographic coordinates.) <P>
-Converting a &#34;raster map&#34;, or image, between different projections, 
+Converting a &quot;raster map&quot;, or image, between different projections, 
 however, involves additional considerations.  
 A raster may be considered to represent a sampling of a
 process at a regular, ordered set of locations.  The set of locations that
@@ -101,7 +101,7 @@ lists with a one-line command.
 <P>The format of files describing maps containing <B>lines</B><I> </I>and<I>
 </I><B>arcs</B> is generally more complex, as even in ascii parts of the
 files will describe topology, and not just locations.  In the GRASS GIS
-package a program <I>v.proj</I> is provided to convert &#34;vector&#34;
+package a program <I>v.proj</I> is provided to convert &quot;vector&quot;
 maps, transferring topology and attributes as well as node locations.  This
 program uses the projection definition and parameters which are stored in
 the PROJ_INFO and PROJ_UNITS files in the PERMANENT mapset directory for
@@ -135,7 +135,7 @@ are provided.
 <P><B>References:</B>
 <p>
 [1]Evenden, G.I.  (1990) Cartographic projection procedures for
-the UNIX environment - a user&#39;s manual.  USGS Open-File Report 90-284
+the UNIX environment - a user's manual.  USGS Open-File Report 90-284
 (Also see Interim Report and 2nd Interim Report on Release 4, Evenden 1994).  
 
 <H2>SEE ALSO</H2>
@@ -153,5 +153,5 @@ the UNIX environment - a user&#39;s manual.  USGS Open-File Report 90-284
 <H2>AUTHOR</H2>
 
 Martin Schroeder, University of Heidelberg, Germany<p>
-Man page text from S.J.D. Cox, AGCRC, CSIRO Exploration & Mining, Nedlands, WA
+Man page text from S.J.D. Cox, AGCRC, CSIRO Exploration &amp; Mining, Nedlands, WA
 </html>

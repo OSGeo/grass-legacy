@@ -113,14 +113,14 @@ data is negative, and the data interval is half of the unsigned (not
 exactly). For example:
 <p>
 Data: 2 byte<BR>
-Unsigned interval: 0x0000 -> 0xFFFF = 0 -> 65535 decimal = 00000000 00000000
-->11111111 11111111 binary.<BR>
-Signed interval: 0x8000 -> 0xFFFF; 0x0000 -> 0x7FFF = -32768 -> -1;  0 ->
-32767 = 10000000 00000000 -> 11111111 11111111; 00000000 00000000 ->
+Unsigned interval: 0x0000 -&gt; 0xFFFF = 0 -&gt; 65535 decimal = 00000000 00000000
+-&gt;11111111 11111111 binary.<BR>
+Signed interval: 0x8000 -&gt; 0xFFFF; 0x0000 -&gt; 0x7FFF = -32768 -&gt; -1;  0 -&gt;
+32767 = 10000000 00000000 -&gt; 11111111 11111111; 00000000 00000000 -&gt;
 01111111 11111111 binary.<P>
 This is the 2's complement representation.<BR>
-So if the data 1 byte the integer range is -128 -> 127, if 2 byte (16 bit,
-word) -32768 -> 32767, if 4 byte (32 bit, doubleword, Dword) -2^31 -> 2^31-1.
+So if the data 1 byte the integer range is -128 -&gt; 127, if 2 byte (16 bit,
+word) -32768 -&gt; 32767, if 4 byte (32 bit, doubleword, Dword) -2^31 -&gt; 2^31-1.
 And of course the value zero has a positive sign.
 
 <H2>SEE ALSO</H2>
