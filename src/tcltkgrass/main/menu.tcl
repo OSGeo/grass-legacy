@@ -126,6 +126,9 @@ set image_processing {
          "User defined matrix filter" "" {
              "source $env(TCLTKGRASSBASE)/module/r.mfilter"
          }
+	 "Assign a histrogram contrast stretch qrey scale" "" {
+	     "source $env(TCLTKGRASSBASE)/module/i.grey.scale"
+	 }
     }
     "Image transformation" "" {
          "Canonical component" "" {
@@ -202,6 +205,18 @@ menu_build 1 .main_menu {
         }
         "Resize menu" "" {resize_menu}
         -separator
+	Scripting "" {
+	    "Start scripting" "" {
+		"script_start"
+	    }
+	    "Stop scripting"  "" {
+		"script_stop"
+	    }
+	    "Play script"     "" {
+		"script_play"
+	    }
+	}
+	-separator
         Options "" {
             "Menu font" "" {
                 "fontsel {Menu font} main_menu(font);\
@@ -223,6 +238,10 @@ menu_build 1 .main_menu {
             "Display dimensions" "" {
                 setdisplay
             }
+	    -separator
+	    "Configure html-browser" "" {
+		"config_netscape"
+	    }
         }
         -separator
         "Save config" "" {
@@ -744,7 +763,7 @@ menu_build 1 .main_menu {
              }
         }
         "Xfig (external)" "" {
-            "run xfig&"
+            "run xfig &"
         }
     }
     Databases "Databases" {
@@ -799,6 +818,13 @@ menu_build 1 .main_menu {
         About "" {
            "source $env(TCLTKGRASSBASE)/main/about.tcl"
         }
+	-separator
+	"Help on scripting" "" {
+	    "source $env(TCLTKGRASSBASE)/main/help-scripting.tcl"
+	}
+	"Help on html-browser" "" {
+	    "source $env(TCLTKGRASSBASE)/main/help-netscape.tcl"
+	}
     }
     Quit Bye quit
 }
