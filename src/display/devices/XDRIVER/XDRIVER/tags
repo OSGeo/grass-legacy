@@ -1,25 +1,40 @@
 AllocXPoints	alloc.c	/^XPoint *AllocXPoints(count)$/
+AppendProperty	Graph_Set.c	/^AppendProperty(display, window, property, target, /
 Box_abs	Box_abs.c	/^Box_abs(x1, y1, x2, y2)$/
 Box_abs2	Box_abs.c	/^Box_abs2(x1, y1, width, height)$/
 Box_rel	Box_abs.c	/^Box_rel(width, height)$/
+Color	../lib/Color.c	/^Color(number)$/
+Color_offset	../lib/Color.c	/^Color_offset(n)$/
 Color_table_fixed	Clr_table.c	/^Color_table_fixed()$/
 Color_table_float	Clr_table.c	/^Color_table_float()$/
 Cont_abs	Cont_abs.c	/^Cont_abs(x, y)$/
 Cont_rel	Cont_abs.c	/^Cont_rel(x, y)$/
+D2R	../lib/text.c	/^#define D2R(d) (double)(d * RpD)\/* degrees->radian/
+Erase	../lib/Erase.c	/^Erase()$/
 EraseRubberBox	Get_w_box.c	/^static EraseRubberBox(x1, y1, x2, y2)$/
 EraseRubberLine	Get_w_line.c	/^static EraseRubberLine(x1, y1, x2, y2)$/
+Font_get	../lib/Font.c	/^Font_get(filename)$/
 GRFont	GRFont.c	/^GRFont(text)$/
+GetRealNumberOfColors	Graph_Set.c	/^GetRealNumberOfColors(dpy,screen)$/
+Get_current_xy	../lib/Move_abs.c	/^Get_current_xy(x, y)$/
 Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, nx, ny, button)$/
 Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, nx, ny, button)$/
 Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
 Get_num_colors	Returns.c	/^Get_num_colors(ncolors)$/
+Get_text_box	../lib/Get_t_box.c	/^Get_text_box(text, t, b, l, r)$/
 Graph_Close	Graph_Clse.c	/^Graph_Close()$/
 Graph_Set	Graph_Set.c	/^int Graph_Set(argc, argv)$/
 InitColorTableFixed	Clr_table.c	/^Colormap InitColorTableFixed()$/
+Long2Bytes	Graph_Set.c	/^Long2Bytes(l,data)$/
 MSWITCHER	SWITCHER.c	/^main(argc, argv)$/
+Move_abs	../lib/Move_abs.c	/^Move_abs(x, y)$/
+Move_rel	../lib/Move_rel.c	/^Move_rel(x, y)$/
+Number_of_colors	../lib/Num_colors.c	/^Number_of_colors(n)$/
 Panel_delete	Panel.c	/^Panel_delete(name)$/
 Panel_restore	Panel.c	/^Panel_restore(name)$/
 Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polydots_abs	../lib/Plydts_abs.c	/^Polydots_abs(xarray, yarray, number)$/
+Polydots_rel	../lib/Plydts_abs.c	/^Polydots_rel(xarray, yarray, number)$/
 Polygon_abs	Polygn_abs.c	/^Polygon_abs(xarray, yarray, number)$/
 Polygon_rel	Polygn_abs.c	/^Polygon_rel(xarray, yarray, number)$/
 Polyline_abs	Plylne_abs.c	/^Polyline_abs(xarray, yarray, number)$/
@@ -27,42 +42,89 @@ Polyline_rel	Plylne_abs.c	/^Polyline_rel(xarray, yarray, number)$/
 REC	SWITCHER.c	/^#define REC(a,b)    if (eof=rec((char*)(a),(int)(b/
 RECTEXT	SWITCHER.c	/^#define RECTEXT(x)  if (eof=rectext(x)) break$/
 RESULT	SWITCHER.c	/^static RESULT(n)$/
-Raster	Raster.c	/^Raster(num, nrows, array, withzeros, color_type)$/
+RGB_color	../lib/Color.c	/^RGB_color(r, g, b)$/
+RGB_raster	../lib/RGB.c	/^RGB_raster(n, nrows, r, g, b, withzeros)$/
+Raster_char	../lib/Raster_def.c	/^Raster_char(num, nrows, array, withzeros, color_ty/
+Raster_int	Raster.c	/^Raster_int(num, nrows, array, withzeros, color_typ/
+Raster_int_def	../lib/Raster_def.c	/^Raster_int_def(num, nrows, array, withzeros, color/
+Reset_color	../lib/Reset_clrs.c	/^Reset_color(red, grn, blu, num)$/
+Reset_colors	../lib/Reset_clrs.c	/^Reset_colors(min, max, red, grn, blu)$/
 SEND	SWITCHER.c	/^#define SEND(a,b)   send((char*)(a),(int)(b))$/
 Screen_bot	Returns.c	/^Screen_bot(index)$/
 Screen_left	Returns.c	/^Screen_left(index)$/
 Screen_rite	Returns.c	/^Screen_rite(index)$/
 Screen_top	Returns.c	/^Screen_top(index)$/
-Service_Xevent	Serve_Xevent.c	/^int Service_Xevent(wait)$/
+Service_Xevent	Serve_Xevent.c	/^int Service_Xevent()$/
 SetXColor	Color.c	/^SetXColor(number)$/
+Set_RGB_color	../lib/RGB.c	/^Set_RGB_color(r, g, b)$/
+Set_window	../lib/Set_window.c	/^Set_window(T, B, L, R)$/
+Standard_color	../lib/Color.c	/^Standard_color(number)$/
+Text	../lib/Text.c	/^Text(text)$/
+Text_rotation	../lib/Text_size.c	/^Text_rotation(val)$/
+Text_size	../lib/Text_size.c	/^Text_size(x, y)$/
+X_copy	../lib/font.c	/^static X_copy(a, b, n)$/
+_fixed_Reset_color	../lib/Reset_clrs.c	/^static _fixed_Reset_color(red, grn, blu, number)$/
+_fixed_Reset_colors	../lib/Reset_clrs.c	/^static _fixed_Reset_colors(min, max, red, grn, blu/
+_float_Reset_color	../lib/Reset_clrs.c	/^static _float_Reset_color(red, grn, blu, incr)$/
+_float_Reset_colors	../lib/Reset_clrs.c	/^static _float_Reset_colors(min, max, red, grn, blu/
+_get_color_index	../lib/Color.c	/^_get_color_index(number)$/
+_get_color_index_array	../lib/Color.c	/^_get_color_index_array(a, num)$/
 _get_lookup_for_color	Clr_table.c	/^_get_lookup_for_color(red, grn, blu)$/
 _rectext	SWITCHER.c	/^static _rectext(s)$/
-append_item	SWITCHER.c	/^static append_item(pad, name, value)$/
+_time_stamp	Serve_Xevent.c	/^_time_stamp(pad)$/
+append_item	SWITCHER.c	/^append_item(pad, name, value)$/
+assign_fixed_color	../lib/color_supp.c	/^assign_fixed_color(user_color, real_color)$/
+assign_standard_color	../lib/color_supp.c	/^assign_standard_color(user_color, real_color)$/
 can_do_float	Can_do.c	/^can_do_float()$/
 catch	SWITCHER.c	/^static catch(n)$/
+check_alloc_color	../lib/color_supp.c	/^static check_alloc_color(n)$/
+check_connection	../lib/connect.c	/^check_connection(me, link)$/
+clip	../lib/clip.c	/^clip(s, n, w, e, x, y, c_x, c_y)$/
 close_mon	SWITCHER.c	/^static int close_mon()$/
 command_pending	command_pend.c	/^int command_pending(_rfd)$/
-create_pad	SWITCHER.c	/^static create_pad(name)$/
-delete_item	SWITCHER.c	/^static delete_item(pad, name)$/
-delete_pad	SWITCHER.c	/^static delete_pad(pad)$/
-delink_pad	SWITCHER.c	/^static delink_pad(pad)$/
+create_pad	SWITCHER.c	/^create_pad(name)$/
+debug	SWITCHER.c	/^#define debug(x) fprintf (stderr,"%s\\n",x)$/
+delete_item	SWITCHER.c	/^delete_item(pad, name)$/
+delete_pad	SWITCHER.c	/^delete_pad(pad)$/
+delink_pad	SWITCHER.c	/^delink_pad(pad)$/
 do_nothing	Raster.c	/^static do_nothing(n)$/
 draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+drawchar	../lib/text.c	/^drawchar(_text_size_x, _text_size_y, sinrot, cosro/
 find_item	SWITCHER.c	/^ find_item(pad, name)$/
-find_pad	SWITCHER.c	/^static PAD *find_pad(name)$/
-free_item	SWITCHER.c	/^static free_item(item)$/
+find_pad	SWITCHER.c	/^PAD *find_pad(name)$/
+for	Raster.c	/^        for (i = 0; i < nrows; i++) {$/
+free_item	SWITCHER.c	/^free_item(item)$/
 get1	SWITCHER.c	/^static get1(c)$/
+get_char_vects	../lib/font.c	/^get_char_vects(achar, n, X, Y)$/
+get_color_offset	../lib/Color.c	/^get_color_offset()$/
 get_command	SWITCHER.c	/^static get_command(c)$/
+get_connection	../lib/connect.c	/^get_connection(files, rfd, wfd)$/
+get_fixed_color	../lib/color_supp.c	/^get_fixed_color(user_color)$/
+get_fixed_color_array	../lib/color_supp.c	/^get_fixed_color_array(a, num)$/
+get_max_std_colors	../lib/color_supp.c	/^get_max_std_colors()$/
+get_standard_color	../lib/color_supp.c	/^get_standard_color(user_color)$/
 get_table_type	Clr_table.c	/^get_table_type()$/
-invent_pad	SWITCHER.c	/^static invent_pad(name)$/
+get_text_ext	../lib/text.c	/^get_text_ext(top, bot, left, rite)$/
+get_user	Graph_Set.c	/^get_user (name, n, value)$/
+if	Raster.c	/^        if (alloc == 0)$/
+init_font	../lib/font.c	/^init_font(filename)$/
+invent_pad	SWITCHER.c	/^invent_pad(name)$/
 new_item	SWITCHER.c	/^ new_item(pad, name)$/
+onechar	../lib/text.c	/^onechar(x, y, _text_size_x, _text_size_y, _text_ro/
+prepare_connection	../lib/connect.c	/^prepare_connection()$/
 read1	SWITCHER.c	/^static read1(c)$/
 rec	SWITCHER.c	/^static rec(buf, n)$/
 rectext	SWITCHER.c	/^static rectext(s)$/
+remember	../lib/text.c	/^static remember(x, y)$/
 reset_color	Clr_table.c	/^reset_color(number, red, grn, blu)$/
 send	SWITCHER.c	/^static send(buf, n)$/
 sendtext	SWITCHER.c	/^static sendtext(s)$/
 sigint	Graph_Set.c	/^static sigint()$/
+soft_text	../lib/text.c	/^soft_text(x, y, _text_size_x, _text_size_y, _text_/
+soft_text_ext	../lib/text.c	/^soft_text_ext(x, y, _text_size_x, _text_size_y, _t/
 store	SWITCHER.c	/^static char *store(s)$/
+text_draw	../lib/text.c	/^static text_draw(x, y)$/
+text_move	../lib/text.c	/^static text_move(x, y)$/
 timeout	SWITCHER.c	/^static timeout()$/
+window_clip	../lib/Set_window.c	/^window_clip(new_x, new_y, cur_x, cur_y)$/
 xalloc	SWITCHER.c	/^static char *xalloc(buf, cur, new, len)$/
