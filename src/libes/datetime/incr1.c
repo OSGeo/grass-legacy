@@ -30,11 +30,43 @@ double dtdec = 0.0;
 }
 
 /*****************************************************************/
+
+/*!
+ * \brief 
+ *
+ * This function changes the 'src' date/time data based on the 'incr'  
+ * The type (mode/from/to) of the 'src' can be anything.  
+ * The mode of the 'incr' must be RELATIVE, and the type (mode/from/to) for
+ * 'incr' must be a valid increment for 'src'. See  <b>datetime_is_valid_increment()</b>,
+ * <b>datetime_check_increment()</b>
+ * Returns:  
+ * 0: OK  
+ * -1: 'incr' is invalid increment for 'src' 
+ * For src.mode ABSOLUTE, 
+ * <ul>
+<li> positive 'incr' moves into the future,
+</li>
+<li> negative 'incr' moves into the past.
+</li>
+<li> BC implies the year is negative, but all else is positive. Also, year==0
+ * is illegal: adding 1 year to 1[bc] gives 1[ad]
+</li></ul>
+ * The 'fracsec' in 'src' is preserved.  
+ * The 'from/to' of the 'src' is preserved.  
+ * A timezone in 'src' is allowed - it's presence is ignored.  
+ * NOTE: There is no datetime_decrement() To decrement, set the 'incr' negative.
+
+ *
+ *  \param src
+ *  \param incr
+ *  \return int
+ */
+
 int 
 datetime_increment (DateTime *src, DateTime *incr)
 {
-int i, relfrom;
-DateTime cpdt, *dt;
+  int i, relfrom;
+  DateTime cpdt, *dt;
 
     if (!datetime_is_valid_increment (src, incr))
        return datetime_error_code();
@@ -345,7 +377,7 @@ static int _datetime_subtract_field (DateTime *src, DateTime *incr, int field)
 static int 
 _datetime_carry (DateTime *dt, int absolute)
 {
-int i, carry;
+  int i, carry;
 
     /* normalize day-sec (same for ABSOLUTE & RELATIVE) */
     for(i = dt->to; i > dt->from && i > DATETIME_DAY; i--){

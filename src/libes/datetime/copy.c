@@ -13,6 +13,17 @@ copy (char *dst, char *src, int n)
   	*dst++ = *src++;
 }
   
+
+/*!
+ * \brief 
+ *
+ * Copies the DateTime [into/from ???]  src
+ *
+ *  \param dst
+ *  \param src
+ *  \return void
+ */
+
 void 
 datetime_copy (DateTime *dst, DateTime *src)
 {
