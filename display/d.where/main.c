@@ -110,7 +110,7 @@ int main (int argc, char **argv)
     if (R_open_driver() != 0)
 	G_fatal_error ("No graphics device selected");
     D_setup(0);
-    where_am_i(once->answer, have_spheroid, decimal->answer) ;
+    where_am_i(once->answer, have_spheroid, decimal->answer, wgs84->answer) ;
     R_close_driver();
 
     exit(0);
