@@ -315,6 +315,7 @@ proc gisSetWindow {} {
     entry .frame0.frameDB.mid.entry \
     	-relief {sunken} \
     	-textvariable database \
+	-width 40 \
     	-xscrollcommand { .frame0.frameDB.mid.hscrollbar set}
     
     scrollbar .frame0.frameDB.mid.hscrollbar \
@@ -377,7 +378,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameMS.label \
     	-anchor {w} \
-    	-text [G_msg "Mapset"] 
+    	-text [G_msg "(Accessible) Mapsets"] 
 
     listbox .frame0.frameMS.listbox \
     	-relief {raised} \
