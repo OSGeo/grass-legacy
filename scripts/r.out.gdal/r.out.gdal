@@ -32,7 +32,7 @@
 #%option
 #% key: format
 #% type: string
-#% description: GIS format to write (see also -l flag)
+#% description: GIS format to write (case sensitive, see also -l flag)
 #% options: AAIGrid,BMP,BSB,DTED,ELAS,ENVI,FIT,GIF,GTiff,HFA,JPEG,MEM,MFF,MFF2,NITF,PAux,PNG,PNM,VRT,XPM
 #% required : no
 #%END
@@ -104,4 +104,4 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-gdal_translate -of $FORMAT $CREATEKEY $METAKEY $CELLHD $OUTPUT 
+gdal_translate -of $FORMAT -a_srs `g.proj -wf` $CREATEKEY $METAKEY $CELLHD $OUTPUT 
