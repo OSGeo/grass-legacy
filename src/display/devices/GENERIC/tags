@@ -1,0 +1,19 @@
+Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, wx, wy, button)$/
+Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, wx, wy, button)$/
+Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_num_colors	Returns.c	/^Get_num_colors(index)$/
+Graph_Close	Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	Graph_Set.c	/^Graph_Set() $/
+Panel_delete	Panel.c	/^Panel_delete(name)$/
+Panel_restore	Panel.c	/^Panel_restore(name)$/
+Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polygon_abs	Polygn_abs.c	/^Polygon_abs(xarray, yarray, number)$/
+Screen_bot	Returns.c	/^Screen_bot(index)$/
+Screen_left	Returns.c	/^Screen_left(index)$/
+Screen_rite	Returns.c	/^Screen_rite(index)$/
+Screen_top	Returns.c	/^Screen_top(index)$/
+can_do_float	Can_do.c	/^can_do_float()$/
+color	Color.c	/^color(number)$/
+draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+get_num_colors	Returns.c	/^get_num_colors()$/
+reset_color	Reset_clr.c	/^reset_color(number, red, grn, blu)$/
