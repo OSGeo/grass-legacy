@@ -1,0 +1,40 @@
+.TH d.vect.db
+.SH NAME
+\fId.vect.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.vect.db\fR
+.br
+\fBd.vect.db help\fR
+.br
+\fBd.vect.db\fR \fBkey=\fIname\fR \fBtab=\fIname\fR \fBwhere=\fIname\fR \fBmap=\fIname\fR \fB[color=\fIname]\fR
+   \fB[join=\fItab,tabkey,pkey]\fR
+.SH DESCRIPTION
+enter short description of d.vect.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIkey\fR
+Column corresponding to cats in vector map [map]
+.IP \fItab\fR
+Table containing column to base query on.
+.IP \fIwhere\fR
+Where clause for query (ie. where col='paved'). 
+.IP \fImap\fR
+Name of existing vector file.
+.IP \fIcolor\fR
+(null)
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
