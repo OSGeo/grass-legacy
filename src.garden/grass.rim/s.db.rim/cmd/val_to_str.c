@@ -24,7 +24,8 @@ int val_to_str(string, field)
       case X_FIELD_CHAR:
       case Y_FIELD_CHAR:
       case F_FIELD_CHAR:
-         sprintf(format, "%%-%d.2lf", Field_info[field].length);
+         sprintf(format, "%%-%d.%dlf",
+               Field_info[field].length,Field_info[field].next_field[1]);
          sprintf(string, format, *((double *) Field_info[field].value));
          break;
       case T_FIELD_CHAR:
