@@ -20,7 +20,12 @@
 #include "gis.h"
 #include "Vect.h"
 
-
+/*!
+ \fn int Vect_print_header (struct Map_info *Map)
+ \brief print vector map header
+ \return 0 on success
+ \param Map_info structure
+*/
 int 
 Vect_print_header (struct Map_info *Map)
 {

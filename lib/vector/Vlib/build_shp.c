@@ -24,14 +24,15 @@
 extern FILE *Msgout;
 extern int prnmsg ( char *msg, ...) ;
 
-/* Build topology 
-*  msgout - message output (stdout/stderr for example) or NULL
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_build_shp ( struct Map_info *Map, FILE *msgout ) 
+ \brief build topology SHAPE
+ \return 1 on success, 0 on error
+ \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
+Vect_build_shp ( struct Map_info *Map, FILE *msgout )
+{
     struct Plus_head *plus ;
     int    i, n, lineid, offset, ret;
     int    line;

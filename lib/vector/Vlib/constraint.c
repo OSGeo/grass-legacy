@@ -17,7 +17,6 @@
 *****************************************************************************/
 #include "Vect.h"
 #include "gis.h"
-
 /*
    **  These routines can affect the read_next_line funtions
    **    by restricting what they return.
@@ -26,6 +25,14 @@
    **  These do not affect the lower level direct read functions.
  */
 
+
+/*!
+ \fn int Vect_set_constraint_region ( struct Map_info *Map,
+			     double n, double s, double e, double w, double t, double b )
+ \brief ADD
+ \return 0 on success, -1 on error
+ \param Map_info structure, north, south, east, west, top, bottom coordinates
+*/
 int 
 Vect_set_constraint_region ( struct Map_info *Map,
 			     double n, double s, double e, double w, double t, double b )
@@ -47,6 +54,13 @@ Vect_set_constraint_region ( struct Map_info *Map,
   return (0);
 }				/*  dig_init_box()  */
 
+/*!
+ \fn int Vect_get_constraint_box ( struct Map_info *Map,
+			      BOUND_BOX *Box )
+ \brief ADD
+ \return 0 on success
+ \param Map_info structure, BOUND_BOX
+*/
 int 
 Vect_get_constraint_box ( struct Map_info *Map,  BOUND_BOX *Box )
 {
@@ -74,6 +88,14 @@ Vect_get_constraint_box ( struct Map_info *Map,  BOUND_BOX *Box )
    **
  */
 
+/*!
+ \fn int Vect_set_constraint_type (
+			   struct Map_info *Map,
+			   int type)
+ \brief ADD
+ \return 0 on success
+ \param Map_info structure, constraint type
+*/
 int 
 Vect_set_constraint_type (
 			   struct Map_info *Map,
@@ -85,6 +107,12 @@ Vect_set_constraint_type (
   return 0;
 }
 
+/*!
+ \fn int Vect_remove_constraints (struct Map_info *Map)
+ \brief ADD
+ \return 0 on success
+ \param Map_info structure
+*/
 int 
 Vect_remove_constraints (struct Map_info *Map)
 {
