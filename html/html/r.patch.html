@@ -19,7 +19,7 @@ to fill in areas of "no data" in another map layer.
 <B>r.patch help</B> 
 <BR>
 <B>r.patch</B> 
-[<B>-q</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+[<B>-qz</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
 <B>output=</B><EM>name</EM> 
 
 <H2>DESCRIPTION</H2>
@@ -27,7 +27,7 @@ to fill in areas of "no data" in another map layer.
 The GRASS program 
 <EM>r.patch</EM>
 allows the user to assign known data values from other raster map layers 
-to the <EM>"no data"</EM> areas (those assigned category value 0) 
+to the <EM>"no data"</EM> areas (those assigned category value NULL/0) 
 in another raster map layer. 
 This program is useful for making a composite raster map layer 
 from two or more adjacent map layers, 
@@ -42,7 +42,7 @@ program arguments on the command line, using the form:
 <DL>
 <DD>
 <B>r.patch</B> 
-[<B>-q</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+[<B>-qz</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
 <B>output=</B><EM>name</EM> 
 </DL>
 where each input <EM>name</EM> is the name of a raster map layer to be patched, 
@@ -76,6 +76,8 @@ flag setting and parameter values using the standard GRASS
 <DT><B>-q</B>
 <DD>Directs that <EM>r.patch</EM> run quietly, suppressing output of messages 
 on program progress to standard output. 
+<DT><B>-z</B>
+<DD>Use zero (0) for transparency instead of NULL.
 </DL>
 
 <H3>Parameters:</H3>
@@ -167,4 +169,5 @@ map layer.
 Michael Shapiro, 
 U.S. Army Construction Engineering 
 Research Laboratory
-
+<br>
+-z flag by Huidae Cho
