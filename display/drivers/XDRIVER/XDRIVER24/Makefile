@@ -5,10 +5,8 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-PGM=XDRIVER
-
-LIBES = $(DRIVERLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-DEPENDENCIES = $(DRIVERDEP) $(GISDEP) $(RASTERDEP)
+LIBES = $(DRIVERLIB) $(GISLIB)
+DEPENDENCIES = $(DRIVERDEP) $(GISDEP)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -58,17 +56,12 @@ OBJS =  \
 	alloc.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
-XDRIVERPGM=xdriver
 
-default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
-	cat description.html >> $(XDRIVERPGM).html
-	echo "<HR>" >> $(XDRIVERPGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(XDRIVERPGM).html
-	echo "</body></html>" >> $(XDRIVERPGM).html
-	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 $(XDRIVERPGM).html $(GISBASE)/docs/html
+PGM=xdriver
 
-$(DRIVERDIR)/$(PGM): $(ARCH_OBJS) $(DEPENDENCIES)
+default: $(DRIVERDIR)/XDRIVER htmlgen
+
+$(DRIVERDIR)/XDRIVER: $(ARCH_OBJS) $(DEPENDENCIES) $(ARCH_INCDIR)/winname.h
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(ARCH_INCDIR)/winname.h:

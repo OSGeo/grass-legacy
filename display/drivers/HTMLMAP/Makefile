@@ -25,21 +25,15 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 DEPENDENCIES = $(DRIVERLIBDEP) $(DRIVERDEP) $(DISPLAYDEP) $(RASTERDEP) $(GISLIBDEP)
-HTMLPGM=htmlmapdriver
+PGM=htmlmapdriver
 
-default: $(DRIVERDIR)/HTMLMAP
+default: $(DRIVERDIR)/HTMLMAP htmlgen
 	@if egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo HTMLMAP already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding HTMLMAP driver to $(ETC)/monitorcap ; \
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
-	cat description.html >> $(HTMLPGM).html
-	echo "<HR>" >> $(HTMLPGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(HTMLPGM).html
-	echo "</body></html>" >> $(HTMLPGM).html
-	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 $(HTMLPGM).html $(GISBASE)/docs/html
 
 
 $(DRIVERDIR)/HTMLMAP: $(ARCH_OBJS) $(DEPENDENCIES)

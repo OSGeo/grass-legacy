@@ -18,7 +18,7 @@ default: \
 	$(HOME)/g.list \
 	$(HOME)/g.remove \
 	$(HOME)/g.rename \
-	htmlcmd
+	htmlmulti
 
 $(HOME)/g.copy: $(OBJDIR)/copy.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -37,16 +37,4 @@ $(HOME)/g.rename: $(OBJDIR)/rename.o $(LIST)
 	@test -x $(BIN)/g.rename || ln $(ETC)/front.end $(BIN)/g.rename
 
 PROGRAMS = g.copy g.list g.remove g.rename
-
-htmlcmd:
-	for prog in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
-		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
-		echo "<HR>" >> $$prog.tmp ; \
-		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
-		echo "</body></html>" >> $$prog.tmp ; \
-		$(MKDIR) $(GISBASE)/docs/html ; \
-		$(INSTALL) -m 644 $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
-		rm -f $$prog.tmp ; \
-	done
 
