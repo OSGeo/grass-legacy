@@ -7,32 +7,27 @@
 #
 # This program is Free Software under the GNU GPL (>=v2).
 # create a new LOCATION from a raster data set
+# 
+# Derived from:
 # Reference:
 #   Markus Neteler and Helena Mitasova:
 #   Open Source GIS: A GRASS GIS Approach. 2nd edition 2004.
 #   Kluwer Academic Publishers, Boston, Dordrecht, 464 pp,
 #   ISBN: 1-4020-7088-8, http://mpa.itc.it/grasstutor/
 #
-# The trick:
-#  The script generates a temp LOCATION for a fake GRASS session, then
-#  uses g.proj to generate the target LOCATION
-# set -x
-#customize version and path to GRASS start script, if needed:
 
 GRASSVERSION=57
-
-#GRASSSTARTSCRIPT=/usr/local/bin/grass$GRASSVERSION
 GRASSSTARTSCRIPT=grass$GRASSVERSION
 ########## nothing to change below ##############################
 EPSG=$1
 LOCATION=$2
 MYGISDBASE=$3
-GRASSRC=grassrc$GRASSVERSION
+GRASSRC=grassrc6
 
 if [ $# -lt 2 ] ; then
  echo "Script to create a new LOCATION from EPSG code"
  echo "Usage:"
- echo "   make_location_epsg_g57.sh epsg newlocation_name [GISDBASE]"
+ echo "   make_location_epsg_g$GRASSVERSION.sh epsg newlocation_name [GISDBASE]"
  echo ""
  echo "       epsg: EPSG code number of projection (see /usr/local/share/proj/epsg)"
  echo "       newlocation_name: new location to be created"
@@ -49,18 +44,8 @@ if test -f $HOME/.gislock$GRASSVERSION ; then
  #exit 1
 fi
 
-#get GISBASE from GRASS start script:
-GRASSSTARTSCRIPTPATH=`type -p $GRASSSTARTSCRIPT`
-if [ "$GRASSSTARTSCRIPTPATH" = "" ] ; then
- echo "ERROR. Cannot find '$GRASSSTARTSCRIPT' in path"
- exit 1
-fi
-
-GISBASE=`cat $GRASSSTARTSCRIPTPATH | grep 'GISBASE=' | cut -d'=' -f2`
-if [ "$GISBASE" = "" ] ; then
- echo "ERROR. Cannot get GISBASE from '`type -p $GRASSSTARTSCRIPT`' script"
- exit 1
-fi
+#get/set GISBASE
+GRASSSTARTSCRIPTPATH=$GISBASE
 
 #get GISDBASE from previous session:
 if [ "$MYGISDBASE" = "" ] ; then
@@ -145,11 +130,10 @@ fi
 rm -rf $GISDBASE/$TEMPDIR
 
 echo "Now you can launch GRASS with:"
-echo "   grass57 $GISDBASE/$LOCATION/PERMANENT"
+echo "   grass$GRASSVERSION $GISDBASE/$LOCATION/PERMANENT"
 echo "and start to import data sets (r.in.gdal -e ... ; v.in.ogr -e ... )."
 echo ""
 echo "Note: Depending on the EPSG definition some datums are missing."
 echo "   check with g.proj -w"
 echo "To fix a missing datum definition, either edit the new PROJ_INFO file"
 echo "or carefully run g.proj again inside the new location."
-
