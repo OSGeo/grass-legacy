@@ -253,6 +253,7 @@
 			{cascad "Hydrologic modeling" {} "" 1 {			
 			    {command "Depressionless elevation map and flowline map" {} "" {} -command {execute  r.fill.dir }}
 			    {command "Flow accumulation for massive grids" {} "" {} -command {exec r.terraflow &}}
+			    {command "Generate flow lines for raster map" {} "" {} -command {execute  r.flow }}
 			    {command "Topographic index map" {} "" {} -command {execute  r.topidx }}
 			    {command "TOPMODEL simulation" {} "" {} -command {execute  r.topmodel }}
 			    {command "Watershed subbasins" {} "" {} -command {execute  r.basins.fill }}
@@ -286,9 +287,9 @@
 			}}
 			{separator}
 			{command "Generate concentric circles around points" {} ""  {} -command { execute r.circle }}
-			{cascad "Generate random points" {} "" 1 {			
+			{cascad "Generate random raster cells" {} "" 1 {			
 			    {command "Generate random cells" {} "" {} -command {execute  r.random.cells }}
-			    {command "Generate random cells and sites from raster map" {} "" {} -command {execute  r.random }}
+			    {command "Generate random cells and vector points from raster map" {} "" {} -command {execute  r.random }}
 			}}
 			{cascad "Generate surfaces" {} "" 1 {			
 			    {command "Generate density surface using moving Gausian kernal" {} "" {} -command {execute  v.kernel }}
@@ -373,26 +374,36 @@
 			    {command "Overlay/combine 2 vector maps" {} "" {} -command {execute  v.overlay }}
 			    {command "Patch multiple maps (combine)" {} "" {} -command {execute  v.patch }}
 			}}
-			{command "Sample raster map at vector points" {} "" {} -command {execute  v.what.rast }}
+			{command "Generate area feature for extent of current region" {} "" {} -command {execute  v.in.region }}
 			{separator}
 			{cascad "Change attributes" {} "" 1 {			
 			    {command "Attach, delete, or report categories" {} "" {} -command {execute  v.category }}
 			    {command "Reclassify features using rules file" {} "" {} -command {execute  v.reclass }}
 			}}
 			{separator}
-			{cascad "Generate vector maps" {} "" 1 {			
-			    {command "Generate convex hull for point set" {} "" {} -command {execute  v.hull }}
-			    {command "Generate vector points from database with x/y coordinates" {} "" {} -command {execute  v.in.db }}
-			    {command "Generate area feature for extent of current region" {} "" {} -command {execute  v.in.region }}
-			}}
-			{cascad "Generate points" {} "" 1 {			
-			    {command "Generate random points" {} "" {} -command {execute  v.random }}
+			{cascad "Work with vector points" {} "" 1 {			
+    			{cascad "Generate points" {} "" 1 {			
+			        {command "Generate points from database with x/y coordinates" {} "" {} -command {execute  v.in.db }}
+    			    {command "Generate random points" {} "" {} -command {execute  v.random }}
+    			    {command "Random location perturbations of points" {} "" {} -command {execute  v.perturb }}
+    			}}
+    			{cascad "Generate areas from points" {} "" 1 {			
+    			    {command "Generate convex hull for point set" {} "" {} -command {execute  v.hull }}
+    			    {command "Generate Vornoi diagram/Thiessen polygons for point set" {} "" {} -command {execute  v.voroni }}
+    			}}
+    			{cascad "Sample raster maps" {} "" 1 {			
+        			{command "Sample raster map at point locations" {} "" {} -command {execute  v.what.rast }}
+        			{command "Sample raster neighborhood around points" {} "" {} -command {execute  v.sample }}
+    			}}
 			}}
 			{separator}
 			{cascad "Reports and statistics" {} "" 1 {			
 			    {command "Basic information" {} "" {} -command {execute  v.info }}
 			    {command "Load vector attributes to database or create reports" {} "" {} -command {execute  v.to.db }}
 			    {command "Univariate statistics" {} "" {} -command {execute  v.univar }}
+    			{separator}
+			    {command "Test normality of point distribution" {} "" {} -command {execute  v.normal }}
+			    {command "Indices of point counts in quadrats" {} "" {} -command {execute  v.qcount }}
 			}}
         }            
         "&Image" all options 1 {			
@@ -407,7 +418,8 @@
 			    {command "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)" {} "" {} -command {execute  i.rgb.his }}
 			}}
 			{cascad "Rectify and georeference image group" {} "" 1 {			
-			    {command "Set ground control points (GCP's) from raster map" {} "" {} -command {term i.points}}
+			    {command "Set ground control points (GCP's) from raster map or keyboard entry" {} "" {} -command {term i.points}}
+			    {command "Set ground control points (GCP's) from vector map or keyboard entry" {} "" {} -command {term i.vpoints}}
 			    {command "Affine and Polynomial rectification (rubber sheet)" {} "" {} -command {execute  i.rectify }}
 			    {command "Ortho photo rectification" {} "" {} -command {term  i.ortho.photo }}
 			}}
