@@ -80,7 +80,7 @@ find (fd, element)
 {
     int len1, len2;
     char *mapset;
-    char name[40];
+    char name[100];
     char *dir;
     char *G__mapset_name();
     int len,maxlen;
