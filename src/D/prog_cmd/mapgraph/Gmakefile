@@ -1,0 +1,16 @@
+LIBES  = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+
+LIST = \
+	command.o \
+	do_graph.o \
+	graphics.o \
+	read_line.o\
+	main.o
+
+$(BIN)/Dmapgraph: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
+
+command.o: options.h
+main.o:    options.h
