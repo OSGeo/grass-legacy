@@ -1,7 +1,7 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
-# tcltkgrass menu.tcl v 4.0.1 for GRASS 5.7 2004/06/01 Michael Barton
+# tcltkgrass menu.tcl v 4.0.1 for GRASS 5.7 2004/06/30 Michael Barton
 # based on menu.tcl for GRASS 5.3 by Michael Barton, Jacques Bouchard, and Markus Neteler
 # with scripting support by Andreas Lange
 
@@ -535,6 +535,8 @@ menu_build 1 .main_menu {
 	    "Generate random cells & sites from raster map" "" {
 	    "exec r.random &"}
 	}
+	"Generate vector contour lines" "" {
+	    "exec r.contour &" }
 	-separator
 	"Reports & statistics" "" {
 	    "Report basic file information" "" {
