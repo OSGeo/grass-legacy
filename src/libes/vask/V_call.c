@@ -395,7 +395,10 @@ fmt(s,n,x)
     if (n >= 0)
 	sprintf (buf, "%%.%dlf", n);
     else
-	strcpy (buf, "%lf");
+	strcpy (buf, "%.5lf");
+/* I had to use .5lf instead of just lf since a number like 65.8 got sprintf'ed as 65.800003
+ * this is a hack - I admit it.
+ */
     sprintf (s, buf, x);
     if (n < 0)
 	V__trim_decimal(s);
