@@ -37,7 +37,7 @@ proc DmVector::legend { id } {
 	}
     }
     # line    
-    if { $opt($id,type_line) || $opt($id,type_boundary) } {
+    if { $opt($id,type_line) || $opt($id,type_boundary) || $opt($id,type_face) } {
 	set x1 [expr $lw / 3 + $mar ]
 	set x2 [expr 2 * $lw / 3 - $mar ]
 	set y1 [expr $lh - $mar ]
@@ -90,6 +90,7 @@ proc DmVector::create { tree parent } {
     set opt($count,type_boundary) 1 
     set opt($count,type_centroid) 1 
     set opt($count,type_area) 1 
+    set opt($count,type_face) 1 
 
     set opt($count,color) \#000000
     set opt($count,fcolor) \#AAAAAA 
@@ -171,7 +172,9 @@ proc DmVector::options { id frm } {
                 -command "DmVector::legend $id"
     checkbutton $row.f -text "area" -variable DmVector::opt($id,type_area) \
                 -command "DmVector::legend $id"
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    checkbutton $row.g -text "face" -variable DmVector::opt($id,type_face) \
+                -command "DmVector::legend $id"
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # color
@@ -243,7 +246,7 @@ proc DmVector::save { tree depth node } {
 
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
-                  type_point type_line type_boundary type_centroid type_area 
+                  type_point type_line type_boundary type_centroid type_area type_face
                   color fcolor lcolor icon size field lfield attribute cat where 
                   _query_text } {
         Dm::rc_write $depth "$key $opt($id,$key)"
@@ -278,7 +281,7 @@ proc DmVector::display { node } {
 
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) } { return } 
+         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
     set cmd "d.vect map=$opt($id,map)"
 
@@ -343,7 +346,7 @@ proc DmVector::query { node } {
 
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
-         !$opt($id,type_area) } { return } 
+         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
     set cmd "d.what.vect map=$opt($id,map)"
     if { $opt($id,_query_text) } { 
