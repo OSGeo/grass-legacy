@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "gis.h"
 
+
 #ifdef	OLD_CPVALUE
 #define	KEEPTYPE	0
 #define	OVERTYPE	1
