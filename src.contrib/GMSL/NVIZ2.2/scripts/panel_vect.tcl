@@ -286,6 +286,7 @@ proc delete_map {type} {
 
 # Use this routine when adding a vect or site in a script
 proc script_add_map { type map_name } {
+
     set temp [Nnew_map_obj $type]
     $temp set_att map $map_name
     set_new_curr $type [string range $temp 5 end]

@@ -1681,7 +1681,7 @@ proc keyanimRunAndSave { BASE } {
     .ras_fname.enter2 insert end "0"
 
 #Disable option for Off Screen render until checked
-    .ras_fname.check1 configure -state disabled
+#    .ras_fname.check1 configure -state disabled
 
     tkwait variable keyanimWaitPress
 

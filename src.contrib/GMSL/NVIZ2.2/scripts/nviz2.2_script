@@ -20,7 +20,7 @@ set BGColor #FFFFFF
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
 
-global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState
+global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState 
 
 set ScriptPlaying 0
 
@@ -123,14 +123,23 @@ proc Nv_force_panel { name } {
 
 proc Nv_makeGUI {{BASE .top}} {
     global Nv_ ScriptState src_boot env
+
+    set width [exec $src_boot/bin/g.gisenv X3D_WIDTH]
+    if {$width == ""} {set width 585}
+    set width [expr round($width/.98)]
+    set height [exec $src_boot/bin/g.gisenv X3D_HEIGHT]
+    if {$height == ""} {set height 720}
+    set height [expr round($height /.97)]
+
+    #set position variable for placing .top2
+    set posx [expr $width + 17]
+    set posy 10
     
     set Nv_(First) 1
-    wm geometry . 585x720
+    wm geometry . $width\x$height\+10+10
     wm minsize . 300 200
     pack [frame $BASE] -side top -fill both -expand y
     toplevel .top2
-    wm geometry .top2 "+400+300"
-    wm minsize .top2 370 404
     wm resizable .top2 false false
     wm title .top2 "Controls"
     set Nv_(height) 720
@@ -149,11 +158,9 @@ puts "toplevel made"
 ##  glxwin $BASE.canvas -rgb true -db true -zbuffersize -1
     togl $BASE.canvas -rgba true -double true -depth true 
     place $BASE.canvas -relx .01 -rely .03 -relwidth .98 -relheight .97
-    
     bind $BASE.canvas <Expose> {Nv_expose %W}
     bind $BASE.canvas <Configure> {set Nv_(height) %h}
-##  bind $BASE.canvas <Configure> {if [%W islinked] {glx_viewport %w %h; \
-							 set Nv_(height) %h}}
+
     update
 
 #With widget made reset ProcessName variable
@@ -190,7 +197,7 @@ puts "panel area made"
 	      {0 0 0 0 0 0 0} \
 	      { "load_state" "save_state" "load_3dview" "save_3dview" \
 		  "Cascade img menu2" "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
-	-side left
+	-side left -fill both -expand yes
 
 # DEBUG
 puts "file menu made"
@@ -199,7 +206,7 @@ pack [Nv_mkMenu $Nv_(AREA).menu.help Help \
 	{"NVIZ Help" "About NVIZ" "NVIZ - Bugs / ToDo"} \
 	{0 0 0} \
 	{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html" "nviz_browse bugs_todo.html"} ] \
-	-side right
+	-side right -fill both -expand yes
 
 # DEBUG
 puts "Help menu made"
@@ -212,7 +219,7 @@ puts "Help menu made"
 puts "disabled made"
 
 
-    pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left
+    pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill both -expand yes
 # DEBUG
 puts "scripting menu 0 made"
 
@@ -258,7 +265,7 @@ puts "scripting menu 7 made"
     $Nv_(AREA).menu.scripting.m add command -label "Close Script" \
 	-underline 1 -command Nv_close_scripting
     
-    pack $Nv_(AREA).menu.scripting -side left
+    pack $Nv_(AREA).menu.scripting -side left -fill both -expand yes
     
 
 # DEBUG
@@ -269,7 +276,7 @@ puts "scripting menu made"
     
     set Nv_(Q) [Q_init 2]
     
-    pack $Nv_(AREA).menu.wait_pls -side left -fill x -expand yes
+    pack $Nv_(AREA).menu.wait_pls -side left -fill x -expand yes 
 
     # initialize Main panel
     Nv_force_panel main
@@ -280,6 +287,8 @@ puts "scripting menu made"
 puts "menubar made"
 
     focus $Nv_(AREA).menu
+
+    wm geometry .top2 "+$posx\+$posy"
 
     return $BASE
 }
@@ -299,7 +308,7 @@ proc menu2 { menu } {
         -command {set fname [create_file_browser .file_browser 1]
 	if {$fname != -1} then {
 	appBusy
-         Nstart_zoom $fname
+         Nstart_zoom $fname [winfo screenwidth .] [winfo screenheight .]
 	appNotBusy
 	}	
 	} -underline 0 -label "Save Max. Resolution PPM(s)"
@@ -387,12 +396,19 @@ proc Nv_openPanel { name {pos -1}} {
 }
 
 proc Nv_mapPanel {name panel pos } {
+
+    #insert update to fix KDE wm problem
+    update
+
     set size [St_get $panel  size]
-    
     if [catch {set height [expr $size * .33]}] { set height 1}
     if [catch {set y [expr $pos * .33]}] { set y 0}
-    
     pack $name -side top -fill x -expand no -anchor n
+    set x [winfo x .top2]
+    set y [winfo y .top2]
+    if {$x && $y} {
+        wm geometry .top2 "+$x+$y"
+    }
 }
 
 proc Nv_closePanel { name } { 
@@ -732,11 +748,6 @@ proc CheckScriptDone {} {
 
     after 5000 CheckScriptDone
 }
-
-
-
-
-
 
 
 

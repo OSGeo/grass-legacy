@@ -29,6 +29,7 @@ set Nv_(labelFontColor) #FF0000
 
 # Legend section
 set Nv_(catval) 1
+set Nv_(leg_on) 0
 set Nv_(catlabel) 0
 set Nv_(leg_invert) 0
 set Nv_(leg_userange) 0
@@ -57,43 +58,47 @@ proc mklabelPanel { BASE } {
     # This section contains widgets for setting font type, size and color
     frame $BASE.text_char -relief groove -bd 5
     set rbase $BASE.text_char
-    
+
     frame $rbase.font_size -relief raised
     label $rbase.font_size.label -text "Font Size:"
-    entry $rbase.font_size.entry -relief sunken -width 3 \
+    entry $rbase.font_size.entry -relief sunken -width 4 \
 	-textvariable Nv_(labelFontSize)
     button $rbase.font_size.color -text "Color" \
-	-bg #FF0000 -width 8 \
+	-bg $Nv_(labelFontColor) -width 8 \
 	-command "change_label_color $rbase.font_size.color"
     pack $rbase.font_size.label $rbase.font_size.entry \
 	$rbase.font_size.color -side left \
 	-padx 2 -anchor n -expand no 
 
     frame $rbase.font_type -relief raised
+    label $rbase.font_type.lab -text "Font: "
     radiobutton $rbase.font_type.times -text "Times-Roman" \
-	-value times -variable Nv_(labelFontType) -anchor w \
-	-width 15
+	-value times -variable Nv_(labelFontType) \
+        -anchor w
     radiobutton $rbase.font_type.helv  -text "Helvetica" \
-	-value helvetica -variable Nv_(labelFontType) -anchor w \
-	-width 15
+	-value helvetica -variable Nv_(labelFontType) \
+        -anchor w
     radiobutton $rbase.font_type.cour  -text "Courier" \
-	-value courier -variable Nv_(labelFontType) -anchor w \
-	-width 15
-    pack $rbase.font_type.times $rbase.font_type.helv \
-	$rbase.font_type.cour -side top \
-	-expand yes
+	-value courier -variable Nv_(labelFontType) \
+        -anchor w 
+    pack $rbase.font_type.lab $rbase.font_type.times \
+        $rbase.font_type.helv \
+	$rbase.font_type.cour -side left -padx 2 \
+	-expand no
 
     frame $rbase.font_weight -relief raised
+    label $rbase.font_weight.lab -text "Font Weight: "
     checkbutton $rbase.font_weight.italic -text "Italic" \
 	-variable Nv_(labelFontWeight1) -anchor w
     checkbutton $rbase.font_weight.bold   -text "Bold" \
 	-variable Nv_(labelFontWeight2) -anchor w
-    pack $rbase.font_weight.italic $rbase.font_weight.bold \
-	-side top -expand yes -anchor w
+    pack $rbase.font_weight.lab $rbase.font_weight.italic \
+        $rbase.font_weight.bold -padx 2 \
+	-side left -expand no -anchor w
 
-    pack $rbase.font_type $rbase.font_weight -side left \
-	-fill x -expand yes -padx 2 -pady 2 -anchor n
-    pack $rbase.font_size -side top -expand yes \
+    pack $rbase.font_type $rbase.font_weight -side top \
+	-expand yes -padx 2 -pady 2 -anchor n
+    pack $rbase.font_size -side top -expand yes -fill x \
 	-before $rbase.font_type -anchor n -padx 2 -pady 2
 
     ##########################################################################
@@ -104,14 +109,15 @@ proc mklabelPanel { BASE } {
 
     frame $rbase.buttons -relief raised
     button $rbase.buttons.place -text "Place Label" -command "place_label"
-    button $rbase.buttons.undo -text "Undo" -command ""
-    pack $rbase.buttons.place $rbase.buttons.undo -side left \
+    button $rbase.buttons.undo -text "Undo" -command "delete_list label 1"
+    button $rbase.buttons.undo_all -text "Undo All" -command "delete_list label 0"
+    pack $rbase.buttons.place $rbase.buttons.undo $rbase.buttons.undo_all -side left \
 	-padx 2 -expand no
 
     entry $rbase.text -relief sunken -width 30 -textvariable Nv_(label_text)
     label $rbase.label -text "Label Text"
     pack $rbase.buttons -side top -expand yes\
-	-padx 2 -pady 2 -anchor n
+	-fill x -padx 2 -pady 2 -anchor n
     pack $rbase.text $rbase.label -side top -expand no \
 	-padx 2 -pady 2 -anchor n
 
@@ -126,81 +132,74 @@ proc mklabelPanel { BASE } {
     set rbase $BASE.legends
 
     # Legend button, invert checkbutton and category checkbuttons
-    frame $rbase.leg_inv
-   button $rbase.leg_inv.legend -text "Legend" -command "place_legend"
+    frame $rbase.leg
+   
+   button $rbase.leg.legend -text "Place Legend" -command "place_legend"
+   checkbutton $rbase.leg.c1 -text "On" \
+        -variable Nv_(leg_on) -onvalue 1 -offvalue 0 \
+	-command "delete_list legend 0"
+   pack $rbase.leg.legend $rbase.leg.c1 \
+	-fill x -side left -expand no -padx 2 -pady 1
 
-    checkbutton $rbase.leg_inv.invert -text "Invert" -anchor w \
+   frame $rbase.leg2
+    checkbutton $rbase.leg2.invert -text "Invert" -anchor w \
 	-variable Nv_(leg_invert) -onvalue 1 -offvalue 0
-    pack $rbase.leg_inv.legend $rbase.leg_inv.invert \
-	-fill x -side top -expand no -padx 2 -pady 1
-
-    frame $rbase.cats
-    checkbutton $rbase.cats.values -text "Category Values" \
+    checkbutton $rbase.leg2.values -text "Category Values" \
 	-anchor w -variable Nv_(catval) -onvalue 1 -offvalue 0
-    checkbutton $rbase.cats.labels -text "Category Labels" \
+    checkbutton $rbase.leg2.labels -text "Category Labels" \
 	-anchor w -variable Nv_(catlabel) -onvalue 1 -offvalue 0
-    pack $rbase.cats.values $rbase.cats.labels -side top \
-	-expand no -padx 2 -pady 1
+    pack $rbase.leg2.invert $rbase.leg2.values $rbase.leg2.labels\
+	-fill x -side left -expand no -padx 2 -pady 1
 
     # Use-range portion of panel
     frame $rbase.ranges -relief sunken
     checkbutton $rbase.ranges.useit -text "Use Range" -anchor w \
 	-variable Nv_(leg_userange) -onvalue 1 -offvalue 0
 
-    frame $rbase.ranges.bound_low
-    entry $rbase.ranges.bound_low.entry -relief sunken -width 8 \
+    entry $rbase.ranges.entry_low -relief sunken -width 8 \
         -textvariable Nv_(leg_lorange)
-    label $rbase.ranges.bound_low.label -text "Low:" \
+    label $rbase.ranges.label_low -text "Low:" \
 	-width 5 -anchor e
-    pack $rbase.ranges.bound_low.entry \
-	$rbase.ranges.bound_low.label -side right \
-	-padx 2 -pady 1 -fill x -expand no
 
-    frame $rbase.ranges.bound_hi
-    entry $rbase.ranges.bound_hi.entry  -relief sunken -width 8 \
+    entry $rbase.ranges.entry_hi  -relief sunken -width 8 \
          -textvariable Nv_(leg_hirange)
-    label $rbase.ranges.bound_hi.label -text "Hi:" \
+    label $rbase.ranges.label_hi -text "Hi:" \
 	-width 5 -anchor e
-    pack $rbase.ranges.bound_hi.entry \
-	$rbase.ranges.bound_hi.label -side right \
-	-padx 2 -pady 1 -fill x -expand no
+
+    pack $rbase.ranges.useit \
+        $rbase.ranges.label_low $rbase.ranges.entry_low \
+        $rbase.ranges.label_hi $rbase.ranges.entry_hi \
+        -side left -fill x -expand no
 
     # Return bindings for "use range" entries
-    bind $rbase.ranges.bound_low.entry <Return> "$rbase.ranges.useit select"
-    bind $rbase.ranges.bound_hi.entry <Return> "$rbase.ranges.useit select"
+    bind $rbase.ranges.entry_low <Return> "$rbase.ranges.useit select"
+    bind $rbase.ranges.entry_hi <Return> "$rbase.ranges.useit select"
 
-    pack $rbase.ranges.bound_low $rbase.ranges.bound_hi \
-	-side top -padx 2 -pady 1 -expand no
-    pack $rbase.ranges.useit -side left -anchor n \
-	-padx 2 -pady 2 -expand no \
-	-before $rbase.ranges.bound_low
-
+    frame $rbase.leg3
     # Discrete categories and use-list portion
-    checkbutton $rbase.disc_cat -text "Discrete Categories" \
+    checkbutton $rbase.leg3.disc_cat -text "Discrete Categories" \
 	-anchor w -width 18 -variable Nv_(leg_discat) \
 	-onvalue 1 -offvalue 0
     
     # Some special handling for the "Use List" entry
-    frame $rbase.use_list
-    checkbutton $rbase.use_list.cb -text "Use List" \
-	-anchor w -width 18 -variable Nv_(leg_uselist) \
-	-onvalue 1 -offvalue 0 -command "make_cat_list $rbase.use_list.curr.m" \
+    checkbutton $rbase.leg3.cb -text "Use List" \
+	-anchor w -variable Nv_(leg_uselist) \
+	-onvalue 1 -offvalue 0 -command "make_cat_list $rbase.leg3.curr.m" \
         -state disabled
-    menubutton $rbase.use_list.curr -text "Current List" \
-	-menu $rbase.use_list.curr.m -relief raised \
+    menubutton $rbase.leg3.curr -text "Current List" \
+	-menu $rbase.leg3.curr.m -relief raised \
         -state disabled
-    menu $rbase.use_list.curr.m -disabledforeground black
-    pack $rbase.use_list.cb $rbase.use_list.curr -side left \
-	-padx 2 -expand no
-    $rbase.use_list.curr.m add command -label "None" -state disabled
+    menu $rbase.leg3.curr.m -disabledforeground black
+
+    pack $rbase.leg3.disc_cat $rbase.leg3.cb $rbase.leg3.curr \
+         -side left -padx 2 -expand no
+
+    $rbase.leg3.curr.m add command -label "None" -state disabled
 
     # Pack all portions
-    pack $rbase.leg_inv $rbase.cats -side left -fill x -expand yes
-    pack $rbase.use_list \
-	$rbase.disc_cat \
-	$rbase.ranges \
-	-side bottom -expand no -before $rbase.leg_inv \
-	-padx 2 -pady 1
+    pack $rbase.leg $rbase.leg2 \
+         $rbase.ranges $rbase.leg3 -side top \
+         -fill x -pady 4 -expand yes
 
     ##########################################################################
     # Separator
@@ -211,23 +210,23 @@ proc mklabelPanel { BASE } {
     frame $BASE.lab_sites -relief groove -bd 5
     set rbase $BASE.lab_sites
 
-    frame $rbase.left
-    button $rbase.left.lab_sites -text "  Label Sites  "
-    checkbutton $rbase.left.in_box -text "In Box" -anchor w \
+    frame $rbase.top
+    button $rbase.top.lab_sites -text "  Label Sites  "
+    pack $rbase.top.lab_sites \
+ 	-side left -expand no -padx 2 -pady 1
+
+    frame $rbase.bottom
+    checkbutton $rbase.bottom.in_box -text "In Box" -anchor w \
 	-variable Nv_(labinbox) -onvalue 1 -offvalue 0
-    pack $rbase.left.lab_sites $rbase.left.in_box \
-	-side top -fill x -expand no -padx 2 -pady 1
-
-    frame $rbase.right
-    checkbutton $rbase.right.values -text "Values" -anchor w \
+    checkbutton $rbase.bottom.values -text "Values" -anchor w \
 	-variable Nv_(labvalues) -onvalue 1 -offvalue 0
-    checkbutton $rbase.right.labels -text "Labels" -anchor w \
+    checkbutton $rbase.bottom.labels -text "Labels" -anchor w \
 	-variable Nv_(lablabels) -onvalue 1 -offvalue 0
-    pack $rbase.right.values $rbase.right.labels \
-	-side top -fill x -expand no -padx 2 -pady 1
+    pack $rbase.bottom.in_box $rbase.bottom.values $rbase.bottom.labels \
+	-side left -fill x -expand no -padx 2 -pady 1
 
-    pack $rbase.left $rbase.right -side left -expand yes \
-	-padx 2 -pady 1
+    pack $rbase.top $rbase.bottom -side top -expand yes \
+	-fill x -padx 2 -pady 1
 
     ##########################################################################
     # Pack all frames
@@ -385,8 +384,8 @@ set y [expr $Nv_(height) - $y]
 
 #Ndraw_legend Args -- filename use_vals use_labels invert use_range 
 # low_range high_range discrete colors corner_coords
-
-      Ndraw_legend $name $font $Nv_(catval) $Nv_(catlabel) $Nv_(leg_invert) $Nv_(leg_discat) \
+	
+      Ndraw_legend $name $font $Nv_(labelFontSize) $Nv_(catval) $Nv_(catlabel) $Nv_(leg_invert) $Nv_(leg_discat) \
 	$Nv_(leg_userange) $range_low $range_high $x1 $x2 $y1 $y2
 
 #reset bindings
@@ -402,6 +401,26 @@ set y [expr $Nv_(height) - $y]
 
 }
 
+#Routine to delete display list
+proc delete_list { list flag } {
+    global Nv_
+
+if {$list == "legend" && $Nv_(leg_on) == 0} {
+	Ndelete_list legend 0
+}
+
+if {$list == "label"} {
+	if {$flag == 1} {
+		Ndelete_list label 1
+	} else {
+		Ndelete_list label 0
+	}
+}
+
+
+
+
+}
 
 # Routine to place legend
 proc place_legend { } {
@@ -411,6 +430,10 @@ proc place_legend { } {
 #do bindings
 bind $Nv_(TOP).canvas <Button-1> {do_legend %W %x %y 1 }
 bind $Nv_(TOP).canvas <Button-3> {do_legend %W %x %y 2 }
+
+#set checkbutton to on
+set Nv_(leg_on) 1
+
 puts "Select Legend Corners in Window ..."
 puts "Corner 1 = left button      Corner 2 = right button"
 update
@@ -449,10 +472,9 @@ set sy [expr $Nv_(height) - $sy]
 	}	
 	set font "*-$Nv_(labelFontType)-$weight-$slant-normal--$Nv_(labelFontSize)-*-*-*-*-*-*-*"
 
-set clr $Nv_(labelFontColor)
-puts "BOB -- $clr"
+        set clr $Nv_(labelFontColor)
 
-	Nplace_label $Nv_(label_text) $font $clr $sx $sy
+	Nplace_label $Nv_(label_text) $font $Nv_(labelFontSize) $clr $sx $sy
 
 
 
