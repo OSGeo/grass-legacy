@@ -1,0 +1,14 @@
+# the tags file created by "make ctags" is great for
+# editting to look for function definitions
+# vi -t <function name>
+
+ctags:
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
+# this next rule builds .s files from .o files preserving all the CFLAGS
+# to make obj.s simply enter "make obj.s"
+
+.c.s:
+	$(CC) $(CFLAGS) -S $<
