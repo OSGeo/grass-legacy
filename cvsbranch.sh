@@ -11,7 +11,7 @@
 TAG="testbranch_5_0_0stable"
 
 #catch all modules from compile list:
-FILE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
+MODULE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
 
 #list of extra files not in compile list:
 FURTHER_FILES="config.guess \
@@ -25,4 +25,4 @@ FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused"
 
 
 #tag it...
-cvs tag $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $FILE_LIST
+cvs tag $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
