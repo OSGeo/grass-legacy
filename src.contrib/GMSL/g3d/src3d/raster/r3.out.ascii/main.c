@@ -2,9 +2,9 @@
  * r3.out.ascii -
  *
  * $Id$
- * Mark Astley
+ *
+ * Mark Astley, Bill Brown
  * USA CERL started 4/4/96
- * See the file "ChangeLog" for changes and revisions
  *
  */
 
