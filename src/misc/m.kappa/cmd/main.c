@@ -46,7 +46,7 @@ main (argc, argv)
  flags.h->description = "no header in the report";
 
  if (G_parser(argc, argv))
-   exit (-1);
+   exit (1);
 
  if (parms.input->answer) {
    input = parms.input->answer;
