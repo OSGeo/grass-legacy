@@ -439,7 +439,7 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 src.contrib/GMSL/g3d/src3d/sites/s.vol.rst
 #
 #new 2003, requires also C++
-src.contrib/DUKE/r.terraflow
+#src.contrib/DUKE/r.terraflow
 #
 #new 2003, not yet to be enabled:
 #src.contrib/GMSL/r.simwe
