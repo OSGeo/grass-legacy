@@ -1,0 +1,1699 @@
+	1                                            MAPGEN
+ |-------------------------------------------------------------------------
+ |
+ |
+ |  Mapset <test> in Location <spearfish>
+ | < GRASS-GRID > MAPGEN
+ | Enter the name of the new map: test
+ |-------------------------------------------------------------------------
+ |         Welcome to the SCS-GRASS/MAPGEN Interface
+ |         Default options are enclosed in brackets [].
+ |         To accept the default type the return.
+ |
+ |   Your are editing map test
+ |   Your current directory is /usr/grass/data/spearfish/test/mapgen/test
+ |
+ |         When ready to quit, type exit.
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	2                                            make.mapdef
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.mapdef
+ |-------------------------------------------------------------------------
+ |
+ | Warning!!
+ | This procedure uses your current window for determining the
+ | extent of the map.
+ |
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the denominator for the scale of the map [24000]: 100000
+ |
+ | Enter the left and right margins in centimeters [0 0]:
+ |
+ | Enter the top and bottom margins in centimeters [0 0]:
+ |-------------------------------------------------------------------------
+ |  make.mapdef complete
+ |         Map definition file     map.def
+ |         Parameter file          map.def.par
+ |
+ |
+ | Mapgen - mapdef file initialization (Ver: III (1/26/89)
+ |    file name: map.def
+ |
+ | projection: +proj=utm +zone=13 +lon_0=-103.749626527778
+ | longitude range: 103d52'44.983"w 103d37'12.328"w
+ |  latitude range: 44d22'12.828"n 44d30'16.007"n
+ | scale 1 : 100000.0
+ | map size x: 20.86, y: 15.23
+ | data window x from 0.00 to 20.86, y from 0.00 to 15.23
+ | plotter counts/cm: 400.00
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	3                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: quads
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > quads
+ | <quads>
+ |
+ | Loading vector information.
+ |
+ | Processing ........
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [quads]:
+ |
+ | Enter the pen number [1]:
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         quads
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/quads
+ |         Parameters
+ |                 pen             1
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	4                                            make.neatline
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.neatline
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [neatline]: databorder
+ |
+ | Are the coordinates for this box relative to the map or
+ | relative to the data area.
+ | Enter [p] for map d for data: d
+ |
+ | Enter the pen to use for this neatline [1]:
+ |
+ |-------------------------------------------------------------------------
+ |  make.neatline complete
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/databorder
+ |         Parameters
+ |                 window          d
+ |                 pen             1
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	5                                            make.mapdef
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.mapdef
+ |-------------------------------------------------------------------------
+ |
+ | Warning!!
+ | This procedure uses your current window for determining the
+ | extent of the map.
+ |
+ | Enter the name of the map definition file [map.def]:
+ | File map.def exists do you want to recreate it [y]es or (n)o:
+ |
+ | Enter the denominator for the scale of the map [24000]: 100000
+ |
+ | Enter the left and right margins in centimeters [0 0]: 2.5 15
+ |
+ | Enter the top and bottom margins in centimeters [0 0]: 3 6
+ |-------------------------------------------------------------------------
+ |  make.mapdef complete
+ |         Map definition file     map.def
+ |         Parameter file          map.def.par
+ |
+ |
+ | Mapgen - mapdef file initialization (Ver: III (1/26/89)
+ |    file name: map.def
+ |
+ | projection: +proj=utm +zone=13 +lon_0=-103.749626527778
+ | longitude range: 103d52'44.983"w 103d37'12.328"w
+ |  latitude range: 44d22'12.828"n 44d30'16.007"n
+ | scale 1 : 100000.0
+ | map size x: 38.35, y: 24.23
+ | data window x from 2.50 to 23.35, y from 6.00 to 21.23
+ | plotter counts/cm: 400.00
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	6                                            redo
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> redo
+ |
+ | Choices are: [all] (fills) (labels) (legend) (lines) (mapdef)
+ | (misc) (symbols)
+ |
+ | Enter the name(s) of the options you wish to redo (separated by spaces)
+ | or (l)ist: all
+ |-------------------------------------------------------------------------
+ | Mapgen - mapdef file initialization (Ver: III (1/26/89)
+ |    file name: map.def
+ |
+ | projection: +proj=utm +zone=13 +lon_0=-103.749626527778
+ | longitude range: 103d52'44.983"w 103d37'12.328"w
+ |  latitude range: 44d'12.828"n 44d30'16.007"n
+ | scale 1 : 100000.0
+ | map size x: 38.35, y: 24.23
+ | data window x from 2.50 to 23.35, y from 6.00 to 21.23
+ | plotter counts/cm: 400.00
+ |-------------------------------------------------------------------------
+ | quads
+ | databorder
+ |-------------------------------------------------------------------------
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	7                                            make.neatline
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.neatline
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [neatline]:
+ |
+ | Are the coordinates for this box relative to the map or
+ | relative to the data area.
+ | Enter [p] for map d for data:
+ |
+ | Enter the pen to use for this neatline [1]:
+ |
+ |-------------------------------------------------------------------------
+ |  make.neatline complete
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/neatline
+ |         Parameters
+ |                 window          p
+ |                 pen             1
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> Derase
+ | 
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	8                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: fields
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > fields
+ | <fields>
+ |
+ | Loading vector information.
+ |
+ | Processing...............................................................
+ |..........................................................................
+ |..........................................................................
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [fields]:
+ |
+ | Enter the pen number [1]: 4
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Field boundaries
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         fields
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/fields
+ |         Parameters
+ |                 pen             4
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	9                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: railroads
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > railroads
+ | <railroads>
+ |
+ | Loading vector information.
+ |
+ | Processing .....................................
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [railroads]:
+ |
+ | Enter the pen number [1]: 8
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Railroads
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         railroads
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/railroads
+ |         Parameters
+ |                 pen             8
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	10                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: rstrct.areas
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > rstrct.areas
+ | <rstrct.areas>
+ |
+ | Loading vector information.
+ |
+ | Processing ...............
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [rstrct.areas]:
+ |
+ | Enter the pen number [1]: 2
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         rstrct.areas
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/rstrct.areas
+ |         Parameters
+ |                 pen             2
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	11                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: streams
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > streams
+ | <streams>
+ |
+ | Loading vector information.
+ |
+ | Processing.............................................................
+ |........................................................................
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [streams]:
+ |
+ | Enter the pen number [1]: 3
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Streams
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         streams
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/streams
+ |         Parameters
+ |                 pen             3
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	12                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: transport.misc
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > transport.misc
+ | <transport.misc>
+ |
+ | Loading vector information.
+ |
+ | Processing .....................
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [transport.misc]:
+ |
+ | Enter the pen number [1]: 6
+ |
+ | Enter the line type [s]olid (l)ist:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Transportation, miscellaneous
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         transport.misc
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/transport.misc
+ |         Parameters
+ |                 pen             6
+ |                 line type       s
+ |                 pattern size
+ |                 line pattern    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	13                                            make.line
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.line
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ | Enter the name of an existing or new dig_geo file: twp.range
+ |
+ | Creating the Georefernced digit file from GRASS
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > twp.range
+ | <twp.range>
+ |
+ | Loading vector information.
+ |
+ | Processing .........................................
+ |-------------------------------------------------------------------------
+ |
+ | Enter the name of this overlay [twp.range]:
+ |
+ | Enter the pen number [1]:
+ |
+ | Enter the line type [s]olid (l)ist: l
+ | a    - - - - - - - - - - - - - - - -
+ | b    --- --- --- --- --- --- --- ---
+ | c    ------  ------  ------  ------
+ | d    ------- ------- ------- -------
+ | e    --------------  --------------
+ | f    --------------- ---------------
+ | g    - ----- - ----- - ----- - -----
+ | h    - ------------- - -------------
+ | i    -- ------------ -- ------------
+ | j    - - ----------- - - -----------
+ | k    -- -- --------- -- -- ---------
+ |
+ | Enter the line type [s]olid (l)ist: b
+ |
+ | Enter the unit length of dashes [.1]: .2
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Township/Range boundaries
+ | :.
+ |
+ |-------------------------------------------------------------------------
+ | make.line completed
+ |         Digit file used         twp.range
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/twp.range
+ |         Parameters
+ |                 pen             1
+ |                 line type       b
+ |                 pattern size    .2
+ |                 line pattern    --- --- --- --- --- --- --- ---
+ |
+ |-------------------------------------------------------------------------
+	14                                            show.sh
+
+
+
+
+
+
+
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> Derase
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	15                                            make.symbol
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.symbol
+ |-------------------------------------------------------------------------
+ | Enter the name of an existing or new sites_geo file: archsites
+ | The sites_geo file does not exist.
+ | Do you want to use a GRASS sites, dig_cats or dig_att file
+ | [s]ites (c)ats or (a)tt:
+ |
+ | Enter the name of an existing site_lists file
+ | Enter 'list' for a list of existing site_lists files
+ | Hit RETURN to cancel request
+ | > archsites
+ | <archsites>
+ |-------------------------------------------------------------------------
+ | Enter the name for this overlay [archsites.s]:
+ |
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the font to use for symbol selection [sr]:
+ |
+ | Select the desired symbol by symbol number [23]: 14
+ |
+ | Enter the pen number [1]:
+ |
+ | Enter the size of the symbol in centimeters [.2]:
+ |
+ | Enter the line(s) of text to use in the legend (end with a .)
+ | :Archeological sites
+ | :.
+ |-------------------------------------------------------------------------
+ |  make.symbol complete
+ |         Sites file used         archsites
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/archsites.s
+ |         Parameters
+ |                 pen              1
+ |                 character size   .2
+ |                 character number 14
+ |                 font             sr
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	16                                            make.label
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.label
+ |-------------------------------------------------------------------------
+ | Enter the name of an existing or new sites_geo file: archsites
+ | Enter the name for this overlay [archsites.l]:
+ |
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the font to use [sr]:
+ |
+ | Enter the pen number [1]:
+ |
+ | Enter the size of the characters in centimeters [.2]:
+ |
+ | Enter the angle of counterclockwise rotation [0]:
+ |
+ | Enter the label justification [l]eft, (r)ight or (c)enter:
+ |
+ | Enter the x offset in centimeters [0]: .2
+ |
+ | Enter the y offset in centimeters [0]:
+ |-------------------------------------------------------------------------
+ |  make.label complete
+ |         Sites file used         archsites
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/archsites.l
+ |         Parameters
+ |                 pen             1
+ |                 character size  .2
+ |                 font            sr
+ |                 rotation        0
+ |                 justification   l
+ |                 x offset        .2
+ |                 y offset        0
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	17                                            make.fill
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.fill
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > fields
+ | <fields>
+ |
+ | Enter the name for this fill overlay [fields.f]: jakesflds
+ |
+ | Enter the list of the patterns to use or [l] to list the choices end with a .
+ | : solid
+ | : .
+ |
+ | Enter the pen number to use [1]: 4
+ |
+ |-------------------------------------------------------------------------
+ | Select areas by category (d)escription, [n]umber, or (f)irst category: d
+ |
+ | Enter the name of an existing dig_cats file
+ | Enter 'list' for a list of existing dig_cats files
+ | Hit RETURN to cancel request
+ | > fields
+ | <fields>
+ |
+ | How do you want to enter the categories? Enter:
+ | f -- to read from a file
+ | t -- to be prompted
+ |
+ | Enter (f)ile, [t]ype:
+ | Enter the categories one per line end with a .
+ | :J._McCandles
+ | :.
+ |
+ | Enter the legend text for fill jakesflds end with a .
+ | : Jake McCandles' fields
+ | : .
+ | Doing pattern solid
+ |
+ | Loading vector information.
+ |
+ | Processing ..............................................................
+ |-------------------------------------------------------------------------
+ |  make.fill complete
+ |         Map definition file     map.def
+ |         GRASS digit file        fields
+ |         Overlay file created    ovm/jakesflds
+ |         Category list file      fills/cat/jakesflds
+ |         Parameters
+ |                 fill patterns    solid
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	18                                            make.fill
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.fill
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name of an existing dig file
+ | Enter 'list' for a list of existing dig files
+ | Hit RETURN to cancel request
+ | > rstrct.areas
+ | <rstrct.areas>
+ |
+ | Enter the name for this fill overlay [rstrct.areas.f]: no_entry
+ |
+ | Enter the list of the patterns to use or [l] to list the choices end with a .
+ | : 45.25
+ | : 135.25
+ | : .
+ |
+ | Enter the pen number to use [1]: 2
+ |
+ |-------------------------------------------------------------------------
+ | Select areas by category (d)escription, [n]umber, or (f)irst category: f
+ |
+ |
+ | Enter the legend text for fill no_entry end with a .
+ | : Restricted areas
+ | : .
+ | Doing pattern 45.25
+ |
+ | Loading vector information.
+ |
+ | Processing ....
+ | Doing pattern 135.25
+ |
+ | Loading vector information.
+ |
+ | Processing ....
+ |-------------------------------------------------------------------------
+ |  make.fill complete
+ |         Map definition file     map.def
+ |         GRASS digit file        rstrct.areas
+ |         Overlay file created    ovm/no_entry
+ |         Category list file      fills/cat/no_entry
+ |         Parameters
+ |                 fill patterns    45.25 135.25
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	19                                            show.sh
+
+
+
+
+
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> Derase
+ | 
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	20                                            make.text
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.text
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [text]:
+ |-------------------------------------------------------------------------
+ |
+ | Enter the pen number to use for this text [1]: 4
+ |
+ | Enter the font to use [sr]: crp
+ |
+ | Enter the size of the text [.2]: .6
+ |
+ | Enter the leading for the text [.3]: .9
+ |
+ | Do you want the coordinates relative to the plot
+ | or relative to the data area ([p] for plot (d) for data area):
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o):
+ | Buttons:
+ | Left:   where am i
+ | Right:  select point
+ |
+ | -x 30.535
+ | -y 19.855
+ | -x 30.535
+ | -y 19.855
+ |
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :ARCHEOLOGICAL SITES
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	21                                            make.text
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            4
+ | font:           crp
+ | size:           0.600
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]: .4
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            4
+ | font:           crp
+ | size:           0.400
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 30.535
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: 18.750
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :On or Near the McCandles' Fields
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	22                                            make.text
+ | Defaults:
+ | window:         plot
+ | pen:            4
+ | font:           crp
+ | size:           0.400
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]: .6
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            4
+ | font:           crp
+ | size:           0.600
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: p
+ |
+ | Enter the pen number to use for this text [1]:
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.600
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 30.535
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: 17.25
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :SPEARFISH
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	23                                            make.text
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.600
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]: .3
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.300
+ | leading:        0.900
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: l
+ |
+ | Enter the leading for the text [.3]: .5
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.300
+ | leading:        0.500
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 30.535
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: 16.3
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :SPEARFISH and DEADWOOD NORTH QUADRANGLES
+ | :Located in North-Central
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	24                                            make.text
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.300
+ | leading:        0.500
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]: .4
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.400
+ | leading:        0.500
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: l
+ |
+ | Enter the leading for the text [.3]: .6
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.400
+ | leading:        0.600
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 30.535
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: 14.8
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :LAWRENCE COUNTY, SOUTH DAKOTA
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	25                                            make.text
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.400
+ | leading:        0.600
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]:
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.200
+ | leading:        0.600
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: l
+ |
+ | Enter the leading for the text [.3]: .32
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.200
+ | leading:        0.320
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m: r
+ |
+ | Enter the x distance: -11.75
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: 2.25
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c:
+	26                                            make.text
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :Thematic Sources:  Archeological site data provided
+ | :by USA, CERL, Champaign, IL; fictious field boundary
+ | :and ownership data provided by SCS, Fort Worth, TX (1989).
+ | :
+ | :Base Source:  USA, CERL sample data base, Champaign, IL
+ | :(approx. 1985).
+ | :.
+ |
+ | MORE([y]es or (n)o):
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.200
+ | leading:        0.320
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: f
+ |
+ | Enter the font to use [sr]:
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.200
+ | leading:        0.320
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: s
+ |
+ | Enter the size of the text [.2]: .25
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.320
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: l
+ |
+ | Enter the leading for the text [.3]: .4
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.400
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+	27                                            make.text
+
+
+
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: .4
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: .7
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c:
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :Map produced using GRASS-MAPGEN Interface,
+ | :GRASS Version 3.1, CGIS Division, NHQ.
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	28                                            make.text
+
+
+
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.400
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: .4
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m: t
+ |
+ | Enter the y distance: -.35
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: l
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :U. S. Department of Agriculture
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	29                                            make.text
+
+
+
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.400
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m: r
+ |
+ | Enter the x distance: -.4
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m: t
+ |
+ | Enter the y distance: -.35
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: r
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :Soil Conservation Service
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	30                                            make.text
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.400
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading: f
+ |
+ | Enter the font to use [sr]: crp
+ |
+ | Defaults:
+ | window:         plot
+ | pen:            1
+ | font:           crp
+ | size:           0.250
+ | leading:        0.400
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the plot
+ |
+ | Enter [l], r, or m: r
+ |
+ | Enter the x distance: -.4
+ |
+ | Are the y coordinates relative to bottom, top or middle of the plot
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: .3
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: r
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :October l990
+ | :.
+ |
+ | MORE([y]es or (n)o):n
+ |-------------------------------------------------------------------------
+ |  make.text complete
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/text
+ |         Parameter file          misc/text
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	31                                            make.text
+
+
+
+
+
+ |-------------------------------------------------------------------------
+ |  
+ | 
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh ovm/text
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	32                                            make.text
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.text
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [text]: text2
+ |-------------------------------------------------------------------------
+ |
+ | Enter the pen number to use for this text [1]:
+ |
+ | Enter the font to use [sr]:
+ |
+ | Enter the size of the text [.2]: .25
+ |
+ | Enter the leading for the text [.3]:
+ |
+ | Do you want the coordinates relative to the plot
+ | or relative to the data area ([p] for plot (d) for data area): d
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the data
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 5
+ |
+ | Are the y coordinates relative to bottom, top or middle of the data
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: -.5
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :(SPEARFISH QUADRANGLE)
+ | :.
+ |
+ | MORE([y]es or (n)o):
+	33                                            make.text
+ |
+ | Defaults:
+ | window:         data
+ | pen:            1
+ | font:
+ | size:           0.250
+ | leading:        0.300
+ |
+ | To change a default enter (w)indow (p)en (f)ont (s)ize (l)eading:
+ |
+ |
+ | Now enter the information for the block of text
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o): n
+ |
+ | Are the x coordinates relative to left, right or middle of the data
+ |
+ | Enter [l], r, or m:
+ |
+ | Enter the x distance: 14.75
+ |
+ | Are the y coordinates relative to bottom, top or middle of the data
+ |
+ | Enter [b], t, or m:
+ |
+ | Enter the y distance: -.5
+ |
+ | The text can be left, right, or center justified at this coordinate.
+ | Enter [l] r or c: c
+ |
+ |
+ | Enter the text one line at a time as you want it on the plot.
+ |
+ | Enter . as the first character of the line to end this block of text.
+ |
+ | :(DEADWOOD NORTH QUADRANGLE)
+ | :.
+ |
+ | MORE([y]es or (n)o):n
+ |-------------------------------------------------------------------------
+ |  make.text complete
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/text2
+ |         Parameter file          misc/text2
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	34                                            show.sh
+
+
+
+
+
+ |-------------------------------------------------------------------------
+ |  
+ | 
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh ovm/text2
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	35                                            make.legend
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.legend
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [legend]:
+ |
+ |
+ | Enter the pen number to use for this text [1]:
+ |
+ | Enter the font to use [sr]: crp
+ |
+ | Enter the size of the text [.2]: .3
+ |
+ | Enter the leading for the text [.3]: .45
+ |
+ | Do you want the coordinates relative to the plot
+ | or relative to the data area ([p] for plot (d) for data area):
+ |
+ | Enter the coordinates for the TOP LEFT corner of the legend
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o):
+ | Buttons:
+ | Left:   where am i
+ | Right:  select point
+ |
+ | -x 26.505
+ | -y 13.398
+ | -x 26.505
+ | -y 13.398
+ |
+ |
+ | Enter the distance between the pattern and the legend text [0.300]: .4
+ |
+ | Enter the horizontal size of the pattern box [0.300]: 1.3
+ |
+ | Enter the vertical size of the pattern box [0.450]: .5
+ |
+ | Enter the fills or lines to include in this legend one per line, end with .
+ | : twp.range
+ | : transport.misc
+ | : railroads
+ | : streams
+ | : fields
+ | : jakesflds
+ | : no_entry
+ | : archsites.s
+ | :.
+ |-------------------------------------------------------------------------
+ |  make.legend complete
+ |         Map definition file     map.def
+ |         Overlay file created    ovm/legend
+ |         Parameter file          legend/par/legend
+ |
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	36                                            show.sh
+
+
+
+
+
+ |-------------------------------------------------------------------------
+ |  
+ | 
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh ovm/legend
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	37                                            make.grid
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.grid
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [grid]:
+ |
+ | Enter the font to use for symbol selection [sr]:
+ |
+ | Enter the pen number [1]:
+ |
+ | Enter the size of the labels in centimeters [.2]:
+ |
+ | Enter the distance the labels are to be offset from the grid [.3]:
+ |
+ | Enter the sides in which you want the labels
+ | (l)eft (r)ight (t)op (b)ottom with no spaces [lrtb]:
+ |
+ | Enter the spacing for the major grid interval in degrees [7.5]:
+ |
+ | Enter the number of minor intervals within one major grid interval
+ |(0 means no minor) [3]:
+ |
+ | Enter the size in centimeters of the major tick  marks
+ |(0 means use  solid lines) [0]:
+ |
+ | Enter the size in centimeters of the minor tick  marks
+ |(0  means  no  minor) [.3]:
+ |
+ |-------------------------------------------------------------------------
+ |  make.grid complete
+ |         Map definition file     map.def
+ |         Overlay file created    grid
+ |         Parameters
+ |                 pen             1
+ |                 character size  .2
+ |                 font            sr
+ |                 label offset    .3
+ |                 sides labeled   lrtb
+ |                 major interval  7.5
+ |                 minor interval  3
+ |                 minor tick size .3
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |-------------------------------------------------------------------------
+	38                                            make.arrow
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.arrow
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [northarrow]:
+ |
+ | Enter the pen to use [1]:
+ |
+ | Enter the width of the north arrow [1]:
+ |
+ | Now enter the information for the position of the north arrow
+ |
+ | Are the coordinates for the north arrow relative to the map
+ | or relative to the data area. Enter [p] for map d for data: d
+ |
+ | Do you want to select the coordinates on the screen [y]es or (n)o:
+ |
+ | Enter the name of the map definition file [map.def]:
+ | Buttons:
+ | Left:   where am i
+ | Right:  select point
+ |
+ | -x -1.383
+ | -y 10.117
+ |
+ |-------------------------------------------------------------------------
+ |  make.arrow complete
+ |         Map definition file     map.def
+ |         Overlay file created    northarrow
+ |         Parameters
+ |                 pen             1
+ |                 size            1
+ |                 x location      -1.383
+ |                 y location      10.117
+ |
+ |
+ |
+ |-------------------------------------------------------------------------
+	39                                            make.barscale
+ |-------------------------------------------------------------------------
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> make.barscale
+ |-------------------------------------------------------------------------
+ | Enter the name of the map definition file [map.def]:
+ |
+ | Enter the name for this overlay [barscale]:
+ |
+ | Enter the pen number to use for the scale [1]:
+ |
+ | Enter the font to use [sr]:
+ |
+ | Enter the size of the text for the barscale [.2]:
+ |
+ | Enter the leading for the text [.3]:
+ |
+ | Do you want the coordinates relative to the plot
+ | or relative to the data area ([p] for plot (d) for data area): d
+ |
+ | Do you want to select the cordinates on the screen ([y]es or (n)o):
+ | Buttons:
+ | Left:   where am i
+ | Right:  select point
+ |
+ | -x 7.694
+ | -y -2.553
+ | -x 7.694
+ | -y -2.553
+ |
+ | Enter the unit for this bar scale ft, mi, km, m,
+ |
+ | (ft mi km m or . to quit)
+ | : mi
+ |
+ | Each mi measures 1.6093 centimeters.
+ | How many mi do you want in each unit [1]:
+ |
+ | Each unit measures 1.61 centimeters.
+ | How many units do you want to the right of 0 [1]: 4
+ |
+ | Each unit measures 1.61 centimeters.
+ | How many divisions do you want on the left [4]:
+ |
+	40                                            make.barscale
+
+
+
+ | (ft mi km m or . to quit)
+ | : km
+ |
+ | Each km measures 1.0000 centimeters.
+ | How many km do you want in each unit [1]:
+ |
+ | Each unit measures 1.00 centimeters.
+ | How many units do you want to the right of 0 [1]: 4
+ |
+ | Each unit measures 1.00 centimeters.
+ | How many divisions do you want on the left [4]: 2
+ |
+ | (ft mi km m or . to quit)
+ | : .
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> 
+ |------------------------------------------------------------------------- 
+	41                                            show.sh
+
+
+
+
+ |------------------------------------------------------------------------
+ | Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> Derase
+ |
+
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> show.sh
+ |
+ |  Mapset <test> in Location <spearfish> in MAP <test>
+ | <GRASS-MAPGEN> exit
+ |
+ | Do you want to work on another map (y)es or [n]o:
+ |
+ |  Mapset <test> in Location <spearfish>
+ | < GRASS-GRID >
+ |
+ |
+ |-------------------------------------------------------------------------
+ 
