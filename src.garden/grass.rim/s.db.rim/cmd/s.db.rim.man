@@ -1,39 +1,44 @@
-
 .TH s.db.rim
 .SH NAME
-s.db.rim - RIM data base management/query interface for GRASS sites
+\fIs.db.rim\fR - RIM data base management/query interface for GRASS sites data.
 .br
-.SH SECTION ONE -- THE COMMAND VERSION
+\fI(GRASS Sites Management Program)\fR
 .SH SYNOPSIS
 \fBs.db.rim\fR
-.I data_base
--- to run the command version
 .br
-\fBs.db.rim\fR
--- to run the interactive version (see SECTION TWO)
-
-.SH OVERVIEW
-.B s.db.rim
-allows you to create, manage and query information about site
-locations (sites) across the landscape, with input in command line
-or friendly, interactive styles.  Command lines may be entered
-through prepared text files or from the keyboard.
-The command language is defined below.  The menu-driven
-interactive version is described in SECTION TWO of these manual pages.
+\fBs.db.rim \fIdata_base\fR
+.SH DESCRIPTION
+\fIs.db.rim\fR
+allows users to create, manage and query information about site
+locations (sites) across the landscape.  Required inputs can be
+entered interactively, or from the command line.
+Command line input may be entered
+through a prepared text file or from the keyboard (standard input).
+The \fIs.db.rim\fR command language is defined in SECTION ONE below.
+The menu-driven interactive version is described in SECTION TWO
+of these manual pages.
 .LP
 These programs are actually a marriage of the GRASS environment
 and the programmer's interface library of the relational data base
 management program RIM, distributed publically by the University of
 Washington Academic Computing Services as FORTRAN 77 code.  Your
-system must have  FORTRAN 77 compiler to use s.db.rim.
-.SH DESCRIPTION
-The site data bases are stored in a subdirectory named 'rim/sites' in the
+system must have a FORTRAN 77 compiler to use \fIs.db.rim\fR.
+.SH SECTION ONE -- THE COMMAND VERSION
+The command-line driven version of \fIs.db.rim\fR is run by typing
+the below command, where \fIdata_base\fR is the name of an existing
+RIM sites data base:
+.LP
+.RS
+\fBs.db.rim \fIdata_base\fR
+.RE
+.LP
+The sites data bases are stored in a subdirectory named 'rim/sites' in the
 user's current mapset.  Data bases in other mapsets, selectable through
 the GRASS
-.B g.mapsets
+.I g.mapsets
 command, can be accessed for 'read-only' retrieval of
 records.  Each mapset may have many data bases.  Each data base within
-a mapset must have a different name; user supplied names for data bases
+a mapset must have a different name;  user-supplied names for data bases
 are limited to
 seven (7) characters in order to maintain compatibility with the
 standard version of RIM.  As with other GRASS commands, mapsets are
@@ -45,24 +50,24 @@ in DBMS jargon).  Each field and its position in the site form is
 defined via input to the .make command when a data base is originally
 defined.  It is possible to add new fields or change the length of
 existing fields after data has been loaded, however this is not
-straightforward and is not described here; deleting of fields
+straightforward and is not described here;  deleting of fields
 is also possible, but requires even more experience and knowledge.
 The user needs to carefully design the
 data base fields and form (layout) and check the operation with a
 few pieces of test data before loading data for a large number of sites.
 .SH COMMANDS
-[Note: For each of the "dot commands", i.e., .make, described below
+(Note: For each of the "dot commands", i.e., .make, described below
 there is a menu choice to selected when running the
 interactive version.  The interactive menus are described in the SECTION
 TWO of this document.  Some display capabilities exist in the
 interactive version which are not directly implemented in the command
-version.]
+version.)
 .LP
 The commands are given alphabetically here for easy reference. The .make
 command is required to create a data base and, therefore, will be
 the first to be entered by a new user.  Abbreviations down to the
 string shown in ( ) are accepted; this is primarily for those giving
-.B s.db.rim
+.I s.db.rim
 commands from a terminal, but abbreviations may also be used in batch
 files.
 .LP
@@ -78,20 +83,20 @@ some commands to signify the end of these input lines.
 
 .IP "\fI!command\fR"
 This is the only
-.B s.db.rim
+.I s.db.rim
 command not starting with a period.
 "command" is a single shell command line which is executed by a
 "G_system()" call (see GRASS gis library).  Many UNIX
-utilities (e.g., vi, ls, print)
-and most GRASS commands (e.g., d.rast, d.points, g.list, g.region,
-d.zoom, g.mask) may be executed.  It is permitted, and often useful,
+utilities (e.g., \fIvi, ls, print\fR)
+and most GRASS commands (e.g., \fId.rast, d.points, g.list, g.region\fR,
+\fId.zoom, r.mask\fR) may be executed.  It is permitted, and often useful,
 to change "region" and "MASK" within
-.B s.db.rim.
+.I s.db.rim.
 Multiple commands may be separated
 by ";" in the standard UNIX way.  Note that a "!cd directory; ls" will
 change to the specified directory and list files, but the effective
 working directory for
-.B s.db.rim
+.I s.db.rim
 will not be changed when the command terminates.
 .IP "\fI.add (.a)\fR"
 Add a new site record (row) to the open data base.  Each line
@@ -125,9 +130,9 @@ Manual).  The file_name can be a relative path name or full path name.
 The file will contain the data base definition, screen layout
 information, and tabular data.  This text file is transportable to RIM
 or
-.B s.db.rim
+.I s.db.rim
 running on any other computer; it may also be reloaded to recreate the
-.B s.db.rim
+.I s.db.rim
 data base.  A message will be output if there is
 any problem writing the .backup file.  Backup can only be done on data
 bases in the user's current mapset.
@@ -180,12 +185,12 @@ approval.
 Ends multi-line input for several other commands.
 .IP "\fI.exit (.ex)\fR"
 Use .exit to end operation of
-.B s.db.rim
+.I s.db.rim
 cleanly.  In general, do
 not use CTRL-C to exit unless absolutely necessary.  When .exit is
 encountered in a batch file, input will revert back to the previous
 file, or the terminal, if any, which called the batch file.
-.IP "\fI.find (.f) [ -a | -d ] [ -m ] [ -w ]\fR"
+.IP "\fI.find (.f) [ -a | -d ] [ -m ] [ -r ]\fR"
 The .find command is used to find the site(s) closest to a given
 point (the target).  The target can be defined
 in one of several ways.  The found sites are stored on an
@@ -195,8 +200,8 @@ of proximity to the target location.
 
 The optional .find command line parameter specifies the current MASK
 (-m), if any,
-or the current region (-w), as a filter on the retrieved sites.  -m
-automatically implies -w, as the MASK is not defined outside the
+or the current region (-r), as a filter on the retrieved sites.  -m
+automatically implies -r, as the MASK is not defined outside the
 current region.  If the -a flag is given, the retrieved sites will
 be appended to those previously
 retrieved with a .query or .find; duplicates will be automatically
@@ -237,7 +242,7 @@ in the data base (including site 132).  If site
 find> distance from 472910.06 5732001.0 5000
 .in -5
 
-will find all sites within 5000 (meters, in UTM coordinates)
+will find all sites within 5000 (meters, in UTM or Lat-Long coordinates)
 of the target location.
 .in +5
 
@@ -277,7 +282,7 @@ GRASS commands.
 .IP "\fI.help (.h)\fR"
 Prints a help screen to the output device or file.  Useful to have
 when using
-.B s.db.rim
+.I s.db.rim
 from a terminal, or when writing a script file of commands.
 .IP "\fI.input (.i) [file]\fR"
 The lines in the file given are read and processed as commands or
@@ -295,7 +300,7 @@ information fields:
 .in +5
 1)  The fixed text part of the screen layout.
 .br
-2)  The positions, types, and lengths of data fields.
+2)  The positions, types, names and lengths of data fields.
 .in -5
 
 
@@ -318,7 +323,6 @@ order, are:
 4) type 'i'  An integer field.
 
 5) type 'f'  A double precision float field.
-             (always 2 decimal places used for output)
 
 6) type 't'  A text field.
 .in -5
@@ -335,8 +339,8 @@ the screen layout until a .end is reached.  If a mistake is made on any
 of the input lines, the .make will fail.  The .make information may be
 prepared in advance as a text file (this facilitates fixing mistakes)
 and the .input command can be used to read in this file.  An example
-text file for a data base screen layout follows, with some explanatory
-notes and restrictions.
+text file for a data base screen layout follows, with some important
+explanatory notes.
 
 .NF
  .make
@@ -349,8 +353,8 @@ notes and restrictions.
      ~tDescript.2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      ~tDescript.3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  Type:  ~tType~~~~~~~~~~~~~ (Should be Arch. or Hist.)
- Date:  ~tEnter_Date~~~~~~~
- North: ~yNorth~~~~~    East: ~xEast~~~~~~
+ Date:  ~tEnter_Date~~~~~~~      Square Miles: ~fArea.4~~~
+ North: ~yNorth~~~~~  East: ~xEast.1~~~~
  .end
 .FI
 
@@ -383,9 +387,22 @@ portion, etc.  This text field splitting affects how information is
 organized for input and output; the composite text string is
 concatenated (unused portions of fields are retained as spaces) and
 treated as a unit for storage and queries to the data base.
+
+5)  For the double precision floating point fields (types x, y and f),
+the number of decimal places to print may be specified by appending ".n" to
+the field name, where n is the number of decimals places required.  Values
+of n from 1 to 12 may be used.  Two decimal places is the default if
+".n" is not specified.  Be certain that you make the field wide enough to
+print the integer and decimal portions of the values that will be stored
+in the field; include space for a sign and the decimal point.  (If it
+is desired to print zero decimals, whole numbers, use an "i" type field.)
+In the example above, the northing coordinate (y) would be output with
+two decimals, the easting (x) would have only one decimal place,
+and the "Area" would be printed with four decimal places.
+
 .IP "\fI.output (.o) [file or | process]\fR"
 Causes all output (except some error messages) from
-.B s.db.rim,
+.I s.db.rim,
 including that from the .print command, to go
 to the named path/file (may be a full or relative path name),
 or to be used as standard input by the process
@@ -416,13 +433,13 @@ can be read with .input, thus they form one kind of backup mechanism and
 can be used to transfer data (not the data base layout) from one GRASS
 system to another.  The destination
 for the output is set by a previous .output command (default is stdout).
-.IP "\fI.query (.q) [ -a | -d ] [ -m ] [ -w ]\fR"
+.IP "\fI.query (.q) [ -a | -d ] [ -m ] [ -r ]\fR"
 The .query command is used to retrieve sites via an SQL-like
 request to RIM, including a user specified "where clause." All
 fields for each site meeting the selection criteria are retrieved.
 
 The optional .query command line parameters cause points not in
-the region (-w) and/or mask (-m) to be rejected, so these conditions
+the region (-r) and/or mask (-m) to be rejected, so these conditions
 need not be
 tested in the "where clause."  The -a flag causes the retrieved sites
 to be appended to those previously retrieved by .query or .find;
@@ -553,7 +570,7 @@ This is the same output generated by a "list *" command when running
 RIM manually.  The information for the table named "data" is useful for
 review of the user's field definitions.  The information for the two
 other tables is for internal use by
-.B s.db.rim.
+.I s.db.rim.
 
 .bp
 .SH SECTION TWO -- THE INTERACTIVE VERSION MENUS AND COMMENTS
@@ -562,7 +579,7 @@ other tables is for internal use by
 \fBs.db.rim\fR
 .SH DESCRIPTION
 The interactive version of
-\fBs.db.rim\fR
+\fIs.db.rim\fR
 allows you to create, manage and query
 information about site locations (sites) across the landscape.
 Operations are done
@@ -688,7 +705,7 @@ to display another record and CTRL-C to end the display.
 
 6.  If a graphics monitor is active, the locations of the selected sites
 will be displayed.  The user may choose to erase the screen;
-display cell, vector, and/or site maps; or display the selected sites
+display raster, vector, and/or site maps; or display the selected sites
 from the data base.  These maps are requested through the following
 interactive screen.  Just enter ESC to skip this step.  If no data base
 sites are currently selected, that section of the menu will not appear;
@@ -701,7 +718,7 @@ version of the program; display is not so easy in the command version.
 
                SELECTION MENU FOR ITEMS TO DISPLAY
 
-Enter cell and/or vector map names, if desired
+Enter raster and/or vector map names, if desired
 
  ______________  Raster map to display
 
@@ -727,7 +744,7 @@ file to output the selected site records to, and for optional formatting
 selection.  If the file name is lp, the site records are sent to the
 printer.  The optional formatting choices are for export of data in list
 format (see .print in the first part of this manual page for
-\fBs.db.rim[2]\fR
+\fIs.db.rim\fR
 for information and examples).
 
 8.  Using this choice you can write (or append) the currently selected
@@ -736,10 +753,10 @@ prompts for the name of the site_list file, and also for the name of a
 field to be used for the "comment" in the site_list (the site number is
 the default field).  The current date and time, and the names of the
 mapset and data base in use are entered as an information line in the
-site_list file.  Note that various kinds of cell files can be produced
-from a \fBs.db.rim\fR
+site_list file.  Note that various kinds of raster map layers can be produced
+from a \fIs.db.rim\fR
 data base by writing site_lists with different fields as "comments" then
-converting the site_lists to cell files with \fBs.menu\fR.
+converting the site_lists to raster files with \fIs.menu\fR.
 
 9.  Choices 9-12 operate on only a single site and do not use or modify
 the internal list of sites selected by find/query (choices 3 or 4).
@@ -764,7 +781,7 @@ query; see .change.)
 12.  To delete a single record, enter its site number when requested.
 All site records chosen by the last find/query operation may be deleted
 by entering "list" in place of the site number.  BE CAREFUL with this,
-.I deleted records are really gone.
+\fIdeleted records are really gone.\fR
 
 13.  This choice starts a new menu with less commonly used functions.
 See MANAGEMENT MENU section below.
@@ -882,7 +899,7 @@ Data base <A> in mapset <rim_test> open.  15025 records.
 
 .FI
 
-1.  Use this choice to create a new \fBs.db.rim\fR data base in
+1.  Use this choice to create a new \fIs.db.rim\fR data base in
 the current GRASS mapset.  See section below on MAKE A NEW DATA BASE.
 
 2.  List available data bases.  Like 2 on MAIN MENU.
@@ -892,7 +909,7 @@ data base and additional confirmation of the action are prompted for.
 
 4.  Choice 6 allows backup of the definition and data parts of a data
 base to a transportable text file.  To rebuild (or build
-for the first time) a \fBs.db.rim\fR
+for the first time) a \fIs.db.rim\fR
 data base from one of these text files do the following steps:
 .NF
 
@@ -909,7 +926,7 @@ data base from one of these text files do the following steps:
 
 .FI
 The data base is thus created in the current mapset.  Several
-\fBs.db.rim\fR commands
+\fIs.db.rim\fR commands
 should be run to verify the integrity of the newly created data base.
 
 5.  This merely shows the screen layout of the currently open data base.
@@ -952,17 +969,40 @@ See .make for the way to define a data base and record (form) layout.
 
 
 .SH NOTES
-.PP
-1.  A "date" type field should be added to future versions.  This
-version only allows storing of dates as strings (unless the user codes
-them to integers), and thus only string type searches can be made for
-dates.
+This program is included in the GRASS 4.0 release, but is not
+automatically compiled with other GRASS commands.
+The user must compile this program separately.
+.LP
+\fIs.db.rim\fR interfaces to the RIM program.  Both \fIrim\fR
+and \fIs.db.rim\fR contain FORTRAN code.  The user must have
+access to a FORTRAN compiler in order to compile and use \fIs.db.rim\fR.
+See the FILES section, below, for the location of source code.
+.LP
+A "date" type field should be added to future versions.  This version
+only allows storing of dates as strings (unless the user codes them
+to integers), and thus only string type searches can be made for dates.
+.SH FILES
+The source code for RIM is located under $GISBASE/../src.related/rim
+.LP
+The source code for \fIs.db.rim\fR is located
+under $GISBASE/../src.garden/grass.rim/s.db.rim
 .SH SEE ALSO
-v.db.rim[1]
-.br
 RIM User's Manual by Jim Fox, Academic Computing Services, Univ. of
 Washington.  See especially Appendix B on redistribution of RIM.
+.LP
+\fIGRASS 4.0 Installation Guide\fR, by Jim Westervelt and Michael
+Shapiro, U.S. Army Construction Engineering Research Laboratory
+.LP
+.I d.icons,
+.I d.points,
+.I g.mapsets,
+.I g.region,
+.I r.mask,
+.I s.in.ascii,
+.I s.menu,
+.I s.out.ascii,
+.I v.db.rim
 .SH AUTHORS
-David Satnik and James Hinthorne, GIS Laboratory, Central Washington
-University.
+James Hinthorne and David Satnik, GIS Laboratory, Central Washington
+University, Ellensburg, WA.
 
