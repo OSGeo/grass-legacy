@@ -22,7 +22,7 @@ int ask_elev_data (void)
 
     sprintf (elev_data,"ELEV_DATA");
     sprintf (units,"METERS");
-    sprintf (buf1, "");
+    *buf1 = '\0';
 
   ok = 0;
   /** Ask user if modification of elevation data is needed **/
