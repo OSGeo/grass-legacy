@@ -1,0 +1,18 @@
+#  %W%  %G%
+
+OFILES = \
+	command.o \
+	draw_point.o \
+	main.o
+
+Dpoints: $(BIN)/Dpoints
+
+$(BIN)/Dpoints: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
