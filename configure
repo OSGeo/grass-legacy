@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.10 2000-10-02 18:01:14 markus Exp $
+# $Id: configure,v 1.11 2000-10-02 18:35:09 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -38,6 +38,12 @@ ac_help="$ac_help
   --with-tkdir            Change default top-level TK directory"
 ac_help="$ac_help
   --with-tcldir           Change default top-level TCL directory"
+ac_help="$ac_help
+  --with-opengl-includes=DIR
+                          Path to OpenGL includes"
+ac_help="$ac_help
+  --with-opengl-libs=DIR
+                          Path to OpenGL libs"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -3362,6 +3368,103 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 fi
 
 
+# Check whether --with-opengl-libs or --without-opengl-libs was given.
+if test "${with_opengl_libs+set}" = set; then
+  withval="$with_opengl_libs"
+  OPENGLLIB=$withval
+        AGL="true"
+        if test -f $OPENGL/include/GL/gl.h ; then
+                echo "$ac_t""found gl.h " 1>&6
+        else
+                { echo "configure: error: Can not find gl.h in $OPENGL/include/GL given with option --with-opengl=$OPENGL " 1>&2; exit 1; }
+        fi
+        if test -f $OPENGL/lib/libMesaGL.a ; then
+                echo "$ac_t""Open GL is Mesa using -lMesaGL " 1>&6
+                MESA="true"
+        else
+                echo "$ac_t""Non Mesa Open GL found using -lGL " 1>&6
+        fi
+        echo "Building with OpenGL support OPENGLLIB= " $OPENGLLIB
+
+fi
+
+# Check for Mesa OpenGL compatible include and library
+echo $ac_n "Checking for GL/gl.h... $ac_c"
+OPENGLINCLIBs="$OPENGL $OPENGL/include /usr/include /usr/local/include \
+              /usr/include/Mesa /usr/local/include/Mesa /usr/Mesa/include \
+              /usr/local/Mesa/include /usr/Mesa /usr/local/Mesa /opt/Mesa \
+              /opt/Mesa/include /usr/X11R6/include"
+
+if [ -z "$OPENGLINC" ]; then
+   OPENGLINC=NO
+   if [ "$OPENGL" != "NO" ]; then
+      for i in $OPENGLINCLIBs; do
+         for j in GL/gl.h; do
+            if [ -r "$i/$j" ]; then
+               OPENGLINC=$i/GL
+               break 2
+            fi
+         done
+      done
+   fi
+fi
+echo $OPENGLINC
+
+echo $ac_n "Checking for libGL... $ac_c"
+OPENGLLIBdirs="$OPENGL $OPENGL/lib /usr/lib /usr/local/lib /usr/lib/X11 \
+              /usr/X11R6/lib /usr/local/lib/X11 /usr/local/X11R6/lib \
+              /usr/X11/lib /usr/lib/Mesa /usr/local/lib/Mesa /usr/Mesa/lib \
+              /usr/local/Mesa/lib /usr/Mesa /usr/local/Mesa /opt/Mesa \
+              /opt/Mesa/lib"
+OPENGLLIBs="libGL.a libGL.so"    # favour .a over .so
+OPENGLLIB=NO
+
+if [ -z "$OPENGLLIBdir" ]; then
+   if [ "$OPENGL" != "NO" ]; then
+      for i in $OPENGLLIBdirs; do
+         for j in $OPENGLLIBs; do
+            if [ -r "$i/$j" ]; then
+               OPENGLLIB=$i/$j
+               break 2
+            fi
+         done
+      done
+   fi
+else
+   for j in $OPENGLLIBs; do
+      if [ -r "$OPENGLLIBdir/$j" ]; then
+         OPENGLLIB=$OPENGLLIBdir/$j
+         break 1
+      fi
+   done
+fi
+echo $OPENGLLIB
+
+echo $ac_n "Checking for libGLU... $ac_c"
+OPENGLULIBs="libGLU.a libGLU.so"    # favour .a over .so
+OPENGLULIB=NO
+
+if [ -z "$OPENGLLIBdir" ]; then
+   if [ "$OPENGL" != "NO" ]; then
+      for i in $OPENGLLIBdirs; do
+         for j in $OPENGLULIBs; do
+            if [ -r "$i/$j" ]; then
+               OPENGLULIB=$i/$j
+               break 2
+            fi
+         done
+      done
+   fi
+else
+   for j in $OPENGLULIBs; do
+      if [ -r "$OPENGLLIBdir/$j" ]; then
+         OPENGLULIB=$OPENGLLIBdir/$j
+         break 1
+      fi
+   done
+fi
+echo $OPENGLULIB
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -3529,7 +3632,10 @@ s%@TIFF_LIBRARY_DIRS@%$TIFF_LIBRARY_DIRS%g
 s%@TCLDIR@%$TCLDIR%g
 s%@TKDIR@%$TKDIR%g
 s%@TCLTKLIBS@%$TCLTKLIBS%g
-s%@SYSV@%$SYSV%g
+s%@OPENGLINC@%$OPENGLINC%g
+s%@OPENGLLIB@%$OPENGLLIB%g
+s%@OPENGLULIB@%$OPENGLULIB%g
+s%@TKDIR@%$TKDIR%gs%@SYSV@%$SYSV%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 
 CEOF

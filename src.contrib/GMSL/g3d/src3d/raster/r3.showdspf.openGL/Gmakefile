@@ -1,8 +1,7 @@
 MYLIBDIR = $(SRC)/libes/dspf
 DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
 
-XINCPATH     = /usr/include
-EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCPATH) $(XCFLAGS)
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(XCFLAGS)
 SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
 OGLLIB	     = -lGLU -lGL -lGLw -lXm -lX11 -lXt -lXext
 

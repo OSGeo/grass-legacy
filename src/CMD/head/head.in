@@ -50,9 +50,11 @@ JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/inclu
 JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 
 #openGL files for NVIZ/r3.showdspf
-OGLINCPATH          = -I/usr/include -I/usr/include/GL -I/usr/include/X11/GLw -I/usr/X11R6/include/GL -I/usr/local/include/GL
-OGLLIBPATH          =
+OPENGLINC           = @OPENGLINC@
+OPENGLLIB           = @OPENGLLIB@
+OPENGLULIB          = @OPENGLULIB@
 
+#tcl/tk stuff
 TCLTKLIBS           = @TCLTKLIBS@
 
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
