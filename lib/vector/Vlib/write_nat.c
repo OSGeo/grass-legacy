@@ -21,6 +21,50 @@
 #include "gis.h"
 #include "Vect.h"
 
+void delete_area_cats_from_cidx ( struct Map_info *Map, int area ) 
+{
+    int i;
+    P_AREA *Area;
+    static struct line_cats *Cats = NULL;
+    
+    G_debug ( 3, "delete_area_cats_from_cidx() area = %d", area );
+
+    Area =  Map->plus.Area[area];
+    if ( !Area ) G_fatal_error ("BUG (delete_area_cats_from_cidx): Area %d does not exist", area );
+
+    if ( Area->centroid == 0 ) return;
+
+    if ( !Cats ) Cats = Vect_new_cats_struct ();
+
+    V2_read_line_nat ( Map, NULL, Cats, Area->centroid );
+
+    for ( i = 0 ; i < Cats->n_cats; i++ ) {
+        dig_cidx_del_cat ( &(Map->plus), Cats->field[i], Cats->cat[i], area, GV_AREA );
+    }
+}
+
+void add_area_cats_to_cidx ( struct Map_info *Map, int area ) 
+{
+    int i;
+    P_AREA *Area;
+    static struct line_cats *Cats = NULL;
+    
+    G_debug ( 3, "add_area_cats_to_cidx() area = %d", area );
+
+    Area =  Map->plus.Area[area];
+    if ( !Area ) G_fatal_error ("BUG (add_area_cats_to_cidx): Area %d does not exist", area );
+
+    if ( Area->centroid == 0 ) return;
+
+    if ( !Cats ) Cats = Vect_new_cats_struct ();
+
+    V2_read_line_nat ( Map, NULL, Cats, Area->centroid );
+
+    for ( i = 0 ; i < Cats->n_cats; i++ ) {
+        dig_cidx_add_cat_sorted ( &(Map->plus), Cats->field[i], Cats->cat[i], area, GV_AREA );
+    }
+}
+
 long V1__rewrite_line_nat ( struct Map_info *Map, long   offset, int    type,
 		       struct line_pnts *points, struct line_cats *cats);
 
@@ -53,6 +97,7 @@ V2_write_line_nat (  struct Map_info *Map,
 		     struct line_cats *cats)
 {
     int    i, s, n, line, next_line, area, node, side, first, sel_area;
+    int    new_area[2];
     long   offset;
     struct Plus_head *plus;
     BOUND_BOX box, abox;
@@ -139,6 +184,10 @@ V2_write_line_nat (  struct Map_info *Map,
 			    Vect_get_area_box ( Map, area, &box); 
 			    if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 			    else  Vect_box_extend ( &abox, &box);
+
+  			    if ( plus->update_cidx ) {
+			        delete_area_cats_from_cidx ( Map, area );
+			    }
 			    dig_del_area ( plus, area );
 			} else if ( area < 0 ) {  /* is isle */
 			    dig_del_isle ( plus, -area ); 
@@ -167,6 +216,7 @@ V2_write_line_nat (  struct Map_info *Map,
 		    if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 		    else  Vect_box_extend ( &abox, &box);
 		}
+		new_area[s-1] = area; 
 	    }
 	    /* Reattach all centroids/isles in deleted areas + new area.
 	    *  Because isles are selected by box it covers also possible new isle created above */
@@ -178,6 +228,14 @@ V2_write_line_nat (  struct Map_info *Map,
 		/* Reattach centroids */
 		if (  plus->built >= GV_BUILD_CENTROIDS )
 		    Vect_attach_centroids ( Map, &abox );
+	    }
+	    /* Add to category index */
+	    if ( plus->update_cidx ) {
+	        for (s = 1; s < 3; s++) {
+		    if ( new_area[s-1] > 0 ) {
+		        add_area_cats_to_cidx ( Map, new_area[s-1] );
+		    }
+		}
 	    }
 	}
     }
@@ -194,12 +252,20 @@ V2_write_line_nat (  struct Map_info *Map,
 		    G_debug ( 3, "  first centroid -> attach to area");
 		    Area->centroid = line;
 		    Line->left = sel_area;
+		    if ( plus->update_cidx ) {
+		        add_area_cats_to_cidx ( Map, sel_area );
+		    }
 		} else {  /* duplicate centroid */
 		    G_debug ( 3, "  duplicate centroid -> do not attach to area");
 		    Line->left = -sel_area;
 		}
 	    }
 	}
+    }
+    
+    /* Add cetegory index */  
+    for ( i = 0 ; i < cats->n_cats; i++ ) {
+        dig_cidx_add_cat_sorted ( plus, cats->field[i], cats->cat[i], line, type );
     }
 
     G_debug ( 3, "updated lines : %d , updated nodes : %d", plus->n_uplines, plus->n_upnodes );
@@ -413,6 +479,7 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   struct Plus_head *plus;
   BOUND_BOX box, abox;
   int adjacent[4], n_adjacent;
+  static struct line_cats *Cats = NULL;
   
   G_debug ( 3, "V2_delete_line_nat(), line = %d", line );
   
@@ -423,6 +490,19 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 
       if ( Line == NULL ) G_fatal_error ("Attempt to delete dead line");
       type = Line->type;
+  }
+
+  if ( !Cats ) {
+      Cats = Vect_new_cats_struct ();
+  }
+
+  /* Update category index */
+  if ( plus->update_cidx ) {
+      type = V2_read_line_nat ( Map, NULL, Cats, line );
+
+      for ( i = 0 ; i < Cats->n_cats; i++ ) {
+          dig_cidx_del_cat ( plus, Cats->field[i], Cats->cat[i], line, type );
+      }
   }
   
   /* delete the line from coor */
@@ -467,6 +547,10 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 	  Vect_get_area_box ( Map, Line->left, &box); 
 	  if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 	  else  Vect_box_extend ( &abox, &box);
+	  
+  	  if ( plus->update_cidx ) {
+	      delete_area_cats_from_cidx ( Map, Line->left );
+	  }
 	  dig_del_area ( plus, Line->left );
       } else if ( Line->left < 0 )  {  /* delete isle */
 	  dig_del_isle ( plus, -Line->left );
@@ -475,6 +559,10 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 	  Vect_get_area_box ( Map, Line->right, &box); 
 	  if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 	  else  Vect_box_extend ( &abox, &box);
+
+  	  if ( plus->update_cidx ) {
+	      delete_area_cats_from_cidx ( Map, Line->right );
+	  }
 	  dig_del_area ( plus, Line->right );
       } else if ( Line->right < 0 )  {  /* delete isle */
 	  dig_del_isle ( plus, -Line->right );
@@ -485,6 +573,9 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   if (  plus->built >= GV_BUILD_CENTROIDS && type == GV_CENTROID ) {
       if ( Line->left > 0 ) {
 	  G_debug ( 3, "Remove centroid %d from area %d", line, Line->left );
+  	  if ( plus->update_cidx ) {
+	      delete_area_cats_from_cidx ( Map, Line->left );
+	  }
           Area = Map->plus.Area[Line->left];
 	  Area->centroid = 0;
       }  
@@ -495,6 +586,10 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 
   /* Rebuild areas/isles and attach centroids and isles */
   if ( plus->built >= GV_BUILD_AREAS && type == GV_BOUNDARY ) {
+      int *new_areas, nnew_areas;
+
+      nnew_areas = 0;
+      new_areas = (int *) G_malloc ( 2 * n_adjacent * sizeof(int) );
       /* Rebuild areas/isles */
       for (i = 0; i < n_adjacent; i++) {
 	  if ( adjacent[i] > 0 ) side = GV_RIGHT;
@@ -507,6 +602,9 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 	      Vect_get_area_box ( Map, area, &box); 
 	      if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 	      else  Vect_box_extend ( &abox, &box);
+		    
+	      new_areas[nnew_areas] = area;
+	      nnew_areas++;
 	  } else if ( area < 0 ) { 
 	      /* isle -> must be attached -> add to abox */   
 	      Vect_get_isle_box ( Map, -area, &box); 
@@ -526,7 +624,11 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
 	      Vect_attach_centroids ( Map, &abox );
       }
       
-      
+      if ( plus->update_cidx ) {
+	  for (i = 0; i < nnew_areas; i++ ) {
+	    add_area_cats_to_cidx ( Map, new_areas[i] );
+	  }
+      }
   }
 
   G_debug ( 3, "updated lines : %d , updated nodes : %d", plus->n_uplines, plus->n_upnodes );

@@ -179,6 +179,7 @@ void i_var_setc ( int code, char *c )
 /* open GUI window with message */
 int i_message ( int type, int icon, char *msg ) 
 {
+    int answer;
     char *tp = "ok", *ico = "error", buf[1000];
     
     G_debug (5, "i_message()");
@@ -187,18 +188,31 @@ int i_message ( int type, int icon, char *msg )
 	case MSG_OK:
 	    tp = "ok";
 	    break;
+	case MSG_YESNO:
+	    tp = "yesno";
+	    break;
     }
     switch ( icon ) {
 	case MSGI_ERROR:
 	    ico = "error";
 	    break;
+	case MSGI_QUESTION:
+	    ico = "question";
+	    break;
     }
     
     var_setc ( VAR_MESSAGE, msg);
-    sprintf ( buf, "MessageDlg .msg -type %s -icon %s -message $GVariable(message)", tp, ico );
+    sprintf ( buf, "set GVariable(answer) [MessageDlg .msg -type %s -icon %s -message $GVariable(message)]",
+	      tp, ico );
     Tcl_Eval ( Toolbox, buf);
+    
+    sprintf ( buf, "c_var_set answer $GVariable(answer)" );
+    Tcl_Eval ( Toolbox, buf);
+    
+    answer = var_geti ( VAR_ANSWER );
+    G_debug (4, "answer = %d", answer );
 
-    return 1;
+    return answer;
 }
 
 /* add background command */

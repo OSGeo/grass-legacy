@@ -168,6 +168,8 @@ int dig_read_spidx (GVFILE *, struct Plus_head *);
 int dig_cidx_init ( struct Plus_head *);
 void dig_cidx_free ( struct Plus_head *);
 int dig_cidx_add_cat ( struct Plus_head *, int, int, int, int);
+int dig_cidx_add_cat_sorted ( struct Plus_head *, int, int, int, int);
+int dig_cidx_del_cat ( struct Plus_head *, int, int, int, int);
 void dig_cidx_sort ( struct Plus_head *);
 
 int dig_write_cidx_head ( GVFILE *, struct Plus_head *);

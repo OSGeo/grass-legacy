@@ -210,7 +210,7 @@ struct Cat_index {
     int n_cats;    /* number of items in cat array */ 
     int a_cats;    /* allocated space in cat array */
     int (*cat)[3]; /* array of cats (cat,type, lines/area) */ 
-    int n_ucats;  /* number of unique cats */
+    int n_ucats;  /* number of unique cats (not updated) */
     int n_types; /* number of types in type */
     int type[7][2]; /* number of elements for each type (point, line, boundary, centroid, area, face, kernel) */
     long offset; /* offset of the beginning of this index in cidx file */
@@ -309,6 +309,9 @@ struct Plus_head
     struct Node *Isle_spidx;
 
     /* Category index */
+    /* By default, category index is not updated */
+    int update_cidx; /* update category index if vector is modified */
+    
     int    n_cidx; /* number of cat indexes (one for each field) */
     int    a_cidx; /* allocated space for cat indexes */
     struct Cat_index *cidx; /* Array of category indexes */

@@ -251,8 +251,8 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     /* check_status ( Map ); */ /* This check would be slow ? */
     *type = *id = 0;
 
-    if ( field_index >= Map->plus.n_cidx ||  cat_index >= Map->plus.cidx[field_index].n_cats )
-	G_fatal_error("Field/cat index out of range");
+    if ( field_index >= Map->plus.n_cidx )
+	G_fatal_error("Field index out of range");
 
     if ( start_index < 0 ) start_index = 0;
     if ( start_index >= Map->plus.cidx[field_index].n_cats ) return -1; /* outside range */
@@ -260,9 +260,10 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     /* pointer to beginning of searched part of category index */
     ci = &(Map->plus.cidx[field_index]);
 
-    catp = bsearch ( &cat, ci->cat + start_index + 3 * sizeof(int), ci->n_cats - start_index, 
+    catp = bsearch ( &cat, ci->cat + start_index * 3 * sizeof(int), ci->n_cats - start_index, 
 	             3 * sizeof(int), cmp_cat);
 
+    G_debug (3, "catp = %p", catp);
     if ( !catp ) return -1;
 
     /* get index from pointer */
@@ -366,7 +367,7 @@ Vect_cidx_save ( struct Map_info *Map )
 
     /* set portable info */
     dig_init_portable ( &(plus->cidx_port), dig__byte_order_out ());
-    
+
     if ( 0 > dig_write_cidx (&fp, plus) ) {
         G_warning ("Error writing out category index file.\n");
 	return 1;

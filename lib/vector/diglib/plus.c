@@ -27,6 +27,7 @@
 int 
 dig_init_plus (struct Plus_head *Plus)
 {
+    G_debug (3, "dig_init_plus()" );
     
     Plus->Version_Major = 0 ;
     Plus->Version_Minor = 0 ;

@@ -401,7 +401,7 @@ Vect_open_update (
 	Map->plus.alloc_upnodes = 0;
 
 	/* Build spatial index from topo */
-	Vect_build_sidx_from_topo ( Map, stderr );
+	Vect_build_sidx_from_topo ( Map, NULL );
     }
 	
     return ret;

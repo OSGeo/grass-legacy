@@ -25,8 +25,10 @@ dig_write_cidx_head ( GVFILE * fp, struct Plus_head *plus)
     unsigned char buf[5];
     long length = 9;
 
+    G_debug (3, "dig_write_cidx_head()" );
+
     dig_rewind (fp);
-    dig_set_cur_port (&(plus->spidx_port));
+    dig_set_cur_port (&(plus->cidx_port));
 
     /* Head of header */
     /* bytes 1 - 5 */
@@ -34,7 +36,7 @@ dig_write_cidx_head ( GVFILE * fp, struct Plus_head *plus)
     buf[1] = GV_CIDX_VER_MINOR;
     buf[2] = GV_CIDX_EARLIEST_MAJOR;
     buf[3] = GV_CIDX_EARLIEST_MINOR;
-    buf[4] = plus->spidx_port.byte_order;
+    buf[4] = plus->cidx_port.byte_order;
     if (0 >= dig__fwrite_port_C (buf, 5, fp)) return (-1);
 
     /* bytes 6 - 9 : header size */
@@ -118,7 +120,7 @@ dig_read_cidx_head (   GVFILE * fp, struct Plus_head *plus)
           /* This version of GRASS lib is lower than the oldest which can read this format */	  
 	  G_fatal_error ( "Category index format version %d.%d is not supported by this release."
 			  " Try to rebuild topology or upgrade GRASS.", 
-			   plus->spidx_Version_Major, plus->spidx_Version_Minor);
+			   plus->cidx_Version_Major, plus->cidx_Version_Minor);
 	  return (-1);
       }
 

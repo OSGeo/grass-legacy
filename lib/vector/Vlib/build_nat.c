@@ -396,7 +396,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     BOUND_BOX box;
     struct ilist *List;
 
-    G_debug (1, "Vect_build_nat() build = %d", build);
+    G_debug (3, "Vect_build_nat() build = %d", build);
     
     plus = &(Map->plus);
     Msgout = msgout;
