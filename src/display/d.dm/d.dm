@@ -50,15 +50,21 @@ proc set_rm { } {
     set sset -1
 }
 
+proc mon_open { mon } {
+    if {[lsearch -exact [mon_get] $mon] < 0} {
+	puts stdout "Monitor $mon is not opened. I will try to open."
+	set cmd "d.mon start=$mon"
+	execute $cmd
+	return    
+    }
+}
+
 proc set_display { dtype } {
-    global set sset smon
+    global set sset smon map
     set s $sset
     if { $s < 0 } { puts stdout "Set not selected."; return }
 
-    if {[lsearch -exact [mon_get] $smon] < 0} {
-	puts stdout "Monitor $smon is not opened"
-	return    
-    }
+    mon_open $smon
 
     set cmon [eval exec d.mon -p]
     set cm ""
@@ -112,6 +118,24 @@ proc set_display { dtype } {
     execute $cmd
     set cmd "g.region region=_d.dm.current"
     execute $cmd
+
+    # display raster map legends
+    foreach mw [pack slaves $f] {
+	regexp -- {.*\.([^.]*)$} $mw p m
+	if { ($map($s,$m,_type) == "r") && ($map($s,$m,_leg_mon) != "") } {
+	    mon_open $map($s,$m,_leg_mon)	
+	    set cmd "d.mon select=$map($s,$m,_leg_mon)"
+	    execute $cmd	
+	    if { $map($s,$m,_leg_mon) != $smon } {	
+		set cmd "d.erase"
+		execute $cmd	    
+	    }
+	    set cmd "d.legend map=$map($s,$m,map) color=$map($s,$m,_leg_color) show=$map($s,$m,_leg_show)"
+	    if { $map($s,$m,_leg_lines) > 0 } { append cmd " lines=$map($s,$m,_leg_lines)" }
+	    execute $cmd	    
+    	    
+	}
+    }
     
     if { $cm != "" } {  
 	set cmd "d.mon select=$cm"
@@ -172,7 +196,7 @@ proc map_create { type } {
     global map set sset s m
     set s $sset
     if { $s < 0 } { puts stdout "Set not selected."; return }
-    if {[lsearch -exact { r l a s } $type] < 0} {
+    if {[lsearch -exact { r l a s pl} $type] < 0} {
 	puts stdout "I don't know map type '$type'."
 	return 
     }    
@@ -192,13 +216,28 @@ proc map_create { type } {
 	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
 		-helptext "raster map name\nuse right button to select from list"
 	    bind $f.$m.map <ButtonPress-3> "map_par_set r $s $m map" 
-	    checkbutton $f.$m.o -text "overlay" -variable map($s,$m,-o)		
-	    pack $f.$m.map $f.$m.o -side left   
+	    checkbutton $f.$m.o -text "overlay" -variable map($s,$m,-o)
+	    ComboBox $f.$m._leg_mon -label "legend" -underline 0 \
+		-labelwidth 0 -width 2  -textvariable map($s,$m,_leg_mon) \
+		-values {"" "x0" "x1" "x2" "x3" "x4" "x5" "x6"} \
+		-helptext "Monitor for legend"
+	    SelectColor $f.$m._leg_color -type menubutton -variable map($s,$m,_leg_color)
+	    set map($s,$m,_leg_color) gray
+	    Label $f.$m.lab1 -text "lines" 
+	    Entry $f.$m._leg_lines -width 3 -text "" -textvariable map($s,$m,_leg_lines) \
+		-helptext "Number of legend lines"
+	    ComboBox $f.$m._leg_show -label "show" -underline 0 \
+		-labelwidth 0 -width 7 -textvariable map($s,$m,_leg_show) \
+		-values {"val,cat" "val" "cat"} \
+		-helptext "Show either values or categories"
+	    set map($s,$m,_leg_show) "val,cat"			
+	    pack $f.$m.map $f.$m.o $f.$m._leg_mon $f.$m._leg_color $f.$m.lab1 $f.$m._leg_lines \
+		 $f.$m._leg_show -side left   
 	}    
 	l {
 	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
 		-helptext "vector map name\nuse right button to select from list"	    
-	    bind $f.$m.map <ButtonPress-3> "map_par_set v $s $m map" 	    
+	    bind $f.$m.map <ButtonPress-3> "map_par_set l $s $m map" 	    
 	    SelectColor $f.$m.color -type menubutton -variable map($s,$m,color)
 	    set map($s,$m,color) white
 	    pack $f.$m.map $f.$m.color -side left   
@@ -206,12 +245,14 @@ proc map_create { type } {
 	a {
 	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
 		-helptext "vector map name\nuse right button to select from list"	    
-	    bind $f.$m.map <ButtonPress-3> "map_par_set v $s $m map" 	    
+	    bind $f.$m.map <ButtonPress-3> "map_par_set a $s $m map"
+	    Label $f.$m.lab1 -text "fill color" 	    
 	    SelectColor $f.$m.fillcolor -type menubutton -variable map($s,$m,fillcolor)
 	    set map($s,$m,fillcolor) white
+	    Label $f.$m.lab2 -text "line color"	    
 	    SelectColor $f.$m.linecolor -type menubutton -variable map($s,$m,linecolor)
 	    set map($s,$m,linecolor) white	    
-	    pack $f.$m.map $f.$m.fillcolor $f.$m.linecolor -side left
+	    pack $f.$m.map $f.$m.lab1 $f.$m.fillcolor $f.$m.lab2 $f.$m.linecolor -side left
 	}	
 	s {
 	    Entry $f.$m.sitefile -width 10 -text "" -textvariable map($s,$m,sitefile) \
@@ -224,12 +265,18 @@ proc map_create { type } {
 		-range {1 100 1} -textvariable map($s,$m,size) \
 		-helptext "Size"  
 	    ComboBox $f.$m.type -label "" -underline 0 \
-		-labelwidth 0 -width 1  -textvariable map($s,$m,type) \
+		-labelwidth 0 -width 7  -textvariable map($s,$m,type) \
 		-values {"x" "diamond" "box" "+"} \
 		-helptext "Type of the icon"
 	    set map($s,$m,type) x	
 	    pack $f.$m.sitefile $f.$m.color $f.$m.size $f.$m.type -side left   
-	}	
+	}
+	pl {
+	    Entry $f.$m.file -width 10 -text "" -textvariable map($s,$m,file) \
+		-helptext "paint labels file name\nuse right button to select from list"
+	    bind $f.$m.file <ButtonPress-3> "map_par_set pl $s $m file"
+	    pack $f.$m.file -side left
+	}		
     }
     incr set($s,nmap)
     return $m
@@ -301,7 +348,7 @@ proc map_rm {  } {
 }
 
 proc map_type_get { } {
-     set list [list {r raster} {l "vector lines"} {a "vector areas"} {s sites}]
+     set list [list {r "raster"} {l "vector lines"} {a "vector areas"} {s "sites"} {pl "paint labels"}]
      return [list_select $list]
 }  
 
@@ -310,12 +357,18 @@ proc map_par_get { type } {
         r {
 	    set list [element_list cell]
         }
-        v {
+        l {
 	    set list [element_list dig]
-        }	
+        }
+        a {
+	    set list [element_list dig_plus]
+        }		
         s {
 	    set list [element_list site_lists]
         }
+        pl {
+	    set list [element_list paint/labels]
+        }	
     }  
 
     if {[llength $list] > 0} {
@@ -349,6 +402,9 @@ proc map_display { s m } {
             set cmd "d.sites sitefile=$map($s,$m,sitefile) color=$col \
     	             size=$map($s,$m,size) type=$map($s,$m,type)"
         }
+        pl {
+            set cmd "d.paint.labels file=$map($s,$m,file)"
+        }	
 	default {
 	    puts stdout "I don't know how to display map type $type."
 	    return
@@ -373,6 +429,10 @@ proc map_query { s m } {
         s {
             set cmd "d.what.sites sites=$map($s,$m,sitefile)"
         }
+	default {
+	    puts stdout "I don't know how to query map type $type."
+	    return
+	}	
     }    
     execute $cmd
 }
@@ -396,19 +456,24 @@ proc dm_save { } {
 	    set type $map($s,$m,_type)
 	    switch $type {
        		r {
-		    puts $file "_map_type=r\nmap=$map($s,$m,map)\n-o=$map($s,$m,-o)\n"
+		    puts $file "_map_type=r\nmap=$map($s,$m,map)\n-o=$map($s,$m,-o)"
+		    puts $file "_leg_mon=$map($s,$m,_leg_mon)\n_leg_color=$map($s,$m,_leg_color)"
+		    puts $file "_leg_lines=$map($s,$m,_leg_lines)\n_leg_show=$map($s,$m,_leg_show)\n"		    
     		}    
     		l {
 		    puts $file "_map_type=l\nmap=$map($s,$m,map)\ncolor=$map($s,$m,color)\n"		
     		}
     		a {
-		    puts $file "_map_type=a\nmap=$map($s,$m,map)\nfillcolor=$map($s,$m,fillcolor)\n
-			linecolor=$map($s,$m,linecolor)\n"		
+		    puts $file "_map_type=a\nmap=$map($s,$m,map)\nfillcolor=$map($s,$m,fillcolor)"
+		    puts $file "linecolor=$map($s,$m,linecolor)\n"		    
     		}		
     		s {
 		    puts $file "_map_type=s\nsitefile=$map($s,$m,sitefile)\ncolor=$map($s,$m,color)"
 		    puts $file "size=$map($s,$m,size)\ntype=$map($s,$m,type)\n"		    				
     		}
+    		pl {
+		    puts $file "_map_type=pl\nfile=$map($s,$m,file)\n"
+    		}		
 	    }    
 	}
     }
@@ -457,6 +522,10 @@ proc dm_read { } {
 	    			switch -- $d(key) {
            			    map { set map($s,$m,map) $d(val) }
            			    -o  { set map($s,$m,-o) $d(val) }
+           			    _leg_mon { set map($s,$m,_leg_mon) $d(val) }
+           			    _leg_color { set map($s,$m,_leg_color) $d(val) }
+           			    _leg_lines { set map($s,$m,_leg_lines) $d(val) }
+           			    _leg_show { set map($s,$m,_leg_show) $d(val) }
     				}
 			    }
            		    l {
@@ -479,6 +548,11 @@ proc dm_read { } {
            			    size { set map($s,$m,size) $d(val) }
            			    type { set map($s,$m,type) $d(val) }				
     				}
+			    }	
+           		    pl {
+	    			switch -- $d(key) {
+           			    file { set map($s,$m,file) $d(val) }
+    				}				
 			    }	
 			}						
 		    }
