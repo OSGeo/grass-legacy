@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+openvect	openvect.c	/^openvect (fullname, name, mapset)$/
+show_cat	show.c	/^show_cat (width, name, cat, label)$/
+show_mouse	show.c	/^show_mouse ()$/
+show_none	show.c	/^show_none ()$/
+show_utm	show.c	/^show_utm (north, east)$/
+what	what.c	/^what ()$/
