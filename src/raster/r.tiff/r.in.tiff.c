@@ -74,6 +74,9 @@ typedef int boolean;
 #define RMT_EQUAL_RGB 1
 #define RT_BYTE_ENCODED 2
 
+#ifdef __CYGWIN__
+#define uint16 unsigned short
+#endif
 #define	CVT(x)		((uint16)(((x) * 255) / ((1L<<16)-1)))
 
 boolean     Verbose;
