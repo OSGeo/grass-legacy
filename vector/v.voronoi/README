@@ -43,3 +43,10 @@ time is spend in label output... Hoping to fix this in GRASS5.1
 
 Andrea Aime
 aaime@libero.it
+
+
+UPDATE 10/2004
+- Copy grass/src/sites/s.voronoi to grass51/vector/v.voronoi
+- Rewritten to read/write directly GRASS vector files.
+
+Radim Blazek

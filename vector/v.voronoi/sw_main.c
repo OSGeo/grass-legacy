@@ -1,44 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "gis.h"
+#include "Vect.h"
 #include "sw_defs.h"
-
-int main (int argc, char **argv)
-{	
-int c;
-struct Site *(*next)();
-
-sorted = 0; triangulate = 0; plot = 0; debug = 0;
-while((c=getopt(argc,argv,"dpst")) != EOF)
-	switch(c) {
-	case 'd': debug = 1;
-		  break;
-	case 's': sorted = 1;
-		  break;
-	case 't': triangulate = 1;
-		  break;
-	case 'p': plot = 1;
-		  break;
-		  };
-
-freeinit(&sfl, sizeof *sites);
-if(sorted)
-{	scanf("%d %f %f %f %f", &nsites, &xmin, &xmax, &ymin, &ymax);
-	next = readone;
-}
-else 
-{	readsites();
-	next = nextone;
-};
-
-siteidx = 0;
-geominit();
-if(plot) plotinit();
-
-voronoi(triangulate, next); 
-
-return 0;
-}
+#include "defs.h"
 
 /* sort sites on y, then x, coord */
 int
@@ -57,13 +23,14 @@ scomp (const void *v1, const void *v2)
 struct Site *
 nextone (void)
 {
-struct Site *s;
-if(siteidx < nsites)
-{	s = &sites[siteidx];
-	siteidx += 1;
-	return(s);
-}
-else	return( (struct Site *)NULL);
+    struct Site *s;
+    if(siteidx < nsites)
+    {	s = &sites[siteidx];
+	    siteidx += 1;
+	    return(s);
+    }
+    else	
+	return( (struct Site *)NULL);
 }
 
 /* removes duplicate sites that would break the voronoi alghoritm */
@@ -91,49 +58,68 @@ void removeDuplicates()
 
 }
 
-
 /* read all sites, sort, and compute xmin, xmax, ymin, ymax */
 int
-readsites (void)
+readsites ( void )
 {
-int i;
+    int    i, type, nlines, line, size;
+    struct line_pnts *Points;
 
-nsites=0;
-sites = (struct Site *) myalloc(4000*sizeof(*sites));
-while(scanf("%lf %lf", &(sites[nsites].coord.x), &(sites[nsites].coord.y))!=EOF)
-{	sites[nsites].sitenbr = nsites;
+    Points = Vect_new_line_struct ();
+
+    nsites = 0;
+    sites = (struct Site *) myalloc(4000*sizeof(*sites));
+
+    nlines = Vect_get_num_lines ( &In );
+
+    for ( line = 1; line <= nlines; line++ ) {
+	int type;
+
+	type = Vect_read_line ( &In, Points, NULL, line );
+	if ( !(type & GV_POINTS ) ) continue;
+
+	if ( !All ) {
+	    if ( !Vect_point_in_box ( Points->x[0], Points->y[0], 0.0, &Box) ) continue;
+	}
+		
+	sites[nsites].coord.x = Points->x[0];
+	sites[nsites].coord.y = Points->y[0];
+
+	sites[nsites].sitenbr = nsites;
 	sites[nsites].refcnt = 0;
 	nsites += 1;
 	if (nsites % 4000 == 0)
-		sites = (struct Site *) realloc(sites,(nsites+4000)*sizeof(*sites));
-};
-	qsort(sites, nsites, sizeof(*sites), scomp);
-	removeDuplicates();
-	xmin=sites[0].coord.x;
-	xmax=sites[0].coord.x;
-	for(i=1; i<nsites; i+=1)
-	{
-		if(sites[i].coord.x < xmin) xmin = sites[i].coord.x;
-		if(sites[i].coord.x > xmax) xmax = sites[i].coord.x;
-	};
-ymin = sites[0].coord.y;
-ymax = sites[nsites-1].coord.y;
-return 0;
+	    sites = (struct Site *) realloc(sites,(nsites+4000)*sizeof(*sites));
+    }
+
+    qsort(sites, nsites, sizeof(*sites), scomp);
+    removeDuplicates();
+    xmin=sites[0].coord.x;
+    xmax=sites[0].coord.x;
+    for(i=1; i<nsites; i+=1)
+    {
+	    if(sites[i].coord.x < xmin) xmin = sites[i].coord.x;
+	    if(sites[i].coord.x > xmax) xmax = sites[i].coord.x;
+    }
+    ymin = sites[0].coord.y;
+    ymax = sites[nsites-1].coord.y;
+    return 0;
 }
 
 /* read one site */
 struct Site *
 readone (void)
 {
-struct Site *s;
+    struct Site *s;
 
-s = (struct Site *) getfree(&sfl);
-s -> refcnt = 0;
-s -> sitenbr = siteidx;
-siteidx += 1;
-if(scanf("%lf %lf", &(s->coord.x), &(s->coord.y)) == EOF)
-	return ((struct Site *) NULL );
-return(s);
+    s = (struct Site *) getfree(&sfl);
+    s -> refcnt = 0;
+    s -> sitenbr = siteidx;
+    siteidx += 1;
+
+    if(scanf("%lf %lf", &(s->coord.x), &(s->coord.y)) == EOF)
+        return ((struct Site *) NULL );
+
+    return(s);
 }
-
 

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <Vect.h>
-#include "vo_defs.h"
+#include "sw_defs.h"
+#include "defs.h"
+#include "write.h"
 
 /*-extend_line()  finds coordinates along the boundary of a window
  *                  that also lie on a specified line (ax+by=c). The
@@ -49,7 +51,7 @@ int extend_line (double s, double n, double w, double e,
 
     /* south */
     nx = (c - b * s) / a;
-    if(in_region(nx,s) &&
+    if(Vect_point_in_box(nx,s,0.0,&Box) &&
        ((nx >  x && knownPointAtLeft) || (nx <= x && !knownPointAtLeft)))
     {
         *c_x = nx;
@@ -59,7 +61,7 @@ int extend_line (double s, double n, double w, double e,
 
     /* north */
     nx = (c - b * n) / a;
-    if(in_region(nx,n) &&
+    if( Vect_point_in_box(nx,n,0.0,&Box) &&
        ((nx >  x && knownPointAtLeft) || (nx <= x && !knownPointAtLeft)))
     {
         *c_x = nx;
@@ -70,7 +72,7 @@ int extend_line (double s, double n, double w, double e,
     if(knownPointAtLeft) {
         /* east */
         ny = (c - a * e) / b;
-        if(in_region(e,ny))
+        if(Vect_point_in_box(e,ny,0.0,&Box))
         {
             *c_x = e;
             *c_y = ny;
@@ -79,7 +81,7 @@ int extend_line (double s, double n, double w, double e,
     } else {
         /* west */
         ny = (c - a * w) / b;
-        if(in_region(w,ny))
+        if(Vect_point_in_box(w,ny,0.0,&Box))
         {
             *c_x = w;
             *c_y = ny;

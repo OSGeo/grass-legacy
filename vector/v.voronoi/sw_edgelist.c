@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "sw_defs.h"
 
 int ntry, totalsearch;
