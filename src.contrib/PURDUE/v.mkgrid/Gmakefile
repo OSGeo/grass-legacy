@@ -1,0 +1,19 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+CFILES = \
+	main.o \
+	init_head.o \
+	write_grid.o \
+	rotate.o
+
+PROG = $(BIN_CONTRIB_CMD)/v.mkgrid 
+#PROG = v.mkgrid 
+
+all:  $(PROG)
+
+$(PROG):  $(CFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(CFILES) $(GISLIB) $(VECTLIB) $(MATHLIB)
+	strip a.out
+	mv a.out $@
+
