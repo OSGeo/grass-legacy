@@ -146,7 +146,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
   /* Determine initial information on shape */
   numparts = Area->n_isles + 1;
 
-  if( (numvertices = Vect_get_unique_area_points( Map, cindx, Points )) < 0 ) {
+  if( (numvertices = Vect_get_area_points( Map, cindx, Points )) < 0 ) {
     fprintf( lfp, "Could not build area %d\n", cindx );
     return 1;
   }
@@ -183,7 +183,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
     j = Area->isles[i];
 
-    if( (numvertices = Vect_get_unique_isle_points( Map, j, Points )) < 0 ) {
+    if( (numvertices = Vect_get_isle_points( Map, j, Points )) < 0 ) {
       sprintf( buf, "Could not extract vertices for island %d of shape %d\n",
 	       i, cindx );
       G_fatal_error(buf);
