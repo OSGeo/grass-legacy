@@ -1,0 +1,132 @@
+
+
+
+profile(1G)          GRASS Reference Manual           profile(1G)
+
+
+
+NAME
+     profile - Plot profiles of a cell-file
+     (Not available through grass3 menu)
+
+SYNOPSIS
+     profile
+
+DESCRIPTION
+     Using Profile you can view profiles of a cell-file map
+     layer. Profile is intended for use with elevation cell-
+     files.  A profile of an elevation cell-file is a plot the
+     shape of the land along a given line.
+
+
+USER PROMPTS
+     First, you will be presented with a prompt asking you to
+     choose a cell-file to be used.  Once you specify a valid
+     cell-file name, the cell-file will be plotted in the left
+     half of the graphics display, and the right half of the
+     dispay will be divided into four windows.  There will also
+     be two windows along the top of the display: a mouse-button
+     menu window on the left, and a status window on the right.
+
+     The mouse-button menu initially offers you three options:
+
+          Mouse Buttons:
+             Left:        Where am I?
+             Middle:      Mark FIRST Point of Profile Line.
+             Right:       QUIT this.
+
+     You may query the displayed cell-file by indicating points
+     with the left mouse-button.  The coordinates and category
+     value of each point that you indicate will be displayed on
+     in the status window.  If you mark the first point of the
+     profile line you will be presented with the following
+     mouse-button menu:
+
+          Mouse Buttons:
+             Left:        Where am I?
+             Middle:      Mark SECOND Point of Profile Line.
+             Right:       QUIT this.
+
+     Once you mark the second point of the profile line, the
+     profile line will be labelled (with a letter from A to D)
+     and plotted in one of the four windows on the right hand
+     side of the screen.  You will then be presented with a third
+     mouse-button menu:
+
+          Mouse Buttons:
+             Left:        DO ANOTHER
+             Middle:      CLEAR DISPLAY
+             Right:       QUIT this.
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+profile(1G)          GRASS Reference Manual           profile(1G)
+
+
+
+     If you would like to view another profile, click on the left
+     mouse-button.  If you would like to replot the cell-file and
+     clear out the four profile windows, click on the middle
+     mouse-button.  If you would like to quit, then click on the
+     right button.
+
+
+NOTES
+     Some enhancements that would be useful:
+
+     1) add an option to plot profiles using category colors,
+     like a bar-chart.
+
+     2) allow profile lines to be defined by a series of points,
+     not just two.
+
+     3) allow profiles to be saved in a file, for later viewing.
+
+     4) allow user to enter profile line points by typing
+     coordinates.
+
+
+
+AUTHORS
+     Dave Johnson
+     DBA Systems, Inc.
+     10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
