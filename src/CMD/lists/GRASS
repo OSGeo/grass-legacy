@@ -190,6 +190,7 @@ src/mapdev/v.in.dxf
 src/mapdev/v.in.dxf2
 src/mapdev/v.in.dxf3d
 src/mapdev/v.in.gshhs
+src/mapdev/v.in.mif
 src/mapdev/v.in.shape
 src/mapdev/v.in.tig.basic
 src/mapdev/v.in.tig.lndmk
