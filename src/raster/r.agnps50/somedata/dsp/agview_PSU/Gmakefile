@@ -1,0 +1,15 @@
+LIBES  = $(GISLIB) $(VASK) $(MATHLIB)
+
+
+PGM = psu_agnps_view
+LIST = \
+        psu_agnps_view.o\
+        critical_area.o\
+        show_maps.o\
+        find_old_map.o
+
+
+./$(PGM): $(LIST) $(LIBES)
+			$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
