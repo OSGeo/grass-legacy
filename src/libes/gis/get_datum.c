@@ -9,6 +9,7 @@
  ***********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
@@ -52,7 +53,7 @@ G_get_datum_parameters (double *a, double *e2, double *f,
   proj_keys = G_read_key_value_file(ipath, &in_stat); 
   if (in_stat !=0)
     {
-      sprintf (err, "Unable to open file %s in %s",PROJECTION_FILE,PERMANENT);
+      sprintf (err, _("Unable to open file %s in %s"),PROJECTION_FILE,PERMANENT);
       G_fatal_error (err);
     }
   
@@ -79,7 +80,7 @@ G_get_datum_parameters (double *a, double *e2, double *f,
   
     if (get_parms) {
       if (G_datum_shift(G_get_datum_by_name(dat), dx, dy, dz) == 0) {
-	sprintf(err, "Error reading datum shift parameters for %s from table", dat);
+	sprintf(err, _("Error reading datum shift parameters for %s from table"), dat);
 	G_fatal_error(err);
 	return -1;
       }
@@ -87,12 +88,12 @@ G_get_datum_parameters (double *a, double *e2, double *f,
       ellps = G_find_key_value("ellps",proj_keys);
       if (ellps!=NULL) {
 	if (G_get_spheroid_by_name(ellps, a, e2, f) == 0) {
-	  sprintf(err, "Error reading ellipsoid parameters for %s from table", ellps);
+	  sprintf(err, _("Error reading ellipsoid parameters for %s from table"), ellps);
 	  G_fatal_error(err);
 	  return -1;
 	}
       } else {
-	sprintf(err, "No ellipsoid field %s in file %s in %s", ellps, PROJECTION_FILE,PERMANENT);
+	sprintf(err, _("No ellipsoid field %s in file %s in %s"), ellps, PROJECTION_FILE,PERMANENT);
 	G_fatal_error (err);
 	return -1;
       }
@@ -126,7 +127,7 @@ getvalue (const char *key, double *value)
 
   if (key!=NULL) {
     if(sscanf(key,"%lf",value)!=1) {
-	sprintf (err, "invalid value: field %s in file %s in %s"
+	sprintf (err, _("invalid value: field %s in file %s in %s")
 		 ,key,PROJECTION_FILE,PERMANENT);
 	G_fatal_error (err);
     } else {

@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include  "gis.h"
+#include  "glocale.h"
 
 int G_ask_ellipse_name( char *spheriod)
 { 
@@ -29,7 +30,7 @@ int G_ask_ellipse_name( char *spheriod)
 
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-	    G_fatal_error("Cannot open temp file") ;
+	    G_fatal_error(_("Cannot open temp file")) ;
         }
         fprintf(Tmp_fd,"sphere\n");
         for (i=0; (sph = G_ellipsoid_name(i)); i++) {
@@ -40,9 +41,9 @@ int G_ask_ellipse_name( char *spheriod)
 
         for(;;) {
 	  do {
-	      fprintf(stderr,"\nPlease specify ellipsoid name\n");
-	      fprintf(stderr,"Enter 'list' for the list of available ellipsoids\n");
-	      fprintf (stderr, "Hit RETURN to cancel request\n");
+	      fprintf(stderr,_("\nPlease specify ellipsoid name\n"));
+	      fprintf(stderr,_("Enter 'list' for the list of available ellipsoids\n"));
+	      fprintf (stderr, _("Hit RETURN to cancel request\n"));
 	      fprintf(stderr,">");
           } while(!G_gets(answer));
           G_strip(answer); 
@@ -58,7 +59,7 @@ int G_ask_ellipse_name( char *spheriod)
           else {
             if (strcmp(answer,"sphere") == 0) break; 
             if (G_get_ellipsoid_by_name(answer,&aa,&e2) == 0) {
-	      fprintf(stderr,"\ninvalid ellipsoid\n");
+	      fprintf(stderr,_("\ninvalid ellipsoid\n"));
             }
             else break;
           }
