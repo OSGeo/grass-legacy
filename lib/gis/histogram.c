@@ -120,7 +120,7 @@ int G_read_histogram (
     sprintf (buf,"cell_misc/%s", name);
     if (G_find_file (buf, "histogram", mapset) == NULL)
     {
-	sprintf (buf, "Histogram for [%s in %s] missing", name, mapset);
+	sprintf (buf, "Histogram for [%s in %s] missing (run r.support)", name, mapset);
 	G_warning (buf);
 	return 0;
     }
