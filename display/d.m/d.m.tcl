@@ -2,7 +2,7 @@
 #
 # d.m.tcl
 #
-# Primary tcltk script for GIS Manager: GUI for GRASS 5.7
+# Primary tcltk script for GIS Manager: GUI for GRASS 6 
 # Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
 # and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)
 # with contributions by Glynn Clemments
@@ -27,6 +27,11 @@ set location_name [exec g.gisenv get=LOCATION_NAME]
 set mapset [exec g.gisenv get=MAPSET]
 
 set dmpath $env(GISBASE)/etc/dm/
+
+#fetch GRASS Version number:
+set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
+set GRASSVERSION [read -nonewline $fp]
+close $fp
 
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
@@ -199,6 +204,7 @@ proc Dm::create { } {
 
 proc Dm::_create_intro { } {
     global dmpath
+    global GRASSVERSION
     variable max_prgindic
 
     set top [toplevel .intro -relief raised -borderwidth 2]
@@ -209,7 +215,7 @@ proc Dm::_create_intro { } {
     set ximg  [label $top.x -image [image create photo -file "$dmpath/intro.gif"] ]
 
     set frame [frame $ximg.f -background white]
-    set lab1  [label $frame.lab1 -text "GRASS 5.7 - GIS Manager" \
+    set lab1  [label $frame.lab1 -text "GRASS $GRASSVERSION - GIS Manager" \
                      -background white -foreground black -font {times 16}]
     set lab2  [label $frame.lab2 -textvariable Dm::prgtext -background white -font {times 12} -width 35]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
@@ -837,9 +843,10 @@ proc Dm::SaveFileBox {w} {
 
 proc main {argc argv} {
     global auto_path
+    global GRASSVERSION
 
     wm withdraw .
-    wm title . [G_msg "GRASS 5.7 GIS Manager"]
+    wm title . [G_msg "GRASS $GRASSVERSION GIS Manager"]
 
     bind . <Control-Key-o> {
 	Dm::OpenFileBox {}
