@@ -1,0 +1,66 @@
+
+
+
+clump(1)             GRASS Reference Manual              clump(1)
+
+
+
+NAME
+     clump - Groups physically discrete areas into unique
+     categories
+     (Available through grass3 menu)
+
+SYNOPSIS
+     clump
+
+DESCRIPTION
+     Clump finds all areas of contiguous cells in an input and
+     assigns them unique category values. The user is prompted
+     for the input and output names.
+
+     Category distinctions in the input are preserved. This means
+     that if distinct categories are adjacent, they will NOT be
+     clumped together.  (If this is not desired, use the GRASS
+     tool reclass[1] to combine the categories into one
+     category.)
+
+ALGORITHM
+     Clump moves a 2x2 matrix over the input The lower right-hand
+     corner of the matrix is grouped with the cells above it, or
+     to the left of it.  (The cell diagonal from it is not
+     considered.)
+
+NOTES
+     Clump works properly with that contain only "fat" areas
+     (more than a single cell in width). Linear elements (lines
+     that are a single cell wide) may or may not be clumped
+     together depending on the direction of the line - horizontal
+     and vertical are contiguous, but diagonal lines are not
+     considered contiguous and are broken up into separate
+     clumps.
+
+     A random color table is generated for the output
+
+SEE ALSO
+     Gclump[2], reclass[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
