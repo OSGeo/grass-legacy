@@ -94,8 +94,12 @@ int main(int argc, char *argv[])
        
         wktstring = GPJ_grass_to_wkt(projinfo, projunits, esristyle->answer,
 				     !(dontprettify->answer));
-        fprintf(stdout, "%s\n", wktstring);       
-        G_free(wktstring);       
+        if(wktstring != NULL) {
+            fprintf(stdout, "%s\n", wktstring);       
+            G_free(wktstring);
+	}
+        else
+	    G_warning("%s: Unable to convert to WKT", G_program_name() );
     }	
 #endif   
 	   
