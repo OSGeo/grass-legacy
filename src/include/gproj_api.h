@@ -28,7 +28,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2002-04-21 14:14:40  roger
+ * Revision 1.1  2003-04-07 15:15:19  paul
+ * External PROJ.4 (libproj) support
+ *
+ * Revision 1.1  2002/04/21 14:14:40  roger
  * Initial addition.  For update to proj4.4.5
  *
  * Revision 1.5  2002/01/09 14:36:22  warmerda

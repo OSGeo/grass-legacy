@@ -9,7 +9,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "V_.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "local_proto.h"
 
 #define	B_DIR  "dig"

@@ -34,7 +34,7 @@
 #include "gis.h"
 #include "site.h"
 #include "local_proto.h"
-#include "projects.h"
+#include "gprojects.h"
 
 FILE *infile, *outfile;
 

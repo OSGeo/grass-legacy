@@ -1,4 +1,5 @@
 PGM = r.proj
+EXTRA_CFLAGS=$(PROJINC)
 
 OBJ = \
 	main.o \

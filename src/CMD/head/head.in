@@ -149,3 +149,7 @@ GDAL_CFLAGS         = @GDAL_CFLAGS@
 FTINC               = @FTINC@
 FTLIB               = @FTLIB@
 
+#External PROJ.4:
+PROJINC               = @PROJINC@
+PROJLIB               = @PROJLIB@
+GPROJLIBOBJS          = @GPROJLIBOBJS@

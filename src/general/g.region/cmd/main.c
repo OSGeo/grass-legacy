@@ -17,11 +17,11 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "gis.h"
 #include "site.h"
 #include "Vect.h"
 #include "local_proto.h"
-#include "projects.h"
 
 static int nsew(char *,char *,char *,char *);
 static void die(struct Option *);

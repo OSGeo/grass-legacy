@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "site.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "CC.h"
 #include "local_proto.h"
 

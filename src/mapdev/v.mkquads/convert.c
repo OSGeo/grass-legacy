@@ -11,7 +11,7 @@
 #include	<stdio.h>
 #include	"gis.h"
 #include	"quad_structs.h"
-#include 	"projects.h"
+#include 	"gprojects.h"
 
 #undef DEBUG
 struct pj_info info_in, info_out;

@@ -53,7 +53,7 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "projects.h"
+#include "gprojects.h"
 
 FILE *felevin,*faspin,*fslopein,*flinkein,*falbedo,*flatin;
 FILE *fincidout,*fbeam_rad,*finsol_time,*fdiff_rad,*frefl_rad;

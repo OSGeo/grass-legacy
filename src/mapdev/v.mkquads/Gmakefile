@@ -1,4 +1,5 @@
 PGM=v.mkquads
+EXTRA_CFLAGS=$(PROJINC)
 
 OFILES = \
 	mkquads_cmd.o \

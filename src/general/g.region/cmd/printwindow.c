@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
-#include "projects.h"
+#include "gprojects.h"
 
 int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 {

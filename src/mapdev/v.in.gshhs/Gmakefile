@@ -1,7 +1,7 @@
 PGM=v.in.gshhs
 HOME=$(BIN_CMD)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(PROJINC)
 
 LIST   = main.o
 

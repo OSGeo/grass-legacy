@@ -30,7 +30,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])

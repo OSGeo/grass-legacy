@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 
 /********************* PARMS FOR PROJ **********************/ 
 

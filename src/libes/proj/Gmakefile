@@ -1,6 +1,6 @@
 SLIBDEPS = $(GISLIB)
 
-EXTRA_CFLAGS = -I. $(PICFLAGS)
+EXTRA_CFLAGS = -I. $(PROJINC) $(PICFLAGS)
 
 azimuthal = \
 	PJ_aeqd.o PJ_gnom.o PJ_laea.o PJ_mod_ster.o \
@@ -51,6 +51,7 @@ LLIST = $(azimuthal) $(conic) $(cylinder) $(misc) $(pseudo) $(support)
 
 RLIB = pj_release.o
 
+PROJINT  = $(LLIST) $(RLIB)
 GRASSINT = get_proj.o do_proj.o
 
 NAD_DIR = $(GISBASE)/etc/nad
@@ -73,7 +74,7 @@ NAD_TABLES = \
 
 all: $(DEPGPROJLIB) $(NAD_TABLES)
 
-$(DEPGPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
+$(DEPGPROJLIB): $(GPROJLIBOBJS)
 	$(SLIBRULE)
 
 $(NAD2BIN): nad2bin.o

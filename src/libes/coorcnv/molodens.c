@@ -44,7 +44,7 @@
 #include "gis.h"
 #include "CC.h"
 /* for definition of PI and others: */
-#include "projects.h" 
+#define PI         3.14159265358979323846
 #include <math.h>
 /* local includes, only for this library: */
 #include "cc.h"

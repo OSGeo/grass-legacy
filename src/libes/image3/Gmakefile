@@ -6,7 +6,7 @@
 ###   extra program required compile flags
 #EXTRA_CFLAGS = -D_NO_PROTO
 
-EXTRA_CFLAGS = $(PICFLAGS)
+EXTRA_CFLAGS = $(PROJINC) $(PICFLAGS)
 
 OBJ =\
 	ask_camera.o\

@@ -176,6 +176,9 @@
  */
 #undef ANOTHER_BUTTON
 
+/* define if using external PROJ.4 */
+#undef USE_PROJ
+
 /*
  * configuration information solely dependent on the above
  * nothing below this point should need changing
