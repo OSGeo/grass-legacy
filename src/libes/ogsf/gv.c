@@ -194,6 +194,7 @@ int gv_set_defaults(geovect *gv)
     gv->fastlines = NULL;
     gv->width = 1;
     gv->color = 0xFFFFFF;
+    gv->flat_val = 0;
     
     for (i = 0; i< MAX_SURFS; i++)
     {

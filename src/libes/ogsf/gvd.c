@@ -64,7 +64,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 {
     int i,j,k;
     float bgn[3], end[3], tx, ty, tz, konst;
-    float zmin, zmax, fudge;
+    float zmin, zmax;
     Point3 *points;
     int npts, src, check; 
     geoline *gln;
@@ -79,12 +79,16 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
     src = gs_get_att_src(gs, ATT_TOPO);
     GS_get_scale(&tx, &ty, &tz, 1);
     gs_get_zrange(&zmin, &zmax);
-    fudge = (zmax - zmin)/500.;
-
-    if (src == CONST_ATT)
+    
+    if (src == CONST_ATT && gv->flat_val != 1)
     {
 	konst = gs->att[ATT_TOPO].constant;
-	bgn[Z] = end[Z] = konst;
+	bgn[Z] = end[Z] = konst + gv->z_trans;
+    }
+
+    if (gv->flat_val == 1) {
+	    /* draw flat */
+	    bgn[Z] = end[Z] = (float)gv->z_trans;
     }
 
     gsd_pushmatrix();
@@ -102,7 +106,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 	gsd_do_scale(1);
     }
 
-    gsd_translate(gs->x_trans, gs->y_trans, gs->z_trans+fudge);
+    gsd_translate(gs->x_trans, gs->y_trans, gs->z_trans);
 
     gsd_colormode(CM_COLOR);
     gsd_color_func(gv->color);
@@ -143,7 +147,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 	    end[X] = gln->p2[k+1][X] + gv->x_trans - gs->ox;
 	    end[Y] = gln->p2[k+1][Y] + gv->y_trans -  gs->oy;
 
-	    if (src == MAP_ATT)
+	    if (src == MAP_ATT && gv->flat_val == 0)
 	    {
 		points = gsdrape_get_segments(gs, bgn, end, &npts);
 		gsd_bgnline();
@@ -226,7 +230,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 	    }
 	    
 	    /* need to handle MASK! */
-	    else if (src == CONST_ATT)
+	    else if (src == CONST_ATT || gv->flat_val == 1)
 	    {
 		/* for now - but later, do seg intersect maskedge */
 		if (gs_point_is_masked(gs,bgn) || gs_point_is_masked(gs,end))

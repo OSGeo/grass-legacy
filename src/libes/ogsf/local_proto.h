@@ -220,8 +220,8 @@ int *GV_get_vect_list(int *);
 int GV_delete_vector(int);
 int GV_load_vector(int, char *);
 int GV_get_vectname(int, char *);
-int GV_set_vectmode(int, int, int, int);
-int GV_get_vectmode(int, int *, int *, int *);
+int GV_set_vectmode(int, int, int, int, int);
+int GV_get_vectmode(int, int *, int *, int *, int *);
 void GV_set_trans(int, float, float, float);
 int GV_get_trans(int, float *, float *, float *);
 int GV_select_surf(int, int);
@@ -408,7 +408,7 @@ void gsd_draw_cplane_fence(geosurf *, geosurf *, int);
 void gsd_draw_cplane(int);
 
 /* From gsd_fonts.c */
-void gs_set_font(int, int, int, double);
+GLuint gsd_set_font(const char *);
 
 /* From gsd_img.c */
 int GS_write_rgb(char *);
@@ -420,7 +420,7 @@ int GS_write_ppm(char *);
 int GS_write_tif(char *);
 
 /* From gsd_label.c */
-void gs_put_label(short, short, char *);
+void gs_put_label(char *, char *, unsigned long, int *);
 
 /* From gsd_objs.c */
 void gsd_plus(float *, int, float);

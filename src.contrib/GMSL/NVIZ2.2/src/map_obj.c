@@ -337,6 +337,8 @@ int Nnew_map_obj_cmd(Nv_data *data, Tcl_Interp *interp, int argc, char *argv[])
   char const_string[]="constant";
   char zero_string[]="0";
   int new_id;
+  int *surf_list, num_surfs, i;
+  int flat = 0;
   Nv_clientData *new_data;
   int file_used=0;
   
@@ -411,7 +413,15 @@ int Nnew_map_obj_cmd(Nv_data *data, Tcl_Interp *interp, int argc, char *argv[])
     }
 
     /* Initialize display parameters */
-    GV_set_vectmode(new_id, 1, 0xFFFFFF, 2);
+    /* automatically select all surfaces to draw vector */
+    GV_set_vectmode(new_id, 1, 0xFFFFFF, 2, 0);
+	surf_list = GS_get_surf_list(&num_surfs);
+		if (num_surfs) {
+		for(i=0; i<num_surfs; i++) {
+			GV_select_surf(new_id, surf_list[i]);
+			}
+		}
+		free(surf_list);
 
     sprintf(id, "Nvect%d", new_id);
 
@@ -1306,16 +1316,20 @@ int get_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
     break;
 
   case VECT: {
-    int mem, color, width;
+    int mem, color, width, flat;
     char temp[128];
 
-    GV_get_vectmode(id, &mem, &color, &width);
+    GV_get_vectmode(id, &mem, &color, &width, &flat);
     switch (sv_att_atoi(argv[2])) {
     case ATT_COLOR:
       Tcl_SetResult(interp, int_to_tcl_color(color), TCL_VOLATILE);
       break;
     case SV_ATT_WIDTH:
       sprintf(temp,"%d",width);
+      Tcl_SetResult(interp, temp, TCL_VOLATILE);
+      break;
+    case SV_ATT_FLAT:
+      sprintf(temp,"%d",flat);
       Tcl_SetResult(interp, temp, TCL_VOLATILE);
       break;
     case SV_ATT_MAP:
@@ -1403,7 +1417,7 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
   float temp2, size;
   float temp;
   double atof();
-  int col;
+  int col, flat;
   char	errStr[255];
 
   /* Switch based on the type of map object we are using */
@@ -1502,11 +1516,12 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
     } else {
 
       /* Get the old values of color and width and optionally change one of them */
-      GV_get_vectmode(id, &mem, &col, &width);
+      GV_get_vectmode(id, &mem, &col, &width, &flat);
       col = (strncmp (argv[2], "color", 5)) ? col : tcl_color_to_int(argv[3]);
       width = (strncmp (argv[2], "width", 5)) ? width : atoi(argv[3]);
+      flat = (strncmp (argv[2], "flat", 5)) ? flat : atoi(argv[3]);
       
-      GV_set_vectmode(id, 1, col, width);
+      GV_set_vectmode(id, 1, col, width, flat);
 
     }
     break;
@@ -1698,6 +1713,8 @@ int sv_att_atoi(char *attname)
     return (ATT_COLOR);
   else if (!strncmp (attname, "width", 5))
     return (SV_ATT_WIDTH);
+  else if (!strncmp (attname, "flat", 5))
+    return (SV_ATT_FLAT);
   else if (!strncmp (attname, "marker", 6))
     return (SV_ATT_MARKER);
   else if (!strncmp (attname, "size", 4))
