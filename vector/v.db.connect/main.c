@@ -101,15 +101,15 @@ int main (int argc, char **argv)
 
     columns = G_define_flag();
     columns->key               = 'c';
-    columns->description       = "print types/names of table columns for specified field and exit";
+    columns->description       = "print types/names of table columns for specified layer and exit";
 
     overwrite = G_define_flag();
     overwrite->key               = 'o';
-    overwrite->description       = "overwrite connection parameter for certain field";
+    overwrite->description       = "overwrite connection parameter for certain layer";
     
     delete = G_define_flag();
     delete->key               = 'd';
-    delete->description       = "Delete connection for certain field (not the table)";
+    delete->description       = "Delete connection for certain layer (not the table)";
 
     G_gisinit (argv[0]);
 
@@ -168,14 +168,14 @@ int main (int argc, char **argv)
 		driver = db_start_driver(fi->driver);
 		if (driver == NULL)
 		    G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
-		fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
+		fprintf(stderr,"layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
 	    }
           }
         } /* end print */
         else /* columns */
         {
           if ( (fi = Vect_get_dblink( &Map, field-1)) == NULL)
-               G_fatal_error("Database connection not defined for field <%d>", field);
+               G_fatal_error("Database connection not defined for layer <%d>", field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
                 G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
@@ -218,7 +218,7 @@ int main (int argc, char **argv)
 	     if ( ret == 1) {
 	       /* field already defined */
 	       if( !overwrite->answer )
-		   G_fatal_error("Use -o to overwrite existing link for field <%d>",atoi(field_opt->answer));
+		   G_fatal_error("Use -o to overwrite existing link for layer <%d>",atoi(field_opt->answer));
 	       else
 	       {
 		   if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
@@ -246,7 +246,7 @@ int main (int argc, char **argv)
 	     }
 	   }
 	   else /* incomplete parameters given */
-	      G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, field]]");
+	      G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, layer]]");
 	}
     } /* end define new dbln settings */
 

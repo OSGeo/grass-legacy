@@ -217,8 +217,8 @@ proc DmVector::options { id frm } {
 
     # field
     set row [ frame $frm.field ]
-    LabelEntry $row.a -label [G_msg "Field"] -textvariable DmVector::opt($id,field) -width 5
-    LabelEntry $row.b -label [G_msg "Label Field"] -textvariable DmVector::opt($id,lfield) -width 5
+    LabelEntry $row.a -label [G_msg "Layer"] -textvariable DmVector::opt($id,field) -width 5
+    LabelEntry $row.b -label [G_msg "Label layer"] -textvariable DmVector::opt($id,lfield) -width 5
     ComboBox $row.c -label [G_msg "Label xpos"] \
                     -width 6  -textvariable DmVector::opt($id,xref) \
                     -values {"left" "center" "right"} \
@@ -359,7 +359,7 @@ proc DmVector::display { node } {
     append cmd " icon=$opt($id,icon) size=$opt($id,size)" 
 
     if { $opt($id,field) != "" } { 
-        append cmd " field=$opt($id,field)" 
+        append cmd " layer=$opt($id,field)" 
     } 
     if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
         append cmd " {att=$opt($id,attribute)}" 
@@ -369,7 +369,7 @@ proc DmVector::display { node } {
     append cmd " xref=$opt($id,xref) yref=$opt($id,yref)"
 
     if { $opt($id,lfield) != "" } { 
-        append cmd " lfield=$opt($id,lfield)" 
+        append cmd " llayer=$opt($id,lfield)" 
     } 
     if { $opt($id,cat) != "" } { 
         append cmd " cat=$opt($id,cat)" 
@@ -414,7 +414,7 @@ proc DmVector::print { file node } {
         if { $opt($id,type_centroid) } { append str " centroid" }
         puts $file $str
 
-	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,field) != "" } { puts $file "  layer $opt($id,field)" }
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
@@ -446,7 +446,7 @@ proc DmVector::print { file node } {
         if { $opt($id,type_boundary) } { append str " boundary" }
         puts $file $str
 
-	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,field) != "" } { puts $file "  layer $opt($id,field)" }
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
@@ -462,7 +462,7 @@ proc DmVector::print { file node } {
     if { $opt($id,type_area) } {
         puts $file "vareas $opt($id,map)"
 
-	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,field) != "" } { puts $file "  layer $opt($id,field)" }
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 

@@ -109,8 +109,8 @@ main (int argc, char **argv)
 	fcolor_opt->description= "Area fill color" ;
 
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
-	lfield_opt->key        = "lfield" ;
-	lfield_opt->description= "Category field for labels" ;
+	lfield_opt->key        = "llayer" ;
+	lfield_opt->description= "Layer for labels" ;
 	
 	lcolor_opt = G_define_option() ;
 	lcolor_opt->key        = "lcolor" ;

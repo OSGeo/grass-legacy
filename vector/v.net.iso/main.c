@@ -75,14 +75,14 @@ int main(int argc, char **argv)
     type_opt->description = "Arc type";
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    afield_opt->key = "afield";
+    afield_opt->key = "alayer";
     afield_opt->answer = "1";
-    afield_opt->description = "Arc field";
+    afield_opt->description = "Arc layer";
     
     nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    nfield_opt->key = "nfield";
+    nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
-    nfield_opt->description = "Node field";
+    nfield_opt->description = "Node layer";
     
     afcol = G_define_option() ;
     afcol->key         = "afcol" ;
@@ -106,7 +106,7 @@ int main(int argc, char **argv)
     term_opt->key         = "ccats";
     term_opt->required    = YES;
     term_opt->description = "Categories of centres (points on nodes) to which net will be allocated, "
-                            "field for this categories is given by nfield option.";
+                            "layer for this categories is given by nlayer option.";
     
     cost_opt = G_define_option() ;
     cost_opt->key         = "costs" ;
@@ -194,8 +194,8 @@ int main(int argc, char **argv)
 	    }  
         }
     } 
-    fprintf ( stdout, "Number of centres: %d (nfield: %d)\n", ncentres, nfield );
-    if ( ncentres == 0 ) G_warning ("Not enough centres for selected nfield. Nothing will be allocated.");
+    fprintf ( stdout, "Number of centres: %d (nlayer: %d)\n", ncentres, nfield );
+    if ( ncentres == 0 ) G_warning ("Not enough centres for selected nlayer. Nothing will be allocated.");
     
     /* alloc and reset space for all nodes */
     Nodes = (NODE *) G_calloc ( ( nnodes + 1 ), sizeof(NODE) );

@@ -328,14 +328,14 @@ int main(int argc, char **argv)
     type_opt->description = "Arc type";
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    afield_opt->key = "afield";
+    afield_opt->key = "alayer";
     afield_opt->answer = "1";
-    afield_opt->description = "Arc field";
+    afield_opt->description = "Arc layer";
     
     tfield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    tfield_opt->key = "nfield";
+    tfield_opt->key = "nlayer";
     tfield_opt->answer = "2";
-    tfield_opt->description = "Node field (used for terminals)";
+    tfield_opt->description = "Node layer (used for terminals)";
     
     afcol = G_define_option() ;
     afcol->key         = "acol" ;
@@ -346,7 +346,7 @@ int main(int argc, char **argv)
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "tcats" ;
     term_opt->required    = YES ; 
-    term_opt->description = "Categories of points on terminals (field is specified by nfield)" ;
+    term_opt->description = "Categories of points on terminals (layer is specified by nlayer)" ;
     
     nsp_opt = G_define_option() ;
     nsp_opt->key         = "nsp" ;
@@ -537,7 +537,7 @@ int main(int argc, char **argv)
     Vect_hist_command ( &Out );
     
     fprintf (stdout, "\nSteiner tree:\n" );
-    fprintf (stdout, "Arcs' categories (field %d, %d arcs):\n", afield, StArcs->n_values );
+    fprintf (stdout, "Arcs' categories (layer %d, %d arcs):\n", afield, StArcs->n_values );
     for (i = 0; i < StArcs->n_values; i++) {
 	line = StArcs->value[i] ;
         ltype = Vect_read_line ( &Map, Points, Cats, line);
@@ -548,7 +548,7 @@ int main(int argc, char **argv)
     }
     fprintf (stdout, "\n\n" );
 
-    fprintf (stdout, "Nodes' categories (field %d, %d nodes):\n", tfield, StNodes->n_values );
+    fprintf (stdout, "Nodes' categories (layer %d, %d nodes):\n", tfield, StNodes->n_values );
     k = 0;
     for (i = 0; i < StNodes->n_values; i++) {
 	node = StNodes->value[i] ;

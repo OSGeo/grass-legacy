@@ -359,11 +359,11 @@ G_define_standard_option (int opt)
 	    Opt->description  = _("Select type: point, line, boundary, centroid or area");
 	    break;
 	case G_OPT_V_FIELD:
-	    Opt->key          = "field";
+	    Opt->key          = "layer";
 	    Opt->type         = TYPE_INTEGER;
 	    Opt->required     = NO;
 	    Opt->answer       = "1";
-	    Opt->description  = _("Field value");
+	    Opt->description  = _("Layer number");
 	    break;
 	case G_OPT_V_CAT:
 	    Opt->key          = "cat";
