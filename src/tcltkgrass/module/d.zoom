@@ -1,8 +1,10 @@
 interface_build {
     {d.zoom} 0
     {Allows the user to change the current geographic region settings interactively, with a mouse.}
-    {checkbox action {Zoom/Unzoom (default)} "" zoom}
-    {checkbox action {Rotate (for lat/lon databases only).} "" rotate}
-    {separator grey 1}
-    {checkbox -q {Run quietly.} "" -q}
+    {entry el {Name of existing raster map:} 0 raster}
+    {entry ve {Name of existing vector map:} 0 vector}
+    {entry si {Name of existing sites map:} 0 sites}
+    {checkbox -j {Just redraw given maps using default colors} "" -j}
+    {checkbox -f {Full menu (zoom + pan)} "" -f}
+    {checkbox -h {Handheld mode} "" -h}
 }
