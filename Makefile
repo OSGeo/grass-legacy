@@ -67,7 +67,7 @@ copymix:
 	GRASS_PERL=${PERL} sh ./tools/link -copy -old=$(GRASS50) -new=./ -conf=./tools/link.conf
 
 mixclean:
-	 ${SHELL} -c "find . -lname '*' -exec rm {} \; 2>/dev/null ; true"
+	 ${SHELL} -c "find . -type l -exec rm {} \; 2>/dev/null ; true"
 
 # Copy binary modules
 binmix:
