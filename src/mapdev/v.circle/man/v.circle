@@ -1,0 +1,54 @@
+.TH v.circle
+.SH NAME
+v.circle \- Create a vector file which consists of circle(s) which uses each point in a "site_lists" file as the center of those circle(s).
+.br
+(GRASS Vector Program)
+.SH SYNOPSIS
+v.circle
+.br
+v.circle help
+.br
+\fBv.circle\fR [\fB\-s\fR] \fB[radius=\fIvalue]\fR \fB[radius_uom=\fIname]\fR \fB[area=\fIvalue]\fR
+   \fB[area_uom=\fIname]\fR \fBsitefile=\fIname\fR \fBoutput=\fIname\fR
+
+.SH DESCRIPTION
+"v.circle" will create "polygon" circle(s) around points read from an existing
+"site_lists" file.  The "site_lists" point(s) will be the center(s) for those
+circle(s) with one circle created per point.  The "polygon" circle(s) will be
+written to a binary vector file.  Each "polygon" circle will have 361 points
+with each point on the circumference of the circle representing 1 degree of
+arc.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Flags
+.IP \fI-s\fR
+Automatically run "v.support" on newly created vector file.
+.LP
+Parameters
+.IP \fIradius\fR
+Radius of circle(s) with "site_lists" point(s) as center(s).  If radius selected then area values are not used for computations.  If both radius and area selected, then radius has precedence over area.
+.br
+default: 0.0
+.IP \fIradius_uom\fR
+Radius unit of measure,  ie. (m)meters,  ft(feet),  (mi)miles.
+.br
+default: m
+.IP \fIarea\fR
+Area of circle(s) with "site_lists" point(s) as center(s).  If area selected then radius values are not used for computations.
+.br
+default: 0.0
+.IP \fIarea_uom\fR
+Area unit of measure,  ie. sqm(square meters),  ac(acres),  sqmi(square miles),  hec(hectares).
+.br
+default: sqm
+.IP \fIsitefile\fR
+GRASS site_lists file (input).
+.br
+.IP \fIoutput\fR
+Vector file to be created (output).
+.br
+
+.SH AUTHOR
+Bruce Powell, National Park Service
+
