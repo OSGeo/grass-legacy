@@ -15,7 +15,7 @@ cell:rast:raster:raster files
   fcell:fcell
   g3dcell:g3dcell
 grid3:rast3d:raster3D:raster3D files
-dig:oldvect:vector:old (GRASS 5.0) binary vector files
+dig:oldvect:old vector:old (GRASS 5.0) binary vector files
   dig_att:attributes
   dig_plus:topology
   dig_cats:category
