@@ -1,4 +1,4 @@
-$Id: TODO,v 1.57 2000-11-24 18:08:09 markus Exp $
+$Id: TODO,v 1.58 2000-12-03 21:47:05 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -41,8 +41,8 @@ Font selection:
 ---------------------------------------------------------------------
 Multiple languages support:
 
-- depends on truetype support
-- learn from KDE/GNOME etc.
+- use "gettext" (.po files)
+  http://www.gnu.org/software/gettext/gettext.html
   (Being worked on by ?)
 
 ---------------------------------------------------------------------
