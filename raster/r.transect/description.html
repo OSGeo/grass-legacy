@@ -11,7 +11,7 @@ azimuth, and distance.
  single aggregate value (e.g., average or median value). -->
 <P>
 
-The <EM><B>line</B></EM> parameter is a definition of (each) transect line,
+The <B>line</B> parameter is a definition of (each) transect line,
 specified by the geographic coordinates of its starting point (<EM>easting,
 northing</EM>), the angle and direction of its travel (<EM>azimuth</EM>),
 and its distance (<EM>distance</EM>).
@@ -20,15 +20,16 @@ and its distance (<EM>distance</EM>).
 The <EM>azimuth</EM> is an angle, in degrees, measured to
 the east of north.  The <EM>distance</EM> is in map units
 (meters for a metered database, like UTM).
+<P>
+The <B>null</B> parameter can optionally be set to change the character
+string representing null values.
 
 <H2>NOTES</H2>
 
-This program is a front-end to the <EM><A
-HREF="r.profile.html">r.profile</A></EM> program.  It simply converts the
-azimuth and distance to an ending coordinate and then runs <EM><A
-HREF="r.profile.html">r.profile</A></EM>.
-
-<H2>BUGS</H2>
+This program is a front-end to the <EM>
+<A HREF="r.profile.html">r.profile</A></EM> program.  It simply converts the
+azimuth and distance to an ending coordinate and then runs <EM>
+<A HREF="r.profile.html">r.profile</A></EM>.
 
 There once were <B>width=</B> and <B>result=</B><EM>raw|median|average</EM>
  options which are not currently implemented.
