@@ -1,0 +1,3 @@
+all:
+	cp d* $(GISBASE)/scripts
+	cp m* $(GISBASE)/scripts
