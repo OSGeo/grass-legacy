@@ -6,31 +6,6 @@
 .SH SYNOPSIS
 \fBr.weight\fR
 .br
-\fBr.weight help\fR
-.br
-\fBr.weight\fR \fBoutput\*=\fIname\fR [\fBaction\*=\fIname\fR] [\fBcolor\*=\fIname\fR] [\fBtitle\*="\fIname\fR"]
-.SH "COMMAND LINE OPTIONS"
-\fBParameters:\fR
-.IP \fBoutput\*=\fIname\fR 18
-Name of the output raster map layer created.
-.IP \fBaction\*=\fIname\fR 18
-Specifies which mathematical operation (addition or multiplication)
-is to be used to calculate weights.
-.br
-Options:  add, mult
-.br
-Default:  add
-.IP \fBcolor\*=\fIname\fR 18
-Type of color table to be assigned to the \fIoutput\fR raster map layer created.
-.br
-Options:  grey, wave, ramp
-.br
-Default:  grey
-.IP \fBtitle\*="\fIname\fR" 18
-A title to be assigned to the \fIoutput\fR map layer created.
-If this title contains more than one word, it should be quoted.
-.br
-Default:  (none)
 .SH DESCRIPTION
 \fIr.weight\fR is a language driven raster map overlay program.
 It provides a means for performing geographical analyses
