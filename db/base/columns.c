@@ -48,7 +48,7 @@ main(int argc, char *argv[])
 
     ncols = db_get_table_number_of_columns(table);
     for (col = 0; col < ncols; col++)
-	fprintf (stdout,"%s\n", db_get_column_name(db_get_table_column(table, col)));
+	G_message ("%s\n", db_get_column_name(db_get_table_column(table, col)));
     exit(OK);
 }
 
@@ -87,8 +87,7 @@ parse_command_line(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
-    module->description = _(""\
-    "list all columns for a given table.");
+    module->description = _("list all columns for a given table.");
 
         
     if(G_parser(argc, argv))

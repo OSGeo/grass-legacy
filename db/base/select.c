@@ -123,10 +123,10 @@ sel (dbDriver *driver,
 	for (col = 0; col < ncols; col++)
 	{
 	    column = db_get_table_column(table, col);
-	    if (col) fprintf (stdout,_("%s"), parms.fs);
-	    fprintf (stdout,"%s", db_get_column_name (column));
+	    if (col) G_message (_("%s"), parms.fs);
+	    G_message ("%s", db_get_column_name (column));
 	}
-	fprintf (stdout,"\n");
+	G_message ("\n");
     }
 
 /* fetch the data */
@@ -143,20 +143,20 @@ sel (dbDriver *driver,
 	    value  = db_get_column_value(column);
 	    db_convert_column_value_to_string (column, &value_string);
 	    if (parms.c && !parms.h)
-		fprintf (stdout,"%s%s", db_get_column_name (column), parms.fs);
+		G_message ("%s%s", db_get_column_name (column), parms.fs);
 	    if (col && parms.h)
-		fprintf (stdout,"%s", parms.fs);
+		G_message ("%s", parms.fs);
 	    if(parms.nv && db_test_value_isnull(value))
-		fprintf (stdout,"%s", parms.nv);
+		G_message ("%s", parms.nv);
 	    else
-		fprintf (stdout,"%s", db_get_string (&value_string));
+		G_message ("%s", db_get_string (&value_string));
 	    if (!parms.h)
-		fprintf (stdout,"\n");
+		G_message ("\n");
 	}
 	if (parms.h)
-	    fprintf (stdout,"\n");
+	    G_message ("\n");
 	else if (parms.vs)
-	    fprintf (stdout,"%s\n", parms.vs);
+	    G_message ("%s\n", parms.vs);
     }
 
     return OK;
@@ -177,13 +177,13 @@ parse_command_line(int argc, char *argv[])
     table->key 	        = "table";
     table->type 	= TYPE_STRING;
     table->required 	= NO;         
-    table->description  = "Table name, select all from this table";
+    table->description  = _("Table name, select all from this table");
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
     database->required 	= NO;        
-    database->description = "database name";
+    database->description = _("database name");
     if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
@@ -192,7 +192,7 @@ parse_command_line(int argc, char *argv[])
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;          
-    driver->description = "driver name";
+    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
@@ -200,51 +200,50 @@ parse_command_line(int argc, char *argv[])
     sql->key 	        = "sql";
     sql->type 	        = TYPE_STRING;
     sql->required 	= NO;         
-    sql->description    = "SQL select statement, for example: 'select * from rybniky where kapri = 'hodne'";
+    sql->description    = _("SQL select statement, for example: 'select * from rybniky where kapri = 'hodne'");
 
     fs 			= G_define_option();
     fs->key 		= "fs";
     fs->type 		= TYPE_STRING;
     fs->required 	= NO;
-    fs->description 	= "output field separator";
+    fs->description 	= _("output field separator");
     fs->answer		= "|";
 
     vs 			= G_define_option();
     vs->key 		= "vs";
     vs->type 		= TYPE_STRING;
     vs->required 	= NO;
-    vs->description 	= "output vertical record separator";
+    vs->description 	= _("output vertical record separator");
 
     nv 			= G_define_option();
     nv->key 		= "nv";
     nv->type 		= TYPE_STRING;
     nv->required 	= NO;
-    nv->description 	= "null value indicator";
+    nv->description 	= _("null value indicator");
 
     input 		= G_define_option();
     input->key 		= "input";
     input->key_desc 	= "filename";
     input->type 	= TYPE_STRING;
     input->required 	= NO;
-    input->description 	= "filename with sql statement";
+    input->description 	= _("filename with sql statement");
     input->gisprompt    = "file,file,file";
 
     c			= G_define_flag();
     c->key		= 'c';
-    c->description	= "do not include column names in output";
+    c->description	= _("do not include column names in output");
 
     d			= G_define_flag();
     d->key		= 'd';
-    d->description	= "describe query only (don't run it)";
+    d->description	= _("describe query only (don't run it)");
 
     v			= G_define_flag();
     v->key		= 'v';
-    v->description	= "vertical output (instead of horizontal)";
+    v->description	= _("vertical output (instead of horizontal)");
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "Select data from database.";
+    module->description = _("Select data from database.");
 
 
     if(G_parser(argc, argv))
@@ -305,11 +304,11 @@ stmt_is_empty(dbString *stmt)
 void
 print_column_definition(dbColumn *column)
 {
-    fprintf (stdout,_("column%s%s\n"), parms.fs, db_get_column_name(column));
-    fprintf (stdout,_("type%s%s\n"), parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
-    fprintf (stdout,_("len%s%d\n"), parms.fs, db_get_column_length(column));
-    fprintf (stdout,_("scale%s%d\n"), parms.fs, db_get_column_scale(column));
-    fprintf (stdout,_("precision%s%d\n"), parms.fs, db_get_column_precision(column));
+    G_message (_("column%s%s\n"), parms.fs, db_get_column_name(column));
+    G_message (_("type%s%s\n"), parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
+    G_message (_("len%s%d\n"), parms.fs, db_get_column_length(column));
+    G_message (_("scale%s%d\n"), parms.fs, db_get_column_scale(column));
+    G_message (_("precision%s%d\n"), parms.fs, db_get_column_precision(column));
     if (parms.vs)
-	fprintf (stdout,"%s\n", parms.vs);
+	G_message ("%s\n", parms.vs);
 }
