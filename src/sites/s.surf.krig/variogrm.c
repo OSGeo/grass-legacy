@@ -1,20 +1,20 @@
-
 /*
  * 3rd Kriging subroutine - find semivariance from variogram model for the
  * calculated distances
- */
-/*-
-  Parameters passed:
-  model_type		variogram model needed to calculate weights(char)
-  range		model range - distance(double)
-  sill			model sill - max theoretical variance(double)
-  nugget		model nugget variance - unresolable variance
-/*
 
-/*  What this does:
-This function provides a "modelled" variogram based on the shape, range,
-sill and nugget determined from the examination of the experimental
-variogram.  Semivariance values are calculated accordingly.	*/
+  Parameters passed:
+    model_type		variogram model needed to calculate weights(char)
+    range		model range - distance(double)
+    sill		model sill - max theoretical variance(double)
+    nugget		model nugget variance - unresolable variance
+
+  What this does:
+    This function provides a "modelled" variogram based on the shape, range,
+    sill and nugget determined from the examination of the experimental
+    variogram.  Semivariance values are calculated accordingly.
+ *
+ */
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

@@ -13,7 +13,7 @@
 
 double krig_z_est (void)
 {
-  int i, col;
+  int i;
   double sum_z;
   extern int nsearch;
   extern mat_struct *x, *smpl_z;
