@@ -37,23 +37,28 @@ centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int
     static struct ilist *List;
     BOUND_BOX box;
 
+    G_debug ( 3, "centroid() cat = %d", cat );
+    
     if ( first ) {
 	Points = Vect_new_line_struct ();
 	BCats = Vect_new_cats_struct ();
 	Cats = Vect_new_cats_struct ();
 	List = Vect_new_list ();
 	first = 0;
+    } else {
+	Vect_reset_line ( Points );
+	Vect_reset_cats ( Cats );
+	Vect_reset_cats ( BCats );
+	Vect_cat_set ( Cats, field, cat );
     }
-    Vect_reset_line ( Points );
-    Vect_reset_cats ( Cats );
-    Vect_reset_cats ( BCats );
-    Vect_cat_set ( Cats, field, cat );
 
     eType = wkbFlatten(OGR_G_GetGeometryType(hGeom));
 
     if( eType == wkbPolygon ) {
         nr = OGR_G_GetGeometryCount( hGeom );
 
+        G_debug ( 3, "polygon: %d rings", nr );
+	
 	/* SFS: 1 exterior boundary and 0 or more interior boundaries.
 	*  So I hope that exterior is the first one, even if it is not explicitly told  */
 
@@ -76,6 +81,7 @@ centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int
 	/* Isles */
 	IPoints = (struct line_pnts **) G_malloc ( (nr-1) * sizeof (struct line_pnts *) );
         for( i = 1; i < nr; i++ ) {
+	    
 	    IPoints[i-1] = Vect_new_line_struct ();
             hRing = OGR_G_GetGeometryRef( hGeom, i );
             np = OGR_G_GetPointCount(hRing);
@@ -104,7 +110,7 @@ centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int
 		in = 1;
 	        for( j = 1; j < nr; j++ ) {
 		    ret = Vect_point_in_poly ( x, y, IPoints[j-1] );
-		    if ( ret == 0 ) {
+		    if ( ret == 1 ) { /* centroid in inner ring */
 			in = 0;
 			break; /* inside isle */
 		    }
@@ -150,6 +156,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
     double  x, y;
     double size;
 
+    G_debug (3, "geom() cat = %d", cat );
+    
     if ( first ) {
 	Points = Vect_new_line_struct ();
 	BCats = Vect_new_cats_struct ();
@@ -182,6 +190,9 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 
     else if( eType == wkbPolygon )
     {
+	G_debug (3, "Polygon" );
+
+	n_polygons++;
         nr = OGR_G_GetGeometryCount( hGeom );
 
 	/* SFS: 1 exterior boundary and 0 or more interior boundaries.
@@ -213,6 +224,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	/* Isles */
 	IPoints = (struct line_pnts **) G_malloc ( (nr-1) * sizeof (struct line_pnts *) );
         for( i = 1; i < nr; i++ ) {
+	    G_debug (3, "Inner ring %d", i );
+	    
 	    IPoints[i-1] = Vect_new_line_struct ();
             hRing = OGR_G_GetGeometryRef( hGeom, i );
             np = OGR_G_GetPointCount(hRing);
