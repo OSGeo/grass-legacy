@@ -7,7 +7,7 @@ MAKE                = make
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 
-GISBASE             = @prefix@
+GISBASE             = @GISBASE@
 UNIX_BIN            = @BINDIR@
 
 DEFAULT_DATABASE    =
