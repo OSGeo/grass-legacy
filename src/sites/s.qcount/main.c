@@ -180,7 +180,7 @@ int main (argc, argv)
     }
   }
   if (nsites < 0 && nsites != EOF)
-    G_fatal_error ("Error reading sites_list");
+    G_fatal_error ("Error reading site_lists");
   
   G_free_site_xyz(xyz); 
 
@@ -235,7 +235,7 @@ fprintf(stdout,"Lloyd (1967) \"mean crowding\"                     %g\n",lloyd);
 fprintf(stdout,"Lloyd (1967) Index of patchiness                 %g\n",lloydip);
 fprintf(stdout,"Morisita's (1959) I (variability b/n patches)    %g\n",morisita);
 fprintf(stdout,"-----------------------------------------------------------\n");
-fprintf(stdout,"sites_list: %s n=%d (%d quadrats of radius %g)\n",siteslist,sites_read,nquads,radius);
+fprintf(stdout,"site_lists: %s n=%d (%d quadrats of radius %g)\n",siteslist,sites_read,nquads,radius);
 }
 
   exit (0);
