@@ -33,4 +33,7 @@ $(BIN_INTER)/$(PGM): $(ARCH_INTER_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_INTER_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
 
-#etc?
+etc: $(ETC)/$(PGM) htmletc
+
+$(ETC)/$(PGM): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
+	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
