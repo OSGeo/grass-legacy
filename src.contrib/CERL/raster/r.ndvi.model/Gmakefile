@@ -1,6 +1,4 @@
-PGM = r.ndvi.model
-
-HOME = $(BIN_CONTRIB_CMD)
+PGM = $(BIN_CONTRIB_CMD)/r.ndvi.model
 
 LIST = 	main.o\
 	utils.o \
@@ -24,7 +22,7 @@ LIST = 	main.o\
 	errfun.o\
 	xformation.o
 
-./$(PGM): $(LIST) $(GISLIB)
+$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): # 
