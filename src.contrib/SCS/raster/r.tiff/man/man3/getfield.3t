@@ -1,0 +1,123 @@
+.\" $Header: /usr/people/sam/tiff/man/man3/RCS/getfield.3t,v 1.3 90/11/25 11:38:53 sam Exp $
+.\"
+.\" Copyright (c) 1990 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFGetField 3T "May 2, 1990"
+.SH NAME
+TIFFGetField \- get the value(s) of a tag in an open
+.SM TIFF
+file
+.SH SYNOPSIS
+.B "#include <tiffio.h>"
+.br
+.B "int TIFFGetField(TIFF* tif, int tag, ...)"
+.SH DESCRIPTION
+.IR TIFFGetField ()
+returns the value of a tag in the current directory associated with
+the open
+.SM TIFF
+file
+.IR tif .
+The file must have been previously opened with
+.IR TIFFOpen (3T).
+The tag is identified by
+.IR tag ,
+one of the values defined in the include file
+.B tiff.h
+(see also the table below).
+The type and number of values returned is dependent
+on the tag being requested.
+The programming interface uses a variable argument list
+as prescribed by the
+.IR varargs (3)
+interface.
+A 1 is returned if the tag is defined in the current
+directory; otherwise a 0 is returned.
+The returned values should only be interpreted if
+.IR TIFFGetField ()
+returns 1.
+.PP
+The tags understood by
+.IR libtiff ,
+the number of parameter values, and the
+types for the returned values are shown below.
+The data types are specified as in C and correspond
+to the types used to specify tag values to
+.IR TIFFSetField (3T).
+Remember that
+.IR TIFFGetField ()
+returns parameter values, so all the listed
+data types are pointers to storage where values
+should be returned.
+Consult the
+.SM TIFF
+specification for information on the meaning of each tag and their possible values.
+.PP
+.nf
+.ta \w'TIFFTAG_CONSECUTIVEBADFAXLINES'u+2n +\w'Count'u+2n +\w'u_short*'u+2n
+\fITag Name\fP	\fICount\fP	\fITypes\fP	\fINotes\fP
+.sp 5p
+TIFFTAG_ARTIST	1	char**
+TIFFTAG_BADFAXLINES	1	u_long*
+TIFFTAG_BITSPERSAMPLE	1	u_short*
+TIFFTAG_CLEANFAXDATA	1	u_short*
+TIFFTAG_COLORMAP	3	u_short**	1<<BitsPerSample arrays
+TIFFTAG_COLORRESPONSECURVE	3	u_short**	1<<BitsPerSample entry arrays
+TIFFTAG_COLORRESPONSEUNIT	1	u_short*
+TIFFTAG_COMPRESSION	1	u_short*
+TIFFTAG_CONSECUTIVEBADFAXLINES	1	u_long*
+TIFFTAG_DATETIME	1	char**
+TIFFTAG_DOCUMENTNAME	1	char**
+TIFFTAG_FILLORDER	1	u_short*
+TIFFTAG_GRAYRESPONSECURVE	1	u_short**	1<<BitsPerSample entry array
+TIFFTAG_GRAYRESPONSEUNIT	1	u_short*
+TIFFTAG_GROUP3OPTIONS	1	u_long*
+TIFFTAG_GROUP4OPTIONS	1	u_long*
+TIFFTAG_HOSTCOMPUTER	1	char**
+TIFFTAG_IMAGEDESCRIPTION	1	char**
+TIFFTAG_IMAGELENGTH	1	u_short*
+TIFFTAG_IMAGEWIDTH	1	u_short*
+TIFFTAG_MAKE	1	char**
+TIFFTAG_MATTEING	1	u_short*
+TIFFTAG_MAXSAMPLEVALUE	1	u_short*
+TIFFTAG_MINSAMPLEVALUE	1	u_short*
+TIFFTAG_MODEL	1	char**
+TIFFTAG_ORIENTATION	1	u_short*
+TIFFTAG_PAGENAME	1	char**
+TIFFTAG_PAGENUMBER	2	u_short*
+TIFFTAG_PHOTOMETRIC	1	u_short*
+TIFFTAG_PLANARCONFIG	1	u_short*
+TIFFTAG_PREDICTOR	1	u_short*
+TIFFTAG_RESOLUTIONUNIT	1	u_short*
+TIFFTAG_ROWSPERSTRIP	1	u_long*
+TIFFTAG_SAMPLESPERPIXEL	1	u_short*	value must be <= 4
+TIFFTAG_SOFTWARE	1	char**
+TIFFTAG_STRIPOFFSETS	1	u_long**
+TIFFTAG_STRIPBYTECOUNTS	1	u_long**
+TIFFTAG_SUBFILETYPE	1	u_long*
+TIFFTAG_THRESHHOLDING	1	u_short*
+TIFFTAG_XPOSITION	1	float*
+TIFFTAG_XRESOLUTION	1	float*
+TIFFTAG_YPOSITION	1	float*
+TIFFTAG_YRESOLUTION	1	float*
+.fi
+.SH DIAGNOSTICS
+All error messages are directed to the
+.IR TIFFError (3T)
+routine.
+.PP
+.BR "Unknown field, tag 0x%x" .
+An unknown tag was supplied.
+.SH "SEE ALSO"
+.IR intro (3T),
+.IR TIFFOpen (3T),
+.IR TIFFSetField (3T),
+.IR TIFFSetDirectory (3T),
+.IR TIFFReadDirectory (3T),
+.IR TIFFWriteDirectory (3T)
