@@ -1,11 +1,13 @@
-$Id: BUGS,v 1.2 2001-02-12 16:28:29 markus Exp $
+$Id: BUGS,v 1.3 2001-02-12 21:40:28 markus Exp $
 
 G3D bugs list
 
 History:
- - There has been a former grid3d library used by Helena Mitasova, Bill Brown 
+ - There has been a former grid3d library written by Roman Waupotitch,
+   with input from Mike Shapiro, Helena Mitasova, Bill Brown 
    et al. 
- - Later Mark Astley developed g3d library now widely used for g3d modules.
+ - Later Mark Astley ported grid3d to g3d library which is now widely used
+   for g3d modules.
    
 Current situation:
 
@@ -16,9 +18,11 @@ I would prefer if G3D orders the data from
  - west to east   (like 2D GRASS)
  - top to bottom
 
-Maybe this was intended by Mark Astely? I can't find anything documented
-except what's in the GRASS Programmer's manual:
-http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
+[Note from Helena Mitasova: One of the fundamental requirements was that     
+ it is consistent with GRASS2d]
+
+I can't find anything documented except what's in the GRASS Programmer's
+manual: http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
 
 Somehow the migration from grid3d to g3d got confused. Check these modules:
 
@@ -26,7 +30,7 @@ Somehow the migration from grid3d to g3d got confused. Check these modules:
  - s.vol.rst: does not use G3D to read/write data, but seems to
    read as described above (N->S, W->E, T->B)
    Looks good.
-
+   (Ported from s.surf.3d to s.vol.rst by Jaro Hofierka)
 
  - src/libes/g3d/writeascii.c (unused sample application):
    G3d_writeAscii()
