@@ -52,12 +52,12 @@ $(ARCH_BINDIR)/$(START_UP): init.sh
 $(ETC)/Init.sh: init.sh
 	rm -f $@
 	$(SHELL) -c "sed \
-	-e "s/VERSION_NUMBER/$(VERSION_NUMBER)/" \
-	-e "s/VERSION_DATE/$(VERSION_DATE)/" \
-	-e "s/VERSION_UPDATE_PKG/$(VERSION_UPDATE)/" \
+	-e \"s#VERSION_NUMBER#$(VERSION_NUMBER)#\" \
+	-e \"s#VERSION_DATE#$(VERSION_DATE)#\" \
+	-e \"s#VERSION_UPDATE_PKG#$(VERSION_UPDATE)#\" \
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	-e \"s#PERL_COMMAND#$(PERL)#\" \
-	init.sh > $@
+	init.sh > $@"
 	chmod +x $@
 
 $(ETC)/set_data: $(SET_DATA)
