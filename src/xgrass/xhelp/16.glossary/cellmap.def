@@ -7,5 +7,5 @@ file, color table files, etc.
 
 NOTE: "Cell map" was the term used to denote maps in raster format
 in previous versions of GRASS.  A "cell map" is now referred to as
-a "raster map" in GRASS 4.0 documentation.
+a "raster map" in GRASS 4.2 documentation.
 
