@@ -125,6 +125,10 @@ Libraries:
 
     -> Finished.
 
+ - data entry field for location and mapset    
+   are 14 characters long. should be more.
+  (Being worked on by ?)
+
 ---------------------------------------------------------------------
 XDriver
 - replace fifos by sockets
