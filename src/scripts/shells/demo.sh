@@ -53,7 +53,7 @@ then
 	exit 1
 fi
 
-$i
+./$i
 
 do
 echo "" > /dev/null
