@@ -134,24 +134,23 @@ int main (int argc, char **argv)
 	inlocation->required = YES;
 	inlocation->description = "location of input map";
 
-	outmap = G_define_option();
-	outmap->key = "output";
-	outmap->type = TYPE_STRING;
-	outmap->required = NO;
-	outmap->description = "output raster map";
-
 	imapset = G_define_option();
 	imapset->key = "mapset";
 	imapset->type = TYPE_STRING;
 	imapset->required = NO;
 	imapset->description = "mapset of input map";
 
-
 	indbase = G_define_option();
 	indbase->key = "dbase";
 	indbase->type = TYPE_STRING;
 	indbase->required = NO;
 	indbase->description = "path to GRASS database of input location";
+
+	outmap = G_define_option();
+	outmap->key = "output";
+	outmap->type = TYPE_STRING;
+	outmap->required = NO;
+	outmap->description = "output raster map";
 
 	interpol = G_define_option();
 	interpol->key = "method";
