@@ -1,0 +1,103 @@
+#!/bin/sh
+########### check to see if I'm running GRASS #######################
+if test ! -f $HOME/.gislock; then
+	echo you must be running GRASS to run the MAPGEN interface
+	exit
+fi
+##### setup mapgen variables   #######################################
+GRAPH=/usr/mapgen
+GRAPHB=$GRAPH/bin/plotter:$GRAPH/gfonts/:sr:
+PATH=.:$PATH:$GRAPH/bin:$GRAPH/macros
+##### END setup
+
+##### Put in the proper directory
+while test "$answ" != "n"
+do
+cd $LOCATION
+##### check for mapgen directory   #########################
+if test ! -d mapgen
+	then
+	mkdir mapgen
+	answ=n
+else
+	answ=y
+fi
+######## Check for supporting directories #####################
+if test ! -d mapgen/dig_geo
+	then
+	mkdir mapgen/dig_geo
+fi
+if test ! -d mapgen/sites_geo
+	then
+	mkdir mapgen/sites_geo
+fi
+##### END check
+if test "$answ" != "n"
+then
+tput clear
+answ=l
+while test "$answ" = "l"
+do
+echo -n 'Do you want to edit an existing map [y]es, (n)o or (l)ist? '
+read answ
+answ=${answ:-y}
+if test "$answ" = "l"
+	then
+	echo
+	ls -C mapgen | sed -e "s/dig_geo//;s/sites_geo//"
+	echo
+fi
+done
+fi
+
+if test "$answ" = "n"
+##### CREATE new map   ##########################################
+	then
+	while test "$MNAME" = ""
+	do
+	echo -n 'Enter the name of the new map: '
+	read MNAME
+	done
+	if test ! -d mapgen/$MNAME
+		then
+		mkdir mapgen/$MNAME
+	fi
+	if test ! -d mapgen/$MNAME/ovm
+		then
+		mkdir mapgen/$MNAME/ovm
+	fi
+
+##### END CREATE map
+else
+	echo -n 'Enter the name of the existing base map. '
+	read MNAME
+	if test ! -d mapgen/$MNAME -o "$MNAME" = ""
+		then
+		echo Error that map does not exist
+		exit
+	fi
+fi
+tput clear
+cd mapgen/$MNAME
+PS1="
+ Mapset <$MAPSET> in Location <$LOCATION_NAME> in MAP <$MNAME>
+<GRASS-MAPGEN> "
+export GRAPHB PATH GRAPH PS1
+export MNAME
+echo "	Welcome to the SCS-GRASS/MAPGEN Interface"
+echo "	Default options are enclosed in brackets []."
+echo "	To accept the default type the return."
+echo
+echo "  You are editing map $MNAME"
+echo "  Your current directory is `pwd`"
+echo
+echo "	When ready to quit, type exit."
+echo
+sh
+MNAME=""
+echo -n "Do you want to work on another map (y)es or [n]o: "
+read answ
+answ=${answ:-n}
+done
+##### Put in the proper directory
+cd $LOCATION
