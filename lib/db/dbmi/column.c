@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "dbmi.h"
 
 /*!
@@ -536,3 +537,60 @@ db_free_column (column)
     db_free_string (&column->columnName);
     db_free_string (&column->value.s);
 }
+
+/*!
+ \fn 
+ \brief Get column structure by table and column name.
+         Column is set to new dbColumn structure or NULL if column was not found
+ \return: DB_OK
+          DB_FAILED
+ \param 
+*/
+int
+db_get_column ( dbDriver *Driver, char *tname, char *cname, dbColumn **Column )
+{
+    int   i, ncols;
+    dbTable *Table;
+    dbColumn *Col, *NCol;
+    dbString tabname;
+
+    db_init_string(&tabname);
+    db_set_string(&tabname, tname);
+
+    if(db_describe_table (Driver, &tabname, &Table) != DB_OK) {
+	 G_warning("Cannot describe table %s", tname);
+	 return DB_FAILED;
+    }
+
+    *Column = NULL;
+
+    ncols = db_get_table_number_of_columns(Table);
+    G_debug (3, "ncol = %d", ncols );
+	     
+    for (i = 0; i < ncols; i++) {
+        Col = db_get_table_column (Table, i);
+	if ( G_strcasecmp ( db_get_column_name(Col), cname ) == 0 ) {
+	    NCol = (dbColumn *) malloc ( sizeof ( dbColumn ) );
+            db_init_column ( NCol );
+	    db_set_string ( &(NCol->columnName), db_get_column_name(Col) );
+	    db_set_string ( &(NCol->description), db_get_column_description(Col) );
+	    NCol->sqlDataType = Col->sqlDataType;
+	    NCol->hostDataType = Col->hostDataType;
+	    db_copy_value ( &(NCol->value), &(Col->value) );
+	    NCol->dataLen = Col->dataLen;
+	    NCol->precision = Col->precision;
+	    NCol->scale = Col->scale;
+	    NCol->nullAllowed = Col->nullAllowed;
+	    NCol->hasDefaultValue = Col->hasDefaultValue;
+	    NCol->useDefaultValue = Col->useDefaultValue;
+	    db_copy_value ( &(NCol->defaultValue), &(Col->defaultValue) );
+	    NCol->select = Col->select;
+	    NCol->update = Col->update;
+
+	    *Column = NCol;
+	    return DB_OK;
+	}
+    }
+    return DB_OK;
+}
+
