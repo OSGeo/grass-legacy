@@ -26,13 +26,7 @@ main (int argc, char *argv[])
     struct Map_info Map;
     int    i, build = 0, dump = 0;
     
-    map_opt = G_define_option();
-    map_opt->key = "map";
-    map_opt->type =  TYPE_STRING;
-    map_opt->required = YES;
-    map_opt->multiple = NO;
-    map_opt->gisprompt = "old,vector,vector";
-    map_opt->description  = "Name of vector";
+    map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     opt = G_define_option();
     opt->key = "option";
@@ -65,8 +59,7 @@ main (int argc, char *argv[])
 	     G_fatal_error ("Could not find input %s\n", map_opt->answer);
 	
 	Vect_set_open_level (1); 
-	if (1 > Vect_open_old (&Map, map_opt->answer, G_mapset()) )
-	     G_fatal_error ("Could not open input\n");
+	Vect_open_old (&Map, map_opt->answer, G_mapset()); 
 
 	Vect_build ( &Map, stdout );
         
@@ -75,11 +68,9 @@ main (int argc, char *argv[])
     if (dump) {
         if ( !build ) { 
 	    Vect_set_open_level (2);
-	    if ( Vect_open_old (&Map, map_opt->answer, G_mapset()) == -1 )
-	         G_fatal_error ("Could not open input on level 2.\n");
+	    Vect_open_old (&Map, map_opt->answer, G_mapset()); 
         }
 	Vect_topo_dump ( &(Map.plus), stdout );
-
     }
 
     Vect_close (&Map);

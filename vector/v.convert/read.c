@@ -17,12 +17,14 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     int               i, lalloc, line=0, type, portable=1;
     int    npoints=0, nlines=0, nbounds=0;     
     int    ndpoints=0, ndlines=0, ndbounds=0, nunknown=0;         
-    double dbuf;
     struct Line *lines;
     struct line_pnts *nline;
     struct line_cats *cat_out;
+    double dbuf;
+    int    ibuf;
+    long   lbuf;
     
-    Vect__init_head (&(In_head));
+    Vect__init_head (Mapout);
     /* set conversion matrices */
     dig_init_portable (&(In_head.port), endian);
 
@@ -36,27 +38,27 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 
     if (0 >= dig__fread_port_C ( buf, DIG4_ORGAN_LEN, Digin)) return -1;
     buf[DIG4_ORGAN_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.organization, &buf, DIG_ORGAN_LEN );
+    Vect_set_organization ( Mapout, buf );
 
     if (0 >= dig__fread_port_C ( buf, DIG4_DATE_LEN, Digin)) return -1;
-    buf[DIG4_DATE_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.date, buf, DIG_DATE_LEN );
+    buf[DIG4_DATE_LEN-1] = '\0';
+    Vect_set_date ( Mapout, buf );
     
     if (0 >= dig__fread_port_C ( buf, DIG4_YOUR_NAME_LEN, Digin)) return -1;
-    buf[DIG4_YOUR_NAME_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.your_name, &buf, DIG_YOUR_NAME_LEN );
+    buf[DIG4_YOUR_NAME_LEN-1] = '\0';
+    Vect_set_person ( Mapout, buf );
 
     if (0 >= dig__fread_port_C ( buf, DIG4_MAP_NAME_LEN, Digin)) return -1;
-    buf[DIG4_MAP_NAME_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.map_name, &buf, DIG_MAP_NAME_LEN );
+    buf[DIG4_MAP_NAME_LEN-1] = '\0';
+    Vect_set_map_name ( Mapout, buf );
 
     if (0 >= dig__fread_port_C ( buf, DIG4_SOURCE_DATE_LEN, Digin)) return -1;
-    buf[DIG4_SOURCE_DATE_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.source_date, &buf, DIG_SOURCE_DATE_LEN );
+    buf[DIG4_SOURCE_DATE_LEN-1] = '\0';
+    Vect_set_map_date ( Mapout, buf );
 
     if (0 >= dig__fread_port_C ( buf, DIG4_LINE_3_LEN, Digin)) return -1;
-    buf[DIG4_LINE_3_LEN-1] = '\0'; 
-    strncpy ( &Mapout->head.line_3, buf, DIG_LINE_3_LEN );
+    buf[DIG4_LINE_3_LEN-1] = '\0';
+    Vect_set_comment ( Mapout, buf );
 
     if (0 >= dig__fread_port_C( buf, VERS_4_DATA_SIZE, Digin)) return -1; 
 
@@ -86,13 +88,16 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
        called by dig__fread_port_*() */
     dig_set_cur_port ( &(In_head.port) );
 
-    if (0 >= dig__fread_port_L ( &Mapout->head.orig_scale, 1, Digin)) return -1;
-    if (0 >= dig__fread_port_I ( &Mapout->head.plani_zone, 1, Digin)) return -1;
+    if (0 >= dig__fread_port_L ( &lbuf, 1, Digin)) return -1;
+    Vect_set_scale ( Mapout, (int) lbuf );
+    if (0 >= dig__fread_port_I ( &ibuf, 1, Digin)) return -1;
+    Vect_set_zone ( Mapout, ibuf );
     if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1;  /* W */
     if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* E */    
     if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* S */
     if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* N */
-    if (0 >= dig__fread_port_D ( &Mapout->head.map_thresh, 1, Digin)) return -1;
+    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1;
+    Vect_set_thresh ( Mapout, dbuf );
 
     /* reading dig file body (elements) */
     nline = Vect_new_line_struct ();

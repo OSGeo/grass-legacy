@@ -31,13 +31,7 @@ main (int argc, char *argv[])
 	old->gisprompt  	= "old,dig_ascii,ascii vector";
 	old->description	= "ascii file to be converted to binary vector file";
 
-	new = G_define_option();
-	new->key		= "output";
-	new->type		=  TYPE_STRING;
-	new->required		=  YES;
-	new->multiple		=  NO;
-	new->gisprompt  	= "new,dig,vector";
-	new->description	= "name of resulting vector file";
+	new = G_define_standard_option(G_OPT_V_OUTPUT);
 
 	zcoorf = G_define_flag ();
         zcoorf->key           	= 'z';
@@ -82,17 +76,10 @@ main (int argc, char *argv[])
 	    zcoor = 1;	    
 	}
 
-	if (0 > Vect_open_new (&Map, new->answer, zcoor))
-	{
-		sprintf(errmsg, "Not able to open vector file <%s>\n", new->answer) ;
-		G_fatal_error (errmsg);
-	}
+	Vect_open_new (&Map, new->answer, zcoor);
 
 	if ( !points_format ) {
-    	    if ( dig_read_head_ascii(ascii, &d_head) < 0)
-	        G_fatal_error (" Can't read ascii file header");
-
-	    Vect_copy_head_data (&d_head, &Map.head);
+    	    read_head(ascii, &Map);
 	}
 
 	asc_to_bin(ascii, &Map, points_format) ;

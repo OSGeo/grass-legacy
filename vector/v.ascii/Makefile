@@ -8,10 +8,12 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 A_B_OFILES = \
+	$(OBJDIR)/head.o\
 	$(OBJDIR)/in.o\
 	$(OBJDIR)/a2b.o
 
 B_A_OFILES = \
+	$(OBJDIR)/head.o\
 	$(OBJDIR)/out.o\
 	$(OBJDIR)/b2a.o
 
