@@ -1,3 +1,4 @@
+extern char *malloc(), *realloc();
 
 # line 2 "gis_pars.y"
 #include "stdio.h"
@@ -39,7 +40,6 @@ extern int yyerrflag;
 #define YYMAXDEPTH 150
 #endif
 YYSTYPE yylval, yyval;
-typedef int yytabelem;
 # define YYERRCODE 256
 
 # line 239 "gis_pars.y"
@@ -50,14 +50,14 @@ yyerror(message) char *message ;
         printf ("What?  Type help for help (%s)\n", message);
 }
 /* ========================================================================= */
-yytabelem yyexca[] ={
+int yyexca[] ={
 -1, 1,
 	0, -1,
 	-2, 0,
 	};
 # define YYNPROD 68
 # define YYLAST 129
-yytabelem yyact[]={
+int yyact[]={
 
     53,    52,    54,    55,    56,    57,    58,    59,    60,    61,
     62,    51,    63,    64,    65,   108,    66,    67,    68,    15,
@@ -72,7 +72,7 @@ yytabelem yyact[]={
     88,    87,    86,    85,    84,    77,    72,    69,    50,    49,
     48,    47,    46,    71,    37,    14,    13,    12,    11,    10,
      9,     8,     7,     6,     5,     4,     3,     2,     1 };
-yytabelem yypact[]={
+int yypact[]={
 
   -237, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000,
  -1000, -1000, -1000, -1000, -1000, -1000,  -226,  -148,  -230,  -233,
@@ -87,11 +87,11 @@ yytabelem yypact[]={
  -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000,  -225, -1000,
   -210, -1000,  -212, -1000,  -192, -1000,  -218, -1000,  -220, -1000,
  -1000,  -221, -1000,  -222, -1000,  -193, -1000,  -194, -1000, -1000 };
-yytabelem yypgo[]={
+int yypgo[]={
 
      0,   128,   127,   126,   125,   124,   123,   122,   121,   120,
    119,   118,   117,   116,   115 };
-yytabelem yyr1[]={
+int yyr1[]={
 
      0,     1,     1,     1,     1,     1,     1,     1,     1,     1,
      1,     1,     1,     1,     1,     2,     2,     2,     2,     7,
@@ -100,7 +100,7 @@ yytabelem yyr1[]={
     10,    12,    12,    12,    12,    12,    12,    12,    11,    13,
     13,    13,    13,    13,    13,    13,    13,    13,    13,    13,
     13,    13,    13,    13,    13,    13,    13,    14 };
-yytabelem yyr2[]={
+int yyr2[]={
 
      0,     3,     3,     3,     3,     3,     3,     3,     3,     3,
      3,     3,     3,     3,     3,     7,     9,     9,     7,     7,
@@ -109,7 +109,7 @@ yytabelem yyr2[]={
      5,     5,     5,     5,     9,     9,     7,     7,     4,     5,
      7,     7,     7,     7,     7,     7,     7,     7,     7,     7,
      7,     7,     7,     7,     7,     7,     7,     2 };
-yytabelem yychk[]={
+int yychk[]={
 
  -1000,    -1,    -2,    -3,    -4,    -5,    -6,    -7,    -8,    -9,
    -10,   -11,   -12,   -13,   -14,   256,   258,   260,   261,   264,
@@ -124,7 +124,7 @@ yytabelem yychk[]={
    269,   269,   269,   269,   269,   269,   269,   269,   277,   269,
    276,   269,   276,   269,   277,   269,   276,   269,   276,   269,
    269,   276,   269,   276,   269,   276,   269,   276,   269,   269 };
-yytabelem yydef[]={
+int yydef[]={
 
      0,    -2,     1,     2,     3,     4,     5,     6,     7,     8,
      9,    10,    11,    12,    13,    14,     0,     0,     0,     0,
@@ -244,12 +244,8 @@ char * yyreds[] =
 	"null_expr : LINE_TKN",
 };
 #endif /* YYDEBUG */
-/* 
- *	Copyright 1987 Silicon Graphics, Inc. - All Rights Reserved
- */
-
-/* #ident	"@(#)yacc:yaccpar	1.10" */
-#ident	"$Header: /d2/3.1Esource/root/usr/src/cmd/yacc/RCS/yaccpar,v 1.4 87/11/30 17:32:21 deb Exp $"
+#line 1 "/usr/lib/yaccpar"
+/*	@(#)yaccpar 1.10 89/04/04 SMI; from S5R3 1.10	*/
 
 /*
 ** Skeleton parser driver for yacc output
@@ -259,8 +255,8 @@ char * yyreds[] =
 ** yacc user known macros and defines
 */
 #define YYERROR		goto yyerrlab
-#define YYACCEPT	return(0)
-#define YYABORT		return(1)
+#define YYACCEPT	{ free(yys); free(yyv); return(0); }
+#define YYABORT		{ free(yys); free(yyv); return(1); }
 #define YYBACKUP( newtoken, newvalue )\
 {\
 	if ( yychar >= 0 || ( yyr2[ yytmp ] >> 1 ) != 1 )\
@@ -289,21 +285,21 @@ int yydebug;			/* set to 1 to get debugging */
 #define YYFLAG		(-1000)
 
 /*
-** global variables used by the parser
+** static variables used by the parser
 */
-YYSTYPE yyv[ YYMAXDEPTH ];	/* value stack */
-int yys[ YYMAXDEPTH ];		/* state stack */
+static YYSTYPE *yyv;			/* value stack */
+static int *yys;			/* state stack */
 
-YYSTYPE *yypv;			/* top of value stack */
-int *yyps;			/* top of state stack */
+static YYSTYPE *yypv;			/* top of value stack */
+static int *yyps;			/* top of state stack */
 
-int yystate;			/* current state */
-int yytmp;			/* extra var (lasts between blocks) */
+static int yystate;			/* current state */
+static int yytmp;			/* extra var (lasts between blocks) */
 
 int yynerrs;			/* number of errors */
+
 int yyerrflag;			/* error recovery flag */
 int yychar;			/* current input token number */
-
 
 
 /*
@@ -313,10 +309,18 @@ int
 yyparse()
 {
 	register YYSTYPE *yypvt;	/* top of value stack for $vars */
+	unsigned yymaxdepth = YYMAXDEPTH;
 
 	/*
 	** Initialize externals - yyparse may be called more than once
 	*/
+	yyv = (YYSTYPE*)malloc(yymaxdepth*sizeof(YYSTYPE));
+	yys = (int*)malloc(yymaxdepth*sizeof(int));
+	if (!yyv || !yys)
+	{
+		yyerror( "out of memory" );
+		return(1);
+	}
 	yypv = &yyv[-1];
 	yyps = &yys[-1];
 	yystate = 0;
@@ -369,11 +373,11 @@ yyparse()
 		{
 			register int yy_i;
 
-			printf( "State %d, token ", yy_state );
+			(void)printf( "State %d, token ", yy_state );
 			if ( yychar == 0 )
-				printf( "end-of-file\n" );
+				(void)printf( "end-of-file\n" );
 			else if ( yychar < 0 )
-				printf( "-none-\n" );
+				(void)printf( "-none-\n" );
 			else
 			{
 				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
@@ -382,14 +386,32 @@ yyparse()
 					if ( yytoks[yy_i].t_val == yychar )
 						break;
 				}
-				printf( "%s\n", yytoks[yy_i].t_name );
+				(void)printf( "%s\n", yytoks[yy_i].t_name );
 			}
 		}
 #endif /* YYDEBUG */
-		if ( ++yy_ps >= &yys[ YYMAXDEPTH ] )	/* room on stack? */
+		if ( ++yy_ps >= &yys[ yymaxdepth ] )	/* room on stack? */
 		{
-			yyerror( "yacc stack overflow" );
-			YYABORT;
+			/*
+			** reallocate and recover.  Note that pointers
+			** have to be reset, or bad things will happen
+			*/
+			int yyps_index = (yy_ps - yys);
+			int yypv_index = (yy_pv - yyv);
+			int yypvt_index = (yypvt - yyv);
+			yymaxdepth += YYMAXDEPTH;
+			yyv = (YYSTYPE*)realloc((char*)yyv,
+				yymaxdepth * sizeof(YYSTYPE));
+			yys = (int*)realloc((char*)yys,
+				yymaxdepth * sizeof(int));
+			if (!yyv || !yys)
+			{
+				yyerror( "yacc stack overflow" );
+				return(1);
+			}
+			yy_ps = yys + yyps_index;
+			yy_pv = yyv + yypv_index;
+			yypvt = yyv + yypvt_index;
 		}
 		*yy_ps = yy_state;
 		*++yy_pv = yyval;
@@ -413,11 +435,11 @@ yyparse()
 		{
 			register int yy_i;
 
-			printf( "Received token " );
+			(void)printf( "Received token " );
 			if ( yychar == 0 )
-				printf( "end-of-file\n" );
+				(void)printf( "end-of-file\n" );
 			else if ( yychar < 0 )
-				printf( "-none-\n" );
+				(void)printf( "-none-\n" );
 			else
 			{
 				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
@@ -426,7 +448,7 @@ yyparse()
 					if ( yytoks[yy_i].t_val == yychar )
 						break;
 				}
-				printf( "%s\n", yytoks[yy_i].t_name );
+				(void)printf( "%s\n", yytoks[yy_i].t_name );
 			}
 		}
 #endif /* YYDEBUG */
@@ -455,11 +477,11 @@ yyparse()
 			{
 				register int yy_i;
 
-				printf( "Received token " );
+				(void)printf( "Received token " );
 				if ( yychar == 0 )
-					printf( "end-of-file\n" );
+					(void)printf( "end-of-file\n" );
 				else if ( yychar < 0 )
-					printf( "-none-\n" );
+					(void)printf( "-none-\n" );
 				else
 				{
 					for ( yy_i = 0;
@@ -472,7 +494,7 @@ yyparse()
 							break;
 						}
 					}
-					printf( "%s\n", yytoks[yy_i].t_name );
+					(void)printf( "%s\n", yytoks[yy_i].t_name );
 				}
 			}
 #endif /* YYDEBUG */
@@ -542,7 +564,7 @@ yyparse()
 #if YYDEBUG
 #	define _POP_ "Error recovery pops state %d, uncovers state %d\n"
 					if ( yydebug )
-						printf( _POP_, *yy_ps,
+						(void)printf( _POP_, *yy_ps,
 							yy_ps[-1] );
 #	undef _POP_
 #endif
@@ -567,11 +589,11 @@ yyparse()
 				{
 					register int yy_i;
 
-					printf( "Error recovery discards " );
+					(void)printf( "Error recovery discards " );
 					if ( yychar == 0 )
-						printf( "token end-of-file\n" );
+						(void)printf( "token end-of-file\n" );
 					else if ( yychar < 0 )
-						printf( "token -none-\n" );
+						(void)printf( "token -none-\n" );
 					else
 					{
 						for ( yy_i = 0;
@@ -584,7 +606,7 @@ yyparse()
 								break;
 							}
 						}
-						printf( "token %s\n",
+						(void)printf( "token %s\n",
 							yytoks[yy_i].t_name );
 					}
 				}
@@ -606,7 +628,7 @@ yyparse()
 		** to be done.
 		*/
 		if ( yydebug )
-			printf( "Reduce by (%d) \"%s\"\n",
+			(void)printf( "Reduce by (%d) \"%s\"\n",
 				yy_n, yyreds[ yy_n ] );
 #endif
 		yytmp = yy_n;			/* value to switch over */
