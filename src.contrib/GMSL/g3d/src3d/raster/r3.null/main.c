@@ -16,12 +16,12 @@ setParams ()
 
 {
   params.map = G_define_option();
-  params.map->key = "map";
+  params.map->key = "grid3";
   params.map->type = TYPE_STRING ;
   params.map->required = YES ;
   params.map->multiple = NO ;
   params.map->gisprompt = "old,grid3,3d-raster";
-  params.map->description = "G3d raster map for which to modify null values";
+  params.map->description = "3dcell map for which to modify null values";
 
   params.setNull = G_define_option();
   params.setNull->key = "setnull";
