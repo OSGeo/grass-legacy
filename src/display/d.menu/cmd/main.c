@@ -36,18 +36,18 @@ char **argv ;
 	char *cmd_ptr ;
 	char *tmp ;
 	char *options[128] ;
+	char *D_color_list();
 	int i ;
 	int len ;
 	char *malloc() ;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
-	char *colorlist="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->answer     = "black" ;
 	opt1->required   = NO ;
-	opt1->options    = colorlist;
+	opt1->options    = D_color_list();
 	opt1->description= "Sets the color of the menu background" ;
 
 	opt2 = G_define_option() ;
@@ -55,7 +55,7 @@ char **argv ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
 	opt2->required   = NO ;
-	opt2->options    = colorlist;
+	opt2->options    = D_color_list();
 	opt2->description= "Sets the color of the menu text" ;
 
 	opt3 = G_define_option() ;
@@ -63,7 +63,7 @@ char **argv ;
 	opt3->type       = TYPE_STRING ;
 	opt3->answer     = "white" ;
 	opt3->required   = NO ;
-	opt3->options    = colorlist;
+	opt3->options    = D_color_list();
 	opt3->description= "Sets the color dividing lines of text" ;
 
 	opt4 = G_define_option() ;
