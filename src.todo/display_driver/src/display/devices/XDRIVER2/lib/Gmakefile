@@ -24,7 +24,7 @@ OBJ =\
 all: $(DEPDRIVERLIB)
 
 $(DEPDRIVERLIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 Color.o: colors.h
 Get_t_box.o: driver.h

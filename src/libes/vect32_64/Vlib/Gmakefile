@@ -39,7 +39,7 @@ CFILES =
 all:  $(DEPVECTLIB_REAL)
 
 $(DEPVECTLIB_REAL): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 
 iprint:

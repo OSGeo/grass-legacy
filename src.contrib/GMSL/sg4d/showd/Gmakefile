@@ -13,7 +13,7 @@ OBJ	=	\
 all: libvol.a
 
 libvol.a: $(OBJ) 
-	$(AR)
+	$(LIBRULE)
 
 
 #cap_data.o: $(MYLIBDIR)/viz.h

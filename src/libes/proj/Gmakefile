@@ -1,4 +1,4 @@
-EXTRA_CFLAGS = -I.
+EXTRA_CFLAGS = -I. $(PICFLAGS)
 
 azimuthal = \
 	PJ_aeqd.o PJ_gnom.o PJ_laea.o PJ_mod_ster.o \
@@ -50,4 +50,4 @@ RLIB = pj_release.o
 GRASSINT = get_proj.o do_proj.o
 
 $(DEPGPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
-	$(AR)
+	$(SLIBRULE)

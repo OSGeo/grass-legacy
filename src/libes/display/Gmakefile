@@ -1,3 +1,7 @@
+SLIBDEPS = $(GISLIB) $(RASTERLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ =\
 	get_win.o\
 	color_list.o\
@@ -21,7 +25,7 @@ OBJ =\
 all: $(DEPDISPLAYLIB)
 
 $(DEPDISPLAYLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 #$(LIBDIR)/colors.h: colors.h
 #	rm -f $@

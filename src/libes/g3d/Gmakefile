@@ -1,4 +1,7 @@
-EXTRA_CFLAGS=$(GETHOSTNAME) 
+SLIBDEPS = $(GISLIB)
+
+EXTRA_CFLAGS=$(GETHOSTNAME) $(PICFLAGS)
+
 OBJ = \
 cache.o \
 cachehash.o \
@@ -50,7 +53,7 @@ writeascii.o
  all: $(DEPG3DLIB)
 
 $(DEPG3DLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 rle.o: rle.c

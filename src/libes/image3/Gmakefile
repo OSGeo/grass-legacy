@@ -51,7 +51,7 @@ OBJ =\
 all: $(IMAGERYLIB_SUP) 
 
 $(IMAGERYLIB_SUP): ${OBJ}
-	${AR}
+	$(LIBRULE)
 
 $(OBJ): ortho_image.h matrix_ops.h
 

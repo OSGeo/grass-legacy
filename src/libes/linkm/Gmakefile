@@ -1,3 +1,4 @@
+EXTRA_CFLAGS = $(PICFLAGS)
 
 OBJ = \
 	init.o\
@@ -10,7 +11,7 @@ OBJ = \
 all: $(DEPLINKMLIB)
 
 $(DEPLINKMLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 #$(LIBDIR)/linkm.h: linkm.h
 #	rm -f $@

@@ -1,3 +1,7 @@
+SLIBDEPS = $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = \
     geocen1.o\
     geocen2.o\
@@ -12,4 +16,4 @@ OBJ = \
 all: $(DEPCOORCNVLIB)
 
 $(DEPCOORCNVLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)

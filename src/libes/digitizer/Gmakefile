@@ -2,4 +2,4 @@ OBJ = \
 	graph_input.o
 
 $(DIGITLIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)

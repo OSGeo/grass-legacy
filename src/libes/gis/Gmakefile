@@ -1,4 +1,9 @@
-EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH)
+#libgis
+SLIBDEPS = $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+#libedit
+#SLIBDEPS = $(GISLIB) $(VASKLIB)
+
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS)
 
 OBJ = \
     adj_cellhd.o\
@@ -202,10 +207,10 @@ all: \
 	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
 $(DEPGISLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 $(DEPEDITLIB): $(EOBJ)
-	$(AR)
+	$(SLIBRULE)
 
 $(ETC)/ellipse.table: ellipse.table
 	rm -f $@

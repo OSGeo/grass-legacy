@@ -40,7 +40,7 @@ all: $(IMAGERYLIB2)
 $(OBJ): orthophoto.h
 
 $(IMAGERYLIB2): ${OBJ}
-	${AR}
+	$(LIBRULE)
 
 orthoref.o: mat.h
 orthoref.o: matrixdefs.h

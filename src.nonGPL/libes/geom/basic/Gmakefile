@@ -1,5 +1,7 @@
 ###########################################################
 
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = basic.o malloc.o files.o \
          getarg.o cb.o cb_doprnt.o \
          isort.o qsort.o istaque.o \
@@ -9,7 +11,7 @@ OBJ = basic.o malloc.o files.o \
 
 
 $(DEPBASICLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 

@@ -1,10 +1,12 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ=setup.o get.o forget.o release.o fileno.o put.o
 
 #all: $(DEPROWIOLIB) $(LIBDIR)/rowio.h
 all: $(DEPROWIOLIB)
 
 $(DEPROWIOLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 #$(LIBDIR)/rowio.h: rowio.h
 #	rm -f $@ ; cp $? $@; chmod +r $@

@@ -11,7 +11,7 @@ OBJ =\
 	show_elem.o sighold.o 
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): ../list.h
 

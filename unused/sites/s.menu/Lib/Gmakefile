@@ -36,7 +36,7 @@ OBJ = \
 	yes.o
 
 $(LIB):	$(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 copy_sites.o:	$I/site.h
 count_site.o:	$I/site.h

@@ -107,7 +107,7 @@ OBJ = \
 	xdr.o
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): $(INCLUDE_DIR)/dbmi.h $(INCLUDE_DIR)/proto_dbmi.h xdr.h macros.h
 

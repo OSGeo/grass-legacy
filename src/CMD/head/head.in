@@ -32,6 +32,8 @@ LEX                 = @LEX@
 YACC                = @YACC@
 PERL                = @PERL@
 MAKE                = make
+AR                  = @AR@
+RANLIB              = @RANLIB@
 
 ARCH                = @ARCH@
 prefix              = @prefix@
@@ -47,6 +49,7 @@ VERSION_DATE        = @VERSION_DATE@
 VERSION_UPDATE_PKG  = @VERSION_UPDATE_PKG@
 VERSION_FILE        = @VERSION_FILE@
 NAME_VER            = @NAME_VER@
+LIB_VER             = @LIB_VER@
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
@@ -138,4 +141,3 @@ GDAL_CFLAGS         = @GDAL_CFLAGS@
 FTINC               = @FTINC@
 FTLIB               = @FTLIB@
 
-LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
