@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 
 static char title[80];
@@ -20,7 +19,7 @@ ask_files (me) char *me;
     int n;
     int any;
 
-    I_location_info (title, "MAXIMUM LIKELYHOOD");
+    I_location_info (title, "MAXIMUM LIKELIHOOD");
     hitreturn = 0;
     I_init_group_ref (&Ref);
     while(1)
@@ -45,9 +44,9 @@ ask_files (me) char *me;
 	    if (G_find_cell (name, mapset) == NULL)
 	    {
 		if (!any)
-		    printf ("\7\n** The following cell files in subgroup [%s] do not exist\n", subgroup);
+		    printf ("\7\n** The following raster files in subgroup [%s] do not exist\n", subgroup);
 		any = 1;
-		printf ("      %s in %s\n", name, mapset);
+		printf ("      %s@%s\n", name, mapset);
 	    }
 	}
 	if (any)
