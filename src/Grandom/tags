@@ -1,0 +1,7 @@
+Mmain	main.c	/^main (argc, argv) char *argv[];$/
+abs	creat_rand.c	/^abs(n)$/
+cmp	creat_rand.c	/^cmp(n1,n2)		\/* functon to compare two integers *\/$/
+contrast	main.c	/^contrast (color)$/
+create_rand	creat_rand.c	/^create_rand(base, targets, count)$/
+make_rand	creat_rand.c	/^make_rand()$/
+usage	main.c	/^usage (msg1, msg2)$/
