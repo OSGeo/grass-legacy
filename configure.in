@@ -248,7 +248,7 @@ AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
 AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
 tcltk_ver=
 if test "$HAVE_TK_H"; then
-    tcltk_ver=$(grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
+    tcltk_ver=`grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
 fi
 
 AC_ARG_WITH(tcltk-includes,
