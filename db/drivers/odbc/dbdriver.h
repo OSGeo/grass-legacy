@@ -4,6 +4,7 @@
 
 #include "dbstubs.h"
 
+int db__driver_create_table();
 int db__driver_close_cursor();
 int db__driver_open_database();
 int db__driver_close_database();
@@ -18,6 +19,7 @@ int db__driver_list_tables();
 int db__driver_open_select_cursor();
 int db__driver_drop_table();
 #define	init_dbdriver() do{\
+db_driver_create_table = db__driver_create_table;\
 db_driver_close_cursor = db__driver_close_cursor;\
 db_driver_open_database = db__driver_open_database;\
 db_driver_close_database = db__driver_close_database;\
