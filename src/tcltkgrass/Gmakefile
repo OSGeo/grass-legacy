@@ -9,9 +9,7 @@ all:
 	if [ ! -d $(GISBASE)/tcltkgrass ]; then mkdir $(GISBASE)/tcltkgrass; fi
 	rm -f $(GISBASE)/bin/tcltkgrass
 	tar cf - docs/Pro* docs/HIS* main/* module/* script/* | (cd $(GISBASE)/tcltkgrass; tar xf -)
-	cp main/tcltkgrass.start $(GISBASE)/etc/
 	cp main/gis_set.tcl $(GISBASE)/tcltkgrass/script
 	cp tcltkgrass $(GISBASE)/bin/tcltkgrass
 	chmod ugo+x $(GISBASE)/bin/tcltkgrass
-	chmod ugo+x $(GISBASE)/etc/tcltkgrass.start
 	chmod -R u+w $(GISBASE)/tcltkgrass
