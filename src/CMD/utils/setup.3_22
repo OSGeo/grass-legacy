@@ -955,7 +955,7 @@ echo "Installing $GMAKE"
 
 rm -f $GMAKE
 (
-echo '#!/bin/sh'
+echo ':'
 echo SRC=$SRC
 echo CMD=$CMD
 echo HEADER=$HEADER
@@ -966,7 +966,7 @@ chmod +x $GMAKE
 echo ""
 echo "Creating GISGEN"
 (
-echo '#!/bin/sh'
+echo ':'
 echo "GMAKE=$gmake"
 echo ". generic/GISGEN.sh"
 ) > $CMD/GISGEN
