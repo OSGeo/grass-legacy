@@ -47,7 +47,7 @@ int main( int argc, char *argv[] ) {
   struct GModule *module;
   struct Option *out, *set, *altname, *logfile, *shapetype, *category;
   struct Option *table, *key;
-  struct Flag *chatflag;
+  struct Flag *chatflag, *Linetype, *Areatype;
   struct Map_info vmap;
   struct Categories *Cat1;
   fieldDescriptor *fd[3];
@@ -57,7 +57,7 @@ int main( int argc, char *argv[] ) {
   char errbuf[512];
   int docats, cat_type = 0;
   int dotable = 0;
-  int shptype;
+  int shptype,linetype;
   int rec_size = 1000, rec_incr = 500;
 
   /* Data processing structures */
@@ -108,7 +108,7 @@ int main( int argc, char *argv[] ) {
   category->type = TYPE_STRING;
   category->required = NO;
   category->description = "Type of field for category (none[default],string,integer,float)";
-  category->options = "none,string,integer,float";
+  category->options = "none, string, integer, float";
   category->answer = "none";
 
   altname = G_define_option();
@@ -144,6 +144,14 @@ int main( int argc, char *argv[] ) {
   chatflag = G_define_flag();
   chatflag->key = 'v';
   chatflag->description = "Verbose output";
+
+  Linetype = G_define_flag();
+  Linetype->key = 'l';
+  Linetype->description = "Restrict lines to arcs of type line";
+
+  Areatype = G_define_flag();
+  Areatype->key = 'a';
+  Areatype->description = "Restrict lines to arcs of type area edge";
 
   /* Parse and process options */
   if( G_parser( argc, argv ) )
@@ -198,6 +206,13 @@ int main( int argc, char *argv[] ) {
     cat_type = FLT_CAT;
   }
   else docats = 0;
+
+  linetype=3;
+  if(shptype == LINE)
+  {
+	if(Linetype->answer)linetype=LINE;
+	if(Areatype->answer)linetype=AREA;
+  }
 
   if( strcmp( table->answer, "" ) != 0 ) dotable = 1;
 
@@ -297,7 +312,7 @@ int main( int argc, char *argv[] ) {
 	lcl_size += lcl_incr;
 	line_chklist = (int *)realloc( line_chklist, lcl_size * sizeof(int) );
       }
-      found = extract_lines( &hShape, &vmap, line_chklist, &nL , where++ );      
+      found = extract_lines( &hShape, &vmap, line_chklist, &nL , where++ ,linetype );      
       
       /* go to next line if line is not LINE */
       if (found == -1) { found = 1; continue; }
