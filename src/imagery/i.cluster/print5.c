@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 print_separability(fd,C)
     FILE *fd;
