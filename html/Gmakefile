@@ -3,7 +3,8 @@ all:
 	(tar -cf - * | (cd $(GISBASE)/html; tar -xf - 2>/dev/null ); true )
 
 #html2man:
-	html/convert_to_man.sh $(SRC)
+	html/convert_to_man.sh $(SRC) $(GISBASE)
+	sh ../man/utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/.. $(MAKE)
 
 #Postscript-docs:
 #http://www.tdb.uu.se/~jan/html2ps.html
