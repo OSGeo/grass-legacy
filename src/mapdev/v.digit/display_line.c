@@ -97,7 +97,7 @@ _display_line (int type, struct line_pnts *points, int line, struct Map_info *ma
     if (line && map != NULL){
 	if (Disp_llines && map->Line[line].att && map->Att[map->Line[line].att].cat)
 	    line_color = CLR_LLINE;
-	if (Disp_ulines && !map->Line[line].att && !map->Att[map->Line[line].att].cat)
+	if (type == LINE && Disp_ulines && !map->Line[line].att && !map->Att[map->Line[line].att].cat)
 	    line_color = CLR_LINE;
     }
 
