@@ -27,7 +27,6 @@ dlg_write_header (fd,dlg)
 {
 	char buffer[81] ;
 	int i ;
-	int j ;
 
 	dlg->head.nlines = 0 ;
 
