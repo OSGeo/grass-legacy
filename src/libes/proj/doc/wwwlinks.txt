@@ -1,3 +1,13 @@
+The files
+ OF90-284.pdf
+ PROJ.4.3.I2.pdf
+ PROJ.4.3.pdf
+ SWISS.pdf
+
+are available from
+http://www.remotesensing.org/proj/
+
+#####################
 Map Projection Overview
 
 http://www.utexas.edu/depts/grg/gcraft/notes/mapproj/mapproj.html
