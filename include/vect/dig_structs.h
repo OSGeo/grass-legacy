@@ -260,26 +260,38 @@ struct line_pnts
     int alloc_points;
   };
 
-typedef char GRASS_V_NCATS;	/* number of vector categories on one element */
-typedef short GRASS_V_FIELD;	/* field number i.e. identifier for
-				   one category */
-typedef int GRASS_V_CAT;	/* vector category */
+typedef char GV_NCATS;	      /* number of vector categories on one element */
+  typedef char GRASS_V_NCATS; /* deprecated */
+typedef int GV_FIELD;	      /* field number i.e. identifier for
+			         one category */
+  typedef int GRASS_V_FIELD;  /* deprecated */
+typedef int GV_CAT;	      /* vector category */
+  typedef int GRASS_V_CAT;    /* deprecated */
 
 struct line_cats
   {
-    GRASS_V_FIELD *field;		/* pointer to array of fields */
-    GRASS_V_CAT *cat;			/* pointer to array of categories */
-    GRASS_V_NCATS n_cats;		/* number of vector categories attached to element */
+    GV_FIELD *field;		/* pointer to array of fields */
+    GV_CAT *cat;			/* pointer to array of categories */
+    GV_NCATS n_cats;		/* number of vector categories attached to element */
     int alloc_cats;		/* allocated space */
   };
 
 struct cat_list
   {
-    GRASS_V_FIELD field;      /* category field */	  
-    GRASS_V_CAT *min;         /* pointer to array of minimun values */
-    GRASS_V_CAT *max;         /* pointer to array of maximum values */
+    GV_FIELD field;      /* category field */	  
+    GV_CAT *min;         /* pointer to array of minimun values */
+    GV_CAT *max;         /* pointer to array of maximum values */
     int         n_ranges;     /* number ranges */
     int         alloc_ranges; /* allocated space */
+  };
+
+/* category field information */
+struct field_info
+  {
+    char *driver;
+    char *database;
+    char *table;
+    char *key;
   };
 
 #endif /* DIG___STRUCTS___ */
