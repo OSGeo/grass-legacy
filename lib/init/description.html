@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>GRASS variables and environment variables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="white">
+
+<H2>GRASS variables and environment variables</H2>
+
+<P>
+There are two types of variables:
+<ul>
+<li>environment variables</li>
+<li>GRASS variables</li>
+</ul>
+
+<h2>Setting environment variables</h2>
+
+<br>Setting environment variables depends on the shell being used:
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
+<p>or
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+
+<h2>Setting GRASS variables</h2>
+You have to use "g.gisenv" (within GRASS):<br>
+<p>
+Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
+
+<p>
+
+It looks unusual with two equals signs, but g.gisenv does dual duty for
+getting and setting GRASS environment variables.  If the user just specifies
+a variable name, it defaults to "get" mode. Example:
+<p>
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GRASS ~> g.gisenv GRASS_GUI<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text
+</tt>
+
+<p>
+To <b>permanently</b> predefine GRASS environment variables the user may specify
+the variable(s) in the <tt>.grassrc57</tt> file.
+
+
+<hr WIDTH="100%">
+<h2>List of selected (GRASS related) environment variables</h2>
+
+<p>GISBASE
+<br>&nbsp; directory where GRASS lives
+
+<p>GISRC
+<br>&nbsp; name of .grassrc5 file
+
+<p>GRASS_ADDON_PATH
+<br>[grass5] startup script
+<br>&nbsp; allows to specify additional paths to local GRASS modules extra to standard distribution
+
+<p>GRASS_BACKGROUNDCOLOR
+<br>[PNGdriver]
+<br>&nbsp; defines the background color of the image created by the PNG driver
+
+<p>GRASS_GNUPLOT
+<br>[m.svfit, s.probplt, s.sv]
+<br>&nbsp; program to use for plotting "gnuplot" data
+
+<p>GRASS_HEIGHT
+<br>[d.mon]
+<br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
+
+<p>GRASS_PAGER
+<br>[various modules]
+<br>Maybe set to either "less" or "more"
+
+<p>GRASS_PERL
+<br>&nbsp; set perl with path
+
+<p>GRASS_PNGFILE
+<br>[PNGdriver]
+<br>&nbsp; name of PNG output file
+
+<p>GRASS_STDERR
+<br>&nbsp; set to any value to prevent user mail on error
+
+<p>GRASS_TCLSH
+<br>[nviz]
+<br>&nbsp; set tclsh shell name to override 'tclsh'
+
+<p>GRASS_TRANSPARENT
+<br>[PNGdriver]
+<br>&nbsp; if "TRUE", the image created by the PNG driver will have a transparent background
+
+<p>GRASS_TRUECOLOR
+<br>[PNGdriver]
+<br>&nbsp; if "TRUE", the PNG driver generates a true-color image
+
+<p>GRASS_WIDTH
+<br>[d.mon]
+<br>&nbsp; defines the width of GRASS monitor, see also GRASS_HEIGHT
+
+<p>GRASS_WISH
+<br>[tcltkgrass, nviz]
+<br>&nbsp; set wish shell name to override 'wish'
+
+
+<h2>List of selected GRASS variables</h2>
+
+<p>GISDBASE
+<br>&nbsp; initial database
+
+<p>GIS_LOCK
+<br>&nbsp; lock ID to prevent parallel GRASS use,
+<br>&nbsp; process id of the start-up shell script
+
+<p>GRASS_GUI
+<br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
+
+<p>LOCATION
+<br>&nbsp;full path to location directory
+
+<p>LOCATION_NAME
+<br>&nbsp;initial location name
+
+<p>MAPSET
+<br>&nbsp; initial mapset
+
+<h2>GRASS-related Files</h2>
+
+<p>$HOME/.grassrc57
+<br>to store GRASS variables (but not environment variables)
+
+<p>$HOME/GIS_ERROR_LOG
+<br>&nbsp; If this file exists, all GRASS error messages are stored here
+instead of sending a mail to the GIS user. To generate the file, use:
+<br>&nbsp;&nbsp; touch $HOME/GIS_ERROR_LOG
+
+<h3>SEE ALSO</h3>
+
+<a href="g.gisenv.html">g.gisenv</a>
+
+
+<p><i>Last changed: $Date$</i>
+<HR>
+<P><a href=index.html>Help Index</a>
+</body></html>
