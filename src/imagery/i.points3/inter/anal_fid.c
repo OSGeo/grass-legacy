@@ -93,7 +93,7 @@ static int dont_del() { return (-1); }
 
 /*-------------------------------------------------------------------------*/
 
-Residuals    resid;
+extern Residuals    resid;
 
 int compute_fiducial_residuals();
 

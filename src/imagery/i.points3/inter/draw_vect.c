@@ -3,7 +3,7 @@
 #include "Vect.h"
 #include <signal.h>
 
-int interrupt;
+extern int interrupt;
 static int set_signals();
 static int reset_signals();
 static void sigint(int);
