@@ -90,6 +90,8 @@ next_point (window, U_X, U_Y)
 
 	while(1)
         {
+	    if (isatty(fileno(infile)))
+		fprintf (stderr, "east north >  ");
             if(!fgets(buffer, sizeof buffer, infile)) return 0;
             if (temp_file != NULL) fprintf(temp_file, "%s", buffer);
             if (sscanf (buffer, "%lf %lf", U_X, U_Y) != 2) continue;
