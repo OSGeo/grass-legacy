@@ -128,7 +128,7 @@ set image_processing {
              "source $env(TCLTKGRASSBASE)/module/r.mfilter"
          }
 	 "Assign a histrogram contrast stretch qrey scale" "" {
-	     "source $env(TCLTKGRASSBASE)/module/i.grey.scale"
+	     "source $env(TCLTKGRASSBASE)/module/r.colors"
 	 }
     }
     "Image transformation" "" {
@@ -544,15 +544,12 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/r.clump"
             }
             -separator
-            "Create color table" "" {
+            "Create color table or histogram contrast grey scale" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.colors"
             }
             "Modify color table" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.colors"
             }
-	    "Assign histogram contrast grey scale color table" "" {
-		"source $env(TCLTKGRASSBASE)/module/i.grey.scale"
-	    }
             -separator
             "Digitize" "" {
                 "run r.digit &"
