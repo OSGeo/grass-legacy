@@ -24,12 +24,21 @@
 : ${GISBASE?}
 
 echo "Starting GRASS ..."
+if [ ! "$GRASS_TCLSH" ] ; then
+    GRASS_TCLSH=tclsh
+    export GRASS_TCLSH
+fi
+
+if [ ! "$GRASS_WISH" ] ; then
+    GRASS_WISH=wish
+    export GRASS_WISH
+fi
 
 # Check if we need to find wish
 if [ $GRASS_GUI = "tcltk" ] ; then
     
     # Search for a wish program
-    SEARCHCOMMAND=wish
+    SEARCHCOMMAND=$GRASS_WISH
     WISH=
     found=0
     
