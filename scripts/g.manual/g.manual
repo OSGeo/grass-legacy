@@ -39,12 +39,8 @@ fi
 #hack for MacOSX:
 if [ "$HOSTTYPE" = "macintosh" ] ; then
     BROWSERNAME="default Macintosh web browser"
-else
-    BROWSERNAME="$GRASS_HTML_BROWSER"
-fi
-
 #hack for Cygwin:
-if [ "$OSTYPE" = "cygwin" ] ; then
+elif [ "$OSTYPE" = "cygwin" ] ; then
     for i in C D E F G H I J K L M N O P Q R S T U V W X Y Z NOT_FOUND
     do
         j="$i:$CYGWIN_ROOT$GRASS_DOC_BASE"
@@ -57,7 +53,9 @@ if [ "$OSTYPE" = "cygwin" ] ; then
         echo "ERROR: cannot find grass document base."
         exit 1
     fi
-    BROWSERNAME=`basename "$BROWSERNAME" | sed 's/\.exe$//i'`
+    BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`
+else
+    BROWSERNAME="$GRASS_HTML_BROWSER"
 fi
 
 
