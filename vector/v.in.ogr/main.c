@@ -13,6 +13,7 @@
  * *               Read the file COPYING that comes with GRASS
  * *               for details.
  * *
+ * * TODO: make fixed field length of OFTIntegerList dynamic
  * **************************************************************/
 #include <stdlib.h> 
 #include <string.h> 
@@ -30,7 +31,8 @@ main (int argc, char *argv[])
     int    ncols;
     struct GModule *module;
     struct Option *dsn_opt, *out_opt, *layer_opt;
-    char   buf[2000];
+    char   buf[2000], namebuf[2000];
+    char   *namebuf2;
 
     /* Vector */
     struct Map_info Map;
@@ -47,6 +49,7 @@ main (int argc, char *argv[])
     OGRSFDriverH Ogr_driver;  
     OGRLayerH Ogr_layer;	
     OGRFieldDefnH Ogr_field; 
+    char *Ogr_fieldname;
     OGRFieldType Ogr_ftype;
     OGRFeatureH Ogr_feature;  
     OGRFeatureDefnH Ogr_featuredefn;
@@ -134,15 +137,26 @@ main (int argc, char *argv[])
     for ( i = 0; i < ncols; i++ ) {
 	Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 	Ogr_ftype = OGR_Fld_GetType( Ogr_field );
+	
+	/* auto-replace # and - characters in columns with underscore for DBMI
+	 * allowed are: [A-Za-z][A-Za-z0-9_]*
+	 */
+	sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
+	namebuf2      = G_strchg(namebuf , '#', '_');
+	Ogr_fieldname = G_strchg(namebuf2, '-', '_');
 
 	if( Ogr_ftype == OFTInteger ) { 
-	    sprintf (buf, ", %s integer", OGR_Fld_GetNameRef( Ogr_field ) );
+	    sprintf (buf, ", %s integer", Ogr_fieldname );
 	} else if( Ogr_ftype == OFTReal ) { 
-	    sprintf (buf, ", %s double precision", OGR_Fld_GetNameRef( Ogr_field ) );
+	    sprintf (buf, ", %s double precision", Ogr_fieldname );
 	} else if( Ogr_ftype == OFTString ) { 
-	    sprintf (buf, ", %s varchar ( %d )", OGR_Fld_GetNameRef(Ogr_field), OGR_Fld_GetWidth(Ogr_field) );
+	    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OGR_Fld_GetWidth(Ogr_field) );
+	} else if( Ogr_ftype == OFTIntegerList ) {
+	    /* treat as string */
+	    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
+	    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
 	} else {
-	    G_warning ( "Column type not supported (%s)", OGR_Fld_GetNameRef( Ogr_field ) );
+	    G_warning ( "Column type not supported (%s)", Ogr_fieldname );
 	    buf[0] = 0;
 	}
 	db_append_string ( &sql, buf);
@@ -184,7 +198,7 @@ main (int argc, char *argv[])
 	    if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
 		if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
 		    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
-		} else if( Ogr_ftype == OFTString ) { 
+		} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
                     db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 		    db_double_quote_string (&strval);
 		    sprintf (buf, ", '%s'", db_get_string(&strval) );
@@ -196,7 +210,7 @@ main (int argc, char *argv[])
 		/* TODO: change to 'NULL' once supported by dbf driver */
 		if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
 		    sprintf (buf, ", 0" );
-		} else if( Ogr_ftype == OFTString ) { 
+		} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
 		    sprintf (buf, ", ''" );
 		}
 		/* sprintf (buf, ", NULL" ); */

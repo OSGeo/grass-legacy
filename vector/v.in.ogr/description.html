@@ -32,6 +32,17 @@ For further available drivers go
 
 <h2>NOTES</h2>
 
+The characters used for table column names are limited. Supported are:<br>
+<pre>
+[A-Za-z][A-Za-z0-9_]*
+</pre>
+
+That means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
+column names. Also a table name must start with a character, not a number.<br>
+<em>v.in.ogr</em> converts '-' and '#' to '_' (underscore) during import.
+
+<P>
+
 The import of areas requires a subsequent run of 
 <a HREF="v.clean.html">v.clean</a> to update the map to a topologically
 valid structure (removal of duplicate collinear lines etc). The tools
