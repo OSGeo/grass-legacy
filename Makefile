@@ -83,6 +83,7 @@ default: builddemolocation
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.sh")
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
+	@echo "(In case of errors please change into the directory with error and run 'make')" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
 
 LIBDIRS = \
