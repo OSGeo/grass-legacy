@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.69 2000-11-09 16:55:38 markus Exp $
+$Id: BUGS,v 1.70 2000-11-10 15:59:19 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -96,6 +96,7 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
  If I display the same set of points but with grass4.1.2 it arrives til the
  end.
  (reported by marino vetuschi zuccolini <zucco@ugo.dipteris.unige.it>)
+ -> probably not a bug?
   (being worked on by ?)   
 
 
@@ -109,6 +110,11 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
     site_list is broken if it doesn't have a constant number and type of   
     fields (We're looking at allowing null fields for 5.1...). 
   (being worked on by ?)  
+
+[RC]: d.what.sites
+  -> double attributes in sites list are display as INT only
+  (being worked on by ?)
+
 
 i.in.gtc/i.in.pri
   i.in.gtc, putting in input leadername voldirname and dataname        
