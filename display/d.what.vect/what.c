@@ -77,8 +77,11 @@ int what(int once, int terse, int width, int mwidth,
       x2 = D_d_to_u_col ((double)(screen_x+WDTH));
       y2 = D_d_to_u_row ((double)(screen_y+WDTH));
 
-      maxdist = abs ( D_d_to_u_col(11) - D_d_to_u_col(1) );
-      printf ("maxdist = %f\n", maxdist);
+      x1 = abs ( x2 - x1 );
+      y1 = abs ( y2 - y1 );
+      if ( x1 > y1 ) maxdist = x1;
+      else maxdist = y1;
+      G_debug (1, "Maximum distance in map units = %f\n", maxdist);
       
       for(i=0; i<nvects; i++)
         {
