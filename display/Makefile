@@ -45,7 +45,7 @@ SUBDIRS = \
 	d.where \
 	d.zoom
 
-FREETYPEBASED = d.text.freetype
+FREETYPEBASED = d.text.freetype d.font.freetype
 
 #compile if FreeType Lib present:
 ifneq ($(strip $(FTLIB)),)
