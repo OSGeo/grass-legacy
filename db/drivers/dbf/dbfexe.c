@@ -31,7 +31,7 @@ void free_all_nodes(Node * nodeptr);
 
 int execute(char *sql, cursor * c)
 {
-    int i, j, tab;
+    int i, j, tab, ret;
     SQLPSTMT *st;
     ROW *dbrows;
     int row, nrows;
@@ -39,7 +39,7 @@ int execute(char *sql, cursor * c)
     int *selset;
     int dtype, stype;
     int width, decimals;
-    char *tmpsql;
+    char *tmpsql, name[500];
 
     /* parse sql statement */
     /* I don't know why, but if the statement ends by string in quotes 'xxx' and is not 
@@ -67,9 +67,23 @@ int execute(char *sql, cursor * c)
 	return DB_FAILED;
     }
 
-    if ((st->command != SQLP_CREATE) && (st->command != SQLP_DROP))
-	load_table_head(tab);
+    if ((st->command != SQLP_CREATE) && (st->command != SQLP_DROP)) {
+	ret = load_table_head(tab);
+	if ( ret == DB_FAILED ) { 
+	    sprintf(errMsg, "%sCannot load table head.\n", errMsg);
+	    return DB_FAILED;
+	}
+    }
 
+    if ((st->command == SQLP_DROP) || (st->command == SQLP_DROP) ||
+        (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE)
+    ) {
+	if ( db.tables[tab].write == FALSE ) {
+  	    sprintf(errMsg, "Cannot modify table, don't have write permission for DBF file.\n");
+	    return DB_FAILED;
+	}
+    }
+    
     /* find columns */
     ncols = st->nCol;
     if (st->command == SQLP_INSERT || st->command == SQLP_SELECT
@@ -110,7 +124,8 @@ int execute(char *sql, cursor * c)
 	    sprintf(errMsg, "Table %s already exists\n", st->table);
 	    return DB_FAILED;
 	}
-	add_table(st->table);
+	sprintf ( name, "%s.dbf", st->table );
+	add_table(st->table, name );
 	tab = find_table(st->table);
 
 	for (i = 0; i < ncols; i++) {
@@ -170,6 +185,7 @@ int execute(char *sql, cursor * c)
 	break;
 
     case (SQLP_SELECT):
+	G_debug ( 2, "SELECT");
 	c->st = st;
 	c->table = tab;
 	c->cols = cols;
@@ -245,14 +261,21 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
     return (1);
 }
 
+/* Select records, sets 'selset' to new array of items and returns
+*  number of items or -1 for error */
 int sel(SQLPSTMT * st, int tab, int **selset)
 {
-    int i, group_condition;
+    int i, ret, group_condition;
     int *set;			/* pointer to array of indexes to rows */
     int aset, nset = 0;
 
+    G_debug ( 2, "sel(): tab = %d", tab);
 
-    load_table(tab);
+    ret = load_table(tab);
+    if ( ret == DB_FAILED ) {
+	sprintf(errMsg, "%sCannot load table.\n", errMsg);
+	return -1;
+    }
 
     aset = 1;
     set = (int *) malloc(aset * sizeof(int));

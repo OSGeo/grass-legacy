@@ -1,6 +1,6 @@
 #include <sqlp.h>
 
-#define DBF_MSG 1024  /* max length of message for report_error() */
+#define DBF_MSG 2000  /* max length of message for report_error() */
 
 #define DBF_COL_NAME 20 /* maximum column name (in fact shouldn't be > 10) */
 

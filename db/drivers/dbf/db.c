@@ -91,7 +91,7 @@ db_driver_open_database (handle)
           {
 	    strcpy ( buf, ent->d_name );
 	    buf[len] = '\0';
-            add_table ( buf );
+            add_table ( buf, ent->d_name );
 	  }
       } 
     

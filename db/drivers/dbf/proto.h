@@ -8,7 +8,7 @@ int add_column ( int table, int type,  char *name , int width, int decimals );
 int find_column ( int, char * );
 
 
-int add_table ( char *);
+int add_table ( char *, char *);
 int execute ( char *, cursor *);
 int free_table ( int );
 int find_table ( char * );

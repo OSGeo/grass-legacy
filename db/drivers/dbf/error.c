@@ -23,7 +23,7 @@ report_error (err)
 {
     char msg[DBF_MSG];
 
-    snprintf (msg, sizeof(msg), "DBMI-DBF driver error: %s", err);
+    sprintf (msg, "DBMI-DBF driver error: %s", err);
     db_error (msg);
 }
 

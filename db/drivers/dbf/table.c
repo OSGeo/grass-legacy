@@ -17,25 +17,29 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
-#include <gis.h>
-#include <dbmi.h>
-#include <shapefil.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include "gis.h"
+#include "dbmi.h"
+#include "shapefil.h"
 #include "globals.h"
 #include "proto.h" 
 
 /* add table to database */
-int add_table (char *table)
+int add_table (char *table, char *name)
 {
+    G_debug (2, "add_table(): table = %s name = %s", table, name );
+
     if ( db.atables == db.ntables )
       {
         db.atables += 15; 
 	db.tables = (TABLE *) realloc ( db.tables, db.atables * sizeof (TABLE) ); 
       }
-
     
     strcpy ( db.tables[db.ntables].name, table );
     
-    sprintf ( db.tables[db.ntables].file, "%s/%s.dbf", db.name, table );
+    sprintf ( db.tables[db.ntables].file, "%s/%s", db.name, name );
     
     db.tables[db.ntables].alive = TRUE;
     db.tables[db.ntables].described = FALSE;
@@ -58,12 +62,14 @@ int add_table (char *table)
 int find_table (char *table)
 {
     int i;
+
+    G_debug ( 2, "find_table(): table = %s", table );
 	
-    for ( i = 0; i < db.ntables; i++ )
-      {
+    for ( i = 0; i < db.ntables; i++ ) {
+         G_debug ( 2, "  ? %s", db.tables[i].name );
          if ( G_strcasecmp( db.tables[i].name, table ) == 0 )
 	     return (i);   
-      }
+   }
     
     return (-1);
 }
@@ -74,40 +80,31 @@ load_table_head( int t)
     int  i, ncol, dtype, type, width, decimals;
     DBFHandle   dbf;
     char fname[20];
-    FILE *fd;
+
+    G_debug ( 2, "load_table_head(): tab = %d, %s", t, db.tables[t].file);
 
     if ( db.tables[t].described == TRUE ) /*already described */
         return DB_OK;
      
-    /* test R/W rights */
-    fd = fopen ( db.tables[t].file, "rb" );
-    if ( fd != NULL )
-      {
-        db.tables[t].read = TRUE;
-	fclose ( fd );
-      }
+    if ( access( db.tables[t].file, R_OK ) == 0 )
+	db.tables[t].read = TRUE;
     else
-      {
         db.tables[t].read = FALSE;
-      }
     
-    fd = fopen ( db.tables[t].file, "ab" );
-    if ( fd != NULL )
-      {
-        db.tables[t].write = TRUE;
-	fclose ( fd );
-      }
+    if ( access( db.tables[t].file, W_OK ) == 0 )
+	db.tables[t].write = TRUE;
     else
-      {
         db.tables[t].write = FALSE;
-      }
     
     /* load */
     dbf = DBFOpen( db.tables[t].file, "r" );
-    if( dbf == NULL )
+    if( dbf == NULL ) {
+	sprintf(errMsg, "Cannot open dbf file.\n");
         return DB_FAILED;
+    }
 
     ncol = DBFGetFieldCount(dbf);
+    G_debug ( 2, "  ncols = %d", ncol);
 
     if ( drv_mode == DBF_MODE_SHP ) {
 	add_column ( t, DBF_INT, DBF_FID_NAME, 11, 0);
@@ -148,18 +145,24 @@ load_table ( int t)
     ROW  *rows;
     VALUE *val;
 
+    G_debug ( 2, "load_table(): tab = %d", t);
+    
     if ( db.tables[t].loaded == TRUE ) /*already loaded */
         return DB_OK;
     
     dbf = DBFOpen( db.tables[t].file, "r" );
-    if( dbf == NULL )
+    if( dbf == NULL ) {
+	sprintf(errMsg, "Cannot open dbf file.\n");
         return DB_FAILED;
+    }
 
     ncols = db.tables[t].ncols;
     nrows = DBFGetRecordCount( dbf );
     rows = db.tables[t].rows;
     rows = (ROW *) malloc ( nrows * sizeof(ROW) );
     db.tables[t].arows = nrows;
+    
+    G_debug ( 2, "  ncols = %d nrows = %d", ncols, nrows);
     
     for( i = 0; i < nrows; i++ )
       {
@@ -210,7 +213,7 @@ int
 save_table ( int t)
 {
     int  i, j, ncols, nrows, ret, field;
-    char name[2000], cmd[2000];
+    char name[2000], fname[20], element[100], cmd[2000];
     DBFHandle   dbf;
     ROW  *rows;
     VALUE *val;
@@ -218,14 +221,17 @@ save_table ( int t)
 
     /* Note: because if driver is killed during the time the table is written, the process
     *        is not completed and DATA ARE LOST. To minimize this, data are first written
-    *        to 'database/.table.dbf' and then this file is renamed to 'database/table.dbf'.
-    *        GRASS temporary file is not used because it may be on another disk and
-    *        copy would be long */
+    *        to temporary file and then this file is renamed to 'database/table.dbf'.
+    *        Hopefully both file are on the same disk/partition */
     
     if ( !(db.tables[t].alive) || !(db.tables[t].updated) )
         return DB_OK;
     
-    sprintf ( name, "%s/.%s.dbf", db.name, db.tables[t].name );
+    /* Construct our temp name because shapelib doesn't like '.' in name */
+    G__temp_element(element);
+    sprintf (fname, "%d.dbf", getpid()) ;
+    G__file_name (name, element, fname, G_mapset()) ;
+    G_debug (2, "Write table to tempfile: '%s'", name);
     
     dbf = DBFCreate( name );
     if( dbf == NULL )
@@ -296,6 +302,8 @@ save_table ( int t)
     if ( system (cmd) != 0 ) {
 	return DB_FAILED;
     }
+
+    unlink ( name );
     
     return DB_OK;
 }
