@@ -44,25 +44,29 @@ G_edit_cats (name, cats, option)
     char next[20];
     char next_line[80];
     char title[80];
-    char msg[80];
-    long line;
+    char msg1[80];
+    char msg2[80];
+    int line;
 
     if (cats->num < 0)
 	option = 1;
-    last_cat = cats->num;
+    last_cat = (long)cats->num;
     if (option >= 0)
     {
 	V_clear();
-	V_line (1, msg);
+	V_line (1, msg1);
+	V_line (2, msg2);
 	if (option == 0)
 	{
-	    sprintf (msg, "The current value for the highest category in [%s] is shown below", name);
-	    V_line (2, "If you need to change it, enter another value");
+	    strcpy (msg1, "The current value for the highest category");
+	    sprintf (msg2,"in [%s] is shown below", name);
+	    V_line (3, "If you need to change it, enter another value");
 	}
 	else
 	{
 	    last_cat = 0;
-	    sprintf (msg, "Please enter the highest category value for [%s]", name);
+	    strcpy (msg1, "Please enter the highest category value");
+	    sprintf (msg2,"for [%s]", name);
 	}
 	V_line (10, "         Highest Category:");
 	V_ques (&last_cat, 'l', 10, 28, 5);
@@ -91,16 +95,16 @@ G_edit_cats (name, cats, option)
 	strcpy (title, cats->title);
 
     startcat = first_cat;
-    sprintf(msg, "[%s]  ENTER NEW CATEGORY NAMES FOR THESE CATEGORIES", name ) ;
+    sprintf(msg1, "[%s] ENTER NEW CATEGORY NAMES FOR THESE CATEGORIES", name ) ;
     while (1) 
     {
 	V_clear() ;
-	V_line ( 0, msg ) ;
+	V_line ( 0, msg1 ) ;
 	V_line ( 2, "TITLE: " ) ;
 	V_line ( 3, "CAT   NEW CATEGORY NAME" ) ;
 	V_line ( 4, "NUM" ) ;
 
-	V_ques  (title, 's', 2, 8, 50) ;
+	V_ques  (title, 's', 2, 8, 60) ;
 
 	endcat = startcat+NLINES <= last_cat+1 ? startcat+NLINES : last_cat+1 ;
 
