@@ -1254,6 +1254,9 @@ int GS_load_att_map(int id, char *filename, int att)
 	begin = 0;
     }
 
+    /* Get MAPSET to ensure names are fully qualified */
+    mapset = G_find_cell2 (filename, "");
+
     if (reuse)
     {
 	gs->att[att].hdata = hdata;
@@ -1290,8 +1293,6 @@ int GS_load_att_map(int id, char *filename, int att)
 
 	tbuff = gs_get_att_typbuff(gs, att, 1);
 
-        /* Get MAPSET to ensure names are fully qualified */
-        mapset = G_find_cell2 (filename, "");
         filename = G_fully_qualified_name(filename, mapset);
 
 	/* TODO: Provide mechanism for loading certain attributes at
