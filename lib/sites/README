@@ -1,0 +1,25 @@
+Radim Blazek blazek at itc.it 
+ Tue, 23 Sep 2003 12:11:27 +0200 
+
+I have modified G_site* functions to use vectors. It is temporary solution
+how to update s.* modules to 5.1/7 v.* without a lot of work. Attributes are
+supported by G_site_get() but G_site_put() writes CELL category only
+(attributes may be added later if needed). Old G_site* functions used by
+v.in.sites are renamed to G_oldsites*. There are only 2 s.* modules in 5.1/7
+(s.in.ascii,s.out.ascii; to be removed later) for tests of new SITESLIB. I
+updated 2 other modules, v.random and v.surf.idw. It is not my intention to
+update all other s.* modules as mostly I don't know too much about them and
+don't need them.
+
+To updated s.* to v.*, it is typically necessary:
+1) ->key = "sites"  =>  "input" / "output" / "vector"
+2) ->description="... sites ..." => "... vector ..."
+3) G_find_file ("site_lists",,) => G_find_sites (,)
+4) fclose() => G_sites_close()
+
+New version is slower (dbf driver, 10000 points): 
+                 time(200x200cells)   time(667x667cells)
+s.surf.idw              0.43                10.71
+v.surf.idw              1.76                11.35
+
+Radim
