@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
     Vect_build (&Map, stderr);
 
     /* insert cats and optionaly labels if raster cats were used */
-    if ( value_flag ) {
+    if ( driver && value_flag ) {
 	char buf[1000];
 	int c, i, cat, fidx, ncats, lastcat, tp, id;
 
@@ -196,11 +196,11 @@ int main (int argc, char *argv[])
 			break;
 		    }
 		}
-		G_debug ( 0, "cat = %d label = %s", cat, db_get_string(&label) );
+		G_debug ( 3, "cat = %d label = %s", cat, db_get_string(&label) );
 		
 		sprintf (buf, "insert into %s values ( %d, '%s')", Fi->table, cat, db_get_string(&label) );
 		db_set_string ( &sql, buf);
-		G_debug ( 0, db_get_string ( &sql ) );
+		G_debug ( 3, db_get_string ( &sql ) );
 
 		if (db_execute_immediate (driver, &sql) != DB_OK ) 
 		    G_fatal_error ( "Cannot insert into table: %s", db_get_string ( &sql )  );
