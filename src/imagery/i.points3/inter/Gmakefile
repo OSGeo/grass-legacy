@@ -6,7 +6,6 @@ PGM  	= i.points3
 
 ####	required - suplimental imagery libary 
 IMAGERY_SUBINC = $(SRC)/libes/image3
-IMAGERYLIB_SUP = $(LIBDIR)/image3/libimage_sup.a
 
 ####	object files
 LIST	=\
@@ -55,15 +54,13 @@ LIST	=\
 
 
 ####	libaries to link
-LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+LIBES =  $(IMAGERYLIB) $(IMAGESUPLIB) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB)\
-	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB)\
-	 $(GISLIB) $(VASKLIB)
+	 $(GPROJLIB) $(GISLIB) $(VASKLIB)
 
-DEPLIBS= $(DEPIMAGERYLIB) $(IMAGERYLIB_SUP) $(DEPD_LIB)\
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
 	 $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB)\
-	 $(DEPGPROJLIB) $(DEPLIBTRANS) $(DEPPROJLIB)\
-	 $(DEPGISLIB) $(DEPVASKLIB)
+	 $(DEPGPROJLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
 
 ####   required compile flags

@@ -114,6 +114,9 @@ VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
 DEPDBMILIB     = $(LIBDIR)/libdbmi.a
 DBMILIB        = -ldbmi
 
+DEPIMAGESUPLIB = $(LIBDIR)/libimage_sup.a
+IMAGESUPLIB    = -limage_sup
+
 # triangulation libraries
 
 DEPSOSLIB      = $(LIBDIR)/libsos.a

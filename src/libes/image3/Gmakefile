@@ -1,17 +1,16 @@
 ###   libimage_sup.a
-###   Supplimental imagery library for i.points and i.rectify programs.
+###   Supplemental imagery library for i.points and i.rectify programs.
 ###
 
 
 ###   extra program required compile flags
 #EXTRA_CFLAGS = -D_NO_PROTO
 
-IMAGERYLIB_SUP = libimage_sup.a
+EXTRA_CFLAGS = $(PICFLAGS)
 
 OBJ =\
 	ask_camera.o\
         ask_elev.o\
-	ask_expose.o\
 	convert_ll.o\
 	crs.o\
 	error.o\
@@ -48,10 +47,10 @@ OBJ =\
 	ref_ortho.o
 
 
-all: $(IMAGERYLIB_SUP) 
+all: $(DEPIMAGESUPLIB) 
 
-$(IMAGERYLIB_SUP): ${OBJ}
-	$(LIBRULE)
+$(DEPIMAGESUPLIB): $(OBJ)
+	$(SLIBRULE)
 
 $(OBJ): ortho_image.h matrix_ops.h
 
