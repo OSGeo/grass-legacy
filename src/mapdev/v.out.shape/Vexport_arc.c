@@ -6,6 +6,7 @@
  *
  * based on - v.out.arc by Dave Johnson, R.L.Glenn, David Stigberg
  *          - gen2shp  by Jan-Oliver Wagner <jan@intevation.de>
+ *          - txt2dbf by Frank Koormann <Frank.Koormann@intevation.de>
  *          - shapelib by Frank Warmerdam <warmerda@home.com>
  *
  * http://www.usf.uos.de/~jwagner/gen2shp/gen2shp.html
@@ -311,7 +312,7 @@ main (int argc, char **argv)
 	G_system(buf);
 
 	fprintf(stdout, "Converting attributes to DBF file...\n");
-	sprintf(buf, "$GISBASE/etc/v.out.shape/txt2dbf -d' ' -I6 -I6 -I6 -C80 $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; rm -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; m -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
 	G_system(buf);
 	
 	exit(0);
