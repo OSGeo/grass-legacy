@@ -325,7 +325,15 @@ main (int argc, char *argv[])
 		} else if( Ogr_ftype == OFTReal ) { 
 		    sprintf (buf, ", %s double precision", Ogr_fieldname );
 		} else if( Ogr_ftype == OFTString ) { 
-		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OGR_Fld_GetWidth(Ogr_field) );
+		    int fwidth;
+		    fwidth = OGR_Fld_GetWidth(Ogr_field); 
+		    /* TODO: read all records first and find the longest string length */
+		    if ( fwidth == 0) {
+			G_warning ("Width for column '%s' set to 255 (was not specified by OGR), "
+				   "some strings may be truncated!", Ogr_fieldname );
+			fwidth = 255;
+		    }
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, fwidth );
 		} else if( Ogr_ftype == OFTStringList ) {
 		    /* hack: treat as string */
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
