@@ -382,7 +382,8 @@ int main (int argc, char *argv[])
             else
                  strcpy(colornamebuf2,colornamebuf);
 
-            if ( strcmp(colornamebuf,"Undefined") == 0 )
+            /* avoid bad color names; in case of 'Gray' often all channels are named 'Gray' */
+            if ( strcmp(colornamebuf,"Undefined") == 0 || strcmp(colornamebuf,"Gray") == 0 )
                  sprintf( szBandName, "%s.%d", output, nBand);
             else
             {
