@@ -86,7 +86,7 @@ int G__make_mapset_element (char *p_element)
 ****************************************************************/
 int G__mapset_permissions (char *mapset)
 {
-    char path[256];
+    char path[2000];
     struct stat info;
 
     G__file_name (path,"","",mapset);
@@ -103,3 +103,33 @@ int G__mapset_permissions (char *mapset)
     
     return 1;
 }
+
+/****************************************************************
+* G__mapset_permissions2 ( gisdbase, location, mapset)
+*
+* mapset_path is full path to mapset directory
+*
+* returns: 1 mapset exists, and user has permission
+*          0 mapset exists, BUT user denied permission
+*         -1 mapset does not exist
+****************************************************************/
+int G__mapset_permissions2 ( char * gisdbase, char * location, char *mapset )
+{
+    char path[2000];
+    struct stat info;
+
+    sprintf ( path, "%s/%s/%s", gisdbase, location, mapset );
+
+    if (stat (path, &info) != 0)
+	    return -1;
+
+#ifndef __MINGW32__    
+    if (info.st_uid != getuid())
+	    return 0;
+    if (info.st_uid != geteuid())
+	    return 0;
+#endif
+    
+    return 1;
+}
+

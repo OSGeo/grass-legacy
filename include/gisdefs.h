@@ -750,6 +750,7 @@ char *G__mapset(void);
 /* mapset_msc.c */
 int G__make_mapset_element(char *);
 int G__mapset_permissions(char *);
+int G__mapset_permissions2(char *, char *, char *);
 
 /* mapset_nme.c */
 char *G__mapset_name(int);
