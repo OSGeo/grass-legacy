@@ -200,9 +200,8 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ -f "$i/netscape" ] ; then
             GRASS_HTML_BROWSER=netscape
             break
-        elif [ -d "/Applications/Safari.app" ] ; then
-            #MacOSX browser:
-            GRASS_HTML_BROWSER="open /applications/safari.app"
+        elif [ "$HOSTTYPE" = "macintosh" ] ; then
+            GRASS_HTML_BROWSER="open"
             break
         fi
     done
