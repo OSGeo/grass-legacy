@@ -23,6 +23,12 @@
 
 /* INTERFACE LEVEL II  */
 
+/*!
+ \fn int Vect_get_num_nodes (struct Map_info *map)
+ \brief get number of nodes
+ \return number of nodes
+ \param Map_info structure
+ */
 int 
 Vect_get_num_nodes (struct Map_info *map)
 {
@@ -30,24 +36,48 @@ Vect_get_num_nodes (struct Map_info *map)
 }
 
 
+/*!
+ \fn int Vect_get_num_lines (struct Map_info *map)
+ \brief get number of lines
+ \return number of lines
+ \param Map_info structure
+ */
 int 
 Vect_get_num_lines (struct Map_info *map)
 {
   return (map->plus.n_lines);
 }
 
+/*!
+ \fn int Vect_get_num_areas (struct Map_info *map)
+ \brief get number of areas
+ \return number of areas
+ \param Map_info structure
+ */
 int 
 Vect_get_num_areas (struct Map_info *map)
 {
   return (map->plus.n_areas);
 }
 
+/*!
+ \fn int Vect_get_num_islands (struct Map_info *map)
+ \brief get number of islands
+ \return number of islands
+ \param Map_info structure
+ */
 int 
 Vect_get_num_islands (struct Map_info *map)
 {
   return (map->plus.n_isles);
 }
 
+/*!
+ \fn int Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
+ \brief get 2D/3D coordinates of node
+ \return 2D/3D coordinates of node
+ \param Map_info structure, node number, xyz coordinates values
+ */
 int 
 Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
 {
@@ -63,7 +93,12 @@ Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double 
     return (0);
 }
 
-/* get Line starting and ending node */
+/*!
+ \fn int Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
+ \brief get starting and ending node of line
+ \return numbers of line nodes
+ \param Map_info structure, line number, numbers of line nodes
+*/
 int 
 Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
 {
@@ -80,7 +115,12 @@ Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
     return 1;
 }
 
-/* get areas/isles on the left and right */
+/*!
+ \fn int Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
+ \brief get areas/isles on the left and right
+ \return numbers of areas/isles on the left and right
+ \param Map_info structure, line number, numbers of areas/isles on the left and right
+*/
 int 
 Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
 {
@@ -97,7 +137,12 @@ Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
     return 1;
 }
 
-/* returns number of lines for node */
+/*!
+ \fn int Vect_get_node_n_lines ( struct Map_info *Map, int node )
+ \brief returns number of lines for node
+ \return numbers of line for a node ??
+ \param Map_info structure, node number
+*/
 int 
 Vect_get_node_n_lines ( struct Map_info *Map, int node )
 {
@@ -110,7 +155,12 @@ Vect_get_node_n_lines ( struct Map_info *Map, int node )
 }
 
 /* TODO: fix explanation - difference to Vect_get_node_n_lines? */
-/* returns number of lines for node */
+/*!
+ \fn int Vect_get_node_line ( struct Map_info *Map, int node, int line )
+ \brief returns number of lines for node
+ \return numbers of line for a node ??
+ \param Map_info structure, node number, line number
+*/
 int 
 Vect_get_node_line ( struct Map_info *Map, int node, int line )
 {
@@ -121,5 +171,4 @@ Vect_get_node_line ( struct Map_info *Map, int node, int line )
     return ( Map->plus.Node[node]->lines[line] );
 
 }
-
 

@@ -49,14 +49,15 @@ int prnmsg ( char *msg, ...) {
     return 1;	
 }
 
-/* Build topology 
-*  msgout - message output (stdout/stderr for example) or NULL
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_build ( struct Map_info *Map, FILE *msgout ) 
+ \brief build topology for vector map
+ \return 1 on success, 0 on error
+ \param Map_info structure, file for message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build ( struct Map_info *Map, FILE *msgout ) {
+Vect_build ( struct Map_info *Map, FILE *msgout ) 
+{
     struct Plus_head *plus ;
     int    ret;
     
@@ -92,13 +93,15 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     return 1;
 }
 
-/* Save topo file
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_save_topo ( struct Map_info *Map )
+ \brief save topology file for vector map
+ \return 1 on success, 0 on error
+ \param Map_info structure
 */
 int
-Vect_save_topo ( struct Map_info *Map ) {
+Vect_save_topo ( struct Map_info *Map )
+{
     struct Plus_head *plus ;
     char   fname[1024], buf[1024];
     FILE   *fp;
@@ -130,14 +133,15 @@ Vect_save_topo ( struct Map_info *Map ) {
     return 1;
 }
 
-/* Dump topology 
-*  out - output (stdout/stderr for example)
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_topo_dump ( struct Plus_head *plus, FILE *out )
+ \brief dump topology to file
+ \return 1 on success, 0 on error
+ \param Map_info structure, file for output (stdout/stderr for example)
 */
 int
-Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
+Vect_topo_dump ( struct Plus_head *plus, FILE *out )
+{
     int i, j, line, isle;
     P_NODE *Node;
     P_LINE *Line;
@@ -224,13 +228,15 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     return 1;
 }
 
-/* Save spatial index file
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_save_spatial_index ( struct Map_info *Map )
+ \brief save spatial index file
+ \return 1 on success, 0 on error
+ \param Map_info structure
 */
 int
-Vect_save_spatial_index ( struct Map_info *Map ) {
+Vect_save_spatial_index ( struct Map_info *Map )
+{
     struct Plus_head *plus ;
     char   fname[1024], buf[1024];
     FILE   *fp;
@@ -262,11 +268,11 @@ Vect_save_spatial_index ( struct Map_info *Map ) {
     return 1;
 }
 
-/* Dump ispatial index 
-*  out - output (stdout/stderr for example)
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_spatial_index_dump ( struct Plus_head *plus, FILE *out )
+ \brief dump spatial index to file
+ \return 1 on success, 0 on error
+ \param Map_info structure, file for output (stdout/stderr for example)
 */
 int
 Vect_spatial_index_dump ( struct Plus_head *plus, FILE *out ) 

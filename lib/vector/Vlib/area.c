@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -21,12 +19,15 @@
 #include "gis.h"
 #include "Vect.h"
 
-/*
-   **  returns the polygon array of points  in BPoints
-   **   returns  number of points or -1 on error
- */
-
-
+/*!
+ \fn int Vect_get_area_points (
+		       struct Map_info *Map,
+		       int area,
+		       struct line_pnts *BPoints)
+ \brief returns the polygon array of points in BPoints
+ \return number of points or -1 on error
+ \param Map_info structure, area number, line_pnts structure
+*/
 int 
 Vect_get_area_points (
 		       struct Map_info *Map,
@@ -82,6 +83,15 @@ Vect_get_area_points (
   return (BPoints->n_points);
 }
 
+/*!
+ \fn int Vect_get_isle_points (
+		       struct Map_info *Map,
+		       int isle,
+		       struct line_pnts *BPoints)
+ \brief returns the polygon array of points in BPoints
+ \return number of points or -1 on error
+ \param Map_info structure, island number, line_pnts structure
+*/
 int 
 Vect_get_isle_points (
 		       struct Map_info *Map,
@@ -132,7 +142,14 @@ Vect_get_isle_points (
   return (BPoints->n_points);
 }
 
-/* Returns centroid number or 0 */ 
+/*!
+ \fn int Vect_get_area_centroid (
+		       struct Map_info *Map,
+		       int area )
+ \brief returns centroid number of area
+ \return centroid number of area or 0
+ \param Map_info structure, area number
+*/
 int 
 Vect_get_area_centroid (
 		       struct Map_info *Map,
@@ -151,7 +168,14 @@ Vect_get_area_centroid (
   return ( Area->centroid );
 }
 
-/* Returns number of isles */ 
+/*!
+ \fn int Vect_get_area_num_isles (
+		       struct Map_info *Map,
+		       int area )
+ \brief returns number of isles for area
+ \return number of isles for area or 0
+ \param Map_info structure, area number
+*/
 int 
 Vect_get_area_num_isles (
 		       struct Map_info *Map,
@@ -173,7 +197,15 @@ Vect_get_area_num_isles (
 
 }
 
-/* Returns area isle */ 
+/*!
+ \fn int Vect_get_area_isle (
+		       struct Map_info *Map,
+		       int area,
+                       int isle)
+ \brief returns isle for area
+ \return isles for area or 0
+ \param Map_info structure, area number, island number
+*/
 int 
 Vect_get_area_isle (
 		       struct Map_info *Map,
@@ -195,11 +227,15 @@ Vect_get_area_isle (
   return ( Area->isles[isle] );
 }
 
-/* 
-*  returns 1 if point is in area
-*          0 if not
+/*!
+ \fn int Vect_point_in_area (
+		       struct Map_info *Map,
+		       int area,
+		       double x, double y)
+ \brief returns 1 if point is in area
+ \return 1 if point is in area 0 if not
+ \param Map_info structure, area number, xy coordinate of point
 */
-
 int 
 Vect_point_in_area (
 		       struct Map_info *Map,
@@ -239,7 +275,14 @@ Vect_point_in_area (
   return 1;
 }
 
-/* Returns area of are without areas of isles */ 
+/*!
+ \fn double Vect_get_area_area (
+		       struct Map_info *Map,
+		       int area)
+ \brief returns area of area without areas of isles
+ \return area of area without areas of isles
+ \param Map_info structure, area number
+*/
 double 
 Vect_get_area_area (
 		       struct Map_info *Map,
