@@ -1,4 +1,3 @@
-# %W% %G%
 NAME=epson.24.180
 INTERFACE = ../interface.o
 PAINT = $(ETC)/paint
