@@ -1,0 +1,40 @@
+****************************************
+d.site.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 5
+
+INGRES version specific subroutines:
+	ingresUnTable
+	buildSQL
+
+Modified and/or renamed subroutines:
+	getAllOpts
+	getSelectOpts
+	buildSQL <=> buildInfxQry
+	runSQL <=> runInfxFile
+
+New subroutines:
+	ingresUnTable
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	ingresUtils.h
+
+INGRES modifications:
+	SQL query syntax (buildSQL)        
+	Where clause 'IS NOT NULL' is not used (buildSQL, INGRES v5 specific)
+	'\g' added at end of SQL query (buildSQL, runSQL)
+	Syntax of execution of SQL command (buildSQL, runSQL)
+	Reading SQL output (buildSQL, runSQL):
+		ingresUnTable added (INGRES v5 specific)
+
+Improvements:
+	Explanatory messages added
+
+Bug Fixes:
+	None
