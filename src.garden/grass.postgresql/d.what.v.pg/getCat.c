@@ -1,8 +1,12 @@
+/* using G_plot_area instead of R_poly and handle isles 03/2002 --alex*/
+
+#include <stdlib.h>
 #include "what.h"
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"
+#include "glocale.h"
 
 int getCat (Map, Cats,colr,fillcolr,fill)
 
@@ -24,15 +28,15 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 
     plus_t line, area;
     
-    struct line_pnts *Points;
+    struct line_pnts *Points, *Points_i;
     int np,ret;
     double *x,*y;
     
-
-    int x_screen[4096], y_screen[4096];
-
-    
-    
+    P_AREA *pa;
+    double **xs, **ys;
+    int rings;
+    int *rpnts;
+    int j;    
     	
 
 	dbCat = -1;
@@ -48,10 +52,10 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 	screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
 	screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
-        fprintf(stderr, "\n\nButtons:\n") ;
-        fprintf(stderr, "Left:   Choose object for query.\n") ;
-	fprintf(stderr, "Middle: Toggle object color.\n") ;
-        fprintf(stderr, "Right:  Finish. \n\n\n") ;
+        fprintf(stderr, _("\n\nButtons:\n")) ;
+        fprintf(stderr, _("Left:   Choose object for query.\n")) ;
+	fprintf(stderr, _("Middle: Toggle object color.\n")) ;
+        fprintf(stderr, _("Right:  Finish. \n\n\n")) ;
 
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
@@ -73,7 +77,7 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 
 
         if  ((line + area == 0) && (button != 3) )  {
-		fprintf(stderr,"Nothing found.\n") ;
+		fprintf(stderr,_("Nothing found.\n")) ;
 		dbCat=-1;
 		return(button);
 		
@@ -86,7 +90,7 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 		if (0 > (ret = V2_read_line (Map, Points, line)))
 		{
 	    		if (ret == -2)
-				G_warning ("Read error\n");
+				G_warning (_("Read error\n"));
 	    		return(-1);
 		}
 		np = Points->n_points;
@@ -103,32 +107,68 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 		}
 		Vect_destroy_line_struct (Points);
 	  }else 
-	  fprintf(stderr,"Line category not found\nArea not found\n");	
+	  fprintf(stderr,_("Line category not found\nArea not found\n"));	
 	} 
 	else if ( (area > 0) && (button != 3) ) {
        
 	 if((dbCat= V2_area_att(Map, area))) {
-	
-		Points = Vect_new_line_struct();
-		Vect_get_area_points(Map, area, Points);		
+		
+		V2_get_area (Map, area, &pa);
+		
+		rings = 1 + pa->n_isles;
+            	xs = (double **) G_malloc (sizeof(double *) * rings);
+            	ys = (double **) G_malloc (sizeof(double *) * rings);
+            	rpnts = (int *) G_malloc (sizeof (int) * rings);
 
-		for(i=0; i < Points->n_points; i++)
-		{
-		    x_screen[i] = (int) (D_u_to_d_col( (*(Points->x+i))));
-		    y_screen[i] = (int) (D_u_to_d_row( (*(Points->y+i))));
+		
+		Points = Vect_new_line_struct();
+		Points_i = Vect_new_line_struct();
+		Vect_get_area_points(Map, area, Points);
+		
+		rpnts[0] = Points->n_points;
+            	xs[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
+            	ys[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
+            	Vect_copy_pnts_to_xy (Points, xs[0], ys[0], &rpnts[0]);
+            	for (j = 0; j < pa->n_isles; j++) {
+                	Vect_get_isle_points (Map, pa->isles[j], Points_i);
+                	rpnts[j+1] = Points_i->n_points;
+                	xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                	ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                	Vect_copy_pnts_to_xy (Points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
+            	}
+		
+		if (fill) {
+			R_standard_color(fillcolr);
+			G_plot_area (xs, ys, rpnts, rings);
 		}
-	   if (fill) {
-		R_standard_color(fillcolr);
-		R_polygon_abs(x_screen,y_screen,Points->n_points);
-	   }
-		if (colr > 0)
-		{
+		
+		if (colr > 0) {
+			
 			R_standard_color(colr);
-			R_polydots_abs(x_screen,y_screen,Points->n_points);
+			
+			for (j = 0; j < Points->n_points - 1; j++)
+                		G_plot_line (Points->x[j],   Points->y[j],
+                        	Points->x[j+1], Points->y[j+1]);
+				
+			for (j = 0; j < Points_i->n_points - 1; j++)
+                		G_plot_line (Points_i->x[j],   Points_i->y[j],
+                        	Points_i->x[j+1], Points_i->y[j+1]);
 		}
+		
+		for (j = 0; j < rings; j++)
+            	{	
+                	free (xs[j]);
+                	free (ys[j]);
+            	}
+            	
+		free (xs);
+            	free (ys);
+            	free (rpnts);
+
 		Vect_destroy_line_struct (Points);
+		Vect_destroy_line_struct (Points_i);
 	  }else{
-	  fprintf(stderr,"Area category not found\n");
+	  fprintf(stderr,_("Area category not found\n"));
 	  	
 		if ( (line > 0) && (button != 3) ) {
 			if ((dbCat = V2_line_att(Map,line))){		
@@ -136,7 +176,7 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 				if (0 > (ret = V2_read_line (Map, Points, line)))
 				{
 	    				if (ret == -2)
-						G_warning ("Read error\n");
+						G_warning (_("Read error\n"));
 	    				return(-1);
 				}
 				np = Points->n_points;
@@ -153,7 +193,7 @@ int getCat (Map, Cats,colr,fillcolr,fill)
 				}
 				Vect_destroy_line_struct (Points);
 	  		}else 
-	  		fprintf(stderr,"Line category not found\n");	
+	  		fprintf(stderr,_("Line category not found\n"));	
 		} 
 	  
 	  }

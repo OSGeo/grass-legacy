@@ -13,6 +13,7 @@
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"
+#include "glocale.h"
 
 
 int getAllOpts(argc, argv)
@@ -44,46 +45,46 @@ int getAllOpts(argc, argv)
 	map->type       = TYPE_STRING ;
 	map->required   = YES  ;
 	map->multiple   = NO ;
-	map->description= "Vector map to run query on:" ;
+	map->description= _("Vector map to run query on:") ;
 
 	keytable = G_define_option() ;
 	keytable->key        = "tab" ;
 	keytable->type       = TYPE_STRING ;
 	keytable->required   = YES  ;
 	keytable->multiple   = NO ;
-	keytable->description= "Postgres table with categories:" ;
+	keytable->description= _("Postgres table with categories:") ;
 
 	col = G_define_option() ;
 	col->key        = "col" ;
 	col->type       = TYPE_STRING ;
 	col->required   = YES  ;
 	col->multiple   = NO ;
-	col->description= "Column with categories from this table:" ;
+	col->description= _("Column with categories from this table:") ;
 
 	color = G_define_option() ;
         color->key        = "color" ;
         color->type       = TYPE_STRING ;
         color->required   = NO  ;
         color->multiple   = NO ;
-	color->description= "Selected lines color:";
+	color->description= _("Selected lines color:");
 	color->answer="yellow";
 	
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = "Fill polygons?" ;
+	flag1->description = _("Fill polygons?") ;
 	
 	fillcolor = G_define_option() ;
 	fillcolor->key        = "fillcolor" ;
 	fillcolor->type       = TYPE_STRING ;
 	fillcolor->answer     = "gray" ;
 	fillcolor->options    = D_color_list();
-	fillcolor->description= "Selected areas color (for fill):";
+	fillcolor->description= _("Selected areas color (for fill):");
 	
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
 	hv->answer     = "v" ;
-	hv->description= "Type of database output - [h/v]:";
+	hv->description= _("Type of database output - [h/v]:");
 	
 
 	/* Invoke parser */
@@ -104,16 +105,16 @@ int getAllOpts(argc, argv)
 	D_setup(0);
 	
 	if ( (mapset = openvect(name) ) == NULL) {
-		fprintf(stderr, "Unable to open %s\n", map->answer);
+		fprintf(stderr, _("Unable to open %s\n"), map->answer);
 		exit(1);
 	}
 	
 
 	level = Vect_open_old( &P_map, name, mapset) ;
 	if (level < 0)
-                G_fatal_error ("Can't open vector file");
+                G_fatal_error (_("Can't open vector file"));
         if (level < 2)
-                G_fatal_error ("You must first run v.support on vector file");
+                G_fatal_error (_("You must first run v.support on vector file"));
 
 	if (G_read_vector_cats(name, mapset, &Cats) < 0)
 		Cats.num = -1;

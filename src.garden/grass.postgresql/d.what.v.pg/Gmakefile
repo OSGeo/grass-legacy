@@ -1,5 +1,8 @@
 PGM       = $(BIN_CMD)/d.what.v.pg
 LIBES     = $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+PACKAGE = "d.what.v.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 
 OBJS = \
@@ -10,8 +13,6 @@ OBJS = \
         runInfxQry.o \
 	getCat.o  \
 	openvect.o
-
-EXTRA_CFLAGS =  $(PQINCPATH)
 
 
 $(PGM): $(OBJS) $(LIBES)
