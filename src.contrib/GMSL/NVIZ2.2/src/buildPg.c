@@ -3,9 +3,7 @@
 #include <stdio.h>
 
 
-char *buildPg(ktab, keycat, curcat)
-     char *ktab, *keycat;
-     int curcat;
+char *buildPg(char *ktab, char *keycat, int curcat)
 {
 
 
@@ -19,8 +17,7 @@ char *buildPg(ktab, keycat, curcat)
 
 }
 
-char *buildPgSite(ktab, ycol, xcol)
-     char *ktab, *ycol, *xcol;
+char *buildPgSite(char *ktab, char *ycol, char *xcol)
 {
     static char SQL_stmt[QRY_LENGTH];
 
