@@ -45,5 +45,9 @@ all:
 	cp r.mpatch/r.mpatch $(SCRIPTS)
 	cp v.in.mapgen.sh/v.in.mapgen.sh $(SCRIPTS)
 	# ln -s $(SCRIPTS)/v.in.mapgen.sh $(SCRIPTS)/v.in.matlab.sh
+	cp d.sites.icons/d.sites.icons $(SCRIPTS)
 	cp d.resize/d.resize $(SCRIPTS)
+	cp s.sv2svfit/s.sv2svfit $(SCRIPTS)
+	cp d.out.tiff/d.out.tiff $(SCRIPTS)
+	cp d.out.png/d.out.png $(SCRIPTS)
 	chmod 755 $(SCRIPTS)/*
