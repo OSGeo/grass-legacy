@@ -1,0 +1,5 @@
+MGpatch	Gpatch.c	/^main (argc, argv) char *argv[];$/
+Mpatch	patch.c	/^main (argc, argv) char *argv[];$/
+do_patch	do_patch.c	/^do_patch (result, patch, statf, ncols)$/
+support	support.c	/^support (names, statf, nfiles, cats, cats_ok, colr/
+usage	Gpatch.c	/^usage (me) char *me;$/
