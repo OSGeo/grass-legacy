@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 #define NFILES 10
@@ -34,7 +33,7 @@ ask_files (group, subgroup, ref1, ref2)
 	    sprintf (name[i], "%s in %s", nm, mp);
 	    V_const (name[i], 's', row, 3, 70);
 	    if (G_find_cell (nm, mp) == NULL)
-		strcat(name[i], "  <- cell file does not exist");
+		strcat(name[i], "  <- raster file does not exist");
 	    else
 		V_ques (use[i], 's', row, 0, 2);
 	    row++;
