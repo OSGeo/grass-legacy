@@ -1,0 +1,4 @@
+
+export GRAPHB
+GRAPHB=/usr/mapgen/bin/plotter:/usr/mapgen/lib/gfonts/:sr:
+PATH=/usr/mapgen/bin:.:/usr/mlh/bin:/usr/local/bin:/usr/ucb:/bin:/usr/bin:/etc:/usr/etc:/usr/games:/usr/grass3/local/bin:/usr/mapgen/macros
