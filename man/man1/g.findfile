@@ -32,7 +32,7 @@ if specified as a single dot (.) only the current mapset is searched.
 The name of a GRASS data file (of the stated \fIelement\fR type) for which to search.
 .SH OUTPUT
 .I g.findfile
-writes three lines to standard output:
+writes four lines to standard output:
 
 .nf
 .RS
