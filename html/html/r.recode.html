@@ -1,0 +1,47 @@
+<html>
+<A NAME="r.recode">
+<TITLE>r.recode</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.recode</EM></B> - recode raster maps<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.recode</B> [<B>-a</B>] <B>input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>title</B><EM>=name</EM>]
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-a</B>
+<DD>Align the current region to the input map
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+
+<DD>Raster map to be recoded
+<DT><B>output</B>
+<DD>Name for the resulting raster map
+
+<DT><B>title</B>
+<DD>Title for the resulting raster map
+</DL>
+
+Enter a rule in one of these formats:
+<PRE>
+ old_low:old_high:new_low:new_high
+ old_low:old_high:new_val  (i.e. new_high == new_low)
+ *:old_val:new_val         (interval [inf, old_val])
+ old_val:*:new_val         (interval [old_val, inf])
+</PRE>
+
+<H2>AUTHOR</H2>
+CERL
+
+</BODY>
+</HTML>

@@ -1,0 +1,64 @@
+<html>
+<A NAME="xganim">
+<TITLE>xganim</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>xganim</EM></B> - Raster File Animation Program
+
+<H2>SYNOPSIS</H2>
+<B>xganim</B><BR>
+<B>xganim help</B><BR>
+<B>xganim view1</B><EM>=name[,name,...]</EM> [<B>view2</B><EM>=name[,name,...]</EM>] [<B>view3</B><EM>=name[,name,...]</EM>] [<B>view4</B><EM>=name[,name,...]</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>xganim</EM> is a tool for animating a series of GRASS raster files.  At startup, a graphics window is opened containing VCR-like button controls for: rewind, reverse play, step back, stop, step forward, forward play, loop, swing, slower, faster, show filenames, current frame no., and Exit.  The image is displayed above or to the left of the controls.  Each raster file is read into memory, then the animation is played once beginning to end.  The user may then replay the series or play continuous animation by using the buttons.
+<P>
+
+The user may define up to four "views", or sub-windows, to animate simultaneously.  e.g., View 1 could be rainfall, View 2 flooded areas, View 3 damage to bridges or levees, View 4 other economic damage, all animated as a time series.  There is an arbitrary limit of 100 files per view (100 animation frames), but the practical limit may be less depending on the window size and amount of available RAM.
+<P>
+
+The environment variable XGANIM_SIZE is checked for a value to use as the dimension, in pixels, of the longest dimension of the animation window.  If XGANIM_SIZE is not set, the animation size defaults to the rows & columns in the current GRASS region, scaling if necessary to a default minimum size of 600 and maximum of 900.  The resolution of the current GRASS region is maintained, independent of window size.  Resizing the window after the program is running will have no effect on the animation size.
+<P>
+
+UNIX - style wild cards may be used with the command line version in place of a raster file name, but it must be quoted.
+<P>
+
+Example:
+<P>
+<DD><EM>xganim view1="rain[1-9]","rain1[0-2]" view2="temp*"</EM>
+<P>
+
+If the number of files differs for each view, the view with the fewest files will determine the number of frames in the animation.
+
+<H2>COMMAND LINE OPTIONS</H2>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>view1</B>
+<DD>Raster file(s) for View1
+
+<DT><B>view2</B>
+<DD>Raster file(s) for View2
+
+<DT><B>view3</B>
+<DD>Raster file(s) for View3
+
+<DT><B>view4</B>
+<DD>Raster file(s) for View4
+</DL>
+
+<H2>BUGS</H2>
+On some displays that need to use private colormaps, the interface buttons may become difficult to see.
+
+<H2>AUTHOR</H2>
+<A HREF=mailto:brown@gis.uiuc.edu>Bill Brown</A>, U.S. Army Construction Engineering Research Laboratories
+
+<H2>NOTICE</H2>
+This program is part of the contrib section of the GRASS distribution.  As such, it is externally contributed code that has not been examined or tested by the Office of GRASS Integration.
+
+</BODY>
+</HTML>

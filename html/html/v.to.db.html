@@ -1,0 +1,60 @@
+<html>
+<A NAME="v.to.db">
+<TITLE>v.to.db</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>v.to.db</EM></B> - load values from vector to database<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>v.to.db [-ps] map</B><EM>=name</EM> <B>type</B><EM>=name[,name,...]</EM> <B>option</B><EM>=name[,name,...]</EM> [<B>units</B><EM>=name</EM>] <B>table</B><EM>=name</EM> [<B>key</B><EM>=name</EM>] [<B>col1</B><EM>=name</EM>] [<B>col2</B><EM>=name</EM>]
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-p</B>
+<DD>Print only
+
+<DT><B>-s</B>
+<DD>Print only sql statements
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map</B>
+<DD>Vector map
+
+<DT><B>type</B>
+<DD>Type of elements
+<DD>Options: area, line, site
+
+<DT><B>option</B>
+<DD>What load
+<DD>Options: cat, label, area, length, count, coor
+
+<DT><B>units</B>
+<DD>Units data are in.  Either: mi(les), f(eet), me(ters), k(ilometers), a(cres), h(ectacres)
+<DD>Options: mi (miles), f (feet), me (meters), k (kilometers), a (acres), h (hectacres)
+
+<DT><B>table</B>
+<DD>DB table
+
+<DT><B>key</B>
+<DD>Key column
+
+<DT><B>col1</B>
+<DD>Column 1
+
+<DT><B>col2</B>
+<DD>Column 2
+</DL>
+
+<H2>AUTHOR</H2>
+<A HREF=mailto:Radim.Blazek@dhv.cz>Radim Blazek</A>
+
+</BODY>
+</HTML>
