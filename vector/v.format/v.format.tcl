@@ -58,7 +58,7 @@ proc check_vect {  } {
     } else {
 	set vf "$gisdbase/$location_name/$mapset/vector/$v"
 	if { [ file exists $vf ] } {
-	    set vecterrmsg "Vector already exists"
+	    set vecterrmsg "Vector map '$v' already exists"
             set vecterr 1
 	}
     }
@@ -211,7 +211,7 @@ proc create_vect { } {
     eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
 
     set vector ""
-    set resultmsg "Vector created"
+    set resultmsg "Vector map '$v' created"
 }
 
 # BUTTONS
