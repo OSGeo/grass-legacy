@@ -112,10 +112,10 @@ char *argv[];
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (verbose) printf ("percent complete: ");
+    if (verbose) fprintf (stderr, "%s: percent complete: ", G_program_name());
     for (row = 0; row < nrows; row++)
     {
-	if (verbose) G_percent (row, nrows, 10);
+	if (verbose) G_percent (row, nrows, 2);
 	if(G_get_map_row (infd[0], presult, row) < 0)
 	    exit(1);
 	G_update_cell_stats (presult, ncols, &statf[0]);
@@ -128,7 +128,7 @@ char *argv[];
 	}
 	G_put_map_row (outfd, presult);
     }
-    if (verbose) G_percent (row, nrows, 10);
+    if (verbose) G_percent (row, nrows, 2);
 
     free (patch);
     free (presult);
