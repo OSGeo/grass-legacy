@@ -1,15 +1,19 @@
-# $Id: Gmakefile,v 1.6 2000-10-04 15:11:45 markus Exp $
+# $Id: Gmakefile,v 1.7 2000-10-11 06:46:30 cho Exp $
 #
 # Toplevel makefile for building everything - used by configure script to 
 # build Gmakefile
 
-NV_VER=nviz2.2
-NVWISH_VER=NVWISH2.2
-INSTALL_DIR=$(GISBASE)/etc/nviz2.2
+VER=2.2
+NV_VER=nviz$(VER)
+NVWISH_VER=NVWISH$(VER)
+INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
 
-all: nvwish nviz install
+all: preconfigure nvwish nviz install
+
+preconfigure:
+	@PRECONFIGURE=YES ./preconfig $(VER) "$(PQLIB)"
 
 nvwish:
 	$(GMAKE) $(LIBDIR)/libimage
@@ -17,8 +21,8 @@ nvwish:
 	cd src ; $(GMAKE) 
 
 nviz:
-	'rm' -rf $(GISBASE)/etc/$(NV_VER)
-	mkdir $(GISBASE)/etc/$(NV_VER)
+	'rm' -rf $(INSTALL_DIR)
+	mkdir $(INSTALL_DIR)
 
 # Install the scripts in the appropriate directory
 install:

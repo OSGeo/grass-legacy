@@ -5,7 +5,6 @@
 # These should be set by the configure script
 NVWISH_VER=sed
 PQ_OBJS=sed
-PQLIB=sed
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
