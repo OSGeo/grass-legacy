@@ -61,6 +61,14 @@ Supported is a limited set of SQL functions and operators.
 <li> DBF column names are limited to 10 characters (DBF API definition)
 </ul>
 
+<h2>EXAMPLES</h2>
+
+Display all vector points except for LAMAR valley and <i>extensive trapping</i>:
+<pre>
+ d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
+    where="valley <> 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
+</pre>
+
 <h2>SEE ALSO</h2>
 <em>
 <a HREF="db.execute.html">db.execute</a>,
