@@ -1,0 +1,93 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+
+
+
+all:  \
+	$(MAPGEN_BIN)/MAPGEN $(MAPGEN_BIN)/show.sh $(MAPGEN_BIN)/plot.sh \
+	$(MAPGEN_BIN)/create.pat $(MAPGEN_BIN)/CHECK.MAP $(MAPGEN_BIN)/redo\
+	$(MAPGEN_BIN)/redo.misc $(MAPGEN_BIN)/show.font \
+	$(MAPGEN_BIN)/tput $(MAPGEN_BIN)/show.char $(MAPGEN_BIN)/etc \
+	$(MAPGEN_BIN)/rm.line $(MAPGEN_BIN)/rm.fill $(MAPGEN_BIN)/rm.legend \
+	$(MAPGEN_BIN)/rm.label $(MAPGEN_BIN)/rm.symbol $(MAPGEN_BIN)/rm.misc\
+	$(MAPGEN_BIN)/copy.map $(MAPGEN_BIN)/g.mapman
+
+$(MAPGEN_BIN)/MAPGEN: MAPGEN
+	cp MAPGEN $(MAPGEN_BIN)/MAPGEN
+	chmod 755 $(MAPGEN_BIN)/MAPGEN
+	if test -f $(UNIX_BIN)/MAPGEN; then rm $(UNIX_BIN)/MAPGEN; fi
+	ln $(MAPGEN_BIN)/MAPGEN $(UNIX_BIN)/MAPGEN
+
+$(MAPGEN_BIN)/show.sh: show.sh
+	cp show.sh $(MAPGEN_BIN)/show.sh
+
+$(MAPGEN_BIN)/show.font: show.font
+	cp show.font $(MAPGEN_BIN)/show.font
+
+$(MAPGEN_BIN)/show.char: show.char $(MAPGEN_BIN)/to_char
+	cp show.char $(MAPGEN_BIN)/show.char
+
+$(MAPGEN_BIN)/to_char: to_char.o
+	$(CC) $(LDFLAGS) -o $@ to_char.o
+
+$(MAPGEN_BIN)/plot.sh: plot.sh
+	cp plot.sh $(MAPGEN_BIN)/plot.sh
+
+$(MAPGEN_BIN)/create.pat: create.pat
+	cp create.pat $(MAPGEN_BIN)/create.pat
+
+$(MAPGEN_BIN)/CHECK.MAP: CHECK.MAP
+	cp CHECK.MAP $(MAPGEN_BIN)/CHECK.MAP
+
+$(MAPGEN_BIN)/redo.misc: redo.misc
+	cp redo.misc $(MAPGEN_BIN)/redo.misc
+
+$(MAPGEN_BIN)/redo: redo
+	cp redo $(MAPGEN_BIN)/redo
+
+$(MAPGEN_BIN)/tput: tput
+	cp tput $(MAPGEN_BIN)/tput
+
+$(MAPGEN_BIN)/rm.misc: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.misc
+	cp ren.layer $(MAPGEN_BIN)/ren.misc
+
+$(MAPGEN_BIN)/rm.line: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.line
+	cp ren.layer $(MAPGEN_BIN)/ren.line
+
+$(MAPGEN_BIN)/rm.fill: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.fill
+	cp ren.layer $(MAPGEN_BIN)/ren.fill
+
+$(MAPGEN_BIN)/rm.label: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.label
+	cp ren.layer $(MAPGEN_BIN)/ren.label
+
+$(MAPGEN_BIN)/rm.symbol: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.symbol
+	cp ren.layer $(MAPGEN_BIN)/ren.symbol
+
+$(MAPGEN_BIN)/rm.legend: rm.layer ren.layer
+	cp rm.layer $(MAPGEN_BIN)/rm.legend
+	cp ren.layer $(MAPGEN_BIN)/ren.legend
+
+$(MAPGEN_BIN)/copy.map: copy.map
+	cp copy.map $(MAPGEN_BIN)/copy.map
+
+$(MAPGEN_BIN)/g.mapman: g.mapman.o
+	$(CC) $(LDFLAGS) -o $@ g.mapman.o $(GISLIB) $(TERMLIB)
+
+$(MAPGEN_BIN)/etc: etc
+	./setup_map $(GRAPH)
+#	find etc -print | cpio -oc | (cd ${GRAPH}; cpio -idumcv)
+#	PATH=$PATH:$(GRAPH)/bin; export PATH
+#	$(GRAPH)/bin/mapdef -csm $(GRAPH)/etc/showfont/map.def < etc/showfont/map.def.par
+
+
+etc:#
