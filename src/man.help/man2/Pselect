@@ -1,0 +1,48 @@
+.\" %W% %G%
+.TH Pselect 2P P-language
+.SH NAME
+Pselect \- Selects hardcopy 
+.CT output paint
+device
+.SH SYNOPSIS
+\fBPselect\fR [-i] [\fIdevice\fR]
+.SH DESCRIPTION
+The GRASS tool \fIpaint\fR
+supports multiple hardcopy devices. The user is required to
+select a device before running any of the
+.I paint
+functions.
+
+.B Pselect
+.I device
+.br
+selects the specified
+.CT "" paint
+.I device
+for output.
+
+.B Pselect
+.br
+run without arguments simply prints the currently selected
+.CT "" paint
+.I device.
+
+.B "Pselect -i"
+.br
+asks \fIPselect\fR to run interactively. It will then print the name
+of the currently selected
+.CT "" paint
+.I device,
+list all paint
+.I devices
+on the system, and allow the user to select a new 
+.CT "device." "paint device."
+.SH "SEE ALSO"
+\fIpaint[1], Pmap[2P], Pscreen[2P]\fR
+.br
+.TS
+ll.
+\fIpaint[5]\fR	For a discussion of paint devices.
+.TE
+.SH AUTHOR
+Michael Shapiro, U.S. Army Constuction Engineering Research Laboratory.
