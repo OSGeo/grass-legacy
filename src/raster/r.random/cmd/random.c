@@ -10,11 +10,12 @@ CELL cat_zero;
 	double east, north;
 	struct Cell_head window;
 	int nrows, ncols, row, col;
-	int *rand;
 	int infd, outfd;
 	FILE *sitefd;
 	char msg[256];
 	CELL *cell;
+	long make_rand();
+	void init_rand();
 
 	G_get_window (&window);
 
@@ -55,14 +56,6 @@ CELL cat_zero;
 			fprintf (sitefd, "desc|Random sites from [%s in %s]\n", input, mapset);
 	}
 
-/*
-	if (verbose)
-		fprintf (stderr, "Creating list of %d random cells\n", targets);
-
-	rand = (int *) G_calloc (targets+2, sizeof(int));
-	create_rand (rand, targets, count);
-*/
-
 	if (verbose)
 	{
 		fprintf (stderr, "Writing ");
@@ -73,10 +66,10 @@ CELL cat_zero;
 		if (sites)
 			fprintf (stderr, "site file [%s] ", sites);
 		fprintf (stderr, "... ");
-		G_percent (0, targets, 10);
+		G_percent (0, targets, 2);
 	}
 
-    srand(getpid());
+	init_rand();
 	nc = count ;
 	nt = targets;
 	for (row = 0; row < nrows && nt ; row++)
@@ -93,7 +86,7 @@ CELL cat_zero;
 		{
 			if (cat_zero == 0 && cell[col] == 0)
 				continue;
-			nc-- ;
+
 			if (make_rand() % nc < nt)
 			{
 				nt--;
@@ -107,10 +100,12 @@ CELL cat_zero;
 					sprintf (msg, "#%ld", (long) cell[col]);
 					G_put_site (sitefd, east, north, msg);
 				}
-				G_percent (nt, targets, 10);
+				G_percent ((targets -nt), targets, 2);
 			}
 			else
 				cell[col] = 0;
+
+			nc-- ;
 		}
 
 		while (col < ncols)
