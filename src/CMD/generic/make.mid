@@ -5,8 +5,9 @@ SHELL           = /bin/sh
 # or files used by GRASS programs
 BIN             = $(GISBASE)/bin
 ETC             = $(GISBASE)/etc
-GARDEN_BIN      = $(GISBASE)/garden/bin
-GARDEN_ETC      = $(GISBASE)/garden/etc
+# unused, stored in BIN_MAIN_CMD now:
+##GARDEN_BIN      = $(GISBASE)/garden/bin
+##GARDEN_ETC      = $(GISBASE)/garden/etc
 BIN_MAIN_INTER  = $(ETC)/bin/main/inter
 BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
 BIN_ALPHA_INTER = $(ETC)/bin/main/inter
