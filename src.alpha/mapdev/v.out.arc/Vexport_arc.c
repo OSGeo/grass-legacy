@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* @(#)Vexport_arc.c	1.0   04/90 */
 /*  Written by  Dave Johnson
 **  DBA Systems, Inc.
@@ -31,21 +30,6 @@ static	char  *arc_prefix = NULL ;
 #ifdef OLDPARSE
 static  int  load_args() ;
 
-struct Command_keys vars[] = {
-	{ "cover_type", 1 },
-	{ "dig_file", 2 },
-	{ "arc_file", 3 },
-	{ "cov", 1 },
-	{ "dig", 2 },
-	{ "arc", 3 },
-	{ "c", 1 },
-	{ "d", 2 },
-	{ "a", 3 },
-	{ "input", 2 },
-	{ "output", 3 },
-	{ NULL,     0 }
-};
-
 #endif /*OLDPARSE*/
 
 main(argc, argv)
@@ -77,7 +61,7 @@ char **argv;
 			*lab_file,
 			*txt_file;
 
-	struct Option *opt1, *opt2, *opt3;
+	struct Option *opt1, *opt2, *opt3, *opt4;
 
 	G_gisinit(argv[0]);
 	progname = G_program_name();
@@ -92,10 +76,11 @@ char **argv;
 	opt1->description = "coverage type";
 
 	opt2 = G_define_option() ;
-	opt2->key        = "input";
+	opt2->key        = "vect";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = YES;
 	opt2->description= "input vector file for ARC/INFO conversion";
+	opt2->gisprompt  ="old,dig,vector";
 
 	opt3 = G_define_option() ;
 	opt3->key        = "arc_prefix";
@@ -103,6 +88,12 @@ char **argv;
 	opt3->required   = YES;
 	opt3->description= "prefix for ARC/INFO output filenames";
 
+	opt4 = G_define_option() ;
+	opt4->key        = "separator";
+	opt4->type       = TYPE_STRING;
+	opt4->required   = NO;
+	opt4->description= "field separator";
+	opt4->answer     = "space";
 
 	/*global flags, zero until respective files are actually written to*/
 	pol_flg = 0; /*apparent BUG--.pol suffix never implemented*/
@@ -144,7 +135,17 @@ char **argv;
 		G_usage();
 		exit (-1);
 	}
-
+	if ((opt4->answer == NULL)||(strcmp(opt4->answer, "space")==0))
+	{
+	   separator = ' ';
+	   space = 1;
+	}
+	else 
+	{
+	   if (strlen(opt4->answer) > 1) 
+	       G_fatal_error("A separator field must consist of one character only!");
+	   else      separator = *(opt4->answer);
+        }
 
 	if ((mapset = G_find_vector2 (dig_name, "")) == NULL)
 	{
