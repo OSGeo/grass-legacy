@@ -254,6 +254,40 @@ create_window(int argc, char **argv, int nlev)
     XMapWindow(dpy, grwin);
 }
 
+static Cursor
+create_cross_cursor(void)
+{
+    static int width  = 16;
+    static int height = 16;
+    static int x0 = 7;
+    static int y0 = 7;
+    static const unsigned char pix_data[] = {
+	0x00, 0x00, 0xa0, 0x02, 0xa0, 0x02, 0xa0, 0x02,
+	0xa0, 0x02, 0xbe, 0x3e, 0x80, 0x00, 0x7e, 0x3f,
+	0x80, 0x00, 0xbe, 0x3e, 0xa0, 0x02, 0xa0, 0x02,
+	0xa0, 0x02, 0xa0, 0x02, 0x00, 0x00, 0x00, 0x00
+    };
+    static const unsigned char mask_data[] = {
+	0x00, 0x00, 0xe0, 0x03, 0xe0, 0x03, 0xe0, 0x03,
+	0xe0, 0x03, 0xfe, 0x3f, 0xfe, 0x3f, 0x7e, 0x3f,
+	0xfe, 0x3f, 0xfe, 0x3f, 0xe0, 0x03, 0xe0, 0x03,
+	0xe0, 0x03, 0xe0, 0x03, 0x00, 0x00, 0x00, 0x00
+    };
+    Pixmap pix, mask;
+    XColor fg, bg;
+
+    fg.pixel = BlackPixel(dpy, scrn);
+    XQueryColor(dpy, fixedcmap, &fg);
+
+    bg.pixel = WhitePixel(dpy, scrn);
+    XQueryColor(dpy, fixedcmap, &bg);
+
+    pix  = XCreateBitmapFromData(dpy, grwin, pix_data, width, height);
+    mask = XCreateBitmapFromData(dpy, grwin, mask_data, width, height);
+
+    return XCreatePixmapCursor(dpy, pix, mask, &fg, &bg, x0, y0);
+}
+
 int
 Graph_Set(int argc, char **argv, int nlev)
 {
@@ -312,7 +346,8 @@ Graph_Set(int argc, char **argv, int nlev)
     }
 
     /* Create the cursors to be used later */
-    cur_xh = XCreateFontCursor(dpy, XC_crosshair);
+
+    cur_xh = create_cross_cursor();
     cur_clock = XCreateFontCursor(dpy, XC_watch);
 
     /* Create the GC. */
