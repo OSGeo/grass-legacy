@@ -2,6 +2,7 @@
 #define GRASS_ERR (-1)
 
 #define GRASS_VECT_DIRECTORY    "vector"
+#define GRASS_VECT_FRMT_ELEMENT "frmt"
 #define GRASS_VECT_COOR_ELEMENT "coor"
 #define GRASS_VECT_HEAD_ELEMENT "head"
 #define GRASS_VECT_TOPO_ELEMENT "topo"
@@ -49,6 +50,12 @@
 #define PORT_SHORT_MIN  (-32768)
 #define PORT_CHAR_MAX   127
 #define PORT_CHAR_MIN   (-128)
+
+/* Geometry data formats supported by lib */
+/* Don't change GV_FORMAT_* values, this order is hardcoded in lib */
+#define GV_FORMAT_NATIVE   0 /* grass native format */
+#define GV_FORMAT_SHAPE    1 /* shapefile format */
+#define GV_FORMAT_POSTGIS  2 /* postgis format */
 
 #define MODE_READ  0
 #define MODE_WRITE 1
@@ -120,7 +127,7 @@
 
 
 #define GV_POINT		0x01
-#define GV_DEAD_DOT		0x02
+#define GV_DEAD_POINT		0x02
 
 #define GV_LINE			0x04
 #define GV_DEAD_LINE		0x08
@@ -133,6 +140,9 @@
 
 #define GV_ALIVE 0x55
 #define GV_DEAD 0xAA
+
+#define GV_POINTS (GV_POINT | GV_DEAD_POINT | GV_CENTROID | GV_DEAD_CENTROID)
+#define GV_LINES (GV_LINE | GV_DEAD_LINE | GV_BOUNDARY | GV_DEAD_BOUNDARY)
 
 /* start of old, deprecated element (line) types */
 #define DOT		0x01

@@ -2,6 +2,8 @@
    **  Written by Dave Gerdes  5/1988
    **  US Army Construction Engineering Research Lab
  */
+#include "config.h"
+
 #ifndef  DIG___STRUCTS___
 #define DIG___STRUCTS___
 #include "dig_head.h"
@@ -9,6 +11,13 @@
 /*  this file depends on  <stdio.h> */
 #ifndef _STDIO_H
 #include <stdio.h>
+#endif
+
+#include "shapefil.h"
+
+
+#ifdef HAVE_POSTGRES
+#include "libpq-fe.h"
 #endif
 
 #define HEADSTR	50
@@ -32,8 +41,61 @@ typedef int plus_t;
 #define P_ISLE struct P_isle
 #define P_ATT struct P_att
 
+
+
+/* Non-native format inforamtion */
+/* Shapefile */
+struct Format_info_shp {
+    char       *file;    /* path to shp file without .shp */
+    char       *cat_col; /* category column */
+    SHPHandle  hShp;     
+    DBFHandle  hDbf;
+    int        type;     /* shapefile type */
+    int        nShapes;  /* number of shapes */
+    int        shape;    /* offset: next shape */ 
+    int        part;     /* offset: next part */ 
+};
+/* PostGIS */
+#ifdef HAVE_POSTGRES
+struct Format_info_post {
+    char       *host;        /* host name */
+    char       *port;        /* port number */
+    char       *database;    /* database name */
+    char       *user;        /* user name */ 
+    char       *password;    /* user password */
+    char       *geom_table;  /* geometry table name */
+    char       *cat_table;   /* category table name */
+    char       *geom_id;     /* geometry table: id column */
+    char       *geom_type;   /* geometry table: type column */
+    char       *geom_geom;   /* geometry table: column name */
+    char       *cat_id;      /* category table: id column */
+    char       *cat_field;   /* category table: field column */
+    char       *cat_cat;     /* category table: category column */
+    PGconn     *conn;        /* connection */
+    int        selected;     /* 0 - data not selected, 1 - data selected */
+    PGresult   *geomRes;    /* results from geometry table */
+    PGresult   *catRes;     /* results from category table */
+    int        nGeom;        /* number of selected geometry records */ 
+    int        nCat;         /* number of selected category records */ 
+    int        nextRow;      /* number of the next row in geometry 
+				selection to be read */ 
+    int        nextId;       /* id number of the next geometry record to be read */ 
+};
+#endif
+struct Format_info {
+    int i;
+    struct Format_info_shp shp;
+#ifdef HAVE_POSTGRES
+    struct Format_info_post post;
+#endif
+} ;
+
+
 struct Map_info
   {
+    int format;         /* format */
+    struct Format_info fInfo;  /* format information */
+      
     P_NODE *Node;		/* P_NODE array *//* 1st item is 1 for  */
     P_AREA *Area;		/* P_AREA array *//* all these (not 0) */
     P_LINE *Line;		/* P_LINE array */
