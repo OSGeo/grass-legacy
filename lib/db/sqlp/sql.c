@@ -75,7 +75,7 @@ void sqpColumn( char *col )
     return;
 }
 
-void sqpColumnDef( char *col, int type, char *width, char *decimals )
+void sqpColumnDef( char *col, int type, int width, int decimals )
 {
     int i;
     
@@ -83,14 +83,14 @@ void sqpColumnDef( char *col, int type, char *width, char *decimals )
     sqpAllocCol(sqlpStmt, i + 1 );
     sqpSaveStr ( &(sqlpStmt->Col[i]), col );
     sqlpStmt->ColType[i] = type;
-    sqlpStmt->ColWidth[i] = atoi ( width );
-    sqlpStmt->ColDecim[i] = atoi ( decimals );
+    sqlpStmt->ColWidth[i] = width;
+    sqlpStmt->ColDecim[i] = decimals;
 
     sqlpStmt->nCol++;
     return;
 }
 
-void sqpValue( char *val, int type )
+void sqpValue( char *strval, int intval, double dblval, int type )
 {
     int i;
     
@@ -104,13 +104,13 @@ void sqpValue( char *val, int type )
     switch ( type  )
       {
         case (SQLP_S):
-            sqpSaveStr ( &(sqlpStmt->Val[i]), val );
+            sqpSaveStr ( &(sqlpStmt->Val[i]), strval );
             break;	
         case (SQLP_I):
-            sqlpStmt->Val[i].i = atoi ( val );
+            sqlpStmt->Val[i].i = intval;
             break;	
         case (SQLP_D):
-            sqlpStmt->Val[i].d = atof ( val );
+            sqlpStmt->Val[i].d = dblval;
             break;	
       }
 
@@ -118,7 +118,7 @@ void sqpValue( char *val, int type )
     return;
 }
 
-void sqpAssignment( char *col, char *val, int type )
+void sqpAssignment( char *col, char *strval, int intval, double dblval, int type )
 {
     int i;
     
@@ -131,13 +131,13 @@ void sqpAssignment( char *col, char *val, int type )
     switch ( type  )
       {
         case (SQLP_S):
-            sqpSaveStr ( &(sqlpStmt->Val[i]), val );
+            sqpSaveStr ( &(sqlpStmt->Val[i]), strval );
             break;	
         case (SQLP_I):
-            sqlpStmt->Val[i].i = atoi ( val );
+	    sqlpStmt->Val[i].i = intval;
             break;	
         case (SQLP_D):
-            sqlpStmt->Val[i].d = atof ( val );
+            sqlpStmt->Val[i].d = dblval;
             break;	
       }
 
@@ -146,7 +146,7 @@ void sqpAssignment( char *col, char *val, int type )
     return;
 }
 
-void sqpComparison( char *col, char *oper, char *val, int type )
+void sqpComparison( char *col, char *oper, char *strval, int intval, double dblval, int type )
 {
     int i;
     
@@ -172,13 +172,13 @@ void sqpComparison( char *col, char *oper, char *val, int type )
     switch ( type  )
       {
         case (SQLP_S):
-            sqpSaveStr ( &(sqlpStmt->ComVal[i]), val );
+            sqpSaveStr ( &(sqlpStmt->ComVal[i]), strval );
             break;	
         case (SQLP_I):
-            sqlpStmt->ComVal[i].i = atoi ( val );
+            sqlpStmt->ComVal[i].i = intval;
             break;	
         case (SQLP_D):
-            sqlpStmt->ComVal[i].d = atof ( val );
+            sqlpStmt->ComVal[i].d = dblval;
             break;	
       }
 

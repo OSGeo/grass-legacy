@@ -43,8 +43,8 @@
 %token <strval> COMPARISON
 %token <strval> NAME
 %token <strval> STRING
-%token <strval> INTNUM 
-%token <strval> FLOATNUM
+%token <intval> INTNUM 
+%token <floatval> FLOATNUM
 
 %token EQUAL
 %token SELECT FROM WHERE
@@ -101,10 +101,10 @@ y_columndefs:
 	;
 
 y_columndef:
-		NAME VARCHAR '(' INTNUM ')'	{ sqpColumnDef( $1, SQLP_VARCHAR, $4, "0" ); }
-	|	NAME INT 			{ sqpColumnDef( $1, SQLP_INTEGER,  "0", "0" ); }
-	|	NAME INTEGER 			{ sqpColumnDef( $1, SQLP_INTEGER,  "0", "0" ); }
-	|	NAME DOUBLE			{ sqpColumnDef( $1, SQLP_DOUBLE,   "0", "0" ); }
+		NAME VARCHAR '(' INTNUM ')'	{ sqpColumnDef( $1, SQLP_VARCHAR, $4, 0 ); }
+	|	NAME INT 			{ sqpColumnDef( $1, SQLP_INTEGER,  0, 0 ); }
+	|	NAME INTEGER 			{ sqpColumnDef( $1, SQLP_INTEGER,  0, 0 ); }
+	|	NAME DOUBLE			{ sqpColumnDef( $1, SQLP_DOUBLE,   0, 0 ); }
 	;
 
 y_columns:
@@ -126,12 +126,12 @@ y_values:
 	;
 
 y_value_list:
-		STRING				{ sqpValue( $1, SQLP_S ); }
-        |	INTNUM				{ sqpValue( $1, SQLP_I ); }
-	|	FLOATNUM			{ sqpValue( $1, SQLP_D ); }
-	|	y_value_list ',' STRING		{ sqpValue( $3, SQLP_S ); }
-	|	y_value_list ',' INTNUM		{ sqpValue( $3, SQLP_I ); }
-	|	y_value_list ',' FLOATNUM	{ sqpValue( $3, SQLP_D ); }
+		STRING				{ sqpValue( $1, 0, 0, SQLP_S ); }
+        |	INTNUM				{ sqpValue( NULL, 456, 0, SQLP_I ); }
+	|	FLOATNUM			{ sqpValue( NULL, 0, $1, SQLP_D ); }
+	|	y_value_list ',' STRING		{ sqpValue( $3, 0, 0, SQLP_S ); }
+	|	y_value_list ',' INTNUM		{ sqpValue( NULL, $3, 0, SQLP_I ); }
+	|	y_value_list ',' FLOATNUM	{ sqpValue( NULL, 0, $3, SQLP_D ); }
 	;
 
 y_assignments:
@@ -140,9 +140,9 @@ y_assignments:
 	;
 	
 y_assignment:
-		NAME EQUAL STRING		{ sqpAssignment( $1, $3, SQLP_S ); }
-        |	NAME EQUAL INTNUM		{ sqpAssignment( $1, $3, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, $3, SQLP_D ); }
+		NAME EQUAL STRING	{ sqpAssignment( $1,   $3,  0, 0, SQLP_S ); }
+        |	NAME EQUAL INTNUM	{ sqpAssignment( $1, NULL, $3, 0, SQLP_I ); }
+        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,$3, SQLP_D ); }
 	;
 
 y_condition:
@@ -156,11 +156,11 @@ y_comparisons:
 	;
 	
 y_comparison:
-		NAME EQUAL STRING		{ sqpComparison( $1, "=", $3, SQLP_S ); }
-        |	NAME EQUAL INTNUM		{ sqpComparison( $1, "=", $3, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM		{ sqpComparison( $1, "=", $3, SQLP_D ); }
-        |	NAME COMPARISON INTNUM		{ sqpComparison( $1, $2, $3, SQLP_I ); }
-        |	NAME COMPARISON FLOATNUM	{ sqpComparison( $1, $2, $3, SQLP_D ); }
+		NAME EQUAL STRING		{ sqpComparison( $1, "=", $3,    0,  0, SQLP_S ); }
+        |	NAME EQUAL INTNUM		{ sqpComparison( $1, "=", NULL, $3,  0, SQLP_I ); }
+        |	NAME EQUAL FLOATNUM		{ sqpComparison( $1, "=", NULL,  0, $3, SQLP_D ); }
+        |	NAME COMPARISON INTNUM		{ sqpComparison( $1, $2,  NULL, $3,  0, SQLP_I ); }
+        |	NAME COMPARISON FLOATNUM	{ sqpComparison( $1, $2,  NULL,  0, $3, SQLP_D ); }
 	;
 
 
