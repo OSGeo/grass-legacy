@@ -1,0 +1,16 @@
+PGM       = $(GARDEN_BIN)/r.rescale.inf
+LIBES     = $(GISLIB)
+
+# EXTRA_CFLAGS	= -Dunlink=puts
+
+
+
+OBJS = \
+	main.o \
+	infxQry.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
