@@ -1,7 +1,10 @@
 #! /usr/bin/python
+## vim:ts=4:et:sts=4:sw=4:ai:
+""" Construct simple wxPython GUI from a GRASS command interface description.
 
 # Copyright (C) 2000 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
+# improved by: Bernhard Reiter   <bernhard@intevation.de>
 #
 # This program is free software under the GPL (>=v2)
 # Read the file COPYING coming with GRASS for details.
@@ -20,14 +23,40 @@
 # 
 # Or you set an alias or wrap the call up in a nice
 # shell script, GUI environment ... please contribute your idea.
+"""
+__version__ ="$RCSFile$ $Revision$"
 
 from wxPython.wx import *
-from xml.sax import saxexts
-from xml.sax import saxlib
-from xml.sax import saxutils
+import sys
+oldPython=0
+
+if not sys.__dict__.has_key("version_info"):
+    # We can assume to have python 1.5.2 or lower here now
+    oldPython=1
+
+if oldPython:
+    try:
+        from xml.sax.saxexts import make_parser
+        from xml.sax.saxlib import HandlerBase
+        from xml.sax import saxutils
+    except ImportError:
+        sys.stdout.write("You need to have Python-XML installed or" +
+                   " a modern Python!\n"+
+                   "Check www.python.org/sigs/xml-sig/\n\n")
+        raise
+    
+else:
+    # Do the python 2.0 standard xml thing and map it on the old names
+    import xml.sax
+    import xml.sax.handler
+    HandlerBase=xml.sax.handler.ContentHandler
+    from xml.sax import make_parser
+
+
+
 from os import system
 
-ID_RUN   = 10
+ID_RUN    = 10
 ID_CANCEL= 11
 ID_PARAM_START = 900
 
@@ -41,7 +70,7 @@ MENU_HEIGHT = 30
 STATUSBAR_HEIGHT = 30
 ENTRY_HEIGHT = 20
 STRING_ENTRY_WIDTH = 300
-BUTTON_HEIGHT = 30
+BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
 
 grass_task = { 'name' : 'unknown', 'description' : 'No description available.',
@@ -55,7 +84,22 @@ def escape_ampersand(text):
     "Escapes ampersands with additional ampersand for GUI"
     return string.replace(text, "&", "&&")
 
-class processTask(saxlib.HandlerBase):
+class testSAXContentHandler(HandlerBase):
+# SAX compliant
+    def characters(self, ch, start, length):
+        pass
+    
+def test_for_broken_SAX():
+    ch=testSAXContentHandler()
+    try:
+        xml.sax.parseString("""<?xml version="1.0"?>
+            <child1 name="paul">Text goes here</child1>
+	    """,ch)
+    except TypeError:
+        return 1
+    return 0
+
+class processTask(HandlerBase):
     def __init__(self):
         self.inDescriptionContent = 0
         self.inDefaultContent = 0
@@ -90,13 +134,22 @@ class processTask(saxlib.HandlerBase):
             self.inValueContent = 1
             self.value_tmp = ''
 
-    def characters(self, ch, start, length):
+    if not oldPython and test_for_broken_SAX():
+        # works with python 2.0, but is not SAX compliant
+        def characters(self, ch):
+            self.my_characters(ch)
+    else:
+        # SAX compliant
+        def characters(self, ch, start, length):
+            self.my_characters(ch[start:start+length])
+
+    def my_characters(self, ch):
         if self.inDescriptionContent:
-            self.description = self.description + ch[start:start+length]
+            self.description = self.description + ch
         if self.inDefaultContent:
-            self.param_default = self.param_default + ch[start:start+length]
+            self.param_default = self.param_default + ch
         if self.inValueContent:
-            self.value_tmp = self.value_tmp + ch[start:start+length]
+            self.value_tmp = self.value_tmp + ch
 
     def endElement(self, name): 
         # If it's not a parameter element, ignore it
@@ -124,17 +177,17 @@ class processTask(saxlib.HandlerBase):
 
 class mainFrame(wxFrame):
     def __init__(self, parent, ID, w, h):
-        wxFrame.__init__(self, parent, ID, grass_task['name'],
+        wxFrame.__init__(self, parent, ID, str(grass_task['name']),
             wxDefaultPosition, wxSize(w, h))
 
         self.CreateStatusBar()
-        self.SetStatusText('Enter parameters for ' + grass_task['name'])
+        self.SetStatusText("Enter parameters for " + str(grass_task['name']))
 
         menu = wxMenu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
                     "Information about GrassGUI")
-        menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task['name'],
-                    "Short descripton of GRASS command " + grass_task['name'])
+        menu.Append(ID_ABOUT_COMMAND, "&About " + str(grass_task['name']),
+                    "Short descripton of GRASS command " + str(grass_task['name']))
         menu.AppendSeparator()
         menu.Append(ID_EXIT, "E&xit", "Terminate the program")
 
@@ -148,7 +201,7 @@ class mainFrame(wxFrame):
         p_count = 0
         l_count = 0
         while p_count < len(grass_task['params']):
-            title = escape_ampersand(grass_task['params'][p_count]['description'])
+            title = str(escape_ampersand(grass_task['params'][p_count]['description']))
             if grass_task['params'][p_count]['required'] == 'no':
                 title = "[optional] " + title
             if grass_task['params'][p_count]['multiple'] == 'yes':
@@ -158,10 +211,12 @@ class mainFrame(wxFrame):
                 wxStaticText(self.panel, -1, title + ':',
                     wxPoint(HSPACE, l_count * ENTRY_HEIGHT + VSPACE + p_count * VSPACE), wxSize(-1, -1))
                 l_count = l_count + 1
+
+                valuelist=map(str,grass_task['params'][p_count]['values'])
                 wxComboBox(self.panel, ID_PARAM_START + p_count, grass_task['params'][p_count]['default'],
                     wxPoint(HSPACE, l_count * ENTRY_HEIGHT + VSPACE + p_count * VSPACE),
                     wxSize(STRING_ENTRY_WIDTH, -1),
-                    grass_task['params'][p_count]['values'], wxCB_DROPDOWN)
+                    valuelist, wxCB_DROPDOWN)
                 EVT_COMBOBOX(self, ID_PARAM_START + p_count, self.EvtComboBox)
 
             if ((grass_task['params'][p_count]['type'] == 'string' or
@@ -242,14 +297,16 @@ class mainFrame(wxFrame):
     def OnAbout(self, event):
         dlg = wxMessageDialog(self, "This is a sample program for\n"
                               "GRASS command interface parsing\n"
-                              "and automatic GUI building.",
+                              "and automatic GUI building. \n%s" %(__version__),
                               "About GrassGUI", wxOK | wxICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
 
     def OnAboutCommand(self, event):
-        dlg = wxMessageDialog(self, grass_task['description'],
-                              "About " + grass_task['name'], wxOK | wxICON_INFORMATION)
+        dlg = wxMessageDialog(self, 
+                            grass_task['name']+": "+grass_task['description'],
+                            "About " + grass_task['name'], 
+                            wxOK | wxICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
 
@@ -268,12 +325,17 @@ if len(sys.argv) > 1:
     print "usage: <grass command> --task-description | " + sys.argv[0]
 else:
     # parse the interface decription
-    parser = saxexts.make_parser()
-    dh = processTask()
-    parser.setDocumentHandler(dh)
-    parser.setErrorHandler(saxutils.ErrorPrinter())
-    parser.parseFile(sys.stdin)
-    parser.close()
+    handler = processTask()
+
+    if oldPython:
+        parser = make_parser()
+        parser.setDocumentHandler(handler)
+        parser.setErrorHandler(saxutils.ErrorPrinter())
+        parser.parseFile(sys.stdin)
+        parser.close()
+    else:
+        xml.sax.parse(sys.stdin,handler)
+
     # Create the application
     app = GrassGUIApp(0)
     app.MainLoop()
