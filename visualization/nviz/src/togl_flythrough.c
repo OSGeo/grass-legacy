@@ -159,6 +159,7 @@ WARNING: 	remember to add "togl_flythrough.o"
 #define TOGL_SCALE_DIM	2
 
 extern Ndraw_all_cmd();
+
 int Nset_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
 int Nget_viewdir_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
 int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv);
@@ -182,7 +183,7 @@ struct mouseData
 
 struct flyData
 {
-	int		mode;
+	int	mode;
 	float	valuator[3];
 	float	scale[TOGL_SCALE_DIM];
 	float	accelRate;
@@ -193,18 +194,18 @@ struct flyData
 	float	dy;
 	float	mx;
 	float	my;
-	int		lateral;
-	int		twist;
+	int	lateral;
+	int	twist;
 	float	center[3];
 };
 
 struct cbData
 {
 	int	coarse_draw;
-	struct mouseData	mouse;
-	struct flyData		fly;
-	Nv_data * 	nv_data;
-	Tcl_Interp * interp;
+	struct 	mouseData mouse;
+	struct 	flyData	fly;
+	Nv_data *nv_data;
+	Tcl_Interp *interp;
 };
 
 /* This contains almost everything*/
@@ -252,9 +253,11 @@ void flythrough_postdraw_cb_remove(void (*func)(void*))
 */
 int Nset_fly_mode_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv)
 {
-    if (argc != 2) return (TCL_ERROR);
+int mode;
+    if (argc != 2) 
+	    return(TCL_ERROR);
 
-    int mode = atoi(argv[1]);
+    mode = atoi(argv[1]);
 
 	if (mode != TOGL_FLY_SIMPLE) GS_set_twist(0);
 
@@ -281,7 +284,7 @@ int Nset_fly_scale_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **arg
 int Nget_fly_scale_cmd(Nv_data * data, Tcl_Interp * interp, int argc, char **argv)
 {
     char *list[2];
-	char scale0[32], scale1[32];
+    char scale0[32], scale1[32];
 
     if (argc != 1) return (TCL_ERROR);
 
@@ -303,11 +306,11 @@ void togl_flythrough_init(struct Togl *togl)
 {
 	float n, s, w, e;
 
-	/* Useful constants */
-	half_pi 		= 2.0f * atan(1.0);
-    pi 				= 2.0f * half_pi;
-    double_pi 		= 2.0f * pi;
-	quasi_half_pi 	= half_pi - 0.001f;
+/* Useful constants */
+half_pi	= 2.0f * atan(1.0);
+pi = 2.0f * half_pi;
+double_pi = 2.0f * pi;
+quasi_half_pi = half_pi - 0.001f;
 
 	cb_data.coarse_draw = TRUE;
 
@@ -375,9 +378,15 @@ void togl_flythrough_init_tcl(Tcl_Interp * interp, Nv_data * data)
 void togl_flythrough_timer_cb(struct Togl *togl)
 {
 	/* it's here in order to avoid to modify other files to call togl_flythrough_init() */
-	static first_time=1;if (first_time) {first_time=0;togl_flythrough_init(togl);return;}
-
-	struct cbData *cb = (struct cbData *) Togl_GetClientData( togl );
+	static first_time=1;
+	struct cbData *cb = (struct cbData *)Togl_GetClientData( togl );
+	
+	
+	if (first_time) {
+		first_time=0;
+		togl_flythrough_init(togl);
+		return;
+	}
 
 	if (cb->fly.mode != TOGL_FLY_OTHER) {
 		mouse_valuator(togl);
@@ -393,8 +402,8 @@ double this_time(void)
 {
 	struct timeval tv;
 	struct timezone tz;
-	gettimeofday(&tv, &tz);
 
+	gettimeofday(&tv, &tz);
 	return( (float)tv.tv_sec + ((float)tv.tv_usec/1000000.0) );
 }
 
@@ -434,7 +443,7 @@ void event_proc(ClientData clientData, XEvent *eventPtr)
 void calc_mxmy(struct Togl *togl)
 {
     float mx, my;
-	struct cbData *cb = (struct cbData *) Togl_GetClientData( togl );
+    struct cbData *cb = (struct cbData *) Togl_GetClientData( togl );
 
 	mx = 2.0f * ((float)cb->mouse.x / (float)Togl_Width(togl)) - 1.0f;
 	my = 2.0f * ((float)cb->mouse.y / (float)Togl_Height(togl)) - 1.0f;
@@ -453,15 +462,17 @@ void calc_mxmy(struct Togl *togl)
 
 void mouse_valuator (struct Togl *togl)
 {
+	double thisTime;
+	double deltaTime;
 	struct cbData *cb = (struct cbData *) Togl_GetClientData( togl );
 
 	cb->fly.valuator[0] = 0.0; cb->fly.valuator[1] = 0.0; cb->fly.valuator[2] = 0.0;
 	cb->fly.lateral=0;
 	cb->fly.twist=0;
 
-	double thisTime = this_time();
-	double deltaTime = thisTime - cb->fly.prevTime;
-    cb->fly.prevTime = thisTime;
+	thisTime = this_time();
+	deltaTime = thisTime - cb->fly.prevTime;
+    	cb->fly.prevTime = thisTime;
 
     switch (cb->fly.mode) {
 
@@ -536,9 +547,10 @@ void mouse_valuator (struct Togl *togl)
 
 void do_navigation (struct Togl *togl)
 {
-	float dir[3], from[4], cur_from[4], cur_dir[4], cur[3];
-    float speed, h, p, sh, ch, sp, cp, radius;
-	int twist, cur_twist;
+   float dir[3], from[4], cur_from[4], cur_dir[4], cur[3];
+   float speed, h, p, sh, ch, sp, cp, radius;
+   float diff_x, diff_y, diff_z;
+   int twist, cur_twist;
 
 	struct cbData *cb = (struct cbData *) Togl_GetClientData( togl );
 	struct flyData *fly = &(cb->fly);
@@ -617,9 +629,9 @@ void do_navigation (struct Togl *togl)
 		break;
     }
 
-	float diff_x = fabs(cur_dir[X] - dir[X]);
-	float diff_y = fabs(cur_dir[Y] - dir[Y]);
-	float diff_z = fabs(cur_dir[Z] - dir[Z]);
+	diff_x = fabs(cur_dir[X] - dir[X]);
+	diff_y = fabs(cur_dir[Y] - dir[Y]);
+	diff_z = fabs(cur_dir[Z] - dir[Z]);
 
 	if ( /* something has changed */
 		(diff_x > QUASI_ZERO)	||	(diff_y > QUASI_ZERO) 	|| (diff_z > QUASI_ZERO) ||
