@@ -12,7 +12,7 @@ static int nlines = 50;
 int 
 what (char **coords, int interactive, int once, struct Map_info *Map, struct Categories *Cats)
 {
-  int i;
+  int i, j;
   int lcat, acat;
   int row, col;
   int nrows, ncols;
@@ -27,8 +27,15 @@ what (char **coords, int interactive, int once, struct Map_info *Map, struct Cat
   P_LINE *Line;
   P_AREA *Area;
   plus_t line, area;
+  struct line_pnts * Points; /* used during area calculation */
 
   G_get_set_window (&window);
+  /* 
+   inititalizations needed to do area calculations for
+   grid cells, based on the current window "projection" field.
+  */
+  G_begin_polygon_area_calculations();
+
   nrows = window.rows;
   ncols = window.cols;
 
@@ -141,9 +148,22 @@ what (char **coords, int interactive, int once, struct Map_info *Map, struct Cat
       else
 	printf ("Area - Category <not tagged>\n");
 
-      /* Area stats - just for grins */
-      dig_find_area2 (Map, Area, &sq_meters);
+	/* Initialization of the structure */
+	Points = Vect_new_line_struct();
 
+	/* First, calculating the whole area */
+	Vect_get_area_points(Map, area, Points);
+	sq_meters = 
+	  G_area_of_polygon(Points->x, Points->y, Points->n_points);
+
+	/* Then substracting islands, if any  */
+	for(j = 0; j < Area->n_isles; j++) {
+		Vect_get_isle_points(Map, Area->isles[j], Points);
+		sq_meters -= 
+		  G_area_of_polygon(Points->x, Points->y, Points->n_points);
+	}
+
+	/* Now tell the world */
       printf ("Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
 	      sq_meters, (sq_meters / 10000.));
 
