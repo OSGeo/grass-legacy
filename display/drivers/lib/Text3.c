@@ -11,8 +11,10 @@
 #include <iconv.h>
 #endif
 
+#ifdef HAVE_FT2BUILD_H
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#endif
 
 #include "driver.h"
 #include "driverlib.h"
@@ -22,18 +24,22 @@
 /*#define DEBUG_LOG_DOUBLE(D) {FILE *fp = fopen("debug.TXT","a");fprintf(fp,"%f",D);fclose(fp);}*/
 
 static int drawMain(int,int,double,double,double,char*);
-static int setMatrix(FT_Matrix*,double);
 static int convert_str(char*,char*,unsigned char**);
 static void release_convert_str(unsigned char*);
+
+#ifdef HAVE_FT2BUILD_H
+static int setMatrix(FT_Matrix*,double);
 static int draw_text(FT_Face,FT_Vector*,FT_Matrix*,unsigned char*,int,int);
 static void draw_bitmap(FT_Bitmap*,FT_Int,FT_Int);
 static void set_text_box(FT_Bitmap*,FT_Int,FT_Int);
+#endif /* HAVE_FT2BUILD_H */
 
 static int fdont_draw = 0;
 static int ft, fb, fl, fr;
 
 int drawMain(int x,int y,double text_size_x,double text_size_y,double text_rotation,char *string) {
 
+#ifdef HAVE_FT2BUILD_H
 	FT_Library		library;
 	FT_Face			face;
 	FT_Matrix		matrix;
@@ -106,15 +112,7 @@ int drawMain(int x,int y,double text_size_x,double text_size_y,double text_rotat
 	FT_Done_FreeType(library);
 
 	return 0;
-}
-
-int setMatrix(FT_Matrix* matrix,double rotation) {
-	matrix->xx = (FT_Fixed)( cos(rotation)*0x10000);
-	matrix->xy = (FT_Fixed)(-sin(rotation)*0x10000);
-	matrix->yx = (FT_Fixed)( sin(rotation)*0x10000);
-	matrix->yy = (FT_Fixed)( cos(rotation)*0x10000);
-
-	return 0;
+#endif /* HAVE_FT2BUILD_H */
 }
 
 int convert_str(char* from,char* in,unsigned char** out) {
@@ -166,13 +164,27 @@ void release_convert_str(unsigned char* out) {
 	free(out);
 }
 
+#ifdef HAVE_FT2BUILD_H
+int setMatrix(FT_Matrix* matrix,double rotation) {
+	matrix->xx = (FT_Fixed)( cos(rotation)*0x10000);
+	matrix->xy = (FT_Fixed)(-sin(rotation)*0x10000);
+	matrix->yx = (FT_Fixed)( sin(rotation)*0x10000);
+	matrix->yy = (FT_Fixed)( cos(rotation)*0x10000);
+
+	return 0;
+}
+#endif /* HAVE_FT2BUILD_H */
+
+#ifdef HAVE_FT2BUILD_H
 int soft_text_freetype(int x,int y,double text_size_x,double text_size_y,double text_rotation,char *string) {
 	text_size_x *= 25.0;
 	text_size_y *= 25.0;
 	drawMain(x,y,text_size_x,text_size_y,text_rotation,string);
 	return 0;
 }
+#endif /* HAVE_FT2BUILD_H */
 
+#ifdef HAVE_FT2BUILD_H
 int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,int len,int color) {
 	int i=0;
 	FT_ULong ch;
@@ -202,7 +214,9 @@ int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,i
 	}
 	return 0;
 }
+#endif /* HAVE_FT2BUILD_H */
 
+#ifdef HAVE_FT2BUILD_H
 void set_text_box(FT_Bitmap* bitmap,FT_Int x,FT_Int y) {
 	FT_Int xMax = x + bitmap->width;
 	FT_Int yMax = y + bitmap->rows;
@@ -213,10 +227,13 @@ void set_text_box(FT_Bitmap* bitmap,FT_Int x,FT_Int y) {
 	if(yMax>fb) fb = yMax;
 	return;
 }
+#endif /* HAVE_FT2BUILD_H */
 
+#ifdef HAVE_FT2BUILD_H
 void draw_bitmap(FT_Bitmap* bitmap,FT_Int x,FT_Int y) {
 	FT_Int i,j,p,q;
 	unsigned char color;
+
 	FT_Int xMax = x + bitmap->width;
 	FT_Int yMax = y + bitmap->rows;
 	for(i=x,p=0;i<xMax;i++,p++) {
@@ -230,8 +247,10 @@ void draw_bitmap(FT_Bitmap* bitmap,FT_Int x,FT_Int y) {
 	}
 	return;
 }
+#endif /* HAVE_FT2BUILD_H */
 
 int soft_text_ext_freetype(int x,int y,double text_size_x,double text_size_y,double text_rotation,char *string) {
+#ifdef HAVE_FT2BUILD_H
 	fdont_draw = 1;
 	text_size_x *= 25.0;
 	text_size_y *= 25.0;
@@ -248,13 +267,16 @@ int soft_text_ext_freetype(int x,int y,double text_size_x,double text_size_y,dou
 	fr += x;
 	fdont_draw = 0;
 	return 0;
+#endif /* HAVE_FT2BUILD_H */
 }
 
 int get_text_ext_freetype (int *top,int *bot,int *left,int *rite){
+#ifdef HAVE_FT2BUILD_H
 	*top = ft;
 	*bot = fb;
 	*left = fl;
 	*rite = fr;
 	return 0;
+#endif /* HAVE_FT2BUILD_H */
 }
 
