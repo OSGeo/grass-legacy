@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.88 2000-11-26 11:54:37 markus Exp $
+$Id: BUGS,v 1.89 2000-11-27 08:08:10 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -132,6 +132,19 @@ g.help:
 
 g3.region:
  - no parser implemented yet
+ - bug: if modeling soils data (top=0, bottom=-100 cm), you cannot set
+   top below surface:
+   [...]
+     top:        -20
+  bottom:        -30
+  e-w res:     10
+  n-s res:     10
+  t-b res:     10
+  [...]
+  total depths:                1
+  total cells:         2,280,000
+  warning - top falls outside the default region
+  -> this test is incorrect!
   (being worked on by ?)  
 
 [RC]nviz2.2:
