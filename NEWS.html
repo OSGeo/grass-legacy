@@ -20,7 +20,16 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 
 <p>
 <h3><font color="#00FE00">What's new in GRASS 5 betaCVS comparing to beta8</font></h3>
-<b>Modules</b>
+
+<b>User's convenience</b>
+<menu>
+<li> New graphical startup for <b>existing</b> locations (the full graphical
+startup is schedules for GRASS 5.1 (Justin Hickey, Jacques Bouchard)
+<li> Added one line description for "-help" parameter to describe purpose of
+each module (Jan Wagner and others)
+</menu>
+
+<b>Modules fixed/updated</b>
 <menu>
 <li> d.dm: added raster legend, paint labels, monitor auto start (Radim
      Blazek)
@@ -54,7 +63,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.in.gdal: added - might become general raster import module, see
   supported formats at <a
   href=http://www.remotesensing.org/gdal/formats_list.html>GDAL</a> (Frank
-     Warmerdam)
+     Warmerdam), support for complex SAR images (Stefano Merler)
 <li> r.in.gridatb: added, imports GRIDATB map file (Huidae Cho/Keith Beven)
 <li> r.in.tiff/r.out.tiff: bugfix, added .tfw support (Eric G. Miller)
 <li> r.in.utm: bugfix (Andreas Lange)
@@ -69,7 +78,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.surf.area: updated to work with FP rasters, skipping NULL cells (Eric
      G. Miller)
 <li> r.topidx: added, creates topographic index, ln(a/tan(beta)), map from
-  elevation map (Huidae Cho/Keith Beven)
+     elevation map (Huidae Cho/Keith Beven)
 <li> r.topmodel: added, physically based hydrologic model (Huidae Cho/Keith
      Beven)
 <li> r3.showdspf(.opengl): bugfix on dsp files/mapsets (Beverly Wallace)
@@ -98,11 +107,13 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> v.surf.rst: fixed incorrect elevations calculation (Helena Mitasova)
 <p>
 <li> tcltkgrass: independent of installed tcl/tk version (Markus Neteler)
-<li> Graphical startup of GRASS (Justin Hickey)
+<li> Graphical startup of GRASS for existing locations (Justin Hickey)
 <p>
 <li> NVIZ:
 <menu>
 <li> writes image dumps in PPM/SGI/TIFF format now (Bob Covill)
+<li> auto-redraw (Bob Covill)
+<li> color bug fixed for surface in lat/long projection (Bob Covill)
 <li> local configure replaced by global configure (Huidae Cho)
 <li> updated to tcl/tk8.3 libs (Huidae Cho, Justin Hickey, Eric G Miller)
 </menu>
@@ -110,26 +121,30 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 
 <b>Source Code</b>
 <menu>
-<li> new library "gmath": wrapper to support LAPACK/BLAS routines and to
-     provide stable numerical algorithm for GRASS modules (David D. Gray)
+<li>libraries:
+<menu>
+ <li> new library "gmath": wrapper to support LAPACK/BLAS routines and to
+      provide stable numerical algorithm for GRASS modules (David D. Gray)
+ <li> datum shift support: new CoordConv library (Andreas Lange)
+ <li> "libgrass": a new GRASS I/O library is under development (Frank
+     Warmerdam)
+ <li> new G_readsites_xyz() function to read sites (Eric G. Miller)
+ <li> XML output with "--interface-description" parameter (Jan-Oliver Wagner)
+ <li> Simple automatic GUI builder based on GRASS and python (Jan-Oliver
+      Wagner)
+</menu>
+<li>other:
+<menu>
 <li> rewritten "configure.in" for autoconf ((Eric G. Miller)
 <li> GRASS testsuite added: to run in source code with "make check" (Andreas Lange)
 <li> grass5install.sh: heavily updated (Justin Hickey)
-<li> projections: added false easting/false northing to aea:Albers Equal Area projection
- (Eric G. Miller/Morten Hulden)
-<li> datum shift support: new CoordConv library (Andreas Lange)
-<li> "libgrass": a new GRASS I/O library is under development (Frank
-     Warmerdam)
-<li> new G_readsites_xyz() function to read sites (Eric G. Miller)
-<li> XML output with "--interface-description" parameter (Jan-Oliver Wagner)
-<li> document type definition (DTD) for xml-based GRASS user interface
-     description (Jan-Oliver Wagner)
-<li> Simple automatic GUI builder based on GRASS and python (Jan-Oliver
-     Wagner)
+<li> projections: added false easting/false northing to aea:Albers Equal
+      Area projection (Eric G. Miller/Morten Hulden)
 <li> man pages are generated from HTML pages now (Michel Wurtz)
-<p>
+</menu>
 <li> Portability:
 <menu>
+<li> running on Mac OS X now (developers)
 <li> updated to compile on CRAY T3E (Justin Hickey, Markus
      Neteler, Bill Brown, David Gray )
 <li> improved WINDOWS/NT portability (John Huddleston)
@@ -138,14 +153,14 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
      code (Beverly Wallace, Markus Neteler)
 </menu>
 <p>
-<li> Removed code:
+<li> Removed code (functionality merged into other modules):
 <menu>
 <li> d.rast.zoom, d.vect.zoom: replaced by d.zoom
 <li> r.in.arctiff, r.out.arctiff, r.out.geotiff: replaced by r.in.tiff/r.out.tiff
 <li> m.in.pl94.db3,  m.in.stf1.db3
 </menu>
-
 </menu>
+
 <hr>
 <p>
 <h3><font color="#00FE00">What's new in GRASS 5 beta8 comparing to beta7</font></h3>
