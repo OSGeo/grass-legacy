@@ -3,6 +3,33 @@
 <em>v.transform</em> transforms a vector map layer from one coordinate system 
 into another coordinate system. 
 
+<h2>NOTES</h2>
+
+When using an ASCII table containing source and target coordinate pairs,
+in each row four coordinate values separated by white space have to be specified.
+Comments are permitted and have to be indicated by a '#' character.
+<p>
+Example for a points file of a linear transformation from XY to UTM coordinates
+(L: left, R: right, U: upper, L: lower, N, S, W, E):
+
+<pre>
+    # Linear transformation from XY to UTM coordinates:
+    # 4 maps corners defined
+    # UL NW
+    # UR NE
+    # LR SW
+    # LL SE
+    -584 585  598000 4920770
+    580  585  598020 4920770
+    580  -600 598020 4920750
+    -584 -600 598000 4920750
+</pre>
+
+The ground control points may be also (ir)regularly distributed
+and can be more than four points.
+
+
+
 <h2>EXAMPLE</h2>
 
 <em>Most DXF/DWG drawings are done within XY coordinates. To transform 
@@ -13,7 +40,7 @@ transformation</em><br>
 
 <h2>SEE ALSO</h2>
 
-<a href="http://grass.itc.it/grass51/tutorial/ex_basic.html#3DDWG">GRASS 5.7 tutorial pages</a>
+<a href="http://grass.itc.it/grass57/tutorial/ex_basic.html#3DDWG">GRASS 5.7 tutorial pages</a>
 
 <h2>AUTHOR</h2>
 
