@@ -1,0 +1,46 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.describe</em> displays table information. If parameter <b>-c</b> is used 
+ only column names instead of full column descriptions is given. 
+
+<h2>NOTE</h2>
+
+If parameters for database connection are already set with 
+<a HREF="db.connect.html">db.connect</a>, they are taken as default values and
+do not need to be spcified each time.
+ 
+<h2>EXAMPLE</h2>
+
+<b>db.describe -c table=</b><em>test</em> <b>driver=</b><em>dbf</em>
+<pre>
+ncols:2
+Column 1: CAT
+Column 2: BACK
+Column 3: TIME
+</pre>
+
+<b>db.describe table</b><em>=test</em>
+<pre>
+column:CAT
+description:
+type:INTEGER
+len:11
+scale:0
+precision:10
+default:0
+nullok:yes
+select:yes
+update:yes
+
+[...]
+</pre>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.1
+tutorial pages</a></em>, 
+<em><a HREF="db.columns.html">db.columns</a>, <a HREF="db.databases.html">db.databases</a>, <a HREF="db.dropdb.html">db.dropdb</a>, <a HREF="db.droptable.html">db.droptable</a>, <a HREF="db.execute.html">db.execute</a>, <a HREF="db.tables.html">db.tables</a></em>
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy

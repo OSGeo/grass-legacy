@@ -1,0 +1,34 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.select</em> prints result of selection from database 
+based on SQL statement read from input file or from standard input 
+to standard output.
+
+<h2>NOTE</h2>
+
+If parameters for database connection are already set with 
+<a HREF="db.connect.html">db.connect</a>, they are taken as default values and
+do not need to be spcified each time. Output will be displayed to stdout or can
+be directed to a file.
+
+<h2>EXAMPLES</h2>
+
+<tt>echo "select * from roads" | db.select</tt>
+<br>or<br>
+<tt>cat file.sql | db.select</tt>
+
+<p>
+
+<em>Select all from table roads</em><br>
+<b>db.select -c driver</b><em>=odbc</em> <b>database=</b><em>g51test</em> 
+<b>table=</b><em>roads</em> <b>sql=</b><em>file.sql</em> > <em>result.csv</em>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="http://grass.itc.it/grass51/tutorial/ex_complex.html#shortestpath">GRASS 5.1
+tutorial pages</a>, <em><a HREF="db.connect.html">db.connect</a></em><br>
+
+<h2>AUTHOR</h2>
+?<br>
+Modifications: Radim Blazek, ITC-Irst, Trento, Italy
+
