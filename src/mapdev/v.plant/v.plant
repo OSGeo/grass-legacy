@@ -1,0 +1,140 @@
+#!/bin/sh
+#
+#	fills in intermediate points on vectors
+#	if the point spacing is greater than a threshold
+#
+#	it uses the dig_ascii format as an intermediate step and replaces the original file
+#
+#	sjdc 10/2/95		s.cox@dem.csiro.au
+#
+
+if [ ! "$GISRC" ]
+then
+	echo "Sorry - you are not running GRASS">&2
+	exit 1
+fi
+
+echo	""
+echo	"v.plant fills in intermediate points on arcs with a specified spacing"
+echo	"Take care:  the original file is replaced with the new one"
+echo	""
+echo	"Simon Cox,  CSIRO,	10/2/95"
+echo	""
+
+eval  `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+
+g.ask type=old prompt="Select a vector (dig) map to process" element=dig desc=vector unixfile=/tmp/$$
+. /tmp/$$
+rm -f /tmp/$$
+if [ ! "$name" ]
+then
+	exit 2
+fi
+
+if [ $mapset -ne $MAPSET ]
+then
+	echo "Sorry - you can only do this operation to maps in the current mapset"
+	exit 3
+fi
+
+echo ""
+echo "Enter a number for the minimum spacing of points on arcs (in map units)"
+echo ""
+gotit=0
+while [ $gotit -eq 0 ]
+do
+      echo -n "spacing:  "
+      read space
+      if [ $space -ge 0 ]
+      then
+              gotit=1
+      else
+              echo "Sorry, spacing must be non-zero"
+      fi
+done
+
+# remove existing dead lines
+
+v.clean $name
+
+# write dig_ascii file
+
+oname=${name}.old
+v.out.ascii input=$name output=$oname
+
+# cd to dig_ascii and process ascii file
+
+cd ${GISDBASE}/${LOCATION_NAME}/${MAPSET}/dig_ascii
+nawk -v thold=$space '
+BEGIN{
+i=0
+}
+{
+
+if(NR<15){	print $0; next;	}	# pass header info through unchanged
+
+if( $1 ~ /^A|a|L|l|S|s/ ){		# found new object header
+	if(i){				# write out previous object
+		print objecttype,i
+		for(j=1; j<=i; j++)	print " ",y[j],x[j]
+	}		
+	objecttype= $1; 		# initialise for new object
+	i=0; 
+	if( objecttype ~ /^a|l|S|s/ ){	# dont interpolate for sites or dead objects
+		print $0; 		# pass these through unchanged
+		skip=1; 
+	}
+	else	skip=0;
+	next; 
+}
+
+if( skip ){	print $0; next; }	# pass data through unchanged & move to next line
+
+i++; y[i]=$1; x[i]=$2;			# read coords into x,y array
+
+if( i<2 )	next;			# if this was first coord move to next line
+
+ydist= y[i]-y[i-1]			# measure distance to last point
+xdist= x[i]-x[i-1]
+dist= sqrt( ydist*ydist + xdist*xdist )
+
+if( dist > thold ){			# fill in intermediate values
+	n_intervals= int( dist/thold )
+	y_increment= ydist/(n_intervals+1)
+	x_increment= xdist/(n_intervals+1)
+
+	y[i+n_intervals]= y[i]
+	x[i+n_intervals]= x[i]
+	
+	for( j=1; j<=n_intervals; ++j ){
+		y[i]= y[i-1]+y_increment
+		x[i]= x[i-1]+x_increment
+		++i
+	}
+}
+}
+END{					# write out last object
+if(i){
+	print objecttype,i
+	for(j=1; j<=i; j++)	print " ",y[j],x[j]
+}		
+}' $oname > $name
+
+# only remove dig file - we want to preserve to atts and cats etc.  
+
+rm $file
+
+# load processed file
+	
+v.in.ascii input=$name output=$name
+v.support map=$name
+
+#tidy up
+
+rm $name ${name}.old
+
+echo "Done"
+
+		
+
