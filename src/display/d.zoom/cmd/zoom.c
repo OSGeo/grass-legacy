@@ -7,7 +7,7 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
     char *err;
     int quitonly;
 
-    G_get_set_window(&window) ;
+    G_get_set_window(&window);
     G_copy((char *) &oldwindow, (char *) &window, sizeof(window));
 
     if (window.proj != PROJECTION_LL)
@@ -50,8 +50,8 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 	    	continue;
 	  }
 
-          G_put_window(&window) ;
-          G_set_window(&window) ;
+          G_put_window(&window);
+          G_set_window(&window);
 	  redraw();
 	  
 	  if (!quitonly)
@@ -59,9 +59,11 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 	    if (yes("Accept new region?"))
 	      break;
 
-            G_put_window(&oldwindow) ;
-	    G_set_window(&oldwindow);
+    	    G_copy((char *) &window, (char *) &oldwindow, sizeof(window));
+            G_put_window(&window);
+	    G_set_window(&window);
 	    redraw();
+
 	    if (!yes("Try again?"))
 	      return 1;
 	  }
