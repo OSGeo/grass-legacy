@@ -382,7 +382,7 @@ proc gisSetWindow {} {
     -borderwidth {2}
 
   button .frame0.frame4.ok \
-     -text Ok \
+     -text "Use Selection" \
      -relief raised \
      -padx 10 \
      -command { 
