@@ -1,0 +1,135 @@
+.\" %W% %G%
+.TH DINTRO 2D D-language
+.SH NAME
+DINTRO \- Introduction to D tools
+.SH DESCRIPTION
+.B D
+commands form part of a growing number of command line-driven GRASS
+tools that give the advanced GRASS user an opportunity to combine GIS functions
+with the powerful capabilities of UNIX shell commands, fancy user interaction
+front ends, database management systems, and any other programs the
+imagination provides.
+.I D
+commands are all named with words that begin with a capital D, such as
+.I "Dnew, Dchoose, Dcell,"
+etc.  They are all involved with the generation of color graphic \fIdisplays\fR
+on a color monitor.
+While new and occasional GRASS users will find the highly interactive
+commands sufficient, the user who wants more control, more power, and more
+options will find the \fID\fR commands quite useful.
+.PP
+.I D
+commands are primarily non-interactive tools which take their input from the
+command line, or from standard input. (Standard input means taking input
+from the keyboard or from a pipe.)  Some commands have an interactive
+option when appropriate.
+.SH FRAMEWORK
+Use of the
+.I D
+commands revolves around the creation, use, and management of graphic windows.
+These windows are device-independent entities which use GRASS
+code, making no use of any machine-specific window management capabilities.
+This makes the code very transportable, but of course does not make use of the
+more rigorous vendor-supplied window management options.  Windows are
+\fIcreated\fR with the
+.I Dnew
+command.  Any number of windows can be created on the monitor at any time.
+As you will see,
+information about each window, including its name, location, and contents
+are managed by the \fImonitor\fR program.  A window cannot be used unless it
+is first \fIchosen\fR with the
+.I Dchoose
+command.  Only one window is the \fIcurrent\fR window at any given time.
+The current window is highlighted with a white border, while all other
+windows are bordered in gray.  Windows can overlay one another; however,
+information displayed in a window which overlaps another window will overwrite
+information in the overlapped window.
+.PP
+Several commands draw map-oriented graphics in a window, including
+.I "Dcell, Dvect, Dscale,"
+and 
+.I Dgrid.
+Graphics programs draw text and graphic objects, like logos, which are
+not registered to the map database. These programs include
+.I "Dtext, Dgraph,"
+and
+.I Dlegend.
+.PP
+Windows can also be removed with the command
+.I Dremove
+(although the current, white-highlighted window, cannot be removed).  To
+completely reinitialize the screen, removing all windows, the
+.I Dclear.screen
+command is provided.
+.PP
+Finally, many 
+.I D
+commands are really "shell scripts" which use the Bourne shell as the
+interpreter.  These accomplish more specific tasks using other
+.I D
+commands.  People unfamiliar with the programming language \fIC\fR will find it
+possible to do some significant programming using the UNIX shell commands
+combined with GRASS
+\fID\fR commands.  Existing commands can be used as models.  Such commands
+include:
+
+.IP \fIDgrass.logo\fR
+.br
+which draws a GRASS logo (nothing official here).
+
+.IP \fId.sites\fR
+.br
+which prompts the user for a site list which then gets processed with the
+\fIGsites[2G]\fR command and then piped (fed) into the \fIDpoints\fR command.
+.SH "DEMOS and MODELS"
+.I D
+commands are, of course, suitable for inclusion in complex models and
+demonstrations. 
+For examples, see the scripts in the directory 
+.I DEMO
+located in
+.I "MAPSET: demo"
+in
+.I "LOCATION: spearfish".
+.SH "COMMAND OPTIONS"
+The 
+.I D
+tools have a somewhat standard command format.  Arguments to the \fID\fR
+commands can be given either positionally or explicitly.  For example, the 
+.I Dgrid
+tool can be run in either of the following forms:
+.RS
+Positional:
+.RS
+.B "Dgrid 10000 yellow"
+.br
+.B "Dgrid - yellow"
+.RE
+Explicit:
+.RS
+.B "Dgrid color=yellow size=10000"
+.RE
+.RE
+The first command gives the parameters by their position on the
+command line.  That command would not
+work if written:
+.RS
+.B "Dgrid yellow 10000"
+.RE
+To mix the order in which options can be stated on the command line, the
+option=value (or explicit) form must be used. The
+positional form will accept use of the \- symbol, to request that the default
+value for the option at that position on the command line be used.  Actually,
+the two positional commands shown above are equivalent since \fIDgrid\fR uses
+a default grid size of 10000 meters.  Most commands will print a statement on
+usage (correct syntax) if run with the single argument, \fIhelp\fR.  For
+example:
+.RS
+.B "Dgrid help"
+.RE
+.SH "SEE ALSO"
+Documentation on the
+.I "G, P, M,"
+and
+.I I
+commands.
