@@ -1,0 +1,16 @@
+interface_build {
+    {d.3d} 0
+    {Displays three-dimensional images based on raster map layers.}
+    {entry map {Raster map used to generate color:} 0 raster}
+    {entry elevation {Raster map used to generate 3-d texture:} 0 raster}
+    {entry from_coordinate {Coordinates of view point [571000,4900000,20000]:} 0 xyz.elevation}
+    {entry to_coordinate {Coordinates of center of view [599500,4921000,0]:} 0 xyz.elevation}
+    {entry exaggeration {Vertical exaggeration factor [2]:} 0 ""}
+    {entry lines {Frequency of vector lines in output [1]:} 0 ""}
+    {entry field {Field of view in degrees [30]:} 0 ""}
+    {entry color {Color of vector lines [gray]:} 0 3Dcolor}
+    {entry box   {Color of bounding box [none]:} 0 Color}
+    {checkbox -l {Display lines only.} "" -l}
+    {checkbox -0 {Show zero elevations.} "" -0}
+    {checkbox -a {Calculate each corner to be an average.} "" -a}
+}
