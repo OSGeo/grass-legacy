@@ -1,0 +1,25 @@
+# %W%  %G%
+
+PGM      = v.dump
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+LIST =  main.o \
+	do_areas.o \
+	do_lines.o \
+	isle_area.o \
+	perimeter.o \
+	head_info.o
+
+all: $(BIN_CONTRIB_CMD)/$(PGM)
+
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) 
+	cc $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(VASKLIB) $(GISLIB) $(CURSES) $(MATHLIB)
+
+main.o: dump.h
+do_areas.o: dump.h
+do_lines.o: dump.h
+
+$(GISLIB): #
+$(VECTLIB): #
