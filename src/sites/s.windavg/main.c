@@ -272,7 +272,7 @@ int average_sites(SITE_XYZ *xyz, int count, int ftype,
           case DCELL_TYPE:
             *avg+=xyz[i].cat.d; break;
           default: /* Programmer Error ?? */
-            G_fatal_error("%s: No cat values exist in sites_list",
+            G_fatal_error("%s: No cat values exist in site_lists",
                 G_program_name());
         }
       else
