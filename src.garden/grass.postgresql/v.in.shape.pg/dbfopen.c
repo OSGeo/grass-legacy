@@ -21,7 +21,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-03-15 12:25:40  markus
+ * Revision 1.3  2000-03-16 12:31:57  markus
+ * moved v.in.shape.pg_alex/ to v.in.shape.pg/: renamed directory
+ *
+ * Revision 1.1  2000/03/15 12:25:40  markus
  * Alex Shevlakov: new version based in David Gray's shp2gen
  *
  * Revision 1.1.1.1  2000/03/14 12:35:59  zapoved
