@@ -16,155 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* best view tabstop=4
+/*
+ * best view tabstop=4
  */
 
 #ifndef _GN_GRAPH_H_
 #define _GN_GRAPH_H_
 
+#ifdef GNGRP_STATS
+#include <time.h>
+#endif
+
 #include "heap.h"
 #include "tree.h"
 
 __BEGIN_DECLS
-
-
-/* *
- * * Each graph is stored in a graph-context of type gnGrpGraph_s and can be represented in one of two
- * * different ways:
- * *    1 - tree
- * *    2 - flat
- * *
- * * When 'tree' , the graph structure is stored in search-binary-trees: pNodeTree,
- * * pLinkTree and pAttrTree graph fields.
- * *
- * * When 'flat' , the graph structure is stored in arrays of bytes : pNodeBuffer ,
- * * pLinkBuffer and pAttrBuffer fields.
- * *
- * * The 'tree' representation is read-write and is not serializable
- * * The 'flat' representation is read-only and is serializable
- * * 
- * * The Flags field of the graph tells us if the graph is tree or flat represented.
- * *
- * * see the gnGrpGraph_s definition.
- * *
- * * Each new graph starts by initializing its graph-context:
-
-int					gnGrpInitialize(
-									gnGrpGraph_s *		pgraph ,
-									gnByte_t 			Version ,
-									gnInt32_t			NodeAttrSize ,
-									gnInt32_t			LinkAttrSize ,
-									gnInt32_t * 		pOpaqueSet
-									);
-
- * * So far 'Version' is always 1; 'NodeAttrSize' defines how many bytes to keep for
- * * each node attributes, if one doesn't plan to use node attributes then 0 must be given; 'LinkAttrSize'
- * * defines how many bytes to keep for each link attrubutes, if one doesn't plan to use link attributes
- * * then 0 must be given; pOpaqueSet is the pointer to an array of 16 32bit words that come stored
- * * with the graph and that the user can use to save private informations.
- * *
- * * After initialization a graph is 'tree' represented and is ready to be written.
- * *
- * * Multithread safety is given only for shortest path computations on the same graph-context and
- * * not yet for other operations.
- * *
- * * Graph-context initialization is not needed if we read a graph.
- * *
- * * We can add arcs on a 'tree' represented graph using the call:
- 
-int 				gnGrpAddLink		(
-										gnGrpGraph_s * 		pgraph ,
-										gnInt32_t 			lFrom ,
-										gnInt32_t 			lTo ,
-										gnInt32_t 			lCost ,
-										gnInt32_t 			lUser
-										void *				pvFnodeAttr ,
-										void *				pvTnodeAttr ,
-										void *				pvLinkAttr
-										);
-
-* * lFrom is the node-id of the from node
-* * lTo is the node-id of the to node (this couple of values defines an intrinsic arc direction).
-* * lCost is the cost to travel from/to in user defined units.
-* * lUser is a user assigned attribute assigned to this arc. 
-* * Two entries are added in the pNodeTree , one for From node amd one for To.
-* * One antry is added in the pLinkTree, holding the Cost and User values for this arc.
-* * Nodes cannot be added alone, but only as part of an arc.
-* * We have two ways for assigning attributes to nodes and arcs: 1) pass attribute data as last
-* * three gnGrpAddLink parameters; 2) use gnGrpSetNodeAttr and gnGrpSetLinkAttr respectively.
-* * The length of attribute data must be coherent with the NodeAttrSize and LinkAttrSize values used to
-* * initialize the graph as described above:
-
-int 				gnGrpSetNodeAttr	(
-										gnGrpGraph_s * pgraph ,
-										void * pattr ,
-										gnInt32_t nodeid
-										);
-
-* * Node attributes can be used to store geo coordinates of the node.
-* *
-* * After arc insertion has finished you must 'flatten' the graph:
-
-int 				gnGrpFlatten		(
-										gnGrpGraph_s * 	pgraph
-										);
-
-* * After flattening you can serializa it to a stream file descriptor:
-
-int 				gnGrpWrite			(
-										gnGrpGraph_s * 	pgraph,
-										int 			fd
-										);
-
-* * And discard it from memory with:
-
-
-int					gnGrpRelease		(
-										gnGrpGraph_s * 	pgraph
-										);
-
-* *
-* * The graph can be re-read using:
-* *
-
-int gnGrpRead			(
-						gnGrpGraph_s *  pgraph,
-						int 			fd
-						);
-
-* * A graph can only be stored after it has been flattened, thus when the graph is read it is
-* * returned always represented as 'flat'
-* * There are operations allowed for a 'tree' represented graph such as: insert arcs, set node/link attributes,
-* * get node/link attributes, flat the graph, discard the graph.
-* * There are operations allowed for a 'flat' represented graph such as: unflat the graph, write the graph,
-* * set node/link attributes, get node/link attributes, compute shortest path:
-* * It is important to note that setting node/link attributes is the only write operation allowed on a
-* * 'flat' represented graph. This is possible because the memory window for attributes has already
-* * been allocated when the graph was flattened. This feature allows us to dinamically change
-* * attributes while computing paths:
-
-
-gnGrpSPReport_s *	gnGrpDijkstra	(
-									gnGrpGraph_s * 	pgraph ,
-			 						gnInt32_t 		from ,
-			 						gnInt32_t 		to ,
-			 						int (*clip)	(
-												gnGrpGraph_s * 	pgraph ,
-												gnInt32_t * 	pprevlink ,
-												gnInt32_t * 	pnodefrom ,
-												gnInt32_t * 	plink ,
-												gnInt32_t * 	pnodeto ,
-												gnInt32_t * 	pcost ,
-												void * 			pvarg
-												) ,
-			 						void * 			pvcliparg
-			 						);
-
-* * The clip function can be NULL, as like as the pvcliparg argument.
-* * The clip function is used to stop graph navigation if it overflows a given bound.
-* * It is esier to understand it from examples than from speech.
-* */
-
 
 
 /*
@@ -235,20 +101,6 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 
 
 /*
- * node defines
- */
-/* old:
-#define GNGRP_C_NODEID						0
-#define GNGRP_C_STATUS 						1
-#define GNGRP_C_OFFSET 						2
-#define GNGRP_C_PREDEC						3
-#define GNGRP_C_DISTAN						4
-#define GNGRP_C_SIZE						5
-#define GNGRP_C_ATTR						GNGRP_C_SIZE
-*/
- /* new: */
-
-/*
  * Node macros
  */
 #define GNGRP_C_NODEID						0
@@ -263,11 +115,10 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 
 #define GNGRP_NODE_ID(p)					(p[GNGRP_C_NODEID])
 #define GNGRP_NODE_STATUS(p)				(p[GNGRP_C_STATUS])
-#define GNGRP_NODE_OFFSET(p)				(p[GNGRP_C_OFFSET])
-
+#define GNGRP_NODE_LINKAREA_OFFSET(p)		(p[GNGRP_C_OFFSET])
 
 /*
- * Link defines
+ * LinkArea macros
  */
 #define GNGRP_F_TOCNT						0
 #define GNGRP_F_SIZE						1
@@ -278,6 +129,12 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 #define GNGRP_F_ALLOC( C , lattr )   		( malloc( GNGRP_F_SIZEOF( C , lattr ) ) )
 #define GNGRP_F_REALLOC( P , C , lattr ) 	( realloc( P , GNGRP_F_SIZEOF( C , lattr ) ) )
 
+#define GNGRP_LINKAREA_LINKCOUNT(p)			(p[GNGRP_F_TOCNT])
+#define GNGRP_LINKAREA_LINKARRAY_PTR(p)		(p + GNGRP_F_TOARR)
+
+/*
+ * Link macros
+ */
 #define GNGRP_T_OFFSET						0
 #define GNGRP_T_COST						1
 #define GNGRP_T_USER						2
@@ -288,7 +145,7 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 #define GNGRP_T_WSIZE( lattr ) 				( GNGRP_T_SIZEOF( lattr ) / sizeof( gnInt32_t ) )
 #define GNGRP_T_ALLOC( lattr )  			( malloc( GNGRP_T_SIZEOF( lattr ) ) )
 
-#define GNGRP_LINK_OFFSET(p)				(p[GNGRP_T_OFFSET])
+#define GNGRP_LINK_TONODE_OFFSET(p)			(p[GNGRP_T_OFFSET])
 #define GNGRP_LINK_COST(p)					(p[GNGRP_T_COST])
 #define GNGRP_LINK_USER(p)					(p[GNGRP_T_USER])
 
@@ -296,7 +153,6 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 /*
  * node status
  */
-
 #define GNGRP_NF_FROM			0x1		/* node exists as 'from' (static) */
 #define GNGRP_NF_TO				0x2		/* node exists as 'to' (static) */
 
@@ -304,7 +160,6 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 /*
  * header fields
  */
-
 #define GNGRP_HEAD_VERSION		0
 #define GNGRP_HEAD_ENDIAN		1
 #define GNGRP_HEAD_NODETYPE		2
@@ -314,7 +169,6 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 /*
  * graph header values
  */
-
 #define GNGRP_ENDIAN_BIG		1
 #define GNGRP_ENDIAN_LITTLE		2
 #define GNGRP_NODETYPE_1		1
@@ -322,6 +176,29 @@ gnGrpSPReport_s *	gnGrpDijkstra	(
 #define GNGRP_CURRENT_VERSION	1
 #define GNGRP_NODETYPE_MAX		2
 
+#ifdef GNGRP_NEWCLIP
+/*
+ * shortest path clip function takes a pointer to
+ * gnGrpSPClipInput_s and gnGrpSPClipOutput_s
+ */
+typedef struct _gnGrpSPClipInput
+{
+	gnInt32_t * 	pnPrevLink;
+	gnInt32_t * 	pnNodeFrom;
+	gnInt32_t * 	pnLink;
+	gnInt32_t * 	pnNodeTo;
+	gnInt32_t		nFromDistance;
+
+} gnGrpSPClipInput_s;
+
+typedef struct _gnGrpSPClipOutput
+{
+	gnInt32_t		nLinkCost;
+
+} gnGrpSPClipOutput_s;
+
+
+#endif /* GNGRP_NEWCLIP */
 /* forward declaration of gnGrpGraph structure  */
 struct _gnGrpGraph;
 
@@ -412,11 +289,16 @@ typedef struct _gnGrpMethods
 					 				gnInt32_t 				to ,
 									int 					(*clip) (
 																	struct _gnGrpGraph * 	pgraph ,
+#ifndef GNGRP_NEWCLIP
 																	gnInt32_t * 			pprevlink ,
 																	gnInt32_t * 			pnodefrom ,
 																	gnInt32_t * 			plink ,
 																	gnInt32_t * 			pnodeto ,
 																	gnInt32_t * 			pcost ,
+#else /* GNGRP_NEWCLIP */
+																	gnGrpSPClipInput_s *	pArgIn ,
+																	gnGrpSPClipOutput_s *	pArgOut ,
+#endif /* GNGRP_NEWCLIP */
 																	void * 					pvarg
 																	) ,
 					 				void * 					pvcliparg
@@ -449,8 +331,21 @@ typedef struct _gnGrpGraph
 	gnInt32_t			Flags;
 	gnInt32_t			aOpaqueSet[ 16 ];
 	gnGrpMethods_s *	pMethods;
+
+/* so far statistics are only computed by gnGrpAddLink() */
+#ifdef GNGRP_STATS
+	clock_t				clkAddLink;  /* cycles spent during the last addlink execution */
+	int					cAddLink;    /* # of calls to gnGrpAddLink() */
+	clock_t				clkLinkTree; /* cycles spent in accessing the link binary tree */
+	clock_t				clkNodeTree; /* cycles spent in accessing the node binary tree */
+	clock_t				clkNodeHeap; /* cycles spent in accessing the node min heap */
+	int					cLinkTree;   /* # of probes in the link tree */
+	int					cNodeTree;   /* # of probes in the node tree */
+	int					cNodeHeap;   /* # of probes in the node heap */
+#endif
 }
 gnGrpGraph_s;
+
 
 /*
  * An ARC defined as : from-node, to-node, arc-cost, to-node-distance (from a starting node), user
@@ -508,6 +403,10 @@ extern int				gnGrpInitialize		(
 											gnInt32_t			NodeAttrSize ,
 											gnInt32_t			LinkAttrSize ,
 											gnInt32_t * 		pOpaqueSet
+											);
+
+extern void 			gnGrpResetStats		(
+											gnGrpGraph_s *
 											);
 
 extern int 				gnGrpRelease		(
@@ -588,6 +487,7 @@ extern gnGrpSPReport_s *gnGrpShortestPath	(
 					 						gnInt32_t 		from ,
 					 						gnInt32_t 		to ,
 					 						int (*clip)	(
+#ifndef GNGRP_NEWCLIP
 														gnGrpGraph_s * 	pgraph ,
 														gnInt32_t * 	pprevlink ,	/* previous link pointer */
 														gnInt32_t * 	pnodefrom ,	/* from node pointer */
@@ -595,6 +495,12 @@ extern gnGrpSPReport_s *gnGrpShortestPath	(
 														gnInt32_t * 	pnodeto ,	/* to node pointer */
 														gnInt32_t * 	pcost ,	/* to node pointer */
 														void * 			pvarg		/* caller's pointer */
+#else /* GNGRP_NEWCLIP */
+														gnGrpGraph_s * 			pgraph ,
+														gnGrpSPClipInput_s *	pArgIn ,
+														gnGrpSPClipOutput_s *	pArgOut ,
+														void * 					pvarg		/* caller's pointer */
+#endif /* GNGRP_NEWCLIP */
 														) ,
 					 						void * 			pvcliparg				/* caller's pointer (passed back to clip) */
 					 						);
