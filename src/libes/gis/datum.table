@@ -12,6 +12,9 @@
 # Please comment and cite the source if you add new parameters 
 # to this list. 
 # cited from NIMA document TR8350.2
+#
+# Datum parameters for/from European Terrestrial Reference System ETRS89
+# are here: http://crs.ifag.de/crs_national.php
 
 # World Geodetic System 1984
 wgs84  "World Geodetic System 1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0
