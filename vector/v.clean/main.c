@@ -59,7 +59,7 @@ main (int argc, char *argv[])
 	thresh_opt ->type =  TYPE_DOUBLE;
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
-	/* thresh_opt ->answer = ""; */
+	thresh_opt ->answer = "";
         thresh_opt ->description = "Threshold in map units for each tool.\n";
 
 	x_flag = G_define_flag ();
