@@ -119,14 +119,14 @@ main (int argc, char *argv[])
             format = FORMAT_ALL;
 
 	if (zcoorf->answer && zcol_opt->answer == "0")
-		G_fatal_error("Please specify zcol.");
+		G_fatal_error("Please specify z column.");
 
 	xcol = atoi(xcol_opt->answer) - 1;
 	ycol = atoi(ycol_opt->answer) - 1;
 	zcol = atoi(zcol_opt->answer) - 1;
 
 	if (zcoorf->answer && zcol < 0)
-	    G_fatal_error("Please specify reasonable zcol.");
+	    G_fatal_error("Please specify reasonable z column.");
 
 	catcol = atoi(catcol_opt->answer) - 1;
 
@@ -181,15 +181,15 @@ main (int argc, char *argv[])
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
 
 	    /* check column numbers */
-	    if ( xcol >= minncols ) G_fatal_error ( "xcol > minimum last column number"); 
-	    if ( ycol >= minncols ) G_fatal_error ( "ycol > minimum last column number"); 
-	    if ( zcol >= minncols ) G_fatal_error ( "zcol > minimum last column number"); 
-	    if ( catcol >= minncols ) G_fatal_error ( "catcol > minimum last column number"); 
+	    if ( xcol >= minncols ) G_fatal_error ( "x column number > minimum last column number"); 
+	    if ( ycol >= minncols ) G_fatal_error ( "y column number > minimum last column number"); 
+	    if ( zcol >= minncols ) G_fatal_error ( "z column number > minimum last column number"); 
+	    if ( catcol >= minncols ) G_fatal_error ( "cat column number > minimum last column number"); 
 
-	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "xcol is not a number type");
-	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "ycol is not a number type");
-	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "zcol is not a number type");
-	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "catcol is not a number type");
+	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "x column is not of number type");
+	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "y column is not of number type");
+	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "z column is not of number type");
+	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "cat column is not of number type");
 
 	    /* Create table */
 	    make_table = 0;
@@ -226,7 +226,7 @@ main (int argc, char *argv[])
 			db_append_string ( &sql, ", " );
 		    }
 		    if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) 
-			G_fatal_error ("Category column is not integer");
+			G_fatal_error ("Category column is not of integer type");
 
 		    switch ( coltype[i] ) {
 			case DB_C_TYPE_INT:
@@ -369,6 +369,7 @@ main (int argc, char *argv[])
 	    }
 	    fclose (tmpascii);
 	} else {
+            /* FORMAT_ALL = standard mode */
     	    read_head(ascii, &Map);
 	    asc_to_bin(ascii, &Map) ;
 	}
