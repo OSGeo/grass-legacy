@@ -1,0 +1,16 @@
+PGM = m.in.e00
+HOME = $(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for info.c debugging
+LIST = 	main.o \
+	info.o \
+	raster.o \
+	projection.o \
+	label.o \
+	vector.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB)
+	$(GMAKE) e00b2a
+
+$(GISLIB): # 
