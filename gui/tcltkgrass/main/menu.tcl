@@ -11,97 +11,95 @@ menu_build 1 .main_menu {
     File "Files in/out" {
 	"Import" "Import maps into GRASS" {
 	    "Raster map" "" {
-		"Multiple formats using GDAL" "" {
+		"Multiple formats using GDAL" "r.in.gdal" {
 		"exec  r.in.gdal &"}
 		-separator
-		"GRASS ASCII GRID" "" {
-		"exec r.in.ascii"}
-		"GRASS ASCII vector map" "" {
-		"exec r.in.poly"}
+		"ASCII GRID (includes GRASS ASCII)" "r.in.ascii" {
+		"exec r.in.ascii &"}
+		"GRASS ASCII vector map" "r.in.poly" {
+		"exec r.in.poly &"}
 		-separator
-		"Binary file (GTOPO30 format)" "" {
+		"Binary file (includes GTOPO30 format)" "r.in.bin" {
 		"exec  r.in.bin &"}
-		"ERDAS LAN" "" {
+		"ERDAS LAN" "i.in.erdas" {
 		"exec  i.in.erdas &"}
-		"GRIDATB.FOR map file (TOPMODEL)" "" {
+		"GRIDATB.FOR map file (TOPMODEL)" "r.in.gridatb" {
 		"exec r.in.gridatb &"}
-		"MAT-File (v.4) map file (Matlab or Octave)" "" {
+		"MAT-File (v.4) map file (Matlab or Octave)" "r.in.gridatb" {
 		"exec r.in.mat &"}
 	    }
 	    "Vector map" "" {
-		"Various formats using OGR" "" {
+		"Various formats using OGR" "v.in.ogr" {
 		"exec v.in.ogr &"}
 		-separator
-		"ASCII GRASS vector file" "" {
+		"ASCII points file or GRASS vector file" "v.in.ascii" {
 		"exec v.in.ascii &"}
-		"Import/export old GRASS vector format" "" {
+		"Import/export old GRASS vector format" "v.convert" {
 		"exec  v.convert &"}
 		-separator
-		"Garmin GPS Waypoints/Routes/Tracks" "" {
+		"Garmin GPS Waypoints/Routes/Tracks" "v.in.garmin" {
 		"exec v.in.garmin &"}
-		"MATLAB MapGen files" "" {
+		"MATLAB MapGen files" "v.in.mapgen.sh" {
 		"exec v.in.mapgen.sh &"}
-		"Garmin GPS Waypoints/Routes/Tracks" "" {
-		"exec v.in.garmin &"}
-		"XY points ascii file" "" {
+		-separator
+		"ASCII points file to GRASS sites format" "s.in.ascii" {
 		"exec s.in.ascii &"}
 	    }
 	    "Grid 3D" "" {
-	     "ASCII 3D file" "" {
+	     "ASCII 3D file" "r3.in.ascii" {
 		"exec r3.in.ascii &"}
-	     "Vis5D file" "" {
+	     "Vis5D file" "r3.in.v5d" {
 		"exec r3.in.v5d &"}
 	    }
 	}
 	Export "Export maps from GRASS" {
 	    "Raster map" "" {
-		"GRASS ASCII" "" {
+		"ASCII grid (for GRASS, Surfer, Modflow, etc)" "r.out.ascii" {
 		"exec r.out.ascii &"}
-		"XYZ ASCII file" "" {
-		"exec r.out.xyz"}
 		-separator
-		"ESRI ARC/INFO ASCII-GRID" "" {
+		"ESRI ARC/INFO ASCII grid" "r.out.arc" {
 		"exec r.out.arc &"}
-		"ERDAS/LAN" "" {
+		"ERDAS LAN file" "i.out.erdas" {
 		"exec i.out.erdas &"}
-		"GRIDATB.FOR map file (TOPMODEL)" "" {
+		"GRIDATB.FOR map file (TOPMODEL)" "r.out.gridatb" {
 		"exec r.out.gridatb"}
-		"MAT-File (v.4) map file (Matlab or Octave)" "" {
+		"MAT-File (v.4) map file (Matlab or Octave)" "r.out.mat" {
 		"exec r.out.mat &"}
 		-separator
-		"Binary file" "" {
+		"Binary file" "r.out.bin" {
 		"exec r.out.bin &"}
 		-separator
-		"MPEG-1 animations" "" {
+		"MPEG-1 animations" "r.out.mpeg" {
 		"exec r.out.mpeg &"}
-		"PNG image (not georeferenced)" "" {
+		"PNG image (not georeferenced)" "r.out.png" {
 		"exec r.out.png &"}
-		"PPM image (24bit)" "" {
+		"PPM image (24bit)" "r.out.ppm" {
 		"exec r.out.ppm &"}
-		"PPM image from red, green, blue raster maps" "" {
+		"PPM image from red, green, blue raster maps" "r.out.ppm3" {
 		"exec r.out.ppm3 &"}
-		"POVray height-field" "" {
+		"POVray height-field" "r.out.pov" {
 		"exec r.out.pov &"}
-		"TIFF image (8/24bit)" "" {
+		"TIFF image (8/24bit)" "r.out.pov" {
 		"exec r.out.tiff &"}
 	    }
 	    "Vector map" "" {
-		"ASCII GRASS vector file" "" {
-		"exec v.out.ascii &"}
-		"Import/export old GRASS vector format" "" {
-		"exec  v.convert &"}
-		"POV-Ray format" "" {
-		"exec  v.out.pov &"}
-		"Various formats using OGR (SHAPE, MapInfo etc)" "" {
+		"Various formats using OGR (SHAPE, MapInfo etc)" "v.out.ogr" {
 		"exec v.out.ogr &"}
 		-separator
-		"ASCII file points file" "" {
+		"ASCII points file or GRASS vector file" "v.out.ascii" {
+		"exec v.out.ascii &"}
+		"Import/export old GRASS vector format" "v.convert" {
+		"exec  v.convert &"}
+		"POV-Ray format" "v.out.pov" {
+		"exec  v.out.pov &"}
+		-separator
+		"ASCII points file from GRASS sites file" "s.out.ascii" {
 		"exec  s.out.ascii &"}
 	    }
 	    "Grid 3D" "" {
-	     "ASCII 3D file" "" {
+	     "ASCII 3D file" "r3.out.ascii" {
 		"exec r3.out.ascii &"}
-	     "Vis5D file" "" {
+	     "Vis5D file" "r3.out.v5d" {
 		"exec r3.out.v5d &"}
 	    }
 	}
@@ -115,12 +113,12 @@ menu_build 1 .main_menu {
 	}
 	"Save display to image file" "" {
 	    "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-		"" {
+		"r3.out.v5d" {
 	    "exec xwd -out map.xwd"}
-	    "PNG (save currently selected display to 24 bit PNG file)" "" {
+	    "PNG (save currently selected display to 24 bit PNG file)" "d.out.png" {
 	    "exec d.out.png"}
 	}
-	"Postscript map creation" "" {"exec ps.map &"}
+	"Postscript map creation" "ps.map" {"exec ps.map &"}
 	"Print (Use display manager)" "" {"do_nothing"}
 	"Quit tcltkgrass" "" resize_menu;quit
     }
@@ -151,8 +149,6 @@ menu_build 1 .main_menu {
 	    "exec g.region &"}
 	    "Select default region" "" {
 	    "exec g.region -d; exec d.erase"}
-	    "Show projection information & create projection files" "" {
-	    "exec g.proj &"}
 	}
 	"3D region" "Grid3D region management" {
 	    "Create WIND3 (default 3D window) from current 2D region" "" {
@@ -161,28 +157,30 @@ menu_build 1 .main_menu {
 	    "exec g3.setregion"}
 	}
 	"Map type conversions" "raster<->vector<->sites<->grid3D" {
-	    "Raster to vector map" "" {
+	    "Raster to vector map" "r.to.vect" {
 	    "exec r.to.vect &"}
-	    "Vector to raster" "" {
+	    "Vector to raster" "v.to.rast" {
 	    "exec v.to.rast &"}
-	    "Vector to points" "" {
+	    "Vector to points" "v.to.points" {
 	    "exec v.to.points &"}
-	    "Sites to vector" "" {
+	    "Sites to vector" "v.in.sites" {
 	    "exec v.in.sites &"}
 	}
-	"Other" "" {
-	    "Create/edit projection information for current location" "" {
-	    "exec g.setproj &"}
-	    "Show current GRASS environment settings" "" {
+	"Projections & GRASS environment" "" {
+	    "Create/edit projection information for current location" "g.setproj" {
+	    "exec g.setproj"}
+	    "Show projection information & create projection files" "g.proj" {
+	    "exec g.proj &"}
+	    "Show current GRASS environment settings" "g.gisenv" {
 	    "exec g.gisenv &"}
-	    "Show current GRASS version" "" {
-	    "exec g.version &"}
+	    "Show current GRASS version" "g.version -c" {
+	    "exec g.version -c &"}
 	}
     }
     Display "Display maps" {
-	"Display Manager" "" {
+	"Start display manager" "d.m" {
 	"exec d.m &"}
-	"NVIZ visualization tool" "" {
+	"Start NVIZ (n-dimensional visualization module)" "nviz -q" {
 	"exec nviz -q &"}
 	-separator
 	"Start displays" "" {
@@ -330,8 +328,8 @@ menu_build 1 .main_menu {
 	"Set active display to specified size" "" {
 	"exec d.resize &"}
 	-separator
-	"Pan in active display" "" {
-	"exec d.pan &"}
+	"Pan and zoom in active display" "" {
+	"exec d.zoom -f &"}
 	"Show geographical position" "" {
 	"exec d.where &"}
 	"Measure lengths and areas" "" {
@@ -498,7 +496,7 @@ menu_build 1 .main_menu {
 	-separator
 	"Generate concentric circles around points" "" {
 	"exec r.circle &"}
-	"Generate surfaces" "" {
+	"Generate & interpolate surfaces" "" {
 	    "Interpolate surfaces from points" "" {
 		"Bilinear from points" "" {
 		"exec r.bilinear &"}
@@ -538,7 +536,7 @@ menu_build 1 .main_menu {
 	    "exec r.random &"}
 	}
 	-separator
-	    "Reports & statistics" "" {
+	"Reports & statistics" "" {
 	    "Report basic file information" "" {
 	    "exec r.info &"}
 	    "Report category labels and values" "" {
@@ -619,7 +617,7 @@ menu_build 1 .main_menu {
 	"Query by map features" "" {
 	"exec v.select &"}
 	"Query with mouse" "" {
-	"exec d.what.vect &"}
+	"exec d.what.vect -xf &"}
 	-separator
 	"Buffer features" "" {
 	"exec v.buffer &"}
@@ -680,11 +678,7 @@ menu_build 1 .main_menu {
     Image "Image processing" {
 	"Develop images & groups" "" {
 	    "Create/edit imagery group" "" {
-	    "exec i.group &"}	"Create 3D mask for grid3D operations" ""	"Create 3D mask for grid3D operations" "" {
-	"exec r3.mask &"}
- {
-	"exec r3.mask &"}
-
+	    "exec i.group &"}	
 	    "Target imagery group" "" {
 	    "exec i.target &"}
 	    -separator
@@ -731,7 +725,7 @@ menu_build 1 .main_menu {
 	"Filter image" "" {
 	    "Zero edge crossing detection" "" {
 	    "exec i.zc &"}
-	    "User defined matrix filter" "" {
+	    "User defined matrix/convolving filter" "" {
 	    "exec r.mfilter &"}
 	}
 	"Spectral response" "" {
@@ -749,7 +743,7 @@ menu_build 1 .main_menu {
 	    "exec i.ifft &"}
 	}
 	-separator
-	    "Reports & statistics" "" {
+	"Reports & statistics" "" {
 	    "Report basic file information" "" {
 	    "exec r.info &"}
 	    "Range of image values" "" {
@@ -820,8 +814,6 @@ menu_build 1 .main_menu {
 	"fontsel {Menu font} main_menu(font);\
 			setfont .main_menu $main_menu(font);\
 			resize_menu"}
-	"Configure html-browser" "" {
-	"config_netscape"}
 	"Save config" "" {
 	"tcltkgrass_save ."}
     }
@@ -839,7 +831,5 @@ menu_build 1 .main_menu {
 	-separator
 	"Help on scripting" "" {
 	"source $env(TCLTKGRASSBASE)/main/help-scripting.tcl"}
-	"Help on html-browser" "" {
-	"source $env(TCLTKGRASSBASE)/main/help-netscape.tcl"}
     }
 }
