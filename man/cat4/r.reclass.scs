@@ -6,45 +6,42 @@ r.reclass.scs <contribGRASS Reference Manu<contrib> r.reclass.scs
 
 
 NAME
-     r.reclass.scs - Create a new raster map layer based on an
-     existing raster map.
-     (SCS GRASS	Raster Program)
+     r.reclass.scs - Create new cell layer based upon  existing
+     cell
+	  layer
+     (GRASS Raster Program)
 
 SYNOPSIS
      r.reclass.scs
      r.reclass.scs help
 
 DESCRIPTION
-     r.reclass.scs is an interface to the GRASS	r.reclass
-     program.  The program will	reclassify the category	values in
-     a raster map layer	based on reclass instructions entered by
-     the user.	The user can enter map reclassification	rules to
-     r.reclass.scs either from standard	input or from a	file.
-     The program then issues r.reclass commands	to produce the
-     new reclassified raster map layer.
+     an interactive program which allows a user to enter
+     categories or category names interactively or will read the
+     categories or names from a file. The program then issues
+     r.reclass commands to produce the reclass map.
 
-     Input to r.reclass.scs consists of	a list of category names
-     or	category values	that will be grouped into the same
-     category in the output (reclassified) map.	 Only one
-     category name should appear on each line of input.	 Input
-     can be entered either interactively, or from a file.
+     Files containing category names can be created in many ways,
+     one may use a test editor, word-processor, or DBMS. In any
+     event, the files for are no more than a list of category
+     names which will have the same category number after the
+     reclass. The files must contain the categories or category
+     names as one category name per line.
 
-     A file containing these reclass rules can be created using	a
-     text editor, word-processor, DBMS,	etc.  It is no more than
-     a list of category	names which will have the same category
-     value after the reclassification.
 
+INTERACTIVE MODE
+BUGS
 SEE ALSO
-     r.reclass,	r.resample, r.rescale
+     r.reclass, r.rescale, r.resample
 
 AUTHOR
-     R.L. Glenn, USDA, SCS, NHQ-CGIS
+     R.L.Glenn, USDA, SCS, NHQ-CGIS
 
 
 NOTICE
-     This program is part of the contrib section of the	GRASS
-     distribution.  As such, it	is externally contributed code
-     that has not been examined	or tested by the Office	of GRASS
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
      Integration.
 
 
@@ -60,7 +57,10 @@ NOTICE
 
 
 
-GRASS 4.2		Baylor University			1
+
+
+
+GRASS 4.2.1		Baylor University			1
 
 
 
