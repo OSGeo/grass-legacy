@@ -1,0 +1,11 @@
+INIT	glob.h	/^# define INIT(x)$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+Mtry	try.c	/^main (argc, argv) char *argv[];$/
+cell_stats	cell_stats.c	/^cell_stats (fd, verbose, non_zero, cell_counts, fm/
+first_node	tree.c	/^first_node (cat, stats)$/
+index_cat	tree.c	/^index_cat (cat)$/
+next_node	tree.c	/^next_node (p, cat, stats)$/
+percent	percent.c	/^percent (n,d,s)$/
+plant_tree	tree.c	/^plant_tree()$/
+raw_stats	raw_stats.c	/^raw_stats (fd, verbose, non_zero, rowcol)$/
+results	results.c	/^results (fmt, non_zero, cell_counts, planimetric, /
