@@ -12,6 +12,57 @@ AC_TRY_LINK(,,STRIPFLAG=-s; AC_MSG_RESULT(yes),AC_MSG_RESULT(no))
 LDFLAGS=${ac_save_ldflags}
 AC_SUBST(STRIPFLAG)
 
+# Put this early on so CPPFLAGS and LDFLAGS have any additional dirs
+AC_ARG_WITH(includes,
+    [  --with-includes=DIR     site header files in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-includes option.])
+	  ;;
+	esac
+	INC_DIRS="$withval"
+    ])
+
+if test "$INC_DIRS"; then
+	for dir in $INC_DIRS; do
+		if test -d "$dir"; then
+			INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
+		else
+			AC_MSG_WARN([*** Include directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional include dirs)
+	AC_MSG_RESULT($INCLUDE_DIRS)
+	CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
+fi
+AC_SUBST(INCLUDE_DIRS)
+
+AC_ARG_WITH(libs,
+    [  --with-libs=DIR         also search for libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-libs option.])
+	  ;;
+	esac
+	LIB_DIRS="$withval"
+    ])
+
+if test "$LIB_DIRS"; then
+	for dir in $LIB_DIRS; do
+		if test -d "$dir"; then
+			LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
+		else
+			AC_MSG_WARN([*** Library directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional library dirs)
+	AC_MSG_RESULT($LIBRARY_DIRS)
+	LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
+fi
+AC_SUBST(LIBRARY_DIRS)
+
 AC_PROG_INSTALL
 AC_PROG_LEX
 AC_PROG_RANLIB
@@ -85,6 +136,17 @@ AC_CHECK_LIB(z, deflate, ZLIB=-lz)
 fi
 AC_SUBST(ZLIB)
 
+# Test if mathlib needs -lm flag or is included with libc
+MATHLIB="-lm"
+AC_CHECK_LIB(c, atan, MATHLIB="")
+if test "$MATHLIB"; then
+	AC_CHECK_LIB(m, atan, MATHLIB=-lm, MATHLIB="")
+	if test -z "$MATHLIB"; then
+		AC_MSG_WARN([*** Failed check for math library.])
+	fi
+fi
+AC_SUBST(MATHLIB)
+
 # BINDIR=/usr/local/bin
 
 BINDIR=
@@ -98,55 +160,6 @@ BINDIR="${bindir}"
 fi
 AC_SUBST(BINDIR)
 
-AC_ARG_WITH(includes,
-    [  --with-includes=DIR     site header files in DIR],
-    [
-	case "$withval" in
-	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-includes option.])
-	  ;;
-	esac
-	INC_DIRS="$withval"
-    ])
-
-if test "$INC_DIRS"; then
-	for dir in $INC_DIRS; do
-		if test -d "$dir"; then
-			INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
-		else
-			AC_MSG_WARN([*** Include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional include dirs)
-	AC_MSG_RESULT($INCLUDE_DIRS)
-	CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
-fi
-AC_SUBST(INCLUDE_DIRS)
-
-AC_ARG_WITH(libs,
-    [  --with-libs=DIR         also search for libraries in DIR],
-    [
-	case "$withval" in
-	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-libs option.])
-	  ;;
-	esac
-	LIB_DIRS="$withval"
-    ])
-
-if test "$LIB_DIRS"; then
-	for dir in $LIB_DIRS; do
-		if test -d "$dir"; then
-			LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
-		else
-			AC_MSG_WARN([*** Library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional library dirs)
-	AC_MSG_RESULT($LIBRARY_DIRS)
-	LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
-fi
-AC_SUBST(LIBRARY_DIRS)
 
 # Some search directories to use as the base for other searches when not specified
 my_inc_dirs="/usr/include /usr/local/include /opt/include /usr/freeware/include"
@@ -226,6 +239,8 @@ fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
 # TCL/TK includes and library tests...
+# Check headers in default location first.
+AC_CHECK_HEADERS(tk.h tcl.h)
 AC_ARG_WITH(tcltk-includes,
     [  --with-tcltk-includes=DIR
                           site header files for TCL and TK in DIR],
@@ -240,7 +255,7 @@ AC_ARG_WITH(tcltk-includes,
     ])
 
 TKINCDIR=
-if test "$tkincdir"; then
+if test "$tkincdir" && test -z "$HAVE_TK_H"; then
 	for dir in $tkincdir; do
 		if test -d "$dir"; then
 			TKINCDIR="$TKINCDIR -I$dir"
@@ -251,7 +266,7 @@ if test "$tkincdir"; then
 	AC_MSG_CHECKING(TK include dirs)
 	AC_MSG_RESULT($TKINCDIR)
 fi
-if test -z "$TKINCDIR"; then
+if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
 	AC_MSG_CHECKING(TK include dirs)
 	for my_dir in $my_inc_dirs; do
 		if test -z "$TKINCDIR" && test -d $my_dir; then
@@ -266,13 +281,13 @@ if test -z "$TKINCDIR"; then
 	AC_MSG_RESULT($TKINCDIR)
 fi
 
-if test -z "$TKINCDIR"; then
+if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
 	AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
 fi
 AC_SUBST(TKINCDIR)
 
 TCLINCDIR=
-if test "$tclincdir"; then
+if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
 	for dir in $tclincdir; do
 		if test -d "$dir"; then
 			TCLINCDIR="$TCLINCDIR -I$dir"
@@ -284,7 +299,7 @@ if test "$tclincdir"; then
 	AC_MSG_RESULT($TCLINCDIR)
 fi
 # NEEDS else check known places ...
-if test -z "$TCLINCDIR"; then
+if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
 	AC_MSG_CHECKING(TCL include dirs)
 	for my_dir in $my_inc_dirs; do
 		if test -z "$TKINCDIR" && test -d $my_dir; then
@@ -298,7 +313,7 @@ if test -z "$TCLINCDIR"; then
 	done
 	AC_MSG_RESULT($TCLINCDIR)
 fi
-if test -z "$TCLINCDIR"; then
+if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
 	AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
 fi
 AC_SUBST(TCLINCDIR)
