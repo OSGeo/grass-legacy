@@ -107,6 +107,7 @@ int load_table(int t, char *stmt)
     int header_only = 0;
     char **tokens;
     int ntokens;
+    char ebuf[2000];
 
     G_debug(3, "load_table()");
         
@@ -126,9 +127,8 @@ int load_table(int t, char *stmt)
     res = PQexec(pg_conn, stmt);
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
-        
-	snprintf(errMsg, sizeof(errMsg), "Error: select Postgres:%s\n",
-		 PQerrorMessage(pg_conn));
+	sprintf( ebuf, "Error: select Postgres:%s\n", PQerrorMessage(pg_conn));
+	db_append_string ( &errMsg, ebuf);
 	PQclear(res);
 	PQfinish(pg_conn);
 	return DB_FAILED;
@@ -139,6 +139,8 @@ int load_table(int t, char *stmt)
     for (i = 0; i < nflds; i++) {
 	dtype = PQftype(res, i);
 	fname = PQfname(res, i);
+	
+	G_debug(3, "col: %s dtype : %d", fname, dtype);
 
 	switch (dtype) {
 	case INT8OID:
@@ -159,6 +161,7 @@ int load_table(int t, char *stmt)
 	    break;
 	case FLOAT4OID:
 	case FLOAT8OID:
+	case NUMERICOID:
 	    type = PG_DOUBLE;
 	    fsize = PQfsize(res, i);
 	    break;
@@ -172,10 +175,10 @@ int load_table(int t, char *stmt)
 	    break;
 	default:
 	    if(!header_only) {
-	    snprintf(errMsg, sizeof(errMsg),
-		     "Field %s can not be selected for query output: type %d not supported yet\n",
-		     fname, dtype);
-	    return DB_FAILED;
+	        sprintf( ebuf, "Field %s can not be selected for query output: type %d not supported yet\n",
+		         fname, dtype);
+		db_append_string ( &errMsg, ebuf );
+	        return DB_FAILED;
 	    }
 	    
 	    type = PG_UNKNOWN;
@@ -183,7 +186,7 @@ int load_table(int t, char *stmt)
 
 	}
 
-	G_debug(3, "col: %s type : %d width :%d", fname, type, fsize);
+	G_debug(3, "  width :%d", fname, type, fsize);
 	add_column(t, type, fname, fsize);
 	
 	G_debug(3, "load_table() - number of cols is %d", db.tables[t].ncols);

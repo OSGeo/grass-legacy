@@ -23,13 +23,14 @@ int db_driver_execute_immediate(sql)
     char *s;
     int ret;
 
+    db_set_string ( &errMsg, "" );
     s = db_get_string(sql);
 
     ret = execute(s, NULL);
 
     if (ret == DB_FAILED) {
-	sprintf(errMsg, "%sError in db_execute_immediate()", errMsg);
-	report_error(errMsg);
+	db_append_string ( &errMsg, "Error in db_execute_immediate()\n");
+	report_error(  db_get_string (&errMsg) );
 	return DB_FAILED;
     }
 
@@ -44,8 +45,7 @@ int db_driver_begin_transaction(void)
     res = PQexec(pg_conn, "BEGIN");
 
     if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	sprintf(errMsg, "%s Cannot 'BEGIN' transaction", errMsg);
-	report_error(errMsg);
+	report_error( "Cannot 'BEGIN' transaction");
 	PQclear(res);
 	return DB_FAILED;
     }
@@ -63,8 +63,7 @@ int db_driver_commit_transaction(void)
     res = PQexec(pg_conn, "COMMIT");
 
     if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	sprintf(errMsg, "%s Cannot 'COMMIT' transaction", errMsg);
-	report_error(errMsg);
+	report_error( "Cannot 'COMMIT' transaction" );
 	PQclear(res);
 	return DB_FAILED;
     }

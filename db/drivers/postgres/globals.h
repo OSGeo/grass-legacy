@@ -133,10 +133,10 @@ cursor;
 
 #ifdef MAIN
 DATABASE db;
-char errMsg[PG_MSG];
+dbString errMsg;
 PGconn *pg_conn;
 #else
 extern DATABASE db;
-extern char *errMsg;
+extern dbString errMsg;
 extern PGconn *pg_conn;
 #endif
