@@ -30,3 +30,7 @@ v.surf.idw              1.76                11.35
 The Makefile needs a reference to $(SITESLIB).
 
 Radim
+
+##################
+
+G_site_put() currently only writes 2D sites files.
