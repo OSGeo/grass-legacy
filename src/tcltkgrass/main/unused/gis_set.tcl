@@ -255,6 +255,19 @@ proc gisSetWindow {} {
     -relief {raised}
 
 
+  frame .frame0.intro -borderwidth 2
+  text .frame0.intro.msg -relief ridge -height 4 -width 50 \
+      -font {Helvitica -12 bold}
+  pack .frame0.intro -side top
+  pack .frame0.intro.msg -side top
+  
+  .frame0.intro.msg tag configure all -justify center
+  .frame0.intro.msg insert end "Welcome to GRASS GIS Version 5.0\n\n"
+  .frame0.intro.msg insert end "Please select location and mapset\n"
+  .frame0.intro.msg insert end "or define a new location\n"
+  .frame0.intro.msg tag add all 1.0 end
+  .frame0.intro.msg configure -state disabled
+  
   # -----------------------------------
   # build .frame0.frame1
   # -----------------------------------
@@ -283,6 +296,7 @@ proc gisSetWindow {} {
   scrollbar .frame0.frame1.mid.hscrollbar \
     -command { .frame0.frame1.mid.entry xview} \
     -relief {raised} \
+    -width 12 \
     -orient {horizontal}
  
   button .frame0.frame1.right.button \
