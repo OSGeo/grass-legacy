@@ -130,7 +130,7 @@ struct symtab *ptr;
             case AttributeSymbol:
                 if ( !first_att && !done_checking ) {
                     if ( prob_check < 0.995 || prob_check > 1.005 ) {
-                        fprintf(stderr,"Conditional probabilities don't sum to 1.0\n");
+                        fprintf(stderr,"Conditional probabilities (%.3f) should sum to 1.0\n", prob_check);
                         fprintf(stderr,"for inferred attribute [%s] determinant [%s]\n",
                             inf_val->name,lastattribute);
                         exit(0);
