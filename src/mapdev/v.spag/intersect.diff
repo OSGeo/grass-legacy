@@ -1,0 +1,5 @@
+114c114,115
+<       for (b = 1 ; b < BPoints.n_points ; b++)
+---
+>       /*for (b = 1 ; b < BPoints.n_points ; b++)*/
+>         for (b = (A == B ? a + 2 : 1) ; b < BPoints.n_points ; b++)
