@@ -712,7 +712,7 @@ done
 
 echo "Cleaning up temporary files....."
 
-("$ETC/clean_temp" > /dev/null &)
+"$ETC/clean_temp" > /dev/null
 rm -f "$lockfile"
 
 # Save GISRC
