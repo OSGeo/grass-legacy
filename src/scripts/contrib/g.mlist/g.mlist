@@ -71,11 +71,11 @@ mapset="$GIS_OPT_mapset"
 sep="$GIS_OPT_sep"
 search="$GIS_OPT_pattern"
 
-if [ "$mapset" == "(null)" ] ; then
+if [ "$mapset" = "(null)" ] ; then
 #    echo using current mapset
     mapset="$MAPSET"
 fi
-if [ "$sep" == "(null)" ] ; then
+if [ "$sep" = "(null)" ] ; then
 #    echo using "\n" as separator
     sep=""
 fi
