@@ -18,7 +18,7 @@ site_data (meta_report, site_list, layer, mapset, layer_num, window, quadsize)
     int site_row, site_col;	/* location of site itself */
     int r, c;   		/* offset from center of site */
 
-    int north, east;
+    double north, east;
     char *desc;
 
     float northing_to_row ();
