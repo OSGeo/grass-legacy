@@ -43,6 +43,7 @@ Note: This text contains some rules only applicable to the
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
+   http://www.kde-apps.org/content/show.php?content=19776
 
    ... anywhere else?
 
