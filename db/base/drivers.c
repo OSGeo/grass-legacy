@@ -1,6 +1,8 @@
 #include "codes.h"
 #include "dbmi.h"
+#include "codes.h"
 #include "gis.h"
+#include <stdlib.h>
 
 void parse_command_line();
 
@@ -33,17 +35,27 @@ main(int argc, char *argv[])
 void
 parse_command_line (int argc, char *argv[])
 {
-    struct Flag *full;
+    struct Flag *full, *print;
+    struct GModule *module;
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
 
     full = G_define_flag();
     full->key = 'f';
     full->description = "Full output";
 
-    G_disable_interactive();
+    print = G_define_flag();
+    print->key               = 'p';
+    print->description       = "print tables and exit";    
 
-    if (argc > 1) {
-      if(G_parser(argc, argv)) exit(ERROR);
-    }
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all database drivers.";
+
+    if(G_parser(argc, argv))
+	exit(ERROR);
 
     parms.f = full->answer;
 }
