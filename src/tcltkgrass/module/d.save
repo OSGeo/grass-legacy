@@ -1,0 +1,7 @@
+interface_build {
+    {d.save} 0
+    {Creates a list of commands for recreating screen graphics.}
+    {entry frame {Frame(s) to save [Active frame]:} 0 ""}
+    {checkbox -c {Save current frame.} 0 -c}
+    {checkbox -a {Save all the frames.} 0 -a}
+}
