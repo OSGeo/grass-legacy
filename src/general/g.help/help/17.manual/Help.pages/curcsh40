@@ -1,0 +1,1088 @@
+#!/bin/csh -f
+#
+# This is a shell script which generates a "currently running programs"
+# document based on help entries.  To run:
+#
+#  1) Edit to make correct.  Especially check the entries to be included
+#     in each section.
+#  2) Run from inside the grass 4.0 man/help1 directory:
+#   **(i.e., on emily under:  /grass.src/4.0/man/help1 )
+#   **(or under /grass.src/4.0/src/general/g.help/help/17.manual/Help.pages )
+#   **(or under /home/zorro/martin/help/17.manual/Help.pages )
+#  Your output will get sent to the file "curprog4.0" under the /tmp directory.
+#  3) Process output file /tmp/"curprog.4.0"  using troff -ms
+#    -- i.e., from zorro, type:  "itroff -ms /tmp/curprog4.0"
+
+setenv OUTPUT /tmp/curprog4.0
+rm -f $OUTPUT
+cat >! $OUTPUT << EOF
+.DA "July 1991"
+.TL
+GRASS 4.0 PROGRAMS
+.br
+DRAFT
+.AB
+This document lists the currently running programs associated with version 4.0
+of the Geographic Resources Analysis Support System (GRASS), developed at the
+U.S. Army Corps of Engineers Construction Engineering Research Laboratory
+(USA-CERL) in Champaign, IL.
+.AE
+.NH 0
+GRASS
+.PP
+GRASS is a public domain image processing and geographic information system
+(GIS), written in the C programming language and running under the UNIX
+operating system.  It was originally designed and developed by researchers in
+USACERL's Environmental Division to assist land managers at military
+installations.
+GRASS is now used by a wide variety of public and private agencies,
+including the Soil Conservation Service, National Park Service, U.S. Geological
+Survey, and many others.  Some GRASS programs are contributed by these
+agencies and others.  The system continues to be developed at USACERL.
+.PP
+GRASS version 4.0 includes roughly 270 commands, which adhere to
+the following naming conventions:
+.DS
+\fIPrefix\fR:
+ d.   - Display commands
+ g.   - General file management	commands
+ i.   - Imagery commands
+ m.   - Data Import/Processing commands
+ p.   - Paint/Print commands
+ r.   - Raster data commands
+ s.   - Sites data commands
+ v.   - Vector data commands
+
+\fISuffix\fR:
+  .sh - Shell scripts (macros)
+.DE
+This naming scheme indicates the data type (raster, vector, sites) on which
+a command operates, or the general functional area (display, imagery,
+data import/processing, general purpose) in which a command falls,
+or whether a command is a UNIX shell script macro.
+.bp
+
+.PP
+In this paper, and in the GRASS on-line help system (accessed by typing
+\fBg.help\fR while running GRASS), commands
+are listed under their respective functional areas.
+The functional areas described here are as follows:
+.DS
+ 1 - General File Management
+ 2 - "Window" Management
+ 3 - Extracting Data from Magnetic Tape
+ 4 - Data Conversion: Importing and Exporting Data
+ 5 - Interfaces between GRASS and other Software
+ 6 - Digitizing and Map Development
+ 7 - Image Processing
+ 8 - Analyzing Data in GRASS
+ 9 - Map Display
+10 - Printing Maps
+11 - Report Generation
+12 - Macro Development 
+.DE
+.NH 1
+General File Management Commands
+.PP
+The following GRASS commands perform general management functions.
+They are designed to assist in the management of files and data and
+to provide access to various GRASS help features.
+EOF
+foreach f (\
+d.ask\
+exit\
+g.access\
+g.ask\
+g.copy\
+g.filename\
+g.findfile\
+g.gisenv\
+g.help\
+g.list\
+g.manual\
+g.mapsets\
+g.region\
+g.remove\
+g.rename\
+g.version\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+"Window" Management
+.PP
+These commands deal with the management of the two types of 'windows'
+available in GRASS:  graphics display frames and geographic regions.
+.NH 2
+Management of Graphics Display Frames
+.PP
+After the user has started and selected a graphics monitor for output
+(using the \fId.mon\fR command), the user can subdivide the monitor
+into different "frames", and display different GRASS outputs in each frame.
+For example, the GRASS macro \fI3d.view.sh\fR divides the monitor into
+nine frames to demonstrate the 3-d viewing function of GRASS.
+.br
+The following commands are used to manage the frames in which graphics
+are displayed on the user's graphics display device (monitor).
+These commands affect only the display of graphics, and do not alter the
+user's data.  In past GRASS releases, "graphics frames" were referred to
+as "graphics windows";  the latter term is now obsolete.
+EOF
+foreach f (\
+d.erase\
+d.frame\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Defining/Management of the Geographic Region  
+.PP
+The commands listed below can be used to modify the settings of the user's
+geographic region.  This settings of this region define the geographic
+boundaries, map projection, coordinate system, and resolution of a data set.
+GRASS commands commonly ignore data falling outside of this region.
+For example, when raster analysis programs are run on map layers, only
+those map areas that fall inside the user's current geographic region
+will be analyzed and included in the resultant map layer.
+In previous GRASS releases, the geographic region definition was referred to
+as the "geographic window";  the latter term is now obsolete.
+EOF
+foreach f (\
+d.zoom\
+g.region\
+r.mask\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Extracting Data from Magnetic Tapes
+.PP
+Several GRASS commands exist to examine and extract specific types of
+data from magnetic tape.  Some of these programs are listed below.
+.NH 2
+Examining, Extracting and Rotating Elevation Tape Data
+.PP
+The U.S. Geological Survey (USGS) and the Defense Mapping Agency (DMA)
+distribute digital elevation data at several resolutions and in different tape
+formats.  These data are referred to as digital elevation models (DEMs)
+and digital terrain elevation data (DTED).  The GRASS programs listed below
+extract this data from 1/2" magnetic tape, list tape contents, rotate
+the data, and "flip" the data.  USACERL distributes brief papers that
+distinguish elevation data types and detail the sequence of GRASS commands
+relevant to each.
+EOF
+foreach f (\
+m.examine.tape\
+m.dem.examine\
+m.dem.extract\
+m.dmaUSGSread\
+m.dted.examine\
+m.dted.extract\
+m.flip\
+m.rot90\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Extracting Imagery Data
+.PP
+Several GRASS commands are also available to extract specific forms of
+satellite imagery data from magnetic tape.  The below commands extract
+LANDSAT multi-spectral scanner (MSS), Thematic Mapper (TM), and other
+(e.g., SPOT) satellite data, as well as header information, from tape.
+The \fIGRASS Imagery Tutorial\fR distributed by USACERL discusses imagery data
+and details the logical sequence of GRASS commands relevant to these different
+data forms.
+EOF
+foreach f (\
+i.tape.mss\
+i.tape.mss.h\
+i.tape.other\
+i.tape.tm\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Data Conversion: Importing and Exporting Data
+.PP
+The commands listed below are useful to those importing and exporting data
+to and from GRASS.  They perform ASCII/binary data conversions,
+raster, vector, and sites data format conversions, GRASS/other data format
+conversions, and map coordinate system and map projection conversions.
+.NH 2
+Moving Data to Another Computer - ASCII/Binary Conversions
+.PP
+These commands  assist in ASCII/binary conversion of data.
+Specifically, commands with the .ascii extension
+bring data in from ASCII (to binary) and out to ASCII (from binary).
+Those with a .dlg extension
+bring data in from DLG-3 Optional format (to GRASS vector format) and
+out to DLG-3 Optional format (from GRASS vector format).
+EOF
+foreach f (\
+r.in.ascii\
+r.out.ascii\
+s.in.ascii\
+s.out.ascii\
+v.in.ascii\
+v.out.ascii\
+v.in.dlg\
+v.out.dlg\
+v.import\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Raster/Vector/Sites Conversions
+.PP
+These commands convert data among GRASS raster, vector and sites formats.
+EOF
+foreach f (\
+r.line\
+r.poly\
+r.thin\
+r.in.sunrast\
+r.in.ll\
+s.in.ascii\
+s.out.ascii\
+v.to.rast\
+v.to.sites\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+GRASS to/from Other File Format Conversions
+.PP
+These commands convert GRASS files to/from such other file formats
+as ARC-INFO, DLG-3 Optional, DXF, and MOSS.
+EOF
+foreach f (\
+v.in.arc\
+v.out.arc\
+v.in.dlg\
+v.out.dlg\
+v.in.dxf\
+v.out.dxf\
+v.in.tiger\
+v.out.moss\
+r.in.sunrast\
+m.lulc.USGS\
+Gen.Maps\
+Gen.tractmap\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Coordinate Conversions and Map Projections
+.PP
+The user can also perform map coordinate conversions and map projection
+transformations, using the GRASS commands listed below.
+EOF
+foreach f (\
+m.datum.shift\
+m.gc2ll\
+m.ll2gc\
+m.ll2u\
+m.u2ll\
+m.lulc.read\
+m.lulc.USGS\
+m.region.ll\
+m.tiger.region\
+r.mapcalc\
+r.in.ll\
+v.transform\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.PP
+Satellite imagery data are generally made available in an x,y coordinate
+system.  In order to analyze imagery data in combination with other
+GRASS data layers, it is necessary that all these data be rectified to
+the same map coordinate system and projection.  Several GRASS programs
+are used to rectify imagery data.
+EOF
+foreach f(\
+i.points\
+i.rectify\
+i.rectify.blk\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Interfaces between GRASS and other Software
+.PP
+One function usefully performed by GRASS is to output data in a form suitable
+for input to other existing computer models.
+GRASS programs allow GRASS data to be interfaced with those
+of the
+BNOISE (blast noise simulation),
+X-Windows (X-Windows user interface),
+MAPGEN (map generation functions for plotter output),
+PPM (portable pix-map utilities),
+ARMSED (watershed and sedimentation modeling),
+ELAS (image processing), UW-RIM (University of Washington's version of the RIM
+relational data base management system), the "S" statistical package,
+and ISM (interactive surface modeling) programs.
+The user can, of course, use GRASS programs to put data into a form suitable
+for import and export to/from programs other than these.
+.NH 1
+Digitizing and Map Development
+.PP
+To be used by GRASS programs, data must be digitally stored in a GRASS data base.
+Data can be entered into a GRASS data base in one of several ways.
+(1)  Hardcopy data (like paper maps) may be either digitized or scanned
+into GRASS's vector file format;
+(2)  data already available in another digital format (like ARC-INFO data)
+may be converted into GRASS's digital data file format,
+and stored in a GRASS data base;
+(3)  GRASS analysis programs can be used to create new GRASS data
+from data already stored in GRASS digital data file format.
+The GRASS programs listed below are designed for the input, manipulation,
+and adjustment of data from sources outside of GRASS.
+.NH 2
+Digitizing Maps
+.PP
+These commands allow for the addition of paper (and other hardcopy geographic
+information) into GRASS data bases, and for the manipulation of vector
+data in GRASS.
+EOF
+foreach f (\
+r.patch\
+r.random\
+s.menu\
+v.digit\
+v.mkgrid\
+v.mkquads\
+v.patch\
+v.support\
+v.to.rast\
+v.to.sites\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Editing and Patching Map Data
+.PP
+Frequently, (due to the size of digitizing tablets) users digitize data
+in relatively small chunks which must be "patched" together before
+data are analyzed.
+The GRASS commands listed below are used to edit and patch digital data.
+EOF
+foreach f (\
+r.mapcalc\
+r.patch\
+v.patch\
+v.prune\
+v.spag\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Creating Support Files for GRASS Maps
+.PP
+A variety of supporting information is needed for each GRASS "map layer".
+For data stored in GRASS vector format, information on the location of vectors,
+the file topology, vector category values, and category labels
+are stored in separate files.  For data stored in GRASS raster format,
+additional files are also stored to hold information on category colors,
+the map's development history, etc.
+The below programs help the user build necessary GRASS support files
+for raster and vector data.
+EOF
+foreach f (\
+r.support\
+v.support\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Importing and Exporting Data to Other Data Formats
+.PP
+Often, data which one wishes to use in a GRASS data base are already
+available in digital data formats other than GRASS.  Similarly, users
+often wish to export data from GRASS into other software systems' data formats.
+A number of GRASS programs are available to import and export data to and
+from GRASS.  These are listed below.
+EOF
+foreach f (\
+r.in.ascii\
+r.in.ll\
+r.out.ascii\
+v.import\
+v.in.dxf\
+v.out.dxf\
+v.support\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Image Processing
+.PP
+Remotely-sensed images, such as satellite data and aerial photographs, are widely
+available in a digital format.  The data in these images can be interpreted using
+image processing techniques that classify image elements based on the spectral
+reflectance values of individual image pixels or on user-identified pixel groupings.
+GRASS integrates GIS with image processing capabilities.  This allows image data
+to augment a GRASS data base, and allows image classifications to be guided
+by known elements in other maps in the GIS data base.
+Processing of remotely-sensed imagery typically involves:
+.LP
+(1) extracting data from their magnetic storage media,
+(2) entering extracted data into a GRASS data base,
+(3) classifying pixels and elements in the image,
+(4) rectifying the image to a map coordinate system and projection, and
+(5) correcting and enhancing the image.
+.LP
+GRASS commands commonly used to perform image processing are listed below.
+Because imagery are stored as raster data, the GRASS raster analysis functions
+can be used to analyze imagery.  The paper \fIr.mapcalc:  An Algebra for
+GIS and Image Processing\fR, describes ways in which \fIr.mapcalc\fR can be used
+as an image processing tool.
+.NH 2
+Tape Extraction
+.PP
+Once imagery data are obtained from agencies, they must be extracted
+from the magnetic tapes on which they are stored.  GRASS commands exist
+to extract LANDSAT Thematic Mapper (TM), Multi-Spectral Scanner (MSS),
+and such other satellite imagery as SPOT data from half-inch magnetic tape.
+Procedures for extracting this data from tape and importing it into
+a GRASS data base are described in the \fIGRASS Imagery Tutorial\fR.
+EOF
+foreach f (\
+i.tape.mss\
+i.tape.mss.h\
+i.tape.other\
+i.tape.tm\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+File Management
+.PP
+Users can "group" imagery files for analysis purposes, and "target" imagery
+files to the files in another GRASS location.  These are basic commands
+for the management of imagery files.
+EOF
+foreach f (\
+i.group\
+i.target\
+)
+
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Image Classification
+.PP
+Image classification is the process of categorizing the data in a raster image
+based on the spectral reflectance values of each map pixel (cell).
+Classification can be done using unsupervised or supervised methods.
+GRASS contains functions to conduct both kinds of classifications.
+In a supervised classification, the user can define the categories into
+which pixels are to be placed;  in an unsupervised classification,
+the computer attempts to categorize pixels in a user-defined number
+of attempts based on statistical regularities in the data.
+EOF
+foreach f (\
+i.cca\
+i.class\
+i.cluster\
+i.maxlik\
+i.pca\
+i.zc\
+r.mapcalc\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Geometric Rectification
+.PP
+Imagery data are generally made available in an x,y coordinate system.
+In order to analyze imagery data in combination with other GRASS data layers,
+it is necessary that all these data be rectified to the same coordinate system
+and map projection.  Several GRASS programs are used to rectify imagery data.
+EOF
+foreach f (\
+i.points\
+i.rectify\
+i.rectify.blk\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Image Correction
+.PP
+Commonly, when analyzing multiple images, it is necessary to correct image
+distortions attributable to such sources as the earth's radiation.  Such
+distortions can result in different spectral reflectance values being collected
+for the same image pixel, based on the time of day, month, year, etc., at which
+the image was photographed.  GRASS programs exist which help the user to identify
+and eliminate such distortions from images, allowing valid comparisons to made among
+images.  See the paper \fIr.mapcalc:  An Algebra for GIS and Image Processing\fR
+for an example of how radiometric corrections can be made to an image.
+EOF
+foreach f (\
+i.fft\
+i.ifft\
+r.mapcalc\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Image Enhancement
+.PP
+GRASS programs can be used to enhance or subdue certain data values,
+in order to make more evident certain features or qualities of digital imagery.
+EOF
+foreach f (\
+i.colors\
+i.composite\
+i.grey.scale\
+i.his.rgb\
+i.rgb.his\
+r.mapcalc\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Building Custom Filters
+.PP
+The user may wish to model interactions across a landscape, or to
+remove systematic distortions occurring across a map or image.
+Both applications can be approached by filtering data.
+The user can build custom filters to make the value of one pixel
+a (user-defined) function of the values in the surrounding cells.
+The paper \fIr.mapcalc:  An Algebra for GIS and Image Processing\fR
+provides examples of how some spatial filters commonly used in image processing
+can be built using \fIr.mapcalc\fR.  See also the section below on
+"Analyzing Data in GRASS:  Neighborhood Analysis/Filters."
+EOF
+foreach f (\
+i.zc\
+r.mapcalc\
+r.mfilter\
+r.neighbors\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Analyzing Data in GRASS
+.PP
+GRASS was designed as an image processing and map analysis system.
+Most GRASS analysis programs operate on raster data;  \fIs.db.rim\fR operates
+on site data.
+GRASS programs exist that allow the user to convert GRASS data between
+raster, vector, and site formats.
+GRASS data analysis functions can be employed for such tasks as:
+(1) general data manipulation,
+(2) site data analysis,
+(3) two- and three-dimensional manipulations,
+(4) single cell map reporting functions,
+(5) multi-cell coincidence tabulations and comparisons,
+(6) neighborhood analysis and filtering,
+(7) regional analysis and filtering,
+(8) proximity analysis,
+(9) Boolean overly functions, and
+(10) terrain analysis functions.
+.NH 2
+General Data Manipulation and Analysis Tools
+.PP
+The programs listed below are used for general data manipulation and analysis.
+Several of these programs are also cross-listed under other categories.
+EOF
+foreach f (\
+r.binfer\
+r.colors\
+r.combine\
+r.grow\
+r.infer\
+r.mapcalc\
+r.mapmask\
+r.mask\
+r.pat.place\
+r.reclass\
+r.resample\
+r.rescale\
+r.weight\
+s.db.rim\
+v.db.rim\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Site Data
+.PP
+Site data can be analyzed in GRASS either in their site format or after conversion
+to raster data format.  The following GRASS programs are used to analyze
+site data.
+EOF
+foreach f (\
+s.db.rim\
+s.menu\
+s.surf.idw\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+2-D and 3-D Manipulations
+.PP
+GRASS programs can be used to perform two- and three-dimensional data
+manipulations.  These functions are useful for modeling iterative
+interactions across a landscape.
+EOF
+foreach f (\
+r.basins.fill\
+r.drain\
+r.surf.contour\
+r.surf.idw\
+r.surf.idw2\
+r.watershed\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Single Cell Map Reporting Functions 
+.PP
+The functions listed below report information about a single cell, in one or
+more raster map layers.
+EOF
+foreach f (\
+d.what.rast\
+r.describe\
+r.info\
+r.report\
+r.stats\
+r.what\
+r.volume\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Multi-Cell Coincidence Tabulations and Comparisons
+.PP
+The GRASS functions listed below report back information about multiple cells
+in one or more map layers, in a way useful for making correlations among data.
+EOF
+foreach f (\
+d.what.rast\
+r.coin\
+r.report\
+r.stats\
+r.what\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Neighborhood Analysis/Filters
+.PP
+The user may wish to model interactions across a landscape, or to
+remove systematic distortions occurring across a map or image.
+The user may also wish to eliminate "noise" from map data in order to make
+the basic results more visually apparent.
+Such applications can be approached by filtering data.
+The user can build custom filters to make the value of one pixel
+a (user-defined) function of the values in the surrounding cells.
+The paper \fIr.mapcalc:  An Algebra for GIS and Image Processing\fR
+provides examples of how some spatial filters commonly used in image processing
+can built using \fIr.mapcalc\fR.  See also past issues of the newsletter
+\fIGRASSClippings\fR for other examples of custom filters for specific
+applications.
+See also the section above on "Image Processing:  Building Custom Filters."
+EOF
+foreach f (\
+r.basins.fill\
+r.buffer\
+r.cost\
+r.clump\
+r.drain\
+r.grow\
+r.mapcalc\
+r.neighbors\
+r.slope.aspect\
+r.thin\
+r.watershed\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Regional Analysis/Filters
+.PP
+GRASS can also be used to analyze and filter data "regions".  Neighborhood
+filters modify each cell value as a function of the cell values found in
+its (square) neighborhood.
+Regional filters make each cell value a function of the values found
+within its (user-defined) region/clump of cells.  A region can be defined as
+a contiguous group of cells having the same category value.
+Such filters are useful for imagery analysis and other applications.
+EOF
+foreach f (\
+i.zc\
+r.average\
+r.clump\
+r.volume\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Proximity Analysis
+.PP
+GRASS can be used to examine the proximity of certain map categories from
+others.  Often, this is useful when determining which geographic areas
+warrant further analysis.  For example, if investigating potential nesting
+sites of species X, the user might restrict his analysis to areas within
+a 300-meter radius of cells containing relevant species habitat.
+EOF
+foreach f (\
+r.buffer\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Boolean Overlay Functions
+.PP
+GRASS can perform basic Boolean overlay functions,
+involving data union ("or" operations), intersection ("and" operations),
+and exclusion ("not" operations).  The GRASS commands listed below are
+used to do this.
+EOF
+foreach f (\
+r.combine\
+r.cross\
+r.infer\
+r.mapcalc\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Terrain Analysis
+.PP
+Elevation data are crucial to any GIS.  A number of GRASS commands were
+designed specifically to address terrain analysis issues related to
+water movement, development of ballistic trajectories,
+and computation of slope and aspect.
+Although the GRASS commands listed below were designed to analyze terrain data,
+they in fact can be used to analyze any data types.
+See also \fId.3d\fR, \fIr.mapcalc\fR, \fIr.clump\fR,
+and the paper \fIr.mapcalc:  An Algebra for GIS and Image Processing\fR.
+EOF
+foreach f (\
+r.cost\
+r.drain\
+r.los\
+r.slope.aspect\
+r.traj\
+r.traj.data\
+r.volume\
+r.watershed\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Map Display
+.PP
+GRASS includes a full range of functions for display of GRASS outputs
+on the user's graphics device.  These commands manage the graphics display
+device (monitor), manage the display frames to which output is sent,
+report on the contents of the images displayed to the monitor,
+and are used for map design, display, input and screen capture.
+.NH 2
+Management of Graphics Display Monitor
+.PP
+GRASS supports the use of multiple graphics display monitors during a GRASS
+session.  The \fId.mon\fR command is used to start, select, stop, and unlock
+graphics monitors for GRASS display output.
+EOF
+foreach f (\
+d.mon\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Management of Display Frames on the Graphics Display Monitor
+.PP
+After the user has started and selected a graphics monitor for output,
+the user can subdivide the monitor into different "frames", and display
+different GRASS outputs in each frame.  For example, the GRASS program
+\fIi.points\fR divides the monitor into multiple frames to allow the user
+to target rectification points on an image to (user-known) points on another
+map layer.  Similarly, the GRASS macro \fI3d.view.sh\fR divides the monitor
+into nine frames to demonstrate the 3-d viewing function of GRASS.
+EOF
+foreach f (\
+d.erase\
+d.frame\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Map Display Reporting Functions
+.PP
+Several GRASS commands enable the user to query the contents of raster
+map layers displayed in the active frame on the user's graphics monitor.
+EOF
+foreach f (\
+d.measure\
+d.what.rast\
+d.what.vect\
+d.where\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Map Design, Display, Input and Capture
+.PP
+Numerous GRASS commands enable the user to develop, display, and capture
+raster, vector, site, textual, and symbol/icon data to the graphics display
+monitor.  Similar functions are available for hardcopy map design and output
+(see "Printing Maps", below).
+EOF
+foreach f (\
+grass.logo.sh\
+show.color.sh\
+show.fonts.sh\
+slide.show.sh\
+3d.view.sh\
+d.3d\
+d.colormode\
+d.colors\
+d.colortable\
+d.display\
+d.font\
+d.geodesic\
+d.graph\
+d.grid\
+d.his\
+d.histogram\
+d.icons\
+d.label\
+d.labels\
+d.legend\
+d.mapgraph\
+d.menu\
+d.paint.labels\
+d.points\
+d.profile\
+d.rgb\
+d.rhumbline\
+d.scale\
+d.sites\
+d.text\
+d.title\
+d.vect\
+d.vect.dlg\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Printing Maps
+.PP
+The map printing process parallels that for map display.  Typically, however,
+printing of outputs is done only after all map analysis is complete.
+The user should design a map's contents, select a paint device (printer)
+to which output will be sent, and then print the map.
+.NH 2
+Designing Maps for Printed Output
+.PP
+A full range of map design functions, similar to those available for
+map display, are accessed through the GRASS commands listed below.
+EOF
+foreach f (\
+p.chart\
+p.colors\
+p.icons\
+p.labels\
+p.map\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Choosing a Printer for Hardcopy Output
+.PP
+A user may have several printers (and display devices) connected
+to a GRASS system.  Before printing a map, the user must first select
+which device will be used to print output produced by the GRASS paint/print
+commands.  In GRASS, the \fIp.select\fR command is used to select a
+device for paint/print output.  The \fIGRASS Hardware Configuration Guide\fR
+lists painters/printers to which GRASS paint/print output can be sent.
+In addition to hardcopy output devices (printers), a "preview" driver also
+exists to send paint output to a user's graphics display monitor.
+User sites can also elect to write new device drivers.
+The \fIGRASS Programmer's Manual\fR and the \fIGRASS Installation Guide\fR
+discuss some of the requirements of device drivers.
+EOF
+foreach f (\
+p.select\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+.NH 2
+Printing Hardcopy Map Output
+.PP
+The below commands exist to print the output produced by GRASS
+\fIpaint\fR commands.
+EOF
+foreach f (\
+p.map\
+p.screen\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Report Generation
+.PP
+Several commands exist in GRASS to report information about a map's
+contents, or the results of an analysis on one or more maps,
+back to the user.  The user can also develop macros specific to his needs
+to prepare other types of reports (see section entitled "Macro Development,"
+and past issues of the newsletter \fIGRASSClippings\fR).
+.NH 2
+Reports on Contents of Single or Multiple Maps
+.PP
+The following GRASS commands report on the contents of one or more maps.
+EOF
+foreach f (\
+d.measure\
+d.what.rast\
+d.what.vect\
+d.where\
+r.describe\
+r.info\
+r.report\
+r.stats\
+r.volume\
+r.what\
+v.stats\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+.NH 1
+Macro Development
+.PP
+GRASS has often been referred to as a "tool chest" of commands.
+In this scenario, the user supplies the data and the notion
+of which functions to perform (i.e., a model), while
+GRASS supplies the commands (functions) necessary to run the model.
+.NH 2
+Programming Tools
+.PP
+The below commands are actually UNIX shell scripts running a series
+of GRASS commands.  They exist both to perform a specific function
+and to exhibit how such macros can be constructed.
+All are stored under the directory \fI$GISBASE/scripts\fR.
+It is hoped that user sites will develop their own macros based on these
+examples.
+EOF
+foreach f (\
+3d.view.sh\
+blend.sh\
+count.files.sh\
+dcorrelate.sh\
+demo.sh\
+grass.logo.sh\
+hsv.rgb.sh\
+old.cmd.sh\
+rcorrelate.sh\
+rgb.hsv.sh\
+shade.rel.sh\
+show.color.sh\
+show.fonts.sh\
+slide.show.sh\
+split.sh\
+stats.sh\
+)
+echo .IP \"$f -\" 16 >> $OUTPUT
+grep -v ^$ $f | sed -e '/^\\/s/^[^-]*- //' | sed -e '/^(GRASS/D' >> $OUTPUT
+end
+cat >> $OUTPUT << EOF
+EOF
+
+
+
+
