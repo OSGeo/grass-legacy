@@ -1,7 +1,9 @@
 #include "globals.h"
 #include "raster.h"
 #include "display.h"
+#include <stdlib.h>
 
+/* initflag: 0 means don't initialize VIEW_MAP1 or VIEW_MAP2 */
 int drawcell (View *view, int initflag)
 {
     int fd;
@@ -33,9 +35,9 @@ colors = &VIEW_MAP1->cell.colors;
 read_colors = view == VIEW_MAP1;
 */
 
-if (!view->cell.configured) return 0;
+    if (!view->cell.configured) return 0;
 
-colors = &VIEW_MAP1->cell.colors;
+    colors = &VIEW_MAP1->cell.colors;
 
     display_title (view);
 
@@ -61,7 +63,7 @@ fflush(pfd);
 pclose(pfd);
 */
 
-R_standard_color(BLACK);
+    R_standard_color(BLACK);
 
     if (initflag)
         {
@@ -116,4 +118,10 @@ R_standard_color(BLACK);
         return row==nrows;
     }
     return 0;
+}
+
+int /* unused */
+re_fresh_rast (void)
+{
+    return( drawcell ((View *)NULL,0));
 }
