@@ -8,17 +8,10 @@ Standards-Version: 3.6.1
 Package: grass
 Architecture: any
 Depends: ${shlibs:Depends}
-Description: GRASS GIS
- Geographic Resources Analysis Support System, commonly referred to as
- GRASS, is a Geographic Information System (GIS) used for data
- management, image processing, graphics production, spatial modeling,
- and visualization of many types of data. Originally written by the
- U.S. Army Construction Engineering Research Laboratories (USA-CERL)
- branch of the US Army Corp of Engineers as a tool for land management
- and environmental planning by the military, GRASS has evolved into a
- powerful utility with a wide range of applications in many different
- areas of scientific research. GRASS is currently used in academic and
- commercial settings around the world, as well as many governmental
- agencies including NASA, NOAA, USDA, the National Park Service, the
- U.S. Census Bureau, USGS, and many environmental consulting companies.
- The main site is hosted at ITC-irst, Trento, Italy.
+Description: Geographic Resources Analysis Support System
+ Commonly referred to as GRASS, this is a Geographic Information
+ System (GIS) used for geospatial data management and analysis,
+ image processing, graphics/map production, spatial modeling, and
+ visualization. GRASS is currently used in academic and commercial
+ settings around the world, as well as by many government agencies
+ and environmental consulting companies.
