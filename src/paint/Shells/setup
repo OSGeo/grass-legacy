@@ -1,0 +1,19 @@
+:
+Pselect -C
+PAINT=${GISBASE?}/etc/paint
+PAINTER=`gisenv PAINTER`
+PAINT_DRIVER_SHELL=$PAINT/driver.sh/${PAINTER?}
+PAINT_DRIVER=$PAINT/driver/$PAINTER
+
+export PAINT_DRIVER PAINT_DRIVER_SHELL PAINTER
+if [ ! -f $PAINT_DRIVER_SHELL ]
+then
+    if test $PAINTER
+    then
+	echo 'PAINTER='$PAINTER : no such device.
+    else
+	echo no PAINTER device selected.
+    fi
+    echo please run paint and select a PAINTER
+    exit 1
+fi
