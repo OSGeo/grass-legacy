@@ -170,6 +170,33 @@ _get_text (char *buf)
     return 0;
 }
 
+char *
+_get_text_2 (void)
+{
+    static char *buf;
+    static int len;
+    int i;
+
+    for (i = 0; ; i++)
+    {
+	if (i >= len)
+	{
+	    len += 1000;
+	    buf = realloc(buf, len);
+	    if (!buf)
+	    {
+		fprintf(stderr, "Unable to allocate memory\n");
+		exit(1);
+	    }
+	}
+        _get_char (&buf[i]);
+	if (!buf[i])
+	    break;
+    }
+
+    return buf;
+}
+
 int
 _get (char *buf, int n)
 {
