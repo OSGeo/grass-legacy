@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.10  2000-11-30 06:17:54  cho
+# Revision 1.11  2000-11-30 06:39:13  cho
+# added g.mremove to use wildcard in g.remove
+#
+# Revision 1.10  2000/11/30 06:17:54  cho
 # added -w flag to use wildcard instead of regular expression
 #
 # Revision 1.9  2000/11/26 18:18:18  cho
@@ -59,6 +62,7 @@ then
         echo
         echo "Usage: g.mlist [-w] [type=name] [mapset=name] [sep=name] map_pattern"
 	echo
+	echo "Flags:"
 	echo "           -w   use wildcard instead of regular expression"
 	echo
 	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") {print; i=1;} else if(i) print "     "$0}'
