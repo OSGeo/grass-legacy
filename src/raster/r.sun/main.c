@@ -81,6 +81,7 @@ struct Cell_head cellhd;
 struct Map_info Map;
 struct dig_head Head;
 struct Key_Value *in_proj_info, *in_unit_info;
+struct Key_Value *out_proj_info, *out_unit_info;
 struct pj_info iproj;
 struct pj_info oproj;
 
@@ -94,9 +95,9 @@ void com_par_const(void);
 double lumcline2(void);
 void joules2(void);
 
-int new_point();
-int searching();
-void where_is_point();
+int new_point(void);
+int searching(void);
+void where_is_point(void);
 void vertex(int, int);
 void line_x(int, int);
 void line_y(int, int);
@@ -1091,7 +1092,7 @@ void joules2(void)
 /*//////////////////////////////////////////////////////////////////////*/
 
 
-int new_point()
+int new_point(void)
 {
 
                   yy0 += stepsinangle;
@@ -1102,7 +1103,7 @@ int new_point()
                           return(1);
 }
 
-void where_is_point()
+void where_is_point(void)
 {
         double sx, sy;
         double dx, dy;
@@ -1282,7 +1283,7 @@ int jmin, imin;
 	}
 }
 
-int searching()
+int searching(void)
 {
 	double z2;
         int succes = 0;
@@ -1312,7 +1313,7 @@ void calculate(void)
 			int i, j, l;
 /*			double energy;*/
 			double lum, q1;
-			char parms_out[512];
+			char *ellps;
 
 			fprintf(stderr,"\n\n");
 
@@ -1442,15 +1443,26 @@ void calculate(void)
 
                 if(pj_get_kv(&iproj,in_proj_info,in_unit_info) < 0)
                 G_fatal_error("Can't get projection key values of current location");
+		
                 /* Set output projection to latlong w/ same ellipsoid */
-                if( G_find_key_value("ellps", in_proj_info) != NULL )
-                    sprintf(parms_out, "proj=ll ellps=%s",
-                            G_find_key_value("ellps", in_proj_info) );
+                out_proj_info = G_create_key_value();
+                out_unit_info = G_create_key_value();
+	    
+                G_set_key_value("proj", "ll", out_proj_info);
+
+                ellps = G_find_key_value("ellps", in_proj_info);
+                if( ellps != NULL )
+                    G_set_key_value("ellps", ellps, out_proj_info);
                 else
-                    sprintf(parms_out, "proj=ll ellps=wgs84");
-                pj_get_string(&oproj, parms_out);
-
-
+                    G_set_key_value("ellps", "wgs84", out_proj_info);
+	    
+                G_set_key_value("unit", "degree", out_unit_info);
+                G_set_key_value("units", "degrees", out_unit_info);
+                G_set_key_value("meters", "1.0", out_unit_info);
+	    
+	        if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
+	            G_fatal_error("Unable to set up lat/long projection parameters");
+		
 	        if(pj_do_proj(&longitude,&latitude,&iproj,&oproj) < 0)
 	        {
 	                fprintf(stderr,"Error in pj_do_proj\n");

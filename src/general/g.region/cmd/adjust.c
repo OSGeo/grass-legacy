@@ -3,7 +3,7 @@
 int 
 adjust_window (struct Cell_head *window)
 {
-    char *err, *G_adjust_Cell_head();
+    char *err;
 
     if (err = G_adjust_Cell_head(window,0,0))
     {
