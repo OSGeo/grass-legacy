@@ -121,8 +121,8 @@ int getarcs( char *name, int cover_type, int prec)
 	offset = Vect_write_line( &map, cover_type, points);
 	if (npts > 1) {
 	    i = (npts)/2;
-	    xc = (x[i]+x[i+1])/2;
-	    yc = (y[i]+y[i+1])/2;
+	    xc = (x[i]+x[i-1])/2;
+	    yc = (y[i]+y[i-1])/2;
 	} else {		/* should never occur... */
 	    xc = x[0];
 	    yc = y[0];
