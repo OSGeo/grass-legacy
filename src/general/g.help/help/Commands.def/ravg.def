@@ -1,0 +1,10 @@
+
+
+r.average - 
+
+r.average calculates the average value of data contained in a values
+raster map layer for each \polygon\ in the user-specified base raster
+map layer.  These averaged values are stored in the \category labels\
+file associated with the resualtant map layer.
+
+Manual entry for \r.average\
