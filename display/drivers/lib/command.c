@@ -100,7 +100,7 @@ process_command(int c)
 
     /* we sleep a bit when querying maps or zooming into - to reduce CPU load */
     delay.tv_sec=0;
-    delay.tv_nsec=500000; /* 500 milliseconds */
+    delay.tv_nsec=1; /* 0.001 milliseconds */
 
     switch(c)
     {
