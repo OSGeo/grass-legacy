@@ -1,0 +1,31 @@
+.\" %W% %G%
+.TH Gdivide 2 G_language
+.SH NAME
+Gdivide \- create map layer depicting left and right half
+planes of subwatershed basins
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.nf
+Gdivide basins streams output-layer
+.fi
+.SH DESCRIPTION
+Gdivide
+generates an output layer depicting left and right half planes
+for each subbasin of a watershed given in the input file basins.
+Also needed for input is a map layer depicting extended stream
+networks.
+
+The map layer depicting left and right half planes is 
+necessary for collecting data by half plane for use
+in other models.
+The data collected might include such information as area
+of the plane or slope of the plane.  This process is 
+necessary in the steps to provide information for the
+water and sediment runoff model armsed as part of the
+GRASS to armsed interface.
+.SH NOTES
+may have problems completing correctly if a stream lies
+directly next to a watershed boundary.
+.SH "AUTHOR"
+Marjorie Larson, U.S. Army Construction Engineering Research Laboratory
