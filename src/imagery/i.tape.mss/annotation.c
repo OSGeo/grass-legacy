@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 annotation(buf)
