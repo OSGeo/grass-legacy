@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.34 2000-10-13 07:42:35 markus Exp $
+# $Id: configure,v 1.35 2000-10-15 09:31:49 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3564,6 +3564,8 @@ if [ -z "$OPENGLINC" ]; then
             if [ -r "$i/$j" ]; then
                OPENGLINC="-I$i/GL"
                break 2
+            else
+               OPENGLINC=""
             fi
          done
       done
@@ -3587,6 +3589,8 @@ if [ -z "$OPENGLwINC" ]; then
             if [ -r "$i/$j" ]; then
                OPENGLwINC="-I$i/GL"
                break 2
+            else
+               OPENGLwINC=""
             fi
          done
       done
