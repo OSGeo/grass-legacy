@@ -6,9 +6,9 @@ all:
 	rm -f $(MAN3)/* $(MAN3)/.class-title
 	rm -f $(MAN4)/* $(MAN4)/.class-title
 	rm -f $(MAN5)/* $(MAN5)/.class-title
-	cp help.src/* $(HELP)/.
-	cp cat1/* man1/.class-title $(MAN1)/.
-	cp cat2/* man2/.class-title $(MAN2)/.
-	cp cat3/* man3/.class-title $(MAN3)/.
-	cp cat4/* man4/.class-title $(MAN4)/.
-	cp cat5/* man5/.class-title $(MAN5)/.
+	tar --exclude=CVS -cvf - help.src/*  | tar -C $(HELP) -xvf - >/dev/null
+	tar --exclude=CVS -cvf - cat1/* man1/.class-title | tar -C $(MAN1) -xvf - >/dev/null
+	tar --exclude=CVS -cvf - cat2/* man2/.class-title | tar -C $(MAN2) -xvf - >/dev/null
+	tar --exclude=CVS -cvf - cat3/* man3/.class-title | tar -C $(MAN3) -xvf - >/dev/null
+	tar --exclude=CVS -cvf - cat4/* man4/.class-title | tar -C $(MAN4) -xvf - >/dev/null
+	tar --exclude=CVS -cvf - cat5/* man5/.class-title | tar -C $(MAN5) -xvf - >/dev/null
