@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.87 2000-11-25 09:39:42 markus Exp $
+$Id: BUGS,v 1.88 2000-11-26 11:54:37 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -53,11 +53,6 @@ G3D libraries bug:
    (being worked on by Jaro)
 
 ----------- modules ---------------------------------------------
-[RC] d.his: 
- - color wrong if input value=0
- - added NULL randomly when using "out" for saving
- - not MASK sensitive
-    (being worked on by ?)
 
 d.mon: hangs with "-L" option
    (would be nice to fix to improve "d.monsize" script
