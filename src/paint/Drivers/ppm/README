@@ -1,0 +1,24 @@
+This driver creates a portable pixmap file. The file will be called
+paint.ppm is the user's home directory (unless the MAPLP envirnoment
+variable is set, then that file is used).
+
+Portable pixmaps are processed by the ppm* suite of utilities written
+by Jef Poskanzer.  These utilities are NOT supplied with this driver.
+If you have them then you can turn paint output into postcript by:
+
+    ppmtops paint.ppm            (for color poscript printers)
+    ppmtopgm paint.pgm | pgmtops (for black and white printers)
+
+The maximum width and height of the output is set in Driver.sh as the
+variables HEIGHT and WIDTH. You can change these if you wish.  I have
+not figured out what combinations are good. No matter what values you
+pick some window sizes will fit better than others.
+
+If the values are too large, you can scale the output down on the
+pp?tops commands, e.g.
+
+    pgmtops -scale .7
+
+If you want the output rotated by 90 degrees,
+
+    ppmrotate 90 paint.ppm | ppmtopgm ...
