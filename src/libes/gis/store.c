@@ -9,6 +9,18 @@
  *******************************************************************/
 #include <string.h>
 
+
+/*!
+ * \brief copy string to allocated memory
+ *
+ * This routine
+ * allocates enough memory to hold the string <b>s</b>, copies <b>s</b> to
+ * the allocated memory, and returns a pointer to the allocated memory.
+ *
+ *  \param s
+ *  \return char * 
+ */
+
 char *G_store (s) char *s;
 {
     char *buf;

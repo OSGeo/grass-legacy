@@ -17,6 +17,23 @@
 
 static int mystats(double,double,double,double,double *,double *);
 
+
+/*!
+ * \brief pole in polygon
+ *
+ * For latitude-longitude coordinates, this routine determines if the polygon
+ * defined by the <b>n</b> coordinate vertices <b>x,y</b> contains one of the
+ * poles.
+ * Returns -1 if it contains the south pole; 1 if it contains the north pole; 0
+ * if it contains neither pole.
+ * <b>Note.</b> Use this routine only if the projection is PROJECTION_LL.
+ *
+ *  \param x
+ *  \param y
+ *  \param n
+ *  \return int
+ */
+
 int G_pole_in_polygon(double *x,double *y, int n)
 {
     int i;

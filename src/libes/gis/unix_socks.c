@@ -1,5 +1,4 @@
 /*
-* $Id$
 *
 ****************************************************************************
 *
@@ -107,6 +106,22 @@ _get_make_sock_path (void)
  * should free() the return value when it is no longer needed.  Returns
  * NULL on failure.
  * ---------------------------------------------------------------------*/
+
+/*!
+ * \brief makes full socket path
+ *
+ * Takes a simple <b>name</b> for a communication channel and builds the
+ * full path for a sockets file with that <b>name</b>.  The path as of
+ * this writing (2000-02-18) is located in the temporary directory for the
+ * user's current mapset (although this will likely change).  A <b>NULL</b>
+ * pointer is returned if the function fails for some reason.  The caller is
+ * responsible for freeing the memory of the returned string when it is no
+ * longer needed.
+ *
+ *  \param name
+ *  \return char * 
+ */
+
 char *
 G_sock_get_fname (char *name)
 {
@@ -135,6 +150,19 @@ G_sock_get_fname (char *name)
  * already exists, 0 otherwise.
  * -------------------------------------------------------------------*/
     
+
+/*!
+ * \brief does the socket exist
+ *
+ * Takes the full path to a unix socket; determines if the file exists; and if
+ * the file exists whether it is a socket file or not.  Returns a non-zero
+ * value if the file exists and is a socket file.  Otherwise it returns
+ * zero.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int
 G_sock_exists (char *name)
 {
@@ -156,6 +184,32 @@ G_sock_exists (char *name)
  * call to bind().  On error, it returns -1.  Check "errno" if you
  * want to find out why this failed (clear it before the call).
  * ----------------------------------------------------------------*/
+
+
+/*!
+ * \brief binds the socket
+ *
+ * Takes the full path to a unix socket and attempts to bind a file
+ * descriptor to the path <b>name</b>.  If successful it will return
+ * the file descriptor.  Otherwise, it returns -1.  The socket file
+ * must not already exist.  If it does, this function will fail and
+ * set the global <b>errno</b> to <b>EADDRINUSE</b>.  Other error
+ * numbers may be set if the call to <b>bind()</b> fails.  Server
+ * programs wishing to bind a socket should test if the socket file
+ * they wish to use already exists.  And, if so, they may try to 
+ * connect to the socket to see if it is in use.  If it is not in use,
+ * such programs may then call <b>unlink()</b> or <b>remove()</b>
+ * to delete the file before calling <b>G_sock_bind()</b>.  It is
+ * important that server processes do not just delete existing socket
+ * files without testing the connection.  Doing so may make another
+ * server process unreachable (i.e. you will have hijacked the other
+ * server's communication channel).  Server processes must call
+ * <b>G_sock_bind()</b> prior to calling <b>G_sock_listen()</b>
+ * and <b>G_sock_accept()</b>.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int
 G_sock_bind (char *name)
@@ -205,6 +259,27 @@ G_sock_bind (char *name)
  * function.
  * --------------------------------------------------------------------*/
 
+
+/*!
+ * \brief listen on a socket
+ *
+ * Takes the file descriptor returned by a successful call to
+ * <b>G_sock_bind()</b> and the length of the the listen queue.
+ * A successful call will return 0, while a failed call will return -1.
+ * The global <b>errno</b> will contain the error number corresponding
+ * to the reason for the failure.  The queue length should never be zero.
+ * Some systems may interpret this to mean that no connections should be
+ * queued.  Other systems may add a fudge factor to the queue length that
+ * the caller specifies.  Servers that don't want additional connections
+ * queued should <b>close()</b> the listening file descriptor after
+ * a successful call to <b>G_sock_accept()</b>.  This function is
+ * a simple wrapper around the system <b>listen()</b> function.
+ *
+ *  \param fd
+ *  \param queue
+ *  \return int
+ */
+
 int
 G_sock_listen (int sockfd, unsigned int queue_len)
 {
@@ -219,6 +294,29 @@ G_sock_listen (int sockfd, unsigned int queue_len)
  * this call will usually block until a connection arrives.  You can use
  * select() for a time out on the call.
  * ---------------------------------------------------------------------*/
+
+
+/*!
+ * \brief accept a connection on the listening socket
+ *
+ * Takes the file descriptor returned by a successful call to
+ * <b>G_sock_bind()</b>, for which a successful call to
+ * <b>G_sock_listen()</b> has also been made, and waits for an incoming
+ * connection.  When a connection arrives, the file descriptor for the connection
+ * is returned.  This function normally blocks indefinitely.  However, an
+ * interrupt like <b>SIGINT</b> may cause this function to return without a
+ * valid connection.  In this case, the return value will be -1 and the global
+ * error number will be set to <b>EINTR</b>.  Servers should handle this
+ * possibility by calling <b>G_sock_accept()</b> again.  A typical server
+ * might have a call to <b>fork()</b> after a successful return from
+ * <b>G_sock_accept()</b>.  A server might also use <b>select()</b> to see
+ * if an a connection is ready prior to calling <b>G_sock_accept()</b>. This
+ * function is a simple wrapper around the system's <b>accept()</b> function,
+ * with the second and third arguments being <b>NULL</b>.
+ *
+ *  \param fd
+ *  \return int
+ */
 
 int
 G_sock_accept (int sockfd)
@@ -236,6 +334,25 @@ G_sock_accept (int sockfd)
  * (though you should zero errno first, since this function doesn't set
  * it for a couple conditions).
  * --------------------------------------------------------------------*/
+
+
+/*!
+ * \brief make a connection to a server process
+ *
+ * Takes the full path to a socket file and attempts
+ * to make a connection to a server listening for connections.  If successful,
+ * the file descriptor for the socket connection is returned.  Otherwise, -1
+ * is returned and the global <b>errno</b> may be set.  This function and
+ * <b>G_sock_get_fname()</b> are the only functions a client program
+ * really needs to worry about.  If the caller wants to be sure that the
+ * global error number was set from an unsuccessful call to this function,
+ * she should zero <b>errno</b> prior to the call.  Failures due to
+ * a non-existent socket file or a path name that exceeds system limits,
+ * will not change the global error number.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int
 G_sock_connect (char *name)

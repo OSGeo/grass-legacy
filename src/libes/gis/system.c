@@ -27,6 +27,22 @@
 #include <signal.h>
 #include <stdio.h>
 
+
+/*!
+ * \brief run a shell level command
+ *
+ * The shell level
+ * <b>command</b> is executed. Interrupt signals for the parent module are
+ * ignored during the call. Interrupt signals for the <b>command</b> are
+ * enabled. The interrupt signals for the parent are restored to their previous
+ * settings upon return.
+ * G_system(~) returns the same value as system(~), which is essentially the
+ * exit status of the <b>command.</b> See UNIX manual system(1) for details.
+ *
+ *  \param command
+ *  \return int
+ */
+
 int G_system ( char *command)
 {
     int status, pid, w;

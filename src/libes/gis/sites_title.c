@@ -1,4 +1,5 @@
 /**************************************************************
+ * 
  * char *G_get_cell_title (name, mapset)
  *   char *name        name of map file
  *   char *mapset      mapset containing name

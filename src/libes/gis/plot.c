@@ -44,6 +44,20 @@ static double fabs(double x)
     return x>0?x:-x;
 }
 
+/*!
+ * \brief returns east larger than west
+ *
+ * If the region projection is
+ * PROJECTION_LL, then this routine returns an equivalent <b>east</b> that is
+ * larger, but no more than 360 degrees larger, than the coordinate for the
+ * western edge of the region. Otherwise no adjustment is made and the original
+ * <b>east</b> is returned.
+ *
+ *  \param east
+ *  \param region
+ *  \return double
+ */
+
 extern double G_adjust_easting();
 
 /*
@@ -61,6 +75,28 @@ extern double G_adjust_easting();
  *   The t,b,l,r are only used to compute coordinate transformations.
  *   The input space is assumed to be the current GRASS window.
  */
+
+/*!
+ * \brief initialize plotting routines
+ *
+ * Initializes the plotting
+ * capability. This routine must be called once before calling the
+ * <b>G_plot_*(~)</b> routines described below.
+ * The parameters <b>t, b, l, r</b> are the top, bottom, left, and right of the
+ * output x,y coordinate space. They are not integers, but doubles to allow for
+ * subpixel registration of the input and output coordinate spaces. The input
+ * coordinate space is assumed to be the current GRASS region, and the routines
+ * supports both planimetric and latitude- longitude coordinate systems.
+ * <b>Move</b> and <b>Cont</b> are subroutines that will draw lines in x,y
+ * space. They will be called as follows:
+ * Move(x, y) move to x,y (no draw)
+ * Cont(x, y) draw from previous position
+ * to x,y. Cont(~) is responsible for clipping
+ *
+ *  \param ~
+ *  \return int
+ */
+
 int G_setup_plot (
     double t,double b,double l,double r,
     int (*Move)(),
@@ -99,6 +135,20 @@ int G_setup_plot (
 #define EAST(x) (window.west + ((x)-left)/xconv)
 #define NORTH(y) (window.north - ((y)-top)/yconv)
 
+
+/*!
+ * \brief east,north to x,y
+ *
+ * The map coordinates <b>east,north</b> are converted
+ * to pixel coordinates <b>x,y.</b>
+ *
+ *  \param east
+ *  \param north
+ *  \param x
+ *  \param y
+ *  \return int
+ */
+
 int G_plot_where_xy (east, north, x, y)
     double east, north;
     int *x, *y;
@@ -108,6 +158,20 @@ int G_plot_where_xy (east, north, x, y)
 
     return 0;
 }
+
+
+/*!
+ * \brief x,y to east,north
+ *
+ * The pixel coordinates <b>x,y</b> are converted to map
+ * coordinates <b>east,north.</b>
+ *
+ *  \param x
+ *  \param y
+ *  \param east
+ *  \param north
+ *  \return int
+ */
 
 int G_plot_where_en (x, y, east, north)
     double *east, *north;
@@ -135,6 +199,22 @@ int G_plot_point (east, north)
  * This routine handles global wrap-around for lat-long databses.
  *
  */
+
+/*!
+ * \brief plot line between latlon coordinates
+ *
+ * A line from <b>east1,north1</b>
+ * to <b>east2,north2</b> is plotted in output x,y coordinates (e.g. pixels for
+ * graphics.) This routine handles global wrap-around for latitude-longitude
+ * databases.
+ *
+ *  \param east1
+ *  \param north1
+ *  \param east2
+ *  \param north2
+ *  \return int
+ */
+
 int G_plot_line (east1, north1, east2, north2)
     double east1, north1, east2, north2;
 {
@@ -296,6 +376,7 @@ static int plot_line(double east1,double north1,double east2,double north2,
 
     return 0;
 }
+
 /*
  * G_plot_polygon (x, y, n)
  * 
@@ -304,7 +385,7 @@ static int plot_line(double east1,double north1,double east2,double north2,
  *    int n           number of verticies
  *
  * polygon fill from map coordinate space to plot x,y space.
- *     for lat-lon, handles global wrap-around as well as polar polygons.
+ * for lat-lon, handles global wrap-around as well as polar polygons.
  *
  * returns 0 ok, 2 n<3, -1 weird internal error, 1 no memory
  */
@@ -327,6 +408,19 @@ static double nearest(double e0,double e1)
     
     return e1;
 }
+
+
+/*!
+ * \brief plot filled polygon with n vertices
+ *
+ * The polygon, described by the <b>n</b> vertices
+ * <b>east,north</b>, is plotted in the output x,y space as a filled polygon.
+ *
+ *  \param east
+ *  \param north
+ *  \param n
+ *  \return int
+ */
 
 int G_plot_polygon (
     double *x,double *y,
@@ -354,7 +448,7 @@ int G_plot_polygon (
 	/*
 	pole = G_pole_in_polygon(x,y,n);
 	*/
-pole = 0;
+	pole = 0;
 
 	e0 = x[n-1];
 	E = W = e0;
@@ -450,6 +544,22 @@ pole = 0;
  * Essentially a copy of G_plot_polygon, with minor mods to
  * handle a set of polygons.  return values are the same.
  */
+
+/*!
+ * \brief plot multiple polygons
+ *
+ * Like G_plot_polygon, except it takes a set of polygons,
+ * each with \textbf{npts[<i>i</i>]} vertices, where the number of polygons 
+ * is specified with the <b>rings</b> argument.  It is especially useful for 
+ * plotting vector areas with interior islands.
+ *
+ *  \param xs
+ *  \param ys
+ *  \param npts
+ *  \param rings
+ *  \return int
+ */
+
 int G_plot_area (double **xs, double **ys, int *rpnts, int rings)
 {
     int i, j, n;
@@ -481,7 +591,7 @@ int G_plot_area (double **xs, double **ys, int *rpnts, int rings)
             /*
             pole = G_pole_in_polygon(x,y,n);
             */
-    pole = 0;
+            pole = 0;
 
             e0 = x[n-1];
             E = W = e0;
@@ -692,6 +802,18 @@ static int iceil(double x)
  * G_plot_fx(e1,e2)
  *
  * plot f(x) from x=e1 to x=e2
+ */
+
+
+/*!
+ * \brief plot f(east1) to f(east2)
+ *
+ * The function <b>f(east)</b> is plotted from
+ * <b>east1</b> to <b>east2.</b> The function <b>f(east)</b> must return
+ * the map northing coordinate associated with east.
+ *
+ *  \param ~
+ *  \return int
  */
 
 int G_plot_fx (

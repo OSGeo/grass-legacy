@@ -12,6 +12,23 @@
 
 #include "gis.h"
 
+
+/*!
+ * \brief query cartographic projection
+ *
+ * This routine returns a code indicating the projection for the active region.  The current
+ * values are:
+ * 0 unreferenced x,y (imagery data)
+ * 1 UTM
+ * 2 State Plane
+ * 3 Latitude-Longitude\remarks{Latitude-Longitude is not yet fully supported in
+ * GRASS.}
+ * Others may be added in the future. HINT GRASS 5: 121 projections!!
+ *
+ *  \param void
+ *  \return int
+ */
+
 int G_projection ()
 {
     struct Cell_head window;

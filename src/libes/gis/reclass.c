@@ -8,6 +8,25 @@ static FILE *fopen_cellhd_old( char *, char *);
 static FILE *fopen_cellhd_new(char *);
 static int get_reclass_table(FILE *, struct Reclass *);
 
+
+/*!
+ * \brief reclass file?
+ *
+ * This function determines if the raster file
+ * <b>name</b> in <b>mapset</b> is a reclass file.
+ * If it is, then the name and mapset of the referenced 
+ * raster file are copied into the <b>r_name</b> and <b>r_mapset</b> 
+ * buffers.
+ * Returns 1 if <b>name</b> is a reclass file, 0 if it is not, and -1 if 
+ * there was a problem reading the raster header for <b>name.</b>
+ *
+ *  \param name
+ *  \param mapset
+ *  \param r_name
+ *  \param r_mapset
+ *  \return int
+ */
+
 int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
 {
     FILE *fd;
@@ -24,6 +43,24 @@ int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
     else
 	return type != 0;
 }
+
+
+/*!
+ * \brief get child reclass maps list
+ *
+ * This function generates a
+ * child reclass maps list from the cell_misc/reclassed_to file which stores 
+ * this list. The cell_misc/reclassed_to file is written by 
+ * G_put_reclass().
+ * G_is_reclassed_to() is used by g.rename, g.remove and r.reclass to
+ * prevent accidentally deleting the parent map of a reclassed raster map.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param nrmaps
+ *  \param rmaps
+ *  \return int
+ */
 
 int G_is_reclassed_to (char *name, char *mapset, int *nrmaps, char ***rmaps)
 {

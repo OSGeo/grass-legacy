@@ -19,6 +19,17 @@
 
 #include "gis.h"
 
+
+/*!
+ * \brief user's name
+ *
+ * Returns a pointer to a string which is
+ * the user's login name.
+ *
+ *  \param ~
+ *  \return char * 
+ */
+
 char *G_whoami(void)
 {
 #ifdef __MINGW32__

@@ -1,5 +1,29 @@
 #include "gis.h"
 
+
+/*!
+ * \brief 
+ *
+ * Advances void
+ * pointer by n bytes. returns new pointer value. Usefull in raster row
+ * processing loops, substitutes 
+ \code
+  CELL *cell; 
+  cell += n;
+ \endcode
+ * Now 
+ \code
+  rast = G_incr_void_ptr(rast, G_raster_size(data_type))
+ \endcode
+ * (where rast is void* and data_type is RASTER_MAP_TYPE can be used instead
+ * of rast++.)  very usefull to generalize the row processing - loop (i.e. void *
+ * buf_ptr += G_raster_size(data_type)
+ *
+ *  \param ptr
+ *  \param size
+ *  \return void * 
+ */
+
 void *G_incr_void_ptr(
 /* advances ptr by size bytes returns new position */
    void *ptr,
@@ -8,6 +32,20 @@ void *G_incr_void_ptr(
    /* assuming that the size of unsigned char is 1 */
    return (void *) ((unsigned char *) ptr + size);
 }
+
+
+/*!
+ * \brief 
+ *
+ * Compares raster vlues p and q. Returns 1 if p > q or only q is
+ * null value -1 if p < q or only p is null value 0 if p == q or
+ * p==q==null value
+ *
+ *  \param p
+ *  \param q
+ *  \param data_type
+ *  \return int
+ */
 
 int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
 {
@@ -42,6 +80,20 @@ int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
      return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Copies raster values q into p. If q is null value, sets q to
+ * null value.
+ *
+ *  \param p
+ *  \param q
+ *  \param n
+ *  \param data_type
+ *  \return int
+ */
+
 int G_raster_cpy(
     void *v1,void *v2,
     int n,
@@ -50,6 +102,20 @@ int G_raster_cpy(
     G_copy((char *) v1, (char *) v2, n * G_raster_size(data_type));
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * If G_is_c_null_value(val) is true, sets p to null value.
+ * Converts CELL val to data_type (type of p) and stores result in p. Used for
+ * assigning CELL values to raster cells of any type.
+ *
+ *  \param p
+ *  \param val
+ *  \param data_type
+ *  \return int
+ */
 
 int G_set_raster_value_c(
     void *rast,
@@ -73,6 +139,20 @@ int G_set_raster_value_c(
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * If G_is_f_null_value(val) is true, sets p to null value.
+ * Converts FCELL val to data_type (type of p) and stores result in p. Used for
+ * assigning FCELL values to raster cells of any type.
+ *
+ *  \param p
+ *  \param val
+ *  \param data_type
+ *  \return int
+ */
+
 int G_set_raster_value_f(
     void *rast,
     FCELL fval,
@@ -94,6 +174,20 @@ int G_set_raster_value_f(
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * If G_is_d_null_value(val) is true, sets p to null value.
+ * Converts DCELL val to data_type (type of p) and stores result in p. Used for
+ * assigning DCELL values to raster cells of any type.
+ *
+ *  \param p
+ *  \param val
+ *  \param data_type
+ *  \return int
+ */
 
 int G_set_raster_value_d(
     void *rast,
@@ -117,6 +211,21 @@ int G_set_raster_value_d(
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Retrieves the value of type data_type from pointer p,
+ * converts it to CELL type and returns the result. If null value is stored in
+ * p, returns CELL null value. Used for retreiving CELL values from raster cells
+ * of any type.  NOTE: when data_type != CELL_TYPE, no quantization is used,
+ * only type conversion.
+ *
+ *  \param p
+ *  \param data_type
+ *  \return CELL
+ */
+
 CELL G_get_raster_value_c(
     void *rast,
     RASTER_MAP_TYPE data_type)
@@ -137,6 +246,20 @@ CELL G_get_raster_value_c(
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Retrieves the value of type data_type from pointer p,
+ * converts it to FCELL type and returns the result. If null value is stored in
+ * p, returns FCELL null value. Used for retreiving FCELL values from raster
+ * cells of any type.
+ *
+ *  \param p
+ *  \param data_type
+ *  \return FCELL
+ */
+
 FCELL G_get_raster_value_f(
     void *rast,
     RASTER_MAP_TYPE data_type)
@@ -156,6 +279,20 @@ FCELL G_get_raster_value_f(
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Retrieves the value of type data_type from pointer p,
+ * converts it to DCELL type and returns the result. If null value is stored in
+ * p, returns DCELL null value. Used for retreiving DCELL values from raster
+ * cells of any type.
+ *
+ *  \param p
+ *  \param data_type
+ *  \return DCELL
+ */
 
 DCELL G_get_raster_value_d(
     void *rast,

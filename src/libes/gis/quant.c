@@ -411,6 +411,16 @@ int G__quant_organize_fp_lookup (struct Quant *q)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Initializes the <em>q</em> struct.
+ *
+ *  \param q
+ *  \return int
+ */
+
 int G_quant_init (struct Quant *quant)
 {
   quant->fp_lookup.active = 0;
@@ -437,6 +447,28 @@ int G_quant_is_round (struct Quant *quant)
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * sets the quant for <em>q</em>
+ * rules to perform simple truncation on floats.
+ *
+ *  \param q
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * sets the quant for <em>q</em>
+ * rules to perform simple rounding on floats.
+ *
+ *  \param q
+ *  \return int
+ */
 
 int G_quant_truncate (struct Quant *quant)
 {
@@ -485,6 +517,25 @@ static void quant_update_limits (
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Extracts the minimum and maximum floating-point
+ * and integer values from all the rules (except the <tt>"infinite"</tt> rules)
+ * in <em>q</em> into <em>dmin</em>, <em>dmax</em>, <em>cmin</em>, and <em>cmax</em>. Returns 1
+ * if there are any explicit rules. If there are no explicit rules, (this
+ * includes cases when q is set to truncate or round map), it returns 0 and sets
+ * <em>dmin</em>, <em>dmax</em>, <em>cmin</em>, and <em>cmax</em> to NULL.
+ *
+ *  \param q
+ *  \param dmin
+ *  \param dmax
+ *  \param cmin
+ *  \param cmax
+ *  \return int
+ */
 
 int G_quant_get_limits (
      struct Quant *q,
@@ -717,6 +768,27 @@ static int less( double x,double y)
    else return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * 
+ * Returns a CELL category for the floating-point <em>value</em> based on the
+ * quantization rules in <em>q</em>. The first rule found that applies is used.
+ * The rules are searched in the reverse order they are added to <em>q</em>.  If no
+ * rule is found, the <em>value</em> is first tested against the negative infinite
+ * rule, and finally against the positive infinite rule. if none of these rules
+ * apply, the NULL-value is returned.
+ * <b>NOTE.</b> See G_quant_organize_fp_lookup() for details on how the
+ * values are looked up from fp_lookup table when it is active. (Right now
+ * fp_lookup is automatically organized during the first call to
+ * G_quant_get_cell_value()
+ *
+ *  \param q
+ *  \param value
+ *  \return CELL
+ */
+
 CELL G_quant_get_cell_value ( struct Quant *q, DCELL dcellVal)
 {
   CELL tmp;
@@ -727,7 +799,7 @@ CELL G_quant_get_cell_value ( struct Quant *q, DCELL dcellVal)
 
   dtmp = dcellVal;
   /* I know the functions which call me already check for null values,
- but I am a public function, and can be called from outside */
+     but I am a public function, and can be called from outside */
   if(G_is_d_null_value(&dtmp))
       return NO_DATA;
 
