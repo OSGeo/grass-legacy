@@ -152,7 +152,7 @@ libsclean: cleandistdirs
 	done
 
 distclean: clean
-	-rm -f config.cache config.log config.status 2>/dev/null
+	-rm -f config.cache config.log config.status config.status.${ARCH} 2>/dev/null
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
 
 strip: FORCE
