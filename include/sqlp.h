@@ -145,6 +145,10 @@ Node *makeArithmValue( char *strval, int intval, double dblval, int type, int fa
 
 static Node *newNode(int size, NodeTag tag);
 
+#ifdef SQLP_MAIN
+SQLPSTMT *sqlpStmt;
+#else
 extern SQLPSTMT *sqlpStmt;
+#endif
 
 
