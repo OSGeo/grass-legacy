@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
+
 #define MAIN
 #define RS ":"
 
@@ -35,23 +37,28 @@ char **argv ;
         struct Option* pghost;
         struct Flag *list ;
 
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+
+
         list = G_define_flag();
         list->key               = 'l';
-        list->description       = "Use -l flag for list of databases.";
+        list->description       = _("Use -l flag for list of databases.");
 
 	pghost = G_define_option() ;
 	pghost->key        = "host" ;
 	pghost->type       = TYPE_STRING ;
 	pghost->required   = NO  ;
 	pghost->multiple   = NO ;
-	pghost->description= "Postgres server name:" ;
+	pghost->description= _("Postgres server name:") ;
  
  	opt1 = G_define_option() ;
 	opt1->key        = "database" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO  ;
 	opt1->multiple   = NO ;
-	opt1->description= "Postgres database name:" ;
+	opt1->description= _("Postgres database name:") ;
 
         hit = 1;
 
@@ -71,7 +78,7 @@ char **argv ;
        G_setenv("PG_HOST", pghost->answer);
 
   if(list->answer) {
-        printf("The following databases are in the Unix catalogue:\n");
+        printf(_("The following databases are in the Unix catalogue:\n"));
 
 	listdb(pghost->answer);
 	exit(0) ;
@@ -90,8 +97,8 @@ char **argv ;
    }
    else
     {
-	G_warning("This database does not exist.");
-       	printf("The following databases are in the Unix catalogue:\n");
+	G_warning(_("This database does not exist."));
+       	printf(_("The following databases are in the Unix catalogue:\n"));
 	listdb(pghost->answer);
 	exit(-1) ;
     }

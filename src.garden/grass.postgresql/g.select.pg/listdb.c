@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <libpq-fe.h>
+#include "glocale.h"
+
 #define EXT ".dbs"
 #define FS '.'
 
@@ -16,14 +18,14 @@ char* ok;
 pg_conn = PQsetdb(pghost,NULL,NULL,NULL,"template1");
 
  if (PQstatus (pg_conn) == CONNECTION_BAD) {
-    printf ("Error: select Postgres:%s\n",PQerrorMessage(pg_conn));
+    printf (_("Error: select Postgres:%s\n"),PQerrorMessage(pg_conn));
     PQfinish(pg_conn);
     exit (-1); 
   }
   	   
  res  = PQexec (pg_conn, "select datname from pg_database");
  if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-    printf ("Error: connect Postgres:%s\n",PQerrorMessage(pg_conn));
+    printf (_("Error: connect Postgres:%s\n"),PQerrorMessage(pg_conn));
     PQfinish(pg_conn);
     exit (-1);      
   } 	   
