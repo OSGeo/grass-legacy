@@ -14,7 +14,7 @@ int
 main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Flag *d_flag;
+ /*    struct Flag *d_flag; */
     struct Option *in_opt, *out_opt, *type_opt, *field_opt, *rules_opt, *col_opt;
     char   *mapset, *key, *data, buf[1024];
     int    rclelem, type, field;
@@ -77,6 +77,9 @@ main (int argc, char *argv[])
     Vect_open_old (&In, in_opt->answer, mapset);
     
     Vect_open_new ( &Out, out_opt->answer, Vect_is_3d (&In) );
+    Vect_copy_head_data (&In, &Out);
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
 
     /* Read column values from database */
     db_CatValArray_init ( &cvarr );

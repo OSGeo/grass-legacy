@@ -205,6 +205,9 @@ int main(int argc, char **argv)
     
     /* Open output segments */
     Vect_open_new ( &Out, out_opt->answer, Vect_is_3d (&In) );
+    Vect_copy_head_data (&In, &Out);
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
 
     /* Table */
     if ( !table_flag->answer ) {

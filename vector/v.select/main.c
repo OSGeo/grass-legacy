@@ -189,6 +189,8 @@ main (int argc, char *argv[])
     Vect_open_new (&Out, out_opt->answer, 0);
     Vect_set_map_name ( &Out, "Output from v.select");
     Vect_set_person ( &Out, G_whoami ());
+    Vect_copy_head_data (&(In[0]), &Out);
+    Vect_hist_copy (&(In[0]), &Out);
     Vect_hist_command ( &Out );
 
     nalines = Vect_get_num_lines ( &(In[0]) );
