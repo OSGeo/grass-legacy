@@ -30,7 +30,12 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2003-04-03 15:25:49  paul
+ * Revision 1.3  2003-09-21 20:12:43  paul
+ * Apply patch described in PROJ bug 368 (http://bugzilla.remotesensing.org/show_bug.cgi?id=368)
+ * to stop inappropriate application of gridshifts when output co-ordinate
+ * system doesn't have a datum specified
+ *
+ * Revision 1.2  2003/04/03 15:25:49  paul
  * PROJ.4 update to fix bug in 7-parameter datum shifting
  *
  * Revision 1.1  2002/04/20 19:13:44  roger
@@ -381,70 +386,71 @@ int pj_datum_transform( PJ *srcdefn, PJ *dstdefn,
 /*	If this datum requires grid shifts, then apply it to geodetic   */
 /*      coordinates.                                                    */
 /* -------------------------------------------------------------------- */
-    if( srcdefn->datum_type == PJD_GRIDSHIFT )
+    if( srcdefn->datum_type != PJD_UNKNOWN
+        && dstdefn->datum_type != PJD_UNKNOWN )
     {
-        pj_apply_gridshift( pj_param(srcdefn->params,"snadgrids").s, 0, 
-                            point_count, point_offset, x, y, z );
+        if( srcdefn->datum_type == PJD_GRIDSHIFT )
+        {
+            pj_apply_gridshift( pj_param(srcdefn->params,"snadgrids").s, 0, 
+                                point_count, point_offset, x, y, z );
 
-        if( pj_errno != 0 )
-            return pj_errno;
+            if( pj_errno != 0 )
+                return pj_errno;
 
-        src_a = SRS_WGS84_SEMIMAJOR;
-        src_es = 0.006694379990;
+            src_a = SRS_WGS84_SEMIMAJOR;
+            src_es = 0.006694379990;
+        }
+       
+        if( dstdefn->datum_type == PJD_GRIDSHIFT )
+        {
+            dst_a = SRS_WGS84_SEMIMAJOR;
+            dst_es = 0.006694379990;
+        }
     }
 
-    if( dstdefn->datum_type == PJD_GRIDSHIFT )
-    {
-        dst_a = SRS_WGS84_SEMIMAJOR;
-        dst_es = 0.006694379990;
-    }
         
-/* ==================================================================== */
-/*      Do we need to go through geocentric coordinates?                */
-/* ==================================================================== */
-    if( srcdefn->datum_type == PJD_3PARAM 
-        || srcdefn->datum_type == PJD_7PARAM
-        || dstdefn->datum_type == PJD_3PARAM 
-        || dstdefn->datum_type == PJD_7PARAM)
-    {
 /* -------------------------------------------------------------------- */
 /*      Convert to geocentric coordinates.                              */
 /* -------------------------------------------------------------------- */
-        pj_geodetic_to_geocentric( src_a, src_es,
-                                   point_count, point_offset, x, y, z );
+    pj_geodetic_to_geocentric( src_a, src_es,
+                               point_count, point_offset, x, y, z );
 
-        if( pj_errno )
-            return pj_errno;
+    if( pj_errno )
+        return pj_errno;
 
 /* -------------------------------------------------------------------- */
 /*      Convert between datums.                                         */
 /* -------------------------------------------------------------------- */
-        if( srcdefn->datum_type != PJD_UNKNOWN
-            && dstdefn->datum_type != PJD_UNKNOWN )
-        {
-            pj_geocentric_to_wgs84( srcdefn, point_count, point_offset,x,y,z);
-            if( pj_errno != 0 )
-                return pj_errno;
+    if( srcdefn->datum_type != PJD_UNKNOWN
+        && dstdefn->datum_type != PJD_UNKNOWN
+        && (srcdefn->datum_type == PJD_3PARAM 
+        || srcdefn->datum_type == PJD_7PARAM
+        || dstdefn->datum_type == PJD_3PARAM 
+        || dstdefn->datum_type == PJD_7PARAM) )
+    {
+        pj_geocentric_to_wgs84( srcdefn, point_count, point_offset,x,y,z);
+        if( pj_errno != 0 )
+            return pj_errno;
             
-            pj_geocentric_from_wgs84( dstdefn, point_count,point_offset,x,y,z);
-            if( pj_errno != 0 )
-                return pj_errno;
-        }
-
-/* -------------------------------------------------------------------- */
-/*      Convert back to geodetic coordinates.                           */
-/* -------------------------------------------------------------------- */
-        pj_geocentric_to_geodetic( dst_a, dst_es,
-                                   point_count, point_offset, x, y, z );
-        
-        if( pj_errno )
+        pj_geocentric_from_wgs84( dstdefn, point_count,point_offset,x,y,z);
+        if( pj_errno != 0 )
             return pj_errno;
     }
 
 /* -------------------------------------------------------------------- */
+/*      Convert back to geodetic coordinates.                           */
+/* -------------------------------------------------------------------- */
+    pj_geocentric_to_geodetic( dst_a, dst_es,
+                               point_count, point_offset, x, y, z );
+        
+    if( pj_errno )
+        return pj_errno;
+
+/* -------------------------------------------------------------------- */
 /*      Apply grid shift to destination if required.                    */
 /* -------------------------------------------------------------------- */
-    if( dstdefn->datum_type == PJD_GRIDSHIFT )
+    if( srcdefn->datum_type != PJD_UNKNOWN
+        && dstdefn->datum_type == PJD_GRIDSHIFT )
     {
         pj_apply_gridshift( pj_param(dstdefn->params,"snadgrids").s, 1,
                             point_count, point_offset, x, y, z );
