@@ -56,17 +56,25 @@ AC_SUBST(BINDIR)
 
 # Set SRCDIR and DSTDIR
 
-if test -f /$srcdir/html/html/grass5.html ; then
+AC_MSG_CHECKING(for source directory)
+
+if echo "$srcdir" | grep '^/' &>/dev/null ; then
   SRCDIR=$srcdir
 else
-  if test -n "$srcdir" -o "$srcdir" = "." ; then
+  if test -z "$srcdir" -o "$srcdir" = "." ; then
     SRCDIR=`pwd`
   else
     SRCDIR=`pwd`/$srcdir
   fi
 fi
 
+AC_MSG_RESULT("$SRCDIR")
+
+AC_MSG_CHECKING(for build directory)
+
 DSTDIR=`pwd`
+
+AC_MSG_RESULT("$DSTDIR")
 
 AC_SUBST(SRCDIR)
 AC_SUBST(DSTDIR)
