@@ -1,0 +1,18 @@
+March 11, 1993
+
+
+
+           FIPS PUB 123 Function Library Version 1.0.3
+
+                          Release Notes
+
+
+
+This file describes the modifications contained in the FIPS123
+Function Library version 1.0.3.  Please read these notes as they
+may be important to your application.
+
+With the resolution and implementation of 93DR033, this version of
+the library supports the use of an array descriptor in place of
+labels in an ISO 8211 DDR.
+
