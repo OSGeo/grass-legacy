@@ -5,7 +5,15 @@ LIST=main.o\
 	log.o\
 	rules.o
 
+COLRFILES = aspect byg byr grey gyr rainbow ramp ryg wave
+
+all:  $(BIN_CMD)/$(PGM) $(ETC)/colors
+
 $(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/colors: $(COLRFILES)
+	-mkdir $@
+	cp -f $^ $@
 
 $(DEPGISLIB): #

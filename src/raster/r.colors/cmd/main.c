@@ -19,11 +19,12 @@ int main (int argc, char *argv[])
     DCELL min, max;
     char *name, *mapset;
     char *type, *cmap, *cmapset;
+    char *rules;
     char errbuf[256];
     int fp;
 	struct GModule *module;
     struct Flag *flag1, *flag2;
-    struct Option *opt1, *opt2, *opt3;
+    struct Option *opt1, *opt2, *opt3, *opt4;
 
     G_gisinit (argv[0]);
 
@@ -54,6 +55,12 @@ int main (int argc, char *argv[])
     opt3->gisprompt  = "old,cell,raster" ;
     opt3->description = "raster map name from which to copy color table";
 
+    opt4 = G_define_option();
+    opt4->key         = "rules";
+    opt4->type        = TYPE_STRING;
+    opt4->required    = NO;
+    opt4->description = "name of predefined rules file";
+
     flag1 = G_define_flag();
     flag1->key = 'w';
     flag1->description = "Keep existing color table";
@@ -72,20 +79,23 @@ int main (int argc, char *argv[])
     name = opt1->answer;
     type = opt2->answer;
     cmap = opt3->answer;
+    rules = opt4->answer;
 
-    if(!cmap && !type){
-	sprintf(errbuf,
-		"One of options \"color\" OR \"rast\" MUST be specified!");
-	G_warning(errbuf);
+    if(!cmap && !type && !rules)
+    {
+	G_warning("One of options \"color\", \"rast\" OR \"rules\" MUST be specified!");
 	G_usage();
 	exit(1);
     }
 
-    if(cmap && type){
-	sprintf(errbuf,
-	    "Both options \"color\" AND \"rast\" specified - ignoring rast");
-	G_warning(errbuf);
-    }
+    if(cmap && type)
+	G_warning("Both options \"color\" AND \"rast\" specified - ignoring rast");
+
+    if(rules && type)
+	G_warning("Both options \"color\" AND \"rules\" specified - ignoring rules");
+
+    if(rules && cmap)
+	G_warning("Both options \"rast\" AND \"rules\" specified - ignoring rast");
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
@@ -110,7 +120,8 @@ int main (int argc, char *argv[])
     G_get_fp_range_min_max (&range, &min, &max);
     G_sleep_on_error (1);
 
-    if(type){
+    if (type)
+    {
 	/* 
 	 * here the predefined color-table color-types random, ramp, wave,
 	 * grey, aspect, rainbow, and ryb are created by GRASS library calls. 
@@ -156,8 +167,8 @@ int main (int argc, char *argv[])
 	    G_make_byg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
-	    if (!read_color_rules(&colors, flag2->answer, min, max, fp))
-	      exit(-1); 
+	    if (!read_color_rules(stdin, &colors, flag2->answer, min, max, fp))
+	      exit(1); 
 	}
 	else
 	{
@@ -171,7 +182,25 @@ int main (int argc, char *argv[])
 	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
 	    fprintf (stdout, "Color table for [%s] set to %s\n", name, type);
     }
-    else{  /* use color from another map (cmap) */
+    else if (rules)
+    {
+	char path[4096];
+	FILE *rules_fp;
+
+	sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
+	rules_fp = fopen(path, "r");
+	if (!rules_fp)
+	    G_fatal_error("Unable to open rules file %s", rules);
+	if (!read_color_rules(rules_fp, &colors, flag2->answer, min, max, fp))
+	    exit(1); 
+	fclose(rules_fp);
+	if(fp) G_mark_colors_as_fp(&colors);
+
+	if (G_write_colors (name, mapset, &colors) >= 0 && !flag2->answer)
+	    fprintf (stdout, "Color table for [%s] set to %s\n", name, rules);
+    }
+    else
+    {  /* use color from another map (cmap) */
 	cmapset = G_find_cell2 (cmap, "");
 	if (cmapset == NULL) {
 	    fprintf (stderr, "ERROR: %s - map not found\n", cmap);
