@@ -10,10 +10,10 @@ extern double D_get_d_east();
 extern int D_move_abs();
 extern int D_cont_abs();
 
-plotCat (name, mapset, Points, vect_cat)
+plotCat (name, mapset, Points, vect_cat,fill)
     char *name, *mapset;
+    int vect_cat,fill;
     struct line_pnts *Points;
-    int vect_cat;
 {
     double *x, *y;
     int i, np;
@@ -30,6 +30,7 @@ plotCat (name, mapset, Points, vect_cat)
     {
 	return -1;
     }
+
 
     G_get_set_window (&window);
 
@@ -55,6 +56,7 @@ plotCat (name, mapset, Points, vect_cat)
 
   if(nlines > 0)
    {
+
     for (line = 1; line <= nlines; line++)
     {
 	int ret;
@@ -83,23 +85,31 @@ plotCat (name, mapset, Points, vect_cat)
 
    if (nareas > 0)
      {
+
        for(area_cnt=1; area_cnt<=nareas; area_cnt++)
           if(V2_area_att(&P_map,area_cnt) == vect_cat)
             {
                a_index = P_map.Att[P_map.Area[area_cnt].att].index;
                Points = Vect_new_line_struct();
-               Vect_get_area_points(P_map,a_index,Points);
+               Vect_get_area_points(&P_map,a_index,Points);
                np = Points->n_points;
                x  = Points->x;
                y =  Points->y;
-               for (i=1; i < np; i++)
+		if (fill) 
+		{
+		G_plot_polygon(x,y,np);
+		}
+		else
+		{
+                 for (i=1; i < np; i++)
                  {
                    G_plot_line (x[0], y[0], x[1], y[1]);
                    x++;
                    y++;
                  }
+		}
              }
       } /* end if nareas > 0 */
-
+        
     return 0;
 }
