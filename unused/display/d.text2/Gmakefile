@@ -1,5 +1,5 @@
 PGM=d.text2
-OBJS = main.o
+OBJS=main.o
 
 LIBS=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 CFLAGS+=`freetype-config --cflags`
