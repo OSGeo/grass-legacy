@@ -1,9 +1,10 @@
 #COMPILE_FLAGS = -g -DDEBUGIO
 COMPILE_FLAGS =
-#LDFLAGS = -Bstatic
+LDFLAGS = -Bstatic
 FFLAGS =
 #FFLAGS =
 MYLIBS = $(SRC).related/rim/librim.a
+
 EXTRA_CFLAGS = -I$(SRC)/mapdev/lib $(VECT_INCLUDE)
 
 OBJFILES = v.db.rim.o dbio.o parser.o toplevel.o misc.o make_init.o \
