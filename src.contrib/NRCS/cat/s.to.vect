@@ -1,0 +1,65 @@
+
+
+
+s.to.vect(1)  	     GRASS Reference Manual	   s.to.vect(1)
+
+
+
+NAME
+     s.to.vect   - convert a site_list into a vector (digit) file
+           (SCS map Development Tool)
+
+SYNOPSIS
+     s.to.vect input=site_list_name output=vector_file_name
+
+DESCRIPTION
+
+     s.to.vect works in a similar manner as converting site_lists
+     into raster files, only creates vector files. The resulting
+     vector file can be treated as any other vector file. The
+     requirements of the site_list file are standard, meaning
+     a regular site_list format is required. Site_list values 
+     are used as dig_cats category values.
+
+
+AUTHOR
+     R.L.Glenn, USDA, Soil Conservation Service, CGIS Division
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+
+
