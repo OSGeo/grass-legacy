@@ -201,6 +201,7 @@ int main(int argc,char *argv[])
 	point_cnt++;
     }
 
+    Vect_set_db_updated ( &Map );
     Vect_close ( &Map );
 
     /* Cache may contain duplicate categories, sort by cat, find and remove duplicates 

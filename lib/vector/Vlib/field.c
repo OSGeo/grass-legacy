@@ -18,9 +18,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Vect.h"
-#include "dbmi.h"
+#include "glocale.h"
 #include "gis.h"
+#include "dbmi.h"
+#include "Vect.h"
 
 /*!
  \fn struct dblinks *Vect_new_dblinks_struct ( void )
@@ -69,24 +70,24 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
     int ret;
 
     if (number == 0) {
-        G_warning ("Field number must be 1 or greater.");
+        G_warning (_("Field number must be 1 or greater."));
 	return -1;
     }
     
     if (Map->mode != GV_MODE_WRITE && Map->mode != GV_MODE_RW) {
-        G_warning ("Cannot add database link, map is not opened in WRITE mode.");
+        G_warning (_("Cannot add database link, map is not opened in WRITE mode."));
 	return -1;
     }
     
     ret = Vect_add_dblink ( Map->dblnk, number, name, table, key, db, driver );
     if ( ret == -1 ) {
-        G_warning ("Cannot add database link.");
+        G_warning (_("Cannot add database link."));
 	return -1;
     }
     /* write it immediately otherwise it is lost if module crashes */
     ret = Vect_write_dblinks ( Map );
     if ( ret == -1 ) {
-        G_warning ("Cannot write database links.");
+        G_warning (_("Cannot write database links."));
 	return -1;
     }
     return 0;
@@ -129,7 +130,7 @@ Vect_map_del_dblink ( struct Map_info *Map, int field)
     /* write it immediately otherwise it is lost if module crashes */
     ret = Vect_write_dblinks ( Map );
     if ( ret == -1 ) {
-        G_warning ("Cannot write database links.");
+        G_warning (_("Cannot write database links."));
 	return -1;
     }
 
@@ -184,7 +185,7 @@ Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *
     
     ret = Vect_check_dblink ( p, number );
     if ( ret == 1 ) {
-         G_warning ("Field number <%d> or name <%s> already exists", number, name);
+         G_warning (_("Field number <%d> or name <%s> already exists"), number, name);
          return -1;
     }
 
@@ -243,16 +244,16 @@ struct field_info
     G_debug (2, "drv = %s db = %s", drv, db );
 
     if ( drv == NULL && db == NULL ) { /* Set default values and create dbf db dir */
-	G_warning ( "Default driver / database for vectors set to:\n"
-		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
+	G_warning ( _("Default driver / database for vectors set to:\n"
+		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/") );
 	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
 	G_setenv2 ( "GV_DATABASE", "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/", G_VAR_MAPSET );
 
 	/* Set also DB_DRIVER and DB_DATABASE is not yet set */
 	db_get_connection( &connection );
 	if ( !connection.driverName && !connection.databaseName ) {
-	    G_warning ( "Database connection (for db.* modules) set to:\n"
-			"driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
+	    G_warning ( _("Database connection (for db.* modules) set to:\n"
+			"driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/") );
 	    connection.driverName = "dbf";
 	    connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
 	    db_set_connection( &connection );
@@ -263,9 +264,9 @@ struct field_info
 	drv = G_store ( "dbf" );
 	db = G_store ( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
     } else if ( drv == NULL ) {
-       G_fatal_error ( "Default driver is not set" ); 
+       G_fatal_error ( _("Default driver is not set") ); 
     } else if ( db == NULL ) {
-       G_fatal_error ( "Default database is not set" ); 
+       G_fatal_error ( _("Default database is not set") ); 
     }
     
     fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
@@ -315,7 +316,7 @@ struct field_info
     G_debug (1, "Vect_get_dblink(): link = %d", link);
 
     if ( link >= Map->dblnk->n_fields ) {
-	G_warning ( "Requested dblink %d, maximum link number %d", link, Map->dblnk->n_fields - 1 );
+	G_warning ( _("Requested dblink %d, maximum link number %d"), link, Map->dblnk->n_fields - 1 );
 	return NULL;
     }
 
@@ -394,7 +395,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 	driver = db_start_driver_open_database ( "ogr", Map->fInfo.ogr.dsn );
 
 	if ( driver == NULL ) {
-	    G_warning ("Cannot open OGR DBMI driver.");
+	    G_warning (_("Cannot open OGR DBMI driver."));
 	    return -1;
 	}
 
@@ -414,7 +415,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 	
 	return ( 1 );
     } else if ( Map->format != GV_FORMAT_NATIVE ) {
-	G_fatal_error ("Don't know how to read links for format %d", Map->format );
+	G_fatal_error (_("Don't know how to read links for format %d"), Map->format );
     }
     
     sprintf ( file, "%s/%s/%s/%s/%s/%s", Map->gisdbase, Map->location, Map->mapset, GRASS_VECT_DIRECTORY, 
@@ -442,7 +443,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 	ndef = sscanf ( buf, "%s %s %s %s %s", fldstr, tab, col, db, drv);
     
 	if ( ndef < 2 || (ndef < 5 && rule < 1 ) ) {
-	    G_warning ( "Error in rule on row %d in %s", row, file);
+	    G_warning ( _("Error in rule on row %d in %s"), row, file);
 	    continue;
         }
 
@@ -560,4 +561,17 @@ Vect_subst_var ( char *in, struct Map_info *Map )
     return ( G_store(str) );
 }
 
+/*!
+ \brief rewrite 'dbln' file, should be used by GRASS modules which update
+        database tables, so that other applications know that tables
+	were changed and can reload data
+ \param pointer to map
+*/
+void Vect_set_db_updated ( struct Map_info *Map )
+{
+    if ( strcmp(Map->mapset,G_mapset() ) != 0 ) {
+	G_fatal_error ( _("Bug: attempt to update map which is not in current mapset." ) );
+    }
 
+    Vect_write_dblinks ( Map ) ;
+}
