@@ -287,10 +287,7 @@ static void handleResizeEvent(void)
     XFreePixmap(dpy, bkupmap);
     bkupmap = XCreatePixmap(dpy, grwin, xwa.width, xwa.height, xwa.depth);
     XGetGCValues(dpy, gc, GCForeground, &gc_values);
-    if (strcmp(DEFAULT_FG_COLOR, "black"))
-	XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
-    else
-	XSetForeground(dpy, gc, WhitePixel(dpy, scrn));
+    XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
     XFillRectangle(dpy, bkupmap, gc, 0, 0, xwa.width, xwa.height);
     XSetForeground(dpy, gc, gc_values.foreground);
     XSetWindowBackgroundPixmap(dpy, grwin, bkupmap);
