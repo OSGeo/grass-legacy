@@ -1,0 +1,8 @@
+.TH r.hydro.CASC2D
+.SH NAME
+\fIr.hydro.CASC2D\fR - Watershed hydrology simulator.  Due to
+the complex nature of this program, users are referred to the 
+hard-copy manual pages for directions.
+.b
+\fI(GRASS Raster Program)\fR
+
