@@ -126,7 +126,7 @@ int main (int argc, char *argv[])
 	{
 	    char temp[200];
 	    fprintf (stderr, "DATABASE <%s> - must start with /\n", gisdbase);
-	    sprintf (temp, " %s", gisdbase);
+	    sprintf (temp, " '%s'", gisdbase);
 	    strcpy (gisdbase, temp);
 	    continue;
 	}
@@ -258,7 +258,7 @@ list_locations (char *gisdbase)
     char buf[1024];
     fprintf(stderr, "\nAvailable locations:\n") ;
     fprintf(stderr, "----------------------\n") ;
-    sprintf(buf, "ls -C %s", gisdbase) ;
+    sprintf(buf, "ls -C '%s'", gisdbase) ;
     system(buf) ;
     fprintf(stderr, "----------------------\n") ;
     return 0;
@@ -272,7 +272,7 @@ list_mapsets (char *location_name, char *location)
     int any, ok, any_ok;
     int len, tot_len;
 
-    sprintf (buf, "ls %s", location);
+    sprintf (buf, "ls '%s'", location);
     fprintf (stderr, "\nMapsets in location <%s>\n", location_name);
     fprintf (stderr, "----------------------\n") ;
     fd = popen (buf, "r");
