@@ -38,7 +38,7 @@ static char *SOLPOSVERSION = "11 April 2001";
 /* uncomment to get debug output */
 /* #define DEBUG*/
 
-struct posdata pd, *pdat; /* declare a posdata struct and a pointer for
+struct posdata pdmain, *pdatmain; /* declare a posdata struct and a pointer for
                                     it (if desired, the structure could be
                                     allocated dynamically with malloc) */
 struct Cell_head window;
@@ -311,17 +311,17 @@ int main(int argc, char *argv[])
        if( flag2->answer || (flag3->answer && !flag2->answer))
        {
         fprintf (stderr, " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i\n",
-         pdat->year, pdat->month, pdat->day, pdat->daynum,  
-         pdat->hour, pdat->minute, pdat->second);
-        fprintf(stderr, " long: %f, lat: %f, timezone: %f\n", pdat->longitude, pdat->latitude, pdat->timezone);
+         pdatmain->year, pdatmain->month, pdatmain->day, pdatmain->daynum,  
+         pdatmain->hour, pdatmain->minute, pdatmain->second);
+        fprintf(stderr, " long: %f, lat: %f, timezone: %f\n", pdatmain->longitude, pdatmain->latitude, pdatmain->timezone);
         fprintf (stderr, " Solar position: sun azimuth %f,\n   sun angle above horz.(refraction corrected) %f\n",
-         pdat->azim, pdat->elevref );
-        fprintf (stderr, " Sunrise time (without refraction): %02.0f:%02.0f\n", floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
-        fprintf (stderr, " Sunset time  (without refraction): %02.0f:%02.0f\n", floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+         pdatmain->azim, pdatmain->elevref );
+        fprintf (stderr, " Sunrise time (without refraction): %02.0f:%02.0f\n", floor(pdatmain->sretr/60.), fmod(pdatmain->sretr, 60.));
+        fprintf (stderr, " Sunset time  (without refraction): %02.0f:%02.0f\n", floor(pdatmain->ssetr/60.), fmod(pdatmain->ssetr, 60.));
        }
-       sunrise=pdat->sretr/60. ; /* decimal minutes */
-       sunset =pdat->ssetr/60. ;
-       current_time=pdat->hour + (pdat->minute/60.) + (pdat->second/3600.);
+       sunrise=pdatmain->sretr/60. ; /* decimal minutes */
+       sunset =pdatmain->ssetr/60. ;
+       current_time=pdatmain->hour + (pdatmain->minute/60.) + (pdatmain->second/3600.);
      }
      else /* fatal error in G_calc_solar_position() */
         G_fatal_error("Please correct settings.");
@@ -329,8 +329,8 @@ int main(int argc, char *argv[])
 
   if (use_solpos)
   {  
-    dalti=pdat->elevref;
-    dazi=pdat->azim;
+    dalti=pdatmain->elevref;
+    dazi=pdatmain->azim;
   } /* otherwise already defined */
 
   
@@ -339,14 +339,14 @@ int main(int argc, char *argv[])
   {
     if ((current_time < sunrise))
     {
-        fprintf(stderr, "Time (%02i:%02i:%02i) is before sunrise (%02.0f:%02.0f)!\n", pdat->hour, pdat->minute, pdat->second,\
-                         floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
+        fprintf(stderr, "Time (%02i:%02i:%02i) is before sunrise (%02.0f:%02.0f)!\n", pdatmain->hour, pdatmain->minute, pdatmain->second,\
+                         floor(pdatmain->sretr/60.), fmod(pdatmain->sretr, 60.));
         G_fatal_error("Please correct time settings.");
     }
     if ((current_time > sunset))
     {
-        fprintf(stderr, "Time (%02i:%02i:%02i) is after sunset (%02.0f:%02.0f)!\n", pdat->hour, pdat->minute, pdat->second,\
-                         floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+        fprintf(stderr, "Time (%02i:%02i:%02i) is after sunset (%02.0f:%02.0f)!\n", pdatmain->hour, pdatmain->minute, pdatmain->second,\
+                         floor(pdatmain->ssetr/60.), fmod(pdatmain->ssetr, 60.));
         G_fatal_error("Please correct time settings.");
     }
   }
