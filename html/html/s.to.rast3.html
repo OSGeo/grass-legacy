@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<TITLE>s.to.rast3</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.to.rast3</b></EM>  - Converts a site file to a 3dcell volume (G3D)
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.to.rast3</B>
+<BR>
+<B>s.to.rast3 help</B>
+<BR>
+<B>s.to.rast3</B> [<B>-qs</B>] 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>field=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.to.rast3</EM> converts a GRASS site file to a GRASS 3dcell
+file.
+<P>
+
+The quad size (ie the number of cells used to represent one
+site) is fixed to 0 (ie one cell/site). If the output file
+already exists, the program exits gracefully.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of input site list
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name of output cell file
+
+<DT><B>field=</B><EM>value</EM> 
+<DD>decimal field number to use for operation<br>
+           default: 1
+
+</DL>
+
+<H2>NOTES</H2>
+
+When converting from a sites layer to a 3dcell volumne
+the site is converted into a single cube
+representing the location of the site. 
+<P>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g3.region.html">g3.region</A></EM>,
+<EM><A HREF="r3.to.sites.html">r3.to.sites</A></EM>
+
+
+<H2>AUTHOR</H2>
+
+Jaro Hofierka, Geomodel s.r.o.
+</HTML>
