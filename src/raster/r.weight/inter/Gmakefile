@@ -28,7 +28,7 @@ pgm: $(ETC)/r.weight
 
 $(ETC)/r.weight: $(OFILES) $(LIBES) $(VASKLIB)
 	rm -f a.out
-	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(VASK) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(VASK) $(LEXLIB) $(MATHLIB)
 	mv a.out $@
 
 $(BIN_MAIN_INTER)/r.weight: weight.sh
@@ -47,7 +47,7 @@ clean:
 # PARSER
 gis_pars.c:     yes_no.h gis_pars.y
 	rm -f gis_pars.c gis_pars.h gis_pars.out y.tab.c y.tab.h
-	yacc -v -d gis_pars.y
+	$(YACC) -v -d gis_pars.y
 	mv y.tab.c gis_pars.c
 	mv y.tab.h gis_pars.h
 	mv y.output gis_pars.out
@@ -55,7 +55,7 @@ gis_pars.c:     yes_no.h gis_pars.y
 
 gis_lxcl.c:     gis_lxcl.l gis_pars.h
 	rm -f gis_lxcl.c
-	lex -t gis_lxcl.l > gis_lxcl.c
+	$(LEX) -t gis_lxcl.l > gis_lxcl.c
 
 gis_pars.h: gis_pars.c
 
