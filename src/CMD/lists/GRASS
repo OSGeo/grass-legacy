@@ -357,7 +357,7 @@ src/raster/r.recode
 src/raster/r.region
 src/raster/r.report
 src/raster/r.resample
-#src/raster/r.resamp.rst # contains bug due to author
+src/raster/r.resamp.rst
 src/raster/r.rescale
 src/raster/r.rescale.eq
 src/raster/r.slope.aspect
