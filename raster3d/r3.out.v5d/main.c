@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * r3.out.v5d -
  *
  * Copyright Jaro Hofierka
@@ -20,10 +18,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "binio.h"
 #include "v5d.h"
-#include <gis.h>
+#include "gis.h"
 #include "G3d.h"
 
 #define MAX(a,b) (a > b ? a : b)
@@ -300,7 +299,8 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 /* Main function: open the input and output files, then call
  * G3dtoascii.
  */
-int main(int argc, char *argv[]) {
+int
+main (int argc, char *argv[]) {
   char *input, *output;
   int convertNull, decim;
   double nullValue;
@@ -310,9 +310,13 @@ int main(int argc, char *argv[]) {
   int cacheSize;
   struct Flag *coords;
   int trueCoords;
+  struct GModule *module;
 
   /* Initialize GRASS */
   G_gisinit(argv[0]);
+  module = G_define_module();
+  module->description =
+   "Export of GRASS 3D raster file to 3-dimensional Vis5D file.";
 
   /* Get parameters from user */
   setParams();
