@@ -1,13 +1,13 @@
 
 
 
-r.line <alpha>       GRASS Reference Manual        <alpha> r.line
+r.line <alpha>	     GRASS Reference Manual	   <alpha> r.line
 
 
 
 NAME
-     r.line - Creates a new binary GRASS vector (v.digit) file by
-     extracting linear features from a thinned raster file.
+     r.line - Creates a	new binary GRASS vector	(v.digit) file by
+     extracting	linear features	from a thinned raster file.
      (GRASS Raster Program)
 
 SYNOPSIS
@@ -23,76 +23,76 @@ DESCRIPTION
 OPTIONS
      The user can run this program either non-interactively or
      interactively.  The program will be run non-interactively if
-     the user specifies program arguments on the command line,
+     the user specifies	program	arguments on the command line,
      using the form:
 
-          r.line input=name output=name [type=name]
+	  r.line input=name output=name	[type=name]
 
-     If the user specifies input raster and output vector map
-     names on the command line, any other parameter values left
-     unspecified on the command line will be set to their default
-     values (see below).  Alternately, the user can simply type
+     If	the user specifies input raster	and output vector map
+     names on the command line,	any other parameter values left
+     unspecified on the	command	line will be set to their default
+     values (see below).  Alternately, the user	can simply type
      r.line on the command line, without program arguments.  In
-     this case, the user will be prompted for parameter values
-     using the standard GRASS parser interface described in the
+     this case,	the user will be prompted for parameter	values
+     using the standard	GRASS parser interface described in the
      manual entry for parser.
 
      Parameters:
 
-     input=name        Name of existing raster file to be used as
-                       input.
+     input=name	       Name of existing	raster file to be used as
+		       input.
 
      output=name       Name of new vector file to be output.
 
-     type=name         Line type of the extracted vectors; either
-                       line or area.  Specifying line will type
-                       extracted vectors as linear edges.
-                       Specifying area will type extracted
-                       vectors as area edges.
-                       Options:  line or area
-                       Default:  type=line
+     type=name	       Line type of the	extracted vectors; either
+		       line or area.  Specifying line will type
+		       extracted vectors as linear edges.
+		       Specifying area will type extracted
+		       vectors as area edges.
+		       Options:	 line or area
+		       Default:	 type=line
 
-     r.line assumes that the input map has been thinned using
+     r.line assumes that the input map has been	thinned	using
      r.thin.
 
 NOTES
-     r.line extracts vectors (aka, "arcs") from a raster file.
+     r.line extracts vectors (aka, "arcs") from	a raster file.
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-r.line <alpha>       GRASS Reference Manual        <alpha> r.line
+r.line <alpha>	     GRASS Reference Manual	   <alpha> r.line
 
 
 
-     These arcs may represent linear features (like roads or
-     streams), or may represent area edge features (like
-     political boundaries, or soil mapping units).  The attribute
-     type option allows the user to establish the use of either
-     linear or area edge attributes for all of the extracted
+     These arcs	may represent linear features (like roads or
+     streams), or may represent	area edge features (like
+     political boundaries, or soil mapping units).  The	attribute
+     type option allows	the user to establish the use of either
+     linear or area edge attributes for	all of the extracted
      vectors.
 
-     r.poly may be used to extract vectors that represent area
-     features (like soil mapping units, elevation ranges, etc.)
+     r.poly may	be used	to extract vectors that	represent area
+     features (like soil mapping units,	elevation ranges, etc.)
      from a raster file.
 
-     The user must run v.support on the resultant vector
-     (v.digit) files to build the dig_plus information.
+     The user must run v.support on the	resultant vector
+     (v.digit) files to	build the dig_plus information.
 
-     r.thin and r.line may create excessive nodes at every
+     r.thin and	r.line may create excessive nodes at every
      junction, and may create small spurs or "dangling lines"
-     during the thinning and vectorization process.  These
+     during the	thinning and vectorization process.  These
      excessive nodes and spurs may be removed using v.trim.
 
 BUGS
-     The input raster file MUST be thinned by r.thin; if not,
-     r.line may crash.
+     The input raster file MUST	be thinned by r.thin; if not,
+     r.line may	crash.
 
 SEE ALSO
      r.poly, r.thin, v.digit, v.support, v.trim, and parser
@@ -105,8 +105,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
