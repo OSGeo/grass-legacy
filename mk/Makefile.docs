@@ -59,4 +59,4 @@ ${manpages2}:	${MANDIR}/%.${MANSECT}:	${HTMLSRC2}/%.html
 	${HTML2MAN} $< $@ $(MANSECT)
 
 ${catpages}:	${CATDIR}/%.${MANSECT}:	${MANDIR}/%.${MANSECT}
-	${MAN2CAT} -M ${GISBASE}/man `echo $< | sed 's#^${MANDIR}/##' | sed 's#\.${MANSECT}$$##'` > $@
+	${MAN2CAT} -M ${GISBASE}/man `echo $< | sed 's#^${MANDIR}/##' | sed 's#\.${MANSECT}$$##'` > /dev/null
