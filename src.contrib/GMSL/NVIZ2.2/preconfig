@@ -1,0 +1,26 @@
+#!/bin/sh
+if [ "$PRECONFIGURE" != "YES" ]
+then
+	echo "./preconfig should be executed in Gmakefile." >&2
+	exit 1
+fi
+
+NVWISH_VER="NVWISH$1"
+
+if [ -n "$2" ]
+then
+	echo "*** PostgreSQL supported ***" >&2
+	cp src/query_postgr_orig.c src/query_postgr.c
+	cp scripts/panel_query_pg.tcl scripts/panel_query.tcl
+	PQ_OBJS="openvect.o getCat.o buildInfxQry.o runInfxQry.o"
+else
+	echo "*** PostgreSQL unsupported ***" >&2
+	cp src/query_postgr_dummy.c src/query_postgr.c
+	cp scripts/panel_query_orig.tcl scripts/panel_query.tcl
+	PQ_OBJS=
+fi
+
+sed -e "\
+	s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
+	s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
+" src/Gmakefile.in > src/Gmakefile
