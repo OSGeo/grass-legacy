@@ -1,0 +1,94 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
+binary format.  
+
+<h2>NOTES</h2>
+
+Using flag <b>-z</b> converts ascii data to 3D binary vector map  
+
+<p>
+
+After running this program, GRASS support files must be built with 
+<em><a HREF="v.build.html">v.build</a></em> for the binary <em>output</em> 
+file 
+
+<h2>EXAMPLE</h2>
+
+Example ASCII vector file (stored in dig_ascii/). Note the blank before
+entering vertex coordinates:<p>
+<pre>
+	ORGANIZATION: GRASS Development Team
+	DIGIT DATE:   1/9/2002
+	DIGIT NAME:   -
+	MAP NAME:     test
+	MAP DATE:     2002
+	MAP SCALE:    10000
+	OTHER INFO:   Test polygons
+	ZONE:         0
+	MAP THRESH:   0.500000
+	VERTI:
+       A  13
+        5958812.48844435 3400828.84221011
+        5958957.29887089 3400877.11235229
+        5959021.65906046 3400930.7458436
+        5959048.47580612 3400973.65263665
+        5959069.92920264 3401032.64947709
+        5958812.48844435 3400828.84221011
+       A  8
+        5959010.9323622 3401338.36037757
+        5959096.7459483 3401370.54047235
+        5959091.38259917 3401450.99070932
+        5959010.9323622 3401338.36037757
+</pre>
+
+The associated dig_att file needs following format (store in dig_att/):<p>
+
+<pre>
+       A 3401180.463379 5959003.209139          1
+       A 3401516.741397 5958966.635071          2
+</pre>
+
+<p>
+
+The associated dig_cats file needs following format:<p>
+
+<pre>
+      # 2 categories
+      Vector map: test
+ 
+      0.00 0.00 0.00 0.00
+      1:forest
+      2:water
+</pre>
+
+<p>
+
+The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
+performs the function of <em>v.in.ascii</em> in reverse;
+i.e., it converts vector files in binary format to ASCII
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
+<p>
+
+The input from <em>v.in.ascii</em> has to be placed into
+<kbd>$LOCATION/dig_ascii</kbd> (this directory must be created if not existing).
+
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.out.ascii.html">v.out.ascii</a></em>,
+<em><a HREF="v.build.html">v.build</a></em>,
+
+
+<h2>AUTHORS</h2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory<br>
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory<br>
+Radim Blazek, ITC-Irst, Trento, Italy
