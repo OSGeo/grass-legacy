@@ -1,0 +1,10 @@
+
+
+v.spag - 
+
+v.spag will fix data that was not \digitized\ in correct GRASS
+\vector\ format.  It will create a \node\ at every line crossing and
+will delete all hanging lines of length less than the specified
+\threshold\.
+
+Manual entry for \v.spag\
