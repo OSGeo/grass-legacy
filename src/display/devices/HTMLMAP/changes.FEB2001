@@ -1,0 +1,29 @@
+changes
+
+README
+	document new environment variables.
+
+htmlmapdriver.html
+	document new environment variables.
+
+Graph_Clse.c
+	remove writing newlines for type CLIENT, fixes bug in Internet Explorer.
+	write ALT tag for type CLIENT.
+	write NOHREF area for type CLIENT.
+
+Polygn_abs.c
+	remove successive points that are less than MINIMUM_DIST from previous.
+	remove all ending points that are same as first point.
+	remove polygon if bounding box size less that BBOX_MINIMUM.
+
+Graph_Set.c
+	accept environment parameters for min bounding box, min dist, &
+	max points.
+
+htmlmap.h
+	set defaults for min bounding box, min dist & max points.
+
+Text.c
+	change strcpy() to custom copy, eliminate newlines in string.
+
+

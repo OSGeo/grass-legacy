@@ -51,7 +51,7 @@ int list_cats (char *name)
     G_free_histogram (&histo);
     G_free_cats (&pcats);
 
-    sprintf (command, "more -d %s", tempfile);
+    sprintf (command, "$GRASS_PAGER %s", tempfile);
     system (command);
     unlink (tempfile);
     return 0;

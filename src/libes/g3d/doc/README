@@ -1,0 +1,31 @@
+History:
+ - There has been a former grid3d library written by Roman Waupotitsch,
+   with input from Mike Shapiro, Helena Mitasova, Bill Brown
+   et al.
+ - Later Mark Astley ported grid3d to g3d library which is now widely used
+   for g3d modules.
+
+
+See 
+src.contrib/GMSL/g3d/src3d/BUGS
+for severe g3d bugs.
+
+The G3D-API is described in
+GRASS CVS server (Latex):
+  cvs -z3 co progmangrass50
+
+----------- contents of this directory -----------
+From: Helena Mitasova - staff <helena@gis.uiuc.edu>                             
+Date: Tue, 13 Feb 2001 18:28:56 -0600                                           
+To: neteler@geog.uni-hannover.de                                                
+Subject: romans-notes                                                           
+                                                                                
+                                                                                
+Markus                                                                          
+                                                                                
+I digged out old emails with Roman about g3d and put those that seemed to       
+be relevant at                                                                  
+                                                                                
+I am not sure whether they are useful at all                                    
+                                                                                
+Helena                                                                          

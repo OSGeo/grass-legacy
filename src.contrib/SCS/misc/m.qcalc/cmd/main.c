@@ -1,7 +1,8 @@
-/* %W% %G% */
-#ident " @(#)main.c     1.2   02/26/91 "
-/* qcalc    1.1   12/10/87
-/* m.qcalc    1.2   02/26/91  for 4.0
+/* 
+* $Id$
+*
+*   qcalc    1.1   12/10/87
+* m.qcalc    1.2   02/26/91  for 4.0
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *             calculation of acre and hectare values for cellsize
@@ -61,8 +62,14 @@ main (int argc, char *argv[])
 	double feet, meters, miles, kilom;
 	struct Option *initopt, *endopt, *incropt, *unitopt, *valuopt;
 	struct Flag *s_flag, *a_flag, *h_flag, *c_flag, *m_flag;
+	struct GModule *module;
 
 	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Creates tables, performs conversions, and performs simple math calculations.";
 
 
           /* set up the options and flags for the command line parser */

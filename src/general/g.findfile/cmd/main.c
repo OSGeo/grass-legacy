@@ -6,9 +6,17 @@ int main( int   argc, char *argv[])
 {
 	char file[1024], name[200], *mapset;
 	char *search_mapset;
+	struct GModule *module;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
 	struct Option *opt3 ;
+
+	module = G_define_module();
+	module->description =
+		"Searches for GRASS data base files "
+		"and sets variables for the shell.";
+
+	G_gisinit (argv[0]);
 
 	/* Define the different options */
 
@@ -30,8 +38,6 @@ int main( int   argc, char *argv[])
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
 	opt3->description= "Name of an existing map" ;
-
-	G_gisinit (argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

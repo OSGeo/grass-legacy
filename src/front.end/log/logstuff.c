@@ -1,5 +1,8 @@
 
 #include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
+#include	<unistd.h>
 #include	<sys/types.h>
 #include	<sys/times.h>
 #include 	<varargs.h>
@@ -57,9 +60,6 @@ char	_PROGNAME [BUFSIZ];
 char	_LOGFILE [BUFSIZ];
 char	*_usrnm;
 struct	 tms	tbuffer;
-
-char	*ttyname();
-char	*getlogin();
 
 log_start ( prog, fmt, va_alist)
 register	char	*prog, *fmt;
@@ -137,9 +137,6 @@ quit ()
  *
  */
 
-
-struct passwd *getpwuid();
-char *getenv(), *getlogin(), *strcpy();
 
 char *
 whoisuser ()

@@ -1,9 +1,9 @@
 PGM=r.slope
-HOME=$(BIN_ALPHA_INTER)
+HOME=$(BIN_INTER)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@ $(MATHLIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

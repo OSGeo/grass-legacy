@@ -1,7 +1,9 @@
 PGM=r.out.ascii
-HOME=$(BIN_MAIN_CMD)
 
-$(HOME)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(XDRLIB) $(MATHLIB)
+LIBES=$(GISLIB)
+DEPLIB=$(DEPGISLIB)
 
-$(GISLIB): #
+$(BIN_CMD)/$(PGM): main.o formspecific.o $(DEPLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o formspecific.o $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): #

@@ -1,5 +1,4 @@
 PGM      = r.in.ll
-HOME     = $(BIN_MAIN_CMD)
 
 LIST =  main.o\
 	row_col.o\
@@ -11,9 +10,10 @@ LIST =  main.o\
 
 
 LIBES = $(GISLIB) $(COORCNVLIB) $(ROWIOLIB)
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS= $(DEPGISLIB) $(DEPCOORCNVLIB) $(DEPROWIOLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
 $(LIST): geo.h
-$(LIBES): #
+$(DEPLIBS): #

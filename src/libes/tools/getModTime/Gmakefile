@@ -1,0 +1,21 @@
+#############################################################################
+#
+# $Id: Gmakefile,v 1.1 2001-01-17 13:35:12 justin Exp $
+#
+# MODULE:   	Grass Tools
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+# PURPOSE:  	To create the getModTime program.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+all: $(ETC)/getModTime
+
+$(ETC)/getModTime: getModTime.o
+	$(CC) $(LDFLAGS) getModTime.o -o $@
+

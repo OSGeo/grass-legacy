@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>GRASS5.0: brief description of ASCII formats</TITLE>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+
+<H3>GRASS5.0: brief description of ASCII formats</H3>
+
+This description of ASCII formats supported by GRASS5 is for
+quick reference only. For full up-to-date description see
+<a href="http://grass.itc.it/grassdevel.html#prog">GRASS 5 Programmer's manual</a>
+<P>
+<HR>
+<P>
+<UL>
+<LI>
+<B>Sites</B>
+<PRE>
+#any comment, can be inserted anywhere
+name|mysoils.site
+desc|3D soils data for location A
+time|15 Jan 1999
+labels|east north elevation ID pH Corg color
+form||||#%%@
+333444.55|2543367.01|22.45|#1 %6.6 %20.123 @brown
+333445.05|2543377.21|32.46|#2 %5.6 %10.043 @gray
+</PRE>
+
+for lat/long data
+<PRE>
+labels|longitude latitude ID elevation
+75:33:55.34W|33:44:59.21N|#1 %225.2
+</PRE>
+
+<P>
+Notes: 
+<UL>
+<LI>
+sites data are stored in this ASCII format in GRASS database
+<LI>
+comment and header lines are optional
+<LI>
+elevation can be given as a 3rd dimension or an attribute
+<LI>
+read more about how to define time in GRASS: 
+<a href="http://www2.gis.uiuc.edu:2280/modviz/htdoc/time/index.html">
+GRASS datetime library</a>
+<LI>
+read more detailed description of sites format: 
+<a href="http://www2.gis.uiuc.edu:2280/modviz/htdoc/sites-api/format.html">
+GRASS 4.2 Site Record Format Specification</a>
+</UL>
+<P>
+
+<HR>
+
+<P>
+<LI>
+<B>Vector</B>
+<P>
+Example area data
+<P>
+Example ASCII vector file (store in dig_ascii/):<p>
+<pre>
+       ORGANIZATION:
+       DIGIT DATE:   Oct 24 2001
+       DIGIT NAME:   nds_gem
+       MAP NAME:     nds_gem
+       MAP DATE:
+       MAP SCALE:    500000
+       OTHER INFO:   /home/neteler/grassdata5/langeoog/PERMANENT/dig_cats
+       ZONE:         0
+       WEST EDGE:    3399965.343
+       EAST EDGE:    3403360.343
+       SOUTH EDGE:   5957127.30045067
+       NORTH EDGE:   5960625.30045067
+       MAP THRESH:   19.05
+       VERTI:
+       A  13
+        5958812.48844435 3400828.84221011
+        5958957.29887089 3400877.11235229
+        5959021.65906046 3400930.7458436
+        5959048.47580612 3400973.65263665
+        5959069.92920264 3401032.64947709
+        5959064.56585351 3401123.82641232
+        5958994.84231481 3401188.1866019
+        5958914.39207784 3401188.1866019
+        5958823.21514261 3401107.73636493
+        5958753.49160391 3401005.83273144
+        5958753.49160391 3400941.47254186
+        5958780.30834956 3400887.83905055
+        5958812.48844435 3400828.84221011
+       A  8
+        5959010.9323622 3401338.36037757
+        5959096.7459483 3401370.54047235
+        5959091.38259917 3401450.99070932
+        5958973.38891828 3401520.71424803
+        5958882.21198305 3401467.08075671
+        5958903.66537958 3401375.90382148
+        5958941.2088235 3401332.99702844
+        5959010.9323622 3401338.36037757
+</pre>
+
+The associated dig_att file needs following format (store in dig_att/):<p>
+<pre>
+       A 3401180.463379 5959003.209139          1
+       A 3401516.741397 5958966.635071          2
+</pre>
+<P>
+
+The associated dig_cats file needs following format:<p>
+<pre>
+       # 2 categories
+ 
+ 
+       0.00 0.00 0.00 0.00
+       1:forest
+       2:water
+</pre>
+
+<p>
+Example line data
+
+<PRE>
+ORGANIZATION: 
+DIGIT DATE:   
+DIGIT NAME:   
+MAP NAME:     from raster map lidar99.t800
+MAP DATE:     
+MAP SCALE:    0
+OTHER INFO:   
+ZONE:         18
+WEST EDGE:    442296
+EAST EDGE:    443960
+SOUTH EDGE:   3978824.85093895
+NORTH EDGE:   3980319.16466812
+MAP THRESH:   0
+VERTI:
+L  5
+ 3980318.16445813 442301.26497998
+ 3980318.08679477 442301      
+ 3980316.24075428 442299      
+ 3980316.16403814 442298.85299258
+ 3980315.46571843 442297      
+L  264
+ 3980318.16445813 442777.02040119
+ 3980317.26230805 442779      
+ 3980316.16403814 442780.1796963
+</PRE>
+
+<P>
+Notes:
+<UL>
+<LI>
+this format is produced by v.out.ascii and can be read by v.in.ascii, vector
+data are stored as binary in GRASS database
+<LI>
+header is mandatory
+</UL>
+
+
+<hr>
+<P>
+<LI>
+<B>2D Raster</B>
+<PRE>
+north: 3980319.16466812
+south: 3978824.85093895
+east: 443960
+west: 442296
+rows: 747
+cols: 832
+10.30957 10.318124 10.201462 9.9399 9.566847.............
+</PRE>
+<P>
+Notes:
+<UL>
+<LI>
+this format is produced by r.out.ascii and can be read by r.in.ascii, raster
+data are stored as binary in GRASS database
+<LI>
+header is mandatory
+<LI>
+first row starts at NW (upper left corner) and the raster is written
+west to east, north to south.
+</UL>
+
+<P>
+<LI>
+<B>3D Raster</B>
+<PRE>
+Proj: 1
+Zone: 1
+North: 2.0000000000000
+South: 0.5000000000000
+East: 4.0000000000000
+West: 3.0000000000000
+Top: 6.0000000000000
+Bottom: 5.0000000000000
+nofRows: 30
+nofCols: 20
+nofDepths: 14
+e-w resol: 0.05
+n-s resol: 0.05
+t-b resol: 0.071428571
+TileDimensionX: 8
+TileDimensionY: 8
+TileDimensionZ: 8
+CellType: double
+useCompression: 1
+useRle: 1
+useLzw: 0
+Precision: -1
+nofHeaderBytes: 12
+useXdr: 1
+hasIndex: 1
+Units: none
+22.3 44.5 33.8
+</PRE>
+
+<P>
+Notes:
+<UL>
+<LI>
+this format is produced by r3.out.ascii and can be read by r3.in.ascii, raster
+data are stored as binary in GRASS database
+<LI>
+header is mandatory
+<LI>
+first row starts at NW (upper left corner) and the raster is written
+west to east, north to south, bottom to top.
+</UL>
+
+<hr>
+<P>
+<LI>
+<B>3D Region definition DEFAULT_WIND3/WIND3</b>
+<PRE>
+Proj: 99
+Zone: 0
+North: 5766600
+South: 5763400
+East: 3573200
+West: 3570000
+Top: 0
+Bottom: -200
+nofRows: 160
+nofCols: 160
+nofDepths: 20
+e-w resol: 20
+n-s resol: 20
+t-b resol: 10
+</pre>
+<P>
+Notes:
+<UL>
+<LI>Note, this file is generated by g3.createwind and can be changed either
+by g3.region or g3.setregion
+</ul>
+<hr>
+GRASS Development Team ($Date$)
+</BODY>
+</HTML>

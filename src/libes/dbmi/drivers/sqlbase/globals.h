@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <dbmi.h>
 #include "sql.h"
 
@@ -16,8 +17,6 @@ typedef struct _mycursor {
   char name[10];	/* symbolic name for the cursor */
   dbString tableName;
 } mycursor;
-
-char *getenv();
 
 #ifndef GLOBAL
 # define GLOBAL extern

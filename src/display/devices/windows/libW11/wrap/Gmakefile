@@ -1,0 +1,18 @@
+
+EXTRA_CFLAGS = -I.. -mwin32
+
+XWRAPPERS = xwrappers.gen
+
+all: $(LIBDIR)/libX11.a
+
+$(LIBDIR)/libX11.a: wrap.o rxvt_res.o
+	$(LIBRULE)
+
+rxvt_res.o: rxvt.rc
+	windres -i $^ -o $@
+
+$(XWRAPPERS): ../X11/Xlib.h
+	perl mkproxy.pl ../X11/Xlib.h > $(XWRAPPERS)
+
+
+wrap.o: xwrappers.gen

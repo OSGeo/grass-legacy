@@ -126,7 +126,7 @@ edit_region ()
     {
 	if (ok == 0)
 	{
-	    fprintf (stdout,"\n\n");
+	    fprintf (stderr,"\n\n");
 	    if (G_yes("Would you like to start over?", 0))
                 return(2);
 	}
@@ -161,22 +161,22 @@ edit_region ()
 
 	if (!G_scan_northing(ll_north, &window.north, window.proj))
 	{
-	    fprintf (stdout,"Illegal value for north: %s\n", ll_north);
+	    fprintf (stderr,"Illegal value for north: %s\n", ll_north);
 	    ok = 0;
 	}
 	if (!G_scan_northing(ll_south, &window.south, window.proj))
 	{
-	    fprintf (stdout,"Illegal value for south: %s\n", ll_south);
+	    fprintf (stderr,"Illegal value for south: %s\n", ll_south);
 	    ok = 0;
 	}
 	if (!G_scan_easting(ll_east, &window.east, window.proj))
 	{
-	    fprintf (stdout,"Illegal value for east: %s\n", ll_east);
+	    fprintf (stderr,"Illegal value for east: %s\n", ll_east);
 	    ok = 0;
 	}
 	if (!G_scan_easting(ll_west, &window.west, window.proj))
 	{
-	    fprintf (stdout,"Illegal value for west: %s\n", ll_west);
+	    fprintf (stderr,"Illegal value for west: %s\n", ll_west);
 	    ok = 0;
 	}
 	if (!ok)
@@ -208,95 +208,95 @@ edit_region ()
 	G_align_window(&window, tmp_window);
 
 SHOW:
-	fprintf (stdout,"\n\n");
-	fprintf (stdout,"       Watershed Project Region Information\n\n");
+	fprintf (stderr,"\n\n");
+	fprintf (stderr,"       Watershed Project Region Information\n\n");
 	G_format_northing(window.north, buf, window.proj);
 	G_format_northing(north, buf2, window.proj);
-	fprintf (stdout,"  north: %s", buf);
+	fprintf (stderr,"  north: %s", buf);
 	if (strcmp(buf, buf2) != 0)
 	{
 	    ok = 0;
-	    fprintf (stdout,"  (Changed to match resolution)");
+	    fprintf (stderr,"  (Changed to match resolution)");
 	}
-	fprintf (stdout,"\n");
+	fprintf (stderr,"\n");
 
 	G_format_northing(window.south, buf, window.proj);
 	G_format_northing(south, buf2, window.proj);
-	fprintf (stdout,"  south: %s", buf);
+	fprintf (stderr,"  south: %s", buf);
 	if (strcmp(buf, buf2) != 0)
 	{
 	    ok = 0;
-	    fprintf (stdout,"  (Changed to match resolution)");
+	    fprintf (stderr,"  (Changed to match resolution)");
 	}
-	fprintf (stdout,"\n");
+	fprintf (stderr,"\n");
 
 	G_format_easting(window.east, buf, window.proj);
 	G_format_easting(east, buf2, window.proj);
-	fprintf (stdout,"  east:  %s", buf);
+	fprintf (stderr,"  east:  %s", buf);
 	if (strcmp(buf, buf2) != 0)
 	{
 	    ok = 0;
-	    fprintf (stdout,"  (Changed to match resolution)");
+	    fprintf (stderr,"  (Changed to match resolution)");
 	}
-	fprintf (stdout,"\n");
+	fprintf (stderr,"\n");
 
 	G_format_easting(window.west, buf, window.proj);
 	G_format_easting(west, buf2, window.proj);
-	fprintf (stdout,"  west:  %s", buf);
+	fprintf (stderr,"  west:  %s", buf);
 	if (strcmp(buf, buf2) != 0)
 	{
 	    ok = 0;
-	    fprintf (stdout,"  (Changed to match resolution)");
+	    fprintf (stderr,"  (Changed to match resolution)");
 	}
-	fprintf (stdout,"\n");
+	fprintf (stderr,"\n");
 
-	fprintf (stdout,"  grid cell resolution: %6.f meters\n", proj_resolution);
-	fprintf (stdout,"  total rows in region: %6d\n", window.rows);
-	fprintf (stdout,"  total cols in region: %6d\n", window.cols);
+	fprintf (stderr,"  grid cell resolution: %6.f meters\n", proj_resolution);
+	fprintf (stderr,"  total rows in region: %6d\n", window.rows);
+	fprintf (stderr,"  total cols in region: %6d\n", window.cols);
 	sprintf(buf, "%ld", (long) window.rows * window.cols);
 	G_insert_commas(buf);
-	fprintf (stdout,"  total cells in region:%6s\n", buf);
-	fprintf (stdout,"  rows in watershed:    %6d\n", rows_in_wshd);
-	fprintf (stdout,"  cols in watershed:    %6d\n", cols_in_wshd);
+	fprintf (stderr,"  total cells in region:%6s\n", buf);
+	fprintf (stderr,"  rows in watershed:    %6d\n", rows_in_wshd);
+	fprintf (stderr,"  cols in watershed:    %6d\n", cols_in_wshd);
 /*
-	fprintf (stdout,"  cells in watershed:   %6d\n", cells_in_wshd);
+	fprintf (stderr,"  cells in watershed:   %6d\n", cells_in_wshd);
 	sprintf(buf, "%.1f", 
 	   (cells_in_wshd * proj_resolution * proj_resolution / 10000));
 	G_insert_commas(buf);
-	fprintf (stdout,"  area of watershed:  %s hectares", buf);
+	fprintf (stderr,"  area of watershed:  %s hectares", buf);
 	sprintf(buf, "%.1f", 
 	   (cells_in_wshd * proj_resolution * proj_resolution / 4046.856));
 	G_insert_commas(buf);
-	fprintf (stdout," (%s acres)\n", buf);
+	fprintf (stderr," (%s acres)\n", buf);
 */
-	fprintf (stdout,"\n");
+	fprintf (stderr,"\n");
 
 
 	if (window.north > def_wind.north)
 	{
-	    fprintf (stdout,"warning - north falls outside the default region\n");
+	    fprintf (stderr,"warning - north falls outside the default region\n");
 	    ok = 0;
 	}
 	if (window.south < def_wind.south)
 	{
-	    fprintf (stdout,"warning - south falls outside the default region\n");
+	    fprintf (stderr,"warning - south falls outside the default region\n");
 	    ok = 0;
 	}
 	if (window.proj != PROJECTION_LL)
 	{
 	    if (window.east > def_wind.east)
 	    {
-		fprintf (stdout,"warning - east falls outside the default region\n");
+		fprintf (stderr,"warning - east falls outside the default region\n");
 		ok = 0;
 	    }
 	    if (window.west < def_wind.west)
 	    {
-		fprintf (stdout,"warning - west falls outside the default region\n");
+		fprintf (stderr,"warning - west falls outside the default region\n");
 		ok = 0;
 	    }
 	}
 ASK:
-	fprintf (stdout,"\nDo you accept this %s? (y/n) [%s] > ", "region", ok ? "y" : "n");
+	fprintf (stderr,"\nDo you accept this %s? (y/n) [%s] > ", "region", ok ? "y" : "n");
 	if (!G_gets(buf))
 	    goto SHOW;
 	G_strip(buf);
@@ -318,7 +318,7 @@ ASK:
 	if (ok)
 	{
 	    G_clear_screen();
-	    fprintf (stdout,"\n\nSaving region and grid resolution for project\n\n");
+	    fprintf (stderr,"\n\nSaving region and grid resolution for project\n\n");
 	    fd = G_fopen_new(data_dir, "region");
 	    if (!fd)
 	        {

@@ -1,9 +1,0 @@
-
-The File-Quit Menu Option
-
-This choice allows you to exit from the raster-editor program.
-If you were in the middle of an edit session, the the session will
-be closed and will remain as a @ref("segment file",xgre/segfile.def) in your @glossary("mapset",16.glossary/mapset.def) so that
-you may resume editing at a later time (by using the @ref("File-Resume",xgre/file_resume)
-menu option).
-

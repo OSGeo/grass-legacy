@@ -1,5 +1,8 @@
 #include "distance.h"
 #include <math.h>
+#ifdef __CYGWIN__
+#define HUGE HUGE_VAL
+#endif
 int
 nearest_seg(map,p,arc,x_pt,y_pt,near_seg,shortest_dist)
  struct Map_info *map;

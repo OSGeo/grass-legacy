@@ -1,0 +1,24 @@
+			     ChangeLog for grass-jni
+
+1999 Feb 23, Release 0.7.4
+	* Checks for null arguments added to all methods
+	* Exceptions are thrown now in a more consistent manner
+	
+1998 Aug 31, Release 0.7.3
+        * A lot of write methods tested
+	* Several methods added to Cellhead (calc. of northing/easting) 
+	* Tested with GCC 2.7.2.3 and GRASS 4.2.1v18
+	
+1998 Aug 11, Release 0.7.2
+	* Some methods for raster calculations added
+	* Methods to handle database region added to libgis
+	* Methods to acquire projection information added to libgis
+
+1998 Jul 24, Release 0.7.1
+	* Methods to read/write Level 2 Vector layers added 
+	* Constructor of Cellstats.Pair made private (was public)
+	* Method Categories.G_read_cats moved to libgis
+
+1998 Jul 15, Release 0.7.0
+	Early version released to public
+	

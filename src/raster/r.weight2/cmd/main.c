@@ -1,4 +1,4 @@
-/*  r.weight 	reclassify and  add or multiply  2 or more layer files 
+/*  r.weight2 	reclassify and  add or multiply  2 or more layer files 
 */
 
 #include <stdio.h>
@@ -22,6 +22,8 @@ main (int argc, char *argv[])
 	    struct Option *title ;
 	    struct Option *color ;
 	} parm;
+	struct GModule *module;
+	
 	int sub();
 	int action = 0;
 	char *tmpfile;
@@ -36,6 +38,11 @@ main (int argc, char *argv[])
 	CELL min, max;
 
 	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Non-interactive weighted overlay raster map layer analysis program.";
 
 	/* Define the different options */
 

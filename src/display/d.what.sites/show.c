@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "local_proto.h"
 
 static int nlines = 100;
 

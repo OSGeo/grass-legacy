@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<TITLE>v.in.dgn</TITLE>
+</HEAD>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.dgn</b></EM>  - Imports Microstation DGN vector files.
+
+<BR>
+
+<EM>(GRASS Vector Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.dgn</B>
+
+<BR>
+
+<B>v.in.dgn help</B>
+
+<BR>
+
+<B>v.in.dgn</B> [<B>-c</B>] <B>dgn</B>=<EM>name</EM> <B>output</B>=<EM>name</EM> 
+[<B>level</B>=<EM>value[,value,...]</EM>] [<B>color</B>=<EM>value[,value,...</EM>] [<B>startcat</B>=<EM>value</EM>] [<B>type</B>=<EM>name</EM>]
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.dgn</EM> creates new GRASS vector map in the current mapset.
+v.in.dgn supports <B>line, line string, shape and text</B> DGN element
+types. For other types warning is printed on standard error output.
+Texts are imported as category labels or categories.
+v.support must be run on vector after import.
+
+<H2>COMMAND LINE OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-c</B> 
+<DD>Use texts as category values (dig_att) instead of category labels (dig_cats).
+</DL>
+
+<P>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>dgn=</B><EM>name</EM> 
+<DD>Full path to DGN file.
+
+<P>
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name for output vector map.
+
+<P>
+<DT><B>level=</B><EM>value</EM> 
+<DD>Comma separated list of levels to be imported. Default value -1 specifies
+all levels. Values 1-63 allowed.
+
+<P>
+<DT><B>color=</B><EM>value</EM> 
+<DD>Comma separated list of colors to be imported. Default value -1 specifies
+all colors. Values 0-255 allowed.
+
+<P>
+<DT><B>startcat=</B><EM>value</EM> 
+<DD>First category wich will be used for texts (if -c flag is not specified).
+
+<P>
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Type which will be assigned to lines and categories in vector file
+(<B>line</B> or <B>area</B> available).
+
+</DL>
+
+<H2>BUGS</H2>
+Text position for any other than lower-left justification is not
+exactly the same as in Microstation.
+
+
+<H2>SEE ALSO</H2>
+<P>
+
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHORS</H2>
+
+Radim Blazek
+
+</BODY>
+</HTML>

@@ -1,9 +1,0 @@
-
-
-driver - A program which directly interfaces a computer's software with
-a hardware device (like a @glossary("graphics monitor",16.glossary/graphmon.def), printer, or @glossary("digitizer",16.glossary/digitizer.def))
-and handles requests made to that hardware device by the software.
-GRASS provides drivers to enable specific graphics monitors, @glossary("raster",16.glossary/rastdata.def)
-output devices, @glossary("digitizing",16.glossary/digitize.def) tablets and other peripherals to be used
-for GRASS input and output.  Users can also write their own drivers to
-allow other peripheral devices to be used for GRASS input and output.

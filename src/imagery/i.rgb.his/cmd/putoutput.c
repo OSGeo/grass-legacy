@@ -1,4 +1,3 @@
-
 #include "gis.h"
 #include "globals.h"
 
@@ -23,7 +22,7 @@ putoutput (void)
 	rowbuf[j] = (CELL) *tempbuf;
 	tempbuf++;
       }
-      G_put_map_row(fd_output[band], rowbuf);
+      G_put_raster_row(fd_output[band], rowbuf, CELL_TYPE);
     }
     G_close_cell(fd_output[band]);
     sprintf(tempstr, "Gcell.colors %s grey", outputfiles[band]);

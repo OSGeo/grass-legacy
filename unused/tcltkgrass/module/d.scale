@@ -1,0 +1,485 @@
+
+
+proc colors { } {
+
+
+  toplevel .colors
+
+  wm geometry .colors +100+20
+  wm title .colors "colors"
+
+
+  global bname
+
+
+  frame .colors.frame0 \
+    -relief {flat}
+
+  label .colors.frame0.label \
+     -anchor {w} \
+     -text {Background color:} \
+     -padx {2}
+
+  listbox .colors.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame0.vscrollbar set}
+
+  scrollbar .colors.frame0.vscrollbar \
+     -command {.colors.frame0.listbox yview}
+
+
+  pack append .colors.frame0 \
+    .colors.frame0.label { top fillx } \
+    .colors.frame0.listbox { left expand fill } \
+    .colors.frame0.vscrollbar { right fill }
+
+  bind .colors.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set bname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set bname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set bname [%W get [%W nearest %y]]
+  }
+
+  .colors.frame0.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet gray brown magenta white black} {
+      .colors.frame0.listbox insert 0 $i
+  }
+
+  global tname
+
+
+  frame .colors.frame1 \
+    -relief {flat}
+
+  label .colors.frame1.label \
+     -anchor {w} \
+     -text {Text color:} \
+     -padx {2}
+
+  listbox .colors.frame1.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame1.vscrollbar set}
+
+  scrollbar .colors.frame1.vscrollbar \
+     -command {.colors.frame1.listbox yview}
+
+
+  pack append .colors.frame1 \
+    .colors.frame1.label { top fillx } \
+    .colors.frame1.listbox { left expand fill } \
+    .colors.frame1.vscrollbar { right fill }
+
+  bind .colors.frame1.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame1.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame1.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  .colors.frame1.listbox delete 0 end
+  foreach i {red orange yellow green blue magenta indigo violet gray white black} {
+      .colors.frame1.listbox insert 0 $i
+  }
+
+
+  frame .colors.frame2 \
+     -borderwidth {2}
+
+  button .colors.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  button .colors.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  pack append .colors.frame2 \
+    .colors.frame2.ok { left expand } \
+    .colors.frame2.cancel { right expand }
+
+
+bind .colors.frame0.listbox <Return> {
+     focus .colors.frame1.listbox
+}
+
+bind .colors.frame1.listbox <Return> {
+     focus .colors.frame0.listbox
+}
+
+
+  pack append .colors \
+    .colors.frame0 { top expand fill } \
+    .colors.frame1 { top expand fill } \
+    .colors.frame2 { bottom expand fill }
+
+
+
+  grab set .colors
+  tkwait window .colors
+
+}
+
+
+
+
+proc coordinates { } {
+
+
+  toplevel .coordinates
+
+  wm geometry .coordinates +100+20
+  wm title .coordinates "coordinates"
+
+
+  global x
+
+
+  frame .coordinates.frame0 \
+    -relief {flat}
+
+  label .coordinates.frame0.label \
+    -anchor {w} \
+    -text {Easting:} \
+    -padx {2}
+
+  scrollbar .coordinates.frame0.hscrollbar \
+    -command {.coordinates.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .coordinates.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.coordinates.frame0.hscrollbar set}
+
+  pack append .coordinates.frame0 \
+    .coordinates.frame0.label { top fillx } \
+    .coordinates.frame0.entry { top fillx } \
+    .coordinates.frame0.hscrollbar { bottom fillx }
+
+  .coordinates.frame0.entry configure -state normal
+
+  bind .coordinates.frame0.entry <Return> {
+       set x [%W get] }
+
+
+  global y
+
+
+  frame .coordinates.frame1 \
+    -relief {flat}
+
+  label .coordinates.frame1.label \
+    -anchor {w} \
+    -text {Northing:} \
+    -padx {2}
+
+  scrollbar .coordinates.frame1.hscrollbar \
+    -command {.coordinates.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .coordinates.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.coordinates.frame1.hscrollbar set}
+
+  pack append .coordinates.frame1 \
+    .coordinates.frame1.label { top fillx } \
+    .coordinates.frame1.entry { top fillx } \
+    .coordinates.frame1.hscrollbar { bottom fillx }
+
+  .coordinates.frame1.entry configure -state normal
+
+  bind .coordinates.frame1.entry <Return> {
+       set y [%W get] }
+
+
+
+  frame .coordinates.frame2 \
+     -borderwidth {2}
+
+  button .coordinates.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set x [.coordinates.frame0.entry get]
+                  set y [.coordinates.frame1.entry get]
+                 destroy .coordinates }
+
+  button .coordinates.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set x ""
+                  set y ""
+                 destroy .coordinates }
+
+  pack append .coordinates.frame2 \
+    .coordinates.frame2.ok { left expand } \
+    .coordinates.frame2.cancel { right expand }
+
+
+bind .coordinates.frame0.entry <Return> {
+     focus .coordinates.frame1.entry
+}
+
+bind .coordinates.frame1.entry <Return> {
+     focus .coordinates.frame0.entry
+}
+
+
+  pack append .coordinates \
+    .coordinates.frame0 { top expand fill } \
+    .coordinates.frame1 { top expand fill } \
+    .coordinates.frame2 { bottom expand fill }
+
+
+
+  grab set .coordinates
+  tkwait window .coordinates
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global bname
+  global tname
+  global x
+  global y
+
+
+  set cmd ""
+
+  if {  $bname != "" } {
+         set cmd "$cmd bcolor=$bname"
+  }
+
+  if {  $tname != "" } {
+         set cmd "$cmd tcolor=$tname"
+  }
+
+  if {  $x != "" || $y != "" } {
+         set cmd "$cmd at=$x,$y"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.scale $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.scale { } {
+
+
+  global bname
+  global tname
+  global x
+  global y
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Overlay Bar Scale and North Arrow"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.scale}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.scale overalys a bar scale and north arrow for the current geographic region at a user-defined location in the active display frame.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "colors ..." \
+     -relief raised \
+     -padx 10 \
+     -command "colors
+                set_command_entry"
+
+
+  button .cmd.frame2.button1 \
+     -text "coordinates ..." \
+     -relief raised \
+     -padx 10 \
+     -command "coordinates
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+     -borderwidth {2}
+
+  button .cmd.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title d.scale -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ }
+
+  button .cmd.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.ok { left expand } \
+    .cmd.frame3.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0 { left } \
+    .cmd.frame2.button1  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame3 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global bname
+set bname ""
+
+global tname
+set tname ""
+
+global x
+set x ""
+
+global y
+set y ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.scale

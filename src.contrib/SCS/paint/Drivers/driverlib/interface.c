@@ -1,5 +1,6 @@
 #include "interface.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 
 #ifndef NO_LOCKING
@@ -11,8 +12,6 @@ static char *me ;
 static int ascii_int = 0 ;
 static int ascii_float = 0 ;
 static char trace ;
-
-char *getenv();
 
 paint_interface (argc, argv) char *argv[];
 {

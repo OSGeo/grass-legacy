@@ -1,4 +1,3 @@
-/* adjusted path in line 28   8/99 MN */
 /*
  * tkInt.h --
  *

@@ -1,0 +1,3 @@
+10/2001
+
+Bug: The Prior probabilities don't sum to 1.0 (table.c)

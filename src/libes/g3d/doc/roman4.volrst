@@ -1,0 +1,20 @@
+
+Roman and Mark,
+
+I tried to interpolate and visualize some data 
+(see phel1.nomask, phel1.iso1 and phel.nomask and phel.iso1)
+and the result has stripe-like character typical
+for situations when there is something wrong with no.
+of rows and columns - this problem may not occure for
+the sphere test data which are in a cube. It may be that
+what interpolation program takes as a number of rows is used
+in the g3d library as a number of columns or something like that.
+I don't know whether the problem is in interpolation, 
+g3d library or visualization. Mark can you test s.vol.rst
+with a subset of sphere data with different no. of rows and columns?
+Roman can you check the library over the weekend 
+whether the problem could be there?
+
+thanks,
+
+Helena

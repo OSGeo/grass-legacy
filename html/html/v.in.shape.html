@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>v.in.shape</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+
+<h2>NAME</h2>
+
+<EM><b>v.in.shape</b></EM> - Read an ArcView Shapefile
+
+<br>
+
+<EM>(GRASS Vector Program)</EM>
+
+<h2>SYNOPSIS</h2>
+
+<BR>
+
+<B>v.in.shape</B>
+<br><br>
+<b>v.in.shape[-loud]</b>
+<b>input=</b><EM>name</EM>
+[<b>output=</b><EM>name</EM>]
+[<b>verbose=</b><EM>debug level</EM>] 
+[<b>logfile=</b><EM>name</EM>]
+[<b>snapdist=</b><EM>snap distance</EM>]
+[<b>scale=</b><EM>orig. scale</EM>] 
+[<b>attribute=</b><EM>category number</EM>]
+[<b>label=</b><EM>category label</EM>]
+
+
+<h2>DESCRIPTION</h2>
+
+The <EM>v.in.shape</EM> program is designed to import ArcView Shapefiles.
+<EM>v.in.shape</EM> will be run non-interactively if the user specifies
+program arguments on the command line. Alternately, the user can simply type:
+
+<br><br>
+
+<b>v.in.shape&nbsp;&nbsp;</b>
+<br><br>on the command line without program arguments. In this
+case, the user will be prompted for parameter values using the standard
+GRASS user interface described in the manual entry for <EM>parser</EM>.
+
+<h2>FEATURES</h2>
+
+By default Grass files created have the name extracted from the basename
+of the shapefile. This can be over-ridden by supplying a value to the
+<EM>output</EM> option, which must be a legal name.
+
+<BR><BR>
+
+
+The current version is more robust than the module available up to Spring 2002.
+The emphasis is now to concentrate on maintaining an effective shape file import filter.
+To assist this, features that are really extensions of the basic aim have been removed.
+Selection of features with particular attributes can still be extracted to a new file
+with <EM>v.extract</EM>. There is also less need for posterior error correction now, as
+the current module filters out some potentially problematic shapes at the point of
+import, and so, will always insert incoming data into the final map. If a map fails to
+build because of topological errors, the problem can be tracked down using <EM>v.digit</EM>
+and fixed. Formerly, the module attempted many kinds of fixes, however
+there were many complaints about imported maps being modified or corrupted by the process,
+so we now leave the fixing of such errors to the user.
+
+<BR>
+
+The snap distance, which always has a small default value if not supplied,
+creates a microgrid of cells in the import map region. Only one vertex
+is ever assigned to a particular cell. If a later vertex is added that is
+in the same cell, it is considered co-incident with the first. When a link
+is added between two vertices, it is recorded and the same link is not added
+twice. The snap distance is also used to define the co-incidence of other 
+spatial entities, for example edges of bounding boxes. This snap distance
+has no relation to the snap distance defined for the dig_plus map. (This
+still needs some improvement).
+
+<h2>OPTIONS</h2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><b>-l</b>
+<DD>Force an area (polygon theme) import to be imported as lines <b>as is</b>. This
+option can be used to create an outline of the original boundaries even if the map
+is bad. This option is ignored for other types of import.
+
+<DT><b>-o</b>
+<DD>Allow over-write of existing vector map.
+
+<DT><b>-u</b>
+<DD>If the record number is used as the attribute, several 'parts' of the same
+'shape' will have the same value when these are split on import to GRASS which
+does not currently support compound objects. This may be what you want, but it might
+not. To assign a unique and sequential record number, as attribute, to each area
+choose this option. So, this option is ignored if the <EM>attribute</EM> is set. 
+<BR><B>Note:</B>&nbsp;This can cause a subtle difference even if applied to coverages 
+without compound objects, as it always applies a sequential ID value to each successively
+imported object. Without the option,  it is the record number in the original that is
+used, which can skip values if there are <B>NULL</B> shapes, because GRASS ignores the latter.
+This may be important if you plan to use the attribute as a row ID in an external database
+or <EM>dbmi</EM>.
+
+<DT><b>-d</b>
+<DD>List fields in DBF file
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input</B>=<EM>filename</EM>
+<DD>Name of input shape file. Provide a full path name or the name
+of a file in the current directory. Any of the full pathname, basename, 
+or prefix only will suffice.
+
+<DT><B>output</B>=<EM>filename</EM>
+<DD>Name of vector map to be created (default: prefix of shape file). By
+default prefix of shape file name is used.
+
+<DT><B>verbose</B>=<EM>integer</EM> 
+<DD>Number between 0 (minimal report of fatal errors and essential warnings) and 3
+(very verbose log - reports most data transfer operations and some intermediate steps).
+The default is <B>1</B>.
+
+<DT><B>logfile</B>=<EM>filename</EM>
+<DD>Name of file[path] where log info will be written. By default, log info is directed to 
+<EM>stderr</EM>, which is also used (with a warning) if the log filepath is invalid or
+not writable.
+
+
+<DT><B>snapdist</B>=<EM>fp-number</EM> 
+<DD>A grid resolution can be defined within which adjacent vertices will snap.
+<br><b>Note:</b>The vertices do not snap to the grid. All
+the vertices inside a grid cell snap to one of their number (usually the
+first).  This value defaults to 1.0e-10 ground units. In fact, it
+will never allow a value that is less. This is still not quite right, but
+errors caused by it are astronomically unlikely, and are easily fixed manually,
+which must be set off against the import process increasing in duration by a
+factor of several if the snapping procedure was perfectly correct. Really 
+effective snapping must await the development of spatial query functions.
+Therefore it will not be changed at this stage.
+
+<DT><B>scale</B>=<EM>integer</EM>
+<DD>This sets an original scale that will be specified in the header of the
+vector map file produced.  It can be edited later with <b>v.digit</b>.
+The value defaults to 1:2400. The value affects some behaviour of 
+<EM>v.digit</EM> including proper building, so may have to be played with.
+Of course it can be reset by <EM>v.digit</EM> following import.
+
+<DT><B>attribute</B>=<EM>name</EM>
+<DD>Name of the input field to use as the category number in dig_att. 
+Defaults to using the record ID number as a category value if no value
+is assigned or a non-numeric field is given. If the field is floating-point 
+the value is rounded to the nearest integer.
+
+<DT><B>label=</B><EM>name</EM>
+<DD>Name of the input field to use as the category label in dig_cats. Only
+writes out results if a meaningful category field is given, otherwise no action
+is taken. If the same attribute is re-assigned a new category, the value is 
+over-written.
+
+<h2>BUGS AND CAVEAT</h2>
+
+There is no support for projection since the projection information is not
+stored in SHAPE files.
+
+<BR><BR>
+Multipatch data is not yet supported. Point data is now imported, but in
+the GRASS 5.0.x vector model, these vector 'points' have limited utility.The
+module <EM>s.in.shape</EM> imports
+site data in a form that may be found more useful.
+<BR><BR>
+The filtration process creates a large temp file to store the imported data
+and a significant amount of metadata about the imported points. This can be
+large 
+in large files. It is deleted if the import proceeds in a normal fashion, but will
+be left 'dangling' on abnormal termination. This however is a quite general problem in the
+current GRASS environment model. If disk space is available, this module will now import
+an unlimited size of map, though it is currently slow on large maps, as there are many
+disk read/write operations. This is compounded by the lengthy build process, which however
+affects all vector map builds.
+<BR><BR>
+Area and perimeter fields in input data may no longer
+be quite correct if the lines have been adjusted to correct topology problems.
+But if the user has not modified the file, the values should be correct. If in
+doubt, GRASS's own modules may be used to generate dimensional data, for example
+<EM>v.report</EM>
+
+<h2>EXAMPLE</h2>
+
+Example: <br>
+<tt>v.in.shape in=map.shp out=map attribute=OBJART label=ALIASFOLIE scale=25000</tt>
+<br>
+This command imports the shape file "map" into GRASS at scale of 1:25000
+(since the scale is not stored in the shape file). "attribute" is the field
+name containing the record ID (if not set, internal numbering will be done).
+"label" is the field containing the associated text labels. Use the "-d"
+flag to get the list of fields from the "map.dbf" file.
+
+
+<h2>SEE ALSO</h2>
+
+<EM><a href="m.in.e00.html">m.in.e00</a>,
+<a href="g.mapsets.html">g.mapsets</a>,
+<a href="g.region.html">g.region</a>,
+<a href="v.digit.html">v.digit</a>,
+<a href="v.proj.html">v.proj</a>,
+<a href="s.in.shape.html">s.in.shape</a>,
+<a href="v.support.html">v.support</a>,
+<a href="v.to.rast.html">v.to.rast</a>,
+<a href="v.out.shape.html">v.out.shape</a>
+<a href="v.extract">v.extract</a>
+<a href="v.report.html">v.report</a></EM>
+
+<br>
+
+<h2>AUTHORS</h2>
+
+
+Frank Warmerdam (warmerda@home.com)
+<BR>
+Based on Shapelib (http://gdal.velocet.ca/projects/shapelib/).
+<BR><BR>
+Markus Neteler
+<br>added category support
+<BR><BR>
+David Gray
+<br>preprocessing to provide correct handling of polygon
+edges, labels and correction of some topological errors. Also some new
+options q.v.<BR>Spring 2002: Rewrite of most of the code.<BR>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

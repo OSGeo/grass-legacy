@@ -5,14 +5,8 @@ SHELL           = /bin/sh
 # or files used by GRASS programs
 BIN             = $(GISBASE)/bin
 ETC             = $(GISBASE)/etc
-GARDEN_BIN      = $(GISBASE)/garden/bin
-GARDEN_ETC      = $(GISBASE)/garden/etc
-BIN_MAIN_INTER  = $(ETC)/bin/main/inter
-BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
-BIN_ALPHA_INTER = $(ETC)/bin/main/inter
-BIN_ALPHA_CMD   = $(ETC)/bin/main/cmd
-BIN_CONTRIB_INTER = $(ETC)/bin/contrib/inter
-BIN_CONTRIB_CMD   = $(ETC)/bin/contrib/cmd
+BIN_INTER       = $(ETC)/bin/inter
+BIN_CMD         = $(ETC)/bin/cmd
 TXT             = $(GISBASE)/txt
 MAN1            = $(GISBASE)/man/1
 MAN2            = $(GISBASE)/man/2
@@ -21,62 +15,130 @@ MAN4            = $(GISBASE)/man/4
 MAN5            = $(GISBASE)/man/5
 MAN6            = $(GISBASE)/man/6
 HELP            = $(GISBASE)/man/help
+HTML            = $(GISBASE)/documents
+SCRIPTS         = $(GISBASE)/scripts
+LOCALE          = $(GISBASE)/locale
 
 # other
-CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) $(USE_TERMIO)
-AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
-#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
+CFLAGS      = -I$(INCLUDE_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
+LDFLAGS     = -L$(LIBDIR)/$(LIBARCH) $(LINK_FLAGS)
 MANROFF     = # 
 MAKEALL     = $(GMAKE) -all
+LIBRULE_ST  = $(GMAKE) -makeparentdir $@; ar ruv $@ $?; $(RANLIB) $@
+LIBRULE     = $(LIBRULE_ST)
+SLIBRULE    = $(LIBRULE_ST)
 
-# various source directories and libraries
-SRC_X       = $(SRC)/xgrass
+# various directories
 LIBDIR      = $(SRC)/libes
-X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
-DIG_LIBDIR  = $(SRC)/libes/vect32/libes
-DIG_INCLUDE  = $(SRC)/libes/vect32/lib
-VECT_INCLUDE = -I$(SRC)/libes/vect32/Vlib -I$(SRC)/libes/vect32/diglib
-
-VASKLIB     = $(LIBDIR)/libvask.a
-VASK        = $(VASKLIB) $(CURSES)
-
-GISLIB      = $(LIBDIR)/libgis.a
-G3DLIB      = $(LIBDIR)/libg3d.a
-ICONLIB     = $(LIBDIR)/libicon.a
-LOCKLIB     = $(LIBDIR)/liblock.a
-IMAGERYLIB  = $(LIBDIR)/libI.a
-ROWIOLIB    = $(LIBDIR)/librowio.a
-COORCNVLIB  = $(LIBDIR)/libcoorcnv.a
-SEGMENTLIB  = $(LIBDIR)/libsegment.a
-GPROJLIB    = $(LIBDIR)/libproj.a
-BTREELIB    = $(LIBDIR)/libbtree.a
-IBTREELIB   = $(LIBDIR)/libibtree.a
-DLGLIB      = $(LIBDIR)/libdlg.a
-RASTERLIB   = $(LIBDIR)/libraster.a
-DISPLAYLIB  = $(LIBDIR)/libdisplay.a
-D_LIB       = $(LIBDIR)/libD.a
-DATETIMELIB = $(LIBDIR)/libdatetime.a
-DRIVERLIB   = $(SRC)/display/devices/lib/driverlib.a
-LINKMLIB    = $(LIBDIR)/liblinkm.a
-BITMAPLIB    = $(LIBDIR)/libbitmap.a
-XGILIB	    = $(X_LIBDIR)/libXgi.a
-XGDLIB	    = $(X_LIBDIR)/libXgd.a
-XPMLIB	    = $(X_LIBDIR)/libXpm.a
 
 
-DIGLIB      = $(LIBDIR)/libdig.a
-DIG2LIB     = $(LIBDIR)/libdig2.a
-VECTLIB_REAL= $(LIBDIR)/libvect.a
-VECTLIB     = $(VECTLIB_REAL) $(DIG2LIB)
-DIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
+# libraries
+DEPGISLIB      = $(LIBDIR)/libgis.a
+GISLIB         = -lgis
+
+DEPVASKLIB     = $(LIBDIR)/libvask.a
+VASKLIB        = -lvask
+
+DEPEDITLIB     = $(LIBDIR)/libgedit.a
+EDITLIB        = -lgedit
+
+DEPG3DLIB      = $(LIBDIR)/libg3d.a
+G3DLIB         = -lg3d
+
+DEPICONLIB     = $(LIBDIR)/libicon.a
+ICONLIB        = -licon
+
+DEPLOCKLIB     = $(LIBDIR)/liblock.a
+LOCKLIB        = -llock
+
+DEPIMAGERYLIB  = $(LIBDIR)/libI.a
+IMAGERYLIB     = -lI
+
+DEPROWIOLIB    = $(LIBDIR)/librowio.a
+ROWIOLIB       = -lrowio
+
+DEPCOORCNVLIB  = $(LIBDIR)/libcoorcnv.a
+COORCNVLIB     = -lcoorcnv
+
+DEPSEGMENTLIB  = $(LIBDIR)/libsegment.a
+SEGMENTLIB     = -lsegment
+
+DEPGPROJLIB    = $(LIBDIR)/libproj.a
+GPROJLIB       = -lproj
+
+DEPBTREELIB    = $(LIBDIR)/libbtree.a
+BTREELIB       = -lbtree
+
+DEPIBTREELIB   = $(LIBDIR)/libibtree.a
+IBTREELIB      = -libtree
+
+DEPGMATHLIB    = $(LIBDIR)/libgmath.a
+GMATHLIB       = -lgmath
+
+DEPDLGLIB      = $(LIBDIR)/libdlg.a
+DLGLIB         = -ldlg
+
+DEPRASTERLIB   = $(LIBDIR)/libraster.a
+RASTERLIB      = -lraster
+
+DEPDISPLAYLIB  = $(LIBDIR)/libdisplay.a
+DISPLAYLIB     = -ldisplay
+
+DEPD_LIB       = $(LIBDIR)/libD.a
+D_LIB          = -lD
+
+DEPDATETIMELIB = $(LIBDIR)/libdatetime.a
+DATETIMELIB    = -ldatetime
+
+DEPDRIVERLIB   = $(LIBDIR)/libdriver.a
+DRIVERLIB      = -ldriver
+
+DEPLINKMLIB    = $(LIBDIR)/liblinkm.a
+LINKMLIB       = -llinkm
+
+DEPBITMAPLIB   = $(LIBDIR)/libbitmap.a
+BITMAPLIB      = -lbitmap
+
+DEPDIGLIB      = $(LIBDIR)/libdig.a
+DIGLIB         = -ldig
+
+DEPDIG2LIB     = $(LIBDIR)/libdig2.a
+DIG2LIB        = -ldig2
+
+DEPVECTLIB_REAL= $(LIBDIR)/libvect.a
+VECTLIB_REAL   = -lvect
+
+DEPDIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
+DIG_ATTLIB     = -ldig_atts
+
+DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
+VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
+
+DEPDBMILIB     = $(LIBDIR)/libdbmi.a
+DBMILIB        = -ldbmi
+
+DEPIMAGESUPLIB = $(LIBDIR)/libimage_sup.a
+IMAGESUPLIB    = -limage_sup
 
 # triangulation libraries
-SOSLIB      = $(LIBDIR)/libsos.a
-LIALIB      = $(LIBDIR)/liblia.a
-OPTRILIB    = $(LIBDIR)/liboptri.a
-BASICLIB    = $(LIBDIR)/libbasic.a
-GEOMLIB     = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)		
 
-XDISPLAYLIB = $(LIBDIR)/libXdisplay.a
+DEPSOSLIB      = $(LIBDIR)/libsos.a
+SOSLIB         = -lsos
+
+DEPLIALIB      = $(LIBDIR)/liblia.a
+LIALIB         = -llia
+
+DEPOPTRILIB    = $(LIBDIR)/liboptri.a
+OPTRILIB       = -loptri
+
+DEPBASICLIB    = $(LIBDIR)/libbasic.a
+BASICLIB       = -lbasic
+
+DEPGEOMLIB     = $(DEPOPTRILIB) $(DEPSOSLIB) $(DEPLIALIB) $(DEPBASICLIB)
+GEOMLIB        = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)
+
+DEPXDISPLAYLIB = $(LIBDIR)/libXdisplay.a
+XDISPLAYLIB    = -lXdisplay
+
 #########################################################################

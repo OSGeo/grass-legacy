@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* main.c */  
                                                                     
 #include <stdio.h>
@@ -25,8 +24,14 @@ int main (int argc, char *argv[])
 	struct Key_Value *in_proj_keys;
 	double rsize, scale, factor, size, mult, nmult, tsize, tcov;
 	FILE *vdot, *popen(), *tmp, *fd;
-
+    struct GModule *module;
+    
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Creates a site_lists file of randomly placed symbols within a GRASS vector area.";
      
 	 /* set up the options and flags for the command line parser */
 

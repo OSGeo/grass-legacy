@@ -1,10 +1,11 @@
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB)
 LIST = main.o\
 	ask_files.o\
 	mke_subgrp.o
 
-$(ETC)/imagery/subgroup: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(ETC)/imagery/subgroup: $(LIST) $(DEPLIBS) $(DEPVASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES) $(VASKLIB): #
+$(DEPLIBS) $(DEPVASKLIB): #

@@ -3,10 +3,8 @@
 /**********************************************************************
 sqrt(x) 
 
-  if floating point exception occurs during the evaluation of sqrt(x)
-  the result is NULLVALUE
-
-  if x is negative, the result is -sqrt(-x)
+  if x is negative, or floating point exception occurs during the
+  evaluation of sqrt(x) the result is NULLVALUE
 
 **********************************************************************/
 
@@ -27,13 +25,15 @@ x_sqrt (int argc, double *argv[], register double *xcell, register int ncols)
 	    floating_point_exception = 0;
 	    x = *a;
 	    if (x < 0)
-		x = -sqrt (-x);
-	    else
-		x = sqrt(x);
-	    if (floating_point_exception)
 		SETNULL_D(xcell);
 	    else
-		*xcell = x;
+	    {
+		x = sqrt(x);
+		if (floating_point_exception)
+		    SETNULL_D(xcell);
+		else
+		    *xcell = x;
+	    }
 	}
     }
 

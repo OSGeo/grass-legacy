@@ -1,0 +1,15 @@
+PGM=polish3d
+all: remove $(ETC)/$(PGM)
+
+remove:
+	rm -f lex.yy.c y.tab.c
+
+$(ETC)/$(PGM): main.o y.tab.o
+	$(CC) $(LDFLAGS) -o $@ main.o y.tab.o $(LEXLIB)
+	rm *.o
+
+y.tab.c: pol.y lex.yy.c
+	$(YACC) pol.y
+
+lex.yy.c: pol.l
+	$(LEX) pol.l

@@ -1,8 +1,6 @@
 #include <gis.h>
 #include <string.h>
-
-char *getenv();
-char *malloc();
+#include <stdlib.h>
 
 #define STANDARD_FONT "romans"
 

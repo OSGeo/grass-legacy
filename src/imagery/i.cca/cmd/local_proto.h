@@ -1,10 +1,3 @@
-/* allocate.c */
-int allocate(double *[MX], int, int);
-int freemem(double *[MX], int);
-/* jacobi.c */
-int jacobi(double [MX][MX], long, double [MX], double [MX][MX]);
-int egvorder(double [MX], double [MX][MX], long);
-int transpose(double [MX][MX], long);
 /* main.c */
 int main(int, char *[]);
 /* matrix.c */

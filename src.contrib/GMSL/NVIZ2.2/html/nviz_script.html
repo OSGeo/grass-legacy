@@ -1,0 +1,572 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<H3>Scripting</H3>
+</A> <P>
+
+<H4>NVIZ - Introduction</H4> <P>
+
+Sometimes it is desirable to automatically generate arbitrarily
+complicated changes to Nviz when creating an animation.  The tools
+presented so far allow the user to create camera movement as well as
+add custom animation channels (e.g. the cut plane channel) to the
+key frame animator.  However, the user would be required to add several
+complex channels to the key frame animator to capture the most general
+behavior.  The purpose of the scripting environment is to allow the
+user to develop a one-time script file which can handle arbitrarily
+complex changes to the Nviz environment.  Script files are extremely
+application dependent and, in general, will not be usable with other
+applications.  However, they are the most convenient mechanism for
+capturing specific behavior quickly.  <P>
+
+Scripting is controlled by the commands provided in the scripting
+pulldown menu (see <A HREF="#ScriptPulldown">figure</A> below).  By
+default, when scripting has been activated every user event in Nviz is
+recorded and output to a script saved as a text file.  This script
+file may be played back in Nviz by using the <I>Play Script</I> option
+in the menu.  Thus, most scripts are simply a carbon copy of the user
+performing certain actions.  Scripting can become more powerful,
+however, by adding loops around a sequence of script events, or by
+using higher-level tools.  The more advanced features of scripting are
+described in the <A HREF="#ScriptTools">Script Tools</A> section below.
+The next section is devoted to describing basic scripting.  Be sure to
+read this section carefully as the discussion of advanced features
+assumes the knowledge of this material.
+<P>
+
+<H3>
+<IMG SRC="nvimg/work/script_pulldown.gif">
+<A NAME="ScriptPulldown"> Script Pulldown Menu</A>
+</H3>
+
+<H4>Basic Scripting</H4> <P>
+
+Basic scripting entails designating a script file, turning scripting
+on and off, and sending commands directly to the script.  Before doing
+anything with scripting it is necessary to designate a script file.
+This is done by selecting the <I>Scriptfile</I> option in the script
+pulldown menu.  The user is queried for a file to use as the new
+script file.  If the designated file already exists then scripting
+will overwrite the old contents of the file.
+<P>
+
+Once a script file has been selected, scripting is turned on and off by
+selecting the <I>On</I> radio button in the scripting menu.  The status
+of this radio button indicates whether or not scripting is active.  As
+soon as scripting becomes active, literally everything the user does
+is recorded in the script file.  Since this can lead to extremely large
+script files, it is suggested that scripting be turned on only when the
+next few user events are critical to the script.  When you are
+finished adding commands to the script, select <I>Close Script</I> to
+close the script file.
+<P>
+
+To make the script files somewhat more legible and useful, two
+additional commands are available in basic scripting: <I>Add Script
+Line</I> and <I>Add Script Cmd</I>.  The difference between these two
+commands is subtle but important.  We will delay a discussion of the
+differences between these two commands for now.  For our purposes, the
+difference between these two commands is as follows: <I>Add Script
+Line</I> adds a command directly to the script being written and will
+not affect the state of Nviz; <I>Add Script Cmd</I> adds a command to
+the script which <B>will</B> affect the state of Nviz.  A script in
+Nviz is really a Tcl script with a slightly specialized format.
+Hence, legal script commands are things like comments marked with the
+<B>#</B> character, expressions like <B>set i [expr $i + 1]</B>, and
+so on.  <I>Add Script Line</I> is intended to add commands which
+directly affect the Tcl code in the script.  Thus comments can be
+added making scripts more readable, variables may be accessed, and
+conditionals may be inserted allowing the script to select different
+execution paths depending on script variables.  Commands added by
+<I>Add Script Cmd</I> may also be Tcl commands.  However, these
+commands are executed directly in the Nviz environment and affect the
+current state of Nviz directly (but <B>do not</B> affect the state of
+the script).  Thus commands like <B>Nsurf10001 set_att topo
+y90o.1</B>, which will set the topology attribute of a particular
+surface to a particular file, are meaningful commands to add.
+ <P>
+
+The combination of <I>Add Script Line</I> and <I>Add Script Cmd</I>
+provide the most general tools for controlling script files short of
+directly editing the text of a script.  It is expected that these
+commands will rarely be used.  However, <I>Add Script Line</I> in
+particular is useful for placing comments to separate distinct
+portions of a script and make the overall script file more readable.
+ <P>
+
+<H4>
+<A NAME="ScriptTools">Script Tools</A>
+</H4>
+ <P>
+
+The <I>Script Tools</I> menu selection pops up the script tools menu
+which provides higher level script manipulation facilities.  It is
+possible to do everything a script tool does by using <I>Add Script
+Line</I> and <I>Add Script Cmd</I> described above.  However, the
+script tools are much more convenient and should be used instead.
+Currently, there are three types of tool covering the five selections
+in the script tool popup.  <I>Open Loop</I> and <I>Close Loop</I>
+allow iteration using a numeric loop variable.  <I>Open File
+Seq. Loop</I> and <I>Close File Seq. Loop</I> allow iteration over a
+series of files.  Finally, the <I>File Sequence Tool</I> allows very
+general iteration over a variety of attributes associated with
+surface, vector and site maps.  Be sure that scripting has been turned
+on (by selecting <I>On</I>) before using a script tool.  The <I>File
+Sequence Tool</I> does not necessarily require scripting to be on, but
+for now we assume scripting has been activated.
+<P>
+
+<H5><I>Open and Close Loop</I></H5> <P>
+
+The simplest tool is the <I>Open/Close Loop</I> pair.  This tool
+defines a loop variable given the name <B>lpX</B> where X is the
+current loop being defined (starting with 1).  The loop variable is
+iterated over a numeric range as specified by the user.  The user may
+add commands (using <I>Add Script Line</I>) which reference the loop
+variable.  The most general functionality provided by this tool is the
+ability to repeat some script activity a specified number of times.
+<P>
+
+A simple <I>Open/Close Loop</I> is created as follows:
+<UL>
+<LI> Select <I>Open Loop</I> from the script tools menu.
+<LI> Fill in numeric values for "Loop Start Value", "Loop End Value"
+and "Loop Increment Value" in the resulting popup (see <A HREF="#SimpLoopP">
+figure</A> below), and press "Accept".
+<LI> Continue scripting as usual adding all activities over which you
+wish to iterate.
+<LI> Close the loop by selecting <I>Close Loop</I> from the script
+tools menu.
+</UL>
+ <P>
+
+<H5>
+<A NAME="SimpLoopP">
+<IMG SRC="nvimg/work/SimpLoop.gif"> Simple Loop Popup
+</A>
+</H5> <P>
+
+Note that simple loops may be nested by repeating the above process
+from within a simple loop.  Each additional loop uses the same naming
+scheme, thus the outer loop will be <B>lp1</B>, the first nested loop
+is <B>lp2</B> and so on.  Internally a stack of loop names is
+maintained so that selecting <I>Close Loop</I> closes the most
+recently opened loop.
+ <P>
+
+<H5><I>Open and Close File Seq. Loop</I></H5> <P>
+
+Simple open/close loops work well when looping behavior is relatively
+simple.  However, simple loops are restricted to iterating over
+numeric values.  A common scenario is for some map object in the scene
+to display a sequence of map files.  That is, we need to be able to
+iterate over lists of files.  The <I>Open/Close File Seq. Loop</I>
+pair provide this functionality.  This tool, when activated, forces
+any mapBrowser activities within the scope of the loop to use the
+current loop iteration value rather than the value entered by the user
+when the script is created.  Creating a file loop is slightly awkward
+but follows these basic steps:
+
+<UL>
+<LI> Select <I>Open File Seq. Loop</I> from the script tools menu.
+<LI> Select a sequence of files using the Map Browser tool (see
+<A HREF="#FBrowseP">figure</A> below), and press "Done".
+<LI> Continue scripting as usual adding all activities over which you
+wish to iterate.
+<LI> If you wish to apply the file sequence to a particular map,
+modify the appropriate map as if you were loading a file from the file
+sequence (see the <A HREF="#FileSeqEx">example</A> below).
+<LI> Close the loop by selecting <I>Close File Seq. Loop</I> from the
+script tools menu.
+</UL>
+ <P>
+
+<H5>
+<A NAME="FBrowseP">
+<IMG SRC="nvimg/work/FBrowse.gif"> File Sequence Loop Popup
+</A>
+</H5>
+ <P>
+
+Like simple loops, file sequence loops may be nested as well as mixed
+with simple loops (make sure that you use the appropriate "Close"
+button however!).  File sequence loops use a naming scheme similar to
+simple loops.  File sequence iteration values can be accessed using
+the variable <B>lseqX</B> where X starts at 1 for the first loop and
+increments by 2 for consecutive loops (thus the next loop is 3, then
+5, and so on).  <P>
+
+To help clarify how the file sequence loop value can automatically be
+used by map browser activities, consider the following explicit
+example:
+ <P>
+
+<A NAME="FileSeqEx"></A>
+Suppose we want the topology of a surface map to sequence over a list
+of files (for example, the four file sequence shown in the map browser
+image above).  We can use the file sequence loop tool to do this as
+follows: 
+<OL>
+<LI> Turn on scripting as usual.
+<LI> Set up the state of Nviz just prior to iterating over the list of
+files.  This includes loading the surface we wish to modify during
+the loop. 
+<LI> Open the file sequence loop with <I>Open File Seq. Loop</I>.
+<LI> Select the list of files we wish to iterate over as above.
+<LI> Load some arbitrary file into the topology attribute of the
+surface we wish to modify in the loop.
+<LI> Close the file sequence loop with <I>Close File Seq. Loop</I>.
+</OL>
+ <P>
+
+When the script event corresponding to changing topology (step 5
+above) is replayed in Nviz, the current value of the file sequence
+loop is used instead of the value supplied during script creation.
+Thus, during each iteration of the loop the topology attribute is set
+to the current value of the file sequence loop.
+ <P>
+
+Be aware that the file sequence loop affects <B>all</B> map browser
+activities within the scope of the loop.  Thus <B>any</B> script
+events added within the scope of a loop which also require a map
+browser will have their value replaced during script playback with the
+current value of the file loop.  
+ <P>
+
+<H5><I>File Sequence Tool</I></H5> <P>
+
+<H5><B>Introduction</B></H5> <P>
+
+The final script tool, the <I>File Sequence Tool</I>, is the most
+complicated but also the most flexible.  This tool is designed to
+allow iteration over several attributes of several maps in Nviz.
+Unlike the two previous tools, the <I>File Sequence Tool</I> is
+capable of automatically producing a stand-alone script file which can
+be played back within Nviz.  <P>
+
+Creating a script using the <I>File Sequence Tool</I> consists of two
+major steps: creating a state file, and creating a file sequence.
+State files were discussed in the appropriate section above.  For the
+purposes of scripting, the <I>File Sequence Tool</I> can use a state
+file as a basis for the script it creates.  Usually, the user sets up
+Nviz in a configuration just prior to the beginning of file iteration
+and saves the state of Nviz.  The script created by the <I>File
+Sequence Tool</I> can then load this state file automatically before
+performing file iteration.  The <A HREF="#FSToolEx">example</A> below
+should help clarify these activities.  For now, let us take a detailed
+look at the <I>File Sequence Tool</I> control window. <P>
+
+The <I>File Sequence Tool</I> control window is activated by selecting
+<I>File Sequence Tool</I> from the script tools popup:
+ <P>
+
+<H5>
+<A NAME="FSToolImg"></A>
+<IMG SRC="nvimg/work/FSTool.gif"> File Sequence Tool Window
+</H5>
+ <P>
+
+The <I>File Sequence Tool</I> operates on the concept of
+<B>fields</B>.  A field identifies some attribute of a surface,
+vector, or site map which will be modified during an animation.  The
+lower area of the <I>File Sequence Tool</I> is used to display all the
+fields currently set.  In the example above, a single field is defined
+which modifies the topography attribute of a surface in Nviz.  The
+buttons under <I>Fields:</I> are used to manipulate the current list
+of fields.  Pressing <I>Add</I> will create a new field.  Pressing
+<I>Delete</I> will allow the user to delete one of the fields.  The
+<I>State:</I> button is used to determine the state file which the
+current fields will use a basis for script creation.
+ <P>
+
+Before we discuss how to add fields, it is important to understand
+what types of fields may be added and how they may be changed.  As
+mentioned before, a field identifies some attribute of a surface,
+vector or site map that we wish to change during each frame of an
+animation.  For surfaces, we can modify the attributes topography,
+color, mask, transparency, shininess, and emission.  For vectors and
+sites, we can only modify the current file.  Furthermore, there are at
+least three simple ways we can change a field inbetween frames: we can
+load a new file in the place of the current file; we can <I>unset</I>
+the field so that it has no value; and we can leave the field
+unchanged.  The <I>File Sequence Tool</I> supports all of the
+attributes we have listed plus the three simplest ways of changing
+these attributes inbetween frames.  
+ <P>
+
+<H5><B>Adding Fields</B></H5> <P>
+
+Adding a field is a two step process: the user must decide which
+attribute of which surface, vector or site to modify; and the user
+must specify the list of changes to the selected attribute.  Pressing
+the <I>Add</I> button creates the following popup:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/AddField.gif">
+Add Button Popup</H5> <P>
+
+<I>Field Type:</I> refers to the type of map object this field will
+modify.  Valid selections are <I>Surface</I>, <I>Vector</I> or
+<I>Site</I>.  <I>Field Attribute:</I> refers to what attribute of the
+given type the new field will modify.  For surfaces, valid selections
+are <I>Topography</I>, <I>Color</I>, <I>Mask</I>, <I>Transparency</I>,
+<I>Shininess</I>, and <I>Emission</I>.  For vectors or sites, the only
+valid selections is <I>File</I>.  <I>Set From:</I> refers to a
+surface, vector or site file in the <B>current</B> session of Nviz
+which will be used as the placeholder for changes in the new field.
+When a script is created, the <I>Set From</I> map object has the
+specified attribute changed according to the new field.  Thus, the
+<I>Set From</I> map object should also be stored in the state file
+used by this file sequence.
+ <P>
+
+After selecting an appropriate type, attribute and source map object,
+clicking <I>Accept</I> creates the file browser popup:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/FSToolBrowse.gif">
+Field File List Popup</H5> <P>
+
+Normally, the file browser will have no selected files.  However, for
+the sake of illustration we have already selected a few files in the
+image above.  The <B>MAPSETS</B> and <B>FILES</B> lists operate just
+as in the <I>Open/Close File Seq. Loop</I> tool above.  When a file is
+selected, its name is copied to the file list on the far right.  File
+names may be entered explicitly in the type-in field on the top.  The
+list of files on the far right indicates the sequence of changes the
+current field will undergo when a script is created.  Recall that the
+<I>File Sequence Tool</I> supports three mechanisms for changing a
+field between frames: load a new file, unset the field, or leave the
+field alone.  Selecting a file from the <B>FILES</B> list corresponds
+to loading a new file inbetween frames.  By pressing the <I>Blank</I>
+button, the field is directed to unset the field for the next frame.
+This is indicated by storing <I>-- blank --</I> as the next file in
+the file list.  By pressing the <I>Previous</I> button, the field is
+directed to make no changes to the field and use the setting for the
+previous frame.  This is indicated by storing <I>(NO CHANGE) ***</I>
+where <I>***</I> is the previous entry in the file list.
+ <P>
+
+For example, in the image above the file list changes can be described
+as follows:
+<OL>
+<LI> <I>a1.masked@helena</I> is loaded.
+<LI> Nothing is changed for frame 2.
+<LI> The current field is <I>unset</I> and will not be displayed.
+<LI> <I>a3.masked@helena</I> is loaded.
+<LI> <I>as.2m100@helena</I> is loaded.
+</OL>
+ <P>
+
+The <I>Remove</I> button removes the selected file entry from the file
+list.  The <I>Done</I> button is used to indicate that you are
+finished creating the file sequence for the current field.  Clicking
+<I>Cancel</I> will backup to the <I>Add Button Popup</I>.  Clicking
+<I>Cancel</I> on the <I>Add Button Popup</I> will cancel the creation
+of a new field.
+ <P>
+
+The file sequence for a particular field may be changed even after it
+has been added to the field list.  Each field in the <I>File Sequence
+Tool Window</I> contains a button which indicates the type of map
+object this field modifies (see the <A HREF="#FSToolImg">image</A>
+above).  Clicking this button pops up the file browser as above except
+that the list of files is initialized to the current file list for the
+selected field.
+ <P>
+
+<H5><B>Saving Fields</B></H5> <P>
+
+A particular configuration of fields can be saved for later editing by
+using the <I>Load Fields...</I> and <I>Save Fields...</I> options
+under the <I>Options:</I> heading.  <I>Save Fields...</I> will save
+all of the current field configurations plus the name of the
+associated state file for later user.  Conversely, <I>Load
+Fields...</I> will load a configuration of fields.  Note that, in
+order to edit a group of fields in a different Nviz session, it will
+be necessary to re-load the state of Nviz that existed when the
+original fields were created.  This is necessary so that the map
+objects which the original fields referenced will be present in the
+system if these fields are changed.
+ <P>
+
+<H5><B>Building a Script</B></H5> <P>
+
+Once the user has created all the necessary fields for a particular
+script, it is possible to create a playable script file.  There are
+two ways script information can be created: script information can be
+written to a script currently being created, or a separate,
+stand-alone script can be created.  In either case, the script code
+created will only create the changes indicated by the given fields
+over the given number of frames.  Extra code, such as code necessary
+for rendering and saving images after each frame, must be added
+separately.  Since adding image saving code is a frequent activity, a
+comment is added to the code produced by the <I>File Sequence Tool</I>
+to aid the user in determining where to add code.
+ <P>
+
+Clicking <I>Add To Script</I> will add code to the current active
+script which will invoke the changes indicated by the field files.
+Make sure that scripting has been turned on (see above) before using
+this option.
+ <P>
+
+Clicking <I>Build Script...</I> will build a stand-alone script file.
+Stand-alone scripts first load the state file, then the field changes
+are executed as specified by the field descriptions.  As usual, code
+must be added to the script to render images and save them to files.
+ <P>
+
+<H5><B>Example</B></H5> <P>
+
+The following step-by-step example should help clarify the creation of
+a script using the <I>File Sequence Tool</I>.
+ <P>
+
+<!-- Create an example of file tool scripting here -->
+<A NAME="FSToolEx"></A>
+
+For this example, we will specify one surface with a vector and site
+file overlayed on top of it.  At each frame, we will change the
+topography and color attributes of the surface, and the overlay files
+for the sites map.  This animation will be a stand-alone animation.
+Recall that creating an animation with the <I>File Seq. Tool</I>
+requires two major steps: creating a state file and creating the field
+specifications.  Since we will need all the appropriate maps loaded
+into Nviz before we can create the field specifications, we will go
+ahead and create the state file first:
+ <P>
+
+<OL>
+<LI> Start up Nviz with "nviz -q".
+<LI> Add the surface "y90o.1@helena" by pressing <I>New</I> on the
+surface panel.
+<LI> Position the camera so that the surface is in full view.
+<LI> Add the vector map "shore.ascii@helena" by pressing <I>New</I> on
+the vector panel.
+<LI> Set the vector map so that it overlays the surface we added in
+step 2 above.
+<LI> Add the sites map "y90mo.1@helena" by pressing <I>New</I> on the
+sites panel.
+<LI> Set the sites map so that it overlays the surface we added in step
+2 above.
+<LI> Set an appropriate size for the sites map.
+<LI> Save the state of Nviz by selecting <I>Save State...</I> from the
+<I>File</I> menu and choosing an appropriate name.
+</OL>
+ <P>
+
+At this point, we have established the state of Nviz before our
+animation will begin.  State files provide a convenient encapsulation
+of the state of Nviz just prior to beginning animation.  In fact, we
+may alter state files independently of the scripts which require them
+as long as we do not change the map objects required by each script.
+This allows users to modify such features as colors, positioning, line
+sizes, lighting, etc. without having to remake scripts.
+ <P>
+
+The next step is to set up the frame changes for the animation.  We
+will require three fields: one to modify surface topography, one to
+modify surface color, and one to modify the sites source file.  For
+the sake of brevity, our animation will only be five frames long.  We
+can create the field changes as follows:
+ <P>
+
+<OL>
+<LI> Load the script tools by selecting <I>Script Tools</I> under the
+<I>Scripting</I> menu.
+<LI> Press the <I>File Sequence Tool</I> button on the script tools
+popup.
+<LI> Press the <I>Add</I> button under <I>Fields:</I> in the <I>File
+Sequence Tool</I>.
+<LI> Be sure that <I>Field Type:</I> is set to <I>Surface</I>,
+<I>Field Attribute:</I> is set to <I>Topography</I> and <I>Set
+From:</I> is set to "y90o.1@helena", then press <I>Accept</I>.
+<LI> In the file browser popup, select the sequence of files:
+<UL>
+<LI> y90o.1@helena
+<LI> y90o.2@helena
+<LI> y90o.3@helena
+<LI> y90o.4@helena
+<LI> y90o.5@helena
+</UL>
+and click <I>Done</I>.
+<LI> We have just created the five frame changes for the topography
+attribute.  Repeat steps 4 and 5 except set <I>Field Attribute:</I> to
+<I>Color</I>.  This creates the five frame changes for the color attribute.
+<LI> Repeat steps 4 and 5 except set <I>Field Type:</I> to <I>Site</I>.
+In the file browser popup , select the sequence of files:
+<UL>
+<LI> y90mo.1@helena
+<LI> y90mo.2@helena
+<LI> y90mo.3@helena
+<LI> y90mo.4@helena
+<LI> y90mo.5@helena
+</UL>
+<LI> Finally, set the state file to the file you saved in state
+creation above.  State file is set by pressing the <I>State File:</I>
+button under <I>Fields:</I>.
+</OL>
+ <P>
+
+At this point, the <I>File Sequence Tool</I> display should look
+something like the following:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/FSToolExample.gif">
+File Sequence Tool Example</H5>
+ <P>
+
+It may be wise to save your progress up to this point by clicking
+<I>Save Fields...</I> and choosing an appropriate file name.  Saving
+the fields configuration is also a convenient way to use the same
+state file with different fields settings.  For example, we could
+later modify our fields settings above by changing the list of files
+used in the frame sequence, adding new fields, etc.
+ <P>
+
+Since we are generating a stand-alone script, press the <I>Build
+Script...</I> button and choose an appropriate file name for the new
+script.  We will now edit the script so that it will render each frame
+after the field changes have been made.  Load the script file into
+your favorite editor and do the following:
+ <P>
+
+<OL>
+<LI> Find the line with the comment "# Put image saving code here".
+It is after this line that we will add commands to render frames.
+<LI> Add the following four lines after the comment <B>exactly</B> as
+they appear here:
+<PRE>
+     SendScriptLine "Nsurf_draw_all"
+     SendScriptLine "Nvect_draw_all"
+     SendScriptLine "Nsite_draw_all"
+     after 1000
+</PRE>
+<LI> Re-save the script file.
+</OL>
+ <P>
+
+The four lines we have added are instructions to Nviz to render the
+all surface, vector and site files, then wait approximately one second
+before going on to the next frame.  The <I>SendScriptLine</I> command
+is described in the next section.  At this point, the script is purely
+stand-alone and can be played from within nviz.  To play the script
+select <I>Play Script</I> from the <I>Scripting</I> menu and choose
+the script file you saved above.  After a brief bit of initialization,
+the script will execute the field changes we specified above.
+
+</BODY>
+</HTML>

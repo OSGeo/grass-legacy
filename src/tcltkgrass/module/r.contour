@@ -7,5 +7,7 @@ interface_build {
     {entry levels {option: List of contour levels (value[,value,...]):} 0 ""}
     {entry minlevel {option: Minimum contour level (value):} 0 ""}
     {entry maxlevel {option: Maximum contour level (value):} 0 ""}
-    {checkbox -q  {Run quietly.} "" -q}
+    {entry cut {option: Minimum number of points for a contour line (default=0 -> no limit):} 0 ""}
+    {checkbox -n {Suppress single crossing error messages} "" -n}
+    {checkbox -q {Run quietly.} "" -q}
 }

@@ -3,9 +3,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include "gis.h"
-#include "dig_head.h"
-#include "dig_inter.h"
-#include "digit.h"
+#include "Vect.h"
 #include "georef.h"
 
 int geo_reg_main (char *driver_name, char *tty,

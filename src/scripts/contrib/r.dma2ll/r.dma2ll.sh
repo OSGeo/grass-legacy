@@ -16,10 +16,18 @@
 #	   creates and deletes temp files in $TMPDIR, or /tmp if
 #          TMPDIR is not set.
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 #### Check that correct number of arguments have been given.
 
-if test "$1" = "" || test "$2" = ""
+if [ "$1" = "" -o "$2" = "" -o "$1" = "-help" -o "$1" = "help" ]
 then
         echo "Usage: $0 <dem_file_name> <raster_name>" >&2
         exit 1

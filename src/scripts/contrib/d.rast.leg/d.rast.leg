@@ -32,27 +32,19 @@
 # October 19, 1993
 ##############################################################################
 
-if [ $# -gt 0 ] 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
+if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
 then
-    if [ $1 = "help" ]
-    then
 	echo 
     	echo "Usage:	d.rast.leg"
     	echo "    or	d.rast.leg help"
     	echo "    or	d.rast.leg rast_map [num_of_lines]"
     	echo
     	exit 1
-    fi
-fi
-
-if [ $# -gt 2 ]
-then
-    echo 
-    echo "Usage:	d.rast.leg"
-    echo "    or	d.rast.leg help"
-    echo "    or	d.rast.leg rast_map [num_of_lines]"
-    echo
-    exit 1
 fi
 
 d.frame -e
@@ -82,3 +74,4 @@ else
     	d.frame -s at=0,100,0,65
     fi
 fi
+d.frame -s frame=full_screen

@@ -1,15 +1,25 @@
-/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
- 
 /*
-**  Original written by Chuck Ehlshlaeger  6/89
-**  Revised by Dave Gerdes  12/89
-**  US Army Construction Engineering Research Lab
+ * $Id$
+ *
+ * 2001-APR-19 change from Michel Wurtz <michel.wurtz@teledetection.fr>
+ *             Cleaning and merge diffs from v.in.dxf2
+ * 
+ * 1998-SEP-30 added -n flag to suppress text boxes 
+ *	Benjamin Horner-Johnson <ben@earth.nwu.edu>
+ *
+ * 1/28/98 change from Jacques Bouchard <bouchard@onera.fr>
+ *
+ *  Original written by Chuck Ehlshlaeger  6/89
+ *  Revised by Dave Gerdes  12/89
+ *  US Army Construction Engineering Research Lab
 */
 
 #define MAIN
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 #include "dxf2vect.h"
-#include    <math.h>
-
+#include "gis.h"
 
 /* #define DEBUG */
 
@@ -26,20 +36,31 @@ static	char  *out_name = NULL ;
 int all_lines = 1;	/* dump ALL lines unless user override */
 int all_atts = 1;	/* dump ALL atts  unless user override */
 
-
-int main (int argc, char *argv[])
+int 
+main (int argc, char *argv[])
 {
     FILE *dxf_fp;
     char *p;
     int i;
+    int count, list;
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
+    struct GModule *module;
 
     G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+	"Converts files in DXF format to ASCII or binary GRASS "
+	"vector file format."; 
 
     ascii_flag = G_define_flag(); 
     ascii_flag->key = 	'a';
     ascii_flag->description = "output to an ascii vector file (default: binary)";
     
+    txtbox_flag = G_define_flag();
+    txtbox_flag->key                     = 'n';
+    txtbox_flag->description             = "Suppress drawing of text outlines";
+
     old_opt = G_define_option();
     old_opt->key			= "dxf";
     old_opt->type			= TYPE_STRING;
@@ -83,6 +104,9 @@ int main (int argc, char *argv[])
 
     if (ascii_flag->answer)
 		fprintf(stderr,"ascii mode has been selected\n");
+
+    if (txtbox_flag->answer)
+		fprintf(stderr,"text boxes will not be drawn\n");
 
 /*DEBUG
     if (out_name != NULL)
@@ -170,45 +194,40 @@ int main (int argc, char *argv[])
     /*NOTE:  examples of dxf files with inaccurate information
     **have led us not to use the EXTMIN and EXTMAX information
     **found in the HEAD SECTION of a dxf file */
+    
+    list=1; /* make a flag similar to v.in.shape after improving the code */
+    if (list)
+    {
+       fprintf(stderr,"Following DXF layers found:\n");
+       for (count = 0; count < num_open_layers; count++)
+       {
+         fprintf(stderr,"Layer %d %s\n",count +1 ,layers[count].name);
+       }
+    }
+
     /*
     if (BOUNDARIES == 4)
 	dxf_add_boundaries ();
     */
     dxf_add_extents (); /*extents of map calculated as points were read in*/
-    
-
 
     exit (0);
 }
 
-#ifdef DEBUG
-#include <stdarg.h>
-int debugf (char *format, ...)
+int
+add_line_layer (char *str)
 {
-    va_list a;
-    va_start(a,format);
-    vfprintf (stderr, format, a, b, c, d, e, f, g, h, i, j, k, l);
-    va_end(a);
-
-    return 0;
-}
-#endif
-
-int add_line_layer (char *str)
-{
-    add_layer (str, line_list, &num_lines);
-
-    return 0;
+    return add_layer (str, line_list, &num_lines);
 }
 
-int add_att_layer (char *str)
+int
+add_att_layer (char *str)
 {
-    add_layer (str, label_list, &num_labels);
-
-    return 0;
+    return add_layer (str, label_list, &num_labels);
 }
 
-int add_layer (char *str, char *list[][2], int *num)
+int
+add_layer (char *str, char *list[][2], int *num)
 {
     char buf[200], *buf_p, *p = NULL;
 
@@ -232,12 +251,11 @@ int add_layer (char *str, char *list[][2], int *num)
 	    p = buf_p;	/* output is same as original layer */
     }
 
-    _add_layer (list, num, buf_p, p);
-
-    return 0;
+    return _add_layer (list, num, buf_p, p);
 }
 
-int _add_layer (char *list[][2], int *num, char *from, char *to)
+int
+_add_layer (char *list[][2], int *num, char *from, char *to)
 {
     list[*num][0] = G_store (from);
     if (to == NULL)
@@ -246,10 +264,11 @@ int _add_layer (char *list[][2], int *num, char *from, char *to)
 	list[*num][1] = G_store (to);
     (*num)++;
 
-    return 0;
+    return *num;
 }
 
-char *remap (char *str, int type)
+char *
+remap (char *str, int type)
 {
     /*
     char *list[][2];
@@ -289,13 +308,12 @@ char *remap (char *str, int type)
 		return (label_list[i][1]);
 	return (NULL);
     }
-
-    return 0;
 }
 
 
 
-char *dxf_fgets (char *buf, int size, FILE *fp)
+char *
+dxf_fgets (char *buf, int size, FILE *fp)
 {
     char *p;
     static unsigned long current_size =0;
@@ -310,7 +328,8 @@ char *dxf_fgets (char *buf, int size, FILE *fp)
     return (p);
 }
 
-int extra_help (void)
+int 
+extra_help (void)
 {
     fprintf (stderr, "\n\nWhere lines and labels are one or more of:\n\n");
     fprintf (stderr, "    layername1[,layername2,layername3,...]\n\n");
@@ -330,7 +349,7 @@ int big_percent (unsigned long n, unsigned long d, int s)
     static unsigned long prev = -1;
 
     x = n*100/d ;
-    if (x % s) return 0;
+    if (x % s) return 1;
     if (n <= 0 || n >= d || x != prev)
     {
         prev = x;

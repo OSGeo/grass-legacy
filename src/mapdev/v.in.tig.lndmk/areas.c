@@ -12,14 +12,16 @@ struct landrec {
 } *r1,*r2,*rstart,*rend,*r1tmp;
 
 /* for qsort of memory list by polyid */
-static int cmp_polyid (struct landrec *q1, struct landrec *q2)
+static int cmp_polyid (const void *qq1, const void *qq2)
 {
+    const struct landrec *q1 = qq1, *q2 = qq2;
     return ( q1->polyid - q2->polyid );
 }
 
 /* for qsort of int list */
-int cmp_int (int *q1, int *q2)
+int cmp_int (const void *qq1, const void *qq2)
 {
+    const int *q1 = qq1, *q2 = qq2;
     return ( *q1 - *q2 );
 }
 

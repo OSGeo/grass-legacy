@@ -14,17 +14,25 @@ static char Path[2048];
 int 
 main (int argc, char *argv[])
 {
-    char path[1024];
     int n;
     int i;
     int skip;
     char *cur_mapset;
     char **ptr;
-    char **tokens, **p;
+    char **tokens;
     FILE *fp;
+	struct GModule *module;
     struct Option *opt1;
     struct Flag *print;
     struct Flag *list;
+
+    G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Modifies the user's current mapset "
+		"search path, affecting the user's access to data existing "
+		"under the other GRASS mapsets in the current location.";
 
     opt1 = G_define_option() ;
     opt1->key        = "mapset" ;
@@ -43,8 +51,6 @@ main (int argc, char *argv[])
 
     Path[0] = '\0';
     nchoices = 0;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);

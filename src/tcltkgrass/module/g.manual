@@ -2,8 +2,11 @@ interface_build {
     {g.manual} 0
     {Prints out manual page(s) of GRASS binary and shell modules.}
     {entry entries {Manual entries to be displayed:} 0 +module}
+    {entry browser {Browser to view manual page with:} 0 browser}
     {checkbox -1 {List all manual entries (one per line).} "" -1}
     {checkbox -a {List all manual entries (pretty format).} "" -a}
-    {checkbox -e {Ignore empty manual sections.} "" -e}
-    {checkbox -f {Add formfeeds to output (pretty format mode).} "" -f}
+    {checkbox -d {Display a short description.} "" -d}
+    {checkbox -m {Force use of man program instead of browser.} "" -m}
+    {checkbox -s {Run silently to set exit status if entry exists.} "" -s}
+    {checkbox -q {Print man pages and quit. Requires rman.} "" -q}
 }

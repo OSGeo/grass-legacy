@@ -4,8 +4,6 @@
 
 int set_default_options (void)
 {
-	DCELL min, max ;
-
 	to_easting =  (window.east  + window.west ) / 2 ;
 	to_northing = (window.north + window.south) / 2 ;
 	from_easting = window.west - (window.east - window.west) ;

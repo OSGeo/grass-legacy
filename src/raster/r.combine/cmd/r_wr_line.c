@@ -12,7 +12,7 @@ int rcr_wr_line (struct Node *node, int win_row)
 
     case NAM_OPR:
 	    /* the name operator has the power to write out maps */
-	    G_put_map_row(node->cellfd, node->cbuf) ;
+	    G_put_raster_row(node->cellfd, node->cbuf, CELL_TYPE);
 
 	    /* name operator is UNARY!! */
 	    rcr_wr_line(node->left, win_row) ;

@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /***                                                                       ***/
 /***                            write_cols()                               ***/
-/***   	         Writes out colour file for morphometric features
+/***   	         Writes out colour file for morphometric features          ***/
 /***               Jo Wood, Project ASSIST, 21st February 1995             ***/
 /***                                                                       ***/
 /*****************************************************************************/
@@ -9,7 +9,7 @@
 #include "param.h"
 
 
-write_cols()
+void write_cols(void)
 {
     /*------------------------------------------------------------------------*/
     /*                            INITIALISE                                  */

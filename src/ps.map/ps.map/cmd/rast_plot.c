@@ -10,6 +10,7 @@
 ** which calls ps_write_mask_row()
 ** These changes are made by Olga Waupotitsch 4/94
 */
+#include <stdlib.h>
 #include "gis.h"
 #include "ps_info.h"
 #include "group.h"
@@ -151,6 +152,7 @@ int PS_raster_plot (void)
     }
     else 
     {
+	void *cptr[3];
 	for (i = 0; i < 3; i++)
 	{
 	   grp_map_type[i] = G_raster_map_type(grp.name[i], grp.mapset[i]);
@@ -160,18 +162,23 @@ int PS_raster_plot (void)
         for (row = 0; row < PS.w.rows; row++)
         {
 	    for (i = 0; i < 3; i++)
+	    {
 	        G_get_raster_row(grp.fd[i], cbuf[i], row, grp_map_type[i]);
+		cptr[i] = cbuf[i];
+	    }
+
 	    if ((row % PS.row_delta) == 0)
-	    {   ptr= cbuf[i];
+	    {
 		for (col = 0; col < PS.w.cols; col += PS.col_delta) 
 	        {   
 	    	    for (i = 0; i < 3; i++)
 		    {
-	              	G_get_raster_color(ptr, &rr, &gg, &bb, 
+	              	G_get_raster_color(cptr[i], &rr, &gg, &bb, 
 				&(grp.colors[i]), grp_map_type[i]);
 			if (i == 0) r = rr;
 			if (i == 1) g = gg;
 			if (i == 2) b = bb;
+			cptr[i] = G_incr_void_ptr(cptr[i], G_raster_size(grp_map_type[0]) * PS.col_delta);
 		    }
 			
 		    /* if color raster */
@@ -184,8 +191,6 @@ int PS_raster_plot (void)
 		            fprintf(PS.fp, "\n");
 		        }
 		    }
-	/* Oops, grp_map_type is a ptr, needs to be RASTER_MAP_TYPE */
-		    ptr = G_incr_void_ptr(ptr, G_raster_size(grp_map_type[0]) * PS.col_delta);
 		}
 	    }
 	}

@@ -235,7 +235,7 @@ char *G__read_Cell_head ( FILE *fd,
 
 
 /* Adjust and complete the cell header  */
-    if(err = G_adjust_Cell_head(cellhd, TEST(F_ROWS), TEST(F_COLS)))
+    if((err = G_adjust_Cell_head(cellhd, TEST(F_ROWS), TEST(F_COLS))))
 	ERROR (err,0);
 
     return NULL;

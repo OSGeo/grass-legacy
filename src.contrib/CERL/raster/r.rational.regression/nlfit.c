@@ -68,6 +68,9 @@ nlfinish()
     return 0;
 }
 
+static abc();
+static solve2();
+
 nlfit(x,y,a,chisq)
     double *x,*y,*a,*chisq;
 {
@@ -86,7 +89,7 @@ nlfit(x,y,a,chisq)
         atemp[j][j] = alpha[j][j]*(1.0+lamda);
     }
 
-    solve(atemp,beta);
+    solve2(atemp,beta);
     for (j = 0;j < na;j++)
         btemp[j] = beta[j];
 
@@ -150,7 +153,7 @@ abc(x,y,a,alpha,beta,dyda,chisq)
 #define SWAP(a,b) {double temp=(a);(a)=(b);(b)=temp;}
 
 static
-solve(a,b)
+solve2(a,b)
     double **a,*b;
 {
     int i,icol,irow,j,k,h,hh;

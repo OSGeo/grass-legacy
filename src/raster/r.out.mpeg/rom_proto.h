@@ -1,9 +1,3 @@
-#include <unistd.h>
-#include <math.h>
-#include "gis.h"
-
-#include <string.h>
-#include <stdlib.h>
 
 #define USE_PPM
 

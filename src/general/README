@@ -1,0 +1,9 @@
+The modules
+ g.copy 
+ g.list 
+ g.remove 
+ g.rename 
+
+are stored in:
+manage/
+

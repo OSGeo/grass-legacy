@@ -1,7 +1,9 @@
 #include "globals.h"
 #include "raster.h"
 #include "display.h"
+#include <stdlib.h>
 
+/* initflag: 0 means don't initialize VIEW_MAP1 or VIEW_MAP2 */
 int drawcell (View *view, int initflag)
 {
     int fd;
@@ -9,15 +11,10 @@ int drawcell (View *view, int initflag)
     int ncols, nrows;
     int row;
     DCELL *dcell;
-    int repeat;
+    int read_colors, repeat;
     struct Colors *colors;
     char msg[100];
-/*
-FILE *pfd;
-int i;
-*/
 
-/*
     if (!view->cell.configured) return 0;
     if (view == VIEW_MAP1 || view == VIEW_MAP1_ZOOM)
     {
@@ -29,39 +26,20 @@ int i;
 	colors = &VIEW_MAP2->cell.colors;
 	read_colors = view == VIEW_MAP2;
     }
-colors = &VIEW_MAP1->cell.colors;
-read_colors = view == VIEW_MAP1;
-*/
 
-if (!view->cell.configured) return 0;
-
-colors = &VIEW_MAP1->cell.colors;
-
-    display_title (view);
-
-    Menu_msg("Please wait, initializing ...");
-
-    if (initflag)
+    if(read_colors)
     {
 	G_free_colors (colors);
 	if(G_read_colors (view->cell.name, view->cell.mapset, colors) < 0)
 	    return 0;
-	set_menu_colors(colors);
+	/* set_menu_colors(colors);*/
     }
 
-/*
-pfd = popen("lp","w");
-fprintf(pfd,"ver = %d, shift = %d, cmin = %d, cmax = %d\n",colors->version,colors->shift,colors->cmin,colors->cmax);
+    display_title (view);
+     
+    set_colors (colors);
 
-for(i = 0; i < 10; i++)
-	fprintf(pfd,"%d. %d %d %d\n",i,colors->fixed.lookup.red[i],colors->fixed.lookup.grn[i],colors->fixed.lookup.blu[i]);
-
-fprintf(pfd,"BLACK = %d WHITE = %d\n",BLACK,WHITE);
-fflush(pfd);
-pclose(pfd);
-*/
-
-R_standard_color(BLACK);
+    R_standard_color(BLACK);
 
     if (initflag)
         {
@@ -82,9 +60,8 @@ R_standard_color(BLACK);
     R_standard_color(YELLOW);
     Outline_box (top, top+nrows-1, left, left+ncols-1);
 
-{char *getenv();
- if (getenv("NO_DRAW")) return 1;
-}
+    if (getenv("NO_DRAW"))
+        return 1;
 
     fd = G_open_cell_old (view->cell.name, view->cell.mapset);
     if (fd < 0)
@@ -102,13 +79,14 @@ R_standard_color(BLACK);
 	repeat = G_row_repeat_nomask (fd, row);
 	D_d_raster (dcell, ncols, repeat, colors);
     }
+    cellmap_present=1; /* for drawcell */
     G_close_cell (fd);
     G_free (dcell);
 
-/*
+
     if(colors != &VIEW_MAP1->cell.colors)
 	set_colors(&VIEW_MAP1->cell.colors);
-*/
+
     if(initflag)
     {
             /* initialize for overlay function in drawvect routine */
@@ -117,4 +95,10 @@ R_standard_color(BLACK);
         return row==nrows;
     }
     return 0;
+}
+
+int /* unused */
+re_fresh_rast (void)
+{
+    return( drawcell ((View *)NULL,0));
 }

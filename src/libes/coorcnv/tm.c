@@ -1,6 +1,22 @@
-#include <math.h>
-#include "CC.h"
-/****************************************************************
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:  	 coorcnv library     
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 transverse mercator to lat lon and lat lon to transverse
+ *               mercator conversion.
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/***********************************************************************
  * tm to lat/lon conversion
  * lat/lon to tm conversion
  *
@@ -12,8 +28,8 @@
  *     (used for conversions in either direction)
  *     returns -1 unrecognized spheroid, -2 internal error, 1 otherwise
  *
- * CC_tm2ll_spheroid_parameters (a,e)
- *    double a,e;
+ * CC_tm2ll_spheroid_parameters (a,e2)
+ *    double a,e2;
  *
  *    called by CC_tm2ll_spheroid() to set the ellipsoid major axis 'a'
  *    and eccentricity squared 'e'. can be called directly for
@@ -43,12 +59,17 @@
  *  CC_tm2ll_north() already called with north.
  *  returns -1 if lon is more than .16 radians from center of tm zone
  *           1 otherwise
- *****************************************************************/
+ ***********************************************************************/
 
-#define abs(x) ((x)<0?-(x):(x))
+#include <math.h>
+#include "CC.h"
+
+/* #define abs(x) ((x)<0?-(x):(x)) */
 
 #define RADIANS_TO_SECONDS 206264.8062470964 
 #define SECONDS_TO_RADIANS 4.84813681109536e-6
+
+static double dabs(double);
 
 static double a1,a2,a3,a4;	/* lat coef: geodetic to rectifying */
 static double a5 = 5.0e5;	/* false easting (TM) */
@@ -68,42 +89,42 @@ static double b9,b10,b11,b12;
 int 
 CC_tm2ll_spheroid (char *spheroid_name)
 {
-    double a,e;
+    double a, e2;
 
-    if (CC_get_spheroid (spheroid_name, &a, &e))
-	return CC_tm2ll_spheroid_parameters (a, e);
-    return -1;	/* unknown spheroid */
+    if (CC_get_spheroid (spheroid_name, &a, &e2))
+	return CC_tm2ll_spheroid_parameters (a, e2);
+    return -1;	   /* unknown spheroid */
 }
 
 int 
-CC_tm2ll_spheroid_parameters (double a, double e)
+CC_tm2ll_spheroid_parameters (double a, double e2)
 {
-    double x,x2,x3,x4;
+    double x, x2, x3, x4;
 
-    if (a < 0.0 || e < 0.0 || e > 1.0)
-	return -2;	/* illegal values */
+    if (a < 0.0 || e2 < 0.0 || e2 > 1.0)
+	return -2; /* illegal values */
 
     a15 = a;
-    a16 = e;
+    a16 = e2;
 
-    x = (((e * (7.0/32.0) + 5.0/16.0) * e + .5) * e + 1.0) * e * .25;
+    x = (((e2 * (7.0/32.0) + 5.0/16.0) * e2 + .5) * e2 + 1.0) * e2 * .25;
     x2 = x * x;
     x3 = x * x2;
     x4 = x * x3;
 
-/* coefficients to convert geodetic to rectifying latitude */
+    /* coefficients to convert geodetic to rectifying latitude */
     a1 = -(((x * (195.0/64.0) + 3.25) * x + 3.75) * x + 3.0) * x ;
     a2 = (((1455.0/32.0) * x + 70.0/3.0) * x + 7.5) * x2;
     a3 = -((70.0/3.0) + x * (945.0/8.0)) * x3;
     a4 = (315.0/4.0) * x4;
 
-/* coefficients to convert rectifying to geodetic latitude */
+    /* coefficients to convert rectifying to geodetic latitude */
     a11 = (((7.75 - (657.0/64.0) * x) * x - 5.25) * x + 3.0) * x;
     a12 = (((5045.0/32.0) * x - (151.0/3.0)) * x + 10.5) * x2;
     a13 = ((151.0/3.0) - (3291.0/8.0) * x) * x3;
     a14 = (109.0/4.0) * x4;
 
-/* radius of curvature */
+    /* radius of curvature */
     a10 = (((225.0/64.0) * x2 + 2.25) * x2 + 1.0) * (1.0 - x2) * (1.0 - x) * a;
 
     return 1;
@@ -114,7 +135,7 @@ CC_tm2ll_zone (int zone)
 {
     double utz;
 
-/* set false northing (a6), compute central meridian (a9) */
+    /* set false northing (a6), compute central meridian (a9) */
     if (zone < 0)
     {
 	a6 = 10.0e6;
@@ -139,7 +160,7 @@ CC_tm2ll_north (double north)
     double etas;
 
     b10 = ((north - a6) / a8 + a7) / a10;
-    if (abs(b10) > 1.47)
+    if (dabs(b10) > 1.47)
 	return -1; /* rectifying lat exceeds 1.47 radians, ~84.15.30 */
     
     sinw = sin(b10);
@@ -178,7 +199,7 @@ CC_tm2ll (double east, double *lat, double *lon)
     double b9, b10;
 
     b9 = ((a5 - east) * 1.0e-6) / a8 ;
-    if (abs(b9) > a15 * 2.0e-7)
+    if (dabs(b9) > a15 * 2.0e-7)
 	return -1;   /* easting too far from center of zone */
 
     b10 = b9 * b9 ;
@@ -196,7 +217,7 @@ CC_ll2tm (double lat, double lon, double *east, double *north, int *zone)
     double etas, t, ts, rn;
     double c1,c2,c3;
 
-/* if zone is != 0, force into this zone, otherwise compute the zone */
+    /* if zone is != 0, force into this zone, otherwise compute the zone */
     if (*zone == 0)
     {
 	if (lon < 0)	/* eastern zones */
@@ -213,14 +234,14 @@ CC_ll2tm (double lat, double lon, double *east, double *north, int *zone)
 	    *zone = -(*zone) ;
     }
 
-/* now, set a6,a9 */
+    /* now, set a6, a9 */
     CC_tm2ll_zone (*zone);	
 
-    if (abs(lat) > 302400.0)
+    if (dabs(lat) > 302400.0)
 	return -1;   /* latitude above 84 degrees */
 
     b10 = (a9 - lon) * SECONDS_TO_RADIANS;
-    if (abs(b10) > .16)
+    if (dabs(b10) > .16)
 	return -2;   /* longitude to far from center of zone */
 
     b9 = lat * SECONDS_TO_RADIANS;
@@ -254,4 +275,10 @@ CC_ll2tm (double lat, double lon, double *east, double *north, int *zone)
     *north = (*north - a7) * a8 + a6;
 
     return 1;
+}
+
+static double 
+dabs(double x)
+{
+    return x < 0 ? -x : x;
 }

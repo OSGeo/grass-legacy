@@ -17,6 +17,7 @@
 
 
 #include	<stdio.h>
+#include	<stdlib.h>
 #include	<signal.h>
 #include	"gis.h"
 
@@ -52,7 +53,6 @@ main (argc, argv)
 	char  file2[128] ;
 	char  file3[128] ;
 	char *p;
-	char  *getenv();
 
 	char  command[256] ;
 
@@ -159,7 +159,7 @@ ask_which_level()
 	fprintf (stdout,"     4  -   Binary VECTOR file to GRASS Vector Format\n") ;
 	fprintf (stdout,"\n\n Enter a number <1-4>\n anything else to quit: ") ;
 
-	if (gets (buf) == NULL)
+	if (fgets (buf,80,stdin) == NULL)
 		clearerr (stdin), exit (1) ;
 
 	num = atoi(buf) ;

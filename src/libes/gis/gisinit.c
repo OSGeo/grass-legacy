@@ -88,6 +88,7 @@ static int gisinit()
     G__.work_buf_size = 0;
     G__.null_buf_size = 0;
     G__.mask_buf_size = 0;
+    G__.temp_buf_size = 0;
     /* mask buf we always want to keep allocated */
     G__reallocate_mask_buf();
 

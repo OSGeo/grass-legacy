@@ -71,20 +71,23 @@ int ps_map (void)
     /* do the unmasked vector plots, if any */
     if (vector.count) do_vectors(1);
 
-    /* do the unmasked ponts/lines, if any */
-    do_plfile(1);
-
     /* do the sites, if any */
     do_sites();
 
     /* do the grid numbers, if any */
     if (PS.grid_numbers > 0) do_grid_numbers();
 
-    /* do the labels, if any */
-    do_labels();
+    /* do the labels from paint/labels, if any */
+    do_labels(0);
 
     /* restore the unclipped graphics state */
     fprintf(PS.fp, "grestore ");
+
+    /* do the unmasked points, lines and eps if any */
+    do_plfile(1);
+
+    /* do the labels specified in script file */
+    do_labels(1);
 
     /* show the map info */
     if (do_mapinfo) map_info();
@@ -106,10 +109,14 @@ int ps_map (void)
     /* do any PostScript include files */
     if (PS.num_psfiles) do_psfiles();
 
+    /* The bounding box code is wrong; it only allows for the size of the
+       map itself, not any legends, etc. */
+#if 0
     /* write the bounding box */
     current_offset = ftell(PS.fp);
     write_bounding_box();
     fseek(PS.fp, current_offset, SEEK_SET);
+#endif
 
     fprintf(PS.fp, "showpage\n");
     fprintf(PS.fp, "%%%%Trailer\n");

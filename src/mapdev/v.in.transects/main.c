@@ -8,6 +8,7 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct {
         struct Option *vect, *title, *input, *length, *units, *decl, *fs;
     } parm;
@@ -37,6 +38,10 @@ int main (int argc, char *argv[])
     unit_type = 0;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Import transect data to a GRASS vector map.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

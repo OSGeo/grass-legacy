@@ -8,11 +8,12 @@ LIST =  color_rnge.o\
 	pts_elim.o\
 	segment.o
 
+LIBES=$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB) 
+DEPLIBS=$(DEPGISLIB) $(DEPDISPLAYLIB) $(DEPSEGMENTLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
  
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB)
- 
-$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB): #
+$(DEPGISLIB) $(DEPDISPLAYLIB) $(DEPSEGMENTLIB): #
 
 delete.o:	point.h
 main.o:	cmd_line.h
@@ -23,4 +24,3 @@ mark_pts.o:	point.h
 pts_elim.o:	point.h
 pts_elim.o:	radians.h
 segment.o:	point.h
-

@@ -1,18 +1,22 @@
+PGM=d.scale
 OFILES = \
 	draw_scale.o \
 	main.o
 
-$(BIN_MAIN_CMD)/d.scale: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
 $(HELP)/d.scale: scale2.help
 	cp scale2.help $@
 
 
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(GISLIB): #
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPGISLIB): #
 
-command.o:	options.h
+draw_scale.o:	options.h
 main.o:	options.h

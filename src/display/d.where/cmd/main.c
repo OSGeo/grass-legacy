@@ -7,21 +7,30 @@
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     struct Option *spheroid;
-    struct Flag *once;
+    struct Flag *once, *decimal;
     char s_names[2048];
     char *name;
     int have_spheroid;
-    int with_info;
     double a,e;
     int i;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
+	module = G_define_module();
+	module->description =
+		"Identifies the geographic coordinates associated with "
+		"point locations in the active frame on the graphics monitor.";
+
     once = G_define_flag() ;
     once->key        = '1' ;
     once->description= "one mouse click only";
+
+    decimal = G_define_flag() ;
+    decimal->key        = 'd' ;
+    decimal->description= "Output lat/long in decimal degree";
 
     spheroid = G_define_option() ;
     spheroid->key        = "spheroid" ;
@@ -41,20 +50,20 @@ int main (int argc, char **argv)
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
 
+    if ( (G_projection() != PROJECTION_LL) )
+       decimal->answer=0;  /* -d only makes sense in LL projection */
+
     have_spheroid = 0;
     if(name = spheroid->answer)
     {
-	if (G_projection() != PROJECTION_UTM)
+	if ( (G_projection() != PROJECTION_UTM) )
 	{
 	    fprintf (stderr,"WARNING: %s=%s: only valid for UTM databses. Ignored\n",
 		spheroid->key, spheroid->answer);    
 	}
 	else if (CC_get_spheroid (name, &a, &e) == 0)
-	{
-	    fprintf (stderr,"ERROR: %s=%s: unknown spheroid\n",
+	    G_fatal_error("ERROR: %s=%s: unknown spheroid",
 		spheroid->key, spheroid->answer);    
-	    exit(-1);
-	}
 	else
 	{
 	    CC_u2ll_spheroid_parameters (a,e);
@@ -63,9 +72,10 @@ int main (int argc, char **argv)
 	}
     }
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
     D_setup(0);
-    where_am_i(once->answer, have_spheroid) ;
+    where_am_i(once->answer, have_spheroid, decimal->answer) ;
     R_close_driver();
 
     exit(0);

@@ -1,0 +1,273 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Andreas C. Lange">
+   <meta name="GENERATOR" content="Mozilla/4.7 [de] (WinNT; I) [Netscape]">
+   <title>GRASS 5.0 Cygwin Binary Install</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica">Installing
+GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
+
+<center>
+<h1>
+<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1>
+
+<tt>
+$Date$
+</tt>
+</center>
+
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<h2>
+<font face="Arial,Helvetica">Prerequisites:</font></h2>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">Windows NT 4.0 (SP3 or higher) or Windows 2000 Professional,</font></li>
+
+<br><font face="Arial,Helvetica">(Windows 9x and Windows ME are unsupported)</font>
+<li>
+<font face="Arial,Helvetica">Cygwin, latest release,</font></li>
+
+<li>
+<font face="Arial,Helvetica">NTFS filesystem (FAT will not work!),</font></li>
+
+<li>
+<font face="Arial,Helvetica">X Window Server and Client (only needed for the
+X-version of winGRASS)</font></li>
+
+<li>
+<font face="Arial,Helvetica">libraries and additions see below.</font></li>
+</ul>
+<font face="Arial,Helvetica">This text was written by Andreas Lange<!--
+&lt;<i>Andreas.Lange@Rhein-Main.de</i>>-->.
+Most of the text was taken out of the description from John Huddleston<!--
+&lt;<i>John.Huddleston@usda.gov</i>>-->. Many thanks to Malcolm Blue <!--
+&lt;<i>mblue@nb.sympatico.ca</i>>-->
+for proof-reading. All errors and mistakes are of course mine.</font>
+<br>
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<h2>
+<font face="Arial,Helvetica">1. Get the Cygwin tools</font></h2>
+<font face="Arial,Helvetica">The Cygwin tools are required to run UNIX
+compliant applications on Windows.</font>
+<br><font face="Arial,Helvetica">Get the latest version from <a href="http://sources.redhat.com/cygwin/download.html">http://sources.redhat.com/cygwin/download.html</a>.</font>
+<p><font face="Arial,Helvetica">Download the file </font><tt>setup.exe</tt><font face="Arial,Helvetica">
+to a local disk, run it and follow the instructions.</font>
+<p><font face="Arial,Helvetica">When installing the Cygwin tools, please
+select all packages, or at least:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">ash, bash, bzip2, clear, cygwin, file, fileutils,
+findutils, </font></li>
+<br><font face="Arial,Helvetica">gawk, gettext, grep, groff, gzip,
+inetutils, jpeg,
+less, libpng, </font>
+<br><font face="Arial,Helvetica">login, man, ncurses, opengl, perl, readline,
+regex, </font>
+<br><font face="Arial,Helvetica">sed, sh-utils/shellutils, tar, tcltk,
+tcsh, termcap, </font>
+<br><font face="Arial,Helvetica">texinfo, textutils, tiff, time, unzip,
+w32api, </font>
+<br><font face="Arial,Helvetica">zip, zlib.</font>
+<li>
+<font face="Arial,Helvetica">Remark: This list contains only the packages
+that are strictly required for running GRASS. For production use of the
+cygwin environment you will probably install other packages in addition. </font></li>
+</ul>
+<font face="Arial,Helvetica">Please select for the install directory a
+local drive on your computer with enough space for the entire cygwin distribution
+(150 MB without X11R6.4), the X Window System (additional 65 MB) and the
+GRASS binaries (programs, about 150 MB). If you want to do real work, you
+need at least another 500 MB for GRASS data storage.</font>
+<p><font face="Arial,Helvetica">Additionally you will need the precompiled
+X Window (XFree86, X11R6.4) System. See next paragraph.</font>
+
+<h2>
+<font face="Arial,Helvetica">2. Install the X11 libraries and the X Server</font></h2>
+<font face="Arial,Helvetica"><b>NOTE: not needed for the winGRASS with
+generic display driver</b></font>
+<p>
+<font face="Arial,Helvetica">If you want to use the GRASS monitors (graphical
+output), you need the X Server and the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
+Download at least the following packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
+DLLs, fonts, Prog, twm, Xterm, Xwin. Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
+install guide</a> for further details.</font>
+<p><font face="Arial,Helvetica">There are a lot of different free and commercial
+servers. 
+If you don't want to use the XFree Server (which is beta-quality and runs
+only in full screen mode), you can download the StarNet X Server from
+<a href="http://www.starnet.com/en/products/">http://www.starnet.com/en/products/</a>. This is a demo version that will time out
+after 2 hours. You can restart it again after it times out. 
+Currently only the XFree86 Server and the StarNet X Server have been tested with the GRASS distribution. 
+The Microimages X Server will not work reliable with the X11R6.4 libraries
+GRASS is linked with. </font>
+<ul>
+<li>
+<font face="Arial,Helvetica">WeirdX, an X Window System Server in pure
+Java under GNU GPL: <a href="http://www.jcraft.com/weirdx/index.html">http://www.jcraft.com/weirdx/index.html</a>.</font></li>
+</ul>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">List of commercially available X servers:</font></li>
+
+<br><font face="Arial,Helvetica"><a href="http://www.rahul.net/kenton/xsites.html">http://www.rahul.net/kenton/xsites.html</a></font></ul>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">Other, commercial servers are available:</font></li>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">MicroImages MI/X: <a href="http://tnt.microimages.com/www/html/freestuf/mix/">http://tnt.microimages.com/www/html/freestuf/mix/</a></font></li>
+
+<li>
+<font face="Arial,Helvetica">MicroImages MI/X: <a href="ftp://ftp.suse.com/pub/suse/i386/current/dosutils/mix">ftp://ftp.suse.com/pub/suse/i386/current/dosutils/mix</a></font></li>
+
+<li>
+<font face="Arial,Helvetica">StarNet Demo: <a href="http://www.starnet.com/product.htm">http://www.starnet.com/product.htm</a></font></li>
+</ul>
+</ul>
+<h2>
+<font face="Arial,Helvetica">3. Get the latest binary distribution for
+GRASS</font></h2>
+<font face="Arial,Helvetica">Get the file</font>
+<br><font face="Arial,Helvetica"><a href="http://grass.itc.it/grass5/binary/windows_cygnus/">GRASS5.0beta12_CYGWIN_NT-4.0_bin.tar.gz</a>
+or a newer package</font>
+<br><font face="Arial,Helvetica">from</font>
+<br><font face="Arial,Helvetica"><a href="http://grass.itc.it/grass5/binary/windows_cygnus/">http://grass.itc.it/grass5/binary/windows_cygnus/</a></font>
+<p><font face="Arial,Helvetica">And download the install script <a href="http://grass.itc.it/grass5/binary/windows_cygnus/">grass5install.sh</a>
+from the same directory.</font>
+
+<h2>
+<font face="Arial,Helvetica">3a. Get the sunrpc libraries</font>
+</h2>
+
+<font face="Arial,Helvetica">
+The sunrpc package contains SUN remote procedure calls, a requirement for
+GRASS/Cygwin. Download from:
+</font>
+<br><font face="Arial,Helvetica"><a
+href="http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/">http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/</a>.</font>
+<font face="Arial,Helvetica">Open a Bash window on
+your PC. Change the directory to the root directory and untar the file:
+<pre>
+cd /
+tar xzf sunrpc-4.0.cygwin1.bin.tar.gz
+</pre>
+
+<h2>
+<font face="Arial,Helvetica">3b. Get the tcl/tk 8.x libraries</font>
+</h2>
+
+<font face="Arial,Helvetica">Download the actual precompiled tcl/tk 8.x
+libraries and executables from</font>
+<br><font face="Arial,Helvetica"><a
+href="http://grass.itc.it/grass5/binary/windows_cygnus/">http://grass.itc.it/grass5/binary/windows_cygnus/</a>.</font>
+
+<p><font face="Arial,Helvetica">
+Go to the root directory (<tt>cd /</tt>) and unpack this file:</font>
+
+<pre><tt>&nbsp; tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz</tt></pre>
+
+<h2>
+<font face="Arial,Helvetica">4. And now FINALLY to the GRASS installation</font></h2>
+<font face="Arial,Helvetica">Log into the cygwin shell. Please check the
+required disk space and permissions first. The default installation path
+is <tt>/usr/local/grass5</tt>. Next:</font>
+<pre><tt>&nbsp; cd /wherever/you/saved/package</tt></pre>
+
+<pre><tt>&nbsp; ./grass5install.sh GRASS5.0*_bin.tar.gz</tt></pre>
+<font face="Arial,Helvetica">This will install the GRASS package under
+<tt>/usr/local/grass5</tt> and store the start files under
+<tt>/usr/local/bin</tt>. Please
+note that the paths are all relative to the cygwin root (usually
+<tt>C:\CYGWIN</tt>
+or <tt>C:\PROGRAM FILES\CYGWIN</tt> or similar). Do not install the file
+from the root directory of cygwin (<tt>C:\CYGWIN</tt> from Windows or
+<tt>/</tt> from
+within cygwin), due to some bug of cygwin this will result in an error. </font>
+<p><font face="Arial,Helvetica">Next you should install some data to test
+GRASS. You can get the <tt>global_grass5data.tar.gz</tt> sample data set from <a href="http://grass.itc.it/data.html">http://grass.itc.it/data.html</a>.
+Unpack the data with:</font>
+<pre><tt>tar xzf global_grass5data.tar.gz</tt></pre>
+<font face="Arial,Helvetica">in an empty directory, e. g.
+<tt>/home/andreas/data</tt>.
+Again remember to do this from within the cygwin shell.</font>
+
+<h2>
+<font face="Arial,Helvetica">5.&nbsp;<a NAME="Start GRASS"></a>Starting
+GRASS 5</font></h2>
+
+<font face="Arial,Helvetica">You can log into a GRASS session on the commandline
+(no graphics monitors) by issuing '<tt>grass5</tt>' in the cygwin shell. Follow the
+on-screen description and enter in the directories for your sample data.
+You can use GRASS from within the cygwin shell for scripting/programming,
+but without graphical output to screen.
+
+
+For running GRASS with graphical output (X Window monitors) and the graphical 
+user interface (tcltkgrass) you have two choices: 
+Either with the XFree86 Server (not well tested) or with the StarNet demo 
+or full product (recommended, tested, faster, simpler setup etc.).</font>
+
+<h3><font face="Arial,Helvetica">XFree86</font></h3>
+<p><font face="Arial,Helvetica">For running the graphics monitors start
+first the X Window Server by double-clicking on the <tt>startxwin.bat</tt> file
+in <tt>/usr/X11R6/bin</tt>. In the xterminal that starts up, re-create your
+login with <tt>bash --login -i</tt> and type in
+<tt>/usr/local/bin/grass5</tt>
+and you get the GRASS login screen. From there you can log into an GRASS
+session.</font>
+
+<p><font face="Arial,Helvetica">If you have problems starting up the X
+Window Server, please check the path in the <tt>startxwin.bat</tt> file under
+<tt>/usr/X11R6/bin</tt>.
+In my case the path was wrong, you need to specify an absolute path (e.
+g. <tt>C:\CYGWIN\USR\X11R6\BIN</tt>) for the Win32 console. If you have
+problems starting the tcltkgrass GUI (e. g. <tt>libX11.dll</tt> not found),
+check that you have <tt>/usr/X11R6/bin</tt> in your path. </font>
+
+<p><font face="Arial,Helvetica">You can switch back to the Windows screen by
+pressing ALT-TAB (beware, this does not work on my system), you end the X Server with ALT-F4.</font>
+
+<h3><font face="Arial,Helvetica">Star Net XWin-32</font></h3>
+<p><font face="Arial,Helvetica">On the server you can find a
+<tt>StartGrass.bat</tt> 
+script to put in your home directory. Please edit this file to adapt to your
+local paths. This sets the PATH and all needed
+environment variables and 
+spawns an xterm window. From within that window run <tt>'grass5'</tt>.</font>
+
+
+<p><font face="Arial,Helvetica">Please report any problems, errors and
+solutions to the GRASS developers mailing list at 
+<a href="mailto:grass5@grass.itc.it">grass5@grass.itc.it</a>
+or the winGRASS mailing list at 
+<a href="mailto:winGRASS@grass.itc.it">winGRASS@grass.itc.it</a>. 
+<a href="http://grass.itc.it/wingrass.html">See
+subsrciption information</a>.</font>
+
+<h2>
+<font face="Arial,Helvetica">6. This build was compiled with Cygwin 1.1.8</font></h2>
+<font face="Arial,Helvetica">Read about Unix running under Windows here:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/docs.html">http://sources.redhat.com/cygwin/docs.html</a></font></li>
+</ul>
+
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=-2>Andreas
+Lange, andreas.lange@rhein-main.de, 
+
+$Date$
+
+</font></font>
+</body>
+</html>

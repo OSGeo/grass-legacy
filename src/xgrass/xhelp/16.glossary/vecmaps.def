@@ -1,7 +1,0 @@
-
-
-vector map - Refers to a data file in vector (arc-node) format and
-any existing supporting files relating to it.  Together, these files
-(including @glossary("vector files",16.glossary/vecfile.def), attribute values (@glossary("category values",16.glossary/catval.def)) and
-labels (@glossary("category labels",16.glossary/catlab.def)), and topology files) constitute a vector
-map.  See also @glossary("arc",16.glossary/arc.def) and @glossary("raster",16.glossary/rastdata.def) map.

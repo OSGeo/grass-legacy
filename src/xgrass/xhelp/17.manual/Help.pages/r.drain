@@ -1,5 +1,0 @@
-
-@man("r.drain") - Traces a flow through an elevation model on a raster map
-layer.
-
-(GRASS Raster Program)

@@ -23,8 +23,16 @@ int
 main (int argc, char *argv[])
 {
 	char *input, *output;
+	struct GModule *module;
 	struct Option *opt1, *opt2;
 
+	G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+		"Thins non-zero cells that denote linear "
+		"features in a raster map layer.";
+					        
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;
@@ -38,8 +46,6 @@ main (int argc, char *argv[])
 	opt2->required   = YES ;
 	opt2->gisprompt  = "new,cell,raster" ;
 	opt2->description= "Name of output raster file" ;
-
-	G_gisinit(argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

@@ -1,6 +1,9 @@
 EXTRA_CFLAGS = $(USE_DIRECT) $(USE_BUFFERED_IO)
+# Cannot be made shared due to undefined db_driver_* symbols
+# EXTRA_CFLAGS = $(USE_DIRECT) $(USE_BUFFERED_IO) $(PICFLAGS)
 
-LIB = libdbmi.a
+LIB =  $(DEPDBMILIB)
+
 OBJ = \
 	c_add_col.o	\
 	c_bindupdate.o	\
@@ -60,6 +63,7 @@ OBJ = \
 	case.o		\
 	column.o	\
 	columnfmt.o	\
+	connect.o	\
 	cursor.o	\
 	datetime.o	\
 	dbmscap.o	\
@@ -73,6 +77,8 @@ OBJ = \
 	isdir.o		\
 	printtab.o	\
 	ret_codes.o	\
+	rclsrule.o	\
+	reclass.o	\
 	shutdown.o	\
 	sqlCtype.o	\
 	sqltype.o	\
@@ -104,7 +110,7 @@ OBJ = \
 	xdr.o
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): $(INCLUDE_DIR)/dbmi.h $(INCLUDE_DIR)/proto_dbmi.h xdr.h macros.h
 

@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "edit.h"
 #include "include.h"
 
 /* =========================================================================
@@ -16,7 +17,7 @@ write_supp (char *name, char *mapset)
 /* make the categories support file */
     if(G_read_cats(name, mapset, &cats) != -1)
     {
-	if(G_edit_cats(name, &cats, -1) != -1)
+	if(E_edit_cats(name, &cats, -1) != -1)
 	    G_write_cats (name, &cats);
 	G_free_cats (&cats);
     }

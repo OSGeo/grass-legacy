@@ -1,4 +1,4 @@
-#include <values.h>
+#include <limits.h>
 #include <math.h>
 #include "distance.h"
 int
@@ -18,7 +18,7 @@ nearest_node(x,y,map,near_node_num)
   found = 0;
   if (pt_in_WIND(y,x)!=1)
     return(found);
-  shortest_dist2 = MAXDOUBLE;
+  shortest_dist2 = DBL_MAX;
   pt_x1 = x;
   pt_y1 = y;
   for (i=1; i <= map->n_nodes; i++)

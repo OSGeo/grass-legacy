@@ -82,7 +82,7 @@ int display_color_bar(View *view)
 {
     load_colors();
     R_move_abs (view->left, view->top);
-    R_RGB_raster (view->ncols, view->nrows, view->red, view->grn, view->blu, 1);
+    R_RGB_raster (view->ncols, view->nrows, view->red, view->grn, view->blu, 0);
 
     return 0;
 }

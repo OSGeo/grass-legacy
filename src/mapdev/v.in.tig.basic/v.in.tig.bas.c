@@ -59,9 +59,10 @@ struct r2 {
 #include "v_in_tig_basic.h"
 
 /* for qsort of type 2 records by tlid  and rtsq*/
-int cmp_type2 (struct r2 *q1, struct r2 *q2)
+int cmp_type2 (const void *qq1, const void *qq2)
 {
-int diff;
+  const struct r2 *q1 = qq1, *q2 = qq2;
+  int diff;
   if (diff = (q1->tlid - q2->tlid) )
     return (diff) ;
   return ( q1->rs - q2->rs );
@@ -127,11 +128,14 @@ struct Option *opt3 ;
 struct Option *opt4 ;
 struct Option *opt5 ;
 struct Option *opt6 ;
+struct GModule *module ;
 
 G_gisinit (argv[0]);
 
 proj = G_projection();
-if (proj != PROJECTION_LL && proj != PROJECTION_UTM) usage(argv[0]);
+
+    module = G_define_module();
+    module->description = "Import U.S. Census Bureau TIGER files";
 
 /* Define the different options */
 
@@ -153,13 +157,15 @@ if (proj != PROJECTION_LL && proj != PROJECTION_UTM) usage(argv[0]);
     opt3->required   = YES;
     opt3->description= "Name of vector map to create";
 
-  if (proj == PROJECTION_UTM){
-    sprintf(t1buf,"%d",G_zone() );
     opt4 = G_define_option() ;
     opt4->key        = "zone";
     opt4->type       = TYPE_INTEGER;
     opt4->required   = NO;
-    opt4->answer     = t1buf;
+    if (proj == PROJECTION_UTM)
+    {
+      sprintf(t1buf,"%d",G_zone() );
+      opt4->answer     = t1buf;
+    }
     opt4->options    = "1-60";
     opt4->description= "UTM zone number; default is location zone";
 
@@ -167,9 +173,11 @@ if (proj != PROJECTION_LL && proj != PROJECTION_UTM) usage(argv[0]);
     opt5->key        = "spheroid";
     opt5->type       = TYPE_STRING;
     opt5->required   = NO;
-    opt5->answer     = "clark66";
+    if (proj == PROJECTION_UTM)
+    {
+      opt5->answer     = "clark66";
+    }
     opt5->description= "Spheroid for LL to UTM conversion; see m.gc.ll";
-  }
 
     opt6 = G_define_option() ;
     opt6->key        = "tlid";
@@ -198,6 +206,8 @@ if (proj != PROJECTION_LL && proj != PROJECTION_UTM) usage(argv[0]);
 
     if (G_parser(argc, argv) < 0)
 	exit(-1);
+
+    if (proj != PROJECTION_LL && proj != PROJECTION_UTM) usage(argv[0]);
 
     quiet        = flag1->answer;
     topology     = flag2->answer;
@@ -739,7 +749,6 @@ if (tlid_first){
       if (1 == (sscanf(buff,"%d",r)) )
         r++;
     *r = 0;
-    fclose(fp);
   }
   else max = 0; /* can't use memory list */
 } /* end of first time */

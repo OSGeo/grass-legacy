@@ -1,0 +1,60 @@
+http://h2osparc.wq.ncsu.edu/
+
+
+
+           Water, Soil, and Hydro-Environmental Decision Support System
+
+
+
+                             NCSU Water Quality Group
+                           North Carolina State University
+                          North Carolina Cooperative Extension
+                   Department of Biological and Agricultural Enginering
+
+                                      Cooperator
+                     Center for AI Applications in Water Quality
+                           The Pennsylvania State University
+                   Agricultural and Biological Engineering Department
+
+-> http://h2osparc.wq.ncsu.edu/GIS_AGNPS.html
+
+
+Reference: WATERSHEDSS Grass-AGNPS Model Tool
+
+Line, D.E., S.W. Coffey, D.L. Osmond. 1997. WATERSHEDSS Grass-AGNPS
+Model Tool, Trans. of the  ASAE 40(4):971-975. 
+
+Because much of the contamination of surface water is due to nonpoint source
+pollution, protecting or
+       restoring the designated use of a water resource often requires the
+reduction of nonpoint source pollutant
+       loading. Developing the most effective nonpoint source control
+strategy for a watershed requires an
+       understanding of the nature of the pollutants and the collection and
+evaluation of a significant amount of
+       pertinent information. WATERSHEDSS (WATER, Soil, and
+Hydro-Environmental Decision Support
+       System) was designed by Osmond et al. (1996) to aid users in learning
+about sources, transport, and control
+       of nonpoint source pollutants as well as in identifying the types of
+data and tools needed to develop an
+       effective control strategy. 
+
+       The modeling tool in WATERSHEDSS uses the Agricultural Nonpoint
+Source Pollution Model (AGNPS)
+       developed by Young et al. (1994). In addition to automatically
+computing input data from basic soils,
+       topography, and land use maps, this modeling tool adds the capability
+to input point source, channel
+       characteristic, and pesticide application data for user-selected
+areas in the watershed. The tool was used to
+       simulate runoff and sediment, nitrogen, and phosphorus loads for a
+small gaged watershed located in North
+       Carolina. Output of the tool was compared to observed runoff and
+pollutant loads for 11 storms. Statistical
+       comparisons between observed and model-simulated loads at two
+monitoring stations showed no significant
+       difference between observed and predicted runoff volumes and
+nitrogen, phosphorus, and sediment loads,
+       indicating that the modeling tool provides reasonable estimates of
+pollutant loads from storm events. 

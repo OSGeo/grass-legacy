@@ -1,32 +1,29 @@
-DATETIMELIB = $(LIBDIR)/libdatetime.a
-#DATETIMELIB = ../lib.a
-#EXTRA_CFLAGS = -I..
 
-RESET = reset.o $(DATETIMELIB)
-SCAN = scan.o $(DATETIMELIB)
-INCR = incr.o $(DATETIMELIB)
-SUB = sub.o $(DATETIMELIB)
-LOCAL = local.o $(DATETIMELIB)
+RESET = reset.o
+SCAN = scan.o
+INCR = incr.o
+SUB = sub.o
+LOCAL = local.o
 
 
 all: scan reset incr sub try local
 
-sub: $(SUB)
-	$(CC) $(LDFLAGS) -o $@ $(SUB)
+sub: $(SUB) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(SUB) $(DATETIMELIB)
 
-incr: $(INCR)
-	$(CC) $(LDFLAGS) -o $@ $(INCR)
+incr: $(INCR) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(INCR) $(DATETIMELIB)
 
-scan: $(SCAN)
-	$(CC) $(LDFLAGS) -o $@ $(SCAN)
+scan: $(SCAN) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(SCAN) $(DATETIMELIB)
 
-reset: $(RESET)
-	$(CC) $(LDFLAGS) -o $@ $(RESET)
+reset: $(RESET) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(RESET) $(DATETIMELIB)
 
-local: $(LOCAL)
-	$(CC) $(LDFLAGS) -o $@ $(LOCAL)
+local: $(LOCAL) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LOCAL) $(DATETIMELIB)
 
 
-TRY = try.o normalize.o $(DATETIMELIB)
-try: $(TRY)
-	$(CC) $(LDFLAGS) -o $@ $(TRY)
+TRY = try.o normalize.o
+try: $(TRY) $(DEPDATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(TRY) $(DATETIMELIB)

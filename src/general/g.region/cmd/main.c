@@ -1,10 +1,28 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	g.region (commandline)
+ * AUTHOR(S):	Michael Shapiro, CERL
+ *              datum added by Andreas Lange <andreas.lange@rhein-main.de>
+ * PURPOSE: 	Program to manage and print the boundary definitions for the
+ *              geographic region.
+ * 
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ *
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "local_proto.h"
+#include "projects.h"
 
-static int print_window(struct Cell_head *,int);
 static int nsew(char *,char *,char *,char *);
 static void die(struct Option *);
 static char *llinfo(char *,char *,int);
@@ -12,7 +30,7 @@ static char *llinfo(char *,char *,int);
 int main (int argc, char *argv[])
 {
 	int i;
-	int print_flag;
+	int print_flag, dist_flag;
 	int set_flag;
 	double x;
 	struct Cell_head window, temp_window;
@@ -24,12 +42,17 @@ int main (int argc, char *argv[])
 	char *G_align_window();
 	int projection;
 
+	struct GModule *module;
 	struct
 	    {
 		struct Flag
 		*update,
 		*print,
 		*gprint,
+		*lprint,
+		*center,
+		*res_set,
+		*dist_res,
 		*dflt;
 	} flag;
 	struct
@@ -43,10 +66,15 @@ int main (int argc, char *argv[])
 
 	G_gisinit (argv[0]);
 
+	module = G_define_module();
+	module->description =
+		"Program to manage the boundary definitions for the "
+		"geographic region.";
+
 	/* get current region.
- * if current region not valid, set it from default
- * note: G_get_default_window() dies upon error
- */
+	 * if current region not valid, set it from default
+	 * note: G_get_default_window() dies upon error
+	 */
 	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
 	{
 		G_get_default_window (&window);
@@ -67,6 +95,22 @@ int main (int argc, char *argv[])
 	flag.print = G_define_flag();
 	flag.print->key         = 'p';
 	flag.print->description = "Print the current region";
+
+	flag.lprint = G_define_flag();
+	flag.lprint->key         = 'l';
+	flag.lprint->description = "Print the current region in lat/long";
+
+	flag.center = G_define_flag();
+	flag.center->key         = 'c';
+	flag.center->description = "Print the current region map center coordinates";
+
+        flag.dist_res= G_define_flag();
+        flag.dist_res->key         = 'm';
+        flag.dist_res->description = "Print region resolution in meters (geodesic)";
+
+        flag.res_set= G_define_flag();
+        flag.res_set->key         = 'a';
+        flag.res_set->description = "Align region to resolution [default = align to bounds]";
 
 	flag.update = G_define_flag();
 	flag.update->key         = 'u';
@@ -198,12 +242,25 @@ int main (int argc, char *argv[])
 		exit(1);
 
 	set_flag = ! flag.update->answer;
-	if (flag.gprint->answer)
+	if (flag.center->answer)
+		print_flag = 4;
+	else if (flag.lprint->answer)
+		print_flag = 3;
+	else if (flag.gprint->answer)
 		print_flag = 2;
 	else if (flag.print->answer)
 		print_flag = 1;
 	else
 		print_flag = 0;
+
+	/* Flag for reporting distance in meters */
+	if (flag.dist_res->answer) {
+		dist_flag = 1;
+		/* Set -g default output */
+		if ( print_flag == 0)
+		print_flag = 2;
+	} else
+		dist_flag = 0;
 
 	if (flag.dflt->answer)
 		G_get_default_window (&window);
@@ -213,15 +270,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_file ("windows", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "region <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("region <%s> not found", name);
 		if (G__get_window (&window, "windows", name, mapset) != NULL)
-		{
-			sprintf (msg, "can't read region <%s> in <%s>", name, mapset);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("can't read region <%s> in <%s>", name, mapset);
 	}
 
 	/* 3dview= */
@@ -233,28 +284,19 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_file2 ("3d.view", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "3dview file <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("3dview file <%s> not found", name);
 
 		G_3dview_warning(0); /* suppress boundary mismatch warning */
 
-		if(NULL == (fp = G_fopen_old("3d.view",name,mapset))){
-		    sprintf (msg, "can't open 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(NULL == (fp = G_fopen_old("3d.view",name,mapset)))
+		    G_fatal_error ("can't open 3dview file <%s> in <%s>", name, mapset);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
-		if(0 > (ret = G_get_3dview(name, mapset, &v))){
-		    sprintf (msg, "can't read 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
-		if (ret == 0){
-		    sprintf (msg, "Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(0 > (ret = G_get_3dview(name, mapset, &v)))
+		    G_fatal_error ("can't read 3dview file <%s> in <%s>", name, mapset);
+		if (ret == 0)
+		    G_fatal_error ("Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
 
                  
 		window.north = v.vwin.north;
@@ -333,9 +375,8 @@ int main (int argc, char *argv[])
 	if (name = parm.sites->answer)
 	{
 		FILE *fp;
-		int i;
-                Site mysite;
-                mysite.dim_alloc=mysite.dbl_alloc=mysite.str_alloc=0;
+		int i, rtype, ndim, nstr, ndec;
+                Site *mysite;
 
 		mapset = G_find_sites2 (name, "");
 		if (!mapset)
@@ -349,29 +390,39 @@ int main (int argc, char *argv[])
 			G_fatal_error (msg);
 		}
 
-		for (i = 0; G_site_get (fp, &mysite) == 0; i++)
+		rtype = -1;
+		G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
+		mysite = G_site_new_struct(rtype, ndim, nstr, ndec);
+
+		for (i = 0; G_site_get (fp, mysite) == 0; i++)
 		{
 			if (i==0)
 			{
 				G_copy (&temp_window, &window, sizeof(window));
-				window.east = window.west = mysite.east;
-				window.north = window.south = mysite.north;
+				window.east = window.west = mysite->east;
+				window.north = window.south = mysite->north;
 			}
 			else
 			{
-				if (mysite.east > window.east) 
-					window.east = mysite.east;
-				if (mysite.east < window.west) 
-					window.west = mysite.east;
-				if (mysite.north > window.north) 
-					window.north = mysite.north;
-				if (mysite.north < window.south) 
-					window.south = mysite.north;
+				if (mysite->east > window.east) 
+					window.east = mysite->east;
+				if (mysite->east < window.west) 
+					window.west = mysite->east;
+				if (mysite->north > window.north) 
+					window.north = mysite->north;
+				if (mysite->north < window.south) 
+					window.south = mysite->north;
 			}
 		}
+		G_free(mysite);
 		fclose (fp);
 		if (i)
 		{
+		     window.east += 100;
+		     window.west -= 100;
+		     window.south -= 100;
+		     window.north += 100;
+
        	             if(window.north == window.south)
        	             {
        	                   window.north = window.north + 0.5 * temp_window.ns_res;
@@ -500,6 +551,12 @@ int main (int argc, char *argv[])
 			die(parm.res);
 		window.ns_res = x;
 		window.ew_res = x;
+	if (flag.res_set->answer) {
+		window.north =  ceil(window.north/x) * x ;
+		window.south = floor(window.south/x) * x ;
+		window.east = ceil(window.east/x) * x ;
+		window.west = floor(window.west/x) * x ;
+                }
 	}
 
 	/* nsres= */
@@ -508,6 +565,10 @@ int main (int argc, char *argv[])
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.nsres);
 		window.ns_res = x;
+	if (flag.res_set->answer) {
+		window.north = 2 * x * ( (int)(window.north/2/x));
+                window.south = 2 * x * ( (int)(window.south/2/x));
+		}
 	}
 
 	/* ewres= */
@@ -516,6 +577,10 @@ int main (int argc, char *argv[])
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.ewres);
 		window.ew_res = x;
+	if (flag.res_set->answer) {
+		window.east =  2 * x * ( (int)(window.east/2/x));
+                window.west =  2 * x * ( (int)(window.west/2/x));
+		}
 	}
 
 	/* zoom= */
@@ -577,67 +642,18 @@ int main (int argc, char *argv[])
 	}
 	if (print_flag)
 	{
-		print_window (&window, print_flag);
+		print_window (&window, print_flag, dist_flag);
 	}
 
 	exit(0);
 }
 
-static int print_window(struct Cell_head *window,int print_flag)
-{
-	char *G_database_projection_name();
-	char *prj;
-	int x;
-	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
-
-	if (print_flag == 2)
-		x = -1;
-	else
-		x = window->proj;
-
-	G_format_northing (window->north, north, x);
-	G_format_northing (window->south, south, x);
-	G_format_easting  (window->east,  east,  x);
-	G_format_easting  (window->west,  west,  x);
-	G_format_resolution  (window->ew_res,  ewres,  x);
-	G_format_resolution  (window->ns_res,  nsres,  x);
-	if (print_flag == 1)
-	{
-		prj = G_database_projection_name();
-		if (!prj) prj = "** unknown **";
-		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
-		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
-
-		fprintf (stdout, "%-11s %s\n","north:", north);
-		fprintf (stdout, "%-11s %s\n","south:", south);
-		fprintf (stdout, "%-11s %s\n","west:",  west);
-		fprintf (stdout, "%-11s %s\n","east:",  east);
-		fprintf (stdout, "%-11s %s\n","nsres:", nsres);
-		fprintf (stdout, "%-11s %s\n","ewres:", ewres);
-
-		fprintf (stdout, "%-11s %d\n","rows:", window->rows);
-		fprintf (stdout, "%-11s %d\n","cols:", window->cols);
-	}
-	else
-	{
-		fprintf (stdout, "n=%s\n",    north);
-		fprintf (stdout, "s=%s\n",    south);
-		fprintf (stdout, "w=%s\n",    west);
-		fprintf (stdout, "e=%s\n",    east);
-		fprintf (stdout, "nsres=%s\n",nsres);
-		fprintf (stdout, "ewres=%s\n",ewres);
-	}
-
-	return 0;
-}
-
 static void die(struct Option *parm)
 {
-	fprintf(stderr,"<%s=%s> ** illegal value **\n\n", parm->key, parm->answer);
-	/*
+    /*
     G_usage();
     */
-	exit(1);
+    G_fatal_error("<%s=%s> ** invalid input **", parm->key, parm->answer);
 }
 
 static int nsew(char *value,char *a,char *b,char *c)

@@ -20,6 +20,7 @@ Programmer : Ali R. Vali
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "gmath.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -34,7 +35,6 @@ int main (int argc, char *argv[])
         int result;
         double max, min, scale, temp;
 
-        long max_pow2(); /* Used to find the smallest power of 2 >= to a number*/
         int i,j;         /* Loop control variables */
         int or,oc;      /* Original dimensions of image */
         int rows,cols;  /* Smallest powers of 2 >= number of rows & columns */
@@ -42,11 +42,17 @@ int main (int argc, char *argv[])
         double *data[2]; /* Data structure containing real & complex values of FFT */
         double *dptr ;
         int save_args(); /* function to stash the command line arguments */
+		struct GModule *module;
         struct Option *op1, *op2, *op3, *op4;
         char *me;
+        int maskfd;
 
         G_gisinit(argv[0]);
         me = G_program_name();
+
+	    module = G_define_module();
+	    module->description =
+			"Fast Fourier Transform (FFT) for image processing.";
 
         /* define options */
         op1=G_define_option();
@@ -99,6 +105,10 @@ int main (int argc, char *argv[])
         inputfd = G_open_cell_old(Cellmap_orig, inmapset);
         if(inputfd < 0)
                 exit(1);
+        
+        if ((maskfd = G_maskfd()) >= 0)
+        	G_warning("Raster MASK found, consider to remove (see man-page). Will continue...");
+
 
         /* check command line args for validity */
         if (G_legal_filename(Cellmap_real) < 0)
@@ -127,8 +137,7 @@ int main (int argc, char *argv[])
         cols = max_pow2(oc);
         totsize = rows * cols;
 
-        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); *
-   /
+        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); */
 
         /* Allocate appropriate memory for the structure containing
      the real and complex components of the FFT.  DATA[0] will
@@ -238,8 +247,8 @@ int main (int argc, char *argv[])
                                 *cptr1++ = (CELL) (log(1.0+fabs(*data0++)) * scale);
                                 *cptr2++ = (CELL) (log(1.0+fabs(*data1++)) * scale);
                         }
-                        G_put_map_row(realfd, cell_row);
-                        G_put_map_row(imagfd, cell_row2);
+                        G_put_raster_row(realfd, cell_row, CELL_TYPE);
+                        G_put_raster_row(imagfd, cell_row2, CELL_TYPE);
                 }
         }
         G_close_cell(realfd);
@@ -257,31 +266,3 @@ int main (int argc, char *argv[])
 exit(0);
 }
 
-
-/*****************************************************************************/
-/* MAX_POW2 : finds least power of 2 greater than or equal to number         */
-/*                                                                           */
-/* Input arguments: n - unsigned integer, the number                         */
-/*                                                                           */
-/* Output is an integer power of 2                                           */
-/*                                                                           */
-/*****************************************************************************/
-
-long 
-max_pow2 (long n)
-
-{
-        long p2, n1;
-
-        n1 = n >> 1;
-        p2 = 1;
-        while (n1 > 0)
-        {
-                n1 >>= 1;
-                p2 <<= 1;
-        }
-        if (p2 < n) p2 <<=1;
-        return(p2);
-}   /* end max_pow2 */
-
-/*************************************************************************/

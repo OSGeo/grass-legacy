@@ -1,0 +1,43 @@
+fix grass_create_location to support different locations in $GISDBASE
+
+write on-the-fly location creation function (grass_create_location)
+
+write grass_rm_location
+
+write externally, compiled version with library support 
+
+ok.	write start and stop procedures 
+
+ok.	init module: config/*-grass.exp
+
+ok.	write and include lib module
+
+ok.	tie in the src and bindir variables from the global configure procedure
+	into testsuite target
+
+ok. 	command line options to runtest:
+	runtest -v --srcdir . --tool grass grass.test/example.exp
+
+write coorcnv test routine
+
+ok.	write r_mapcalc test routine
+
+ok. 	write test routine for all modules
+
+ok.	write example test routine
+
+ok. 	write r_neighbors test routine
+
+write r_binfer test routine
+
+ok.	write r_reclass test routine
+
+ok.	write d_mon test routine
+
+extend grass_switch_location
+
+implement tests from:
+- src/libes/coorcnv/test
+- src/libes/coorcnv/testp
+- src/libes/datetime/tests SH
+- src/libes/gis/TESTS

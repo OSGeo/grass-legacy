@@ -3,6 +3,7 @@
  * GRASS site_list or vector file.
  */
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "globals.h"
 
@@ -40,6 +41,13 @@ int open_site_file (void)		/* open site list */
   char dat[20];
   FILE *fp1;
   Site_head info;
+
+  info.name = NULL;
+  info.desc = NULL;
+  info.form = NULL;
+  info.labels = NULL;
+  info.stime = NULL;
+  info.time = NULL;
 
   if (sitefile == NULL)
   {
@@ -81,6 +89,8 @@ int save_site (char *buf)
   }
   else
     G_fatal_error ("No site file open to write to.");
+  
+  return 0;
 }
 
 int close_site_file (int n)

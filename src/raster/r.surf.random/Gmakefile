@@ -1,13 +1,13 @@
-PROG = $(BIN_CONTRIB_CMD)/r.surf.random
+PGM = r.surf.random
 
-LIBES = $(GISLIB) $(VASK) $(MATHLIB)
+LIBES = $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
 OBJ =\
 	main.o		\
-	randsurf.o	\
-	rand1.o 
+	randsurf.o
 
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

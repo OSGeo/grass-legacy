@@ -1,7 +1,7 @@
 /*  @(#)bin_to_asc.c    2.1  6/26/87  */
 
 #include "Vect.h"
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 
 int bin_to_asc(

@@ -7,5 +7,5 @@ interface_build {
     {entry north {North latitude of region to extract (dd:mm:ss{N|S}):} 0 ""}
     {entry south {South latitude of region to extract (dd:mm:ss{N|S}):} 0 ""}
     {entry east {East longitude of region to extract (ddd:mm:ss{E|W}):} 0 ""}
-    {entry north {North longitude of region to extract (ddd:mm:ss{E|W}):} 0 ""}
+    {entry west {West longitude of region to extract (ddd:mm:ss{E|W}):} 0 ""}
 }

@@ -1,9 +1,0 @@
-
-
-d.profile - 
-
-d.profile clears the entire graphics screen and provides a graphical
-interaction allowing the selection of transects for which profiles are
-generated.
-
-Manual entry for @man("d.profile")

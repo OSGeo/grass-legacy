@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#script to generate makefiles
+#optionally a directory can be specified to generate a local makefile
+
+if [ ! -f ./mk/mkmakefiles ] ; then
+    echo This script must be run from the top of the GRASS source tree >&2
+    exit 1
+fi
+
+if test ! $1 
+then
+  find . -name Gmakefile -print | \
+    sed -e 's#^\(.*\)/Gmakefile#\1#' | \
+    while read dir ; do
+	sed -f mk/genmake.sed < $dir/Gmakefile > $dir/makefile
+    done
+else
+  find $1 -name Gmakefile -print | \
+    sed -e 's#^\(.*\)/Gmakefile#\1#' | \
+    while read dir ; do
+	sed -f mk/genmake.sed < $dir/Gmakefile > $dir/makefile
+    done
+fi

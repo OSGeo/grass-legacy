@@ -4,5 +4,5 @@ interface_build {
     {entry h_map {Raster map to be used for HUE:} 0 raster}
     {entry i_map {Raster map to be used for INTENSITY:} 0 raster}
     {entry s_map {Raster map to be used for SATURATION:} 0 raster}
-    {entry out   {Raster map to contain results (optional):} 0 raster}
+    {checkbox -n {Respect NULL values when drawing:} "" -n}
 }

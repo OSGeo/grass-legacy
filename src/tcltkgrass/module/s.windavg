@@ -1,0 +1,12 @@
+interface_build {
+    {s.windavg} 0
+    {Average an attribute of a site_list over each cell in the region}
+    {checkbox -q  {Be quiet:} "" -q}
+    {checkbox -z  {Suppress zero averages:} "" -z}
+    {checkbox -p  {Output in g.gnuplot format:} "" -p}
+    {entry input  {Name of input sites map:} 0 sites}
+    {entry attr   {Attribute to use (default: cat):} 0 ""}
+    {entry index  {Index of attribute:} 0 ""}
+    {entry output {Name of new sites file:} 0 sites}
+}
+

@@ -51,7 +51,7 @@
  */
 
 #include <stdio.h>
-#include "dig_structs.h"
+#include "Vect.h"
 #include <math.h>
 
 int dig_prune ( struct line_pnts *points, double thresh )

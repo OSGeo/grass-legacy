@@ -9,7 +9,7 @@
 /***************************************************************/
 
 struct cost{
-    float  min_cost;
+    double  min_cost;
     int row;
     int col;
     struct cost *lower;
@@ -18,9 +18,11 @@ struct cost{
 };
 
 /* btree.c */
-struct cost *insert(float, int, int);
-struct cost *find(float, int, int);
+struct cost *insert(double, int, int);
+struct cost *find(double, int, int);
 struct cost *get_lowest(void);
+int show(struct cost *);
+int show_all();
 int delete(struct cost *);
 int check(char *, struct cost *);
 /***************************************************************/

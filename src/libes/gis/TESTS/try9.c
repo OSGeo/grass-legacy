@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "edit.h"
 
 main()
 {
@@ -14,7 +15,7 @@ main()
 	    fprintf (stdout,"OOPS\n");
 	    continue;
 	}
-	if(G_edit_cats (&cats) > 0)
+	if(E_edit_cats (&cats) > 0)
 	{
 	    fprintf (stdout,"updating cats for [%s]\n", name);
 	    G_write_cats (name, &cats);

@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 1994. James Darrell McCauley.  (darrell@mccauley-usa.com)
+ * 	                                        http://mccauley-usa.com/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
@@ -15,18 +23,18 @@ double cubic (
   char *buf;
   int i, row, col;
   double grid[4][4], tmp[4];
-  CELL *arow = NULL, *brow = NULL, *crow = NULL, *drow = NULL;
+  DCELL *arow = NULL, *brow = NULL, *crow = NULL, *drow = NULL;
 
-  arow = G_allocate_cell_buf ();
-  brow = G_allocate_cell_buf ();
-  crow = G_allocate_cell_buf ();
-  drow = G_allocate_cell_buf ();
+  arow = G_allocate_d_raster_buf ();
+  brow = G_allocate_d_raster_buf ();
+  crow = G_allocate_d_raster_buf ();
+  drow = G_allocate_d_raster_buf ();
 
   /* convert northing and easting to row and col, resp */
   row = (int) G_northing_to_row (north, &window);
   col = (int) G_easting_to_col (east, &window);
 
-  if (G_get_map_row (fd, arow, row) < 0)
+  if (G_get_d_raster_row (fd, arow, row) < 0)
     G_fatal_error ("Problem reading cell file");
 
   /* we need 4x4 pixels to do the interpolation. */
@@ -34,11 +42,11 @@ double cubic (
   if (row == 0)
   {
     /* row containing sample is at top, must get three rows below */
-    if (G_get_map_row (fd, brow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, brow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, crow, row + 2) < 0)
+    if (G_get_d_raster_row (fd, crow, row + 2) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, drow, row + 3) < 0)
+    if (G_get_d_raster_row (fd, drow, row + 3) < 0)
       G_fatal_error ("Problem reading cell file");
   }
   else if (row == 1)
@@ -46,11 +54,11 @@ double cubic (
     /* must get row above and tow rows below */
     for (i = 0; i < G_window_cols (); ++i)
       brow[i] = arow[i];
-    if (G_get_map_row (fd, arow, row - 1) < 0)
+    if (G_get_d_raster_row (fd, arow, row - 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, crow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, crow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, drow, row + 2) < 0)
+    if (G_get_d_raster_row (fd, drow, row + 2) < 0)
       G_fatal_error ("Problem reading cell file");
     row--;
   }
@@ -59,11 +67,11 @@ double cubic (
     /* arow is at bottom, get the three above it */
     for (i = 0; i < G_window_cols (); ++i)
       drow[i] = arow[i];
-    if (G_get_map_row (fd, arow, row - 3) < 0)
+    if (G_get_d_raster_row (fd, arow, row - 3) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, brow, row - 2) < 0)
+    if (G_get_d_raster_row (fd, brow, row - 2) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, crow, row - 1) < 0)
+    if (G_get_d_raster_row (fd, crow, row - 1) < 0)
       G_fatal_error ("Problem reading cell file");
     row -= 3;
   }
@@ -72,11 +80,11 @@ double cubic (
     /* arow is next to bottom, get the one below and two above it */
     for (i = 0; i < G_window_cols (); ++i)
       crow[i] = arow[i];
-    if (G_get_map_row (fd, arow, row - 2) < 0)
+    if (G_get_d_raster_row (fd, arow, row - 2) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, brow, row - 1) < 0)
+    if (G_get_d_raster_row (fd, brow, row - 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, drow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, drow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
     row -= 2;
   }
@@ -88,11 +96,11 @@ double cubic (
      */
     for (i = 0; i < G_window_cols (); ++i)
       crow[i] = arow[i];
-    if (G_get_map_row (fd, arow, row - 2) < 0)
+    if (G_get_d_raster_row (fd, arow, row - 2) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, brow, row - 1) < 0)
+    if (G_get_d_raster_row (fd, brow, row - 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, drow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, drow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
     row -= 2;
   }
@@ -104,11 +112,11 @@ double cubic (
      */
     for (i = 0; i < G_window_cols (); ++i)
       brow[i] = arow[i];
-    if (G_get_map_row (fd, arow, row - 1) < 0)
+    if (G_get_d_raster_row (fd, arow, row - 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, crow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, crow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
-    if (G_get_map_row (fd, drow, row + 2) < 0)
+    if (G_get_d_raster_row (fd, drow, row + 2) < 0)
       G_fatal_error ("Problem reading cell file");
     row--;
   }
@@ -172,6 +180,28 @@ double cubic (
       grid[3][i] = (double) drow[col + i];
   }
 
+  /* Treat NULL cells as 0.0 */
+  for (i = 0; i < 4 ; i++) {
+    if (G_is_d_null_value(&(arow[col + i]))) {
+	    grid[0][i] = 0.0;
+    }
+  }
+  for (i = 0; i < 4 ; i++) {
+    if (G_is_d_null_value(&(brow[col + i]))) {
+	    grid[1][i] = 0.0;
+    }
+  }
+  for (i = 0; i < 4 ; i++) {
+    if (G_is_d_null_value(&(crow[col + i]))) {
+	    grid[2][i] = 0.0;
+    }
+  }
+  for (i = 0; i < 4 ; i++) {
+    if (G_is_d_null_value(&(drow[col + i]))) {
+	    grid[3][i] = 0.0;
+    }
+  }
+    
   /* this needs work here */
   east = fabs (G_col_to_easting ((double) col + 1, &window) - east);
   while (east > window.ew_res)

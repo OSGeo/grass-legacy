@@ -7,11 +7,11 @@ int
 o_max (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
     char command[1024];
-    FILE  *stats, *reclass;
+    FILE *stats, *reclass;
     int first;
     long basecat, covercat, catb, catc;
 
-    sprintf(command, "r.stats input='%s,%s' fs=space", basemap, covermap);
+    sprintf(command, "r.stats -n input='%s,%s' fs=space", basemap, covermap);
     stats = popen (command, "r");
 
     sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
@@ -21,7 +21,6 @@ o_max (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     
     while (fscanf (stats, "%ld %ld", &basecat, &covercat) == 2)
     {
-
 	if (first)
 	{
 	    first = 0;
@@ -38,8 +37,6 @@ o_max (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 
 	if (covercat > catc)
 	    catc = covercat;
-
-
     }
     
     if (first)

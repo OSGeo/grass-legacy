@@ -83,7 +83,7 @@ static int zoom1 (
 
 /*
  * ok, erase menu messages
- *
+ */
     Menu_msg("");
 
 /* determine magnification of zoom */

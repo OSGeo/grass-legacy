@@ -1,0 +1,11 @@
+PGM=r3.mask
+
+LIST=main.o mask.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPG3DLIB) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPG3DLIB): #
+$(DEPGISLIB): #
+
+#main.o: main.c mask.c gis.h G3d.h G3d_intern.h

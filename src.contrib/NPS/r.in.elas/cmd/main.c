@@ -1,9 +1,16 @@
+/* Function: "main.c" for GRASS Program "r.in.elas"
+   "r.in.elas" transfers ELAS raster files to GRASS cell files.
 
-/* Function: "main.c" for GRASS Program "r.in.elas"             */
-/* "r.in.elas" transfers ELAS raster files to GRASS cell files. */
-
-/* Exit status of 0 indicates program was successful.     */
-/* Exit status of 1 indicates program was not successful. */
+   Exit status of 0 indicates program was successful.
+   Exit status of 1 indicates program was not successful.
+   
+   AUTHOR: Bruce Powell, National Park Service (NPS)
+   http://www.nps.gov/
+   
+   "r.in.elas" and "r.out.elas" will transfer multi-byte raster files.  If you 
+    would like information concerning these programs, please contact:
+    Bruce Powell, NPS, 303 969 2590.
+*/
 
 #include <math.h>
 #include <sys/types.h>
@@ -58,6 +65,7 @@ int main( int argc, char *argv[])
     unsigned short int color_table[256];
     char not_used_249_256[32];
    } elas;
+  struct GModule *module;
   int i;
   int byte;
   int read_colors;
@@ -96,6 +104,11 @@ int main( int argc, char *argv[])
 
 
   G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Import an ELAS raster file into a GRASS raster map.";
   
   /* Request a pointer to memory for each flag. */
   flag = G_define_flag();
@@ -981,7 +994,7 @@ unsuccessful.\n",
             cell_cnt += 1;
            }
           /* Write "cell" (one row) to GRASS output file. */
-          G_put_map_row(fd_out,cell);
+          G_put_raster_row(fd_out,cell, CELL_TYPE);
          }
         else
          {

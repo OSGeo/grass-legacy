@@ -1,0 +1,239 @@
+                                FIPS 123 Function Library
+                                  Version 1.0.3 3/11/94
+                        Current Discrepancy Reports / Statements of Need
+
+
+      This is a summary of all existing discrepancy reports and statements 
+      of need (enhancement requests) for the FIPS 123 Function Library.  
+      These will be fixed in future versions as time permits.
+      
+
+      92DR001 11/25/91              No DDR in memory
+
+      If a DDR does not reside in memory and a field or 
+      subfield is erased using er123ddfld() or          
+      er123ddsfld(), both functions return failure.     
+      Note er123ddrec() does not fail under the same    
+      instances.                                        
+
+      92DR004   /  /                Back up past 1st rec
+
+      If an application tries to back up beyond first   
+      data record in a transfer file, the "BAK"         
+      functions return a failure.  This does not allow  
+      the calling application routine to recover.       
+                                                        
+      92DR007 03/19/92              bak123sfld
+
+      Invoking bak123sfld() after reading a record or   
+      field does not leave the application program in   
+      the correct subfield location for subsequent      
+      reads.                                            
+
+      92SN003   /  /                Error handling
+
+      Design, code, and implement error handling for the
+      FIPS123 function library and software.            
+
+      93DR020 01/28/93              Max unsigned integer
+
+      The FIPS PUB 123 Function Library defined constant
+      MAXSIZ determines the maximum amount of contiguous
+      memory space that can be allocated during         
+      processing.  MAXSIZ is defined as 64000 for the   
+      DOS environment and 128000 for the other          
+      environments.                                     
+                                                        
+      The value of MAXSIZ may cause failure in routines 
+      that pass parameters of type size_t.              
+                                                        
+      The predefined type, size_t, is defined in ANSI C 
+      as an unsigned integer.  The compilers currently  
+      used within the MS-DOS, DG/UX, and MVS            
+      environments all conform to this requirement.     
+      However, ANSI C defines the maximum size of an    
+      unsigned integer to be two bytes (16 bits),       
+      capable of storing a maximum value of 65,535      
+      (64K-1).  MS-DOS conforms to this standard, but   
+      DG/UX and MVS environments allocate 32 bits for   
+      unsigned integers, capable of storing the maximum 
+      value of 4,294,967,295.                           
+                                                        
+      It is highly likely that future and currently     
+      untested environments will conform to the ANSI C  
+      convention that unsigned integers can not store   
+      values greater than 65,535.  In this case, the    
+      value of MAXSIZ (128,000) will overflow when      
+      passed to arguments declared in the FIPS PUB 123  
+      Function Library as type size_t (unsigned         
+      integer).                                         
+                                                        
+      93DR022 01/29/93              Verify level 3 tags
+
+      Although three previous discrepancy reports       
+      (92DR002, 92DR003, and 92DR006) describing the    
+      verification of the order of field tags in the DDR
+      and DRs have been completed, there remains a more 
+      detailed change that is specific to level 3       
+      interchange files.                                
+                                                        
+      Level 3 files contain compound data fields and a  
+      list of tag pairs describing hierarchical         
+      structures.  These structures are absent in level 
+      1 and 2 files.  The order of the DDR field tags   
+      for level 3 files should be in the same order as  
+      the pre-order traversal sequence of the data tree.
+      The order of the DR field tags are ordered        
+      similarly.                                        
+                                                        
+      Additional information is requested from the USGS 
+      SDTS Task Force in order to implement tag order   
+      verification for level 3 files correctly.         
+                                                        
+      The discrepancies listed above have been          
+      implemented to check tag order for level 1 and 2  
+      files.  No verification occurs for level 3 files  
+      at this time.                                     
+                                                        
+      93DR024 03/05/93              Use of ch123size
+
+      Function end123file calls ch123size which copies  
+      the entire file to a new file, truncating the file
+      at its current position.  This is necessary if the
+      program has called wr123rec or the backing        
+      functions but is not necessary if the program has 
+      only called wr123fld or wr123sfld as is done by   
+      the DLG-3 to SDTS programs.  This reading of the  
+      original file and writing of a second file can    
+      potentially degrade performance when writing      
+      files.                                            
+                                                        
+      93DR026 03/12/93              Write funct. status
+
+      Functions wr123ddrec() and wr123rec() contain the 
+      argument status within its calling parameters.    
+      These functions return a status of 'failure' (0)  
+      if an error is encountered when processing a      
+      record.  If no error occurs, the named functions  
+      do not change the value of status; thus, the value
+      returned is the same as the value passed into the 
+      functions.                                        
+                                                        
+      To provide a consistent return status value, only 
+      two values should be returned:  'failure' (0) upon
+      an error, and 'okay' (1) when the record is       
+      written successfully.                             
+                                                        
+      93DR028 04/02/93              Pad with ^ character
+
+      A revision to ISO8211 has been made.  This        
+      revision pads the end of transfer files with a '^'
+      character to ensure the file ends at a certain    
+      byte count.  For additional information consult   
+      5th year revised ISO8211.                         
+
+      93DR029 04/21/93              Erase DDR functions
+
+      The 'erase' functions are responsible for erasing 
+      DDR subfields and fields and a complete DDR for a 
+      file opened in write mode.  These functions should
+      only be invoked prior to processing a data record.
+      If an erase function is invoked after initiating  
+      DR processing, unpredictable results may occur.   
+      The results are dependent upon the type of        
+      processing performed by the application program.  
+                                                        
+      Currently, there is no logic that signals the     
+      invocation of an erase function after initiating  
+      DR processing.  Thus, an application may continue 
+      to execute, creating an invalid data file, until  
+      an error is encountered severe enough to halt     
+      execution.                                        
+                                                        
+      The erase functions should be modified to return  
+      failure if invoked after initiating DR processing.
+                                                        
+      93DR041 10/27/93              ch_size rename
+
+      In ch_size.c, use of rename function on temporary 
+      file fails if user is creating destination output 
+      files in a file system different from current     
+      directory since the rename function cannot work   
+      accross file systems.  The result is temp files   
+      accumulate and are not removed and data doesn't go
+      to where it should.  No errors are reported by the
+      software.                                         
+                                                        
+      Discovered on Sun platform at USA/CERL.           
+
+      93DR042 12/17/93              EBCDIC to ASCII
+
+      The FIPS PUB 123 Function Library currently       
+      reads and writes a data file in the character     
+      set of the machine on which the software is       
+      executing.  Applications executing in DOS         
+      and UNIX read, process, and write a data          
+      files in the ASCII character set, while MVS       
+      reads, processes, and writes data files in        
+      the EBCDIC character set.  A utility, DDFCONV,    
+      converts data files from one character set to     
+      the other.  The production of DLGs in SDTS        
+      format would benefit from the ability of the      
+      FIPS PUB 123 Function Library to read or write    
+      either data set.  Applications under MVS could    
+      write a DLG in SDTS format as an ASCII file and   
+      avoid running the DDFCONV utility.                
+                                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&a6H

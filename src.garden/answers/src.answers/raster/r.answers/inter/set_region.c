@@ -31,7 +31,7 @@ set_region()
     FILE *fd;
     char *G__read_Cell_head();
 /*
-    fprintf (stdout,"\n\nReading region and grid resolution for project\n\n");
+    fprintf (stderr,"\n\nReading region and grid resolution for project\n\n");
 */
     if(!(fd = G_fopen_old(data_dir, "region", proj_mapset)))
     {

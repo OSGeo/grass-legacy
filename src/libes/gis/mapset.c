@@ -10,6 +10,7 @@
  **********************************************************************/
 
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 
 char *
@@ -21,7 +22,10 @@ G_mapset()
 
     char msg[100];
 
-    m = G_getenv ("MAPSET");
+    m = G__mapset();
+    if( m == NULL )
+        G_fatal_error( "MAPSET is not set" );
+
     if (first)
 	    first = 0;
     else if (strcmp(mapset,m) == 0)
@@ -45,3 +49,10 @@ G_mapset()
     G_fatal_error (msg);
     exit(-1);
 }
+
+char *
+G__mapset()
+{
+    return G__getenv("MAPSET");
+}
+

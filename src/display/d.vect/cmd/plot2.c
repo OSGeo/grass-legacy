@@ -1,4 +1,10 @@
-/* plot2() - Level Two vector reading */
+/* plot2() - Level Two vector reading 
+* 
+* Michael Shapiro,
+* U.S. Army Construction Engineering
+* Research Laboratory
+*
+*/
 
 #include "gis.h"
 #include "Vect.h"
@@ -11,18 +17,24 @@ extern double D_get_d_east();
 extern int D_move_abs();
 extern int D_cont_abs();
 
+extern int quiet;
+
 int 
 plot2 (char *name, char *mapset, struct line_pnts *Points)
 {
     double *x, *y;
+    double N,S,E,W;
+    char buf[128];
     int i, np;
     int nlines;
     struct Cell_head window;
     /*char *dig__P_init(), *err;*/
     struct Map_info P_map;
 
-    fprintf (stdout,"Initializing [%s] ... ", name);
-    fflush (stdout);
+	if (!quiet) {
+		fprintf (stdout,"Initializing [%s] ... ", name);
+		fflush (stdout);
+	}
 
     /*
     if (NULL != (err = dig__P_init (name, mapset, &P_map)))
@@ -35,9 +47,28 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 	return -1;
     }
 
-    fprintf (stdout,"Plotting ... "); fflush (stdout);
+    Vect__get_window (&P_map, &N, &S, &E, &W);
+	if (!quiet) {
+		fprintf (stdout,"Plotting ... "); fflush (stdout);
+		Vect_print_header(&P_map);
+	}
 
     G_get_set_window (&window);
+    if (!quiet) {
+		fprintf (stdout,"\n");
+		G_format_northing (N, buf, window.proj);
+		fprintf (stdout," North: %s\n", buf);
+
+		G_format_northing (S, buf, window.proj);
+		fprintf (stdout," South: %s\n", buf);
+
+		G_format_easting (E, buf, window.proj);
+		fprintf (stdout," East:  %s\n", buf);
+
+		G_format_easting (W, buf, window.proj);
+		fprintf (stdout," West:  %s\n", buf);
+		fprintf (stdout,"\n");
+	}
 
     G_setup_plot (
 	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
@@ -45,33 +76,6 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 
 
     nlines = V2_num_lines (&P_map);
-
-#ifdef OLD
-    for (line = 1; line <= nlines; line++)
-    {
-	if (V2_get_line_bbox (&P_map, line, &N, &S, &E, &W) < 0)
-	{
-	    fprintf (stderr, "\nWARNING: vector file [%s] - read error\n", name);
-	    return -1;
-	}
-	if (!G_window_overlap (&window, N, S, E, W))
-	    continue;
-        if (V2_read_line (&P_map, Points, line) < 0)
-	{
-	    fprintf (stderr, "\nWARNING: vector file [%s] - read error\n", name);
-	    return -1;
-	}
-	np = Points->n_points;
-	x  = Points->x;
-	y =  Points->y;
-	for(i=1; i < np; i++)
-	{
-	    G_plot_line (x[0], y[0], x[1], y[1]);
-	    x++;
-	    y++;
-	}
-    }
-#endif
 
     /* let library do window checking for us */
 
@@ -98,7 +102,8 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 	}
     }
 
-    fprintf (stdout,"Done\n");
+	if (!quiet)
+		fprintf (stdout,"Done\n");
 
     return 0;
 }

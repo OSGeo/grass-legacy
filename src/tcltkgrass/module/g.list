@@ -11,5 +11,5 @@ interface_build {
     {checkbox type {imagery group files.} 	"" group}
     {checkbox type {3D view parameters.}	"" 3dview}
     {separator grey 1}
-    {checkbox -f {Verbose listing.} "" -f}
+    {checkbox -f {Verbose listing (map titles).} "" -f}
 }

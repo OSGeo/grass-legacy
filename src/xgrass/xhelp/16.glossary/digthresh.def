@@ -1,6 +1,0 @@
-
-
-digitizing threshold - The digitizing threshold determines which points
-are saved during @glossary("digitizing",16.glossary/digitize.def).  Expressed, in map distance, as the
-width of the corridor surrounding each point outside of which digitized
-points will be saved.

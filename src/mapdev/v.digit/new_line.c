@@ -5,7 +5,6 @@
 
 #include "digit.h"
 #include "debug.h"
-#include "dig_head.h"
 #include "Map_proto.h"
 #include "local_proto.h"
 

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -8,7 +9,8 @@ struct {
 
 void parse_command_line();
 
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -17,7 +19,8 @@ main(argc, argv) char *argv[];
 
     parse_command_line (argc, argv);
 
-    driver = db_start_driver (argv[1]);
+    /* driver = db_start_driver (argv[1]); */
+    driver = db_start_driver (parms.driver);
     if (driver == NULL)
     {
 	fprintf (stderr, "Can't run driver %s\n", argv[1]);
@@ -40,17 +43,19 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *table;
+    struct GModule *module;
+    
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->required 	= YES;
+    driver->required 	= NO;
     driver->description = "driver name";
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
-    database->required 	= YES;
+    database->required 	= NO;
     database->description = "database name";
 
     location 		= G_define_option();
@@ -66,6 +71,12 @@ parse_command_line(argc, argv) char *argv[];
     table->description = "table name";
 
     G_disable_interactive();
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Remove a table from database.";
+    
     if(G_parser(argc, argv))
 	exit(ERROR);
 

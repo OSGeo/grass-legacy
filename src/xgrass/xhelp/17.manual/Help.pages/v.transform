@@ -1,5 +1,0 @@
-
-@man("v.transform") - Transforms an ASCII vector map layer from one coordinate
-system into another coordinate system.
-
-(GRASS Vector Program)

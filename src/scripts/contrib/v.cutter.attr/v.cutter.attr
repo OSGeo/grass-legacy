@@ -1,8 +1,18 @@
-:
+#!/bin/sh
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
 ssdata=$1
 master=$2
 
-if [ $# != 2 -o "$ssdata" = "help" ]; then
+if [ $# != 2 -o "$ssdata" = "help" -o "$ssdata" = "-help" ]; then
 echo "Usage: v.cutter.attr source_data master
 
 where:
@@ -17,11 +27,6 @@ where:
  file is copied into each cliped vector map.
  Output files are named list_name.cut .
 "
-exit
-fi
-
-if test "$GISBASE" = ""; then
-echo "You Must be in GRASS to run this program."
 exit
 fi
 

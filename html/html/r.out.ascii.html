@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>r.out.ascii</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><b>r.out.ascii</b></EM>  - Converts a raster map layer into an ASCII text file.
+<BR>
+<EM>(GRASS Raster Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.out.ascii</B>
+<BR>
+<B>r.out.ascii help</B>
+<BR>
+<B>r.out.ascii </B>[<B>-hsMi</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+[<B>dp=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.out.ascii</EM> converts a user-specified raster map layer
+(<B>input=</B><EM>name</EM>) into an ASCII text file
+(<B>output=</B><EM>name</EM>) suitable for export to
+other computer systems.
+
+<P>
+
+The GRASS program <EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM> can be
+used to perform the reverse function, converting an ASCII file in suitable
+format to GRASS raster file format.
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-h</B> 
+<DD>Suppress printing of header information.
+
+<DT><B>-s</B>
+<DD>Write SURFER .grd ASCII GRID instead of GRASS ASCII GRID<br>
+    (with reverted row order, different header)
+
+<DT><B>-s</B>
+<DD>Write MODFLOW (USGS) free-format array instead of GRASS ASCII GRID<br>
+
+<DT><B>-i</B>
+<DD>Output integer category values, nit cell values.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=name</B> 
+<DD>Name of an existing raster map layer.
+
+<DT><B>output</B>
+<DD>Name of an output binary file (use output=- for stdout)
+
+<DT><B>dp=value</B>
+<DD>Number of decimal places.
+
+<DT><B>null=string</B>
+<DD>Character string to represent no data cell.
+</DL>
+
+<EM>r.out.ascii</EM> can be run either non-interactively or interactively. 
+The program will be run non-interactively if the user specifies the name of
+a raster map layer and (optionally) a value for <EM>dp</EM>, using the
+form
+
+<DL>
+<DD>
+<B>r.out.ascii input=</B><EM>inname</EM> <b>output=</b><em>outname</em> [<B>dp=</B><EM>value</EM>]
+</DL>
+
+where <EM>inname</EM> is the name of a raster map layer to be converted to
+ASCII format, <EM>outname</EM> is the name of the exported file, and
+<EM>value</EM> is the number of digits (per cell) to be printed to output. 
+The user can also the <EM>-h</EM> option to suppress the output of file
+header information.
+
+<P>
+To write a SURFER .grd ASCII GRID file (with reverted row order and different
+header) use the <em>-s</em> flag:
+
+<DL>
+<DD>
+<B>r.out.ascii -s input=</B><EM>inname</EM> <b>output=</b><em>outname.grd</em> [<B>dp=</B><EM>value</EM>]
+</DL>
+
+NULL data are coded to "1.70141e+038" for SURFER ASCII GRID files (ignoring
+the <em>null=</em> parameter).
+
+<p>
+
+Alternately, the user can simply type <B>r.out.ascii</B> on the command
+line, without program arguments.  In this case, the user will be prompted
+for parameter values using the standard GRASS <EM><a href="parser.html">parser</A></EM> interface.
+
+<H2>NOTES</H2>
+
+The output from <EM>r.out.ascii</EM> may be placed into a file by using the
+UNIX redirection mechanism; e.g.:
+
+<DL>
+<DD>
+<B>r.out.ascii inout=</B>soils <b>output=-</b> &gt; out.file
+</DL>
+
+The output file out.file can then be printed or copied onto a CDROM
+or floppy disk for export purposes.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A>,
+<A HREF="r.in.arc.html">r.in.arc</A>,   
+<A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+<p>
+Surfer support by Markus Neteler
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -9,6 +9,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include  "gis.h"
 #include "Vect.h"
 #include "local_proto.h"
@@ -23,18 +24,18 @@ struct line_pnts *Points;
 char  buf[1024] ;
 
 int 
-xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int cat_new)
+xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int cat_new, int select)
 {
-	FILE *out, *outa;
-	int cat, line, island, islanda, got_one, lcat, cat1;
-	int linea, latt, att_cnt=0, max_att=0;
-        int did_sel, did_draw;
+	FILE *outa;
+	int cat, cat1;
+	int max_att=0;
+
         int day, yr, vect_read;
-	register int area_num, i, ii, jj, kk;
-	char  name[150], bufr[1024], date[40], mon[4] ;
+	register int i, ii, jj;
+	char  name[150], date[40], mon[4] ;
 	char  *mapset ;
-	char *X, *Y;
-	int n_points;
+
+
         P_LINE *Lines;
 
 
@@ -93,8 +94,8 @@ xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int 
         for (ii=1; ii <= Map.n_lines; ii++)
 	     {
 	     Lines = &(Map.Line[ii]);
-	            /* skip anything other than area lines */
-	     if (Lines->type == AREA)   continue;
+	            /* skip anything other than the selected line type */
+	     if (Lines->type != select)   continue;
 
 	            /* get the category */
 	     cat = Map.Att[Lines->att].cat;

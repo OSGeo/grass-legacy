@@ -129,7 +129,7 @@ int median (int chtty)
     }
 
     {
-	char *p, *getenv ();
+	char *p;
 	if (p = getenv ("CMAP_SIZE"))
 	    num_colors = atoi (p);
 	else

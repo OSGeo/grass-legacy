@@ -1,3 +1,4 @@
+/* updated by Roger Miller <rgrmill@rt66.com> 4/02 */
 /* updated for GRASS 5 9/99 */
 /*  @(#)do_select.c     1.1  2/26/90    RLG */
 /*  @(#)main.c          1.0  2/26/91    RLG , for 4.0*/
@@ -26,11 +27,10 @@ int
 main (int argc, char *argv[])
 {
     char command[1024];
-    char list_name[40], name[40], cat_list[128], new_cat[10];
+    char list_name[40], name[40], cat_list[128], new_cat[30];
     char *mapset, *tmp_file, *G_tempfile();
-    int nfiles;
     char prompt[80];
-    int i, opt_d, opt_n, opt_t;
+    int i, opt_d=0, opt_n, opt_t;
     struct Categories cats;
 
     gbase = G_gisbase() ;
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
     strcat (command, "/bin/v.extract"); 
 
 
-    fprintf (stderr,"\n\n This program allows you to extract, then create a new vector file from \n an existing one; by providing category names or category codes.\n\n");
+    fprintf (stderr,"\n\n This program allows you to create a new vector file from vector objects in an existing file by selecting either category names or category numbers.\n\n");
 
     gbase = G_gisbase() ;
     current_mapset = G_mapset() ;
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
     opt_t = 0;
     while(opt_t == 0)
       {
-      fprintf(stderr,"\n Enter the type of map (area, line, or site) [area] : ");
+      fprintf(stderr,"\n Enter the type of object (area, edge, line, or site) [area] : ");
       fgets(prompt,60,stdin);
       prompt[strlen(prompt)-1] = '\0'; /* Trim the linefeed */
       if (strlen(prompt) == 0)  
@@ -71,6 +71,9 @@ main (int argc, char *argv[])
 	              break;
            case 's' :
 	   case 'S' : opt_t = 3;
+                      break;
+           case 'e' :
+           case 'E' : opt_t = 4;
                       break;
            default  : fprintf(stderr,"\n **** INVALID type, re-enter\n");
                       sleep(2);
@@ -119,6 +122,7 @@ main (int argc, char *argv[])
 
     if (opt_t == 1) strcat (command, " type=area");
     else if (opt_t == 2) strcat (command, " type=line");
+    else if (opt_t == 4) strcat (command, " type=edge");
     else strcat (command, " type=site");
 
     G_clear_screen ();
@@ -176,6 +180,7 @@ main (int argc, char *argv[])
             fgets (new_cat,8,stdin) ;
             new_cat[strlen(new_cat)-1] = '\0';  /* Trim the linefeed */
             if (!strlen(new_cat) ) break;
+	    fprintf( stderr, "\nString Length is %d\n", strlen(new_cat) );
             if (strlen(cat_list) > 0) strcat(cat_list,",");
             strcat(cat_list,new_cat);
 	    }
@@ -217,7 +222,7 @@ main (int argc, char *argv[])
     fflush (stdout);
     G_clear_screen ();
     fprintf (stderr,"\n Extraction process begins:\n");
-/*  fprintf(stderr," %s\n",command);   sleep(4);*/
+    fprintf(stderr," %s\n",command);   sleep(15);
     system (command); 
     exit(0);
 }
@@ -284,7 +289,7 @@ return(0);
 int 
 conv_file (int type, struct Categories *pcats, char *infile, char *outfile)
 {
-    int i, icode, recd, begin=0, pass=0;
+    int i, icode, recd;
     int  area_value;
     char area_name[40], cat_name[100], buffr[128], number[2];
     char *nptr, *cptr, *pntr1;

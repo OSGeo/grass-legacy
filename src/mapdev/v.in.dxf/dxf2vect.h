@@ -1,16 +1,15 @@
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 #include <stdio.h>
 #include <string.h>
-#include <float.h>
+#include <math.h>
 #include "gis.h"
 #include "Vect.h"
 
 #ifndef DBL_MAX
-/*   This is defined already in float.h; glibc2 - Linux-Alpha */
 #define DBL_MAX		9999999999999999999999.9
 #define DBL_MIN		-99999999999999999999.9
 #endif
-
 
 #define DXF_ASCII 0
 #define DXF_LABEL 1
@@ -50,7 +49,7 @@ DXF_DIG
 #define GLOBAL_DXF extern
 #endif
 
-GLOBAL_DXF  struct line_pnts *Points;
+GLOBAL_DXF	struct line_pnts	*Points;
 GLOBAL_DXF	unsigned long	file_size;
 GLOBAL_DXF	int     percent;
 GLOBAL_DXF	char	dig_path[240];
@@ -76,14 +75,14 @@ GLOBAL_DXF	char	point[8];
 GLOBAL_DXF	char	arc[8];
 GLOBAL_DXF	char	vertex[8];
 GLOBAL_DXF	char	seqend[8];
-GLOBAL_DXF	char	dxf_line[80];
+GLOBAL_DXF	char	dxf_line[256];
 GLOBAL_DXF	DXF_DIG	layers[MAX_FILES];
 GLOBAL_DXF	DXF_DIG *closed_layers;
 GLOBAL_DXF	double	XMAX,XMIN,YMAX,YMIN;
 GLOBAL_DXF	int	BOUNDARIES;
-GLOBAL_DXF    struct Flag *ascii_flag;
-GLOBAL_DXF	struct dig_head dxf_head;
-GLOBAL_DXF	double *xinfo,*yinfo;
+GLOBAL_DXF	struct Flag	*ascii_flag, *txtbox_flag;
+GLOBAL_DXF	struct dig_head	dxf_head;
+GLOBAL_DXF	double	*xinfo,*yinfo;
 
 
 /* add_arc.c */
@@ -108,6 +107,7 @@ int dxf_check_ext(double, double);
 int dxf_close_layer(int);
 /* debug.c */
 int debuginit(void);
+int debugf(char *, ...);
 /* entities.c */
 int dxf_entities(FILE *);
 /* find_lines.c */
@@ -120,7 +120,6 @@ int dxf_init_chars(void);
 int dxf_add_labelbox(FILE *);
 int dxf_readcode(FILE *);
 /* main.c */
-int debugf(char *, ...);
 int add_line_layer(char *);
 int add_att_layer(char *);
 int add_layer(char *, char *[][2], int *);

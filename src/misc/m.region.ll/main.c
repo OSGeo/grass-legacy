@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     struct Option *spheroid;
+    struct GModule *module;
     double lat_nw, lon_nw;
     double lat_ne, lon_ne;
     double lat_sw, lon_sw;
@@ -15,26 +16,35 @@ int main(int argc, char *argv[])
     char buf[100];
 
     G_gisinit (argv[0]);
-    if (G_projection() != PROJECTION_UTM)
-    {
-	fprintf (stderr, "%s - must be in a UTM database\n", G_program_name());
-	exit(1);
-    }
 
     spheroid = G_define_option();
     spheroid->key = "spheroid";
+    spheroid->description = "spheroid geographic coordinates to base on. ";
     spheroid->type = TYPE_STRING;
     spheroid->required = YES;
     spheroid->options = spheroid_list();
 
+    module = G_define_module();
+    module->description = 
+      "Converts UTM coordinates falling within the current "
+      "geographic region to geographic (latitude/longitude) "
+      "coordinates. ";
+
     if (G_parser(argc,argv))
 	exit(1);
+
+    if (G_projection() != PROJECTION_UTM)
+    {
+	fprintf (stderr, "%s - must be in a UTM database\n", G_program_name());
+	exit(-1);
+    }
+
     if(!G_get_ellipsoid_by_name(spheroid->answer, &a, &e))
     {
         fprintf (stderr, "%s=%s - unknown spheroid\n",
                 spheroid->key, spheroid->answer);
         G_usage();
-        exit(1);
+        exit(-2);
     }
 
     G_get_window (&window);

@@ -1,0 +1,16 @@
+# this file contains datum shift parameters,
+# it supplies a datum database table for grass 5.0
+# format:
+# shortname "description" ellipsoid dx= dy= dz=
+#
+# where short name is a single word datum specifier,
+# description is a long name (enclosed in double qoutes), 
+# ellipsoid is the acronym of the ellipsoid used with this map datum, 
+# dx, dy and dz are the datum shift parameters.
+# no spaces allowed before or after the =.
+#
+# Please comment and cite the source if you add new parameters 
+# to this list. 
+# cited from NIMA document TR8350.2
+
+# acronym "description" ellipse dx= dy= dz=

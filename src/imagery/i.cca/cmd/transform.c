@@ -40,8 +40,8 @@ transform (int datafds[MX], int outfds[MX], int rows, int cols, double eigmat[MX
 
     /* output the row of data */
     for (j=1; j<=bands; j++)
-      if (G_put_map_row(outfds[j], rowbufs[j]) < 0)
-        G_fatal_error("Error reading cell map during transform.");
+      if (G_put_raster_row(outfds[j], rowbufs[j], CELL_TYPE) < 0)
+        G_fatal_error("Error writing cell map during transform.");
   }
   for (i=1; i<=bands; i++) free(rowbufs[i]);
 
