@@ -1,4 +1,5 @@
 LIBES = $(VECTLIB) $(GISLIB) $(GEOMLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DEPGEOMLIB)
 
 
 OBJ =   \
@@ -28,8 +29,8 @@ PROG = m.clump
 HOME = $(BIN_CMD)
 
 
-$(HOME)/$(PROG): $(OBJ) $(LIBES)
+$(HOME)/$(PROG): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 

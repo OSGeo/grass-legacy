@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/g.stats.pg
 LIBES     = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 PACKAGE = "g.stats.pg"
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
@@ -8,7 +9,7 @@ OBJS = \
 	main.o \
 	infxStats.o
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)  $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -3,4 +3,4 @@
 all:
 	$(MAKEALL)
 
-$(GISLIB): #
+$(DEPGISLIB): #

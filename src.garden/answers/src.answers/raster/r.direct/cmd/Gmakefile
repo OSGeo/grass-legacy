@@ -21,7 +21,7 @@ OBJ3 = un_fmt.o
 
 all: $(PGM) $(PGM1) $(PGM2) $(PGM3) 
 
-$(PGM): $(OBJ) $(GISLIB)
+$(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(PGM1): $(OBJ1) $(FILL)
@@ -36,4 +36,4 @@ $(PGM3): $(OBJ3) $(FILL)
 $(FILL):
 	mkdir $(FILL)
 
-$(GISLIB): #
+$(DEPGISLIB): #

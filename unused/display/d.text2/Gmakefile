@@ -8,6 +8,6 @@ LDFLAGS+=`freetype-config --libs` -lgiconv
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(XDRLIB)
 
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(GISLIB): #
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPGISLIB): #

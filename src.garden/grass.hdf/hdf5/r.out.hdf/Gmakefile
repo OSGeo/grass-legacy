@@ -25,6 +25,7 @@ HDFLIB  = $(HDFBASE)/$(HDFLIBDIR)/lib/libdf.a
 HDFEOS_LIB = $(HDFBASE)/$(HDFEOSDIR)/lib/$(EOSLIBARCH)
 
 LIBES = $(GISLIB) $(HDFLIB) -ljpeg
+DEPLIBS= $(DEPGISLIB) $(HDFLIB) -ljpeg
 EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
 
 PGM = $(BIN_CMD)/r.out.hdf
@@ -32,5 +33,5 @@ PGM = $(BIN_CMD)/r.out.hdf
 LIST = r.out.hdf.o
 
 
-$(PGM): $(LIST) $(LIBES) 
+$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -13,5 +13,5 @@ $(BIN_INTER)/$(PGM):	$(OFILES)
 	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) -ltermcap $(SHAREDLIB)
 
 
-$(GISLIB): #
+$(DEPGISLIB): #
 

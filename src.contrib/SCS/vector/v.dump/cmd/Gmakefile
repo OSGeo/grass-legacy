@@ -18,5 +18,5 @@ main.o: dump.h
 do_areas.o: dump.h
 do_lines.o: dump.h
 
-$(GISLIB): #
-$(VECTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #

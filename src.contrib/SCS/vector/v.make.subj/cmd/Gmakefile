@@ -12,6 +12,6 @@ PROG =   $(BIN_CMD)/$(PGM)
 all:  $(PROG)
 
 
-$(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
+$(PROG): $(OBJ) $(DEPGISLIB) $(DEPVECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
 

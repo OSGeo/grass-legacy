@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/g.select.pg
 LIBES     = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 PACKAGE = "g.select.pg"
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
@@ -10,7 +11,7 @@ OBJS = \
 	listdb.o
 
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -21,9 +21,9 @@ OBJ =\
 	RGB.o\
 	text.o
 
-all: driverlib.a
+all: $(DEPDRIVERLIB)
 
-driverlib.a: $(OBJ)
+$(DEPDRIVERLIB): $(OBJ)
 	$(AR)
 
 Color.o: colors.h

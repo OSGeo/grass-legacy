@@ -10,9 +10,9 @@ LIST =  main.o\
 	  process.o\
 	  layer_stat.o
 
-$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
 	$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/site.h
 $(SITELIB):	#
-$(GISLIB):	#
+$(DEPGISLIB):	#

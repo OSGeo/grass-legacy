@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/d.vect.pg
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB)		
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPVECTLIB) $(DEPRASTERLIB) $(DEPGISLIB)		
 PACKAGE = "d.vect.pg"
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
@@ -15,7 +16,7 @@ OBJS = \
 	runInfxFile.o \
 	plotCat.o 
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -26,6 +26,6 @@ OBJ = 		 	novisual.o \
 				height.o
 
 
-$(OPTRILIB): $(OBJ)
+$(DEPOPTRILIB): $(OBJ)
 	$(AR)
 

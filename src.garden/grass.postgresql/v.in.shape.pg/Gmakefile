@@ -19,10 +19,10 @@ LIST = 	main.o \
 # LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
 # 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) \
 		$(DATETIMELIB) $(MATHLIB) $(XDRLIB) \
 		$(PQLIBPATH) $(PQLIB) $(INTLLIB)
 
-$(VECTLIB): #
-$(GISLIB): # 
+$(DEPVECTLIB): #
+$(DEPGISLIB): # 

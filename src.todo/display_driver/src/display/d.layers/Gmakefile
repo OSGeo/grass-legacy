@@ -2,8 +2,9 @@ PGM=d.layers
 HOME=$(BIN_MAIN_CMD)
 
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(HOME)/$(PGM): main.o $(LIBES)
+$(HOME)/$(PGM): main.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

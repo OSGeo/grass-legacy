@@ -8,7 +8,7 @@ OBJ = basic.o malloc.o files.o \
          math2.o 
 
 
-$(BASICLIB): $(OBJ)
+$(DEPBASICLIB): $(OBJ)
 	$(AR)
 
 

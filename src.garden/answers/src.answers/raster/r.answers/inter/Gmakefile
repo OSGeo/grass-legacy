@@ -60,9 +60,9 @@ user_file.o
 
 all:    $(BIN)/$(PGM)
 
-$(BIN)/$(PGM): $(OBJ) $(GISLIB) $(VASKLIB)
+$(BIN)/$(PGM): $(OBJ) $(DEPGISLIB) $(DEPVASKLIB)
 	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(LDFLAGS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) 
  
 
-$(GISLIB): #
-$(VASKLIB): #
+$(DEPGISLIB): #
+$(DEPVASKLIB): #

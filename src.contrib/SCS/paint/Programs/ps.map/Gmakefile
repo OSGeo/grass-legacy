@@ -1,4 +1,5 @@
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB)
 PGM = ps.map
 
 
@@ -42,7 +43,7 @@ OBJ =	main.o \
 	vlegfile.o \
 	vlegend.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(EXTRALIB) -o $@
 
 $(OBJ):		ps_info.h

@@ -3,9 +3,9 @@ OBJ =  lia.o auxiliary.o chars.o stack.o pool.o \
          mint.o
 
 
-all: $(LIALIB)
+all: $(DEPLIALIB)
 
-$(LIALIB): $(OBJ)
+$(DEPLIALIB): $(OBJ)
 	$(AR)
 
 

@@ -35,6 +35,6 @@ $(SUPPORT_DIR):
 	-mkdir $@
 
 $(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

@@ -9,6 +9,6 @@ $(BIN_CMD)/m.in.pl94.db3: m.in.pl94.db.o
 m.in.pl94.db.o: id_section.h
 
 $(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

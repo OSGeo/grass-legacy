@@ -8,9 +8,9 @@ LIST = 	main.o \
 	dbfopen.o \
 	pgdump.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) \
 		$(DATETIMELIB) $(MATHLIB) $(XDRLIB) \
 		$(PQLIBPATH) $(PQLIB) $(INTLLIB)
 
-$(GISLIB): # 
+$(DEPGISLIB): # 
