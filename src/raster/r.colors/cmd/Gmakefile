@@ -1,0 +1,10 @@
+PGM=r.colors
+
+LIST=main.o\
+     eq.o\
+     rules.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
