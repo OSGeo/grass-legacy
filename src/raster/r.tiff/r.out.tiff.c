@@ -36,6 +36,8 @@
 #include "rasterfile.h"
 #include "tiffio.h"
 
+#define MAX_TILE_LENGTH 512
+
 #define	howmany(x, y)	(((x)+((y)-1))/(y))
 #define	streq(a,b)	(strcmp(a,b) == 0)
 
@@ -56,7 +58,7 @@ main (int argc, char *argv[])
 	struct rasterfile h;
 	struct Option *inopt, *outopt, *compopt;
 	struct Flag *pflag, *vflag, *lflag, *tflag;
-	CELL *cell, *cellptr;
+	CELL *cell, *cellptr, *cells[MAX_TILE_LENGTH];
 	struct Cell_head cellhd;
 	int col,verbose, tfw, palette, tiled;
 	char *mapset, *filename;
@@ -202,6 +204,7 @@ main (int argc, char *argv[])
 	    int spp;
 	    char *obuf, *bufp;
 	    char *tptr;
+            uint32 col, oskew, width, i, j;
 	    
 	    imagewidth = h.ras_width;
 	    imagelength = h.ras_height;
@@ -213,13 +216,21 @@ main (int argc, char *argv[])
 	    if (DEBUG)
 		fprintf (stderr, "Tile buff size: %d \n ",TIFFTileSize(out) );
 	    
+	    /* allocate cell buffers */
+	    for (i = 0; i < tilelength; i++ ) {
+		cells[i] = G_allocate_cell_buf();
+	    }
+
 	    /* build tiff tiles from grass buffer */
 	    
             for (row = 0; row < imagelength; row += tilelength) {
                     uint32 nrow = (row+tilelength > imagelength) ? imagelength-row : tilelength;
                     uint32 colb = 0;
-                    uint32 col, oskew, width, i, j;
 
+		    for (i = 0; i < nrow; i++ ) {
+			if (G_get_c_raster_row (in, cells[i], row + i) < 0)
+				G_fatal_error("error reading cell data");
+		    }
                     for (col = 0; col < imagewidth; col += tilewidth) {
                             tsample_t s;
 			    
@@ -243,11 +254,7 @@ main (int argc, char *argv[])
                             }
 			    
 			    for (i = 0; i < nrow; i++ ) {
-			        tptr += oskew;
- 			    	
-				if (G_get_c_raster_row (in, cell, row + i) < 0)
-					exit(1);
-				cellptr = cell;
+				cellptr = cells[i];
 				
 				if (palette) {
 				    cellptr += col;
@@ -257,7 +264,7 @@ main (int argc, char *argv[])
 				    tptr += oskew;
 				} else {
 				    for (j = 0; j < width; j++ ) {
-					G_get_color( cell[col + j], &red, &grn, &blu, &colors);
+					G_get_color( cellptr[col + j], &red, &grn, &blu, &colors);
 					*tptr++ = (u_char) red;
 					*tptr++ = (u_char) grn;
 					*tptr++ = (u_char) blu;
@@ -277,13 +284,10 @@ main (int argc, char *argv[])
                             }
 	 		    
 			    if (verbose)
-				G_percent (row, h.ras_height, 2);
+				G_percent (row, h.ras_height, 1);
 			    }
 			    colb += tilewidth;
 		    }
-		    //bufp += nrow * imagewidth;
-		
-
 	} else {
 
 	
