@@ -10,7 +10,7 @@ ask_title (input, output, method, nsize, title)
 
     do
     {
-	printf("enter title for <%s> [%s]  ", output, default_title);
+	printf("enter title for <%s> [%s]\n> ", output, default_title);
     }
     while (!G_gets(title));
 
