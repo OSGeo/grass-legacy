@@ -1,0 +1,23 @@
+LIST = main.o\
+	ask_files.o\
+	ask_files2.o\
+	ask_wind.o\
+	get_wind.o\
+	cp.o\
+	compress.o\
+	env.o\
+	exec.o\
+	mail.o\
+	matrix.o\
+	perform.o\
+	rectify.o\
+	report.o\
+	target.o\
+	write.o
+
+$(BIN)/i.rectify: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
+$(LIST): global.h rowcol.h
+
+
+$(IMAGERYLIB) $(GISLIB) $(VASKLIB): # in case libraries change
