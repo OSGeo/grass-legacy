@@ -48,7 +48,8 @@ proc DmLabels::set_option { node key value } {
 proc DmLabels::select_map { id } {
     set m [GSelect paint/labels]
     if { $m != "" } { 
-        set DmLabels::opt($id,map) $m 
+        set DmLabels::opt($id,map) $m
+        Dm::autoname $m
     }
 }
 
@@ -127,7 +128,7 @@ proc DmLabels::query { node } {
     puts "Query not supported for Paint labels layer"
 }
 
-proc DmLabels::dublicate { tree parent node id } {
+proc DmLabels::duplicate { tree parent node id } {
     variable opt
     variable count 
     global dmpath
@@ -144,11 +145,18 @@ proc DmLabels::dublicate { tree parent node id } {
     set ico [label $frm.ico -image labels_ico -bd 1 -relief raised]
     
     pack $check $ico -side left
-
-    $tree insert end $parent $node \
-	-text      "labels $count" \
-	-window    $frm \
-	-drawcross auto 
+	
+	if { $opt($id,map) == ""} {
+    	$tree insert end $parent $node \
+		-text      "labels $count" \
+		-window    $frm \
+		-drawcross auto
+	} else {
+	    $tree insert end $parent $node \
+		-text      "$opt($id,map)" \
+		-window    $frm \
+		-drawcross auto
+	}
 
     set opt($count,_check)  $opt($id,_check)
 

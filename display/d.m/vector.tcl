@@ -143,7 +143,8 @@ proc DmVector::set_option { node key value } {
 proc DmVector::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
-        set DmVector::opt($id,map) $m 
+        set DmVector::opt($id,map) $m
+        Dm::autoname $m
     }
 }
 
@@ -612,10 +613,17 @@ proc DmVector::duplicate { tree parent node id } {
     set opt($count,_legend) $can
     pack $check $can -side left
 
-    $tree insert end $parent $node \
-	-text      "vector $count" \
-	-window    $frm \
-	-drawcross auto 
+	if { $opt($id,map) == ""} {
+    	$tree insert end $parent $node \
+		-text      "vector $count" \
+		-window    $frm \
+		-drawcross auto
+	} else {
+	    $tree insert end $parent $node \
+		-text      "$opt($id,map)" \
+		-window    $frm \
+		-drawcross auto
+	} 
 
     set opt($count,_check) $opt($id,_check)
 

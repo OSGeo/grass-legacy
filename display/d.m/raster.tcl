@@ -7,7 +7,7 @@ namespace eval DmRaster {
 
 proc DmRaster::create { tree parent } {
     variable opt
-    variable count 
+    variable count
     global dmpath
 
     set node "raster:$count"
@@ -22,12 +22,12 @@ proc DmRaster::create { tree parent } {
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     
     pack $check $ico -side left
-
+    
     $tree insert end $parent $node \
-	-text      "raster $count" \
+	-text  "raster $count"\
 	-window    $frm \
-	-drawcross auto 
-
+	-drawcross auto  
+    
     set opt($count,_check) 1 
     set opt($count,map) "" 
     set opt($count,cquery) "" 
@@ -36,9 +36,8 @@ proc DmRaster::create { tree parent } {
     set opt($count,overlay) 0 
     set opt($count,legend) 0 
     set opt($count,legmon) "x1" 
-    set opt($count,legthin) "1" 
-
-
+    set opt($count,legthin) "1"
+    
     incr count
     return $node
 }
@@ -51,9 +50,12 @@ proc DmRaster::set_option { node key value } {
 }
 
 proc DmRaster::select_map { id } {
+    variable tree
+    variable node
     set m [GSelect cell]
     if { $m != "" } { 
-        set DmRaster::opt($id,map) $m 
+        set DmRaster::opt($id,map) $m
+        Dm::autoname $m
     }
 }
 
@@ -224,10 +226,17 @@ proc DmRaster::duplicate { tree parent node id } {
     
     pack $check $ico -side left
 
-    $tree insert end $parent $node \
-	-text      "raster $count" \
-	-window    $frm \
-	-drawcross auto 
+	if { $opt($id,map) == ""} {
+    	$tree insert end $parent $node \
+		-text      "raster $count" \
+		-window    $frm \
+		-drawcross auto
+	} else {
+	    $tree insert end $parent $node \
+		-text      "$opt($id,map)" \
+		-window    $frm \
+		-drawcross auto
+	}
 
     set opt($count,_check) $opt($id,_check)
 

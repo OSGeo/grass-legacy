@@ -126,3 +126,6 @@ proc DmTree::edit { tree node } {
     }
 }
 
+proc DmTree::autoname { tree node name} {
+	$tree itemconfigure $node -text $name
+}
