@@ -21,8 +21,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-#include "avl.c"
 
+#include "avl.h"
 #include "type.h"
 #include "tree.h"
 

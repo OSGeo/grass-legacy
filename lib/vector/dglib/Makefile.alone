@@ -1,7 +1,7 @@
 CFLAGS = -Wall -DGNGRP_STATS -DGNGRP_NEWCLIP
 LNFLAGS =
-OBJECTS = tree.o heap.o graph.o
-INCLUDES = tree.h heap.h graph.h type.h
+OBJECTS = avl.o tree.o heap.o graph.o
+INCLUDES = avl.h tree.h heap.h graph.h type.h
 LIBRARY = libdgl.a
 
 $(LIBRARY): $(OBJECTS) $(INCLUDES)
