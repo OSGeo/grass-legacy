@@ -260,11 +260,20 @@ AC_DEFUN(SC_ENABLE_SHARED, [
     if test "$shared_ok" = "yes" ; then
 	AC_MSG_RESULT([shared])
 	SHARED_BUILD=1
+	GRASS_LIB_PREFIX='$(SHLIB_PREFIX)'
+	GRASS_LIB_SUFFIX='$(SHLIB_SUFFIX)'
+	GRASS_LIBRARY_TYPE='shlib'
     else
 	AC_MSG_RESULT([static])
 	SHARED_BUILD=0
 	AC_DEFINE(STATIC_BUILD)
+	GRASS_LIB_PREFIX='$(STLIB_PREFIX)'
+	GRASS_LIB_SUFFIX='$(STLIB_SUFFIX)'
+	GRASS_LIBRARY_TYPE='stlib'
     fi
+    AC_SUBST(GRASS_LIB_PREFIX)
+    AC_SUBST(GRASS_LIB_SUFFIX)
+    AC_SUBST(GRASS_LIBRARY_TYPE)
 ])
 
 #--------------------------------------------------------------------
@@ -332,12 +341,12 @@ AC_DEFUN(SC_ENABLE_SHARED, [
 #                       in a static or shared library name, using the $VERSION variable
 #                       to put the version in the right place.  This is used
 #                       by platforms that need non-standard library names.
-#                       Examples:  ${VERSION}.so.1.1 on NetBSD, since it needs
-#                       to have a version after the .so, and ${VERSION}.a
+#                       Examples:  ${VERSION_NUMBER}.so.1.1 on NetBSD, since it needs
+#                       to have a version after the .so, and ${VERSION_NUMBER}.a
 #                       on AIX, since a shared library needs to have
 #                       a .a extension whereas shared objects for loadable
 #                       extensions have a .so extension.  Defaults to
-#                       ${VERSION}${SHLIB_SUFFIX}.
+#                       ${VERSION_NUMBER}${SHLIB_SUFFIX}.
 #       GRASS_NEEDS_EXP_FILE -
 #                       1 means that an export file is needed to link to a
 #                       shared library.
@@ -425,8 +434,8 @@ AC_DEFUN(SC_CONFIG_CFLAGS, [
     EXTRA_CFLAGS=""
     GRASS_EXPORT_FILE_SUFFIX=""
     UNSHARED_LIB_SUFFIX=""
-    GRASS_TRIM_DOTS='`echo ${VERSION} | tr -d .`'
-    ECHO_VERSION='`echo ${VERSION}`'
+    GRASS_TRIM_DOTS='`echo ${VERSION_NUMBER} | tr -d .`'
+    ECHO_VERSION='`echo ${VERSION_NUMBER}`'
     GRASS_LIB_VERSIONS_OK=ok
     CFLAGS_DEBUG=-g
     CFLAGS_OPTIMIZE=-O
@@ -478,7 +487,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 		GRASS_NEEDS_EXP_FILE=1
-		GRASS_EXPORT_FILE_SUFFIX='${VERSION}\$\{DBGX\}.exp'
+		GRASS_EXPORT_FILE_SUFFIX='${VERSION_NUMBER}.exp'
 	    fi
 
 	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
@@ -524,7 +533,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    LD_LIBRARY_PATH_VAR="LIBPATH"
 	    GRASS_NEEDS_EXP_FILE=1
-	    GRASS_EXPORT_FILE_SUFFIX='${VERSION}\$\{DBGX\}.exp'
+	    GRASS_EXPORT_FILE_SUFFIX='${VERSION_NUMBER}.exp'
 
 	    # AIX v<=4.1 has some different flags than 4.2+
 	    if test "$system" = "AIX-4.1" -o "`uname -v`" -lt "4" ; then
@@ -674,7 +683,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    LDFLAGS="-Wl,-D,08000000"
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
-	    SHARED_LIB_SUFFIX='${VERSION}\$\{DBGX\}.a'
+	    SHARED_LIB_SUFFIX='${VERSION_NUMBER}.a'
 	    ;;
 	IRIX-5.*)
 	    SHLIB_CFLAGS=""
@@ -687,6 +696,16 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    EXTRA_CFLAGS=""
 	    LDFLAGS=""
+	    ;;
+	IRIX-6.2)
+	    SHLIB_CFLAGS=""
+	    SHLIB_LD="ld -shared -rdata_shared"
+	    SHLIB_LD_LIBS='${LIBS}'
+	    SHLIB_SUFFIX="so"
+	    DL_OBJS=""
+	    DL_LIBS=""
+	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
+	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    ;;
 	IRIX-6.*|IRIX64-6.5*)
 	    SHLIB_CFLAGS=""
@@ -850,9 +869,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 #endif
 		],
 		    AC_MSG_RESULT(yes)
-		    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.so',
+		    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so',
 		    AC_MSG_RESULT(no)
-		    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.so.1.0'
+		    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'
 		)
 	    ], [
 		SHLIB_CFLAGS=""
@@ -864,12 +883,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 		LDFLAGS=""
 		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
-		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.a'
+		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    ])
 
 	    # FreeBSD doesn't handle version numbers with dots.
 
-	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.a'
+	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    GRASS_LIB_VERSIONS_OK=nodots
 	    ;;
 	FreeBSD-*)
@@ -892,8 +911,8 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    case $system in
 	    FreeBSD-3.*)
 	    	# FreeBSD-3 doesn't handle version numbers with dots.
-	    	UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.a'
-	    	SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.so'
+	    	UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
+	    	SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so'
 	    	GRASS_LIB_VERSIONS_OK=nodots
 		;;
 	    esac
@@ -1067,8 +1086,8 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    # requires an extra version number at the end of .so file names.
 	    # So, the library has to have a name like libgrass75.so.1.0
 
-	    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.so.1.0'
-	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}\$\{DBGX\}.a'
+	    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'
+	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    GRASS_LIB_VERSIONS_OK=nodots
 	    ;;
 	SunOS-5.[[0-6]]*)
@@ -1191,107 +1210,6 @@ dnl AC_CHECK_TOOL(AR, ar)
     AC_MSG_WARN("64bit support being disabled -- don\'t know magic for this platform")
     fi
 
-    # Step 4: If pseudo-static linking is in use (see K. B. Kenny, "Dynamic
-    # Loading for Tcl -- What Became of It?".  Proc. 2nd Tcl/Tk Workshop,
-    # New Orleans, LA, Computerized Processes Unlimited, 1994), then we need
-    # to determine which of several header files defines the a.out file
-    # format (a.out.h, sys/exec.h, or sys/exec_aout.h).  At present, we
-    # support only a file format that is more or less version-7-compatible. 
-    # In particular,
-    #	- a.out files must begin with `struct exec'.
-    #	- the N_TXTOFF on the `struct exec' must compute the seek address
-    #	  of the text segment
-    #	- The `struct exec' must contain a_magic, a_text, a_data, a_bss
-    #	  and a_entry fields.
-    # The following compilation should succeed if and only if either sys/exec.h
-    # or a.out.h is usable for the purpose.
-    #
-    # Note that the modified COFF format used on MIPS Ultrix 4.x is usable; the
-    # `struct exec' includes a second header that contains information that
-    # duplicates the v7 fields that are needed.
-
-    if test "x$DL_OBJS" = "xtclLoadAout.o" ; then
-	AC_MSG_CHECKING(sys/exec.h)
-	AC_TRY_COMPILE([#include <sys/exec.h>],[
-	    struct exec foo;
-	    unsigned long seek;
-	    int flag;
-#if defined(__mips) || defined(mips)
-	    seek = N_TXTOFF (foo.ex_f, foo.ex_o);
-#else
-	    seek = N_TXTOFF (foo);
-#endif
-	    flag = (foo.a_magic == OMAGIC);
-	    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-    ], shared_ok=usable, shared_ok=unusable)
-	AC_MSG_RESULT($shared_ok)
-	if test $shared_ok = usable; then
-	    AC_DEFINE(USE_SYS_EXEC_H)
-	else
-	    AC_MSG_CHECKING(a.out.h)
-	    AC_TRY_COMPILE([#include <a.out.h>],[
-		struct exec foo;
-		unsigned long seek;
-		int flag;
-#if defined(__mips) || defined(mips)
-		seek = N_TXTOFF (foo.ex_f, foo.ex_o);
-#else
-		seek = N_TXTOFF (foo);
-#endif
-		flag = (foo.a_magic == OMAGIC);
-		return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-	    ], shared_ok=usable, shared_ok=unusable)
-	    AC_MSG_RESULT($shared_ok)
-	    if test $shared_ok = usable; then
-		AC_DEFINE(USE_A_OUT_H)
-	    else
-		AC_MSG_CHECKING(sys/exec_aout.h)
-		AC_TRY_COMPILE([#include <sys/exec_aout.h>],[
-		    struct exec foo;
-		    unsigned long seek;
-		    int flag;
-#if defined(__mips) || defined(mips)
-		    seek = N_TXTOFF (foo.ex_f, foo.ex_o);
-#else
-		    seek = N_TXTOFF (foo);
-#endif
-		    flag = (foo.a_midmag == OMAGIC);
-		    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-		], shared_ok=usable, shared_ok=unusable)
-		AC_MSG_RESULT($shared_ok)
-		if test $shared_ok = usable; then
-		    AC_DEFINE(USE_SYS_EXEC_AOUT_H)
-		else
-		    DL_OBJS=""
-		fi
-	    fi
-	fi
-    fi
-
-    # Step 5: disable dynamic loading if requested via a command-line switch.
-
-    AC_ARG_ENABLE(load, [  --disable-load          disallow dynamic loading and "load" command],
-	[shared_ok=$enableval], [shared_ok=yes])
-    if test "$shared_ok" = "no"; then
-	DL_OBJS=""
-    fi
-
-    if test "x$DL_OBJS" != "x" ; then
-	BUILD_DLTEST="\$(DLTEST_TARGETS)"
-    else
-	echo "Can't figure out how to do dynamic loading or shared libraries"
-	echo "on this system."
-	SHLIB_CFLAGS=""
-	SHLIB_LD=""
-	SHLIB_SUFFIX=""
-	DL_OBJS="tclLoadNone.o"
-	DL_LIBS=""
-	LDFLAGS=""
-	CC_SEARCH_FLAGS=""
-	LD_SEARCH_FLAGS=""
-	BUILD_DLTEST=""
-    fi
-
     # If we're running gcc, then change the C flags for compiling shared
     # libraries to the right flags for gcc, instead of those for the
     # standard manufacturer compiler.
@@ -1323,10 +1241,10 @@ dnl AC_CHECK_TOOL(AR, ar)
     fi
 
     if test "$SHARED_LIB_SUFFIX" = "" ; then
-	SHARED_LIB_SUFFIX='${VERSION}\$\{DBGX\}${SHLIB_SUFFIX}'
+	SHARED_LIB_SUFFIX='${VERSION_NUMBER}${SHLIB_SUFFIX}'
     fi
     if test "$UNSHARED_LIB_SUFFIX" = "" ; then
-	UNSHARED_LIB_SUFFIX='${VERSION}\$\{DBGX\}.a'
+	UNSHARED_LIB_SUFFIX='${VERSION_NUMBER}.a'
     fi
 
     if test "${SHARED_BUILD}" = "1" && test "${SHLIB_SUFFIX}" != "" ; then

@@ -1197,7 +1197,7 @@ fi
 
 LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
 
-LOC_CHECK_LIBS(proj,pj_init,External PROJ.4,$PROJLIB,PROJLIB,,,)
+LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
 
 fi # $USE_PROJ
 
