@@ -1,0 +1,529 @@
+##################################################################
+#  SPECFEAT.code                   $GISBASE/etc
+#  Labels and codes for conventional and special features
+#  This file consists of a label, major code, minor code, and
+#  description.  The purpose is to provide major/minor code
+#  pairs when exporting data as a DLG-3.  The category labels
+#  are related to those in the GRASS cats file.  Records with
+#  XXXX labels are user defined like the ad hoc symbols.
+#  June 3, 1994                    f. minzenmayer 
+##################################################################
+
+ESB	900	0204	Escarpment, bedrock
+ESO	900	0206	Escarpment, other than bedrock
+GUL	900	0202	Gully
+SLP	900	0203	Short, steep slope
+DEP	900	0300	Depression, closed
+SNK	905	0303	Sinkhole
+BLO	900	0307	Blowout
+CLA	900	0309	Clay spot
+GRA	900	0310	Gravelly spot
+LAV	908	0104	Lava flow
+MAR	905	0111	Marsh or swamp
+ROC	900	0311	Rock outcrop
+SAL	900	0312	Saline spot
+SAN	900	0313	Sandy spot
+ERO	900	0314	Severely eroded spot
+SLI	900	0315	Slide or slip
+SOD	900	0316	Sodic spot
+SPO	900	0304	Spoil area
+STN	900	0317	Stony spot
+STV	900	0318	Very stony spot
+WET	905	0330	Wet spot
+BPI	920	0612	Borrow pit
+GPI	920	0302	Gravel pit
+MPI	920	0325	Mine or quarry
+LDF	920	0304	Landfill
+WAT	905	0331	Perennial water (symbol only)
+MIS	905	0332	Miscellaneous water (symbol only)
+LVS	920	0208	Levee with single side slope (show actual feature location)
+HILL	900	0303	Prominent hill or peak
+SPRN	905	0300	Spring
+AWEL	905	0302	Artesian well
+IWEL	905	0329	Irrigation well
+PDDR	905	0222	Perennial double line stream
+PSDR	905	0223	Perennial single line stream
+INDR	905	0224	Intermittent stream
+DEND	953	0000	Drainage end (symbol only)
+DEND0	953	0000	Drainage end (symbol only)
+DEND1	953	0001	Drainage end (symbol only)
+DEND2	953	0002	Drainage end (symbol only)
+DEND3	953	0003	Drainage end (symbol only)
+DEND4	953	0004	Drainage end (symbol only)
+DEND5	953	0005	Drainage end (symbol only)
+DEND6	953	0006	Drainage end (symbol only)
+DEND7	953	0007	Drainage end (symbol only)
+DEND8	953	0008	Drainage end (symbol only)
+DEND9	953	0009	Drainage end (symbol only)
+DEND10	953	0010	Drainage end (symbol only)
+DEND11	953	0011	Drainage end (symbol only)
+DEND12	953	0012	Drainage end (symbol only)
+DEND13	953	0013	Drainage end (symbol only)
+DEND14	953	0014	Drainage end (symbol only)
+DEND15	953	0015	Drainage end (symbol only)
+DEND16	953	0016	Drainage end (symbol only)
+DEND17	953	0017	Drainage end (symbol only)
+DEND18	953	0018	Drainage end (symbol only)
+DEND19	953	0019	Drainage end (symbol only)
+DEND20	953	0020	Drainage end (symbol only)
+DEND21	953	0021	Drainage end (symbol only)
+DEND22	953	0022	Drainage end (symbol only)
+DEND23	953	0023	Drainage end (symbol only)
+DEND24	953	0024	Drainage end (symbol only)
+DEND25	953	0025	Drainage end (symbol only)
+DEND26	953	0026	Drainage end (symbol only)
+DEND27	953	0027	Drainage end (symbol only)
+DEND28	953	0028	Drainage end (symbol only)
+DEND29	953	0029	Drainage end (symbol only)
+DEND30	953	0030	Drainage end (symbol only)
+DEND31	953	0031	Drainage end (symbol only)
+DEND32	953	0032	Drainage end (symbol only)
+DEND33	953	0033	Drainage end (symbol only)
+DEND34	953	0034	Drainage end (symbol only)
+DEND35	953	0035	Drainage end (symbol only)
+DEND36	953	0036	Drainage end (symbol only)
+DEND37	953	0037	Drainage end (symbol only)
+DEND38	953	0038	Drainage end (symbol only)
+DEND39	953	0039	Drainage end (symbol only)
+DEND40	953	0040	Drainage end (symbol only)
+DEND41	953	0041	Drainage end (symbol only)
+DEND42	953	0042	Drainage end (symbol only)
+DEND43	953	0043	Drainage end (symbol only)
+DEND44	953	0044	Drainage end (symbol only)
+DEND45	953	0045	Drainage end (symbol only)
+DEND46	953	0046	Drainage end (symbol only)
+DEND47	953	0047	Drainage end (symbol only)
+DEND48	953	0048	Drainage end (symbol only)
+DEND49	953	0049	Drainage end (symbol only)
+DEND50	953	0050	Drainage end (symbol only)
+DEND51	953	0051	Drainage end (symbol only)
+DEND52	953	0052	Drainage end (symbol only)
+DEND53	953	0053	Drainage end (symbol only)
+DEND54	953	0054	Drainage end (symbol only)
+DEND55	953	0055	Drainage end (symbol only)
+DEND56	953	0056	Drainage end (symbol only)
+DEND57	953	0057	Drainage end (symbol only)
+DEND58	953	0058	Drainage end (symbol only)
+DEND59	953	0059	Drainage end (symbol only)
+DEND60	953	0060	Drainage end (symbol only)
+DEND61	953	0061	Drainage end (symbol only)
+DEND62	953	0062	Drainage end (symbol only)
+DEND63	953	0063	Drainage end (symbol only)
+DEND64	953	0064	Drainage end (symbol only)
+DEND65	953	0065	Drainage end (symbol only)
+DEND66	953	0066	Drainage end (symbol only)
+DEND67	953	0067	Drainage end (symbol only)
+DEND68	953	0068	Drainage end (symbol only)
+DEND69	953	0069	Drainage end (symbol only)
+DEND70	953	0070	Drainage end (symbol only)
+DEND71	953	0071	Drainage end (symbol only)
+DEND72	953	0072	Drainage end (symbol only)
+DEND73	953	0073	Drainage end (symbol only)
+DEND74	953	0074	Drainage end (symbol only)
+DEND75	953	0075	Drainage end (symbol only)
+DEND76	953	0076	Drainage end (symbol only)
+DEND77	953	0077	Drainage end (symbol only)
+DEND78	953	0078	Drainage end (symbol only)
+DEND79	953	0079	Drainage end (symbol only)
+DEND80	953	0080	Drainage end (symbol only)
+DEND81	953	0081	Drainage end (symbol only)
+DEND82	953	0082	Drainage end (symbol only)
+DEND83	953	0083	Drainage end (symbol only)
+DEND84	953	0084	Drainage end (symbol only)
+DEND85	953	0085	Drainage end (symbol only)
+DEND86	953	0086	Drainage end (symbol only)
+DEND87	953	0087	Drainage end (symbol only)
+DEND88	953	0088	Drainage end (symbol only)
+DEND89	953	0089	Drainage end (symbol only)
+DEND90	953	0090	Drainage end (symbol only)
+DEND91	953	0091	Drainage end (symbol only)
+DEND92	953	0092	Drainage end (symbol only)
+DEND93	953	0093	Drainage end (symbol only)
+DEND94	953	0094	Drainage end (symbol only)
+DEND95	953	0095	Drainage end (symbol only)
+DEND96	953	0096	Drainage end (symbol only)
+DEND97	953	0097	Drainage end (symbol only)
+DEND98	953	0098	Drainage end (symbol only)
+DEND99	953	0099	Drainage end (symbol only)
+DEND100	953	0100	Drainage end (symbol only)
+DEND101	953	0101	Drainage end (symbol only)
+DEND102	953	0102	Drainage end (symbol only)
+DEND103	953	0103	Drainage end (symbol only)
+DEND104	953	0104	Drainage end (symbol only)
+DEND105	953	0105	Drainage end (symbol only)
+DEND106	953	0106	Drainage end (symbol only)
+DEND107	953	0107	Drainage end (symbol only)
+DEND108	953	0108	Drainage end (symbol only)
+DEND109	953	0109	Drainage end (symbol only)
+DEND110	953	0110	Drainage end (symbol only)
+DEND111	953	0111	Drainage end (symbol only)
+DEND112	953	0112	Drainage end (symbol only)
+DEND113	953	0113	Drainage end (symbol only)
+DEND114	953	0114	Drainage end (symbol only)
+DEND115	953	0115	Drainage end (symbol only)
+DEND116	953	0116	Drainage end (symbol only)
+DEND117	953	0117	Drainage end (symbol only)
+DEND118	953	0118	Drainage end (symbol only)
+DEND119	953	0119	Drainage end (symbol only)
+DEND120	953	0120	Drainage end (symbol only)
+DEND121	953	0121	Drainage end (symbol only)
+DEND122	953	0122	Drainage end (symbol only)
+DEND123	953	0123	Drainage end (symbol only)
+DEND124	953	0124	Drainage end (symbol only)
+DEND125	953	0125	Drainage end (symbol only)
+DEND126	953	0126	Drainage end (symbol only)
+DEND127	953	0127	Drainage end (symbol only)
+DEND128	953	0128	Drainage end (symbol only)
+DEND129	953	0129	Drainage end (symbol only)
+DEND130	953	0130	Drainage end (symbol only)
+DEND131	953	0131	Drainage end (symbol only)
+DEND132	953	0132	Drainage end (symbol only)
+DEND133	953	0133	Drainage end (symbol only)
+DEND134	953	0134	Drainage end (symbol only)
+DEND135	953	0135	Drainage end (symbol only)
+DEND136	953	0136	Drainage end (symbol only)
+DEND137	953	0137	Drainage end (symbol only)
+DEND138	953	0138	Drainage end (symbol only)
+DEND139	953	0139	Drainage end (symbol only)
+DEND140	953	0140	Drainage end (symbol only)
+DEND141	953	0141	Drainage end (symbol only)
+DEND142	953	0142	Drainage end (symbol only)
+DEND143	953	0143	Drainage end (symbol only)
+DEND144	953	0144	Drainage end (symbol only)
+DEND145	953	0145	Drainage end (symbol only)
+DEND146	953	0146	Drainage end (symbol only)
+DEND147	953	0147	Drainage end (symbol only)
+DEND148	953	0148	Drainage end (symbol only)
+DEND149	953	0149	Drainage end (symbol only)
+DEND150	953	0150	Drainage end (symbol only)
+DEND151	953	0151	Drainage end (symbol only)
+DEND152	953	0152	Drainage end (symbol only)
+DEND153	953	0153	Drainage end (symbol only)
+DEND154	953	0154	Drainage end (symbol only)
+DEND155	953	0155	Drainage end (symbol only)
+DEND156	953	0156	Drainage end (symbol only)
+DEND157	953	0157	Drainage end (symbol only)
+DEND158	953	0158	Drainage end (symbol only)
+DEND159	953	0159	Drainage end (symbol only)
+DEND160	953	0160	Drainage end (symbol only)
+DEND161	953	0161	Drainage end (symbol only)
+DEND162	953	0162	Drainage end (symbol only)
+DEND163	953	0163	Drainage end (symbol only)
+DEND164	953	0164	Drainage end (symbol only)
+DEND165	953	0165	Drainage end (symbol only)
+DEND166	953	0166	Drainage end (symbol only)
+DEND167	953	0167	Drainage end (symbol only)
+DEND168	953	0168	Drainage end (symbol only)
+DEND169	953	0169	Drainage end (symbol only)
+DEND170	953	0170	Drainage end (symbol only)
+DEND171	953	0171	Drainage end (symbol only)
+DEND172	953	0172	Drainage end (symbol only)
+DEND173	953	0173	Drainage end (symbol only)
+DEND174	953	0174	Drainage end (symbol only)
+DEND175	953	0175	Drainage end (symbol only)
+DEND176	953	0176	Drainage end (symbol only)
+DEND177	953	0177	Drainage end (symbol only)
+DEND178	953	0178	Drainage end (symbol only)
+DEND179	953	0179	Drainage end (symbol only)
+DEND180	953	0180	Drainage end (symbol only)
+DEND181	953	0181	Drainage end (symbol only)
+DEND182	953	0182	Drainage end (symbol only)
+DEND183	953	0183	Drainage end (symbol only)
+DEND184	953	0184	Drainage end (symbol only)
+DEND185	953	0185	Drainage end (symbol only)
+DEND186	953	0186	Drainage end (symbol only)
+DEND187	953	0187	Drainage end (symbol only)
+DEND188	953	0188	Drainage end (symbol only)
+DEND189	953	0189	Drainage end (symbol only)
+DEND190	953	0190	Drainage end (symbol only)
+DEND191	953	0191	Drainage end (symbol only)
+DEND192	953	0192	Drainage end (symbol only)
+DEND193	953	0193	Drainage end (symbol only)
+DEND194	953	0194	Drainage end (symbol only)
+DEND195	953	0195	Drainage end (symbol only)
+DEND196	953	0196	Drainage end (symbol only)
+DEND197	953	0197	Drainage end (symbol only)
+DEND198	953	0198	Drainage end (symbol only)
+DEND199	953	0199	Drainage end (symbol only)
+DEND200	953	0200	Drainage end (symbol only)
+DEND201	953	0201	Drainage end (symbol only)
+DEND202	953	0202	Drainage end (symbol only)
+DEND203	953	0203	Drainage end (symbol only)
+DEND204	953	0204	Drainage end (symbol only)
+DEND205	953	0205	Drainage end (symbol only)
+DEND206	953	0206	Drainage end (symbol only)
+DEND207	953	0207	Drainage end (symbol only)
+DEND208	953	0208	Drainage end (symbol only)
+DEND209	953	0209	Drainage end (symbol only)
+DEND210	953	0210	Drainage end (symbol only)
+DEND211	953	0211	Drainage end (symbol only)
+DEND212	953	0212	Drainage end (symbol only)
+DEND213	953	0213	Drainage end (symbol only)
+DEND214	953	0214	Drainage end (symbol only)
+DEND215	953	0215	Drainage end (symbol only)
+DEND216	953	0216	Drainage end (symbol only)
+DEND217	953	0217	Drainage end (symbol only)
+DEND218	953	0218	Drainage end (symbol only)
+DEND219	953	0219	Drainage end (symbol only)
+DEND220	953	0220	Drainage end (symbol only)
+DEND221	953	0221	Drainage end (symbol only)
+DEND222	953	0222	Drainage end (symbol only)
+DEND223	953	0223	Drainage end (symbol only)
+DEND224	953	0224	Drainage end (symbol only)
+DEND225	953	0225	Drainage end (symbol only)
+DEND226	953	0226	Drainage end (symbol only)
+DEND227	953	0227	Drainage end (symbol only)
+DEND228	953	0228	Drainage end (symbol only)
+DEND229	953	0229	Drainage end (symbol only)
+DEND230	953	0230	Drainage end (symbol only)
+DEND231	953	0231	Drainage end (symbol only)
+DEND232	953	0232	Drainage end (symbol only)
+DEND233	953	0233	Drainage end (symbol only)
+DEND234	953	0234	Drainage end (symbol only)
+DEND235	953	0235	Drainage end (symbol only)
+DEND236	953	0236	Drainage end (symbol only)
+DEND237	953	0237	Drainage end (symbol only)
+DEND238	953	0238	Drainage end (symbol only)
+DEND239	953	0239	Drainage end (symbol only)
+DEND240	953	0240	Drainage end (symbol only)
+DEND241	953	0241	Drainage end (symbol only)
+DEND242	953	0242	Drainage end (symbol only)
+DEND243	953	0243	Drainage end (symbol only)
+DEND244	953	0244	Drainage end (symbol only)
+DEND245	953	0245	Drainage end (symbol only)
+DEND246	953	0246	Drainage end (symbol only)
+DEND247	953	0247	Drainage end (symbol only)
+DEND248	953	0248	Drainage end (symbol only)
+DEND249	953	0249	Drainage end (symbol only)
+DEND250	953	0250	Drainage end (symbol only)
+DEND251	953	0251	Drainage end (symbol only)
+DEND252	953	0252	Drainage end (symbol only)
+DEND253	953	0253	Drainage end (symbol only)
+DEND254	953	0254	Drainage end (symbol only)
+DEND255	953	0255	Drainage end (symbol only)
+DEND256	953	0256	Drainage end (symbol only)
+DEND257	953	0257	Drainage end (symbol only)
+DEND258	953	0258	Drainage end (symbol only)
+DEND259	953	0259	Drainage end (symbol only)
+DEND260	953	0260	Drainage end (symbol only)
+DEND261	953	0261	Drainage end (symbol only)
+DEND262	953	0262	Drainage end (symbol only)
+DEND263	953	0263	Drainage end (symbol only)
+DEND264	953	0264	Drainage end (symbol only)
+DEND265	953	0265	Drainage end (symbol only)
+DEND266	953	0266	Drainage end (symbol only)
+DEND267	953	0267	Drainage end (symbol only)
+DEND268	953	0268	Drainage end (symbol only)
+DEND269	953	0269	Drainage end (symbol only)
+DEND270	953	0270	Drainage end (symbol only)
+DEND271	953	0271	Drainage end (symbol only)
+DEND272	953	0272	Drainage end (symbol only)
+DEND273	953	0273	Drainage end (symbol only)
+DEND274	953	0274	Drainage end (symbol only)
+DEND275	953	0275	Drainage end (symbol only)
+DEND276	953	0276	Drainage end (symbol only)
+DEND277	953	0277	Drainage end (symbol only)
+DEND278	953	0278	Drainage end (symbol only)
+DEND279	953	0279	Drainage end (symbol only)
+DEND280	953	0280	Drainage end (symbol only)
+DEND281	953	0281	Drainage end (symbol only)
+DEND282	953	0282	Drainage end (symbol only)
+DEND283	953	0283	Drainage end (symbol only)
+DEND284	953	0284	Drainage end (symbol only)
+DEND285	953	0285	Drainage end (symbol only)
+DEND286	953	0286	Drainage end (symbol only)
+DEND287	953	0287	Drainage end (symbol only)
+DEND288	953	0288	Drainage end (symbol only)
+DEND289	953	0289	Drainage end (symbol only)
+DEND290	953	0290	Drainage end (symbol only)
+DEND291	953	0291	Drainage end (symbol only)
+DEND292	953	0292	Drainage end (symbol only)
+DEND293	953	0293	Drainage end (symbol only)
+DEND294	953	0294	Drainage end (symbol only)
+DEND295	953	0295	Drainage end (symbol only)
+DEND296	953	0296	Drainage end (symbol only)
+DEND297	953	0297	Drainage end (symbol only)
+DEND298	953	0298	Drainage end (symbol only)
+DEND299	953	0299	Drainage end (symbol only)
+DEND300	953	0300	Drainage end (symbol only)
+DEND301	953	0301	Drainage end (symbol only)
+DEND302	953	0302	Drainage end (symbol only)
+DEND303	953	0303	Drainage end (symbol only)
+DEND304	953	0304	Drainage end (symbol only)
+DEND305	953	0305	Drainage end (symbol only)
+DEND306	953	0306	Drainage end (symbol only)
+DEND307	953	0307	Drainage end (symbol only)
+DEND308	953	0308	Drainage end (symbol only)
+DEND309	953	0309	Drainage end (symbol only)
+DEND310	953	0310	Drainage end (symbol only)
+DEND311	953	0311	Drainage end (symbol only)
+DEND312	953	0312	Drainage end (symbol only)
+DEND313	953	0313	Drainage end (symbol only)
+DEND314	953	0314	Drainage end (symbol only)
+DEND315	953	0315	Drainage end (symbol only)
+DEND316	953	0316	Drainage end (symbol only)
+DEND317	953	0317	Drainage end (symbol only)
+DEND318	953	0318	Drainage end (symbol only)
+DEND319	953	0319	Drainage end (symbol only)
+DEND320	953	0320	Drainage end (symbol only)
+DEND321	953	0321	Drainage end (symbol only)
+DEND322	953	0322	Drainage end (symbol only)
+DEND323	953	0323	Drainage end (symbol only)
+DEND324	953	0324	Drainage end (symbol only)
+DEND325	953	0325	Drainage end (symbol only)
+DEND326	953	0326	Drainage end (symbol only)
+DEND327	953	0327	Drainage end (symbol only)
+DEND328	953	0328	Drainage end (symbol only)
+DEND329	953	0329	Drainage end (symbol only)
+DEND330	953	0330	Drainage end (symbol only)
+DEND331	953	0331	Drainage end (symbol only)
+DEND332	953	0332	Drainage end (symbol only)
+DEND333	953	0333	Drainage end (symbol only)
+DEND334	953	0334	Drainage end (symbol only)
+DEND335	953	0335	Drainage end (symbol only)
+DEND336	953	0336	Drainage end (symbol only)
+DEND337	953	0337	Drainage end (symbol only)
+DEND338	953	0338	Drainage end (symbol only)
+DEND339	953	0339	Drainage end (symbol only)
+DEND340	953	0340	Drainage end (symbol only)
+DEND341	953	0341	Drainage end (symbol only)
+DEND342	953	0342	Drainage end (symbol only)
+DEND343	953	0343	Drainage end (symbol only)
+DEND344	953	0344	Drainage end (symbol only)
+DEND345	953	0345	Drainage end (symbol only)
+DEND346	953	0346	Drainage end (symbol only)
+DEND347	953	0347	Drainage end (symbol only)
+DEND348	953	0348	Drainage end (symbol only)
+DEND349	953	0349	Drainage end (symbol only)
+DEND350	953	0350	Drainage end (symbol only)
+DEND351	953	0351	Drainage end (symbol only)
+DEND352	953	0352	Drainage end (symbol only)
+DEND353	953	0353	Drainage end (symbol only)
+DEND354	953	0354	Drainage end (symbol only)
+DEND355	953	0355	Drainage end (symbol only)
+DEND356	953	0356	Drainage end (symbol only)
+DEND357	953	0357	Drainage end (symbol only)
+DEND358	953	0358	Drainage end (symbol only)
+DEND359	953	0359	Drainage end (symbol only)
+DEND360	953	0360	Drainage end (symbol only)
+DCAN	905	0225	Double line canal (label)
+DDIT	905	0226	Perennial drainage and/or irrigation ditch
+IDIT	905	0227	Intermittent drainage and/or irrigation ditch
+FPOOL	909	0222	Flood pool line
+CANB	909	0197	Canada boundary
+MEXB	909	0198	Mexico boundary
+WATB	909	0199	Open water boundary
+XXXX	951	(fips)	State boundary; label = SB{fips}
+SPRSBXXX	951	(fips)	State boundary Spur; label = SPRSB{rotation}
+XXXX	952	(fips)	County or parish boundary; label = CB{fips}
+SPRCBXXX	952	(fips)	County boundary Spur; label = SPRCB{rotation}
+INCB	909	0101	Inc. city, village, town, burrough, or hamlet boundary
+CIVB	909	0100	Civil township, district, precinct, or barrio boundary
+NFOR	909	0104	National forest boundary
+NPAR	909	0103	National park boundary
+NSCE	909	0106	National scenic waterway, riverway, wild & scenic river or wilderness boundary
+NWIL	909	0105	National wildlife refuge, game reserve, or fish hatchery boundary
+SFOR	909	0132	State forest boundary
+SPAR	909	0130	State park boundary
+SWIL	909	0131	State wildlife refuge, game reserve, or fish hatchery boundary
+CPAR	909	0102	City, county, or private park boundary
+MILR	909	0108	Military Reservation boundary
+TICK	930	0301	State coordinate tick
+FARM	909	0218	Land grant, experiment station, or farm boundary
+LCT	930	0001	Land grant land division corner, center
+LSE	930	0002	Land grant land division corner, SE
+LNW	930	0003	Land grant land division corner, NW
+LNE	930	0004	Land grant land division corner, NE
+LSW	930	0005	Land grant land division corner, SW
+LSESW	930	0006	Land grant land division corner, SESW
+LSWNW	930	0007	Land grant land division corner, SWNW
+LSENE	930	0008	Land grant land division corner, SENE
+LNENW	930	0009	Land grant land division corner, NENW
+SCT	930	0010	Section land division corner, center
+SSE	930	0011	Section land division corner, SE
+SNW	930	0012	Section land division corner, NW
+SNE	930	0013	Section land division corner, NE
+SSW	930	0014	Section land division corner, SW
+SSESW	930	0015	Section land division corner, SESW
+SSWNW	930	0016	Section land division corner, SWNW
+SSENE	930	0017	Section land division corner, SENE
+SNENW	930	0018	Section land division corner, NENW
+SDLXXX	930	0019	Section land division corner, single line with rotation replace XXX with rotation 0-360, 0 = ----
+SLAB1	930	0301	Section Labels, 1
+SLAB2	930	0302	Section Labels, 2
+SLAB3	930	0303	Section Labels, 3
+SLAB4	930	0304	Section Labels, 4
+SLAB5	930	0305	Section Labels, 5
+SLAB6	930	0306	Section Labels, 6
+SLAB7	930	0307	Section Labels, 7
+SLAB8	930	0308	Section Labels, 8
+SLAB9	930	0309	Section Labels, 9
+SLAB10	930	0310	Section Labels, 10
+SLAB11	930	0311	Section Labels, 11
+SLAB12	930	0312	Section Labels, 12
+SLAB13	930	0313	Section Labels, 13
+SLAB14	930	0314	Section Labels, 14
+SLAB15	930	0315	Section Labels, 15
+SLAB16	930	0316	Section Labels, 16
+SLAB17	930	0317	Section Labels, 17
+SLAB18	930	0318	Section Labels, 18
+SLAB19	930	0319	Section Labels, 19
+SLAB20	930	0320	Section Labels, 20
+SLAB21	930	0321	Section Labels, 21
+SLAB22	930	0322	Section Labels, 22
+SLAB23	930	0323	Section Labels, 23
+SLAB24	930	0324	Section Labels, 24
+SLAB25	930	0325	Section Labels, 25
+SLAB26	930	0326	Section Labels, 26
+SLAB27	930	0327	Section Labels, 27
+SLAB28	930	0328	Section Labels, 28
+SLAB29	930	0329	Section Labels, 29
+SLAB30	930	0330	Section Labels, 30
+SLAB31	930	0331	Section Labels, 31
+SLAB32	930	0332	Section Labels, 32
+SLAB33	930	0333	Section Labels, 33
+SLAB34	930	0334	Section Labels, 34
+SLAB35	930	0335	Section Labels, 35
+SLAB36	930	0336	Section Labels, 36
+LLABXXX	903	3001	Land grant Labels, XXX = label value i.e. 21A
+LIMT	909	0219	Limit of soil survey
+NEAT	909	0220	Field sheet matchline & neatline
+PPUB	909	0221	Previously published survey boundary
+AIRP	909	0403	Airport or airfield boundary
+AIRS	920	0311	Small airport or airfield (symbol only)
+CEME	909	0420	Cemetery boundary
+CEMS	900	0320	Small cemetery (symbol only)
+CROS	900	0321	Cemetery cross (symbol only)
+OILF	920	0421	Oilfield boundary
+FENC	920	0206	Fence
+PIPE	919	0201	Pipeline
+LINE	919	0202	Power transmission line
+DVRD	917	0214	Divided road
+UDRD	917	0215	Undivided road
+FRRD	917	0216	Farm or ranch road
+ROUT	917	0217	Reservation, park, or military route
+IXXXX	972	(No.)	Interstate road emblem and designation; label = I{No.}
+FXXXX	973	(No.)	Federal road emblem and designation; label = F{No.}
+SXXXX	974	(No.)	State road emblem and designation; label = S{No.}
+CXXXX	976	(No.)	County, farm, or ranch road emblem and designation; label = C{No.}
+MXXXX	975	(No.)	Reservation, park, or military route number emblem and designation; label = M{No.}
+VTRL	970	0212	Vehicle trail
+PTRL	970	0211	Pedestrian trail
+RAIL	918	0201	Railroad
+LVWR	920	0205	Levee with road
+LVXR	920	0204	Levee without road
+LVRR	920	0207	Levee with railroad
+MDAM	905	0406	Medium or small dam
+CHUR	920	0402	Church
+OREL	920	0404	Other religious structures
+HOUS	920	0305	Farmstead, house
+SCHL	920	0403	School
+LTHS	920	0306	Lighthouse
+HIST	920	0301	Historical marker
+LOOK	920	0614	Lookout tower
+PTANK	920	0308	Petroleum storage tank
+WTANK	920	0310	Water storage tank
+GWEL	920	0606	Gas and oil well
+WIND	905	0305	Windmill
+LOCO	920	0312	Located object
+SOIS	900	0319	Soil sample site
