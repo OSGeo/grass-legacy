@@ -57,6 +57,8 @@ $(PROG): $(OBJ)  $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) 
 	mv a.out $@
 
+$(VECTLIB) $(GISLIB): #
+
 saber_src:
 	#load $(CFLAGS) $(SOURCES) ../Vlib/*.c ../diglib/*.c $(GISLIB) $(MATHLIB)
 
