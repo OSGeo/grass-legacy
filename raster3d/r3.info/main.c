@@ -42,7 +42,7 @@ int main (argc, argv)
      "Outputs basic information about a user-specified 3D raster map layer.";
 
     opt1 = G_define_option() ;
-    opt1->key        = "grid3" ;
+    opt1->key        = "map" ;
     opt1->type       = TYPE_STRING ;
     opt1->required   = YES ;
     opt1->gisprompt  = "old,grid3,3d raster" ;

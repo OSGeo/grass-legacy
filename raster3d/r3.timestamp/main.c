@@ -31,7 +31,7 @@ int main (int argc, char *argv[])
      "print/add/remove a timestamp for a 3D raster map";
 
     map = G_define_option();
-    map->key = "grid3";
+    map->key = "map";
     map->required = YES;
     map->type = TYPE_STRING;
     map->description = "input grid3 filename";
