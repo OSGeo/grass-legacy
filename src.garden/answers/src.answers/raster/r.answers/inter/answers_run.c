@@ -49,17 +49,17 @@ answers_run()
 
    if (complete[11] !=1)
    {
-        fprintf (stdout,"This step cannot be executed until an ANSWERS input file\n");
-        fprintf (stdout,"is completed (by running Step 11).\n\n");
-        fprintf (stdout,"\n\n\n\n\n\n\n\n\n\n");
+        fprintf (stderr,"This step cannot be executed until an ANSWERS input file\n");
+        fprintf (stderr,"is completed (by running Step 11).\n\n");
+        fprintf (stderr,"\n\n\n\n\n\n\n\n\n\n");
         hit_return();
         return(0);
     }
 
     if (G_find_file (data_dir, "answers_input", proj_mapset) == NULL)
     {
-        fprintf (stdout,"\nNo input file found. Run Step 11 again to build one.\n");
-        fprintf (stdout,"\n\n\n\n\n\n\n\n\n\n");
+        fprintf (stderr,"\nNo input file found. Run Step 11 again to build one.\n");
+        fprintf (stderr,"\n\n\n\n\n\n\n\n\n\n");
         complete[11] = 2;
         hit_return();
         return(0);
@@ -71,7 +71,7 @@ answers_run()
 /*
 */
 
-    fprintf (stdout,"\n\nRunning...\n\n");
+    fprintf (stderr,"\n\nRunning...\n\n");
 
     strcpy(dirname, G_location_path());
     strcat(dirname, "/");
@@ -85,8 +85,8 @@ answers_run()
    
     if (G_system(line) != 0)
     {
-        fprintf (stdout,"\n\nProgram could not execute ANSWERS\n\n");
-        fprintf (stdout,"Perhaps the program 'answers' is not available\n\n");
+        fprintf (stderr,"\n\nProgram could not execute ANSWERS\n\n");
+        fprintf (stderr,"Perhaps the program 'answers' is not available\n\n");
         complete[11] = 2;
         hit_return();
         return(0);
@@ -111,7 +111,7 @@ answers_run()
         G_system(line);
         if(G_yes("Would you like to review, copy or print this information?",0))
             user_file(err_report_file);
-        fprintf (stdout,"\n\n");
+        fprintf (stderr,"\n\n");
         if (!G_yes("shall we attempt to process the ANSWERS output?", 1))
         {
             return(0);
@@ -119,11 +119,11 @@ answers_run()
     }
     else
     {
-        fprintf (stdout,"\n\nNo errors were reported while ANSWERS was running...\n\n");
+        fprintf (stderr,"\n\nNo errors were reported while ANSWERS was running...\n\n");
     }
     unlink(err_report_file);
 
-    fprintf (stdout,"\n\nProcessing ANSWERS output...\n\n");
+    fprintf (stderr,"\n\nProcessing ANSWERS output...\n\n");
 
 /* now read answers output file */
 
@@ -202,7 +202,7 @@ answers_run()
                   (strcmp(wd_buf, "AVERAGE") == 0)) 
                 {
                     fprintf(fp[0], "%s", buf);
-                    fprintf (stdout,"%s", buf);
+                    fprintf (stderr,"%s", buf);
                     continue;
                 }
             }
@@ -219,7 +219,7 @@ answers_run()
                 (strcmp(wd_buf, "STD.") == 0))
                 {
                     fprintf(fp[0], "%s", buf);
-                    fprintf (stdout,"%s", buf);
+                    fprintf (stderr,"%s", buf);
                     continue;
                 }
             }
@@ -249,10 +249,10 @@ answers_run()
     
     if (check_pt != 1)
     {
-        fprintf (stdout,"\nWARNING: The output file seems incomplete.\n");
-        fprintf (stdout,"  (can't find Channel Deposition data which should be\n");
-        fprintf (stdout,"   at the bottom of the file)\n\n");
-        fprintf (stdout,"Would you like to take a look at the output file to\n"); 
+        fprintf (stderr,"\nWARNING: The output file seems incomplete.\n");
+        fprintf (stderr,"  (can't find Channel Deposition data which should be\n");
+        fprintf (stderr,"   at the bottom of the file)\n\n");
+        fprintf (stderr,"Would you like to take a look at the output file to\n"); 
         if(G_yes("check for diagnostic (error) messages from ANSWERS?", 1))
         {
             sprintf(line, "%s/%s/%s/answers_output",
@@ -263,8 +263,8 @@ answers_run()
         return(0);
     }
 
-    fprintf (stdout,"\n\n(NOTE: use the Miscellaneous Command Menu to look at the 'out_text'\n");
-    fprintf (stdout,"      file for more of the ANSWERS watershed summary)\n\n\n");
+    fprintf (stderr,"\n\n(NOTE: use the Miscellaneous Command Menu to look at the 'out_text'\n");
+    fprintf (stderr,"      file for more of the ANSWERS watershed summary)\n\n\n");
     hit_return();
     hydro_filter();
     map_sediment();

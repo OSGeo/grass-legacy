@@ -1003,6 +1003,7 @@ int GS_unset_att(int id, int att)
     geosurf *gs;
 
     gs = gs_get_surf(id);
+    gs->mask_needupdate = 1;
     
     return(gs_set_att_src(gs, att, NOTSET_ATT));
 }

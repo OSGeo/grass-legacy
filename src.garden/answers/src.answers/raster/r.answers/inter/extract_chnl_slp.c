@@ -41,7 +41,7 @@ extract_chnl_slp ()
     CELL *chnl_map_cell;
     CELL *mask_cell;
 
-    fprintf (stdout,"\n\nExtracting data from <%s in %s>\n\n",
+    fprintf (stderr,"\n\nExtracting data from <%s in %s>\n\n",
     chnl_slp_layer, chnl_slp_mapset);
 
 /* open input layer */

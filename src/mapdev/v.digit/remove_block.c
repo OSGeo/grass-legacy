@@ -89,7 +89,7 @@ top:
 
 foo:
     _Clear_info ();
-    Write_info (2, "You are about to remove a block of lines. OK? ");
+    Write_info (2, "You are about to remove a block of lines. OK (y/n)? ");
     Get_curses_text (buf);
     G_squeeze (buf);
     if (*buf != 'y' && *buf != 'Y')

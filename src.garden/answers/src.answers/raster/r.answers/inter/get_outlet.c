@@ -31,11 +31,11 @@ get_outlet()
 
     if (complete[6] > 0)
     {
-        fprintf (stdout,"\n           ANSWERS on GRASS  Watershed Outlet\n\n");
-        fprintf (stdout,"This step was previously completed. The current row and\n");
-        fprintf (stdout,"column number for the watershed outlet is:\n\n");
-        fprintf (stdout,"             row: %d\n", out_row);
-        fprintf (stdout,"          column: %d\n\n", out_col);
+        fprintf (stderr,"\n           ANSWERS on GRASS  Watershed Outlet\n\n");
+        fprintf (stderr,"This step was previously completed. The current row and\n");
+        fprintf (stderr,"column number for the watershed outlet is:\n\n");
+        fprintf (stderr,"             row: %d\n", out_row);
+        fprintf (stderr,"          column: %d\n\n", out_col);
         if(G_yes("Do you wish to change this?",0))
             complete[6] = 0;
         else

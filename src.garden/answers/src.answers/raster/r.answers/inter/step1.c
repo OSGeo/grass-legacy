@@ -38,17 +38,17 @@ step_1()
     int done = 0;
     
     G_clear_screen();
-    fprintf (stdout,"\n\n        ANSWERS on GRASS Project Manager\n\n");
-    fprintf (stdout,"    Step 1: Set mask, region, and resolution\n\n");
-    fprintf (stdout,"    The first priority of the project is to\n");
-    fprintf (stdout,"    1. Establish the area of the watershed (mask)\n");
-    fprintf (stdout,"    2. Determine the region in the mapset for study, and\n");
-    fprintf (stdout,"    3. Define the resolution (raster map cell size) \n");
-    fprintf (stdout,"       to use for the simulation.\n");
-    fprintf (stdout,"    \n");
-    fprintf (stdout,"    This step will require a raster map to use as a\n");
-    fprintf (stdout,"    watershed mask.\n");
-    fprintf (stdout,"    \n");
+    fprintf (stderr,"\n\n        ANSWERS on GRASS Project Manager\n\n");
+    fprintf (stderr,"    Step 1: Set mask, region, and resolution\n\n");
+    fprintf (stderr,"    The first priority of the project is to\n");
+    fprintf (stderr,"    1. Establish the area of the watershed (mask)\n");
+    fprintf (stderr,"    2. Determine the region in the mapset for study, and\n");
+    fprintf (stderr,"    3. Define the resolution (raster map cell size) \n");
+    fprintf (stderr,"       to use for the simulation.\n");
+    fprintf (stderr,"    \n");
+    fprintf (stderr,"    This step will require a raster map to use as a\n");
+    fprintf (stderr,"    watershed mask.\n");
+    fprintf (stderr,"    \n");
     for (r = 2; r < 11; r++)
     {
         if (complete[r] == 1)
@@ -56,12 +56,12 @@ step_1()
     }
     if (done == 1)
     {
-        fprintf (stdout,"    This step has already been completed. If mask,\n");
-        fprintf (stdout,"    region, or resolution is changed, all previously\n");
-        fprintf (stdout,"    completed steps will have to be run again to resample\n");
-        fprintf (stdout,"    ANSWERS input data.\n");
+        fprintf (stderr,"    This step has already been completed. If mask,\n");
+        fprintf (stderr,"    region, or resolution is changed, all previously\n");
+        fprintf (stderr,"    completed steps will have to be run again to resample\n");
+        fprintf (stderr,"    ANSWERS input data.\n");
     }
-    fprintf (stdout,"    \n");
+    fprintf (stderr,"    \n");
 
     if (!G_yes("\n    Do you wish to continue with this step? ", 1))
         return(0);
@@ -95,7 +95,7 @@ step_1()
         else
         {
             complete[1] = 1;
-            fprintf (stdout,"\n\n\n\n");
+            fprintf (stderr,"\n\n\n\n");
             hit_return();
             return(0);
         }

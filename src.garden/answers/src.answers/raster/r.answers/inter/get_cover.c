@@ -31,10 +31,10 @@ get_cover()
     char        line[200];
 
     G_clear_screen();
-    fprintf (stdout,"\n\n       ANSWERS on GRASS Land Cover Catalogue Utility \n\n");
-    fprintf (stdout,"To prepare cropping/land cover data for use with ANSWERS, the \n");
-    fprintf (stdout,"following is needed: a raster map layer of the land cover in the \n");
-    fprintf (stdout,"watershed and a description of each category found.\n\n");
+    fprintf (stderr,"\n\n       ANSWERS on GRASS Land Cover Catalogue Utility \n\n");
+    fprintf (stderr,"To prepare cropping/land cover data for use with ANSWERS, the \n");
+    fprintf (stderr,"following is needed: a raster map layer of the land cover in the \n");
+    fprintf (stderr,"watershed and a description of each category found.\n\n");
 
   /* check to see if read_project found any previously recorded info
      in the project file about the layer. If so, make sure the
@@ -43,9 +43,9 @@ get_cover()
     check = 0;
     if ((complete[3]) && (cover_mapset) && (cover_layer[0] != 0)) {
         check = 1;
-        fprintf (stdout,"This utility was previously completed. You can:\n\n");
-        fprintf (stdout,"- Use a different layer for cover (this erases previously set parameters)\n");
-        fprintf (stdout,"- Use a same layer for cover and edit previously set parameters.\n\n");
+        fprintf (stderr,"This utility was previously completed. You can:\n\n");
+        fprintf (stderr,"- Use a different layer for cover (this erases previously set parameters)\n");
+        fprintf (stderr,"- Use a same layer for cover and edit previously set parameters.\n\n");
         sprintf(line, "Use the raster map %s in %s for LAND COVER?",
                        cover_layer, cover_mapset);
         if(!G_yes(line, 1)) 
@@ -54,21 +54,21 @@ get_cover()
 
     if (check == 0){
         complete[3] = 0;
-        fprintf (stdout,"\n\nEnter the name of the LAND COVER raster map.\n");
+        fprintf (stderr,"\n\nEnter the name of the LAND COVER raster map.\n");
         cover_mapset = G_ask_cell_old ("",cover_layer);
             if(!cover_mapset) {
                 return(0);
              }
         }
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
     if (mk_cat_tbl(1, cover_layer, cover_mapset) == -1)
     {
         complete[3] = 0;
         return(0);
     }
  
-    fprintf (stdout,"\nNumber of land cover/cropping categories found: %d \n", cat_tbl[0].cat);
-    fprintf (stdout,"-----------------------------------------------\n");
+    fprintf (stderr,"\nNumber of land cover/cropping categories found: %d \n", cat_tbl[0].cat);
+    fprintf (stderr,"-----------------------------------------------\n");
     for (i = 1, j = 0; i <= cat_tbl[0].cat; i++, j++)
         {
         if (j > 19) 
@@ -76,11 +76,11 @@ get_cover()
             j = 0;
             hit_return();
             }
-        fprintf (stdout," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
+        fprintf (stderr," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
         }
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
     if (cat_tbl[0].cat > 21) {
-        fprintf (stdout,"\n\n\nMore than 20 categories were found.\n");
+        fprintf (stderr,"\n\n\nMore than 20 categories were found.\n");
         croak(1, 
         "The ANSWERS program can be reconfigured or input layer can be reclassed");
     }

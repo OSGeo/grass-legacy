@@ -61,11 +61,11 @@ map_sediment()
 
     G_clear_screen();
 
-    fprintf (stdout,"ANSWERS on GRASS %s Project\n\n", proj_name);
-    fprintf (stdout,"Now ready to extract data for sediment movement (if any) from\n");
-    fprintf (stdout,"the ANSWERS output. Three new raster maps will be created:\n");
-    fprintf (stdout,"net sediment loss, net sediment deposition, and deposition\n");
-    fprintf (stdout,"in channel elements.\n\n");
+    fprintf (stderr,"ANSWERS on GRASS %s Project\n\n", proj_name);
+    fprintf (stderr,"Now ready to extract data for sediment movement (if any) from\n");
+    fprintf (stderr,"the ANSWERS output. Three new raster maps will be created:\n");
+    fprintf (stderr,"net sediment loss, net sediment deposition, and deposition\n");
+    fprintf (stderr,"in channel elements.\n\n");
 
 /* set default names */
    
@@ -73,29 +73,29 @@ map_sediment()
     sprintf(deposit_layer, "%s.deposit", proj_name);
     sprintf(chnl_deposit_layer, "%s.chnl", proj_name);
 
-    fprintf (stdout,"Default names for these maps are:\n\t%s\n\t%s\n\t%s\n\n",
+    fprintf (stderr,"Default names for these maps are:\n\t%s\n\t%s\n\t%s\n\n",
     loss_layer, deposit_layer, chnl_deposit_layer);
 
     there = 0;
     if (G_find_cell(loss_layer, G_mapset()))
     {
         there = 1;
-        fprintf (stdout,"<%s> already exists in <%s>.\n", loss_layer,
+        fprintf (stderr,"<%s> already exists in <%s>.\n", loss_layer,
         G_mapset());
     }
     if (G_find_cell(deposit_layer, G_mapset()))
     {
         there = 1;
-        fprintf (stdout,"<%s> already exists in <%s>.\n", deposit_layer,
+        fprintf (stderr,"<%s> already exists in <%s>.\n", deposit_layer,
         G_mapset());
     }
     if (G_find_cell(chnl_deposit_layer, G_mapset()))
     {
         there = 1;
-        fprintf (stdout,"<%s> already exists in <%s>.\n", chnl_deposit_layer,
+        fprintf (stderr,"<%s> already exists in <%s>.\n", chnl_deposit_layer,
         G_mapset());
     }
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
     
     enter_names = 0;
     if (there == 1)
@@ -112,12 +112,12 @@ map_sediment()
     if (enter_names)
     {
     G_clear_screen();
-    fprintf (stdout,"\nEnter the new map names:\n\n");
+    fprintf (stderr,"\nEnter the new map names:\n\n");
 
     if(!G_ask_cell_new("Enter the name for the sediment *loss* map",
     loss_layer))
     {
-        fprintf (stdout,"\nno new map name given\ncancelling the creation of maps.\n\n");
+        fprintf (stderr,"\nno new map name given\ncancelling the creation of maps.\n\n");
         hit_return();
         complete[13] = 0;
         menu();
@@ -126,7 +126,7 @@ map_sediment()
     if(!G_ask_cell_new("Enter the name for the sediment *deposition* map",
     deposit_layer))
     {
-        fprintf (stdout,"\nno new map name given\ncancelling the creation of maps.\n\n");
+        fprintf (stderr,"\nno new map name given\ncancelling the creation of maps.\n\n");
         hit_return();
         complete[12] = 0;
         menu();
@@ -135,14 +135,14 @@ map_sediment()
     if(!G_ask_cell_new("Enter the name for the channel deposition map",
     chnl_deposit_layer))
     {
-        fprintf (stdout,"\nno new map name given\ncancelling the creation of maps.\n\n");
+        fprintf (stderr,"\nno new map name given\ncancelling the creation of maps.\n\n");
         hit_return();
         complete[14] = 0;
         menu();
     }
     }
     G_clear_screen();
-    fprintf (stdout,"\nCreating sediment movement maps from ANSWERS output...\n\n");
+    fprintf (stderr,"\nCreating sediment movement maps from ANSWERS output...\n\n");
 
     data_fp = G_fopen_old(data_dir, "out_sediment", proj_mapset);
     if (!data_fp)
@@ -196,9 +196,9 @@ map_sediment()
                 fscanf(data_fp, "%d %f", &element_num, &element_value);
                 if (element_num != ct)
                 {
-                    fprintf (stdout,"\n\nexpecting element %d, found %d\n",
+                    fprintf (stderr,"\n\nexpecting element %d, found %d\n",
                     ct, element_num);
-                    fprintf (stdout,"Check answers_output file for more diagnostic information\n");
+                    fprintf (stderr,"Check answers_output file for more diagnostic information\n");
                     croak(1,
                     "problem reading element data in ANSWERS output");
                 }
@@ -219,9 +219,9 @@ map_sediment()
  
                 if (chnl_num != ct)
                 {
-                    fprintf (stdout,"\n\nexpecting channel element %d, found %d\n",
+                    fprintf (stderr,"\n\nexpecting channel element %d, found %d\n",
                     ct, chnl_num);
-                    fprintf (stdout,"Check answers_output file for more diagnostic information\n");
+                    fprintf (stderr,"Check answers_output file for more diagnostic information\n");
                     croak(1,
                     "problem reading channel element data in ANSWERS output");
                 }
@@ -292,7 +292,7 @@ map_sediment()
         }
         else
         {
-            fprintf (stdout,"\n\nNo sediment deposition reported. <%s> not created.\n",
+            fprintf (stderr,"\n\nNo sediment deposition reported. <%s> not created.\n",
             deposit_layer);
         }
 
@@ -320,7 +320,7 @@ map_sediment()
         }
         else
         {
-            fprintf (stdout,"\n\nNo sediment loss reported. <%s> not created.\n",
+            fprintf (stderr,"\n\nNo sediment loss reported. <%s> not created.\n",
             loss_layer);
         }
 
@@ -349,11 +349,11 @@ map_sediment()
         }
         else
         {
-            fprintf (stdout,"\n\nNo channel deposition reported. <%s> not created.\n",
+            fprintf (stderr,"\n\nNo channel deposition reported. <%s> not created.\n",
             chnl_deposit_layer);
         }
 
-    fprintf (stdout,"\ndone.\n");
+    fprintf (stderr,"\ndone.\n");
     hit_return();
     return(0);
 }

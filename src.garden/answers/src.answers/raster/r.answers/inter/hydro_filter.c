@@ -55,11 +55,11 @@ hydro_filter()
     {
         return(0);
     }
-    fprintf (stdout,"\n\nWorking...\n\n");
+    fprintf (stderr,"\n\nWorking...\n\n");
 
     */
 
-    fprintf (stdout,"\n\nFormatting outlet hydrograph data...\n\n");
+    fprintf (stderr,"\n\nFormatting outlet hydrograph data...\n\n");
 
     strcpy(dirname, G_location_path());
     strcat(dirname, "/");

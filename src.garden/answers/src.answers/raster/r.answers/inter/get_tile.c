@@ -75,11 +75,11 @@ if((option > 0) && (option < 4))
 
     if(option == 3)
     {
-        fprintf (stdout,"\n\nEnter the name of SUBSURFACE TILE DRAINAGE raster map.\n");
+        fprintf (stderr,"\n\nEnter the name of SUBSURFACE TILE DRAINAGE raster map.\n");
         tile_mapset = G_ask_cell_old ("", tile_layer);
         if(!tile_mapset) 
                 return(0);
-        fprintf (stdout,"\n");
+        fprintf (stderr,"\n");
         if (mk_cat_tbl(0, tile_layer, tile_mapset) == -1)
         {
             complete[7] = 0;
@@ -93,10 +93,10 @@ if((option > 0) && (option < 4))
     }
     else
     {
-        fprintf (stdout,"\n\nSetting parameter:\n");
-        fprintf (stdout,"%s of the watershed area has subsurface tile drainage\n",
+        fprintf (stderr,"\n\nSetting parameter:\n");
+        fprintf (stderr,"%s of the watershed area has subsurface tile drainage\n",
         tile_area);
-        fprintf (stdout,"\n");
+        fprintf (stderr,"\n");
     }
 
 
@@ -107,7 +107,7 @@ if((option > 0) && (option < 4))
     }
     else
     {
-        fprintf (stdout,"\n\nANSWERS subsurface drainage input data preparation complete.\n\n");
+        fprintf (stderr,"\n\nANSWERS subsurface drainage input data preparation complete.\n\n");
         hit_return();
         complete[7] = 1;
     }

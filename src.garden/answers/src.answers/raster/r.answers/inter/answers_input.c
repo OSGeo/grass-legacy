@@ -71,16 +71,16 @@ answers_input()
        {
            if (m == 0)
            {
-               fprintf (stdout,"ANSWERS input cannot yet be created. The following\n");
-               fprintf (stdout,"must be completed: \n\n");
+               fprintf (stderr,"ANSWERS input cannot yet be created. The following\n");
+               fprintf (stderr,"must be completed: \n\n");
                m = 1;
            }
-           fprintf (stdout,"Step %d: %s\n", i, step[i]);
+           fprintf (stderr,"Step %d: %s\n", i, step[i]);
        }
     }
     if (m == 1)
     {
-       fprintf (stdout,"\n\n\n\n\n");
+       fprintf (stderr,"\n\n\n\n\n");
        hit_return();
        return(0);
     }
@@ -95,7 +95,7 @@ answers_input()
         return(0);
     }
 
-    fprintf (stdout,"\n\nCreating input file for ANSWERS\n\n");
+    fprintf (stderr,"\n\nCreating input file for ANSWERS\n\n");
 
     complete[11] = 0;
 
@@ -109,35 +109,35 @@ answers_input()
     fprintf(fp,
     " METRIC units are used on input/output                   PRINT\n");
 
-    fprintf (stdout,"   reading rain gauge predata...");
+    fprintf (stderr,"   reading rain gauge predata...");
     err = read_file("rain_predata", fp);
     if (err == -1)
     {
        croak(1, "Failure to read <rain_predata>. Run that step again.");
     }
 
-    fprintf (stdout,"\n\n   reading soils predata...");
+    fprintf (stderr,"\n\n   reading soils predata...");
     err = read_file("soil_predata", fp);
     if (err == -1)
     {
        croak(1, "Failure to read <soil_predata>. Run that step again.");
     }
 
-    fprintf (stdout,"\n\n   reading cover predata...");
+    fprintf (stderr,"\n\n   reading cover predata...");
     err = read_file("cover_predata", fp);
     if (err == -1)
     {
        croak(1, "Failure to read <cover_predata>. Run that step again.");
     }
 
-    fprintf (stdout,"\n\n   reading channel predata...");
+    fprintf (stderr,"\n\n   reading channel predata...");
     err = read_file("chnl_predata", fp);
     if (err == -1)
     {
        croak(1, "Failure to read <chnl_predata>. Run that step again.");
     }
 
-    fprintf (stdout,"\n\ncollecting and preparing element data...\n\n");
+    fprintf (stderr,"\n\ncollecting and preparing element data...\n\n");
 
     fprintf(fp, "  ELEMENT SPECIFICATIONS FOR %s Project \n", proj_name);
     fprintf(fp, " EACH ELEMENT IS %5.1fM  SQUARE\n", proj_resolution);
@@ -263,7 +263,7 @@ answers_input()
         fclose(in_fp[8]);
     fclose(fp);
 
-    fprintf (stdout,"\n\nANSWERS input file created.\n\n");
+    fprintf (stderr,"\n\nANSWERS input file created.\n\n");
     complete[11] = 1;
 
     answers_run();

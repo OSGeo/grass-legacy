@@ -113,15 +113,7 @@
 
 #ifndef HAVE_ZLIB_H
 
-static void
-break_compile (void)
-{
-    /* if ZLIB is not installed, a compile error is generated here
-     * The HAVE_ZLIB_H flag is set in src/include/config.h by
-     * configure
-     */
-    NULL = 1;
-}
+#error "GRASS requires libz to compile"
 
 #else
 
