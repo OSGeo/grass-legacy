@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     struct Cell_head window;
     void *elevbuf, *tmpcellbuf, *outcellbuf;
     CELL value,value2, min, max;
-    DCELL dvalue, value2, dmin, dmax;
+    DCELL dvalue, dvalue2, dmin, dmax;
     RASTER_MAP_TYPE data_type;
     struct Range range;
     struct FPRange fprange;
@@ -153,8 +153,8 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 
 	    while (col1<window.cols)
 	      {
-		value = &elevbuf[col1];
-		&outcellbuf[col1]=1;
+		value = ((CELL *)elevbuf)[col1];
+		((CELL *)outcellbuf)[col1]=1;
 		OK=1;
 		east=G_col_to_easting(col1+0.5,&window);
 		north=G_row_to_northing(row1+0.5,&window);
@@ -184,11 +184,11 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 					drow=G_northing_to_row(north,&window);
 	    				G_get_raster_row(elev_fd, tmpcellbuf,(int) drow, data_type);
 					}
-				  value2=tmpcellbuf[(int)dcol];
+				  value2=((CELL *)tmpcellbuf)[(int)dcol];
 				  if ((value2-value)>(maxh))
 					{
 					OK=0;
-					outcellbuf[col1]=0;
+					((CELL *)outcellbuf)[col1]=0;
 					}
 				  }
 				}
