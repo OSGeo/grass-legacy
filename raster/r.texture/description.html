@@ -1,0 +1,61 @@
+<H2>DESCRIPTION</H2>
+
+<em>r.texture</em> - Creates map raster with textural features for
+user-specified raster map layer.
+
+<p> It uses the algorithms of <a href="i.texture.html">i.texture</a>. Reads
+a GRASS raster map as input. Calculates textural features based on spatial
+dependence matrices for north-south, east-west, northwest, and southwest
+directions using a side by side neighborhood (i.e., a distance of 1). Be
+sure to carefully set your resolution (using 
+<a href="g.region.html">g.region</a>) before running this program, or else your
+computer could run out of memory.  Also, make sure that your raster map has
+no more than 255 categories.  The output consists into four images for each
+textural feature, one for every direction</p>
+      
+   
+<h2>NOTES</h2>
+Algorithm taken from:<br>
+
+Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features for
+    image classification. <em>IEEE Transactions on Systems, Man</em>, <em>and
+    Cybertinetics</em>, SMC-3(6):610-621.
+
+<p>The code was taken by permission from <em>pgmtexture</em>, part of
+    PBMPLUS (Copyright 1991, Jef Poskanser and Texas Agricultural Experiment
+    Station, employer for hire of James Darrell McCauley).</p>
+
+<h2>BUGS</h2>
+- The program can run incredibly slow for large raster files.
+<p>
+- The method for finding the maximal correlation coefficient, which
+    requires finding the second largest eigenvalue of a matrix Q, does not
+    always converge.
+
+<h2>REFERENCES</h2>
+<em>IEEE Transactions on Systems, Man, and Cybertinetics</em>,
+    SMC-3(6):610-621.<b>Bouman C. A., Shapiro M.</b>,(March
+    1994).A Multiscale Random Field Model for Bayesian Image
+    Segmentation, IEEE Trans. on Image Processing, vol. 3, no.2.</p>
+
+<p>
+<b>Haralick R.</b>, (May 1979). <i>Statistical Approaches to Texture</i>, Proceedings of
+    the IEEE, vol. 67, No.5.</p>
+ 
+     
+<h2>SEE ALSO</h2>
+
+<em><a href="i.smap.html">i.smap</a></em><br>
+<em><a href="i.gensigset.html">i.gensigset</a></em><br>
+<em><a href="i.pca.html">i.pca</a></em><br>
+<em><a href="r.digit.html">r.digit</a></em><br>
+<em><a href="i.group.html">i.group</a></em><br>
+<em><a href="i.texture.html">i.texture</a></em>
+
+<h2>AUTHOR</h2>
+<a href="mailto:antoniol@ieee.org">G. Antoniol</a> - RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento.<br>
+<a href="mailto:basco@unisannio.it">C. Basco</a> -  RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento.<br>
+<a href="mailto:ceccarelli@unisannio.it">M. Ceccarelli</a> - Facolt&agrave; di Scienze, Universit&agrave; del Sannio Via Port&#8217;Arsa 11, Benevento.<br>
+
+<p><i><br>
+Last changed: $Date$</i> </p>
