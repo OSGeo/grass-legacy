@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 
 #define MAX_STD_COLORS  15
 
