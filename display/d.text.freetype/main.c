@@ -40,43 +40,84 @@
 #define	DEFAULT_ALIGN		"ll"
 #define	DEFAULT_ROTATION	"0"
 
+
+#define	deinit()		{if(face)				\
+					FT_Done_Face(face);		\
+				if(library)				\
+					FT_Done_FreeType(library);	\
+				if(driver)				\
+					R_close_driver();}
+
+#define	error(msg)		{deinit(); G_fatal_error(msg);}
+
+
 typedef struct {
 	char	*font, *path, *charset, *color, *size;
 } capinfo;
 
-static capinfo	*fonts = NULL;
-static int	fonts_count = 0;
-static int	cur_font = -1;
-static char	*font_names = NULL;
 
-static FT_Library	library = NULL;
-static FT_Face		face = NULL;
-static int		driver = 0;
-
-static void	error(const char *msg);
-static void	read_capfile(void);
-static int	find_font(const char *name);
-static char 	*transform_string(char *str, int (*func)(int));
+static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
+			int *fonts_count, int *cur_font);
+static int	find_font(capinfo *fonts, int fonts_count, char *name);
+static char	*transform_string(char *str, int (*func)(int));
+static int	set_font(FT_Library library, FT_Face *face, char *path,
+			int size);
+static int	convert_text(char *charset, char *text, unsigned char **out);
+static int	get_coordinates(char **ans, char p, double *east, double *north,
+			int *x, int *y);
+static void	get_color(char *tcolor, int *color);
+static void	get_dimension(FT_Face face, unsigned char *out, int l,
+			int *width, int *height);
+static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
+			char *align, double rotation, FT_Vector *pen);
+static void	set_transform(FT_Matrix *matrix, double rotation);
+static int	draw_glyph(FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
+			int ch, int color);
+static void	draw_text(FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
+			unsigned char *out, int ol, int color);
 
 
 int
 main(int argc, char **argv)
 {
 	struct	GModule	*module;
-	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8,
-			*opt9;
-	struct	Flag	*flag1;
-	unsigned char	*text, *path, *charset, *tcolor;
-	int	size, color;
-	double	east, north, rotation;
-	int	i, j, k, l, x, y, minx, maxx, miny, maxy, r, g, b, ch, index;
-#ifdef HAVE_ICONV_H
-	iconv_t	cd;
-#endif
-	int	ol;
-	unsigned char	*p1, *p2, *out, *buffer, *align;
+	struct
+	{
+		struct	Option	*text;
+		struct	Option	*east_north;
+		struct	Option	*font;
+		struct	Option	*path;
+		struct	Option	*charset;
+		struct	Option	*color;
+		struct	Option	*size;
+		struct	Option	*align;
+		struct	Option	*rotation;
+	} param;
+
+	struct
+	{
+		struct	Flag	*r;
+		struct	Flag	*p;
+	} flag;
+
+	char	capfile[4096];
+	capinfo	*fonts;
+	char	*font_names;
+	int	fonts_count;
+	int	cur_font;
+
+	FT_Library	library = NULL;
+	FT_Face		face = NULL;
 	FT_Matrix	matrix;
 	FT_Vector	pen;
+
+	int	driver = 0;
+	char	*text, *path, *charset, *tcolor;
+	int	size, color;
+	double	east, north, rotation;
+	int	i, j, k, l, ol, x, y, ch;
+	unsigned char	*out;
+	char	*buffer, *align;
 
 
 	G_gisinit(argv[0]);
@@ -85,96 +126,102 @@ main(int argc, char **argv)
 	module->description =
 		"Draws text on the graphics monitor using TrueType fonts.";
 
-	read_capfile();
+	sprintf(capfile, "%s/etc/freetypecap", G_gisbase());
+	read_capfile(capfile, &fonts, &font_names, &fonts_count, &cur_font);
 
-	opt1 = G_define_option();
-	opt1->key        = "text";
-	opt1->type       = TYPE_STRING;
-	opt1->required   = YES;
-	opt1->description= "Text";
+	param.text = G_define_option();
+	param.text->key         = "text";
+	param.text->type        = TYPE_STRING;
+	param.text->required    = YES;
+	param.text->description = "Text";
 
-	opt2 = G_define_option();
-	opt2->key        = "east_north";
-	opt2->type       = TYPE_DOUBLE;
-	opt2->required   = NO;
-	opt2->key_desc   = "east,north";
-	opt2->description= "Coordinates";
+	param.east_north = G_define_option();
+	param.east_north->key         = "east_north";
+	param.east_north->type        = TYPE_DOUBLE;
+	param.east_north->required    = NO;
+	param.east_north->key_desc    = "east,north";
+	param.east_north->description = "Coordinates";
 
-	opt3 = NULL;
+	param.font = NULL;
 	if(fonts_count)
 	{
-	opt3 = G_define_option();
-	opt3->key        = "font";
-	opt3->type       = TYPE_STRING;
-	opt3->required   = NO;
-	if(cur_font >= 0)
-	opt3->answer     = fonts[cur_font].font;
-	opt3->options    = font_names;
-	opt3->description= "Font name";
+		param.font = G_define_option();
+		param.font->key         = "font";
+		param.font->type        = TYPE_STRING;
+		param.font->required    = NO;
+		if(cur_font >= 0)
+			param.font->answer      = fonts[cur_font].font;
+		param.font->options     = font_names;
+		param.font->description = "Font name";
 	}
 
-	opt4 = G_define_option();
-	opt4->key        = "path";
-	opt4->type       = TYPE_STRING;
-	opt4->required   = fonts_count ? NO : YES;
-	opt4->description= "Font path";
+	param.path = G_define_option();
+	param.path->key         = "path";
+	param.path->type        = TYPE_STRING;
+	param.path->required    = fonts_count ? NO : YES;
+	param.path->description = "Font path";
 
-	opt5 = G_define_option();
-	opt5->key        = "charset";
-	opt5->type       = TYPE_STRING;
-	opt5->required   = NO;
-	opt5->description= "Character encoding";
+	param.charset = G_define_option();
+	param.charset->key         = "charset";
+	param.charset->type        = TYPE_STRING;
+	param.charset->required    = NO;
+	param.charset->description = "Character encoding";
 
-	opt6 = G_define_option();
-	opt6->key        = "color";
-	opt6->type       = TYPE_STRING;
-	opt6->required   = NO;
-	opt6->description= "Color";
+	param.color = G_define_option();
+	param.color->key         = "color";
+	param.color->type        = TYPE_STRING;
+	param.color->required    = NO;
+	param.color->description = "Color";
 
-	opt7 = G_define_option();
-	opt7->key        = "size";
-	opt7->type       = TYPE_INTEGER;
-	opt7->required   = NO;
-	opt7->description= "Size";
+	param.size = G_define_option();
+	param.size->key         = "size";
+	param.size->type        = TYPE_INTEGER;
+	param.size->required    = NO;
+	param.size->description = "Size";
 
-	opt8 = G_define_option();
-	opt8->key        = "align";
-	opt8->type       = TYPE_STRING;
-	opt8->required   = NO;
-	opt8->answer     = DEFAULT_ALIGN;
-	opt8->options    = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
-	opt8->description= "Text align";
+	param.align = G_define_option();
+	param.align->key         = "align";
+	param.align->type        = TYPE_STRING;
+	param.align->required    = NO;
+	param.align->answer      = DEFAULT_ALIGN;
+	param.align->options     = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
+	param.align->description = "Text align";
 
-	opt9 = G_define_option();
-	opt9->key        = "rotation";
-	opt9->type       = TYPE_DOUBLE;
-	opt9->required   = NO;
-	opt9->answer     = DEFAULT_ROTATION;
-	opt9->description= "Rotation angle (counterclockwise)";
+	param.rotation = G_define_option();
+	param.rotation->key         = "rotation";
+	param.rotation->type        = TYPE_DOUBLE;
+	param.rotation->required    = NO;
+	param.rotation->answer      = DEFAULT_ROTATION;
+	param.rotation->description = "Rotation angle (counterclockwise)";
 
 
-	flag1 = G_define_flag();
-	flag1->key       = 'r';
-	flag1->description= "Rotation angle in radian";
+	flag.r = G_define_flag();
+	flag.r->key         = 'r';
+	flag.r->description = "Radian rotation";
+
+	flag.p = G_define_flag();
+	flag.p->key         = 'p';
+	flag.p->description = "Pixel coordinates";
 
 
 	if(G_parser(argc, argv))
 		exit(1);
 
-	text = opt1->answer;
+	text = param.text->answer;
 
-	if((opt3 && !opt3->answer && !opt4->answer) || (!opt3 && !opt4->answer))
+	if((param.font && !param.font->answer && !param.path->answer) ||
+			(!param.font && !param.path->answer))
 		G_fatal_error("No font selected");
 
 	charset = NULL;
 	tcolor = NULL;
 	size = 0;
 
-	if(opt3 && opt3->answer)
+	if(param.font && param.font->answer)
 	{
-		cur_font = find_font(opt3->answer);
+		cur_font = find_font(fonts, fonts_count, param.font->answer);
 		if(cur_font < 0)
-			G_fatal_error("Invalid font: %s", opt3->answer);
+			G_fatal_error("Invalid font: %s", param.font->answer);
 
 		path = fonts[cur_font].path;
 		charset = transform_string(fonts[cur_font].charset, toupper);
@@ -182,15 +229,15 @@ main(int argc, char **argv)
 		size = atoi(fonts[cur_font].size);
 	}
 
-	if(opt4->answer)
-		path = opt4->answer;
+	if(param.path->answer)
+		path = param.path->answer;
 
-	if(opt5->answer)
-		charset = transform_string(opt5->answer, toupper);
-	if(opt6->answer)
-		tcolor = transform_string(opt6->answer, tolower);
-	if(opt7->answer)
-		size = atoi(opt7->answer);
+	if(param.charset->answer)
+		charset = transform_string(param.charset->answer, toupper);
+	if(param.color->answer)
+		tcolor = transform_string(param.color->answer, tolower);
+	if(param.size->answer)
+		size = atoi(param.size->answer);
 
 	if(!charset)
 		charset = DEFAULT_CHARSET;
@@ -201,10 +248,10 @@ main(int argc, char **argv)
 
 	fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n", path, charset, tcolor, size);
 
-	align = opt8->answer;
+	align = param.align->answer;
 
-	rotation = atof(opt9->answer);
-	if(!flag1->answer)
+	rotation = atof(param.rotation->answer);
+	if(!flag.r->answer)
 		rotation *= M_PI / 180.0;
 
 	rotation = fmod(rotation, 2 * M_PI);
@@ -218,258 +265,65 @@ main(int argc, char **argv)
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
 
-	if(FT_New_Face(library, path, 0, &face))
+	i = set_font(library, &face, path, size);
+	if(i == -1)
 		error("Unable to create face");
-
-	if(FT_Set_Pixel_Sizes(face, size, 0))
+	if(i == -2)
 		error("Unable to set size");
 
-	l = strlen(text);
-
-	ol = 4 * (l + 1);
-	out = (unsigned char *) G_malloc(ol);
-
-#ifdef HAVE_ICONV_H
-	p1 = text;
-	p2 = out;
-	i = ol;
-	if((cd = iconv_open("UCS-4", charset)) < 0)
-		error("Unable to create conversion context");
-
-	if(iconv(cd, (const char **)&p1, &l, (char **)&p2, &i) < 0)
-		error("Conversion error");
-
-	iconv_close(cd);
-	ol -= i;
-#else
-	for(i = 0; i <= l; i++)
-	{
-		out[2*i+0] = 0;
-		out[2*i+1] = 0;
-		out[2*i+2] = 0;
-		out[2*i+3] = text[i];
-	}
-	ol = l * 4;
-#endif
+	ol = convert_text(charset, text, &out);
+	if(ol == -1)
+		error("Unable to create text conversion context");
+	if(ol == -2)
+		error("Text conversion error");
 
 	D_setup(0);
-
-	if(opt2->answer)
-	{
-		east  = atof(opt2->answers[0]);
-		north = atof(opt2->answers[1]);
-		x = (int)D_u_to_d_col(east);
-		y = (int)D_u_to_d_row(north);
-	}
-	else
-	{
-		fprintf(stdout, "Click!\n");
-		fprintf(stdout, " Left:    Place text here\n");
-		fprintf(stdout, " Right:   Quit\n");
-
-		R_get_location_with_pointer(&x, &y, &i);
-		i &= 0x0f;
-		if(i != 1)
-		{
-			FT_Done_Face(face);
-			FT_Done_FreeType(library);
-			R_close_driver();
-			exit(1);
-		}
-		east  = D_d_to_u_col((double)x);
-		north = D_d_to_u_row((double)y);
-	}
-
 	R_color_table_fixed();
 
-	if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
+	if(get_coordinates(param.east_north->answers, flag.p->answer,
+				&east, &north, &x, &y))
 	{
-		color = 1;
-		R_reset_color(r, g, b, color);
+		deinit();
+		exit(0);
 	}
-	else
-		color = D_translate_color(tcolor);
-
-	if(!color)
-	{
-		G_warning("%s: No such color", tcolor);
-		color = D_translate_color(DEFAULT_COLOR);
-	}
+	get_color(tcolor, &color);
 
 	pen.x = x;
 	pen.y = y;
 
-	if(strcmp(align, "ll"))
-	{
-	j = 1;
-	for(i=0; i<ol; i+=4)
-	{
-		ch = (out[i+2] << 8) | out[i+3];
+	get_ll_coordinates(face, out, l, align, rotation, &pen);
+	set_transform(&matrix, rotation);
 
-		if(!(index = FT_Get_Char_Index(face, ch)))
-			continue;
-		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
-			continue;
-		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
-			continue;
+	draw_text(face, &matrix, &pen, out, ol, color);
 
-		if(j)
-		{
-			j = 0;
-			minx = pen.x + face->glyph->bitmap_left;
-			maxx = minx + face->glyph->bitmap.width;
-			miny = pen.y - face->glyph->bitmap_top;
-			maxy = miny + face->glyph->bitmap.rows;
-		}
-		else
-		{
-			if(minx > pen.x + face->glyph->bitmap_left)
-				minx = pen.x + face->glyph->bitmap_left;
-			if(maxx < pen.x + face->glyph->bitmap_left +
-					face->glyph->bitmap.width)
-				maxx = pen.x + face->glyph->bitmap_left +
-					face->glyph->bitmap.width;
-			if(miny > pen.y - face->glyph->bitmap_top)
-				miny = pen.y - face->glyph->bitmap_top;
-			if(maxy < pen.y - face->glyph->bitmap_top +
-					face->glyph->bitmap.rows)
-				maxy = pen.y - face->glyph->bitmap_top +
-					face->glyph->bitmap.rows;
-		}
-
-		pen.x += face->glyph->advance.x >> 6;
-		pen.y += face->glyph->advance.y >> 6;
-	}
-
-	pen.x = x;
-	pen.y = y;
-
-	i = maxx - minx;
-	j = maxy - miny;
-
-	switch(align[0])
-	{
-		case 'l':
-			break;
-		case 'c':
-			pen.x += j / 2.0 * sin(rotation);
-			pen.y += j / 2.0 * cos(rotation);
-			break;
-		case 'u':
-			pen.x += j * sin(rotation);
-			pen.y += j * cos(rotation);
-			break;
-	}
-
-	switch(align[1])
-	{
-		case 'l':
-			break;
-		case 'c':
-			pen.x -= i / 2.0 * cos(rotation);
-			pen.y += i / 2.0 * sin(rotation);
-			break;
-		case 'r':
-			pen.x -= i * cos(rotation);
-			pen.y += i * sin(rotation);
-			break;
-	}
-	}
-
-	pen.x *= 64;
-	pen.y = - pen.y * 64;
-
-	matrix.xx = (FT_Fixed)( cos(rotation)*0x10000);
-	matrix.xy = (FT_Fixed)(-sin(rotation)*0x10000);
-	matrix.yx = (FT_Fixed)( sin(rotation)*0x10000);
-	matrix.yy = (FT_Fixed)( cos(rotation)*0x10000);
-
-	for(i=0; i<ol; i+=4)
-	{
-		ch = (out[i+2] << 8) | out[i+3];
-
-		FT_Set_Transform(face, &matrix, &pen);
-
-		if(!(index = FT_Get_Char_Index(face, ch)))
-			continue;
-		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
-			continue;
-		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
-			continue;
-
-		l = face->glyph->bitmap.rows * face->glyph->bitmap.width;
-
-		buffer = (unsigned char *) G_malloc(l);
-		memset(buffer, 0, l);
-
-		k = face->glyph->bitmap.width / 8 +
-			(face->glyph->bitmap.width % 8 ? 1 : 0);
-
-		for(j=0; j<l; j++)
-		{
-			if(face->glyph->bitmap.buffer[
-				(j / face->glyph->bitmap.width) * k +
-				(j % face->glyph->bitmap.width) / 8
-			   ] & (1 << (7 - (j % face->glyph->bitmap.width) % 8)))
-				buffer[j] = color;
-		}
-
-		for(j=0; j<face->glyph->bitmap.rows; j++)
-		{
-			R_move_abs(face->glyph->bitmap_left,
-					- face->glyph->bitmap_top + j);
-			R_raster_char(face->glyph->bitmap.width,
-					1, 0,
-					buffer + face->glyph->bitmap.width * j);
-		}
-
-		G_free(buffer);
-
-		pen.x += face->glyph->advance.x;
-		pen.y += face->glyph->advance.y;
-	}
-
-	if(opt2->answer)
+	if(param.east_north->answer)
 		D_add_to_list(G_recreate_command());
 
-	FT_Done_Face(face);
-	FT_Done_FreeType(library);
-	R_close_driver();
+	deinit();
 
 	exit(0);
 }
 
-static void
-error(const char *msg)
+static int
+read_capfile(char *capfile, capinfo **fonts, char **font_names,
+		int *fonts_count, int *cur_font)
 {
-	if(face)
-		FT_Done_Face(face);
-	if(library)
-		FT_Done_FreeType(library);
-	if(driver)
-		R_close_driver();
-	G_fatal_error("%s", msg);
-
-	return;
-}
-
-static void
-read_capfile(void)
-{
-	char freetypecap[4096], buf[4096];
+	char buf[4096];
 	char ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
 	int font_names_size = 0;
 	FILE *fp;
 	int i;
 
-	sprintf(freetypecap, "%s/etc/freetypecap", G_gisbase());
-	fp = fopen(freetypecap, "r");
-
-	if(!fp)
+	if(!(fp = fopen(capfile, "r")))
 	{
-		G_warning("%s: No FreeType definition file", freetypecap);
-		return;
+		G_warning("%s: No FreeType definition file", capfile);
+		return -1;
 	}
+
+	*fonts = NULL;
+	*font_names = NULL;
+	*fonts_count = 0;
+	*cur_font = -1;
 
 	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
 	{
@@ -488,15 +342,15 @@ read_capfile(void)
 		if(access(ipath, R_OK))
 			continue;
 
-		fonts = (capinfo *)
-			G_realloc(fonts, (fonts_count + 1) * sizeof(capinfo));
+		*fonts = (capinfo *)
+			G_realloc(*fonts, (*fonts_count + 1) * sizeof(capinfo));
 
-		font = &fonts[fonts_count];
+		font = &((*fonts)[*fonts_count]);
 
 		offset = (ifont[0] == '*') ? 1 : 0;
 
-		if(offset > 0 && cur_font < 0)
-			cur_font = fonts_count;
+		if(offset > 0 && *cur_font < 0)
+			*cur_font = *fonts_count;
 
 		font->font    = G_store(ifont + offset);
 		font->path    = G_store(ipath);
@@ -504,31 +358,32 @@ read_capfile(void)
 		font->color   = G_store(icolor);
 		font->size    = G_store(isize);
 
-		fonts_count++;
+		(*fonts_count)++;
 	}
 
 	fclose(fp);
 
 	font_names_size = 0;
-	for(i = 0; i < fonts_count; i++)
-		font_names_size += strlen(fonts[i].font) + 1;
+	for(i = 0; i < *fonts_count; i++)
+		font_names_size += strlen((*fonts)[i].font) + 1;
 
-	font_names = (char *) G_malloc(font_names_size);
-	font_names[0] = '\0';
-	for(i = 0; i < fonts_count; i++)
+	*font_names = (char *) G_malloc(font_names_size);
+	(*font_names)[0] = '\0';
+	for(i = 0; i < *fonts_count; i++)
 	{
 		if(i > 0)
-			strcat(font_names, ",");
-		strcat(font_names, fonts[i].font);
+			strcat(*font_names, ",");
+		strcat(*font_names, (*fonts)[i].font);
 	}
 
-	return;
+	return 0;
 }
 
 static int
-find_font(const char *name)
+find_font(capinfo *fonts, int fonts_count, char *name)
 {
 	int i;
+
 	for(i = 0; i < fonts_count; i++)
 		if(strcasecmp(fonts[i].font, name) == 0)
 			return i;
@@ -539,12 +394,305 @@ find_font(const char *name)
 static char *
 transform_string(char *str, int (*func)(int))
 {
-	char *result = G_store(str);
+	char *result;
 	int i;
+
+	result = G_store(str);
 
 	for(i = 0; result[i]; i++)
 		result[i] = (*func)(result[i]);
 
 	return result;
+}
+
+static int
+set_font(FT_Library library, FT_Face *face, char *path, int size)
+{
+	if(FT_New_Face(library, path, 0, face))
+		return -1;
+	if(FT_Set_Pixel_Sizes(*face, size, 0))
+		return -2;
+
+	return 0;
+}
+
+static int
+convert_text(char *charset, char *text, unsigned char **out)
+{
+	int i, l, ol;
+	char *p1;
+	unsigned char *p2;
+#ifdef HAVE_ICONV_H
+	iconv_t cd;
+#endif
+
+	l = strlen(text);
+
+	ol = 4 * (l + 1);
+	*out = (unsigned char *) G_malloc(ol);
+
+#ifdef HAVE_ICONV_H
+	p1 = text;
+	p2 = *out;
+	i = ol;
+	if((cd = iconv_open("UCS-4", charset)) < 0)
+		return -1;
+
+	if(iconv(cd, (const char **)&p1, &l, (char **)&p2, &i) < 0)
+		return -2;
+
+	iconv_close(cd);
+	ol -= i;
+#else
+	p2 = *out;
+	for(i = 0; i <= l; i++)
+	{
+		p2[2*i+0] = 0;
+		p2[2*i+1] = 0;
+		p2[2*i+2] = 0;
+		p2[2*i+3] = text[i];
+	}
+	ol = l * 4;
+#endif
+
+	return ol;
+}
+
+static int
+get_coordinates(char **ans, char p, double *east, double *north, int *x, int *y)
+{
+	int	i;
+	double	e, n;
+
+	if(ans)
+	{
+		e = atof(ans[0]);
+		n = atof(ans[1]);
+		if(!p)
+		{
+			*x = (int)D_u_to_d_col(e);
+			*y = (int)D_u_to_d_row(n);
+		}
+		else
+		{
+			*x = e;
+			*y = n;
+			e = D_d_to_u_col((double)*x);
+			n = D_d_to_u_row((double)*y);
+		}
+	}
+	else
+	{
+		fprintf(stdout, "Click!\n");
+		fprintf(stdout, " Left:    Place text here\n");
+		fprintf(stdout, " Right:   Quit\n");
+
+		R_get_location_with_pointer(x, y, &i);
+		i &= 0x0f;
+		if(i != 1)
+			return 1;
+		e = D_d_to_u_col((double)*x);
+		n = D_d_to_u_row((double)*y);
+	}
+
+	if(east)
+		*east = e;
+	if(north)
+		*north = n;
+
+	return 0;
+}
+
+static void
+get_color(char *tcolor, int *color)
+{
+	int r, g, b;
+
+	if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
+	{
+		*color = 1;
+		R_reset_color(r, g, b, *color);
+	}
+	else
+		*color = D_translate_color(tcolor);
+
+	if(!*color)
+	{
+		G_warning("%s: No such color", tcolor);
+		*color = D_translate_color(DEFAULT_COLOR);
+	}
+
+	return;
+}
+
+static void
+get_dimension(FT_Face face, unsigned char *out, int l, int *width, int *height)
+{
+	int i, index, x = 0, y = 0, first = 1, minx, maxx, miny, maxy, ch;
+
+	for(i=0; i<l; i+=4)
+	{
+		ch = (out[i+2] << 8) | out[i+3];
+
+		if(!(index = FT_Get_Char_Index(face, ch)))
+			continue;
+		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
+			continue;
+		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+			continue;
+
+		if(first)
+		{
+			first = 0;
+			minx = x + face->glyph->bitmap_left;
+			maxx = minx + face->glyph->bitmap.width;
+			miny = y - face->glyph->bitmap_top;
+			maxy = miny + face->glyph->bitmap.rows;
+		}
+		else
+		{
+			if(minx > x + face->glyph->bitmap_left)
+				minx = x + face->glyph->bitmap_left;
+			if(maxx < x + face->glyph->bitmap_left +
+					face->glyph->bitmap.width)
+				maxx = x + face->glyph->bitmap_left +
+					face->glyph->bitmap.width;
+			if(miny > y - face->glyph->bitmap_top)
+				miny = y - face->glyph->bitmap_top;
+			if(maxy < y - face->glyph->bitmap_top +
+					face->glyph->bitmap.rows)
+				maxy = y - face->glyph->bitmap_top +
+					face->glyph->bitmap.rows;
+		}
+
+		x += face->glyph->advance.x >> 6;
+		y += face->glyph->advance.y >> 6;
+	}
+
+	*width  = maxx - minx;
+	*height = maxy - miny;
+
+	return;
+}
+
+static void
+get_ll_coordinates(FT_Face face, unsigned char *out, int l,
+		char *align, double rotation, FT_Vector *pen)
+{
+	int	width, height;
+
+	if(strcmp(align, "ll"))
+	{
+		get_dimension(face, out, l, &width, &height);
+
+		switch(align[0])
+		{
+			case 'l':
+				break;
+			case 'c':
+				pen->x += height / 2.0 * sin(rotation);
+				pen->y += height / 2.0 * cos(rotation);
+				break;
+			case 'u':
+				pen->x += height * sin(rotation);
+				pen->y += height * cos(rotation);
+				break;
+		}
+
+		switch(align[1])
+		{
+			case 'l':
+				break;
+			case 'c':
+				pen->x -= width / 2.0 * cos(rotation);
+				pen->y += width / 2.0 * sin(rotation);
+				break;
+			case 'r':
+				pen->x -= width * cos(rotation);
+				pen->y += width * sin(rotation);
+				break;
+		}
+	}
+
+	pen->x *= 64;
+	pen->y = - pen->y * 64;
+
+	return;
+}
+
+static void
+set_transform(FT_Matrix *matrix, double rotation)
+{
+	matrix->xx = (FT_Fixed)( cos(rotation)*0x10000);
+	matrix->xy = (FT_Fixed)(-sin(rotation)*0x10000);
+	matrix->yx = (FT_Fixed)( sin(rotation)*0x10000);
+	matrix->yy = (FT_Fixed)( cos(rotation)*0x10000);
+
+	return;
+}
+
+static int
+draw_glyph(FT_Face face, FT_Matrix *matrix, FT_Vector *pen, int ch, int color)
+{
+	int	i, j, l, index;
+	char	*buffer;
+
+	FT_Set_Transform(face, matrix, pen);
+
+	if(!(index = FT_Get_Char_Index(face, ch)))
+		return -1;
+	if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
+		return -2;
+	if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+		return -3;
+
+	if((l = face->glyph->bitmap.rows * face->glyph->bitmap.width) > 0)
+	{
+		buffer = (char *) G_malloc(l);
+		memset(buffer, 0, l);
+	
+		j = face->glyph->bitmap.width / 8 +
+			(face->glyph->bitmap.width % 8 ? 1 : 0);
+	
+		for(i=0; i<l; i++)
+		{
+			if(face->glyph->bitmap.buffer[
+				(i / face->glyph->bitmap.width) * j +
+				(i % face->glyph->bitmap.width) / 8
+			   ] & (1 << (7 - (i % face->glyph->bitmap.width) % 8)))
+				buffer[i] = color;
+		}
+	
+		for(i=0; i<face->glyph->bitmap.rows; i++)
+		{
+			R_move_abs(face->glyph->bitmap_left,
+					- face->glyph->bitmap_top + i);
+			R_raster_char(face->glyph->bitmap.width,
+					1, 0,
+					buffer + face->glyph->bitmap.width * i);
+		}
+	
+		G_free(buffer);
+	}
+
+	pen->x += face->glyph->advance.x;
+	pen->y += face->glyph->advance.y;
+
+	return 0;
+}
+
+static void
+draw_text(FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
+		unsigned char *out, int ol, int color)
+{
+	int	i;
+
+	for(i=0; i<ol; i+=4)
+	{
+		draw_glyph(face, matrix, pen,
+				(out[i+2] << 8) | out[i+3], color);
+	}
+
+	return;
 }
 
