@@ -1,0 +1,31 @@
+Mll_to_secs	ll_to_secs.c	/^main (argc, argv)$/
+Mmkquads_cmd	mkquads_cmd.c	/^main (argc, argv)$/
+Mtryit	tryit.c	/^main()$/
+ask_for_double	ask_for.c	/^ask_for_double( num, quest)$/
+ask_for_int	ask_for.c	/^ask_for_int( num, quest)$/
+ask_for_name	ask_for.c	/^ask_for_name( file_name, header, name, dir, file_d/
+ask_for_string	ask_for.c	/^ask_for_string( buf, quest)$/
+calculate_quads	calc_quads.c	/^calculate_quads (Q, W_ll, flags)$/
+check_args	mkquads_cmd.c	/^check_args( argc, argv, filename, flags) $/
+convert_ll_to_utm	convert.c	/^convert_ll_to_utm( lon, lat, x, y, Q)$/
+convert_window_to_ll	convert.c	/^convert_window_to_ll (W)$/
+create_name	ask_for.c	/^create_name( file_name, header, name, dir, file_de/
+dashed_args	mkquads_cmd.c	/^dashed_args(  args, flags) $/
+find_quad_point	convert.c	/^find_quad_point (Q, W_ll, flags)$/
+init_header	init_head.c	/^init_header (fp_digit, window, d_head)$/
+init_quad_struct	init_quad.c	/^init_quad_struct (quads_info, W_ll)$/
+print_quad	convert.c	/^print_quad( Q) $/
+print_wind	convert.c	/^print_wind( W, desc) $/
+reg_quads	reg_quads.c	/^reg_quads (fp_reg, Q)$/
+report_quads	report_quads.c	/^report_quads (fp_report, Q, flags)$/
+ret_check	convert.c	/^ret_check( funct_no, ret_value)$/
+setup_ll_to_utm	convert.c	/^setup_ll_to_utm (quads_info)$/
+sites_quads	sites_quads.c	/^sites_quads (fp_sites, Q)$/
+welcome_mat	ask_for.c	/^welcome_mat() $/
+window_quads	wind_quads.c	/^window_quads ( Q, WW)$/
+write_quads	write_quads.c	/^write_quads (fp_digit, Q)$/
+write_reg_line	reg_quads.c	/^write_reg_line( fp_reg, x, y )$/
+write_report_line	report_quads.c	/^static  write_report_line( fp_report, cnt, lon, la/
+write_sites_line	sites_quads.c	/^write_sites_line( fp_sites, x, y )$/
+write_vect	write_quads.c	/^write_vect( fp_digit, x1, y1, x2, y2 )$/
+write_window	wind_quads.c	/^write_window( window_num, x1, y1, x2, y2, WW )$/
