@@ -33,7 +33,7 @@ fi
 # if non-interactive mode but improper number of arguments
 #
 
-if [ $# -eq 2 -o $# -gt 6 ]
+if [ $# -le 2 -o $# -gt 6 -o "$1" = "-help" ]
 then
 	cat $DBASEDIR/v.usage > "/dev/tty"
 	exit 1
