@@ -122,14 +122,14 @@ main (int argc, char *argv[])
 	else
             format = FORMAT_ALL;
 
-	if (zcoorf->answer && zcol_opt->answer == "0")
+	if (zcoorf->answer && format == FORMAT_POINT && zcol_opt->answer == "0")
 		G_fatal_error("Please specify z column.");
 
 	xcol = atoi(xcol_opt->answer) - 1;
 	ycol = atoi(ycol_opt->answer) - 1;
 	zcol = atoi(zcol_opt->answer) - 1;
 
-	if (zcoorf->answer && zcol < 0)
+	if (zcoorf->answer && format == FORMAT_POINT && zcol < 0)
 	    G_fatal_error("Please specify reasonable z column.");
 
 	catcol = atoi(catcol_opt->answer) - 1;
