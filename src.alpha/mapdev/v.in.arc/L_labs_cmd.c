@@ -54,7 +54,7 @@ char idcol, catcol, attcol;
 	int   n_points=0;
 	int   n_dig_lines=0;
 	int   type = LINE;
-	char  tmpbuf[1024];
+	char  tmp[1024], tmpbuf[1024];
 	int   CatStat;
 	int   CatNum;
 	int   NumCats;
@@ -165,8 +165,20 @@ char idcol, catcol, attcol;
 	done=0;
 	do {
 		if (!fgets(inbuf,1024,lin_file)) return (-1);
-		if (sscanf(inbuf,"%lf %lf",&xtmp,&ytmp)==2)
+		strcpy(tmpbuf, inbuf);
+		if ((strcmp(G_squeeze(inbuf),"END") == 0) && almost_done)
+			done = 1;
+		else if (strcmp(G_squeeze(inbuf),"END") == 0)
 		{
+			almost_done = 1;
+			if (vertex_count > vertex_max)
+				vertex_max = vertex_count;
+                }
+		else
+		{
+		    process_inp(tmpbuf);
+		    if (sscanf(tmpbuf,"%lf %lf",&xtmp,&ytmp)==2)
+		    {
 			if (first==1)
 			{
 				xmax=xmin=xtmp;
@@ -179,17 +191,12 @@ char idcol, catcol, attcol;
 			if (ytmp < ymin) ymin=ytmp;
 			vertex_count++;
 			almost_done = 0;
-		}
-		else if (sscanf(inbuf,"%d",&itmp)==1)
-		{
-			if (vertex_count > vertex_max)
-				vertex_max = vertex_count;
+		    }
+	    	    else if (sscanf(tmpbuf,"%d",&itmp)==1)
+		    {
 			vertex_count = 0;
+                    }
 		}
-		else if ((strcmp(G_squeeze(inbuf),"END") == 0) && almost_done)
-			done = 1;
-		else if (strcmp(G_squeeze(inbuf),"END") == 0)
-			almost_done = 1;
 	}while (!done);
 	rewind(lin_file);
 
@@ -230,10 +237,12 @@ char idcol, catcol, attcol;
 		/* read until next line id (or and END marker) is found */
 		do {
 			if (!fgets(inbuf,1024,lin_file)) return (-1);
+		        strcpy(tmp, inbuf);
 			sscanf(inbuf,"%s",tmpbuf);
 			if (strcmp(G_squeeze(tmpbuf),"END")==0)
 				done = 1;
-		}   while (sscanf(inbuf,"%d",&id)!=1 && !done);
+                        process_inp(tmp);
+		}   while (sscanf(tmp,"%d",&id)!=1 && !done);
 
 		if (!done)
 		{
@@ -253,21 +262,26 @@ char idcol, catcol, attcol;
 			do {
 				if (!fgets(inbuf,1024,lin_file)) return (-1);
 				sscanf(inbuf,"%s",tmpbuf);
+				strcpy(tmp,inbuf);
 				if (strcmp(G_squeeze(tmpbuf),"END")==0)
 					almost_done=1;
-				else if (sscanf(inbuf,"%lf %lf",&xtmp,&ytmp)==2)
+                                else
 				{
+				   process_inp(tmp);
+				   if (sscanf(tmp,"%lf %lf",&xtmp,&ytmp)==2)
+				   {
 					*x++ = xtmp;
 					*y++ = ytmp;
-#           ifdef DEBUG
+#           ifdef DEBUG 
 					printf("(%lf %lf) ",xtmp,ytmp);
-#           endif
+#           endif 
 					if (n_points == 0)
 					{
 						xtmp1 = xtmp;
 						ytmp1 = ytmp;
 					}
 					n_points++;
+                                   }
 				}
 				if (CatStat>-1 && n_points == 2 && !almost_done)
 				{
