@@ -1,12 +1,10 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <TITLE>GRASS GIS 5.x - new features</TITLE>
-<!-- Created by: (c) 1999-2002 Markus Neteler, ITC-irst, Italy -->
-<!-- email: neteler@itc.it -->
+   <meta name="Author" content="Created by: (c) 1999-2002 Markus Neteler, ITC-irst, Italy">
+   <TITLE>GRASS GIS 5.0.x - new features</TITLE>
 </HEAD>
-<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B"
-ALINK="#FF0000">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
 
 <h2>New features in GRASS 5.x - Developers notes</h2>
 [$Date$]
@@ -28,6 +26,8 @@ Many thanks to all contributors!
 
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
+<li>d.legend: partial rewrite, now in usable condition (Hamish Bowman)
+<li>g.setproj: UPS projection query mode fixed (Morten Hulden, Eric Miller)
 <li>r.neighbors: added sum method (Markus Neteler)
 <li>r.param.scale: fixed c_tol default settings to 0.0001 (Markus Neteler)
 <li>r.series: added for time series analysis (Glynn Clements)
@@ -39,6 +39,7 @@ Many thanks to all contributors!
 <b>Source Code:</b><br>
 <ul>
 <li>configure, configure.in: Fix FreeType header check (Glynn Clements)
+<li>Gmakefiles: fixed TERMLIB dependencies (Glynn Clements)
 <li>MacOS X portability fixes (Glynn Clements)
 <li>tools/sql.sh: Script to import dependency information into a PostgreSQL database
     (Glynn Clements)
