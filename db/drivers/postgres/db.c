@@ -51,10 +51,14 @@ int db__driver_open_database(handle)
 
     /* Set schema */
     schema = db_get_handle_dbschema (handle);
+
+    /* Cannot use default schema because link to table can point to different database */
+    /*
     if ( schema ) 
 	schema = connection.schemaName;
+    */
     
-    if ( schema ) {
+    if ( schema && strlen(schema) > 0 ) {
 	sprintf ( buf, "set search_path to %s", schema );
 	res = PQexec ( pg_conn, buf );
 	
