@@ -353,6 +353,7 @@ AC_CYGWIN
 AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
 AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
 AC_CHECK_FUNCS(drand48)
+AC_CHECK_FUNCS(putenv setenv)
 AC_FUNC_SETPGRP
 
 AC_MSG_CHECKING(for W11)
