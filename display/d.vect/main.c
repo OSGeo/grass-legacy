@@ -410,51 +410,54 @@ main (int argc, char **argv)
 	     fprintf (stdout,"Plotting ... "); fflush (stdout);
 
 	Vect_get_map_box ( &Map, &box );
-	overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
-	G_debug ( 1, "overlap = %f \n", overlap );
-	if ( overlap < 1 ) 
-	    Vect_set_constraint_region (&Map, window.north, window.south, 
-	        window.east, window.west, PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
-         
-	if ( area ) {
-	    if ( level >= 2 )
-	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer );
-	    else
-		G_warning ("Cannot display areas, topology not available");
-        }
+	if ( window.north < box.S || window.south >  box.N || window.east < box.W || window.west > box.E ){
+	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.");
+	} else { 
+	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
+	    G_debug ( 1, "overlap = %f \n", overlap );
+	    if ( overlap < 1 ) 
+		Vect_set_constraint_region (&Map, window.north, window.south, 
+		    window.east, window.west, PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
+	     
+	    if ( area ) {
+		if ( level >= 2 )
+		    stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer );
+		else
+		    G_warning ("Cannot display areas, topology not available");
+	    }
 
-	if ( display & DISP_SHAPE ) {
-	    if ( id_flag->answer && level < 2 ) {
-		G_warning ("Cannot display lines by id, topology not available");
-	    } else {
-	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer );
+	    if ( display & DISP_SHAPE ) {
+		if ( id_flag->answer && level < 2 ) {
+		    G_warning ("Cannot display lines by id, topology not available");
+		} else {
+		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb, size, (int) id_flag->answer );
+		}
+	    }
+
+	    if ( color > -1 ) {
+		R_color(color);
+		if ( display & DISP_DIR )
+		    stat = dir ( &Map, type, Clist, chcat );
+	    }
+
+	    if ( display & DISP_CAT )
+		stat = label ( &Map, type, area, Clist, &lattr, chcat);
+	    
+	    if ( display & DISP_ATTR )
+		stat = attr ( &Map, type, attrcol_opt->answer, Clist, &lattr, chcat);
+
+	    if ( display & DISP_ZCOOR )
+		stat = zcoor ( &Map, type, &lattr);
+	    
+	    if ( display & DISP_TOPO ) {
+		if (level >= 2 )
+		    stat = topo ( &Map, type, area, &lattr);
+		else
+		    G_warning ("Cannot display topology, not available");
 	    }
 	}
-
-	if ( color > -1 ) {
-	    R_color(color);
-	    if ( display & DISP_DIR )
-		stat = dir ( &Map, type, Clist, chcat );
-	}
-
-	if ( display & DISP_CAT )
-	    stat = label ( &Map, type, area, Clist, &lattr, chcat);
 	
-	if ( display & DISP_ATTR )
-	    stat = attr ( &Map, type, attrcol_opt->answer, Clist, &lattr, chcat);
-
-	if ( display & DISP_ZCOOR )
-	    stat = zcoor ( &Map, type, &lattr);
-	
-	if ( display & DISP_TOPO ) {
-	    if (level >= 2 )
-		stat = topo ( &Map, type, area, &lattr);
-	    else
-		G_warning ("Cannot display topology, not available");
-	}
-	
-	if(stat == 0)
-	    D_add_to_list(G_recreate_command()) ;
+	D_add_to_list(G_recreate_command()) ;
 
 	D_set_dig_name(G_fully_qualified_name(map_name, mapset));
 	D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
