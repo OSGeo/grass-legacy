@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.surf.rst</em>
-<br>This program interpolates the z-values from vector data (e.g., contours,
+<br>This program interpolates the z-values or attributes from vector data (e.g., points, contours,
 isolines) given in a vector file named <em>input</em> to grid cells in the
 output raster file <em>elev</em> representing a surface. As an option, simultaneously
 with interpolation, topographic parameters slope, aspect, profile curvature
@@ -36,7 +36,7 @@ parameter tunes the character of the resulting surface from thin plate
 to membrane. For noisy data, it is possible to define a smoothing parameter
 <em>smooth</em>. With the smoothing parameter set to zero (<em>smooth=0</em>) 
 the resulting surface passes exactly through the data points. When smoothing parameter
-is used, it is possible to output site file <em>devi</em> containing deviations
+is used, it is possible to output vector point file <em>devi</em> containing deviations
 of the resulting surface from the given data.
 
 <p>
@@ -206,19 +206,23 @@ AUTHORS</h2>
 
 <p><br><em>Original version of program (in FORTRAN) and GRASS enhancements</em>:
 <br>Lubos Mitas, NCSA, University of Illinois at Urbana Champaign, Illinois,
-USA
-<br>Helena Mitasova, Department of Geography, University of Illinois at
-Urbana-Champaign, USA
+USA (1990-2000); Department of Physics, North Carolina State University, Raleigh
+<br>Helena Mitasova, USA CERL, Department of Geography, University of Illinois at
+Urbana-Champaign, USA (1990-2001); MEAS, North Carolina State University, Raleigh 
 </p><p><em>Modified program (translated to C, adapted for GRASS, new segmentation
 procedure):</em>
-<br>Irina Kosinovsky, US Army CERL
-
-<br>Dave Gerdes, US Army CERL
+<br>Irina Kosinovsky, US Army CERL, Dave Gerdes, US Army CERL
 </p><p><em>Modifications for new sites format and timestamping:</em>
-<br>Darrel McCauley, Purdue University
+<br>Darrel McCauley, Purdue University, Bill Brown, US Army CERL
+</p><p><em>Update for GRASS5.7, addition of crossvalidation:</em>
+Jaroslav Hofierka, University of Presov; Radim Blazek, ITC-irst
 <br>&nbsp;
 </p><h2>
 REFERENCES</h2><font color="#000000">
+<P>
+H. Mitasova and L. Mitas, R.S. Harmon, Simultaneous spline approximation and topographic analysis for
+ lidar elevation data in open source GIS, submitted to IEEE GRSL.
+<P>
      Hofierka J., Parajka J.,  Mitasova H., Mitas L., 2002,
      Multivariate Interpolation of Precipitation Using Regularized Spline with Tension.
      <em>Transactions in GIS</em>&nbsp; 6(2), pp. 135-150.</font><br>
