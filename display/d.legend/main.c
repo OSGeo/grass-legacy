@@ -76,7 +76,7 @@ int main( int argc, char **argv )
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->answer     = "white" ;
+	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->options    = D_color_list();
 	opt2->description= "Sets the legend's text color" ;
 
@@ -276,8 +276,8 @@ int main( int argc, char **argv )
 
 	D_set_colors(&colors);
 
-	white = D_translate_color("white") ;
-	black = D_translate_color("black") ;
+	white = D_translate_color(DEFAULT_FG_COLOR) ;
+	black = D_translate_color(DEFAULT_BG_COLOR) ;
 
 	/* Figure out where to put text */
 	D_get_screen_window(&t, &b, &l, &r) ;
