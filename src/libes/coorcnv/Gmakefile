@@ -2,6 +2,7 @@ OBJ = \
     geocen1.o\
     geocen2.o\
     spheroid.o\
+    tm.o\
     utm.o\
     format_ll.o\
     scan_ll.o
