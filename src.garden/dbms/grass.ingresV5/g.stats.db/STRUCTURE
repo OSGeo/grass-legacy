@@ -1,0 +1,15 @@
+************************
+g.stats 
+
+(m) meands modified
+
+Katarina Johnsson 930419
+************************
+
+main (m)
+	buildSQL (m)
+	chktype (m)
+		ingresUnTable (new)
+	sqlStats (m, <=> infxStats)
+		ingresUnTable (new)
+
