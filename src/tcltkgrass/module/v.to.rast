@@ -1,0 +1,6 @@
+interface_build {
+    {v.to.rast} 0
+    {Converts a binary GRASS vector map to a GRASS raster map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output raster map:} 0 raster}
+}
