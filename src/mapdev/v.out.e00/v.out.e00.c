@@ -46,7 +46,9 @@ int main( int argc, char *argv[])
 {
     char *infile, *outfile;	/* name of output files */
     char msg[128];		/* for error messages */
-    char name[32], mapsetname[128], nm[32], *p;	/* name of cover */
+    char name[32];
+    char *mapsetname;
+    char nm[32], *p;	/* name of cover */
     char nnu[32], nid[32];
     int i, j, k, l, n, m;
     int level;			/* level of vector file (should be at least 2 */
@@ -58,7 +60,7 @@ int main( int argc, char *argv[])
     struct Map_info map;
     struct line_pnts *points;
     struct Cell_head region;
-    P_ISLE *pisle;
+    /* P_ISLE *pisle; */
 
     void add_line_universe( int, struct P_line);
     struct Univ *pu, *current, *segment;
@@ -106,10 +108,12 @@ int main( int argc, char *argv[])
     
     infile = parm.input->answer;
     outfile = parm.output->answer;
-    strcpy( mapsetname,  parm.mapset->answer);
 
-    if( strcmp( mapsetname, "" ) == 0 )
-      strcpy( mapsetname, G_mapset() );
+    mapsetname = G_find_vector (infile, parm.mapset->answer);
+    if (mapsetname == NULL) {
+        G_fatal_error ("Vector map <%s> not found in mapset search path!\n",
+                infile);
+    }
 
     strncpy( name, infile, 27);
     for (p=name; *p; p++) {
@@ -126,7 +130,8 @@ int main( int argc, char *argv[])
     /* Open input file */
 
     if ((level = Vect_open_old( &map, infile, mapsetname)) < 0)
-	G_fatal_error( "Vector map <%s> in mapset <%s> not found.\n", infile, mapsetname );
+	G_fatal_error( "Failed to open vector map <%s> in mapset <%s>.\n",
+                infile, mapsetname );
 	
     if (level == 1)
 	G_fatal_error( "Need to run v.support to build topology\n");
@@ -229,9 +234,10 @@ int main( int argc, char *argv[])
 
 	/* print header for each line */
 	fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
-		i, map.Att[map.Line[i].att].cat, map.Line[i].N1,
-		map.Line[i].N2, map.Line[i].left,
-		map.Line[i].right, points->n_points);
+		(long)i, (long)map.Att[map.Line[i].att].cat, 
+                (long)map.Line[i].N1, (long)map.Line[i].N2, 
+                (long)map.Line[i].left, (long)map.Line[i].right,
+                (long)points->n_points);
 	
 	/* Compute length of lines for AAT and PAT tables (perimeter) */
 	px = points->x; py = points->y;
@@ -250,7 +256,7 @@ int main( int argc, char *argv[])
     
     /* mark end of ARC section */
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
-	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
+	    -1L, 0L, 0L, 0L, 0L, 0L, 0L);
 
     if (nareas == 0)	/* should we also test if dig_att file is empty ? */
 	goto no_area;	/* We could the go to the PAL section...          */
@@ -278,7 +284,7 @@ int main( int argc, char *argv[])
 	fprintf( fde00, "%10d\n", i);
     }
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
-	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
+	    -1L, 0L, 0L, 0L, 0L, 0L, 0L);
 
     /* LAB SECTION */
     /* use the same values than in CNT section for labels' position */
@@ -358,6 +364,7 @@ int main( int argc, char *argv[])
 	npts += 2;
     }
 
+
     /* write universe polygon */
     /* first print bounding box : here the coverage's extent */
     
@@ -378,7 +385,7 @@ int main( int argc, char *argv[])
 	    area[0] -= lareas[-current->line];
 	}
 
-	if (l=1-l)	/* two arc's descriptions by file's line */
+	if ((l=1-l))	/* two arc's descriptions by file's line */
 	    fputc( '\n', fde00);
 	current = current->next;
     }
@@ -419,7 +426,7 @@ int main( int argc, char *argv[])
 		area[i] -= lareas[-k];
 	    }
 
-	    if (l=1-l)
+	    if ((l=1-l))
 		fputc( '\n', fde00);
 	}
 	/* isles follow main perimeter description */
@@ -428,7 +435,7 @@ int main( int argc, char *argv[])
 		k = map.Area[i].isles[j];
 		if (map.Isle[k].alive != 0) {
 		    fprintf( fde00, "%10d%10d%10d", 0, 0, 0);
-		    if (l=1-l)
+		    if ((l=1-l))
 			fputc( '\n', fde00);
 		    for (n=0; n < map.Isle[k].n_lines; n++) {
 		    m = map.Isle[k].lines[n];
@@ -445,7 +452,7 @@ int main( int argc, char *argv[])
 			perim[0] += length[-m];
 			area[0] -= lareas[-m];
 		    }
-		    if (l=1-l)
+		    if ((l=1-l))
 			fputc( '\n', fde00);
 		    }
 		}
@@ -457,7 +464,7 @@ int main( int argc, char *argv[])
 
     /* mark end of PAL section */
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
-	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
+	    -1L, 0L, 0L, 0L, 0L, 0L, 0L);
     fprintf( fde00, "%21.14lE%21.14lE\n", 0.0, 0.0);
 
 no_area:
@@ -500,7 +507,7 @@ no_area:
     strncat( nid, "-ID", 31);
 
     /* description of format */
-    fprintf( fde00, "%-32.32sXX   7   7  28%10ld\n", nm, nlines);
+    fprintf( fde00, "%-32.32sXX   7   7  28%10ld\n", nm, (long)nlines);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
 	"FNODE#", "  4-1   14-1   5-1 50-1  -1  -1-1                   1-",
 	"TNODE#", "  4-1   54-1   5-1 50-1  -1  -1-1                   2-",
@@ -529,7 +536,7 @@ no_area:
     strncat( nm, ".PAT", 31);
 
     /* don't forget we add one area : the unnverse polygon */
-    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, nareas+1);
+    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, nareas+1L);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
 	"AREA", "  4-1   14-1  12 3 60-1  -1  -1-1                   1-",
 	"PERIMETER", "  4-1   54-1  12 3 60-1  -1  -1-1                   2-",
@@ -539,12 +546,12 @@ no_area:
     /* write universe polygon... */
 
     fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n",
-	  area[0], perim[0], 1, 0);
+	  area[0], perim[0], 1L, 0L);
     
     /* write other polygons */
     for (i=1; i<=nareas; i++) {
 	fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n",
-	  area[i], perim[i], i+1, map.Att[map.Area[i].att].cat);
+	  area[i], perim[i], i+1L, (long)map.Att[map.Area[i].att].cat);
     }
 
 finish:
@@ -552,6 +559,8 @@ finish:
     fclose( fde00);
     Vect_destroy_line_struct( points);
     Vect_close( &map);
+
+    return 0;
 }
 
 /* function to add a line to the perimeter of the universe polygon */
