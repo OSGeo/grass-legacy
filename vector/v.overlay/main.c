@@ -23,6 +23,11 @@
  *  - opent output, write centroids, build, close
  */
 
+#define OP_AND 0
+#define OP_OR  1
+#define OP_NOT 2
+#define OP_XOR 3
+
 typedef struct {
     double x, y;
     int cat[2]; /* category in map a and b */
@@ -32,19 +37,20 @@ typedef struct {
 int 
 main (int argc, char *argv[])
 {
-    int    ret, input, line, nlines, area, nareas;
+    int    ret, input, line, nlines, area, nareas, operator;
     int    in_area, in_centr, in_cat;
     int    field[2];
     char   *mapset[2];
     char   *pre[0], *sep;
     struct GModule *module;
-    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2];
+    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
     struct Flag *table_flag;
     struct Map_info In[2], Out;
     int    type;
     struct line_pnts *Points;
     struct line_cats *Cats;
     CENTR  *Centr;
+    char    *Del;
 
     struct   field_info *Fi;
     char     buf[1000];
@@ -84,11 +90,31 @@ main (int argc, char *argv[])
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
+    operator_opt = G_define_option();
+    operator_opt->key = "operator";
+    operator_opt->type = TYPE_STRING;
+    operator_opt->required = NO;
+    operator_opt->multiple = NO;
+    operator_opt->options = "and,or,not,xor";
+    operator_opt->answer = "or";
+    operator_opt->description = "Operator defines features written to output vector. "
+	"Feature is written to output if the result of operation 'ainput operator binput' is true. "
+	"Input feature is considered to be true, if category of given field is defined.\n"
+	"\t and : also known as 'union' in GIS\n"
+	"\t or  : also known as 'intersection' in GIS\n"
+	"\t not : features from ainput not overlayed by features from binput\n"
+	"\t xor : features from either ainput or binput but not those from ainput overlayed by binput";
+
     table_flag = G_define_flag ();
     table_flag->key             = 't';
     table_flag->description     = "Do not create attribute table.";
 
     if (G_parser (argc, argv)) exit(-1);
+
+    if ( operator_opt->answer[0] == 'a' ) operator = OP_AND;
+    else if ( operator_opt->answer[0] == 'o' ) operator = OP_OR;
+    else if ( operator_opt->answer[0] == 'n' ) operator = OP_NOT;
+    else if ( operator_opt->answer[0] == 'x' ) operator = OP_XOR;
     
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
@@ -124,8 +150,9 @@ main (int argc, char *argv[])
         fprintf (stderr, sep );
     }
 
-    fprintf ( stderr, "Buiding topology ...\n" );
-    Vect_build (&Out, NULL); /* do not print output, because befor cleaning it is nonsense */
+    fprintf ( stderr, "Buiding partial topology ...\n" );
+    /* do not print output, because befor cleaning it is nonsense */
+    Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
     fprintf (stderr, sep );
     fprintf ( stderr, "Breaking boundaries ...\n" );
@@ -134,12 +161,14 @@ main (int argc, char *argv[])
     fprintf (stderr, sep );
     fprintf ( stderr, "Removing duplicates ...\n" );
     Vect_remove_duplicates ( &Out, GV_BOUNDARY, NULL, stderr );
+
+    /* ?: May be result of Vect_break_lines() + Vect_remove_duplicates() any dangle or bridge?
+     * In that case, calls to Vect_remove_dangles() and Vect_remove_bridges() would be also necessary */
     
-    /* This is not necessary in theory, because Vect_break_lines() and Vect_remove_duplicates()
-     * update topology, but to be sure, it is better to rebuild */
+    /* Attach islands */
     fprintf (stderr, sep );
-    fprintf ( stderr, "Rebuiding topology ...\n" );
-    Vect_build (&Out, NULL); /* do not print output, because befor cleaning it is nonsense */
+    fprintf ( stderr, "Attaching islands ...\n" );
+    Vect_build_partial ( &Out, GV_BUILD_ATTACH_ISLES, stderr );
 
     /* Calculate new centroids for all areas */
     nareas = Vect_get_num_areas ( &Out );
@@ -155,6 +184,8 @@ main (int argc, char *argv[])
 	}
     }
     
+    /* Downgrade topo so that it is not written by Vect_close() */
+    Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
     Vect_close (&Out);
 
     /* Query input maps */
@@ -185,7 +216,6 @@ main (int argc, char *argv[])
 	Vect_close ( &(In[input]) ); 
     }
 
-
     /* Open output and write centroids */
     Vect_open_update (&Out, out_opt->answer, G_mapset());
 
@@ -193,6 +223,23 @@ main (int argc, char *argv[])
     fprintf ( stderr, "Writing centroids ..." );
     
     for ( area = 1; area <= nareas; area++ ) {
+	/* check the condition */
+        switch (operator) {
+	    case OP_AND:
+		if ( !( Centr[area].cat[0] && Centr[area].cat[1] ) ) continue;
+		break;
+	    case OP_OR:
+		if ( !( Centr[area].cat[0] || Centr[area].cat[1] ) ) continue;
+		break;
+	    case OP_NOT:
+		if ( !( Centr[area].cat[0] && !(Centr[area].cat[1]) ) ) continue;
+		break;
+	    case OP_XOR:
+		if ( (Centr[area].cat[0] && Centr[area].cat[1]) ||
+		     ( !(Centr[area].cat[0]) && !(Centr[area].cat[1]) ) ) continue;
+		break;
+	}
+	
 	Vect_reset_line ( Points );
         Vect_reset_cats ( Cats );
 
@@ -210,9 +257,56 @@ main (int argc, char *argv[])
 	G_percent ( area, nareas, 1 );
     }
 
+    /* Build topology and remove boundaries with area without centroid on both sides */
     fprintf (stderr, sep );
-    fprintf ( stderr, "Rebuiding topology ...\n" );
-    Vect_build (&Out, stderr); /* Rebuild topology to show the final result */
+    fprintf ( stderr, "Building topology ...\n" );
+    Vect_build (&Out, stderr); 
+
+    /* Create a list of lines to be deleted */
+    nlines = Vect_get_num_lines ( &Out );
+    Del = (char *) G_calloc ( nlines+1,  sizeof(char) ); /* index from 1 ! */
+
+    for ( line = 1; line <= nlines; line++ ) {
+	int i, side[2], centr[2];
+	G_percent ( line, nlines, 1 ); /* must be before any continue */
+	
+	type = Vect_read_line ( &Out, NULL, NULL, line);
+	if ( !(type & GV_BOUNDARY) ) continue;
+	
+	Vect_get_line_areas ( &Out, line, &side[0], &side[1] );
+
+	for ( i = 0; i < 2; i++ ) {
+	    if ( side[i] == 0 ) { /* This should not happen ! */
+		centr[i] = 0;
+		continue;
+	    }
+
+	    if ( side[i] > 0 ) {
+		area = side[i]; 
+	    } else { /* island */
+		area = Vect_get_isle_area ( &Out, abs ( side[i] ) ); 
+	    }
+
+	    if ( area > 0 )
+		centr[i] = Vect_get_area_centroid ( &Out, area );
+	    else 
+	        centr[i] = 0;
+	}
+	
+	if ( !centr[0] && !centr[1] ) Del[line] = 1;
+    }
+
+    /* Delete boundaries */
+    for ( line = 1; line <= nlines; line++ ) {
+	if ( Del[line] )
+	    Vect_delete_line ( &Out, line );
+    }
+    G_free ( Del );
+
+    fprintf (stderr, sep );
+    fprintf ( stderr, "Rebuilding topology ...\n" );
+    Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
+    Vect_build (&Out, stderr); /* Build topology to show the final result and prepare for Vect_close() */
     
     /* Create dblinks */
     Fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
