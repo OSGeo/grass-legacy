@@ -1,0 +1,130 @@
+GRASS - INGRES INTERFACE
+
+James Farley at University of Arkansa has developed 13 new GRASS functions 
+to interface an Informix relational database management system.
+This document descibe the changes in SQL syntax  that are required
+to adapt the interface functions for an INGRES relational database
+management system.
+ 
+1) Syntax to run a non-interactive SQL query on database_name. 
+   Query is stored in file_name:
+
+	sql -s database_name < file_name
+
+
+2) Get list of all data bases. This is solved as an sql query to
+   the system database. The system database differs between INGRES
+   version 5 and INGRES version 6. 
+
+INGRES version 6:
+
+	The name of the system database is: iidbdb
+
+	(all databases, except system db's)
+	SELECT name FROM iidatabase		
+	WHERE name NOT LIKE 'ii%';
+
+	(all databases owned by me. Username must be enclosed in quotes)
+	SELECT name 
+	FROM iidatabase		
+	WHERE own='kjohnsso';			
+
+	(save the query in a file and execute using the systems database iidbdb)
+	sql -s iidbdb < file_name
+
+INGRES version 5:
+
+	The name of the system database is: dbdb
+
+	(all databases, except system db's)
+	SELECT name from database;
+	
+	sql -s dbdb < file_name
+
+3) Get list of all tables in the database that we are currently working with.
+
+INGRES version 6:
+
+	SELECT DISTINCT table_name 
+	FROM iicolumns 
+	WHERE table_name NOT LIKE 'ii%';
+
+	(save the query in a file and execute using the current database)
+	sql -s database_name < file_name
+
+INGRES version 5:
+
+	SELECT DISTINCT relid FROM relation
+	WHERE mod(restat,2) <= 0;
+
+	sql -s database_name < file_name
+
+
+
+4) Get list of all columns of a certain table in the database 
+   that we are currently working  with.
+
+INGRES version 6:
+
+	SELECT DISTINCT column_name 
+	FROM iicolumns 
+	WHERE table_name='table_name';
+
+	(verbose)
+	??????
+
+	(save the query in a file and execute using the current database)
+	sql -s database_name < file_name
+
+INGRES version 5:
+
+	SELECT DISTINCT attname from attribute
+	WHERE attrelid='table_name';
+
+	(verbose)
+	SELECT DISTINCT attname, attfrmt, attfrml
+	FRMO attribute
+	WHERE allreid='table_name';
+
+	sql -s database_name < file_name
+
+5) Add '\g' to all queries
+	
+	Running ingres non-interactively requires that all queries end
+	with '\g' (GO). '\g' is added to all queries, whether created
+        by the program or by the user.
+
+6) Read SQL output
+
+	The output from INGRES is in a "nice looking" table. A routine
+	to remove all table delimiters and any additional text has been
+	added to the code, where ever the output is read. The name of the
+	routine is 'ingresUnTable'. It is stored in 'ingresUtils.c'. There
+	is also an include file called 'ingresUtils.h'. 'ingresUnTable'
+	differs slightly for the two versions of INGRES.
+
+7) Format of user supplied SQL query 
+
+	SQL queries supplied by the user should always end with ';'.
+	It is required by the two modules 'r.reclass.db' and 'v.reclass.db'.
+	For all other modules it is optional, but recommended for 
+	consistency. 
+
+8) Checking column data type (g.column.db verbose, g.stats.db)
+
+INGRES ver 6:
+
+	??????
+
+INGRES ver 5:
+
+	(Query to get data type)	
+	SELECT attfrmt FROM attribute
+	WHERE attname='column_name'
+	AND attrelid='table_name';
+
+	(Checking data type)
+	Numeric data type:
+	attfrmt=30	integer
+	attfrmt=31	float
+
