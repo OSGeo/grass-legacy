@@ -11,7 +11,9 @@ static struct
     "mode",          "most frequently occuring value",
     "minimum",       "lowest value",
     "maximum",       "highest value",
-    "diversity",     "number of different value",
+    "stddev",        "statistical standard deviation",
+    "variance",      "statistical variance",
+    "diversity",     "number of different values",
     "interspersion", "number of values different than center value",
     (char *)NULL, (char *) NULL
 } ;
