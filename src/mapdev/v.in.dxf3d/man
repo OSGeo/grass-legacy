@@ -1,58 +1,0 @@
-.TH v.in.dxf3d
-.SH NAME
-Iv.in.dxf3dR \- Converts the Z values of DXF files to attribute GRASS vector file format.
-.br
-.I "(GRASS Vector Program)"
-.SH SYNOPSIS
-Bv.in.dxf3dR
-.br
-Bv.in.dxf3d helpR
-.br
-\fBv.in.dxf3d\fR \fBdxf=\fIname\fR \fB[lines=\fIname[,name,...]]\fR
-.SH DESCRIPTION
-The v.in.dxf3d data conversion program generates GRASS dig_att files from a
-DXF file with Z values.
-
-This program, in conjunction with v.in.dxf, is ideal for automaticaly importing,
-to GRASS vector file, layers with Z values (isolines and level contours) from 
-DXF format files.
-
-Firts should be run the v.in.dxf program for import the DXF polylines to binary
-GRASS vector file format (dig). Later, the DXF Z values of the isolines layers 
-with v.in.dxf3d (dig_att) must be imported, and finally run v.support to 
-attach at this layers their elevations.
-The v.in.dxf3d.sh script can be used to make all this automaticaly, for a maximun
-of two isolines layers (normally contours and master contours) from one DXF file.
-
-The v.in.dxf program only recognizes, by now, the Z values  from polylines 
-entities in the DXF format.
-
-.SH "COMMAND LINE OPTIONS"
-.LP
-Parameters
-.IP \fIdxf\fR
-Name of the DXF input design file from where will be extracted the Z values.
-.IP \fIlines\fR
-Name(s) of layer(s) in DXF input file containing isoline data with Z values,
-and the name(s) to be assigned to the GRASS vector data (dig_att) files
-output.
-
-.SH BUGS
-The program only recognizes the Z values if they are in the "30" field of the
-POLYLINE entity section.
-
-If the input DXF file is in MS-DOS text format, with CR/LF instead of Unix LF, 
-the program doesn't run. To avoid this problem, import to Unix your DXF-MSDOS 
-format files with FTP in ascii mode or with a command able to convert this files 
-(DOS-COPY, mcopy, etc).
-
-.SH "SEE ALSO"
-v.in.dxf, v.support, v.digit, v.in.dxf3d.sh
-
-.SH AUTHOR
-The original program dxf3d2gras.bas written in GWBASIC (MS-DOS) by Evaristo 
-Quiroga, Hidrologic and Extern Geodinamic Unity of the University Autonoma of
-Barcelona (6/93).
-
-The program was rewritted in C for Grass-Unix environment by Evaristo
-Quiroga, Environmental and Territorial Analisis Center, UAB (12/95).
