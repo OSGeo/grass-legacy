@@ -1,3 +1,4 @@
+/* $Id$ */
 /*  @(#)asc_to_bin.c	2.1  6/26/87  */
 
 /*
@@ -64,7 +65,7 @@ the_switch:
 		case 'E': case 'e':
 			return 0;
 		default:
-			fprintf (stdout,"?? %s\n", buff) ;
+			G_warning("unknown feature type [%s]\n", buff);
 			if (NULL == fgets(buff,BUFFSIZE,ascii))
 				return 0;
 			goto the_switch ;
