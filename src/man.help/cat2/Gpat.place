@@ -1,0 +1,132 @@
+
+
+
+Gpat.place(2G)       GRASS Reference Manual        Gpat.place(2G)
+
+
+
+NAME
+     Gpat.place - Places a pattern on the landscape
+     (G Language Tool)
+
+SYNOPSIS
+     Gpat.place
+               pattern=name output=name east=value north=value
+               [rotation=value]
+
+DESCRIPTION
+     Gpat.place allows a user-chosen pattern to be placed in the
+     desired orientation and at a desired location on the
+     landscape.  The input to the function is as follows:
+
+     pattern        File name of a digit format vector file that
+                    contains information about the pattern.  Such
+                    a file differs from the conventional digit
+                    file in that the header does not contain
+                    information for global registration of the
+                    line graph pattern.  Alternately, this
+                    pattern file can also be the name of an
+                    already stored land pattern file which a user
+                    wants to modify.
+
+     output         File name of a digit vector file which stores
+                    information about the pattern in its new
+                    position globally registered to the
+                    landscape.  Such registration is done using
+                    the information provided on the command line
+                    of this function.
+
+     east, north    Coordinates identifying the desired location
+                    of the origin of the pattern on the
+                    landscape.
+
+     rotation       Specifies the magnitude of the angle in
+                    degrees through which the pattern will be
+                    rotated about its origin before being
+                    globally registered.  If omitted, no rotation
+                    is applied to the pattern and it is
+                    registered as oriented in the input file.
+                    Positive values indicate counter-clockwise
+                    rotation, while negative values indicate
+                    clockwise rotation.
+
+NOTES
+     Using existing GRASS functions, a digit format file of the
+     globally registered pattern can be converted to a grid cell
+     file for further analysis purposes.  For example, a digit
+     pattern file can be used to prepare a grid cell layer
+     identifying the areas of interest in which the line of sight
+     analysis can be performed using the Glos function.
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gpat.place(2G)       GRASS Reference Manual        Gpat.place(2G)
+
+
+
+BUGS
+     Program not yet tested because it currently uses dlg3 format
+     files rather than digit files.
+
+SEE ALSO
+     Glos[2]
+
+AUTHOR
+     Kewan Q. Khawaja, Intelligent Engineering Systems
+     Laboratory, M.I.T.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
