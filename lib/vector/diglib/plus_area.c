@@ -184,6 +184,26 @@ dig_add_area (struct Plus_head *plus,
 }
 
 
+/* 
+*  dig_area_set_box ()
+*  Set area bound box
+*/
+int
+dig_area_set_box (struct Plus_head *plus, plus_t area, BOUND_BOX *Box ) {
+    P_AREA *Area;
+    
+    Area = plus->Area[area];
+    
+    Area->N = Box->N;
+    Area->S = Box->S;
+    Area->E = Box->E;
+    Area->W = Box->W;
+    Area->T = Box->T;
+    Area->B = Box->B;
+
+    return (1);
+}
+
 
 /* 
 ** angle_next_line ()
@@ -362,6 +382,26 @@ dig_add_isle (struct Plus_head *plus,
     return (isle);
 }
 
+
+/* 
+*  dig_isle_set_box ()
+*  Set isle bound box
+*/
+int
+dig_isle_set_box (struct Plus_head *plus, plus_t isle, BOUND_BOX *Box ) {
+    P_ISLE *Isle;
+    
+    Isle = plus->Isle[isle];
+    
+    Isle->N = Box->N;
+    Isle->S = Box->S;
+    Isle->E = Box->E;
+    Isle->W = Box->W;
+    Isle->T = Box->T;
+    Isle->B = Box->B;
+
+    return (1);
+}
 
 /*
    ** 

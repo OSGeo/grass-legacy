@@ -6,10 +6,12 @@ LIB_NAME = $(DIG2_LIBNAME)
 LIB_OBJS = \
     allocation.o  \
     angle.o  \
+    box.o  \
     file_checks.o  \
     frmt.o \
     inside.o \
     line_dist.o \
+    list.o \
     plus.o \
     plus_area.o  \
     plus_line.o \
@@ -18,6 +20,7 @@ LIB_OBJS = \
     poly.o \
     portable.o \
     rw_ascii.o  \
+    spindex.o  \
     struct_alloc.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
