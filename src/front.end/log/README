@@ -1,0 +1,31 @@
+Testlog is a prototype of a program to write log entries documenting
+the use of grass programs.  
+
+There are two versions:
+
+Version 1:  can be used with front.end without modification.
+
+	  one function:  log_write (program name, logfilename)
+	  
+		  --just before progr is called, adds an entry to named logfile.
+		  entry names target prog, date and time, user name.
+
+Version 2:
+
+	  depends on system calls in front.end; since log writing only takes
+	  palce after target program is terminated and returned from.
+
+	  Uses two functions:
+	  
+		   log_start(program name, log filename)
+   
+      sets up info for a log entry to be written after the program called
+	  via front.end is done. to be called from front.end. once actual program 
+	  name is clear, but before the actual call to the target program.
+	  
+		   quit_log()
+
+	  to be called after the target prg exits. makes a single-line log entry
+	  in the file specified in call to log_start.  entry includes target
+	  program name, user, date, elapsed time, etc.
+
