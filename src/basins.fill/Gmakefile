@@ -1,0 +1,10 @@
+# %W% %G%
+
+PGM=basins.fill
+
+LIST = main.o read_map.o percent.o die.o
+
+$(BIN)/basins.fill: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(GISLIB): #
