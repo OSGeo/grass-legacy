@@ -14,7 +14,7 @@ static int nlines = 50;
 
 #define WDTH 5
 
-int what(int once, int txt, int terse, int width, int mwidth )
+int what(int once, int txt, int terse, int width, int mwidth, int topo )
 {
     int type, edit_mode;
     int row, col;
@@ -184,7 +184,35 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		    else l = Vect_line_length ( Points );
 		}
 
-		if ( txt ) {
+		if ( topo ) {
+		    int n, node[2], nnodes, nnlines, nli, nodeline, left, right;
+		    float angle;
+		    
+		    fprintf(stdout, "-----------------------------------------------\n" );
+		    Vect_get_line_areas ( &(Map[i]), line, &left, &right );
+		    fprintf(stdout, "Line: %d  Type: %s  Left: %d  Right: %d  ", line, buf, left, right);
+		    if ( type & GV_LINES ) {
+			nnodes = 2;
+			fprintf(stdout, "Length: %f\n", l);
+		    } else { /* points */
+			nnodes = 1;
+			fprintf(stdout, "\n");
+		    }
+		    
+		    Vect_get_line_nodes ( &(Map[i]), line, &node[0], &node[1]);
+
+		    for ( n = 0; n < nnodes; n++ ) { 
+			nnlines = Vect_get_node_n_lines (  &(Map[i]), node[n]);
+		        fprintf(stdout, "  Node[%d]: %d  Number of lines: %d\n", n, node[n], nnlines);
+			
+			for ( nli = 0; nli < nnlines; nli++ ) {
+			    nodeline =  Vect_get_node_line ( &(Map[i]), node[n], nli );
+			    angle =  Vect_get_node_line_angle ( &(Map[i]), node[n], nli );
+		            fprintf(stdout, "    Line: %5d  Angle: %.8f\n", nodeline, angle);
+			}
+		    }
+		    
+		} else if ( txt ) {
 		    fprintf(stdout, "%s\n", buf);
 		    if ( type & GV_LINES ) fprintf(stdout, "length %f\n", l);
 		} else { 
@@ -209,15 +237,35 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		        db_append_string (&html, buf);
 		    }
 		} else {
-		    if ( txt ) fprintf(stdout, "Area\n");
-		    else {
+		    if ( txt ) {
+			fprintf(stdout, "Area\n");
+		    } else {
 			sprintf(buf, "feature type: Area<BR>");
 		        db_append_string (&html, buf);
 		    }
 		}
 
 		sq_meters = Vect_get_area_area(&Map[i], area);
-		if ( txt ) {
+		if ( topo ) {
+		    int nisles, isleidx, isle, isle_area;
+		    
+		    nisles = Vect_get_area_num_isles ( &Map[i], area );
+		    fprintf(stdout, "-----------------------------------------------\n" );
+		    fprintf(stdout, "Area: %d  Number of isles: %d\n", area, nisles );
+
+		    for ( isleidx = 0; isleidx < nisles; isleidx++ ) {
+		        isle = Vect_get_area_isle ( &Map[i], area, isleidx );
+			fprintf(stdout, "  Isle[%d]: %d\n", isleidx, isle );
+		    }
+
+		    isle = Vect_find_island ( &Map[i], east, north );
+		    
+		    if ( isle ) {
+			isle_area = Vect_get_isle_area ( &Map[i], isle );
+		        fprintf(stdout, "Island: %d  In area: %d\n", isle, isle_area );
+		    }
+
+		} else if ( txt ) {
 		    fprintf(stdout, "Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
 			    sq_meters, (sq_meters / 10000.));
 
@@ -292,7 +340,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		}
 	    }
 	    fflush(stdout);
-	    if (!txt ) {
+	    if (!txt && !topo ) {
 		db_append_string (&html, "</BODY></HTML>"); 
 		G_debug ( 3, db_get_string (&html) ); 
 		F_open ( title, db_get_string(&html) );
