@@ -1,5 +1,6 @@
 #define EPS     1.e-7
 #define MAXW    7000000
+#define UNDEF	-9999
 
 FILE *fdelevin, *fddxin, *fddyin, *fdrain, *fdinfil, *fdtraps, *fdmanin, *fddepth, *fddisch, *fderr, *fdoutwalk,*fdwalkers;
 FILE *fdwdepth,*fddetin,*fdtranin,*fdtauin, *fdtc, *fdet, *fdconc, *fdflux,*fderdep;
