@@ -73,6 +73,38 @@ int do_grid (void)
     return 0;
 }
 
+int do_grid_cross (void)
+{
+    double g_north, g_east;
+    int j, k;
+
+    if (PS.grid <= 0) return 1;
+
+    /* set color and set line width to 1 */
+    set_rgb_color(PS.grid_color);
+    set_line_width(PS.grid_width);
+
+    g_north = floor(PS.w.north / PS.grid) * PS.grid ;
+    g_east = floor (PS.w.east / PS.grid) * PS.grid ;
+    for (j = 0; g_north >= PS.w.south; j++, g_north -= PS.grid) {
+    	for (k = 0; g_east > PS.w.west; k++, g_east -= PS.grid) {
+    	
+    	if (g_north == PS.w.north || g_north == PS.w.south) continue;
+    	if (g_east == PS.w.east || g_east == PS.w.west) continue;
+    	
+    	start_line(g_east-PS.grid_cross, g_north);
+    	G_plot_line (g_east-PS.grid_cross, g_north, g_east+PS.grid_cross, g_north);
+    	fprintf(PS.fp, " D ");
+	start_line(g_east, g_north-PS.grid_cross);
+    	G_plot_line (g_east, g_north-PS.grid_cross, g_east, g_north+PS.grid_cross);
+    	fprintf(PS.fp, " D ");
+    	}
+	g_east = floor (PS.w.east / PS.grid) * PS.grid ;
+    }
+
+    return 0;
+}
+
 int do_grid_numbers (void)
 {
     double g;
