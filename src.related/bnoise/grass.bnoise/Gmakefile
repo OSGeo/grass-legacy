@@ -1,0 +1,72 @@
+# %W%  %G%
+PGM=grass.bnoise
+
+LIST = ask_weapon.o add_weap.o choose_weap.o editor.o read_weapon.o \
+       show_weapons.o write_weapon.o add_targ.o choose_targ.o \
+	   read_target.o show_targets.o write_target.o save_param.o \
+	   add_fp.o choose_fp.o read_fp.o show_fp.o write_fp.o get_answer.o \
+	   run_Bnoise.o write7.o finish.o new.o remove_param.o
+
+
+all: $(BIN)/grass.bnoise help
+
+$(BIN)/grass.bnoise: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(VASK) -o $@
+	cp new.table $(GIS)/etc/gun.table
+	cp TAPE20.DAT $(GIS)/etc/TAPE20.DAT
+
+
+editor.o:  edit.h
+
+add_fp.o:    edit.h
+
+add_targ.o:  edit.h
+
+add_weap.o:  edit.h
+
+ask_weapon.o:  edit.h
+
+choose_fp.o:    edit.h
+
+choose_targ.o:  edit.h
+
+choose_weap.o:  edit.h
+
+get_answer.o:    edit.h
+
+new.o:    edit.h
+
+read_fp.o:    edit.h
+
+read_target.o:  edit.h
+
+read_weapon.o:  edit.h
+
+remove_param.o:  edit.h
+
+run_Bnoise.o:  edit.h
+
+save_param.o:  edit.h
+
+show_fp.o:    edit.h
+
+show_targets.o:  edit.h
+
+show_weapons.o:  edit.h
+
+write7.o:    edit.h
+
+write_fp.o:    edit.h
+
+write_target.o:  edit.h
+
+write_weapon.o:  edit.h
+
+
+help:
+	cp HELP $(HELP)/$(PGM); chmod +r $(HELP)/$(PGM)
+	cp MAN.cat $(MAN1)/$(PGM); chmod +r $(MAN1)/$(PGM)
+
+MAN.cat: MAN.nroff
+	$(MANROFF)
+$(GISLIB): #
