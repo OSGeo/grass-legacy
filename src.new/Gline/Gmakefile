@@ -1,0 +1,15 @@
+OFILES = main.o extr_lines.o io.o 
+
+$(BIN)/Gline:	$(OFILES)
+	rm -f $@
+	cc $(LDFLAGS) $(OFILES) $(GISLIB) -o $@
+
+main.o: extr_lines.h
+main.o: mode.h
+main.o: head.h
+extr_lines.o: extr_lines.h
+extr_lines.o: mode.h
+extr_lines.o: head.h
+io.o: extr_lines.h
+io.o: mode.h
+io.o: head.h
