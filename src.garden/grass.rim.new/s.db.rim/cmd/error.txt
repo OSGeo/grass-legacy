@@ -1,0 +1,385 @@
+/data/grass42/src421/src.garden/grass.rim/s.db.rim/cmd # gmake4.2
+  SRC     = /usr/local/grass42/src421/src
+  CMD     = /usr/local/grass42/src421/src/CMD
+  HEADER  = linux
+  ARCH    = linux
+  GISBASE = /usr/local/grass42
+  VERSION = 4.2.1 V.17 - June 1998 
+#################################################################
+/data/grass42/src421/src.garden/grass.rim/s.db.rim/cmd
+  make -f OBJ.linux/make.rules 
+
+mkdir /usr/local/grass42/etc/rim
+mkdir: cannot make directory /usr/local/grass42/etc/rim': File exists
+make: [/usr/local/grass42/etc/rim/s.db.rim.cmd] Error 1 (ignored)
+gcc -Wl,-s -o /usr/local/grass42/etc/rim/s.db.rim.cmd  OBJ.linux/s.db.rim.o
+OBJ.linux/dbio.o OBJ.linux/parser.o OBJ.linux/toplevel.o OBJ.linux/misc.o
+OBJ.linux/make_init.o OBJ.linux/make_add.o OBJ.linux/make_done.o
+OBJ.linux/use_table.o OBJ.linux/fill_buf.o OBJ.linux/fil_f_table.o
+OBJ.linux/fil_s_table.o OBJ.linux/save_finfo.o OBJ.linux/rim_type.o
+OBJ.linux/rim_text_len.o OBJ.linux/res_split_f.o OBJ.linux/show.o
+OBJ.linux/ret_s_table.o OBJ.linux/retr_buf.o OBJ.linux/input_file.o
+OBJ.linux/output_file.o OBJ.linux/site_list.o OBJ.linux/input_stack.o
+OBJ.linux/remove.o OBJ.linux/tables.o OBJ.linux/field_info.o
+OBJ.linux/ret_f_table.o OBJ.linux/list.o OBJ.linux/backup.o
+OBJ.linux/field_offset.o OBJ.linux/field_val.o OBJ.linux/fill_field.o
+OBJ.linux/clear_value.o OBJ.linux/add_change.o OBJ.linux/val_from_str.o
+OBJ.linux/delete.o OBJ.linux/my_G_yes.o OBJ.linux/find_query.o
+OBJ.linux/fill_value.o OBJ.linux/val_to_str.o OBJ.linux/print.o
+OBJ.linux/read_sites.o OBJ.linux/strip_fields.o OBJ.linux/get_max_site.o
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a
+/usr/local/grass42/src421/src/libes/LIB.linux/libgis.a  -lm
+/usr/lib/crt1.o: In function start':
+/usr/lib/crt1.o(.text+0x5a): undefined reference to ain'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(build.o): In
+function uild_':
+build.o(.text+0x3f): undefined reference to _cmp'
+build.o(.text+0x6f): undefined reference to _cmp'
+build.o(.text+0x9f): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(gtsort.o): In
+function tsort_':
+gtsort.o(.text+0x52): undefined reference to _rew'
+gtsort.o(.text+0x106): undefined reference to _rsue'
+gtsort.o(.text+0x151): undefined reference to o_uio'
+gtsort.o(.text+0x16d): undefined reference to o_uio'
+gtsort.o(.text+0x181): undefined reference to o_uio'
+gtsort.o(.text+0x195): undefined reference to o_uio'
+gtsort.o(.text+0x19d): undefined reference to _rsue'
+gtsort.o(.text+0x1c9): undefined reference to _rsue'
+gtsort.o(.text+0x211): undefined reference to o_uio'
+gtsort.o(.text+0x221): undefined reference to _rsue'
+gtsort.o(.text+0x24b): undefined reference to _rsue'
+gtsort.o(.text+0x25e): undefined reference to o_uio'
+gtsort.o(.text+0x271): undefined reference to o_uio'
+gtsort.o(.text+0x284): undefined reference to o_uio'
+gtsort.o(.text+0x297): undefined reference to o_uio'
+gtsort.o(.text+0x2e1): undefined reference to o_uio'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(gtsort.o)(.text+0x2fd):
+more undefined references to o_uio' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(gtsort.o): In
+function tsort_':
+gtsort.o(.text+0x32d): undefined reference to _rsue'
+gtsort.o(.text+0x35b): undefined reference to _rsue'
+gtsort.o(.text+0x36e): undefined reference to o_uio'
+gtsort.o(.text+0x3c1): undefined reference to o_uio'
+gtsort.o(.text+0x3dd): undefined reference to o_uio'
+gtsort.o(.text+0x3f1): undefined reference to o_uio'
+gtsort.o(.text+0x405): undefined reference to o_uio'
+gtsort.o(.text+0x40d): undefined reference to _rsue'
+gtsort.o(.text+0x42e): undefined reference to _rsue'
+gtsort.o(.text+0x441): undefined reference to o_uio'
+gtsort.o(.text+0x491): undefined reference to o_uio'
+gtsort.o(.text+0x4a1): undefined reference to _rsue'
+gtsort.o(.text+0x564): undefined reference to _clos'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(pilib.o): In
+function xtasc_':
+pilib.o(.text+0x806): undefined reference to _copy'
+pilib.o(.text+0x871): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rioin.o): In
+function ioin_':
+rioin.o(.text+0x23): undefined reference to _rdue'
+rioin.o(.text+0x7b): undefined reference to o_uio'
+rioin.o(.text+0xb1): undefined reference to _rdue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rioout.o): In
+function ioout_':
+rioout.o(.text+0x3a): undefined reference to _wdue'
+rioout.o(.text+0x9b): undefined reference to o_uio'
+rioout.o(.text+0xd1): undefined reference to _wdue'
+rioout.o(.text+0x11e): undefined reference to _wdue'
+rioout.o(.text+0x17b): undefined reference to o_uio'
+rioout.o(.text+0x1b1): undefined reference to _wdue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rmqery.o): In
+function mqery_':
+rmqery.o(.text+0x4e): undefined reference to _copy'
+rmqery.o(.text+0x66): undefined reference to _copy'
+rmqery.o(.text+0x7e): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rmset.o): In
+function mset_':
+rmset.o(.text+0x515): undefined reference to _copy'
+rmset.o(.text+0x593): undefined reference to _cmp'
+rmset.o(.text+0x5ae): undefined reference to _copy'
+rmset.o(.text+0x605): undefined reference to _copy'
+rmset.o(.text+0x683): undefined reference to _cmp'
+rmset.o(.text+0x69e): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(selsrt.o): In
+function elsrt_':
+selsrt.o(.text+0x68): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(selwhr.o): In
+function elwhr_':
+selwhr.o(.text+0x41): undefined reference to _copy'
+selwhr.o(.text+0x33d): undefined reference to _cmp'
+selwhr.o(.text+0x76f): undefined reference to _copy'
+selwhr.o(.text+0x888): undefined reference to _cat'
+selwhr.o(.text+0x9b0): undefined reference to _cmp'
+selwhr.o(.text+0x17ae): undefined reference to _cmp'
+selwhr.o(.text+0x184e): undefined reference to _cmp'
+selwhr.o(.text+0x18c6): undefined reference to _cmp'
+selwhr.o(.text+0x1964): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(selwhr.o)(.text+0x1a4c):
+more undefined references to _cmp' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(sort.o): In
+function ort_':
+sort.o(.text+0x1b): undefined reference to _open'
+sort.o(.text+0x18c): undefined reference to _wsue'
+sort.o(.text+0x1d1): undefined reference to o_uio'
+sort.o(.text+0x1ed): undefined reference to o_uio'
+sort.o(.text+0x201): undefined reference to o_uio'
+sort.o(.text+0x215): undefined reference to o_uio'
+sort.o(.text+0x21d): undefined reference to _wsue'
+sort.o(.text+0x29f): undefined reference to _wsue'
+sort.o(.text+0x2bb): undefined reference to o_uio'
+sort.o(.text+0x2cf): undefined reference to o_uio'
+sort.o(.text+0x2e2): undefined reference to o_uio'
+sort.o(.text+0x2f6): undefined reference to o_uio'
+sort.o(.text+0x341): undefined reference to o_uio'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(sort.o)(.text+0x35d):
+more undefined references to o_uio' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(sort.o): In
+function ort_':
+sort.o(.text+0x38d): undefined reference to _wsue'
+sort.o(.text+0x3a6): undefined reference to _wsue'
+sort.o(.text+0x3c2): undefined reference to o_uio'
+sort.o(.text+0x411): undefined reference to o_uio'
+sort.o(.text+0x42d): undefined reference to o_uio'
+sort.o(.text+0x441): undefined reference to o_uio'
+sort.o(.text+0x455): undefined reference to o_uio'
+sort.o(.text+0x45d): undefined reference to _wsue'
+sort.o(.text+0x71f): undefined reference to _wsue'
+sort.o(.text+0x75b): undefined reference to o_uio'
+sort.o(.text+0x771): undefined reference to _wsue'
+sort.o(.text+0x786): undefined reference to _wsue'
+sort.o(.text+0x799): undefined reference to o_uio'
+sort.o(.text+0x7db): undefined reference to o_uio'
+sort.o(.text+0x7f1): undefined reference to _wsue'
+sort.o(.text+0x8ec): undefined reference to _wsue'
+sort.o(.text+0x90f): undefined reference to o_uio'
+sort.o(.text+0x923): undefined reference to o_uio'
+sort.o(.text+0x92b): undefined reference to _wsue'
+sort.o(.text+0x986): undefined reference to _rew'
+sort.o(.text+0xa9b): undefined reference to _open'
+sort.o(.text+0xafa): undefined reference to _clos'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(strasc.o): In
+function trasc_':
+strasc.o(.text+0x26): undefined reference to _copy'
+strasc.o(.text+0x91): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swcon.o): In
+function wcon_':
+swcon.o(.text+0x25): undefined reference to _rew'
+swcon.o(.text+0x151): undefined reference to _rew'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swhart.o): In
+function whart_':
+swhart.o(.text+0x7b): undefined reference to _rsue'
+swhart.o(.text+0x8e): undefined reference to o_uio'
+swhart.o(.text+0xd0): undefined reference to o_uio'
+swhart.o(.text+0xe1): undefined reference to _rsue'
+swhart.o(.text+0x18b): undefined reference to _rsue'
+swhart.o(.text+0x1d0): undefined reference to o_uio'
+swhart.o(.text+0x1e1): undefined reference to _rsue'
+swhart.o(.text+0x240): undefined reference to _rew'
+swhart.o(.text+0x2f9): undefined reference to _wsue'
+swhart.o(.text+0x30c): undefined reference to o_uio'
+swhart.o(.text+0x350): undefined reference to o_uio'
+swhart.o(.text+0x361): undefined reference to _wsue'
+swhart.o(.text+0x3f0): undefined reference to _wsue'
+swhart.o(.text+0x440): undefined reference to o_uio'
+swhart.o(.text+0x451): undefined reference to _wsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swinpo.o): In
+function winpo_':
+swinpo.o(.text+0x6b): undefined reference to _rsue'
+swinpo.o(.text+0x7e): undefined reference to o_uio'
+swinpo.o(.text+0xc0): undefined reference to o_uio'
+swinpo.o(.text+0xd1): undefined reference to _rsue'
+swinpo.o(.text+0x16b): undefined reference to _rsue'
+swinpo.o(.text+0x1b0): undefined reference to o_uio'
+swinpo.o(.text+0x1c1): undefined reference to _rsue'
+swinpo.o(.text+0x208): undefined reference to _rew'
+swinpo.o(.text+0x284): undefined reference to _wsue'
+swinpo.o(.text+0x297): undefined reference to o_uio'
+swinpo.o(.text+0x2e0): undefined reference to o_uio'
+swinpo.o(.text+0x2f1): undefined reference to _wsue'
+swinpo.o(.text+0x35b): undefined reference to _wsue'
+swinpo.o(.text+0x3a0): undefined reference to o_uio'
+swinpo.o(.text+0x3b1): undefined reference to _wsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swunlo.o): In
+function wunlo_':
+swunlo.o(.text+0x1c): undefined reference to _rew'
+swunlo.o(.text+0x2b4): undefined reference to _wsue'
+swunlo.o(.text+0x316): undefined reference to o_uio'
+swunlo.o(.text+0x331): undefined reference to _wsue'
+swunlo.o(.text+0x622): undefined reference to _wsue'
+swunlo.o(.text+0x676): undefined reference to o_uio'
+swunlo.o(.text+0x691): undefined reference to _wsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swvllo.o): In
+function wvllo_':
+swvllo.o(.text+0x91): undefined reference to _rsue'
+swvllo.o(.text+0xa4): undefined reference to o_uio'
+swvllo.o(.text+0xeb): undefined reference to o_uio'
+swvllo.o(.text+0x101): undefined reference to _rsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(chgdat.o): In
+function hgdat_':
+chgdat.o(.text+0x41): undefined reference to _copy'
+chgdat.o(.text+0x5c): undefined reference to _copy'
+chgdat.o(.text+0x77): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(dbload.o): In
+function bload_':
+dbload.o(.text+0x71): undefined reference to _copy'
+dbload.o(.text+0x8c): undefined reference to _copy'
+dbload.o(.text+0x26c): undefined reference to _cmp'
+dbload.o(.text+0x33d): undefined reference to _cmp'
+dbload.o(.text+0x35b): undefined reference to _copy'
+dbload.o(.text+0x403): undefined reference to _cat'
+dbload.o(.text+0x6cc): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(dbopcl.o): In
+function bopcl_':
+dbopcl.o(.text+0x28): undefined reference to _cmp'
+dbopcl.o(.text+0x163): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(dtfenc.o): In
+function tfenc_':
+dtfenc.o(.text+0x40): undefined reference to 	_indx'
+dtfenc.o(.text+0x61): undefined reference to 	_indx'
+dtfenc.o(.text+0x88): undefined reference to 	_indx'
+dtfenc.o(.text+0xa9): undefined reference to 	_indx'
+dtfenc.o(.text+0xd0): undefined reference to 	_indx'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(dtfenc.o)(.text+0x2b0):
+more undefined references to 	_indx' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(eqkeyw.o): In
+function qkeyw_':
+eqkeyw.o(.text+0xd7): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(locboo.o): In
+function ocboo_':
+locboo.o(.text+0x24): undefined reference to _copy'
+locboo.o(.text+0x6a): undefined reference to _cmp'
+locboo.o(.text+0xca): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lodrec.o): In
+function odrec_':
+lodrec.o(.text+0x29): undefined reference to _copy'
+lodrec.o(.text+0x6b): undefined reference to _cmp'
+lodrec.o(.text+0x86): undefined reference to _cmp'
+lodrec.o(.text+0xe5): undefined reference to _cmp'
+lodrec.o(.text+0x104): undefined reference to _cmp'
+lodrec.o(.text+0x11f): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lodrec.o)(.text+0x1c9):
+more undefined references to _cmp' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lodrec.o): In
+function odrec_':
+lodrec.o(.text+0x28d): undefined reference to _copy'
+lodrec.o(.text+0x3be): undefined reference to xit_'
+lodrec.o(.text+0x3f9): undefined reference to _copy'
+lodrec.o(.text+0x40f): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lxcmnt.o): In
+function xcmnt_':
+lxcmnt.o(.text+0xa5): undefined reference to _cmp'
+lxcmnt.o(.text+0x175): undefined reference to _cmp'
+lxcmnt.o(.text+0x1dc): undefined reference to _copy'
+lxcmnt.o(.text+0x225): undefined reference to _cmp'
+lxcmnt.o(.text+0x275): undefined reference to _cmp'
+lxcmnt.o(.text+0x2d5): undefined reference to _cmp'
+lxcmnt.o(.text+0x2f8): undefined reference to _cmp'
+lxcmnt.o(.text+0x31b): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lxcmnt.o)(.text+0x33e):
+more undefined references to _cmp' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(lxfmt.o): In
+function xfmt_':
+lxfmt.o(.text+0x20): undefined reference to _copy'
+lxfmt.o(.text+0xd5): undefined reference to _copy'
+lxfmt.o(.text+0x32b): undefined reference to _cmp'
+lxfmt.o(.text+0x365): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(macdef.o): In
+function acdef_':
+macdef.o(.text+0x58): undefined reference to _cmp'
+macdef.o(.text+0x26f): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(nxttok.o): In
+function xttok_':
+nxttok.o(.text+0xfd): undefined reference to _copy'
+nxttok.o(.text+0x3d2): undefined reference to _copy'
+nxttok.o(.text+0x5e5): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(parse.o): In
+function arse_':
+parse.o(.text+0x80): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(parval.o): In
+function arval_':
+parval.o(.text+0x82d): undefined reference to _cmp'
+parval.o(.text+0x8d8): undefined reference to _cmp'
+parval.o(.text+0xcaa): undefined reference to _cmp'
+parval.o(.text+0xdeb): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(parval.o)(.text+0xe7c):
+more undefined references to _cmp' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(parval.o): In
+function arval_':
+parval.o(.text+0x1b21): undefined reference to _cat'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rioopn.o): In
+function ioopn_':
+rioopn.o(.text+0x55): undefined reference to _open'
+rioopn.o(.text+0xa5): undefined reference to _open'
+rioopn.o(.text+0xc1): undefined reference to _wsfe'
+rioopn.o(.text+0xd4): undefined reference to o_fio'
+rioopn.o(.text+0xe7): undefined reference to o_fio'
+rioopn.o(.text+0xfc): undefined reference to o_fio'
+rioopn.o(.text+0x104): undefined reference to _wsfe'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rmtypt.o): In
+function mtypt_':
+rmtypt.o(.text+0x11): undefined reference to _copy'
+rmtypt.o(.text+0x2e): undefined reference to _copy'
+rmtypt.o(.text+0x4b): undefined reference to _copy'
+rmtypt.o(.text+0x68): undefined reference to _copy'
+rmtypt.o(.text+0x85): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(rmtypt.o)(.text+0xa2):
+more undefined references to _copy' follow
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swfilo.o): In
+function wfilo_':
+swfilo.o(.text+0x61): undefined reference to _rsue'
+swfilo.o(.text+0xb0): undefined reference to o_uio'
+swfilo.o(.text+0xc1): undefined reference to _rsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(swunvl.o): In
+function wunvl_':
+swunvl.o(.text+0x1c): undefined reference to _rew'
+swunvl.o(.text+0x38b): undefined reference to _wsue'
+swunvl.o(.text+0x3e6): undefined reference to o_uio'
+swunvl.o(.text+0x401): undefined reference to _wsue'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(sysdbg.o): In
+function ysdbg_':
+sysdbg.o(.text+0x11b): undefined reference to _copy'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(sysdbn.o): In
+function ysdbn_':
+sysdbn.o(.text+0x6c): undefined reference to _copy'
+sysdbn.o(.text+0x8a): undefined reference to _copy'
+sysdbn.o(.text+0xe4): undefined reference to _cat'
+sysdbn.o(.text+0x143): undefined reference to _cmp'
+sysdbn.o(.text+0x1d0): undefined reference to _cat'
+sysdbn.o(.text+0x21c): undefined reference to _cat'
+sysdbn.o(.text+0x268): undefined reference to _cat'
+sysdbn.o(.text+0x2b4): undefined reference to _cat'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(tokdsp.o): In
+function okdsp_':
+tokdsp.o(.text+0x253): undefined reference to _cat'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(ator.o): In
+function tor_':
+ator.o(.text+0x2a0): undefined reference to ow_dd'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(change.o): In
+function hange_':
+change.o(.text+0x1c): undefined reference to _copy'
+change.o(.text+0x37): undefined reference to _copy'
+change.o(.text+0x52): undefined reference to _copy'
+change.o(.text+0xef): undefined reference to _cmp'
+change.o(.text+0x184): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(chkfil.o): In
+function hkfil_':
+chkfil.o(.text+0x33): undefined reference to _inqu'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(chtype.o): In
+function htype_':
+chtype.o(.text+0x25): undefined reference to _cmp'
+chtype.o(.text+0xb0): undefined reference to _cmp'
+chtype.o(.text+0x100): undefined reference to _cmp'
+chtype.o(.text+0x180): undefined reference to _cmp'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(iexp.o): In
+function 	exp_':
+iexp.o(.text+0x4c): undefined reference to _lg10'
+/usr/local/grass42/src421/src.related/rim/LIB.linux/librim.a(nxtchx.o): In
+function xtchx_':
+nxtchx.o(.text+0x76): undefined reference to _wsle'
+nxtchx.o(.text+0x8f): undefined reference to o_lio'
+nxtchx.o(.text+0xa8): undefined reference to o_lio'
+nxtchx.o(.text+0xc1): undefined reference to o_lio'
+nxtchx.o(.text+0xc9): undefined reference to _wsle'
+make: *** [/usr/local/grass42/etc/rim/s.db.rim.cmd] Error 1
+Thuille:/data/grass42/src421/src.garden/grass.rim/s.db.rim/cmd # 
