@@ -1,11 +1,13 @@
+PGM=d.graph
 OFILES = \
 	allocation.o \
 	do_graph.o \
 	graphics.o \
 	main.o
 
-$(BIN_MAIN_CMD)/d.graph: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #

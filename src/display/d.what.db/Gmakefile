@@ -1,14 +1,12 @@
-DBMILIB = $(LIBDIR)/libdbmi.a 
-LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(DBMILIB)
-
 PGM    = d.what.db
-HOME   = $(BIN_CONTRIB_CMD)
+DBMILIB = $(LIBDIR)/libdbmi.a 
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB) $(DBMILIB)
 
 LIST   = main.o \
 	 show.o \
 	 attr.o
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

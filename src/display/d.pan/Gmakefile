@@ -1,4 +1,5 @@
-LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB)
+PGM=d.pan
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
 
 EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
 
@@ -9,12 +10,8 @@ LIST   = main.o \
 	 pan.o \
 	 redraw.o
 
-PROG = $(BIN_CONTRIB_CMD)/d.pan
-#PROG = ./d.pan
-
-$(PROG): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 returns.o: graphics.h
 
-$(LIBES): #

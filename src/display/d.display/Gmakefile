@@ -1,3 +1,4 @@
+PGM=d.display
 OFILES = \
 	cell3d.o \
 	cell_map.o \
@@ -23,8 +24,10 @@ OFILES = \
 	vect_map.o \
 	zoom.o
 
-$(BIN_MAIN_INTER)/d.display: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
+
+$(BIN_MAIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 cell3d.o: windows.h
 cell_map.o: variables.h

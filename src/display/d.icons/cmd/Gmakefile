@@ -1,10 +1,9 @@
-HOME=$(BIN_MAIN_CMD)
 PGM=d.icons
 OFILES = main.o plot_points.o draw_icon.o setup.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(ICONLIB) $(GISLIB)
 
-$(HOME)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
