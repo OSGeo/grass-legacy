@@ -61,7 +61,16 @@ bounding coordinates.
 </DL>
 
 <H2>NOTES</H2>
-Imported vector data is assigned labels (eg.land, lake, etc) derived from GSHHS data. Solid lines that exit and re-enter the import area are broken at the point of exit.
+Imported vector data is assigned labels (eg.land, lake, etc) derived from
+GSHHS data. Solid lines that exit and re-enter the import area are broken at
+the point of exit.
+<P>
+
+A GSHHS map shift sometimes reported  may be related to the map datum. The
+GSHHS reference ellipsoid is the same as for the GSHHS data sources WVS
+("World Vector Shoreline") and WDBII ("World Databank II") for which the
+reference ellipsoid is unknown.
+The GSHHS data set is provided in Latitude/Longitude.
 
 <H2>EXAMPLE</H2>
 The following example imports an intermediate resolution shoreline into GRASS using the current GRASS region and automatically runs <EM>v.support</EM> after import:
@@ -69,6 +78,10 @@ The following example imports an intermediate resolution shoreline into GRASS us
 v.in.gshhs -gs input=gshhs_i.b output=shoreline.int
 </pre>
 
+<H2>SEE ALSO</H2>
+Appendix K in:
+<A HREF=http://gmt.soest.hawaii.edu/gmt/doc/html/GMT_Docs/GMT_Docs.html>The
+Generic Mapping Tools. Technical Reference and Cookbook</a>.
 
 <H2>AUTHORS</H2>
 This program is based on <EM>gshhstograss</EM><BR>
