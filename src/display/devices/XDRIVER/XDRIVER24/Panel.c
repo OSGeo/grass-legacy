@@ -1,3 +1,4 @@
+#include "gis.h"
 #include <stdio.h>
 #include "includes.h"
 
@@ -142,7 +143,7 @@ int Panel_restore (char *name)
 
     /* allocate space and read the data points */
     /*
-    data = G_malloc((unsigned) width * height);
+    data = (char *) G_malloc((unsigned) width * height);
     */
     data = (char *) G_malloc((size_t) (bytes_per_line * height));
     /*   another way of reading data

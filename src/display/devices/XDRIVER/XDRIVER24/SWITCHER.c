@@ -13,6 +13,7 @@
  * to work with Decstation X11r3 server. by David B. Satnik
  * (SATNIKDB%cwu.bitnet) on 8/90 */
 
+#include "gis.h"
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
@@ -106,6 +107,8 @@ int main (int argc, char *argv[])
     /* How many commands for each check of Xevents?? */
     static int cmd_loop_count;  
 
+    struct sigaction mysig_catch, mysig_close;
+    sigset_t m_catch, m_close;
 
     /* whoami */
     me = argv[0];
@@ -211,7 +214,7 @@ int main (int argc, char *argv[])
      * are to run in background, we will have fifos == 1 from the
      * syntax check above. */
     if (fifos == 1) {
-        if (pid = fork()) {
+        if ((pid = fork())) {
             if (pid > 0) {      /* parent exits */
                 fprintf(stderr, "Graphics driver [%s] started\n", me);
                 exit(0);
@@ -227,9 +230,19 @@ int main (int argc, char *argv[])
 	   setsid();
     }                           /* monitor runs */
 #ifdef SIGPIPE
-    signal(SIGPIPE, catch);
+    sigemptyset(&m_catch);
+    mysig_catch.sa_handler = catch;
+    mysig_catch.sa_mask = m_catch;
+    mysig_catch.sa_flags = 0;
+    sigaction(SIGPIPE, &mysig_catch, NULL);
+    /*    signal(SIGPIPE, catch); */
 #endif
-    signal(SIGTERM, close_mon); /* exit gracefully if terminated */
+    sigemptyset(&m_close);
+    mysig_close.sa_handler = close_mon;
+    mysig_close.sa_mask = m_close;
+    mysig_close.sa_flags = 0;
+    sigaction(SIGTERM, &mysig_close, NULL);
+    /* signal(SIGTERM, close_mon); */ /* exit gracefully if terminated */
 
 
 
