@@ -54,11 +54,15 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
     int     first, last;
     SHPObject *pShape;
     
-    
+    plus = &(Map->plus);
+    Msgout = msgout;
+    nShapes = Map->fInfo.shp.nShapes;
+
     if ( Map->fInfo.shp.type != SHPT_POLYGON  &&
          Map->fInfo.shp.type != SHPT_POLYGONZ &&
          Map->fInfo.shp.type != SHPT_POLYGONM ) 
     {
+        prnmsg ("Build topology for %d shapes:\n", nShapes );
         return ( Vect_build_nat ( Map, msgout) );
     } 
     else 
@@ -66,14 +70,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	G_warning ("Topology for shapefile areas is not fully supported.\n");
     }
     
-    plus = &(Map->plus);
-    Msgout = msgout;
-    
     CPoints = Vect_new_line_struct ();
-    //APoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
-
-    nShapes = Map->fInfo.shp.nShapes;
   
     alloc_parts = 10; 
     Points = (struct line_pnts **) malloc ( alloc_parts * sizeof ( struct line_pnts *) );

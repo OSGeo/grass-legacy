@@ -372,10 +372,10 @@ Vect_line_distance (
   n_points = points->n_points;
 
   if ( n_points == 1 ) {
-    /* OK ? - what dig_distance_point_to_line returns for degenerated line ? */  
     distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
               					    points->x[0], points->y[0]);
-    distance = sqrt(distance);
+
+    *dist = sqrt(distance);
     return (0);
   }
 

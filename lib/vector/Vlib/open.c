@@ -98,9 +98,7 @@ Vect_open_old (
   int level, level_request;
   int format;
 
-#ifdef GDEBUG
-      G_debug (1, "Vect_open_old(): name = %s mapset= %s", name, mapset);
-#endif
+  G_debug (1, "Vect_open_old(): name = %s mapset= %s", name, mapset);
       
   level_request = Open_level;
   Open_level = 0;
@@ -123,12 +121,11 @@ Vect_open_old (
   
   /* Read vector format information */
   format = 0;
-  sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
-  fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, mapset);
+  sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+  G_debug (1, "open format file: '%s/%s/%s", Map->mapset, buf, GRASS_VECT_FRMT_ELEMENT);
+  fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, Map->mapset);
   if ( fp == NULL) {
-#ifdef GDEBUG
       G_debug ( 1, "Vector format: %d (native)", format);
-#endif
       format = GV_FORMAT_NATIVE;
   } else {
       format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
@@ -162,11 +159,12 @@ Vect_open_old (
       Map->mode = MODE_READ;
       Map->Constraint_region_flag = 0;
       Map->Constraint_type_flag = 0;
+      G_debug (1, "Vect_open_old(): vector opened on level %d", level);
+  } else {
+      level = -1;
+      G_debug (1, "Vect_open_old(): vector was not opened");
   }
       
-#ifdef GDEBUG
-      G_debug (1, "Vect_open_old(): vector opened on level %d", level);
-#endif
   return (level);
 }
 
