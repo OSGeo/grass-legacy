@@ -207,8 +207,7 @@ proc create_vect { } {
     close $f
 
     set cmd "v.build map=$v"
-    set shell $env(SHELL)
-    eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
+    eval "exec $cmd >@stdout 2>@stdout"
 
     set vector ""
     set resultmsg "Vector map '$v' created"
