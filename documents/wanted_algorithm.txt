@@ -1,10 +1,10 @@
-http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/documents/wanted_algorithm.txt
 Wanted Algorithm for GRASS GIS
 
 $Id$
 
 This page contains algorithm we would like to integrate
-into GRASS GIS on GPL license basis.
+into GRASS GIS under GNU GPL license.
+
 
 Please contact us if you can help!
  neteler@geog.uni-hannover.de or, better:
