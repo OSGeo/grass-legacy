@@ -252,7 +252,6 @@ main (int argc, char **argv)
 						continue;
 					if(first)
 					{
-					fprintf(stderr, "A");
 						first = 0;
 						U_east = s->east;
 						U_west = s->east;
@@ -261,7 +260,6 @@ main (int argc, char **argv)
 					}
 					else
 					{
-					fprintf(stderr, "B");
 						if(s->east > U_east)
 							U_east = s->east;
 						if(s->east < U_west)
