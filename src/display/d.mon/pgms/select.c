@@ -44,7 +44,12 @@ main (int argc, char *argv[])
 	if (R_open_driver() != 0)
 	    exit(EXIT_FAILURE);
 	R_font ("romans");
-	D_setup(0);
+
+	D_new_window("full_screen",
+		     R_screen_top(), R_screen_bot(),
+		     R_screen_left(), R_screen_rite());
+	D_set_cur_wind("full_screen");
+
 	R_close_driver();
 
 	/* write the name to the .gisrc file */
