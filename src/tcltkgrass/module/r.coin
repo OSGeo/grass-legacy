@@ -1,0 +1,17 @@
+interface_build {
+    {r.coin} 0
+    {Tabulates the mutual occurrence (coincidence) of categories for two raster map layers.}
+    {entry map1 {First raster map:} 0 raster}
+    {entry map2 {Second raster map:} 0 raster}
+    {checkbox units {Cells.} "" c}
+    {checkbox units {Percent cover of region.} "" p}
+    {checkbox units {Percent of <map name> category (column).} "" x}
+    {checkbox units {Percent of <map name> category (row).} "" y}
+    {checkbox units {Acres.} "" a}
+    {checkbox units {Hectares.} "" h}
+    {checkbox units {Square kilometers.} "" k}
+    {checkbox units {Square miles.} "" m}
+    {separator grey 1}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -w {Wide report, 132 columns (default: 80).} "" -w}
+}
