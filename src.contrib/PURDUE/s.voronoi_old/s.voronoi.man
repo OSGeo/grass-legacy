@@ -1,0 +1,72 @@
+.TH s.voronoi
+.SH NAME
+\fIs.voronoi\fR \- Uses a GRASS sites list to produce a Voronoi diagram.
+.br
+.I (GRASS Sites Program)
+.SH SYNOPSIS
+\fBs.voronoi\fR
+.br
+\fBs.voronoi help\fR
+.br
+\fBs.voronoi \fR[\fB-alq\fR] \fBsites\*=\fIname\fR [\fBvect\*=\fIname\fR]
+.SH DESCRIPTION
+.I s.voronoi
+uses an existing sites list (sites\*=\fIname\fR)
+to create a Voronoi diagram (Theissen polygons) in
+a binary vector file (vect\*=\fIname\fR).
+.LP
+\fBFlags:\fR
+.IP \fB-a\fR 18
+Use all sites found in the named \fIsites\fR file, rather than
+limiting output to sites falling within the current geographic region.
+.IP \fB-l\fR 18
+Attempt to use site descriptions (category labels) as categories
+and attributes for the vector file. Sites must be in the 
+(E|N|#n desc) format for this to work.
+.IP \fB-q\fR 18
+Quiet. Cut out the chatter.
+.LP
+\fBParameters:\fR
+.IP \fBsites\*=\fIname\fR 18
+Name of an existing sites file.
+.IP \fBvect\*=\fIname\fR 18
+Name of the output file (binary vector file).
+.LP
+\fIs.voronoi\fR can be run either non-interactively or interactively.
+The program will be run non-interactively if the user specifies
+the name of an existing site list file and a name for a \fIvect\fR
+file, using the form
+.LP
+.RS
+\fBs.voronoi \fR[\fB-adlpq\fR] \fBsites\*=\fIname1\fR [\fBvect\*=\fIname2\fR]
+.RE
+.LP
+where \fIname1\fR is the name of an existing site list file
+and \fIname2\fR is the name of vector output file.
+.LP
+Alternately, the user can simply type \fBs.voronoi\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS parser interface
+described in the manual entry for \fIparser\fR.
+In either case, \fIv.spag\fR and \fIv.support\fR should be run on the 
+output (running \fIv.spag\fR is necessary so that nodes are created
+where the polygons cross the boundary of the region).
+.SH SEE ALSO
+.I s.delaunay,
+.I v.autocorr,
+.I v.spag,
+.I v.support,
+.I parser,
+and
+.br
+Steve J. Fortune, (1987).
+A Sweepline Algorithm for Voronoi Diagrams,
+.I Algorithmica 
+2, 153-174.
+.SH BUGS
+Please send all bug fixes and comments to the author.
+.SH AUTHOR
+James Darrell McCauley, Purdue University 
+.if n .br 
+(mccauley@ecn.purdue.edu)
+
