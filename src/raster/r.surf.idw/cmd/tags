@@ -1,0 +1,35 @@
+G_begin_geodesic_distance	dist.c	/^G_begin_geodesic_distance (nrows, a, e2)$/
+LL_geodesic_distance	dist.c	/^LL_geodesic_distance (sdlmr)$/
+LL_lookup_tables	ll.c	/^LL_lookup_tables (nrows, ncols)$/
+LL_set_geodesic_distance	dist.c	/^LL_set_geodesic_distance (rowlook, unk, data)$/
+LL_set_geodesic_distance_lat	dist.c	/^double LL_set_geodesic_distance_lat (lat)$/
+Mmain	main.c	/^main(argc, argv)$/
+add_neighbor	main.c	/^add_neighbor (Mptr, nptr, distance)$/
+completed_row	main.c	/^completed_row (ewptr)$/
+completed_row_LL	ll.c	/^completed_row_LL (ewptr)$/
+distance_LL	ll.c	/^double distance_LL (row, col, Mptr)$/
+exhaust	main.c	/^exhaust (ewptr, head, row, col)$/
+exhaust_search	main.c	/^exhaust_search (ewptr, nbr_head, row, col)$/
+exhaust_search_LL	ll.c	/^exhaust_search_LL (ewptr, nbr_head, row, col)$/
+extend_east	ll.c	/^extend_east (ewptr)$/
+extend_west	ll.c	/^extend_west (ewptr)$/
+find_neighbors	main.c	/^find_neighbors (ewptr, nbr_head, row, col, npoints/
+find_neighbors_LL	ll.c	/^find_neighbors_LL (ewptr, nbr_head, row, col, npoi/
+first_west	main.c	/^first_west (ewptr, col)$/
+first_west_LL	ll.c	/^first_west_LL (ewptr, col)$/
+free_dist_params	dist.c	/^free_dist_params ()$/
+free_list	main.c	/^free_list(head)		\/* frees list of neighboring pts	/
+free_row_lists	main.c	/^free_row_lists (rowlist, nrows)		\/* frees indexed /
+interpolate	main.c	/^interpolate (rowlist, nrows, ncols, datarows, npoi/
+lookup_and_function_ptrs	main.c	/^lookup_and_function_ptrs (nrows, ncols)$/
+lookup_tables	main.c	/^lookup_tables (nrows, ncols)$/
+make_neighbors_list	main.c	/^NEIGHBOR *make_neighbors_list (firstrow, lastrow, /
+next_row	main.c	/^EW *next_row (ewptr, boundary, new, south)$/
+offset_distance	main.c	/^double offset_distance (offset)$/
+offset_distance_LL	ll.c	/^double offset_distance_LL (offset)$/
+replace_neighbor	main.c	/^int replace_neighbor (Mptr, nbr_head, distance)$/
+row_lists	main.c	/^MELEMENT *row_lists (rows, cols, datarows, npts, f/
+search	main.c	/^search (ewptr, head, row, col, npoints, neighbors,/
+set_sdlmr	dist.c	/^double set_sdlmr (lon_diff)$/
+sort_neighbors	main.c	/^sort_neighbors (nbr_head, distance)$/
+triangulate	main.c	/^double triangulate (Mptr, row, col)$/
