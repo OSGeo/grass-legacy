@@ -1,0 +1,10 @@
+PGM=r.transect
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o parse_line.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(GISLIB): #
