@@ -1,0 +1,6 @@
+# %W% %G%
+
+LIST = main.o drivers.o list.o show.o select.o get.o
+
+$(ETC)/paint/select: $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
