@@ -107,10 +107,6 @@ load_table_head( int t)
     ncol = DBFGetFieldCount(dbf);
     G_debug ( 2, "  ncols = %d", ncol);
 
-    if ( drv_mode == DBF_MODE_SHP ) {
-	add_column ( t, DBF_INT, DBF_FID_NAME, 11, 0);
-    }
-    
     for( i = 0; i < ncol; i++ )
       {
          dtype = DBFGetFieldInfo( dbf, i, fname, &width, &decimals );
@@ -175,16 +171,8 @@ load_table ( int t)
            {
              val = &(rows[i].values[j]);		   
 	     
-             if ( drv_mode == DBF_MODE_SHP ) {
-                 if ( j == 0 ) {
-		     val->i = i + 1; 
-		     continue;
-		 } else {
-		     dbfcol = j - 1;
-		 }
-	     } else {
-		 dbfcol = j;
-	     }
+	     dbfcol = j;
+
 	     val->is_null = DBFIsAttributeNULL ( dbf, i, dbfcol );
 	     if ( !(val->is_null) ) {
 		 switch ( db.tables[t].cols[j].type )
@@ -249,8 +237,6 @@ save_table ( int t)
 
     for( i = 0; i < ncols; i++ )
       {
-        if ( drv_mode == DBF_MODE_SHP && i == 0 ) continue;
-
 	switch ( db.tables[t].cols[i].type )
           {
             case DBF_INT:
@@ -278,12 +264,7 @@ save_table ( int t)
 		 
          for( j = 0; j < ncols; j++ )
            {
-             if ( drv_mode == DBF_MODE_SHP ) {
-		 if ( j == 0 ) continue;
-		 field = j - 1;
-	     } else {
-		 field = j;
-	     }
+	     field = j;
 		 
              val = &(rows[i].values[j]);		   
 	     if ( val->is_null ) {
