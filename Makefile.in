@@ -213,6 +213,8 @@ real-install: FORCE
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - man/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	test -f ${GISBASE}/dev || rm -f ${GISBASE}/dev
+	test -d ${GISBASE}/dev || ${MAKE_DIR_CMD} ${GISBASE}/dev
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_ipcs.sh ${INST_DIR}/dev ; true"
 	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"
