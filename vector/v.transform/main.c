@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
     
     /* open vectors */
     if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
-	G_fatal_error ("Could not find input vector %s\n", old->answer);
+	G_fatal_error ("Could not find input map <%s>\n", old->answer);
     
     Vect_open_old(&Old, old->answer, mapset);
 

@@ -385,7 +385,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (map->answer, NULL); 
       
     if ( mapset == NULL) 
-      G_fatal_error ("Could not find input %s\n", map->answer);
+      G_fatal_error ("Could not find input map <%s>\n", map->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 

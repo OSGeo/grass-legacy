@@ -126,7 +126,7 @@ int main (int argc, char **argv)
 
   /* Open binary vector file at level 2 */
   mapset = G_find_vector2 (input->answer, "");
-  if ( mapset == NULL ) G_fatal_error ( "Could not find input %s\n", input->answer);  
+  if ( mapset == NULL ) G_fatal_error ( "Could not find input map <%s>\n", input->answer);  
   Vect_set_open_level (2);
   Vect_open_old (&map, input->answer, mapset);
 

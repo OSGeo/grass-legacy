@@ -152,7 +152,7 @@ main (int argc, char *argv[])
 		    
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     G_fatal_error ("Could not find input %s\n", in_opt->answer);
+	     G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
 	}
 
         /* Input vector may be both on level 1 and 2. Level 2 is required for 
