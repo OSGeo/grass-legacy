@@ -38,6 +38,7 @@ clean:
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/fonts/       2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null ; true"
 	${SHELL} -c "rmdir ${ARCH_DISTDIR} ; true"
 	${SHELL} -c "rm -f ${ARCH_BINDIR}/grass${VERSION_NAME} 2>/dev/null ; true"
 	${SHELL} -c "rmdir ${ARCH_BINDIR} ; true"
