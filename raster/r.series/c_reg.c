@@ -21,7 +21,7 @@ static void regression(DCELL *result, DCELL *values, int n, int offset)
 		count++;
 	}
 
-	if (count == 0)
+	if (count < 2)
 	{
 		G_set_d_null_value(result, 1);
 		return;
