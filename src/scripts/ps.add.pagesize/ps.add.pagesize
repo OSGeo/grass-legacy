@@ -1,0 +1,152 @@
+:
+
+#  Usage:
+#
+#        ps.add.pagesize filename
+#
+#        or
+#
+#        ps.add.pagesize
+#
+#        For first usage shown, file must be a "ps.map" output file in the
+#        current directory.  The script will not go searching for the file.
+#        For the second usage shown, the user will be prompted to enter the
+#        filename.  Again, the file will need to be in the current directory.
+#
+#
+#  This script is an attempt to deal with page size specification
+#  within the output file of the GRASS program "ps.map".  
+#  The need for this arose when plotting maps on a Hewlett Packard
+#  DesignJet 650C large-format, color, inkjet plotter.  The plotter
+#  was using 36" x 54" paper sheets for every plot, regardless of the
+#  size of the map or the size specifications in the selected
+#  configuration file (selected using "ps.select"). The plotter was
+#  using a default length that is one and a half times the width of
+#  the paper [ 54 = 1.5 * 36 ].
+#
+#  The "ps.map" output file is apparently missing a line that specifies
+#  the plot width and height.  If the line is included in the output file,
+#  the plotter will automatically cut the paper at the edge of the plot,
+#  and no paper will be wasted.  The width/height specification is in
+#  "points", where 72 points equal one inch.  An example specification:
+#
+#      <</PageSize [612 792]>> setpagedevice
+#
+#   This example sets the page size at 8.5" x 11"  [ 72 * 8.5 = 612, and
+#   72 * 11 = 792 ].
+#   
+#   Two problems needed to be addressed in the script:
+#   1.  Calculate the correct width and height values from the
+#       selected configuration file.
+#   2.  Add the needed line into a potentially very large ASCII file
+#       containing all the PostScript instructions for the map.
+#
+#   Bourne shell script written March 1994, by Scott Wade, Technical
+#   Assistance Center, US Army Construction Engineering Research Laboratories,
+#   Champaign, Illinois, USA.  Originally used in GRASS 4.1, update 3.
+#   Some technical help from Hewlett Packard.
+#
+#   Problems/bugs:
+#   1. The script contains little checking - e.g., for pre-existing files
+#      that might be over-written.
+#   2. The script does not give the user a choice about where to put the
+#      resulting file.
+#   3. The script will overwrite any pre-existing file in the paint
+#      subdirectory of the current mapset if it has the same name as the
+#      input PostScript file.
+#   4. This script has given positive results, but it has been tested very
+#      little.
+
+
+
+############################################################################
+# Determine if GRASS is being used
+ 
+ if [ ! "$GISBASE" ]
+   then
+   echo ""
+   echo "ERROR:  must be in GRASS to use `basename $0`"
+   echo ""
+   exit
+ fi
+
+############################################################################
+# Check for file name argument
+
+ if [ $# != 1 ]
+   then
+   echo
+   echo -n "Enter name of PostScript file that needs to be edited:  "
+   read PSMAPFILE
+ else
+   PSMAPFILE=$1
+ fi
+
+ echo
+
+ if [ ! -s $PSMAPFILE ]
+   then
+   echo "Not a valid file."
+   echo
+   exit
+  fi
+
+echo -n "Processing...."
+
+############################################################################
+# Read currently selected ps.map configuration file to determine
+# plot width and height.  If no configuration file is currently
+# selected, base the size on the default of 8.5" x 11".
+
+CONFIG=$GISBASE/etc/paint/ps.devices/`ps.select -p`
+
+if [ -s $CONFIG ]
+  then
+  WIDTH=` awk ' /page width:/ { printf "%s\n", $3 * 72 + 200 }' $CONFIG `
+  HEIGHT=` awk ' /page height:/ { printf "%s\n", $3 * 72 + 200 }' $CONFIG `
+else
+  WIDTH=812
+  HEIGHT=992
+fi 
+
+echo -n "....."
+
+############################################################################
+# Re-create the "ps.map" PostScript file with the needed pagesize
+# specification.  The name of the output is same as input file name.
+#
+# The file is placed in the "paint" subdirectory of the current mapset, 
+# no matter where the input map resided.  This way, the script can send the
+# output to a directory that is known to be writable (the input file does not
+# necessarily need to be owned by the current user).
+#
+# The PageSize specification seems to work best as the fifth line in the
+# modified "ps.map" output file.  The script constructs the new file by
+# adding, in order:  the first four lines of the old file, the new PageSize
+# line, and all the lines after the first four lines of the old file.
+
+NEW_NAME=`basename $PSMAPFILE`
+TMP_PS_FILE=`g.tempfile $$`
+mv $PSMAPFILE $TMP_PS_FILE
+
+if [ ! -d $LOCATION/paint ]
+  then
+  mkdir $LOCATION/paint
+fi
+
+head -4 $TMP_PS_FILE > $LOCATION/paint/$NEW_NAME
+echo -n "....."
+echo \<\</PageSize [$WIDTH $HEIGHT]\>\> setpagedevice >> $LOCATION/paint/$NEW_NAME
+echo -n "....."
+tail +5 $TMP_PS_FILE >> $LOCATION/paint/$NEW_NAME
+echo "....."
+rm $TMP_PS_FILE
+echo
+
+
+############################################################################
+echo "Output file, with added pagesize, is"
+echo $LOCATION/paint/$NEW_NAME
+echo
+echo "Old file has been replaced or removed."
+echo
