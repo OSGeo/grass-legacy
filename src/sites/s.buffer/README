@@ -1,0 +1,17 @@
+This is s.buffer which generates vector buffer aroud a site point.
+The area is labelled with site category.
+**  Input arguements:
+
+**        s.buffer input=site_list file to read
+**                  output=vector (digit) file to create
+**                  radius=radius of circle, 0=category, -1=the 4th value of site list
+The buffering radius can be given. Then the buffer is the same with all
+points. The value must be positive.
+
+If the value is not given or its 0, then the radius is taken from the 
+attribute of the site point.
+
+If the radius value is negative, then the radius is taken from the 4th column
+of site list. Here it's called also radius value.
+
+Comments to jsoi@cs.joensuu.fi
