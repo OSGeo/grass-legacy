@@ -141,25 +141,28 @@ getargs (argc, argv, geo, infile, outfile)
     }
 
 /* corner */
+/* note: the lat,lon are center of cell.
+ * They need to be adjust to edge of cell
+ */
     if(strcmp(CORNER,"nw") == 0)
     {
-	geo->lat = lat;
-	geo->lon = lon;
+	geo->lat = lat + 0.5;
+	geo->lon = lon + 0.5;
     }
     else if(strcmp(CORNER,"ne") == 0)
     {
-	geo->lat = lat;
-	geo->lon = lon + geo->ncols * geo->lon_res;
+	geo->lat = lat + 0.5;
+	geo->lon = lon + geo->ncols * geo->lon_res - 0.5;
     }
     else if(strcmp(CORNER,"se") == 0)
     {
-	geo->lat = lat + geo->nrows * geo->lat_res;
-	geo->lon = lon + geo->ncols * geo->lon_res;
+	geo->lat = lat + geo->nrows * geo->lat_res - 0.5;
+	geo->lon = lon + geo->ncols * geo->lon_res - 0.5;
     }
     else if(strcmp(CORNER,"sw") == 0)
     {
-	geo->lat = lat + geo->nrows * geo->lat_res;
-	geo->lon = lon;
+	geo->lat = lat + geo->nrows * geo->lat_res - 0.5;
+	geo->lon = lon + 0.5;
     }
     else
     {
