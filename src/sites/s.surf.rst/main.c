@@ -720,10 +720,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   fprintf (stdout, _("dnorm = %f, rescaled tension = %f\n"), dnorm, params.fi);
   }
 
-  if (maskmap != NULL)
-    bitmask = BM_create (n_cols, n_rows);
-
-  IL_create_bitmask (&params, bitmask);
+  bitmask = IL_create_bitmask (&params);
   if (totsegm <= 0)
     G_fatal_error (_("Input failed"));
   ertot = 0.;

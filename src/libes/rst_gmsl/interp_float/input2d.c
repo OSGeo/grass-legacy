@@ -187,35 +187,46 @@ int IL_input_data_2d (
 }
 
 
-int 
-IL_create_bitmask (struct interp_params *params, struct BM *bitmask)
+struct BM * 
+IL_create_bitmask (struct interp_params *params)
 
 /** Creates a bitmap mask from given raster file **/
 {
-  int i, j, cfmask, irev;
+  int i, j, cfmask, irev, MASKfd;
   char *mapsetm;
-  CELL *cellmask;
+  CELL *cellmask, *MASK;
+  struct BM *bitmask;
 
-  if (params->maskmap != NULL)
-  {
-    mapsetm = G_find_cell2 (params->maskmap, "");
-    if (!mapsetm)
+  if ((MASKfd = G_maskfd()) >= 0)
+    MASK = G_allocate_cell_buf();
+  else
+    MASK = NULL;
+
+  if (params->maskmap != NULL || MASK != NULL)
+  {    
+    bitmask = BM_create (params->nsizc, params->nsizr);
+     
+    if (params->maskmap != NULL)
     {
-      fprintf (stderr, "mask raster file [%s] not found\n", params->maskmap);
-      return -1;
+      mapsetm = G_find_cell2 (params->maskmap, "");
+      if (!mapsetm)
+        G_fatal_error ("mask raster file [%s] not found\n", params->maskmap);
+      cellmask = G_allocate_cell_buf ();
+      cfmask = G_open_cell_old (params->maskmap, mapsetm);
     }
-    /*
-     * bitmask = BM_create (params->nsizc, params->nsizr);
-     */
-    cellmask = G_allocate_cell_buf ();
-    cfmask = G_open_cell_old (params->maskmap, mapsetm);
+    else
+      cellmask = NULL;
+     
     for (i = 0; i < params->nsizr; i++)
     {
-      irev = params->nsizr - i - 1;
-      G_get_map_row (cfmask, cellmask, i);
+      irev = params->nsizr - i - 1;      
+      if(cellmask) 
+        G_get_map_row (cfmask, cellmask, i);
+      if(MASK)
+        G_get_map_row (MASKfd, MASK, i);
       for (j = 0; j < params->nsizc; j++)
       {
-	if (cellmask[j] == 0)
+	if ((cellmask && cellmask[j] == 0) || (MASK && MASK[j] == 0))
 	  BM_set (bitmask, j, irev, 0);
 	else
 	  BM_set (bitmask, j, irev, 1);
@@ -226,7 +237,7 @@ IL_create_bitmask (struct interp_params *params, struct BM *bitmask)
   }
   else
     bitmask = NULL;
-  return 1;
+  return bitmask;
 }
 
 int translate_quad (
