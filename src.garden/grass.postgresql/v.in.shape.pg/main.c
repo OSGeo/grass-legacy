@@ -85,6 +85,8 @@ int main( int   argc, char *argv[])
     int attval;
     int lab_field = -1;
 
+    unsigned char dump_flags;
+    int cnt;
 
     /* DDG: Create structures for processing of shapefile contents */
     lineList *ll0;
@@ -112,7 +114,7 @@ int main( int   argc, char *argv[])
 
     struct {
 	struct Option *input, *logfile, *verbose, *attribute, *snapd, *minangle;
-	struct Option *scale, *catlabel;
+	struct Option *scale, *catlabel, *special;
     } parm;
 
     struct Flag *listflag, *rejflag, *pgflag;
@@ -177,7 +179,14 @@ int main( int   argc, char *argv[])
     parm.catlabel->description= "Name of attribute to use as category label";
     parm.catlabel->answer     = "";
     
-    
+    parm.special = G_define_option();
+    parm.special->key = "special";
+    parm.special->type = TYPE_STRING;
+    parm.special->required = NO;
+    parm.special->description = "Special fields to be included in table";
+    parm.special->multiple = YES;
+    parm.special->options = "none,id,orig,coords";
+    parm.special->answer = "none";
 
     /* Set flag for listing fields of database */
 
@@ -185,7 +194,7 @@ int main( int   argc, char *argv[])
     listflag->key     = 'l';
     listflag->description = "List fields of DBF file";
 
-    /* Set flag for listing fields of database */
+    /* Set flag for creating reject lines */
 
     rejflag = G_define_flag();
     rejflag->key     = 'r';
@@ -212,6 +221,24 @@ int main( int   argc, char *argv[])
     /* Are we dumping to postgres? */
 
     pgdmp =(int)pgflag->answer;
+
+
+    /* Are we dumping special tables? */
+
+    dump_flags = 0;
+
+    cnt = 0;
+    while(1) {
+      if( parm.special->answers[cnt] == NULL )
+	break;
+      else if( strcmp(parm.special->answers[cnt], "id") == 0 )
+	dump_flags |= 1;
+      else if( strcmp(parm.special->answers[cnt], "orig") == 0 )
+	dump_flags |= 2;
+      else if( strcmp(parm.special->answers[cnt], "coords") == 0 )
+	dump_flags |= 4;
+      cnt++;
+    }
     
 
     /* Examine the flag `-l' first */
@@ -485,7 +512,7 @@ int main( int   argc, char *argv[])
     linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
 
     if (pgdmp)
-      PgDumpFromFieldD( fd0, fc1, name);
+      PgDumpFromFieldD( fd0, fc1, name, dump_flags );
 
     /* Extract arcs from V-base into segment list */
     vbase2segd( segl, hVB );
@@ -554,7 +581,7 @@ int main( int   argc, char *argv[])
     if( f_att != NULL ) {
       if(cat_field == -1)
 	G_warning( "No attribute value field assigned. Using record ID.\n" );	
-      else if(fd0[cat_field+4].fldType != 1 || fd0[cat_field+4].fldType != 2)
+      else if(fd0[cat_field+4].fldType != 1 && fd0[cat_field+4].fldType != 2)
 	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
