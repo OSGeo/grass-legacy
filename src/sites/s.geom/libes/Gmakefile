@@ -1,0 +1,5 @@
+all:
+	$(GMAKE) basic
+	$(GMAKE) lia
+	$(GMAKE) sos
+	$(GMAKE) optri
