@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.10 2000-12-07 11:36:23 justin Exp $
+# $Id: Gmakefile,v 1.11 2000-12-15 08:31:52 markus Exp $
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -33,7 +33,7 @@ all: unix \
 unix:
 	@test -d $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not found; exit 1)
 	@test -w $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not writeable; exit 1)
-	rm -f $(UNIX_BIN)/$(START_UP)
+	rm -f $(UNIX_BIN)/$(START_UP) ; true
 	$(SHELL) -c "sed -e \"s#GISBASE_VALUE#$(GISBASE)#\" grass.src > $(UNIX_BIN)/$(START_UP) 2>/dev/null ; true"
 	$(SHELL) -c "cp $(UNIX_BIN)/$(START_UP) $(GISBASE)"
 	chmod a+x $(UNIX_BIN)/$(START_UP)
