@@ -197,7 +197,7 @@ main(int argc, char **argv)
 	param.color->type        = TYPE_STRING;
 	param.color->required    = NO;
 	param.color->description =
-		"Text color (either standard GRASS color or hexadecimal 0xRRGGBB)";
+		"Text color, either a standard GRASS color or R:G:B triplet (separated by colons)";
 
 	param.size = G_define_option();
 	param.size->key         = "size";
@@ -812,18 +812,28 @@ static void
 get_color(char *tcolor, int *color)
 {
 	int	r, g, b;
-
-	if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
+	
+	if(sscanf(tcolor, "%d:%d:%d", &r, &g, &b) == 3)
+	{
+		if (r>=0 && r<256 && g>=0 && g<256 && b>=0 && b<256) {
+			*color = 1;
+			R_reset_color(r, g, b, *color);
+		}
+	}
+#define BACKWARDS_COMPATIBLE
+#ifdef BACKWARDS_COMPATIBLE
+	else if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
 	{
 		*color = 1;
 		R_reset_color(r, g, b, *color);
 	}
+#endif
 	else
 		*color = D_translate_color(tcolor);
 
 	if(!*color)
 	{
-		G_warning("%s: No such color", tcolor);
+		G_warning("[%s]: No such color", tcolor);
 		*color = D_translate_color(DEFAULT_COLOR);
 	}
 
