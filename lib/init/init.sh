@@ -229,7 +229,7 @@ if [ ! -f "$GISRC" ] ; then
 
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
-    GRASS_GUI="text"
+    #GRASS_GUI="text"
     
 else
     echo "Cleaning up temporary files....."
