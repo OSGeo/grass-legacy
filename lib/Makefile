@@ -5,6 +5,7 @@ MODULE_TOPDIR = ..
 SUBDIRS = \
 	datetime \
 	gis \
+	raster \
 	bitmap \
 	btree \
 	display \
@@ -21,7 +22,6 @@ SUBDIRS = \
 	imagery \
 	linkm \
 	proj \
-	raster \
 	rowio \
 	segment \
 	vector \
