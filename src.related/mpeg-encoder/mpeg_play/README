@@ -1,0 +1,84 @@
+                  MPEG Video Software Decoder
+                  (Version 2.1; May 1 1995)
+
+ Lawrence A. Rowe, Ketan Patel, Brian Smith, Steve Smoot, and Eugene Hung
+      Computer Science Division-EECS, Univ. of Calif. at Berkeley
+
+This directory contains a public domain MPEG video software
+decoder. The decoder is implemented as a library that will
+take a video stream and display it in an X window on an 8, 24
+or 32 bit deep display.  The main routine is supplied to
+demonstrate the use of the decoder library. Several dithering
+algorithms are supplied based on the Floyd-Steinberg, ordered
+dither, and half-toning algorithms that tradeoff quality and
+performance. Neither the library nor the main routine handle
+real-time synchronization or audio streams.
+
+The decoder implements the standard described in the Committee 
+Draft ISO/IEC CD 11172 dated December 6, 1991 which is
+sometimes refered to as "Paris Format." The code has been
+compiled and tested on the following platforms:
+
+ HP PA-RISC (HP/UX 9.X, X11R5) (i.e., HP 9000/7XX and 9000/3XX)
+ Sun Sparc (SunOS 4.X, Solaris)
+ DECstation 5000 and Alpha
+ Silicon Graphics Indigo
+ MIPS RISC/os 4.51
+ Linux
+
+If you decide to port the code to a new architecture, please let
+us know if there are any significant changes, so that we can incorporate
+them into our sources. 
+
+This directory contains everything required to build and
+display video. We have included source code, a makefile, an Imakefile,
+installation instructions, and a man page. Data files can
+be obtained from the same ftp site this was located in.
+See the INSTALL file for instructions on how to
+compile and run the decoder. 
+
+The data files were produced by XING. XING data does not take
+advantage of P or B frames (ie, frames with motion compensation). 
+Performance of the player on XING data is significantly slower 
+(half or less) than the performance when motion compensated MPEG 
+data is decoded. We are very interested in running the software 
+on other MPEG streams.  Please contact us if you have a stream 
+that does not decode correctly. Also, please send us new streams
+produced by others that do utilize P and B frames.
+
+Our future plans include porting the decoder to run on other
+platforms, integrating it into a video playback system that
+supports real-time synchronization and audio streams, and
+further experiments to improve the performance of the
+decoder. Vendors or other organizations interested in supporting 
+this research or discussing other aspects of this project should 
+contact Larry Rowe at Rowe@CS.Berkeley.EDU.
+
+Reporting bugs:
+    If you find any bugs in this software, please send them to
+    mpeg-bugs@plateau.cs.berkeley.edu.  Since this software
+    is unsupported, we make no guarantees about how long it will
+    take to fix the bug, or if it will be fixed at all.  Bug fixes
+    will be cheerfully accepted.  Please include as much detailed
+    information as possible, including:
+
+	1) the version number of the program you are using (cf. VERSION)
+	2) the data file that caused the bug (if possible)
+	3) the OS version and machine type you ran the program on
+	4) the compiler used to compile the program
+
+ACKNOWLEDGEMENTS:
+	We gratefully thank Hewlett-Packard, Fujitsu, the Semiconductor
+	Research Corporation for financial support.
+
+	We also want to thank the following people for their help:
+
+	Tom Lane of the Independent JPEG Group provided us with
+		the basic inverse DCT code used by our player.
+		(tom_lane@g.gp.cs.cmu.edu)
+
+	Reid Judd of Sun Microsystems provided advice and assistance.
+
+	Todd Brunhoff of NVR provided advice and assistance.
+
+	Toshihiko Kawai of Sony provided advice and assistance.
