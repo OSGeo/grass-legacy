@@ -166,12 +166,12 @@ int edit(void)
 			select_count = 2;
 		}
 		/* right key means quit edit mode */
-		if (button == RIGHT) {
+		if (button == RIGHTB) {
 			G_close_cell(fd);
 			break;
 		}
 		/* if left or middle key, find out what's there */
-		if (button == LEFT || button == MIDDLE) {
+		if (button == LEFTB || button == MIDDLEB) {
 			/* convert display coords to UTM coords */
 			east = D_d_to_u_col((double) screen_x);
 			north = D_d_to_u_row((double) screen_y);
@@ -223,13 +223,13 @@ int edit(void)
 			fprintf (stdout,"%s\n", G_get_d_raster_cat(&buf[col], &cats));
 		}
 		/* middle button means we want to edit that cell */
-		if (button == MIDDLE) {
+		if (button == MIDDLEB) {
 			int             tmpx, tmpy;
 
 			edit_mouse_info2(c, buf[col]);
 			R_get_location_with_pointer(&tmpx, &tmpy, &button);
 
-			if (button == RIGHT)
+			if (button == RIGHTB)
 				while (1) {
 					/*
 					 * get new value from user, make sure
@@ -270,7 +270,7 @@ int edit(void)
 					}
 					break;
 				}
-			if ((button == MIDDLE) || (button == RIGHT)) {
+			if ((button == MIDDLEB) || (button == RIGHTB)) {
 
 				select_count = 2;
 				c = num;
