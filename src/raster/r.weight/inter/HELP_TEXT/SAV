@@ -1,0 +1,13 @@
+
+------------------------------------------------------------------
+KEYWORD: save
+    "save" is used to write out a currently defined analysis for later
+    use.  It completely erases any currently saved analysis by the same
+    name.  "save" does NOT save the "multiply" or "add" information.
+
+EXAMPLE: 
+    save hospital_site
+
+ALIAS:
+------------------------------------------------------------------
+
