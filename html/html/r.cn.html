@@ -1,3 +1,4 @@
+<html>
 <TITLE>r.cn</TITLE>
 
 <body bgcolor="white">
@@ -17,28 +18,45 @@
           <B>hc=</B>hy_condition_map <B>cn=</B>cn_map <B>amc=</B>AMC_number
 
 <H2>DESCRIPTION</H2>
-<EM>r.cn</EM> is a command-line interface for generating an SCS CN
-     map.  The command format is:
-<PRE>
+<EM>r.cn</EM> is a command-line interface for generating an SCS CN (Curve
+   Number) map.  The command format is:
 
-     sg=map         hydrologic soil group map name
-     lu=map         landuse map name
-     pr=map         practice or management map name
-     hc=map         hydrologic condition map name
-     cn=map         output CN map name
-     amc=number     equivalent AMC condition number for the CN output
-</PRE>
+<P>
 
-     The command-line ordering can be in any form but all key
-     words must be there to run the program.
-<PRE>
-EXAMPLE
+<DD><EM>r.cn sg=hysoilgroup  lu=landusemap  pr=practicemap
+hc=hyconditionmap cn=cnmap amc=AMCnumber</EM>
 
-     <B>r.cn sg=</B><EM>hy.soil.group</EM> <B>lu=</B><EM>land_use</EM> <B>hc=</B><EM>hy.cond</EM> <B>pr=</B><EM>veg.cover</EM>
-     <B>cn=</B><EM>cn_name amc=2</EM>
-</PRE>
-will create a CN map cn_name for equivalent AMC
-condition II
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sg=map</B>
+<DD>Hydrologic soil group map name
+
+<DT><B>lu=map</B>
+<DD>Landuse map name
+
+<DT><B>pr=map</B>
+<DD>Practice or management map name
+
+<DT><B>hc=map</B>
+<DD>Hydrologic condition map name
+
+<DT><B>cn=map</B>
+<DD>Output CN map name
+
+<DT><B>amc=number</B>
+<DD>Equivalent AMC condition number for the CN output
+</DL>
+
+The command-line ordering can be in any form but all key words must be there
+     to run the program.
+
+<H2>EXAMPLE</H2>
+<EM>r.cn sg=hy.soil.group lu=landuse hc=hy.cond pr=veg.cover cn=cnname
+amc=2</EM>
+
+will create a CN map cnname for equivalent AMC condition II
+
+
 <P>
 <H2>ATTENTION</H2>
      <EM>r.cn</EM> uses information from the four map layers by reading
@@ -99,10 +117,13 @@ href=http://www.wcc.nrcs.usda.gov/water/quality/common/tr55/tr55.html>TR-55, Urb
 
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="r.cn.html">r.cn</A></EM>,
 <EM><A HREF="r.weighted.cn.html">r.weighted.cn</A></EM>
 
 <P>
 <H2>AUTHORS</H2>
      Raghavan Srinivasan and Dr. Bernie A. Engel, Agricultural
-     Engineering Department, Purdue University
+     Engineering Department, Purdue University<br>
+Extensions by Markus Neteler, University of Hannover, Germany (fixes for
+AGNPS 5)
+</BODY>
+</HTML>
