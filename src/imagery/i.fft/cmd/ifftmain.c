@@ -53,7 +53,7 @@ char *argv[];
         op1->required         = YES;
         op1->multiple         = NO;
         op1->gisprompt        = "old,cell,raster";
-        op1->description      = "input raster file for inverse fft, real part";
+        op1->description      = "input raster file (image fft, real part)";
 
         op2=G_define_option();
         op2->key              = "imaginary_image";
@@ -61,7 +61,7 @@ char *argv[];
         op2->required         = YES;
         op2->multiple         = NO;
         op2->gisprompt        = "old,cell,raster";
-        op2->description      = "input raster file for inverse fft, imaginary";
+        op2->description      = "input raster file (image fft, imaginary part";
 
         op3=G_define_option();
         op3->key              = "output_image";
@@ -69,7 +69,7 @@ char *argv[];
         op3->required         = YES;
         op3->multiple         = NO;
         op3->gisprompt        = "new,cell,raster";
-        op3->description      = "output inverse raster file after fft";
+        op3->description      = "output inverse raster file after ifft";
 
         /*call parser*/
         if(G_parser(argc, argv))
@@ -80,31 +80,29 @@ char *argv[];
         strcpy(Cellmap_orig, op3->answer) ;
 
         /* open input raster map */
-        if ((realmapset = G_find_cell(Cellmap_real, "")) == NULL)
+        if ((realmapset = G_find_cell2(Cellmap_real, "")) == NULL)
         {
-                fprintf (stderr, "%s: %s - Unable to open the real part raster map\n", me,
+                fprintf (stderr, "%s: %s - Unable to find the real-image map\n", me,
                     Cellmap_real);
                 exit(1);
         }
         sprintf(buffer, "cell_misc/%s", Cellmap_real);
-        if ((realfp = G_fopen_old(buffer, FFTREAL,
-                        G_find_file(buffer, FFTREAL, NULL))) == NULL)
+        if ((realfp = G_fopen_old(buffer, FFTREAL, realmapset)) == NULL)
         {
-                G_fatal_error("Unable to open file in the cell_misc directory.\nInput map probably wasn't created by i.fft") ;
+                G_fatal_error("Unable to open real-image in the cell_misc directory.\nInput map probably wasn't created by i.fft") ;
                 exit(1);
         }
 
-        if ((imagmapset = G_find_cell(Cellmap_imag, "")) == NULL)
+        if ((imagmapset = G_find_cell2(Cellmap_imag, "")) == NULL)
         {
-                fprintf (stderr, "%s: %s - Unable to open the real part raster map\n", me,
+                fprintf (stderr, "%s: %s - Unable to find the imaginary-image\n", me,
                     Cellmap_imag);
                 exit(1);
         }
         sprintf(buffer, "cell_misc/%s", Cellmap_imag);
-        if ((imagfp = G_fopen_old(buffer, FFTIMAG,
-                        G_find_file(buffer, FFTIMAG, NULL))) == NULL)
+        if ((imagfp = G_fopen_old(buffer, FFTIMAG, imagmapset)) == NULL)
         {
-                G_fatal_error("Unable to open file in the cell_misc directory.\nInput map probably wasn't created by i.fft") ;
+                G_fatal_error("Unable to open imaginary-image in the cell_misc directory.\nInput map probably wasn't created by i.fft") ;
                 exit(1) ;
         }
 
@@ -152,8 +150,8 @@ char *argv[];
 
         /* Read in cell map values */
         fprintf(stderr,"Masking the raster maps...\n");
-        maskfd = G_open_cell_old("MASK", G_mapset());
-        if (maskfd > 0) maskbuf = G_allocate_cell_buf();
+        maskfd = G_maskfd();
+        if (maskfd >= 0) maskbuf = G_allocate_cell_buf();
 
         if (maskfd >= 0) {
                 for (i=0; i<rows; i++) {
