@@ -15,402 +15,44 @@
 #include "display.h"
 #include "Vect.h"
 #include "local_proto.h"
+#include "screenpoly.h"
 
 extern int fillcolor;
 extern int linecolor;
 extern struct Cell_head window;
 
-/* Polygon circular linked list of screen points */
-typedef struct _ScreenPoint {
-    int x, y;
-    struct _ScreenPoint *next, *prev;
-} SCREENPOINT;
 
-typedef struct {
-    int count, _alloced;
-    SCREENPOINT *entry, *_array;
-} SCREENPOLY;
-
-
-/* Allocate memory for new SCREENPOLY type and intialize */
-static SCREENPOLY *
-ScreenPolyNew (int sz)
-{
-    SCREENPOLY *new = (SCREENPOLY *) G_calloc (sizeof (SCREENPOLY), 1);
-    if (new == NULL)
-        return NULL;
-
-    new->count = 0;
-    new->entry = NULL;
-
-    new->_array = (SCREENPOINT *) G_calloc (sizeof (SCREENPOINT), sz);
-    if (new->_array == NULL)
-    {
-        G_free (new);
-        return NULL;
-    }
-    new->_alloced = sz;
-
-    return new;
-}
-
-/* Push entries into the SCREENPOLY. The new entry is placed just
- * after the current entry, and then made the current entry.  If
- * an entry is passed that would duplicate the current entry, it
- * is silently dropped.  Callers should rely on sp->count, for
- * an accurate number of entries.
- */
-static int
-ScreenPolyAddEntry (SCREENPOLY *sp, int x, int y)
-{
-    SCREENPOINT *pnt, *before, *after;
-
-    if (sp == NULL)
-        return -1;
-
-    /* Realloc if needed */
-    if (sp->count == sp->_alloced)
-    {
-        pnt = (SCREENPOINT *) G_realloc (sp->_array, 
-                    (sp->_alloced + 10) * (sizeof (SCREENPOINT)));
-        if (pnt == NULL)
-            G_fatal_error ("[%s:%d] Memory Exhausted!", __FILE__, __LINE__);
-        sp->_array = pnt;
-        sp->_alloced += 10;
-    }
-    
-
-    pnt = &sp->_array[sp->count];
-    pnt->x = x;
-    pnt->y = y;
-    
-    if (sp->count == 0)
-    {
-        /* First entry */
-        sp->entry = pnt;
-        sp->entry->next = NULL;
-        sp->entry->prev = NULL;
-        sp->count++;
-    }
-    else if (sp->count == 1)
-    {
-        /* Special Case */
-        pnt->prev = sp->entry;
-        pnt->next = sp->entry;
-        sp->entry->next = pnt;
-        sp->entry->prev = pnt;
-        sp->entry = sp->entry->next;
-        sp->count++;
-    }
-    else
-    {
-        /* Weed out duplicate entries with no purpose */
-        if (pnt->x == sp->entry->x && pnt->y == sp->entry->y)
-        {
-            return 0;
-        }
-        after = sp->entry->next;
-        before = sp->entry;
-        after->prev = pnt;
-        before->next = pnt;
-        pnt->prev = before;
-        pnt->next = after;
-        sp->entry = pnt;
-        sp->count++;
-    }
-
-    return 0;
-}
-
-/* Removes the current entry, make the "next" entry, the current
- * entry point, and adjust "next", "prev" pointers
- */
-static int
-ScreenPolyRemoveEntry (SCREENPOLY *sp)
-{
-    SCREENPOINT *before, *after;
-
-    if (sp == NULL || sp->count < 1)
-        return -1;
-
-    if (sp->count == 1)
-    {
-        /* special case */
-        sp->count--;
-        sp->entry = NULL;
-    }
-    else
-    {
-        before = sp->entry->prev;
-        after  = sp->entry->next;
-        before->next = after;
-        after->prev = before;
-        sp->count--;
-        sp->entry = after;
-    }
-
-    return 0;
-}
-
-/* Deallocate all of the entries and free the memory for the
- * SCREENPOLY type
- */
-static int
-ScreenPolyDestroy (SCREENPOLY *sp)
-{
-    if (sp == NULL)
-        return -1;
-
-    G_free (sp->_array);
-
-    G_free (sp);
-
-    return 0;
-}
-
-/* Dumps the SCREENPOLY list -- for debugging */
-#ifdef DEBUG
-static void
-ScreenPolyDump (SCREENPOLY *sp)
-{
-    int i;
-    SCREENPOINT *p;
-    p = sp->entry;
-    for (i = 0; i < sp->count ; i++)
-    {
-        fprintf (stderr, "%d = {%d, %d}\n", i, p->x, p->y);
-        p = p->next;
-    }
-}
-#endif
-
-/* Copy one SCREENPOLY to a new SCREENPOLY */
-static SCREENPOLY *
-ScreenPolyCopy (SCREENPOLY *sp)
-{
-    int i;
-    SCREENPOLY *cp;
-    SCREENPOINT *pnt;
-
-    if (sp == NULL)
-        return NULL;
-    if (NULL == (cp = ScreenPolyNew(sp->count)))
-        return NULL;
-    
-    pnt = sp->entry;
-    for (i = 0; i < sp->count; i++)
-    {
-        ScreenPolyAddEntry (cp, pnt->x, pnt->y);
-        pnt = pnt->next;
-    }
-
-    return cp;
-}
-
-/*  The idea here is to move the entry points for "a" and "b", so that
- *  the distance between their respective points is minimized.  This
- *  thing is a real CPU hog and is where the most band for the
- *  optimization buck could be had.
- */
-static int
-ScreenPolyMoveNearest (SCREENPOLY *a, SCREENPOLY *b)
-{
-    int i, j;
-    double dmin, dcur, dx, dy;
-    SCREENPOLY  *u, *v;
-    SCREENPOINT *uPnt, *vPnt, *uSave, *vSave;
-
-    if (a == NULL || b == NULL || a->count < 2 || b->count < 2)
-        return -1;
-
-    if (a->count > b->count)
-    {
-        u = b; v = a;
-    }
-    else
-    {
-        u = a; v = a;
-    }
-
-    for (i = 0 ; i < u->count ; i++)
-    {
-        if (i == 0)
-            uPnt = uSave = u->entry;
-        else
-            uPnt = uPnt->next;
-
-        for (j = 0; j < v->count; j++)
-        {
-            if (j == 0)
-            {
-                if (i == 0)
-                    vSave = v->entry;
-                vPnt = v->entry;
-            }
-            else
-            {
-                vPnt = vPnt->next;
-            }
-
-            /* Find the square of the distance */
-            dx = (double)(uPnt->x - vPnt->x);
-            dy = (double)(uPnt->y - vPnt->y);
-            dcur = dx*dx + dy*dy;
-            if (i == 0 && j == 0)
-            {
-                dmin = dcur;
-            }
-            else if (dcur < dmin)
-            {
-                uSave = uPnt;
-                vSave = vPnt;
-                dmin = dcur;
-            }
-
-            if (dmin < 1.0)
-                goto finish;
-        } /* inner for */
-    } /* outer for */
-
-finish:
-    
-    u->entry = uSave;
-    v->entry = vSave;
-
-    return 0;
-} /* ScreenPolyMoveNearest() */
-
-
-/* This takes two SCREENPOLY types, creates a new one, and merges "b" into "a"
- * connecting them at the current "entry" points.  The "a" SCREENPOLY should
- * be the outer ring.  NOTE, the origninals are copied to a new struct, so
- * you probably want to deallocate those old structs unless you need them
- * for something.
- */
-static SCREENPOLY *
-ScreenPolyMerge (SCREENPOLY *a, SCREENPOLY *b)
-{
-    int i;
-    SCREENPOINT *apnt, *bpnt, *pnt;
-    SCREENPOLY *new;
-
-    if (a == NULL || b == NULL)
-        return NULL;
-
-    
-    if (a->count < 2)
-    {
-        /* Special case, just copy "a" */
-        return ScreenPolyCopy (a);
-    }
-    else if (b->count < 2)
-    {
-        /* Special case, just copy "b" */
-        return ScreenPolyCopy (b);
-    }
-    else
-    {
-        /* Make sure polys are at nearest node points */
-        ScreenPolyMoveNearest (a,b);
-
-        /* Two extra points -- one on each ring */
-        if (NULL == (new = ScreenPolyNew(a->count + b->count + 2)))
-            return NULL;
-
-        /* Save branch points */
-        apnt = a->entry;
-        bpnt = b->entry;
-        
-        /* First point is a->entry */
-        ScreenPolyAddEntry (new, apnt->x, apnt->y);
-        /* Now add all of "b" */
-        pnt = bpnt;
-        for (i = 0 ; i < b->count; i++)
-        {
-            ScreenPolyAddEntry (new, pnt->x, pnt->y);
-            pnt = pnt->next;
-        }
-        /* Now add bpnt to make sure ring is "closed" */
-        ScreenPolyAddEntry (new, bpnt->x, bpnt->y);
-        /* Now add all of "a" to close the polygon */
-        pnt = apnt;
-        for (i = 0; i < a->count; i++)
-        {
-            ScreenPolyAddEntry (new, pnt->x, pnt->y);
-            pnt = pnt->next;
-        }
-    } /* else */
-
-    return new;
-    
-} /* ScreenPolyMerge */
-
-
-/* This takes a SCREENPOLY type and populates the "x" and "y" arrary.  The
- * return value is the number of points.  This function allocates the
- * memory, hence the double pointers.  "x" and "y" should not point to
- * anything prior to this call, and should be deallocated when they are
- * no longer needed.
- */
-static int
-ScreenPolyToArrays (SCREENPOLY *sp, int **x, int **y)
-{
-    int i, *u, *v;
-    SCREENPOINT *this;
-    
-    /* line needs 2 points, poly needs 3 */
-    if (sp == NULL || sp->count < 2)
-        return 0;
-
-    this = sp->entry;
-    if (this == NULL)
-    {
-        G_warning ("ScreenPolyToArrays: sp->entry == NULL, but shouldn't");
-        return -1;
-    }
-    
-    if (NULL == (u = (int *) G_malloc (sizeof (int) * sp->count)))
-        return -1;
-    if (NULL == (v = (int *) G_malloc (sizeof (int) * sp->count)))
-    {
-        G_free (u);
-        return -1;
-    }
-
-    for (i = 0; i < sp->count ; i++)
-    {
-        u[i] = this->x;
-        v[i] = this->y;
-        this = this->next;
-    }
-
-    *x = u;
-    *y = v;
-    
-    return i;
-}
-    
 int plot1 (char *name, char *mapset, struct line_pnts *Points)
 {
     int i, j, dofill;
     struct Map_info Map;
     double N, S, E, W;
+    int t,b,l,r;
     int line, nisles;
     int nlines;
     int *x_screen, *y_screen;
     struct line_pnts *Isle;
     P_AREA *pa;
-    SCREENPOLY *spArea, *spLine, *spIsle, *spTmp;
+    SCREENPOLY *spArea, *spLine, *spIsle, *spClip, *spTmp;
 
     i = Vect_open_old (&Map, name, mapset);
 
     if (2 > i)
 	G_fatal_error ("Failed opening vector file");
 
-    G_setup_plot (
-	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-	D_move_abs, D_cont_abs);
+    t = D_get_d_north();
+    b = D_get_d_south();
+    l = D_get_d_west();
+    r = D_get_d_east();
 
+    G_setup_plot (t, b, l, r, D_move_abs, D_cont_abs);
+
+    /* TODO: Not working yet */
+    spClip = ScreenPolyNew (4);
+    ScreenPolyAddPoint (spClip, l, t);
+    ScreenPolyAddPoint (spClip, r, t);
+    ScreenPolyAddPoint (spClip, r, b);
+    ScreenPolyAddPoint (spClip, l, b);
 
     fprintf (stderr,"Plotting ... "); fflush (stderr);
     nlines = V2_num_areas(&Map);
@@ -448,18 +90,29 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
 	for(i=0; i < Points->n_points; i++)
 	{
             /* Populate the SCREENPOLY type with screen coordinates */
-            ScreenPolyAddEntry (
+            ScreenPolyAddPoint (
                 spLine,
                 (int) (D_u_to_d_col (Points->x[i])),
                 (int) (D_u_to_d_row (Points->y[i]))
             );
 	}
+        
+        /* Clip lines to screen window 
+         * TODO: Not working yet.
+         *********
+        spTmp = ScreenPolyClip (spLine, spClip);
+        ScreenPolyDestroy (spLine);
+        if (spTmp == NULL)
+            continue;
+        spLine = spTmp;
+        *******/
 
         /* Are we filling this poly */
         if (dofill)
         {
             /* Make copy of polygon */
-            spArea = ScreenPolyCopy (spLine);
+            spArea = ScreenPolyNew (spLine->count);
+            ScreenPolyCopy (spLine, spArea);
        
             /* Need to do extra work to handle islands */
             V2_get_area (&Map, line, &pa);
@@ -472,12 +125,20 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
                     Vect_get_isle_points (&Map, pa->isles[i], Isle);
                     spIsle = ScreenPolyNew(Isle->n_points);
                     for (j = 0; j < Isle->n_points; j++)
-                        ScreenPolyAddEntry (
+                        ScreenPolyAddPoint (
                                 spIsle, 
                                 (int) (D_u_to_d_col (Isle->x[j])),
                                 (int) (D_u_to_d_row (Isle->y[j]))
                         );
                     Vect_destroy_line_struct (Isle);
+                    /* TODO: Not working yet.
+                     *********
+                    spTmp = ScreenPolyClip (spIsle, spClip);
+                    ScreenPolyDestroy (spIsle);
+                    if (spTmp == NULL)
+                        continue;
+                    spIsle = spTmp;
+                    **********/
                     spTmp = ScreenPolyMerge (spArea, spIsle);
                     ScreenPolyDestroy (spIsle);
                     ScreenPolyDestroy (spArea);
@@ -487,13 +148,13 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
                 }
                     
             }
-            
+           
             i = ScreenPolyToArrays (spArea, &x_screen, &y_screen);
             ScreenPolyDestroy (spArea);
 
             if (i == 0)
             {
-                G_warning ("No points in point struct ??");
+                /* G_warning ("No points in point struct ??"); */
                 continue;
             }
             else if (i < 0)
@@ -527,6 +188,9 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
     }
     /* do newline */
     fprintf (stderr, "\n");
+
+    /* TODO: Clipping not yet functional */
+    /* ScreenPolyDestroy (spClip); */
     return 0;
 }
 

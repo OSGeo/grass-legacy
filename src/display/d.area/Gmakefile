@@ -4,11 +4,13 @@ LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
 OBJS = \
 	main.o \
-	plot.o
+	plot.o\
+        screenpoly.o
 
 CFILES = \
 	main.c \
-	plot.c
+	plot.c \
+        screenpoly.c
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
