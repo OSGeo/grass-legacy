@@ -303,7 +303,7 @@ proc DmVector::display { node } {
 
     # type
     set tlist [list]
-    foreach t { point line boundary centroid area } {
+    foreach t { point line boundary centroid area face } {
        if { $opt($id,type_$t) } { lappend tlist $t }
     }
     set type [join $tlist , ]
