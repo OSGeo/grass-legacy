@@ -63,6 +63,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
 <li> r.patch: -z flag allows additionally to use 0 for transparency
 	instead of NULL (Markus Neteler/Huidae Cho/Alex Shevlakov)
+<li> r.proj: heavily improved, transforms map portions now (Morten Hulden)
 <li> r.surf.area: updated to work with FP rasters, skipping NULL cells (Eric
      G. Miller)
 <li> r.topidx: added, creates topographic index, ln(a/tan(beta)), map from
@@ -72,7 +73,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r3.showdspf(.opengl): bugfix on dsp files/mapsets (Beverly Wallace)
 <li> s.datum.shift: datum shift software (Andreas Lange)
 <li> s.in.ascii: fixed parsing problem when no category or other attributes
-    are specified (just dimensions) (Eric G. Miller)
+     are specified (just dimensions) (Eric G. Miller)
 <li> s.in.atkisdgm: import bugfix (Otto Dassau/Markus Neteler)
 <li> s.in.atkisktb: added (for German DEM data) (Otto Dassau/Markus Neteler)
 <li> s.in.mif: added to import MapInfo MIF/MID pair (David D. Gray)
@@ -109,7 +110,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <menu>
 <li> new library "gmath": wrapper to support LAPACK/BLAS routines and to
      provide stable numerical algorithm for GRASS modules (David D. Gray)
-<li> updated global configure to find header files and libs (Huidae Cho, Markus Neteler)
+<li> rewritten "configure.in" for autoconf ((Eric G. Miller)
 <li> GRASS testsuite added: to run in source code with "make check" (Andreas Lange)
 <li> grass5install.sh: heavily updated (Justin Hickey)
 <li> projections: added false easting/false northing to aea:Albers Equal Area projection
