@@ -20,7 +20,7 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
-function usage()
+usage()
 {
  echo ""
  echo "g3.setregion modifies current 3D region"
