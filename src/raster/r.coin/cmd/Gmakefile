@@ -1,7 +1,7 @@
 PGM   = r.coin
 
 LIST  = main.o\
-	cmd.o\
+	cmd_parms.o\
 	inter.o\
 	check.o\
 	make_coin.o\
