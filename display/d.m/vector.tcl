@@ -111,6 +111,8 @@ proc DmVector::create { tree parent } {
     set opt($count,_query_text) 0 
     set opt($count,_use_query_text) 0
 
+    set opt($count,_width) 1
+
     DmVector::legend $count
 
     incr count
@@ -264,6 +266,14 @@ proc DmVector::options { id frm } {
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
+
+    # Width
+    set row [ frame $frm.print ]
+    Label $row.a -text [G_msg "Width (print):"] 
+    SpinBox $row.b -range {1 100 1} -textvariable DmVector::opt($id,_width) \
+                   -width 2 -helptext [G_msg "Line width used for printing"] 
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
 }
 
 proc DmVector::save { tree depth node } {
@@ -275,7 +285,7 @@ proc DmVector::save { tree depth node } {
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
                   color fcolor _use_fcolor lcolor icon size field lfield attribute
-                  xref yref lsize cat where _query_text _use_query_text minreg maxreg } {
+                  xref yref lsize cat where _query_text _use_query_text minreg maxreg _width } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -427,7 +437,7 @@ proc DmVector::print { file node } {
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
 	puts $file "  color $color"
-	#puts $file "width $opt($id,ps_width)"
+	puts $file "width $opt($id,_width)"
 
 	puts $file "  hcolor NONE"
 
@@ -443,7 +453,7 @@ proc DmVector::print { file node } {
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
 	puts $file "  color $color"
-	#puts $file "width $opt($id,ps_width)"
+	puts $file "width $opt($id,_width)"
 
         if { $opt($id,_use_fcolor) } { 
 	    puts $file "  fcolor $fcolor"
