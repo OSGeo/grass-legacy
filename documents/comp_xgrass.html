@@ -1,0 +1,57 @@
+<html>
+<pre>
+Version 0.2  - 8. March 1998
+
+             Steps to compile XGRASS without Motif (using lesstif)
+ 
+This text shall help you to compile XGRASS.
+Is is still some work and not yet fully tested.
+
+Markus Neteler
+ 
+       Department of Geography
+       Institute of Physical Geography
+       University of Hannover
+       Germany
+       http://www.geog.uni-hannover.de/users/neteler/
+       email: neteler@geog.uni-hannover.de
+
+
+You have found this file here:
+    http://www.geog.uni-hannover.de/grass/
+It will also be stored on:
+    http://www.baylor.edu/~grass/
+
+ 
+1. Install lesstif:
+   
+   You find the lesstif package on page
+   http://www.geog.uni-hannover.de/grass/main_source.html
+      - lesstiff (version 0.83, from 4. Feb. 98)
+        
+
+   It has to be compiled separately
+           - install package somewhere
+           - say: configure
+           - say: make
+           - say: make install
+           - say: make clean
+           - feel happy
+
+   Successfully tested on Linux 2.x, gcc 2.7.1.
+
+   Great - thanks to the lesstif-developers!
+
+
+2. Compilation of XGRASS:
+           - Change gmake4.2 to HASMOTIF=yes
+             or use xgmake4.2 
+           - uncomment the xgrass-directory in src421/src/CMD/lists/GRASS
+
+           - Then you should be able to compile XGRASS without Motif
+
+
+-> Tell me your improvements :)
+
+ </pre>
+</html>
