@@ -1125,6 +1125,18 @@ int G_gui (void)
 		G_free (top);
 	    } else {
 		if ( opt->gisprompt ) {
+		    if ( !strncmp(opt->gisprompt, "file", 3) ) {
+		        strcpy(buf, opt->gisprompt);
+		        s = strtok(buf, ",");
+		        s = strtok(NULL, ",");
+			append(cmd, "button $suf.val%d.sel -text \">\" -command {\n"
+				"    set filename [tk_getOpenFile -title {Load File}]\n"
+				"    if { [string length $filename] > 0 } {\n"
+                        	"        set optval(%d) $filename\n"
+				"    }\n"
+				"}\n", optn, optn);
+	                append(cmd, "pack $suf.val%d.sel -side left -fill x\n", optn);
+		    }
 		    if ( !strncmp(opt->gisprompt, "old", 3) ) {
 		        strcpy(buf, opt->gisprompt);
 		        s = strtok(buf, ",");
