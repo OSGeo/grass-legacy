@@ -70,6 +70,7 @@ yes_no_quest (char *s)
     while (1)
     {
 	fprintf (stdout,"%s",s);
+        fflush (stdout);
 	if (NULL == fgets(buff,200,stdin))
 		exit(-1) ;
 	switch (*buff)

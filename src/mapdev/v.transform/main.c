@@ -104,8 +104,10 @@ int main (int argc, char *argv[])
         strcpy( New.head.date, date);
 	
         strcpy( New.head.your_name, G_whoami());
-	
-        snprintf(buf, DIG_MAP_NAME_LEN - 1, "transformed from %s", old->answer );
+
+        sprintf (buf, "transformed from %s", old->answer);
+        /* truncate if string > DIG_MAP_NAME_LEN-1 */
+        buf[DIG_MAP_NAME_LEN-1] = '\0';
 	strcpy( New.head.map_name, buf);
 	
         New.head.orig_scale  =  0.0 ;
@@ -152,7 +154,8 @@ int main (int argc, char *argv[])
 	}
 	fclose( Current.fp) ;
 	fclose( Trans.fp) ;
-	
+
+        trans_dig_cats (Current.name, Current.mapset, Trans.name);
 
 	exit(0) ;
 

@@ -11,7 +11,8 @@ O_FILES = \
 	print_trans.o \
 	setup_trans.o \
 	trans_digit.o \
-	trans_att.o
+	trans_att.o \
+	trans_cats.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKLIB)
 DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB) $(TRANSLIB) $(DEPVASKLIB)

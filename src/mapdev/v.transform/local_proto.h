@@ -21,5 +21,9 @@ int init_transform_arrays(void);
 int print_transform_error(int);
 /* trans_att.c */
 int transform_att_file(FILE *, FILE *);
+/* trans_cats.c */
+void trans_dig_cats (const char * /* from */, 
+                     const char * /* from_mapset */, 
+                     const char * /* to */);
 /* trans_digit.c */
 int transform_digit_file(struct Map_info *, struct Map_info *);
