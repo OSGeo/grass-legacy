@@ -60,7 +60,7 @@
 
 
 
-Printed 4/27/93          U.S. Army CERL                         1
+Printed	10/13/97	Baylor University			1
 
 
 
@@ -74,7 +74,7 @@ ISMcont2dig <contrib> GRASS Reference Manual<contrib> ISMcont2dig
 NAME
      ISMcont2dig - Converts a binary ISM contour data file to a
      binary GRASS vector (dig) file.
-     (GRASS Vector Data Import Program)
+     (GRASS Vector Data	Import Program)
 
 SYNOPSIS
      ISMcont2dig
@@ -82,51 +82,51 @@ SYNOPSIS
      ISMcont2dig input=name output=name
 
 DESCRIPTION
-     This program converts a binary ISM contour data file into a
+     This program converts a binary ISM	contour	data file into a
      binary GRASS vector (dig) file.  ISMcont2dig also creates a
-     dig_att file containing the label information from the ISM
+     dig_att file containing the label information from	the ISM
      contour file.  However, the user must run v.support (or
-     v.import option 4) on the output file created by ISMcont2dig
-     to create a dig_plus file containing the file topology,
+     v.import option 4)	on the output file created by ISMcont2dig
+     to	create a dig_plus file containing the file topology,
      before using the output file in v.digit.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     input=name        Name of binary ISM contour data input
-                       file.
+     input=name	       Name of binary ISM contour data input
+		       file.
 
      output=name       Name to be assigned to the binary GRASS
-                       vector files created.
+		       vector files created.
 
-     If the user simply types ISMcont2dig without specifying
+     If	the user simply	types ISMcont2dig without specifying
      parameter values on the command line, the program will
-     prompt the user to enter these.
+     prompt the	user to	enter these.
 
 NOTES
-     To create a contour file from ISM for use by ISMcont2dig,
+     To	create a contour file from ISM for use by ISMcont2dig,
      turn on option 7 (contour output file) under CONTOUR/BASE
      MAP OPTIONS.  To achieve better contour resolution, also
      change options 12 and 13 (minimum separation) under this
      same menu to some minimum number such as .00001.  The ISM
      user may wish to save these options as an ISM options file.
-     Plot the map as usual.  At run time, ISM will prompt the
-     user for a filename and ask whether the contour output
+     Plot the map as usual.  At	run time, ISM will prompt the
+     user for a	filename and ask whether the contour output
      format should be binary (default) or ASCII.  Only BINARY
      contour files may be used by ISMcont2dig.
 
-     Interactive Surface Modeling (ISM) is a trademark of Dynamic
+     Interactive Surface Modeling (ISM)	is a trademark of Dynamic
      Graphics, Inc., Berkeley, California.
 
 
 SEE ALSO
      ISMdig2ann, ISMann2dig, ISMcell2grd, ISMgrd2cell,
-     ISMcell2scat, v.support, v.import, v.digit
+     ISMcell2scat, v.support, v.import,	v.digit
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
@@ -142,9 +142,9 @@ AUTHOR
      Laboratory
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
-     that has not been examined or tested by the Office of GRASS
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -192,7 +192,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
