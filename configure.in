@@ -1029,15 +1029,6 @@ AC_SUBST(JPEGINCPATH)
 
 
 XDRIVER=fifo
-AC_ARG_WITH(ipc,
-    [  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)],
-    [
-	case "$withval" in
-	"" | y | ye | yes)
-	    XDRIVER=ipc
-	  ;;
-	esac
-    ])
 
 AC_ARG_WITH(fifo,
     [  --with-fifo             use fifo XDriver instead of ipc (default)],
@@ -1048,12 +1039,23 @@ AC_ARG_WITH(fifo,
 	  ;;
 	esac
     ])
-AC_ARG_WITH(socks,
-    [  --with-socks            use socket XDriver instead of ipc or fifo],
+
+AC_ARG_WITH(ipc,
+    [  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    XDRIVER=ipc
+	  ;;
+	esac
+    ])
+
+AC_ARG_WITH(socket,
+    [  --with-socket           use socket XDriver instead of ipc or fifo],
     [
        case "$withval" in
        "" | y | ye | yes)
-           XDRIVER=socks
+           XDRIVER=socket
 	   AC_DEFINE(USE_G_SOCKS)
 	 ;;
        esac
@@ -1063,25 +1065,20 @@ AC_MSG_CHECKING(for XDriver)
 AC_MSG_RESULT($XDRIVER)
 AC_SUBST(XDRIVER)
 
-# if test "$XDRIVER" = "ipc"; then
-#    xdriver=new
-# else
-#    xdriver=orig
-# fi
 case "$XDRIVER" in
     ipc)
-       xdriver=new
+       xdriver=ipc
     ;;
-    socks)
-       xdriver=socks
+    socket)
+       xdriver=socket
     ;;
     *)
-       xdriver=orig
+       xdriver=fifo
     ;;
 esac
 
-echo GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
-GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
+echo GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
+GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
 
 
 AC_OUTPUT(Makefile src/CMD/head/head)

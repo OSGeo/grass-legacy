@@ -71,11 +71,11 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-jpeg-libs=DIR    Specify directory for jpeg library"
 ac_help="$ac_help
-  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)"
-ac_help="$ac_help
   --with-fifo             use fifo XDriver instead of ipc (default)"
 ac_help="$ac_help
-  --with-socks            use socket XDriver instead of ipc or fifo"
+  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)"
+ac_help="$ac_help
+  --with-socket           use socket XDriver instead of ipc or fifo"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -4537,18 +4537,6 @@ LDFLAGS=${ac_save_ldflags}
 
 
 XDRIVER=fifo
-# Check whether --with-ipc or --without-ipc was given.
-if test "${with_ipc+set}" = set; then
-  withval="$with_ipc"
-  
-	case "$withval" in
-	"" | y | ye | yes)
-	    XDRIVER=ipc
-	  ;;
-	esac
-    
-fi
-
 
 # Check whether --with-fifo or --without-fifo was given.
 if test "${with_fifo+set}" = set; then
@@ -4562,13 +4550,27 @@ if test "${with_fifo+set}" = set; then
     
 fi
 
-# Check whether --with-socks or --without-socks was given.
-if test "${with_socks+set}" = set; then
-  withval="$with_socks"
+
+# Check whether --with-ipc or --without-ipc was given.
+if test "${with_ipc+set}" = set; then
+  withval="$with_ipc"
+  
+	case "$withval" in
+	"" | y | ye | yes)
+	    XDRIVER=ipc
+	  ;;
+	esac
+    
+fi
+
+
+# Check whether --with-socket or --without-socket was given.
+if test "${with_socket+set}" = set; then
+  withval="$with_socket"
   
        case "$withval" in
        "" | y | ye | yes)
-           XDRIVER=socks
+           XDRIVER=socket
 	   cat >> confdefs.h <<\EOF
 #define USE_G_SOCKS 1
 EOF
@@ -4580,29 +4582,24 @@ fi
 
 
 echo $ac_n "checking for XDriver""... $ac_c" 1>&6
-echo "configure:4584: checking for XDriver" >&5
+echo "configure:4586: checking for XDriver" >&5
 echo "$ac_t""$XDRIVER" 1>&6
 
 
-# if test "$XDRIVER" = "ipc"; then
-#    xdriver=new
-# else
-#    xdriver=orig
-# fi
 case "$XDRIVER" in
     ipc)
-       xdriver=new
+       xdriver=ipc
     ;;
-    socks)
-       xdriver=socks
+    socket)
+       xdriver=socket
     ;;
     *)
-       xdriver=orig
+       xdriver=fifo
     ;;
 esac
 
-echo GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
-GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
+echo GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
+GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
 
 
 trap '' 1 2 15
