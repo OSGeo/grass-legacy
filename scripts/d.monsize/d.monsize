@@ -1,8 +1,8 @@
 #!/bin/sh
-# $Id: d.monsize, v 1.6 for GRASS 5.7 2004/04/01 
+# $Id: d.monsize,v 1.6 for GRASS 6.0 (2004/12/07) 
 ############################################################################
 #
-# MODULE:		d.monsize, v 1.6 for GRASS 5.7 (2004/05/01) 
+# MODULE:		d.monsize, v 1.6 for GRASS 6.0 (2004/12/07) 
 #			based on d.monsize for GRASS 5
 # AUTHOR(S):	Unknown; 
 #			updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
@@ -29,6 +29,7 @@
 #% key: setmonitor
 #% type: string
 #% description: Display monitor to start
+#% options: x0,x1,x2,x3,x4,x5,x6
 #% required : yes
 #%end
 #%option
@@ -53,31 +54,6 @@ fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
-fi
-
-
-if [ "$GIS_OPT_setmonitor" = "(null)" ]
-then
-			echo ""
-			echo "You must select a display monitor"
-			echo ""
-			exit
-fi
-
-if [ "$GIS_OPT_setwidth" = "(null)" ]
-then
-			echo ""
-			echo "You must select a display width"
-			echo ""
-			exit
-fi
-
-if [ "$GIS_OPT_setheight" = "(null)" ]
-then
-			echo ""
-			echo "You must select a display height"
-			echo ""
-			exit
 fi
 
 export GRASS_WIDTH=$GIS_OPT_setwidth
