@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.106 2001-01-21 15:09:34 markus Exp $
+$Id: BUGS,v 1.107 2001-01-22 09:25:25 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -54,11 +54,16 @@ Vector:
 
 ----------- modules ---------------------------------------------
 
+d.leg.thin:
+ - flags missing. Howver, rather implemented in main_new.c, needs to be
+   finished.
+   (being worked on by ?)
+
 d.param.scale (at src.nonGPL/display/d.param.scale/)
  - replace numerical recipes functions with src/libes/gmath/ functions
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
-    (being worked on by ?)
+   (being worked on by ?)
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
