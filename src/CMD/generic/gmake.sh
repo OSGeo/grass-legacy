@@ -23,6 +23,7 @@ then
 fi
 
 all=no
+install=no
 parseonly=no
 while test $# != 0
 do
@@ -60,6 +61,7 @@ do
 	    test -d $dirname || mkdir $dirname
 	    exit $?
 	    ;;
+	-i) install=yes;shift;;
 
 	 *) break
     esac
@@ -301,6 +303,38 @@ then
     exit $status
 fi
 
+if test "$install" = "no"
+then
+    if test "$GMAKE_DEL_OBJ" != ""
+    then
+       echo rm -rf $OBJARCH
+       rm -rf $OBJARCH
+    fi
+    exit 0
+fi
+
+
+###########
+# install #
+###########
+
+makefile2=$OBJARCH/make2.rules
+if test -f $makefile2
+then
+    rm -f $makefile2
+fi
+
+sed -e 's#^GISBASE\([ 	]*\)=.*$#GISBASE\1= \${prefix}/grass5#' $makefile \
+	> $makefile2
+
+echo "  make -f $makefile2 $*"
+echo ""
+${MAKE} -f $makefile2 $*
+status=$?
+if test $status != 0 
+then
+    exit $status
+fi
 
 if test "$GMAKE_DEL_OBJ" != ""
 then
