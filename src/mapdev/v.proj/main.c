@@ -46,6 +46,10 @@ int main (int argc, char *argv[])
         struct line_pnts *Points;
         struct Map_info Map;
         struct Map_info Out_Map;
+        struct {
+        struct Flag *support;
+            } flag;
+        char buf[1024];
 
         G_gisinit (argv[0]);
      
@@ -88,6 +92,11 @@ int main (int argc, char *argv[])
         osetopt->required        =  NO;
         osetopt->description     =  "mapset to contain OUTput vector map";
 */
+
+        flag.support = G_define_flag();
+        flag.support->key = 's';
+        flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
  
 	   /* heeeerrrrrre's the   PARSER */
         if (G_parser (argc, argv))
@@ -480,13 +489,23 @@ int main (int argc, char *argv[])
 	      }
 	   }
 
+   /* If "-s" flag is passed as argument then run "v.support" on */
+   /* newly created vector file (output).                        */
+   if (flag.support->answer)
+    {
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), omap_name);
+     G_system(buf);
+     fprintf(stderr, "Done.\n");
+    }
+    else
+    {
+     fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
+                      argv[0],map_name);
+     fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
+     fprintf(stderr, "  v.support be run, before the data is usable\n");
+    }
 
-fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
-argv[0],map_name);
-fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
-fprintf(stderr, "  v.support be run, before the data is usable\n");
-
-	return 0;
+    return 0;
 }
 
 

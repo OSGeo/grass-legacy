@@ -22,7 +22,7 @@
 
 <BR>
 
-<B>v.proj</B> <B>input=</B><EM>name 
+<B>v.proj</B> [<B>-s</B>] <B>input=</B><EM>name 
 <B>location=</B><EM>name</EM> [<B>dbase=</B><EM>name</EM>]
 [<B>mapset=</B><EM>name</EM>] [</EM><B>out=</B><EM>name</EM>]
 
@@ -40,6 +40,12 @@ PROJ_INFO files).
 <EM>dig_cats</EM> directories in the output mapset, if they do NOT exist.
 Map files for <EM>dig</EM>, <EM>dig_att</EM>, and <EM>dig_cats</EM> are also
 created for the new map layer.
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>Automatically run "v.support" on newly created vector file.
+</DL>
 
 <H3>Parameters:</H3>
 
