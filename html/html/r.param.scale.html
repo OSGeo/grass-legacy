@@ -30,7 +30,7 @@ parameter
 <p><b>&nbsp;s_tol</b> Slope tolerance that defines a `flat' surface (degrees)
 <br>default: 1.0
 <p><b>&nbsp;c_tol</b> Curvature tolerance that defines `planar' surface
-<br>default: 0.02
+<br>default: 0.0001
 <p><b>&nbsp;size </b>Size of processing window (odd numbers only)
 <br>default: 3
 <p><b>&nbsp;param</b> Morphometric parameter to calculate
@@ -89,7 +89,7 @@ Morphometric features: peaks, ridges, passes, channels, pits and planes</li>
 <h2>
 NOTES</h2>
 In <i>r.param.scale</i> the direction of maximum gradient (considered downslope)
-is stored as:
+is stored as (West is 0 degree, East is +/- 180 degree):
 <ul>
 <li>
 0..+180 degree from West to North to East</li>
