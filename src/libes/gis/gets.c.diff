@@ -1,0 +1,2 @@
+39d38
+<       if ( isatty(1) ) (void)fflush(stdout);
