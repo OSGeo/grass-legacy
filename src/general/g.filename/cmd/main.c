@@ -7,9 +7,14 @@ int main( int   argc, char *argv[])
 	char *element;
 	char *mapset;
 	char *name;
+	struct GModule *module;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
 	struct Option *opt3 ;
+
+	module = G_define_module();
+	module->description =
+		"Prints GRASS data base file names.";
 
 	/* Define the different options */
 

@@ -6,12 +6,17 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *pid;
     char *tempfile, *G__tempfile();
     int p;
 
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates a temporary file and prints the file name.";
 
     pid = G_define_option();
     pid->key = "pid";

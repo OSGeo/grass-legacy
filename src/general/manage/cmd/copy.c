@@ -6,10 +6,18 @@ int main (int argc, char *argv[])
 {
     int i,n;
     char *mapset;
+	struct GModule *module;
     struct Option **parm, *p;
     char *from, *to;
 
     init (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Copies available data files in the user's current mapset "
+		"search path and location to the appropriate element "
+		"directories under the user's current mapset.";
+
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
     for (n = 0; n < nlist; n++)

@@ -7,11 +7,16 @@ int main(int   argc, char *argv[])
     char *prompt;
     char *help[2];
     FILE *fd; 
+	struct GModule *module;
     struct Option *opt1 ;
     struct Option *opt2 ;
     struct Option *opt3 ;
     struct Option *opt4 ;
     struct Option *opt5 ;			
+
+	module = G_define_module();
+	module->description =
+		"Prompts the user for the names of GRASS data base files.";
 
     /* Define the different options */
 
