@@ -1,0 +1,11 @@
+4.0 Conversion notes - 12-90 dks
+
+v.b.a.vect and v.a.b.vect:
+
+    inter source:   a_b_front.c and b_a_front.c
+		      (conversion of dig_front/a_b_front.c and b_a_front.c)
+
+    cmd source:     v.a_b_dig.c and v.b_a_dig.c
+		      (conversion of dig_front/a_b_dig.c and b_a_dig.c)
+
+
