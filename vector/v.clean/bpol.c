@@ -18,7 +18,6 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "rtree/index.h"
 
 typedef struct {
     double x, y;
