@@ -462,5 +462,11 @@ struct ilist
     int    alloc_values; /* allocated space */
   };
 
+/* Vector array. Space allocated is size + 1. */
+typedef struct {
+    int size;    /* array size */
+    int *c;      /* array where 'class' or new category or something like that is stored */
+} VARRAY;
+
 #endif /* DIG___STRUCTS___ */
 

@@ -38,6 +38,12 @@ int Vect_array_to_cat_list (int *, int, struct cat_list *);
 int Vect_cat_in_cat_list (int, struct cat_list *);
 int Vect_destroy_cat_list (struct cat_list *);
 
+      /* Vector array */
+VARRAY *Vect_new_varray (int size);
+int Vect_set_varray_from_cat_string ( struct Map_info *, int, char *, int, int, VARRAY *);
+int Vect_set_varray_from_cat_list ( struct Map_info *, int, struct cat_list *, int, int, VARRAY *);
+int Vect_set_varray_from_db ( struct Map_info *, int, char *, int, int, VARRAY *);
+
      /* DB connection - field info */
 struct dblinks *Vect_new_dblinks_struct ( void );
 void Vect_reset_dblinks ( struct dblinks *p );
