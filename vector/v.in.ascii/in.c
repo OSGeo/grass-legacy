@@ -16,7 +16,7 @@ main (int argc, char *argv[])
 	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
 		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt;
 	int    xcol, ycol, zcol, catcol, format;
-	struct Flag *zcoorf, *t_flag, *e_flag;
+	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag;
 	char   *table;
 	char   *fs;
 	int    zcoor=WITHOUT_Z, make_table; 
@@ -109,7 +109,11 @@ main (int argc, char *argv[])
 	e_flag = G_define_flag();
 	e_flag->key              = 'e';
 	e_flag->description      = "Create a new empty map and exit. Nothing is read from input.";
-	
+
+        noheader_flag = G_define_flag();
+        noheader_flag->key          = 'n';
+        noheader_flag->description  = "Don't expect a header when reading in standard format";
+
 	if (G_parser (argc, argv))
 		exit(-1);
 
@@ -370,7 +374,8 @@ main (int argc, char *argv[])
 	    fclose (tmpascii);
 	} else {
             /* FORMAT_ALL = standard mode */
-    	    read_head(ascii, &Map);
+    	    if ( ! noheader_flag->answer )
+                   read_head(ascii, &Map);
 	    asc_to_bin(ascii, &Map) ;
 	}
 	
