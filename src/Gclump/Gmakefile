@@ -1,0 +1,6 @@
+# %W% %G%
+OBJS = main.o clump.o
+
+$(BIN)/Gclump: $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(MATHLIB) -o $@
+$(GISLIB): #
