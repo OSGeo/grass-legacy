@@ -406,21 +406,16 @@ AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses, [
 ])])
 AC_SUBST(CURSESLIB)
 
+AC_CHECK_LIB(ncurses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
+AC_CHECK_LIB(curses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
+])])
+
 AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat, [
 AC_CHECK_LIB(bsd-compat, gtty, COMPATLIB=-lbsd-compat, [
 AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
     COMPATLIB=
 ])])])
 AC_SUBST(COMPATLIB)
-
-AC_CHECK_LIB(termlib, tgetent, TERMLIB=-ltermlib, [
-AC_CHECK_LIB(termcap, tgetent, TERMLIB=-ltermcap, [
-AC_CHECK_LIB(ncurses, tgetent, TERMLIB=-lncurses, [
-AC_CHECK_LIB(curses, tgetent, TERMLIB=-lcurses, [
-    AC_MSG_WARN([*** Unable to locate tgetent() function.])
-    TERMLIB=
-])])])])
-AC_SUBST(TERMLIB)
 
 AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
 AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
@@ -543,8 +538,8 @@ LOC_CHECK_INCLUDES(readline/history.h,Readline,$READLINEINCPATH)
 
 LOC_CHECK_LIB_PATH(readline,Readline,READLINELIBPATH)
 
-LOC_CHECK_LIBS(readline,readline,Readline,$READLINELIBPATH,READLINELIB,,,,$TERMLIB)
-LOC_CHECK_LIBS(history,add_history,History,$READLINELIBPATH,HISTORYLIB,,,,$TERMLIB)
+LOC_CHECK_LIBS(readline,readline,Readline,$READLINELIBPATH,READLINELIB,,,)
+LOC_CHECK_LIBS(history,add_history,History,$READLINELIBPATH,HISTORYLIB,,,)
 
 fi # $USE_READLINE
 
@@ -695,7 +690,7 @@ LOC_CHECK_LIB_PATH(gd,GD,GDLIB)
 
 LOC_CHECK_LIBS(gd,gdImagePng,GD,$GDLIB,GDLIB,,,[
 LOC_CHECK_LIBS(gd,gdImageGif,GD,$GDLIB,GDLIB,,,)
-],$X_LIBS -lXpm $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,-lfreetype,$JPEGLIBPATH $JPEGLIB,$PNGLIB)
+],$X_LIBS -lXpm $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,-lfreetype,$JPEGLIBPATH $JPEGLIB,$PNGLIB,$MATHLIB)
 
 AC_CHECK_LIB(gd, gdImagePng, AC_DEFINE(HAVE_GDIMAGEPNG), [], $GDLIB)
 AC_CHECK_LIB(gd, gdImageGif, AC_DEFINE(HAVE_GDIMAGEGIF), [], $GDLIB)
@@ -843,7 +838,7 @@ LOC_CHECK_LIB_PATH(opengl,OpenGL,OPENGL_LIB_PATH)
 
 LOC_CHECK_LIBS(GL,glBegin,OpenGL,$OPENGL_LIB_PATH,OPENGLLIB,$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,,-lpthread)
 
-LOC_CHECK_LIBS(GLU,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,)
+LOC_CHECK_LIBS(GLU,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB,,,-lstdc++)
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
@@ -1053,7 +1048,7 @@ if test -n "$USE_FREETYPE"; then
 
 LOC_CHECK_INC_PATH(freetype,FreeType,FTINC)
 
-LOC_CHECK_INCLUDES(ft2build.h,FreeType,$FTINC)
+LOC_CHECK_INCLUDES(freetype/freetype.h,FreeType,$FTINC)
 
 # With FreeType library directory
 
