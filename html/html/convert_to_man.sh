@@ -1,5 +1,8 @@
 #!/bin/sh
 # Converting HTML file to MAN format, move into man1 directory
+#
+# This file should become a Gmakefile soon
+#
 # Markus Neteler
 
 #this will change in future: (testing purpose)
