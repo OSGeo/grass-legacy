@@ -5,7 +5,7 @@ LIST=main.o\
 	log.o\
 	rules.o
 
-COLRFILES = aspect byg byr grey gyr rainbow ramp ryg wave
+COLRFILES = aspect bgyr byg byr elevation grey gyr rainbow ramp ryg slope terrain wave
 
 all:  $(BIN_CMD)/$(PGM) $(ETC)/colors
 
