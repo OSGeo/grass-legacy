@@ -1,3 +1,4 @@
+#ifndef __MINGW32__
 
 #include "config.h"
 
@@ -7,8 +8,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-
-#ifndef __MINGW32__
 
 #ifndef USE_G_SOCKS
 #include <fcntl.h>
@@ -746,7 +745,7 @@ unlock_driver (int wipeout)
     }
     if (wipeout)
     {
-        unlink (file);
+        remove (file);
         if (access (file,0) != 0)
             return 1;
     }
@@ -842,5 +841,8 @@ R_stabilize(void)
 
     return 0;
 }
+
+#else /* __MINGW32__ */
+
 
 #endif /* __MINGW32__ */

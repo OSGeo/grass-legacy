@@ -73,12 +73,7 @@ G_ask_datum_name(char *datum)
           }
         }
         sprintf(datum,"%s",answer);
-#ifdef __MINGW32__
         remove ( Tmp_file );
-#else        
-        unlink(Tmp_file);
-#endif        
-       
         return 1;
 }
 
