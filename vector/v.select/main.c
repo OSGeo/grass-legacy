@@ -209,14 +209,14 @@ main (int argc, char *argv[])
 	    /* Read line and check type */
 	    if ( !(Vect_read_line(&(In[0]), APoints, NULL, aline) & type[0]) ) continue;
 
+	    Vect_get_line_box ( &(In[0]), aline, &abox );
+
 	    /* Check if this line overlaps any feature in B */
 
 	    /* x Lines in B */
 	    if ( type[1] & (GV_POINTS | GV_LINES) ) {
 		int i;
 		int found = 0;
-
-		Vect_get_line_box ( &(In[0]), aline, &abox );
 
 		/* Lines */
 		Vect_select_lines_by_box ( &(In[1]), &abox, type[1], List);
