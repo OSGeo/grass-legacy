@@ -1,74 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  <title>r.texture</title>
+<title>r.texture</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body bgcolor="white">
-<img src="grass.smlogo.gif" width="76" height="91">
-      
-<hr width="100%" align="center" size="6" noshade="noshade">    
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
 <h2>NAME</h2>
-
-<em><b>r.texture</b></em>  - Create map raster with textural features.<br>
-<em>(GRASS</em> Raster Program)     
+<em><b>r.texture</b></em>  - Generate images with textural features from a raster map
 <h2>SYNOPSIS</h2>
-   <b>r.texture</b><br>
-   <b>r.texture help</b>  <br>
-   <b>r.texture</b> [-<b>Nqackviswxedpmno</b>] <b>input</b>=<em>string</em> 
-       <b>prefix</b>=<em>string</em> <b>size</b>=<em>integer</em> <b>distance</b>=<em>integer</em> 
- 
-<h2>DESCRIPTION</h2>
+<b>r.texture</b><br>
+<b>r.texture help</b><br>
+<b>r.texture</b> [-<b>Nqackviswxedpmno</b>] <b>input</b>=<em>string</em> <b>prefix</b>=<em>string</em> <b>size</b>=<em>integer</em> <b>distance</b>=<em>integer</em> 
 
-<em>r.texture</em> - Creates map raster with textural features for
-user-specified raster map layer.
-
-<p> It uses the algorithms of <a
-href="i.texture.html">i.texture</a>. Reads a GRASS raster map as
-input. Calculates textural features based on spatial dependence
-matrices for north-south, east-west, northwest, and southwest
-directions using a side by side neighborhood (i.e., a distance of
-1). Be sure to carefully set your resolution (using <a
-href="g.region.html">g.region</a>) before running this program, or
-else your computer could run out of memory.  Also, make sure that your
-raster map has no more than 255 categories.  The output consists into
-four images for each textural feature, one for every direction</p>
-      
-<h2>OPTIONS</h2>
-
-The program will be run non-interactively, if the user specifies the
-names of raster map layers and any desired option on the command line,
-using the form
-
-<dl>
-  <dd> <b>r.texture</b> [-<b>Nqackviswxedpmno</b>] <b>input</b>=<em>string</em> 
-  <b>prefix</b>=<em>string</em> <b>size</b>=<em>integer</em> <b>distance</b>=<em>integer</em> 
- </dd>
-</dl>
-   
-<h3>Parameters:</h3>
-      
-<dl>
-  <dt><b>input = </b><em>name</em> </dt>
-  <dd>Existing raster map layer to be included in the textural feature extraction.</dd>
-</dl>
-<dl>
-  <dt><b>prefix = </b><em>name</em> </dt>
-  <dd>New raster map layer with the textural feature extracted.
- </dd>
-</dl>
-      
-<dl>
-  <dt>
-  <b>size = </b><em>1..N</em> </dt>
-  <dd>specifies the size of the square that encloses the primitive of the raster map;
-  <dt>
-  <b>distance = </b><em>1..(N/2-1)</em> </dt>
-  <dd>specifies the distance between two pixel of the primitive;<br>
-</dl>
-    <p>and the flags have meanings given below.</p>
-
-<h3>Flags</h3>
- <DL>
+<h3>Flags:</h3>
+<DL>
 <DT><b>-N</b>
 <DD>Normalized</DD>
 
@@ -109,37 +57,103 @@ using the form
 <DD>Difference Entropy</DD>
 
 <DT><b>-m</b>
-<DD>Meas of Correlation-1</DD>
+<DD>Measure of Correlation-1</DD>
 
 <DT><b>-n</b>
-<DD>Meas of Correlation-2</DD>
+<DD>Measure of Correlation-2</DD>
 
 <DT><b>-o</b>
 <DD>Max Correlation Coeff</DD>
 
 </DL>
-     
-      
-<p> Alternately, the user can simply type <b>r.texture </b>on the command
-line, without program arguments. In this case, the user will be prompted for
-flag settings and parameter values using the standard GRASS <a
-href="parser.html">parser</a> interface.  </p>
-   
-<h2></h2>
-<h2>NOTES</h2>
-    Algorithm taken from:<br>
 
-    Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features for
+<h3>Parameters:</h3>
+<DL>
+<DT><b>input</b>=<em>string</em>
+<DD>Name of the input raster map</DD>
+
+<DT><b>prefix</b>=<em>string</em>
+<DD>Name of the ouput raster map</DD>
+
+<DT><b>size</b>=<em>integer</em>
+<DD>The size of the sliding window (odd and >= 3)</DD>
+
+<DT><b>distance</b>=<em>integer</em>
+<DD>The distance between two samples (>= 1)
+</DD>
+
+</DL>
+<H2>DESCRIPTION</H2>
+
+<em>r.texture</em> - Creates map raster with textural features for
+user-specified raster map layer. The module calculates textural features 
+based on spatial dependence matrices at 0, 45, 90, and 135 
+degrees for a <em>distance</em> (default = 1).
+
+<p> A commonly used texture model is based on the so-called grey level co-occurrence
+matrix. This matrix is a two-dimensional histogram of grey levels
+for a pair of pixels which are separated by a fixed spatial relationship. 
+The matrix approximates the joint probability distribution of a pair of pixels.
+Several texture measures are directly computed from the grey level co-occurrence
+matrix.<P>
+
+<em>r.texture</em> uses the algorithms of <a href="i.texture.html">i.texture</a>. Reads
+a GRASS raster map as input. Calculates textural features based on spatial
+dependence matrices for north-south, east-west, northwest, and southwest
+directions using a side by side neighborhood (i.e., a distance of 1). Be
+sure to carefully set your resolution (using 
+<a href="g.region.html">g.region</a>) before running this program, or else your
+computer could run out of memory.  Also, make sure that your raster map has
+no more than 255 categories.  The output consists into four images for each
+textural feature, one for every direction</p>
+
+The following are brief explanations of texture measures:
+<P>
+A commonly used texture model is based on the so-called grey level co-occurrence
+matrix. This matrix is a two-dimensional histogram of grey levels
+for a pair of pixels which are separated by a fixed spatial relationship. 
+The matrix approximates the joint probability distribution of a pair of pixels.
+Several texture measures are directly computed from the grey level co-occurrence
+matrix. 
+
+<p>
+<ul>
+<li> Angular Second Moment:
+This is a measure of local homogeneity and the opposite of Entropy. 
+It is high when the local window a few pixels with high values; low,
+when the pixels are almost equal.
+
+<li> Contrast:
+This measure considers the amount of local variation and is the opposite of Homogeneity 
+(when high pixel values concentrate along the diagonal).
+
+<li> Correlation:
+This measure  analyses the linear dependency of grey levels of neighboring
+pixels. Typically high, when the scale of local texture is larger than the
+<em>distance</em>.
+
+<li> Entropy:
+This measure is high when the values of the local window have similar values.
+It is low when the values are close to either 0 or 1 (i.e. when the
+pixels in the local window are uniform).
+</ul>
+   
+<h2>NOTES</h2>
+Algorithm taken from:<br>
+
+Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features for
     image classification. <em>IEEE Transactions on Systems, Man</em>, <em>and
     Cybertinetics</em>, SMC-3(6):610-621.
 
-    <p>The code was taken by permission from <em>pgmtexture</em>, part of
+<p>The code was taken by permission from <em>pgmtexture</em>, part of
     PBMPLUS (Copyright 1991, Jef Poskanser and Texas Agricultural Experiment
-    Station, employer for hire of James Darrell McCauley).</p>
+    Station, employer for hire of James Darrell McCauley). <br>
+    Man page of <a href="http://netpbm.sourceforge.net/doc/pgmtexture.html">pgmtexture</a></p>
 
 <h2>BUGS</h2>
-    - The program can run incredibly slow for large raster files.
-    <p>- The method for finding the maximal correlation coefficient, which
+- The program can run incredibly slow for large raster files.
+<p>
+- The method for finding the maximal correlation coefficient, which
     requires finding the second largest eigenvalue of a matrix Q, does not
     always converge.
 
@@ -150,7 +164,7 @@ href="parser.html">parser</a> interface.  </p>
     Segmentation, IEEE Trans. on Image Processing, vol. 3, no.2.</p>
 
 <p>
-<b>Haralick R.</b>, (May 1979). <i>Statistical and structural approaches to texture</i>, 
+<b>Haralick R.</b>, (May 1979). <i>Statistical and structural approaches to texture</i>,
    Proceedings of the IEEE, vol. 67, No.5, pp. 786-804</p>
  
      
