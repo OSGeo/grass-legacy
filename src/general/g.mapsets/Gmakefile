@@ -1,0 +1,33 @@
+PGM      = g.mapsets
+
+LIST_INTER = \
+	main_inter.o\
+	dsply_path.o\
+	dsply_maps.o\
+	get_maps.o\
+	get_path.o\
+	set_path.o\
+	scan_int.o
+
+LIST_CMD = main_cmd.o dsply_path.o dsply_maps.o get_maps.o
+
+
+all:  $(BIN_MAIN_INTER)/$(PGM)	$(BIN_MAIN_CMD)/$(PGM)
+
+$(BIN_MAIN_INTER)/$(PGM): $(LIST_INTER) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST_INTER) $(GISLIB) $(VASK)
+	mv a.out $@
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST_CMD) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST_CMD) $(GISLIB)
+	mv a.out $@
+
+#==============================================================
+# include dependencies
+
+$(LIST_INTER) $(LIST_CMD):        externs.h
+
+#==============================================================
+
+$(GISLIB):      # in case library changes
+$(VASKLIB): #
