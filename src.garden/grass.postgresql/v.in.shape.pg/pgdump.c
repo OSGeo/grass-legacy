@@ -43,7 +43,7 @@ typedef unsigned char uchar;
 
 
 int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields, 
-		      const char *table_name ) {
+		      const char *table_name, const unsigned char dump_flags ) {
 
 	char buf[256]="";
 	
@@ -61,10 +61,16 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 	char	*pghost;
 	
 	FILE *fp;
-    	char *tmpfile_nm;
+    	char *tmpfile_nm; 
 
+	int dump_coords, dump_orig, dump_id;
 
-	printf( "We got here\n" );
+	/* Do we include special fields? */
+
+	dump_coords = (int)(dump_flags & 4);
+	dump_orig = (int)(dump_flags & 2);
+	dump_id = (int)(dump_flags & 1);
+
 	
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
@@ -75,7 +81,7 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 
 	/* Should we include the additional fields (1-4) here? */
 		
-	for( i = 4; i < nfields + 4; i++ )
+	for( i = 0; i < nfields + 4; i++ )
         {
             char	field_name[15];
 	    int		field_width, k;
@@ -85,9 +91,15 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 	    
 	    DBFFieldType ftype;
 
+	    if( (i == 2 || i == 3) && !dump_coords ) continue;
+	    if( i == 0 && !dump_id ) continue;
+	    if( i == 1 && !dump_orig ) continue;
+
+
+
             ftype=fd1[i].fldType;
 	    field_width = fd1[i].fldSize;
-	    strncpy( field_name, fd1[i].fldName, 11 );
+	    strncpy( field_name, fd1[i].fldName, 12 );
 
 	switch (ftype) {
 		case 0:
@@ -155,7 +167,7 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 
    /* Again: do we want to dump the special fields? */
 		
-	for( j = 4; j < nfields + 4; j++ ) {
+	for( j = 0; j < nfields + 4; j++ ) {
 	
             char	field_name[15];
 	    char 	c_tmpbuf[128];
@@ -164,6 +176,10 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 	    DBFFieldType ftype;
 
             ftype=fd1[j].fldType;
+
+	    if( (j == 2 || j == 3) && !dump_coords ) continue;
+	    if( j == 0 && !dump_id ) continue;
+	    if( j == 1 && !dump_orig ) continue;
 
 	  switch (ftype) {
 		case 0:
