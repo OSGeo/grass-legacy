@@ -1,0 +1,58 @@
+.TH g.table.db
+.SH NAME
+\fIg.table.db\fR \- Generate a list of database tables in the currently
+selected database.
+.br
+.I "(GRASS-RDBMS General Interface Program)"
+.SH SYNOPSIS
+\fBg.table.db\fR
+.br
+\fBg.table.db help\fR
+.SH DESCRIPTION
+g.table.db is used to generate a list of the tables in the currently selected SQL database. The currently selected database is identified by the GRASS environment
+variable $DATABASE which is set using the g.select.db GRASS-RDBMS interface
+tool. If this environment variable is not set the program terminates with a
+message to the user. Otherwise, the names of the tables in the currently
+selected database are displayed on the screen in three
+columns. The names of the tables in the current database are needed to
+construct query criteria for use in many of the other dbSQL tools. This command
+can be run at any time and is provided for reference purposes, to be used while
+performing GRASS-RDBMS applications.
+
+.SH "COMMAND LINE OPTIONS"
+None 
+
+.SH "EXAMPLE"
+
+g.table.db
+.br
+The following tables are available in database: nri
+
+.br
+county            cover             geoaggs
+.br
+hydros            landclass         locks
+.br
+mlra              nri_fld_vals      point
+.br
+practices         priors            psu
+.br
+psu_trends        recorders         state
+.br
+std_rpts          streams           treatments
+.br
+trends82          trends87          ud_rpt
+.br
+ud_subj           utm               value_list
+.br
+water             windbreaks        
+.SH BUGS
+None known.
+
+.SH "SEE ALSO"
+g.column.db, g.select.db, g.stats.db, d.rast.db, d.site.db, d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db, r.reclass.db, r.rescale.db, v.reclass.db
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
