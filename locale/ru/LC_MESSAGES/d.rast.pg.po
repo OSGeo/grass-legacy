@@ -2,96 +2,227 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
+#: getAllOpts.c:87 getSopts.c:92
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-02 18:00+0300\n"
+"POT-Creation-Date: 2002-11-25 09:30+0300\n"
 "PO-Revision-Date: 2002-03-02 18:00+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: getAllOpts.c:34
+#: buildPg.c:25
+#, c-format
+msgid "%s and"
+msgstr ""
+
+#: buildPg.c:33
+#, c-format
+msgid ""
+"SELECT %s,%s,%s from %s where %s %s is not null and %s is not null order by %"
+"s,%s"
+msgstr ""
+
+#: buildPg.c:38
+#, c-format
+msgid ""
+"SELECT %s,%s from %s where %s %s is not null and %s is not null order by %s,%"
+"s"
+msgstr ""
+
+#: getAllOpts.c:28 getSopts.c:54
+msgid "old,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:29 getSopts.c:53
+msgid "input"
+msgstr ""
+
+#: getAllOpts.c:33
 msgid "Name of existing raster file."
 msgstr "Название существующей растровой карты."
+
+#: getAllOpts.c:36
+msgid "key"
+msgstr ""
 
 #: getAllOpts.c:41
 msgid "Column corresponding to cats in raster map [input]"
 msgstr "Столбец, соответствующий категориям исход. растровой карты."
 
+#: getAllOpts.c:44
+msgid "tab"
+msgstr ""
+
 #: getAllOpts.c:48
 msgid "Table containing [col]."
 msgstr "Таблица, содержащая столбец."
+
+#: getAllOpts.c:52
+msgid "col"
+msgstr ""
 
 #: getAllOpts.c:56
 msgid "Column to base reclass on."
 msgstr "Столбец, по которому производится рекласс."
 
+#: getAllOpts.c:59
+msgid "lab"
+msgstr ""
+
 #: getAllOpts.c:63
 msgid "Column to use as labels (optional)."
 msgstr "Столбец, используемый для метки (выбор.)"
 
-#: getAllOpts.c:70
+#: getAllOpts.c:66
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:71
 msgid "Where clause for query (ie. where col='paved'). "
 msgstr "Условие запроса where (напр., where col='paved'. "
 
-#: getAllOpts.c:78
+#: getAllOpts.c:74 getSopts.c:70
+msgid "new,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:75 getSopts.c:69
+msgid "output"
+msgstr ""
+
+#: getAllOpts.c:79
 msgid "Name of for new reclass file."
 msgstr "Название новой карты рекласса."
 
-#: getAllOpts.c:87
+#: getAllOpts.c:83
+msgid "d.rast.pg -s help"
+msgstr ""
+
+#: getAllOpts.c:88
 #, c-format
 msgid "Raster file %s not found.\n"
 msgstr "Растровая карта %s не найдена.\n"
 
-#: getSopts.c:53
+#: getSopts.c:50
 msgid "Use [-s] flag for query input from file."
 msgstr "Используйте флаг [-s] для запроса через командный файл."
 
-#: getSopts.c:61
+#: getSopts.c:58
 msgid "Raster map (must exist):"
 msgstr "Растровая карта (существующая):"
 
-#: getSopts.c:69
+#: getSopts.c:61
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:62
+msgid "file"
+msgstr ""
+
+#: getSopts.c:66
 msgid "SQL command file: "
 msgstr "Файл команд SQL:"
 
-#: getSopts.c:77
+#: getSopts.c:74
 msgid "Reclass map (new):"
 msgstr "Карта рекласса (новая):"
 
-#: getSopts.c:99
+#: getSopts.c:79 getSopts.c:80
+msgid "help"
+msgstr ""
+
+#: getSopts.c:82
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:93
 #, c-format
 msgid "Raster map %s not found.\n"
 msgstr "Растровая карта %s не найдена.\n"
 
-#: getSopts.c:105
+#: getSopts.c:98
+msgid "r"
+msgstr ""
+
+#: getSopts.c:99
 #, c-format
 msgid "File read error on select file (%s)\n"
 msgstr "Ошибка чтения файла (%s)\n"
 
-#: main.c:56
+#: getSopts.c:110
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: main.c:44 runPg.c:40
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:47
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: runInfxFile.c:40
+#: runPg.c:35
 #, c-format
-msgid "Error: Selecting from Postgres:%s\n"
-msgstr "Ошибка: Selecting from Postgres:%s\n"
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
 
-#: runInfxFile.c:47
-#, c-format
-msgid "Error: Connecting to Postgres:%s\n"
+#: runPg.c:38
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:42
+#, fuzzy, c-format
+msgid "Error: connect Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:54
+#: runPg.c:49
+#, fuzzy, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runPg.c:56
+msgid "w"
+msgstr ""
+
+#: runPg.c:57
 msgid "File write error on temporary file (rules)\n"
 msgstr "Ошибка записи во временный файл (с правилами)\n"
 
-#: runInfxFile.c:81
+#: runPg.c:66
+#, c-format
+msgid "%s = %s %s\n"
+msgstr ""
+
+#: runPg.c:69
+#, c-format
+msgid "%s = %s\n"
+msgstr ""
+
+#: runPg.c:73
+msgid "end"
+msgstr ""
+
+#: runPg.c:76 runPg.c:100 runPg.c:101 runPg.c:102 runPg.c:103 runPg.c:104
+#: runPg.c:105
+msgid "tmp.recl"
+msgstr ""
+
+#: runPg.c:80
+#, c-format
+msgid "r.reclass input=%s output=%s < %s\n"
+msgstr ""
+
+#: runPg.c:86
 msgid ""
 "Output map name has NOT been given,\n"
 "so we try to plot and exit..\n"
@@ -99,3 +230,31 @@ msgstr ""
 "Название карты результата не дано,\n"
 "мы только рисуем и заканчиваем..\n"
 
+#: runPg.c:87
+#, c-format
+msgid "d.rast %s\n"
+msgstr ""
+
+#: runPg.c:100
+msgid "cell"
+msgstr ""
+
+#: runPg.c:101
+msgid "cats"
+msgstr ""
+
+#: runPg.c:102
+msgid "cellhd"
+msgstr ""
+
+#: runPg.c:103
+msgid "hist"
+msgstr ""
+
+#: runPg.c:104
+msgid "cell_misc"
+msgstr ""
+
+#: runPg.c:105
+msgid "colr"
+msgstr ""
