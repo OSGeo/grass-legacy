@@ -3,15 +3,14 @@ CELL
 c_ave (values, n)
     register CELL *values;
 {
-    register CELL ave;
+    register double sum;
     register int i;
 
-    ave = 0;
+    if(n==0) return 0;
+    sum = 0.0;
     for (i = 0; i < n; i++)
-	ave += *values++;
+	sum += *values++;
 
-    if (n)
-	ave = (ave + n/2)/n;
-    
-    return ave;
+
+    return (CELL)(sum/n + .5);
 }
