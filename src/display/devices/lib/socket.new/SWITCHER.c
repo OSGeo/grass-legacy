@@ -148,6 +148,16 @@ main (int argc, char *argv[])
     }
 
     /*****************
+     * Make sure it's not already in use...
+     *****************/
+    if (G_sock_exists(sockpath) && 
+	(listenfd = G_sock_connect(sockpath)) != -1)
+    {
+	close (listenfd);
+	G_fatal_error ("Monitor <%s> is already running", me);
+    }
+
+    /*****************
     * Try to bind to the unix socket.  This will fail if another process
     * already has it bound.  We'll listen after we make fork(s).
     ****************/
