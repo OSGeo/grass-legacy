@@ -1,5 +1,5 @@
 Known BUGS
-$Date: 2003-09-09 14:06:16 $
+$Date: 2004-01-15 17:51:51 $
 
 - menu 6: photo.init
           it's unclear at time if these values are used in case the user
@@ -13,10 +13,16 @@ $Date: 2003-09-09 14:06:16 $
           window, this GCP isn't shown, should be drawn in orange color
           before asking for confirmation.
 
-- menu 8: photo.rectify
-          Option 2: seems that the calculation of the minimal region is
-                    to small - sometimes part of the image borders is cut
-                    off
+- problem in alpine regions with steep slope (or poor DEM):
+
+         NOTES: the size of target window is defined in photo.rectify/global.h
+          #define TIE_ROW_DIST 128
+          #define TIE_COL_DIST 128
+          #define NROWS 128
+          #define NCOLS 128
+          -> 128 is too large for alpine regions! MN 2003
+              32 works better, but slows down the processing. A dynamic selection
+              based on local slope were best.
 
 ---------------------
 TODOs
