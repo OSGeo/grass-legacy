@@ -2,20 +2,23 @@
 #	man/utilities/Nroff
 #
 #	Script to produce cat* entries from GRASS man* man page source.
-#	Usage:	Nroff version date directory
-#	    version	GRASS version number, e.g. "4.1"
-#	    date	date of this GRASS version, e.g. "Spring 1993"
-#	    directory	GISBASE directory, e.g. /home/local/src/grass4.1
+#	Usage:	Nroff version date directory make
+#	    version	GRASS version number, e.g. "5.0"
+#	    date	date of this GRASS version, e.g. "Spring 2000"
+#	    directory	GISBASE directory, e.g. /home/local/src/grass5
+#           make        make program
 #
-# $Id: Nroff,v 1.3 2000-07-13 11:50:32 markus Exp $
+# $Id: Nroff,v 1.4 2000-07-18 05:55:15 markus Exp $
 #
 umask 0
 
 if test $# -lt 3
 then
-    echo "Usage: $0  version  date  GISBASE"
+    echo "Usage: $0  version  date  GISBASE make"
     exit 2
 fi
+
+MAKE=$4
 
 wd=$3\/man/utilities
 
