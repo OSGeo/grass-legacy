@@ -13,8 +13,7 @@ all:
 	$(GMAKE) i.oif
 	$(GMAKE) i.spectral
 	cp i.image.mosaic/i.image.mosaic $(SCRIPTS)
-	cp i.tasscap/i.tasscap.tm4 $(SCRIPTS)
-	cp i.tasscap/i.tasscap.tm5 $(SCRIPTS)
+	cp i.tasscap/i.tasscap.tm? $(SCRIPTS)
 	cp i.tm.dehaze/i.tm.dehaze $(SCRIPTS)
 	cp ps.add.pagesize/ps.add.pagesize $(SCRIPTS)
 	cp r.edge.dig/r.edge.dig $(SCRIPTS)
