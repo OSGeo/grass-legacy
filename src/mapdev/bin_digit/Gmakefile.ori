@@ -1,0 +1,61 @@
+EXTRA_CFLAGS	= -I../lib   -I../libes
+
+
+OFILES = \
+	read_cap.o \
+	bin_digit.o \
+	select_digit.o
+
+A_B_OFILES = \
+	a_b_dig.o\
+	rw_ascii.o\
+	asc_to_bin.o\
+	rindex.o
+
+B_A_OFILES = \
+	b_a_dig.o\
+	rw_ascii.o\
+	bin_to_asc.o\
+	rindex.o
+
+
+
+all:  $(BIN)/digit  $(ETC)/digitcap  $(BIN)/b.a.vect  $(BIN)/a.b.vect  $(ETC)/b.a.vect  $(ETC)/a.b.vect $(BIN)/import.to.vect $(BIN)/Vstat
+
+
+#  notice that bin_digit becomes digit in the bin directory
+
+$(BIN)/digit: $(OFILES)
+	$(CC) $(LDFLAGS) -o bin_digit $(OFILES) $(GISLIB)
+	mv  bin_digit  $(BIN)/digit
+
+#  update the digitcap file
+
+$(ETC)/digitcap:  digitcap
+	rm -f $(ETC)/digcap.sampl
+	cp  digitcap  $(ETC)/digcap.sampl
+	chmod  644  $(ETC)/digcap.sampl
+
+
+#   compile the frontends
+$(BIN)/a.b.vect:  a_b_front.o
+	$(CC) $(LDFLAGS) -o $@  a_b_front.o $(GISLIB)
+
+$(BIN)/b.a.vect:  b_a_front.o
+	$(CC) $(LDFLAGS) -o $@  b_a_front.o $(GISLIB)
+
+$(BIN)/import.to.vect:  import_vect.o
+	$(CC) $(LDFLAGS) -o $@  import_vect.o $(DIGLIB) $(GISLIB)
+
+
+#   compile the actual programs
+
+$(ETC)/a.b.vect:  $(A_B_OFILES)
+	$(CC) $(LDFLAGS) -o $@  $(A_B_OFILES) $(DIGLIB) $(GISLIB)
+
+$(ETC)/b.a.vect:  $(B_A_OFILES)
+	$(CC) $(LDFLAGS) -o $@  $(B_A_OFILES) $(DIGLIB) $(GISLIB)
+
+
+$(BIN)/Vstat: stat.o
+	$(CC) $(LDFLAGS) -o $@  stat.o $(DIGLIB) $(GISLIB)
