@@ -16,8 +16,9 @@
 <B>d.vect.area</B>
 [<B>-r</B>] 
 <B>map</B><EM>=name</EM> 
-[<B>color</B><EM>=name|R:G:B</EM>]
+[<B>fillcolor</B><EM>=name|R:G:B</EM>]
 [<B>linecolor</B><EM>=name|R:G:B</EM>]
+[<B>catnum</B><EM>=i[,j,k,...,n]</EM>]
 [<B>legend</B><EM>=filename|"-"</EM>]
 
 
@@ -34,7 +35,7 @@ and draw all boundaries in black.
 <DT><B>map</B>
 <DD>Name of existing vector map to be displayed
 
-<DT><B>color</B>
+<DT><B>fillcolor</B>
 <DD>Color desired for filling polygons. May be specified as a standard
 grass color name, or as an RGB triplet (e.g. 80:198:255).
 <DD>Default: white
@@ -43,6 +44,10 @@ grass color name, or as an RGB triplet (e.g. 80:198:255).
 <DD>Color desired for drawing area boundaries.  May be specified as a
 standard grass color name, or as an RGB triplet (e.g. 127:127:127).
 <DD>Default: black
+
+<DT><B>catnum</B>
+<DD>List of category numbers to restrict which areas are drawn.  Ignored
+if either the <EM>-r</EM> flag or the <EM>legend</EM> options are used.
 
 <DT><B>legend</B>
 <DD>Name of a legend file specifying what color to use for 
@@ -55,21 +60,25 @@ will be read from standard input.
 
 Use <EM>d.vect.area</EM> to draw labelled areas from a vector map to the GRASS
 display.  Using, the "<EM>-r</EM>" flag, the program will cycle through the
-standard GRASS named colors, overriding any <EM>color</EM> or
+standard GRASS named colors, overriding any <EM>fillcolor</EM> or
 <EM>linecolor</EM> argument.  If a <EM>legend</EM> file is specified, it will
 be used.  Otherwise, the color used for filling areas is as specified.
 
 <P>
 
-The <EM>color</EM> argument may be any of the standard named GRASS colors,
+The <EM>fillcolor</EM> argument may be any of the standard named GRASS colors,
 or and RGB (red, green, blue) triplet.  An RGB triplet must have the
 form <EM>&lt;num&gt;:&lt;num&gt;:&lt;num&gt;</EM> where <EM>num</EM> is
 between 0 and 255.
 <P>
 
 The <EM>linecolor</EM> argument is used in conjunction with the
-<EM>color</EM> argument for drawing boundaries and has the
+<EM>fillcolor</EM> argument for drawing boundaries and has the
 same format.
+
+<P>
+An optional list of category numbers may be used to restrict which areas are
+drawn (only valid with the <EM>fillcolor</EM> and <EM>linecolor</EM> options).
 
 <P>
 More control can be had by creating a <EM>legend</EM> file.  At the
