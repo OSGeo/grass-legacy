@@ -10,10 +10,11 @@ static char *SCCSid=	"SCCS version: %Z%   %M%   %I%   %G%";
 ** SYNOPSIS
 **	#include "gis.h"
 **
-**	headers (fdi, fdm, cellhd, min, max)
+**	headers (fdi, fdm, cellhd, min, max, override)
 ** 	int fdi, fdm;
 **	struct Cell_head *cellhd;
 **	fpixel_t *min, *max;
+**	int override;
 ** 
 ** DESCRIPTION
 ** 	headers reads the headers of the given IPW image file, ingests
@@ -48,12 +49,14 @@ static char *SCCSid=	"SCCS version: %Z%   %M%   %I%   %G%";
 #include "fpio.h"
 
 int
-headers (fdi, fdm, cellhd, min, max)
+headers (fdi, fdm, cellhd, min, max, override)
 	int			 fdi;		/* IPW image file desc   */
 	int			 fdm;		/* mask image file desc  */
 	struct Cell_head	*cellhd;	/* -> GRASS cell header  */
 	fpixel_t	        *min;		/* F.P. min in image     */
 	fpixel_t	        *max;		/* F.P. max in image     */
+	int			override;	/* flag to override cell */
+						/* half-pixel offset	 */
 {
 	int		class;			/* class loop counter    */
 	int		cat;			/* GRASS category        */
@@ -128,37 +131,46 @@ headers (fdi, fdm, cellhd, min, max)
 	if (hdr_addr(h_orh) != NULL)
 		warn ("IPW file should be standard orientation\n");
 
-   /* get active program window from GRASS */
+   /* Initialize cell header from GRASS active window (proj and zone) */
 
 	G_get_set_window (cellhd);
 
-   /* check that #lines and #rows agree with IPW file */
+   /* if IPW file has no GEO header, use GRASS active window */
 
-	if (cellhd->rows != bih_nlines(bihpp[0])) {
-		error ("IPW file has %d rows, GRASS window has %d rows\n",
-			bih_nlines(bihpp[0]), cellhd->rows);
-	}
+	if ((geohpp = (GEOH_T **) hdr_addr(h_geo)) == NULL) {
 
-	if (cellhd->cols != bih_nsamps(bihpp[0])) {
-		error ("IPW file has %d cols, GRASS window has %d cols\n",
-			bih_nsamps(bihpp[0]), cellhd->cols);
-	}
+		warn ("IPW image contains no GEO header - using GRASS window");
 
-   /* check coords and spacing from geodetic header */
-
-	if ((geohpp = (GEOH_T **) hdr_addr(h_geo)) != NULL) {
-
-		if (geoh_bline(geohpp[0]) != cellhd->north ||
-		    geoh_bsamp(geohpp[0]) != cellhd->west) {
-			warn ("IPW and GRASS coordinates do not match; using GRASS coords");
+		if (cellhd->rows != bih_nlines(bihpp[0])) {
+			error ("IPW file has %d rows, GRASS window has %d rows",
+				bih_nlines(bihpp[0]), cellhd->rows);
 		}
 
-		if (fabs ((double)geoh_dline(geohpp[0])) != cellhd->ns_res) {
-			warn ("IPW and GRASS NS resolutions do not match; using GRASS value");
+		if (cellhd->cols != bih_nsamps(bihpp[0])) {
+			error ("IPW file has %d cols, GRASS window has %d cols",
+				bih_nsamps(bihpp[0]), cellhd->cols);
 		}
 
-		if (fabs ((double)geoh_dsamp(geohpp[0])) != cellhd->ew_res) {
-			warn ("IPW and GRASS EW resolutions do not match; using GRASS value");
+	} else {
+
+		cellhd->cols = bih_nsamps(bihpp[0]);
+		cellhd->rows = bih_nlines(bihpp[0]);
+
+		cellhd->ns_res = -geoh_dline(geohpp[0]);
+		cellhd->ew_res = geoh_dsamp(geohpp[0]);
+
+		if (!override) {
+			cellhd->north = geoh_bline(geohpp[0]) +
+				cellhd->ns_res / 2.0;
+			cellhd->west = geoh_bsamp(geohpp[0]) -
+				cellhd->ew_res / 2.0;
+		} else {
+			cellhd->north = geoh_bline(geohpp[0]);
+			cellhd->west = geoh_bsamp(geohpp[0]);
 		}
+
+		cellhd->south = cellhd->north - cellhd->rows * cellhd->ns_res;
+		cellhd->east = cellhd->west + cellhd->cols * cellhd->ew_res;
+		G_set_window (cellhd);
 	}
 }
