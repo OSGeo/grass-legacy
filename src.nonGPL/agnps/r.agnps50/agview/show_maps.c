@@ -72,7 +72,8 @@ show_maps (char *input_nps_filename)
     */
     int res=0;              /*cell size*/
     char resstring[2];      /* String to read in cell size */ 
-    char mapflagstring[2];  /* string to read in desired map type */
+    char mapflagstring[3];  /* string to read in desired map type */
+    char *fgets();
     
     
     char cellnummapname[20]; /*cell_num.map name, e.g cell_num.map.100*/
