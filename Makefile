@@ -107,8 +107,11 @@ copymix:
 	cat $(GRASS50)/src/CMD/RELEASE >> MIX
 
 mixclean:
-	-find . -type l -exec rm {} \; 2>/dev/null
-	rm -f MIX 
+	@list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+		find $$subdir -type l -exec rm {} \; 2>/dev/null; \
+	done
+	-rm -f MIX 
 
 # Copy binary modules
 binmix:
