@@ -30,6 +30,7 @@ OBJ = \
     clicker.o\
     closecell.o\
     color_asp.o \
+    color_byg.o \
     color_byr.o \
     color_free.o \
     color_get.o \

@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
     opt2->key_desc    = "type";
     opt2->type        = TYPE_STRING;
     opt2->required    = NO;
-    opt2->options     = "aspect,grey,grey.eq,grey.log,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
+    opt2->options     = "aspect,grey,grey.eq,grey.log,byg,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
     opt2->description = "type of color table";
 
     opt3 = G_define_option();
@@ -152,6 +152,8 @@ int main (int argc, char *argv[])
 	    G_make_gyr_fp_colors (&colors, min, max);
 	else if (strcmp (type, "byr") == 0)
 	    G_make_byr_fp_colors (&colors, min, max);
+	else if (strcmp (type, "byg") == 0)
+	    G_make_byg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
 	    if (!read_color_rules(&colors, min, max, fp))
@@ -196,6 +198,7 @@ int more_usage (void)
     fprintf (stderr, "  grey      (linear grey scale)\n");
     fprintf (stderr, "  grey.eq   (histogram equalized grey scale)\n");
     fprintf (stderr, "  grey.log  (histogram logarithmic transformed grey scale)\n");
+    fprintf (stderr, "  byg       (blue through yellow to green colors)\n");
     fprintf (stderr, "  byr       (blue through yellow to red colors)\n");
     fprintf (stderr, "  gyr       (green through yellow to red colors)\n");
     fprintf (stderr, "  rainbow   (rainbow color table)\n");
