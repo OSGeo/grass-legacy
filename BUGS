@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.81 2000-11-17 08:53:51 markus Exp $
+$Id: BUGS,v 1.82 2000-11-19 17:16:34 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -231,6 +231,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (being worked on by ?)
 
 [RC]r.in.png:
+ - remove dependency on "netpbm" libs: pnm.h
  -  seg. faults on Pentium CPU (compare r.binfer)
  -  r.in.png refused to import a 24-bit image.  However it seems to work 
     OK with an 8-bit image.
