@@ -1369,6 +1369,7 @@ array set featuredir {
 	group		group
 	subgroup	group/$$group($array)/subgroup
 	signature	group/$$group($array)/subgroup/$$subgroup($array)/sig
+	signature2	group/$$group($array)/subgroup/$$subgroup($array)/sig
 	icon		icons
 	Icon		ps_icons
 	label		paint/labels
