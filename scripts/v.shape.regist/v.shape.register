@@ -1,32 +1,48 @@
 #!/bin/sh
 
-# registers a SHAPE file into GRASS 5.1
-# Markus Neteler 2/2002
+############################################################################
 #
+# MODULE:	v.shape.register
+# AUTHOR(S):	Markus Neteler. neteler@itc.it
+# PURPOSE:	registers a SHAPE file into GRASS 5.1 (without importing it)
+# COPYRIGHT:	(C) 2002 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
 # TODOs:
 #  - allow for .SHP extension (currently only .shp)
 #  - add stuff for multilayer SHAPE (ID field identification with ogrinfo,
 #    currently only first layer supported)
+#  - the -k flag is dangerous! Remove?
 #
 #  - maybe! add .prj/.PRJ support (not sure)
+#
+#############################################################################
 
+#%Module
+#% description: registers a SHAPE file into GRASS 5.1
+#%End
+#%flag
+#%  key: k
+#%  description: keep original place of SHAPE and related files
+#%END
+#%option
+#% key: map
+#% type: string
+#% description: Name of SHAPE file
+#% required : yes
+#%End
 
-if test "$GISBASE" = ""; then
-echo "You must be in GRASS to run this program."
-exit
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" -o "--html-description" ]
-then
- echo "Registers a SHAPE file into GRASS 5.1 DATABASE"
- echo " "
- echo "v.shape.register map.shp"
- exit
-fi
+INPUT="$GIS_OPT_map"
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+GISDBASE=`g.gisenv GISDBASE`
+LOCATION_NAME=`g.gisenv LOCATION_NAME`
+MAPSET=`g.gisenv MAPSET`
 
 which ogrinfo > /dev/null
 if [ $? -eq 1 ]
@@ -36,14 +52,15 @@ then
 fi
 
 CWD=`pwd`
-INPUT=$1
-
 SHPTARGET=$GISDBASE/$LOCATION_NAME/shp
 VECTTARGET=$GISDBASE/$LOCATION_NAME/$MAPSET/vector
 
-#eventually strip of file extension:
+#strip off file extension:
 SHAPE=`basename $INPUT .shp`
 DIRNAME=`dirname $INPUT`
+if [ "$DIRNAME" = "." ] ; then
+   DIRNAMEFULL=$CWD
+fi
 
 if test ! -f $DIRNAME/$SHAPE.shp
 then
@@ -51,21 +68,24 @@ then
  exit
 fi
 
-#due to SQLP limitation:
+#due to DBMI-SQLP limitation:
 echo $SHAPE.shp | cut -b1 | grep '[0123456789]' > /dev/null
 if [ "$?" -eq "0" ]; then
  echo "ERROR: GRASS 5.1 vector map names must start with a letter."
- echo "       Your map name starts with with a number, please rename."
+ echo "       The map name starts with with a number, please rename."
  echo "       Cannot import $DIRNAME/$SHAPE.shp"
  exit 
 fi
 
-if test ! -d $SHPTARGET
-then
-  mkdir -p $SHPTARGET
+if [ $GIS_FLAG_k -ne 1 ] ; then
+   if test ! -d $SHPTARGET ; then
+     mkdir -p $SHPTARGET
+   fi
+   cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
+else
+   #keep them were they are:
+   SHPTARGET=$DIRNAMEFULL
 fi
-
-cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
 
 #analyse the file for later (check first layer):
 LAYER1=`ogrinfo $DIRNAME/$SHAPE.shp |grep 1 | cut -d' ' -f2`
@@ -101,5 +121,13 @@ v.build map=$SHAPE.shp opt=build
 
 ### that's it
 echo "$SHAPE.shp is registered now."
-echo "The SHAPE files (.shp, shx and .dbf) were copied to:"
-echo "   $GISDBASE/$LOCATION_NAME/shp"
+
+if [ $GIS_FLAG_k -ne 1 ] ; then
+  echo "The SHAPE files (.shp, shx and .dbf) were copied to:"
+  echo "   $GISDBASE/$LOCATION_NAME/shp"
+else
+  echo "The SHAPE files (.shp, shx and .dbf) are at:"
+  echo "   $DIRNAMEFULL"
+  echo "Be careful with g.remove, it will remove these original files"
+  echo "(consider to use -k flag)"
+fi
