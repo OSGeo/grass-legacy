@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#generates HTML man page docs/html/index.html
+#generates HTML man pages docs/html/index.html
 #Markus Neteler, 2003
 
 #exclude following list of modules from help index:
@@ -9,22 +9,15 @@ EXCLUDEHTML="v.topo.check"
 
 ############# nothing to configure below ############
 
-#are we in the tools/ dir?
-ls build_html_index.html 2> /dev/null
-if [ $? -eq 1 ] ; then
- echo "ERROR: this script must be run from the tools/ directory"
- exit
-fi
-
-ARCH="`cat ../include/Make/Platform.make | grep ARCH | sed 's+ ++g' | cut -d'=' -f2`"
-HTMLDIR="../dist.$ARCH/docs/html"
-
-cd $HTMLDIR
+write_html_header()
+{
+# $1: filename
+# $2: page title
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 <html>
 <head>
- <title>GRASS GIS 5.1 Reference Manual</title>
+ <title>$2</title>
  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
  <meta name=\"Author\" content=\"GRASS Development Team\">
 </head>
@@ -34,52 +27,149 @@ This reference manual details the use of modules distributed with
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).
 <p>
-" > index.html
+" > $1
+}
 
-CMDLIST=`ls -1 *.html | grep -v index.html| cut -d'.' -f1 | sort -u`
+write_html_footer()
+{
+# $1: filename
+# $2: help index url
+echo "<hr>" >> $1
+echo "<a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
+echo "&copy; 2003 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
+echo "</body>" >> $1   
+echo "</html>" >> $1
+}
+
+expand_module_class_name()
+{
+# $1: module class
+ if [ "$1" = "d" ]  ; then 
+    echo "display"  
+  elif [ "$1" = "db" ] ; then 
+    echo "database" 
+  elif [ "$1" = "g" ]  ; then 
+    echo "general" 
+  elif [ "$1" = "i" ]  ; then 
+    echo "imagery" 
+  elif [ "$1" = "m" ]  ; then 
+    echo "misc" 
+  elif [ "$1" = "pg" ] ; then 
+    echo "postGRASS" 
+  elif [ "$1" = "ps" ] ; then 
+    echo "postscript" 
+  elif [ "$1" = "r" ]  ; then 
+    echo "raster" 
+  elif [ "$1" = "v" ]  ; then 
+    echo "vector" 
+  else 
+    echo "$1"
+ fi
+}
+
+#are we in the tools/ dir?
+ls build_html_index.html 2> /dev/null
+if [ $? -eq 1 ] ; then
+ echo "ERROR: this script must be run from the tools/ directory"
+ exit
+fi
+
+#fetch the ARCH for store the files:
+ARCH="`cat ../include/Make/Platform.make | grep ARCH | sed 's+ ++g' | cut -d'=' -f2`"
+HTMLDIR="../dist.$ARCH/docs/html"
+
+FULLINDEX=full_index.html
+
+cd $HTMLDIR
+
+#get list of available GRASS modules:
+CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v '$EXCLUDEHTML' | cut -d'.' -f1 | sort -u`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
-echo "[ " >> index.html
+#write main index:
+echo "Generating HTML manual pages..."
+write_html_header $FULLINDEX "GRASS GIS 5.1 Reference Manual"
+echo "<b>Full command index:</b>" >> $FULLINDEX
+
+#generate main index of all modules:
+echo "[ " >> $FULLINDEX
 k=0
 for i in $CMDLIST
 do
   k=`expr $k + 1`
-  echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> index.html
+  echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> $FULLINDEX
   if [ $k -lt $CMDLISTNO ] ; then
-     echo -n " | " >> index.html
+     echo -n " | " >> $FULLINDEX
   fi
 done
 
 echo " ]
 <p>
-" >> index.html
+" >> $FULLINDEX
 
 #for all module groups:
 for i in $CMDLIST
 do 
-  echo "<a name=\"$i\"></a>" >> index.html
-  echo "<b>$i.* commands:</b>" >> index.html
-  echo "<ul>" >> index.html
+  echo "<a name=\"$i\"></a>" >> $FULLINDEX
+  echo "<b>$i.* commands:</b>" >> $FULLINDEX
+  echo "<ul>" >> $FULLINDEX
 
   #for all modules:  
   for i in `ls -1 $i.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $i .html`
-    echo "<li><a href=\"$i\">$BASENAME</a>" >> index.html
+    echo "<li><a href=\"$i\">$BASENAME</a>" >> $FULLINDEX
   done
-  echo "</ul><br>" >> index.html
-  echo "<p>" >> index.html
+  echo "</ul>" >> $FULLINDEX
+  echo "<p>" >> $FULLINDEX
 done
 
-echo "<hr>" >> index.html
-echo "&copy; 2003 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> index.html
-echo "</body>" >> index.html   
-echo "</html>" >> index.html
+write_html_footer $FULLINDEX index.html
+# done full index
 
-echo "Generated $HTMLDIR/index.html"
+#next write separate module pages:
+#for all module groups:
+for k in $CMDLIST
+do 
+  MODCLASS=`expand_module_class_name $k`
+  FILENAME=$MODCLASS.html
+
+  write_html_header $FILENAME "GRASS GIS 5.1 Reference Manual"
+  echo "<b>$MODCLASS commands:</b>" >> $FILENAME
+  echo "<ul>" >> $FILENAME
+  #for all modules:
+  for k in `ls -1 $k.*.html | grep -v $EXCLUDEHTML`
+  do
+    BASENAME=`basename $k .html`
+    echo "<li><a href=\"$k\">$BASENAME</a>" >> $FILENAME
+  done
+  echo "</ul>" >> $FILENAME
+  echo "<p>"   >> $FILENAME
+
+  write_html_footer $FILENAME index.html
+done
+
+#next write main page:
+FILENAME=index.html
+write_html_header $FILENAME "GRASS GIS 5.1 Reference Manual"
+echo "<b>Manual sections:</b>" >> $FILENAME
+echo "<ul>" >> $FILENAME
+#for all module groups:
+for k in $CMDLIST
+do 
+  MODCLASS=`expand_module_class_name $k`
+  echo "<li><a href=\"$MODCLASS.html\">$MODCLASS commands</a>" >> $FILENAME
+done
+echo "</ul>" >> $FILENAME
+echo "<p>"   >> $FILENAME
+write_html_footer $FILENAME index.html
+
+
+
+echo "Generated HTML docs in $HTMLDIR/index.html"
 echo "----------------------------------------------------------------------"
 echo "Following modules are missing the 'description.html' file in src code:"
-for i in `find . -name "*.html" | grep -v './index.html'`
+for i in `find . -name "*.*.html" | grep -v "$FULLINDEX"  | grep -v 'index.html'`
 do
   if grep 'DESCRIPTION' $i >/dev/null 2>&1 ; then 
     :
