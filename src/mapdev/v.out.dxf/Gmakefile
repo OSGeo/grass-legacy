@@ -1,0 +1,25 @@
+PGM=cell.to.dat
+
+LIST = cell.to.dat.o
+
+#all:  $(BIN)/cell.to.dat $(BIN)/dig2dxf
+
+PROG =    $(BIN_ALPHA_CMD)/v.out.dxf
+
+all:   $(PROG)
+
+$(PROG): v.out.dxf.o $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB)
+	mv a.out $@
+
+$(BIN)/cell.to.dat: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
+
+saber_src:
+	#load v.out.dxf.c $(GISLIB) $(TERMLIB) $(MATHLIB)
+
+saber_obj:
+	#load v.out.dxf.o 
