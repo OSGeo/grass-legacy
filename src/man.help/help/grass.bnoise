@@ -1,0 +1,4 @@
+Interfaces the grass system with a noise simulation model called
+bnoise.  Allows user to choose and/or input information to run
+the bnoise model, and uses bnoise output to produce a grass map
+layer depicting noise contours for the given input.
