@@ -53,13 +53,36 @@ if test ! -f $1; then
 fi
 
 # check, if package is first parameter and in tar.gz compression:
-PACKAGETYPE=`file $1`
-echo $PACKAGETYPE  | grep gzip > /dev/null
+echo $1 |grep bz2
 if [ $? -eq 1 ] ; then
-    echo "ERROR: You need the GRASS binary package in .tar.gz compression."
-    echo ""
-    exit
+    PACKAGETYPE=`file $1`
+    echo $PACKAGETYPE  | grep gzip > /dev/null
+    if [ $? -eq 1 ] ; then
+       echo "ERROR: You need the GRASS binary package in .tar.gz compression or bz2."
+       echo ""
+       exit
+    else
+      UNPACK=gunzip
+      # is gunzip there?
+      which gunzip |grep -v no
+      if [ $? -eq 1 ] ; then
+        echo "No gunzip installed. Please get from:"
+        echo "   http://www.gnu.org/software/gzip/gzip.html"
+        exit
+      fi
+    fi
+else
+ UNPACK=bunzip2
+ # is bunzip2 there?
+ which bunzip2 |grep -v no
+ if [ $? -eq 1 ] ; then
+   echo "No bunzip2 installed. Please get from:"
+   echo "   http://sources.redhat.com/bzip2/index.html"
+   exit
+ fi
 fi
+
+echo "Using $UNPACK decompressor..."
 
 # Start the installation job...
 echo "GRASS GIS $NAME_VER binary package installation tool"
@@ -112,7 +135,7 @@ echo "Installing GRASS binaries into $DESTDIR"
 echo ""
 
 echo "Uncompressing the package and extracting to target directory..."
-gunzip -c $1 |tar -C $DESTDIR -xvf -
+$UNPACK -c $1 |tar -C $DESTDIR -xvf -
 if [ $? -eq 1 ] ; then
      echo "An error occured/user break! Exiting."
      exit
