@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
     zcol_opt->description = "z column name";
 
     keycol_opt 		    = G_define_option();
-    keycol_opt->key 	    = "cat";
+    keycol_opt->key 	    = "key";
     keycol_opt->type 	    = TYPE_STRING;
     keycol_opt->required    = YES;
     keycol_opt->description = "category column name";
