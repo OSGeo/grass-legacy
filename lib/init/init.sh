@@ -664,7 +664,7 @@ bash)
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PROMPT_COMMAND='if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo "[Raster MASK present]" ; fi'" >> "$bashrc"
-    echo "PS1='GRASS GRASS_VERSION_NUMBER:\w > '" >> "$bashrc"
+    echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
@@ -689,7 +689,7 @@ cygwin)
     # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
-    echo "PS1='GRASS GRASS_VERSION_NUMBER:\w > '" >> "$bashrc"
+    echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
