@@ -63,7 +63,7 @@ main(int argc, char **argv)
 	char	*name, *mapset;
 	int	fd, row, rows, col, cols;
 	char	str[20];
-	RASTER_MAP	buf;
+	RASTER_ROW	buf;
 
 	opt		 = G_define_option();
 	opt->key         = "map";
@@ -89,7 +89,7 @@ main(int argc, char **argv)
 	rows = cellhd.rows;
 	cols = cellhd.cols;
 
-	buf.type   = G_raster_map_type(name, mapset);
+	buf.type  = G_raster_map_type(name, mapset);
 	buf.row.v = G_allocate_raster_buf(buf.type);
 
 	fprintf(stderr, "%s\n", r_type_name[buf.type]);
