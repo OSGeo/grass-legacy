@@ -224,25 +224,6 @@ cpvalue(dest, dcol, src, scol)
 	struct	RASTER_MAP_PTR dest, src;
 	int	dcol, scol;
 {
-/*
-	if(mode == KEEPTYPE && src.type != dest.type)
-		return 0;
-
-	dest.type = src.type;
-
-	switch(src.type)
-	{
-		case CELL_TYPE:
-			dest.data.c[dcol] = src.data.c[scol];
-			break;
-		case FCELL_TYPE:
-			dest.data.f[dcol] = src.data.f[scol];
-			break;
-		case DCELL_TYPE:
-			dest.data.d[dcol] = src.data.d[scol];
-			break;
-	}
-*/
 	switch(dest.type)
 	{
 		case CELL_TYPE:
