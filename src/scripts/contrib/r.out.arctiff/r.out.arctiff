@@ -24,7 +24,7 @@ then
     cont=n
     cellm=$name 
  done
- rm t.1
+ rm -f t.1
 else
  if [ "$1" = "help" ] 
  then
