@@ -1,0 +1,13 @@
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+
+LIST = \
+	main.o \
+	b_w_line.o \
+	get_shift.o
+
+
+$(BIN_CONTRIB_CMD)/d.fix.ortho: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@  $(LIST) $(LIBES) $(MATHLIB)
+
+
+$(LIBES): #
