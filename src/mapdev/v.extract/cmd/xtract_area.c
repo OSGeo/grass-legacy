@@ -1,8 +1,11 @@
-/* updated for GRASS 5 9/99 */
-/*  @(#)select_area.c     1.0  9/29/89   
- *  @(#)                  1.1  2/15/90    
- *  @(#)                  1.2  3/15/90    
- *  @(#)xtract_area.c     1.3  1/30/91  for 4.0
+/* 
+ * $Id$
+ *
+ * updated for GRASS 5 9/99
+ *  select_area.c     1.0  9/29/89   
+ *                    1.1  2/15/90    
+ *                    1.2  3/15/90    
+ *  xtract_area.c     1.3  1/30/91  for 4.0
  *  From preliminary work (pull.vect) by Dave Gerdes - CERL
  *  created by:         R.L.Glenn, SCS
  *
