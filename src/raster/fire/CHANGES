@@ -1,0 +1,22 @@
+There were several errors in Pi-definition:
+    float PI=3.14159
+
+Errors like:
+  gcc -O -m486  -I/usr/local/grass42/src421/src/include -DUSE_TERMIO -c
+  spread.c
+  spread.c:48: parse error before 3.14159265358979323846
+  make: *** [OBJ.linux/spread.o] Error 1
+
+After correcting these PI-definitions in
+src/r.spread
+   main.c - line 51
+  spread.c - line 48
+  select_linksB.c - line 36
+  spot.c - l.61
+
+it compiles fine on Slackware Linux gcc 2.7.1, Redhat
+ and SUN Solaris 2.5.1
+
+
+Markus Neteler
+6. Feb. 98
