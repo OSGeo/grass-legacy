@@ -1,4 +1,4 @@
-.\" %W%	 %G%
+.\" @(#)M_dig_to_dlg	2.1.2.4	 11/19/92
 .TH dig_to_dlg 1 GRASSmapdev
 .SH "NAME"
 dig_to_dlg \- convert digit file to dlg file
