@@ -1,7 +1,11 @@
-#!/usr/bin/perl
+#!/bin/sh  -- #perl, to stop looping
+eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
+    if 0;
+
 #
 # $Id$
-# Usage g.html2man <html file> <man file> <section> 
+# Usage:
+#       sh g.html2man <html file> <man file> <section>
  
 sub basename {
   $slash = rindex($_[0], "/");
