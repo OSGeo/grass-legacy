@@ -11,6 +11,8 @@
  *              decompressing data using DEFLATE.  It's primary use is in
  *              the storage and reading of GRASS floating point rasters.
  *              It replaces the patented LZW compression interface.
+ *
+ * ALGORITHM:   http://www.gzip.org/zlib/feldspar.html
  * DATE CREATED: Nov 19 2000
  * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
  *
