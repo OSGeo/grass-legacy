@@ -1,0 +1,37 @@
+/* %W%   %G% */
+#define ESC 033
+Cont_abs(x,y)
+	int x, y ;
+{
+	extern int current_x_pos ;
+	extern int current_y_pos ;
+	int xarr[5], yarr[5] ;
+	int cx, cy ;
+
+	if (! is_inside(current_x_pos, current_y_pos))
+	{
+		move_abs_no_update(x,y) ;
+		return ;
+	}
+
+	cx = current_x_pos ;
+	cy = current_y_pos ;
+
+	move_abs_no_update(x,y) ;
+
+	if (! is_inside(current_x_pos, current_y_pos))
+		return ;
+
+	cx > x ? cx++ : x++ ;
+	cy > y ? cy++ : y++ ;
+	xarr[0] = cx ;
+	yarr[0] = cy ;
+	xarr[1] = cx ;
+	yarr[1] = y ;
+        xarr[2] = x ;
+	yarr[2] = y ;
+	xarr[3] = x ;
+	yarr[3] = cy ;   
+
+	Polygon_abs(xarr, yarr, 4) ;
+}
