@@ -11,23 +11,33 @@ tan(x)
 
 #define DEGREES_TO_RADIANS ( 3.14159 / 180.0 )
 
+extern double tan();
+static double cur = 0.0;
+static double cur_tan = 0.0; /* tan(0.0) */
+
 x_tan (argc, argv, cell, ncols)
     double *argv[];
     register double *cell;
     register int ncols;
 {
-    double tan();
-    register double x;
     register double *a;
 
     a = argv[0];
     while (ncols-- > 0)
     {
-	floating_point_exception = 0;
-	x = tan (*a++ * DEGREES_TO_RADIANS);
-	if (floating_point_exception)
-	    x = 0.0;
-	*cell++ = x;
+	if (*a == cur)
+	{
+	    a++;
+	}
+	else
+	{
+	    cur = *a++;
+	    floating_point_exception = 0;
+	    cur_tan = tan (cur * DEGREES_TO_RADIANS);
+	    if (floating_point_exception)
+		cur_tan = 0.0;
+	}
+	*cell++ = cur_tan;
     }
 }
 
