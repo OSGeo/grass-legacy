@@ -37,6 +37,16 @@ $GISBASE/etc/bin/inter.
 -- 
 Andreas Lange, andreas.lange@rhein-main.de
 
+
+Further hints:
+> How can I force gcc, to complain about missing header file?
+ 
+'-Wimplicit-function-declaration'
+'-Werror-implicit-function-declaration'
+     Give a warning (or error) whenever a function is used before being
+     declared.
+
+
 ------------------------------------------------------------------------
 
 2. Debugging tools
