@@ -133,8 +133,6 @@ __BEGIN_DECLS
 #define GNGRP_ENDIAN_BIG		1
 #define GNGRP_ENDIAN_LITTLE		2
 
-
-#ifdef GNGRP_NEWCLIP
 /*
  * Shortest Path clip function takes a pointer to
  * gnGrpSPClipInput_s and gnGrpSPClipOutput_s
@@ -154,8 +152,6 @@ typedef struct _gnGrpSPClipOutput
 	gnInt32_t		nLinkCost;
 
 } gnGrpSPClipOutput_s;
-
-#endif /* GNGRP_NEWCLIP */
 
 
 /*
@@ -238,9 +234,7 @@ gnGrpGraph_s;
 /*
  * Shortest Path clip function type
  */
-#ifdef GNGRP_NEWCLIP
 typedef int (*gnGrpSPClip_fn)(gnGrpGraph_s *, gnGrpSPClipInput_s *, gnGrpSPClipOutput_s *, void *);
-#endif
 
 /*
  * Spanning clip function type
@@ -399,20 +393,10 @@ extern gnGrpSPReport_s *gnGrpShortestPath	(
 					 						gnInt32_t 		from ,
 					 						gnInt32_t 		to ,
 					 						int (*clip)	(
-#ifndef GNGRP_NEWCLIP
-														gnGrpGraph_s * 	pgraph ,
-														gnInt32_t * 	pprevlink ,	/* previous link pointer */
-														gnInt32_t * 	pnodefrom ,	/* from node pointer */
-														gnInt32_t * 	plink ,		/* this link pointer */
-														gnInt32_t * 	pnodeto ,	/* to node pointer */
-														gnInt32_t * 	pcost ,	/* to node pointer */
-														void * 			pvarg		/* caller's pointer */
-#else /* GNGRP_NEWCLIP */
 														gnGrpGraph_s * 			pgraph ,
 														gnGrpSPClipInput_s *	pArgIn ,
 														gnGrpSPClipOutput_s *	pArgOut ,
 														void * 					pvarg		/* caller's pointer */
-#endif /* GNGRP_NEWCLIP */
 														) ,
 					 						void * 			pvcliparg				/* caller's pointer (passed back to clip) */
 					 						);
