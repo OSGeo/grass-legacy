@@ -1,0 +1,15 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+add_node_to_tree	tree.c	/^add_node_to_tree (cat)$/
+compact_list	dumplist.c	/^compact_list (statf)$/
+compact_range_list	dumplist.c	/^compact_range_list (negmin, negmax, zero, posmin, /
+describe	describe.c	/^describe (name, mapset, compact, verbose, range, w/
+first_cat	tree.c	/^first_cat (cat)$/
+first_node	tree.c	/^first_node ()$/
+long_list	dumplist.c	/^long_list (statf)$/
+next_cat	tree.c	/^next_cat (cat)$/
+next_node	tree.c	/^next_node ()$/
+percent	percent.c	/^percent (n,d,s)$/
+plant_tree	tree.c	/^plant_tree()$/
+range_list	dumplist.c	/^range_list (negmin, negmax, zero, posmin, posmax)$/
+show	dumplist.c	/^show (low, high, len)$/
+usage	main.c	/^usage (me) char *me;$/
