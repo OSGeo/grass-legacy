@@ -27,6 +27,7 @@ main(int argc, char *argv[])
     struct Flag *print;
     struct Option *driver, *database;
     struct GModule *module;
+    dbConnection  connection;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -62,6 +63,16 @@ main(int argc, char *argv[])
 		
     if ( database->answer )
 	G_setenv2 ( "GV_DATABASE", database->answer, G_VAR_MAPSET );
+
+    /* Set also DB_DRIVER and DB_DATABASE if not yet set */
+    db_get_connection( &connection );
+    if ( driver->answer && database->answer && !connection.driverName && !connection.databaseName ) {
+        G_warning ( "Database connection (for db.* modules) also set to:\n"
+                     "driver: %s\ndatabase: %s", driver->answer, database->answer );
+	connection.driverName = driver->answer;
+	connection.databaseName = database->answer;
+	db_set_connection( &connection );
+    }
 
     /* get and print */
     if( print->answer)  {
