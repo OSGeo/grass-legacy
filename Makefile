@@ -8,7 +8,8 @@ SUBDIRS = \
 	db \
 	display \
 	general \
-	vector
+	vector \
+	visualization
 
 default:
 	@list='$(SUBDIRS)'; \
