@@ -16,6 +16,7 @@ extern  int SCREEN_BOTTOM ;
 extern  int SCREEN_TOP ;
 extern  int SCREEN_VS ;
 extern  int NCOLORS ;
+extern  int IGRAPH_CLRS_SAV ;
 
 Put_to_grass_env() 
 {
@@ -25,7 +26,8 @@ put_to_grass_env ("IGRAPH_BOT" ,SCREEN_BOTTOM );
 put_to_grass_env ("IGRAPH_RIGHT" ,SCREEN_RIGHT );
 put_to_grass_env ("IGRAPH_LEFT" ,SCREEN_LEFT );
 put_to_grass_env ("IGRAPH_VS" ,SCREEN_VS );
-put_to_grass_env ("IGRAPH_COLORS" ,NCOLORS );
+/*put_to_grass_env ("IGRAPH_COLORS" ,NCOLORS );*/
+put_to_grass_env ("IGRAPH_COLORS" ,IGRAPH_CLRS_SAV );
 
 }
 
