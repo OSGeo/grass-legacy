@@ -61,7 +61,9 @@ src/libes/dbmi/clients
 # start with modules:
 ################
 src/display/d.3d
-src/display/d.area
+# Deprecated
+# src/display/d.area
+src/display/d.vect.area
 src/display/d.ask
 src/display/d.barscale
 src/display/d.colormode
