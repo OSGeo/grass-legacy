@@ -1,0 +1,2 @@
+Generates a smooth interpolated surface from an input of irregularly
+spaced values with intervening areas of no data (i.e., zeros).
