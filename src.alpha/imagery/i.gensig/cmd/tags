@@ -1,0 +1,25 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+SIGN	eigen.c	/^#define SIGN(a,b) ((b)<0 / -fabs(a) : fabs(a))$/
+can_invert	can_invert.c	/^can_invert(a,n)$/
+check_signatures	check.c	/^check_signatures(S)$/
+closefiles	closefiles.c	/^closefiles(files)$/
+compute_covariances	covariance.c	/^compute_covariances (files, S)$/
+compute_means	means.c	/^compute_means (files, S)$/
+copy_covariances	copy.c	/^copy_covariances (a, b, n)$/
+eigen	eigen.c	/^eigen(M,lambda,n) $/
+free_matrix	alloc.c	/^free_matrix(m,nrl,nrh,ncl,nch)$/
+free_vector	alloc.c	/^free_vector(v,nl,nh)$/
+get_training_classes	get_train.c	/^get_training_classes (files, S)$/
+initialize_signatures	init_sig.c	/^initialize_signatures (files, S)$/
+lookup_class	lookup_class.c	/^lookup_class(cats, ncats, list, nlist, class)$/
+matrix	alloc.c	/^double **matrix(nrl,nrh,ncl,nch)$/
+open_cell	opencell.c	/^open_cell (name, mapset, fd)$/
+openfiles	openfiles.c	/^openfiles(parms, files)$/
+parse	parse.c	/^parse(argc,argv,parms)$/
+print_one_sig	print_sig.c	/^print_one_sig (S, k)$/
+read_training_labels	labels.c	/^read_training_labels (parms, files)$/
+read_training_map	read_train.c	/^read_training_map(class, row, ncols, files)$/
+tqli	eigen.c	/^tqli(d,e,n,z)$/
+tred2	eigen.c	/^tred2(a,n,d,e)$/
+vector	alloc.c	/^double *vector(nl,nh)$/
+write_sigfile	write_sig.c	/^write_sigfile (parms, S)$/
