@@ -18,11 +18,13 @@ $(PROG_INT): prune.o $(VECTLIB) $(GISLIB)
 
 #  command line version
 
-$(PROG_CMD): v.prune.o $(VECTLIB) $(GISLIB)
+$(PROG_CMD): v.prune.o $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) v.prune.o $(VECTLIB) $(GISLIB) $(MATHLIB) 
+	$(CC) $(LDFLAGS) v.prune.o $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) 
 	mv a.out $@
 
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
+
 saber_src:
-	#load v.prune.c $(CFLAGS) $(VECTLIB) $(MATHLIB) $(GISLIB)
+	#load v.prune.c $(CFLAGS) $(DIG_ATTLIB) $(VECTLIB) $(MATHLIB) $(GISLIB) $(LINKMLIB)
 
