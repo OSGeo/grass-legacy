@@ -1,0 +1,11 @@
+LIST = main.o
+
+PGM      = Mwindow.ll
+
+LIBES	= $(GISLIB) $(COORCNVLIB) $(MATHLIB) $(TERMLIB) 
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(COORCNVLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) -o $@
+
+$(GISLIB): #
+$(COORCNVLIB): #
