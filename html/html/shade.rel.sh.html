@@ -22,6 +22,7 @@ values entered by the user.
 <B>shade.rel.sh</B> [<B>altitude=</B><EM>value</EM>] 
 [<B>azimuth=</B><EM>value</EM>]
 [<B>elevation=</B><EM>name</EM>]
+[<B>shade=</B><EM>value|m|f</EM>]
 
 
 <H2>DESCRIPTION</H2>
@@ -57,6 +58,15 @@ provide elevation values for the shaded relief map.  Typically, this
 would be a map layer of elevation;  however, any raster map layer
 can be named.
 
+<LI>vertical scale: The script scales latitude and longitude equally, so
+it's only approximately right, but for shading its close enough. It makes
+the difference between an unusable and usable shade.
+If 'scale' is a number then the ewres and nsres are multiplied by that
+scale to calculate the shading. If 'scale' is the letter M (either case)
+the number of meters is degree of latitude is used as the scale.
+If 'scale' is the letter F (either case) then the number of feet in a
+degree is used.
+
 </OL>
 
 Specifically, <EM>shade.rel.sh</EM> executes the following 
@@ -70,9 +80,9 @@ statement:
 <DD>
 $ELEV.shade = eval( \\<BR>
  x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\<BR>
-   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()) , \\<BR>
+   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\<BR>
  y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\<BR>
-   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()) , \\<BR>
+   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()*$scale) , \\<BR>
  slope=90.-atan(sqrt(x*x + y*y)), \\<BR>
  a=round(atan(x,y)), \\<BR>
  a=if(isnull(a),1,a), \\<BR>
