@@ -1,0 +1,66 @@
+
+
+
+s.to.rast <alpha>    GRASS Reference Manual	<alpha>	s.to.rast
+
+
+
+NAME
+     s.to.rast - Converts a site file to a cell	file
+     (CCRS Contrib Program)
+
+SYNOPSIS
+     s.to.rast
+     s.to.rast help
+     s.to.rast [-v] input=name output=name
+
+DESCRIPTION
+     s.to.rast converts	a GRASS	site file uses a subset	of the
+     functions in s.menu.
+
+     The quad size (ie the number of cells used	to represent one
+     site) is fixed to 0 (ie one cell/site). If	the output file
+     already exists, the program exits gracefully.
+
+
+     Flag:
+
+     -v		       Run the program verbosely.
+
+
+     Parameters:
+
+     input=name	       Name of input site list (in GRASS db)
+
+     output=name       Name of output cell file
+
+
+BUGS
+     None
+
+
+SEE ALSO
+     s.menu
+
+
+AUTHOR
+     Katarina Johnsson,	CCRS
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
