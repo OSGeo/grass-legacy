@@ -1,5 +1,5 @@
 
-EXTRA_CFLAGS = $(GDINC) -I../lib
+EXTRA_CFLAGS = $(PNGINC) -I../lib
 
 OFILES =  \
 	Can_do.o\
@@ -12,7 +12,8 @@ OFILES =  \
 	Graph_Clse.o\
 	Graph_Set.o\
 	Panel.o\
-	Polygn_abs.o
+	Polygn_abs.o\
+	Raster_int.o
 
 LIBES = $(DRIVERLIB) $(GISLIB)
 DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
@@ -26,7 +27,7 @@ all: $(GISBASE)/driver/PNG
 	fi
 
 $(GISBASE)/driver/PNG: $(OFILES) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(GDLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(PNGLIB) $(MATHLIB)
 
 $(DEPDRIVERLIB): #
 $(DEPGISLIB): #

@@ -6,11 +6,9 @@
  *      Color() in ../lib/Color.c
  */
 
-#include "png.h"
-
-#include "colors.h"
-#include "driverlib.h"
 #include "gis.h"
+#include "colors.h"
+#include "pngdriver.h"
 
 int color(int number)
 {
