@@ -1,0 +1,66 @@
+
+
+
+i.grey.scale(1)      GRASS Reference Manual       i.grey.scale(1)
+
+
+
+NAME
+     i.grey.scale - An imagery function that assigns a histogram
+                    contrast stretch grey scale color table to a
+                    (GRASS Imagery Tool)
+
+SYNOPSIS
+     i.grey.scale
+
+DESCRIPTION
+     i.grey.scale is an imagery function that assigns a histogram
+     contrast stretch grey scale color table to a The histogram
+     contrast stretch expands the original range of values to
+     utilize the full range of the
+
+     The user is asked for the name of the that needs a grey
+     scale.  When the is displayed it will be displayed with a
+     grey scale color scheme.
+
+
+     GRASS Tutorial: Image Processing
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
