@@ -223,8 +223,11 @@ implement(void)
 
 			_qv_ = 0.0;
 			if(misc.S_[i][j] > 0.0){
-				_qv_ = misc.Suz_[i][j] / 
-					(misc.S_[i][j] * params.td) * input.dt;
+				_qv_ = (params.td > 0.0 ?
+					misc.Suz_[i][j] / 
+					(misc.S_[i][j] * params.td) * input.dt
+					: - params.td * params.K0 *
+					    exp(- misc.S_[i][j] / params.m));
 				if(_qv_ > misc.Suz_[i][j])
 					_qv_ = misc.Suz_[i][j];
 				misc.Suz_[i][j] -= _qv_;
@@ -311,7 +314,7 @@ get_Em(void)
 	if(denominator == 0.0){
 		fprintf(stderr, "\n** Em can not be resolved due to constant "
 				"observed Q **\n");
-		Em = -1.0;
+		G_set_d_null_value(&Em, 1);
 	}else{
 		Em = 1.0 - numerator / denominator;
 	}

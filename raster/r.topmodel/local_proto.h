@@ -69,7 +69,7 @@ GLOBAL	struct
 	char	*name;
 	double	A, qs0, lnTe, m, Sr0, Srmax, td, vch, vr;
 	int	infex;
-	double	K, psi, dtheta;
+	double	K0, psi, dtheta;
 	int	nch;
 	/* params.nch's */
 	double	*d, *Ad_r;
@@ -119,7 +119,7 @@ GLOBAL	struct
 	/* input.ntimestep's */
 	double	*Qobs_;
 	double	*Qt_;
-	double	*qs_;			/* qs_[timestep] * a[i] = spatial */
+	double	*qs_;	/* spatially constant? */
 	double	*Sbar_;
 	double	*f_;
 	double	*fex_;

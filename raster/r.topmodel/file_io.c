@@ -113,7 +113,7 @@ read_inputs(void)
 		get_line(fp, buf);
 
 		if(sscanf(buf, "%d %lf %lf %lf",
-				&(params.infex),&(params.K),
+				&(params.infex),&(params.K0),
 				&(params.psi),	&(params.dtheta)) == 4)
 			break;
 	}
@@ -339,7 +339,7 @@ write_outputs(void)
 
 	if(file.Qobs){
 		fprintf(fp, "%-15s ", "Em:");
-		if(misc.Em >= 0.0)
+		if(!G_is_d_null_value(&misc.Em))
 			fprintf(fp,
 				"%15.5lf\n", misc.Em);
 		else
