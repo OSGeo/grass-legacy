@@ -1,4 +1,4 @@
-#include "dbmi.h"
+#include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
 
