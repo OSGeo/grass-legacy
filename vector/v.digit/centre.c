@@ -57,6 +57,14 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		move_vertex ();
 		break;
+	    case TOOL_ADD_VERTEX :
+		Tool_next = TOOL_NOTHING;
+		add_vertex ();
+		break;
+	    case TOOL_RM_VERTEX :
+		Tool_next = TOOL_NOTHING;
+		rm_vertex ();
+		break;
 	    case TOOL_MOVE_LINE :
 		Tool_next = TOOL_NOTHING;
 		move_line ();

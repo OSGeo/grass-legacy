@@ -18,6 +18,8 @@ typedef enum
     TOOL_NEW_BOUNDARY,  
     TOOL_NEW_CENTROID,  
     TOOL_MOVE_VERTEX,  
+    TOOL_ADD_VERTEX,    /* add vertex on line */
+    TOOL_RM_VERTEX,     /* remove vertex from line */
     TOOL_MOVE_LINE,  
     TOOL_DELETE_LINE,  
     TOOL_ZOOM_WINDOW,    /* zoom by window */
