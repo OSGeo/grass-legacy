@@ -1,4 +1,4 @@
-SYSCMD = more lpr reset
+SYSCMD = more lpr reset whoami
 
 all: 
 	chmod 0775 $(GISBASE)/scripts/*
