@@ -11,7 +11,7 @@ makefiles:
 	-find ${SRCDIR} -name Gmakefile -print | \
 		sed -e 's#^\(.*\)/Gmakefile#\1#' | \
 		while read dir ; do \
-			${SRCDIR}/mk/genmake.sed < $$dir/Gmakefile > $$dir/makefile ; \
+			sed -f ${SRCDIR}/mk/genmake.sed < $$dir/Gmakefile > $$dir/makefile ; \
 		done
 
 dirs:
@@ -86,5 +86,5 @@ clean-makefiles:
 	-find ${SRCDIR} -name makefile -exec rm {} \;
 
 %/makefile: %/Gmakefile
-	${SRCDIR}/mk/genmake.sed < $< > $@
+	sed -f ${SRCDIR}/mk/genmake.sed < $< > $@
 

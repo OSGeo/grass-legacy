@@ -7,5 +7,5 @@ fi
 find . -name Gmakefile -print | \
     sed -e 's#^\(.*\)/Gmakefile#\1#' | \
     while read dir ; do
-	mk/genmake.sed < $dir/Gmakefile > $dir/makefile
+	sed -f mk/genmake.sed < $dir/Gmakefile > $dir/makefile
     done
