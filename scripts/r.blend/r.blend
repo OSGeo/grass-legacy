@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+# $Id: r.blend,v 2 2004/04/11 
+#
+############################################################################
+#
+# MODULE:		r.blend for GRASS 5.7; based on blend.sh for GRASS 5
+# AUTHOR(S):	CERL?; updated to GRASS 5.7 by Michael Barton
+# PURPOSE:	To redraw current displayed maps to 24 bit PNG output
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: r.blend - Blends color components of 2 raster maps by a given % first map'
+#%End
+#%option
+#% key: first
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Name of first file for blending
+#% required : yes
+#%end
+#%option
+#% key: perc
+#% type: integer
+#% answer: 2
+#% description: Percentage weighting of first file for color blending
+#% required : yes
+#%end
+#%option
+#% key: second
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Name of second file for blending
+#% required : yes
+#%end
+#%option
+#% key: out
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Base name for 3 output red, green, & blue files of blended output
+#% required : yes
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+r.mapcalc "$GIS_OPT_out.r = r#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * r#$GIS_OPT_second"
+r.mapcalc "$GIS_OPT_out.g = g#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * g#$GIS_OPT_second"
+r.mapcalc "$GIS_OPT_out.b = b#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * b#$GIS_OPT_second"
+
+exit 0

@@ -1,0 +1,117 @@
+#!/bin/sh
+# written by Markus Neteler 18. August 1998 / 20. Jan. 1999
+#            neteler@geog.uni-hannover.de
+# mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
+# updated for GRASS 5.7 by Michael Barton 2004/04/05
+#
+# TODO: - implement g.findfile for 3 and 4 maps (currently only current mapset supported)
+#            [done for 2 maps]
+#       - fix isnull() in r.mapcalc for 3 and 4 maps composites
+#            [done for 2 maps]
+#       - fix color table length (currently only 256 cols supported, make
+#         flexible)
+#            [done for 2 maps]
+#--------------------------------------------------
+
+
+#% Module
+#% description: i.image.mosaic - mosaics up to 4 images and extends colormap; creates map *.mosaic
+#% End
+#% option
+#% key: image1
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: 1st map for mosaic (top of image stack).
+#% required : yes
+#% end
+#% option
+#% key: image2
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: 2nd map for mosaic.
+#% required : yes
+#% end
+#% option
+#% key: image3
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: 3rd map for mosaic.
+#% required : no
+#% end
+#% option
+#% key: image4
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: 4th map for mosaic.
+#% required : no
+#% end
+
+if  [ -z "$GISBASE" ]
+then
+	echo ""
+	echo "You must be in GRASS GIS to run this program"
+	echo ""
+	exit 1
+fi
+
+if   [ "$1" != "@ARGS_PARSED@" ]
+then
+	exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+CURRLOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+echo ""
+echo "ATTENTION: Do not forget to set region properly to cover all images!"
+echo ""
+
+# two images to patch
+if [ -z $GIS_OPT_image3 -a  -z $GIS_OPT_image4 ]; then
+     echo "Mosaicing two images..."
+     r.mapcalc "$GIS_OPT_image1.$GIS_OPT_image2.mosaic = if(isnull($GIS_OPT_image1),\
+					$GIS_OPT_image2+256,\
+					$GIS_OPT_image1)"
+     #modify the color table:
+     echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.mosaic
+
+     eval `g.findfile element=cell file=$GIS_OPT_image1`
+     mapset1="${mapset}"
+     cat $LOCATION_NAME/$mapset1/colr/$GIS_OPT_image1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.mosaic
+
+     eval `g.findfile element=cell file=$GIS_OPT_image2`
+     mapset2="${mapset}"
+     cat $LOCATION_NAME/$mapset2/colr/$GIS_OPT_image2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.mosaic
+     
+     echo "Ready. File $GIS_OPT_image1.$GIS_OPT_image2.mosaic created."
+     exit
+fi
+
+# three images to patch
+if [ -z $GIS_OPT_image3 -o  -z $GIS_OPT_image4 ]; then
+     echo "Mosaicing three images..."
+     r.mapcalc "$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic = eval(t1=if($GIS_OPT_image1,$GIS_OPT_image1,$GIS_OPT_image2+256), t2=if(t1 % 256,t1,$GIS_OPT_image3+512), t2)"
+     #modify the color table:
+     echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image1 >> $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic
+     echo "Ready. File $GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.mosaic created."
+     exit
+fi
+
+# four images to patch
+if [ $GIS_OPT_image3 != "" -a  $GIS_OPT_image4 != "" ]; then
+     echo "Mosaicing four images..."
+     r.mapcalc "$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic = eval(t1=if($GIS_OPT_image1,$GIS_OPT_image1,$GIS_OPT_image2+256), t2=if(t1 % 256,t1,$GIS_OPT_image3+512), t3=if(t2 % 256,t2,$GIS_OPT_image4+768),t3)"
+     #modify the color table:
+     echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image1 >> $CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic
+     tail -256 $CURRLOCATION/colr/$GIS_OPT_image4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic
+     echo "Ready. File $GIS_OPT_image1.$GIS_OPT_image2.$GIS_OPT_image3.$GIS_OPT_image4.mosaic created."
+     exit
+fi

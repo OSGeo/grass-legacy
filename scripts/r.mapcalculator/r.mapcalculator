@@ -1,0 +1,212 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:		r.mapcalculator v.1.0 for GRASS 5.7 (2004/05/15)
+#			based on mapcalculator.sh for GRASS 5
+# AUTHOR(S):	R. Brunzema (r.brunzema@web.de); 
+#			updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
+# PURPOSE:	Provides GUI front-end to r.mapcalc
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#%  description: r.mapcalculator - Calculates new raster map from r.mapcalc expression
+#%End
+#%option
+#% key: amap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: A: 
+#% required : no
+#%end
+#%option
+#% key: bmap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: B: 
+#% required : no
+#%end
+#%option
+#% key: cmap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: C: 
+#% required : no
+#%end
+#%option
+#% key: dmap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: D: 
+#% required : no
+#%end
+#%option
+#% key: emap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: E: 
+#% required : no
+#%end
+#%option
+#% key: fmap
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: F: 
+#% required : no
+#%end
+#%option
+#% key: formula
+#% type: string
+#% description: Formula (e.g. A-B or A*C+B):
+#% required : yes
+#%end
+#%option
+#% key: outfile
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Resulting output map 
+#% required : yes
+#%end
+#%option
+#% key: help
+#% type: string
+#% description: Show help 
+#% options: -,help,man
+#% answer: -
+#% required : no
+#%end
+#%flag
+#% key: e
+#% description: Expert mode (enter a set of r.mapcalc expressions)
+#%end
+#%flag
+#% key: o
+#% description: Don't overwrite existing map 
+#%end
+
+
+function display_help {
+	echo ""
+	echo "***** BRIEF HELP *****"
+	echo ""
+	echo "Enter an r.mapcalc expression in the"
+	echo "formula field using this format:"
+	echo "A+C or (more complex:) exp(A+C)+(B-2)*7"
+	echo "Where A, B, C are raster maps entered"
+	echo "in the A field, B field, and C field."
+	echo ""
+	echo "Do not enter output file in the formula field:"
+	echo "Correct: A+B"
+	echo "Incorrect: newfile = A+B"
+	echo "Use no blanks!"
+	echo ""
+	echo "For details on creating an r.mapcalc expression,"
+	echo "select 'man' in the help field to see the r.mapcalc manual page" 
+	echo "(or type g.manual r.mapcalc from the command line)."
+}
+
+if  [ -z "$GISBASE" ]
+then
+	echo ""
+	echo "You must be in GRASS GIS to run this program"
+	echo ""
+	exit 1
+fi
+
+if   [ "$1" != "@ARGS_PARSED@" ]
+then
+	exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+case $GIS_OPT_help in
+	help)
+	display_help
+	exit 0
+	;;
+	man)
+	g.manual r.mapcalc
+	exit 0
+	;;
+esac
+
+# use old style mapcalc
+
+if [ $GIS_FLAG_e = 1 ] ; then
+	exec xterm -e r.mapcalc &
+	exit 0
+fi
+
+	
+# Check for required arguments
+if [ -z "$GIS_OPT_formula" ]; then
+	echo "ERROR: Missing formula!"
+	echo "Please enter a formula in the field formula"
+	exit 1
+fi
+
+if [ -z "$GIS_OPT_outfile" ]; then
+	echo "ERROR: Missing name of outputfile!"
+	echo "Please enter a name for the resulting map and try again."
+	exit 1
+elif [ $GIS_FLAG_o = 1 ]; then
+		echo `g.list type=rast | grep -w "$GIS_OPT_outfile" `
+		outtest=`g.list type=rast | grep -w $GIS_OPT_outfile`
+		if [ -n "$outtest" ]; then
+			echo "File $GIS_OPT_outfile exists. Exiting."
+			exit 0
+		fi		
+fi
+
+typeset -i form_length=${#GIS_OPT_formula}
+typeset -i count=0
+
+# Get the parts of the formula,
+while [ $count -le $form_length ] 
+	do
+	compart[$count]="${GIS_OPT_formula:$count:1}"
+	# ... get the rasterfile names
+	case ${compart[$count]} in
+		A)
+		# ... replace them
+		compart[count]=" \"$GIS_OPT_amap\" "
+		;;
+		B)
+		compart[count]=" \"$GIS_OPT_bmap\" "
+		;;
+		C)
+		compart[count]=" \"$GIS_OPT_cmap\" "
+		;;
+		D)
+		compart[count]=" \"$GIS_OPT_dmap\" "
+		;;
+		E)
+		compart[count]=" \"$GIS_OPT_emap\" "
+		;;
+		F)
+		compart[count]=" \"$GIS_OPT_fmap\" "
+		;;
+	esac
+	# .. and put the formula together again
+	command="$command${compart[$count]}"
+	let count=count+1
+done
+
+echo r.mapcalc "$GIS_OPT_outfile" ="($command)" # Show the resulting commandline
+
+eval `r.mapcalc "$GIS_OPT_outfile" ="($command)"` # Start the command
+
+echo ""
+echo ""
+echo "Done"
+
+# Check for errors
+if [ $? -ne 0 ]; then
+	echo "Error calculating $GIS_OPT_outfile. Try expert mode."
+fi
+
+exit	
