@@ -1,0 +1,21 @@
+PGM       = Dvect
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(DIGLIB) $(GISLIB)
+
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib -I$(SRC)/mapdev/libes
+
+OBJS = \
+	command.o \
+	main.o \
+	open.o\
+	plot1.o\
+	plot2.o\
+	use_plot1.o
+
+
+$(BIN)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
+
+command.o:	options.h
+main.o:	options.h
