@@ -2,6 +2,7 @@
 #include "glob.h"
 #include <unistd.h>
 #include <signal.h>
+#include <stdio.h>
 #include "function.h"
 #include "mapcalc.h"
 
