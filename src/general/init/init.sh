@@ -41,7 +41,6 @@ if [ "$GRASS_GUI" = "tcltk" ] ; then
     # Search for a wish program
     SEARCHCOMMAND=$GRASS_WISH
     WISH=
-    found=0
     
     for i in `echo $PATH | sed 's/^:/.:/
     	    	    		s/::/:.:/g
@@ -50,14 +49,14 @@ if [ "$GRASS_GUI" = "tcltk" ] ; then
     do
 	if [ -f $i/$SEARCHCOMMAND ] ; then
     	    WISH=$i/$SEARCHCOMMAND
-	    found=1
+	    break
 	fi
     done
 
     #NEEDED: is wish >= wish8.0? Because wish4.2 won't work.
 
     # Check if any wish8.x programs are stored in $PATHLIST 
-    if [ $found -gt 0 ] ; then
+    if [ "$WISH" ] ; then
     	
 	# Take the first and the tcltkgrass base directory
 	TCLTKGRASSBASE=$GISBASE/tcltkgrass
