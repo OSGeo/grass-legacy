@@ -27,29 +27,29 @@ For further available drivers go
 
 Export <b>lines</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
 <br>
-<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>line</em> 
-<b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
+<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
+<b>dsn=</b><em>/tmp</em> <b>olayer=</b><em>testogr</em>
 
 <p>
 
 Export <b>areas</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
 <br>
-<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>area</em> 
-<b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
+<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>area</em> 
+<b>dsn=</b><em>/tmp</em> <b>olayer=</b><em>testogr</em>
 
 <p>
 
 Export <b>lines</b> from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
 <br>
 <b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
-<b>dsn=</b><em>/tmp/testogr.gml</em> <b>layer=</b><em>testogr</em> 
+<b>dsn=</b><em>/tmp/testogr.gml</em> <b>olayer=</b><em>testogr</em> 
 <b>format=</b><em>GML</em>
 <p>
 
 Export <b>areas</b> from GRASS vector map directly to PostGIS:
 <br>
 <b>v.out.ogr input=</b><em>polygons</em> <b>type=</b><em>area</em>
-<b>dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em> <b>layer=</b><em>polymap</em>
+<b>dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em> <b>olayer=</b><em>polymap</em>
 <b>format=</b><em>PostgreSQL</em>
 
 <H2>REFERENCES</H2>
