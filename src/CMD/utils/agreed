@@ -1,0 +1,30 @@
+:
+if test $# = 0
+then
+    default=YES
+else
+    default=$1
+fi
+
+if test $# = 1
+then
+    set ""
+fi
+
+shift
+
+while true
+do
+    printf %s "$@""? "
+    read a
+    if test .$a = .''
+    then
+	a=$default
+    fi
+    case "$a" in
+
+    y|Y|yes|YES|Yes)  exit 0;;
+    n|N|no|NO|No)  exit 1;;
+
+    esac
+done
