@@ -405,40 +405,8 @@ where \f$r=|{\bf r} - {\bf r}_j|\f$, \f$\delta=(d-2)/2\f$, and
 \f$\varrho = (\varphi r/2)^2\f$.  Further, \f$\varphi\f$ is a generalized tension parameter,
 and \f$\gamma(\delta,\varrho)\f$ is the incomplete gamma function, not to be
 confused with semivariogram (Abramowitz 1964).
-For the special cases \f$d=2,3,4\f$, the equation \f$R_d({\bf r, r}_j)\f$
-above can be rewritten as:
-
-\f$
-R_2(r)=  - \left[ {\rm E_1} (\varrho) + \ln\varrho + C_E \right]
-\f$
-
-\f$
-R _ 3(r)= \sqrt{{\pi \over  \varrho}} \;{\rm erf}
-\left( \sqrt{\varrho}  \right) -2 
-\f$
-
-\f$
-R_4(r)=  {1 -e^{-\varrho} \over \varrho } - 1
-\f$
-
-where \f$C_E=0.577215...\f$ is the Euler constant, \f${\rm E}_1(\varrho)\f$ is the
-exponential integral function and erf(\f$\sqrt{\varrho}\f$) is the error function
-(Abramowitz 1964), while the trend function is a constant (\f$M=1\f$):
-
-\f$
-T({\bf x})=a_1\; , \quad d=2,3,4
-\f$
-The coefficients \f$a_1, \{\lambda _j\}\f$ are obtained by solving the following
-system of linear equations
-
-\f$
- a_1+\sum_{j=1}^N \lambda_j \left[R({\bf r}^{[i]},{\bf r}^{[j]})
-+\delta_{ji}w_0/w_j \right] =z^{[i]}\, ,\quad i=1,\ldots,N
-\f$
-
-\f$
-\sum_{j=1}^N \lambda _j =0\, .
-\f$
+<p>
+[see more in Neteler and Mitasova 2002]
 
 <h2>
 AUTHORS</h2>

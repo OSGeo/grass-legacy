@@ -80,7 +80,7 @@ htmldocs:
 	(cd lib/db/ ; make htmldocs)
 	(cd lib/vector/ ; make htmldocs)
 	#next runs only on grass51refman.dox (as defined in ./Doxyfile)
-	doxygen
+	doxygen ./Doxyfile
 
 packagehtmldocs:
 	tar cvfz grass51refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html
