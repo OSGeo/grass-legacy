@@ -62,8 +62,8 @@ COORCNVLIB     = -lcoorcnv
 DEPSEGMENTLIB  = $(LIBDIR)/libsegment.a
 SEGMENTLIB     = -lsegment
 
-DEPGPROJLIB    = $(LIBDIR)/libproj.a
-GPROJLIB       = -lproj
+DEPGPROJLIB    = $(LIBDIR)/libgproj.a
+GPROJLIB       = -lgproj $(PROJLIB)
 
 DEPBTREELIB    = $(LIBDIR)/libbtree.a
 BTREELIB       = -lbtree

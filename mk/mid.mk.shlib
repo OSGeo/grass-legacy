@@ -19,6 +19,7 @@ LOCALE          = $(GISBASE)/locale
 
 # other
 CFLAGS      = -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
+CXXFLAGS    = -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS_CXX) $(EXTRA_CXXFLAGS) $(USE_TERMIO)
 LDFLAGS     = -L$(LIBDIR) -Wl,-rpath-link,$(LIBDIR) $(LINK_FLAGS)
 MANROFF     = # 
 LIBRULE_ST  = ar ruv $@ $?; $(RANLIB) $@
@@ -34,7 +35,7 @@ CONFIG_DIR  = $(DSTDIR)/src/include
 
 # libraries
 DEPGISLIB      = $(LIBDIR)/libgrass_gis.so.$(LIB_VER)
-GISLIB         = -lgrass_gis
+GISLIB         = -lgrass_gis $(SOCKLIB) $(INTLLIB)
 
 DEPVASKLIB     = $(LIBDIR)/libgrass_vask.so.$(LIB_VER)
 VASKLIB        = -lgrass_vask
@@ -63,8 +64,8 @@ COORCNVLIB     = -lgrass_coorcnv
 DEPSEGMENTLIB  = $(LIBDIR)/libgrass_segment.so.$(LIB_VER)
 SEGMENTLIB     = -lgrass_segment
 
-DEPGPROJLIB    = $(LIBDIR)/libgrass_proj.so.$(LIB_VER)
-GPROJLIB       = -lgrass_proj
+DEPGPROJLIB    = $(LIBDIR)/libgrass_gproj.so.$(LIB_VER)
+GPROJLIB       = -lgrass_gproj $(PROJLIB)
 
 DEPBTREELIB    = $(LIBDIR)/libgrass_btree.so.$(LIB_VER)
 BTREELIB       = -lgrass_btree
