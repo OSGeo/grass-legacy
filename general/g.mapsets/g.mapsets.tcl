@@ -25,9 +25,12 @@ proc set_mapsets { } {
     eval exec $cmd
 }
 
+set mainw [ScrolledWindow .mainw -relief sunken -borderwidth 2]
+
 set sw [ScrolledWindow .sw -relief sunken -borderwidth 2]
 set sf [ScrollableFrame .sf -width 150 -height 300]
 $sw setwidget $sf
+
 pack $sw $sf -fill both -expand yes
 set sframe [$sf getframe]
 
@@ -50,3 +53,6 @@ foreach ms $msts {
     set ms_ch($ms) 1
 }
 
+set close [button $mainw.close -text "Close" -command { exit } ]
+pack $mainw
+pack $close -side bottom
