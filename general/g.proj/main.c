@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"module to manipulate GRASS projection information files";
+	"Prints and manipulates GRASS projection information files.";
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
 		GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 1);
 
 		OGR_DS_Destroy(ogr_ds);
-		OSRDestroySpatialReference(ogr_srs);
+		 /* OSRDestroySpatialReference(ogr_srs); */ /* crashes */
 	    }
 	    else
 		G_fatal_error("Could not read georeferenced file %s using "
