@@ -6,49 +6,134 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-03 11:20+0300\n"
+"POT-Creation-Date: 2002-11-25 10:04+0300\n"
 "PO-Revision-Date: 2002-03-03 11:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:25
+#, c-format
+msgid "%s and"
+msgstr ""
+
+#: buildPg.c:29
+#, c-format
+msgid ", %s "
+msgstr ""
+
+#: buildPg.c:33
+#, c-format
+msgid ""
+"SELECT %s,%s %s from %s where %s %s is not null and %s is not null order by %"
+"s,%s"
+msgstr ""
+
+#: getAllOpts.c:28
+msgid "tab"
+msgstr ""
 
 #: getAllOpts.c:32
 msgid "Table with X,Y coors:"
 msgstr "Таблица с координатами X и Y:"
 
+#: getAllOpts.c:36
+msgid "coordx"
+msgstr ""
+
+#: getAllOpts.c:40
+msgid "column of X coordinates"
+msgstr ""
+
+#: getAllOpts.c:41
+msgid "X"
+msgstr ""
+
 #: getAllOpts.c:42
 msgid "Column with X-coor:"
 msgstr "Столбец X-координат:"
+
+#: getAllOpts.c:45
+msgid "coordy"
+msgstr ""
+
+#: getAllOpts.c:49
+msgid "column of Y coordinates"
+msgstr ""
+
+#: getAllOpts.c:50
+msgid "Y"
+msgstr ""
 
 #: getAllOpts.c:51
 msgid "Column with Y-coor:"
 msgstr "Столбец Y-координат:"
 
+#: getAllOpts.c:54
+msgid "cats"
+msgstr ""
+
+#: getAllOpts.c:58
+msgid "category-column"
+msgstr ""
+
 #: getAllOpts.c:60
 msgid "Column with categories:"
 msgstr "Столбец с категориями:"
 
-#: getAllOpts.c:67
+#: getAllOpts.c:63
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:68
 msgid "Clause for SQL query (e.g. obj='huts', num > 56, etc.):"
 msgstr "Условие для SQL запроса (напр., obj='huts', num > 56, и т.д.):"
 
-#: getAllOpts.c:74
+#: getAllOpts.c:71 getSopts.c:49
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:75
 msgid "New site map name:"
 msgstr "Название новой карты объектов:"
 
-#: getAllOpts.c:85
-msgid ""
-"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
-"ack;Icon:diamond, box, plus, x; Size: 1-9. "
+#: getAllOpts.c:79 getSopts.c:57
+msgid "plot"
 msgstr ""
-"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
-"ack;Икона:diamond, box, plus, x; Размер: 1-9. "
+
+#: getAllOpts.c:83 getSopts.c:61
+msgid "Color,icon,size"
+msgstr ""
+
+#: getAllOpts.c:84 getSopts.c:62
+msgid "gray,x,3"
+msgstr ""
+
+#: getAllOpts.c:88
+msgid ""
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black;Icon:diamond, box, plus, x; Size: 1-9. "
+msgstr ""
+"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black;Значок:diamond, box, plus, x; Размер: 1-9. "
+
+#: getAllOpts.c:92
+msgid "d.site.pg -s help"
+msgstr ""
 
 #: getSopts.c:38
 msgid "Use [s] flag to select db records using an input file."
 msgstr "Используйте флаг [s] для запроса через командный файл."
+
+#: getSopts.c:41
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:42
+msgid "file"
+msgstr ""
 
 #: getSopts.c:46
 msgid "SQL statements specifying selection criteria. "
@@ -58,43 +143,99 @@ msgstr "SQL команды, задающие критерий выбора."
 msgid "Name of sites list to output."
 msgstr "Название списка объектов для вывода."
 
-#: getSopts.c:63
+#: getSopts.c:65
 msgid ""
-"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
-"ack; Icon: diamond, box, plus, x; Size: 1-9. "
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black; Icon: diamond, box, plus, x; Size: 1-9. "
 msgstr ""
-"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
-"ack;Икона:diamond, box, plus, x; Размер: 1-9. "
+"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black;Значок:diamond, box, plus, x; Размер: 1-9. "
+
+#: getSopts.c:69 getSopts.c:70
+msgid "help"
+msgstr ""
+
+#: getSopts.c:72 main.c:58
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:83
+msgid "r"
+msgstr ""
 
 #: getSopts.c:84
 #, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения файла %s\n"
 
-#: main.c:56
+#: main.c:48 runPg.c:108
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:51
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: runInfxFile.c:54
+#: plotsite.c:25
+msgid "diamond"
+msgstr ""
+
+#: plotsite.c:37
+msgid "box"
+msgstr ""
+
+#: plotsite.c:48
+msgid "plus"
+msgstr ""
+
+#: runPg.c:96
 #, c-format
 msgid "Cannot open %s"
 msgstr "Невозможно открыть %s"
 
-#: runInfxFile.c:69
+#: runPg.c:103
 #, c-format
-msgid "Error: Selecting from Postgres:%s\n"
-msgstr "Ошибка: Selecting from Postgres:%s\n"
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
 
-#: runInfxFile.c:76
-#, c-format
-msgid "Error: Connecting to Postgres:%s\n"
+#: runPg.c:106
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:110
+#, fuzzy, c-format
+msgid "Error: connect Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:116
+#: runPg.c:118
+#, fuzzy, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runPg.c:143
 #, c-format
 msgid "Can not use the field type id %d for category\n"
 msgstr "Невозможно использовать тип поля %d для категорий\n"
 
-#: runInfxFile.c:130
+#: runPg.c:157
 msgid "Display error(exiting..)\n"
 msgstr "Ошибка дисплея (выход..)\n"
+
+#: runPg.c:174
+msgid "no data"
+msgstr ""
+
+#: runPg.c:182
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: runPg.c:188
+#, c-format
+msgid "%f"
+msgstr ""

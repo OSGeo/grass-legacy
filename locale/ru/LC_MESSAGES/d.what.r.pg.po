@@ -2,33 +2,67 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
+#: getSopts.c:107 opencell.c:12
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-04 14:20+0300\n"
+"POT-Creation-Date: 2002-11-25 20:15+0300\n"
 "PO-Revision-Date: 2002-03-04 14:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: getAllOpts.c:35 getSopts.c:55
+#: buildPg.c:14
+#, c-format
+msgid "SELECT * from %s where %s=%d"
+msgstr ""
+
+#: getAllOpts.c:28 getSopts.c:49
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:29 getSopts.c:50
+msgid "old,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:33 getSopts.c:54
 msgid "Raster map to query:"
 msgstr "Растровая карта для запроса:"
 
-#: getAllOpts.c:42
+#: getAllOpts.c:36
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:40
 msgid "Table with categories:"
 msgstr "Таблица с категориями:"
 
-#: getAllOpts.c:49
+#: getAllOpts.c:43
+msgid "col"
+msgstr ""
+
+#: getAllOpts.c:47
 msgid "Column with categories:"
 msgstr "Столбец категорий:"
 
-#: getAllOpts.c:55 getSopts.c:69
+#: getAllOpts.c:50 getSopts.c:65
+msgid "hv"
+msgstr ""
+
+#: getAllOpts.c:52 getSopts.c:67 runPg.c:28
+msgid "v"
+msgstr ""
+
+#: getAllOpts.c:53 getSopts.c:68
 msgid "Database output format - [v(ert)/h(oriz)]:"
 msgstr "Формат вывода результата - [v(ert)/h(oriz)]:"
+
+#: getAllOpts.c:58
+msgid "d.what.r.pg -s help"
+msgstr ""
 
 #: getCat.c:32
 msgid ""
@@ -54,49 +88,129 @@ msgstr ""
 "\n"
 "\n"
 
-#: getCat.c:49
+#: getCat.c:50
 #, c-format
 msgid "Error read cell file %s."
 msgstr "Ошибка чтения растрового файла %s."
 
-#: getSopts.c:47
+#: getSopts.c:46
 msgid "Use [s] for input from SQL-file."
 msgstr "Используйте [s] для ввода через командный файл SQL."
 
-#: getSopts.c:63
+#: getSopts.c:57
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:58
+msgid "file"
+msgstr ""
+
+#: getSopts.c:62
 msgid "SQL command file:"
 msgstr "Файл команд SQL:"
 
-#: getSopts.c:102
+#: getSopts.c:72 getSopts.c:73
+msgid "help"
+msgstr ""
+
+#: getSopts.c:76 main.c:50
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:99
+msgid "r"
+msgstr ""
+
+#: getSopts.c:100
 #, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения файла на %s\n"
 
-#: main.c:57
+#: getSopts.c:113
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: getSopts.c:117
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: main.c:41 runPg.c:33
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:44
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: opencell.c:15
+#: opencell.c:14
 #, c-format
 msgid "warning: %s - raster map not found.\n"
 msgstr "предупреждение: %s - растровая карта не найдена.\n"
 
-#: opencell.c:24
+#: opencell.c:23
 #, c-format
 msgid "warning: can not open [%s] in [%s]\n"
 msgstr "предупреждение: не могу открыть [%s] в [%s]\n"
 
-#: runInfxQry.c:35
+#: runPg.c:26 runPg.c:64
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: runPg.c:30
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s\n"
+"---------------------\n"
+msgstr ""
+
+#: runPg.c:32
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:36
+#, fuzzy, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr "Ошибка: connect Postgres:%s\n"
+
+#: runPg.c:44
+msgid "select"
+msgstr ""
+
+#: runPg.c:44
+msgid "SELECT"
+msgstr ""
+
+#: runPg.c:47
 #, c-format
 msgid "Error: select Postgres:%s\n"
 msgstr "Ошибка: select Postgres:%s\n"
 
-#: runInfxQry.c:45
+#: runPg.c:60
 #, c-format
-msgid "Error: Connecting to Postgres:%s\n"
-msgstr "Ошибка: Connecting to Postgres:%s\n"
+msgid "%10s I %s\n"
+msgstr ""
 
-#: runInfxQry.c:75
+#: runPg.c:66
+#, c-format
+msgid ",%s"
+msgstr ""
+
+#: runPg.c:68 runPg.c:75
+msgid "\n"
+msgstr ""
+
+#: runPg.c:73
+#, c-format
+msgid "%s,"
+msgstr ""
+
+#: runPg.c:78
 #, c-format
 msgid ""
 "\n"
@@ -106,3 +220,8 @@ msgstr ""
 "\n"
 "%d записей выбрано\n"
 "\n"
+
+#: runPg.c:84
+#, c-format
+msgid "Error:%s\n"
+msgstr ""

@@ -2,150 +2,149 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
-#: buildInfxQry.c:19 getAllOpts.c:91 getSopts.c:104 runInfxFile.c:37
-#: runInfxFile.c:41 runInfxFile.c:42
+#: getAllOpts.c:89 getSopts.c:101 runPg.c:36 runPg.c:41
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-05-30 14:49+0400\n"
+"POT-Creation-Date: 2002-11-25 16:49+0300\n"
 "PO-Revision-Date: 2002-03-05 19:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8-bit\n"
-"Content-Transfer-Encoding: koi8\n"
+"Content-Type: text/plain\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: buildInfxQry.c:24
+#: buildPg.c:22
 msgid " where "
 msgstr ""
 
-#: buildInfxQry.c:27
+#: buildPg.c:25
 #, c-format
 msgid "SELECT Distinct %s from %s %s %s and %s is not null"
 msgstr ""
 
-#: buildInfxQry.c:29
+#: buildPg.c:30
 #, c-format
 msgid "SELECT Distinct %s from %s where %s is not null"
 msgstr ""
 
-#: getAllOpts.c:31 getSopts.c:47
+#: getAllOpts.c:29 getSopts.c:44
 msgid "map"
 msgstr ""
 
-#: getAllOpts.c:32 getSopts.c:49
+#: getAllOpts.c:30 getSopts.c:46
 msgid "old,dig,vector"
 msgstr ""
 
-#: getAllOpts.c:36
+#: getAllOpts.c:34
 msgid "Vector map:"
 msgstr "Векторная карта:"
 
-#: getAllOpts.c:39
+#: getAllOpts.c:37
 msgid "key"
 msgstr ""
 
-#: getAllOpts.c:43
+#: getAllOpts.c:41
 msgid "Column with category IDs from the table:"
 msgstr "Столбец ID в таблице:"
 
-#: getAllOpts.c:47
+#: getAllOpts.c:45
 msgid "tab"
 msgstr ""
 
-#: getAllOpts.c:51
+#: getAllOpts.c:49
 msgid "Table containing this column:"
 msgstr "Таблица, содержащая ID:"
 
-#: getAllOpts.c:54
+#: getAllOpts.c:52
 msgid "where"
 msgstr ""
 
-#: getAllOpts.c:58
+#: getAllOpts.c:56
 msgid "Query clause (e.g. obj='paved'):"
 msgstr "Условие запроса (напр.,obj='paved'): "
 
-#: getAllOpts.c:61 getSopts.c:63
+#: getAllOpts.c:59 getSopts.c:60
 msgid "color"
 msgstr ""
 
-#: getAllOpts.c:65
+#: getAllOpts.c:63
 msgid "Color to draw selected vectors:"
 msgstr "Цвет прорисовки выбранных линий/площадей:"
 
-#: getAllOpts.c:69 getSopts.c:71
+#: getAllOpts.c:67 getSopts.c:68
 msgid "Fill polygons"
 msgstr "Закрасить полигоны"
 
-#: getAllOpts.c:73 getSopts.c:75
+#: getAllOpts.c:71 getSopts.c:72
 msgid "Extract vector objects to new map"
 msgstr "Сохранить выбранные векторы в новую карту"
 
-#: getAllOpts.c:77
+#: getAllOpts.c:75
 msgid "d.vect.pg -s help"
 msgstr ""
 
-#: getAllOpts.c:82 getSopts.c:94
+#: getAllOpts.c:80 getSopts.c:91
 msgid "white"
 msgstr ""
 
-#: getAllOpts.c:91 getSopts.c:104 runInfxFile.c:99
+#: getAllOpts.c:89 getSopts.c:101 runPg.c:101
 msgid "dig"
 msgstr ""
 
-#: getAllOpts.c:92
+#: getAllOpts.c:90
 #, c-format
 msgid "Vector map %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
 
-#: getSopts.c:44
+#: getSopts.c:41
 msgid "Use [s] flag to select db records using an input file."
 msgstr "Используйте флаг [s] для выборки записей через командный файл SQL."
 
-#: getSopts.c:52
+#: getSopts.c:49
 msgid "Name of existing vector file."
 msgstr "Название существующей векторной карты."
 
-#: getSopts.c:55
+#: getSopts.c:52
 msgid "sql"
 msgstr ""
 
-#: getSopts.c:56
+#: getSopts.c:53
 msgid "file"
 msgstr ""
 
-#: getSopts.c:60
+#: getSopts.c:57
 msgid "SQL statements specifying selection criteria. "
 msgstr "SQL команды в файле."
 
-#: getSopts.c:67
+#: getSopts.c:64
 msgid "Color for vector draw."
 msgstr "Цвет прорисовки."
 
-#: getSopts.c:81 getSopts.c:82
+#: getSopts.c:78 getSopts.c:79
 msgid "help"
 msgstr ""
 
-#: getSopts.c:84 main.c:60
+#: getSopts.c:81 main.c:60
 msgid "-s"
 msgstr ""
 
-#: getSopts.c:105
+#: getSopts.c:102
 #, c-format
 msgid "Vector file %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
 
-#: getSopts.c:109
+#: getSopts.c:106
 msgid "r"
 msgstr ""
 
-#: getSopts.c:110
+#: getSopts.c:107
 #, fuzzy, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: main.c:51 runInfxFile.c:72
+#: main.c:51 runPg.c:69
 msgid "PG_DBASE"
 msgstr ""
 
@@ -153,7 +152,7 @@ msgstr ""
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: plotCat.c:139
+#: plotCat.c:137
 #, c-format
 msgid ""
 "\n"
@@ -162,20 +161,20 @@ msgstr ""
 "\n"
 "WARNING: векторная карта [%s]-ошибка чтения\n"
 
-#: plotCat.c:149
+#: plotCat.c:147
 msgid "Read error - EOF\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: plotCat.c:153
+#: plotCat.c:151
 msgid "Read error\n"
 msgstr "Ошибка чтения\n"
 
-#: runInfxFile.c:61
+#: runPg.c:59
 #, c-format
 msgid "Error opening vector map %s in mapset %s\n"
 msgstr "Ошибка открытия векторной карты %s в наборе %s\n"
 
-#: runInfxFile.c:68
+#: runPg.c:65
 #, c-format
 msgid ""
 "Executing\n"
@@ -183,26 +182,26 @@ msgid ""
 "\n"
 msgstr ""
 
-#: runInfxFile.c:70
+#: runPg.c:67
 msgid "PG_HOST"
 msgstr ""
 
-#: runInfxFile.c:74
+#: runPg.c:71
 #, c-format
 msgid "Error Connecting to Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:81
+#: runPg.c:79
 #, c-format
 msgid "Error Selecting from Postgres:%s\n"
 msgstr "Ошибка: Selecting from Postgres:%s\n"
 
-#: runInfxFile.c:85
+#: runPg.c:85
 #, c-format
 msgid "%d Rows\n"
 msgstr "%d записей\n"
 
-#: runInfxFile.c:91
+#: runPg.c:91
 msgid ""
 "\n"
 " Extract areas [y]/lines[n]:"
@@ -210,23 +209,23 @@ msgstr ""
 "\n"
 " Сохранить как площади[y]/линии[n]:"
 
-#: runInfxFile.c:93
+#: runPg.c:94
 msgid "line"
 msgstr ""
 
-#: runInfxFile.c:94
+#: runPg.c:96
 msgid "area"
 msgstr ""
 
-#: runInfxFile.c:97
+#: runPg.c:99
 msgid "Enter name for new vector map:"
 msgstr "Введите имя новой векторной карты:"
 
-#: runInfxFile.c:99
+#: runPg.c:101
 msgid "vector"
 msgstr ""
 
-#: runInfxFile.c:103
+#: runPg.c:105
 msgid ""
 "\n"
 "\n"
@@ -236,35 +235,35 @@ msgstr ""
 "\n"
 " Убрать общие границы?"
 
-#: runInfxFile.c:106
+#: runPg.c:108
 msgid "Module v.extract loaded:\n"
 msgstr "Модуль v.extract:\n"
 
-#: runInfxFile.c:107
+#: runPg.c:109
 msgid "w"
 msgstr ""
 
-#: runInfxFile.c:108
+#: runPg.c:110
 #, fuzzy
 msgid "File write error on temporary file\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: runInfxFile.c:118
+#: runPg.c:121
 #, c-format
 msgid "%d\n"
 msgstr ""
 
-#: runInfxFile.c:126
+#: runPg.c:129
 #, c-format
 msgid "Error plotting category %d\n"
 msgstr "Ошибка рисования категории %d\n"
 
-#: runInfxFile.c:135
+#: runPg.c:139
 #, c-format
 msgid "v.extract -d input=%s output=%s type=%s new=0 file=%s\n"
 msgstr ""
 
-#: runInfxFile.c:138
+#: runPg.c:143
 #, c-format
 msgid "v.extract input=%s output=%s type=%s new=0 file=%s\n"
 msgstr ""
