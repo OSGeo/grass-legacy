@@ -240,14 +240,16 @@ main (int argc, char **argv)
 
 			G_get_color(hue_array[atcol], &r, &g, &b, &hue_colors) ;
 
-			out_array[atcol] = (CELL) G_HIS(atcol, r, g, b, intensity, saturation ) ;
+			if(r==255 && g==255 && b==255 && intensity==255 && saturation==255)
+				G_set_c_null_value(&out_array[atcol], 1);
+			else
+				out_array[atcol] = (CELL) G_HIS(atcol, r, g, b, intensity, saturation ) ;
 		}
 
 		if (atrow == next_row)
 			next_row = D_draw_cell(next_row, out_array, &out_colors);
 		if (out_used)
 		{
-			/*if(G_put_map_row (out_file, out_array, &out_colors) < 0)*/
 			if(G_put_c_raster_row (out_file, out_array) < 0)
 				out_used = 0;
 		}
