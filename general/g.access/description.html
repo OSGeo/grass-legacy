@@ -1,13 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>g.access</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-</head>
-<body bgcolor="white">
-
-<h2>NAME</h2>
-<em><b>g.access</b></em>
 <H2>DESCRIPTION</H2>
 
 This program allows the user to control access to the
@@ -25,45 +15,8 @@ The user may, for example, allow only users in the same
 UNIX group to read data files in the mapset, or restrict
 the mapset to personal use only.
 
-<P>
-After typing 
-<DL>
-<DD>
-<B>g.access</B> 
-</DL>
-the user will be presented with a screen page which reflects the current 
-mapset permissions. The user can then change them. 
-The screen page looks like: 
-
-<PRE>
- __________________________________________________________
-| LOCATION: spearfish                          MAPSET: demo|
-|                                                          |
-| This program allows you to control access to your        | 
-| mapset by other users.                                   |
-|                                                          |
-| Access may be granted/removed for everyone, or for       |
-| everyone in your group.                                  |
-|                                                          |
-| Mark an 'x' to allow access;  erase the field to         |
-| restrict access.                                         |
-|                                                          |
-|     GROUP: _x_                                           |
-|     OTHER: _x_                                           |
-|                                                          |
-|    AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE   |
-|                  (OR &lt;Ctrl-C&gt; TO CANCEL)                 |
-|__________________________________________________________|
-
-</PRE>
-
-If you remove the x (using the space bar), access will be denied to that 
-class of user (group or other). 
-If you type an x, access will be granted to that class of user. 
-
 <H2>NOTES</H2>
 
-There is no non-interactive version of <EM>g.access</B>.</EM> 
 
 <P> Under GRASS, access to the mapset PERMANENT must be open to
 all users.  This is because GRASS looks for the user's default geographic
@@ -91,5 +44,3 @@ Michael Shapiro,
 U.S. Army Construction Engineering Research Laboratory
 
 <p><i>Last changed: $Date$</i>
-</body>
-</html>
