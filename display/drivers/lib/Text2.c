@@ -12,7 +12,7 @@ static int t, b, l, r ;
 double basex, basey ;
 double curx, cury ;
 
-int drawchar (double _text_size_x,double _text_size_y,
+int drawchar (double text_size_x,double text_size_y,
 	register double sinrot,register double cosrot, unsigned char character)
 {
 	unsigned char *X ;
@@ -38,8 +38,8 @@ int drawchar (double _text_size_x,double _text_size_y,
 		}
 		ix = 10 + X[i] - 'R' ;
 		iy = 10 - Y[i] + 'R' ;
-		ax = (int)(_text_size_x * (double)ix) ;
-		ay = (int)(_text_size_y * (double)iy) ;
+		ax = (int)(text_size_x * (double)ix) ;
+		ay = (int)(text_size_y * (double)iy) ;
 		if(dont_draw)
 		{
 			remember(x + (ax * cosrot - ay * sinrot),
@@ -57,8 +57,8 @@ int drawchar (double _text_size_x,double _text_size_y,
 	*/
 	ix = 20 ;
 	iy = 0 ;
-	ax = (int)(_text_size_x * (double)ix) ;
-	ay = (int)(_text_size_y * (double)iy) ;
+	ax = (int)(text_size_x * (double)ix) ;
+	ay = (int)(text_size_y * (double)iy) ;
 	if (! dont_draw)
 		text_move(basex + (ax * cosrot - ay * sinrot),
 			basey - (ax * sinrot + ay * cosrot)) ;
@@ -139,7 +139,7 @@ static int text_move (double x,double y)
 }
 
 int soft_text_ext(int x,int y,
-	double _text_size_x,double _text_size_y,double _text_rotation,
+	double text_size_x,double text_size_y,double text_rotation,
 	char *string)
 {
 	t = 999999 ;
@@ -147,7 +147,7 @@ int soft_text_ext(int x,int y,
 	l = 999999 ;
 	r = 0 ;
 	dont_draw = 1 ;
-	soft_text(x, y, _text_size_x, _text_size_y, _text_rotation, string) ;
+	soft_text(x, y, text_size_x, text_size_y, text_rotation, string) ;
 	dont_draw = 0 ;
 
 	return 0;
@@ -167,18 +167,18 @@ int get_text_ext (int *top,int *bot,int *left,int *rite)
 # define D2R(d) (double)(d * RpD)	/* degrees->radians */
 
 int soft_text(int x,int y,
-	double _text_size_x,double _text_size_y,double _text_rotation,
+	double text_size_x,double text_size_y,double text_rotation,
 	char *string)
 {
-	double sinrot = sin (D2R (_text_rotation)) ;
-	double cosrot = cos (D2R (_text_rotation)) ;
+	double sinrot = sin (D2R (text_rotation)) ;
+	double cosrot = cos (D2R (text_rotation)) ;
 
 	am_inside = 0 ;
 	curx = basex = (double)x ;
 	cury = basey = (double)y ;
 	while(*string != 00)
 	{
-		drawchar (_text_size_x, _text_size_y, sinrot, cosrot, *string++) ;
+		drawchar (text_size_x, text_size_y, sinrot, cosrot, *string++) ;
 		basex = curx ; basey = cury ;
 	}
 
@@ -186,16 +186,16 @@ int soft_text(int x,int y,
 }
 
 int onechar(int x,int y,
-	double _text_size_x,double _text_size_y,double _text_rotation,
+	double text_size_x,double text_size_y,double text_rotation,
 	register unsigned char achar)
 {
-	double sinrot = sin (D2R (_text_rotation)) ;
-	double cosrot = cos (D2R (_text_rotation)) ;
+	double sinrot = sin (D2R (text_rotation)) ;
+	double cosrot = cos (D2R (text_rotation)) ;
 
 	am_inside = 0 ;
 	curx = basex = (double)x ;
 	cury = basey = (double)y ;
-	drawchar (_text_size_x,_text_size_y,sinrot, cosrot, achar) ;
+	drawchar (text_size_x,text_size_y,sinrot, cosrot, achar) ;
 
 	return 0;
 }

@@ -10,6 +10,6 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-#include "XDRIVER.h"
+#include "driver.h"
 #include "local_proto.h"
 #include "local_vars.h"

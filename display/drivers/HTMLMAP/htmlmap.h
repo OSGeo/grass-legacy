@@ -1,15 +1,6 @@
-#ifndef BUFSIZ
+
 #include <stdio.h>
-#endif
 
-#ifdef MAIN
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
-
-#define DEF_WIDTH  640
-#define DEF_HEIGHT 480
 #define DEF_MINBBOX  2
 #define DEF_MINDIST  2
 #define DEF_MAXPTS  99
@@ -23,12 +14,11 @@
 #define CLIENT 1     /* write output in netscape client side image map format */
 #define RAW    2     /* write output in raw format */
 
-
-GLOBAL char *last_text;
-GLOBAL int   last_text_len;
-GLOBAL char *file_name;
-GLOBAL int   html_type;
-GLOBAL FILE *output;
+extern char *last_text;
+extern int   last_text_len;
+extern char *file_name;
+extern int   html_type;
+extern FILE *output;
 
 struct MapPoly {
     char *url;
@@ -38,6 +28,6 @@ struct MapPoly {
     struct MapPoly *next_poly;
 } MapPoly;
 
-GLOBAL struct MapPoly *head;
-GLOBAL struct MapPoly **tail;
+extern struct MapPoly *head;
+extern struct MapPoly **tail;
 
