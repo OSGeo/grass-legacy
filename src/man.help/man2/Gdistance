@@ -1,0 +1,102 @@
+.\" %W% %G%
+.TH Gdistance 2G G-language
+.SH NAME
+Gdistance \- Create cell file based on distances from categories
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGdistance\fR \fIoldcell newcell\fR [\fImethod\fR] < \fIrulesfile\fR
+.SH DESCRIPTION
+\fIGdistance\fR creates a new grid cell data layer showing distance (or
+proximity) zones around selected map categories. Both the categories 
+and the zones are user-chosen. \fIGdistance\fR performs the same function as
+does \fIdistance\fR, but with less user interface. See the GRASS manual
+entry for \fIdistance[1]\fR for more detailed information.
+
+\fBoldcell\fR identifies the name of the existing data layer from which
+distance-from calculations shall be based.
+             
+\fBnewcell\fR assigns the name (user's choice) for the new data layer which will
+contain the results.
+            
+\fBmethod\fR specifies the name of the method the \fIGdistance\fR program
+should use for calculating distance. Method options are \fBto\fR and
+\fBfrom\fR.  If unspecified by the user the default is
+\fBto\fR. These methods are very different in their execution, but yield the 
+same results. The decision to use one, rather than the other, is based partly on
+an evaluation of the patterns in which categories of interest appear in
+the specified map layer.
+
+.RS
+\fBto\fR:  The "tocell" method \fIsearches\fR around each cell in the database 
+looking for cells from which distances are to be calculated. This technique is
+very fast when there are many cells containing the categories of interest 
+scattered throughout the area. It works very slowly when there are few
+cells from which to calculate distances, because it takes so long to find them.
+
+\fBfrom\fR: The "fromcell" method goes to each cell that contains a
+category from which distances are to be calculated, drawing the
+requested distance rings around them.  This method works very quickly
+when there are only a few cells containing the categories of interest,
+but works slowly when many cells of this category are present.
+.RE
+
+\fBrulesfile\fR is the name of a previously prepared \fIGdistance\fR UNIX file.
+The user has the option of directing a file with the correct \fIGdistance\fR
+rules into \fIGdistance\fR, or entering the rules directly on the command
+line. 
+
+.SH RULES
+After entering the \fIGdistance\fR command line (if the user is not directing a
+UNIX rules file into \fIGdistance\fR), a (\>) prompt will appear. At
+the prompt, the user enters:
+
+(1) the selected categories in the existing data layer \fBfrom\fR which 
+distances shall be calculated. In the example below, distances are calculated
+for categories 2, 6, 7, 8, 10 and 14.
+
+.nf
+.RS
+FORMAT:
+> \fBcats\fR# # # [etc.]
+
+EXAMPLE:
+> \fBcats\fR 2 6 7 8
+> \fBcats\fR 10 14
+.RE
+.fi
+
+(2) the \fBdist\fRance zones desired. The user has the option of identifying up
+to 60 continuous zones. The zones are identified by specifying the upper 
+limit of each desired zone (\fIGdistance\fR assumes that 0 is the starting
+point). In the 
+example below, the distance zones would be (in cells): 0\*-10, 11\*-20,
+21\*-30, 31\*-40 and 41\*-50.
+
+.nf
+.RS
+Format:
+> \fBdist\fR # # # [etc.]
+
+Example:
+> \fBdist\fR 10 20 30
+> \fBdist\fR 40 50
+.RE
+.fi
+
+(3) \fBend\fR   (This tells \fIGdistance\fR to terminate input and start
+creating the new cell file.)
+
+.nf
+.RS
+Format:
+> \fBend\fR
+.RE
+.fi
+.SH NOTES
+\fIGdistance\fR only works on square cells in the current window.
+\fIGdistance\fR will complain if cells are not square.
+.SH SEE ALSO
+\fIdistance[1]
+.SH AUTHOR
+Dave Gerdes, U.S. Army Construction Engineering Research Laboratory.
