@@ -31,9 +31,13 @@ all:
 	# cp v.in.gps/v.in.gps $(GISBASE)/scripts
 	cp v.line2area/v.line2area $(GISBASE)/scripts
 	cp v.plant/v.plant $(GISBASE)/scripts
+	cp v.region.sh/v.region.sh $(GISBASE)/scripts
+	cp v.cutregion.sh/v.cutregion.sh $(GISBASE)/scripts
 	cp v.xfig/*fig*  $(GISBASE)/scripts
 	cp s.in.garmin.sh/s.in.garmin.sh $(GISBASE)/scripts
 	cp v.in.garmin.sh/v.in.garmin.sh $(GISBASE)/scripts
 	cp g.mlist/g.mlist $(GISBASE)/scripts
 	cp r.mpatch/r.mpatch $(GISBASE)/scripts
+	cp v.in.mapgen.sh/v.in.mapgen.sh $(GISBASE)/scripts
+	# ln -s $(GISBASE)/scripts/v.in.mapgen.sh $(GISBASE)/scripts/v.in.matlab.sh
 	chmod 755 $(GISBASE)/scripts/*
