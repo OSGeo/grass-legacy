@@ -6,8 +6,6 @@
 #define GRASS_VECT_COOR_ELEMENT "coor"
 #define GRASS_VECT_HEAD_ELEMENT "head"
 #define GV_TOPO_ELEMENT "topo"
-//#define GRASS_VECT_CATS_ELEMENT "cats"
-
 
 #define ENDIAN_LITTLE 0
 #define ENDIAN_BIG    1
@@ -43,9 +41,9 @@
 #define PORT_FLOAT_MAX  3.40282347e+38F
 #define PORT_FLOAT_MIN  1.17549435e-38F
 #define PORT_LONG_MAX   2147483647L
-#define PORT_LONG_MIN   (-2147483648L)
+#define PORT_LONG_MIN   (-2147483647L)
 #define PORT_INT_MAX    2147483647
-#define PORT_INT_MIN    (-2147483648)
+#define PORT_INT_MIN    (-2147483647)
 #define PORT_SHORT_MAX  32767
 #define PORT_SHORT_MIN  (-32768)
 #define PORT_CHAR_MAX   127
@@ -81,7 +79,7 @@
 #define GRASS_V_EARLIEST_MAJOR  5
 #define GRASS_V_EARLIEST_MINOR	0
 
-#define GRASS_V_DIG_HEAD_LENGTH	64
+#define GRASS_V_DIG_HEAD_LENGTH	20
 
 #define WITHOUT_Z	0
 #define WITH_Z		1
@@ -130,45 +128,22 @@
 
 #define POINTS		3	/* this is thrown in for get_type_cnt() */
 
-
+/* types used in memory on run time - may change */
 #define GV_POINT		0x01
-#define GV_DEAD_POINT		0x02
+#define GV_LINE			0x02
+#define GV_BOUNDARY		0x04
+#define GV_CENTROID	        0x08
+#define GV_AREA	                0x10
 
-#define GV_LINE			0x04
-#define GV_DEAD_LINE		0x08
+#define GV_POINTS (GV_POINT | GV_CENTROID )
+#define GV_LINES (GV_LINE | GV_BOUNDARY )
 
-#define GV_BOUNDARY		0x10
-#define GV_DEAD_BOUNDARY	0x20
+/* types used in store like 'coor' file or postgis type column - must not change */
+#define GV_STORE_POINT    1
+#define GV_STORE_LINE     2
+#define GV_STORE_BOUNDARY 3
+#define GV_STORE_CENTROID 4
 
-#define GV_CENTROID	0x40
-#define GV_DEAD_CENTROID	0x80
-
-#define GV_ALIVE 0x55
-#define GV_DEAD 0xAA
-
-#define GV_POINTS (GV_POINT | GV_DEAD_POINT | GV_CENTROID | GV_DEAD_CENTROID)
-#define GV_LINES (GV_LINE | GV_DEAD_LINE | GV_BOUNDARY | GV_DEAD_BOUNDARY)
-
-/* start of old, deprecated element (line) types */
-#define DOT		0x01
-#define DEAD_DOT	0x02
-
-#define LINE		0x04
-#define DEAD_LINE	0x08
-
-#define BOUNDARY	0x10
-#define DEAD_BOUNDARY	0x20
-
-#define CENTROID	0x40
-#define DEAD_CENTROID	0x80
-
-#define ELEMENT_TYPE_LIVE 0x55
-#define ELEMENT_TYPE_DEAD 0xAA
-#define ELEMENT_TYPE_ALL  0xFF
-
-#define ELEMENT_TYPE_DOT (DOT | DEAD_DOT | CENTROID | DEAD_CENTROID)
-#define ELEMENT_TYPE_LINE (LINE | DEAD_LINE | BOUNDARY | DEAD_BOUNDARY)
-/* end of depracated types */
 
 #define ESC	033
 
@@ -198,6 +173,9 @@
 #define CLR_2_NODE	RED
 #endif
 
-#define GRASS_V_NCATS_MAX PORT_CHAR_MAX	 /* maximum number of categories for one element */
-#define GRASS_V_FIELD_MAX PORT_SHORT_MAX /* maximum field */
-#define GRASS_V_CAT_MAX	  PORT_INT_MAX	/* maximum category value */
+#define GV_NCATS_MAX PORT_CHAR_MAX  /* maximum number of categories for one element */
+#define GV_FIELD_MAX PORT_SHORT_MAX /* maximum field */
+#define GV_CAT_MAX   PORT_INT_MAX   /* maximum category value */
+
+#define BUILD_PROG "v.build"
+

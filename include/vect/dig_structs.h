@@ -99,10 +99,19 @@ struct dig_head
     int Back_Major;
     int Back_Minor;
     int with_z;
+    
+    long size;                  /* coor file size */
 
     struct Port_info port;      /* Portability information */
     
     struct Map_info *Map;	/* X-ref to Map_info struct ?? */
+  };
+
+/* Coor info */
+struct Coor_info
+  {	  
+    long size;     /* total size, in bytes */ 
+    long mtime;    /* time of last modification */
   };
 
 /* Non-native format inforamtion */
@@ -162,6 +171,8 @@ struct Plus_head
     int with_z;
 
     struct Port_info port;      /* Portability information */
+    
+    int mode;			/*  Read, Write, RW */
 
     P_NODE **Node;	/* P_NODE array of pointers *//* 1st item is 1 for  */
     P_LINE **Line;	/* P_LINE array of pointers *//* all these (not 0) */
@@ -177,7 +188,6 @@ struct Plus_head
     plus_t n_llines;		/* Current Number of line     lines */
     plus_t n_blines;		/* Current Number of boundary lines */
     plus_t n_clines;		/* Current Number of centroid lines */
-    //int n_points;		/* Current Number of points */
 
     plus_t alloc_nodes;		/* # of nodes we have alloc'ed space for 
 				     i.e. array size - 1 */
@@ -190,6 +200,11 @@ struct Plus_head
     long Area_offset;
     long Isle_offset;
 
+    long Node_spidx_offset;     /* offset of spindex */
+    long Line_spidx_offset;
+    long Area_spidx_offset;
+    long Isle_spidx_offset;
+    
     /* Here will be spatial index, now only temporary solution for nodes */
     BTREE Node_spidx;
     /*
@@ -198,21 +213,11 @@ struct Plus_head
     ???   Isle_spidx;
     */
 
-    long Dig_size;		/* size of dig file */
-    long Dig_code;		/* internal check codes */
+    long coor_size;		/* size of coor file */
+    long coor_mtime;		/* time of last coor modification */
 
     //int all_areas;		/* if TRUE, all areas have just been calculated */
     //int all_isles;		/* if TRUE, all islands have just been calculated */
-
-    //double snap_thresh;
-    //double prune_thresh;
-
-    //long future3;
-    //long future4;
-    //double F1, F2, F3, F4;	/* in anticipation of future needs */
-
-    //char Dig_name[HEADSTR];
-    //char filler[HEADSTR];
   };
 
 struct Map_info
@@ -291,21 +296,22 @@ struct P_node
 
 struct P_line
   {
-    plus_t N1;			/* start node */
-    plus_t N2;			/* end node */
-    /* left and right are negative if an island ??? */
-    plus_t left;		/* area number to left, negative for isle */
-    plus_t right;		/* area number to right, negative for isle */
+    plus_t N1;		/* start node */
+    plus_t N2;		/* end node   */
+    plus_t left;	/* area/isle number to left, negative for isle  */
+                        /* !!! area number for centroid, negative for   */
+			/* duplicate centroid                           */ 
+    plus_t right;	/* area/isle number to right, negative for isle */
 
-    double N;			/* Bounding Box */
+    double N;		/* Bounding Box */
     double S;
     double E;
     double W;
-    double T;                   /* top */
-    double B;                   /* bottom */ 
+    double T;           /* top */
+    double B;           /* bottom */ 
 
-    long offset;		/* offset in DIG file for line */
-    char type;			/*  see mode.h */
+    long offset;	/* offset in coor file for line */
+    char type;	
   };
 
 struct P_area
@@ -323,17 +329,11 @@ struct P_area
     
     /*********  Above this line is compatible with P_isle **********/
     
-    /* Centroids - ofcourse each area may have only one correct centroid
-    *  other centroids are errors in data */
-    plus_t n_centroids;		/* Number of centroids within */
-    plus_t alloc_centroids;
-    plus_t *centroids;		
+    plus_t centroid;		/* Number of first centroid within area */
 
     plus_t n_isles;		/* Number of islands inside */
     plus_t alloc_isles;
     plus_t *isles;		/* 1st generation interior islands */
-
-    //plus_t outside;           /* ??? Area outside if this area if island */
   };
 
 struct P_isle
@@ -351,17 +351,8 @@ struct P_isle
 
     /*********  Above this line is compatible with P_area **********/
 
-    plus_t area;		/* area it exists w/in, if any */
+    plus_t area;	/* area it exists w/in, if any */
   };
-
-/*
-struct new_node
-  {
-    plus_t N1;
-    plus_t N2;
-    int cnt;
-  };
-*/
 
 struct line_pnts
   {
@@ -372,29 +363,21 @@ struct line_pnts
     int alloc_points;
   };
 
-typedef char GV_NCATS;	      /* number of vector categories on one element */
-  typedef char GRASS_V_NCATS; /* deprecated */
-typedef int GV_FIELD;	      /* field number i.e. identifier for
-			         one category */
-  typedef int GRASS_V_FIELD;  /* deprecated */
-typedef int GV_CAT;	      /* vector category */
-  typedef int GRASS_V_CAT;    /* deprecated */
-
 struct line_cats
   {
-    GV_FIELD *field;		/* pointer to array of fields */
-    GV_CAT   *cat;			/* pointer to array of categories */
-    GV_NCATS n_cats;		/* number of vector categories attached to element */
-    int      alloc_cats;		/* allocated space */
+    int *field;		/* pointer to array of fields */
+    int *cat;		/* pointer to array of categories */
+    int n_cats;		/* number of vector categories attached to element */
+    int alloc_cats;	/* allocated space */
   };
 
 struct cat_list
   {
-    GV_FIELD field;      /* category field */	  
-    GV_CAT   *min;         /* pointer to array of minimun values */
-    GV_CAT   *max;         /* pointer to array of maximum values */
-    int      n_ranges;     /* number ranges */
-    int      alloc_ranges; /* allocated space */
+    int field;        /* category field */	  
+    int *min;         /* pointer to array of minimun values */
+    int *max;         /* pointer to array of maximum values */
+    int n_ranges;     /* number ranges */
+    int alloc_ranges; /* allocated space */
   };
 
 /* category field information */
