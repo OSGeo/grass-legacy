@@ -35,46 +35,33 @@ int
 Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 
 	                            int type, struct ilist *list)
 {
-    int       i, j, line, node, ret;
+    int       i, line, nlines;
     struct    Plus_head *plus ;
-    BOUND_BOX lbox;
     P_LINE    *Line;
-    P_NODE    *Node;
-    struct ilist *LocList;
+    struct     ilist *LocList;
     
     G_debug ( 3, "Vect_select_lines_by_box()" );
-    G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
+    G_debug ( 3, "  Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
     plus = &(Map->plus);
     list->n_values = 0; 
+    LocList = Vect_new_list ();
     
-    if ( ! (type & GV_LINES) ) { /* points and/or centroids only */
-	LocList = Vect_new_list ();
-	dig_select_nodes ( plus, Box, LocList );
-        G_debug ( 5, "%d nodes selected", LocList->n_values );
-	for ( i = 0; i < LocList->n_values; i++) {
-            node = LocList->value[i];
-	    Node = plus->Node[node];
-	    for (j = 0; j < Node->n_lines; j++) {
-		line = abs ( Node->lines[j] );
-	        Line = plus->Line[line];
-		if ( Line->type & type ) {
-		     dig_list_add ( list, line );
-		}
-	    }
-	}
-    } else {
-	for (line = 1; line <= plus->n_lines; line++) {
-	    Line = plus->Line[line];
-	    if ( !(Line->type & type) ) continue;
-	    ret = Vect_get_line_box (Map, line, &lbox );
-	    if ( ret == 1 ) { /* alive */
-		if ( Vect_box_overlap( &lbox, Box ) ) {
-		     dig_list_add ( list, line );
-		}
-	    }
-	}
+    nlines = dig_select_lines ( &(Map->plus), Box, LocList );
+    G_debug ( 3, "  %d lines selected (all types)", nlines );
+
+    /* Remove lines of not requested types */
+    for ( i = 0; i < nlines; i++ ) { 
+	line = LocList->value[i];
+	if (  plus->Line[line] == NULL ) continue; /* Should not happen */
+        Line = plus->Line[line];
+	if ( !(Line->type & type) ) continue; 
+	dig_list_add ( list, line ); 
     }
+
+    Vect_destroy_list ( LocList );    
+        
+    G_debug ( 3, "  %d lines of requested type", list->n_values );
     
     return list->n_values;
 }
@@ -92,25 +79,18 @@ Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box,
 int 
 Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
 {
-    int       area, ret;
-    struct    Plus_head *plus ;
-    BOUND_BOX abox;
+    int i;
     
     G_debug ( 3, "Vect_select_areas_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
-    plus = &(Map->plus);
-    list->n_values = 0; 
-    
-    for (area = 1; area <= plus->n_areas; area++) {
-	ret = Vect_get_area_box (Map, area, &abox );
-	if ( ret == 1 ) { /* alive */
-	    if ( Vect_box_overlap( &abox, Box ) ) {
-		 dig_list_add ( list, area );
-            }
-	}
+
+    dig_select_areas ( &(Map->plus), Box, list );
+    G_debug ( 3, "  %d areas selected", list->n_values );
+    for ( i = 0; i < list->n_values; i++ ) {
+        G_debug ( 3, "  %d : %d", list->value[i], Map->plus.Area[list->value[i]] );
+            
     }
-    
     return list->n_values;
 }
 
@@ -122,30 +102,18 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
 *  
 *  argument 'list' must be initialized
 *  
-*  returns: number of areas
+*  returns: number of isles
 *           
 */
 int 
 Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
 {
-    int       isle, ret;
-    struct    Plus_head *plus ;
-    BOUND_BOX ibox;
-    
     G_debug ( 3, "Vect_select_isles_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
-    plus = &(Map->plus);
-    list->n_values = 0; 
     
-    for (isle = 1; isle <= plus->n_isles; isle++) {
-	ret = Vect_get_isle_box (Map, isle, &ibox );
-	if ( ret == 1 ) { /* alive */
-	    if ( Vect_box_overlap( &ibox, Box ) ) {
-		 dig_list_add ( list, isle );
-            }
-	}
-    }
+    dig_select_isles ( &(Map->plus), Box, list );
+    G_debug ( 3, "  %d isles selected", list->n_values );
     
     return list->n_values;
 }
@@ -171,5 +139,9 @@ Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     plus = &(Map->plus);
     list->n_values = 0; 
     
-    return ( dig_select_nodes ( plus, Box, list ) ) ;
+    dig_select_nodes ( plus, Box, list );
+    G_debug ( 3, "  %d nodes selected", list->n_values );
+    
+    return list->n_values;
 }
+

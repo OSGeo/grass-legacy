@@ -330,6 +330,7 @@ dig_area_alloc_isle ( P_AREA * area, int add) {
   int num;
   char *p;
 
+  G_debug (5, "dig_area_alloc_isle(): add = %d", add ); 
   num = area->alloc_isles + add;
 
   p = realloc ( area->isles, num * sizeof(plus_t) );

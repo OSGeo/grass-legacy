@@ -86,22 +86,24 @@ Vect_set_open_level (int level)
   return 0;
 }
 
+
 /*
 *  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
 *  In case of error, the functions respect fatal error settings.
 */
 int
-Vect_open_old (
+Vect__open_old (
 		struct Map_info *Map,
 		char *name,
-		char *mapset)
+		char *mapset,
+		int update) /* open for update */
 {
   char buf[200], buf2[200], xname[512], xmapset[512], name_buf[1024];
   FILE *fp;
   int level, level_request;
   int format;
 
-  G_debug (1, "Vect_open_old(): name = %s mapset= %s", name, mapset);
+  G_debug (1, "Vect_open_old(): name = %s mapset= %s update = %d", name, mapset, update);
       
   level_request = Open_level;
   Open_level = 0;
@@ -118,6 +120,11 @@ Vect_open_old (
       sprintf (buf2, "%s", GRASS_VECT_COOR_ELEMENT);
       Map->name = G_store (name);
       Map->mapset = G_store (mapset);
+  }
+  
+  if ( update && (0 != strcmp(Map->mapset, G_mapset()) ) ) {
+      G_warning ( "A map which is not in the current mapset cannot be opened for update.");
+      return -1;
   }
 
   G__file_name (name_buf, buf, buf2, mapset);
@@ -138,7 +145,7 @@ Vect_open_old (
       G_debug ( 1, "Vector format: %d (non-native)", format);
   }
   Map->format = format;
-    
+
 #ifndef HAVE_POSTGRES
   if ( Map->format == GV_FORMAT_POSTGIS )
       G_fatal_error ("PostGIS support is not compiled in GRASS vector library.\n");
@@ -147,11 +154,11 @@ Vect_open_old (
   if (level_request) {
       level = level_request;
       G_debug ( 1, "Level request = %d", level_request);
-      if (0 != (*Open_old_array[format][level_request]) (Map))
+      if (0 != (*Open_old_array[format][level_request]) (Map, update))
 	level = -1;
   } else {
       for (level = MAX_OPEN_LEVEL; level; level--)
-	  if (0 == (*Open_old_array[format][level]) (Map)) {
+	  if (0 == (*Open_old_array[format][level]) (Map, update)) {
 	      break;
 	  }
   }
@@ -159,7 +166,14 @@ Vect_open_old (
   if ( level >= 1 && Vect__read_head (Map) == GRASS_OK ) {
 	  Map->open = VECT_OPEN_CODE;
 	  Map->level = level;
-	  Map->mode = MODE_READ;
+          if ( update ) {
+	      Map->mode = GV_MODE_RW;
+	      Map->plus.mode = GV_MODE_RW;
+	  } else {
+	      Map->mode = GV_MODE_READ;
+	      Map->plus.mode = GV_MODE_READ;
+	  }
+	  
 	  Map->Constraint_region_flag = 0;
 	  Map->Constraint_type_flag = 0;
 	  G_debug (1, "Vect_open_old(): vector opened on level %d", level);
@@ -180,6 +194,34 @@ Vect_open_old (
   }
       
   return (level);
+}
+
+/* 
+*  Open old vector for reading.
+*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
+*  In case of error, the functions respect fatal error settings.
+*/
+int
+Vect_open_old (
+		struct Map_info *Map,
+		char *name,
+		char *mapset)
+{
+    return ( Vect__open_old (Map, name, mapset, 0) );
+}
+
+/* 
+*  Open old vector for reading/writing.
+*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
+*  In case of error, the functions respect fatal error settings.
+*/
+int
+Vect_open_update (
+		struct Map_info *Map,
+		char *name,
+		char *mapset)
+{
+    return ( Vect__open_old (Map, name, mapset, 1) );
 }
 
 /*
@@ -231,8 +273,12 @@ Vect_open_new (
 
     Open_level = 0;
 
+    Map->open = VECT_OPEN_CODE;
+    Map->level = 1;
+    Map->mode = GV_MODE_RW;
     Map->Constraint_region_flag = 0;
     Map->Constraint_type_flag = 0;
+    Map->head.with_z = with_z;
     
     return 1;
 }
@@ -325,7 +371,7 @@ Vect_open_topo (struct Map_info *Map)
     fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
 
     if ( fp == NULL ) { /* topo file is not available */
-	G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n", 
+	G_debug( 1, "Cannot open topo file for vector '%s@%s'.", 
 		      Map->name, Map->mapset);
 	return -1;
     }
@@ -360,6 +406,70 @@ Vect_open_topo (struct Map_info *Map)
     /* load topo to memory */
     dig_init_plus ( Plus );    
     dig_load_plus ( Plus, fp );    
+   
+    fclose ( fp );  
+
+    return 0;
+}
+
+/* Open spatial index file.
+*  
+*  Return: 0 success
+*         -1 error */
+int 
+Vect_open_spatial_index (struct Map_info *Map)
+{
+    char buf[500];
+    FILE *fp;
+    /* struct Coor_info CInfo; */
+    struct Plus_head *Plus;
+    
+    G_debug (1, "Vect_open_spatial_index(): name = %s mapset= %s", Map->name, Map->mapset);
+
+    Plus = &(Map->plus);
+    
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    fp = G_fopen_old (buf, GV_SIDX_ELEMENT, Map->mapset);
+
+    if ( fp == NULL ) { /* spatial index file is not available */
+	G_debug( 1, "Cannot open spatial index file for vector '%s@%s'.", 
+		      Map->name, Map->mapset);
+	return -1;
+    }
+  
+    /* TODO: checks */
+    /* load head */
+    /*
+    dig_Rd_spindx_head (fp, Plus);
+    G_debug ( 1, "Spindx head: coor size = %ld, coor mtime = %ld", 
+	                              Plus->coor_size, Plus->coor_mtime);
+
+    */
+    /* do checks */
+    /*
+    err = 0;
+    if ( CInfo.size != Plus->coor_size ) {
+	G_warning ( "Size of 'coor' file differs from value saved in topo file.\n");
+	err = 1;
+    }
+    */
+    /* Do not check mtime because mtime is changed by copy */
+    /*
+    if ( CInfo.mtime != Plus->coor_mtime ) {
+	G_warning ( "Time of last modification for 'coor' file differs from value saved in topo file.\n");
+	err = 1;
+    }
+    */
+    /*
+    if ( err ) {
+	G_warning ( "Please rebuild topology for vector '%s@%s'\n", Map->name,
+	                          Map->mapset );
+	return -1;
+    }
+    */
+    /* load topo to memory */
+    dig_spidx_init ( Plus);
+    dig_read_spidx ( fp, Plus );    
    
     fclose ( fp );  
 

@@ -31,7 +31,7 @@ V1_close_shp (struct Map_info *Map)
     return -1;
 
   /* TODO something extra for shp opened for writing ? */  
-  if (Map->mode == MODE_WRITE || Map->mode == MODE_RW)
+  if (Map->mode == GV_MODE_WRITE || Map->mode == GV_MODE_RW)
     Vect__write_head (Map);
 
   free (Map->name);
@@ -63,7 +63,7 @@ V2_close_shp (struct Map_info *Map)
 
     Plus = &(Map->plus);
     
-    if (Plus->mode & (MODE_WRITE | MODE_RW)) { 
+    if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) { 
 	Vect_coor_info ( Map, &CInfo);
 	Plus->coor_size = CInfo.size;
 	Plus->coor_mtime = CInfo.mtime;

@@ -480,7 +480,7 @@ V1_delete_line_post (struct Map_info *Map, long id)
     }
 
   PQclear (res);
-/* Map->fInfo.post.nextId = id; *//*This is an unuse id please save it, and use for future write */
+  /* Map->fInfo.post.nextId = id; */ /*This is an unuse id please save it, and use for future write */
   /* No next id will be max id + 1, deleted id is not reused */
 
   /*Actualize cursor view on database */

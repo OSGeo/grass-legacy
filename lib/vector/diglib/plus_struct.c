@@ -54,12 +54,34 @@ dig_Rd_P_node (
 		  int  n,
 		  FILE * fp)
 {
+  int cnt;
   P_NODE *ptr;
 
   G_debug (3, "dig_Rd_P_node()");
   
-  ptr = dig_alloc_node();
   
+  if (0 >= dig__fread_port_P (&cnt, 1, fp))
+    return (-1);
+
+  if ( cnt == 0 ) { /* dead */
+      G_debug (3, "    node is dead");
+      Plus->Node[n] = NULL ;
+      return 0;
+  }
+      
+  ptr = dig_alloc_node();
+  ptr->n_lines = cnt;
+
+  if ( dig_node_alloc_line ( ptr, ptr->n_lines) == -1)
+     return -1; 
+
+  if (ptr->n_lines) {
+      if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
+	return (-1);
+      if (0 >= dig__fread_port_F (ptr->angles, ptr->n_lines, fp))
+	return (-1);
+  }
+
   if (0 >= dig__fread_port_D (&(ptr->x), 1, fp))
     return (-1);
   if (0 >= dig__fread_port_D (&(ptr->y), 1, fp))
@@ -71,25 +93,9 @@ dig_Rd_P_node (
   } else
       ptr->z = 0;
   
-  if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
-    return (-1);
-
-  if ( dig_node_alloc_line ( ptr, ptr->n_lines) == -1)
-     return -1; 
-
-  if (ptr->n_lines) {
-      if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
-	return (-1);
-      if (0 >= dig__fread_port_F (ptr->angles, ptr->n_lines, fp))
-	return (-1);
-  }
   
   Plus->Node[n] = ptr;
 
-  /* TODO - save to file instead of rebuilding
-  *         It takes 50% of time for d.vect!!! */ 
-  dig_spidx_add_node (Plus, n, ptr->x, ptr->y, ptr->z);
-  
   return (0);
 }
 
@@ -99,18 +105,20 @@ dig_Wr_P_node (
 		  int  n,
 		  FILE * fp)
 {
+  int i;
   P_NODE *ptr; 
 
+  G_debug (3, "dig_Wr_P_node()");
   ptr = Plus->Node[n];
-  
-  if (0 >= dig__fwrite_port_D (&(ptr->x), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->y), 1, fp))
-    return (-1);
 
-  if ( Plus->with_z )
-    if (0 >= dig__fwrite_port_D (&(ptr->z), 1, fp))
-      return (-1);
+  /* If NULL i.e. dead write just 0 instead of number of lines */
+  if ( ptr == NULL ) { 
+      G_debug (3, "    node is dead -> write 0 only");
+      i = 0;
+      if (0 >= dig__fwrite_port_P (&i, 1, fp))
+          return (-1);
+      return 0;
+  }
   
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
@@ -122,6 +130,16 @@ dig_Wr_P_node (
       if (0 >= dig__fwrite_port_F (ptr->angles, ptr->n_lines, fp))
 	return (-1);
     }
+  
+  if (0 >= dig__fwrite_port_D (&(ptr->x), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->y), 1, fp))
+    return (-1);
+
+  if ( Plus->with_z )
+    if (0 >= dig__fwrite_port_D (&(ptr->z), 1, fp))
+      return (-1);
+  
   return (0);
 }
 
@@ -131,6 +149,7 @@ dig_Rd_P_line (
 		  int  n,
 		  FILE * fp)
 {
+  char  tp;
   P_LINE *ptr; 
   P_NODE *Node;
 
@@ -138,10 +157,19 @@ dig_Rd_P_line (
   G_debug (3, "dig_Rd_P_line()");
 #endif
 
+  if (0 >= dig__fread_port_C (&tp, 1, fp))
+    return (-1);
+
+  if ( tp == 0 ) { /* dead */
+      G_debug (3, "    line is dead");
+      Plus->Line[n] = NULL ;
+      return 0;
+  }
+
   ptr = dig_alloc_line();
 
-  if (0 >= dig__fread_port_C (&(ptr->type), 1, fp))
-    return (-1);
+  ptr->type = tp;
+  
   if (0 >= dig__fread_port_L (&(ptr->offset), 1, fp))
     return (-1);
 
@@ -177,6 +205,9 @@ dig_Rd_P_line (
         return -1;
       if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
         return -1;
+    } else {
+        ptr->T = 0.0;
+	ptr->B = 0.0;
     }
   } else {
     Node = Plus->Node[ptr->N1];
@@ -198,9 +229,20 @@ dig_Wr_P_line (
 		  int  n,
 		  FILE * fp)
 {
+  char ch;
   P_LINE *ptr; 
 
+  G_debug (3, "dig_Wr_P_line() line = %d", n);
+  
   ptr = Plus->Line[n];
+  
+  /* If NULL i.e. dead write just 0 instead of type */
+  if ( ptr == NULL ) { 
+      G_debug (3, "    line is dead -> write 0 only");
+      ch = 0;
+      if (0 >= dig__fwrite_port_C (&ch, 1, fp)) return (-1);
+      return 0;
+  }
   
   if (0 >= dig__fwrite_port_C (&(ptr->type), 1, fp))
     return (-1);
@@ -249,32 +291,24 @@ dig_Rd_P_area (
 		  int  n,
 		  FILE * fp)
 {
+  int cnt;
   P_AREA *ptr; 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_area(): n = %d", n );
 #endif
 
+  if (0 >= dig__fread_port_P (&cnt, 1, fp))
+    return (-1);
+
+  if ( cnt == 0 ) { /* dead */
+      Plus->Area[n] = NULL ;
+      return 0;
+  }
+      
   ptr = dig_alloc_area();
 
-  if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
-    return -1;
-
-  if ( Plus->with_z ) {
-    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
-      return -1;
-    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
-      return -1;
-  }
-
   /* lines */
-  if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
-    return -1;
+  ptr->n_lines = cnt;
    
   if ( dig_area_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1; 
@@ -298,6 +332,26 @@ dig_Rd_P_area (
   if (0 >= dig__fread_port_P (&(ptr->centroid), 1, fp))
      return -1;
 
+  if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
+    return -1;
+
+  if ( Plus->with_z ) {
+    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+      return -1;
+  } else {
+      ptr->T = 0.0;
+      ptr->B = 0.0;
+  }
+
+
   Plus->Area[n] = ptr;
   
   return (0);
@@ -309,26 +363,18 @@ dig_Wr_P_area (
 		  int  n,
 		  FILE * fp)
 {
+  int i;
   P_AREA *ptr; 
 
   ptr = Plus->Area[n];
   
-  if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->E), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
-    return (-1);
-
-  if ( Plus->with_z ) {
-    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
-      return (-1);
-    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
-      return (-1);
+  /* If NULL i.e. dead write just 0 instead of number of lines */
+  if ( ptr == NULL ) { 
+      i = 0;
+      if (0 >= dig__fwrite_port_P (&i, 1, fp)) return (-1);
+      return 0;
   }
-
+  
   /* lines */
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
@@ -349,67 +395,6 @@ dig_Wr_P_area (
   if (0 >= dig__fwrite_port_P (&(ptr->centroid), 1, fp))
     return (-1);
 
-  return (0);
-}
-
-int 
-dig_Rd_P_isle (
-		  struct Plus_head *Plus,
-		  int  n,
-		  FILE * fp)
-{
-  P_ISLE *ptr; 
-#ifdef GDEBUG
-  G_debug (3, "dig_Rd_P_isle()");
-#endif
-
-  ptr = dig_alloc_isle();
-
-  if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
-    return -1;
-
-  if ( Plus->with_z ) {
-    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
-      return -1;
-    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
-      return -1;
-  }
-
-  if (0 >= dig__fread_port_P (&(ptr->area), 1, fp))
-    return -1;
-  
-  /* lines */
-  if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
-    return -1;
-
-  if ( dig_isle_alloc_line ( ptr, ptr->n_lines) == -1)
-     return -1;
-  
-  if (ptr->n_lines)
-    if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
-      return -1;
-
-  Plus->Isle[n] = ptr;
-  
-  return (0);
-}
-
-int 
-dig_Wr_P_isle (
-		  struct Plus_head *Plus,
-		  int  n,
-		  FILE * fp)
-{
-  P_ISLE *ptr; 
-
-  ptr = Plus->Isle[n];
-  
   if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
     return (-1);
   if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
@@ -425,9 +410,89 @@ dig_Wr_P_isle (
     if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
       return (-1);
   }
-  if (0 >= dig__fwrite_port_P (&(ptr->area), 1, fp))
+
+  return (0);
+}
+
+int 
+dig_Rd_P_isle (
+		  struct Plus_head *Plus,
+		  int  n,
+		  FILE * fp)
+{
+  int cnt;
+  P_ISLE *ptr; 
+#ifdef GDEBUG
+  G_debug (3, "dig_Rd_P_isle()");
+#endif
+
+  if (0 >= dig__fread_port_P (&cnt, 1, fp))
     return (-1);
 
+  if ( cnt == 0 ) { /* dead */
+      Plus->Isle[n] = NULL ;
+      return 0;
+  }
+  
+  ptr = dig_alloc_isle();
+
+  /* lines */
+  ptr->n_lines = cnt;
+
+  if ( dig_isle_alloc_line ( ptr, ptr->n_lines) == -1)
+     return -1;
+  
+  if (ptr->n_lines)
+    if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
+      return -1;
+
+  /* area */
+  if (0 >= dig__fread_port_P (&(ptr->area), 1, fp))
+    return -1;
+  
+  if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
+    return -1;
+  if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
+    return -1;
+
+  if ( Plus->with_z ) {
+    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+      return -1;
+  } else {
+      ptr->T = 0.0;
+      ptr->B = 0.0;
+  }
+
+
+  Plus->Isle[n] = ptr;
+  
+  return (0);
+}
+
+int 
+dig_Wr_P_isle (
+		  struct Plus_head *Plus,
+		  int  n,
+		  FILE * fp)
+{
+  int i;
+  P_ISLE *ptr; 
+
+  ptr = Plus->Isle[n];
+  
+  /* If NULL i.e. dead write just 0 instead of number of lines */
+  if ( ptr == NULL ) { 
+      i = 0;
+      if (0 >= dig__fwrite_port_P (&i, 1, fp)) return (-1);
+      return 0;
+  }
+  
   /* lines */
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
@@ -435,6 +500,26 @@ dig_Wr_P_isle (
   if (ptr->n_lines)
     if (0 >= dig__fwrite_port_P (ptr->lines, ptr->n_lines, fp))
       return -1;
+  
+  /* area */
+  if (0 >= dig__fwrite_port_P (&(ptr->area), 1, fp))
+    return (-1);
+
+  if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->E), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
+    return (-1);
+
+  if ( Plus->with_z ) {
+    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
+      return (-1);
+  }
 
   return (0);
 }
@@ -516,15 +601,6 @@ dig_Rd_Plus_head (   FILE * fp,
   if (0 >= dig__fread_port_L (&(ptr->Isle_offset), 1, fp))
     return (-1);
   
-  if (0 >= dig__fread_port_L (&(ptr->Node_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Line_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Area_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Isle_spidx_offset), 1, fp))
-    return (-1);
-
   if (0 >= dig__fread_port_L (&(ptr->coor_size), 1, fp))
     return (-1);
   if (0 >= dig__fread_port_L (&(ptr->coor_mtime), 1, fp))
@@ -572,6 +648,7 @@ dig_Wr_Plus_head ( FILE * fp,
     return (-1);
   if (0 >= dig__fwrite_port_P (&(ptr->n_isles), 1, fp))
     return (-1);
+
   if (0 >= dig__fwrite_port_P (&(ptr->n_plines), 1, fp))
     return (-1);
   if (0 >= dig__fwrite_port_P (&(ptr->n_llines), 1, fp))
@@ -590,15 +667,6 @@ dig_Wr_Plus_head ( FILE * fp,
   if (0 >= dig__fwrite_port_L (&(ptr->Isle_offset), 1, fp))
     return (-1);
 
-  if (0 >= dig__fwrite_port_L (&(ptr->Node_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Line_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Area_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Isle_spidx_offset), 1, fp))
-    return (-1);
-  
   if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp))
     return (-1);
   if (0 >= dig__fwrite_port_L (&(ptr->coor_mtime), 1, fp))

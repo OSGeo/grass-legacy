@@ -20,6 +20,7 @@
 #include "Vect.h"
 
 static int read_next_dummy () { return -1; }
+static long last_offset_dummy () { return -1; }
 
 static int (*Read_next_line_array[][3]) () =
 {
@@ -54,6 +55,15 @@ static long (*Next_line_offset_array[]) () =
    , Vect_next_line_offset_shp 
 #ifdef HAVE_POSTGRES
    , Vect_next_line_offset_post 
+#endif
+};
+
+static long (*Last_line_offset_array[]) () =
+{
+   Vect_last_line_offset_nat 
+   , last_offset_dummy  
+#ifdef HAVE_POSTGRES
+   , last_offset_dummy 
 #endif
 };
 
@@ -135,6 +145,15 @@ Vect_next_line_offset ( struct Map_info *Map )
 }
 
 /*
+*  Returns  last line offset
+*/
+long
+Vect_last_line_offset ( struct Map_info *Map )
+{
+    return (*Last_line_offset_array[Map->format]) (Map);
+}
+
+/*
 *  Returns: 1 - line alive
 *           0 - line is dead
 */
@@ -142,6 +161,42 @@ int
 Vect_line_alive ( struct Map_info *Map, int line )
 {
     if ( Map->plus.Line[line] != NULL ) return 1;
+    
+    return 0;
+}
+
+/*
+*  Returns: 1 - node alive
+*           0 - node is dead
+*/
+int
+Vect_node_alive ( struct Map_info *Map, int node )
+{
+    if ( Map->plus.Node[node] != NULL ) return 1;
+    
+    return 0;
+}
+
+/*
+*  Returns: 1 - area alive
+*           0 - area is dead
+*/
+int
+Vect_area_alive ( struct Map_info *Map, int area )
+{
+    if ( Map->plus.Area[area] != NULL ) return 1;
+    
+    return 0;
+}
+
+/*
+*  Returns: 1 - isle alive
+*           0 - isle is dead
+*/
+int
+Vect_isle_alive ( struct Map_info *Map, int isle )
+{
+    if ( Map->plus.Isle[isle] != NULL ) return 1;
     
     return 0;
 }

@@ -33,16 +33,17 @@ int check_coor ( struct Map_info *Map );
 *  Return: 0 success
 *         -1 error */
 int 
-V1_open_old_nat ( struct Map_info *Map )
+V1_open_old_nat ( struct Map_info *Map, int update )
 {
-  int  ret;
   char buf[500];
-  FILE *fp;
 
   G_debug (1, "V1_open_old_nat(): name = %s mapset = %s", Map->name, Map->mapset);
   
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-  Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+  if ( update )
+      Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
+  else
+      Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
 
   if ( Map->dig_fp == NULL ) return -1;
 
@@ -66,7 +67,6 @@ V1_open_new_nat (
 	      int with_z)
 {
   char buf[200];
-  FILE *fp;
   struct stat info;
 
   G_debug (1, "V1_open_new_nat(): name = %s", name);
@@ -88,15 +88,6 @@ V1_open_new_nat (
   G__file_name (name_buf, buf, GRASS_VECT_COOR_ELEMENT, G_mapset ());
   Map->digit_file = G_store (name_buf);		/*need? */
 
-  Map->name = G_store (name);
-  Map->mapset = G_store (G_mapset ());
-  Map->open = VECT_OPEN_CODE;
-  Map->level = LEVEL_1;
-  Map->mode = MODE_WRITE;
-  Map->Constraint_region_flag = 0;	/* these do not apply to to write, but */
-  Map->Constraint_type_flag = 0;	/* init them anyway                   */
-
-  Map->head.with_z = with_z;
   Map->head.size = 0;
   Vect__write_head (Map);
 
@@ -115,7 +106,7 @@ V1_open_new_nat (
 *  Return: 0 success
 *         -1 error */
 int 
-V2_open_old_nat (struct Map_info *Map)
+V2_open_old_nat (struct Map_info *Map, int update)
 {
     int  ret;
     char buf[500];
@@ -126,14 +117,28 @@ V2_open_old_nat (struct Map_info *Map)
     ret = Vect_open_topo ( Map );
 
     if ( ret == -1 ) { /* topo file is not available */
-	G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n", 
+	G_debug( 1, "Cannot open topo file for vector '%s@%s'.", 
+		      Map->name, Map->mapset);
+	return -1;
+    }
+    
+    /* open spatial index */
+    ret = Vect_open_spatial_index ( Map );
+
+    if ( ret == -1 ) { /* spatial index is not available */
+	/* TODO: free topology */
+	G_debug( 1, "Cannot open spatial index file for vector '%s@%s'.", 
 		      Map->name, Map->mapset);
 	return -1;
     }
     
     /* open dig file */
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+    if ( update )
+        Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
+    else
+        Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+    
     if ( Map->dig_fp == NULL ) {
 	dig_free_plus ( &(Map->plus) ); 
 	return -1;
@@ -144,12 +149,6 @@ V2_open_old_nat (struct Map_info *Map)
     /* set conversion matrices */
     dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
     
-    Map->open = VECT_OPEN_CODE;
-    Map->level = LEVEL_2;
-    Map->mode = MODE_READ;
-
-    Map->Constraint_region_flag = 0;
-    Map->Constraint_type_flag = 0;
     Map->next_line = 1;
 
     return 0;

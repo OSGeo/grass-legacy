@@ -164,7 +164,7 @@ Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
 int
 Vect_val_in_list ( struct ilist *list, int val )
 {
-    int i, size;
+    int i;
     
     if ( list == NULL ) 
         return 0;

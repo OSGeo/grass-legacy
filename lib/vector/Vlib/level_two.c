@@ -23,9 +23,6 @@
 
 /* INTERFACE LEVEL II  */
 
-static int Writable = 0;	/* Open Plus file for WRITE/READONLY */
-static char *RW_str = "r";
-
 int 
 Vect_get_num_nodes (struct Map_info *map)
 {
@@ -77,6 +74,23 @@ Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
     return 1;
 }
 
+/* get areas/isles on the left and right */
+int 
+Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
+{
+
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    if ( left != NULL ) 
+	*left = Map->plus.Line[line]->left;
+
+    if ( right != NULL ) 
+	*right = Map->plus.Line[line]->right;
+
+    return 1;
+}
+
 /* returns number of lines for node */
 int 
 Vect_get_node_n_lines ( struct Map_info *Map, int node )
@@ -100,4 +114,5 @@ Vect_get_node_line ( struct Map_info *Map, int node, int line )
     return ( Map->plus.Node[node]->lines[line] );
 
 }
+
 

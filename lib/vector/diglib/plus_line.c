@@ -30,8 +30,8 @@
 int 
 dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long offset){
     int  lineid, node, lp;
-    char *p;
     P_LINE *line;
+    BOUND_BOX box;
    
     /* First look if we have space in array of pointers to lines
     *  and reallocate if necessary */
@@ -101,7 +101,77 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 	    break;
     }
          
+    dig_line_box ( Points, &box );
+    dig_line_set_box (plus, lineid, &box);
+    dig_spidx_add_line ( plus, lineid, &box );    
+    
     return ( lineid );
+}
+
+/* dig_del_line ()
+** Delete line from topology. Doesn't update area/isle references
+** (dig_del_area/isle() must be run before the line is deleted if the
+**  line is part of such structure).
+** Updateis info about line in nodes. If this line is last in node then node is deleted.
+**
+** Returns -1 on error      
+**          0 OK
+*/
+int 
+dig_del_line (struct Plus_head *plus, int line)
+{
+    int    i, mv;
+    P_LINE *Line;
+    P_NODE *Node;
+  
+    /* TODO: free structures */
+    G_debug (3, "dig_del_line() line =  %d", line);
+    
+    Line = plus->Line[line]; 
+    dig_spidx_del_line ( plus, line );
+    
+    /* Delete from nodes (and nodes) */
+    Node = plus->Node[Line->N1];
+    mv = 0;
+    for ( i = 0; i < Node->n_lines; i++ ) {
+	if ( mv ) {
+	    Node->lines[i-1] = Node->lines[i]; 
+	    Node->angles[i-1] = Node->angles[i]; 
+	} else {
+	    if ( abs(Node->lines[i]) == line ) mv = 1;
+	}
+    }
+    Node->n_lines--;
+    if ( Node->n_lines == 0 ) {
+        G_debug (3, "    node %d has 0 lines -> delete", Line->N1);
+	dig_spidx_del_node ( plus, Line->N1 );
+	plus->Node[Line->N1] = NULL;	
+    }
+	
+    
+    if ( Line->type & GV_LINES ) {
+	Node = plus->Node[Line->N2];
+	mv = 0;
+	for ( i = 0; i < Node->n_lines; i++ ) {
+	    if ( mv ) {
+		Node->lines[i-1] = Node->lines[i]; 
+	        Node->angles[i-1] = Node->angles[i]; 
+	    } else {
+		if ( abs(Node->lines[i]) == line ) mv = 1;
+	    }
+	}
+        Node->n_lines--;
+        if ( Node->n_lines == 0 ) {
+            G_debug (3, "    node %d has 0 lines -> delete", Line->N2);
+	    dig_spidx_del_node ( plus, Line->N2 );
+	    plus->Node[Line->N2] = NULL;	
+	}
+    }
+     
+    /* Delete line */ 
+    plus->Line[line] = NULL; 
+    
+    return 0;
 }
 
 /* dig_line_get_area ()
@@ -162,6 +232,26 @@ dig_line_set_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
     Line->W = Box->W;
     Line->T = Box->T;
     Line->B = Box->B;
+
+    return (1);
+}
+
+/* dig_line_get_box ()
+** Get line bound box saved in topo
+** 
+*/
+int
+dig_line_get_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
+    P_LINE *Line;
+    
+    Line = plus->Line[line];
+    
+    Box->N = Line->N;
+    Box->S = Line->S;
+    Box->E = Line->E;
+    Box->W = Line->W;
+    Box->T = Line->T;
+    Box->B = Line->B;
 
     return (1);
 }

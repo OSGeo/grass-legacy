@@ -33,7 +33,7 @@
 *         -1 error
 */
 int 
-V1_open_old_shp ( struct Map_info *Map )
+V1_open_old_shp ( struct Map_info *Map, int update )
 {
     SHPHandle hShp;
     DBFHandle hDbf;
@@ -46,6 +46,11 @@ V1_open_old_shp ( struct Map_info *Map )
 #ifdef GDEBUG
     G_debug ( 1, "V1_open_old_shp(): shp file = %s", Map->fInfo.shp.file );
 #endif
+
+    if ( update ) {
+        G_warning ( "Shapefile format cannot be updated.");
+        return -1;
+    }
 
     if ( Map->fInfo.shp.file == NULL ) {
 	G_warning ("Shapefile name not defined\n");
@@ -118,13 +123,18 @@ V1_open_old_shp ( struct Map_info *Map )
 *         -1 error
 */
 int 
-V2_open_old_shp ( struct Map_info *Map )
+V2_open_old_shp ( struct Map_info *Map, int update )
 {
     int ret;    
     char buf[500];
     FILE *fp;
     struct Coor_info CInfo;
  
+    if ( update ) {
+        G_warning ( "Shapefile format cannot be updated.");
+        return -1;
+    }
+
     /* check if topo is available */
     Vect_coor_info ( Map, &CInfo);
     
@@ -137,7 +147,7 @@ V2_open_old_shp ( struct Map_info *Map )
 	return -1;
     }
     
-    ret = V1_open_old_shp ( Map );
+    ret = V1_open_old_shp ( Map, 0 );
     if ( ret != 0 ) {
 	fclose ( fp );
         return -1;

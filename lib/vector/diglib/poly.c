@@ -26,7 +26,7 @@
 #endif
 
 /*
-**  fills BPoints (must be inited previously) with points from imput
+**  fills BPoints (must be inited previously) by points from imput
 **  array LPoints. Each imput points must have at least 2 points.
 **   
 **  returns number of points or -1 on error
@@ -59,7 +59,7 @@ dig_get_poly_points ( int n_lines,
     if (0 > dig_alloc_points (BPoints, n_points))
 	return (-1);
 
-    point = 0;
+    point = 0; j = 0;
     for (i = 0; i < n_lines; i++) {
         Points = LPoints[i];
         if (direction[i] > 0) {

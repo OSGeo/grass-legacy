@@ -212,7 +212,7 @@ Vect_copy_pnts_to_xyz (
     {
       x[i] = Points->x[i];
       y[i] = Points->y[i];
-      if ( z = NULL )
+      if ( z != NULL )
           z[i] = Points->z[i];
       *n = Points->n_points;
     }

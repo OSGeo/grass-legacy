@@ -62,6 +62,10 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     
     G_debug (1, "Vect_build()"); 
 
+    /* If topology is already build (map on level2), set level to 1 so that lines will
+    *  be read by V1_read_ (all lines) */
+    Map->level = 1; /* may be not needed, because  V1_read is used directly by Vect_build_ */
+    
     plus = &(Map->plus);
     prnmsg ("Building topology ...\n") ;
     dig_init_plus ( plus );
@@ -71,18 +75,8 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
 
     if ( ret == 0 ) { return 0; } 
     
-    /*
-    Plus.all_areas = 1;
-    if (do_islands)
-	Plus.all_isles = 1;
-    else
-	Plus.all_isles = 0; 
-    dig_map_to_head (&Map, &Plus);
-    */
-    /*  clean up files  */
-
     Map->level = LEVEL_2;
-    plus->mode = MODE_WRITE;
+    plus->mode = GV_MODE_WRITE;
     
     prnmsg ("Topology was built.\n") ;
    
@@ -159,7 +153,7 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
 	                         box.E, box.W, box.T, box.B);
     
     /* nodes */
-    fprintf (out, "Nodes (%d nodes):\n", plus->n_nodes ); 
+    fprintf (out, "Nodes (%d nodes, alive + dead ):\n", plus->n_nodes ); 
     for (i = 1; i <= plus->n_nodes; i++) {
 	if ( plus->Node[i] == NULL ) { continue; }
 	Node = plus->Node[i];
@@ -173,7 +167,7 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     }
     
     /* lines */
-    fprintf (out, "Lines (%d lines):\n", plus->n_lines ); 
+    fprintf (out, "Lines (%d lines, alive + dead ):\n", plus->n_lines ); 
     for (i = 1; i <= plus->n_lines; i++) {
 	if ( plus->Line[i] == NULL ) { continue; }
 	Line = plus->Line[i];
@@ -186,7 +180,7 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     }
     
     /* areas */
-    fprintf (out, "Areas (%d areas):\n", plus->n_areas ); 
+    fprintf (out, "Areas (%d areas, alive + dead ):\n", plus->n_areas ); 
     for (i = 1; i <= plus->n_areas; i++) {
 	if ( plus->Area[i] == NULL ) { continue; }
 	Area = plus->Area[i];
@@ -209,7 +203,7 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     }
     
     /* isles */
-    fprintf (out, "Islands (%d islands):\n", plus->n_isles ); 
+    fprintf (out, "Islands (%d islands, alive + dead ):\n", plus->n_isles ); 
     for (i = 1; i <= plus->n_isles; i++) {
 	if ( plus->Isle[i] == NULL ) { continue; }
 	Isle = plus->Isle[i];
@@ -230,3 +224,57 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     return 1;
 }
 
+/* Save spatial index file
+*
+*  Returns: 1 - success
+*           0 - error
+*/
+int
+Vect_save_spatial_index ( struct Map_info *Map ) {
+    struct Plus_head *plus ;
+    char   fname[1024], buf[1024];
+    FILE   *fp;
+    
+    G_debug (1, "Vect_save_spatial_index()"); 
+
+    plus = &(Map->plus);
+    
+    /*  write out rtrees to the sidx file  */
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    G__file_name (fname, buf, GV_SIDX_ELEMENT, Map->mapset);
+    G_debug (1, "Open sidx: %s", fname);
+    fp = fopen( fname, "w");
+    if ( fp ==  NULL) {
+        G_warning("Can't open spatial index file for write: %s\n", fname);
+	    return 0;
+    }
+
+    /* set portable info */
+    dig_init_portable ( &(plus->port), dig__byte_order_out ());
+    
+    if ( 0 > dig_write_spidx (fp, plus) ) {
+        G_warning ("Error writing out spatial index file.\n");
+	return 0;
+    }
+    
+    fclose( fp );
+
+    return 1;
+}
+
+/* Dump ispatial index 
+*  out - output (stdout/stderr for example)
+*
+*  Returns: 1 - success
+*           0 - error
+*/
+int
+Vect_spatial_index_dump ( struct Plus_head *plus, FILE *out ) 
+{
+
+    fprintf (out, "---------- SPATIAL INDEX DUMP ----------\n" ); 
+    
+    dig_dump_spidx ( out, plus); 
+
+    return 1;
+}

@@ -82,7 +82,6 @@ dig_distance2_point_to_line (
       tpz = z1;
     } else {
 	t = (dx * (x - x1) + dy * (y - y1) + dz * (z - z1)) / (dx * dx + dy * dy + dz * dz);
-	t = (dx * (x - x1) + dy * (y - y1) ) / (dx * dx + dy * dy );
 
 	if (t < 0.0) {			/* go to x1,y1,z1 */
 	    t = 0.0;
@@ -92,7 +91,6 @@ dig_distance2_point_to_line (
 	    st = 1;
 	}
     
-
 	/* go t from x1,y1,z1 towards x2,y2,z2 */
 	tpx = dx * t + x1;
 	tpy = dy * t + y1;
@@ -106,11 +104,12 @@ dig_distance2_point_to_line (
     if ( py ) *py = tpy;
     if ( pz ) *pz = tpz;
     if ( status ) *status = st;
+
     if ( pdist ) {
 	dpx = tpx - x1;
 	dpy = tpy - y1;
 	dpz = tpz - z1;
-	*pdist = sqrt ( dx * dx + dy * dy + dpz * dpz ); 
+	*pdist = sqrt ( dpx * dpx + dpy * dpy + dpz * dpz ); 
     }
    
     return (dx * dx + dy * dy + dz * dz);

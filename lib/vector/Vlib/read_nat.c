@@ -39,6 +39,8 @@
 #include "gis.h"
 #include "Vect.h"
 
+int Vect__Read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+
 /*
 *  Read line from coor file on given offset.
 *
@@ -71,8 +73,6 @@ V1_read_next_line_nat (
 {
   int itype;
   long offset;
-  double n, s;
-  double e, w;
   BOUND_BOX lbox, mbox;
 
   if (Map->Constraint_region_flag)
@@ -127,7 +127,12 @@ V2_read_line_nat (
 
     G_debug (3, "V2_read_line_nat(): line = %d", line); 
     
+    
     Line = Map->plus.Line[line]; 
+
+    if ( Line == NULL )
+	G_fatal_error ( "Attempt to read dead line %d", line );
+	    
     return Vect__Read_line_nat (Map, line_p, line_c, Line->offset);
 }
 
@@ -144,6 +149,8 @@ V2_read_next_line_nat (
   register P_LINE *Line;
   BOUND_BOX lbox, mbox;
 
+  G_debug (3, "V2_read_next_line_nat()"); 
+  
   if (Map->Constraint_region_flag)
       Vect_get_constraint_box ( Map, &mbox );
 
@@ -155,8 +162,10 @@ V2_read_next_line_nat (
 	return (-2);
 
       Line = Map->plus.Line[line];
-      if ( Line == NULL)           /* Dead line */
+      if ( Line == NULL) {           /* Dead line */
+	  Map->next_line++;
 	  continue;
+      }
 
       if ((Map->Constraint_type_flag && !(Line->type & Map->Constraint_type)))
 	{
@@ -195,7 +204,7 @@ Vect__Read_line_nat (
 		    struct line_cats *c,
 		    long offset)
 {
-  int i;   
+  int i, dead = 0;   
   int n_points, size;
   int n_cats, do_cats;
   int type;
@@ -203,6 +212,8 @@ Vect__Read_line_nat (
   short field;
 
   G_debug (3, "Vect__Read_line_nat: offset = %ld", offset);
+ 
+  Map->head.last_offset = offset;
   
   /* reads must set in_head, but writes use default */
   dig_set_cur_port (&(Map->head.port));
@@ -213,8 +224,8 @@ Vect__Read_line_nat (
       return (-2);
 
   if ( !(rhead & 0x01) ) /* dead line */
-      type = 0;
-
+      dead = 1;
+  
   if ( rhead & 0x02 ) /* categories exists */
       do_cats = 1;    /* do not return here let file offset moves forward to next */
   else 		      /* line */
@@ -223,7 +234,7 @@ Vect__Read_line_nat (
   rhead >>= 2;
   type = Vect_type_from_store ( (int) rhead );  
  
-  G_debug (3, "    type = %d, do_cats = %d", type, do_cats);
+  G_debug (3, "    type = %d, do_cats = %d dead = %d", type, do_cats, dead);
 	  
   if ( c != NULL )
       c->n_cats = 0;
@@ -279,11 +290,13 @@ Vect__Read_line_nat (
       if (0 >= dig__fread_port_D (p->y, n_points, Map->dig_fp))
 	  return (-2);
 
-      if (Map->head.with_z)
-	{
+      if (Map->head.with_z) {
 	  if (0 >= dig__fread_port_D (p->z, n_points, Map->dig_fp))
 	      return (-2);
-	}
+      } else {
+	  for ( i = 0; i <  n_points; i++ )
+	      p->z[i] = 0.0;
+      }
   } else {
       if (Map->head.with_z) 
 	  size = n_points * 3 * PORT_DOUBLE;
@@ -292,6 +305,10 @@ Vect__Read_line_nat (
       
       fseek (Map->dig_fp, size, SEEK_CUR);
   }
+  
+  G_debug (3, "    off = %ld", ftell(Map->dig_fp) );
+  
+  if ( dead ) return 0;
   
   return (type);
 }
@@ -305,3 +322,11 @@ Vect_next_line_offset_nat ( struct Map_info *Map )
   return ftell (Map->dig_fp);
 }
 
+/*
+*  Returns  last line offset
+*/
+long 
+Vect_last_line_offset_nat ( struct Map_info *Map )
+{
+  return (Map->head.last_offset);
+}

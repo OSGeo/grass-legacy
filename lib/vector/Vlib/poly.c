@@ -95,6 +95,7 @@ Vect_get_point_in_area (
     }
   return (Vect_get_point_in_poly_isl (Points, IPoints, Map->plus.Area[area].n_isles, X, Y));
 */
+    return -1;
 }
 
 static int 
