@@ -11,6 +11,20 @@ static int have( int x, DateTime *dt)
     return datetime_is_between(x, dt->from, dt->to);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 0 is legal year for dt  
+ * -1 illegal year for this dt  
+ * -2 dt has no year component
+ *
+ *  \param dt
+ *  \param year
+ *  \return int
+ */
+
 int datetime_check_year (
     DateTime *dt,
     int year)
@@ -23,6 +37,20 @@ int datetime_check_year (
 	return datetime_error(-1, "invalid datetime year");
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 0 is legal month for dt  
+ * -1 illegal month for this dt  
+ * -2 dt has no month component
+ *
+ *  \param dt
+ *  \param month
+ *  \return int
+ */
 
 int datetime_check_month (
     DateTime *dt,
@@ -44,6 +72,23 @@ BILL CHANGED TO: */
 	return datetime_error(-1,"invalid datetime month");
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 0 is legal day for dt  
+ * -1 illegal day for this dt  
+ * -2 dt has no day component<br>
+ * Note: if dt.mode is ABSOLUTE, then dt.year and
+ * dt.month must also be legal, since the 'day' must be a legal value for the
+ * dt.year/dt.month
+ *
+ *  \param dt
+ *  \param day
+ *  \return int
+ */
 
 int datetime_check_day( DateTime *dt, int day)
 {
@@ -67,6 +112,15 @@ int datetime_check_day( DateTime *dt, int day)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param hour
+ *  \return int
+ */
+
 int datetime_check_hour (
     DateTime *dt,
     int hour)
@@ -79,6 +133,15 @@ int datetime_check_hour (
 	return datetime_error(-1,"invalid datetime hour");
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minute
+ *  \return int
+ */
 
 int datetime_check_minute (
     DateTime *dt,
@@ -93,6 +156,15 @@ int datetime_check_minute (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param second
+ *  \return int
+ */
+
 int datetime_check_second ( DateTime *dt, double second)
 {
     if (!have(DATETIME_SECOND, dt))
@@ -104,6 +176,15 @@ int datetime_check_second ( DateTime *dt, double second)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param fracsec
+ *  \return int
+ */
+
 int datetime_check_fracsec (DateTime *dt, int fracsec)
 {
     if (!have(DATETIME_SECOND, dt))
@@ -113,6 +194,15 @@ int datetime_check_fracsec (DateTime *dt, int fracsec)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param year
+ *  \return int
+ */
+
 int datetime_get_year( DateTime *dt, int *year)
 {
     int stat;
@@ -121,6 +211,17 @@ int datetime_get_year( DateTime *dt, int *year)
 	*year = dt->year;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ * if dt.mode = ABSOLUTE, this also sets dt.day = 0 
+ *
+ *  \param dt
+ *  \param year
+ *  \return int
+ */
 
 int datetime_set_year ( DateTime *dt, int year)
 {
@@ -135,6 +236,15 @@ int datetime_set_year ( DateTime *dt, int year)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param month
+ *  \return int
+ */
+
 int datetime_get_month( DateTime *dt, int *month)
 {
     int stat;
@@ -143,6 +253,17 @@ int datetime_get_month( DateTime *dt, int *month)
 	*month = dt->month;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ * if dt.mode = ABSOLUTE, this also sets dt.day = 0
+ *
+ *  \param dt
+ *  \param month
+ *  \return int
+ */
 
 int datetime_set_month ( DateTime *dt, int month)
 {
@@ -157,6 +278,15 @@ int datetime_set_month ( DateTime *dt, int month)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param day
+ *  \return int
+ */
+
 int datetime_get_day( DateTime *dt, int *day)
 {
     int stat;
@@ -165,6 +295,22 @@ int datetime_get_day( DateTime *dt, int *day)
 	*day = dt->day;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ * if dt.mode = ABSOLUTE, then  the dt.year, dt.month:
+ \code
+  if (day >  <b>datetime_days_in_month</b> (dt.year, dt.month)) 
+  {error} 
+ \endcode
+ * This implies that year/month must be set  for ABSOLUTE datetimes.
+ *
+ *  \param dt
+ *  \param day
+ *  \return int
+ */
 
 int datetime_set_day ( DateTime *dt, int day)
 {
@@ -175,6 +321,15 @@ int datetime_set_day ( DateTime *dt, int day)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param hour
+ *  \return int
+ */
+
 int datetime_get_hour( DateTime *dt, int *hour)
 {
     int stat;
@@ -183,6 +338,15 @@ int datetime_get_hour( DateTime *dt, int *hour)
 	*hour = dt->hour;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param hour
+ *  \return int
+ */
 
 int datetime_set_hour( DateTime *dt, int hour)
 {
@@ -193,6 +357,15 @@ int datetime_set_hour( DateTime *dt, int hour)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minute
+ *  \return int
+ */
+
 int datetime_get_minute( DateTime *dt, int *minute)
 {
     int stat;
@@ -201,6 +374,15 @@ int datetime_get_minute( DateTime *dt, int *minute)
 	*minute = dt->minute;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minute
+ *  \return int
+ */
 
 int datetime_set_minute( DateTime *dt, int minute)
 {
@@ -211,6 +393,15 @@ int datetime_set_minute( DateTime *dt, int minute)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param second
+ *  \return int
+ */
+
 int datetime_get_second(DateTime *dt, double *second)
 {
     int stat;
@@ -219,6 +410,15 @@ int datetime_get_second(DateTime *dt, double *second)
 	*second = dt->second;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param second
+ *  \return int
+ */
 
 int datetime_set_second( DateTime *dt, double second)
 {
@@ -229,6 +429,15 @@ int datetime_set_second( DateTime *dt, double second)
     return stat;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param fracsec
+ *  \return int
+ */
+
 int datetime_get_fracsec( DateTime *dt, int *fracsec)
 {
     int stat;
@@ -237,6 +446,15 @@ int datetime_get_fracsec( DateTime *dt, int *fracsec)
 	*fracsec = dt->fracsec;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param fracsec
+ *  \return int
+ */
 
 int datetime_set_fracsec(DateTime *dt, int fracsec)
 {

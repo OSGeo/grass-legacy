@@ -6,6 +6,15 @@
  */
 #include "datetime.h"
 
+
+/*!
+ * \brief 
+ *
+ *  \param year
+ *  \param ad
+ *  \return int
+ */
+
 int 
 datetime_is_leap_year (int year, int ad)
 {
@@ -16,6 +25,15 @@ datetime_is_leap_year (int year, int ad)
 
     return((year%4 == 0 && year%100 != 0) || year%400 == 0);
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param year
+ *  \param ad
+ *  \return int
+ */
 
 int 
 datetime_days_in_year (int year, int ad)
@@ -28,6 +46,15 @@ datetime_days_in_year (int year, int ad)
     else
 	return 365;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param month
+ *  \param year
+ *  \return int
+ */
 
 int 
 datetime_days_in_month (int year, int month, int ad)

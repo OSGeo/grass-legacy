@@ -43,6 +43,40 @@
 static int _datetime_ymd_to_ddays(DateTime *, double *);
 static int _datetime_compare(DateTime *,DateTime *);
 
+
+/*!
+ * \brief 
+ *
+ * 
+ * This performs the formula:   result = a - b; 
+ * <ul>
+<li> both a and b must be absolute.
+ * </li>
+<li> result will be relative
+ * </li>
+<li> If a is "earlier" than b, then result will be set negative.
+ * </li>
+<li> b must be no more "precise" than a.
+ * (a copy of b is "extended" to the precision of a)
+ * </li>
+<li> If result.to == SECOND, then result.fracsec is a.fracsec
+ * </li>
+<li> result will have the following from/to based
+ * on a.to: result a.to      from    to YEAR      YEAR    YEAR MONTH     YEAR
+ * MONTH DAY       DAY     DAY HOUR      DAY     HOUR MINUTE    DAY   
+ * MINUTE SECOND    DAY     SECOND [LAYOUT ??? - see HTML]
+ * </li>
+<li> If either 'a' or 'b' has a timezone, both must have a timezone. The
+ * difference will account for the differences in the time zones.
+</li></ul>
+
+ *
+ *  \param a
+ *  \param b
+ *  \param result
+ *  \return int
+ */
+
 int
 datetime_difference (DateTime *a,DateTime *b,DateTime *result)
 {

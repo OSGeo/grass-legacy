@@ -8,6 +8,23 @@
 static int err_code = 0;
 static char err_msg[1024];
 
+
+/*!
+ * \brief 
+ *
+ * record 'code' and 'msg' as
+ * error code/msg (in static variables)
+ * code==0 will clear the error (ie set msg=NULL)
+ * returns 'code' so that it can be used like:
+\code
+  return datetime_error (-1, "bad date");
+\endcode
+ *
+ *  \param code
+ *  \param msg
+ *  \return int
+ */
+
 int datetime_error (int code, char *msg)
 {
     err_code = code;
@@ -27,6 +44,15 @@ char *datetime_error_msg (void)
 {
     return err_msg;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  clears error code and message
+ *
+ *  \return void
+ */
 
 void datetime_clear_error (void)
 {
