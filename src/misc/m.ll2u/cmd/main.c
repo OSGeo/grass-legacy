@@ -55,7 +55,6 @@ main (argc, argv) char *argv[];
     int zone,z ;
     int want_zone;
     int reversed;
-    int print_zone;
     int warning_other;
     int warning_ll;
     char ebuf[256], nbuf[256], label[512];
@@ -151,13 +150,21 @@ main (argc, argv) char *argv[];
 
     if (isatty(0))
     {
-	fprintf (stderr,"Enter lon lat, one per line, in the format\n");
-	fprintf (stderr," %s %s\n", G_lon_format_string(), G_lat_format_string());
+	if (reversed)
+	{
+	    fprintf (stderr,"Enter lat lon, one coordinate pair per line, in the format\n");
+	    fprintf (stderr," %s %s\n", G_lat_format_string(), G_lon_format_string());
+	}
+	else
+	{
+	    fprintf (stderr,"Enter lon lat, one coordinate pair per line, in the format\n");
+	    fprintf (stderr," %s %s\n", G_lon_format_string(), G_lat_format_string());
+	}
 	fprintf (stderr,"Enter the word <end> when done\n");
     }
     for (n=1; input(b1,reversed?nbuf:ebuf,b2,reversed?ebuf:nbuf,label); n++)
     {
-	if (*ebuf < '0' || *ebuf > '9' || *nbuf < '0' || *nbuf > '9')
+	if (!might_be_number(ebuf) || !might_be_number(nbuf))
 	{
 	    sprintf (buf, "%s%s%s%s%s",
 		b1, reversed?nbuf:ebuf, b2, reversed?ebuf:nbuf, label);
@@ -172,7 +179,7 @@ main (argc, argv) char *argv[];
 		b1, reversed?nbuf:ebuf, b2, reversed?ebuf:nbuf, label);
 	    output (buf);
 	    if (warning_ll)
-		warning (buf, n, "invalid lon lat");
+		warning (buf, n, reversed?"invalid lat lon":"invalid lon lat");
 	}
 	else
 	{
