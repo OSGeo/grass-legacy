@@ -9,20 +9,22 @@
 
 # set test name
 set test "GRASS example test"
+set pgm "g.list"
 
 # test if tested module exists
-
-# execute module and check responding
-send "g.list help \n"
-
-expect { 
-    -re {.*Usage:.*} { pass "$test" }
-    -re {.*not found.*} { fail "$test: module missing" }
-    -re {.*egmentation.*} { fail "$test: module segfaults" }
-    -re {.*core dump.*} { fail "$test: module dumps core" }
-    timeout { fail "$test: module timed out" }
+if { ![isgrassbin "$pgm"] } {
+    fail "$test: module missing"
 }
 
-# do clean up 
+# execute module and check responding
+spawn "$pgm" "help"
 
-# switch back to old location
+expect { 
+    -re {.*Usage.*}             { pass "$test" }
+    -re {.*egmentation fault.*} { fail "$test: module segfaults" }
+    -re {.*core dump.*}         { fail "$test: module dumps core" }
+    timeout                     { fail "$test: module timed out"; slay "$pgm" }
+}
+slay "$pgm"
+
+# do clean up 

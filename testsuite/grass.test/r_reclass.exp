@@ -1,0 +1,45 @@
+# can not reproduce this bug currently.
+#
+set test "r.reclass default rule segmentation fault bug"
+set timeout 5
+
+# check if we find the executable
+if { ![isgrassbin r.reclass] } {
+    fail "$test: module missing"
+}
+
+# invoke mapcalc for creating raster map
+spawn "g.region" "-d" "-p"
+expect {
+    -re {.*projection:.*$} { verbose "projection set to default" }
+    timeout                { perror "g.region timeout" }
+}
+
+spawn "r.mapcalc" "testmap=1000"
+expect {
+    -re {.*GRASS.*$} { verbose "map testmap created" }
+    timeout          { perror "r.mapcalc timeout" ; slay "r.mapcalc" }
+}
+
+set ok 1
+spawn "r.reclass" "input=testmap" "output=testmap2"
+expect {
+    -re {>.*$} { send "1=100\n10=100\n* = NULL\nend\n" ; 
+	expect {
+	    -re {.*egmentation.*$} { fail "$test" ; set ok 0 }
+	    timeout                { fail "$test" ; set ok 0 ; slay "r.reclass" }
+	}
+    }
+    timeout     { perror "$test" ; slay "r.reclass" }
+}
+slay "r.reclass"
+
+if { $ok == 1 } {
+    spawn "r.stats" "-q" "testmap2"
+    expect {
+	-re {\*.*$}     { pass "$test" }
+	-re {100.*$}    { fail "$test" }
+	-re {.*GRASS.*} { unresolved "$test" }
+	timeout         { fail "$test" ; slay "r.stats" }
+    }
+}
