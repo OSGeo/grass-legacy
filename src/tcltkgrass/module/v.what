@@ -1,7 +1,8 @@
 interface_build {
     {v.what} 1
-    {Queries vector map layers.}
+    {Queries vector map layers by coordinate(s) or with the mouse.}
     {entry map {Name of existing vector map:} 0 vector}
+    {entry east_north {Coordinates for query (east,north[,east,north,...]):} 0 ""}
     {checkbox -1 {Identify just one location.} "" -1}
     {checkbox -i {Interactive.} "" -i}
 }
