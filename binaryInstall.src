@@ -36,7 +36,7 @@ if [ -z "$TEST_STR" ] ; then
 fi
 
 # Check for first parameter:
-if [ ! "$1" ] ; then
+if [ $# -lt 1 -o "$1" == "-h" -o "$1" == "-help" ] ; then
     echo "
 
 GRASS GIS $NAME_VER binary package installation tool
@@ -292,19 +292,38 @@ echo "Creating start script: $BINDIR/grass$NAME_VER"
 #}' $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER 
 
 STRING="s|^GISBASE.*|GISBASE\=\'$DESTDIR\'|g"
-sed -e $STRING $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER
 
+#check needed to avoid writing to identical file (grass5 script)
+if [ "$DESTDIR" != "$BINDIR" ]
+then
+  sed -e $STRING $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER
+  if [ $? -eq 1 ] ; then
+    echo "An error occured trying to create the grass start script! Exiting."
+    echo "You probably do not have permission to install into $BINDIR."
+    echo "You may need to be the root user to install in that directory."
+    exit
+  fi
+  # Remove the source version of the grass executable
+  rm -f $DESTDIR/grass$NAME_VER
+
+else
+  sed -e $STRING $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER.tmp
+  if [ $? -eq 1 ] ; then
+    echo "An error occured trying to create the grass start script! Exiting."
+    echo "You probably do not have permission to install into $BINDIR."
+    echo "You may need to be the root user to install in that directory."
+    exit
+  fi
+  mv $BINDIR/grass$NAME_VER.tmp $BINDIR/grass$NAME_VER
+fi
+
+chmod ugo+x $BINDIR/grass$NAME_VER
 if [ $? -eq 1 ] ; then
     echo "An error occured trying to create the grass start script! Exiting."
     echo "You probably do not have permission to install into $BINDIR."
     echo "You may need to be the root user to install in that directory."
     exit
 fi
-
-# Remove the source version of the grass executable
-rm -f $DESTDIR/grass$NAME_VER
-
-chmod ugo+x $BINDIR/grass$NAME_VER
 
 echo "Creating the locks directory for monitors..."
 SERVERNAME=`uname -n | sed -e "s/\..*//"`
