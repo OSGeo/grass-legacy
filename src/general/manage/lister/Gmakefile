@@ -1,0 +1,11 @@
+L = $(ETC)/lister
+
+all: $L $L/cell
+
+$L:
+	mkdir $L
+
+$L/cell: cell.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ cell.o $(GISLIB)
+	
+$(GISLIB): #
