@@ -34,6 +34,9 @@ This program converts a PNG raster file to a GRASS raster file.
 
 <DL>
 
+<DT><B>-f</B>
+<DD>Create floating-point maps (range 0.0 - 1.0).
+
 <DT><B>-h</B>
 <DD>Output image file header only; don't create map(s).
 
@@ -81,9 +84,14 @@ appending ".a" to the name specified by the <B>output</B> option.
 For paletted images, the resulting cell values will be the color
 indices from the image, with the map's color table generated from the
 image's palette. For gray-scale and true-color images, the cell values
-will be the (unscaled) intensity values from the image. The map's
-color table will map these values to the corresponding intensity
-levels.
+will be the intensity values from the image. The map's color table
+will map these values to the normalized intensity levels,
+incorporating any gamma correction.
+<P>
+However, when the <B>-f</B> flag is used, any scaling or gamma
+correction is performed on the actual cell values. The map's color
+table will be a linear gray scale. Also, paletted images will first be
+expanded to true-color.
 <P>
 The user should adjust boundary coordinates stored in the cell header
 after import using <EM>r.support</EM> or <EM>r.region</EM>.
