@@ -1,6 +1,6 @@
-.TH v.in.dlg
+.th v.in.dlg
 .SH NAME
-\fIv.in.dlg\fR \- Converts an ASCII or binary USGS DLG-3 (bdlg) file
+\fIv.in.dlg\fR \- Converts an ASCII USGS DLG-3 Optional file
 to a binary GRASS vector (dig) file.
 .br
 .I (GRASS Vector Data Import Program)
@@ -9,27 +9,64 @@ to a binary GRASS vector (dig) file.
 .br
 \fBv.in.dlg help\fR
 .br
-\fBv.in.dlg\fR [\fB-bl\fR] \fBinput\*=\fIname \fBoutput\*=\fIname\fR
+\fBv.in.dlg\fR [\fB-l\fR] \fBinput\*=\fIname \fBoutput\*=\fIname\fR [\fBmatt\*=\fIname\fR] [\fBbase\*=\fIval\fR]
 .SH DESCRIPTION
-This program converts an ASCII or binary USGS DLG-3
-(\fIdlg\fR or \fIbdlg\fR) file
-into a binary GRASS vector (\fIdig\fR) file.
+This program converts an ASCII USGS DLG-3
+(\fIdlg\fR) file
+into a binary GRASS vector (\fIdig\fR) file.  
+.br
+\fBWarning\fR:  The program reads DLG-3 Optional
+format only. 
 
 \fIv.in.dlg\fR also creates a \fIdig_att\fR file containing the label
-information 'stripped' from the DLG-3 file.
+information 'stripped' from the DLG-3 file (the first minor attribute
+for each record unless \fImatt\fR is specified).
+
+If the \fImatt\fR is specified, \fIv.in.dlg\fR creates an additional
+attribute file containing identifiers for every record with correspon
+ding
+multiple attributes.  In this case \fImatt\fR file contains identifiers
+starting with base \fIbase\fR for the attributes stored in \fImatt\fR
+file (as opposed to the first minor attributes with no \fImatt\fR file).                             
+The example of \fImatt\fR with \fIbase\fR = 34 would be:
+
+.br
+	34	0	0
+.br
+	35	180	201
+.br
+	36	180	208
+.br
+		170	240
+.br
+		190	201
+.br
+	37	160	220
+.br
+
+With the corresponding \fIdig_att\fR looking like this:
+.br
+
+	A 648467.190000 4456367.320000     34
+.br
+	L 667989.290000 4458393.520000     35
+.br
+	L 651002.470000 4473793.390000     36
+.br
+	L 663816.680000 4471412.080000     37
+.br
+
+
 However, the user must run \fIv.support\fR (or \fIv.import\fR option 4)
 on the \fIoutput\fR file created by \fIv.in.dlg\fR to create a
 \fIdig_plus\fR file containing the file topology, before using the
 \fIoutput\fR file in \fIv.digit\fR.
 
 The user can avoid this two-step process by converting
-the ASCII or binary DLG-3 file to binary GRASS vector format
-using option 1 or 2 of the GRASS program \fIv.import\fR.
+the ASCII DLG-3 file to binary GRASS vector format
+using option 1 of the GRASS program \fIv.import\fR.
 
 .LP
-\fBFlags:\fR
-.IP \fB\-b\fR 18
-Input is a binary DLG-3 file (default is ASCII).
 .IP \fB\-l\fR 18
 Give precedence to line information (default is area).
 
@@ -39,6 +76,10 @@ Give precedence to line information (default is area).
 Name of USGS DLG-3 Optional format input file.
 .IP \fBoutput\*=\fIname\fR 18
 Name to be assigned to the binary GRASS vector files created.
+.IP \fBmatt\*=\fIname\fR 18
+Name of file with multiple attributes (optional). 
+.IP \fBbase\*=\fIval\fR 18
+Identifier base for multiple attributes (default is 1). 
 .LP
 If the user simply types \fBv.in.dlg\fR without specifying parameter
 values on the command line, the program will prompt the user to enter these.
@@ -73,6 +114,6 @@ threshold.
 .I v.import,
 .I v.support
 .SH AUTHOR
-Michael Higgins, U.S. Army Construction Engineering Research Laboratory
-.br
 Dave Gerdes, U.S. Army Construction Engineering Research Laboratory
+.br
+Irina Kosinovsky, U.S. Army Construction Engeneering Research Laboratory
