@@ -14,6 +14,7 @@ typedef int args_t(int argc, int *argt);
 #define E_ARG_TYPE	3
 #define E_RES_TYPE	4
 #define E_INV_TYPE	5
+#define E_ARG_NUM	6
 #define E_WTF		99
 
 typedef enum expr_t {
