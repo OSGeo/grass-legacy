@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.28 2000-10-09 19:20:29 markus Exp $
+# $Id: configure,v 1.29 2000-10-10 03:50:32 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3440,23 +3440,23 @@ echo "configure:2632: checking for Tk/Tcl libraries" >&5
 
         elif test \(  -r "$TKDIR/local/lib/libtk$tcltkver.so" -a	\
 	              -r "$TCLDIR/local/lib/libtcl$tcltkver.so" \) -a	\
-	        -d "$TKDIR/lib/tk$tcltkver" -a				\
-		-d "$TCLDIR/lib/tcl$tcltkver"; then
+	        -d "$TKDIR/local/lib/tk$tcltkver" -a				\
+		-d "$TCLDIR/local/lib/tcl$tcltkver"; then
 
 	    TKLIBDIR=$TKDIR/local/lib/tk$tcltkver
 	    TCLLIBDIR=$TCLDIR/local/lib/tcl$tcltkver
-	    if test -d "$TKDIR/include/tk$tcltkver"; then
-	        TKINCDIR="-I$TKDIR/include/tk$tcltkver"
+	    if test -d "$TKDIR/local/include/tk$tcltkver"; then
+	        TKINCDIR="-I$TKDIR/local/include/tk$tcltkver"
 	    else
-	        TKINCDIR="-I$TKDIR/include"
+	        TKINCDIR="-I$TKDIR/local/include"
 	    fi
-	    if test -d "$TCLDIR/include/tcl$tcltkver"; then
-	        TCLINCDIR="-I$TCLDIR/include/tcl$tcltkver"
+	    if test -d "$TCLDIR/local/include/tcl$tcltkver"; then
+	        TCLINCDIR="-I$TCLDIR/local/include/tcl$tcltkver"
 	    else
-	        TCLINCDIR="-I$TCLDIR/include"
+	        TCLINCDIR="-I$TCLDIR/local/include"
 	    fi
-	    if test -r "$TKDIR/lib/libtk$ltcltkver.so" -a	\
-	    	    -r "$TCLDIR/lib/libtcl$ltcltkver.so"; then
+	    if test -r "$TKDIR/local/lib/libtk$ltcltkver.so" -a	\
+	    	    -r "$TCLDIR/local/lib/libtcl$ltcltkver.so"; then
 	        TCLTKLIBS="-L$TKDIR/local/lib -L$TCLDIR/local/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
 	    else
 	        TCLTKLIBS="-L$TKDIR/local/lib -L$TCLDIR/local/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
@@ -3486,9 +3486,9 @@ echo "configure:2632: checking for Tk/Tcl libraries" >&5
 	    fi
 	    if test -r "$PREFIX/lib/libtk$ltcltkver.so" -a	\
 	    	    -r "$PREFIX/lib/libtcl$ltcltkver.so"; then
-	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	        TCLTKLIBS="-L$PREFIX/lib -L$PREFIX/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
 	    else
-	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	        TCLTKLIBS="-L$PREFIX/lib -L$PREFIX/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
 	    fi
 
 	    FOUND=1
