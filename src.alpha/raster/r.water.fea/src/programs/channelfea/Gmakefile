@@ -1,0 +1,12 @@
+PGM=cfeapro.bd
+RFEA=$(GISBASE)/etc/r.fea
+LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+MATHLIB= -lm
+LDFLAGS= -s -O
+LIST= main.o chantimecalc.o chantimedata.o draw.o
+
+$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(MATHLIB) $(LIBES)
+	mv $(PGM) $(RFEA)
+
+$LIBES: #
