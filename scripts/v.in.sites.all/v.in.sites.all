@@ -43,9 +43,10 @@ do
 
   # polish map names to be SQL compliant
   INPUT=$i
-  OUTPUT=`echo $INPUT | sed 's+\.+_+g'`
+  OUTPUT=`echo $INPUT | sed 's+\.+_+g'`_points
 
   #do it:
+  echo "Processing $INPUT -> $OUTPUT"
   v.in.sites in=$INPUT out=$OUTPUT
   if [ $? -ne 0 ] ; then
     echo "ERROR converting map $INPUT to $OUTPUT"
@@ -57,7 +58,7 @@ done
 if [ $CONVERTEDMAPS -lt 1 ] ; then
   echo "No sites maps converted as no old sites maps present in current mapset <$MAPSET>."
 else
-  echo "Vector maps in current mapset converted. Please verify new vector map(s) before deleting old sites map(s)."
+  echo "Vector maps in current mapset converted (original names extended by '_points'). Please verify new vector map(s) before deleting old sites map(s)."
 fi
 
 exit 0
