@@ -1,0 +1,4 @@
+74c74
+< 		    strerror(errno));
+---
+> 		    sys_errlist[errno]);
