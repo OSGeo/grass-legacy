@@ -32,7 +32,8 @@ ID_CANCEL= 11
 ID_PARAM_START = 900
 
 ID_ABOUT = 101
-ID_EXIT  = 102
+ID_ABOUT_COMMAND = 102
+ID_EXIT  = 103
 
 VSPACE = 4
 HSPACE = 4
@@ -43,7 +44,8 @@ STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 30
 BUTTON_WIDTH = 100
 
-grass_task = { 'name' : 'unknown', 'lines' : 0, 'params' : [] }
+grass_task = { 'name' : 'unknown', 'description' : 'No description available.',
+    'lines' : 0, 'params' : [] }
 
 def normalize_whitespace(text):
     "Remove redundant whitespace from a string"
@@ -58,12 +60,14 @@ class processTask(saxlib.HandlerBase):
         self.inDescriptionContent = 0
         self.inDefaultContent = 0
         self.inValueContent = 0
+        self.inParameter = 0
 
     def startElement(self, name, attrs):
         if name == 'task':
             grass_task['name'] = attrs.get('name', None)
 
         if name == 'parameter':
+            self.inParameter = 1;
             self.param_description = ''
             self.param_default = ''
             self.param_values = []
@@ -78,7 +82,7 @@ class processTask(saxlib.HandlerBase):
             self.param_multiple = attrs.get('multiple', None)
         if name == 'description':
             self.inDescriptionContent = 1
-            self.param_description = ''
+            self.description = ''
         if name == 'default':
             self.inDefaultContent = 1
             self.param_default = ''
@@ -88,7 +92,7 @@ class processTask(saxlib.HandlerBase):
 
     def characters(self, ch, start, length):
         if self.inDescriptionContent:
-            self.param_description = self.param_description + ch[start:start+length]
+            self.description = self.description + ch[start:start+length]
         if self.inDefaultContent:
             self.param_default = self.param_default + ch[start:start+length]
         if self.inValueContent:
@@ -97,13 +101,17 @@ class processTask(saxlib.HandlerBase):
     def endElement(self, name): 
         # If it's not a parameter element, ignore it
         if name == 'parameter':
+            self.inParameter = 0;
             grass_task['params'].append({ "name" : self.param_name,
                 "type" : self.param_type, "required" : self.param_required,
                 "multiple" : self.param_multiple, "description" : self.param_description,
                 "default" : self.param_default, "values" : self.param_values, "value" : '' })
 
         if name == 'description':
-            self.param_description = normalize_whitespace(self.param_description)
+            if self.inParameter:
+                self.param_description = normalize_whitespace(self.description)
+            else:
+                grass_task['description'] = normalize_whitespace(self.description)
             self.inDescriptionContent = 0
         if name == 'default':
             self.param_default = normalize_whitespace(self.param_default)
@@ -123,8 +131,10 @@ class mainFrame(wxFrame):
         self.SetStatusText('Enter parameters for ' + grass_task['name'])
 
         menu = wxMenu()
-        menu.Append(ID_ABOUT, "&About",
-                    "Information about GRASS-GUI")
+        menu.Append(ID_ABOUT, "&About GrassGUI",
+                    "Information about GrassGUI")
+        menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task['name'],
+                    "Short descripton of GRASS command " + grass_task['name'])
         menu.AppendSeparator()
         menu.Append(ID_EXIT, "E&xit", "Terminate the program")
 
@@ -181,6 +191,7 @@ class mainFrame(wxFrame):
             wxPoint(2 * HSPACE + BUTTON_WIDTH + HSPACE, VSPACE + l_count * ENTRY_HEIGHT + p_count * VSPACE + 3 * VSPACE)).SetDefault()
 
         EVT_MENU(self, ID_ABOUT, self.OnAbout)
+        EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         EVT_MENU(self, ID_EXIT,  self.OnCancel)
         EVT_BUTTON(self.panel, ID_CANCEL, self.OnCancel)
         EVT_BUTTON(self.panel, ID_RUN, self.OnRun)
@@ -232,10 +243,15 @@ class mainFrame(wxFrame):
         dlg = wxMessageDialog(self, "This is a sample program for\n"
                               "GRASS command interface parsing\n"
                               "and automatic GUI building.",
-                              "About", wxOK | wxICON_INFORMATION)
+                              "About GrassGUI", wxOK | wxICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
 
+    def OnAboutCommand(self, event):
+        dlg = wxMessageDialog(self, grass_task['description'],
+                              "About " + grass_task['name'], wxOK | wxICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
 
 
 class GrassGUIApp(wxApp):
