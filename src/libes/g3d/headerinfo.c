@@ -3,6 +3,19 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns the size of the region of <em>map</em> in cells.
+ *
+ *  \param map
+ *  \param rows
+ *  \param cols
+ *  \param depths
+ *  \return void
+ */
+
 void
 G3d_getCoordsMap (map, rows, cols, depths)
 
@@ -31,6 +44,20 @@ G3d_getCoordsMapWindow (map, rows, cols, depths)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns the dimensions of the tile-cube used to tile the region of <em>map</em>.
+ * These numbers include partial tiles.
+ *
+ *  \param map
+ *  \param nx
+ *  \param ny
+ *  \param nz
+ *  \return void
+ */
+
 void
 G3d_getNofTilesMap (map, nx, ny, nz)
 
@@ -44,6 +71,22 @@ G3d_getNofTilesMap (map, nx, ny, nz)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Returns the size of the region.
+ *
+ *  \param map
+ *  \param north
+ *  \param south
+ *  \param east
+ *  \param west
+ *  \param top
+ *  \param bottom
+ *  \return void
+ */
 
 void
 G3d_getRegionMap (map, north, south, east, west, top, bottom)
@@ -79,6 +122,17 @@ G3d_getWindowMap (map, north, south, east, west, top, bottom)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns in <em>region</em> the region of <em>map</em>.
+ *
+ *  \param map
+ *  \param region
+ *  \return void
+ */
+
 void
 G3d_getRegionStructMap (map, region)
 
@@ -103,6 +157,19 @@ G3d_getWindowStructMap (map, window)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns the tile dimensions used for <em>map</em>.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return void
+ */
+
 void
 G3d_getTileDimensionsMap (map, x, y, z)
 
@@ -117,6 +184,16 @@ G3d_getTileDimensionsMap (map, x, y, z)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns the type in which tiles of <em>map</em> are stored in memory.
+ *
+ *  \param map
+ *  \return int
+ */
+
 int
 G3d_tileTypeMap (map)
 
@@ -127,6 +204,16 @@ G3d_tileTypeMap (map)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Returns the type with which tiles of <em>map</em> are stored on file.
+ *
+ *  \param map
+ *  \return int
+ */
 
 int
 G3d_fileTypeMap (map)
@@ -139,6 +226,16 @@ G3d_fileTypeMap (map)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns the precision used to store <em>map</em>.
+ *
+ *  \param map
+ *  \return int
+ */
+
 int
 G3d_tilePrecisionMap (map)
 
@@ -150,6 +247,16 @@ G3d_tilePrecisionMap (map)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if <em>map</em> uses cache, returns 0 otherwise.
+ *
+ *  \param map
+ *  \return int
+ */
+
 int
 G3d_tileUseCacheMap (map)
 
@@ -159,6 +266,16 @@ G3d_tileUseCacheMap (map)
   return map->useCache;
 }
 
+
+
+/*!
+ * \brief 
+ *
+ * Prints the header information of <em>map</em>.
+ *
+ *  \param map
+ *  \return void
+ */
 
 void 
 G3d_printHeader (map)
@@ -213,7 +330,3 @@ G3d_printHeader (map)
     printf ("%f)\n", (double) rangeMax);
   fflush (stdout);
 }
-     
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

@@ -21,6 +21,19 @@ G3d_isNullValueNum (n, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Fills the vector pointed to by <em>c</em> with <em>nofElts</em> NULL-values
+ * of <em>type</em>.
+ *
+ *  \param c
+ *  \param nofElts
+ *  \param type
+ *  \return void
+ */
+
 void
 G3d_setNullValue (c, nofElts, type)
 
@@ -35,7 +48,3 @@ G3d_setNullValue (c, nofElts, type)
     
   G_set_d_null_value ((double *) c, nofElts);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

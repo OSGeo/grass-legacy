@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -10,6 +8,17 @@
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Removes the primary and/or secondary color file. See <em>G_remove_colr</em> for
+ * details.
+ *
+ *  \param name
+ *  \return always 0
+ */
 
 int
 G3d_removeColor (name) /* adapted from G_remove_colr */
@@ -36,6 +45,20 @@ G3d_removeColor (name) /* adapted from G_remove_colr */
   return 0;
 }
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Reads color file for map <em>name</em> in <em>mapset</em> into the
+ * <em>colors</em> structure.  See <em>G_read_colors</em>
+ * (Raster_Color_Table) for details and return values.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param colors
+ *  \return int
+ */
 
 int
 G3d_readColors (name, mapset, colors) /* adapted from G_read_colors */
@@ -96,6 +119,21 @@ G3d_readColors (name, mapset, colors) /* adapted from G_read_colors */
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Writes colors stored in <em>colors</em> structure into the color
+ * file for map <em>name</em> in <em>mapset</em>.  See <em>G_write_colors</em>
+ * (Raster_Color_Table) for
+ * details and return values.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param colors
+ *  \return int
+ */
+
 int
 G3d_writeColors (name, mapset, colors) /* adapted from G_write_colors */
 
@@ -141,7 +179,3 @@ G3d_writeColors (name, mapset, colors) /* adapted from G_write_colors */
   fclose (fd);
   return stat;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

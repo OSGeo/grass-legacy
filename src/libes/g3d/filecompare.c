@@ -1,4 +1,3 @@
-
 #include <rpc/types.h>
 #include <rpc/xdr.h>
 #include <stdio.h>
@@ -407,6 +406,24 @@ compareFilesNocache (map, map2)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Compares the cell-values of file <em>f1</em> in mapset
+ * <em>mapset1</em> and file <em>f2</em> in mapset <em>mapset2</em>.
+ * The values are compared up to precision.
+ * Terminates in error if the files don't match.
+ * This function uses the more advanced features of the cache.
+ * The source code can be found in <em>filecompare.c</em>.
+ *
+ *  \param f1
+ *  \param mapset1
+ *  \param f2
+ *  \param mapset2
+ *  \return void
+ */
+
 void
 G3d_compareFiles (f1, mapset1, f2, mapset2)
 
@@ -525,7 +542,3 @@ G3d_compareFiles (f1, mapset1, f2, mapset2)
   G3d_closeCell (map);
   G3d_closeCell (map2);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -6,6 +5,20 @@
 #include "G3d.h"
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Makes a copy of <em>map</em> with name <em>nameOut</em> which is
+ *  written with <em>precision</em>.
+ * The source code can be found in <em>changeprecision.c</em>.
+ *
+ *  \param map
+ *  \param precision
+ *  \param nameOut
+ *  \return void
+ */
 
 void
 G3d_changePrecision (map, precision, nameOut)
@@ -63,7 +76,3 @@ G3d_changePrecision (map, precision, nameOut)
   if (! G3d_closeCell (map2)) 
     G3d_fatalError ("G3d_changePrecision: error in G3d_closeCell");
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

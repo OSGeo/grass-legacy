@@ -17,8 +17,26 @@ typedef struct {
 
 static G3d_paramType *param;
 
+
+/*!
+ * \brief 
+ *
+ * Initializes a parameter
+ * structure for the subset of command line arguments which lets the user
+ * overwrite the default properties of the new file.  Applications are
+ * encouraged to use this function in order to provide a uniform style.  The
+ * command line arguments provided are the <em>type</em> of the cell values, the
+ * <em>precision</em>, the properties of the <em>compression</em>, and the dimension
+ * of the tiles (<em>tiledimension</em>). Every of these values defaults to the
+ * value described in G3D Defaults.
+ * This function has to be used in conjunction with
+ * G3d_getStandard3dInputParams() (cf.{g3d:G3d.getStandard3dInputParams}).
+ *
+ *  \return void
+ */
+
 void
-G3d_setStandard3dInputParams ()
+G3d_setStandard3dInputParams()
 
 {
   param = G3d_malloc (sizeof (G3d_paramType));
@@ -80,14 +98,14 @@ G3d_getStandard3dParams (useTypeDefault, type,
   *useTypeDefault = *useLzwDefault = *useRleDefault = 0;
   *usePrecisionDefault = *useDimensionDefault = 0;
 
-  G3d_initDefaults ();
+  G3d_initDefaults();
 
   if (strcmp (param->type->answer, "double") == 0)
     *type = G3D_DOUBLE;
   else if (strcmp (param->type->answer, "float") == 0)
     *type = G3D_FLOAT;
   else {
-    *type = G3d_getFileType ();
+    *type = G3d_getFileType();
     *useTypeDefault = 1;
   }
 
@@ -140,13 +158,10 @@ G3d_getStandard3dParams (useTypeDefault, type,
 
 /*----------------------------------------------------------------------------*/
 
-
-/*----------------------------------------------------------------------------*/
-
 static struct Option *windowParam = NULL;
 
 void
-G3d_setWindowParams ()
+G3d_setWindowParams()
 
 {
   windowParam = G_define_option();
@@ -160,7 +175,7 @@ G3d_setWindowParams ()
 
 /*----------------------------------------------------------------------------*/
 
-char * G3d_getWindowParams ()
+char * G3d_getWindowParams()
 
 {
   if (windowParam == NULL) return NULL;
@@ -169,7 +184,3 @@ char * G3d_getWindowParams ()
     return G_store (G3D_WINDOW_ELEMENT);
   return G_store (windowParam->answer);
 }
-
-/*----------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------*/

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -8,6 +7,19 @@
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Same as <em>malloc (nBytes)</em>, except that in case of error
+ * <tt>G3d_error()</tt> is invoked.
+ *
+ *  \param nBytes
+ *  \return void *: a pointer ... if successful,
+ * NULL ... otherwise.
+
+ */
 
 void *
 G3d_malloc (nBytes)
@@ -24,6 +36,19 @@ G3d_malloc (nBytes)
   return (void *) NULL;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  Same as <em>realloc (ptr, nBytes)</em>, except that in case of error
+ *  <tt>G3d_error()</tt> is invoked. 
+ *
+ *  \param ptr
+ *  \param nBytes
+ *  \return void *: a pointer ... if successful,
+ *         NULL ... otherwise.
+ */
+
 void *
 G3d_realloc (ptr, nBytes)
      
@@ -38,6 +63,16 @@ G3d_realloc (ptr, nBytes)
   return (void *) NULL;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  Same as <em>free (ptr)</em>.
+ *
+ *  \param ptr
+ *  \return void
+ */
+
 void
 G3d_free (buf)
 
@@ -46,7 +81,3 @@ G3d_free (buf)
 {
   free (buf);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

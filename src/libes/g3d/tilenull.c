@@ -6,6 +6,20 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Assumes that <em>tile</em> is a tile with the same dimensions as the
+ * tiles of <em>map</em>. Fills <em>tile</em> with NULL-values of
+ * <em>type</em>.
+ *
+ *  \param map
+ *  \param tile
+ *  \param type
+ *  \return void
+ */
+
 void
 G3d_setNullTileType (map, tile, type)
 
@@ -19,6 +33,17 @@ G3d_setNullTileType (map, tile, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Is equivalent to G3d_setNullTileType (map, tile, G3d_fileTypeMap (map)).
+ *
+ *  \param map
+ *  \param tile
+ *  \return void
+ */
+
 void
 G3d_setNullTile (map, tile)
 
@@ -28,7 +53,3 @@ G3d_setNullTile (map, tile)
 {
   G3d_setNullTileType (map, tile, map->typeIntern);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

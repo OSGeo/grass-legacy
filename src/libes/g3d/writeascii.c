@@ -1,12 +1,19 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "G3d.h"
 
-
-/*---------------------------------------------------------------------------*/
+/*!
+ * \brief 
+ *
+ *  Writes the cell-values of <em>map</em> in ascii format to file 
+ *  <em>fname</em>. The values are organized by horizontal slices.
+ *
+ *  \param map
+ *  \param fname
+ *  \return void
+ */
 
 void
 G3d_writeAscii (map, fname)
@@ -49,7 +56,3 @@ G3d_writeAscii (map, fname)
 
   if (fp != stdout) fclose (fp);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

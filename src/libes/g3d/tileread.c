@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -6,9 +5,6 @@
 #include <rpc/types.h>
 #include <rpc/xdr.h>
 #include "G3d_intern.h"
-
-
-/*---------------------------------------------------------------------------*/
 
 static int
 G3d_xdrTile2tile (map, tile, rows, cols, depths,
@@ -139,9 +135,26 @@ G3d_readTileCompressed (map, tileIndex, nofNum)
 /*---------------------------------------------------------------------------*/
                        /* EXPORTED FUNCTIONS */
 /*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
+ 
+/*!
+ * \brief 
+ *
+ * 
+ * Reads tile with index <em>tileIndex</em> into the <em>tile</em> buffer. The cells
+ * are stored with type <em>type</em> which must be one of G3D_FLOAT and
+ * G3D_DOUBLE. If the tile with <em>tileIndex</em> is not stored on the file
+ * corresponding to <em>map</em>, and <em>tileIndex</em> is a valid index <em>tile</em>
+ * is filled with NULL-values. 
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \param type
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
 
-int
+ int
 G3d_readTile (map, tileIndex, tile, type)
 
      G3D_Map *map; 
@@ -195,6 +208,18 @@ G3d_readTile (map, tileIndex, tile, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_FLOAT).
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \return int
+ */
+
 int
 G3d_readTileFloat (map, tileIndex, tile)
 
@@ -212,6 +237,18 @@ G3d_readTileFloat (map, tileIndex, tile)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_DOUBLE).
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \return int
+ */
 
 int
 G3d_readTileDouble (map, tileIndex, tile)
@@ -235,6 +272,20 @@ G3d_readTileDouble (map, tileIndex, tile)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Locks tile with <em>tileIndex</em> in cache. If after locking fewer than the minimum number of
+ *  unlocked tiles are unlocked, the lock request is ignored.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \return 1 ... if successful,
+ *          -1 ... if request is ignored,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_lockTile (map, tileIndex)
 
@@ -254,6 +305,18 @@ G3d_lockTile (map, tileIndex)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Unlocks tile with <em>tileIndex</em>.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
 
 int
 G3d_unlockTile (map, tileIndex)
@@ -275,6 +338,17 @@ G3d_unlockTile (map, tileIndex)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Unlocks every tile in cache of <em>map</em>.
+ *
+ *  \param map
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_unlockAll (map)
 
@@ -294,6 +368,16 @@ G3d_unlockAll (map)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Turns autolock mode on.
+ *
+ *  \param map
+ *  \return void
+ */
+
 void
 G3d_autolockOn (map)
 
@@ -308,6 +392,16 @@ G3d_autolockOn (map)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Turns autolock mode Off.
+ *
+ *  \param map
+ *  \return void
+ */
+
 void
 G3d_autolockOff (map)
 
@@ -321,6 +415,25 @@ G3d_autolockOff (map)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Sets the minimum
+ * number of unlocked tiles to <em>minUnlocked</em>.  This function should be used
+ * in combination with <tt>G3d_unlockAll ()</tt> in order to avoid situations where the
+ * new minimum is larger than the actual number of unlocked tiles.
+ * <em>minUnlocked</em> must be one of G3D_USE_CACHE_X, G3D_USE_CACHE_Y,
+ * G3D_USE_CACHE_Z, G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ,
+ * G3D_USE_CACHE_YZ, G3D_USE_CACHE_XYZ, the result of G3d_cacheSizeEncode()
+ * (cf.{g3d:G3d.cacheSizeEncode}), or any positive integer
+ * which explicitly specifies the number of tiles.
+ *
+ *  \param map
+ *  \param minUnlocked
+ *  \return void
+ */
 
 void
 G3d_minUnlocked (map, minUnlocked)
@@ -337,6 +450,17 @@ G3d_minUnlocked (map, minUnlocked)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Starts a new cycle.
+ *
+ *  \param map
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
 
 int
 G3d_beginCycle (map)
@@ -355,6 +479,17 @@ G3d_beginCycle (map)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Ends a cycle.
+ *
+ *  \param map
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_endCycle (map)
 
@@ -365,6 +500,3 @@ G3d_endCycle (map)
   return 1;
 }
 
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
