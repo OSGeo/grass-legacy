@@ -190,7 +190,7 @@ killdups (Closet, Suitcase)
  *
  * -> but today?
  */
-#if defined(sgi) || defined(CRAY)
+#if defined(sgi) || defined(CRAY) || defined(sparc)
     while (match == 0 && Closet->dig_fp->_cnt) 
 #elif defined(__CYGWIN__) || defined(__FreeBSD__)
     while (match == 0 && Closet->dig_fp->_bf._size)
