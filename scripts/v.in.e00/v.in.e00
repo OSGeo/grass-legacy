@@ -93,7 +93,8 @@ fi
 
 
 #### trap ctrl-c so that we can clean up tmp
-#trap 'rm -f ${TMP}*' 2 3 15
+#### take care to define ${TMP}:
+#trap 'rm -f ${TMP}' 2 3 15
 
 if [ -n "$GIS_OPT_file" ] ; then
     E00NAME=`basename $GIS_OPT_file .e00`
