@@ -1,0 +1,105 @@
+/*  @(#)xtract_lines.c    1.0  9/29/89   
+ *  created by:         R.L.Glenn, SCS
+ *
+ * Program will read vector line records, outputting lines
+ * which match the user list of names/categories.
+ * The resulting map attribute is arbitarily set to first category
+ * of the user list or a user selected category number (cat_new).
+ */
+
+#include <string.h>
+#include <stdlib.h>
+#include  "gis.h"
+#include "Vect.h"
+
+int 
+xtract_line (int num_index, int num_array[], char *in_name, char *mapset, char *out_name,
+             int cat_new, int select, int dissolve)
+{
+	int cat, cat1, areal, arear, catl, catr, centroid, line;
+	int max_att=0, type;
+	int i;
+	struct Map_info Map;
+	struct Map_info Out_Map;
+	struct line_pnts *Points, *CPoints;
+	struct line_cats *Cats, *CCats; 
+
+        fprintf(stderr,"\nLoading vector information.\n");
+
+        /* Do initial read of input DIGIT file */
+	Vect_set_open_level (2);
+	Vect_open_old(&Map,in_name, mapset);
+
+        /* Open output "dig" file */
+	if ( Vect_open_new(&Out_Map, out_name, Vect_is_3d (&Map) ) < 0) {
+	   Vect_close ( &Map );
+	   G_fatal_error ( "Can't create output vector file <%s> \n", out_name) ;
+	}
+
+        /* Initialize the Point structure, ONCE */
+        Points = Vect_new_line_struct();
+        CPoints = Vect_new_line_struct();
+	Cats = Vect_new_cats_struct ();
+	CCats = Vect_new_cats_struct ();
+	
+        /* Read and write header info */
+        Vect_copy_head_data(&Map, &Out_Map);
+
+	/* TODO: Dissolve common boundaries and output are centroids */ 
+        /* Cycle through all lines */
+        for ( line = 1; line <= Vect_get_num_lines ( &Map ); line++) {
+	     G_debug ( 2, "Line = %d", line );
+	     type = Vect_read_line ( &Map, Points, Cats, line);
+	     
+	     cat = catr = catl = 0;
+	     /* get the line category */
+	     Vect_cat_get ( Cats, 1, &cat );
+	     
+	     /* skip anything other than the selected line type and get the category */
+	     if ( type == GV_BOUNDARY ) {
+	         if ( !(select & GV_BOUNDARY) && !(select & GV_AREA) ) continue;
+		 if ( select & GV_AREA ) { /* get left right category */
+		     Vect_get_line_areas ( &Map, line, &areal, &arear );
+		     if ( areal > 0 ) {
+			 centroid = Vect_get_area_centroid ( &Map, areal );
+			 if ( centroid > 0 ) {
+	                     Vect_read_line ( &Map, CPoints, CCats, centroid);
+			     Vect_cat_get ( CCats, 1, &catr );
+			 }
+		     }
+		     if ( arear > 0 ) {
+			 centroid = Vect_get_area_centroid ( &Map, areal );
+			 if ( centroid > 0 ) {
+	                     Vect_read_line ( &Map, CPoints, CCats, centroid);
+			     Vect_cat_get ( CCats, 1, &catr );
+			 }
+		     }
+		 }
+	     } else {
+	         if ( !(type & select) )   continue;
+	     }
+
+	     /* check against the user category list */
+             for ( i = 0 ; i < num_index ; i++) {
+                 if ( cat == num_array[i] || catr == num_array[i] || catl == num_array[i] ) {  
+	             if ( type == GV_BOUNDARY && dissolve ) {
+			 /* TODO */
+		     }
+		     /* write line */
+		     cat1 = cat_new ? cat_new : num_array[i];
+		     Vect_cat_set (Cats, 1, cat1);
+		     Vect_write_line (&Out_Map, type, Points, Cats);
+		      
+		     /* capture the highest attribute value */
+		     if (cat1 > max_att) max_att = cat1;
+		     break;
+	         }
+             } /* end for num_index */
+        }  /* end lines section */
+
+	Vect_close (&Map);
+	Vect_build ( &Out_Map, stdout );
+	Vect_close (&Out_Map);
+	return(max_att) ;
+}
+
