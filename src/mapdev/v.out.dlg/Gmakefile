@@ -1,5 +1,7 @@
 PGM=v.out.dlg
-COMP_LIBES = $(VECTLIB) $(GISLIB) $(LINKMLIB)
+
+LIBES = $(VECTLIB) $(GISLIB) $(LINKMLIB)
+DEPLIBS = $(DEPVECTLIB) $(DEPGISLIB) $(DEPLINKMLIB)
 
 
 OFILES = \
@@ -24,10 +26,10 @@ CFILES = \
 	write_head.c\
 	write.c
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(COMP_LIBES) $(DEPLINKMLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(COMP_LIBES) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(COMP_LIBES): #
+$(DEPLIBS): #
 
 write_lines.o: export_dlg.h
 write_areas.o: export_dlg.h

@@ -113,6 +113,10 @@ DIG_ATTLIB     = -lgrass_dig_atts
 DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
 VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
 
+# Cannot be made shared
+DEPDBMILIB     = $(LIBDIR)/libdbmi.a
+DBMILIB        = -ldbmi
+
 # triangulation libraries
 
 DEPSOSLIB      = $(LIBDIR)/libgrass_sos.so.$(LIB_VER)

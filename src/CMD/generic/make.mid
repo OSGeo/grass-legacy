@@ -114,6 +114,9 @@ DIG_ATTLIB     = -ldig_atts
 DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
 VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
 
+DEPDBMILIB     = $(LIBDIR)/libdbmi.a
+DBMILIB        = -ldbmi
+
 # triangulation libraries
 
 DEPSOSLIB      = $(LIBDIR)/libsos.a

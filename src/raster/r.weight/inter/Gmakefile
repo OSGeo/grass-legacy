@@ -1,5 +1,5 @@
-LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
+LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(EDITLIB) $(VASKLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVASKLIB) $(DEPEDITLIB) $(DEPGISLIB)
 OFILES  =\
 	add_mult.o\
 	ask_weight.o\
@@ -23,12 +23,12 @@ OFILES  =\
 	write_supp.o
 
 
-all: clean pgm shell help
+all: pgm shell help
 shell: $(BIN_INTER)/r.weight
 pgm: $(ETC)/r.weight
 
-$(ETC)/r.weight: $(OFILES) $(DEPLIBS) $(DEPVASKLIB) $(DEPEDITLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(EDITLIB) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
+$(ETC)/r.weight: $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
 $(BIN_INTER)/r.weight: weight.sh
 	rm -f $@ ; cp $? $@ ; chmod 0755 $@

@@ -16,7 +16,7 @@ OFILES =  \
 	Reset_clr.o \
 	Text.o
 
-$(GISBASE)/driver/HTMLMAP: HTMLMAP
+all: $(GISBASE)/driver/HTMLMAP
 	@if egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo HTMLMAP already defined in $(ETC)/monitorcap ; \
 	else \
@@ -24,7 +24,7 @@ $(GISBASE)/driver/HTMLMAP: HTMLMAP
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
 
-HTMLMAP: $(OFILES) $(DEPDRIVERLIB) $(DEPGISLIB)
+$(GISBASE)/driver/HTMLMAP: $(OFILES) $(DEPDRIVERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $(GISBASE)/driver/HTMLMAP $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPDRIVERLIB): #

@@ -1,9 +1,8 @@
-DBMILIB = $(LIBDIR)/libdbmi.a
 
 PGM=v.to.db
 
 LIBES= $(VECTLIB) $(GISLIB) $(DBMILIB)
-DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DBMILIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DEPDBMILIB)
 LIST = main.o\
 	parse.o\
 	lines.o\
