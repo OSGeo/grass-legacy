@@ -1,0 +1,3 @@
+alias t "read_dai < ../raw*/URBAN*"
+alias r "read < ../raw*/URBAN*"
+alias c "cat -v ../raw*/URBAN* | fold"
