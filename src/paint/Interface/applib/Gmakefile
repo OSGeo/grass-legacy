@@ -1,5 +1,3 @@
-# %W% %G%
-
 EXTRA_CFLAGS=-I..
 LIB = lib.a
 OBJ  =  alpha.o close.o colornum.o colortable.o colorvalue.o \
