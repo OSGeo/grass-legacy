@@ -1,0 +1,128 @@
+.\" %W% %G%
+.TH Gweight 2G G-language
+.SH NAME
+Gweight \- Weighted overlay analysis tool
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Gweight
+\fI[output] [action] [color]\fR
+.br
+.B Gweight
+[output\*=\fIoption\fR] [action\*=\fIoption\fR] [color\*=\fIoption\fR]
+
+.SH DESCRIPTION
+\fIGweight\fR is the non-interactive version of \fIweight\fR.
+Both programs allow the user to assign numeric values (i.e.,
+"weights") to individual 
+.CT "data categories" "category values"
+within 
+.CT "map layers." "cell maps."
+These weights are then distributed locationally throughout a 
+.CT "map layer," "cell map,"
+based on the distribution of the categories with which they
+are associated.
+The user can weight the categories of several 
+.CT "map layers" "cell maps"
+in a 
+.CT "database." "data base."
+Such weighted 
+.CT "map layers" "cell maps"
+can then be overlain.
+\fIGweight\fR will combine weights in the overlain 
+.CT "map layers," "cell maps,"
+by 
+.XT grid 
+cell 
+.CT "location." "position."
+A resulting output 
+.CT "map layer" "cell map"
+depicts the combination of 
+.CT "map layer" "cell map"
+weights across a landscape.  These values represent a hierarchy
+of suitability for some user-defined purpose.  To obtain a more
+detailed description, see the manual entry for \fIweight[1]\fR.
+
+.TS
+l l.
+\fIOutput\fR cell map must be specified	(no default)
+\fIAction\fR must be either (\fIadd\fR or \fImult\fR)	(default: add)
+\fIColor\fR table for the new cell map (grey | wave | ramp)	(default: grey)
+.TE
+.PP
+Once the \fIGweight\fR command line is entered, the user will need to
+enter a 
+.CT "map layer" "cell map"
+name and assign numeric values to
+its categories.  Values can be assigned to the categories of up to six
+.CT "map layers" "cell maps"
+within \fIGweight\fR in a single analysis.  Help is available
+to the user by typing \fBGweight help\fR.
+.SH EXAMPLE
+The following is the format in which data should be entered to \fIGweight\fR:
+.nf
+.RS
+Cell_layer1
+[Reclass rule 1a]
+[Reclass rule 1b]
+Cell_layer2
+[Reclass rule 2a]
+etc.
+end
+.RE
+Cell_layer:  \fIcell_map\fR OR "\fIcell_map in mapset\fR"
+Reclass rule: (example)  1 = 5 OR 20 thru 50 = 10 (must leave spaces between 
+  the category, =, and value entries)
+.fi
+
+Example: (the prompts are shown in bold)
+.nf
+.RS
+\fB\>  \fRGweight sites add wave\fB
+>  \fRsoils\fB
+.in 1.5i
+
+soils\>  \fR1 thru 20 = 5\fB
+soils\>  \fR21 thru 30 = 10\fB
+soils\>  \fRlandcover\fB
+
+landcover\>  \fR1 = 2\fB
+landcover\>  \fR2 = 4\fB
+landcover\>  \fR3 thru 8 = 6\fB
+landcover\>  \fRend\fB
+.in -1.5i
+.RE
+
+.fi
+.SH NOTES
+The user must be knowledgeable about \fIweight\fR to run \fIGweight\fR.
+\fIGweight\fR does not provide the user with a listing
+of 
+.CT "map layers" "cell maps"
+or 
+.CT "map layer" "cell map"
+categories.  Users unsure about cell map
+.XT layer 
+names should run the GRASS tool \fIGlist\fR.  To obtain a listing
+of the categories for a 
+.CT "map layer" "cell map"
+run \fIGreport\fR.
+
+The user can create an input file containing the data needed to run 
+\fIGweight\fR.  This file must list the cell 
+.CT files map
+and reclass rules in
+the format shown in the above example.  The prompts must not be included
+in the file.  This file can be directed into \fIGweight\fR at the command
+line by typing \fBGweight output action color \<  input_file\fR
+.SH BUGS
+When entering data for the reclass rules, if the 
+user does not include spaces between the category, =, and value, the
+program will assume that the entry is a cell 
+.CT "file." "map."
+.SH "SEE ALSO"
+.I "GRASS Tutorial: WEIGHT"
+.br
+\fIcombine[1], weight[1], Glist[2G], Greport[2G]\fR
+.SH AUTHOR
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
