@@ -30,7 +30,12 @@ Things to focus on for GRASS 5.0 stable
       -> time consuming to reach involved people (former programmers)
 
  6) introduce G_readsites() function, replace all individual
-    readz.c and readsites.c files
+    readz.c and readsites.c files (Eric G . Miller)
+
+ 7) Modify GRASS monitor driver to enable "close by clicking"
+
+ 8) Add wildcard support to g.list, g.remove and few other modules
+
 
 
 Things to go into GRASS 5.1 development (after Oct. 15th):
