@@ -1,0 +1,41 @@
+Copied mp.h from a ftp-server.
+The following change was necessary.
+ 
+
+M. Neteler
+
+*** fill_dir.c	Mon Dec  9 18:51:34 1996
+--- fill_dir.c.orig	Mon Dec  9 18:40:21 1996
+***************
+*** 11,22 ****
+  #include <stdio.h>
+  #include <math.h>
+! #include "mp.h"
+  #include "gis.h"
+--- 11,19 ----
+  #include <stdio.h>
+  #include <math.h>
+! #include <mp.h>
+  #include "gis.h"
+  
+
+*** fill_dir.c	Mon Dec  9 18:56:09 1996
+--- fill_dir.c.orig	Mon Dec  9 18:55:23 1996
+***************
+*** 29,36 ****
+  char **argv;
+  {
+  
+! 	/*FILE	*fd, *ft, *fopen(), *fclose();*/
+! 	FILE	*fd, *ft;
+  	int    short_int;
+  	int	i, j, k, type, dir_type();
+  	int	new_id, elev_dat;
+--- 29,35 ----
+  char **argv;
+  {
+  
+! 	FILE	*fd, *ft, *fopen(), *fclose();
+  	int    short_int;
+  	int	i, j, k, type, dir_type();
+  	int	new_id, elev_dat;
