@@ -5,11 +5,11 @@ remove:
 	rm -f lex.yy.c y.tab.c
 
 $(ETC)/$(PGM): main.o y.tab.o
-	$(CC) $(LDFLAGS) main.o y.tab.o -o $@
+	$(CC) $(LDFLAGS) main.o y.tab.o -o $@ $(LEXLIB)
 	rm *.o
 
 y.tab.c: pol.y lex.yy.c
-	yacc pol.y
+	$(YACC) pol.y
 
 lex.yy.c: pol.l
-	lex pol.l
+	$(LEX) pol.l
