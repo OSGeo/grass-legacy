@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>v.rm.dangles</title>              
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>v.rm.dangles</B></EM> - Remove lines of specified length 
+from GRASS vector file. (GRASS Vector Program)
+
+<H2>SYNOPSIS</H2>
+<B>v.rm.dangles</B><BR>
+<B>v.rm.dangles help</B><BR>
+<B>v.rm.dangles input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+[<B>maxlength=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>v.rm.dangles</EM> removes lines from a binary
+vector file (input) which have a length less than or equal to maxlength.  
+The length is computed as sum(sqrt(x^2+y^2)) for the entire 
+length of the line in the units of the map. Lines that have 
+attached lines at BOTH ends are not removed, regardless of length.
+(Note that nodes that have more than 1 line attached show as red
+in v.digit. Nodes with a single line show as green.) 
+<P>
+
+Specifying maxlength of less than or equal 0 (default is -1)
+disables length checking and only lines with attached lines
+at both ends are output. Note that the lines at the ends of 
+a string of lines will be eliminated because they have 2 lines
+attached at one node (endpoint) and only 1 line attached at the
+other node. For example, 5 lines attached in a row would have 
+the first and last line eliminated leaving 3 lines when 
+using maxlength = -1. Running v.rm.dangles maxlength = -1 
+again would remove 2 more lines, leaving 1 line in this example.
+<P>
+
+See v.build.polylines for building single lines from 
+multiple attached lines.
+<P>
+
+To remove small segments on the order of the map resolution
+(from a raster to vector conversion, for example) consider
+specifying maxlength to be slightly greater than sqrt(2) 
+times the map resolution (assuming the Easting and Northing 
+resolutions are the same).
+<P>
+
+The input file is NOT changed. The input file is coppied to
+the output file with appropriate lines removed.
+<P>
+
+This program is very simple.  It copies header information 
+to the new map file but does not copy catagory or attribute
+information.
+<P> 
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of a binary vector file
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name given to binary vector output file.
+
+<DT><B>maxlength=</B><EM>value</EM>
+<DD>Threshold length for deleting lines. Default value is -1
+</DL>
+
+
+<H2>SEE ALSO</H2>
+<EM>
+<A HREF="v.build.polylines.html">v.build.polylines</A>,
+<A HREF="v.clean.html">v.clean</A>,
+<A HREF="v.digit.html">v.digit</A>,
+<A HREF="v.prune.html">v.prune</A>,
+<A HREF="v.spag.html">v.spag</A>,
+<A HREF="v.support.html">v.support</A>
+</EM>
+
+<H2>AUTHOR</H2>
+J.Soimasuo <br>
+Faculty of Forestry <br>
+University of Joensuu, Finland<br>
+
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

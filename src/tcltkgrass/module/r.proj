@@ -1,0 +1,13 @@
+interface_build {
+    {r.proj} 0
+    {Re-project a raster map from one location to the current location.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map [input name]:} 0 raster}
+    {entry dbase {GRASS database containing INPUT location [current database]:} 0 ""}
+    {entry mapset {GRASS mapset containing INPUT raster map [current mapset]:} 0 ""}
+    {entry location {Location containing INPUT raster map:} 0 ""}
+    {entry method {Interpolation method to use (nearest,bilinear,cubic):} 0 ""}
+    {entry resolution {Resolution of output map:} 0 ""}
+    {checkbox -l {list raster files in input location} "" -l}
+    {checkbox -n {Don't attempt to crop output map} "" -n}
+}

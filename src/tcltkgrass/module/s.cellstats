@@ -1,0 +1,10 @@
+interface_build {
+    {s.cellstats} 0
+    {Calculate statistics for sites within each cell of the current region}
+    {checkbox -q   {Run quietly:} "" -q}
+    {entry input   {Name of input sites file:} 0 sites}
+    {entry output  {Name of output sites files:} 0 sites}
+    {entry field   {Field index for double attribute (default 1):} 0 ""}
+    {entry min     {Minimum sample size per cell (default 1):} 0 ""}
+    {entry stats   {report only selected statistics (m,s,cv,skw,kur,mse,mav,min,q1,med,q3,max):} 0 ""}
+}

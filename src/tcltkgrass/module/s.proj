@@ -1,0 +1,10 @@
+interface_build {
+    {s.proj} 0
+    {Allows the user to re-project a sites file from one location to the current location.}
+    {entry input {Input sites list:} 0 sites}
+    {entry output {Output sites list [input name]:} 0 sites}
+    {entry dbase {GRASS database containing INPUT location [current database]:} 0 ""}
+    {entry mapset {GRASS mapset containing INPUT sites list [current mapset]:} 0 ""}
+    {entry location {Location containing INPUT sites list:} 0 ""}
+    {checkbox -l {list sites files in input location} "" -l}
+}
