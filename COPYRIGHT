@@ -10,9 +10,11 @@ under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your
 option) any later version.
 
-Individual copyrights upheld by original authors and not superceded by the
-GRASS GPL Copyright.  Users must abide by applicable copyrights for
-individual programs where noted.
+Parts of GRASS are not copyright by the GRASS development team.
+The original authors hold the copyrights and you have to abide
+to their licensing terms where noted.
+(Keep in mind that code linking into GRASS can only be distributed 
+if compatible with the GPL.)                               
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,12 +29,22 @@ along with this program; if not, write to the
 
 Questions regarding GRASS GIS should be directed to the
 GRASS Development Team at the following address:
-  GRASS Development Team
-  Center for Applied Geographic and Spatial Research
-  Baylor University
-  P.O. Box 7351
-  Waco, Texas  76798-7351
-  254-710-6814
-  grass@baylor.edu
-  http://www.baylor.edu/~grass/
 
+European Headquarters 
+ GRASS Development Team
+ Institute of Physical Geography-Landscape Ecology
+ University of Hannover 
+ Schneiderberg 50 
+ 30167 Hannover, Germany 
+ email: neteler@geog.uni-hannover.de
+
+United States Headquarters 
+ GRASS Development Team
+ Center for Applied Geographic and Spatial Research
+ Baylor University
+ P.O. Box 97351
+ Waco, Texas  76798-7351
+ Email:     grass@baylor.edu
+
+Internet:  http://www.baylor.edu/~grass
+           http://www.geog.uni-hannover.de/grass
