@@ -1,0 +1,56 @@
+VER=11a
+OBJS=calc.$(VER).o io.$(VER).o mem.$(VER).o aspect.$(VER).o precomp.$(VER).o
+SOURCES=calc.$(VER).c io.$(VER).c mem.$(VER).c aspect.$(VER).c precomp.$(VER).c
+HEADERS=r.flow.$(VER).h io.$(VER).h mem.$(VER).h aspect.$(VER).h \
+	precomp.$(VER).h
+
+#LDFLAGS =
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+#DIR=$(BIN_ALPHA_CMD)
+DIR=.
+
+LIBS=$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SEGMENTLIB)
+PGM=$(DIR)/r.flow
+MANPAGE=$(MAN2)/r.flow
+MANPAGESRC=$(SRC)/../man/man2/r.flow
+MANROFFDIR=$(SRC)/../man/utilities
+MANHELP=$(HELP)/r.flow
+
+$(PGM): $(OBJS) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(MATHLIB) $(XDRLIB)
+
+all:	$(PGM) $(MANPAGE) $(MANHELP)
+man:	$(MANPAGE) $(MANHELP)
+bin:	$(PGM)
+
+$(MANPAGE):	$(MANPAGESRC)
+	rm -f $@
+	(cd $(MANROFFDIR); man2cat $? > $@)
+
+$(MANPAGESRC):	r.flow.man.2
+	rm -f $@
+	cp $? $@
+	
+$(MANHELP):	r.flow.man.help
+	rm -f $@
+	cp $? $@
+
+$(OBJS): Gmakefile
+
+calc.$(VER).o:			$(HEADERS)
+aspect.$(VER).o:		r.flow.$(VER).h
+io.$(VER).o:			r.flow.$(VER).h mem.$(VER).h
+precomp.$(VER).o \
+mem.$(VER).o:			r.flow.$(VER).h io.$(VER).h mem.$(VER).h
+precomp.$(VER).o:		aspect.$(VER).h
+
+saber_src:
+	#load $(CFLAGS) $(LDFLAGS) $(VECT_INCLUDE) $(SOURCES) $(LIBS) \
+		$(MATHLIB)
+
+$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB): #
+
+
+
+
