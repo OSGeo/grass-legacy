@@ -22,6 +22,7 @@
 #define DEFAULT_INDEX "1"
 
 void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
+	char *ptr = theText;
 	switch (attr) {
 		case SITE_ATTR_CAT:
 			if (theSite->cattype == CELL_TYPE)
@@ -50,7 +51,32 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
 			if (theSite->dbl_alloc <= index)
 				G_fatal_error("Double index out of range!\n");
 			snprintf(theText, MAX_SITE_STRING,
-					"%lf", theSite->dbl_att[index]);
+				"%lf", theSite->dbl_att[index]);
+			break;
+		case SITE_ATTR_COORD:
+			*ptr = '(';
+			ptr++;
+			G_format_easting(theSite->east, ptr, G_projection());
+			ptr = strchr(ptr, '\0');
+			*ptr = ',';
+			ptr++;
+			G_format_northing(theSite->north, ptr, G_projection());
+			ptr = strchr(ptr, '\0');
+			*ptr = ')';
+			ptr++;
+			*ptr = '\0';
+			/*
+			snprintf(theText, MAX_SITE_STRING,
+				"(%lf,%lf)", theSite->east, theSite->north);
+			*/
+			break;
+		case SITE_ATTR_DIM:
+			if (theSite->dim == NULL)
+				G_fatal_error("No dimensions in site file!\n");
+			if (theSite->dim_alloc <= index)
+				G_fatal_error("Dimension index out of range!\n");
+			snprintf(theText, MAX_SITE_STRING,
+				"%lf", theSite->dim[index]);
 			break;
 		default:
 			G_fatal_error("Wrong or unknown attribute type!\n");
@@ -90,14 +116,14 @@ int main(int argc, char *argv[])
   attr_opt->type = TYPE_STRING;
   attr_opt->required = NO;
   attr_opt->description = "Type of attribute to use for labels";
-  attr_opt->options = "string,cat,double";
+  attr_opt->options = "string,cat,double,coords,dim";
   attr_opt->answer  = DEFAULT_ATTRIBUTE;
 
   index_opt = G_define_option();
   index_opt->key = "index";
   index_opt->type = TYPE_STRING;
   index_opt->required = NO;
-  index_opt->description = "Index of attribute. Ignored when attr=cat.";
+  index_opt->description = "Index of attribute. Ignored when attr=cat or attr=coords.";
   index_opt->answer = DEFAULT_INDEX;
   
   anchor_opt = G_define_option();
@@ -151,6 +177,12 @@ int main(int argc, char *argv[])
   }
   else if (strcmp(attr_opt->answer, "double") == 0) {
 	  attrib = SITE_ATTR_DBL;
+  }
+  else if (strcmp(attr_opt->answer, "coords") == 0) {
+	  attrib = SITE_ATTR_COORD;
+  }
+  else if (strcmp(attr_opt->answer, "dim") == 0) {
+	  attrib = SITE_ATTR_DIM;
   }
   else {
 	  G_fatal_error("Unknown attribute type!\n");
@@ -212,6 +244,8 @@ int main(int argc, char *argv[])
       draw_site_label(x,y,5,width,height,color,font,desc,anchor);
     }
   }
+
+  G_site_free_struct(theSite);
   R_close_driver();
 
   return 0;
