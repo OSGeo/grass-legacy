@@ -6,15 +6,15 @@ dstdir=${3:-$HOME/grass/diff}
 
 regex='\$\(Author\|Date\|Header\|Id\|Name\|RCSfile\|Revision\|Source\|State\):'
 
-tmpfile=$dstdir/rel-head-1.txt
-outfile=$dstdir/rel-head-2.txt
-only1=$dstdir/only-1.txt
-only2=$dstdir/only-2.txt
+tmpfile=$dstdir/rel-head-rel.txt
+outfile=$dstdir/rel-head-exp.txt
+only1=$dstdir/only-rel.txt
+only2=$dstdir/only-exp.txt
 differ=$dstdir/diff.txt
-files1=$dstdir/files-1.txt
-files2=$dstdir/files-2.txt
-dirs1=$dstdir/dirs-1.txt
-dirs2=$dstdir/dirs-2.txt
+files1=$dstdir/files-rel.txt
+files2=$dstdir/files-exp.txt
+dirs1=$dstdir/dirs-rel.txt
+dirs2=$dstdir/dirs-exp.txt
 gmakefiles2=$dstdir/files-2-g.txt
 otherfiles2=$dstdir/files-2-o.txt
 thediff=$dstdir/diff.diff
