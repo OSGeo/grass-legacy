@@ -7,7 +7,8 @@ SUBDIRS = \
 	d.m \
 	d.mon \
 	d.vect \
-	d.what.vect
+	d.what.vect \
+	d.zoom
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
