@@ -135,8 +135,11 @@ int Vect_get_area_centroid ( struct Map_info *, int );
 int Vect_get_area_num_isles ( struct Map_info *, int );
 int Vect_get_area_isle ( struct Map_info *, int, int );
 double Vect_get_area_area ( struct Map_info *, int );
+int Vect_get_area_boundaries ( struct Map_info *, int, struct ilist * );
 
 int Vect_get_isle_points (struct Map_info *, int, struct line_pnts *);
+
+int Vect_get_centroid_area ( struct Map_info *, int );
 
       /* Selecting features */
 int Vect_select_lines_by_box (struct Map_info *, BOUND_BOX *, int, struct ilist *);
