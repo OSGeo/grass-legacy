@@ -30,10 +30,10 @@ int tmp = 0;
  * color look-up table. */
 
 int 
-Raster_int (int num, int nrows, unsigned int *array, int withzeros, int color_type)
+Raster_int (int num, int nrows, int *array, int withzeros, int color_type)
 {
     int i, j;
-    unsigned int *arr ;
+    int *arr ;
     XWindowAttributes xwa;
     int bytes_per_pixel;
     int offset = 0 ;
