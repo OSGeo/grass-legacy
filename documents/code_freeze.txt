@@ -1,6 +1,5 @@
 Code Freeze schedule for GRASS 5 stable
-
-(MN)
+documents/code_freeze.txt  (MN)
 
 $Id$
 
@@ -45,14 +44,18 @@ Things to go into GRASS 5.1 development (after Oct. 15th):
       Therefore a split into stable/development tree should take place
       after restructuring and before applying new features/autoconf
 
- 2) 3D vector support (David D Gray, Radim Blazek)
+ 2) build various component libraries as shared libraries
+    to reduce the size of resulting command executables
+
+ 3) sync GRASS i/o routines with "libgrass" (Frank Warmerdam)
+
+ 4) 3D vector support (David D Gray, Radim Blazek)
     * needs modification of all vector modules
+    * link DMBS to vector model tightly
 
- 3) replace GRASS i/o routines by "libgrass" (Frank Warmerdam)
-
- 4) layered XDRIVER (Pierre de Mouveaux)
+ 5) layered XDRIVER (Pierre de Mouveaux)
   
- 5) full RGB support in all display modules (Pierre de Mouveaux)
+ 6) full RGB support in all display modules (Pierre de Mouveaux)
 
  
  X) tons of other stuff (see TODO file)
@@ -60,7 +63,7 @@ Things to go into GRASS 5.1 development (after Oct. 15th):
 
 Timeline:
  - 15. Oct. 2000: 
-       a) Code freeze
+       a) Code freeze announce
        b) new directory structure
        c) based on this split into stable tree and development tree
  - then: 
