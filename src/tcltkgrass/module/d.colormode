@@ -1,0 +1,6 @@
+interface_build {
+    {d.colormode} 0
+    {Establishes what color table will be used to display maps.}
+    {checkbox mode {Fixed color table.} "" fixed}
+    {checkbox mode {Float color table.} "" float}
+}
