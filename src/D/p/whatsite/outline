@@ -1,0 +1,20 @@
+check command line
+
+check for existence of files
+
+draw sites in color 1
+
+show Q sheet
+
+loop for mouse input
+   show instructions
+   get mouse
+   if button-3 quit
+   check coordinates
+   if OK
+	   draw site in color 2
+	   show information
+	   get mouse
+	   draw site in color 1
+   else
+	   give message
