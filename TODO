@@ -1,4 +1,4 @@
-$Id: TODO,v 1.61 2001-01-04 16:20:34 markus Exp $
+$Id: TODO,v 1.62 2001-01-04 16:22:26 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -359,10 +359,15 @@ Modules:
   add an optional circle with radius of snapping threshold
   (Being worked on by ?)
 
+- v.slabel: write it:
+  v.alabel does bulk labeling of areas, v.llable does bulk labeling of line
+  features. But there is no module to bulk label point features (site
+  vectors in GRASS terminology). This function is needed if you want to
+  intersect point features with area features (point-in-polygon test).
+
 - v.support:
   - add segmentation for large files
   - speed up v.build
-
 
 - tcltkgrass:
  - Change the tcltkgrass code so that lists of choices appear as
