@@ -34,6 +34,8 @@ int Nquick_draw_cmd(Nv_data * dc, Tcl_Interp * interp)
 
     GS_done_draw();
 
+/*** ACS_MODIFY flythrough  ONE LINE ******************************************/
+	flythrough_postdraw_cb();
 
     return (TCL_OK);
 }
