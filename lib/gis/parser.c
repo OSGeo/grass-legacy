@@ -149,6 +149,9 @@ static int interactive_flag( struct Flag *);
 static int interactive_option( struct Option *);
 static int gis_prompt( struct Option *, char *);
 
+int G_gui (void);
+int G_usage_xml (void);
+    
 int 
 G_disable_interactive (void)
 {
@@ -825,7 +828,7 @@ int G_gui (void)
 {
     char *cmd, *cmd2;
     char buf[1000];
-    char wish[200], def[200];
+    char wish[200];
     struct Option *opt ;
     struct Flag *flag ;
     char *type;
@@ -1148,7 +1151,7 @@ static int show_options(int maxlen,char *str)
 	fprintf (stderr, "  %*s   options: ", maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
-	while(p2 = G_index(p1, ','))
+	while( (p2 = G_index(p1, ',')) )
 	{
 		*p2 = '\0' ;
 		len = strlen(p1) + 1 ;
@@ -1882,7 +1885,7 @@ char *G_recreate_command (void)
 	{
 		if (opt->answer != '\0')
 		{
-			slen = strlen (opt->key) + strlen (opt->answers[0]) + 2;
+			slen = strlen (opt->key) + strlen (opt->answers[0]) + 4; /* +4 for: ' ' = " " */
 			if (len + slen >= nalloced)
 			{
 				nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
@@ -1895,12 +1898,16 @@ char *G_recreate_command (void)
 			cur = strchr (cur, '\0');
 			strcpy (cur, "=");
 			cur++;
+			if ( opt->type == TYPE_STRING ) {
+			    strcpy (cur, "\"");
+			    cur++;
+			}
 			strcpy (cur, opt->answers[0]);
 			cur = strchr (cur, '\0');
 			len = cur - buff;
 			for(n=1;opt->answers[n] != '\0';n++)
 			{
-				slen = strlen (opt->answers[n]) + 1;
+				slen = strlen (opt->answers[n]) + 2; /* +2 for , " */
 				if (len + slen >= nalloced)
 				{
 					nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
@@ -1913,9 +1920,15 @@ char *G_recreate_command (void)
 				cur = strchr(cur, '\0');
 				len = cur - buff;
 			}
+			if ( opt->type == TYPE_STRING ) {
+			    strcpy (cur, "\"");
+			    cur++;
+			    len = cur - buff;
+			}
 		}
 		opt = opt->next_opt ;
 	}
 
 	return(buff) ;
 }
+
