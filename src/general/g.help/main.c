@@ -34,10 +34,7 @@ int main(int argc, char **argv)
 
 	sprintf(errbuf,"%s/etc/help", G_gisbase()) ;
 	if (chdir(errbuf))
-	{
-		fprintf(stderr,"Directory: %s unavailable\n", errbuf) ;
-		exit(1) ;
-	}
+		G_fatal_error("Directory: %s unavailable", errbuf);
 
 /*** Initialize the phrase to file lookup table ***/
 	init_phrases() ;
@@ -127,10 +124,7 @@ init_phrases (void)
 	char *fgets() ;
 
 	if (NULL == (fptr = fopen(LOOKUP, "r")))
-	{
-		fprintf(stderr,"ERROR: lookup-file <%s> unavailable.\n", LOOKUP) ;
-		exit(-1) ;
-	}
+		G_fatal_error("lookup-file <%s> unavailable.", LOOKUP) ;
 
 	for(n_phrases=0; ; n_phrases++)
 	{

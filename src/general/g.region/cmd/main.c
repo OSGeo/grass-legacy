@@ -12,45 +12,6 @@
  *   	    	This program is free software under the GPL (>=v2)
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
- * $Log$
- * Revision 1.8  2002-01-22 04:51:04  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.7.2.7  2002/01/05 21:41:52  markus
- * splitted main.c due to length. Added map center coord output for -l (lat/long). Hope this doesn't break anything
- *
- * Revision 1.7.2.6  2001/07/07 12:21:47  markus
- * added -c flag to Print the current region map center coordinates
- *
- * Revision 1.7.2.5  2001/05/07 07:26:21  markus
- * changed coordinate order for -l flag to standard order E, N
- *
- * Revision 1.7.2.4  2001/04/28 16:13:58  bob
- * Added -a & -m flags
- *
- * Revision 1.7.2.3  2001/04/24 16:49:38  markus
- * xy cosmetics
- *
- * Revision 1.7.2.2  2001/04/24 16:41:52  markus
- * fix for xy proj
- *
- * Revision 1.7.2.1  2001/04/24 15:55:01  markus
- * added -l flag
- *
- * Revision 1.7  2001/04/02 21:37:21  andreas
- * changed to suppress datum/ellipsoid output in XY-Locations
- *
- * Revision 1.6  2001/01/12 08:16:18  justin
- * Added site.h since it was removed from gis.h
- *
- * Revision 1.5  2000/12/20 14:42:42  jan
- * Added module description.
- *
- * Revision 1.4  2000/11/26 16:33:14  andreas
- * added module description, file header, output of ellipsoid with cmdline and inter
- *
- * Revision 1.3  2000/11/08 20:30:36  andreas
- * added datum output with -p option
  *
  */
 
@@ -309,15 +270,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_file ("windows", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "region <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("region <%s> not found", name);
 		if (G__get_window (&window, "windows", name, mapset) != NULL)
-		{
-			sprintf (msg, "can't read region <%s> in <%s>", name, mapset);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("can't read region <%s> in <%s>", name, mapset);
 	}
 
 	/* 3dview= */
@@ -329,28 +284,19 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_file2 ("3d.view", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "3dview file <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("3dview file <%s> not found", name);
 
 		G_3dview_warning(0); /* suppress boundary mismatch warning */
 
-		if(NULL == (fp = G_fopen_old("3d.view",name,mapset))){
-		    sprintf (msg, "can't open 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(NULL == (fp = G_fopen_old("3d.view",name,mapset)))
+		    G_fatal_error ("can't open 3dview file <%s> in <%s>", name, mapset);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
-		if(0 > (ret = G_get_3dview(name, mapset, &v))){
-		    sprintf (msg, "can't read 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
-		if (ret == 0){
-		    sprintf (msg, "Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(0 > (ret = G_get_3dview(name, mapset, &v)))
+		    G_fatal_error ("can't read 3dview file <%s> in <%s>", name, mapset);
+		if (ret == 0)
+		    G_fatal_error ("Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
 
                  
 		window.north = v.vwin.north;
@@ -704,11 +650,10 @@ int main (int argc, char *argv[])
 
 static void die(struct Option *parm)
 {
-	fprintf(stderr,"<%s=%s> ** illegal value **\n\n", parm->key, parm->answer);
-	/*
+    /*
     G_usage();
     */
-	exit(1);
+    G_fatal_error("<%s=%s> ** invalid input **", parm->key, parm->answer);
 }
 
 static int nsew(char *value,char *a,char *b,char *c)
