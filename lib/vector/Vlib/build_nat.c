@@ -101,9 +101,11 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
     return 0;
 }
 
-/* Find area outside island
-*  Return: number of  area
-*          0 not found
+/*!
+ \fn int Vect_isle_find_area ( struct Map_info *Map, int isle ) 
+ \brief find area outside island
+ \return number of  area(s), 0 if not found
+ \param Map_info structure, isle number
 */
 int
 Vect_isle_find_area ( struct Map_info *Map, int isle ) 
@@ -187,9 +189,11 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
     return sel_area;
 }
 
-/* (Re)Attach isle to area.
-*
-*  Returns: ? not sure yet what should be return
+/*!
+ \fn int Vect_attach_isle ( struct Map_info *Map, int isle ) 
+ \brief (Re)Attach isle to area
+ \return ? not sure yet what should be returned
+ \param Map_info structure, isle number
 */
 int
 Vect_attach_isle ( struct Map_info *Map, int isle ) 
@@ -218,12 +222,14 @@ Vect_attach_isle ( struct Map_info *Map, int isle )
     return 0;
 }
 
-/* (Re)Attach isles to areas in given box.
-*
-*  Returns: ? not sure yet what should be return
+/*!
+ \fn int Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
+ \brief (Re)Attach isles to areas in given box
+ \return ? not sure yet what should be returned
+ \param Map_info structure, BOUND_BOX
 */
 int
-Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box ) 
+Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
 {
     int i, isle;
     struct ilist *List;
@@ -244,9 +250,11 @@ Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
     return 0;
 }
 
-/* (Re)Attache centropids to areas in given box.
-*
-*  Returns: ? not sure yet what should be return
+/*!
+ \fn int Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box ) 
+ \brief (Re)Attach centroids to areas in given box
+ \return ? not sure yet what should be returned
+ \param Map_info structure, BOUND_BOX
 */
 int
 Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box ) 
@@ -287,14 +295,15 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
     return 0;
 }
     
-/* Build topology 
-*  msgout - message output (stdout/stderr for example) or NULL
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_build_nat ( struct Map_info *Map, FILE *msgout )
+ \brief build topology 
+ \return 1 on success, 0 on error
+ \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
+Vect_build_nat ( struct Map_info *Map, FILE *msgout )
+{
     struct Plus_head *plus ;
     int    i, j, s, type, lineid, offset, ret;
     int    side, line, area, found;
@@ -380,7 +389,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
     }
     prnmsg ("\n%d areas built\n%d isles built\n", plus->n_areas, plus->n_isles );
 
-    /* Attache isles to areas */
+    /* Attach isles to areas */
     prnmsg ("Attaching islands: ");
     last_progress = -1; 
     for (i = 1; i <= plus->n_isles; i++) {
@@ -394,7 +403,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 	}
     }
     
-    /* Attache centroids to areas */
+    /* Attach centroids to areas */
     prnmsg ("\nAttaching centroids: ");
     last_progress = -1; 
     for (area = 1; area <= plus->n_areas; area++) {
@@ -405,7 +414,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 	    last_progress = progress;
 	}
 	
-	/* attache */
+	/* attach */
 	Area = plus->Area[area];
 	Vect_get_area_box ( Map, area, &box );
 	box.T = PORT_DOUBLE_MAX;
