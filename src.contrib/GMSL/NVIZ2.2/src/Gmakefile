@@ -1,5 +1,8 @@
 # $Log: Gmakefile,v $
-# Revision 1.5  2000-03-06 17:17:22  markus
+# Revision 1.6  2000-07-14 10:10:52  bill
+# *** empty log message ***
+#
+# Revision 1.5  2000/03/06 17:17:22  markus
 # Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
 #
 # Revision 1.5  2000/03/06 09:04:07  markus
@@ -44,7 +47,7 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
-EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
+EXTRA_CFLAGS= -I${SURF_INCDIR} -D_NO_PROTO\
         -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a

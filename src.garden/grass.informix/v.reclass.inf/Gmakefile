@@ -10,7 +10,6 @@ OBJS = \
 	row_or_col.o \
 	readSQLout.o
 
-#EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
 #EXTRA_CFLAGS =  -Dunlink=puts
 
 

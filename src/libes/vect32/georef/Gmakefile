@@ -1,4 +1,4 @@
-EXTRA_CFLAGS	= $(DIGITFLAGS)  $(VECT_INCLUDE) -I../digitizers -I../libes
+EXTRA_CFLAGS	= $(DIGITFLAGS) -I../digitizers -I../libes
 
 #  Note that this rd_cap.c is a little different then ../dig_front/read_cap.c
 

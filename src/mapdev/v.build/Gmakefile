@@ -2,7 +2,7 @@
 #	for optimization,   this is also toggle-able from the command line if -DRAM_ON is used
 #EXTRA_CFLAGS	=	-I../lib -I../libes -DRAM_ON
 
-EXTRA_CFLAGS	=	$(VECT_INCLUDE) -DRAM_ON
+EXTRA_CFLAGS	=	-DRAM_ON
 
 BUILD_LIB = ../v.build/libbuild.a
 

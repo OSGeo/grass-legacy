@@ -1,6 +1,5 @@
 PGM = v.extract
 
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 OFILES = \
 	main.o \

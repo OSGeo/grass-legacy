@@ -1,7 +1,5 @@
 PGM = m.in.e00
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG
 LDFLAGS = -g
 LIST = 	main.o \
 	e00read.o \

@@ -1,7 +1,6 @@
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 PGM = ps.map
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJ =	main.o \
 	read_cfg.o \

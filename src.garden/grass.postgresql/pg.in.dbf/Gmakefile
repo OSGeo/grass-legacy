@@ -1,7 +1,6 @@
 PGM = pg.in.dbf
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
-# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
+EXTRA_CFLAGS = $(PQINCPATH)
 LIST = 	main.o \
 	dbfopen.o \
 	pgdump.o

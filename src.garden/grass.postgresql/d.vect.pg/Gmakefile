@@ -1,7 +1,7 @@
 #PGM       = d.vect.pg
 PGM       = $(BIN_CONTRIB_CMD)/d.vect.pg
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(MATHLIB)
-EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH) 
+EXTRA_CFLAGS = $(PQINCPATH) 
 # -Dunlink=puts
 
 OBJS = \

@@ -4,7 +4,6 @@ OFILES = \
 	openvect.o\
 	what.o
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
 all: $(BIN_CONTRIB_CMD)/$(PGM)

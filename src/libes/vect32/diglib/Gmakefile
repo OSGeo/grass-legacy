@@ -77,7 +77,7 @@ CFILES = \
 $(DIG2LIB): $(OBJ)
 	$(AR)
 
-EXTRA_CFLAGS    = $(VECTLIBFLAGS) $(VECT_INCLUDE)
+EXTRA_CFLAGS    = $(VECTLIBFLAGS)
 
 read_head: read_head.o
 	$(CC) -o $@ read_head.o $(DIGLIB) $(GISLIB)

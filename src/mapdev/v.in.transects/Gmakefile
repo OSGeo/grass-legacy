@@ -1,6 +1,5 @@
 PGM = v.in.transects
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
 LIST = main.o trig.o vect.o decl.o
 

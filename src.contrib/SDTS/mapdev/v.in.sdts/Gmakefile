@@ -4,7 +4,7 @@ HOME =	$(BIN_CONTRIB_CMD)
 
 FIPSLIB	= $(LIBDIR)/libf123.a
 
-EXTRA_CFLAGS	= -I../../libes/fips123/f123inc $(VECT_INCLUDE) -DSTIG
+EXTRA_CFLAGS	= -I../../libes/fips123/f123inc -DSTIG
 
 OFILES = \
 	v.in.sdts.o\

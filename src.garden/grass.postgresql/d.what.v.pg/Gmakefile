@@ -14,7 +14,7 @@ OBJS = \
 	openvect.o \
 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
+EXTRA_CFLAGS =  $(PQINCPATH)
 
 
 $(PGM): $(OBJS) $(LIBES)

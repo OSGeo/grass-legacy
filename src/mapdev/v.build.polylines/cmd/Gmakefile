@@ -1,6 +1,5 @@
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 PGM = v.build.polylines
 LIST =  main.o \

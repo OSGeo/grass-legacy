@@ -1,6 +1,5 @@
 #  @(#)Gmakefile	2.2  6/26/87
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 COORLIB = $(LIBDIR)/libcoorcnv.a
 

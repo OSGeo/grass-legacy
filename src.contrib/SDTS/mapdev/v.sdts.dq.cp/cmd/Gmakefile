@@ -1,7 +1,6 @@
 PGM      = v.sdts.dq.cp
 HOME     = $(BIN_CONTRIB_CMD)
 
-#EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST     = main.o
 

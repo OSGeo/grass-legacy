@@ -1,5 +1,4 @@
 LIB = $(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 SUPPORT_FILES = db.layout tiger1.format
 SUPPORT_DIR = $(ETC)/tiger_support

@@ -10,7 +10,6 @@ OBJS = \
 	infxQry.o \
 	modCat.o 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
 
 
 $(PGM): $(OBJS) $(LIBES)

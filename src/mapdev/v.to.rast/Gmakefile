@@ -1,5 +1,4 @@
 PGM=v.to.rast
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST = main.o vect2rast.o raster.o \
 	do_areas.o do_lines.o do_sites.o \

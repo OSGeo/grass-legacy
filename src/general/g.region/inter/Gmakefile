@@ -1,7 +1,6 @@
 PGM      = g.region
 HOME     = $(BIN_MAIN_INTER)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST     = main.o\
 	   cur_frm_db.o\

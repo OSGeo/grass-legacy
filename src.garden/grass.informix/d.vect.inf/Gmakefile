@@ -2,7 +2,6 @@ PGM       = $(BIN_MAIN_CMD)/d.vect.inf
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) 
 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)  # -Dunlink=puts
 
 OBJS = \
 	main.o  \
