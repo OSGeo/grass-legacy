@@ -15,23 +15,8 @@ int G_is_zero_value(
  
  /* insert 0 check here */
 
-  DCELL dval;
-
-
-  switch (data_type)
-  {
-    case CELL_TYPE:
-	    dval = (DCELL) *((CELL *)rast);
-	    break;
-    case FCELL_TYPE:
-	    dval = (DCELL) *((FCELL *)rast);
-	    break;
-    case DCELL_TYPE:
-	    dval = *((DCELL *)rast);
-	    break;
-  }
-
-  return dval == 0.0;
+  return G_is_null_value(rast, data_type) ||
+         G_get_raster_value_d(rast, data_type) != 0.0 ? 0 : 1;
 }
 
 
