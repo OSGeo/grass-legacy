@@ -1,0 +1,26 @@
+FILTER = \
+	main.o\
+	getfilt.o\
+	getrow.o\
+	apply.o\
+	execute.o\
+	perform.o\
+	percent.o\
+	usage.o\
+	uppercase.o
+
+$(BIN)/Gmfilter: $(FILTER) $(GISLIB) $(ROWIOLIB)
+	$(CC) $(LDFLAGS) -o $@ $(FILTER) $(GISLIB) $(ROWIOLIB)
+
+apply.o: filter.h
+execute.o: filter.h
+execute.o: glob.h
+getfilt.o: filter.h
+getrow.o: glob.h
+main.o: filter.h
+main.o: glob.h
+perform.o: filter.h
+perform.o: glob.h
+
+$(GISLIB): # in case library changes
+$(ROWIOLIB): # in case library changes
