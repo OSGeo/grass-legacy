@@ -33,7 +33,7 @@ void write_triangles (Map, tmp_sites, tmp_vert, verbose)
   if (verbose)
     fprintf (stderr, "Doing Delaunay triangulation ...    ");
   Points = Vect_new_line_struct ();
-  v_alloc = 1000;
+  v_alloc = 5000;
   v = (double **) G_malloc (v_alloc * sizeof (double *));
   for (vi = 0; vi < v_alloc; ++vi)
   {
@@ -62,7 +62,7 @@ void write_triangles (Map, tmp_sites, tmp_vert, verbose)
   }
   fclose(ptr);
 
-  s_alloc = 1000;
+  s_alloc = 5000;
   s = (int **) G_malloc (s_alloc * sizeof (int *));
   for (si = 0; si < s_alloc; ++si)
   {
