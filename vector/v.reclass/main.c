@@ -52,7 +52,8 @@ main (int argc, char *argv[])
     col_opt->type           = TYPE_STRING;
     col_opt->required       = NO;
     col_opt->multiple       = NO;
-    col_opt->description    = "Column name";
+    col_opt->description    = "The name of the column values of which are used as new categories. "
+	                      "The column must be type integer.";
     
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
 
