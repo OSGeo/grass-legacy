@@ -152,14 +152,18 @@ struct Coor_info
   };
 
 /* Non-native format inforamtion */
-/* TODO: structer size should not change depending on compilation I think */
+/* TODO: structure size should not change depending on compilation I think, do it better */
 /* OGR */
-#ifdef HAVE_OGR
 struct Format_info_ogr {
     char           *dsn;
     char           *layer_name;
+#ifdef HAVE_OGR
     OGRDataSourceH ds;
     OGRLayerH      layer;
+#else
+    void *ds;
+    void *layer;
+#endif
     
     /* Level 1 (used by V*_read_next_line_ogr) */
     struct line_pnts **lines;  /* points cache */
@@ -169,7 +173,11 @@ struct Format_info_ogr {
     int lines_next; /* next line to be read from cache */
 
     /* Level 2 */
+#ifdef HAVE_OGR
     OGRFeatureH    feature_cache; /* cache to avoid repeated reading,  NULL if no feature is in cache */
+#else
+    void *feature_cache;
+#endif
     int            feature_cache_id; /* id of feature read in feature_cache */
 
     /* Array where OGR feature/part info is stored for each line in GRASS.
@@ -190,12 +198,10 @@ struct Format_info_ogr {
 
     int next_line; /* used by V2_read_next_line_ogr */
 } ;
-#endif
+
 struct Format_info {
     int i;
-#ifdef HAVE_OGR
     struct Format_info_ogr ogr;
-#endif
 } ;
 
 /* Category index */
