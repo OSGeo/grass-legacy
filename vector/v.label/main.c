@@ -83,14 +83,14 @@ main (int argc, char **argv)
     Xoffset = G_define_option();
     Xoffset->key = "xoffset";
     Xoffset->description = "Offset label in x-direction";
-    Xoffset->type = TYPE_INTEGER;
-    Xoffset->answer = "";
+    Xoffset->type = TYPE_DOUBLE;
+    Xoffset->answer = "0";
 
     Yoffset = G_define_option();
     Yoffset->key = "yoffset";
     Yoffset->description = "Offset label in y-direction";
-    Yoffset->type = TYPE_INTEGER;
-    Yoffset->answer = "";
+    Yoffset->type = TYPE_DOUBLE;
+    Yoffset->answer = "0";
 
     Reference = G_define_option();
     Reference->key = "reference";
@@ -108,9 +108,8 @@ main (int argc, char **argv)
     Size = G_define_option();
     Size->key = "size";
     Size->description = "Label size (in map-units)";
-    Size->type = TYPE_INTEGER;
+    Size->type = TYPE_DOUBLE;
     Size->answer = "100";
-    Size->options = "1-1000";
 
     Color = G_define_option();
     Color->key = "color";
@@ -122,9 +121,8 @@ main (int argc, char **argv)
     Width = G_define_option();
     Width->key = "width";
     Width->description = "Line width of text (only for p.map output)";
-    Width->type = TYPE_INTEGER;
+    Width->type = TYPE_DOUBLE;
     Width->answer = "1";
-    Width->options = "1-100";
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
@@ -166,7 +164,6 @@ main (int argc, char **argv)
     Space->description = "Space between letters (in map-units)";
     Space->type = TYPE_DOUBLE;
     Space->answer = "100";
-    Space->options = "1-100000";
 
     if (G_parser (argc, argv ) ) exit (-1 );
 
@@ -241,11 +238,11 @@ main (int argc, char **argv)
 	linlength = Vect_line_length ( Points );
 	
 	if ( ltype & GV_POINTS ) {
-	    print_label (labels, Points->x[0], Points->y[0], 0, txt);
+	    print_label (labels, Points->x[0], Points->y[0], 0.0, txt);
 	} else if ( !Along_flag->answer ) { /* Line, but not along */
 	    /* get centre */
             Vect_point_on_line ( Points, linlength/2, &x, &y, NULL, NULL, NULL);
-	    print_label (labels, x, y, 0, txt);
+	    print_label (labels, x, y, 0.0, txt);
 	} else { /* Along line */
 	
 	    /* find best orientation (most letters by bottom to down side */
