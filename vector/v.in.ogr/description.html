@@ -67,6 +67,13 @@ build areas:<br>
 <b>v.in.ogr dsn=</b><em>gemeinden</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
 <b>output=</b><em>mymap</em> 
 <P>
+<B>E00 file</B><BR>
+First we have to convert the E00 file to an Arc Coverage with 'avcimport' 
+(<a href="http://avce00.maptools.org/avce00/index.html">AVCE00 tools</a>):<br>
+<b>avcimport</b> <em>e00file</em> <em>coverage</em><br>
+<b>v.in.ogr dsn=</b><em>coverage</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
+<b>output=</b><em>mymap</em> 
+<P>
 <B>SDTS files</B> (you have to select the CATD file)<BR>
 <b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
 <P>
@@ -112,10 +119,7 @@ The characters used for table column names are limited. Supported are:<br>
 That means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
 column names. Also a table name must start with a character, not a number.<br>
 <em>v.in.ogr</em> converts '.', '-' and '#' to '_' (underscore) during import.
-
-<P>
-
-
+Use the <em>cnames</em> parameter to define new column names during import.
 
 <H2>REFERENCES</H2>
 
