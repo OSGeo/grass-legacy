@@ -151,7 +151,8 @@ main(int argc, char **argv)
 		tcolor = transform_string(fonts[cur_font].ccolor, tolower);
 		size = atoi(fonts[cur_font].csize);
 	}
-	else
+
+	if (opt4->answer)
 		path = opt4->answer;
 
 	if (opt5->answer)
