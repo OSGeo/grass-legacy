@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "global.h"
 #include "vask.h"
 
@@ -167,6 +170,7 @@ int ask_files (char *groupname)
 	if (ref_list[k] >= 0)
 	    return 1;
     fprintf (stderr, "No files selected! Bye\n");
+    sleep(3);
     exit(0);
 }
 
