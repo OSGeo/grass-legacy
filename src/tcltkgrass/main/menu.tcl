@@ -744,6 +744,47 @@ menu_build 1 .main_menu {
             "run xfig&"
         }
     }
+    Databases "Databases" {
+        "General" "" {
+            "Select DB" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.select.pg"
+            }
+	    "List tables" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.table.pg"
+            }
+	    "List columns" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.column.pg"
+            }
+	    "Column stats" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+            }
+        }
+	"Query" "" {
+            "Vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+            }
+	    "Sites" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+            }
+	    "Raster" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+            }
+        }
+	"Display" "" {
+            "Vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+            }
+	    "Sites" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+            }
+	    "Raster" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+            }
+	    "Reclass vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+            }
+        }
+    }
     Help Help {
         "Manual pages" "" {
            "source $env(TCLTKGRASSBASE)/module/g.manual"
