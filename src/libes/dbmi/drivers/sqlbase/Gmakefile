@@ -1,14 +1,14 @@
 # SQLBASE is where sqlbase C/API header files and libraries are installed
-SQLBASE=/SQLBASE
+# SQLBASE=/SQLBASE
 
 # these are DBMI definitions
 # STUBLIB = ../libstubs.a
-DBMILIB= ../../lib/libdbmi.a
+STUBLIB=
 
-HOME = $(DBMIDIR)/driver
+DBMIDIR = $(GISBASE)/driver/db
 
-LIBES = $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
-DEPLIBS= $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
+LIBES = $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.a
+DEPLIBS= $(DEPDBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.a
 EXTRA_CFLAGS = -I$(SQLBASE) -I$(INCLUDE_DIR)
 
 OBJ 	=  \
@@ -55,14 +55,14 @@ OBJ 	=  \
 DRIVER = main.o $(OBJ)
 TRY = try.o $(OBJ)
 
-$(HOME)/sqlbase: $(HOME) $(DRIVER) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) -lnsl
+$(DBMIDIR)/sqlbase: $(DBMIDIR) $(DRIVER) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(XDRLIB)
 
 try: $(TRY) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(TRY) $(LIBES) -lnsl
+	$(CC) $(LDFLAGS) -o $@ $(TRY) $(LIBES) $(XDRLIB)
 
-$(HOME):
-	-mkdir -p $(HOME)
+$(DBMIDIR):
+	-mkdir -p $(DBMIDIR)
 
 $(DRIVER) $(TRY):  $(INCLUDE_DIR)/dbmi.h globals.h proto.h
 $(DEPLIBS): #

@@ -1,17 +1,13 @@
-# ODBCBASE is where odbc C/API header files and libraries are installed
-ODBCBASE=/unixODBC
 
 # these are DBMI definitions
 STUBLIB = ../libstubs.a
-DBMILIB= $(LIBDIR)/libdbmi.a
 
-DBMIDIR=$(GISBASE)
-HOME = $(DBMIDIR)/driver/db
+DBMIDIR = $(GISBASE)/driver/db
 
 LIBES = $(DBMILIB) $(STUBLIB) $(GISLIB) 
-DEPLIBS= $(DBMILIB) $(STUBLIB) $(DEPGISLIB) 
-#LIBES = $(DBMILIB) $(STUBLIB) $(ODBCBASE)/odbc.a
-EXTRA_CFLAGS = -I$(ODBCBASE) $(ODBCINC) -I$(INCLUDE_DIR)
+DEPLIBS= $(DEPDBMILIB) $(STUBLIB) $(DEPGISLIB) 
+
+EXTRA_CFLAGS = $(ODBCINC)
 
 OBJ 	=  \
 	driver.o \
@@ -29,13 +25,11 @@ OBJ 	=  \
 
 DRIVER = main.o $(OBJ)
 
-$(HOME)/odbc: $(HOME) $(DRIVER) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) $(ODBCLIB) -lodbc $(MATHLIB) $(XDRLIB)
+$(DBMIDIR)/odbc: $(DBMIDIR) $(DRIVER) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) $(ODBCLIB) $(MATHLIB) $(XDRLIB)
 
 
-$(HOME):
-	-mkdir -p $(HOME)
+$(DBMIDIR):
+	-mkdir -p $(DBMIDIR)
 
-#$(DRIVER) :  dbmi.h globals.h proto.h
-#$(DRIVER) :  $(INCLUDE)/dbmi.h globals.h proto.h
 $(DEPLIBS): #

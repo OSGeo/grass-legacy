@@ -1,7 +1,5 @@
 PGM=v.db.reclass
 
-DBMILIB = $(LIBDIR)/libdbmi.a
-
 LIBES = $(VECTLIB) $(DIG_ATTLIB)\
 	$(DBMILIB) $(VECTLIB_REAL) $(DIG2LIB)\
 	$(GISLIB) 

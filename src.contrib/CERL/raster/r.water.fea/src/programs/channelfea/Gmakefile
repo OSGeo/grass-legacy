@@ -7,4 +7,4 @@ LIST= main.o chantimecalc.o chantimedata.o draw.o
 $(RFEA)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$LIBES: #
+$(DEPLIBS): #

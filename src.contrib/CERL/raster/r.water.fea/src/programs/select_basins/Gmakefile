@@ -7,5 +7,5 @@ LIST = main.o selectbasin.o basinlink.o unique.o
 $(RFEA)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$LIBES: #
+$(DEPLIBS): #
 

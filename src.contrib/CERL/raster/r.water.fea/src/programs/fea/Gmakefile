@@ -7,4 +7,4 @@ LIST = main.o timedata.o mstifgeo.o timecalc.o other.o band.o infiltration.o dra
 $(RFEA)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$LIBES: #
+$(DEPLIBS): #
