@@ -25,7 +25,10 @@ GISBASE=GISBASE_VALUE
 export GISBASE
 
 # Set the default grass user interface - for now Tcl/Tk
-GRASS_GUI="tcltk"
+if [ "$GRASS_GUI" != "text" ]
+then
+    GRASS_GUI="tcltk"
+fi
 
 # Clear the variable that will hold the command line options
 CMD_LINE_ARGS=""
