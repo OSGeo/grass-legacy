@@ -5,13 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char *getCat(Map, x, y, i)
-
-     struct Map_info *Map;
-     float x, y;
-     int *i;
-
-
+char *getCat(struct Map_info *Map, float x, float y, int *i)
 {
 
     static char buf[32];
@@ -72,10 +66,7 @@ char *getCat(Map, x, y, i)
     return buf;
 }
 
-int fillSQLstruct(tp, x, y, dist)
-     struct Sql *tp;
-     float x, y;
-     int dist;
+int fillSQLstruct(struct Sql *tp, float x, float y, int dist)
 {
     double east, north;
     int ret = 0;
