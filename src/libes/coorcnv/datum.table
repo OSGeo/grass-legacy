@@ -1,0 +1,57 @@
+# this file contains datum shift parameters,
+# it supplies a datum database table for GRASS 5.0
+# format:
+# shortname "description" ellipsoid dx= dy= dz=
+#
+# where short name is a single word datum specifier,
+# description is a long name (enclosed in double qoutes), 
+# ellipsoid is the acronym of the ellipsoid used with this map datum, 
+# dx, dy and dz are the datum shift parameters.
+# no spaces allowed before or after the =.
+#
+# Please comment and cite the source if you add new parameters 
+# to this list. 
+# cited from NIMA document TR8350.2
+
+# World Geodetic System 1984
+wgs84  "World Geodetic System 1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0
+# World Geodetic System 1972
+wgs72  "World Geodetic System 1972"       wgs72         dx=0.0      dy=0.0      dz=5.0
+# North American 1927
+nad27  "North American 1927"              clark66       dx=-22.0    dy=157.0    dz=176.0
+# North American 1983 (CONUS)
+nad83	"North American 1983"		  GRS80		dx=0.0	    dy=0.0	dz=0.0
+# Alaska and Canada
+a-can  "Alaska and Canada NAD27"          clark66       dx=-9.0     dy=151.0    dz=185.0 
+# European datum
+eur    "European"                         international dx=-84.0    dy=-103.0   dz=-127.0
+# Tokyo datum mean
+tokyo  "Tokyo mean"                       bessel        dx=-128.0   dy=481.0    dz=664.0
+# Australian Geodetic
+aus    "Australian Geodetic"              australian    dx=-122.0   dy=-41.0    dz=146.0
+# Ordnance Survey of Great Britain (1936)
+osgb36 "Ordnance Survey of Great Britain" airy          dx=368.0    dy=-120.0   dz=425.0
+# South American 1969 (= SAD-69/Brazil)
+# SAm69 "South American 1969"             SAm69         dx=-77.0    dy=3.0      dz=-45.0
+SAD-69 "SAD-69/Brasil"	            	  SAm69	        dx=-60.0    dy=-2.0     dz=-41.0
+# Pulkovo 1942 ( = S-42)
+pulkovo "Pulkovo 1942"                    krassovsky    dx=28.0     dy=-130.0   dz=-95.0
+# European 1950 mean
+eur50	"European 1950 mean"	  	  international dx=-87.0    dy=-98      dz=-121
+# European 1979 mean
+eur79	"European 1979 mean"		  international dx=-86      dy=-98      dz=-119
+# AGD66 Australian Geodetic 1966 [from NIMA TR8350.2]
+agd66	"Australian Geodetic 1966"	  australian    dx=-133     dy=-48      dz=148
+# AGD84 Australian Geodetic 1984 [from NIMA TR8350.2]
+agd84	"Australian Geodetic 1984"	  australian    dx=-134     dy=-48      dz=149
+# GDA94 (nearly the same as wgs84)
+# International Union of Geodesy and Geophysics Geographic Reference System 1980
+grs80	"Geographic Reference System 1980" wgs84        dx=0.0      dy=0.0      dz=0.0
+
+# from Geodetic Datum List, Peter H. Dana, 07/12/97, dlist.html
+# South Asia
+Sasia	"South Asia"			  fschr60m	dx=7.0 	    dy=-10.0    dz=-26.0
+# S-42 Pulkovo 1942
+S-42	"S-42"				  krassovsky	dx=28.0     dy=-121.0   dz=-77.0
+# Potsdam Rauenberg 1950 DHDN
+potsdam "Potsdam Rauenberg 1950 DHDN"	  bessel	dx=606.0    dy=23.0     dz=413.0
