@@ -46,6 +46,12 @@ The user will be prompted for the projection name.
 The specification of any projection other than ll and stp will generate 
 a request to the user for a name of a standard ellipse. 
 
+<P> 
+
+The user will be asked for a map datum. If no map datum support is needed, the question should be answered with no, so that no map datum is specified in the PROJ_INFO file. 
+The program assures that the ellipsoid matches the ellipsoid defined with the map datum from the datum table within GRASS. If the map datum used is not listed within this program, the user/administrator should add the definition to the systems datum.table. 
+If the ellipsoid specified does not match the one from the definition in the datum table, the program exits with an error. 
+
 <P>
 
 The projections of aea, lcc, merc, leae (GRASS 5.x), leac (GRASS 5.x), and tmerc will generate a request to the user for the prime meridian and standard parallel for the output 
@@ -64,8 +70,11 @@ projection.
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="v.proj.html">v.proj</A></EM><br>
-<EM><A HREF="m.proj.html">m.proj</A></EM> 
+<EM><A HREF="v.proj.html">v.proj</A></EM><BR>
+<EM><A HREF="s.proj.html">s.proj</A></EM><BR>
+<EM><A HREF="r.proj.html">r.proj</A></EM><BR>
+<EM><A HREF="m.proj.html">m.proj</A></EM><BR>
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM> 
 
 
 <H2>AUTHOR</H2>
@@ -75,6 +84,7 @@ U.S. Army Construction Engineering
 Research Laboratory
 <br>
 Morten Hulden, morten@tor.ngb.se - rewrote module and added 121 projections 
+Andreas Lange, andreas.lange@rhein-main.de - added prelimnary map datum support
 </body>
 </html>
 
