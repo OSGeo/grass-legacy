@@ -1,0 +1,191 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:	i.fusion.brovey
+# AUTHOR(S):	Markus Neteler. neteler itc it
+# PURPOSE:	Brovey transform to merge
+#                 - LANDSAT-7 MS (2, 4, 5) and pan (high res)
+#                 - SPOT MS and pan (high res)
+#                 - QuickBird MS and pan (high res)
+#
+# COPYRIGHT:	(C) 2002,2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+# REFERENCE:    for LANDSAT 5: see Pohl, C 1996 and others
+#############################################################################
+
+#%Module
+#%  description: Brovey transform to merge multispectral and high-res panchromatic channels
+#%End
+#%Flag
+#%  key: l
+#%  description: sensor: LANDSAT
+#%END
+#%Flag
+#%  key: q
+#%  description: sensor: QuickBird
+#%END
+#%Flag
+#%  key: s
+#%  description: sensor: SPOT
+#%END
+#%option
+#% key: ms1
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map (green: tm2 | qbird_green | spot1)
+#% required : yes
+#%end
+#%option
+#% key: ms2
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map (NIR: tm4 | qbird_nir | spot2)
+#% required : yes
+#%end
+#%option
+#% key: ms3
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map (MIR; tm5 | qbird_red | spot3)
+#% required : yes
+#%end
+#%option
+#% key: pan
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map (etmpan | qbird_pan | spotpan)
+#% required : yes
+#%end
+#%option
+#% key: outputprefix
+#% type: string
+#% gisprompt: new,cell,raster
+#% description: raster output map prefix (e.g. 'brov')
+#% required : yes
+#%end
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ cleanup
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+cleanup()
+{
+ #restore settings:
+ g.region region=i.fusion.brovey.$TMP
+ g.remove region=i.fusion.brovey.$TMP > /dev/null
+}
+
+TMP=$$
+
+if [ $GIS_FLAG_s -eq 0 -a $GIS_FLAG_l -eq 0 -a $GIS_FLAG_q -eq 0 ] ; then
+   echo "Please select a flag to specify the satellite sensor"
+   exit 1
+fi
+
+#get PAN resolution:
+PANRES=`r.info $GIS_OPT_pan | grep Res | tr -s ' ' ' ' | cut -d':' -f4 | cut -d' ' -f2 | tr '\n' ' '  | awk '{printf "%f\n", ($1+$2) / 2.}'`
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+#save current settings:
+g.region save=i.fusion.brovey.$TMP > /dev/null
+
+echo "Temporarily setting raster resolution to PAN resolution: $PANRES"
+g.region res=$PANRES -ap > /dev/null
+
+echo "Performing Brovey transformation..."
+
+# The formula was originally developed for LANDSAT-TM5 and SPOT, 
+# but it also works well with LANDSAT-TM7
+# LANDSAT formula:
+#  r.mapcalc "brov.red=1. *  tm.5 / (tm.2 + tm.4 + tm.5) * etmpan"
+#  r.mapcalc "brov.green=1. * tm.4 /(tm.2 + tm.4 + tm.5) * etmpan"
+#  r.mapcalc "brov.blue=1. * tm.2 / (tm.2 + tm.4 + tm.5) * etmpan"
+#
+# SPOT formula:
+# r.mapcalc "brov.red= 1.  * spot.ms.3 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
+# r.mapcalc "brov.green=1. * spot.ms.2 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
+# r.mapcalc "brov.blue= 1. * spot.ms.1 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
+# note: for RGB composite then revert brov.red and brov.green!
+
+echo -n "  Calculating $GIS_OPT_outputprefix.red:..."
+r.mapcalc   $GIS_OPT_outputprefix.red="1. * $GIS_OPT_ms3 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+echo -n "  Calculating $GIS_OPT_outputprefix.green:..."
+r.mapcalc   $GIS_OPT_outputprefix.green="1. * $GIS_OPT_ms2 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+echo -n "  Calculating $GIS_OPT_outputprefix.blue:..."
+r.mapcalc   $GIS_OPT_outputprefix.blue="1. * $GIS_OPT_ms1 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
+if [ $? -ne 0 ] ; then
+ echo "An error occurred."
+ exit 1
+fi
+
+# Maybe?
+#r.colors   $GIS_OPT_outputprefix.red col=grey
+#r.colors   $GIS_OPT_outputprefix.green col=grey
+#r.colors   $GIS_OPT_outputprefix.blue col=grey
+#to blue-ish, therefore we modify
+#r.colors $GIS_OPT_outputprefix.blue col=rules << EOF
+#5 0 0 0
+#20 200 200 200
+#40 230 230 230
+#67 255 255 255
+#EOF
+
+if [ $GIS_FLAG_s -eq 1 ] ; then
+ #apect table is nice for SPOT:
+ echo "Assigning color tables for SPOT..."
+ r.colors $GIS_OPT_outputprefix.blue col=aspect
+ r.colors $GIS_OPT_outputprefix.green col=aspect
+ r.colors $GIS_OPT_outputprefix.red col=aspect
+ echo "Fixing output names..."
+ g.rename $GIS_OPT_outputprefix.green,$GIS_OPT_outputprefix.$TMP > /dev/null
+ g.rename $GIS_OPT_outputprefix.red,$GIS_OPT_outputprefix.green > /dev/null
+ g.rename $GIS_OPT_outputprefix.$TMP,$GIS_OPT_outputprefix.red > /dev/null
+else
+ #aspect table is nice for LANDSAT and QuickBird:
+ echo "Assigning color tables for LANDSAT or QuickBird..."
+ r.colors $GIS_OPT_outputprefix.blue col=aspect
+ r.colors $GIS_OPT_outputprefix.green col=aspect
+ r.colors $GIS_OPT_outputprefix.red col=aspect
+fi
+
+echo "Restoring region settings."
+cleanup
+
+echo "To visualize output, run:"
+echo "  d.rgb r=$GIS_OPT_outputprefix.red g=$GIS_OPT_outputprefix.green b=$GIS_OPT_outputprefix.blue"
+echo ""
+echo "If desired, combine channels with 'r.composite' to a single map"
+
