@@ -45,6 +45,15 @@ and interpolating function interp()
     double          fstar2 = params->fi * params->fi / 4.;
     static double   *A = NULL;
     double          RO,amaxa;
+    double rsin, rcos, teta, scale; /*anisotropy parameters - added by JH 2002*/
+    double          xxr, yyr;
+
+  if(params->theta) {
+        teta = params->theta / 57.295779; /* deg to rad */
+        rsin = sin(teta); rcos = cos(teta);
+        }
+  if(params->scalex) scale = params->scalex;
+
 
     n1 = n_points + 1;
     
@@ -96,8 +105,20 @@ C
 	{
 	    xx = points[k - 1].x - points[l - 1].x;
 	    yy = points[k - 1].y - points[l - 1].y;
+
+        if ((params->theta) && (params->scalex)) {
+	/* re run anisotropy */
+            xxr = xx*rcos + yy*rsin;
+            yyr = yy*rcos - xx*rsin;
+	    xx = xxr; yy = yyr;
+            r = scale*xx*xx + yy*yy;
+            rfsta2 = fstar2 * (scale*xx * xx + yy * yy);
+	    } else
+	     {
             r = xx*xx+yy*yy;
 	    rfsta2 = fstar2 * (xx * xx + yy * yy);
+		}
+
 	    if (rfsta2 == 0.)
 	    {
 		fprintf (stderr,"ident. points in segm.  \n");

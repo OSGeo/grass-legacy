@@ -6,10 +6,8 @@ DATADIR = $(SRC)/libes/rst_gmsl/data
 DATALIB = $(LIBDIR)/rst_gmsl/data/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(LIBDIR)/rst_gmsl/interp_float/libinterpfl.a
-PACKAGE = "s.surf.rst"
-DEFS = -DPACKAGE=\"$(PACKAGE)\"
 
-EXTRA_CFLAGS = $(DEFS) -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
+EXTRA_CFLAGS = -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 
