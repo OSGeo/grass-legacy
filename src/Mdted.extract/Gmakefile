@@ -1,0 +1,24 @@
+# %W% %G%
+PGM      = Mdted.extract
+
+LIST = main.o\
+	extract.o\
+	error.o\
+	getargs.o\
+	io.o\
+	printgeo.o\
+	readtape.o\
+	round.o\
+	scan_geo.o\
+	uhl.o\
+	usage.o\
+	write_hd.o\
+	zero_out.o
+
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(LIST): dma.h
+
+$(GISLIB):      # in case library changes
