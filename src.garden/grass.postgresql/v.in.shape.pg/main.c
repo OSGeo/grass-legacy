@@ -123,11 +123,7 @@ int main( int   argc, char *argv[])
 
     struct Flag *listflag, *rejflag, *pgflag;
 
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
+    G_init_locale(PACKAGE);
 
     /* Are we running in Grass environment ? */
 

@@ -34,11 +34,10 @@ char **argv ;
         struct Option* pghost;
         struct Flag *list ;
 
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
+	G_init_locale(PACKAGE);
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
 
         list = G_define_flag();
         list->key               = 'l';
@@ -59,9 +58,6 @@ char **argv ;
 	opt1->description= _("Postgres database name:") ;
 
         hit = 1;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 
 	/* Check command line */

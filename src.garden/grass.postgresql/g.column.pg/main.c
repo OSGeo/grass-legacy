@@ -32,13 +32,12 @@ char **argv ;
     struct Option  *tbl ;
     int   stat;   
     static char SQL[1024] ;
-
-#ifdef HAVE_LIBINTL_H
-  setlocale (LC_MESSAGES, "");
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
-#endif
     
+
+	G_init_locale(PACKAGE);
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
 	   
 	tbl = G_define_option() ;
 	tbl->key        = "table" ;
@@ -50,9 +49,6 @@ char **argv ;
 	flag = G_define_flag();
 	flag->key		= 'v';
 	flag->description	= _("Use flag -v for full output.");
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {

@@ -57,7 +57,3 @@ $(DEPRASTERLIB): $(OBJ)
 
 $(OBJ): $(INCLUDE)/graph.h
 io.o: open.h
-Cont_abs.o: pos.h
-Cont_rel.o: pos.h
-Move_abs.o: pos.h
-Move_rel.o: pos.h

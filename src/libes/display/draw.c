@@ -29,8 +29,6 @@
 #include "gis.h"
 #include "display.h"
 
-extern int R__curx, R__cury;	/* current position in R_ library */
-
 static int clip (void);
 static int line_eq(int,int,int,int,int,int);
 
@@ -98,8 +96,7 @@ int D_cont_abs (int x,int y)
     clipped = clip();
     if (clipped >= 0)
     {
-	if (x1 != R__curx || y1 != R__cury) /* avoid a move, if possible */
-	    R_move_abs (x1, y1);
+	R_move_abs (x1, y1);
 	R_cont_abs (x2, y2);
     }
 
