@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2000-07-12 11:26:39 markus Exp $
+$Id: README,v 1.2 2000-07-12 11:47:55 markus Exp $
 
 Contents of this directory:
 
@@ -24,7 +24,7 @@ imagery    : imagery library
 libimage   : required for SG3d/Iris
 linkm      : linked list memory manager
 lock       : locking mechanism for GRASS monitors
-ogsf       : openGL library
+ogsf       : ported gsurf library (required for NVIZ)
 proj       : PROJ4.x projections library
 raster     : GRASS raster library
 rowio      : row in/out library
