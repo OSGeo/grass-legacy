@@ -37,6 +37,13 @@
 #% required : no
 #%END
 #%option
+#% key: type
+#% type: string
+#% description: file type
+#% options: Byte,Int16,UInt16,UInt32,Int32,Float32,Float64,CInt16,CInt32,CFloat32,CFloat64
+#% required : no
+#%END
+#%option
 #% key: output
 #% type: string
 #% description: Name of output file
@@ -77,6 +84,7 @@ fi
 
 INPUT="$GIS_OPT_input"
 FORMAT="$GIS_OPT_format"
+TYPE="$GIS_OPT_type"
 OUTPUT="$GIS_OPT_output"
 CREATEKEY="-co $GIS_OPT_createopt"
 METAKEY="-mo $GIS_OPT_metaopt"
@@ -104,4 +112,6 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-gdal_translate -of $FORMAT -a_srs `g.proj -wf` $CREATEKEY $METAKEY $CELLHD $OUTPUT 
+echo "Writing format: $FORMAT"
+echo "Writing type:   $TYPE"
+gdal_translate -of $FORMAT -ot $TYPE -a_srs "`g.proj -wf`" $CREATEKEY $METAKEY $CELLHD $OUTPUT 
