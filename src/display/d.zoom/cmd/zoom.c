@@ -16,7 +16,7 @@ int zoomwindow (int quiet, int rotate, double magnify)
     while(1)
     {
 	if (rotate)
-	    quitonly=make_window_center (&window, magnify);
+	    quitonly=make_window_center (&window, magnify, -1.0, -1.0);
 	else
 	    quitonly=make_window_box (&window, magnify);
 
