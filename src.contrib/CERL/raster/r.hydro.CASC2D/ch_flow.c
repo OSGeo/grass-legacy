@@ -71,6 +71,13 @@ if(itmp!=link && ltype[itmp]==4 && sf<0)
       if(htmp<depth) delh=(w*abs(sf)*w)/(w+width+2.*z*htmp);
    }
    dq=(abs(sf)*w-delh)*w*w/dt;   
+
+   if(dq < 0 && dqch[node+link*NODES] < abs(dq))
+	dq = - dqch[node+link*NODES];
+
+   if(dq > 0 && qtolake[lake_cat[vect2]] < dq)
+	dq = qtolake[lake_cat[vect2]];
+
    dqch[node+link*NODES]=dqch[node+link*NODES]+dq;
    qtolake[lake_cat[vect2]]=qtolake[lake_cat[vect2]]-dq;
    return;
