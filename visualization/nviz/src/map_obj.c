@@ -1848,6 +1848,10 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
         max = max / 35;
         if (max < 1)
             max = 1;
+        
+        if (max > cols) max = cols / 2;
+        if (max > rows) max = rows / 2;
+        if (max > depths) max = depths / 2;
 
 		/* set default drawres and drawmode for isosurfaces */
 		GVL_isosurf_set_drawres(id, max, max, max);
