@@ -18,7 +18,7 @@ main (int argc, char **argv)
 {
     int stat;
     int rotate;
-    struct Flag *quiet;
+    struct Flag *quiet, *recreate, *pan;
     struct Option *action;
     struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
@@ -110,35 +110,97 @@ main (int argc, char **argv)
     quiet->key = 'q';
     quiet->description = "Quiet";
 
+    recreate = G_define_flag();
+    recreate->key = 'r';
+    recreate->description = "Recreate current window";
+
+    pan = G_define_flag();
+    pan->key = 'p';
+    pan->description = "Unzoom with panning";
+
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
 
     sscanf(zoom->answer,"%lf", &magnify);
 
+    /* if map was found in monitor: */
+    if (rast || vect || site) 
+       quiet->answer=1;
+
+    cmd = NULL;
+    if (recreate->answer)
+    {
+        R_open_driver();
+	stat = R_pad_get_item("list", &list, &nlists);
+	R_close_driver();
+	if (stat || !nlists)
+	{
+	    fprintf(stderr, "ERROR: can not get \"list\" items\n");
+	    fprintf(stderr, "-r flag ignored\n");
+	    recreate->answer = 0;
+	}
+	else
+	{
+	    cmd = (char *)G_malloc(strlen(list[0])+1);
+	    strcpy(cmd, list[0]);
+	    for(i=1; i<nlists; i++)
+	    {
+		cmd = (char *)G_realloc(cmd, strlen(cmd)+strlen(list[i])+2);
+		strcat(cmd, "\n");
+		strcat(cmd, list[i]);
+	    }
+	}
+    }
+
+    if (!recreate->answer)
+    {
+    	if (rmap->answers && rmap->answers[0])
+	    rast = rmap->answers;
+	else
+	{
+	    rast = NULL;
+	    nrasts = 0;
+	}
+    	if (vmap->answers && vmap->answers[0])
+	    vect = vmap->answers;
+	else
+	{
+	    vect = NULL;
+	    nvects = 0;
+	}
+    	if (smap->answers && smap->answers[0])
+	    site = smap->answers;
+	else
+	{
+	    site = NULL;
+	    nsites = 0;
+	}
+    }
+
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
 	exit(0);
 
-    if (rmap->answers)
+    if (rast)
     {
         struct Cell_head window;
 
 	if (!nrasts)
 	{
-		for(i=0; rmap->answers[i]; i++);
+		for(i=0; rast[i]; i++);
 		nrasts = i;
 	}
 	for(i=0; i<nrasts; i++){
-    		mapset = G_find_cell2 (rmap->answers[i], "");
+    		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
     		{
 			char msg[256];
-			sprintf(msg,"Raster file [%s] not available", rmap->answers[i]);
+			sprintf(msg,"Raster file [%s] not available", rast[i]);
 			G_fatal_error(msg) ;
 		}
 		else
 		{
-	 		if(G_get_cellhd(rmap->answers[i], mapset, &window) >= 0)
+	 		if(G_get_cellhd(rast[i], mapset, &window) >= 0)
 			{
 	 			if(first)
 	 			{
@@ -167,27 +229,27 @@ main (int argc, char **argv)
     if (vmap->required == YES && vmap->answers == NULL)
 	exit(0);
 
-    if (vmap->answers)
+    if (vect)
     {
         struct Map_info Map;
 
 	if (!nvects)
 	{
-		for(i=0; vmap->answers[i]; i++);
+		for(i=0; vect[i]; i++);
 		nvects = i;
 	}
         Vect_set_open_level(1);
 	for(i=0; i<nvects; i++){
-    		mapset = G_find_vector2 (vmap->answers[i], "");
+    		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
     		{
 			char msg[256];
-			sprintf(msg,"Vector file [%s] not available", vmap->answers[i]);
+			sprintf(msg,"Vector file [%s] not available", vect[i]);
 			G_fatal_error(msg) ;
 		}
 		else
 		{
-			if(Vect_open_old(&Map, vmap->answers[i], mapset) == 1)
+			if(Vect_open_old(&Map, vect[i], mapset) == 1)
 			{
 	 			if(first)
 	 			{
@@ -216,7 +278,7 @@ main (int argc, char **argv)
     if (smap->required == YES && smap->answers == NULL)
 	exit(0);
 
-    if (smap->answers)
+    if (site)
     {
 	FILE *fp;
 	Site *s;
@@ -224,20 +286,20 @@ main (int argc, char **argv)
 
 	if (!nsites)
 	{
-		for(i=0; smap->answers[i]; i++);
+		for(i=0; site[i]; i++);
 		nsites = i;
 	}
 	for(i=0; i<nsites; i++){
-    		mapset = G_find_sites2 (smap->answers[i], "");
+    		mapset = G_find_sites2 (site[i], "");
     		if (mapset == NULL)
     		{
 			char msg[256];
-			sprintf(msg,"Site file [%s] not available", smap->answers[i]);
+			sprintf(msg,"Site file [%s] not available", site[i]);
 			G_fatal_error(msg) ;
 		}
 		else
 		{
-			if(NULL != (fp = G_fopen_sites_old(smap->answers[i], mapset)))
+			if(NULL != (fp = G_fopen_sites_old(site[i], mapset)))
 			{
 				rtype = -1;
 				G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
@@ -286,17 +348,6 @@ main (int argc, char **argv)
 	}
     }
 
-    /* if map was found in monitor: */
-    if (rast || vect || site) 
-       quiet->answer=1;
-
-    if (rmap->answers)
-	    rast = rmap->answers;
-    if (vmap->answers)
-	    vect = vmap->answers;
-    if (smap->answers)
-	    site = smap->answers;
-
 #ifdef BOUNDARY
     if(!first)
     {
@@ -320,6 +371,10 @@ main (int argc, char **argv)
     }
 #endif
 
+    R_open_driver();
+    
+    D_setup(0);
+
 /* find out for lat/lon if zoom or rotate option */
     rotate = 0;
     if (G_projection() == PROJECTION_LL)
@@ -333,15 +388,16 @@ main (int argc, char **argv)
 
     do
     {
-        R_open_driver();
-    
-        D_setup(0);
-    
+        fprintf(stderr, "%d raster%s, %d vector%s, %d site file%s\n",
+		    nrasts, (nrasts > 1 ? "s":""),
+		    nvects, (nvects > 1 ? "s":""),
+		    nsites, (nsites > 1 ? "s":""));
     /* Do the zoom */
-        stat = zoomwindow(quiet->answer, rotate, magnify);
+        stat = zoomwindow(quiet->answer, rotate, magnify, pan->answer);
     
-        R_close_driver();
     } while(stat == 2);
+
+    R_close_driver();
 
     if (rast)
       R_pad_freelist(rast, nrasts);

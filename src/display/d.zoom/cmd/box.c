@@ -6,7 +6,7 @@
 
 static int max(int,int);
 
-int make_window_box ( struct Cell_head *window, double magnify)
+int make_window_box ( struct Cell_head *window, double magnify, char pan)
 {
     char buffer[64] ;
     int screen_x, screen_y ;
@@ -80,7 +80,10 @@ int make_window_box ( struct Cell_head *window, double magnify)
 		   U_south < window->south ||
 		   U_north > window->north)
 		{
-			make_window_center(window, magnify, ux2, uy2);
+			if(pan)
+			    make_window_center(window, magnify, ux2, uy2);
+			else
+			    make_window_center(window, magnify, -1.0, -1.0);
 		}
 		else
 		{
