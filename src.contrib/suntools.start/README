@@ -1,0 +1,20 @@
+GRASS has an undocumented capability that allows a user to run a startup
+file automatically every time GRASS is started.  This is akin to a .cshrc
+or .login file (for csh users) or a .profile (for sh users).  This directory
+contains startup files that have been generated for different sites.  You
+may want to use them for ideas.
+
+If the file .grass3rc is found inthe users home directory it is EXECUTED.  If
+it is not found, but there is a grass3rc file in the $GISBASE directory, that
+file is executed.  The later is reserved as a default for all users at a given
+site.
+
+Samples in this directory:
+
+suntool.st   Developed for a site which runs one single user SUN graphics
+             monitor.   At GRASS startup, suntools is automatically started
+             up (if not already running).  An accompanying suntools startup
+             file creates an appropriate window in which the SUN (core)
+             driver is started.   The script then checks after a pause to
+             make sure the driver is running and reports to the user
+             accordingly.
