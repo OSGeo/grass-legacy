@@ -21,7 +21,7 @@ are collectively termed a @glossary("raster map",16.glossary/rastmap.def) layer.
 
 NOTE: "Cell map" was the term used to denote maps in raster format in
 previous versions of GRASS.  A "cell map" is now referred to as a
-"raster map" in GRASS 4.0 documentation.
+"raster map" in GRASS 4.2 documentation.
 
 Raster data files are stored under the "cell" directory under each
 mapset.  For more information on the location and content of raster
