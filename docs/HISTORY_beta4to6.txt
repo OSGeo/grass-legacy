@@ -6,7 +6,16 @@ The history is organized bottom-up (latest comes first).
 Find the authors of every section behind the release date.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-22th December, 1999 (John Huddleston, Bill Hughes, Markus Neteler)
+30. Dec. 1999
+
+This change log will be continued in ../ChangeLog
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+23th December, 1999 (John Huddleston, Bill Hughes, Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_6d.tar <--
+         -------------------
 
  - renamed src/libes/geom/lia/aux.c to (John)
     auxiliary.c
