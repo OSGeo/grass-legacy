@@ -17,20 +17,30 @@
 *  Written by the Radim Blazek
 */
 
+#include <math.h>
+#include "libtrans.h"
 #include "Vect.h"
 #include "gis.h"
-#include "libtrans.h"
+#include "trans.h"
+
+#define PI  3.141592653589793116
 
 int 
 transform_digit_file (struct Map_info *Old, struct Map_info *New,
-                      float ztozero, float zscale, float zshift)
+	              int    shift, 
+	              double xshift, double yshift, double zshift, double ztozero,
+		      double zrot, double zscale)
 {
     int    i, type;
+    double ang, x, y; 
     static struct line_pnts *Points;
     static struct line_cats *Cats;
 
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
+    
+
+    ang = PI * zrot / 180;
     
     while (1) {
 	type = Vect_read_next_line (Old, Points, Cats);
@@ -42,7 +52,14 @@ transform_digit_file (struct Map_info *Old, struct Map_info *New,
 	    return 1;
 	
 	for ( i = 0; i < Points->n_points; i++ ) {
-            transform_a_into_b( Points->x[i], Points->y[i], &(Points->x[i]), &(Points->y[i]) );
+	    if ( !shift ) {
+                transform_a_into_b( Points->x[i], Points->y[i], &(Points->x[i]), &(Points->y[i]) );
+            } else {
+		x = xshift + Points->x[i] * cos(ang) - Points->y[i] * sin(ang); 
+		y = yshift + Points->x[i] * sin(ang) + Points->y[i] * cos(ang); 
+		Points->x[i] = x;
+		Points->y[i] = y;
+	    }
             /* ztozero shifts oldmap z to zero, zshift shifts rescaled object
              * to target elevation: */
             Points->z[i] = ((Points->z[i] + ztozero) * zscale) + zshift;

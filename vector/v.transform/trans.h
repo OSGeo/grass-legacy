@@ -21,6 +21,8 @@
 #define  POINTS_NOT_SPREAD  -1
 #define  NEED_MORE_POINTS  -2
 
+#define  TRANS_MATRIX 0 
+#define  TRANS_SHIFT  1
 
 /******************
 *  GLOBALS:       *
