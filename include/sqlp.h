@@ -78,10 +78,10 @@ int sqpInitParser(SQLPSTMT *st);
 void sqpCommand( int command );
 void sqpTable( char *table );
 void sqpColumn( char *column );
-void sqpColumnDef( char *column, int type, char *width, char *decimals );
-void sqpValue( char *value, int type );
-void sqpAssignment( char *column, char *value, int type );
-void sqpComparison( char *column, char *oper, char *value, int type );
+void sqpColumnDef( char *column, int type, int width, int decimals );
+void sqpValue( char *strval, int intval, double dblval, int type );
+void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
+void sqpComparison( char *column, char *oper, char *strval, int intval, double dblval, int type );
 
 #ifdef SQLP_MAIN
 SQLPSTMT *sqlpStmt;

@@ -106,9 +106,9 @@
   * INTEGER
   ***************************************/
 
-[0-9]+		{
-			/*yylval.intval = atoi(yytext);*/
-			yylval.strval = (char*)strdup(yytext);
+[+-]?[0-9]+	{
+			yylval.intval = atoi(yytext);
+			/* yylval.strval = (char*)strdup(yytext); */
 			return INTNUM;
 		}
 
@@ -116,13 +116,13 @@
   * FLOATING POINT NUM
   ***************************************/
 
-"."[0-9]* |
-[0-9]+"."[0-9]* |
-[0-9]+[eE][+-]?[0-9]+	|
-[0-9]+"."[0-9]*[eE][+-]?[0-9]+ |
-"."[0-9]*[eE][+-]?[0-9]+	{
-					/*yylval.floatval = atol(yytext);*/
-			                yylval.strval = (char*)strdup(yytext);
+[+-]?"."[0-9]* |
+[+-]?[0-9]+"."[0-9]* |
+[+-]?[0-9]+[eE][+-]?[0-9]+	|
+[+-]?[0-9]+"."[0-9]*[eE][+-]?[0-9]+ |
+[+-]?"."[0-9]*[eE][+-]?[0-9]+	{
+					yylval.floatval = atof(yytext);
+			                /* yylval.strval = (char*)strdup(yytext); */
 					return FLOATNUM;
 				}
 
