@@ -40,10 +40,11 @@ rm -f ./a a.exe 64test.c
 ARCHIT=`echo $ARCH | grep -i "alpha"`
 
 if [ "$SIZEOFLONG" -eq "8" -a "X$ARCHIT" != "X" ]; then
-	 echo "[ 64bit alpha ]"
-	 echo "  --> Using 64-bit PVF library"
-	 cat $GRASSLIST | \
-         sed "s,vect32/diglib$,vect32/diglib64," > $GRASSLIST.new
-	 mv $GRASSLIST.new $GRASSLIST
+	echo "[ 64bit alpha ]"
+	echo "  --> Using 64-bit PVF library"
+#not required any more:
+#	cat $GRASSLIST | \
+#	sed "s,vect32/diglib$,vect32/diglib64," > $GRASSLIST.new
+#	mv $GRASSLIST.new $GRASSLIST
 fi
 
