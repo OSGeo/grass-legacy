@@ -1,10 +1,9 @@
 PGM=v.circle
 HOME=$(BIN_MAIN_INTER)
 
-$(HOME)/$(PGM): main.o $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB)
+$(HOME)/$(PGM): main.o $(GISLIB) $(VECTLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VECTLIB): #
-$(MATHLIB): #
 $(DATETIMELIB): #

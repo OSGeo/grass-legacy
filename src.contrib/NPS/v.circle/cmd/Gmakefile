@@ -1,10 +1,9 @@
 PGM=v.circle
 HOME=$(BIN_MAIN_CMD)
 
-$(HOME)/$(PGM): main.o readsites.o $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB)
+$(HOME)/$(PGM): main.o readsites.o $(GISLIB) $(VECTLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ main.o readsites.o $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VECTLIB): #
-$(MATHLIB): #
 $(DATETIMELIB) : #
