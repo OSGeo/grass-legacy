@@ -14,9 +14,9 @@
 <h2>SYNOPSIS</h2>
    <b>r.texture</b><br>
    <b>r.texture help</b>  <br>
-   <b>r.texture</b> [<b>-qackviswxedpmno</b>] <b>input=</b>name <b>output=</b>name
-<b>size=</b>value <b>distance=</b>value<br>
-     
+   <b>r.texture</b> [-<b>Nqackviswxedpmno</b>] <b>input</b>=<em>string</em> 
+       <b>prefix</b>=<em>string</em> <b>size</b>=<em>integer</em> <b>distance</b>=<em>integer</em> 
+ 
 <h2>DESCRIPTION</h2>
 
 <em>r.texture</em> - Creates map raster with textural features for
@@ -40,8 +40,9 @@ names of raster map layers and any desired option on the command line,
 using the form
 
 <dl>
-  <dd> <b>r.texture</b> [<b>-qackviswxedpmno</b>] <b>input=</b>name <b>output=</b>name
-    <b>size=</b>value <b>distance=</b>value    </dd>
+  <dd> <b>r.texture</b> [-<b>Nqackviswxedpmno</b>] <b>input</b>=<em>string</em> 
+  <b>prefix</b>=<em>string</em> <b>size</b>=<em>integer</em> <b>distance</b>=<em>integer</em> 
+ </dd>
 </dl>
    
 <h3>Parameters:</h3>
@@ -51,7 +52,7 @@ using the form
   <dd>Existing raster map layer to be included in the textural feature extraction.</dd>
 </dl>
 <dl>
-  <dt><b>output = </b><em>name</em> </dt>
+  <dt><b>prefix = </b><em>name</em> </dt>
   <dd>New raster map layer with the textural feature extracted.
  </dd>
 </dl>
@@ -67,27 +68,57 @@ using the form
     <p>and the flags have meanings given below.</p>
 
 <h3>Flags</h3>
-      
-<dl>
-  <dt><b> -q</b> Run quietly (without comments on program progress).
-  </dt>
-  <dt>
-     <b>-a</b> Calculate the Angular Second Moment<br>
-     <b>-c</b> Calculate the Contrast<br>
-     <b>-k</b> Calculate the Correlation<br>
-     <b>-v</b> Calculate the Variance<br>
-     <b>-i</b> Calculate the Inverse Diff Moment<br>
-     <b>-s</b> Calculate the Sum Average<br>
-     <b>-w</b> Calculate the Sum Variance<br>
-     <b>-x</b> Calculate the Sum Entropy<br>
-     <b>-e</b> Calculate the Entropy<br>
-     <b>-d</b> Calculate the Difference Variance<br>
-     <b>-p</b> Calculate the Difference Entropy<br>
-     <b>-m</b> Calculate the Meas of Correlation-1<br>
-     <b>-n</b> Calculate the Meas of Correlation-2<br>
-     <b>-o</b> Calculate the Max Correlation Coeff
-  </dt>
-</dl>
+ <DL>
+<DT><b>-N</b>
+<DD>Normalized</DD>
+
+<DT><b>-q</b>
+<DD>Quiet</DD>
+
+<DT><b>-a</b>
+<DD>Angular Second Moment</DD>
+
+<DT><b>-c</b>
+<DD>Contrast</DD>
+
+<DT><b>-k</b>
+<DD>Correlation</DD>
+
+<DT><b>-v</b>
+<DD>Variance</DD>
+
+<DT><b>-i</b>
+<DD>Inverse Diff Moment</DD>
+
+<DT><b>-s</b>
+<DD>Sum Average</DD>
+
+<DT><b>-w</b>
+<DD>Sum Variance</DD>
+
+<DT><b>-x</b>
+<DD>Sum Entropy</DD>
+
+<DT><b>-e</b>
+<DD>Entropy</DD>
+
+<DT><b>-d</b>
+<DD>Difference Variance</DD>
+
+<DT><b>-p</b>
+<DD>Difference Entropy</DD>
+
+<DT><b>-m</b>
+<DD>Meas of Correlation-1</DD>
+
+<DT><b>-n</b>
+<DD>Meas of Correlation-2</DD>
+
+<DT><b>-o</b>
+<DD>Max Correlation Coeff</DD>
+
+</DL>
+     
       
 <p> Alternately, the user can simply type <b>r.texture </b>on the command
 line, without program arguments. In this case, the user will be prompted for
@@ -119,8 +150,8 @@ href="parser.html">parser</a> interface.  </p>
     Segmentation, IEEE Trans. on Image Processing, vol. 3, no.2.</p>
 
 <p>
-<b>Haralick R.</b>, (May 1979). <i>Statistical Approaches to Texture</i>, Proceedings of
-    the IEEE, vol. 67, No.5.</p>
+<b>Haralick R.</b>, (May 1979). <i>Statistical and structural approaches to texture</i>, 
+   Proceedings of the IEEE, vol. 67, No.5, pp. 786-804</p>
  
      
 <h2>SEE ALSO</h2>
