@@ -13,6 +13,7 @@
 #endif
 
 #include "shapefil.h"
+#include "btree.h"
 
 
 #ifdef HAVE_POSTGRES
@@ -32,6 +33,7 @@
  */
 typedef int plus_t;
 
+#define BOUND_BOX struct bound_box
 
 #define P_NODE struct P_node
 #define P_AREA struct P_area
@@ -188,6 +190,14 @@ struct Plus_head
     long Area_offset;
     long Isle_offset;
 
+    /* Here will be spatial index, now only temporary solution for nodes */
+    BTREE Node_spidx;
+    /*
+    ???   Line_spidx;
+    ???   Area_spidx;
+    ???   Isle_spidx;
+    */
+
     long Dig_size;		/* size of dig file */
     long Dig_code;		/* internal check codes */
 
@@ -257,7 +267,7 @@ struct Map_info
   };
 
 
-struct bounding_box        /* Bounding Box */
+struct bound_box        /* Bounding Box */
   {
     double N;	/* north */			
     double S;   /* south */
@@ -373,18 +383,18 @@ typedef int GV_CAT;	      /* vector category */
 struct line_cats
   {
     GV_FIELD *field;		/* pointer to array of fields */
-    GV_CAT *cat;			/* pointer to array of categories */
+    GV_CAT   *cat;			/* pointer to array of categories */
     GV_NCATS n_cats;		/* number of vector categories attached to element */
-    int alloc_cats;		/* allocated space */
+    int      alloc_cats;		/* allocated space */
   };
 
 struct cat_list
   {
     GV_FIELD field;      /* category field */	  
-    GV_CAT *min;         /* pointer to array of minimun values */
-    GV_CAT *max;         /* pointer to array of maximum values */
-    int         n_ranges;     /* number ranges */
-    int         alloc_ranges; /* allocated space */
+    GV_CAT   *min;         /* pointer to array of minimun values */
+    GV_CAT   *max;         /* pointer to array of maximum values */
+    int      n_ranges;     /* number ranges */
+    int      alloc_ranges; /* allocated space */
   };
 
 /* category field information */
@@ -394,6 +404,14 @@ struct field_info
     char *database;
     char *table;
     char *key;
+  };
+
+/* list of integers */
+struct ilist
+  {
+    int    *value;       /* items */	  
+    int    n_values;     /* number of values */
+    int    alloc_values; /* allocated space */
   };
 
 #endif /* DIG___STRUCTS___ */

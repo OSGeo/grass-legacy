@@ -4,6 +4,10 @@ void *dig_falloc (int, int);	/* exits on error, calls _falloc () */
 void *dig_frealloc (void *, int, int, int);	/* exits on error, calls _frealloc () */
 void *dig__falloc (int, int);	/* returns NULL on error, calls calloc () */
 void *dig__frealloc (void *, int, int, int);	/* returns NULL on error, calls calloc () */
+
+int dig_init_list ( struct ilist * );
+int dig_list_add ( struct ilist *, int );
+
 char *color_name (int);		/* pass it an int, returns the name of the color */
 
 float dig_calc_begin_angle (struct line_pnts *, double);
@@ -69,6 +73,11 @@ int dig_add_area (struct Plus_head *, int, plus_t *);
 int dig_angle_next_line (struct Plus_head *, plus_t, int, int);
 //int dig_area_bound_box (struct Map_info *, P_AREA *);
 int dig_bound_box2 (struct line_pnts *, double *, double *, double *, double *, long);
+int dig_line_box (struct line_pnts *, BOUND_BOX *);
+int dig_line_set_box (struct Plus_head *, plus_t, BOUND_BOX *);
+int dig_area_set_box (struct Plus_head *, plus_t, BOUND_BOX *);
+int dig_isle_set_box (struct Plus_head *, plus_t, BOUND_BOX *);
+
 int dig_is_line_degenerate (struct line_pnts *, double);
 //int dig_check_nodes (struct Map_info *, struct new_node *, struct line_pnts *);
   //int dig_in_area_bbox (P_AREA *, double, double);
@@ -92,6 +101,7 @@ int dig_free_plus (struct Plus_head *);
 int dig_load_plus (struct Plus_head *, FILE *);
 int dig_map_to_head (struct Map_info *, struct Plus_head *);
 int dig_head_to_map (struct Plus_head *, struct Map_info *);
+int dig_spindex_init ( struct Plus_head *);
 
 //int dig_snap_line_to_node (struct Map_info *, int, int, struct line_pnts *);
 
@@ -104,6 +114,28 @@ int dig_add_line_to_node (int, int, char, struct Map_info *, struct line_pnts *)
 int dig_point_to_area (struct Map_info *, double, double);
 int dig_point_to_next_area (struct Map_info *, double, double, double *);
 int dig_point_to_line (struct Map_info *, double, double, char);
+
+int dig_spidx_add_node ( struct Plus_head *, int, double, double, double);
+int dig_spidx_add_line ( struct Plus_head *, int, BOUND_BOX *);
+int dig_spidx_add_area ( struct Plus_head *, int, BOUND_BOX *);
+int dig_spidx_add_isle ( struct Plus_head *, int, BOUND_BOX *);
+
+int dig_select_nodes ( struct Plus_head *, BOUND_BOX *, struct ilist *);
+int dig_select_lines ( struct Plus_head *, BOUND_BOX *, struct ilist *);
+int dig_select_areas ( struct Plus_head *, BOUND_BOX *, struct ilist *);
+int dig_select_isles ( struct Plus_head *, BOUND_BOX *, struct ilist *);
+int dig_find_node ( struct Plus_head *, double, double, double);
+
+int dig_write_spidx_nodes ( FILE *, struct Plus_head *);
+int dig_write_spidx_lines ( FILE *, struct Plus_head *);
+int dig_write_spidx_areas ( FILE *, struct Plus_head *);
+int dig_write_spidx_isles ( FILE *, struct Plus_head *);
+
+int dig_read_spidx_nodes ( FILE *, struct Plus_head *);
+int dig_read_spidx_lines ( FILE *, struct Plus_head *);
+int dig_read_spidx_areas ( FILE *, struct Plus_head *);
+int dig_read_spidx_isles ( FILE *, struct Plus_head *);
+
 //int dig_in_line_bbox (P_LINE *, double, double);
 int dig_check_dist (struct Map_info *, int, double, double, double *);
 int dig__check_dist (struct Map_info *, struct line_pnts *, double, double, double *);
