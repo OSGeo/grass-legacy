@@ -1,0 +1,39 @@
+PGM=XDRIVER.n
+
+LIB = ../lib/driverlib.a $(D_LIB)
+
+# For those compiling this driver under Sun's Openwindows, uncomment
+# the following two lines:
+EXTRA_CFLAGS=-I/usr/openwin/include
+LDFLAGS=-L/usr/openwin/lib -s
+# if you are compiling under X11R3 add this define
+#EXTRA_CFLAGS=-DX11R3
+
+OFILES =  \
+	Box_abs.o\
+	Can_do.o\
+	Color.o\
+	Cont_abs.o\
+	Clr_table.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Plylne_abs.o\
+	Polygn_abs.o\
+	Returns.o\
+	Serve_Xevent.o\
+	SWITCHER.o\
+	alloc.o\
+	command_pend.o\
+	Raster.o
+
+#A -lnsl_s -lpt must be inserted in front of the $(EXTRALIB) for the 
+#SYSV compile on the $(CC) line
+$(GISBASE)/driver/$(PGM): $(OFILES) $(LIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIB) -lX11 $(MATHLIB) $(EXTRALIB)
+
+$(LIB): #
