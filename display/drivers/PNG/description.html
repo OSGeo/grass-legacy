@@ -13,19 +13,25 @@
 
 The PNG driver generates PNG images from GRASS display commands.
 <H2>USAGE</H2>
-<H3>Environment variables</H3>Several environment variables effect the operation 
+<H3>Environment variables</H3>
+Several environment variables effect the operation 
 of the PNG driver. 
 <UL>
-  <LI><B>GRASS_WIDTH=xxx</B><BR>the width of the image map (default is 
-  640).<BR><BR>
-  <LI><B>GRASS_HEIGHT=yyy</B><BR>the height of the image map (default is 
-  480).<BR><BR>
-  <LI><B>GRASS_PNGFILE=filename</B><BR>the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
-  <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>specifies the background color to use in RGB
-  notation (hex values). Default is <b>000000</b> (black).<br><br>
-  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE,
-  default).<BR><BR>
-  <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>sets true-color support
+  <LI><B>GRASS_WIDTH=xxx</B><BR>
+     the width of the image map (default is 640).<BR><BR>
+  <LI><B>GRASS_HEIGHT=yyy</B><BR>
+    the height of the image map (default is 480).<BR><BR>
+  <LI><B>GRASS_PNGFILE=filename</B><BR>
+     the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
+  <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>
+     specifies the background color to use in RGB
+     notation (hex values). Default is <b>000000</b> (black).<br><br>
+  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>
+    sets transparent background on (TRUE) or off (FALSE, default).<BR><BR>
+  <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>
+    sets true-color support<BR><BR>
+  <LI><B>GRASS_PNG_COMPRESSION=[0|1|9]</B><BR>
+    compression level of PNG files (0 = none, 1 = fastest, 9 = best)
 </UL>
 
 <H3>Example</H3>
