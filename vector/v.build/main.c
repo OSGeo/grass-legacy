@@ -31,7 +31,7 @@ main (int argc, char *argv[])
     map_opt->type =  TYPE_STRING;
     map_opt->required = YES;
     map_opt->multiple = NO;
-    map_opt->gisprompt = "old,dig,vector";
+    map_opt->gisprompt = "old,vector,vector";
     map_opt->description  = "Name of vector";
     
     opt = G_define_option();

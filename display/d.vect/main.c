@@ -56,8 +56,8 @@ main (int argc, char **argv)
 	map_opt->type       = TYPE_STRING ;
 	map_opt->required   = YES ;
 	map_opt->multiple   = NO ;
-	map_opt->gisprompt  = "old,dig,vector" ;
-	map_opt->description= "Name of existing vector map to be displayed" ;
+	map_opt->gisprompt  = "old,vector,vector" ;
+	map_opt->description= "Vector name" ;
 
 	type_opt = G_define_option() ;
 	type_opt->key        = "type" ;
@@ -66,7 +66,7 @@ main (int argc, char **argv)
 	type_opt->multiple   = YES ;
 	type_opt->answer     = "point,line,boundary,centroid" ;
 	type_opt->options    = "point,line,boundary,centroid,area";
-	type_opt->description= "Select type: point, line, boundary, centroid or area" ;
+	type_opt->description= "Type" ;
 	
 	display_opt = G_define_option() ;
 	display_opt->key        = "display" ;
@@ -75,7 +75,7 @@ main (int argc, char **argv)
 	display_opt->multiple   = YES ;
 	display_opt->answer     = "shape" ;
 	display_opt->options    = "shape,cat,topo,dir";
-	display_opt->description= "Display shape, category, direction or topology" ;
+	display_opt->description= "Display" ;
 	
 	field_opt = G_define_option() ;
 	field_opt->key        = "field" ;
@@ -86,14 +86,13 @@ main (int argc, char **argv)
 	cat_opt = G_define_option() ;
 	cat_opt->key        = "cat" ;
 	cat_opt->type       = TYPE_STRING ;
-	cat_opt->description= "Categories to be displayed. "
-                              "Example: cat=3,7,15-21,45" ;
+	cat_opt->description= "Categories (example: 3,7,15-21,45)" ;
 	
 	where_opt = G_define_option() ;
 	where_opt->key        = "where" ;
 	where_opt->type       = TYPE_STRING ;
 	where_opt->description= "WHERE conditions of SQL statement without 'where' keyword. "
-                                "Example: income < 1000 and inhab >= 10000" ;
+                                "(example: income < 1000 and inhab >= 10000)" ;
 	
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;

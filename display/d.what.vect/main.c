@@ -53,7 +53,7 @@ int main(int argc, char **argv)
   if (vect)
           opt1->answers = vect;
   opt1->required   = NO ;
-  opt1->gisprompt  = "old,dig,vector" ;
+  opt1->gisprompt  = "old,vector,vector" ;
   opt1->description= "Name of existing vector map" ;
   
   terse = G_define_flag();
