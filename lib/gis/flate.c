@@ -60,6 +60,18 @@
  *                                                                  *
  * ================================================================ *
  * int                                                              *
+ * G_zlib_write_noCompress (fd, src, nbytes)                        *
+ *     int fd, nbytes;                                              *
+ *     unsigned char *src;                                          *
+ * ---------------------------------------------------------------- *
+ * Works similar to G_zlib_write() except no attempt at compression *
+ * is made.  This is quicker, but may result in larger files.       *
+ * Returns the number of bytes written, or -1 for an error. It will *
+ * return an error if it fails to write nbytes. Otherwise, the      *
+ * return value will always be nbytes + 1 (for compression flag).   *
+ *                                                                  *
+ * ================================================================ *
+ * int                                                              *
  * G_zlib_compress (src, srz_sz, dst, dst_sz)                       *
  *     int src_sz, dst_sz;                                          *
  *     unsigned char *src, *dst;                                    *
@@ -268,6 +280,44 @@ G_zlib_write (fd, src, nbytes)
 
     return nwritten;
 } /* G_zlib_write() */
+
+
+int
+G_zlib_write_noCompress (fd, src, nbytes)
+    int fd, nbytes;
+    unsigned char *src;
+{
+    int err, nwritten;
+    unsigned char compressed;
+    
+    /* Catch errors */
+    if (src == NULL || nbytes < 0)
+        return -1;
+   
+    /* Write the compression flag */
+    compressed = G_ZLIB_COMPRESSED_NO;
+    if (write (fd, &compressed, 1) != 1)
+        return -1;
+    
+    /* Now write the data */
+    nwritten = 0;
+    do {
+        err = write (fd, src + nwritten, nbytes - nwritten);
+        if (err > 0)
+            nwritten += err;
+    } while (err > 0 && nwritten < nbytes);
+
+    if (err < 0 || nwritten != nbytes)
+        return -1;
+
+    /* Account for extra compressed flag */
+    nwritten++;
+
+    /* That's all */
+    return nwritten;
+
+} /* G_zlib_write_noCompress() */
+
 
 int
 G_zlib_compress (src, src_sz, dst, dst_sz)
