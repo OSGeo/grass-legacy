@@ -1,0 +1,8 @@
+
+
+snapping threshold - The radius within which \vector\ \nodes\ will be
+"snapped" and said to be at the same geographic coordinate location.
+Used during digitizing, when importing vector files to GRASS vector
+format and when converting vector files to GRASS \raster\ format.
+Generally expressed as a map distance but may also be expressed as
+ground distance.
