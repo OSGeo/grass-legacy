@@ -1,0 +1,8 @@
+interface_build {
+    {v.prune} 0
+    {Prunes points from binary GRASS vector map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+    {entry thresh {Threshold value:} 0 ""}
+    {checkbox -i {Threshold value in inches.} "" -i}
+}
