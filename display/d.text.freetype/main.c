@@ -139,8 +139,7 @@ main(int argc, char **argv)
 	{
 		strcpy(capfile, getenv("GRASS_FREETYPECAP"));
 		if(access(capfile, R_OK))
-			G_warning("%s: Can not read FreeType definition file; "
-					"use the default", capfile);
+			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
 		else
 		if(!read_capfile(capfile, &fonts, &font_names,
 					&fonts_count, &cur_font))
@@ -389,16 +388,20 @@ main(int argc, char **argv)
 		x = px = sx;
 		y = py = sy;
 
+		if(isatty(0))
+			fprintf(stdout, "\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n\n");
+
 		tmpfile = G_tempfile();
 		if(!(fp = fopen(tmpfile, "w")))
 			error("Unable to write the temporary file");
 
 		while(fgets(buf, 512, stdin))
 		{
+			fprintf(fp, "%s", buf);
+
 			l = strlen(buf);
 			buf[l-1] = 0;
 
-			fprintf(fp, "%s", buf);
 			if(buf[0] == '.' && buf[1] != '.')
 			{
 				G_squeeze(buf);
@@ -436,7 +439,7 @@ main(int argc, char **argv)
 							path = p;
 							if(access(path, R_OK))
 							{
-								G_warning("%s: Can not read font", p);
+								G_warning("%s: Unable to read font", p);
 								break;
 							}
 						}
@@ -611,7 +614,7 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 
 	if(!(fp = fopen(capfile, "r")))
 	{
-		G_warning("%s: Can not read FreeType definition file", capfile);
+		G_warning("%s: Unable to read FreeType definition file", capfile);
 		return -1;
 	}
 
