@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.65 2000-11-06 13:41:14 markus Exp $
+$Id: BUGS,v 1.66 2000-11-06 14:25:17 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -130,6 +130,9 @@ i.in.gtc/i.in.pri
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
  - Attempting to change the default Title causes a segfault.
   (being worked on by ?)  
+
+g.help:
+ - implement correct keycodes for "arrow down/up" instead of d, u
 
 g3.region:
  - after defining the 3D-region with g3.createwind (which runs o.k.),
