@@ -1,0 +1,34 @@
+Mtry	try.c	/^main()$/
+Pclose	io.c	/^Pclose()$/
+Pcolorlevels	colors.c	/^Pcolorlevels (red, grn, blu)$/
+Pcolormultipliers	colors.c	/^Pcolormultipliers (red, grn, blu)$/
+Pcolornum	colors.c	/^Pcolornum (red, green, blue)$/
+Pcolorvalue	colors.c	/^Pcolorvalue (n, red, grn, blu)$/
+Pflush	io.c	/^Pflush ()$/
+Pncolors	colors.c	/^Pncolors()$/
+Popen	io.c	/^Popen(port)$/
+Pout	io.c	/^Pout (buf, len)$/
+Poutc	io.c	/^Poutc ( c)$/
+Pouts	io.c	/^Pouts (s)$/
+Pset_color_levels	colors.c	/^Pset_color_levels(n)$/
+TRACE	interface.c	/^static TRACE (msg) char *msg;$/
+baud	io.c	/^baud ()$/
+colortable	interface.c	/^colortable (n)$/
+delay	interface.c	/^delay(n)$/
+envf	interface.c	/^envf (name)$/
+envi	interface.c	/^envi (name, min)$/
+eq	io.c	/^#define eq(x) strcmp(BAUD,x)==0$/
+error	interface.c	/^error (msg)$/
+lock	interface.c	/^lock (maplp,fatal) char *maplp;$/
+paint_interface	interface.c	/^paint_interface (argc, argv) char *argv[];$/
+rec	interface.c	/^rec (buf, n)$/
+rec_opcode	interface.c	/^rec_opcode (opcode)$/
+recf	interface.c	/^recf ()$/
+reci	interface.c	/^reci ()$/
+recs	interface.c	/^recs (buf,n)$/
+send	interface.c	/^send (buf, n)$/
+sendf	interface.c	/^sendf (f)$/
+sendi	interface.c	/^sendi (i)$/
+sends	interface.c	/^sends (s)$/
+unlock	interface.c	/^unlock()$/
+xalloc	interface.c	/^xalloc (n)$/
