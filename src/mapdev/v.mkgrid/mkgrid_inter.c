@@ -36,6 +36,7 @@ int main (int argc, char *argv[])
 	AttributeType  att_type;
 	struct attribute *Att1;
 	struct atts_index *attindx;
+	struct Categories cats;
 	int cval, attCount;
 	int nr, nc;
 
@@ -58,6 +59,7 @@ int main (int argc, char *argv[])
 
     /*  make sure dig directory is there  */
 	G__make_mapset_element( B_DIG) ;
+	G__make_mapset_element("dig_cats") ;
 
 /*  information we need to collect from user: origin point x and y (lower left),
 *   shift in x, shift in y,  number of rows, number of cols
@@ -219,11 +221,15 @@ int main (int argc, char *argv[])
 	grid_point_x = (double *)malloc( nr * nc * sizeof(double) );
 	grid_point_y = (double *)malloc( nr * nc * sizeof(double) );
 	grid_val = (int *)malloc( nr * nc * sizeof(int) );
+	if ( att_type != ATT_CONSTANT )
+	    G_init_cats (nr*nc, "", &cats);
+        else
+	    G_init_cats (0, "", &cats); 
 
 
 	set_grid_area_points( grid_point_x, grid_point_y, &grid_info );
 
-	set_grid_attributes( grid_val, &grid_info, att_type );
+	set_grid_attributes( grid_val, &cats, &grid_info, att_type );
 
 
 	/* Allocate space for attribute structures */
@@ -251,6 +257,12 @@ int main (int argc, char *argv[])
 	    write_att_struct( fatt, Att1 );
 	  }
 	}
+	if (G_write_vector_cats (dig_file, &cats) == -1)
+	{
+    	    G_warning("Unable to open category labes file. Not writing category labels.\n");
+	    exit(0);
+	}
+	G_free_cats (&cats); 	
   
 	if(fatt) fclose(fatt);
 
