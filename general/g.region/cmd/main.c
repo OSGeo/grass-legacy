@@ -69,16 +69,6 @@ int main (int argc, char *argv[])
 		"Program to manage the boundary definitions for the "
 		"geographic region.";
 
-	/* get current region.
-	 * if current region not valid, set it from default
-	 * note: G_get_default_window() dies upon error
-	 */
-	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
-	{
-		G_get_default_window (&window);
-		G_put_window (&window);
-	}
-	projection = window.proj;
 
 	/* flags */
 
@@ -238,6 +228,17 @@ int main (int argc, char *argv[])
 
 	if (G_parser(argc,argv))
 		exit(1);
+
+	/* get current region.
+	 * if current region not valid, set it from default
+	 * note: G_get_default_window() dies upon error
+	 */
+	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
+	{
+		G_get_default_window (&window);
+		G_put_window (&window);
+	}
+	projection = window.proj;
 
 	set_flag = ! flag.update->answer;
 	if (flag.center->answer)
