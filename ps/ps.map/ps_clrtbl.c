@@ -18,6 +18,7 @@ int PS_colortable (void)
     int R, G, B;
     int center_cols;
     DCELL dmin, dmax, val;
+    struct Colors colors;
     double t, l, r;
     double x1, x2, y, dy, fontsize, tl;
     double col_width;
@@ -26,15 +27,20 @@ int PS_colortable (void)
     if (verbose > 1)
     {
         fprintf (stdout,"PS-PAINT: creating color table for <%s in %s> ...",
-	    PS.cell_name, PS.cell_mapset);
+		ct.name, ct.mapset); 
         fflush(stdout);
     }
 
-    if (G_read_cats(PS.cell_name, PS.cell_mapset, &PS.cats) == -1)
+    if (G_read_cats(ct.name, ct.mapset, &PS.cats) == -1)
     {
-        sprintf(buf, "Category file for [%s] not available", PS.cell_name);
+        sprintf(buf, "Category file for [%s] not available", ct.name);
         G_warning(buf);
         return 1;
+    }
+
+    if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
+    {
+	    G_warning("Unable to read colors for colorbar\n");
     }
 
     /* set font */
@@ -54,7 +60,7 @@ int PS_colortable (void)
 
     /* How many categories to show */
     num_cats = G_number_of_raster_cats(&PS.cats);
-
+    
     /* read cats into PostScript array "a" */
     fprintf(PS.fp, "/a [\n");
     for(i = 0; i <= num_cats; i++)
@@ -121,9 +127,9 @@ int PS_colortable (void)
 	    {
 	       /* set box fill color */
 	       if(!i)
-		  G_get_null_value_color(&R, &G, &B, &PS.colors);
+		  G_get_null_value_color(&R, &G, &B, &colors);
                else
-	          G_get_d_raster_color(&dmin, &R, &G, &B, &PS.colors);
+	          G_get_d_raster_color(&dmin, &R, &G, &B, &colors);
 	       fprintf(PS.fp, "%.2f %.2f %.2f C\n", 
 	   	  (double)R/255., (double)G/255., (double)B/255.);
                fprintf(PS.fp, "%.1f ", x1);
@@ -142,7 +148,7 @@ int PS_colortable (void)
 	       {
    	          /* set box fill color */
 	          val = dmin + (double) jj * (dmax-dmin)/NSTEPS;
-	          G_get_d_raster_color(&val, &R, &G, &B, &PS.colors);
+	          G_get_d_raster_color(&val, &R, &G, &B, &colors);
 		  fprintf(PS.fp, "%.2f %.2f %.2f C\n",
 			  (double)R/255., (double)G/255., (double)B/255.);
     	          fprintf(PS.fp, "%.1f ", x1);
@@ -176,6 +182,8 @@ int PS_colortable (void)
     }
     y -= dy;
     if (PS.min_y > y) PS.min_y = y;
+
+    G_free_colors(&colors);
 
     if (verbose > 1) fprintf (stdout,"\n");
 

@@ -16,6 +16,7 @@ static char *help[] =
     "where      x y",
     "width      table_width",
     "height     fptable_height",
+    "raster	raster_name",
     "cols       columns",
     "font       fontname",
     "fontsize   fontsize",
@@ -29,6 +30,7 @@ read_colortable (void)
 {	
     char buf[1024];
     char *key, *data;
+    char name[100], mapset[50];
     int color, fontsize, cols, nodata;
     double w, h, x, y;
 
@@ -67,6 +69,15 @@ read_colortable (void)
 		error(key, data, "illegal height request");
 	    }
 	    else continue;
+	}
+
+	if (KEY("raster"))
+	{
+		if (scan_gis("cell", "raster", key, data, name, mapset, 0)) {
+			ct.name = G_store(name);
+			ct.mapset = G_store(mapset);
+			continue;
+		}
 	}
 
         if (KEY("cols"))
