@@ -299,7 +299,7 @@ int main (int argc, char *argv[])
                          cellhd.proj, cellhd.zone );
         }
         strcat( error_msg, 
-         "\nYou can use the -o flag to r.in.gdal to override this check.\n" );
+         "\nYou can use the -o flag to r.in.gdal to override this check and use the location definition for the dataset.\n" );
         strcat( error_msg, 
          "Consider to generate a new location with 'location' parameter"
          " from input data set.\n" );
