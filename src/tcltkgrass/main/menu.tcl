@@ -809,6 +809,36 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
             }
         }
+	-separator
+	"DBMI" "" {
+            "Select driver" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect.driver"
+            }
+            "Connect" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect"
+            }
+            -separator
+	    "List tables" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.tables"
+            }	    	    
+            "List columns" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.columns"
+            }
+            "Describe table" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.describe"
+            }
+            -separator
+            "Select" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select"
+            } 
+            "Execute" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.execute"
+            }
+	    -separator
+            "Reclass vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.db.reclass"
+            }	    
+        }
     }
     Help Help {
         "Manual pages" "" {

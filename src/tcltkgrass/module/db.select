@@ -1,0 +1,10 @@
+interface_build {
+    {db.select} 0
+    {Select.}
+    {entry input {File with sql statement:} 0 file}
+    {entry fs {Output field separator [|]:} 0 ""}
+    {entry vs {Output vertical record separator:} 0 ""}
+    {entry nv {Null value indicator:} 0 ""}
+    {checkbox -c {Include column names.} "" -c}
+    {checkbox -h {Horizontal output.} "" -h}         
+}

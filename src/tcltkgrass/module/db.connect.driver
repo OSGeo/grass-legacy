@@ -1,0 +1,6 @@
+interface_build {
+    {db.connect} 0
+    {Selects DBMI driver.}
+    {entry driver {Driver, required:} 0 ""}
+    {checkbox -p {Print only current settings.} "" -p}
+}
