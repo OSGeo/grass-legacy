@@ -633,7 +633,7 @@ int vmap_import(param_import_ctrl *pic0) {
 int shp_extract_line(SHPObject *shp0, int idx, struct line_pnts **lpt0) {
 
   int offs1, offs2, nPartVertices, vcnt;
-  double *vertex1, *vertex2;
+  double *vertex1, *vertex2, xnow, ynow;
 
   struct line_pnts *lpt1;
 
@@ -657,7 +657,16 @@ int shp_extract_line(SHPObject *shp0, int idx, struct line_pnts **lpt0) {
   lpt1 = Vect_new_line_struct();
 
   while(++vcnt <= nPartVertices) {
-    Vect_append_point(lpt1, *vertex1, *vertex2);
+
+    if(vcnt > 1) {
+      if(xnow == *vertex1 && ynow == *vertex2) {
+	continue;
+      }
+    }
+
+    xnow = *vertex1;
+    ynow = *vertex2;
+    Vect_append_point(lpt1, xnow, ynow);
     if(vcnt <= nPartVertices) {
       vertex1++;
       vertex2++;

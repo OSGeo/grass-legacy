@@ -502,6 +502,7 @@ int vertex_links_update(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
 
       else {
 	/* Just create a single slot */
+	n_extra = 1;
 	vptr1->links2 = (long *) malloc(sizeof(long) );
 	if(vptr1->links2 == NULL) {
 	  /* Allocation error */

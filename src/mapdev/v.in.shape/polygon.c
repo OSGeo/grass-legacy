@@ -36,7 +36,7 @@
 #include "gis.h"
 #include "Vect.h"
 
-#define REAL_EPSILON 1.0e-6
+#define REAL_EPSILON 1.0e-2
 #define POLYGON_RING_BLOCKSIZE 40
 #define POLYGON_RING_INCR_BLOCKSIZE 10
 
