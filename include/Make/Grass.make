@@ -205,7 +205,7 @@ VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 	       $(GRASS_INCDIR)/vect/dig_defines.h \
                $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h \
-               $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
+               $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
 
 GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
                $(GRASS_INCDIR)/colors.h $(GRASS_INCDIR)/glocale.h \
