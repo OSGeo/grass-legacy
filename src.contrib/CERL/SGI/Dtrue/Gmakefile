@@ -4,10 +4,12 @@ DLIB  = $(SRC)/D/libes/Dlib.a
 
 OFILES = main.o Dcell.o
 
-Dtrue: $(BIN)/Dtrue
+Dtrue: $(BIN_CONTRIB_CMD)/Dtrue
 
-$(BIN)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -Zg
+$(BIN_CONTRIB_CMD)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
+	mv a.out $@
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #
