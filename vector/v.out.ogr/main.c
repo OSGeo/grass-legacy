@@ -275,6 +275,7 @@ main (int argc, char *argv[])
 
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
+	fprintf(stderr,"Exporting %i points/lines...\n", Vect_get_num_lines(&In) );
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 	    int j;
 
@@ -321,6 +322,8 @@ main (int argc, char *argv[])
 
     /* Areas (run always to count features of different type) */
     if ( otype & GV_AREA ) {
+	fprintf(stderr,"Exporting %i areas...\n", Vect_get_num_areas(&In) );
+	fprintf(stderr,"GRASS Topology -> Simple Features conversion (may take some time)...\n" );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    int j;
 	    
