@@ -5,7 +5,8 @@
 #include "plot.h"
 
 
-int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor ) {
+int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
+	     int chcat ) {
     int i, ltype, num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
@@ -27,7 +28,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     for ( area = 1; area <= num; area++ ) {
         G_debug (3, "area = %d", area);
 
-        if ( Clist->n_ranges > 0)
+        if ( chcat )
           { 
              centroid = Vect_get_area_centroid ( Map, area ); 
              G_debug (3, "centroid = %d", centroid);

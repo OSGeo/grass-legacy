@@ -7,7 +7,7 @@
 
 int label (
     struct Map_info *Map, int type, int do_area, 
-    struct cat_list *Clist, LATTR *lattr)
+    struct cat_list *Clist, LATTR *lattr, int chcat)
 {
     int i, ltype;
     double xl, yl;
@@ -40,7 +40,7 @@ int label (
 	R_text_size(lattr->size, lattr->size) ;
 	R_font(lattr->font) ;
 		  
-        if ( Clist->n_ranges > 0)
+        if ( chcat )
           {
 	    Vect_cat_get(Cats, Clist->field, &cat);
 	    if ( !(Vect_cat_in_cat_list (cat, Clist)) )

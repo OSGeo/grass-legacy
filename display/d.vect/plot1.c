@@ -9,7 +9,7 @@
 
 int plot1 (
     struct Map_info *Map, int type, int area, 
-    struct cat_list *Clist, int color, int fcolor)
+    struct cat_list *Clist, int color, int fcolor, int chcat)
 {
     int i, ltype;
     double *x, *y;
@@ -40,15 +40,14 @@ int plot1 (
 
 	if ( !(type & ltype) ) continue;
 
-        if ( Clist->n_ranges > 0)
-          { 
-             if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
-	         if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-                     continue;
+	if ( chcat ) {
+	     if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
+		 if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+		     continue;
 	     } else {
 		 continue;
 	     } 
-          }
+	}
 	
 	x = Points->x;
 	y = Points->y;
