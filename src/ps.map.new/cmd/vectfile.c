@@ -28,6 +28,7 @@ static char *help[]=
     "acolor   r g b",
     "label    label",
     "lpos     0|1-20",
+    "ref      left|right",
     ""
 };
 
@@ -72,6 +73,7 @@ vectfile (char *name, char *mapset)
     vector.coffset[vector.count]  = 0. ;            
     for (i = 0; i < 9; i++) vector.colors[vector.count][i] = BLACK;
     vector.linestyle[vector.count] = NULL;
+    vector.ref[vector.count] = LINE_REF_CENTER;    
     vector.hwidth[vector.count] = 0. ;
     vector.hcolor[vector.count] = WHITE;
     vector.line_cat[vector.count] = -1 ;
@@ -266,6 +268,22 @@ vectfile (char *name, char *mapset)
             vector.lpos[vector.count] = itmp;
 	    continue;
          }
+	if (KEY("ref"))
+	{
+	    G_strip(data);
+	    if (strcmp(data, "left") == 0)
+	    {
+		vector.ref[vector.count] = LINE_REF_LEFT;
+		continue;
+	    }
+	    if (strcmp(data, "right") == 0)
+	    {
+		vector.ref[vector.count] = LINE_REF_RIGHT;
+		continue;
+	    }
+	    error(key, data, "illegal ref request");
+	    continue;
+	}
 
 	error(key, "", "illegal request");
     }
