@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include "../lib/graph.h"
 #include "colors.h"
 
@@ -37,53 +35,30 @@ PAD *find_pad();
 extern PAD *curpad;
 extern PAD *padlist;
 
-static char grasstr[] = "GRASS 4.0 - X Display Window";
-
-
-int Service_Xevent(wait)
-int wait;
+int Service_Xevent()
 {
     static int firstime = 1;
+    Atom WM_DELETE_WINDOW;
     XEvent event;
 
-    /* If wait is zero wait for and service the next X event. If wait
-     * is non-zero see if any events are ready. If none just return. */
-    if (wait) {
-        if (!XPending(dpy)) /* this won't die if X server quits (shapiro) */
-        {
-            XSync(dpy, False); /* check if server still lives (shapiro) */
-            return;             /* no events in queue, return */
-        }
+    while( XPending(dpy)) { /* NOTE: This won't die if server terminates */
         XNextEvent(dpy, &event);
-    }
     /* On the first Expose events, write the grass display message. For
      * now, on subsequent expose copy the backup window to the display
      * window. */
-    if ((wait == 0) || (event.type == Expose && event.xexpose.count == 0)
+    if ((event.type == Expose && event.xexpose.count == 0)
         || event.type == ConfigureNotify ) {
       if ( event.type == Expose ) {
         if (firstime) {
-            XWindowAttributes xwa;
-            int x, y;
-
-            firstime = 0;
-
-            /* Get the window's current attributes. */
-            if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
-                return;
-            x = (xwa.width -
-                XTextWidth(fontstruct, grasstr, strlen(grasstr))) / 2;
-            y = (xwa.height + fontstruct->max_bounds.ascent
-                - fontstruct->max_bounds.descent) / 2;
-            /* Fill the window with the background color,  and then
-             * paint the centered string. */
+            /* Fill the window with the background color */
             XClearWindow(dpy, grwin);
-            XDrawString(dpy, grwin, gc, x, y, grasstr, strlen(grasstr));
+            firstime = 0;
         } else 
         {
             XWindowAttributes xwa;
 
             /* Get the window's current attributes. */
+	    
             if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
                 return;
 
@@ -93,7 +68,7 @@ int wait;
             SCREEN_BOTTOM = xwa.height - 1;
             Set_window(1, xwa.height-1, 1, xwa.width-1);
 
-            if (backing_store != Always)
+            if (!backing_store)
                 XCopyArea(dpy, bkupmap, grwin, gc, 0, 0, SC_WID, SC_HITE,
                     0, 0);
             firstime = 0;
@@ -154,8 +129,28 @@ int wait;
                 /* set the window */
                 Set_window(1, SCREEN_BOTTOM,
                            1, SCREEN_RIGHT) ;
+		/* Handle backing store */
+                if (!backing_store) {
+fprintf(stderr,"Destroying old pixmap\n");
+                    XFreePixmap(dpy, bkupmap);
+                    bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, 
+                        xwa.depth);
+                    XCopyArea(dpy, grwin, bkupmap, gc, 0, 0, (unsigned) SC_WID,
+                            (unsigned) SC_HITE, 0, 0);
+		}
+XFlush(dpy); _notify_resize();
             }
         }
+    }
+    if (event.type == ClientMessage)
+    {
+	WM_DELETE_WINDOW = XInternAtom(event.xclient.display, "WM_DELETE_WINDOW", False);
+	if(event.xclient.data.l[0] == WM_DELETE_WINDOW)
+	{
+   	   Graph_Close();
+	   exit(0);
+	}
+    }
     }
 }
 
@@ -167,6 +162,13 @@ _time_stamp(pad)
     append_item(pad,"time","1");
 }
 
+
+_notify_resize()
+{
+    char *getenv(), *command;
+    if(command = getenv("XDRIVER_RESIZER"))
+	system(command);
+}
 
 
 
