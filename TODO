@@ -1,4 +1,4 @@
-$Id: TODO,v 1.45 2000-10-29 16:44:49 andreas Exp $
+$Id: TODO,v 1.46 2000-11-03 16:52:38 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -242,6 +242,9 @@ Modules:
 - v.buffer: write it
   (Being worked on by ?)
 
+- v.digit:
+  add an optional circle with radius of snapping threshold
+  (Being worked on by ?)
 
 - tcltkgrass:
  - Change the tcltkgrass code so that lists of choices appear as
