@@ -115,6 +115,48 @@ and then install with "INST_NOW=y make".
 It is not necessary to install the full distribution.
 You may want to make an alias: alias gmake='INST_NOW=y make'
 
+CODE OPTIMIZATION
+
+If you would like to set compiler optimisations, for a possibly faster
+binary, type (don't enter a ";" anywhere):
+
+	CFLAGS=-O ./configure
+or,
+	setenv CFLAGS -O
+	./configure
+
+whichever works on your shell. Use -O2 instead of -O if your compiler
+supports this (note: O is the letter, not zero). Using "gcc" compiler, you
+can also specify processor specific flags (examples):
+
+  CFLAGS="-mcpu=k6 -O2"     # AMD K6 processor
+  CFLAGS="-mcpu=pentium"    # Intel Pentium processor
+  CFLAGS="-mcpu=pentiumpro" # Intel PentiumPro processor
+
+To find out optional CFLAGS for your platform, enter:
+  gcc -dumpspecs
+
+See also: http://gcc.gnu.org/
+
+A real fast GRASS version (and small binaries) will be created with
+LDFLAGS set to "stripping" (but this disables debugging):
+
+  CFLAGS="-O3 -mcpu=pentiumpro -Wall" LDFLAGS="-s" ./configure
+
+
+DEBUGGING OPTIONS
+
+The LDFLAGS="" must be undefined as "-s" will strip the debugging 
+information.
+
+Don't use -O for CFLAGS if you want to be able to step through function
+bodies. When optimisation is enabled, the compiler will re-order statements
+and re-arrange expressions, resulting in object code which barely resembles
+the source code.
+
+See also the file
+./doc/debugging.txt
+
 
 SUPPORT
 
