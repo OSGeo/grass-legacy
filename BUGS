@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.22 2000-10-11 14:09:41 markus Exp $
+$Id: BUGS,v 1.23 2000-10-11 14:44:58 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -107,7 +107,7 @@ g3.region:
  - after defining the 3D-region with g3.createwind (which runs o.k.),
    the g3.region does not display the vertical resolution (top-bottom)
    correctly. -> rounding error?
-
+  -> r3.info is affected as well
 
 p.map.new:
  - p.map.new now works but only with the grass4.2 raster files
@@ -311,7 +311,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.22  2000-10-11 14:09:41  markus
+ Revision 1.23  2000-10-11 14:44:58  markus
+ added r3.info bug
+
+ Revision 1.22  2000/10/11 14:09:41  markus
  added g3.region
 
  Revision 1.21  2000/09/28 08:56:34  markus
