@@ -85,7 +85,12 @@ The 2 column output is compatible with most plotting programs.
 The profile resolution is measured exactly from the supplied end or "turning" point along the profile.
 The end of a profile segment will be an exact multiple of the profile resolution and will therefore 
 not always match the end point coordinates entered for the segmanet.
-
+<p>
+To extract the numbers in scripts, following parameters can be used:
+<pre>
+           r.profile dgm12.5 prof=3570631,5763556 out=- 2>/dev/null
+</pre>
+This filters out the everything except the numbers.
 
 <H2>SEE ALSO</H2>
 
