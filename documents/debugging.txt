@@ -129,6 +129,12 @@ nm /usr/local/lib/libgdal.1.1.so
 
 5. Library dependencies with shared libraries
 
+Why are GRASS shared libraries useful for GRASS development? First, if
+you're modifying library code, you only need to rebuild the library; you
+don't have to re-link the programs. Second, the information obtained from
+running "nm" or "ldd" on an executable is more useful when the executable is
+linked against shared versions of the GRASS libraries.
+
 If you need to know on which shared libraries a given binary depends, you
 may use ldd to find out:
 
