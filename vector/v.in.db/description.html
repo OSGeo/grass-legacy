@@ -5,21 +5,32 @@ creates new vector (points) map from database table containing coordinates.
 
 <H2>EXAMPLE</H2>
 
-Creating a map from PostgreSQL table:
+<b>1) Creating a map from PostgreSQL table:</b>
 
 <pre>
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
          table=pat_stazioni x=east y=north z=quota  key=id output=pat_stazioni
 </pre>
+<P>
+
+<b>2) Creating a map from PostGIS:</b>
+
+To extract coordinate values from PostGIS, functions have to be used:
+<pre>
+ v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
+         table=station x="x(geom)" y="y(geom)" z="z(geom)" key=id out=meteostations
+</pre>
+
 
 <P>
-<b>Import of a points table (x, y, z) from DBF to vector points map:</b>
+<b>3) Import of a points table (x, y, z) from DBF file to vector points map:</b>
 <P>
 The DBF file has to be copied into $MAPSET/dbf/ (to be created
 if not existing yet). Then the DBMI needs to be connected to
 this directory:
 
 <pre>
+
 db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 
 #if no ID column present in the DBF file, the 'shp' driver can be used
