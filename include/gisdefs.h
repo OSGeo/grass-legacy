@@ -1105,6 +1105,9 @@ int G_sock_accept(int);
 int G_sock_connect(char *);
 int G_sock_socketpair(int, int, int, int *);
 
+/* version.c */
+int G_version(char *, char *, char *);
+
 /* view.c */
 int G_3dview_warning(int);
 int G_get_3dview_defaults(struct G_3dview *, struct Cell_head *);
