@@ -1,9 +1,10 @@
 PGM=r.out.png
+EXTRA_CFLAGS=-I/usr/X11R6/include/
 
 LIST= r.out.png.o
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) \
-	$(XDRLIB) -lpng -lz
+	$(XDRLIB) $(EXTRA_CFLAGS) -lpng -lz
 
 $(GISLIB): #
