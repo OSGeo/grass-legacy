@@ -47,14 +47,18 @@
 %type <exp> atom_map
 %type <exp> atom_func
 
+%type <exp> def
+
 %type <ival> mapmod
 %type <ival> index
 
+%type <sval> name
 %type <sval> map
+%type <sval> newmap
 
 %type <list> expr_list
 
-%type <list> stmts
+%type <list> defs
 %type <list> program
 
 %{
@@ -70,17 +74,24 @@ void yyerror(char *s);
 
 %%
 
-program		: stmts			{ $$ = result = $1;		}
+program		: defs			{ $$ = result = $1;		}
 		;
 
-stmts		: exp_let		{ $$ = list($1,NULL);		}
-		| exp_let ';'		{ $$ = list($1,NULL);		}
-		| exp_let ';' stmts	{ $$ = list($1,$3);		}
+defs		: def			{ $$ = list($1,NULL);		}
+		| def ';'		{ $$ = list($1,NULL);		}
+		| def ';' defs		{ $$ = list($1,$3);		}
+		;
+
+def		: newmap '=' exp	{ $$ = binding($1,$3); define_variable($$);	}
+		;
+
+newmap		: STRING
+		| NAME
 		;
 
 map		: STRING
 		| NAME
-		| NAME '@' NAME		{ $$ = composite($1,$3);	}
+		| name '@' name		{ $$ = composite($1,$3);	}
 		;
 
 mapmod		: '@'			{ $$ = '@';			}
@@ -114,8 +125,8 @@ atom_map	: map '[' index ']'	{ $$ = mapname($1,'M',$3,0);	}
 		| mapmod map		{ $$ = mapname($2,$1,0,0);	}
 		;
 
-atom_func	: NAME '(' ')'		{ $$ = function($1, NULL);	}
-		| NAME '(' expr_list ')'
+atom_func	: name '(' ')'		{ $$ = function($1, NULL);	}
+		| name '(' expr_list ')'
 					{ $$ = function($1, $3);	}
 		;
 
@@ -167,13 +178,15 @@ exp_cond	: exp_log
 		;
 
 exp_let		: exp_cond
-		| NAME '=' exp_let	{ $$ = binding($1,$3);
-						define_variable($$);	}
-		| VARNAME '=' exp_let	{ $$ = binding($1,$3);
-						define_variable($$);	}
+		| NAME '=' exp_let	{ $$ = binding($1,$3); define_variable($$);	}
+		| VARNAME '=' exp_let	{ $$ = binding($1,$3);	}
 		;
 
 exp		: exp_let
+		;
+
+name		: NAME
+		| VARNAME
 		;
 
 %%
