@@ -1,0 +1,32 @@
+<H2>DESCRIPTION</H2>
+
+
+This module creates a raster map containing concentric rings around a given
+point.  The cell values are increasing linear from the center point to outer
+rings. Minimum and maximum radius can be selected. Optionally a "donut" ring
+can be created to use as (binary) filter for <em>i.ifft</em> inverse Fourier
+transform (apply filter with <em>r.mask</em>).
+
+<H2>EXAMPLES</H2>
+
+Generate a circle at current map center with a radius of 300m:
+
+<pre>
+      EASTCENTER=`g.region -c |  awk ' /region center easting:/ { print $4 }'`
+      NORTHCENTER=`g.region -c | awk ' /region center northing:/ { print $4 }'`
+      r.circle -b out=circle coordinate=$EASTCENTER,$NORTHCENTER max=300
+</pre>
+
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.remove.html">g.remove</A></EM>, 
+<EM><A HREF="g.rename.html">g.rename</A></EM>, 
+<EM><A HREF="i.fft.html">i.fft</A></EM>, 
+<EM><A HREF="i.ifft.html">i.ifft</A></EM>, 
+<EM><A HREF="r.mask.html">r.mask</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratory<br>
+Additional flag/min/max parameter by Markus Neteler, University of Hannover
+
+<p><i>Last changed: $Date$</i>
