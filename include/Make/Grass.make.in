@@ -78,7 +78,7 @@ VERSION_FILE    = $(ETC)/VERSION
 
 ##################### other #############################################
 CFLAGS      =  $(COMPILE_FLAGS) $(INC) $(USE_TERMIO)
-LDFLAGS     =  $(LINK_FLAGS) $(LIBPATH) $(USE_TERMIO) $(LINK_FLAGS)
+LDFLAGS     =  $(LINK_FLAGS) $(LIBPATH) $(USE_TERMIO)
 VECT_CFLAGS =  $(GDALCFLAGS) 
 ##################### library names #####################################
 
