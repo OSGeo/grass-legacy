@@ -1,7 +1,7 @@
 
 
 
-m.examine.tape       GRASS Reference Manual        m.examine.tape
+m.examine.tape <main> GRASS Reference Manual<main> m.examine.tape
 
 
 
@@ -60,14 +60,14 @@ SEE ALSO
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.examine.tape       GRASS Reference Manual        m.examine.tape
+m.examine.tape <main> GRASS Reference Manual<main> m.examine.tape
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
