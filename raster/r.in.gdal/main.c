@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
     char *title;
     struct Cell_head cellhd, loc_wind, def_wind;
     struct Key_Value *proj_info=NULL, *proj_units=NULL;
-    struct Key_Value *loc_proj_info, *loc_proj_units;
+    struct Key_Value *loc_proj_info=NULL, *loc_proj_units=NULL;
     GDALDatasetH  hDS;
     GDALDriverH   hDriver;
     GDALRasterBandH hBand;
@@ -237,9 +237,12 @@ int main (int argc, char *argv[])
 /*      Does the projection of the current location match the           */
 /*      dataset?                                                        */
 /* -------------------------------------------------------------------- */
-            loc_proj_info = G_get_projinfo();
-            loc_proj_units = G_get_projunits();
             G_get_window( &loc_wind );
+	    if( loc_wind.proj != PROJECTION_XY )
+	    {		
+                loc_proj_info = G_get_projinfo();
+                loc_proj_units = G_get_projunits();
+	    }	   
 
             if( flag_o->answer )
             {
