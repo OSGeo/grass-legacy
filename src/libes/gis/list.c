@@ -165,9 +165,9 @@ static int list_element( FILE *out, char *element,
  * otherwise the ls must be forced into columnar form.
  */
 	if (lister)
-	    sprintf(buf,"ls %s", path);
+	    sprintf(buf,"ls '%s'", path);
 	else
-	    sprintf(buf,"ls -C %s", path);
+	    sprintf(buf,"ls -C '%s'", path);
 
 	if ((ls = G_popen(buf,"r")))
 	{

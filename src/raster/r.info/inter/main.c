@@ -19,7 +19,7 @@ int main (int argc, char *argv[])
     tempfile = G_tempfile () ;
     unlink (tempfile);
 
-    sprintf (command, "r.info '%s' > %s",
+    sprintf (command, "r.info '%s' > '%s'",
 	G_fully_qualified_name(name, mapset), tempfile);
     system (command);
 
