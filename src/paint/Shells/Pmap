@@ -1,0 +1,7 @@
+:
+. ${GISBASE?}/etc/paint/setup
+
+case $# in
+    0) exec ${PAINT?}/Pmap ;;
+    *) exec ${PAINT?}/Pmap "$@" ;;
+esac
