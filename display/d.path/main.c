@@ -70,12 +70,12 @@ int main(int argc, char **argv)
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "afield";
-    afield_opt->answer = "0";
+    afield_opt->answer = "1";
     afield_opt->description = "Arc field";
     
     nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     nfield_opt->key = "nfield";
-    nfield_opt->answer = "0";
+    nfield_opt->answer = "2";
     nfield_opt->description = "Node field";
 
     afcol = G_define_option() ;
