@@ -1,4 +1,4 @@
-$Id: TODO,v 1.54 2000-11-17 08:53:52 markus Exp $
+$Id: TODO,v 1.55 2000-11-21 17:42:49 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -148,6 +148,7 @@ Package concept:
 
 - reorganize directory structure
   (Being worked on by Markus et al.)
+  see documents/new_directory_structure.txt
 
 ---------------------------------------------------------------------
 Lock system:
@@ -340,6 +341,17 @@ Modules:
    (Being worked on by ?)
  - added nice icons for mostly used commands
  - generate module windows by parser.c
+
+---------------------------------------------------------------------
+PostgreSQL/ODBC support:
+
+ - store host/database not in .grassrc5, but in location itself
+   Then you can keep the settings along with your database for
+   convenience
+ - store a username/password pair in a "secured" file (that is, a file
+   read/writeable *only* by the user that owns it).  The ~/.grass5rc file
+   must be readable by others if you allow access to a dataset.
+
 
 ---------------------------------------------------------------------
 Numerical Recipes: removal of code:
