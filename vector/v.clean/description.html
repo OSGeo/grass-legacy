@@ -36,9 +36,17 @@ You do <em>not</em> have to run
 
 <h2>EXAMPLE</h2>
 
-<pre>
-v.clean input=testmap output=cleanmap tool=svtlx,breakthresh=1
-</pre>
+<p>
+<b>v.clean input=</b><em>testmap</em> <b>output=</b><em>cleanmap</em> <b>tool=</b><em>svtlx</em> <b>breakthresh=</b><em>1</em>
+<p>
+
+The import of areas with <a HREF="v.in.ogr.html">v.in.ogr</a> requires a subsequent run of
+<a HREF="v.clean.html">v.clean</a> to update the map to a topologically
+valid structure (removal of duplicate collinear lines etc). The tools
+used for that are 'rmdupl' and 'bpol':
+<p>
+<b>v.clean input=</b><em>areamap</em> <b>output=</b><em>areamap_clean</em> <b>tool=</b><em>rmdupl,bpol</em> <br>
+
 
 <h2>AUTHOR</h2>
 
