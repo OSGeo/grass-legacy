@@ -4,7 +4,7 @@ include @DSTDIR@/mk/vars.mk
 INST_DIR	= ${prefix}/grass${NAME_VER}
 ERROR_LOG	= error.log
 
-all: dirs binaries html links
+all: dirs binaries htmlfiles links
 
 makefiles:
 	@echo "making makefiles ..."
@@ -38,7 +38,7 @@ binaries:
 		done
 	echo "End of compilation:   "`date` >> ${ERROR_LOG}
 
-html:
+htmlfiles:
 	-mkdir -p html
 	${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/html -f makefile
 
