@@ -12,7 +12,7 @@ static int height, size, edge, count;
 static int page,npages;
 static struct
 {
-    char name[30], mapset[30];
+    char name[100], mapset[100];
     struct box box;
 } list[NLINES*2];
 
@@ -39,7 +39,7 @@ ask_gis_files (type, file, xname, xmapset, position)
     char buf[100];
     int top, bottom, left, right, center;
     int topx, bottomx, leftx, rightx, widthx;
-    char name[30], mapset[30], cur_mapset[30];
+    char name[100], mapset[100], cur_mapset[100];
     int new_mapset;
 
     Menu_msg("");
@@ -297,7 +297,7 @@ downarrow (box, color)
 }
 
 static
-pick(x,y)
+pick(x,y,button)
 {
     int n;
 
