@@ -7,8 +7,8 @@
 .c .S size[p]				size		p means pixel size
 .c .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
 .c .R rotation[r]			rotation	r means radian rotation
-.c .X [+|-]x[p]				set x-coord	+|- means relative dx
-.c .Y [+|-]y[p]				set y-coord
+.c .X [+|-]x[%|p]			set x-coord	+|- means relative dx
+.c .Y [+|-]y[%|p]			set y-coord	% means percentage
 .c .L {0|1}				set auto-linefeed
 .c ..					draw one .
 .
@@ -42,8 +42,8 @@ line 5-1
 .L 0
 line 5-2
 .A cc
-.X 100p
-.Y 200p
+.X 50%
+.Y 70%
 .C red
 .R 3.14r
 (100,200)

@@ -33,6 +33,10 @@
 #include "display.h"
 #include "raster.h"
 
+/* less speedy
+#define	FLUSH_EACH_CHAR
+ */
+
 #define	DEFAULT_CHARSET		"ISO-8859-1"
 #define	DEFAULT_SIZE		"10"
 #define	DEFAULT_COLOR		"gray"
@@ -352,13 +356,15 @@ main(int argc, char **argv)
 	}
 	else
 	{
-		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed;
+		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed,
+			displayed;
 		FILE	*fp;
 		int	d, sx, sy;
 
 		x = sx = win.l;
 		y = sy = win.t + size;
 		linefeed = 1;
+		displayed = 0;
 
 		if(param.east_north->answer &&
 				get_coordinates(win, param.east_north->answers,
@@ -437,6 +443,8 @@ main(int argc, char **argv)
 							size = (int)(size/100.0 * (double)(win.b-win.t));
 						if(face && FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
+						if(!displayed)
+							sy = win.t + size;
 						break;
 					case 'A':
 						strncpy(align, p, 2);
@@ -454,6 +462,9 @@ main(int argc, char **argv)
 						if(strchr("+-", p[0]))
 							i = 1;
 						d = atoi(p);
+						if(p[l-1] == '%')
+							d = (int)(d/100.0 * (double)(win.r-win.l));
+						else
 						if(p[l-1] != 'p')
 							d *= size;
 						x = d + (i ? x : sx);
@@ -464,6 +475,9 @@ main(int argc, char **argv)
 						if(strchr("+-", p[0]))
 							i = 1;
 						d = atoi(p);
+						if(p[l-1] == '%')
+							d = (int)(d/100.0 * (double)(win.b-win.t));
+						else
 						if(p[l-1] != 'p')
 							d *= size;
 						y = d + (i ? y : sy) - size;
@@ -505,6 +519,8 @@ main(int argc, char **argv)
 						align, rotation, &pen);
 				draw_text(win, face, &pen, out, ol,
 						color, rotation);
+
+				displayed = 1;
 			}
 			else
 				G_warning("No font selected");
@@ -934,8 +950,11 @@ draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 			R_raster_char(w, 1, 0, buffer + width * i + start_col);
 		}
 
+#ifdef	FLUSH_EACH_CHAR
+		/* less speedy */
 		R_flush();
-	
+#endif
+
 		G_free(buffer);
 	}
 
@@ -959,6 +978,10 @@ draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 		ch = (out[i+2] << 8) | out[i+3];
 		draw_glyph(win, face, &matrix, pen, ch, color);
 	}
+
+#ifndef	FLUSH_EACH_CHAR
+	R_flush();
+#endif
 
 	return;
 }
