@@ -43,21 +43,21 @@ main (int argc, char *argv[])
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
     in_opt[0]->key = "ainput";
 
-    in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt[1]->key = "binput";
-
     type_opt[0] = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt[0]->key = "atype";
     type_opt[0]->options = "line,area";
     type_opt[0]->answer = "area";
 
+    field_opt[0] = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt[0]->key = "afield";
+
+    in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
+    in_opt[1]->key = "binput";
+
     type_opt[1] = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt[1]->key = "btype";
     type_opt[1]->options = "area";
     type_opt[1]->answer = "area";
-
-    field_opt[0] = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt[0]->key = "afield";
     
     field_opt[1] = G_define_standard_option(G_OPT_V_FIELD);
     field_opt[1]->key = "bfield";
