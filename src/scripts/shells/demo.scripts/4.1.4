@@ -1,0 +1,42 @@
+#!/bin/sh
+
+d.frame -s f=map1
+d.erase
+d.frame -s f=map2
+d.erase
+d.frame -s f=map3
+d.erase
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 9
+.F romats
+.C black
+  *
+  *
+  *
+.C yellow
+  *
+.C black
+  *
+  *
+  *
+EOF
+
+d.frame -s f=explain
+d.erase
+d.text << EOF
+.S 5
+
+  Various types of reports are available:
+     Available data
+     Data categories
+     Data statistics
+     Category correlations between maps
+     Area calculations
+EOF
+
+./continue.yes
+
+exit 1
