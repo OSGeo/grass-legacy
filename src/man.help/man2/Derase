@@ -1,0 +1,48 @@
+.\" %W% %G%
+.TH Derase 2D D-language
+.SH NAME
+Derase \- Clears the contents of the currently chosen graphics window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Derase
+[\fIcolor\fR]
+.SH DESCRIPTION
+.I Derase
+erases the contents of the current graphics window, and replaces it with
+the color black (by default) or by the stated color.  Color options are red,
+orange, yellow, green, blue, yellow, indigo, violet, black, white, gray, brown,
+and magenta.  \fIDerase\fR does not remove the current window.  It only
+erases the contents of the current window.  Because \fIDerase\fR replaces
+the contents of the current window with a color, it will obscure those
+portions of any windows which overlap the current window with that color.
+\fIDerase\fR will not alter the assignment of the current window.
+.SH "NOTES"
+.I Derase
+will complain if no window has been chosen to be the current window with
+.I Dchoose.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDchoose[2D]\fR	T{
+Designates a window as the current window to be used for graphics display
+T}
+.br
+\fIDclear.screen[2D]\fR	T{
+Clears the entire screen and erases all previously created windows from memory
+T}
+.br
+\fIDnew[2D]\fR	Creates new display windows on the monitor
+.br
+\fIDscreen[2D]\fR	T{
+Runs \fIDclear.screen\fR, \fIDnew\fR, and \fIDchoose\fR commands to erase
+the entire screen, create a new window covering the entire screen, and
+choose this window as the current window for display
+T}
+.br
+\fIDstatus[2D]\fR	Prints the status of the monitor windows
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
