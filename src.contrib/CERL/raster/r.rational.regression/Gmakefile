@@ -1,0 +1,28 @@
+PGM = r.rational.regression
+HOME = $(BIN_CONTRIB_CMD)
+LIST = 	main.o\
+	utils.o \
+	read_data.o\
+	correlation.o\
+	gasdev.o\
+	gaussj.o \
+	mrqcof.o\
+	mrqfit.o\
+	nlfit.o\
+	ran1.o\
+	rational.o \
+	svbksb.o \
+	svdcmp.o \
+	svdfit.o\
+	svdfit2.o\
+	svdfitn.o\
+	solve.o\
+	modify.o\
+	tscore.o\
+	errfun.o\
+	xformation.o
+
+./$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): # 
