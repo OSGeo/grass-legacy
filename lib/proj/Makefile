@@ -12,18 +12,17 @@ NAD_TABLES = FL.lla MD.lla TN.lla WI.lla WO.lla alaska.lla conus.lla \
 
 NT_TABLES = ntv1_can.dat nzgd2kgrid0005.gsb
 
-$(NAD2BIN): nad2bin.o
-	$(CC) $(LDFLAGS) $? -o $@
+NAD_DIR = $(GISBASE)/etc/nad
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make 
+
+default: lib $(NAD_DIR)
+
+NAD2BIN = nad2bin
 
 $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
 	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
 	for i in $(NAD_TABLES) ; do $(NAD2BIN) < $$i $@/`echo $$i | sed 's/.lla//'`; done
 	cp -f $(NT_TABLES) $@
 	@ touch $@
-
-NAD_DIR = $(GISBASE)/etc/nad
-
-include $(MODULE_TOPDIR)/include/Make/Lib.make 
-
-default: lib $(NAD_DIR)
 
