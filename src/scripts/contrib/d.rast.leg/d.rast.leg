@@ -42,7 +42,7 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 
-if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
+if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" ] 
 then
 	echo 
     	echo "Usage:	d.rast.leg"
@@ -64,27 +64,31 @@ d.frame -e
 
 if [ $# = 0 ]
 then
-    d.frame -s at=0,100,0,65
+    d.frame -s at=0,100,0,65 frame=left
     d.rast
-    echo
+  
+   # title not supported here (we do not know the map name)
+
+    echo " "
     echo "Please enter the name of the raster file again!"
-    d.frame -s at=0,100,65,100
+    d.frame -s at=0,100,65,100 frame=right
     d.legend 
-    d.frame -s at=0,100,0,65
+    d.frame -s frame=left
 else
     if [ $# = 1 ]
     then
-	d.frame -s at=0,100,0,65
+	d.frame -s at=0,100,0,65 frame=left
         d.erase col=white
     	d.rast map=$1 b=white
 
-#draw title
-        d.frame -s at=90,100,65,100
+       #draw title
+        d.frame -s at=90,100,65,100  frame=title
         d.erase col=white
-        echo "$1" | d.text col=black size=70
+        echo "$1" | d.text col=black size=60
+#         d.text.freetype -sp text=$1 col=black size=30 east_north=10,10
 
-#draw legend
-    	d.frame -s at=0,90,65,100
+       #draw legend
+    	d.frame -s at=0,90,65,100 frame=right
         if test -f $HISTFILEDIR/$1/histogram
           then
              d.erase col=white
@@ -93,18 +97,20 @@ else
              d.erase col=white
              d.legend map=$1 col=black
           fi
-    	d.frame -s at=0,100,0,65
+    	d.frame -s frame=left
     else
-	d.frame -s at=0,100,0,65
+	d.frame -s at=0,100,0,65 frame=left
         d.erase col=white
     	d.rast map=$1 b=white
-#draw title
-        d.frame -s at=90,100,65,100
+
+       #draw title
+        d.frame -s at=90,100,65,100 frame=title
         d.erase col=white
-        echo "$1" | d.text col=black size=70
- 
-#draw legend
-    	d.frame -s at=0,90,65,100
+        echo "$1" | d.text col=black size=60
+#         d.text.freetype -sp text=$1 col=black size=30 east_north=10,10
+
+       #draw legend
+    	d.frame -s at=0,90,65,100 frame=right
         if test -f $HISTFILEDIR/$1/histogram
           then
              d.erase col=white
@@ -113,7 +119,11 @@ else
              d.erase col=white
              d.legend map=$1 col=black
           fi
-    	d.frame -s at=0,100,0,65
+    	d.frame -s frame=left
     fi
 fi
-d.frame -s frame=full_screen
+
+
+#d.frame -s frame=full_screen
+echo "Clear screen with:"
+echo "                  d.frame -e"
