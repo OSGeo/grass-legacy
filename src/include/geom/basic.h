@@ -170,8 +170,8 @@ extern int errno;
 
 #define Square(X)  ((X) * (X))
 
-#ifndef powerof2
-#define powerof2(EXP) (1 << (EXP))
+#ifndef __powerof2
+#define __powerof2(EXP) (1 << (EXP))
 #endif
 #define bitsof(TYPE)  (BITS (TYPE))
 
@@ -255,7 +255,7 @@ extern char basic_charbit_mask_n[];
 #define     charbit_s1(I,CVAR)  ((char) (basic_charbit_mask__[I] | CVAR))
 #define     charbit_s0(I,CVAR)  ((char) (basic_charbit_mask_n[I] & CVAR))
 
-#define intbit_on(I,IVAR) ((powerof2 (I) & IVAR) != 0)
+#define intbit_on(I,IVAR) ((__powerof2 (I) & IVAR) != 0)
 
 #define NULL_HOOK  basic__null_hook
 
