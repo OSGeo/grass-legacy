@@ -59,7 +59,8 @@ int db__driver_open_database(handle)
 	res = PQexec ( pg_conn, buf );
 	
 	if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	    append_error ( "Cannot set schema" );
+	    append_error ( "Cannot set schema: " );
+	    append_error ( schema );
 	    report_error();
 	    PQclear(res);
 	    return DB_FAILED;
