@@ -393,7 +393,7 @@ static void cell_values_double(
 	    continue;
 	}
 
-	if (cmap[i] != cmapold)
+	if (cmap[i] == cmapold)
 	{
 	    c[i] = c[i-1];
 	    continue;
