@@ -222,7 +222,7 @@ interp_call (root, tree)
 
 	/* show before to catch 0% */
 
-fprintf(stderr,"total segments = %d, Current = %d, npoints = %d\n",totsegm,cursegm+1,npt);
+fprintf(stderr,"total segments = %d, Current = %d, npoints = %d\n",totsegm,cursegm+1,npt+1);
 
 {
   G_percent (cursegm, totsegm, 1);
