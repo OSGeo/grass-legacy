@@ -3,10 +3,11 @@ MODULE_TOPDIR = ../../..
 
 HOME=$(BIN_CMD)
 
-MLIB = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(MANAGE_LIBNAME).$(LIB_SUFFIX)
+MLIBDEP = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(MANAGE_LIBNAME).$(LIB_SUFFIX)
+MLIB = -l$(MANAGE_LIBNAME)
 LIBES = $(VECTLIB) $(MLIB) $(DBMILIB) $(GISLIB)
-LIST = $(OBJDIR)/init.o $(MLIB)
-DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP)
+LIST = $(OBJDIR)/init.o  
+DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP) $(MLIBDEP)
 
 EXTRA_INC = -I..
 include $(MODULE_TOPDIR)/include/Make/Module.make
@@ -47,3 +48,4 @@ htmlcmd:
 		mkdir -p $(GISBASE)/docs/html ; \
 		mv $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
 	done
+
