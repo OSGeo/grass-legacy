@@ -1,7 +1,7 @@
 
 
 
-r.mfilter            GRASS Reference Manual             r.mfilter
+r.mfilter <main>     GRASS Reference Manual      <main> r.mfilter
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.mfilter            GRASS Reference Manual             r.mfilter
+r.mfilter <main>     GRASS Reference Manual      <main> r.mfilter
 
 
 
@@ -126,14 +126,14 @@ FILTERS
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.mfilter            GRASS Reference Manual             r.mfilter
+r.mfilter <main>     GRASS Reference Manual      <main> r.mfilter
 
 
 
@@ -192,14 +192,14 @@ HOW THE FILTER WORKS
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.mfilter            GRASS Reference Manual             r.mfilter
+r.mfilter <main>     GRASS Reference Manual      <main> r.mfilter
 
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
