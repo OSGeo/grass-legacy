@@ -1,51 +1,76 @@
-#HOME = $(DBMIDIR)/bin
+HOME=$(GISBASE)/etc/bin/main/cmd
 
-HOME=$(GISBASE)/etc/dbmi/bin
 INCLUDE = ../include
-DBMILIB = ../lib/libdbmi.a
+DBMILIB = $(LIBDIR)/libdbmi.a
 
 LIBES = $(GISLIB) $(DBMILIB)
 EXTRA_CFLAGS=-I$(INCLUDE)
 
-all: 
-	if [ ! -d $(GISBASE)/etc/dbmi ]; then mkdir $(GISBASE)/etc/dbmi; fi; \
-	if [ ! -d $(HOME) ]; then mkdir $(HOME); fi; \
-	$(HOME)/db.columns \
+all: 	$(HOME)/db.columns \
+	$(HOME)/db.createdb \
+	$(HOME)/db.dropdb \
+	$(HOME)/db.droptable \
 	$(HOME)/db.databases \
 	$(HOME)/db.describe \
 	$(HOME)/db.drivers \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
-	$(HOME)/db.tables
+	$(HOME)/db.tables \
+	$(HOME)/db.connect 	
 
 $(HOME)/db.columns: columns.o $(LIBES)
-	$(CC) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.createdb: createdb.o $(LIBES)
-	$(CC) -o $@ createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.dropdb: dropdb.o $(LIBES)
-	$(CC) -o $@ dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.droptable: droptable.o $(LIBES) 
-	$(CC) -o $@ droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.databases: databases.o $(LIBES)
-	$(CC) -o $@ databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.describe: describe.o printtab.o $(LIBES)
-	$(CC) -o $@ describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.drivers: drivers.o $(LIBES)
-	$(CC) -o $@ drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.execute: execute.o $(LIBES)
-	$(CC) -o $@ execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.select: select.o $(LIBES)
-	$(CC) -o $@ select.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) select.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
 $(HOME)/db.tables: tables.o $(LIBES)
-	$(CC) -o $@ tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	rm -f a.out
+	$(CC) tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
 
+$(HOME)/db.connect: connect.o $(LIBES)
+	rm -f a.out
+	$(CC) connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	mv a.out $@
+	
 $(LIBES): #
