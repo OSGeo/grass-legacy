@@ -64,7 +64,7 @@ V2_close_nat (struct Map_info *Map)
   /* close files */
   fclose (Map->dig_fp);
 
-  V2__release_file_mem_nat (Map);	/* from dig_P_fini()  4.0 */
+  //V2__release_file_mem_nat (Map);	/* from dig_P_fini()  4.0 */
 
   free (Map->name);
   free (Map->mapset);
@@ -79,12 +79,13 @@ V2_close_nat (struct Map_info *Map)
   return 0;
 }
 
-static int			/* dunno if this should be static or not */
+/* dunno if this should be static or not */
+/*
+static int			
 V2__release_file_mem_nat (struct Map_info *Map)
 {
   register int i;
 
-  /* release all memory */
   if (Map->Line != NULL)
     {
       free (Map->Line);
@@ -124,4 +125,4 @@ V2__release_file_mem_nat (struct Map_info *Map)
 
   return 0;
 }
-
+*/

@@ -24,9 +24,6 @@
    **   returns  number of points or -1 on error
  */
 
-static int first_time = 1;	/* zero at startup */
-static struct line_pnts Points;
-
 
 int 
 Vect_get_area_points (
@@ -34,62 +31,46 @@ Vect_get_area_points (
 		       int area,
 		       struct line_pnts *BPoints)
 {
-  register int i, line;
-  int start, end, to, from, inc;
-  P_AREA *Area;
-  int done_yet;
-
+  int i, line, aline, dir;
+  struct Plus_head *Plus;
+  P_AREA_2D *Area;
+  static int first_time = 1;
+  static struct line_pnts *Points;
+  
+  G_debug ( 3, "Vect_get_area_points(): area = %d", area );	
   BPoints->n_points = 0;
-  BPoints->alloc_points = 0;
-  Area = &(Map->Area[area]);
 
-  if (first_time == 1)
-    {
-      Points.alloc_points = 0;	/* executed only once */
+  Plus = &(Map->plus);
+  Area = Plus->Area_2d[area];
+
+  if (first_time == 1){
+      Points = Vect_new_line_struct ();	
       first_time = 0;
-    }
+  }
 
+  G_debug ( 3, "  n_lines = %d", Area->n_lines );	
   for (i = 0; i < Area->n_lines; i++)
     {
-      line = abs (Area->lines[i]);
+      line = Area->lines[i];
+      aline = abs (line);
+      G_debug ( 3, "  append line(%d) = %d", i, line );	
 
-      if (0 > V2_read_line (Map, &Points, NULL, line))
-	return (-1);
+      if (0 > V2_read_line (Map, Points, NULL, aline)) {
+          G_fatal_error ( "Cannot read line %d",  aline );
+      }
+      
+      G_debug ( 3, "  line n_points = %d", Points->n_points );	
 
-      if (0 > dig_alloc_points (BPoints, Points.n_points + BPoints->n_points))
-	return (-1);
+      if ( line > 0 )
+          dir = GV_FORWARD;
+      else 
+	  dir = GV_BACKWORD;
 
-      if (Area->lines[i] < 0)
-	{
-	  start = Points.n_points - 1;
-	  inc = -1;
-	  end = 1;
-	}
-      else
-	{
-	  end = Points.n_points - 2;
-	  inc = 1;
-	  start = 0;
-	}
-
-      done_yet = 0;
-      for (from = start, to = BPoints->n_points; !done_yet; from += inc, to++)
-	{
-	  if (from == end)
-	    done_yet = 1;
-	  BPoints->x[to] = Points.x[from];
-	  BPoints->y[to] = Points.y[from];
-	}
-      BPoints->n_points = Points.n_points + BPoints->n_points - 1;
-
+      Vect_append_points ( BPoints, Points, dir);  
+      if ( i != (Area->n_lines - 1) ) /* all but not last */
+	 BPoints->n_points--; 
+      G_debug ( 3, "  area n_points = %d", BPoints->n_points );	
     }
-
-  if (0 > dig_alloc_points (BPoints, BPoints->n_points + 2))
-    return (-1);
-  BPoints->x[BPoints->n_points] = BPoints->x[0];
-  BPoints->y[BPoints->n_points] = BPoints->y[0];
-  BPoints->n_points++;
-
 
   return (BPoints->n_points);
 }
@@ -100,64 +81,146 @@ Vect_get_isle_points (
 		       int isle,
 		       struct line_pnts *BPoints)
 {
-  register int i, line;
-  int start, end, to, from, inc;
-  P_ISLE *Isle;
-  int done_yet;
-
-
-
+  int i, line, aline, dir;
+  struct Plus_head *Plus;
+  P_ISLE_2D *Isle;
+  static int first_time = 1;
+  static struct line_pnts *Points;
+  
+  G_debug ( 3, "Vect_get_isle_points(): isle = %d", isle );	
   BPoints->n_points = 0;
-  BPoints->alloc_points = 0;
-  Isle = &(Map->Isle[isle]);
 
-  if (first_time == 1)
-    {
-      Points.alloc_points = 0;	/* executed only once */
+  Plus = &(Map->plus);
+  Isle = Plus->Isle_2d[isle];
+
+  if (first_time == 1) {
+      Points = Vect_new_line_struct ();	
       first_time = 0;
-    }
+  }
 
+  G_debug ( 3, "  n_lines = %d", Isle->n_lines );	
   for (i = 0; i < Isle->n_lines; i++)
     {
-      line = abs (Isle->lines[i]);
+      line = Isle->lines[i];
+      aline = abs (line);
+      G_debug ( 3, "  append line(%d) = %d", i, line );	
 
-      if (0 > V2_read_line (Map, &Points, NULL, line))
-	return (-1);
+      if (0 > V2_read_line (Map, Points, NULL, aline)) {
+          G_fatal_error ( "Cannot read line %d",  aline );
+      }
+      
+      G_debug ( 3, "  line n_points = %d", Points->n_points );	
 
-      if (0 > dig_alloc_points (BPoints, Points.n_points + BPoints->n_points))
-	return (-1);
+      if ( line > 0 )
+          dir = GV_FORWARD;
+      else 
+	  dir = GV_BACKWORD;
 
-      if (Isle->lines[i] < 0)
-	{
-	  start = Points.n_points - 1;
-	  inc = -1;
-	  end = 1;
-	}
-      else
-	{
-	  end = Points.n_points - 2;
-	  inc = 1;
-	  start = 0;
-	}
-
-      done_yet = 0;
-      for (from = start, to = BPoints->n_points; !done_yet; from += inc, to++)
-	{
-	  if (from == end)
-	    done_yet = 1;
-	  BPoints->x[to] = Points.x[from];
-	  BPoints->y[to] = Points.y[from];
-	}
-      BPoints->n_points = Points.n_points + BPoints->n_points - 1;
-
+      Vect_append_points ( BPoints, Points, dir);  
+      if ( i != (Isle->n_lines - 1) ) /* all but not last */
+	 BPoints->n_points--; 
+      G_debug ( 3, "  area n_points = %d", BPoints->n_points );	
     }
-
-  if (0 > dig_alloc_points (BPoints, BPoints->n_points + 2))
-    return (-1);
-  BPoints->x[BPoints->n_points] = BPoints->x[0];
-  BPoints->y[BPoints->n_points] = BPoints->y[0];
-  BPoints->n_points++;
-
 
   return (BPoints->n_points);
 }
+
+/* Returns centroid number or 0 */ 
+int 
+Vect_get_area_centroid (
+		       struct Map_info *Map,
+		       int area )
+{
+  struct Plus_head *Plus;
+  P_AREA_2D *Area;
+  
+  G_debug ( 3, "Vect_get_area_centroid(): area = %d", area );	
+
+  Plus = &(Map->plus);
+  Area = Plus->Area_2d[area];
+  if ( Area->n_centroids > 0 )
+      return ( Area->centroids[0] );
+  else
+      return 0;
+
+}
+
+/* Returns number of isles */ 
+int 
+Vect_get_area_num_isles (
+		       struct Map_info *Map,
+		       int area )
+{
+  struct Plus_head *Plus;
+  P_AREA_2D *Area;
+  
+  G_debug ( 3, "Vect_get_area_num_isles(): area = %d", area );	
+
+  Plus = &(Map->plus);
+  Area = Plus->Area_2d[area];
+  return ( Area->n_isles );
+
+}
+
+/* Returns area isle */ 
+int 
+Vect_get_area_isle (
+		       struct Map_info *Map,
+		       int area,
+                       int isle)
+{
+  struct Plus_head *Plus;
+  P_AREA_2D *Area;
+  
+  G_debug ( 3, "Vect_get_area_num_isles(): area = %d", area );	
+
+  Plus = &(Map->plus);
+  Area = Plus->Area_2d[area];
+  return ( Area->isles[isle] );
+}
+
+/* 
+*  returns 1 if point is in area
+*          0 if not
+*/
+
+int 
+Vect_point_in_area (
+		       struct Map_info *Map,
+		       int area,
+		       double x, double y)
+{
+  int    i, isle;
+  struct Plus_head *Plus;
+  P_AREA_2D *Area;
+  double poly;
+  static struct line_pnts *Points;
+  static first_time = 1;
+  
+  Plus = &(Map->plus);
+  Area = Plus->Area_2d[area];
+  if ( Area == NULL ) return 0;
+
+  if (first_time == 1)
+    {
+      Points = Vect_new_line_struct ();	
+      first_time = 0;
+    }
+  
+  Vect_get_area_points (Map, area, Points);
+  poly = dig_point_in_poly ( x, y, Points);
+  if (poly <= 0) return 0;
+
+
+  /* check if in islands */
+  for (i = 0; i < Area->n_isles; i++) {
+      isle = Area->isles[i];
+      Vect_get_isle_points (Map, isle, Points);
+      poly = dig_point_in_poly ( x, y, Points);
+      if (poly > 0) return 0;
+  }
+
+  return 1;
+}
+
+

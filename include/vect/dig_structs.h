@@ -6,7 +6,6 @@
 
 #ifndef  DIG___STRUCTS___
 #define DIG___STRUCTS___
-#include "dig_head.h"
 
 /*  this file depends on  <stdio.h> */
 #ifndef _STDIO_H
@@ -34,14 +33,75 @@
 typedef int plus_t;
 
 
-#define P_NODE struct P_node
-#define P_AREA struct P_area
-#define P_LINE struct P_line
-#define P_CAT struct P_cat
-#define P_ISLE struct P_isle
-#define P_ATT struct P_att
+#define P_NODE_2D struct P_node_2d
+#define P_AREA_2D struct P_area_2d
+#define P_LINE_2D struct P_line_2d
+#define P_ISLE_2D struct P_isle_2d
 
 
+#define DIG_ORGAN_LEN       30
+#define DIG_DATE_LEN        20
+#define DIG_YOUR_NAME_LEN   20
+#define DIG_MAP_NAME_LEN    41
+#define DIG_SOURCE_DATE_LEN 11
+#define DIG_LINE_3_LEN      53	/* see below */
+
+#define OLD_LINE_3_SIZE 73
+#define NEW_LINE_3_SIZE 53
+#define VERS_4_DATA_SIZE 20
+
+/* Portability info */
+struct Port_info
+  {	  
+    /* portability stuff, set in V1_open_new/old() */
+    /* file byte order */
+    int byte_order; 
+      
+    /* conversion matrices between file and native byte order */
+    unsigned char dbl_cnvrt[PORT_DOUBLE];
+    unsigned char flt_cnvrt[PORT_FLOAT];
+    unsigned char lng_cnvrt[PORT_LONG];
+    unsigned char int_cnvrt[PORT_INT];
+    unsigned char shrt_cnvrt[PORT_SHORT];
+    
+    /* *_quick specify if native byte order of that type 
+     * is the same as byte order of vector file (TRUE) 
+     * or not (FALSE);*/
+    int dbl_quick;
+    int flt_quick;
+    int lng_quick;
+    int int_quick;
+    int shrt_quick;
+  };
+
+struct dig_head
+  {	  
+    /*** HEAD_ELEMENT ***/
+    char organization[30];
+    char date[20];
+    char your_name[20];
+    char map_name[41];
+    char source_date[11];
+    long orig_scale;
+    char line_3[73];
+    int plani_zone;
+    double W, E, S, N;
+    double digit_thresh;
+    double map_thresh;
+
+    /* Programmers should NOT touch any thing below here */
+    /* Library takes care of everything for you          */
+    /*** COOR_ELEMENT ***/
+    int Version_Major;
+    int Version_Minor;
+    int Back_Major;
+    int Back_Minor;
+    int with_z;
+
+    struct Port_info port;      /* Portability information */
+    
+    struct Map_info *Map;	/* X-ref to Map_info struct ?? */
+  };
 
 /* Non-native format inforamtion */
 /* Shapefile */
@@ -90,71 +150,84 @@ struct Format_info {
 #endif
 } ;
 
+struct Plus_head
+  {
+    int Version_Major;		/* version codes */
+    int Version_Minor;
+    int Back_Major;		/* earliest version that can use this data format */
+    int Back_Minor;
+    int with_z;
+
+    struct Port_info port;      /* Portability information */
+
+    P_NODE_2D **Node_2d;	/* P_NODE array of pointers *//* 1st item is 1 for  */
+    P_LINE_2D **Line_2d;	/* P_LINE array of pointers *//* all these (not 0) */
+    P_AREA_2D **Area_2d;		
+    P_ISLE_2D **Isle_2d;
+   
+    plus_t n_nodes;		/* Current Number of nodes */
+    plus_t n_lines;		/* Current Number of lines */
+    plus_t n_areas;		/* Current Number of areas */
+    plus_t n_isles;
+
+    plus_t n_plines;		/* Current Number of point    lines */
+    plus_t n_llines;		/* Current Number of line     lines */
+    plus_t n_blines;		/* Current Number of boundary lines */
+    plus_t n_clines;		/* Current Number of centroid lines */
+    //int n_points;		/* Current Number of points */
+
+    plus_t alloc_nodes;		/* # of nodes we have alloc'ed space for 
+				     i.e. array size - 1 */
+    plus_t alloc_lines;		/* # of lines we have alloc'ed space for */
+    plus_t alloc_areas;		/* # of areas we have alloc'ed space for */
+    plus_t alloc_isles;		/* # of isles we have alloc'ed space for */
+
+    long Node_offset;           /* offset of array of nodes in topo file */
+    long Line_offset;
+    long Area_offset;
+    long Isle_offset;
+
+    long Dig_size;		/* size of dig file */
+    long Dig_code;		/* internal check codes */
+
+    //int all_areas;		/* if TRUE, all areas have just been calculated */
+    //int all_isles;		/* if TRUE, all islands have just been calculated */
+
+    //double snap_thresh;
+    //double prune_thresh;
+
+    //long future3;
+    //long future4;
+    //double F1, F2, F3, F4;	/* in anticipation of future needs */
+
+    //char Dig_name[HEADSTR];
+    //char filler[HEADSTR];
+  };
 
 struct Map_info
   {
-    int format;         /* format */
-    struct Format_info fInfo;  /* format information */
-      
-    P_NODE *Node;		/* P_NODE array *//* 1st item is 1 for  */
-    P_AREA *Area;		/* P_AREA array *//* all these (not 0) */
-    P_LINE *Line;		/* P_LINE array */
-    P_CAT *Cat;			/* P_CAT  array */
-    P_ATT *Att;
-    P_ISLE *Isle;
+    /* Common info for all formats */  
+    int format;                /* format */
 
-    plus_t n_nodes;		/* Current Number of nodes */
-    plus_t n_lines;		/* Current Number of lines */
-    plus_t n_cats;		/* Current Number of category lists */
-    plus_t n_areas;		/* Current Number of areas */
-    plus_t n_atts;		/* Current Number of attributes */
-    plus_t n_isles;
-    plus_t n_alines;		/* Current Number of area lines */
-    plus_t n_llines;		/* Current Number of line lines */
-    plus_t n_plines;		/* Current Number of point lines */
-    int n_points;		/* Current Number of points */
+    //char *plus_file;		/* Dig+ file */
+    //char *coor_file;		/* Point registration file */
+    
+    struct Plus_head plus;      /* topo file *head; */
 
-    plus_t alloc_nodes;		/* # of nodes we have alloc'ed space for */
-    plus_t alloc_lines;		/* # of lines we have alloc'ed space for */
-    plus_t alloc_cats;		/* # of cat lists we have alloc'ed space for */
-    plus_t alloc_areas;		/* # of areas we have alloc'ed space for */
-    plus_t alloc_atts;		/* # of atts  we have alloc'ed space for */
-    plus_t alloc_isles;		/* # of isles  we have alloc'ed space for */
+    //double snap_thresh;
+    //double prune_thresh;
 
-    /*  Note that dig_plus does not have a pointer, cuz it does
-       **    not remain open.  All of its contents are currently read
-       **    into memory at time of open
-       **    att_fp also is not kept open, but for some reason it 
-       **    was in here, so I will leave it for now.
-       **  Note that dig_fp and att_fp are new names for 4.0
-       **    they used to be digit and att
-     */
-    FILE *dig_fp;		/* Dig file pointer */
-    char *digit_file;		/* digit file */
+    //int all_areas;	/* if TRUE, all areas have just been calculated */
+    //int all_isles;	/* if TRUE, all islands have just been calculated */
 
-    char *plus_file;		/* Dig+ file */
-    char *coor_file;		/* Point registration file */
-
-    /*struct dig_head *head; */
-    struct dig_head head;
-
-    double snap_thresh;
-    double prune_thresh;
-
-    int all_areas;		/* if TRUE, all areas have just been calculated */
-    int all_isles;		/* if TRUE, all islands have just been calculated */
-
-
-/*********************  New Vlib data for 4.0 ***********************/
     /*  All of these apply only to runtime, and none get written out
-       **  to the dig_plus file
-     */
-
+    **  to the dig_plus file 
+    */
     int open;			/* should be 0x5522AA22 if opened correctly */
-    /* or        0x22AA2255 if closed           */
-    /* anything else implies that structure has */
-    /* never been initialized                   */
-    int mode;			/*  Read, Write, RW                           */
+                                /* or        0x22AA2255 if closed           */
+                                /* anything else implies that structure has */
+                                /* never been initialized                   */
+    int mode;			/*  Read, Write, RW                         */
     int level;			/*  1, 2, (3)                               */
     plus_t next_line;		/* for Level II sequential reads */
 
@@ -162,68 +235,57 @@ struct Map_info
     char *mapset;
 
     /* Constraints for reading in lines  (not polys yet) */
-    int Constraint_region_flag;
-    int Constraint_type_flag;
+    int    Constraint_region_flag;
+    int    Constraint_type_flag;
     double Constraint_N;
     double Constraint_S;
     double Constraint_E;
     double Constraint_W;
-    int Constraint_type;
-    int proj;
+    int    Constraint_type;
+    int    proj;
+
+    /* format specific */
+    /* native */
+    FILE   *dig_fp;		/* Dig file pointer */
+    char   *digit_file;		/* digit file */
+    struct dig_head head;	/* coor file head */
+    
+    /* non native */
+    struct Format_info fInfo;  /* format information */
+    
   };
 
 
-struct Plus_head
+struct bounding_box        /* Bounding Box */
   {
-    int Major;			/* version codes */
-    int Minor;
-
-    plus_t n_nodes;
-    plus_t n_lines;
-    plus_t n_cats;
-    plus_t n_areas;
-    plus_t n_atts;
-    plus_t n_isles;
-    plus_t n_llines;
-    plus_t n_alines;
-    plus_t n_plines;
-    int n_points;
-
-    long Node_offset;
-    long Line_offset;
-    long Cat_offset;
-    long Area_offset;
-    long Att_offset;
-    long Isle_offset;
-
-    long Dig_size;		/* size of dig file */
-    long Att_size;		/* size of attribute file */
-    long Dig_code;		/* internal check codes */
-    long Att_code;
-
-    int all_areas;		/* if TRUE, all areas have just been calculated */
-    int all_isles;		/* if TRUE, all islands have just been calculated */
-
-    double snap_thresh;
-    double prune_thresh;
-
-    long Back_Major;		/* earliest version that can use this data format */
-    long Back_Minor;
-    long future3;
-    long future4;
-    double F1, F2, F3, F4;	/* in anticipation of future needs */
-
-    char Dig_name[HEADSTR];
-    char filler[HEADSTR];
+    double N;	/* north */			
+    double S;   /* south */
+    double E;   /* east */
+    double W;   /* west */
+    double T;   /* top */
+    double B;   /* bottom */
   };
 
-struct P_line
+struct P_node_2d
+  {
+    double x;			/* X ord */
+    double y;			/* Y ord */
+    plus_t alloc_lines;  
+    plus_t n_lines;	/* Number of attached lines (size of lines, angle) */
+    /*  If 0, then is degenerate node, for snapping */
+    plus_t *lines;		/* Connected lines */
+    float  *angles;		/* Respected angles */
+    //char   alive;		/* deleted or not   0 or !0  */
+            // if dead pointer to this node is set to NULL
+  };
+
+struct P_line_2d
   {
     plus_t N1;			/* start node */
     plus_t N2;			/* end node */
-    /* left and right are negative if an island */
-    plus_t left;		/* area number to left */
-    plus_t right;		/* area number to right */
+    /* left and right are negative if an island ??? */
+    plus_t left;		/* area number to left, negative for isle */
+    plus_t right;		/* area number to right, negative for isle */
 
     double N;			/* Bounding Box */
     double S;
@@ -231,87 +293,63 @@ struct P_line
     double W;
 
     long offset;		/* offset in DIG file for line */
-    plus_t att;			/* attribute index number if such, else 0 */
     char type;			/*  see mode.h */
+    //char   alive;	/* ??? add alive because types are only alive now */
   };
 
-struct P_cat
+struct P_area_2d
   {
-
-    void *table_meta_info;	/* Use this to store information about
-				   the true location, other info, about the
-				   associated fields. Needed (?)
-				 */
-
-    plus_t alloc_cats;
-    plus_t n_cats;
-
-    long offset;
-  };
-
-struct P_node
-  {
-    double x;			/* X ord */
-    double y;			/* Y ord */
-    plus_t alloc_lines;
-    plus_t n_lines;		/* Number of attached lines (size of lines, angle) */
-    /*  If 0, then is degenerate node, for snapping */
-    plus_t *lines;		/* Connected lines */
-    float *angles;		/* Respected angles */
-    char alive;			/* deleted or not   0 or !0  */
-  };
-
-struct P_area
-  {
-    double N;			/* Bounding Box */
+    double N;		/* Bounding Box */
     double S;
     double E;
     double W;
-    plus_t n_lines;		/* Number of boundary lines */
+    plus_t n_lines;	/* Number of boundary lines */
     plus_t alloc_lines;
-    plus_t *lines;		/* Boundary Lines (Negative means N2 to N1 clockwise) */
-    char alive;			/* deleted or not   0 or !0  */
-/*********  Above this line is compatible with P_isle **********/
+    plus_t *lines;	/* Boundary Lines, negative means direction N2 to N1,
+			   lines are in  clockwise order */
+    //char   alive;		/* deleted or not   0 or !0  */
+    //  alive replaced by pointer to NULL
+    
+    /*********  Above this line is compatible with P_isle **********/
+    
+    /* Centroids - ofcourse each area may have only one correct centroid
+    *  other centroids are errors in data */
+    plus_t n_centroids;		/* Number of centroids within */
+    plus_t alloc_centroids;
+    plus_t *centroids;		
 
-    plus_t att;			/* attribute index number, if labeled */
-    plus_t n_isles;		/* Number of boundary areas inside */
+    plus_t n_isles;		/* Number of islands inside */
     plus_t alloc_isles;
     plus_t *isles;		/* 1st generation interior islands */
+
+    //plus_t outside;             /* ??? Area outside if this area if island */
   };
 
-
-struct P_isle
+struct P_isle_2d
   {
-    double N;			/* Bounding Box */
+    double N;		/* Bounding Box */
     double S;
     double E;
     double W;
-    plus_t n_lines;		/* Number of boundary lines */
+    plus_t n_lines;	/* Number of boundary lines */
     plus_t alloc_lines;
-    plus_t *lines;		/* Boundary Lines (Negative means N2 to N1
-				   counter-clockwise) */
-    char alive;			/* deleted or not   0 or !0  */
+    plus_t *lines;	/* Boundary Lines, negative means direction N2 to N1,
+			   lines are in counter clockwise order */
+    //char alive;			/* deleted or not   0 or !0  */
+    //  alive replaced by pointer to NULL
 /*********  Above this line is compatible with P_area **********/
 
     plus_t area;		/* area it exists w/in, if any */
   };
 
-struct P_att
-  {
-    double x;			/* x ord location point */
-    double y;			/* y ord location point */
-    long offset;		/* Offset into Attr file */
-    int cat;			/* Category Number */
-    plus_t index;		/* Area or Line number it's attached to */
-    char type;			/* see mode.h */
-  };
-
+/*
 struct new_node
   {
     plus_t N1;
     plus_t N2;
     int cnt;
   };
+*/
 
 struct line_pnts
   {

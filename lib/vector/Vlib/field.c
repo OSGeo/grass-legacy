@@ -38,7 +38,7 @@ struct field_info
     FILE *fd;
     char files[2][1024],msets[2][200];
     char buf[1024];
-    char *map, *tmp1, *tmp2;
+    char *map, tmp1[1024], tmp2[1024];
     char md[1024], mp[1024], mpset[1024];
     char tab[1024], col[1024], db[1024], drv[1024];
     char m_tab[1024], m_col[1024], m_db[1024], m_drv[1024];
@@ -46,6 +46,8 @@ struct field_info
     char *c;
     int  ndef, row, rule, nfiles;
     int  matched;
+    
+    G_debug (1, "Vect_get_field_info(): map = %s, mapset = %s", m, ms);
     
     fi = NULL;
     
@@ -55,10 +57,12 @@ struct field_info
     if ( !(G__name_is_fully_qualified(m, tmp1, tmp2)) )
         map = G_fully_qualified_name ( m, ms );
     
+    G_debug (1, "map = %s", map);
     sprintf ( files[0], "%s/%s/DB", G_location_path(), G_mapset());
     strcpy ( msets[0], G_mapset() );
     nfiles = 1;
 
+    G_debug (1, "file 1 = %s", files[0]);
     if ( strcmp ( ms, G_mapset() ) != 0 )
       {
         sprintf ( files[1], "%s/%s/DB", G_location_path(), ms);
@@ -66,6 +70,7 @@ struct field_info
         nfiles = 2;
       }
 
+    G_debug (1, "nfiles = %d", nfiles);
     matched = FALSE;
     for (i=nfiles-1; i >= 0; i--)
       {

@@ -108,7 +108,7 @@ V1_read_next_line_shp (
        */
       if (Map->Constraint_region_flag)
 	{
-	  dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
+	  //dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
 
 	  if (!V__map_overlap (Map, n, s, e, w))
 	    continue;
@@ -134,10 +134,10 @@ V2_read_line_shp (
 	       struct line_cats *line_c,
 	       int line)
 {
-  if (line < 1 || line > Map->n_lines)	/* ALL DONE */
+  if (line < 1 || line > Map->plus.n_lines)	/* ALL DONE */
     return -2;
 
-  return Vect__Read_line_shp (Map, line_p, line_c, Map->Line[line].offset);
+//  return Vect__Read_line_shp (Map, line_p, line_c, Map->plus.Line_2d[line].offset);
 }
 
 /*
@@ -154,16 +154,16 @@ V2_read_next_line_shp (
 		    struct line_cats *line_c)
 {
   register int line;
-  register P_LINE *Line;
-  
+  register P_LINE_2D *Line;
+/*  
   while (1)
     {
       line = Map->next_line;
 
-      if (line > Map->n_lines)
+      if (line > Map->plus.n_lines)
 	return (-2);
 
-      Line = &(Map->Line[line]);
+      Line = &(Map->plus.Line_2d[line]);
 
       if ((Map->Constraint_type_flag && !(Line->type & Map->Constraint_type)))
 	{
@@ -180,6 +180,7 @@ V2_read_next_line_shp (
 
       return V2_read_line_shp (Map, line_p, line_c, Map->next_line++);
     }
+*/
   /* NOTREACHED */
 }
 

@@ -40,10 +40,10 @@ char *G_adjust_Cell_head(struct Cell_head *, int, int);
 char *G_align_window(struct Cell_head *, struct Cell_head *);
 
 /* alloc.c */
-char *G_malloc(int);
-char *G_calloc(int, int);
-char *G_realloc(void *, int);
-int G_free(void *);
+void *G_malloc(int);
+void *G_calloc(int, int);
+void *G_realloc(void *, int);
+void G_free(void *);
 
 /* alloc_cell.c */
 int G_raster_size(RASTER_MAP_TYPE);
@@ -356,9 +356,6 @@ int G_debug(int,char *,...);
 /* def_window.c */
 int G_def_window(struct Cell_head *);
 
-/* dig_title.c */
-char *G_get_dig_title(char *, char *);
-
 /* distance.c */
 int G_begin_distance_calculations(void);
 double G_distance(double, double, double, double);
@@ -525,10 +522,6 @@ int G__open_null_read(int);
 int G__read_null_bits(int, unsigned char *, int, int, int);
 int embed_nulls_nomask(int, void *, int, RASTER_MAP_TYPE, int);
 int embed_nulls(int, void *, int, RASTER_MAP_TYPE, int);
-
-/* get_row_colr.c */
-int G_get_raster_row_colors(int, int, struct Colors *,
-    unsigned char *, unsigned char *, unsigned char *);
 
 /* get_window.c */
 int G_get_window(struct Cell_head *);
@@ -776,7 +769,6 @@ int G__open_raster_new(char *, int);
 int G__reallocate_work_buf(int);
 int G__reallocate_null_buf(void);
 int G__reallocate_mask_buf(void);
-int G__reallocate_temp_buf(void);
 int G_set_fp_type(RASTER_MAP_TYPE);
 int G_raster_map_is_fp(char *, char *);
 RASTER_MAP_TYPE G_raster_map_type(char *, char *);
@@ -806,6 +798,7 @@ int G_plot_line(double, double, double, double);
 int G_plot_line2(double, double, double, double);
 int G_plot_polygon(double *, double *, int);
 int G_plot_fx(double (*)(), double, double);
+int G_plot_icon (double, double, int, double, double);
 
 /* pole_in_poly.c */
 int G_pole_in_polygon(double *, double *, int);
@@ -973,9 +966,6 @@ FILE *G_fopen_sites_old(char *, char *);
 FILE *G_fopen_sites_new(char *);
 int G_get_site(FILE *, double *, double *, char **);
 int G_put_site(FILE *, double, double, char *);
-
-/* sites_title.c */
-char *G_get_sites_title(char *, char *);
 
 /* squeeze.c */
 char *G_squeeze(char *);

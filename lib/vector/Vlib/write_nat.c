@@ -134,7 +134,7 @@ V1__rewrite_line_nat (
   int  n_points;
   FILE *dig_fp;
   
-  dig__set_cur_head (&(Map->head));
+  dig_set_cur_port (&(Map->head.port));
   dig_fp = Map->dig_fp;
   fseek (dig_fp, offset, 0);
 

@@ -17,9 +17,10 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
 #include <stdlib.h>
+#include <math.h>
 #include "gis.h"
+#include "Vect.h"
 
 /*
    **
@@ -55,6 +56,9 @@ Vect__new_line_struct ()
   /* alloc_points MUST be initialized to zero */
   if (p)
     p->alloc_points = p->n_points = 0;
+  
+  if (p)
+    p->x = p->y = p->z = NULL;
 
   return p;
 }
@@ -152,8 +156,6 @@ Vect_reset_line (struct line_pnts *Points)
    **   If you are re-using a line struct, be sure to clear out old 
    **   data first by calling Vect_reset_line ()
  */
-/* NEW after 4.0 alpha */
-
 int 
 Vect_append_point (struct line_pnts *Points, double x, double y)
 {
@@ -181,6 +183,46 @@ Vect_append_3d_point (struct line_pnts *Points, double x, double y, double z)
   Points->y[n] = y;
   Points->z[n] = z;
   return ++(Points->n_points);
+}
+
+/* 
+   ** Appends points to the end of a Points structure
+   ** returns new number of points or -1 on out of memory
+   **
+   **  Note, this will append to whatever is in line struct.
+   **   If you are re-using a line struct, be sure to clear out old 
+   **   data first by calling Vect_reset_line ()
+ */
+int 
+Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
+	           int direction) /* GV_FORWARD, GV_BACKWARD */
+{
+  int i, n, on, an;
+
+  on = Points->n_points;
+  an = APoints->n_points;
+  n = on + an;
+  
+  /* Should be OK, dig_alloc_points calls realloc */
+  if (0 > dig_alloc_points (Points, n)) 
+    return (-1);
+  
+  if ( direction == GV_FORWARD ) {
+      for (i = 0; i < an; i++) {
+          Points->x[on + i] = APoints->x[i];
+          Points->y[on + i] = APoints->y[i];
+          Points->z[on + i] = APoints->z[i];
+      }
+  } else {
+      for (i = 0; i < an; i++) {
+          Points->x[on + i] = APoints->x[an - i - 1];
+          Points->y[on + i] = APoints->y[an - i - 1];
+          Points->z[on + i] = APoints->z[an - i - 1];
+      }
+  }
+  
+  Points->n_points = n;
+  return n;
 }
 
 /*
@@ -224,4 +266,134 @@ Vect_copy_pnts_to_xyz (
   return (Points->n_points);
 }
 
+/* Find point on line in the specified distance from the begining,
+*  measured along line.
+*
+*  If the distance is greater than line length or negative, error is returned.
+*
+*  ( G_begin_distance_calculations() must be called before. - Is not true
+*    because G_distance is not used (no 3D support) )
+* 
+*  *x, *y, *z - pointers to point coordinates or NULL
+*  *angle     - pointer to angle of line in that point (radians, 
+*               counter clockwise from x axis) or NULL
+*  *slope     - pointer to slope angle in radians (positive up)
+* 
+*  Returns: 1 OK
+*           0 error - point is outside the line 
+*/
+int 
+Vect_point_on_line ( struct line_pnts *Points, double distance, 
+	  double *x, double *y, double *z, double *angle, double *slope )
+{
+    int j;
+    double dist = 0;
+    double xp, yp, zp, dx, dy, dz, dxy, dxyz, k, rest;
+
+    if ( (distance < 0) || (Points->n_points < 2) ) return 0;
+    
+    for ( j = 0; j < Points->n_points - 1; j++) {
+        /* dxyz = G_distance(Points->x[j], Points->y[j], 
+	                     Points->x[j+1], Points->y[j+1]); */
+	dx = Points->x[j+1] - Points->x[j];
+        dy = Points->y[j+1] - Points->y[j];
+        dz = Points->z[j+1] - Points->z[j];
+        dxy = hypot (dx, dy); 
+        dxyz = hypot (dxy, dz); 
+	
+	dist += dxyz; 
+        if ( dist >= distance ){ /* point is on the current line part */
+            rest = distance - dist + dxyz; /* from first point of segment to point */
+            k = rest / dxyz;
+
+	    xp = Points->x[j] + k * dx;
+            yp = Points->y[j] + k * dy;
+            zp = Points->z[j] + k * dz;
+	
+            if ( x != NULL ) *x = xp;
+            if ( y != NULL ) *y = yp;
+            if ( z != NULL ) *z = zp;
+	    
+	    /* calculate angle */
+	    if ( angle != NULL )
+	       *angle = atan2(dy, dx);
+
+	    /* calculate slope */
+	    if ( slope != NULL )
+	       *slope = atan2(dz, dxy);
+	    
+	    return 1;
+	}
+    }
+
+    return 0;
+}
+
+/* Calculate line length
+* 
+*  Returns: line length
+*/
+double 
+Vect_line_length ( struct line_pnts *Points )
+{
+    int j;
+    double dist = 0;
+    double dx, dy, dz, len = 0;
+
+    if ( Points->n_points < 2 ) return 0;
+    
+    for ( j = 0; j < Points->n_points - 1; j++) {
+	dx = Points->x[j+1] - Points->x[j];
+        dy = Points->y[j+1] - Points->y[j];
+        dz = Points->z[j+1] - Points->z[j];
+        len += hypot ( hypot (dx, dy), dz ); 
+    }
+
+    return len;
+}
+
+/* original dig__check_dist () in grass50 
+*  
+*  returns nearest segment (first is 1)
+*/  
+int 
+Vect_line_distance (
+		  struct line_pnts *points,
+		  double ux,
+		  double uy,
+		  double *dist)
+{
+  register int i;
+  register double distance;
+  register double new_dist;
+  register int n_points;
+  int segment;
+
+  n_points = points->n_points;
+
+  if ( n_points == 1 ) {
+    /* OK ? - what dig_distance_point_to_line returns for degenerated line ? */  
+    distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
+              					    points->x[0], points->y[0]);
+    distance = sqrt(distance);
+    return (0);
+  }
+
+  distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
+        					  points->x[1], points->y[1]);
+  segment = 1;
+      
+  for ( i = 1 ; i < n_points - 1; i++)
+    {
+      new_dist = dig_distance2_point_to_line (ux, uy, points->x[i], points->y[i],
+					points->x[i + 1], points->y[i + 1]);
+      if (new_dist < distance)
+	{
+	  distance = new_dist;
+	  segment = i + 1;
+	}
+    }
+  *dist = sqrt(distance);
+  return (segment);
+}
 

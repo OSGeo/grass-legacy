@@ -19,18 +19,23 @@
 *****************************************************************************/
 #include "Vect.h"
 
-static int
-rnl_dummy ()
-{
-  return -1;
-}
+static int read_next_dummy () { return -1; }
 
 static int (*Read_next_line_array[][3]) () =
 {
-    { rnl_dummy, V1_read_next_line_nat, V2_read_next_line_nat }
-   ,{ rnl_dummy, V1_read_next_line_shp, V2_read_next_line_shp }
+    { read_next_dummy, V1_read_next_line_nat, V2_read_next_line_nat }
+   ,{ read_next_dummy, V1_read_next_line_shp, V2_read_next_line_shp }
 #ifdef HAVE_POSTGRES
-   ,{ rnl_dummy, V1_read_next_line_post }
+   ,{ read_next_dummy, V1_read_next_line_post }
+#endif
+};
+
+static int (*Read_line_array[]) () =
+{
+   V1_read_line_nat 
+   , V1_read_line_shp 
+#ifdef HAVE_POSTGRES
+   , V1_read_line_post 
 #endif
 };
 
@@ -53,5 +58,54 @@ Vect_read_next_line (Map, line_p, line_c)
         return -1;
 
     return (*Read_next_line_array[Map->format][Map->level]) (Map, line_p, line_c);
+}
+
+/*
+*   returns: line type
+*           -1 on Out of memory
+*           -2 on EOF   
+*/
+int
+V1_read_line (Map, line_p, line_c, offset )
+     struct Map_info *Map;
+     struct line_pnts *line_p;
+     struct line_cats *line_c;
+     long   offset;
+{
+#ifdef GDEBUG
+    G_debug (3, "V1_read_line()");
+#endif    
+  
+    if (!VECT_OPEN (Map))
+        return -1;
+
+    return (*Read_line_array[Map->format]) (Map, line_p, line_c, offset);
+}
+
+/*
+*   returns: line type
+*           -1 on Out of memory
+*           -2 on EOF   
+*/
+int
+V2_read_line (Map, line_p, line_c, line )
+     struct Map_info *Map;
+     struct line_pnts *line_p;
+     struct line_cats *line_c;
+     int    line;
+{
+    long offset;
+    P_LINE_2D *Line;
+
+#ifdef GDEBUG
+    G_debug (3, "V2_read_line()");
+#endif    
+  
+    if (!VECT_OPEN (Map))
+        return -1;
+    
+    Line = Map->plus.Line_2d[line];
+    offset = Line->offset;
+    return ( V1_read_line (Map, line_p, line_c, offset) );
 }
 

@@ -67,33 +67,33 @@ Vect_get_point_in_area (
   static int first_time = 1;
   static int isl_allocated = 0;
   register int i;
-
+/*
   if (first_time)
     {
       Points = Vect_new_line_struct ();
       IPoints = NULL;
       first_time = 0;
     }
-  if (Map->Area[area].n_isles > isl_allocated)
+  if (Map->plus.Area_2d[area].n_isles > isl_allocated)
     {
       IPoints = (struct line_pnts **)
-	G_realloc (IPoints, (1 + Map->Area[area].n_isles) * sizeof (struct line_pnts *));
-      for (i = isl_allocated; i < Map->Area[area].n_isles; i++)
+	G_realloc (IPoints, (1 + Map->plus.Area_2d[area].n_isles) * sizeof (struct line_pnts *));
+      for (i = isl_allocated; i < Map->plus.Area_2d[area].n_isles; i++)
 	IPoints[i] = Vect_new_line_struct ();
-      isl_allocated = Map->Area[area].n_isles;
+      isl_allocated = Map->plus.Area_2d[area].n_isles;
     }
 
   if (0 > Vect_get_area_points (Map, area, Points))
     return -1;
 
-  for (i = 0; i < Map->Area[area].n_isles; i++)
+  for (i = 0; i < Map->plus.Area_2d[area].n_isles; i++)
     {
       IPoints[i]->alloc_points = 0;
-      if (0 > Vect_get_isle_points (Map, Map->Area[area].isles[i], IPoints[i]))
+      if (0 > Vect_get_isle_points (Map, Map->plus.Area_2d[area].isles[i], IPoints[i]))
 	return -1;
     }
-  return (Vect_get_point_in_poly_isl (Points, IPoints, Map->Area[area].n_isles, X, Y));
-
+  return (Vect_get_point_in_poly_isl (Points, IPoints, Map->plus.Area_2d[area].n_isles, X, Y));
+*/
 }
 
 static int 
@@ -364,13 +364,14 @@ Vect_find_poly_centroid (
    ** returns 0 if not
    ** returns -1 on error
  */
+/*
 int 
 Vect_point_in_islands (
 			struct Map_info *Map,
 			int area,
 			double cent_x, double cent_y)
 {
-  P_AREA *Area;
+  P_AREA_2D *Area;
   static struct line_pnts *TPoints;
   static int first_time = 1;
   int isle;
@@ -381,7 +382,7 @@ Vect_point_in_islands (
       first_time = 0;
     }
 
-  Area = &(Map->Area[area]);
+  Area = &(Map->plus.Area_2d[area]);
 
   for (isle = 0; isle < Area->n_isles; isle++)
     {
@@ -394,7 +395,7 @@ Vect_point_in_islands (
 
   return 0;
 }
-
+*/
 
 
 /*
