@@ -60,6 +60,7 @@ command line, using the form
 <B>r.drain</B>
 [<B>-c</B>]
 [<B>-a</B>]
+[<B>-n</B>]
 <B>input=</B><EM>name</EM>
 <B>output=</B><EM>name</EM>
 [<B>site=</B><EM>name</EM>]
@@ -84,6 +85,17 @@ needed parameter values using the standard GRASS
 
 Program parameters are as follows. 
 
+<h3>Flags:</h3>
+<DL>
+<DT><B>-c</B>
+<DD> Input map cells values are copied verbatim along the least cost path.
+<DT><B>-a</B>
+<DD> Accumulated input map cells values along the least cost path are
+written on output.
+<DT><B>-n</B>
+<DD> Accumulate cell numbers along the path
+</DL>
+
 <H3>Parameters:</H3>
 
 <DL>
@@ -101,13 +113,8 @@ As many points as desired can be input.
 <DT><B>null_value=</B><EM>value</EM>
 <DD>Floating point value assign to null cells. By defaults, null cells
 are excluded from the path evaluation.
-<DT><B>-c</B>
-<DD> Input map cells values are copied verbatim along the least cost path.
-<DT><B>-a</B>
-<DD> Accumulated input map cells values along the least cost path are
-written on output.
-
 </DL>
+
 
 <H2>EXAMPLES</H2>
 
