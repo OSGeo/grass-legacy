@@ -1,0 +1,18 @@
+if test $# -eq 1; then
+	out=$1
+fi
+########### GET NAME FOR THIS overlay #######################################
+while test "$out" = ""
+do
+echo -n "Enter the name for this overlay: "
+read out
+if test -f XXXXXX/$out
+	then
+	echo -n "File $out exists. Do you want to redo it [y]es (n)o: "
+	read answ
+	if test "$answ" = "n"
+		then
+		out=""
+	fi
+fi
+done
