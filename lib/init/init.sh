@@ -87,6 +87,12 @@ done
 GISRC="$HOME/.grassrc57"
 export GISRC
 
+# remove invalid GISRC file to avoid disturbing error messages:
+cat "$GISRC" 2>/dev/null| grep UNKNOWN >/dev/null
+if [ $? -eq 0 ] ; then
+   rm -f "$GISRC"
+fi
+
 # At this point the grass user interface variable has been set from the
 # command line, been set from an external environment variable, or is 
 # not set. So we check if it is not set
