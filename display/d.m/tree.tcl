@@ -65,6 +65,9 @@ proc DmTree::drop { from to where operation type data } {
     if { [lindex $where 0] == "position" } { 
         set new_parent [lindex $where 1]
         set new_index [lindex $where 2]
+    } elseif { [lindex $where 0] == "widget" } {
+        set new_parent "root"
+        set new_index [llength [$from nodes "root"] ]
     } else {
         set node [lindex $where 1]
         if { [Dm::node_type $node] == "group" } {
@@ -77,7 +80,6 @@ proc DmTree::drop { from to where operation type data } {
        }
     }
 
-
     # test if new is not in childrens
     set parent $new_parent
     while { $parent != "root" } {
@@ -88,7 +90,7 @@ proc DmTree::drop { from to where operation type data } {
     if { ($old_parent == $new_parent) && ($new_index > $old_index) } { 
         set new_index [expr $new_index - 1]
     }
-    
+
     $from move $new_parent $data $new_index
 
 }
