@@ -18,12 +18,13 @@ INSTALL_SCRIPT=		@INSTALL@ -m 755
 INSTALL_DATA_DIR=	mkdir -p -m 755
 
 ENV=			@ENV@
+MAKE=			make
 
-MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0
+MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 MAKE=${MAKE}
 
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
-MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR}
+MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE}
 
 MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
@@ -32,10 +33,9 @@ all: pre-install
 install: pre-install do-install
 
 pre-install:
-	if [ ! -d ${PREFIX} ]; then mkdir -p ${PREFIX} ; fi
-	if [ ! -d src/CMD/next_step ]; then mkdir -p src/CMD/next_step ; fi
+	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
+	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	${INSTALL_DATA_DIR} ${PREFIX}
 	${SHELL} ${IS64BIT}
 	echo "Now proceed with make install"
 
