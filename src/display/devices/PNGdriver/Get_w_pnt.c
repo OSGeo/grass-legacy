@@ -14,8 +14,10 @@
  * the button pressed in returned in *button.
  */
 
-Get_location_with_pointer(wx, wy, button)
-	int *wx, *wy ;    /* new x,y coordinate       */
-	int *button ;     /* button pressed to return */
+#include "pngdriver.h"
+
+int
+Get_location_with_pointer(int *wx, int *wy, int *button)
 {
+	return -1;
 }

@@ -3,7 +3,7 @@
  * color table is available.
  */
 
-#include "png.h"
+#include "pngdriver.h"
 
 int 
 can_do_float (void)
