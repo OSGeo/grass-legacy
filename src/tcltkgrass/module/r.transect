@@ -4,6 +4,7 @@ interface_build {
     {entry map {Raster map to be queried:} 0 raster}
     {entry line {Transect line definition(s) (east,north,azimuth,distance[,...]):} 0 +xy}
     {entry null {Character string to be used for no data value [*]:} 0 ""}
+    {checkbox -g {Output Geographic Coordinates} "" -g}
 }
 #    {entry width {Profile width, in cells (odd number) [1]:} 0 ""}
 #    {checkbox result {Raw results (default).} "" raw}

@@ -22,7 +22,7 @@ user defined transect line(s).
 <BR>
 <B>r.transect help</B> 
 <BR>
-<B>r.transect</B> 
+<B>r.transect</B> [<B>-g</B>]
 <B>map=</B><EM>name</EM> 
 <!-- [<B>result=</B><EM>type</EM>] 
 [<B>width=</B><EM>value</EM>] -->
@@ -41,8 +41,13 @@ single aggregate value (e.g., average or median value). -->
 
 <H2>OPTIONS</H2>
 
-<H3>Parameters:</H3>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-g</B>
+<DD>Output easting and northing in first two columns of four column output
+</DL>
 
+<H3>Parameters:</H3>
 <DL>
 <DT><B>map=</B><EM>name</EM>
 <DD>Name of an existing raster map layer to be queried. 
