@@ -29,6 +29,8 @@ zoom1(x,y)	/* called by Input_pointer */
 {
     static int use = 1;
     int zoom2();
+	int cancel();
+
     static Objects objects[] =
     {
 	MENU("CANCEL",cancel,&use),
