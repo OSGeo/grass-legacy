@@ -352,6 +352,7 @@ src/raster/r.random.cells
 src/raster/r.random.surface
 src/raster/r.reclass
 src/raster/r.recode
+src/raster/r.region
 src/raster/r.report
 src/raster/r.resample
 #src/raster/r.resamp.rst # contains bug due to author
