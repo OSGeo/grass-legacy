@@ -1,4 +1,4 @@
-#pragma ident "cdh C Version 1.0 <12 Sep 1994>";
+#pragma ident "cdh C Version 1.0 <12 Sep 1994>"
 
 int dcmp ();
 int dblcomp ();
