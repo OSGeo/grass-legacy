@@ -1,4 +1,4 @@
-$Id: TODO,v 1.43 2000-10-25 15:02:40 markus Exp $
+$Id: TODO,v 1.44 2000-10-28 13:29:28 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -247,7 +247,6 @@ Modules:
   (Being worked on by ?)
 
 
-
 - tcltkgrass:
  - Change the tcltkgrass code so that lists of choices appear as
    a list instead of needing to use a push button to create the
@@ -257,6 +256,7 @@ Modules:
    module from the menu (edit gui.tcl)
    (Being worked on by ?)
  - added nice icons for mostly used commands
+ - generate module windows by parser.c
 
 ---------------------------------------------------------------------
 Numerical Recipes: removal of code:
