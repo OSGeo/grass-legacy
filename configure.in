@@ -44,6 +44,11 @@ AC_ARG_WITH(includes,
 	INC_DIRS="$withval"
     ])
 
+# For SGI's add /usr/freeware/include
+if test "$host_vendor" = "sgi" ; then
+    INC_DIRS="$INC_DIRS /usr/freeware/include"
+fi
+
 if test "$INC_DIRS"; then
     for dir in $INC_DIRS; do
         if test -d "$dir"; then
@@ -68,6 +73,11 @@ AC_ARG_WITH(libs,
 	esac
 	LIB_DIRS="$withval"
     ])
+
+# For SGI's add /usr/lib32 and /usr/freeware/lib32
+if test "$host_vendor" = "sgi" ; then
+    LIB_DIRS="$LIB_DIRS /usr/lib32 /usr/freeware/lib32"
+fi
 
 if test "$LIB_DIRS"; then
     for dir in $LIB_DIRS; do
@@ -215,6 +225,7 @@ else
     for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/zlib.h"; then
             ZLIBINCPATH="$ZLIBINCPATH -I$dir"
+	    break
         fi
     done
 fi
@@ -256,6 +267,7 @@ else
     for dir in $my_lib_dirs; do
         if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
            ZLIBLIBPATH="$ZLIBLIBPATH -L$dir"
+	   break
         fi
     done
 fi
@@ -306,6 +318,7 @@ if test -z "$TIFF_INCLUDE_DIRS"; then
     for dir in $my_inc_dirs; do
         if test -z "$TIFF_INCLUDE_DIRS" && test -d "$dir" && test -f "$dir/tiffio.h"; then
             TIFF_INCLUDE_DIRS="-I$dir"
+	    break
         fi
     done
     AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
@@ -344,6 +357,7 @@ if test -z "$TIFF_LIBRARY_DIRS"; then
     for dir in $my_lib_dirs; do
         if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && test -f "$dir/libtiff.a"; then
             TIFF_LIBRARY_DIRS="-L$dir"
+	    break
         fi
     done
     AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
@@ -461,7 +475,7 @@ if test -z "$TKINCDIR" ; then
 fi
 
 if test -z "$TKINCDIR" ; then
-    AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
+    AC_MSG_WARN([*** Did not find tk.h, maybe okay...])
 fi
 AC_SUBST(TKINCDIR)
 
@@ -498,8 +512,9 @@ fi
 if test -z "$TCLTKLIBPATH"; then
     AC_MSG_CHECKING(Tcl/Tk library dirs)
     for dir in $my_lib_dirs; do
-        if test -z "$TCLTKLIBPATH" && test -d "$dir" && test -f "$dir/libtcl$tcltk_ver.a" && test -f "$dir/libtk$tcltk_ver.a"; then
+        if test -z "$TCLTKLIBPATH" && test -d "$dir" && ((test -f "$dir/libtcl$tcltk_ver.a" && test -f "$dir/libtk$tcltk_ver.a") || (test -f "$dir/libtcl$tcltk_ver.so" && test -f "$dir/libtk$tcltk_ver.so")) ; then
             TCLTKLIBPATH="-L$dir"
+	    break
         fi
     done
     AC_MSG_RESULT($TCLTKLIBPATH)
@@ -694,19 +709,21 @@ if test -n "$USE_POSTGRES"; then
         for dir in $my_pginc_path; do
             if test -d "$dir" && test -f "$dir/libpq-fe.h"; then
                 PQINCPATH="$PQINCPATH -I$dir"
+		break
             fi
         done
         AC_MSG_RESULT($PQINCPATH)
         if test -z "$PQINCPATH"; then
             AC_MSG_WARN([*** libpq-fe.h not found, but needed for PostgreSQL support])
         fi
-fi
-if test -z "$PQLIBPATH"; then
-        my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
+    fi
+    if test -z "$PQLIBPATH"; then
+    	my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
         AC_MSG_CHECKING(libpq paths)
         for dir in $my_pglib_path; do
             if test -d "$dir"; then
-                  PQLIBPATH="$PQLIBPATH -L$dir"
+            	PQLIBPATH="$PQLIBPATH -L$dir"
+		break
             fi
         done
         AC_MSG_RESULT($PQLIBPATH)
@@ -802,10 +819,10 @@ if test -n "$opengl_includes"; then
         fi
     done
     if test -z "$OPENGLINC"; then
-        AC_MSG_WARN([*** Didn't find GL/gl.h])
+        AC_MSG_WARN([*** Did not find GL/gl.h])
     fi
     if test -z "$OPENGLwINC"; then
-        AC_MSG_WARN([*** Didn't find GL/GLwMDrawA.h])
+        AC_MSG_WARN([*** Did not find GL/GLwMDrawA.h])
     fi
     if test -n "$OPENGLINC" && test -n "$OPENGLwINC"; then
         AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
@@ -881,8 +898,10 @@ else
     for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/sql.h"; then
             ODBCINC="$ODBCINCPATH -I$dir"
+	    break
 	elif test -d "$dir/odbc" && test -f "$dir/odbc/sql.h"; then
             ODBCINC="$ODBCINCPATH -I$dir/odbc"
+	    break
         fi
     done
 fi
@@ -935,6 +954,7 @@ else
     for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/jpeglib.h"; then
             JPEGINCPATH="$JPEGINCPATH -I$dir"
+	    break
         fi
     done
 fi
@@ -951,6 +971,7 @@ else
     for dir in $my_lib_dirs; do
         if test -d "$dir" && test -f "$dir/libjpeg.a"; then
             JPEGLIBPATH="$JPEGLIBPATH -L$dir"
+	    break
         fi
     done
 fi                         
