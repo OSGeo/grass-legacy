@@ -10,12 +10,6 @@
 #%  description: a flag
 #%END
 #%option
-#% key: option1
-#% type: string
-#% description: an option
-#% required : yes
-#%end
-#%option
 #% key: raster
 #% type: string
 #% gisprompt: old,cell,raster
@@ -28,6 +22,12 @@
 #% gisprompt: old,dig,vector
 #% description: vector input map
 #% required : yes
+#%end
+#%option
+#% key: option1
+#% type: string
+#% description: an option
+#% required : no
 #%end
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
