@@ -1,0 +1,192 @@
+.\" %W% %G%
+.TH import.to.vect 1
+.SH NAME
+import.to.vect  \-  Converts ascii DLG files, 
+binary DLG files, and ascii vector
+.CT files maps
+into binary vector 
+.CT "files," "maps,"
+and creates the needed support files
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B import.to.vect
+.SH DESCRIPTION
+This program performs all of the processes that are needed to convert
+ascii DLG files, binary DLG files, and ascii vector 
+.CT files maps
+into binary vector
+.CT "files." "maps."
+It also creates two support files, the \fBdig_plus\fR file and the
+\fBdig_att\fR file (only created when importing DLG files). The \fBdig_plus\fR 
+file contains topological information obtained by analyzing the vector 
+.CT "file." "map."
+The \fBdig_att\fR file contains attribute 
+.CT "" "(category)"
+information 'stripped' from the DLG
+file. This \fBdig_att\fR file is created for vector 
+.CT files maps
+by the labeling
+function of the GRASS \fIdigit\fR program.
+All of the above files must be run through \fIimport.to.vect\fR before they
+can be used in the \fIdigit\fR program of GRASS 3.0.
+.sp
+.SH IMPORT FILES
+After entering the command \fBimport.to.vect\fR, the user will be asked
+which type of file to import and create support files for:
+
+.RS
+.nf
+         Import to GRASS Vector Format and Creates Needed Support Files
+
+ 1  -   Ascii DLG file to Binary GRASS Vector Map
+ 2  -   Binary DLG file to Binary GRASS Vector Map
+ 3  -   Ascii GRASS Vector Map to Binary GRASS Vector Map
+ 4  -   Build support files for Binary GRASS Vector Map
+.RE
+.fi
+
+If numbers 1-3 are chosen, \fIimport.to.vect\fR will respond with the current
+.CT database "data base"
+units (in feet or meters), and ask if the new vector 
+.CT file map
+is in the 
+correct units for the 
+.CT database "data base"
+location.
+If the new vector 
+.CT file map
+is not in the correct units, \fIimport.to.vect\fR
+will not
+allow it to be placed in the current 
+.CT database "data base"
+location. For each 
+.CT database
+"data base"
+location, all 
+.CT "data layers" "map layers"
+should have the same units. If, for some
+reason, a 
+.CT "data layer" "map layers"
+has different units than the rest of the 
+.CT "data layers" "map layers"
+in the same 
+.CT database,"data base"
+ a new 
+.CT database "data base"
+location will have to be created for it.
+
+.SH Ascii DLG File to Binary GRASS Vector Map:
+Converts ascii DLG files (such as those created in GRASS 2.0) to a vector
+.CT file map
+and creates the \fBdig_plus\fR and \fBdig_att\fR support files. 
+The user is asked two 
+questions:
+.nf
+.RS
+
+1. Determine if this map is composed of Area or Line information.
+   Do you want to give precedence to Areas (opposed to Lines)? (y/n) [y]
+.fi
+
+\fBNOTE\fR: Some machine-processed DLG files do not make the
+distinction between lines and area edges. For example, in a roads map, where
+the the desired information is line data, 
+a downtown block surrounded by roads may be processed as an area.
+Because of this, the user is asked to
+choose whether to give precedence to areas or lines.  If precedence is
+given to lines, the user should be aware that any lines that bound 
+unlabeled areas in the DLG file will
+be stored as line data. Any unlabeled areas would therefore be lost (this is
+only a concern when areas are unlabeled, labeled area information will be
+retained). If precedence is given to areas, lines will be stored as boundaries 
+to areas that are unlabeled. 
+
+.nf
+.br
+2. During the building of the Vector format:
+   Do you want to snap nodes to other nodes within a threshold (y/n) [n]
+.fi
+
+\fBNOTE\fR: BE CAREFUL! This threshold is calculated using the scale of the
+original DLG or DIGIT file. If the threshold is too high, excessive snapping 
+may occur,
+destroying the file.  In general, users seldom need to snap nodes. If snapping
+of nodes is desired, the user may want to run \fIsupport.vect\fR separately. 
+\fIsupport.vect\fR allows the user to set the threshold.
+.RE
+.fi
+
+This process is done in three phases:
+.br
+1. The ascii dlg file is converted to a binary dlg file.
+.br
+2. The binary dlg file is converted to a binary vector 
+.CT "file," "maps,"
+and the
+\fBdig_att\fR support file containing attribute 
+.CT "" "(category)"
+information is created.
+.br
+3. The \fBdig_plus\fR support file is created by analyzing the vector 
+.CT file map
+for topological information.
+
+.SH Binary DLG File to Binary GRASS Vector Map:
+Converts binary DLG files (such as those created in GRASS 2.0) to a vector
+.CT file map
+and creates the \fBdig_plus\fR and \fBdig_att\fR support files. The user
+is asked whether precedence should be given to Areas or Lines and if nodes
+should be snapped to other nodes within a calculated threshold.
+
+This process is done in two phases:
+.br
+1. The binary dlg file is converted to a binary vector 
+.CT "file." "map."
+.XT ", and the \fBdig_att\fR support file containing attribute information is created."
+.br
+2. The \fBdig_plus\fR support file is created by analyzing the vector 
+.CT file map
+for topological information.
+
+.SH Ascii GRASS Vector Map into Binary GRASS Vector Map:
+Converts ascii 
+.CT "DIGIT files" "vector maps"
+(such as those created in GRASS 2.0) into 
+binary vector 
+.CT files maps
+and creates the \fBdig_plus\fR support file. Since a vector
+.CT file map
+keeps the distinction between lines and area edges, the user is not
+asked to give precedence to either. However, the user will be asked if the
+user wants to snap from nodes to other nodes within a calculated threshold.
+
+This process is done in two phases:
+.br
+1. The ascii vector 
+.CT file map
+is converted to a binary vector 
+.CT "file," "map,"
+and the
+\fBdig_plus\fR support file is created.
+.br
+2. The \fBdig_plus\fR support file is created by analyzing the vector 
+.CT file map
+for
+topological information.
+
+.SH Build support files for Binary GRASS Vector Map:
+Creates the \fBdig_plus\fR support file.
+
+This process is done in one phase:
+.br
+1. The \fBdig_plus\fR support file is created by analyzing the vector 
+.CT file map
+for topological information.
+
+.SH SEE ALSO
+\fIa.b.vect[1], digit[1], support.vect[1]\fR
+.SH AUTHORS
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+Dave Gerdes, U.S. Army Construction Engineering Research Laboratory
