@@ -1,0 +1,12 @@
+PGM = d.rast.num
+
+OFILES = number.o
+
+all: $(BIN_ALPHA_CMD)/$(PGM)
+
+$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
