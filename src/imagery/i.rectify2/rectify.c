@@ -103,11 +103,12 @@ int rectify (char *name, char *mapset, char *result, int order)
 
 	G_suppress_warnings(1);
     target_window.compressed=cellhd.compressed;
+    G_close_cell (infd); /* (pmx) 17 april 2000 */
     write_map(result);
     select_current_env();
+/*    G_close_cell (infd); */ /* moved up! (pmx) 17 april 2000 */
 
 	G_suppress_warnings(0);
-    G_close_cell (infd);
     G_free (rast);
 
     return 1;
