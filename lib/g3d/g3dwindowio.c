@@ -126,6 +126,21 @@ G3d_getWindowLocation (path, windowName)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Reads
+ * <em>window</em> from the file specified by <em>windowName</em>. The name is
+ * converted by the rules defined in window defaults. A NULL pointer indicates
+ * the <em>WIND3</em> file in the current mapset.
+ *
+ *  \param window
+ *  \param windowName
+ *  \return 1 ... if successful
+ *          0 ... otherwise.
+ */
+
 int
 G3d_readWindow (window, windowName)
 
@@ -225,6 +240,21 @@ G3d_createPath (thePath)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * 
+ * Writes <em>window</em> to the file specified by <em>windowName</em>. The name
+ * is converted by the rules defined in window defaults. A NULL pointer
+ * indicates the <em>WIND3</em> file in the current mapset.
+ *
+ *  \param window
+ *  \param windowName
+ *  \return 1 ... if successful
+ *          0 ... otherwise.
+ */
+
 int
 G3d_writeWindow (window, windowName)
 
@@ -269,13 +299,20 @@ G3d_writeWindow (window, windowName)
   
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Allows the window to be set at run-time via the <em>region3</em>
+ * command line argument. This function has to be called before
+ * <em>G_parser ()</em>. See also window defaults.
+ *
+ *  \return void
+ */
+
 void
 G3d_useWindowParams ()
 
 {
   G3d_setWindowParams ();
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

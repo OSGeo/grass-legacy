@@ -4,6 +4,22 @@
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * The default resampling function which uses nearest
+ * neighbor resampling.
+ *
+ *  \param map
+ *  \param row
+ *  \param col
+ *  \param depth
+ *  \param value
+ *  \param type
+ *  \return void
+ */
+
 void
 G3d_nearestNeighbor (map, row, col, depth, value, type)
 
@@ -31,6 +47,17 @@ G3d_nearestNeighbor (map, row, col, depth, value, type)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Sets the resampling function to be used by
+ * G3d_getValue () (cf.{g3d:G3d.getValue}). This function is defined
+ * as follows:
+ *
+ *  \return void
+ */
+
 void
 G3d_setResamplingFun (map, resampleFun)
 
@@ -42,6 +69,17 @@ G3d_setResamplingFun (map, resampleFun)
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * 
+ * Returns in <em>resampleFun</em> a pointer to the resampling function used by
+ * <em>map</em>.
+ *
+ *  \return void
+ */
 
 void
 G3d_getResamplingFun (map, resampleFun)
@@ -55,6 +93,16 @@ G3d_getResamplingFun (map, resampleFun)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns
+ * in <em>nnFunPtr</em> a pointer to G3d_nearestNeighbor () (cf.{g3d:G3d.nearestNeighbor}).
+ *
+ *  \return void
+ */
+
 void
 G3d_getNearestNeighborFunPtr (nnFunPtr)
 
@@ -63,7 +111,3 @@ G3d_getNearestNeighborFunPtr (nnFunPtr)
 {
   *nnFunPtr = G3d_nearestNeighbor;
 }
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -58,6 +57,22 @@ retileNocache (map, nameOut, tileX, tileY, tileZ)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Makes a copy of <em>map</em> with name <em>nameOut</em> which has
+ * tile dimensions <em>tileX</em>, <em>tileY</em>, <em>tileZ</em>.
+ * The source code can be found in <em>retile.c</em>.
+ *
+ *  \param map
+ *  \param nameOut
+ *  \param tileX
+ *  \param tileY
+ *  \param tileZ
+ *  \return void
+ */
 
 void
 G3d_retile (map, nameOut, tileX, tileY, tileZ)
@@ -128,7 +143,3 @@ G3d_retile (map, nameOut, tileX, tileY, tileZ)
   if (! G3d_closeCell (map2))
     G3d_fatalError ("G3d_retile: error in G3d_closeCell");
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

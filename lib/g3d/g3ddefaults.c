@@ -1,7 +1,3 @@
-/*
- * $Id$
- */
- 
 #include <stdlib.h>
 #include <stdio.h>
 #include "G3d.h"
@@ -69,6 +65,22 @@ extern char * G3d_getWindowParams(void);
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * <em>doCompress</em> should be one of G3D_NO_COMPRESSION and
+ * G3D_COMPRESSION, <em>doRle</em> should be either G3D_NO_RLE or
+ * G3D_USE_RLE, and <em>precision</em> should be either G3D_MAX_PRECISION or
+ * a positive integer.
+ *
+ *  \param doCompress
+ *  \param doLzw
+ *  \param doRle
+ *  \param precision
+ *  \return void
+ */
+
 void
 G3d_setCompressionMode (doCompress, doLzw, doRle, precision)
 
@@ -99,6 +111,19 @@ G3d_setCompressionMode (doCompress, doLzw, doRle, precision)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * 
+ *
+ *  \param doCompress
+ *  \param doLzw
+ *  \param doRle
+ *  \param precision
+ *  \return void
+ */
+
 void
 G3d_getCompressionMode (doCompress, doLzw, doRle, precision)
 
@@ -113,6 +138,16 @@ G3d_getCompressionMode (doCompress, doLzw, doRle, precision)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  set cache size
+ *
+ *  \param nTiles
+ *  \return void
+ */
+
 void
 G3d_setCacheSize (nTiles)
 
@@ -126,6 +161,15 @@ G3d_setCacheSize (nTiles)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  get cache size
+ *
+ *  \return int
+ */
+
 int
 G3d_getCacheSize ()
 
@@ -134,6 +178,16 @@ G3d_getCacheSize ()
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief Set cache limit
+ *
+ *  set cache limit
+ *
+ *  \param nBytes
+ *  \return void
+ */
 
 void
 G3d_setCacheLimit (nBytes)
@@ -148,6 +202,16 @@ G3d_setCacheLimit (nBytes)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief Get cache limit
+ *
+ *  get cache limit
+ *
+ *  \param nBytes
+ *  \return int
+ */
+
 int
 G3d_getCacheLimit ()
 
@@ -156,6 +220,16 @@ G3d_getCacheLimit ()
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  set G3d file type
+ *
+ *  \param type
+ *  \return void
+ */
 
 void
 G3d_setFileType (type)
@@ -171,6 +245,16 @@ G3d_setFileType (type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * get G3d file type
+ *
+ *  \param type
+ *  \return int
+ */
+
 int
 G3d_getFileType ()
 
@@ -179,6 +263,18 @@ G3d_getFileType ()
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * set Tile Dimension
+ *
+ *  \param tileX
+ *  \param tileY
+ *  \param tileZ
+ *  \return void
+ */
 
 void
 G3d_setTileDimension (tileX, tileY, tileZ)
@@ -198,6 +294,18 @@ G3d_setTileDimension (tileX, tileY, tileZ)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  get Tile Dimension
+ *
+ *  \param tileX
+ *  \param tileY
+ *  \param tileZ
+ *  \return void
+ */
+
 void
 G3d_getTileDimension (tileX, tileY, tileZ)
 
@@ -211,6 +319,16 @@ G3d_getTileDimension (tileX, tileY, tileZ)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  set error function
+ *
+ *  \param 
+ *  \return void
+ */
+
 void
 G3d_setErrorFun (fun)
 
@@ -221,6 +339,16 @@ G3d_setErrorFun (fun)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  set G3d unit
+ *
+ *  \param unit
+ *  \return void
+ */
 
 void
 G3d_setUnit (unit)
@@ -233,6 +361,18 @@ G3d_setUnit (unit)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Initializes the default values described
+ * in G3D Defaults.  Applications have to use this function only if they need to
+ * query the default values before the first file (either old or new) has been
+ * opened.
+ *
+ *  \return void
+ */
 
 void
 G3d_initDefaults ()
@@ -499,7 +639,3 @@ G3d_initDefaults ()
     G3d_fatalError ("G3d_initDefaults: Error reading window");
   G3d_setWindow (&window);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

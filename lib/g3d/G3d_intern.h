@@ -1,4 +1,3 @@
-
 #include <rpc/types.h>
 #include <rpc/xdr.h>
 
@@ -197,11 +196,6 @@ extern void G3d_fatalError (/* msg */);
 #define G3D_REGION_EWRES "e-w resol"
 #define G3D_REGION_NSRES "n-s resol"
 #define G3D_REGION_TBRES "t-b resol"
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-
 
 
 

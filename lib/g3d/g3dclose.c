@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -130,6 +129,19 @@ G3d_closeCellOld (map)
  
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Closes g3d-file. If <em>map</em> is new
+ * and cache-mode is used for <em>map</em> then every tile which is not flushed
+ * before closing is flushed.  
+ *
+ *  \param map
+ *  \return 1 ... if successful,
+ *          0 ...  otherwise.
+ */
+
 int
 G3d_closeCell (map)
 
@@ -183,7 +195,3 @@ G3d_closeCell (map)
   G3d_free (map);
   return 1;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

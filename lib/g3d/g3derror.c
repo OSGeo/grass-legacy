@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -9,6 +8,16 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  This function ignores the error.
+ *
+ *  \param 
+ *  \return void
+ */
+
 void
 G3d_skipError (msg)
 
@@ -16,6 +25,17 @@ G3d_skipError (msg)
 
 {
 }
+
+
+/*!
+ * \brief 
+ *
+ *  This function prints the
+ * error message <em>msg</em> to <em>stderr</em> and returns.
+ *
+ *  \param 
+ *  \return void
+ */
 
 void
 G3d_printError (msg)
@@ -27,6 +47,18 @@ G3d_printError (msg)
   fprintf (stderr, msg);
   fprintf (stderr, "\n");
 }
+
+
+/*!
+ * \brief 
+ *
+ *  This function prints the
+ * error message <em>msg</em> to <em>stderr</em>, flushes <em>stdout</em> 
+ * and <em>stderr</em>, and terminates the program with a segementation fault.
+ *
+ *  \param 
+ *  \return void
+ */
 
 void
 G3d_fatalError (msg)
@@ -55,7 +87,3 @@ G3d_error (msg)
 {
   g3d_error_fun (msg);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
