@@ -1,0 +1,66 @@
+
+
+
+reclass(1)	     GRASS Reference Manual	       reclass(1)
+
+
+
+NAME
+     reclass - Create new cell layer based upon	existing cell
+     layer
+
+SYNOPSIS
+     reclass
+
+DESCRIPTION
+     The SCS GRASS program reclass is an interactive program
+     which allows a user to enter categories or names interactively
+     or will read the categories or names from a file. The program
+     then issues r.reclass commands to produce the reclass map.
+
+     Files containing category names can be created in many ways,
+     one may use a test editor, word-processor, or DBMS. In any
+     event, the files for are no more than a list of category names 
+     which will have the same category number after the reclass. 
+     The files will contain the category names as one category name 
+     per line.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SEE ALSO
+     r.reclass, r.rescale, r.resample
+
+AUTHORS
+     R.L.Glenn, USDA, Soil Conservation Service, CGIS Division
+
+GRASS 4.0		 U.S. Army CERL				1
+
+
+
