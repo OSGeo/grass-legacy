@@ -218,7 +218,15 @@ the transformation choosing the actual pixel that has its centre nearest to
 the point location in the image. Advantage of this method is that the pixel
 brightness of the image is kept as <EM>i.rectify</EM> rearranges the
 geometry of the image pixels.
+<P>
 
+In case i.rectify starts normal and after some time a mail with following
+text is sent:
+<br><tt>
+GIS ERROR: error while writing to temp file
+</tt><br>
+the user may try the flag <EM>-c</EM> (or the module needs more free space
+on the hard drive).
 
 <H2>SEE ALSO</H2>
 
