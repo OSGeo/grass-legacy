@@ -1,7 +1,11 @@
 #include <stdlib.h>
-#include "interface.h"
 #include "togl.h"
+
+#define FontBase_MAIN
+#include "interface.h"
+
 #define BG_COLOR 0xFF000000
+
 
 /* 
 *  Have to look into why we can't draw to BOTH in OpenGL/tcl
