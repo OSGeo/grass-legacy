@@ -142,8 +142,29 @@ int db_driver_open_database(handle)
 	return DB_FAILED;
     }
 
+    /* fetch table names */
     res = PQexec(pg_conn,
 		 "select tablename from pg_tables where tablename !~ 'pg_*' order by tablename");
+
+    if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
+	snprintf(emsg, sizeof(emsg), "Error: select Postgres: %s\n",
+		 PQerrorMessage(pg_conn));
+	report_error(emsg);
+	PQclear(res);
+	PQfinish(pg_conn);
+	return DB_FAILED;
+    }
+
+    rec_num = PQntuples(res);
+
+    for (i = 0; i < rec_num; i++)
+	add_table(PQgetvalue(res, i, 0));
+
+    PQclear(res);
+
+    /* fetch view names */
+    res = PQexec(pg_conn,
+		 "select viewname from pg_views where viewname !~ 'pg_*' order by viewname");
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	snprintf(emsg, sizeof(emsg), "Error: select Postgres: %s\n",
