@@ -29,8 +29,20 @@ establish_view(fx,fy,fz,tx,ty,tz, view_angle)
 	int t, b, l, r ;
 
 /* Get the screen coordinates for the current window */
-	D_get_screen_window(&t, &b, &l, &r) ;
+        D_get_screen_window(&t, &b, &l, &r) ;
 	save_edges(t, b, l, r) ;
+
+/* the functions for drawing faces use D_ functions to draw.
+   it is inconsistent since the functions in clip.c use R_ calls
+   instead of D_ calls. This is because the original version of
+   d.3d was written before display (D_) libraries.
+   So the functions in clip.c need t, b, l, r for clipping.
+   That is why we call D_get_screen_window() even though
+   D_set_clip_window() calls it internally to set static vars
+   for D_ routines to draw and clip */
+
+        D_set_clip_window( t, b, l, r);
+/* adjust coordinates of the window to draw with D_ routines */
 
 /* Calculate real to screen conversion factors */
 	x_adj =  ((double)(r - l)/2.) / tan(view_angle * RpD / 2.0);
@@ -66,7 +78,10 @@ establish_view(fx,fy,fz,tx,ty,tz, view_angle)
 	rotate02 = -sin(rx) * -sin(rz) + cos(rx) * sin(ry) * cos(rz);
 	rotate10 = cos(ry) * sin(rz);
 	rotate11 = cos(rx) * cos(rz) + sin(rx) * sin(ry) * sin(rz);
+	/*
 	rotate12 = -sin(rx) * cos(rz) + cos(rz) * sin(ry) * sin(rz);
+	*/
+	rotate12 = -sin(rx) * cos(rz) + cos(rx) * sin(ry) * sin(rz);
 	rotate20 = -sin(ry);
 	rotate21 = sin(rx) * cos(ry);
 	rotate22 = cos(rx) * cos(ry);
