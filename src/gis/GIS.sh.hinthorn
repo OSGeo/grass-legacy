@@ -1,0 +1,254 @@
+#!/bin/sh
+
+: ${GISBASE?}
+
+# -a as first arg imports user's aliases.
+getalias=$1
+
+# get home directory, name of lockfile and gisrc file
+
+home=`cd;pwd`
+lockfile=$home/.gislock
+GISRC=$home/.grassrc
+export GISRC
+
+# set the GIS_LOCK variable to current process id
+
+GIS_LOCK=$$
+export GIS_LOCK
+
+# set PATH to GRASS bin, ETC to GRASS etc
+
+ETC=$GISBASE/etc
+PATH=$GISBASE/bin:$PATH
+export PATH
+
+# check for concurrent use
+
+$ETC/lock $lockfile $$
+case $? in
+ 0) ;;
+ 1)
+    echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    exit ;;
+ *)
+    echo Unable to properly access $lockfile
+    echo Please notify system personel.
+    exit ;;
+esac
+
+# first time user ...
+
+if [ ! -f $GISRC ]
+then
+	cat $ETC/gis_intro
+	echo ""
+	echo "Hit RETURN to continue"
+	read ans
+fi
+
+# run tset to set terminal and TERM variable
+# must tell it to output sh
+eval `SHELL=/bin/sh tset -s -Q`
+stty -tabs
+
+# user selects LOCATION and MAPSET
+
+$ETC/gis_set
+case $? in
+ 0) ;;
+ *) exit ;;
+esac
+
+# unset the MONITOR variable to force user to select one if they are going
+# to do graphics.
+
+gisenv MONITOR=
+
+# get gisrc into the environment
+
+eval `gisenv`
+
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+export LOCATION
+
+if [ -x $home/.grass3rc ]
+then
+	$home/.grass3rc
+elif [ -x $GISBASE/grass3rc ]
+then
+	$GISBASE/grass3rc
+fi
+##############################################################
+
+trap "" 2 3
+shell=sh
+shellname="Bourne Shell"
+
+if test "$SHELL"
+then
+    if [ "$SHELL" = "/bin/csh" ]
+    then
+	shell=csh
+	shellname="C Shell"
+    fi
+fi
+
+# Display the advertising
+clear
+echo ""
+echo "------------------------------------------------------------------------"
+echo "Welcome to the QUICK-ACCESS version of GRASS 3.1"
+echo "  Copyright: Army Corps of Engineers, Construction Engineering"
+echo "  Research Laboratory, Environmental Division.  Autumn 1989"
+echo "  This version running thru the $shellname ($shell)"
+echo ""
+echo "Help is available with the command: help"
+echo "When ready to quit, enter: exit"
+echo "------------------------------------------------------------------------"
+echo "Remember to Dselect.mon # if you will use the Graphics Monitor"
+echo "------------------------------------------------------------------------"
+
+if [ $shell = csh ]
+then
+    HOME=$LOCATION
+    export HOME
+    cshrc=$HOME/.cshrc
+    rm -f $cshrc
+    echo "set home = $home" > $cshrc
+
+    if [ -r $home/.cshrc ]
+    then
+	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
+		if [ "$getalias" = "-a" ]
+		then
+			grep '^alias *' $home/.cshrc >> $cshrc
+		fi
+    fi
+	
+    if [ -r $home/.login ]
+    then
+	grep '^ *set  *mail *= *' $home/.login >> $cshrc
+		if [ "$getalias" = "-a" ]
+		then
+			grep '^alias *' $home/.login >> $cshrc
+		fi
+    fi
+
+    echo "set history=30 noclobber ignoreeof" >> $cshrc
+    echo "set prompt='\\" >> $cshrc
+    echo "Mapset <$MAPSET> in Location <$LOCATION_NAME>\\" >> $cshrc
+    echo "GRASS > '" >> $cshrc
+
+    $ETC/run csh
+
+    HOME=$home
+    export HOME
+
+else
+
+PS1="
+Mapset <$MAPSET> in Location <$LOCATION_NAME>
+GRASS > "
+
+    export PS1
+
+    $ETC/run sh
+fi
+
+trap 2 3
+#############################################################
+# unset the MONITOR variable
+
+monitor=`gisenv MONITOR`
+if [ "$monitor" ]
+then
+	Drelease.mon -v $monitor
+fi
+gisenv MONITOR=
+
+# Read gisrc again
+
+eval `gisenv`
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+
+
+# exit session. List files
+
+clear
+echo ""
+echo "GRASS SESSION WRAPUP"
+echo ""
+
+echo "You have just finished working on mapset: <$MAPSET>"
+any=no
+# for each specified directory see if there are files
+for val in 1 2 3 4 5 6 7 8 9 10 11 12
+do
+case "$val" in
+  1) dir=cellhd; txt="cell";f="";;
+  2) dir=dig; txt="vector";f="";;
+  3) dir=site_lists; txt="sites";f="";;
+  4) dir=windows; txt="window";f="";;
+  5) dir=group; txt="group";f="";;
+  6) dir=bdlg; txt="binary DLG";f="";;
+  7) dir=dlg; txt="ASCII DLG";f="";;
+  8) dir=paint; txt="paint label/comment";f="";;
+  9) dir=icons; txt="paint icons";f="";;
+ 10) dir=COMBINE; txt="combine script";f="";;
+ 11) dir=WEIGHT; txt="weight script";f="";;
+ 12) dir=rim; txt="rim data base";f='*rimdb1';;
+esac
+   if [ -d $LOCATION/$dir ]
+   then
+       count=`ls $LOCATION/$dir/$f | wc -l`
+       if [ $count -ne 0 ]
+       then
+         echo "$count  $txt files in <$MAPSET>"
+         any=yes
+       fi
+   fi
+done
+
+echo ""
+if [ $MAPSET != PERMANENT ]
+then
+    $GISBASE/etc/echo -n "SHALL THE MAPSET <$MAPSET> BE SAVED?        y/n [y]"
+    read ans
+else
+    ans=YES
+fi
+
+case $ans in
+    n|no|N|NO|No)
+	echo ""
+	echo "WARNING - If you remove your mapset, you will lose"
+	echo "          all your data files in this mapset!"
+	echo ""
+	$GISBASE/etc/echo -n "Are you sure you want to remove your mapset? y/n [n]"
+	read ans
+	case $ans in
+	    y|yes|Y|YES|Yes)
+		echo ""
+		echo "Removing MAPSET $MAPSET"
+		rm -rf $LOCATION
+		if [ -d $LOCATION ]
+		then
+		    echo "WARNING: Unable to completely remove $LOCATION"
+		else
+		    echo "MAPSET --$MAPSET-- REMOVED."
+		fi
+		sleep 3 ;;
+	    *) ;;
+	    esac
+	    ;;
+
+    *)
+	($ETC/clean_temp > /dev/null &)
+esac
+echo ""
+echo "                  GOOD BYE from GRASS"
+rm -f $lockfile
+echo ""
+
+
