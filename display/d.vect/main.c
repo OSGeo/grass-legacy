@@ -411,8 +411,10 @@ main (int argc, char **argv)
 
 	if ( level >= 2 )
 	    Vect_get_map_box ( &Map, &box );
+
 	if ( level >= 2 && ( window.north < box.S || window.south >  box.N || 
-		             window.east < box.W || window.west > box.E ) )
+		             window.east < box.W ||
+			     window.west > G_adjust_easting(box.E, &window) ) )
 	{
 	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.\n");
 	} else { 
