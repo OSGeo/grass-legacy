@@ -1,3 +1,4 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 #include "dxf2vect.h"
 
 /*#define DEBUG*/
@@ -10,7 +11,7 @@ dxf_open_layer (type, count)
     FILE	*layer_fd;
 
 
-    sprintf (filename, "%s.%s", basename, layers[count].name);
+    sprintf (filename, "%s.%s", base_name, layers[count].name);
 #ifdef DEBUG
 	fprintf(stderr,"%d opening layername %s \n",count,layers[count].name);
 #endif
