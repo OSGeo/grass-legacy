@@ -46,7 +46,7 @@ struct G__                         /*  Structure of library globals */
         int compression_bits;      /* max # bits used in lzw compression */
 	int want_histogram ;
         int reclass_flag ;         /* Automatic reclass flag       */
-        long *row_ptr ;            /* File row addresses           */
+        off_t *row_ptr ;           /* File row addresses           */
         COLUMN_MAPPING *col_map ;  /* Data to window col mapping   */
 	double C1,C2;              /* Data to window row constants */
         int cur_row ;              /* Current data row in memory   */
