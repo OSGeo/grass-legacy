@@ -1,0 +1,62 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.font romans
+
+d.frame -c f=map1 a=67,99,61,99
+d.frame -c f=map2 a=34,66,61,99
+d.frame -c f=map3  a=1,33,61,99
+d.frame -c f=text a=60,99,1,60
+d.frame -c f=explain a=1,59,1,60
+
+d.frame -s f=text
+d.text << EOF
+.F romant
+.S 10
+.C green
+           MAP ANALYSIS
+.C white
+.F romats
+.B 0
+.S 9
+   Boolean (and/or) overlays
+   Weighted overlays
+   Mathematical combination
+   Reports
+   Line of sight
+   Corridor selection
+   Ballistic trajectory
+EOF
+
+MAXVAL=5
+
+until
+i=`d.menu << 'EOF'
+# set the text size in % of entire screen height
+.S 3
+# set the top edge
+.T 10
+# set the LEFT edge
+.L 10
+GIS: choose item of interest 
+  Boolean (and/or) overlays
+  Weighted overlays
+  Mathematical combination
+  Reports
+  Line of sight
+  Corridor selection
+  Ballistic trajectory
+  Return
+EOF
+`
+
+if [ $i -ge $MAXVAL ] 
+	then
+	exit 1
+fi
+
+$0.$i
+
+do
+echo -n
+done
