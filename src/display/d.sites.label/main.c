@@ -1,6 +1,8 @@
 /*======================================================================
 			    d.sites.label
 ======================================================================*/
+/* $Id$ */
+
 #include <stdlib.h>
 #include <gis.h>
 #include <stdio.h>
@@ -35,10 +37,18 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
 				G_fatal_error("No categories in site file!\n");
 			break;
 		case SITE_ATTR_STR:
+			if (theSite->str_att == NULL)
+				G_fatal_error("No string attributes!\n");
+			if (theSite->str_alloc <= index)
+				G_fatal_error("String index out of range!\n");
 			G_strncpy(theText, theSite->str_att[index], 
 					MAX_SITE_STRING);
 			break;
 		case SITE_ATTR_DBL:
+			if (theSite->dbl_att == NULL)
+				G_fatal_error("No double attributes!\n");
+			if (theSite->dbl_alloc <= index)
+				G_fatal_error("Double index out of range!\n");
 			snprintf(theText, MAX_SITE_STRING,
 					"%lf", theSite->dbl_att[index]);
 			break;
