@@ -1,5 +1,5 @@
 
-eval `$GMAKE -sh` || exit 1
+eval `$GMAKE -sh $*` || exit 1
 : ${GISBASE?} ${SRC?} ${CMD?}
 
 #  Code to create links to front.end
@@ -9,7 +9,7 @@ do
 #    if [ ! -s $GISBASE/bin/$i ]
 #    then
         echo Creating link for $i
-		rm -f $GISBASE/bin/$i
+	rm -f $GISBASE/bin/$i
         ln $GISBASE/etc/front.end $GISBASE/bin/$i
 #    fi
 done
