@@ -1,4 +1,4 @@
-$Id: TODO,v 1.34 2000-10-18 14:37:15 markus Exp $
+$Id: TODO,v 1.35 2000-10-19 09:53:05 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -163,9 +163,13 @@ Modules:
   (Being worked on by ?)
 
 - r.info 
-   should also report statistics (min, max, mean, stddev, 1st            
-   quartile, median, 3rd quartile and sum)
-   (merge function of r.univar into r.info)
+  should also report statistics (min, max, mean, stddev, 1st            
+  quartile, median, 3rd quartile and sum)
+  (merge function of r.univar into r.info)
+  (Being worked on by ?)
+
+- r.out.bin
+   write it
   (Being worked on by ?)
 
 - r.surf.distance: write it
