@@ -336,7 +336,7 @@ menu_build 1 .main_menu {
         }
     }
     Region "Region coordinates management" {
-        "ZOOM in the monitor" "" {
+        "ZOOM/UNZOOM in the monitor" "" {
             "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "PAN in the monitor" "" {
@@ -415,7 +415,7 @@ menu_build 1 .main_menu {
         "ERASE display frame" "" {
             "source $env(TCLTKGRASSBASE)/module/d.erase"
         }
-        "ZOOM in the monitor" "" {
+        "ZOOM/UNZOOM in the monitor" "" {
         "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "Manage display frames" "" {
