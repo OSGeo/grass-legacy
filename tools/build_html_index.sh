@@ -1,11 +1,12 @@
 #!/bin/sh
 
 #generates HTML man pages docs/html/index.html
-# Markus Neteler, 2003, 2004
+# Markus Neteler, 2003, 2004, 2005
 
 #exclude following list of modules from help index:
 # escape it properly:
 EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target"
+GRASSVERSION=5.7
 
 ############# nothing to configure below ############
 
@@ -22,7 +23,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
  <meta name=\"Author\" content=\"GRASS Development Team\">
 </head>
 <body bgcolor=\"#FFFFFF\">
-<h2>GRASS GIS 5.7 Reference Manual</h2>
+<h2>GRASS GIS $GRASSVERSION Reference Manual</h2>
 This reference manual details the use of modules distributed with
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).
@@ -36,7 +37,7 @@ write_html_footer()
 # $2: help index url
 echo "<hr>" >> $1
 echo "<a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003-2004 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
+echo "&copy; 2003-2005 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
 echo "</body>" >> $1   
 echo "</html>" >> $1
 }
@@ -58,6 +59,8 @@ expand_module_class_name()
     echo "postGRASS" 
   elif [ "$1" = "ps" ] ; then 
     echo "postscript" 
+  elif [ "$1" = "p" ]  ; then 
+    echo "paint" 
   elif [ "$1" = "r" ]  ; then 
     echo "raster" 
   elif [ "$1" = "r3" ]  ; then 
@@ -103,7 +106,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
-write_html_header $FULLINDEX "GRASS GIS 5.7 Reference Manual"
+write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual"
 echo "<b>Full command index:</b>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
@@ -111,6 +114,7 @@ echo "<tr><td>db.* </td><td>database commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>p.* </td><td>paint commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>pg.* </td><td>postGRASS commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
@@ -162,7 +166,7 @@ do
   MODCLASS=`expand_module_class_name $k`
   FILENAME=$MODCLASS.html
 
-  write_html_header $FILENAME "GRASS GIS 5.7 Reference Manual"
+  write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual"
   echo "<b>$MODCLASS commands:</b>" >> $FILENAME
   echo "<table>" >> $FILENAME
   #for all modules:
@@ -180,7 +184,7 @@ done
 
 #next write main page:
 FILENAME=index.html
-write_html_header $FILENAME "GRASS GIS 5.7 Reference Manual"
+write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual"
 
 #modules:
 echo "<b>Manual sections:</b>" >> $FILENAME
