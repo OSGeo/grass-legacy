@@ -1,0 +1,164 @@
+.TL
+Index of Contributed Code
+.br
+
+\fBThe following programs were contributed for the 4.1 GRASS release
+and are accompanied by documentation of minimally a manpage.  Some
+code has other supporting information.\fR
+
+.IP "d.savescreen -" 16
+Screen capture utility for some MASSCOMP graphics monitor.
+(GRASS Display Program)
+
+.IP "p.screen -" 16
+Prints a graphics monitor display image file that has been saved by
+d.savescreen.
+(GRASS Paint/Print Output Program)
+
+.IP "r.traj -" 16
+Ballistic trajectory modeling program.
+
+.IP "v.mkgrid -" 16
+Creates a (binary) GRASS vector map of a user-defined grid.
+(GRASS vector)
+
+.IP "v.autocorr -" 16
+Calculates spatial autocorrelation statistics for GRASS vector files.
+(GRASS vector)
+
+.IP "s.medp -" 16
+Median polish for a GRASS sites list.
+(GRASS sites)
+
+.IP "d.linegraph -" 16
+Generates and displays simple line graphs in the active graphics monitor
+display frame.
+(GRASS Display Program)
+
+.IP "i.texture -" 16
+Calculates textural features on a raster file.
+(GRASS Image Processing Program)
+
+.IP "s.voronoi -" 16
+Uses a GRASS sites list to produce a Voronoi diagram.
+
+.IP "v.reg -" 16
+Computes the latitude and longitude of the exterior and interior corner tic
+marks for USGS 7.5' quad maps.
+
+.IP "s.to.rast -" 16
+Converts a site file to a cell file.
+(CCRS Contrib Program)
+
+.IP "v.in.poly -" 16
+Creates a vector file of polygons centered on given locations.
+(GRASS Vector Program)
+
+.IP "f.input -" 16
+Reads the results of the HEC-2 Water Surface Profile model and generates
+a vector map of water surface evaluations at hydraulic sections.
+
+.IP "f.wsurf -" 16
+Takes the results of f.input along with a raster terrain elevation map
+and generates two raster maps desc
+ribing the floodplain.
+
+.IP "f.econ -" 16
+Takes as input the results of f.wsurf along with a user-supplied
+vector map of building sites and two ASCII files of economic data
+and generates a vector map of total damage.
+
+.IP "f.detail -" 16
+Functions like f.econ but outputs two detailed reports: economic damage
+and depth of flooding.
+
+.IP "f.reach -" 16
+Provides floodwater statistics, including areal extent of flooding,
+average flood depth, and volume of water, calculated on a
+reach-by-reach basis.
+
+.IP "f.acap -" 16
+Calculates area-capacity for select areas of interest and shows
+relationships between water surface elevation, water surface area, and 
+volume of water.
+
+.IP "f.xsection -" 16
+Provides an interactive means for digitizing new cross-sections to be
+used as input to HEC-2 modeling.
+
+.LP
+
+\fBThe following programs were incorporated into contributed code 
+in pre-4.1 GRASS releases and may be accompanied by documentation.\fR
+
+DOS.delete 
+
+DOS.list
+
+DOS.save
+
+DOS.show
+
+d.6386.delete
+
+d.6386.save
+
+d.6386.show
+
+d.to.sites
+
+m.bsplit
+
+m.eigensystem
+
+m.geo
+
+m.get.fips
+
+m.get.stp
+
+m.qcalc
+
+m.setproj
+
+m.stp.proj
+
+r.in.erdas
+
+r.in.miads
+
+r.reclass.scs
+
+s.to.vect
+
+v.export
+
+v.extract
+
+v.import
+
+v.in.dlg.scs
+
+v.in.tiger.scs
+
+v.make.subj
+
+v.merge
+
+v.out.dlg.scs
+
+v.proj
+
+v.psu
+
+v.psu.subj
+
+v.random
+
+v.reclass
+
+v.report
+
+v.rmedge
+
+v.scale.random
