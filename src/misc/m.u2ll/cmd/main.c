@@ -5,10 +5,6 @@
 * function
 *    convert from utm to latitude/longitude
 *
-* usage
-*    ll2u spheroid=name [zone=value] [input=file] [output=file]
-*
-*    if the zone is missing it will be read from the current database
 *
 * coordinates are read from input, format:
 *
@@ -35,6 +31,7 @@
 *     -w   east north lines in error should NOT be printed to stderr.
 *
 *   Other flags
+*     -d  output format in decimal degrees
 *     -s  zone on command line is southern hemisphere
 *     -r  east,north is reversed - comes in as north,east
 ****************************************************************/
@@ -49,7 +46,7 @@ main (argc, argv) char *argv[];
     } parm;
     struct
     {
-	struct Flag *southern, *o, *w, *r;
+	struct Flag *s, *d, *o, *w, *r;
     } flag;
     int n;
     int warning_other;
@@ -59,6 +56,7 @@ main (argc, argv) char *argv[];
     char *error;
     double north,east,lat,lon;
     double a,e;
+    int proj_format;
     int zone ;
     char buf[1024];
     char ebuf[256], nbuf[256], label[512];
@@ -77,7 +75,7 @@ main (argc, argv) char *argv[];
     parm.zone->key = "zone";
     parm.zone->description = "utm zone";
     parm.zone->type = TYPE_INTEGER;
-    parm.zone->required = NO;
+    parm.zone->required = YES;
     parm.zone->options = "1-60";
 	/* note: on output southern hemisphere zones are negative */
 
@@ -93,9 +91,9 @@ main (argc, argv) char *argv[];
     parm.output->type = TYPE_STRING;
     parm.output->required = NO;
 
-    flag.southern = G_define_flag();
-    flag.southern->key = 's';
-    flag.southern->description = "Specified zone is in the southern hemisphere";
+    flag.s = G_define_flag();
+    flag.s->key = 's';
+    flag.s->description = "Specified zone is in the southern hemisphere";
 
 
     flag.r = G_define_flag();
@@ -110,17 +108,22 @@ main (argc, argv) char *argv[];
     flag.o->key = 'o';
     flag.o->description = "Flag other input lines as errors";
 
+    flag.d = G_define_flag();
+    flag.d->key = 'd';
+    flag.d->description = "Output in decimal degrees";
+
     if (G_parser(argc,argv))
 	exit(1);
-    
+
     warning_other = flag.o->answer;
     warning_utm   = !flag.w->answer;
     reversed      = flag.r->answer;
+    proj_format   = flag.d->answer ? -1 : PROJECTION_LL ;
 
     if (parm.zone->answer)
     {
 	sscanf (parm.zone->answer, "%d", &zone);
-	if (flag.southern->answer) zone = -zone;
+	if (flag.s->answer) zone = -zone;
     }
     else
     {
@@ -166,7 +169,10 @@ main (argc, argv) char *argv[];
 
     if (isatty(0))
     {
-	fprintf (stderr, "Enter easting northing, one per line\n");
+	if (reversed)
+	    fprintf (stderr, "Enter northing easting, one coordinate pair per line\n");
+	else
+	    fprintf (stderr, "Enter easting northing, one coordinate pair per line\n");
 	fprintf (stderr, "Enter the word <end> when done\n");
     }
     for (n=1; input(b1,reversed?nbuf:ebuf,b2,reversed?ebuf:nbuf,label); n++)
@@ -218,8 +224,8 @@ main (argc, argv) char *argv[];
 		lon = -lon;    /* CC lib expects negative in the west, which is
 				  reverse from what G_scan_easting() returns */
 
-		G_format_easting (lon, ebuf, PROJECTION_LL);
-		G_format_northing (lat, nbuf, PROJECTION_LL);
+		G_format_easting (lon, ebuf, proj_format);
+		G_format_northing (lat, nbuf, proj_format);
 		sprintf (buf, "%s%s%s%s%s",
 		    b1, reversed?nbuf:ebuf, b2, reversed?ebuf:nbuf, label);
 		output(buf);
