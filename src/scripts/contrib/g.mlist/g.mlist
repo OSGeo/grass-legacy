@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.8  2000-11-26 16:50:29  cho
+# Revision 1.9  2000-11-26 18:18:18  cho
+# bug fixed
+#
+# Revision 1.8  2000/11/26 16:50:29  cho
 # updated
 #
 # Revision 1.7  2000/11/26 16:47:17  cho
@@ -67,7 +70,7 @@ for i
 do
 	case $i in
 		type=*)
-			itype=$(echo "$i" | sed 's/^type=//')
+			itype=`echo "$i" | sed 's/^type=//'`
 			case $itype in
 				rast*)
 					type=rast;;
@@ -89,9 +92,9 @@ do
 		mapset=*)
 			mapset="mapset=$i";;
 		sep=*)
-			sep=$(echo "$i" | sed 's/^sep=//');;
+			sep=`echo "$i" | sed 's/^sep=//'`;;
 		*)
-			i=$(echo "$i" | sed 's/^map=//')
+			i=`echo "$i" | sed 's/^map=//'`
 			if [ x$search = x ]
 			then
 				search=$i
@@ -101,13 +104,13 @@ do
 	esac
 done
 
-for i in $(g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset")
+for i in `g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
 do
 	if [ "x$search" = "x" ]
 	then
 		list="$list $i"
 	else
-		list="$list $(echo $i | grep $search)"
+		list="$list `echo $i | grep $search`"
 	fi
 done
 
