@@ -1,3 +1,5 @@
+#include "gis.h"
+
 /*******************************************************
 void Critical_area_analys()
 
@@ -40,23 +42,6 @@ AGNPS output.
 #include <stdio.h>
 #include <string.h>
 #include <sys/param.h>
-
-/* The following includes should not be needed */
-/* MIKE FOSTER 2-16-96 */
-
-/*
-#include <X11/Xatom.h>
-#include <X11/Intrinsic.h>
-#include <X11/Shell.h>
-
-#include <Xm/Xm.h>
-#include <Xm/FileSB.h>
-#include <Xm/PushB.h>
-#include <Xm/Scale.h>
-#include <Xm/SelectioB.h>
-#include <Xm/ToggleB.h>
-#include <Xm/ToggleBG.h>
-*/
 
 /* parameter "input_nps_filename" added by Dave Peterson, April 1996; parameter
    passes back input filename entered by user with .nps extension added
@@ -195,25 +180,6 @@ END ADDITIONS BY MIKE FOSTER 2-19-96
        }
 
     strcpy(teststring,"                             ");
-/*  DON'T NEED THIS FOR MODIFIED VERSION */
-/*  MIKE FOSTER February 15, 1996 */
-/*  Get the selected file name from the file selector*/
-
-/*
-    if(call_data->length == 0) {
-       fprintf(stderr,"No file has been selected\n");
-       return;
-       }
-      else
-       {
-       getstring_ok = XmStringGetLtoR(call_data->value,
-          XmSTRING_DEFAULT_CHARSET,&file_selected);
-       fprintf(stderr,"the filename is %s \n",file_selected);
-       getdir_ok = XmStringGetLtoR(call_data->dir,
-          XmSTRING_DEFAULT_CHARSET,&directory);
-       fprintf(stderr,"the directory is %s \n",directory);
-       }
-*/
 
   /* Open the agnps.dat file and read in the number  */
   /* of total cells(including divided cells)         */
@@ -241,10 +207,14 @@ END ADDITIONS BY MIKE FOSTER 2-19-96
       fprintf (stderr,"\nPlease enter the output file name without its .nps extension\n");
       fprintf (stderr,"(ex: gaston) >");
       fgets(file_entered,30,stdin);
+      G_chop(file_entered);  /* 6/2000 remove white space */
+
       strcpy(infilename,file_entered);
       strcpy(input_nps_filename, file_entered);
       strcat(input_nps_filename, ".nps");
       strcat(infilename,".dat");
+      fprintf (stderr,"\nOpening files...");
+      
       if((infile = fopen(infilename,"r")) == NULL) {
          fprintf(stderr,"Can't open file: %s\n",infilename);
          sprintf(cmd,"Bad_dir_message.sh %s.nps\n",file_entered); 
