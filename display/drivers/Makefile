@@ -4,7 +4,8 @@ MODULE_TOPDIR = ../..
 SUBDIRS = \
 	lib \
 	monitorcap \
-	XDRIVER
+	XDRIVER \
+	PNG
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
