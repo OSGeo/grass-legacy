@@ -1,0 +1,12 @@
+PGM  = m.dted.examine
+HOME = $(BIN_MAIN_CMD)
+
+LIST	= main.o tape.o 
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB)
+	mv a.out $@
+
+
+$(GISLIB):      # in case library changes
