@@ -151,10 +151,13 @@ G_edit_cellhd (cellhd, type)
 	    cellhd->south       = def_wind.south     ;
 	    cellhd->west        = def_wind.west      ; 
 	    cellhd->east        = def_wind.east      ;
+	    if (type != AS_CELLHD)
+	    {
 	    cellhd->ew_res      = def_wind.ew_res    ;
 	    cellhd->ns_res      = def_wind.ns_res    ;
 	    cellhd->rows        = def_wind.rows      ;
 	    cellhd->cols        = def_wind.cols      ;
+	    }
 	}
 
 	if (cellhd->proj != def_wind.proj)
