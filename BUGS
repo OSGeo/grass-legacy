@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.73 2000-11-11 10:42:00 markus Exp $
+$Id: BUGS,v 1.74 2000-11-11 14:51:30 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -438,6 +438,12 @@ r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
    -> partly done by global configure
    -> runs fine with MESA 3.2
   (being worked on by ?)
+
+r3.to.sites:
+ - get it running. It is useful to extract parts of a volume into
+   a common x,y,z list
+  (being worked on by ?)
+
 
 s.kcv 
  - needs modified for the new Sites API
