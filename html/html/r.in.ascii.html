@@ -52,15 +52,13 @@ The header has 6 lines:
 
 <BR>
 
-<PRE>
-north:   xxxxxx.xx
-south:   xxxxxx.xx 
-east:    xxxxxx.xx 
-west:    xxxxxx.xx 
-rows:    r 
-cols:    c 
-</PRE>
-
+<BR>
+north:   xxxxxx.xx<BR>
+south:   xxxxxx.xx <BR>
+east:    xxxxxx.xx <BR>
+west:    xxxxxx.xx <BR>
+rows:    r <BR>
+cols:    c <BR>
 <BR>
 
 The north, south, east, and west field values entered 
@@ -68,31 +66,40 @@ are the coordinates of the edges of the geographic region.
 The rows and cols field values entered describe the dimensions 
 of the matrix of data to follow. 
 The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
+<p>
+Optionally the following parameters can be defined in the header section:
+<p>
+null: nn<BR>
+type: float<BR>
+multiplier: 2.<BR>
+<p>
+"null" defines a string or number to be converted to NULL value (no
+data).<br>
+"type" defines the data type (int, float double) as is not required.<br>
+"multiplier" is an optional parameter to multiply each cell value.
 
 <H2>EXAMPLE</H2>
 
 The following is a sample <EM>input</EM> file to <EM>r.in.ascii</B>:</EM> 
 
+<BR><BR>
+north:                   4299000.00<BR>
+south:                   4247000.00<BR>
+east:                     528000.00<BR>
+west:                     500000.00<BR>
+rows:                         10   <BR>
+cols:                         15   <BR>
 <BR>
-<PRE>
-north:                   4299000.00
-south:                   4247000.00
-east:                     528000.00
-west:                     500000.00
-rows:                         10   
-cols:                         15   
-
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-</PRE>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
 
 <H2>NOTES</H2>
 
