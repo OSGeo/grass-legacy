@@ -69,7 +69,7 @@ f_median(int argc, const int *argt, void **args)
 				if (IS_NULL_C(&argv[j][i]))
 					nv = 1;
 				else
-					a[i] = argv[j][i];
+					a[j] = argv[j][i];
 			}
 
 			if (nv)
@@ -100,7 +100,7 @@ f_median(int argc, const int *argt, void **args)
 				if (IS_NULL_F(&argv[j][i]))
 					nv = 1;
 				else
-					a[i] = argv[j][i];
+					a[j] = argv[j][i];
 			}
 
 			if (nv)
@@ -131,7 +131,7 @@ f_median(int argc, const int *argt, void **args)
 				if (IS_NULL_D(&argv[j][i]))
 					nv = 1;
 				else
-					a[i] = argv[j][i];
+					a[j] = argv[j][i];
 			}
 
 			if (nv)
