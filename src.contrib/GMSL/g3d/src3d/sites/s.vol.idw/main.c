@@ -202,24 +202,17 @@ int main(argc, argv)
      
     cnt=0;
 
-    z = current_region.top + lev_res/2.0;  // start at TOP
+    z = current_region.top + lev_res/2.0;
 
-    for (lev = 0; lev < Nl; lev++) {       // T->B
+    for (lev = 0; lev < Nl; lev++) {
 
       fprintf (stderr, "\n  Calculating level no. %-10d ", Nl-lev);
 
       z -=lev_res;  /* daj input*/
 
-      north = current_region.north + current_region.ns_res/2.0;  // start at NORTH
+      north = current_region.north + current_region.ns_res/2.0;
 
-      // JCH restored above line; AV replaced above with following line to be
-      // consistent with loop.  JCH modified loop as well.
-
-//    north = current_region.south - current_region.ns_res/2.0;  // AV version
-
-
-//    for (row = Nr-1; row >= 0; row--) // AV version
-      for (row = 0; row < Nr; row++) {  // N->S
+      for (row = 0; row < Nr; row++) {
 
         /*fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);*/
         G_percent (row, Nr, 2);
@@ -230,9 +223,8 @@ int main(argc, argv)
 	}
 
 	north -= current_region.ns_res;
-//	north += current_region.ns_res;  // AV version
 
-	east = current_region.west - current_region.ew_res/2.0;  // start in WEST
+	east = current_region.west - current_region.ew_res/2.0;
 
 	for (col = 0; col < Nc; col++) {
 
