@@ -59,7 +59,8 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,rmarea";
+	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,"
+	                    "rmarea,rmsa";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
@@ -80,7 +81,8 @@ main (int argc, char *argv[])
        				"changed attachement of centroid), first and last segment of the boundary "
 				"is never changed\n"
 			        "\t\trmarea - remove small areas, the longest boundary with adjacent area "
-			        "is removed";
+			        "is removed\n"
+			        "\t\trmsa - remove small angles between lines at nodes";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
@@ -134,6 +136,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_PRUNE;
 	    else if ( strcmp ( tool_opt->answers[i], "rmarea" ) == 0 )
 		tools[ntools] = TOOL_RMAREA;
+	    else if ( strcmp ( tool_opt->answers[i], "rmsa" ) == 0 )
+		tools[ntools] = TOOL_RMSA;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -196,6 +200,9 @@ main (int argc, char *argv[])
 		    break;
 		case ( TOOL_RMAREA ) :
 	            fprintf (stderr, "| Remove small areas               |" );	    
+		    break;
+		case ( TOOL_RMSA ) :
+	            fprintf (stderr, "| Remove small angles at nodes     |" );	    
 		    break;
 	    }
 	    fprintf (stderr, " %e |\n", threshs[i] );	    
@@ -322,6 +329,12 @@ main (int argc, char *argv[])
 		    fflush ( stderr );
                     count = Vect_remove_small_areas ( &Out, threshs[i], pErr, stderr, &size );
 		    fprintf (stderr, "%d areas of total size %g removed\n", count, size );
+		    break;
+		case TOOL_RMSA:
+		    fprintf (stderr, "Tool: Remove small angles at nodes\n" );
+		    fflush ( stderr );
+                    count = Vect_clean_small_angles_at_nodes ( &Out, otype, pErr, stderr );
+		    fprintf (stderr, "%d modifications done\n", count );
 		    break;
 	    }
 	    fprintf (stderr,         "--------------------------------------------------\n" );
