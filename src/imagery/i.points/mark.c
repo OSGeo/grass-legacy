@@ -80,9 +80,15 @@ get_point2 (east, north)
     };
 
     if (from_digitizer > 0)
+    {
 	stat = Input_other (digitizer, "Digitizer");
+    }
     else if (from_screen > 0)
+    {
+	set_colors (&VIEW_MAP2->cell.colors);
 	stat = Input_pointer(objects) > 0;
+	set_colors (&VIEW_MAP1->cell.colors);
+    }
     else
 	stat = Input_other (keyboard, "Keyboard");
 
