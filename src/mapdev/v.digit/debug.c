@@ -250,7 +250,7 @@ d_find_line (map)
 	{
 	    if (!(num = atoi (buf)))
 		break;
-	    if (num < 0) num = ABS (num);
+	    if (num < 0) num = abs (num);
 	}
 
 	if (num > map->n_lines)
@@ -273,6 +273,7 @@ d_find_line (map)
 	    return (0);
 	}
 	highlight_line (map->Line[num].type, &Gpoints, num, map);
+	V_flush ();
     }
     return (0);
 }
@@ -297,7 +298,7 @@ d_find_area (map)
 	    reset_area (num, map);
 	if (!(num = atoi (buf)))
 	    break;
-	if (num < 0) num = ABS (num);
+	if (num < 0) num = abs (num);
 
 	if (num > map->n_areas)
 	{
@@ -311,7 +312,9 @@ d_find_area (map)
 	    sleep (2);
 	    continue;
 	}
+
 	highlight_area (num, map);
+	V_flush ();
     }
     return (0);
 }
@@ -341,7 +344,7 @@ d_find_node (map)
 	}
 	if (!(num = atoi (buf)))
 	    break;
-	if (num < 0) num = ABS (num);
+	if (num < 0) num = abs (num);
 
 	if (num > map->n_nodes)
 	{
@@ -441,6 +444,15 @@ d_show_areas (map)
 	if (AREA_ALIVE (&(map->Area[i])))
 	{
 	    prev = i;
+
+	    if (Auto_Window && area_outside_window (&(map->Area[i])))
+	    {
+		P_AREA *Area;
+
+		Area = &(map->Area[i]);
+		move_window (Area->N, Area->S, Area->E, Area->W, 1);
+	    }
+
 	    highlight_area (i, map);
 
 	    sprintf (text, "Area %d  Att: %d  N_lines: %d", i, map->Area[i].att ? map->Att[map->Area[i].att].cat : 1, map->Area[i].n_lines);
@@ -509,6 +521,15 @@ d_show_lines (map)
 		sleep (2);
 		return (0);
 	    }
+
+	    if (Auto_Window && line_outside_window (&(map->Line[i])))
+	    {
+		P_LINE *Line;
+
+		Line = &(map->Line[i]);
+		move_window (Line->N, Line->S, Line->E, Line->W, 1);
+	    }
+
 	    highlight_line (map->Line[i].type, &Gpoints,i, map);
 	}
 	else
