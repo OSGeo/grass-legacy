@@ -1,4 +1,5 @@
-/* $Id$ */
+/* 
+ * $Id$ */
 
 /* Line thinning program */
 /*   Input/output and file support functions */

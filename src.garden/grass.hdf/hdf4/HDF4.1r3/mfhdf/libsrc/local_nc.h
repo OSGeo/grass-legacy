@@ -2,7 +2,8 @@
  *	Copyright 1993, University Corporation for Atmospheric Research
  *      See netcdf/COPYRIGHT file for copying and redistribution conditions.
  */
-/* $Id$ */
+/* 
+ * $Id$ */
 #ifndef _LOCAL_NC_
 #define _LOCAL_NC_
 

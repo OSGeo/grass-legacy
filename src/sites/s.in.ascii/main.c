@@ -2,7 +2,8 @@
 #include "gis.h"
 #include "local_proto.h"
 
-/* $Id$ */
+/* 
+ * $Id$ */
 
 /* 12/99 removed elev data flag. MN. not required any more */
 

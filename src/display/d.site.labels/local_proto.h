@@ -1,5 +1,6 @@
 /* Hacked for new sites API by Eric G. Miller <egm2@jps.net> 2000-10-01 */
-/* $Id$ */
+/* 
+ * $Id$ */
 /* Added for new Sites API */
 #define SITE_ATTR_CAT 1
 #define SITE_ATTR_STR 2
