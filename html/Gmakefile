@@ -1,0 +1,3 @@
+all:
+	if [ ! -d $(GISBASE)/html ]; then mkdir $(GISBASE)/html; fi
+	(tar -cf - * | (cd $(GISBASE)/html; tar -xf - 2>/dev/null ); true )
