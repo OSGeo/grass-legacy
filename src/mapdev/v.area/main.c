@@ -1,7 +1,7 @@
 /*
- *   Darea
+ *   v.area
  *
- *   Usage:  Darea [-fill] vector-file-name [color]
+ *   Usage:  v.area [-fill] vector-file-name [color]
  *
  */
 
