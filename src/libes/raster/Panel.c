@@ -23,6 +23,7 @@ R_panel_save(name, t, b, l, r)
 	_send_int(&z) ;
 	z = r ;
 	_send_int(&z) ;
+	R_stabilize();
 }
 
 R_panel_restore(name)
@@ -30,6 +31,7 @@ R_panel_restore(name)
 {
 	_send_ident(PANEL_RESTORE) ;
 	_send_text(name) ;
+	R_stabilize();
 }
 
 R_panel_delete(name)
