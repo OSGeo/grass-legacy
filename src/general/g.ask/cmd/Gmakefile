@@ -1,0 +1,5 @@
+PGM=g.ask
+
+$(BIN_MAIN_CMD)/$(PGM): main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
+$(GISLIB): #
