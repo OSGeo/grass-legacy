@@ -1,0 +1,395 @@
+INTERP	polyframe.c	/^#define INTERP(x1, x2, a) ((a)*(x2)+(1.0-(a))*(x1)/
+Meric	eric.c	/^main () $/
+Mmapo	mapo.c	/^main() $/
+Mmapx	mapx.c	/^main() $/
+NewY	strip.c	/^void NewY(a,x)$/
+PNL_INIT	panel.c	/^#define PNL_INIT(X)	= X$/
+_add_submenu	submenu.c	/^_add_submenu(a)$/
+_addcycle	cycle.c	/^_addcycle(a)$/
+_addframe	frame.c	/^_addframe(a)$/
+_addicon	icon.c	/^_addicon(a)$/
+_addiconmenu	iconmenu.c	/^_addiconmenu(a)$/
+_addmenu	menu.c	/^_addmenu(a)$/
+_addmenuitem	menu.c	/^_addmenuitem(a, val)$/
+_addmouse	mouse.c	/^_addmouse(a, p)$/
+_addmultislider	mslider.c	/^_addmultislider(a)$/
+_addpolyframe	polyframe.c	/^_addpolyframe(a)$/
+_addradiobutton	button.c	/^_addradiobutton(a, p)$/
+_addscroll	scroll.c	/^_addscroll(a)$/
+_addsignal	signal.c	/^_addsignal(a, p)$/
+_addstripchart	strip.c	/^_addstripchart(a, p)$/
+_addsubcycle	cycle.c	/^_addsubcycle(sa, a)$/
+_addsubframe	frame.c	/^_addsubframe(sa, a)$/
+_addsubgraphframe	graphframe.c	/^_addsubgraphframe(sa, a)$/
+_addsubhmultislider	mslider.c	/^_addsubhmultislider(sa, a)$/
+_addsubicon	icon.c	/^_addsubicon(sa, a)$/
+_addsubiconmenu	iconmenu.c	/^_addsubiconmenu(sa, a)$/
+_addsubmenu	menu.c	/^_addsubmenu(sa, a)$/
+_addsubpolyframe	polyframe.c	/^_addsubpolyframe(sa, a)$/
+_addsubscroll	scroll.c	/^_addsubscroll(sa, a)$/
+_addsubstripchart	strip.c	/^_addsubstripchart(sa, a)$/
+_addsubsubmenu	submenu.c	/^_addsubsubmenu(sa, a)$/
+_addsubviewframe	viewframe.c	/^_addsubviewframe(sa, a)$/
+_addsubvmultislider	mslider.c	/^_addsubvmultislider(sa, a)$/
+_addtypein	oldtypein.c	/^_addtypein(a, p)$/
+_addtypeout	typeout.c	/^_addtypeout(a, p)$/
+_addviewframe	viewframe.c	/^_addviewframe(a)$/
+_addwidebutton	button.c	/^_addwidebutton(a, p)$/
+_backline	typeout.c	/^char $/
+_backtochar	typeout.c	/^_backtochar(a, n, delimstr)$/
+_delact	panel.c	/^_delact(a)$/
+_deletemmenuitem	menu.c	/^_deletemmenuitem(a, sa)$/
+_deletemsliderbar	mslider.c	/^_deletemsliderbar(a, sa)$/
+_delpnl	panel.c	/^_delpnl(p)$/
+_delsignal	signal.c	/^_delsignal(a, p)$/
+_drawabsicon	slideroid.c	/^static _drawabsicon(a, selected)$/
+_drawanalogbar	strip.c	/^_drawanalogbar(a,p)$/
+_drawanalogmeter	strip.c	/^_drawanalogmeter(a,p)$/
+_drawarrowbutton	button.c	/^_drawarrowbutton(a, p, style) \/* defaults to point/
+_drawbutton	button.c	/^_drawbutton(a, p)$/
+_drawcursor	typeout.c	/^_drawcursor(a, tx, ty)$/
+_drawcycle	cycle.c	/^_drawcycle(a, p)$/
+_drawdial	dial.c	/^_drawdial(a, p)$/
+_drawdifficon	slider.c	/^_drawdifficon(a, selected)$/
+_drawdoublearrowbutton	button.c	/^_drawdoublearrowbutton(a, p, style)$/
+_drawdownarrowbutton	button.c	/^_drawdownarrowbutton(a, p)$/
+_drawdowndoublearrowbutton	button.c	/^_drawdowndoublearrowbutton(a, p)$/
+_drawdvslider	slider.c	/^_drawdvslider(a, p)$/
+_drawelevator	typeout.c	/^_drawelevator(a, p, style)$/
+_drawfilledhslider	slider.c	/^_drawfilledhslider(a, p)$/
+_drawfilledvslider	slider.c	/^_drawfilledvslider(a, p)$/
+_drawfineicon	slider.c	/^_drawfineicon(a, selected)$/
+_drawfloatingpuck	puck.c	/^_drawfloatingpuck(a,p)$/
+_drawframe	frame.c	/^_drawframe(a, p)$/
+_drawgraphframe	graphframe.c	/^_drawgraphframe(a, p)$/
+_drawhpalette	palette.c	/^_drawhpalette(a, p)$/
+_drawhshadowslider	slider.c	/^_drawhshadowslider(a, p)$/
+_drawhslider	slider.c	/^_drawhslider(a, p)$/
+_drawicon	icon.c	/^_drawicon(a, p)$/
+_drawlabel	typein.c	/^_drawlabel(a, p)$/
+_drawleftarrowbutton	button.c	/^_drawleftarrowbutton(a, p)$/
+_drawleftdoublearrowbutton	button.c	/^_drawleftdoublearrowbutton(a, p)$/
+_drawmenu	menu.c	/^_drawmenu(a, p)$/
+_drawmsliderbar	mslider.c	/^_drawmsliderbar(a, p)$/
+_drawmslideropenbar	mslider.c	/^_drawmslideropenbar(a, p)$/
+_drawmultislider	mslider.c	/^_drawmultislider(a, p)$/
+_drawpnl	panel.c	/^_drawpnl(p)$/
+_drawpolyframe	polyframe.c	/^_drawpolyframe(a, p)$/
+_drawpuck	puck.c	/^_drawpuck(a, p)$/
+_drawpuckshape	puck.c	/^_drawpuckshape(a, p, x, y, style)$/
+_drawpup	puck.c	/^_drawpup(a,p,x,y,mode,drawfunc)$/
+_drawrightarrowbutton	button.c	/^_drawrightarrowbutton(a, p)$/
+_drawrightdoublearrowbutton	button.c	/^_drawrightdoublearrowbutton(a, p)$/
+_drawrubberband	puck.c	/^_drawrubberband(a, p, x, y, style)$/
+_drawrubberpuck	puck.c	/^_drawrubberpuck(a,p)$/
+_drawrubberpuckshape	puck.c	/^_drawrubberpuckshape(a, p, x, y, style)$/
+_drawrubberpuckshapeandband	puck.c	/^_drawrubberpuckshapeandband(a, p, x, y, style)$/
+_drawscroll	scroll.c	/^_drawscroll(a, p)$/
+_drawscrollarrow	typeout.c	/^_drawscrollarrow()$/
+_drawslideroid	slideroid.c	/^_drawslideroid(a, p)$/
+_drawstripchart	strip.c	/^_drawstripchart(a,p)$/
+_drawtogglebutton	button.c	/^_drawtogglebutton(a, p)$/
+_drawtypein	oldtypein.c	/^_drawtypein(a, p)$/
+_drawtypeout	typeout.c	/^_drawtypeout(a, p)$/
+_drawuparrowbutton	button.c	/^_drawuparrowbutton(a, p)$/
+_drawupdoublearrowbutton	button.c	/^_drawupdoublearrowbutton(a, p)$/
+_drawviewframe	viewframe.c	/^_drawviewframe(a, p)$/
+_drawvpalette	palette.c	/^_drawvpalette(a, p)$/
+_drawvshadowslider	slider.c	/^_drawvshadowslider(a, p)$/
+_drawvslider	slider.c	/^_drawvslider(a, p)$/
+_drawwidebutton	button.c	/^_drawwidebutton(a, p)$/
+_drawwidebuttonshape	button.c	/^_drawwidebuttonshape(a, p, style)$/
+_dumpact	panel.c	/^_dumpact(a, fd)$/
+_dumpstripchart	strip.c	/^void _dumpstripchart(a, fd)$/
+_dumptypein	oldtypein.c	/^static void _dumptypein(a, fd)$/
+_dumptypeout	typeout.c	/^void _dumptypeout(a, fd)$/
+_fixcycle	cycle.c	/^_fixcycle(a)$/
+_fixframe	frame.c	/^_fixframe(a)$/
+_fixhmsliderbar	mslider.c	/^_fixhmsliderbar(a)$/
+_fixhmultislider	mslider.c	/^_fixhmultislider(a)$/
+_fixicon	icon.c	/^_fixicon(a)$/
+_fixmenu	menu.c	/^_fixmenu(a)$/
+_fixpnl	panel.c	/^_fixpnl(p)$/
+_fixpolyframe	polyframe.c	/^_fixpolyframe(a)$/
+_fixscroll	scroll.c	/^_fixscroll(a)$/
+_fixstripchart	strip.c	/^_fixstripchart(a)$/
+_fixsubmenu	submenu.c	/^_fixsubmenu(a)$/
+_fixtypein	oldtypein.c	/^_fixtypein(a)$/
+_fixtypeout	typeout.c	/^_fixtypeout(a)$/
+_fixviewframe	viewframe.c	/^_fixviewframe(a)$/
+_fixvmsliderbar	mslider.c	/^_fixvmsliderbar(a)$/
+_fixvmultislider	mslider.c	/^_fixvmultislider(a)$/
+_fixwidebutton	button.c	/^_fixwidebutton(a)$/
+_forwardline	typeout.c	/^char $/
+_forwardtochar	typeout.c	/^_forwardtochar(a, n, delimstr)$/
+_getnextchar	typein.c	/^_getnextchar(string, maxstringlen)$/
+_hitact	panel.c	/^_hitact(a,p,x,y)$/
+_hitdial	dial.c	/^_hitdial()$/
+_hitpolyframe	polyframe.c	/^_hitpolyframe(a, p, x, y)$/
+_hitviewframe	viewframe.c	/^_hitviewframe(a, p, x, y)$/
+_linelen	typeout.c	/^_linelen(a,p)$/
+_loadact	panel.c	/^_loadact(a, fd)$/
+_loadstripchart	strip.c	/^void _loadstripchart(a, fd)$/
+_loadtypein	oldtypein.c	/^static void _loadtypein(a, fd)$/
+_loadtypeout	typeout.c	/^void _loadtypeout(a, fd)$/
+_mkuseract	panel.c	/^*_mkuseract(size, initfunc)$/
+_newvalarrowbutton	button.c	/^void _newvalarrowbutton(a,p,x,y)$/
+_newvalbutton	button.c	/^void _newvalbutton(a,p,x,y)$/
+_newvalcycle	cycle.c	/^_newvalcycle(a,p,x,y)$/
+_newvaldial	dial.c	/^void _newvaldial(a,p,x,y)$/
+_newvaldvslider	slider.c	/^void _newvaldvslider(a,p,x,y)$/
+_newvalfloatingpuck	puck.c	/^_newvalfloatingpuck(a,p,x,y)$/
+_newvalframe	frame.c	/^_newvalframe(a,p,x,y)$/
+_newvalgraphframe	graphframe.c	/^_newvalgraphframe(a,p,x,y)$/
+_newvalhmultislider	mslider.c	/^void _newvalhmultislider(a,p,x,y)$/
+_newvalhpalette	palette.c	/^void _newvalhpalette(a,p,x,y)$/
+_newvalhslider	slider.c	/^void _newvalhslider(a,p,x,y)$/
+_newvalicon	icon.c	/^_newvalicon(a,p,x,y)$/
+_newvalmenu	menu.c	/^_newvalmenu(a,p,x,y)$/
+_newvalmenuitem	menu.c	/^_newvalmenuitem(a,p,x,y)$/
+_newvalmouse	mouse.c	/^void _newvalmouse(a,p,x,y)$/
+_newvalmsliderbar	mslider.c	/^_newvalmsliderbar(a,p,x,y)$/
+_newvalpolyframe	polyframe.c	/^_newvalpolyframe(a,p,x,y)$/
+_newvalpuck	puck.c	/^void _newvalpuck(a,p,x,y)$/
+_newvalradiobutton	button.c	/^void _newvalradiobutton(a,p,x,y)$/
+_newvalscroll	scroll.c	/^_newvalscroll(a,p,x,y)$/
+_newvalsignal	signal.c	/^_newvalsignal(a, p, x, y)$/
+_newvalslideroid	slideroid.c	/^void _newvalslideroid(a,p,x,y)$/
+_newvaltogglebutton	button.c	/^void _newvaltogglebutton(a,p,x,y)$/
+_newvaltypein	oldtypein.c	/^static void _newvaltypein(a,p,x,y)$/
+_newvaltypeout	typeout.c	/^void _newvaltypeout(a,p,x,y)$/
+_newvalviewframe	viewframe.c	/^_newvalviewframe(a,p,x,y)$/
+_newvalvmultislider	mslider.c	/^void _newvalvmultislider(a,p,x,y)$/
+_newvalvpalette	palette.c	/^void _newvalvpalette(a,p,x,y)$/
+_newvalvslider	slider.c	/^void _newvalvslider(a,p,x,y)$/
+_pickicon	icon.c	/^_pickicon(a,p,x,y)$/
+_pnttopos	typeout.c	/^_pnttopos(a,point,x,y)$/
+_postopnt	typeout.c	/^_postopnt(a,x,y)$/
+_scrollframe	scroll.c	/^_scrollframe(a)$/
+_setrange	strip.c	/^void _setrange(a)$/
+_shiftcycleleft	cycle.c	/^_shiftcycleleft(a)$/
+_shiftcycleright	cycle.c	/^_shiftcycleright(a)$/
+addact	panel.c	/^addact(a,p)$/
+addpanel	panel.c	/^addpanel(p)$/
+addsubact	panel.c	/^addsubact(sa,a)$/
+addtogroup	panel.c	/^addtogroup(a, p)$/
+alloc	panel.c	/^*alloc(size)$/
+alt	panel.c	/^alt()$/
+appendscript	script.c	/^appendscript()$/
+bashcolors	mapo.c	/^bashcolors(start, end)$/
+bashmap	mapo.c	/^bashmap(a)$/
+beginscript	script.c	/^beginscript()$/
+bindsubact	panel.c	/^bindsubact(sa, a)$/
+calcppu	panel.c	/^calcppu(p)$/
+clean_exit	eric.c	/^clean_exit ()$/
+cleanexit	mapo.c	/^cleanexit()$/
+continuescript	script.c	/^continuescript()$/
+defpanel	mapo.c	/^*defpanel()$/
+defpanel1	eric.c	/^*defpanel1 ()$/
+defpanel2	eric.c	/^*defpanel2 ()$/
+defpanel3	eric.c	/^*defpanel3 ()$/
+delact	panel.c	/^delact(a)$/
+delpanel	panel.c	/^delpanel(p)$/
+doautos	panel.c	/^doautos(p,x,y)$/
+dofuncs	panel.c	/^dofuncs(a,p)$/
+dopanel	panel.c	/^*dopanel()$/
+drawact	panel.c	/^drawact(a, p)$/
+drawbevel	panel.c	/^drawbevel(a, p)$/
+drawcursor	g_gets.c	/^static int drawcursor(pos, max)$/
+drawfade	panel.c	/^drawfade(a, p)$/
+drawlabel	panel.c	/^drawlabel(a, p)$/
+drawpanel	panel.c	/^drawpanel()	\/* user routine to update all panels */
+dumppanel	panel.c	/^dumppanel()$/
+dumpstate	panel.c	/^dumpstate()$/
+endgroup	panel.c	/^endgroup(p)$/
+endscript	script.c	/^endscript()$/
+fixact	panel.c	/^fixact(a)$/
+fixpanel	panel.c	/^fixpanel(p)$/
+forkpanel	panel.c	/^forkpanel()$/
+framelimits	frame.c	/^framelimits(a)$/
+g_getchar	g_gets.c	/^static int g_getchar()   \/* do a getchar without u/
+g_gets	g_gets.c	/^char *g_gets(stringcolor, backcolor, cursorcolor)$/
+g_getstring	g_gets.c	/^char *g_getstring(stringcolor,$/
+g_mode_getstring	g_gets.c	/^char *g_mode_getstring(stringcolor,$/
+getaction	panel.c	/^getaction()$/
+getactionfromqueue	panel.c	/^getactionfromqueue()$/
+getactionfromscript	panel.c	/^getactionfromscript()$/
+getnewactive	panel.c	/^getnewactive(ca,cp,mx,my)$/
+gl_invertview_ind	mapwfind.c	/^gl_invertview_ind(vobj, mat)$/
+hitpoly	polyframe.c	/^Boolean hitpoly(poly, x, y) $/
+init	panel.c	/^init()$/
+initscriptpanel	script.c	/^initscriptpanel()$/
+labeldimensions	panel.c	/^labeldimensions(a)$/
+labeloffsets	panel.c	/^labeloffsets(a)$/
+lowerkey	g_gets.c	/^static char lowerkey(dev) \/* maps sgi keyboard dev/
+makepolyobj	polyframe.c	/^makepolyobj(a)$/
+makeviewobj	viewframe.c	/^makeviewobj(a)$/
+mapwfind	mapwfind.c	/^void mapwfind(vobj, x, y, wx1, wy1, wz1, wx2, wy2,/
+mkact	panel.c	/^*mkact(initfunc)$/
+mkpanel	panel.c	/^*mkpanel()$/
+mousetoworld	panel.c	/^mousetoworld(p, mx, my, x, y)$/
+needredraw	panel.c	/^needredraw()$/
+newvalact	panel.c	/^newvalact(a, p, x, y)$/
+openicon	icon.c	/^openicon(a)$/
+panellimits	panel.c	/^panellimits(p)$/
+panellimitsact	panel.c	/^panellimitsact(a, sf, x, y)$/
+patchmap	mapo.c	/^patchmap(){$/
+pickact	panel.c	/^*pickact(p,x,y)$/
+pnl_addact	panel.c	/^pnl_addact(a,p)$/
+pnl_addpanel	panel.c	/^pnl_addpanel(p)$/
+pnl_addsubact	panel.c	/^pnl_addsubact(sa,a)$/
+pnl_addtogroup	panel.c	/^pnl_addtogroup(a, p)$/
+pnl_alloc	panel.c	/^*pnl_alloc(size)$/
+pnl_alt	panel.c	/^pnl_alt()$/
+pnl_analog_bar	strip.c	/^pnl_analog_bar(a)$/
+pnl_analog_meter	strip.c	/^pnl_analog_meter(a)$/
+pnl_beginappendscript	panel.c	/^pnl_beginappendscript(name)$/
+pnl_beginreadscript	panel.c	/^pnl_beginreadscript(name)$/
+pnl_beginwritescript	panel.c	/^pnl_beginwritescript(name)$/
+pnl_button	button.c	/^pnl_button(a)$/
+pnl_calcppu	panel.c	/^pnl_calcppu(p)$/
+pnl_cleanup	panel.c	/^pnl_cleanup()	$/
+pnl_continuereadscript	panel.c	/^pnl_continuereadscript(name)$/
+pnl_cycle	cycle.c	/^pnl_cycle(a)$/
+pnl_delact	panel.c	/^pnl_delact(a)$/
+pnl_delpanel	panel.c	/^pnl_delpanel(p)$/
+pnl_dial	dial.c	/^pnl_dial(a)$/
+pnl_doautos	panel.c	/^pnl_doautos(p,x,y)$/
+pnl_dofuncs	panel.c	/^pnl_dofuncs(a,p)$/
+pnl_dopanel	panel.c	/^*pnl_dopanel()$/
+pnl_down_arrow_button	button.c	/^pnl_down_arrow_button(a)$/
+pnl_down_double_arrow_button	button.c	/^pnl_down_double_arrow_button(a)$/
+pnl_drawact	panel.c	/^pnl_drawact(a, p)$/
+pnl_drawbevel	panel.c	/^pnl_drawbevel(a, p)$/
+pnl_drawfade	panel.c	/^pnl_drawfade(a, p)$/
+pnl_drawlabel	panel.c	/^pnl_drawlabel(a, p)$/
+pnl_drawpanel	panel.c	/^pnl_drawpanel()	\/* user routine to update all pane/
+pnl_dumppanel	panel.c	/^pnl_dumppanel()$/
+pnl_dumpstate	panel.c	/^pnl_dumpstate()$/
+pnl_dvslider	slider.c	/^pnl_dvslider(a)$/
+pnl_endgroup	panel.c	/^pnl_endgroup(p)$/
+pnl_endreadscript	panel.c	/^pnl_endreadscript()$/
+pnl_endwritescript	panel.c	/^pnl_endwritescript()$/
+pnl_filled_hslider	slider.c	/^pnl_filled_hslider(a)$/
+pnl_filled_slider	slider.c	/^pnl_filled_slider(a)$/
+pnl_filled_vslider	slider.c	/^pnl_filled_vslider(a)$/
+pnl_fixact	panel.c	/^pnl_fixact(a)$/
+pnl_fixpanel	panel.c	/^pnl_fixpanel(p)$/
+pnl_floating_puck	puck.c	/^pnl_floating_puck(a)$/
+pnl_forkpanel	panel.c	/^pnl_forkpanel()$/
+pnl_frame	frame.c	/^pnl_frame(a)$/
+pnl_getaction	panel.c	/^pnl_getaction()$/
+pnl_getactionfromqueue	panel.c	/^pnl_getactionfromqueue()$/
+pnl_getactionfromscript	panel.c	/^pnl_getactionfromscript()$/
+pnl_getchar	panel.c	/^pnl_getchar()$/
+pnl_getnewactive	panel.c	/^pnl_getnewactive(ca,cp,mx,my)$/
+pnl_graphframe	graphframe.c	/^pnl_graphframe(a)$/
+pnl_hmultislider	mslider.c	/^pnl_hmultislider(a)$/
+pnl_hmultislider_bar	mslider.c	/^pnl_hmultislider_bar(a)$/
+pnl_hmultislider_open_bar	mslider.c	/^pnl_hmultislider_open_bar(a)$/
+pnl_hpalette	palette.c	/^pnl_hpalette(a)$/
+pnl_hslider	slider.c	/^pnl_hslider(a)$/
+pnl_icon	icon.c	/^pnl_icon(a)$/
+pnl_icon_menu	iconmenu.c	/^pnl_icon_menu(a)$/
+pnl_init	panel.c	/^pnl_init()$/
+pnl_initpanel	panel.c	/^pnl_initpanel(p)$/
+pnl_label	typein.c	/^pnl_label(a)$/
+pnl_labeldimensions	panel.c	/^pnl_labeldimensions(a)$/
+pnl_labeloffsets	panel.c	/^pnl_labeloffsets(a)$/
+pnl_left_arrow_button	button.c	/^pnl_left_arrow_button(a)$/
+pnl_left_double_arrow_button	button.c	/^pnl_left_double_arrow_button(a)$/
+pnl_listadd	list.c	/^pnl_listadd(p, list)$/
+pnl_listdelete	list.c	/^pnl_listdelete(p, list)$/
+pnl_listin	list.c	/^pnl_listin(p, list)$/
+pnl_menu	menu.c	/^pnl_menu(a)$/
+pnl_menu_item	menu.c	/^pnl_menu_item(a)$/
+pnl_meter	strip.c	/^pnl_meter(a)$/
+pnl_mkact	panel.c	/^*pnl_mkact(initfunc)$/
+pnl_mkpanel	panel.c	/^*pnl_mkpanel()$/
+pnl_mkuseract	panel.c	/^*pnl_mkuseract(size, initfunc)$/
+pnl_mouse	mouse.c	/^pnl_mouse(a)$/
+pnl_mousetoworld	panel.c	/^pnl_mousetoworld(p, mx, my, x, y)$/
+pnl_multislider	mslider.c	/^pnl_multislider(a)$/
+pnl_multislider_bar	mslider.c	/^pnl_multislider_bar(a)$/
+pnl_multislider_open_bar	mslider.c	/^pnl_multislider_open_bar(a)$/
+pnl_needredraw	panel.c	/^pnl_needredraw()$/
+pnl_newvalact	panel.c	/^pnl_newvalact(a, p, x, y)$/
+pnl_oldtypein	oldtypein.c	/^pnl_oldtypein(a)$/
+pnl_palette	palette.c	/^pnl_palette(a)$/
+pnl_panellimits	panel.c	/^pnl_panellimits(p)$/
+pnl_panellimitsact	panel.c	/^pnl_panellimitsact(a, sf, x, y)$/
+pnl_pickact	panel.c	/^*pnl_pickact(p,x,y)$/
+pnl_polyframe	polyframe.c	/^pnl_polyframe(a)$/
+pnl_puck	puck.c	/^pnl_puck(a)$/
+pnl_putactiontoscript	panel.c	/^pnl_putactiontoscript() \/* format could be compres/
+pnl_radio_button	button.c	/^pnl_radio_button(a)$/
+pnl_reshapepanel	panel.c	/^pnl_reshapepanel(p)$/
+pnl_right_arrow_button	button.c	/^pnl_right_arrow_button(a)$/
+pnl_right_double_arrow_button	button.c	/^pnl_right_double_arrow_button(a)$/
+pnl_rubber_puck	puck.c	/^pnl_rubber_puck(a)$/
+pnl_runpanel	panel.c	/^pnl_runpanel()$/
+pnl_scale_chart	strip.c	/^pnl_scale_chart(a)$/
+pnl_scroll	scroll.c	/^pnl_scroll(a)$/
+pnl_setdirty	panel.c	/^pnl_setdirty(a)$/
+pnl_setinactive	panel.c	/^pnl_setinactive(a,p)$/
+pnl_sighandler	signal.c	/^pnl_sighandler(sig)$/
+pnl_signal	signal.c	/^pnl_signal(a)$/
+pnl_slider	slider.c	/^pnl_slider(a)$/
+pnl_slideroid	slideroid.c	/^pnl_slideroid(a)$/
+pnl_startpanel	panel.c	/^pnl_startpanel()$/
+pnl_strip_chart	strip.c	/^pnl_strip_chart(a)$/
+pnl_strwidth	panel.c	/^pnl_strwidth(p, s)$/
+pnl_sub_menu	submenu.c	/^pnl_sub_menu(a)$/
+pnl_testchar	panel.c	/^pnl_testchar()$/
+pnl_toggle_button	button.c	/^pnl_toggle_button(a)$/
+pnl_typein	typein.c	/^pnl_typein(a)$/
+pnl_typeout	typeout.c	/^pnl_typeout(a)$/
+pnl_up_arrow_button	button.c	/^pnl_up_arrow_button(a)$/
+pnl_up_double_arrow_button	button.c	/^pnl_up_double_arrow_button(a)$/
+pnl_userredraw	panel.c	/^pnl_userredraw()$/
+pnl_viewframe	viewframe.c	/^pnl_viewframe(a)$/
+pnl_vmultislider	mslider.c	/^pnl_vmultislider(a)$/
+pnl_vmultislider_bar	mslider.c	/^pnl_vmultislider_bar(a)$/
+pnl_vmultislider_open_bar	mslider.c	/^pnl_vmultislider_open_bar(a)$/
+pnl_vpalette	palette.c	/^pnl_vpalette(a)$/
+pnl_vslider	slider.c	/^pnl_vslider(a)$/
+pnl_wide_button	button.c	/^pnl_wide_button(a)$/
+pnl_worldtomouse	panel.c	/^pnl_worldtomouse(p, x, y, mx, my)$/
+polyframelimits	polyframe.c	/^polyframelimits(a)$/
+putactiontoscript	panel.c	/^putactiontoscript()$/
+readscript	script.c	/^readscript()$/
+replacepolyobj	polyframe.c	/^replacepolyobj(a)$/
+replaceviewobj	viewframe.c	/^replaceviewobj(a)$/
+reshapepanel	panel.c	/^reshapepanel(p)$/
+restorecolors	mapo.c	/^restorecolors(start, end)$/
+restoreevents	g_gets.c	/^static restoreevents()$/
+restoreq	g_gets.c	/^static restoreq()	\/* requeue all devices that were/
+runpanel	panel.c	/^runpanel()$/
+savecolors	mapo.c	/^savecolors(start, end)$/
+saveevent	g_gets.c	/^static saveevent(dev,data)$/
+saveq	g_gets.c	/^static saveq()  \/* save the device numbers of all /
+screenpnt	screenpnt.c	/^screenpnt(wx, wy, wz, sx, sy)	\/* returns false if /
+scrolldown	typeout.c	/^scrolldown(a)$/
+scrollup	typeout.c	/^scrollup(a)$/
+set_color_func	eric.c	/^set_color_func (cs)$/
+set_my_button	eric.c	/^set_my_button (b)$/
+setclearregion	mslider.c	/^setclearregion(a)$/
+setcolors	panel.c	/^setcolors()$/
+setdirty	panel.c	/^setdirty(a)$/
+setdontdraw	script.c	/^setdontdraw(a)$/
+setignoredelay	script.c	/^setignoredelay(a)$/
+setinactive	panel.c	/^setinactive(a,p)$/
+setpaletteval	palette.c	/^void setpaletteval(a, x, dist)$/
+setreadbutton	script.c	/^setreadbutton(a)$/
+setsliderval	slider.c	/^void setsliderval(a, x, dist)$/
+setsubactextval	mslider.c	/^setsubactextval(a, sa, x, dist)$/
+setwritebutton	script.c	/^setwritebutton(a)$/
+somedirty	panel.c	/^somedirty(al)$/
+startpanel	panel.c	/^startpanel()$/
+stopscript	script.c	/^stopscript()$/
+stowicon	icon.c	/^stowicon(a)$/
+tprint	typeout.c	/^tprint(a,s)$/
+upperkey	g_gets.c	/^static char upperkey(dev) \/* maps sgi keyboard dev/
+userredraw	panel.c	/^userredraw()$/
+viewframelimits	viewframe.c	/^viewframelimits(a)$/
+worldtomouse	panel.c	/^worldtomouse(p, x, y, mx, my)$/
