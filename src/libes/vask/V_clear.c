@@ -1,5 +1,3 @@
-/* %W% %G% */
-#
 /***********************************************************************
 
 NAME:		V_clear()
@@ -26,6 +24,9 @@ CALLS:
 
 ***********************************************************************/
 #include "vask.h"
+
+#define DECIMAL_PLACES -1
+
 V_clear()
 {
 	static char *text = "" ;
@@ -43,7 +44,7 @@ V_clear()
 	V__.NUM_CONST = 0 ;
 	V__.NUM_ANSW  = 0 ;
 	V__.NUM_LINE  = 0 ;
-	V__.decimal_places = 2;
+	V_float_accuracy(DECIMAL_PLACES);
 	sprintf (V__.interrupt_msg, "CANCEL");
 
 /* please leave this code commented out 
