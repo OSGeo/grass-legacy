@@ -71,7 +71,7 @@ int main (int argc, char **argv)
     Fi = Vect_get_field_info( input, mapset, field);
     if (Fi == NULL)
     {
-       fprintf(stderr, "Database connection for this driver is not defined in DB file\n");
+       fprintf(stderr, "Database connection for map <%s> is not defined in DB file\n", input);
        exit(0);
     }
     driver = db_start_driver(Fi->driver);
