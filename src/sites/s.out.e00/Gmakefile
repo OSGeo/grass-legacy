@@ -1,6 +1,5 @@
 PGM = s.out.e00
 HOME = $(BIN_CONTRIB_CMD)
-LDFLAGS = -g
 LIST = 	s.out.e00.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
