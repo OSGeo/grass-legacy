@@ -116,16 +116,33 @@ proc Nv_scaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
     if {$who == "s"} {
 	set num [llength [split [expr int($val * 1)] ""]]
-	set num [expr int($num + 3)]
+	if {$num == 1} {
+        set num [expr int($num + 4)]
+        set val [format %.3f $val]
+	if {$val < 0.05} {
+	set num [expr int($num + 1)]
+	set val [format %.4f $val]
+	}
+        } else {
+        set num [expr int($num + 3)]
+        set val [format %.2f $val]
+        }
 	$S.scale configure -digits $num
-	Nv_setEntry $S.f.entry [format %.2f $val]
+	Nv_setEntry $S.f.entry $val
     } elseif {$who == "e"} {
 	set min [lindex [$S.scale configure -to] 4]
 	set max [lindex [$S.scale configure -from] 4]
 	set res [lindex [$S.scale configure -resolution] 4]
 	set val [$S.f.entry get]
         set num [llength [split [expr int($val * 1)] ""]]
+	if {$num == 1} {
+        set num [expr int($num + 4)]
+	if {$val < 0.05} {
+        set num [expr int($num + 1)]
+        }
+        } else {
         set num [expr int($num + 3)]
+        }
 
 	if {[expr $val < $min]} then {
 	    $S.scale configure -to $val
@@ -134,17 +151,31 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	    $S.scale configure -from $val
 	}
 	if {$val != 0} {
+	if {$val < $res} {
+	set res $val
+	} else {
 	set res [expr $val/floor($val/$res)]
+	}
+	$S.scale configure -digits $num
 	$S.scale configure -resolution $res
 	}
-	$S.scale configure -digits $num	
 	Nv_changeScale  $S.scale $val
     } elseif {$who == "b"} {
 	set min [lindex [$S.scale configure -to] 4]
 	set max [lindex [$S.scale configure -from] 4]
 	set res [lindex [$S.scale configure -resolution] 4]
         set num [llength [split [expr int($val * 1)] ""]]
+	if {$num == 1} {
+        set num [expr int($num + 4)]
+        set val [format %.3f $val]
+	if {$val < 0.05} {
+        set num [expr int($num + 1)]
+        set val [format %.4f $val]
+        }
+        } else {
         set num [expr int($num + 3)]
+        set val [format %.2f $val]
+        }
 	if {[expr $val < $min]} then {
 	    $S.scale configure -to $val
 	}
@@ -152,12 +183,16 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	    $S.scale configure -from $val
 	}
         if {$val != 0} {
+	if {$val < $res} {
+        set res $val
+        } else {
         set res [expr $val/floor($val/$res)]
+	}
         $S.scale configure -resolution $res
         }
 	$S.scale configure -digits $num
 	Nv_changeScale  $S.scale $val
-	Nv_setEntry $S.f.entry [format %.2f $val]
+	Nv_setEntry $S.f.entry $val
     }
     
     $cmd $val
@@ -223,8 +258,14 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 
 #calculate number length for digits var
 set num [llength [split [expr int($curr * 1)] ""]]
+if {$num == 1} {
+set num [expr int($num + 4)]
+if {$curr < 0.05} {
+set num [expr int($num + 1)]
+}
+} else {
 set num [expr int($num + 3)]
-    
+}    
     scale $S.scale -from $from -length 140 -showvalue 0 -orient $orient \
 	-digits $num -resolution [expr -1.0 * (($to - $from)/140.0)] \
 	-tickinterval 0 -to $to -width 13 \
