@@ -6,8 +6,8 @@ count_sites (site_list, clipped)
 {
 	int count;
 	struct Cell_head window;
-	int north;
-	int east;
+	double north;
+	double east;
 	char *desc;
 
 	if (clipped)
