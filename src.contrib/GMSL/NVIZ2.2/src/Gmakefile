@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.23 2002-11-30 12:51:23 alex Exp $
+# $Id: Gmakefile,v 1.24 2003-02-20 23:48:43 bob Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
@@ -12,6 +12,7 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # Stuff for mkdspf - not yet implemented
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = -I$(LIBDIR)/libes/dspf
+#Use -DOS_RENDER to enable off-screen rendering
 
 EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 	-I${SURF_INCDIR} $(VECT_INCLUDE) \

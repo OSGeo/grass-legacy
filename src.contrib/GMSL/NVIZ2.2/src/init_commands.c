@@ -8,6 +8,7 @@ extern int
   Nset_background_cmd(),
   Nchange_position_cmd(),
   Nget_position_cmd(),
+  Nchange_twist_cmd(),
   Nchange_persp_cmd(),
   Nchange_exag_cmd(),
   Nchange_height_cmd(),
@@ -44,6 +45,9 @@ extern int
   Nmove_to_cmd(),
   Nmove_to_real_cmd(),
   Nset_fov_cmd(),
+  Nget_fov_cmd(),
+  Nset_twist_cmd(),
+  Nget_twist_cmd(),
   Nget_region_cmd(),
   Nget_point_on_surf_cmd(),
   Nget_point_on_surf_pg_grass(),
@@ -182,6 +186,7 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
 		      data, NULL);
   Tcl_CreateCommand(interp, "Nget_position", Nget_position_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nchange_persp", Nchange_persp_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nchange_twist", Nchange_twist_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nchange_height", Nchange_height_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_first_exag", Nget_first_exag_cmd, 
 		    data, NULL);
@@ -218,6 +223,9 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   Tcl_CreateCommand(interp, "Nmove_to", Nmove_to_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nmove_to_real", Nmove_to_real_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_fov", Nset_fov_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nget_fov", Nget_fov_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nset_twist", Nset_twist_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nget_twist", Nget_twist_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd, 
 		    data, NULL);

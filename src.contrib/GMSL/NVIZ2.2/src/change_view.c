@@ -48,6 +48,29 @@ Nchange_persp_cmd (
   return 0;
 }
 
+/**********************************************/
+int
+Nchange_twist_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+
+{
+  int twist;
+  if (argc != 2)
+    return (TCL_ERROR);
+  twist = atoi(argv[1]);
+
+  twist = (int)(10 * twist);
+  GS_set_twist(twist);
+  Nquick_draw_cmd(data, interp);
+
+  return 0;
+}
+
+/********************************************************************/
 int normalize (float *v)
 {
   float len;
@@ -59,8 +82,8 @@ int normalize (float *v)
 
   return 0;
 }
-/**********************************************************************/
 
+/**********************************************************************/
 int Nchange_position_cmd (
     Nv_data *data,
     Tcl_Interp *interp,                 /* Current interpreter. */
