@@ -150,7 +150,7 @@ main (int argc, char *argv[])
 		fprintf(stderr, "%s - can't open raster map\n", inopt->answer);
 		exit(1);
 	}
-	len = strlen (inopt->answer) + 5 ;
+	len = strlen (outopt->answer) + 5 ;
 	if ((filename = G_malloc (len)) == NULL)
 		G_fatal_error ("Memory Allocation failed.");
 	sprintf (filename, "%s.tif", outopt->answer);
