@@ -1,0 +1,29 @@
+.TH MONITORCAP 5
+.SH NAME
+monitorcap \- device driver database file format
+.SH DESCRIPTION
+The commands
+.IR Dlist_mon ,
+.IR Dnew_mon ,
+.IR Drelease_mon ,
+.IR Dstart_mon ,
+.IR Dstatus_mon ,
+.IR Dstop_mon and
+.I Dwhich_mon
+access a device driver database stored in the file $BASE/etc/monitorcap.
+This file contains the following fields separated by colons:
+.sp
+.nf
+.ta \w'tty_comment       'u
+name	the name by which the user identifies the driver
+path	the full pathname to the executable driver
+comment	a comment to clarify the name entry for the user
+fifos	full pathnames to the input and output fifos over which
+	the driver communicates with the libraries
+tty	the name of the tty from which the driver must be started,
+	or empty if there is no such restriction
+tty_comment	a comment to clarify the tty entry for the user
+.fi
+.SH "SEE ALSO"
+Dlist_mon(1), Dnew_mon(1), Drelease_mon(1), Dstart_mon(1), Dstatus_mon(1),
+Dstop_mon(1), Dwhich_mon(1)
