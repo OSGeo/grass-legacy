@@ -1,0 +1,197 @@
+.TH r.fuz.set
+.SH NAME
+\fIr.fuz.set \fR\- Fuzzification of a raster map layer.
+.br
+.I (GRASS Raster Program)
+.LP
+.SH SYNOPSIS
+\fBr.fuz.set\fR
+.br
+\fBr.fuz.set help\fR
+.br
+\fBr.fuz.set \fR[\fB-dp\fR] \fBmap\*=\fIname\fR [\fBfile=name\fR]
+.LP
+.SH DESCRIPTION
+.I r.fuz.set
+associates a raster map with fuzzy variables which are described by their membership functions 
+(or fuzzy sets, or fuzzy numbers).
+These variables are stored in an ASCII file that the user must specify at the first call of \fIr.fuz.set\fR.
+This file may contain several fuzzy variables defined as follows :
+.LP
+- a string for the name of the linguistic variable.
+.LP
+- a set of membership functions, each one defined by a name and a mathematical function : TFN (Triangular
+Fuzzy Number), TRFN (TRapezoidal Fuzzy Number), LR (Left/Right power function) and LRG (Generalized 
+Left/Right power function).
+.LP
+\fIr.fuz.set\fR is the first step before any further fuzzy treatment.
+.LP
+.SH OPTIONS
+The program will be run non-interactively if the user specifies program arguments 
+on the commande line. Alternately, the user can simply type \fIr.fuz.set\fR
+on the command line, without program arguments. In this case, the user will be
+prompted for flag settings and parameter values.
+.LP
+\fBFlags:\fR
+.IP \fB-d\fR 4
+Display membership functions in the grass current display.
+A monitor must be running. If not, the user is asked to start one.
+.IP \fB-p\fR 4
+Print content of fuzzy variable file, i.e. the membership function characteristics.
+
+.LP
+\fBParameters:\fR
+.IP \fBmap\*=\fIname\fR 12
+Name of an existing raster map layer.
+.IP \fBfile\*=\fIname\fR 12
+Name of an existing fuzzy variable file. The user must specify the file pathname.
+If this option is omitted, the raster map is supposed to have been already fuzzified : in this case,
+the \fB-d\fR and \fB-p\fR  flags can be used just to have a look on the graphs and values
+of the membership functions.
+For updating the fuzzy variables, the user must activate \fBr.fuz.set\fR with a new fuzzy variable file.
+.LP
+.SH EXAMPLE
+The following is a sample \fIinput\fR fuzzy variable file which is associated with 
+the elevation.dem raster layer of spearfish database by the \fIr.fuz.set\fR command.     
+The range of elevation is 1066-1840 meters. This file is included in the fuzzy module
+distribution ("data" directory of r.fuzzy)
+.br
+In this example, the user can select one fuzzy variable among four 
+(TFN, TRFN, LR and LRG) for the further treatments.
+.LP
+.ne 20
+.TS
+box;
+l s.
+#
+4
+1 ELEVATION_tri
+1 0 1000 1200 1500 elev_low_tri
+1 0 1200 1500 1700 elev_medium_tri
+1 0 1500 1700 2000 elev_high_tri
+2 ELEVATION_tra
+2 1 1000 1100 1300 1400 elev_low_tra
+2 1 1300 1400 1600 1700 elev_medium_tra
+2 1 1600 1700 1900 2000 elev_high_tra
+3 ELEVATION_lr
+3 2 1000 1200 1500 2 0.5 elev_low_lr
+3 2 1200 1500 1700 0.5 2 elev_medium_lr
+3 2 1500 1700 2000 0.8 1.5 elev_high_lr
+4 ELEVATION_lrg
+4 3 1000 1150 1250 1400 0.5 0.5 elev_low_lrg
+4 3 1300 1450 1550 1700 0.8 0.2 elev_medium_lrg
+4 3 1600 1750 1850 2000 0.1 2   elev_high_lrg
+  < blank record for end of file >
+.TE
+.LP
+In this example :
+.LP
+- record #1 : comment (beginning with #)
+.br
+- record #2 : number of fuzzy variables (=4)
+.LP
+- record #3 to #6 : definition of 1st fuzzy variable :
+.br
+  #3 : number and name of variable ELEVATION_tri
+.br
+  #4 : number of variable, TFN index and parameters, 1st fuzzy set name
+.br
+  #5 : number of variable, TFN index and parameters, 2nd fuzzy set name
+.br
+  #6 : number of variable, TFN index and parameters, 3rd fuzzy set name
+.LP
+- record #7 to #10 : definition of the 2nd fuzzy variable :
+.br
+  #7 : number and name of variable ELEVATION_tra
+.br
+  #8 : number of variable, TRFN index and parameters, 1st fuzzy set name
+.br
+  #9 : number of variable, TRFN index and parameters, 2nd fuzzy set name
+.brname
+  #10 : number of variable, TRFN index and parameters, 3rd fuzzy set name
+.LP
+- record #11 to 14 : definition of the 3rd fuzzy variable :
+.br
+  #11 : number and name of variable ELEVATION_lr
+.br
+  #12 : number of variable, LR index and parameters, 1st fuzzy set name
+.br
+  #13 : number of variable, LR index and parameters, 2nd fuzzy set name
+.br
+ #14 : number of variable, LR index and parameters, 3rd fuzzy set name
+.LP
+- record #15 to 18 : definition of the 4th fuzzy variable :
+.br
+ #15 : number and name of variable ELEVATION_lrg
+.br
+ #16 : number of variable, LRG index and parameters, 1st fuzzy set name
+.br
+ #17 : number of variable, LRG index and parameters, 2nd fuzzy set name
+.br
+ #18 : number of variable, LRG index and parameters, 3rd fuzzy set name
+.LP
+- record #19 : blank record for end of file.
+.LP
+The function characteristics are as follows :
+.LP
+              TFN     TRFN        LR          LRG
+.br
+Index          0        1         2            3
+.br
+Parameters  (a,b,c) (a,b,c,d) (a,b,c,p,q) (a,b,c,d,p,q)
+.LP
+- for TFN and LR functions, [a,c] is the support and b is the kernel :
+.br
+mu(b)=1 ;  mu(x)=0 for x<a or x>c
+.LP
+- for TFRN and LRG functions, [a,d] is the support and [c,b] is the kernel :
+.br
+ mu(x)=1 for x in [b,c]  ; mu(x)=0  for x<a or x>d
+.LP
+- for LR and LRG functions, p and q are positive real numbers. They are the
+exponents of the Left and Right power functions according the following
+equations :
+.br
+LR function on Left :
+.br 
+mu(x)=L(X) for x in [a,b] with L(X)=1-((b-x)/(b-a))**p
+.br
+LR function on Right :
+.br
+mu(x)=R(X) for x in [b,c] with R(X)=1-((x-b)/(c-b))**q
+.br
+LRG function on Left :
+.br
+mu(x)=L(X) for x in [a,b] with L(X)=1-((b-x)/(b-a))**p
+.br
+LRG function on Right : 
+.br
+mu(x)=R(X) for x in [c,d] with R(X)=1-((x-c)/())**q
+.br
+.LP
+.SH "BUGS AND LIMITS"
+- a blank record must end the ASCII fuzzy variable file.
+.LP
+- \fBr.fuz.set\fR does not test if the range of the raster map values matches the extrema of
+the membership functions. In case of need (for example, using \fBr.fuz.rule\fR), 
+the user has to check it.
+.LP
+- the maximum number of fuzzy variables which can be stored is 10.
+.LP
+.SH NOTES
+The first time \fBr.fuz.set\fR is used in a mapset, a directory, named fuzzy,
+is created in the mapset at the same level as cell, dig, cats, etc. and a copy of the fuzzy variable file is
+written in this directory. Subsequently, it will contain all of the fuzzy variable files to be 
+created with \fBr.fuz.set\fR
+.br
+To maintain the fuzzified raster maps, the element_list file in 
+grass etc directory has to be changed : a record fuzzy:fuzzy must be added at the end
+of the cell paragraph. After that, \fBg.rename\fR , \fBg.copy\fR and \fBg.remove\fR will take into account
+fuzzy map information.
+.LP
+.SH "SEE ALSO"
+.I r.fuz.map, r.fuz.rule
+.LP
+.SH AUTHOR
+Francois Delclaux, Institut de Recherche pour le Developpement (IRD), France.
+(email : delclaux@mpl.ird.fr ) 
