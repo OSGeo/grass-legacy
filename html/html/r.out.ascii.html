@@ -14,14 +14,19 @@
 <BR>
 <B>r.out.ascii help</B>
 <BR>
-<B>r.out.ascii </B>[<B>-hi</B>] <B>map=</B><EM>name </EM>[<B>digits=</B><EM>value</EM>] [<B>dp=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
+<B>r.out.ascii </B>[<B>-hi</B>] <B>map=</B><EM>name 
+[<B>dp=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>r.out.ascii</EM> converts a user-specified raster map layer (<B>map=</B><EM>name</EM>) into an ASCII text file suitable for export to other computer systems.  The digits=<EM>value</EM> option (where <EM>value</EM> is a number of the user's choice) can be used to request that numbers in the ouput be equally-spaced (i.e., columnar output).  Each category value in the ASCII map layer will then take up <EM>value</EM> number of spaces.  However, to use this, the user should know the maximum number of digits that will occur in the output file, and add one to this number (to leave a space between each column).  The user can find the maximum number of digits occurring in the output file by running <EM>r.out.ascii</EM> without the <B>digits=</B><EM>value</EM> option.
+<EM>r.out.ascii</EM> converts a user-specified raster map layer
+(<B>map=</B><EM>name</EM>) into an ASCII text file suitable for export to
+other computer systems.
 
 <P>
 
-The GRASS program <EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM> can be used to perform the reverse function, converting an ASCII file in suitable format to GRASS raster file format.
+The GRASS program <EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM> can be
+used to perform the reverse function, converting an ASCII file in suitable
+format to GRASS raster file format.
 
 <H2>OPTIONS</H2>
 <H3>Flags:</H3>
@@ -38,9 +43,6 @@ The GRASS program <EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM> can be used 
 <DT><B>map=name</B> 
 <DD>Name of an existing raster map layer.
 
-<DT><B>digits=value</B> 
-<DD>The minimum number of digits (per cell) to be printed.
-
 <DT><B>dp=value</B>
 <DD>Number of decimal places.
 
@@ -48,30 +50,45 @@ The GRASS program <EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM> can be used 
 <DD>Character string to represent no data cell.
 </DL>
 
-<EM>r.out.ascii</EM> can be run either non-interactively or interactively.  The program will be run non-interactively if the user specifies the name of a raster map layer and (optionally) a value for <EM>digits</EM>, using the form 
+<EM>r.out.ascii</EM> can be run either non-interactively or interactively. 
+The program will be run non-interactively if the user specifies the name of
+a raster map layer and (optionally) a value for <EM>dp</EM>, using the
+form
 
 <DL>
 <DD>
-<B>r.out.ascii map=</B><EM>name </EM>[<B>digits=</B><EM>value</EM>]
+<B>r.out.ascii map=</B><EM>name </EM>[<B>dp=</B><EM>value</EM>]
 </DL>
 
-where <EM>name</EM> is the name of a raster map layer to be converted to ASCII format, and <EM>value</EM> is the minimum number of digits (per cell) to be printed to output.  The user can also the <EM>-h</EM> option to suppress the output of file header information.
+where <EM>name</EM> is the name of a raster map layer to be converted to
+ASCII format, and <EM>value</EM> is the number of digits (per cell)
+to be printed to output.  The user can also the <EM>-h</EM> option to
+suppress the output of file header information.
 
 <P>
 
-Alternately, the user can simply type <B>r.out.ascii</B> on the command line, without program arguments.  In this case, the user will be prompted for parameter values using the standard GRASS <EM><A HREF="parser.html">parser</A></EM> interface.
+Alternately, the user can simply type <B>r.out.ascii</B> on the command
+line, without program arguments.  In this case, the user will be prompted
+for parameter values using the standard GRASS <EM><A
+HREF="parser.html">parser</A></EM> interface.
 
 <H2>NOTES</H2>
-The output from <EM>r.out.ascii</EM> may be placed into a file by using the UNIX redirection mechanism;  e.g.: 
+
+The output from <EM>r.out.ascii</EM> may be placed into a file by using the
+UNIX redirection mechanism; e.g.:
+
 <DL>
 <DD>
 <B>r.out.ascii map=</B>soils &gt; out.file
 </DL>
 
-The output file out.file can then be printed or copied onto a magnetic tape or floppy disk for export purposes.
+The output file out.file can then be printed or copied onto a magnetic tape
+or floppy disk for export purposes.
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="r.in.ascii.html">r.in.ascii</A>, <A HREF="parser.html">parser</A></EM>
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A>,
+<A HREF="r.in.arc.html">r.in.arc</A>,   
+<A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHOR</H2>
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
