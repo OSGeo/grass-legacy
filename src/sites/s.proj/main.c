@@ -86,29 +86,30 @@ main(int argc, char    **argv)
 	inmap->required = YES;
 	inmap->description = "input sites list";
 
+	inlocation = G_define_option();
+	inlocation->key = "location";
+	inlocation->type = TYPE_STRING;
+	inlocation->required = YES;
+	inlocation->description = "location of input sites list";
+
+	indbase = G_define_option();
+	indbase->key = "dbase";
+	indbase->type = TYPE_STRING;
+	indbase->required = NO;
+	indbase->description = "path to GRASS database of input location";
+
+	imapset = G_define_option();
+	imapset->key = "mapset";
+	imapset->type = TYPE_STRING;
+	imapset->required = NO;
+	imapset->description = "mapset of input sites list";
+
 	outmap = G_define_option();
 	outmap->key = "output";
 	outmap->type = TYPE_STRING;
 	outmap->required = NO;
 	outmap->description = "output sites list";
 
-	imapset = G_define_option();
-	imapset->key = "mapset";
-	imapset->type = TYPE_STRING;
-	imapset->required = NO;
-	imapset->description = "mapset of input";
-
-	inlocation = G_define_option();
-	inlocation->key = "location";
-	inlocation->type = TYPE_STRING;
-	inlocation->required = YES;
-	inlocation->description = "location of input";
-
-	indbase = G_define_option();
-	indbase->key = "dbase";
-	indbase->type = TYPE_STRING;
-	indbase->required = NO;
-	indbase->description = "database of input";
 
 	if (G_parser(argc, argv))
 		exit(-1);
