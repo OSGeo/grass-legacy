@@ -1,0 +1,68 @@
+#	use -DRAM_OFF if you do not want the digit file loaded into memory
+#	for optimization,   this is also toggle-able from the command line if -DRAM_ON is used
+#EXTRA_CFLAGS	=	-I../lib -I../libes -DRAM_ON
+
+EXTRA_CFLAGS	=	$(VECT_INCLUDE) -DRAM_ON
+
+BUILD_LIB = ../v.build/libbuild.a
+
+OBJ = \
+	area.o \
+	atts_file.o \
+	init_plus_s.o \
+	find_nodes.o \
+	import_line.o \
+	isle.o\
+	labels.o \
+	open_files.o \
+	read_digit.o \
+	ascii_io.o 
+
+CFILES = \
+	area.c \
+	atts_file.c \
+	init_plus_s.c \
+	isle.c\
+	find_nodes.c \
+	import_line.c \
+	labels.c \
+	open_files.c \
+	read_digit.c \
+	ascii_io.c 
+
+#  write_ascii.o in OBJ is just for debugging
+
+B_A_OFILES = \
+	ascii_io.o \
+	b_a_plus.o \
+	write_ascii.o 
+
+PROG = $(ETC)/v.build 
+
+all:    $(BUILD_LIB) $(PROG)
+
+#all:    $(BUILD_LIB) $(ETC)/build.vect $(ETC)/b.a.plus
+
+
+
+$(BUILD_LIB): $(OBJ)
+	$(AR)
+
+$(BIN_MAIN_INTER)/v.build: front_end.o 
+	$(CC) $(LDFLAGS) -o $@ front_end.o $(GISLIB)
+
+$(PROG): main.o $(BUILD_LIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) main.o $(BUILD_LIB) $(VECTLIB) $(VECTLIB)  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+	mv a.out $@
+
+#b.a.plus: $(B_A_OFILES) $(VECTLIB)
+#	rm -f a.out $@
+#	$(CC) $(LDFLAGS) $(B_A_OFILES) $(VECTLIB) $(GISLIB)
+#	mv a.out $@
+
+#$(OFILES):	
+#$(B_A_OFILES):	
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) *.c ../Vlib/*.c ../diglib/*.c $(DIG_ATTLIB) $(GISLIB)
