@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "gis.h"
 #include "dbmi.h"
 
 /*!
@@ -122,6 +123,13 @@ db_get_table_description (table)
     return db_get_string (&table->description);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+int
 db_get_table_number_of_columns(table)
     dbTable *table;
 {
@@ -207,6 +215,7 @@ db_set_table_select_priv_not_granted (table)
  \return 
  \param 
 */
+int
 db_get_table_select_priv (table)
     dbTable *table;
 {
@@ -245,6 +254,7 @@ db_set_table_update_priv_not_granted (table)
  \return 
  \param 
 */
+int
 db_get_table_update_priv (table)
     dbTable *table;
 {
@@ -283,6 +293,7 @@ db_set_table_insert_priv_not_granted (table)
  \return 
  \param 
 */
+int
 db_get_table_insert_priv (table)
     dbTable *table;
 {
@@ -315,8 +326,61 @@ db_set_table_delete_priv_not_granted (table)
     table->delete = DB_NOT_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+int
 db_get_table_delete_priv (table)
     dbTable *table;
 {
     return table->delete;
+}
+
+/*!
+ \fn 
+ \brief 
+ \return: 1 exist, 0 doesn't exist, -1 error
+ \param 
+*/
+int
+db_table_exists ( char *drvname, char *dbname, char *tabname)
+{
+    dbDriver *driver;
+    dbString *names;
+    int i, count, found = 0;
+
+    driver = db_start_driver_open_database ( drvname, dbname );
+    if ( driver == NULL ) {
+        G_warning ( "Cannot open database '%s' by driver '%s'", dbname, drvname );
+	return -1;
+    }
+    
+    /* user tables */
+    if( db_list_tables (driver, &names, &count, 0) != DB_OK) return (-1);
+
+    for (i = 0; i < count; i++) {
+	if ( G_strcasecmp( tabname, db_get_string (&names[i])) == 0 ) {
+            found = 1;
+	    break;
+	}
+    }
+    db_free_string_array(names, count);
+    
+    if ( !found ) {    /* system tables */
+	if( db_list_tables (driver, &names, &count, 1) != DB_OK) return (-1);
+
+	for (i = 0; i < count; i++) {
+	    if ( G_strcasecmp( tabname, db_get_string (&names[i])) == 0 ) {
+		found = 1;
+		break;
+	    }
+	}
+	db_free_string_array(names, count);
+    }
+    db_close_database_shutdown_driver ( driver );
+
+    return (found);
 }
