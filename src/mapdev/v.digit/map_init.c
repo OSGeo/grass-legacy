@@ -30,7 +30,8 @@ init_map ( coor_file)
 
 	Write_info(1, "DIGITIZER SETUP") ;
 
-	D_setup_origin() ;
+/*	D_setup_origin() ; */ /*ltp stuff should take care of this */
+
 	Clear_info() ;
 
 	n_points = 0 ;
@@ -53,14 +54,18 @@ init_map ( coor_file)
 while (1)
  {
 	/*  go to Vask page to enter the coordinates  */
+	/*DEBUG*/ 
+	debugf ("entering ask_map_coords\n");
 	if ((n_points =  ask_map_coor (n_points)) < 0)
 		return(-1) ;
 
 	Clear_info() ;
 
 	/*  go to curses page  and register points  */
-
+/*DEBUG*/ 
+	debugf ("entering register_map_coords\n");
 	status =  register_map_coor( n_points) ;
+/*DEBUG*/ 	debugf ("status = %d\n", status);
 	if (status < 0)
 		return (-1) ;
 	if (status == 1)
