@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 #define FAR ((double) -1.0)
