@@ -66,7 +66,7 @@ FONTDIR         = $(ARCH_DISTDIR)/fonts
 VERSION_MAJOR   = 5
 VERSION_MINOR   = 1
 VERSION_NUMBER  = $(VERSION_MAJOR).$(VERSION_MINOR)
-VERSION_DATE    = January 2001
+VERSION_DATE    = December 2001
 VERSION_NAME    = 51
 
 ##################### other #############################################
@@ -167,7 +167,7 @@ SHAPELIB    = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(SHAPE_LIBNAME).$(STLIB_SUFFIX)
 
 ##################### dependencies ######################################
 VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
-	       $(GRASS_INCDIR)/vect/dig_defines.h $(GRASS_INCDIR)/vect/dig_head.h \
+	       $(GRASS_INCDIR)/vect/dig_defines.h \
                $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h
 
