@@ -51,7 +51,6 @@ main (int argc, char *argv[])
 
 	delim_opt = G_define_option();
 	delim_opt->key = "fs";
-	delim_opt->key_desc = "character|space|tab";
 	delim_opt->type = TYPE_STRING;
 	delim_opt->required = NO;
 	delim_opt->description = "field separator";
@@ -140,14 +139,8 @@ main (int argc, char *argv[])
 	    ascii = stdin;
         }
 
-	if (  (fs = delim_opt->answer) ) {
-	    if(strcmp (fs, "space") == 0)
-		fs = " ";
-	    else if(strcmp (fs, "tab") == 0)
-		fs = "\t";
-	} else {
-	    fs = "|";
-	}
+	fs = delim_opt->answer;
+	if ( strcmp(fs,"\t") ) fs = "\t";
 
 	/* check dimension */
 	if (zcoorf->answer) {
