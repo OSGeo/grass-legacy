@@ -7,11 +7,16 @@
 <BODY BGCOLOR="#FFFFFF">
 <H2>NAME</H2>
 <b>r.lags</b> - GRASS module to calculate various spatial dependence 
+measures for all possible lags within a given image.
+
+<H2>DESCRIPTION</H2>
+
+GRASS module to calculate various spatial dependence 
 measures for all possible lags within a given image. Each measure is made by 
 comparing two cells only for each lag azimuth and distance. The whole image is 
 read once for each cell in the image, therefore is very computationally 
 expensive. A Sparc 2 would typically take 1 hour to calculate a 150x150 image.
-<P>
+
 <H2>Usage:</H2>
  r.lags [-sc] <em>in=</em>name <em>out=</em>name [<em>measure=</em>name]<p>
 
