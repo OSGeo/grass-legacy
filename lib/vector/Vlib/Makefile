@@ -9,8 +9,8 @@ DEPENDENCIES =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
 default: lib
-
-
-
 

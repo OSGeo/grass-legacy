@@ -28,19 +28,21 @@ LIB_OBJS = \
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 EXTRA_CLEAN_FILES = $(ARCH_INCDIR)/portable.h
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 default: $(ARCH_INCDIR)/portable.h lib $(OBJDIR)/test
 
 #  Test the machine size and orientation for the Portable Library
 $(ARCH_INCDIR)/portable.h:
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	$(CC) $(LDFLAGS) $(GDALCFLAGS) $(ALLINC) -o $(OBJDIR)/port_test port_test.c
+	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
 	
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c 
-	$(CC) $(LDFLAGS) $(GDALCFLAGS) $(ALLINC) -o $@ test.c $(DIG2LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(GISLIB)
 	cd $(OBJDIR); ./test
 
 

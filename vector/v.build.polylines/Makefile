@@ -5,6 +5,8 @@ PGM = v.build.polylines
 
 LIBES = $(VECTLIB) $(GISLIB) $(VASKLIB)
 DEPENDENCIES = $(VECTDEP) $(GISDEP) $(VASKDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
