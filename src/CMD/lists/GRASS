@@ -127,6 +127,7 @@ src/general/g.findfile
 src/general/g.gisenv
 src/general/g.help
 src/general/g.mapsets
+src/general/g.parser
 src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
@@ -373,6 +374,7 @@ src/raster/r.surf.gauss
 src/raster/r.surf.idw
 src/raster/r.surf.idw2
 src/raster/r.surf.random
+src/raster/r.texture
 src/raster/r.thin
 src/raster/r.tiff
 src/raster/r.timestamp
@@ -424,7 +426,7 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 #
 # requires MOTIF:
 #src.contrib/GMSL/xganim
-# src.contrib/GMSL/ogl3d_linux
+#src.contrib/GMSL/ogl3d_linux
 #
 # requires OpenGL and Tcl/Tk
 #src.contrib/GMSL/NVIZ2.2
@@ -433,8 +435,9 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 #src.contrib/GMSL/SG3d
 #src.contrib/GMSL/sg4d
 #
-# grid3d (raster voxel), still buggy:
-#src.contrib/GMSL/g3d
+# grid3d (raster voxel), almost working:
+src.contrib/GMSL/g3d
+#
 # 2D-case working:
 src.contrib/GMSL/g3d/src3d/sites/s.vol.rst
 #
