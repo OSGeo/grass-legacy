@@ -5,6 +5,8 @@ proc okbox { msg } {
     tk_messageBox -icon info -message $msg  -type ok
 }
 
+source showamap.tcl
+
 # Do this better as errors in finding 
 # DLL's are otherwise not reported and/or
 # dealt with leading to unexplained problems
@@ -49,36 +51,14 @@ if { [catch {G_gisinit $cmdname} res ] } {
 }
 # okbox Initted
 
-set our_region [new_Cell_head]
-if { [catch {G_get_window $our_region} res] } {
-    okbox "G_get_window exception: $res"
-}
-set ewr [Cell_head_ew_res_get $our_region]
-set zone [Cell_head_zone_get $our_region]
-set cols [Cell_head_cols_get $our_region]
-set rows [Cell_head_rows_get $our_region]
-
-set cols1 [G_window_cols]
-set rows1 [G_window_rows]
-
-
-okbox "our_region ew res $ewr, zone $zone, rows $rows $rows1,  cols $cols $cols1 "
-
 # GISBASE top level grass module dir
 
 # $(HOME)/.grassrc5 holds next three vars
 # GISDBASE - directory in which locations appear
-set dbmapset [G_gisdbase]/[G_location]/[G_mapset]
-okbox "Our mapset: $dbmapset"
+#set dbmapset [G_gisdbase]/[G_location]/[G_mapset]
+#okbox "Our mapset: $dbmapset"
 
-# LOCATION_NAME - current location
-# G_location
-
-# MAPSET - current mapset
-# G_mapset
-
-# Also MONITOR, PAINTER, DIGITIZER
-# G_getenv
+showmap geology 1
 
 # Path to current location 
 # G_location_path
