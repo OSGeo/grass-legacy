@@ -50,7 +50,6 @@ main(int argc, char *argv[])
     char *connpath;
     int _wfd;
     int _rfd;
-    int nlev;
     int eof;
 
     char c;
@@ -62,7 +61,7 @@ main(int argc, char *argv[])
     struct sigaction sigact;
 
     /* The calling syntax is as follows:
-          monitor_name [-] "input_fifo output_fifo" [nlev]
+          monitor_name [-] "input_fifo output_fifo"
 
        The "-", if present, causes the monitor to run in foreground.
        Otherwise, once it has been determined that the monitor is not
@@ -71,9 +70,9 @@ main(int argc, char *argv[])
        see the comments in Dstart_mon.c.
     */
 
-    if (argc != 5)
+    if (argc != 4)
     {
-        fprintf(stderr,"Usage:  %s <name> [-] \"input_fifo output_fifo\" [<nlev>]\n", argv[0]);
+        fprintf(stderr,"Usage:  %s <name> [-] \"input_fifo output_fifo\"\n", argv[0]);
         return 1;
     }
 
@@ -90,11 +89,6 @@ main(int argc, char *argv[])
     connpath = argv[3];
 #endif
 
-    if (argv[4][0] != '\0')
-	nlev = atoi(argv[4]);
-    else
-	nlev = 32;
-
     /* Syntax is all right.  Now we must check and see whether or not someone */
     /* (possibly another invocation of ourself) is using our socket/FIFOs.    */
 
@@ -105,14 +99,6 @@ main(int argc, char *argv[])
     }
 
     /* initialize graphics */
-    if ( nlev < -1 ) {
-	fprintf(stderr,"Nlev is negative, resetting to 32\n");
-	nlev=32;
-    }
-    if ( nlev > 256 ) {
-	fprintf(stderr,"Nlev is too big ( > 256), resetting to 32\n");
-	nlev=32;
-    }
 
     p = getenv ("GRASS_WIDTH");
     screen_left = 0;
@@ -122,7 +108,7 @@ main(int argc, char *argv[])
     screen_top = 0;
     screen_bottom = (p && atoi(p)) ? atoi(p) : DEF_HEIGHT;
 
-    if (Graph_Set(argc, argv, nlev) < 0)
+    if (Graph_Set(argc, argv) < 0)
         exit(1);
 
     /* Initialize color stuff */

@@ -31,7 +31,7 @@ int currentColor;
 unsigned long *xpixels;
 int true_color;
 
-int Graph_Set (int argc, char **argv, int nlev) 
+int Graph_Set (int argc, char **argv) 
 {
     unsigned int bgcol;
     char *p;
