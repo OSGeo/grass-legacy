@@ -390,13 +390,12 @@ tput clear
 echo "Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG"
 echo
 echo "Geographic Resources Analysis Support System (GRASS) is Copyright,"
-echo "1999-2002 by the GRASS Development Team, and licensed under terms of the"
+echo "1999-2003 by the GRASS Development Team, and licensed under terms of the"
 echo "GNU General Public License (GPL)."
 echo 
 echo "This GRASS VERSION_NUMBER release is coordinated and produced by the"
 echo "GRASS Development Team headquartered at ITC-irst (Trento, Italy) with"
-echo "worldwide support and further development sites located at Baylor"
-echo "University and the University of Illinois (U.S.A.)."
+echo "contributions from all over the world."
 echo 
 echo "This program is distributed in the hope that it will be useful, but"
 echo "WITHOUT ANY WARRANTY; without even the implied warranty of"
@@ -404,7 +403,7 @@ echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU"
 echo "General Public License for more details."
 echo 
 echo "This version running thru the $shellname ($SHELL)"
-echo "Help is available with the command:      g.help"
+echo "Help is available with the command:      g.manual"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
