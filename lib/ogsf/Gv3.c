@@ -68,7 +68,7 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     /* Decide if lines or polygons */
     /* TODO: this is far from optimal */
     ret = Vect_read_next_line(&map, points, NULL);
-    if ( ret == GV_BOUNDARY && Vect_level(&map) >= 2 ) {
+    if ( ret == GV_BOUNDARY && Vect_level(&map) >= 2 && Vect_is_3d(&map) ) {
        	polygon = 1;
     } else { 
 	polygon = 0;
