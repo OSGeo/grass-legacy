@@ -54,7 +54,7 @@ DEPLIBS = $(DEPGISLIB)
 
 PGM = r.terraflow
 
-default: dofirst $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlgen
+default: dofirst $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlcmd
 
 dofirst:
 	$(MKDIR) $(OBJARCH)/FLOAT ; true
