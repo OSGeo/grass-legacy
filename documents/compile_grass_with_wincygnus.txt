@@ -77,25 +77,33 @@ tar xzf /your/path/to/the/sunrpc-4.0.cygwin1.bin.tar.gz
 
   In a cygwin command window (started with the desktop icon created by setup)
 
-    cd /grass      (use the directory name for where you installed grass)
-    ./configure --with-ipc
+    # use the directory name for where you installed grass:
+    cd /grass
+
+    # set libs:    
+    LIBS="-L/usr/X11R6/lib -lGLw -lGLU -lGL -lXm -lXt -lX11 -lSM -lICE -lXext"
+    export LIBS
+
+    # configure:
+    rm -i config.cache
+    ./configure -with-ipc --prefix=/usr/local --exec-prefix=/usr/local\
+                --with-x-libs=/usr/X11R6/lib\
+                --with-x-includes=/usr/X11R6/include --with-x
 
   Check the file src/command/head/head.  This will probably need changing.
   Change the appropriate lines in the src/CMD/head/head.i686-pc-cygwin
   head file to look like this:
 
  YACC                = bison -y
- COMPILE_FLAGS       = -g -O2 -I/usr/local/include
- XLIBPATH            =  -L/usr/X11R6/lib -L/usr/local/lib
- XLIB                =  -lSM -lICE -lX11 -lcygipc
+ COMPILE_FLAGS       = -O2 -I/usr/local/include
+ XLIBPATH            = -L/usr/X11R6/lib -L/usr/local/lib
+ XLIB                = -lSM -lICE -lX11 -lcygipc
  XDRLIB              = -lrpclib -lz -lcygipc
 
   Then proceed with compiling:
 
     make               (This installs to $GISBASE)
-  ./README.ipc -n new          (This sets up the IPC files in $GISBASE/dev
-** Obsoleted????)
-   make install     (This installs to $INST_DIR)
+    make install       (This installs to $INST_DIR)
 
 
 8.  To run GRASS.
@@ -132,7 +140,6 @@ yellow -bg black -e bash
 
 If you wish you can try the following:
 1. Get the unixODBC source, build and install it.
-   Current version is 1.8.8 as of August, 2000
 
 
 For questions, send a message to the grass list grass5@geog.uni-hannover.de
