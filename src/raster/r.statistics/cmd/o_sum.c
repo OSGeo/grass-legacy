@@ -9,27 +9,23 @@
 #define MDEBUG(a) fprintf(stderr,"%s\n",a);
 
 
-int 
+int
 o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
     char *me="o_sum";
     char command[1024];
-    
+
     long catb, basecat, covercat;
     double x, area, sum1;
     int stat;
     char *tempfile1, *tempfile2;
     FILE *fd1, *fd2;
 
-
-
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
 
-
-  /*  sprintf (command, "%s -cz input='%s,%s' fs=space > %s", STATS, basemap, covermap, tempfile1);*/
     sprintf (command, "%s -cn input='%s,%s' fs=space > %s", STATS, basemap, covermap, tempfile1);
-    
+
     if (stat = system(command))
     {
 	unlink(tempfile1);
@@ -50,7 +46,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 
     catb = 0;
     sum1 = 0.0;
-    
+
 
     while (fscanf (fd1, "%ld %ld %lf", &basecat, &covercat, &area) == 3)
     {
@@ -66,7 +62,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 	    x = covercat;
 	sum1 += x * area;
 /*        fprintf(stderr,"sum: %d\n",(int)sum1);*/
-        
+
     }
     sum_out(fd2, basecat, sum1);
     fclose (fd1);
@@ -79,7 +75,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     return(stat);
 }
 
-int 
+int
 sum_out (FILE *fd, long cat, double sum1)
 {
     char buf[80];

@@ -10,29 +10,25 @@
 #define MDEBUG(a) fprintf(stderr,"%s\n",a);
 
 
-int 
+int
 o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
-  char command[1024];
-  FILE *popen(), *stats, *reclass;
-  int first, mem, i, count;
-  long basecat, covercat, catb, catc;
-  double value, var, x;
-  double *tab;
-      
-    
+    char command[1024];
+    FILE *stats, *reclass;
+    int first, mem, i, count;
+    long basecat, covercat, catb, catc;
+    double value, var, x;
+    double *tab;
+
     mem = MEM * sizeof(double);
     tab = (double *) G_malloc(mem);
-    
-/*    sprintf(command, "r.stats -cz input='%s,%s' fs=space", basemap, covermap);*/
-    sprintf(command, "r.stats -cn input='%s,%s' fs=space", basemap, covermap);
-    
-    stats = popen(command,"r");  
 
-    sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
+    sprintf(command, "r.stats -cn input='%s,%s' fs=space", basemap, covermap);
+    stats = popen(command,"r");
+
+    sprintf(command, "r.reclass i='%s' o='%s'", basemap, outputmap);
     reclass = popen (command, "w");
 
-                                            
     first = 1;
     while (read_stats(stats, &basecat, &covercat, &value))
     {
@@ -47,18 +43,18 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 
 	if (basecat != catb)
 	{
-           kurt(tab, count, &var); 
+           kurt(tab, count, &var);
            fprintf (reclass, "%ld = %ld %f\n", catb, catb, var);
 	   catb = basecat;
 	   catc = covercat;
 	   count = 0;
         }
-        
+
         if(usecats)
            sscanf (G_get_cat((CELL)covercat, cats), "%lf", &x);
         else
            x = covercat;
-        
+
         for(i = 0; i < value; i++)
         {
            if(count * sizeof(double) >= mem )
@@ -69,20 +65,20 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
            }
            tab[count++] = x;
         }
-        
+
     }
     if (first)
     {
 	catb = catc = 0;
     }
-    
-    kurt(tab, count, &var); 
+
+    kurt(tab, count, &var);
     fprintf (reclass, "%ld = %ld %f\n", catb, catb, var);
-    
-    
+
+
     pclose(stats);
     pclose(reclass);/**/
-    
+
     return(0);
 }
 
@@ -94,9 +90,9 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 *
 ************************************************************************/
 
-int 
+int
 kurt (double *data, int n, double *kurto)
-{      
+{
  double ave, ep, var, s;
  int i;
 
@@ -110,27 +106,27 @@ kurt (double *data, int n, double *kurto)
    var    = 0.0;
    ep     = 0.0;
    s      = 0.0;
-   
-   
+
+
    for(i = 0; i < n; i++)              /* First pass to get the mean     */
       s += data[i];
    ave = s / n;
-  
-   for (i = 0; i < n; i++)             
-   {                     
-       s   = data[i] - ave;     
+
+   for (i = 0; i < n; i++)
+   {
+       s   = data[i] - ave;
        var  += s * s;
        ep += s;
    }
-   
+
    var = (var - ep * ep / n) / (n -  1);
-   
+
    for(i = 0; i < n; i++)
    {
      s       = (data[i] - ave) / sqrt(var);
      *kurto += s * s * s * s;
    }
    *kurto = (*kurto / n) - 3;
-   
+
    return(0);
 }

@@ -24,7 +24,6 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
 
-/*    sprintf (command, "%s -cz input='%s,%s' fs=space > %s", STATS, basemap, covermap, tempfile1);*/
     sprintf (command, "%s -cn input='%s,%s' fs=space > %s", STATS, basemap, covermap, tempfile1);
     
     if (stat = system(command))
