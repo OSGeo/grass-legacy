@@ -23,4 +23,8 @@ r.mapcalc "$out.r = r#$first * .$perc + (1.0 - .$perc) * r#$second"
 r.mapcalc "$out.g = g#$first * .$perc + (1.0 - .$perc) * g#$second"
 r.mapcalc "$out.b = b#$first * .$perc + (1.0 - .$perc) * b#$second"
 
+r.colors m=$out.r col=grey
+r.colors m=$out.g col=grey
+r.colors m=$out.b col=grey
+
 exit 0
