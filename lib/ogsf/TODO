@@ -31,3 +31,14 @@ the surface to disapear for larger values of z for higher resolution/higher
 zscale case. Bill fixed it for the SGI-GL version - if the GL version           
 is available it would be good to compare them. I will check with Bill,          
 but I would like him to finish the legends first.              
+
+--------------------------------
+The trans.c file should be removed and any calls to the functions in that
+file should be replaced with appropriate OpenGL calls. All the functionality
+in trans.c can be achieved with OpenGL.
+
+--------------------------------
+This library needs a general overhaul. There are many places which have
+empty functions containing only return statements, as well as several comments
+that say /* You can do better than this */ which indicates areas for
+improvements.
