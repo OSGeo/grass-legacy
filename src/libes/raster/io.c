@@ -315,7 +315,7 @@ int R__open_quiet()
 
 static int fifoto( char *input,char *output,int alarm_time)
 {
-    struct sigaction mysig;
+    struct sigaction mysig, savesig;
     sigset_t mask;
     no_mon = 0;
     
@@ -326,27 +326,24 @@ static int fifoto( char *input,char *output,int alarm_time)
     mysig.sa_flags = 0;
     
 /*    sigalarm = signal(SIGALRM, dead); */
-    sigaction (SIGALRM, &mysig, NULL);
+    sigaction (SIGALRM, &mysig, &savesig);
     alarm(alarm_time);
     _wfd = open (output, O_WRONLY);
     alarm(0);
 /*    signal(SIGALRM, sigalarm); */
-    mysig.sa_handler = SIG_DFL;
-    sigaction (SIGALRM, &mysig, NULL);
+    sigaction (SIGALRM, &savesig, NULL);
     if (no_mon)
         return 0 ;
 
    
     no_mon = 0;
 /*    signal(SIGALRM, dead); */
-    mysig.sa_handler = dead;
-    sigaction (SIGALRM, &mysig, NULL);
+    sigaction (SIGALRM, &mysig, &savesig);
     alarm(alarm_time);
     _rfd = open (input, O_RDONLY);
     alarm(0);
 /*    signal(SIGALRM, sigalarm); */
-    mysig.sa_handler = SIG_DFL;
-    sigaction (SIGALRM, &mysig, NULL);
+    sigaction (SIGALRM, &savesig, NULL);
     if (no_mon)
         return 0 ;
 
