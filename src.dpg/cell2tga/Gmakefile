@@ -1,8 +1,0 @@
-# %W% %G%
-
-LIST=main.o
-
-$(BIN)/Mcell2tga: $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
-
-$(GISLIB): #

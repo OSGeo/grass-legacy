@@ -1,7 +1,0 @@
-Change cell stats to use northing and easting
-Look at patch utility to handle save.
-Make hooks for at least one brush undo.
-Implement regional edit.
-Implement undo.
-
-- Handle Public Post Unpost actions for the property sheet.

@@ -1,6 +1,0 @@
-# %W% %G%
-
-$(BIN)/describe: main.o $(GISLIB)
-	$(CC) $(LDFLAGS) main.o $(GISLIB) -o $@
-
-$(GISLIB): #

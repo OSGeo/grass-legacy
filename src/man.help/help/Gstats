@@ -1,4 +1,0 @@
-Prints area statistics for user specified grid cell data layers.
-Applied to a single layer, the area for each category which occurs
-in the layer is printed.  Applied to multiple layers, an area coincidence
-table across all the layers is printed.

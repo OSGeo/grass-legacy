@@ -1,8 +1,0 @@
-PGM = Xcell
-
-SOURCES =  main.c Xcell.c command.c
-
-OBJECTS =  main.o Xcell.o command.o
-
-$(BIN)/$(PGM):  $(OBJECTS)  $(GISLIB)  $X
-	cc $(LDFLAGS) $(OBJECTS) $(XDISPLAYLIB) $(GISLIB)  -o $@ -lX11 -lm

@@ -1,4 +1,0 @@
-Lists the status of the programs which control graphic output devices.  These
-programs are called device drivers or monitors.  The status may be In Use
-(locked by another user), Idle (in memory but not locked), or Not Loaded
-(not resident in memory).

@@ -1,8 +1,0 @@
-LIBES  = $(GISLIB)
-
-LIST   = main.o describe.o dumplist.o percent.o
-
-$(BIN)/Gdescribe: $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
-
-$(LIBES): #

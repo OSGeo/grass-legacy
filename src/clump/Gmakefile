@@ -1,5 +1,0 @@
-# %W% %G%
-
-$(BIN)/clump: main.o $(GISLIB)
-	$(CC) $(LDFLAGS) main.o $(GISLIB) -o $@
-$(GISLIB): #

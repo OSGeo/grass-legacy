@@ -1,7 +1,0 @@
-Mmain	main.c	/^main(argc, argv)$/
-do_labels	do_labels.c	/^do_labels(infile)$/
-initialize_options	do_labels.c	/^initialize_options()$/
-scan_ref	do_labels.c	/^scan_ref (buf)$/
-show_it	do_labels.c	/^show_it()$/
-xmatch	do_labels.c	/^xmatch (word)$/
-ymatch	do_labels.c	/^ymatch (word)$/

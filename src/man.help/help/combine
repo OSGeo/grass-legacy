@@ -1,4 +1,0 @@
-Map overlay tool which allows combinations of map categories
-from several maps.  Allows combinations using AND, OR, GROUP.
-Created maps can be overlayed and/or saved with the commands
-NAME, COVER, and OVER.

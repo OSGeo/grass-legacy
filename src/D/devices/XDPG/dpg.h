@@ -1,2 +1,0 @@
-
-#define COLOR_OFFSET 16

@@ -1,5 +1,0 @@
-# %W%  %G%
-all: makeall
-
-makeall:
-	$(MAKEALL)

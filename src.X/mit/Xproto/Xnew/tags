@@ -1,6 +1,0 @@
-Mmain	main.c	/^main(argc, argv)$/
-Quit	main.c	/^int Quit()$/
-SetSizeHints	main.c	/^SetSizeHints(shints, geom, width, height, bdwidth)/
-load_vect_colrs	make_clrs.c	/^Colormap load_vect_colrs(clrmap)$/
-make_fixed_colormap	make_clrs.c	/^Colormap make_fixed_colormap(mycolormap, no_cells)/
-make_float_clr_table	make_clrs.c	/^Colormap make_float_clr_table(clrmap, name)$/

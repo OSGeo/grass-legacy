@@ -1,5 +1,0 @@
-# %W% %G%
-
-$(BIN)/Gask: main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
-$(GISLIB): #

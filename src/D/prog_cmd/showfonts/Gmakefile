@@ -1,4 +1,0 @@
-$(BIN)/Dshow.fonts: showfonts.sh
-	rm -f $@
-	cp $? $@
-	chmod +rx $@

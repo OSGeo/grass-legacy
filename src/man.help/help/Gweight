@@ -1,4 +1,0 @@
-Gweight is a weighted overlay analysis tool, and is the non-interactive
-version of weight(1).  Like weight, Gweight allows the user to assign
-numerical weights to each of the categories into which grid cell map layers
-are classified.

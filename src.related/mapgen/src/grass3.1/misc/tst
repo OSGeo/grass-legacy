@@ -1,3 +1,0 @@
-    mt -f /dev/nrst8 rewind
-    mt -f /dev/nrst8 fsf 1
-    dd if=/dev/nrst8 bs=400b | uncompress | tar -xpfbX - 400 /tmp/excluded:q!

@@ -1,4 +1,0 @@
-LIST = main.o usage.o flip.o
-
-$(BIN)/Mflip: $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)

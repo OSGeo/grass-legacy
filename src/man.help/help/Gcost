@@ -1,3 +1,0 @@
-Evaluates the cost of traveling from one or more starting points
-to each grid cell in the window by traveling over a cost surface.
-Cost surfaces can be topographic elevation, roads, soils etc.

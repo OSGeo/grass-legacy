@@ -1,9 +1,0 @@
-#!/bin/sh
-if test $# -ne 4; then
-	echo Usage: cal.degree degree minutes sign offset
-else
-	bc << EOF
-	scale = 5
-	$1 + ($2 / 60) $3 ($4 / 60) $3 .0001
-EOF
-fi

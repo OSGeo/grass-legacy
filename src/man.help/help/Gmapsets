@@ -1,3 +1,0 @@
-Gmapsets sets the current mapset search path to include whatever 
-mapsets are named on the command line.  These mapsets can then be
-accessed by the user.

@@ -1,4 +1,0 @@
-$(BIN)/Dscreen: screen.sh
-	rm -f $@
-	cp $? $@
-	chmod +rx $@

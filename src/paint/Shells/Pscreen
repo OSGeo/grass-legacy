@@ -1,7 +1,0 @@
-:
-. ${GISBASE?}/etc/paint/setup
-
-case $# in
-    0) exec ${PAINT?}/Pscreen ;;
-    *) exec ${PAINT?}/Pscreen "$@" ;;
-esac

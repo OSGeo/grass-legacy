@@ -1,140 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            make.grid                                       make.grid            make.grid                                       make.grid
-
-
-
-
-            
-            
-            NAME            NAME
-            make.grid - Draws a latitude/longitude coordinate grid
-            system on the map composition.
-            
-            SYNOPSIS            SYNOPSIS
-            make.grid [filename]            make.grid                                  ________ 
-            
-            DESCRIPTION            DESCRIPTION
-            make.grid generates a latitude/longitude coordinate grid            _________                                               
-            system for the map composition using the data window.  The
-            user designs the appearance of the grid by responding to a
-            series of questions regarding the use of grid lines or
-            ticks, major and minor subdivisions of the grid, and
-            descriptions for the grid annotation text.  If given,
-            [filename] is used for the name of the overlay file             ________                                          
-            generated.
-            
-            The user is required to provide the following:
-            
-                 - map definition
-                 - overlay file name (if not specified on the command
-                      line)
-                 - text/character font
-                 - plotter pen number
-                 - text/character size
-                 - offset distance for annotation
-                 - sides to show annotation
-                 - major/minor grid intervals
-                 - tick sizes
-                      - use of lines or ticks
-            
-            Completing the response sequence generates the required
-            files to construct the map element.  Definition parameters
-            are stored in the misc directory; graphic elements to draw                              ____                                    
-            the map on the screen or plotter are stored in the ovm                                                               ___
-            directory.  The default file name for both directories is
-            grid.            ____ 
-            
-            Changing the appearance of the grid (e.g. intervals,
-            text/character size, etc.) can be done by regenerating the
-            make.grid command and overwriting the initial file, or by            _________                                                
-            editing the text definition file, then executing it
-            directly, or by using the redo.misc command.                                      _________         
-            
-                 (edit) example:          vi misc/[filename]                                                   ________ 
-                                          vi misc/grid                                             _________
-            
-            Information entered through the interactive make.grid                                                        _________
-            command has been reformatted to meet the requirements of the
-
-                                   APPENDIX I                    2
-                              GRASS-MAPGEN User's Guide
-            make.grid                                       make.grid            make.grid                                       make.grid
-
-
-
-
-            MAPGEN command grid, prefacing the element characteristics                           ____                                       
-            with options for the grid command.  All options available in                                 ____                                   
-            the grid command are available for use in the GRASS-MAPGEN                ____                                                  
-            Interface.  Commonly used grid options associated with                                      ____                        
-            making grids are:
-                 
-                 -f (font/style) [font=-alphanumeric]                                       _____________ 
-                 -b (linework pen) [plotter pen location=value]                                                         _____ 
-                 -c (character pen) [plotter pen location=value]                                                          _____ 
-                 -d (offset distance) [centimeter=value]                                                  _____ 
-                 -s (size) [centimeter=value]                                       _____ 
-                 -a (annotation) [top=t][bottom=b][left=l][right=r]                                      _         _       _        _ 
-                 -(m|p)i (major meridian/parallel intervals) [dms]                                                              ___ 
-                 -(m|p)j (minor intervals) [value]                                            _____ 
-                 -(m|p)u (ticks instead of lines) [centimeter=value]                                                              _____ 
-                 -(m|p)v (minor grid tick size) [centimeter=value]                                                            _____ 
-            
-            
-            EXAMPLE            EXAMPLE
-            The file misc/grid will construct a 2-1/2 minute major                     _________                                    
-            interval of parallels and meridians.  There are no minor
-            intervals; the tick size is .2 cm and the major grid lines
-            have been generated as ticks .2 cm.  The linework and
-            character annotation have been plotted with the pen in
-            position one on the plotter.  The annotation is positioned
-            .125 cm from the ticks, .125 cm in height, and is shown on
-            all sides of the data window.  The text font used for
-            character annotation is the default font (sr).
-            
-                 grid -m map.def -o ovm/grid << EOF
-                 -f -
-                 -b 1
-                 -c 1
-                 -d .125
-                 -s .125
-                 -pi 2'30 -mi 2'30
-                 -pj 1 -mj 1
-                 -pv .2 -mv .2
-                 -pu .2 -mu .2
-                 -a tblr
-                 EOF
-            
-            NOTE            NOTE
-            The MAPGEN grid command draws the grid to the full extents                       ____                                           
-            of the maps data window.
-            
-            If only one map element will be drawn on the map
-            composition, the default selection for the file name is
-            recommended for use.
-            
-            The delete key will abort the make.grid command.                                          _________         
-
-                                   APPENDIX I                    3
-                              GRASS-MAPGEN User's Guide
-            make.grid                                       make.grid            make.grid                                       make.grid
-
-
-
-
-            
-            SEE ALSO            SEE ALSO
-                 grid           User Manual for MAPGEN (UNIX Version),                 ____                                                 
-                                USGS, p. 23.
-                 TASK 10        GRASS-MAPGEN User's Guide, USDA-SCS.                 _______                                            
-                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,                 ____                                                 
-                                USDA-SCS.
-                 redo.misc      (Same)                 _________            
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

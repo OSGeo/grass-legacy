@@ -1,4 +1,0 @@
-$(BIN)/d.sites: sites.sh
-	rm -f $@
-	cp $? $@
-	chmod +rx $@

@@ -1,5 +1,0 @@
-OFILES = \
-	main.o 
-
-$(BIN)/Xfont: $(OFILES) $(GISLIB)
-	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDISPLAYLIB) -lX11

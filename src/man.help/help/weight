@@ -1,4 +1,0 @@
-Map overlay tool which allows combinations of map categories
-from several maps.  The user assigns weights to each category
-for several maps.  Weight creates a new map based on the weights
-assigned to the categories of each cell.

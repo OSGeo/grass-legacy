@@ -1,3 +1,0 @@
-Compresses grid cell files using a run length encoding method. 
-Recommended for keeping disk usage down. Files created in GRASS 3.0
-are automatically in a compressed format.

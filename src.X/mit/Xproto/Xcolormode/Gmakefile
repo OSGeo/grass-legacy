@@ -1,6 +1,0 @@
-OFILES = \
-	colormode.o \
-	command.o
-
-$(BIN)/Xcolormode: $(OFILES) $(GISLIB)
-	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDISPLAYLIB) -lX11

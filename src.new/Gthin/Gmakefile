@@ -1,6 +1,0 @@
-OFILES = main.o thin_lines.o io.o
-
-$(BIN)/Gthin:	$(OFILES)
-	rm -f $@
-	cc $(LDFLAGS) $(OFILES) $(GISLIB) $(ROWIOLIB) -o $@
-

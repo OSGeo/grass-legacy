@@ -1,5 +1,0 @@
-I fextension names are long, keep in mind the GRASS limit of 14 characters
-for filenames.  To minimize the possibility of creating two output files
-of the same name use the prefix option to abreviate the dxf file name
-leaving the majority of characters available for differentiating between
-layer names.

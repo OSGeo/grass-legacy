@@ -1,2 +1,0 @@
-int GetDataVals();
-char *MakeCellPath();

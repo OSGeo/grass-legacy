@@ -1,5 +1,0 @@
-PGM = Xchoose
-OFILES =  choose_win.o 
-
-$(BIN)/$(PGM): $(OFILES) $(GISLIB)
-	cc -g $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lXmu -lX11

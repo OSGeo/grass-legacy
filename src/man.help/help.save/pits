@@ -1,3 +1,0 @@
-Generates a list of points (easting northing) which are 
-are called pits.  Pits are characterized as having a lower
-elevation value than all the points which surround them.

@@ -1,4 +1,0 @@
-:
-: ${GISBASE?}
-
-exec ${GISBASE?}/etc/paint/select $1

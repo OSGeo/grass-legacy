@@ -1,8 +1,0 @@
-PGM = Xwhat.once
-OFILES = \
-	main.o \
-	opencell.o
-
-
-$(BIN)/$(PGM): $(OFILES) $(XDISPLAYLIB) $(GISLIB) $X
-	cc -o $@ $(LDFLAGS) $(OFILES) $(XDISPLAYLIB) $(GISLIB) $(CURSES) -lX11

@@ -1,3 +1,0 @@
-all:
-	$(GMAKE) polish
-	$(GMAKE) mapcalc

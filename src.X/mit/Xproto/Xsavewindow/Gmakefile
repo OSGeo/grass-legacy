@@ -1,6 +1,0 @@
-OFILES = \
-	savewindow.o \
-	main.o
-
-$(BIN)/Xsavewindow: $(OFILES) 
-	cc $(LDFLAGS) -o $@ $(OFILES) -lX11

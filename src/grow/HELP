@@ -1,4 +1,0 @@
-grow
-    Generates output layer which has areas that are one pixel
-    bigger around than input layer.  User may specify output to
-    be completely binary.

@@ -1,3 +1,0 @@
-Data layer support interface. Allows user to edit the header file,
-stats file, category file, color table, and history file for data
-layers in the current mapset.

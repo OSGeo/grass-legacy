@@ -1,54 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            rm.[element]                                    rm.[element]            rm.[element]                                    rm.[element]
-
-
-
-
-            
-            
-            NAME            NAME
-            rm.[element] - Removes all files associated with an
-            overlay(s).
-            
-            SYNOPSIS            SYNOPSIS
-            rm.fill [filename1] [filename2] ...            rm.fill                                                 _________   _________     
-            rm.label [filename1] [filename2] ...            rm.label                                                  _________   _________     
-            rm.legend [filename1] [filename2] ...            rm.legend                                                   _________   _________     
-            rm.line [filename1] [filename2] ...            rm.line                                                 _________   _________     
-            rm.misc [filename1] [filename2] ...            rm.misc                                                 _________   _________     
-            rm.symbol [filename1] [filename2] ...            rm.symbol                                                   _________   _________     
-            
-            DESCRIPTION            DESCRIPTION
-            rm.fill deletes the files generated in the fills, legend,            _______                                    _____  ______ 
-            and ovm directories, resultant from a make.fill command.                ___                               _________         
-            
-            rm.label deletes the files generated in the labels and ovm            ________                                    ______     ___
-            directories, resultant from a make.label command.                                          __________         
-            
-            rm.legend deletes the files generated in the legend/par,            _________                                    __________ 
-            legend/cmd and ovm directories, resultant from a make.legend            __________     ___                               ___________
-            command.
-            
-            rm.line deletes the files generated in the lines, legend,            _______                                    _____  ______ 
-            and ovm directories, resultant from a make.line command.                ___                               _________         
-            
-            rm.misc deletes the files generated in the misc and ovm            _______                                    ____     ___
-            directories, resultant from a make.misc command.                                          _________         
-            
-            rm.symbol deletes the files generated in the symbols,            _________                                    _______ 
-            legend, and ovm directories, resultant from a make.symbol            ______      ___                               ___________
-            command.
-            
-            EXAMPLE            EXAMPLE
-                 rm.misc neatline northarrow barscale
-            
-            SEE ALSO            SEE ALSO
-                 make.[element] GRASS-MAPGEN User's Guide, USDA-SCS.                 _____ _______                                      
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

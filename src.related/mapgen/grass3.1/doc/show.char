@@ -1,40 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            show.char                                       show.char            show.char                                       show.char
-
-
-
-
-            
-            
-            NAME            NAME
-            show.char - Draws an enlarged character from a font on the
-            graphic screen.
-            
-            SYNOPSIS            SYNOPSIS
-            show.char            show.char
-            
-            DESCRIPTION            DESCRIPTION
-            show.char draws an enlarged display of a character from an            _________                                                 
-            available font.  A list of supported fonts is available to
-            select the desired font.
-            
-            The user is required to provide the following:
-            
-                 - the name of the font
-                 - the number of the character to view
-            
-            EXAMPLES            EXAMPLES
-            
-                 show.char
-            
-            SEE ALSO            SEE ALSO
-                 font catalog   User Manual for MAPGEN, (UNIX Version),                                                                                        _______________                                       
-                                USGS, APPENDIX III.
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

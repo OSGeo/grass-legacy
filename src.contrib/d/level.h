@@ -1,4 +1,0 @@
-#define OVERLAY_LEVEL 1
-#define VECTOR_LEVEL 2
-#define LABEL_LEVEL 3
-#define SITES_LEVEL 4

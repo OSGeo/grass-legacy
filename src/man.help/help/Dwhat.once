@@ -1,3 +1,0 @@
-Runs the Dwhat command once, showing the user what category number
-and label are located on a map at the spot pointed to by the user
-(useful for programs which require one input from the user).

@@ -1,3 +1,0 @@
-Generates a cell file (map layer) which represents the drainage
-accumulation numbers within a given watershed, specified by the
-outlet (in easting and northing coordinates) which the user supplies.

@@ -1,4 +1,0 @@
-Finds the lowest cost path over a surface from starting points.
-The surface can be elevation (in which case the path will be that which 
-a raindrop would follow to the low point) or a cost surface (resulting 
-in the least cost path).

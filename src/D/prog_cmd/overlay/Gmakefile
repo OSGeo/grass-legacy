@@ -1,4 +1,0 @@
-$(BIN)/Doverlay: overlay.sh
-	rm -f $@
-	cp $? $@
-	chmod +rx $@

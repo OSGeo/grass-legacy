@@ -1,4 +1,0 @@
-$(BIN)/D3d.view: view.sh
-	rm -f $@
-	cp $? $@
-	chmod +rx $@

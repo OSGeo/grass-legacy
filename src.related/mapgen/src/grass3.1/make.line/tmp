@@ -1,5 +1,0 @@
-while test "$name" = ""
-do
-	echo -n "Enter the name of an existing or new sites_geo file: "
-	read name
-done

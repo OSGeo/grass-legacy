@@ -1,6 +1,0 @@
-all:
-	$(SRC)/man.help/utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)"
-	cp cat1/* $(MAN1)/.
-	cp cat2/* $(MAN2)/.
-	cp cat3/* $(MAN3)/.
-	cp help/* $(HELP)/.

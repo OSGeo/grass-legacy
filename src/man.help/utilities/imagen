@@ -1,9 +1,0 @@
-PRINTER=${PRINTER-oscar}
-export PRINTER
-if [ $# = 0 ]
-then
-    echo Usage: $0 manual-file
-    exit
-fi
-
-tbl man.version man.header $1 | troff -t | lpr  -t

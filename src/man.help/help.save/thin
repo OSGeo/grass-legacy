@@ -1,3 +1,0 @@
-Generates a stream network from a drainage accumulation input
-file.  User may to some extent control the detail of the 
-tributaries through the supply of an accumulation threshold.

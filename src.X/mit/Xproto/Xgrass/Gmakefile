@@ -1,6 +1,0 @@
-
-PGM = XGRASS3
-OFILES =  main.o 
-
-$(BIN)/$(PGM): $(OFILES)
-	cc $(LDFLAGS) -o $@ $(OFILES) -lX11

@@ -1,4 +1,0 @@
-Converts binary vector (digit) file into GRASS Vector Format. Creates a dig_plus
-support file that contains topological information derived from the vector
-(digit) file.  Will also allow creation of cats file
-

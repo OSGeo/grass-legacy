@@ -1,5 +1,0 @@
-Gask old "" dig "" tmp
-. tmp
-rm tmp
-if test "$name" = ""; then
-	exit

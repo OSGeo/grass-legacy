@@ -1,6 +1,0 @@
-OFILES = main.o extr_lines.o io.o
-
-$(BIN)/Gline:	$(OFILES)
-	rm -f $@
-	cc $(LDFLAGS) $(OFILES) $(GISLIB) -o $@
-

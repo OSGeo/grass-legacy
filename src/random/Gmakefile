@@ -1,4 +1,0 @@
-$(BIN)/random: main.o $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(VASK)
-
-$(GISLIB) $(VASKLIB): #

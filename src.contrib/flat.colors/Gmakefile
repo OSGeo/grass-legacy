@@ -1,4 +1,0 @@
-$(BIN)/flat.colors: flat.colors.sh
-	rm -f $@
-	cp $? $@
-	chmod 755 $@

@@ -1,37 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            copy.map                                        copy.map            copy.map                                        copy.map
-
-
-
-
-            
-            
-            NAME            NAME
-            copy.map - Makes a copy of an existing map under a new map
-            name.
-            
-            SYNOPSIS            SYNOPSIS
-            copy.map [old_mapname]            copy.map                                    ___________ 
-            
-            DESCRIPTION            DESCRIPTION
-            copy.map makes a copy of all files in an existing map to use            ________                                                    
-            as the active map.  The user must create the new map by
-            providing a new map name (e.g. map2) following the MAPGEN                                                               ______
-            command, then copy the contents of the old map into the new
-            environment.
-            
-            EXAMPLE            EXAMPLE
-            
-                 copy.map map1
-            
-            NOTE            NOTE
-            Though more cumbersome, the UNIX cp command may be used to                                             __                       
-            change the names on the individual appropriate files.
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

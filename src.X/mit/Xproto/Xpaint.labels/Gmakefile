@@ -1,6 +1,0 @@
-OFILES = \
-	do_labels.o \
-	main.o
-
-$(BIN)/Xpaint.labels: $(OFILES) $(XDISPLAYLIB) $(GISLIB) 
-	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11

@@ -1,60 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            ren.[element]                                   ren.[element]            ren.[element]                                   ren.[element]
-
-
-
-
-            
-            
-            NAME            NAME
-            ren.[element] - Renames all files associated with an overlay
-            to a new name.
-            
-            SYNOPSIS            SYNOPSIS
-            ren.[fill] [old_filename] [new_filename]            ren.[fill]                                                      ____________   ____________ 
-            ren.[label] [old_filename] [new_filename]            ren.[label]                                                       ____________   ____________ 
-            ren.[legend] [old_filename] [new_filename]            ren.[legend]                                                        ____________   ____________ 
-            ren.[line] [old_filename] [new_filename]            ren.[line]                                                      ____________   ____________ 
-            ren.[misc] [old_filename] [new_filename]            ren.[misc]                                                      ____________   ____________ 
-            ren.[symbol] [old_filename] [new_filename]            ren.[symbol]                                                        ____________   ____________ 
-            
-            DESCRIPTION            DESCRIPTION
-            ren.fill changes the name on all MAPGEN files created by the            ________                                                    
-            make.fill command (i.e. fills, legend, and ovm files).            _________                                             
-            
-            ren.label changes the name on all MAPGEN files created by            _________                                                
-            the make.label command (i.e. labels and ovm files).                __________                                     
-            
-            ren.legend changes the name on all MAPGEN files created by            __________                                                
-            the make.legend command (i.e. legend/par, legend/cmd, and                ___________                                          
-            ovm files).
-            
-            ren.line changes the name on all MAPGEN files created by the            ________                                                    
-            make.line command (i.e. lines, legend, and ovm files).            _________                                             
-            
-            ren.misc changes the name on all MAPGEN files associated            ________                                                
-            created by the make.misc command (i.e. misc and ovm files).                           _________                                   
-            
-            ren.symbol changes the name on all MAPGEN files created by            __________                                                
-            the make.symbol command (i.e. symbols, legend, and ovm                ___________                                       
-            files).
-            
-            EXAMPLE            EXAMPLE
-            If the user created a fill layer named yel_corn for the map
-            composition, and later wished to change the layer name to
-            wht_corn, the ren.fill command changes the file name in the                          ________                                     
-            fills, legend, and ovm directories to the new name.            _____  ______      ___                             
-            
-                 ren.fill yel_corn wht_corn
-            
-            NOTE            NOTE
-            Though more cumbersome, the UNIX mv command may be used to                                             __                       
-            change the names on the individual appropriate files.
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

@@ -1,89 +1,0 @@
-
-
-                                   APPENDIX I                    1
-                              GRASS-MAPGEN User's Guide
-            redo.[element]                                  redo.[element]            redo.[element]                                  redo.[element]
-
-
-
-
-            
-            
-            NAME            NAME
-            redo.[element] - Re-creates the appropriate graphic overlay
-            file(s) in the ovm directory, using the current parameter                           ___                                       
-            definitions.
-            
-            SYNOPSIS            SYNOPSIS
-            redo.fill [filename1] [filename2] ...            redo.fill                                                   _________   _________     
-            redo.label [filename1] [filename2] ...            redo.label                                                    _________   _________     
-            redo.legend [filename1] [filename2] ...            redo.legend                                                     _________   _________     
-            redo.line [filename1] [filename2] ...            redo.line                                                   _________   _________     
-            redo.mapdef [filename1] [filename2] ...            redo.mapdef                                                     _________   _________     
-            redo.misc [filename1] [filename2] ...            redo.misc                                                   _________   _________     
-            redo.symbol [filename1] [filename2] ...            redo.symbol                                                     _________   _________     
-            
-            DESCRIPTION            DESCRIPTION
-            redo.fill uses the current parameter file(s) (i.e. filename1            _________                                          _________
-            in the fills directory, to create a new graphic file(s) for                   _____                                               
-            the ovm directory.                ___           
-            
-            redo.label uses the current parameter file(s) (i.e.            __________                                         
-            filename1 in the labels directory, to create a new graphic            _________        ______                                   
-            file(s) for the ovm directory.                            ___           
-            
-            redo.legend uses the current parameter file(s) (i.e.            ___________                                         
-            filename1 in the legend directory, to create a new graphic            _________        ______                                   
-            file(s) for the ovm directory.                            ___           
-            
-            redo.line uses the current parameter file(s) (i.e. filename1            _________                                          _________
-            in the lines directory, to create a new graphic file(s) for                   _____                                               
-            the ovm directory.                ___           
-            
-            redo.mapdef uses the current parameters of the definition            ___________                                              
-            file(s) (i.e. filename1.par) to create a new definition                          _____________                            
-            file(s) (i.e. filename1) for the map composition.  Changing                          _________                                    
-            the map definition parameters, once the map composition is
-            partially or completely developed, requires all files in the
-            ovm directory to be recreated.  This is very easily done by            ___                                                        
-            using the redo command, selecting the "all" option; the user
-            is prompted to enter the map definition file name.
-            
-            redo.misc uses the current parameter file(s) (i.e. filename1            _________                                          _________
-            in the misc directory, to create a new graphic file(s) for                   ____                                               
-            the ovm directory.                ___           
-            
-            redo.symbol uses the current parameter file(s) (i.e.            ___________                                         
-            filename1 in the symbols directory, to create a new graphic            _________        _______                                   
-            file(s) for the ovm directory.                            ___           
-            
-
-                                   APPENDIX I                    2
-                              GRASS-MAPGEN User's Guide
-            redo.[element]                                  redo.[element]            redo.[element]                                  redo.[element]
-
-
-
-
-            EXAMPLE            EXAMPLE
-            If the user created four extensive area fill layers for the
-            map composition, and later wished to revise the plotting
-            color on two layers, three steps would be required to make
-            the change: 1 & 2) edit the parameter files to change the
-            pen number, and save the changes; and 3) create new graphic
-            files for the ovm directory to reflect the new pen colors.
-            
-                 redo.fill cornflds wheatflds
-            
-            NOTE            NOTE
-            The delete key will abort the redo.fill command.                                          _________         
-            
-            SEE ALSO            SEE ALSO
-                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,                 __________                                           
-                                USDA-SCS.
-                 make.[element] (Same)                 _____ _______        
-            
-            AUTHOR            AUTHOR
-            Marty Holko, Computer Systems Analyst, Cartography and
-            Geographic Information Systems Division, USDA, Soil
-            Conservation Service, Washington, DC. (October l990).

@@ -1,8 +1,0 @@
-PGM = Xgraph
-OFILES =  main.o allocation.o \
-	graphics.o \
-	do_graph.o \
-	command.o
-
-$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
-	cc -g $(LDFLAGS) -o $@ $(OFILES) -I$(INCLUDE) -I$(LIBDIR) $(D_LIB) $(XDISPLAYLIB) $(GISLIB) -lX11
