@@ -1,0 +1,7 @@
+OFILES = \
+	main.o get_deg.o get_num.o table.o get_stp.o
+
+$(BIN_MAIN_CMD)/g.setproj: $(OFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB)
+
+$(GISLIB): #
