@@ -87,7 +87,8 @@ int main (int argc, char **argv)
 	          cell_size,		 /* size of a cell in bytes	 */
 	          row, col,		 /* counters			 */
 		  irows, icols,		 /* original rows, cols		 */
-		  orows, ocols;
+		  orows, ocols,
+		  have_colors;     	 /* Input map has a colour table */
 
 	void     *obuffer,		 /* buffer that holds one output row	 */
 	         *obufptr;		 /* column ptr in output buffer	 */
@@ -103,6 +104,8 @@ int main (int argc, char **argv)
 		  inorth, isouth,
 		  ieast, iwest;
 
+	struct Colors colr;		 /* Input map colour table       */
+   
 	struct pj_info iproj,		 /* input map proj parameters	 */
 	          oproj;		 /* output map proj parameters	 */
 
@@ -251,6 +254,9 @@ int main (int argc, char **argv)
 		G_fatal_error("Input map [%s] in location [%s] in mapset [%s] not found.",
 			      inmap->answer, inlocation->answer, setname);
 
+	/* Read input map colour table */   
+	have_colors = G_read_colors(inmap->answer, setname, &colr);
+   
 	/* Get projection info for input mapset */
 	if ((in_proj_info = G_get_projinfo()) == NULL)
 		G_fatal_error("Can't get projection info of input map");
@@ -429,7 +435,13 @@ int main (int argc, char **argv)
 	}
 
 	G_close_cell(fdo);
-
+   
+	if(have_colors > 0)
+	{    
+		G_write_colors(mapname, G_mapset(), &colr);
+		G_free_colors(&colr);
+	}
+   
 	return 0;		/* OK */
 }
 
