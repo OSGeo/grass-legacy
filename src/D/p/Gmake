@@ -1,0 +1,8 @@
+# %W%  %G%
+all: makeall $(MAN2)/DINTRO.2
+
+makeall:
+	$(MAKEALL)
+
+$(MAN2)/DINTRO.2: MAN
+	rm -f $@ ; cp $? $@ ; chmod +r $@
