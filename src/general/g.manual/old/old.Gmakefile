@@ -1,0 +1,8 @@
+
+g.manual: main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB)
+
+$(BIN_MAIN_INTER)/g.manual: main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB)
+
+$(GISLIB): #
