@@ -12345,7 +12345,8 @@ esac
 
 
 
-OPENDWGINC=
+OPENDWGINCPATH=
+OPENDWGLIBPATH=
 OPENDWGLIB=
 
 if test -n "${USE_OPENDWG}"; then
@@ -12354,7 +12355,7 @@ if test -n "${USE_OPENDWG}"; then
 
 
 echo $ac_n "checking for location of openDGW includes""... $ac_c" 1>&6
-echo "configure:12358: checking for location of openDGW includes" >&5
+echo "configure:12359: checking for location of openDGW includes" >&5
 case "$with_opendwg_includes" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-includes." 1>&2; exit 1; }
@@ -12365,7 +12366,7 @@ echo "$ac_t""$with_opendwg_includes" 1>&6
 if test -n "$with_opendwg_includes" ; then
     for dir in $with_opendwg_includes; do
         if test -d "$dir"; then
-            OPENDWGINC="$OPENDWGINC -I$dir"
+            OPENDWGINCPATH="$OPENDWGINCPATH -I$dir"
         else
             { echo "configure: error: *** openDGW includes directory $dir does not exist." 1>&2; exit 1; }
         fi
@@ -12375,20 +12376,20 @@ fi
 
 
 ac_save_cppflags="$CPPFLAGS"
-CPPFLAGS="$OPENDWGINC $CPPFLAGS"
+CPPFLAGS="$OPENDWGINCPATH $CPPFLAGS"
 for ac_hdr in ad2.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:12384: checking for $ac_hdr" >&5
+echo "configure:12385: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 12387 "configure"
+#line 12388 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:12392: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:12393: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -12422,7 +12423,7 @@ CPPFLAGS=$ac_save_cppflags
 
 
 echo $ac_n "checking for location of openDWG library""... $ac_c" 1>&6
-echo "configure:12426: checking for location of openDWG library" >&5
+echo "configure:12427: checking for location of openDWG library" >&5
 case "$with_opendwg_libs" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-libs." 1>&2; exit 1; }
@@ -12433,7 +12434,7 @@ echo "$ac_t""$with_opendwg_libs" 1>&6
 if test -n "$with_opendwg_libs"; then
     for dir in $with_opendwg_libs; do
         if test -d "$dir"; then
-            OPENDWGLIB="$OPENDWGLIB -L$dir"
+            OPENDWGLIBPATH="$OPENDWGLIBPATH -L$dir"
         else
             { echo "configure: error: *** openDWG library directory $dir does not exist." 1>&2; exit 1; }
         fi
@@ -12441,10 +12442,17 @@ if test -n "$with_opendwg_libs"; then
 fi
 
 
-# how to program that:
-# LOC_CHECK_LIBS(ad2,adSeekLayer,openDWG,$OPENDWGLIB,OPENDWGLIB,,,)
+#search for ad2.a, ad3.a ... in openDWG toolkit directory:
+#FIX ME  how to program this test??
+#LOC_CHECK_LIBS(ad?.a,adSeekLayer,openDWG,$OPENDWGLIBPATH,OPENDWGLIB,,)
+#
+#for now hack (but working):
+TRUEOPENDWGLIBPATH=`echo $OPENDWGLIBPATH | cut -b3-`
+adlib=`ls -1 $TRUEOPENDWGLIBPATH/ad?.a | tail -1`
+OPENDWGLIB=$adlib
 
 fi # $USE_OPENDWG
+
 
 
 
@@ -12659,7 +12667,8 @@ s%@FTLIB@%$FTLIB%g
 s%@CXX@%$CXX%g
 s%@PROJINC@%$PROJINC%g
 s%@PROJLIB@%$PROJLIB%g
-s%@OPENDWGINC@%$OPENDWGINC%g
+s%@OPENDWGINCPATH@%$OPENDWGINCPATH%g
+s%@OPENDWGLIBPATH@%$OPENDWGLIBPATH%g
 s%@OPENDWGLIB@%$OPENDWGLIB%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 s%@STRIPFLAG@%$STRIPFLAG%g
