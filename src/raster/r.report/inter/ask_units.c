@@ -24,6 +24,7 @@ ask_units()
 	V_ques (units[i].marked,'s',i+2,3,1);
 	V_const (units[i].name, 's', i+2,6,30);
     }
+
     V_intrpt_ok();
     return V_call();
 }
