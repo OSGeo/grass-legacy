@@ -1,0 +1,74 @@
+R.LE PROGRAMS - NOTES FOR THE VERSION 2.1 RELEASE - AUGUST 1, 1994
+
+This directory contains the release of Version 2.1 of the r.le programs
+and documentation. These programs enable calculation of a variety
+of quantitative measures of the structure of landscapes, following 
+traditions in the field of landscape ecology.  They work directly with 
+landscape maps in GRASS raster files.  The programs can be used for a 
+variety of other purposes as well.
+
+There are 9 subdirectories, 7 of which contain the source code for one of 
+the r.le programs.  Another directory, doc, contains the documentation.
+
+The best place to install the programs is in $(GISBASE)/src.contrib/UW.  If you 
+want to place them somewhere else, you will have to change line 1 of the
+Gmakefile in the r.le.setup subdirectory to correctly specify the location
+of the r.le.setup/polytocell subdirectory.
+
+The Gmakefile in this directory will compile all the r.le programs.  Just 
+type "gmake4.1" at the GRASS prompt. The compiled programs and source code
+will consume approximately 2.7 Mb of hard disk space.  The compiled programs
+will be in (GISBASE)/etc/bin/contrib/cmd
+
+There are no manual pages.  The documentation consists of a Wordperfect
+5.2 file in wp format (doc.wp), plus figures to be inserted in the documenta-
+tion at the appropriate place.  There is a Postscript version of each figure.
+Each Postscript figure file contains a line similar to "500 300 translate"
+inserted to position the figure correctly when it is printed, in my case on an
+HP Laserjet III with Newsprint.  You may have to change the "500 300" to other
+values to get them to print correctly on your printer.  These numbers represent
+the amount, in Postscript units, to move the origin in the x and y directions.
+Experiment with these numbers until the figures print correctly.
+
+If you are not able to print the Wordperfect file or the figures, you can obtain
+a printed copy of the documentation by mail from me if you send me a check for
+$10.00 in US funds made out to: Department of Geography, University of Wyoming. 
+This amount is necessary to cover the cost of copying and mailing. I am sorry 
+for this inconvenience, but did not have access to a program to produce 
+Postscript text and equations.  It is not possible to convert the 
+Wordperfect file to ASCII text, as the equations will not convert correctly.  
+
+These programs were developed in part with funding from the Ecological Research 
+Division, Office of Health and Environmental Research, U.S. Department of
+Energy, and are in the public domain.  They are provided on an "as is" basis. 
+No warranty is expressed or implied.
+
+If you use these programs in your research, please cite us:
+
+	Baker, W.L. and Y. Cai. 1992. The r.le programs for multiscale
+		analysis of landscape structure using the GRASS GIS.
+		Landscape Ecology 7(4):291-302.
+
+These programs require grass 4.1.  We have only compiled and tested the programs
+using a Sun Sparcstation 1 under SunOS 4.1.3, although we have reports that they
+will compile with other machines (i.e., Apollo, HP).  I would appreciate an 
+E-mail message about your success or failure, particularly with other machines
+or operating systems (e.g., Linux, Solaris 2.x).
+
+Unfortunately, I cannot provide general support for these programs, but
+please send bug reports and reports of compilation problems to me.  As time
+permits I will try to fix these problems.  Please do not phone me, but 
+send questions via E-mail or regular mail.  I am always looking for ideas
+about how to improve the programs, and welcome your suggestions, whether 
+cosmetic, trivial, or complex.  If anything, I have received too little
+feedback.
+
+			William L. Baker
+			Department of Geography & Recreation
+			207 Arts & Sciences Bldg.
+			University of Wyoming
+			Laramie, WY 82071
+			U.S.A.
+			bakerwl@uwyo.edu
+			August 1, 1994
+ 
