@@ -14,14 +14,15 @@
 *
 *****************************************************************************/
 /*
-*  This takes an ascii digit file in one coordinate system and converts
+*History:
+*- This takes an ascii digit file in one coordinate system and converts
 *  the map to another coordinate system.
 *  Uses the transform library:  $(TRANSLIB)
 *
 *  Written during the ice age of Illinois, 02/16/90, by the GRASS team, -mh.
 *
-*  Modified by Dave Gerdes  1/90  for dig_head stuff
-*  Modified by Radim Blazek to work on binary files
+*- Modified by Dave Gerdes  1/90  for dig_head stuff
+*- Modified by Radim Blazek to work on binary files 2002
 */
 #define MAIN
 
