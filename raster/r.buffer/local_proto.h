@@ -18,7 +18,7 @@ int process_right(int, int, int, int);
 /* process_row.c */
 int process_row(int, int);
 /* read_map.c */
-int read_input_map(char *, char *, int);
+int read_input_map(char *, char *, int, int);
 /* support.c */
 int make_support_files(char *, char *);
 /* write_map.c */
