@@ -36,7 +36,6 @@ config.status: configure
 		--with-gdal=/usr/bin/gdal-config \
 		--with-tcltk-includes=/usr/include/tcl8.3 \
 		--with-postgres-includes=/usr/include/postgresql \
-		--without-opengl \
 		--with-grass50=$(GRASS53SRC)
 
 build: build-stamp
