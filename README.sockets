@@ -1,7 +1,9 @@
 #!/bin/sh
-# 
+#
 # XDriver sockets: replacement of XDriver fifos (needed to improve speed and
 #                  to run GRASS Monitors on Windows)
+# 
+# Contact: Huidae Cho  <hdcho@geni.knu.ac.kr>
 # 
 # The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
 # the current driver code by Huidae Cho.
