@@ -20,7 +20,7 @@ wgs72  "World Geodetic System 1972"       wgs72         dx=0.0      dy=0.0      
 # North American 1927
 nad27  "North American 1927"              clark66       dx=-22.0    dy=157.0    dz=176.0
 # North American 1983 (CONUS)
-nad83	"North American 1983"		  GRS80		dx=0.0	    dy=0.0	dz=0.0
+nad83	"North American 1983"		  grs80		dx=0.0	    dy=0.0	dz=0.0
 # Alaska and Canada
 a-can  "Alaska and Canada NAD27"          clark66       dx=-9.0     dy=151.0    dz=185.0 
 # European datum
