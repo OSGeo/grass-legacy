@@ -61,7 +61,7 @@ static int plot(int x,int y)
 
 	G_adjust_window_to_box (&cellhd, &VIEW_MAP1->cell.head, VIEW_MAP1->nrows, VIEW_MAP1->ncols);
 	Configure_view (VIEW_MAP1, name, mapset, cellhd.ns_res, cellhd.ew_res);
-	drawcell(VIEW_MAP1,1);
+	drawcell(VIEW_MAP1,0);
     }
     else if (x > VIEW_MAP2->left && x < VIEW_MAP2->right)
     {
@@ -81,7 +81,7 @@ static int plot(int x,int y)
 	G_adjust_window_to_box (&cellhd, &VIEW_MAP2->cell.head, VIEW_MAP2->nrows, VIEW_MAP2->ncols);
 	Configure_view (VIEW_MAP2, name, mapset, cellhd.ns_res, cellhd.ew_res);
 	select_target_env();
-	drawcell(VIEW_MAP2,1);
+	drawcell(VIEW_MAP2,0);
 	select_current_env();
 	if (from_screen < 0)
 	{
