@@ -71,6 +71,7 @@ int main (int argc, char *argv[])
 	RASTER_MAP_TYPE map_type;
 	int row, col;
 	int nrows, ncols;
+	int grass_nrows, grass_ncols;
 	int bytes, sflag, swap;
 	int no_coord=0, no_dim=0;
 	void *x_v;
@@ -346,27 +347,39 @@ int main (int argc, char *argv[])
 			SwabDouble(&cellhd.ew_res);
 			SwabDouble(&cellhd.ns_res);
 		}
+		
+		/* Adjust Cell Header to match resolution */
+		if (err = G_adjust_Cell_head (&cellhd, 0, 0)) {
+			fprintf(stderr, "%s\n", err);
+			return 1;
+		}
+	nrows = header.ny;
+	ncols = header.nx;
+	grass_nrows = cellhd.rows;
+	grass_ncols = cellhd.cols;
 	}
 
-	/* Adjust Cell Header to New Values */
-	if (err = G_adjust_Cell_head (&cellhd, 1, 1)) {
-		fprintf(stderr, "%s\n", err);
-		return 1;
+	if (!flag.gmt_hd->answer) {
+		/* Adjust Cell Header to New Values */
+		if (err = G_adjust_Cell_head (&cellhd, 1, 1)) {
+			fprintf(stderr, "%s\n", err);
+			return 1;
+		}
+	grass_nrows = nrows = cellhd.rows;
+	grass_ncols = ncols = cellhd.cols;
 	}
 
-	nrows = cellhd.rows;
-	ncols = cellhd.cols;
 	if(G_set_window (&cellhd) < 0)
 		exit(3);
 
-	if (nrows != G_window_rows())
+	if (grass_nrows != G_window_rows())
 	{
-		fprintf (stderr, "OOPS: rows changed from %d to %d\n", nrows, G_window_rows());
+		fprintf (stderr, "OOPS: rows changed from %d to %d\n", grass_nrows, G_window_rows());
 		exit(1);
 	}
-	if (ncols != G_window_cols())
+	if (grass_ncols != G_window_cols())
 	{
-		fprintf (stderr, "OOPS: cols changed from %d to %d\n", ncols, G_window_cols());
+		fprintf (stderr, "OOPS: cols changed from %d to %d\n", grass_ncols, G_window_cols());
 		exit(1);
 	}
 
@@ -427,7 +440,7 @@ int main (int argc, char *argv[])
 	x_c = (char *)  x_v;
 
 	fprintf(stderr, "Percent Complete: ");
-	for (row = 0; row < nrows; row++)
+	for (row = 0; row < grass_nrows; row++)
 	{
 		if (fread (x_v, bytes * ncols, 1, fd) != 1)
 		{
@@ -438,7 +451,7 @@ int main (int argc, char *argv[])
 			exit(1);
 		}
 
-		for (col = 0 ; col < ncols; col++ ) {
+		for (col = 0 ; col < grass_ncols; col++ ) {
 			if (flag.f->answer) {
 				/* Import Float */
 				if (swap)
