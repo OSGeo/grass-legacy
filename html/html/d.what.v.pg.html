@@ -14,44 +14,38 @@ NAME</h2>
 vector features.
 <br><i></i>&nbsp;
 <h2>
-<font size=+2>USAGE:</font></h2>
-<font size=+1>d.what.v.pg [-f] map=name tab=name col=name [color=name]</font>
-<br><font size=+1>&nbsp;&nbsp; [fillcolor=name] [hv=name]</font>
-<br><font size=+1>&nbsp;</font>
-<br><font size=+1>d.what.v.pg [-sf] sql=file map=name [color=name] [fillcolor=name]</font>
-<br><font size=+1>&nbsp;&nbsp; [hv=name]</font><i><font size=+1></font></i>
-<p><font size=+1>Flags:</font>
-<br><font size=+1>&nbsp; -s&nbsp;&nbsp; Use [-s] for SQL command file input.</font>
-<br><font size=+1>&nbsp; -f&nbsp;&nbsp; Fill polygons?</font><font size=+1></font>
-<p><font size=+1>Parameters:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql&nbsp;&nbsp;
-Name of the SQL command file:</font><font size=+1></font>
-<p><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map&nbsp;&nbsp;
-Vector map to run query on:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tab&nbsp;&nbsp;
-Postgres table with categories:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col&nbsp;&nbsp;
-Column with categories from this table:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; color&nbsp;&nbsp;
-Selected lines color:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-default: yellow</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fillcolor&nbsp;&nbsp;
-Selected areas color (for fill):</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-options: red,orange,yellow,green,blue,indigo,white,black,brown,</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-magenta,aqua,gray,grey</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-default: gray</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hv&nbsp;&nbsp;
-Type of database output - [h/v]:</font>
-<br><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-default: v</font>
-<br><font size=+1></font>&nbsp;
+<font size=+2>SYNOPSIS:</font></h2>
+<b>d.what.v.pg [-f] map=</b>name<b> tab=</b>name<b> col=</b>name<b> [color=</b>name<b>]</b>
+<br><b>&nbsp;&nbsp; [fillcolor=</b>name<b>] [hv=</b>name<b>]</b>
+<br>&nbsp;
+<br><b>d.what.v.pg [-sf] sql=</b>file<b> map=</b>name<b> [color=</b>name<b>]
+[fillcolor=</b>name<b>]</b>
+<br><b>&nbsp;&nbsp; [hv=name]</b>
+<br><i></i>&nbsp;
 <h2>
 DESCRIPTION</h2>
-Reports database attributes from the currently selected database which
+<b>Flags:</b>
+<br>-s&nbsp;&nbsp; Use [-s] for SQL command file input.
+<br>-f&nbsp;&nbsp; Fill polygons?
+<p><b>Parameters:</b>
+<br>&nbsp;
+<br>sql&nbsp;&nbsp; Name of the SQL command file:
+<br>map&nbsp;&nbsp; Vector map to run query on:
+<br>tab&nbsp;&nbsp; Postgres table with categories:
+<br>col&nbsp;&nbsp; Column with categories from this table:
+<br>color&nbsp;&nbsp; Selected lines color:
+<br>&nbsp;&nbsp;&nbsp; default: yellow
+<br>fillcolor&nbsp;&nbsp; Selected areas color (for fill):
+<br>&nbsp;&nbsp;&nbsp; options: red,orange,yellow,green,blue,indigo,white,black,brown,
+magenta,aqua,gray,grey
+<br>&nbsp;&nbsp;&nbsp; default: gray
+<br>hv&nbsp;&nbsp; Type of database output - [h/v]:
+<br>&nbsp;&nbsp;&nbsp; default: v<font size=+1></font>
+<p><b>tab</b> is Postgres table containing column linked to vector attribute
+values, <b>col</b> - column associated with vector attribute values, <b>map</b>
+is name of an existing vector map with attribute values linked to the cur­
+rently selected database.
+<p>Reports database attributes from the currently selected database which
 are associated with specific vector features identified using the mouse.
 The currently selected database is identified by the GRASS environment
 variable $PGDBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS
@@ -69,12 +63,6 @@ filters.
 <p>The database information can be optionally output as comma-sepatated
 list (horizontal) which is convenient feeding it to other programs like
 table editors and worksheet.
-<h3>
-Parameters:</h3>
-<b>Tab</b> is Postgres table containing column linked to vector attribute
-values, <b>col</b> - column associated with vector attribute values, <b>map</b>
-is name of an existing vector map with attribute values linked to the cur­
-rently selected database.
 <br>&nbsp;
 <p><b>EXAMPLE:</b>
 <p><b>1.</b><i> d.what.v.pg -s sql=census.sql map=census</i>
