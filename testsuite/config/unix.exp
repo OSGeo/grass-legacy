@@ -21,6 +21,22 @@ proc grass_exit { } {
 	    exec rm -fR [getenv GISDBASE]
 	}
     }
+    # now restore the $HOME/.grassrc5 
+    if { [getenv HOME] == "" } {
+    	note "no \$HOME set, can not restore .grassrc5!"
+    } else {
+    	set old [file join [getenv HOME] ".grassrc5"]
+    	set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
+    	if { ![file exists $new] } {
+	    note "can not restore .grassrc5!"
+   	} else { 
+	    if { [catch {file rename -force $new $old} ] } {
+		note "problem restoring .grassrc5!"
+	    } else {
+		note ".grassrc5 restored sucessfully!"
+	    }
+    	}
+    }
     return
 }
 
@@ -49,6 +65,19 @@ proc grass_start { } {
     if { [getenv SRCDIR] == "" } {
 	perror "SRCDIR not set, use export to set SRCDIR!"
 	exit 1
+    }
+    # now save the $HOME/.grassrc5 so that we can restore it 
+    # later.
+    if { [getenv HOME] == "" } {
+    	note "no \$HOME set, can not restore .grassrc5 later!"
+    } else {
+    	set old [file join [getenv HOME] ".grassrc5"]
+    	set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
+    	if { [catch {file rename -force $old $new}] } {
+    	    note "problem saving .grassrc5!"
+    	} else {
+    	    note ".grassrc5 saved to .grassrc5-tmp-grasstestsuite\nIf the testsuite exits abnormally, please restore\nmanually!"
+    	}
     }
     # GISBASE is set from Makefile!
     set path [file join [getenv GISBASE]]

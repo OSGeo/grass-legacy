@@ -1,7 +1,6 @@
 # test if grass5 can be invoked with command line parameters
 set test "grass5 commandline execution"
-set path [file join [getenv LOCATION] [getenv MAPSET]]
-spawn $GRASS $path
+spawn $GRASS "-" "-"
 
 expect {
     -re {.*o such.*$}      { fail "$test: Can't start $GRASS" }
