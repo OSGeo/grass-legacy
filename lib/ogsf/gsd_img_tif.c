@@ -49,7 +49,7 @@ int GS_write_tif(char *name)
     /* Assuming 24 bit RGB Tif */
     TIFFSetField(out, TIFFTAG_IMAGEWIDTH, xsize);
     TIFFSetField(out, TIFFTAG_IMAGELENGTH, ysize);
-    TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_BOTLEFT);
+    TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
     TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, 24 > 8 ? 3 : 1);
     TIFFSetField(out, TIFFTAG_BITSPERSAMPLE, 24 > 1 ? 8 : 1);
     TIFFSetField(out, TIFFTAG_PLANARCONFIG, config);
@@ -79,6 +79,7 @@ int GS_write_tif(char *name)
     /* Done with Header Info*/
     for (y=0; y<ysize; y++)
     {
+	int yy = ysize-y-1;
 	tmpptr = buf;
 	
 	for (x=0; x<(xsize); x++)
@@ -86,16 +87,16 @@ int GS_write_tif(char *name)
 	    if (!swapFlag)
 	    {
 	    	/* big endian: SUN et al. */
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0xFF000000)>>24;
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0x00FF0000)>>16;
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0x0000FF00)>>8;
 	    }
 	    else
 	    {
 	    	/* little endian: Linux et al. */
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x000000FF);
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0x000000FF);
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0x0000FF00)>>8;
+	    	*tmpptr++ = (pixbuf[yy*xsize + x] & 0x00FF0000)>>16;
  	    }
     	}
 	
