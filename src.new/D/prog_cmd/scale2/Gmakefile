@@ -1,0 +1,25 @@
+#  %W%  %G%
+
+OFILES = \
+	command.o \
+	draw_scale.o \
+	main.o
+
+Dscale2: $(BIN)/Dscale2 $(MAN2)/Dscale2 $(HELP)/Dscale2
+
+$(BIN)/Dscale2: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(MAN2)/Dscale2: scale2.man
+	$(MANROFF)
+
+$(HELP)/Dscale2: scale2.help
+	cp scale2.help $@
+
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
