@@ -348,6 +348,7 @@ fi
 
 eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+export LOCATION
 
 trap "" 2 3
 CYGWIN=`uname | grep CYGWIN`
