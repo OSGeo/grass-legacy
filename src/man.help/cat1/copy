@@ -1,0 +1,66 @@
+
+
+
+copy(1)              GRASS Reference Manual               copy(1)
+
+
+
+NAME
+     copy - Copy data
+     (Available through grass3 menu)
+
+SYNOPSIS
+     copy
+
+DESCRIPTION
+     Copy allows the user to make copies of data The data may
+     reside in any mapset and will be copied to the current
+     mapset.  The user first selects the type of data to be
+     copied from the following list:
+
+
+            1         cell maps
+
+            2         binary vector maps
+
+            3         paint icon files
+
+            4         paint label files
+
+            5         site maps
+
+            6         window files
+
+            7         imagery group files
+
+          RETURN      exit
+
+
+     Once the number of the data element is selected, the user is
+     prompted for a to be copied.  This may reside in any mapset
+     to which the user has access (i.e., those in the user's
+     search path).  The user is then prompted for the name of a
+     new in the current mapset into which the will be copied.
+     After both names have been entered, the copy is created and
+     the user is again prompted for a to be copied.
+
+     When prompted for names, the user may enter 'list' to see a
+     list of existing or hit RETURN to cancel the request.
+
+NOTE
+     If a data element has support files (e.g., cell these
+     support files are also copied.
+
+SEE ALSO
+     Gcopy[2]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
