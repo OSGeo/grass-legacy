@@ -15,7 +15,7 @@ int main (int argc, char **argv)
     char rast[128], vect[128];
     char command[128];
     struct Flag *quiet;
-    struct Option *map, *vmap, *zoom;
+    struct Option *rmap, *vmap, *zoom;
     double magnify;
     char *mapset;
 
@@ -29,17 +29,17 @@ int main (int argc, char **argv)
                *vect = 0;
     R_close_driver();
                     
-    map = G_define_option();
-    map->key = "rast";
-    map->type = TYPE_STRING;
+    rmap = G_define_option();
+    rmap->key = "rast";
+    rmap->type = TYPE_STRING;
     if (*rast)
-          map->answer = rast;
+          rmap->answer = rast;
     if (*rast)
-          map->required = NO;
+          rmap->required = NO;
        else
-          map->required = YES;
-    map->gisprompt = "old,cell,raster" ;
-    map->description = "Name of raster map";
+          rmap->required = YES;
+    rmap->gisprompt = "old,cell,raster" ;
+    rmap->description = "Name of raster map";
                                                         
     vmap = G_define_option();
     vmap->key = "vector";
@@ -71,12 +71,12 @@ int main (int argc, char **argv)
     sscanf(zoom->answer,"%lf", &magnify); 
 
 /* Make sure map is available */
-    if (map->answer == NULL) exit(0);
-       mapset = G_find_cell2 (map->answer, "");
+    if (rmap->answer == NULL) exit(0);
+       mapset = G_find_cell2 (rmap->answer, "");
     if (mapset == NULL)
     {
 	char msg[256];
-	sprintf(msg,"Raster file [%s] not available", map->answer);
+	sprintf(msg,"Raster file [%s] not available", rmap->answer);
 	G_fatal_error(msg) ;
     }
 
@@ -100,7 +100,7 @@ int main (int argc, char **argv)
 /* Redraw raster map */
     if (*rast)
     {
-      sprintf(command, "d.erase; d.rast map=%s", map->answer);
+      sprintf(command, "d.erase; d.rast map=%s", rmap->answer);
       system(command);
     }
 
@@ -111,6 +111,7 @@ int main (int argc, char **argv)
       system(command);
     }
     
+
     exit(stat);
 }
 
