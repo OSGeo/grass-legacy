@@ -1,4 +1,5 @@
 Mmain	main.c	/^main(argc,argv) char *argv[];$/
+tape_advance	advance.c	/^tape_advance()$/
 ask_format	ask_format.c	/^ask_format ()$/
 ask_window	ask_window.c	/^ask_window ()$/
 bil	bil.c	/^bil()$/
