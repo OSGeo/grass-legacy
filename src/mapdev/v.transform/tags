@@ -1,0 +1,22 @@
+Mmain	main.c	/^main( argc, argv)$/
+_transform_head_info	trans_head.c	/^_transform_head_info( header )$/
+ask_transform_coor	ask_trans.c	/^ask_transform_coor (n_points)$/
+create_transform_conversion	creat_trans.c	/^create_transform_conversion ( Coord, quiet)$/
+create_transform_from_file	creat_trans.c	/^create_transform_from_file ( Coord, quiet)$/
+create_transform_from_user	creat_trans.c	/^create_transform_from_user ()$/
+get_coor_from_file	get_coor.c	/^get_coor_from_file (fp)$/
+init_transform_arrays	setup_trans.c	/^init_transform_arrays()$/
+my_help	main.c	/^my_help()$/
+open_att_files	open_files.c	/^open_att_files( Readfile, Writefile, Read_mapset, /
+open_vect_files	open_files.c	/^open_vect_files( Readfile, Writefile, Coordfile )$/
+pr_options	main.c	/^pr_options()$/
+print_transform_error	setup_trans.c	/^print_transform_error(stat)$/
+print_transform_resids	print_trans.c	/^print_transform_resids ( n_points)$/
+set_default_options	command.c	/^set_default_options(Inmap, Outmap, Coord, Comm_fla/
+setup_transform	setup_trans.c	/^setup_transform ( n_points)$/
+shrink_map_coor	ask_trans.c	/^shrink_map_coor()$/
+stash_away	command.c	/^stash_away(pos, option)$/
+transform_att_file	trans_att.c	/^transform_att_file(fp_current, fp_new)$/
+transform_digit_file	trans_digit.c	/^transform_digit_file(current_file, new_file)$/
+transform_head_info	trans_head.c	/^transform_head_info(dhead)$/
+yes_no_quest	creat_trans.c	/^yes_no_quest(s)$/
