@@ -5,7 +5,8 @@ EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
 LIST = 	main.o \
 	shpopen.o \
 	dbfopen.o \
-	pgdump.o
+	pgdump.o \
+	shp2dig.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB) $(PQLIB)

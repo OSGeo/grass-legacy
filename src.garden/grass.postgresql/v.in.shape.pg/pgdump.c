@@ -22,6 +22,11 @@
  *
  * 02/2000 Alex Shevlakov sixote@yahoo.com	
  *			      
+ ******************************************************************************
+ ******************************************************************************
+ *
+ * 03/2000 with modifications by DD Gray  ddgray@armadce.demon.co.uk
+ *			      
  ******************************************************************************/
  
 #include <stdio.h>
@@ -29,10 +34,11 @@
 #include <string.h>
 #include "gis.h"
 #include "shapefil.h"
+#include "shp2dig.h"
+#include "pg_local.h"
 #include <libpq-fe.h>
 
 typedef unsigned char uchar;
-
 
 int PgDumpFromDBF (char *infile, int normal_user) {
 	
@@ -291,6 +297,249 @@ else {
 	return 0;
 }
 
+
+int PgDumpFromFieldD( fieldDescript *fd1, int normal_user, 
+		      const int nfields, const char *table_name ) {
+
+	char buf[256]="";
+	
+	int i,j;
+	char *dbname, *pp;
+	
+	static char SQL_create [1024]="";
+	static char SQL_insert [4096]="";
+	static char name[128]="";
+	static char chunks[1024]="";
+	static char fldstrng[1024]="";
+	
+	PGconn*	pg_conn;
+    	PGresult*	res;
+	char	*pghost;
+	
+	FILE *fp;
+    	char *tmpfile_nm;
+
+
+	/* Check DATABASE env variable */
+        if ((dbname=G__getenv("PG_DBASE")) == NULL) {
+            fprintf(stderr,
+                  "Please run g.select.pg to identify a current database.\n");
+	    exit(-1);
+        }
+
+	/* Should we include the additional fields (1-4) here? */
+		
+	for( i = 4; i < nfields + 4; i++ )
+        {
+            char	field_name[15];
+	    int		field_width, k;
+	    char 	c_tmpbuf[128];
+	    char *fld;
+	    
+	    
+	    DBFFieldType ftype;
+
+            ftype=fd1[i].fldType;
+	    field_width = fd1[i].fldSize;
+	    strncpy( field_name, fd1[i].fldName, 11 );
+
+	switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	}
+	
+	/*chunks -for create stmt*/	
+	snprintf(c_tmpbuf,128,"%s %s,",field_name,fld);
+		strncat(chunks,c_tmpbuf,strlen(c_tmpbuf));
+		
+	/*fldstrng - for insert stmt*/
+	snprintf(c_tmpbuf,128,"%s,",field_name);
+		strncat(fldstrng,c_tmpbuf,strlen(c_tmpbuf));
+		
+        }
+	/*stripping last commas*/
+	pp = strrchr(chunks, ',');
+    	if (pp != NULL)
+        	*pp = '\0';
+	
+	pp = strrchr(fldstrng, ',');
+    	if (pp != NULL)
+        	*pp = '\0';
+
+	snprintf(SQL_create,1024,"create table %s (%s)",table_name, chunks);
+	
+	    if ((pghost=G_getenv("PG_HOST")) == NULL) pghost = NULL;
+        
+    	pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
+    	if (PQstatus (pg_conn) == CONNECTION_BAD) {
+     		printf ("Error Quering Postgres:%s\n",PQerrorMessage(pg_conn));
+      		PQfinish(pg_conn);
+      		exit (-1); 
+    	}
+  	fprintf(stdout,"Executing %s\n",SQL_create);      
+   	res = PQexec (pg_conn, SQL_create);
+	
+		if (strlen(PQresultErrorMessage(res))){
+			fprintf(stdout,"FIXME: Postgres Says:\n**********************\n%s\nPlease make sure that created table name is not used by another table.\n", PQresultErrorMessage(res));
+		PQclear(res);
+		PQfinish(pg_conn);
+		/* DBFClose( hDBF ); */
+		exit(-1);
+		}
+		
+	PQclear(res);
+    /* explicitly close select result to avoid memory leaks  */ 
+
+/*now insert data; there are currently no rules to allow any user COPY table from file in 
+Postgres; that is probably safer (:) Anyway, if you can write a script with as many INSERT 
+statements - you'd evetually run the HDD to death - if this was your aim, I should better let
+you COPY from ascii. -A.Sh.*/
+
+
+if (!normal_user) { 
+
+	char nm[32]="";
+	uchar ch='y';
+	
+
+	fprintf(stdout,"Additionally dump to ASCII file (enter full Unix name or hit <Enter> for none):\n");
+	if (fgets(buf,sizeof(buf),stdin) == NULL || !strlen(buf)) {
+		fprintf(stdout, "OK, writing to temporary file\n");
+		tmpfile_nm = G_tempfile();
+		ch='n';
+
+	} else {
+		sscanf(buf,"%s",&nm);
+		if (strlen(nm)) tmpfile_nm=nm;
+		else {
+			fprintf(stdout, "OK, writing to temporary file\n");
+			tmpfile_nm = G_tempfile();
+			ch='n';
+		}
+		
+	}
+			
+	if((fp = fopen(tmpfile_nm,"w")) == NULL) {
+            fprintf(stderr, "File write error on temporary file %s\nHint: Check write permissions for current catalogue", tmpfile_nm);
+	
+		snprintf(SQL_insert,4096,"drop table %s",name);	
+		res = PQexec (pg_conn,SQL_insert);
+		PQclear(res);
+		PQfinish(pg_conn);
+	    exit(-1);
+        }
+	
+	FielddDumpASCII( fd1, fp, nfields );
+		
+	fclose(fp);
+	
+				
+		snprintf(SQL_insert,4096,"copy  %s from '%s' using delimiters ','",
+			name, tmpfile_nm);
+			
+		fprintf(stdout,"Executing %s\n",SQL_insert);
+		
+		res = PQexec (pg_conn, SQL_insert);
+		
+		if (strlen(PQresultErrorMessage(res))){
+		/*explicitly close select result to avoid memory leaks*/  
+			
+			
+		fprintf(stdout,"********************\nFIXME: Postgres \n%sThe table has NOT been created.\nYou must be Postgres superuser to COPY table. Choose normal user dumpmode.\n",PQresultErrorMessage(res));
+			
+			PQclear(res);
+			snprintf(SQL_insert,4096,"drop table %s",name);
+			
+			res = PQexec (pg_conn,SQL_insert);
+			PQclear(res);
+			
+			if (ch != 'y') unlink(tmpfile_nm);
+			PQfinish(pg_conn);	
+			/* DBFClose( hDBF ); */
+			exit(-1);	
+		}
+	if (ch != 'y') unlink(tmpfile_nm);
+	fprintf(stdout,"\nTable %s successfully copied into Postgres. Congratulations!\n",name);	
+	/*explicitly close select result to avoid memory leaks*/  
+	PQclear(res);
+}
+else {			
+	
+	/*Loop over records*/
+   for( i = 0; i < fd1[0].nRec; i++ ) {
+   
+   char valstrng[1024]="";
+
+   /* Again: do we want to dump the special fields? */
+		
+	for( j = 4; j < nfields + 4; j++ ) {
+	
+            char	field_name[15];
+	    char 	c_tmpbuf[128];
+	    char fld[128];
+	    
+	    DBFFieldType ftype;
+
+            ftype=fd1[j].fldType;
+
+	  switch (ftype) {
+		case 0:
+			snprintf(fld,128,"'%s'",fd1[j].fldRecs[i].stringField);
+		break;
+		case 1:
+			snprintf(fld,128,"%d",fd1[j].fldRecs[i].intField);
+
+		break;
+		case 2:
+			snprintf(fld,128,"%f",fd1[j].fldRecs[i].doubleField);
+
+		break;
+		case 3:
+		  /* Fields not as above should have been converted to an int
+		     holder (for future compatibility), with all records set to
+		     0. We shouldn't get here.
+		  */
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
+	/*valstrng -for insert stmt*/
+	snprintf(c_tmpbuf,128,"%s,",fld);
+		strncat(valstrng,c_tmpbuf,strlen(c_tmpbuf));
+	}
+	
+		pp = strrchr(valstrng, ',');
+    		if (pp != NULL)
+        		*pp = '\0';
+			
+		snprintf(SQL_insert,4096,"insert into %s (%s) values (%s)",table_name, 
+			fldstrng,valstrng);
+			
+		fprintf(stdout,"Executing %s\n",SQL_insert);
+		
+		res = PQexec (pg_conn, SQL_insert);
+		/*explicitly close select result to avoid memory leaks*/  
+		PQclear(res);
+   }
+	fprintf(stdout,"\nSuccessfully inserted %d records to Postgres table %s\n",
+		fd1[0].nRec,name);   
+}
+
+    	PQfinish(pg_conn);	
+	
+	return 0;
+}
+
 /************************************************************************/
 /*                             SfRealloc()                              */
 /*                                                                      */
@@ -312,6 +561,127 @@ static void * SfRealloc( void * pMem, int nNewSize )
 /*                                                                      */
 /*     		 Dumps DBF to comma-separated list. 			*/
 /************************************************************************/
+
+ int FielddDumpASCII(fieldDescript *fd1, FILE *fp, const int nfields)
+
+{
+    int	       	nRecordOffset;
+    uchar	*pabyRec;
+    void	*pReturnField = NULL;
+    int 	hEntity=0, iField=0;
+    
+    static double dDoubleField;
+    static char * pszStringField = NULL;
+    static int	nStringFieldLen = 0;
+    static char single_line[4096]="";
+
+
+  for ( hEntity=0; hEntity < fd1[0].nRec; hEntity++) {
+  
+  	single_line[0]='\0';
+	
+	
+    for ( iField=0; iField < fd1[0].nRec; iField++)
+    {	
+    	char tmp_buf[1024]="";
+	char tmpStringField[1024] = "";
+
+	DBFFieldType ftype;
+	
+	
+	
+/* -------------------------------------------------------------------- */
+/*	Ensure our field buffer is large enough to hold this buffer.	*/
+/* -------------------------------------------------------------------- */
+    
+
+	if( fd1[iField].fldSize + 1 > nStringFieldLen )
+	  {
+	    nStringFieldLen = fd1[iField].fldSize*2 + 10;
+	    pszStringField = (char *) SfRealloc(pszStringField,nStringFieldLen);
+	  }
+
+/* -------------------------------------------------------------------- */
+/*	Extract the requested field.					*/
+/* -------------------------------------------------------------------- */
+
+	ftype = fd1[iField].fldType;
+
+	  switch( ftype ) {
+
+	  case 0:
+	    strncpy( pszStringField, fd1[iField].fldRecs[hEntity].stringField,
+	     fd1[iField].fldSize );
+	    break;
+	  case 1:
+	    snprintf( tmpStringField, fd1[iField].fldSize, "%d", 
+		      fd1[iField].fldRecs[hEntity].intField );
+	    strncpy( pszStringField, tmpStringField,
+		     fd1[iField].fldSize );
+	    break;
+	  case 2:
+	    snprintf( tmpStringField, fd1[iField].fldSize, "%f", 
+		      fd1[iField].fldRecs[hEntity].doubleField );
+	    strncpy( pszStringField, tmpStringField,
+		     fd1[iField].fldSize );
+	    break;
+	  default:
+	    /* Fields not as above should have been converted to an int
+	       holder (for future compatibility), with all records set to
+	       0. We shouldn't get here.
+	    */
+	    G_fatal_error ("Invalid field type - bailing out");
+	    break;
+	  }
+	    
+
+
+	pszStringField[fd1[iField].fldSize] = '\0';
+
+    	/*Remove white spaces if any*/
+#ifdef TRIM_DBF_WHITESPACE
+    	if (1)
+    	{
+        	char	*pchSrc, *pchDst;
+
+        	pchDst = pchSrc = pszStringField;
+        	while( *pchSrc == ' ' )
+            		pchSrc++;
+
+        	while( *pchSrc != '\0' )
+            		*(pchDst++) = *(pchSrc++);
+        	*pchDst = '\0';
+
+        	while( *(--pchDst) == ' ' && pchDst != pszStringField )
+            		*pchDst = '\0';
+
+    	}
+#endif
+	if (!iField) 
+		snprintf(tmp_buf,1024,"%s",pszStringField);
+	else if (iField == nfields - 1)
+		snprintf(tmp_buf,1024,",%s\n",pszStringField);
+	else
+    		snprintf(tmp_buf,1024,",%s",pszStringField);
+
+
+	strncat(single_line,tmp_buf,strlen(tmp_buf));
+   
+    }
+
+	fwrite( single_line, strlen(single_line), 1, fp );
+	
+	if (ferror(fp)) {
+		fprintf(stderr,"Error ocurred while writing to tmp file!\n");
+		fclose(fp);
+		exit(-1);
+	}
+  }
+
+
+
+    return 0;
+}
 
  int DBFDumpASCII(DBFHandle psDBF, FILE *fp)
 

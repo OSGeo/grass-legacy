@@ -11,6 +11,8 @@
 #include "gis.h"
 #include "Vect.h"
 #include "shapefil.h"
+#include "shp2dig.h"
+#include "pg_local.h"
 
 /******************************************************************/
 /*                                                                */
@@ -28,6 +30,11 @@
  /*02/2000 added dbf dump to Postgres
  *	Alex Shevlakov sixote@yahoo.com
  ******************************************************************/
+ 
+/*03/2000 minor modifications to read data from shp2dig
+ *         structures, after processing
+ *	DD Gray  ddgray@armadce.demon.co.uk
+ ******************************************************************/
 
 enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
 
@@ -41,9 +48,12 @@ int main( int   argc, char *argv[])
     SHPHandle	hShapeDB;
     DBFHandle   hDBF;
     double	adfMinBound[4], adfMaxBound[4];
-    int		nShapeType, nShapes, iShape;
+    int		nShapeType, nShapes, iShape, iPart;
+    int         iPoint, iRec, iField;
+    int         pntCount;
     int		cat_field;
     int 	pgdmp, no_rattle;
+    char        nprefix[128] = "v";
 
     char name[128], *p;	/* name of output files */
 
@@ -56,6 +66,16 @@ int main( int   argc, char *argv[])
 
     struct Categories cats;  /* added MN 10/99 */
     char    AttText[512];    /* added MN 10/99 */
+
+
+    /* DDG: Create structures for processing of shapefile contents */
+    lineList *ll0;
+    fieldDescript *fd0;
+    int fc1;
+    /************************************/
+
+    double *pntxlist, *pntylist;
+    double *xlab, *ylab;
     
     char buf[256];
 
@@ -114,6 +134,7 @@ int main( int   argc, char *argv[])
     parm.dumpmode->description= "Admin/normal user dump mode (Default = Postgres super-user)";
     
 
+
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
@@ -124,11 +145,6 @@ int main( int   argc, char *argv[])
     pgdmp = (int) parm.pgdump->answer;
     no_rattle = (int) parm.dumpmode->answer;
     
-	if (pgdmp && strncmp(parm.pgdump->answer,"n",1)) {
-    		PgDumpFromDBF(infile, no_rattle);
-	}
-	
-
     debug = atoi( parm.verbose->answer);
     if (parm.logfile->answer == NULL)
 	fdlog = stderr;
@@ -177,6 +193,12 @@ int main( int   argc, char *argv[])
     /* Establish the shape types and corresponding GRASS type */
     
     SHPGetInfo( hShapeDB, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
+
+    if( nShapeType == SHPT_MULTIPATCH ) {
+      sprintf( buf, "Multipatch type not yet supported" );
+      SHPClose( hShapeDB );
+      G_fatal_error( buf );
+    }
     
     switch (nShapeType) {
       case SHPT_POINT:
@@ -192,6 +214,7 @@ int main( int   argc, char *argv[])
       case SHPT_ARCZ:
       case SHPT_ARCM:
         cover_type = LINE;
+        break;
 
       case SHPT_POLYGON:
       case SHPT_POLYGONZ:
@@ -200,6 +223,12 @@ int main( int   argc, char *argv[])
         break;
     }
     
+	if (cover_type == DOT && pgdmp && strncmp(parm.pgdump->answer,"n",1)) {
+    		PgDumpFromDBF(infile, no_rattle);
+	}
+
+
+
 /* -------------------------------------------------------------------- */
 /*      Extract basename of shapefile.                                  */
 /* -------------------------------------------------------------------- */
@@ -214,6 +243,10 @@ int main( int   argc, char *argv[])
 
     if (debug > 4)
 	fprintf( fdlog, "Name of output file is \"%s\"\n", name);
+
+    if( isdigit( name[0] )) {
+      strncpy( name,strncat( nprefix, name, 128 ), 128);
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Create the GRASS vector layer based on the basename of the      */
@@ -304,35 +337,80 @@ int main( int   argc, char *argv[])
             G_fatal_error( buf );
         }
 
-        /*
-         * Create the dig_cats file
-         */
-        G_init_cats(nShapes,(char *)NULL,&cats);
-        if (G_write_vector_cats(name, &cats) != 1)
-                    G_fatal_error("Writing dig_cats file");
-                        
     }
+
+
+  /* -------------------------------------------------------------------- */
+  /*      DDG: Create the line descriptor list and field descriptor.      */
+  /* -------------------------------------------------------------------- */
+
+    if( cover_type == LINE || cover_type == AREA ) {
+
+      /* FIXME. This is just a work around to avoid complicated errors */
+
+      if( cat_field == -1 ) {
+        hDBF = DBFOpen( infile, "r" );
+        if( hDBF == NULL )
+        {
+            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+            G_fatal_error (buf);
+        }
+      }
+
+      /*****************************/
+
+      ll0 = ( lineList *)malloc( sizeof( lineList ));
+      fd0 = ( fieldDescript *)malloc( (DBFGetFieldCount(hDBF) + 4) * 
+				      sizeof( fieldDescript ));
+
+      linedCreate( ll0, hShapeDB, hDBF, fd0, &fc1 );
+      
+      	if( cover_type == LINE || cover_type == AREA ) {
+      
+ 		if (pgdmp && strncmp(parm.pgdump->answer,"n",1)) {
+    			PgDumpFromFieldD( fd0, no_rattle, fc1, name);
+		}
+	}
+     
+      
+    }
+
+    
+    /*
+     * Create the dig_cats file
+     */
+    G_init_cats(ll0->totalValidParts,(char *)NULL,&cats);
+    if (G_write_vector_cats(name, &cats) != 1)
+      G_fatal_error("Writing dig_cats file");
+                        
+
+
 
   /* -------------------------------------------------------------------- */
   /*      Loop over each shape in the file.                               */
   /* -------------------------------------------------------------------- */
-    for( iShape = 0; iShape < nShapes; iShape++ )
-    {
-        SHPObject	*psShape = SHPReadObject( hShapeDB, iShape );
 
-        if( psShape->nVertices == 0 )
-        {
-            SHPDestroyObject( psShape );
-            continue;
-        }
+    /* Keep this for now for point data        */
 
-	points = Vect_new_line_struct();
-	Vect_copy_xy_to_pnts( points, psShape->padfX, psShape->padfY,
-                              psShape->nVertices );
-	Vect_write_line( &map, cover_type, points);
-	Vect_destroy_line_struct( points );
+    if( cover_type == DOT ) {
 
-        if( f_att != NULL ) {
+      for( iShape = 0; iShape < nShapes; iShape++ )
+	{
+	  SHPObject	*psShape = SHPReadObject( hShapeDB, iShape );
+
+	  if( psShape->nVertices == 0 )
+	    {
+	      SHPDestroyObject( psShape );
+	      continue;
+	    }
+
+	  points = Vect_new_line_struct();
+	  Vect_copy_xy_to_pnts( points, psShape->padfX, psShape->padfY,
+				psShape->nVertices );
+	  Vect_write_line( &map, cover_type, points);
+	  Vect_destroy_line_struct( points );
+
+	  if( f_att != NULL ) {
             double	xc, yc;
 
             if( psShape->nVertices == 1 )
@@ -354,10 +432,67 @@ int main( int   argc, char *argv[])
             sprintf(AttText, "%-8d", DBFReadIntegerAttribute( hDBF, iShape, cat_field ));
             if (G_set_cat(iShape, AttText, &cats) != 1)
                        G_fatal_error("Call to G_set_cats");
-        }
+	  }
 
-        SHPDestroyObject( psShape );
+	  SHPDestroyObject( psShape );
+	}
     }
+    else
+      {
+
+	/* Check the number of records is the same as the number of lines */
+	xlab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
+	ylab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
+
+	pntCount = 0;
+	for( iShape = 0; iShape < nShapes; ++iShape ) {
+	  for( iPart = 0; iPart < ll0->lines[iShape].numParts; ++iPart ) {
+	    if( ll0->lines[iShape].parts[iPart].duff ) continue;
+	    xlab[pntCount] = ll0->lines[iShape].parts[iPart].centroid->xcentroid;
+	    ylab[pntCount++] = ll0->lines[iShape].parts[iPart].centroid->ycentroid;
+	    pntxlist = (double *)malloc( ll0->lines[iShape].parts[iPart].numPoints *
+					 sizeof( double ) );
+	    pntylist = (double *)malloc( ll0->lines[iShape].parts[iPart].numPoints *
+					 sizeof( double ) );
+	  
+	    for( iPoint = 0; iPoint < ll0->lines[iShape].parts[iPart].numPoints; ++iPoint ) {
+	      pntxlist[iPoint] = ll0->lines[iShape].parts[iPart].linepnts[iPoint].xPosn;
+	      pntylist[iPoint] = ll0->lines[iShape].parts[iPart].linepnts[iPoint].yPosn;
+	    }
+	    points = Vect_new_line_struct();
+	    Vect_copy_xy_to_pnts( points, pntxlist, pntylist,
+				  ll0->lines[iShape].parts[iPart].numPoints );
+	    Vect_write_line( &map, cover_type, points);
+	    Vect_destroy_line_struct( points );
+	    
+	    free(pntxlist);
+	    free(pntylist);
+	  }	  
+	}
+	
+	if( f_att != NULL ) {
+	  for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
+	    if( cover_type == LINE )
+	      fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
+		       xlab[iRec], ylab[iRec],
+		       fd0[cat_field+4].fldRecs[iRec].intField );
+	    else
+	      fprintf( f_att, "A  %-12f  %-12f  %-8d \n",
+		       xlab[iRec], ylab[iRec],
+		       fd0[cat_field+4].fldRecs[iRec].intField );
+
+                     
+            /* set cat for dig_cats file*/ /* M Neteler 10/99 */
+            sprintf(AttText, "%-8d", fd0[cat_field+4].fldRecs[iRec].intField );
+            if (G_set_cat(iRec, AttText, &cats) != 1)
+                       G_fatal_error("Call to G_set_cats");
+	    
+	}
+
+	free( xlab );
+	free( ylab );
+	}
+      }
 
     map.head.orig_scale = 100000l;
     G_strncpy( map.head.your_name, G_whoami(), 20);
@@ -377,6 +512,8 @@ int main( int   argc, char *argv[])
         DBFClose( hDBF );
         fclose( f_att );
     }
+
+    linedDispose( ll0, fd0, fc1 );
     
     exit(0);
 }
