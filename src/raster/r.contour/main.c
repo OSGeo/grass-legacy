@@ -148,11 +148,14 @@ int main ( int argc, char *argv[])
 
 	lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
 	contour(lev, nlevels,  Map, z_array, Wind, Att, quiet->answer, noerr->answer);
-	
+
 	Vect_close (&Map);
 	fclose(Att);
 
-  	exit (0);
+	if (!quiet->answer)
+		fprintf(stderr, "\nFinished.\n");
+
+	exit (0);
 }
 
 /*********************************************************************/
