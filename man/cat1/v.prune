@@ -1,7 +1,7 @@
 
 
 
-v.prune              GRASS Reference Manual               v.prune
+v.prune <main>       GRASS Reference Manual        <main> v.prune
 
 
 
@@ -60,14 +60,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-v.prune              GRASS Reference Manual               v.prune
+v.prune <main>       GRASS Reference Manual        <main> v.prune
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
