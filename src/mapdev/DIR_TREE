@@ -1,0 +1,46 @@
+
+    This is a listing of the directories and files in  ../src/mapdev and what
+  programs they contain as of   Tue Jul 26 12:48:48 CDT 1988
+
+README       -  File contains step-by-step instructions to bring up mapdev.
+
+build        -  Dir: Contains program 'support.vect'
+dig_front    -  Dir: Contains programs ' ../bin/digit, a.b.vect, b.a.vect, 
+                import.to.vect'  and the digitcap file information.
+digit        -  Dir contains 'libdigit.a' and source code to build it.
+digitizers   -  Dir contains a directory for each digitizer driver and this
+	        is where the drivers are compiled from. 
+dlg_to_bdlg  -  Dir contains programs 'a.b.dlg, b.a.dlg'
+dlg_to_dig   -  Dir contains program  'dlg.to.dig'
+georef       -  Dir contains georeferencing programs for Imagery programs.
+lib          -  Dir contains 'libdig.a' and source code.
+libes        -  Dir contains 'libtrans.a', 'libdev.a', assorted *.h files,
+		and code for the those lib*.a.
+
+support      -  Dir contains program 'support.vect'.
+unsupported  -  Dir contains sub-directories with the code for 'dlglabel,
+                dlg_to_cell, dig_to_dlg'.
+                The code in these sub-dir's are unsupported and we make no
+		guarantees.
+vect_to_cell -  Dir contains program 'vect.to.cell'
+
+===============================================================================
+
+			    NOTES
+
+  Other libraries that MAPDEV is responsible for: 
+  ../src/libes/dlg, ../src/libes/dig_att
+
+  Other programs that MAPDEV is responsible for: 
+  ../src/D/prog_cmd/vect (Dvect) , ../src/D/prog_cmd/vect.dlg (Dvect.dlg)
+
+  If other programs wish to access mapdev data files they will have to go
+  through ../src/libes/libdig_att.a  for the dig_att files
+
+	OR
+
+  ../src/mapdev/lib/libdig.a  for the dig and dig_plus files.
+  Two important files in ../src/mapdev/lib are level_one.c and level_two.c
+
+
+
