@@ -80,7 +80,7 @@ src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
 src/display/d.site.labels
-src/display/d.sites.label
+#src/display/d.sites.label
 src/display/d.siter
 src/display/d.sites
 src/display/d.sites.qual
