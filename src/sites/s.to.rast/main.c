@@ -145,38 +145,38 @@ int main (int argc, char *argv[])
         quad_size = 0;  /* our default - one cell per site */
 
     if (strncmp(field->answer,"dim",3) == 0 )
-	    num_type = SITE_COL_DIM;
+        num_type = SITE_COL_DIM;
     else if (strncmp(field->answer, "decimal", 7) == 0)
-	    num_type = SITE_COL_DBL;
+        num_type = SITE_COL_DBL;
     else if (strncmp(field->answer, "cat", 3) == 0)
-	    num_type = SITE_COL_NUL;
+        num_type = SITE_COL_NUL;
     else { /* Shouldn't happen */
-	   char msg[256];
-	   snprintf(msg, 256, "%s: \"%s\" is an unknown field type.\n",
-			   G_program_name(), field->answer);
-	   G_fatal_error(msg);
+       char msg[256];
+       snprintf(msg, 256, "%s: \"%s\" is an unknown field type.\n",
+                       G_program_name(), field->answer);
+       G_fatal_error(msg);
     }
 
     scan_int=sscanf(findex->answer,"%d",&num_index);
     if ((scan_int <= 0) || num_index < 1)
     {
-      char msg[256];
-      sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
-      G_program_name(), findex->answer );
-      G_fatal_error (msg);
-      exit(1);
-     }
+        char msg[256];
+        sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
+        G_program_name(), findex->answer );
+        G_fatal_error (msg);
+        exit(1);
+    }
     num_index--;
     
     scan_int = sscanf(sindex->answer, "%d", &str_index);
     if ((scan_int <= 0) || str_index < 1)
     {
-	    char msg[256];
-            sprintf(msg,"%s: \"%s\" is an incorrect value "
-			    "for attribute field number.\n",
-      			    G_program_name(), findex->answer );
-	    G_fatal_error (msg);
-            exit(1);
+        char msg[256];
+        sprintf(msg,"%s: \"%s\" is an incorrect value "
+                        "for attribute field number.\n",
+                        G_program_name(), findex->answer );
+        G_fatal_error (msg);
+        exit(1);
     }
     str_index--;
 	    
@@ -220,34 +220,34 @@ int main (int argc, char *argv[])
     real_map_type = map_type;
 
     switch(num_type) {
-	    case SITE_COL_DBL:
-    		if(num_index >= dbls){
-       			fprintf(stderr,"\n");
-          		G_fatal_error("selected decimal field column no. %d "
-				"not present in sites list.", num_index+1);
-    		}
-		map_type = DCELL_TYPE;
-		break;
-	    case SITE_COL_DIM:
-		if(num_index >= dims || num_index < 2 ) {
-       			fprintf(stderr,"\n");
-          		G_fatal_error("selected dimension no. %d "
-				"not present in sites list. or is a coordinate", num_index+1);
-    		}
-		num_index -= 2;
-		map_type = DCELL_TYPE;
-		break;
-	    case SITE_COL_NUL:
-		if(map_type < 0 && !zero_one) {
-			fprintf(stderr, "\n");
-			G_fatal_error("site_list does not have any category values");
-		}
-	    default: /* Already caught.. */
+        case SITE_COL_DBL:
+            if(num_index >= dbls){
+                fprintf(stderr,"\n");
+                G_fatal_error("selected decimal field column no. %d "
+                        "not present in sites list.", num_index+1);
+            }
+            map_type = DCELL_TYPE;
+            break;
+        case SITE_COL_DIM:
+            if(num_index >= dims || num_index < 2 ) {
+                fprintf(stderr,"\n");
+                G_fatal_error("selected dimension no. %d "
+                        "not present in sites list. or is a coordinate", num_index+1);
+            }
+            num_index -= 2;
+            map_type = DCELL_TYPE;
+            break;
+        case SITE_COL_NUL:
+            if(map_type < 0 && !zero_one) {
+                fprintf(stderr, "\n");
+                G_fatal_error("site_list does not have any category values");
+            }
+        default: /* Already caught.. */
     }
     
     if (str_index >= strs) {
-	    G_warning("String attribute index out of range, resetting to default.");
-	    str_index = 0;
+        G_warning("String attribute index out of range, resetting to default.");
+        str_index = 0;
     }
     if(!quiet)
        fprintf (stderr, "\nSites map Type: %d, Dims: %d, Strs: %d, Dbls: %d\n", 
@@ -255,7 +255,7 @@ int main (int argc, char *argv[])
 
     if (zero_one)
     {
-	  map_type = CELL_TYPE;
+        map_type = CELL_TYPE;
     }
     
     s = G_site_new_struct (real_map_type, dims, strs, dbls); 
@@ -276,7 +276,7 @@ int main (int argc, char *argv[])
     for(row = 0; row < rows; row++)
         if(write(temp_fd, rast, cols * G_raster_size(map_type))!=
 					      cols * G_raster_size(map_type))
-	       G_fatal_error("error while writing to temp file");
+            G_fatal_error("error while writing to temp file");
 
     if (!quiet)
         fprintf (stderr, "output raster map: <%s> in <%s>\n", layer, G_mapset());
@@ -303,15 +303,15 @@ int main (int argc, char *argv[])
 	    switch(num_type) {
 	        case SITE_COL_NUL:
 		    switch(map_type) {
-		         case CELL_TYPE:
-		             G_set_raster_value_c(rast, s->ccat, map_type);
-			     break;
-			 case FCELL_TYPE:
-			     G_set_raster_value_f(rast, s->fcat, map_type);
-			     break;
-			 case DCELL_TYPE:
-			     G_set_raster_value_d(rast, s->dcat, map_type);
-			     break;
+		        case CELL_TYPE:
+		            G_set_raster_value_c(rast, s->ccat, map_type);
+			    break;
+			case FCELL_TYPE:
+			    G_set_raster_value_f(rast, s->fcat, map_type);
+			    break;
+			case DCELL_TYPE:
+			    G_set_raster_value_d(rast, s->dcat, map_type);
+			    break;
 		    }
 		    break;
 		case SITE_COL_DBL:
@@ -356,20 +356,20 @@ int main (int argc, char *argv[])
      }  /* while */
     
      if(!quiet) {
-	     switch (retcode) {
-		     case -1:
-			     fprintf(stderr, "Site list read successfully.\n");
-			     break;
-		     case 1:
-			     G_warning("Extra attributes found in a site record. "
-					     "Data may be invalid.");
-			     break;
-		     case -2:
-			     G_warning("Error reading sites list. Remaining data skipped.");
-			     break;
-		     default: /* Unknown return code */
-			     G_warning("Got unknown return code: %d", retcode);
-	    }
+         switch (retcode) {
+             case -1:
+                 fprintf(stderr, "Site list read successfully.\n");
+                 break;
+             case 1:
+                 G_warning("Extra attributes found in a site record. "
+                                 "Data may be invalid.");
+                 break;
+             case -2:
+                 G_warning("Error reading sites list. Remaining data skipped.");
+                 break;
+             default: /* Unknown return code */
+                 G_warning("Got unknown return code: %d", retcode);
+        }
     }
 
      if(zero_one)
@@ -388,3 +388,4 @@ int main (int argc, char *argv[])
         fprintf(stdout, "\n<%s> raster file complete. Bye.\n\n", layer);
     exit(0);
 }
+/* vim: softtabstop=4 shiftwidth=4 expandtab */
