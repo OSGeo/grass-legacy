@@ -9,7 +9,7 @@ usage v.in.dlg -bl in=input file out=outfile
 
              -b   "     "   = binary dlg (default is ascii dlg)
 	     -l  force lines instead of areas (areas is default)
-
+*/
 /**  data directories   **/
 #define         B_DIG           "dig"
 #define         A_DIG           "dig_ascii"
