@@ -48,10 +48,9 @@ func_desc func_descs[] = {
 
 	{"max",		c_varop,	f_max		},
 	{"min",		c_varop,	f_min		},
-#if 0
-	{"median",	c_median,	f_median	},
-	{"mode",	c_mode,		f_mode		},
-#endif
+	{"median",	c_varop,	f_median	},
+	{"mode",	c_varop,	f_mode		},
+
 	{"rand",	c_binop,	f_rand		},
 
 	{"null",	c_int0,		f_null		},
