@@ -13,9 +13,10 @@ After running this program, GRASS support files must be built with
 <em><a HREF="v.build.html">v.build</a></em> for the binary <em>output</em> 
 file 
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
 <b>Example 1</b><br>
+Direct file editing:
 Sample ASCII vector file (stored in dig_ascii/). Note the blank before
 entering vertex coordinates:<p>
 <pre>
@@ -65,13 +66,34 @@ The associated dig_cats file needs following format:<p>
 
 <p>
 <b>Example 2</b><br>
+
+Generate a points vector file 'coords.txt' as ASCII file:
+<pre>
+  1664619|5103481
+  1664473|5095782
+  1664273|5101919
+  1663427|5105234
+  1663709|5102614
+</pre>
+<P>
+Import into GRASS:
+<pre>
+cat coords.txt | v.in.ascii out=mymap
+</pre>
+<P>
+<b>The module is reading from standard input, delimiter is '|' (pipe).</b>
+
+<p>
+<b>Example 3</b><br>
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
 <pre>
 echo "select east,north,elev,idcol from mytable " | db.select -c | v.in.ascii -z out=mymap
 </pre>
 
-The module is reading from standard input, delimiter is '|' (pipe).
+<b>The module is reading from standard input, delimiter is '|' (pipe).</b>
+
 The import works for 2D maps as well (no elev column and no '-z' flag).
+
 
 <P>
 The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
