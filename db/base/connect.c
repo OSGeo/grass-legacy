@@ -5,6 +5,10 @@
 #include "dbmi.h"
 #include "codes.h"
 
+/* database for DBF can be written with variables:
+   database=$GISDBASE/$LOCATION_NAME/$MAPSET/dbf
+ */
+
 int
 main(int argc, char *argv[])
 {
@@ -82,9 +86,9 @@ main(int argc, char *argv[])
 
 	db_set_connection( &conn );    
 	
-	if ( (conn.password != NULL) && ( strlen (conn.password) > 0))
+/*	if ( (conn.password != NULL) && ( strlen (conn.password) > 0))
 	    fprintf(stdout, "Warning: Your password was written to %s in readable form!!!\n", getenv ("GISRC"));    
-
+*/
     }
     
     /* get and print connection */
