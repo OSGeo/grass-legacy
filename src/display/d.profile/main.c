@@ -48,7 +48,7 @@ char **argv ;
 	map->type        = TYPE_STRING;
 	map->required    = YES;
 	map->gisprompt   = "old,cell,raster" ;
-	map->description = "Raster map to be profiledd";
+	map->description = "Raster map to be profiled";
 
 	if (G_parser(argc, argv))
 		exit(1);
