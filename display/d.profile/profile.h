@@ -90,7 +90,7 @@ extern struct windows profiles[];
 /* DrawText.c */
 int DrawText(int, int, int, char *);
 /* DumpProfile.c */
-int DumpProfile(struct Profile);
+int WriteProfile(char *, char *, char *, char, struct Profile *);
 /* ExtractProf.c */
 int ExtractProfile(struct Profile *, char *, char *);
 /* InitProfile.c */
