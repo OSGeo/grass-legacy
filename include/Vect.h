@@ -257,6 +257,7 @@ void Vect_remove_dangles ( struct Map_info *, int, double, struct Map_info *, FI
 void Vect_chtype_dangles ( struct Map_info *, double, struct Map_info *, FILE * );
 void Vect_remove_bridges ( struct Map_info *, struct Map_info *, FILE * );
 void Vect_chtype_bridges ( struct Map_info *, struct Map_info *, FILE * );
+int Vect_remove_small_areas ( struct Map_info *, double, struct Map_info *, FILE *, double * );
 
     /* Overlay */
 int Vect_overlay_str_to_operator ( char * );
