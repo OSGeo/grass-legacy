@@ -1,0 +1,5 @@
+
+  V.mkquads is a map development program and the code must be placed in
+ /usr/grass3/src/mapdev/mkquads for it to compile correctly.
+ Compile by typing 'Gmake'.   There is also a GRASS manual page in the mkquads
+ directory for V.mkquads (man.mkquads).
