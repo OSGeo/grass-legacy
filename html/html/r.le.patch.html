@@ -15,7 +15,8 @@
 <H2>SYNOPSIS</H2>
 <B>r.le.patch</B><BR>
 <B>r.le.patch help</B><BR>
-<B>r.le.patch</B> [<B>-bcnptu</B>] <B>map=</B><EM>name</EM> [<B>sam=</B><EM>name</EM>] [<B>reg=</B><EM>name</EM>] [<B>att=</B><EM>name[,name,...]</EM>] [<B>siz=</B><EM>name[,name,...]</EM>] [<B>co1=</B><EM>value</EM>] [<B>co2=</B><EM>name[,name,...]</EM>] [<B>sh1=</B><EM>name</EM>] [<B>sh2=</B><EM>name[,name,...]</EM>] [<B>fra=</B><EM>name</EM>] [<B>per=</B><EM>name[,name,...]</EM>] [<B>out=</B><EM>name</EM>]
+<B>r.le.patch</B> [<B>-bcnptu</B>] <B>map=</B><EM>name</EM> [<B>sam=</B><EM>name</EM>] [<B>reg=</B><EM>name</EM>] [<B>att=</B><EM>name[,name,...]</EM>] [<B>siz=</B><EM>name[,name,...]</EM>] [<B>co1=</B><EM>value</EM>] [<B>co2=</B><EM>name[,name,...]</EM>] [<B>sh1=</B><EM>name</EM>] [<B>sh2=</B><EM>name[,name,...]</EM>] [<B>fra=</B><EM>name</EM>] [<B>per=</B><EM>name[,name,...]</EM>] 
+[<B>minpatchsize</B><EM>value</EM>] [<B>out=</B><EM>name</EM>]
 
 <H2>OPTIONS</H2>
 <H3>Flags:</H3>
@@ -119,6 +120,11 @@
 <DD>	p4 = sum of perims. by gp
 <DD>	p5 = mean perim. by gp 
 <DD>	p6 = st. dev. perim. by gp
+
+<DT><B>minpatchsize</B>
+<DD>Minimum patch size in pixels (smaller patches consisting of less than 
+   given number of are not considered for calculations of shape factors)
+<DD> default: 0 (use all patches)
 
 <DT><B>out</B>
 <DD>Name of output file for individual patch measures, when sam=w, u, r; if out=head, then column headings will be printed
