@@ -1,6 +1,7 @@
 /*
  * r3.out.ascii -
  *
+ * $Id$
  * Mark Astley
  * USA CERL started 4/4/96
  * See the file "ChangeLog" for changes and revisions
@@ -49,12 +50,12 @@ void fatalError(char *errorMsg) {
  */
 void setParams() {
   param.input = G_define_option();
-  param.input->key = "map";
+  param.input->key = "grid3";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
   param.input->multiple = NO;
-  param.input->description = "G3d raster map to be converted to ASCII";
+  param.input->description = "3dcell map to be converted to ASCII";
   
   param.output = G_define_option();
   param.output->key = "output";
