@@ -7,10 +7,11 @@ package require BWidget
 
 set dmpath $env(GISBASE)/etc/dm/
 
+source $dmpath/group.tcl
+source $dmpath/raster.tcl
 source $dmpath/select.tcl
 source $dmpath/tool.tcl
 source $dmpath/tree.tcl
-source $dmpath/group.tcl
 source $dmpath/vector.tcl
 
 namespace eval Dm {
@@ -145,6 +146,9 @@ proc Dm::add { type } {
         group {
             DmGroup::create $tree $parent_node
         }
+        raster {
+            DmRaster::create $tree $parent_node
+        }
         vector {
             DmVector::create $tree $parent_node
         }
@@ -168,6 +172,9 @@ proc Dm::select { node } {
     pack $opt -fill both -expand yes
 
     switch $type {
+        raster {
+            DmRaster::options $id $opt
+        }
         vector {
             DmVector::options $id $opt
         }
@@ -228,6 +235,9 @@ proc Dm::display_node { node } {
         group {
             DmGroup::display $node
 	}
+	raster {
+	    DmRaster::display $node
+	}
 	vector {
 	    DmVector::display $node
 	}
@@ -245,6 +255,9 @@ proc Dm::query { } {
     set type [Dm::node_type $sel]
 
     switch $type {
+        raster {
+            DmVector::query $sel
+        }
         vector {
             DmVector::query $sel
         }
@@ -279,6 +292,11 @@ proc Dm::save_node { depth node } {
             Dm::rc_write $depth Group $name
             incr depth
             DmGroup::save $tree $depth $node
+	}
+	raster {
+            Dm::rc_write $depth Raster $name
+            incr depth
+	    DmRaster::save $tree $depth $node
 	}
 	vector {
             Dm::rc_write $depth Vector $name
@@ -324,6 +342,10 @@ proc Dm::load { } {
                 $tree itemconfigure $current_node -text $val 
                 set parent $current_node
             }
+            Raster {
+                set current_node [DmRaster::create $tree $parent]
+                $tree itemconfigure $current_node -text $val 
+            }
             Vector {
                 set current_node [DmVector::create $tree $parent]
                 $tree itemconfigure $current_node -text $val 
@@ -340,6 +362,9 @@ proc Dm::load { } {
                 switch $type {
                     group { 
                         DmGroup::set_option $current_node $key $val
+                    }
+                    raster { 
+                        DmRaster::set_option $current_node $key $val
                     }
                     vector { 
                         DmVector::set_option $current_node $key $val
@@ -384,11 +409,11 @@ proc Dm::node_type { node } {
     if { [string compare -length 5 $node "group"] == 0 } {
        return "group"
     }  
-    if { [string compare -length 6 $node "vector"] == 0 } {
-       return "vector"
-    }  
     if { [string compare -length 6 $node "raster"] == 0 } {
        return "raster"
+    }  
+    if { [string compare -length 6 $node "vector"] == 0 } {
+       return "vector"
     }  
     
     return ""

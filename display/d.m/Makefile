@@ -8,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: $(PROG)
 
-TCL = group.tcl  select.tcl  tool.tcl  tree.tcl  vector.tcl
+TCL = group.tcl raster.tcl select.tcl  tool.tcl  tree.tcl  vector.tcl
 
 $(PROG): *.gif *.tcl 
 	if [ ! -d $(GISBASE)/etc/dm ]; then mkdir $(GISBASE)/etc/dm; fi
