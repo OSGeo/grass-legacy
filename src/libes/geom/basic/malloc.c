@@ -8,6 +8,10 @@
 #include <sys/types.h>
 #endif
 
+#ifdef sgi
+#include <malloc.h> /* we need the M_DEBUG macro below */
+#endif
+
 /*---------------------------------------------------------------------------*/
 
 #define REPORT_THRESHOLD  1000000
