@@ -26,7 +26,7 @@ all:
 
 man:
 	-cp $(PGM).man $(MDIR)/$(PGM)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(NROFF) $(MUTL)/man.version $(MDIR)/.class-header \
 	 $(MUTL)/man.header $(PGM).man $(MDIR)/.class-notice \
 	 > $(GISBASE)/man/$(MSEC)/$(PGM)
 
