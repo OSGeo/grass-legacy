@@ -40,6 +40,7 @@ main (int argc, char *argv[])
     struct Flag *rflag;
     struct Flag *sflag;
     struct Flag *tflag;
+    struct Flag *gflag;
 
     G_gisinit(argv[0]);
 
@@ -67,6 +68,10 @@ main (int argc, char *argv[])
     tflag->key            = 't';
     tflag->description    = _("Print raster map type only");
 
+    gflag = G_define_flag();
+    gflag->key            = 'g';
+    gflag->description    = _("Print raster map region only");
+
     if (G_parser(argc, argv))
         exit(1);
     
@@ -89,7 +94,7 @@ main (int argc, char *argv[])
 
     out = stdout;
 
-  if (!rflag->answer && !sflag->answer && !tflag->answer)
+  if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer)
   {
     divider ('+');
 
@@ -257,22 +262,31 @@ main (int argc, char *argv[])
 	  fprintf(out, "min=%f\n", zmin);
 	  fprintf(out, "max=%f\n", zmax);
 	}
-     } else {
-      if (sflag->answer){
+     }
+     else if (gflag->answer){
+	G_format_northing (cellhd.north, tmp1, cellhd.proj);
+	G_format_northing (cellhd.south, tmp2, cellhd.proj);
+        fprintf(out, "north=%s\n", tmp1);
+        fprintf(out, "south=%s\n", tmp2);
+            
+	G_format_easting (cellhd.east, tmp1, cellhd.proj);
+	G_format_easting (cellhd.west, tmp2, cellhd.proj);
+        fprintf(out, "east=%s\n", tmp1);
+        fprintf(out, "west=%s\n", tmp2);
+     }
+     else if (sflag->answer){
 	G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
         fprintf (out, "nsres=%s\n", tmp3);
 
 	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
         fprintf (out, "ewres=%s\n", tmp3);
-      } else {
-      if (tflag->answer){
+      } 
+     else if (tflag->answer){
          fprintf (out, "datatype=%s\n",
 			(data_type ==  CELL_TYPE ?  "CELL" :
 			(data_type == DCELL_TYPE ? "DCELL" :
 			(data_type == FCELL_TYPE ? "FCELL" : "??"))));
       }
-     } /* else sflag */
-    } /* else rflag */
    } /* else rflag or sflag or tflag */
    
    return 0;
