@@ -153,7 +153,12 @@ int main (int argc, char *argv[])
 	    fprintf (stderr, "Monitor <%s> is already running", me);
             exit (EXIT_FAILURE);
         }
-        unlink (sockpath);
+        if (unlink (sockpath) != 0)
+        {
+            fprintf (stderr, "Failed to remove stale socket file:\n"\
+                    "\t%s\n", sockpath);
+            exit (EXIT_FAILURE);
+        }
     }
     
     /*****************
