@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "display.h"
 #include "D.h"
@@ -5,6 +7,7 @@
 #define GLOBAL
 #include "options.h"
 #include "local_proto.h"
+#include "colors.h"
 
 int main (int argc, char **argv)
 {
@@ -12,6 +15,8 @@ int main (int argc, char **argv)
 	char msg[200];
 	char window_name[64] ;
 	int t, b, l, r ;
+	int R, G, B;
+	const int customcolor = MAXCOLORS + 1;
 	struct Cell_head window ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
@@ -36,8 +41,9 @@ int main (int argc, char **argv)
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
 	opt1->answer     = "gray" ;
-	opt1->options    = D_color_list();
-	opt1->description= "Sets the current color to that stated" ;
+/*	opt1->options    = D_color_list(); */
+	opt1->description=
+	    "Either a GRASS standard color or R:G:B triplet (separated by colons)";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "size" ;
@@ -58,14 +64,24 @@ int main (int argc, char **argv)
 	/* Check command line */
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(1);
 
-	color = D_translate_color(opt1->answer) ;
-	if (color == 0)
-	{
-		G_usage() ;
-		G_fatal_error("Don't know the color %s", opt1->answer);
+        /* Parse and select text color */
+	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+		if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+			R_reset_color(R, G, B, customcolor);
+			color = customcolor;
+		}
+		else
+			color = 0;
 	}
+	else {
+		color = D_translate_color(opt1->answer);
+	}
+
+	if(!color)
+		G_fatal_error("[%s]: No such color", opt1->answer);
+
 
 	mapset = G_find_file ("site_lists", opt4->answer, "");
 	if (mapset == NULL)
@@ -115,7 +131,11 @@ int main (int argc, char **argv)
 		G_fatal_error("Error in calculating conversions") ;
 
 	/* Do the plotting */
-	R_standard_color (color) ;
+	if(color > MAXCOLORS)     /* ie custom RGB color */
+		R_color(color);
+	else
+		R_standard_color(color);
+
 	switch(type)
 	{
 	case TYPE_X:
