@@ -2,6 +2,22 @@
  * variables:  LOCATION_NAME MAPSET GISDBASE
  */
 
+
+/* these defines come from the Gnakefile, but are defined here to allow
+ * debugging with saber
+ */
+#ifndef D_LOCATION_NAME
+#define D_LOCATION_NAME "spearfish"
+#endif
+#ifndef D_GISDBASE
+#define D_GISDBASE "/data"
+#endif 
+#ifndef VERSION_NUMBER
+#define VERSION_NUMBER ""
+#endif
+
+
+
 static char *intro[] =
 {
 "                   PLEASE SET SESSION INFORMATION",
@@ -147,7 +163,20 @@ main(argc, argv)
 	    if (yes_no())
 	    {
 		if(make_location (gisdbase, location_name))
-		    printf ("LOCATION <%s> created!\n", location_name);
+                {
+
+	            G__setenv ("LOCATION_NAME", location_name);
+	            G__setenv ("MAPSET", "PERMANENT");
+                    G__write_env();
+                    if (system("g.setproj"))
+		    {
+			printf ("LOCATION <%s> created\n", location_name);
+			printf ("\nBut the PROJECTION information files were not created!\n");
+			printf ("You must run g.setproj successfully before projection software will work%c%c%c\n", 7,7,7);
+		    }
+		    else
+			printf ("LOCATION <%s> created!\n", location_name);
+                }
 		else
 		    printf ("LOCATION <%s> NOT created\n", location_name);
 	    }
@@ -164,7 +193,7 @@ main(argc, argv)
 
 	repeat = 0 ;
 
-	switch (G__mapset_permissions(mapset) )
+	switch (mapset_permissions(mapset) )
 	{
 	case -1:
 		if(strcmp(mapset, G_whoami()) == 0)
@@ -190,6 +219,8 @@ main(argc, argv)
 		repeat = 1 ;
 		break ;
 	case 1:
+		mapset_message(mapset);
+		if (!mapset_question(mapset)) repeat = 1;
 		break ;
 	}
 	if (!repeat) break;
@@ -239,7 +270,7 @@ list_mapsets (location_name, location)
 		printf ("\n");
 		tot_len = len;
 	    }
-	    if(ok = (G__mapset_permissions(buf) == 1))
+	    if(ok = (mapset_permissions(buf) == 1))
 		any_ok = 1;
 	    printf ("%s%-*s", ok?"(+)":"   ", len, buf);
 	}
@@ -291,4 +322,5 @@ yes_no()
 	}
     }
 }
+
 
