@@ -28,16 +28,16 @@ all:	$(ETC)/v.b.a.dlg $(ETC)/v.a.b.dlg
 #  there will be no frontends to dlg code, but code is still there
 #          $(BIN)/b.a.dlg $(BIN)/a.b.dlg
 
-$(ETC)/v.b.a.dlg:	$(B_A_OFILES)
+$(ETC)/v.b.a.dlg:	$(B_A_OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(GISLIB) $(MATHLIB)
 
-$(ETC)/v.a.b.dlg:	$(A_B_OFILES)
+$(ETC)/v.a.b.dlg:	$(A_B_OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(GISLIB) $(MATHLIB)
 
-$(BIN)/a.b.dlg: $(A_B_F)
+$(BIN)/a.b.dlg: $(A_B_F) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_F) $(GISLIB) $(MATHLIB)
 
-$(BIN)/b.a.dlg: $(B_A_F)
+$(BIN)/b.a.dlg: $(B_A_F) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(B_A_F) $(GISLIB) $(MATHLIB)
 
 b_a_dlg.o:	format.h
