@@ -1,0 +1,5 @@
+
+\r.flow\ - Construct flowlines, flowpath lengths, and flowline densities
+from a raster map layer of true elevation values.
+
+(GRASS Raster/Vector Program)
