@@ -318,13 +318,85 @@ int Nset_fov_cmd (
     char **argv                        /* Argument strings. */
 )
 {
+  int fov;
+
   if (argc != 2)
     return (TCL_ERROR);
-  GS_set_fov(atoi(argv[1]));
+  fov = atoi(argv[1]);
+  fov = (int)(fov * 10);
+  GS_set_fov(fov);
   
   return (TCL_OK);
 }
 
+int
+Nget_fov_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  char *list[2];
+  char fov_name[32];
+  int fov;
+
+  fov = GS_get_fov();
+  fov = (int)(fov/10);
+
+  sprintf (fov_name, "%d", fov);
+  list[0] = fov_name;
+  list[1] = NULL;
+  interp->result = Tcl_Merge (1, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+
+
+  return (TCL_OK);
+}
+
+int Nset_twist_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  int twist;
+
+  if (argc != 2)
+    return (TCL_ERROR);
+
+  twist = atoi(argv[1]);
+  twist = (int)(twist * 10);
+  GS_set_twist(twist);
+
+  return (TCL_OK);
+}
+
+int
+Nget_twist_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  char *list[2];
+  char twist_name[32];
+  int twist;
+
+  twist = GS_get_twist();
+  twist = (int)(twist/10);
+
+  sprintf (twist_name, "%d", twist);
+  list[0] = twist_name;
+  list[1] = NULL;
+  interp->result = Tcl_Merge (1, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+
+  return (TCL_OK);
+}
+                                                              
 int 
 Nget_region_cmd (
     Nv_data *data,
