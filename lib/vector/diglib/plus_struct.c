@@ -129,6 +129,7 @@ dig_Rd_P_line (
 		  int  n,
 		  FILE * fp)
 {
+  P_NODE *Node;
   P_LINE *ptr; 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_line()");
@@ -154,22 +155,35 @@ dig_Rd_P_line (
     if (0 >= dig__fread_port_P (&(ptr->right), 1, fp))
       return -1;
 
-  if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
-    return -1;
+  /* TODO - do not read box; prepared below */
+  //if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) { 
+    if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->S), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->E), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
+      return -1;
 
-  if ( Plus->with_z ) {
-    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
-      return -1;
-    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
-      return -1;
+    if ( Plus->with_z ) {
+      if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+        return -1;
+      if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+        return -1;
+    }
+  /*  
+  } else {
+    Node = Plus->Node[ptr->N1];
+    ptr->N = Node->y;
+    ptr->S = Node->y;
+    ptr->E = Node->x;
+    ptr->W = Node->x;
+    ptr->T = Node->z;
+    ptr->B = Node->z;
   }
-
+  */
+  
   Plus->Line[n] = ptr;
   return (0);
 }
@@ -202,21 +216,24 @@ dig_Wr_P_line (
     if (0 >= dig__fwrite_port_P (&(ptr->right), 1, fp))
       return (-1);
 
-  if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->E), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
-    return (-1);
+  /* TODO - do not write dox for points as prepared */
+  //if ( ptr->type & (GV_LINE | GV_BOUNDARY ) ) {
+    if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->S), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->E), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
+      return (-1);
 
-  if ( Plus->with_z ) {
-    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
+    if ( Plus->with_z ) {
+      if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
       return (-1);
-    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
-      return (-1);
-  }
+      if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
+        return (-1);
+    }
+  //}
 
   return (0);
 }
@@ -436,6 +453,22 @@ dig_Rd_Plus_head (   FILE * fp,
   byte_order         = buf[4];
   ptr->with_z        = buf[5];
   
+  /* TODO - enable following box reading */
+  /*
+  if (0 >= dig__fread_port_D (&(ptr->box.N), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.S), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.E), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.W), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.T), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_D (&(ptr->box.B), 1, fp))
+    return (-1);
+  */
+    
   /* check version numbers */
   /*
   if (ptr->Version_Major != GRASS_V_VERSION_MAJOR ||
@@ -514,6 +547,22 @@ dig_Wr_Plus_head ( FILE * fp,
   buf[5] = ptr->with_z;
   if (0 >= dig__fwrite_port_C (buf, 6, fp))
     return (-1);
+ 
+  /* TODO - enable following box saving */
+  /*
+  if (0 >= dig__fwrite_port_D (&(ptr->box.N), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->box.S), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->box.E), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->box.W), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->box.T), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_D (&(ptr->box.B), 1, fp))
+    return (-1);
+  */
   
   if (0 >= dig__fwrite_port_P (&(ptr->n_nodes), 1, fp))
     return (-1);

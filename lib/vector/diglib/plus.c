@@ -33,6 +33,13 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->Back_Major = 0 ;
     Plus->Back_Minor = 0 ;
     
+    Plus->box.N = 0;
+    Plus->box.S = 0;
+    Plus->box.E = 0;
+    Plus->box.W = 0;
+    Plus->box.T = 0;
+    Plus->box.B = 0;
+    
     Plus->Node = NULL ;
     Plus->Line = NULL ;
     Plus->Area = NULL ;
@@ -240,13 +247,6 @@ dig_write_plus_file (
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)
     {
       fprintf (stderr, "\nERROR: Can't write head to plus file.\n");
-      return (-1);
-    }
-
-  rewind (fp_plus);
-  if (dig_write_file_checks (fp_plus, Plus))
-    {
-      fprintf (stderr, "\nERROR: writing file_checks.\n");
       return (-1);
     }
 

@@ -148,8 +148,14 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     P_LINE *Line;
     P_AREA *Area;
     P_ISLE *Isle;
+    BOUND_BOX box;
 
     fprintf (out, "---------- TOPOLOGY DUMP ----------\n" ); 
+    
+    /* box */
+    Vect_box_copy ( &box, &(plus->box) );
+    fprintf (out, "N,S,E,W,T,B: %f, %f, %f, %f, %f, %f\n", box.N, box.S, 
+	                         box.E, box.W, box.T, box.B);
     
     /* nodes */
     fprintf (out, "Nodes (%d nodes):\n", plus->n_nodes ); 

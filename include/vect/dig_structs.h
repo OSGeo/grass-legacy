@@ -52,6 +52,16 @@ typedef int plus_t;
 #define NEW_LINE_3_SIZE 53
 #define VERS_4_DATA_SIZE 20
 
+struct bound_box        /* Bounding Box */
+  {
+    double N;	/* north */			
+    double S;   /* south */
+    double E;   /* east */
+    double W;   /* west */
+    double T;   /* top */
+    double B;   /* bottom */
+  };
+
 /* Portability info */
 struct Port_info
   {	  
@@ -87,7 +97,7 @@ struct dig_head
     long orig_scale;
     char line_3[73];
     int plani_zone;
-    double W, E, S, N;
+    //double W, E, S, N;
     double digit_thresh;
     double map_thresh;
 
@@ -174,6 +184,8 @@ struct Plus_head
     
     int mode;			/*  Read, Write, RW */
 
+    struct bound_box box;      /* box */
+    
     P_NODE **Node;	/* P_NODE array of pointers *//* 1st item is 1 for  */
     P_LINE **Line;	/* P_LINE array of pointers *//* all these (not 0) */
     P_AREA **Area;		
@@ -272,15 +284,6 @@ struct Map_info
   };
 
 
-struct bound_box        /* Bounding Box */
-  {
-    double N;	/* north */			
-    double S;   /* south */
-    double E;   /* east */
-    double W;   /* west */
-    double T;   /* top */
-    double B;   /* bottom */
-  };
 
 struct P_node
   {

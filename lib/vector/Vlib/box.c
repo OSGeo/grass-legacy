@@ -60,6 +60,46 @@ Vect_box_overlap (BOUND_BOX *A, BOUND_BOX *B)
 }
 
 /* 
+*  Vect_box_copy ()
+*
+*  Copy B to A.
+*  
+*/
+int 
+Vect_box_copy (BOUND_BOX *A, BOUND_BOX *B)
+{
+
+    A->N = B->N;
+    A->S = B->S;
+    A->E = B->E;
+    A->W = B->W;
+    A->T = B->T;
+    A->B = B->B;
+
+    return 1;
+}
+
+/* 
+*  Vect_box_extend ()
+*
+*  Extend A by B.
+*  
+*/
+int 
+Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
+{
+
+    if ( B->N > A->N ) A->N = B->N;
+    if ( B->S < A->S ) A->S = B->S;
+    if ( B->E > A->E ) A->E = B->E;
+    if ( B->W < A->W ) A->W = B->W;
+    if ( B->T > A->T ) A->T = B->T;
+    if ( B->B < A->B ) A->B = B->B;
+
+    return 1;
+}
+
+/* 
 *  Vect_get_line_box ()
 *  
 *  returns: 1 OK
@@ -164,3 +204,25 @@ Vect_get_isle_box (struct Map_info *Map, int isle, BOUND_BOX *Box )
     return 1;
 }
 
+/* 
+*  Vect_get_map_box ()
+*  
+*  returns: 1 OK
+*           0 error
+*/
+int 
+Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
+{
+    struct    Plus_head *Plus;
+    
+    Plus = &(Map->plus);
+    
+    Box->N = Plus->box.N;
+    Box->S = Plus->box.S;
+    Box->E = Plus->box.E;
+    Box->W = Plus->box.W;
+    Box->T = Plus->box.T;
+    Box->B = Plus->box.B;
+
+    return 1;
+}
