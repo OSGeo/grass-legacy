@@ -222,8 +222,9 @@ int main (int argc, char **argv)
     
     xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field, type_only);
 
+    /* TODO: copy all tables */
     if ( !t_flag->answer && new_cat == -1 ) 
-        Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );
+        Vect_copy_table_by_cats ( &In, &Out, field, field, NULL, GV_1TABLE, cat_array, cat_count );
 
     Vect_close (&In);
 
