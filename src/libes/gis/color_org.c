@@ -61,6 +61,7 @@ organize_lookup(colors, mod)
     G__lookup_colors (cat,
 	    &cp->lookup.r0, &cp->lookup.g0, &cp->lookup.b0, &cp->lookup.s0,
 	    1, colors, mod, 1);
+    cp->lookup.s0 = 1;
 
     cp->lookup.active = 1;
 }
