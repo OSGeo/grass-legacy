@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.31 2000-10-17 08:38:47 markus Exp $
+$Id: BUGS,v 1.32 2000-10-17 11:44:13 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -11,7 +11,7 @@ Bugfix formula:
 http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
 
 ----------------------------------------------------------------
-[In sync with GRASS 5 beta 9/CVS]
+[In sync with GRASS 5 beta CVS version]
 History at end of file.
 
 ----------- drivers ---------------------------------------------
@@ -359,6 +359,3 @@ system headers it is ok; it would be safer to rename it to something
 else within Grass, though.
  -> same warning on Linux/Intel
 
----------------------------------------------------------------------
-
- $Id: BUGS,v 1.31 2000-10-17 08:38:47 markus Exp $
