@@ -8,6 +8,7 @@
  * hofierka@geomodel.sk
  * 
  * Region sensivity by MN 1/2001
+ * Fixed coordinate being reversed MN 1/2001
  */
 
 /* uncomment to get some debug output */
@@ -118,11 +119,10 @@ void convert(char *fileout, int rows, int cols, int depths) {
    int typeIntern;
    G3D_Region region;
 
-/*  G3d_getCoordsMap (map, &rows, &cols, &depths);*/
   typeIntern = G3d_tileTypeMap (map);
 
 #ifdef DEBUG
-fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
+fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 #endif
 
   /* see v5d.h */
@@ -139,8 +139,7 @@ fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
   	}
 
    Nl[0]=depths;
-   G3d_getWindow(&region);
-
+   
 /* ********* */     
 /* add here grass region/window settings from region struct */
 
@@ -148,11 +147,11 @@ fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
    TimeStamp[0] = DateStamp[0] = 0;
    CompressMode = 4;
    Projection = 0;      /*linear, rectangular, generic units*/
-   ProjArgs[0] = 0.0 + rows;   /*North boundary of 3-D box*/
-   ProjArgs[1] = 0.0 + cols;   /*West boundary of 3-D box */
+   ProjArgs[0] = 0.0;   /*North boundary of 3-D box*/
+   ProjArgs[1] = 0.0;   /*West boundary of 3-D box */
    ProjArgs[2] = 1.0;   /*Increment between rows */
    ProjArgs[3] = 1.0;   /*Increment between columns*/
-   Vertical = 0;        /*equally spaced levels in generic units*/
+   Vertical    = 0;     /*equally spaced levels in generic units*/
    VertArgs[0] = 0.0;   /*height of bottom level*/
    VertArgs[1] = 1.0;   /*spacing between levels*/
 
@@ -174,14 +173,14 @@ fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
   d1p = &d1; f1p = (float *) &d1;
 	cnt=0;
 
-/* originally written in 1999. Bug: displays reversed in Vis5D:   
+ /* originally written in 1999. Bug: displays reversed in Vis5D:   
   for (z = 0; z < depths; z++) {
     G_percent(z, depths, 1);
     for (y = 0; y < rows; y++) {  
       for (x = 0; x < cols; x++) {
  */
 
-   /* taken from r3.out.ascii: modified x and y order
+  /* taken from r3.out.ascii: but modified x and y order
       MN 2001 */
    for (z = 0; z < depths; z++) {
     G_percent(z, depths, 1);
@@ -269,10 +268,11 @@ int main(int argc, char *argv[]) {
   /* Use default region */
   /*  G3d_getRegionStructMap(map, &region); */
   /* Figure out the region from current settings:*/
-  G3d_getWindow(&region);
+ /* G3d_getWindow(&region);*/
+    G3d_readWindow(&region,NULL); /* read current region from WIND3, MN 1/2001 */
 
 #ifdef DEBUG
-fprintf(stderr, "cols: %i rows:%i depths:%i\n", region.cols, region.rows, region.depths);
+fprintf(stderr, "cols: %i rows: %i layers: %i\n", region.cols, region.rows, region.depths);
 #endif
 
   convert(output, region.rows, region.cols, region.depths);
