@@ -29,17 +29,19 @@ struct NT_window *
 NT_new_window()
 {
 	struct NT_window *new;
-	xtrace("NT_new_window\n");
+	NT_debug("NT_new_window\n");
 	new = (struct NT_window *) allocateMemory (sizeof(struct NT_window));
-	new->next = window_list;
-	new->child=NULL;
-	new->min = 1;
-	new->minx =0;
-	new->miny =0;
-	new->w = INVALID_HANDLE;
+	new->next    = window_list;
+	new->child   = NULL;
+	new->min     = 1;
+	new->minx    = 0;
+	new->miny    = 0;
+	new->bg      = INVALID_HANDLE;
+	new->bgp     = INVALID_HANDLE;
+	new->w       = INVALID_HANDLE;
 	new->hBitmap = INVALID_HANDLE;
-	new->hDC = INVALID_HANDLE;
-	window_list = new;
+	new->hDC     = INVALID_HANDLE;
+	window_list  = new;
 	cjh_printf("NEW window %x\n",window_list);
 	return(window_list);
 }
@@ -54,7 +56,7 @@ int
 NT_delete_window(struct NT_window *w)
 {
 	NT_window *f;
-	xtrace("NT_delete_window\n");
+	NT_debug("NT_delete_window\n");
 	
 	if (w->w != INVALID_HANDLE)
 	{
@@ -96,7 +98,7 @@ struct NT_window *
 NT_find_window_from_id(HWND w)
 {
 	struct NT_window *current = window_list;
-	/* xtrace("NT_find_window_from_id\n"); */
+	/* NT_debug("NT_find_window_from_id\n"); */
 	
 	while ( current != NULL &&
 			current->w != w )
@@ -134,7 +136,7 @@ NT_window *parent,*child;
 
 struct NT_window *
 NT_find_child(NT_window *w,unsigned long mask,
-								unsigned long val)
+	      unsigned long val)
 {
 	struct NT_window *ret = NULL;
 	struct NT_child *child = NULL;
