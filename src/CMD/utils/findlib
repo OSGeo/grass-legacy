@@ -1,0 +1,8 @@
+for i in /lib /usr/lib
+do
+    if test -f $i/lib${1}.a
+    then
+	exit 0
+    fi
+done
+exit 1
