@@ -74,7 +74,7 @@ sub lnk {
     $oldbase = ~ s/.+\///;
     
     # ignore Gmakefiles 
-    if ( $oldpath =~ /Gmakefile/  ) { return; }    
+    if ( $oldpath =~ /Gmakefile/ ||  $oldpath =~ /makefile/ || $oldpath =~ /Makefile/   ) { return; }    
 
     if ( -e $newpath ) { return; } 
   
