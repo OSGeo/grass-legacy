@@ -1,0 +1,8 @@
+Contents of this directory
+
+dglib:		DGLIB (Directed Graph Library) aims at giving support to
+		network analysis.
+diglib:		Lower level functions for reading/writing/manipulating
+		vectors.
+Vlib:		Higher level functions for reading/writing/manipulating
+		vectors.
