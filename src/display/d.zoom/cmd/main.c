@@ -192,50 +192,50 @@ main (int argc, char **argv)
 	    rotate = ask_rotate();
     }
 
-do
-{
-    R_open_driver();
-
-    D_setup(0);
-
-/* Do the zoom */
-    stat = zoomwindow(quiet->answer, rotate, magnify);
-
-    R_close_driver();
-
-    sprintf(command, "d.erase");
-    system(command);
-
-/* Redraw raster map */
-    if (rast)
+    do
     {
-      for(i=0; i<nrasts; i++)
-      {
-      	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
-      	system(command);
-      }
-    }
-
-/* Redraw vector map */
-    if (vect)
-    {
-      for(i=0; i<nvects; i++)
-      {
-      	sprintf(command, "d.vect map=%s", vmap->answers[i]);
-      	system(command);
-      }
-    }
+        R_open_driver();
     
-/* Redraw site map */
-    if (site)
-    {
-      for(i=0; i<nsites; i++)
-      {
-      	sprintf(command, "d.sites sitefile=%s", smap->answers[i]);
-      	system(command);
-      }
-    }
-} while(stat == 2);
+        D_setup(0);
+    
+    /* Do the zoom */
+        stat = zoomwindow(quiet->answer, rotate, magnify);
+    
+        R_close_driver();
+    
+        sprintf(command, "d.erase");
+        system(command);
+    
+    /* Redraw raster map */
+        if (rast)
+        {
+          for(i=0; i<nrasts; i++)
+          {
+          	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
+          	system(command);
+          }
+        }
+    
+    /* Redraw vector map */
+        if (vect)
+        {
+          for(i=0; i<nvects; i++)
+          {
+          	sprintf(command, "d.vect map=%s", vmap->answers[i]);
+          	system(command);
+          }
+        }
+        
+    /* Redraw site map */
+        if (site)
+        {
+          for(i=0; i<nsites; i++)
+          {
+          	sprintf(command, "d.sites sitefile=%s", smap->answers[i]);
+          	system(command);
+          }
+        }
+    } while(stat == 2);
 
     if (rast)
       R_pad_freelist(rast, nrasts);
