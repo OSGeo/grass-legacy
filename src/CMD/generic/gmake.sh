@@ -87,6 +87,7 @@ then
     exit 1
 fi
 
+prefix="`sed 's/=/ /' $HEAD | awk '$1 ~ /^prefix$/ {if(NF>1)print $2}'`"
 GISBASE="`sed 's/=/ /' $HEAD | awk '$1 ~ /^GISBASE$/ {if(NF>1)print $2}'`"
 VERSION_NUMBER=
 VERSION_DATE=
@@ -111,6 +112,10 @@ ARCH="`sed 's/=/ /' $HEAD | awk '$1 ~ /^ARCH$/ {if(NF>1)print $2}'`"
 
 if test $parseonly = sh
 then
+    if test $install = yes
+    then
+        GISBASE=$prefix/grass5
+    fi
     echo GISBASE=$GISBASE
     echo SRC=$SRC
     echo CMD=$CMD
@@ -121,6 +126,10 @@ fi
 
 if test $parseonly = csh
 then
+    if test $install = yes
+    then
+        GISBASE=$prefix/grass5
+    fi
     echo set GISBASE=$GISBASE
     echo set SRC=$SRC
     echo set CMD=$CMD
@@ -303,7 +312,7 @@ then
     exit $status
 fi
 
-if test "$install" = "no"
+if test $install = no
 then
     if test "$GMAKE_DEL_OBJ" != ""
     then
