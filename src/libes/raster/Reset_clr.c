@@ -1,8 +1,22 @@
 #include "raster.h"
 #include "graph.h"
 
+
+/*!
+ * \brief define single color
+ *
+ * Sets color number <b>num</b> to the
+ * intensities represented by <b>red, grn</b>, and <b>blue.</b>
+ *
+ *  \param red
+ *  \param grn
+ *  \param blu
+ *  \param num number
+ *  \return int
+ */
+
 int R_reset_color(
-	unsigned char red,unsigned char grn,unsigned char blu ,
+	unsigned char red,unsigned char grn,unsigned char blu,
 	int number )
 {
 	int i ;

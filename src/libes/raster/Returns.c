@@ -4,31 +4,74 @@ static int first = 1 ;
 static int t, b, l, r ;
 static int getall(void);
 
-int R_screen_left()
+
+/*!
+ * \brief screen left edge
+ *
+ * Returns the pixel column number of the left edge of the screen.
+ *
+ *  \param void
+ *  \return int
+ */
+
+int R_screen_left(void)
 {
 	if(first) getall() ;
 	return(l) ;
 }
 
-int R_screen_rite()
+
+/*!
+ * \brief screen right edge
+ *
+ * Returns the pixel column
+ * number of the right edge of the screen.
+ *
+ *  \param void
+ *  \return int
+ */
+
+int R_screen_rite(void)
 {
 	if(first) getall() ;
 	return(r) ;
 }
 
-int R_screen_bot()
+
+/*!
+ * \brief bottom of screen
+ *
+ * Returns the pixel row number of
+ * the bottom of the screen.
+ *
+ *  \param void
+ *  \return int
+ */
+
+int R_screen_bot(void)
 {
 	if(first) getall() ;
 	return(b) ;
 }
 
-int R_screen_top()
+
+/*!
+ * \brief top of screen
+ *
+ * Returns the pixel row number of
+ * the top of the screen.
+ *
+ *  \param void
+ *  \return int
+ */
+
+int R_screen_top(void)
 {
 	if(first) getall() ;
 	return(t) ;
 }
 
-static int getall()
+static int getall(void)
 {
 	_send_ident(SCREEN_TOP) ;
 	_get_int(&t) ;
