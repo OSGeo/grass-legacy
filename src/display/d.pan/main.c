@@ -37,7 +37,7 @@ int main (int argc, char **argv)
 	vect = NULL;
     else
     {
-	vect = (char **)G_realloc(rast, (nvects+1)*sizeof(char *));
+	vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
 	vect[nvects] = NULL;
     }
 
@@ -45,7 +45,7 @@ int main (int argc, char **argv)
 	site = NULL;
     else
     {
-	site = (char **)G_realloc(rast, (nsites+1)*sizeof(char *));
+	site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
 	site[nsites] = NULL;
     }
 
