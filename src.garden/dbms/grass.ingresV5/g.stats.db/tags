@@ -1,0 +1,5 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	main.c	/^buildSQL(fp,tabname,colname)$/
+chktype	chktype.c	/^chktype(tabname, colname)$/
+ingresUnTable	ingresUtils.c	/^void ingresUnTable(buf)$/
+sqlStats	sqlStats.c	/^sqlStats(tabname, colname,sqlFile)$/
