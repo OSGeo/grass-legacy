@@ -359,6 +359,7 @@ src/raster/r.resample
 src/raster/r.resamp.rst
 src/raster/r.rescale
 src/raster/r.rescale.eq
+src/raster/r.series
 src/raster/r.slope.aspect
 src/raster/r.statistics
 src/raster/r.stats
