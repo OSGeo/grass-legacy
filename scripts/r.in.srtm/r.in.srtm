@@ -2,7 +2,6 @@
 
 #import of SRTM hgt files into GRASS
 # written by Markus Neteler 11/2003 neteler AT itc it
-# $Date$
 #
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -110,7 +109,22 @@ if [ $? -ne 0 ] ; then
   exit 1
 fi
 
+
+#make a temporary directory
+TMPDIR="`g.tempfile pid=$$`"
+rm -f "$TMPDIR"
+mkdir "$TMPDIR"
+
+#unzip & rename data file:
+echo "Extracting $FILE..."
+unzip $FILE.hgt.zip
+if [ $? -gt 0 ] ; then
+ echo "ERROR - stop."
+ exit 1
+fi
+
 echo "Converting input file to BIL..."
+mv $TILE.hgt "$TMPDIR"/$TILE.bil
 
 LL_LATITUDE=`echo $TILE  | cut -b2-3`
 LL_LONGITUDE=`echo $TILE | cut -b5-7`
@@ -132,10 +146,7 @@ ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $1}'`
 # SRTM90 tile size is 1 deg:
 ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $1 + 1.0}'`
 
-#make & change to a temporary directory
-TMPDIR="`g.tempfile pid=$$`"
-rm -f "$TMPDIR"
-mkdir "$TMPDIR"
+#change to temporary directory
 cd "$TMPDIR"
 
 echo "BYTEORDER M
@@ -152,10 +163,6 @@ ULXMAP $ULXMAP
 ULYMAP $ULYMAP
 XDIM 0.000833333333333
 YDIM 0.000833333333333"> $TILE.hdr
-
-#unzip & rename data file:
-unzip $FILE.hgt.zip
-mv $TILE.hgt $TILE.bil
 
 #create prj file: To be precise, we would need EGS96! But who really cares...
 echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
