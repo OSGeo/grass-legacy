@@ -18,10 +18,11 @@ int main(int argc, char **argv)
 {
     struct Option *map, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
     struct Option *color_opt, *hcolor_opt, *bgcolor_opt;
+    struct Flag   *geo_f;
     struct GModule *module;
     char   *mapset;
     struct Map_info Map;
-    int    type, afield, nfield, color, hcolor, bgcolor;
+    int    type, afield, nfield, color, hcolor, bgcolor, geo;
     int    r, g, b, colornum = MAX_COLOR_NUM;
 
     /* Initialize the GIS calls */
@@ -83,6 +84,10 @@ int main(int argc, char **argv)
     bgcolor_opt->type       = TYPE_STRING ;
     bgcolor_opt->answer     = "black" ;
     bgcolor_opt->description= "Background color" ;
+
+    geo_f = G_define_flag ();
+    geo_f->key             = 'g';
+    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
     
     if(G_parser(argc,argv))
         G_fatal_error("");
@@ -111,6 +116,8 @@ int main(int argc, char **argv)
 	R_reset_color (r, g, b, colornum); 
 	bgcolor = colornum;
     }
+
+    if ( geo_f->answer ) geo = 1; else geo = 0;
     
     mapset = G_find_vector2 (map->answer, NULL); 
       
@@ -130,7 +137,8 @@ int main(int argc, char **argv)
 		D_get_d_west(), D_get_d_east(),
 		D_move_abs, D_cont_abs);
 
-    Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer, abcol->answer, ncol->answer, 0 );
+    Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer, abcol->answer, ncol->answer, 
+	                   geo, 0 );
     path ( &Map, color, hcolor, bgcolor ); 
 
 
