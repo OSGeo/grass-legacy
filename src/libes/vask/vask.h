@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 #include	<signal.h>
 #include	<curses.h>
 #define 	MAX_ANSW	80
