@@ -1,3 +1,2 @@
 all:
 	$(GMAKE) stubs
-	$(GMAKE) odbc
