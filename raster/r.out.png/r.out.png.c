@@ -371,7 +371,7 @@ int main(int argc, char *argv[])
     if (!bequiet->answer)
 	fprintf(stderr, "\nDone.\n");
 
-    return (1);
+    return (0);
 }
 
 #ifdef __STDC__
