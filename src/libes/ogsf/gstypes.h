@@ -75,7 +75,7 @@ typedef struct{
     float *fb;
     int *ib;
     short *sb;
-    char *cb;
+    unsigned char *cb;
     struct BM *bm;
     struct BM *nm;     /* null mask: set = null */
     float  (*tfunc)();
