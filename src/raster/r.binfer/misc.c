@@ -81,7 +81,7 @@ char *
 strip_quotes(s)
 char *s;
 {
-    char temp[80];
+    static char temp[80];
     int len = strlen(s);
     int i;
 
