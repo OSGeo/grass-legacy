@@ -1,0 +1,12 @@
+INIT	glob.h	/^# define INIT(x)$/
+Mmain	main.c	/^main(argc,argv) $/
+cmp	main.c	/^cmp (a,b) RECLASS *a, *b;$/
+cross	cross.c	/^cross (fd, verbose, non_zero, primary, outfd)$/
+first_node	tree.c	/^first_node (cat, result)$/
+index_cat	tree.c	/^index_cat (cat)$/
+next_node	tree.c	/^next_node (p, cat, result)$/
+plant_tree	tree.c	/^plant_tree()$/
+renumber	renumber.c	/^renumber (in, out, verbose)$/
+set_cat	cats.c	/^set_cat (result, cat, pcats)$/
+store_reclass	store.c	/^store_reclass (result, primary, cat)$/
+uproot_tree	tree.c	/^uproot_tree ()$/
