@@ -1,4 +1,6 @@
-#!/usr/local/bin/wish -f
+#!/bin/sh
+# the next line restarts using wish \
+exec wish "$0" "$@"
 
 ############################################################################
 # routines to create structures in tcl, and get & set fields.
