@@ -1,0 +1,132 @@
+
+
+
+i.pca                GRASS Reference Manual                 i.pca
+
+
+
+NAME
+     i.pca - Principal components analysis (pca) program for
+     image processing.
+     (GRASS Image Processing Program)
+
+SYNOPSIS
+     i.pca
+     i.pca help
+     i.pca input1=name input2=name [input3=name] [input4=name] [input5=name]
+           [input6=name] [input7=name] [input8=name] output=name
+
+DESCRIPTION
+     i.pca is an image processing program based on the algorithm
+     provided by Vali (1990), that processes n (2 <= n <= 8)
+     input raster map layers and produces n output raster map
+     layers containing the principal components of the input data
+     in decreasing order of variance ("contrast").  The output
+     raster map layers are assigned names with .1, .2, ... .n
+     suffixes.  The current geographic region definition and mask
+     settings are respected when reading the input raster map
+     layers.
+
+
+     Parameters:
+
+     input1=name       Name of first input raster map layer.
+
+     input2=name       Name of second input raster map layer.
+
+     input3=name       Name of third input raster map layer.
+
+     input4=name       Name of fourth input raster map layer.
+
+     input5=name       Name of fifth input raster map layer.
+
+     input6=name       Name of sixth input raster map layer.
+
+     input7=name       Name of seventh input raster map layer.
+
+     input8=name       Name of eighth input raster map layer.
+
+     output=name       The output raster map layer name to which
+                       suffixes are added.  Each output raster
+                       map layer is assigned this user-specified
+                       name with a numerical (.1, .2, ... .n)
+                       suffix.
+
+
+     Richards (l986) gives a good example of the application of
+     principal components analysis (pca) to a time series of
+     LANDSAT images of a burned region in Australia.
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+i.pca                GRASS Reference Manual                 i.pca
+
+
+
+SEE ALSO
+     Richards, John A., Remote Sensing Digital Image Analysis,
+     Springer-Verlag, 1986.
+
+     Vali, Ali R., Personal communication, Space Research Center,
+     University of Texas, Austin, 1990.
+
+     i.cca, i.class, i.fft, i.ifft, m.eigensystem, r.covar,
+     r.mapcalc
+
+AUTHOR
+     David Satnik, GIS Laboratory, Central Washington University
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
