@@ -1,7 +1,7 @@
 
 
 
-g.mapsets            GRASS Reference Manual             g.mapsets
+g.mapsets <main>     GRASS Reference Manual      <main> g.mapsets
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-g.mapsets            GRASS Reference Manual             g.mapsets
+g.mapsets <main>     GRASS Reference Manual      <main> g.mapsets
 
 
 
@@ -126,14 +126,14 @@ g.mapsets            GRASS Reference Manual             g.mapsets
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-g.mapsets            GRASS Reference Manual             g.mapsets
+g.mapsets <main>     GRASS Reference Manual      <main> g.mapsets
 
 
 
@@ -172,6 +172,7 @@ AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
 
+     Greg Koerper, ManTech Environmental Technology, Inc.
 
 
 
@@ -191,8 +192,7 @@ AUTHOR
 
 
 
-
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
