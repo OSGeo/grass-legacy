@@ -45,6 +45,7 @@ read_lines(struct Map_info *Map )
 		    Values[idx].d2 = Points->y[0];
 		    Values[idx].i1++;
 		}
+		found = 1;
 	    }
 	}
 
