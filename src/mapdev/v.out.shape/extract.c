@@ -31,7 +31,7 @@
 #include "local_proto.h"
 
 int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *nIndices,
-		   const int curr_indx ) {
+		   const int curr_indx, int ltype) {
 
   /* Extract lines from a LINE dig file and add to shapefile */
 
@@ -52,9 +52,9 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
   /* If we have come to the end of the lines, exit with 0 */
   if( curr_indx >= Map->n_lines ) return 0;
 
-  /* Deal only with linear elements (reject area edges) */
+  /* Deal only with linear elements */
 
-  if(Map->Line[cindx].type != LINE)
+    if(Map->Line[cindx].type == DOT)
     return -1;
 
   /* Initialise line structure */
@@ -63,7 +63,8 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
 
   /* Read the line */
 
-  if( V2_read_line(Map, line1, cindx ) != LINE ) return -1;
+  /* the test below will accept a DOT if one appears */
+  if (V2_read_line(Map, line1, cindx ) != ltype && ltype != 3) return 1;
 
   tvertices = line1->n_points;
 
