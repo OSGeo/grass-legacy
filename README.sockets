@@ -16,10 +16,10 @@
 #  driver.
 #
 # NOTE:
-#  The $GISBASE/dev/fifo* files are still required. However, those files 
-#  need not to be FIFO files. It's ok if those files are just zero size
+#  The $GISBASE/dev/fifo* files are still required. However, these files 
+#  need not to be FIFO files. It's ok if these files are just zero size
 #  file, not FIFO nor other special file. Socket drivers communicate through
-#  those files.
+#  these files.
 #############################################################################
 #
 # Please test new XDRIVER and report bugs to developers list.
