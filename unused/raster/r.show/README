@@ -1,0 +1,5 @@
+r.show outputs the raster values of a map to stdout.
+
+It demonstrated CELL/FP programming with unions.
+
+Huidae Cho 2000

@@ -1,0 +1,7 @@
+LIBES  = $(GISLIB)
+PGM    = r.show
+SRCS   = main.c
+OBJS   = main.o
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
