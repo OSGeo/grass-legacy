@@ -18,7 +18,10 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  * $Log$
- * Revision 1.2  2000-03-22 20:05:34  markus
+ * Revision 1.3  2000-05-22 14:52:03  markus
+ * updated to reflect move of shapelib into SRC/libes/vbect32_64/shapelib-1.2.8
+ *
+ * Revision 1.2  2000/03/22 20:05:34  markus
  * updated oon shapelib path
  *
  * Revision 1.1  2000/03/22 20:02:28  markus
@@ -52,7 +55,7 @@
 
 #include <string.h>
 
-#include "../shapelib-1.2.7/shapefil.h"	/* from shapelib */
+#include "../../../libes/vect32_64/shapelib-1.2.8/shapefil.h"	/* from shapelib */
 
 #include "utils.h"
 

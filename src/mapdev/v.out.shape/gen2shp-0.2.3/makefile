@@ -1,5 +1,8 @@
 # $Log: makefile,v $
-# Revision 1.2  2000-03-22 20:05:34  markus
+# Revision 1.3  2000-05-22 14:52:03  markus
+# updated to reflect move of shapelib into SRC/libes/vbect32_64/shapelib-1.2.8
+#
+# Revision 1.2  2000/03/22 20:05:34  markus
 # updated oon shapelib path
 #
 # Revision 1.1  2000/03/22 20:02:28  markus
@@ -18,7 +21,7 @@
 # Initial revision
 #
 
-SHAPELIBPATH=../shapelib-1.2.7
+SHAPELIBPATH=../../../libes/vect32_64/shapelib-1.2.8
 
 CC=gcc
 # add -DWITH_STRICMP if you are compiling i.e. with MS VC
