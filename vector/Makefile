@@ -38,6 +38,7 @@ SUBDIRS = \
 	v.overlay \
 	v.patch \
 	v.perturb \
+	v.split \
 	v.qcount \
 	v.random \
 	v.reclass \
