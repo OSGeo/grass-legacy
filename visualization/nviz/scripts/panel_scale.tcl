@@ -67,7 +67,7 @@ proc mkscalePanel { BASE } {
     frame $BASE.draw_ruler -relief groove -bd 5
     set rbase $BASE.draw_ruler
 
-    button $rbase.draw -text "Draw Ruler"
+    button $rbase.draw -text "Draw Ruler" -command "draw_fringe"
 
     frame $rbase.where
     frame $rbase.where.top
@@ -76,10 +76,14 @@ proc mkscalePanel { BASE } {
     label $rbase.where.top.nel -text "NE"
     label $rbase.where.bot.swl -text "SW"
     label $rbase.where.bot.sel -text "SE"
-    checkbutton $rbase.where.top.nwc -width 0
-    checkbutton $rbase.where.top.nec -width 0
-    checkbutton $rbase.where.bot.swc -width 0
-    checkbutton $rbase.where.bot.sec -width 0
+    checkbutton $rbase.where.top.nwc -width 0 \
+        -variable fringe_nw -onvalue 1 -offvalue 0
+    checkbutton $rbase.where.top.nec -width 0 \
+        -variable fringe_ne -onvalue 1 -offvalue 0
+    checkbutton $rbase.where.bot.swc -width 0 \
+        -variable fringe_sw -onvalue 1 -offvalue 0
+    checkbutton $rbase.where.bot.sec -width 0 \
+        -variable fringe_se -onvalue 1 -offvalue 0
     pack $rbase.where.top.nwl $rbase.where.top.nwc \
 	$rbase.where.top.nec $rbase.where.top.nel -side left
     pack $rbase.where.bot.swl $rbase.where.bot.swc \
@@ -117,8 +121,19 @@ proc mkscalePanel { BASE } {
 
     return $panel
 }
+#############################################################
 
+######################
+proc draw_fringe {} {
+global Nv_
+global fringe_nw fringe_ne fringe_sw fringe_se
+    
+set surf [Nget_current surf]
+Ndraw_fringe $surf $fringe_nw $fringe_ne $fringe_sw $fringe_se
+    
+} 
 
+###########################
 proc place_narrow {W x y} {
 global Nv_ n_arrow
 
