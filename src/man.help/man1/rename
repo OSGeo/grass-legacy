@@ -1,0 +1,77 @@
+.\" %W% %G%
+.TH rename 1
+.SH NAME
+rename \- Renames 
+.CT "data files" "data base elements"
+.br
+.I (Available through
+.B grass3
+.I menu)
+.SH SYNOPSIS
+.B rename
+.SH DESCRIPTION
+The GRASS program
+.I rename
+allows the user to rename 
+.CT "data files" "data base elements"
+in the current \fImapset\fR.
+The user first selects the type of 
+.CT "data file" "data base element" 
+.XT "(i.e., the data element)"
+to be renamed, from among the following choices:
+
+.RS
+.TP 12
+\ \ 1
+cell maps
+.TP 12
+\ \ 2
+vector maps    
+.TP 12
+\ \ 3
+paint icon files
+.TP 12
+\ \ 4
+paint label files
+.TP 12
+\ \ 5
+site maps
+.TP 12
+\ \ 6
+window files
+.TP 12
+\ \ 7
+imagery group files
+.TP 12
+RETURN
+exit
+.RE
+
+.PP
+Once the data element type is selected, 
+the user is prompted for 
+.CT "a file" "an element"
+to be renamed.
+Then the user is prompted for the new name for the 
+.CT "file." "element."
+After both names have been entered, the \fIrename\fR is executed and
+the user is once again prompted for 
+.CT "a file" "an element"
+to be renamed.
+
+When prompted for 
+.CT file element
+names,
+the user may enter \fBlist\fR to see a list of existing 
+.CT "files," "elements,"
+or hit RETURN to get back to the above menu.
+.SH NOTE
+If 
+.CT "a data element file" "an element"
+has support files (e.g., cell maps),
+\fIrename\fR also automatically renames these support files upon
+execution.
+.SH "SEE ALSO"
+\fIGrename[2G]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
