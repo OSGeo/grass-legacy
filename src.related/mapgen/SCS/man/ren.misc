@@ -1,0 +1,56 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            ren.[element]                                   ren.[element]
+
+            
+            
+            NAME
+            ren.[element] - Renames all files associated with an overlay
+            to a new name.
+            
+            SYNOPSIS 
+            ren.[fill] [old_filename] [new_filename]            ren.[fill] 
+            ren.[label] [old_filename] [new_filename]            ren.[label]
+            ren.[legend] [old_filename] [new_filename]            ren.[legend]
+            ren.[line] [old_filename] [new_filename]            ren.[line]
+            ren.[misc] [old_filename] [new_filename]            ren.[misc]
+            ren.[symbol] [old_filename] [new_filename]            ren.[symbol]
+            
+            DESCRIPTION            DESCRIPTION
+            ren.fill changes the name on all MAPGEN files created by the 
+            make.fill command (i.e. fills, legend, and ovm files). 
+            
+            ren.label changes the name on all MAPGEN files created by 
+            the make.label command (i.e. labels and ovm files). 
+            
+            ren.legend changes the name on all MAPGEN files created by
+            the make.legend command (i.e. legend/par, legend/cmd, and  
+            ovm files).
+            
+            ren.line changes the name on all MAPGEN files created by the 
+            make.line command (i.e. lines, legend, and ovm files).
+            
+            ren.misc changes the name on all MAPGEN files associated 
+            created by the make.misc command (i.e. misc and ovm files). 
+            
+            ren.symbol changes the name on all MAPGEN files created by
+            the make.symbol command (i.e. symbols, legend, and ovm 
+            files).
+            
+            EXAMPLE 
+            If the user created a fill layer named yel_corn for the map
+            composition, and later wished to change the layer name to
+            wht_corn, the ren.fill command changes the file name in the 
+            fills, legend, and ovm directories to the new name.
+            
+                 ren.fill yel_corn wht_corn
+            
+            NOTE 
+            Though more cumbersome, the UNIX mv command may be used to 
+            change the names on the individual appropriate files.
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
