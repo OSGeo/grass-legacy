@@ -8,6 +8,7 @@
  \return 
  \param 
 */
+int
 db_convert_Cstring_to_value (Cstring, sqltype, value)
     char *Cstring;
     int sqltype;
