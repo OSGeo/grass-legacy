@@ -2,6 +2,8 @@
 /*  @(#)a_b_dig.c	2.1 6/26/87 */
 /* v.a_b_dig.c renamed 12/90 */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
@@ -21,8 +23,9 @@ main (int argc, char *argv[])
 	struct dig_head d_head;
 	struct GModule *module;
 	struct Option *old, *new;
+	struct Flag *support;
 	char *mapset;
-	char errmsg[200];
+	char errmsg[200], buf[256];
 
 	struct Map_info Map;
 
@@ -49,6 +52,10 @@ main (int argc, char *argv[])
 	new->multiple		=  NO;
 	new->gisprompt  	= "new,dig,vector";
 	new->description	= "name of resulting vector file";
+
+	support = G_define_flag();
+	support->key = 's';
+	support->description = "Automatically run 'v.support -r' after import";
 
 	if (G_parser (argc, argv))
 		exit(-1);
@@ -108,6 +115,11 @@ main (int argc, char *argv[])
 	    sprintf (command, "cp %s %s 2>&1 > /dev/null", file1, file2);
 	    system (command);
 	    */
+	}
+
+	if(support->answer) {
+	    sprintf(buf,"v.support -r map=%s", new->answer);
+	    system(buf);
 	}
 
 	exit(0) ;
