@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
-"POT-Creation-Date: 2005-01-20 18:30+0100\n"
+"POT-Creation-Date: 2005-03-02 09:56+0100\n"
 "PO-Revision-Date: 2005-01-12 09:39+0100\n"
 "Last-Translator: Maurizio Napolitano <napo@itc.it>\n"
 "Language-Team:  <translations@grass.itc.it>\n"
@@ -2037,7 +2037,7 @@ msgstr "n n"
 msgid "Attaching islands: "
 msgstr "Isole allegate: "
 
-#: ../lib/vector/Vlib/build_nat.c:555
+#: ../lib/vector/Vlib/build_nat.c:556
 #, fuzzy
 msgid "Attaching centroids: "
 msgstr "Centroidi allegati:  "
