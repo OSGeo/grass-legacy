@@ -316,6 +316,7 @@ int         db__start_procedure_call  P((int procnum ));
 char *      db_store                  P((char *s ));
 void        db_strip                  P((char *buf ));
 void        db_syserror               P((char *s ));
+int         db_table_exists P((char* drvname, char *dbname, char *tabname));
 int         db_test_column_has_default_value P((dbColumn *column ));
 int         db_test_column_has_defined_default_value P((dbColumn *column ));
 int         db_test_column_has_undefined_default_value P((dbColumn *column ));
