@@ -100,7 +100,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
             err = 0;
     }
 
-    buf += strlen (ebuf) + strlen (nbuf) + 2;
+    buf += strlen (ebuf) + strlen (nbuf) + 1;
     dims -= 2;
     for (i = 0; i < dims; ++i) {
         sscanf (buf, "%s", ebuf);
