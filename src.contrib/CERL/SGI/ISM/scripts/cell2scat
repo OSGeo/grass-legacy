@@ -1,0 +1,102 @@
+#!/bin/csh -f
+
+#  This shell script will create an ISM Scattered data file from
+#    a GRASS cell file.
+#
+#  It will sample EVERY cell in the current window (so make the window SMALL!)
+#    and create a Z value for that location from the data.
+#
+#  This can be used, for example, to bring an elevation file from GRASS
+#    into ISM.
+
+# Need to add argument checking  -dpg
+
+if (.$2 == .) then
+    echo 'Usage: cell2scat cellfile output'
+    exit 1
+endif
+
+
+echo ''
+echo ''
+#echo 'Warning: This program generates one data point for EVERY cell in'
+#echo '    the current window.  This could generate a LARGE .dat file'
+#echo '    if the window has many rows and columns.'
+#echo ''
+#echo 'To avoid this, set a smaller GRASS window.'
+#echo ''
+
+eval `g.region -p | awk '/cols/ { printf ("set cols=%d\n", $2) } /rows/ { printf ("set rows=%d\n", $2) }'`
+
+#echo rows = $rows
+#echo cols = $cols
+
+#
+#  awk also seems to break w/ > 90 cols 
+#
+
+if ($rows > 90 || $cols > 90) then
+    echo ''
+    echo ''
+    echo  'Sorry, your GRASS window must be smaller than 90 rows  by 90 cols'
+    echo  ' to run this program.'
+    echo ''
+    echo ''
+    exit 1
+endif
+    
+    
+
+echo ''
+echo ''
+echo ''
+
+
+cat  >! /tmp/awk$$ << EOF
+BEGIN {
+    row = 0
+}
+/north:/ {
+    north = \$2
+}
+/south:/ {
+    south = \$2
+}
+/west:/ {
+    west = \$2
+}
+/east:/ {
+    east = \$2
+}
+/rows:/ {
+    rows = \$2
+}
+/cols:/ {
+    cols = \$2
+}
+
+/nsres:/ {
+    nsres = \$2
+}
+
+/ewres:/ {
+    ewres = \$2
+}
+
+/^[0-9]/ {
+
+    northing = north - (row * nsres)
+    for (i = 1 ; i <= NF ; i++)
+    {
+	easting = west + (i-1) * ewres
+	printf (" %12.6f %12.6f  %5d\n", easting, northing, \$i)
+    }
+    
+    row++
+}
+EOF
+
+(g.region -p;r.out.ascii $1) | awk -f /tmp/awk$$ >! $2
+rm -f /tmp/awk$$
+
+exit 0
