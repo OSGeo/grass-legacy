@@ -5,14 +5,15 @@
 GRASS57=$HOME/grass57
 
 ########################
-PATHGRASS50=`grep GRASS50 $GRASS57/include/Make/Platform.make | sed 's+ ++g' |cut -d '=' -f2`
 
-if [ $# -ne 1 ] ; then
- echo g51.extract_description.sh htmlfile
+if [ $# -ne 2 ] ; then
+ echo g51.extract_description.sh /path/to/grass53src htmlfile
  exit
 fi
 
-FILE=$PATHGRASS50/html/html/$1.html
+PATHGRASS50="$1"
+
+FILE=$PATHGRASS50/html/html/$2.html
 
 CUTLINE="`grep -ni '<H2>DESCRIPTION' $FILE | cut -d':' -f1`"
 if [ "$CUTLINE" == "" ] ; then
