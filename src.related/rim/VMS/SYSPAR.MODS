@@ -1,0 +1,27 @@
+VAX mods to SYSPAR parameters.
+ 
+ 
+C
+C     ------------- I/O NAMES AND UNITS ----------
+C
+C        ZFNAML       = MAX FILENAME LENGTH
+C        ZTRMIN       = TERMINAL INPUT FILENAME
+C        ZTRMOU       = TERMINAL OUTPUT FILENAME
+C
+      PARAMETER (ZFNAML=20)
+      CHARACTER*10 ZTRMIN, ZTRMOU
+      PARAMETER (ZTRMIN='sys$input ')
+      PARAMETER (ZTRMOU='sys$output')
+C
+ 
+ 
+ 
+ 
+ 
+      CHARACTER*(ZFNAML) ZCSRT1, ZCSRT2
+      PARAMETER (ZCSRT1='RIM.SC1')
+      PARAMETER (ZCSRT2='RIM.SC2')
+ 
+ 
+      PARAMETER (ZCARDN=10)                 
+ 
