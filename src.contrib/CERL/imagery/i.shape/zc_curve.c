@@ -104,9 +104,6 @@ double dalpha[POINTS],ds[POINTS],*totals;
         G_close_cell(zcfd);
 
         free(cell_row);
-
-        /* Release memory resources */
-        for (i=0 ; i<2 ; i++) free(data[i]);
         printf("Transform successful\n");
 				/*
 -------------------------------------------------------------------
@@ -312,5 +309,7 @@ printf("x[%d]=%lf, y[%d]=%lf\n", s, x[s], s, y[s]);
 printf("dalpha[%d]=%lf\n", s, dalpha[s]);
 *sout=s+1;
 *totals=ltotal;
+/* Release memory resources */
+for (i=0 ; i<2 ; i++) free(data[i]);
 }
 
