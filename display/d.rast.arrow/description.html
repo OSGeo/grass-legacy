@@ -19,16 +19,28 @@ An arrow can point in one of eight directions.  If the aspect
 layer has a category value denoting locations of "unknown" aspect,
 <EM>d.rast.arrow</EM> draws a question mark over the displayed cells
 of that category.
-Cells of category 0 (no data) will be marked with an "X".
-
+Cells of containing null data will be marked with an "X".
 
 <P>
-
-<B> Note:</B>  Arrows are cell size and cannot be seen if the raster map is
+<H2>NOTES</H2>
+Arrows are drawn at the size of a cell and cannot be seen if the raster map is
 relatively close in scale.  From a command line mode, the user cannot run
 <EM>d.rast.arrow</EM> and then run <EM><A HREF="d.zoom.html">d.zoom</A></EM>
 and still see the arrows.  The zooming action erases the arrows and the user
-must run <EM>d.rast.arrow</EM> again.
+must run <EM>d.rast.arrow</EM> again. <!-- is this a bug or a feature? -->
+
+<P>
+GRASS aspect maps are measured in degrees counterclockwise from east. i.e.:
+<UL>
+<pre>
+90  North
+180 West
+270 South
+360 East</pre>
+</UL>
+<P>
+They can be created from a raster elevation map with <em>r.slope.aspect</em>.
+<P>
 
 <H2>SEE ALSO</H2>
 
