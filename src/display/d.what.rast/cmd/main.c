@@ -8,6 +8,8 @@ int main (int argc, char **argv)
 {
 	struct Cell_head window ;
 	char temp[128] ;
+	char **maps;
+	int nmaps;
 	int t, b, l, r ;
 	int i;
 	char **ptr;
@@ -26,7 +28,7 @@ int main (int argc, char **argv)
 	opt1->multiple   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
 	opt1->description= G_malloc(120);
-	sprintf(opt1->description, "Name of existing raster map(s). Limit: %d maps.\n\tDefault: Current map on screen", MAX_LAYERS);
+	sprintf(opt1->description, "Name of existing raster map(s). Limit: %d maps.\n\tDefault: Current maps on screen", MAX_LAYERS);
 
 	fs = G_define_option ();
 	fs->key 	= "fs";
@@ -94,10 +96,16 @@ int main (int argc, char **argv)
 	/* If we are to use currently displayed map */
 	else /* if (isatty(0))    I dont figure this one??  -dpg */
 	{
-		if(D_get_cell_name (temp))
+		if(D_get_cell_list (&maps, &nmaps))
 			fprintf (stderr, "warning: no data layer drawn in current window\n");
-		else if ((fd[nlayers] = opencell (temp, name[nlayers], mapset[nlayers])) >= 0)
-			nlayers++;
+		else
+		{	
+			for(i=0; i<nmaps; i++)
+			{
+				if ((fd[nlayers] = opencell (maps[i], name[nlayers], mapset[nlayers])) >= 0)
+					nlayers++;
+			}
+		}
 	}
 
 	if (nlayers == 0)
