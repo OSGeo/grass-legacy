@@ -1,0 +1,11 @@
+PGM=v.in.gshhs
+HOME=$(BIN_CONTRIB_CMD)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+LIST   = main.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GPROJLIB) $(MATHLIB) $(XDRLIB) 
+
+$(GISLIB): #
