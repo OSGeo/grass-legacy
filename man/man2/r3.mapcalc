@@ -1,0 +1,25 @@
+.TH r3.mapcalc 1 "" "" "" ""
+.SH NAME
+\*Lr3.mapcalc\*O  - G3D raster volume data calculator.
+.br
+(GRASS 3D Program)
+.SH SYNOPSIS
+\*Lr3.mapcalc\*O [\*Lresult=\*Oexpression]
+.SH DESCRIPTION
+r3.mapcalc performs arithmetic on 3D raster map layers.
+New raster map layers can be created which are arithmetic expressions
+involving existing raster map layers, integer or floating point constants,
+and functions.
+.SH PROGRAM USE
+If used without command line arguments, r3.mapcalc will read its
+input, one line at a time, from standard input
+(which is the keyboard, unless r.directed from a file or across a pipe).
+Otherwise, the expression on the command line is evaluated.
+r3.mapcalc expects its input to have the form:
+.PP
+\*Lresult=\*Oexpression
+.PP
+.SH SEE ALSO
+\*Lr.mapcalc\*O
+.SH AUTHOR
+Jaro Hofierka, funded by GeoModel s.r.o.
