@@ -9,18 +9,18 @@
 #	description is never used.
 #	DO NOT ADD A DEFAULT FONT IN THE CVS VERSION. :-)
 #
-luximr:/usr/X11R6/lib/X11/fonts/TTF/luximr.ttf:iso-8859-1:gray:10:
-luxirr:/usr/X11R6/lib/X11/fonts/TTF/luxirr.ttf:iso-8859-1:gray:10:
-luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:gray:10:
-luximb:/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:iso-8859-1:gray:10:
-luxirb:/usr/X11R6/lib/X11/fonts/TTF/luxirb.ttf:iso-8859-1:gray:10:
-luxisb:/usr/X11R6/lib/X11/fonts/TTF/luxisb.ttf:iso-8859-1:gray:10:
-luximri:/usr/X11R6/lib/X11/fonts/TTF/luximri.ttf:iso-8859-1:gray:10:
-luxirri:/usr/X11R6/lib/X11/fonts/TTF/luxirri.ttf:iso-8859-1:gray:10:
-luxisri:/usr/X11R6/lib/X11/fonts/TTF/luxisri.ttf:iso-8859-1:gray:10:
-luximbi:/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf:iso-8859-1:gray:10:
-luxirbi:/usr/X11R6/lib/X11/fonts/TTF/luxirbi.ttf:iso-8859-1:gray:10:
-luxisbi:/usr/X11R6/lib/X11/fonts/TTF/luxisbi.ttf:iso-8859-1:gray:10:
-batang:/usr/X11R6/lib/X11/fonts/TTF/batang.ttc:euc-kr:gray:10:
-dotum:/usr/X11R6/lib/X11/fonts/TTF/dotum.ttc:euc-kr:gray:10:
-gulim:/usr/X11R6/lib/X11/fonts/TTF/gulim.ttc:euc-kr:gray:10:
+luximr:/usr/X11R6/lib/X11/fonts/TTF/luximr.ttf:iso-8859-1:gray:5:
+luxirr:/usr/X11R6/lib/X11/fonts/TTF/luxirr.ttf:iso-8859-1:gray:5:
+luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:gray:5:
+luximb:/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:iso-8859-1:gray:5:
+luxirb:/usr/X11R6/lib/X11/fonts/TTF/luxirb.ttf:iso-8859-1:gray:5:
+luxisb:/usr/X11R6/lib/X11/fonts/TTF/luxisb.ttf:iso-8859-1:gray:5:
+luximri:/usr/X11R6/lib/X11/fonts/TTF/luximri.ttf:iso-8859-1:gray:5:
+luxirri:/usr/X11R6/lib/X11/fonts/TTF/luxirri.ttf:iso-8859-1:gray:5:
+luxisri:/usr/X11R6/lib/X11/fonts/TTF/luxisri.ttf:iso-8859-1:gray:5:
+luximbi:/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf:iso-8859-1:gray:5:
+luxirbi:/usr/X11R6/lib/X11/fonts/TTF/luxirbi.ttf:iso-8859-1:gray:5:
+luxisbi:/usr/X11R6/lib/X11/fonts/TTF/luxisbi.ttf:iso-8859-1:gray:5:
+batang:/usr/X11R6/lib/X11/fonts/TTF/batang.ttc:euc-kr:gray:5:
+dotum:/usr/X11R6/lib/X11/fonts/TTF/dotum.ttc:euc-kr:gray:5:
+gulim:/usr/X11R6/lib/X11/fonts/TTF/gulim.ttc:euc-kr:gray:5:

@@ -42,7 +42,7 @@
  */
 
 #define	DEFAULT_CHARSET		"ISO-8859-1"
-#define	DEFAULT_SIZE		"10"
+#define	DEFAULT_SIZE		"5"
 #define	DEFAULT_COLOR		"gray"
 
 #define	DEFAULT_ALIGN		"ll"
@@ -67,8 +67,8 @@ typedef	struct	{
 	int	t, b, l, r;
 } rectinfo;
 
-static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
-			int *fonts_count, int *cur_font);
+static int	read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
+			int *cur_font, char **font_names);
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
 static int	convert_text(char *charset, char *text, unsigned char **out);
@@ -116,9 +116,9 @@ main(int argc, char **argv)
 
 	char	capfile[4096];
 	capinfo	*fonts;
-	char	*font_names;
 	int	fonts_count;
 	int	cur_font;
+	char	*font_names;
 
 	FT_Library	library = NULL;
 	FT_Face		face = NULL;
@@ -128,8 +128,8 @@ main(int argc, char **argv)
 	char	win_name[64];
 	rectinfo	win;
 	char	*text, *path, *charset, *tcolor;
-	int	color, size;
-	double	east, north, rotation;
+	int	color;
+	double	east, north, size, rotation;
 	int	i, l, ol, x, y;
 	unsigned char	*out;
 
@@ -139,24 +139,6 @@ main(int argc, char **argv)
 	module = G_define_module();
 	module->description =
 		"Draws text in the graphics monitor's active display frame using TrueType fonts.";
-
-	i = 0;
-	if(getenv("GRASS_FREETYPECAP"))
-	{
-		strcpy(capfile, getenv("GRASS_FREETYPECAP"));
-		if(access(capfile, R_OK))
-			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
-		else
-		if(!read_capfile(capfile, &fonts, &font_names,
-					&fonts_count, &cur_font))
-			i = 1;
-	}
-	if(!i)
-	{
-		sprintf(capfile, "%s/etc/freetypecap", G_gisbase());
-		read_capfile(capfile, &fonts, &font_names,
-				&fonts_count, &cur_font);
-	}
 
 	param.text = G_define_option();
 	param.text->key         = "text";
@@ -170,6 +152,9 @@ main(int argc, char **argv)
 	param.east_north->required    = NO;
 	param.east_north->key_desc    = "east,north";
 	param.east_north->description = "Map coordinates";
+
+	read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count,
+			&cur_font, &font_names);
 
 	param.font = NULL;
 	if(fonts_count)
@@ -206,7 +191,7 @@ main(int argc, char **argv)
 
 	param.size = G_define_option();
 	param.size->key         = "size";
-	param.size->type        = TYPE_INTEGER;
+	param.size->type        = TYPE_DOUBLE;
 	param.size->required    = NO;
 	param.size->description =
 		"Height of letters (in percent of available frame height)";
@@ -267,7 +252,7 @@ main(int argc, char **argv)
 	path = NULL;
 	charset = NULL;
 	tcolor = NULL;
-	size = 0;
+	size = 0.0;
 
 	if(param.font && param.font->answer)
 	{
@@ -278,7 +263,7 @@ main(int argc, char **argv)
 		path = fonts[cur_font].path;
 		charset = transform_string(fonts[cur_font].charset, toupper);
 		tcolor = transform_string(fonts[cur_font].color, tolower);
-		size = atoi(fonts[cur_font].size);
+		size = atof(fonts[cur_font].size);
 	}
 
 	if(param.path->answer)
@@ -289,17 +274,17 @@ main(int argc, char **argv)
 	if(param.color->answer)
 		tcolor = transform_string(param.color->answer, tolower);
 	if(param.size->answer)
-		size = atoi(param.size->answer);
+		size = atof(param.size->answer);
 
 	if(!charset)
 		charset = DEFAULT_CHARSET;
 	if(!tcolor)
 		tcolor = DEFAULT_COLOR;
-	if(!size)
-		size = atoi(DEFAULT_SIZE);
+	if(size == 0.0)
+		size = atof(DEFAULT_SIZE);
 
 	if(!flag.c->answer)
-		fprintf(stderr, "Font=<%s:%s:%s:%d>\n\n",
+		fprintf(stderr, "Font=<%s:%s:%s:%.2f>\n\n",
 				path, charset, tcolor, size);
 
 	rotation = atof(param.rotation->answer);
@@ -324,8 +309,9 @@ main(int argc, char **argv)
 	D_get_screen_window(&win.t, &win.b, &win.l, &win.r);
 	R_set_window(win.t, win.b, win.l, win.r);
 
+	size *= 0.8;
 	if(!flag.s->answer)
-		size = (int)(size/100.0 * (double)(win.b-win.t));
+		size = size/100.0*(double)(win.b-win.t);
 
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
@@ -335,7 +321,7 @@ main(int argc, char **argv)
 		if(set_font(library, &face, path))
 			error("Unable to create face");
 
-		if(FT_Set_Pixel_Sizes(face, size, 0))
+		if(FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
 			error("Unable to set size");
 	}
 
@@ -374,8 +360,8 @@ main(int argc, char **argv)
 		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed,
 			setx, sety, setl;
 		FILE	*fp;
-		int	d, sx, sy, px, py;
-		double	dd;
+		int	sx, sy, px, py;
+		double	d, dd;
 
 		sx = win.l;
 		sy = win.t;
@@ -460,7 +446,7 @@ main(int argc, char **argv)
 							charset = transform_string(c+1, toupper);
 						if(set_font(library, &face, path))
 							error("Unable to create face");
-						if(FT_Set_Pixel_Sizes(face, size, 0))
+						if(FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
 							error("Unable to set size");
 						break;
 					case 'C':
@@ -471,11 +457,11 @@ main(int argc, char **argv)
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
-						d = atoi(p);
+						d = 0.8 * atof(p);
 						if(p[l-1] != 'p')
-							d = (int)(d/100.0 * (double)(win.b-win.t));
+							d = d/100.0*(double)(win.b-win.t);
 						size = d + (i ? size : 0);
-						if(face && FT_Set_Pixel_Sizes(face, size, 0))
+						if(face && FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
 							error("Unable to set size");
 						break;
 					case 'A':
@@ -498,9 +484,9 @@ main(int argc, char **argv)
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
-						d = atoi(p);
+						d = atof(p);
 						if(p[l-1] == '%')
-							d = (int)(d/100.0 * (double)(win.r-win.l));
+							d = d/100.0*(double)(win.r-win.l);
 						else
 						if(p[l-1] != 'p')
 						{
@@ -516,9 +502,9 @@ main(int argc, char **argv)
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
-						d = atoi(p);
+						d = atof(p);
 						if(p[l-1] == '%')
-							d = (int)(d/100.0 * (double)(win.b-win.t));
+							d = d/100.0*(double)(win.b-win.t);
 						else
 						if(p[l-1] != 'p')
 						{
@@ -575,9 +561,9 @@ main(int argc, char **argv)
 				if(linefeed || setl)
 				{
 					if(!setx)
-						x = px + size * sin(rotation);
+						x = px + size / 0.8 * sin(rotation);
 					if(!sety)
-						y = py + size * cos(rotation);
+						y = py + size / 0.8 * cos(rotation);
 					px = x;
 					py = y;
 				}
@@ -619,22 +605,39 @@ main(int argc, char **argv)
 }
 
 static int
-read_capfile(char *capfile, capinfo **fonts, char **font_names,
-		int *fonts_count, int *cur_font)
+read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
+		char **font_names)
 {
+	char	file[4096], *ptr;
 	int	i, font_names_size = 0;
 	char	buf[4096],
 		ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
 	FILE	*fp;
 
 	*fonts = NULL;
-	*font_names = NULL;
 	*fonts_count = 0;
-	*cur_font = -1;
+	if(cur_font)
+		*cur_font = -1;
+	if(font_names)
+		*font_names = NULL;
 
-	if(!(fp = fopen(capfile, "r")))
+	ptr = file;
+	sprintf(file, "%s/etc/freetypecap", G_gisbase());
+	if(capfile)
 	{
-		G_warning("%s: Unable to read FreeType definition file", capfile);
+		if(access(capfile, R_OK))
+			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
+		else
+			ptr = capfile;
+	}
+	if(ptr == file && access(ptr, R_OK))
+	{
+		G_warning("%s: No FreeType definition file", ptr);
+		return -1;
+	}
+	if(!(fp = fopen(ptr, "r")))
+	{
+		G_warning("%s: Unable to read FreeType definition file", ptr);
 		return -1;
 	}
 
@@ -642,11 +645,11 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 	{
 		capinfo *font;
 		int offset;
-		char *ptr;
+		char *p;
 
-		ptr = strchr(buf, '#');
-		if(ptr)
-			*ptr = 0;
+		p = strchr(buf, '#');
+		if(p)
+			*p = 0;
 
 		if(sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
 			  ifont, ipath, icharset, icolor, isize) != 5)
@@ -662,7 +665,7 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 
 		offset = (ifont[0] == '*') ? 1 : 0;
 
-		if(offset > 0 && *cur_font < 0)
+		if(cur_font && offset > 0 && *cur_font < 0)
 			*cur_font = *fonts_count;
 
 		font->font    = G_store(ifont + offset);
@@ -675,6 +678,9 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 	}
 
 	fclose(fp);
+
+	if(!font_names)
+		return 0;
 
 	font_names_size = 0;
 	for(i = 0; i < *fonts_count; i++)

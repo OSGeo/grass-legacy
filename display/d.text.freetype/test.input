@@ -36,9 +36,10 @@ line 5
 .Y 0
 line 1 again
 .X +3
-.F /usr/X11R6/lib/X11/fonts/TrueType/gulim.ttf:EUC-KR
-.S 20p
+.F /usr/X11R6/lib/X11/fonts/TTF/gulim.ttc:euc-kr
+.S 50p
 .R -10
+한글입니다.
 line 2 again
 line 3 again
 line 4
