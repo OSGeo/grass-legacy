@@ -22,8 +22,13 @@ main (int argc, char *argv[])
     int    i,ret;
     struct Map_info Map;
     struct Categories Labels;
+	struct GModule *module;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Load values from vector to database.";
 
     parse_command_line (argc, argv);
 
