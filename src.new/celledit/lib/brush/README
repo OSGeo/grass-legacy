@@ -1,0 +1,2 @@
+I broke this code out of the widget, so that it could be used by other GRASS
+applications that might adopt this brush format.
