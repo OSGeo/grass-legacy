@@ -1,4 +1,3 @@
-
 /*
 *  Functions to ask user questions and if possible use the digitizer cursor for
 *  input.
@@ -18,10 +17,14 @@ ask_yes_no(quest)
 	char  *quest ;
 {
 
+#ifdef CURSORKEYS
 	if (D_cursor_buttons())
 	    return( ask_driver_yes_no(quest)) ;
 	else
 	    return( curses_yes_no(4, quest)) ;
+#else	    
+    return( ask_driver_yes_no(quest)) ;
+#endif
 
 }
 
@@ -36,7 +39,14 @@ ask_driver_yes_no(quest)
 
     first_button = D_start_button() ;
 
-    _Write_info(1, "  USING DIGITIZER CURSOR FOR INPUT");
+#ifdef USE_KEYS
+    _Write_info(1, "  USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT");
+#else
+    if (D_cursor_buttons() < 5)
+        _Write_info(1, "  USE KEYBOARD FOR INPUT");
+    else
+	_Write_info(1, "  USE DIGITIZER CURSOR FOR INPUT");
+#endif
 
     sprintf( buf, "Key '%d' for YES   :   Key '%d' for NO",
 	first_button, first_button+1);
@@ -106,13 +116,15 @@ ask_driver_raw( X, Y)
 	int  priority_on ;
 
 	priority_on = set_priority() ;
-	D_clear_driver() ;
+/*	D_clear_driver() ; */
 	button = D_ask_driver_raw( X, Y) ;
 
     	if (priority_on == 0)
 		unset_priority() ;
 
 	flush_keyboard ();  /* for SCS problems */
+/*DEBUG*/ debugf ("leaving ask_driver_raw: button = %d\n", button);
+
 	return(button) ;
 }
 
@@ -140,6 +152,10 @@ _coll_a_pnt ( x, y)
     KeyHit = D_read_raw (&Xraw, &Yraw) ;
     
     transform_a_into_b ((double) Xraw, (double) Yraw, x, y) ;
+#ifdef DEBUG
+    debugf ("BUTTON: %d RAW: x = %d y = %d    WORLD: x = %lf y = %lf\n",
+				   KeyHit, Xraw, Yraw, *x, *y);
+#endif
 
     return(KeyHit ) ;
 
