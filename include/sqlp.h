@@ -115,7 +115,7 @@ typedef struct
     int	      aVal; 	
     int	      nVal;
     Node      *upperNodeptr;
-    char      *orderCol;  // column name which should be used for sorting (ORDER BY) or NULL (no sorting)
+    char      *orderCol;  /* column name which should be used for sorting (ORDER BY) or NULL (no sorting) */
 } SQLPSTMT;
 
 int	my_yyinput(char *buf, int max_size);
