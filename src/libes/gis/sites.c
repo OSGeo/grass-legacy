@@ -13,7 +13,11 @@
 
 /*-
  * $Log$
- * Revision 1.5  2000-10-13 00:54:52  eric
+ * Revision 1.6  2000-10-14 01:36:54  eric
+ * Fix bug I introduced to sites.c; Fix the real bug in s.to.rast --
+ * was creating a site struct with the *wrong* cattype.
+ *
+ * Revision 1.5  2000/10/13 00:54:52  eric
  * Small modifications to G__site_get() to fix missing the first attribute
  * when no cat exists and returning a spurious error code when everything
  * was okay.  s.to.rast should now work fine with sites like
@@ -392,8 +396,8 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
       */
     case '%':			/* decimal attribute */
       if (d < s->dbl_alloc) {
-	p1 = buf;
-	s->dbl_att[d++] = strtod(++buf, &p1);
+	p1 = ++buf;
+	s->dbl_att[d++] = strtod(buf, &p1);
 	if (p1 == buf) {
 		/* replace with:
 		 * s->dbl_att[d - 1] = NAN
@@ -401,7 +405,7 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
 		 */
 		return -2;
 	}
-	err = 0; /* Make sure this is zeroed */
+	/* err = 0; Make sure this is zeroed */
       } else {
 	 err = 1;  /* extra decimal */
       }
@@ -427,8 +431,9 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
 	else
 	  return (FOUND_ALL(s,n,dim,c,d)? err: -2);
       }
-      if ((buf = next_att (buf)) == (char *) NULL)
+      if ((buf = next_att (buf)) == (char *) NULL) {
 	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
+      }
       break;
     }
   }

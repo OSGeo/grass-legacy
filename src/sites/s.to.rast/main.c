@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
     struct Flag   *verbose;
     struct Flag   *one_cat;
     void *rast;
-    RASTER_MAP_TYPE map_type;
+    RASTER_MAP_TYPE map_type, real_map_type;
 
     G_gisinit (argv[0]);
 
@@ -175,6 +175,7 @@ int main (int argc, char *argv[])
     {
 	fprintf (stderr, "\n%s: wrong site format",G_program_name());
     }
+    real_map_type = map_type;
     if(dec_field >= dbls){
        fprintf(stderr,"\n");
           G_fatal_error("selected decimal field column no. %d not present in sites list.", dec_field+1);
@@ -233,7 +234,7 @@ int main (int argc, char *argv[])
       }
     }
 
-    s = G_site_new_struct (map_type, dims, strs, dbls); 
+    s = G_site_new_struct (real_map_type, dims, strs, dbls); 
     temp_name = G_tempfile();
     temp_fd = creat(temp_name,0660);
     rast = G_allocate_raster_buf(map_type);	
