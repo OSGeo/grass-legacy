@@ -16,6 +16,7 @@
  *
  * TODO: make fixed field length of OFTIntegerList dynamic
  **************************************************************/
+#define MAIN
 #include <stdlib.h> 
 #include <string.h> 
 #include "gis.h"
@@ -47,7 +48,6 @@ main (int argc, char *argv[])
     /* Attributes */
     struct field_info *Fi;
     dbDriver *driver;
-    dbHandle handle;
     dbString sql, strval;
     int dim, with_z;
     
@@ -339,19 +339,19 @@ main (int argc, char *argv[])
 	    db_append_string ( &sql, ")" );
 	    G_debug ( 3, db_get_string ( &sql ) );
 
-	    driver = db_start_driver( Fi->driver );
-	    if (driver == NULL) G_fatal_error ( "Cannot open driver %s", Fi->driver );
-	    db_init_handle (&handle);
-	    db_set_handle (&handle, Vect_subst_var(Fi->database,&Map), NULL);
-	    if (db_open_database(driver, &handle) != DB_OK) {
-		db_shutdown_driver(driver);
-		G_fatal_error ( "Cannot open database %s", Fi->database );
+	    driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
+	    if ( driver == NULL ) {
+	        G_fatal_error ( "Cannot open database %s by driver %s", 
+			             Vect_subst_var(Fi->database,&Map), Fi->driver );
 	    }
+	    
 	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
 		db_close_database(driver);
 		db_shutdown_driver(driver);
 		G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
 	    }
+	    
+	    db_begin_transaction ( driver );
 	}
 
 	/* Import feature */
@@ -415,8 +415,8 @@ main (int argc, char *argv[])
 	}
 	
 	if ( !notab_flag->answer ) {
-	    db_close_database(driver);
-	    db_shutdown_driver(driver);
+	    db_commit_transaction ( driver );
+	    db_close_database_shutdown_driver ( driver );
 	}
 
 	if ( nogeom > 0 )
@@ -429,10 +429,10 @@ main (int argc, char *argv[])
     Vect_build ( &Map, stderr );
     
     if ( !no_clean_flag->answer && Vect_get_num_primitives(&Map, GV_BOUNDARY) > 0) {
-	int ret, centr, ncentr, otype;
+	int ret, centr, ncentr, otype, n_overlaps, n_nocat;
         CENTR  *Centr;
 	SPATIAL_INDEX si;
-	double x, y;
+	double x, y, total_area, overlap_area, nocat_area;
 	BOUND_BOX box;
 	struct line_pnts *Points;
 
@@ -499,8 +499,10 @@ main (int argc, char *argv[])
         fprintf ( stderr, separator );
         Vect_build_partial ( &Map, GV_BUILD_ATTACH_ISLES, stderr );
 
-	/* Calculate new centroids for all areas */
+	/* Calculate new centroids for all areas, centroids have the same id as area */
 	ncentr = Vect_get_num_areas ( &Map );
+	G_debug (3, "%d centroids/areas", ncentr);
+
 	Centr = (CENTR *) G_calloc ( ncentr+1, sizeof(CENTR) );
 	Vect_spatial_index_init ( &si );
 	for ( centr = 1; centr <= ncentr; centr++ ) {
@@ -538,12 +540,26 @@ main (int argc, char *argv[])
 	    }
 	}
 
-        fprintf ( stderr, separator );
-	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
-
 	/* Write centroids */
+	n_overlaps = n_nocat = 0;
+	total_area = overlap_area = nocat_area = 0.0;
 	for ( centr = 1; centr <= ncentr; centr++ ) {
-	    if ( Centr[centr].cats->n_cats == 0 ) continue;
+	    double area;
+
+	    area = Vect_get_area_area ( &Map, centr );
+	    total_area += area;
+
+	    if ( Centr[centr].cats->n_cats == 0 ) {
+		nocat_area += area;
+		n_nocat++;
+		continue;
+	    }
+	    
+	    if ( Centr[centr].cats->n_cats > 1 ) {
+	        Vect_cat_set ( Centr[centr].cats, nlayers+1, Centr[centr].cats->n_cats );
+		overlap_area += area;
+		n_overlaps++;
+	    }
 
 	    Vect_reset_line ( Points );
 	    Vect_append_point ( Points, Centr[centr].x, Centr[centr].y, 0.0 );
@@ -552,7 +568,35 @@ main (int argc, char *argv[])
 	}
 	
         fprintf ( stderr, separator );
+	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
+
+        fprintf ( stderr, separator );
         Vect_build ( &Map, stderr );
+        
+	fprintf ( stderr, separator );
+
+	if ( n_overlaps > 0 ) {
+	    G_warning ("%d areas represet more (overlapping) features, because polygons overlap "
+		    "in input layer(s). Such areas are linked to more than 1 row in attribute table. "
+		    "The number of features for those areas is stored as category in field %d.",
+		    n_overlaps, nlayers+1 );
+	}
+
+	sprintf (buf, "%d input polygons\n", n_polygons); 
+	fprintf (stderr, buf );
+	Vect_hist_write ( &Map, buf );
+
+	sprintf (buf, "total area: %e (%d areas)\n", total_area, ncentr); 
+	fprintf (stderr, buf );
+	Vect_hist_write ( &Map, buf );
+
+	sprintf (buf, "overlapping area: %e (%d areas)\n", overlap_area, n_overlaps); 
+	fprintf (stderr, buf );
+	Vect_hist_write ( &Map, buf );
+	
+	sprintf (buf, "area without category: %e (%d areas)\n", nocat_area, n_nocat ); 
+	fprintf (stderr, buf );
+	Vect_hist_write ( &Map, buf );
     }
     
     OGR_DS_Destroy( Ogr_ds );
