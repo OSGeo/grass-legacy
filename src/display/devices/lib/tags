@@ -1,5 +1,5 @@
-Box_abs	Box.c	/^Box_abs(x1,y1,x2,y2)$/
-Box_rel	Box.c	/^Box_rel(x,y)$/
+Box_abs	Box_abs.c	/^Box_abs(x1,y1,x2,y2)$/
+Box_rel	Box_rel.c	/^Box_rel(x,y)$/
 Color	Color.c	/^Color(number)$/
 Color_offset	Color.c	/^Color_offset(n)$/
 Color_table_fixed	Clr_table.c	/^Color_table_fixed()$/
@@ -8,13 +8,14 @@ Cont_abs	Cont_abs.c	/^Cont_abs(x,y)$/
 Cont_rel	Cont_rel.c	/^Cont_rel(x,y)$/
 D2R	text.c	/^# define D2R(d) (double)(d * RpD)	\/* degrees->radi/
 Erase	Erase.c	/^Erase()$/
-Font	Font.c	/^Font(text)$/
+Font	Font.c	/^Font(filename)$/
 Get_current_xy	Move_abs.c	/^Get_current_xy(x, y)$/
 Get_text_box	Get_t_box.c	/^Get_text_box(text, t, b, l, r)$/
 Linemod	Linemod.c	/^Linemod(type)$/
 MSWITCHER	SWITCHER.c	/^main(argc,argv)$/
 Move_abs	Move_abs.c	/^Move_abs(x,y)$/
 Move_rel	Move_rel.c	/^Move_rel(x,y)$/
+Number_of_colors	Num_colors.c	/^Number_of_colors(n)$/
 Polydots_abs	Plydts_abs.c	/^Polydots_abs(xarray, yarray, number)$/
 Polydots_rel	Plydts_rel.c	/^Polydots_rel(xarray, yarray, number)$/
 Polygon_rel	Polygn_rel.c	/^Polygon_rel(xarray, yarray, number)$/
@@ -50,7 +51,7 @@ assign_fixed_color	color_supp.c	/^assign_fixed_color(user_color, real_color)$/
 assign_standard_color	color_supp.c	/^assign_standard_color(user_color, real_color)$/
 catch	SWITCHER.c	/^static catch (n)$/
 check_alloc_color	color_supp.c	/^check_alloc_color(n)$/
-check_connection	connect.c	/^check_connection(link)$/
+check_connection	connect.c	/^check_connection(me, link)$/
 clip	clip.c	/^clip( s, n, w, e, x, y, c_x, c_y)$/
 close_mon	SWITCHER.c	/^close_mon()$/
 create_pad	SWITCHER.c	/^create_pad (name)$/
