@@ -70,6 +70,7 @@ fi
 
 compile=1
 sources=""
+cmd=""
 for i
 do
 	case $i in
