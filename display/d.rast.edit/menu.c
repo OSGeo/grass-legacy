@@ -86,7 +86,7 @@ main_menu (void)
            R_close_driver();
            /* G_system("d.zoom");*/
 	   memset(tmpbuf, '\0', sizeof(tmpbuf));
-	   snprintf(tmpbuf, 128, "d.zoom -f %s@%s", current_name, current_mapset);
+	   sprintf(tmpbuf, "d.zoom -f %s@%s", current_name, current_mapset);
            G_system(tmpbuf);
 	   if (R_open_driver() != 0)
 	       G_fatal_error ("No graphics device selected");
