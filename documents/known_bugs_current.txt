@@ -44,7 +44,7 @@ i.ortho.photo
    immediately in orange color (right window)
  - GIS WARNING: Can't write embedded null values for map open for random
    access: i.ortho.photo/photo.rectify/write.c needs to be updated.
-
+ - photo2target/mark.c needs to be updated to support FP elevations
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
@@ -94,7 +94,6 @@ r.in.ppm
   Memory bug fixed by Alex Shevlakov
 
 r.in.tiff/r.out.tiff
- - LZW code must be removed due to patent problems
  - segm. fault on Pentium CPU (same thing with r.binfer)
 
 r.info
@@ -123,6 +122,9 @@ r.random
 r.reclass
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
  - does not accept "*" to reclass NULL values
+
+r.support:
+ - does not support FP maps yet!
 
 r.surf.contour
   fixed by Pierre de Mouveaux <pmx@audiovu.com>
@@ -154,6 +156,7 @@ s.in.ascii:
 s.to.rast, s.to.vect:
  should accept sites_list even if #cats field is missing and
  only a %dbls field is there (like the output from r.to.sites)
+ - > maybe fixed in s.to.rast?
 
 s.rand
  should write #cats rather than %cats (site numbering)
@@ -266,7 +269,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.15  2000-05-27 08:41:25  markus
+ Revision 1.16  2000-07-10 13:52:37  markus
+ added r.support bug
+
+ Revision 1.15  2000/05/27 08:41:25  markus
  added cats.ncats info
 
  Revision 1.14  2000/05/15 18:13:38  markus
