@@ -4,29 +4,35 @@
 binary format. The module may be run in 2 modes:
 <UL>
 <LI><B>standard</B>: if <B>'input'</B> option is used the module reads GRASS ASCII vector from 
-                     <B>dig_ascii</B> directory
+                     the <B>dig_ascii</B> directory
 <LI><B>points</B>: if <B>'input'</B> is not used the module reads points from standard input.
-    Each point must be defined on one row, values are separated by '|' (pipe).
-    If 'columns' are not defined, default names are used. It is possible to select columns
-    for x,y,z coordinate and category.
+    Each point must be defined on one row, values separated by a user definable deliminator.
+    If the 'columns' option is not defined, default names are used. It is possible to specify
+    the column order for the x,y,z coordinates and category values.
 </UL>
 
 
 <h2>NOTES</h2>
 
-Using flag <b>-z</b> converts ascii data to 3D binary vector map  
+Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map
 
 <p>
-
 After running this program, GRASS support files must be built with 
 <em><a HREF="v.build.html">v.build</a></em> for the binary <em>output</em> 
 file 
+
+<P>
+<b>Importing from a spreadsheet</b><br>
+Data may be imported from many spreadsheet programs by saving the 
+spreadsheet as a comma separated variable (.csv) text file, and then 
+using the "fs=," option with <em>v.in.ascii</em> in 'points' mode.
+
 
 <h2>EXAMPLES</h2>
 
 <b>Example 1</b><br>
 Direct file editing:
-Sample ASCII vector file (stored in dig_ascii/). Note the blank before
+Sample ASCII vector file (stored in $MAPSET/dig_ascii/). Note the blank before
 entering vertex coordinates:<p>
 <pre>
 	ORGANIZATION: GRASS Development Team
@@ -53,7 +59,7 @@ entering vertex coordinates:<p>
         5959010.9323622 3401338.36037757
 </pre>
 
-The associated dig_att file needs following format (store in dig_att/):<p>
+The associated dig_att file needs following format (stored in $MAPSET/dig_att/):<p>
 
 <pre>
        A 3401180.463379 5959003.209139          1
@@ -73,7 +79,7 @@ The associated dig_cats file needs following format:<p>
       2:water
 </pre>
 
-<p>
+<p><BR>
 <b>Example 2</b><br>
 
 Generate a points vector file 'coords.txt' as ASCII file:
@@ -90,7 +96,7 @@ Import into GRASS:
 cat coords.txt | v.in.ascii out=mymap
 </pre>
 
-<p>
+<p><BR>
 <b>Example 3</b><br>
 
 Generate a points vector file 'points.dat' as ASCII file:
@@ -107,19 +113,19 @@ Import into GRASS:
 cat points.dat | v.in.ascii out=mypoints xcol=2 ycol=3 catcol=1 columns='cat int, x double, y double, label varchar(20)'
 </pre>
 <P>
-<b>The module is reading from standard input, delimiter is '|' (pipe).</b>
+<b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
 
-<p>
-<b>Example 3</b><br>
+<p><BR>
+<b>Example 4</b><br>
 Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
 <pre>
 echo "select east,north,elev,idcol from mytable " | db.select -c | v.in.ascii -z out=mymap
 </pre>
 
-<b>The module is reading from standard input, delimiter is '|' (pipe).</b>
-
+<b>The module is reading from standard input, using the default '|' (pipe) delimiter.</b>
+<br>
 The import works for 2D maps as well (no elev column and no '-z' flag).
-
+<BR><BR>
 
 <P>
 The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
@@ -133,7 +139,7 @@ machines.
 <p>
 
 The input from <em>v.in.ascii</em> has to be placed into
-<kbd>$LOCATION/dig_ascii</kbd> (this directory must be created if not existing)
+<kbd>$LOCATION/$MAPSET/dig_ascii</kbd> (this directory must be created if it does not exist)
 or piped into the module.
 
 
