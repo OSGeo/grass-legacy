@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 /*
 **-->  Written by R.L.Glenn, SCS, 1/1990
 **  
