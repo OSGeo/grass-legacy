@@ -316,7 +316,10 @@ Vect__init_default_heads (do_port)
 {
     struct dig_head *head;
 
+    /* old 4.0
     do_port = do_port || Portable_In || Portable_Out;
+    */
+    do_port = Portable_In || Portable_Out;
     if (do_port)
 	dig__Init_portable_code (1);
 
