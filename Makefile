@@ -65,7 +65,7 @@ BIN_DIST_FILES = $(FILES) \
 default:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && make) || exit 1; \
+		(cd $$subdir && $(MAKE) ) || exit 1; \
 	done
 	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
 	${SHELL} -c "cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp ; true"
@@ -85,7 +85,7 @@ LIBDIRS = \
 libs:
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && make) || exit 1; \
+		(cd $$subdir && $(MAKE) ) || exit 1; \
 	done
 	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
 	${SHELL} -c "cp -fr --parents include ${ARCH_DISTDIR}/ ; true"
@@ -125,13 +125,13 @@ cleandistdirs:
 clean: cleandistdirs
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && make clean) || exit 1; \
+		(cd $$subdir && $(MAKE) clean) || exit 1; \
 	done
 
 libsclean: cleandistdirs
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && make clean) || exit 1; \
+		(cd $$subdir && $(MAKE) clean) || exit 1; \
 	done
 
 distclean: clean
@@ -275,8 +275,8 @@ srclibsdist: FORCE distclean
 	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
 
 htmldocs:
-	(cd lib/db/ ; make htmldocs)
-	(cd lib/vector/ ; make htmldocs)
+	(cd lib/db/ ; $(MAKE) htmldocs)
+	(cd lib/vector/ ; $(MAKE) htmldocs)
 	#next runs only on grass${VERSION_MAJOR}${VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
 	doxygen ./Doxyfile
 
@@ -284,5 +284,5 @@ packagehtmldocs: htmldocs
 	tar cvfz grass${VERSION_MAJOR}${VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html
 
 pdfdocs:
-	(cd lib/db/ ; make pdfdocs)
-	(cd lib/vector/ ; make pdfdocs)
+	(cd lib/db/ ; $(MAKE) pdfdocs)
+	(cd lib/vector/ ; $(MAKE) pdfdocs)

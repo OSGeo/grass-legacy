@@ -10,4 +10,4 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: inter
-	(cd polytocell/ ; make )
+	(cd polytocell/ ; $(MAKE) )
