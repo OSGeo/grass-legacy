@@ -71,15 +71,7 @@ getAllOpts(argc, argv)
 	distance->required   = YES  ;
 	distance->multiple   = NO ;
 	distance->description= "Radius of cursor:" ;
-/*
-	join = G_define_option() ;
-	join->key        = "join" ;
-	join->type       = TYPE_STRING ;
-	join->required   = NO  ;
-	join->multiple   = NO ;
-	join->key_desc	 = "tab,key,pkey";
-	join->description= "**not used.** JOIN rules (eg. table,key,primekey). ";
-*/
+
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
@@ -99,7 +91,7 @@ getAllOpts(argc, argv)
         /* Initialize screen graphics and get mouse input */
 
 
-        SQL_stmt = (char*) buildInfxQry(keytable,ycol,xcol,distance,pts,join->answers);
+        SQL_stmt = (char*) buildInfxQry(keytable,ycol,xcol,distance,pts);
 
         if ( (xpos->answer == NULL) || (ypos->answer == NULL)) 
            { stat = runInfxFile(SQL_stmt, distance->answer, print_out); }
