@@ -1,7 +1,8 @@
 PGM=g.help
-OFILES	= main.o do_leave.o menu.o 
+OFILES	= main.o do_leave.o menu.o
+H2H = GRASS_PERL=${PERL} sh $(SRC)/general/g.help/help2html.pl
 
-all: $(BIN_INTER)/$(PGM)  the_help
+all: $(BIN_INTER)/$(PGM)  the_help  html_help
 
 $(BIN_INTER)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
@@ -9,6 +10,9 @@ $(BIN_INTER)/$(PGM): $(OFILES) $(GISLIB)
 the_help:
 	rm -rf $(GISBASE)/etc/help
 	tar cf - help | (cd $(GISBASE)/etc; tar xf -)
+
+html_help:
+	$(H2H) $(GISBASE)
 
 do_call.o: do_climb.h
 do_call.o: menu.h
