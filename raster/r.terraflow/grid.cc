@@ -120,11 +120,11 @@ void
 grid::print() {
   cout << "    ";
   for(int i=0; i<width; i++) {
-    cout << form("%2d", (jMin + i%10));
+    printf("%2d", (jMin + i%10));
   }
   cout << endl;
   for(int j=0; j<height; j++) {
-    cout << form("%3d ", j + iMin);
+    printf("%3d ", j + iMin);
     for(int i=0; i<width; i++) {
       if(data[i+width*j].valid) {
 	cout << " " << directionSymbol(data[i+width*j].dir);
