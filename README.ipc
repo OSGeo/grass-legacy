@@ -206,10 +206,10 @@ fi
 
 if [ "$cmd" = "new" -a -p $GISBASE/dev/fifo.1a ]
 then
-	sh $GISBASE/dev/create_buffers.sh
+	sh $GISBASE/dev/create_buffers.sh $GISBASE
 elif [ "$cmd" = "orig" -a -f $GISBASE/dev/fifo.1a ]
 then
-	sh $GISBASE/dev/create_fifos.sh
+	sh $GISBASE/dev/create_fifos.sh $GISBASE
 fi
 
 if [ $changed -eq 0 -a $compile -ne 2 -a "$cmd" != "" ]
