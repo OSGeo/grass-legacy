@@ -1,4 +1,7 @@
+/* $Id$ */
+
 #define GLOBAL
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
@@ -145,13 +148,14 @@ int main (int argc, char *argv[])
     flag.N = G_define_flag() ;
     flag.N->key         = 'N' ;
     flag.N->description = "Suppress reporting of NULLs when all values are NULL" ;
+
     flag.g = G_define_flag() ;
     flag.g->key = 'g';
-    flag.g->description = "Print grid coordinates (east and north) (requires -1 flag)";
+    flag.g->description = "Print grid coordinates (east and north)";
 
     flag.x = G_define_flag() ;
     flag.x->key = 'x';
-    flag.x->description = "Print x and y (column and row) (requires -1 flag)";
+    flag.x->description = "Print x and y (column and row)";
 
     flag.C = G_define_flag() ;
     flag.C->key         = 'C' ;
@@ -180,7 +184,7 @@ int main (int argc, char *argv[])
     sscanf(option.nsteps->answer, "%d", &nsteps);
     if(nsteps <= 0)
     {
-         G_warning("%s: nsteps has to be > 0; using nsteps=255");
+         G_warning("nsteps must be greater than zero; using nsteps=255");
 	 nsteps = 255;
     }
     cat_ranges = flag.C->answer;
@@ -208,6 +212,8 @@ int main (int argc, char *argv[])
     raw_data = flag.one->answer;
     with_coordinates = flag.g->answer;
     with_xy = flag.x->answer;
+    if(with_coordinates || with_xy)
+	raw_data = 1;
 
 /* turn off verbose if stdout not a tty */
     if (raw_data && verbose)
