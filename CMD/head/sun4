@@ -1,0 +1,20 @@
+ARCH                = sun4
+
+GISBASE             = /home/grass3/sun4
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    = /data/mass3
+DEFAULT_LOCATION    = spearfish
+
+COMPILE_FLAGS       = -O
+LDFLAGS             = -s
+
+TERMLIB             = -ltermlib
+CURSES		    = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+LIBRULE             = ar ruv $@ $?; ranlib $@
+
+USE_TERMIO          =
+USE_MTIO            = -DUSE_MTIO
+DIGITFLAGS          = -DUSE_SETREUID -DUSE_SETEUID -DUSE_SETPRIORITY
+CAN_CLEAR           = -DCAN_CLEAR
