@@ -11,14 +11,11 @@
 #define MAXBND 7
 #define MAXNUMBER 9999999999.0
 
-
-
-
+/*
+ * $Id$
+ */
 
 int ERDFTYP;   /* ERDAS file type ( 4 or other) */
-
-
-
 
 
 /******** Routine that does byte swapping for 2 or 4 byte word in place *******/
@@ -136,7 +133,7 @@ int main (int argc, char *argv[])
 	inopt->description     = "Input raster layers.";
 
 	erdasopt = G_define_option();
-	erdasopt->key             = "ouput";
+	erdasopt->key             = "output";
 	erdasopt->type            =  TYPE_STRING;
 	erdasopt->required        =  YES;
 	erdasopt->description     = "Erdas output file name";
