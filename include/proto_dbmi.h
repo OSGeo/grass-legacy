@@ -39,6 +39,7 @@ int         db_convert_value_datetime_into_string P((dbValue *value , int sqltyp
 int         db_convert_value_to_string P((dbValue *value , int sqltype , dbString *string ));
 void        db_copy_dbmscap_entry     P((dbDbmscap *dst , dbDbmscap *src ));
 int         db_copy_string            P((dbString *dst , dbString *src ));
+int         db_copy_table ( char *, char *, char *, char *, char *, char *);
 void        db_copy_value             P((dbValue *dst , dbValue *src ));
 int         db_create_database        P((dbDriver *driver , dbHandle *handle ));
 int         db_create_index           P((dbDriver *driver , dbIndex *index ));
@@ -159,6 +160,7 @@ int         db_insert                 P((dbCursor *cursor ));
 void        db_interval_range         P((int sqltype , int *from , int *to ));
 int         db_isdir                  P((char *path ));
 int         db_list_databases         P((dbDriver *driver , dbString *path , int npaths , dbHandle **handles , int *count ));
+char *      db_list_drivers(void);
 int         db_list_indexes           P((dbDriver *driver , dbString *table_name , dbIndex **list , int *count ));
 int         db_list_tables            P((dbDriver *driver , dbString **names , int *count , int system ));
 void *      db_malloc                 P((int n ));
