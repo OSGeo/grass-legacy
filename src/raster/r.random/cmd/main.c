@@ -169,6 +169,7 @@ main (argc, argv)
 	make_support (parm.input->answer, mapset, parm.raster->answer,
 		      parm.npoints->answer, percent, cat_zero);
 
+
     exit(0);
 }
 
