@@ -4,7 +4,13 @@
 * merged select_vNsds.c from NASA into this code. Markus Neteler
 *
 * HDF docs: http://hdf.ncsa.uiuc.edu/training/HDFtraining/RefManual
+*           http://hdf.ncsa.uiuc.edu/training/class/sd/sdview.html
+*           http://www.ece.arizona.edu/~rojas/hdf/UG_Book.LOP.html
+* Read Data Example:
+*           http://hdf.ncsa.uiuc.edu/training/class/sd/ho_rd_ex.html
 *
+* MODIS2QKM format (250m): http://mcstweb.gsfc.nasa.gov/documents/MOD02QKM-fs.txt
+**************************************************************************
 * select_vNsds.c (public domain from NASA)
 *
 * http://daac.gsfc.nasa.gov/CAMPAIGN_DOCS/MODIS/software.shtml
@@ -17,19 +23,14 @@
 *    user-selected SDS arrays and Vdata tables as separate flat binary 
 *    files. Metadata (global attributes) are written out in a separate 
 *    ascii file with extension .meta
-*
 *    Data in output files will be the same number type (float32, int32, 
 *    int16, int8, uint8) as the corresponding array in the input (HDF) 
 *    file. 
 *
-*
 *    USAGE :
-*
 *    select_vNsds <hdf_file>
-*    
 *
 *    NOTES :
-*
 *    1) Please make sure that the buffer arrays are dimensioned properly
 *       via the PARAMETER statements
 *
@@ -56,6 +57,11 @@
 #define  IN_TAIL0      "hdf"          /* possible input filename extension */
 #define  IN_TAIL1      "HDF"          /* possible input filename extension */
 
+#define LX  144                    /* max latitude */
+#define LY  91                     /* max longitude */
+typedef  float DATAP2[LY][LX];
+static   DATAP2 VarNew2;    /* data to be checked */
+
 
 int
 main(int argc, char *argv[])
@@ -66,7 +72,7 @@ main(int argc, char *argv[])
    char                nextfile[200], errbuf[200];
    double              mply;
   
-   FILE    *meta_fp, *sds_fp, *vd_fp;
+   FILE    *meta_fp, *sds_fp, *sds_fpA, *sds_fpB, *vd_fp;
 
    int32   sd_id, sds_id, dim_id, file_id;
    int32   index, attr_index, sds_idx, dim_index;
@@ -99,7 +105,7 @@ main(int argc, char *argv[])
    int8    *i8;
    uint8   *ui8;
    int16   *i16;
-   uint16  *ui16;  
+   uint16  *ui16, *ui16A, *ui16B;
    int32   *i32;
    uint32  *ui32;
    float   *f32;
@@ -107,7 +113,6 @@ main(int argc, char *argv[])
    
    char    cmd[1000];
    int     bytes;
-
 
     G_gisinit (argv[0]);
 
@@ -175,14 +180,14 @@ main(int argc, char *argv[])
  */
     sd_id = SDstart(hdf_file->answer, DFACC_READ);
     if (sd_id == -1) {
-        printf ("SDstart failed.\n");
+        fprintf(stderr, "SDstart failed.\n");
         HEprint (stdout, 0);
         exit (-1);
     }
 
     status = Vstart (file_id);
     if (status == -1 ) {
-        printf ("Vstart failed.\n");
+        fprintf(stderr, "Vstart failed.\n");
         HEprint (stdout, 0);
         exit (-1);
     }
@@ -211,7 +216,7 @@ main(int argc, char *argv[])
 
     status = SDfileinfo(sd_id, &n_datasets, &n_file_attrs);
     if (status != 0 ) {
-        printf("SDfileinfo failed. \n");
+        fprintf(stderr, "SDfileinfo failed. \n");
         exit (-1);
     }
 
@@ -219,22 +224,22 @@ main(int argc, char *argv[])
 /*
  * List out SDSs contained in input HDF file
  */
-    printf("\n Number of SDS arrays in file: %d\n\n",n_datasets);
+    fprintf(stderr, "\n Number of SDS arrays in file: %d\n\n",n_datasets);
 
     for (index = 0; index < n_datasets; index++) {
          sds_id = SDselect(sd_id, index);
 
          status = SDgetinfo(sds_id, sds_name, &rank, dim_sizes, &num_type, &attributes);
          if (status != 0) {        
-            printf ("SDgetingo failed.\n");
+            fprintf(stderr, "SDgetingo failed.\n");
             HEprint (stdout, 0);
             exit (-1);
          }
 
-         printf("   %2d) %-25s   dimensions = ", index+1, sds_name);
+         fprintf(stderr, "   %2d) %-25s   dimensions = ", index+1, sds_name);
          for(dim_index = 0; dim_index < rank; dim_index++)
-             printf("%7d", dim_sizes[dim_index]);
-         printf(" \n");
+             fprintf(stderr, "%7d", dim_sizes[dim_index]);
+         fprintf(stderr, " \n");
 
          status = SDendaccess(sds_id);
     }
@@ -244,12 +249,12 @@ main(int argc, char *argv[])
  * Prompt user for desired parameters to be written as binary file 
  */
 
-    printf("\n Enter total NUMBER of maps to write out or 0 to exit program\n");  
+    fprintf(stderr, "\nEnter total NUMBER of maps to write out or 0 to exit program\n");  
     scanf("%d", &nparm);
     if(nparm == 0) {
        nindex = 0;
        sds_index[nindex] = 0;
-        printf("\n End of Slect_vNsds\n");
+        fprintf(stderr, "\n End of HDF import.\n");
          exit(-1);
     }
     else if (nparm == n_datasets){
@@ -258,7 +263,7 @@ main(int argc, char *argv[])
            sds_index[nindex++] = index+1;
     }
     else {
-       printf("\n Enter map(s) numbers from above list separated by white space\n");  
+       fprintf(stderr, "\nEnter map(s) numbers from above list separated by white space\n");  
        nindex = 0;
        for (index = 0; index < nparm; index++) {
            scanf("%d", &temparm);
@@ -268,12 +273,12 @@ main(int argc, char *argv[])
     }
 
     if(nparm > 0) {
-       printf(" The valid parameter numbers you Enter are: "); 
+       fprintf(stderr, " The valid parameter numbers you Enter are: "); 
        for (index = 0; index < nindex; index++)
-            printf(" %d ", sds_index[index]);
+            fprintf(stderr, " %d ", sds_index[index]);
     }
     else
-       printf(" No sds selected -- # of parameters = 0 \n");  
+       fprintf(stderr, " No sds selected -- # of parameters = 0 \n");  
 
 
 /*
@@ -288,27 +293,102 @@ main(int argc, char *argv[])
         status = SDgetcal(sds_id, &gain, &gain_err, &offset, &offset_err, &cal_data_type );
 
 
-        printf("\n ****************************************\n");
-        printf("  SDS name  = %s\n",  sds_name);
-        printf("  SDS type  = %4d\n", num_type);
-        printf("  SDS rank  = %4d\n", rank);
-        printf("  SDS scale = %f\n",  gain);
-        printf("  SDS dims  = ");
+        fprintf(stderr, "\n ****************************************\n");
+        fprintf(stderr, "  SDS name  = %s\n",  sds_name);
+        fprintf(stderr, "  SDS type  = %4d\n", num_type);
+        fprintf(stderr, "  SDS rank  = %4d\n", rank);
+        fprintf(stderr, "  SDS scale = %f\n",  gain);
+        fprintf(stderr, "  SDS dims  = ");
         for (j = 0; j < rank; j++) {
-             printf("%6d", dim_sizes[j]);
+             fprintf(stderr, "%6d", dim_sizes[j]);
              num_element *= dim_sizes[j];
         }
-        printf ("\n");
+        fprintf(stderr, "\nrank: %i, num_element: %i = %i * %i * %i\n",rank, num_element,dim_sizes[0],dim_sizes[1],dim_sizes[2]);
 
-        for (j = 0; j < rank; j++) {
-            edges[j]  = dim_sizes[j];
-            stride[j] = 1;
-            start[j]  = 0;
+/* HDF rank:
+  A rank 2 dataset is an image read in scan-line order (2D). 
+  A rank 3 dataset is a series of images which are read in an image at a time
+  to form a volume.
+  A rank 4 dataset may be thought of as a series of volumes.
+
+  The "start" array specifies the multi-dimensional index of the starting
+  corner of the hyperslab to read. The values are zero based.
+
+  The "edge" array specifies the number of values to read along each
+  dimension of the hyperslab.
+
+  The "stride" array allows for sub-sampling along each dimension. If a
+  stride value is specified for a dimension, that many values will be
+  skipped over when reading along that dimension. Specifying stride = NULL
+  in the C interface or stride = 1 in either interface specifies contiguous
+  reading of data. If the stride values are set to 0, SDreaddata returns
+  FAIL (or -1). No matter what stride value is provided, data is always
+  placed contiguously in buffer.
+ 
+  See also:
+   http://www.dur.ac.uk/~dcs0elb/au-case-study/code/hdf-browse.c.html
+   http://dao.gsfc.nasa.gov/DAO_people/yin/quads.code.html
+
+Meaning of start, edges, stride:
+http://www.swa.com/meteorology/hdf/tutorial/File_reading.html
+YL = 30;
+XL = 30;
+dims[0] = YL;
+ dims[1] = XL;
+ start[0] =0;  row start - X axis
+ start[1]=0; column start - Y axis
+ edges[0] = dims[0];  - number elements to read  
+ edges[1] = dims[1]; - number elements to read 
+ stride[0] = 3;   - skip every 3rd element 
+ stride[1] = 1; - no skip with value 1
+*/
+        /* initialization */
+        switch(rank)
+        {
+	case 4:
+	    /* 4Dim: volume-time */
+	    fprintf(stderr, "found 4D HDF - volume/time arrays \n");
+	    start[3]  = 0;
+	    stride[3] = 1;
+	    edges[3]  = dim_sizes[3];
+	    start[2]  = 0;		/* 3Dim: slice# */
+	    stride[2] = 1;
+	    edges[2]  = dim_sizes[2];
+	    start[0]  = 0;
+	    stride[0] = 1;
+	    edges[0]  = dim_sizes[0];
+	    start[1]  = 0;
+	    stride[1] = 1;
+	    break;
+	case 3:
+                        /* 3Dim: volume */
+	    fprintf(stderr, "found MODIS 2Q product compliant type (3D HDF)\n");
+	    start[2]  = 0;		/* 3Dim: slice# */
+	    stride[2] = 1;
+	    edges[2]  = dim_sizes[2];
+	    start[1]  = 0;
+	    stride[1] = 1;
+	    edges[1]  = dim_sizes[1];
+	    start[0]  = 0;
+	    stride[0] = 1;
+	    edges[0]  = dim_sizes[0];
+	    break;
+	case 2:
+	    /* 2Dim: rows/cols */
+                       fprintf(stderr, "found ASTER compliant type (2D HDF)\n");
+	    start[1]  = 0;
+	    stride[1] = 1;
+	    edges[1]  = dim_sizes[1];
+	    start[0]  = 0;
+	    stride[0] = 1;
+	    edges[0]  = dim_sizes[0];
+                        break;
         }
 
 /*
  * Read HDF sds arrays
  */
+        fprintf(stderr, "Allocating memory for temp file...\n");
         switch (num_type)
         {
           case DFNT_FLOAT32: f32 = (float *) malloc( num_element * sizeof(float)); break;
@@ -316,12 +396,24 @@ main(int argc, char *argv[])
           case DFNT_INT8: i8 = (int8 *) malloc( num_element * sizeof(int8)); break;
           case DFNT_UINT8: ui8 = (uint8 *) malloc( num_element * sizeof(uint8)); break;
           case DFNT_INT16: i16 = (int16 *) malloc( num_element * sizeof(int16)); break;
-          case DFNT_UINT16: ui16 = (uint16 *) malloc( num_element * sizeof(uint16)); break;
+          case DFNT_UINT16:
+               if (rank == 2) /* MODIS 500m, 1km resolution*/
+                  ui16 = (uint16 *) malloc( num_element * sizeof(uint16));
+               if (rank == 3) /* MODIS 2Q products 250m resolution*/
+               {
+                  ui16A = (uint16 *) malloc( num_element * sizeof(uint16));
+                  ui16B = (uint16 *) malloc( num_element * sizeof(uint16));
+               }                  
+               break;
           case DFNT_INT32: i32 = (int32 *) malloc( num_element * sizeof(int32)); break;
           case DFNT_UINT32: ui32 = (uint32 *) malloc( num_element * sizeof(uint32)); break;
           case DFNT_CHAR8: c8 = (char8 *) malloc( num_element * sizeof(char8)); break;
-          default: printf("not valid data type\n"); break;
+          default: fprintf(stderr, "not valid data type - not implemented\n"); break;
         }
+
+        /* check initialization */
+        for (i = 0; i < rank; i++)
+            fprintf(stderr,"%i-start: %i  edges: %i stride: %i\n",i, start[i],edges[i],stride[i]);
 
         switch (num_type)
         {
@@ -330,15 +422,23 @@ main(int argc, char *argv[])
           case DFNT_INT8:    status = SDreaddata (sds_id, start, NULL, edges, i8); break;
           case DFNT_UINT8:   status = SDreaddata (sds_id, start, NULL, edges, ui8); break;
           case DFNT_INT16:   status = SDreaddata (sds_id, start, NULL, edges, i16); break;
-          case DFNT_UINT16:  status = SDreaddata (sds_id, start, NULL, edges, ui16); break;
+          case DFNT_UINT16:
+               if (rank == 2) /* MODIS 500m, 1km resolution*/
+                  status = SDreaddata (sds_id, start, NULL, edges, ui16);
+               if (rank == 3) /* MODIS 2Q products 250m resolution*/
+               {
+                  status = SDreaddata (sds_id, start, NULL, edges, ui16);
+                   /* status=read_variable_new(hdf_file->answer, "EV_250_RefSB",start[0],edges[1],edges[2],VarNew2); */
+               }
+            break;
           case DFNT_INT32:   status = SDreaddata (sds_id, start, NULL, edges, i32); break;
           case DFNT_UINT32:  status = SDreaddata (sds_id, start, NULL, edges, ui32); break;
           case DFNT_CHAR8:   status = SDreaddata (sds_id, start, NULL, edges, c8); break;
-          default: printf("not valid data type\n"); break;
+          default: fprintf(stderr, "not valid data type\n"); break;
         }
 
         if ( status != 0 )
-           printf("\n SDreaddata failed on data set %s. \n", sds_name);
+           fprintf(stderr, "\n SDreaddata failed on data set %s. \n", sds_name);
                  
 /*
  * Out put sds to binary data file
@@ -347,13 +447,39 @@ main(int argc, char *argv[])
 /* see numbers in
    4.1r5-linux/include/hntdefs.h
  */
-        tempfile = strdup(infile);
-        strcpy(outfile, tempfile);
-        strcat(outfile, sds_name);
-        sds_fp = fopen(outfile,"wb");
-        if (sds_fp == NULL)
-            printf("Open output sds file failed. \n");
-        printf("sds file %s. \n", outfile);
+        if (rank == 2)
+        {
+            /* write one temp file */
+          tempfile = strdup(infile);
+          strcpy(outfile, tempfile);
+          strcat(outfile, sds_name);
+          sds_fp = fopen(outfile,"wb");
+          if (sds_fp == NULL)
+            fprintf(stderr, "Open output sds file failed. \n");
+          fprintf(stderr, "sds file %s. \n", outfile);
+        }
+        
+        if (rank == 3)
+        {
+            /* write two temp files */
+          tempfile = strdup(infile);
+          strcpy(outfile, tempfile);
+          strcat(outfile, sds_name);
+          strcat(outfile, "A");
+          sds_fpA = fopen(outfile,"wb");
+          if (sds_fpA == NULL)
+            fprintf(stderr, "Open output sds fileA failed. \n");
+          fprintf(stderr, "sds file %s. \n", outfile);
+          
+          tempfile = strdup(infile);
+          strcpy(outfile, tempfile);
+          strcat(outfile, sds_name);
+          strcat(outfile, "B");
+          sds_fpB = fopen(outfile,"wb");
+          if (sds_fpB == NULL)
+            fprintf(stderr, "Open output sds fileB failed. \n");
+          fprintf(stderr, "sds file %s. \n", outfile);
+        }
 
         switch (num_type)
         {
@@ -379,11 +505,11 @@ main(int argc, char *argv[])
             break;
           case DFNT_UINT16:  /* 23 */
 /* not working yet for MODIS */
-            status = fwrite(ui16, num_element * sizeof(uint16),1,sds_fp);
-
-            /* get dimensions (c, r) again - to be sure */
-            status2 = SDgetinfo(sds_id, sds_name, &rank, dim_sizes, &num_type, &attributes);
-            bytes=4;
+              /*status = fwrite(ui16A, num_element * sizeof(uint16),1,sds_fpA);
+                status = fwrite(ui16B, num_element * sizeof(uint16),1,sds_fpB);*/
+            fwrite((void *) VarNew2, sizeof(float), LX*LY, sds_fpA);
+            fwrite((void *) VarNew2, sizeof(float), LX*LY, sds_fpB);
+            bytes=2;
             break;
           case DFNT_INT32:   
             status = fwrite(i32, num_element * sizeof(int32),1,sds_fp);
@@ -394,25 +520,39 @@ main(int argc, char *argv[])
           case DFNT_CHAR8:   
             status = fwrite(c8, num_element * sizeof(c8),1,sds_fp); 
             break;
-          default: printf("not valid data type\n"); break;
+          default: fprintf(stderr, "not valid data type\n"); break;
         }
+
+        /*
+          for(i=0;i<num_element;i++)
+          fprintf(stdout,"%u\t",ui16[i]);
+          fprintf(stdout,"\n");
+        */
+
 
         if ( status == 0 ) 
            fprintf(stderr, "\n fwrite failed on data set %s. \n", sds_name);
         else
            fprintf(stderr, "\n Binary temp file successfully created.\n");
 
-        fclose(sds_fp);
+       if (rank == 3)
+        {
+            fclose(sds_fpA);
+            fclose(sds_fpB);
+        }
+       else
+           fclose(sds_fp);
 
         G_free(tempfile);
 
+#ifdef YES
        /* dim_sizes cols and rows*/
         fprintf(stderr, "Importing into GRASS....\n");
         sprintf(cmd, "r.in.bin in=%s out=%s r=%i c=%i bytes=%i",outfile,outfile,dim_sizes[rank-2],dim_sizes[rank-1], bytes);
         G_system(cmd);
 
        /* coltable*/
-        fprintf(stderr, "Grey.eq color table...\n");
+        fprintf(stderr, "Applying Grey.eq color table...\n");
         sprintf(cmd, "g.region save=%s.tmpreg.%s; g.region rast=%s;\
                       r.colors %s col=grey.eq;\
                       g.region region=%s.tmpreg.%s;
@@ -424,7 +564,7 @@ main(int argc, char *argv[])
         sprintf(cmd, "rm -f %s",outfile);
         G_system(cmd);
         fprintf(stderr, "GRASS file successfully created:\n %s\n", outfile);
-
+#endif
         switch (num_type)
         {
           case DFNT_FLOAT32: free(f32); break;
@@ -436,7 +576,7 @@ main(int argc, char *argv[])
           case DFNT_INT32: free(i32); break;
           case DFNT_UINT32: free(ui32); break;
           case DFNT_CHAR8: free(c8); break;
-          default: printf("not valid data type\n"); break;
+          default: fprintf(stderr, "not valid data type\n"); break;
         }
 
         status = SDendaccess(sds_id);
@@ -449,7 +589,7 @@ main(int argc, char *argv[])
    } /* end of if statement for nindex */
 
     status = SDend(sd_id);
-    printf(" \n\n");
+    fprintf(stderr, " \n\n");
 
 
 /*=================================*/
@@ -463,11 +603,11 @@ main(int argc, char *argv[])
     vdata_ref = - 1;
     vdata_ref =  VSgetid(file_id, vdata_ref);
     if ( vdata_ref == -1 ) {
-         printf("\n No Vdatas found in data set\n");
+         fprintf(stderr, "\n No Vdatas found in data set\n");
          exit(-1);
     }
 
-    printf("\n\n  List of Vdata name:               (rec_num   rec_size)\n\n");
+    fprintf(stderr, "\n\n  List of Vdata name:               (rec_num   rec_size)\n\n");
     while(vdata_ref != -1) {
       vdata_id    = VSattach(file_id, vdata_ref, "r");
 
@@ -475,7 +615,7 @@ main(int argc, char *argv[])
                          fields, &vdata_size, vdata_name);
 
       if ( status != 0 ) {
-          printf("\n VSinquire failed on vdata %s\n", vdata_name);
+          fprintf(stderr, "\n VSinquire failed on vdata %s\n", vdata_name);
           exit(-1);
       }
 
@@ -483,7 +623,7 @@ main(int argc, char *argv[])
            strstr(vdata_name, "offset") == NULL &&
            strstr(vdata_name, "factor") == NULL ) {
          total_vref[total_vidx++] = vdata_ref;
-         printf(" %2d)  %-30s   %5d     %5d \n", total_vidx, vdata_name,
+         fprintf(stderr, " %2d)  %-30s   %5d     %5d \n", total_vidx, vdata_name,
                  n_records, vdata_size);
       }
 
@@ -496,12 +636,12 @@ main(int argc, char *argv[])
  * Prompt user for desired vdata to be written as binary file
  */
 
-    printf("\n Enter total number of vdata to write out or 0 to exit program\n");
+    fprintf(stderr, "\nEnter total number of vdata to write out or 0 to exit program\n");
     scanf("%d", &nparm);
     if(nparm == 0) {
        nindex = 0;
        vdata_index[nindex] = 0;
-        printf("\n End of Slect_vNsds\n");
+        fprintf(stderr, "\n End of HDF import.\n");
          exit(-1);
     }
     else if (nparm == total_vidx){
@@ -510,7 +650,7 @@ main(int argc, char *argv[])
            vdata_index[nindex++] = index+1;
     }
     else {
-       printf("\n Enter parameter numbers from above list separated by white space\n");
+       fprintf(stderr, "\nEnter parameter numbers from above list separated by white space\n");
        nindex = 0;
        for (index = 0; index < nparm; index++) {
            scanf("%d", &temparm);
@@ -520,12 +660,12 @@ main(int argc, char *argv[])
     }
 
     if(nparm > 0) {
-       printf(" The valid vdata numbers you Enter are: ");
+       fprintf(stderr, "The valid vdata numbers you Enter are: ");
        for (index = 0; index < nindex; index++)
-            printf(" %d ", vdata_index[index]);
+            fprintf(stderr, " %d ", vdata_index[index]);
     }
     else
-       printf(" No vdata selected -- # of vdata = 0 \n");
+       fprintf(stderr, " No vdata selected -- # of vdata = 0 \n");
 
 
 /*
@@ -543,14 +683,14 @@ main(int argc, char *argv[])
                             fields, &vdata_size, vdata_name);
 
          if ( status != 0 ) {
-             printf("\n VSinquire failed on vdata %s\n", vdata_name);
+             fprintf(stderr, "\n VSinquire failed on vdata %s\n", vdata_name);
              exit(-1);
          }
 
-         printf("\n\n *************************************************\n");
-         printf("   Vdata name     :   %s\n", vdata_name);
-         printf("   Vdata recs     :   %d\n", n_records);
-         printf("   Vdata recsize  :   %d\n", vdata_size);
+         fprintf(stderr, "\n\n *************************************************\n");
+         fprintf(stderr, "   Vdata name     :   %s\n", vdata_name);
+         fprintf(stderr, "   Vdata recs     :   %d\n", n_records);
+         fprintf(stderr, "   Vdata recsize  :   %d\n", vdata_size);
 
          status = VSsetfields( vdata_id, fields );
 
@@ -558,17 +698,17 @@ main(int argc, char *argv[])
          status = VSread(vdata_id, vdatabuf, n_records, FULL_INTERLACE);
 
          if (status != n_records) 
-            printf("\n Vdata recs read and num_rec do not match");
+            fprintf(stderr, "\n Vdata recs read and num_rec do not match");
  
          ifield = VFnfields(vdata_id);
 
-         printf("   Field Name list: \n");
+         fprintf(stderr, "   Field Name list: \n");
          for (field_index = 0; field_index<ifield; field_index++) {
              fieldname = VFfieldname(vdata_id, field_index);
              field_size   = VFfieldisize( vdata_id, field_index );
              field_order  = VFfieldorder( vdata_id, field_index );
              field_type   = VFfieldtype( vdata_id, field_index );
-             printf("         %-20s  (size: %4d, type: %3d )\n",
+             fprintf(stderr, "         %-20s  (size: %4d, type: %3d )\n",
                      fieldname,field_size, field_type);
          }
   
@@ -581,12 +721,12 @@ main(int argc, char *argv[])
          strcat(outfile, vdata_name);
          vd_fp = fopen(outfile,"wb");
          if (vd_fp == NULL)
-             printf("Open vdata file failed  %s\n", vdata_name);
+             fprintf(stderr, "Open vdata file failed  %s\n", vdata_name);
          status = fwrite(vdatabuf, sizeof(uint8), n_records * vdata_size, vd_fp);
          if ( status == 0 ) 
-             printf("\n fwrite failed on vdata %s. \n", vdata_name);
+             fprintf(stderr, "\n fwrite failed on vdata %s. \n", vdata_name);
          else
-            printf("\n Binary file successfully created : %s\n", outfile);
+            fprintf(stderr, "\n Binary file successfully created : %s\n", outfile);
 
 
          fclose(vd_fp);
@@ -598,9 +738,70 @@ main(int argc, char *argv[])
 
    } /* end of if statement for nindex */
 
-   printf("\n\n");
+   fprintf(stderr, "\n\n");
    status = Vend ( file_id );
    status = Hclose( file_id );
 
+}
 
+int read_variable_new(char *charfilename, char *svarname2,    \
+     int itime,  int lx, int ly, DATAP2 VarNew2)
+
+/*
+* http://dao.gsfc.nasa.gov/DAO_people/yin/quads.code.html
+* !INPUT PARAMETERS:
+* char *charfilename     indicates a character pointer which
+*                        contains the filename for the dataset
+* char *svarname2        indicates the current variable name
+* int itime              indicates the current time step
+* int lx;                indicates the max latitude
+* int ly;                indicates the max longitude
+* int lz;                indicates the max vertical level
+*
+* !INPUT/OUTPUT PARAMETERS:
+* DATAP VarNew           a two or three dimension array for checking
+*
+* !DESCRIPTION:
+* read two or three dimension data (lx*ly or lx*ly*lz) from GEOS-3
+*   in HDF format
+*
+* !REVISION HISTORY:
+*   31Jan1998      Baoyu Yin     Initial Code.
+*
+*/
+                            
+{
+        int32 sd_id, sds_id,sds_id1,sds_id2, istat, istat1,readstat;
+        int32 sds_id11,sds_id12;
+        int32 dims[3], start[3], edges[3], rank;
+        intn i, j, t;
+        int x,y,z;
+
+        sd_id = SDstart(charfilename, DFACC_READ);
+
+        rank = 3;
+        dims[0] = 1;
+        dims[1] = ly;
+        dims[2] = lx;
+
+        sds_id2 = SDnametoindex(sd_id, svarname2);
+fprintf(stderr,"SDnametoindex %i\n",sds_id2 );
+        sds_id12 = SDselect(sd_id, sds_id2);
+        for (i = 0; i < rank; i++) {
+                start[i] = 0;
+                edges[i] = dims[i];
+fprintf(stderr,"%i-start: %i  edges: %i\n",i, start[i],edges[i]);
+        }
+        start[0] = itime;
+
+        readstat = SDreaddata(sds_id12, start, NULL, edges, VarNew2);
+        if ( readstat != 0 )
+           fprintf(stderr, "\n  read_variable_new: SDreaddata failed \n");
+        else
+           fprintf(stderr, "Success!\n");
+                 
+        istat = SDendaccess(sds_id2);
+
+        istat = SDend(sd_id);
+        return(readstat);
 }
