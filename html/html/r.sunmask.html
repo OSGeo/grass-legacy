@@ -17,12 +17,24 @@
 <B>output</B><EM>=name</EM> 
 <B>altitude</B><EM>=value</EM>
 <B>azimuth</B><EM>=value</EM>
+<B>year</B><EM>=value</EM>
+<B>month</B><EM>=value</EM>
+<B>day</B><EM>=value</EM>
+<B>hour</B><EM>=value</EM>
+<B>minute</B><EM>=value</EM>
+<B>second</B><EM>=value</EM>
+<B>timezone</B><EM>=value</EM>
+<B>east</B><EM>=value</EM>
+<B>north</B><EM>=value</EM>
 
 <H2>DESCRIPTION</H2>
 
 <em>r.sunmask</em> creates an output map layer based on an input elevation
 raster map layer and the sun position. The output map layer contains the
-cast shadow areas arising from sun shine and elevations.
+cast shadow areas arising from sun shine and elevations. The user can define
+the sun position either directly or the module calculates it from given
+location and date/time parameters using the <a
+href=http://rredc.nrel.gov/solar/codes_algs/solpos/>NREL</a> sun position algorithm.
 
 <H3>Flag:</H3>
 <DL>
@@ -43,7 +55,37 @@ cast shadow areas arising from sun shine and elevations.
 
 <DT><B>azimuth</B>
 <DD>azimuth of the sun from the north, degrees (options: 0-360)
+
+<DT><B>year</B>
+<DD>year (1950..2050) for sun position calculation
+
+<DT><B>month</B>
+<DD>month (0..12) for sun position calculation
+
+<DT><B>day</B>
+<DD>day (0..31) for sun position calculation
+
+<DT><B>hour</B>
+<DD>hour (0..12) for sun position calculation
+
+<DT><B>minute</B>
+<DD>minutes (0..60) for sun position calculation
+
+<DT><B>second</B>
+<DD>seconds (0..60) for sun position calculation
+
+<DT><B>timezone</B>
+<DD>timezone (east positive, counted from Greenwich)
+
+<DT><B>east</B>
+<DD>east coordinate, usually of map center
+
+<DT><B>north</B>
+<DD>north coordinate, usually of map center
 </DL>
+
+The module performs sunset/sunrise checks and refraction correction for sun
+position calculation.
 
 <H2>SEE ALSO</H2>
 <EM>
@@ -53,7 +95,8 @@ cast shadow areas arising from sun shine and elevations.
 
 <H2>AUTHOR</H2>
 Janne Soimasuo, Finland 1994<br>
-update to FP by Huidae Cho 2001
+update to FP by Huidae Cho 2001<br>
+added solpos algorithm feature by Markus Neteler 2001
 
 </BODY>
 </HTML>
