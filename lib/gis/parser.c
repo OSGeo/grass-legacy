@@ -962,20 +962,6 @@ static void G_usage_xml (void)
 				print_escaped_for_xml(stdout, opt->def);
 				fprintf(stdout, "\n\t\t\t</default>\n");
 			}
-			if(opt->descs) {
-			    int i = 0;
-
-			    while ( opt->opts[i] ) {
-				fprintf(stdout, "<DD><b>%s</b>: ", opt->opts[i]);
-
-				if (  opt->descs[i] )
-				    fprintf (stdout, "%s", opt->descs[i] );
-				
-				fprintf(stdout, "</DD>\n");
-				
-				i++;
-			    }
-			}
 
 			if(opt->options) {
 			        i = 0;
