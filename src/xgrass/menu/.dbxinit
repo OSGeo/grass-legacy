@@ -1,0 +1,7 @@
+alias q quit
+alias s step
+alias n next
+alias p print
+alias c cont
+alias r run
+use /grass.src/4.1/src/libes/Xgi /grass.src/4.1/src.x/menu
