@@ -1,0 +1,15 @@
+
+------------------------------------------------------------------
+KEYWORD: recover
+    "recover" is used to read in a previously defined weight analysis.
+    It completely erases any currently defined analysis.  WARNING:
+    "save" does NOT save the "multiply" or "add" information. Hence,
+    "recover" sets the add/multiply option by default to "add". You
+	must specify "multiply" if you so desire.
+
+EXAMPLE: 
+    recover hospital_site
+
+ALIAS: get
+------------------------------------------------------------------
+
