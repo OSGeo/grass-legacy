@@ -1,5 +1,4 @@
-: '%W% %G%'
-
+:
 MAPLP=${MAPLP-/dev/maplp}
 BAUD=9600
 
