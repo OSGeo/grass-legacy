@@ -30,15 +30,20 @@
 int 
 Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 {
-    int    type;
+    int    i, type, nlines;
     struct line_pnts *Points;
     struct line_cats *Cats;
 
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     
-    while (1) {
-	type =  Vect_read_next_line (In, Points, Cats);
+    /* Note: it is important to copy on level 2 (pseudotopo centroids) */
+    if ( Vect_level ( In ) < 2 )
+	G_fatal_error ("Input is not opened on level 2" );
+    
+    nlines = Vect_get_num_lines ( In );
+    for ( i = 1; i <= nlines; i++ ) {
+	type =  Vect_read_line (In, Points, Cats, i);
 	switch ( type ) {
             case -1:
 		G_warning ("Cannot read vector file\n" );
@@ -53,8 +58,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
        	Vect_write_line ( Out, type, Points, Cats );
     }
 
-    
-    /* Not reached */
+    return 0;
 }
 
 /*!
@@ -73,19 +77,11 @@ Vect_copy ( char *in, char *mapset, char *out )
     G_debug (3, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
 
     /* Open input */
-    Vect_set_open_level (1); /* Topo not needed */
-    ret = Vect_open_old (&In, in, mapset);
-    if ( ret < 1 ) {
-	G_warning ( "Cannot open input vector %s in mapset %s", in, mapset );
-	return -1;
-    }
+    Vect_set_open_level (2);
+    Vect_open_old (&In, in, mapset);
     
     /* Open output */
-    ret = Vect_open_new (&Out, out, Vect_is_3d(&In) );
-    if ( ret < 1 ) {
-	G_warning ( "Cannot open output vector %s", out );
-	return -1;
-    }
+    Vect_open_new (&Out, out, Vect_is_3d(&In) );
     
     /* Copy lines */
     ret = Vect_copy_map_lines ( &In, &Out );
