@@ -65,8 +65,8 @@ distclean: clean
 	${SHELL} -c "rm -f include/Make/Platform.make 2>/dev/null ; true"
 
 bindist:  
-	( date=`date '+%m%d%y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass51-$$date-${ARCH}-bin.tar.gz)
-	date=`date '+%m%d%y'`; name=grass51-$$date-${ARCH}-bin.tar.gz; \
+	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass51-$$date-${ARCH}-bin.tar.gz)
+	date=`date '+%d_%m_%Y'`; name=grass51-$$date-${ARCH}-bin.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
 	    sed -e "s/BIN_DIST_VERSION/51-$$date/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
