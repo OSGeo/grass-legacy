@@ -5,6 +5,7 @@
  * Andreas Lange, andreas.lange@rhein-main.de
  * version 0.9
  * modified Jun 21 2000 
+ * modified Oct 20 2000
  *
  ***********************************************************************/
 
@@ -38,7 +39,7 @@
 /* if you want support for Bursa Wolf transformation, uncomment the following: */
 /* #define BURSAWOLF */
 
-const char rcsid[] = "@(#)$Header"; 
+const char rcsid[] = "@(#)$Id$"; 
 
 int
 main (int argc, char *argv[]) 
@@ -95,12 +96,12 @@ main (int argc, char *argv[])
     flags.method_m = G_define_flag();
     flags.method_m->key = 'm';
     flags.method_m->description = "use molodensky transformation";
-    flags.method_m->answer = NULL;
+    flags.method_m->answer = '\0';
 
     flags.method_w = G_define_flag();
     flags.method_w->key = 'w';
     flags.method_w->description = "use bursa wolf 3d similarity transformation (not implemented)";
-    flags.method_w->answer = NULL;
+    flags.method_w->answer = '\0';
 
     parm.lat = G_define_option();
     parm.lat->key = "latitude";
