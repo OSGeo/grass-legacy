@@ -43,7 +43,7 @@ int Graph_Close (void)
 
     Cellbuf = G_allocate_cell_buf ();
     if ((newmap = G_open_cell_new (FILE_NAME)) == -1)
-	fprintf (stderr, "Error creating cell file '%s'\n", Filename), exit(-1);
+	G_fatal_error("Error creating map '%s'\n", FILE_NAME);
     
 
     for (row = screen_top; row < screen_bottom; row++)
