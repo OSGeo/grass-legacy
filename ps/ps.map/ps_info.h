@@ -64,6 +64,8 @@ struct PS_data
     double ew_res, ns_res;
     double ew_to_x, ns_to_y;
     double r0, g0, b0;
+    int    mask_color;
+    double mask_r, mask_g, mask_b;
     double outline_width;
     FILE *fp;
 };

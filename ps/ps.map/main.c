@@ -187,6 +187,7 @@ int main(int argc,char *argv[])
     PS.celltitle[0] = 0;
     PS.commentfile = NULL;
     PS.num_psfiles = 0;
+    PS.mask_color = 0;
 
     /* PS.map_* variables are set to 0 (not defined) and then may be reset by 'maploc'.
      * When script is read, main() should call reset_map_location() to reset map size to fit to paper */
@@ -661,6 +662,24 @@ int main(int argc,char *argv[])
 	    PS.psfiles[PS.num_psfiles] = G_store(data);
 	    PS.num_psfiles++;
 	    continue;
+	}
+
+	if (KEY("maskcolor"))
+	{
+	    int ret, r, g, b;
+
+	    ret = G_str_to_color( data, &r,  &g,  &b);
+	    if ( ret == 1 ) {
+		PS.mask_r = r/255;
+		PS.mask_g = g/255;
+		PS.mask_b = b/255;
+		PS.mask_color = 1;
+		continue;
+	    } else if ( ret == 2 ) { /* none */
+		continue; 
+	    } else {
+		error (key,data,"illegal color request");
+	    }
 	}
 
 	if (*key)
