@@ -1,0 +1,18 @@
+:
+# test for d.vect.db where all required command line args are provided
+# DB=tiger, GISdb=SECO
+#
+# Following line queries tiger fea for roads
+#d.vect.db  key=record_num tab=feature where='cfcc matches "A2*"' map=bandera.tgr color=red
+#
+# Following line queries tiger fea for streams
+d.vect.db  key=record_num tab=feature where='cfcc matches "H11"' map=bandera.tgr color=green
+#
+# Following line queries tiger fea for RR
+#d.vect.db  key=record_num tab=feature where='cfcc matches "B*"' map=bandera.tgr color=green
+#
+# Following line queries tiger fea for all
+#d.vect.db  key=record_num tab=feature where='cfcc matches "B1*" OR cfcc matches"A2*" OR cfcc matches "H11"' map=bandera.tgr color=red
+#
+# Following line queries tiger fea for streams
+#d.vect.db  key=record_num tab=feature where='feature_name matches "*River"' map=bandera.tgr color=green
