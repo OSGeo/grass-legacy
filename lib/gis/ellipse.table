@@ -77,7 +77,7 @@ hayford		"Hayford"			a=6378388.000	f=1/297.000
 # Appl. Physics. 1965
 apl4.9		"Appl. Phys. 1965"		a=6378137.0	f=1/298.25
 # Australian Natl & S. Amer. 1969
-aust_SA		"Australian Natl & S. Amer. 1969" a=6378160.000	f=1/298.25
+aust_sa		"Australian Natl & S. Amer. 1969" a=6378160.000	f=1/298.25
 # Andrae 1876 (Den., Iclnd.)
 andrae		"Andrae 1876"			a=6377104.43	f=1/300.0
 # Comm. des Poids et Mesures 1799
