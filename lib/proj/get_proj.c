@@ -53,8 +53,8 @@ static int nopt1;
  * \param in_units_keys PROJ_UNITS-style key-value pairs
  * 
  * \return -1 on error (unable to initialise PROJ.4)
- *          2 if default 3-parameter datum shift values from datum.table were 
- *            used
+ *          2 if "default" 3-parameter datum shift values from datum.table
+ *            were used
  *          3 if an unrecognised datum name was passed on to PROJ.4 (and
  *            initialisation was successful
  *          1 otherwise
@@ -180,20 +180,19 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 	alloc_options(buffa);
 	/* Cannot use es directly because the OSRImportFromProj4() 
 	 * function in OGR only accepts b or rf as the 2nd parameter */
-	if (es == 0) {
+	if (es == 0)
 	    sprintf(buffa, "b=%.16g", a);
-	    /* Workaround to stop PROJ reading values from defaults file when
-	     * rf is not specified */
-	    if (G_find_key_value("no_defs", in_proj_keys) == NULL) {
-	        alloc_options(buffa);
-	        sprintf(buffa, "no_defs");
-	    }	    	    
-	}
 	else
 	    sprintf(buffa, "rf=%.16g", rf);
 	alloc_options(buffa);
 
     }
+    /* Workaround to stop PROJ reading values from defaults file when
+     * rf (and sometimes ellps) is not specified */
+    if (G_find_key_value("no_defs", in_proj_keys) == NULL) {
+        sprintf(buffa, "no_defs");
+        alloc_options(buffa);
+    }	    	    
 
     /* If datum parameters are present in the PROJ_INFO keys, pass them on */
     if (GPJ__get_datum_params(in_proj_keys, &datum, &params) == 2) {
@@ -205,12 +204,12 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 	 * from the datum.table file */
     }
     else if (datum != NULL) {
-	if (GPJ_get_datum_by_name(datum, &dstruct) > 0) {
-	    sprintf(buffa, "towgs84=%.16g,%.16g,%.16g", dstruct.dx, dstruct.dy,
-		    dstruct.dz);
+        
+	if (GPJ_get_default_datum_params_by_name(datum, &params) > 0) {
+	    sprintf(buffa, params);
 	    alloc_options(buffa);
 	    returnval = 2;
-	    GPJ_free_datum(&dstruct);
+	    G_free(params);
 
 	    /* else just pass the datum name on and hope it is recognised by 
 	     * PROJ.4 even though it isn't recognised by GRASS */

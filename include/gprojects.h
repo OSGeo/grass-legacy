@@ -64,13 +64,20 @@ char * GPJ_grass_to_wkt (struct Key_Value *,
 			       struct Key_Value *, int, int );
 OGRSpatialReferenceH * GPJ_grass_to_osr (struct Key_Value *, 
                                                struct Key_Value * );
+int GPJ_wkt_to_grass(struct Cell_head *, struct Key_Value **,
+                     struct Key_Value **, const char *, int);
+int GPJ_osr_to_grass(struct Cell_head *, struct Key_Value **,
+                     struct Key_Value **, OGRSpatialReferenceH *, int);
+const char *GPJ_set_csv_loc(const char *);
 #endif
 
 /* datum.c */
 int GPJ_get_datum_by_name (const char *, struct gpj_datum *);
+int GPJ_get_default_datum_params_by_name(const char *, char **);
 int GPJ_get_datum_params (char **, char **);
 int GPJ__get_datum_params (struct Key_Value *, char **, char **);
 void GPJ_free_datum (struct gpj_datum *);
+int GPJ_ask_datum_params(char *, char **);
   
 /* ellipse.c */
 int GPJ_get_ellipsoid_by_name (const char *, struct gpj_ellps *);

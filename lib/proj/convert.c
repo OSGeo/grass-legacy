@@ -5,6 +5,7 @@
  *
  * MODULE:       gproj library
  * AUTHOR(S):    Paul Kelly
+ *               Frank Warmerdam
  * PURPOSE:      Functions for manipulating co-ordinate system representations
  * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  *
@@ -15,13 +16,20 @@
  *****************************************************************************/
 
 #include "config.h"
+
+#ifdef HAVE_OGR
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "gprojects.h"
+#include <cpl_csv.h>
+#include "local_proto.h"
 
-#ifdef HAVE_OGR
+/* GRASS relative location of OGR co-ordinate system lookup tables */
+#define CSVDIR "/etc/ogr_csv"
+
+static void GPJ_DatumNameMassage( char ** );
 
 /**
  * \brief Convert a GRASS co-ordinate system representation to WKT style
@@ -93,7 +101,7 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     if( (proj_info == NULL) || (proj_units == NULL) )
         return NULL;
-
+   
     hSRS = OSRNewSpatialReference(NULL);
 
     if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0) {
@@ -217,14 +225,433 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     return hSRS2;
 }
 
-/*
- * int GPJ_osr_to_grass(struct Cell_Head *cellhd, struct Key_Value *projinfo, 
- * struct Key_Value *projunits, OGRSpatialReferenceH *hSRS)
- * {
- * This function is currently in r.in.gdal but will be moved here
- * 
- * 
- * }
- */
+int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
+                     struct Key_Value **projunits, OGRSpatialReferenceH *hSRS,
+		     int interactive)
+{
+    struct Key_Value *temp_projinfo;
+    char *pszProj4 = NULL, *pszRemaining;
+    char *pszProj = NULL;
+    
+    if( hSRS == NULL )
+        goto default_to_xy;
+ 
+    /* Set finder function for locating OGR csv co-ordinate system tables */
+    SetCSVFilenameHook( GPJ_set_csv_loc );
+     
+    /* Hopefully this doesn't do any harm if it wasn't in ESRI format
+     * to start with... */
+    OSRMorphFromESRI( hSRS );
+
+/* -------------------------------------------------------------------- */
+/*      Set cellhd for well known coordinate systems.                   */
+/* -------------------------------------------------------------------- */
+    if( !OSRIsGeographic( hSRS ) && !OSRIsProjected( hSRS ) )
+        goto default_to_xy;
+
+    if( cellhd )
+    {
+        int   bNorth;
+
+        if( OSRIsGeographic( hSRS ) )
+        {
+            cellhd->proj = PROJECTION_LL;
+            cellhd->zone = 0;
+        }
+        else if( OSRGetUTMZone( hSRS, &bNorth ) != 0 )
+        {
+            cellhd->proj = PROJECTION_UTM;
+            cellhd->zone = OSRGetUTMZone( hSRS, &bNorth );
+        }
+        else 
+        {
+            cellhd->proj = PROJECTION_OTHER;
+            cellhd->zone = 0;
+        }
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Get the coordinate system definition in PROJ.4 format.          */
+/* -------------------------------------------------------------------- */
+    if( OSRExportToProj4( hSRS, &pszProj4 ) != OGRERR_NONE )
+        goto default_to_xy;
+
+/* -------------------------------------------------------------------- */
+/*      Parse the PROJ.4 string into key/value pairs.  Do a bit of      */
+/*      extra work to "GRASSify" the result.                            */
+/* -------------------------------------------------------------------- */
+    temp_projinfo = G_create_key_value();
+   
+    pszRemaining = pszProj4;
+    while( (pszRemaining = strstr(pszRemaining,"+")) != NULL )
+    {
+        char 	*pszToken, *pszValue;
+
+        pszRemaining++;
+        
+        /* Advance pszRemaining to end of this token[=value] pair */
+        pszToken = pszRemaining;
+        while( *pszRemaining != ' ' && *pszRemaining != '\0' )
+            pszRemaining++;
+
+        if( *pszRemaining == ' ' )
+        {
+            *pszRemaining = '\0';
+            pszRemaining++;
+        }
+
+        /* parse token, and value */
+        if( strstr(pszToken,"=") != NULL )
+        {
+            pszValue = strstr(pszToken,"=");
+            *pszValue = '\0';
+            pszValue++;
+        }
+        else
+            pszValue = "defined";
+        
+
+        if( G_strcasecmp(pszToken,"proj") == 0 )
+	{
+            /* The ll projection is known as longlat in PROJ.4 */
+            if( G_strcasecmp(pszValue,"longlat") == 0 )
+	        pszValue = "ll";
+	   
+            pszProj = pszValue;
+	    continue;
+	}
+
+        /* Ellipsoid and datum handled separately below */
+        if( G_strcasecmp(pszToken,"ellps") == 0
+            || G_strcasecmp(pszToken,"a") == 0
+            || G_strcasecmp(pszToken,"b") == 0
+            || G_strcasecmp(pszToken,"es") == 0
+            || G_strcasecmp(pszToken,"rf") == 0
+            || G_strcasecmp(pszToken,"datum") == 0 )
+            continue;
+       
+        /* We will handle units separately */
+        if( G_strcasecmp(pszToken,"to_meter") == 0 
+            || G_strcasecmp(pszToken,"units") == 0 )
+            continue;
+
+        G_set_key_value( pszToken, pszValue, temp_projinfo );
+    }
+
+    *projinfo = G_create_key_value();
+   
+/* -------------------------------------------------------------------- */
+/*      Derive the user name for the projection.                        */
+/* -------------------------------------------------------------------- */
+    {
+        char	path[4095];
+        char    name[80];
+
+        sprintf(path,"%s/etc/projections",G_gisbase());
+        if( G_lookup_key_value_from_file(path,pszProj,name,sizeof(name)) > 0 )
+            G_set_key_value( "name", name, *projinfo );
+        else
+            G_set_key_value( "name", pszProj, *projinfo );
+    }
+
+    G_set_key_value( "proj", pszProj, *projinfo );
+       
+/* -------------------------------------------------------------------- */
+/*      Find the GRASS datum name and choose parameters either          */
+/*      interactively or not.                                           */
+/* -------------------------------------------------------------------- */
+
+    {   
+        const char *pszDatumNameConst = OSRGetAttrValue( hSRS, "DATUM", 0 );
+        struct datum_list *list, *listhead;
+        char *datum = NULL, *dum1, *dum2, *pszDatumName;
+        int paramspresent = GPJ__get_datum_params(temp_projinfo, &dum1, &dum2);
+
+        if ( pszDatumNameConst )
+        {
+	    /* Need to make a new copy of the string so we don't mess
+	     * around with the memory inside the OGRSpatialReferenceH? */
+	    G_asprintf( &pszDatumName, pszDatumNameConst );
+            GPJ_DatumNameMassage( &pszDatumName );
+
+            list = listhead = read_datum_table();
+ 
+            while (list != NULL) {
+    	        if (strcasecmp(pszDatumName, list->longname) == 0) {
+    	            datum = G_store(list->name);
+	            break;
+	        }
+	        list = list->next;
+            }
+            free_datum_list(listhead);
+	   
+	    if (datum == NULL)
+	    {
+	        if( paramspresent < 2)
+		    /* Only give warning if no parameters present */
+	            G_warning("Datum '%s' not recognised by GRASS and no parameters found. "
+			      "Datum transformation will not be possible using this projection information.",
+			      pszDatumName);
+	    }
+            else
+	    {
+                G_set_key_value( "datum", datum, *projinfo );        
+       
+                if (paramspresent < 2)
+    	        {
+	            /* If no datum parameters were imported from the OSR
+	             * object then we may prompt the user */
+                    char *params, *chosenparams;
+                    int paramsets;
+		   
+		    fprintf(stderr, "A datum name %s (%s) was specified "
+			            "without transformation parameters.\n",
+			            datum, pszDatumName);
+                    if( (paramsets = GPJ_get_default_datum_params_by_name(datum, &params))
+		        == 1 ) 
+		        /* GRASS only knows one parameter set for this so
+			 * just use it but inform the user what we're doing */
+		        fprintf(stderr, "Note that the GRASS default for %s "
+			            "is %s.\n", datum, params);
+                    else if( paramsets < 0 )
+                        G_warning("Datum '%s' apparently recognised by GRASS but no parameters found. "
+                                  "You may want to look into this.", datum );
+                    else if( interactive && (GPJ_ask_datum_params(datum, &chosenparams) > 0) )
+		    {
+		        /* Force the user to think about it and make a 
+			 * decision on which set of parameters is most
+			 * appropriate for his/her location */
+
+                        char *paramkey, *paramvalue;
+                        paramkey = strtok(chosenparams, "=");
+                        paramvalue = chosenparams + strlen(paramkey) + 1;
+                        G_set_key_value( paramkey, paramvalue, *projinfo );
+                        G_free( chosenparams );
+		    }
+                    else if( !interactive )
+                        G_warning("Non-interactive mode: the GRASS default "
+				  "for %s is %s.\n", datum, params);
+		    else
+		        G_warning("No parameters specified: the GRASS default "
+				  "for %s is %s.\n", datum, params);
+                    if(paramsets > 0)
+                        G_free(params);
+	        }
+       
+                G_free(datum);
+	    }
+	}   
+    }
+
+/* -------------------------------------------------------------------- */
+/*	Despite having the +ellps set, GRASS still requires +a and +es	*/
+/* -------------------------------------------------------------------- */
+
+    {
+        const char *pszSemiMajor = OSRGetAttrValue( hSRS, "SPHEROID", 1 );
+        const char *pszInvFlat = OSRGetAttrValue( hSRS, "SPHEROID", 2 );
+
+        if( strstr(pszProj4,"+a") == NULL && pszSemiMajor != NULL )
+            G_set_key_value( "a", (char *) pszSemiMajor, *projinfo );
+
+        if( pszInvFlat != NULL )
+        {
+            double	es, flat;
+            char	es_str[100];
+
+            flat = 1 / atof(pszInvFlat);
+            
+            es = flat * (2.0 - flat);
+
+            sprintf( es_str, "%.10f", es );
+            G_set_key_value( "es", es_str, *projinfo );
+        }
+    }
+
+/* -------------------------------------------------------------------- */
+/*	Finally append the detailed projection parameters to the end	*/
+/* -------------------------------------------------------------------- */
+
+    {
+        int i;
+        
+        for ( i = 0; i < temp_projinfo->nitems; i++)	 	
+	    G_set_key_value( temp_projinfo->key[i], 
+			     temp_projinfo->value[i], *projinfo );
+       
+        G_free_key_value( temp_projinfo );
+    }
+       
+    free( pszProj4 ); /* hopefully the same as CPLFree()! */
+
+/* -------------------------------------------------------------------- */
+/*      Set the linear units.                                           */
+/* -------------------------------------------------------------------- */
+    *projunits = G_create_key_value();
+    
+    if( OSRIsGeographic( hSRS ) )
+    {
+        /* We assume degrees ... someday we will be wrong! */
+        G_set_key_value( "unit", "degree", *projunits );
+        G_set_key_value( "units", "degrees", *projunits );
+        G_set_key_value( "meter", "1.0", *projunits );
+    }
+    else 
+    {
+        char	szFormatBuf[256];
+        char    *pszUnitsName = NULL;
+        double  dfToMeters;
+
+        dfToMeters = OSRGetLinearUnits( hSRS, &pszUnitsName );
+        
+        /* Workaround for the most obvious case when unit name is unknown */
+        if( (strcasecmp(pszUnitsName, "unknown") == 0) && (dfToMeters == 1.) )
+	    G_asprintf( &pszUnitsName, "meter" );
+       
+        G_set_key_value( "unit", pszUnitsName, *projunits );
+        sprintf( szFormatBuf, "%ss", pszUnitsName );
+        G_set_key_value( "units", szFormatBuf, *projunits );
+        sprintf( szFormatBuf, "%.16g", dfToMeters );
+        G_set_key_value( "meter", szFormatBuf, *projunits );
+
+    }
+
+    return 1;
+
+/* -------------------------------------------------------------------- */
+/*      Fallback to returning an ungeoreferenced definition.            */
+/* -------------------------------------------------------------------- */
+  default_to_xy:
+    if( hSRS != NULL )
+        OSRDestroySpatialReference( hSRS );
+
+    if( cellhd != NULL )
+    {
+        cellhd->proj = PROJECTION_XY;
+        cellhd->zone = 0;
+    }
+
+    *projinfo = NULL;
+    *projunits = NULL;
+    
+    return 1; 
+}
+
+
+int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
+                     struct Key_Value **projunits, const char *wkt,
+		     int interactive)
+{
+    int retval;
+
+    if( wkt == NULL )
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, NULL, interactive);
+    else
+    {
+        OGRSpatialReferenceH *hSRS;
+
+        /* Set finder function for locating OGR csv co-ordinate system tables */
+        SetCSVFilenameHook( GPJ_set_csv_loc );
+       
+        hSRS = OSRNewSpatialReference(wkt);
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, hSRS, interactive);
+        OSRDestroySpatialReference(hSRS);
+    }
+   
+    return retval;
+}
+
+
+/* GPJ_set_csv_loc()
+ * 'finder function' for use with OGR SetCSVFilenameHook() function */
+
+const char *GPJ_set_csv_loc(const char *name)
+{
+    const char *gisbase = G_gisbase();
+    static char *buf = NULL;
+
+    if (buf != NULL)
+        G_free(buf);
+
+    G_asprintf(&buf, "%s%s/%s", gisbase, CSVDIR, name);
+
+    return buf;
+}
+
+/* N.B. The order of these pairs is different from that in 
+ * ogr/ogrfromepsg.cpp in the GDAL source tree! GRASS uses the EPSG
+ * names in its WKT representation except WGS_1984 and WGS_1972 as
+ * these shortened versions seem to be standard */
+
+static const char *papszDatumEquiv[] =
+{
+    "Militar_Geographische_Institute",
+    "Militar_Geographische_Institut",
+    "World_Geodetic_System_1984",
+    "WGS_1984",
+    "World_Geodetic_System_1972",
+    "WGS_1972",
+    "European_Terrestrial_Reference_System_89",
+    "European_Terrestrial_Reference_System_1989",
+    "European_Reference_System_1989",
+    "European_Terrestrial_Reference_System_1989",
+    NULL
+};
+
+/************************************************************************/
+/*                      OGREPSGDatumNameMassage()                       */
+/*                                                                      */
+/*      Massage an EPSG datum name into WMT format.  Also transform     */
+/*      specific exception cases into WKT versions.                     */
+/************************************************************************/
+
+static void GPJ_DatumNameMassage( char ** ppszDatum )
+
+{
+    int         i, j;
+    char        *pszDatum = *ppszDatum;
+
+/* -------------------------------------------------------------------- */
+/*      Translate non-alphanumeric values to underscores.               */
+/* -------------------------------------------------------------------- */
+    for( i = 0; pszDatum[i] != '\0'; i++ )
+    {
+        if( !(pszDatum[i] >= 'A' && pszDatum[i] <= 'Z')
+            && !(pszDatum[i] >= 'a' && pszDatum[i] <= 'z')
+            && !(pszDatum[i] >= '0' && pszDatum[i] <= '9') )
+        {
+            pszDatum[i] = '_';
+        }
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Remove repeated and trailing underscores.                       */
+/* -------------------------------------------------------------------- */
+    for( i = 1, j = 0; pszDatum[i] != '\0'; i++ )
+    {
+        if( pszDatum[j] == '_' && pszDatum[i] == '_' )
+            continue;
+
+        pszDatum[++j] = pszDatum[i];
+    }
+    if( pszDatum[j] == '_' )
+        pszDatum[j] = '\0';
+    else
+        pszDatum[j+1] = '\0';
+    
+/* -------------------------------------------------------------------- */
+/*      Search for datum equivelences.  Specific massaged names get     */
+/*      mapped to OpenGIS specified names.                              */
+/* -------------------------------------------------------------------- */
+    for( i = 0; papszDatumEquiv[i] != NULL; i += 2 )
+    {
+        if( EQUAL(*ppszDatum,papszDatumEquiv[i]) )
+        {
+            CPLFree( *ppszDatum );
+            *ppszDatum = CPLStrdup( papszDatumEquiv[i+1] );
+            break;
+        }
+    }
+}
 
 #endif /* HAVE_OGR */

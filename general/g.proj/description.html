@@ -1,16 +1,88 @@
 <h2>DESCRIPTION</h2>
 
-<em>g.proj</em> provides a means of reporting the contents of GRASS
-projection information files. Will be extended to handle modification of and
-creation of new projection information files.
+<P><em>g.proj</em> provides a means of manipulating GRASS projection
+information files. If compiled without 
+<A HREF="http://remotesensing.org/gdal/ogr/">OGR</A> present, the
+functionality is limited to reporting the projection information for the
+current location, either in conventional GRASS (-p flag) or PROJ.4 (-j flag) 
+format, and verifying the datum transformation information in the location
+(-d flag).</P>
+
+<P>When compiled with OGR, functionality is increased and allows output of
+the projection information in the Well-Known Text (WKT) format popularised
+by proprietary GIS.</P>
+
+<P>If one of the parameters <em>georef</em>, <em>wkt</em> or 
+<em>proj4</em> is specified, rather than the projection information being 
+read from the current location it is imported from an external source 
+as follows:
+<dl>
+<dt>georef=<em>filename</em></dt>
+<dd><em>g.proj</em> attempts to invoke GDAL and OGR in turn to read a
+georeferenced file <em>filename</em>. The projection information will be
+read from this file. If the file is not georeferenced or cannot be read,
+XY (unprojected) will be used.</dd>
+
+<dt>wkt=<em>filename</em> or <em>-</em></dt>
+<dd>The file <em>filename</em> should contain a projection description in
+WKT format with no line-breaks (e.g. a '.prj' file). If <em>-</em> is given for
+the filename, the WKT description will be read from stdin rather than a
+file.</dd>
+
+<dt>proj4=<em>description</em> or <em>-</em></dt>
+<dd><em>description</em> should be a projection description in 
+<A HREF="http://remotesensing.org/proj/">PROJ.4</a> format, enclosed in
+quotation marks if there are any spaces. If <em>-</em> is given for
+<em>description</em>, the PROJ.4 description will be read from stdin rather 
+than as a directly-supplied command-line parameter.</dd>
+</dl>
+</P>
+
+<P>The -p, -j, -w, etc. flags are all functional when importing projection
+information from an external source, meaning that <em>g.proj</em> can be
+used to convert between representations of the information.</P>
+
+<P>In addition, if the -c flag is specified, <em>g.proj</em> will create new
+GRASS projection files (PROJ_INFO, PROJ_UNITS, WIND and DEFAULT_WIND) based
+on the imported information. If the <em>location</em> parameter is
+specified in addition to -c, then a new location will be created. Otherwise
+the projection information files in the current location will be
+overwritten. The program will warn before doing this.</P>
+
+<H2>NOTES</H2>
+
+<P>GRASS uses a local copy of the GDAL CSV co-ordinate system and datum
+information files, stored in the directory $(GISBASE)/etc/ogr_csv . This
+allows many possible ways of initializing a co-ordinate system, such as EPSG
+codes etc.</P>
+
+<H2>EXAMPLES</H2>
+
+Print the projection information for the current location <br>
+<b>g.proj -p</b> <br>
+Create a '.prj' file in ESRI format corresponding to the current location <br>
+<b>g.proj -we ></b> <em>irish_grid.prj</em> <br>
+Read the projection information from a geotiff file and print it in PROJ.4
+format <br>
+<b>g.proj -jf georef=</b><em>ASTER_DEM20020508161837.tif</em> </br>
+Convert the PROJ.4 projection description contained in a text file to WKT
+format <br>
+<b>cat</b> <em>proj4.description</em> <b>| g.proj -w proj4=</b><em>-</em> <br>
+Create a new location with the co-ordinate system referred to by EPSG code
+29900 (Irish Grid) <br>
+<b>g.proj -c proj4=</b><em>'+init=epsg:29900'</em>
+<b>location=</b><em>irish_grid</em> <br>
 
 <H2>REFERENCES</H2>
 
-<a href=http://www.remotesensing.org/proj/>PROJ 4</a>: Projection/datum support library.
+<a href=http://www.remotesensing.org/proj/>PROJ 4</a>: 
+Projection/datum support library.
 
 <H2>SEE ALSO</H2>
  
-<EM><a href="g.setproj.html">g.setproj</a></EM>
+<EM><a href="g.setproj.html">g.setproj</a></EM><BR>
+<EM><a href="r.in.gdal.html">r.in.gdal</a></EM><BR>
+<EM><a href="v.in.ogr.html">v.in.ogr</a></EM>
 
 <h2>AUTHOR</h2>
 

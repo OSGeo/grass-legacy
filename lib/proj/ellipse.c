@@ -145,7 +145,6 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 
 int GPJ_get_ellipsoid_by_name(const char *name, struct gpj_ellps *estruct)
 {
-    int i;
     struct ellps_list *list, *listhead;
 
     list = listhead = read_ellipsoid_table(0);
