@@ -68,7 +68,7 @@ for i in \
     etc/sites etc/dig_drivers etc/imagery \
     etc/bin etc/bin/inter etc/bin/cmd \
     txt txt/COMBINE txt/DIGIT txt/DIGIT2 txt/WEIGHT txt/MONITOR \
-    lib include \
+    lib include locale \
     driver locks dev
 do
     if test ! -d $GISBASE/$i
