@@ -1,0 +1,18 @@
+Mmain	main.c	/^main (argc,argv) char *argv[];$/
+ask_window	ask_window.c	/^ask_window ()$/
+bil	bil.c	/^bil()$/
+bsq	bsq.c	/^bsq()$/
+cmpint	cmpint.c	/^cmpint (a, b)$/
+find_image	find_image.c	/^find_image (band, row)$/
+get_tapename	tapename.c	/^get_tapename (name)$/
+header	header.c	/^header(vol_number_only)$/
+mount_tape	mnt_tape.c	/^mount_tape ()$/
+mount_vol	mnt_vol.c	/^mount_vol (n)$/
+number	number.c	/^number (start,end)$/
+put_image	put_image.c	/^put_image (b,row,ok)$/
+put_row	put_row.c	/^put_row (fd, buf, row)$/
+read_tape	read_tape.c	/^read_tape(ignore_eof)$/
+record_type	rec_type.c	/^record_type ()$/
+tape_item	tape_item.c	/^tape_item (start, end)$/
+text_record	text_rec.c	/^text_record()$/
+unmount_tape	unmnt_tape.c	/^unmount_tape()$/
