@@ -68,7 +68,7 @@ int kurt(double *, int, double *);
 int o_max(char *, char *, char *, int, struct Categories *);
 /* o_median.c */
 int o_median(char *, char *, char *, int, struct Categories *);
-/* long median(struct stats *); Prototyped in median.c */
+long median(struct stats *);
 /* o_min.c */
 int o_min(char *, char *, char *, int, struct Categories *);
 /* o_mode.c */
