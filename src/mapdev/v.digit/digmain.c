@@ -52,8 +52,6 @@ digmain(digname, path, mname, pid, dev, lock)
     int have_attr;
     int    close_down();
     int ret;
-    unsigned	short	getuid() ;
-    unsigned	short	getgid() ;
     char *memptr;	/* for load_file */
     int n;
 
