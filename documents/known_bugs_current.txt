@@ -148,6 +148,9 @@ s.to.rast, s.to.vect:
 s.rand
  should write #cats rather than %cats (site numbering)
 
+v.extract:
+does not copy the category support for vector file
+
 v.reclass:
 The problem with v.reclass seems to stem from an input field for old=new        
 reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is       
@@ -255,7 +258,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.7  2000-04-16 11:16:01  markus
+ Revision 1.8  2000-04-16 11:28:32  markus
+ v.extract does not copy the category support for vector file
+
+ Revision 1.7  2000/04/16 11:16:01  markus
  r.drain: fixed by Pierre de Mouveaux <pmx@audiovu.com>
 
  Revision 1.6  2000/04/12 13:48:19  markus
