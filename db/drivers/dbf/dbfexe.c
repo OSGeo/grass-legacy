@@ -320,22 +320,22 @@ double eval_node(Node * nptr, int tab, int i)
      case T_A_Expr:
 	aexprptr = (A_Expr *) nptr;
 	
-	if (aexprptr->oper != OP){
+	if (aexprptr->oper != SQLP_OP){
 	    if ( (leval = (int) eval_node(aexprptr->lexpr, tab, i)) != 0 && leval != 1) return (-1);
 	    if ( (reval = (int) eval_node(aexprptr->rexpr, tab, i)) != 0 && reval != 1) return (-1);
 	}
 	
 	switch (aexprptr->oper) {
-	case OR:	    
+	case SQLP_OR:	    
 	    condition = leval | reval;		
 	    break;
-	case AND:
+	case SQLP_AND:
 	    condition = leval & reval;		
 	    break;
-	case NOT:
+	case SQLP_NOT:
 	    condition = !reval;		
 	    break;
-	case OP:
+	case SQLP_OP:
 
 	leval = eval_arithmvalue_type(aexprptr->lexpr, tab);
 	reval = eval_arithmvalue_type(aexprptr->rexpr, tab);

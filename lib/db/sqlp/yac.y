@@ -39,7 +39,13 @@
 }
 
 	/* operators */
-%type <node>	y_comparison, y_condition, y_attr, y_attr2, y_name, y_cnam
+%type <node>	y_comparison
+%type <node>	y_condition
+%type <node>	y_attr
+%type <node>	y_attr2
+%type <node>	y_name
+%type <node>	y_cnam
+
 	/* literal keyword tokens */
 %token <strval> COMPARISON
 %token <strval> NAME
@@ -167,11 +173,11 @@ y_assignment:
 y_condition:			
 		y_attr		{$$ = $1;}	
 	|	y_condition AND y_attr {
-			$$ = makeA_Expr(AND, 0, $1, $3);
+			$$ = makeA_Expr(SQLP_AND, 0, $1, $3);
 			    sqlpStmt->upperNodeptr = $$; 
 		}
 	|	y_condition OR y_attr {
-			$$ = makeA_Expr(OR, 0, $1, $3);
+			$$ = makeA_Expr(SQLP_OR, 0, $1, $3);
 			    sqlpStmt->upperNodeptr = $$; 
 		}
 	;
@@ -185,17 +191,17 @@ y_attr:
 y_attr2:
 		y_comparison	{$$ = $1;}
 	|	NOT y_attr {
-			$$ = makeA_Expr(NOT, 0, NULL, $2); 
+			$$ = makeA_Expr(SQLP_NOT, 0, NULL, $2); 
 			    sqlpStmt->upperNodeptr = $$; 
 		}
 	;
 y_comparison:
 		y_name EQUAL y_name {
-				$$ = makeA_Expr(OP, SQLP_EQ, $1, $3);
+				$$ = makeA_Expr(SQLP_OP, SQLP_EQ, $1, $3);
 					sqlpStmt->upperNodeptr = $$; 
 		}
 	|	y_name COMPARISON y_name {
-				$$ = makeA_Expr(OP, translate_Operator($2), $1, $3);
+				$$ = makeA_Expr(SQLP_OP, translate_Operator($2), $1, $3);
 					sqlpStmt->upperNodeptr = $$; 
 		}
 	;	

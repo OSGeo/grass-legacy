@@ -1,10 +1,10 @@
 /* SQL Parser */
 
 /* KEYWORD OPS */
-#define OP 1
-#define AND 2
-#define OR   3
-#define NOT   4
+#define SQLP_OP   1
+#define SQLP_AND  2
+#define SQLP_OR   3
+#define SQLP_NOT  4
 
 /* SQL COMMANDS */
 #define SQLP_CREATE 1
