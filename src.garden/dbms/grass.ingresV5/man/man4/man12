@@ -1,0 +1,66 @@
+
+
+
+r.rescale.db()    MISC. REFERENCE MANUAL PAGES     r.rescale.db()
+
+
+
+NAME
+     _r._r_e_s_c_a_l_e._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _R_a_s_t_e_r _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     r.rescale.db
+     r.rescale.db help
+     r.rescale.db tab=_n_a_m_e key=_n_a_m_e col=_n_a_m_e cats=_n_a_m_e input=_n_a_m_e
+        output=_n_a_m_e [join=_t_a_b,_t_a_b_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of r.rescale.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _t_a_b  DB table containing linked to GIS.
+
+     _k_e_y  Key column in db.
+
+     _c_o_l  Column to rescale.
+
+     _c_a_t_s Column to rescale.
+
+     _i_n_p_u_t
+          Name of existing raster file to be rescaled.
+
+     _o_u_t_p_u_t
+          Name of new raster (rescaled),  file.
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
