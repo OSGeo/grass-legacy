@@ -1,0 +1,105 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffgt.1,v 1.6 90/11/25 11:15:58 sam Exp $
+.\"
+.\" Copyright (c) 1989 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFGT 1 "May 2, 1990"
+.SH NAME
+tiffgt \- display an image stored in a
+.SM TIFF
+file (Silicon Graphics version)
+.SH SYNOPSIS
+.B tiffgt
+[
+.B \-d
+.I dirnum
+] [
+.B \-f
+]
+.I name
+.SH DESCRIPTION
+.I Tiffgt
+displays an image stored in a file with the
+Tag Image File Format, Revision 5.0.
+The image is placed in a fixed size window that the
+user must position on the display.
+If the display has fewer than 24 bitplanes, then
+.SM RGB
+color values are mapped to the closest values that exist in
+the colormap (this work is done by the
+.I rgbi
+routine found in the graphics utility library
+.BR \-lgutil .)
+By default,
+the first image in the file is displayed;
+to display an alternate image, specify the directory
+number with the
+.B \-d
+option; directories are numbered starting at zero.
+Normally
+.I tiffgt
+runs as a background process; the
+.B \-f
+option forces it to run as a foreground process.
+The
+.B \-d
+option sets the initial
+.SM TIFF
+directory to
+.IR dirnum .
+.PP
+.I Tiffgt
+correctly handles files with any of the following characteristics:
+.sp .5
+.ta \w'\fIPhotometricInterpretation\fP  'u
+.nf
+BitsPerSample	1, 2, 4, 8, 16
+SamplesPerPixel	1, 3, 4 (the 4th sample is ignored)
+PhotometricInterpretation	0 (min-is-white), 1 (min-is-black), 2 (RGB), 3 (palette)
+PlanarConfiguration	1 (contiguous), 2 (separate)
+Orientation	1 (top-left), 4 (bottom-left)
+.fi
+.sp .5
+Data may be compressed with any of the compression algorithms supported
+by the 
+.IR libtiff (3)
+library.
+If data are organized in separate planes (\c
+.IR PlanarConfiguration =2),
+then the
+.I RowsPerStrip
+must be one.
+.PP
+For palette images (\c
+.IR PhotomatricInterpretation =3),
+.I tiffgt
+inspects the colormap values and assumes either 16-bit
+or 8-bit values according to the maximum value.
+That is, if no colormap entry greater than 255 is found,
+.I tiffgt
+assumes the colormap has only 8-bit values; otherwise
+it assumes 16-bit values.
+This inspection is done to handle old images written by
+previous (incorrect) versions of
+.IR libtiff .
+.PP
+If a file can be read with
+.IR tiffinfo (1),
+but can not be displayed, convert it to have the above characteristics
+with
+.IR tiffcp (1).
+.SH BUGS
+.IR PhotometricInterpretation =4
+(holdout mask) should be handled (I had no examples to use for testing).
+Images wider and taller than the display are silently truncated to avoid
+crashing old versions of the window manager.
+.SH "SEE ALSO"
+.IR tiffdump (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR libtiff (3)
