@@ -1,0 +1,7 @@
+LIST = main.o popup.o
+LIBES = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+
+$(ETC)/i.ask: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
