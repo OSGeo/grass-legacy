@@ -2,7 +2,7 @@
 int can_make_location(char *, char *);
 /* clean_temp.c */
 int find_process(int);
-/* gis_set.c */
+/* set_data.c */
 int list_locations(char *);
 int list_mapsets(char *, char *);
 int first_word(char *);
