@@ -181,7 +181,13 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
                         G_malloc(sizeof(struct ProfileNode));
          profile->ptr->cat = theCell;
          profile->ptr->next = NULL;
-         ptr = profile->ptr;
+         /* Start info for Plotfile output */
+         profile->ptr->east  = G_col_to_easting ((double) 0.5 + col,
+                                                &profile->window);
+         profile->ptr->north = G_row_to_northing ((double) 0.5 + row,
+                                                &profile->window);
+         profile->ptr->dist  = (double) 0.0;
+         ptr = profile->ptr; 
          }
       else
          {
@@ -189,6 +195,14 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
          ptr->next = (struct ProfileNode *)
                      G_malloc(sizeof(struct ProfileNode));
          ptr->next->cat = theCell;
+         /* Do row/cell conversion for coordinates, Add .5 to get center */
+         ptr->next->north = G_row_to_northing ((double) 0.5 + row, 
+                                                &profile->window);
+         ptr->next->east  = G_col_to_easting ((double) 0.5 + col,
+                                                &profile->window);
+         G_begin_distance_calculations();
+         ptr->next->dist  = G_distance (profile->ptr->east, profile->ptr->north,
+                                      ptr->east, ptr->north);
          ptr->next->next = NULL;
          ptr = ptr->next; 
          } 
@@ -268,6 +282,12 @@ else
                         G_malloc(sizeof(struct ProfileNode));
          profile->ptr->cat = theCell;
          profile->ptr->next = NULL;
+         /* Start info for Plotfile output */
+         profile->ptr->east  = G_col_to_easting ((double) 0.5 + col,
+                                                &profile->window);
+         profile->ptr->north = G_row_to_northing ((double) 0.5 + row,
+                                                &profile->window);
+         profile->ptr->dist  = (double) 0.0;
          ptr = profile->ptr;
          }
       else
@@ -276,6 +296,14 @@ else
          ptr->next = (struct ProfileNode *)
                      G_malloc(sizeof(struct ProfileNode));
          ptr->next->cat = theCell;
+         /* Do row/cell conversion for coordinates, Add .5 to get center */
+         ptr->next->north = G_row_to_northing ((double) 0.5 + row, 
+                                                &profile->window);
+         ptr->next->east  = G_col_to_easting ((double) 0.5 + col,
+                                                &profile->window);
+         G_begin_distance_calculations();
+         ptr->next->dist  = G_distance (profile->ptr->east, profile->ptr->north,
+                                      ptr->east, ptr->north);
          ptr->next->next = NULL;
          ptr = ptr->next; 
          } 
