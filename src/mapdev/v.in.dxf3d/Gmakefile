@@ -1,0 +1,26 @@
+NAME=v.in.dxf3d
+NAME2=v.in.dxf3d.sh
+PROG =  $(BIN_CONTRIB_CMD)/v.in.dxf3d
+
+MSEC=4
+MDIR=$(SRC)/../man/man$(MSEC)
+MUTL=$(SRC)/../man/utilities
+MSEC2=3
+MDIR2=$(SRC)/../man/man$(MSEC2)
+
+$(PROG): main.o  $(GISLIB) 
+	rm -f a.out $@
+	$(CC) main.o  $(GISLIB)
+	mv a.out $@
+	cp v.in.dxf3d.sh $(GISBASE)/scripts/
+
+	cp man $(MDIR)/$(NAME)
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header $(MDIR)/$(NAME) $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/$(NAME)
+
+	cp man.sh $(MDIR2)/$(NAME2)
+	nroff $(MUTL)/man.version $(MDIR2)/.class-header \
+	$(MUTL)/man.header $(MDIR2)/$(NAME2) $(MDIR2)/.class-notice \
+	> $(GISBASE)/man/$(MSEC2)/$(NAME2)
+
