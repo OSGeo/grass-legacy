@@ -31,8 +31,8 @@ static int ctrlz = 0;
 G_gets (buf)
 	char *buf;
 {
-	int (*sigtstp)();
-	int catch_ctrlz();
+	void (*sigtstp)();
+	void catch_ctrlz();
 	int tty;
 	int eof;
 
@@ -58,10 +58,10 @@ G_gets (buf)
 	exit(1);
 }
 
-static catch_ctrlz(n)
+static void catch_ctrlz(n)
 {
-	int (*sigint)();
-	int catch_int();
+	void (*sigint)();
+	void catch_int();
 
 /* having caught ctrlz - effect a ctrl-z using kill */
 	ctrlz = 1;
@@ -69,11 +69,11 @@ static catch_ctrlz(n)
 	kill (0, n);
 
 /* for berkley systems, ctrlz will not cause eof on read */
-	sigint = (int (*)()) signal (SIGINT, catch_int);
+	sigint = signal (SIGINT, catch_int);
 	kill (getpid(), SIGINT);
 	signal (SIGINT, sigint);
 }
 
-static catch_int(n)
+static void catch_int(n)
 {
 }
