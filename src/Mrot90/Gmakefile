@@ -1,0 +1,4 @@
+LIST = main.o usage.o rotate.o fill.o
+
+$(BIN)/Mrot90: $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)
