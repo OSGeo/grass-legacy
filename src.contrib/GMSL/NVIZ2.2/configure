@@ -2,7 +2,7 @@
 # configure script for nviz
 
 # Revisions:
-#  $Id: configure,v 1.12 2000-10-04 15:11:45 markus Exp $
+#  $Id: configure,v 1.13 2000-10-10 07:23:58 markus Exp $
 
 set NV_VER=nviz2.2
 set NVWISH_VER=NVWISH2.2
@@ -50,6 +50,7 @@ endif
 
 # Check for PostgreSQL
 set PQ_OBJS=(openvect.o getCat.o buildInfxQry.o runInfxQry.o)
+set PQLIB=(-lpq)
 'cp' src/query_postgr_orig.c src/query_postgr.c
 'cp' scripts/panel_query_pg.tcl scripts/panel_query.tcl
 echo -n Do you want Postgres support \[y\/n\]:
@@ -57,6 +58,7 @@ set found=$<
 if ("$found" != "y") then
   echo -n Postgres support disabled.
   set PQ_OBJS=''
+  set PQLIB=''
   'rm' -rf src/query_postgr.c
   'rm' -rf src/scripts/panel_query.tcl
   'cp' src/query_postgr_dummy.c src/query_postgr.c
@@ -67,9 +69,11 @@ endif
 echo ""
 echo Creating src/Gmakefile...
 set PQ_OBJS=`echo "$PQ_OBJS" | sed 's/\//\\\//g'`
+set PQLIB=`echo "$PQLIB" | sed 's/\//\\\//g'`
 'rm' -rf src/Gmakefile
 sed -e "\
 s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
+s/PQLIB=sed/PQLIB=${PQLIB}/g;\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
 " src/Gmakefile.in > src/Gmakefile
 
