@@ -28,6 +28,18 @@
 **
 */
 
+#ifndef  USE_SETUID
+# ifndef  USE_SETRUID
+#  ifndef  SETPRIORITY
+
+#   define  STRICT_ATT
+
+    unsigned    short    getuid();
+    unsigned    short    getgid();
+
+#  endif
+# endif
+#endif
 
 #ifdef SYSV
     unsigned    short    getuid();
@@ -39,9 +51,9 @@
 *    This is done to make sure no points are lost when digitizing in STREAM
 *    mode.   This means that this program will get more CPU time then any
 *    other program.  It will also take CPU time from graphics and ethernet.
-*    If graphics or ethernet seem to be buffering output the priority may have
+*    If graphics or ethernet seem to be degraded, the priority may have
 *    to be lessened.
-*    Any other words the priority will differ from machine to machine.
+*    In other words the priority value may differ from machine to machine.
 */
 
 #define    PRIO_PROCESS    0
@@ -59,7 +71,7 @@
 static  int  priority_set;
 
 
-#ifdef ATT
+#ifdef STRICT_ATT
 set_priority_3b2 ()
 {
     unsigned    short    getuid();
@@ -68,7 +80,7 @@ set_priority_3b2 ()
     nice(PRIORITY);
     return (0);
 }
-#endif ATT
+#endif /*STRICT_ATT*/
 
 init_priority ()
 {
@@ -84,14 +96,12 @@ init_priority ()
     swap_re_uids ();
     priority_set = 0;
 
-#ifdef ATT
-    /* FOR 3b2 comment all the above out 
-    ** and replace with the code below 
-    *   And then ref
+#ifdef STRICT_ATT
+    /* FOR 3b2 
     */
     set_priority_3b2 ();
     
-#endif ATT
+#endif /*STRICT_ATT*/
 }
 
 /*  set_priority() returns 1 is already set and 0 if it had to set it.
@@ -102,8 +112,8 @@ set_priority ()
     int     pid;
 
 
-#ifndef ATT
-#ifdef    SYSV
+#ifndef STRICT_ATT
+#ifndef    SETPRIORITY
     unsigned    short    getuid();
     unsigned    short    getgid();
 
@@ -122,7 +132,7 @@ set_priority ()
     setpriority (PRIO_PROCESS, pid, PRIORITY);
 #endif
     swap_re_uids ();	/* and back to user */
-#endif !ATT
+#endif /*!ATT*/
 
     priority_set = 1;
     return(0);
@@ -133,7 +143,7 @@ unset_priority ()
     int     pid;
 
 #ifdef USE_SETUID
-#ifdef    SYSV
+#ifndef    SETPRIORITY
     swap_re_uids ();	/* set to root */
     nice(-(PRIORITY));
 #else
@@ -143,7 +153,7 @@ unset_priority ()
 #endif
     swap_re_uids ();	/* and back to user */
 
-#endif !ATT
+#endif
 
     priority_set = 0;
     return(0);
