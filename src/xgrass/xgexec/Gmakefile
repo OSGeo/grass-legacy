@@ -24,7 +24,7 @@ $(BIN)/xgexec:
 	@echo "export XGRASSLIBDIR" >> $@
 	@echo 'XGRASSHELPDIR=$$GISBASE/etc/xhelp' >> $@
 	@echo "export XGRASSHELPDIR" >> $@
-	@echo "exec $$GISBASE/etc/xgexec.exe" >> $@
+	@echo 'exec $$GISBASE/etc/xgexec.exe' >> $@
 	@chmod +x $@
 
 $(ETC)/xgexec.exe: $(OBJS) $(XGILIB) $(GISLIB)
