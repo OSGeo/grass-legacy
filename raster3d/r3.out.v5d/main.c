@@ -185,7 +185,7 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    for (z = 0; z < depths; z++) {
     G_percent(z, depths, 1);
     for (x = 0; x < cols; x++) {
-          for (y = 0; y < rows; y++) {
+          for (y = rows-1; y >= 0; y--) {  /* north to south */
                  
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
         if (typeIntern == G3D_FLOAT) {
