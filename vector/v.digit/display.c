@@ -153,22 +153,23 @@ void display_map ( void )
     }
     R_flush();
     
-    /* Nodes: first nodes with more than 1 line and than with 1 line, so that dangle cannot be hidden,
-    *         nodes without lines (points, centroids, are not displayed) */
+    /* Nodes: first nodes with more than 1 line, then nodes with only 1 line, 
+     *   so that dangles are not hidden, and nodes without lines (points, 
+     *   centroids, are displayed) */
     n = Vect_get_num_nodes ( &Map );
+    symb_set_driver_color ( SYMB_NODE_2 );
+    for(i=1; i <= n; i++) {
+	if ( !Vect_node_alive ( &Map, i) ) continue;
+	if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
+	display_node(i, NodeSymb[i], 0);
+    }
+    R_flush();
+
     symb_set_driver_color ( SYMB_NODE_1 );
     for(i=1; i <= n; i++) {
 	G_debug ( 2, "node = %d NodeSymb = %d", i, NodeSymb[i]); 
 	if ( !Vect_node_alive ( &Map, i) ) continue;
 	if ( NodeSymb[i] != SYMB_NODE_1 ) continue;
-	display_node(i, NodeSymb[i], 0);
-    }
-    R_flush();
-
-    symb_set_driver_color ( SYMB_NODE_2 );
-    for(i=1; i <= n; i++) {
-	if ( !Vect_node_alive ( &Map, i) ) continue;
-	if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
 	display_node(i, NodeSymb[i], 0);
     }
     R_flush();
