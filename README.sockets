@@ -17,7 +17,7 @@
 #
 #############################################################################
 #
-# Please test new XDRIVER and report bug to developers list.
+# Please test new XDRIVER and report bugs to developers list.
 #
 #	./README.sockets new
 #	
@@ -105,5 +105,6 @@ fi
 (cd src/paint/Drivers/preview2 && gmake5)
 
 echo
-echo Thanks for your time.
+echo "Thanks for your time."
+echo "If you have more time, you would like to recompile entire sources. :-)"
 echo
