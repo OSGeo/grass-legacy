@@ -1,0 +1,18 @@
+# %W% %G%
+PGM = meta_to_S
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o\
+	mode.o\
+	opn_outfle.o\
+	S.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB)
+		mv $(PGM) $(SITE)/$(PGM)
+
+$(SITELIB):	#
+$(GISLIB):	#
