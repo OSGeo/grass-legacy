@@ -1,0 +1,95 @@
+R_RGB_color	RGB_color.c	/^R_RGB_color(red, grn, blu)$/
+R_RGB_raster	RGB_ras.c	/^R_RGB_raster(n, nrows, red, grn, blu, withzeros)$/
+R__open_quiet	io.c	/^R__open_quiet()$/
+R_box_abs	Box.c	/^R_box_abs(x1,y1,x2,y2)$/
+R_box_rel	Box.c	/^R_box_rel(x,y)$/
+R_close_driver	io.c	/^R_close_driver()$/
+R_color	Color.c	/^R_color(index)$/
+R_color_offset	Clr_table.c	/^R_color_offset(n)$/
+R_color_table_fixed	Clr_table.c	/^R_color_table_fixed()$/
+R_color_table_float	Clr_table.c	/^R_color_table_float()$/
+R_cont_abs	Cont_abs.c	/^R_cont_abs(x,y)$/
+R_cont_rel	Cont_rel.c	/^R_cont_rel(x,y)$/
+R_erase	Erase.c	/^R_erase()$/
+R_flush	Flush.c	/^R_flush()$/
+R_font	Font.c	/^R_font(name)$/
+R_get_color_index	Get_cindex.c	/^R_get_color_index(r, g, b)$/
+R_get_location_with_box	Get_w_box.c	/^R_get_location_with_box(cx, cy, wx, wy, button)$/
+R_get_location_with_line	Get_w_line.c	/^R_get_location_with_line(cx, cy, wx, wy, button)$/
+R_get_location_with_pointer	Get_w_pnt.c	/^R_get_location_with_pointer(wx, wy, button)$/
+R_get_num_colors	Get_ncolors.c	/^R_get_num_colors (n)$/
+R_get_text_box	Get_t_box.c	/^R_get_text_box(sometext, t, b, l, r)$/
+R_kill_driver	io.c	/^R_kill_driver()             \/* #31 Aug 87 - stop a/
+R_move_abs	Move_abs.c	/^R_move_abs(x,y)$/
+R_move_rel	Move_rel.c	/^R_move_rel(x,y)$/
+R_open_driver	io.c	/^R_open_driver()$/
+R_pad_append_item	item_appnd.c	/^R_pad_append_item (item, value)$/
+R_pad_create	pad_create.c	/^R_pad_create (pad)$/
+R_pad_current	pad_cur.c	/^R_pad_current (name)$/
+R_pad_delete	pad_delete.c	/^R_pad_delete ()$/
+R_pad_delete_item	item_del.c	/^R_pad_delete_item (name)$/
+R_pad_freelist	lists.c	/^R_pad_freelist (list, count)$/
+R_pad_get_item	item_get.c	/^R_pad_get_item (item, list, count)$/
+R_pad_invent	pad_invent.c	/^R_pad_invent (pad)$/
+R_pad_list	pad_list.c	/^R_pad_list (list, count)$/
+R_pad_list_items	item_list.c	/^R_pad_list_items (list, count)$/
+R_pad_perror	perror.c	/^R_pad_perror (msg, code)$/
+R_pad_select	pad_select.c	/^R_pad_select (pad)$/
+R_pad_set_item	item_set.c	/^R_pad_set_item (item, value)$/
+R_panel_delete	Panel.c	/^R_panel_delete(name)$/
+R_panel_restore	Panel.c	/^R_panel_restore(name)$/
+R_panel_save	Panel.c	/^R_panel_save(name, t, b, l, r)$/
+R_parse_monitorcap	parse_mon.c	/^R_parse_monitorcap(field,key)$/
+R_polydots_abs	Plydts_abs.c	/^R_polydots_abs(xarray, yarray, number)$/
+R_polydots_rel	Plydts_rel.c	/^R_polydots_rel(xarray, yarray, number)$/
+R_polygon_abs	Polygn_abs.c	/^R_polygon_abs(xarray, yarray, number)$/
+R_polygon_rel	Polygn_rel.c	/^R_polygon_rel(xarray, yarray, number)$/
+R_polyline_abs	Plylne_abs.c	/^R_polyline_abs(xarray, yarray, number)$/
+R_polyline_rel	Plylne_rel.c	/^R_polyline_rel(xarray, yarray, number)$/
+R_raster	Raster.c	/^R_raster(num, nrows, withzero, ras)$/
+R_raster_char	Raster.c	/^R_raster_char(num, nrows, withzero, ras)$/
+R_raster_int	Raster.c	/^R_raster_int(num, nrows, withzero, ras)$/
+R_release_driver	io.c	/^R_release_driver()$/
+R_reset_color	Reset_clr.c	/^R_reset_color(red, grn, blu, number)$/
+R_reset_colors	Reset_clrs.c	/^R_reset_colors(min, max, red, grn, blu)$/
+R_screen_bot	Returns.c	/^R_screen_bot()$/
+R_screen_left	Returns.c	/^R_screen_left()$/
+R_screen_rite	Returns.c	/^R_screen_rite()$/
+R_screen_top	Returns.c	/^R_screen_top()$/
+R_set_RGB_color	RGB_ras.c	/^R_set_RGB_color(r,g,b)$/
+R_set_window	Set_win.c	/^R_set_window(t, b, l, r)$/
+R_stabilize	io.c	/^R_stabilize()$/
+R_standard_color	Color.c	/^R_standard_color(index)$/
+R_text	Text.c	/^R_text(sometext)$/
+R_text_rotation	Text_rot.c	/^R_text_rotation(rotation)$/
+R_text_size	Text_size.c	/^R_text_size(width, height)$/
+_get	io.c	/^_get (buf, n)$/
+_get_char	io.c	/^_get_char(achar)$/
+_get_float	io.c	/^_get_float(afloat)$/
+_get_int	io.c	/^_get_int(anint)$/
+_get_list	lists.c	/^_get_list (list, count)$/
+_get_text	io.c	/^_get_text (buf)$/
+_hold_signals	io.c	/^_hold_signals (hold)$/
+_send_char	io.c	/^_send_char (achar)$/
+_send_char_array	io.c	/^_send_char_array(num, achar)$/
+_send_float	io.c	/^_send_float(afloat)$/
+_send_float_array	io.c	/^_send_float_array(num, afloat)$/
+_send_ident	io.c	/^_send_ident(anint)$/
+_send_int	io.c	/^_send_int(anint)$/
+_send_int_array	io.c	/^_send_int_array(num, anint)$/
+_send_text	io.c	/^_send_text(text)$/
+build_path	parse_mon.c	/^build_path (line, gisbase)$/
+dead	io.c	/^dead()$/
+fifoto	io.c	/^fifoto(input,output,alarm_time)$/
+find_process	io.c	/^find_process (pid)$/
+flushout	io.c	/^flushout()$/
+get_ids	io.c	/^get_ids (file, id, x)$/
+getall	Returns.c	/^getall()$/
+lock_driver	io.c	/^lock_driver (lock_pid)$/
+lockfile	io.c	/^lockfile(file)$/
+read_line	parse_mon.c	/^read_line(file,line,size)$/
+select_font	Font.c	/^select_font(name)$/
+substr	parse_mon.c	/^substr(string,buffer)$/
+sync_driver	io.c	/^sync_driver(name)$/
+unlock_driver	io.c	/^unlock_driver (wipeout)$/
+who_locked_driver	io.c	/^who_locked_driver()$/
