@@ -1,0 +1,119 @@
+<html>
+
+<TITLE>g.manual</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.manual</b></EM>  - Accesses GRASS User's Reference Manual entries.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.manual</B>
+
+<BR>
+
+<B>g.manual help</B>
+
+<BR>
+
+<B>g.manual</B> [<B>-1aefs</B>] 
+[<B>entries=</B><EM>name</EM>[,<EM>name</EM>,...]]
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+The <EM>g.manual</EM> command provides user access to the
+on-line <B>GRASS User's Reference Manual</B> entries.  The
+user may request a list of available manual entries, and
+may get a manual entry printed to the terminal screen
+and/or to the line printer.
+
+
+<H2>OPTIONS</H2>
+
+<EM>g.manual</EM> can be run either interactively or
+non-interactively.  If the user types:
+
+<DL>
+<DD>
+<B>g.manual</B>
+</DL>
+
+on the command line without program arguments, the program
+will prompt the user for a manual entry to display. The
+user may enter <B>list</B> to get a section-by-section
+listing of the manual entries available.  Once the user has
+viewed the desired information it may be printed by
+responding to the questions appropriately.
+
+
+<P>
+
+The user can run the program non-interactively, by
+specifying the appropriate options and/or the 
+<EM>name</EM>(s) of the manual entries to displayed.
+
+<H2>OPTIONS</H2>
+
+
+<DT><B>-1</B> 
+
+<DD>This option will list all manual entries, one per line.
+
+<DT><B>-a</B> 
+
+<DD>This option will list all manual entries in a more
+appealing format.  The manual page list will be separated
+by manual section.
+
+<DT><B>-e</B> 
+
+<DD>This option tells <EM>g.manual</EM> to ignore empty
+manual sections when printing the listings from the
+<EM>-1</EM> or <EM>-a</EM> options.
+
+<DT><B>-f</B> 
+
+<DD>This option will add formfeeds to output listing when
+using the <EM>-a</EM> option.
+
+<DT><B>-s</B> 
+
+<DD>This option will cause <EM>g.manual</EM> to run
+silently. Instead of displaying the manual page it will
+simply set the exit status to:
+
+<DL>
+<DD> 0   if entry exists, or
+<DD> 1   if it does not exist.
+</DL>
+</DL>
+These entries may also be accessed through the 
+<EM><A HREF="g.help.html">g.help</A></EM> command.
+
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://www.geog.uni-hannover.de/grass/gdp/">GRASS User's Reference Manual</A></B>
+<br>
+<EM><A HREF="g.help.html">g.help</A></EM>
+
+<H2>AUTHOR</H2>
+
+Kurt Buehler,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>
