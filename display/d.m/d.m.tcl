@@ -279,7 +279,11 @@ proc Dm::edit { } {
     variable options
 
     set sel [ lindex [$tree selection get] 0 ]
-    if { $sel == "" } { return }
+    if { $sel == "" } {
+        set message "No map selected"
+        tk_messageBox -type ok -icon warning -message $message
+        return
+    }
 
     set type [Dm::node_type $sel]
 
