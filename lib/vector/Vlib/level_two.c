@@ -83,6 +83,30 @@ Vect_get_num_islands (struct Map_info *map)
 }
 
 /*!
+ \fn int Vect_get_num_faces (struct Map_info *map)
+ \brief get number of faces
+ \return number of faces
+ \param Map_info structure
+ */
+int 
+Vect_get_num_faces (struct Map_info *map)
+{
+  return (map->plus.n_flines);
+}
+
+/*!
+ \fn int Vect_get_num_kernels (struct Map_info *map)
+ \brief get number of kernels
+ \return number of kernels
+ \param Map_info structure
+ */
+int 
+Vect_get_num_kernels (struct Map_info *map)
+{
+  return (map->plus.n_klines);
+}
+
+/*!
  \fn int Vect_get_num_dblinks (struct Map_info *map)
  \brief get number of defined dblinks
  \return number of dblinks
