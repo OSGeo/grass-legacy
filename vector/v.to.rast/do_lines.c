@@ -6,7 +6,7 @@
 static int plot_line(double *,double *,int);
 static int plot_points (double *,double *,int);
 
-int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype)
+int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field)
 {
     int nlines, type, ret, cat;
     int index;
@@ -21,7 +21,7 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
     count = 0;
     for ( index = 1; index <= nlines; index++) {
 	type = Vect_read_line ( Map, Points, Cats, index );
-	Vect_cat_get (Cats, 1, &cat);
+	Vect_cat_get (Cats, field, &cat);
 	if ( cat <= 0 ) { continue; } 
 
 	if ( ctype == DB_C_TYPE_INT ) {
