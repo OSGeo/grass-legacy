@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use File::Basename;
+
 print "Linking\n";
 
 $newdir="..";
@@ -63,7 +65,8 @@ while ($r=<MAP>)
 		$n = $o;
 		$n =~ s/.+\///; 
 		lnk ( "$o", "$newdir/$new/$n" );
-		print "Linked $o\n";
+		if ( basename($o) ne "Gmakefile" )
+		   { print "Linked $o\n";}
 	    }
 	}    
     }	
