@@ -170,6 +170,7 @@ LAPACKLIB           = @LAPACKLIB@
 #GDAL/OGR
 GDALLIBS            = @GDAL_LIBS@
 GDALCFLAGS          = @GDAL_CFLAGS@
+USE_GDAL            = @USE_GDAL@
 USE_OGR             = @USE_OGR@
 
 #FreeType:
