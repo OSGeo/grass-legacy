@@ -75,11 +75,9 @@ proc DmPrint::init { } {
     set PVar(paper_mode_default) 0
     set PVar(paper_mode_custom) 1
     set PVar(paper_mode) $PVar(paper_mode_default) 
-    set PVar(printer) "lpr"
-    set PWid(preview) ".preview"
-    set PVar(pngresolution) 100
 
     set PVar(view_size) 200
+    set PWid(preview) ".preview"
 
     # load paper sizes 
     set PVar(papers) ""
@@ -108,6 +106,23 @@ proc DmPrint::init { } {
     set PVar(paper_bottom) $PPap($pap,bottom)
 
     set PVar(paper) [lindex $PVar(papers) 0]
+
+    set PVar(do_scriptfile) 0
+    set PVar(scriptfile) ""
+    set PVar(do_psfile) 0
+    set PVar(psfile) ""
+    set PVar(do_pdffile) 0
+    set PVar(pdffile) ""
+    set PVar(do_pngfile) 0
+    set PVar(pngfile) ""
+    set PVar(pngresolution) 100
+
+    set PVar(do_printer) 0
+    set PVar(printer) "lpr"
+}
+
+proc DmPrint::init_tmpfiles { } {
+    global PWid PVar PPap PView
 
     # get temporary file for script file
     set pid [ pid ]
@@ -233,6 +248,17 @@ proc DmPrint::window { } {
     pack $row.a $row.b $row.c -side left;
     pack $row -side top -fill x -expand no -anchor n
 
+    # Script file
+    set row [ frame $PWid(output).scriptfile ]
+    checkbutton $row.a -variable PVar(do_scriptfile)
+    Label $row.b -anchor w -text "Script file:"
+    Entry $row.c -width 50 -textvariable PVar(scriptfile) 
+    Button $row.d -text "Browse" \
+           -command { set PVar(scriptfile) [ tk_getSaveFile -title "Output script file" ] }
+
+    pack $row.a $row.b $row.c $row.d -side left;
+    pack $row -side top -fill x -expand no -anchor n
+
     # Paper view
     frame $PW.view
     pack $PW.view -side right -anchor e
@@ -308,6 +334,10 @@ proc DmPrint::print { ptype } {
             set cmd "$PVar(printer) $PVar(tmppsfile)"
             Dm::execute $cmd
         }
+        if { $PVar(do_scriptfile) && $PVar(scriptfile) != "" } {
+            set cmd "cp $PVar(tmpscript) $PVar(scriptfile)"
+            Dm::execute $cmd
+        }
     }
 
 
@@ -350,7 +380,8 @@ proc DmPrint::save { } {
 
     Dm::rc_write 0 "Print"
     foreach key { paper_mode paper paper_width paper_height paper_left paper_right paper_top paper_bottom 
-                  do_psfile psfile do_pdffile pdffile do_pngfile pngfile pngresolution 
+                  do_scriptfile scriptfile do_psfile psfile do_pdffile pdffile 
+                  do_pngfile pngfile pngresolution 
                   do_printer printer 
     } {
         Dm::rc_write 1 "$key $PVar($key)"
@@ -364,3 +395,14 @@ proc DmPrint::set_option { key value } {
     set PVar($key) $value
 
 }
+
+# Delete temporary files
+proc DmPrint::clean {  } {
+    global PWid PVar PPap PView
+
+    file delete $PVar(tmpscript)
+    file delete $PVar(tmppsfile)
+    file delete $PVar(tmpppmfile)
+
+}
+

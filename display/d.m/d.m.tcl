@@ -53,7 +53,7 @@ proc Dm::create { } {
     # Menu description
     set descmenu {
         "&File" all file 0 {
-            {command "E&xit" {} "Exit BWidget demo" {} -command exit}
+            {command "E&xit" {} "Exit BWidget demo" {} -command { DmPrint::clean;  exit } }
         }
         "&Options" all options 0 {
         }
@@ -551,6 +551,7 @@ proc main {} {
 
     Dm::create
     DmPrint::init
+    DmPrint::init_tmpfiles
     Dm::load
     BWidget::place . 0 0 center
     wm deiconify .
@@ -559,6 +560,7 @@ proc main {} {
     destroy .intro
 }
 
+bind . <Destroy> { if { "%W" == "."} { DmPrint::clean } } 
 main
 wm geom . [wm geom .]
 
