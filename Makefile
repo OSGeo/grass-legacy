@@ -35,6 +35,7 @@ default:
 	done
 	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
 	${SHELL} -c "cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp ; true"
+	@(cd tools ; sh -c "./build_html_index.html")
 
 mix:
 	GRASS_PERL=${PERL} sh ./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
