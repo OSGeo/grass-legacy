@@ -36,6 +36,7 @@
 
 #include "gis.h"
 #include "site.h"
+#include "Vect.h"
 #include "userglobs.h"
 
 /* include G3d defs */
@@ -68,7 +69,7 @@ int    NERROR, cond1, cond2;
 char   fncdsm[32];
 char   filnam[10];
 
-FILE   *fdinp, *fdredinp, *fdzout, *fddxout, *fddyout, *fddzout,
+FILE   *fdredinp, *fdzout, *fddxout, *fddyout, *fddzout,
   *fdxxout, *fdyyout, *fd4, *fxyout;
 FILE *fddev = NULL;
 int    fdcell,fdcout;
@@ -163,7 +164,7 @@ int main (int argc, char *argv[])
     double          amin1 ();
     int             max1 ();
     int             min1 ();
-    int             colnumber, scan_int;
+    int             scan_int;
     int             per,npmin;
     int             ii,i, n_rows, n_cols, n_levs;
     double          x_orig, y_orig, z_orig;
@@ -171,10 +172,10 @@ int main (int argc, char *argv[])
     struct octdata *data;
     struct octfunc *functions;
     struct octtree *tree;
-    int dims, strs, dbls = 0;
     RASTER_MAP_TYPE map_type;
 /*DEBUG  int testout = 1; */
-    Site_head inhead, devihead;
+    Site_head devihead;
+    struct Map_info In;
 
     struct
     {
@@ -232,11 +233,10 @@ int main (int argc, char *argv[])
     parm.cellinp->description = "Name of the surface cell file";
 
     parm.colnum = G_define_option();
-    parm.colnum ->key        = "colnum" ;
-    parm.colnum ->type       = TYPE_INTEGER ;
+    parm.colnum ->key        = "column" ;
+    parm.colnum ->type       = TYPE_STRING ;
     parm.colnum ->required   = NO ;
-    parm.colnum ->description="Column number of w attribute to use for calculation (counting only float type columns)";
-    parm.colnum ->answer = "1";
+    parm.colnum ->description="Column name of w attribute to use for calculation";
                         
     parm.fi = G_define_option ();
     parm.fi->key = "tension";
@@ -371,14 +371,6 @@ int main (int argc, char *argv[])
     iw2 = 1;
     input = parm.input->answer;
 
-    scan_int=sscanf(parm.colnum->answer,"%d",&colnumber);
-    if ((scan_int <= 0) || colnumber < 1)
-    {
-      fprintf (stderr, "%s=%s - illegal column number\n",
-               parm.colnum->key, parm.colnum->answer);
-      G_usage();
-      exit(1);  
-    }
     cellinp = parm.cellinp->answer;
     cellout = parm.cellout->answer;
     maskmap = parm.maskmap->answer;
@@ -459,25 +451,16 @@ int main (int argc, char *argv[])
       if ((fd4 = fopen ("testout", "w+")) == NULL)
 	G_fatal_error ("Cannot open testout");
     }
-    mapset = G_find_sites (input, "");
-    if (mapset == NULL)
-    {
-        sprintf (msg, "file [%s] not found", input);
-        G_fatal_error (msg);
-    }
-
-    if ((fdinp = G_fopen_sites_old(input, mapset)) == NULL)
-    {
-        sprintf (msg, "Cannot open %s", input);
-        G_fatal_error (msg);
-    }
-
-    if (G_site_describe(fdinp, &dims, &map_type, &strs, &dbls) < 0)
-      G_fatal_error("%s: Unable to guess sites format", G_program_name());
-    if (dims < 3)
-      G_fatal_error("Only found %i dimensions in sites file %s. Need 3 dimensions.", dims, input);
     
-    ii=INPUT(colnumber);
+    Vect_set_open_level ( 1 );
+    Vect_open_old ( &In, input, "" );
+
+    if ( !Vect_is_3d(&In) )
+	G_warning ( "The vector is not 3D" );
+
+    ii=INPUT( &In, parm.colnum->answer);
+
+    Vect_close ( &In );
 
   if (devi != NULL)
   {
@@ -493,8 +476,6 @@ int main (int argc, char *argv[])
       devihead.desc = (char *) G_malloc (128 * sizeof (char));
       sprintf (devihead.desc, "deviations of %s [raster] at %s [sites]",
                cellout, input);
-      devihead.time = inhead.time;
-      devihead.stime = inhead.stime;
       devihead.labels = NULL;
       devihead.form = NULL;
       G_site_put_head (fddev, &devihead);
@@ -743,7 +724,6 @@ fprintf(stderr,"finished interpolating\n");
     else
       clean_fatal_error("input failed!");
     if (fd4 != NULL) fclose (fd4);
-    G_sites_close (fdinp);
 
     return 0;
 }
