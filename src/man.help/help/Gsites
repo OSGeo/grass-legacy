@@ -1,0 +1,4 @@
+Gsites lists locations of points that are contained in the specified
+GRASS sites file.  Point locations are listed as pairs of grid coordinates
+in the form of Eastings and Northings.  Gsites output can be redirected
+directly into the Dpoints program.
