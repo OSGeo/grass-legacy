@@ -43,8 +43,7 @@ OBJ = \
 	ask_driver.o \
 	flush_input.o \
 	map_reg.o \
-	map_resid.o \
-	vars.o
+	map_resid.o
 
 all:  libgeo.a  $(ETC)/geo.reg  $(ETC)/geo.point  $(ETC)/geo.quest   $(ETC)/geo.unlock 
 
