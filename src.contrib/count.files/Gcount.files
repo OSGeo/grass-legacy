@@ -1,0 +1,41 @@
+#!/bin/sh
+# GRASS Users: We have this useful item in our local/bin for GRASS users as
+# the command "count.files".  Try it.  Jim Hinthorne (Central Washington U.)
+if [ $# -gt 0 ]
+then
+   m1=$1
+else
+   m1=$MAPSET
+fi
+M_PATH=$LOCATION/../$m1
+
+# for each specified directory see if there are files
+echo ""
+for val in 1 2 3 4 5 6 7 8 9 10 11 12
+do
+case "$val" in
+  1) dir=cellhd; txt="cell";f="";;
+  2) dir=dig; txt="vector";f="";;
+  3) dir=site_lists; txt="sites";f="";;
+  4) dir=windows; txt="window";f="";;
+  5) dir=group; txt="group";f="";;
+  6) dir=bdlg; txt="binary DLG";f="";;
+  7) dir=dlg; txt="ASCII DLG";f="";;
+  8) dir=paint; txt="paint label/comment";f="";;
+  9) dir=icons; txt="paint icons";f="";;
+ 10) dir=COMBINE; txt="combine script";f="";;
+ 11) dir=WEIGHT; txt="weight script";f="";;
+ 12) dir=rim; txt="rim data base";f='*rimdb1';;
+esac
+   if [ -d $M_PATH/$dir ]
+   then
+       count=`ls $M_PATH/$dir/$f | wc -l`
+       if [ $count -ne 0 ]
+       then
+         echo "$count  $txt files in mapset <$m1>"
+         any=yes
+       fi
+   fi
+done
+
+
