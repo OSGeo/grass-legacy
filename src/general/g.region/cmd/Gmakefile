@@ -7,7 +7,8 @@ LIST   = main.o\
 	 adjust.o\
 	 zoom.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): #
+$(VECTLIB): #
