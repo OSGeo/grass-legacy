@@ -23,8 +23,8 @@ user defined transect line(s).
 <BR>
 <B>r.transect</B> 
 <B>map=</B><EM>name</EM> 
-[<B>result=</B><EM>type</EM>] 
-[<B>width=</B><EM>value</EM>] 
+<!-- [<B>result=</B><EM>type</EM>] 
+[<B>width=</B><EM>value</EM>] -->
 <B>line=</B><EM>east,north,azimuth,distance</EM>[<EM>,east,north,azimuth,distance,...</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -32,10 +32,10 @@ user defined transect line(s).
 This progream outputs, in ASCII, the values in a raster map
 which lie along one or more user-defined transect lines.
 The transects are described by their starting coordinates,
-azimuth, and distance.  The transects may be single-cell
+azimuth, and distance. <!-- The transects may be single-cell
 wide lines, or multiple-cell wide lines.  The output, for
 each transect, may be the values at each of the cells, or a
-single aggregate value (e.g., average or median value).
+single aggregate value (e.g., average or median value). -->
 
 <H2>OPTIONS</H2>
 
@@ -44,7 +44,7 @@ single aggregate value (e.g., average or median value).
 <DL>
 <DT><B>map=</B><EM>name</EM>
 <DD>Name of an existing raster map layer to be queried. 
-<DT><B>result=</B><EM>type</EM>
+<!-- <DT><B>result=</B><EM>type</EM>
 <DD>Type of results to be output. 
 <BR>
 Options: raw, median, average 
@@ -59,21 +59,19 @@ Median and average results output a single value per
 transect: average outputs the average category value of all
 cells along the transect; median outputs the median
 category value of these cells.
-
+-->
 <DT><B>line</B>=</B><EM>east,north,azimuth,distance</EM>[<EM>,east,north,azimuth,distance,...</EM>]
 
 <DD>A definition of (each) transect line, specified by the
 geographic coordinates of its starting point (<EM>easting,
 northing</EM>), the angle and direction of its travel
 (<EM>azimuth</EM>), and its distance (<EM>distance</EM>).
-
 <P>
-
 The <EM>azimuth</EM> is an angle, in degrees, measured to
 the east of north.  The <EM>distance</EM> is in map units
 (meters for a metered database, like UTM).
 
-<DT><B>width=</B><EM>value</EM>
+<!-- <DT><B>width=</B><EM>value</EM>
 <DD>Profile width, in cells (odd number). 
 <BR>
 Default: 1 
@@ -82,11 +80,11 @@ Default: 1
 
 Wider transects can be specified by setting the width to 3,
 5, 7, etc.  The transects are then formed as rectangles 3,
-5, 7, etc., cells wide.
+5, 7, etc., cells wide. -->
 
 </DL>
 
-<H2>OUTPUT FORMAT</H2>
+<!-- <H2>OUTPUT FORMAT</H2>
 
 The output from this command is printed to standard output
 in ASCII.  The format of the output varies slightly
@@ -149,7 +147,7 @@ width=</B><EM>3</EM><B> result=</B><EM>median</EM>
 <KBD>
 22 1549.000000 
 </KBD>
-</DL>
+</DL> -->
 
 <H2>NOTES</H2>
 
@@ -158,6 +156,11 @@ This program is a front-end to the
 It simply converts the azimuth and distance to an ending coordinate 
 and then runs 
 <EM><A HREF="r.profile.html">r.profile</A></EM>.
+
+<H2>BUGS</H2>
+
+There once were <B>width=</B> and <B>result=</B><EM>raw|median|average</EM>
+ options which are not currently implemented.
 
 <H2>SEE ALSO</H2>
 
