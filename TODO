@@ -1,12 +1,15 @@
-$Id: TODO,v 1.16 2000-09-05 20:44:13 markus Exp $
+$Id: TODO,v 1.17 2000-09-05 20:45:02 markus Exp $
 
 TODO for GRASS GIS:
 
-- Fix the bugs described in BUGS
+See ONGOING for ONGOING GRASS projects.
 
 ---------------------------------------------------------------------
 Wishlist for GRASS 5
 ---------------------------------------------------------------------
+
+- Fix the bugs described in BUGS
+
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
      - search for PQLIB, PQINCPATH: PostgreSQL stuff
