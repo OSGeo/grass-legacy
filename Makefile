@@ -8,6 +8,7 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	ps \
 	raster \
 	scripts \
 	tools \
