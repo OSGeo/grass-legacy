@@ -1,0 +1,93 @@
+
+The following files and directories are on emily under /grass.src/4.1/man.
+(1992-12-07)
+
+
+Gmakefile:	* Nroffs the grass 4.0 manual entries that are under
+		  /grass.src/4.1/man/man* by running the script
+		  "/grass/src/4.1/man/utilities/Nroff";
+		* Puts the device-independent, nroff-formatted output under
+		  /grass.src/4.1/man/cat*
+		* Copies this nroff-formatted output from cat*
+		  to $MAN1, $MAN2, $MAN3, $MAN4, $MAN5, and $HELP
+		  under /grass.src/4.1/sun4 (or whatever)/man/ in:
+		  /1, /2, /3, /4, /5, and /help.src.
+README:		* This file.
+
+man.pgnum:	* Cat this file to force starting page number for printing
+		  man entries.
+man.version.40:	* Cat this grass version number for footer printed
+		  on man entries.
+man.header:	* Cat this header file when printing manual entries.
+permuted.index:	* Jim's pgm to created a permuted index for grass 4.0 manual.
+		  (note.  i have not yet tried this.)
+z.index:	* My own index to the printed "grass 4.0 user's reference
+		  manual," done by hand, and not used on-line
+		  (appears in printed manual).
+		  -- Note.  This file is under /grass.src/4.1/man.4.0.rel
+z.index.dba:	* My own index to the printed "grass 4.0 user's reference
+		  manual," FOR DBA ONLY, done by hand, and not used on-line
+		  (appears in printed manual).  (Was fixed to incorporate
+		  adjusted page numbers based on full r.binfer man entry,
+		  which had been badly printed in bulk-printed manual).
+		  -- Note.  This file is under /grass.src/4.1/man.4.0.rel
+
+OBJ, OBJ.*	*  GRASS object code.  Contain "make.rules" files for man, etc.
+
+man1:		*  Contains basic, tested cmd man entries (nroff source).
+man2:		*  Contains shell scripts man entries (nroff source).
+man3:		*  Contains alpha pgm man entries (see /man1) (nroff source).
+man4:		*  Contains contributed, untested code man entries (nroff).
+man5:		*  Contains file format descriptions (nroff source).
+help.src:	*  Contains brief help entries for all cmds under /man1-5.
+
+cat1:		*  Contains device-independent, nroff-formatted man1 entries
+cat2:		*  Contains device-independent, nroff-formatted man2 entries
+cat3:		*  Contains device-independent, nroff-formatted man3 entries
+cat4:		*  Contains device-independent, nroff-formatted man4 entries
+cat5:		*  Contains device-independent, nroff-formatted man5 entries
+
+utilities:	* Directory of utility files for making manual.
+    Nroff:	* Nroffs files under ../man1-5.  See Gmakefile above.
+    README:	* A readme file; outdated (not really 4.0).
+    find_cmd:	* Looks for a user-specified file in user's path.
+    getNAME.sed:* Editor script used by make-permuted-index.
+    imagen:	* Sends manual entries to imagen printer.
+    make-permuted-index:	* Creates a printed permuted index.
+    man.header:	* Header file used to print man pages.
+    man.pgnum:	* Cat this file to force starting page number for printing
+		  4.0 man entries.
+    man.version:* GRASS version #4.1 footer used to print man pages.
+    missing:	* Tells which man entries are missing.
+    ptx.to.ms:	* Script used by make-permuted-index.
+    tbl.nroff:	* Nroffs man entries for dev-indep, post-nroffed format.
+    z.mkindex:	* Lists man entries requiring indexing.  (junk)
+    man.version.40:	* Cat this grass version number for footer printed
+			on 4.0 man entries.
+    man.header:	* Cat this header file when printing 4.0 manual entries.
+
+
+***********************************************************************
+NOTE.  To print manual entries, while in /grass.src/4.1/man, type:
+
+tbl utilities/man.version manN/.class-header utilities/man.header \
+    manN/file manN/.class-notice | troff -t | lpr -Poscar -t
+
+where "manN" is one of man1, man2, man3, man4, or man5,
+and "file" is the file to be printed.
+
+You can also use the "tbl.nroff" and "imagen" scripts in the utilities
+directory, to create screen and laser-printer output respectively.
+To use them, type:
+	utilities/tbl.nroff file
+or
+	utilities/imagen file
+***********************************************************************
+
+
+	man1	Main, tested commands
+	man2	Bourne and C-shell scripts
+	man3	Alpha-tested code (when printing, combined with /man1)
+	man4	Contributed code, still in testing, to be used AYOR
+	man5	Format definitions, non-executable
+
