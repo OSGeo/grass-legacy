@@ -200,7 +200,7 @@ fi
 
 
 if [ ! "$GRASS_TCLSH" ] ; then
-   if [ "$HOSTTYPE == macintosh" ] ; then
+   if [ "$HOSTTYPE" = "macintosh" ] ; then
       if [ -d "/usr/local/grasslib" ]; then
             GRASS_TCLSH=/usr/local/grasslib/bin/tclsh
       else
@@ -216,23 +216,23 @@ fi
 #WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
 
 if [ ! "$GRASS_WISH" ] ; then
-   if [ "$HOSTTYPE == macintosh" ] ; then
-        if [ "$osxaqua" ] ; then
-        	if [ -d "/usr/local/grasslib/bin/Grass.app" ] ; then
-            	GRASS_WISH=/usr/local/grasslib/bin/Grass.app/Contents/MacOS/Grass
-            else
-            	GRASS_WISH=/usr/bin/wish
-            fi
-            export osxaqua
-        elif [ -d "/usr/local/grasslib" ] ; then
-            GRASS_WISH=/usr/local/grasslib/bin/wish
-		else
-			#force X11 tcl on Mac without grasslib directory:
-			GRASS_WISH=/usr/bin/wish
-        fi
-    fi   
-else
-    GRASS_WISH=wish
+   if [ "$HOSTTYPE" = "macintosh" ] ; then
+      if [ "$osxaqua" ] ; then
+         if [ -d "/usr/local/grasslib/bin/Grass.app" ] ; then
+            GRASS_WISH=/usr/local/grasslib/bin/Grass.app/Contents/MacOS/Grass
+         else
+            GRASS_WISH=/usr/bin/wish
+         fi
+         export osxaqua
+      elif [ -d "/usr/local/grasslib" ] ; then
+         GRASS_WISH=/usr/local/grasslib/bin/wish
+      else
+         #force X11 tcl on Mac without grasslib directory:
+         GRASS_WISH=/usr/bin/wish
+      fi
+   else
+      GRASS_WISH=wish
+   fi   
 fi
 export GRASS_WISH
 
