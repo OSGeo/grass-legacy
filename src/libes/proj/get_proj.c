@@ -236,7 +236,6 @@ static void alloc_options(char * buffa)
     if (!(opt_in[nopt1++] = (char *) malloc(nsize + 1)))
         G_fatal_error("cannot allocate options\n");
     sprintf(opt_in[nopt1-1], buffa);
-    printf("/%s/ ", buffa);
     return;
 }
    
