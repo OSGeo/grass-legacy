@@ -1,0 +1,42 @@
+all:	$(BIN)/d.mon.list \
+	$(BIN)/d.mon.release \
+	$(BIN)/d.mon.select \
+	$(BIN)/d.mon.start \
+	$(BIN)/d.mon.status \
+	$(BIN)/d.mon.stop \
+	$(BIN)/d.mon.which
+
+$(BIN)/d.mon.list: list.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.start: start.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.status: status.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.stop: stop.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.which: which.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.select: select.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/d.mon.release: release.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
