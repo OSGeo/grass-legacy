@@ -21,8 +21,8 @@ LIST =  main.o \
         
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB) -o $@
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(LIBES): #
 
