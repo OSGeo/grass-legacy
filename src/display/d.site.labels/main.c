@@ -69,9 +69,9 @@ int main (int argc, char **argv)
     yref_opt->key = "yref";
     yref_opt->type = TYPE_STRING;
     yref_opt->required = NO;
-    yref_opt->options = "top,bottom";
+    yref_opt->options = "top,center,bottom";
     yref_opt->answer  = "bottom";
-    yref_opt->description = "Relative vertical position 'top|bottom'" ;
+    yref_opt->description = "Relative vertical position 'top|center|bottom'" ;
 
     size_opt = G_define_option() ;
     size_opt->key        = "size" ;
