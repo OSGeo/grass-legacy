@@ -35,6 +35,8 @@ src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
+#XDRIVER2 is a layers XDRIVER for d.layers
+src/display/devices/XDRIVER2
 src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
@@ -60,6 +62,7 @@ src/display/d.histogram
 src/display/d.icons
 src/display/d.label
 src/display/d.labels
+src/display/d.layers
 src/display/d.leg.thin
 src/display/d.legend
 src/display/d.mapgraph
@@ -108,8 +111,6 @@ src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
 src/general/g.version
-src/general/gis
-src/general/manage
 src/imagery/i.ask
 src/imagery/i.cca
 src/imagery/i.class
@@ -336,6 +337,7 @@ src/sites/sroff
 src/sites/s.kcv
 src/sites/s.normal
 src/sites/s.perturb
+src/sites/s.proj
 src/sites/s.qcount
 src/sites/s.probplt
 src/sites/s.rand
@@ -470,3 +472,4 @@ src.contrib/UCB/gdbase
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3
 src.garden/answers/src.answers/raster/r.fill.dir
+
