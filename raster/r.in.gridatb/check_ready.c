@@ -16,15 +16,6 @@ check_ready(void)
 		fclose(fp);
 	}
 
-	if(G_find_file("cell",oname,mapset)){
-		if(overwr && !retval){
-			G_remove("cell", oname);
-		}else{
-			fprintf(stderr, "\n** %s - already exists **\n", oname);
-			exit(1);
-		}
-	}
-
 	return(retval);
 }
 

@@ -16,6 +16,5 @@ GLOBAL	struct	Cell_head	cellhd;
 GLOBAL	FCELL	*cell;
 GLOBAL	char	*file;
 GLOBAL	char	*mapset,*oname;
-GLOBAL	char	overwr;
 GLOBAL	char	buf[1024];
 

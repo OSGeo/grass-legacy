@@ -55,7 +55,7 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt_h, *opt_i, *opt_s;
 	struct Option *opt_r, *opt_g, *opt_b;
-	struct Flag *flg1, *nulldraw;
+	struct Flag *nulldraw;
 
 	G_gisinit(argv[0]) ;
 
@@ -106,10 +106,6 @@ main (int argc, char **argv)
 	opt_b->required   = YES ;
 	opt_b->gisprompt  = "new,cell,raster" ;
 	opt_b->description= _("Name of output layer to be used for BLUE") ;
-
-	flg1 = G_define_flag() ;
-	flg1->key	  = 'o' ;
-	flg1->description = _("Overwrite output maps") ;
 
 	nulldraw = G_define_flag();
 	nulldraw->key = 'n';
@@ -210,15 +206,6 @@ main (int argc, char **argv)
 	{
 		name_r = opt_r->answer;
 
-		mapset = G_find_cell2( name_r, "");
-		if (mapset != NULL)
-		{
-			if (flg1->answer)
-				G_remove("cell", name_r);
-			else
-				G_fatal_error("%s: <%s> cell file exists already\n",
-					      G_program_name(), name_r);
-		}
 		if ((r_file = G_open_cell_new (name_r)) < 0)
 			r_used = 0;
 		else
@@ -231,15 +218,6 @@ main (int argc, char **argv)
 	{
 		name_g = opt_g->answer;
 
-		mapset = G_find_cell2( name_g, "");
-		if (mapset != NULL)
-		{
-			if (flg1->answer)
-				G_remove("cell", name_g);
-			else
-				G_fatal_error("%s: <%s> cell file exists already\n",
-					      G_program_name(), name_g);
-		}
 		if ((g_file = G_open_cell_new (name_g)) < 0)
 			g_used = 0;
 		else
@@ -252,15 +230,6 @@ main (int argc, char **argv)
 	{
 		name_b = opt_b->answer;
 
-		mapset = G_find_cell2(name_b, "");
-		if (mapset != NULL)
-		{
-			if (flg1->answer)
-				G_remove("cell", name_b);
-			else
-				G_fatal_error("%s: <%s> cell file exists already\n",
-					      G_program_name(), name_b);
-		}
 		if ((b_file = G_open_cell_new (name_b)) < 0)
 			b_used = 0;
 		else
