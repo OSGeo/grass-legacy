@@ -1,22 +1,22 @@
 
-these are so far just notes and polishing:
+13.dec 2004
+===========
 
-1. it writes in history file:
+- if devi is not given rmsi computation is skipped
+- segmentation needs to be checked whether all fixes were incorporated
+- reading if z is attribute leads to swapping for large data sets
+- crossvalidation needs improved efficiency
+- add crossvalidation to description
+- remove the dmax option
+- change error message if segment is smaller than grid cell (in data.c)
 
-data source site file and should be vector file
-            ^^^^                    ^^^^^^
-
-2. change the word for parameter dmax to dmin (for people used to s.surf.tps
-this gets confusing)
-
-3. missing manual page?
-
-4. it says ...identical points instead of
+old notes
+=========
+- it says ...identical points instead of
            ....point closer than given dmin (or whatever we have in s.surf.tps)
 
-5. check whether masking works
+- check whether masking works
 
-6. the program has not been tested and may not be updated for variable smoothing
-
+- test variable smoothing
 
 
