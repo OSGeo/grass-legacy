@@ -1,0 +1,48 @@
+PROGRAM      = photo.rectify
+#HOME         = ../bin
+HOME         = $(ETC)/imagery
+
+EXTRA_CFLAGS = -I../libes
+IMAGERYLIB2  = ../libes/libortho.a
+
+ 
+LIST = main.o\
+	ask_files.o\
+	ask_files2.o\
+	ask_wind.o\
+        ask_elev.o\
+	get_wind.o\
+	aver_z.o\
+	cp.o\
+        ps_cp.o\
+	compress.o\
+	conv.o\
+	env.o\
+	exec.o\
+	equ.o\
+	mail.o\
+	matrix.o\
+	perform.o\
+	rectify.o\
+	report.o\
+	target.o\
+	write.o
+
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASK)
+
+$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB)
+$(LIST): defs.h global.h rowcol.h
+
+$(LIBES): # in case libraries change
+
+
+
+
+
+
+
+
+
+
+
