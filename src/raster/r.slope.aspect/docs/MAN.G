@@ -6,7 +6,7 @@ Gslope.aspect \- generate slope and aspect maps from elevation
 .I (GRASS-GRID Tool)
 .SH SYNOPSIS
 .nf
-Gslope.aspect [-v] elevation=input slope=output1 aspect=output2
+Gslope.aspect [-v] elevation=input slope=output1 aspect=output2 [format=degrees/percent]
 .fi
 .SH DESCRIPTION
 Gslope.aspect
@@ -25,8 +25,8 @@ must contain true elevation values,
 not rescaled or categorized data.
 .SH ASPECT LAYER
 The aspect file which is created indicates the direction that the
-slopes are facing. The aspect categories are as follows:
-
+slopes are facing. The aspect categories represent the number of
+degrees of east .
 .NF
 .ne 18
   0   no data
@@ -67,31 +67,8 @@ The slope layer could contain, in theory, up to 91 categories.
 The category file is generated for the slope layer (but not the color
 table).
 
-Often slope is represented in percent rise.  The following conversion
-table is presented which converts from degrees to percent:
-
-.NF
-.ne 19
-deg  perc   deg  perc   deg  perc   deg  perc   deg  perc   deg  perc
-
- 0     0  | 15    27  | 30    58  | 45   100   | 60  173   | 75   373
- 1     2  | 16    29  | 31    60  | 46   104   | 61  180   | 76   401
- 2     3  | 17    31  | 32    62  | 47   107   | 62  188   | 77   433
- 3     5  | 18    32  | 33    65  | 48   111   | 63  196   | 78   470
- 4     7  | 19    34  | 34    67  | 49   115   | 64  205   | 79   514
- 5     9  | 20    36  | 35    70  | 50   119   | 65  214   | 80   567
- 6    11  | 21    38  | 36    73  | 51   123   | 66  225   | 81   631
- 7    12  | 22    40  | 37    75  | 52   128   | 67  236   | 82   712
- 8    14  | 23    42  | 38    78  | 53   133   | 68  248   | 83   814
- 9    16  | 24    45  | 39    81  | 54   138   | 69  261   | 84   951
-10    18  | 25    47  | 40    84  | 55   143   | 70  275   | 85  1143
-11    19  | 26    49  | 41    87  | 56   148   | 71  290   | 86  1430
-12    21  | 27    51  | 42    90  | 57   154   | 72  308   | 87  1908
-13    23  | 28    53  | 43    93  | 58   160   | 73  327   | 88  2864
-14    25  | 29    55  | 44    97  | 59   166   | 74  349   | 89  5729
-
-               90 (undefined)
-.FI
+The slope is represented in degrees by default or in percen of rise if
+the option format=percent is used.
 
 However, for most applications, it will be desired to create a reclassification
 of the slopes into groups using RECLASS.
@@ -145,6 +122,8 @@ elevations are valid, \*(lqno data\*(rq can not be represented.
 If the elevation layer contains no data values, either at its edges
 or in its interior, incorrect (and usually quite large) slopes will
 result.
+The program can work in lat-lon coordinates and deals with global
+wraparound.
 
 .SH SEE ALSO
 slope.aspect[1]
@@ -152,3 +131,4 @@ slope.aspect[1]
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
 .br
 Marjorie Larson, U.S. Army Construction Engineering Research Laboratory
+
