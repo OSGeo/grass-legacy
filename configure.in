@@ -28,7 +28,9 @@ AC_PROG_CC
 AC_MSG_CHECKING(whether ld -s works)
 STRIPFLAG=
 ac_save_ldflags=${LDFLAGS}
-LDFLAGS=-s
+CFLAGS="-g -Wall"
+#LDFLAGS=-s
+LDFLAGS=
 AC_TRY_LINK(,,STRIPFLAG=-s; AC_MSG_RESULT(yes),AC_MSG_RESULT(no))
 LDFLAGS=${ac_save_ldflags}
 AC_SUBST(STRIPFLAG)
