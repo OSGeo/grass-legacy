@@ -1,0 +1,63 @@
+:
+ssdata=$1
+master=$2
+
+if [ $# != 2 -o "$ssdata" = "help" ]; then
+echo "Usage: v.cutter.attr source_data master
+
+where:
+
+	source_data is the vector file to be used as a cutter
+	master is the master dig_cats file
+
+ Command to run a list of vector files through the v.cutter program 
+ to clip out an area or create a masked version of a vector map.
+ The vector names must be entered in a file named cut.list.
+ The v.spag and v.support commands are also executed.  A master category 
+ file is copied into each cliped vector map.
+ Output files are named list_name.cut .
+"
+exit
+fi
+
+if test "$GISBASE" = ""; then
+echo "You Must be in GRASS to run this program."
+exit
+fi
+
+g.findfile element=dig file=$ssdata >tmp
+name=`grep "^name=" tmp |cut -d"'" -f2`
+
+if test "$name" = ""; then
+echo "Vector file $ssdata does not exist.
+Exiting ..................................."
+exit
+fi
+
+g.findfile element=dig_cats file=$master >tmp
+m_mapset=`grep mapset= tmp|cut -d"'" -f2`
+
+if test ! -f $LOCATION/../$m_mapset/dig_cats/$master;then
+echo "dig_cats file $master does not exist.
+Exiting ..................................."
+exit
+fi
+
+ 
+if test ! -f $LOCATION/cut.list; then
+make.infolist cut.list
+else
+echo "Using the existing cut.list file"
+fi
+
+for name in `cat $LOCATION/cut.list`
+do
+g.region vect=$name
+d.erase
+v.cutter -u cutter=$ssdata data=$name out=$name.cut
+v.spag -i map=$name.cut
+cp $LOCATION/../$m_mapset/dig_cats/$master $LOCATION/dig_cats/$name.cut
+v.support map=$name.cut
+done
+
+rm tmp
