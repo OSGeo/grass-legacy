@@ -675,6 +675,8 @@ menu_build 1 .main_menu {
 	    	"exec v.info &"}
 		"Load vector attributes to database or create reports" "" {
 		"exec v.to.db &"}
+		"Univariate statistics" "" {
+		"exec v.univar &"}
 	}
     }
     Image "Image processing" {
