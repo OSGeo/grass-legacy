@@ -93,7 +93,7 @@ cross_lines (Map, A, B)
 	}
 	if (same)	/* remove A and return */
 	{
-/*DEBUG*/ debugf2 ( "Lines %d and %d are same 
+/*DEBUG*/ debugf2 ( "Lines %d and %d are same\n", A, B);
 	    _remove_line (map, A);
 	    return (0);
 	}
