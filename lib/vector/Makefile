@@ -4,7 +4,8 @@ MODULE_TOPDIR = ../..
 SUBDIRS = rtree \
 	dglib \
 	diglib \
-	Vlib
+	Vlib \
+	transform
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
