@@ -10,7 +10,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>r.proj</b></EM>  - Allows the user to re-project a raster map from
+<EM><B>r.proj</B></EM>  - Allows the user to re-project a raster map from
 one location to the current location.
 
 <BR>
@@ -19,15 +19,19 @@ one location to the current location.
 
 <H2>SYNOPSIS</H2>
 
-<b> r.proj [-l] input=name location=name [output=name] [mapset=name]
-   [dbase=name] [method=name] [resolution=value]</b>
+<B> r.proj </B>[<B>-ln</B>]<B> input</B>=<EM>name</EM>
+<B>location</B>=<EM>name</EM> [<B>output</B>=<EM>name</EM>] 
+[<B>mapset</B>=<EM>name</EM>] [<B>dbase</B>=<EM>name</EM>] 
+[<B>method</B>=<EM>name</EM>] [<B>resolution</B>=<EM>value</EM>]
 <p>
 
-<H3>Flags:</H3>  
+<H3>Flags:</H3>
 
 <DL>
 <DT><B>-l</B>
 <DD> List raster files in input location and exit
+<DT><B>-n</B>
+<DD> Do not preform region cropping optimization
 </DL>
 
 <H3>Parameters:</H3>
@@ -59,7 +63,14 @@ If <B>dbase</B> is not specified it is assumed to be the current database.
 <BR>
 If <B>mapset</B> is not specified, its name is assumed to be the same as the
 current  mapset's name. 
-
+<BR>
+<P>
+The <B>-n</B> flag will disable the cropping of the input map to the 
+vicinity of the current region before projection.
+This will increase the processing time and memory usage of <EM>r.proj</EM>, 
+but may be necessary in some situations, e.g. if you wish to project a polar 
+region to a cylindrical projection.
+The <B>output</B> map will still be cropped to the bounds of the current region.
 <P>
 <EM>r.proj</EM> supports general datum transformations, making use of the
 <EM>PROJ.4</EM> co-ordinate system translation library.
@@ -67,7 +78,7 @@ current  mapset's name.
 
 <H2>DESCRIPTION</H2> 
 
-<em>r.proj</em> projects a raster map in a specified mapset of a
+<EM>r.proj</EM> projects a raster map in a specified mapset of a
 specified location from the projection of the input location to a raster map
 in the current location. The projection information is taken from the
 momentary PROJ_INFO files.
@@ -144,7 +155,7 @@ raster is resampling the source grid at locations corresponding to the
 intersections of a grid in the target projection.  The basic procedure for
 accomplishing this, therefore, is as follows:
 <p>
-<em>r.proj</em> converts a map to a new geographic projection. It reads a
+<EM>r.proj</EM> converts a map to a new geographic projection. It reads a
 map from a different location, projects it and write it out
 to the current location. 
 <br>
@@ -185,7 +196,7 @@ are provided.
 <p>
 The entire input map is read into memory even if portions only are
 transformed. This requires a large amount of memory if large raster layers
-where projected.
+are projected.
 
 <h2>References:</h2>
 [1]Evenden, G.I.  (1990) Cartographic projection procedures for
