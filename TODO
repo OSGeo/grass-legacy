@@ -1,4 +1,4 @@
-$Id: TODO,v 1.63 2001-01-12 16:47:45 markus Exp $
+$Id: TODO,v 1.64 2001-01-14 19:38:36 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -49,8 +49,13 @@ Multiple languages support:
 ---------------------------------------------------------------------
 
 Libraries:
-- new 3D vector format: evetually http://gts.sourceforge.net/ ??
+- new 3D vector format: eventually http://gts.sourceforge.net/ ??
   (Being worked on by David D Gray, Radim Blazek)
+
+- optri replacement: 
+    detri (http://www.geocities.com/mucke/GeomDir/detri.html)? 
+    or gts (http://gts.sourceforge.net/)?
+  (Being worked on by ?)
 
 - TIN support: Probably use this library:
     http://www.cs.cmu.edu/~quake/triangle.html
@@ -337,6 +342,9 @@ Modules:
  spheroid and datum are the same on the input and output side should a
  straight copy be done, I think.
 
+- r.reclass.pg
+  write it
+  (Being worked on by)
 
 - r.surf.distance: write it
   this module would generate a distance surface (improved version of
