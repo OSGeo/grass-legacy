@@ -23,6 +23,10 @@ Additional software
 s.to.qrast/	: fast sites to raster conversion (replaces s.to.rast)
 
 Related Publications:
-- Transactions in GIS, Special issue (in print 2004)
 - GRASS Users conference 2002, Trento, Italy
+  http://www.ing.unitn.it/~grass/proceedings/proceedings/pdfs/Brovelli_Maria_Antonia.pdf 
+- Brovelli, Maria A, Cannata, Massimiliano & Longoni, Ulisse M (2004)
+  LIDAR Data Filtering and DTM Interpolation Within GRASS.
+  Transactions in GIS 8 (2), 155-174.
+  Online: http://www.blackwell-synergy.com/servlet/useragent?func=synergy&synergyAction=showTOC&journalCode=tgis&volume=8&issue=2&year=2004&part=null
 
