@@ -411,7 +411,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 }
 
 /*!
- \fn int *Vect_write_dblinks ( char *m, char *ms, struct dblinks *p)
+ \fn int *Vect_write_dblinks ( struct Map_info *Map )
  \brief write dblinks to file
  \return 0 OK, -1 on error
  \param pointer to map name, pointer to mapset name, pointer to dblinks structure
