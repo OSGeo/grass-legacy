@@ -92,7 +92,7 @@ outline_window()
 	R_cont_abs((int)D_east, (int)D_south) ;
 	R_cont_abs((int)D_west, (int)D_south) ;
 	R_cont_abs((int)D_west, (int)D_north) ;
-	R_flush() ;
+	V_flush() ;
 }
 
 get_D_west()
