@@ -1,0 +1,108 @@
+.TH g.column.inf
+.SH NAME
+\fIg.column.inf\fR \- Generate a list of database columns for a specified table
+in the currently selected database.
+.br
+.I "(GRASS-RDBMS General Interface Program)"
+.SH SYNOPSIS
+\fBg.column.inf\fR
+.br
+\fBg.column.inf help\fR
+.br
+\fBg.column.inf\fR [\fB\-v\fR] \fBtable=\fIname\fR
+.SH DESCRIPTION
+g.column.inf is used to generate a list of the columns in the specified table [table] of the currenty selected database. If the [-v] option is used the data type and length of the column are reported as well. The currently selected database is identified by the GRASS environment variable $DATABASE which is set using the g.select.inf GRASS-RDBMS interface tool. If this environment variable is not set the program terminates with a message to the user. To generate a list of the available tables in the currently
+selected database use the command g.table.inf. The information provided by
+g.column.inf will be used in subsequent GRASS-RDBMS applications to formulate
+and construct well formed database queries.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Flags
+.IP \fI-v\fR
+Use v for a verbose listing of columns.
+.LP
+Parameters
+.IP \fItable=database_table_name\fR
+Name of table in the currently selected  database.
+
+.SH "EXAMPLE OUTPUT (terse)"
+g.column.inf table=nri
+
+.br
+The following columns are defined in table: utm
+
+.br
+fips              flood             hydunit           
+.br
+landcl82          landcl87          mlra              
+.br
+nriptr            other             point             
+.br
+psu               refname           slope
+.br
+soil5             text_mod          texture           
+.br
+tfact             ukfact            utm_e             
+.br
+utm_n             xfact
+
+.SH "EXAMPLE OUTPUT (verbose)"
+g.column.inf table=nri -v
+
+.br
+The following columns are defined in table: utm
+.br
+
+.br
+               flood	                char	5
+.br
+             hydunit	                char	8
+.br
+            landcl82	                char	2
+.br
+            landcl87	                char	2
+.br
+                mlra	                char	4
+.br
+              nriptr	             integer	4
+.br
+               other	                char	40
+.br
+               point	             integer	4
+.br
+             refname	                char	40
+.br
+               slope	                char	6
+.br
+               soil5	                char	6
+.br
+            text_mod	                char	8
+.br
+             texture	                char	8
+.br
+               tfact	            smallint	2
+.br
+              ukfact	             decimal	3,2
+.br
+               utm_e	             integer	4
+.br
+               utm_n	             integer	4
+.br
+               xfact	             integer	4
+.br
+               xfact	             integer	4
+
+.SH BUGS
+None
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
