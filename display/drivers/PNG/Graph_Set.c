@@ -65,6 +65,7 @@ int Graph_Set (int argc, char **argv)
     p = getenv("GRASS_TRUECOLOR");
     if (p && strcmp(p, "TRUE") == 0) {
 	true_color = 1;
+	fprintf(stderr,"PNG: GRASS_TRUECOLOR status: TRUE\n");
 	im = gdImageCreateTrueColor(screen_right - screen_left, screen_bottom - screen_top);
     }
     else
