@@ -1,0 +1,132 @@
+.TH r.describe
+.SH NAME
+\fIr.describe\fR \- Prints terse list of category values found in a raster
+map layer.
+.br
+\fI(GRASS Raster Program)\fR
+.SH SYNOPSIS
+\fBr.describe\fR
+.br
+\fBr.describe help\fR
+.br
+\fBr.describe\fR [\fB-1rqd\fR] \fBmap\*=\fIname\fR
+.SH DESCRIPTION
+\fIr.describe\fR prints a terse listing of category values found in
+a user-specified raster map layer.
+
+The program will be run non-interactively, if the user specifies
+the name of a raster map layer and any desired flags on the
+command line, using the form
+.LP
+.RS
+\fBr.describe\fR [\fB-1rqd\fR] \fBmap\*=\fIname\fR
+.RE
+.LP
+where the map \fIname\fR is the name of a raster map layer whose
+categories are to be described, and the (optional) flags
+\fI-1\fR, \fI-r\fR, \fI-q\fR, and \fI-d\fR have the meanings described below.
+
+Alternately, the user can simply type \fBr.describe\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+needed flag settings and the parameter value using the standard GRASS parser
+interface described in the manual entry for \fIparser\fR.
+.SH PROGRAM USE
+The user can select one of the following two output reports from \fIr.describe\fR:
+
+(1) RANGE.
+A range of category values found in the raster map layer will be printed.
+The range is divided into three groups:  negative, positive, and zero.
+If negative values occur, the minimum and maximum negative values
+will be printed.
+If positive values occur, the minimum and maximum positive values
+will be printed.
+If zero occurs, this will be indicated.
+
+(2) FULL LIST.
+A list of all category values that were found in the raster map layer
+will be printed.
+
+The following sample output from \fIr.describe\fR:
+
+.ti +.5i
+0 2-4 10-13
+
+means that category data values 0, 2 through 4, and 10 through 13
+occurred in the named map layer.
+
+The user must choose to read the map layer in one of two ways:
+
+(1) DIRECTLY.
+The current geographic region and mask are ignored and the full 
+raster map layer is read.  This method is useful if the
+user intends to \fIreclassify\fR or
+\fIrescale\fR the data, since these functions (\fIr.reclass\fR and
+\fIr.rescale\fR) also ignore the current \fIgeographic region\fR
+and \fImask\fR.
+
+(2) REGIONED and MASKED.
+The map layer is read within the current geographic region,
+masked by the current mask.
+.SH NON-INTERACTIVE PROGRAM USE
+.I r.describe
+examines a user-chosen raster map layer.  If run non-interactively,
+the layer name must be supplied on the command line.
+.LP
+A compact list of category values that were found in the data layer
+will be printed.
+.LP
+Following is a sample output:
+.sp 1
+.ti +.5i
+0 2-4 10-13
+.IP -1
+Print the output one value per line, instead of the default short form.
+In the above example, the -1 option would output:
+
+.nf
+.in +5
+0
+2
+3
+4
+10
+11
+12
+13
+.in
+.fi
+
+.IP -r
+Only print the range of the data.
+The highest and lowest positive values, and the highest and lowest
+negative values, are output. In the above example, the -r option would output:
+
+.nf
+.in +5
+0 2 13
+.in
+.fi
+
+If the -1 option is also specified, the output appears with one category
+value per line.
+.IP -q
+Quiet. The -q option will tell r.describe to be silent while reading the
+raster file.  If not specified, program percentage-completed messages are
+printed.
+.IP -d
+Use the current geographic region settings.  Normally, \fIr.describe\fR
+will read the data layer directly, ignoring both the current region settings
+and mask.
+The -d option tells \fIr.describe\fR to read the map layer in the current region
+masked by the current mask (if any).
+.SH NOTES
+The range report will generally run faster than the full list.
+.SH SEE ALSO
+.I g.region,
+.I r.mask,
+.I r.reclass,
+.I r.rescale
+and
+.I parser
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
