@@ -1,12 +1,9 @@
-#CC	=	cc
-#LDIR =	../../../libes/dspf
 LDIR = $(SRC)/libes/dspf
 DSPLIB	=	$(LDIR)/libdsp3.a
 
 EXTRA_CFLAGS	=	-I$(LDIR) -I$(INCLUDE_DIR)
 
 
-#PGM	=	./r3.mkdspf
 PGM	=	$(BIN_CONTRIB_CMD)/r3.mkdspf
 
 SOURCES	=	\
