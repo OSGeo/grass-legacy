@@ -108,7 +108,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     /* --- Add arcs --- */
     /* Open db connection */
     if ( afield > 0 ) {
-        Fi = Vect_get_field_info( Map->name, Map->mapset, afield);
+        Fi = Vect_get_field( Map, afield);
 	if ( Fi == NULL ) 
 	    G_fatal_error ("Cannot get field info");
 	
@@ -205,7 +205,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     /* Set node attributes */
     if ( nfield > 0 ) {
         G_debug ( 2, "Set nodes' costs");
-        Fi = Vect_get_field_info( Map->name, Map->mapset, nfield);
+        Fi = Vect_get_field( Map, nfield);
 	if ( Fi == NULL ) 
 	    G_fatal_error ("Cannot get field info");
 	

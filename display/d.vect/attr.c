@@ -37,7 +37,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     db_init_string (&stmt);
     db_init_string (&valstr);
 
-    fi = Vect_get_field_info(Map->name, Map->mapset, lattr->field);
+    fi = Vect_get_field(Map, lattr->field);
     if ( fi == NULL ) return 1;
     driver = db_start_driver(fi->driver);
     if (driver == NULL) G_fatal_error("Cannot open driver %s", fi->driver) ;

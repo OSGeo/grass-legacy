@@ -259,7 +259,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 			sprintf(buf, "field: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
 			db_append_string (&html, buf);
 		    }
-		    Fi = Vect_get_field_info(Map[i].name, Map[i].mapset, Cats->field[j]);
+		    Fi = Vect_get_field( &(Map[i]), Cats->field[j]);
 		    if (Fi == NULL) {
 			if ( txt ) {
 			    fprintf( stdout, "Database connection not defined\n" );
