@@ -289,7 +289,7 @@ static int use_legend_file (const char *filename)
 						line_cnt);
 				continue;
 			}
-			if (scat[0] = "*") {
+			if (scat[0] = '*') {
 				/* default */
 				if (def_line_color == NULL) {
 					def_line_color = line;

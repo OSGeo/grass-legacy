@@ -6,7 +6,7 @@
 */
 
 #include <stdio.h>
-#include    <math.h>
+#include <math.h>
 #include "Vect.h"
 
 static double d_atan2(double,double);
@@ -19,9 +19,6 @@ float dig_calc_begin_angle (
     double last_y;
     double *xptr;
     double *yptr;
-#ifndef atan2
-    double atan2();
-#endif atan2
     int short_line;
     int i;
     int n_points;
@@ -84,10 +81,6 @@ float dig_calc_end_angle( struct line_pnts *points, double thresh)
     double last_y;
     double *xptr;
     double *yptr;
-    double fabs();
-#ifndef atan2
-    double atan2();
-#endif atan2
     int short_line;
     int i;
     int n_points;

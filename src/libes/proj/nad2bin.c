@@ -9,7 +9,7 @@ static const char SCCSID[]="@(#)nad2bin.c	4.2 93/08/25 GIE REL";
 #define U_SEC_TO_RAD 4.848136811095359935899141023e-12
 	static char
 *usage = "<ASCII_dist_table local_bin_table";
-	void
+	int
 main(int argc, char **argv) {
 	struct CTABLE ct;
 	FLP *p, t;
@@ -64,5 +64,5 @@ main(int argc, char **argv) {
 		fprintf(stderr, "output failure\n");
 		exit(2);
 	}
-	exit(0); /* normal completion */
+	return 0; /* normal completion */
 }

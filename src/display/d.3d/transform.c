@@ -19,13 +19,6 @@ int
 establish_view (double fx, double fy, double fz, double tx, double ty, double tz, double view_angle)
 {
 	register double x, y, z ;
-#ifndef atan2
-	double atan2() ;
-#endif atan2
-	double tan() ;
-	double hypot() ;
-	double sin() ;
-	double cos() ;
 	double rx ;
 	double ry ;
 	double rz ;

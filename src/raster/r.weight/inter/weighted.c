@@ -1,9 +1,15 @@
-#define MAIN
+
 #include "include.h"
 #include "display.h"
 #include "D.h"
 #include <unistd.h>
 #include "raster.h"
+
+struct mapdef mapdef[MAX_MAPS] ;
+int analysis_type = ADD ;
+long normalize = 0 ;
+char map_name[20] ;
+char input_buf[256] ;
 
 static int is_console ;
 

@@ -4,6 +4,7 @@
 * Find the a 3dcell in the current mapset
 **************************************************************/
 #include "gis.h"
+#include "G3d.h"
 
 
 int g3_find_dsp_file (cell, file, mset)
@@ -37,7 +38,7 @@ static char dspout[200];
     if(!G_legal_filename (dspf))
 	return(NULL);
 
-    if(NULL == G_find_grid3(g3f, "")){
+    if(!G_find_grid3(g3f, "")){
 	fprintf
 	(stderr, "[%s] Invalid 3dcell file (does not exist)\n", g3f);
 	return(NULL);

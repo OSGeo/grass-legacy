@@ -29,23 +29,11 @@ struct mapdef
     struct Histogram histo ;
 } ;
 
-#ifdef MAIN
-
-struct mapdef mapdef[MAX_MAPS] ;
-int analysis_type = ADD ;
-long normalize = 0 ;
-char map_name[20] ;
-char input_buf[256] ;
-
-#else
-
 extern struct mapdef mapdef[] ;
 extern int analysis_type ;
 extern long normalize ;
 extern char map_name[] ;
 extern char input_buf[] ;
-
-#endif MAIN
 
 #define GETS mygets(input_buf)
 char *mygets() ;

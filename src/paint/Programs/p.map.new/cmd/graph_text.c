@@ -8,7 +8,7 @@ static int draw (int x, int y, int drawflag)
 {
 #ifdef DEBUG
 fprintf (stdout," draw(%d,%d->%d,%d)\n", curx, cury, x, y);
-#endif DEBUG
+#endif
     text_line (curx, cury, x, y, drawflag ) ;   /* see draw_text.c */
     curx = x ;  cury = y ;
 
@@ -19,7 +19,7 @@ static int move (int x, int y, int drawflag)
 {
 #ifdef DEBUG
 fprintf (stdout," move(%d,%d->%d,%d)\n", curx, cury, x, y);
-#endif DEBUG
+#endif
     curx = x ;  cury = y ;
 
     return 0;
@@ -43,7 +43,7 @@ static int drawchar (double size, double sinrot, double cosrot,
 
 #ifdef DEBUG
 fprintf (stdout,"drawchar(%c) basex=%d, basey=%d\n", character, basex, basey);
-#endif DEBUG
+#endif
 
     Do = move;
     for (i = 1; i < n; i++)

@@ -202,7 +202,7 @@ write_SDTS_nodes (map, full_fname, fname, ll_input, zone)
 			else
 				n_lines++;
 		}
-#endif FOO
+#endif
 
 
 		 sprintf (rcid_str, "%6d", cnt);

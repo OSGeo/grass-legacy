@@ -24,7 +24,7 @@ static int drawchar (
 
 #ifdef DEBUG
 fprintf (stdout,"drawchar(%c) basex=%d, basey=%d\n", character, basex, basey);
-#endif DEBUG
+#endif
 
     Do = move;
     for (i = 1; i < n; i++)
@@ -54,7 +54,7 @@ static int draw (int x,int y)
 {
 #ifdef DEBUG
 fprintf (stdout," draw(%d,%d->%d,%d)\n", curx, cury, x, y);
-#endif DEBUG
+#endif
     text_line (curx, cury, x, y) ;   /* see draw_text.c */
     curx = x ;  cury = y ;
 
@@ -65,7 +65,7 @@ static int move (int x,int y)
 {
 #ifdef DEBUG
 fprintf (stdout," move(%d,%d->%d,%d)\n", curx, cury, x, y);
-#endif DEBUG
+#endif
     curx = x ;  cury = y ;
 
     return 0;

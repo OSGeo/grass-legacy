@@ -46,7 +46,7 @@ rcr_sum_tree (struct Node *node)
 	    fprintf(stderr,
 		    "node->ltot = %3d,  node->rtot = %3d\n",
 		     node->ltot,	node->rtot	 ) ;
-#endif DEBUG
+#endif
 	    break ;
     }
     return(totl) ;
