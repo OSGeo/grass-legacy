@@ -2,12 +2,13 @@ OFILES = \
 	draw_point.o \
 	main.o
 
-$(BIN_MAIN_CMD)/d.sites: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_MAIN_CMD)/d.sites: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB)
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #
 $(GISLIB): #
+$(DLGLIB): #
 
 draw_point.o: options.h
 main.o: options.h
