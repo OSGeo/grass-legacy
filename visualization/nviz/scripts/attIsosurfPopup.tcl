@@ -8,6 +8,10 @@
 #    att  - Current Att
 #    mode - Disable events in other windows ?
 
+#If set to 1 output debug statements
+global DEBUG
+set DEBUG 0
+
 proc mkIsosurfAttPopup {w id att {mode 0}} {
 
     global attIsoPopup_InvertMask attIsoPopup_Status attIsoPopup_Type \
@@ -119,7 +123,7 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
 
     # tkspecial_wait window $w
     tkwait window $w
-    puts "Exiting from attIsoPopup"
+    if {$DEBUG} {puts "Exiting from attIsoPopup"}
 
     # Signal to user that we are busy
     appBusy
