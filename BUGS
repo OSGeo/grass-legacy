@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.82 2000-11-19 17:16:34 markus Exp $
+$Id: BUGS,v 1.83 2000-11-19 19:47:40 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -52,10 +52,6 @@ G3D libraries bug:
  -> needs to be fixed
    (being worked on by Jaro)
 
------------ docs ------------------------------------------------
-html/Gmakefile:
- fix it
-
 ----------- modules ---------------------------------------------
 [RC] d.his: 
  - color wrong if input value=0
@@ -70,16 +66,12 @@ d.mon: hangs with "-L" option
   couldn't find the problem. This is something for the signal
   specialists/system programmers from BSD and SYSV.
     (being worked on by Andreas Lange, help wanted!)
+  -> note: with IPC it's o.k.
 
 d.param.scale
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
     (being worked on by ?)
-
-[RC]d.profile
- - problems when loading a reclassified maps containing NULLs
-   (reported by Markus)
-   (being worked on by ?)   
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
@@ -104,7 +96,7 @@ i.in.gtc/i.in.pri
   (reported by Stefano Merler <merler@itc.it>)
   (being worked on by ?)
 
-[RC]i.ortho.photo
+i.ortho.photo
  - if second control point is set by mouse, it is not indicated
    immediately in orange color (right window)
  - GIS WARNING: Can't write embedded null values for map open for random
@@ -241,11 +233,6 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
 [RC]r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
   Memory bug fixed by Alex Shevlakov
-  (being worked on by David D Gray)
-
-[RC]r.in.tiff/r.out.tiff
- - segm. fault (same thing with r.binfer)
-  (reported by Stephan Holl <Stephan.Holl@stud.uni-hannover.de>)
   (being worked on by David D Gray)
 
 [RC]r.los:
