@@ -89,6 +89,8 @@ int PS_fcolortable (void)
     cwidth = 0.1;
     ncols = (int) height / cwidth;
     step = (dmax - dmin) / (ncols - 1);
+    if(dmin == dmax)  /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
+        G_fatal_error("A floating point colortable must contain a range of values.");
     lwidth = 0.02 * width;
 
     /* Print color band */
@@ -153,7 +155,7 @@ int PS_fcolortable (void)
     /* changed to draw tic through bar ?? */
     x2 = x1 - width;
     /* x2 = x1 + 0.5 * width; */
-    
+
     /* do nice label: we need so many decimal places to hold all step decimal digits */	
     if ( step > 100 ) { /* nice steps do not have > 2 digits, important separate, otherwise */
 	ddig = 0;       /* we can get something like 1000000.00000000765239 */
