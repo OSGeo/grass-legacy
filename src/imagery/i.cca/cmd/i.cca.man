@@ -1,0 +1,55 @@
+.TH i.cca
+.SH NAME
+\fIi.cca\fR \- Canonical components analysis (cca) program for
+image processing.
+.br
+.I (GRASS Imagery Program)
+.SH SYNOPSIS
+\fBi.cca\fR
+.br
+\fBi.cca help\fR
+.br
+\fBi.cca\fR \fBgroup\*=\fIname\fR \fBsubgroup\*=\fIname\fR \fBsignature\*=\fInam
+   e\fR \fBoutput\*=\fIname\fR
+.SH DESCRIPTION
+\fBi.cca\fR is an image processing program that takes from two to eight
+(raster) band files and a signature file,
+and outputs the same number of raster band files transformed to provide
+maximum separability of the categories indicated by the signatures.
+This implementation of the canonical components transformation
+is based on the algorithm contained in the LAS image processing system.
+
+Typically the user will use the \fIi.class\fR program to collect a set
+of signatures and then pass those signatures along with the raster band
+files to \fIi.cca\fR.  The raster band file names are specified
+on the command line by giving the group and subgroup that were used
+to collect the signatures.
+
+The output raster map names are built by appending a ".1", ".2", etc. to
+the output raster map name specified on the command line.
+.SH NOTES
+\fIi.cca\fR respects the current geographic region definition
+and the current mask setting while performing the transformation.
+
+If the warning about the "Jacobi routine" not converging appears,
+carefully examine the partial matrix that is output.  If the values
+that are above the diagonal are not close to zero (say, not between
+-1.0e-50 and +1.0e-50), this may indicate a problem with the Jacobi
+routine.  Also, see the bug listed below.
+.SH BUGS
+The \FIi.cca\fR transformation depends on calculating the
+eigen values and eigen vectors of a matrix based on the input
+signatures.  The function that calculates the eigen values and vectors
+depends on an under flow being set to zero to converge.  If this isn't
+true for a given architecture, spurious warnings about non-convergence
+may result.
+.SH SEE ALSO
+Schowengerdt, Robert A.  \fBTechniques for Image Processing and
+Classification in Remote Sensing\fR,  Academic Press, 1983.
+.LP
+.I i.class
+.SH AUTHORS
+David Satnik GIS Laboratory, Central Washington University
+.br
+Vali, Ali R.
+Space Research Center, University of Texas, Austin
