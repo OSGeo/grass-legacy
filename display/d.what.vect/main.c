@@ -20,12 +20,12 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse, *attr;
+  struct Flag *once, *terse, *txt;
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
   char temp[128], *str;
-  int i, j, level, width, mwidth;
+  int i, j, level, width = 0, mwidth = 0;
   
   /* Initialize the GIS calls */
   G_gisinit (argv[0]) ;
@@ -59,11 +59,11 @@ int main(int argc, char **argv)
   
   terse = G_define_flag();
   terse->key = 't';
-  terse->description = "Terse output. For parsing by programs";
+  terse->description = "Terse output. For parsing by programs.";
  
-  attr = G_define_flag();
-  attr->key = 'a';
-  attr->description = "Display attributes";
+  txt = G_define_flag();
+  txt->key = 'x';
+  txt->description = "Print informations as plain text to terminal window";
   
   module = G_define_module();
   module->description = 
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
     G_fatal_error ("No graphics device selected");
   D_setup(0);
 
-  what(once->answer, terse->answer, width, mwidth, attr->answer); 
+  what(once->answer, txt->answer, terse->answer, width, mwidth); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);

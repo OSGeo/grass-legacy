@@ -253,7 +253,7 @@ F_open ( char *title,  char *html )
             if ( ret == 1 ) {
 	        G_debug ( 3, "CHILD: recieved = '%c'", buf[0] );
                 if ( buf[0] == 'O' ) { 
-	            G_debug ( 0, "Open form %d", frmid );
+	            G_debug ( 2, "Open form %d", frmid );
 		    /* Read title */
 		    fgets ( buf, 1000, child_recv ); 
       		    length = atoi ( buf ); /* length of the string */
