@@ -14,4 +14,4 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd ctest
 
 ctest:
-	cd test; $(MAKE)
+	$(MAKE) -C test
