@@ -1,0 +1,8 @@
+interface_build {
+    m.dem.examine 0
+    {Provides a terse description of USGS Digital Elevation Model (DEM) data files stored on 1/2-inch magnetic tape.}
+    {entry input {Tape input device:} 0 input}
+    {entry blocksize {Blocksize of tape data [10240]:} 0 ""}
+    {entry first {First file to examine [1]:} 0 ""}
+    {entry last {Last file to examine [999999]:} 0 ""}
+}
