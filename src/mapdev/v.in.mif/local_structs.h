@@ -32,4 +32,11 @@ typedef struct _type_array {
   int *entities;
 } type_array;
 
+
+typedef struct _ring_offsets {
+  int n_offs;
+  int alloc_offs;
+  int *offs;
+}  ring_offsets;
+
 #endif /* LOCAL_STRUCTS_H_ */

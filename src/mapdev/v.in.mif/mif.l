@@ -4,7 +4,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 10th. Aug. 2000
- * Last updated 24th. Oct. 2000
+ * Last updated 10th. Jan. 2001
  *
 
  * This file is part of GRASS GIS. It is free software. You can 
@@ -36,6 +36,7 @@
 #include "Vect.h"
 #include "local_structs.h"
 #include "scanner.h"
+#include "cpoly.h"
 
 #ifdef yywrap
 #undef yywrap
@@ -46,6 +47,7 @@ extern site_array *site0;
 extern line_array *line0;
 extern line_array *area0;
 extern type_array *type0;
+extern ring_offsets *roffs;
 extern int header_only;
 extern double *xcenter;
 extern double *ycenter;
@@ -76,6 +78,7 @@ int nlines;
 int ncols;
 int slot, pos;
 int data_is_set = 0;
+int is_vert1;
 int cnt;
 int nparts, numparts, nvertices;
 
@@ -89,6 +92,7 @@ char delchar;
 int current_region, current_ring = 0;
 
 struct line_pnts *tmp_line;
+region uni_bb;
 
 %}
 
@@ -205,8 +209,10 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 			  nsites = 0; nglines = 0; nrings = 0; ncenter = 0;
 			  site_index = line_index = region_index = 0;
 			  type0 = type_array_init();
+			  roffs = offsets_init();
 			  if(header_only) return 1;
 			  BEGIN DATA;
+			  is_vert1 = 1;
 			}
 
 <DATA>{point}           {
@@ -349,6 +355,20 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 				       sx = atof(ssx);
 				       ssy = strtok(NULL, " \t");
 				       sy = atof(ssy);
+				       
+				       if(is_vert1) {
+					 is_vert1 = 0;
+					 uni_bb.w = uni_bb.e = sx;
+					 uni_bb.n = uni_bb.s = sy;
+				       }
+
+				       else {
+					 if(sx > uni_bb.e) uni_bb.e = sx;
+					 if(sx < uni_bb.w) uni_bb.w = sx;
+					 if(sy > uni_bb.n) uni_bb.n = sy;
+					 if(sy < uni_bb.s) uni_bb.s = sy;
+				       }
+				       
 				       Vect_append_point(linex, sx, sy);
 				       if(linex->n_points == nvertices) {
 					 if(alloc_glines( area0, nrings + 1))
@@ -356,6 +376,8 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 					 memcpy(&area0->gplines[nrings++], linex, sizeof(struct line_pnts) );
 					 free(linex);
 					 if(numparts == nparts) {
+					   if(append_offset(roffs, region_index, nrings - 1) < 0)
+					     return -1;
 					   region_index++;
 					   BEGIN DATA;
 					 }
@@ -442,7 +464,7 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
                           BEGIN MIDLINE;
 			  if(!data_is_set) {
 			    data_is_set = 1;
-			    data_info = (d_type *)G_malloc( (nsites + nglines) *
+			    data_info = (d_type *)G_malloc( (nsites + nglines + nrings) *
 							    sizeof(d_type));
 			  }
 			  strcpy(&data_info[recs][0], yytext);
@@ -578,6 +600,35 @@ int alloc_glines ( line_array *l1, int size )  {
 }
 
 
+int alloc_offsets ( ring_offsets *ro, int size ) {
+
+  /* Allocate enough space for `size' offset indices */
+
+  if(ro->alloc_offs >= size)
+    return 1;
+
+  if(ro->n_offs == 0) {
+    if( (ro->offs = (int *)malloc( 128 * sizeof(int) )) == NULL ) {
+      fprintf(stderr, "Error allocating dynamic memory.\n");
+      return -1;
+    }
+    ro->alloc_offs = 128;
+    memset(ro->offs, 0, 128 * sizeof(int));
+  }
+
+  else {
+    if( (ro->offs = (int *)realloc( ro->offs, (ro->alloc_offs + 128)
+				    * sizeof(int) )) == NULL ) {
+      fprintf(stderr, "Error allocating dynamic memory.\n");
+      return -1;
+    }
+    ro->alloc_offs += 128;
+    memset(&ro->offs[ro->alloc_offs - 128], 0, 128 * sizeof(int));
+  }
+
+  return 0;
+}
+
 int append_simple_line(line_array *l0, const double x1, const double y1, const double x2,
 		       const double y2, const int nlines) {
 
@@ -628,6 +679,18 @@ type_array *type_array_init(void) {
   return tp0;
 }
 
+
+ring_offsets *offsets_init(void) {
+
+  ring_offsets *ro;
+
+  ro = (ring_offsets *)G_malloc( sizeof(ring_offsets) );
+  memset(ro, 0, sizeof(ring_offsets));
+
+  return ro;
+}
+
+
 int append_type_spec(type_array *arr0, const char val, const int cnt) {
 
   if(arr0->n_chars == 0) {
@@ -665,6 +728,23 @@ int append_type_spec(type_array *arr0, const char val, const int cnt) {
   arr0->n_chars++;
 
   return 0;
+}
+
+
+int append_offset(ring_offsets *ro, int indx, int val) {
+
+  /* Append an offset value for the index of the ring in an area
+     array that corresponds to the _last_ ring of the current
+     region (whose index corresponds to the position in the offsets'
+     array
+  */
+
+  if(alloc_offsets(ro, indx + 1) < 0)
+    return -1;
+
+  ro->offs[indx] = val;
+  return 0;
+  
 }
 
 int yywrap ()  {

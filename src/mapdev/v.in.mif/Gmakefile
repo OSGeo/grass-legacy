@@ -6,9 +6,11 @@ LIST = 	lex.yy.o \
 	parse.o \
 	write_lines.o \
 	fields.o \
-	static.o
+	cpoly.o \
+	gbtree.o \
+	store.o
 
-LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
