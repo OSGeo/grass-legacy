@@ -1,0 +1,21 @@
+Makefile  -  Run make to create the programs listed below
+
+read      -  Reads raw TTD .DAI files and writes out records.  Sample run:
+             read < ../raw.tape.data/URBAN.DAI | more
+
+make_digit-  Reads raw TTD .DAI files and creates GRASS digit
+             results. 
+             * The coordinates are UTM, but are slightly shifted
+                probably due to a mix of speroids or datums
+             * The digit required topology is not guaranteed to be there.
+             * Only line features are preserved
+             * No attribute information is preserved
+
+             Sample run:
+             make_digit < ../raw.tape.data/URBAN.DAI > URBAN.digit
+
+             If you do not have ../raw.tape.data directory:
+                This directory held raw TTD files as extracted from 
+                the TTD distribution tape.  You will probably run a
+                dd(1) command to read the tape directly (once positioned on
+                the correct file) into make_digit.
