@@ -97,9 +97,13 @@ mix:
 
 copymix:
 	GRASS_PERL=${PERL} sh ./tools/link -copy -old=$(GRASS50) -new=./ -conf=./tools/link.conf
+	echo "Mixed with" > MIX
+	cat $(GRASS50)/src/CMD/VERSION >> MIX
+	cat $(GRASS50)/src/CMD/RELEASE >> MIX
 
 mixclean:
-	 ${SHELL} -c "find . -type l -exec rm {} \; 2>/dev/null ; true"
+	${SHELL} -c "find . -type l -exec rm {} \; 2>/dev/null ; true"
+	rm -f MIX 
 
 # Copy binary modules
 binmix:
@@ -231,52 +235,54 @@ install-strip: FORCE
 
 
 bindist:  
-	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-bin.tar.gz)
-	date=`date '+%d_%m_%Y'`; name=grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-bin.tar.gz; \
+	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
+	date=`date '+%d_%m_%Y'`; name=grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
-	    sed -e "s/BIN_DIST_VERSION/${VERSION_MAJOR}${VERSION_MINOR}-$$date/" \
+	    sed -e "s/BIN_DIST_VERSION/${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
 	    -e "s/ARCHITECTURE/${ARCH}/" \
 	    -e "s/TEST_STR=/TEST_STR=executable/" \
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
-	    binaryInstall.src > grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-install.sh ; \
-	    chmod a+x grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-install.sh 2>/dev/null ; true
+	    binaryInstall.src > grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
+	    chmod a+x grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null ; true
 
 # make a source package for distribution (we include the 5.3.0 stuff):
 srcdist: FORCE distclean
-	${SHELL} -c "${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	${SHELL} -c "${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
+
 	@ # needed to store code in package with grass-version path:
-	${SHELL} -c "mv * ./grass-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "mv * ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
 	@ #we use -h to get the linked files into as real files:
-	tar cvfzh grass-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ./grass-${VERSION_MAJOR}${VERSION_MINOR}/* --exclude=CVS
+	tar cvfzh grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
 	@ # restore src code location:
-	${SHELL} -c "mv ./grass-${VERSION_MAJOR}${VERSION_MINOR}/* ." ; true
-	${SHELL} -c "rmdir ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
-	@ echo "Distribution source package: grass-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
+	${SHELL} -c "mv ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* ." ; true
+	${SHELL} -c "rmdir ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	@ echo "Distribution source package: grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
 
 # make a source package for library distribution (we include the 5.3.0 stuff):
 srclibsdist: FORCE distclean
-	${SHELL} -c "${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}" ; true
-	echo "" > ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}/SRCPKG
+	${SHELL} -c "${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
      
 	@ # needed to store code in package with grass-version path:
-	${SHELL} -c "cp -L * ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL tools ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL include ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
-	${SHELL} -c "cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -L * ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL tools ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL include ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	${SHELL} -c "cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
 
-	${SHELL} -c "cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
         
-	tar cvfz grass-lib-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}/* --exclude=CVS
-	${SHELL} -c "rm -r ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}" ; true
-	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
+	tar cvfz grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
+	${SHELL} -c "rm -r ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
 
 htmldocs:
 	(cd lib/db/ ; $(MAKE) htmldocs)

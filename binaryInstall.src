@@ -43,7 +43,7 @@ if [ $# -lt 1 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help"  ] ; then
 
 GRASS GIS $NAME_VER binary package installation tool
 
-Usage:	grass$NAME_VER-$ARCH-install.sh grass$NAME_VER-$ARCH-bin.tar.gz [dest_dir] [bin_dir]
+Usage:	grass-$NAME_VER-install.sh grass-$NAME_VER.tar.gz [dest_dir] [bin_dir]
 
       with:
         [dest_dir] - optional: FULL path name to the installation directory
@@ -167,7 +167,7 @@ echo " Proceeding..."
 echo ""
 
 # Check if the paths for the binary and the destination are the same
-BIN_PATH1=$BINDIR/grass$NAME_VER
+BIN_PATH1=$BINDIR/grass-$NAME_VER
 BIN_PATH2=$BIN_PATH1/
 
 if [ $BIN_PATH1 = $DESTDIR -o $BIN_PATH2 = $DESTDIR ] ; then
@@ -284,11 +284,11 @@ cd $CURR_DIR
 
 # Creating start script
 echo "Creating start script:"
-echo "$BINDIR/$GRASSPRG -> $BINDIR/grass$NAME_VER"
+echo "$BINDIR/$GRASSPRG -> $BINDIR/grass-$NAME_VER"
 
 STRING="s|^GISBASE.*|GISBASE\=\'$DESTDIR\'|g"
 
-sed -e $STRING $DESTDIR/$GRASSPRG.tmp > $BINDIR/grass$NAME_VER
+sed -e $STRING $DESTDIR/$GRASSPRG.tmp > $BINDIR/grass-$NAME_VER
 if [ $? -eq 1 ] ; then
   echo "An error occured trying to create the grass start script! Exiting."
   echo "You probably do not have permission to install into $BINDIR."
@@ -296,8 +296,8 @@ if [ $? -eq 1 ] ; then
   exit
 fi
 
-ln -s $BINDIR/grass$NAME_VER $BINDIR/$GRASSPRG
-chmod ugo+x $BINDIR/grass$NAME_VER
+ln -s $BINDIR/grass-$NAME_VER $BINDIR/$GRASSPRG
+chmod ugo+x $BINDIR/grass-$NAME_VER
 
 if [ $? -eq 1 ] ; then
     echo "An error occured trying to create the grass start script! Exiting."
@@ -321,7 +321,7 @@ echo""
 
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"
-echo "    $BINDIR/grass$NAME_VER"
+echo "    $BINDIR/grass-$NAME_VER"
 echo ""
 #echo "The graphical user interface can be started within GRASS GIS."
 #echo ""
