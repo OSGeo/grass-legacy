@@ -1,3 +1,17 @@
+/*
+ * r.show: shows values of raster map of any raster type.
+ *
+ * $Id$
+ *
+ *	Copyright (C) 2001 by the GRASS Development Team
+ *	Author: Huidae Cho <hdcho@geni.cemtlo.com>
+ *		Cemtlomedia
+ *		Taejon, South Korea
+ *
+ *	This program is free software under the GPL (>=v2)
+ *	Read the file COPYING coming with GRASS for details.
+ */
+
 #include <stdio.h>
 #include "gis.h"
 #include "libr.h"
