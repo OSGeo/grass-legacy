@@ -31,7 +31,7 @@ main (int argc, char *argv[])
 {
 
 	struct GModule *module;
-	struct Option *option, *map, *s_val;
+	struct Option *option, *map, *s_val, *err;
 	int opt;
 	struct Flag *s_flag, *p_flag, *r_flag;
 	/*    struct Flag *s_flag, *c_flag, *t_flag, *p_flag;*/
@@ -60,6 +60,14 @@ main (int argc, char *argv[])
 	map->multiple               = NO;
 	map->gisprompt              = "old,dig,vector";
 	map->description            = "vector file name";
+	
+	err = G_define_option();
+	err->key                    = "err";
+	err->type                   = TYPE_STRING;
+	err->required               = NO;
+	err->multiple               = NO;
+	err->gisprompt              = "new,dig,vector";
+	err->description            = "error vector file name";
 
 	option = G_define_option();
 	option->key                    = "option";
@@ -177,6 +185,10 @@ main (int argc, char *argv[])
 		    s_flag->answer ? "-s" : "",
 		    p_flag->answer ? "-p" : "",
 		    r_flag->answer ? "-r" : "");
+ 
+	if (err->answer)
+		sprintf (buf, "%s err=%s", buf, err->answer);
+	
 	exit (system (buf));
 }
 
