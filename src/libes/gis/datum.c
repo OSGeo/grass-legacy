@@ -126,6 +126,8 @@ read_datum_table(void)
     if (count >= 0)
 	return;
 
+    count = 0;
+
     sprintf(file, "%s/etc/datum.table", G_gisbase());
 
     fd = fopen(file, "r");
