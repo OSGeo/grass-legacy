@@ -1,0 +1,7 @@
+
+LIST=Glut.o
+
+$(BIN)/Glut: $(LIST) $(GISLIB)
+	cc -g $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
