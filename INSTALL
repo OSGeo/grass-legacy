@@ -10,22 +10,14 @@ SOURCE CODE DISTRIBUTION
 
 GRASS 5.7.x source code is currently distributed in 2 forms:
 
-1) Full source code (e.g. grass-5.7.0.tar.gz)
+1) Officially released source code (e.g. grass-5.7.0.tar.gz)
 
   The Full source code version contains all the GRASS source code
   required for compilation. It is distributed as one file (*.tar.gz
   package) and the version is composed of 3 numbers, e.g. 5.7.0, 5.7.1
   etc.
 
-2) Incomplete source code (CVS or CVS snapshot)
-
-  The Incomplete source code version currently contains only the new
-  vector library, vector modules and few files updated from 5.3.x.
-  To compile this version of 5.7.x, source code from 5.3.x/5.4.x is
-  also needed.
-
-  The 5.3.x/5.4.x source code is then automatically linked into the
-  5.7.x source directory structure during the compilation.
+2) CVS or CVS Snapshots source code (CVS or CVS snapshot)
 
   This version of source code can be acquired either from CVS
   repository (intevation.de:/grassrepository/grass51) or as a snapshot
@@ -36,73 +28,42 @@ GRASS 5.7.x source code is currently distributed in 2 forms:
 
 COMPILATION
 
-  IMPORTANT: All unix distributions are different. The command,
+IMPORTANT: All unix distributions are different. The command,
 
    ./configure --help 
 
-  explains the options used to disable the compilation of non-mandatory
-  GRASS modules. See REQUIREMENTS.html for details.
+explains the options used to disable the compilation of non-mandatory
+GRASS modules. See REQUIREMENTS.html for details.
   
-  First steps of the compilation depend on the version of source code
-  (see above):
-
-  1) Full source code:
+First step of the compilation:
 
      CFLAGS="-g -Wall" ./configure
 
 
-  2) Incomplete source code:
-
-     CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass53/source
-     make mix
-
-
-  Next steps are the same for both versions of source code:
-
-     make       
-
-Explanation of configure options:
-
---with-grass50  Use only if incomplete source code is used (see above).
-                  It must be full path to GRASS 5.3.x/5.4.x source
-                  code. Use the latest version of 5.3.x/5.4.x
-                  series. Make it an *absolute* path, not a relative
-                  path.
-
 Explanation of make targets: 
-
-make mix           - create symbolic links to grass53/grass54 for file not yet
-                     uploaded into the 5.7.x CVS repository (needed only
-                     if incomplete source code is used (see above).
-
-make copymix       - copy files from grass50 instead of linking,
-                     creates full source code from incomplete source code
-                      (NOT RECOMMENDED!!)
-
-make binmix        - Copy binary modules not yet updated to 5.7.x 
-                      from compiled 5.3.x (NOT RECOMMENDED!!)
 
 make install       - installs the binary
 
 make bindist       - make a binary package with install script
 
-make srcdist       - make a source package for distribution (including the
-                     5.3.0 files)
-
+make srcdist       - make a source package for distribution
 make srclibsdist   - make a source package for library distribution
-                     (including the 5.3.0 files)
 
-make libs          - make libraries
+make libs          - make libraries only
 
 make clean         - delete all files created by 'make' 
 make distclean     - 'make clean' + delete all files created by './configure'
-make mixclean      - delete all symbolic links created by make mix
 make libsclean     - clean libraries compiled by 'make libs'
+
+
+Next step is the compilation itself:
+
+     make       
 
 
 INSTALLATION (first time)
 
-After compilation, the resulting code is in the directory
+After compilation, the resulting code is stored in the directory
 ./dist.$ARCH
 and the scripts (grass57, ...) in
 ./bin.$ARCH
@@ -115,40 +76,28 @@ or run
  make install
  grass57
 
-Note that some modules from GRASS 5.3.x are missing. However, they
-can be easily linked into the ./dist.$ARCH structure if needed.
-Or, new directories with new Makefiles must be added and the
-directory defined in ./tools/link.conf (preferred).
 
 RUNNING GRASS
 
 Download a sample data package from the GRASS web site, for example
 the Spearfish5.7 data set. Extract the data set and point GRASS in the
 startup menu to the directory.
+
 Enjoy.
 
 
 UPDATE OF 5.7.x (CVS or CVS snapshot only)
 
-It is impossible to update full source code (see above).
 Assuming that you want to update your current installation from
-CVS, you have to perform a couple of steps. In general:
+CVS, you have to perform a few steps. In general:
 
-- clean the links to 5.3.x
-- update from 5.3.x CVS HEAD (the 5.3.x code)
-- update from 5.7.x CVS (the 5.7.x code)
-- recreate the links to 5.3.x (make mix)
+- update from 5.7-CVS (the 5.7.x code)
 - configure, compile
 
 In detail:
 
-cd /where/your/grass530/lives/
-cvs update -dP
-
 cd /where/your/grass57/lives/
-make mixclean
 cvs update -dP
-make mix
 configure ...
 make
 make install
