@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/*  
  ****************************************************************************
  *
  * MODULE:       g.proj 
@@ -259,14 +257,22 @@ int main(int argc, char *argv[])
     if( importformats == 1 ) {     
         /* If importing projection there will be no region information, so
 	 * set some default values */
-        cellhd.rows   = 1 ;
-        cellhd.cols   = 1 ;
-        cellhd.north  = 1.;
-        cellhd.ns_res = 1.;
-        cellhd.south  = 0.;
-        cellhd.west   = 0.;
-        cellhd.ew_res = 1.;
-        cellhd.east   = 1.;
+        cellhd.rows    = 1 ;
+        cellhd.rows3   = 1 ;
+        cellhd.cols    = 1 ;
+        cellhd.cols3   = 1 ;
+        cellhd.depths  = 1.;
+        cellhd.north   = 1.;
+        cellhd.ns_res  = 1.;
+        cellhd.ns_res3 = 1.;
+        cellhd.south   = 0.;
+        cellhd.west    = 0.;
+        cellhd.ew_res  = 1.;
+        cellhd.ew_res3 = 1.;
+        cellhd.east    = 1.;
+        cellhd.top     = 1.;
+        cellhd.tb_res  = 1.;
+        cellhd.bottom  = 0.;
     }
 #endif
 
