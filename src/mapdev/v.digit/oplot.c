@@ -50,5 +50,5 @@ plot_points(type, n_coors, xarray, yarray, line_color, point_color)
 			Blot(xptr++, yptr++) ;
 	}
 	
-	R_flush() ;
+	V_flush() ;
 }
