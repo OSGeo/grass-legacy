@@ -328,6 +328,9 @@ struct Map_info
 
     char *name;			/* for 4.0  just name, and mapset */
     char *mapset;
+    /* location and gisdbase is usefull if changed (v.proj or external apps) */
+    char *location;    /* location name */
+    char *gisdbase;    /* gisdbase path */
 
     /* Constraints for reading in lines  (not polys yet) */
     int    Constraint_region_flag;
