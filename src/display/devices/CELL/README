@@ -1,25 +1,53 @@
+                                  CELL driver
 
   This display driver is to allow the output of ANY GRASS display commands
 to end up back in a GRASS raster file.  This file can then be treated
 like any other raster file, and displayed or exported to an image processing
 system.
     The one unique funtion that this provides is to allow the output of
-D3d to be placed into file at any resolution.  Currently the only method
-we have had is to use the SUNVIEW driver and do a screendump to capture
+d.3d to be placed into file at any resolution.  Currently the only method
+we have had is to use the X0 etc. driver and do a screendump to capture
 it at the resolution of the screen.
     Other than that, anything that you can put on the screen can now be
-placed into a cell file (including Pmap output).
+placed into a cell file (including p.map output).
 
     Note that commands that require the MOUSE will NOT work correctly (or
 at all)
 
     
-    Use it like any other display driver   Use  d.mon start=CELL
-and d.mon select=CELL  to start it up.  Then when done displaying 
-stuff to it, use   d.mon stop=CELL     a new cell file called  D_cell
-will then be created in your current mapset.  It will have its own
-window independant of (and incompatible with) the location.
+Use it like any other display driver:
+    0. GRASS_WIDTH=xxx   #if you want another size than the default 640
+       export GRASS_WIDTH
+       GRASS_HEIGHT=xxx  #if you want another size than the default 480
+       export GRASS_WIDTH
+
+    1. Use 
+         d.mon start=CELL
+         d.mon select=CELL  
+       to start it up.  
+
+    2. (the display command)
+
+    3. When done displaying stuff to CELL driver, use
+         d.mon stop=CELL     
+This will write the file. A new cell file called  D_cell will be created  
+then in your current mapset.  It will have its own window independent of 
+(and incompatible with) the location.
 
     Some machines can be real slow initializing the output file, so
 wait until you see the   'READY'  from d.mon start=CELL before trying
 to select it.
+
+Display such CELL file like this:
+       d.mon x0   (if already started, use select option)
+       g.region raster=D_cell
+       d.erase
+       d.rast D_cell
+       g.region -d
+       d.erase
+
+Export such raster file like this:
+       g.region raster=D_cell
+       r.out.tga input=D_cell output=grasscell.tga  (or your favorite export
+                                                     module)       
+       g.region -d
