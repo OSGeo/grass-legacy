@@ -147,7 +147,7 @@ check_area (map, line, x, y)
     int line;
     double x, y;
 {
-    line = ABS (line);
+    line = abs (line);
 /*DEBUG*/ debugf ("Check_area: line %d R %d L %d (%lf, %lf)\n", line, map->Line[line].right, map->Line[line].left, x, y);
     if (map->Line[line].right)
 	if (dig_point_in_area (map, x, y, &(map->Area[map->Line[line].right])))
