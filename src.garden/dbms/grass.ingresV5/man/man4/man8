@@ -1,0 +1,66 @@
+
+
+
+g.select.db()     MISC. REFERENCE MANUAL PAGES      g.select.db()
+
+
+
+NAME
+     _g._s_e_l_e_c_t._d_b - Select an SQL database for subsequent GRASS  -
+     RDBMS applications.
+     (_G_R_A_S_S _R_e_l_a_t_i_o_n_a_l _D_a_t_a_b_a_s_e _M_a_n_a_g_e_m_e_n_t _I_n_t_e_r_f_a_c_e _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     g.select.db
+     g.select.db help
+     g.select.db database=_n_a_m_e
+
+DESCRIPTION
+     g.select.db is used to identify an SQL database  for  subse-
+     quent  GRASS-RDBMS  applications.  The  program  checks  the
+     directories identified in the  envionment  variable  $DBPATH
+     for   a   database  directory  named  [name.dbs].  If  found
+     g.select.db sets the environment variable DATABASE to  name.
+     If  [name.dbs]  is  not  found a list of the database direc-
+     tories in $DBPATH is provided to the user.
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _d_a_t_a_b_a_s_e
+          Name of existing SQL database
+
+
+BUGS
+     No know bugs.
+
+
+SEE ALSO
+     g.column.db, g.stats.db, g.table.db,  d.rast.db,  d.site.db,
+     d.vect.db,     d.what.r.db,     d.what.s.db,    d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick  Limp  University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
