@@ -30,6 +30,7 @@ static char                     rcsid[] = "@(#)XGRASS $Id: Interact.c,v 0.0 1992
 #include <Xm/PushBG.h>
 #include <Xm/SeparatoG.h>
 #include <Xm/Text.h>
+#include <Xm/PrimitiveP.h>
 
 #include <stdio.h>
 
@@ -488,7 +489,7 @@ interactorClassRec =
     {                           /* bulletin board class record */
          /* always_install_accelerators */ FALSE,
              /* geo_matrix_create           */ _XgInteractorGeoMatrixCreate,
-             /* focus_moved_proc            */ XtInheritFocusMovedProc,
+             /* focus_moved_proc            */ XmInheritFocusMovedProc,
              /* extension                   */ NULL,
     },
 
@@ -979,7 +980,7 @@ _XgInteractorCreateList(
 {
     Arg                             al[10];
     register int                    ac = 0;
-    int *                           pos;
+    int *                           pos=NULL;
     int                             posCount;
     XtCallbackProc                  callbackProc;
   
