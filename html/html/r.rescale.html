@@ -25,7 +25,7 @@ in a raster map layer.
 
 <BR>
 
-<B>r.rescale</B> [<B>-q</B>] 
+<B>r.rescale</B> [<B>-qz</B>] 
 <B>input=</B><EM>name</EM> 
 [<B>from=</B><EM>min,max</EM>] 
 <B>output=</B><EM>name </EM>[<B>to=</B><EM>min,max</EM>] 
@@ -57,7 +57,7 @@ the form:
 
 <P>
 
-<B>r.rescale </B>[<B>-q</B>] <B>input=</B><EM>name</EM>
+<B>r.rescale </B>[<B>-qz</B>] <B>input=</B><EM>name</EM>
 [<B>from=</B><EM>min,max</EM>] <B>output=</B><EM>name</EM> 
 [<B>to=</B><EM>min,max</EM>] [<B>TITLE="</B><EM>phrase</EM>"]
 
@@ -83,6 +83,12 @@ entry for
 <DT><B>-q</B> 
 <DD>Run quietly, without printing messages on program
 progress to the user's terminal.
+</DL>
+
+<DL>
+<DT><B>-z</B>
+<DD>Use zero (0) for transparency instead of NULL, that means
+set values outside range to zero (0) instead of NULL. 
 </DL>
 
 <H3>Parameters:</H3>
