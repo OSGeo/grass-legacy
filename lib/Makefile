@@ -14,11 +14,11 @@ SUBDIRS = \
 	gis \
 	image \
 	linkm \
-	ogsf \
 	proj \
 	raster \
 	vask \
 	vector \
+	ogsf \
 	init \
 	front.end
 
