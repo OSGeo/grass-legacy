@@ -19,6 +19,7 @@
 *****************************************************************************/
 
 %{
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "sqlp.h"
@@ -58,6 +59,12 @@
 %token INT
 %token INTEGER
 %token DOUBLE
+
+%{
+ 
+extern int yylex(void);
+
+%}
 
 %%
 
@@ -127,7 +134,7 @@ y_values:
 
 y_value_list:
 		STRING				{ sqpValue( $1, 0, 0, SQLP_S ); }
-        |	INTNUM				{ sqpValue( NULL, 456, 0, SQLP_I ); }
+        |	INTNUM				{ sqpValue( NULL, $1, 0, SQLP_I ); }
 	|	FLOATNUM			{ sqpValue( NULL, 0, $1, SQLP_D ); }
 	|	y_value_list ',' STRING		{ sqpValue( $3, 0, 0, SQLP_S ); }
 	|	y_value_list ',' INTNUM		{ sqpValue( NULL, $3, 0, SQLP_I ); }

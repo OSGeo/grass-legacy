@@ -20,9 +20,10 @@
 
 #define SQLP_MAIN 
 
-#include "sqlp.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "sqlp.h"
 
 /* save string to value */
 int sqpSaveStr(SQLPVALUE *val, char *c )

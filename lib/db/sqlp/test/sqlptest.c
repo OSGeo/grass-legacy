@@ -1,8 +1,9 @@
-#include "sqlp.h"
+#include <stdlib.h>
 #include "gis.h"
+#include "sqlp.h"
 
-
-main(argc, argv) char *argv[];
+int
+main (int argc, char **argv) 
 {
     SQLPSTMT *st;
     char sql[1024];
