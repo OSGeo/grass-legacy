@@ -30,6 +30,7 @@ AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(src/include/config.h)
 AC_CANONICAL_HOST
 AC_PROG_CC
+AC_PROG_CXX
 
 # Check for full floating-point support, including Infinity and NaN
 IEEEFLAG=
@@ -138,6 +139,7 @@ AC_ARG_ENABLE(w11,
 
 # With options
 
+LOC_ARG_WITH(cxx, CXX, no)
 LOC_ARG_WITH(dbm, DBM, no)
 LOC_ARG_WITH(jpeg, JPEG)
 LOC_ARG_WITH(tiff, TIFF)
@@ -880,6 +882,12 @@ AC_SUBST(ODBCLIB)
 
 # Done checking ODBC
 
+# Enable CXX option
+ 
+LOC_CHECK_USE(cxx,CXX,USE_CXX)
+
+# Done checking CXX
+
 # Enable FFTW option
 
 LOC_CHECK_USE(fftw,FFTW,USE_FFTW)
@@ -1103,6 +1111,10 @@ LOC_OPTIONAL(i.zc,FFTW,I_ZC,src/imagery/i.zc)
 LOC_OPTIONAL(r.surf.fractal,FFTW,R_SURF_FRACTAL,src/raster/r.surf.fractal)
 LOC_OPTIONAL(i.shape,FFTW,I_SHAPE,src.contrib/CERL/imagery/i.shape)
 
+AC_MSG_CHECKING(whether to build CXX programs)
+AC_MSG_RESULT()
+LOC_OPTIONAL(r.terraflow,CXX,R_TERRAFLOW,src.contrib/DUKE/r.terraflow)
+
 # Done checking for optional packages
 
 mkdir -p mk src/CMD/head src/CMD/lists src/include
@@ -1125,6 +1137,7 @@ LOC_MSG([  Source directory:          ${SRCDIR}])
 LOC_MSG([  Build directory:           ${DSTDIR}])
 LOC_MSG([  Installation directory:    ${prefix}/grass${NAME_VER}])
 LOC_MSG([  C compiler:                ${CC} ${CFLAGS}])
+LOC_MSG([  CXX compiler:              ${CXX} ${CFLAGS}],USE_CXX)
 LOC_MSG([  FORTRAN compiler:          ${F77}])
 LOC_MSG()
 LOC_MSG_USE(NVIZ,USE_TOGL)
