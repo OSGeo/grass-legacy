@@ -1,0 +1,65 @@
+#!/bin/sh
+tput clear
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+if test ! -d legend
+	then
+	mkdir legend
+fi
+if test ! -d legend/cmd
+	then
+	mkdir legend/cmd
+fi
+if test ! -d legend/par
+	then
+	mkdir legend/par
+fi
+
+####################### Get map definition file #####################
+mdef=`date +%H%M%S`
+while test ! -f $mdef
+do
+	echo -n "Enter the name of the map definition file [map.def]: "
+	read mdef
+	if test "$mdef" = ""
+		then
+		mdef=map.def
+	fi
+done
+echo
+
+
+
+if test $# -eq 1; then
+	out=$1
+fi
+########### GET NAME FOR THIS overlay #######################################
+while test "$out" = ""
+do
+echo -n "Enter the name for this overlay [legend]: "
+read out
+out=${out:-legend}
+if test -f legend/cmd/$out
+	then
+	echo -n "File $out exists. Do you want to redo it [y]es (n)o: "
+	read answ
+	if test "$answ" = "n"
+		then
+		out=""
+	fi
+fi
+done
+echo
+
+cmd="awk -F'=' '{print \$2}' legend/par/$out | make_leg /dev/null $GRAPH/etc/pattern  2> /dev/null | legend -m $mdef -o ovm/$out"
+echo $cmd > legend/cmd/$out
+make_leg legend/par/$out $GRAPH/etc/pattern | legend -m $mdef -o ovm/$out
+tput clear
+echo " make.legend complete
+	Map definition file	$mdef
+	Overlay file created	ovm/$out
+	Parameter file		legend/par/$out
+"
