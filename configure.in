@@ -186,16 +186,53 @@ AC_SUBST(DLLIB)
 my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include"
 my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib"
 
-ZLIBINCPATH=/usr/include # prefix?
+# With zlib includes directory:
 AC_MSG_CHECKING(for location of zlib includes)
 AC_ARG_WITH(zlib-includes,
-[  --with-zlib-includes=DIR DIR is path where ZLIB header files can be
-                           found, defaults to /usr/include])
-if test "X$with_zlib_includes" != "X"; then
-  ZLIBINCPATH=$with_zlib_includes
+  [  --with-zlib-includes=DIR
+                          Specify includes directory for zlib],
+  [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-zlib-includes.])
+	;;
+	esac
+	zlib_inc_dirs="$withval"
+   ])
+
+ZLIBINCPATH=
+if test "$zlib_inc_dirs"; then
+    for dir in $zlib_inc_dirs; do
+        if test -d "$dir"; then
+            ZLIBINCPATH="-I${dir}"
+        else
+            AC_MSG_ERROR([*** zlib includes directory $dir does not exist.])
+        fi
+    done
 fi
-if test ! -f "$ZLIBINCPATH/zlib.h"; then
-  AC_MSG_ERROR(could not find zlib.h in $ZLIBINCPATH)
+
+if test "$ZLIBINCPATH"; then
+    for dir in $zlib_inc_dirs; do
+        if test -d "$dir" && test -f "$dir/zlib.h"; then
+            ZLIBINCPATH="-I$dir"
+        else
+            ZLIBINCPATH=""
+        fi
+    done
+    if test -z "$ZLIBINCPATH"; then
+       AC_MSG_ERROR([*** Could not find zlib includes in $dir.])
+    fi
+fi
+
+if test -z "$ZLIBINCPATH"; then
+    for dir in $my_inc_dirs; do
+        if test -d "$dir" && test -f "$dir/zlib.h"; then
+            ZLIBINCPATH="-I$dir"
+        fi
+    done
+    if test -z "$ZLIBINCPATH"; then
+       AC_MSG_ERROR([*** Could not find zlib includes.])
+    fi
 fi
 AC_MSG_RESULT($ZLIBINCPATH)
 AC_SUBST(ZLIBINCPATH)
@@ -220,25 +257,40 @@ if test "$zlib_dirs"; then
         if test -d "$dir"; then
             ZLIBLIBPATH="$ZLIBLIBPATH -L${dir}"
         else
-            AC_MSG_ERROR([*** zlib library directory $dir does not exist.])
+            AC_MSG_ERROR([*** zlib lib directory $dir does not exist.])
         fi
     done
-    AC_MSG_RESULT($ZLIBLIBPATH)
+fi
+
+if test "$ZLIBLIBPATH"; then
+    for dir in $zlib_dirs; do
+        if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
+           ZLIBLIBPATH="-L$dir"
+        else
+            ZLIBLIBPATH=""
+        fi
+    done
+    if test -z "$ZLIBLIBPATH"; then
+       AC_MSG_ERROR([*** Could not find zlib lib in $dir.])
+    fi
 fi
 
 if test -z "$ZLIBLIBPATH"; then
     for dir in $my_lib_dirs; do
-        if test -z "$ZLIBLIBPATH" && test -d "$dir" && test -f "$dir/libz.a" && test -f "$dir/libz.so"; then
-            ZLIBLIBPATH="-L$dir"
+        if test -d "$dir" && ( test -f "$dir/libz.a" || test -f "$dir/libz.so" ) ; then
+           ZLIBLIBPATH="-L$dir"
         fi
     done
-    AC_MSG_RESULT($ZLIBLIBPATH)
+    if test -z "$ZLIBLIBPATH"; then
+       AC_MSG_ERROR([*** Could not find zlib lib.])
+    fi
 fi
 
 if test -z "$ZLIBLIBPATH"; then
         AC_MSG_RESULT($ZLIBLIBPATH)
-	AC_MSG_ERROR([*** Could not find zlib library in. This lib is required.])
+	AC_MSG_ERROR([*** Could not find zlib library. This lib is required.])
 fi
+AC_MSG_RESULT($ZLIBLIBPATH)
 AC_SUBST(ZLIBLIBPATH)
 
 
