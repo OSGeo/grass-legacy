@@ -1,0 +1,39 @@
+ABS	Gwater.h	/^#define ABS(x)	(((x) < 0) / -(x) : (x))$/
+FLAG_GET	flag.h	/^#define FLAG_GET(flags,row,col) \\$/
+FLAG_SET	flag.h	/^#define FLAG_SET(flags,row,col) \\$/
+FLAG_UNSET	flag.h	/^#define FLAG_UNSET(flags,row,col) \\$/
+G_malloc	init_vars.c	/^alt = (CELL *) G_malloc (sizeof(CELL) * size_array/
+Mmain	main.c	/^main (argc, argv)$/
+SEG_INDEX	ramseg.h	/^#define SEG_INDEX(s,r,c) (int) \\$/
+TST	Gwater.h	/^#define TST(a)		(fprintf (stderr, "%e\\n", (double)/
+TSTSTR	Gwater.h	/^#define TSTSTR(a)	(fprintf (stderr, "%s\\n", a))$/
+add_pt	do_astar.c	/^add_pt(r, c, downr, downc, ele, downe)$/
+close_array_seg	close_maps2.c	/^close_array_seg()$/
+close_maps	close_maps.c	/^close_maps ()$/
+def_basin	def_basin.c	/^def_basin (row,col,basin_num,stream_length,old_ele/
+do_astar	do_astar.c	/^do_astar ()$/
+do_cum	do_cum.c	/^do_cum ()$/
+do_exist	init_vars.c	/^do_exist (file_name)$/
+do_legal	init_vars.c	/^do_legal (file_name)$/
+find_pourpts	find_pour.c	/^find_pourpts ()$/
+flag_clear_all	flag_clr_all.c	/^flag_clear_all(flags)$/
+flag_create	flag_create.c	/^flag_create(nrows,ncols)$/
+flag_destroy	flag_destroy.c	/^flag_destroy(flags)$/
+flag_get	flag_get.c	/^flag_get(flags, row, col)$/
+flag_set	flag_set.c	/^flag_set(flags, row, col)$/
+flag_unset	flag_unset.c	/^flag_unset(flags, row, col)$/
+for	init_vars.c	/^for (r = 0; r < nrows; r++)	{$/
+get_slope	do_astar.c	/^get_slope (r, c, downr, downc, ele, downe)$/
+haf_basin_side	haf_side.c	/^haf_basin_side (updir,downdir,thisdir)$/
+if	init_vars.c	/^if (ls_flag || sg_flag) tot_parts++;$/
+init_vars	init_vars.c	/^init_vars (argc,argv)$/
+len_slp_equ	sg_factor.c	/^len_slp_equ(slope_length, sin_theta, S, r, c)$/
+no_stream	no_stream.c	/^no_stream (row,col,basin_num,stream_length,old_ele/
+overland_cells	over_cells.c	/^overland_cells (row,col,basin_num, haf_num, hih_el/
+replace	do_astar.c	/^replace (upr, upc, r, c) \/* ele was in there *\/$/
+sg_factor	sg_factor.c	/^sg_factor()$/
+size_array	ramseg.c	/^size_array (ram_seg, nrows, ncols)$/
+sizeof	init_vars.c	/^asp = (CELL *) G_calloc (size_array(&asp_seg, nrow/
+slope_length	slope_len.c	/^slope_length (r, c, dr, dc)$/
+split_stream	split_str.c	/^split_stream (row, col, new_r, new_c, ct, basin_nu/
+usage	usage.c	/^usage (me)$/
