@@ -1,0 +1,24 @@
+# setup src for BSD systems
+echo 'Does your f77 specify RECL in bytes or words (b/w)? \c'
+set r=($<)
+if ($r == 'b') then
+  cp BSD/rioopn.f-bytes src/rioopn.f
+else if ($r == 'w') then
+  cp BSD/rioopn.f-words src/rioopn.f
+else 
+  echo '[' $r ']'
+  echo 'Please find out which it wants and rerun this setup'
+  exit (1)
+endif
+cp BSD/*.f src
+cp BSD/*.d src
+cat <<endmake >Makefile
+# definitions for BSD rim
+PILE = f77
+EXTRA = 
+LIBEXTRA = 
+RANLIB=ranlib
+endmake
+cp Makefile src
+cat MAKEFILE >>Makefile
+cat src/MAKEFILE >>src/Makefile
