@@ -58,19 +58,24 @@ static int (*Open_new_array[][2]) () =
 #endif
 };
 
-/*
-   **  Predetermine level you want to open for read at.  If it can't open
-   **  that level, the open will fail.  The specified level must be
-   **  set before any call to open.  The default is to try to open
-   **  the highest level possible, and keep stepping down until success.
-   **
-   **  NOTE!!  This should only be used to set when you wish to force
-   **  a lower level open.  If you require a higher level, then just
-   **  check the return to verify the level instead of forcing it.
-   **  This is because future releases will have higher levels which
-   **  will be downward compatible and which your programs should 
-   **  support by default.
- */
+
+/*!
+ \fn int Vect_set_open_level (int level)
+ \brief Predetermine level at which a map will be opened for reading.  If it can't open
+     that level, the open will fail.  The specified level must be
+     set before any call to open.  The default is to try to open
+     the highest level possible, and keep stepping down until success.
+   
+     NOTE!!  This should only be used to set when you wish to force
+     a lower level open.  If you require a higher level, then just
+     check the return to verify the level instead of forcing it.
+     This is because future releases will have higher levels which
+     will be downward compatible and which your programs should 
+     support by default.
+ \return 0 on success, ?? on error
+ \param vector level
+*/
+
 int 
 Vect_set_open_level (int level)
 {
@@ -194,10 +199,14 @@ Vect__open_old (
   return (level);
 }
 
-/* 
-*  Open old vector for reading.
-*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
-*  In case of error, the functions respect fatal error settings.
+/*!
+ \fn int Vect_open_old ( struct Map_info *Map,
+		char *name,
+		char *mapset)
+ \brief Open old vector for reading
+ \return level of openness.  [ 1, 2, (3) ] or -1 for error. In case of
+    error, the functions respect fatal error settings.
+ \param Map_info structure, map name, map mapset
 */
 int
 Vect_open_old (
@@ -208,10 +217,14 @@ Vect_open_old (
     return ( Vect__open_old (Map, name, mapset, 0) );
 }
 
-/* 
-*  Open old vector for reading/writing.
-*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
-*  In case of error, the functions respect fatal error settings.
+/*!
+ \fn int Vect_open_update ( struct Map_info *Map,
+		char *name,
+		char *mapset)
+ \brief Open old vector for reading/writing
+ \return level of openness.  [ 1, 2, (3) ], -1 for error. In case of
+   error, the functions respect fatal error settings.
+ \param Map_info structure, map name, map mapset
 */
 int
 Vect_open_update (
@@ -222,8 +235,14 @@ Vect_open_update (
     return ( Vect__open_old (Map, name, mapset, 1) );
 }
 
-/*
-**  Returns level  [ 1 ]  or -1 on error 
+
+/*!
+ \fn int Vect_open_new ( struct Map_info *Map,
+		char *name,
+		int with_z)
+ \brief Open new vector for reading/writing
+ \return level  [ 1 ], -1 on error
+ \param Map_info structure, map name, with_z
 */
 int 
 Vect_open_new (
@@ -281,9 +300,11 @@ Vect_open_new (
     return 1;
 }
 
-/*
-**  Returns: 1 OK
-**           0 error 
+/*!
+ \fn int Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
+ \brief ADD
+ \return 1 on success, 0 on error
+ \param Map_info structure, Coor_info structure
 */
 int 
 Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
@@ -347,10 +368,13 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
     return 1;
 }
 
-/* Open topo file.
-*  
-*  Return: 0 success
-*         -1 error */
+
+/*!
+ \fn int Vect_open_topo (struct Map_info *Map)
+ \brief Open topo file
+ \return 0 on success, -1 on error
+ \param Map_info structure
+*/
 int 
 Vect_open_topo (struct Map_info *Map)
 {
@@ -410,10 +434,12 @@ Vect_open_topo (struct Map_info *Map)
     return 0;
 }
 
-/* Open spatial index file.
-*  
-*  Return: 0 success
-*         -1 error */
+/*!
+ \fn int Vect_open_spatial_index (struct Map_info *Map)
+ \brief Open spatial index file
+ \return 0 on success, -1 on error
+ \param Map_info structure
+*/
 int 
 Vect_open_spatial_index (struct Map_info *Map)
 {

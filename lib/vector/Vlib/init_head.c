@@ -48,6 +48,12 @@ Vect__init_head (struct Map_info *Map)
     return 0;
 }
 
+/*!
+ \fn int Vect_copy_head_data (struct Map_info *from, struct Map_info *to)
+ \brief copy header data from one to another map
+ \return 0 on success, ?? on error
+ \param from Map_info structure, to Map_info structure
+*/
 int 
 Vect_copy_head_data (struct Map_info *from, struct Map_info *to)
 {

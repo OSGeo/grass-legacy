@@ -74,6 +74,25 @@
 *  of decimal places and for different order of coordinates, the results would be different)
 *     
 */ 
+
+/*!
+ \fn int Vect_segment_intersection (
+    double ax1, double ay1, double az1, double ax2, double ay2, double az2,
+    double bx1, double by1, double bz1, double bx2, double by2, double bz2,
+    double *x1, double *y1, double *z1,
+    double *x2, double *y2, double *z2,
+    int with_z)
+ \brief check for intersect of 2 line segments
+ \return 0 - do not intersect,
+           1 - intersect at one point,
+           2 - partial overlap,
+           3 - a contains b,
+           4 - b contains a,
+           5 - identical
+ \param input line a, input line b, intersection point1 (case 2-4),
+    intersection point2 (case 2-4), use z coordinate (3D)
+*/
+
 int Vect_segment_intersection (
     double ax1, double ay1, double az1, double ax2, double ay2, double az2, /* input line a */
     double bx1, double by1, double bz1, double bx2, double by2, double bz2, /* input line b */

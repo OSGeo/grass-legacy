@@ -22,19 +22,15 @@
 
 struct line_pnts *Vect__new_line_struct (void);
 
-/*
-   **
-   **  Creates and initializes a  struct line_pnts  
-   **   This structure is used for reading and writing vector lines and
-   **   polygons.
-   **
-   **  The library routines handle all memory allocation.
-   **
-   **  If you need 3 lines in memory at the same time, then you simply need
-   **   to use 3 line_pnts structures.
-   **
-   **  returns  struct line_pnts *  or NULL on error
- */
+/*!
+ \fn struct line_pnts *Vect_new_line_struct (void)
+ \brief creates and initializes a struct line_pnts. This structure is
+    used for reading and writing vector lines and polygons.  The library
+   routines handle all memory allocation.  If 3 lines in memory are needed
+   at the same time, then  simply 3 line_pnts structures have to be used
+ \return  struct line_pnts *  or NULL on error
+ \param void
+*/
 struct line_pnts *
 Vect_new_line_struct ()
 {
@@ -63,12 +59,12 @@ Vect__new_line_struct ()
   return p;
 }
 
-/*
-   ** Frees all memory associated with a struct line_pnts, including
-   **  the struct itself!!!
-   ** 
-   **  no return value;
- */
+/*!
+ \fn int Vect_destroy_line_struct (struct line_pnts *p)
+ \brief frees all memory associated with a struct line_pnts, including the struct itself
+ \return no return value
+ \param  line_pnts * structure
+*/
 int 
 Vect_destroy_line_struct (struct line_pnts *p)
 {
@@ -86,9 +82,13 @@ Vect_destroy_line_struct (struct line_pnts *p)
   return 0;
 }
 
-/*
-   ** returns 0 or -1 on out of memory
- */
+/*!
+ \fn int Vect_copy_xyz_to_pnts (
+	struct line_pnts *Points, double *x, double *y, double *z, int n)
+ \brief ADD
+ \return 0 on success, -1 on out of memory
+ \param  line_pnts * structure, x, y, z, number of points
+*/
 int 
 Vect_copy_xyz_to_pnts (
 	struct line_pnts *Points, double *x, double *y, double *z, int n)
@@ -112,14 +112,15 @@ Vect_copy_xyz_to_pnts (
   return (0);
 }
 
-/*
-   **  Make sure line structure is clean to be re-used.
-   **  I.e. it has no points associated with it
-   **
-   **  Points must have previously been created with Vect_new_line_struct ()
-   **
-   **  no return value
- */
+
+/*!
+ \fn int Vect_reset_line (struct line_pnts *Points)
+ \brief ADD. Make sure line structure is clean to be re-used, i.e. it
+   has no points associated with it Points must have previously been
+   created with Vect_new_line_struct ()
+ \return no return value
+ \param  line_pnts * structure
+*/
 /* NEW after 4.0 alpha */
 int 
 Vect_reset_line (struct line_pnts *Points)
@@ -129,14 +130,16 @@ Vect_reset_line (struct line_pnts *Points)
   return 0;
 }
 
-/* 
-   **  Appends one point to the end of a Points structure
-   ** returns new number of points or -1 on out of memory
-   **
-   **  Note, this will append to whatever is in line struct.
-   **   If you are re-using a line struct, be sure to clear out old 
-   **   data first by calling Vect_reset_line ()
- */
+
+/*!
+ \fn int Vect_append_point (struct line_pnts *Points, double x, double y, double z)
+ \brief appends one point to the end of a Points structure returns new
+   number of points or -1 on out of memory Note, this will append to
+   whatever is in line struct.  If you are re-using a line struct, be
+   sure to clear out old data first by calling Vect_reset_line ()
+ \return number of points??
+ \param line_pnts * structure, x, y, z
+*/
 int 
 Vect_append_point (struct line_pnts *Points, double x, double y, double z)
 {
@@ -152,14 +155,17 @@ Vect_append_point (struct line_pnts *Points, double x, double y, double z)
   return ++(Points->n_points);
 }
 
-/* 
-   ** Appends points to the end of a Points structure
-   ** returns new number of points or -1 on out of memory
-   **
-   **  Note, this will append to whatever is in line struct.
-   **   If you are re-using a line struct, be sure to clear out old 
-   **   data first by calling Vect_reset_line ()
- */
+
+/*!
+ \fn int Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
+	           int direction)
+ \brief appends points to the end of a Points structure. Note, this
+   will append to whatever is in line struct.  If you are re-using a
+   line struct, be sure to clear out old data first by calling
+   Vect_reset_line ()
+ \return new number of points, -1 on out of memory
+ \param line_pnts * structure, line_pntsA * structure, direction (GV_FORWARD, GV_BACKWARD)
+*/
 int 
 Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
 	           int direction) /* GV_FORWARD, GV_BACKWARD */
@@ -192,14 +198,14 @@ Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
   return n;
 }
 
-/*
-   ** returns number of points copied
-   **
-   ** NOTE!  x/y arrays MUST be at least as large as Points->n_points
-   **
-   **   Also note that  n  is a pointer to int.
- */
 
+/*!
+ \fn int Vect_copy_pnts_to_xyz (
+	  struct line_pnts *Points, double *x, double *y, double *z, int *n)
+ \brief ADD. NOTE!  x/y arrays MUST be at least as large as Points->n_points
+ \return number of points copied. Also note that  n  is a pointer to int.
+ \param line_pnts * structure, x, y, z
+*/
 int 
 Vect_copy_pnts_to_xyz (
 	  struct line_pnts *Points, double *x, double *y, double *z, int *n)
@@ -218,21 +224,24 @@ Vect_copy_pnts_to_xyz (
   return (Points->n_points);
 }
 
-/* Find point on line in the specified distance from the begining,
-*  measured along line.
-*
-*  If the distance is greater than line length or negative, error is returned.
-*
-*  ( G_begin_distance_calculations() must be called before. - Is not true
-*    because G_distance is not used (no 3D support) )
-* 
-*  *x, *y, *z - pointers to point coordinates or NULL
-*  *angle     - pointer to angle of line in that point (radians, 
-*               counter clockwise from x axis) or NULL
-*  *slope     - pointer to slope angle in radians (positive up)
-* 
-*  Returns: number of segment the point is on (first is 1)
-*           0 error - point is outside the line 
+/*!
+ \fn int Vect_point_on_line ( struct line_pnts *Points, double distance, 
+	  double *x, double *y, double *z, double *angle, double *slope )
+ \brief  Find point on line in the specified distance from the begining,
+  measured along line.
+
+  If the distance is greater than line length or negative, error is returned.
+
+  ( G_begin_distance_calculations() must be called before. - Is not true
+    because G_distance is not used (no 3D support) )
+ 
+  *x, *y, *z - pointers to point coordinates or NULL
+  *angle     - pointer to angle of line in that point (radians, 
+               counter clockwise from x axis) or NULL
+  *slope     - pointer to slope angle in radians (positive up)
+ \return number of segment the point is on (first is 1),
+           0 error when point is outside the line 
+ \param line_pnts * structure, distance, x, y, z, angle, slope
 */
 int 
 Vect_point_on_line ( struct line_pnts *Points, double distance, 
@@ -281,9 +290,12 @@ Vect_point_on_line ( struct line_pnts *Points, double distance,
     return 0;
 }
 
-/* Calculate line length
-* 
-*  Returns: line length
+
+/*!
+ \fn double Vect_line_length ( struct line_pnts *Points )
+ \brief calculate line length
+ \return line length
+ \param line_pnts * structure
 */
 double 
 Vect_line_length ( struct line_pnts *Points )
@@ -303,9 +315,12 @@ Vect_line_length ( struct line_pnts *Points )
     return len;
 }
 
-/* Calculate line length. If projection is LL, the length is measured along the geodesic.
-* 
-*  Returns: line length
+
+/*!
+ \fn double Vect_line_geodesic_length ( struct line_pnts *Points )
+ \brief calculate line length. If projection is LL, the length is measured along the geodesic.
+ \return line length
+ \param line_pnts * structure
 */
 double 
 Vect_line_geodesic_length ( struct line_pnts *Points )
@@ -333,14 +348,27 @@ Vect_line_geodesic_length ( struct line_pnts *Points )
     return len;
 }
 
-/* original dig__check_dist () in grass50 
-*  
-*  returns: nearest segment (first is 1)
-*  sets (if not null): px, py - point on line
-*                      dist   - distance to line
-*                      spdist - distance to point on line from segment beginning
-*                      sldist - distance to point on line form line beginning along line
-*/  
+/*!
+ \fn int 
+Vect_line_distance (	  struct line_pnts *points,
+		  double ux, double uy, double uz,
+		  int    with_z,
+		  double *px, double *py, double *pz,
+		  double *dist,
+		  double *spdist,
+		  double *lpdist)
+ \brief calculate line distance.  Sets (if not null):
+                      px, py - point on line,
+                      dist   - distance to line,
+                      spdist - distance to point on line from segment beginning,
+                      sldist - distance to point on line form line beginning along line
+ \return nearest segment (first is 1)
+ \param line_pnts * structure, x, y, z of point, flag if to use z
+   coordinate, (3D calculation), point on line, distance to line,
+   distance of point from segment beginning, distance of point from line
+   beginning
+*/
+/* original dig__check_dist () in grass50 */
 int 
 Vect_line_distance (
 		  struct line_pnts *points, /* line */
@@ -431,12 +459,16 @@ Vect_line_distance (
   return (segment);
 }
 
-/* Distance of 2 points. 
-*  
-*  with_z - use z coordinate
-*  
-*  returns: distance
-*/  
+
+/*!
+ \fn double
+Vect_points_distance ( double x1, double y1, double z1,
+		  double x2, double y2, double z2,
+		  int with_z)
+ \brief distance of 2 points. with_z - use z coordinate
+ \return distance
+ \param x1, y1, z1, x2, y2, z2, with_z
+*/
 double
 Vect_points_distance (
 		  double x1, double y1, double z1,    /* point 1 */
@@ -457,7 +489,12 @@ Vect_points_distance (
   
 }
 
-/* Line bounding box.  */
+/*!
+ \fn int Vect_line_box ( struct line_pnts *Points, BOUND_BOX *Box )
+ \brief get bounding box of line
+ \return 0 on success, ADD on error
+ \param line_pnts * structure, BOUND_BOX
+*/
 int
 Vect_line_box ( struct line_pnts *Points, BOUND_BOX *Box )
 {

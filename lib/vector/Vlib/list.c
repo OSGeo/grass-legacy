@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include "gis.h"
 
+/* ADD comment what and why a list */
 
 struct ilist *
 Vect_new_list (void)
@@ -36,6 +37,12 @@ Vect_new_list (void)
   return p;
 }
 
+/*!
+ \fn int Vect_reset_list (struct ilist *list)
+ \brief ADD
+ \return no return value
+ \param ilist * structure
+*/
 int 
 Vect_reset_list (struct ilist *list)
 {
@@ -44,6 +51,12 @@ Vect_reset_list (struct ilist *list)
   return 0;
 }
 
+/*!
+ \fn int Vect_destroy_list (struct ilist *list)
+ \brief ADD
+ \return no return value
+ \param ilist * structure
+*/
 int 
 Vect_destroy_list (struct ilist *list)
 {
@@ -60,10 +73,11 @@ Vect_destroy_list (struct ilist *list)
   return 0;
 }
 
-/* Append new item to the end of list if not yet present 
-*
-*  returns: 0 - OK
-*           1 - error
+/*!
+ \fn int Vect_list_append (struct ilist *list, int val )
+ \brief Append new item to the end of list if not yet present 
+ \return 0 on success, 1 on error
+ \param ilist * structure, ADD
 */
 int
 Vect_list_append ( struct ilist *list, int val )
@@ -90,10 +104,11 @@ Vect_list_append ( struct ilist *list, int val )
     return 0;
 }
 
-/* Append list to existing list 
-*
-*  returns: 0 - OK
-*           1 - error
+/*!
+ \fn int Vect_list_append_list (struct ilist *alist,  struct ilist *blist )
+ \brief Append new item to the end of list if not yet present 
+ \return 0 on success, 1 on error
+ \param ailist * structure, bilist * structure
 */
 int
 Vect_list_append_list ( struct ilist *alist,  struct ilist *blist )
@@ -109,10 +124,11 @@ Vect_list_append_list ( struct ilist *alist,  struct ilist *blist )
     return 0;
 }
 
-/* Remove value from list 
-*
-*  returns: 0 - OK
-*           1 - error
+/*!
+ \fn int Vect_list_delete (struct ilist *list, int val )
+ \brief  Remove value from list
+ \return 0 on success, 1 on error
+ \param ilist * structure, ADD
 */
 int
 Vect_list_delete ( struct ilist *list, int val )
@@ -135,10 +151,11 @@ Vect_list_delete ( struct ilist *list, int val )
     return 0;
 }
 
-/* Delete list from existing list 
-*
-*  returns: 0 - OK
-*           1 - error
+/*!
+ \fn int Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
+ \brief  Delete list from existing list 
+ \return 0 on success, 1 on error
+ \param ailist * structure, bilist * structure
 */
 int
 Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
@@ -154,10 +171,11 @@ Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
     return 0;
 }
 
-/* Is value in list? 
-*
-*  returns: 1 - yes
-*           0 - no
+/*!
+ \fn int Vect_val_in_list ( struct ilist *list, int val )
+ \brief is value in list?
+ \return 1 if in list, 0 if not in list
+ \param line_pnts * structure, value
 */
 int
 Vect_val_in_list ( struct ilist *list, int val )
