@@ -40,7 +40,7 @@ int main( int argc, char **argv )
 	struct Categories cats ;
 	struct Colors colors ;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt4, *opt5, *opt6, *opt7, *opt9;
+	struct Option *opt1, *opt2, *opt4, *opt5, *opt6, *opt7, *opt8, *opt9;
 	struct Flag *hidestr, *hidenum, *hidenodata, *smooth, *mouse, *flipit;
 	struct Range range ;
 	struct FPRange fprange ;
@@ -54,7 +54,9 @@ int main( int argc, char **argv )
 	char DispFormat[5];	/*  %.Xf\0  */
 	int flip, horiz, UserRange;
 	double UserRangeMin, UserRangeMax, UserRangeTemp;
-	double maxCat;
+	double *catlist, maxCat;
+	int catlistCount, use_catlist;
+
 	
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -117,8 +119,14 @@ int main( int argc, char **argv )
 	opt7->options    = "0-100" ;
 	opt7->description= "Screen coordinates to place the legend (as percentage)" ;
 	opt7->answer     = NULL;
-
-	/* opt8 will be the use= option */
+	
+	opt8 = G_define_option() ;
+	opt8->key        = "use";
+	opt8->key_desc   = "catnum";
+	opt8->type       = TYPE_DOUBLE;		/* string as it is fed through the parser? */
+	opt8->required   = NO;
+	opt8->description= "List of discrete category numbers/values for legend" ;
+	opt8->multiple   = YES;
 
 	opt9 = G_define_option() ;
 	opt9->key        = "range";
@@ -195,6 +203,24 @@ int main( int argc, char **argv )
 	if (opt6->answer != NULL)
 		sscanf(opt6->answer,"%d",&steps);
 
+	catlistCount = 0;
+	if (opt8->answer != NULL) {	/* should this be answerS ? */
+		use_catlist = TRUE;
+
+		catlist= (double *) G_calloc(100+1,sizeof(double));
+		for (i=0; i<100; i++)		/* fill with dummy values */
+			catlist[i]=1.0*(i+1);
+		catlist[i]=0;
+
+		for(i=0; (opt8->answers[i] != NULL) && i<100; i++)
+			catlist[i]=atof(opt8->answers[i]);
+
+		catlistCount = i;
+	}
+	else
+		use_catlist = FALSE;
+	
+	
 	UserRange = FALSE;
 	if (opt9->answer != NULL) {	/* should this be answerS ? */ 
 		sscanf(opt9->answers[0], "%lf", &UserRangeMin);
@@ -224,7 +250,7 @@ int main( int argc, char **argv )
 	}
 
         fp = G_raster_map_is_fp(map_name, mapset);
-	if (fp)
+	if (fp && !use_catlist)
 	{
 		do_smooth = TRUE;
 		fprintf(stderr, "FP map found - switching gradient legend on\n");
@@ -329,7 +355,7 @@ int main( int argc, char **argv )
 				G_warning("Color range exceeds upper limit of actual data");
 			}
 		}
-		
+
 		/*  cats_num is total number of categories in raster                  */
 		/*  do_cats is  total number of categories to be displayed            */
 		/*  k is number of cats to be displayed after skipping unlabeled cats */
@@ -344,6 +370,10 @@ int main( int argc, char **argv )
 		if(do_cats == cats_num)
 			lines = (int)ceil((1.0*lines)/thin);
 	
+		if (!use_catlist) {
+			catlist= (double *) G_calloc(lines+1, sizeof(double));
+			catlistCount=lines;
+		}
 		/* see how many boxes there REALLY will be */
 		maxCat = 0.0;
 		for(i=min_ind, j=1, k=0; j<=do_cats && i<=max_ind; j++, i+=thin) {
@@ -351,6 +381,9 @@ int main( int argc, char **argv )
 			cstr = G_get_cat(i, &cats);
 		    else
 			cstr = G_get_cat((max_ind - (i-min_ind)), &cats);
+
+		    if (!use_catlist)
+			catlist[j-1] = (double)i;
 
 		    if(!cstr[0]) {	/* no cat label found, skip str output */
 			if(hide_nodata)
@@ -367,21 +400,49 @@ int main( int argc, char **argv )
 		}
 		lines = k;
 
-	
+		/* figure out how long the category + label will be */
+		if(use_catlist) {
+			MaxLabelLen=0;
+			maxCat=0;	/* reset */
+			for(i=0, k=0; i<catlistCount; i++) {
+				if( (catlist[i] < min_ind) || (catlist[i] > max_ind) ) {
+					sprintf(buff,"use=%s out of range [%d,%d]. (extend with range= ?)",
+						opt8->answers[i], min_ind, max_ind);
+					G_fatal_error(buff);
+				}
+
+				cstr = G_get_cat(catlist[i], &cats);
+				if(!cstr[0]) {  /* no cat label found, skip str output */
+					if(hide_nodata)
+						continue;
+				}
+				else {		/* ie has a label */
+					if( !hide_catstr && (MaxLabelLen < strlen(cstr)) )
+						MaxLabelLen=strlen(cstr);
+				}
+				if(!hide_catnum)
+					if(catlist[i] > maxCat) maxCat = catlist[i];
+				k++;
+			}
+			if (0 == k)	/* nothing to draw */
+				lines = 0;
+		}
+
 		if(MaxLabelLen > 0) {		/* ie we've picked up at least one label */
 			MaxLabelLen++;			/* compensate for leading space */
 			if(!hide_catnum)
 				MaxLabelLen +=3;	/* compensate for "%2d) " */
 		}
-		else
+		else {
 			if(!hide_catnum)
 				MaxLabelLen=1;
+		}
+
 		/* compensate for categories >100 */
 		if(!hide_catnum) {
 			if(maxCat > 99)
 				MaxLabelLen += (int)(floor(log10(maxCat))-1);
 		}
-
 
 		/* following covers both the above if(do_cats == cats_num) and k++ loop */
 		if(lines < 1) {
@@ -395,8 +456,10 @@ int main( int argc, char **argv )
 	
 		if ((dots_per_line == 0) && (do_smooth == 0)) {
 			do_smooth = 1; /* for CELL maps with lot's of cats */
-			fprintf(stderr, "Forcing smooth legend as too many categories for current monitor height.\n");
-			flip = !flip;
+			if(!use_catlist) {
+				fprintf(stderr, "Forcing smooth legend as too many categories for current monitor height.\n");
+				flip = !flip;
+			}
 		}	/* an alternate solution is to set   dots_per_line=1   */
 
 		/* center really tiny legends */
@@ -436,11 +499,27 @@ int main( int argc, char **argv )
 				G_warning("Color range exceeds upper limit of actual data");
 			}
 		}
-				
+
+		if(use_catlist) {
+			for(i=0; i<catlistCount; i++) {
+				if( (catlist[i] < dmin) || (catlist[i] > dmax) ) {
+					sprintf(buff,"use=%s out of range [%.2f, %.2f]. (extend with range= ?)",
+						opt8->answers[i], dmin, dmax);
+					G_fatal_error(buff);
+				}
+				MaxLabelLen=strlen(opt8->answers[i]);
+			}
+		}
 		do_cats = 0;	/* if only to get rid of the compiler warning  */
 		cats_num = 0;	/* if only to get rid of the compiler warning  */
 	}
-	
+
+	if(use_catlist) {
+		cats_num = catlistCount;
+		do_cats = catlistCount;
+		lines = catlistCount;
+		do_smooth = 0;
+	}
 
 	if(do_smooth){
 	    int wleg, lleg, dx, dy;
@@ -634,13 +713,15 @@ int main( int argc, char **argv )
 
 		/*  j = (do_cats == cats_num ? 1 : 2 ); */
 
-		for(i=min_ind, j=1, k=0; j<=do_cats && i<=max_ind; j++, i+=thin)
+		for(i=0, k=0; i<catlistCount; i++)
+/*		for(i=min_ind, j=1, k=0; j<=do_cats && i<=max_ind; j++, i+=thin)	*/
 		{
 		    if(!flip)
-			cstr = G_get_cat(i, &cats);
+			cstr = G_get_cat(catlist[i], &cats);
 	            else
-			cstr = G_get_cat((max_ind - (i-min_ind)), &cats);
+			cstr = G_get_cat(catlist[catlistCount-i-1], &cats);
 		    
+
 		    if(!cstr[0]) {  /* no cat label found, skip str output */
 			hide_catstr=1;
 			if(hide_nodata)
@@ -669,11 +750,18 @@ int main( int argc, char **argv )
 		    R_cont_rel((4-dots_per_line), 0) ;
 	
 		    /* Color solid box */
-		    if(!flip)
-			D_color((CELL)i,&colors) ;
-		    else
-			D_color((CELL)(max_ind - (i-min_ind)),&colors) ; 
-
+		    if(!fp) {
+			if(!flip)
+				D_color((CELL)(int)catlist[i],&colors) ;
+			else
+				D_color((CELL)(int)catlist[catlistCount-i-1],&colors) ; 
+		    }
+		    else {
+			if(!flip)
+				D_d_color(catlist[i],&colors);
+			else
+				D_d_color(catlist[catlistCount-i-1],&colors);
+		    }
 		    
 		    R_move_abs(l+4, (cur_dot_row-2)) ;
 		    R_polygon_rel(x_box, y_box, 5) ;
@@ -681,35 +769,49 @@ int main( int argc, char **argv )
 		    /* Draw text */
 		    R_standard_color(color) ;
 
-	            if(hide_catnum && ! hide_catstr) /* str only */
-			sprintf(buff, " %s", cstr);
-	            else{
-		        if(! hide_catnum && hide_catstr) { /* num only */
-			    if(!flip)			
-				sprintf(buff, "%2d", i);
-		            else
-				sprintf(buff, "%2d", max_ind - (i-min_ind));
-			}
-			else{
-		            if(hide_catnum && hide_catstr) /* nothing, box only */
-		               buff[0] = 0;
-		            else {
-				if(!flip)
-				    sprintf(buff, "%2d) %s", i, cstr); /* both */
-				else
-				    sprintf(buff, "%2d) %s", (max_ind - (i-min_ind)), cstr);
-			    }
+		    if(!fp) {
+			if(hide_catnum && ! hide_catstr) /* str only */
+				sprintf(buff, " %s", cstr);
+			else {
+				if(! hide_catnum && hide_catstr) { /* num only */
+				    if(!flip)			
+					sprintf(buff, "%2d", (int)catlist[i]);
+				    else
+					sprintf(buff, "%2d", (int)catlist[catlistCount-i-1]);
+				}
+				else{
+					if(hide_catnum && hide_catstr) /* nothing, box only */
+						buff[0] = 0;
+					else {
+						if(!flip)
+						    sprintf(buff, "%2d) %s", (int)catlist[i], cstr); /* both */
+						else
+						    sprintf(buff, "%2d) %s", (int)catlist[catlistCount-i-1], cstr);
+					}
+				}
 			}
 		    }
+		    else {	/* is fp */
+			if(!flip)
+				sprintf(buff, "%s", opt8->answers[i]);
+			else
+				sprintf(buff, "%s", opt8->answers[catlistCount-i-1]);
+		    }
+
 		    R_move_abs((l+3+dots_per_line), (cur_dot_row)-3);
 		    R_text(buff);
 		}
-		
-		
+
+		if(0 == k) {
+			sprintf(buff,"Nothing to draw! (no categories with labels?)");	/* "(..., out of range?)" */
+			G_fatal_error(buff) ;
+		}
+
 		if (do_cats != cats_num)
 		{
 		    cur_dot_row += dots_per_line;
 	/*	    sprintf(buff, "%d of %d categories\n", (j-1), cats_num) ;	*/
+
 		    sprintf(buff, "%d of %d categories\n", k, cats_num) ;
 		
 		    /* shrink text if it will run off the screen */
