@@ -22,6 +22,7 @@
 
 int break_lines ( struct Map_info *Out, int otype, int x_flag );
 int rmdupl ( struct Map_info *Out, int otype );
+int rmdac ( struct Map_info *Out );
 int svtl ( struct Map_info *Out, int otype, int tool, double thresh, int x_flag );
 
 int 
@@ -48,11 +49,12 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,svtlx";
+	tool_opt->options = "break,rmdupl,svtlx,rmdac";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
-			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line";
+			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line"
+			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
@@ -89,6 +91,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_RMDUPL;
 	    else if ( strcmp ( tool_opt->answers[i], "svtlx" ) == 0 )
 		tools[ntools] = TOOL_SVTLX;
+	    else if ( strcmp ( tool_opt->answers[i], "rmdac" ) == 0 )
+		tools[ntools] = TOOL_RMDAC;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -105,7 +109,7 @@ main (int argc, char *argv[])
 	    threshs[i] = atof ( thresh_opt->answers[i] ) ;
 	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
 	    
-	    if (  tools[i] == TOOL_BREAK || tools[i] == TOOL_RMDUPL ) {
+	    if (  tools[i] != TOOL_SVTLX ) {
 		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
 		threshs[i] = 0.0;
 	    }
@@ -113,24 +117,27 @@ main (int argc, char *argv[])
 	}
 
         /* Print tool table */
-	fprintf (stdout, "+-------------------+--------------+\n" );
-	fprintf (stdout, "| Tool              | Threshold    |\n" );
-	fprintf (stdout, "+-------------------+--------------+\n" );
+	fprintf (stdout,             "+---------------------------------+--------------+\n" );
+	fprintf (stdout,             "| Tool                            | Threshold    |\n" );
+	fprintf (stdout,             "+---------------------------------+--------------+\n" );
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-	            fprintf (stdout, "| Break             |" );	    
+	            fprintf (stdout, "| Break                           |" );	    
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            fprintf (stdout, "| Remove duplicates |" );	    
+	            fprintf (stdout, "| Remove duplicates               |" );	    
 		    break;
 		case ( TOOL_SVTLX ) :
-	            fprintf (stdout, "| Snap vertices     |" );	    
+	            fprintf (stdout, "| Snap vertices                   |" );	    
+		    break;
+		case ( TOOL_RMDAC ) :
+	            fprintf (stdout, "| Remove duplicate area centroids |" );	    
 		    break;
 	    }
 	    fprintf (stdout, " %e |\n", threshs[i] );	    
 	}
-	fprintf (stdout, "+-------------------+--------------+\n" );
+	fprintf (stdout,             "+---------------------------------+--------------+\n" );
 		    
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
@@ -169,13 +176,18 @@ main (int argc, char *argv[])
 		    fflush ( stderr );
                     rmdupl ( &Out, otype );
 		    break;
+		case TOOL_RMDAC:
+		    fprintf (stderr, "Tool: Remove duplicate area centroids\n" );
+		    fflush ( stderr );
+                    rmdac ( &Out );
+		    break;
 		case TOOL_SVTLX:
 		    fprintf (stderr, "Tool: Snap vertex to a line and create new vertex at that line\n" );
 		    fflush ( stderr );
                     svtl ( &Out, otype, TOOL_SVTLX, threshs[i], (int) x_flag->answer );
 		    break;
 	    }
-	    fprintf (stdout, "------------------------------------\n" );
+	    fprintf (stdout,         "--------------------------------------------------\n" );
 	}
 
 	Vect_build (&Out, stdout);
