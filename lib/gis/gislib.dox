@@ -1619,9 +1619,10 @@ needed and the file is removed.  Commonly it is required that
 temporary file names be unique from invocation to invocation of the
 module. It would not be good for a fixed name like "/tmp/mytempfile"
 to be used. If the module were run by two users at the same time, they
-would use the same temporary file. The following routine generates
-temporary file names which are unique within the module and across all
-GRASS programs.
+would use the same temporary file. In addition systematic use of the
+/tmp directory could leave the system vulnerable to symlink attacks.
+The following routine generates temporary file names which are unique
+within the module and across all GRASS programs.
 
 <P>
 char *G_tempfile() returns a temporary file name
