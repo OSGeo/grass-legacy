@@ -22,7 +22,6 @@ main (int argc, char *argv[])
     struct Option *opt3 ;
     static int verbose = 1;
     char rname[256], rmapset[256];
-    int is_reclass;
 
     G_gisinit (argv[0]);
 
@@ -87,10 +86,6 @@ main (int argc, char *argv[])
     	G_fatal_error (err);
 	exit(1);
     }
-
-    is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
-    if (is_reclass)
-        G_fatal_error("%s is a reclass of map <%s> in mapset <%s>. Consider to use r.mapcalc to generate a map copy. Exiting.", name, rname, rmapset);
 
     in_fd = G_open_cell_old (name, mapset);
     if (in_fd < 0)
