@@ -1,11 +1,15 @@
-/* d.legend a.k.a d.leg.thin */
+/* d.legend a.k.a d.leg.thin 
+ * $Id$
+ */
 
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+
 #include "local_proto.h"
 
 /* height to width ratio when generating automatic smooth legends */
@@ -79,15 +83,6 @@ int main( int argc, char **argv )
 	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->options    = D_color_list();
 	opt2->description= "Sets the legend's text color" ;
-
-/*
-	opt3 = G_define_option() ;
-	opt3->key        = "type" ;
-	opt3->type       = TYPE_STRING ;
-	opt3->required   = NO;
-	opt3->options    = "fancy" ;
-	opt3->description= "Set type is fancy or not" ;
-*/
 
 	opt4 = G_define_option() ;
 	opt4->key        = "lines" ;
@@ -183,15 +178,6 @@ int main( int argc, char **argv )
 		color = new_colr ;
 	}
 
-/*
-	if (opt3->answer != NULL)
-	{
-			if (strcmp(opt3->answer,"fancy"))
-					exit(-1);
-			type = FANCY ;
-	}
-*/
-
 	if (opt4->answer != NULL)
 		sscanf(opt4->answer,"%d",&lines);
 	
@@ -253,7 +239,7 @@ int main( int argc, char **argv )
 	if (fp && !use_catlist)
 	{
 		do_smooth = TRUE;
-		fprintf(stderr, "FP map found - switching gradient legend on\n");
+		/* fprintf(stderr, "FP map found - switching gradient legend on\n"); */
 		flip = !flip;
 	}
 	
@@ -440,8 +426,8 @@ int main( int argc, char **argv )
 
 		/* compensate for categories >100 */
 		if(!hide_catnum) {
-			if(maxCat > 99)
-				MaxLabelLen += (int)(floor(log10(maxCat))-1);
+		    if(maxCat > 99)
+			MaxLabelLen += (int)(log10(maxCat));
 		}
 
 		/* following covers both the above if(do_cats == cats_num) and k++ loop */
@@ -503,11 +489,12 @@ int main( int argc, char **argv )
 		if(use_catlist) {
 			for(i=0; i<catlistCount; i++) {
 				if( (catlist[i] < dmin) || (catlist[i] > dmax) ) {
-					sprintf(buff,"use=%s out of range [%.2f, %.2f]. (extend with range= ?)",
+					sprintf(buff,"use=%s out of range [%.3f, %.3f]. (extend with range= ?)",
 						opt8->answers[i], dmin, dmax);
 					G_fatal_error(buff);
 				}
-				MaxLabelLen=strlen(opt8->answers[i]);
+				if( strlen(opt8->answers[i]) > MaxLabelLen )
+				    MaxLabelLen=strlen(opt8->answers[i]);
 			}
 		}
 		do_cats = 0;	/* if only to get rid of the compiler warning  */
@@ -526,6 +513,7 @@ int main( int argc, char **argv )
 	    int txsiz;
 	    int ppl;
 	    int tcell;
+	    float ScaleFactor = 1.0;
 
 	    if(horiz) {
 		lleg = x1-x0;
@@ -615,11 +603,28 @@ int main( int argc, char **argv )
 		    }
 		}
 
+		/* this probably shouldn't happen mid-loop as text sizes 
+			might not end up being uniform, but it's a start */
+		if( strlen(buff) > MaxLabelLen )
+		    MaxLabelLen=strlen(buff);
+
 		/* Draw text */
 		if(!horiz)
 		    txsiz = (int)((y1-y0)/20);
 		else
 		    txsiz = (int)((x1-x0)/20);
+
+		/* scale text to fit in window if position not manually set */
+		/* usually not needed, except when frame is really narrow   */
+		if( !use_mouse && opt7->answer == NULL)	{	/* ie defualt scaling */
+		    ScaleFactor = ((r-x1)/((MaxLabelLen+1)*txsiz*0.81)); /* ?? txsiz*.81=actual text width. */
+		    if( ScaleFactor < 1.0) {
+			txsiz = (int)(txsiz*ScaleFactor);
+		    }
+		}
+
+		if(txsiz < 0) txsiz = 0;  /* keep it sane */
+
 		R_text_size(txsiz, txsiz);
 		R_standard_color(color);
 
