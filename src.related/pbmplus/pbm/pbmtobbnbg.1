@@ -1,0 +1,30 @@
+.TH pbmtobg 1 "16 May 1989"
+.SH NAME
+pbmtobg - convert a portable bitmap into BitGraph graphics
+.SH SYNOPSIS
+.B pbmtobg
+.RI [ rasterop ]
+.RI [ x
+.IR y ]
+<
+.I pbmfile
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Produces BBN BitGraph terminal Display Pixel Data (DPD) sequence as output.
+.PP
+The rasterop can be specified on the command line.  If this is omitted, 3
+(replace) will be used.  A position in (x,y) coordinates can also be
+specified.  If both are given, the rasterop comes first.  The portable bitmap
+is always taken from the standard input.
+.PP
+Note that there is no bgtopbm tool.
+.SH "SEE ALSO"
+pbm(5)
+.SH AUTHOR
+Copyright 1989 by Mike Parker.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
