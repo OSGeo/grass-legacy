@@ -1,0 +1,19 @@
+#  %W%  %G%
+UNIX_BIN = $(GRAPH)/macros
+EXTRA_CFLAGS =  -I$(GRAPH)/src/grass3.1/include
+GMAPLIB = $(GRAPH)/src/grass3.1/libes/gmaplib.a
+CFILE = make_text.c 
+
+all:  $(UNIX_BIN)/make_text $(UNIX_BIN)/make.text
+
+$(UNIX_BIN)/make_text: $(CFILE) $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB) $(GMAPLIB)
+	$(CC) -o $@ $(CFILE) $(EXTRA_CFLAGS) $(GMAPLIB) $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB)
+
+$(UNIX_BIN)/make.text: make.text
+	cp make.text $(UNIX_BIN)/make.text
+
+
+$(GMAPLIB): #
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
