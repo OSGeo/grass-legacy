@@ -1,10 +1,12 @@
-PGM = r.profile
-LIST = main.o\
-	parse_line.o\
-	process_line.o\
-	profile.o
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+PGM    = r.profile
 
-$(GISLIB): #
+LIST   = main.o \
+	read_rast.o
+
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
