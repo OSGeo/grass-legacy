@@ -45,6 +45,11 @@ int main(int argc,char *argv[])
 	if (argc > 1 && G_parser(argc, argv))
 		return 1;
 
+	if(!rflag->answer && !dflag->answer && !cflag->answer) {
+		G_usage();
+		return 1;
+	}
+
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
 
