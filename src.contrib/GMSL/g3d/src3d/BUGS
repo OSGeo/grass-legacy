@@ -1,4 +1,4 @@
-$Id: BUGS,v 1.5 2001-02-12 21:55:24 markus Exp $
+$Id: BUGS,v 1.6 2001-02-15 13:40:43 markus Exp $
 
                            G3D bugs list
                   ---> Call for assistance <------
@@ -9,7 +9,7 @@ History:
    et al. 
  - Later Mark Astley ported grid3d to g3d library which is now widely used
    for g3d modules.
-   
+
 Current situation:
 
 Currently there are severe G3D inconsistencies: 
@@ -25,7 +25,13 @@ I would prefer if G3D orders the data from
 I can't find anything documented except what's in the GRASS Programmer's
 manual: http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
 
-Somehow the migration from grid3d to g3d got confused. Check these modules:
+See
+src/libes/g3d/doc/*
+for emails from Roman Waupotitsch during the implementation period.
+
+--------------------------------------------------------------------
+Somehow the migration from grid3d to g3d got confused.
+Check these modules:
 
 
  - s.vol.rst: does not use G3D to read/write data, but seems to
