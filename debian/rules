@@ -29,13 +29,20 @@ config.status: configure
 	CFLAGS="$(CFLAGS)" ./configure \
 		--host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
 		--prefix=/usr/lib \
-		--mandir=\$${prefix}/share/man \
-		--infodir=\$${prefix}/share/info \
-		--enable-shared \
-		--with-gdal=/usr/local/bin/gdal-config \
-		--with-tcltk-includes=/usr/include/tcl8.3 \
+		--sysconfdir=/etc \
+		--sharedstatedir=/var \
+		--with-cxx \
+		--with-gdal \
+		--with-glw \
+		--with-freetype \
+		--with-motif \
+		--with-nls \
+		--with-postgres \
+		--with-readline \
+		--with-freetype-includes=/usr/include/freetype2 \
+		--with-motif-includes=/usr/X11R6/include \
 		--with-postgres-includes=/usr/include/postgresql \
-		--without-odbc
+		--with-tcltk-includes=/usr/include/tcl8.3
 
 build: build-stamp
 
