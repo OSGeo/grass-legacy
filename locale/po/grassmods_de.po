@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-20 11:51+0100\n"
-"PO-Revision-Date: 2004-11-20 12:27+0100\n"
+"POT-Creation-Date: 2004-11-26 08:52+0100\n"
+"PO-Revision-Date: 2004-11-26 08:57+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -17,15 +17,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: ../db/base/connect.c:107
+#: ../db/base/connect.c:112
 #, c-format
 msgid "driver:%s\n"
 msgstr "Treiber: %s\n"
 
-#: ../db/base/connect.c:108
+#: ../db/base/connect.c:113
 #, c-format
 msgid "database:%s\n"
 msgstr "Datenbank: %s\n"
+
+#: ../db/base/connect.c:114
+#, c-format
+msgid "schema:%s\n"
+msgstr "Schema: %s\n"
 
 #: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
 #: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
@@ -142,6 +147,47 @@ msgstr "Maßstab%s%d\n"
 #, c-format
 msgid "precision%s%d\n"
 msgstr "Präzision%s%d\n"
+
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Kann Benutzer/Passwort nicht setzen."
+
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr ""
+"Selektiert die Schriftart, in welcher der Text auf dem Graphik-Monitor des "
+"Benutzers angezeigt wird."
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
+"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Zeichenkodierung"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Keine Graphik-Augabe ausgewählt."
+
+#: ../display/d.font.freetype/main.c:170
+#, c-format
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+" Einstellungen des FreeType-Releases\n"
 
 #: ../display/d.paint.labels/do_labels.c:143
 #, c-format
@@ -363,48 +409,6 @@ msgstr ""
 msgid " Right: quit\n"
 msgstr " Rechts:  Beenden\n"
 
-#: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Buttons:\n"
-msgstr ""
-"\n"
-"\n"
-"Mausknöpfe:\n"
-
-#: ../display/d.zoom/zoom.c:16
-#, c-format
-msgid "%s Zoom menu\n"
-msgstr "%s Zoom-Menü\n"
-
-#: ../display/d.zoom/zoom.c:17 ../display/d.zoom/pan.c:21
-#, c-format
-msgid "%s Pan\n"
-msgstr "%s Verschieben (Pan)\n"
-
-#: ../display/d.zoom/zoom.c:18 ../display/d.zoom/pan.c:22
-#, c-format
-msgid "%s Quit\n"
-msgstr "%s Beenden\n"
-
-#: ../display/d.zoom/zoom.c:41
-#, c-format
-msgid ""
-"This region now saved as current region.\n"
-"\n"
-msgstr ""
-"Diese Region wurde nun als aktive Region abgespeichert.\n"
-"\n"
-
-#: ../display/d.zoom/zoom.c:42
-#, c-format
-msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr ""
-"Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
-"Region einzustellen.\n"
-
 #: ../display/d.zoom/main.c:158
 #, c-format
 msgid "ERROR: can not get \"list\" items\n"
@@ -430,9 +434,51 @@ msgstr "%d Raster%sm %d Vektor%s\n"
 msgid "Zooming finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Mausknöpfe:\n"
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+msgid "%s Pan\n"
+msgstr "%s Verschieben (Pan)\n"
+
+#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s Beenden\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr "%s Zoom-Menü\n"
+
+#: ../display/d.zoom/zoom.c:41
+#, c-format
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+"Diese Region wurde nun als aktive Region abgespeichert.\n"
+"\n"
+
+#: ../display/d.zoom/zoom.c:42
+#, c-format
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+"Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
+"Region einzustellen.\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
-#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #, c-format
 msgid "Monitor: interactive command in redraw\n"
 msgstr "Monitor: Interaktives Kommando zum erneuten Zeichnen\n"
@@ -471,43 +517,6 @@ msgstr "Monitor: XGetWMName fehlgeschlagen\n"
 #, c-format
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
-
-#: ../display/d.font.freetype/main.c:52
-msgid ""
-"Selects the font in which text will be displayed on the user's graphics "
-"monitor."
-msgstr ""
-"Selektiert die Schriftart, in welcher der Text auf dem Graphik-Monitor des "
-"Benutzers angezeigt wird."
-
-#: ../display/d.font.freetype/main.c:60
-msgid ""
-"Font name (not supported interactively, see also -l flag) or path to "
-"TrueType font (including file name)"
-msgstr ""
-"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
-"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
-
-#: ../display/d.font.freetype/main.c:62
-msgid "Path to TrueType font (including file name)"
-msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
-
-#: ../display/d.font.freetype/main.c:71
-msgid "Character encoding"
-msgstr "Zeichenkodierung"
-
-#: ../display/d.font.freetype/main.c:102
-msgid "No graphics device selected"
-msgstr "Keine Graphik-Augabe ausgewählt."
-
-#: ../display/d.font.freetype/main.c:170
-#, c-format
-msgid ""
-"\n"
-"Setting release of FreeType\n"
-msgstr ""
-"\n"
-" Einstellungen des FreeType-Releases\n"
 
 #: ../imagery/i.group/main.c:86
 msgid "No input map(s) specified."
@@ -616,6 +625,18 @@ msgstr "%s - unbekannte Farbe\n"
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
 
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr "Zu viele Layer für diese Operation."
+
+#: ../vector/v.category/main.c:176
+msgid "2 layers must be specified"
+msgstr "Mindestens 2 Layer müssen angegeben werden."
+
+#: ../vector/v.category/main.c:180
+msgid "Output vector wasn't entered."
+msgstr "Ausgabekarte wurde nicht verändert."
+
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 msgid "Input vector was not found."
 msgstr "Eingabevektorkarte wurde nicht gefunden."
@@ -662,12 +683,16 @@ msgstr "Füge Kategorien an...\n"
 #: ../vector/v.convert/old2new.c:89
 #, c-format
 msgid "Failed to attach an attribute (category %d) to a line."
-msgstr "Das Anfügen von einem Attribut (Kategorie %d) an eine Linie ist fehlgeschlagen."
+msgstr ""
+"Das Anfügen von einem Attribut (Kategorie %d) an eine Linie ist "
+"fehlgeschlagen."
 
 #: ../vector/v.convert/old2new.c:92
 #, c-format
 msgid "WARNING: line %d label: %d matched another label: %d."
-msgstr "WARNUNG: Linie %d mit dem Label %d ist mit einem anderen Label (%d) identisch."
+msgstr ""
+"WARNUNG: Linie %d mit dem Label %d ist mit einem anderen Label (%d) "
+"identisch."
 
 #: ../vector/v.convert/old2new.c:100
 msgid "Writing new file...\n"
@@ -703,7 +728,10 @@ msgstr "Eingabedatei ist portabel.\n"
 msgid ""
 "WARNING: Input file is not portable.We will attempt to convert anyway but "
 "conversion may fail.Please read manual for detail information."
-msgstr "WARNUNG: Eingabedatei ist nicht portabel. Sie wird trotzdem konvertiert; dies kann aber schiefgehen. Bitte lesen Sie die Hilfeseiten für weitere Informationen."
+msgstr ""
+"WARNUNG: Eingabedatei ist nicht portabel. Sie wird trotzdem konvertiert; "
+"dies kann aber schiefgehen. Bitte lesen Sie die Hilfeseiten für weitere "
+"Informationen."
 
 #: ../vector/v.convert/read.c:161
 #, c-format
@@ -728,23 +756,22 @@ msgstr "%-5d Linien sind gelesen und in die Ausgabedatei geschrieben worden.\n"
 #: ../vector/v.convert/read.c:167
 #, c-format
 msgid "%-5d area boundaries read and written to output\n"
-msgstr "%-5d Flächengrenzen (Boundaries) sind gelesen und in die Ausgabedatei geschrieben worden.\n"
+msgstr ""
+"%-5d Flächengrenzen (Boundaries) sind gelesen und in die Ausgabedatei "
+"geschrieben worden.\n"
 
 #: ../vector/v.convert/read.c:168
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead points skipped\n"
 msgstr "%-5d tote Punkte (dead points) übersprungen.\n"
 
 #: ../vector/v.convert/read.c:169
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead lines skipped\n"
 msgstr "%-5d tote Linien (dead lines) übersprungen.\n"
 
 #: ../vector/v.convert/read.c:170
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead area boundaries skipped\n"
 msgstr "%-5d tote Flächenumrandungen (dead area boundaries) übersprungen.\n"
 
@@ -788,26 +815,22 @@ msgid "%-5d centroids read\n"
 msgstr "%-5d Zentroiden gelesen.\n"
 
 #: ../vector/v.convert/read.c:263
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead point categories skipped\n"
 msgstr "%-5d Kategorien toter Punkte übersprungen.\n"
 
 #: ../vector/v.convert/read.c:264
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead line categories skipped\n"
 msgstr "%-5d Kategorien toter Linien übersprungen.\n"
 
 #: ../vector/v.convert/read.c:265
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d dead centroids skipped\n"
 msgstr "%-5d tote Zentroiden übersprungen.\n"
 
 #: ../vector/v.convert/read.c:266
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%-5d categories of unknown type skipped\n"
 msgstr "%-5d Kategorien unbekannten Types übersprungen.\n"
 
@@ -825,6 +848,10 @@ msgstr "SYSTEM FEHLER: OLD_T_NEW: Falscher Type-Code: %x"
 #, c-format
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
 msgstr "SYSTEM FEHLER: NEW_T_OLD: Falscher Type-Code: %x"
+
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr "Wähle Typ aus: Linie oder Fläche"
 
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
@@ -921,10 +948,13 @@ msgid "'%s' has finished the transformation of the vectors.\n"
 msgstr "Die Transformation der Vektoren ist für '%s' beendet.\n"
 
 #: ../vector/v.transform/print_trans.c:29
+#, fuzzy
 msgid ""
 "                          CHECK MAP RESIDUALS\n"
 "\n"
 msgstr ""
+"                          ÜBERPRÜFE KARTEN RESIDUALE\n"
+"\n"
 
 #: ../vector/v.transform/print_trans.c:30
 msgid "                Current Map                  New Map\n"
@@ -949,8 +979,9 @@ msgstr ""
 
 #: ../vector/v.transform/print_trans.c:44
 #, c-format
+#, fuzzy
 msgid "  Residual mean average   : %f\n"
-msgstr ""
+msgstr "Mittlerer Residual Durchschnitt: %f\n"
 
 #: ../vector/v.transform/setup_trans.c:88
 msgid "The points weren't spread out enough."
@@ -960,6 +991,14 @@ msgstr "Die Punkte sind nicht weit genug auseinander gelegen."
 #, c-format
 msgid "You need to enter at least %d points."
 msgstr "Sie müssen mindestens %d Punkte eingeben."
+
+#: ../vector/v.voronoi/dt_main.c:116
+msgid "Cannot calculate area centroid"
+msgstr "Kann den Flächenzentroiden nicht berechnen."
+
+#: ../vector/v.voronoi/vo_main.c:251
+msgid "Cannot copy table"
+msgstr "Kann die Tabelle nicht kopieren."
 
 #: ../vector/v.what.rast/main.c:330
 #, c-format
@@ -988,15 +1027,6 @@ msgstr "%d Einträge aktualisiert.\n"
 
 #: ../vector/v.what.rast/main.c:335
 #, c-format
-#, fuzzy
 msgid "%d update errors\n"
 msgstr "%d aktualisierte Fehler.\n"
-
-#: ../vector/v.voronoi/dt_main.c:116
-msgid "Cannot calculate area centroid"
-msgstr "Kann den Flächenzentroiden nicht berechnen."
-
-#: ../vector/v.voronoi/vo_main.c:251
-msgid "Cannot copy table"
-msgstr "Kann die Tabelle nicht kopieren."
 
