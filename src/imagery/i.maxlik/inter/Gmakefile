@@ -1,0 +1,12 @@
+PGM=i.maxlik
+HOME=$(BIN_MAIN_INTER)
+LIST=main.o
+
+$(HOME)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
+	mv a.out $@
+
+$(IMAGERYLIB): #
+$(VASKLIB): #
+$(GISLIB): #
