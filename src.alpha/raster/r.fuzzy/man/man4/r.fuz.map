@@ -1,0 +1,107 @@
+.TH r.fuz.map
+.SH NAME
+\fIr.fuz.map \fR\- Creation of derived raster maps based upon an existing fuzzified 
+raster map.
+.br
+.I "(GRASS Raster Program)"
+.LP
+.SH SYNOPSIS
+\fBr.fuz.map\fR
+.br
+\fBr.fuz.map help\fR
+.br
+\fBr.fuz.map \fR[\fB-ipz\fR] \fBinput\*=\fIname\fR [\fBvar\*=\fIname\fR] [\fBset\*=\fIname\fR] [\fBmu\*=\fIname\fR] [\fBclass\*=\fIname\fR] [\fBh\*=\fIvalue\fR] [\fBinter\*=\fIname\fR]
+.LP
+.SH DESCRIPTION
+.I r.fuz.map
+generates a set of raster maps from a fuzzified raster layer. The user selects an 
+input map which has been fuzzified by \fIr.fuz.set\fR. Three maps can be
+generated : 1) mu map, the spatial distribution of the membership function values,
+2) class map, the  spatial distribution of the membership function types, 3) intersection
+map, the intersection areas of two or more membership functions.
+.br
+In addition, according the type of derived maps, the user can select
+a specific fuzzy variable and/or a specific membership function.
+.LP
+.SH OPTIONS
+The program will be run non-interactively if the user specifies program arguments 
+on the commande line. Alternately, the user can simply type \fIr.fuz.map\fR
+on the command line, without program arguments. In this case, the user will be
+prompted for flag settings and parameter values.
+.LP
+\fBFlags:\fR
+.LP
+.IP \fB-p\fR 4
+Print content of fuzzy variable file, i.e. the membership function characteristics.
+.IP \fB-z\fR 4
+Zero data values are considered as valid data.
+.IP \fB-i\fR 4
+In the case of an intersection map, this flag retains
+only the pixels whose attribute belongs to two or more fuzzy sets. In other words, 
+it corresponds to areas where intersection between membership functions exists.
+.LP
+\fBParameters:\fR
+.LP
+.IP \fBinput\*=\fIname\fR 13
+Name of an existing fuzzified raster map
+.IP \fBvar\*=\fIname\fR 13
+Name of a specific fuzzy variable. This variable is defined in the fuzzy variable
+file which has been associated to the input raster map by \fIr.fuz.set\fR .If this parameter is not set
+by the user, the default value is the first name in the list of the fuzzy variables.
+.IP \fBset\*=\fIname\fR 13
+Name of a specific fuzzy set (or membership function). This name is one of these 
+defining the selected fuzzy variable. This option is valid only in the case the user selects 
+a mu map and/or a class map.
+.IP \fBmu\*=\fIname\fR 13
+Output raster map of membership function values. The values are coded from 0 to 100 percent.
+.br
+For each pixel value in the input map, the program looks for the corresponding membership 
+values of the selected fuzzy variable.
+.br
+If the user does not select a specific fuzzy set,
+and if the pixel is found to belong to several fuzzy sets, the maximum membership value
+is retained.
+.br
+No category file is created with mu raster map.
+.IP \fBclass\*=\fIname\fR 13
+Output raster map of membership functions. For each pixel value in the input map, \fIr.fuz.map\fR
+looks for the fuzzy set it belongs to. The output values are integer numbers ranging from 1 to n,
+where n is the total number of available fuzzy sets of the working fuzzy variable. 
+The categories are the names of the membership functions as defined in fuzzy variable file.
+.br
+If the user selects a specific fuzzy set, only one function will be extracted.
+.br
+If the user does not select a specific fuzzy set, and if the pixel is found to belong to 
+several fuzzy sets, the retained category will be the name of the greatest membership function.
+.IP \fBh\*=\fIvalue\fR 13
+Threshold value. This option is valid only for class map. The range value is [0,1],
+and the default is set to 0.5
+.br
+This option allows the user to define a threshold under which the pixel value is
+ supposed to be too uncertain. Only the fuzzy sets for which membership value is greater
+or equal to h are retained.
+.IP \fBinter\*=\fIname\fR 13
+Output intersection raster map. According to the pixel value, the program
+looks for the number of fuzzy sets it belongs to. The output value is an integer, starting from 1,
+which is incremented each time a new intersection is found. The category file contains
+the concatenation of the fuzzy set names such as as "name1+name2".
+.br
+With the -i option, the user only gets the intersection areas.
+.LP
+.SH NOTES
+\fIr.fuz.map\fR works in the current geographic region with the current mask.
+.br
+When the user types "list" in the interactive form, \fIr.fuz.map\fR will only 
+generate the fuzzified raster map list (see man of \fIr.fuz.set\fR for 
+handling fuzzified raster maps).
+.br
+In the interactive form, if the user asks for an unknown fuzzy variable name
+and/or unknown fuzzy set, a request is made at the end of the command
+for selecting aq new one in the list of avalaible names.
+.LP
+.SH "SEE ALSO"
+.I r.fuz.set, r.fuz.rule
+.LP
+.SH AUTHOR
+Francois Delclaux, Institut de Recherche pour le Developpement (IRD), France.
+(email : delclaux@mpl.ird.fr )
