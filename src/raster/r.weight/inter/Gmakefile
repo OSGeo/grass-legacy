@@ -9,6 +9,7 @@ OFILES  =\
 	dots.o\
 	falloc.o\
 	gets.o\
+	getc.o\
 	histo.o\
 	list_anal.o\
 	list_cats.o\
@@ -45,6 +46,7 @@ clean:
 #
 # PARSER
 gis_pars.c:     yes_no.h gis_pars.y
+	rm -f gis_pars.c gis_pars.h gis_pars.out y.tab.c y.tab.h
 	yacc -v -d gis_pars.y
 	mv y.tab.c gis_pars.c
 	mv y.tab.h gis_pars.h
@@ -52,6 +54,7 @@ gis_pars.c:     yes_no.h gis_pars.y
 	@echo "See gis_pars.out for review of this parser." 
 
 gis_lxcl.c:     gis_lxcl.l gis_pars.h
+	rm -f gis_lxcl.c
 	lex -t gis_lxcl.l > gis_lxcl.c
 
 gis_pars.h: gis_pars.c
