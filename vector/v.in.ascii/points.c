@@ -70,6 +70,15 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
 	buf[0] = '\0';
 	while (1) {
 	    if ( fgets(tmpbuf,500,ascii_in) == NULL ) { /* end of file */
+
+		/* test for Mac OS9 (\r) newline */
+		if(tmpbuf[strlen(tmpbuf)-1] == '\r')  /* G_fatal_error() ?? */
+		    G_warning ("Mac OS9 text format not supported (incorrect newline)");
+
+		/* test for DOS (\r\n) newline */
+		if( (tmpbuf[strlen(tmpbuf)-1] == '\n') && (tmpbuf[strlen(tmpbuf)-2] == '\r') )
+		    G_warning ("DOS text format found, attempting import anyway");
+
 		free (buf);
 		buf = NULL;
 		break;
@@ -80,7 +89,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
 		buf = (char *) G_realloc ( buf, buflen );
 	    }
 	    strcpy ( strchr(buf,'\0'), tmpbuf);
-	    
+
 	    /* Check if whole line was read */
 	    if ( buf[strlen(buf)-1] == '\n' ) break; /* Yes, whole line was read */
 	}
@@ -94,7 +103,13 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
 	
 	/* remove '\n' (for G_tokenize) */
 	buf[strlen(buf)-1] = '\0';
-	
+
+	/* clean DOS (\r\n) newline */
+	if(buf[strlen(buf)-1] == '\r') {
+	    buf[strlen(buf)-1] = '\0';
+	    G_debug (4, "row %d : removed trailing CR", row);
+	}
+
 	G_debug (4, "row %d : %s", row, buf);
 
 	tokens = G_tokenize (buf, fs);
@@ -185,6 +200,13 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
 	
 	/* remove '\n' (for G_tokenize) */
 	buf[len-1] = '\0';
+
+	/* clean DOS (\r\n) newline */
+	if(buf[len-2] == '\r') {
+	    buf[len-2] = '\0';
+	    G_debug (4, "removed trailing CR");
+	}
+
 	G_debug (4, "row: %s", buf );
 		
 	tokens = G_tokenize (buf, fs);
