@@ -140,7 +140,7 @@ srcdist: ChangeLog
 	# Next line needs write permission to ${SRCDIR}...
 	mv ChangeLog grass-${VERSION} ; true
 	# ...and next line only works with GNU tar
-	tar cf - grass-${VERSION} --exclude=CVS --dereference | \
+	tar cf - grass-${VERSION} --dereference | \
 	gzip -fc > grass-${VERSION}.tar.gz	
 	rm grass-${VERSION} ; true
 	@ echo "Distribution source package: grass-${VERSION}.tar.gz ready."
