@@ -1,0 +1,8 @@
+PGM = Xwhere
+OFILES =  main.o \
+	where_am_i.o \
+	command.o \
+	list_sph.o 
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) $(COORCNVLIB) 
+	cc -g $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(COORCNVLIB) $(GISLIB) $(VASK) -lX11 -lm
