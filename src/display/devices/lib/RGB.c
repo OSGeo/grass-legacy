@@ -70,9 +70,9 @@ RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char 
 		
 	/* Make sure sufficient space is allocated */
 		if (array == NULL)
-			array = (int *)malloc(array_alloc * sizeof(int)) ;
+			array = (int *)malloc((size_t)(array_alloc * sizeof(int))) ;
 		else
-			array = (int *)realloc((char *)array, array_alloc * sizeof(int)) ;
+			array = (int *)realloc((void *)array, (size_t) (array_alloc * sizeof(int))) ;
 		if(array == NULL)
 		{
 			fprintf(stderr,"ERROR: insufficient memory in RGB_raster\n") ;
