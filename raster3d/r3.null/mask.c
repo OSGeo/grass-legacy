@@ -119,7 +119,7 @@ parse_vallist (vallist, d_mask)
 	    fd = fopen (*vallist, "r");
 	    if (fd == NULL)
 	    {
-		perror (vallist);
+		perror (*vallist);
 		G_usage();
 		exit(1);
 	    }
