@@ -10,7 +10,14 @@
 *      on an input elevation map.  The program was written by         *
 *      Kewan Q. Khawaja                                               *
 *      kewan@techlogix.com                                            *
+*                                                                     *
+* update to FP (2000): Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>*
+* bugfix in DCELL: Markus Neteler 12/2000                             *
 **********************************************************************/
+
+/*
+#define DEBUG
+*/
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -332,7 +339,7 @@ main (int argc, char *argv[])
 	}
 
 /*   Parameters for map submatrices   */
-#if 0
+#ifdef DEBUG
 	if (1) {
 		switch (data_type) {
 			case (CELL_TYPE):
@@ -380,7 +387,7 @@ main (int argc, char *argv[])
 
 /*	G_close_cell(elevation_fd); */
 
-/*	G_free(cell); */
+	G_free(cell); /* activated 12/2000 MN */
 
 	cell = G_allocate_raster_buf(data_type2); 
 	G_set_null_value(cell,ncols,data_type2);
@@ -421,7 +428,7 @@ main (int argc, char *argv[])
 
 			for(col = 0; col < ncols; col++)
 			{
-/* 				if(((int*)cell3)[col] > 0) { */
+                          /*	if(((int*)cell3)[col] > 0) { */
 				if(!G_is_null_value(cell3,data_type3)) {
 					POINT *new;
 					G_incr_void_ptr(cell3,data_size3);
@@ -541,6 +548,9 @@ int drain_path_finder ( POINT *PRES_PT)
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &val, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = val;
+#ifdef DEBUG
+fprintf(stderr, "p_elev: %g\n", p_elev);
+#endif
 				switch (mode){
 					case 0: {
 						val2 = 1;
@@ -599,6 +609,9 @@ int drain_path_finder ( POINT *PRES_PT)
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = f;
+#ifdef DEBUG
+fprintf(stderr, "p_elev: %g\n", p_elev);
+#endif
 
 				switch (mode){
 					case 0:
@@ -653,7 +666,12 @@ int drain_path_finder ( POINT *PRES_PT)
 				segment_get(&out_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
 				if(!G_is_d_null_value(&fdata) ) 
 					return 0;		/* already traversed	*/
-				segment_get(&in_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL);
+				segment_get(&in_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
+				p_elev = fdata;
+#ifdef DEBUG
+fprintf(stderr, "fdata: %g\n", fdata);
+#endif
+				
 				/* check the elevations of neighbouring pts to determine the	*/
 				/* next pt(s) for the drop to flow				*/
 				switch (mode){
@@ -833,7 +851,4 @@ free_list (POINT *head)
 
 	return 0;
 }
-
-
-
 
