@@ -14,6 +14,8 @@
 
 int Get_location_with_pointer (int *wx, int *wy, int *button)
 {
+    XEvent bpevent;
+
     if (redraw_pid)
     {
 	fprintf(stderr, "Monitor: interactive command in redraw\n");
@@ -26,38 +28,19 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
     /* wait for a button-push event in the grass window, and return the
      * x,y coord and button number */
 
-    if(*button == -1){
-        u_int  mask;
-        Window root, child;
-        int    rx, ry;
+    XSelectInput(dpy, grwin, ButtonPressMask);
 
-        XGetInputFocus(dpy, &child, &rx);
-	if(child == grwin){
-	    XQueryPointer(dpy, grwin, &root, &child, &rx, &ry, wx, wy, &mask);
-	    *button = (mask&Button1Mask ? 1
-			    : (mask&Button2Mask ? 2
-				    : (mask&Button3Mask ? 3
-					    : *button)));
-	}else{
-	    *wx = *wy = -1;
-	}
-    }else{
-        XEvent bpevent;
+    do 
+    {
+	if (!Get_Xevent(ButtonPressMask, &bpevent))
+	    break;
+    } while (bpevent.type != ButtonPress);
 
-	XSelectInput(dpy, grwin, ButtonPressMask);
+    XSelectInput(dpy, grwin, gemask);
 
-	do 
-	{
-	    if (!Get_Xevent(ButtonPressMask, &bpevent))
-		break;
-	} while (bpevent.type != ButtonPress);
-
-	XSelectInput(dpy, grwin, gemask);
-
-	*wx = bpevent.xbutton.x;
-	*wy = bpevent.xbutton.y;
-	*button = bpevent.xbutton.button;
-    }
+    *wx = bpevent.xbutton.x;
+    *wy = bpevent.xbutton.y;
+    *button = bpevent.xbutton.button;
 
     XUndefineCursor(dpy, grwin);
 
