@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 /***********************************************************************
  * G_ask_datum_name(char *datum)
@@ -37,7 +38,7 @@ G_ask_datum_name(char *datum)
 
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-	    G_fatal_error("Cannot open temp file") ;
+	    G_fatal_error(_("Cannot open temp file")) ;
         }
         fprintf(Tmp_fd,"datum\n");
         for (i=0; (dat = G_datum_name(i)); i++) {
@@ -48,9 +49,9 @@ G_ask_datum_name(char *datum)
 
         for(;;) {
 	  do {
-	      fprintf(stderr,"\nPlease specify datum name\n");
-	      fprintf(stderr,"Enter 'list' for the list of available datums\n");
-	      fprintf (stderr, "Hit RETURN to cancel request\n");
+	      fprintf(stderr,_("\nPlease specify datum name\n"));
+	      fprintf(stderr,_("Enter 'list' for the list of available datums\n"));
+	      fprintf (stderr, _("Hit RETURN to cancel request\n"));
 	      fprintf(stderr,">");
           } while(!G_gets(answer));
           G_strip(answer); 
@@ -66,7 +67,7 @@ G_ask_datum_name(char *datum)
           else {
             if (strcmp(answer,"datum") == 0) break; 
             if (G_get_datum_by_name(answer) < 0) {
-	      fprintf(stderr,"\ninvalid datum\n");
+	      fprintf(stderr,_("\ninvalid datum\n"));
             }
             else break;
           }
