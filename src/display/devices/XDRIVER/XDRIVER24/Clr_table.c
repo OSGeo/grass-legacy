@@ -193,14 +193,14 @@ int trueAllocColor(
 
 #endif /* ORIG */
 
-Colormap InitColorTableFixed (void)
+Colormap InitColorTableFixed (Colormap cmap)
 {
     float span;
     int r, g, b, i;
     unsigned char R, G, B;
     static int n_levels = 0;
     XColor xcolor;
-    Colormap cmap;
+/*    Colormap cmap;  */
 
     table_type = FIXED;
     /* figure out how many equal levels of r, g, and b are possible
@@ -218,7 +218,8 @@ Colormap InitColorTableFixed (void)
 	/* allocate xpixels array */
 	xpixels = (u_long *) calloc(n_levels*n_levels*n_levels, sizeof(u_long));
     }
-    cmap = DefaultColormap(dpy, scrn);
+/*    cmap = DefaultColormap(dpy, scrn);  */
+
     /* Generate "fixed" color table */
     span = 255.0 / (float) (n_levels - 1);
     i = 0;
