@@ -101,6 +101,24 @@ static int (*no_lister)() = 0 ;
 static int parselist(char *, int , char *);
 static char *ask( char *,char *,char *,char *,char *, int (*)(),int );
 
+
+/*!
+ * \brief prompt for new database file
+ *
+ * The user is asked to enter the name of
+ * a new file which does not exist in the current mapset.
+ * <b>Note.</b> The file chosen by the user may exist in other mapsets. This
+ * routine does not look in other mapsets, since the assumption is that
+ * <b>name</b> will be used to create a new file. New files are always created
+ * in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param desc
+ *  \return char * 
+ */
+
 char *G_ask_new (prompt, name, element, desc)
     char *prompt;
     char *name;
@@ -120,6 +138,24 @@ char *G_ask_new_ext (prompt, name, element, desc, option, lister)
 {
     return ask (prompt, name, element, desc, option, lister, NEW);
 }
+
+
+/*!
+ * \brief prompt for existing database file
+ *
+ * The user is asked to enter the
+ * name of an existing database file.
+ * <b>Note.</b> This routine looks for the file in the current mapset as well
+ * as other mapsets. The mapsets that are searched are determined from the user's
+ * mapset search path. See Mapset_Search_Path for some more details
+ * about the search path.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param label
+ *  \return char * 
+ */
 
 char *G_ask_old (prompt, name, element, desc)
     char *prompt;
@@ -141,6 +177,24 @@ char *G_ask_old_ext (prompt, name, element, desc, option, lister)
     return ask (prompt, name, element, desc, option, lister, OLD);
 }
 
+
+/*!
+ * \brief prompt for any valid file name
+ *
+ * The user is asked to enter
+ * any leg al file name. If <b>warn</b> is 1 and the file chosen exists in the
+ * current mapset, then the user is asked if it is ok to overwrite the file. If
+ * <b>warn</b> is 0, then any leg al name is accepted and no warning is issued
+ * to the user if the file exists.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param label
+ *  \param warn
+ *  \return char * 
+ */
+
 char *G_ask_any (prompt, name, element, desc, warn)
     char *prompt;
     char *name;
@@ -160,6 +214,24 @@ char *G_ask_any_ext (prompt, name, element, desc, warn, option, lister)
 {
     return ask (prompt, name, element, desc, option, lister, warn?ANY:ANY_NW);
 }
+
+
+/*!
+ * \brief prompt for existing database file
+ *
+ * The user is asked to enter the
+ * name of an file which exists in the current mapset.
+ * <b>Note.</b> The file chosen by the user may or may not exist in other
+ * mapsets. This routine does not look in other mapsets, since the assumption is
+ * that <b>name</b> will be used to modify a file. GRASS only permits users to
+ * modify files in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param label
+ *  \return char * 
+ */
 
 char *
 G_ask_in_mapset (prompt, name, element, desc)
@@ -183,6 +255,18 @@ G_ask_in_mapset_ext (prompt, name, element, desc, option ,lister)
     return ask (prompt, name, element, desc, option, lister, PRJ);
 }
 
+
+/*!
+ * \brief set Hit RETURN msg
+ *
+ * The "Hit
+ * RETURN to cancel request" part of the prompt in the prompting routines
+ * described above, is modified to "Hit RETURN <b>msg.</b>"
+ *
+ *  \param msg
+ *  \return int
+ */
+
 int G_set_ask_return_msg (char *msg)
 {
     if (ask_return_msg) free (ask_return_msg);
@@ -191,6 +275,17 @@ int G_set_ask_return_msg (char *msg)
 
     return 0;
 }
+
+
+/*!
+ * \brief get Hit RETURN msg
+ *
+ *  The current
+ * <i>msg</i> (as set by <i>G_set_ask_return_msg</i>) is returned.
+ *
+ *  \param void
+ *  \return char * 
+ */
 
 char *G_get_ask_return_msg()
 {
