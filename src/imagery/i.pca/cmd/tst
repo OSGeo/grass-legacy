@@ -1,0 +1,9 @@
+  for(i=0;i<bands;i++)
+  {
+     for (j=0;j<bands;j++);
+	fprintf(stdout, "%f  ", eigvect[i][j]);
+     fprintf(stdout, "\n");
+  }
+  for (i=0;i<bands;i++)
+     fprintf(stdout, "%f  ", eigval[i]);
+  fprintf(stdout, "\n");
