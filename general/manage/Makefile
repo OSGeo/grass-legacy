@@ -1,11 +1,9 @@
 
-MODULE_TOPDIR = ..
+MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	g.gisenv \
-	g.mapsets \
-	g.region \
-	manage
+	lib \
+	cmd
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
