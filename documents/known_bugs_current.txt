@@ -111,9 +111,9 @@ r.reclass
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
  - does not accept "*" to reclass NULL values
 
-r.surf.contour broken
- segment_put_row write error Bad address
-WARNING: cseg_read_cell(): unable to segment put row for [wegenetz] in
+r.surf.contour
+  fixed by Pierre de Mouveaux <pmx@audiovu.com>
+  (but supports currently CELL type only)
 
 r.stats: some inconsistent results comparing to r.average
  *First, I compute the per-class averages:
@@ -258,7 +258,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.8  2000-04-16 11:28:32  markus
+ Revision 1.9  2000-04-17 13:51:37  markus
+ r.surf.contour fixed by Pierre de Mouveaux <pmx@audiovu.com>
+
+ Revision 1.8  2000/04/16 11:28:32  markus
  v.extract does not copy the category support for vector file
 
  Revision 1.7  2000/04/16 11:16:01  markus
