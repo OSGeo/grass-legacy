@@ -1,0 +1,16 @@
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+
+PGM    = d.what.sites
+
+LIST   = main.o \
+	 sites.o\
+	 what.o
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIST): sites.h
+what.o: what.h
+
+
+$(LIBES): #
