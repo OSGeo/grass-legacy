@@ -3,41 +3,46 @@
 <head>
   <title>r.texture</title>
 </head>
-  <body bgcolor="white">
-    <img src="grass.smlogo.gif" width="76" height="91">
+<body bgcolor="white">
+<img src="grass.smlogo.gif" width="76" height="91">
       
 <hr width="100%" align="center" size="6" noshade="noshade">    
 <h2>NAME</h2>
-    <em><b>r.texture</b></em>  - Create map raster with textural features.<br>
-   <em>(GRASS</em> Raster Program)     
+
+<em><b>r.texture</b></em>  - Create map raster with textural features.<br>
+<em>(GRASS</em> Raster Program)     
 <h2>SYNOPSIS</h2>
-    <b>r.texture</b><br>
+   <b>r.texture</b><br>
    <b>r.texture help</b>  <br>
    <b>r.texture</b> [<b>-qackviswxedpmno</b>] <b>input=</b>name <b>output=</b>name
 <b>size=</b>value <b>distance=</b>value<br>
      
 <h2>DESCRIPTION</h2>
-    <em>r.texture</em>   - Creates map raster with textural features for user-specified
-  raster map layer.&nbsp;
-    <p> It uses the algorithms of i.texture. Reads a GRASS raster map as input. Calculates textural features based on
-    spatial dependence matrices for north-south, east-west, northwest, and
-    southwest directions using a side by side neighborhood (i.e., a distance of
-    1). Be sure to carefully set your resolution (using
-    <a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/g.region.html">g.region</a>)
-    before running this program, or else your computer could run out of memory.
-    Also, make sure that your raster map has no more than 255 categories.
-The output consists into four images for each textural feature, one for every
-direction</p>
+
+<em>r.texture</em> - Creates map raster with textural features for
+user-specified raster map layer.
+
+<p> It uses the algorithms of <a
+href="i.texture.html">i.texture</a>. Reads a GRASS raster map as
+input. Calculates textural features based on spatial dependence
+matrices for north-south, east-west, northwest, and southwest
+directions using a side by side neighborhood (i.e., a distance of
+1). Be sure to carefully set your resolution (using <a
+href="g.region.html">g.region</a>) before running this program, or
+else your computer could run out of memory.  Also, make sure that your
+raster map has no more than 255 categories.  The output consists into
+four images for each textural feature, one for every direction</p>
       
 <h2>OPTIONS</h2>
-    The program will be run non-interactively, if the user specifies  the 
-names of raster map layers and any desired option on the  command line, using
-the form     
+
+The program will be run non-interactively, if the user specifies the
+names of raster map layers and any desired option on the command line,
+using the form
+
 <dl>
   <dd> <b>r.texture</b> [<b>-qackviswxedpmno</b>] <b>input=</b>name <b>output=</b>name
     <b>size=</b>value <b>distance=</b>value    </dd>
 </dl>
-    &nbsp;
    
 <h3>Parameters:</h3>
       
@@ -52,130 +57,86 @@ the form
 </dl>
       
 <dl>
-  <dt><b>size = </b><em>1..N&nbsp;</em> </dt>
-  <dd>specifies the size of the square
-that encloses the primitive of the raster map;
-  <dt>&nbsp; </dt>
-  <dt><b>distance = </b><em>1..(N/2-1)&nbsp;</em> </dt>
-  <dd><font face="Times New Roman, Times, serif">specifies the distance between two pixel of the primitive;<br>
-     </font>
-    </dl>
-    <p><font face="Times New Roman, Times, serif">and the flags have meanings given below.     </font>
-    </p>
+  <dt>
+  <b>size = </b><em>1..N</em> </dt>
+  <dd>specifies the size of the square that encloses the primitive of the raster map;
+  <dt>
+  <b>distance = </b><em>1..(N/2-1)</em> </dt>
+  <dd>specifies the distance between two pixel of the primitive;<br>
+</dl>
+    <p>and the flags have meanings given below.</p>
+
 <h3>Flags</h3>
       
 <dl>
-  <dt><b>&nbsp; -q</b>&nbsp; Run quietly (without comments on program progress).
+  <dt><b> -q</b> Run quietly (without comments on program progress).
   </dt>
   <dt>
-&nbsp; <b>-a</b>&nbsp;&nbsp; Calculate the Angular Second Moment<br>
-    &nbsp; <b>-c</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; " &nbsp; &nbsp;&nbsp;
-&nbsp; " &nbsp; Contrast<br>
-    &nbsp; <b>-k</b>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Correlation<br>
-    &nbsp; <b>-v</b>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;" &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Variance<br>
-    &nbsp; <b>-i</b>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Inverse Diff Moment<br>
-    &nbsp; <b>-s</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Sum Average<br>
-    &nbsp; <b>-w</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; " &nbsp;&nbsp;&nbsp;
-&nbsp; &nbsp; " &nbsp; Sum Variance<br>
-    &nbsp; <b>-x</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp;&nbsp;&nbsp;
-&nbsp; &nbsp; " &nbsp; Sum Entropy<br>
-    &nbsp; <b>-e</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp;&nbsp;&nbsp;
-&nbsp; &nbsp; " &nbsp; Entropy<br>
-    &nbsp; <b>-d</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Difference Variance<br>
-    &nbsp; <b>-p</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Difference Entropy<br>
-    &nbsp; <b>-m</b>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp;  Meas of Correlation-1<br>
-    &nbsp; <b>-n</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Meas of Correlation-2<br>
-    &nbsp; <b>-o</b>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " &nbsp; &nbsp;
-&nbsp; &nbsp; " &nbsp; Max Correlation Coeff
+     <b>-a</b> Calculate the Angular Second Moment<br>
+     <b>-c</b> Calculate the Contrast<br>
+     <b>-k</b> Calculate the Correlation<br>
+     <b>-v</b> Calculate the Variance<br>
+     <b>-i</b> Calculate the Inverse Diff Moment<br>
+     <b>-s</b> Calculate the Sum Average<br>
+     <b>-w</b> Calculate the Sum Variance<br>
+     <b>-x</b> Calculate the Sum Entropy<br>
+     <b>-e</b> Calculate the Entropy<br>
+     <b>-d</b> Calculate the Difference Variance<br>
+     <b>-p</b> Calculate the Difference Entropy<br>
+     <b>-m</b> Calculate the Meas of Correlation-1<br>
+     <b>-n</b> Calculate the Meas of Correlation-2<br>
+     <b>-o</b> Calculate the Max Correlation Coeff
   </dt>
 </dl>
       
 <p> Alternately, the user can simply type <b>r.texture </b>on the command
-line,   without program arguments. In this case, the user will be prompted
-for  flag settings and parameter values using the standard GRASS <a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/parser.html">parser</a> interface.  </p>
+line, without program arguments. In this case, the user will be prompted for
+flag settings and parameter values using the standard GRASS <a
+href="parser.html">parser</a> interface.  </p>
    
-<h2>&nbsp;</h2>
+<h2></h2>
 <h2>NOTES</h2>
     Algorithm taken from:<br>
+
     Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features for
     image classification. <em>IEEE Transactions on Systems, Man</em>, <em>and
     Cybertinetics</em>, SMC-3(6):610-621.
+
     <p>The code was taken by permission from <em>pgmtexture</em>, part of
     PBMPLUS (Copyright 1991, Jef Poskanser and Texas Agricultural Experiment
     Station, employer for hire of James Darrell McCauley).</p>
-    <p>&nbsp;</p>
-    <h2>BUGS</h2>
+
+<h2>BUGS</h2>
     - The program can run incredibly slow for large raster files.
     <p>- The method for finding the maximal correlation coefficient, which
     requires finding the second largest eigenvalue of a matrix Q, does not
     always converge.
-    <p>&nbsp;</p>
-    <h2>REFERENCES</h2>
-    <em>IEEE Transactions on Systems, Man, and Cybertinetics</em>,
-    SMC-3(6):610-621.
-    <p><b><span lang="EN-GB" style="font-size:12.5pt;
-mso-bidi-font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:
-&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:
-AR-SA">Bouman C. A., Shapiro M., </span></b><span lang="EN-GB" style="font-size:
-12.5pt;mso-bidi-font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:
-&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:
-AR-SA">(</span><span lang="EN-GB" style="font-size:12.5pt;mso-bidi-font-size:
-10.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
-mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:AR-SA">March
-    1994</span><span lang="EN-GB" style="font-size:12.5pt;mso-bidi-font-size:14.5pt;
-font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
-mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:AR-SA">). </span><i><span lang="EN-GB" style="font-size:12.5pt;mso-bidi-font-size:20.5pt;font-family:&quot;Times New Roman&quot;;
-mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:
-IT;mso-bidi-language:AR-SA">A Multiscale Random Field Model for Bayesian Image
-    Segmentation</span></i><span lang="EN-GB" style="font-size:12.5pt;mso-bidi-font-size:
-20.5pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
-mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:AR-SA">, </span><span lang="EN-GB" style="font-size:12.5pt;mso-bidi-font-size:10.0pt;font-family:&quot;Times New Roman&quot;;
-mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:
-IT;mso-bidi-language:AR-SA">IEEE Trans. on Image Processing, vol. 3, no.2.</span></p>
-    <p><b><span lang="EN-GB" style="font-size:12.5pt;
-mso-bidi-font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:
-&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:
-AR-SA">Haralick R</span></b><span lang="EN-GB" style="font-size:12.5pt;
-mso-bidi-font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:
-&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:IT;mso-bidi-language:
-AR-SA">., (May 1979). <i>Statistical Approaches to Texture</i>, Proceedings of
-    the IEEE, vol. 67, No.5.</span></p>
-    <p>&nbsp;</p>
+
+<h2>REFERENCES</h2>
+<em>IEEE Transactions on Systems, Man, and Cybertinetics</em>,
+    SMC-3(6):610-621.<b>Bouman C. A., Shapiro M.</b>,(March
+    1994).A Multiscale Random Field Model for Bayesian Image
+    Segmentation, IEEE Trans. on Image Processing, vol. 3, no.2.</p>
+
+<p>
+<b>Haralick R.</b>, (May 1979). <i>Statistical Approaches to Texture</i>, Proceedings of
+    the IEEE, vol. 67, No.5.</p>
+ 
      
 <h2>SEE ALSO</h2>
-    <p style="margin-top: 0">
-    <em><a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/i.smap.html">i.smap</a></em><br>
-    <em><a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/i.gensigset.html">i.gensigset</a></em><br>
-    <em><a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/i.pca.html">i.pca</a></em><br>
-    <em><a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/r.digit.html">r.digit</a></em><br>
-    <em><a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass4/html/i.group.html">i.group</a></em><br>
-    <em><a href="http://grass.itc.it/gdp/html_grass5/html/i.texture.html">i.texture</a><br>
-    </em></p>
+
+<em><a href="i.smap.html">i.smap</a></em><br>
+<em><a href="i.gensigset.html">i.gensigset</a></em><br>
+<em><a href="i.pca.html">i.pca</a></em><br>
+<em><a href="r.digit.html">r.digit</a></em><br>
+<em><a href="i.group.html">i.group</a></em><br>
+<em><a href="i.texture.html">i.texture</a></em>
+
 <h2>AUTHOR</h2>
-     <font face="Times New Roman, Times, serif" color="#330033"><a href="mailto:antoniol@ieee.org">G. Antoniol</a>
-- </font><font color="#330033" face="Times New Roman, Times, serif">RCOST
-(</font><font face="Times New Roman, Times, serif">Research Centre on Software
-Technology</font><font color="#330033"
- face="Times New Roman, Times, serif">) -&nbsp; Viale Traiano
-- 82100 Benevento.<br>
-    <a href="mailto:basco@unisannio.it">C. Basco</a>
-- </font> <font color="#330033" face="Times New Roman, Times, serif">RCOST
-</font><font color="#330033" face="Times New Roman, Times, serif">(</font><font
- face="Times New Roman, Times, serif">Research Centre on Software Technology</font><font
- color="#330033" face="Times New Roman, Times, serif">)</font><font
- color="#330033" face="Times New Roman, Times, serif"> - Viale Traiano - 82100 Benevento.</font><br>
-<font face="Times New Roman, Times, serif" color="#330033"><a href="mailto:ceccarelli@unisannio.it">M. Ceccarelli
-</a>
-- Facolt&agrave; di Scienze, Universit&agrave; del Sannio Via Port&#8217;Arsa 11,
-Benevento.</font><br>
+<a href="mailto:antoniol@ieee.org">G. Antoniol</a> - RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento.<br>
+<a href="mailto:basco@unisannio.it">C. Basco</a> -  RCOST (Research Centre on Software Technology - Viale Traiano - 82100 Benevento.<br>
+<a href="mailto:ceccarelli@unisannio.it">M. Ceccarelli</a> - Facolt&agrave; di Scienze, Universit&agrave; del Sannio Via Port&#8217;Arsa 11, Benevento.<br>
+
 <p><i><br>
 Last changed: $Date$</i> </p>
 </body>
