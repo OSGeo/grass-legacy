@@ -1,26 +1,20 @@
 /***************************************************************************
- * $Id$
- *
- * MODULE: 	g.version
- * AUTHOR(S):	Michael Shapiro, CERL
- *              Andreas Lange - <andreas.lange@rhein-main.de>
- * PURPOSE: 	Output GRASS version number, date and copyright message.
- *             
- * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
- *
- *   	    	This program is free software under the GPL (>=v2)
- *   	    	Read the file COPYING that comes with GRASS for details.
- ****************************************************************************
- * $Log$
- * Revision 1.7  2000-11-24 08:33:47  justin
- * Can't define COPYING with cat in Gmakefile - see main.c for proper definition
- *
- * Revision 1.6  2000/11/08 20:32:54  andreas
- * added automatic input of COPYING file for copyr. msg.
- *
- */
+* $Id$
+*
+* MODULE: 	g.version
+* AUTHOR(S):	Michael Shapiro, CERL
+*               Andreas Lange - <andreas.lange@rhein-main.de>
+*  	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+* PURPOSE: 	Output GRASS version number, date and copyright message.
+*             
+* COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+*
+*   	    	This program is free software under the GPL (>=v2)
+*   	    	Read the file COPYING that comes with GRASS for details.
+*****************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 
 #ifndef VERSION_NUMBER
 #define VERSION_NUMBER "5.0"
@@ -84,6 +78,15 @@ Internet:  http://www.baylor.edu/~grass\n\
            http://www.geog.uni-hannover.de/grass\n"
 #endif
 
+/* Define TRUE and FALSE for boolean comparisons */
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
 /* did'nt work in practice, though it should,
  * andreas lange 07/2000 
  * #define QUOTE(x) #x
@@ -91,10 +94,42 @@ Internet:  http://www.baylor.edu/~grass\n\
 
 int main(int argc, char *argv[])
 {
-  fprintf (stdout, "GRASS %s (%s) %s\n",
-	   VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
-  fprintf (stdout, "\n");
-  fprintf (stdout, "%s", COPYING);
-  fprintf (stdout, "\n");
-  exit(0);
+    int     copyright;	    /* flag to print copyright message */
+    int     error;  	    /* flag to indicate error in command line */
+    
+    /* Set the flags to FALSE */
+    copyright = FALSE;
+    error = FALSE;
+    
+    /* Parse the command line - since all we do is print, we do not need to */
+    /* use the grass parser */
+    if (argc == 2 && strcmp(argv[1], "-c") == 0)
+    {
+    	copyright = TRUE;
+    }
+    else if (argc == 2)
+    {
+    	error = TRUE;
+    }
+    
+    if (argc > 2 || error)
+    {
+    	fprintf(stderr, "Usage:\n");
+	fprintf(stderr, "\tg.version [-c]\n\n");
+	fprintf(stderr, "Flags:\n");
+	fprintf(stderr, "\t-c    Print the copyright message as well\n\n");
+	exit(0);
+    }
+    
+    fprintf (stdout, "GRASS %s (%s) %s\n",
+    	VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
+    fprintf (stdout, "\n");
+    
+    if (copyright)
+    {
+    	fprintf (stdout, "%s", COPYING);
+    	fprintf (stdout, "\n");
+    }
+    
+    exit(0);
 }
