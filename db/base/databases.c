@@ -2,6 +2,7 @@
 #include "gis.h"
 #include "codes.h"
 #include <stdlib.h>
+#include "glocale.h"
 
 void parse_command_line();
 
@@ -38,8 +39,8 @@ main(int argc, char *argv[])
     db_shutdown_driver (driver);
 
     for (i = 0; i < count; i++) {
-	fprintf (stdout,"%s", db_get_handle_dbname(&handles[i]));
-	fprintf (stdout,"\n");
+	fprintf (stdout,_("%s"), db_get_handle_dbname(&handles[i]));
+	fprintf (stdout,_("\n"));
     }
     exit(OK);
 }

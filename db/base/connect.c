@@ -4,6 +4,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
+#include "glocale.h"
 
 /* database for DBF can be written with variables:
    database=$GISDBASE/$LOCATION_NAME/$MAPSET/dbf
@@ -99,8 +100,8 @@ main(int argc, char *argv[])
     /* get and print connection */
     db_get_connection( &conn );    
     
-    fprintf(stdout, "driver:%s\n", conn.driverName);
-    fprintf(stdout, "database:%s\n", conn.databaseName);    
+    fprintf(stdout, _("driver:%s\n"), conn.driverName);
+    fprintf(stdout, _("database:%s\n"), conn.databaseName);    
 /* commented due to new mechanism:
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    
