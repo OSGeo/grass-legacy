@@ -241,6 +241,8 @@ int main(int argc, char **argv) {
 
     if (G_parser (argc, argv)) exit (1);
 
+    Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
+
     /* look for mapset containing site file */
     sitefile = input->answer;
     mapset = G_find_sites (sitefile, "");

@@ -124,6 +124,8 @@ int main (int argc, char **argv)
   gQuietly = quietly->answer;
   /* gOverwrite = overwrite->answer; */
 
+  Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
+
   /* Open binary vector file at level 2 */
   mapset = G_find_vector2 (input->answer, "");
   if ( mapset == NULL ) G_fatal_error ( "Could not find input map <%s>\n", input->answer);  

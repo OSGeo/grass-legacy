@@ -131,6 +131,8 @@ int main(int argc, char **argv)
     catlist = Vect_new_cat_list ();
     Vect_str_to_cat_list ( term_opt->answer, catlist); 
 
+    Vect_check_input_output_name ( map->answer, output->answer, GV_FATAL_EXIT );
+
     /* Iso costs */
     aiso = 1; 
     iso = (double *) G_malloc (aiso * sizeof(double));

@@ -99,6 +99,8 @@ main (int argc, char *argv[])
     
     ntypes = i;
 
+    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     

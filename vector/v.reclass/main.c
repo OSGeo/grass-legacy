@@ -68,6 +68,8 @@ main (int argc, char *argv[])
 	 (rules_opt->answer && col_opt->answer) ) { 
 	G_fatal_error ( "Either 'rules' or 'col' must be specified.");
     }
+
+    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
     
     mapset = G_find_vector2 (in_opt->answer, NULL);
     if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);

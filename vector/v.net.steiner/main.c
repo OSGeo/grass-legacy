@@ -382,6 +382,8 @@ int main(int argc, char **argv)
     }
 
     if ( geo_f->answer ) geo = 1; else geo = 0;
+
+    Vect_check_input_output_name ( map->answer, output->answer, GV_FATAL_EXIT );
     
     mapset = G_find_vector2 (map->answer, NULL); 
       

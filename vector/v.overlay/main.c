@@ -113,6 +113,9 @@ main (int argc, char *argv[])
     /* OP_OR, OP_XOR is not supported for lines, mostly because I'am not sure if they make enouhg sense */
     if ( type[0] == GV_LINE && (operator == OP_OR || operator == OP_XOR) )
 	G_fatal_error ( "Operator '%s' is not supported for type line.",  operator_opt->answer );
+
+    Vect_check_input_output_name ( in_opt[0]->answer, out_opt->answer, GV_FATAL_EXIT );
+    Vect_check_input_output_name ( in_opt[1]->answer, out_opt->answer, GV_FATAL_EXIT );
     
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();

@@ -109,6 +109,8 @@ int main(int argc, char **argv)
           G_warning("The current projection is not longitude-latitude");
     }
     else geo = 0;
+
+    Vect_check_input_output_name ( input_opt->answer, output_opt->answer, GV_FATAL_EXIT );
     
     mapset = G_find_vector2 (input_opt->answer, NULL); 
       

@@ -100,6 +100,11 @@ main (int argc, char *argv[])
 	
 	otype = Vect_option_to_types ( type_opt );
 	
+	Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+	if ( err_opt->answer ) {
+	    Vect_check_input_output_name ( in_opt->answer, err_opt->answer, GV_FATAL_EXIT );
+	}
+	
 	atools = 20;
 	tools = (int *) G_malloc ( atools * sizeof(int) );
 

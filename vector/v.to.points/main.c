@@ -194,6 +194,8 @@ int main(int argc, char **argv)
     type = Vect_option_to_types ( type_opt );
     dmax = atof ( dmax_opt->answer );
 
+    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
     if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);
