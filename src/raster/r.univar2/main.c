@@ -194,23 +194,23 @@ int main(int argc, char *argv[]) {
 
     if(shell_style->answer) {
     	fprintf(stdout, "n=%d\n", n);
-	fprintf(stdout, "min=%f\n", min);
-	fprintf(stdout, "max=%f\n", max);
-	fprintf(stdout, "range=%f\n", max - min);
-	fprintf(stdout, "mean=%f\n", mean);
-	fprintf(stdout, "stddev=%f\n", stdev);
-	fprintf(stdout, "variance=%f\n", variance);
-	fprintf(stdout, "coeff_var=%f\n", var_coef);
+	fprintf(stdout, "min=%g\n", min);
+	fprintf(stdout, "max=%g\n", max);
+	fprintf(stdout, "range=%g\n", max - min);
+	fprintf(stdout, "mean=%g\n", mean);
+	fprintf(stdout, "stddev=%g\n", stdev);
+	fprintf(stdout, "variance=%g\n", variance);
+	fprintf(stdout, "coeff_var=%g\n", var_coef);
     }
     else {
 	fprintf(stdout, "n: %d\n", n);
-	fprintf(stdout, "minimum: %f\n", min);
-	fprintf(stdout, "maximum: %f\n", max);
-	fprintf(stdout, "range: %f\n", max - min);
-	fprintf(stdout, "mean: %f\n", mean);
-	fprintf(stdout, "standard deviation: %f\n", stdev);
-	fprintf(stdout, "sample variance: %f\n", variance);
-	fprintf(stdout, "variation coefficient: %f %%\n", var_coef);
+	fprintf(stdout, "minimum: %g\n", min);
+	fprintf(stdout, "maximum: %g\n", max);
+	fprintf(stdout, "range: %g\n", max - min);
+	fprintf(stdout, "mean: %g\n", mean);
+	fprintf(stdout, "standard deviation: %g\n", stdev);
+	fprintf(stdout, "sample variance: %g\n", variance);
+	fprintf(stdout, "variation coefficient: %g %%\n", var_coef);
     }
 
 /*  if(extended->answer) {
