@@ -21,6 +21,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -30,6 +31,19 @@
 #include "type.h"
 #include "graph.h"
 
+void gnGrpResetStats( gnGrpGraph_s * pgraph )
+{
+#ifdef GNGRP_STATS
+	pgraph->clkAddLink = 0;
+	pgraph->cAddLink = 0;
+	pgraph->clkLinkTree = 0;
+	pgraph->clkNodeTree = 0;
+	pgraph->clkNodeHeap = 0;
+	pgraph->cLinkTree = 0;
+	pgraph->cNodeTree = 0;
+	pgraph->cNodeHeap = 0;
+#endif
+}
 
 static int _node_free( gnTreeNode_s * pnode , void * pv )
 {
@@ -57,7 +71,7 @@ static gnTreeNode_s * __node( gnTreeNode_s * ptree , gnInt32_t nodeid )
 	return pnode;
 }
 
-static int _add_arc_V1  (
+static int _add_link_V1  (
 						gnGrpGraph_s * 	pgraph ,
 						gnInt32_t *		ppar ,
 						void * pvFnodeAttr ,	
@@ -99,8 +113,20 @@ static int _add_arc_V1  (
 		return -1;
 	}
 
-	if ( (pFromNodeItem = __node( pgraph->pNodeTree , lFrom )) == NULL ) return -1;
-	if ( (pToNodeItem   = __node( pgraph->pNodeTree , lTo   )) == NULL ) return -1;
+#ifdef GNGRP_STATS
+		{
+		clock_t clk = clock();
+#endif
+
+		if ( (pFromNodeItem = __node( pgraph->pNodeTree , lFrom )) == NULL ) return -1;
+		if ( (pToNodeItem   = __node( pgraph->pNodeTree , lTo   )) == NULL ) return -1;
+
+#ifdef GNGRP_STATS
+		pgraph->clkNodeTree += clock() - clk;
+		pgraph->cNodeTree ++;
+		pgraph->cNodeTree ++;
+		}
+#endif
 
 	if ( pFromNodeItem->data.pv == NULL )
 	{
@@ -113,7 +139,18 @@ static int _add_arc_V1  (
 		pFromNodeItem->data.pv = pfrom;
 		HeapData.pv        = pfrom;
 
+#ifdef GNGRP_STATS
+		{
+		clock_t clk = clock();
+#endif
+
 		if ( gnHeapInsertMin( & pgraph->NodeHeap , lFrom , HeapData ) < 0 ) return -1;
+
+#ifdef GNGRP_STATS
+		pgraph->clkNodeHeap += clock() - clk;
+		pgraph->cNodeHeap ++;
+		}
+#endif
 	}
 	else
 	{
@@ -131,7 +168,19 @@ static int _add_arc_V1  (
 		pToNodeItem->data.pv = pto;
 		HeapData.pv      = pto;
 
+#ifdef GNGRP_STATS
+		{
+		clock_t clk = clock();
+#endif
+
 		if ( gnHeapInsertMin( & pgraph->NodeHeap , lTo , HeapData ) < 0 ) return -1;
+
+#ifdef GNGRP_STATS
+		pgraph->clkNodeHeap += clock() - clk;
+		pgraph->cNodeHeap ++;
+		}
+#endif
+
 	}
 	else
 	{
@@ -147,11 +196,6 @@ static int _add_arc_V1  (
 	pfrom[ GNGRP_C_OFFSET ] = -1;
 	pto  [ GNGRP_C_OFFSET ] = -1;
 
-	/* old:
-	pto  [ GNGRP_C_PREDEC ] = -1;
-	pto  [ GNGRP_C_DISTAN ] = 0x7FFFFFFF;
-	*/
-
 	if ( pvFnodeAttr && pgraph->NodeAttrSize ) {
 		memcpy( & pfrom[ GNGRP_C_ATTR ], pvFnodeAttr, pgraph->NodeAttrSize );
 	}
@@ -160,7 +204,18 @@ static int _add_arc_V1  (
 		memcpy( & pto[ GNGRP_C_ATTR ], pvTnodeAttr, pgraph->NodeAttrSize );
 	}
 
+#ifdef GNGRP_STATS
+	{
+	clock_t clk = clock();
+#endif
+
 	if ( (pLinkItem = __node( pgraph->pLinkTree , lFrom )) == NULL ) return -1;
+
+#ifdef GNGRP_STATS
+	pgraph->clkLinkTree += clock() - clk;
+	pgraph->cLinkTree ++;
+	}
+#endif
 
 	if ( pLinkItem->data.pv == NULL )
 	{
@@ -226,6 +281,7 @@ static gnInt32_t * _search_node_V1( gnGrpGraph_s * pgraph , gnInt32_t nodeid )
 	cwords = GNGRP_C_SIZEOF(pgraph->NodeAttrSize) / sizeof(gnInt32_t);
 	bot    = pgraph->iNodeBuffer / GNGRP_C_SIZEOF(pgraph->NodeAttrSize);
 	top    = 0;
+	pos    = 0;
 	pref   = (gnInt32_t*)pgraph->pNodeBuffer;
 
 	/* perform a binary search
@@ -256,7 +312,6 @@ static gnInt32_t * _search_node_V1( gnGrpGraph_s * pgraph , gnInt32_t nodeid )
 
 static int _unflatten_V1( gnGrpGraph_s * pgraph )
 {
-	register gnTreeNode_s * 	pTreeNode;
 	register gnInt32_t *		pnode;
 	register gnInt32_t *		pnodeto;
 	register gnInt32_t *		plink;
@@ -288,7 +343,7 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 				par[ 2 ] = plinkto[ GNGRP_T_COST ];
 				par[ 3 ] = plinkto[ GNGRP_T_USER ];
 
-				if ( _add_arc_V1 ( pgraph , par , &pnode[GNGRP_C_ATTR], &pnodeto[GNGRP_C_ATTR], &plinkto[GNGRP_T_ATTR] ) < 0 )
+				if ( _add_link_V1 ( pgraph , par , &pnode[GNGRP_C_ATTR], &pnodeto[GNGRP_C_ATTR], &plinkto[GNGRP_T_ATTR] ) < 0 )
 				{
 					return -1;
 				}
@@ -434,7 +489,6 @@ static int _flatten_V1( gnGrpGraph_s * pgraph )
 	}
 
 	pgraph->Flags |= 0x1; /* flattened */
-
 	return 0;
 }
 
@@ -509,7 +563,7 @@ static int _set_linkattr_V1( gnGrpGraph_s * pgraph , void * pattr , gnInt32_t fn
 			pgraph->iErrno = GNGRP_ERR_NodeNotFound;
 			return -1;
 		}
-		plinkarea = (gnInt32_t*)pgraph->pLinkBuffer + pnode[ GNGRP_C_OFFSET ];
+		plinkarea = (gnInt32_t*)(pgraph->pLinkBuffer + pnode[ GNGRP_C_OFFSET ]);
 		for ( i = 0 ; i < plinkarea[ GNGRP_F_TOCNT ] ; i ++ ) {
 			plink = & plinkarea[ GNGRP_F_TOARR ] + GNGRP_T_WSIZE(pgraph->LinkAttrSize) * i;
 			if ( pgraph->pNodeBuffer[ plink[GNGRP_T_OFFSET] + GNGRP_C_NODEID ] == tnodeid ) {
@@ -539,6 +593,7 @@ static int _set_linkattr_V1( gnGrpGraph_s * pgraph , void * pattr , gnInt32_t fn
 static void * _get_linkattr_V1( gnGrpGraph_s * pgraph , gnInt32_t fnodeid , gnInt32_t tnodeid )
 {
 	gnInt32_t *			pnode;
+	gnInt32_t *			ptonode;
 	gnInt32_t *			plinkarea;
 	gnInt32_t *			plink;
 	gnTreeNode_s * 		pitem;
@@ -548,20 +603,28 @@ static void * _get_linkattr_V1( gnGrpGraph_s * pgraph , gnInt32_t fnodeid , gnIn
 	{
 		if ( (pnode = _search_node_V1( pgraph , fnodeid )) == NULL )
 		{
-			pgraph->iErrno = GNGRP_ERR_NodeNotFound;
+			pgraph->iErrno = GNGRP_ERR_FromNodeNotFound;
 			return NULL;
 		}
-		plinkarea = (gnInt32_t*)pgraph->pLinkBuffer + pnode[ GNGRP_C_OFFSET ];
-		for ( i = 0 ; i < plinkarea[ GNGRP_F_TOCNT ] ; i ++ ) {
-			plink = & plinkarea[ GNGRP_F_TOARR ] + GNGRP_T_WSIZE(pgraph->LinkAttrSize) * i;
-			if ( pgraph->pNodeBuffer[ plink[GNGRP_T_OFFSET] + GNGRP_C_NODEID ] == tnodeid ) {
+		plinkarea = (gnInt32_t*)(pgraph->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pnode));
+
+		for (
+				i = 0 , plink = GNGRP_LINKAREA_LINKARRAY_PTR(plinkarea);
+				i < GNGRP_LINKAREA_LINKCOUNT(plinkarea);
+				i ++ , plink += GNGRP_T_WSIZE(pgraph->LinkAttrSize)
+			)
+		{
+			ptonode = (gnInt32_t*)(pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink));
+			if ( GNGRP_NODE_ID(ptonode) == tnodeid ) {
 				break;
 			}
 		}
-		if ( i == plinkarea[ GNGRP_F_TOCNT ] ) {
-			pgraph->iErrno = GNGRP_ERR_NodeNotFound;
+
+		if ( i == GNGRP_LINKAREA_LINKCOUNT(plinkarea) ) {
+			pgraph->iErrno = GNGRP_ERR_ToNodeNotFound;
 			return NULL;
 		}	
+
 		return & plink[ GNGRP_T_ATTR ];
 	}
 	else
@@ -588,12 +651,6 @@ static void _dump_node_V1( gnGrpGraph_s * pgraph , FILE * f , gnInt32_t * pnode 
 
 	if ( pnode[ GNGRP_C_STATUS ] & GNGRP_NF_FROM )
 	{
-		/* old:
-		fprintf( f , "NODE-FROM: id:%ld offset:%ld - predec:%ld distan:%ld ->\n",
-				 pnode[ GNGRP_C_NODEID ] , pnode[ GNGRP_C_OFFSET ] ,
-				 pnode[ GNGRP_C_PREDEC ] , pnode[ GNGRP_C_DISTAN ]
-				 );
-		*/
 		fprintf( f , "NODE-FROM: id:%ld offset:%ld ->\n",
 				 pnode[ GNGRP_C_NODEID ] , pnode[ GNGRP_C_OFFSET ]
 				 );
@@ -603,14 +660,6 @@ static void _dump_node_V1( gnGrpGraph_s * pgraph , FILE * f , gnInt32_t * pnode 
 		for( pto = & pfrom[ GNGRP_F_TOARR ] , i = 0 ; i < pfrom[ GNGRP_F_TOCNT ] ; i ++ )
 		{
 			ptonode = (gnInt32_t*)& pgraph->pNodeBuffer[ pto[ GNGRP_T_OFFSET ] ];
-			/* old:
-			fprintf( f , "\tARC-TO: id:%ld cost:%ld user:%ld - predec:%ld distan:%ld\n",
-					 ptonode[ GNGRP_C_NODEID ],
-					 pto[ GNGRP_T_COST ],
-					 pto[ GNGRP_T_USER ],
-					 ptonode[ GNGRP_C_PREDEC ],
-					 ptonode[ GNGRP_C_DISTAN ] );
-			*/
 			fprintf( f , "\tARC-TO: id:%ld cost:%ld user:%ld\n",
 					 ptonode[ GNGRP_C_NODEID ],
 					 pto[ GNGRP_T_COST ],
@@ -622,12 +671,6 @@ static void _dump_node_V1( gnGrpGraph_s * pgraph , FILE * f , gnInt32_t * pnode 
 
 	if ( pnode[ GNGRP_C_STATUS ] & GNGRP_NF_TO )
 	{
-		/* old:
-		fprintf( f , "NODE-TO: id:%ld offset:%ld - predec:%ld distan:%ld\n",
-				 pnode[ GNGRP_C_NODEID ] , pnode[ GNGRP_C_OFFSET ] ,
-				 pnode[ GNGRP_C_PREDEC ] , pnode[ GNGRP_C_DISTAN ]
-				 );
-		*/
 		fprintf( f , "NODE-TO: id:%ld offset:%ld\n",
 				 pnode[ GNGRP_C_NODEID ] , pnode[ GNGRP_C_OFFSET ]
 				 );
@@ -637,8 +680,6 @@ static void _dump_node_V1( gnGrpGraph_s * pgraph , FILE * f , gnInt32_t * pnode 
 
 static void _dump_head_V1( gnGrpGraph_s * pgraph , FILE * f )
 {
-	int 		i;
-
 	fprintf( f , "--\n" );
 	fprintf( f , "GRAPH FILE VERSION %d\n" ,
 			 pgraph->Version );
@@ -712,12 +753,18 @@ static void * _dijkstra_V1	(
 							gnInt32_t 			from ,
 							gnInt32_t 			to ,
 							int (*clip)		(
+#ifndef GNGRP_NEWCLIP
 											gnGrpGraph_s * pgraph,
 											gnInt32_t * pprevlink,
 											gnInt32_t * pfromnode,
 											gnInt32_t * plink,
 											gnInt32_t * ptonode,
 											gnInt32_t * pcost,
+#else /* GNGRP_NEWCLIP */
+											gnGrpGraph_s * ,
+											gnGrpSPClipInput_s * ,
+											gnGrpSPClipOutput_s * ,
+#endif /* GNGRP_NEWCLIP */
 											void *
 											) ,
 							void * 			pvcliparg
@@ -733,29 +780,35 @@ static void * _dijkstra_V1	(
 	register int				i;
 
 	/*
-	 * new: shortest path distance temporary min heap
+	 * shortest path distance temporary min heap
 	 */
 	gnHeapData_u 				heapvalue;
 	gnHeap_s					NodeHeap;
 	gnHeapNode_s *				pheapnode;
 
 	/*
-	 * new: shortest path visited network
+	 * shortest path visited network
 	 */
 	void * 			pvVisited = NULL;	
 	gnTreeNode_s * 	pVisitedItem;
 
 	/*
-	 * new: shortest path predecessor and distance network
+	 * shortest path predecessor and distance network
 	 */
 	void * 			pvPredist = NULL;	
 	gnTreeNode_s * 	pPredistItem;
 	gnInt32_t *		pPredist;
 
 	/*
-	 * a temporary storage for links' cost modifications
+	 * args to clip()
 	 */
+#ifndef GNGRP_NEWCLIP
 	gnInt32_t 		nTmpCost;
+#else /* GNGRP_NEWCLIP */
+	gnGrpSPClipInput_s 	clipInput;
+	gnGrpSPClipOutput_s	clipOutput;
+
+#endif /* GNGRP_NEWCLIP */
 
 	if ( ! (pgraph->Flags & 0x1) )
 	{
@@ -763,7 +816,6 @@ static void * _dijkstra_V1	(
 		return NULL;
 	}
 
-	/* new: do not use anymore pgraph->NodeHeap but a stack heap instead */
 	gnHeapInit( & NodeHeap );
 
 	/* create temporary networks - The use of a predist network for predecessor and
@@ -787,16 +839,18 @@ static void * _dijkstra_V1	(
 		goto sp_error;
 	}
 
-	if ( ! (pfromnode[ GNGRP_C_STATUS ] & GNGRP_NF_FROM) )
+	if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NF_FROM) )
 	{
 		pgraph->iErrno = GNGRP_ERR_BadLink;
 		goto sp_error;
 	}
 
-	plinkarea = (gnInt32_t*) (pgraph->pLinkBuffer + pfromnode[ GNGRP_C_OFFSET ]);
+	plinkarea = (gnInt32_t*) (pgraph->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pfromnode) );
 
-	/* we now mark a visited node by inserting it in the visited network */
-	pVisitedItem = __node(pvVisited , pfromnode[GNGRP_C_NODEID]);
+	/*
+	 * we now mark a visited node by inserting it in the visited network
+	 */
+	pVisitedItem = __node(pvVisited , GNGRP_NODE_ID(pfromnode));
 	if ( pVisitedItem == NULL ) goto sp_error;
 
 
@@ -810,13 +864,15 @@ static void * _dijkstra_V1	(
 	 * - we insert a item in the node min-heap (sorted on node distance), storing the offset of the
 	 *   link in the link buffer.
 	 */
-	for( plink = & plinkarea[ GNGRP_F_TOARR ], i = 0;
-		 i < plinkarea[ GNGRP_F_TOCNT ];
-		 i ++, plink += GNGRP_T_WSIZE(pgraph->LinkAttrSize)  )
+	for	(
+		i = 0,  plink = GNGRP_LINKAREA_LINKARRAY_PTR(plinkarea) ;
+		i < GNGRP_LINKAREA_LINKCOUNT(plinkarea) ;
+		i ++,   plink += GNGRP_T_WSIZE(pgraph->LinkAttrSize)
+		)
 	{
-		ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + plink[ GNGRP_T_OFFSET ]);
+		ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) );
 
-		if ( ! (ptonode[ GNGRP_C_STATUS ] & GNGRP_NF_TO) )
+		if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NF_TO) )
 		{
 			pgraph->iErrno = GNGRP_ERR_BadLink;
 			goto sp_error;
@@ -825,17 +881,31 @@ static void * _dijkstra_V1	(
 		/*
 		 * arc clipping : no previous link in path at first round
 		 */
+#ifndef GNGRP_NEWCLIP
 		nTmpCost = plink[GNGRP_T_COST];
+#else /* GNGRP_NEWCLIP */
+		clipOutput.nLinkCost = GNGRP_LINK_COST(plink);
+#endif /* GNGRP_NEWCLIP */
 
 		if ( clip )
 		{
+#ifndef GNGRP_NEWCLIP
 			if ( clip( pgraph , NULL , pfromnode , plink , ptonode , &nTmpCost , pvcliparg ) ) continue;
+#else /* GNGRP_NEWCLIP */
+			clipInput.pnPrevLink 	= NULL;
+			clipInput.pnNodeFrom 	= pfromnode;
+			clipInput.pnLink		= plink;
+			clipInput.pnNodeTo		= ptonode;
+			clipInput.nFromDistance = 0;
+
+			if ( clip( pgraph , & clipInput , & clipOutput , pvcliparg ) ) continue;
+#endif /* GNGRP_NEWCLIP */
 		}
 
 		/*
 		 * Setup the predist for this node
 		 */
-		pPredistItem = __node( pvPredist, ptonode[GNGRP_C_NODEID] );
+		pPredistItem = __node( pvPredist, GNGRP_NODE_ID(ptonode) );
 		if ( pPredistItem == NULL ) goto sp_error;
 
 		if ( (pPredist = pPredistItem->data.pv) == NULL ) {
@@ -844,19 +914,27 @@ static void * _dijkstra_V1	(
 		}
 
 		/*
-		 * no predecessor link at this stage
+		 * '-2' = no predecessor link: used for arcs departing from starting node
 		 */
 		pPredist[0] = -2;
 
 		/*
 		 * store actual distance
 		 */
+#ifndef GNGRP_NEWCLIP
 		pPredist[1] = nTmpCost;
+#else /* GNGRP_NEWCLIP */
+		pPredist[1] = clipOutput.nLinkCost;
+#endif /* GNGRP_NEWCLIP */
 
 		/*
 		 * store real cost
 		 */
+#ifndef GNGRP_NEWCLIP
 		pPredist[2] = nTmpCost;
+#else /* GNGRP_NEWCLIP */
+		pPredist[2] = clipOutput.nLinkCost;
+#endif /* GNGRP_NEWCLIP */
 
 
 		/* store the offset in the link buffer into the heap item */
@@ -869,78 +947,140 @@ static void * _dijkstra_V1	(
 		}
 	}
 
+	/*
+	 * Now we begin extracting nodes from the min-heap. Each node extracted is
+	 * the one that is actually closest to the SP starting point 'from'.
+	 */
 	while( (pheapnode = gnHeapExtractMin( & NodeHeap )) != NULL )
 	{
 		gnInt32_t fromPred , fromDist;
-		plink   = (gnInt32_t*) (pgraph->pLinkBuffer + pheapnode->value.l);
-		pfromnode = (gnInt32_t*) (pgraph->pNodeBuffer + plink[ GNGRP_T_OFFSET ]);
-		plinkarea = (gnInt32_t*) (pgraph->pLinkBuffer + pfromnode[ GNGRP_C_OFFSET ]);
+		/*
+		 * recover the stored link pointer
+		 */
+		plink   	= (gnInt32_t*) (pgraph->pLinkBuffer + pheapnode->value.l);
+		/*
+		 * the new relative from-node is the to-node of the link
+		 */
+		pfromnode 	= (gnInt32_t*) (pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) );
+		/*
+		 * get the linkarea of the new from-node
+		 */
+		plinkarea 	= (gnInt32_t*) (pgraph->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pfromnode) );
 
-		/* save previous link in path to pass it to the clipping hook */
+		/*
+		 * save actual link for later clip()
+		 */
 		plink_prev = plink;
 
 
-		if ( pfromnode[ GNGRP_C_NODEID ] == to )
+		/*
+		 * Dijkstra algorithm ends when the destination node 'to' is extracted from
+		 * the min distance heap, that means: no other path exist in the network giving
+		 * a shortest output.
+		 * If this happens we jump to the epilogue in order to build a path report and return.
+		 */
+		if ( GNGRP_NODE_ID(pfromnode) == to )
 		{
 			ptofound = plink;
 			goto to_found;
 		}
 
-		if ( ! (pfromnode[ GNGRP_C_STATUS ] & GNGRP_NF_FROM) )  continue; 	/* blind alley */
-
-		pVisitedItem = gnTreeSearch( pvVisited , pfromnode[GNGRP_C_NODEID] );
-		if ( pVisitedItem ) continue; /* found in visited network: give up this path */
-		pVisitedItem = __node( pvVisited, pfromnode[GNGRP_C_NODEID] );
-		if ( pVisitedItem == NULL ) goto sp_error;
+		/*
+		 * If the from-node is not marked as having departing links, then we are into a
+		 * blind alley. Just give up this direction and continue looping.
+		 */
+		if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NF_FROM) )  continue;
 
 		/*
-		 * new: store from node's predecessor and distance
+		 * We do not want to explore twice the same node as a relative starting point,
+		 * that's the meaning of 'visited'. We mark actual from node as 'visited' by
+		 * inserting it into the visited-network. If we find actual node in the network
+		 * we just give up and continue looping. Otherwise we add actual node to the network.
 		 */
-		if ( (pPredistItem = gnTreeSearch( pvPredist, pfromnode[GNGRP_C_NODEID] )) == NULL ) goto sp_error;
+		pVisitedItem = gnTreeSearch( pvVisited , GNGRP_NODE_ID(pfromnode) );
+		if ( pVisitedItem ) { /* found */
+			continue;
+		}
+		/* add */
+		pVisitedItem = __node( pvVisited, GNGRP_NODE_ID(pfromnode) );
+		if ( pVisitedItem == NULL ) {
+			goto sp_error;
+		}
+
+		/*
+		 * Recover the predecessor-link-in-path and distance from the predist network
+		 */
+		if ( (pPredistItem = gnTreeSearch( pvPredist, GNGRP_NODE_ID(pfromnode) )) == NULL ) goto sp_error;
 		if ( (pPredist = pPredistItem->data.pv) == NULL ) goto sp_error;
 		fromPred = pPredist[0];
 		fromDist = pPredist[1];
 
+		/*
+		 * Loop on departing links
+		 */
 		for (
-			plink = & plinkarea[ GNGRP_F_TOARR ], i = 0;
-			i < plinkarea[ GNGRP_F_TOCNT ];
-			i ++, plink += GNGRP_T_WSIZE(pgraph->LinkAttrSize)
+			i = 0,  plink = GNGRP_LINKAREA_LINKARRAY_PTR(plinkarea), i = 0;
+			i < GNGRP_LINKAREA_LINKCOUNT(plinkarea);
+			i ++,   plink += GNGRP_T_WSIZE(pgraph->LinkAttrSize)
 			)
 		{
-			ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + plink[ GNGRP_T_OFFSET ]);
+			ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) );
 		
-			if ( ! (ptonode[ GNGRP_C_STATUS ] & GNGRP_NF_TO) )
+			if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NF_TO) )
 			{
 				pgraph->iErrno = GNGRP_ERR_BadLink;
 				goto sp_error;
 			}
 		
 			/*
-			 * arc clipping : we now have previous link
+			 * arc clipping : we now have previous link and from distance
 			 */
+#ifndef GNGRP_NEWCLIP
 			nTmpCost = plink[GNGRP_T_COST];
+#else /* GNGRP_NEWCLIP */
+			clipOutput.nLinkCost = GNGRP_LINK_COST(plink);
+#endif /* GNGRP_NEWCLIP */
 
 			if ( clip )
 			{
+#ifndef GNGRP_NEWCLIP
 				if ( clip( pgraph , plink_prev , pfromnode , plink , ptonode , &nTmpCost , pvcliparg ) ) continue;
+#else /* GNGRP_NEWCLIP */
+				clipInput.pnPrevLink 	= plink_prev;
+				clipInput.pnNodeFrom 	= pfromnode;
+				clipInput.pnLink		= plink;
+				clipInput.pnNodeTo		= ptonode;
+				clipInput.nFromDistance = fromDist;
+
+				if ( clip( pgraph , & clipInput , & clipOutput , pvcliparg ) ) continue;
+#endif /* GNGRP_NEWCLIP */
 			}
 
-			if ( (pPredistItem = gnTreeSearch( pvPredist, ptonode[GNGRP_C_NODEID] )) == NULL ) {
-				if ( (pPredistItem = __node( pvPredist, ptonode[GNGRP_C_NODEID] )) == NULL ) goto sp_error;
+			if ( (pPredistItem = gnTreeSearch( pvPredist, GNGRP_NODE_ID(ptonode) )) == NULL ) {
+				if ( (pPredistItem = __node( pvPredist, GNGRP_NODE_ID(ptonode) )) == NULL ) goto sp_error;
 				if ( (pPredist = malloc( sizeof(gnInt32_t) * 3 )) == NULL ) goto sp_error;
 				pPredistItem->data.pv = pPredist;
 			}
 			else {
 				pPredist = pPredistItem->data.pv;
+#ifndef GNGRP_NEWCLIP
 				if ( pPredist[1] <= fromDist + nTmpCost ) {
+#else /* GNGRP_NEWCLIP */
+				if ( pPredist[1] <= fromDist + clipOutput.nLinkCost ) {
+#endif /* GNGRP_NEWCLIP */
 					continue;
 				}
 			}
 
 			pPredist[0] = pheapnode->value.l;
+#ifndef GNGRP_NEWCLIP
 			pPredist[1] = fromDist + nTmpCost;
 			pPredist[2] = nTmpCost;
 
+#else /* GNGRP_NEWCLIP */
+			pPredist[1] = fromDist + clipOutput.nLinkCost;
+			pPredist[2] = clipOutput.nLinkCost;
+#endif /* GNGRP_NEWCLIP */
 
 			heapvalue.l = (gnInt32_t)plink - (gnInt32_t)pgraph->pLinkBuffer;
 
@@ -976,7 +1116,6 @@ to_found: /* path found - build a shortest path report */
 		gnGrpSPReport_s *	pSPR = NULL;
 		gnGrpSPArc_s			arc;
 
-
 		if ( (pSPR = malloc( sizeof( gnGrpSPReport_s ) )) == NULL )
 		{
 			pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
@@ -989,17 +1128,12 @@ to_found: /* path found - build a shortest path report */
 		 */
 		for(
 			plink = ptofound ,
-			ptonode = (gnInt32_t*)(pgraph->pNodeBuffer + plink[ GNGRP_T_OFFSET ]) ;
+			ptonode = (gnInt32_t*)(pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) ) ;
 
-			/* new: */
-			(pPredistItem = gnTreeSearch( pvPredist , ptonode[GNGRP_C_NODEID] )) != NULL ;
+			(pPredistItem = gnTreeSearch( pvPredist , GNGRP_NODE_ID(ptonode) )) != NULL ;
 
-			/* old:
-			plink = (gnInt32_t*)(pgraph->pLinkBuffer + ptonode[ GNGRP_C_PREDEC ]) ,
-			*/
-			/* new: */
 			plink = plinkto_pred ,
-			ptonode = (gnInt32_t*)(pgraph->pNodeBuffer + plink[ GNGRP_T_OFFSET ])
+			ptonode = (gnInt32_t*)(pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) )
 			)
 		{
 			pPredist = pPredistItem->data.pv;			
@@ -1011,7 +1145,7 @@ to_found: /* path found - build a shortest path report */
 			else
 			{
 				plinkto_pred = (gnInt32_t*)(pgraph->pLinkBuffer + pPredist[0]);
-				ptonode_pred = (gnInt32_t*)(pgraph->pNodeBuffer + plinkto_pred[ GNGRP_T_OFFSET ]) ;
+				ptonode_pred = (gnInt32_t*)(pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plinkto_pred) ) ;
 			}
 
 			arc.From = GNGRP_C_ALLOC( pgraph->NodeAttrSize );
@@ -1056,7 +1190,7 @@ to_found: /* path found - build a shortest path report */
 		pSPR->distance = 0;
 		for( i = 0 ; (ppop = _mempop( pstack , & istack , sizeof( gnGrpSPArc_s ) )) != NULL ; i ++ ) {
 			memcpy( & pSPR->pArc[ i ] , ppop , sizeof( gnGrpSPArc_s ) );
-			pSPR->distance += pSPR->pArc[i].Link[ GNGRP_T_COST ];
+			pSPR->distance += GNGRP_LINK_COST(pSPR->pArc[i].Link);
 		}
 		pSPR->from = from;
 		pSPR->to = to;
@@ -1331,7 +1465,7 @@ static gnGrpMethods_s _v1_methods =
 	_write_V1,
 	_read_V1,
 	_parse_arc_values_V1,
-	_add_arc_V1,
+	_add_link_V1,
 	_search_node_V1,
 	_unflatten_V1,
 	_flatten_V1,
@@ -1380,7 +1514,7 @@ static int _init_V1(gnGrpGraph_s * pgraph, gnInt32_t NodeAttrSize, gnInt32_t Lin
  */
 
 /*
- * CREATE A NEW GRAPH INSTANCE
+ * INITIALIZE A NEW GRAPH INSTANCE
  */
 
 int gnGrpInitialize(gnGrpGraph_s * pgraph, gnByte_t Version, gnInt32_t NodeAttrSize, gnInt32_t LinkAttrSize, gnInt32_t * pOpaqueSet)
@@ -1446,17 +1580,30 @@ int gnGrpAddLink	(
 				)
 {
 	gnInt32_t	par[ 16 ];
-	
+	int 		nret;
 
+#ifdef GNGRP_STATS
+	clock_t clk;
+	clk = clock();
+	pgraph->cAddLink ++;
+#endif
+	
 	pgraph->iErrno = 0;
 	if ( pgraph->pMethods->parsearcvalues )
 	{
 		pgraph->pMethods->parsearcvalues( pgraph , par , lFrom , lTo , lCost , lUser );
 		if ( pgraph->pMethods->addlink )
-			return pgraph->pMethods->addlink( pgraph , par , pvFnodeAttr , pvTnodeAttr , pvLinkAttr );
+			nret = pgraph->pMethods->addlink( pgraph , par , pvFnodeAttr , pvTnodeAttr , pvLinkAttr );
 	}
-	pgraph->iErrno = GNGRP_ERR_UndefinedMethod;
-	return -1;
+	else {
+		pgraph->iErrno = GNGRP_ERR_UndefinedMethod;
+		nret = -1;
+	}
+
+#ifdef GNGRP_STATS
+	pgraph->clkAddLink += clock() - clk;
+#endif
+	return nret;
 }
 
 int gnGrpSetNodeAttr( gnGrpGraph_s * pgraph , void * pattr , gnInt32_t nodeid )
@@ -1504,6 +1651,10 @@ int gnGrpWrite( gnGrpGraph_s * pgraph, int fd )
 	return -1;
 }
 
+/*
+ * When we'll have more versions we'll read the first graph
+ * byte reporting version number and switch on its value
+ */
 int gnGrpRead( gnGrpGraph_s * pgraph, int fd )
 {
 	return _read_V1( pgraph, fd );
@@ -1533,11 +1684,16 @@ gnGrpSPReport_s * gnGrpShortestPath	(
 								 	gnInt32_t 		to ,
 								 	int (*clip)(
 											 	gnGrpGraph_s *, /* graph pointer */
+#ifndef GNGRP_NEWCLIP
 											 	gnInt32_t *,	/* previous link pointer */
 											 	gnInt32_t *,	/* from node pointer */
 											 	gnInt32_t *,	/* this link pointer */
 											 	gnInt32_t *,	/* to node pointer */
 											 	gnInt32_t *,	/* real cost pointer */
+#else /* GNGRP_NEWCLIP */
+											 	gnGrpSPClipInput_s *,
+											 	gnGrpSPClipOutput_s *,
+#endif /* GNGRP_NEWCLIP */
 											 	void  *			/* caller's context pointer */
 											 	) ,
 								 	void * 		pvcliparg		/* caller's context pointer (passed back to clip)*/
