@@ -1,4 +1,3 @@
-/* %W% %G% */
 Pnpixels (rows, cols)
     int *rows, *cols;
 {
