@@ -220,12 +220,17 @@ int 		npoints, out_fd, maskfd;
 		*current_row,	/* start row for north/south search */
 		*lastrow;	/* last element in search array */
     SHORT	row, col;
-    NEIGHBOR 	*nbr_head , *Nptr, *make_neighbors_list();
+    NEIGHBOR 	*nbr_head , *Nptr;
     double 	sum1, sum2;
+    double      maxdist = 1e20; /* used to maintain ordering of neighbors */
 
-    /* initialize search array */
+    /* initialize search array and neighbors array */
     current_row = search = (EW *) G_calloc (datarows, sizeof (EW));
     lastrow = search + datarows - 1;
+    nbr_head = (NEIGHBOR *) G_calloc (npoints + 1, sizeof (NEIGHBOR));
+    /*nbr_head->distance = maxdist;
+    nbr_head->searchptr = &(nbr_head->Mptr);      /* see replace_neighbor */
+
     fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ", output, nrows);
 
     for(row=0; row<nrows; row++) {	/*  loop over rows	*/
@@ -250,29 +255,28 @@ int 		npoints, out_fd, maskfd;
            	}
 
 	    /* make a list of npoints neighboring data pts */
-	    nbr_head = make_neighbors_list(search, lastrow, current_row,
-	     row, col, npoints);
-	    if (nbr_head == NULL)	/* data occurs at this point */
-		continue;
+    	    nbr_head->next = NULL;
+	    if (make_neighbors_list (search, lastrow, current_row, row, col,
+	     nbr_head, npoints)) {    /* otherwise, known data value assigned */
 
-	    /* calculate value to be set for the cell from the	*/
-	    /* data values of npoints closest neighboring points	*/
-	    sum1 = sum2 = 0.0;
-	    Nptr = nbr_head->next;
+		/* calculate value to be set for the cell from the data values
+		   of npoints closest neighboring points	*/
+		sum1 = sum2 = 0.0;
+		Nptr = nbr_head->next;
 
-	    do {
-		sum1 += Nptr->Mptr->value / Nptr->distance;
-		sum2 += 1.0 / Nptr->distance;
-		Nptr = Nptr->next;
-		} while (Nptr);		/* to end of list */
+		do {
+		    sum1 += Nptr->Mptr->value / Nptr->distance;
+		    sum2 += 1.0 / Nptr->distance;
+		    Nptr = Nptr->next;
+		    } while (Nptr);		/* to end of list */
 
-	    free_list(nbr_head);
-	    cell[col] = (CELL) (sum1 / sum2);	
-	    /* printf ("%d,%d = %d\n", col, row, cell[col]); */
+		cell[col] = (CELL) (sum1 / sum2 + .5);	
+		/* printf ("%d,%d = %d\n", col, row, cell[col]); */
 
-	    if (error_flag) 	/* output interpolation error for this cell */
-		cell[col] -= mask[col];
-	    }	/* end of loop over columns 			*/
+		if (error_flag)	/* output interpolation error for this cell */
+		    cell[col] -= mask[col];
+		}
+       	    }	/* end of loop over columns */
 
 	G_put_map_row(out_fd, cell);
 
@@ -295,30 +299,22 @@ int 		npoints, out_fd, maskfd;
 /*	inside the search radius around a cell whose value is 	*/
 /*	to be interpolated using data value of its neighbors	*/
 
-NEIGHBOR *make_neighbors_list (firstrow, lastrow, current_row, row, col, npoints)
-EW	*firstrow, *lastrow, *current_row;
-SHORT 	row, col; 
-int	npoints;
+int make_neighbors_list (firstrow, lastrow, curr_row, row, col, head, npoints)
+EW		*firstrow, *lastrow, *curr_row;
+SHORT 		row, col; 
+NEIGHBOR 	*head;	/* head points to dummy plus npoints neighbors */
+int		npoints;
 {
     extern struct Cell_head	window;
     extern CELL			*cell;
     extern int			(*init_row_search) ();
 
-    NEIGHBOR 	*head;
-    SHORT 	neighbors = 1,	/* number of neighbors in current list */
+    SHORT 	neighbors = 0,	/* number of neighbors in current list */
 		nsearch = 1, ssearch = 1;    /* expand search north and south */
     EW 		*north, *south;
-    double	maxdist = 1e20;	/* used to maintain ordering of neighbors */
-
-    /* initialize dummy on neighbors list with infinite distance */
-    head = (NEIGHBOR *) G_malloc (sizeof (NEIGHBOR));
-    head->next = (NEIGHBOR *) G_malloc (sizeof (NEIGHBOR));
-    head->next->next = NULL;
-    head->distance = head->next->distance =  maxdist;
-    head->next->searchptr = &(head->next->Mptr);      /* see replace_neighbor */
 
     /* begin north search in the row of the point to be interpolated */
-    north = current_row;
+    north = curr_row;
     (*init_row_search) (north, col);
     north->next = NULL;
 
@@ -331,7 +327,7 @@ int	npoints;
 		north->east = north->east->next;
 	else {			/* no interpolation required */
 	    cell[col] = north->east->value;
-	    return(NULL);
+	    return (0);
 	    }
 
     /* initialize south search routine */
@@ -367,7 +363,7 @@ int	npoints;
 		exhaust (&south, head, row, col);
 	} while (north || south);
 
-    return(head);	/* head points to dummy plus npoints neighbors */
+    return (1);	
 }
 
 /******* END OF FUNCTION "MAKE_NEIGHBORS_LIST" ******************/
@@ -537,10 +533,8 @@ SHORT           row, col,
     	if (*Mptr) {                /* not NULL */
             distance = triangulate (*Mptr, row, col);
 
-            if (*neighbors < npoints) {
-            	add_neighbor (Mptr, nbr_head, distance);
-            	++(*neighbors);
-            	}
+            if (*neighbors < npoints) 
+            	add_neighbor (Mptr, nbr_head, distance, ++(*neighbors));
             else if (!replace_neighbor (Mptr, nbr_head, distance)) 
             	*Mptr = NULL;       /* curtail search in this direction */
             
@@ -604,14 +598,15 @@ SHORT		row, col;
 }
     
 
-add_neighbor (Mptr, nptr, distance)
+add_neighbor (Mptr, nptr, distance, neighbors)
 MELEMENT	**Mptr;		/* double-indirection!! */
 NEIGHBOR	*nptr;
 double		distance;
+int		neighbors;
 {
     NEIGHBOR	*new;
 
-    new = (NEIGHBOR *) G_malloc (sizeof (NEIGHBOR));
+    new = nptr + neighbors;	/* offset from base of neighbors array */
     new->distance = distance;
     new->Mptr = *Mptr;		/* points to row_list element */
     new->searchptr = Mptr;	/* points to east or west field of an EW */
@@ -641,7 +636,7 @@ double		distance;
 	furthest->searchptr = Mptr;  /* points to east or west field of an EW */
 	
 	/* keep neighbors list in descending order of distance */
-	if (furthest->distance < furthest->next->distance)
+	if (furthest->next && (furthest->distance < furthest->next->distance))
 	    sort_neighbors (nbr_head, distance);
 	return (1);
 	}
@@ -667,23 +662,6 @@ double		distance;
 }
 
  
-
-free_list(head)		/* frees list of neighboring pts	*/
-        NEIGHBOR *head;
-{
-        NEIGHBOR *PRES_PT;
-
-        PRES_PT = head;
-        while(PRES_PT != NULL)
-        {
-        PRES_PT = head->next;
-        free(head);
-        head = PRES_PT;
-        }
-}
-
-/*************** END OF FUNCTION "FREE_LIST" ********************/
-
 
 free_row_lists (rowlist, nrows)		/* frees indexed row lists of data */
 MELEMENT	*rowlist;
