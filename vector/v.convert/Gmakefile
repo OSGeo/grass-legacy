@@ -1,0 +1,17 @@
+PROG=$(BIN_CMD)/v.convert
+
+all:  $(PROG) $(TEST)	
+	
+OBJ = \
+	dist.o \
+	main.o \
+	read.o \
+	old2new.o \
+	type.o
+
+
+$(PROG): $(OBJ) $(VECTLIB) $(VECTLIB_REAL) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(VECTLIB_REAL) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+	
+$(VECTLIB) $(GISLIB): #
+
