@@ -149,6 +149,19 @@ int main (int argc, char *argv[])
     opt2->required    = NO;
     opt2->options     = "aspect,grey,grey.eq,grey.log,byg,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
     opt2->description = _("Type of color table");
+    opt2->descriptions = "aspect;aspect oriented grey colors;"
+		"grey;linear grey scale;"
+		"grey.eq;histogram equalized grey scale;"
+    		"grey.log;histogram logarithmic transformed grey scale;"
+		"byg;blue through yellow to green colors;"
+		"byr;blue through yellow to red colors;"
+		"gyr;green through yellow to red colors;"
+		"rainbow;rainbow color table;"
+		"ramp;color ramp;"
+		"ryg;red through yellow to green colors;"
+		"random;random color table;"
+		"wave;color wave;"
+		"rules;create new color table by rules";
 
     opt3 = G_define_option();
     opt3->key         = "rast";
@@ -178,7 +191,6 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc, argv) < 0)
     {
-	more_usage();
 	exit(1);
     }
 
@@ -294,7 +306,6 @@ int main (int argc, char *argv[])
 	{
 	    fprintf (stderr, "ERROR: %s - unknown color request\n", type);
 	    G_usage();
-	    more_usage();
 	    exit(1);
 	}
 	if(fp) G_mark_colors_as_fp(&colors);
@@ -338,25 +349,4 @@ int main (int argc, char *argv[])
     }
 
     exit(0);
-}
-
-int more_usage (void)
-{
-    fprintf (stderr, "\nWhere color type is one of:\n");
-    fprintf (stderr, "  aspect    (aspect oriented grey colors)\n");
-    fprintf (stderr, "  grey      (linear grey scale)\n");
-    fprintf (stderr, "  grey.eq   (histogram equalized grey scale)\n");
-    fprintf (stderr, "  grey.log  (histogram logarithmic transformed grey scale)\n");
-    fprintf (stderr, "  byg       (blue through yellow to green colors)\n");
-    fprintf (stderr, "  byr       (blue through yellow to red colors)\n");
-    fprintf (stderr, "  gyr       (green through yellow to red colors)\n");
-    fprintf (stderr, "  rainbow   (rainbow color table)\n");
-    fprintf (stderr, "  ramp      (color ramp)\n");
-    fprintf (stderr, "  ryg       (red through yellow to green colors)\n");
-    fprintf (stderr, "  random    (random color table)\n");
-    fprintf (stderr, "  wave      (color wave)\n");
-    fprintf (stderr, "  rules     (create new color table by rules)\n");
-    fprintf (stderr, "\n");
-    
-    return 0;
 }
