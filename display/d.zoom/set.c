@@ -160,7 +160,7 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	limit = print_limit ( window, &defwin );
 
-	G_adjust_Cell_head (window, 0, 0); 
+	G_adjust_Cell_head3 (window, 0, 0, 0); 
 	G_put_window(window);
 	G_set_window(window);
 	redraw();

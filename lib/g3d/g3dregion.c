@@ -96,7 +96,7 @@ G3d_adjustRegion (region)
   struct Cell_head region2d;
 
   G3d_extract2dRegion (region, &region2d);
-  G_adjust_Cell_head (&region2d, 1, 1);
+  G_adjust_Cell_head3 (&region2d, 1, 1, 1);
   G3d_incorporate2dRegion (&region2d, region);
 
   if (region->depths <= 0)
@@ -126,7 +126,7 @@ G3d_adjustRegionRes (region)
   struct Cell_head region2d;
 
   G3d_extract2dRegion (region, &region2d);
-  G_adjust_Cell_head (&region2d, 0, 0);
+  G_adjust_Cell_head3 (&region2d, 0, 0, 0);
   G3d_incorporate2dRegion (&region2d, region);
 
   if (region->tb_res <= 0)
