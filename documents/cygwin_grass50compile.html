@@ -16,8 +16,15 @@ GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
 
 <center>
 <h1>
-<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1>
+<font face="Arial,Helvetica">(arch i686-pc-cygwin)
+</font></h1>
+<tt>
+
 $Date$
+
+</tt>
+</font>
+
 </center>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
@@ -29,7 +36,7 @@ so expect some functionality missing or not working.</font>
 <p><font face="Arial,Helvetica">You need:</font>
 <ul>
 <li>
-<font face="Arial,Helvetica">Windows NT 4.0 or Windows 2000 Professional,</font></li>
+<font face="Arial,Helvetica">Windows NT 4.0 (SP3 or higher) or Windows 2000 Professional,</font></li>
 
 <br><font face="Arial,Helvetica">(Windows 9x and Windows ME currently unsupported),</font>
 <li>
@@ -65,7 +72,7 @@ select all available packages, or at least:</font>
 <li>
 <font face="Arial,Helvetica">ash, autoconf, automake, bash, binutils, bison</font></li>
 
-<br><font face="Arial,Helvetica">byacc, clear, cvs, cygwin, dejagnu, diff,
+<br><font face="Arial,Helvetica">byacc, bzip2, clear, cvs, cygwin, dejagnu, diff,
 expect</font>
 <br><font face="Arial,Helvetica">file, fileutils, findutils, flex, gawk,
 gcc, gdb</font>
@@ -75,16 +82,14 @@ jpeg</font>
 ncurses</font>
 <br><font face="Arial,Helvetica">opengl, patch, perl, popt, readline, regex,
 sed</font>
-<br><font face="Arial,Helvetica">sh-utils|shellutils, tar, tcltk, tcsh,
+<br><font face="Arial,Helvetica">sh-utils/shellutils, tar, tcltk, tcsh,
 termcap, texinfo</font>
 <br><font face="Arial,Helvetica">textutils, tiff, time, unzip, vim, w32api,
 zip, zlib</font>
 <li>
-<font face="Arial,Helvetica">..</font></li>
-
-<li>
-<font face="Arial,Helvetica">update with list from Malcolm Blue for development
-setup</font></li>
+<font face="Arial,Helvetica">This list contains packages that are not
+strictly required, but are very useful for practical work or enhance the
+capabilities of the setup. </font></li>
 </ul>
 <font face="Arial,Helvetica">If you install all available packages it will
 save you from much hassle later when you need these libraries for GRASS.</font>
@@ -112,13 +117,13 @@ of your choice, e. g. in your home directory:</font>
 <pre><tt>mkdir grass.src</tt></pre>
 
 <pre><tt>cd grass.src</tt></pre>
-<tt>tar xzf /path/to/file/grass5.0beta12_src.tar.gz</tt>
+<tt>tar xzf /path/to/file/grass5.0*_src.tar.gz</tt>
 <h2>
 <font face="Arial,Helvetica">3. Install the X11 libraries and the X Server</font></h2>
 <font face="Arial,Helvetica">For compiling the GRASS XDRIVER (monitors
 for graphical output), you need the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
 Download at least the following packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
-devel, DLLs, fonts, Xterm, Xwin, Prog, rgb, twm, updates.</font>
+devel, DLLs, fonts, Xterm, Xwin, Prog, twm, updates.</font>
 <br><font face="Arial,Helvetica">Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
 install guide</a> for further details.</font>
 <p><font face="Arial,Helvetica">Please check out yourself the actual version
@@ -158,7 +163,7 @@ does not hurt to export it.</font>
 and </font><tt>/bin</tt><font face="Arial,Helvetica"> to your path if they
 are not included (</font><tt>echo $PATH</tt><font face="Arial,Helvetica">
 to check, </font><tt>export PATH=/usr/local/bin:/usr/bin:$PATH</tt><font face="Arial,Helvetica">
-to add). Please start the compile (see 8.) from within the cygwin shell,
+to add). Please start the compile (see paragraph 7) from within the cygwin shell,
 not from a DOS/cmd shell under Windows.</font>
 <p><font face="Arial,Helvetica">For sure i have forgotten something. If
 a module doesn't compile, get back here and check.</font>
@@ -234,9 +239,7 @@ easier use.</font>
 <p><font face="Arial,Helvetica">Now start GRASS. In the xterm window type:</font>
 <pre><tt>&nbsp;&nbsp; grass5</tt></pre>
 <font face="Arial,Helvetica">then follow the normal GRASS startup procedure.</font>
-<p><font face="Arial,Helvetica">See the StartGrass shell script in both
-/bin and in /usr/local/grass5 for the above steps.</font>
-<br>&nbsp;
+
 <h2>
 <font face="Arial,Helvetica">10. This build was compiled with Cygwin 1.1.8</font></h2>
 <font face="Arial,Helvetica">Read about Unix running under Windows here:</font>
@@ -301,6 +304,10 @@ program that converts the fonts to the GRASS internal binary format (only
 with Win 9x, not with NT 4.0/2000).</font>
 <p>
 <hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=-2>Andreas
-Lange, andreas.lange@rhein-main.de, 28.03.2001</font></font>
+Lange, andreas.lange@rhein-main.de, 
+
+$Date$
+
+</font></font>
 </body>
 </html>
