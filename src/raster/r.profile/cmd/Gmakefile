@@ -1,0 +1,11 @@
+PGM = r.profile
+HOME=$(BIN_MAIN_CMD)
+LIST = main.o\
+	parse_line.o\
+	process_line.o\
+	profile.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
