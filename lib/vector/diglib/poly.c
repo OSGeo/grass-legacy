@@ -93,6 +93,9 @@ dig_get_poly_points ( int n_lines,
    **   dpg 12/89  (for Vcontour or whatever it may be called by the time
    **               this is read)
    **
+   **   If it is, a positive floating point number is returned giving the distance
+   **   to the area.  If not, "0.0" is returned.
+   **
    **   WARNING:  if poly is an area,  this will NOT tell you if it inside
    **     an Island w/in the area.
  */
@@ -111,6 +114,8 @@ dig_point_in_poly (
   int n_segs;
   int n;
 
+  G_debug ( 3, "dig_point_in_poly(): x = %f y = %f n_points = %d", X, Y, Points->n_points );
+  
   cur_min = HUGE_VAL;
   cur_x = 0.0;
   cur_y = 0.0;
