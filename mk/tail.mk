@@ -1,6 +1,4 @@
 
-EXTRA_CFLAGS += -I$(OBJARCH)
-
 $(OBJARCH)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 

@@ -1,3 +1,3 @@
 include vars.mk
-include mid.mk
 include macros.mk
+include mid.mk
