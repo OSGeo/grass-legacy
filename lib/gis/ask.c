@@ -5,11 +5,15 @@
 * G_ask_old           (prompt, name, element, desc)
 * G_ask_any           (prompt, name, element, desc, warn)
 * G_ask_in_mapset     (prompt, name, element, desc)
+* G_ask_new_file      (prompt, name, element, desc)
+* G_ask_old_file      (prompt, name, element, desc)
 *
 * G_ask_new_ext       (prompt, name, element, desc, option, lister)
 * G_ask_old_ext       (prompt, name, element, desc, option, lister)
 * G_ask_any_ext       (prompt, name, element, desc, warn, option, lister)
 * G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
+* G_ask_new_file_ext  (prompt, name, element, desc, option, lister)
+* G_ask_old_file_ext  (prompt, name, element, desc, option, lister)
 *
 *   char *prompt      prompt to be printed. can be "" in which
 *                     case an appropriate prompt will be printed.
@@ -37,6 +41,10 @@
 * G_ask_any() accepts any legal filename. Optionally warns user
 *             if the file exists in the current mapset.
 *
+* G_ask_new_file() requires the user to enter the name of a new file.
+*
+* G_ask_old_file() requires the user to enter the name of
+*                  any existing file.
 *
 * returns:
 *   char *    mapset where file was found, or
@@ -94,6 +102,8 @@
 #define PRJ 2
 #define ANY 3
 #define ANY_NW 4
+#define OLD_FILE 5
+#define NEW_FILE 6
 
 static char *ask_return_msg = 0 ;
 static char clear_return_msg = 0 ;
@@ -244,7 +254,7 @@ G_ask_in_mapset (prompt, name, element, desc)
 }
 
 char *
-G_ask_in_mapset_ext (prompt, name, element, desc, option ,lister)
+G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
     char *prompt;
     char *name;
     char *element;
@@ -253,6 +263,76 @@ G_ask_in_mapset_ext (prompt, name, element, desc, option ,lister)
     int (*lister)();
 {
     return ask (prompt, name, element, desc, option, lister, PRJ);
+}
+
+
+/*!
+ * \brief prompt for existing database file
+ *
+ * The user is asked to enter the name of an file which exists.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param label
+ *  \return char * 
+ */
+
+char *
+G_ask_new_file (prompt, name, element, desc)
+    char *prompt;
+    char *name;
+    char *element;
+    char *desc;
+{
+    return ask (prompt, name, element, desc, (char *) NULL, no_lister, NEW_FILE);
+}
+
+char *
+G_ask_new_file_ext (prompt, name, element, desc, option, lister)
+    char *prompt;
+    char *name;
+    char *element;
+    char *desc;
+    char *option;
+    int (*lister)();
+{
+    return ask (prompt, name, element, desc, option, lister, NEW_FILE);
+}
+
+
+/*!
+ * \brief prompt for existing database file
+ *
+ * The user is asked to enter the name of an file which exists.
+ *
+ *  \param prompt
+ *  \param name
+ *  \param element
+ *  \param label
+ *  \return char * 
+ */
+
+char *
+G_ask_old_file (prompt, name, element, desc)
+    char *prompt;
+    char *name;
+    char *element;
+    char *desc;
+{
+    return ask (prompt, name, element, desc, (char *) NULL, no_lister, OLD_FILE);
+}
+
+char *
+G_ask_old_file_ext (prompt, name, element, desc, option, lister)
+    char *prompt;
+    char *name;
+    char *element;
+    char *desc;
+    char *option;
+    int (*lister)();
+{
+    return ask (prompt, name, element, desc, option, lister, OLD_FILE);
 }
 
 
@@ -395,6 +475,27 @@ static char *ask (
 	if (*input == 0)
 	    return 0;
 
+	if (type == OLD_FILE || type == NEW_FILE)
+	{
+	    int exist;
+
+	    exist = (access(input, 0) == 0);
+	    if (type == OLD_FILE && !exist)
+	    {
+	    	fprintf (stderr,_("\n** %s - not found **\n"), input);
+	    	continue;
+	    }
+	    if (type == NEW_FILE && exist)
+	    {
+		char question[200];
+		sprintf(question,
+			_("\n** %s exists. ok to overwrite? "), input);
+	    	if (!G_yes (question,0))
+			continue;
+	    }
+	    strcpy (name,input);
+	    return G_store (input);
+	}
 /*
  * 'list' does a list without extension. if we are looking for a new
  * file only list the current mapset. Otherwise list all mapsets
