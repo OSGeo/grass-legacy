@@ -153,29 +153,32 @@ struct Key_Value *in_proj_keys, *in_units_keys;
     if (G_find_key_value("datum", in_proj_keys) != NULL ||
 	G_find_key_value("ellps", in_proj_keys) != NULL) {
         str = G_find_key_value("datum", in_proj_keys);
-        if( str != NULL )
-	 
+       
+        if( str != NULL )	 
 	    /* If 'datum' key is present, look up correct ellipsoid
 	     * from datum.table */
 	    str = G_datum_ellipsoid(G_get_datum_by_name(str));
-	else
-	 
-	    /* else use ellipsoid defined in PROJ_INFO */
+	else         
+            /* else use ellipsoid defined in PROJ_INFO */
             str = G_find_key_value("ellps", in_proj_keys);
        
-        if (G_get_spheroid_by_name(str, &a, &es, &f) ) {
-	   
-            /* Use a and 1/f values from ellipse.table if available */
-            sprintf(buffa, "a=%f", a);
-            alloc_options(buffa);
-	    sprintf(buffa, "rf=%f", f);
-	    alloc_options(buffa);
-        } else {
-	   
-	    /* else pass on ellipsoid name and hope it is recognised by
-	     * PROJ.4 even though it wasn't by GRASS */
-            sprintf(buffa, "ellps=%s", str);
-	}
+        if( str != NULL )
+        {
+            if (G_get_spheroid_by_name(str, &a, &es, &f) ) {
+           
+                /* Use a and 1/f values from ellipse.table if available */
+                sprintf(buffa, "a=%f", a);
+                alloc_options(buffa);
+                sprintf(buffa, "rf=%f", f);
+                alloc_options(buffa);
+            } else {
+           
+                /* else pass on ellipsoid name and hope it is recognised by
+                 * PROJ.4 even though it wasn't by GRASS */
+                sprintf(buffa, "ellps=%s", str);
+                alloc_options(buffa);
+            }
+        }
     } /* else if 'datum' or 'ellps' keys were not present ellipsoid 
        * parameters will have been set in loop above */    
 
@@ -187,19 +190,19 @@ struct Key_Value *in_proj_keys, *in_units_keys;
        
     /* else see if the old-style dx dy dz params are there on their own */
     } else if( G_find_key_value("datum", in_proj_keys) == NULL
-	     && G_find_key_value("dx", in_proj_keys) != NULL
-	     && G_find_key_value("dy", in_proj_keys) != NULL
-	     && G_find_key_value("dz", in_proj_keys) != NULL ) {
+             && G_find_key_value("dx", in_proj_keys) != NULL
+             && G_find_key_value("dy", in_proj_keys) != NULL
+             && G_find_key_value("dz", in_proj_keys) != NULL ) {
         sprintf(buffa, "towgs84=%s,%s,%s",
-	        G_find_key_value("dx", in_proj_keys),
-	      	G_find_key_value("dy", in_proj_keys),
-	       	G_find_key_value("dz", in_proj_keys) );
-	alloc_options(buffa);
+                G_find_key_value("dx", in_proj_keys),
+                G_find_key_value("dy", in_proj_keys),
+                G_find_key_value("dz", in_proj_keys) );
+        alloc_options(buffa);
        
     /* else if a datum name is present take it and look up the parameters 
      * from the datum.table file */
     } else if ( (str = G_find_key_value("datum", in_proj_keys)) != NULL
-	     && G_datum_shift(G_get_datum_by_name(str), &dx, &dy, &dz) ) {
+             && G_datum_shift(G_get_datum_by_name(str), &dx, &dy, &dz) ) {
         sprintf(buffa, "towgs84=%f,%f,%f", dx, dy, dz);
         alloc_options(buffa);
         returnval = 2;
@@ -208,6 +211,7 @@ struct Key_Value *in_proj_keys, *in_units_keys;
      * even though it isn't recognised by GRASS */
     } else if ( (str = G_find_key_value("datum", in_proj_keys)) != NULL ) {
         sprintf(buffa, "datum=%s", str);
+        alloc_options(buffa);
         returnval = 3;
        
     /* else there'll be no datum transformation taking place here... */
@@ -219,8 +223,10 @@ struct Key_Value *in_proj_keys, *in_units_keys;
     pj_set_finder( FINDERFUNC ); 
 
     if (!(pj = pj_init(nopt1, opt_in))) {
-        fprintf(stderr, "cannot initialize pj\ncause: ");
-        fprintf(stderr,"%s\n",pj_strerrno(pj_errno));
+        fprintf(stderr, "Unable to initialise PROJ.4 with the following parameter list:\n");
+        for(i=0; i<nopt1; i++)
+            fprintf(stderr, " %s", opt_in[i]);
+        fprintf(stderr,"\nThe error message was '%s'\n",pj_strerrno(pj_errno));
         return -1;
     }
     info->pj = pj;
@@ -326,11 +332,11 @@ int pj_zero_proj(info)
 struct pj_info *info;
 {
 
-	info->zone = 0;
-	info->proj[0] = '\0';
-	info->meters = 1.0;
+        info->zone = 0;
+        info->proj[0] = '\0';
+        info->meters = 1.0;
 
-	return 0;
+        return 0;
 }
 
 /* set_proj_lib()
