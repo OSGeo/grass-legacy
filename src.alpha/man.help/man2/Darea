@@ -1,0 +1,126 @@
+.TH Darea 2D D-language
+.SH NAME
+Darea \- To obtain area/perimeter information on vector polygons.
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Darea
+[-f]  vector-file-name  [color]
+.SH DESCRIPTION
+.I Darea
+is an interactive tool which allows the user, using the pointing device
+(mouse), to obtain area/perimeter information on vector polygons in the current
+graphics window.
+The user must run
+.I Darea
+providing the 
+.B vector-file-name
+as an argument.  There
+are also the optional arguments of 
+.B fill
+and 
+.B color.
+The 
+.B fill
+option signifies whether or not to shade the polygon on the screen.  If the 
+.B fill
+option is passed, the polygon will be filled with a color and a white boundary
+will outline the polygon.  The default is 
+.B NO fill
+and then only the boundary
+of the polygon will be drawn on the screen.   If a 
+.B color
+is passed then that
+will be the particular color used for either the boundary or shading of the 
+polygon.  The default color is red for drawing the polygon.  If the number of
+points of the polygon exceeds 512 then only a boundary will be drawn even 
+though you specified the 
+.B fill
+option.
+
+The 
+.I Darea
+program will provide both perimeter and area calculations for
+area polygons only.  You must position the cross hairs inside of the polygon
+that you wish to obtain the area/perimeter calculations and then 
+.B click
+either the right or left button on the mouse.  The calculations will be 
+displayed on the 
+.B text
+screen.  The polygon selected on the screen will either
+have the boundary drawn or the area shaded to the particular color you have
+chosen.  This will visibly verify which polygon you have chosen on the screen.
+To quit 
+.I Darea
+just click the middle button on the mouse. 
+
+The 
+.B fill
+option may be passed as any one of the following values:
+ -f -fill -F -Fill -FILL f fill F Fill FILL
+
+The 
+.B vector-file-name
+must be an existing vector file located in one the
+mapsets that you have previously indicated in your mapset search list.
+For the file name you have chosen, the 
+.I Darea
+program will use the first file
+of this name it locates according to the order of mapsets you have previously
+specified in your mapset search list.  The vector file will be a binary file
+located in the directory 
+.B digit.
+You may have to run 
+.B support.vect
+prior to 
+running 
+.I Darea
+for the first time for a file, to ensure the topology 
+information for that vector file in directory 
+.B dig_plus
+is current for that file.
+
+The 
+.B color
+value must be one of the following values:
+white black yellow blue red green orange grey magenta aqua indigo violet brown
+
+The following is an example of the execution of 
+.I Darea
+using the vector file 
+.B fields
+in the 
+.B spearfish
+data set.  The information below will be displayed
+on your 
+.B text
+screen when executing this program: 
+
+Darea -f fields blue
+
+.nf
+Selected information from dig header
+ Organization:  ESRI    DLG DATA - CHARACTER
+ Map Name:      Output from Patch.vect
+ Source Date:   1988      
+ Orig. Scale:   24000
+
+Buttons:
+Left:   get area/perimeter
+Middle: quit this
+Right:  get area/perimeter
+
+POINT AT CROSS HAIRS:     4923769.80 (N)     594200.17 (E)
+AREA INDEX NUMBER: 22
+PERIMETER:  7685.74 meters   25215.39 feet   4.776 miles
+AREA:  	2782189.26 sq meters  	278.219 hectares
+       	687.477 acres  		1.0742 sq miles
+AREA CENTROID: 4923705.64 (N) 594512.57 (E)
+.fi
+
+.SH SEE ALSO
+DINTRO(2D)
+.SH AUTHORS
+Bruce K. Powell, National Park Service, GIS Division
+.br
+CERL Programming Staff (for supporting programming modules)
