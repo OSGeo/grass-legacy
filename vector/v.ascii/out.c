@@ -23,7 +23,7 @@ int main (int argc, char *argv[])
 	old->type		=  TYPE_STRING;
 	old->required		=  YES;
 	old->multiple		=  NO;
-	old->gisprompt  	= "old,dig,vector" ;
+	old->gisprompt  	= "old,vector,vector" ;
 	old->description	= "binary vector file to be converted to ascii";
 
 	new = G_define_option();

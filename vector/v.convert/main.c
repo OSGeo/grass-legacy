@@ -41,7 +41,7 @@ main (int argc, char *argv[])
     opt_in->type        = TYPE_STRING ;
     opt_in->required    = YES ;
     opt_in->multiple    = NO ;
-    opt_in->gisprompt   = "vector" ;
+    opt_in->gisprompt   = "old,dig,vector" ;
     opt_in->description = "input vector map";  
     
     /* output vector map */

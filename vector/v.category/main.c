@@ -61,7 +61,7 @@ main (int argc, char *argv[])
 	in_opt->type =  TYPE_STRING;
 	in_opt->required = YES;
 	in_opt->multiple = NO;
-	in_opt->gisprompt = "old,dig,vector";
+	in_opt->gisprompt = "old,vector,vector";
 	in_opt->description  = "Name of input vector";
 	
 	out_opt = G_define_option();
