@@ -40,7 +40,7 @@ int asc_to_bin(
 	{
 	    n_cats=0;
 	    if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) {
-                fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
+                fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
                 return 0;
 	    }
 
