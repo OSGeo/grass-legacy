@@ -28,8 +28,6 @@ int do_masking(void);
 int do_plt(int);
 /* do_psfiles.c */
 int do_psfiles(void);
-/* do_sites.c */
-//int do_sites(void);
 /* do_vectors.c */
 int do_vectors(int);
 /* error.c */
