@@ -2,6 +2,14 @@
 # exports GRASS raster map to PostgreSQL database
 # supports only one value, no attribute cats
 #
+# Bug fixed: rastermap name will be used if celltable is not set.
+#	     '==' should be changed to '='.
+#	     PG_DBASE is used instead of DB_DATABASE in case g.select.pg used.
+#
+# Jul 26 02:13:30 KST 2000
+# by  Huidae Cho <hdcho@geni.knu.ac.kr>
+#
+#
 # BUG: celltable needs to be exchanged to user's wish. But how
 #      to tell "awk" about it?
 #      Problem is to use environment variables within "awk".
