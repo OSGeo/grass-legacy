@@ -368,7 +368,7 @@ int main (int argc, char *argv[])
 		    G_debug ( 4, "%d: area %d", i, area );
 		    Vect_get_area_points ( &To, area, TPoints);
 
-		    if (  dig_point_in_poly (FPoints->x[0], FPoints->y[0], TPoints) > 0) { 
+		    if (  Vect_point_in_poly (FPoints->x[0], FPoints->y[0], TPoints) > 0) { 
 		        /* point in polugon ( => must be in isle ) */
 
 			/* Note: this is never used in fact, because isle is always area,
