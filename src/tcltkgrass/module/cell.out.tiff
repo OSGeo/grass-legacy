@@ -2,21 +2,23 @@ interface_build {
     {cell.out.tiff} 0
     {Export of maps created with the cell driver.}
     {entry erasecolor {Choose background color [white]:} 0 color }
-    {entry baseraster {Input raster maps:} 0 raster }
-    {entry addraster {Input additonal raster maps} 0 +raster }
+    {entry baseraster {Input base map:} 0 raster }
+    {entry addraster {Input additonal raster maps:} 0 +raster }
     {checkbox -o {Overlay (Display non zero values only)} "" -o }
-    {entry vectormaps {Input vector maps:} 0 +vector }
-    {entry veccols {Vector display colors [white]:} 0 +color}
     {entry vecpols {Vector polygon maps:} 0 +vector}
-    {entry linecolor {Polygon border colors [none]:} 0 +color}
-    {entry fillcolor {Polygon fill colors [white]:} 0 +color}
-    {entry sites {Input site maps:} 0 +sites }
-    {entry sitecols {Choose site colors [gray]:} 0 +color}
+    {entry linecolor {Polygon border colors [none]:} 0 +color }
+    {entry fillcolor {Polygon fill colors [white]:} 0 +color }
+    {entry vectormaps {Vector maps:} 0 +vector }
+    {entry veccols {Vector display colors [white]:} 0 +color }
+    {entry sites {Site maps:} 0 +sites }
+    {entry sitecols {Choose site colors [gray]:} 0 +color }
+    {entry siteicons {Choose Icon type:} 0 +type }
     {entry sizes {Icon sizes, in pixels (0-1000) [5], devided by comma:} 0 ""}
     {entry legendmap {Raster map for legend:} 0 raster}
     {entry leg_text_color {Legend text color [black]:} 0 color}
-    {entry leg_lines {Number of lines in the legend (0-1000) [0]:} 0 ""}
-    {entry cellxy {Cell size in pixel [x,y](required):} 0 ""}
+    {entry leg_lines {Number of lines in the legend (0-1000) [0]:} 0 "" }
+    {entry cellxy {Cell size in pixel [x,y](required):} 0 "" }
     {entry outfile {Output tiff file (required):} 0 File }
-    {checkbox -p {Pause before exporting} "" -p }
+    {checkbox -p {Pause for additonal commands} "" -p }
+    {checkbox -t {Preview only} "" -t }
     }
