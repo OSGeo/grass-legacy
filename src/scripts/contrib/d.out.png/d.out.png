@@ -16,21 +16,24 @@
 #		for details.
 #
 #############################################################################
-
+#
+# TODO: update to use d.info once that is compiled by default
+#       update to use g.parser
+#
 
 if  [ -z $GISBASE ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
 fi   
 
-if [ "$1" = "-help" -o "$1" = "--help" -o "$1" = "help" -o "$1" = "-h" ]
+if [ "$1" = "-help" -o "$1" = "--help" -o "$1" = "help" -o "$1" = "-h" -o -z "$1" ]
 then
 	echo
 	echo "Usage: d.out.png output=file_name res=1|[2]|4"
 	echo
 	echo "Uses d.save and PNG drier to save select display monitor to file_name.png"
 	echo "in user's home directory at current resolution (res=1),"
-	echo "double resolution (res=2), or quadruple resolution (res=4)."
+	echo "double resolution (res=2) [default], or quadruple resolution (res=4)."
 	echo
 	exit 1
 fi
