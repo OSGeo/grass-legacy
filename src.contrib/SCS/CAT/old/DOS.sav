@@ -1,0 +1,66 @@
+
+
+
+DOS.save(1)  	     GRASS Reference Manual	      DOS.save(1)
+
+
+
+NAME
+     DOS.save - stores screen images to the PC6300 MS_DOS hard disk.
+     (Available for PC6300 workstations, only)
+
+SYNOPSIS
+     DOS.save filename
+
+DESCRIPTION
+     DOS.save allows a user to :
+     interactively save PC6300 screen images produced by "display",
+     "Dcell", etc. to the PC6300 hard disk. Program will assign
+     the extension ".GRS" to the filename given, and will store
+     the image file in the current DOS directory. The files are
+     binary image files, representing the red, green, and blue
+     planes of the DEB board graphic memory.
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
