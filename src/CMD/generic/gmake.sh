@@ -61,7 +61,7 @@ do
 	    test -d $dirname || mkdir $dirname
 	    exit $?
 	    ;;
-	-i) install=yes;shift;;
+	-i) install=yes;me="$me -i";shift;;
 
 	 *) break
     esac
