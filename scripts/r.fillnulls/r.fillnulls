@@ -34,6 +34,20 @@
 #% description: Output raster map with nulls filled by interpolation from surrounding values
 #% required : yes
 #%end
+#%option
+#% key: tension
+#% type: double
+#% description: Spline tension parameter
+#% required : no
+#% answer : 40.
+#%end
+#%option
+#% key: smooth
+#% type: double
+#% description: Spline smoothing parameter
+#% required : no
+#% answer : 0.1
+#%end
 
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
@@ -119,13 +133,15 @@ echo ""
 echo "Note: Below warnings may be ignored."
 echo ""
 
+RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_tension smooth=$GIS_OPT_smooth"
+
 if [ $POINTSNUMBER  -ge 800 ] ; then
   echo "Using segmentation for interpolation..."
-  v.surf.rst zcol=value input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 #2> /dev/null
+  $RST_CMD input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 #2> /dev/null
 else
   #if less than 800 points, use no segmentation for speedup:
   echo "Using no segmentation for interpolation as not needed..."
-  v.surf.rst zcol=value input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=700 #2> /dev/null
+  $RST_CMD input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=700 #2> /dev/null
 fi
 
 echo ""
