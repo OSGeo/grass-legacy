@@ -3,20 +3,21 @@
 \fIg.region\fR \- Program to manage the boundary definitions for the
 geographic region.
 .br
-.I (GRASS File Management Program)
+.I (GRASS Region Management Program)
 .SH SYNOPSIS
 \fBg.region\fR
 .br
 \fBg.region help\fR
 .br
-.nf
-\fBg.region [-dgpu] [region\*=\fIname\fP] [raster\*=\fIname\fP] \
-[vector\*=\fIname\fP] [sites\*=\fIname\fP] [n\*=\fIvalue\fP] \
-[s\*=\fIvalue\fP]
-    [e\*=\fIvalue\fP] [w\*=\fIvalue\fP] [res\*=\fIvalue\fP] \
+.in +3
+.ti -3
+\fBg.region [-dgpu] [region\*=\fIname\fP] [raster\*=\fIname\fP]
+[vector\*=\fIname\fP] [sites\*=\fIname\fP] [3dview\*=\fIname\fP]
+[n\*=\fIvalue\fP] [s\*=\fIvalue\fP]
+[e\*=\fIvalue\fP] [w\*=\fIvalue\fP] [res\*=\fIvalue\fP] \
 [nsres\*=\fIvalue\fP] [ewres\*=\fIvalue\fP] [zoom\*=\fIname\fP]
-    [align\*=\fIname\fP] [save\*=\fIname\fP]\fR
-.fi
+[align\*=\fIname\fP] [save\*=\fIname\fP]\fR
+.in
 .SH DESCRIPTION
 The \fIg.region\fR program allows the user to manage the settings of the
 current geographic region.
@@ -232,6 +233,9 @@ Make the current region settings the same as those of the named vector map.
 .IP \fBsites\*=\fIname\fR 18
 Set the current region to the smallest region encompassing all
 coordinates in the named site_lists file, aligned with the current region.
+.IP \fB3dview\*=\fIname\fR 18
+Make current region settings same as those in the named 3dview file, which
+holds the region that was current when the 3dview was saved.
 .IP \fBn\*=\fIvalue\fR 18
 Set map coordinate value for the region's northern edge to x
 .IP \fBs\*=\fIvalue\fR 18
