@@ -1,0 +1,65 @@
+.TH r.in.hdf
+.SH NAME
+\fIr.in.hdf\fR \- Convert data in HDF format into a (binary) raster map layer. 
+.br
+.I "(GRASS Raster Data Import Program)"
+.SH SYNOPSIS
+\fBr.in.hdf\fR
+.br
+\fBr.in.hdf help\fR
+.br
+\fBr.in.hdf\fR [\fB\-q\fR] \fBinput=\fIname\fR \fBoutput=\fIname\fR \fB[mult=\fIvalue\fB]
+.SH DESCRIPTION
+\fIr.in.hdf\fR allows a user to create a GRASS raster map layer from a file containing a scientific data set (SDS) in NCSA Hierarchical Data Format (HDF).
+.SH "COMMAND LINE OPTIONS"
+.LP
+Flags
+.IP \fI-q\fR
+Run quietly
+.LP
+Parameters
+.IP \fIinput\fR
+HDF file to be converted.
+.IP \fIoutput\fR
+Name of new raster file.
+.IP \fImult\fR
+Floating point multiplier. (rastfile = (int)(file.hdf * multiplier))
+.LP
+The raster file created will have its southwest origin at 0 East and 0 North,
+with resolution of 1.  To view the new GRASS raster file, use
+\fIg.region rast=newfile\fR, then use \fId.rast\fR as normal.  You may
+wish to manually change the new raster's cellhd file.
+.LP
+NCSA HDF is a multi-object file format developed by The National Center for
+Supercomputing Applications at Champaign, Illinois
+for the transfer of graphical and 
+floating-point data between machines.  The format defines both a raster 
+type and a SDS type.  The later is basically a highly structured 
+multi-dimensional array of floating point values.  A single HDF file
+may contain more than one SDS, but using this program will only extract
+the first SDS from the HDF file.  The SDS in the HDF file must also be
+only two dimensional in order for \fIr.in.hdf\fR to accept it as input.
+The HDF raster format consists of a palette and a 2D array of 8-bit numbers,
+but \fIr.in.hdf\fR does not yet recognize this format, so color tables
+are not transferrable.
+.LP
+NCSA distributes the HDF library and several public domain visualization
+applications which use the HDF format.  Some commercial applications
+also support HDF.  For more information, use the NCSA anonymous ftp server
+\fIftp.ncsa.uiuc.edu\fR or contact:
+.IP
+NCSA
+.br
+152 Computing Applications Building
+.br
+605 E. Springfield Ave.
+.br
+Champaign, IL 61820
+.br
+(217) 244-0072
+.SH "SEE ALSO"
+r.out.hdf
+
+.SH AUTHOR
+Bill Brown, U.S. Army Construction Engineering Research Laboratory
+
