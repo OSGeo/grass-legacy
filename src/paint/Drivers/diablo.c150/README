@@ -1,0 +1,32 @@
+****************************************************************
+*
+*       Readme file for diablo c150 ink jet driver for GRASS
+*       Author: James Farley. Arkansas Archeological Survey
+*
+================================================================
+*
+The dip switch settings used on the c150 are provided..
+The paint driver for this device is designed to run with the 
+standard default settings as they exist at powerup.
+
+The printer i/o interface is parallel.
+*****************************************************************
+
+C150 dip sitch settings:
+
+              ON     OFF
+         1            x
+         2            x
+         3    x
+         4    x
+         5    x
+         6            x
+         M            x
+         C    x
+
+  1)  The number of chars per line (NCHARS) must be 71
+      to accomodate the C150 powerup defaults.
+
+  2)  The number of cols (npixels.c) must be 840 to reflect
+      the number of pixels which can be printed in the active
+      area (ie. 7").
