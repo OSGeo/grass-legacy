@@ -41,8 +41,7 @@ int main (int argc, char **argv)
     struct field_info *fi;
     int field, ret, num_dblinks, i, ncols, col;
     struct Map_info Map;
-    char *drv, *db;
-    char *fakestart;
+    char   *drv, *db;
     
     /* set up the options and flags for the command line parser */
 
@@ -52,9 +51,6 @@ int main (int argc, char **argv)
 
     inopt = G_define_standard_option(G_OPT_V_MAP);
 
-    /* fake session for HTML generation with parser */
-    fakestart = getenv( "GRASS_FAKE_START" );
-
     dbdriver = G_define_option() ;
     dbdriver->key        = "driver" ;
     dbdriver->type       = TYPE_STRING ;
@@ -62,7 +58,7 @@ int main (int argc, char **argv)
     dbdriver->required   = NO  ;
     dbdriver->multiple   = NO ;
     dbdriver->description= "driver name:" ;
-    if ( fakestart == NULL && (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
+    if ( (drv=G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
 	dbdriver->answer = G_store ( drv );
 
     dbdatabase = G_define_option() ;
@@ -71,7 +67,7 @@ int main (int argc, char **argv)
     dbdatabase->required   = NO  ;
     dbdatabase->multiple   = NO ;
     dbdatabase->description= "database name:" ;
-    if ( fakestart == NULL && (db=G__getenv2("GV_DATABASE",G_VAR_MAPSET)) )
+    if ( (db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
 	dbdatabase->answer = G_store ( db );
 
     dbtable = G_define_option();

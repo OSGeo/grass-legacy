@@ -238,36 +238,29 @@ struct field_info
     
     G_debug (1, "Vect_default_field_info(): map = %s field = %d", Map->name, field);
     
-    drv = G__getenv2 ( "GV_DRIVER", G_VAR_MAPSET );
-    db = G__getenv2 ( "GV_DATABASE", G_VAR_MAPSET );
+    db_get_connection( &connection );
+    drv = G__getenv2 ( "DB_DRIVER", G_VAR_MAPSET );
+    db = G__getenv2 ( "DB_DATABASE", G_VAR_MAPSET );
 
     G_debug (2, "drv = %s db = %s", drv, db );
 
-    if ( drv == NULL && db == NULL ) { /* Set default values and create dbf db dir */
-	G_warning ( _("Default driver / database for vectors set to:\n"
+    if ( !connection.driverName && !connection.databaseName ) { /* Set default values and create dbf db dir */
+	G_warning ( _("Default driver / database set to:\n"
 		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/") );
-	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
-	G_setenv2 ( "GV_DATABASE", "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/", G_VAR_MAPSET );
-
-	/* Set also DB_DRIVER and DB_DATABASE is not yet set */
-	db_get_connection( &connection );
-	if ( !connection.driverName && !connection.databaseName ) {
-	    G_warning ( _("Database connection (for db.* modules) set to:\n"
-			"driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/") );
-	    connection.driverName = "dbf";
-	    connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
-	    db_set_connection( &connection );
-	}
+	    
+	connection.driverName = "dbf";
+	connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
+	db_set_connection( &connection );
 	
 	sprintf ( buf, "%s/%s/%s/dbf", Map->gisdbase, Map->location, Map->mapset );
 	G__make_mapset_element ( "dbf" );
-	drv = G_store ( "dbf" );
-	db = G_store ( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
-    } else if ( drv == NULL ) {
+    } else if ( !connection.driverName ) {
        G_fatal_error ( _("Default driver is not set") ); 
-    } else if ( db == NULL ) {
+    } else if ( !connection.databaseName ) {
        G_fatal_error ( _("Default database is not set") ); 
     }
+    drv = connection.driverName;
+    db = connection.databaseName;
     
     fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
     
@@ -285,8 +278,7 @@ struct field_info
 	    sprintf ( buf, "%s_%d", Map->name, field );
     }
     
-
-    schema = G__getenv2 ( "GV_SCHEMA", G_VAR_MAPSET );
+    schema = connection.schemaName;
     if ( schema && strlen(schema) > 0 ) {
         sprintf ( buf2, "%s.%s", schema, buf );
         fi->table = G_store ( buf2 );
