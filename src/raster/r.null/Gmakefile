@@ -1,7 +1,7 @@
-HOME=$(BIN_MAIN_CMD)
+PGM=r.null
 LIST=null.o mask.o
 
-$(HOME)/r.null: $(LIST) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,10 +1,9 @@
 PGM=r.mask.points
-HOME=$(BIN_ALPHA_CMD)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 

@@ -4,36 +4,12 @@ SOURCES=calc.$(VER).c io.$(VER).c mem.$(VER).c aspect.$(VER).c precomp.$(VER).c
 HEADERS=r.flow.$(VER).h io.$(VER).h mem.$(VER).h aspect.$(VER).h \
 	precomp.$(VER).h
 
-#LDFLAGS =
+LIBES=$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SEGMENTLIB)
 
-DIR=$(BIN_ALPHA_CMD)
-#DIR=.
+PGM=r.flow
 
-LIBS=$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SEGMENTLIB)
-PGM=$(DIR)/r.flow
-MANPAGE=$(MAN2)/r.flow
-MANPAGESRC=$(SRC)/../man/man2/r.flow
-MANROFFDIR=$(SRC)/../man/utilities
-MANHELP=$(HELP)/r.flow
-
-$(PGM): $(OBJS) $(LIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(MATHLIB) $(XDRLIB)
-
-all:	$(PGM) $(MANPAGE) $(MANHELP)
-man:	$(MANPAGE) $(MANHELP)
-bin:	$(PGM)
-
-$(MANPAGE):	$(MANPAGESRC)
-	rm -f $@
-	(cd $(MANROFFDIR); man2cat $? > $@)
-
-$(MANPAGESRC):	r.flow.man.2
-	rm -f $@
-	cp $? $@
-	
-$(MANHELP):	r.flow.man.help
-	rm -f $@
-	cp $? $@
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): Gmakefile
 
@@ -43,9 +19,6 @@ io.$(VER).o:			r.flow.$(VER).h mem.$(VER).h
 precomp.$(VER).o \
 mem.$(VER).o:			r.flow.$(VER).h io.$(VER).h mem.$(VER).h
 precomp.$(VER).o:		aspect.$(VER).h
-
-saber_src:
-		$(MATHLIB)
 
 $(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB): #
 

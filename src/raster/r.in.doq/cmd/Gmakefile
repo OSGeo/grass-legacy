@@ -1,9 +1,8 @@
 PGM    = r.in.doq
-HOME   = $(BIN_CONTRIB_CMD)
 
 LIST   =  main.o gethead.o get_newhead.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

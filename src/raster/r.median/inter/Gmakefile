@@ -1,6 +1,6 @@
 PGM=r.median
 
 $(BIN_ALPHA_INTER)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

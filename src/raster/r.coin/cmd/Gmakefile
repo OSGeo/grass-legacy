@@ -1,5 +1,4 @@
 PGM   = r.coin
-HOME  = $(BIN_MAIN_CMD)
 
 LIST  = main.o\
 	cmd.o\
@@ -13,8 +12,8 @@ LIST  = main.o\
 	totals.o
 
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) $(TERMLIB) -o $@
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):  coin.h
 

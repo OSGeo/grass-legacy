@@ -1,9 +1,7 @@
 PGM    = r.in.bin
-HOME   = $(BIN_MAIN_CMD)
-
 LIST   = main.o tif_swab.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

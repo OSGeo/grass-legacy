@@ -1,5 +1,4 @@
 PGM = r.mfilter
-HOME = $(BIN_MAIN_CMD)
 
 LIST = \
 	main.o\
@@ -10,7 +9,7 @@ LIST = \
 	perform.o\
 	uppercase.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(ROWIOLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(ROWIOLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(ROWIOLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): filter.h glob.h

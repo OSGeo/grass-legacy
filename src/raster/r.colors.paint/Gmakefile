@@ -4,19 +4,18 @@ LIST = main.o readfile.o range.o assign_color.o
 
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERFACE)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) $(DISPLAYLIB) $(INTERFACE) -o $@
+LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERFACE)
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 	rm -rf $(ETC)/Gcolortab
 	mkdir $(ETC)/Gcolortab
 	mkdir $(ETC)/Gcolortab/tek4695
 	mkdir $(ETC)/Gcolortab/shinko635
 	mkdir $(ETC)/Gcolortab/preview
-#	cp Gcolortab/tek4695/* $(ETC)/Gcolortab/tek4695
-	(cd Gcolortab/tek4695 ; tar -cvf - * | (cd $(ETC)/Gcolortab/tek4695; tar -xvf - 2>/dev/null ); true )
-#	cp Gcolortab/shinko635/* $(ETC)/Gcolortab/shinko635
-	(cd Gcolortab/shinko635 ; tar -cvf - * | (cd $(ETC)/Gcolortab/shinko635; tar -xvf - 2>/dev/null ); true )
-#	cp Gcolortab/preview/* $(ETC)/Gcolortab/preview
-	(cd Gcolortab/preview ; tar -cvf - * | (cd $(ETC)/Gcolortab/preview; tar -xvf - 2>/dev/null ); true )
+	(cd Gcolortab/tek4695 ; tar -cf - * | (cd $(ETC)/Gcolortab/tek4695; tar -xf - 2>/dev/null ); true )
+	(cd Gcolortab/shinko635 ; tar -cf - * | (cd $(ETC)/Gcolortab/shinko635; tar -xf - 2>/dev/null ); true )
+	(cd Gcolortab/preview ; tar -cf - * | (cd $(ETC)/Gcolortab/preview; tar -xf - 2>/dev/null ); true )
 
 $(GISLIB): #
 $(VASKLIB): #

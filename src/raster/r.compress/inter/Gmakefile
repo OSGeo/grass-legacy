@@ -1,7 +1,6 @@
 PGM=r.compress
-HOME=$(BIN_MAIN_INTER)
 
-$(HOME)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_MAIN_INTER)/$(PGM): main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,14 +1,9 @@
-
-
 LIBRARIES = $(GISLIB) $(DATETIMELIB)
 
-
-PGM = $(BIN_CONTRIB_CMD)/r.out.xyz
+PGM = r.out.xyz
 
 OFILES = main.o
 
 
-$(PGM): $(OFILES) $(LIBRARIES) 
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBRARIES) 
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
-
-

@@ -1,10 +1,9 @@
-HOME=$(BIN_ALPHA_CMD)
 PGM=r.in.poly
 
 LIST = main.o poly2rast.o raster.o getformat.o get_item.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 getformat.o: format.h
 raster.o: format.h

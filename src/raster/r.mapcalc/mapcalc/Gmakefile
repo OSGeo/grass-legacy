@@ -1,5 +1,4 @@
 PGM = r.mapcalc
-HOME=$(BIN_MAIN_CMD)
 
 LIST = main.o\
 	compare.o\
@@ -46,7 +45,7 @@ LIST = main.o\
 
 LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): glob.h

@@ -1,4 +1,4 @@
-PROG = $(BIN_ALPHA_CMD)/r.cn2
+PGM = r.cn2
 
 LIBES  = $(GISLIB) $(DATETIMELIB)
 
@@ -13,7 +13,7 @@ OBJ = \
 	amc_conversion.o
 
 
-$(PROG): $(OBJ) $(LIBES)
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
