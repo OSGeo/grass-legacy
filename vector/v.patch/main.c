@@ -74,8 +74,6 @@ main (int argc, char *argv[])
 	} else {
 	    ret = Vect_open_new (&OutMap, out_name, 0);
 	}
-	Vect_copy_head_data (&InMap, &OutMap);
-	Vect_hist_copy (&InMap, &OutMap);
 	Vect_hist_command ( &OutMap );
 	
 	if ( ret < 0 ) 
