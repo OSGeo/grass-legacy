@@ -23,7 +23,6 @@
 #include "v.bubble.h"
 
 
-
 int main( int argc, char **argv )
  {
   char *vect_mapset;
@@ -103,7 +102,7 @@ vector file.";
 
 /* Make sure that the current projection is UTM or   */
 /* Unreferenced XY projection.                       */
-  if ((G_projection() != 0)&&(G_projection() != 1))
+  if ((G_projection() != 0)&&(G_projection() != 1) &&(G_projection() != 99))
    {
     char msg[256];      
     sprintf(msg,"%s:  Projection must be either Unreferenced XY (value 0) or \
@@ -192,7 +191,7 @@ Please choose a different vector file name.\n",
    if ((nsites = readsites (fd_site,1,1,1, &bsite))==0) {
        G_fatal_error("No sites found. .");
    } else {
-       printf("%i sites found\n",nsites);
+       fprintf(stderr, "%i sites found\n",nsites);
    }
 
    i1=bubbling(bsite,nsites,&map,radius);
