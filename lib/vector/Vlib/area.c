@@ -205,6 +205,44 @@ Vect_get_area_boundaries (
 }
 
 /*!
+ \fn int Vect_get_isle_boundaries (
+		       struct Map_info *Map,
+		       int isle,
+		       struct ilist *List )
+ \brief creates list of boundaries for isle
+ \return number of boundaries
+ \param Map vector map
+ \param isle island number
+ \param List pointer to list where boundaries are stored
+*/
+int 
+Vect_get_isle_boundaries (
+		       struct Map_info *Map,
+		       int isle,
+                       struct ilist *List )
+{
+  int i, line;
+  struct Plus_head *Plus;
+  P_AREA *Isle;
+  
+  G_debug ( 3, "Vect_get_isle_boundaries(): isle = %d", isle );	
+
+  Vect_reset_list ( List );
+  
+  Plus = &(Map->plus);
+  Isle = Plus->Isle[isle];
+
+  if ( Isle == NULL ) G_fatal_error ( "Attempt to read topo for dead isle (%d)", isle);
+
+  for (i = 0; i < Isle->n_lines; i++) {
+      line = Isle->lines[i];
+      Vect_list_append ( List, line );
+  }
+   
+  return ( List->n_values );
+}
+
+/*!
  \fn int Vect_get_area_num_isles (
 		       struct Map_info *Map,
 		       int area )
