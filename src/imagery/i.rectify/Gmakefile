@@ -15,7 +15,7 @@ LIST = main.o\
 	target.o\
 	write.o
 
-$(BIN)/i.rectify: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.rectify: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
 $(LIST): global.h rowcol.h
 
