@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.3  2000-11-01 17:14:26  cho
+# Revision 1.4  2000-11-22 09:11:21  cho
+# fixed
+#
+# Revision 1.3  2000/11/01 17:14:26  cho
 # nothing :-)
 #
 # Revision 1.2  2000/11/01 17:12:04  cho
@@ -30,7 +33,7 @@ then
 	echo
 	echo "ERROR: must be in GRASS to use $program"
 	echo
-#	exit 1
+	exit 1
 fi
 
 if [ $# -lt 2 -o "x$1" = "xhelp" ]
