@@ -83,7 +83,7 @@ post_exec(void)
 int 
 main (int argc, char *argv[])
 {
-	int ok, all_ok;
+	int all_ok;
 
 	G_gisinit(argv[0]);
 

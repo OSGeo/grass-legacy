@@ -45,6 +45,10 @@ extern int open_output_map(const char *name, int res_type);
 extern void put_map_row(int fd, void *buf, int res_type);
 extern void close_output_map(int fd);
 
+extern void copy_cats(const char *dst, const char *src);
+extern void copy_colors(const char *dst, const char *src);
+extern void copy_history(const char *dst, const char *src);
+
 /****************************************************************************/
 
 #endif /* _MAPCALC_H_ */

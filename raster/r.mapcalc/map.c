@@ -1,4 +1,4 @@
- 
+
 #include <limits.h>
 #include <string.h>
 #include <unistd.h>
@@ -128,7 +128,7 @@ static void translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, in
  *
  * This maps is a hybrid tree, where the data in each node
  * of the tree is an array of, for example, 64 values, and
- * the key of the tree is the category represented by the 
+ * the key of the tree is the category represented by the
  * first index of the data
  *
  * To speed things up a little, use shifts instead of divide or multiply
@@ -186,7 +186,7 @@ static void translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 					SET_NULL_D(values);
 				values++;
 			}
-	    
+
 			values = vbuf;
 			btree_update(btree, (char *)&key, sizeof(key),
 				      (char *)values, sizeof(vbuf));
@@ -590,6 +590,49 @@ void close_output_map(int fd)
 {
 	if (G_close_cell(fd) < 0)
 		G_fatal_error("unable to close output map");
+}
+
+/****************************************************************************/
+
+void copy_cats(const char *dst, const char *src)
+{
+	struct Categories cats;
+	char *mapset;
+
+	mapset = G_find_cell2((char *) src, "");
+
+	if (G_read_cats((char *) src, mapset, &cats) < 0)
+		return;
+
+	G_write_cats((char *) dst, &cats);
+	G_free_cats(&cats);
+}
+
+void copy_colors(const char *dst, const char *src)
+{
+	struct Colors colr;
+	char *mapset;
+
+	mapset = G_find_cell2((char *) src, "");
+
+	if (G_read_colors((char *) src, mapset, &colr) <= 0)
+		return;
+
+	G_write_colors((char *) dst, G_mapset(), &colr);
+	G_free_colors(&colr);
+}
+
+void copy_history(const char *dst, const char *src)
+{
+	struct History hist;
+	char *mapset;
+
+	mapset = G_find_cell2((char *) src, "");
+
+	if (G_read_history ((char *) src, mapset, &hist) < 0)
+		return;
+
+	G_write_history((char *) dst, &hist);
 }
 
 /****************************************************************************/
