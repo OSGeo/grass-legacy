@@ -17,7 +17,7 @@
 4.x, 5.x (versions differ)
 
 <H2>SYNOPSIS</H2>
-<B>r.out.tiff</B> [<B>-ptv</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+<B>r.out.tiff</B> [<B>-ptv</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> [<B>compression=</B><EM>name</EM>
 
 <H2>DESCRIPTION</H2>
 This program converts a GRASS raster file to a TIFF raster file. Output may be
@@ -44,11 +44,18 @@ and other's products may be output.
 
 <DT><B>output=name</B>
 <DD>Name of new TIFF image file.
+
+<DT><B>compression=name</B>
+<DD>Type of compression to use for TIFF file.<BR>
+<B>Options:</B> none, packbit, deflate<BR>
+<B>Default:</B> none
 </DL>
 
 The program prompts the user for the name of a GRASS raster file, an output TIFF
 file, whether an 8 or 24 bit format is desired, and whether or not to create a
-TIFF world file.  Currently only uncompressed TIFF files are written.
+TIFF world file.  Currently only uncompressed, packpit, or
+deflate TIFF files are written.  These output formats are known to be
+compatible with r.in.tiff.  
 
 <P>
 The user may adjust region and resolution before export using <EM>g.region</EM>.

@@ -60,9 +60,10 @@ TIFF files.<BR>
 
 The program prompts the user to enter the name of the TIFF raster file to be
 converted and the name to be assigned to the GRASS raster file
-to contain the resultant image. Currently "TIFF/uncompressed" 
-and TIFF/PackBits-compression" formats are supported. LZW compression is 
-not supported due to UNISYS patent.
+to contain the resultant image. Currently "TIFF/uncompressed", 
+"TIFF/PackBits-compression" and "TIFF/deflate" formats are supported.  Other
+compression schemes may not be read correctly.
+LZW compression is not supported due to UNISYS patent.
 
 <P>
 If a TIFF World file exists with an extension of "tfw", "tifw", "TFW", or
