@@ -1,194 +1,233 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>v.vol.rst</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>v.vol.rst</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
-<body bgcolor="white">
+<body style="background-color: white;">
+
 <h2>NAME</h2>
-<em><b>v.vol.rst</b></em>  - Interpolates vector point data to a G3D grid volume using regularized spline with tension (RST) algorithm
+<em><b>v.vol.rst</b></em> - Interpolates vector point data to a G3D
+grid volume using regularized spline with tension (RST) algorithm
+
 <h2>SYNOPSIS</h2>
 <b>v.vol.rst</b><br>
 <b>v.vol.rst help</b><br>
-<b>v.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>colnum</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
-
-
+<b>v.vol.rst [-c]</b> <b>input</b>=<em>string</em> [<b>cellinp</b>=<em>string</em>]
+[<b>colnum</b>=<em>integer</em>] [<b>tension</b>=<em>float</em>] [<b>smatt</b>=<em>integer</em>]
+[<b>smooth</b>=<em>float</em>] [<b>devi</b>=<em>string</em>] [<b>cvdev</b>=<em>string</em>]
+[<b>maskmap</b>=<em>string</em>] [<b>segmax</b>=<em>integer</em>]
+[<b>dmin</b>=<em>float</em>] [<b>npmin</b>=<em>integer</em>] [<b>wmult</b>=<em>float</em>]
+[<b>zmult</b>=<em>float</em>] [<b>cellout</b>=<em>string</em>] [<b>elev</b>=<em>string</em>]
+[<b>gradient</b>=<em>string</em>] [<b>aspect1</b>=<em>string</em>] [<b>aspect2</b>=<em>string</em>]
+[<b>ncurv</b>=<em>string</em>] [<b>gcurv</b>=<em>string</em>] [<b>mcurv</b>=<em>string</em>]
+<h3>Flags:</h3>
+<p><b>-c</b> Perform a cross-validation procedure.
+<br>
+</p>
 <h3>Parameters:</h3>
-<DL>
-<DT><b>input</b>=<em>string</em>
-<DD>Name of the vector points file with input x,y,z,w</DD>
+<dl>
+  <dt><b>input</b>=<em>string</em> </dt>
+  <dd>Name of the vector points file with input x,y,z,w</dd>
+  <dt><b>cellinp</b>=<em>string</em> </dt>
+  <dd>Name of the surface cell file</dd>
+  <dt><b>colnum</b>=<em>integer</em> </dt>
+  <dd>Column number of w attribute to use for calculation (counting
+only float type columns)</dd>
+  <dd>Default: <em>1</em></dd>
+  <dt><b>tension</b>=<em>float</em> </dt>
+  <dd>Tension</dd>
+  <dd>Default: <em>40.</em></dd>
+  <dt><b>smatt</b>=<em>integer</em> </dt>
+  <dd>Which fp point attribute to use for smoothing (or use smooth= for
+constant)</dd>
+  <dt><b>smooth</b>=<em>float</em> </dt>
+  <dd>Smoothing parameter</dd>
+  <dd>Default: <em>0.1</em></dd>
+  <dt><b>devi</b>=<em>string</em> </dt>
+  <dd>Name of the output deviations vector file</dd>
+  <dt><b>cvdev</b>=<em>string</em> </dt>
+  <dd>Name of the output cross-validation vector file</dd>
+  <dt><b>maskmap</b>=<em>string</em> </dt>
+  <dd>Name of the raster file used as mask</dd>
+  <dt><b>segmax</b>=<em>integer</em> </dt>
+  <dd>Max number of points in segment (&lt;=700)</dd>
+  <dd>Default: <em>50</em></dd>
+  <dt><b>dmin</b>=<em>float</em> </dt>
+  <dd>Min distance between points (extra points ignored)</dd>
+  <dd>Default: <em>50.000000</em></dd>
+  <dt><b>npmin</b>=<em>integer</em> </dt>
+  <dd>Min number of points for interpolation</dd>
+  <dd>Default: <em>200</em></dd>
+  <dt><b>wmult</b>=<em>float</em> </dt>
+  <dd>Conversion factor for w-values</dd>
+  <dd>Default: <em>1.0</em></dd>
+  <dt><b>zmult</b>=<em>float</em> </dt>
+  <dd>Conversion factor for z-values</dd>
+  <dd>Default: <em>1.0</em></dd>
+  <dt><b>cellout</b>=<em>string</em> </dt>
+  <dd>Name of the crossection cell file</dd>
+  <dt><b>elev</b>=<em>string</em> </dt>
+  <dd>Elevation g3d-file </dd>
+  <dt><b>gradient</b>=<em>string</em> </dt>
+  <dd>Gradient magnitude g3d-file</dd>
+  <dt><b>aspect1</b>=<em>string</em> </dt>
+  <dd>G. horizontal angle g3d-file</dd>
+  <dt><b>aspect2</b>=<em>string</em> </dt>
+  <dd>G. vertical angle g3d-file</dd>
+  <dt><b>ncurv</b>=<em>string</em> </dt>
+  <dd>Change of gradient g3d-file</dd>
+  <dt><b>gcurv</b>=<em>string</em> </dt>
+  <dd>Gaussian curvature g3d-file</dd>
+  <dt><b>mcurv</b>=<em>string</em> </dt>
+  <dd>Mean curvature g3d-file</dd>
+</dl>
 
-<DT><b>cellinp</b>=<em>string</em>
-<DD>Name of the surface cell file</DD>
+<h2>DESCRIPTION</h2>
 
-<DT><b>colnum</b>=<em>integer</em>
-<DD>Column number of w attribute to use for calculation (counting only float type columns)</DD>
-<DD>Default: <em>1</em></DD>
-
-<DT><b>tension</b>=<em>float</em>
-<DD>Tension</DD>
-<DD>Default: <em>40.</em></DD>
-
-<DT><b>smooth</b>=<em>float</em>
-<DD>Smoothing parameter</DD>
-<DD>Default: <em>0.1</em></DD>
-
-<DT><b>devi</b>=<em>string</em>
-<DD>Name of the output deviations site file</DD>
-
-<DT><b>maskmap</b>=<em>string</em>
-<DD>Name of the raster file used as mask</DD>
-
-<DT><b>segmax</b>=<em>integer</em>
-<DD>Max number of points in segment (<=700)</DD>
-<DD>Default: <em>50</em></DD>
-
-<DT><b>dmin</b>=<em>float</em>
-<DD>Min distance between points (extra points ignored)</DD>
-<DD>Default: <em>50.000000</em></DD>
-
-<DT><b>npmin</b>=<em>integer</em>
-<DD>Min number of points for interpolation</DD>
-<DD>Default: <em>200</em></DD>
-
-<DT><b>wmult</b>=<em>float</em>
-<DD>Conversion factor for w-values</DD>
-<DD>Default: <em>1.0</em></DD>
-
-<DT><b>zmult</b>=<em>float</em>
-<DD>Conversion factor for z-values</DD>
-<DD>Default: <em>1.0</em></DD>
-
-<DT><b>cellout</b>=<em>string</em>
-<DD>Name of the crossection cell file</DD>
-
-<DT><b>elev</b>=<em>string</em>
-<DD>Elevation g3d-file </DD>
-
-<DT><b>gradient</b>=<em>string</em>
-<DD>Gradient magnitude g3d-file</DD>
-
-<DT><b>aspect1</b>=<em>string</em>
-<DD>G. horizontal angle g3d-file</DD>
-
-<DT><b>aspect2</b>=<em>string</em>
-<DD>G. vertical angle g3d-file</DD>
-
-<DT><b>ncurv</b>=<em>string</em>
-<DD>Change of gradient g3d-file</DD>
-
-<DT><b>gcurv</b>=<em>string</em>
-<DD>Gaussian curvature g3d-file</DD>
-
-<DT><b>mcurv</b>=<em>string</em>
-<DD>Mean curvature g3d-file</DD>
-
-</DL>
-</body></html>
-<H2>DESCRIPTION</H2>
-
-<p><i>v.vol.rst</i> interpolates the values to 3-dimensional grid from point
- data (climatic stations, drill holes etc.) given in a 3D sites file named
- <i>input</i>.&nbsp; Output g3d file is <i>elev</i>. The 3-dimensional grid
- is given by the current 3D region. If the options <i>cellinp</i> and <i>cellout</i>
- are specified then the output raster file <i>cellout</i> contains crossection
- of interpolated volume with surface defined by input cell file .  As an
-option, simultaneously with interpolation, geometric parameters magnitude
- of gradient, both aspects, change of gradient, Gauss-Kronecker curvature,
- or mean curvature are computed and saved as g3d file as specified by the
-options <i>gradient, aspect1, aspect2, ncurv, gcurv, mcurv</i> respectively.
+<p><i>v.vol.rst</i> interpolates values to a 3-dimensional grid from
+3-dimensional point data (e.g. temperature, rainfall data from climatic
+stations, concentrations from drill holes etc.) given in a 3-D vector
+point file named <i>input</i>.&nbsp; The size of the output 3-D grid
+g3d file <i>elev</i> is given by the current 3D region. Sometimes, the
+user
+may want to get a 2-D map showing a modelled phenomenon at a
+crossection surface. In that case, <i>cellinp</i> and <i>cellout</i>
+options must be specified and then the output 2D grid file <i>cellout</i>
+contains crossection of interpolated volume with surface defined by <i>cellinp</i>
+2D grid input file. As an
+option, simultaneously with interpolation, geometric parameters of the
+interpolated
+phenomenon can be computed (magnitude of gradient, direction of
+gradient defined by horizontal and vertical angles), change of
+gradient,
+Gauss-Kronecker curvature, or mean curvature). These geometric
+parameteres are saved as
+g3d files <i>gradient, aspect1, aspect2, ncurv, gcurv, mcurv</i>,
+respectively.
 </p>
-      
-<p>At first, data points are checked for identical points and points that
- are closer to each other than given <i>dmin</i> are removed. Parameters
-<i>wmult</i>  and <i>zmult</i> allow user to re-scale the w-values and z-values
-for sites  (useful e.g. for transformation of elevations given in feet to
-meters, so  that the proper values of gradient and curvatures can be computed).
+<p>At first, data points are checked for identical points and points
+that are closer to each other than given <i>dmin</i> are removed.
+Parameters
+<i>wmult</i> and <i>zmult</i> allow user to re-scale the w-values and
+z-coordinates
+of the point data (useful e.g. for transformation of elevations given
+in feet
+to meters, so that the proper values of gradient and curvatures can be
+computed).
 </p>
-      
-<p>Regularized spline with tension is used for the interpolation. The <i>tension</i> 
- parameter tunes the character of the resulting volume from thin plate to
- membrane. Higher values of tension parameter reduce the overshoots that
-can  appear in volumes with rapid change of gradient. For noisy data, it
-is possible  to define a smoothing parameter, <i>smooth</i>. With the smoothing
-parameter  set to zero (<i>smooth=0</i>) the resulting volume passes exactly
-through  the data points. When smoothing is used,
-it is  possible to output site file <i>devi</i>
-containing deviations of the resulting volume from the given data.  </p>
-      
-<p>User can define a 2D raster file named <i>maskmap</i>, which will be used
- as a mask. The interpolation is skipped for 3-dimensional cells whose 2-dimensional
- projection has zero value in mask. Zero values will be assigned to these
-cells in all output g3d files. </p>
-      
-<p>If the number of given points is greater than 700, segmented processing
- is used. The region is split into 3-dimensional "box" segments, each having
- less than <i>segmax</i> points and interpolation is performed on each segment
- of the region. To ensure the smooth connection of segments the interpolation
- function for each segment is computed using the points in given segment
-and  the points in its neighborhood. The minimum number of points taken for
-interpolation  is controlled by <i>npmin</i> , the value of which must be
-larger than <i>segmax</i>  and less than 700. This limit of 700 was selected
-to ensure the numerical  stability and efficiency of the algorithm. </p>
-      
-<p><i>v.vol.rst</i> uses regularized spline with tension for interpolation
- from point data (as described in Mitasova and Mitas, 1993). The implementation
- has an improved segmentation procedure based on Oct-trees which enhances
+<p>Regularized spline with tension method is used in the interpolation.
+The <i>tension</i> parameter tunes the character of the resulting
+volume from thin plate
+to membrane. Higher values of tension parameter reduce the overshoots
+that
+can appear in volumes with rapid change of gradient. For noisy data, it
+is possible to define a global smoothing parameter, <i>smooth</i>.
+With the
+smoothing parameter set to zero (<i>smooth=0</i>) the resulting volume
+passes
+exactly through the data points. Also, the user can use a spatially
+variable
+smoothing using <i>smatt</i> option by setting the parameter <i>smatt</i>
+to the value j for the j-th floating point attribute in the input
+vector point file, representing the smoothing parameter for each point.
+When smoothing is used,
+it is possible to output site file <i>devi</i>
+containing deviations of the resulting volume from the given data. </p>
+<p>User can define a 2D raster file named <i>maskmap</i>, which will
+be used as a mask. The interpolation is skipped for 3-dimensional cells
+whose 2-dimensional projection has zero value in mask. Zero values will
+be assigned to these cells in all output g3d files. </p>
+<p>If the number of given points is greater than 700, segmented
+processing is used. The region is split into 3-dimensional "box"
+segments, each having less than <i>segmax</i> points and interpolation
+is performed on each segment of the region. To ensure the smooth
+connection of segments the interpolation function for each segment is
+computed using the points in given segment
+and the points in its neighborhood. The minimum number of points taken
+for interpolation is controlled by <i>npmin</i> , the value of which
+must
+be larger than <i>segmax</i> and less than 700. This limit of 700 was
+selected to ensure the numerical stability and efficiency of the
+algorithm. </p>
+<p>
+Sometimes it can be difficult to figure out the proper
+values of interpolation
+parameters. In this case, the user can use a crossvalidation procedure
+using <i>-c</i> flag (a.k.a. "jack-knife" method) to find optimal
+parameters for given data. In this method, every point in the input
+point file is temporarily excluded from the
+computation and interpolation error for this point location is
+computed.
+During this procedure no output grid files can be simultanuously
+computed.
+The procedure for larger datasets may take a very long time, so it
+might be worth
+to use just a sample data representing the whole dataset.
+</p>
+<p><i>v.vol.rst</i> uses regularized spline with tension for
+interpolation from point data (as described in Mitasova and Mitas,
+1993). The implementation has an improved segmentation procedure based
+on Oct-trees which enhances
 the efficiency for large data sets. </p>
-      
-<p>Geometric parameters - magnitude of gradient (<i>gradient</i>), horizontal
- (<i>aspect1</i>) and vertical (<i>aspect2) </i>aspects, change of gradient
- (<i>ncurv</i>), Gauss-Kronecker (<i>gcurv</i>) and mean curvatures (<i>mcurv</i>)
- are computed directly from the interpolation function so that the important
- relationships between these parameters are preserved. More information on
- these parameters can be found in Mitasova et al., 1995 or Thorpe, 1979.</p>
-      
-<p>The program gives warning when significant overshoots appear and higher
- tension should be used. However, with tension too high the resulting volume
- changes its behavior to membrane( rubber sheet stretched over the data points
- resulting in a peak in each given point and everywhere else the volume goes
- rapidly to trend). With smoothing parameter greater than zero the volume
-will not pass through the data points and the higher the parameter the closer
-the volume will be to the trend. For theory on smoothing with splines see
+<p>Geometric parameters - magnitude of gradient (<i>gradient</i>),
+horizontal (<i>aspect1</i>) and vertical (<i>aspect2) </i>aspects,
+change of gradient (<i>ncurv</i>), Gauss-Kronecker (<i>gcurv</i>) and
+mean curvatures (<i>mcurv</i>) are computed directly from the
+interpolation function so that the important relationships between
+these parameters are preserved. More information on these parameters
+can be found in Mitasova et al., 1995 or Thorpe, 1979.</p>
+<p>The program gives warning when significant overshoots appear and
+higher tension should be used. However, with tension too high the
+resulting volume changes its behavior to membrane( rubber sheet
+stretched over the data points resulting in a peak in each given point
+and everywhere else the volume goes rapidly to trend). With smoothing
+parameter greater than zero the volume
+will not pass through the data points and the higher the parameter the
+closer
+the volume will be to the trend. For theory on smoothing with splines
+see
 Talmi and Gilat, 1977 or Wahba, 1990. </p>
-      
-<p>If a visible connection of segments appears, the program should be rerun
- with higher <i>npmin</i> to get more points from the neighborhood of given
- segment. </p>
-      
+<p>If a visible connection of segments appears, the program should be
+rerun with higher <i>npmin</i> to get more points from the
+neighborhood of given segment. </p>
 <p>If the number of points in a site file is less then 400, <i>segmax</i>
- should be set to 400 so that segmentation is not performed when it is not
- necessary. </p>
-      
-<p>The program gives warning when user wants to interpolate outside the "box" 
- given by minimum and maximum coordinates in site file, zoom into the area
- where the points are is suggested in this case. </p>
-      
-<p>For large data sets (thousands of data points) it is suggested to zoom
- into a smaller representative area and test whether the parameters chosen
- (e.g. defaults) are appropriate. </p>
-      
-<p>The user must run <i>g3.region</i> before the program to set the region
- for interpolation. </p>
-      
+should be set to 400 so that segmentation is not performed when it is
+not necessary. </p>
+<p>The program gives warning when user wants to interpolate outside the
+"box" given by minimum and maximum coordinates in site file, zoom into
+the area where the points are is suggested in this case. </p>
+<p>For large data sets (thousands of data points) it is suggested to
+zoom into a smaller representative area and test whether the parameters
+chosen (e.g. defaults) are appropriate. </p>
+<p>The user must run <i>g3.region</i> before the program to set the
+region for interpolation. </p>
+<h3>Flags:</h3>
+<p><b>-c</b> Perform a cross-validation procedure.
+<br>
+</p>
 <h3>Parameters:</h3>
-      
 <dl>
   <dt><b>input</b></dt>
-  <dd>Name of the site file (format see NOTES below)</dd>
+  <dd>Name of the vector file (format see NOTES below)</dd>
   <dt><strong>colnum</strong></dt>
-  <dd>decimal attribute to use for value w (1=first) options (1-100), default
- is 1.</dd>
+  <dd>decimal attribute to use for value w (1=first) options (1-100),
+default is 1.</dd>
   <dt><b>cellinp</b></dt>
   <dd>Name of the surface cell file to use for crossection</dd>
   <dt><b>tension</b></dt>
   <dd>Tension</dd>
   <dd>Default: 40</dd>
+  <dt><b>smatt</b></dt>
+  <dd>Which fp point attribute to use for smoothing (or use smooth= for
+constant)</dd>
   <dt><b>smooth</b></dt>
   <dd>Smoothing parameter</dd>
   <dd>Default: 0.1</dd>
   <dt><b>devi</b></dt>
-  <dd>Output deviations to a site file </dd>
+  <dd>Output deviations to a vector file </dd>
+  <dt><b>cvdev</b></dt>
+  <dd>Name of the output cross-validation vector file</dd>
   <dt><b>maskmap</b></dt>
   <dd>Name of the raster file used as mask</dd>
   <dt><b>segmax</b></dt>
@@ -223,9 +262,8 @@ Talmi and Gilat, 1977 or Wahba, 1990. </p>
   <dt><b>mcurv</b></dt>
   <dd>Mean curvature g3d-file</dd>
 </dl>
-      
-<h2>NOTES</h2>
 
+<h2>NOTES</h2>
 The vector points map must be a 3D vector map (x, y, z as geometry).
 The module <a href="v.in.db.html">v.in.db</a> can be used to generate
 a 3D vector map from a table containing x,y,z columns.
@@ -240,76 +278,70 @@ a 3D vector map from a table containing x,y,z columns.
 <a href="v.surf.rst.html">v.surf.rst</a>
 
 <h2>AUTHOR</h2>
-      
 <p>Original version of program (in FORTRAN) and GRASS enhancements: <br>
-   Lubos Mitas, NCSA, University of Illinois at Urbana-Champaign, Illinois,
- USA,<a href="mailto:lubos_mitas@ncsu.edu">lubos_mitas@ncsu.edu</a><br>
-   Helena Mitasova, Department of Geography, University of Illinois at Urbana-Champaign, 
- Champaign, Illinois, USA, <a href="mailto:hmitaso@unity.ncsu.edu">hmitaso@unity.ncsu.edu</a></p>
-      
-<p>Modified program (translated to C, adapted for GRASS, new segmentation
- procedure): <br>
-   Irina Kosinovsky, US Army CERL, Champaign, Illinois, USA <br>
-   Dave Gerdes, US Army CERL, Champaign, Illinois, USA </p>
-      
-<p>Modifications for g3d library, geometric parameters, deviations: <br>
-   Jaro Hofierka, GeoModel s.r.o., Bratislava, Slovakia, <a
- href="MAILTO:hofierka@geomodel.sk">hofierka@geomodel.sk</a>, <a
+Lubos Mitas, NCSA, University of Illinois at Urbana-Champaign,
+Illinois, USA,<a href="mailto:lubos_mitas@ncsu.edu">lubos_mitas@ncsu.edu</a><br>
+Helena Mitasova, Department of Marine, Earth and Atmospheric Sciences,
+North Carolina State University, Raleigh, USA, <a
+ href="mailto:hmitaso@unity.ncsu.edu">hmitaso@unity.ncsu.edu</a></p>
+<p>Modified program (translated to C, adapted for GRASS, new
+segmentation procedure): <br>
+Irina Kosinovsky, US Army CERL, Champaign, Illinois, USA <br>
+Dave Gerdes, US Army CERL, Champaign, Illinois, USA </p>
+<p>Modifications for g3d library, geometric parameters,
+cross-validation, deviations: <br>
+Jaro Hofierka, Department of Geography and Regional Development,
+University of Presov, Presov, Slovakia, <a
+ href="MAILTO:hofierka@fhpv.unipo.sk">hofierka@fhpv.unipo.sk</a>, <a
  href="http://www.geomodel.sk">http://www.geomodel.sk</a> <br>
-   &nbsp; </p>
-      
-<h2>REFERENCES</h2>
-      
-<p>Hofierka J., Parajka J., Mitasova H., Mitas L., 2002, Multivariate Interpolation
- of Precipitation Using Regularized Spline with Tension. Transactions in
-GIS&nbsp;  6, pp. 135-150.  </p>
-   
-<p><a href="http://skagit.meas.ncsu.edu/~helena/gmslab/">Mitas, L., Mitasova, H.</a>, 
- 1999, Spatial Interpolation. In: P.Longley, M.F. Goodchild, D.J. Maguire, 
- D.W.Rhind (Eds.), Geographical Information Systems: Principles, Techniques, 
- Management and Applications, Wiley, pp.481-492  </p>
-   
-<p>Mitas L., Brown W. M., Mitasova H., 1997, <a
- href="http://skagit.meas.ncsu.edu/~helena/gmslab/lcgfin/cg-mitas.html">Role of 
- dynamic cartography in simulations of landscape processes based on multi-variate
- fields.</a> Computers and Geosciences, Vol. 23, No. 4, pp. 437-446 (includes
- CDROM and WWW: www.elsevier.nl/locate/cgvis)  </p>
-   
-<p>Mitasova H., Mitas L.,&nbsp; Brown W.M.,&nbsp; D.P. Gerdes, I. Kosinovsky,
- Baker, T.1995, Modeling spatially and temporally distributed phenomena:
-New  methods and tools for GRASS GIS. International Journal of GIS, 9 (4),
-special  issue on Integrating GIS and Environmental modeling, 433-446. </p>
-      
-<p> Mitasova, H., Mitas, L., Brown, B., Kosinovsky, I., Baker,  T., Gerdes, 
-D. (1994): <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/viz/ches.html">Multidimensional 
- interpolation and visualization in GRASS GIS</a>  </p>
-   
-<p><a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/lmg.rev1.ps">Mitasova
- H. and Mitas L. 1993</a>: Interpolation by Regularized Spline with Tension:
- I. Theory and Implementation, <i>Mathematical Geology</i> 25, 641-655. 
-</p>
-   
-<p><a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/hmg.rev1.ps">Mitasova
- H. and Hofierka J. 1993</a>: Interpolation by Regularized Spline with Tension: 
- II. Application to Terrain Modeling and Surface Geometry Analysis, <i>Mathematical
- Geology</i> 25, 657-667.  </p>
-   
-<p>Mitasova, H., 1992 : New capabilities for interpolation and topographic
- analysis in GRASS, GRASSclippings 6, No.2 (summer), p.13. </p>
-      
-<p>Wahba, G., 1990 : Spline Models for Observational Data, CNMS-NSF Regional
- Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
- </p>
-      
-<p>Mitas, L., Mitasova H., 1988 : General variational approach to the interpolation 
- problem, Computers and Mathematics with Applications 16, p. 983 </p>
-      
-<p>Talmi, A. and Gilat, G., 1977 : Method for Smooth Approximation of Data,
- Journal of Computational Physics, 23, p.93-123. </p>
-      
-<p>Thorpe, J. A. (1979): Elementary Topics
- in Differential Geometry. Springer-Verlag, New York, pp. 6-94.</p>
-       
-<p><i>Last changed: $Date$</i> </p>
+&nbsp; </p>
 
- 
+<h2>REFERENCES</h2>
+<p>Hofierka J., Parajka J., Mitasova H., Mitas L., 2002, Multivariate
+Interpolation of Precipitation Using Regularized Spline with Tension.
+Transactions in
+GIS&nbsp; 6, pp. 135-150. </p>
+<p><a href="http://skagit.meas.ncsu.edu/%7Ehelena/gmslab/">Mitas, L.,
+Mitasova, H.</a>, 1999, Spatial Interpolation. In: P.Longley, M.F.
+Goodchild, D.J. Maguire, D.W.Rhind (Eds.), Geographical Information
+Systems: Principles, Techniques, Management and Applications, Wiley,
+pp.481-492 </p>
+<p>Mitas L., Brown W. M., Mitasova H., 1997, <a
+ href="http://skagit.meas.ncsu.edu/%7Ehelena/gmslab/lcgfin/cg-mitas.html">Role
+of dynamic cartography in simulations of landscape processes based on
+multi-variate fields.</a> Computers and Geosciences, Vol. 23, No. 4,
+pp. 437-446 (includes CDROM and WWW: www.elsevier.nl/locate/cgvis) </p>
+<p>Mitasova H., Mitas L.,&nbsp; Brown W.M.,&nbsp; D.P. Gerdes, I.
+Kosinovsky, Baker, T.1995, Modeling spatially and temporally
+distributed phenomena:
+New methods and tools for GRASS GIS. International Journal of GIS, 9
+(4),
+special issue on Integrating GIS and Environmental modeling, 433-446. </p>
+<p> Mitasova, H., Mitas, L., Brown, B., Kosinovsky, I., Baker, T.,
+Gerdes, D. (1994): <a
+ href="http://skagit.meas.ncsu.edu/%7Ehelena/gmslab/viz/ches.html">Multidimensional
+interpolation and visualization in GRASS GIS</a> </p>
+<p><a
+ href="http://skagit.meas.ncsu.edu/%7Ehelena/gmslab/papers/lmg.rev1.ps">Mitasova
+H. and Mitas L. 1993</a>: Interpolation by Regularized Spline with
+Tension: I. Theory and Implementation, <i>Mathematical Geology</i> 25,
+641-655. </p>
+<p><a
+ href="http://skagit.meas.ncsu.edu/%7Ehelena/gmslab/papers/hmg.rev1.ps">Mitasova
+H. and Hofierka J. 1993</a>: Interpolation by Regularized Spline with
+Tension: II. Application to Terrain Modeling and Surface Geometry
+Analysis, <i>Mathematical Geology</i> 25, 657-667. </p>
+<p>Mitasova, H., 1992 : New capabilities for interpolation and
+topographic analysis in GRASS, GRASSclippings 6, No.2 (summer), p.13. </p>
+<p>Wahba, G., 1990 : Spline Models for Observational Data, CNMS-NSF
+Regional Conference series in applied mathematics, 59, SIAM,
+Philadelphia, Pennsylvania. </p>
+<p>Mitas, L., Mitasova H., 1988 : General variational approach to the
+interpolation problem, Computers and Mathematics with Applications 16,
+p. 983 </p>
+<p>Talmi, A. and Gilat, G., 1977 : Method for Smooth Approximation of
+Data, Journal of Computational Physics, 23, p.93-123. </p>
+<p>Thorpe, J. A. (1979): Elementary Topics in Differential Geometry.
+Springer-Verlag, New York, pp. 6-94.</p>
+
+<p><i>Last changed: $Date$</i> </p>
