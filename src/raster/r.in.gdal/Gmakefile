@@ -4,6 +4,7 @@ HOME   = $(BIN_MAIN_CMD)
 LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) -ldl
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(XDRLIB) \
+			$(DLLIB) $(MATHLIB)
 
 $(GISLIB): #

@@ -30,8 +30,11 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-09-26 13:04:32  frankw
- * New
+ * Revision 1.2  2000-09-26 17:47:50  frankw
+ * added imagery support
+ *
+ * Revision 1.10  2000/09/26 15:20:32  warmerda
+ * added GDALGetRasterBand{X,Y}Size
  *
  * Revision 1.9  2000/09/01 19:12:09  warmerda
  * fixed const mismatch
@@ -178,6 +181,12 @@ int GDALBridgeInitialize( const char * pszTargetDir )
 
     GDALGetRasterDataType = (GDALDataType (*)(GDALRasterBandH))
         GBGetSymbol( szPath, "GDALGetRasterDataType" );
+
+    GDALGetRasterBandXSize = (int (*)(GDALRasterBandH))
+        GBGetSymbol( szPath, "GDALGetRasterBandXSize" );
+
+    GDALGetRasterBandYSize = (int (*)(GDALRasterBandH))
+        GBGetSymbol( szPath, "GDALGetRasterBandYSize" );
 
     GDALGetBlockSize = (void (*)(GDALRasterBandH, int *, int *))
         GBGetSymbol( szPath, "GDALGetBlockSize" );
