@@ -24,6 +24,7 @@ put_field_info()
 get_field_info()
 {
    int status, tempint;
+   char c;
 
    crim_w_err(FIELD_TABLE, "select from fieldnames");
    status = Field_num = 0;
@@ -38,10 +39,14 @@ get_field_info()
       G_squeeze(Field_info[tempint].column_name);
       G_tolcase(Field_info[tempint].column_name);
 
-      if (Field_info[tempint].column_type==S_FIELD_CHAR) Site_field = tempint;
-      if (Field_info[tempint].column_type==X_FIELD_CHAR) East_field = tempint;
-      if (Field_info[tempint].column_type==Y_FIELD_CHAR) North_field = tempint;
-
+      c = Field_info[tempint].column_type;
+      if (c==S_FIELD_CHAR) Site_field = tempint;
+      if (c==X_FIELD_CHAR) East_field = tempint;
+      if (c==Y_FIELD_CHAR) North_field = tempint;
+      if ((c==X_FIELD_CHAR || c==Y_FIELD_CHAR || c==F_FIELD_CHAR)
+         && Field_info[tempint].next_field[1] > 20)
+            Field_info[tempint].next_field[1] = 2; /*for old data bases*/
+          
       if (tempint!=Field_num)
          G_fatal_error("Corrupted field information in data base.");
       Field_num++;
