@@ -1,0 +1,24 @@
+IMP_OFILES = \
+	imp_main.o \
+	imp_gef.o \
+	get_head.o \
+	llutm.o \
+	llstp.o \
+	llalbr.o \
+	utmll.o \
+	stpll.o \
+	albrll.o 
+
+all:	$(BIN_CONTRIB_CMD)/v.in.scsgef
+
+
+$(BIN_CONTRIB_CMD)/v.in.scsgef:	$(IMP_OFILES)
+	cc $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(VASK) $(MATHLIB)
+
+
+imp_gef.o:	format.h
+imp_main.o:	format.h
+get_head.o:	format.h
+
+$(GISLIB): #
+
