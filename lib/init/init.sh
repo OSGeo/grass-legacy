@@ -528,7 +528,7 @@ else
 fi
 echo 
 echo "This version running thru the $shellname ($SHELL)"
-echo "Help is available with the command:      g.help"
+echo "Help is available with the command:      g.manual"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
