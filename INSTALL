@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.18 2001-04-03 12:35:39 markus Exp $)
+($Id: INSTALL,v 1.19 2001-04-04 13:15:21 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -99,6 +99,14 @@ or,
 
 whichever works on your shell. (Use -O2 instead of -O if your compiler
 supports this.)
+
+If you want to catch the compiler warnings into a file, modify above "make"
+call to
+
+	make 2>compile_warnings.log
+
+The modules not being compiled due to errors will be listed in
+error.log.
 
 
 CONFIGURE OPTIONS
