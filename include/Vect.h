@@ -195,6 +195,8 @@ int Vect_overlay ( struct Map_info *, int, struct ilist *, struct ilist *,
     /* Network (graph) */
 int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int, int);
 int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist *, double *);
+int Vect_net_get_line_cost ( struct Map_info *, int, int, double *);
+int Vect_net_get_node_cost ( struct Map_info *, int, double *);
 
     /* Miscellaneous */
 int Vect_topo_dump ( struct Plus_head *, FILE *);

@@ -296,7 +296,11 @@ struct Map_info
     
     struct Plus_head plus;      /* topo file *head; */
     dglGraph_s   graph;       	/* graph structure */
-    dglSPCache_s spCache;     /* Shortest path cache */ 
+    dglSPCache_s spCache;       /* Shortest path cache */ 
+    double *edge_fcosts;        /* costs used for graph, (dglGetEdge() is not supported for _DGL_V1) */
+    double *edge_bcosts;        
+    double *node_costs;         /* node costs */
+    int cost_multip;            /* edge and node costs multiplicator */
 
     /*  All of these apply only to runtime, and none get written out
     **  to the dig_plus file 
