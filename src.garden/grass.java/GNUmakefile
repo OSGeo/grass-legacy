@@ -1,9 +1,17 @@
 #
 # Copyright (C) 1998 The Information-technology Promotion Agency, Japan(IPA), LGPL
-# $Id: GNUmakefile,v 2.2 2000-11-26 13:28:09 markus Exp $
+# $Id: GNUmakefile,v 2.3 2001-04-17 12:19:15 john Exp $
 #
 
 SHELL = /bin/sh
+
+export UNIX_TYP:=$(shell uname -s)
+ifeq ($(UNIX_TYP), CYGWIN_NT-5.0)
+LIBEXT:=dll
+else
+LIBEXT:=so
+endif
+
 
 #### ######################################################################
 ####
@@ -33,7 +41,8 @@ VECTH2 = $(GRASS_SRC)/libes/vect32/diglib
 # directory that contains a libgis.a for your grass compilation 
 # if previous variables were set this should be ok
 #GISLIB = $(GRASS_SRC)/libes/LIB.$(ARCH)
-GISLIB = $(GRASS_SRC)/libes/$(LIBARCH)
+#GISLIB = $(GRASS_SRC)/libes/$(LIBARCH)
+GISLIB = /usr/local/grass5/lib
 
 ## Settings to run the test programs
 
@@ -61,7 +70,7 @@ DOCDEST = htmls
 
 # location of JDK, uncomment this line and set variable to an appropriate 
 # value if it is not set in your environment
-JDK_HOME = /usr/java/jdk1.3
+JDK_HOME = /JBuilder4/jdk1.3
 
 ## OS dependent settings (default to Solaris) ####
 
@@ -71,7 +80,8 @@ SO_FLAGS = -shared   # Linux 2.x
 
 # location of OS dependent JNI headers for C programs
 #JNI_H = $(JDK_HOME)/include/solaris   # Solaris 2.5.1
-JNI_H = $(JDK_HOME)/include/linux   # Linux 2.x
+#JNI_H = $(JDK_HOME)/include/linux   # Linux 2.x
+JNI_H = $(JDK_HOME)/include
 
 ## C-related settings ####
 CC	= gcc $(DEBUG)
@@ -84,7 +94,7 @@ DEBUG = -g
 ####
 #### #######################################################################
 
-JAVAC   = $(JDK_HOME)/bin/javac $(DEBUG) -d $(DEST)
+JAVAC   = javac -deprecation $(DEBUG) -d $(DEST)
 JAVA    = $(JDK_HOME)/bin/java
 JAVAH   = $(JDK_HOME)/bin/javah -jni
 JAVADOC = $(JDK_HOME)/bin/javadoc $(JAVADOCFLAGS) 
@@ -93,7 +103,7 @@ JAR     = $(JDK_HOME)/bin/jar
 FIND  = find
 STRIP = strip
 
-EXTRA_CFLAGS = -I$(JDK_HOME)/include -I$(JNI_H) -I$(GISH) \
+EXTRA_CFLAGS = -I$(JDK_HOME)/include/win32 -I$(JNI_H) -I$(GISH) \
 	       -I$(VECTH1) -I$(VECTH2)
 
 SRC_GIS = GRASS_libgis.c GRASS_CELL.c GRASS_Cellhead.c GRASS_Colors.c \
@@ -111,7 +121,7 @@ H_ETC   = etc.h
 OBJ_ETC = $(addsuffix .o,$(basename $(SRC_ETC)))
 
 CLASS = $(addsuffix .class,$(basename $(wildcard GRASS/*.java)))
-SO    = libgis.so libvect.so
+SO    = libgis.$(LIBEXT) libvect.$(LIBEXT)
 
 # Standard Targets 
 
@@ -127,7 +137,7 @@ clean:
 	rm -f $(H_GIS) $(H_VECT) *.class *.o core* GRASS/*.class
 
 distclean: clean cleandocs
-	rm -f *.so *.jar 
+	rm -f *.$(LIBEXT) *.jar 
 	rm -rf OBJ.*
 
 # these are tags common for GNU programs but I have not yet implemented them
@@ -136,21 +146,21 @@ install uninstall install-strip:
 
 # Project Specific Targets
 
-libgis.so: $(OBJ_GIS) $(H_GIS) $(OBJ_ETC) $(H_ETC) $(CLASS) $(GISLIB)
+libgis.$(LIBEXT): $(OBJ_GIS) $(H_GIS) $(OBJ_ETC) $(H_ETC) $(CLASS) $(GISLIB)
 	$(CC) $(SO_FLAGS) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ \
-        $(OBJ_GIS) $(OBJ_ETC) -L$(GISLIB) -lgis 
-	rm -f $(subst .so,_g.so,$@)
+        $(OBJ_GIS) $(OBJ_ETC) -L$(GISLIB) -lgis -ldatetime -lrpclib -lz
+	rm -f $(subst .$(LIBEXT),_g.$(LIBEXT),$@)
 ifdef DEBUG
-	cp $@ $(subst .so,_g.so,$@)
+	cp $@ $(subst .$(LIBEXT),_g.$(LIBEXT),$@)
 endif
 	$(STRIP) $@
 
-libvect.so: $(OBJ_VECT) $(H_VECT) $(OBJ_ETC) $(H_ETC) $(CLASS) $(GISLIB)
+libvect.$(LIBEXT): $(OBJ_VECT) $(H_VECT) $(OBJ_ETC) $(H_ETC) $(CLASS) $(GISLIB)
 	$(CC) $(SO_FLAGS) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ \
-	$(OBJ_VECT) $(OBJ_ETC) -L$(GISLIB) -lvect -ldig2 -L. -lgis
-	rm -f $(subst .so,_g.so,$@)
+	$(OBJ_VECT) $(OBJ_ETC) -L$(GISLIB) -lvect -ldig2 -L. -lgis -ldatetime -lrpclib -lz
+	rm -f $(subst .$(LIBEXT),_g.$(LIBEXT),$@)
 ifdef DEBUG
-	cp $@ $(subst .so,_g.so,$@)
+	cp $@ $(subst .$(LIBEXT),_g.$(LIBEXT),$@)
 endif
 	$(STRIP) $@
 
