@@ -166,6 +166,8 @@ main (int argc, char *argv[])
     
     Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, NULL, wkbtype, NULL );
     
+    db_init_string(&dbstring);
+
     /* Vector attributes -> OGR fields */
     if ( field > 0 ) {
 	 doatt = 1; /* do attributes */
@@ -186,7 +188,6 @@ main (int argc, char *argv[])
 	     if (db_open_database(Driver, &handle) != DB_OK)
 		 G_fatal_error("Cannot open database %s", Fi->database);
 
-	     db_init_string(&dbstring);
 	     db_set_string(&dbstring, Fi->table);
 	     if(db_describe_table (Driver, &dbstring, &Table) != DB_OK) 
 		 G_fatal_error("Cannot describe table %s", Fi->table);
@@ -360,7 +361,7 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
     dbCursor cursor;
     dbValue  *Value;
 
-    G_debug (2, "mk_feature() cat = %d", cat );
+    G_debug (2, "mk_att() cat = %d, doatt = %d", cat, doatt );
     db_init_string(&dbstring);
     
     /* Attributes */
