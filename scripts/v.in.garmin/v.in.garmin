@@ -323,6 +323,8 @@ else # CREATE_LINES
 	    sed -e 's/:/\t/' > "${TMP}.route_ids"
 	cat "${TMP}.gpst" | sed -e '1d' | grep ^R -A 1 | grep ^W | cut -f2 > "${TMP}.route_start"
 	paste "${TMP}.route_ids" "${TMP}.route_start" > "${TMP}.route_atts"
+	ATTR_FILE="${TMP}.route_atts"
+	ATTR_COLS='cat int, route_id int, name varchar(20), start_wpt varchar(10)'
     fi
 
     if [ $TRK -eq 1 ] ; then
@@ -338,6 +340,8 @@ else # CREATE_LINES
 	cat "${TMP}.gpst" | sed -e '1d' | grep ^$ -A 1 | grep ^T | cut -f2,3,4 | \
 	    grep -n ^ | sed -e 's/:/\t/'  > "${TMP}.start_time"
 	paste "${TMP}.start_time" "${TMP}.end_time" > "${TMP}.track_atts"
+	ATTR_FILE="${TMP}.track_atts"
+	ATTR_COLS='cat int, start_time varchar(40), start_lat double, start_lon double, end_time varchar(40), end_lat double, end_lon double'
     fi
 
 
@@ -358,7 +362,6 @@ else # CREATE_LINES
 		$1!="L" { printf(" %.7f %.7f\n", $2, $1) } END {;}' > "${TMP}.P_base"
 	fi
     fi
-
 
     # add category numbers
     cat "${TMP}.P_base" | awk 'BEGIN { FS=" " ; R=0 } \
@@ -398,7 +401,39 @@ EOF
 	else
 	    echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
 	    echo "please check!" 1>&2
+	    exit 1
 	fi
+
+# check that 'db.connect -p' exists first? or maybe with 'g.findfile element=. file=VAR'?
+
+	echo "Creating new table.."
+	echo "CREATE TABLE $NAME ($ATTR_COLS)" | db.execute
+
+	echo "Populating table with attributes.."
+# echo "COPY $NAME FROM '$ATTR_FILE'" | db.execute
+
+# "COPY table FROM 'filename.txt'" does not work for DBF and there is no
+#   db.in.ascii yet, so we use a hack ...
+
+### <hack>
+	if [ $RTE -eq 1 ] ; then
+	    # =>  echo "INSERT INTO $NAME VALUES (2, 1, 'AB', 'B')" | db.execute
+	    cat "$ATTR_FILE" | \
+	      awk -F'\t' '{ printf("echo \"INSERT INTO $NAME VALUES (%d, %d, ^%s^, ^%s^)\" | db.execute\n", $1, $2, $3, $4) }' \
+	        | tr '^' \' >  "$ATTR_FILE"_exe
+	fi
+	if [ $TRK -eq 1 ] ; then
+	    # =>  echo "INSERT INTO $NAME VALUES ()" | db.execute
+	    cat "$ATTR_FILE" | \
+	      awk -F'\t' '{ printf("echo \"INSERT INTO $NAME VALUES (%d, ^%s^, %.7f, %.7f, ^%s^, %.7f, %.7f)\" | db.execute\n", $1, $2, $3, $4, $5, $6, $7) }' \
+	        | tr '^' \' >  "$ATTR_FILE"_exe
+	fi
+
+	. "$ATTR_FILE"_exe
+### </hack>
+
+	echo "Connecting attribute table to vector file.."
+	v.db.connect map="$NAME" table="$NAME"
     fi
 
 fi  # if CREATE_POINTS or CREATE_LINES
