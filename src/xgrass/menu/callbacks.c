@@ -1,4 +1,4 @@
-static char rcsid[] = "@(#)XGRASS $Id: callbacks.c,v 0.0.0.1 1992/05/05 14:58:21 kurt Exp kurt $";
+static char rcsid[] = "@(#)XGRASS $Id: callbacks.c,v 0.0.0.1 1997/09/30 14:58:21 kurt Exp kurt $";
 /*
  * File: callbacks.c
  *
@@ -8,7 +8,7 @@ static char rcsid[] = "@(#)XGRASS $Id: callbacks.c,v 0.0.0.1 1992/05/05 14:58:21
  *
  * Date: Tue Oct 22 15:53:47 CDT 1991
  *
- * Modification History:
+ * Modification History:  BGRG, 1997
  *
  */
 
