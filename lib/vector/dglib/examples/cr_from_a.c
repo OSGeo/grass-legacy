@@ -97,11 +97,11 @@ reread_first_line:
 	 * new API call
 	 */
 	gnGrpInitialize (
-					& graph , 		/* graph context to initialize */
-					1 ,				/* version (so far is always 1) */
-					sizeof(xyz) ,	/* node attributes size */
-					0 ,				/* link attributes size */
-					opaqueset		/* opaque graph parameters */
+					& graph , 				/* graph context to initialize */
+					1 ,						/* version (so far is always 1) */
+					sizeof(xyz) ,			/* node attributes size */
+					0, 						/* link attributes size */
+					opaqueset				/* opaque graph parameters */
 					);
 
 	/* add arcs and X/Y/Z node attributes

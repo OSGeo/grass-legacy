@@ -28,6 +28,7 @@
 #include <fcntl.h>
 #include <time.h>
 #include <errno.h>
+#include <ctype.h>
 
 #include "../type.h"
 #include "../graph.h"
@@ -43,11 +44,10 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 	gnInt32_t * plinkarea;
 	gnInt32_t * plink;
 	gnInt32_t * ptonode;
-	gnInt32_t * pxyz;
-	gnInt32_t * pdirection;
-	char *		pszdirection;
-	int		i;
+	int		iAttr, cAttr;
 	int		role;
+	int		i;
+	char	ch;
 
 	role = 0;
 
@@ -61,46 +61,56 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 		role |= 2;
 	}
 
-	pxyz = GNGRP_NODE_ATTR_PTR(pnode);
-
-	fprintf( f , "NODE %-8ld - ROLE %-s - LINKAREA OFFSET %-8ld - ATTR [x=%-6ld y=%-6ld z=%-6ld]\n",
+	fprintf( f , "NODE %-8ld - ROLE %-s - LINKAREA OFFSET %-8ld",
 			GNGRP_NODE_ID(pnode),
 			(role>2)?"'from/to'":(role==2)?"'to'     ":"'from'   ",
-			GNGRP_NODE_LINKAREA_OFFSET(pnode) ,
-			pxyz[0], pxyz[1], pxyz[2] );
+			GNGRP_NODE_LINKAREA_OFFSET(pnode) );
+
+	if ( (cAttr = gnGrpGet_NodeAttrSize(pgraph)) > 0 ) {
+		fprintf( f , " - ATTR HEX DUMP [" );
+		for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
+			if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
+			fprintf( f , "%02x" , ((unsigned char*)GNGRP_NODE_ATTR_PTR(pnode))[iAttr] );
+		}
+		fprintf( f , "]\n" );
+	}
+	else {
+		fprintf( f , "\n" );
+	}
 
 	if ( role & 1 ) {
 		plinkarea = gnGrpGetLinkArea( pgraph, pnode );
 
 		i = 0;
-		GNGRP_LB_FOREACH_LINK(pgraph,plinkarea,plink) {
-			if ( pgraph->Flags & 0x1 ) 	ptonode = GNGRP_NB_NODE_OFF(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
+		GNGRP_FOREACH_LINK(pgraph,plinkarea,plink) {
+			if ( pgraph->Flags & 0x1 ) 	ptonode = GNGRP_NODEBUFFER_SHIFT(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
 			else						ptonode = gnGrpGetNode(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
 
-			pdirection = GNGRP_LINK_ATTR_PTR(plink);
-
-			if ( pgraph->LinkAttrSize > 0 ) {
-				switch( pdirection[0] ) {
-				case 't': pszdirection = "top         "; break;
-				case 'b': pszdirection = "bottom      "; break;
-				case 'r': pszdirection = "right       "; break;
-				case 'l': pszdirection = "left        "; break;
-				case 'o': pszdirection = "bottom-right"; break;
-				case 'O': pszdirection = "top-left    "; break;
-				default: pszdirection =  "unknown     "; break;
-				}
-			}
-			else {
-				pszdirection = "empty";
-			}
-
 			if ( ptonode ) {
-				fprintf( f , "LINK #%-8d: TO NODE %-8ld - COST %-8ld - USER %-8ld - ATTR [%s]\n",
+				fprintf( f , "LINK #%-8d: TO NODE %-8ld - COST %-8ld - USER %-8ld",
 					 i++ ,
 					 GNGRP_NODE_ID(ptonode) ,
 					 GNGRP_LINK_COST(plink) ,
-					 GNGRP_LINK_USER(plink) ,
-					 pszdirection );
+					 GNGRP_LINK_USER(plink)
+					 );
+
+				if ( (cAttr = gnGrpGet_LinkAttrSize(pgraph)) > 0 ) {
+					fprintf( f , " - ATTR HEX DUMP [" );
+					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
+						if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
+						fprintf( f , "%02x" , ((unsigned char*)GNGRP_LINK_ATTR_PTR(plink))[iAttr] );
+					}
+					fprintf( f , "] " );
+					fprintf( f , " - PRINTABLE [" );
+					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
+						ch = ((char*)GNGRP_LINK_ATTR_PTR(plink))[iAttr];
+						fprintf( f , "%c" , (isprint(ch))?ch:' ' );
+					}
+					fprintf( f , "]\n" );
+				}
+				else {
+					fprintf( f , "\n" );
+				}
 			}
 		}
 	}
