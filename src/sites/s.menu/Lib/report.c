@@ -103,7 +103,6 @@ report_scan (report)
     REPORT *report;
 {
     unsigned int flags; 
-    double ctof();
 
     flags = 0;
     fseek (report->fd, 0L, 0);
@@ -129,32 +128,32 @@ report_scan (report)
         }
         else if (report_record(report,"north"))
         {
-            report->north = ctof(report->field[1]);
+            if(scan_north(report->field[1], &(report->north)))
             flags |= 004;
         }
         else if (report_record(report,"south"))
         {
-            report->south = ctof(report->field[1]);
+            if(scan_north(report->field[1], &(report->south)))
             flags |= 010;
         }
         else if (report_record(report,"east"))
         {
-            report->east = ctof(report->field[1]);
+            if(scan_east(report->field[1], &(report->east)))
             flags |= 020;
         }
         else if (report_record(report,"west"))
         {
-            report->west = ctof(report->field[1]);
+            if(scan_east(report->field[1], &(report->west)))
             flags |= 040;
         }
         else if (report_record(report,"nsres"))
         {
-            report->ns_res = ctof(report->field[1]);
+            if(scan_res(report->field[1], &(report->ns_res)))
             flags |= 0100;
         }
         else if (report_record(report,"ewres"))
         {
-            report->ew_res = ctof(report->field[1]);
+            if(scan_res(report->field[1], &(report->ew_res)))
             flags |= 0200;
         }
         else if (report_record(report,"layer"))
