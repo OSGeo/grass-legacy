@@ -1,0 +1,41 @@
+COMPILE_FLAGS       = -O
+PGM = Vmkcontour
+EXTRA_CFLAGS = -I$(DIG_INCLUDE)
+SOURCES =	\
+		line_cent.c \
+		drawline.c \
+		do_contours.c \
+		read_data.c \
+		init_functns.c \
+		main.c
+
+
+OBJ =	\
+	line_cent.o \
+	drawline.o \
+	do_contours.o \
+ 	read_data.o \
+	init_functns.o \
+	main.o
+
+
+all:	$(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OBJ) $(GISLIB) $(DIGLIB) $(DIG_ATTLIB) 
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(DIGLIB) $(DIG_ATTLIB) $(TERMLIB) $(MATHLIB)   -o $@
+
+saber_src:
+	#load $(SOURCES) $(DIG_ATTLIB)
+
+saber_obj:
+	#load $(OBJ)
+
+$(GISLIB): # in case the library changes
+
+$(DIGLIB): # in case the library changes
+ 
+$(DIG_ATTLIB): #in case the library changes
+
+try: try.o
+	$(CC) $(LDFLAGS) try.o $(GISLIB) $(MATHLIB)   -o $@
+	
