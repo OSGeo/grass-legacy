@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
     parm.input->key        = "input" ;
     parm.input->type       = TYPE_STRING ;
     parm.input->required   = YES ;
-    parm.input->description= "Name of input sites map" ;
-    parm.input->gisprompt  = "old,site_lists,sites" ;
+    parm.input->description= "Name of input vector map" ;
+    parm.input->gisprompt  = "old,vector,vector" ;
 
     parm.output = G_define_option() ;
     parm.output->key        = "output" ;
