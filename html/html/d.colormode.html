@@ -86,14 +86,14 @@ GRASS <EM><A HREF="../html/parser.html">parser</A></EM> interface.
 
 <H2>NOTES</H2>
 
-Some devices support only a fixed color look-up; e.g.,
-ink-jet printers, plotters, and the AT&amp;T 6300 (running
-a DEB board). The number of color categories capable of
-being displayed is also device-dependent; if your colors
-fall outside this range when in <EM>float</EM> mode, they
-may not be <EM>displayed</EM> in the colors indicated in
-the map's color table file.  However, the color table files
-themselves will accurately represent the user's changes.
+Some devices support only a fixed color look-up. Whether or not
+XDRIVER supports float mode depends upon the X display in use; modes
+with more than 256 colors usually only support fixed mode. The number
+of color categories capable of being displayed is also
+device-dependent; if your colors fall outside this range when in
+<EM>float</EM> mode, they may not be <EM>displayed</EM> in the colors
+indicated in the map's color table file. However, the color table
+files themselves will accurately represent the user's changes.
 
 <P>
 
