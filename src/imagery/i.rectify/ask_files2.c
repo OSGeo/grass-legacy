@@ -50,7 +50,7 @@ ask_file_from_list (name, mapset)
 	{
 	    ln = 3;
 	    V_clear();
-	    V_line (0, "Please mark one file to use as a reference for the window");
+	    V_line (0, "Please mark one file to use as a reference for the region");
 	    for (i=0; i < NFILES; i++)
 		use[i][0] = 0;
 	    for (i=0; f2 < ref.nfiles && i < NFILES; i++, f2++)
@@ -61,7 +61,7 @@ ask_file_from_list (name, mapset)
 		    continue;
 		}
 		n = index[i] = ref_list[f2];
-		sprintf (line[i], "   %s in %s", ref.file[n].name, ref.file[n].mapset);
+		sprintf (line[i], "   %s@%s", ref.file[n].name, ref.file[n].mapset);
 		V_line (ln, line[i]);
 		V_ques (use[i], 's', ln, 1, 1);
 		ln++;
