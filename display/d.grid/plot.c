@@ -7,8 +7,15 @@ int plot_grid (double grid_size, double east, double north)
 	double x,y;
 	double e1,e2;
 	struct Cell_head window ;
+	double row_dist, colm_dist;
 
 	G_get_set_window (&window);
+
+	/* pull right and bottom edges back one pixel; display lib bug? */
+	row_dist = D_d_to_u_row(0) - D_d_to_u_row(1);
+	colm_dist = D_d_to_u_col(1) - D_d_to_u_col(0);
+	window.south = window.south + row_dist*2;
+	window.east  = window.east  - colm_dist*2;
 
 	G_setup_plot (
 	    D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
