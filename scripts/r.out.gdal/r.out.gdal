@@ -4,15 +4,16 @@
 #
 # MODULE:	r.out.gdal
 # AUTHOR(S):	Markus Neteler. neteler itc.it
-# PURPOSE:	r.out.gdal script hack unless a C version is written
-# COPYRIGHT:	(C) 2003 by the GRASS Development Team
+# PURPOSE:	r.out.gdal script hack until a C version is written
+# COPYRIGHT:	(C) 2003,2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
-# REQUIRES:     GDAL compiled with GRASS support (libgrass)
-#               http://gdal.velocet.ca/projects/grass/
-#               or GRASS CVS/libgrass/
+# REQUIRES:     - GDAL compiled with GRASS support (libgrass)
+#                   http://gdal.velocet.ca/projects/grass/
+#               - or GRASS CVS/libgrass/
+#               - or new GDAL/GRASS plugin
 #############################################################################
 
 #%Module
@@ -74,14 +75,16 @@ if [ $? -ne 0 ] ; then
    exit 1
 fi
 
-#check if GRASS is supported by gdal_translate for reading
-GDAL_INPUT_FORMATS=`gdal-config --formats`
-echo $GDAL_INPUT_FORMATS | grep grass 2>&1 > /dev/null
-if [ $? -ne 0 ] ; then
-   echo "ERROR: GDAL installation does not support GRASS."
-   echo "       Recompile GDAL libraries to use r.out.gdal."
-   exit 1
-fi
+### 2005: test doesn't work with GRASS plugin
+#
+##check if GRASS is supported by gdal_translate for reading
+#GDAL_INPUT_FORMATS=`gdal-config --formats`
+#echo $GDAL_INPUT_FORMATS | grep grass 2>&1 > /dev/null
+#if [ $? -ne 0 ] ; then
+#   echo "ERROR: GDAL installation does not support GRASS."
+#   echo "       Recompile GDAL libraries to use r.out.gdal."
+#   exit 1
+#fi
 
 INPUT="$GIS_OPT_input"
 FORMAT="$GIS_OPT_format"
