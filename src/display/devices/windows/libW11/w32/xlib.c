@@ -22,6 +22,7 @@
 #include <math.h>
 #include <string.h>
 #include <fcntl.h>
+#include <errno.h>
 #include "ntdef.h"
 
 /* Local Data */
@@ -158,7 +159,11 @@ const char *name;
 	strcpy (vs,vstring);
 	strcpy (dn,name);
 	d->ext_data=NULL;
-	d->fd=0;
+	d->fd = open ( "/dev/windows", O_RDONLY, 0 );
+	if ( -1 == d->fd ) {
+	  NT_log ( "XOpenDisplay: Unable to open "
+		   "/dev/windows with errno %d\n", errno );
+	}
 	d->proto_major_version=11;
 	d->proto_minor_version=4;
 	d->vendor=vs;
@@ -187,6 +192,7 @@ XCloseDisplay(Display *display)
 char *
 XDisplayString(Display *display)
 {
+        NT_debug ( "XDisplayString\n" );
 	return (display->display_name);
 }
 
@@ -205,6 +211,7 @@ Display *display;
 int discard;
 {
 	/* Do nothing here either */
+        NT_debug ( "XSync\n" );
 	return 0;
 }
 
@@ -541,6 +548,7 @@ Display *dpy;
 Window  win;
 XTextProperty *prop;
 {
+        NT_debug ( "XGetWMName\n" );
 	prop->value=(u_char *) (dpy->display_name);
 	prop->encoding=XA_STRING;
 	prop->format=8;
@@ -556,7 +564,7 @@ XTextProperty *prop;
 {
 	NT_window *ntw = (NT_window *)win;
 	char *wn;
-
+	NT_debug ( "XSetWMName\n" );
 	wn=strdup(prop->value);
 	dpy->display_name= wn;
 	ntw->title_text= wn;
@@ -829,6 +837,7 @@ XFreeGC(display, gc)
 Display *display;
 GC gc;
 {
+        NT_debug ( "XFreeGC\n" );
 	freeMemory(gc);
 }
 
@@ -1515,6 +1524,7 @@ unsigned int depth;
 	RECT rct;
 	NT_window *w = (NT_window *)NT_new_window();
 	HDC parenthDC = drawableGetDC(drawable);
+	NT_debug ( "XCreatePixmap\n" );
 	w->hDC = CreateCompatibleDC(parenthDC);
 	w->hBitmap = CreateCompatibleBitmap(parenthDC,width,height);
 	SelectObject(w->hDC, w->hBitmap);
@@ -1571,6 +1581,7 @@ XCreateBitmapFromData(Display *display,
 {
 	NT_window *w = (NT_window *)NT_new_window();
 	HDC parenthDC = drawableGetDC(drawable);
+	NT_debug ( "XCreateBitmapFromData\n" );
 	w->hDC = CreateCompatibleDC(parenthDC);
 
 	{
@@ -1606,6 +1617,7 @@ XFreePixmap(display, pixmap)
 	 Pixmap pixmap;
 {
 	NT_window *w = (NT_window *)pixmap;
+	NT_debug ( "XFreePixmap\n" );
 	NT_delete_window(w);
 	return 0;
 }
@@ -1620,6 +1632,7 @@ unsigned int width, height;
 int dest_x, dest_y;
 {
 	HDC hsrc, hdst;
+	NT_debug ( "XCopyArea\n" );
 	hsrc = drawableGetDC(src);
 	if (VALID_WINDOW(dest))
 	{
@@ -1718,6 +1731,7 @@ int format;
                          "bmBitsPixel %d, x %d, y %d, bmInfo %x, bm bytes pp %d\n",
                          bm.bmWidth, width, bm.bmHeight, height,
                          bm.bmBitsPixel, x, y, bmInfo, bitmap_bytes_per_pix );
+
                 if ( NULL != bmInfo ) {
                     char *bits;
 
@@ -1745,7 +1759,7 @@ int format;
                                               DIB_RGB_COLORS );
                         /* When bits is not NULL, the result is the number of scanlines */
                         if ( res != height ) {
-                            NT_debug ( "XGetImage: getDIBits failed with %d scanlines returned.\n", res );
+                            NT_log ( "XGetImage: getDIBits failed with %d scanlines returned.\n", res );
                         } else {
 
                             /* Extract the image segments from each row of the Device Context DIB. */
@@ -2227,6 +2241,26 @@ Screen *scr;
 	return(scr->root);
 }
 
+
+/*****************************************************************\
+
+	Function: XScreenNumberOfScreen
+	Inputs:   screen
+	Returned: screen number
+
+\*****************************************************************/
+
+int
+XScreenNumberOfScreen(screen)
+Screen *screen;
+{
+	int i;
+        NT_debug ( "XScreenNumberOfScreen\n" );
+	for (i = 0; i < screen->display->nscreens; i++)
+		if (screen == &screen->display->screens[i])
+			return i;
+	return 0;
+}
 
 /*****************************************************************\
 
@@ -3050,6 +3084,18 @@ unsigned int shape;
 }
 
 
+Cursor
+XCreatePixmapCursor(display,source,mask,fg,bg,x, y)
+Display *display;
+Pixmap source,mask;
+XColor *fg,*bg;
+unsigned int x,y;
+{
+	NT_debug ("XCreatePixmapCursor\n");
+	return 0;
+}
+
+
 int
 XRecolorCursor(display,cursor,fg,bg)
 Display *display;
@@ -3464,8 +3510,9 @@ Atom sel;
 Window owner;
 Time time;
 {
-    HWND hwnd = owner ? ((NT_window*)owner)->w : NULL;
+        HWND hwnd = owner ? ((NT_window*)owner)->w : NULL;
 	HWND cowner = GetClipboardOwner();
+	NT_debug ( "XSetSelectionOwner\n" );
 	OpenClipboard(hwnd);
 	if (cowner==hwnd)
 		catchNextDestroyClipboard();
@@ -4006,10 +4053,12 @@ XChangeGC(
 int
 XConnectionNumber(Display* display)
 {
-	int fd;
-	NT_debug ("XConnectionNumber\n");
-	fd = open ("/tmp/windows", O_NONBLOCK, 0);
-	return 999;
+	NT_debug ( "XConnectionNumber\n" );
+	if ( -1 == display->fd ) {
+	      NT_log ( "XConnectionNumber: The display connection number "
+		       "is invalid (-1)\n", display->fd );
+	}
+	return ( display->fd );
 }
 
 XFreeFont(Display* display,XFontStruct* font_struct)
@@ -4103,6 +4152,7 @@ XmbTextListToTextProperty(
 	 XTextProperty *text_prop_return)
 {
 	int ret = 0;
+	NT_debug ( "XmbTextListToTextProperty\n" );
 	if (count!=1) ret = XNoMemory;
 	text_prop_return->value = strdup(list[0]);
 	switch (style)
@@ -4182,7 +4232,7 @@ XParseGeometry(
 	unsigned int tempWidth, tempHeight;
 	int tempX, tempY;
 	char *nextCharacter;
-  
+	NT_debug ( "XParseGeometry\n" );  
 	if ((string == NULL) || (*string == '\0')) return (mask);
 	if (*string == '=')
 		string++;  /* ignore possible '=' at beg of geometry spec */
@@ -5229,6 +5279,7 @@ XParseColor(display, map, spec, colorPtr)
     const char* spec;
     XColor *colorPtr;
 {
+    NT_debug ( "XParseColor\n" );
     if (spec[0] == '#') {
 	char fmt[16];
 	int i, red, green, blue;
@@ -5264,6 +5315,7 @@ unsigned long pixels[];
 int npixels;
 unsigned long planes;
 {
+        NT_debug ( "XFreeColors\n" );
 	return 0;
 }
 
@@ -5271,6 +5323,7 @@ int
 XGrabServer(display)
 	 Display *display;
 {
+        NT_debug ( "XGrabServer\n" );
 	return 0;
 }
 
@@ -5278,6 +5331,7 @@ int
 XUngrabServer(display)
 	 Display *display;
 {
+        NT_debug ( "XUngrabServer\n" );
 	return 0;
 }
 
@@ -5291,23 +5345,28 @@ int XSetBackground(Display *dpy, GC gc, unsigned long background)
 
 char * XDisplayName(char *n)
 {
-    static char *s = "libW11Display";
+    static char *s = "libG11Display";
+    NT_debug ( "XDisplayName\n" );
     return ( s );
 }
 void XNoOp(Display *dpy)
 {
+    NT_debug ( "XNoOp\n" );
 }
 int XGetGCValues(Display *dpy, GC gc, unsigned long valuemask, XGCValues *values)
 {
+    NT_debug ( "XGetGCValues\n" );
     *values = gc->values;
     return ( 0 );
 }
 
 void XSetWindowColormap(Display *dpy, Window w, Colormap colormap)
 {
+    NT_debug ( "XSetWindowColormap\n" );
 }
 void XFreeColormap(Display *dpy, Colormap cmap)
 {
+    NT_debug ( "XFreeColormap\n" );
 }
 
 #endif

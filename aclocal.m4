@@ -97,7 +97,9 @@ LOC_SHIFT9($*))
 define(LOC_CHECK_LIBS,[
 ac_save_ldflags="$LDFLAGS"
 LDFLAGS="$4 $LDFLAGS"
-LOC_CHECK_LIBS_1($1,$2,,,$5,$6,$7,ifelse($8,[],[
+LOC_CHECK_LIBS_1($1,$2,,,$5,$6,$7,
+LDFLAGS=${ac_save_ldflags}
+ifelse($8,[],[
     AC_MSG_ERROR([*** Unable to locate $3 library.])
 ],$8),LOC_SHIFT8($*))
 LDFLAGS=${ac_save_ldflags}

@@ -151,7 +151,8 @@ LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
 LOC_ARG_WITH(lapack, LAPACK, no)
 LOC_ARG_WITH(motif, Motif, no)
-LOC_ARG_WITH(freetype, FreeType,no)
+LOC_ARG_WITH(freetype, FreeType, no)
+LOC_ARG_WITH(glw, GLw, no)
 
 # With includes and libs options
 
@@ -206,6 +207,9 @@ LOC_ARG_WITH_LIB(motif, Motif)
 
 LOC_ARG_WITH_INC(freetype, FreeType)
 LOC_ARG_WITH_LIB(freetype, FreeType)
+
+LOC_ARG_WITH_INC(glw, GLw)
+LOC_ARG_WITH_LIB(glw, GLw)
 
 # Enable SysV option
 
@@ -353,7 +357,7 @@ XTLIB=
 
 if test "$enable_w11" = "yes" ; then
     X_CFLAGS=-I${SRCDIR}/src/display/devices/windows/libW11
-    X_LIBS=-L${SRCDIR}/src/display/devices/windows/libW11/lib
+    X_LIBS='-L$(LIBDIR)'
     AC_SUBST(X_CFLAGS)
     AC_SUBST(X_LIBS)
 
@@ -494,9 +498,9 @@ LOC_CHECK_INCLUDES(dbm.h,DBM,$DBMINCPATH)
 
 LOC_CHECK_LIB_PATH(dbm,DBM,DBMLIBPATH)
 
-LOC_CHECK_LIBS(dbm,dbminit,DBM,$DBMLIBPATH,DBMLIB,,,[
-LOC_CHECK_LIBS(gdbm,dbminit,DBM,,DBMLIB,,,[
-LOC_CHECK_LIBS(ndbm,dbminit,DBM,,DBMLIB,,,)
+LOC_CHECK_LIBS(dbm, dbminit,DBM,$DBMLIBPATH,DBMLIB,,,[
+LOC_CHECK_LIBS(gdbm,dbminit,DBM,$DBMLIBPATH,DBMLIB,,,[
+LOC_CHECK_LIBS(ndbm,dbminit,DBM,$DBMLIBPATH,DBMLIB,,,)
 ])
 ])
 
@@ -702,16 +706,16 @@ LOC_CHECK_LIB_PATH(tcltk,Tcl/Tk,TCLTKLIBPATH)
 TCLLIB=
 TKLIB=
 
-LOC_CHECK_LIBS(tcl,Tcl_Init,Tcl,$TCLTKLIBPATH,TCLLIB,,$MATHLIB,[
-LOC_CHECK_LIBS(tcl$tcltk_ver,Tcl_Init,Tcl,,TCLLIB,,$MATHLIB,[
-LOC_CHECK_LIBS(tcl$tcltk_ver2,Tcl_Init,Tcl,,TCLLIB,,$MATHLIB,[
+LOC_CHECK_LIBS(tcl,           Tcl_Init,Tcl,$TCLTKLIBPATH,TCLLIB,,$MATHLIB,[
+LOC_CHECK_LIBS(tcl$tcltk_ver, Tcl_Init,Tcl,$TCLTKLIBPATH,TCLLIB,,$MATHLIB,[
+LOC_CHECK_LIBS(tcl$tcltk_ver2,Tcl_Init,Tcl,$TCLTKLIBPATH,TCLLIB,,$MATHLIB,[
 ],$DLLIB)
 ],$DLLIB)
 ],$DLLIB)
 
-LOC_CHECK_LIBS(tk,Tk_MainWindow,Tk,$TCLTKLIBPATH,TKLIB,$TCLLIB,$MATHLIB,[
-LOC_CHECK_LIBS(tk$tcltk_ver,Tk_MainWindow,Tk,,TKLIB,$TCLLIB,$MATHLIB,[
-LOC_CHECK_LIBS(tk$tcltk_ver2,Tk_MainWindow,Tk,,TKLIB,$TCLLIB,$MATHLIB,[
+LOC_CHECK_LIBS(tk,           Tk_MainWindow,Tk,$TCLTKLIBPATH,TKLIB,$TCLLIB,$MATHLIB,[
+LOC_CHECK_LIBS(tk$tcltk_ver, Tk_MainWindow,Tk,$TCLTKLIBPATH,TKLIB,$TCLLIB,$MATHLIB,[
+LOC_CHECK_LIBS(tk$tcltk_ver2,Tk_MainWindow,Tk,$TCLTKLIBPATH,TKLIB,$TCLLIB,$MATHLIB,[
 ],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
 ],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
 ],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
@@ -814,16 +818,6 @@ AC_SUBST(OPENGLULIB)
 
 # Done checking OpenGL
 
-# GLw isn't used currently, so there's not much point in checking for it
-
-OPENGLwINC=
-LGLWM=
-
-AC_SUBST(OPENGLwINC)
-AC_SUBST(LGLWM)
-
-# Done checking GLw
-
 # Enable ODBC option
 
 LOC_CHECK_USE(odbc,ODBC,USE_ODBC)
@@ -873,8 +867,8 @@ LOC_CHECK_INCLUDES(dfftw.h,FFTW,,)
 
 LOC_CHECK_LIB_PATH(fftw,FFTW,FFTWLIB)
 
-LOC_CHECK_LIBS(fftw,fftwnd_one,FFTW,$FFTWLIB,FFTWLIB,,$MATHLIB,[
-LOC_CHECK_LIBS(dfftw,fftwnd_one,FFTW,,FFTWLIB,,$MATHLIB,)
+LOC_CHECK_LIBS(fftw, fftwnd_one,FFTW,$FFTWLIB,FFTWLIB,,$MATHLIB,[
+LOC_CHECK_LIBS(dfftw,fftwnd_one,FFTW,$FFTWLIB,FFTWLIB,,$MATHLIB,)
 ])
 
 fi # $USE_FFTW
@@ -963,6 +957,49 @@ AC_SUBST(XMINC)
 AC_SUBST(XMLIB)
 
 # Done checking Motif
+
+# Enable GLw option
+
+LOC_CHECK_USE(glw,GLw,USE_GLW)
+
+OPENGLwINC=
+LGLWM=
+
+if test -n "$USE_GLW"; then
+
+# With GLw includes directory
+
+LOC_CHECK_INC_PATH(glw,GLw,OPENGLwINC)
+
+LOC_CHECK_INCLUDES(GL/GLwMDrawA.h,GLwM,$OPENGLwINC $XMINC $OPENGLINC)
+
+# With GLw library directory
+
+LOC_CHECK_LIB_PATH(glw,GLw,LGLWM)
+
+LOC_CHECK_LIBS(GLw,     GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLw,     GLwCreateM1DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLw,     GLwCreateM2DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,    GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,    GLwCreateM1DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,    GLwCreateM2DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(MesaGLw, GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(MesaGLwM,GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+])
+])
+])
+])
+])
+])
+])
+])
+
+fi # $USE_OPENGL && $USE_MOTIF
+
+AC_SUBST(OPENGLwINC)
+AC_SUBST(LGLWM)
+
+# Done checking GLw
 
 # Enable FreeType option
 
@@ -1063,4 +1100,5 @@ LOC_MSG_USE(BLAS support,USE_BLAS)
 LOC_MSG_USE(LAPACK support,USE_LAPACK)
 LOC_MSG_USE(Motif support,USE_MOTIF)
 LOC_MSG_USE(FreeType support,USE_FREETYPE)
+LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG()
