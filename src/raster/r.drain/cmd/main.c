@@ -3,14 +3,14 @@
  */
 
 /* -*-c-basic-offset: 4;-*- */
-/**********************************************************************/ 
-/*                                                                    */
-/*      This is the main program for tracing out the path that a      */
-/*      drop of water would take if released at a certain location    */
-/*      on an input elevation map.  The program was written by        */
-/*	Kewan Q. Khawaja                                              */
-/*                                                                    */
-/**********************************************************************/
+/********************************************************************** 
+*                                                                     *
+*      This is the main program for tracing out the path that a       *
+*      drop of water would take if released at a certain location     *
+*      on an input elevation map.  The program was written by         *
+*      Kewan Q. Khawaja                                               *
+*      kewan@techlogix.com                                            *
+**********************************************************************/
 
 #include <unistd.h>
 #include <stdlib.h>
