@@ -1,0 +1,149 @@
+.\" @(#)MAN	2.5 11/24/87
+.TH Gwindow 2G G-language
+.SH NAME
+Gwindow \- window management program
+.br
+.I (G Language Tool)
+.SH DESCRIPTION
+.B Gwindow
+is a command-line interface for setting/querying the current window.
+The command format is:
+
+Gwindow parms
+.br
+where parms are
+
+.NF
+n=x           set window north to x
+s=x           set window south to x
+e=x           set window east to x
+w=x           set window west to x
+res=x         set both north/south and east/west resolutions to x
+ewres=x       set east/west resolution to x
+nsres=x       set north/south resolution to x
+
+window=name   set window from database window name
+save=name     write current window to database window name
+layer=name    set window from cell header for layer name
+zoom=name     set window to smallest window containing data is layer name
+default       set window from default window for the database
+
+print         print the current window (to stdout)
+gprint        print the current window (to stdout) in a format which
+              can be given back to Gwindow on its command line
+
+-             do not actually set the database window.
+.FI
+
+Any combination of parameters may be specified. They are applied in the
+order specified. Missing parameters leave the current window values
+unchanged.
+.SH EXAMPLES
+Gwindow n=7360100 e=699000
+
+.RS
+will reset the north and east for the current window, but leave the
+south, west, and window resolutions unchanged.
+.RE
+
+Gwindow default s=698000 print
+
+.RS
+will set the current window from the default window for the database,
+reset the south to 698000, and then print the result.
+.RE
+
+Gwindow n+=1000 w-=500
+
+.RS
+The n=x may also be specified n+=x to increase the current current north,
+and n-=x to decrease it. This is also true for s=x, e=x, and w=x. In this case
+the current window north is increased by 1000 and the current window west
+is decreased by 500.
+.RE
+
+Gwindow n=s+1000 e=w+1000
+
+.RS
+This form sets the north to be 1000 larger than the south,
+and the east 1000 larger than the west.
+The corresponding forms s=n-x and w=e-x may be used for the south and the
+west. 
+.RE
+
+Gwindow layer=soils
+
+.RS
+This form will set the current window to be exactly the same as the header
+for the layer soils.
+.RE
+
+Gwindow layer=soils zoom=soils
+
+.RS
+This form will first look up the cell header for soils, use this as the
+current window, and then shrink the window to the samllest window which
+contains all the data in the layer soils. Note that if the parameter
+layer=soils were not specifed, the zoom would begin with the current window.
+.RE
+
+Gwindow - layer=soils print
+
+.RS
+The - option supresses the setting of the database window. This can be useful
+when it is desired to only extract window information. In this case,
+the cell header for the soils file is printed without changing the
+current window.
+.RE
+
+Gwindow - layer=soils zoom=soils save=soils
+.RS
+This will zoom into the smallest window which contains all the soils data
+and save it in the database window named soils. The current window is
+not changed.
+.RE
+.SH NOTE
+After all updates have been applied, the current window south and the west 
+are (silently) adjusted so that the north/south distance is a multiple
+of the north/south resolution and that the east/west distance is a multiple
+of the east/west resolution.
+
+The print option prints the current window in the format:
+
+.in +5
+.NF
+projection: 1 (UTM)
+zone:       15
+north:       4294050.00
+south:       4249950.00
+east:         526050.00
+west:         500950.00
+nsres:           100.00
+ewres:           100.00
+rows:      441
+cols:      251
+.FI
+.in
+
+The gprint option prints the window in the following format:
+
+.in +5
+.NF
+n=4294050.00
+s=4249950.00
+e=526050.00
+w=500950.00
+nsres=100.00
+ewres=100.00
+.FI
+.in
+
+This format does not have the rows and columns, but can be given back to
+Gwindow on its command line.
+
+The print (or gprint) option is recognized last. This means that all changes
+are applied to the window before printing occurs.
+.SH SEE ALSO
+window[1]
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
