@@ -1,0 +1,626 @@
+/*  @(#)main.c     1.1  6/03/91   
+ *  created by:         R.L.Glenn, SCS
+ *
+ * Program will read vector maps, areas, lines, islands, etc.
+ *
+ * snoop [-falicne] map=name[,name,...]
+ *                  num=ent number
+ *
+ *  flags:    -f(default)   full reports:   All areas, lines, islands, etc.\n");
+ *            -a   areas only report
+ *            -l   lines only report
+ *            -i   islands only report
+ *            -c   categories only report
+ *            -n   nodes only report
+ *            -e   modifies header records
+ */
+
+#include <stdio.h>
+#include  "gis.h"
+#include "Vect.h"
+#include "V_.h"
+
+#define		DIG_DIR		"dig"
+
+struct Map_info Map;
+char  buf[1024] ;
+struct line_pnts *Points;
+struct Categories cats;
+
+main (argc,argv)
+int argc;
+char *argv[];
+
+{
+	register int area_num, i, ii, jj, kk;
+	int Full, Area, Line, Isle, Attr, Node, Edit;
+	int aArea, aLine, aIsle, aAttr, aNode;
+	int Hit, cnt, cat, line, linea, isle, island, larea, rarea;
+	int vect_read, n_points, got_cats;
+	char *p, *input, *mapset, label[100], label2[100];
+	double angl, f_area, perim, tot_area, *X, *Y;
+	struct Option *mapopt, *entopt;
+	struct Flag *f_flag,*a_flag,*l_flag,*i_flag,*c_flag,*n_flag,*e_flag;
+	P_AREA *Areas;
+        P_LINE *Lines;
+        P_NODE *Nodes;
+        extern double perimeter();
+
+        G_gisinit(argv[0]);
+
+        f_flag = G_define_flag();
+        f_flag->key              = 'f';
+        f_flag->description      = "full report";
+
+        a_flag = G_define_flag();
+        a_flag->key              = 'a';
+        a_flag->description      = "area report";
+
+        l_flag = G_define_flag();
+        l_flag->key              = 'l';
+        l_flag->description      = "line report";
+
+        i_flag = G_define_flag();
+        i_flag->key              = 'i';
+        i_flag->description      = "island report";
+
+        c_flag = G_define_flag();
+        c_flag->key              = 'c';
+        c_flag->description      = "categories report";
+
+        n_flag = G_define_flag();
+        n_flag->key              = 'n';
+        n_flag->description      = "node report";
+
+        e_flag = G_define_flag();
+        e_flag->key              = 'e';
+        e_flag->description      = "edit header";
+
+        mapopt = G_define_option();
+        mapopt->key                        = "map";
+        mapopt->type                       = TYPE_STRING;
+        mapopt->required           = YES;                 
+        mapopt->multiple           = YES; 
+        mapopt->gisprompt          = "old,dig,vector";
+        mapopt->description                = "vector map(s)";
+
+        entopt = G_define_option();
+        entopt->key                        = "num";
+        entopt->type                       = TYPE_INTEGER;
+        entopt->required           = NO;                 
+        entopt->multiple           = NO; 
+        entopt->gisprompt          = "entity number";
+        entopt->description                = "Unique number of an area,line,site,category, or node";
+
+
+		  /* parse the options */
+        if (G_parser (argc, argv))
+	    exit (-1);
+
+	Full = Area = Line = Isle = Attr = Node = Edit = 0;
+
+        if (!f_flag->answer)
+          {
+          if (a_flag->answer)
+	     {
+	     Area = 1;
+	     if (entopt->answer)
+	        sscanf(entopt->answer,"%d",&aArea);
+	     else aArea = 0;
+             }
+          if (l_flag->answer)
+	     {
+	     Line = 1;
+	     if (entopt->answer)
+	        sscanf(entopt->answer,"%d",&aLine);
+	     else aLine = 0;
+             }
+          if (i_flag->answer)
+	     {
+	     Isle = 1;
+	     if (entopt->answer)
+	        sscanf(entopt->answer,"%d",&aIsle);
+	     else aIsle = 0;
+             }
+          if (n_flag->answer)
+	     {
+	     Node = 1;
+	     if (entopt->answer)
+	        sscanf(entopt->answer,"%d",&aNode);
+	     else aNode = 0;
+             }
+          if (c_flag->answer)
+	     {
+	     Attr = 1;
+	     if (entopt->answer)
+	        sscanf(entopt->answer,"%d",&aAttr);
+	     else aAttr = 0;
+             }
+          if (e_flag->answer) Edit = 1;
+	  if (!Area && !Line && !Isle && !Node && !Attr && !Edit) exit(0);
+	  }
+         else Full = 1;
+
+                    /* Initialize the Point structure, ONCE */
+         Points = Vect_new_line_struct();                   
+			      
+                    /* -- input file name(s) -- */    
+         i = 0;
+	 while (mapopt->answers[i])
+	  {
+          input = mapopt->answers[i++];
+          if ((mapset = G_find_vector2 (input, "")) == NULL)
+             {                                                  
+             sprintf (buf, "Could not find vector file <%s>\n", input);
+             G_fatal_error (buf);
+             }                       
+          fprintf(stderr,"\nLoading <%s> vector information.\n",input);
+
+                     /* Do initial read of input DIGIT file */
+          if ((vect_read = Vect_open_old(&Map,input, mapset)) < 0 )
+             G_fatal_error("Reading input file.") ;
+          if (vect_read < 2)
+             G_fatal_error("You must run v.support on this file.") ;
+
+	  if (Edit)
+	     {                  /* Read and write header info */
+             get_head_info(&(Map.head));
+             Vect__write_head_binary(Map, &(Map.head));
+	     continue;
+	     }
+
+		     /* read in categories */
+	  G_suppress_warnings (1);
+          got_cats = G_read_vector_cats (input, mapset, &cats);
+	  G_suppress_warnings (0);
+
+          fprintf(stderr,"\nProcessing ..... \n");
+          printf("\n\t\tREPORT FOR '%s'\n\n",input);
+
+
+if (Full || Area || Isle || Attr)
+   {
+                     /* Cycle through all areas */
+	     for (area_num = 1 ; area_num <= Map.n_areas ; area_num++)
+	       { 
+	            /* get the category for area "area_num" */
+               cat = Map.Att[Map.Area[area_num].att].cat;
+
+	       if ( ((cat == aAttr) && (cat > 0)) ||
+                    (Area && (aArea == 0)) || 
+                    (area_num == aArea) ) Hit = 1;
+               else Hit = 0;
+
+	       if ( Full || Hit)
+                   printf("\nAREA: %d, n_lines = %ld, n_isles= %ld, active= %ld\n",area_num,Map.Area[area_num].n_lines,Map.Area[area_num].n_isles,Map.Area[area_num].alive);
+
+               if ( Hit )
+		  {
+                  if (Map.Area[area_num].n_lines)
+		     {
+                     printf("   lines: ");
+                     for (ii=0; ii < Map.Area[area_num].n_lines; ii++)
+		        {
+                        line = Map.Area[area_num].lines[ii];
+                        printf("  %ld ",line);
+		        }
+                     printf("\n");
+		     }
+                  if (Map.Area[area_num].n_isles) 
+                     {
+		     printf("   islands: ");
+		     for (ii=0; ii < Map.Area[area_num].n_isles; ii++)
+		        { 
+		        island= Map.Area[area_num].isles[ii];
+			printf("  %ld ",island);
+			}
+                      printf("\n");
+		      }
+                   printf("\n   Area maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",Map.Area[area_num].E,Map.Area[area_num].N,Map.Area[area_num].W,Map.Area[area_num].S);
+		  }
+
+
+		perim = 0.0;
+/* --------------------- Area Lines Section --------------------------- */
+		    /* does "area_num" have any lines ? */
+                if ((Full || Hit) && Map.Area[area_num].n_lines)
+		    /* for every line in the area_lines list */
+                      for (ii=0; ii < Map.Area[area_num].n_lines; ii++)
+		        {
+		               /* set line to absolute value pointed at */
+                        linea = abs (Map.Area[area_num].lines[ii]);
+                        line = Map.Area[area_num].lines[ii];
+
+		        if (got_cats < 0)
+                           printf("\n  line= %6ld, area_left= %ld, area_right= %ld\n   line maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",line,Map.Line[linea].left,Map.Line[linea].right,Map.Line[linea].E,Map.Line[linea].N,Map.Line[linea].W,Map.Line[linea].S);
+		        else
+			   {
+                           kk = Map.Line[linea].left;
+                           if (kk > 0)
+			      {
+			      sprintf(label,"%s",cats.list[Map.Area[kk].att].label);
+			      p = label;
+			      while (*p != '\0')
+			       { if (*p == '\072')
+			         { *p = '\0'; break; }
+                               p++;
+			       }
+			      }
+                           else
+			      label[0] = '\0';
+			   
+                           kk = Map.Line[linea].right;
+                           if (kk > 0)
+			      {
+			      sprintf(label2,"%s",cats.list[Map.Area[kk].att].label);
+			      p = label2;
+			      while (*p != '\0')
+			       { if (*p == '\072')
+			         { *p = '\0'; break; }
+                               p++;
+			       }
+			      }
+                           else
+			      label2[0] = '\0';
+
+                           printf("\n  line= %6ld, area_left= %ld,  <%s>\n                area_right= %ld  <%s>\n   line maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",line,Map.Line[linea].left,label,Map.Line[linea].right,label2,Map.Line[linea].E,Map.Line[linea].N,Map.Line[linea].W,Map.Line[linea].S);
+			   }
+
+                        printf("\n  offset= %d,",Map.Line[linea].offset);
+		        printf(" type= %d [Area_edge]\n", Map.Line[linea].type);
+
+      	                if (0 > V1_read_line (Map, Points, Map.Line[linea].offset))
+			         fprintf (stderr, "Out of Memory\n"), exit (-1);
+                        n_points = Points->n_points;
+			X = Points->x;
+			Y = Points->y;
+
+	                printf("\n        coordinates:        %6d\n",n_points);
+	                while (n_points--)
+	                      printf("                  %12.2lf        %12.2lf\n", *(X++),*(Y++));
+                        n_points = Points->n_points;
+			X = Points->x;
+			Y = Points->y;
+                             /* compute this line's length */
+
+                        perim = perim + perimeter(n_points,X,Y);
+
+		        }    /* end area lines */
+
+/* --------------------- Area size Section ------------------------- */
+	                                      /* works for 4.0 or above */
+                 if ( Full || Hit)  
+                    {
+		    V2_get_area(Map,area_num,&Areas);
+		    dig_find_area2(Map,Areas,&f_area);
+		    tot_area = f_area;
+		    }
+
+/* --------------------- Area Islands Section ------------------------- */
+	                                      /* works for 4.0 or above */
+                 if ((Full || Hit) && Map.Area[area_num].n_isles) 
+                   for (ii=0; ii < Map.Area[area_num].n_isles; ii++)
+		     { 
+		          /* set island to element in area isles list */
+		     island= Map.Area[area_num].isles[ii];
+                          /* get island size */
+                     isle_area(Map, island, &f_area);
+		     if (f_area > 0) tot_area = tot_area - f_area;
+		     else tot_area = tot_area + f_area;
+
+                     printf("\n   Within: %ld, island#: %ld\n",Map.Isle[island].area,island);
+
+             /* Cycle through lines making this island 
+		      these are handled like area boundaries */
+                     for (kk=0; kk < Map.Isle[island].n_lines; kk++)
+		       {
+                       linea = abs (Map.Isle[island].lines[kk]);
+                       line = Map.Isle[island].lines[kk];
+                       printf("\n\t  line= %ld, area_left= %ld, area_right= %ld\n   line maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",line,Map.Line[linea].left,Map.Line[linea].right,Map.Line[linea].E,Map.Line[linea].N,Map.Line[linea].W,Map.Line[linea].S);
+
+			    /* get left and right area for this line */
+                       larea = Map.Line[linea].left;
+                       rarea = Map.Line[linea].right;
+
+			    /* select the positive side */
+		       if (larea > 0) jj = Map.Area[larea].att;
+		       if (rarea > 0) jj = Map.Area[rarea].att;
+
+		            /* put out the attribute info for this area */
+                       if (got_cats < 0)
+			  printf( "\t island attribute:\n       type= %c,  cat= %6d\n       position: E= %10.2lf, N=  %10.2lf\n", 
+                           codes(Map.Att[jj].type),Map.Att[jj].cat,
+				 Map.Att[jj].x, Map.Att[jj].y);
+                       else
+			  {
+			  sprintf(label,"%s",cats.list[Map.Att[jj].cat].label);
+			  p = label;
+			  while (*p != '\0')
+			   { if (*p == '\072')
+			     { *p = '\0'; break; }
+                           p++;
+			   }
+                          printf( "\t island attribute:\n       type= %c,  cat= %6d\n       label= <%s>\n       position: E= %10.2lf, N=  %10.2lf\n", 
+                              codes(Map.Att[jj].type),Map.Att[jj].cat,label,
+				 Map.Att[jj].x, Map.Att[jj].y);
+			  }
+		       }
+		     }     /* end for islands */
+
+/* --------------------- Area Attributes Section ---------------------- */
+               if ((Full || (Attr && (aAttr == 0)) || Hit) &&
+			     Map.Area[area_num].att)  
+		     {      /* put out the attribute info for this area */
+                     ii = Map.Area[area_num].att;
+
+                     if (Attr)
+		       {
+		       if (got_cats < 0)
+			 printf( "   area %ld attribute:\n       type: %c,  cat: %6d\n       position:  E= %10.2lf, N=  %10.2lf\n", 
+                           area_num,codes(Map.Att[ii].type),Map.Att[ii].cat,
+				 Map.Att[ii].x, Map.Att[ii].y);
+		       else
+			 {
+			 sprintf(label,"%s",cats.list[Map.Att[ii].cat].label);
+			 p = label;
+			 while (*p != '\0')
+			   { if (*p == '\072')
+			     { *p = '\0'; break; }
+                           p++;
+			   }
+			 printf( "   area %ld attribute:\n       type: %c,  cat: %6d\n       label: <%s>\n       position :  E= %10.2lf, N=  %10.2lf\n", 
+                           area_num,codes(Map.Att[ii].type),Map.Att[ii].cat,
+			   label, Map.Att[ii].x, Map.Att[ii].y);
+			 }
+		       }
+                     else
+		       {
+		       if (got_cats < 0)
+			 printf( "   area attribute:\n       type: %c,  cat: %6d\n       position :  E= %10.2lf, N=  %10.2lf\n", 
+                           codes(Map.Att[ii].type),Map.Att[ii].cat,
+				 Map.Att[ii].x, Map.Att[ii].y);
+		       else
+			 {
+			 sprintf(label,"%s",cats.list[Map.Att[ii].cat].label);
+			 p = label;
+			 while (*p != '\0')
+			   { if (*p == '\072')
+			     { *p = '\0'; break; }
+                           p++;
+			   }
+			 printf( "   area attribute:\n       type: %c,  cat: %6d\n       label: <%s>\n       position :  E= %10.2lf, N=  %10.2lf\n", 
+                           codes(Map.Att[ii].type),Map.Att[ii].cat,label,
+				 Map.Att[ii].x, Map.Att[ii].y);
+			 }
+		       }
+
+               if (Full || Hit)
+	             printf( "       size     : %.2lf\n       perimeter: %.2lf\n", tot_area, perim);
+                     }
+		    
+                  } /* end for Map.Areas */
+   }
+
+if (Full || Line)
+   {
+/* -------------------------- Lines Section --------------------------- */
+                  for (ii=1; ii <= Map.n_lines; ii++)
+		    {
+                    if ( (Line && (aLine == 0)) || (aLine == ii)) Hit = 1;
+                    else Hit = 0;
+
+                    if (Full || Hit)
+                      {
+	              Lines = &(Map.Line[ii]);
+
+		      if (Map.Line[ii].type == AREA)
+		           {
+			   if (got_cats < 0)
+			    {
+                             printf("\nLINE: %6d, area_left= %ld, area_right= %ld\n        maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",ii,Lines->left,Lines->right,Map.Line[ii].E,Map.Line[ii].N,Map.Line[ii].W,Map.Line[ii].S);
+			    }
+		           else
+			    {
+                            kk = Lines->left;
+                            if (kk > 0)
+			      {
+			      sprintf(label,"%s",cats.list[Map.Area[kk].att].label);
+			      p = label;
+			      while (*p != '\0')
+			        { if (*p == '\072')
+			         { *p = '\0'; break; }
+                                p++;
+			        }
+			      }
+                            else
+			      label[0] = '\0';
+			   
+                            kk = Lines->right;
+                            if (kk > 0)
+			      {
+			      sprintf(label2,"%s",cats.list[Map.Area[kk].att].label);
+			      p = label2;
+			      while (*p != '\0')
+			        { if (*p == '\072')
+			         { *p = '\0'; break; }
+                                p++;
+			        }
+			      }
+                            else
+			      label2[0] = '\0';
+			      
+                             printf("\nLINE: %6d, area_left= %ld, <%s>\n              area_right= %ld, <%s>\n        maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",ii,Lines->left,label,Lines->right,label2,Map.Line[ii].E,Map.Line[ii].N,Map.Line[ii].W,Map.Line[ii].S);
+			    }
+
+                           printf("\n  offset= %d,",Map.Line[ii].offset);
+			   printf(" type= %d [Area_edge]\n",Map.Line[ii].type);
+			   }
+		      else if (Map.Line[ii].type == LINE)
+		           {
+                           printf("\n  line= %d\n        maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",ii,Map.Line[ii].E,Map.Line[ii].N,Map.Line[ii].W,Map.Line[ii].S);
+                           printf("\n offset= %d,",Map.Line[ii].offset);
+		           printf(" type= %d [Line]\n",Map.Line[ii].type);
+			   }
+		      else if (Map.Line[ii].type == DOT)
+		           {
+                           printf("\n  line= %d\n",ii);
+                           printf("\n offset= %d,",Map.Line[ii].offset);
+		           printf(" type= %d [Site]\n",Map.Line[ii].type);
+			   }
+		      else 
+			   {
+                           printf("\n  line= %d\n",ii);
+                           printf("\n offset= %d,",Map.Line[ii].offset);
+			   printf(" type= %d [Unknown]\n",Map.Line[ii].type);
+			   }
+
+                      if (Map.Att[Map.Line[ii].att].cat != 0)
+			   {
+			   if (got_cats < 0)
+                              printf(" category# = %d\n",
+				Map.Att[Map.Line[ii].att].cat);
+			   else
+			      {
+			      sprintf(label,"%s",
+				cats.list[Map.Att[Map.Line[ii].att].cat].label);
+			      p = label;
+			      while (*p != '\0')
+			        { if (*p == '\072')
+			          { *p = '\0'; break; }
+                                p++;
+			        }
+                              printf(" category# = %d\n label = <%s>\n",
+			       Map.Att[Map.Line[ii].att].cat,label);
+			      }
+			   }
+
+      	              if (0 > V1_read_line (Map, Points, Map.Line[ii].offset))
+			         fprintf (stderr, "Out of Memory\n"), exit (-1);
+                      n_points = Points->n_points;
+		      X = Points->x;
+		      Y = Points->y;
+
+	              printf("\n        coordinates:        %6d\n",n_points);
+		      if (Map.Line[ii].type == DOT)
+	                printf("                  %12.2lf        %12.2lf\n", *(X),*(Y));
+	              else
+		       while (n_points--)
+	                printf("                  %12.2lf        %12.2lf\n", *(X++),*(Y++));
+		      }    /* end Hit */
+		    }    /* end for loop */
+}    /* end Lines */
+
+/* -------------------------- Islands Section ------------------------- */
+	                                      /* works for 4.0 or above */
+if (Full || (Isle && Map.n_isles))
+                   for (island=0; island < Map.n_isles; island++)
+		     { 
+
+	             if ( (Isle && (aIsle == 0)) || 
+                          (island == aIsle) ) Hit = 1;
+                     else Hit = 0;
+
+		     if (Full || Hit)
+		       {
+                       printf("\nISLAND: %ld\n",island);
+
+             /* Cycle through lines making this island 
+		      these are handled like area boundaries */
+                       for (kk=0; kk < Map.Isle[island].n_lines; kk++)
+		         {
+                         linea = abs (Map.Isle[island].lines[kk]);
+                         line = Map.Isle[island].lines[kk];
+                         printf("\n\t  line= %ld, area_left= %ld, area_right= %ld\n   line maximum : E %12.2lf,     N %12.2lf\n        minimum : W %12.2lf,     S %12.2lf\n",line,Map.Line[linea].left,Map.Line[linea].right,Map.Line[linea].E,Map.Line[linea].N,Map.Line[linea].W,Map.Line[linea].S);
+
+			    /* get left and right area for this line */
+                         larea = Map.Line[linea].left;
+                         rarea = Map.Line[linea].right;
+
+			    /* select the positive side */
+		         if (larea > 0) jj = Map.Area[larea].att;
+		         if (rarea > 0) jj = Map.Area[rarea].att;
+
+		            /* put out the attribute info for this area */
+		       
+		         if (got_cats < 0)
+			   printf( "   area attribute:\n       type= %c,  cat= %6d\n        position:  E= %10.2lf, N=  %10.2lf\n", 
+                             codes(Map.Att[jj].type),Map.Att[jj].cat,
+				   Map.Att[jj].x, Map.Att[jj].y);
+		         else
+			   {
+			   sprintf(label,"%s",cats.list[Map.Att[jj].cat].label);
+			   p = label;
+			   while (*p != '\0')
+			     { if (*p == '\072')
+			       { *p = '\0'; break; }
+                             p++;
+			     }
+			   printf( " island attribute:\n       type= %c,  cat= %6d\n        label= <%s>\n        position:  E= %10.2lf, N=  %10.2lf\n", 
+                             codes(Map.Att[jj].type),Map.Att[jj].cat, label,
+				   Map.Att[jj].x, Map.Att[jj].y);
+			   }
+		         }
+		       }
+		     }     /* end for islands */
+
+if (Full || Node)
+   {
+/* -------------------------- Nodes Section --------------------------- */
+                   for (ii=1; ii <= Map.n_nodes; ii++)
+		     {
+                     if ( (Node && (aNode == 0)) || (aNode == ii)) Hit = 1;
+                     else Hit = 0;
+
+                     if (Full || Hit)
+                       {
+	               Nodes = &(Map.Node[ii]);
+                       printf("\nNODE: %d, coords: E %12.2lf,     N %12.2lf\n\n",ii,Map.Node[ii].x,Map.Node[ii].y);
+                       if (Map.Node[ii].n_lines) 
+                         {
+		         printf("   lines:\n");
+		         for (jj=0; jj < Map.Node[ii].n_lines; jj++)
+		          { 
+		          line= Map.Node[ii].lines[jj];
+		          angl= Map.Node[ii].angles[jj];
+			  printf("      %ld,\tangle: %lf\n",line,(angl*57.296));
+			  }
+                         printf("\n");
+		         }
+		       }    /* end Hit */
+		     }    /* end for loop*/
+}    /* end Node */
+
+
+	  Vect_close (&Map);
+          fprintf(stderr,"\nFinished <%s>\n",input);
+          }
+       exit(0);
+}
+
+codes (type)
+    char type;
+{
+    switch (type) {
+	case LINE:
+	    return ('L');
+	    break;
+	case AREA:
+	    return ('A');
+	    break;
+	case DOT:
+	    return ('P');
+	    break;
+	case DEAD_LINE:
+	    return ('l');
+	    break;
+	case DEAD_AREA:
+	    return ('a');
+	    break;
+	case DEAD_DOT:
+	    return ('p');
+	    break;
+	default:
+	    return ('X');
+    }
+}
+
