@@ -1,0 +1,34 @@
+MDmain	Dmain.c	/^main(argc, argv)  char *argv[] ;$/
+Mcube	cube.c	/^main()$/
+Mmain	main.c	/^main()$/
+Reset_color	cube.c	/^Reset_color(red, grn, blu, number)$/
+Reset_colors	cube.c	/^Reset_colors(red, grn, blu, tot_colr)$/
+Screen_calc	transform.c	/^Screen_calc(carray, z_adj, scr_x, scr_y, atrow, wi/
+_norm	cube.c	/^_norm(intensity)$/
+avg_rows	get_row.c	/^avg_rows(avg, a1, a2)$/
+check_options	check_opt.c	/^check_options()$/
+check_signal	sigint.c	/^check_signal()$/
+copy	cube.c	/^copy(sarray, darray, i1, i2, i3, i4)$/
+de_initialize_arrays	get_row.c	/^de_initialize_arrays()$/
+do_plot	threed.c	/^do_plot(row_beg,row_end,row_dir,col_beg,col_end,co/
+draw_east_face	draw_face.c	/^draw_east_face(min, max)$/
+draw_line	clip.c	/^draw_line(do_zero,x1,y1,x2,y2)$/
+draw_north_face	draw_face.c	/^draw_north_face(min, max)$/
+draw_polygon	clip.c	/^draw_polygon(x, y, num)$/
+draw_polyline	clip.c	/^draw_polyline(x, y, num)$/
+draw_south_face	draw_face.c	/^draw_south_face(min, max)$/
+draw_west_face	draw_face.c	/^draw_west_face(min, max)$/
+establish_view	transform.c	/^establish_view(fx,fy,fz,tx,ty,tz, view_angle)$/
+get_corners	get_row.c	/^get_corners(row, scr_x1, scr_y1, scr_x2, scr_y2)$/
+get_defaults	get_inputs.c	/^get_defaults()$/
+get_inputs	get_inputs.c	/^get_inputs(do_it, erase_color)$/
+get_range	draw_face.c	/^get_range(elevfile, elevfile_mapset, min, max)$/
+get_row	get_row.c	/^get_row(row)$/
+initialize_arrays	get_row.c	/^initialize_arrays()$/
+point_calc	transform.c	/^point_calc(y, z, x, scr_x, scr_y)$/
+save_defaults	get_inputs.c	/^save_defaults()$/
+save_edges	clip.c	/^save_edges(T, B, L, R)$/
+set_default_options	command.c	/^set_default_options()$/
+set_signals	sigint.c	/^set_signals()$/
+sigint	sigint.c	/^sigint(n)$/
+threed	threed.c	/^threed(interactive)$/
