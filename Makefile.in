@@ -68,6 +68,7 @@ BIN_DIST_FILES =    	AUTHORS \
 			README \
 			REQUIREMENTS \
 			TODO \
+			grass${NAME_VER} \
     	    	    	bin/ \
 			bwidget/ \
 			dev/ \
