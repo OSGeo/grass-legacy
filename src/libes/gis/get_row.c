@@ -1022,7 +1022,7 @@ G__open_null_read (int fd)
 {
    int null_fd;
    char dir_name[200];
-   static char *name=NULL, *mapset=NULL;
+   static char *name=NULL, *mapset=NULL, *dummy;
 
    if(NULL_FILE_EXISTS == 0) return -1;
 
@@ -1039,7 +1039,7 @@ G__open_null_read (int fd)
 			 
    sprintf(dir_name, "cell_misc/%s", name);
     
-   if (G_find_file(dir_name, NULL_FILE, mapset)==NULL)
+   if ((dummy = G_find_file(dir_name, NULL_FILE, mapset))==NULL)
    {
 /*
       G_warning ("unable to find [%s]",path);
@@ -1047,7 +1047,8 @@ G__open_null_read (int fd)
       NULL_FILE_EXISTS = 0;
       return -1;
    }
-
+   G_free (dummy);
+   
    null_fd = G_open_old (dir_name, NULL_FILE, mapset);
    if (null_fd < 0)
        return -1;
