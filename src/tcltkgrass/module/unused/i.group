@@ -1,0 +1,4 @@
+interface_build {
+    {i.group} 1
+    {An imagery function that creates and edits groups and subgroups of (raster) imagery files.}
+}
