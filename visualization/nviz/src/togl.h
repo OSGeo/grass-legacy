@@ -11,7 +11,10 @@
 
 /*
  * $Log$
- * Revision 1.4  2002-01-22 04:51:41  glynn
+ * Revision 2.0  2004-11-09 14:22:47  bernhard
+ * copied within CVS repository from grass/src.contrib/GMSL/NVIZ2.2/src/togl.h
+ *
+ * Revision 1.4  2002/01/22 04:51:41  glynn
  * Merge releasebranch_11_april_2001_5_0_0 with HEAD
  *
  * Revision 1.3.4.1  2001/08/22 14:26:59  markus
