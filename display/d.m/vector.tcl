@@ -343,7 +343,7 @@ proc DmVector::display { node } {
         append cmd " cat=$opt($id,cat)" 
     } 
     if { $opt($id,where) != "" && $opt($id,_use_query_text) } { 
-        append cmd " where=\"$opt($id,where)\"" 
+        append cmd " {where=$opt($id,where)}" 
     } 
     if { $opt($id,minreg) != "" } { 
         append cmd " minreg=$opt($id,minreg)" 

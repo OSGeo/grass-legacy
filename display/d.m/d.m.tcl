@@ -582,15 +582,15 @@ proc Dm::node_id { node } {
 proc Dm::execute { cmd } {
     global env
 
-    #puts stdout $cmd
-    # warning: DBMI - be careful and test 'd.vect where=' after changes,
-    # there are some pipes used there
-    #eval "exec >@stdout 2>@stdout $cmd"
-    set shell $env(SHELL)
-    set cmd [ string map { \" \\\" \$ \\\$ } $cmd ]
-    #puts stdout $cmd
-    eval "exec echo \"$cmd\" >@stdout "
-    eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
+    # warning: DBMI - be careful and test 'd.vect where=' after changes
+    puts stdout $cmd
+    
+      ## This was old version - does not work, because $shell have not LD_LIBRARY_PATH to GRASS libs ? 
+      #set shell $env(SHELL)
+      #set cmd [ string map { \" \\\" \$ \\\$ } $cmd ]
+      #eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
+
+    eval "exec $cmd >@stdout 2>@stdout"
 }
 
 # open print window
