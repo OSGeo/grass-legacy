@@ -2,7 +2,6 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS1 = \
-	v.ascii \
 	v.build \
 	v.build.polylines \
 	v.category \
@@ -14,11 +13,14 @@ SUBDIRS1 = \
 	v.extract \
 	v.format \
 	v.info \
+	v.in.ascii \
+	v.in.dwg \
 	v.in.sites \
 	v.net.alloc \
 	v.net.iso \
 	v.net.salesman \
 	v.net.steiner \
+	v.out.ascii \
 	v.patch \
 	v.surf.rst \
 	v.transform \
