@@ -1,0 +1,50 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM>v.distance</EM>
+uses a binary vector file (map=<EM>name</EM>) and user specified
+coordinates to calculate the distance from the given point(s) to 
+the nearest line or point in vector layer.
+<P>
+<EM>v.distance</EM> reads:
+
+<pre>
+x|y|label
+</pre>
+
+and prints (10 columns):
+
+<pre>
+x|y|label|distance|line category|nearest x|nearest y|segment number|distance along segment|distance along line
+
+1 2   3      4           5          6          7           8                 9                    10
+</pre>
+
+
+<h2>EXAMPLE</H2>
+
+To calculate the distance of given sites to the next road, run:
+<br>
+<tt>v.out.ascii archsites | v.distance roads</tt>
+
+<p>
+To calculate the distance of given sites to the next road and generate
+a new vector map containing these nearest points, run:
+<br>
+<tt>v.out.ascii archsites | v.distance roads | cut -d'|' -f6,7 | v.in.ascii out=dist</tt>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><a href="r.distance.html">r.distance</a></EM>
+
+
+<H2>AUTHOR</H2>
+
+Janne Soimasuo 1994, Finland<br>
+University of Joensuu, Faculty of Forestry, Finland<p>
+
+Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<BR>
+5.1 update Radim Blazek, ITC-irst, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
