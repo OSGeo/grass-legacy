@@ -43,14 +43,12 @@ int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
 	    if (button == 2) continue;
 	    if (button == 3) break;
 	}
-        east  = D_d_to_u_col((double)screen_x) ;
-        north = D_d_to_u_row((double)screen_y) ;
-        row = (window.north - north) / window.ns_res ;
-        col = (east - window.west) / window.ew_res ;
-        if (row < 0 || row >= nrows) continue;
-        if (col < 0 || col >= ncols) continue;
-        north = window.north - (row+.5) * window.ns_res ;
-        east  = window.west  + (col+.5) * window.ew_res ;
+
+        east  = D_d_to_u_col(screen_x + 0.5) ;
+        north = D_d_to_u_row(screen_y + 0.5) ;
+        col = D_d_to_a_col(screen_x + 0.5) ;
+        row = D_d_to_a_row(screen_y + 0.5) ;
+
         show_utm (name[0], mapset[0], north, east, &window, terse, colrow, button, fs);
 	G_set_c_null_value(&null_cell,1);
 	G_set_d_null_value(&null_dcell,1);

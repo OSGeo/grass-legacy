@@ -110,13 +110,12 @@ static int draw_cell_RGB(
     int D_row ;
     int repeat ;
     int cur_A_row ;
-    double D_d_to_a_row() ;
     int r_size = G_raster_size(r_type);
     int g_size = G_raster_size(g_type);
     int b_size = G_raster_size(b_type);
-    int r_bytes = (D_x_end-D_x_beg+1) * r_size;
-    int g_bytes = (D_x_end-D_x_beg+1) * g_size;
-    int b_bytes = (D_x_end-D_x_beg+1) * b_size;
+    int r_bytes = (D_x_end - D_x_beg) * r_size;
+    int g_bytes = (D_x_end - D_x_beg) * g_size;
+    int b_bytes = (D_x_end - D_x_beg) * b_size;
 
 /* Allocate memory for raster */
     if(!r_raster)
@@ -132,7 +131,7 @@ static int draw_cell_RGB(
 
 /* Get window (array) row currently required */
     D_row = cur_D_row ;
-    cur_A_row = (int)D_d_to_a_row((double)cur_D_row) ;
+    cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5) ;
 
 /* If we need a row further down the array, return that row number */
     if (cur_A_row > A_row)
@@ -142,7 +141,7 @@ static int draw_cell_RGB(
     repeat = 1 ;
     for (cur_D_row++ ; cur_D_row < D_y_end; cur_D_row++)
     {
-        if (A_row == (cur_A_row = (int)D_d_to_a_row((double)cur_D_row)))
+        if (A_row == (cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5)))
             repeat++ ;
         else
             break ;
@@ -159,7 +158,7 @@ static int draw_cell_RGB(
 	g_ptr = g_raster;
 	b_ptr = b_raster;
 
-        for (D_col = D_x_beg; D_col<D_x_end; D_col++ )
+        for (D_col = D_x_beg; D_col < D_x_end; D_col++)
 	{
 	    /* copy array[[D_to_A_tab[D_col]] to *raster, advance raster by 1 */
 
@@ -179,7 +178,7 @@ static int draw_cell_RGB(
 
     R_move_abs(D_x_beg, D_row) ;
     D_raster_of_type_RGB(r_raster, g_raster, b_raster,
-			 D_x_end-D_x_beg, repeat,
+			 D_x_end - D_x_beg, repeat,
 			 r_colors, g_colors, b_colors,
 			 r_type,   g_type,   b_type);
 
@@ -194,12 +193,7 @@ static int draw_cell_RGB(
 int D_cell_draw_setup_RGB(int t,int b,int l,int r)
 {
     int D_col ;
-    double D_d_to_a_col() ;
     struct Cell_head window ;
-    double D_get_d_west() ;
-    double D_get_d_east() ;
-    double D_get_d_north() ;
-    double D_get_d_south() ;
 
     if (G_get_set_window(&window) == -1) 
         G_fatal_error("Current window not available") ;
@@ -215,13 +209,11 @@ int D_cell_draw_setup_RGB(int t,int b,int l,int r)
     if (D_to_A_tab)
         free (D_to_A_tab) ;
 
-    D_to_A_tab = (int *)G_calloc(D_x_end+1, sizeof(int)) ;
+    D_to_A_tab = (int *)G_calloc(D_x_end, sizeof(int)) ;
 
 /* construct D_to_A_tab for converting x screen Dots to x data Array values */
-    for (D_col = D_x_beg; D_col<=D_x_end; D_col++)
-    {
-        D_to_A_tab[D_col] = (int)(D_d_to_a_col((double)D_col)) ;
-    }
+    for (D_col = D_x_beg; D_col < D_x_end; D_col++)
+        D_to_A_tab[D_col] = (int)(D_d_to_a_col(D_col + 0.5)) ;
 
     if (r_raster)
     {
