@@ -18,7 +18,6 @@ OFILES =  \
 
 $(GISBASE)/driver/HTMLMAP: HTMLMAP
 	mv HTMLMAP $@
-#	mv $(GISBASE)/etc/monitorcap $(GISBASE)/etc/monitorcap.tmp
 	@if egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo HTMLMAP already defined in $(ETC)/monitorcap ; \
 	else \
