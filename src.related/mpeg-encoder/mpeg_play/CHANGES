@@ -1,0 +1,61 @@
+ Changes since last version:
+
+1.1
+o Fixed -dither color option to find best 24 bit or greater visual
+  for most machines.
+o Fixed recursive loop in Makefile. 
+o Added entries for R6000 and SGI's in Makefile
+o Fixed declaration of j_rev_dct.
+o Does initial sequence start code check to confirm validity of mpeg stream.
+o Changed or's in ordered dither to add's to allow more flexible
+  allocation of color ranges.
+o Uses shared memory.
+o Lots of little bugs fixed.
+
+1.2
+o Fixed shared memory problem (freeing memory twice on exit).
+o Added entries for Sony NEWS machines
+o Added monochrome support.
+o Unrolled loops for optimization.
+o Variety of small bugs.
+
+2.0
+o Added ability to use private colormap.
+o Display name can now be given as part of command line.
+o Fixed green artifacts problem
+o Fixed sequence end code cutoff problem.
+o Lots of performance tweaks.
+o Other bugs.
+
+2.1 (newest version)
+o Fixed frame dropping problem.
+o Supports MPEG system layer (tosses audio)
+o 16, 32 bit color modes (thanks to: Erik Corry erik@kroete2.freinet.de)
+o Added -owncm to guarantee a private colormap
+o Added gray256 to get 256 shades of grey (and added gray/grey no diff)
+o Fixed leaving of shared memory buffers when shared memory crashes
+  (in the common case of running from the wrong display)
+o Instructions for IRIX4 Cflags in PLATFORMS.
+o Added -step, -start, and -end
+o Fixed insanely subtle readfile bug
+o Added color2 true color doubling dither, provided by garyo@avs.com (thanks!)
+o Added ppm dither, provided by Jef Poskanzer <jef@acme.com> (thanks!)
+o Added bzero.c for silly SOLARIS
+o -no_display doesnt put up a window now.
+o -gamma float, raises the luminance of each pixel to float (a
+   floating point number),  thus -gamma 0.8 darkens, -gamma 1.2 lightens
+o Fixed ycc to rgb conversion block assignment mixup.
+  (thanks to John Toebes <toebes@unx.sas.com> for pointing this out)
+o Added frame rate limiting (-framerate)
+o Doesn't skip initial B frames (after an I) if the GOP is closed.
+o Auto-determines RGB order of server (well, RGB vs BGR anyway).
+o Fixed a few grainy blocks appearing due to bugs in sparse IDCT function.
+o -nop now implies -nob (doesnt make sense to have B's w/o P's)
+o -seek indexes into files
+o Added chroma averaging in color and color2 dithers (thanks to
+	tristan@tcela.la.tce.com (Tristan 'RAMBO' Savatier))
+o Added -quality option, which, when turned on, 
+  o correctly implements halfpel motion vector averaging
+  o uses a very time-consuming but accurate IDCT
+o Sped up player a little by using lookup tables for y/cr/cb values
+o Minor, unreported bugs.
