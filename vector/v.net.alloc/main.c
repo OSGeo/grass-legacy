@@ -194,6 +194,7 @@ int main(int argc, char **argv)
     
     /* Write arcs to new map */
     Vect_open_new ( &Out, output->answer, Vect_is_3d (&Map) );
+    Vect_hist_command ( &Out );
 
     nlines = Vect_get_num_lines ( &Map );
     for (line = 1; line <= nlines; line++) {

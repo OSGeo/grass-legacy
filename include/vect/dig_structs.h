@@ -349,6 +349,9 @@ struct Map_info
     
     /* non native */
     struct Format_info fInfo;  /* format information */
+
+    /* history file */
+    FILE *hist_fp;
   };
 
 struct P_node

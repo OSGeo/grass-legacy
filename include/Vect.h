@@ -171,6 +171,13 @@ int Vect_get_updated_line (struct Map_info *map, int idx);
 int Vect_get_num_updated_nodes (struct Map_info *map);
 int Vect_get_updated_node (struct Map_info *map, int idx);
 
+      /* History */
+int Vect_hist_command ( struct Map_info *Map );
+int Vect_hist_write ( struct Map_info *Map, char *str );
+int Vect_hist_copy ( struct Map_info *In, struct Map_info *Out );
+void Vect_hist_rewind ( struct Map_info *Map );
+char *Vect_hist_read ( char *s, int size, struct Map_info *Map );
+
       /* Selecting features */
 int Vect_select_lines_by_box (struct Map_info *, BOUND_BOX *, int, struct ilist *);
 int Vect_select_areas_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);

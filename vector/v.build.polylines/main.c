@@ -151,6 +151,10 @@ int main (int argc, char **argv)
   /* Copy header info. */
   Vect_copy_head_data (&map, &Out); 
 
+  /* History */
+  Vect_hist_copy (&map, &Out);
+  Vect_hist_command ( &Out );      
+
   /* Get the number of lines in the binary map and set up record of lines visited */
 
   lines_visited = (int*) G_calloc ( Vect_get_num_lines(&map) + 1, sizeof (int));

@@ -6,7 +6,7 @@
 #include "conv.h"
 #include "local_proto.h"
 
-int read_line ( FILE *, struct line_pnts *);
+int read_line ( GVFILE *, struct line_pnts *);
 
 /* read old 3.0 or 4.0 dig file into array 
    returns number of elements read into array
@@ -25,6 +25,10 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     double dbuf;
     int    ibuf;
     long   lbuf;
+    GVFILE gvf;
+
+    dig_file_init ( &gvf );
+    gvf.file = Digin;
     
     Vect__init_head (Mapout);
     /* set conversion matrices */
@@ -36,33 +40,33 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     fprintf(stdout,"Reading dig file...\n");
 
     /* read and copy head */
-    fseek (Digin, 0L, SEEK_SET) ;   /* set to beginning */
+    dig_fseek (&gvf, 0L, SEEK_SET) ;   /* set to beginning */
 
-    if (0 >= dig__fread_port_C ( buf, DIG4_ORGAN_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_ORGAN_LEN, &gvf)) return -1;
     buf[DIG4_ORGAN_LEN-1] = '\0'; 
     Vect_set_organization ( Mapout, buf );
 
-    if (0 >= dig__fread_port_C ( buf, DIG4_DATE_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_DATE_LEN, &gvf)) return -1;
     buf[DIG4_DATE_LEN-1] = '\0';
     Vect_set_date ( Mapout, buf );
     
-    if (0 >= dig__fread_port_C ( buf, DIG4_YOUR_NAME_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_YOUR_NAME_LEN, &gvf)) return -1;
     buf[DIG4_YOUR_NAME_LEN-1] = '\0';
     Vect_set_person ( Mapout, buf );
 
-    if (0 >= dig__fread_port_C ( buf, DIG4_MAP_NAME_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_MAP_NAME_LEN, &gvf)) return -1;
     buf[DIG4_MAP_NAME_LEN-1] = '\0';
     Vect_set_map_name ( Mapout, buf );
 
-    if (0 >= dig__fread_port_C ( buf, DIG4_SOURCE_DATE_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_SOURCE_DATE_LEN, &gvf)) return -1;
     buf[DIG4_SOURCE_DATE_LEN-1] = '\0';
     Vect_set_map_date ( Mapout, buf );
 
-    if (0 >= dig__fread_port_C ( buf, DIG4_LINE_3_LEN, Digin)) return -1;
+    if (0 >= dig__fread_port_C ( buf, DIG4_LINE_3_LEN, &gvf)) return -1;
     buf[DIG4_LINE_3_LEN-1] = '\0';
     Vect_set_comment ( Mapout, buf );
 
-    if (0 >= dig__fread_port_C( buf, VERS_4_DATA_SIZE, Digin)) return -1; 
+    if (0 >= dig__fread_port_C( buf, VERS_4_DATA_SIZE, &gvf)) return -1; 
 
     if (buf[0] != '%' || buf[1] != '%') { /* Version3.0 */
 	In_head.Version_Major = 3;
@@ -90,15 +94,15 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
        called by dig__fread_port_*() */
     dig_set_cur_port ( &(In_head.port) );
 
-    if (0 >= dig__fread_port_L ( &lbuf, 1, Digin)) return -1;
+    if (0 >= dig__fread_port_L ( &lbuf, 1, &gvf)) return -1;
     Vect_set_scale ( Mapout, (int) lbuf );
-    if (0 >= dig__fread_port_I ( &ibuf, 1, Digin)) return -1;
+    if (0 >= dig__fread_port_I ( &ibuf, 1, &gvf)) return -1;
     Vect_set_zone ( Mapout, ibuf );
-    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1;  /* W */
-    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* E */    
-    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* S */
-    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1; /* N */
-    if (0 >= dig__fread_port_D ( &dbuf, 1, Digin)) return -1;
+    if (0 >= dig__fread_port_D ( &dbuf, 1, &gvf)) return -1;  /* W */
+    if (0 >= dig__fread_port_D ( &dbuf, 1, &gvf)) return -1; /* E */    
+    if (0 >= dig__fread_port_D ( &dbuf, 1, &gvf)) return -1; /* S */
+    if (0 >= dig__fread_port_D ( &dbuf, 1, &gvf)) return -1; /* N */
+    if (0 >= dig__fread_port_D ( &dbuf, 1, &gvf)) return -1;
     Vect_set_thresh ( Mapout, dbuf );
 
     /* reading dig file body (elements) */
@@ -110,7 +114,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     
     line = 0;
     while ( 1 ) {
-        type = read_line ( Digin, nline);
+        type = read_line ( &gvf, nline);
 	G_debug (3, "read line = %d, type = %d", line, type);
 	if ( type == -2 ) break; /* EOF */
 	switch (type) {
@@ -174,22 +178,22 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 /* read_line() reads element from file
    returns element type
  */   
-int read_line ( FILE *Digin, struct line_pnts *nline )
+int read_line ( GVFILE *Gvf, struct line_pnts *nline )
 {
     int n_points;
     long itype;
 
-    if (0 >= dig__fread_port_L (&itype, 1, Digin)) return (-2);
+    if (0 >= dig__fread_port_L (&itype, 1, Gvf)) return (-2);
     itype = dig_old_to_new_type ((char) itype);
 
-    if (0 >= dig__fread_port_I (&n_points, 1, Digin)) return (-2);
+    if (0 >= dig__fread_port_I (&n_points, 1, Gvf)) return (-2);
  
     if (0 > dig_alloc_points ( nline, n_points))
        G_fatal_error ("Cannot allocate points");
  
     nline->n_points = n_points;
-    if (0 >= dig__fread_port_D ( nline->x, n_points, Digin)) return (-2);
-    if (0 >= dig__fread_port_D ( nline->y, n_points, Digin)) return (-2);    
+    if (0 >= dig__fread_port_D ( nline->x, n_points, Gvf)) return (-2);
+    if (0 >= dig__fread_port_D ( nline->y, n_points, Gvf)) return (-2);    
 
     return ((int) itype);
 }  

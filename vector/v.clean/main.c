@@ -37,6 +37,8 @@ main (int argc, char *argv[])
 	int    *tools, ntools, atools;
 	double *threshs;
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description = "Break lines at intersections.";
 
@@ -67,7 +69,6 @@ main (int argc, char *argv[])
 	x_flag->key             = 'x';
 	x_flag->description     = "Write out intersection points instead of broken lines";
 	
-	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
 	    exit(-1); 
 	
@@ -157,6 +158,8 @@ main (int argc, char *argv[])
 
 	/* Copy input to output */
 	Vect_copy_head_data (&In, &Out);
+	Vect_hist_copy (&In, &Out);
+	Vect_hist_command ( &Out );
 	Vect_copy_map_lines ( &In, &Out );
 	Vect_copy_tables ( &In, &Out, 0 );
 	Vect_build ( &Out, NULL );

@@ -118,17 +118,15 @@ int main (int argc, char *argv[])
     if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
 	G_fatal_error ("Could not find input vector %s\n", old->answer);
     
-    if( Vect_open_old(&Old, old->answer, mapset) < 1)
-	G_fatal_error("Could not open input vector %s\n", old->answer);
+    Vect_open_old(&Old, old->answer, mapset);
 
-    if (0 > Vect_open_new (&New, new->answer, Vect_is_3d(&Old) )) {
-	Vect_close (&Old);
-	G_fatal_error("Could not open output vector %s\n", new->answer);
-    }
-
+    Vect_open_new (&New, new->answer, Vect_is_3d(&Old) );
 
     /* copy and set header */
     Vect_copy_head_data(&Old, &New);
+
+    Vect_hist_copy (&Old, &New);
+    Vect_hist_command ( &New );
 
     sprintf(date,"%s",G_date());
     sscanf(date,"%*s%s%d%*s%d",mon,&day,&yr);

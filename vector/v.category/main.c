@@ -181,6 +181,8 @@ main (int argc, char *argv[])
 	    }
 
 	    Vect_copy_head_data (&In, &Out);
+	    Vect_hist_copy (&In, &Out);
+	    Vect_hist_command ( &Out );
           }
 
 

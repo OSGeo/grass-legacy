@@ -37,6 +37,8 @@ old2new (char *in, char *out, int endian)
 	fclose (Digin);
     	exit(-1);
     }  
+
+    Vect_hist_command ( &Mapout );
     
     /* open input dig_att file if exists */
     att = FALSE;

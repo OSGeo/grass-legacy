@@ -111,6 +111,7 @@ int main (int argc, char *argv[])
     if ( dims == 3 ) withz = 1; else withz = 0;
 	
     Vect_open_new (&Map, outvect->answer, withz);
+    Vect_hist_command ( &Map );
 
     fi = Vect_default_field_info ( Map.name, 1, NULL, GV_1TABLE );
     Vect_map_add_dblink ( &Map, 1, NULL, fi->table, "cat", fi->database, fi->driver);

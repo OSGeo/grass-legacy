@@ -102,6 +102,8 @@ main (int argc, char *argv[])
     else
        Vect_open_new (&Map, out_opt->answer, 1 );
 
+    Vect_hist_command ( &Map );
+
     /* Add DB link */
     Fi = Vect_default_field_info ( Map.name, 1, NULL, GV_1TABLE );
     Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);

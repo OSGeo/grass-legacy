@@ -79,6 +79,8 @@ main (int argc, char *argv[])
 	} else {
 	    ret = Vect_open_new (&OutMap, out_name, 0);
 	}
+	Vect_hist_command ( &OutMap );
+	
 	if ( ret < 0 ) 
 	   G_fatal_error ( "Not able to open vector file <%s>\n", out_name);
 

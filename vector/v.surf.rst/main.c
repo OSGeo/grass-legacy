@@ -660,6 +660,7 @@ int main ( int argc, char *argv[])
       sprintf (msg, "Not able to open vector file <%s>\n", treefile);
       clean_fatal_error (msg);
     }
+    Vect_hist_command ( &TreeMap );
 
     /*
     sprintf (TreeMap.head.your_name, "grass");
@@ -668,6 +669,7 @@ int main ( int argc, char *argv[])
     TreeMap.head.plani_zone = G_zone ();
     */
     print_tree (root, x_orig, y_orig, &TreeMap);
+    Vect_build (&TreeMap, NULL);
     Vect_close (&TreeMap);
   }
 
@@ -757,6 +759,7 @@ int main ( int argc, char *argv[])
       sprintf (msg, "Not able to open vector file <%s>\n", overfile);
       clean_fatal_error (msg);
     }
+    Vect_hist_command ( &OverMap );
 
     /*
     sprintf (OverMap.head.your_name, "grass");
@@ -765,6 +768,7 @@ int main ( int argc, char *argv[])
     OverMap.head.plani_zone = G_zone ();
     */
     print_tree (root, x_orig, y_orig, &OverMap);
+    Vect_build (&OverMap, NULL);
     Vect_close (&OverMap);
   }
 

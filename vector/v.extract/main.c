@@ -144,10 +144,9 @@ int main (int argc, char **argv)
     Vect_open_old(&In, input, mapset);
     
     /* Open output file */
-    if ( Vect_open_new( &Out, output, Vect_is_3d (&In) ) < 0) {
-           Vect_close ( &In );
-           G_fatal_error ( "Can't create output vector file <%s> \n", output) ;
-    }
+    Vect_open_new( &Out, output, Vect_is_3d (&In) );
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
 
     /* Read and write header info */
     Vect_copy_head_data(&In, &Out);

@@ -15,8 +15,9 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "Vect.h"
 
 static int
 clo_dummy () {
@@ -51,9 +52,15 @@ static int (*Close_array[][3]) () =
 int 
 Vect_close (struct Map_info *Map)
 {
+    
     G_debug (1, "Vect_close(): name = %s, mapset = %s, format = %d, level = %d",
 	         Map->name, Map->mapset, Map->format, Map->level);
 
+    if ( Map->format == GV_FORMAT_NATIVE || Map->format == GV_FORMAT_POSTGIS ) {
+	if ( Map->hist_fp != NULL ) fclose ( Map->hist_fp );
+    }
+
     return (*Close_array[Map->format][Map->level]) (Map); 
+
 }
 

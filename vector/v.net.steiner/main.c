@@ -532,6 +532,8 @@ int main(int argc, char **argv)
     
     /* Write arcs to new map */
     Vect_open_new ( &Out, output->answer, Vect_is_3d (&Map) );
+    Vect_hist_command ( &Out );
+    
     fprintf (stdout, "\nSteiner tree:\n" );
     fprintf (stdout, "Arcs' categories (field %d, %d arcs):\n", afield, StArcs->n_values );
     for (i = 0; i < StArcs->n_values; i++) {
