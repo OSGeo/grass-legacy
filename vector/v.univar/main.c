@@ -61,7 +61,7 @@ main (int argc, char *argv[])
     type_opt->options = "point,line,boundary,centroid,area";
     
     col_opt = G_define_option();
-    col_opt->key            = "col";
+    col_opt->key            = "column";
     col_opt->type           = TYPE_STRING;
     col_opt->required       = YES;
     col_opt->multiple       = NO;
