@@ -36,15 +36,9 @@ raster file.  Only those cells falling within the mask will be
 assigned interpolated values.  The procedure for 
 selection of input data will consider all 
 input data relevant to interpolating values at the cell centers of the
-current geographic region, ignoring the curent mask.  Zero values of the
-input raster are assumed to be real values of a continuous variable, thus
-<EM>r.bilinear</EM> supports interpolation of variables that range from negative
-to positive values.  If input zero values are in fact nulls, the user bears
-responsibility for controling the quality of the output, either through
-post-interpolation editing of the output or pre-interpolation setting of the
-current mask.  Note that
+current geographic region, ignoring the curent mask.  Note that
 cells of the output raster that cannot be bounded by 4 input cell centers are
-set to zero (null).
+set to null.
 
 
 <P>
