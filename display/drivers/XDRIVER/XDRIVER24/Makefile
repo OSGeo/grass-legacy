@@ -1,0 +1,74 @@
+
+MODULE_TOPDIR = ../../../..
+
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
+include $(MODULE_TOPDIR)/include/Make/Rules.make
+
+PGM=XDRIVER
+SWITCHER = SWITCHER.o
+
+LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
+
+# if you are compiling under X11R3 add this define
+#R3DEFINE=-DX11R3
+# and comment out this line
+R3DEFINE=
+
+# For those compiling on Intergraph machines, uncomment the following 2 lines:
+#XINCPATH=-I/usr/ip32/xwinprog
+#XCFLAGS=-DINTERGRAPH -DX11R3
+#XLDFLAGS=-L/usr/ip32/xwinprog/lib
+
+# these are for the CDC mips machine
+#XCFLAGS=-systype bsd43
+#XLDFLAGS=-systype bsd43
+
+# One user reported that he had to load -lsockstub for SCO-UNIX under X11R3
+# we record his comment here for anyone that may have problems under SCO-UNIX
+# This problem was NOT reported when CWU did the port to SCO-UNIX
+#XEXTRALIBS=-lsockstub
+
+# On the Silcon Graphics Boxes, the standard XOpenDisplay() fails when
+# trying to display to another machine if the machine is named on
+# the DISPLAY variable instead of it IP address. Loading the -lsun
+# library resolves this problem
+#XEXTRALIBS=-lsun
+
+EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) $(XINCPATH) 
+
+OBJS =  \
+	$(SWITCHER)\
+	Box_abs.o\
+	Can_do.o\
+	Color.o\
+	Cont_abs.o\
+	Clr_table.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Plylne_abs.o\
+	Polygn_abs.o\
+	Returns.o\
+	Serve_Xevent.o\
+	alloc.o\
+	command_pend.o\
+	Raster.o
+
+ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
+
+default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
+
+$(DRIVERDIR)/$(PGM): $(ARCH_OBJS) 
+	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
+
+#Graph_Set.o: winname.h
+
+$(ARCH_INCDIR)/winname.h: 
+	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
+
+
