@@ -179,9 +179,7 @@ Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
     {
       *X = cent_x;
       *Y = cent_y;
-      /*
-         return 0;
-       */
+      return 0;
     }
 
 /* guess we have to do it the hard way... */
@@ -446,8 +444,10 @@ Vect_get_point_in_poly_isl (
     {
       for (i = 0; i < n_isles; i++)
 	{
-	  if (Vect_point_in_poly (cent_x, cent_y, IPoints[i]) == 1)
+	  if (Vect_point_in_poly (cent_x, cent_y, IPoints[i]) >= 1) {
 	    point_in_sles = 1;
+	    break;
+	  }
 	}
       if (!point_in_sles)
 	{
@@ -533,7 +533,6 @@ Vect_get_point_in_poly_isl (
 
   *att_x = (Intersects->x[maxpos] + Intersects->x[maxpos + 1]) / 2.;
 
-  /* if (Vect_point_in_poly (*att_x, *att_y, Points) == 1) */
   return 0;
 }
 
