@@ -209,7 +209,7 @@ write_outputs(void)
 	time(&tloc);
 	ltime = localtime(&tloc);
 
-	ltime->tm_year += (ltime->tm_year > 90 ? 1900 : 2000);
+	ltime->tm_year += 1900;
 	ltime->tm_mon++;
 
 

@@ -347,6 +347,7 @@ int main( int argc, char *argv[] ) {
 		   mapname );
 
   hHead = (Site_head *)malloc( sizeof(Site_head) );
+  memset(hHead, 0, sizeof(Site_head));
 
   hHead->name = (char *)malloc( strlen(mapname) + 1 );
   strcpy( hHead->name, mapname );
@@ -362,8 +363,10 @@ int main( int argc, char *argv[] ) {
 
   dt0 = (DateTime *)malloc( sizeof(DateTime) );
   dt0->mode = DATETIME_ABSOLUTE;
-  dt0->year = site_time->tm_year;
-  dt0->month = site_time->tm_mon;
+  dt0->from = DATETIME_YEAR;
+  dt0->to = DATETIME_SECOND;
+  dt0->year = site_time->tm_year + 1900;
+  dt0->month = site_time->tm_mon + 1;
   dt0->day = site_time->tm_mday;
   dt0->hour = site_time->tm_hour;
   dt0->minute = site_time->tm_min;
