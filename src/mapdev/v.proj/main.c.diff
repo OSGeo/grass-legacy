@@ -1,0 +1,4 @@
+27c27
+<       char ctype[3];
+---
+>       char ctype[1];
