@@ -132,6 +132,9 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 		    Vect_append_point ( Points[part], pShape->padfX[i], pShape->padfY[i], 0 );
 		}
 		G_debug ( 3, "   -> n_points = %d",  Points[part]->n_points );
+
+		if ( Points[part]->n_points < 4 )
+		    G_warning ( "Degenerate polygon part (%d vertices).", Points[part]->n_points );
 		
 		/* register line */
 		offset = ( ( shape << 11 ) | ( part & 0x7FF) );
@@ -204,27 +207,42 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 
 		    /* create virtual centroid */
 		    /* !! offset for virtual centroids is offset for part 0 */
-		    /* TODO calculate better centroid coordinates */
 		    offset =  ( shape << 11 ) ;
 		    Vect_reset_line ( CPoints );
-		    ret = Vect_get_point_in_area ( Map, area, &x, &y ); 
-		    if ( ret < -1 ) {
-			G_warning ( "Cannot calculate centroid for shape area (area %d, shape %d, part %d)",
-				                area, shape, part );
-			x = Points[part]->x[0];
-			y = Points[part]->y[0];
-		    }
-		    Vect_append_point ( CPoints, x, y, 0 );
-		    line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
-		    dig_line_box ( CPoints, &box );
-		    dig_line_set_box (plus, line, &box);
-		    
-		    Line = plus->Line[line];
-		    Line->left = area;
 
-		    /* register centroid to area */
-		    Area = plus->Area[area];
-		    Area->centroid = line;
+		    if ( Points[part]->n_points > 0  ) { 
+			if ( Points[part]->n_points >= 4  ) { 
+			    ret = Vect_get_point_in_area ( Map, area, &x, &y ); 
+			    if ( ret < -1 ) {
+				G_warning ( "Cannot calculate centroid for shape area (area %d, shape %d, part %d)",
+							area, shape, part );
+				x = Points[part]->x[0];
+				y = Points[part]->y[0];
+			    }
+			} else {
+			    if ( Points[part]->n_points >= 2 ) {
+				x = (Points[part]->x[0] + Points[part]->x[1]) / 2;
+				y = (Points[part]->y[0] + Points[part]->y[1]) / 2;
+			    } else {
+				x = Points[part]->x[0];
+				y = Points[part]->y[0];
+			    }
+			}
+			    
+			Vect_append_point ( CPoints, x, y, 0 );
+			line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
+			dig_line_box ( CPoints, &box );
+			dig_line_set_box (plus, line, &box);
+			
+			Line = plus->Line[line];
+			Line->left = area;
+
+			/* register centroid to area */
+			Area = plus->Area[area];
+			Area->centroid = line;
+		    } else  {
+		        G_warning ( "No centroid calculated for polygon with 0 vertices." );
+		    }
 		}
 	    }
 	    
