@@ -12,6 +12,7 @@
 
 add_site (site_list, north, east, desc)
     SITE_LIST *site_list;
+    double north, east;
     char *desc;
 {
     SITE *new;
@@ -48,8 +49,8 @@ rewind_site_list(site_list)
 
 next_site (site_list, north, east, desc)
     SITE_LIST *site_list;
-    int *north;
-    int *east;
+    double *north;
+    double *east;
     char **desc;
 {
     if ( ! site_list -> cur)
