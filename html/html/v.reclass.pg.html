@@ -7,8 +7,10 @@
 
 <hr width=100% align=center size=6 no shade>
 
-<H2>NAME</H2>
-<EM><B>v.reclass.pg</B></EM> - Generate new vector map layer derived from attribute data in the currently selected database. (GRASS-RDBMS Vector Interface Program)
+<H2>NAME</H2> 
+<EM><B>v.reclass.pg</B></EM> - Generate new vector map layer derived from
+attribute data in the currently selected database. (GRASS-RDBMS Vector
+Interface Program)
 
 <H2>SYNOPSIS</H2>
 <B>v.reclass.pg</B><BR>
@@ -16,10 +18,30 @@
 <B>v.reclass.pg [-d] pql</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>type</B><EM>=name</EM> <B>input</B><EM>=name</EM>[<B>output</B><EM>=name</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>v.reclass.pg</EM> generates a new vector map layer based on the results of one or more queries to the currently selected database.  The user constructs a series of mutually exclu­sive postQUEL retrieve statments designed to return groups of records from the database. Each group of records should be internally consistent in terms of attribute character­istics specified by the user in the retrieve clause. These groups should also be mutually exclusive, thereby insuring that a row returned by one retrieve clause is not also returned by a subsequent retrieve clause.  Each group of records therefore forms the basis for a single category in the resulting GRASS vector map.  <EM>v.reclass.pg</EM> processes each retrieve statement in order returning groups of records which will form a single category in the resulting map.  As each retrieve statement is processed the group of records returned receives a common category value.  The category value is incremented by one for each subsequent retrieve statment which is processed.  The resulting reclass map will have one category for each of the origi­nal retrieve statements.
+
+<EM>v.reclass.pg</EM> generates a new vector map layer based on the results
+of one or more queries to the currently selected database.  The user
+constructs a series of mutually exclusive SQL retrieve statments
+designed to return groups of records from the database. Each group of
+records should be internally consistent in terms of attribute
+character­istics specified by the user in the retrieve clause. These groups
+should also be mutually exclusive, thereby insuring that a row returned by
+one retrieve clause is not also returned by a subsequent retrieve clause. 
+Each group of records therefore forms the basis for a single category in the
+resulting GRASS vector map.  <EM>v.reclass.pg</EM> processes each retrieve
+statement in order returning groups of records which will form a single
+category in the resulting map.  As each retrieve statement is processed the
+group of records returned receives a common category value.  The category
+value is incremented by one for each subsequent retrieve statment which is
+processed.  The resulting reclass map will have one category for each of the
+original retrieve statements. 
 <P>
 
-For example, the rows associated with the first retrieve statement will be assigned to category 1, those associated with the second retrieve statement will be assigned to category 2 and so on. The output map will contain only those line segments associated with database rows returned by the retrieve statement(s).
+For example, the rows associated with the first retrieve statement will be
+assigned to category 1, those associated with the second retrieve statement
+will be assigned to category 2 and so on. The output map will contain only
+those line segments associated with database rows returned by the retrieve
+statement(s).
 
 <H2>COMMAND LINE OPTIONS</H2>
 <H3>Flag:</H3>
@@ -30,15 +52,27 @@ For example, the rows associated with the first retrieve statement will be assig
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>pql=filename</B>
-<DD>Name of file containing postQUEL query statements
+<DT><B>sql=filename</B>
+<DD>Name of file containing SQL query statements
 <P>
 
 <DT><B>key=databasecolumnname</B>
 <DD>Key column in db
 <P>
 
-<DT><B>type=area/line</B>
+<DT><B>tab=name</B>
+<DD>Table containing [col]
+<P>
+
+<DT><B>col=name</B>
+<DD>Column to base reclass on
+<P>
+
+<DT><B>where=name</B>
+<DD>Where clause for query (ie. where col='paved')
+<P>
+
+<DT><B>type=area/line/site</B>
 <DD>Key column in db
 <P>
 
@@ -52,7 +86,7 @@ For example, the rows associated with the first retrieve statement will be assig
 <P>
 
 <B>EXAMPLE:</B> produces vector map of primary and secondary roads.<P>
-<EM>v.reclass.pg pql=vect.pql key=tlid input=t.roads.pg out­put=t.roads.12</EM>
+<EM>v.reclass.pg sql=vect.sql key=tlid input=t.roads.pg out­put=t.roads.12</EM>
 <P>
 vect.pql:
 <EM>retrieve unique (t.tlid,t.cfcc) from t in type1</EM><BR>
@@ -66,19 +100,23 @@ sort by tlid
 <H2>BUGS</H2>
 None known.
 
-<H2>NOTE</H2>
-This program requires the Postgres database software.
+<H2>NOTE</H2> 
+This program requires the <a
+href=www.postgresql.org>PostgreSQL</a> database software.
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A></EM>
 
 <H2>AUTHOR</H2>
-Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
 <P>
-Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of
+Joensuu, Finland.
+
 <P>
 Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
 
 </BODY>
 </HTML>
-
