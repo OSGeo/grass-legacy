@@ -62,7 +62,7 @@
 #%option
 #% key: name
 #% type: string
-#% gisprompt: old,cell,raster
+#% gisprompt: new,cell,raster
 #% description: Name of raster plane to be created.
 #% required : yes
 #%end
@@ -76,11 +76,12 @@ fi
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
-     
+
+
+### setup enviro vars ###
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
-
 
 dip=$GIS_OPT_dip
 az=$GIS_OPT_az
@@ -90,12 +91,10 @@ el=$GIS_OPT_el
 name=$GIS_OPT_name
 type=$GIS_OPT_type
 
-
 eval `g.region -g`
 
-# get directory for r.in.ascii
-#CELLDIR=$LOCATION/fcell
 
+### test input values ###
 diptest=`echo $dip | awk '{ printf("%8d", int($1 + 0.5))'}`
 if [ $diptest -lt -90 -o $diptest -gt 90 ]
 then
@@ -132,13 +131,9 @@ then
         ctype=dcell
 fi
 
-TMP="`g.tempfile pid=$$`"
-
-echo $ea > "$TMP"
-awk '{ printf"eaint=%d",$1 }' "$TMP" > "$TMP"ea
-	eval `cat "$TMP"ea`
-rm "$TMP"*
-if test $eaint -le $e -a $eaint -ge $w
+# these tests will fail for negative lat/lon?
+eaint=`echo $ea | awk '{ printf"%d",$1 }'`
+if test $eaint -le `echo $e | cut -d. -f1` -a $eaint -ge `echo $w | cut -d. -f1`
 then
 	gotit=1
 #	echo "east: $ea"
@@ -149,11 +144,7 @@ else
 	exit 1
 fi
 
-
-echo $no > "$TMP"
-awk '{ printf"noint=%d",$1 }' "$TMP" > "$TMP"no
-	eval `cat "$TMP"no`
-rm "$TMP"*
+noint=`echo $no | awk '{ printf"%d",$1 }'`
 if test $noint -gt `echo $s | cut -d. -f1` -a $noint -lt `echo $n | cut -d. -f1`
 then
 	gotit=1
@@ -166,11 +157,9 @@ else
 fi
 
 
-#g.ask type=new element=cell desc=raster prompt="Enter name for resulting file:" unixfile="$TMP" 
-#eval `cat "$TMP"`
-#rm -f "$TMP"
+### now the actual algorithm in awk (stored in a temporary file) ###
+TMP="`g.tempfile pid=$$`"
 
-# now the actual algorithm in awk (stored in a temporary file)
 cat > "$TMP" << EOF
 
 {
@@ -234,19 +223,19 @@ END {
 
 EOF
 
-#execute awk and remove temporary file
+
+### execute awk and remove temporary file ###
 
 awk  -f "$TMP" -v east=$e west=$w north=$n south=$s ea=$ea no=$no typeflag=$typeflag \
   nsres=$nsres ewres=$ewres  dip=$dip az=$az el=$el "$TMP" > $name
 
-rm "$TMP"
+rm -f "$TMP"
 
 
 #if [ type='int' ]
 #then 
 echo "Running r.in.ascii, please stand by.."
 r.in.ascii `echo $typeflag` i=$name o=$name
-### rm $name
 
 dat=`date +'%a %b %e %T %Y'`
 user=`logname`
