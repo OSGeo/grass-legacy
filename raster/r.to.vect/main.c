@@ -90,12 +90,12 @@ int main (int argc, char *argv[])
     else
 	has_cats = 0;
 
+    db_init_string (&sql);
+    db_init_string (&label);
+
     /* Create table */
     if ( (feature & (GV_AREA | GV_POINT)) && (!value_flag || (value_flag && has_cats)) ) {
 	char buf[1000];
-
-	db_init_string (&sql);
-	db_init_string (&label);
 
 	Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
 	Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
@@ -146,23 +146,6 @@ int main (int argc, char *argv[])
 
 	db_begin_transaction ( driver );
 
-	if ( value_flag ) { /* we can write out category labels here */
-	    int i, cat;
-	    
-	    for ( i = 0; i < RastCats.ncats; i++) {
-		cat = (int) RastCats.q.table[i].dLow; /* cats are in dLow/High not in cLow/High !!! */ 
-		G_debug ( 3, "%d cat = %d label = %s", i, cat, RastCats.labels[i] );
-		
-		db_set_string ( &label, RastCats.labels[i]);
-		db_double_quote_string ( &label );
-		sprintf (buf, "insert into %s values ( %d, '%s')", Fi->table, cat, db_get_string(&label) );
-		db_set_string ( &sql, buf);
-		G_debug ( 3, db_get_string ( &sql ) );
-
-		if (db_execute_immediate (driver, &sql) != DB_OK ) 
-		    G_fatal_error ( "Cannot insert into table: %s", db_get_string ( &sql )  );
-	    }
-	}
     } else {
 	driver = NULL;
     }
@@ -184,8 +167,48 @@ int main (int argc, char *argv[])
     } else { /* GV_POINT */
 	extract_points ();
     }
-
+    
     G_close_cell(input_fd);
+    
+    Vect_build (&Map, stderr);
+
+    /* insert cats and optionaly labels if raster cats were used */
+    if ( value_flag ) {
+	char buf[1000];
+	int c, i, cat, fidx, ncats, lastcat, tp, id;
+
+	fidx = Vect_cidx_get_field_index ( &Map, 1 );
+	if ( fidx >= 0 )  {
+	
+	    ncats = Vect_cidx_get_num_cats_by_index (  &Map, fidx ) ;
+	    lastcat = -1;
+	    for ( c = 0; c < ncats; c++) {
+		Vect_cidx_get_cat_by_index ( &Map, fidx, c, &cat, &tp, &id );
+
+		if ( lastcat == cat ) continue;
+
+		/* find label, slow -> TODO faster */
+		db_set_string ( &label, "");
+		for ( i = 0; i < RastCats.ncats; i++) {
+		    if ( cat == (int) RastCats.q.table[i].dLow ) { /* cats are in dLow/High not in cLow/High !!! */ 
+			db_set_string ( &label, RastCats.labels[i]);
+			db_double_quote_string ( &label );
+			break;
+		    }
+		}
+		G_debug ( 0, "cat = %d label = %s", cat, db_get_string(&label) );
+		
+		sprintf (buf, "insert into %s values ( %d, '%s')", Fi->table, cat, db_get_string(&label) );
+		db_set_string ( &sql, buf);
+		G_debug ( 0, db_get_string ( &sql ) );
+
+		if (db_execute_immediate (driver, &sql) != DB_OK ) 
+		    G_fatal_error ( "Cannot insert into table: %s", db_get_string ( &sql )  );
+
+		lastcat = cat;
+	    }
+	}
+    }
 
     if ( has_cats )
 	G_free_cats(&RastCats);
@@ -195,7 +218,6 @@ int main (int argc, char *argv[])
 	db_close_database_shutdown_driver ( driver );
     }
 
-    Vect_build (&Map, stderr);
     Vect_close (&Map);
 
     exit(0);
