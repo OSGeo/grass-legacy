@@ -72,10 +72,12 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 	}
     }
 
+#ifdef DEPRECATED
     if(!quiet)
     {
 	fprintf(stderr, "This region now saved as current region.\n\n") ;
 	fprintf(stderr, "Note: run 'd.erase' for the new region to affect the graphics.\n");
     }
+#endif
     return(quitonly) ;
 }
