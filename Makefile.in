@@ -49,7 +49,6 @@ pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	@if [ $? != 0 ] ; then echo "An error occured. Stop." ; exit 1 ;	fi
 	${SHELL} ${IS64BIT}
 	echo "Now proceed with make install"
 
