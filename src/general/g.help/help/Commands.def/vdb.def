@@ -1,0 +1,13 @@
+
+
+v.db - 
+
+v.db allows the user to create, manipulate and query information about
+labeled lines and areas from a number of different \vector\ maps in a
+batch mode or \interactively\, with input in a command line style.
+This program, like \s.db\, is actually a marriage of the GRASS
+environment and the programmer's interface library of the relational
+database management program RIM distributed publically by the
+University of Washington Academic Computing Services.
+
+Manual entry for \v.db\
