@@ -1,0 +1,44 @@
+
+
+dig_cats								dig_cats
+
+
+NAME
+
+dig_cats - FILE STRUCTURE for GRASS dig_cats files.
+
+The present version of the GRASS/MAPGEN interface is capable of using the labels placed
+in the dig_cats file associated with a GRASS digit file. The dig_cats file is used by the 
+interface programs cat.to.geo and make.fill. To use this file for referencing area
+labels it must follow a well defined structure.
+
+For each category the line in the dig_cats file must be as follows:
+	cat#:name:name2:[anything else]
+
+Where name and name2 are the names that can be used in the make.fill and cat.to.geo programs.
+When used the labels in the dig_cat file must exactly match what the user specifies.
+
+
+Example
+	: 10 categories				#line one
+	Farmfields categories
+
+	0.00 0.00 0.00 0.00
+	0:NO DATA:				#line five
+	1:C. Smith:
+	2:C. Smith:
+	3:P. Biggam:
+	4:P. Biggam:
+	5:P. Biggam:
+	6:P. Biggam:
+	7:P. Biggam:
+	8:P. Biggam:
+	9:G. Tandy:
+	10:C. Mitchell:
+
+
+C. Smith, P. Biggam, G. Tandy and C. Mitchell can be used as the label references for the
+the respective category numbers in the digit file. Notice that each label is followed by a
+":". To reference the category numbers 1 and 2 the user would specify the label "C. Smith"
+with the capital letters specified correctly and exactly one space between the "." and the
+"S". The user would not include the ":" as part of the label.
