@@ -1,0 +1,4 @@
+Conversion of geographic to geocentric coordinates. Geographic
+coordinates are in latitude and longitude. Geocentric coordinates,
+in meters, are measured in the three dimensions, x, y, and z, from
+the center of the earth.
