@@ -145,8 +145,6 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 		else
 		    Vect_box_extend (&(plus->box), &box);
 				
-		//if ( part == 0 ) { lineid = line; }
-	    
 		/* Check part type: area or isle */
 		dig_find_area_poly (Points[part], &area_size);
 		G_debug ( 3, "  area/isle size = %f", area_size );
