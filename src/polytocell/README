@@ -1,0 +1,6 @@
+
+  Programs that use this code:
+
+  bmf_to_cell  -  dig.to.cell, dlg.to.cell (mapdev), screen.digitize
+
+  poly_to_bmif  -  screen.digitize
