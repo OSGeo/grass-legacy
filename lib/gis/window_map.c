@@ -260,8 +260,15 @@ double G_col_to_easting (double col,
 
 int G_window_rows ()
 {
-    G__init_window () ;
-    return WINDOW_NROWS;
+    char *fakestart;
+    
+    /* fake session for HTML generation with parser */
+    fakestart = getenv( "GRASS_FAKE_START" );
+    if ( fakestart == NULL ) {
+       G__init_window () ;
+       return WINDOW_NROWS;
+    } else
+       return 1; /* fake only */
 }
 
 
@@ -293,8 +300,15 @@ int G_window_rows ()
 
 int G_window_cols ()
 {
-    G__init_window () ;
-    return WINDOW_NCOLS;
+    char *fakestart;
+    
+    /* fake session for HTML generation with parser */
+    fakestart = getenv( "GRASS_FAKE_START" );
+    if ( fakestart == NULL ) {
+       G__init_window () ;
+       return WINDOW_NCOLS;
+    } else
+       return 1; /* fake only */
 }
 
 int G__init_window ()
