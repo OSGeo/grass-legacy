@@ -2,7 +2,7 @@
 #define _GRASS_CC_H
 
 /* datum.c */
-int CC_datum_shift(char *, double *, double *, double *);
+int CC_datum_shift(const char *, double *, double *, double *);
 char *CC_datum_name(int);
 char *CC_datum_description(int);
 /* format_ll.c */
@@ -18,7 +18,7 @@ int CC_geo2ll(double, double, double, double, double, double *, double *, double
 int CC_lat_scan(char *, double *);
 int CC_lon_scan(char *, double *);
 /* spheroid.c */
-int CC_get_spheroid(char *, double *, double *);
+int CC_get_spheroid(const char *, double *, double *);
 char *CC_spheroid_name(int);
 /* tm.c */
 int CC_tm2ll_spheroid(char *);
