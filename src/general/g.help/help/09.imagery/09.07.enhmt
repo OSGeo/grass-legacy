@@ -1,0 +1,29 @@
+                       IMAGE ENHANCEMENT
+
+GRASS programs can be used to enhance or subdue certain data values
+in order to make more evident certain features or qualities of digital
+imagery.  Following is a list of GRASS programs which can be used in
+the image enhancement process:    
+
+	\-  i.colors \
+	\-  i.composite \
+	\-  i.grey.scale \
+	\-  i.his.rgb \
+	\-  i.median \
+	\-  i.rgb.his \
+	\-  r.mapcalc \
+
+For more information on a specific command, select a command and press
+ESC.
+
+
+
+
+
+
+
+
+
+
+
+
