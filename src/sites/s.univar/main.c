@@ -113,7 +113,7 @@ int main ( int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = G_readsites (fdsite, all, verbose, field, &z);
+  nsites = G_readsites (fdsite, all, verbose, field, &window, &z);
 
   if (nsites == 0)
     G_fatal_error ("No sites found in sites file [%s]", sitefile);

@@ -1,6 +1,7 @@
 /*
  * int G_readsites 
- *     (FILE *fdsite, int all, int verbose, int dec_field, Z **xyz)
+ *     (FILE *fdsite, int all, int verbose, int dec_field,
+ *      struct Cell_head *window, Z **xyz)
  *   reads in a sites list into site struct
  *   returning the number of sites found
  *   select decimal field (table column) by dec_field parameter
@@ -23,13 +24,13 @@
 #include "gis.h"
 #include "readsites.h"
 
-int G_readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
+int G_readsites (FILE *fdsite, int all, int verbose, int field,
+		 struct Cell_head *window, Z **xyz)
 
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
   int i, strs, dims,map_type,dbls,allocated=1000;
   Site *s;
-  extern struct Cell_head window;
 
   G_sleep_on_error (0);
 
@@ -66,8 +67,8 @@ int G_readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
       (*xyz) = (Z *) G_realloc ((*xyz), allocated * sizeof (Z));
       if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
     }
-    if (all || (s->east >= window.west && s->east <= window.east &&
-		s->north <= window.north && s->north >= window.south))
+    if (all || (s->east >= window->west && s->east <= window->east &&
+		s->north <= window->north && s->north >= window->south))
     {
       (*xyz)[i].z=s->dbl_att[field];
       (*xyz)[i].x=s->east;

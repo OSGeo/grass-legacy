@@ -160,7 +160,7 @@ geopoint *Gp_load_sites(char *grassname, int *nsites, int *has_z, int *has_att)
 	}
     }
     
-    G_site_destroy_struct (nextsite);
+    G_site_free_struct (nextsite);
     prev->next = NULL;
     free(gpt);
 
