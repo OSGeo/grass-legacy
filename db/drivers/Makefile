@@ -2,7 +2,8 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	dbf
+	dbf \
+	odbc
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
