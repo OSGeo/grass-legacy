@@ -29,6 +29,7 @@ proc mkmainPanel { BASE } {
     # make redraw button area
     pack [frame $BASE.redrawf]		-side top -fill x -expand 1
     pack [frame $BASE.redrawf.f1] 	-side top -fill x
+    pack [frame $BASE.redrawf.f11]       -side top -fill x
     pack [frame $BASE.redrawf.f2] 	-side top -fill x 
 
     set labl1 [label $BASE.redrawf.f1.label1  -text Auto: ]
@@ -38,24 +39,53 @@ proc mkmainPanel { BASE } {
     set auto_d [checkbutton $BASE.redrawf.f1.autodraw -text "Draw" \
                   -onvalue 1 -offvalue 0 -variable auto_draw ]
     $auto_d select
-    set labl2 [label $BASE.redrawf.f1.label2  -text REDRAW] 
-    set clr [button $BASE.redrawf.f1.clear -text Clear -command do_clear]
-    pack $labl1 $auto $auto_d $labl2 $clr -side left -expand 1 -fill x
+    pack $labl1 $auto $auto_d -side left -expand 1 -fill x
 
-    pack \
-	[button $BASE.redrawf.f2.surface -text Surface -command Nsurf_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.vectors -text Vectors -command Nvect_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.sites  -text Sites -command Nsite_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.cancel -text Cancel -command {Nset_cancel 1} ] \
-	-side left -expand 1 -fill x
+#checkbuttons for features to draw
+    set labl2 [label $BASE.redrawf.f11.label1  -text Feature: ]
+
+    set surf_b [checkbutton $BASE.redrawf.f11.surface -text "Surface" \
+                  -onvalue 1 -offvalue 0 -variable surface]
+    $surf_b select
+
+    set vect_b [checkbutton $BASE.redrawf.f11.vector -text "Vectors" \
+                  -onvalue 1 -offvalue 0 -variable vector]
+    $vect_b select
+
+    set site_b [checkbutton $BASE.redrawf.f11.sites -text "Sites" \
+                  -onvalue 1 -offvalue 0 -variable sites]
+    $site_b select
+
+    pack $labl2 $surf_b $vect_b $site_b -side left \
+    -expand 1 -fill x
 
 
+#Execute buttons
+
+    button $BASE.redrawf.f2.exec -text DRAW -command { \
+        if {$surface == 1 && $vector == 1 && $sites == 1} {
+        {Ndraw_all}
+        } else {
+        if {$surface == 1} {
+        {Nsurf_draw_all}
+        }
+        if {$vector == 1} {
+        {Nvect_draw_all}
+        }
+        if {$sites == 1} {
+        {Nsite_draw_all}
+        }
+                }}
+
+   button $BASE.redrawf.f2.clear -text Clear -command {do_clear}
+
+   button $BASE.redrawf.f2.cancel -text Cancel -command {Nset_cancel 1}
+
+   pack $BASE.redrawf.f2.exec  $BASE.redrawf.f2.clear $BASE.redrawf.f2.cancel \
+    -side left -expand 1 -fill x
+
+
+#pack frames
     pack [frame $BASE.midf ] -side left -expand 1
 
     # make  position "widget"
