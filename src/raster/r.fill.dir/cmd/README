@@ -1,0 +1,47 @@
+Updated to GRASS FP by Roger Miller 3/2001
+
+"Roger S. Miller" <rgrmill@rt66.com>
+
+From his mail:
+Date: Tue, 13 Mar 2001 21:34:43 -0700                                           
+
+One of the FORTRAN program (ppupdate.f) contains some logic that I think is
+aimed at determining whether a depression is real or artificial.  It doesn't
+fill holes that it determines to be real.  Possibly the NULL holes met the
+requirements for a feature that the program would not fill.
+
+I ran my test first with a raster map without null areas.  It worked on
+cell, fcell and dcell maps, all of which gave approximately the same result. 
+This raster map contains a number of shallow natural depressions (playas) --
+features that ideally r.fill.dir would not fill in.  Unfortunately it did
+fill them in.  That wasn't entirely a loss, though, because I found that I
+could subtract the original map from the new, filled map and the difference
+gave me a map of the depth of the depressions.  An interesting result.
+                                                                                
+I then filled a square area of the map with nulls, and ran it back through
+r.fill.dir.  The FORTRAN programs generated errors (this is the expected
+result) and the result was meaningless.  Then I replaced the null area with
+zeros and reran r.fill.dir.  It ran without errors.  The big hole was not
+filled but the playas were filled.  r.fill.dir also found and filled some
+small holes along some drainage channels, thus integrating the watershed. 
+This latter case is what r.fill.dir is supposed to do, so I guess we can say
+that it works.
+                                                                                
+One thing I've found is that C (at least GNU C) does not correctly read
+FORTRAN double precision numbers from formatted text.  FORTRAN prints double
+precision numbers with a "D" indicating the exponent, as in 1.77785D-23. 
+When a C program tries to read a double it looks for an "E" or "e" to
+indicate the exponent.  So the FORTRAN double precision values are
+misinterpreted by C programs.  This was a problem for r.fill.dir.  I had to
+add a little FORTRAN subroutine that converted all the "D"s in the printed
+double precision values to "E"s before the main program could reread the
+results from the last of the FORTRAN programs.
+                                                                                
+This isn't just a problem with r.fill.dir.  r.in.dem died with a
+segmentation fault when I tried to import a new dem.  Looking closer at the
+program and at the USGS DEM standard I found that large parts of the header
+are actually supposed to be FORTRAN double precision values.  I'm surprised
+that r.in.dem works for anyone.  I guess once r.fill.dir is converted to C I
+can turn to writing new input functions for r.in.dem.
+
+Roger
