@@ -1,0 +1,84 @@
+.\" %W% %G%
+.TH describe 1
+.SH NAME
+describe \- Prints terse list of 
+.CT values "category values"
+found in cell 
+.CT files maps
+.br
+\fI(Available through\fR \fBgrass3\fR \fImenu)\fR
+.SH SYNOPSIS
+.B describe
+.SH DESCRIPTION
+The GRASS tool
+.I describe 
+examines a user-specified 
+.CT "grid cell database map layer." "cell map."
+\fIdescribe\fR
+prompts the user for a 
+.CT "map layer" "cell map"
+name.  The user can select one of the
+following two output reports:
+
+(1) RANGE.
+A range of 
+.CT values "category values"
+found in the 
+.CT "data layer" "cell map"
+will be printed.
+The range is divided into three groups: negative, positive, and zero.
+If negative values occur, the minimum and maximum negative values
+will be printed.
+If positive values occur, the minimum and maximum positive values
+will be printed.
+If zero occurs, this will be indicated.
+
+(2) FULL LIST.
+A list of all 
+.CT values "category values"
+that were found in the 
+.CT "data layer" "cell map"
+will be printed.
+
+The following sample output from \fIdescribe\fR:
+
+.ti +.5i
+0 2-4 10-13
+
+means that category 
+.XT data 
+values 0, 2 through 4, and 10 through 13 occurred
+in the named 
+.CT "map layer." "cell map."
+
+The user must choose to read the 
+.CT "data layer" "cell map"
+in one of two ways:
+
+(1) DIRECTLY.
+The current 
+.CT window "geographic window"
+and mask are ignored and the full 
+.CT "data layer" "cell map"
+is read.
+This method is useful if 
+.XT the 
+the user intends to \fIreclassify\fR or
+\fIrescale\fR the data, since these functions (\fIreclass[1]\fR and
+\fIrescale[1]\fR) also ignore the current \fI 
+.CT window "geographic window"
+\fR and \fImask\fR.
+
+(2) WINDOWED and MASKED.
+The 
+.CT "data layer" "cell map"
+is read in the
+current 
+.CT window "geographic window"
+masked by the current mask.
+.SH NOTES
+The range report will generally run faster than the full list.
+.SH SEE ALSO
+\fIGdescribe[2G], mask[1], reclass[1], rescale[1], window[1]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
