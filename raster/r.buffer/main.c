@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
 
     opt4 = G_define_option() ;
     opt4->key        = "units" ;
-    opt4->options    = "meters,kilometers,feet,miles";
+    opt4->options    = "meters,kilometers,feet,miles,nautmiles";
     opt4->type       = TYPE_STRING ;
     opt4->required   = NO ;
     opt4->description= "Units of distance" ;
@@ -128,6 +128,8 @@ int main (int argc, char *argv[])
 	to_meters = KILOMETERS_TO_METERS;
     else if (strcmp(units, "miles") == 0)
 	to_meters = MILES_TO_METERS;
+    else if (strcmp(units, "nautmiles") == 0)
+	to_meters = NAUT_MILES_TO_METERS;
     else
     {
 	fprintf (stderr, "%s: %s - illegal units\n", pgm_name, units);
