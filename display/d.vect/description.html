@@ -7,24 +7,43 @@ monitor.
 
 d.vect can simply be used typing <em><b>d.vect map=</b>vector_map</em>. 
 Optional a large variety of parameters allow to specify vector type, 
-use of colors, data fields, SQL queries, label size and justification, etc..    
+use of colors, data fields, SQL queries, label size and justification, etc.
+<P>
+Vector area fill colors can be specified in an attribute table column with
+name 'GRASSRGB'. With flag <em>-a</em> every area is filled depending on the
+category number. A table for a vector area map may look like this:
+
+<PRE>
+  echo "select * from testisola" | db.select
+  cat|label|GRASSRGB
+  0|no data|
+  90|FRASSILONGO|23:245:67
+  104|LEVICO|23:145:67
+  139|PERGINE VALSUGANA|223:45:237
+  168|SANT'ORSOLA|223:45:67
+  190|TENNA|123:45:67
+</PRE>
+<P>
+To change a color, the SQL <em>update</em> function can be used:
+<PRE>
+  echo "update testisola set GRASSRGB='123:45:237' where cat=139" | db.execute
+</PRE>
+
 
 <h2>EXAMPLES</h2>
 
-<b>d.vect map=</b><em>vectmap</em> <b>display=</b><em>shape,cat</em>
-<b>lcolor=</b><em>green</em> <br>
-<b>d.vect map=</b><em>markveggy.vegtype</em> <b>where=</b><em>"VEGTYPE =
-'IFA'"</em>
+<b>d.vect map=</b><em>vectmap</em> <b>display=</b><em>shape,cat</em> <b>lcolor=</b><em>green</em> <br>
+<b>d.vect map=</b><em>markveggy.vegtype</em> <b>where=</b><em>"VEGTYPE = 'IFA'"</em>
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="d.erase.html">d.erase</a></em><br>
 <em><a HREF="d.what.vect.html">d.what.vect</a></em><br>
 <em><a HREF="d.rast.html">d.rast</a></em><br>
-<em><a HREF="http://grass.itc.it/grass51/tutorial/">GRASS 5.1 tutorial pages</a></em>
+<em><a HREF="http://grass.itc.it/grass51/tutorial/">GRASS 5.7 tutorial pages</a></em>
 
 <h2>AUTHOR</h2>
 
 Radim Blazek, ITC-Irst, Trento, Italy
 
-<p><i>Last changed: $</i>
+<p><i>Last changed: $Date$</i>
