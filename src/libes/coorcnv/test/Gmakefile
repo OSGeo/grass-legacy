@@ -1,0 +1,13 @@
+EXTRA_CFLAGS = 
+OFILES = main.o
+PGM = test
+
+# all:	$(BIN_CONTRIB_CMD)/$(PGM)
+all: $(PGM)
+
+$(PGM): $(OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) \
+		$(GISLIB) $(MATHLIB) $(COORCNVLIB)
+
+
+$(GISLIB): # in case LIB changes
