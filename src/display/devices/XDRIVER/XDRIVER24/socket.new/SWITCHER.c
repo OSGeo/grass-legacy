@@ -133,10 +133,6 @@ int main (int argc, char *argv[])
      * rest. We never can run in the foreground... Optionally have nlevs.
      */
 
-    for (index = 0; index < argc ; index++)
-	fprintf (stderr, "%s", argv[index]);
-    fprintf (stderr, "\n");
-
     syntax = 0;
     nlev=32;
     switch (argc) 
@@ -237,7 +233,7 @@ int main (int argc, char *argv[])
 
     if (G_sock_listen (listenfd, 1) != 0)
     {
-	G_fatal_error (stderr, "In %s: G_sock_listen() got error %s\n", 
+	G_fatal_error ("In %s: G_sock_listen() got error %s\n", 
 	        __FILE__, strerror (errno));
     }
 
