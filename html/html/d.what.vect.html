@@ -1,4 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 
 <TITLE>d.what.vect</TITLE>
@@ -7,7 +6,7 @@
 
 <img src="grass.smlogo.gif">
 
-<hr width="100%" align=center size=6 noshade>
+<hr width=100% align=center size=6 noshade>
 
 <H2>NAME</H2>
 
@@ -24,12 +23,14 @@ within the current geographic region.
 <B>d.what.vect help</B> 
 <BR>
 <B>d.what.vect</B> [<B>-1t</B>] <B>map=</B><EM>name</EM> 
+[<B>table=</B><EM>name</EM>] [<B>key=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
 <EM>d.what.vect</EM>
 outputs the category value(s) associated with user-specified location(s) 
-in a user-specified vector map layer.
+in a user-specified vector map layer. This program currently returns 
+only category values for line types in the user-specified vector file. 
 
 <P>
 
@@ -44,6 +45,12 @@ location(s) to be queried by depressing a mouse button over desired location(s)
 within the current geographic region in the 
 active display frame on the graphic monitor. 
 
+<P>
+
+Alternatively user can specify <B>table=</B> and <B>key=</B> and 
+window with database attributes will be opened for each selected object
+with assigned category.
+
 <H3>Flag:</H3> 
 
 <DL>
@@ -53,7 +60,8 @@ is executed. This option is provided for shell scripts and programs
 that want to obtain only one point from the user. 
 <DT><B>-t</B>
 <DD>Provide only terse output. This option is provided to simplify the 
-parsing of output by other programs. 
+parsing of output by other programs. Database connection must be set up
+by <A HREF="db.connect.html">d.connect</A> first. 
 </DL>
 
 
@@ -62,6 +70,13 @@ parsing of output by other programs.
 <DL>
 <DT><B>map=</B><EM>name</EM>
 <DD>Name of an existing binary vector map in the user's mapset search path. 
+
+<DT><B>table=</B><EM>name</EM>
+<DD>Name of database table containing attributes. 
+
+<DT><B>key=</B><EM>name</EM>
+<DD>Name of database table key (id) column. 
+
 </DL>
 
 <H2>EXAMPLE</H2>
@@ -82,7 +97,7 @@ After typing this, the user moves the mouse to a desired location
 on the displayed <EM>roads</EM> map layer, 
 and presses the left mouse button to query the category value of the 
 <EM>roads</EM> vector map at this location. The program then 
-outputs the category value of a line/area type corresponding to this 
+outputs the category value of a line type corresponding to this 
 user-selected map location, for the vector map queried by the user. 
 
 </DT>
@@ -104,6 +119,12 @@ pressed, and 3 indicates that the right mouse button was
 pressed.)
 
 <H2>NOTES</H2>
+
+Currently, <EM>d.what.vect</EM> only outputs category values for lines. 
+It does not output category labels for lines, nor output 
+category values or category labels for areas in a vector file. 
+
+<P>
 
 <EM>d.what.vect</EM>
 will always print its output to the user's terminal screen. 
@@ -130,6 +151,7 @@ of multiple raster map layers at user-selected locations.
 <EM><A HREF="d.vect.html">d.vect</A></EM><br>
 <EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="db.connect.html">db.connect</A></EM><br>
 <EM><A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHOR</H2>
@@ -139,6 +161,5 @@ Central Washington University
 <BR>
 Upgrades: Dennis Finch, National Park Service 
 
-<p><i>Last changed: $Date$</i>
 </body>
 </html>
