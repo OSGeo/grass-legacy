@@ -34,7 +34,7 @@ default: $(DRIVERDIR)/PNG
 	echo adding PNG driver to $(ETC)/monitorcap ; \
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
-	cat description.html >> $(HTMLPGM).html
+	cat description.html > $(HTMLPGM).html
 	echo "<HR>" >> $(HTMLPGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(HTMLPGM).html
 	echo "</body></html>" >> $(HTMLPGM).html
