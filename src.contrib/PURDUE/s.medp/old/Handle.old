@@ -1,0 +1,175 @@
+#include <stdio.h>
+#include <math.h>
+#include "gis.h"
+#include "Vect.h"
+#include "polish.h"
+
+handle (Map, no_sites)
+  struct Map_info *Map;
+  int no_sites;
+{
+  int i,p,q, k, el, tmpk, tmpel, maxdepth;
+  double *tmpx, *tmpy, maxdist, distance, ***y, ***yold, atof();
+  double longestline();
+  SITEPTR **pnow, **pfirst, **pprev;
+  extern int *sitex, *sitey, *sitecat;
+  extern float *datax;
+  extern float *datay;
+  extern int *cats;
+  extern char **desc;
+  extern struct Cell_head window;
+
+#ifdef DIAG
+  fprintf (stderr, "DIAG: nodes %d\n", Map->n_nodes);
+#endif
+  /*
+   * note that nodes, areas, and lines are indexed beginning with 1, not 0
+   * like a conventional C array
+   */
+
+  tmpx = (double *) G_malloc ((Map->n_nodes + 1) * sizeof (double));
+  tmpy = (double *) G_malloc ((Map->n_nodes + 1) * sizeof (double));
+
+  /* determine p and q, error check for non-rectangular grid */
+  if (examine_grid (Map, &p, &q, tmpx, tmpy))
+    G_fatal_error ("Problems with vector map---may not be rectangular");
+
+#ifdef DIAG
+  fprintf (stderr, "DIAG: Grid looks okay...\n");
+#endif
+  /*
+   * allocate 2D array of pointers to link lists and a link for each pointer
+   * and point each array element to its respective link
+   */
+  pnow = (SITEPTR **) G_malloc (p * sizeof (SITEPTR *));
+  pfirst = (SITEPTR **) G_malloc (p * sizeof (SITEPTR *));
+  pprev = (SITEPTR **) G_malloc (p * sizeof (SITEPTR *));
+  for (k = 0; k < p; ++k)
+  {
+    pnow[k] = (SITEPTR *) G_malloc (q * sizeof (SITEPTR));
+    pfirst[k] = (SITEPTR *) G_malloc (q * sizeof (SITEPTR));
+    pprev[k] = (SITEPTR *) G_malloc (q * sizeof (SITEPTR));
+  }
+  pprev=pfirst=pnow;
+  /* check? */
+  for (k = 0; k < p; ++k)
+    for (el = 0; el < q; ++el)
+    {
+      pnow[k][el] = (SITEPTR) G_malloc (sizeof (SITE));
+      if ((pfirst[k][el] = pnow[k][el]) == NULL)
+	G_fatal_error ("Error allocating link lists");
+      else
+      {
+	(pnow[k][el])->desc = 0;
+	(pnow[k][el])->northing = tmpy[k*p +el];
+	(pnow[k][el])->easting = tmpx[k*p +el];
+	(pnow[k][el])->cat = -1;
+      }
+    }
+
+  /* Initialize--associate site w/ closest node */
+  distance=maxdist = 0.5 * sqrt (2 * pow (longestline (Map), 2.0)); 
+#ifdef DIAG
+  fprintf (stderr, "DIAG: maxdist = %g\tno_sites=%d \n",maxdist,no_sites);
+#endif
+  for (i = 1; i <= no_sites; ++i)
+  {
+    for (k = 0; k < p; ++k)
+    {
+      for (el = 0; el < q; ++el)
+      {
+	distance = hypot (datax[i]-pfirst[k][el]->easting,
+			  datay[i]-pfirst[k][el]->northing);
+#ifdef DIAG
+  /* fprintf (stderr, "DIAG: distance = %g \n",distance); */
+#endif
+	if (distance < maxdist)	/* then a new candidate node */
+	{
+	  tmpk = k;
+	  tmpel = el;
+          el=q; k=p; /* get out of for loops */
+	}
+      }
+    }
+    /* now site #i should be attached to node (tmpk, tmpel) */
+    pnow[tmpk][tmpel] = (SITEPTR) G_malloc (sizeof (SITE));
+    if (pprev[tmpk][tmpel] == (SITEPTR) NULL)
+    {
+      pfirst[tmpk][tmpel] = pnow[tmpk][tmpel];	/* remember first one */
+    }
+    else
+    {
+      pprev[tmpk][tmpel]->pnext = pnow[tmpk][tmpel];
+    }
+    pnow[tmpk][tmpel]->desc = atof (desc[i]);
+    pnow[tmpk][tmpel]->easting = (double) datax[i];
+    pnow[tmpk][tmpel]->northing = (double) datay[i];
+    pnow[tmpk][tmpel]->cat = (double) cats[i];
+    pfirst[tmpk][tmpel]->desc++;/* update depth */
+  }
+
+#ifdef DIAG
+  fprintf (stderr, "DIAG: sites attached to nodes...\n");
+#endif
+  /*
+   * now lets make two copies of this ugly data structure. To make things
+   * easier, we just need two 3D arrays containing the numeric site
+   * description. There may be a lot of wasted space, but heck, this is
+   * UNIX... burn, baby, burn!
+   */
+
+  /* find depth of arrays */
+  for (maxdepth = 0, k = 0; k < p; ++k)
+    for (el = 0; el < q; ++el)
+      maxdepth = (maxdepth > (int) pfirst[k][el]) ? maxdepth : (int) pfirst[k][el];
+  /*
+   * since I update the depth each time I assigned a site to a node, there's
+   * no need to search every link in each list
+   */
+
+
+  /*
+   * Now allocate 3D arrays, (p+1) x (q+1) x maxdepth.  (we need the extra
+   * elements for the median polish, to store all, row, and column effects)
+   */
+  y = (double ***) G_malloc ((p + 1) * sizeof (double **));
+  yold = (double ***) G_malloc ((p + 1) * sizeof (double **));
+  for (k = 0; k <= p; ++k)
+  {
+    y[k] = (double **) G_malloc ((q + 1) * sizeof (double *));
+    yold[k] = (double **) G_malloc ((q + 1) * sizeof (double *));
+    for (el = 0; el <= q; ++el)
+    {
+      y[k][el] = (double *) G_malloc (maxdepth * sizeof (double));
+      yold[k][el] = (double *) G_malloc (maxdepth * sizeof (double));
+      if (y[k][el] == NULL || yold[k][el] == NULL)
+	G_fatal_error ("error allocating polishing grid");
+      else
+	for (i = 0; i < maxdepth; ++i)
+	  y[k][el][i] = yold[k][el][i] = 0.0;
+    }
+  }
+
+  /* copy data structure into arrays */
+  for (k = 0; k < p; ++k)
+  {
+    for (i = 0, el = 0; el < q; ++el)
+    {
+      pnow[k][el] = pfirst[k][el]->pnext;	/* point to first site */
+      do
+      {
+	y[k][el][i] = yold[k][el][i] = pnow[k][el]->desc;
+	pnow[k][el] = pnow[k][el]->pnext;
+	if (++i > pfirst[k][el]->desc)
+	  G_fatal_error ("linked list not working properly");
+      }
+      while (pnow[k][el] != (SITEPTR) NULL);
+    }
+  }
+
+#ifdef DIAG
+  fprintf (stderr, "DIAG: going to median polish...\n");
+#endif
+  /* FINALLY, do median polish */
+  median_polish (&y, &yold, &i, p, q, maxdepth);
+}
