@@ -12,6 +12,11 @@
 #define XDR_FLOAT_LENGTH 4
 #define XDR_FLOAT_NOF_EXP_BYTES 1
 
+/*************
+ * Only needed for transition */
+#define USE_LZW_COMPRESSION
+/**************/
+
 /*--------------------------------------------------------------------------*/
 
 void
@@ -697,7 +702,9 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
 					 compressBuf + 1,
 					 &nBytes, &offsetMantissa);
 
+#ifdef USE_LZW_COMPRESSION
   G_lzw_set_bits (9);
+#endif
 
   if (useRle == G3D_USE_RLE)
     rleLength = G_rle_count_only (compressBuf + 1, offsetMantissa, 1);
@@ -712,19 +719,37 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
     *(compressBuf + offsetMantissa - rleLength) = 1;
 
     if (useLzw == G3D_USE_LZW)
+#ifdef USE_LZW_COMPRESSION
       status = G_lzw_write (fd, compressBuf + offsetMantissa - rleLength,
 			    nBytes - offsetMantissa + rleLength + 1);
+#else
+      status = G_zlib_write (fd, compressBuf + offsetMantissa - rleLength,
+		      nBytes - offsetMantissa + rleLength + 1);
+#endif
     else
+#ifdef USE_LZW_COMPRESSION
       status = 
 	G_lzw_write_noCompress (fd, compressBuf + offsetMantissa - rleLength,
 				nBytes - offsetMantissa + rleLength + 1);
+#else
+      status = G_zlib_write_noCompress (fd, compressBuf + offsetMantissa - rleLength,
+		      nBytes -offsetMantissa + rleLength + 1);
+#endif
   } else {
 
     *compressBuf = 0;
     if (useLzw == G3D_USE_LZW)
+#ifdef USE_LZW_COMPRESSION
       status = G_lzw_write (fd, compressBuf, nBytes + 1);
+#else
+      status = G_zlib_write (fd, compressBuf, nBytes + 1);
+#endif
     else
+#ifdef USE_LZW_COMPRESSION
       status = G_lzw_write_noCompress (fd, compressBuf, nBytes + 1);
+#else
+      status = G_zlib_write_noCompress (fd, compressBuf, nBytes + 1);
+#endif
   }
   
   if (status < 0) {
@@ -800,7 +825,11 @@ G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision,
 
   nBytes = (isFloat ? XDR_FLOAT_LENGTH : XDR_DOUBLE_LENGTH);
 
+#ifdef USE_LZW_COMPRESSION
   status = G_lzw_read2 (fd, compressBuf, nofNum * nBytes + 1, fileBytes);
+#else
+  status = G_zlib_read (fd, fileBytes, compressBuf, nofNum * nBytes + 1);
+#endif
   if (status < 0) {
     G3d_error ("G_fpcompress_readXdrNums: read error");
     return 0;
