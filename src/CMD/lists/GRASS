@@ -374,7 +374,7 @@ src/raster/r.surf.gauss
 src/raster/r.surf.idw
 src/raster/r.surf.idw2
 src/raster/r.surf.random
-src/raster/r.texture
+#src/raster/r.texture
 src/raster/r.thin
 src/raster/r.tiff
 src/raster/r.timestamp
