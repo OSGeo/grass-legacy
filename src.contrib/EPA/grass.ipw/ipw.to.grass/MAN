@@ -1,0 +1,138 @@
+
+
+
+ipw.to.grass            GRASS Reference Manual             ipw.to.grass
+
+
+
+NAME
+     ipw.to.grass - Converts IPW image file to GRASS raster map layer
+     (GRASS Data Import/Processing Program)
+
+SYNOPSIS
+     ipw.to.grass
+     ipw.to.grass help
+     ipw.to.grass [ipw=name] map=name [mask=name] [multiplier=value] \
+               [offset=value]
+
+DESCRIPTION
+
+     ipw.to.grass converts a single-band image file in IPW (Image
+     Processing Workbench) format to a GRASS raster map layer.
+     If an IPW image is not specified, standard input will be
+     used.
+
+     The current region in GRASS must have the same number of
+     rows and columns (as shown by g.region -p) as the IPW
+     image has lines and samples, respectively.  If the IPW
+     input file contains a geodetic header, the geographic
+     boundaries and resolutions must match, or a warning will
+     be issued and the GRASS values will be used.
+
+     If an IPW image is specified as a mask, all cells in the 
+     GRASS map layer corresponding to the zero ("no data") values
+     in the mask will be set to zero, regardless of the value
+     in the IPW input image.
+
+     Since GRASS cell values are integers, IPW image floating
+     point values will be truncated to integer values, i.e.
+     29.2 and 29.9 will both be set to 29 in the resulting
+     GRASS cell file.  A multiplier and/or offset may be
+     specified to convert the input IPW floating point pixel
+     values to the GRASS integer values.  If both a multiplier
+     and offset are specified, the data are first multiplied
+     by the multiplier, then the offset will be added.
+
+
+     Parameters:
+
+     ipw=name            IPW input image (defaults to standard input)
+     map=name            output GRASS cell file
+     mask=name           IPW mask image
+     multiplier=value    multiply IPW datum by value (before offset)
+                         default: 1.0
+     offset=value        add to map datum (after multiplication)
+                         default: 0.0
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+ipw.to.grass            GRASS Reference Manual             ipw.to.grass
+
+
+
+EXAMPLES
+
+     The following command,
+
+              ipw.to.grass ipw=ipwfile map=grasslayer multiplier=10.0 \
+                        offset=100.0
+
+     will convert an IPW image called ipwfile to a GRASS map
+     layer called  grasslayer, multiplying all input values by 10
+     then adding 100 before storing in the GRASS output file.
+
+     In the following command,
+
+              demux -b 0 ipw.img | ipw.to.grass map=grass.out \
+                  mask=ipwmask offset=0.5
+
+     the IPW command demux is used to extract band 0 from a mult-band
+     IPW image file and feed it as input to ipw.to.grass.  The data are
+     masked by the IPW mask image ipwmask and 0.5 is added to non-masked
+     data to cause rounding to the nearest integer, rather than
+     truncating.
+
+     To convert an N-band IPW image into N GRASS cell files:
+
+             demux -b 1 ipwfile | ipw.to.grass o=cell.1
+                     ...
+             demux -b N ipwfile | ipw.to.grass o=cell.N
+
+SEE ALSO
+     James Edward Frew, Jr., The Image Processing Workbench
+
+     Also read GRASS User's Reference Manual entries for:
+     grass.to.ipw, g.region
+
+AUTHOR
+     Kelly Longley, Oregon State University, EPA Environmental
+     Research Lab - Corvallis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
