@@ -248,7 +248,7 @@ int G_lookup_c_raster_colors(CELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
 int G_lookup_raster_colors(void *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *, RASTER_MAP_TYPE);
-int G_lookup_f_raster_colors(DCELL *, unsigned char *, unsigned char *,
+int G_lookup_f_raster_colors(FCELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
 int G_lookup_d_raster_colors(DCELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
@@ -355,6 +355,9 @@ int G_debug(int,char *,...);
 
 /* def_window.c */
 int G_def_window(struct Cell_head *);
+
+/* dig_title.c */
+char *G_get_dig_title(char *, char *);
 
 /* distance.c */
 int G_begin_distance_calculations(void);
@@ -522,6 +525,10 @@ int G__open_null_read(int);
 int G__read_null_bits(int, unsigned char *, int, int, int);
 int embed_nulls_nomask(int, void *, int, RASTER_MAP_TYPE, int);
 int embed_nulls(int, void *, int, RASTER_MAP_TYPE, int);
+
+/* get_row_colr.c */
+int G_get_raster_row_colors(int, int, struct Colors *,
+    unsigned char *, unsigned char *, unsigned char *);
 
 /* get_window.c */
 int G_get_window(struct Cell_head *);
@@ -769,6 +776,7 @@ int G__open_raster_new(char *, int);
 int G__reallocate_work_buf(int);
 int G__reallocate_null_buf(void);
 int G__reallocate_mask_buf(void);
+int G__reallocate_temp_buf(void);
 int G_set_fp_type(RASTER_MAP_TYPE);
 int G_raster_map_is_fp(char *, char *);
 RASTER_MAP_TYPE G_raster_map_type(char *, char *);
@@ -965,6 +973,9 @@ FILE *G_fopen_sites_old(char *, char *);
 FILE *G_fopen_sites_new(char *);
 int G_get_site(FILE *, double *, double *, char **);
 int G_put_site(FILE *, double, double, char *);
+
+/* sites_title.c */
+char *G_get_sites_title(char *, char *);
 
 /* squeeze.c */
 char *G_squeeze(char *);
