@@ -29,7 +29,14 @@ Vector analysis:
     <ddgray@armadce.demon.co.uk>
     <Radim.Blazek@dhv.cz>
 
+JAVA:
 
+ - update/improve the java lib in src.garden/grass.java/
+ - add servlets?
+
+   -> this should be coordinated on grass5-list as some
+      projects are already ongoing (see GRASS web site/"Links and
+      Screenshots"
 
 GRASS Development Team
 
