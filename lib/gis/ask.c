@@ -264,7 +264,7 @@ G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
 
 
 /*!
- * \brief prompt for existing database file
+ * \brief prompt for new file
  *
  * The user is asked to enter the name of an file which doesn't exist.
  *
@@ -302,7 +302,7 @@ G_ask_new_file_ext (prompt, name, element, desc, option, lister)
 
 
 /*!
- * \brief prompt for existing database file
+ * \brief prompt for existing file
  *
  * The user is asked to enter the name of an file which exists.
  *
