@@ -1,0 +1,3 @@
+Makes copies of database files. Copies map layers, windows,
+vector files, etc. Files from any mapset can be copied into
+the current mapset. 
