@@ -7,7 +7,7 @@ LIST=main.o\
 	log.o\
 	rules.o
 
-COLORFILES = aspect byg byr grey gyr rainbow ramp ryg wave
+COLRFILES = aspect bcyr byg byr elevation grey gyr rainbow ramp ryg slope terrain wave
 
 LIBES = $(GISLIB)
 DEPENDENCIES = $(GISDEP)
@@ -16,6 +16,6 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: $(ETC)/colors cmd
 
-$(ETC)/colors: $(COLORFILES)
-	-mkdir $@
+$(ETC)/colors: $(COLRFILES)
+	-mkdir -p $@
 	cp -f $^ $@
