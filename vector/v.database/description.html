@@ -6,22 +6,36 @@ stored their attributes according to these settings.
 <P>
 A database schema is stored with table name in 'dbln' file (qualified name). 
 
-<h3>EXAMPLE</h3>
+<h3>EXAMPLES</h3>
 
-Define PostgreSQL attribute storage settings for map 'botswanaUTM34':<br>
+Get current settings:
+<tt>
+v.database -p
+</tt>
+
+<P>
+Define PostgreSQL attribute storage settings: using database 'botswanaUTM34' on external
+server:<br>
 <tt>
 v.database driver=pg database="host=pgserver.itc.it,dbname=botswanaUTM34,user=postgres"
 </tt>
 
 <P>
-It is possible to set a default schema for a new vector table:
+Schema support: It is possible to set a default schema for a new vector table:
 <tt>
 v.database driver=pg database=test schema=user1
 </tt>
 
+<P>
+Define local DBF file attribute storage settings:
+<tt>
+v.database driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'
+</tt>
+
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="v.format.html">v.format</A></EM>
+<EM><A HREF="v.db.connect.html">v.db.connect</A>,
+<A HREF="v.format.html">v.format</A></EM>
 
 <h2>AUTHOR</h2>
 
