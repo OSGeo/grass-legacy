@@ -1029,8 +1029,6 @@ wkt_to_grass( const char * wkt,
         G_set_key_value( "units", szFormatBuf, *proj_units );
         sprintf( szFormatBuf, "%g", dfToMeters );
         G_set_key_value( "meter", szFormatBuf, *proj_units );
-
-        free( pszUnitsName );
     }
 
     return TRUE;
