@@ -268,19 +268,16 @@ Publish the new official GRASS 5 release:
    Our GRASS web site: /announces/
 
    news:comp.infosystems.gis
-   http://spatialnews.geocomm.com/dailynews/
-   http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
+   http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://www.linuxapps.com/?page=application&database=current&id=40
-   http://www.remotesensing.org/submit/submit.php3
    http://www.newsforge.com/submit.pl
-   http://osx.macnn.com/
-   http://www.gis-news.de/
-   http://www.giscafe.com/
+   http://osx.macnn.com/ (email to news tips)
+   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.giscafe.com/   (link: submit material, needs registration)
    http://www.geopoint.de/  (German GIS journal)
    http://www.freegis.org
-   http://www.directions.org
-   http://www.opensourcegis.org
-   http://www.gisdevelopment.net
+   http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
+   http://www.gisdevelopment.net (click on 'Submit Press Release')
 
-   ... where else?
+   ... anywhere else?
