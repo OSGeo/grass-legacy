@@ -1,0 +1,4 @@
+all:
+	$(GMAKE) libtiff
+	$(GMAKE) tools
+	$(GMAKE) cmd
