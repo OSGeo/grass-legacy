@@ -1,0 +1,12 @@
+EXTRA_CFLAGS=-I..
+LIB = lib.a
+OBJ  =  alpha.o close.o colornum.o colortable.o colorvalue.o \
+	connect.o data.o device.o flush.o hres.o io.o \
+	nchars.o ncolors.o npixels.o open.o \
+	pictsize.o raster.o rle.o text.o vres.o \
+	misc.o painter.o lock.o colorlevel.o colormult.o
+
+$(LIB): $(OBJ)
+	$(AR)
+
+$(OBJ): ../interface.h
