@@ -1,0 +1,56 @@
+.\" @(#)gerber.7p - 1.2
+.nr LL 5.5i
+.TH GERBER 7P 11/8/90 "USGS"
+.ad b
+.hy 1
+.SH NAME
+gerber - Gerber photo-head plotter
+.SH SYNOPSIS
+.LP
+.B plotter \-d gerber ...
+.br
+.B plotter \-d gerbers ...
+.SH DESCRIPTION
+The Gerber is a high resolution photohead plotter designed
+to produce negatives for publication processes.
+Output should always be to a 9-track, 1600bpi magnetic
+tape drive.
+Dependent upon magnetic tape drive,
+.B gerbers
+may be required to swab or interchange output byte but this
+is becoming rare.
+The output of this driver is also used with the Scitex system.
+
+There are no
+.B \-Dx
+options for this device.
+.SH SIZE AND RESOLUTION
+Maximum x and y axis sizes are respectively
+24000 and 32000
+(120\(mu160cm) with a resolution of 200 counts/cm.
+.SH SPECIAL STRING OPERATIONS
+None.
+.SH MECHANICAL PENS
+.RS 6
+Mechanical  Line width
+ pen no.     (inches)
+     0       0.002
+     1        .003
+     2        .004
+     3        .005
+     4        .006
+     5        .007
+     6        .008
+     7        .009
+     8        .010
+     9        .012
+    10        .014
+    11        .015
+    12        .025
+    13        .050
+.RE
+.SH SEE ALSO
+ Device Independent Vector Graphics manual.
+ plotter(1)
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA 02543
