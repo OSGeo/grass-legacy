@@ -39,7 +39,7 @@ PROGRAMS = g.copy g.list g.remove g.rename
 
 allhtml: *.html
 	for pgm in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$pgm --html-description | grep -v '</body>' > $$pgm.tmp ; true \
+		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$pgm --html-description | grep -v '</body>' > $$pgm.tmp ; true ; \
 		test ! -f $$pgm.html || ( cat $$pgm.html >> $$pgm.tmp ) ; \
 		echo "</body></html>" >> $$pgm.tmp ; \
 		mkdir -p $(GISBASE)/docs/html ; \
