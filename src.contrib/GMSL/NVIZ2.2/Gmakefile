@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.9 2000-10-11 08:35:56 markus Exp $
+# $Id: Gmakefile,v 1.10 2000-10-11 09:30:08 cho Exp $
 #
 # Toplevel makefile for building everything
 
@@ -9,9 +9,9 @@ INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
 
-all: preconfigure nvwish nviz install
+all: configure nvwish nviz install
 
-preconfigure:
+configure:
 	@PRECONFIGURE=YES ./preconfigure $(VER) "$(PQLIB)"
 
 nvwish:
