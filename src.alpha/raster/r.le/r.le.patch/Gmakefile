@@ -1,0 +1,9 @@
+LIST =  main.o user_input.o driver.o trace.o patch.o 
+
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib  # gives location of .dig includes
+
+$(BIN_ALPHA_CMD)/r.le.patch: $(LIST) $(GISLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(MATHLIB) 
+
+$(GISLIB): # in case library changes
+$(VECTLIB): # in case library changes
