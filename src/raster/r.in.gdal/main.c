@@ -553,6 +553,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     char msg[100];
     char outputReal[200], outputImg[200];
     char *nullFlags = NULL;
+    int (*raster_open_new_func)(char *, RASTER_MAP_TYPE) = G_open_raster_new;
 
 /* -------------------------------------------------------------------- */
 /*      Select a cell type for the new cell.                            */
@@ -567,19 +568,28 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         complex = FALSE;
         break;
 
-      case GDT_CInt16:
-      case GDT_CInt32:
-      case GDT_CFloat32:
-      case GDT_CFloat64:
-        data_type = FCELL_TYPE;
-        eGDT = GDT_CFloat32;
-        complex = TRUE;
-        break;	
+      case GDT_Byte:
+        data_type = CELL_TYPE;
+        eGDT = GDT_Int32;
+        complex = FALSE;
+        G_set_cell_format(0);
+        raster_open_new_func = G_open_raster_new_uncompressed;
+        break;
+
+      case GDT_Int16:
+      case GDT_UInt16:
+        data_type = CELL_TYPE;
+        eGDT = GDT_Int32;
+        complex = FALSE;
+        G_set_cell_format(1);
+        raster_open_new_func = G_open_raster_new_uncompressed;
+        break;
 
       default:
         data_type = CELL_TYPE;
         eGDT = GDT_Int32;
         complex = FALSE;
+	G_set_cell_format(3);
         break;
     }
     
@@ -592,7 +602,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     if( complex )
     {
         sprintf( outputReal, "%s.real", output);
-        cfR = G_open_raster_new((char *)outputReal, data_type);
+        cfR = (*raster_open_new_func)((char *)outputReal, data_type);
         if (cfR < 0)
 	{
             sprintf (msg, "unable to create raster map %s", outputReal);
@@ -601,7 +611,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
 	}
         sprintf( outputImg, "%s.imaginary", output);
 
-        cfI = G_open_raster_new((char *)outputImg, data_type);
+        cfI = (*raster_open_new_func)((char *)outputImg, data_type);
         if (cfI < 0)
 	{
             sprintf (msg, "unable to create raster map %s", outputImg);
@@ -621,7 +631,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     }
     else
     {
-        cf = G_open_raster_new((char *)output, data_type);
+        cf = (*raster_open_new_func)((char *)output, data_type);
         if (cf < 0)
 	{
             sprintf (msg, "unable to create raster map %s", output);
@@ -808,15 +818,31 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     }
     else /* no color table present */
     {
+        /* types are defined in GDAL: ./core/gdal.h */
         if ( (GDALGetRasterDataType(hBand) == GDT_Byte) )
         {
            /* found 0..255 data: we set to grey scale: */
            struct Colors    colors;
         
-           fprintf (stderr, "SETTING GREY COLOR TABLE FOR %s\n", output );
+           fprintf (stderr, "SETTING GREY COLOR TABLE FOR %s (8bit, full range)\n", output );
 
            G_init_colors (&colors);
            G_make_grey_scale_colors (&colors, 0, 255); /* full range */
+           G_write_colors( (char *) output, G_mapset(), &colors);
+        }
+        if ( (GDALGetRasterDataType(hBand) == GDT_UInt16) )
+        {
+           /* found 0..65535 data: we set to grey scale: */
+           struct Colors    colors;
+           struct Range     range;
+           CELL             min, max;
+        
+           fprintf (stderr, "SETTING GREY COLOR TABLE FOR %s (16bit, image range)\n", output );
+           G_read_range( (char *) output, G_mapset(), &range) ;
+           G_get_range_min_max (&range, &min, &max);
+
+           G_init_colors (&colors);
+           G_make_grey_scale_colors (&colors, min, max); /* image range */
            G_write_colors( (char *) output, G_mapset(), &colors);
         }
     }
