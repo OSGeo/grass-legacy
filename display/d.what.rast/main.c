@@ -11,7 +11,8 @@ int main (int argc, char **argv)
 	char **maps;
 	int nmaps;
 	int t, b, l, r ;
-	int i;
+	int i, j;
+	int width, mwidth;
 	char **ptr;
 	struct Flag *once, *terse, *colrow;
 	struct Option *opt1, *fs;
@@ -111,6 +112,7 @@ int main (int argc, char **argv)
 		mapset = (char **)G_malloc(nrasts*sizeof(char *));
 		cats = (struct Categories *)G_malloc(nrasts*sizeof(struct Categories));
 
+		width = mwidth = 0;
 		for (i=0; i<nrasts; i++)
 		{
 			name[i] = (char *)G_malloc(80);
@@ -122,12 +124,21 @@ int main (int argc, char **argv)
 				sprintf(msg, "Raster file [%s] not available", rast[i]);
 				G_fatal_error(msg);
 			}
+
+			j = strlen(name[i]);
+			if(j > width)
+				width = j;
+
+			j = strlen(mapset[i]);
+			if(j > mwidth)
+				mwidth = j;
+
 			if (G_read_cats (name[i], mapset[i], &cats[i]) < 0)
 				cats[i].ncats = -1;
 		}
 	}
 
-	what (once->answer, terse->answer, colrow->answer, fs->answer) ;
+	what (once->answer, terse->answer, colrow->answer, fs->answer, width, mwidth) ;
 
 	R_close_driver();
 	exit(0);

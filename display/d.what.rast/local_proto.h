@@ -6,4 +6,4 @@ int show_dval(int, int, char *, char *, DCELL, char *, int, char *);
 int show_utm(char *, double, double, struct Cell_head *, int, int, int, char *);
 int show_buttons(int);
 /* what.c */
-int what(int, int, int, char *);
+int what(int, int, int, char *, int, int);
