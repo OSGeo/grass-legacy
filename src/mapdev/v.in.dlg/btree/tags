@@ -1,0 +1,12 @@
+Btree_add	tri.c	/^Btree_add (key)$/
+Btree_init	tri.c	/^Btree_init ()$/
+Btree_report	tri.c	/^Btree_report ()$/
+Mtry	try.c	/^main()$/
+btree_create	create.c	/^btree_create (B, cmp, incr)$/
+btree_find	find.c	/^btree_find (B, key, data)$/
+btree_free	free.c	/^btree_free (B)$/
+btree_next	next.c	/^btree_next (B, key, data)$/
+btree_rewind	rewind.c	/^btree_rewind (B)$/
+btree_update	update.c	/^btree_update (B, key, keylen, data, datalen)$/
+int_cmp	tri.c	/^int_cmp (a, b)$/
+store	update.c	/^store (s, n)$/
