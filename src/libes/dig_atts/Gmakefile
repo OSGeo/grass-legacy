@@ -3,17 +3,18 @@ OBJ = \
 	read_att.o \
 	write_att.o 
 
-ATTS = $(LIBDIR)/dig_atts.h
+#ATTS = $(LIBDIR)/dig_atts.h
 
-all: $(ATTS) $(DIG_ATTLIB) 
+#all: $(ATTS) $(DIG_ATTLIB) 
+all: $(DIG_ATTLIB) 
 
 $(DIG_ATTLIB): $(OBJ)
 	$(AR)
 
-$(ATTS): dig_atts.h
-	rm -f $@
-	cp $? $@
-	chmod +r $@
+#$(ATTS): dig_atts.h
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
 
 
 #  Program to test the atts functions, also example of how to use
@@ -26,5 +27,5 @@ tt:  tt.o
 	rm -f tt
 	$(CC)  $(LDFLAGS) -o $@  tt.o $(DIG_ATTLIB) $(GISLIB)
 
-$(OBJ): dig_atts.h
+$(OBJ): #dig_atts.h
 
