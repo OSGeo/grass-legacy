@@ -8,7 +8,7 @@
 int db__driver_open_database(handle)
      dbHandle *handle;
 {
-    char *name, *user, *password;
+    char *name, *schema, *user, *password, buf[500];
     dbConnection connection;
     PGCONN pgconn;
     PGresult *res;
@@ -47,6 +47,23 @@ int db__driver_open_database(handle)
 	report_error ();
 	PQfinish(pg_conn);
 	return DB_FAILED;
+    }
+
+    /* Set schema */
+    schema = db_get_handle_dbschema (handle);
+    if ( schema ) 
+	schema = connection.schemaName;
+    
+    if ( schema ) {
+	sprintf ( buf, "set search_path to %s", schema );
+	res = PQexec ( pg_conn, buf );
+	
+	if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	    append_error ( "Cannot set schema" );
+	    report_error();
+	    PQclear(res);
+	    return DB_FAILED;
+	}
     }
 
     /* Read internal codes */
