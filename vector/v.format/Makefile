@@ -17,5 +17,5 @@ $(PROG1): $(PGM)
 
 $(PROG2): $(PGM2)
 	if [ ! -d $(ETC) ]; then mkdir $(ETC); fi
-	cp $(PGM) $(PROG2)
+	cp $(PGM2) $(PROG2)
 	chmod 0755 $(PROG2)
