@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
-"POT-Creation-Date: 2005-01-20 18:31+0100\n"
-"PO-Revision-Date: 2005-01-30 16:06+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-04 20:14+0100\n"
+"PO-Revision-Date: 2005-02-05 17:42+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
@@ -206,8 +206,7 @@ msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr ""
-"SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
+msgstr "SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
 #: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
 msgid "output field separator"
@@ -368,6 +367,7 @@ msgid "No graphics device selected"
 msgstr "Keine Graphik-Augabe ausgewählt."
 
 #: ../display/d.font.freetype/main.c:170
+#, c-format
 msgid ""
 "\n"
 "Setting release of FreeType\n"
@@ -381,16 +381,17 @@ msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
+#, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr ""
-"Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
+msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
+#, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr ""
-"Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.path/select.c:32
+#, c-format
 msgid "L: from  M: to R: quit\n"
 msgstr "L: Startpunkt M: Zielpunkt R: Beenden\n"
 
@@ -400,6 +401,7 @@ msgid "Node %d: %f %f\n"
 msgstr "Knoten %d: %f %f\n"
 
 #: ../display/d.path/select.c:133
+#, c-format
 msgid "Destination unreachable\n"
 msgstr "Ziel unerreichbar\n"
 
@@ -416,6 +418,7 @@ msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 #: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
+#, c-format
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
@@ -423,17 +426,18 @@ msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
-#: ../display/d.vect/main.c:501
+#: ../display/d.vect/main.c:502
+#, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
-#: ../display/d.vect/main.c:510
-msgid ""
-"The bounding box of the map outside current region, nothing displayed.\n"
-msgstr ""
-"Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
+#: ../display/d.vect/main.c:511
+#, c-format
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
+msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
-#: ../display/d.vect/main.c:567
+#: ../display/d.vect/main.c:568
+#, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
 
@@ -442,6 +446,7 @@ msgid "Building spatial index ..."
 msgstr "Baue räumlichen Index..."
 
 #: ../display/d.what.vect/main.c:157
+#, c-format
 msgid "Done.\n"
 msgstr "Fertig\n"
 
@@ -451,6 +456,7 @@ msgid "warning: %s - vector file not found\n"
 msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+#, c-format
 msgid "Nothing Found.\n"
 msgstr "Nichts gefunden.\n"
 
@@ -500,6 +506,7 @@ msgid "Area height: %f\n"
 msgstr "Höhe der Fläche: %f\n"
 
 #: ../display/d.what.vect/what.c:287
+#, c-format
 msgid "Area\n"
 msgstr "Fläche:\n"
 
@@ -538,6 +545,7 @@ msgstr ""
 "Kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
+#, c-format
 msgid "Database connection not defined\n"
 msgstr "Datenbankverbindung ist nicht definiert.\n"
 
@@ -555,6 +563,7 @@ msgstr ""
 "Key-Spalte: %s\n"
 
 #: ../display/d.what.vect/what.c:421
+#, c-format
 msgid ""
 "\n"
 "Click mouse button on desired location\n"
@@ -565,32 +574,39 @@ msgstr ""
 "\n"
 
 #: ../display/d.what.vect/what.c:426
+#, c-format
 msgid "Buttons\n"
 msgstr "Mausknopfbelegung:\n"
 
 #: ../display/d.what.vect/what.c:427
+#, c-format
 msgid " Left:  what's here\n"
 msgstr " Links:  Was ist hier?\n"
 
 #: ../display/d.what.vect/what.c:429
+#, c-format
 msgid " Middle: toggle flash color\n"
 msgstr ""
 " Mitte: wechselt zwischen den Farben, die auf dem Bildschirm aufleuchten "
 "sollen.\n"
 
 #: ../display/d.what.vect/what.c:434
+#, c-format
 msgid " Right: quit\n"
 msgstr " Rechts:  Beenden\n"
 
 #: ../display/d.zoom/main.c:161
+#, c-format
 msgid "ERROR: can not get \"list\" items\n"
 msgstr "FEHLER: Kann keine \"list\" Werte finden\n"
 
 #: ../display/d.zoom/main.c:162
+#, c-format
 msgid "-j flag forced\n"
 msgstr "Benutzung des -j Flags erzwungen.\n"
 
 #: ../display/d.zoom/main.c:200
+#, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt.\n"
 
@@ -600,16 +616,19 @@ msgid "%d raster%s, %d vector%s\n"
 msgstr "%d Raster%s, %d Vektor%s\n"
 
 #: ../display/d.zoom/main.c:334
+#, c-format
 msgid "this is the first d.zoom run; no previous zoom availible\n"
 msgstr ""
 "Das ist das erste Mal, dass 'd.zoom' benutzt wird; keine vorherigen "
 "Zoomstufen vorhanden.\n"
 
 #: ../display/d.zoom/main.c:380
+#, c-format
 msgid "Zooming finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+#, c-format
 msgid ""
 "\n"
 "\n"
@@ -640,6 +659,7 @@ msgid "%s Quit menu\n"
 msgstr "%s Beende Menü \n"
 
 #: ../display/d.zoom/zoom.c:41
+#, c-format
 msgid ""
 "This region now saved as current region.\n"
 "\n"
@@ -648,6 +668,7 @@ msgstr ""
 "\n"
 
 #: ../display/d.zoom/zoom.c:42
+#, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
 msgstr ""
 "Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
@@ -656,6 +677,7 @@ msgstr ""
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+#, c-format
 msgid "Monitor: interactive command in redraw\n"
 msgstr "Monitor: Interaktives Kommando zum erneuten Zeichnen\n"
 
@@ -665,6 +687,7 @@ msgid "found %d visuals of type TrueColor\n"
 msgstr "Habe %d Ansichten vom Typ TrueColor gefunden\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+#, c-format
 msgid "searching for highest bit depth\n"
 msgstr "Suche die höchste Bit-Tiefe...\n"
 
@@ -684,10 +707,12 @@ msgid "Monitor: waitpid: expected %d but got %d\n"
 msgstr "Monitor: Waitpid: erwarte %d, habe aber %d bekommen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+#, c-format
 msgid "Monitor: XGetWMName failed\n"
 msgstr "Monitor: XGetWMName fehlgeschlagen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+#, c-format
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
 
@@ -717,8 +742,7 @@ msgstr "Resultierende Rasterkarte"
 
 #: ../raster/r.average/main.c:58
 msgid "cover values extracted from the category labels of the cover map"
-msgstr ""
-"Überlagerungswerte von den Kategorie-Labels der Überlagerungskarte extrahiert"
+msgstr "Überlagerungswerte von den Kategorie-Labels der Überlagerungskarte extrahiert"
 
 #: ../raster/r.basins.fill/main.c:34
 msgid "Generates a raster map layer showing watershed subbasins."
@@ -884,6 +908,7 @@ msgid "List rules"
 msgstr "Zeige Regeln"
 
 #: ../raster/r.colors/rules.c:45
+#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
 "Eingabe der Regeln. Bitte am Ende \"end\" eingeben. \"help\" liefert eine "
@@ -899,86 +924,94 @@ msgstr "fp: Datenspanne liegt zwischen %.25f und %.25f\n"
 msgid "Data range is %ld to %ld\n"
 msgstr "Datenspanne liegt zwischen %ld und %ld\n"
 
-#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+#: ../raster/r.colors/rules.c:118
 msgid "Your color rules do not cover the whole range of data!"
 msgstr ""
 "Die ausgewählten Farbregeln erstrecken sich nicht über die gesamte "
 "Datenspanne!"
 
-#: ../raster/r.colors/rules.c:188
+#: ../raster/r.colors/rules.c:191
+#, c-format
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Bitte geben Sie eine Regel in einem der folgende Formate ein:\n"
 
-#: ../raster/r.colors/rules.c:190
+#: ../raster/r.colors/rules.c:193
+#, c-format
 msgid " val color\n"
 msgstr "Wert Farbe\n"
 
-#: ../raster/r.colors/rules.c:191
+#: ../raster/r.colors/rules.c:194
 #, c-format
 msgid " n%% color\n"
 msgstr "n%% Farbe\n"
 
-#: ../raster/r.colors/rules.c:192
+#: ../raster/r.colors/rules.c:195
+#, c-format
 msgid " nv color\n"
 msgstr "nv Farbe\n"
 
-#: ../raster/r.colors/rules.c:193
+#: ../raster/r.colors/rules.c:196
+#, c-format
 msgid " default color\n"
 msgstr "Standard-Farbe\n"
 
-#: ../raster/r.colors/rules.c:194
+#: ../raster/r.colors/rules.c:197
+#, c-format
 msgid "color can be one of:\n"
 msgstr "Farben können sich wie folgt zusammensetzen:\n"
 
-#: ../raster/r.colors/rules.c:196
+#: ../raster/r.colors/rules.c:199
+#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "oder ein R:G:B Tripel, zum Beispiel 0:127:255\n"
 
-#: ../raster/r.colors/rules.c:237
+#: ../raster/r.colors/rules.c:240
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr ""
-"** Warnung: R:G:B Werte liegen außerhalb der Spanne [0...255]: %d:%d:%d **\n"
+msgstr "** Warnung: R:G:B Werte liegen außerhalb der Spanne [0...255]: %d:%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
-#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
-#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
-#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#: ../raster/r.colors/rules.c:241 ../raster/r.colors/rules.c:257
+#: ../raster/r.colors/rules.c:270 ../raster/r.colors/rules.c:282
+#: ../raster/r.colors/rules.c:292 ../raster/r.colors/rules.c:304
+#: ../raster/r.colors/rules.c:379 ../raster/r.colors/rules.c:407
+#, c-format
 msgid "** rule is not added **\n"
 msgstr "** Regel nicht hinzugefügt **\n"
 
-#: ../raster/r.colors/rules.c:253
+#: ../raster/r.colors/rules.c:256
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr ""
 "** Warnung: R:G:B Werte liegen außerhalb des gültigen Bereichs [0...255]: %d:"
 "%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+#: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
+#, c-format
 msgid "** warning: no such value **\n"
 msgstr "** Warnung: Solche Werte sind nicht vorhanden **\n"
 
-#: ../raster/r.colors/rules.c:402
+#: ../raster/r.colors/rules.c:405
 #, c-format
 msgid "%s:line %d:%s\n"
 msgstr "%s:Linie %d:%s\n"
 
-#: ../raster/r.colors/rules.c:403
+#: ../raster/r.colors/rules.c:406
+#, c-format
 msgid "** bad color specification **\n"
 msgstr "** Falsche Farbspezifikation **\n"
 
-#: ../raster/r.colors/rules.c:424
+#: ../raster/r.colors/rules.c:427
 #, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - unbekannte Farbe\n"
 
-#: ../raster/r.colors/rules.c:425
+#: ../raster/r.colors/rules.c:428
+#, c-format
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
 
 #: ../raster/r.composite/main.c:71
-msgid ""
-"Combines red, green and blue map layers into a single composite map layer."
+msgid "Combines red, green and blue map layers into a single composite map layer."
 msgstr "Kombiniert Farbkanäle rot, grün und blau zu einer Komposit-Karte"
 
 #: ../raster/r.composite/main.c:89
@@ -1042,35 +1075,35 @@ msgstr ""
 msgid "Name of an existing raster map"
 msgstr "Name einer existierenden Rasterkarte."
 
-#: ../raster/r.contour/main.c:85
+#: ../raster/r.contour/main.c:86
 msgid "Name of output vector file"
 msgstr "Name der Ausgabe-Vektorkarte"
 
-#: ../raster/r.contour/main.c:92
+#: ../raster/r.contour/main.c:93
 msgid "List of contour levels"
 msgstr "Anzahl der Kontour-Level"
 
-#: ../raster/r.contour/main.c:98
+#: ../raster/r.contour/main.c:99
 msgid "Minimum contour level"
 msgstr "Minimales Kontur-Level"
 
-#: ../raster/r.contour/main.c:104
+#: ../raster/r.contour/main.c:105
 msgid "Maximum contour level"
 msgstr "Maximales Kontur-Level"
 
-#: ../raster/r.contour/main.c:110
+#: ../raster/r.contour/main.c:111
 msgid "Increment between contour levels"
 msgstr "Abstand zwischen der kontour-Intervallen."
 
-#: ../raster/r.contour/main.c:117
+#: ../raster/r.contour/main.c:118
 msgid "Minimum number of points for a contour line (0 -> no limit)"
 msgstr "Minimale Anzahl der Punkte für eine Kontour-Linie (0 -> kein Limit)"
 
-#: ../raster/r.contour/main.c:121
+#: ../raster/r.contour/main.c:122
 msgid "Suppress progress report & min/max information"
 msgstr "Unterdrücke Fortschrittsanzeige und Min/Max.-Informationen"
 
-#: ../raster/r.contour/main.c:125
+#: ../raster/r.contour/main.c:126
 msgid "Suppress single crossing error messages"
 msgstr "Unterdrücke einzelne kreuzende Fehlermeldungen"
 
@@ -1086,8 +1119,7 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:108
 msgid "Name of raster map containing grid cell cost information"
-msgstr ""
-"Name der Rasterkarte, deren Kategoriewerte Kosteninformationen enthalten."
+msgstr "Name der Rasterkarte, deren Kategoriewerte Kosteninformationen enthalten."
 
 #: ../raster/r.cost/main.c:122
 msgid "Starting points vector map"
@@ -1159,8 +1191,7 @@ msgstr "Gebe Korrelations-Matrix aus"
 msgid ""
 "Creates a cross product of the category values from multiple raster map "
 "layers."
-msgstr ""
-"Erzeugt ein Kreuzprodukt von Kategoriewerten auf Basis mehrerer Rasterkarten."
+msgstr "Erzeugt ein Kreuzprodukt von Kategoriewerten auf Basis mehrerer Rasterkarten."
 
 #: ../raster/r.cross/main.c:55
 #, c-format
@@ -1335,13 +1366,11 @@ msgstr "Name der Karte, die für den Farbton (HUE) verwendet werden soll"
 
 #: ../raster/r.his/main.c:80
 msgid "Name of layer to be used for INTENSITY"
-msgstr ""
-"Name der Karte, die für die Intensität (INTENSITY) verwendet werden soll."
+msgstr "Name der Karte, die für die Intensität (INTENSITY) verwendet werden soll."
 
 #: ../raster/r.his/main.c:87
 msgid "Name of layer to be used for SATURATION"
-msgstr ""
-"Name der Karte, die für die Sättigung (SATURATION) verwendet werden soll"
+msgstr "Name der Karte, die für die Sättigung (SATURATION) verwendet werden soll"
 
 #: ../raster/r.his/main.c:94
 msgid "Name of output layer to be used for RED"
@@ -1363,8 +1392,7 @@ msgstr "Respektiere NULL-Werte während des Zeichnens."
 msgid ""
 "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
 "layer."
-msgstr ""
-"Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (binäre) GRASS Rasterkarte."
+msgstr "Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (binäre) GRASS Rasterkarte."
 
 #: ../raster/r.in.arc/main.c:48
 msgid "ARC/INFO ascii raster file (GRID) to be imported"
@@ -1508,8 +1536,7 @@ msgstr "Überschreibe Datenprojekten (benutzte Projektion der Location)."
 
 #: ../raster/r.in.gdal/main.c:121
 msgid "Extend location extents based on new dataset"
-msgstr ""
-"Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
+msgstr "Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
 
 #: ../raster/r.in.gdal/main.c:125
 msgid "List supported formats then exit"
@@ -1970,8 +1997,7 @@ msgstr "Ausgaberasterkarte, die die morphometrischen Parameter enthalten."
 
 #: ../raster/r.param.scale/interface.c:75
 msgid "Slope tolerance that defines a 'flat' surface (degrees)"
-msgstr ""
-"Hangneigungstoleranz, die eine 'flache' Oberfläche definiert (in Grad)."
+msgstr "Hangneigungstoleranz, die eine 'flache' Oberfläche definiert (in Grad)."
 
 #: ../raster/r.param.scale/interface.c:81
 msgid "Curvature tolerance that defines 'planar' surface"
@@ -2049,8 +2075,7 @@ msgstr ""
 
 #: ../raster/r.proj/main.c:138
 msgid "Re-project a raster map from one location to the current location."
-msgstr ""
-"Reprojiziert eine Rasterkarte von einer Location in die aktuelle Location."
+msgstr "Reprojiziert eine Rasterkarte von einer Location in die aktuelle Location."
 
 #: ../raster/r.proj/main.c:144 ../raster/r.surf.idw/main.c:57
 msgid "Input raster map"
@@ -2339,8 +2364,7 @@ msgstr "Name der Ausgabedatei zum Speichern des Reports."
 
 #: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
 msgid "Number of fp subranges to collect stats from"
-msgstr ""
-"Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
+msgstr "Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
@@ -2368,11 +2392,9 @@ msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr ""
-"Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
+msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
 
 #: ../raster/r.resamp.rst/main.c:161
-#, fuzzy
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
@@ -2404,7 +2426,7 @@ msgstr "Hangneigung"
 
 #: ../raster/r.resamp.rst/main.c:208
 msgid "Aspect"
-msgstr ""
+msgstr "Hangexposition"
 
 #: ../raster/r.resamp.rst/main.c:215
 msgid "Profile curvature"
@@ -2439,7 +2461,6 @@ msgid "Conversion factor for z-values"
 msgstr "Konvertierungsfaktor ür z-Werte."
 
 #: ../raster/r.resamp.rst/main.c:268
-#, fuzzy
 msgid "Tension"
 msgstr "Spannung (Tension)"
 
@@ -2495,10 +2516,11 @@ msgid "Title for new raster map"
 msgstr "Titel für die neue Rasterkarte."
 
 #: ../raster/r.rescale.eq/main.c:36
+#, fuzzy
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr ""
+msgstr "Reskaliert ein normalisiertes Histogram der Spanne der Kategoriewerte einer Rasterkarte."
 
 #: ../raster/r.series/main.c:84
 #, fuzzy
@@ -2559,13 +2581,11 @@ msgstr "Ausgabekarte mit Horizontal-Wölbung."
 
 #: ../raster/r.slope.aspect/main.c:199
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr ""
-"Ausgabekarte der ersten partiellen Ableitung dx (Ost-West Hangneigung)."
+msgstr "Ausgabekarte der ersten partiellen Ableitung dx (Ost-West Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:207
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr ""
-"Ausgabekarte der ersten partiellen Ableitung dy (Nord-Süd Hangneigung)."
+msgstr "Ausgabekarte der ersten partiellen Ableitung dy (Nord-Süd Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:215
 msgid "Output second order partial derivative dxx filename"
@@ -2643,8 +2663,7 @@ msgstr "Gebe Zellenanzahlen aus."
 
 #: ../raster/r.stats/main.c:133
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-msgstr ""
-"Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
+msgstr "Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
 
 #: ../raster/r.stats/main.c:137
 msgid "Print category labels"
@@ -2784,100 +2803,88 @@ msgstr "Lokale (Sonnen-)Zeit [Dezimal-Stunden]"
 
 #: ../raster/r.sun/main.c:334
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr ""
+msgstr "Sampling-Distanzstufen-Koeffizient (0.5-1.5)"
 
 #: ../raster/r.sun/main.c:339
 msgid "Incorporate the shadowing effect of terrain"
 msgstr "Berücksichtige den Schatteneffekt der Oberfläche."
 
 #: ../raster/r.sunmask/main.c:109
-#, fuzzy
 msgid ""
 "Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
 "position is specified, or B: date/time to calculate the sun position by r."
 "sunmask itself."
-msgstr "von ist Zeit."
+msgstr "Berechnet Schlagschattenbereiche zwischen Sonnenstand und DEM. Es können entweder A: exakte Sonnenposition, oder B: Datum/Uhrzeit zur selbständigen Berechnung durch r.sunmask, angegeben werden."
 
 #: ../raster/r.sunmask/main.c:119
-#, fuzzy
 msgid "Name of elevation raster map"
-msgstr "von"
+msgstr "Name der Höhenkarte"
 
 #: ../raster/r.sunmask/main.c:127
 msgid "Output raster map having shadows"
-msgstr ""
+msgstr "Ausgaberasterkarte, die die berechneten Schatten enthält."
 
 #: ../raster/r.sunmask/main.c:134
-#, fuzzy
 msgid "A: altitude of the sun above horizon, degrees"
-msgstr "von"
+msgstr "A: Höhe der Sonne über dem Horizont (in Grad)."
 
 #: ../raster/r.sunmask/main.c:141
-#, fuzzy
 msgid "A: azimuth of the sun from the north, degrees"
-msgstr "von von Norden"
+msgstr "A: Winkel der Sonne, gemessen von Norden (in Grad)."
 
 #: ../raster/r.sunmask/main.c:147
 msgid "B: year (1950..2050)"
-msgstr ""
+msgstr "B: Jahr (1950..2050)"
 
 #: ../raster/r.sunmask/main.c:153
-#, fuzzy
 msgid "B: month (0..12)"
-msgstr "Monat"
+msgstr "B: Monat (0..12)"
 
 #: ../raster/r.sunmask/main.c:159
 msgid "B: day (0..31)"
-msgstr ""
+msgstr "B: Tag (0..31)"
 
 #: ../raster/r.sunmask/main.c:165
-#, fuzzy
 msgid "B: hour (0..24)"
-msgstr "Stunde"
+msgstr "B: Stunde (0..24)"
 
 #: ../raster/r.sunmask/main.c:171
 msgid "B: minutes (0..60)"
-msgstr ""
+msgstr "B: Minuten (0..60)"
 
 #: ../raster/r.sunmask/main.c:177
 msgid "B: seconds (0..60)"
-msgstr ""
+msgstr "B: Sekunden (0..60)"
 
 #: ../raster/r.sunmask/main.c:183
-#, fuzzy
 msgid ""
 "B: timezone (east positive, offset from GMT, also use to adjust daylight "
 "savings)"
-msgstr "Osten von"
+msgstr "B: Zeitzone (Ost positiv, Abstand von GMT; wird auch zur Anpassung an die Winterzeit genutzt)."
 
 #: ../raster/r.sunmask/main.c:190
-#, fuzzy
 msgid "east coordinate (point of interest, default: map center)"
-msgstr "Osten Punkt von"
+msgstr "Ost Koordinaten (Punkt des Interesses, Standard: Kartenmittelpunkt)."
 
 #: ../raster/r.sunmask/main.c:197
-#, fuzzy
 msgid "north coordinate (point of interest, default: map center)"
-msgstr "Norden Punkt von"
+msgstr "Nord Koordinaten (Punkt des Interesses, Standard: Kartenmittelpunkt)."
 
 #: ../raster/r.sunmask/main.c:201
-#, fuzzy
 msgid "Zero is a real elevation"
-msgstr "ist a"
+msgstr "Zero (0) ist eine reale Höhenangabe"
 
 #: ../raster/r.sunmask/main.c:205
-#, fuzzy
 msgid "verbose output (also print out sun position etc.)"
-msgstr "Ausgabe"
+msgstr "Ausführliche Ausgabe (gibt auch die Sonnenposition etc. aus)."
 
 #: ../raster/r.sunmask/main.c:209
 msgid "calculate sun position only and exit"
-msgstr ""
+msgstr "Berechne nur sie Sonnenposition und beende das Modul."
 
 #: ../raster/r.sunmask/main.c:213
-#, fuzzy
 msgid "Print the sun position output in shell script style"
-msgstr "Ausgabe"
+msgstr "Gebe die Sonnenposition im Shell-Skript-Style aus."
 
 #: ../raster/r.sunmask/main.c:225
 msgid "Using map center coordinates\n"
@@ -2919,8 +2926,7 @@ msgstr ""
 #: ../raster/r.sunmask/main.c:338
 #, c-format
 msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
-msgstr ""
-" %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
+msgstr " %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
 
 #: ../raster/r.sunmask/main.c:342
 #, c-format
@@ -3005,155 +3011,130 @@ msgid "Finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
 #: ../raster/r.surf.area/main.c:89
-#, fuzzy
 msgid "Surface area estimation for rasters."
-msgstr "Oberfläche Bereich für."
+msgstr "Abschätzung der Größe der Rasteroberflächen."
 
 #: ../raster/r.surf.area/main.c:97
-#, fuzzy
 msgid "Raster file for surface"
-msgstr "für"
+msgstr "Rasterkarte für die Oberfläche."
 
 #: ../raster/r.surf.area/main.c:104
-#, fuzzy
 msgid "Vertical scale"
-msgstr "skalieren"
+msgstr "Vertikaler Maßstab."
 
 #: ../raster/r.surf.contour/main.c:34
-#, fuzzy
 msgid "Surface generation program from rasterized contours."
-msgstr "Oberfläche program von."
+msgstr "Erzeugt eine Rasteroberfläche aus gerasterten Konturlinien mit Höheninformationen."
 
 #: ../raster/r.surf.contour/main.c:41
-#, fuzzy
 msgid "Name of existing raster map containing contours"
-msgstr "von"
+msgstr "Name der existierenden Rasterkarte, die Konturlinien enthält."
 
 #: ../raster/r.surf.contour/main.c:48
 msgid "Output elevation raster map"
-msgstr ""
+msgstr "Name der Ausgaberasterkarte, die Höheninformationen enthält."
 
 #: ../raster/r.surf.contour/main.c:52
 msgid "Invoke fast, but memory intensive operation"
-msgstr ""
+msgstr "Arbeite schnell, aber speicherintensiv."
 
 #: ../raster/r.surf.fractal/interface.c:33
-#, fuzzy
 msgid ""
 "GRASS module to create a fractal surface of a given fractal dimension. Uses "
 "spectral synthesis method. Can create intermediate layers showing the build "
 "up of different spectral coefficients (see Saupe, pp.106-107 for an example "
 "of this). Use this module to generate naturally looking synthetical "
 "elevation models (DEM)."
-msgstr "module a von a method von see für example von module."
+msgstr "GRASS Modul zum Erstellen einer fraktalen Oberfläche aus einer gegebenen fraktalen Dimension. Dabei wird die Spectral synthesis Methode benutzt. Es können Zwischenschritte mit unterschiedlichen spektralen Koeffizienten erstellt werden (vgl. Saupe S. 106-107 für ein Beispiel). Das Modul kann zur Erstellung eines natürlich aussehenden synthetischen Höhenmodells (DEM) benutzt werden."
 
 #: ../raster/r.surf.fractal/interface.c:54
-#, fuzzy
 msgid "Name of fractal surface raster layer"
-msgstr "von"
+msgstr "Name der Karte mit der fraktalen Oberfläche."
 
 #: ../raster/r.surf.fractal/interface.c:59
-#, fuzzy
 msgid "Fractal dimension of surface (2 < D < 3)"
-msgstr "von"
+msgstr "Fraktale Dimension der Oberfläche (2 < D < 3)."
 
 #: ../raster/r.surf.fractal/interface.c:65
-#, fuzzy
 msgid "Number of intermediate images to produce"
-msgstr "von Bilder"
+msgstr "Anzahl der zu produzierenden Zwischenschritte."
 
 #: ../raster/r.surf.gauss/main.c:38
-#, fuzzy
 msgid ""
 "GRASS module to produce a raster map layer of gaussian deviates whose mean "
 "and standard deviation can be expressed by the user. It uses a gaussian "
 "random number generator."
-msgstr "module a von deren a."
+msgstr "GRASS Modul zum Erstellen einer Gauß 'schen Verteilung, wobei das arithmetisches Mittel und Standardabweichung vom Benutzer angegeben werden können. Ein Gauß 'scher Zufallsgenerator wird benutzt."
 
 #: ../raster/r.surf.gauss/main.c:54 ../raster/r.surf.random/main.c:49
-#, fuzzy
 msgid "Name of the random surface to be produced"
-msgstr "von"
+msgstr "Name der Karte, die die zufällig erzeugte Oberfläche beinhalten soll."
 
 #: ../raster/r.surf.gauss/main.c:59
-#, fuzzy
 msgid "Distribution mean"
-msgstr "Distribution"
+msgstr "Mittlere Streuung"
 
 #: ../raster/r.surf.gauss/main.c:64
-#, fuzzy
 msgid "Standard deviation"
 msgstr "Standardabweichung"
 
 #: ../raster/r.surf.idw/main.c:51
-#, fuzzy
 msgid "Surface interpolation utility for raster map layers."
-msgstr "Oberfläche für."
+msgstr "Oberflächeninterpolationswerkzeug für Rasterkarten."
 
 #: ../raster/r.surf.idw/main.c:71 ../raster/r.surf.idw2/main.c:64
-#, fuzzy
 msgid "Number of interpolation points"
-msgstr "von"
+msgstr "Anzahl der Interpolationspunkte."
 
 #: ../raster/r.surf.idw/main.c:76
-#, fuzzy
 msgid "Output is the interpolation error"
-msgstr "ist Fehler"
+msgstr "Name der Karte, die Interpolationsfehler enthält."
 
 #: ../raster/r.surf.idw2/main.c:43
-#, fuzzy
 msgid "Surface generation program."
-msgstr "Oberfläche program."
+msgstr "Programm zur Erzeugung von Oberflächen."
 
 #: ../raster/r.surf.idw2/main.c:49 ../raster/r.water.outlet/main.c:40
-#, fuzzy
 msgid "Name of input raster map"
-msgstr "von"
+msgstr "Name der Eingaberasterkarte."
 
 #: ../raster/r.surf.idw2/main.c:56
-#, fuzzy
 msgid "Name of output raster map"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgaberasterkarte."
 
 #: ../raster/r.surf.random/main.c:34
-#, fuzzy
 msgid ""
 "Produces a raster map layer of uniform random deviates whose range can be "
 "expressed by the user."
-msgstr "a von deren."
+msgstr "Erzeugt eine Rasterkarte mit zufälligen Werten, die vom Benutzer festgelegt werden können."
 
 #: ../raster/r.surf.random/main.c:54
 msgid "Minimum random value"
-msgstr ""
+msgstr "Kleinster Zufallswert."
 
 #: ../raster/r.surf.random/main.c:59
 msgid "Maximum random value"
-msgstr ""
+msgstr "Größter Zufallswert."
 
 #: ../raster/r.texture/main.c:72
-#, fuzzy
 msgid "Generate images with textural features from a raster map"
-msgstr "Bilder von a"
+msgstr "Erzeugt Texturbilder einer Rasterkarte."
 
 #: ../raster/r.texture/main.c:81
-#, fuzzy
 msgid "Name of the input raster map"
-msgstr "von"
+msgstr "Name der Eingabekarte."
 
 #: ../raster/r.texture/main.c:88
-#, fuzzy
 msgid "Name of the ouput raster map"
-msgstr "von"
+msgstr "Name der Ausgabekarte."
 
 #: ../raster/r.texture/main.c:95
-#, fuzzy
 msgid "The size of the sliding window (odd and >= 3)"
-msgstr "Größe von"
+msgstr "Die Größe des 'Moving-Windows' (ungerade und >= 3)."
 
 #: ../raster/r.texture/main.c:104
-#, fuzzy
 msgid "The distance between two samples (>= 1)"
-msgstr "zwischen zwei Samples"
+msgstr "Abstand zwischen zwei Proben (>= 1)."
 
 #: ../raster/r.texture/main.c:110
 #, fuzzy
@@ -3163,18 +3144,17 @@ msgstr "Normalisiert"
 #: ../raster/r.texture/main.c:118
 #, fuzzy
 msgid "Angular Second Moment"
-msgstr "Sekunde"
+msgstr "Bogensekunde"
 
 #: ../raster/r.texture/main.c:122
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: ../raster/r.texture/main.c:126
 msgid "Correlation"
-msgstr ""
+msgstr "Korrelation"
 
 #: ../raster/r.texture/main.c:130
-#, fuzzy
 msgid "Variance"
 msgstr "Abweichung"
 
@@ -3184,20 +3164,19 @@ msgstr ""
 
 #: ../raster/r.texture/main.c:138
 msgid "Sum Average"
-msgstr ""
+msgstr "Durchschnittssumme"
 
 #: ../raster/r.texture/main.c:142
-#, fuzzy
 msgid "Sum Variance"
-msgstr "Abweichung"
+msgstr "Abweichungssumme"
 
 #: ../raster/r.texture/main.c:146
 msgid "Sum Entropy"
-msgstr ""
+msgstr "Entropiesumme"
 
 #: ../raster/r.texture/main.c:150
 msgid "Entropy"
-msgstr ""
+msgstr "Entropie"
 
 #: ../raster/r.texture/main.c:154
 #, fuzzy
@@ -3209,337 +3188,282 @@ msgid "Difference Entropy"
 msgstr ""
 
 #: ../raster/r.texture/main.c:162
-#, fuzzy
 msgid "Measure of Correlation-1"
-msgstr "von"
+msgstr "Messen der Korrelation-1."
 
 #: ../raster/r.texture/main.c:167
-#, fuzzy
 msgid "Measure of Correlation-2"
-msgstr "von"
+msgstr "Messen der Korrelation-2"
 
 #: ../raster/r.texture/main.c:171
 msgid "Max Correlation Coeff"
-msgstr ""
+msgstr "Maximaler Korrelationskoeffizient."
 
 #: ../raster/r.thin/main.c:34
-#, fuzzy
 msgid "Thins non-zero cells that denote linear features in a raster map layer."
-msgstr "a."
+msgstr "Dünnt Zellen, die nicht null (0) sind und linienhafte Strukturen zeigen, aus."
 
 #: ../raster/r.timestamp/main.c:19
-#, fuzzy
 msgid "Print/add/remove a timestamp for a raster map."
-msgstr "hinzufügen a für a."
+msgstr "Ausgeben/hinzufügen/entfernen eines Zeitstempels von einer Rasterkarte."
 
 #: ../raster/r.timestamp/main.c:33
-#, fuzzy
 msgid "Datetime, datetime1/datetime2, or none"
-msgstr "nichts"
+msgstr "Datumsangabe, Datum1/Datum2, oder nichts"
 
 #: ../raster/r.to.vect/main.c:28
-#, fuzzy
 msgid "Converts a raster map into a vector map layer."
-msgstr "a a."
+msgstr "Kovertiert eine Rasterkarte in eine Vektorkarte."
 
 #: ../raster/r.to.vect/main.c:36
 msgid "raster input file"
-msgstr ""
+msgstr "Raster-Eingabekarte"
 
 #: ../raster/r.to.vect/main.c:47
-#, fuzzy
 msgid "Feature type"
-msgstr "Funktion"
+msgstr "Art des Vektorobjekts."
 
 #: ../raster/r.to.vect/main.c:51
-#, fuzzy
 msgid "Smooth Corners"
-msgstr "Geglättet Ecken"
+msgstr "Glätte Ecken."
 
 #: ../raster/r.to.vect/main.c:55
-#, fuzzy
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
-msgstr "von unique sequence"
+msgstr "Benutze Rasterzellenwerte als Kategoriewerte anstelle von eindeutigen Sequenzen (nur bei CELL-Karten)."
 
 #: ../raster/r.topidx/main.c:46
-#, fuzzy
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
-msgstr "index a beta von."
+msgstr "Erstellt Topographischen Index (ln(a/tan(beta))) auf Basis einer Höhenkarte (DEM)."
 
 #: ../raster/r.topidx/main.c:50
 msgid "Elevation map"
-msgstr ""
+msgstr "Höhenkarte (DEM)"
 
 #: ../raster/r.topidx/main.c:57
-#, fuzzy
 msgid "Topographic index ln(a/tanB) map"
-msgstr "index a"
+msgstr "Ausgabekarte des Topographischen Index ln(a/tanB)."
 
 #: ../raster/r.topidx/main.c:64
-#, fuzzy
 msgid "Output verbosely"
-msgstr "Ausgabe-Treibername"
+msgstr "Ausführliche Ausgabe"
 
 #: ../raster/r.topmodel/main.c:63
-#, fuzzy
 msgid "Simulates TOPMODEL which is physically based hydrologic model."
-msgstr "ist."
+msgstr "Modul zur TOPMODEL Simulation (physikalisch basiertes hydrologisches Modell)."
 
 #: ../raster/r.topmodel/main.c:69
-#, fuzzy
 msgid "(i)   Rectangular elevation map"
-msgstr "i rechteckig"
+msgstr "(i)   Rechteckige Höhenkarte."
 
 #: ../raster/r.topmodel/main.c:77
-#, fuzzy
 msgid "(i)   Basin map created by r.water.outlet"
-msgstr "i"
+msgstr "(i)   Einzugsgebietskarte, durch r.water.outlet erstellt."
 
 #: ../raster/r.topmodel/main.c:85
 msgid "(o)   Depressionless elevation map"
-msgstr ""
+msgstr "(o)   Senkenloses Höhenmodell"
 
 #: ../raster/r.topmodel/main.c:93
 msgid "(o)   Direction map with depressionless elevation map"
-msgstr ""
+msgstr "(o)   Fließrichtungskarte vom senkenlosen Höhenmodell."
 
 #: ../raster/r.topmodel/main.c:101
-#, fuzzy
 msgid "(i/o) Basin elevation map (extracted)"
-msgstr "i"
+msgstr "(i/o) Extrahiertes Höhenmodell des Einzugsgebiets."
 
 #: ../raster/r.topmodel/main.c:109
-#, fuzzy
 msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
-msgstr "i index a"
+msgstr "(i/o) Extrahierter Topographischer Index ln(a/tanB)"
 
 #: ../raster/r.topmodel/main.c:117
-#, fuzzy
 msgid "(i)   Number of topographic index classes"
-msgstr "i von index"
+msgstr "(i)   Anzahl der Klassen des Topgraphischen Indexes."
 
 #: ../raster/r.topmodel/main.c:125
-#, fuzzy
 msgid "(i/o) Topographic index statistics file"
-msgstr "i index"
+msgstr "(i/o) Statistik-Datei des Topographischen Indexes."
 
 #: ../raster/r.topmodel/main.c:132
-#, fuzzy
 msgid "(i)   TOPMODEL Parameters file"
-msgstr "i"
+msgstr "(i)   Parameterdatei für TOPMODEL"
 
 #: ../raster/r.topmodel/main.c:139
-#, fuzzy
 msgid "(i)   Rainfall and potential evapotranspiration data file"
-msgstr "i"
+msgstr "(i)    Datei mir Niederschlag und potentieller Evapotranspiration."
 
 #: ../raster/r.topmodel/main.c:146
 msgid "(o)   Output file"
-msgstr ""
+msgstr "(o)   Ausgabedatei"
 
 #: ../raster/r.topmodel/main.c:153
-#, fuzzy
 msgid "      Observed Q file"
-msgstr "Q"
+msgstr "Untersuchte Q-Datei."
 
 #: ../raster/r.topmodel/main.c:160
-#, fuzzy
 msgid "      output for given time step"
-msgstr "Ausgabe für Zeit step"
+msgstr "      Ausgabe für ein gegebenes Zeitintervall."
 
 #: ../raster/r.topmodel/main.c:167
-#, fuzzy
 msgid "      output for given topographic index class"
-msgstr "Ausgabe für index"
+msgstr "      Ausgabe für eine gegebene Klasse des Topgraphischen Index."
 
 #: ../raster/r.topmodel/main.c:176
-#, fuzzy
 msgid "Input data given for (i/o)"
-msgstr "für i"
+msgstr "Eingabedaten für Eingabe/Ausgabe (i/o)"
 
 #: ../raster/r.topmodel/main.c:181
 msgid "Overwrite outputs"
-msgstr ""
+msgstr "Überschreibe Ausgabedateien."
 
 #: ../raster/r.topmodel/main.c:186
-#, fuzzy
 msgid "Wide output"
-msgstr "Ausgabe"
+msgstr "Breite Ausgabe."
 
 #: ../raster/r.transect/main.c:34
-#, fuzzy
-msgid ""
-"Outputs raster map layer values lying along user defined transect line(s)."
-msgstr "Linie."
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
+msgstr "Gibt die Werte einer Rasterkarte aus, die entlang einer/mehrerer durch den Benutzer festgelegten Linie(n) liegen."
 
 #: ../raster/r.transect/main.c:40
 msgid "Raster map to be queried"
-msgstr ""
+msgstr "Rasterkarte, die abgefragt werden soll."
 
 #: ../raster/r.transect/main.c:58
 msgid "Transect definition"
-msgstr ""
+msgstr "Transekt-Definition."
 
 #: ../raster/r.transect/main.c:67 ../raster/r.what/main.c:90
-#, fuzzy
 msgid "Char string to represent no data cell"
-msgstr "Nein"
+msgstr "Zeichenkette, die NODATA-Zellen repräsentiert."
 
 #: ../raster/r.univar2/main.c:55
-#, fuzzy
-msgid ""
-"Calculates univariate statistics from the non-null cells of a raster map."
-msgstr "von von a."
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgstr "Berechnet univariate Statistikparameter einer Rasterkarte (nur Nicht-Null-Zellen)."
 
 #: ../raster/r.univar2/main.c:68
-#, fuzzy
 msgid "Quiet mode"
-msgstr "schweigsam Modus"
+msgstr "schweigsamer Modus"
 
 #: ../raster/r.univar2/main.c:72
 msgid "Print the stats in shell script style"
-msgstr ""
+msgstr "Gebe die Statistik im Shell-Skript-Style aus."
 
 #: ../raster/r.water.outlet/main.c:33
-#, fuzzy
 msgid "Watershed basin creation program."
-msgstr "program."
+msgstr "Modul zur Berechnung von Wassereinzugsgebieten."
 
 #: ../raster/r.water.outlet/main.c:55
-#, fuzzy
 msgid "The map E  grid coordinates"
-msgstr "Benutzte Koordinaten der Kartenmitte.\n"
+msgstr "Ost Koordinaten "
 
 #: ../raster/r.water.outlet/main.c:63
-#, fuzzy
 msgid "The map N grid coordinates"
-msgstr "Benutzte Koordinaten der Kartenmitte.\n"
+msgstr "Nord Koordinaten"
 
 #: ../raster/r.watershed/front/main.c:35
-#, fuzzy
 msgid "Watershed basin analysis program."
-msgstr "program."
+msgstr "Modul zur Analyse von Wassereinzugsgebieten."
 
 #: ../raster/r.watershed/front/main.c:39
-#, fuzzy
 msgid "Input map: elevation on which entire analysis is based"
-msgstr "ein ist"
+msgstr "Eingabekarte: Höhenmodell, welches Grundlage dieser gesamten Analyse sein wird."
 
 #: ../raster/r.watershed/front/main.c:46
-#, fuzzy
 msgid "Input map: locations of real depressions"
-msgstr "von"
+msgstr "Eingabekarte: Orte realer Senken im Gebiet."
 
 #: ../raster/r.watershed/front/main.c:53
-#, fuzzy
 msgid "Input map: amount of overland flow per cell"
-msgstr "von"
+msgstr "Eingabekarte: Anzahl von Oerflächenabfluss pro Zelle."
 
 #: ../raster/r.watershed/front/main.c:60
 #, fuzzy
 msgid "Input map or value: percent of disturbed land, for USLE"
-msgstr "Prozent von für"
+msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, (für ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:67
-#, fuzzy
 msgid "Input map: terrain blocking overland surface flow, for USLE"
-msgstr "für"
+msgstr "Eingabekarte: Linienhafte Strukturen, die Oberflächenabfluss blockieren (für ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:74
-#, fuzzy
 msgid "Input value: minimum size of exterior watershed basin"
-msgstr "Größe von"
+msgstr "Eingabewert: kleinste Größe eines äußeren Wassereinzugsgebiets."
 
 #: ../raster/r.watershed/front/main.c:81
-#, fuzzy
 msgid "Input value: maximum length of surface flow, for USLE"
-msgstr "length von für"
+msgstr "Eingabewert: Maximale Länge des Oberflächenabflusses (für ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:88
-#, fuzzy
 msgid "Output map: number of cells that drain through each cell"
-msgstr "von"
+msgstr "Ausgabekarte: Anzahl der Zellen, die durch jede Zelle abfließt."
 
 #: ../raster/r.watershed/front/main.c:95
 msgid "Output map: drainage direction"
-msgstr ""
+msgstr "Ausgabekarte: Abflussrichtung"
 
 #: ../raster/r.watershed/front/main.c:102
-#, fuzzy
 msgid "Output map: unique label for each watershed basin"
-msgstr "unique für"
+msgstr "Ausgabekarte: Eindeutige Label für jedes Einzugsgebiet."
 
 #: ../raster/r.watershed/front/main.c:109
 msgid "Output map: stream segments"
-msgstr ""
+msgstr "Ausgabekarte: Flussnetzwerk"
 
 #: ../raster/r.watershed/front/main.c:116
-#, fuzzy
 msgid "Output map: each half-basin is given a unique value"
-msgstr "ist a unique"
+msgstr "Ausgabekarte: Einzugegebietshälften mit einem eindeutigen Wert."
 
 #: ../raster/r.watershed/front/main.c:123
-#, fuzzy
 msgid "Output map: useful for visual display of results"
-msgstr "für von"
+msgstr "Ausgabekarte: hilfreich für die visuelle Darstellung der Ergebnisse."
 
 #: ../raster/r.watershed/front/main.c:130
-#, fuzzy
 msgid "Output map: slope length and steepness (LS) factor for USLE"
-msgstr "Steigung length für"
+msgstr "Ausgabekarte: Hanglänge und -Neigungsfaktor (LS) für ABAG/USLE."
 
 #: ../raster/r.watershed/front/main.c:137
-#, fuzzy
 msgid "Output map: slope steepness (S) factor for USLE"
-msgstr "Steigung für"
+msgstr "Ausgabekarte: Hangneigungsfaktor (S) für ABAG/USLE."
 
 #: ../raster/r.watershed/front/main.c:144
-#, fuzzy
 msgid "Enable extend memory option: Operation is slow"
-msgstr "erweitere option ist"
+msgstr "Schalte erweiterte Speicheroption an: Die Berechnung ist langsam."
 
 #: ../raster/r.watershed/front/main.c:148
-#, fuzzy
 msgid "Allow only horizontal and vertical flow of water"
-msgstr "von"
+msgstr "Erlaube nur horizontalen und vertikalen Wasserfluss."
 
 #: ../raster/r.what/main.c:67
-#, fuzzy
 msgid "Queries raster map layers on their category values and category labels."
-msgstr "Queries ein."
+msgstr "Fragt Rasterkartenwerte und Kategorielabel ab."
 
 #: ../raster/r.what/main.c:75
-#, fuzzy
 msgid "Name of existing raster map(s) to query"
-msgstr "von"
+msgstr "Rasterkarte(n) zum abfragen."
 
 #: ../raster/r.what/main.c:82
-#, fuzzy
 msgid "Size of point cache"
-msgstr "von Punkt"
+msgstr "Größe des Punkt-Caches."
 
 #: ../raster/r.what/main.c:98
-#, fuzzy
 msgid "Coordinates for query"
-msgstr "Koordinaten für"
+msgstr "Koordinaten für die Abfrage."
 
 #: ../raster/r.what/main.c:102
 msgid "Show the category label in the grid cell(s)"
-msgstr ""
+msgstr "Zeige die Kategorielabel der Rasterzelle(n)."
 
 #: ../raster/r.what/main.c:106
 #, fuzzy
 msgid "Turn on cache reporting"
-msgstr "ein"
+msgstr "Benutze Cache-Reporting."
 
 #: ../raster/wildfire/r.ros/main.c:221
-#, fuzzy
 msgid ""
 "Generates three, or four raster map layers showing 1) the base "
 "(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
 "direction of the maximum ROS, and optionally 4) the maximum potential "
 "spotting distance."
-msgstr "Speicherort von von."
+msgstr "Erstellt drei oder optional vier Rasterkarten, die 1) die Basisrate der (lotrechten) Ausbreitung (ROS), 2) die maximale (Vorwärts-) Ausbreitung, 3) die Richtung der größten Ausbreitung, und optional 4) die maximal zu erkennende potentielle Ausbreitung, zeigen."
 
 #: ../raster/wildfire/r.ros/main.c:231
 #, fuzzy
@@ -3632,14 +3556,12 @@ msgstr "von"
 
 #: ../raster/wildfire/r.spread/main.c:156
 #, fuzzy
-msgid ""
-"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
 msgstr "von m"
 
 #: ../raster/wildfire/r.spread/main.c:162
 #, fuzzy
-msgid ""
-"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
 msgstr "von Wind"
 
 #: ../raster/wildfire/r.spread/main.c:168
@@ -4210,8 +4132,3 @@ msgstr "Kann Datenbank '%s' nicht öffnen."
 msgid "Cannot fetch data"
 msgstr "Kann Datenbanken nicht auflisten."
 
-#~ msgid "Overwrite output maps"
-#~ msgstr "Überschreibe Ausgabe-Karten"
-
-#~ msgid "Overwrite output map"
-#~ msgstr "Überschreibe Ausgabekarte."
