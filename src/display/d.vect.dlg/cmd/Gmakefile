@@ -1,0 +1,11 @@
+OFILES = \
+	main.o \
+	p_coors.o \
+	p_lines.o
+
+$(BIN_MAIN_CMD)/d.vect.dlg: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
