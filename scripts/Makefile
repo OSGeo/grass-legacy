@@ -10,6 +10,7 @@ SUBDIRS = \
 	g.manual \
 	g.mlist \
 	g.mremove \
+	i.fusion.brovey \
 	i.spectral \
 	i.tasscap \
 	pg.postgisdb \
