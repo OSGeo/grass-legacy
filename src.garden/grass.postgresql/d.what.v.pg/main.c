@@ -25,11 +25,11 @@
 */
 #define GLOBAL
 #include "what.h"
-#include "digit.h"
+#include "Vect.h"
 
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {

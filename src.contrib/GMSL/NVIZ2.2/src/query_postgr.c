@@ -1,7 +1,6 @@
 /*	Alex Shevlakov sixote@yahoo.com 02/2000
 */
 #include <stdio.h>
-#include "digit.h"
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"

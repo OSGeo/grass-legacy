@@ -57,9 +57,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
-#include "digit.h"
-#include "dig_head.h"
-#include "dig_atts.h"
+#include "Vect.h"
 #include "AtoG.h"
 #include "v_in_arc.inter.h"
 

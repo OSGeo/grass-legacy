@@ -1,5 +1,4 @@
 #include "what.h"
-#include "digit.h"
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"

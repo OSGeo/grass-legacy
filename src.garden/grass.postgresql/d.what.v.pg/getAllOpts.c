@@ -8,13 +8,12 @@
 */
 
 #include "what.h"
-#include "digit.h"
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
 
 
-getAllOpts(argc, argv)
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
