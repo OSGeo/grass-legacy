@@ -38,7 +38,7 @@ fi
  
 clear
 echo ''
-if [ $# = 1 ] ; then
+if [ $# -eq 1 ] ; then
   name="$1"
 else
   g.ask type=old prompt="Which vector map to translate?" element=dig desc=vector unixfile=/tmp/$$
