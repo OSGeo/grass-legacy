@@ -1,0 +1,20 @@
+.TH g.manual
+.SH NAME
+\fIg.manual\fR \- Accesses GRASS User's Reference Manual entries.
+.br
+.I (GRASS File Management Program)
+.SH SYNOPSIS
+.B g.manual
+.SH DESCRIPTION
+The \fIg.manual\fR command
+provides user access to the on-line \fBGRASS User's Reference Manual\fR entries.
+The user may request a list of available manual entries, and may get a
+manual entry printed to the terminal screen and/or to the line printer.
+.LP
+These entries may also be accessed through the \fIg.help\fR command.
+.SH "SEE ALSO"
+\fBGRASS User's Reference Manual\fR
+.LP
+.I g.help
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
