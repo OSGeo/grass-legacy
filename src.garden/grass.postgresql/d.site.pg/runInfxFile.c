@@ -8,9 +8,6 @@
 #include <libpq-fe.h>
 #include "dbsite.h"
 
-#define TRUE 0
-#define FALSE 1
-
 runInfxFile(SQL_stmt, map,  plotargs )
   char *SQL_stmt, *map, *plotargs[];
   {

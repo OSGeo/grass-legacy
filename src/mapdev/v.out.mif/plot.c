@@ -189,6 +189,33 @@ double x,y;
 
 
 
+static
+compare (a, b)
+    struct list *a, *b;
+{
+    return (a->cat - b->cat);
+}
+
+static
+area_ok(Map, index, cat)
+    struct Map_info *Map;
+    CELL *cat;
+{
+    int att;
+
+    if (!AREA_ALIVE(&Map->Area[index]))
+	return 0;
+    att = Map->Area[index].att;
+    if (att == 0)
+	*cat = 0; /* unlabeled */
+    else
+	*cat = Map->Att[att].cat;
+
+    return 1;
+}
+
+
+
 sort_areas (Map, Points)
     struct Map_info *Map;
     struct line_pnts *Points;
@@ -232,33 +259,6 @@ sort_areas (Map, Points)
     qsort (list, nareas, sizeof(struct list), compare);
     return nareas;
 }
-
-static
-compare (a, b)
-    struct list *a, *b;
-{
-    return (a->cat - b->cat);
-}
-
-static
-area_ok(Map, index, cat)
-    struct Map_info *Map;
-    CELL *cat;
-{
-    int att;
-
-    if (!AREA_ALIVE(&Map->Area[index]))
-	return 0;
-    att = Map->Area[index].att;
-    if (att == 0)
-	*cat = 0; /* unlabeled */
-    else
-	*cat = Map->Att[att].cat;
-
-    return 1;
-}
-
-
 
 fillcats(Map, nareas)
 	struct Map_info *Map;

@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include "gis.h"
 #include <stdio.h>
-#define TRUE 0
-#define FALSE 1
 
 buildInfxQry(key,col,table,where,input,output, vtype, disolve)
   char *key;

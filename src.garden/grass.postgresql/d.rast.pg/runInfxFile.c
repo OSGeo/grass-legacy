@@ -6,9 +6,6 @@
 #include <libpq-fe.h>
 #include "dbrast.h"
 
-#define TRUE 1
-#define FALSE 0
-
 runInfxFile(SQL_stmt, input,output, withlabel)
   char *SQL_stmt, *input, *output;
   int withlabel;

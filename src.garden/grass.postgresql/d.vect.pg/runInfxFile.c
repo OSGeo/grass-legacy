@@ -6,8 +6,6 @@
 #include "gis.h"
 #include "Vect.h"
 #include <libpq-fe.h>
-#define TRUE 0
-#define FALSE 1
 
 runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
   char *SQL_stmt, *map, *mapset;

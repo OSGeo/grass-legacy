@@ -5,9 +5,6 @@
 #include <stdio.h>
 #include <libpq-fe.h>
 
-#define TRUE 1
-#define FALSE 0
-
 runInfxFile(SQL_stmt, input,output, vtype, disolve )
   char *SQL_stmt, *input, *output, *vtype;
   int disolve;

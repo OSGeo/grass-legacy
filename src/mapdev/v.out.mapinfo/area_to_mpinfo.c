@@ -67,7 +67,7 @@ int zone;                  /* ZONE */
 	   /* now eliminate everything after the first "~" in the label */
 	    for (pntr=label;*pntr;pntr++)
 		if (*pntr == '\176') break;
-	    *pntr = NULL;
+	    *pntr = '\0';
 	  }
         }
 

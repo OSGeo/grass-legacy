@@ -60,17 +60,17 @@ char **cdpath (buf, p, prefix, suffix)
     j = strlen (dirs[i]);
     if (!i)
       dirs[i][j++] = buf[cp++];
-    while (buf[cp] != SEPARATOR && buf[cp] != NULL)
+    while (buf[cp] != SEPARATOR && buf[cp] != '\0')
       dirs[i][j++] = buf[cp++];
-    dirs[i][j] = NULL;
+    dirs[i][j] = '\0';
     strcat (dirs[i], suffix);
     cp++;
   }
   strcpy (dirs[i], suffix);
   j = strlen (dirs[i]);
-  while (buf[cp] != SEPARATOR && buf[cp] != NULL)
+  while (buf[cp] != SEPARATOR && buf[cp] != '\0')
     dirs[i][j++] = buf[cp++];
-  dirs[i][j] = NULL;
+  dirs[i][j] = '\0';
   strcat (dirs[i], suffix);
 
   *p = n;

@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 char inbuf2[100];
 FILE *fp1, *fp2, *log;
@@ -93,16 +94,16 @@ char *inp, *out;
 				fprintf(log,"************************************\n");
 				return(-1);
 			}
-			if(inbuf2[0]==34)  /*double quote mark*/
+			if(inbuf2[0]=='"')  /*double quote mark*/
 			{
 				j--;
 				curr=strlen(inbuf2);
 				fseek(fp1,-curr,1);
-		fprintf(log,"Count Error Fixed: %s, %d\n",b1,b3);
+				fprintf(log,"Count Error Fixed: %s, %d\n",b1,b3);
 				break;
 			}
 
-			for(i=0; inbuf2[i]!=10 && inbuf2[i]!=NULL; i++)  /*new line character*/
+			for(i=0; inbuf2[i]!='\n' && inbuf2[i]!='\0'; i++)  /*new line character*/
 			{
 				if((inbuf2[i]<44 || inbuf2[i]>57 || inbuf2[i]==47))
 				{  /*0-9 comma period minus sign are ok

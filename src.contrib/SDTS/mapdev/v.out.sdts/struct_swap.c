@@ -1,5 +1,7 @@
 #include "Vect.h"
 
+static line_fixup ();
+
 /* swap two P_LINEs and all references to them:
 **   Area->lines
 **   Node->lines
