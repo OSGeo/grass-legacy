@@ -1,0 +1,12 @@
+MODULE_TOPDIR = ../../..
+
+PGM = photo.2target
+
+EXTRA_CFLAGS = -I../libes
+
+LIBES     = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(IORTHOLIB) $(VASKLIB) $(CURSES)
+DEPENDENCIES= $(IMAGERYDEP) $(D_DEP) $(DISPLAYDEP) $(RASTERDEP) $(IORTHODEP) $(GISDEP) $(VASKDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: etc
