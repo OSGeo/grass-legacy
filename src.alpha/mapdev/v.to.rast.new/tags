@@ -1,0 +1,56 @@
+EAST	plot.c	/^#define EAST(x) (window.west + ((x)-left)\/xconv)$/
+G_plot_fx	plot.c	/^G_plot_fx (f, east1, east2)$/
+G_plot_line	plot.c	/^G_plot_line (east1, north1, east2, north2)$/
+G_plot_line2	plot.c	/^G_plot_line2 (east1, north1, east2, north2)$/
+G_plot_point	plot.c	/^G_plot_point (east, north)$/
+G_plot_polygon	plot.c	/^G_plot_polygon (x,y,n)$/
+G_plot_where_en	plot.c	/^G_plot_where_en (x, y, east, north)$/
+G_plot_where_xy	plot.c	/^G_plot_where_xy (east, north, x, y)$/
+G_setup_plot	plot.c	/^G_setup_plot (t, b, l, r, Move, Cont)$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+NORTH	plot.c	/^#define NORTH(y) (window.north - ((y)-top)\/xconv)$/
+X	plot.c	/^#define X(e) (left + xconv * ((e) - window.west))$/
+Y	plot.c	/^#define Y(n) (top + yconv * (window.north - (n)))$/
+area_ok	do_areas.c	/^area_ok(Map, index, cat)$/
+begin_mapgraph	mapgraph.c	/^begin_mapgraph()$/
+begin_rasterization	raster.c	/^begin_rasterization(nrows, f)$/
+cell_dot	raster.c	/^cell_dot (x, y)$/
+char_dot	raster.c	/^char_dot (x, y)$/
+compare	do_areas.c	/^compare (a, b)$/
+configure_plot	raster.c	/^configure_plot()$/
+cont	raster.c	/^cont (x, y)$/
+do_areas	do_areas.c	/^do_areas (Map, Points)$/
+do_lines	do_lines.c	/^do_lines (Map, Points)$/
+do_sites	do_sites.c	/^do_sites (Map, Points)$/
+edge	plot.c	/^edge (x0,y0,x1,y1)$/
+edge_order	plot.c	/^edge_order (a, b)$/
+edge_point	plot.c	/^edge_point (x, y)$/
+end_mapgraph	mapgraph.c	/^end_mapgraph()$/
+fabs	plot.c	/^static double fabs(x)$/
+fastline	plot.c	/^fastline(x1,y1,x2,y2)$/
+getformat	getformat.c	/^getformat (Map)$/
+iceil	plot.c	/^iceil(x) double x;$/
+ifloor	plot.c	/^ifloor(x) double x;$/
+inform	inform.c	/^inform (msg)$/
+mapgraph	mapgraph.c	/^mapgraph(x,y,n,polygon)$/
+mapgraph_line	mapgraph.c	/^mapgraph_line(x1,y1,x2,y2)$/
+mapgraph_polygon	mapgraph.c	/^mapgraph_polygon(x,y,n)$/
+mapgraph_polyline	mapgraph.c	/^mapgraph_polyline(x,y,n)$/
+move	raster.c	/^move (x, y)$/
+nearest	plot.c	/^static double nearest(e0,e1)$/
+output_raster	raster.c	/^output_raster (fd)$/
+plot_line	do_lines.c	/^plot_line (x, y, n)$/
+plot_points	do_sites.c	/^plot_points (x, y, n)$/
+raster_dot	raster.c	/^raster_dot(x,y)$/
+row_fill	plot.c	/^row_fill (y, x1, x2)$/
+set_cat	raster.c	/^set_cat(x)$/
+short_dot	raster.c	/^short_dot (x, y)$/
+slowline	plot.c	/^slowline(x1,y1,x2,y2)$/
+sort_areas	do_areas.c	/^sort_areas (Map, Points)$/
+start_clock	clock.c	/^start_clock (save)$/
+stop_clock	clock.c	/^stop_clock (save)$/
+uchar_dot	raster.c	/^uchar_dot (x, y)$/
+update_cats	support.c	/^update_cats(raster_name, vector_name, vector_mapse/
+update_colors	support.c	/^update_colors (raster_name)$/
+update_hist	support.c	/^update_hist(raster_name, vector_name, vector_mapse/
+vect_to_rast	vect2rast.c	/^vect_to_rast (vector_map, raster_map, nrows)$/
