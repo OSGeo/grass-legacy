@@ -2,12 +2,18 @@
 #include <stdlib.h>
 #include "global.h"
 
+/* Modified to support Grass 5.0 fp format 11 april 2000
+ *
+ * Pierre de Mouveaux - pmx@audiovu.com
+ *
+ */
+
 int rectify (
     char *name,
     char *mapset,
     char *result)
 {
-    struct Cell_head cellhd, win;
+    struct Cell_head  win, cellhd;
     int ncols, nrows;
     int row, col;
     int infd;
@@ -16,6 +22,7 @@ int rectify (
     select_current_env();
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
 	return 0;
+    map_type = G_raster_map_type(name, mapset);
 
 /* open the result file into target window
  * this open must be first since we change the window later
@@ -27,8 +34,8 @@ int rectify (
  */
 
     select_target_env();
-    G_set_window (&target_window);
-    G_set_cell_format (cellhd.format);
+    G_set_window(&target_window);
+    G_set_cell_format(cellhd.format);
     select_current_env();
 
 /* open the file to be rectified
@@ -38,12 +45,12 @@ int rectify (
     infd = G_open_cell_old (name, mapset);
     if (infd < 0)
     {
+	close (infd);
 	return 0;
     }
-    map_type = G_raster_map_type(name, mapset);
+
     rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
     G_set_null_value(rast, G_window_cols()+1, map_type);
-
     G_copy (&win, &target_window, sizeof(win));
 
     win.west += win.ew_res/2;
@@ -81,7 +88,6 @@ int rectify (
     target_window.compressed=cellhd.compressed;
     write_map(result);
     select_current_env();
-
     G_close_cell (infd);
     G_free (rast);
 

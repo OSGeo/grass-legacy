@@ -54,7 +54,6 @@ fprintf (stderr, "  process matrix row %d\n", idx);
 	    right = row_right[idx];
 	    do_cell (row, G_incr_void_ptr(rast, rast_size),
 					  cell_buf[idx]);
-
 	    row_min[idx]++;
 	    if (row_min[idx] > row_max[idx])
 		row_min[idx] = -1;
@@ -94,6 +93,5 @@ static int do_cell (int row,void *in,void *out)
 	if (rmap[col] == row)
 	   G_raster_cpy(outptr, inptr,1,map_type);
     }
-
     return 0;
 }
