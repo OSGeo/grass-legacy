@@ -1,5 +1,5 @@
 # gsf release for Grass5.0
-# $Id: Gmakefile,v 1.10 2003-02-20 23:41:10 bob Exp $
+# $Id: Gmakefile,v 1.11 2003-04-22 17:23:35 bob Exp $
 # changed file names to fix name conflicts on WINDOWS 5/2000
 # changed gsd_img.c 10/99 to uncompressed IRIS RGB
 # Use -DOS_RENDER to enable off-screen rendering
@@ -15,7 +15,7 @@ OBJ = GS2.o GSX.o GS_util.o Gs3.o gs.o gsd_wire.o gsd_surf.o gsd_views.o \
 	gs_bm.o gs_norms.o gs_query.o gsd_objs.o gsd_img.o gsd_img_ppm.o \
 	gsd_img_tif.o gsd_cplane.o trans.o \
 	GV2.o Gv3.o gv.o gvd.o gv_quick.o gsdrape.o GP2.o Gp3.o gp.o \
-	gpd.o gsds.o \
+	gpd.o gsds.o gsd_legend.o \
 	GK2.o gsdiff.o gsget.o gk.o \
 	gsd_label.o gsd_fonts.o   \
  	Gvol.o gvl.o GVL2.o

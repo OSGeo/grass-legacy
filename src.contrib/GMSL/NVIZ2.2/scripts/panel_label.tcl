@@ -17,17 +17,19 @@
 global Nv_
 
 # Font Type: Times, Helvetica, Courier
-set Nv_(labelFontType) Times
+set Nv_(labelFontType) times
 
 # Font Weight: Italic, Bold
-set Nv_(labelFontWeight) Bold
+set Nv_(labelFontWeight1) 0
+set Nv_(labelFontWeight2) 0
 
 # Font Point Size: varies
 set Nv_(labelFontSize) 12
+set Nv_(labelFontColor) #FF0000
 
 # Legend section
 set Nv_(catval) 1
-set Nv_(catlabel) 1
+set Nv_(catlabel) 0
 set Nv_(leg_invert) 0
 set Nv_(leg_userange) 0
 set Nv_(leg_discat) 0
@@ -40,10 +42,12 @@ set Nv_(labvalues) 1
 set Nv_(lablabels) 1
 set Nv_(labinbox) 1
 
+global clr
+
 ##########################################################################
 
 proc mklabelPanel { BASE } {
-    global Nv_
+    global Nv_ 
 
     set panel [St_create {window name size priority} $BASE "Label" 2 5]
     frame $BASE -relief groove -borderwidth 2
@@ -59,7 +63,7 @@ proc mklabelPanel { BASE } {
     entry $rbase.font_size.entry -relief sunken -width 3 \
 	-textvariable Nv_(labelFontSize)
     button $rbase.font_size.color -text "Color" \
-	-bg \#ffffff -width 8 \
+	-bg #FF0000 -width 8 \
 	-command "change_label_color $rbase.font_size.color"
     pack $rbase.font_size.label $rbase.font_size.entry \
 	$rbase.font_size.color -side left \
@@ -67,23 +71,23 @@ proc mklabelPanel { BASE } {
 
     frame $rbase.font_type -relief raised
     radiobutton $rbase.font_type.times -text "Times-Roman" \
-	-value Times -variable Nv_(labelFontType) -anchor w \
+	-value times -variable Nv_(labelFontType) -anchor w \
 	-width 15
     radiobutton $rbase.font_type.helv  -text "Helvetica" \
-	-value Helvetica -variable Nv_(labelFontType) -anchor w \
+	-value helvetica -variable Nv_(labelFontType) -anchor w \
 	-width 15
     radiobutton $rbase.font_type.cour  -text "Courier" \
-	-value Courier -variable Nv_(labelFontType) -anchor w \
+	-value courier -variable Nv_(labelFontType) -anchor w \
 	-width 15
     pack $rbase.font_type.times $rbase.font_type.helv \
 	$rbase.font_type.cour -side top \
 	-expand yes
 
     frame $rbase.font_weight -relief raised
-    radiobutton $rbase.font_weight.italic -text "Italic" \
-	-value Italic -variable Nv_(labelFontWeight) -anchor w
-    radiobutton $rbase.font_weight.bold   -text "Bold" \
-	-value Bold -variable Nv_(labelFontWeight) -anchor w
+    checkbutton $rbase.font_weight.italic -text "Italic" \
+	-variable Nv_(labelFontWeight1) -anchor w
+    checkbutton $rbase.font_weight.bold   -text "Bold" \
+	-variable Nv_(labelFontWeight2) -anchor w
     pack $rbase.font_weight.italic $rbase.font_weight.bold \
 	-side top -expand yes -anchor w
 
@@ -104,7 +108,7 @@ proc mklabelPanel { BASE } {
     pack $rbase.buttons.place $rbase.buttons.undo -side left \
 	-padx 2 -expand no
 
-    entry $rbase.text -relief sunken -width 30
+    entry $rbase.text -relief sunken -width 30 -textvariable Nv_(label_text)
     label $rbase.label -text "Label Text"
     pack $rbase.buttons -side top -expand yes\
 	-padx 2 -pady 2 -anchor n
@@ -123,8 +127,8 @@ proc mklabelPanel { BASE } {
 
     # Legend button, invert checkbutton and category checkbuttons
     frame $rbase.leg_inv
-#   button $rbase.leg_inv.legend -text "Legend" -command "place_legend"
-    button $rbase.leg_inv.legend -text "Legend" 
+   button $rbase.leg_inv.legend -text "Legend" -command "place_legend"
+
     checkbutton $rbase.leg_inv.invert -text "Invert" -anchor w \
 	-variable Nv_(leg_invert) -onvalue 1 -offvalue 0
     pack $rbase.leg_inv.legend $rbase.leg_inv.invert \
@@ -144,7 +148,8 @@ proc mklabelPanel { BASE } {
 	-variable Nv_(leg_userange) -onvalue 1 -offvalue 0
 
     frame $rbase.ranges.bound_low
-    entry $rbase.ranges.bound_low.entry -relief sunken -width 8
+    entry $rbase.ranges.bound_low.entry -relief sunken -width 8 \
+        -textvariable Nv_(leg_lorange)
     label $rbase.ranges.bound_low.label -text "Low:" \
 	-width 5 -anchor e
     pack $rbase.ranges.bound_low.entry \
@@ -152,7 +157,8 @@ proc mklabelPanel { BASE } {
 	-padx 2 -pady 1 -fill x -expand no
 
     frame $rbase.ranges.bound_hi
-    entry $rbase.ranges.bound_hi.entry  -relief sunken -width 8
+    entry $rbase.ranges.bound_hi.entry  -relief sunken -width 8 \
+         -textvariable Nv_(leg_hirange)
     label $rbase.ranges.bound_hi.label -text "Hi:" \
 	-width 5 -anchor e
     pack $rbase.ranges.bound_hi.entry \
@@ -178,9 +184,11 @@ proc mklabelPanel { BASE } {
     frame $rbase.use_list
     checkbutton $rbase.use_list.cb -text "Use List" \
 	-anchor w -width 18 -variable Nv_(leg_uselist) \
-	-onvalue 1 -offvalue 0 -command "make_cat_list $rbase.use_list.curr.m"
+	-onvalue 1 -offvalue 0 -command "make_cat_list $rbase.use_list.curr.m" \
+        -state disabled
     menubutton $rbase.use_list.curr -text "Current List" \
-	-menu $rbase.use_list.curr.m -relief raised
+	-menu $rbase.use_list.curr.m -relief raised \
+        -state disabled
     menu $rbase.use_list.curr.m -disabledforeground black
     pack $rbase.use_list.cb $rbase.use_list.curr -side left \
 	-padx 2 -expand no
@@ -236,8 +244,11 @@ proc mklabelPanel { BASE } {
 
 # Simple routine to change the color of fonts
 proc change_label_color { me } {
+global Nv_
+
     set clr [lindex [$me configure -bg] 4]
     set clr [mkColorPopup .colorpop LabelColor $clr 1]
+    set Nv_(labelFontColor) $clr
     $me configure -bg $clr
 }
 
@@ -305,15 +316,148 @@ proc make_cat_list_delete { BASE } {
     }
 }
 
+# Routine to do_legend
+proc do_legend {W x y flag } {
+    global Nv_
+    global x1 y1 x2 y2
+
+if {$flag == 1} {
+#pick first corner
+set y [expr $Nv_(height) - $y]
+
+#set first corner of box
+      set x1 $x
+      set y1 $y
+
+  } else {
+set y [expr $Nv_(height) - $y]
+#set last corner of box and reset binding
+      #Get name of current map 
+      set name [Nget_current surf]
+      if { [lindex [Nsurf$name get_att color] 0] == "const"} {
+	puts "Colortable constant -- no legend available"
+#reset everything
+        bind $W <Button-1> {}
+        bind $W <Button-3> {}
+        unset x1
+        unset y1
+        update
+	return
+      } 
+
+      set name [lindex [Nsurf$name get_att color] 1]
+
+      set range_low -9999
+      set range_high -9999
+      if {$Nv_(leg_userange)} {
+         set range_low $Nv_(leg_lorange)
+         set range_high $Nv_(leg_hirange)
+          if { $range_low == ""} {set range_low -9999}
+          if { $range_high == ""} {set range_high -9999}
+      }
+#make sure corner 1 is picked
+      if {[info exists x1]} {
+
+      if {$x1 > $x} {
+	set x2 $x1
+	set x1 $x
+      } else {
+	set x2 $x
+      }
+      if {$y1 > $y} {
+        set y2 $y1
+        set y1 $y
+      } else {
+        set y2 $y
+      }
+#get font description
+	if {$Nv_(labelFontWeight2) == 1} {
+		set weight "bold"
+	} else {
+		set weight "medium"
+	}
+	if {$Nv_(labelFontWeight1) == 1} {
+		set slant "i"
+	} else {
+		set slant "r"
+	}	
+	set font "*-$Nv_(labelFontType)-$weight-$slant-normal--$Nv_(labelFontSize)-*-*-*-*-*-*-*"
+
+#Ndraw_legend Args -- filename use_vals use_labels invert use_range 
+# low_range high_range discrete colors corner_coords
+
+      Ndraw_legend $name $font $Nv_(catval) $Nv_(catlabel) $Nv_(leg_invert) $Nv_(leg_discat) \
+	$Nv_(leg_userange) $range_low $range_high $x1 $x2 $y1 $y2
+
+#reset bindings
+      bind $W <Button-1> {}
+      bind $W <Button-3> {}
+      unset x1
+      unset x2
+      unset y1
+      unset y2
+      update
+      }
+}
+
+}
+
+
+# Routine to place legend
+proc place_legend { } {
+    global Nv_
+    global x1 y1 x2 y2
+
+#do bindings
+bind $Nv_(TOP).canvas <Button-1> {do_legend %W %x %y 1 }
+bind $Nv_(TOP).canvas <Button-3> {do_legend %W %x %y 2 }
+puts "Select Legend Corners in Window ..."
+puts "Corner 1 = left button      Corner 2 = right button"
+update
+
+##Tried binding to draw rectangle outline but unsupported with togl ??
+#bind $Nv_(TOP).canvas <Motion> {do_legend %W %x %y 3}
+}
+
+
 # Routines to allow user to place a label
-proc place_label {} {
+proc place_label { } {
     global Nv_
     # We bind the canvas area so that the user can click to place the
     # label.  After the click is processed we unbind the canvas area
+
+bind $Nv_(TOP).canvas <Button-1> {place_label_cb %x %y }
+
 }
 
-proc place_label_cb {sx sy} {
-    global Nv_
+
+proc place_label_cb { sx sy } {
+    global Nv_ 
+
+set sy [expr $Nv_(height) - $sy]
+
+#get font description
+	if {$Nv_(labelFontWeight2) == 1} {
+		set weight "bold"
+	} else {
+		set weight "medium"
+	}
+	if {$Nv_(labelFontWeight1) == 1} {
+		set slant "i"
+	} else {
+		set slant "r"
+	}	
+	set font "*-$Nv_(labelFontType)-$weight-$slant-normal--$Nv_(labelFontSize)-*-*-*-*-*-*-*"
+
+set clr $Nv_(labelFontColor)
+puts "BOB -- $clr"
+
+	Nplace_label $Nv_(label_text) $font $clr $sx $sy
+
+
+
+#remove binding
+bind $Nv_(TOP).canvas <Button-1> {}
 }
 
 
