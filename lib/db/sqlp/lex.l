@@ -134,7 +134,7 @@
   * STRINGS (single quotes)
   ***************************************/
 
-'[^'\n]*'	{
+'[^']*'	{
 			char	*Buffer, *ptra, *ptrb;
 			int 	c = input();
 			int     len;
