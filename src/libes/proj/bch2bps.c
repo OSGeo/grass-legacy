@@ -138,6 +138,6 @@ bch2bps(UV a, UV b, UV **c, int nu, int nv) {
 	/* do columns to power series */
 	cols(d, c, nu, nv);
 	colshft(a.u, b.u, c, nu, nv);
-	freev2(d, nu);
+	freev2((void **) d, nu);
 	return 1;
 }
