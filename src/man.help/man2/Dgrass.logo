@@ -1,0 +1,34 @@
+.\" %W% %G%
+.TH Dgrass.logo 2D D-language
+.SH NAME
+Dgrass.logo \- Paints a GRASS logo in the current graphics window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dgrass.logo
+.SH DESCRIPTION
+.I Dgrass.logo 
+is primarily a demonstration of the GRASS
+.I Dgraph
+tool in a UNIX Bourne shell macro, which generates the USA-CERL logo.
+Users are encouraged to generate their own unique logos by similarly
+writing such macro shell scripts.  Refer to the input file \fIDgrass.logo\fR
+located in the GRASS command bin to see how the GRASS logo was
+generated using \fIDgraph\fR graphics commands.
+The coordinates for this logo were taken from a drawing done on graph paper.
+A future option will be to use a local graphics editor to generate a
+picture.  A translator program would have to be written for each such
+editor to turn its language into \fIDgraph\fR language.
+.SH "NOTES"
+\fIDgrass.logo\fR will overwrite whatever is in the current window.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDgraph[2D]\fR	Tool for generating simple graphics
+.br
+\fIDmapgraph[2D]\fR	Tool for generating simple map graphics
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
