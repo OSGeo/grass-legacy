@@ -11,9 +11,7 @@ check_ready(void)
 
 	retval = 0;
 
-	if(check_required() ||
-	   check_names()    ||
-	   check_io())
+	if(check_required() || check_names() || check_io())
 		retval = 1;
 
 	if(!retval){
@@ -37,7 +35,7 @@ check_ready(void)
 	}
 
 
-	return(retval);
+	return retval;
 }
 
 
@@ -97,7 +95,7 @@ check_required(void)
 	}
 
 
-	return(retval);
+	return retval;
 }
 
 
@@ -275,7 +273,7 @@ check_names(void)
 	}
 
 
-	return(retval);
+	return retval;
 }
 
 
@@ -472,6 +470,6 @@ check_io(void)
 	}
 
 
-	return(retval);
+	return retval;
 }
 

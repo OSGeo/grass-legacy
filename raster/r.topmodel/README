@@ -6,7 +6,7 @@ Thanks to Keith Beven.
 
 
 [r.topmodel]
-simulates TOPMODEL which is physically based hydrologic model.
+simulates TOPMODEL which is a physically based hydrologic model.
 
 
 Parameters:
@@ -17,18 +17,18 @@ Parameters:
 (o)	depressionless:	Depressionless elevation map
 
 			This can be omitted if [elevation] map is already
-			depressionless map.  If this is given, [depressionless]
-			map will be used as [elevation] map.
+			a depressionless map.  If this is given,
+			[depressionless] map will be used as [elevation] map.
 
-(o)	direction:	This should be given with [depressionless] map.
+(o)	direction:	This should be given with the [depressionless] map.
 
-(i/o)	belevation:	Study basin extracted elevation map
+(o/i)	belevation:	Study basin extracted elevation map
 
-(i/o)	topidx:		Study basin extracted topographic index map
+(o/i)	topidx:		Study basin extracted topographic index map
 
 (i)	nidxclass:	Number of topographic index classes
 
-(i/o)	idxstats:	Topographic index statistics file
+(o/i)	idxstats:	Topographic index statistics file
 
 (i)	parameters:	TOPMODEL parameters file
 
@@ -36,32 +36,29 @@ Parameters:
 
 (o)	output:		Output file
 
-	Qobs:		Compare Qt with Qobs and calculate model efficiency
+	Qobs:		Compare Qt with Qobs and calculate the model efficiency
 
-	timestep:	OPTIONAL output for given time step
+	timestep:	OPTIONAL output for the given time step
 
-	idxclass:	OPTIONAL output for given topographic index class
+	idxclass:	OPTIONAL output for the given topographic index class
 
 
 (i)   means input
 (o)   means output
-(i/o) means input or output
+(o/i) means ouput or input with -i flag
 
 
 Flags:
-	-i:		Without this flag, all input data, (i) or (i/o),
-			should be given and intermediate output can not be
-			input for run.
-			
-			In example, [belevation] map will be created from 
-			[elevation] and [basin] every run.  However, every 
-			[belevation] output map is the same and this is 
-			useless process if [belevation] map is already given.
+	-i:		Without this flag, all input data (i) and intermediate
+			output (o/i) should be given and intermediate output can
+			not be input for run.
+
+			For example, [belevation] map will be created from 
+			[elevation] and [basin] in every run.  However, every 
+			[belevation] output is the same and this is useless
+			process if [belevation] map is already given.
 
 			With this flag, intermediate output can be input for
-			run.  (i/o) parameters can be affected by this flag.
+			run.  (o/i) parameters will be affected by the flag.
 
 	-o:		Overwrite outputs
-
-	-w:		No limit for 80 columns output
-

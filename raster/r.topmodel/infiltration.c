@@ -11,13 +11,14 @@ get_f(t, R)
 	int	factorial;
 	int	i, j;
 
-	
+
 	if(R <= 0.0){
 		cumf = 0.0;
 		ponding = 0;
-		return(0.0);
+		return 0.0;
 	}
 
+	f_ = f1 = cnst = pt = 0.0;
 	psi_dtheta = params.psi * params.dtheta;
 	if(!ponding){
 		if(cumf){
@@ -41,7 +42,7 @@ get_f(t, R)
 			f = R;
 			cumf += f * input.dt;
 			ponding = 0;
-			return(f);
+			return f;
 		}
 		f_ = cumf + R2 * input.dt;
 		for(i=0; i<MAXITER; i++){
@@ -62,14 +63,14 @@ get_f(t, R)
 		}
 		if(i == MAXITER){
 			G_set_d_null_value(&f, 1);
-			return(f);
+			return f;
 		}
 		pt = t - input.dt + (f_ - cumf) / R;
 		if(pt > t){
 			f = R;
 			cumf += f * input.dt;
 			ponding = 0;
-			return(f);
+			return f;
 		}
 cont1:
 		cnst = 0.0;
@@ -105,7 +106,7 @@ cont1:
 	}
 	if(i == MAXITER){
 		G_set_d_null_value(&f, 1);
-		return(f);
+		return f;
 	}
 
 	if(f_ < cumf + R){
@@ -115,6 +116,6 @@ cont1:
 	}
 
 
-	return(f);
+	return f;
 }
 
