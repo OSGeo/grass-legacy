@@ -260,8 +260,9 @@ if [ ! "$LOCATION" ] ; then
      	    	1)
 		    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
-		    echo "Please report this error to the Grass developers"
-		    echo "Switching to text mode"
+		    echo "Error in Tcl/Tk startup. If necessary, please"
+		    echo "Report this error to the Grass developers."
+		    echo "Switching to text mode now."
 		    echo "Hit RETURN to continue..."
 		    read ans
 		    
