@@ -75,6 +75,7 @@ dlg_init (fd,dlg)
 		else
 			return(-1) ;   /* good place to see if binary dlg file is in sync */
 
+
 		GET (&dlg->coors.lat[j],   sizeof(dlg->coors.lat[j]),    1) ;
 		GET (&dlg->coors.lon[j],   sizeof(dlg->coors.lon[j]),    1) ;
 		GET (&dlg->coors.utm_e[j], sizeof(dlg->coors.utm_e[j]),  1) ;
