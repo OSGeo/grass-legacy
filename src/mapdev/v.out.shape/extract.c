@@ -141,7 +141,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
 
   SHPObject *obj1;
   P_AREA *Area;
-  P_ISLE *Isle;
   struct line_pnts *Points;
 
   char *logfile_name;
@@ -149,7 +148,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
   char buf[512];
 
   /* loop */
-  int i, j, k, k0, k1;
+  int i, j, k, k1;
 
   /* Fields for shape object */
   int numparts, *partoffsets, numvertices, totalvertices;
@@ -157,19 +156,20 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
   int cindx;
 
   /* Fields for dig file area and topology analysis */
-  int nIsles, nLinePoints, nTotalPoints;
+  int nIsles;
   int startOffset, endOffset;
 
   cindx = curr_indx + 1;
   if( curr_indx >= Map->n_areas ) return 0;
  
-  logfile_name = (char *)malloc(128);
+  logfile_name = G_malloc(128);
 
   proc_logfile( GET_VAL, logfile_name );
 
   if( (lfp = fopen( logfile_name, "a" )) == NULL ) {
     lfp = stdout;
   }
+  free (logfile_name);
 
   if (!all && !V2_area_att(Map, cindx)) {
     fprintf ( lfp, "Skipping unlabeled area (hole?) #%d\n", cindx);
@@ -187,8 +187,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
   Points->x = NULL;
   Points->y = NULL;
  
-  /* fprintf(lfp, "\nArea %d has %d isles: \n", cindx, Area->n_isles ); */
-  
   /* Determine initial information on shape */
   numparts = Area->n_isles + 1;
 
@@ -197,7 +195,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
     return 1;
   }
 
-  partoffsets = (int *)malloc( numparts * sizeof(int) );
+  partoffsets = G_malloc( numparts * sizeof *partoffsets );
 
   /* Set first offset (of main ring) */
   partoffsets[0] = 0;
@@ -206,15 +204,14 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
 
   /* Loop through the main ring and assign X and Y points */
 
-  listX = (double *)malloc( numvertices * sizeof(double) );
-  listY = (double *)malloc( numvertices * sizeof(double) );
+  listX = G_malloc( numvertices * sizeof listX[0] );
+  listY = G_malloc( numvertices * sizeof listY[0] );
 
   
   for( i = 0; i < numvertices; ++i ) {
     listX[i] = Points->x[i];
     listY[i] = Points->y[i];
   }
-
   totalvertices = numvertices;
 
   /* Determine the rings of the isles */
@@ -237,20 +234,18 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
     /* Loop through this ring and add points to the shape */
     
     totalvertices += numvertices;
-    listX = (double *)realloc( listX, totalvertices * sizeof(double) );
-    listY = (double *)realloc( listY, totalvertices * sizeof(double) );
+    listX = G_realloc( listX, totalvertices * sizeof listX[0] );
+    listY = G_realloc( listY, totalvertices * sizeof listY[0] );
     
-    k1 = numvertices - 1;
-    for( k = startOffset; k <= endOffset; ++k ) {
+    for( k = startOffset, k1 = 0; k <= endOffset && k1 < numvertices; ++k, ++k1 ) {
       listX[k] = Points->x[k1];
-      listY[k] = Points->y[k1--];      
+      listY[k] = Points->y[k1];      
     }
   }
 
   Vect_destroy_line_struct(Points);
 
   /* Log vertex lists */
-  /*
   k = 0;
   for(i = 0; i < totalvertices; i++ ) {
     if( i == partoffsets[k++] ) {
@@ -260,7 +255,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
     fprintf(lfp, "    Vertex %d: %.6f  %.6f\n", i, listX[i], listY[i] );
   }
   fprintf( lfp, "END\n" );
-  */
 
   /* Build the shape object */
 
@@ -273,14 +267,13 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map,
     G_fatal_error(buf);
   }
 
-  /*free(listX);
+  free(listX);
   free(listY);
-  */
   free(partoffsets);
 
   *sh1 = obj1;
 
-  if(lfp) fclose(lfp);
+  if(lfp != stdout && lfp != stderr) fclose(lfp);
 
   /* Update indices */
   indx_list[*nIndices] = cindx;
