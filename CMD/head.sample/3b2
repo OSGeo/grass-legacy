@@ -1,0 +1,23 @@
+# ATT 3b2 (Vanilla system 5 unix)
+# set these definitions according to your system requirements
+
+ARCH                = 3b2
+
+GISBASE             = /usr/grass3
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    = /usr/grass3/data
+DEFAULT_LOCATION    = spearfish
+
+COMPILE_FLAGS       = -O
+LDFLAGS             =
+TERMLIB             =
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+CLEAR               = no
+LIBRULE             = ar rc $@ `lorder $(OBJ) | tsort`
+
+USE_TERMIO          = -DUSE_TERMIO
+USE_MTIO            = -DUSE_MTIO
+DIGITFLAGS          =
+CAN_CLEAR           =
