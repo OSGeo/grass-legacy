@@ -4,12 +4,13 @@ Please read all text below.
 
 CURRENT STATUS
 
-The GRASS 5.1 code repository currently contains only the new
-3D/DBMS vector library and a few rewritten vector modules. 
-To compile the 5.1 code, source code from 5.0 is needed, which
-is automatically linked into the 5.1 directory structure. 
+The GRASS 5.1 code repository currently contains only the new 3D/DBMS vector
+library and a few rewritten vector modules.  To compile the 5.1 code, source
+code from 5.0 is needed (the CVS HEAD version), which is automatically
+linked into the 5.1 directory structure.
 In future we will migrate further code into the 5.1 directory
 structure.
+
 Because of that the source code of GRASS 5.0 is needed. When
 running "configure" the  full path to grass50/ has to be specified.
 
