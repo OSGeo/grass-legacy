@@ -159,7 +159,6 @@ int dig_alloc_points (struct line_pnts *, int);
 int dig_alloc_cats (struct line_cats *, int);
 int dig_area_alloc_line (P_AREA *, int);
 int dig_area_alloc_isle (P_AREA *, int);
-int dig_area_alloc_centroid (P_AREA *, int);
 int dig_isle_alloc_line (P_ISLE *, int);
 int dig_out_of_memory (void);
 int dig_struct_copy (void *, void *, int);

@@ -29,18 +29,9 @@ int Vect_print_header (struct Map_info *);
 int Vect__init_head (struct dig_head *);
 int Vect_copy_head_data (struct dig_head *, struct dig_head *);
 int Vect_level (struct Map_info *);
-int Vect_P_init (char *, char *, struct Map_info *);
-int Vect__P_writeable (int);
-char *Vect__P_init (struct Map_info *, char *, char *);
-char *Vect__P_init_new_plus (struct Map_info *, char *);
 int V2_num_nodes (struct Map_info *);
 int V2_num_lines (struct Map_info *);
 int V2_num_areas (struct Map_info *);
-/*
-int V2_line_att (struct Map_info *, int);
-int V2_area_att (struct Map_info *, int);
-*/
-//int V2_get_area (struct Map_info *, int, P_AREA **);
 int V2_get_area_bbox (struct Map_info *, int, double *, double *, double *, double *);
 int V2_get_line_bbox (struct Map_info *, int, double *, double *, double *, double *);
 struct line_pnts *Vect_new_line_struct (void);
@@ -59,20 +50,22 @@ int Vect_reset_line (struct line_pnts *);
 int Vect_append_point (struct line_pnts *, double, double);
 int Vect_append_3d_point (struct line_pnts *, double, double, double);
 int Vect_append_points (struct line_pnts *, struct line_pnts *, int direction);
-int Vect_cat_set (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT);
-int Vect_cat_get (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT *);
-int Vect_cat_del (struct line_cats *, GRASS_V_FIELD);
+int Vect_cat_set (struct line_cats *, int, int);
+int Vect_cat_get (struct line_cats *, int, int *);
+int Vect_cat_del (struct line_cats *, int);
 int Vect_reset_cats (struct line_cats *);
 int Vect_reset_list (struct ilist *);
 int Vect_str_to_cat_list (char *, struct cat_list *);
 int Vect_array_to_cat_list (int *, int, struct cat_list *);
-int Vect_cat_in_cat_list (GRASS_V_CAT, struct cat_list *);
+int Vect_cat_in_cat_list (int, struct cat_list *);
 struct field_info *Vect_get_field_info (char *, char *, int);
-int Vect_cat_in_array (GRASS_V_CAT, int *, int);
+int Vect_cat_in_array (int, int *, int);
 int Vect_copy_pnts_to_xy (struct line_pnts *, double *, double *, int *);
 int Vect_copy_pnts_to_xyz (struct line_pnts *, double *, double *, double *, int *);
 int Vect_type_to_code (int);
 int Vect_code_to_type (int);
+int Vect_type_to_store (int);
+int Vect_type_from_store (int);
 int Vect_set_open_level (int);
 int Vect_open_old (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
@@ -94,6 +87,11 @@ int V2__init_for_create_plus (struct Map_info *, char *);
 int V2__open_update_1 (struct Map_info *, char *);
 int V2__setup_for_digit (struct Map_info *, char *); 
 */
+int Vect_open_topo (struct Map_info *);
+int Vect_save_topo ( struct Map_info *);
+    
+int Vect_coor_info ( struct Map_info *, struct Coor_info *);
+
 int Vect_get_point_in_area (struct Map_info *, int, double *, double *);
 int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts *);
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
@@ -157,10 +155,13 @@ long Vect_write_line (struct Map_info *, int type, struct line_pnts *, struct li
 long V1_write_line_nat (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_shp (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_post (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
-long Vect_rewrite_line (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+long V1_rewrite_line (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_nat (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_shp (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+
+int V1_delete_line (struct Map_info *, long offset);
+int V1_delete_line_nat (struct Map_info *, long offset);
 
 int Vect_build ( struct Map_info *Map, FILE *msgout );
 int Vect_build_nat ( struct Map_info *Map, FILE *msgout );

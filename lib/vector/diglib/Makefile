@@ -7,8 +7,8 @@ LIB_OBJS = \
     allocation.o  \
     angle.o  \
     box.o  \
-    file_checks.o  \
     frmt.o \
+    head.o \
     inside.o \
     line_dist.o \
     list.o \
