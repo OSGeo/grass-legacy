@@ -24,12 +24,10 @@
 *	and use id=CatNum simple rule for cats (no need of the text_file which is still
 *	set to non_NULL to use the original code)
 */
-#include "digit.h"
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "v_in_arc.inter.h"
 
 int 

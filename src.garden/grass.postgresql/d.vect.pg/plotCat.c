@@ -5,7 +5,6 @@
 */
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "display.h"
 
 extern double D_get_d_north();
