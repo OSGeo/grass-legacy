@@ -23,14 +23,15 @@
 #define O_REP  3
 #define O_PRN  4
 
-#define FRTYPES 6  /* number of field report types */
+#define FRTYPES 7  /* number of field report types */
 
 #define FR_POINT    0
 #define FR_LINE     1
 #define FR_BOUNDARY 2
 #define FR_CENTROID 3
 #define FR_AREA     4
-#define FR_ALL      5
+#define FR_UNKNOWN  5
+#define FR_ALL      6
 
 typedef struct {
     int field;
@@ -44,7 +45,9 @@ main (int argc, char *argv[])
 	struct Map_info In, Out;
 	static struct line_pnts *Points;
 	struct line_cats *Cats;
-        int    i, j, ret, option, otype, type, oarea, with_z, step;
+        int    i, j, ret, option, otype, type, with_z, step;
+	int    n_areas, centr, new_centr;
+	double x, y;
 	char   *mapset, errmsg[200];
 	int    cat, ocat, *fields, nfields, field;
 	struct GModule *module;
@@ -91,6 +94,7 @@ main (int argc, char *argv[])
 	    exit(-1); 
 	
 	/* read options */
+	option = 0;
         switch ( option_opt->answer[0] )
           {
 	    case ( 'a' ):
@@ -111,7 +115,7 @@ main (int argc, char *argv[])
 	step = atoi( step_opt->answer );
         
 	i = 0;
-        otype = 0; oarea = FALSE;
+        otype = 0; 
 	while (type_opt->answers[i])
 	  {
 	    switch ( type_opt->answers[i][0] )
@@ -129,7 +133,7 @@ main (int argc, char *argv[])
 	            otype |= GV_CENTROID;
 		    break;
 	        case 'a':
-	            oarea = TRUE;
+	            otype |= GV_AREA;
 		    break;
 	      }
 	    i++;
@@ -162,7 +166,7 @@ main (int argc, char *argv[])
 	     G_fatal_error (errmsg);
 	}
 	
-        Vect_set_open_level (1); 
+        Vect_set_open_level (2); 
 	Vect_open_old (&In, in_opt->answer, mapset); 
 
 	/* open output vector if needed */
@@ -183,6 +187,7 @@ main (int argc, char *argv[])
         switch ( option)
 	  {	
 	    case (O_ADD):	  
+		/* Lines */
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
 	            if ( type & otype )
@@ -195,6 +200,28 @@ main (int argc, char *argv[])
 	               }	   
 	            Vect_write_line ( &Out, type, Points, Cats );  
 	          }
+		/* Areas */
+		if ( otype & GV_AREA ) {
+		    n_areas = Vect_get_num_areas ( &In );
+		    new_centr = 0;
+		    for ( i = 1; i <= n_areas; i++ ) {
+			centr = Vect_get_area_centroid ( &In, i );
+			if ( centr > 0 ) continue; /* Centroid exists and may be processed as line */
+			ret = Vect_get_point_in_area ( &In, i, &x, &y );
+			if ( ret < 0 ) {
+			    G_warning ("Cannot calculate area centroid" );
+			    continue;
+			}
+			Vect_reset_line ( Points );
+			Vect_reset_cats ( Cats );
+			Vect_append_point ( Points, x, y, 0 );
+			Vect_cat_set (Cats, fields[0], cat);
+			cat += step;
+			Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
+			new_centr++;
+		    }
+		    fprintf (stdout, "%d new centroids placed in output map\n", new_centr );
+		}
 		break;
 		
 	    case (O_DEL):	  
@@ -227,6 +254,8 @@ main (int argc, char *argv[])
                         case (GV_CENTROID):
 			    rtype = FR_CENTROID;
 			    break;
+			default:
+			    rtype = FR_UNKNOWN;
 		      }
 		    
 		    for (i=0; i < Cats->n_cats; i++)
