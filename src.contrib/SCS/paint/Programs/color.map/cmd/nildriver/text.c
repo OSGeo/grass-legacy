@@ -1,0 +1,4 @@
+Ptext (s)
+    char *s;
+{
+}
