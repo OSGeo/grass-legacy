@@ -551,6 +551,9 @@ Vect_line_intersection (
         j = RTreeSearch(RTree, &rect, (void *)cross_seg, &i); /* A segment number from 0 */
     }
 
+    /* Free RTree */
+    RTreeDestroyNode ( RTree );
+
     G_debug ( 2, "n_cross = %d", n_cross );
     /* Lines do not cross each other */
     if ( n_cross == 0 ) {
