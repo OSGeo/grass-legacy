@@ -47,7 +47,7 @@ V1_open_old_nat ( struct Map_info *Map )
   if ( !(dig__read_head (Map)) ) return (-1);
 
   /* set conversion matrices */
-  dig__init_head_portable ( &(Map->head));
+  dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
   
   return (0);
 }
@@ -69,11 +69,15 @@ V1_open_new_nat (
 
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
 
+  /* TODO open better */
   Map->dig_fp = G_fopen_new (buf, GRASS_VECT_COOR_ELEMENT);
+  if ( Map->dig_fp == NULL ) return (-1);
+  fclose ( Map->dig_fp );
+  Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
   if ( Map->dig_fp == NULL ) return (-1);
 
   /* check to see if dig_plus file exists and if so, remove it */
-  G__file_name (name_buf, buf, GRASS_VECT_TOPO_ELEMENT, G_mapset ());
+  G__file_name (name_buf, buf, GV_TOPO_ELEMENT, G_mapset ());
   if (stat (name_buf, &info) == 0)	/* file exists? */
        unlink (name_buf);
 
@@ -92,35 +96,70 @@ V1_open_new_nat (
   Map->head.with_z = with_z;
   Vect__write_head (Map);
 
-  /* set byte order to native order of double */
-  Map->head.byte_order = dig__byte_order_out ();
-  
   /* set conversion matrices */
-  dig__init_head_portable ( &(Map->head) );
+  dig_init_portable ( &(Map->head.port), dig__byte_order_out ());
 
   if ( !(dig__write_head (Map)) ) return (-1);
   
   return 0;
 }
 
-int 
-V2_open_old_nat (struct Map_info *Map, char *name, char *mapset)
-{
 
-  if (NULL != Vect__P_init (Map, name, mapset))
+/* Open old file on level 2.
+*  Map->name and Map->mapset must be set before
+*  
+*  Return: 0 success
+*         -1 error */
+int 
+V2_open_old_nat (struct Map_info *Map)
+{
+    int  ret;
+    char buf[500];
+    FILE *fp;
+    
+    G_debug (1, "V2_open_old_nat(): name = %s mapset= %s", Map->name, Map->mapset);
+
+    /* check if topo is available */
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
+
+    if ( fp == NULL ) { /* topo file is not available */
+	G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n", 
+		      Map->name, Map->mapset);
+	return -1;
+    }
+    
+    /* open dig file */
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+    if ( Map->dig_fp == NULL ) {
+        fclose ( fp );  
+	return -1;
+    }
+    if ( !(dig__read_head (Map)) ) return (-1);
+    /* set conversion matrices */
+    dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
+    
+
+    /* load topo to memory */
+    dig_init_plus ( &(Map->plus) );    
+    dig_load_plus ( &(Map->plus), fp );    
+   
+    fclose ( fp );  
+    /*
+    if (NULL != Vect__P_init (Map, name, mapset))
     {
       return -1;
     }
-  Map->open = VECT_OPEN_CODE;
-  Map->level = LEVEL_2;
-  Map->mode = MODE_READ;
+    */
+    Map->open = VECT_OPEN_CODE;
+    Map->level = LEVEL_2;
+    Map->mode = MODE_READ;
 
-  Map->name = G_store (name);
-  Map->mapset = G_store (mapset);
-  Map->Constraint_region_flag = 0;
-  Map->Constraint_type_flag = 0;
-  Map->next_line = 1;
+    Map->Constraint_region_flag = 0;
+    Map->Constraint_type_flag = 0;
+    Map->next_line = 1;
 
-  return 0;
+    return 0;
 }
 

@@ -40,12 +40,13 @@ Vect_P_init (
 	      struct Map_info *map)
 {
   char *error;
-
+/*
   if (NULL != (error = Vect__P_init (map, name, mapset)))
     {
       fprintf (stderr, "%s\n", error);
       exit (-1);
     }
+*/
   return (0);
 }
 
@@ -66,6 +67,7 @@ Vect_P_init (
    **    is to use only the level_one I/O calls to read and write dig files
    **    and att files only.
  */
+/*
 int 
 Vect__P_writeable (int x)
 {
@@ -77,7 +79,7 @@ Vect__P_writeable (int x)
 
   return 0;
 }
-
+*/
 /***************************************************************************/
 
 
@@ -85,6 +87,7 @@ Vect__P_writeable (int x)
 /* 
    **  Returns NULL   or a pointer to an error message
  */
+/*
 char *
 Vect__P_init (struct Map_info *map, char *name, char *mapset)
 {
@@ -94,13 +97,13 @@ Vect__P_init (struct Map_info *map, char *name, char *mapset)
   char file[1024];
 
 
-  /* need dig open,  need to open plus for load_plus, and att for verify */
+  // need dig open,  need to open plus for load_plus, and att for verify
 
   have_old = have_plus = 0;
   
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
-    sprintf (bufc, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); /* ==coor@mapset */     
+    sprintf (bufc, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); 
     sprintf (bufp, "%s@%s", GRASS_VECT_TOPO_ELEMENT, xmapset);      
     map->name = G_store (xname);
     map->mapset = G_store (xmapset);
@@ -138,26 +141,26 @@ Vect__P_init (struct Map_info *map, char *name, char *mapset)
 
   Vect__read_head (map);
   
-  /* set conversion matrices */
+  // set conversion matrices
   dig__init_head_portable ( &(map->head));
 
-  map->Line = NULL;
-  map->Area = NULL;
-  map->Isle = NULL;
-  map->Att = NULL;
-  map->Node = NULL;
+  map->plus.Line_2d = NULL;
+  map->plus.Area_2d = NULL;
+  map->plus.Isle_2d = NULL;
+  map->plus.Node_2d = NULL;
 
-  if (0 > dig_load_plus (map, map->dig_fp, 1))
-    return ("Error reading dig_plus file");
+//  if (0 > dig_load_plus (map, map->dig_fp, 1))
+//    return ("Error reading dig_plus file");
 
-  /* OK */
+  // OK
   return (NULL);
 }
-
+*/
 /*
    **  This is to support       V2_init_for_create ()
    **  Other than that it is totally UNSUPPORTED
  */
+/*
 char *
 Vect__P_init_new_plus (struct Map_info *map, char *name)
 {
@@ -167,7 +170,7 @@ Vect__P_init_new_plus (struct Map_info *map, char *name)
   char file[1024];
 
 
-  /* need dig open,  need to open plus for load_plus, and att for verify */
+  // need dig open,  need to open plus for load_plus, and att for verify
 
   have_old = have_plus = 0;
   
@@ -191,9 +194,9 @@ Vect__P_init_new_plus (struct Map_info *map, char *name)
   else
     {
       have_plus = 0;
-      /*
-         return ("Cannot open dig_plus file");
-       */
+      
+      //   return ("Cannot open dig_plus file");
+      
     }
 
 
@@ -201,33 +204,49 @@ Vect__P_init_new_plus (struct Map_info *map, char *name)
 
   Vect__read_head (map);
   
-  /* set conversion matrices */
+  // set conversion matrices
   dig__init_head_portable ( &(map->head));
 
-  map->Line = NULL;
-  map->Area = NULL;
-  map->Isle = NULL;
-  map->Att = NULL;
-  map->Node = NULL;
+  map->plus.Line_2d = NULL;
+  map->plus.Area_2d = NULL;
+  //map->Isle = NULL;
+  map->plus.Node_2d = NULL;
 
-  /* OK */
+  // OK
   return (NULL);
 }
+*/
 
 
-
+int 
+V2_num_nodes (struct Map_info *map)
+{
+  return (map->plus.n_nodes);
+}
 
 
 int 
 V2_num_lines (struct Map_info *map)
 {
-  return (map->n_lines);
+  return (map->plus.n_lines);
 }
 
 int 
 V2_num_areas (struct Map_info *map)
 {
-  return (map->n_areas);
+  return (map->plus.n_areas);
+}
+
+int 
+Vect_get_node_point (struct Map_info *map, int num, double *x, double *y)
+{
+    P_NODE_2D *Node;
+
+    Node = map->plus.Node_2d[num];
+    *x = Node->x;
+    *y = Node->y;
+  
+    return (0);
 }
 
 
@@ -236,42 +255,47 @@ V2_num_areas (struct Map_info *map)
 int 
 V2_line_att (struct Map_info *map, int line)
 {
-  P_LINE *Line;
+  P_LINE_2D *Line;
 
-  Line = &(map->Line[line]);
+  //Line = &(map->plus.Line_2d[line]);
 
-  if (line <= 0 || line > map->n_lines || !LINE_ALIVE (Line) || !Line->att)
-    return (0);
-  return (map->Att[Line->att].cat);
+  // TODO
+  //if (line <= 0 || line > map->plus.n_lines || !LINE_ALIVE (Line) || !Line->att)
+  //  return (0);
+  //return (map->Att[Line->att].cat);
+  return (1);
 }
 
 int 
 V2_area_att (struct Map_info *map, int area)
 {
-  P_AREA *Area;
+  P_AREA_2D *Area;
 
-  if (area <= 0 || area > map->n_areas)
-    return (0);
+  //if (area <= 0 || area > map->plus.n_areas)
+  //  return (0);
 
-  Area = &(map->Area[area]);
-  if (!AREA_ALIVE (Area) || !Area->att)
-    return (0);
-  return (map->Att[Area->att].cat);
+  //Area = &(map->plus.Area_2d[area]);
+  // TODO
+  //if (!AREA_ALIVE (Area) || !Area->att)
+  //  return (0);
+  //return (map->Att[Area->att].cat);
+  return 1;
 }
 
 /* returns -1 on error */
 /* note all areas may not be labeled */
 /* use get_area_att  > 0 for test of labelled */
-
 int 
-V2_get_area (struct Map_info *map, int num, P_AREA ** Area)
+V2_get_area (struct Map_info *map, int num, P_AREA_2D ** Area)
 {
-  if (num <= 0 || num > map->n_areas)
+    /*
+  if (num <= 0 || num > map->plus.n_areas)
     return (-1);
-  if (!AREA_ALIVE (&(map->Area[num])))
+  if (!AREA_ALIVE (&(map->plus.Area_2d[num])))
     return (-1);
-  *Area = &(map->Area[num]);
+  *Area = &(map->plus.Area_2d[num]);
   return (0);
+  */
 }
 
 /* get Area bounding box info in NSEW */
@@ -279,17 +303,18 @@ int
 V2_get_area_bbox (struct Map_info *map, int area,
 		  double *N, double *S, double *E, double *W)
 {
-  P_AREA *Area;
-
-  if (area <= 0 || area > map->n_areas)
+  P_AREA_2D *Area;
+/*
+  if (area <= 0 || area > map->plus.n_areas)
     return (-1);
-  if (!AREA_ALIVE (&(map->Area[area])))
+  if (!AREA_ALIVE (&(map->plus.Area_2d[area])))
     return (-1);
-  Area = &(map->Area[area]);
+  Area = &(map->plus.Area_2d[area]);
   *N = Area->N;
   *E = Area->E;
   *W = Area->W;
   *S = Area->S;
+  */
   return (0);
 }
 
@@ -299,16 +324,17 @@ V2_get_line_bbox (
 		   struct Map_info *map, int line,
 		   double *N, double *S, double *E, double *W)
 {
-  P_LINE *Line;
-
-  if (line <= 0 || line > map->n_lines)
+  P_LINE_2D *Line;
+/*
+  if (line <= 0 || line > map->plus.n_lines)
     return (-1);
-  if (!LINE_ALIVE (&(map->Line[line])))
+  if (!LINE_ALIVE (&(map->plus.Line_2d[line])))
     return (-1);
-  Line = &(map->Line[line]);
+  Line = &(map->plus.Line_2d[line]);
   *N = Line->N;
   *E = Line->E;
   *W = Line->W;
   *S = Line->S;
+*/
   return (0);
 }

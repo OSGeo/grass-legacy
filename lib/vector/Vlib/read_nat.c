@@ -106,7 +106,7 @@ V1_read_next_line_nat (
        */
       if (Map->Constraint_region_flag)
 	{
-	  dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
+	  //dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
 
 	  if (!V__map_overlap (Map, n, s, e, w))
 	    continue;
@@ -121,6 +121,7 @@ V1_read_next_line_nat (
 /*
    ** reads any specified line   This is NOT affected by constraints
  */
+/* TODO needed ?, see V2_read_line */
 int 
 V2_read_line_nat (
 	       struct Map_info *Map,
@@ -128,10 +129,13 @@ V2_read_line_nat (
 	       struct line_cats *line_c,
 	       int line)
 {
-  if (line < 1 || line > Map->n_lines)	/* ALL DONE */
-    return -2;
+    P_LINE_2D *Line;
 
-  return Vect__Read_line_nat (Map, line_p, line_c, Map->Line[line].offset);
+    if (line < 1 || line > Map->plus.n_lines)	
+        return -2;
+
+    Line = Map->plus.Line_2d[line]; 
+    return Vect__Read_line_nat (Map, line_p, line_c, Line->offset);
 }
 
 /* reads next unread line each time called.  use Vect_rewind to reset */
@@ -144,16 +148,16 @@ V2_read_next_line_nat (
 		    struct line_cats *line_c)
 {
   register int line;
-  register P_LINE *Line;
+  register P_LINE_2D *Line;
 
   while (1)
     {
       line = Map->next_line;
 
-      if (line > Map->n_lines)
+      if (line > Map->plus.n_lines)
 	return (-2);
 
-      Line = &(Map->Line[line]);
+      Line = Map->plus.Line_2d[line];
 
       if ((Map->Constraint_type_flag && !(Line->type & Map->Constraint_type)))
 	{
@@ -170,6 +174,7 @@ V2_read_next_line_nat (
 
       return V2_read_line_nat (Map, line_p, line_c, Map->next_line++);
     }
+
   /* NOTREACHED */
 }
 
@@ -192,8 +197,10 @@ Vect__Read_line_nat (
   GRASS_V_NCATS n_cats;
   int type;
 
+  G_debug (3, "Vect__Read_line_nat: offset = %ld", offset);
+  
   /* reads must set in_head, but writes use default */
-  dig__set_cur_head (&(Map->head));
+  dig_set_cur_port (&(Map->head.port));
 
   fseek (Map->dig_fp, offset, 0);
 
@@ -219,7 +226,7 @@ Vect__Read_line_nat (
     }
   else
     {
-      size = (PORT_SHORT + PORT_LONG) * n_cats;
+      size = 2 * PORT_INT * n_cats;
       fseek (Map->dig_fp, size, SEEK_CUR);
     }
   

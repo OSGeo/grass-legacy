@@ -134,9 +134,7 @@ Vect_open_old (
       format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
       fclose (fp); 
       
-#ifdef GDEBUG
       G_debug ( 1, "Vector format: %d (non-native)", format);
-#endif
   }
   Map->format = format;
     
@@ -147,6 +145,7 @@ Vect_open_old (
   
   if (level_request) {
       level = level_request;
+      G_debug ( 1, "Level request = %d", level_request);
       if (0 != (*Open_old_array[format][level_request]) (Map))
 	level = -1;
   } else {

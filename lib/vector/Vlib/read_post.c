@@ -115,7 +115,7 @@ V1_read_next_line_post (
        */
       if (Map->Constraint_region_flag)
 	{
-	  dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
+	  //dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
 
 	  if (!V__map_overlap (Map, n, s, e, w))
 	    continue;

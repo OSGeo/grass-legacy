@@ -5,8 +5,8 @@
 #define GRASS_VECT_FRMT_ELEMENT "frmt"
 #define GRASS_VECT_COOR_ELEMENT "coor"
 #define GRASS_VECT_HEAD_ELEMENT "head"
-#define GRASS_VECT_TOPO_ELEMENT "topo"
-#define GRASS_VECT_CATS_ELEMENT "cats"
+#define GV_TOPO_ELEMENT "topo"
+//#define GRASS_VECT_CATS_ELEMENT "cats"
 
 
 #define ENDIAN_LITTLE 0
@@ -114,8 +114,13 @@
 #define VIOLET	12
 #define BROWN	13
 
-#define RIGHT	1
-#define LEFT	2
+#define GV_LEFT	 1
+#define GV_RIGHT 2
+
+#define GV_FORWARD 1
+#define GV_BACKWORD 2
+//#define GV_NODE1 1
+//#define GV_NODE2 2
 
 /* These are from mode.h which is no longer supported w/ digit 3.0 */
 /*                               ^     for the most part...        */
