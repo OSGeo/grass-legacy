@@ -125,7 +125,7 @@
         	}}
         }            
         "&Display" all options 1 {
-			{command "Start NVIZ (n-dimensional visualization module)" {} "nviz -q" {} -command {spawn nviz -q }}
+			{command "Start NVIZ (n-dimensional visualization module)" {} "nviz" {} -command {execute nviz }}
 			{command "Create fly-through animation path for NVIZ" {} "" {} -command {execute d.nviz }}
         	{separator}
         	{cascad "Start displays" {} "" 1 [monitor_menu start]}
