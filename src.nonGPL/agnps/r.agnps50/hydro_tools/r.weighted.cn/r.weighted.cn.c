@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <math.h>
 #include "gis.h"
+#include <string.h>
+#include <stdio.h>
+
 
 #define KILOMETERS(C,R) R*C/1000000.0
 #define ACRES(C,R)      KILOMETERS(C,R) * 247.1000
@@ -33,24 +36,34 @@ char	*argv[];
 	int		cn_flag, weighted_cn_flag;
 	long		count;
 	char		*G_get_cat();
+	struct Option *parm1, *parm2;
+	
+        parm1 = G_define_option() ;
+        parm1->key        = "input" ;
+        parm1->type       = TYPE_STRING ;
+        parm1->required   = YES;
+        parm1->gisprompt  = "any,cell,raster" ;
+        parm1->description= "curve_number_map" ;
+
+        parm2 = G_define_option() ;
+        parm2->key        = "output" ;
+        parm2->type       = TYPE_STRING ;
+        parm2->required   = YES;
+        parm2->gisprompt  = "any,cell,raster" ;
+        parm2->description= "weighted_cn_map" ;
 
 /*  Initialize the GRASS environment variables */
 	G_gisinit(argv[0]);
+        if (G_parser(argc, argv))
+                        exit(-1);
 
+        strcpy (cn_name, parm1->answer);
+        strcpy (weighted_cn_name, parm2->answer);
+        
 	cn_flag = weighted_cn_flag = 0;
 
 	G_get_window (&window);
 	square_meters = window.ns_res * window.ew_res ;
-
-/* Check for any error at the command line key words */
-	for (i = 1; i < argc; i++)
-	{
-	    if  (sscanf(argv[i], "input=%[^\n]", cn_name) == 1) cn_flag = 1;
-	    else if (sscanf(argv[i], "output=%[^\n]", weighted_cn_name) == 1) weighted_cn_flag = 1;
-	    else usage(argv[0]);
-	 }
-
-	 if((cn_flag != 1) && weighted_cn_flag != 1) usage(argv[0]);
 
 /*      get the current mapset */
 	 this_mapset = G_mapset();
