@@ -12,11 +12,11 @@ $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERF
 	mkdir $(ETC)/Gcolortab/shinko635
 	mkdir $(ETC)/Gcolortab/preview
 #	cp Gcolortab/tek4695/* $(ETC)/Gcolortab/tek4695
-	tar --exclude=CVS -cvf - Gcolortab/tek4695/* | tar -C $(ETC)/Gcolortab/tek4695/ -xvf - 2>/dev/null ; true
+	(cd Gcolortab/tek4695/ ; tar -cvf - * | (cd $(ETC)/Gcolortab/tek4695/; tar -xvf - 2>/dev/null ); true )
 #	cp Gcolortab/shinko635/* $(ETC)/Gcolortab/shinko635
-	tar --exclude=CVS -cvf - Gcolortab/shinko635/* | tar -C $(ETC)/Gcolortab/shinko635/ -xvf - 2>/dev/null ; true
+	(cd Gcolortab/shinko635/ ; tar -cvf - * | (cd $(ETC)/Gcolortab/shinko635/; tar -xvf - 2>/dev/null ); true )
 #	cp Gcolortab/preview/* $(ETC)/Gcolortab/preview
-	tar --exclude=CVS -cvf - Gcolortab/preview/* | tar -C $(ETC)/Gcolortab/preview/ -xvf - 2>/dev/null ; true
+	(cd Gcolortab/preview/ ; tar -cvf - * | (cd $(ETC)/Gcolortab/preview/; tar -xvf - 2>/dev/null ); true )
 
 $(GISLIB): #
 $(VASKLIB): #
