@@ -81,10 +81,10 @@ void extract_cats ( struct line_cats *Cats, int type_only, int field, int new )
 			found = 1;
 			break;
 		    }
-		    if ( found )
-		        Vect_cat_set ( Cats, field, new );
 		}
 	    }
+	    if ( found )
+		Vect_cat_set ( Cats, field, new );
 	} else {
 	    for ( i = 0; i < TCats->n_cats; i++ ) {
 		if ( TCats->field[i] == field ) {
