@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 *****************************************************************************
 *
 * MODULE:   	Grass Include Files
@@ -204,6 +202,17 @@ int G_make_aspect_colors(struct Colors *, CELL, CELL);
 int G_make_aspect_fp_colors(struct Colors *, DCELL, DCELL);
 int G_add_aspect_colors(struct Colors *, CELL, CELL);
 
+/* color_byr.c */
+int G_make_byr_colors(struct Colors *, CELL, CELL);
+int G_make_byr_fp_colors(struct Colors *, DCELL, DCELL);
+int G_add_byr_colors(struct Colors *, CELL, CELL);
+
+/* color_byg.c */
+int G_make_byg_colors(struct Colors *, CELL, CELL);
+int G_make_byg_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_blue_yel_grn(struct Colors *, CELL, CELL);
+int G_add_byg_colors(struct Colors *, CELL, CELL);
+
 /* color_free.c */
 int G_free_colors(struct Colors *);
 int G__color_free_rules(struct _Color_Info_ *);
@@ -355,6 +364,14 @@ int G_free_fmatrix(float **);
 
 /* date.c */
 char *G_date(void);
+
+/* datum.c */
+int G_get_datum_by_name(const char *);
+int G_datum_shift(int, double *, double *, double *);
+int G_datum_parameters(int, char *, double *, double *, double *);
+char *G_datum_name(int);
+char *G_datum_description(int);
+char *G_datum_ellipsoid(int);
 
 /* debug.c */
 int G_debug(int,char *,...);
@@ -533,6 +550,11 @@ int G__open_null_read(int);
 int G__read_null_bits(int, unsigned char *, int, int, int);
 int embed_nulls_nomask(int, void *, int, RASTER_MAP_TYPE, int);
 int embed_nulls(int, void *, int, RASTER_MAP_TYPE, int);
+
+/* get_row_colr.c */
+int G_get_raster_row_colors(int, int, struct Colors *,
+    unsigned char *, unsigned char *, unsigned char *,
+    unsigned char *);
 
 /* get_window.c */
 int G_get_window(struct Cell_head *);
@@ -1038,6 +1060,7 @@ int G_remove_vector_timestamp (char *);
 
 /* token.c */
 char **G_tokenize(char *, char *);
+int G_number_of_tokens(char **);
 int G_free_tokens(char **);
 
 /* trim_dec.c */
