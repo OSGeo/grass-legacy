@@ -1,0 +1,13 @@
+
+LIBRARY = libiostream.a
+
+EXTRA_CXXFLAGS = -I../include
+
+OBJS =	ami_stream.o \
+	minmaxheap_test.o \
+	mm.o \
+	mm_utils.o \
+	rtimer.o
+
+$(LIBRARY): $(OBJS)
+	$(LIBRULE)

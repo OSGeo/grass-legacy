@@ -2,6 +2,9 @@
 $(OBJARCH)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(OBJARCH)/%.o: %.cc
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 makefile: Gmakefile
 	${SRCDIR}/mk/genmake.sed < $< > $@
 
