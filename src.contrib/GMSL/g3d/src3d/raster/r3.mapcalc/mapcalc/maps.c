@@ -98,7 +98,7 @@ readmap(i, xcell, row, col, depth,  nrows, ncols, ndepths)
 
 initcats(i)
 {
-    int compare_ints();
+    /* int compare_ints(); */ /* double def'ed! Do we need it? MN 1/2001 */
 
     if (G3d_readCats (list[i].name, list[i].mapset, &list[i].cats) < 0)
     {
