@@ -1,0 +1,70 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffmedian.1,v 1.9 90/11/25 11:16:02 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFMEDIAN 1 "May 2, 1990"
+.SH NAME
+tiffmedian \- apply the median cut algorithm to data in a
+.SM TIFF
+file
+.SH SYNOPSIS
+.B tiffmedian
+[
+.B \-c
+.I size
+] [
+.B \-f
+] [
+.B \-none
+] [
+.B \-lzw
+] [
+.B \-packbits
+] [
+.B \-rowsperstrip
+.I n
+]
+.I "file1 file2"
+.SH DESCRIPTION
+.I Tiffmedian
+applys median cut to an
+.SM RGB
+image stored in
+.I file1
+to generate the data in
+.IR file2 .
+The colormap generated has, by default, 256 entries;
+this may be modified with the
+.B \-c
+option.
+By default the image data is quantized by mapping each
+pixel to the closest color values in the colormap.
+If the
+.B \-f
+option is specified, Floyd-Steinberg dithering is done
+before selecting a colormap entry.
+The remaining options are used to specify a compression algorithm
+to use in creating the output file or the number of
+rows (scanlines) to place in each data strip in the output file.
+By default, the compression algorithm is derived from the
+input file and the rows per strip is calculated so that
+each strip is no more than 8 kilobytes.
+.SH NOTES
+This program is derived from Paul Heckbert's
+.I median
+program.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffcmp (1),
+.IR libtiff (3)
+.br
+"Color Image Quantization for Frame Buffer Display", Paul
+Heckbert, SIGGRAPH proceedings, 1982, pp. 297-307.
