@@ -16,7 +16,7 @@ clark66       a=6378206.4   b=6356583.8
 grs80         a=6378137     f=1/298.257
 hayford       a=6378388     f=1/297
 international a=6378388     f=1/297
-krasovsky     a=6378245     f=1/298.3
+krassovsky     a=6378245     f=1/298.3
 wgs72         a=6378135     f=1/298.26
 
 # this is from naval oceanographic lab
@@ -40,3 +40,19 @@ wgs66         a=6378145     f=1/298.25
 #      Symposium  on Problems Related to the Redefinition if
 #      North American Geodetic Networks, Fredericton, New 
 #      Brunswick,Canada in May, 1974.
+
+
+#these were added for g.setproj capabilities
+MERIT           a=6378137       f=1/298.257
+IAU76           a=6378140.0     f=1/298.257
+GRS67           a=6378160.0     f=1/247.247167
+clark80    	a=6378249.145   f=1/293.4663
+hough	        a=6378270.0     b=6356794.343479
+mercury  	a=6378166.0     b=6356784.283666
+modif_airy	a=6377341.89    b=6356036.143
+modif_everest	a=6377304.063   b=6356103.039
+modif_merc	a=6378150.0     b=6356768.337303
+new_internatnl	a=6378157.5     b=6356772.2
+SEasia       	a=6378155.0     b=6356773.3205
+walbeck 	a=6376896.0     b=6355834.8467
+# sphere  	a=6370997.0     e=0.0
