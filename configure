@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.25 2000-10-05 19:26:05 markus Exp $
+# $Id: configure,v 1.26 2000-10-06 12:19:27 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3407,14 +3407,14 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 	    TKLIBDIR=$TKDIR/lib/tk$tcltkver
 	    TCLLIBDIR=$TCLDIR/lib/tcl$tcltkver
 	    if test -d "$TKDIR/include/tk$tcltkver"; then
-	        TKINCDIR=$TKDIR/include/tk$tcltkver
+	        TKINCDIR="-I$TKDIR/include/tk$tcltkver"
 	    else
-	        TKINCDIR=$TKDIR/include
+	        TKINCDIR="-I$TKDIR/include"
 	    fi
 	    if test -d "$TCLDIR/include/tcl$tcltkver"; then
-	        TCLINCDIR=$TCLDIR/include/tcl$tcltkver
+	        TCLINCDIR="-I$TCLDIR/include/tcl$tcltkver"
 	    else
-	        TCLINCDIR=$TCLDIR/include
+	        TCLINCDIR="-I$TCLDIR/include"
 	    fi
 	    if test -r "$TKDIR/lib/libtk$ltcltkver.so" -a	\
 	    	    -r "$TCLDIR/lib/libtcl$ltcltkver.so"; then
@@ -3438,14 +3438,14 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 	    TKLIBDIR=$PREFIX/lib/tk$tcltkver
 	    TCLLIBDIR=$PREFIX/lib/tcl$tcltkver
 	    if test -d "$PREFIX/include/tk$tcltkver"; then
-	        TKINCDIR=$PREFIX/include/tk$tcltkver
+	        TKINCDIR="-I$PREFIX/include/tk$tcltkver"
 	    else
-	        TKINCDIR=$PREFIX/include
+	        TKINCDIR="-I$PREFIX/include"
 	    fi
 	    if test -d "$PREFIX/include/tcl$tcltkver"; then
-	        TCLINCDIR=$PREFIX/include/tcl$tcltkver
+	        TCLINCDIR="-I$PREFIX/include/tcl$tcltkver"
 	    else
-	        TCLINCDIR=$PREFIX/include
+	        TCLINCDIR="-I$PREFIX/include"
 	    fi
 	    if test -r "$PREFIX/lib/libtk$ltcltkver.so" -a	\
 	    	    -r "$PREFIX/lib/libtcl$ltcltkver.so"; then
@@ -3512,7 +3512,7 @@ if [ -z "$OPENGLINC" ]; then
       for i in $OPENGLINCLIBs; do
          for j in GL/gl.h; do
             if [ -r "$i/$j" ]; then
-               OPENGLINC=$i/GL
+               OPENGLINC="-I$i/GL"
                break 2
             fi
          done
@@ -3521,7 +3521,7 @@ if [ -z "$OPENGLINC" ]; then
 fi
 echo $OPENGLINC
 
-# Check for Mesa OpenGLw compatible include and library
+# Check for Mesa OpenGLw compatible include
 echo $ac_n "Checking for GL/GLwMDrawA.h... $ac_c"
 OPENGLwINCLIBs="$OPENGL $OPENGL/include /usr/include /usr/local/include \
               /usr/include/Mesa /usr/local/include/Mesa /usr/Mesa/include \
@@ -3535,7 +3535,7 @@ if [ -z "$OPENGLwINC" ]; then
       for i in $OPENGLwINCLIBs; do
          for j in GL/GLwMDrawA.h; do
             if [ -r "$i/$j" ]; then
-               OPENGLwINC=$i/GL
+               OPENGLwINC="-I$i/GL"
                break 2
             fi
          done
@@ -3559,7 +3559,7 @@ if [ -z "$OPENGLLIBdir" ]; then
       for i in $OPENGLLIBdirs; do
          for j in $OPENGLLIBs; do
             if [ -r "$i/$j" ]; then
-               OPENGLLIB=$i/$j
+               OPENGLLIB="-l$i/$j"
                break 2
             fi
          done
@@ -3568,7 +3568,7 @@ if [ -z "$OPENGLLIBdir" ]; then
 else
    for j in $OPENGLLIBs; do
       if [ -r "$OPENGLLIBdir/$j" ]; then
-         OPENGLLIB=$OPENGLLIBdir/$j
+         OPENGLLIB="-l$OPENGLLIBdir/$j"
          break 1
       fi
    done
@@ -3584,7 +3584,7 @@ if [ -z "$OPENGLLIBdir" ]; then
       for i in $OPENGLLIBdirs; do
          for j in $OPENGLULIBs; do
             if [ -r "$i/$j" ]; then
-               OPENGLULIB=$i/$j
+               OPENGLULIB="-l$i/$j"
                break 2
             fi
          done
@@ -3593,7 +3593,7 @@ if [ -z "$OPENGLLIBdir" ]; then
 else
    for j in $OPENGLULIBs; do
       if [ -r "$OPENGLLIBdir/$j" ]; then
-         OPENGLULIB=$OPENGLLIBdir/$j
+         OPENGLULIB="-l$OPENGLLIBdir/$j"
          break 1
       fi
    done
@@ -3610,7 +3610,7 @@ if [ -z "$OPENGLLIBdir" ]; then
       for i in $OPENGLLIBdirs; do
          for j in $OPENGLWMLIBs; do
             if [ -r "$i/$j" ]; then
-               OPENGLWMLIB=$i/$j
+               OPENGLWMLIB="-l$i/$j"
 	       LGLWM=-lGLwM
                break 2
             fi
@@ -3620,13 +3620,35 @@ if [ -z "$OPENGLLIBdir" ]; then
 else
    for j in $OPENGLWMLIBs; do
       if [ -r "$OPENGLLIBdir/$j" ]; then
-         OPENGLWMLIB=$OPENGLLIBdir/$j
+         OPENGLWMLIB="-l$OPENGLLIBdir/$j"
 	 LGLWM=-lGLwM
          break 1
       fi
    done
 fi
 echo $OPENGLWMLIB
+
+
+# Check for ODBC driver include
+echo $ac_n "Checking for odbc/sql.h... $ac_c"
+ODBCINCPATHs="/usr/include /usr/local/include \
+              /usr/X11R6/include /opt/include"
+
+if [ -z "$ODBCINC" ]; then
+   ODBCINC=NO
+   if [ "$ODBC" != "NO" ]; then
+      for i in $ODBCINCPATHs; do
+         for j in odbc/sql.h; do
+            if [ -r "$i/$j" ]; then
+               ODBCINC="-I$i/odbc"
+               break 2
+            fi
+         done
+      done
+   fi
+fi
+echo $ODBCINC
+
 
 trap '' 1 2 15
 cat > confcache <<\EOF
@@ -3807,7 +3829,7 @@ s%@USE_TERMIO@%$USE_TERMIO%g
 s%@PQINCPATH@%$PQINCPATH%g
 s%@PQLIBPATH@%$PQLIBPATH%g
 s%@PQLIB@%$PQLIB%g
-
+s%@ODBCINC@%$ODBCINC%g
 CEOF
 EOF
 

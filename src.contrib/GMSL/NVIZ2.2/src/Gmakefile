@@ -1,10 +1,10 @@
-# $Id: Gmakefile,v 1.11 2000-10-04 18:12:41 cho Exp $
+# $Id: Gmakefile,v 1.12 2000-10-06 12:19:31 markus Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
 # These should be set by the configure script
 NVWISH_VER=NVWISH2.2
-PQ_OBJS=openvect.o getCat.o buildInfxQry.o runInfxQry.o
+PQ_OBJS=
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
@@ -15,7 +15,7 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
-EXTRA_CFLAGS= ${XCFLAGS} -I${TCLINCDIR} -I${TKINCDIR} \
+EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 	-I${SURF_INCDIR} $(VECT_INCLUDE) \
 	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 

@@ -2,7 +2,6 @@
 ODBCBASE=/unixODBC
 
 # these are DBMI definitions
-INCLUDE = ../../include 
 STUBLIB = ../libstubs.a
 DBMILIB= $(LIBDIR)/libdbmi.a
 
@@ -11,7 +10,7 @@ HOME = $(DBMIDIR)/driver
 
 LIBES = $(DBMILIB) $(STUBLIB) $(GISLIB) 
 #LIBES = $(DBMILIB) $(STUBLIB) $(ODBCBASE)/odbc.a
-EXTRA_CFLAGS = -I$(ODBCBASE) -I$(INCLUDE) -I../../../../include -I/usr/local/include
+EXTRA_CFLAGS = -I$(ODBCBASE) $(ODBCINC) -I$(INCLUDE_DIR)
 
 OBJ 	=  \
 	driver.o \
@@ -30,7 +29,7 @@ OBJ 	=  \
 DRIVER = main.o $(OBJ)
 
 $(HOME)/odbc: $(HOME) $(DRIVER) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lodbc $(XDRLIB) $(MATH)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lodbc $(MATHLIB) $(XDRLIB)
 
 
 $(HOME):
