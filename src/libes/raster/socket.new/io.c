@@ -279,13 +279,11 @@ R_open_driver()
     /** We try to make a connection now **/
     for (try = 0; try < 2; try++)
     {
-        fprintf (stderr, "Try #%d to connect to monitor\n");
         _wfd = G_sock_connect (sockpath);
         if (_wfd > 0) /* success */
         {
             _rfd = _wfd;
             sync_driver (name);
-            fprintf (stderr, "We're connected\n");
             return (OK);
         }
 	switch (errno)
@@ -295,7 +293,7 @@ R_open_driver()
 		    if (verbose)
 			fprintf (stderr, "Socket is already in use or not "\
 					"accepting connections.\n");
-                    return (LOCKED);
+                    return (NO_OPEN);
 	            break;
 	    case EBADF:
 	    case ENOTSOCK:
