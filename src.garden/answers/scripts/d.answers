@@ -11,7 +11,7 @@
 # variable to the path of the directory where these files
 # live
 
-set menu_dir=/home/diego/rewerts/answers/scripts
+set menu_dir=scripts
 
 if ($?GISRC == 0) then
    echo ""
@@ -393,7 +393,7 @@ exit
     endsw
     breaksw
  default: 
-    echo "Unknown Main Menu Option: $option"
+    echo "Unknown Main Menu Option: $option"
     breaksw
 endsw
 
