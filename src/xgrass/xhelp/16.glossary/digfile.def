@@ -9,4 +9,4 @@ in separate files, under the dig_att and dig_cats directories.
 
 NOTE: "Digit file" was the name used for vector map data files in
 previous releases of GRASS.  A "digit file" is now referred to as
-a "vector file" in all GRASS 4.0 documentation.
+a "vector file" in all GRASS 4.2 documentation.
