@@ -1,6 +1,6 @@
 static char aline[80], answer[14], AZONE[5], null = '\0';
 static char command[1024], sav_comd[1024], parms[256];
-static char buff[128], in_file[60], out_file[60];
+static char buff[300], in_file[60], out_file[60];
 char *ptr, STabbr[2], COname[30], FIPSfile[60], TXT_ZONE[5];
 char ellps_name[20], proj_name[20];
 int ier, icode, SFIPS, CFIPS, fipscode, COzone, NUM_ZON, lookup;
