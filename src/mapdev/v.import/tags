@@ -1,0 +1,10 @@
+Mimport_vect	import_vect.c	/^main (argc, argv)$/
+ask_for_name	import_vect.c	/^ask_for_name( file_name, header, name, dir, file_d/
+ask_force	import_vect.c	/^ask_force()$/
+ask_snap	import_vect.c	/^ask_snap()$/
+ask_which_level	import_vect.c	/^ask_which_level()$/
+run_a_b_dlg	import_vect.c	/^run_a_b_dlg( command, name, ascii_dlg, binary_dlg)/
+run_a_b_vect	import_vect.c	/^run_a_b_vect( command, name, ascii_vector, binary_/
+run_build_vect	import_vect.c	/^run_build_vect( command, name, snap, ram)$/
+run_dlg_to_digit	import_vect.c	/^run_dlg_to_digit( command, name, binary_dlg, binar/
+show_phase	import_vect.c	/^show_phase( phase, describe)$/
