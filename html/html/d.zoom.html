@@ -10,8 +10,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>d.zoom</b></EM>  - Allows the user to change the current geographic region 
-settings interactively, with a mouse. 
+<EM><b>d.zoom</b></EM>  - Allows the user to change the current geographic 
+region settings interactively, with a mouse. 
 <BR>
 <EM>(GRASS Display Program)</EM>
 
@@ -21,7 +21,12 @@ settings interactively, with a mouse.
 <BR>
 <B>d.zoom help</B> 
 <BR>
-<B>d.zoom</B> [<B>-q</B>] [<B>action=</B><EM>name</EM>] 
+<B>d.zoom</B> [<B>-q</B>] 
+[<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>site=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>action=</B><EM>name</EM>]
+[<B>zoom=</B><EM>value</EM>] 
 <BR>
 
 <H2>DESCRIPTION</H2>
@@ -33,12 +38,9 @@ Like <EM><A HREF="g.region.html">g.region</A></EM>,
 <EM>d.zoom</EM> re-defines the settings of the geographic
 region.  However, <EM>d.zoom</EM> allows the user to change
 the current region settings interactively, by either
-outlining the new region perimeter with a mouse
-or "rotating" latitude-longitude data into the current region. 
-The user should run 
-<EM><A HREF="d.erase.html">d.erase</A></EM> 
-after <EM>d.zoom</EM> is run for the 
-new region settings to affect the graphics display. 
+outlining the new region perimeter with a mouse,
+"rotating" latitude-longitude data into the current region or unzoom
+the region.  The graphics display is updated by the module.
 
 <H2>OPTIONS</H2>
 
@@ -55,8 +57,13 @@ messages to standard output.
 <H3>Parameter:</H3> 
 
 <DL>
+<DT><B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of raster map(s)
+<DT><B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of vector map(s)
+<DT><B>site=</B><EM>name</EM>[,<EM>name</EM>,...]  
+<DD>Name of site map(s)
 <DT><B>action=</B><EM>name</EM>
-
 <DD>Allows the user to change the geographic region
 settings by "rotating" the globe to move a different
 portion of the globe into the stationery boxed region
@@ -67,10 +74,13 @@ latitude-longitude data bases (although <EM>d.zoom</EM>
 will not complain if the user attempts to set this
 parameter while running on a non-latitude-longitude data
 base).
-
 <BR>
 Options: zoom, rotate 
 
+<DT><B>zoom=</B><EM>value</EM>
+<DD>magnification: >1.0 zooms in, <1.0 zooms out<br>
+           options: 0.001-1000.0<br>
+           default: 1.0
 </DL>
 
 After the user types the command <B>d.zoom</B> and
@@ -88,31 +98,14 @@ Accept new region? Y / N  &gt;
 
 If the user clicks the mouse over the "Y" (yes), 
 the mouse-drawn geographic region is saved as the user's 
-current geographic region. The user is warned that 
-<EM><A HREF="d.erase.html">d.erase</A></EM> should 
-be run after <EM>d.zoom</EM> to make new current region settings affect 
-the graphics display. 
+current geographic region.
 
 <P>
-
-If the user clicks the mouse over the "N" (no), the first mouse-drawn 
-geographic region is not saved; instead, <EM>d.zoom</EM> asks whether or not 
-the user wishes to 
-
-<DL>
-<DD>
-Try Again? Y / N  &gt;
-</DL>
-
-The user can then opt to draw a new region with the mouse
-("Y"), or opt to exit <EM>d.zoom</EM> ("N") and leave
-current region settings unchanged.
-
-<P>
-
 To zoom-out to a larger area than was windowed-in on with <EM>d.zoom</EM> 
 (i.e., to enlarge the current geographic region), 
-the user may run <EM><A HREF="g.region.html">g.region</A></EM>.
+the user may use the middle mouse button. The stepsize can be adjusted
+by <EM>zoom</EM> parameter. Additionally the region settings can be modified by
+running <EM><A HREF="g.region.html">g.region</A></EM>.
 The user may also alter the current geographic region by running the "region" 
 option of the <EM><A HREF="d.display.html">d.display</A></EM> program. 
 
@@ -123,11 +116,6 @@ the active display frame before running <EM>d.zoom</EM>, it
 is helpful to do this for reference.
 
 <P>
-
-Currently, the rubber-banded boundaries of the zoom region drawn by 
-the user are not clearly visible on the graphics monitor. However, 
-whether or not these boundaries are clearly visible when drawn, 
-the drawn region is still correctly zoomed-in on. 
 
 <H2>SEE ALSO</H2>
 
@@ -144,7 +132,8 @@ the drawn region is still correctly zoomed-in on.
 Michael Shapiro, 
 U.S. Army Construction Engineering 
 Research Laboratory
-
+<br>
+Improvements by Huidae Cho and Markus Neteler
 </body>
 </html>
 
