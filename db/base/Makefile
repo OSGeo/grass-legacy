@@ -4,6 +4,7 @@ MODULE_TOPDIR = ../..
 HOME=$(BIN_CMD)
 
 LIBES = $(DBMILIB) $(GISLIB) $(DATETIMELIB)
+DEPENDENCIES = $(GISDEP) $(DBMIDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
@@ -21,51 +22,51 @@ default: \
 	$(HOME)/db.tables \
 	$(HOME)/db.connect \
 
-$(HOME)/db.columns: $(OBJDIR)/columns.o $(LIBES)
+$(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.columns || ln $(ETC)/front.end $(BIN)/db.columns
 
-$(HOME)/db.copy: $(OBJDIR)/copy.o $(LIBES)
+$(HOME)/db.copy: $(OBJDIR)/copy.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.copy || ln $(ETC)/front.end $(BIN)/db.copy
 
-$(HOME)/db.createdb: $(OBJDIR)/createdb.o $(LIBES)
+$(HOME)/db.createdb: $(OBJDIR)/createdb.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.createdb || ln $(ETC)/front.end $(BIN)/db.createdb
 
-$(HOME)/db.dropdb: $(OBJDIR)/dropdb.o $(LIBES)
+$(HOME)/db.dropdb: $(OBJDIR)/dropdb.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.dropdb || ln $(ETC)/front.end $(BIN)/db.dropdb
 
-$(HOME)/db.droptable: $(OBJDIR)/droptable.o $(LIBES) 
+$(HOME)/db.droptable: $(OBJDIR)/droptable.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.droptable || ln $(ETC)/front.end $(BIN)/db.droptable
 
-$(HOME)/db.databases: $(OBJDIR)/databases.o $(LIBES)
+$(HOME)/db.databases: $(OBJDIR)/databases.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.databases || ln $(ETC)/front.end $(BIN)/db.databases
 
-$(HOME)/db.describe: $(OBJDIR)/describe.o $(OBJDIR)/printtab.o $(LIBES)
+$(HOME)/db.describe: $(OBJDIR)/describe.o $(OBJDIR)/printtab.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/describe.o $(OBJDIR)/printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.describe || ln $(ETC)/front.end $(BIN)/db.describe
 
-$(HOME)/db.drivers: $(OBJDIR)/drivers.o $(LIBES)
+$(HOME)/db.drivers: $(OBJDIR)/drivers.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.drivers || ln $(ETC)/front.end $(BIN)/db.drivers
 
-$(HOME)/db.execute: $(OBJDIR)/execute.o $(LIBES)
+$(HOME)/db.execute: $(OBJDIR)/execute.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.execute || ln $(ETC)/front.end $(BIN)/db.execute
 
-$(HOME)/db.select: $(OBJDIR)/select.o $(LIBES)
+$(HOME)/db.select: $(OBJDIR)/select.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.select || ln $(ETC)/front.end $(BIN)/db.select
 
-$(HOME)/db.tables: $(OBJDIR)/tables.o $(LIBES)
+$(HOME)/db.tables: $(OBJDIR)/tables.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.tables || ln $(ETC)/front.end $(BIN)/db.tables
 
-$(HOME)/db.connect: $(OBJDIR)/connect.o $(LIBES)
+$(HOME)/db.connect: $(OBJDIR)/connect.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.connect || ln $(ETC)/front.end $(BIN)/db.connect
 	
