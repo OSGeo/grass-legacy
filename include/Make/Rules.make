@@ -27,9 +27,7 @@ $(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 
 # default clean rules
 clean:
-	-find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null
-	-rm -rf $(EXTRA_CLEAN_DIRS)
-	-rm -f $(EXTRA_CLEAN_FILES)
+	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
 
 #below is a dirty hack (feel free to rewrite):
 
@@ -50,7 +48,7 @@ htmlgen:
 htmldesc = \
 	GRASS_FAKE_START=1 \
 	GISBASE=$(GISBASE) \
-	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib \
+	$(LD_LIBRARY_PATH_VAR)=$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib \
 	$(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
 
 # html rules for cmd commands

@@ -56,7 +56,7 @@ LIB_RUNTIME_DIR     = @prefix@/grass-@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RE
 #static libs:
 STLIB_LD            = @STLIB_LD@
 STLIB_PREFIX        = lib
-STLIB_SUFFIX        = a
+STLIB_SUFFIX        = .a
 
 #shared libs
 SHLIB_PREFIX        = lib

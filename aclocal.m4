@@ -289,20 +289,17 @@ AC_DEFUN(SC_ENABLE_SHARED, [
 #
 #	Defines and substitutes the following vars:
 #
-#       DL_OBJS -       Name of the object file that implements dynamic
-#                       loading for Tcl on this system.
-#       DL_LIBS -       Library file(s) to include in base applications
-#                       in order for the "load" command to work.
-#       LDFLAGS -       Flags to pass to the compiler when linking object
-#                       files into an executable application binary
-#       LD_SEARCH_FLAGS-Flags to pass to ld, such as "-R /usr/local/grass/lib",
+#       LDFLAGS -      Flags to pass to the compiler when linking object
+#                       files into an executable application binary such
+#                       as tclsh.
+#       LD_SEARCH_FLAGS-Flags to pass to ld, such as "-R /usr/local/tcl/lib",
 #                       that tell the run-time dynamic linker where to look
-#                       for shared libraries such as libgrass_gis.so.  Depends on
+#                       for shared libraries such as libtcl.so.  Depends on
 #                       the variable LIB_RUNTIME_DIR in the Makefile. Could
 #                       be the same as CC_SEARCH_FLAGS if ${CC} is used to link.
-#       CC_SEARCH_FLAGS-Flags to pass to ${CC}, such as "-Wl,-rpath,/usr/local/grass/lib",
+#       CC_SEARCH_FLAGS-Flags to pass to ${CC}, such as "-Wl,-rpath,/usr/local/tcl/lib",
 #                       that tell the run-time dynamic linker where to look
-#                       for shared libraries such as libgrass_gis.so.  Depends on
+#                       for shared libraries such as libtcl.so.  Depends on
 #                       the variable LIB_RUNTIME_DIR in the Makefile.
 #       MAKE_LIB -      Command to execute to build the a library;
 #                       differs when building shared or static.
@@ -337,16 +334,22 @@ AC_DEFUN(SC_ENABLE_SHARED, [
 #                       extensions.  An empty string means we don't know how
 #                       to use shared libraries on this platform.
 # GRASS_SHLIB_LD_EXTRAS - Additional element which are added to SHLIB_LD_LIBS
+#                       for the build of Tcl and Tk, but not recorded in the
+#                       tclConfig.sh, since they are only used for the build
+#                       of Tcl and Tk. 
+#                       Examples: MacOS X records the library version and
+#                       compatibility version in the shared library.  But
+#                       of course the Tcl version of this is only used for Tcl.
 #       LIB_SUFFIX -    Specifies everything that comes after the "libfoo"
-#                       in a static or shared library name, using the $VERSION variable
+#                       in a static or shared library name, using the $LIB_VER variable
 #                       to put the version in the right place.  This is used
 #                       by platforms that need non-standard library names.
-#                       Examples:  ${VERSION_NUMBER}.so.1.1 on NetBSD, since it needs
-#                       to have a version after the .so, and ${VERSION_NUMBER}.a
+#                       Examples:  ${LIB_VER}.so.1.1 on NetBSD, since it needs
+#                       to have a version after the .so, and ${LIB_VER}.a
 #                       on AIX, since a shared library needs to have
 #                       a .a extension whereas shared objects for loadable
 #                       extensions have a .so extension.  Defaults to
-#                       ${VERSION_NUMBER}${SHLIB_SUFFIX}.
+#                       ${LIB_VER}${SHLIB_SUFFIX}.
 #       GRASS_NEEDS_EXP_FILE -
 #                       1 means that an export file is needed to link to a
 #                       shared library.
@@ -357,6 +360,9 @@ AC_DEFUN(SC_ENABLE_SHARED, [
 #                       The name of the built export / import file which
 #                       should be used to link to the Tcl shared library.
 #                       Empty if Tcl is unshared.
+#       GRASS_LIBS -
+#                       Libs to use when linking Tcl shell or some other
+#                       shell that includes Tcl libs.
 #	CFLAGS_DEBUG -
 #			Flags used when running the compiler in debug mode
 #	CFLAGS_OPTIMIZE -
@@ -434,8 +440,8 @@ AC_DEFUN(SC_CONFIG_CFLAGS, [
     EXTRA_CFLAGS=""
     GRASS_EXPORT_FILE_SUFFIX=""
     UNSHARED_LIB_SUFFIX=""
-    GRASS_TRIM_DOTS='`echo ${VERSION_NUMBER} | tr -d .`'
-    ECHO_VERSION='`echo ${VERSION_NUMBER}`'
+    GRASS_TRIM_DOTS='`echo ${LIB_VER} | tr -d .`'
+    ECHO_VERSION='`echo ${LIB_VER}`'
     GRASS_LIB_VERSIONS_OK=ok
     CFLAGS_DEBUG=-g
     CFLAGS_OPTIMIZE=-O
@@ -468,33 +474,11 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    LIBS="$LIBS -lc"
 	    # AIX-5 uses ELF style dynamic libraries
 	    SHLIB_CFLAGS=""
-	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    if test "`uname -m`" = "ia64" ; then
-		# AIX-5 uses ELF style dynamic libraries on IA-64, but not PPC
-		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
-		# AIX-5 has dl* in libc.so
-		DL_LIBS=""
-		if test "$GCC" = "yes" ; then
-		    CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
-		else
-		    CC_SEARCH_FLAGS='-R${LIB_RUNTIME_DIR}'
-		fi
-		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
-	    else
-		SHLIB_LD="${GRASS_SRC_DIR}/unix/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry"
-		DL_LIBS="-ldl"
-		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
-		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
-		GRASS_NEEDS_EXP_FILE=1
-		GRASS_EXPORT_FILE_SUFFIX='${VERSION_NUMBER}.exp'
-	    fi
-
 	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
 	    # symbols when dynamically loaded into tclsh.
+	    SHLIB_LD_LIBS='${LIBS}'
+	    SHLIB_SUFFIX=".so"
 
-	   ## DL_OBJS=""
-	    DL_OBJS=""
 	    LDFLAGS=""
 
 	    LD_LIBRARY_PATH_VAR="LIBPATH"
@@ -512,6 +496,24 @@ dnl AC_CHECK_TOOL(AR, ar)
 		    SHLIB_LD_FLAGS="-b64"
 		fi
 	    fi
+
+	    if test "`uname -m`" = "ia64" ; then
+		# AIX-5 uses ELF style dynamic libraries on IA-64, but not PPC
+		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
+		# AIX-5 has dl* in libc.so
+		if test "$GCC" = "yes" ; then
+		    CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
+		else
+		    CC_SEARCH_FLAGS='-R${LIB_RUNTIME_DIR}'
+		fi
+		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
+	    else
+		SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
+		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
+		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
+		GRASS_NEEDS_EXP_FILE=1
+		GRASS_EXPORT_FILE_SUFFIX='${LIB_VER}.exp'
+	    fi
 	    ;;
 	AIX-*)
 	    if test "${GRASS_THREADS}" = "1" -a "$GCC" != "yes" ; then
@@ -523,23 +525,29 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    fi
 	    LIBS="$LIBS -lc"
 	    SHLIB_CFLAGS=""
-	    SHLIB_LD="${GRASS_SRC_DIR}/unix/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    LD_LIBRARY_PATH_VAR="LIBPATH"
 	    GRASS_NEEDS_EXP_FILE=1
-	    GRASS_EXPORT_FILE_SUFFIX='${VERSION_NUMBER}.exp'
+	    GRASS_EXPORT_FILE_SUFFIX='${LIB_VER}.exp'
 
-	    # AIX v<=4.1 has some different flags than 4.2+
-	    if test "$system" = "AIX-4.1" -o "`uname -v`" -lt "4" ; then
-		LIBOBJS="$LIBOBJS"
-		DL_LIBS="-lld"
+	    # Check to enable 64-bit flags for compiler/linker
+	    if test "$do64bit" = "yes" ; then
+		if test "$GCC" = "yes" ; then
+		    AC_MSG_WARN("64bit mode not supported with GCC on $system")
+		else 
+		    do64bit_ok=yes
+		    EXTRA_CFLAGS="-q64"
+		    LDFLAGS="-q64"
+		    RANLIB="${RANLIB} -X64"
+		    AR="${AR} -X64"
+		    SHLIB_LD_FLAGS="-b64"
+		fi
 	    fi
+	    SHLIB_LD="${SRCDIR}/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry ${SHLIB_LD_FLAGS}"
 
 	    # On AIX <=v4 systems, libbsd.a has to be linked in to support
 	    # non-blocking file IO.  This library has to be linked in after
@@ -558,50 +566,44 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    	MATH_LIBS="$MATH_LIBS -lbsd"
 	    	AC_DEFINE(USE_DELTA_FOR_TZ)
 	    fi
+	    ;;
+	BeOS*)
+	    SHLIB_CFLAGS="-fPIC"
+	    SHLIB_LD="${CC} -nostart"
+	    SHLIB_LD_LIBS='${LIBS}'
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS=""
 
-	    # Check to enable 64-bit flags for compiler/linker
-	    if test "$do64bit" = "yes" ; then
-		if test "$GCC" = "yes" ; then
-		    AC_MSG_WARN("64bit mode not supported with GCC on $system")
-		else 
-		    do64bit_ok=yes
-		    EXTRA_CFLAGS="-q64"
-		    LDFLAGS="-q64"
-		    RANLIB="${RANLIB} -X64"
-		    AR="${AR} -X64"
-		    SHLIB_LD_FLAGS="-b64"
-		fi
-	    fi
+	    #-----------------------------------------------------------
+	    # Check for inet_ntoa in -lbind, for BeOS (which also needs
+	    # -lsocket, even if the network functions are in -lnet which
+	    # is always linked to, for compatibility.
+	    #-----------------------------------------------------------
+	    AC_CHECK_LIB(bind, inet_ntoa, [LIBS="$LIBS -lbind -lsocket"])
 	    ;;
 	BSD/OS-2.1*|BSD/OS-3*)
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="shlicc -r"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
 	BSD/OS-4.*)
 	    SHLIB_CFLAGS="-export-dynamic -fPIC"
-	    SHLIB_LD="-shared"
+	    SHLIB_LD="cc -shared"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS="-export-dynamic"
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
 	dgux*)
 	    SHLIB_CFLAGS="-K PIC"
-	    SHLIB_LD="-G"
+	    SHLIB_LD="cc -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
@@ -612,14 +614,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    AC_DEFINE(_XOPEN_SOURCE_EXTENDED) # Use the XOPEN network library
 	    LIBS="$LIBS -lxnet"               # Use the XOPEN network library
 
-	    SHLIB_SUFFIX="sl"
+	    SHLIB_SUFFIX=".sl"
 	    AC_CHECK_LIB(dld, shl_load, shared_ok=yes, shared_ok=no)
 	    if test "$shared_ok" = yes; then
 		SHLIB_CFLAGS="+z"
 		SHLIB_LD="ld -b"
 		SHLIB_LD_LIBS='${LIBS}'
-		DL_OBJS="rubbish"
-		DL_LIBS="-ldld"
 		LDFLAGS="-Wl,-E"
 		CC_SEARCH_FLAGS='-Wl,+s,+b,${LIB_RUNTIME_DIR}:.'
 		LD_SEARCH_FLAGS='+s +b ${LIB_RUNTIME_DIR}:.'
@@ -637,7 +637,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 			hppa64*)
 			    # 64-bit gcc in use.  Fix flags for GNU ld.
 			    do64bit_ok=yes
-			    SHLIB_LD="-shared"
+			    SHLIB_LD="gcc -shared"
 			    SHLIB_LD_LIBS=""
 			    LD_SEARCH_FLAGS=''
 			    CC_SEARCH_FLAGS=''
@@ -659,14 +659,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    fi
 	    ;;
 	HP-UX-*.08.*|HP-UX-*.09.*|HP-UX-*.10.*)
-	    SHLIB_SUFFIX="sl"
+	    SHLIB_SUFFIX=".sl"
 	    AC_CHECK_LIB(dld, shl_load, shared_ok=yes, shared_ok=no)
 	    if test "$shared_ok" = yes; then
 		SHLIB_CFLAGS="+z"
 		SHLIB_LD="ld -b"
 		SHLIB_LD_LIBS=""
-		DL_OBJS="rubbish"
-		DL_LIBS="-ldld"
 		LDFLAGS="-Wl,-E"
 		CC_SEARCH_FLAGS='-Wl,+s,+b,${LIB_RUNTIME_DIR}:.'
 		LD_SEARCH_FLAGS='+s +b ${LIB_RUNTIME_DIR}:.'
@@ -675,23 +673,19 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	IRIX-4.*)
 	    SHLIB_CFLAGS="-G 0"
-	    SHLIB_SUFFIX="a"
-	    SHLIB_LD="ld -b"
+	    SHLIB_SUFFIX=".a"
+	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    DL_OBJS="rubbish"
-	    DL_LIBS=""
 	    LDFLAGS="-Wl,-D,08000000"
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
-	    SHARED_LIB_SUFFIX='${VERSION_NUMBER}.a'
+	    SHARED_LIB_SUFFIX='${LIB_VER}.a'
 	    ;;
 	IRIX-5.*)
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="ld -shared -rdata_shared"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    EXTRA_CFLAGS=""
@@ -701,9 +695,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="ld -shared -rdata_shared"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    ;;
@@ -711,9 +703,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="ld -n32 -shared -rdata_shared"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 	    if test "$GCC" = "yes" ; then
@@ -736,9 +726,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="ld -n32 -shared -rdata_shared"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
@@ -759,26 +747,22 @@ dnl AC_CHECK_TOOL(AR, ar)
 	Linux*)
 	    SHLIB_CFLAGS="-fPIC"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
+	    SHLIB_SUFFIX=".so"
 
+	    CFLAGS_OPTIMIZE=-O2
 	    # egcs-2.91.66 on Redhat Linux 6.0 generates lots of warnings 
 	    # when you inline the string and math operations.  Turn this off to
 	    # get rid of the warnings.
-
-	    CFLAGS_OPTIMIZE="${CFLAGS_OPTIMIZE} -D__NO_STRING_INLINES -D__NO_MATH_INLINES"
+	    #CFLAGS_OPTIMIZE="${CFLAGS_OPTIMIZE} -D__NO_STRING_INLINES -D__NO_MATH_INLINES"
 
 	    if test "$have_dl" = yes; then
-		SHLIB_LD="-shared"
-		DL_OBJS="rubbish" #just to make test in configure happy
-		DL_LIBS="-ldl"
-		LDFLAGS="-rdynamic" #???
+		SHLIB_LD="${CC} -shared"
+		LDFLAGS="-Wl,--export-dynamic"
 		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
 		AC_CHECK_HEADER(dld.h, [
 		    SHLIB_LD="ld -shared"
-		    DL_OBJS=""
-		    DL_LIBS="-ldld"
 		    LDFLAGS=""
 		    CC_SEARCH_FLAGS=""
 		    LD_SEARCH_FLAGS=""])
@@ -794,7 +778,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    # is kind of overkill but it works.
 	    # Disable inlining only when one of the
 	    # files in compat/*.c is being linked in.
-	    if test x"${LIBOBJS}" != x ; then
+	    if test x"${USE_COMPAT}" != x ; then
 	        EXTRA_CFLAGS="${EXTRA_CFLAGS} -fno-inline"
 	    fi
 
@@ -805,20 +789,16 @@ dnl AC_CHECK_TOOL(AR, ar)
 	GNU*)
 	    SHLIB_CFLAGS="-fPIC"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
+	    SHLIB_SUFFIX=".so"
 
 	    if test "$have_dl" = yes; then
-		SHLIB_LD="-shared"
-		DL_OBJS=""
-		DL_LIBS="-ldl"
-		LDFLAGS="-rdynamic"
+		SHLIB_LD="${CC} -shared"
+		LDFLAGS="-Wl,--export-dynamic"
 		CC_SEARCH_FLAGS=""
 		LD_SEARCH_FLAGS=""
 	    else
 		AC_CHECK_HEADER(dld.h, [
 		    SHLIB_LD="ld -shared"
-		    DL_OBJS=""
-		    DL_LIBS="-ldld"
 		    LDFLAGS=""
 		    CC_SEARCH_FLAGS=""
 		    LD_SEARCH_FLAGS=""])
@@ -827,38 +807,43 @@ dnl AC_CHECK_TOOL(AR, ar)
 		EXTRA_CFLAGS="-mieee"
 	    fi
 	    ;;
+        CYGWIN*)
+            SHLIB_CFLAGS=""
+	    SHLIB_LD_LIBS='${LIBS}'
+            SHLIB_SUFFIX=".dll"
+
+            SHLIB_LD="${CC} -shared"
+            LDFLAGS="-Wl,--export-dynamic"
+            CC_SEARCH_FLAGS=""
+            LD_SEARCH_FLAGS=""
+	    LD_LIBRARY_PATH_VAR="PATH"
+	    ;;
 	MP-RAS-02*)
 	    SHLIB_CFLAGS="-K PIC"
-	    SHLIB_LD="-G"
+	    SHLIB_LD="cc -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
 	MP-RAS-*)
 	    SHLIB_CFLAGS="-K PIC"
-	    SHLIB_LD="-G"
+	    SHLIB_LD="cc -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS="-Wl,-Bexport"
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
-	NetBSD-*|FreeBSD-[[1-2]].*|OpenBSD-*)
+	NetBSD-*|FreeBSD-[[1-2]].*)
 	    # Not available on all versions:  check for include file.
 	    AC_CHECK_HEADER(dlfcn.h, [
 		# NetBSD/SPARC needs -fPIC, -fpic will not do.
 		SHLIB_CFLAGS="-fPIC"
 		SHLIB_LD="ld -Bshareable -x"
 		SHLIB_LD_LIBS=""
-		SHLIB_SUFFIX="so"
-		DL_OBJS=""
-		DL_LIBS=""
+		SHLIB_SUFFIX=".so"
 		LDFLAGS=""
 		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
@@ -875,11 +860,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 		)
 	    ], [
 		SHLIB_CFLAGS=""
-		SHLIB_LD="ld -b"
+		SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r"
 		SHLIB_LD_LIBS='${LIBS}'
-		SHLIB_SUFFIX="a"
-		DL_OBJS="rubbish"
-		DL_LIBS=""
+		SHLIB_SUFFIX=".a"
 		LDFLAGS=""
 		CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
@@ -891,21 +874,38 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
 	    GRASS_LIB_VERSIONS_OK=nodots
 	    ;;
+	OpenBSD-*)
+	    SHLIB_LD="${CC} -shared"
+	    SHLIB_LD_LIBS='${LIBS}'
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS=""
+	    CC_SEARCH_FLAGS=""
+	    LD_SEARCH_FLAGS=""
+	    AC_MSG_CHECKING(for ELF)
+	    AC_EGREP_CPP(yes, [
+#ifdef __ELF__
+	yes
+#endif
+	    ],
+		[AC_MSG_RESULT(yes)
+		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'],
+		[AC_MSG_RESULT(no)
+		SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0']
+	    )
+
+	    # OpenBSD doesn't do version numbers with dots.
+	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
+	    GRASS_LIB_VERSIONS_OK=nodots
+	    ;;
 	FreeBSD-*)
 	    # FreeBSD 3.* and greater have ELF.
 	    SHLIB_CFLAGS="-fPIC"
-	    SHLIB_LD="-shared"
+	    SHLIB_LD="ld -Bshareable -x"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS="-export-dynamic"
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
-	    # this is where most installed packages go
-	    CPPFLAGS="$CPPFLAGS -I/usr/local/include"
-	    LDFLAGS="$LDFLAGS -pthread -L/usr/local/lib"
-	    # require this for GL probe to work
-	    CFLAGS="$CFLAGS -pthread"
 	    if test "${GRASS_THREADS}" = "1" ; then
 		# The -pthread needs to go in the CFLAGS, not LIBS
 		LIBS=`echo $LIBS | sed s/-pthread//`
@@ -922,18 +922,16 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    esac
 	    ;;
 	Rhapsody-*|Darwin-*)
-	    # see: http://fink.sourceforge.net/doc/porting/shared.php
-	    #      http://developer.apple.com/documentation/Porting/Conceptual/PortingUnix/index.html
-	    SHLIB_CFLAGS="-fPIC -fno-common"
+	    SHLIB_CFLAGS="-fno-common"
+#	    SHLIB_LD="cc -dynamiclib \${LDFLAGS}"
+#	    GRASS_SHLIB_LD_EXTRAS="-compatibility_version ${LIB_VER} -current_version \${LIB_VER} -install_name \${DYLIB_INSTALL_DIR}/\${GRASS_LIB_FILE} -prebind -seg1addr 0xa000000"
 #check if we need -U,_cuserid:
-	    SHLIB_LD="-dynamiclib -Wl,-flat_namespace,-U,_cuserid -undefined suppress \${LDFLAGS}"
+	    SHLIB_LD="cc -dynamiclib -Wl,-flat_namespace,-U,_cuserid -undefined suppress \${LDFLAGS}"
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="dylib"
-	    DL_OBJS="rubbish" #just to make test in configure happy
+	    SHLIB_SUFFIX=".dylib"
 	    PLAT_OBJS=""
-	    DL_LIBS=""
-	    LDFLAGS=""
+	    LDFLAGS="-prebind"
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    CFLAGS_OPTIMIZE="-Os"
@@ -945,11 +943,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	NEXTSTEP-*)
 	    SHLIB_CFLAGS=""
-	    SHLIB_LD="-nostdlib -r"
+	    SHLIB_LD="cc -nostdlib -r"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS="rubbish"
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
@@ -964,9 +960,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    # Hack: make package name same as library name
 	    SHLIB_LD='ld -R -export $@:'
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS="rubbish"
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
@@ -980,9 +974,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	        SHLIB_LD="ld -non_shared"
 	    fi
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
@@ -996,14 +988,14 @@ dnl AC_CHECK_TOOL(AR, ar)
 	        SHLIB_LD='ld -non_shared -expect_unresolved "*"'
 	    fi
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
-	    LDFLAGS=""
+	    SHLIB_SUFFIX=".so"
+	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
-	    if test "$GCC" != "yes" ; then
-		EXTRA_CFLAGS="-DHAVE_TZSET -std1"
+	    if test "$GCC" = "yes" ; then
+		EXTRA_CFLAGS="-mieee"
+            else
+		EXTRA_CFLAGS="-DHAVE_TZSET -std1 -ieee"
 	    fi
 	    # see pthread_intro(3) for pthread support on osf1, k.furukawa
 	    if test "${GRASS_THREADS}" = "1" ; then
@@ -1025,21 +1017,16 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_CFLAGS="-fPIC"
 	    SHLIB_LD="ld -Bshareable -x"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    # dlopen is in -lc on QNX
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
 	RISCos-*)
 	    SHLIB_CFLAGS="-G 0"
-	    SHLIB_LD="ld -b"
+	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="a"
-	    DL_OBJS="rubbish"
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".a"
 	    LDFLAGS="-Wl,-D,08000000"
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
@@ -1057,19 +1044,15 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    fi
 	    SHLIB_LD="ld -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS=""
+	    SHLIB_SUFFIX=".so"
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
 	SINIX*5.4*)
 	    SHLIB_CFLAGS="-K PIC"
-	    SHLIB_LD="-G"
+	    SHLIB_LD="cc -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
@@ -1078,17 +1061,15 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_CFLAGS="-PIC"
 	    SHLIB_LD="ld"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 
 	    # SunOS can't handle version numbers with dots in them in library
-	    # specs, like -lgrass7.5, so use -lgrass75 instead.  Also, it
+	    # specs, like -ltcl7.5, so use -ltcl75 instead.  Also, it
 	    # requires an extra version number at the end of .so file names.
-	    # So, the library has to have a name like libgrass75.so.1.0
+	    # So, the library has to have a name like libtcl75.so.1.0
 
 	    SHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.so.1.0'
 	    UNSHARED_LIB_SUFFIX='${GRASS_TRIM_DOTS}.a'
@@ -1108,12 +1089,10 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    # symbols when dynamically loaded into tclsh.
 
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    if test "$GCC" = "yes" ; then
-		SHLIB_LD="-shared"
+		SHLIB_LD="$CC -shared"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
@@ -1158,11 +1137,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    # symbols when dynamically loaded into tclsh.
 
 	    SHLIB_LD_LIBS='${LIBS}'
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    if test "$GCC" = "yes" ; then
-		SHLIB_LD="-shared"
+		SHLIB_LD="$CC -shared"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
@@ -1173,11 +1150,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	ULTRIX-4.*)
 	    SHLIB_CFLAGS="-G 0"
-	    SHLIB_SUFFIX="a"
-	    SHLIB_LD="ld -b"
+	    SHLIB_SUFFIX=".a"
+	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
-	    DL_OBJS="rubbish"
-	    DL_LIBS=""
 	    LDFLAGS="-Wl,-D,08000000"
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
@@ -1187,11 +1162,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	UNIX_SV* | UnixWare-5*)
 	    SHLIB_CFLAGS="-KPIC"
-	    SHLIB_LD="-G"
+	    SHLIB_LD="cc -G"
 	    SHLIB_LD_LIBS=""
-	    SHLIB_SUFFIX="so"
-	    DL_OBJS=""
-	    DL_LIBS="-ldl"
+	    SHLIB_SUFFIX=".so"
 	    # Some UNIX_SV* systems (unixware 1.1.2 for example) have linkers
 	    # that don't grok the -Bexport option.  Test that it does.
 	    hold_ldflags=$LDFLAGS
@@ -1210,24 +1183,19 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
     esac
 
-    if test "$do64bit" = "yes" -a "$do64bit_ok" = "no" ; then
-    AC_MSG_WARN("64bit support being disabled -- don\'t know magic for this platform")
-    fi
-
     # If we're running gcc, then change the C flags for compiling shared
     # libraries to the right flags for gcc, instead of those for the
     # standard manufacturer compiler.
 
-    if test "$DL_OBJS" != "tclLoadNone.o" ; then
 	if test "$GCC" = "yes" ; then
 	    case $system in
 		AIX-*)
 		    ;;
 		BSD/OS*)
 		    ;;
-		IRIX*)
+                *)
 		    ;;
-		NetBSD-*|FreeBSD-*|OpenBSD-*)
+		NetBSD-*|FreeBSD-*)
 		    ;;
 		Rhapsody-*|Darwin-*)
 		    ;;
@@ -1242,13 +1210,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 		    ;;
 	    esac
 	fi
-    fi
 
     if test "$SHARED_LIB_SUFFIX" = "" ; then
-	SHARED_LIB_SUFFIX='${VERSION_NUMBER}${SHLIB_SUFFIX}'
+	SHARED_LIB_SUFFIX='${LIB_VER}${SHLIB_SUFFIX}'
     fi
     if test "$UNSHARED_LIB_SUFFIX" = "" ; then
-	UNSHARED_LIB_SUFFIX='${VERSION_NUMBER}.a'
+	UNSHARED_LIB_SUFFIX='${LIB_VER}.a'
     fi
 
     if test "${SHARED_BUILD}" = "1" && test "${SHLIB_SUFFIX}" != "" ; then
@@ -1291,10 +1258,6 @@ dnl        esac
         INSTALL_STUB_LIB='$(INSTALL_LIBRARY) $(STUB_LIB_FILE) $(LIB_INSTALL_DIR)/$(STUB_LIB_FILE) ; (cd $(LIB_INSTALL_DIR) ; $(RANLIB) $(STUB_LIB_FILE))'
     fi
 
-
-    AC_SUBST(DL_LIBS)
-
-    AC_SUBST(DL_OBJS)
     AC_SUBST(PLAT_OBJS)
     AC_SUBST(CFLAGS)
     AC_SUBST(CFLAGS_DEBUG)

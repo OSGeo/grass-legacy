@@ -21,9 +21,3 @@ include $(MODULE_TOPDIR)/include/Make/Shlib.make
 
 lib: $(GRASS_LIBRARY_TYPE)
 
-#static libs:
-#lib: stlib
-
-#shared libs:
-#also change at top of ./Grass.make
-#lib: shlib
