@@ -37,29 +37,32 @@ int rectify (
     select_target_env();
     G_set_window(&target_window);
     G_set_cell_format(cellhd.format);
-    select_current_env();
 
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
  */
-	G_suppress_warnings(1);
-    G_set_window (&cellhd);
-    infd = G_open_cell_old (name, mapset);
+
+/*  	G_suppress_warnings(1); */
+
+
+	select_current_env();
+	G_set_window (&cellhd);
+	infd = G_open_cell_old (name, mapset);
     if (infd < 0)
     {
 	close (infd);
 	return 0;
     }
-
-    rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
+  
+	rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
     G_set_null_value(rast, G_window_cols()+1, map_type);
     G_copy (&win, &target_window, sizeof(win));
 
     win.west += win.ew_res/2;
     ncols = target_window.cols;
     col = 0;
-
-    temp_fd = 0;
+	
+	temp_fd = 0;
     while (ncols > 0)
     {
 	if ((win.cols = ncols) > NCOLS)
@@ -86,31 +89,16 @@ int rectify (
 	col += win.cols;
 	win.west += (win.ew_res * win.cols);
     }
-    select_target_env();
-	G_suppress_warnings(0);
-	if (cellhd.proj == 0) { /* x,y imagery */
-			cellhd.proj = target_window.proj;
-			cellhd.zone = target_window.zone;
-	}
+/*      select_target_env(); */
+/*  	G_suppress_warnings(0); */
 
-	if (target_window.proj != cellhd.proj) {
-			cellhd.proj = target_window.proj;
-			sprintf(buf,"WARNING %s@%s: projection don't match current settings.\n",name,mapset);
-			G_warning(buf);
-	}  
-
-	if (target_window.zone != cellhd.zone) {
-			cellhd.zone = target_window.zone;
-			sprintf(buf,"WARNING %s@%s: zone don't match current settings .\n",name,mapset);
-			G_warning(buf);
-	}  
-
-	G_suppress_warnings(1);
+/*  	G_suppress_warnings(1); */
     target_window.compressed=cellhd.compressed;
-    write_map(result);
+ 	G_close_cell (infd); /* pmx 17 april 2000: need closing before cganging window if different projs !*/
+   write_map(result);
     select_current_env();
- 	G_suppress_warnings(0);
-	G_close_cell (infd);
+/*   	G_suppress_warnings(0); */
+/*  	G_close_cell (infd); */  /* original position ... !#@?! */
     G_free (rast);
 
     return 1;
