@@ -1,5 +1,5 @@
 #include "colors.h"
-static int color_offset = 20;
+static int color_offset = 0;
 static int first_time = 1;
 static max_std_colors;
 static n_colors;
@@ -76,12 +76,12 @@ int number;
     if (get_table_type() == FIXED) {
         SetXColor(get_standard_color(number));
     } else
-        SetXColor(20+number);
+        SetXColor(number);
 }
 
 Color_offset(n)
 {
-    color_offset = 20 + n;
+    color_offset = n;
 }
 
 get_color_offset()
