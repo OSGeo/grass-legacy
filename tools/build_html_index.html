@@ -75,7 +75,7 @@ if [ $? -eq 1 ] ; then
 fi
 
 #fetch the ARCH for store the files:
-ARCH="`cat ../include/Make/Platform.make | grep ARCH | sed 's+ ++g' | cut -d'=' -f2`"
+ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
 HTMLDIR="../dist.$ARCH/docs/html"
 
 FULLINDEX=full_index.html
