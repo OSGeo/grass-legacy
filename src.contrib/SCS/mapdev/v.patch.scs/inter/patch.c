@@ -24,7 +24,7 @@ main (argc, argv) char *argv[];
     printf ("This program allows you to patch 2 or more digit files together.\n");
 
     nfiles = 0;
-    sprintf (command, "v.patch "); 
+    sprintf (command, "v.patch input="); 
     for (;;)
     {
 	if (nfiles == 0)
@@ -39,8 +39,8 @@ main (argc, argv) char *argv[];
         mapset = G_ask_vector_old(prompt, name) ;
 	if (mapset == NULL)
 	    break; 
+	if (nfiles > 0) strcat (command, ",");
 	strcat (command, name);
-	strcat (command, " ");
 	nfiles++;
     }
     if (nfiles < 2) exit(0);
@@ -50,8 +50,10 @@ main (argc, argv) char *argv[];
 
     if (G_ask_vector_new ("Enter name for resultant map", name) == NULL)
 	exit(0);
+    strcat (command, " output=");
     strcat (command, name);
     printf ("\n\npatching ... "); fflush (stdout);
+
     system (command);
     exit(0);
 }
