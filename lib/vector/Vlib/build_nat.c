@@ -543,6 +543,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    G_percent2 ( i, plus->n_isles, 1, msgout );
 	    Vect_attach_isle ( Map, i ) ;
 	}
+	if (i==1) prnmsg ("\n");
 	plus->built = GV_BUILD_ATTACH_ISLES;
     }
     
