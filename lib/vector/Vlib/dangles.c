@@ -100,6 +100,8 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
     struct ilist *List; /* List of lines in chain */
     char   *lmsg;
 
+    type &= GV_LINES; /* to work only with lines and boundaries */
+
     if ( chtype ) {
 	type = GV_BOUNDARY; /* process boundaries only */
 	lmsg = "changed lines";
