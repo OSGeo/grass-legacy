@@ -1,0 +1,66 @@
+
+
+
+DOS.show(1)  	     GRASS Reference Manual	      DOS.show(1)
+
+
+
+NAME
+     DOS.show - reads screen images stored on the PC6300 MS_DOS hard 
+     disk by DOS.save.
+     (Available for PC6300 workstations, only)
+
+SYNOPSIS
+     DOS.show filename
+
+DESCRIPTION
+     DOS.show allows a user to :
+     interactively view PC6300 screen images produced by "display",
+     "Dcell", etc. and saved to the PC6300 hard disk by DOS.save.
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
