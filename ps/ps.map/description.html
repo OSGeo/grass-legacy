@@ -29,10 +29,23 @@ in interactive mode).
 
 <P>
 
-The command line flag is:
+The order of commands is generally unimportant but may affect how some layers
+are drawn. For example to plot <B>vpoints</B> above <B>vareas</B> list the
+<B>vpoints</B> entry first.
 
+<P>
+
+The command line flags are:
+
+<DL>
 <DT><B>-r</B> 
 <DD>Rotate plot 90 degrees.
+<DT><B>-p</B> 
+<DD>Print available paper formats.<BR>
+   ( name width height left right tob bottom(margin) )
+<DT><B>-e</B> 
+<DD>Create an EPS (Encapsulated PostScript) plot instead of a PostScript file.
+</DL>
 
 <P>
 
@@ -43,6 +56,7 @@ The command-line parameters are:
 <DD>File containing mapping instructions.
 (or enter <B>input=-</B> to enter from keyboard).
 These instructions are described in detail below.
+If omitted, instructions can be piped from <em>stdin</em>.
 <P>
 
 <DT><B>scale=</B><EM>mapscale</EM> 
