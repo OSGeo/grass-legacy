@@ -6,6 +6,7 @@ RPOLY = $(GISBASE)/scripts/v.rand.poly
 CTEST = $(GISBASE)/scripts/v.clean.test
 
 LIBES = $(VECTLIB) $(DBMILIB) $(GISLIB) $(VASKLIB)
+DEPENDENCIES = $(VECTDEP) $(DBMIDEP) $(GISDEP) $(VASKDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
