@@ -8,6 +8,7 @@ Contents:
  3. Shell debugging 
  4. Library browsing
  5. Library dependencies with shared libraries
+ 6. Debugging with 'core' file
 
 
 ------------------------------------------------------------------------
@@ -155,6 +156,42 @@ ldd /usr/local/grass5/etc/bin/cmd/r.out.tiff
         libc.so.6 => /lib/libc.so.6 (0x40092000)
 	libjpeg.so.62 => /usr/lib/libjpeg.so.62 (0x401b8000)
 	/lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
+
+-------------------------------------------------------------------------
+6. Debugging with 'core' file
+
+How to debug allocation, from Roberto Micarelli:
+
+Example: debugging d.path in GRASS 5.1:
+
+What I've done is to make libc control over memory allocation. You need a not
+stripped version of d.path (remove -s option from linker).
+Set the core size with
+   ulimit -c 10000000
+
+Verify you have compiled with
+   -g
+before starting d.path set
+   export MALLOC_CHECK_=2
+
+This will make malloc and free control more things and raise an abort when a
+illegal access is detected, instead of leaving program run and have the
+problem later. At this point try
+   gdb -c core ./path/to/d.path
+
+and ask 'where' at gdb prompt.
+
+It will print a stack telling you the failure call sequence and source
+file/line. In the best case you'll get the exact error, in the worst one
+you'll get oriented.
+
+Read man malloc for MALLOC_CHECK_ usage.
+
+Hope this helps.
+
+Roberto
+
+-------------------------------------------------------------------------
 
 -- 
 $Id$ 
