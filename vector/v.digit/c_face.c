@@ -48,6 +48,10 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_NEW_CENTROID;
     else if ( strcmp ( tl, "move_vertex" ) == 0 )
 	Tool_next = TOOL_MOVE_VERTEX;
+    else if ( strcmp ( tl, "add_vertex" ) == 0 )
+	Tool_next = TOOL_ADD_VERTEX;
+    else if ( strcmp ( tl, "rm_vertex" ) == 0 )
+	Tool_next = TOOL_RM_VERTEX;
     else if ( strcmp ( tl, "move_line" ) == 0 )
 	Tool_next = TOOL_MOVE_LINE;
     else if ( strcmp ( tl, "delete_line" ) == 0 )

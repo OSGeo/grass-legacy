@@ -30,6 +30,8 @@ void updated_lines_and_nodes_erase_refresh_display(void);
 /* Edit */
 int new_line (int);
 int move_vertex (void);
+int add_vertex (void);
+int rm_vertex (void);
 int move_line (void);
 int delete_line (void);
 

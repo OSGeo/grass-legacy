@@ -90,6 +90,16 @@ $bbox add -image [image create photo -file "$vdpath/move.vertex.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
         -helptext "Move vertex"
 
+$bbox add -image [image create photo -file "$vdpath/add.vertex.gif"] \
+        -command "c_next_tool add_vertex" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Add vertex"
+
+$bbox add -image [image create photo -file "$vdpath/rm.vertex.gif"] \
+        -command "c_next_tool rm_vertex" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
+        -helptext "Remove vertex"
+
 $bbox add -image [image create photo -file "$vdpath/move.line.gif"] \
         -command "c_next_tool move_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
