@@ -45,6 +45,21 @@ None known.
 <h2>
 NOTE</h2>
 This program requires the Postgres database software.
+
+<h2>
+FAQ</h2>
+
+If this error appears:
+
+<pre>
+  Error: select Postgres:could not connect to server: Connection refused
+         Is the server running on host localhost and accepting
+         TCP/IP connections on port 5432?
+</pre>
+
+the Postgres server (postmaster) does not run in TCP/IP mode (-i) flag.
+The postmaster has to be restarted in TCP/IP mode.
+
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.stats.pg.html">g.stats.pg</a>,
