@@ -39,8 +39,7 @@ f_atan(int argc, const int *argt, void **args)
 	if (argc > 1 && argt[2] != DCELL_TYPE)
 		return E_ARG_TYPE;
 
-	if (argc > 1)
-		arg2 = args[2];
+	arg2 = (argc > 1) ? args[2] : NULL;
 
 	for (i = 0; i < columns; i++)
 		if (IS_NULL_D(&arg1[i]))

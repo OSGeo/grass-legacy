@@ -219,9 +219,9 @@ int translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 
 static int column_shift(void *buf, int res_type, int col)
 {
-	CELL *ibuf;
-	FCELL *fbuf;
-	DCELL *dbuf;
+	CELL *ibuf = buf;
+	FCELL *fbuf = buf;
+	DCELL *dbuf = buf;
 	int i;
 
 	/* if column offset, copy cell to itself shifting by col */
@@ -426,7 +426,6 @@ static int close_map(map *m)
 int map_type(const char *name, int mod)
 {
 	char *mapset;
-	int type;
 
 	switch (mod)
 	{
