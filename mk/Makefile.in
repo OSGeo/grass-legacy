@@ -4,7 +4,7 @@ include @DSTDIR@/mk/vars.mk
 INST_DIR	= ${prefix}/grass${NAME_VER}
 ERROR_LOG	= error.log
 
-all: dirs binaries htmlfiles links
+all: dirs binaries links htmlfiles
 
 makefiles:
 	@echo "making makefiles ..."
