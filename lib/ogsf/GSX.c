@@ -9,36 +9,36 @@
 
 #include "gstypes.h"
 
-void (*Cxl_func)();
-void (*Swap_func)();
+void (*Cxl_func) ();
+void (*Swap_func) ();
 
-static int Cxl=0;
+static int Cxl = 0;
 
 int GS_check_cancel(void)
 {
     Cxl_func();
 
-    return(Cxl);
+    return (Cxl);
 }
 
 void GS_set_cancel(int c)
 {
     Cxl = c;
-    
+
     return;
 }
 
-void GS_set_cxl_func(void (*f)(void))
+void GS_set_cxl_func(void (*f) (void))
 {
     Cxl_func = f;
-    
+
     return;
 }
 
 
-void GS_set_swap_func(void (*f)(void))
+void GS_set_swap_func(void (*f) (void))
 {
     Swap_func = f;
-    
+
     return;
 }
