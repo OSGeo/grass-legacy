@@ -162,7 +162,7 @@ if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	} else {
 		buf = G_allocate_cell_buf ();
 		for (r = 0; r < nrows; r++) {
-			G_get_map_row_nomask (fd, buf, r);
+			G_get_c_raster_row_nomask (fd, buf, r);
 			for (c = 0; c < ncols; c++) {
 				if (!buf[c]) {
 					do_points--;

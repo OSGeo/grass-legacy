@@ -116,7 +116,7 @@ if (fd < 0)	{
 	exit(1);
 }
 for (r = 0; r < nrows; r++)	{
-	G_get_map_row (fd, buf, r);
+	G_get_c_raster_row (fd, buf, r);
 	for (c = 0; c < ncols; c++)	{
 		index = SEG_INDEX(alt_seg, r, c);
 		alt[index] = r_h[index] = buf[c];
@@ -136,7 +136,7 @@ if (run_flag) {
 		exit(1);
 	}
 	for (r = 0; r < nrows; r++)	{
-		G_get_map_row (fd, buf, r);
+		G_get_c_raster_row (fd, buf, r);
 		for (c = 0; c < ncols; c++)	{
 			wat[SEG_INDEX(wat_seg, r, c)] = buf[c];
 		}
@@ -161,7 +161,7 @@ if (pit_flag) {
 		exit(1);
 	}
 	for (r = 0; r < nrows; r++)	{
-		G_get_map_row (fd, buf, r);
+		G_get_c_raster_row (fd, buf, r);
 		for (c = 0; c < ncols; c++)	{
 			asp[SEG_INDEX(asp_seg, r, c)] = buf[c];
 		}
@@ -176,7 +176,7 @@ if (ob_flag) {
 		exit(1);
 	}
 	for (r = 0; r < nrows; r++)	{
-		G_get_map_row (fd, buf, r);
+		G_get_c_raster_row (fd, buf, r);
 		for (c = 0; c < ncols; c++)	{
 			if (buf[c]) FLAG_SET(swale, r, c);
 		}
@@ -201,7 +201,7 @@ if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 		exit(1);
 	} else {
 		for (r = 0; r < nrows; r++)	{
-			G_get_map_row_nomask (fd, buf, r);
+			G_get_c_raster_row_nomask (fd, buf, r);
 			for (c = 0; c < ncols; c++)	{
 				if (!buf[c]) {
 					FLAG_SET(worked, r, c);
