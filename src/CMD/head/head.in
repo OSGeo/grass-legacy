@@ -72,6 +72,7 @@ CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
 ICONVLIB            = @ICONVLIB@
+INTLLIB             = @INTLLIB@
 
 #ZLIB:
 ZLIB                = @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@

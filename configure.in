@@ -447,6 +447,12 @@ AC_CHECK_LIB(giconv, iconv, ICONVLIB=-lgiconv, [
 ])])])
 AC_SUBST(ICONVLIB)
 
+AC_CHECK_FUNC(gettext, INTLLIB=, [
+AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
+    AC_MSG_WARN([*** Unable to locate gettext() function.])
+])])
+AC_SUBST(INTLLIB)
+
 # Mandatory zlib dependency
 
 ZLIBLIBPATH=
