@@ -29,6 +29,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     struct GModule *module;
     char *arglist[3], *autoload;
     int i, aload = 1;
+    char *saved_argv0 = argv[0];
 
     /*
      * Flags and Options:
@@ -104,8 +105,13 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     state->required = NO;
     state->description = "Load previosly saved state file";
 
+    argv[0] = "nviz";
+    
     if (G_parser(argc, argv))
 	exit(0);
+
+    argv[0] = saved_argv0; /* to make it work on cmd line */
+    
     /* Exit status is zero to avoid TCL complaints */
 
     {
