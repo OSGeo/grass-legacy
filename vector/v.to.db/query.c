@@ -73,7 +73,7 @@ query (struct Map_info *Map )
     db_init_string (&value_string);
 
     if ( (Fi = Vect_get_field ( Map, options.qfield)) == NULL)
-	G_fatal_error("Database connection not defined for field <%d>", options.qfield);
+	G_fatal_error("Database connection not defined for field <%d>. Use v.db.connect first.", options.qfield);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
