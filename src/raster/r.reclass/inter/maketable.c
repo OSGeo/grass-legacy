@@ -6,9 +6,10 @@
 
 #define NLINES 10
 
-maketable (cats, table, MASK)
+maketable (cats, table,min, max,  MASK)
     struct Categories *cats ;
     long *table;
+    CELL min, max;
 {
     long catnum[NLINES] ;
     char name[NLINES][80] ;
@@ -21,7 +22,7 @@ maketable (cats, table, MASK)
     int endcat ;
 
 /* initialize the table to zero */
-    for (i=0; i <= cats->num; i++)
+    for (i=0; i <= max - min; i++)
 	table[i] = 0 ;
 
 /* reclass, ask user how table whould be initialized */
@@ -44,13 +45,13 @@ maketable (cats, table, MASK)
 	} while (set != 0 && set != 1);
 
 	if (set)
-	    for (i=1; i <= cats->num; i++)
-		table[i] = i ;
+	    for (i=0; i <= max - min; i++)
+		table[i] = min + i ;
     }
 
 
-    startcat = 0;
-    while (startcat >= 0 && startcat <= cats->num) 
+    startcat = min;
+    while (startcat >= min && startcat <= max) 
     {
 	V_clear() ;
 	if (MASK)
@@ -66,7 +67,7 @@ maketable (cats, table, MASK)
 	    V_line ( 3, "                                                                    NUM   NUM" ) ;
 	}
 
-	endcat = startcat+NLINES <= cats->num+1 ? startcat+NLINES : cats->num+1 ;
+	endcat = startcat+NLINES <= max+1 ? startcat+NLINES : max+1 ;
 
 	atnum = 0;
 	line = 5;
@@ -75,19 +76,19 @@ maketable (cats, table, MASK)
 	    dots (G_get_cat((CELL)i,cats), name[atnum], 65);
 	    V_line  (line, name[atnum]) ;
 	    V_const (&catnum[atnum], 'l', line, 68, 5) ;
-	    V_ques  (&table[i], 'l', line, 74, 5) ;
+	    V_ques  (&table[i-min], 'l', line, 74, 5) ;
 	    atnum++;
 	    line++;
 	}
 
 	line += 2;
 	*next = 0;
-	if (endcat > cats->num)
+	if (endcat > max)
 	    strcpy (next, "end");
 	else
 	    sprintf (next, "%d", endcat);
-	sprintf (next_line, "%*s%*s  (of %ld)", 26, "Next category: ",5,"",
-		(long)cats->num);
+	sprintf (next_line, "%*s%*s  (%ld thru %ld)",
+		26, "Next category: ",5,"",min, max);
 	V_line (line, next_line);
 	V_ques (next, 's', line, 26, 5);
 
@@ -99,17 +100,17 @@ maketable (cats, table, MASK)
 	if (strcmp (next, "end") == 0) break;
 	if (sscanf (next, "%d", &endcat) != 1)
 		continue;
-	if (endcat < 0)
-	    endcat = 0;
-	if (endcat > cats->num)
+	if (endcat < min)
+	    endcat = min;
+	if (endcat > max)
 	{
-	    endcat = cats->num - NLINES + 1;
-	    if (endcat < 0) endcat = 0;
+	    endcat = max - NLINES + 1;
+	    if (endcat < min) endcat = min;
 	}
 	startcat = endcat ;
     }
     if (MASK)
-	for (i = 0 ; i <= cats->num; i++)
-	    if (table[i])
-		table[i] = 1;
+	for (i = min ; i <= max; i++)
+	    if (table[i-min])
+		table[i-min] = 1;
 }
