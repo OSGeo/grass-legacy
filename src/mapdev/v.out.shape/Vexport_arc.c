@@ -192,16 +192,6 @@ main (int argc, char **argv)
     if (level < 2)
         G_fatal_error ("You must run v.support before running this program");
 
-#ifdef OLD_LIB
-	dig_P_init(dig_name,mapset,&Map);
-
-	if (!Map.all_areas || !Map.all_isles)
-	{
-		G_fatal_error("You must first run v.support on this data.\n");
-		exit(-1);
-	}
-#endif /*OLD_LIB*/
-
 	G__make_mapset_element("arc_tmp") ;
 	G__file_name(full_prefix, "arc_tmp", shape_prefix, G_mapset()) ;
 
@@ -247,22 +237,15 @@ main (int argc, char **argv)
 	
 	if (coverage == POLY_TYPE)
 	{
-		fprintf (stdout,"ARC Area/Polygon data being created\n");
+		fprintf (stderr,"ARC Area/Polygon data being created\n");
 		write_areas(dig_name,mapset,&Map,lin_file,lab_file,txt_file);
-		/*dig_P_fini(&Map);*/
 		G__file_name(dig_filepath,"dig",dig_name,mapset);
-		/*
-		dig_fp = fopen(dig_filepath,"r");
-		*/
-        /*
-		dig_read_head_binary(Map.digit,&head);
-		*/
-		write_area_lines(&Map, lin_file);
+		write_area_lines(&Map, lin_file); 
 		lin_flg=1;
 	}
 	else
 	{
-		fprintf (stdout,"ARC Line data being created\n");
+		fprintf (stderr,"ARC Line data being created\n");
 		write_lines(dig_name,mapset,&Map,lin_file,txt_file);
 	}
 	Vect_close (&Map);
