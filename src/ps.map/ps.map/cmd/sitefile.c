@@ -25,7 +25,7 @@ int sitefile (char *name, char *mapset)
     char buf[1024];
     char *key, *data;
     double size;
-    int color;
+    int color, size_att;
 
     sprintf(fullname, "%s in %s", name, mapset);
 
@@ -43,6 +43,7 @@ int sitefile (char *name, char *mapset)
     site.icon[site.count] = G_store("default");
     site.font[site.count] = G_store("Helvetica");
     site.size[site.count] = 1.0;
+    site.size_att[site.count] =  0;    
     site.with_text[site.count] = 0;
 
     while (input(2, buf, help))
@@ -81,6 +82,16 @@ int sitefile (char *name, char *mapset)
 	    continue;
 	}
 
+	if (KEY("size_att"))
+	{
+	    if (sscanf(data, "%d", &size_att) != 1 || size_att < 0)
+	    {
+		size_att = -1;
+		error(key, data, "illegal size_att request");
+	    }
+	    site.size_att[site.count] = size_att;
+	    continue;
+	}	
 
 	if (KEY("color"))
 	{

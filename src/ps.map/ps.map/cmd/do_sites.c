@@ -102,6 +102,11 @@ int do_sites (void)
 	    x = (double) x_int / 10.;
 	    y = (double) y_int / 10.;
 
+	    if (site.size_att[i] > 0 && site.size_att[i] <= dbls)
+	    {
+	        s = 10.0 * site.size[i] * mysite->dbl_att[ site.size_att[i] - 1 ];
+	    }
+
 	    /* draw the icon */
 	    set_rgb_color(site.color[i]);
 	    fprintf(PS.fp, "%.1f %.1f NM\n", x + s * xo[0], y + s * yo[0]);
