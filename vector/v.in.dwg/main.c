@@ -4,9 +4,9 @@
  * * 
  * * AUTHOR(S):    Radim Blazek
  * *               
- * * PURPOSE:      Import OGR vectors
+ * * PURPOSE:      Import DWG/DXF vectors
  * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  * *
  * *               This program is free software under the 
  * *               GNU General Public License (>=v2). 
@@ -38,6 +38,7 @@ main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *out_opt, *in_opt;
+    struct Flag *without_z;
     char   buf[2000];
     dbHandle handle;
 
@@ -54,14 +55,18 @@ main (int argc, char *argv[])
     module = G_define_module();
     module->description = "Convert DWG/DXF to GRASS vector";
 
-    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-    out_opt->required = NO;
-
     in_opt = G_define_option();
     in_opt->key = "input";
     in_opt->type =  TYPE_STRING;
     in_opt->required = YES;
     in_opt->description = "DWG or DXF file.";
+
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+    out_opt->required = NO;
+
+    without_z = G_define_flag();
+    without_z->key               = 'n';
+    without_z->description       = "no 3D vector support (import only 2D vectors from file)";
 
     if (G_parser (argc, argv)) exit(-1); 
 
@@ -93,7 +98,10 @@ main (int argc, char *argv[])
     }
 
     /* open output vector */
-    Vect_open_new (&Map, out_opt->answer, 0 ); 
+    if (without_z->answer)
+       Vect_open_new (&Map, out_opt->answer, 0 );
+    else
+       Vect_open_new (&Map, out_opt->answer, 1 );
 
     /* Add DB link */
     Fi = Vect_default_field_info ( Map.name, 1, NULL, GV_1TABLE );
