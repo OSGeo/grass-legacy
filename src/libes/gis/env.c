@@ -56,6 +56,7 @@
 #include <unistd.h>   /* for sleep() */
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define ENV struct env
 ENV
@@ -238,7 +239,7 @@ static FILE *open_env ( char *mode)
 	sleep(3);
 	exit(-1); */
 	/* Roger Bivand 17 June 2000 */
-	G_fatal_error("GISRC - variable not set");
+	G_fatal_error(_("GISRC - variable not set"));
 	return(NULL);
     }
 
@@ -257,7 +258,7 @@ char *G_getenv( char *name)
     sleep(3);
     exit(-1); */
     /* Roger Bivand 17 June 2000 */
-    sprintf(rsbbuf, "%s not set", name);
+    sprintf(rsbbuf, _("%s not set"), name);
     G_fatal_error(rsbbuf);
     return;
 }

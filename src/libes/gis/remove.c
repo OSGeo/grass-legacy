@@ -38,9 +38,8 @@ int G_remove ( char *element, char *name)
     if (access (G__file_name (path, element, name, mapset),0) != 0)
 	    return 0;
 
-    if (unlink(path) == 0)
+    if ( remove ( path ) == 0)
 	    return 1;
-
     if (strchr(path, '\''))
 	    return -1;
 

@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -61,7 +62,7 @@ int G__make_mapset_element (char *p_element)
 	    if (access (path, 0) != 0)
 	    {
 		char err[1024];
-		sprintf (err, "can't make mapset element %s (%s)", p_element, path);
+		sprintf (err, _("can't make mapset element %s (%s)"), p_element, path);
 		G_fatal_error (err);
 		exit(1);
 	    }
