@@ -3,9 +3,9 @@
 \
 include head.mk\
 
-s#[-*0-9a-zA-Z_.$()/]*\.o[ 	\]#$(OBJARCH)/&#g
-s#[-*0-9a-zA-Z_.$()/]*\.o:#$(OBJARCH)/&#g
-s#[-*0-9a-zA-Z_.$()/]*\.o$#$(OBJARCH)/&#g
+s#[-*0-9a-zA-Z_.$()/%]*\.o[ 	\]#$(OBJARCH)/&#g
+s#[-*0-9a-zA-Z_.$()/%]*\.o:#$(OBJARCH)/&#g
+s#[-*0-9a-zA-Z_.$()/%]*\.o$#$(OBJARCH)/&#g
 s#[-*0-9a-zA-Z_.$()/]*\.a[ 	\]#$(OBJARCH)/&#g
 s#[-*0-9a-zA-Z_.$()/]*\.a:#$(OBJARCH)/&#g
 s#[-*0-9a-zA-Z_.$()/]*\.a$#$(OBJARCH)/&#g
