@@ -77,7 +77,7 @@ VERSION_NAME    = $(VERSION_MAJOR)$(VERSION_MINOR)$(VERSION_RELEASE)
 ##################### other #############################################
 CFLAGS      =  $(COMPILE_FLAGS) $(INC) $(USE_TERMIO)
 LDFLAGS     =  $(LD_FLAGS) $(LIBPATH) $(USE_TERMIO)
-
+VECT_CFLAGS =  $(GDALCFLAGS) 
 ##################### library names #####################################
 VASK_LIBNAME	= vask
 
