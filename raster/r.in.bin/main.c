@@ -254,8 +254,8 @@ cellhd.ns_res = header.y_inc;
 
 if (swap == 1) {
 /* Swapping Header Values */
-TIFFSwabLong((long *)&cellhd.cols);
-TIFFSwabLong((long *)&cellhd.rows);
+TIFFSwabLong((uint32 *)&cellhd.cols);
+TIFFSwabLong((uint32 *)&cellhd.rows);
 TIFFSwabDouble(&cellhd.west);
 TIFFSwabDouble(&cellhd.east);
 TIFFSwabDouble(&cellhd.south);
@@ -390,7 +390,7 @@ fprintf(stderr, "Percent Complete: ");
 		for (col = 0 ; col < ncols; col++ ) {
 	if(bytes < 4) {
 	/* Import 2 byte Short */
-	if (swap == 1) TIFFSwabShort((short *)&x_s[col]);
+	if (swap == 1) TIFFSwabShort((uint16 *)&x_s[col]);
 	cell[col] = (CELL)x_s[col] ;
 	if (sflag && cell[col] > 127) cell[col] -= 256;
 	if(oldval) {
@@ -398,14 +398,14 @@ fprintf(stderr, "Percent Complete: ");
 	}
 	} else if (flag.f->answer) {
 	/* Import Float */
-	if (swap == 1) TIFFSwabLong((long *)&x_f[col]);
+	if (swap == 1) TIFFSwabLong((uint32 *)&x_f[col]);
 	fcell[col] = (FCELL)x_f[col] ;
 	if(oldval) {
 	if (fcell[col] == (float)oldval) G_set_f_null_value(&fcell[col], 1);
 	}
 	} else {
 	/* Import 4 byte Int */
-	if (swap == 1) TIFFSwabLong((long *)&x_i[col]);
+	if (swap == 1) TIFFSwabLong((uint32 *)&x_i[col]);
         cell[col] = (CELL)x_i[col] ;
         if (sflag && cell[col] > 127) cell[col] -= 256;
 	if(oldval) {
