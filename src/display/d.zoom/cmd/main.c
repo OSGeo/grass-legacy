@@ -24,7 +24,7 @@ main (int argc, char **argv)
 #ifdef QUIET
     struct Flag *quiet;
 #endif
-    struct Flag *just, *pan;
+    struct Flag *just;
     struct Option *rmap, *vmap, *smap, *zoom;
     struct GModule *module;
     double magnify;
@@ -121,10 +121,6 @@ main (int argc, char **argv)
     just = G_define_flag();
     just->key = 'j';
     just->description = "Just redraw given maps using default colors";
-
-    pan = G_define_flag();
-    pan->key = 'p';
-    pan->description = "Unzoom with panning";
 
     if(!rast && !vect && !site)
     {
@@ -399,15 +395,9 @@ main (int argc, char **argv)
 		    nsites, (nsites > 1 ? "s":""));
     /* Do the zoom */
 #ifndef QUIET
-/*
-        stat = zoomwindow(1, rotate, magnify, pan->answer);
-*/
-        stat = zoomwindow(1, magnify, pan->answer);
+        stat = zoomwindow(1, magnify );
 #else
-/*
-        stat = zoomwindow(quiet->answer, rotate, magnify, pan->answer);
-*/
-        stat = zoomwindow(quiet->answer, magnify, pan->answer);
+        stat = zoomwindow(quiet->answer, magnify);
 #endif
     
     } while(stat == 2);
