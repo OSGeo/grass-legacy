@@ -23,8 +23,7 @@ exit
 fi
 
 g.region -p |head -1 |grep 0 > /dev/null
-if ! test $? ;
-then
+if [ $? -eq 0 ] ; then
  echo ""
  echo "Sorry: xy-locations are not supported."
  echo "Need projected data with grids in meter."
@@ -52,10 +51,15 @@ fi
  
 file2=$file.clump
 
+if test ! -f $LOCATION/cell/$file; then
+ echo "File $file not found"
+ exit 1
+fi
+
 if test ! -f $LOCATION/cell/$file2; then
-echo
-echo "Generating a clumped raster file.............................."
-r.clump input=$file output=$file2
+ echo
+ echo "Generating a clumped raster file.............................."
+ r.clump input=$file output=$file2
 fi
 
 ## calculation in acres
