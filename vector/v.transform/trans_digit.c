@@ -29,7 +29,7 @@ int
 transform_digit_file (struct Map_info *Old, struct Map_info *New,
 	              int    shift, 
 	              double xshift, double yshift, double zshift, double ztozero,
-		      double zrot, double zscale)
+		      double zrot, double xscale, double yscale, double zscale)
 {
     int    i, type;
     double ang, x, y; 
@@ -55,8 +55,8 @@ transform_digit_file (struct Map_info *Old, struct Map_info *New,
 	    if ( !shift ) {
                 transform_a_into_b( Points->x[i], Points->y[i], &(Points->x[i]), &(Points->y[i]) );
             } else {
-		x = xshift + Points->x[i] * cos(ang) - Points->y[i] * sin(ang); 
-		y = yshift + Points->x[i] * sin(ang) + Points->y[i] * cos(ang); 
+		x = xshift + xscale * Points->x[i] * cos(ang) - yscale * Points->y[i] * sin(ang); 
+		y = yshift + xscale * Points->x[i] * sin(ang) + yscale * Points->y[i] * cos(ang); 
 		Points->x[i] = x;
 		Points->y[i] = y;
 	    }

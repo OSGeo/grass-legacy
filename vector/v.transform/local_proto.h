@@ -19,4 +19,4 @@ int init_transform_arrays(void);
 int print_transform_error(int);
 /* trans_digit.c */
 int transform_digit_file(struct Map_info *, struct Map_info *, int, double, double, double, 
-	                        double, double, double);
+	                        double, double, double, double, double);
