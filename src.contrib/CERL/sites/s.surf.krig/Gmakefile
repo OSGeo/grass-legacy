@@ -1,4 +1,4 @@
-PGM=s.surf.krig
+PGM=s.surf.krig.cerl
 
 LIST= \
 	dbtnsamp.o \
