@@ -4,7 +4,16 @@
 .br
 .SH SYNOPSIS
 .nf
-\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR]  [\fB -n \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+.br
+[\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
+.br
+[\fBsliver=\fImin. angle\fR] \fR[\fBscale=\fIorig. scale\fR] \fR[\fBattribute=\fIattribute category\fR] \fR
+.br
+[\fBlabel=\fIcategory label\fR] \fR
+.LP
+.br
+\fBv.in.shape.pg \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
 .br
 [\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
 .br
@@ -22,7 +31,16 @@ The \fIv.in.shape\fR program is designed to import ArcView Shapefiles.
 .br
 .br
 .nf
-\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR]  [\fB -n \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+.br
+[\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
+.br
+[\fBsliver=\fImin. angle\fR] \fR[\fBscale=\fIorig. scale\fR] \fR[\fBattribute=\fIattribute category\fR] \fR
+.br
+[\fBlabel=\fIcategory label\fR] \fR
+.LP
+.br
+\fBv.in.shape.pg \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
 .br
 [\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
 .br
@@ -35,7 +53,7 @@ The \fIv.in.shape\fR program is designed to import ArcView Shapefiles.
 Alternately, the user can simply type:
 .LP
 .RS
-\fBv.in.shape\fR
+\fBv.in.shape\fR  \fIor\fR  \fBv.in.shape.pg\fR
 .RE
 .LP
 on the command line without program arguments.
@@ -56,12 +74,11 @@ then exit.
 Create a reject lines file. During import some lines are not imported for a
 variety of reasons. This option creates a new Level 1 vector map (ie. without
 topology), which can be used to display these lines.
+.LP
+.br
+*NOTE*  The following option is only available in the version with postgres support \fI(v.in.shape.pg)\fR
 .IP "\fB-p\fR"
 Dump the fields of the shapefile from DBF to a postgres table.
-.IP "\fB-n\fR"
-Access postgres as a normal user (the default is as postgres superuser).
-Most users will want to select this option. If postgres cannot be accessed
-as postgres superuser, an ASCII database is dumped.
 .SH OPTIONS
 .LP
 .IP "\fBin=\fIname\fR"
