@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -20,16 +18,16 @@
 #include "Vect.h"
 
 /* This is file is just example and starting point for writing overlay functions!!! */
-
 int Vect_overlay_and ( struct Map_info *, int, struct ilist *, struct ilist *,
 	               struct Map_info *, int, struct ilist *, struct ilist *,
 		       struct Map_info *);
 
-/*  Get operator code from string.
-*  
-*   returns: operator code
-*            -1 error
-*            
+
+/*!
+ \fn int Vect_overlay_str_to_operator ( char *str )
+ \brief Get operator code from string
+ \return operator code, -1 on error
+ \param operator code string
 */
 int 
 Vect_overlay_str_to_operator ( char *str )
@@ -43,10 +41,16 @@ Vect_overlay_str_to_operator ( char *str )
     return -1;
 }
     
-/*  Overlay 2 maps and create new one.
-*  
-*   returns: 0 success
-*            
+
+/*!
+ \fn int Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
+               struct Map_info *BMap, int btype, struct ilist *BList, struct ilist *BAList,
+	       int operator,  struct Map_info *OMap )
+
+ \brief Overlay 2 maps and create new one
+ \return 0 on success,?? on error
+ \param AMap, atype, AList, AAList, BMap, btype, BList, BAList,
+   operator, OMap
 */
 int 
 Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList, /* map A */
@@ -65,11 +69,18 @@ Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ili
     return 0;
 }
 
-/* AND supports:       point line area
-*                point  +     -    +
-*                line   -     -    -
-*                area   +     -    -
-*/ 
+/*!
+ \fn int Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
+                   struct Map_info *BMap, int btype, struct ilist *BList, struct ilist *BAList,
+                   struct Map_info *OMap )
+ \brief overlay 2 vector maps with AND.  AND supports:       point line area
+               point  +     -    +
+               line   -     -    -
+               area   +     -    -
+ \return 1 on success, 0 on error
+ \param AMap,  atype,  AList, AAList, BMap, btype, BList, BAList,
+                   OMap )
+*/
 int 
 Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
                    struct Map_info *BMap, int btype, struct ilist *BList, struct ilist *BAList,

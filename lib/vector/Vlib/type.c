@@ -17,10 +17,11 @@
 #include "gis.h"
 #include "Vect.h"
 
-/*
-*  Convert type to store type.
-*
-*  Returns  store type.
+/*!
+ \fn int Vect_type_to_store (int type)
+ \brief convert type to store type
+ \return store type
+ \param type
 */
 int
 Vect_type_to_store (int type)
@@ -39,10 +40,11 @@ Vect_type_to_store (int type)
     }
 }
 
-/*
-*  Convert type from store type.
-*
-*  Returns type.
+/*!
+ \fn int Vect_type_from_store (int type)
+ \brief convert type from store type
+ \return store type
+ \param type
 */
 int
 Vect_type_from_store (int stype)
@@ -61,11 +63,11 @@ Vect_type_from_store (int stype)
     }
 }
 
-/*
-*  Get types from options.
-*
-*  Returns: types 
-*           -1 error
+/*!
+ \fn int Vect_option_to_types (struct Option *type_opt )
+ \brief get types from options
+ \return types, -1 on error
+ \param Option structure
 */
 int
 Vect_option_to_types (struct Option *type_opt )

@@ -35,9 +35,11 @@ static int (*Rewind_array[][3]) () =
 #endif
 };
 
-/*  Rewind vector data file to cause reads to start at beginning.
-**  returns 0 on success
-**         -1 on error 
+/*!
+ \fn int Vect_rewind (struct Map_info *Map)
+ \brief Rewind vector data file to cause reads to start at beginning
+ \return 0 on success, -1 on error
+ \param Map_info structure
 */
 int 
 Vect_rewind (struct Map_info *Map)

@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -67,16 +65,21 @@ static long (*Last_line_offset_array[]) () =
 #endif
 };
 
-/*
-*   returns: line type
-*           -1 on Out of memory
-*           -2 on EOF   
+/*!
+ \fn int Vect_read_next_line ( struct Map_info *Map,
+    struct line_pnts *line_p,
+    struct line_cats *line_c)
+ \brief get next vector line ?
+ \return line type,
+           -1 on Out of memory,
+           -2 on EOF   
+ \param Map_info structure, line_pnts structure, line_cats structure
 */
 int
-Vect_read_next_line (Map, line_p, line_c)
-     struct Map_info *Map;
-     struct line_pnts *line_p;
-     struct line_cats *line_c;
+Vect_read_next_line (
+    struct Map_info *Map,
+    struct line_pnts *line_p,
+    struct line_cats *line_c)
 {
 #ifdef GDEBUG
     G_debug (3, "Vect_read_next_line()");
@@ -110,17 +113,22 @@ V1_read_line (Map, line_p, line_c, offset )
     return (*V1_read_line_array[Map->format]) (Map, line_p, line_c, offset);
 }
 
-/*
-*   returns: line type
-*           -1 on Out of memory
-*           -2 on EOF   
+/*!
+ \fn int Vect_read_line ( struct Map_info *Map,
+    struct line_pnts *line_p,
+    struct line_cats *line_c)
+ \brief get vector line ?
+ \return line type,
+           -1 on Out of memory,
+           -2 on EOF   
+ \param Map_info structure, line_pnts structure, line_cats structure
 */
 int
-Vect_read_line (Map, line_p, line_c, line )
-     struct Map_info *Map;
-     struct line_pnts *line_p;
-     struct line_cats *line_c;
-     int    line;
+Vect_read_line (
+                struct Map_info *Map,
+                struct line_pnts *line_p,
+                struct line_cats *line_c,
+                int    line)
 {
 
     G_debug (3, "Vect_read_line()");
@@ -135,8 +143,11 @@ Vect_read_line (Map, line_p, line_c, line )
     return (*V2_read_line_array[Map->format]) (Map, line_p, line_c, line);
 }
 
-/*
-*  Returns  next line offset
+/*!
+ \fn long Vect_next_line_offset ( struct Map_info *Map)
+ \brief ADD
+ \return next line offset
+ \param Map_info structure
 */
 long
 Vect_next_line_offset ( struct Map_info *Map )
@@ -144,8 +155,11 @@ Vect_next_line_offset ( struct Map_info *Map )
     return (*Next_line_offset_array[Map->format]) (Map);
 }
 
-/*
-*  Returns  last line offset
+/*!
+ \fn long Vect_last_line_offset ( struct Map_info *Map)
+ \brief ADD
+ \return last line offset
+ \param Map_info structure
 */
 long
 Vect_last_line_offset ( struct Map_info *Map )
@@ -153,9 +167,11 @@ Vect_last_line_offset ( struct Map_info *Map )
     return (*Last_line_offset_array[Map->format]) (Map);
 }
 
-/*
-*  Returns: 1 - line alive
-*           0 - line is dead
+/*!
+ \fn int Vect_line_alive ( struct Map_info *Map, int line )
+ \brief check if line is alive or dead
+ \return 1 if line alive, 0 if line is dead
+ \param Map_info structure, line number
 */
 int
 Vect_line_alive ( struct Map_info *Map, int line )
@@ -165,9 +181,11 @@ Vect_line_alive ( struct Map_info *Map, int line )
     return 0;
 }
 
-/*
-*  Returns: 1 - node alive
-*           0 - node is dead
+/*!
+ \fn int Vect_node_alive ( struct Map_info *Map, int node )
+ \brief check if node is alive or dead
+ \return 1 if node alive, 0 if node is dead
+ \param Map_info structure, node number
 */
 int
 Vect_node_alive ( struct Map_info *Map, int node )
@@ -177,9 +195,11 @@ Vect_node_alive ( struct Map_info *Map, int node )
     return 0;
 }
 
-/*
-*  Returns: 1 - area alive
-*           0 - area is dead
+/*!
+ \fn int Vect_area_alive ( struct Map_info *Map, int area )
+ \brief check if area is alive or dead
+ \return 1 if area alive, 0 if area is dead
+ \param Map_info structure, area number
 */
 int
 Vect_area_alive ( struct Map_info *Map, int area )
@@ -189,9 +209,11 @@ Vect_area_alive ( struct Map_info *Map, int area )
     return 0;
 }
 
-/*
-*  Returns: 1 - isle alive
-*           0 - isle is dead
+/*!
+ \fn int Vect_isle_alive ( struct Map_info *Map, int isle )
+ \brief check if isle is alive or dead
+ \return 1 if isle alive, 0 if isle is dead
+ \param Map_info structure, isle number
 */
 int
 Vect_isle_alive ( struct Map_info *Map, int isle )

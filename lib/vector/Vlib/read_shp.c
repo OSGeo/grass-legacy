@@ -327,8 +327,11 @@ Vect__Read_line_shp (
 }
 
 
-/*
-*  Returns  next line offset
+/*!
+ \fn long Vect_next_line_offset_shp (struct Map_info *Map)
+ \brief get next line offset for SHAPE format
+ \return next line offset
+ \param Map_info structure
 */
 long
 Vect_next_line_offset_shp ( struct Map_info *Map )

@@ -16,12 +16,15 @@
 *****************************************************************************/
 #include "Vect.h"
 
-/*
-*   calculates z coordinate 
-*
-*   returns: 1 ok
-*            0 point is not in area  
-*           -1 area has not 4 points or has island
+/*!
+ \fn int Vect_tin_get_z ( struct Map_info *Map,
+		   double tx, double ty,
+		   double *tz, double *angle, double *slope)
+ \brief calculates z coordinate for point from TIN
+ \return 1 on success,
+            0 point is not in area,
+           -1 area has not 4 points or has island
+ \param Map_info structure
 */
 int 
 Vect_tin_get_z (

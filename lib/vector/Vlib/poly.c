@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -23,26 +21,6 @@
 #include "gis.h"
 #include "linkm.h"
 
-/*
-   **
-   ** Vect_get_point_in_area (Map, area, x, y)  get point inside area
-   **                                           and outside all islands
-   ** Vect_get_point_in_poly (Points, X, Y)     get point inside polygon
-   ** Vect_get_point_in_poly_isl 
-   **        (Points, Ipoints, x,y,n_isles)     get point inside polygon
-   **                                           but outside the islands 
-   **                                           specifiled in IPoints.
-   **
-   **
-   **  Vect_get_point_in_area()
-   **
-   **     Take a line and intersect it with the polygon and any islands.
-   **     sort the list of X values from these intersections.  This will
-   **     be a list of segments alternating  IN/OUT/IN/OUt of the polygon.
-   **     Pick the largest IN segment and take the midpoint. 
-   **   
- */
-
 struct Slink
   {
     double x;
@@ -57,7 +35,16 @@ static int Vect__divide_and_conquer (struct Slink *, struct line_pnts *,
 			       struct link_head *, double *, double *, int);
 
 
-/* returns 0 on success and -1 on failure */
+/*!
+ \fn int Vect_get_point_in_area ( struct Map_info *Map, int area, double *X, double *Y)
+ \brief get point inside area and outside all islands
+        Take a line and intersect it with the polygon and any islands.
+        sort the list of X values from these intersections.  This will
+        be a list of segments alternating  IN/OUT/IN/OUT of the polygon.
+        Pick the largest IN segment and take the midpoint. 
+ \return 0 on success, -1 on error
+ \param Map_info structure, area number, x, y
+*/
 int 
 Vect_get_point_in_area (
 		       struct Map_info *Map, int area, double *X, double *Y)
@@ -169,11 +156,12 @@ Vect__intersect_line_with_poly (
   return 0;
 }
 
-/*
-   ** This does NOT consider ISLANDS !!! 
-   **
-   ** returns 0 on success and -1 on failure 
- */
+/*!
+ \fn int Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
+ \brief get point inside polygon. This does NOT consider ISLANDS!
+ \return 0 on success, -1 on error
+ \param line_pnts structure
+*/
 int 
 Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
 {
@@ -318,8 +306,14 @@ destroy_links (struct Slink *Head)
     }
 }
 
-/* returns 0 or -1 on error */
 
+/*!
+ \fn int Vect_find_poly_centroid ( struct line_pnts *points,
+			  double *cent_x, double *cent_y)
+ \brief get centroid of polygon
+ \return 0 on success, -1 on error
+ \param line_pnts * structure, x, y of centroid
+*/
 int 
 Vect_find_poly_centroid (
 			  struct line_pnts *points,
@@ -361,6 +355,7 @@ Vect_find_poly_centroid (
   return 0;
 }
 
+
 /*
    ** returns true if point is in any of islands /w in area
    ** returns 0 if not
@@ -399,26 +394,23 @@ Vect_point_in_islands (
 }
 */
 
-
-/*
-   ** Vect_get_point_in_poly_isl (APoints, IPoints, n_isles, X, Y)     get point inside polygon
-   **
-   **  Vect_get_point_in_poly_isl()
-   **
-   **     Take a line and intersect it with the polygon and any islands.
-   **     sort the list of X values from these intersections.  This will
-   **     be a list of segments alternating  IN/OUT/IN/OUt of the polygon.
-   **     Pick the largest IN segment and take the midpoint. 
- */
-
+/*!
+ \fn int Vect_get_point_in_poly_isl ( struct line_pnts *Points, struct line_pnts **IPoints,
+			     int n_isles,
+			     double *att_x, double *att_y)
+ \brief get point inside polygon but outside the islands specifiled in IPoints.
+        Take a line and intersect it with the polygon and any islands.
+        sort the list of X values from these intersections.  This will
+        be a list of segments alternating  IN/OUT/IN/OUt of the polygon.
+        Pick the largest IN segment and take the midpoint. 
+ \return 0 on success, -1 on error
+ \param Map_info structure
+*/
 int 
 Vect_get_point_in_poly_isl (
 		       struct line_pnts *Points, struct line_pnts **IPoints,
 			     int n_isles,
 			     double *att_x, double *att_y)
-
-
-/* returns 0 on success and -1 on failure */
 {
   static struct line_pnts *Intersects;
   double cent_x, cent_y;
