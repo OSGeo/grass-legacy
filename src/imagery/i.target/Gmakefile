@@ -1,6 +1,6 @@
 LIST = main.o ask_target.o
 
-$(BIN)/i.target: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.target: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
 
 $(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
