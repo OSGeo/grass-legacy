@@ -341,7 +341,7 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
 
 	/* print progress */
 	if ( count == 100 ) {
-	    prnmsg ("%4d\b\b\b\b", iFeature);
+	    prnmsg ("%7d\b\b\b\b\b\b\b", iFeature);
 	    count = 0;
 	}
 
