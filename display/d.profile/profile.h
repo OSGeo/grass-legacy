@@ -44,6 +44,7 @@ struct windows
 
 struct ProfileNode
    {
+   double north, east, dist;
    UCAT   cat;
    struct ProfileNode *next;
    };
