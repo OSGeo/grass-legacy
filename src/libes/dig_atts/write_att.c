@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 /*  Functions in this file: write_att(), write_att_struct(), and,
 *   write_att_line();
@@ -64,6 +63,22 @@
 
 #include "dig_atts.h"
 #include <stdio.h>
+
+#ifdef LINE
+#undef LINE 0
+#undef AREA 1
+#undef DOT 2
+#undef DEAD_LINE 4
+#undef DEAD_AREA 5
+#undef DEAD_DOT 6
+#endif
+
+#define LINE 0
+#define AREA 1
+#define DOT 2
+#define DEAD_LINE 4
+#define DEAD_AREA 5
+#define DEAD_DOT 6
 
 static char * float_point ();
 static n_index ();
@@ -142,7 +157,6 @@ write_att_line (fp, x_coors, y_coors, n_coors, cat)
 	double	*x_coors, *y_coors ;
 	int	n_coors,  cat ;
 {
-	int  i ;
 	int  which_coor ;
 	double  x,  y ;
 	char	buf[80] ;
