@@ -1,0 +1,11 @@
+To convert RGB to a good grey level.
+
+    GREY = (int) (.177*RED + .813*GREEN + .011*BLUE);
+
+This is based on the C.I.E X,Y,Z system wher Y is luminance.
+
+     Y = .177R + .813G + .011B
+
+See p.67 of Fundamental of Digital Image Processing, by Anil K. Jain,
+1989, Prentice Hall, NJ.
+
