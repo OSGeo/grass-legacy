@@ -1,4 +1,3 @@
-/* %W% %G% */
 cym (n, cyan, yellow, magenta)
     unsigned char n;
     int *cyan, *yellow, *magenta;
