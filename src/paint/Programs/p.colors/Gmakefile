@@ -1,0 +1,11 @@
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+LIST =	main.o
+
+####################################################################
+$(BIN_MAIN_INTER)/p.colors: $(LIST) $(INTERFACE) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) $(GISLIB) $(VASK) -o $@
+
+####################################################################
+$(INTERFACE):	# in case the interface changes
+$(GISLIB):	# in case the library changes
+$(VASKLIB):	# in case the library changes
