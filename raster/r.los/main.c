@@ -124,7 +124,15 @@ main (int argc, char *argv[])
     else
         patt_flag=1;
 
-
+/* Make sure that the current projection is not lat/long */
+    if ((G_projection() == 3))
+        {
+          char msg[256];
+          sprintf(msg,"lat/long databases not (yet) supported.");
+          G_fatal_error (msg);
+          exit(1);
+        }
+                                                
     /* check if specified observer location inside window   */
     if(east<window.west || east>window.east
         || north>window.north || north<window.south)
