@@ -47,7 +47,7 @@ void read_sites ( char *name, int field, char *col)
     if ( nrec < 0 ) 
 	G_fatal_error (_("Cannot select data from table"));
 
-    G_message ( "%d records selected from table", nrec);
+    G_message ( _("%d records selected from table"), nrec);
 
     db_close_database_shutdown_driver(Driver);
     
@@ -88,6 +88,6 @@ void read_sites ( char *name, int field, char *col)
 
     Vect_close ( &Map );
 
-    G_message ( "%d points loaded\n", npoints);
+    G_message ( _("%d points loaded\n"), npoints);
 }
 
