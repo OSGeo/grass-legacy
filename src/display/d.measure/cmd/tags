@@ -1,0 +1,6 @@
+Mmain	main.c	/^main(argc, argv)$/
+calc_area	msurements.c	/^calc_area(x1, y1, x2, y2) $/
+draw_line	draw_line.c	/^draw_line(screen_x,screen_y,cur_screen_x,cur_scree/
+measurements	msurements.c	/^measurements(color1,color2)$/
+print_en	msurements.c	/^print_en(e,n)$/
+print_length	msurements.c	/^print_length(length)$/
