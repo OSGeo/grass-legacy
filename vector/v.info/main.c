@@ -113,14 +113,13 @@ main (int argc, char *argv[])
     printline (line);
     sprintf (line, "                                         Number of lines:      %-9ld", (long)Vect_get_num_lines(&Map));
     printline (line);
-/* next missing: */
-/*    sprintf (line, "                                         Number of centroids:      %-9ld", (long)Vect_get_num_centroids(&Map));
-    printline (line);*/
+    sprintf (line, "                                         Number of centroids:  %-9ld", (long)Vect_get_num_centroids(&Map));
+    printline (line);
     sprintf (line, "                                         Number of areas:      %-9ld", (long)Vect_get_num_areas(&Map));
     printline (line);
     sprintf (line, "                                         Number of islands:    %-9ld", (long)Vect_get_num_islands(&Map));
     printline (line);
-    sprintf (line, "                                         Map is 3D:    %d", Vect_is_3d(&Map));
+    sprintf (line, "                                         Map is 3D:            %d", Vect_is_3d(&Map));
     printline (line);
   }
   else
