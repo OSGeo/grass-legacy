@@ -1,0 +1,77 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffinfo.1,v 1.8 90/11/25 11:16:00 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFINFO 1 "May 2, 1990"
+.SH NAME
+tiffinfo \- print information about
+.SM TIFF
+files
+.SH SYNOPSIS
+.B tiffinfo
+[
+.B \-D
+] [
+.B \-d
+] [
+.B \-c
+] [
+.B \-s
+] [
+.B \-#
+]
+.I "name \&..."
+.SH DESCRIPTION
+.I Tiffinfo
+displays information about files created according
+to the Tag Image File Format, Revision 5.0.
+By default, the contents of each
+.SM TIFF
+directory in each file
+is displayed, with the value of each tag shown symbolically
+(where sensible).
+.PP
+The
+.B \-D
+option forces
+.I tiffinfo
+to read and decompress all the data in a file (but not display it).
+.PP
+The
+.B \-d
+option forces
+.I tiffinfo
+to print each byte of decompressed data stored in a file in hexadecimal.
+.PP
+The
+.B \-c
+option forces
+.I tiffinfo
+to display the colormap and color/gray response curves,
+if present.
+.PP
+The
+.B \-s
+option forces
+.I tiffinfo
+to display the offsets and byte counts for each data strip in
+a directory.
+.PP
+The
+.B \-#
+option sets the initial
+.SM TIFF
+directory to
+.IR # .
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffcp (1),
+.IR tiffcmp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
