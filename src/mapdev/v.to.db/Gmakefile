@@ -1,0 +1,27 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+PGM=v.to.db
+
+LIBES= $(GISLIB)
+LIST = main.o\
+	parse.o\
+	lines.o\
+	calc.o\
+	find.o\
+	report.o\
+	alloc.o\
+	update.o\
+	points.o\
+	areas.o\
+	units.o	
+
+	
+all: $(BIN_CONTRIB_CMD)/$(PGM)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(MATHLIB) $(XDRLIB) $(DBMILIB)
+
+$(LIST): global.h
+
+$(LIBES): #
