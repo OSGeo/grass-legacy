@@ -94,3 +94,23 @@ int db_driver_fetch(cn, position, more)
     }
     return DB_OK;
 }
+
+int
+db_driver_get_num_rows (cn )
+        dbCursor *cn;
+{
+    cursor     *c;
+    dbToken    token;
+
+    /* get cursor token */
+    token = db_get_cursor_token(cn);
+
+    /* get the cursor by its token */
+    if (!(c = (cursor *) db_find_token(token)))
+    {
+        db_error("cursor not found");
+        return DB_FAILED;
+    }
+
+    return ( c->nrows );
+}
