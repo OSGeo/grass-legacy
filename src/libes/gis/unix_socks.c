@@ -26,6 +26,8 @@
 *
 *****************************************************************************/
 
+#ifndef __MINGW32__
+
 #include "gis.h"
 #include <stdio.h>
 #include <stddef.h>
@@ -264,3 +266,4 @@ G_sock_connect (char *name)
 }
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab : */
+#endif

@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <signal.h>
 #include <sys/types.h>
+
+#ifndef __MINGW32__
 #include <sys/wait.h>
+#endif
 #include "gis.h"
 
 #define tst(a,b)        (*mode == 'r'? (b) : (a))
@@ -47,7 +50,11 @@ FILE *G_popen(
 
 int G_pclose( FILE *ptr)
 {
+#ifdef __MINGW32__
+    void (*sigint)();
+#else    
     void (*sighup)(), (*sigint)(), (*sigquit)();
+#endif
     int f, r;
     int status;
 
@@ -55,8 +62,10 @@ int G_pclose( FILE *ptr)
     fclose(ptr);
 
     sigint  = signal(SIGINT, SIG_IGN);
+#ifndef __MINGW32__
     sigquit = signal(SIGQUIT, SIG_IGN);
     sighup  = signal(SIGHUP, SIG_IGN);
+#endif
 
     while((r = wait(&status)) != popen_pid[f] && r != -1)
 	    ;
@@ -65,8 +74,10 @@ int G_pclose( FILE *ptr)
 	status = -1;
 
     signal(SIGINT, sigint);
+#ifndef __MINGW32__
     signal(SIGQUIT, sigquit);
     signal(SIGHUP, sighup);
+#endif
 
     return(status);
 }

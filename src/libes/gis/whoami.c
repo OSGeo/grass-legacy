@@ -12,13 +12,19 @@
  *
  *****************************************************************/
 #include <unistd.h>
+
+#ifndef __MINGW32__
 #include <pwd.h>
+#endif
+
 #include "gis.h"
 
 char *G_whoami(void)
 {
+#ifdef __MINGW32__
+    static char *name = "mingw_user_name";
+#else
     static char *name= 0;
-
 #ifdef COMMENTED_OUT
     char *getlogin();
     char *ttyname();
@@ -46,5 +52,6 @@ char *G_whoami(void)
     if (name == NULL)
 	name = G_store ("?");
 
+#endif
     return name;
 }

@@ -52,8 +52,12 @@ int G__make_mapset_element (char *p_element)
 /* MOD shapiro 16apr91 */
 	    if (access (path, 0) != 0)
 	    {
+#ifdef __MINGW32__
+		mkdir(path);
+#else                
 		mkdir(path,0777);
-	    }
+#endif
+	}
 /* end MOD */
 	    if (access (path, 0) != 0)
 	    {
