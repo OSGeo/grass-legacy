@@ -57,45 +57,45 @@ raster format.
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>if</B>=<EM>name</EM>
+<DT><B>input</B>=<EM>name</EM>
 
 <DD>The pathname of the tape device where the raw DTED data exists 
 (default is <KBD>/dev/rmt0</KBD>)
 
-<DT><B>of</B>=<EM>name</EM>
+<DT><B>output</B>=<EM>name</EM>
 
 <DD>The full pathname of the output file into which the extracted tape data is
 to be copied
 
-<DT><B>hf</B>=<EM>name</EM>
+<DT><B>header</B>=<EM>name</EM>
 
 <DD>The full pathname of a file to contain descriptive information about
 the extracted data;  should be placed in the same directory as the output file
 
-<DT><B>n</B>="<EM>string</EM>"
+<DT><B>north</B>="<EM>string</EM>"
 
 <DD>North latitude value defining the boundaries of the extraction geographic
 region 
 (format: <EM>dd.mm.ss[n|s]</EM>)
 
-<DT><B>s</B>="<EM>string</EM>"
+<DT><B>south</B>="<EM>string</EM>"
 
 <DD>South latitude value defining the extraction geographic region
 (format: <EM>dd.mm.ss[n|s]</EM>)
 
-<DT><B>ea</B>="<EM>string</EM>"
+<DT><B>east</B>="<EM>string</EM>"
 
 <DD>East longitude value defining the extraction geographic region
 (format: <EM>dd.mm.ss[e|w]</EM>)
 
-<DT><B>w</B>="<EM>string</EM>"
+<DT><B>west</B>="<EM>string</EM>"
 
 <DD>West longitude value defining the extraction geographic region
 (format: <EM>dd.mm.ss[e|w]</EM>)
 
 </DL>
 
-The <B>n</B>, <B>s</B>, <B>e</B> and <B>w</B>
+The <B>north</B>, <B>south</B>, <B>east</B> and <B>west</B>
 parameters define a
 geographic region that should completely encompass the data
 set.  <EM>dd.mm.ss</EM> are degree, minute, and second
@@ -109,7 +109,7 @@ The command line:
 
 <DL>
 <DD>
-<B>m.dted.extract if=</B><EM>/dev/rmt0</EM> <B>of=</B><EM>dted.out</EM> <B>hf=</B><EM>dted.head</EM> 
+<B>m.dted.extract in=</B><EM>/dev/rmt0</EM> <B>out=</B><EM>dted.out</EM> <B>head=</B><EM>dted.head</EM> 
 <B>n=</B><EM>37.30.00n</EM> <B>s=</B><EM>37.15.00n</EM> <B>e=</B><EM>103.30.00w</EM> <B> w=</B><EM>103.45.00w</EM>
 </DL>
 
@@ -118,7 +118,7 @@ will extract DTED data from <KBD>/dev/rmt0</KBD>,
 store it in a file named <KBD>dted.out</KBD>,
 and store some supporting information in the file <KBD>dted.head</KBD>.
 Only data that falls within the geographic region
-defined by the coordinates <B>n</B>, <B>s</B>, <B>e</B> and <B>w</B> 
+defined by the coordinates <B>north</B>, <B>south</B>, <B>east</B> and <B>west</B> 
 will be extracted.
 
 <H2>NOTE</H2>
