@@ -16,8 +16,8 @@ $(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
 		mv $(PGM) $(SITE)/$(PGM)
 
 $(LIST):	$I/site.h run.h
-main.o:		$I/menu.h $I/dir.h
-get_site.o: $I/dir.h
+main.o:		$I/menu.h $I/site_dir.h
+get_site.o: $I/site_dir.h
 
 $(SITELIB):	#
 $(GISLIB):	#
