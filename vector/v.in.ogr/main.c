@@ -34,12 +34,13 @@ int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field,
 int 
 main (int argc, char *argv[])
 {
-    int    i, j, layer, arg_s_num, nogeom;
+    int    i, j, layer, arg_s_num, nogeom, ncnames;
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
     int    ncols, type;
     struct GModule *module;
     double min_area, snap;
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt, *outloc_opt;
+    struct Option *cnames_opt;
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag, *over_flag, *extend_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
@@ -151,6 +152,13 @@ main (int argc, char *argv[])
     outloc_opt->required = NO;
     outloc_opt->description = "Name for new location to create";
 
+    cnames_opt = G_define_option();
+    cnames_opt->key = "cnames";
+    cnames_opt->type = TYPE_STRING;
+    cnames_opt->required = NO;
+    cnames_opt->multiple = YES;
+    cnames_opt->description = "List of column names to be used instead of original names.";
+
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
     list_flag->description     = "List available layers in data source and exit.";
@@ -180,6 +188,14 @@ main (int argc, char *argv[])
     min_area = atof (min_area_opt->answer);
     snap = atof (snap_opt->answer);
     type = Vect_option_to_types ( type_opt );
+
+    ncnames = 0;
+    if ( cnames_opt->answers ) {
+	i = 0;
+	while ( cnames_opt->answers[i++] ) {
+	    ncnames++;
+	}
+    }
     
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
@@ -441,36 +457,47 @@ main (int argc, char *argv[])
 	    sprintf ( buf, "create table %s (cat integer", Fi->table );
 	    db_set_string ( &sql, buf);
 	    for ( i = 0; i < ncols; i++ ) {
+		char *c;
+		    
 		Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 		Ogr_ftype = OGR_Fld_GetType( Ogr_field );
 		
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
-		
-		/* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
-		* allowed are: [A-Za-z][A-Za-z0-9_]*
-		*/
-		sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
-		G_debug(3, "namebuf = '%s'", namebuf);
-		G_strchg(namebuf , '#', '_');
-		G_strchg(namebuf, '-', '_');
-		G_strchg(namebuf, '.', '_');
-	    
-		/* Remove initial '_' */
-		Ogr_fieldname = namebuf;
-	        while ( *Ogr_fieldname == '_' )
-		    Ogr_fieldname++;
 
-		G_debug(3, "Ogr_fieldname = '%s'", Ogr_fieldname);
+		if ( i < ncnames ) {
+		    Ogr_fieldname = cnames_opt->answers[i];
+		} else {
+		    /* Change column names to [A-Za-z][A-Za-z0-9_]* */
+		    Ogr_fieldname = strdup ( OGR_Fld_GetNameRef( Ogr_field ) );
+		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
+
+		    c = Ogr_fieldname;
+		    while ( *c ) {
+			*c = toascii(*c);
+
+			if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) && !( *c>='0' && *c<='9' ) ) {
+			    *c = '_';
+			}
+			c++;
+		    }
+
+		    c = Ogr_fieldname;
+		    if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) ) { 
+			*c = 'x';
+		    }
+		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
+
+		}
 		
 		/* avoid that we get the 'cat' column twice */
 		if ( strcmp(Ogr_fieldname, "cat") == 0 ) {
-		    sprintf(namebuf, "%s_pg", Ogr_fieldname);
-		    sprintf(Ogr_fieldname, "%s", namebuf);
+		    sprintf(namebuf, "%s_", Ogr_fieldname);
+		    Ogr_fieldname = strdup ( namebuf );
 		}
 		    
-		if ( strcmp(OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname) != 0 ) {
-		    G_warning("Column name changed from '%s' to '%s' (to avoid SQL problems)", 
-			                OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname);
+		if ( strcmp ( OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname) != 0 ) {
+		    G_warning ("Column name changed: '%s' -> '%s'",  
+				  OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname );
 		}
 		
 		/** Simple 32bit integer                     OFTInteger = 0        **/
