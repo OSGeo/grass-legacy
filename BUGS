@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.111 2001-02-06 16:09:24 cho Exp $
+                 $Id: BUGS,v 1.112 2001-02-07 02:55:12 cho Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -23,17 +23,6 @@ are indicated [RC].
     (being worked on by ?)
 
 ----------- libraries ---------------------------------------------
-
-- sites lib: src/libes/gis/sites.c
-  
-  Already fixed by Huidae Cho:
-   BSLASH problem if \ is within a string. Example:
-   @"BB\DD" is not accepted, all sites modules go to sleep then.
-   @"BB\\DD" doesn't help.
-
-  Still to be done:
-   If fixed, update s.in.dbf/dump.c
-  (being worked on by ?)
 
 - Vector:
   R_polygon_abs() seems to ignore islands. Correct?
