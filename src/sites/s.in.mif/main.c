@@ -28,6 +28,7 @@
 #include <assert.h>
 #include "gis.h"
 #include "Vect.h"
+#include "site.h"
 #include "local_structs.h"
 #include "scanner.h"
 
