@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Markus Neteler <neteler@itc.it>, 2004.
-# Stephan Holl <holl@gdf-hannover.de>, 2004.
+# Stephan Holl <holl@gdf-hannover.de>, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-09 21:47+0100\n"
-"PO-Revision-Date: 2004-12-10 15:04+0100\n"
+"POT-Creation-Date: 2005-01-01 16:17+0100\n"
+"PO-Revision-Date: 2005-01-01 16:38+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -122,7 +122,8 @@ msgid ""
 "Full select statement (only if from_table and where is not used), e.g.:\n"
 "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 msgstr ""
-"Komplettes Select-Statement (Nur, wenn 'from_table' und 'where' nicht benutzt werden), z.B.:\n"
+"Komplettes Select-Statement (Nur, wenn 'from_table' und 'where' nicht "
+"benutzt werden), z.B.:\n"
 "\t\tSELECT dedek FROM starobine WHERE obec = 'Frimburg'"
 
 #: ../db/base/copy.c:95
@@ -245,13 +246,17 @@ msgstr "Systemtabellen anstatt Benutzertabellen"
 msgid "List all tables for a given database."
 msgstr "Listet alle Tabellen für eine angegebene Datenbank auf."
 
-#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:52
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
 msgid "'user' in database definition is not supported, use db.login"
-msgstr "'user' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db.login' benutzen."
+msgstr ""
+"'user' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db.login' "
+"benutzen."
 
-#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:56
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
 msgid "'password' in database definition is not supported, use db.login"
-msgstr "'Password' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db.login' benutzen."
+msgstr ""
+"'Password' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db."
+"login' benutzen."
 
 #: ../db/drivers/mysql/db.c:75
 #, c-format
@@ -268,7 +273,9 @@ msgstr "OGR-Treiber: Spalte '%s', OGR Typ %d wird nicht unterstützt."
 msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
 "data may be lost"
-msgstr "Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) abgespeichert; eine Daten können u.U verloren sein."
+msgstr ""
+"Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) "
+"abgespeichert; eine Daten können u.U verloren sein."
 
 #: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
@@ -284,33 +291,40 @@ msgstr "PG-Treiber: Spalte '%s', Typ %d wird nicht unterstützt."
 msgid ""
 "column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
 "may be damaged"
-msgstr "Spalte '%s' vom Typ int8 (bigint) wird als integer (4 bytes) abgespeichert. Einige Daten können u.U. verloren sein."
+msgstr ""
+"Spalte '%s' vom Typ int8 (bigint) wird als integer (4 bytes) abgespeichert. "
+"Einige Daten können u.U. verloren sein."
 
 #: ../db/drivers/postgres/describe.c:111
 #, c-format
 msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
-msgstr "Spalte '%s' vom Type Text wird als varchar(250) abgespeichert. Einige Daten können u.U. verloren sein."
+msgstr ""
+"Spalte '%s' vom Type Text wird als varchar(250) abgespeichert. Einige Daten "
+"können u.U. verloren sein."
 
 #: ../db/drivers/postgres/describe.c:117
 #, c-format
 msgid ""
 "column '%s' : type character varying is stored as varchar(250) some data may "
 "be lost"
-msgstr "Spalte '%s' vom Typ Character ist als Typ varchar(250) abgespeichert. Einige Daten können u.U verloren sein."
+msgstr ""
+"Spalte '%s' vom Typ Character ist als Typ varchar(250) abgespeichert. Einige "
+"Daten können u.U verloren sein."
 
 #: ../db/drivers/postgres/describe.c:123
 #, c-format
 msgid ""
 "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
 "(true)"
-msgstr "Spalte '%s' vom Typ bool (boolean) ist als Typ char(1) abgespeichert. Werte: 0 (falsch), 1 (wahr)"
+msgstr ""
+"Spalte '%s' vom Typ bool (boolean) ist als Typ char(1) abgespeichert. Werte: "
+"0 (falsch), 1 (wahr)"
 
 #: ../db/drivers/postgres/fetch.c:163
-#, fuzzy
 msgid "Cannot recognize boolean value"
-msgstr "Kann die Tabelle nicht kopieren."
+msgstr "Kann den Boolean-Wert nicht erkennen."
 
-#: ../db/drivers/postgres/parse.c:58
+#: ../db/drivers/postgres/parse.c:61
 msgid "Unknown option in database definition for PostgreSQL: "
 msgstr "Unbekannte Option in der Datenbankdefinition für PostgreSQL."
 
@@ -364,12 +378,12 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:217
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
 #, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
 msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:226
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
 #, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
@@ -410,26 +424,26 @@ msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
-#: ../display/d.vect/main.c:423
+#: ../display/d.vect/main.c:501
 #, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
-#: ../display/d.vect/main.c:432
+#: ../display/d.vect/main.c:510
 #, c-format
 msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
-#: ../display/d.vect/main.c:489
+#: ../display/d.vect/main.c:567
 #, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
 
-#: ../display/d.what.vect/main.c:136
+#: ../display/d.what.vect/main.c:139
 msgid "Building spatial index ..."
 msgstr "Baue räumlichen Index..."
 
-#: ../display/d.what.vect/main.c:154
+#: ../display/d.what.vect/main.c:157
 #, c-format
 msgid "Done.\n"
 msgstr "Fertig\n"
@@ -522,10 +536,10 @@ msgstr "           Acker: %.3f\t\tQuadrat-Meilen: %.4f\n"
 #: ../display/d.what.vect/what.c:353
 #, c-format
 msgid ""
-"field: %d\n"
+"Layer: %d\n"
 "category: %d\n"
 msgstr ""
-"Feld: %d\n"
+"Layer: %d\n"
 "Kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
@@ -579,27 +593,32 @@ msgstr ""
 msgid " Right: quit\n"
 msgstr " Rechts:  Beenden\n"
 
-#: ../display/d.zoom/main.c:158
+#: ../display/d.zoom/main.c:161
 #, c-format
 msgid "ERROR: can not get \"list\" items\n"
 msgstr "FEHLER: Kann keine \"list\" Werte finden\n"
 
-#: ../display/d.zoom/main.c:159
+#: ../display/d.zoom/main.c:162
 #, c-format
 msgid "-j flag forced\n"
 msgstr "Benutzung des -j Flags erzwungen.\n"
 
-#: ../display/d.zoom/main.c:196
+#: ../display/d.zoom/main.c:200
 #, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt\n"
 
-#: ../display/d.zoom/main.c:320
+#: ../display/d.zoom/main.c:324
 #, c-format
 msgid "%d raster%s, %d vector%s\n"
 msgstr "%d Raster%s, %d Vektor%s\n"
 
-#: ../display/d.zoom/main.c:346
+#: ../display/d.zoom/main.c:334
+#, c-format
+msgid "this is the first d.zoom run; no previous zoom availible\n"
+msgstr "Das ist das erste Mal, dass 'd.zoom' benutzt wird; keine vorherigen Zoomstufen vorhanden.\n"
+
+#: ../display/d.zoom/main.c:380
 #, c-format
 msgid "Zooming finished.\n"
 msgstr "Zoomfunktion beendet.\n"
@@ -620,7 +639,7 @@ msgstr ""
 msgid "%s Pan\n"
 msgstr "%s Verschieben (Pan)\n"
 
-#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#: ../display/d.zoom/pan.c:22
 #, c-format
 msgid "%s Quit\n"
 msgstr "%s Beenden\n"
@@ -629,6 +648,11 @@ msgstr "%s Beenden\n"
 #, c-format
 msgid "%s Zoom menu\n"
 msgstr "%s Zoom-Menü\n"
+
+#: ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit menu\n"
+msgstr "%s Beende Menü \n"
 
 #: ../display/d.zoom/zoom.c:41
 #, c-format
@@ -1217,7 +1241,7 @@ msgstr "Erstelle keine Attributtabelle."
 msgid "Could not find input %s\n"
 msgstr "Kann die Eingabedatei <%s> nicht finden.\n"
 
-#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:251
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:298
 msgid "Cannot copy table"
 msgstr "Kann die Tabelle nicht kopieren."
 
@@ -1320,6 +1344,8 @@ msgid ""
 " POINT      X coord    Y coord  |        X coord   Y coord    |      "
 "residuals\n"
 msgstr ""
+" PUNKT      X Koord    Y Koord  |        X Koord   Y Koord    |      "
+"Residuen\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
@@ -1346,7 +1372,7 @@ msgstr "Die Punkte sind nicht weit genug auseinander gelegen."
 msgid "You need to enter at least %d points."
 msgstr "Sie müssen mindestens %d Punkte eingeben."
 
-#: ../vector/v.voronoi/dt_main.c:116
+#: ../vector/v.voronoi/dt_main.c:119
 msgid "Cannot calculate area centroid"
 msgstr "Kann den Flächenzentroiden nicht berechnen."
 
