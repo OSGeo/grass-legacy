@@ -151,30 +151,19 @@ G_compare_projections( struct Key_Value *proj_info1,
            != atof(G_find_key_value( "meter", proj_units2 )) )
         return -2;
 
-
-/* -------------------------------------------------------------------- */
-/*      Do they both have the same map datum?                           */
-/* -------------------------------------------------------------------- */
-
-    sprintf(buf1,"%s",G_find_key_value( "datum", proj_info1 ));
-    G_tolcase(buf1);
-    sprintf(buf2,"%s",G_find_key_value( "datum", proj_info2 ));
-    G_tolcase(buf2);
-
-    if ( strcmp(buf1, buf2) != 0 )
-        return -3;
-
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same ellipsoid?                           */
+/*      Lets just check the semi-major axis for now to keep it simple   */
 /* -------------------------------------------------------------------- */
+    
+    {
+        double a1, a2;
+        a1 = atof(G_find_key_value( "a", proj_info1 ));
+        a2 = atof(G_find_key_value( "a", proj_info2 ));
 
-    sprintf(buf1,"%s",G_find_key_value( "ellps", proj_info1 ));
-    G_tolcase(buf1);
-    sprintf(buf2,"%s",G_find_key_value( "ellps", proj_info2 ));
-    G_tolcase(buf2);
-
-    if ( strcmp(buf1, buf2) != 0 )
-        return -4;
+        if ( abs(a2-a1) > 0.000001 )
+            return -4;
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same zone?                           */
