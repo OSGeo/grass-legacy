@@ -26,6 +26,7 @@ char *file_name;
 int currentColor;
 unsigned int *xpixels;
 int true_color;
+int auto_write;
 
 int width, height;
 unsigned int *grid;
@@ -61,6 +62,9 @@ Graph_Set(int argc, char **argv)
 
 	fprintf(stderr,"PNG: GRASS_TRUECOLOR status: %s\n",
 		true_color ? "TRUE" : "FALSE");
+
+	p = getenv("GRASS_PNG_AUTO_WRITE");
+	auto_write = p && strcmp(p, "TRUE") == 0;
 
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;

@@ -12,9 +12,11 @@ extern FILE *output;
 extern int currentColor;
 extern unsigned int *xpixels;
 extern int true_color;
+extern int auto_write;
 
 extern int width, height;
 extern unsigned int *grid;
 extern unsigned char palette[256][4];
 extern unsigned int transparent;
 
+extern void write_image(void);

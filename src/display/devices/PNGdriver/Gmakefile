@@ -3,6 +3,7 @@ EXTRA_CFLAGS = $(PNGINC) -I../lib
 
 OFILES =  \
 	Can_do.o\
+	Client.o\
 	Clr_table.o\
 	Color.o\
 	Draw_line.o\
@@ -13,7 +14,8 @@ OFILES =  \
 	Graph_Set.o\
 	Panel.o\
 	Polygn_abs.o\
-	Raster_int.o
+	Raster_int.o\
+	write.o
 
 LIBES = $(DRIVERLIB) $(GISLIB)
 DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
