@@ -586,7 +586,7 @@ int main (int argc, char *argv[])
 	{
 		if(i = nsew(value, "t+", "t-", "b+"))
 		{
-			if (!G_scan_resolution (value+2, &x, PROJECTION_XY))
+			if ( sscanf (value+2, "%lf", &x) != 1 )
 				die(parm.top);
 			switch(i)
 			{
@@ -601,7 +601,7 @@ int main (int argc, char *argv[])
 				break;
 			}
 		}
-		else if (G_scan_resolution (value, &x, PROJECTION_XY))
+		else if ( sscanf (value, "%lf", &x) == 1 )
 			window.top = x;
 		else
 			die(parm.top);
@@ -612,7 +612,7 @@ int main (int argc, char *argv[])
 	{
 		if(i = nsew(value, "b+", "b-", "t-"))
 		{
-			if (!G_scan_resolution (value+2, &x, PROJECTION_XY))
+			if (  sscanf (value+2, "%lf", &x) != 1 )
 				die(parm.bottom);
 			switch(i)
 			{
@@ -627,7 +627,7 @@ int main (int argc, char *argv[])
 				break;
 			}
 		}
-		else if (G_scan_resolution (value, &x, PROJECTION_XY))
+		else if ( sscanf (value, "%lf", &x) == 1 )
 			window.bottom = x;
 		else
 			die(parm.bottom);
@@ -688,7 +688,7 @@ int main (int argc, char *argv[])
 	/* tbres= */
 	if (value = parm.tbres->answer)
 	{
-		if (!G_scan_resolution (value, &x, PROJECTION_XY))
+		if ( sscanf (value, "%lf", &x) != 1 )
 			die(parm.tbres);
 		window.tb_res = x;
 
