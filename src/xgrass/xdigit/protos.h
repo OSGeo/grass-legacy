@@ -89,6 +89,7 @@ Widget make_browser_popup();
 int show_digth();
 int show_snapth();
 void digthreshcb();
+int reset_lit_line();
 
 /* debugf.c */
 int init_debug();
