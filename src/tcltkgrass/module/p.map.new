@@ -1,0 +1,6 @@
+interface_build {
+    {p.map.new} 1
+    {Hardcopy color map output utility.}
+    {entry input {Mapping instructions file, or - for keyboard:} 0 file}
+    {entry scale {Scale of the output map, e.g. 1:25000 [1panel]} 0 ""}
+}
