@@ -12,6 +12,5 @@ interface_build {
     {checkbox -l {List fields in database(dbf).} "" -l}
     {checkbox -r {Create reject lines map.} "" -r}
     {checkbox -p {Create postgres table.} "" -p}
-    {checkbox -n {Access postgres as normal user.} "" -n}
 }
 
