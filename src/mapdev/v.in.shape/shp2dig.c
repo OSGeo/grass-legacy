@@ -27,8 +27,6 @@
 #include <string.h>
 #include <assert.h>
 #include "shp2dig.h"
-#include "shapefil.h"
-/* #include "gis.h" */
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function carries out the transfer of data from the         */

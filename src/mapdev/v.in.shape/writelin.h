@@ -21,6 +21,9 @@
 
  ******************************************************************************/
 
+#ifndef WRITELIN_H
+#define WRITELIN_H
+
 #include "shp2dig.h"
 #include "gbtree.h"
 
@@ -36,3 +39,4 @@ int check_terminal_snapback( pntDescript *ppnt1, pntDescript *ppnt2, pntDescript
 void build_half_lines( pntDescript *ppntx, segmentList *segl );
 void extract_simple_link( segmentList *seg1, pntDescript *pt1, pntDescript *pt2 );
 
+#endif
