@@ -1,9 +1,7 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; IRIX64 6.4 IP30) [Netscape]">
    <TITLE>r.flow</TITLE>
-
 </HEAD>
 <BODY>
 
@@ -169,8 +167,11 @@ or sediment transport capacity.
 has rather strict conditions for ending flowlines. It is therefore not
 very suitable for the extraction of stream networks or delineation of watersheds
 unless a DEM without pits or flat areas is available.
-<H2>
-DIAGNOSTICS</H2>
+
+<P> To label the vector flowlines automatically, the user can use
+<a href=v.llabel.html>v.llabel</a>.
+
+<H2>DIAGNOSTICS</H2>
 ERROR: GISRC - variable not set
 
 <P>The program was run outside of GRASS.
@@ -202,18 +203,17 @@ resolution
 <P>"ERROR: r.flow: resolution too unbalanced (" val " x " val ")" The difference
 in length between the two axes of a grid cell is so great that quantization
 error is larger than one of the dimensions. Resample the map and try again.
-<BR>&nbsp;
-<H2>
-SEE ALSO</H2>
 
 
-<P><A HREF="r.basins.fill.html">r.basins.fill</A>,
-<A HREF="r.drain.html">r.drain</A>,&nbsp; <A HREF="r.water.outlet.html">r.water.outlet.html</A>
-, <A HREF="r.watershed.html">r.watershed</A>
-<BR>&nbsp;
-<H2>
-AUTHORS</H2>
+<H2>SEE ALSO</H2>
+<A HREF="r.basins.fill.html">r.basins.fill</A>,
+<A HREF="r.drain.html">r.drain</A>,
+<A HREF="r.water.outlet.html">r.water.outlet.html</A>,
+<A HREF="r.watershed.html">r.watershed</A>
+<A HREF="v.llabel.html">v.llabel</A>
 
+
+<H2>AUTHORS</H2>
 
 <P><I>Original version of program:</I>
 <BR>Maros Zlocha and Jaroslav Hofierka, Comenius University, Bratislava,
