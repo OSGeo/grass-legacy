@@ -193,6 +193,8 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: $(ARCH_INCDIR)/version.h \
 	lib \
 	$(ETC)/ellipse.table \
+	$(ETC)/datum.table \
+	$(ETC)/datumtransform.table \
 	$(ETC)/projections \
 	$(ETC)/FIPS.code \
 	$(ETC)/state27 \
@@ -202,6 +204,16 @@ $(ARCH_INCDIR)/version.h:
 	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
 
 $(ETC)/ellipse.table: ellipse.table
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/datum.table: datum.table
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/datumtransform.table: datumtransform.table
 	rm -f $@
 	cp $? $@
 	chmod +r $@
