@@ -1,0 +1,33 @@
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+INTERFILES = \
+	mkgrid_inter.o \
+	ask_for.o \
+	init_head.o \
+	write_grid.o
+
+CMDFILES = \
+	mkgrid_cmd.o \
+	init_head.o \
+	write_grid.o
+
+PROG_CMD = $(BIN_MAIN_CMD)/v.mkgrid 
+PROG_INT = $(BIN_MAIN_INTER)/v.mkgrid 
+
+all:  $(PROG_CMD)
+
+# all:  $(PROG_CMD) $(PROG_INT)
+
+
+$(PROG_CMD):  $(CMDFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(CMDFILES) $(GISLIB) $(VECTLIB) $(MATHLIB)
+	mv a.out $@
+
+$(PROG_INT):  $(INTERFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(INTERFILES) $(GISLIB) $(VECTLIB) $(MATHLIB)
+	mv a.out $@
+
