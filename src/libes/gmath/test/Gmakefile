@@ -1,14 +1,21 @@
 
-OFILES = add_test.o \
+OFILES = \
+	add_test.o \
+	dgesv.o
 
 
-PROG = add_test
+PROGS = add_test dgesv
 G2C = -lg2c
 LA = -lblas -llapack
 
+all: $(PROGS)
 
-$(PROG): $(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LA) $(G2C) \
+add_test: add_test.o
+	$(CC) $(LDFLAGS) -o $@ $< $(LA) $(G2C) \
+	$(GMATHLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+dgesv: dgesv.o
+	$(CC) $(LDFLAGS) -o $@ $< $(LA) $(G2C) \
 	$(GMATHLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
