@@ -1,0 +1,17 @@
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+begin_paint	paint.c	/^begin_paint(prows, pcols)$/
+blu_dither	color.c	/^blu_dither (color, row, col, ncols)$/
+build	color.c	/^build (nlevels, mult, level, value, level_to_255)$/
+build_color_tables	color.c	/^build_color_tables()$/
+build_dither_tables	color.c	/^build_dither_tables()$/
+dither	color.c	/^dither (color, row, col, ncols, low, hi, extra)$/
+eol	nextword.c	/^eol()$/
+grn_dither	color.c	/^grn_dither (color, row, col, ncols)$/
+header	header.c	/^header (rows, cols, max)$/
+mix	color.c	/^mix (low, hi, extra, level_to_255, nlevels, steps)/
+nextword	nextword.c	/^nextword(word)$/
+paint	paint.c	/^paint(red, grn, blu, row, pcols)$/
+printer_color_number	color.c	/^printer_color_number (red, grn, blu)$/
+readcolors	readcolors.c	/^readcolors (red, grn, blu, ncols, max)$/
+red_dither	color.c	/^red_dither (color, row, col, ncols)$/
+xalloc	xalloc.c	/^xalloc (n)$/
