@@ -20,6 +20,7 @@
 <B>d.text.freetype help</B> 
 <BR>
 <B>d.text.freetype</B> 
+[<B>-r</B>]
 <B>text=</B><EM>name</EM>
 [<B>east_north=</B><EM>east,north</EM>] 
 [<B>font=</B><EM>name</EM>] 
@@ -27,11 +28,21 @@
 [<B>charset=</B><EM>name</EM>] 
 [<B>color=</B><EM>name</EM>] 
 [<B>size=</B><EM>value</EM>] 
+[<B>align=</B><EM>name</EM>]
+[<B>rotation=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
 <EM>d.text.freetype</EM> draws text in the active display frame on
 the graphics monitor using TrueType fonts.
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-r</B>
+<DD>Rotation angle in radian
+</DL>
 
 
 <H3>Parameters:</H3>
@@ -49,14 +60,24 @@ the graphics monitor using TrueType fonts.
 <DT><B>charset=</B><EM>name</EM>
 <DD>Sets character encoding for input <B>text</B>.
 <DT><B>color=</B><EM>name</EM>
-<DD>Sets text color to <EM>name</EM>.  <BR>
+<DD>Sets text color to <EM>name</EM>.<BR>
     Options: red, orange, yellow, green, blue, indigo, 
-    violet, gray, white, and black <BR>
-    Default: <EM>gray</EM> <BR>
+    violet, gray, white, and black<BR>
+    Default: <EM>gray</EM><BR>
     It can also be a hexadecimal value of 0xRRGGBB.
 <DT><B>size=</B><EM>value</EM>
-<DD>Sets text height in pixels. <BR>
+<DD>Sets text height in pixels.<BR>
     Default: 30
+<DT><B>align=</B><EM>name</EM>
+<DD>Aligns text in this way.<BR>
+    Options: ll, lc, lr, cl, cc, cr, ul, uc, ur<BR>
+    Default: <EM>ll</EM><BR>
+    l?: Lower, c?: Vertically Centered, u?: Upper,<BR>
+    ?l: Left, ?c: Horizontally Centered, ?r: Right
+<DT><B>rotation=</B><EM>value</EM>
+<DD>Rotates text.<BR>
+    Default: 0<BR>
+    The default unit is degree.
 </DL>
 
 
