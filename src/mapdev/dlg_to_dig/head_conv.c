@@ -1,6 +1,5 @@
-/* %W% %G% */
 #include "dlg.h"
-#include "bdig_head.h"
+#include "dig_head.h"
 
 #define METERS_PER_INCH	0.0254
 
@@ -12,7 +11,7 @@ double lesser ();
 
 hd_dlg_to_dig (dlg, dig)
     struct dlg *dlg;
-    struct bdig_head *dig;
+    struct dig_head *dig;
 {
 	G_strncpy (dig->organization, dlg->head.banner, 29);
 	G_strncpy (dig->date, dlg->head.source_date, 19);
