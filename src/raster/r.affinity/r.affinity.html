@@ -1,0 +1,133 @@
+<html>
+<head>
+<TITLE>r.affinity</TITLE>
+</head>
+<body bgcolor="white">
+<hr width=100% align=center size=6 noshade>
+<H2>NAME</H2>
+
+<EM><b>r.affinity</b></EM> - An raster function that classifies remote 
+sensing images as well as other kinds of maps.
+
+<BR>
+
+<EM>     (GRASS Raster Processing Program)
+
+</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.affinity</B>
+
+<BR>
+
+<B>r.affinity help</B>
+
+<BR> 
+
+<H2>DESCRIPTION</H2>
+     <EM>r.affinity </EM>is an  analysis	classifier based on affinity
+     index of David W. Goodall,	which is quite different with
+     other indices by taking into account the order of the value
+     instead of	the value itself. See AFFINITY BETWEEN AN
+     INDIVIDUAL	AND A CLUSTER IN NUMERICAL TAXONOMY  by	David W.
+     Goodall 1968 for details. The advantage of this program is
+     that it can deal with multi source data. Three kinds of data
+     are supported by this program: <br>
+     1.  quantitative map such as image or DTM data<br>
+     2.  qualitative data such as a landcover map<br>
+     3.  ranked data such as a slope class map
+<p>
+     It should be used as a supervised classification which 
+     determines to which category each cell in the image 
+     has the highest probability of belonging based on training areas
+     (groups of	image pixels) chosen by	the user.
+<p>
+     The raster	map layer output by r.affinity is a classified
+     image in which each cell has been assigned	to a spectral
+     class (i.e., a category).	The spectral classes (categories)
+     can be related to specific	land cover types on the	ground.
+<p>
+     The program will run only interactively.
+<p>
+     The user should first create the rast map with all the training areas
+     using i.digit or in other way. Then simply type r.affinity in the
+     command line without program arguments.
+<p> 
+<H3>Parameters:</H3>
+
+<dl>
+ <dt> <b>training_map </b>     The rast map with all the training areas
+
+<p> 
+ <dt><b> group</b>	       The imagery group contains the subgroup to
+		       be classified.
+<p>
+ <dt> <b> subgroup</b>          The subgroup contains image files and maps, which
+		       are goning to be classified.
+<p>
+    
+ <dt> <b> class_map</b>	       The name	of a raster map	holds the
+		       classification results. This new	raster
+		       map layer will contain categories that can
+		       be related to land cover	categories on the
+		       ground.
+<p>
+ <dt><b>  reject_name </b>      The optional name of a raster map holds
+		       the reject threshold results. It	is the
+		       reject threshold	map layer, and contains
+		       one calculated confidence level for each
+		       classified cell in the classified image.
+		       Generally those cells whose confidence
+		       level is	less than  0.05	can be reguarded
+		       as well classified.  One	of the possible
+		       uses for	this map layer is as a mask, to
+		       identify	cells in the classified	image
+		       that have the lowest probability	of being
+		       assigned	to the correct class.
+<p>
+<dt><b>   data_type </b>     The data type for every file within subgroup
+                     input one number for each file.
+                     1. quantitative data<br>
+                     2. quanlitative data<br>
+                     3. ranked data
+<p>
+<p>
+
+<h2>NOTES</h2>
+     The affinity classifier assumes that the attributes used in
+     classification are	independent with each other. It	is better
+     to	choose those images and maps which are related as less as
+     possible.
+
+         
+     This program respects the region and the mask set by the user.
+
+
+<h2>SEE ALSO</h2>
+     Grass Tutorial: Raster Processing
+<p>
+     r.digit i.group, r.mask
+
+<h2>AUTHOR</h2>
+     Tian Qing,	Institute of Remote Sensing Application, Chinese
+     Academy of	Science
+
+<h2>ACKNOWLEDGEMENTS</h2>
+     I wrote this program in Department	of Biology, University of
+     Trieste, Italy under a fellowship from ICS/UNIDO .
+<p>
+     My	superviser is  Prof. Enrico Feoli (Department of Biology,
+     University	of Trieste, Italy)
+<p>
+     I also would like to thank	 Prof. Paola Ganis (Department of
+     Biology, University of Trieste, Italy) and	Dr. Cristina
+     Milesi (Centre for	Theoretical and	Applied	Ecology) etc.
+
+<h2>NOTICE</h2>
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
+     Integration.
+</body>
+</html>
