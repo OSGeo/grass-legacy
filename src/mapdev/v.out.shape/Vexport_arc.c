@@ -43,6 +43,7 @@ static	char  *cov_type = NULL ;
 static	char  *dig_name = NULL ;
 static	char  *arc_prefix = NULL ;
 static  char  *shape_type= NULL ;
+static  char  *extension= NULL ;
 
 #ifdef OLDPARSE
 static  int  load_args() ;
@@ -278,16 +279,22 @@ main (int argc, char **argv)
  * infile must be in 'generate' format
  */
 	if (strcmp (opt1->answer, "polygon") == 0)
+	{
 			shape_type = "polygons";
+			extension = "pol";
+	}
 	else
 	{
 		if (strcmp (opt1->answer, "line") == 0)
+		{
 			shape_type = "lines";
+			extension = "lin";
+		}
 	}
 	/* do we need points ?? */
 
-	fprintf(stdout, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s", arc_prefix, shape_type, arc_prefix);
-	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s", arc_prefix, shape_type, arc_prefix);
+	fprintf(stdout, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s\n", arc_prefix, shape_type, arc_prefix, extension);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s", arc_prefix, shape_type, arc_prefix, extension);
 	G_system(buf);
 
 	exit(0);
