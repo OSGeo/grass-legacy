@@ -563,7 +563,7 @@ proc Dm::load { lpth } {
 		    }
 		    default {
 		      if {[catch {Dm::node_type $current_node}] } {
-			tk_messageBox -type ok -message "Inappropriate file format"
+			tk_messageBox -type ok -message "Can't open $fpath - bad file format"
 			break
 		      } else {
 
@@ -740,7 +740,7 @@ proc Dm::toggleformmode { } {
     set form_mode $mode
 }
 
-proc main {} {
+proc main {argc argv} {
     global auto_path
 
     wm withdraw .
@@ -776,9 +776,15 @@ proc main {} {
     raise .
     focus -force .
     destroy .intro
+    
+    if { $argc == "1"} { 
+    	set ::Dm::filename $argv
+	Dm::load $::Dm::filename
+    }
+
 }
 
 bind . <Destroy> { if { "%W" == "."} { DmPrint::clean } } 
-main
+main $argc $argv
 wm geom . [wm geom .]
 
