@@ -1,0 +1,4 @@
+all:
+	$(GMAKE) HDF_lib
+	$(GMAKE) r.in.hdf
+	$(GMAKE) r.out.hdf
