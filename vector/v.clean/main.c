@@ -59,8 +59,7 @@ main (int argc, char *argv[])
 	thresh_opt ->type =  TYPE_DOUBLE;
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
-	thresh_opt ->answer = "";
-        thresh_opt ->description = "Threshold in map units for each tool.\n";
+        thresh_opt ->description = "Threshold in map units for each tool (default: 0.0).";
 
 	x_flag = G_define_flag ();
 	x_flag->key             = 'x';
@@ -102,7 +101,7 @@ main (int argc, char *argv[])
 	/* Read thresholds */
 	for ( i = 0; i < ntools; i++ ) threshs[i] = 0.0;
 	i = 0;
-	while ( thresh_opt->answers[i] ) {
+	while ( thresh_opt->answers && thresh_opt->answers[i] ) {
 	    threshs[i] = atof ( thresh_opt->answers[i] ) ;
 	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
 	    
