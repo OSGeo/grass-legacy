@@ -87,7 +87,7 @@ int delete(struct my_string *str) {
 }
 
 
-int DumpFromDBF (char *infile) {
+int DumpFromDBF (char *infile, char *outfile) {
 	
 	DBFHandle   hDBF;
 	char buf[256]="";
@@ -106,10 +106,10 @@ int DumpFromDBF (char *infile) {
 	FILE *sites;
     	char *sitesname;
 
-	sites = G_fopen_sites_new (infile);
+	sites = G_fopen_sites_new (outfile);
 	if (sites == NULL)
 	{
-		fprintf (stderr, " Can't create sites file [%s]", infile);
+		fprintf (stderr, " Can't create sites file [%s]", outfile);
 		exit(1);
 	}
 
@@ -197,9 +197,7 @@ int DumpFromDBF (char *infile) {
         	*pp = '\0';
 	
 	
-  	fprintf(stdout,"Executing %s\n",SQL_create.data);
-	fprintf(stdout, "OK, writing to sites map %s\n", infile);
-
+	fprintf(stdout, "Writing to sites map %s...\n", outfile);
 
         /* Write Header to sites list*/
         fprintf(sites, "%s\n", headerline);
@@ -208,7 +206,7 @@ int DumpFromDBF (char *infile) {
         /* dump the fields */                                              
 	DBFDumpASCII(hDBF, sites);
 		
-	fprintf(stdout,"\nTable %s successfully imported.\n",infile);
+	fprintf(stdout,"\nTable %s successfully imported into %s.\n",infile, outfile);
 
 	DBFClose( hDBF );
 
