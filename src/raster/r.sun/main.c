@@ -80,8 +80,6 @@ char mapname[1024];
 struct Cell_head cellhd;
 struct Map_info Map;
 struct dig_head Head;
-struct Key_Value *in_proj_info, *in_unit_info;
-struct Key_Value *out_proj_info, *out_unit_info;
 struct pj_info iproj;
 struct pj_info oproj;
 
@@ -138,6 +136,10 @@ double TOLER;
 int
 main(int argc, char *argv[])
 {
+
+ struct Key_Value *in_proj_info, *in_unit_info;
+ struct Key_Value *out_proj_info, *out_unit_info;
+ char *ellps;
 
  struct GModule *module;
  struct
@@ -385,6 +387,44 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
 			tim = M_PI * tim / 180;
 			/* conv. to radians */
 		}
+
+        /* Set up parameters for projection to lat/long if necessary */
+   
+	if (latin == NULL && lt == NULL && (G_projection() != PROJECTION_LL)) {
+
+                if((in_proj_info = G_get_projinfo()) == NULL)
+                G_fatal_error("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!");
+
+                if((in_unit_info = G_get_projunits()) == NULL)
+                G_fatal_error("Can't get projection units of current location");
+
+                if(pj_get_kv(&iproj,in_proj_info,in_unit_info) < 0)
+                G_fatal_error("Can't get projection key values of current location");
+		
+                /* Set output projection to latlong w/ same ellipsoid */
+                out_proj_info = G_create_key_value();
+                out_unit_info = G_create_key_value();
+	    
+                G_set_key_value("proj", "ll", out_proj_info);
+
+                ellps = G_find_key_value("ellps", in_proj_info);
+                if( ellps != NULL )
+                    G_set_key_value("ellps", ellps, out_proj_info);
+                else
+                    G_set_key_value("ellps", "wgs84", out_proj_info);
+	    
+                G_set_key_value("unit", "degree", out_unit_info);
+                G_set_key_value("units", "degrees", out_unit_info);
+                G_set_key_value("meters", "1.0", out_unit_info);
+	    
+	        if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
+	            G_fatal_error("Unable to set up lat/long projection parameters");
+		
+                G_free_key_value( in_proj_info );
+                G_free_key_value( in_unit_info );
+                G_free_key_value( out_proj_info );
+                G_free_key_value( out_unit_info );
+        }
 
 /**********end of parser - ******************************/
 
@@ -1313,7 +1353,6 @@ void calculate(void)
 			int i, j, l;
 /*			double energy;*/
 			double lum, q1;
-			char *ellps;
 
 			fprintf(stderr,"\n\n");
 
@@ -1434,34 +1473,6 @@ void calculate(void)
 
                 longitude = xp;
                 latitude = yp;
-
-                if((in_proj_info = G_get_projinfo()) == NULL)
-                G_fatal_error("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!");
-
-                if((in_unit_info = G_get_projunits()) == NULL)
-                G_fatal_error("Can't get projection units of current location");
-
-                if(pj_get_kv(&iproj,in_proj_info,in_unit_info) < 0)
-                G_fatal_error("Can't get projection key values of current location");
-		
-                /* Set output projection to latlong w/ same ellipsoid */
-                out_proj_info = G_create_key_value();
-                out_unit_info = G_create_key_value();
-	    
-                G_set_key_value("proj", "ll", out_proj_info);
-
-                ellps = G_find_key_value("ellps", in_proj_info);
-                if( ellps != NULL )
-                    G_set_key_value("ellps", ellps, out_proj_info);
-                else
-                    G_set_key_value("ellps", "wgs84", out_proj_info);
-	    
-                G_set_key_value("unit", "degree", out_unit_info);
-                G_set_key_value("units", "degrees", out_unit_info);
-                G_set_key_value("meters", "1.0", out_unit_info);
-	    
-	        if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-	            G_fatal_error("Unable to set up lat/long projection parameters");
 		
 	        if(pj_do_proj(&longitude,&latitude,&iproj,&oproj) < 0)
 	        {
