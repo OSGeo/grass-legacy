@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 checkpoint(X,n)
     struct Cluster *X;
