@@ -45,7 +45,7 @@ struct REC2 {
     int ipen;
     int n_points;
 
-    float xy[252];
+    float xy[5000];
 };
 
 struct Option *old, *new;
@@ -62,6 +62,8 @@ main (argc, argv)
     int argc;
     char **argv;
 {
+    G_gisinit(argv[0]);
+
 /*  check args and set flags  */
 	
 /************************** Command Parser ************************************/
@@ -94,7 +96,6 @@ main (argc, argv)
         exit (-1);
     }
 
-    G_gisinit(argv[0]);
 
     export (in_name, out_name); 
 
@@ -133,6 +134,9 @@ export(in_name, out_name)
 
     /* open output files */
     Att = G_fopen_new ("dig_att", out_name);
+
+    if (0 > Vect_open_new (&Map, out_name))
+        G_fatal_error ("Can't open vector file for write");
 
     /* open input contour file */
     if (NULL == (In = fopen (in_name, "r")))
@@ -246,7 +250,7 @@ export(in_name, out_name)
 
     Vect_close (&Map);
 
-    fprintf (stdout, "Cont2dig complete.   You must now run support.vect (option 1)\n");
+    fprintf (stdout, "Cont2dig complete.   You must now run v.support (option 1)\n");
     fprintf (stdout, " to build the dig_plus file.\n\n\n");
 
 
