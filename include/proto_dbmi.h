@@ -49,6 +49,8 @@ int         db_convert_value_to_string P((dbValue *value , int sqltype , dbStrin
 void        db_copy_dbmscap_entry     P((dbDbmscap *dst , dbDbmscap *src ));
 int         db_copy_string            P((dbString *dst , dbString *src ));
 int         db_copy_table ( char *, char *, char *, char *, char *, char *);
+int         db_copy_table_where ( char *, char *, char *, char *, char *, char *, char *);
+int         db_copy_table_by_ints ( char *, char *, char *, char *, char *, char *, char *, int *, int);
 void        db_copy_value             P((dbValue *dst , dbValue *src ));
 int         db_create_database        P((dbDriver *driver , dbHandle *handle ));
 int         db_create_index           P((dbDriver *driver , dbIndex *index ));
