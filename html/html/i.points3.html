@@ -43,7 +43,7 @@ The first prompt in the program asks the user for the imagery group to be regist
        Enter 'list' for a list of existing imagery groups
        Enter 'list -f' for a verbose listing
        Hit RETURN to cancel request
-       >
+       &gt;
 </PRE>
 
 <P>
@@ -61,41 +61,49 @@ After entering the imagery group to be registered the terminal screen displays t
 
 The graphics monitor displays the following screen:
 <PRE>
-       box,   center,  tab(:);  l|l.   imagery   filename   (mag)
-       :target  filename  (mag) 
 
+     +-----------------------------+--------------------------------+
+     |imagery  filename  (mag)     | target  filename  (mag)        |
+     +-----------------------------+--------------------------------+
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     +-----------------------------+--------------------------------+
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     |                             |                                |
+     +-----------------------------+--------------------------------+
+     |QUIT &lt;main&gt; ZOOM  PLOT MARK  | ANALYZE OVERLAY TRANSFORM      |
+     +-----------------------------+--------------------------------+
 
-
-
-
-
-
-       =
-
-
-
-
-
-
-
-        QUIT <main> ZOOM  PLOT MARK :ANALYZE OVERLAY TRANSFORM:
 </PRE>
 
 A pop-down menu like that shown below will be superimposed on the left half of the screen:
 <PRE>
-       box, center;
-       c.
-       Double click on raster map layer
-       to be plotted
-       Double click here to cancel
 
-       allbox, center, tab(:);
-       c s
-       l l.
-       Mapset demo
-       spotclass:spot.1
-       composite:spot.2
-       spot.3:
+                   +---------------------------------+
+                   |Double click on raster map layer |
+                   |         to be plotted           |
+                   |  Double click here to cancel    |
+                   +---------------------------------+
+                          +-------------------+
+                          |   Mapset demo     |
+                          +----------+--------+
+                          |spotclass | spot.1 |
+                          +----------+--------+
+                          |composite | spot.2 |
+                          +----------+--------+
+                          |spot.3    |        |
+                          +----------+--------+
+
 </PRE>
 
 Any single raster map layer in the imagery group may be used on which to mark points, and the user can mark points on more than one raster map layer in the imagery group to accumulate the suggested minimum number of points.  Any raster map layer in the imagery group can be rectified (using <EM>i.rectify</EM>) based on the transformation parameters computed from these points.
@@ -106,7 +114,11 @@ The imagery file chosen by the user is displayed in the upper left quadrant of t
 <H3>ZOOM</H3>
 To magnify the displayed file, the user must place the mouse cross hairs on the word ZOOM.  The following menu will then be displayed at the bottom of the screen:
 <PRE>
-       box, center, tab(:); l|l|l|l.  CANCEL:<zoom>:BOX:POINT
+
+                    +-------+--------+-----+-------+
+                    |CANCEL | &lt;zoom&gt; | BOX | POINT |
+                    +-------+--------+-----+-------+
+
 </PRE>
 
 The user has the option of identifying the zoom region either by using the mouse to make a box, or by using the mouse to mark the two diagonal points of the desired region.  The terminal screen will display a mouse button menu to guide the user in identifying the corner points of the region.
@@ -118,8 +130,11 @@ The user can return to the main menu by selecting the CANCEL option.
 In addition to acquiring reference points from a standard map, the user has the option of acquiring the reference points from a raster or vector map layer in the target data base LOCATIONNAME.  A target location map layer is displayed by placing the mouse cross hairs on the words PLOT.  The following line is then displayed at the bottom of the graphics monitor:
 
 <PRE>
-       allbox,        center,        tab(:);         l|l|l|l|l|l.
-       CANCEL:<plot>:IMAGERY:RASTER:VECTOR:REFRESH:CLEAR
+
+     +-------+--------+---------+--------+--------+---------+-------+
+     |CANCEL | &lt;plot&gt; | IMAGERY | RASTER | VECTOR | REFRESH | CLEAR |
+     +-------+--------+---------+--------+--------+---------+-------+
+
 </PRE>
 
 The IMAGERY option allows the user to select another imagery group file to be displayed (on the left hand side of the graphics monitor).
@@ -143,32 +158,40 @@ The user can return to the main menu by selecting the CANCEL option.
 A pop-down menu will be superimposed on the left half of the screen for the IMAGERY option, and on the right hand side for either the RASTER or VECTOR options:  The pop-up menu will allow you to select either an raster or vector map layer to be displayed in the appropriate half of the graphics monitor.
 
 <PRE>
-       box, center;
-       c.
-       Double click on raster (vector) map layer
-       to be plotted
-       Double click here to cancel
 
-       allbox, center, tab(:);
-       c s
-       l l.
-       Mapset demo
-       tm.rectified: spot.rect
-       tm.classified:spot.rect.class
+              +------------------------------------------+
+              |Double click on raster (vector) map layer |
+              |              to be plotted               |
+              |       Double click here to cancel        |
+              +------------------------------------------+
+                   +--------------------------------+
+                   |          Mapset demo           |
+                   +--------------+-----------------+
+                   |tm.rectified  |  spot.rect      |
+                   +--------------+-----------------+
+                   |tm.classified | spot.rect.class |
+                   +--------------+-----------------+
+
 </PRE>
 
 <H3>MARKING POINTS</H3>
 To mark the points on the image that correspond to the points on a standard coordinate system map, the user must place the mouse cross hairs on the corresponding location on the image to be marked and press the left hand button on the mouse.  A diamond shaped symbol will be marked on the image.  The user's terminal will display the following menu:
 
 <PRE>
-       box, center, tab(#); l|l.  Point 1 marked on the image at#
-       East: 1023.77# North: -164.41#
 
+       +-------------------------------+--------------------------+
+       |Point 1 marked on the image at |                          |
+       |East: 1023.77                  |                          |
+       |North: -164.41                 |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       +-------------------------------+--------------------------+
+       |Enter coordinates as east north:                          |
+       +----------------------------------------------------------+
 
-
-
-
-        l s.  Enter coordinates as east north:
 </PRE>
 
 The user then enters the easting and northing (separated by a space) for the point marked on the image.  If the user wishes not to enter a coordinate, he or she may simply hit RETURN to return control to the mouse; the marked point then disappears and will NOT be used.
@@ -177,8 +200,11 @@ The user then enters the easting and northing (separated by a space) for the poi
 If a target raster or vector map layer is displayed (in the right hand side) the following message appears at the bottom of the graphics monitor:
 
 <PRE>
-       allbox, center, tab(:); l l l.  input method
-       -->:keyboard:screen
+
+                 +-----------------+----------+--------+
+                 |input method --&gt; | keyboard | screen |
+                 +-----------------+----------+--------+
+
 </PRE>
 
 If the user wishes to use the plotted raster map layer only as a comparative reference, then the keyboard can be chosen as the means to input coordinates corresponding to the marked points on the image.  This is done by placing the mouse cross hairs on the word KEYBOARD and pressing the left button on the mouse.
@@ -187,17 +213,25 @@ If the user wishes to use the plotted raster map layer only as a comparative ref
 If the user selects the SCREEN option, then points marked on the image will automatically be associated with the coordinates from the corresponding points on the target data base map layer.  In this option, when the user marks a point on the image, the following menu is displayed at the terminal:
 
 <PRE>
-       box, center, tab(#); l|l.  Point 5 marked on the image at#
-       East: 1023.77# North: -164.41#
 
+       +-------------------------------+--------------------------+
+       |Point 5 marked on the image at |                          |
+       |East: 1023.77                  |                          |
+       |North: -164.41                 |                          |
+       |                               |                          |
+       |                               |                          |
+       |Point located at               |                          |
+       |East: 679132.57                |                          |
+       |North: 4351080.67              |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       |                               |                          |
+       +-------------------------------+--------------------------+
+       |use mouse now...                                          |
+       +----------------------------------------------------------+
 
-       Point located at# East: 679132.57# North: 4351080.67#
-
-
-
-
-
-        l s.  use mouse now...
 </PRE>
 
 The user then uses the mouse to mark a corresponding point on the displayed image from the target data base.  The coordinates for the target data base map layer are automatically saved as the coordinates corresponding to the marked point on the image.
@@ -206,24 +240,32 @@ The user then uses the mouse to mark a corresponding point on the displayed imag
 After a number of points have been marked (4 to 7), the user can check the RMS error of the points marked on the image.  This is done by placing the mouse cross hairs on the word ANALYZE at the bottom of the graphics monitor.  An error report resembling that shown below is superimposed on the graphics monitor:
 
 <PRE>
-       box,  center,  tab(?);  c  s  s s s s s s c c c c c c c c.
-       error                     image                     target
-       #?row?col?target?east?north?east?north                   
-       1?0.0?-0.9?1.0?1048.5?-144.8?679132.5?4351080.6
-       2?0.4?1.0?1.3?2153.1?-567.2?684314.7?4399001.4
-       3?-1.2?-0.5?.6?1452.8?-476.5?567841.4?3457682.8
-       4?1.1?0.5?1.3?1034.0?-109.2?677573.8?4352626.4
-       5?-2.7?14.0?14.2?1048.6?-144.9?679132.6?4351080.7
 
-        l l l l.  ?overall?rms?error:?4.46
+ +---------------------------------------------------------------------+
+ |         error                 image                 target          |
+ |#     row     col    target    east    north      east       north   |
+ +---------------------------------------------------------------------+
+ |1     0.0     -0.9    1.0     1048.5   -144.8   679132.5   4351080.6 |
+ |2     0.4     1.0     1.3     2153.1   -567.2   684314.7   4399001.4 |
+ |3    -1.2     -0.5     .6     1452.8   -476.5   567841.4   3457682.8 |
+ |4     1.1     0.5     1.3     1034.0   -109.2   677573.8   4352626.4 |
+ |5    -2.7     14.0    14.2    1048.6   -144.9   679132.6   4351080.7 |
+ |                                                                     |
+ +---------------------------------------------------------------------+
+ |    overall   rms    error:   4.46                                   |
+ +---------------------------------------------------------------------+
 
+</PRE>
 
+The following menu then  appears  at  the  bottom  of  the
+graphics monitor:
 
-       The following menu then  appears  at  the  bottom  of  the
-       graphics monitor:
+<PRE>
 
-       allbox,  center, tab(:); l l l l.  DONE:PRINT:FILE: Double
-       click on point to be included/excluded
+ +-----+-------+------+------------------------------------------------+
+ |DONE | PRINT | FILE |  Double click on point to be included/excluded |
+ +-----+-------+------+------------------------------------------------+
+
 </PRE>
 
 The RMS error for the image is given under the column titled "error" and subtitled "row" and "col".  In the above report, point number 1 is 0.0 rows and -0.9 columns from the predicted location calculated from the transformation equation.  The RMS error for the target raster map layer is listed under the heading "target".  This is the RMS error for the east and north coordinates of the target map layer, but it is presented in the table using one general value.  The overall RMS error is displayed at the bottom of the screen in meters.  Points that create high RMS error are displayed in red on the graphics monitor (represented here in italics).
@@ -235,8 +277,9 @@ The location of the point marked on the imagery group file is given under the he
 The OVERLAY option allows the user to visulaize the results of the RMS error analysis.  The option allows the user to overlay either a grid some vector map layers to visually examine the results of the transformation.  The following menu appears at the bottom of the graphics screen.
 <PRE>
 
-       allbox,  center,  tab(:);  l  l  l l.  CANCEL:VECTOR:GRID:
-       REFRESH
+                  +-------+--------+------+-----------+
+                  |CANCEL | VECTOR | GRID |  REFRESH  |
+                  +-------+--------+------+-----------+
 </PRE>
 
 The VECTOR option allows the user to overlay all of the vector map layers that are currently displayed on the right hand side on top of the original source imagery (left hand side).
@@ -256,14 +299,21 @@ The transfromation option allows the user to select the type of transformation t
 
 The following menu appears at the bottom of the graphics monitor.
 <PRE>
-       allbox,      center,      tab(:);     l     l     l     l.
-       CANCEL:POLYNOMIAL:ORTHOPHOTO:LANDSATTM
+
+            +-------+------------+-------------+------------+
+            |CANCEL | POLYNOMIAL | ORTHO_PHOTO | LANDSAT_TM |
+            +-------+------------+-------------+------------+
+
 </PRE>
 
 <H3>POLYNOMIAL</H3>
 The POLYNOMIAL option allows the user to select the degree of the polynomial transformation (first, second, or third).  The following menu appears at the bottom of the graphics monitor.
 <PRE>
-       allbox, center, tab(:); l l l l.  CANCEL:POLY1:POLY2:POLY3
+
+                    +-------+-------+-------+-------+
+                    |CANCEL | POLY1 | POLY2 | POLY3 |
+                    +-------+-------+-------+-------+
+
 </PRE>
 
 This menu allows the user to select the degree of the polynomial transformation (first, second, or third).
@@ -272,8 +322,11 @@ This menu allows the user to select the degree of the polynomial transformation 
 The ORTHOPHOTO transformation is strictly for aerial photography.  The transformation is much more complicated than a polynomial transformation.  The ORTHOPHOTO transformation requires the user to enter elevation data, camera data, and exposure data.  The following menu appears at the bottom of the graphics monitor.
 
 <PRE>
-       allbox,   center,   tab(:);    l    l    l    l    l    l.
-       CANCEL:ELEVATION:CAMERA:MARK FID.:ANAL FID.:EXPOSURE
+
+    +-------+-----------+--------+-----------+-----------+----------+
+    |CANCEL | ELEVATION | CAMERA | MARK FID. | ANAL FID. | EXPOSURE |
+    +-------+-----------+--------+-----------+-----------+----------+
+
 </PRE>
 
 The ORTHOPHOTO option allows the user to select a raster map layer in the target LOCATIONNAME to be displayed on the right hand side of the graphics monitor.
@@ -282,7 +335,11 @@ The ORTHOPHOTO option allows the user to select a raster map layer in the target
 The LANDSATTM transfromation is strictly for LANDSAT Thematic mapper imagery.  This transfromation requires information extracted from the LANDSAT data tape as well as an elevation model.  The following menu appears at the bottom of the graphics monitor.
 
 <PRE>
-       allbox, center, tab(:); l l.  CANCEL:ELEVATION
+
+                          +-------+-----------+
+                          |CANCEL | ELEVATION |
+                          +-------+-----------+
+
 </PRE>
 
 <H3>QUIT</H3>
