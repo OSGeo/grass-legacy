@@ -1,0 +1,17 @@
+PGM       = v.out.mif
+LIBES     = $(VECTLIB) $(GISLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB)
+
+
+OBJS = \
+	main.o \
+	plot.o
+
+CFILES = \
+	main.c \
+	plot.c
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPLIBS): #

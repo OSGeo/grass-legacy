@@ -1,0 +1,4 @@
+
+all:
+	$(GMAKE) wrap
+	$(GMAKE) w32

@@ -1,7 +1,0 @@
-
-
-v.stats - 
-
-v.stats prints out information about a GRASS @glossary("vector",16.glossary/vector.def) @glossary("map layer",16.glossary/maplayer.def).
-
-Manual entry for @man("v.stats")

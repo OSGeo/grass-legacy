@@ -1,59 +1,70 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       coorcnv library
+ * AUTHOR(S):    Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 provide functions for reading datum parameters from the
+ *               location database.     
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+#include <unistd.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include "gis.h"
 #include "CC.h"
-static struct
-{
-    char *name, *description;
-    double dx,dy,dz;
-}
-datum[] =
-{
-    "wgs72", "World Geodetic System 1972",         0.0,    0.0,    0.0,
-    "na27",  "North American 1927",              -22.0,  157.0,  176.0,
-    "a&c",   "Alaska and Canada",                 -9.0,  139.0,  173.0,
-    "eur",   "European",                         -84.0, -103.0, -127.0,
-    "tokyo", "Tokyo",                           -140.0,  516.0,  673.0,
-    "aus",   "Australian Geodetic",             -122.0,  -41.0,  146.0,
-    "osgb",  "Ordnance Survey of Great Britain", 368.0, -120.0,  425.0,
-    "sa69",  "South American 1969",              -77.0,    3.0,  -45.0
-};
+
+/* this functionality has been moved into libgis */
 
 int 
-CC_datum_shift (char *name, double *dx, double *dy, double *dz)
+CC_get_datum_by_name(const char *name)
 {
-    int n;
+    return G_get_datum_by_name(name);
+}
 
-    n = datum_n (name);
-    if (n < 0) return 0;
+char *
+CC_get_datum_by_nbr(int n) 
+{
+    return G_datum_name(n);
+}
 
-    *dx = datum[n].dx;
-    *dy = datum[n].dy;
-    *dz = datum[n].dz;
-    return 1;
+/* this sets the datum shift parameters for datum pointed to by name */
+int 
+CC_datum_shift (const char *name, double *dx, double *dy, double *dz)
+{
+    return G_datum_shift(G_get_datum_by_name(name), dx, dy, dz);
+}
+
+/* set the ellipsoid name and parameters for datum */
+int 
+CC_get_datum_parameters (const char *name, char *ellps, double *dx, double *dy, double *dz)
+{
+    return G_datum_parameters(G_get_datum_by_name(name), ellps, dx, dy, dz);
 }
 
 char *
 CC_datum_name (int n)
 {
-    if (n < 0 || n >= sizeof (datum) / sizeof (datum[0]))
-	return 0;
-    return datum[n].name;
+    return G_datum_name(n);
 }
 
 char *
 CC_datum_description (int n)
-{
-    if (n < 0 || n >= sizeof (datum) / sizeof (datum[0]))
-	return 0;
-    return datum[n].description;
+{ 
+    return G_datum_description(n);
 }
 
-static 
-datum_n (char *name)
+char *
+CC_datum_ellipsoid (int n)
 {
-    int n;
-
-    n = sizeof (datum) / sizeof (datum[0]);
-    while (n-- > 0)
-	if (equal (name, datum[n].name))
-	    return n;
-    return -1;
+    return G_datum_ellipsoid(n);
 }
+

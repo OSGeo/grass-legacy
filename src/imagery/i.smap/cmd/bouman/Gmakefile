@@ -11,6 +11,6 @@ OBJ = decimate.o\
 	segment.o
 
 lib.a: $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): bouman.h

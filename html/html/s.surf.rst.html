@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+   
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+   
+  <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]"><title>s.surf.rst</title></head><body bgcolor="#ffffff"><img src="grass.smlogo.gif">
+<hr width="100%" align="Center" size="6" noshade="">
+<h2><font color="#000000">
+NAME</font></h2>
+<font color="#000000"><b><i>s.surf.rst</i></b></font><font color="#000000">- interpolation and topographic analysis from
+given site data to GRASS floating point raster format using regularized
+spline with tension (this program replaces </font><font color="#000000"><i>s.surf.tps</i></font><font color="#000000">)
+</font><font color="#000000"><br>
+</font>
+<font color="#000000"><i>(GRASS Site Program)</i></font>
+<h2><font color="#000000">
+SYNOPSIS</font></h2>
+<font color="#000000"><b>s.surf.rst</b></font><font color="#000000"><br>
+</font>
+<font color="#000000"><b>s.surf.rst help</b></font><font color="#000000"><br>
+</font>
+<font color="#000000"><b>s.surf.rst [-d] [-t]  input </b></font><font color="#000000">= name [</font><font color="#000000"><b>elev </b></font><font color="#000000">= name]
+[</font><font color="#000000"><b>field</b></font><font color="#000000">=val] [</font><font color="#000000"><b>slope </b></font><font color="#000000">= name] [</font><font color="#000000"><b>aspect
+</b></font><font color="#000000">= name] [</font><font color="#000000"><b>pcurv
+</b></font><font color="#000000">=
+name] [</font><font color="#000000"><b>tcurv </b></font><font color="#000000">= name] [</font><font color="#000000"><b>mcurv </b></font><font color="#000000">= name] [</font><font color="#000000"><b>maskmap</b></font><font color="#000000"> = name]
+[</font><font color="#000000"><b>dmin </b></font><font color="#000000">= val] [</font><font color="#000000"><b>zmult = </b></font><font color="#000000">val] [</font><font color="#000000"><b>tension
+</b></font><font color="#000000">= val] [</font><font color="#000000"><b>smooth
+</b></font><font color="#000000">=
+val] [</font><font color="#000000"><b>smatt=</b></font><font color="#000000">val] [</font><font color="#000000"><b>segmax = </b></font><font color="#000000">val] [</font><font color="#000000"><b>npmin
+</b></font><font color="#000000">= val] </font><font color="#000000">[</font><font color="#000000"><b>theta</b></font><font color="#000000"> = val] [</font><font color="#000000"><b>scalex</b></font><font color="#000000"> = val] [<b>devi
+</b>=
+name] [<b>treefile </b>= name] [<b>overfile </b>= name]
+<br>
+</font>
+<h2><font color="#000000">
+DESCRIPTION</font></h2>
+<font color="#000000"><i>s.surf.rst</i></font><font color="#000000"><br>
+</font><font color="#000000">
+This program interpolates the z</font><font color="#000000"><sub><font size="-1">i</font></sub></font><font color="#000000">-values
+from point data (e.g., elevations, climatic stations, drill holes, etc.)
+given in a sites file named </font><font color="#000000"><i>input</i></font><font color="#000000"> as x|y|%z</font><font color="#000000"><sub><font size="-2">1</font></sub></font><font color="#000000">
+%z</font><font color="#000000"><sub><font size="-2">2</font></sub></font><font color="#000000"> ...%z</font><font color="#000000"><sub><font size="-2">i</font></sub></font><font color="#000000">...
+to grid cells in the output raster file
+</font><font color="#000000"><i>elev</i></font><font color="#000000"> representing a surface.
+The user can select which floating point attribute will be interpolated
+by setting the parameter </font><font color="#000000"><i>field</i></font><font color="#000000"> to the value i for the i-th floating
+point attribute</font><font color="#000000"><b>.</b></font>
+<p><font color="#000000">As an option, simultaneously with interpolation, topographic parameters
+slope, aspect, profile curvature (measured in the direction of steepest
+slope), tangential curvature (measured in the direction of a tangent to
+contour line) or mean curvature are computed and saved as raster files
+specified by the options </font><font color="#000000"><i>slope, aspect, pcurv, tcurv, mcurv</i></font><font color="#000000"> respectively.
+If </font><font color="#000000"><i>-d</i></font><font color="#000000"> flag is set the program outputs partial derivatives f</font><font color="#000000"><sub>x</sub></font><font color="#000000">,
+f</font><font color="#000000"><sub>y</sub></font><font color="#000000">, f</font><font color="#000000"><sub>xx</sub></font><font color="#000000">, f</font><font color="#000000"><sub>yy</sub></font><font color="#000000">, f</font><font color="#000000"><sub>xy</sub></font><font color="#000000"> instead of
+slope, aspect, profile, tangential and mean curvatures respectively.
+</font></p>
+<p><font color="#000000">User can define a raster file named </font><font color="#000000"><i>maskmap</i></font><font color="#000000">, which will be used
+as a mask. The interpolation is skipped for cells which have zero or NULL
+value in mask. Data points are checked for identical points and the points
+that are closer to each other than the given </font><font color="#000000"><i>dmin</i></font><font color="#000000"> are removed. Parameter
+</font><font color="#000000"><i>zmult</i></font><font color="#000000">
+allows user to rescale the z-values for sites (useful e.g. for transformation
+of elevations given in feet to meters, so that the proper values of slopes
+and curvatures can be computed).
+</font></p>
+<p><font color="#000000">Regularized spline with tension and smoothing is used for  interpolation
+and approximation. The </font><font color="#000000"><i>tension</i></font><font color="#000000"> parameter tunes the character of
+the resulting surface from thin plate to membrane. The experimental flag </font><font color="#000000"><i>-t </i></font><font color="#000000">can
+be set to use "dnorm independent tension", (see notes for more details
+about the tension behavior). For noisy data, it is possible to define 
+either a constant smoothing parameter </font><font color="#000000"><i>smooth</i></font><font color="#000000"> or a variable smoothing
+parameter by  setting the parameter
+</font><font color="#000000"><i>smatt</i></font><font color="#000000"> to the value j for
+the j-th floating point attribute in the</font><font color="#000000"><i> input</i></font><font color="#000000"> site file, representing
+the smoothing parameter for each point. When smoothing is used, it is possible
+to output site file
+</font><font color="#000000"><i>devi</i></font><font color="#000000"> containing deviations of the resulting
+surface from the given data.
+</font></p>
+<p><font color="#000000">If the number of given points is greater than </font><font color="#000000"><i>segmax</i></font><font color="#000000">, segmented
+processing is used. The region is split into rectangular segments, each
+having less than
+</font><font color="#000000"><i>segmax</i></font> points and interpolation is performed on
+each segment of the region. To ensure smooth connection of segments the
+interpolation function for each segment is computed using the points in
+given segment and the points in its neighborhood which are in the rectangular
+window surrounding the given segment. The number of points taken for interpolation
+is controlled by <font color="#000000"><i>npmin</i></font><font color="#000000">, the value of which must be larger than </font><font color="#000000"><i>segmax</i></font><font color="#000000">.
+User can choose to output vector files </font><font color="#000000"><i>treefile</i></font><font color="#000000"> and </font><font color="#000000"><i>overfile</i></font><font color="#000000">
+which represent the quad tree used for segmentation and overlapping neighborhoods
+from which additional points for interpolation on each segment were taken. </font><font color="#000000">Anisotropic surfaces can be interpolated setting anisotropy angle </font><font color="#000000"><i>theta</i></font><font color="#000000"> and scaling factor </font><font color="#000000"><i>scalex</i></font><font color="#000000">. The program writes several important values to history file of raster map
+<i>elev</i>.
+If the input data have time stamp, the program creates time stamp for all
+output files.
+</font></p>
+<p><font color="#000000">The user must run </font><font color="#000000"><i>g.region</i></font><font color="#000000"> before the program to set the region
+and resolution for interpolation.
+</font><font color="#000000"><br>
+</font></p>
+<h2><font color="#000000">
+OPTIONS</font></h2><font color="#000000">
+
+The user can run this program either interactively or non-interactively.
+The program will be run non-interactively if the user specifies program
+arguments and flag settings on the command line using the form:
+
+</font><p><font color="#000000"><b>s.surf.rst [-d] [-t] input </b></font><font color="#000000">= name </font><font color="#000000"><b>elev </b></font><font color="#000000">= name [</font><font color="#000000"><b>field</b></font><font color="#000000">=val]
+[</font><font color="#000000"><b> slope </b></font><font color="#000000">= name] [</font><font color="#000000"><b> aspect </b></font><font color="#000000">= name] [</font><font color="#000000"><b> pcurv </b></font><font color="#000000">= name] [</font><font color="#000000"><b>
+tcurv </b></font><font color="#000000">= name] [</font><font color="#000000"><b> mcurv </b></font><font color="#000000">= name] [</font><font color="#000000"><b> maskmap</b></font> = name] [<font color="#000000"><b>
+dmin </b></font><font color="#000000">= val] [</font><font color="#000000"><b> zmult = </b></font><font color="#000000">val] [</font><font color="#000000"><b> tension </b></font><font color="#000000">= val] [</font><font color="#000000"><b> smooth
+</b></font><font color="#000000">=
+val] [</font><font color="#000000"><b>smatt</b></font><font color="#000000">=val] [</font><font color="#000000"><b> segmax = </b></font><font color="#000000">val] [</font><font color="#000000"><b> npmin </b></font><font color="#000000">= val]</font><font color="#000000"> [ </font><font color="#000000"><b>theta</b></font><font color="#000000"> = val ] [ </font><font color="#000000"><b>scalex</b></font><font color="#000000"> = val ] [<b>
+devi </b>= name] [<b> treefile </b>= name] [= name]
+</font></p>
+<p><font color="#000000">Alternately, the user can simply type </font><font color="#000000"><b>s.surf.rst</b></font><font color="#000000"> on the command
+line without program arguments. In this case, the user will be prompted
+for parameter values and flag settings using the standard GRASS parser
+interface described in the manual entry for</font><font color="#000000"><i> parser</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>Flags</b></font></p>
+<p><font color="#000000"><b>-d</b></font><font color="#000000"> Output partial derivatives instead of aspect, slope and curvatures.
+</font><font color="#000000"><br>
+</font><font color="#000000"><b>-t</b></font><font color="#000000">  Use dnorm independent tension (experimental)
+</font></p>
+<p><font color="#000000"><b>Parameters:</b></font></p>
+<p><font color="#000000"><b>input </b></font><font color="#000000">= </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Use the existing site file name as input.
+</font></p>
+<p><font color="#000000"><b>elev </b></font><font color="#000000">= </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output elevation values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>field</b></font><font color="#000000">=</font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">decimal attribute to use for elevation (1=first) options (1-100), default is 1.
+</font></p>
+<p><font color="#000000"><b>slope </b></font><font color="#000000">= </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output slope or dx values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>aspect </b></font><font color="#000000">= </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output aspect or dy values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>pcurv </b></font><font color="#000000">= </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output profile curvature or dxx values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>tcurv</b></font><font color="#000000"> = </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output tangential curvature or dyy values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>mcurv</b></font><font color="#000000"> = </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output mean curvature or dxy values to raster file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>maskmap</b></font><font color="#000000"> = </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Use the existing raster file </font><font color="#000000"><i>name</i></font><font color="#000000"> as a mask.
+</font></p>
+<p><font color="#000000"><b>dmin</b></font><font color="#000000"> = </font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Set min distance between points to </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value is set
+to 0.5 grid cell size.
+</font></p>
+<p><font color="#000000"><b>zmult</b></font><font color="#000000"> = </font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Convert z-values using conversion factor </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value
+is 1.
+</font></p>
+<p><font color="#000000"><b>tension</b></font><font color="#000000"> =</font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Set tension to </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value is 40.
+</font></p>
+<p><font color="#000000"><b>smooth</b></font><font color="#000000"> = </font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Set smoothing parameter to </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value is 0.1.
+</font></p>
+<p><font color="#000000"><b>smatt</b></font><font color="#000000">=</font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">order of floating point attribute to use for variable smoothing parameter
+</font></p>
+<p><font color="#000000"><b>segmax</b></font><font color="#000000"> = </font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Set max number of points per segment to </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value is
+40.
+</font></p>
+<p><font color="#000000"><b>npmin</b></font><font color="#000000"> = </font><font color="#000000"><i>val</i></font><font color="#000000"><br>
+</font><font color="#000000">Set min number of points for interpolation to </font><font color="#000000"><i>val</i></font><font color="#000000">. Default value
+is 200, for data with heterogeneous spatial distribution higher value is
+suggested (see notes).</font></p>
+<p><font color="#000000"><b>theta</b></font><font color="#000000"> =<i> val</i><i><br>
+</i></font><font color="#000000">Set anisotropy angle in degrees (measured from East counterclockwise) to <i>val</i>.</font><font color="#000000"><br></font></p>
+<p><font color="#000000"><b>scalex</b></font><font color="#000000"> =<i> val</i><i><br>
+</i></font><font color="#000000">Set anisotropy scaling factor to <i>val</i>. Values 0 and 1 give no anisotropy</font><font color="#000000">.<br>
+</font></p>
+<p><font color="#000000"><b>devi</b></font><font color="#000000"> = </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output deviations to a site file </font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font></p>
+<p><font color="#000000"><b>treefile</b></font><font color="#000000"> = </font><font color="#000000"><i>name</i></font><font color="#000000"><br>
+</font><font color="#000000">Output quad tree used for segmentation to vector file </font><font color="#000000"><i>name</i></font></p>
+<p><font color="#000000"><b>overfile</b></font><font color="#000000"> = name
+</font><font color="#000000"><br>
+</font><font color="#000000">Output overlapping neighborhoods used for segmentation to vector file
+</font><font color="#000000"><i>name</i></font><font color="#000000">.
+</font><font color="#000000"><br>
+</font></p>
+<h2><font color="#000000">
+NOTES</font></h2>
+<font color="#000000"><i>s.surf.rst</i></font><font color="#000000">uses regularized spline with tensionfor interpolation
+from point data. Point data should be in a </font><font color="#000000"><a href="../ascii_formats.html">new
+site format </a>
+</font><font color="#000000">
+, that means format x|y|%z</font><font color="#000000"><sub><font size="-2">1</font></sub></font><font color="#000000">
+%z</font><font color="#000000"><sub><font size="-2">2</font></sub></font><font color="#000000"> ...%z</font><font color="#000000"><sub><font size="-2">i</font></sub></font><font color="#000000">...,
+instead of the old format which confused categories with values (x|y|#z).
+If program detects the old format it will allow users to have the site
+file rewritten to a new format automatically.
+
+</font><p><font color="#000000">The implementation has a segmentation procedure based on quadtrees which
+enhances the efficiency for large data sets. The GRASS5.0 version has enhanced
+segmentation which takes more points for the large segments, to reduce
+the potential for visibility of segmentens in areas with sparse data.
+</font></p>
+<p><font color="#000000">Special color tables are created by the program for output raster files.
+</font></p>
+<p><font color="#000000">Topographic parameters are computed directly from the interpolation
+function so that the important relationships between these parameters are
+preserved. The equations for computation of these parameters and their
+interpretation are described in </font><font color="#000000"><a href="http://www2.gis.uiuc.edu:2280/modviz/papers/lmg.rev1.ps">(Mitasova
+and Hofierka 1993</a>
+</font><font color="#000000">). Slopes and aspect are computed in degrees (0-90
+and 1-360 respectively). The aspect raster file has value 0 assigned to
+flat areas (with slope less than 0.1%) and to singular points with undefined
+aspect. Aspect points downslope and is 90 to the North, 180 to the West,
+270 to the South and 360 to the East, the values increase counterclockwise.
+Curvatures are positive for convex and negative for concave areas. Singular
+points with undefined curvatures have assigned zero values.
+</font></p>
+<p><font color="#000000"><i>Tension</i></font><font color="#000000"> and </font><font color="#000000"><i>smooth</i></font><font color="#000000">ing allow user to tune the surface character.
+For most landscape scale applications the default should work fine.The
+program gives warning when significant overshoots appear in the resulting
+surface and higher tension or smoothing should be used.
+</font><font color="#000000"><br>
+</font><font color="#000000">While it is possible to automatize the selection of suitable </font><font color="#000000"><i>tension</i></font><font color="#000000">
+and </font><font color="#000000"><i>smooth</i></font><font color="#000000">ing, it has not been done yet, so here are some hints
+which may help to choose the proper parameters if the results look "weird".
+It is useful to know that the method is scale dependent and the </font><font color="#000000"><i>tension</i></font><font color="#000000">
+works as a rescaling parameter (high </font><font color="#000000"><i>tension</i></font><font color="#000000"> "increases the distances
+between the points" and reduces the range of impact of each point, low</font><font color="#000000"><i>
+tension</i></font><font color="#000000"> "decreases the distance" and the points influence each other
+over longer range). Surface with  </font><font color="#000000"><i>tension</i></font><font color="#000000"> set too high behaves
+like a membrane (rubber sheet stretched over the data points) with peak
+or pit ("crater") in each given point and everywhere else the surface goes
+rapidly to trend. If digitized contours are used as input data, high tension
+can cause artificial waves along contours. Lower tension and higher smoothing
+is suggested for such a case.
+</font><font color="#000000"><br>
+</font><font color="#000000">Surface with </font><font color="#000000"><i>tension</i></font><font color="#000000"> set too low behaves like a stiff steel
+plate and overshoots can appear in areas with rapid change of gradient
+and segmentation can be visible. Increase tension should solve the problems.
+</font></p>
+<p><font color="#000000">There are two options how </font><font color="#000000"><i>tension</i></font><font color="#000000"> can be applied in relation
+to </font><font color="#000000"><i>dnorm</i></font><font color="#000000"> (dnorm rescales the coordinates depending on the average
+data density so that the size of segments with </font><font color="#000000"><i>segmax=</i></font><font color="#000000">40 points
+is around 1 - this ensures the numerical stability of the computation):
+</font></p>
+<p><font color="#000000">1. Default (used also in s.surf.tps): the given </font><font color="#000000"><i>tension</i></font><font color="#000000"> 
+is applied to normalized data (x/</font><font color="#000000"><i>dnorm</i></font><font color="#000000">..),  that means that
+the distances are multiplied (rescaled) by </font><font color="#000000"><i>tension/dnorm</i></font><font color="#000000">. If density
+of points is changed, e.g.,  by using higher </font><font color="#000000"><i>dmin</i></font><font color="#000000">, the </font><font color="#000000"><i>dnorm</i></font><font color="#000000">
+changes and </font><font color="#000000"><i>tension</i></font><font color="#000000"> needs to be changed too to get the same result.
+Because the </font><font color="#000000"><i>tension</i></font><font color="#000000"> is applied to normalized data its suitable value
+is usually within the 10-100 range and does not depend on the actual scale
+(distances) of the original data (which can be km for regional applications
+or cm for field experiments).
+</font><font color="#000000"><br>
+</font><font color="#000000">2. Flag</font><font color="#000000"><b> -t </b></font><font color="#000000">(experimental for s.surf.rst)</font><font color="#000000"><b>: </b></font><font color="#000000">The given 
+</font><font color="#000000"><i>tension</i></font><font color="#000000"> is applied to un-normalized data (rescaled tension = t</font><font color="#000000"><i>ension*dnorm</i></font><font color="#000000">/1000
+is applied to normalized data (x/</font><font color="#000000"><i>dnorm</i></font><font color="#000000">) and therefore  </font><font color="#000000"><i>dnorm</i></font><font color="#000000">
+cancels out) so here </font><font color="#000000"><i>tension</i></font><font color="#000000"> truly works as a rescaling parameter.
+For regional applications with distances between points in km the suitable
+tension can be 0.1 or smaller, for detailed field scale analysis with distances
+in cm it can be 500 or more. To help select how much the data need to be rescaled 
+the program writes
+</font><font color="#000000"><i>dnorm</i></font><font color="#000000"> and rescaled tension=</font><font color="#000000"><i>tension*dnorm</i></font><font color="#000000">/1000 at the
+beginning of the program run. This rescaled </font><font color="#000000"><i>tension</i></font><font color="#000000"> should be around
+20-30.  If it is lower or higher, the given </font><font color="#000000"><i>tension</i></font><font color="#000000"> parameter
+should be changed accordingly.
+</font></p>
+<p><font color="#000000">The default is a recommended choice, however for the applications where
+the user needs to change density of data and preserve the interpolation
+character the </font><font color="#000000"><b>-t</b></font><font color="#000000"> flag can be helpful.</font></p>
+<p><font color="#000000">Anisotropic data (e.g. geologic phenomena)</font><font color="#000000"> can be 
+interpolated using </font><font color="#000000"><i>theta</i></font><font color="#000000"> 
+and </font><font color="#000000"><i>scalex</i></font><font color="#000000"> defining orientation</font><font color="#000000"> 
+and ratio of the perpendicular axes put on the longest/shortest side of the feature, respectively.
+</font><font color="#000000"><i>Theta</i> is measured in degrees from East, 
+counterclockwise</font><font color="#000000">. <i>Scalex</i> is a ratio</font><font color="#000000"> 
+of axes</font><font color="#000000"> size</font><font color="#000000">s</font><font color="#000000">. 
+Setting <i>scalex</i> in the range 0-1, you will get pattern prolonged in the
+direction defined by <i>theta</i>. <i>Scalex</i> value 0.5 means that your feature is approximatelly
+2 times longer in the direction of <i>theta</i> than in the perpendicular direction.
+<i>Scalex</i> value 2</font><font color="#000000"> means that axes ratio is reverse and you will get pattern 
+perpendicular to the previous example. </font>Please note that anisotropy option has not been extensively tested and may include bugs - if there are problems, please report to GRASS bugtracker (accessible from http://grass.itc.it/).<br>
+</p>
+<p><font color="#000000">For data with values changing over several magnitudes (sometimes the
+concentration or density data) it is suggested to interpolate the log of
+the values rather than the original ones.
+</font></p>
+<p><font color="#000000">The program checks the numerical stability of the algorithm by computing
+the values in given points. The root mean square deviation (rms) between
+interpolated and given values is written into the history file of raster
+map </font><font color="#000000"><i>elev</i></font><font color="#000000">. For computation with smoothing set to 0. the rms should
+be 0. Significant increase in tension is suggested if the rms is unexpectedly
+high for this case. With smoothing parameter greater than zero the surface
+will not pass exactly through the data points and the higher the parameter
+the closer the surface will be to the trend. The rms then represents a
+measure of smoothing effect on data. More detailed analysis of smoothing
+effects can be performed using the output deviations option and running
+s.univar on the site file with deviations.
+</font></p>
+<p><font color="#000000">The program writes the values of parameters used in computation into
+the comment part of history file </font><font color="#000000"><i>elev</i></font><font color="#000000"> as well as the following values
+which help to evaluate the results and choose the suitable parameters:
+minimum and maximum z values in the data file (zmin_data, zmax_data) and
+in the interpolated raster map (zmin_int, zmax_int), rescaling parameter
+used for normalization (dnorm), which influences the tension.
+</font></p>
+<p><font color="#000000">When the number of points in a site file is not too large (less than
+800), the user can skip segmentation by setting </font><font color="#000000"><i>segmax</i></font><font color="#000000"> to the number
+of data points or segmax=700.
+</font></p>
+<p><font color="#000000">The program gives warning when user wants to interpolate outside the
+rectangle given by minimum and maximum coordinates in site file, zoom into
+the area where the points are is suggested in this case.
+</font></p>
+<p><font color="#000000">When a mask is used, the program takes all points in the given region
+for interpolation, including those in the area which is masked out, to
+ensure proper interpolation along the border of the mask. It therefore
+does not mask out the data points, if this is desirable, it must be done
+outside s.surf.rst (e.g. using r.mask.points).
+</font></p>
+<p><font color="#000000">For examples of applications see 
+</font><font color="#000000"><a href="http://www2.gis.uiuc.edu:2280/modviz/viz/">http://www2.gis.uiuc.edu:2280/modviz/viz/</a>
+</font><font color="#000000"> <br>
+</font><font color="#000000">and
+</font><font color="#000000"> <a href="http://www2.gis.uiuc.edu:2280/modviz/">http://www2.gis.uiuc.edu:2280/modviz/</a>
+</font></p>
+<h2><font color="#000000">
+SEE ALSO</font></h2>
+<font color="#000000"><a href="r.slope.aspect.html">r.slope.aspect,</a>
+</font><font color="#000000">
+</font><font color="#000000"><a href="r.surf.idw.html">r.surf.idw</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="r.surf.idw2.html">r.surf.idw2</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="r.surf.contour.html">r.surf.contour</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="s.surf.idw.html">s.surf.idw</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="v.to.sites.html">v.to.sites</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="g.region.html">g.region</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="r.mask.html">r.mask</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="v.surf.rst.html">v.surf.rst</a>
+</font><font color="#000000">
+,
+</font><font color="#000000"><a href="r.resamp.rst.html">r.resamp.rst</a>
+</font>
+<h2><font color="#000000">
+AUTHORS</font></h2>
+<font color="#000000"><i>Original version of program (in FORTRAN) and GRASS enhancements:</i></font><font color="#000000"><br>
+</font><font color="#000000">
+Lubos Mitas, NCSA, University of Illinois at Urbana-Champaign, Illinois,
+USA
+</font><font color="#000000"><br>
+</font><font color="#000000">
+Helena Mitasova, Department of Geography, University of Illinois at
+Urbana-Champaign, Champaign, Illinois, USA
+
+</font><p><font color="#000000"><i>Modified program (translated to C, adapted for GRASS, new segmentation
+procedure):</i></font><font color="#000000"><br>
+</font><font color="#000000">Irina Kosinovsky, US Army CERL, Champaign, Illinois, USA
+</font><font color="#000000"><br>
+</font><font color="#000000">Dave Gerdes, US Army CERL, Champaign, Illinois, USA
+</font></p>
+<p><font color="#000000"><i>Modifications for new sites format and timestamping:</i></font><font color="#000000"><br>
+</font><font color="#000000">Darrel McCauley, Purdue University, West Laffayette, Indiana, USA
+
+</font></p>
+<h2><font color="#000000">
+REFERENCES</font></h2>
+<font color="#000000"><br>
+</font>
+<font color="#000000">
+     Hofierka J., Parajka J.,  Mitasova H., Mitas L., 2002,
+     Multivariate Interpolation of Precipitation Using Regularized Spline with Tension.
+     <i>Transactions in GIS</i>&nbsp; 6(2), pp. 135-150.<br>
+<br>
+
+Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F.
+Goodchild, D.J. Maguire, D.W.Rhind (Eds.), <i>Geographical Information
+Systems: Principles, Techniques, Management and Applications</i>, Wiley,
+pp.481-492
+
+</font>
+<p><font color="#000000">Mitasova H., Mitas L.,  Brown W.M.,  D.P. Gerdes, I. Kosinovsky,
+Baker, T.1995, Modeling spatially and temporally distributed phenomena:
+New methods and tools for GRASS GIS. </font><font color="#000000"><i>International Journal of GIS</i></font><font color="#000000">,
+9 (4), special issue on Integrating GIS and Environmental modeling, 433-446.
+</font></p>
+<p><font color="#000000"><a href="http://www2.gis.uiuc.edu:2280/modviz/papers/lmg.rev1.ps">Mitasova
+H. and Mitas L. 1993</a>
+</font><font color="#000000">: Interpolation by Regularized Spline with Tension:
+I. Theory and Implementation, </font><font color="#000000"><i>Mathematical Geology</i></font><font color="#000000"> 25, 641-655.
+</font></p>
+<p><font color="#000000"><a href="http://www2.gis.uiuc.edu:2280/modviz/papers/hmg.rev1.ps">Mitasova
+H. and Hofierka J. 1993</a>
+</font><font color="#000000">: Interpolation by Regularized Spline with Tension:
+II. Application to Terrain Modeling and Surface Geometry Analysis, </font><font color="#000000"><i>Mathematical
+Geology</i></font><font color="#000000"> 25, 657-667.
+</font></p>
+<p><font color="#000000">Mitasova, H., 1992 : New capabilities for interpolation and topographic
+analysis in GRASS, </font><font color="#000000"><i>GRASSclippings </i></font><font color="#000000">6, No.2 (summer), p.13.
+</font></p>
+<p><font color="#000000">Mitas, L., Mitasova H., 1988 : General variational approach to the interpolation
+problem, </font><font color="#000000"><i>Computers and Mathematics with Applications </i></font><font color="#000000">16, p. 983
+</font></p>
+<p><font color="#000000">Talmi, A. and Gilat, G., 1977 : Method for Smooth Approximation of Data,
+</font><font color="#000000"><i>Journal
+of Computational Physics</i></font><font color="#000000">, 23, p.93-123.
+</font></p>
+<p><font color="#000000">Wahba, G., 1990, : Spline Models for Observational Data, CNMS-NSF Regional
+Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
+</font><font color="#000000"><br>
+</font></p>
+<p><font color="#000000">Updated April 2, 2002 by Jaro Hofierka and Helena Mitasova</font>
+</p>
+<p><font color="#000000"><i>Last changed: $Date$</i></font></p>
+</body></html>

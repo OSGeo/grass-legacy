@@ -1,16 +1,12 @@
-OBJS = main.o eigen.o
+PGM=i.pca
+OBJS = main.o
 
-LIBES= $(GISLIB) 
+LIBES=$(GMATHLIB) $(GISLIB)
+DEPLIBS=$(DEPGMATHLIB) $(DEPGISLIB)
 
-$(BIN_MAIN_CMD)/i.pca: $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-$(MAN2)/i.pca: Gpca.man
-	$(MANROFF)
-
-$(HELP)/i.pca: Gpca.help
-	cp Gpca.help $@
 
 $(OBJS): globals.h
 
-$(LIBES): #
+$(DEPLIBS): #

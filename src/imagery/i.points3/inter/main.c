@@ -12,7 +12,7 @@
 
 	 The program i.target must also be run prior to i.points.
 
-	 Finnally, since i.points uses the graphics display, the user
+	 Finally, since i.points uses the graphics display, the user
 	 will have to start a display using the d.mon command.
 
 	 The imagery group data directory may contain the following files:
@@ -218,8 +218,9 @@ int main(int  argc, char *argv[])
 
 
     /* open the raster graphics driver */
-    R_open_driver();
-
+    if (R_open_driver() != 0)
+       G_fatal_error ("No graphics device selected");
+           
     /* initialize the graphics screens into VIEWS */
     Init_graphics();
     display_title (VIEW_MAP1);

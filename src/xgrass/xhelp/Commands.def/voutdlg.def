@@ -1,8 +1,0 @@
-
-
-v.out.dlg - 
-
-v.out.dlg allows the user to convert GRASS @glossary("vector",16.glossary/vector.def) data to @glossary("DLG",16.glossary/dlg.def)-3
-Optional format, for export to other systems.
-
-Manual entry for @man("v.out.dlg")

@@ -1,15 +1,18 @@
-OFILES	= main.o do_leave.o tty.o menu.o 
-HOME	= $(BIN_MAIN_CMD)
+PGM=g.help
+OFILES	= main.o do_leave.o menu.o
+H2H = GRASS_PERL=${PERL} sh $(SRC)/general/g.help/help2html.pl
 
-all: pgm  the_help
-pgm: $(BIN_MAIN_CMD)/g.help
+all: $(BIN_INTER)/$(PGM)  the_help  html_help
 
-$(BIN_MAIN_CMD)/g.help:	$(OFILES) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(OFILES) $(DEPGISLIB)
 	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 the_help:
 	rm -rf $(GISBASE)/etc/help
 	tar cf - help | (cd $(GISBASE)/etc; tar xf -)
+
+html_help:
+	$(H2H) $(GISBASE)
 
 do_call.o: do_climb.h
 do_call.o: menu.h
@@ -18,4 +21,4 @@ do_climb.o: menu.h
 do_leave.o: menu.h
 menu.o: menu.h
 
-$(GISLIB): #
+$(DEPGISLIB): #

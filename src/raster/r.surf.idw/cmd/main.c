@@ -31,6 +31,7 @@ int main (int argc, char **argv)
     SHORT nrows, ncols;
     SHORT datarows;
     int npoints;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *npoints;
@@ -43,6 +44,10 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls 					*/
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Surface interpolation utility for raster map layers.";
 
     parm.input = G_define_option();
     parm.input->key = "input";
@@ -220,8 +225,10 @@ interpolate (MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows, int n
     current_row = search = (EW *) G_calloc (datarows, sizeof (EW));
     lastrow = search + datarows - 1;
     nbr_head = (NEIGHBOR *) G_calloc (npoints + 1, sizeof (NEIGHBOR));
-    /*nbr_head->distance = maxdist;
+#if 0
+    nbr_head->distance = maxdist;
     nbr_head->searchptr = &(nbr_head->Mptr);      /* see replace_neighbor */
+#endif
 
     fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ", output, nrows);
 
@@ -270,7 +277,7 @@ interpolate (MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows, int n
 		}
        	    }	/* end of loop over columns */
 
-	G_put_map_row(out_fd, cell);
+	G_put_raster_row(out_fd, cell, CELL_TYPE);
 
 	/* advance current row pointer if necessary */
 	if (current_row->start->y == row && current_row != lastrow)

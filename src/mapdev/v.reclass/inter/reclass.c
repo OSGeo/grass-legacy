@@ -2,6 +2,7 @@ static char rcsid[]="$Header$";
 
 #include <unistd.h>
 #include "gis.h"
+#include "edit.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
@@ -69,7 +70,7 @@ int main (int argc, char *argv[])
 /* prepare the new category labels */
     G_init_cats (ncats, "", &new_cats);
     set_new_cats (&cats, &new_cats, table);
-    G_edit_cats (new_name, &new_cats, -1);
+    E_edit_cats (new_name, &new_cats, -1);
 
 /* run reclass now */
     do_reclass (old_name, old_mapset, new_name, &cats, &new_cats, table, area, dissolve);

@@ -91,7 +91,7 @@ mk_elev()
                 }
                 if (aspect_cell[col] == 0)
                 {
-                    fprintf (stdout,"\n\nwatershed element %d, row %d col %d\n",
+                    fprintf (stderr,"\n\nwatershed element %d, row %d col %d\n",
                     ct, row, col);
                     croak(1, "Illegal aspect value of 0 (zero)");
                 }

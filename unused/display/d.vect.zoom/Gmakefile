@@ -1,0 +1,16 @@
+PGM = d.vect.zoom
+OFILES = \
+	main.o \
+	openvect.o\
+	what.o
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB)
+
+all: $(BIN_CMD)/$(PGM)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VECTLIB)  $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPLIBS): #
+

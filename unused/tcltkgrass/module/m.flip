@@ -1,0 +1,493 @@
+
+
+proc flag { } {
+
+
+  toplevel .flag
+
+  wm geometry .flag +100+20
+  wm title .flag "flag"
+
+
+  global q
+
+
+  frame .flag.frame0 \
+    -relief {flat}
+
+  checkbutton .flag.frame0.checkbutton \
+     -text "Run quietly and suppress the output of messages." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "q" \
+     -offvalue "" \
+     -variable q
+
+  pack append .flag.frame0 \
+    .flag.frame0.checkbutton { left }
+
+
+  frame .flag.frame1 \
+     -borderwidth {2}
+
+  button .flag.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flag }
+
+  button .flag.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flag }
+
+  pack append .flag.frame1 \
+    .flag.frame1.ok { left expand } \
+    .flag.frame1.cancel { right expand }
+
+
+
+  pack append .flag \
+    .flag.frame0 { top expand fill } \
+    .flag.frame1 { bottom expand fill }
+
+
+
+  grab set .flag
+  tkwait window .flag
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global q
+  global iname
+  global oname
+  global rvalue
+  global cvalue
+  global bvalue
+
+
+  set cmd ""
+
+  if {  $q != "" } {
+         set cmd "$cmd -$q"
+  }
+
+  if {  $iname != "" } {
+         set cmd "$cmd input=$iname"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if {  $rvalue != "" } {
+         set cmd "$cmd rows=$rvalue"
+  }
+
+  if {  $cvalue != "" } {
+         set cmd "$cmd cols=$cvalue"
+  }
+
+  if {  $bvalue != "" } {
+         set cmd "$cmd bpc=$bvalue"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.flip $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.flip { } {
+
+
+  global q
+  global iname
+  global oname
+  global rvalue
+  global cvalue
+  global bvalue
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Flip Elevation Data"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.flip}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.flip flips elevation data extracted from systems that retrieve data by rows from south to north.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Full pathname of the file containing the data to be flipped:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Full pathname of the output file:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Number of rows of data in the input file:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set rvalue [%W get] }
+
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  label .cmd.frame5.label \
+    -anchor {w} \
+    -text {Number of columns of data in the input file:} \
+    -padx {2}
+
+  scrollbar .cmd.frame5.hscrollbar \
+    -command {.cmd.frame5.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame5.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame5.hscrollbar set}
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.label { top fillx } \
+    .cmd.frame5.entry { top fillx } \
+    .cmd.frame5.hscrollbar { bottom fillx }
+
+  .cmd.frame5.entry configure -state normal
+
+  bind .cmd.frame5.entry <Return> {
+       set cvalue [%W get] }
+
+
+
+  frame .cmd.frame6 \
+    -relief {flat}
+
+  label .cmd.frame6.label \
+    -anchor {w} \
+    -text {Number of bytes per cell (i.e., per data value) in the input file:} \
+    -padx {2}
+
+  scrollbar .cmd.frame6.hscrollbar \
+    -command {.cmd.frame6.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame6.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame6.hscrollbar set}
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.label { top fillx } \
+    .cmd.frame6.entry { top fillx } \
+    .cmd.frame6.hscrollbar { bottom fillx }
+
+  .cmd.frame6.entry configure -state normal
+
+  bind .cmd.frame6.entry <Return> {
+       set bvalue [%W get] }
+
+
+
+  frame .cmd.frame7 \
+    -relief {flat}
+
+  label .cmd.frame7.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame7.button0 \
+     -text "flag ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flag
+                set_command_entry"
+
+
+  frame .cmd.frame8 \
+     -borderwidth {2}
+
+  button .cmd.frame8.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" && $oname != "" && $rvalue != "" && $cvalue != "" && $bvalue != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.flip -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame8.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame8 \
+    .cmd.frame8.ok { left expand } \
+    .cmd.frame8.cancel { right expand }
+
+  pack append .cmd.frame7 \
+    .cmd.frame7.label { top fillx } \
+    .cmd.frame7.button0  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame6 { top expand fill } \
+    .cmd.frame7 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame8 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set rvalue [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set rvalue [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame5.entry <KeyRelease> {
+		set cvalue [.cmd.frame5.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame5.entry <Return> {
+		set cvalue [.cmd.frame5.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame6.entry <KeyRelease> {
+		set bvalue [.cmd.frame6.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame6.entry <Return> {
+		set bvalue [.cmd.frame6.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global q
+set q ""
+
+global iname
+set iname ""
+
+global oname
+set oname ""
+
+global rvalue
+set rvalue ""
+
+global cvalue
+set cvalue ""
+
+global bvalue
+set bvalue ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.flip

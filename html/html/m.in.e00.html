@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (X11; I; Linux 2.2.17 i686) [Netscape]">
+   <title>m.in.e00</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>m.in.e00</i></b> - Read an ESRI e00 file
+<br><i>(GRASS Vector/Raster/Sites Data Import Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>m.in.e00</b>
+<br><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+<h2>
+DESCRIPTION</h2>
+The m.in.e00 program is designed to import ESRI Arc/Info e00 ascii archives.
+The input file may be a compressed e00 file : m.in.e00 will automatically
+recognize the format.
+<p>The module not only can analyse the content of an Arc/Info file, but
+try to create the objects described (geometry and attributes).
+<p>m.in.e00 will be run non-interactively if the user specifies program
+arguments on the command line, using the form:
+<p><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+<p>Alternately, the user can simply type:
+<p><b>m.in.e00</b>
+<p>on the command line without program arguments. In this case, the user
+will be prompted for parameter values using the standard GRASS user interface
+described in the manual entry for parser.
+<h2>
+FEATURES</h2>
+m.in.e00 attemps to retrieve all information in an Arc/Info export file
+(.e00): points, line, polygon, and grid coverage. The attribute of each
+"vector" object (points, line, and polygon) is the Arc/Info coverage-ID
+(and not the coverage-#). Both single and double precision are supported.
+
+<p>GRASS files created have the name extracted from the first line of the
+e00 file, i.e. the name of the coverage. The file is read from the current
+directory unless specified differently.
+<p>The following rules are used : A line vector file is created when there
+is a non-empty ARC section, and neither PAL (Polygon Attribute Label) section,
+neither PAT (Point/Polygon Attribute Table) table in INFO section. Otherwise
+a polygon vector file is created, excepted when the ARC section is empty
+or doesn't exist, in which case a site file is created.
+<p>Dig_cats files are created if the PAT or AAT (Arc Attribute Table) tables
+have more attributes than the standard one. If there is one extra attribute,
+the dig_cats file has the name of the vector (dig) file created. If there
+is more than one extra attribute, the dig_cats files have names of the
+form <tt>cover_name.attribute_name</tt>. If you want to use one of them, you must
+rename it so it matches the name of the vector file. Doing this, the vector
+modules will use it for the raster file created.<p>
+To "activate" a category label file for the vector map "cover_name", change to:<br>
+
+<pre>
+    cd $LOCATION/dig_cats/
+    ls cover_name.*
+    cp cover_name.attribute_name cover_name
+    cd $HOME
+    v.support cover_name
+</pre>
+
+If you want to use another table entry, you have to run above procedure
+accordingly with <tt>cover_name.other_attribute_name</tt>.
+
+<p>
+When importing raster file ("GRID"), cats files are created the same way
+in <tt>$LOCATION/cats</tt>.
+Note that an empty cat file is automaticaly put in this directory when a
+raster file is created, so m.in.e00 allways use the
+<tt>cover_name.attribute_name</tt> form for raster category files.
+
+<h2>
+OPTIONS</h2>
+<i>m.in.e00</i> requires the user to enter the following information:
+<h3>
+Flags:</h3>
+
+<dl>
+<dt>
+<b>-i</b></dt>
+<dd>
+Use the "feature-ID" of the arc info objects to link geometry and attribute's
+tables. The default is to use the "feature-#" field (which is an internal
+link, but you should not rely on it for linking Arc/Info objects to an
+external database.</dd>
+
+<dt>
+<b>-d</b></dt>
+<dd>
+Use a database instead of as many dig_cats files as you have attributes
+in the INFO tables (not yet operational).</dd>
+
+<dt>
+<b>-t</b></dt>
+<dd>
+Put all attributes in one category file, separated by tabs
+(not yet operational).</dd>
+
+<dt>
+<b>-s</b></dt>
+<dd>
+Automatically run "v.support" on newly created vector file.</dd>
+
+</dl>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>mapset=</b><i>name</i></dt>
+
+<dd>
+For creating a new mapset for the data imported. This may be useful, since
+we cannot create a projection info file and a default window in an existing
+mapset. When a file is imported in the current mapset, you should take
+care that they are in the same projection. Unfortunately, you may run in
+trouble after that when using g.region (Cf BUGS).</dd>
+
+<dt>
+<b>action=</b><i>what to do</i></dt>
+
+<dd>
+Five options: analyse, raster, lines, vector and all. By default, all is
+used and everything (grid, points, lines, polygons) is imported. Analyze
+produces no files, but only a log output (level 5) on stderr, and is useful
+to see whether the e00 file is clean or not. Raster imports only grid section.
+Lines imports only the geometry (no label are attached to the lines or
+polygons) of a point/line/polygon coverage. Vector imports a point/line/polygon
+coverage with their attributes.</dd>
+
+<dt>
+<b>verbose=</b><i>debug level</i></dt>
+
+<dd>
+Number between 0 (no trace of what's happening) and 9 (very verbose log).</dd>
+
+<dt>
+<b>logfile=</b><i>name</i></dt>
+
+<dd>
+Name of file where log info will be written. By default log info are directed
+to stderr.</dd>
+</dl>
+
+<h2>
+BUGS AND CAVEAT</h2>
+
+If the E00 file contains areas, it is recommended to set the map scale (in
+v.digit) to some big value (1:1), and run v.support again. Otherwise map
+threshold is too big, and v.support may fail even on clean data.
+<p>
+
+You must know what to do with all the dig_cats file generated when importing
+a vector coverage.
+<p>The program may crash when unexpexted data (mainly in INFO section)
+are found, or when the input file is corrupted.
+<p>There is no support for projection. Using verbose=1 lets you see the
+parameters of the e00 file, but you must create the DEFAULT_WIND and the
+PROJ file yourself. Using verbose=4 (at least), the logfile will show
+the content of the projection info of the e00 file imported.
+<p>New mapset are always created with proj=0 zone=99. If the default proj
+and zone are not the same, g.region complains and d.vect or d.rast refuse
+to display your data. The only thing to do is to import in the current
+mapset.
+
+<h2>REFERENCES</h2>
+
+<a href=http://pages.infinit.net/danmo/e00/docs/v7_e00_cover.html> E00 format</a>
+
+<h2>
+SEE ALSO</h2>
+<a href="g.mapsets.html">g.mapsets</a>, 
+<a href="g.region.html">g.region</a>,
+<a href="g.setproj.html">g.setproj</a>,
+<a href="r.in.arc.html">r.in.arc</a>, 
+<a href="v.support.html">v.support</a>,
+<a href="v.to.rast.html">v.to.rast</a>, 
+<a href="v.in.shape.html">v.in.shape</a>
+
+<h2>
+AUTHOR</h2>
+Michel J. Wurtz, DIG/cemagref
+<br>mw@teledetection.fr
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -1,0 +1,4 @@
+all:
+	$(GMAKE) $(SRC)/libes/dspf
+	$(GMAKE) $(SRC)/libes/g3d
+	$(GMAKE) src3d

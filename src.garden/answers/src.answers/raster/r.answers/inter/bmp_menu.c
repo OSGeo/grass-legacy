@@ -142,9 +142,9 @@ bmp_menu()
                 break;
             case 5:
                 cancel_bmp();
-                fprintf (stdout,"\n\n\n\n\n");
+                fprintf (stderr,"\n\n\n\n\n");
                 complete[10] = 1;
-                fprintf (stdout,"No BMPs to be used in watershed\n");
+                fprintf (stderr,"No BMPs to be used in watershed\n");
                 sleep(3);
                 return(0);
             case 6:

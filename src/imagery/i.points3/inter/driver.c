@@ -67,7 +67,7 @@ driver( )
       MENU("MARK",      mark_control, &use), 
       MENU("ANALYZE",   anal_control,&use), 
       MENU("OVERLAY",   Overlay,&use), 
-      MENU("AUXIL",     transform,&use), 
+/*      MENU("AUXIL",     transform,&use), */
       INFO("Select Function.", &use),
       {0}
     };
@@ -247,7 +247,7 @@ static int transform()
       /** MENU ("POLYNOMIAL", get_poly_order, &use),  **/
       MENU ("ORTHO_PHOTO",ortho_photo,&use),
       MENU ("LANDSAT TM",  landsat_tm,&use),
-      /** MENU ("PROJECTION", get_poly_order, &use),  /** TODO **/
+      /** MENU ("PROJECTION", get_poly_order, &use),*/  /** TODO **/
       INFO ("Select Transformation Type", &use),
       {0}
     };
@@ -291,19 +291,19 @@ static int transform()
        }
 
 #ifdef NULL
-/**      /* is something went wrong dont run transformation */
+      /* is something went wrong dont run transformation */
 /**       if (status != 1) {
-/**           sprintf (msg, "Problem selecting  %s transformation, select another\n",
-/**		trans_text[group.trans_type]);
-/**           G_warning (msg);
-/**	   goto skip_trans;
-/**       }
+**           sprintf (msg, "Problem selecting  %s transformation, select another\n",
+**		trans_text[group.trans_type]);
+**           G_warning (msg);
+**	   goto skip_trans;
+**       }
 **/
 #endif
 
 
       /* do an initial calculation of the transformation parameters */
-       if (status = group.calculate_trans (&group) < 0 ) {
+       if ((status = group.calculate_trans (&group)) < 0 ) {
            sprintf (msg, "Problem running %s transformation, select another\n",
 		trans_text[group.trans_type]);
            G_warning (msg);

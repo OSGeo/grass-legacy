@@ -1,7 +1,14 @@
+/*
+* $Id$
+*/
+
 /*  gsurf.h 
     Bill Brown, USACERL  
     January 1993
 */
+
+#ifndef _GSURF_H
+#define _GSURF_H
 
 #define GS_UNIT_SIZE 1000.
 
@@ -97,8 +104,4 @@
 #define LT_SHOW_VALS     0x00001000
 #define LT_SHOW_LABELS   0x00002000
 
-extern float GS_global_exag();
-extern int *GS_get_surf_list();
-extern int *GV_get_vect_list();
-extern int *GP_get_site_list();
-extern void *GS_Get_ClientData();
+#endif /* _GSURF_H */

@@ -248,6 +248,12 @@ int V2_num_areas ( struct Map_info *map)
     return (map->n_areas);
 }
 
+/* added 1/2002 MN */
+int V2_num_islands ( struct Map_info *map)
+{
+    return (map->n_isles);
+}
+
 
 /* returns category of line */
 /* or 0 on any error */

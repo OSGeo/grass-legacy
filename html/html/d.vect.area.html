@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<A NAME="d.vect.area">
+<TITLE>d.vect.area</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<B><EM>d.area</EM></B> - Draws vector areas to the GRASS display<BR>
+<EM>(GRASS Display/Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>d.vect.area</B>
+[<B>-r</B>] 
+<B>map</B><EM>=name</EM> 
+[<B>fillcolor</B><EM>=name|R:G:B</EM>]
+[<B>linecolor</B><EM>=name|R:G:B</EM>]
+[<B>catnum</B><EM>=value[,value,...]</EM>]
+[<B>legend</B><EM>=filename|"-"</EM>]
+
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-r</B> 
+<DD>Fill all areas with a randomly selected color from a small color palette,
+and draw all boundaries in black. The palette is similar to the GRASS named
+colors, but replaces white and black with other colors.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map</B>
+<DD>Name of existing vector map to be displayed
+
+<DT><B>fillcolor</B>
+<DD>Color desired for filling polygons. May be specified as a standard
+grass color name, or as an RGB triplet (e.g. 80:198:255).  Fill can
+be disabled by specifying a color of "none".
+<DD>Default: white
+
+<DT><B>linecolor</B>
+<DD>Color desired for drawing area boundaries.  May be specified as a
+standard grass color name, or as an RGB triplet (e.g. 127:127:127).
+Line drawing can be disabled by specifying a color of "none".
+<DD>Default: black
+
+<DT><B>catnum</B>
+<DD>List of category numbers to restrict which areas are drawn.  Ignored
+if either the <EM>-r</EM> flag or the <EM>legend</EM> options are used.
+
+<DT><B>legend</B>
+<DD>Name of a legend file specifying what color to use for 
+each category (see below). If "-" is specified, the legend
+will be read from standard input.
+<DD>Default: none
+</DL>
+
+<H2>DESCRIPTION</H2>
+
+Use <EM>d.vect.area</EM> to draw labelled areas from a vector map to the GRASS
+display.  Using, the "<EM>-r</EM>" flag, the program will cycle through
+a small color palette, overriding any <EM>fillcolor</EM> or
+<EM>linecolor</EM> argument.  If a <EM>legend</EM> file is specified, it will
+be used.  Otherwise, the color used for filling areas is as specified.
+
+<P>
+
+The <EM>fillcolor</EM> argument may be any of the standard named GRASS colors,
+or and RGB (red, green, blue) triplet.  An RGB triplet must have the
+form <EM>&lt;num&gt;:&lt;num&gt;:&lt;num&gt;</EM> where <EM>num</EM> is
+between 0 and 255.  If "none" is specified, no fill will be done.  Specifying
+"none" does not make sense for the random color option, since it always draws
+lines in black.
+<P>
+
+The <EM>linecolor</EM> argument specifies the color to use for drawing
+area boundary lines.  It has the same format as <EM>fillcolor</EM>, and
+also accepts the "none" color to disable line drawing.
+
+<P>
+An optional list of category numbers may be used to restrict which areas are
+drawn (only valid with the <EM>fillcolor</EM> and <EM>linecolor</EM> options).
+
+<P>
+More control can be had by creating a <EM>legend</EM> file.  At the
+time of this writing, GRASS does not have any management functions
+for specifying how vectors should be drawn, so this file must be
+created by "hand".  The easiest way to create such a file, is
+to copy the category file for the vector map, and edit it to
+contain color specifications.  The format of the <EM>legend</EM>
+file is <EM>category red green blue [red green blue]</EM>,
+with one entry per line.  The first RGB color specifies the fill
+color, while the optional second one specifies the boundary
+line color.
+If a category for a map is not included
+in this file, it will not be drawn unless there is a special "default"
+entry with a category of -1.  Boundary lines are not drawn unless
+either a boundary color is specified for the category, or there is
+a default boundary color.  Using the keyword "none" for either
+<EM>fillcolor</EM> or <EM>linecolor</EM> in conjunction with a legend
+will override drawing fill or boundary lines.
+
+<DL>
+<DT><B>Example Legend File</B>
+<DD>
+-1 255 255 255 127 127 127<BR>
+1  210 198 168<BR>
+5  168 198 220<BR>
+</DL>
+
+<P>
+
+In the above, all labelled areas will be drawn in white (255, 255, 255)
+with dark gray boundaries (127, 127, 127)
+except those labelled as categories 1 or 5.  If the "default" entry
+had been omitted, then only areas labelled 1 or 5 would have been drawn.
+Since the entries for 1 and 5 don't specify a color for boundary lines,
+no boundary lines are drawn.
+
+<P>
+One may place comments on any line in the legend file by starting it
+with a non-numeric character ('#' is a good choice).  Empty lines
+are ignored.
+
+<H2>NOTES</H2>
+<P>
+It is expected that the legend specification aspect of this module
+will change when an infrastructure for managing vector drawing
+styles is implemented.
+
+<H2>AUTHOR</H2>
+Eric G. Miller
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

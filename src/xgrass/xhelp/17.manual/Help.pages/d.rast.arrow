@@ -1,5 +1,0 @@
-
-@man("d.rast.arrow") - Displays arrows representing aspect directions for a
-raster map layer in the active display frame on the graphics monitor.
-
-(GRASS Display Program)

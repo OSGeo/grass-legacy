@@ -41,9 +41,9 @@ int I_ask_ref_colors (
 "----------------------------------------------------------------------------";
 
     nfiles = ref->nfiles;
-/* only use first NFILES files */
+/* only run with NFILES in group */
     if (nfiles > NFILES)
-	nfiles = NFILES ;
+       G_fatal_error("More than %i images in group. Please reduce number. Can't continue", NFILES);
 
 /**************************************************************
  * step 1 - setup
@@ -182,7 +182,7 @@ ASK:
 /**************************************************************
  * step 4 - verify
  */
-    fprintf (stdout,"Colors assigned as follows:\n\n");
+    fprintf (stderr,"Colors assigned as follows:\n\n");
     show_color ("RED:    ", r, ref);
     show_color ("GREEN:  ", g, ref);
     show_color ("BLUE:   ", b, ref);
@@ -202,11 +202,11 @@ ASK:
 
 static int show_color(char *label,int n,struct Ref *ref)
 {
-    fprintf (stdout,"%s", label);
+    fprintf (stderr,"%s", label);
     if (n < 0)
-	fprintf (stdout,"none\n");
+	fprintf (stderr,"none\n");
     else
-	fprintf (stdout,"%s in %s\n", ref->file[n].name, ref->file[n].mapset);
+	fprintf (stderr,"%s in %s\n", ref->file[n].name, ref->file[n].mapset);
 
 	return 0;
 }

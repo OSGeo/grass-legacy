@@ -1,24 +1,24 @@
+/* main.c */ 
+/*
+	'r.rational.regression'
+	the program establishes RVI (Relaxation Vegetation Index) model
+	using rational method of nonlinear regression
+*/
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <signal.h>
 #include "gis.h"
-					/* main.c */ 
-					/*
-	'r.rational.regression'
-	the program establishes RVI (Relaxation Vegetation Index) model
-	using rational method of nonlinear regression
-					*/
-
 
 double *vector();
 double **matrix();
 double rms(), log(), sqrt(), err2();
 void function();
 
-main(argc,argv) 
-int   argc;
-char *argv[];
+int
+main (int argc, char *argv[])
 {
 	FILE *fdinp, *fdoutp1, *fdoutp2, *popen();
 
@@ -50,12 +50,16 @@ struct
 {
         struct Option *input, *output1, *output2, *niteration;
 } parm;
-
-
+    struct GModule *module;
+    
         G_gisinit (argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Linear and nonlinear regression calculation from data stored in ASCII file";
 
-						/* define the different options
-						*/
+	/* define the different options */
         parm.input = G_define_option() ;
         parm.input->key        = "input";
         parm.input->type       = TYPE_STRING;

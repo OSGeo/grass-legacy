@@ -1,17 +1,14 @@
-LIB = $(LIBDIR)/libcoorcnv.a
+PGM=v.apply.census
+LIBES = $(COORCNVLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+DEPLIBS= $(DEPCOORCNVLIB) $(DEPGISLIB) $(DEPVECTLIB) $(DEPDIG_ATTLIB)
 DOCS = $(ETC)/census.docs 
 
-all:	$(BIN_ALPHA_CMD)/v.apply.census
-
-$(BIN_ALPHA_CMD)/v.apply.census: v.apply.cen.o $(LIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ v.apply.cen.o $(LIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	-mkdir $(DOCS)
+$(BIN_CMD)/$(PGM): v.apply.cen.o $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ v.apply.cen.o $(LIBES) $(MATHLIB) $(XDRLIB)
+	if [ ! -d $(DOCS) ]; then mkdir $(DOCS); fi
 	cp stf1_matrix $(DOCS)
 	cp pl94_matrix $(DOCS)
 	cp stf1_id $(DOCS)
 	cp stf1_sumlev $(DOCS)
 
-$(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPLIBS): # in case LIB changes

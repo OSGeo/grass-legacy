@@ -1,17 +1,17 @@
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-
 PGM =	v.out.arc
 
-OBJ =	Vexport_arc.o\
+OBJ =	main.o\
 	write_areas.o\
 	write_lines.o\
 	write.o\
 	writ_a_lines.o
 
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB): #
-$(DIG_ATTLIB): #
-$(GISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #
+$(DEPGISLIB): #

@@ -9,7 +9,7 @@
  *        Next byte(s): category number. The number of bytes is determined
  *                      by the number of bytes in a cell 
  *
- * The normal G_open_cell(), and G_put_map_row() do the compression
+ * The normal G_open_cell(), and G_put_raster_row() do the compression
  * This program must only check that the file is not a reclass file and
  * is not already compressed.
  *
@@ -17,23 +17,29 @@
  *
  *****************************************************************************/
 
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "gis.h"
 
 long newsize, oldsize;
-int process(char *, int);
-int doit(char *, int, RASTER_MAP_TYPE);
+int process(char *, int, int);
+int doit(char *, int, RASTER_MAP_TYPE, int);
 
 int main (int argc, char *argv[])
 {
     int stat ;
     int n;
     char *name;
+	struct GModule *module;
     struct Option *map;
-    struct Flag *uncompress;
+    struct Flag *uncompress, *quiet;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Compresses and decompresses raster files.";
 
     map = G_define_option();
     map->key = "map";
@@ -47,18 +53,23 @@ int main (int argc, char *argv[])
     uncompress->key = 'u';
     uncompress->description = "Uncompress the map";
 
+    quiet = G_define_flag() ;
+    quiet->key         = 'q' ;
+    quiet->description = "Run quietly" ;
+
+
     if (G_parser(argc,argv))
 	exit(1);
     stat = 0;
     for (n = 0; name = map->answers[n]; n++)
-	if (process (name, uncompress->answer))
+	if (process (name, uncompress->answer, quiet->answer))
 	    stat = 1;
     exit (stat);
 }
 
 
 int 
-process (char *name, int uncompress)
+process (char *name, int uncompress, int quiet)
 {
     struct Colors colr;
     struct History hist;
@@ -79,7 +90,7 @@ process (char *name, int uncompress)
     }
     if (G_is_reclass (name, G_mapset(), rname, rmapset) > 0)
     {
-	fprintf (stdout,"[%s] is a reclass file - can't %scompress\n", name, uncompress?"un":"");
+	fprintf (stdout,"[%s] is a reclass file of map <%s> in mapset <%s> - can't %scompress\n", name, rname, rmapset, uncompress?"un":"");
 	return 1;
     }
 
@@ -97,7 +108,7 @@ process (char *name, int uncompress)
        G_suppress_warnings(0);
     }
 
-    if (doit(name,uncompress, map_type)) return 1;
+    if (doit(name,uncompress, map_type, quiet)) return 1;
 
     if (colr_ok)
     {
@@ -133,7 +144,7 @@ process (char *name, int uncompress)
 }
 
 int 
-doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
+doit (char *name, int uncompress, RASTER_MAP_TYPE map_type, int quiet)
 {
     struct Cell_head cellhd ;
     int new, old, nrows, row;
@@ -191,9 +202,11 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
 
     oldsize = lseek (old, 0L, 2);
 
-    /* the null file is writtren automatically */
+    /* the null file is written automatically */
     for (row = 0; row < nrows; row++)
     {
+       if (!quiet)
+           G_percent (row, nrows, 2);
        if (G_get_raster_row_nomask (old, rast, row, map_type) < 0)
            break;
        if (G_put_raster_row (new, rast, map_type) < 0)

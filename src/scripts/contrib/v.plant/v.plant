@@ -8,10 +8,22 @@
 #	sjdc 10/2/95		s.cox@dem.csiro.au
 #
 
-if [ ! "$GISRC" ]
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "--help" ]
 then
-	echo "Sorry - you are not running GRASS">&2
-	exit 1
+ echo	""
+ echo	"v.plant fills in intermediate points on arcs with a specified spacing"
+ echo	"Take care:  the original file is replaced with the new one"
+ echo	""
+ exit
 fi
 
 echo	""
@@ -20,9 +32,6 @@ echo	"Take care:  the original file is replaced with the new one"
 echo	""
 echo	"Simon Cox,  CSIRO,	10/2/95"
 echo	""
-
-eval  `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 g.ask type=old prompt="Select a vector (dig) map to process" element=dig desc=vector unixfile=/tmp/$$
 . /tmp/$$

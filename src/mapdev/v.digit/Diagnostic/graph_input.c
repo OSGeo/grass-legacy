@@ -20,6 +20,8 @@
 
 static int Debug = 0;
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
 #include <string.h>
@@ -1892,7 +1894,6 @@ dig_input(x, y)
     static long i;                    /*  counter                        */
     static long rtn;
     static int first_time = 1;
-    char *getenv();
 
     if (first_time)
     {

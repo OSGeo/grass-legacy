@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "D.h"
 #include "lproto.h"
 #include "windows.h"
@@ -5,7 +6,8 @@
 
 int cell3d()
 {
-	R_open_driver();
+	if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 	Dchoose(MAP.name) ;
 	R_close_driver();
 

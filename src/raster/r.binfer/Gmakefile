@@ -1,32 +1,23 @@
-
-FILES = gram.c lex.c makefile symtab.h symtab.c table.c main.c \
+PGM=r.binfer
+FILES = y.tab.c lex.yy.c makefile symtab.h symtab.c table.c main.c \
 		flags.c engine.c misc.c reclass.c yywrap.c
-OBJS = gram.o lex.o symtab.o table.o main.o \
+OBJS = y.tab.o lex.yy.o symtab.o table.o main.o \
 		flags.o engine.o misc.o reclass.o yywrap.o
 
-all: clean $(BIN_MAIN_CMD)/r.binfer
+all: $(BIN_CMD)/$(PGM)
 
-clean:
-	-rm -f lex.c gram.c
-
-$(BIN_MAIN_CMD)/r.binfer: $(OBJS) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) $(LEXLIB)
-	
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPGISLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(LEXLIB) $(MATHLIB) $(XDRLIB)
 
 count:
 	@echo "Current number of lines:"
 	@wc -l $(FILES)
 
 $(OBJS): symtab.h
-$(GISLIB): #
+$(DEPGISLIB): #
 
-lex.c: binfer.l
-	$(LEX) binfer.l
-	rm -f lex.c
-	mv lex.yy.c lex.c
+lex.yy.c: binfer.l
+	$(LEX) -t binfer.l > $@
 
-gram.c: binfer.y
-	$(YACC) binfer.y
-	rm -f gram.c
-	mv y.tab.c gram.c
-
+y.tab.c: binfer.y
+	$(YACC) -d binfer.y

@@ -1,4 +1,5 @@
 #include "ps_info.h"
+#include <string.h>
 #include "local_proto.h"
 
 #define KEY(x) (strcmp(key,x)==0)

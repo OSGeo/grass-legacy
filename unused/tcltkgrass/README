@@ -1,0 +1,105 @@
+This src-tree contains the binary code for TclTkGRASS "superview", a
+graphical output window directly in Tcl/TK for GRASS.
+
+I got the last version of the souce code (from around 1994) from:
+http://www.funet.fi/pub/graphics/packages/grass-incoming/tcltkgrass.tar.Z
+
+Tcl/Tk changed a lot since then so that the module files do not work any
+longer.
+
+
+If you have the Tcl/Tk libraries around you can recompile this with issuing
+"gmake5" in the source directory ./src.
+
+This will build a binary file tcltkgrass in ./bin. If you edit the script
+file tcltkgrass_start_with_superview to reflect the TCLTKGRASSBASE to this
+directory and GISBASE to your grass installation and copy the file to
+/usr/local/bin/tcltkgrass you will be able to start this and open the
+superview.
+
+Don't be surprized if it dumps core and most modules exit with an error.
+
+
+some general thoughts:
+
+two or three concepts to merge functions from GRASS into tcl/tk: 
+- make a new wish with added functions from gislib/display (statically linked) 
+- make a loadable module out of gislib/display functions (dynamically linked)
+- embed tcl/tk in a core C Application (link app to tcl/tk API)
+
+one additional option within the GRASS system:
+- create a TCLTKDRIVER as a X device (in GRASS terminology) e. g.
+make a tk canvas that draws from GRASS modules from the fifos and allows to:
+zoom in, zoom out, scale, pan, save the contents of the canvas to
+postscript. But this could be too slow for production use? Another problem
+is that the driver communicates essentially only in one direction, so that
+it may be complicated to set the region from the display window.
+
+The source code in this directory is the first attempt of L.A.S. to create a
+tcltkgrass application. This attempt was later abandoned in favour of a
+[incr] Tcl system completey new designed.
+
+I think that the approach with new tcl/tk functions statically linked into a
+own wish/tclsh is a dead road. So in consequence this code could be moved to
+unused.
+
+
+some URLs:
+http://www.equi4.com/jcw/extuse.html
+http://starbase.neosoft.com/~claird/comp.lang.tcl/tcl_tutorials.html
+
+Books:
+Ousterhout: Tcl and TK
+Welch: Practical Programming in Tcl and Tk, 3rd ed.
+
+commands/options within grass wish tcltkgrass:
+(collected from code)
+
+View 
+	addlayer
+	addpolyline
+	addpoint
+	addsites
+	addraster
+	addoraster
+	addlabel
+	addgrid
+	addlegend
+	
+	draw
+	delete
+	panx
+	pany
+	scale
+	setdefregion
+	
+	up
+	zoom
+	zoommode
+	
+
+options:
+-name
+-mapset
+-color
+-width
+-dash
+-fill
+-downscale
+-upscale
+-unit
+-cat
+-bitmap
+-font
+-window
+
+example:
+
+View .new
+.new addlayer -name "dem@PERMANENT"
+.new draw
+.new panx 100
+.new delete
+
+-- 
+Andreas Lange, andreas.lange@rhein-main.de

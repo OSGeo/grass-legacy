@@ -34,7 +34,6 @@
 #include "Vect.h"
 #include "gis.h"
 #include "dlg.h"
-#include "dig_head.h"
 
 #include <stdio.h>
 
@@ -200,7 +199,7 @@ main(argc, argv)
 
     }	/*  for()  */
 
-	fprintf (stderr,"STEP %d: Write digit header\n", ++step) ;
+	fprintf (stderr,"STEP %d: Write Vect.header\n", ++step) ;
 	/*obsolete with new Vect.lib
      write_head_bdig (f_digit, &head);
      */

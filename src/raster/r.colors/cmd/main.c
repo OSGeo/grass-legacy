@@ -1,11 +1,14 @@
-#include "gis.h"
-#include "local_proto.h"
-
 /* main.c
  *
  * specify and print options added by DBA Systems, Inc.
  * update 10/99 for GRASS 5
  */
+
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
+#include "local_proto.h"
+
 
 int main (int argc, char *argv[])
 {
@@ -18,10 +21,16 @@ int main (int argc, char *argv[])
     char *type, *cmap, *cmapset;
     char errbuf[256];
     int fp;
+	struct GModule *module;
     struct Flag *flag1, *flag2;
     struct Option *opt1, *opt2, *opt3;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates/Modifies the color table associated with "
+		"a raster map layer.";
 
     opt1 = G_define_option();
     opt1->key         = "map";
@@ -35,7 +44,7 @@ int main (int argc, char *argv[])
     opt2->key_desc    = "type";
     opt2->type        = TYPE_STRING;
     opt2->required    = NO;
-    opt2->options     = "aspect,grey,grey.eq,gyr,rainbow,ramp,random,ryg,wave,rules";
+    opt2->options     = "aspect,grey,grey.eq,grey.log,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
     opt2->description = "type of color table";
 
     opt3 = G_define_option();
@@ -47,7 +56,7 @@ int main (int argc, char *argv[])
 
     flag1 = G_define_flag();
     flag1->key = 'w';
-    flag1->description = "Don't overwrite existing color table";
+    flag1->description = "Keep existing color table";
 
     flag2 = G_define_flag();
     flag2->key = 'q';
@@ -96,7 +105,7 @@ int main (int argc, char *argv[])
     G_suppress_warnings (0);
 
     G_sleep_on_error (0);
-    fp = G_raster_map_is_fp(name, G_mapset());
+    fp = G_raster_map_is_fp(name, mapset);
     G_read_fp_range (name, mapset, &range);
     G_get_fp_range_min_max (&range, &min, &max);
     G_sleep_on_error (1);
@@ -126,6 +135,13 @@ int main (int argc, char *argv[])
 		   ("Can't make grey.eq color table for floating point map\n");
 	    eq_grey_colors (name, mapset, &colors, flag2->answer);
 	}
+	else if (strcmp (type, "grey.log") == 0)
+	{
+	    if(fp)
+		G_fatal_error
+		   ("Can't make logarithmic color table for floating point map\n");
+	    log_grey_colors (name, mapset, &colors, flag2->answer, (CELL) min, (CELL) max);
+	}
 	else if (strcmp (type, "aspect") == 0)
 	    G_make_aspect_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rainbow") == 0)
@@ -134,6 +150,8 @@ int main (int argc, char *argv[])
 	    G_make_ryg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "gyr") == 0)
 	    G_make_gyr_fp_colors (&colors, min, max);
+	else if (strcmp (type, "byr") == 0)
+	    G_make_byr_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
 	    if (!read_color_rules(&colors, min, max, fp))
@@ -154,7 +172,7 @@ int main (int argc, char *argv[])
     else{  /* use color from another map (cmap) */
 	cmapset = G_find_cell2 (cmap, "");
 	if (cmapset == NULL) {
-	    fprintf (stderr, "ERROR: %s - map not found\n", name);
+	    fprintf (stderr, "ERROR: %s - map not found\n", cmap);
 	    exit(1);
 	}
 	if(0 > G_read_colors (cmap, cmapset, &colors)){
@@ -177,6 +195,8 @@ int more_usage (void)
     fprintf (stderr, "  aspect    (aspect oriented grey colors)\n");
     fprintf (stderr, "  grey      (linear grey scale)\n");
     fprintf (stderr, "  grey.eq   (histogram equalized grey scale)\n");
+    fprintf (stderr, "  grey.log  (histogram logarithmic transformed grey scale)\n");
+    fprintf (stderr, "  byr       (blue through yellow to red colors)\n");
     fprintf (stderr, "  gyr       (green through yellow to red colors)\n");
     fprintf (stderr, "  rainbow   (rainbow color table)\n");
     fprintf (stderr, "  ramp      (color ramp)\n");

@@ -1,0 +1,12 @@
+belongs to r.hydro.CASC2D
+
+ program node+con.c
+ 
+   Written by Fred L. Ogden, Ph.D., May 1996.
+ 
+   This program may be used, distributed and modified freely provided that
+   reference is given to the original author in all publications, reports,
+   and manuals produced using this program.
+ 
+   The purpose of this program is to greatly simplify the task of setting
+   up channel routing data sets for CASC2D.

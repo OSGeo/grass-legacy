@@ -1,4 +1,0 @@
-      cellhd[i]->north = 0.5;
-      cellhd[i]->south = -(double)(cellhd[i]->rows/5) + 0.5;
-      cellhd[i]->east = (double)(cellhd[i]->cols) - 0.5;
-      cellhd[i]->west = -0.5;

@@ -17,12 +17,24 @@ print_unit (int i, int ns, int nl)
     if (unit[i].type == LN_METERS ||
         unit[i].type == LN_FEET ||
         unit[i].type == LN_KILOMETERS ||
-        unit[i].type == LN_MILES ) 
-  	format_double (len_sum (&ns, nl) * unit[i].factor,
-	    num, unit[i].len, unit[i].eformat, unit[i].dp);
+        unit[i].type == LN_MILES )
+        {
+         if (e_format)
+            scient_format (len_sum (&ns, nl) * unit[i].factor,
+               num, unit[i].len, unit[i].dp);
+         else
+  	    format_double (len_sum (&ns, nl) * unit[i].factor,
+	       num, unit[i].len, unit[i].dp);
+	}
     else
-  	format_double (area_sum (&ns, nl) * unit[i].factor,
-	    num, unit[i].len, unit[i].eformat, unit[i].dp);
+        {
+         if (e_format)
+            scient_format (area_sum (&ns, nl) * unit[i].factor,
+               num, unit[i].len, unit[i].dp);
+         else
+    	    format_double (area_sum (&ns, nl) * unit[i].factor,
+	       num, unit[i].len, unit[i].dp);
+	}
     }
     fprintf (stdout,"|%s", num);
 

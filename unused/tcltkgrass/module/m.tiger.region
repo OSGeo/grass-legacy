@@ -1,0 +1,412 @@
+
+
+proc zone { } {
+
+
+  toplevel .zone
+
+  wm geometry .zone +100+20
+  wm title .zone "zone"
+
+
+  global value
+
+
+  frame .zone.frame0 \
+    -relief {flat}
+
+  scale .zone.frame0.scale \
+     -label "Universal Transverse Mercator (UTM) zone for this country:" \
+     -from -60 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .zone.frame0 \
+    .zone.frame0.scale { left expand fill }
+
+  .zone.frame0.scale set 0
+
+
+  frame .zone.frame1 \
+     -borderwidth {2}
+
+  button .zone.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.zone.frame0.scale get]
+                 destroy .zone }
+
+  button .zone.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .zone }
+
+  pack append .zone.frame1 \
+    .zone.frame1.ok { left expand } \
+    .zone.frame1.cancel { right expand }
+
+
+
+  pack append .zone \
+    .zone.frame0 { top expand fill } \
+    .zone.frame1 { bottom expand fill }
+
+
+
+  grab set .zone
+  tkwait window .zone
+
+}
+
+
+
+
+proc spheroid { } {
+
+
+  toplevel .spheroid
+
+  wm geometry .spheroid +100+20
+  wm title .spheroid "spheroid"
+
+
+  global sname
+
+
+  frame .spheroid.frame0 \
+    -relief {flat}
+
+  label .spheroid.frame0.label \
+     -anchor {w} \
+     -text {Spheroid:} \
+     -padx {2}
+
+  listbox .spheroid.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.spheroid.frame0.vscrollbar set}
+
+  scrollbar .spheroid.frame0.vscrollbar \
+     -command {.spheroid.frame0.listbox yview}
+
+
+  pack append .spheroid.frame0 \
+    .spheroid.frame0.label { top fillx } \
+    .spheroid.frame0.listbox { left expand fill } \
+    .spheroid.frame0.vscrollbar { right fill }
+
+  bind .spheroid.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  bind .spheroid.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  bind .spheroid.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  .spheroid.frame0.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .spheroid.frame0.listbox insert 0 $i
+  }
+
+
+  frame .spheroid.frame1 \
+     -borderwidth {2}
+
+  button .spheroid.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroid }
+
+  button .spheroid.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroid }
+
+  pack append .spheroid.frame1 \
+    .spheroid.frame1.ok { left expand } \
+    .spheroid.frame1.cancel { right expand }
+
+
+
+  pack append .spheroid \
+    .spheroid.frame0 { top expand fill } \
+    .spheroid.frame1 { bottom expand fill }
+
+
+
+  grab set .spheroid
+  tkwait window .spheroid
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global iname
+  global value
+  global sname
+
+
+  set cmd ""
+
+  if {  $iname != "" } {
+         set cmd "$cmd infile=$iname"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd zone=$value"
+  }
+
+  if {  $sname != "" } {
+         set cmd "$cmd spheroid=$sname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.tiger.region $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.tiger.region { } {
+
+
+  global iname
+  global value
+  global sname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Find Geographic Region Information"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.tiger.region}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.tiger.region finds geographic region information for U.S. Census Bureau TIGER input data.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Input file name in which raw TIGER data (type 1) is stored:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "zone ..." \
+     -relief raised \
+     -padx 10 \
+     -command "zone
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "spheroid ..." \
+     -relief raised \
+     -padx 10 \
+     -command "spheroid
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.tiger.region -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global iname
+set iname ""
+
+global value
+set value ""
+
+global sname
+set sname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.tiger.region

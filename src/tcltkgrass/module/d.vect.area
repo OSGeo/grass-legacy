@@ -1,0 +1,7 @@
+interface_build {
+    {d.vect.area} 0
+    {Displays GRASS vector polygons (optionally filled).}
+    {entry map {Vector polygon map, required:} 0 vector}
+    {entry linecolor {Polygon border color [none]:} 0 color}
+    {entry fillcolor {Polygon fill color [white]:} 0 color}
+}

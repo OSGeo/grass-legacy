@@ -11,16 +11,16 @@ IMP_OFILES = \
 	stpll.o \
 	albrll.o 
 
-all:	$(BIN_CONTRIB_CMD)/v.in.gef
+all:	$(BIN_CMD)/v.in.gef
 
 
-$(BIN_CONTRIB_CMD)/v.in.gef:	$(IMP_OFILES)
-	cc $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(VASK) $(MATHLIB)
+$(BIN_CMD)/v.in.gef:	$(IMP_OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(XDRLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
 
 
 imp_gef.o:	format.h
 imp_main.o:	format.h
 get_head.o:	format.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 

@@ -1,0 +1,4 @@
+for i in 1hour_moisture        fire_origin           slope aspect                fuel_model            spread_time_observed image_burned          wind_direction elevation             live_moisture         wind_speed
+do 
+  r.resample $i output=$i
+done

@@ -1,29 +1,77 @@
-/*  @(#)head_info.c	2.1  6/26/87  */
+/*
+ * $Id$
+ * 
+ ******************************************************************************
+ * MODULE:       s.to.vect -- Convert site_list to a vector point layer.
+ * AUTHOR(S):    Original authors (see main.c)
+ *               Eric G. Miller <egm2@jps.net>
+ * PURPOSE:      A general module to convert site_lists to vector point layers.
+ * 	        This file handles some vector header data.
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ******************************************************************************/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "gis.h"
 #include "vask.h"
 #include "Vect.h"
 
-int get_head_info (struct dig_head *head)
+static void _set_default_head_info (struct dig_head *head)
 {
-	char value[6];
-	struct Cell_head wind ;
+	struct Cell_head wind;
+	char *organization;
 
-	strcpy(head->organization, "USDA, Soil Cons. Service") ;
-	G__get_window (&wind,"","WIND",G_mapset()) ;
+	if (getenv("GRASS_ORGANIZATION"))    /* added MN 12/2001 */
+	{
+		organization=(char *)getenv("GRASS_ORGANIZATION");
+		sprintf(head->organization, "%s", organization);
+	}
+	else
+		strcpy(head->organization, "GRASS Development Team") ;
+
+	G_get_window (&wind) ;
         head->W = wind.west;
         head->E = wind.east;
         head->N = wind.north;
         head->S = wind.south;
-	if (wind.proj != 3)
-	   {
-           if (G_lookup_key_value_from_file("PROJ_INFO","zone",value,5))
-	      head->plani_zone = atoi(value);
-           else head->plani_zone = 0;
-	   }
+	head->plani_zone = G_zone ();
+	sprintf (head->line_3, "Projection: %s", 
+			G_database_projection_name());
 
+        /* avoid 1:0 scale */
+        head->orig_scale = 1;
+	                
+}
+
+void set_default_head_info (struct dig_head *head)
+{
+	time_t ticks = time (NULL) ;
+	struct tm *theTime = localtime (&ticks) ;
+
+	/* Date in ISO 8601 format YYYY-MM-DD */
+	strftime (head->date, 20, "%Y-%m-%d", theTime) ;
+	/* free (theTime) ; */
+
+	_set_default_head_info (head);
+	
+	/* Arbitrary scale */
+	head->orig_scale = 24000;
+
+}
+
+
+int get_head_info (struct dig_head *head)
+{
+	_set_default_head_info (head);
+	
 	V_clear() ;
 	V_line(1,"Provide the following information:") ;
 
@@ -54,12 +102,9 @@ int get_head_info (struct dig_head *head)
 	V_ques( &head->E,           'd', 13, 20, 14) ;
 	V_ques( &head->N,           'd', 14, 20, 14) ;
 	
-
-	V_call() ;
-
-	/*
-	endwin ();
-	*/
-
-	return 0;
+        V_intrpt_ok();
+        if(!V_call())
+          return -1;
+        else
+	  return 0;
 }

@@ -30,17 +30,17 @@ get_res()
     char string[100];
     int i, num_ok, num;
     G_clear_screen();
-    fprintf (stdout,"\n");
-    fprintf (stdout,"     ANSWERS on GRASS Project Resolution Utility\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"     ANSWERS on GRASS Project Resolution Utility\n");
     
 /* if complete is 1 or 2, this means the user has already set the resolution
    but we offer the option in case they wish to re-set it */
     if (complete[1] > 0)
     {
-	fprintf (stdout,"\nYou have already set the grid cell size at %.f meters.\n",
+	fprintf (stderr,"\nYou have already set the grid cell size at %.f meters.\n",
 	proj_resolution);
-        fprintf (stdout,"If the project is changed at this time, all previously\n");
-        fprintf (stdout,"completed steps must be run again.\n\n");
+        fprintf (stderr,"If the project is changed at this time, all previously\n");
+        fprintf (stderr,"completed steps must be run again.\n\n");
 	if (!G_yes("Do you wish to re-define a grid cell size at this time?", 0))
 	    return (0);
 
@@ -50,20 +50,20 @@ get_res()
     complete[1] = 2;
     alter_status();
     }
-    fprintf (stdout,"\n");
-    fprintf (stdout,"\nThis is your opportunity to set the size of the raster elements\n");
-    fprintf (stdout,"to be used for the ANSWERS simulation. Both the north-south and\n");
-    fprintf (stdout,"east-west cell dimensions will be set the the value you input, since\n");
-    fprintf (stdout,"ANSWERS is limited to using square elements.\n");
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
+    fprintf (stderr,"\nThis is your opportunity to set the size of the raster elements\n");
+    fprintf (stderr,"to be used for the ANSWERS simulation. Both the north-south and\n");
+    fprintf (stderr,"east-west cell dimensions will be set the the value you input, since\n");
+    fprintf (stderr,"ANSWERS is limited to using square elements.\n");
+    fprintf (stderr,"\n");
 
     num_ok = 1;
     while (1)
     {
-	fprintf (stdout,"\n");
-	fprintf (stdout,"Press RETURN to cancel this operation.\n");
-	fprintf (stdout,"\n");
-	fprintf (stdout,"Input the cell size resolution (in meters) -> ");
+	fprintf (stderr,"\n");
+	fprintf (stderr,"Press RETURN to cancel this operation.\n");
+	fprintf (stderr,"\n");
+	fprintf (stderr,"Input the cell size resolution (in meters) -> ");
 	G_gets(string);
 	
 /* error check the user's input */
@@ -89,25 +89,25 @@ get_res()
 	}
 	if (!num_ok)
 	{
-	    fprintf (stdout,"\n\7[enter a whole number]\n\n");
+	    fprintf (stderr,"\n\7[enter a whole number]\n\n");
 	    hit_return();
-	    fprintf (stdout,"\n");
+	    fprintf (stderr,"\n");
 	    num_ok = 1;
 	    continue;
 	}
 	sscanf(string, "%d", &num);
 	if (num < 0)
 	{
-	    fprintf (stdout,"\n\7[enter a whole number 0 or larger]\n\n");
+	    fprintf (stderr,"\n\7[enter a whole number 0 or larger]\n\n");
 	    hit_return();
-	    fprintf (stdout,"\n");
+	    fprintf (stderr,"\n");
 	    continue;
 	}
 	proj_resolution = (float) num;
-	fprintf (stdout,"\n");
-	fprintf (stdout,"Project cell size being set to %.f meters square.\n", 
+	fprintf (stderr,"\n");
+	fprintf (stderr,"Project cell size being set to %.f meters square.\n", 
 	proj_resolution);
-	fprintf (stdout,"cell area: %.3f hectares (%.3f acres)\n",
+	fprintf (stderr,"cell area: %.3f hectares (%.3f acres)\n",
 	    (proj_resolution * proj_resolution / 10000) + .0005,
 	    (proj_resolution * proj_resolution / 4046.856) + .0005);
 	if (!G_yes("\nIs this ok? ", 1))

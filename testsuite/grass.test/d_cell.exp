@@ -1,0 +1,6 @@
+# CELL driver color problem,
+# can not be tested automated.
+
+set test "CELL-Driver"
+
+unresolved "$test"

@@ -4,31 +4,27 @@
  * US Army Construction Engineering Research Lab
  * Copyright 1993, H. Mitasova (University of Illinois),
  * I. Kosinovsky, (USA-CERL), and D.Gerdes (USA-CERL)
+ * 
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ *
  *
  * modified by McCauley in August 1995
  * modified by Mitasova in August 1995
  * modified by Mitasova in November 1999
  *
- */
-
-
-/*
- * The interpolation library and interpolation programs, both binary and
- * source is copyrighted, but available without fee for education,
- * research and non-commercial purposes. Users may distribute the binary
- * and source code to third parties provided that the copyright notice and
- * this statement appears on all copies and that no charge is made for
- * such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * U.S.Army CERL and authors of the software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * U.S.Army CERL or authors SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED
- * BY THE USER OF THIS SOFTWARE.
- * 
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
  */
 
 
@@ -76,6 +72,7 @@ double fstar2, tfsta2, xmin, xmax, ymin, ymax, zmin, zmax, gmin, gmax, c1min,
  c1max, c2min, c2max;
 double dnorm;
 double smc;
+double theta, scalex;
 
 FCELL *zero_array_cell;
 struct interp_params params;
@@ -141,10 +138,11 @@ int main (int argc, char *argv[])
   DCELL cellmin, cellmax;
   FCELL *cellrow,fcellmin;
 
+  struct GModule *module;
   struct
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *smooth,
-    *maskmap, *zmult, *fi, *segmax, *npmin, *res_ew, *res_ns, *overlap;
+    *maskmap, *zmult, *fi, *segmax, *npmin, *res_ew, *res_ns, *overlap,*theta, *scalex;
   } parm;
   struct
   {
@@ -154,47 +152,12 @@ int main (int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
-  if (G_get_set_window (&winhd) == -1)
-    G_fatal_error ("G_get_set_window failed");
-
-  inp_ew_res = winhd.ew_res;
-  inp_ns_res = winhd.ns_res;
-  inp_cols = winhd.cols;
-  inp_rows = winhd.rows;
-  inp_x_orig = winhd.west;
-  inp_y_orig = winhd.south;
-
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta,  update: November 1999\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
-    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
-    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
-    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
-    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Please cite these references in publications where the results of this\n");
-    fprintf (stderr, "program were used.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-
+  module = G_define_module();
+  module->description =
+	"Reinterpolates and computes topographic analysis from "
+	"input raster file to a new raster file (possibly with "
+	"different resolution) using regularized spline with "
+	"tension and smoothing.";
 
   parm.input = G_define_option ();
   parm.input->key = "input";
@@ -301,6 +264,18 @@ int main (int argc, char *argv[])
   parm.fi->required = NO;
   parm.fi->description = "Tension";
 
+  parm.theta = G_define_option ();
+  parm.theta ->key = "theta";
+  parm.theta ->type = TYPE_DOUBLE;
+  parm.theta ->required = NO;
+  parm.theta ->description = "Anisotropy angle (in degrees)";
+
+  parm.scalex = G_define_option ();
+  parm.scalex ->key = "scalex";
+  parm.scalex ->type = TYPE_DOUBLE;
+  parm.scalex ->required = NO;
+  parm.scalex ->description = "Anisotropy scaling factor";
+
   flag.cprght = G_define_flag ();
   flag.cprght->key = 't';
   flag.cprght->description = "Use dnorm independent tension";
@@ -308,6 +283,47 @@ int main (int argc, char *argv[])
 
   if (G_parser (argc, argv))
     exit (1);
+
+  if (G_get_set_window (&winhd) == -1)
+    G_fatal_error ("G_get_set_window failed");
+
+  inp_ew_res = winhd.ew_res;
+  inp_ns_res = winhd.ns_res;
+  inp_cols = winhd.cols;
+  inp_rows = winhd.rows;
+  inp_x_orig = winhd.west;
+  inp_y_orig = winhd.south;
+
+    fprintf (stderr, "\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Version: GRASS5.0 beta,  update: November 1999\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
+    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
+    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
+    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
+    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
+    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
+    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
+    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
+    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
+    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
+    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Please cite these references in publications where the results of this\n");
+    fprintf (stderr, "program were used.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "\n");
 
   per = 1;			/* flag.per->answer; */
   input = parm.input->answer;
@@ -332,6 +348,16 @@ int main (int argc, char *argv[])
   sscanf (parm.fi->answer, "%lf", &fi);
   sscanf (parm.zmult->answer, "%lf", &zmult);
   sscanf (parm.overlap->answer, "%d", &overlap);
+
+  if(parm.theta->answer)
+  sscanf (parm.theta->answer, "%lf", &theta);
+
+  if(parm.scalex->answer) {
+  sscanf (parm.scalex->answer, "%lf", &scalex);
+        if (!parm.theta->answer)
+        G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+        }
+
   /*
    * G_set_embedded_null_value_mode(1);
    */
@@ -514,7 +540,7 @@ int main (int argc, char *argv[])
 		     outhd.cols, az, adx, ady, adxx, adyy, adxy, fi, 
                      MAXPOINTS, SCIK1, SCIK2, SCIK3,
 		     smc, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, 
-                     inp_x_orig, inp_y_orig, deriv,
+                     inp_x_orig, inp_y_orig, deriv, theta, scalex,
                      Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, 
                      Tmp_fd_yy, Tmp_fd_xy,NULL,NULL);
 /*  In the above line, the penultimate argument is supposed to be a 

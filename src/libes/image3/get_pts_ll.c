@@ -151,6 +151,8 @@ I_new_con_point_ll (Control_Points_LL *cp, double e1, double n1, double lon2, do
     cp->lon2[i]   = lon2;
     cp->status[i] = status;
 
+fprintf(stderr, "BOBBY %d %d %f %f %f %f\n", cp->count, i, cp->e1[i], cp->n1[i], cp->lat2[i], cp->lon2[i] );
+
     return 0;
 }
 

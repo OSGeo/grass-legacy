@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include "digit.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "wind.h"
@@ -35,9 +34,14 @@ remove_block (struct Map_info *Map)
     Clear_info ();
     _Clear_base ();
     _Write_base (12, "Buttons:") ;
-    _Write_base (13, "Left:   Establish a corner") ;
-    _Write_base (14, "Middle: Abort") ;
-    Write_base  (15, "Right:  Accept window") ;
+    _Write_base (13, "   Left:   Establish a corner") ;
+#ifdef ANOTHER_BUTTON
+    _Write_base (14, "   Middle: Abort") ;
+    Write_base  (15, "   Right:  Accept window") ;
+#else
+    _Write_base (14, "   Middle: Accept window") ;
+    Write_base  (15, "   Right:  Abort") ;
+#endif
 
     cur_screen_x = (int)D_west ;
     cur_screen_y = (int)D_south ;
@@ -60,7 +64,7 @@ top:
 	Clear_info ();
 
 	switch (button) {
-	    case 1:
+	    case LEFTB:
 		if ( cur_screen_x == screen_x  &&  cur_screen_y == screen_y)
 		{
 		    Write_info(2, "Block is too small to use") ;
@@ -71,12 +75,13 @@ top:
 		screen_to_utm ( cur_screen_x, cur_screen_y, &ux1, &uy1) ;
 		break;
 
-	    case 2:
-		return (0);
-		break;
-	    case 3:
+	    case MIDDLEB:
 		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
 		    goto foo;
+		break;
+
+	    case RIGHTB:
+		return (0);
 		break;
 	}
 
@@ -84,7 +89,7 @@ top:
 
 foo:
     _Clear_info ();
-    Write_info (2, "You are about to remove a block of lines. OK? ");
+    Write_info (2, "You are about to remove a block of lines. OK (y/n)? ");
     Get_curses_text (buf);
     G_squeeze (buf);
     if (*buf != 'y' && *buf != 'Y')

@@ -1,7 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "bitmap.h"
-
-char *getenv ();
 
 int 
 main (int argc, char *argv[])

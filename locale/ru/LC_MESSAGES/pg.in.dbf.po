@@ -1,0 +1,119 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-06 15:40+0300\n"
+"PO-Revision-Date: 2002-03-06 15:40+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: main.c:42
+msgid "Name of .dbf file to be imported"
+msgstr "Название .dbf файла для импорта"
+
+#: main.c:49
+msgid "Admin/normal user dump mode (Default = Postgres super-user)"
+msgstr "Способ импорта - admin/normal (Default = Postgres super-user)"
+
+#: pgdump.c:52 pgdump.c:68
+msgid "Failed to allocate new memory.\n"
+msgstr "Не смог выделить необходимую память.\n"
+
+#: pgdump.c:191
+msgid "Error occurred while writing to tmp file!\n"
+msgstr "Ошибка записи данных во временный файл!\n"
+
+#: pgdump.c:238
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: pgdump.c:259
+#, c-format
+msgid "%s - DBF not found, or wrong format.\n"
+msgstr "%s - DBF не найден, или имеет неправильный формат.\n"
+
+#: pgdump.c:288 pgdump.c:468
+msgid "Invalid field type - bailing out"
+msgstr "Неправильный тип поля - выход"
+
+#: pgdump.c:329
+#, c-format
+msgid "Error Quering Postgres:%s\n"
+msgstr "Ошибка запроса Postgres:%s\n"
+
+#: pgdump.c:333 pgdump.c:401 pgdump.c:491
+#, c-format
+msgid "Executing %s\n"
+msgstr "Выполняется %s\n"
+
+#: pgdump.c:337
+#, c-format
+msgid ""
+"FIXME: Postgres Says:\n"
+"**********************\n"
+"%s\n"
+"Please make sure that created table name is not used by another table.\n"
+msgstr ""
+"FIXME: Postgres:\n"
+"**********************\n"
+"%s\n"
+"Убедитесь в том, что имя новой таблицы не существует.\n"
+
+#: pgdump.c:359
+msgid ""
+"Additionally dump to ASCII file (enter full Unix name or hit <Enter> for "
+"none):\n"
+msgstr ""
+"Дополнительно записать в ASCII file (введите полный адрес файла или <Enter>, если "
+"нет):\n"
+
+#: pgdump.c:361 pgdump.c:369
+msgid "OK, writing to temporary file\n"
+msgstr "OK, запись во временный файл\n"
+
+#: pgdump.c:377
+#, c-format
+msgid ""
+"File write error on temporary file %s\n"
+"Hint: Check write permissions for current catalogue"
+msgstr ""
+"Ошибка записи во временный файл %s\n"
+"Проверьте, есть ли права на запись в каталог"
+
+#: pgdump.c:409
+#, c-format
+msgid ""
+"********************\n"
+"FIXME: Postgres ERROR:%s\n"
+"The table has NOT been created.\n"
+"You must be Postgres superuser to COPY table. Choose normal user dumpmode.\n"
+msgstr ""
+"********************\n"
+"FIXME: Postgres ERROR:%s\n"
+"Таблица не была создана.\n"
+"Вы должны быть администратором Postgres, чтобы COPY table. Выберите способ normal.\n"
+
+#: pgdump.c:427
+#, c-format
+msgid ""
+"\n"
+"Table %s successfully copied into Postgres. Congratulations!\n"
+msgstr ""
+"\n"
+"Таблица %s успешно скопирована в Postgres. Поздравления!\n"
+
+#: pgdump.c:497
+#, c-format
+msgid ""
+"\n"
+"Successfully inserted %d records to Postgres table %s\n"
+msgstr ""
+"\n"
+"Успешно вставлено %d записей в табл. Postgres %s\n"

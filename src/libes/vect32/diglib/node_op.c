@@ -6,8 +6,7 @@
 
 
 #include <stdlib.h>
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 /**  file contains functions that do a specific operation or access the x,y
 *    coordinate arrays.

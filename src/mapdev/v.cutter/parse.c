@@ -16,8 +16,11 @@ int parse_args (int argc, char *argv[], struct ARGS *Args)
     struct Option *VectA;
     struct Option *VectB;
     struct Option *Outfile;
+    struct Option *Type;
     struct Flag *All_flag;
     struct Flag *Quiet_flag;
+    struct Flag *Area_arcs_flag;
+    struct Flag *Line_arcs_flag;
 
     G_gisinit(argv[0]);
 
@@ -30,7 +33,7 @@ int parse_args (int argc, char *argv[], struct ARGS *Args)
     VectA->description	= "Cutter vector file";
 
     VectB = G_define_option();
-    VectB->key 		= "data";
+    VectB->key 		= "input";
     VectB->type		= TYPE_STRING;
     VectB->required		= YES;
     VectB->multiple		= NO;
@@ -40,7 +43,7 @@ int parse_args (int argc, char *argv[], struct ARGS *Args)
     if (output_open)
     {
 	Outfile = G_define_option();
-	Outfile->key 		= "out";
+	Outfile->key 		= "output";
 	Outfile->type		= TYPE_STRING;
 	Outfile->required		= YES;
 	Outfile->multiple		= NO;
@@ -48,14 +51,30 @@ int parse_args (int argc, char *argv[], struct ARGS *Args)
 	Outfile->description	= "Output vector file";
     }
 
+    Type = G_define_option();
+    Type->key	= "type";
+    Type->type	= TYPE_STRING;
+    Type->required	= NO;
+    Type->multiple	= NO;
+    Type->options	= "area,line,both";
+    Type->answer	= "line";
+    Type->description	= "Type of object to extract (area, line or both)";
+
     All_flag  		  = G_define_flag ();
-    All_flag->key   	  =  'u';
-    All_flag->description = "Output unlabled data polygons also";
+    All_flag->key   	  =  'o';
+    All_flag->description = "only labeled areas will be extracted";
+
+    Area_arcs_flag	= G_define_flag ();
+    Area_arcs_flag->key	= 'a';
+    Area_arcs_flag->description	="Limit line output to area-edge arcs";
+
+    Line_arcs_flag	= G_define_flag ();
+    Line_arcs_flag->key	= 'l';
+    Line_arcs_flag->description	="Limit line output to line arcs";
 
     Quiet_flag  		= G_define_flag ();
     Quiet_flag->key   		=  'q';
     Quiet_flag->description  	= "Run quietly";
-
 
     if (G_parser (argc, argv))
 	exit(-1);
@@ -65,8 +84,24 @@ int parse_args (int argc, char *argv[], struct ARGS *Args)
     if (output_open)
 	Args->Out = Outfile->answer;
 
-    All   = All_flag->answer   == 0 ? 0 : 1;
     Quiet = Quiet_flag->answer == 0 ? 0 : 1;
+
+    Do_areas=0;
+    All=Do_lines=1;
+    if(*Type->answer == 'a' ||
+       *Type->answer == 'b' )Do_areas=1;
+
+    if(Do_lines)
+    {
+       ltype=BOTH;
+       if(Line_arcs_flag->answer)ltype=LINE;
+       else if(Area_arcs_flag->answer)ltype=AREA;
+    }
+
+    if(Do_areas)
+    {
+       if(All_flag->answer)All=0;
+    }
 
     return (0);
 }

@@ -3,5 +3,5 @@ Calculate univariate statictics for raster maps
 Markus Neteler
 neteler@geog.uni-hannover.de
 
-15. Nov. 1998
-updated for GRASS 5 : 11/99 (renamed from m.statistics to r.univar)
+15. Nov. 1998 updated for GRASS 5 : 11/99 (renamed from m.statistics to r.univar)
+10/2001: new parser MN

@@ -4,6 +4,7 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 #include "local_proto.h"
 
 #define LEFT 0

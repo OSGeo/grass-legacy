@@ -1,0 +1,51 @@
+From: Glynn Clements <glynn.clements@virgin.net>
+To: Somesh Agarwal <agarwal_somesh@yahoo.com>
+Cc: grass5 developers list <grass5@geog.uni-hannover.de>
+Subject: Re: [GRASS5] grass .. how does write on display
+
+Somesh Agarwal wrote:
+
+> I am new to grass and while looking at grass code I found this find io.c
+> in which
+> to write a text to display (from paint dir) we write the whole of
+> $GISBASE/font/fontname  file contents to the display socket ,
+> I did not understand what is happening exactly , can someone throw
+> more light into the issue ,
+
+The current mechanism is this (all files are in the directory
+src/display/devices/lib unless stated otherwise):
+
+1. A client calls R_font(), which sends the filename
+($GISBASE/fonts/font_name) to the display driver using the FONT
+command. See src/libes/raster/Font.c.
+
+2. The display driver receives the FONT command and the filename. See
+command.c.
+
+3. It passes the filename to Font_get() (Font_get.c), which passes it
+to init_font() (font.c), which reads the file into memory.
+
+4. A client draws text by calling R_text (src/libes/raster/Text.c),
+which sends the string to the display driver using the TEXT command.
+
+5. The display driver receives the TEXT command and the string. See
+command.c (again).
+
+6. It passes the string to Text() (Text.c) which calls soft_text()
+with the string and several stored parameters.
+
+7. soft_text() (Text2.c) calls drawchar() (same file), to draw each
+character.
+
+8. drawchar() calls get_char_vects() (font.c) to retrieve the actual
+vector definitions. It then draws the character using text_move() and
+text_draw() (same file), which use the Move_abs() and Cont_abs()
+functions (these are implemented separately by each display driver,
+e.g. XDRIVER).
+
+-- 
+Glynn Clements <glynn.clements@virgin.net>
+_______________________________________________
+grass5 mailing list
+grass5@geog.uni-hannover.de
+http://www.geog.uni-hannover.de/mailman/listinfo/grass5

@@ -1,5 +1,0 @@
-
-@man("d.rhumbline") - Displays the rhumbline joining two user-specified points
-in the active frame on the user's graphics monitor.
-
-(GRASS Display Program)

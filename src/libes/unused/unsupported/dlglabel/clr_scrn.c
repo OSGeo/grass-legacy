@@ -4,12 +4,12 @@ char *BC;
 char *UP;
 short ospeed;
 #include <stdio.h>
+#include <stdlib.h>
 #undef putchar
 
 clear_screen()
 {
 	int putchar();
-	char *getenv();
 	char *term;
 	char buf[1024];
 	static char clear[100];

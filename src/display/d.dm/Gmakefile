@@ -1,0 +1,7 @@
+PGM=d.dm
+PROG =  $(GISBASE)/scripts/$(PGM)
+
+$(GISBASE)/$(PGM): d.dm
+	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
+	cp d.dm $(GISBASE)/scripts
+	chmod 0755 $(GISBASE)/scripts/d.dm

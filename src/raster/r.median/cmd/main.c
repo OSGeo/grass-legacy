@@ -6,6 +6,7 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct {
 	struct Option *base, *cover, *output;
     } parm;
@@ -21,6 +22,12 @@ int main (int argc, char *argv[])
     struct stats stats;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Finds the median of values in a cover map within "
+		"areas assigned the same category value in a "
+		"user-specified base map.";
 
     parm.base = G_define_option();
     parm.base->key = "base";

@@ -1,5 +1,0 @@
-Brush-Load menu option
-
-This menu option allows you to load a previously saved brush
-from a @glossary("mapset",16.glossary/mapset.def) in your @glossary("mapset search path.",16.glossary/srchpth.def)
-

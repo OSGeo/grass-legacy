@@ -1,0 +1,592 @@
+
+
+proc colors { } {
+
+
+  toplevel .colors
+
+  wm geometry .colors +100+20
+  wm title .colors "colors"
+
+
+  global cname
+
+
+  frame .colors.frame0 \
+    -relief {flat}
+
+  label .colors.frame0.label \
+     -anchor {w} \
+     -text {Icon color:} \
+     -padx {2}
+
+  listbox .colors.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame0.vscrollbar set}
+
+  scrollbar .colors.frame0.vscrollbar \
+     -command {.colors.frame0.listbox yview}
+
+
+  pack append .colors.frame0 \
+    .colors.frame0.label { top fillx } \
+    .colors.frame0.listbox { left expand fill } \
+    .colors.frame0.vscrollbar { right fill }
+
+  bind .colors.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  .colors.frame0.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet gray white black} {
+      .colors.frame0.listbox insert 0 $i
+  }
+
+
+  frame .colors.frame1 \
+     -borderwidth {2}
+
+  button .colors.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  button .colors.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  pack append .colors.frame1 \
+    .colors.frame1.ok { left expand } \
+    .colors.frame1.cancel { right expand }
+
+
+
+  pack append .colors \
+    .colors.frame0 { top expand fill } \
+    .colors.frame1 { bottom expand fill }
+
+
+
+  grab set .colors
+  tkwait window .colors
+
+}
+
+
+
+
+proc size { } {
+
+
+  toplevel .size
+
+  wm geometry .size +100+20
+  wm title .size "size"
+
+
+  global value
+
+
+  frame .size.frame0 \
+    -relief {flat}
+
+  scale .size.frame0.scale \
+     -label "Icon scaling factor:" \
+     -from 1 \
+     -to 1000 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .size.frame0 \
+    .size.frame0.scale { left expand fill }
+
+  .size.frame0.scale set 1
+
+
+  frame .size.frame1 \
+     -borderwidth {2}
+
+  button .size.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.size.frame0.scale get]
+                 destroy .size }
+
+  button .size.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .size }
+
+  pack append .size.frame1 \
+    .size.frame1.ok { left expand } \
+    .size.frame1.cancel { right expand }
+
+
+
+  pack append .size \
+    .size.frame0 { top expand fill } \
+    .size.frame1 { bottom expand fill }
+
+
+
+  grab set .size
+  tkwait window .size
+
+}
+
+
+
+
+proc points { } {
+
+
+  toplevel .points
+
+  wm geometry .points +100+20
+  wm title .points "points"
+
+
+  global pname
+
+
+  frame .points.frame0 \
+    -relief {flat}
+
+  label .points.frame0.label \
+    -anchor {w} \
+    -text {UNIX file containing geographic coordinates of sites:} \
+    -padx {2}
+
+  scrollbar .points.frame0.hscrollbar \
+    -command {.points.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .points.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.points.frame0.hscrollbar set}
+
+  pack append .points.frame0 \
+    .points.frame0.label { top fillx } \
+    .points.frame0.entry { top fillx } \
+    .points.frame0.hscrollbar { bottom fillx }
+
+  .points.frame0.entry configure -state normal
+
+  bind .points.frame0.entry <Return> {
+       set pname [%W get] }
+
+
+
+  frame .points.frame1 \
+     -borderwidth {2}
+
+  button .points.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set pname [.points.frame0.entry get]
+                 destroy .points }
+
+  button .points.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set pname ""
+                 destroy .points }
+
+  pack append .points.frame1 \
+    .points.frame1.ok { left expand } \
+    .points.frame1.cancel { right expand }
+
+
+
+  pack append .points \
+    .points.frame0 { top expand fill } \
+    .points.frame1 { bottom expand fill }
+
+
+
+  grab set .points
+  tkwait window .points
+
+}
+
+
+
+
+proc flag { } {
+
+
+  toplevel .flag
+
+  wm geometry .flag +100+20
+  wm title .flag "flag"
+
+
+  global r
+
+
+  frame .flag.frame0 \
+    -relief {flat}
+
+  checkbutton .flag.frame0.checkbutton \
+     -text "Coordinates are input in reverse order." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "r" \
+     -offvalue "" \
+     -variable r
+
+  pack append .flag.frame0 \
+    .flag.frame0.checkbutton { left }
+
+
+  frame .flag.frame1 \
+     -borderwidth {2}
+
+  button .flag.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flag }
+
+  button .flag.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flag }
+
+  pack append .flag.frame1 \
+    .flag.frame1.ok { left expand } \
+    .flag.frame1.cancel { right expand }
+
+
+
+  pack append .flag \
+    .flag.frame0 { top expand fill } \
+    .flag.frame1 { bottom expand fill }
+
+
+
+  grab set .flag
+  tkwait window .flag
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global r
+  global iname
+  global cname
+  global value
+  global pname
+
+
+  set cmd ""
+
+  if {  $r != "" } {
+         set cmd "$cmd -$r"
+  }
+
+  if {  $iname != "" } {
+         set cmd "$cmd icon=$iname"
+  }
+
+  if {  $cname != "" } {
+         set cmd "$cmd color=$cname"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd size=$value"
+  }
+
+  if {  $pname != "" } {
+         set cmd "$cmd points=$pname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.icons $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.icons { } {
+
+
+  global r
+  global iname
+  global cname
+  global value
+  global pname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Display Points as Icons"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.icons}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.icons displays points, as icons, at user-defined locations in the active display frame on the graphics monitor.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {File containing graphic representation of icon to be drawn:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "colors ..." \
+     -relief raised \
+     -padx 10 \
+     -command "colors
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "size ..." \
+     -relief raised \
+     -padx 10 \
+     -command "size
+                set_command_entry"
+
+
+  button .cmd.frame3.button2 \
+     -text "points ..." \
+     -relief raised \
+     -padx 10 \
+     -command "points
+                set_command_entry"
+
+
+  button .cmd.frame3.button3 \
+     -text "flag ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flag
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1 { left } \
+    .cmd.frame3.button2 { left } \
+    .cmd.frame3.button3  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global r
+set r ""
+
+global iname
+set iname ""
+
+global cname
+set cname ""
+
+global value
+set value ""
+
+global pname
+set pname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.icons

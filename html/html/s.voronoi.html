@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>s.voronoi</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>s.voronoi</B></EM>  - Uses a GRASS sites list to produce a Voronoi
+diagram<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>s.voronoi</B> [<b>-aq</b>] <b>sites=</b><i>name</i> <b>vect=</b><i>name</i>
+[<b>labels=</b><i>name</i>]
+
+<BR>
+
+<H2>DESCRIPTION</H2>
+s.voronoi uses an existing sites list (sites) to
+create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
+<P>
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sites=</B><EM>name </EM>
+<DD> Name of existing sites file.
+<DT><B>vect=</B><EM>name</EM>
+<DD> Name of the output file (binary vector file).
+<DT><B>catnum=</B><EM>name</EM>
+<DD> no category numbers, keep from input file, generate as serial number <BR>
+           options: no,keep,gen <BR>
+           default: keep
+</DL>
+
+<DT><B>labels=</B><EM>name</EM>
+<DD>  Field to use to generate the label. (no; cat; str,#; dec,#) <BR>
+      default: no
+</DL>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B>
+<DD> Use all sites found in the named sites file, rather than limiting output to sites falling within the current geographic region.
+<DT><B>-q</B>
+<DD> Quiet. Cut out the chatter.
+</DL>
+
+<H2>NOTES</H2>
+       <p> s.voronoi can be run either non-interactively or interactively.
+       The program will be run non-interactively if the user specifies the name of
+       an existing site list file  and a name for a vect file, using the form </p>
+
+	      <p> s.voronoi [-aq] sites=name1 vect=name2 catnum=optCatnum labels=optLabel </p>
+
+       <p>where  name1 is the name of an existing site list file and
+       name2 is the name of vector output file. optCatnum can be "keep" only
+       if the site file category number is integer. optLabel can
+       be "no", no labels, "cat", use site file category number as
+       label, str,num, use the num string type field of the site file as
+       label, dec,num, use the num decimal type field of the site file as
+       label.</p>
+
+       <p> Alternately, the user can simply	 type  s.voronoi  on  the
+       command	line,  without	program arguments.  In this case,
+       the user will be prompted for parameter values  using  the
+       standard	 GRASS	parser	interface described in the manual
+       entry for parser. </p>
+
+<H2>EXAMPLES</H2>
+	To create a Voronoi diagram keeping the original category number and using the
+        first decimal field as the output label use:
+	<DD> s.voronoi sites=inputSite vect=voro catnum=keep labels=dec,1 </DL>
+
+<H2>REFERENCES</H2>
+<EM>Steve J. Fortune,  (1987).  A Sweepline Algorithm for
+    Voronoi Diagrams, Algorithmica 2, 153-174.</EM>
+
+<H2>SEE ALSO</H2>
+<EM>
+<A HREF="v.autocorr.html">v.autocorr</A>,
+<A HREF="v.spag.html">v.spag</A>, 
+<A HREF="v.support.html">v.support</A>, 
+<A HREF="s.delaunay.html">s.delaunay</A>,
+<A HREF="s.hull.html">s.hull</A>,
+<A HREF="s.sweep.html">s.sweep</A></EM>
+
+<H2>AUTHOR</H2>
+James Darrell McCauley, Purdue University<br>
+GRASS 5 update, improvements: <a href=mailto:aaime@libero.it>Andrea
+Aime</a>, Modena, Italy
+
+<p><i>Last changed: $Date$</i>
+</BODY>
+</HTML>

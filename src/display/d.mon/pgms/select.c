@@ -2,8 +2,8 @@
 
 #include "raster.h"
 #include "display.h"
-#include "D.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "monitors.h"
 
@@ -12,6 +12,7 @@ main (int argc, char *argv[])
 {
 	struct MON_CAP *R_parse_monitorcap();
 	char command[1024];
+	char name[128];
 
 	if (argc != 2)
 	{
@@ -39,9 +40,17 @@ main (int argc, char *argv[])
  * set the font
  * if no current frame create a full screen window.
  */
-	R_open_driver();
+	/* Don't do anything else if connecting to the driver fails */
+	if (R_open_driver() != 0)
+	    exit(EXIT_FAILURE);
 	R_font ("romans");
-	D_setup(0);
+
+	if (D_get_cur_wind(name) != 0)
+		D_new_window("full_screen",
+			     R_screen_top(), R_screen_bot(),
+			     R_screen_left(), R_screen_rite());
+	D_set_cur_wind("full_screen");
+
 	R_close_driver();
 
 	/* write the name to the .gisrc file */

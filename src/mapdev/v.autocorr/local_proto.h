@@ -48,7 +48,7 @@ int std_err(double [], double *, double *, double *, double *, int);
 /* att2cat.c */
 double att2cat(struct Map_info *, int);
 /* c_matrix.c */
-int c_matrix(struct Map_info *, struct Plus_head *);
+int c_matrix(struct Map_info *);
 /* init_plus_s.c */
 int init_plus_struct(struct Plus_head *);
 int init_map_struct(struct Map_info *);

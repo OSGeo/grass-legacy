@@ -1,5 +1,12 @@
 #include "kappa.h"
 
+static
+die()
+{
+  unlink (stats_file);
+  G_fatal_error ("WARNING: - problem reading r.stats output\n");
+}
+
 stats()
 {
   char buf[1024], msg[100];
@@ -62,11 +69,4 @@ stats()
   }
   fclose (fd);
   unlink (stats_file);
-}
-
-static
-die()
-{
-  unlink (stats_file);
-  G_fatal_error ("WARNING: - problem reading r.stats output\n");
 }

@@ -12,10 +12,7 @@ put_row (int fd, unsigned char *buf, int row)
     while(ncols-- > 0)
 	*c++ = *buf++;
 /* function call changed */
-/*
-    G_put_map_row (fd, cellbuf, row);
-*/
-    G_put_c_raster_row (fd, cellbuf);
+    G_put_raster_row (fd, cellbuf, CELL_TYPE);
 
     return 0;
 }

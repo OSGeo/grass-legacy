@@ -83,8 +83,7 @@ draw_scale (int use_mouse)
 		if (! incr)
 			return(-1) ;
 
-		line_len = (int)(D_get_a_to_d_xconv() * (scales[incr].size / 
-			      G_distance(D_get_u_west(), (D_get_u_north() + D_get_u_south())/2., D_get_u_west() + D_get_ew_resolution(), (D_get_u_north() + D_get_u_south())/2.))) ;
+		line_len = (int)(D_get_u_to_d_xconv() * scales[incr].size) ;
 
 	/* Blank out area with background color */
 		R_standard_color(color1) ;
@@ -115,7 +114,7 @@ draw_scale (int use_mouse)
 
 		R_move_abs (x_pos + 40 + line_len, y_pos + 25) ;
 		R_text(scales[incr].name) ;
-		R_flush();
+		R_stabilize();
 
 		if(use_mouse)
 		{
@@ -125,6 +124,7 @@ draw_scale (int use_mouse)
 				!strcmp("no",yn) || !strcmp("NO",yn))
 			{
 				R_panel_restore(tmp_fname);
+				R_stabilize();
 				fprintf (stdout,"Try again? [y] ? ");
 				fgets(yn,128,stdin);
 				if (!strcmp("n",yn) || !strcmp("N",yn) ||

@@ -1,8 +1,8 @@
 #include <string.h>
 #include "gis.h"
 
-static int lookup(char *,char *,char *,int);
-static int equal(char *,char *);
+static int lookup(char *, char *, char *, int);
+static int equal(char *, char *);
 static int lower(char);
 
 char *G_database_unit_name(int plural)
@@ -57,6 +57,7 @@ double G_database_units_to_meters_factor()
 	double factor;
     } table[] =
     {
+	{"unit", 1.0},
 	{"meter", 1.0},
 	{"foot", .3048},
 	{"inch", .0254},
@@ -79,7 +80,45 @@ double G_database_units_to_meters_factor()
     return factor;
 }
 
-static int lookup(char *file,char *key,char *value,int len)
+/***********************************************************************
+ * G_database_datum_name()
+ *
+ * return name of datum of current database
+ *
+ * returns pointer to valid name if ok
+ * NULL otherwise
+ ***********************************************************************/
+ 
+char *G_database_datum_name()
+{
+  static char name[256];
+  
+  if(!lookup (PROJECTION_FILE, "datum", name, sizeof(name)))
+    return NULL;
+  /* strcpy (name, "Unknown datum"); */
+  return name;	
+}
+
+/***********************************************************************
+ * G_database_ellipse_name()
+ *
+ * return name of ellipsoid of current database
+ *
+ * returns pointer to valid name if ok
+ * NULL otherwise
+ ***********************************************************************/
+ 
+char *G_database_ellipse_name()
+{
+  static char name[256];
+  
+  if(!lookup (PROJECTION_FILE, "ellps", name, sizeof(name)))
+    return NULL;
+  /* strcpy (name, "Unknown ellipsoid"); */
+  return name;	
+}
+
+static int lookup(char *file, char *key, char *value, int len)
 {
     char path[1024];
 
@@ -92,7 +131,7 @@ static int lookup(char *file,char *key,char *value,int len)
     return G_lookup_key_value_from_file(path, key, value, len) == 1;
 }
 
-static int equal(char *a,char *b)
+static int equal(char *a, char *b)
 {
     if (a == NULL || b == NULL)
 	return a==b;

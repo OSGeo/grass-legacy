@@ -1,0 +1,12 @@
+PGM = s.in.dbf
+HOME = $(BIN_CMD)
+LIST = 	main.o \
+	dbfopen.o \
+	dump.o
+
+LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPVECTLIB) $(DEPDATETIMELIB)
+$(HOME)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): # 

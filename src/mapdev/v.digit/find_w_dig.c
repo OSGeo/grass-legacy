@@ -161,12 +161,10 @@ int find_point_with_dig (double *x, double *y, int n_points, double thresh)
 
 
 /* x = y = 0.0  on abort.  */
-int 
-new_point_with_dig (double *x, double *y, char *header)
+int new_point_with_dig (double *x, double *y, char *header)
 {
     int  button;
     double    ux1, uy1;
-    double    ux2, uy2;
     char    buffer[64];
     int prev;
 

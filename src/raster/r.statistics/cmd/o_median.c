@@ -14,7 +14,7 @@ o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Ca
   struct stats stats;
    
           
-    sprintf(command, "r.stats -a input='%s,%s' fs=space", basemap, covermap);
+    sprintf(command, "r.stats -an input='%s,%s' fs=space", basemap, covermap);
     stats_fd = popen (command, "r");
          
 

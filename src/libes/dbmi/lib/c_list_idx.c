@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_indexes (driver, table_name, list, count)
+int db_list_indexes (driver, table_name, list, count)
     dbDriver *driver;
     dbString *table_name;
     dbIndex **list;

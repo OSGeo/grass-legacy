@@ -35,8 +35,6 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
-#include "dig_structs.h"
-#include "dig_externs.h"
 
          /* internal function prototypes */
 #ifdef _NO_PROTO
@@ -215,12 +213,12 @@ int _plotvect(char *name,char *mapset,char *color_name,int which)
 /*---------------------------------------------------------------------*/
 
 /***********************************************************************
-/** _plotvect_warp (name, mapset, color_name, which, E, N, order)
-/** char *name, *mapset, *color_name;
-/** int  which;          /* 0 - both target&zoom, 1 - zoom only */
-/** double E[];
-/** double N[];
-/** int  order;
+** _plotvect_warp (name, mapset, color_name, which, E, N, order)
+** char *name, *mapset, *color_name;
+** int  which;           0 - both target&zoom, 1 - zoom only 
+** double E[];
+** double N[];
+** int  order;
 ***********************************************************************/
 
 int _plotvect_warp (char *name,char *mapset,char *color_name,

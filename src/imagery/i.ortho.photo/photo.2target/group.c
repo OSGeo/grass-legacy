@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "local_proto.h"
 
-static int cmp (int *,int *);
+static int cmp (const void *, const void *);
 
 int prepare_group_list (void)
 {
@@ -51,8 +51,9 @@ int prepare_group_list (void)
     return 0;
 }
 
-static int cmp (int *a, int *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const int *a = aa, *b = bb;
     int n;
 
     if(n = strcmp (group.group_ref.file[*a].mapset, group.group_ref.file[*b].

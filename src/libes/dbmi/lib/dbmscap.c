@@ -1,3 +1,7 @@
+#include <sys/types.h>
+#include <dirent.h>
+#include <string.h>
+#include <stdlib.h>
 #include "dbmi.h"
 
 static
@@ -53,37 +57,54 @@ db_copy_dbmscap_entry(dst, src)
     strcpy (dst->startup, src->startup);
 }
 
+/* Originaly used dbmscap is not used any more.
+ * All code for dbmscap file is commented here. 
+ *
+ * Instead of in dbmscap file db_read_dbmscap() searches 
+ * for available dbmi drivers in $(GISBASE)/driver/db/  */ 
+
 dbDbmscap *
 db_read_dbmscap()
 {
+    /*	
     FILE *fd;
     char *file;
-    char buf[1024];
     char name[1024];
     char startup[1024];
     char comment[1024];
-    int line;
+    int  line;
+    */
+    char   buf[1024];
+    char   dirpath[1024];
+    DIR    *dir;	
+    struct dirent *ent;	
 
     dbDbmscap *list = NULL;
 
-/* get the full name of the dbmscap file */
+/* START OF OLD CODE FOR dbmscap FILE - NOT USED, BUT KEEP IT FOR FUTURE */
+    /* get the full name of the dbmscap file */
+    /*
     file = db_dbmscap_filename();
     if (file == NULL)
 	return (dbDbmscap *) NULL;
-
-/* open the dbmscap file */
+    */
+    
+    /* open the dbmscap file */
+    /*
     fd = fopen (file, "r");
     if (fd == NULL)
     {
 	db_syserror (file);
 	return (dbDbmscap *) NULL;
     }
-
-/* find all valid entries
- * blank lines and lines with # as first non blank char are ignored
- * format is:
- *   driver name:startup command:comment
- */
+    */ 
+    
+    /* find all valid entries
+     * blank lines and lines with # as first non blank char are ignored
+     * format is:
+     *   driver name:startup command:comment
+     */
+    /*
     for (line = 1; fgets (buf, sizeof buf, fd); line++)
     {
 	if (sscanf (buf, "%1s", comment) != 1 || *comment == '#')
@@ -97,10 +118,36 @@ db_read_dbmscap()
 	    fprintf (stderr, "%s: line %d: invalid entry\n", file, line);
 	    fprintf (stderr,"%d:%s\n", line, buf);
 	}
-	if (list == NULL) /* add_entry failed */
+	if (list == NULL)
 	    break;
     }
     fclose (fd);
+    */
+/* END OF OLD CODE FOR dbmscap FILE */
+
+/* START OF NEW CODE FOR SEARCH IN $(GISBASE)/driver/db/ */
+    
+    /* opend db drivers directory */
+    snprintf (dirpath, 1023, "%s/driver/db/", G_gisbase());
+    dir = opendir(dirpath);
+    if (dir == NULL)
+    {
+	db_syserror (dirpath);
+	return (dbDbmscap *) NULL;
+    }
+    
+    /* read all drivers */
+    while ( ent = readdir (dir) )
+      {
+        if ( (strcmp (ent->d_name, ".") == 0) 
+	    || (strcmp (ent->d_name, "..") == 0) ) continue;	
+	
+        snprintf (buf, 1023, "%s/driver/db/%s", G_gisbase(),ent->d_name);
+	add_entry (&list, ent->d_name, buf, "");
+      }
+    
+    closedir (dir);
+
     return list;
 }
 

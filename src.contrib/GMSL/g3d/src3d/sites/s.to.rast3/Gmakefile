@@ -1,0 +1,8 @@
+PGM=s.to.rast3
+
+LIST=main.o read_sites.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPG3DLIB) $(DEPGISLIB) $(DEPLINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(LINKMLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): #

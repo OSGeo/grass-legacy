@@ -1,5 +1,0 @@
-
-@man("g.findfile") - Searches for GRASS data base files and sets variables
-for the shell.
-
-(GRASS File Management Program)

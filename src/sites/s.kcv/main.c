@@ -2,26 +2,28 @@
  * s.kcv
  * Copyright (C) 1993-1994. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This 
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION 
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * $Id$
  *
  * Modification History:
  * 4.2B <27 Jan 1994>  fixed RAND_MAX for Solaris 2.3
+ * <13 Sep 2000> released under GPL
  */
 
 #include <stdlib.h>
@@ -30,32 +32,60 @@
 #include "gis.h"
 #include "kcv.h"
 #include "version.h"
+#include "site.h"
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
 #endif
+#if defined(__CYGWIN__) || defined(__APPLE__) 
+double drand48()
+{
+	return(rand()/32767.0);
+}
+#define srand48(sv) (srand((unsigned)(sv)))
+#else
+double drand48 ();
+void srand48 ();
+#endif
+
+struct Cell_head window;
+
 
 int 
 main (int argc, char **argv)
 {
   char siteslist[256], errmsg[256], *mapset;
-  double east, north, (*rng) (), max, drand48 (), myrand ();
-  int i, j, k, m, n, a, b, nsites, verbose, np, *p, dcmp ();
-  void srand48 ();
+  double east, north, (*rng) (), max, myrand ();
+  int i, j, k, m, n, b, nsites, verbose, np, *p, dcmp ();
   FILE *fdsite, *fdtest, *fdtrain;
+  int all, field;
   D *d;
   Z *z;
-  struct Cell_head window;
+  Site *outSite;
+  extern struct Cell_head window;
+  struct GModule *module;
   struct
   {
-    struct Option *output, *npartitions;
+    struct Option *input, *npartitions, *dfield;
   } parm;
   struct
   {
-    struct Flag *drand48, *q;
+    struct Flag *drand48, *q, *all;
   } flag;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =        
+                "Randomly partition sites into test/train sets.";
+                
+
+  parm.input = G_define_option ();
+  parm.input->key = "sites";
+  parm.input->type = TYPE_STRING;
+  parm.input->required = YES;
+  parm.input->description = "sites list to be sampled";
+  parm.input->gisprompt = "old,site_lists,sites";
 
   parm.npartitions = G_define_option ();
   parm.npartitions->key = "k";
@@ -64,17 +94,22 @@ main (int argc, char **argv)
   parm.npartitions->description = "number of partitions";
   parm.npartitions->options = "1-32767";
 
-  parm.output = G_define_option ();
-  parm.output->key = "sites";
-  parm.output->type = TYPE_STRING;
-  parm.output->required = YES;
-  parm.output->description = "sites list to be sampled";
-  parm.output->gisprompt = "old,site_lists,sites";
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
 
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';
   flag.drand48->description = "Use drand48()";
 
+  flag.all = G_define_flag ();
+  flag.all->key = 'a';
+  flag.all->description = "Use all sites (do not limit to current region)";
+      
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -83,8 +118,10 @@ main (int argc, char **argv)
   if (G_parser (argc, argv))
     exit (1);
 
-  G_strcpy (siteslist, parm.output->answer);
+  G_strcpy (siteslist, parm.input->answer);
+  sscanf(parm.dfield->answer,"%d", &field);
   verbose = (!flag.q->answer);
+  all = flag.all->answer;
   np = atoi (parm.npartitions->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
@@ -109,7 +146,16 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  G_get_window (&window);
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
+  }
+              
+  if (!all)
+    G_get_window (&window);   
+  else
+    G_get_default_window (&window);
   fdsite = G_fopen_sites_old (siteslist, mapset);
   if (fdsite == NULL)
   {
@@ -117,10 +163,13 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readsites (fdsite, verbose, &z, window);
+  nsites = G_readsites (fdsite, all, verbose, field, &window, &z);
 
   if (nsites < np)
+  {
+    fprintf(stderr, "Sites found: %i\n", nsites);
     G_fatal_error ("More partitions than sites");
+  }
 
   G_begin_distance_calculations ();
 
@@ -150,7 +199,7 @@ main (int argc, char **argv)
       /* for each random point */
       for (m = 0, k = 0; m < nsites; ++m)
       {
-	if (!z[m].partition)	/* if the site hasn't been taken out */
+	if (!z[m].z)	/* if the site hasn't been taken out */
 	{
 	  /* calculate the distance to this site */
 	  /* d[k].dist = G_distance (z[m].x, z[m].y, east, north); */
@@ -163,15 +212,23 @@ main (int argc, char **argv)
 
       /* now sort these distances */
       qsort (d, k, sizeof (D), dcmp);
-      z[d[0].i].partition = i + 1;
-      G_put_site (fdtest, z[d[0].i].x, z[d[0].i].y, z[d[0].i].desc);
+      z[d[0].i].z = i + 1;
+      outSite->east  = z[d[0].i].x;
+      outSite->north = z[d[0].i].y;
+      outSite->ccat  = z[d[0].i].z;
+      G_site_put (fdtest, outSite);
     }
     fclose (fdtest);
 
     fdtrain = opensites (siteslist, i + 1, "train");
     for (j = 0; j < nsites; ++j)
-      if (z[j].partition != i + 1)
-	G_put_site (fdtrain, z[j].x, z[j].y, z[j].desc);
+      if (z[j].z != i + 1)
+      {
+       outSite->east  = z[j].x;
+       outSite->north = z[j].y;
+       outSite->ccat  = z[j].z;
+       G_site_put (fdtest, outSite);
+      }
     fclose (fdtrain);
     if (verbose)
       G_percent (i, np, 1);

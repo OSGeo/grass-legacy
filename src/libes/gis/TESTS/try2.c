@@ -36,7 +36,7 @@ fprintf (stdout,"get(%d)\n", row);
 	G_get_map_row (fd, cell, row);
 
 fprintf (stdout,"put(%d)\n", row);
-	if(G_put_map_row (fd2, cell) < 0)
+	if(G_put_raster_row (fd2, cell, CELL_TYPE) < 0)
 		exit(1);
 
     }

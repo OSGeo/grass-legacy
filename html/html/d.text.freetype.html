@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>d.text.freetype</title>              
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.text.freetype</b></EM> - Draws text in the active display frame on the graphics monitor using TrueType fonts. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.text.freetype</B> 
+<BR>
+<B>d.text.freetype help</B> 
+<BR>
+<B>d.text.freetype</B> 
+<B>text=</B><EM>name</EM>
+[<B>east_north=</B><EM>east,north</EM>] 
+[<B>font=</B><EM>name</EM>] 
+[<B>path=</B><EM>name</EM>] 
+[<B>charset=</B><EM>name</EM>] 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.text.freetype</EM> draws text in the active display frame on
+the graphics monitor using TrueType fonts.
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>text=</B><EM>name</EM>
+<DD>Text to be displayed.
+<DT><B>east_north=</B><EM>east,north</EM>
+<DD>Locates text at this point.
+    The user can click on the location instead of using this option.
+<DT><B>font=</B><EM>name</EM>
+<DD>Specifies a font with a fontname in the definition file, freetypecap.
+<DT><B>path=</B><EM>name</EM>
+<DD>Specifies a font with full pathname.
+<DT><B>charset=</B><EM>name</EM>
+<DD>Sets character encoding for input <B>text</B>.
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets text color to <EM>name</EM>.  <BR>
+    Options: red, orange, yellow, green, blue, indigo, 
+    violet, gray, white, and black <BR>
+    Default: <EM>gray</EM> <BR>
+    It can also be a hexadecimal value of 0xRRGGBB.
+<DT><B>size=</B><EM>value</EM>
+<DD>Sets text height in pixels. <BR>
+    Default: 30
+</DL>
+
+
+<H2>DEFINITION FILE</H2>
+
+To help users select fonts conveniently, the definition file,
+$(GISBASE)/etc/freetypecap, is provided.  Its format is as follows:
+
+<PRE>
+	font:fontpath:charset:color:size:description
+	*default_font:fontpath:charset:color:size:description
+</PRE>
+
+See the file for examples.
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.text.html">d.text</A></EM><br>
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="d.title.html">d.title</A></EM><br>
+<EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Huidae Cho
+&lt;<a href=mailto:grass@geni.cemtlo.com>grass@geni.cemtlo.com</a>&gt;
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

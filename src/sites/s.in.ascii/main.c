@@ -1,27 +1,57 @@
-#include <string.h>
-#include "gis.h"
-#include "local_proto.h"
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       s.in.ascii
+ * AUTHOR(S):    Michael Shapiro - US Army CERL
+ *               Improvements:
+ *                     Markus Neteler - neteler@geog.uni-hannover.de
+ *                     Eric Miller
+ *                     added timestamp 1/2002 MN
+ * PURPOSE:      Import ASCII sites lists and their descriptions into
+ *               a GRASS sites list file. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
-/* 12/99 removed elev data flag. MN. not required any more */
+#include <string.h>
+#include <stdio.h>
+#include "gis.h"
+#include "site.h"
+#include "local_proto.h"
+#include <stdlib.h>
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
-                  * required for s.to.vect */
+                  * required for s.to.vect and s.to.rast */
 
 int 
 main (int argc, char *argv[])
 {
+    char *me;
     char *output, *input;
     char *fs;
     int dims, i, has_cat;
+    struct GModule *module;
     FILE *in_fd, *out_fd;
     Site *site;
+    Site_head shead;
+    struct TimeStamp ts;
     struct
     {
-	struct Option *input, *output, *dims, *fs;
+	struct Option *input, *output, *dims, *fs, *date;
     } parm;
-    struct Flag *elev;
 
-    G_gisinit (argv[0]);
+    G_gisinit (me = argv[0]);
+
+    module = G_define_module();
+    module->description = 
+      "Convert an ASCII listing of site locations "
+      "into a GRASS site list file.";
 
     parm.output = G_define_option();
     parm.output->key = "sites";
@@ -50,14 +80,22 @@ main (int argc, char *argv[])
     parm.fs->description = "input field separator";
     parm.fs->answer = "space";
 
+    parm.date = G_define_option();
+    parm.date->key = "date";
+    parm.date->key_desc = "timestamp";
+    parm.date->required = NO;
+    parm.date->type = TYPE_STRING;
+    parm.date->description = "datetime, datetime1/datetime2, or none";
+
     if (G_parser(argc,argv))
-	exit(1);
+	exit(-1);
+	
     if((input = parm.input->answer))
     {
 	in_fd = fopen (input, "r");
 	if (NULL == in_fd)
 	{
-	    fprintf (stderr, "%s - ", G_program_name());
+	    fprintf (stderr, "%s - ", me);
 	    perror (input);
 	    exit(1);
 	}
@@ -66,6 +104,18 @@ main (int argc, char *argv[])
 	in_fd = stdin;
 
     output = parm.output->answer;
+    shead.name = G_store(parm.output->answer);
+    shead.desc = G_store(G_recreate_command());
+    shead.form = shead.labels = shead.stime = (char *)NULL;
+      
+    /* add here time parameter */
+    if (parm.date->answer)
+    {
+      G_scan_timestamp (&ts, parm.date->answer);
+      shead.time = &ts;
+    }
+    else 
+      shead.time = (struct TimeStamp*)NULL; 
 
     dims=2;
     loop=1; /* added 11/99 MNeteler*/
@@ -89,10 +139,16 @@ main (int argc, char *argv[])
     if (out_fd == NULL)
     {
 	fprintf (stderr, " %s - can't create sites file [%s]",
-		G_program_name(), output);
+		me, output);
 	exit(1);
     }
 
+    G_site_put_head (out_fd, &shead);
+/*    G_free(shead.name);
+    G_free(shead.desc);
+    G_free(shead.form);
+    G_free(shead.labels);
+ */   
     while ((site = get_site (in_fd, dims, fs, &has_cat)))
       G_site_put_new (out_fd, site, has_cat);
     fclose (out_fd);
@@ -115,6 +171,7 @@ format_double (double value, char *buf)
 #define ispipe(c) (c==PIPE)
 #define isnull(c) (c==(char)NULL)
 #define isquote(c) (c==DQUOTE)
+#define isbslash(c) (c==BSLASH)
 
 int 
 G_site_put_new (FILE *fptr, Site *s, int has_cat)
@@ -139,44 +196,40 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
     G_strcat (buf, xbuf);
   }
 
-/* this was oldish: commented 11/99 MN*/
-/*  if (has_cat)  
- *{
- *  sprintf (xbuf, "#%d ", s->cat);
- *  G_strcat (buf, xbuf);
- *} */ 
-
  if (has_cat)  
   {
     switch(s->cattype)
     {
-     case CELL_TYPE:  /* I thought #cat must be int??? 11/99 */
-      sprintf (xbuf, "#%d|", s->ccat);
+     case CELL_TYPE:
+      sprintf (xbuf, "#%d ", s->ccat);
       G_strcat (buf, xbuf);
       break;
      case FCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->fcat);
+      sprintf (xbuf, "#%g ", s->fcat);
       G_strcat (buf, xbuf);
       break;
      case DCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->dcat);
+      sprintf (xbuf, "#%g ", s->dcat);
       G_strcat (buf, xbuf);
       break;
     }
   }                                                    
-  else /* no cat there, so data in x,y,%z will be imported   12/99 MN */
+  else /* no cat there, so data in plain x,y,z format will be imported   12/99 MN */
   {
-     sprintf (xbuf, "#%d ", loop); /* we create a #cat from the currentsite number 11/99 */
+     /* we create a #cat entry in site_list from the current site number 11/99 */
+     sprintf (xbuf, "#%d ", loop);
      loop++;
      G_strcat (buf, xbuf);
   }
-  
+
+ /* now import attributes */
   for (i = 0; i < s->dbl_alloc; ++i)
   {
     format_double (s->dbl_att[i], nbuf);
     sprintf (xbuf, "%%%s ", nbuf);
     G_strcat (buf, xbuf);
   }
+  
   for (i = 0; i < s->str_alloc; ++i)
   {
     if (strlen (s->str_att[i]) != 0)
@@ -191,6 +244,12 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
 	  {
 	    xbuf[k++] = BSLASH;
 	    xbuf[k++] = DQUOTE;
+	  }
+	  else
+	  if (isbslash(s->str_att[i][j]))
+	  {
+	    xbuf[k++] = BSLASH;
+	    xbuf[k++] = BSLASH;
 	  }
 	  else
 	    xbuf[k++] = s->str_att[i][j];

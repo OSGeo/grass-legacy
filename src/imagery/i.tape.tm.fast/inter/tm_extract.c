@@ -43,8 +43,9 @@ int tm_extract (void)
   }
 
   if (title != NULL) {
-    strcat (command, " title=");
+    strcat (command, " title=\"");
     strcat (command, title);         /* Here need to add a quote */
+    strcat (command, "\"");
   }
   G_free(title);
   

@@ -4,10 +4,17 @@
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
+
     G_gisinit(argv[0]);
-    G_get_window (&window);
+
+	module = G_define_module();
+	module->description =
+		"Reports statistics for raster map layers.";
 
     parse_command_line (argc, argv);
+
+    G_get_window (&window);
 
     get_stats();
 

@@ -52,6 +52,8 @@ void IL_init_params_2d (
     double x_or,
     double y_or,		/* origin */
     int der,			/* 1 if compute partial derivs */
+   double tet,                            /* anisotropy angle, 0=East,counter-clockwise */
+   double scl,                          /* anisotropy scaling factor */
     FILE *t1,
     FILE *t2,
     FILE *t3,
@@ -96,6 +98,8 @@ void IL_init_params_2d (
   params->x_orig = x_or;
   params->y_orig = y_or;
   params->deriv = der;
+  params->theta = tet;
+  params->scalex = scl;
   params->Tmp_fd_z = t1;
   params->Tmp_fd_dx = t2;
   params->Tmp_fd_dy = t3;

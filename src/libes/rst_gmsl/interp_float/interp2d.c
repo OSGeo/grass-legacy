@@ -75,21 +75,28 @@ int IL_grid_calc_2d (
   static double *w2 = NULL;
   static double *w = NULL;
   int cond1, cond2;
-  double amaxa, r;
-  double stepix, stepiy, RO, xx, yy, xg, yg, xx2;
+  double r;
+  double stepix, stepiy, xx, xg, yg, xx2;
   double rfsta2, /* cons, cons1, */ wm, dx, dy, dxx, dyy, dxy, h, bmgd1, bmgd2;
   double r2, gd1, gd2;		/* for interpder() */
-  int n1, k1, k2, k, i1, l, l1, n4, n5, m, i, icont, ncont;
+  int n1, k, l, m;
   int ngstc, nszc, ngstr, nszr;
-  int j, jr, ll1, ll2;
-  double zz;
+  double yy, zz;
   int bmask = 1;
   static int first_time_z = 1;
   int offset, offset2;
   double fstar2 = params->fi * params->fi / 4.;
   double tfsta2, tfstad;
   double ns_res, ew_res;
+  double rsin, rcos, teta, scale; /*anisotropy parameters - added by JH 2002*/
+  double xxr, yyr;
 
+  if(params->theta) {
+	teta = params->theta / 57.295779; /* deg to rad */
+        rsin = sin(teta); rcos = cos(teta);
+	}
+  if(params->scalex) scale = params->scalex;
+	
   ns_res = (((struct quaddata *) (data))->ymax -
 	    ((struct quaddata *) (data))->y_orig) / data->n_rows;
   ew_res = (((struct quaddata *) (data))->xmax -
@@ -138,7 +145,7 @@ int IL_grid_calc_2d (
   for (k = ngstr; k <= nszr; k++)
   {
     offset = offset1 * (k - 1);	/* rows offset */
-    yg = (k - ngstr) * stepiy;
+    yg = (k - ngstr) * stepiy + stepiy /2.; /* fixed by J.H. in July 01 */
     for (m = 1; m <= n_points; m++)
     {
       wm = yg - points[m - 1].y;
@@ -151,7 +158,7 @@ int IL_grid_calc_2d (
       if(params->maskmap != NULL)
 	bmask = BM_get (bitmask, l-1, k-1); /*fixed by helena jan 97*/
 /*    if(bmask==0 || bmask==-1) fprintf(stderr, "bmask=%d, at (%d,%d)\n", bmask, l, k);*/
-      xg = (l - ngstc) * stepix;
+      xg = (l - ngstc) * stepix + stepix /2.; /*fixed by J.H. in July 01 */
       dx = 0.;
       dy = 0.;
       dxx = 0.;
@@ -164,11 +171,24 @@ int IL_grid_calc_2d (
 	h = b[0];
 	for (m = 1; m <= n_points; m++)
 	{
-	  xx = xg - points[m - 1].x;
-	  xx2 = xx * xx;
-	  r2 = xx2 + w2[m];
-	  r = r2;
-	  rfsta2 = xx2 + w2[m];
+                xx = xg - points[m - 1].x;
+	if ((params->theta) && (params->scalex)) {
+/* we run anisotropy */
+           xxr = xx*rcos + w[m]*rsin;
+           yyr = w[m]*rcos - xx*rsin;
+           xx2 = xxr * xxr;
+           w2[m] = yyr * yyr;
+          r2 = scale*xx2 + w2[m];
+	   r = r2;
+          rfsta2 = scale*xx2 + w2[m];
+	} else
+	     {
+	  	xx2 = xx * xx;
+	  	r2 = xx2 + w2[m];
+	  	r = r2;
+	  	rfsta2 = xx2 + w2[m];
+	     }
+
 	  h = h + b[m] * params->interp (r, params->fi);
 	  if (cond1)
 	  {

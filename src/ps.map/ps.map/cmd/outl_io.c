@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "ps_info.h"
 #include "local_proto.h"

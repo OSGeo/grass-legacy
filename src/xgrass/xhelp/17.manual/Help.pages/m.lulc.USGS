@@ -1,7 +1,0 @@
-
-@man("m.lulc.USGS") - Creates raster map layers from a Composite Theme Grid
-(CTG) file created by @man("m.lulc.read").  m.lulc.read extracts the CTG
-data from an ASCII landuse/landcover (lulc) CTG format file 
-supplied by the USGS.
-
-(GRASS Data Import/Processing Program)

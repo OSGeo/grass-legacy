@@ -1,9 +1,7 @@
-/* @(#)main.c	1.3 2/27/91 */
 #include <string.h>
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
-#include "local_proto.h"
 
 int main (int argc, char *argv[])
 {
@@ -21,32 +19,48 @@ int main (int argc, char *argv[])
 	FILE *outfd;
 	int verbose;
 	char *me;
-
+	struct Option *parm1, *parm2;
+	struct Flag *flag;
+	struct GModule *module;
 	short start[1000], stop[1000], buf1, buf2;
 	int runcnt, runpos;
 	int onrun, runstart, runstop, x;
 
-	G_gisinit (me = argv[0]);
+        G_gisinit (me = argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Exports a GRASS raster to a RLC encoded binary file.";
+        
+        parm1 = G_define_option() ;
+        parm1->key        = "input" ;
+        parm1->type       = TYPE_STRING ;
+        parm1->required   = YES ;
+        parm1->gisprompt  = "old,cell,raster" ;
+        parm1->description= "raster map to export" ;
 
+        parm2  = G_define_option() ;
+        parm2->key        = "output" ;
+        parm2->type       = TYPE_STRING ;
+        parm2->required   = YES ;
+        parm2->gisprompt  = "old,cell,raster" ;
+        parm2->description= "export file name" ;
+
+	flag = G_define_flag();
+	flag->key = 'v';
+	flag->description = "run verbose";
+
+	if (G_parser(argc, argv))
+		exit(-1);
+		
+        strcpy (name, parm1->answer);
+        strcpy (result, parm2->answer);
 	verbose = 1;
-	if (argc < 2)
-		usage (me);
-	if (argv[1][0] == '-')
-	{
-		if (strcmp (argv[1], "-v") == 0)
+
+	if (flag->answer == 0)
 			verbose = 0;
-		else
-		{
-			fprintf (stderr, "%s: %s  illegal option\n", me, argv[1]);
-			usage (me);
-		}
-		argc--;
-		argv++;
-	}
-	if (argc < 3)
-		usage(me);
-	strcpy (name, argv[1]);
-	strcpy (result, argv[2]);
+
 	mapset = G_find_cell2 (name, "");
 	if (mapset == NULL)
 	{
@@ -87,7 +101,7 @@ int main (int argc, char *argv[])
 	for (row = 0; row < nrows; row++)
 	{
 		if (verbose)
-			percent (row, nrows, 10);
+			G_percent (row, nrows, 10);
 		if (G_get_map_row (infd, cell, row) < 0)
 			exit(1);
 		runcnt = 0; /* set run count back to 0 */
@@ -122,12 +136,12 @@ int main (int argc, char *argv[])
 			}
 		}
 
-		/*	if (G_put_map_row (outfd, cell) < 0)
+/*	if (G_put_raster_row (outfd, cell, CELL_TYPE) < 0)
 	    exit(1);
 */
 	}
 	if (verbose)
-		percent (row, nrows, 10);
+		G_percent (row, nrows, 10);
 
 	G_close_cell (infd);
 	exit(0);

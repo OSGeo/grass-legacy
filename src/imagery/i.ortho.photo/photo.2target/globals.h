@@ -32,7 +32,7 @@ GLOBAL View *VIEW_TITLE2_ZOOM;
 GLOBAL View *VIEW_ELEV;
 GLOBAL View *VIEW_TITLE_ELEV;
 
-GLOBAL CELL *elevbuf; 
+GLOBAL void *elevbuf; 
 GLOBAL int elev;
 GLOBAL char *elev_layer;
 GLOBAL char *mapset_elev;
@@ -76,3 +76,4 @@ GLOBAL int COLOR[10];
 #define YELLOW	COLOR[9]
 
 #undef INIT
+

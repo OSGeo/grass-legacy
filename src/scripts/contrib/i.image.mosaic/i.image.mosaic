@@ -2,9 +2,21 @@
 # written by Markus Neteler 18. August 1998 / 20. Jan. 1999
 #            neteler@geog.uni-hannover.de
 # mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
+#
+# TODO: - implement g.findfile (currently only current mapset supported)
+#       - fix isnull() in r.mapcalc for 3 and 4 maps composites
 
 #--------------------------------------------------
-if [ "$#" -lt 2 ]; then
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ "$#" -lt 2  -o "$1" = "-help" -o "$1" = "help" ]; then
       echo ""
       echo "GRASS script to mosaic (aerial) images. A new image will"
       echo "be created with extended colormap."
@@ -32,7 +44,9 @@ echo ""
 # two images to patch
 if [ "$#" -eq 2 ]; then
      echo "Mosaicing two images..."
-     r.mapcalc "$1.$2.mosaic = if($1,$1,$2+256)"
+     r.mapcalc "$1.$2.mosaic = if(isnull($1),\
+					$2+256,\
+					$1)"
      #modify the color table:
      echo '% 0 1024' > $LOCATION/colr/$1.$2.mosaic
      tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.mosaic

@@ -1,2 +1,0 @@
-    sscanf (parm.which_att->answer, "%d", &which_att);
-    

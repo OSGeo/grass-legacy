@@ -34,10 +34,7 @@ int main(int argc, char **argv)
 
 	sprintf(errbuf,"%s/etc/help", G_gisbase()) ;
 	if (chdir(errbuf))
-	{
-		fprintf(stderr,"Directory: %s unavailable\n", errbuf) ;
-		exit(1) ;
-	}
+		G_fatal_error("Directory: %s unavailable", errbuf);
 
 /*** Initialize the phrase to file lookup table ***/
 	init_phrases() ;
@@ -48,7 +45,7 @@ int main(int argc, char **argv)
 
 	strcpy(file_stack[0], INDEX_FILE) ;
 	strcpy(response_stack[0], 
-	"GRASS ON-LINE HELP                      Press ESC key to exit program") ;
+	"GRASS ON-LINE HELP                     Press [q]uit to exit program");
 	cur_hilite[0] = 1 ;
 	cur_line[0] = 1 ;
 	stack_ptr = 0 ;
@@ -127,10 +124,7 @@ init_phrases (void)
 	char *fgets() ;
 
 	if (NULL == (fptr = fopen(LOOKUP, "r")))
-	{
-		fprintf(stderr,"ERROR: lookup-file <%s> unavailable.\n", LOOKUP) ;
-		exit(-1) ;
-	}
+		G_fatal_error("lookup-file <%s> unavailable.", LOOKUP) ;
 
 	for(n_phrases=0; ; n_phrases++)
 	{

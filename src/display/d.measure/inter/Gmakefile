@@ -1,4 +1,0 @@
-PGM=d.measure
-
-$(BIN_MAIN_INTER)/$(PGM): main.o
-	$(CC) $(LDFLAGS) -o $@ main.o

@@ -30,34 +30,34 @@ get_mask()
     int i;
 
     G_clear_screen();
-    fprintf (stdout,"\n      ANSWERS on GRASS Mask, Resolution, and Region Utility \n");
-    fprintf (stdout,"      Part 1: MASK \n\n");
+    fprintf (stderr,"\n      ANSWERS on GRASS Mask, Resolution, and Region Utility \n");
+    fprintf (stderr,"      Part 1: MASK \n\n");
     if (complete[1] == 0) {
-        fprintf (stdout,"A raster map is needed to identify the study watershed area\n");
-        fprintf (stdout,"\"mask\" throughout the preparation of data and subsequent \n");
-        fprintf (stdout,"running of the ANSWERS simulation.\n\n");
+        fprintf (stderr,"A raster map is needed to identify the study watershed area\n");
+        fprintf (stderr,"\"mask\" throughout the preparation of data and subsequent \n");
+        fprintf (stderr,"running of the ANSWERS simulation.\n\n");
         
-        fprintf (stdout,"This program will read the provided map. *All* raster values \n");
-        fprintf (stdout,"greater than zero will be considered part of the project mask.\n");
-        fprintf (stdout,"(Any currently set mask and region will be ignored).\n\n");
-        fprintf (stdout,"* IMPORTANT: It is imperative that the map you wish to use as *\n");
-        fprintf (stdout,"* a mask remain unchanged during the course of the project,   *\n");
-        fprintf (stdout,"* since it will be used as a reference by all parts of the    *\n");
-        fprintf (stdout,"* the ANSWERS on GRASS Project Manager.                       *\n");
-        fprintf (stdout,"\n");
+        fprintf (stderr,"This program will read the provided map. *All* raster values \n");
+        fprintf (stderr,"greater than zero will be considered part of the project mask.\n");
+        fprintf (stderr,"(Any currently set mask and region will be ignored).\n\n");
+        fprintf (stderr,"* IMPORTANT: It is imperative that the map you wish to use as *\n");
+        fprintf (stderr,"* a mask remain unchanged during the course of the project,   *\n");
+        fprintf (stderr,"* since it will be used as a reference by all parts of the    *\n");
+        fprintf (stderr,"* the ANSWERS on GRASS Project Manager.                       *\n");
+        fprintf (stderr,"\n");
         }
     else {
-        fprintf (stdout,"Currently defined MASK layer is <%s> in <%s>\n\n",
+        fprintf (stderr,"Currently defined MASK layer is <%s> in <%s>\n\n",
         mask_layer, mask_mapset);
-        fprintf (stdout,"If a the mask layer is re-defined at this time, all \n");
-        fprintf (stdout,"previously completed steps must be run again to\n");
-        fprintf (stdout,"resample ANSWERS input data.\n\n");
+        fprintf (stderr,"If a the mask layer is re-defined at this time, all \n");
+        fprintf (stderr,"previously completed steps must be run again to\n");
+        fprintf (stderr,"resample ANSWERS input data.\n\n");
         if(!G_yes("Do you wish to re-define the mask at this time?",0))
             return(0);
-        fprintf (stdout,"\n");
+        fprintf (stderr,"\n");
         complete[1] = 2;
         }
-    fprintf (stdout,"\nIdentify the raster layer to be used for the project MASK.\n");
+    fprintf (stderr,"\nIdentify the raster layer to be used for the project MASK.\n");
 
     mask_mapset = G_ask_cell_old ("",mask_layer);
         if (!strcmp(mask_layer, "")) 

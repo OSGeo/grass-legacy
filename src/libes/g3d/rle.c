@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include "G3d.h"
 
 #define G_254_SQUARE 64516
 #define G_254_TIMES_2 508
@@ -265,6 +267,7 @@ G_rle_decode (src, dst, nofElts, eltLength, lengthEncode, lengthDecode)
 
 /*---------------------------------------------------------------------------*/
 
+void
 test_rle ()
 
 {

@@ -1,5 +1,6 @@
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../Interface/applib/lib.a
 LIBES=$(INTERFACE) $(GISLIB)
+DEPLIBS=$(INTERFACE) $(DEPGISLIB)
 HOME=$(ETC)/paint
 EXTRA_CFLAGS = -I$(SRC)/paint
 
@@ -11,17 +12,17 @@ all:	$(HOME)/vres.test \
 ####################################################################
 
 
-$(HOME)/pixel.test:	ptest.o $(LIBES)
+$(HOME)/pixel.test:	ptest.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) ptest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
 
-$(HOME)/hres.test:	htest.o $(LIBES)
+$(HOME)/hres.test:	htest.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) htest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
 
-$(HOME)/vres.test:	vtest.o $(LIBES)
+$(HOME)/vres.test:	vtest.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) vtest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
 
-$(HOME)/char.test:	ctest.o $(LIBES)
+$(HOME)/char.test:	ctest.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) ctest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
 
 ######################################################################
-$(LIBES):	# in case libraries change
+$(DEPLIBS):	# in case libraries change

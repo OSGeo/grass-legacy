@@ -2,7 +2,16 @@
 
 # reclasses an input sites file based upon a rulesfile
 
-if [ $# = 0 ]
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
 	echo "Usage:"
 	echo "s.reclass input=name output=name rules=name"
@@ -11,44 +20,26 @@ then
 	echo "    input     name of existing raster file to be preferentially displayed" 
 	echo "   output     name of reclass sites file to be created"
 	echo "    rules     name of unixfile containing reclass rules"
+	echo 
+	exit
 fi
 #
 # parse out the input (from gdbase/parser)
 #
 
-        case $1 in
-                input=*) INPUT=`echo $1 | sed s/input=//` ;;
-                i=*) INPUT=`echo $1 | sed s/i=//` ;;
+for i
+do
+        case $i in
+                i=*|in=*|inp=*|inpu=*|input=*)
+				INPUT=`echo $i | awk -F '=' '{print $2}'` ;;
 
-                output=*) OUTPUT=`echo $1 | sed s/output=//` ;;
-                o=*) OUTPUT=`echo $1 | sed s/o=//` ;;
+                o=*|ou=*|out=*|outp=*|outpu=*|output=*) 
+				OUTPUT=`echo $i| awk -F '=' '{print $2}'` ;;
 
-                rules=*) RULES=`echo $1 | sed s/rules=//` ;;
-                r=*) RULES=`echo $1 | sed s/r=//` ;;
+                r=*|ru=*|rul=*|rule=*|rules=*) 
+				RULES=`echo $i | awk -F '=' '{print $2}'` ;;
         esac
-
-        case $2 in
-                input=*) INPUT=`echo $2 | sed s/input=//` ;;
-                i=*) INPUT=`echo $2 | sed s/i=//` ;;
- 
-                output=*) OUTPUT=`echo $2 | sed s/output=//` ;;
-                o=*) OUTPUT=`echo $2 | sed s/o=//` ;;
- 
-                rules=*) RULES=`echo $2 | sed s/rules=//` ;;
-                r=*) RULES=`echo $2 | sed s/r=//` ;;
-	esac
-
-        case $3 in
-                input=*) INPUT=`echo $3 | sed s/input=//` ;;
-                i=*) INPUT=`echo $3 | sed s/i=//` ;;
- 
-                output=*) OUTPUT=`echo $3 | sed s/output=//` ;;
-                o=*) OUTPUT=`echo $3 | sed s/o=//` ;;
- 
-                rules=*) RULES=`echo $3 | sed s/rules=//` ;;
-                r=*) RULES=`echo $3 | sed s/r=//` ;;
-        esac
-
+done
 
 eval `g.findfile element=site_lists file=$INPUT`
         if [ ! "$file" ]
@@ -90,7 +81,7 @@ fi
 newtotal=`wc $RULES | gawk '{print $1}'`
 export newtotal
 export RULES
-
+echo $newtotal $RULES
 gawk 'BEGIN { 
 	rules = ENVIRON["RULES"]
 	for (i=1; i<=ENVIRON["newtotal"]; i++) { 
@@ -102,7 +93,7 @@ gawk 'BEGIN {
 		}
 	}
 }		
-	{ 
+	{
 	gsub("\\|", " ")
 	sub("#", " ")
 	if (newcat[$3]) {printf("%s|%s|#%d %s\n", $1, $2, newatt[$3], newcat[$3]) }} ' $INPUT > $LOCATION/site_lists/$OUTPUT

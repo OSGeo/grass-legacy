@@ -1,12 +1,24 @@
 PGM = v.in.shape
-HOME = $(BIN_CONTRIB_CMD)
+
+
 EXTRA_CFLAGS = $(VECT_INCLUDE)
-# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
-LIST = 	main.o \
+
+LIST = 	basename.o \
+	category.o \
+	polygon.o \
+	main.o \
 	shpopen.o \
-	dbfopen.o
+	dbfopen.o \
+	import.o \
+	lines.o \
+	vmap_import.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
-$(GISLIB): # 
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DATETIMELIB) $(VASKLIB) $(BTREELIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPLINKMLIB) $(DEPDATETIMELIB) $(DEPVASKLIB) $(DEPBTREELIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(DEPVECTLIB): #
+$(DEPGISLIB): # 

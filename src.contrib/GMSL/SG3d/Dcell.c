@@ -21,8 +21,6 @@
 long Main_Win;
 extern float Range_val[];
 
-/*double atof();*/
-char *getenv();
 extern void set_font();
 extern void calculate_model();
 extern void _update_lightpos ();

@@ -5,16 +5,14 @@
 /**  										**/
 /**                                                         			**/
 /**			  Jo Wood, V 1.1, 11th December, 1994			**/
-/**                                      					**/
+/**                                $Id$      					**/
 /*********************************************************************************/
 
 #define MAIN
 
 #include "param.h"	
 
-main(argc,argv) 
-    int argc;
-    char *argv[];
+int main(int argc, char **argv)
 {
 
     /*--------------------------------------------------------------------------*/
@@ -33,6 +31,10 @@ main(argc,argv)
     /*--------------------------------------------------------------------------*/
     /*                        OPEN INPUT AND OUTPUT RASTER FILES		*/
     /*--------------------------------------------------------------------------*/
+
+    /* Make sure that the current projection is not lat/long */
+    if ((G_projection() == PROJECTION_LL))
+         G_fatal_error ("lat/long databases not supported - sorry.");
 
     open_files();
 
@@ -55,4 +57,5 @@ main(argc,argv)
 	write_cats();
     }
 
+    return 0;
 }

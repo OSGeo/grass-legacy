@@ -1,0 +1,5 @@
+interface_build {
+    {i.grey.scale} 0
+    {Assign histogram contrast stretch grey scale color table to raster map.}
+    {entry map {Raster map:} 0 raster}
+}

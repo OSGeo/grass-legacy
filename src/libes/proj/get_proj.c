@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
@@ -16,13 +17,14 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 {
 	char *opt_in[MAX_PARGS];
 	char *str;
-	int nopt, nopt1;
-	int i, k, south;
+	int  nopt1;
+	int i, south;
 	int nsize;
 	char buffa[300], factbuff[50];
 	char proj_in[50];
 	PJ *pj;
 
+        proj_in[0] = '\0';
 	info->zone = 0;
 	info->meters = 1.0;
 	info->proj[0] = '\0';
@@ -51,21 +53,37 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 	if (strlen(info->proj) <= 0)
 		sprintf(info->proj, "ll");
 
-	if (strncmp(proj_in, "Lat", 3) == 0) {
+	if (strncmp(proj_in, "Lat", 3) == 0 
+            || strcmp(info->proj,"ll") == 0) {
 		return 1;
 	}
-	nopt = in_proj_keys->nitems - 1;
-	nopt1 = nopt;
+	nopt1 = 0;
 	south = 0;
-	k = 0;
 	/* if zone is negative, write abs(zone) and define south */
-	for (i = 1; i <= nopt; i++) {
-		if (strncmp(in_proj_keys->key[i], "south", 5) == 0) {
+	for (i = 0; i < in_proj_keys->nitems; i++) {
+                /* the name parameter is just for grasses use */
+                if( strncmp(in_proj_keys->key[i],"name",4) == 0 ) {
+                    continue;
+
+		/* Don't pass through any ellps= settings if we have the
+                   underlying parameters.  */
+
+		} else if( strncmp(in_proj_keys->key[i], "ellps", 5) == 0 ) {
+                    if( G_find_key_value("a", in_proj_keys) != NULL
+                        && (G_find_key_value("b", in_proj_keys) != NULL
+                            || G_find_key_value("es", in_proj_keys) != NULL
+                            || G_find_key_value("rf", in_proj_keys) != NULL))
+                        continue;
+                    else
+                        sprintf(buffa, "%s=%s", 
+                                in_proj_keys->key[i], in_proj_keys->value[i]);
+                } else if (strncmp(in_proj_keys->key[i], "south", 5) == 0) {
 			sprintf(buffa, "south");
 			south = 1;
 		} else if (strncmp(in_proj_keys->key[i], "zone", 4) == 0) {
 			if (info->zone < 0) {
 				info->zone = -info->zone;
+
 				if (!south)
 					sprintf(buffa, "south");
 			}
@@ -94,28 +112,23 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 		else if (strncmp(in_proj_keys->key[i], "no_defs", 7) == 0)
 			sprintf(buffa, "no_defs");
 		/* workaround because pj_ellps.c does not include sphere as valid ellipsoid */
-		else if (!(strncmp(in_proj_keys->key[i], "ellps", 5) == 0) && (strncmp(in_proj_keys->value[i], "sphere", 6) != 0))
-			sprintf(buffa, "%s=%s", in_proj_keys->key[i], in_proj_keys->value[i]);
+		else 
+			sprintf(buffa, "%s=%s", 
+                                in_proj_keys->key[i], in_proj_keys->value[i]);
 
-		if ((strncmp(in_proj_keys->key[i], "ellps", 5) == 0) && (strncmp(in_proj_keys->value[i], "sphere", 6) != 0))
-			nopt1--;
-		else {
-			nsize = strlen(buffa);
-			if (!(opt_in[k] = (char *) malloc(nsize + 1)))
-				G_fatal_error("cannot allocate options\n");
-			sprintf(opt_in[k], buffa);
-			k++;
-		}
+                nsize = strlen(buffa);
+                if (!(opt_in[nopt1++] = (char *) malloc(nsize + 1)))
+                    G_fatal_error("cannot allocate options\n");
+                sprintf(opt_in[nopt1-1], buffa);
 	}
 
-	if (strncmp(proj_in, "Lat", 3) != 0) {
-		if (!(pj = pj_init(nopt1, opt_in))) {
-			fprintf(stderr, "cannot initialize pj\ncause: ");
-			fprintf(stderr,"%s\n",pj_strerrno(pj_errno));
-			return -1;
-		}
-		info->pj = pj;
-	}
+        if (!(pj = pj_init(nopt1, opt_in))) {
+            fprintf(stderr, "cannot initialize pj\ncause: ");
+            fprintf(stderr,"%s\n",pj_strerrno(pj_errno));
+            return -1;
+        }
+        info->pj = pj;
+
 	return 1;
 }
 

@@ -1,7 +1,9 @@
-/*  @(#)set_window.c	2.1  6/26/87  */
+/* 
+ * $Id$  
+ * set_window.c	2.1  6/26/87  */
+ 
 #include "digit.h"
 #include "debug.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "local_proto.h"
 
@@ -11,7 +13,7 @@ int init_window (void)
 {
     if (Dig_Enabled)
     {
-	set_window ();
+	set_window_w ();
     }
     else
     {
@@ -26,7 +28,7 @@ int init_window (void)
 }
 
 int 
-set_window (void)
+set_window_w (void)
 {
 	char buff[256] ;
 	double Ux1, Uy1 ;

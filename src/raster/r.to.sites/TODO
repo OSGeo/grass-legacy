@@ -1,2 +1,5 @@
 
 write something meaningful to Site_head
+
+ -  r.to.sites -z does not output third dimension
+    however r.to.sites -cz works o.k.          

@@ -14,6 +14,14 @@ int main( int argc, char **argv)
   struct Option *opt1, *opt4 ;
   struct Option *opt2, *opt5 ;
   struct Option *opt3, *opt6 ;
+  struct GModule *module;
+
+  G_gisinit(argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color transformation function.";
 
   /* Define the different options */
   opt4 = G_define_option() ; 
@@ -58,9 +66,6 @@ int main( int argc, char **argv)
   opt3->description= "output saturation map name";
   opt3->gisprompt  = "new,cell,raster";
 
-
-  G_gisinit(argv[0]);
-
   if (G_parser(argc, argv) < 0)
 	  exit(-1);
 
@@ -89,7 +94,7 @@ int main( int argc, char **argv)
     rgb2his(rowbuffer,cols);
     /* write out the new row for each cell map */
     for (band=0; band<NBANDS; band++) {
-      if(G_put_map_row(fd_output[band], rowbuffer[band]) < 0)
+      if(G_put_raster_row(fd_output[band], rowbuffer[band], CELL_TYPE) < 0)
 	G_fatal_error("Error while writing new cell map.");
     }
   }

@@ -27,9 +27,9 @@ remove_files()
     char buf[100];
     int i = 0;
     
-        fprintf (stdout,"\nANSWERS on GRASS Project Removal Utility\n");
-        fprintf (stdout,"\nThis will remove all files and directories in your GRASS\n");
-        fprintf (stdout,"database associated with a given ANSWERS project\n");
+        fprintf (stderr,"\nANSWERS on GRASS Project Removal Utility\n");
+        fprintf (stderr,"\nThis will remove all files and directories in your GRASS\n");
+        fprintf (stderr,"database associated with a given ANSWERS project\n");
         
     while(i == 0){
         proj_mapset = G_ask_in_mapset("Enter the name of the project to be removed",
@@ -44,23 +44,23 @@ remove_files()
             return(0);
         }
         
-        fprintf (stdout,"\nworking...\n");
+        fprintf (stderr,"\nworking...\n");
 
         G_remove("answers/project",proj_name);
         G_remove("answers/data",proj_name);
-        fprintf (stdout,"\nProject <%s> removed.\n\n\n", proj_name);
+        fprintf (stderr,"\nProject <%s> removed.\n\n\n", proj_name);
         
         sprintf(buf, "Remove the raster layer %s.ELEMENT?", proj_name);
         if(G_yes(buf, 1))
         {
-            fprintf (stdout,"\n");
+            fprintf (stderr,"\n");
             sprintf(buf,  "g.remove rast=%s.ELEMENT", proj_name);
             G_system(buf);
         }
         
         if(!G_yes("\n\nRemove another project?", 0))
             i = 1;
-        fprintf (stdout,"\n\n");
+        fprintf (stderr,"\n\n");
         }
     return(0);
 }

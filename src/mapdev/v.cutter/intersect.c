@@ -71,8 +71,9 @@ struct foo {
 };
 
 static int 
-compar (struct foo *a, struct foo *b)
+compar (const void *aa, const void *bb)
 {
+    const struct foo *a = aa, *b = bb;
     double x;
 
     x = a->val - b->val;

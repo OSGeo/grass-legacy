@@ -1,0 +1,6588 @@
+%!
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% FrameMaker PostScript Prolog 3.0, for use with FrameMaker 3.0
+% Copyright (c) 1986,87,89,90,91 by Frame Technology Corporation.
+% All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (3.0) def 
+% Set up Color vs. Black-and-White
+	/FMPrintInColor systemdict /colorimage known
+		systemdict /currentcolortransfer known or def
+% Uncomment this line to force b&w on color printer
+%   /FMPrintInColor false def
+/FrameDict 195 dict def 
+systemdict /errordict known not {/errordict 10 dict def
+		errordict /rangecheck {stop} put} if
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(FrameMaker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/manualfeed FMLOCAL
+	/paperheight FMLOCAL
+	/paperwidth FMLOCAL
+/FMDOCUMENT { 
+	array /FMfonts exch def 
+	/#copies exch def
+	FrameDict begin
+	0 ne dup {setmanualfeed} if
+	/manualfeed exch def
+	/paperheight exch def
+	/paperwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+	/organgle exch def /orgfreq exch def
+	setpapername 
+	manualfeed {true} {papersize} ifelse 
+	{manualpapersize} {false} ifelse 
+	{desperatepapersize} if
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+	/landscape FMLOCAL
+/FMBEGINPAGE { 
+	FrameDict begin 
+	/pagesave save def
+	3.86 setmiterlimit
+	/landscape exch 0 ne def
+	landscape { 
+		90 rotate 0 exch neg translate pop 
+		}
+		{pop pop}
+		ifelse
+	xscale yscale scale
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+/FMFONTDEFINE { 
+	FrameDict begin
+	findfont 
+	ReEncode 
+	1 index exch 
+	definefont 
+	FMfonts 3 1 roll 
+	put
+	end 
+	} def 
+/FMFILLS {
+	FrameDict begin
+	array /fillvals exch def
+	end 
+	} def 
+/FMFILL {
+	FrameDict begin
+	 fillvals 3 1 roll put
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 0 0 sethsbcolor
+	0 setgray 
+	} bind def
+	/fx FMLOCAL
+	/fy FMLOCAL
+	/fh FMLOCAL
+	/fw FMLOCAL
+	/llx FMLOCAL
+	/lly FMLOCAL
+	/urx FMLOCAL
+	/ury FMLOCAL
+/FMBEGINEPSF { 
+	end 
+	/FMEPSF save def 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	rotate
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+FrameDict begin 
+/setmanualfeed {
+%%BeginFeature *ManualFeed True
+	 statusdict /manualfeed true put
+%%EndFeature
+	} def
+/max {2 copy lt {exch} if pop} bind def
+/min {2 copy gt {exch} if pop} bind def
+/inch {72 mul} def
+/pagedimen { 
+	paperheight sub abs 16 lt exch 
+	paperwidth sub abs 16 lt and
+	{/papername exch def} {pop} ifelse
+	} def
+	/papersizedict FMLOCAL
+/setpapername { 
+	/papersizedict 14 dict def 
+	papersizedict begin
+	/papername /unknown def 
+		/Letter 8.5 inch 11.0 inch pagedimen
+		/LetterSmall 7.68 inch 10.16 inch pagedimen
+		/Tabloid 11.0 inch 17.0 inch pagedimen
+		/Ledger 17.0 inch 11.0 inch pagedimen
+		/Legal 8.5 inch 14.0 inch pagedimen
+		/Statement 5.5 inch 8.5 inch pagedimen
+		/Executive 7.5 inch 10.0 inch pagedimen
+		/A3 11.69 inch 16.5 inch pagedimen
+		/A4 8.26 inch 11.69 inch pagedimen
+		/A4Small 7.47 inch 10.85 inch pagedimen
+		/B4 10.125 inch 14.33 inch pagedimen
+		/B5 7.16 inch 10.125 inch pagedimen
+	end
+	} def
+/papersize {
+	papersizedict begin
+		/Letter {lettertray letter} def
+		/LetterSmall {lettertray lettersmall} def
+		/Tabloid {11x17tray 11x17} def
+		/Ledger {ledgertray ledger} def
+		/Legal {legaltray legal} def
+		/Statement {statementtray statement} def
+		/Executive {executivetray executive} def
+		/A3 {a3tray a3} def
+		/A4 {a4tray a4} def
+		/A4Small {a4tray a4small} def
+		/B4 {b4tray b4} def
+		/B5 {b5tray b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	/FMdicttop countdictstack 1 add def 
+	statusdict begin stopped end 
+	countdictstack -1 FMdicttop {pop end} for 
+	} def
+/manualpapersize {
+	papersizedict begin
+		/Letter {letter} def
+		/LetterSmall {lettersmall} def
+		/Tabloid {11x17} def
+		/Ledger {ledger} def
+		/Legal {legal} def
+		/Statement {statement} def
+		/Executive {executive} def
+		/A3 {a3} def
+		/A4 {a4} def
+		/A4Small {a4small} def
+		/B4 {b4} def
+		/B5 {b5} def
+		/unknown {unknown} def
+	papersizedict dup papername known {papername} {/unknown} ifelse get
+	end
+	stopped 
+	} def
+/desperatepapersize {
+	statusdict /setpageparams known
+		{
+		paperwidth paperheight 0 1 
+		statusdict begin
+		{setpageparams} stopped pop 
+		end
+		} if
+	} def
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi    72 0 dmatrix defaultmatrix dtransform
+    dup mul exch   dup mul add   sqrt def
+/freq dpi 18.75 div 8 div round dup 0 eq {pop 1} if 8 mul dpi exch div def
+/sangle 1 0 dmatrix defaultmatrix dtransform exch atan def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+/ReEncode { 
+	dup 
+	length 
+	dict begin 
+	{
+	1 index /FID ne 
+		{def} 
+		{pop pop} ifelse 
+	} forall 
+	0 eq {/Encoding DiacriticEncoding def} if 
+	currentdict 
+	end 
+	} bind def
+/graymode true def
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq sangle landscape {90 add} if 
+		{/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div FMsetgray
+	/graymode false def
+	} bind def
+/grayness {
+	FMsetgray
+	graymode not {
+		/graymode true def
+		orgxfer cvx settransfer
+		orgfreq organgle orgproc cvx setscreen
+		} if
+	} bind def
+	/HUE FMLOCAL
+	/SAT FMLOCAL
+	/BRIGHT FMLOCAL
+	/Colors FMLOCAL
+FMPrintInColor 
+	
+	{
+	/HUE 0 def
+	/SAT 0 def
+	/BRIGHT 0 def
+	% array of arrays Hue and Sat values for the separations [HUE BRIGHT]
+	/Colors   
+	[[0    0  ]    % black
+	 [0    0  ]    % white
+	 [0.00 1.0]    % red
+	 [0.37 1.0]    % green
+	 [0.60 1.0]    % blue
+	 [0.50 1.0]    % cyan
+	 [0.83 1.0]    % magenta
+	 [0.16 1.0]    % comment / yellow
+	 ] def
+      
+	/BEGINBITMAPCOLOR { 
+		BITMAPCOLOR} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPCOLORc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUECOLOR } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUECOLORc } def
+	/K { 
+		Colors exch get dup
+		0 get /HUE exch store 
+		1 get /BRIGHT exch store
+		  HUE 0 eq BRIGHT 0 eq and
+			{1.0 SAT sub setgray}
+			{HUE SAT BRIGHT sethsbcolor} 
+		  ifelse
+		} def
+	/FMsetgray { 
+		/SAT exch 1.0 exch sub store 
+		  HUE 0 eq BRIGHT 0 eq and
+			{1.0 SAT sub setgray}
+			{HUE SAT BRIGHT sethsbcolor} 
+		  ifelse
+		} bind def
+	}
+	
+	{
+	/BEGINBITMAPCOLOR { 
+		BITMAPGRAY} def
+	/BEGINBITMAPCOLORc { 
+		BITMAPGRAYc} def
+	/BEGINBITMAPTRUECOLOR { 
+		BITMAPTRUEGRAY } def
+	/BEGINBITMAPTRUECOLORc { 
+		BITMAPTRUEGRAYc } def
+	/FMsetgray {setgray} bind def
+	/K { 
+		pop
+		} def
+	}
+ifelse
+/normalize {
+	transform round exch round exch itransform
+	} bind def
+/dnormalize {
+	dtransform round exch round exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/H { 
+	lnormalize setlinewidth
+	} bind def
+/Z {
+	setlinecap
+	} bind def
+	/fillvals FMLOCAL
+/X { 
+	fillvals exch get
+	dup type /stringtype eq
+	{8 1 setpattern} 
+	{grayness}
+	ifelse
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	stroke
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+	/rad FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/RR { 
+	/rad exch def
+	normalize
+	/y2 exch def
+	/x2 exch def
+	normalize
+	/y1 exch def
+	/x1 exch def
+	newpath
+	x1 y1 rad add moveto
+	x1 y2 x2 y2 rad arcto
+	x2 y2 x2 y1 rad arcto
+	x2 y1 x1 y1 rad arcto
+	x1 y1 x1 y2 rad arcto
+	closepath
+	16 {pop} repeat
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+	/FMpointsize FMLOCAL
+/F { 
+	FMfonts exch get
+	FMpointsize scalefont
+	setfont
+	} bind def
+/Q { 
+	/FMpointsize exch def
+	F 
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/RF { 
+	rotate
+	0 ne {-1 1 scale} if
+	} bind def
+/TF { 
+	gsave
+	moveto 
+	RF
+	show
+	grestore
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/PF { 
+	gsave
+	moveto 
+	RF
+	0 32 3 2 roll widthshow
+	grestore
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/SF { 
+	gsave
+	moveto
+	RF
+	0 exch ashow
+	grestore
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/BF { 
+	gsave
+	moveto
+	RF
+	0 32 4 2 roll 0 exch awidthshow
+	grestore
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath fill
+	grestore
+	} bind def
+/A { 
+	gsave
+	savematrix
+	newpath
+	2 index 2 div add exch 3 index 2 div sub exch 
+	normalize 2 index 2 div sub exch 3 index 2 div add exch 
+	translate 
+	scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE { 
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 4 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS 
+	3 index neg 3 index neg translate
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/d FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/wbytes { 
+	dup 
+	8 eq {pop} {1 eq {7 add 8 idiv} {3 add 4 idiv} ifelse} ifelse
+	} bind def
+/BEGINBITMAPBWc { 
+	1 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAPGRAYc { 
+	8 {} COMMONBITMAPc
+	} bind def
+/BEGINBITMAP2BITc { 
+	2 {} COMMONBITMAPc
+	} bind def
+/COMMONBITMAPc { 
+	/r exch def
+	/d exch def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	r                    
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BEGINBITMAPBW { 
+	1 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAPGRAY { 
+	8 {} COMMONBITMAP
+	} bind def
+/BEGINBITMAP2BIT { 
+	2 {} COMMONBITMAP
+	} bind def
+/COMMONBITMAP { 
+	/r exch def
+	/d exch def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/bitmapsave save def 
+	r                    
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} image
+	bitmapsave restore 
+	grestore
+	} bind def
+	/proc1 FMLOCAL
+	/proc2 FMLOCAL
+	/newproc FMLOCAL
+/Fmcc {
+    /proc2 exch cvlit def
+    /proc1 exch cvlit def
+    /newproc proc1 length proc2 length add array def
+    newproc 0 proc1 putinterval
+    newproc proc1 length proc2 putinterval
+    newproc cvx
+} bind def
+/ngrayt 256 array def
+/nredt 256 array def
+/nbluet 256 array def
+/ngreent 256 array def
+	/gryt FMLOCAL
+	/blut FMLOCAL
+	/grnt FMLOCAL
+	/redt FMLOCAL
+	/indx FMLOCAL
+	/cynu FMLOCAL
+	/magu FMLOCAL
+	/yelu FMLOCAL
+	/k FMLOCAL
+	/u FMLOCAL
+/colorsetup {
+	currentcolortransfer
+	/gryt exch def
+	/blut exch def
+	/grnt exch def
+	/redt exch def
+	0 1 255 {
+		/indx exch def
+		/cynu 1 red indx get 255 div sub def
+		/magu 1 green indx get 255 div sub def
+		/yelu 1 blue indx get 255 div sub def
+		/k cynu magu min yelu min def
+		/u k currentundercolorremoval exec def
+		nredt indx 1 0 cynu u sub max sub redt exec put
+		ngreent indx 1 0 magu u sub max sub grnt exec put
+		nbluet indx 1 0 yelu u sub max sub blut exec put
+		ngrayt indx 1 k currentblackgeneration exec sub gryt exec put
+	} for
+	{255 mul cvi nredt exch get}
+	{255 mul cvi ngreent exch get}
+	{255 mul cvi nbluet exch get}
+	{255 mul cvi ngrayt exch get}
+	setcolortransfer
+	{pop 0} setundercolorremoval
+	{} setblackgeneration
+	} bind def
+	/tran FMLOCAL
+/fakecolorsetup {
+	/tran 256 string def
+	0 1 255 {/indx exch def 
+		tran indx
+		red indx get 77 mul
+		green indx get 151 mul
+		blue indx get 28 mul
+		add add 256 idiv put} for
+	currenttransfer
+	{255 mul cvi tran exch get 255.0 div}
+	exch Fmcc settransfer
+} bind def
+/BITMAPCOLOR { 
+	/d 8 def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/bitmapsave save def 
+	colorsetup
+	/is w d wbytes string def
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{cf is readhexstring pop} {is} {is} true 3 colorimage 
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPCOLORc { 
+	/d 8 def
+	gsave
+	translate rotate scale /h exch def /w exch def
+	/lb w d wbytes def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	colorsetup
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h d [w 0 0 h neg 0 h] 
+	{ip} {is} {is} true 3 colorimage
+	bitmapsave restore 
+	grestore
+	} bind def
+/BITMAPTRUECOLORc { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        
+        /is w string def
+        
+        ws 0 w getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {ip} {gip} {bip} true 3 colorimage
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUECOLOR { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop } 
+        { cf gis readhexstring pop } 
+        { cf bis readhexstring pop } 
+        true 3 colorimage 
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPTRUEGRAYc { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        
+        /is w string def
+        
+        ws 0 w getinterval is copy pop 
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        {ip gip bip w gray} image
+        bitmapsave restore 
+        grestore
+        } bind def
+/ww FMLOCAL
+/r FMLOCAL
+/g FMLOCAL
+/b FMLOCAL
+/i FMLOCAL
+/gray { 
+        /ww exch def
+        /b exch def
+        /g exch def
+        /r exch def
+        0 1 ww 1 sub { /i exch def r i get .299 mul g i get .587 mul
+			b i get .114 mul add add r i 3 -1 roll floor cvi put } for
+        r
+        } bind def
+/BITMAPTRUEGRAY { 
+        gsave
+        translate rotate scale /h exch def /w exch def
+        /bitmapsave save def 
+        /is w string def
+        /gis w string def
+        /bis w string def
+        /cf currentfile def 
+        w h 8 [w 0 0 h neg 0 h] 
+        { cf is readhexstring pop 
+          cf gis readhexstring pop 
+          cf bis readhexstring pop w gray}  image
+        bitmapsave restore 
+        grestore
+        } bind def
+/BITMAPGRAY { 
+	8 {fakecolorsetup} COMMONBITMAP
+	} bind def
+/BITMAPGRAYc { 
+	8 {fakecolorsetup} COMMONBITMAPc
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+	/ALDsave FMLOCAL
+	/ALDmatrix matrix def ALDmatrix currentmatrix pop
+/StartALD {
+	/ALDsave save def
+	 savematrix
+	 ALDmatrix setmatrix
+	} bind def
+/InALD {
+	 restorematrix
+	} bind def
+/DoneALD {
+	 ALDsave restore
+	} bind def
+%%EndProlog
+%%BeginSetup
+(3.0) FMVERSION
+1 1 612 792 0 1 12 FMDOCUMENT
+0 0 /Times-Roman FMFONTDEFINE
+1 0 /Times-Bold FMFONTDEFINE
+2 0 /Helvetica-Bold FMFONTDEFINE
+3 0 /Times-Italic FMFONTDEFINE
+4 0 /Helvetica FMFONTDEFINE
+32 FMFILLS
+0 0 FMFILL
+1 .1 FMFILL
+2 .3 FMFILL
+3 .5 FMFILL
+4 .7 FMFILL
+5 .9 FMFILL
+6 .97 FMFILL
+7 1 FMFILL
+8 <0f1e3c78f0e1c387> FMFILL
+9 <0f87c3e1f0783c1e> FMFILL
+10 <cccccccccccccccc> FMFILL
+11 <ffff0000ffff0000> FMFILL
+12 <8142241818244281> FMFILL
+13 <03060c183060c081> FMFILL
+14 <8040201008040201> FMFILL
+16 1 FMFILL
+17 .9 FMFILL
+18 .7 FMFILL
+19 .5 FMFILL
+20 .3 FMFILL
+21 .1 FMFILL
+22 0.03 FMFILL
+23 0 FMFILL
+24 <f0e1c3870f1e3c78> FMFILL
+25 <f0783c1e0f87c3e1> FMFILL
+26 <3333333333333333> FMFILL
+27 <0000ffff0000ffff> FMFILL
+28 <7ebddbe7e7dbbd7e> FMFILL
+29 <fcf9f3e7cf9f3f7e> FMFILL
+30 <7fbfdfeff7fbfdfe> FMFILL
+%%EndSetup
+%%Page: "31" 31
+%%BeginPaperSize: Letter
+%%EndPaperSize
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(31) 477 748 T
+(,) 72 712 T
+1 10 Q
+(Attribute Module AP01) 255.48 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 192.48 683 T
+(Contents) 318.79 683 T
+(Sour) 449.97 683 T
+(ces) 468.29 683 T
+0 F
+(Attribute Pri-) 110.95 668 T
+(mary Field) 110.95 657 T
+(Module Name) 173.08 668 T
+(\322AP01\323) 249.35 668 T
+(Pro\336le) 428.68 668 T
+(Record ID) 173.08 653 T
+-0.17 (Internal ID for attributes from GRASS dig_plus) 249.35 653 P
+(\336le) 249.35 642 T
+(GRASS) 428.68 653 T
+(Primary) 110.95 627 T
+(Attributes) 110.95 616 T
+(Field) 110.95 605 T
+(A) 173.08 627 T
+(TTR_NUM) 178.57 627 T
+(value of dig_att referenced by internal ID num-) 249.35 627 T
+(ber) 249.35 616 T
+(GRASS) 428.68 627 T
+(A) 173.08 601 T
+(TTR_LABEL) 178.57 601 T
+(corresponding dig_cats value) 249.35 601 T
+(GRASS) 428.68 601 T
+107.95 691.75 107.95 595.25 2 L
+V
+0.5 H
+0 Z
+N
+170.08 692.25 170.08 594.75 2 L
+V
+N
+246.35 692.25 246.35 594.75 2 L
+V
+N
+425.68 692.25 425.68 594.75 2 L
+V
+N
+504.05 691.75 504.05 595.25 2 L
+V
+N
+107.7 692 504.3 692 2 L
+V
+N
+108.2 678.25 503.8 678.25 2 L
+V
+N
+108.2 675.75 503.8 675.75 2 L
+V
+N
+169.83 662 504.3 662 2 L
+V
+N
+107.7 636 504.3 636 2 L
+V
+N
+169.83 610 504.3 610 2 L
+V
+N
+107.7 595 504.3 595 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "31" 30
+%%Page: "30" 30
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(30) 477 748 T
+2 9 Q
+(Polygon Module) 271.3 704 T
+1 F
+(Field) 129.27 686 T
+(Sub\336eld) 193.65 686 T
+(Contents) 319.97 686 T
+(Sour) 451.15 686 T
+(ces) 469.46 686 T
+0 F
+(Primary Field) 109.77 671 T
+(Module Name) 174.25 671 T
+(\322PC01\323) 250.52 671 T
+(Pro\336le) 429.86 671 T
+(Record ID) 174.25 656 T
+(internal ID number for area \050GRASS dig_plus) 250.52 656 T
+(\336le\051) 250.52 645 T
+(GRASS) 429.86 656 T
+(Object Representa-) 174.25 630 T
+(tion Code) 174.25 619 T
+-0.13 (\322PW\323 for universe polygon, \322PC\323 for all others\323) 250.52 630 P
+(Pro\336le) 429.86 630 T
+(Attribute ID) 109.77 604 T
+(Module Name) 174.25 604 T
+(\322AP01\323) 250.52 604 T
+(generated) 429.86 604 T
+(Record ID) 174.25 589 T
+(Internal ID number for area attribute \050GRASS) 250.52 589 T
+(dig_plus \336le\051) 250.52 578 T
+(GRASS) 429.86 589 T
+1 10 Q
+(Attribute Module AP00) 255.48 527.33 T
+1 9 Q
+(Field) 129.27 509 T
+(Sub\336eld) 192.48 509 T
+(Contents) 318.79 509 T
+(Sour) 449.97 509 T
+(ces) 468.29 509 T
+0 F
+(Attribute Pri-) 110.95 494 T
+(mary Field) 110.95 483 T
+(Module Name) 173.08 494 T
+(\322AP00\323) 249.35 494 T
+(Pro\336le) 428.68 494 T
+(Record ID) 173.08 479 T
+(\3221\323) 249.35 479 T
+(GRASS) 428.68 479 T
+(Primary) 110.95 464 T
+(Attributes) 110.95 453 T
+(Field) 110.95 442 T
+(ORGANIZA) 173.08 464 T
+(TION) 219 464 T
+(ORGANIZA) 249.35 464 T
+(TION from dig \336le header) 295.27 464 T
+(GRASS) 428.68 464 T
+(DIGIT_DA) 173.08 449 T
+(TE) 214.01 449 T
+(DIGIT DA) 249.35 449 T
+(TE from dig \336le header) 288.03 449 T
+(GRASS) 428.68 449 T
+(DIGIT_NAME) 173.08 434 T
+(DIGIT NAME from dig \336le header) 249.35 434 T
+(GRASS) 428.68 434 T
+(MAP_NAME) 173.08 419 T
+(MAP NAME from dig \336le header) 249.35 419 T
+(GRASS) 428.68 419 T
+(MAP_DA) 173.08 404 T
+(TE) 209.03 404 T
+(MAP DA) 249.35 404 T
+(TE from dig \336le header) 283.05 404 T
+(GRASS) 428.68 404 T
+(OTHER_INFO) 173.08 389 T
+(OTHER INFO from dig \336le header) 249.35 389 T
+(GRASS) 428.68 389 T
+(ZONE) 173.08 374 T
+(ZONE from dig \336le header) 249.35 374 T
+(GRASS) 428.68 374 T
+(WEST_EDGE) 173.08 359 T
+(WEST EDGE from dig \336le header) 249.35 359 T
+(GRASS) 428.68 359 T
+(EAST_EDGE) 173.08 344 T
+(EAST EDGE from dig \336le header) 249.35 344 T
+(GRASS) 428.68 344 T
+(SOUTH_EDGE) 173.08 329 T
+(SOUTH EDGE from dig \336le header) 249.35 329 T
+(GRASS) 428.68 329 T
+(NOR) 173.08 314 T
+(TH_EDGE) 191.51 314 T
+(NOR) 249.35 314 T
+(TTH EDGE from dig \336le header) 267.78 314 T
+(GRASS) 428.68 314 T
+(DIGIT_THRESH) 173.08 299 T
+(Digitizing Threshold from dig \336le header) 249.35 299 T
+(GRASS) 428.68 299 T
+(MAP_THRESH) 173.08 284 T
+(MAP THRESH) 249.35 284 T
+(GRASS) 428.68 284 T
+(VERSION) 173.08 269 T
+(V) 249.35 269 T
+(ersion Major + V) 254.84 269 T
+(ersion Minor from dig \336le) 316.07 269 T
+(header) 249.35 258 T
+(GRASS) 428.68 269 T
+(BACK_VERSION) 173.08 243 T
+(Back_Major + Back_Minor from dig \336le header) 249.35 243 T
+(GRASS) 428.68 243 T
+(ELLIPSOID) 173.08 228 T
+(Ellipsoid, if available, from \322PROJ_INFO\323 \336le) 249.35 228 T
+(in PERMANENT mapset) 249.35 217 T
+(GRASS) 428.68 228 T
+106.77 694.75 106.77 572.25 2 L
+V
+0.5 H
+0 Z
+N
+171.25 695.25 171.25 571.75 2 L
+V
+N
+247.52 695.25 247.52 571.75 2 L
+V
+N
+426.86 695.25 426.86 571.75 2 L
+V
+N
+505.23 694.75 505.23 572.25 2 L
+V
+N
+106.52 695 505.48 695 2 L
+V
+N
+107.02 681.25 504.98 681.25 2 L
+V
+N
+107.02 678.75 504.98 678.75 2 L
+V
+N
+171 665 505.48 665 2 L
+V
+N
+171 639 505.48 639 2 L
+V
+N
+106.52 613 505.48 613 2 L
+V
+N
+171 598 505.48 598 2 L
+V
+N
+106.52 572 505.48 572 2 L
+V
+N
+107.95 517.75 107.95 211.25 2 L
+V
+N
+170.08 518.25 170.08 210.75 2 L
+V
+N
+246.35 518.25 246.35 210.75 2 L
+V
+N
+425.68 518.25 425.68 210.75 2 L
+V
+N
+504.05 517.75 504.05 211.25 2 L
+V
+N
+107.7 518 504.3 518 2 L
+V
+N
+108.2 504.25 503.8 504.25 2 L
+V
+N
+108.2 501.75 503.8 501.75 2 L
+V
+N
+169.83 488 504.3 488 2 L
+V
+N
+107.7 473 504.3 473 2 L
+V
+N
+169.83 458 504.3 458 2 L
+V
+N
+169.83 443 504.3 443 2 L
+V
+N
+169.83 428 504.3 428 2 L
+V
+N
+169.83 413 504.3 413 2 L
+V
+N
+169.83 398 504.3 398 2 L
+V
+N
+169.83 383 504.3 383 2 L
+V
+N
+169.83 368 504.3 368 2 L
+V
+N
+169.83 353 504.3 353 2 L
+V
+N
+169.83 338 504.3 338 2 L
+V
+N
+169.83 323 504.3 323 2 L
+V
+N
+169.83 308 504.3 308 2 L
+V
+N
+169.83 293 504.3 293 2 L
+V
+N
+169.83 278 504.3 278 2 L
+V
+N
+169.83 252 504.3 252 2 L
+V
+N
+169.83 237 504.3 237 2 L
+V
+N
+107.7 211 504.3 211 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "30" 29
+%%Page: "29" 29
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(29) 477 748 T
+1 10 Q
+(Ar) 265.28 701.33 T
+(ea Point Module) 276.76 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 193.65 683 T
+(Contents) 319.97 683 T
+(Sour) 451.15 683 T
+(ces) 469.46 683 T
+0 F
+(Primary Field) 109.77 668 T
+(Module Name) 174.25 668 T
+(\322NA01\323) 250.52 668 T
+(Pro\336le) 429.86 668 T
+(Record ID) 174.25 653 T
+-0.16 (internal ID number for associated area \050GRASS) 250.52 653 P
+(dig_plus \336le\051) 250.52 642 T
+(GRASS) 429.86 653 T
+(Object Representa-) 174.25 627 T
+(tion Code) 174.25 616 T
+(\322NA\323) 250.52 627 T
+(Pro\336le) 429.86 627 T
+-0.22 (Spatial Address) 109.77 601 P
+(Field) 109.77 590 T
+(X and Y Compo-) 174.25 601 T
+(nents) 174.25 590 T
+(X and Y coordinates for area point \050= dig_att) 250.52 601 T
+(coordinates\051 \050GRASS dig_plus \336le\051) 250.52 590 T
+(GRASS) 429.86 601 T
+(Area ID) 109.77 575 T
+(Module Name) 174.25 575 T
+(\322PC01\323) 250.52 575 T
+(generated) 429.86 575 T
+(Record ID) 174.25 560 T
+(Area internal ID number \050GRASS dig_plus \336le\051) 250.52 560 T
+(GRASS) 429.86 560 T
+1 10 Q
+(Line Module) 278.65 509.33 T
+1 9 Q
+(Field) 129.27 491 T
+(Sub\336eld) 193.65 491 T
+(Contents) 319.97 491 T
+(Sour) 451.15 491 T
+(ces) 469.46 491 T
+0 F
+(Primary Field) 109.77 476 T
+(Module Name) 174.25 476 T
+(\322LE01) 250.52 476 T
+(Pro\336le) 429.86 476 T
+(Record ID) 174.25 461 T
+(internal ID number for line \050GRASS dig_plus) 250.52 461 T
+(\336le\051) 250.52 450 T
+(GRASS) 429.86 461 T
+(Object Representa-) 174.25 435 T
+(tion Code) 174.25 424 T
+(\322LE\323) 250.52 435 T
+(Pro\336le) 429.86 435 T
+(Attribute ID) 109.77 409 T
+(Module Name) 174.25 409 T
+(\322AP01\323) 250.52 409 T
+(generated) 429.86 409 T
+(Record ID) 174.25 394 T
+(internal ID number for line attr \050GRASS) 250.52 394 T
+(dig_plus \336le\051) 250.52 383 T
+(GRASS) 429.86 394 T
+-0.22 (Polygon ID Left) 109.77 368 P
+(Module Name) 174.25 368 T
+(\322PC01\323) 250.52 368 T
+(generated) 429.86 368 T
+(Record ID) 174.25 353 T
+(internal ID number for left polygon \050GRASS) 250.52 353 T
+(dig_plus \336le\051) 250.52 342 T
+(GRASS) 429.86 353 T
+(Polygon ID) 109.77 327 T
+(Right) 109.77 316 T
+(Module Name) 174.25 327 T
+(\322PC01\323) 250.52 327 T
+(generated) 429.86 327 T
+(Record ID) 174.25 312 T
+(internal ID number for right polygon \050GRASS) 250.52 312 T
+(dig_plus \336le\051) 250.52 301 T
+(GRASS) 429.86 312 T
+(Start Node ID) 109.77 286 T
+(Module Name) 174.25 286 T
+(\322NO01\323) 250.52 286 T
+(generated) 429.86 286 T
+(Record ID) 174.25 271 T
+(internal ID number for start node \050GRASS) 250.52 271 T
+(dig_plus \336le\051) 250.52 260 T
+(GRASS) 429.86 271 T
+(End Node) 109.77 245 T
+(Module Name) 174.25 245 T
+(\322NO01\323) 250.52 245 T
+(generated) 429.86 245 T
+(Record ID) 174.25 230 T
+(internal ID number for end node \050GRASS) 250.52 230 T
+(dig_plus \336le\051) 250.52 219 T
+(GRASS) 429.86 230 T
+-0.22 (Spatial Address) 109.77 204 P
+(Field) 109.77 193 T
+(X and Y Compo-) 174.25 204 T
+(nents) 174.25 193 T
+(X and Y coordinates for line \050GRASS dig \336le\051) 250.52 204 T
+(GRASS) 429.86 204 T
+106.77 691.75 106.77 554.25 2 L
+V
+0.5 H
+0 Z
+N
+171.25 692.25 171.25 553.75 2 L
+V
+N
+247.52 692.25 247.52 553.75 2 L
+V
+N
+426.86 692.25 426.86 553.75 2 L
+V
+N
+505.23 691.75 505.23 554.25 2 L
+V
+N
+106.52 692 505.48 692 2 L
+V
+N
+107.02 678.25 504.98 678.25 2 L
+V
+N
+107.02 675.75 504.98 675.75 2 L
+V
+N
+171 662 505.48 662 2 L
+V
+N
+171 636 505.48 636 2 L
+V
+N
+106.52 610 505.48 610 2 L
+V
+N
+106.52 584 505.48 584 2 L
+V
+N
+171 569 505.48 569 2 L
+V
+N
+106.52 554 505.48 554 2 L
+V
+N
+106.77 499.75 106.77 187.25 2 L
+V
+N
+171.25 500.25 171.25 186.75 2 L
+V
+N
+247.52 500.25 247.52 186.75 2 L
+V
+N
+426.86 500.25 426.86 186.75 2 L
+V
+N
+505.23 499.75 505.23 187.25 2 L
+V
+N
+106.52 500 505.48 500 2 L
+V
+N
+107.02 486.25 504.98 486.25 2 L
+V
+N
+107.02 483.75 504.98 483.75 2 L
+V
+N
+171 470 505.48 470 2 L
+V
+N
+171 444 505.48 444 2 L
+V
+N
+106.52 418 505.48 418 2 L
+V
+N
+171 403 505.48 403 2 L
+V
+N
+106.52 377 505.48 377 2 L
+V
+N
+171 362 505.48 362 2 L
+V
+N
+106.52 336 505.48 336 2 L
+V
+N
+171 321 505.48 321 2 L
+V
+N
+106.52 295 505.48 295 2 L
+V
+N
+171 280 505.48 280 2 L
+V
+N
+106.52 254 505.48 254 2 L
+V
+N
+171 239 505.48 239 2 L
+V
+N
+106.52 213 505.48 213 2 L
+V
+N
+106.52 187 505.48 187 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "29" 28
+%%Page: "28" 28
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(28) 477 748 T
+1 10 Q
+(Data Quality Modules \0505\051) 251.73 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 193.65 683 T
+(Contents) 319.97 683 T
+(Sour) 451.15 683 T
+(ces) 469.46 683 T
+0 F
+(Lineage or) 109.77 668 T
+(Positional) 109.77 657 T
+(Accuracy or) 109.77 646 T
+(Attribute Accu-) 109.77 635 T
+(racy or) 109.77 624 T
+(Logical Consis-) 109.77 613 T
+(tency or) 109.77 602 T
+(Completeness) 109.77 591 T
+(Module Name) 174.25 668 T
+(\322DQHL\323 or \322DQP) 250.52 668 T
+(A\323 or \322DQAA\323 or \322DQLC\323) 316.58 668 T
+(or \322DQCG\323) 250.52 657 T
+(Pro\336le) 429.86 668 T
+(Record ID) 174.25 642 T
+(de\336ned by order in this module) 250.52 642 T
+(generated) 429.86 642 T
+(Comment) 174.25 627 T
+(narrative about aspect of data quality covered) 250.52 627 T
+(by this module) 250.52 616 T
+(user) 429.86 627 T
+(-supplied) 444.65 627 T
+(\050v) 429.86 616 T
+(.sdts.meta\051) 436.76 616 T
+1 10 Q
+(Planar Node Module) 261.58 540.33 T
+1 9 Q
+(Field) 129.27 522 T
+(Sub\336eld) 193.65 522 T
+(Contents) 319.97 522 T
+(Sour) 451.15 522 T
+(ces) 469.46 522 T
+0 F
+(Primary Field) 109.77 507 T
+(Module Name) 174.25 507 T
+(\322N001\323) 250.52 507 T
+(Pro\336le) 429.86 507 T
+(Record ID) 174.25 492 T
+(Node internal ID number \050GRASS dig_plus) 250.52 492 T
+(\336le\051) 250.52 481 T
+(GRASS) 429.86 492 T
+(Object Representa-) 174.25 466 T
+(tion Code) 174.25 455 T
+(\322NO\323) 250.52 466 T
+(Pro\336le) 429.86 466 T
+-0.22 (Spatial Address) 109.77 440 P
+(Field) 109.77 429 T
+(X and Y Compo-) 174.25 440 T
+(nents) 174.25 429 T
+-0.36 (X and Y coordinates for node \050GRASS dig_plus) 250.52 440 P
+(\336le\051) 250.52 429 T
+(GRASS) 429.86 440 T
+(Attribute ID) 109.77 414 T
+(Module Name) 174.25 414 T
+(\322AP01\323) 250.52 414 T
+(generated) 429.86 414 T
+(Record ID) 174.25 399 T
+-0.43 (Attr) 250.52 399 P
+-0.43 (. internal ID number for \322Line of type DOT\323) 264.51 399 P
+(collocated with this node, if any \050GRASS) 250.52 388 T
+(dig_plus \336le\051) 250.52 377 T
+(GRASS) 429.86 399 T
+1 10 Q
+(Entity Point Module) 262.41 326.33 T
+1 9 Q
+(Field) 129.27 308 T
+(Sub\336eld) 193.65 308 T
+(Contents) 319.97 308 T
+(Sour) 451.15 308 T
+(ces) 469.46 308 T
+0 F
+(Primary Field) 109.77 293 T
+(Module Name) 174.25 293 T
+(\322NE01\323) 250.52 293 T
+(Pro\336le) 429.86 293 T
+(Record ID) 174.25 278 T
+(\322Line of type DOT\323 internal ID number) 250.52 278 T
+(\050GRASS dig_plus \336le) 250.52 267 T
+(GRASS) 429.86 278 T
+(Object Representa-) 174.25 252 T
+(tion Code) 174.25 241 T
+(\322NE\323) 250.52 252 T
+(Pro\336le) 429.86 252 T
+-0.22 (Spatial Address) 109.77 226 P
+(Field) 109.77 215 T
+(X and Y Compo-) 174.25 226 T
+(nents) 174.25 215 T
+(X and Y coordinates for \322DOT\323 \050GRASS) 250.52 226 T
+(dig_plus \336le\051) 250.52 215 T
+(GRASS) 429.86 226 T
+(Attribute ID) 109.77 200 T
+(Module Name) 174.25 200 T
+(\322AP01\323) 250.52 200 T
+(generated) 429.86 200 T
+(Record ID) 174.25 185 T
+(Attr) 250.52 185 T
+(. internal ID number for \322DOT\323 \050GRASS) 264.51 185 T
+(dig_plus \336le\051) 250.52 174 T
+(GRASS) 429.86 185 T
+(Area ID) 109.77 159 T
+(Module Name) 174.25 159 T
+(\322PC01\323) 250.52 159 T
+(generated) 429.86 159 T
+(Record ID) 174.25 144 T
+(internal ID number for polygon on left or right) 250.52 144 T
+(of \322DOT\323 \050GRASS dig_plus \336le\051) 250.52 133 T
+(GRASS) 429.86 144 T
+106.77 691.75 106.77 585.25 2 L
+V
+0.5 H
+0 Z
+N
+171.25 692.25 171.25 584.75 2 L
+V
+N
+247.52 692.25 247.52 584.75 2 L
+V
+N
+426.86 692.25 426.86 584.75 2 L
+V
+N
+505.23 691.75 505.23 585.25 2 L
+V
+N
+106.52 692 505.48 692 2 L
+V
+N
+107.02 678.25 504.98 678.25 2 L
+V
+N
+107.02 675.75 504.98 675.75 2 L
+V
+N
+171 651 505.48 651 2 L
+V
+N
+171 636 505.48 636 2 L
+V
+N
+106.52 585 505.48 585 2 L
+V
+N
+106.77 530.75 106.77 371.25 2 L
+V
+N
+171.25 531.25 171.25 370.75 2 L
+V
+N
+247.52 531.25 247.52 370.75 2 L
+V
+N
+426.86 531.25 426.86 370.75 2 L
+V
+N
+505.23 530.75 505.23 371.25 2 L
+V
+N
+106.52 531 505.48 531 2 L
+V
+N
+107.02 517.25 504.98 517.25 2 L
+V
+N
+107.02 514.75 504.98 514.75 2 L
+V
+N
+171 501 505.48 501 2 L
+V
+N
+171 475 505.48 475 2 L
+V
+N
+106.52 449 505.48 449 2 L
+V
+N
+106.52 423 505.48 423 2 L
+V
+N
+171 408 505.48 408 2 L
+V
+N
+106.52 371 505.48 371 2 L
+V
+N
+106.77 316.75 106.77 127.25 2 L
+V
+N
+171.25 317.25 171.25 126.75 2 L
+V
+N
+247.52 317.25 247.52 126.75 2 L
+V
+N
+426.86 317.25 426.86 126.75 2 L
+V
+N
+505.23 316.75 505.23 127.25 2 L
+V
+N
+106.52 317 505.48 317 2 L
+V
+N
+107.02 303.25 504.98 303.25 2 L
+V
+N
+107.02 300.75 504.98 300.75 2 L
+V
+N
+171 287 505.48 287 2 L
+V
+N
+171 261 505.48 261 2 L
+V
+N
+106.52 235 505.48 235 2 L
+V
+N
+106.52 209 505.48 209 2 L
+V
+N
+171 194 505.48 194 2 L
+V
+N
+106.52 168 505.48 168 2 L
+V
+N
+171 153 505.48 153 2 L
+V
+N
+106.52 127 505.48 127 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "28" 27
+%%Page: "27" 27
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(27) 477 748 T
+1 10 Q
+(Data Dictionary/Schema Module) 236.04 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 192.48 683 T
+(Contents) 318.79 683 T
+(Sour) 449.97 683 T
+(ces) 468.29 683 T
+0 F
+(Data Dictio-) 110.95 668 T
+(nary/Schema) 110.95 657 T
+(Module Name) 173.08 668 T
+(\322DDSH\323) 249.35 668 T
+(Pro\336le) 428.68 668 T
+(Record ID) 173.08 653 T
+(de\336ned by order in this module) 249.35 653 T
+(generated) 428.68 653 T
+(Name) 173.08 638 T
+(name of module referenced \050\322AP00\323 or) 249.35 638 T
+(\322AP01\323\051) 249.35 627 T
+(generated) 428.68 638 T
+(T) 173.08 612 T
+(ype) 177.94 612 T
+(primary \336eld name of module referenced) 249.35 612 T
+(\050\322A) 249.35 601 T
+(TPR\323\051) 261.82 601 T
+(generated) 428.68 612 T
+(Entity Label) 173.08 586 T
+(name of entity to which attribute\050s\051 apply) 249.35 586 T
+(generated or user) 428.68 586 T
+(-) 490.39 586 T
+(supplied \050v) 428.68 575 T
+(.sdts.-) 468.29 575 T
+(meta\051) 428.68 564 T
+(Entity Authority) 173.08 549 T
+(\322USACERL\323) 249.35 549 T
+(generated) 428.68 549 T
+(Attribute Label) 173.08 534 T
+(\050\050sub\051\336eld name of attribute) 249.35 534 T
+(generated) 428.68 534 T
+(Attribute Authority) 173.08 519 T
+(\322USACERL\323) 249.35 519 T
+(generated) 428.68 519 T
+(Format) 173.08 504 T
+(format of the attribute \050sub\051\336eld referenced) 249.35 504 T
+(generated) 428.68 504 T
+(Unit) 173.08 489 T
+-0.15 (measurement unit for the attribute \050sub\051\336eld ref-) 249.35 489 P
+(erenced) 249.35 478 T
+(generated) 428.68 489 T
+(Maximum Sub-) 173.08 463 T
+(\336eld Length) 173.08 452 T
+(maximum length of contents of \050sub\051\336eld refer-) 249.35 463 T
+(enced) 249.35 452 T
+(generated or user) 428.68 463 T
+(-) 490.39 463 T
+(supplied \050v) 428.68 452 T
+(.sdts.-) 468.29 452 T
+(meta\051) 428.68 441 T
+(Key) 173.08 426 T
+(\322NOKEY\323, \322PKEY\323, \322FKEY\323, \322PFKEY\323) 249.35 426 T
+(generated) 428.68 426 T
+1 10 Q
+(T) 249.46 375.33 T
+(ransfer Statistics Module) 255.39 375.33 T
+1 9 Q
+(Field) 129.27 357 T
+(Sub\336eld) 192.48 357 T
+(Contents) 318.79 357 T
+(Sour) 449.97 357 T
+(ces) 468.29 357 T
+0 F
+(T) 110.95 342 T
+(ransfer Statis-) 116.12 342 T
+(tics) 110.95 331 T
+(Module Name) 173.08 342 T
+(\322ST) 249.35 342 T
+(A) 263.11 342 T
+(T\323) 268.6 342 T
+(Pro\336le) 428.68 342 T
+(Record ID) 173.08 327 T
+(de\336ned by order in this module) 249.35 327 T
+(generated) 428.68 327 T
+(Module T) 173.08 312 T
+(ype) 208.15 312 T
+(Referred) 173.08 301 T
+(primary \336eld name of referenced module) 249.35 312 T
+(Pro\336le) 428.68 312 T
+(Module Name) 173.08 286 T
+(Referred) 173.08 275 T
+(name of referenced module) 249.35 286 T
+(Pro\336le) 428.68 286 T
+(Module Record) 173.08 260 T
+(Count) 173.08 249 T
+(number of records in the referenced module) 249.35 260 T
+(generated) 428.68 260 T
+(Spatial Address) 173.08 234 T
+(Count) 173.08 223 T
+(number of spatial addresses in the referenced) 249.35 234 T
+(module) 249.35 223 T
+(generated) 428.68 234 T
+107.95 691.75 107.95 420.25 2 L
+V
+0.5 H
+0 Z
+N
+170.08 692.25 170.08 419.75 2 L
+V
+N
+246.35 692.25 246.35 419.75 2 L
+V
+N
+425.68 692.25 425.68 419.75 2 L
+V
+N
+504.05 691.75 504.05 420.25 2 L
+V
+N
+107.7 692 504.3 692 2 L
+V
+N
+108.2 678.25 503.8 678.25 2 L
+V
+N
+108.2 675.75 503.8 675.75 2 L
+V
+N
+169.83 662 504.3 662 2 L
+V
+N
+169.83 647 504.3 647 2 L
+V
+N
+169.83 621 504.3 621 2 L
+V
+N
+169.83 595 504.3 595 2 L
+V
+N
+169.83 558 504.3 558 2 L
+V
+N
+169.83 543 504.3 543 2 L
+V
+N
+169.83 528 504.3 528 2 L
+V
+N
+169.83 513 504.3 513 2 L
+V
+N
+169.83 498 504.3 498 2 L
+V
+N
+169.83 472 504.3 472 2 L
+V
+N
+169.83 435 504.3 435 2 L
+V
+N
+107.7 420 504.3 420 2 L
+V
+N
+107.95 365.75 107.95 217.25 2 L
+V
+N
+170.08 366.25 170.08 216.75 2 L
+V
+N
+246.35 366.25 246.35 216.75 2 L
+V
+N
+425.68 366.25 425.68 216.75 2 L
+V
+N
+504.05 365.75 504.05 217.25 2 L
+V
+N
+107.7 366 504.3 366 2 L
+V
+N
+108.2 352.25 503.8 352.25 2 L
+V
+N
+108.2 349.75 503.8 349.75 2 L
+V
+N
+169.83 336 504.3 336 2 L
+V
+N
+169.83 321 504.3 321 2 L
+V
+N
+169.83 295 504.3 295 2 L
+V
+N
+169.83 269 504.3 269 2 L
+V
+N
+169.83 243 504.3 243 2 L
+V
+N
+107.7 217 504.3 217 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "27" 26
+%%Page: "26" 26
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(26) 477 748 T
+3 F
+-0.13 (Data Dictionary/De\336nition module) 108 712 P
+0 F
+-0.13 (: contents of the De\336nition \336eld for the records) 276.31 712 P
+(for GRASS_ENT) 108 698 T
+(, A) 192.06 698 T
+(TTR_NUM, and A) 205.39 698 T
+(TTR_LABEL may be user supplied, via) 295.66 698 T
+3 F
+(v) 108 684 T
+(.sdts.meta) 112.44 684 T
+0 F
+( or other means. Otherwise, default de\336nitions are supplied by) 160.41 684 T
+3 F
+(v) 462.2 684 T
+(.out.s-) 466.64 684 T
+(dts.) 108 670 T
+-0.24 (Data Dictionary/Domain module) 108 651 P
+0 F
+-0.24 (: minimum and maximum Domain V) 266.75 651 P
+-0.24 (alues for the) 442.45 651 P
+(records for A) 108 637 T
+(TTR_NUM are derived from the GRASS data.) 170.61 637 T
+3 F
+(Data Dictionary/Schema module) 108 618 T
+0 F
+(: \0501\051 Maximum Sub\336eld Length values for the) 265.89 618 T
+(records for OTHER_INFO, A) 108 604 T
+(TTR_NUM, and A) 250.55 604 T
+(TTR_LABEL are derived from) 340.83 604 T
+(the GRASS data. \0502\051 The Entity Label \336eld for the A) 108 590 T
+(TTR_NUM and A) 360.83 590 T
+(TTR_LA-) 448.11 590 T
+-0.05 (BEL records may be user) 108 576 P
+-0.05 (-supplied via) 229.47 576 P
+3 F
+-0.05 (v) 294.67 576 P
+-0.05 (.sdts.meta) 299.1 576 P
+0 F
+-0.05 (; otherwise the vector map layer) 347.08 576 P
+(name speci\336ed as a parameter to) 108 562 T
+3 F
+(v) 267.2 562 T
+(.out.sdts) 271.64 562 T
+0 F
+( is used for Entity Label.) 311.62 562 T
+1 10 Q
+(Data Dictionary/De\336nition Module) 231.6 532.33 T
+1 9 Q
+(Field) 129.27 514 T
+(Sub\336eld) 192.48 514 T
+(Contents) 318.79 514 T
+(Sour) 449.97 514 T
+(ces) 468.29 514 T
+0 F
+(Data Dictio-) 110.95 499 T
+(nary/De\336nition) 110.95 488 T
+(Module Name) 173.08 499 T
+(\322DDDF\323) 249.35 499 T
+(Pro\336le) 428.68 499 T
+(Record ID) 173.08 484 T
+(de\336ned by order in this module) 249.35 484 T
+(generated) 428.68 484 T
+(Entity or Attribute) 173.08 469 T
+(\322ENT\323 or \322A) 249.35 469 T
+(TT\323) 296.26 469 T
+(Pro\336le) 428.68 469 T
+(Entity/Attribute) 173.08 454 T
+(Label) 173.08 443 T
+(name of entity or \336eld name of attribute) 249.35 454 T
+(generated) 428.68 454 T
+(De\336nition) 173.08 428 T
+(free text de\336nition of entity or attribute) 249.35 428 T
+(generated or user) 428.68 428 T
+(-) 490.39 428 T
+(supplied) 428.68 417 T
+(Attribute Authority) 173.08 402 T
+(\322USACERL\323) 249.35 402 T
+(generated) 428.68 402 T
+(Attribute Author-) 173.08 387 T
+(ity Description) 173.08 376 T
+(\322U. S. Army Construction Engineering Labora-) 249.35 387 T
+(tories\323) 249.35 376 T
+(generated) 428.68 387 T
+1 10 Q
+(Data Dictionary/Domain Module) 235.76 344.33 T
+1 9 Q
+(Field) 129.27 326 T
+(Sub\336eld) 192.48 326 T
+(Contents) 318.79 326 T
+(Sour) 449.97 326 T
+(ces) 468.29 326 T
+0 F
+(Data Dictio-) 110.95 311 T
+(nary/Domain) 110.95 300 T
+(Module Name) 173.08 311 T
+(\322DDOM\323) 249.35 311 T
+(Pro\336le) 428.68 311 T
+(Record ID) 173.08 296 T
+(de\336ned by order in this module) 249.35 296 T
+(generated) 428.68 296 T
+(Attribute Label) 173.08 281 T
+(\336eld name of attribute) 249.35 281 T
+(generated) 428.68 281 T
+(Attribute Authority) 173.08 266 T
+(generated) 428.68 266 T
+(Attribute Domain) 173.08 251 T
+(T) 173.08 240 T
+(ype) 177.94 240 T
+(\322ALPHANUM\323, \322INTEGER\323, \322REAL\323, etc.) 249.35 251 T
+(Pro\336le/generated) 428.68 251 T
+(Attribute Domain) 173.08 225 T
+(V) 173.08 214 T
+(alue Format) 178.57 214 T
+(\322A\323, \322I\323, \322R\323, etc.) 249.35 225 T
+(Pro\336le/generated) 428.68 225 T
+(Attribute Domain) 173.08 199 T
+(Measurement Unit) 173.08 188 T
+(dependent upon attribute label) 249.35 199 T
+(generated) 428.68 199 T
+(Range or V) 173.08 173 T
+(alue) 213.51 173 T
+(\322MIN\323, \322MAX\323, or \322V) 249.35 173 T
+(ALUE\323) 331.79 173 T
+(Pro\336le/generated) 428.68 173 T
+(Domain V) 173.08 158 T
+(alue) 209.77 158 T
+(valid values for referenced attribute) 249.35 158 T
+(generated or user) 428.68 158 T
+(-) 490.39 158 T
+(supplied \050v) 428.68 147 T
+(.sdts.-) 468.29 147 T
+(meta\051) 428.68 136 T
+-0.05 (Domain V) 173.08 121 P
+-0.05 (alue Def-) 209.72 121 P
+(inition) 173.08 110 T
+(text describing domain value) 249.35 121 T
+(generated) 428.68 121 T
+107.95 522.75 107.95 370.25 2 L
+V
+0.5 H
+0 Z
+N
+170.08 523.25 170.08 369.75 2 L
+V
+N
+246.35 523.25 246.35 369.75 2 L
+V
+N
+425.68 523.25 425.68 369.75 2 L
+V
+N
+504.05 522.75 504.05 370.25 2 L
+V
+N
+107.7 523 504.3 523 2 L
+V
+N
+108.2 509.25 503.8 509.25 2 L
+V
+N
+108.2 506.75 503.8 506.75 2 L
+V
+N
+169.83 493 504.3 493 2 L
+V
+N
+169.83 478 504.3 478 2 L
+V
+N
+169.83 463 504.3 463 2 L
+V
+N
+169.83 437 504.3 437 2 L
+V
+N
+169.83 411 504.3 411 2 L
+V
+N
+169.83 396 504.3 396 2 L
+V
+N
+107.7 370 504.3 370 2 L
+V
+N
+107.95 334.75 107.95 104.25 2 L
+V
+N
+170.08 335.25 170.08 103.75 2 L
+V
+N
+246.35 335.25 246.35 103.75 2 L
+V
+N
+425.68 335.25 425.68 103.75 2 L
+V
+N
+504.05 334.75 504.05 104.25 2 L
+V
+N
+107.7 335 504.3 335 2 L
+V
+N
+108.2 321.25 503.8 321.25 2 L
+V
+N
+108.2 318.75 503.8 318.75 2 L
+V
+N
+169.83 305 504.3 305 2 L
+V
+N
+169.83 290 504.3 290 2 L
+V
+N
+169.83 275 504.3 275 2 L
+V
+N
+169.83 260 504.3 260 2 L
+V
+N
+169.83 234 504.3 234 2 L
+V
+N
+169.83 208 504.3 208 2 L
+V
+N
+169.83 182 504.3 182 2 L
+V
+N
+169.83 167 504.3 167 2 L
+V
+N
+169.83 130 504.3 130 2 L
+V
+N
+107.7 104 504.3 104 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "26" 25
+%%Page: "25" 25
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(25) 477 748 T
+1 F
+(Data Dictionary Modules) 72 111 T
+0 F
+-0.15 (For the most part, the entries generated by) 72 92 P
+3 F
+-0.15 (v) 276.29 92 P
+-0.15 (.out.sdts) 280.73 92 P
+0 F
+-0.15 ( for the three SDTS Data Dictionary modules) 320.72 92 P
+(are \336xed. The exceptions are as follows:) 72 78 T
+1 10 Q
+(Internal Spatial Refer) 232.11 701.33 T
+(ence Module) 325.76 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 192.48 683 T
+(Contents) 318.79 683 T
+(Sour) 449.97 683 T
+(ces) 468.29 683 T
+0 F
+(Internal Spa-) 110.95 668 T
+(tial Reference) 110.95 657 T
+(Module Name) 173.08 668 T
+(\322IREF\323) 249.35 668 T
+(Pro\336le) 428.68 668 T
+(Record ID) 173.08 653 T
+(\3221\323) 249.35 653 T
+(generated) 428.68 653 T
+(Spatial Address) 173.08 638 T
+(T) 173.08 627 T
+(ype) 177.94 627 T
+(\3222-T) 249.35 638 T
+(uple\323) 266 638 T
+(Pro\336le/GRASS) 428.68 638 T
+(Spatial Address X) 173.08 612 T
+(Component Label) 173.08 601 T
+(\322Longitude\323 or \322Easting\323) 249.35 612 T
+(Pro\336le/GRASS) 428.68 612 T
+(Spatial Address Y) 173.08 586 T
+(Component Label) 173.08 575 T
+(\322Latitude\323 or \322Northing\323) 249.35 586 T
+(Pro\336le/GRASS) 428.68 586 T
+(Horizontal Compo-) 173.08 560 T
+(nent Format) 173.08 549 T
+(\322BI32\323) 249.35 560 T
+(Pro\336le) 428.68 560 T
+(Scale factor X) 173.08 534 T
+(\322-0.000001\323 \050lat-lon\051 or \3220.01\323 \050UTM\051) 249.35 534 T
+(generated) 428.68 534 T
+(Scale Factor Y) 173.08 519 T
+(\3220.000001\323 \050lat-lon\051 or \3220.01\323 \050UTM\051) 249.35 519 T
+(generated) 428.68 519 T
+(X Origin) 173.08 504 T
+(\3220.0\323) 249.35 504 T
+(generated) 428.68 504 T
+(Y Origin) 173.08 489 T
+(\3220.0\323) 249.35 489 T
+(generated) 428.68 489 T
+1 10 Q
+(External Spatial Refer) 231 438.33 T
+(ence Module) 326.87 438.33 T
+1 9 Q
+(Field) 129.27 420 T
+(Sub\336eld) 192.48 420 T
+(Contents) 318.79 420 T
+(Sour) 449.97 420 T
+(ces) 468.29 420 T
+0 F
+(External Spa-) 110.95 405 T
+(tial Reference) 110.95 394 T
+(Module Name) 173.08 405 T
+(\322XREF\323) 249.35 405 T
+(Pro\336le) 428.68 405 T
+(Record ID) 173.08 390 T
+(\3221\323) 249.35 390 T
+(generated) 428.68 390 T
+(Reference System) 173.08 375 T
+(Name) 173.08 364 T
+(\322GEO\323 or \322SPCS\323 or \322UTM\323 or \322UPS\323) 249.35 375 T
+(Pro\336le/GRASS) 428.68 375 T
+(Horizontal Datum) 173.08 349 T
+(default = NULL, unless user) 249.35 349 T
+(-supplied) 351.83 349 T
+(user) 428.68 349 T
+(-supplied) 443.48 349 T
+(\050v) 428.68 338 T
+(.sdts.meta\051) 435.58 338 T
+(Zone Number) 173.08 323 T
+(if UTM or State Plane, value returned from) 249.35 323 T
+(GRASS G_zone\050\051 function) 249.35 312 T
+(GRASS) 428.68 323 T
+1 10 Q
+(Spatial Domain Module) 255.19 261.33 T
+1 9 Q
+(Field) 129.27 243 T
+(Sub\336eld) 192.48 243 T
+(Contents) 318.79 243 T
+(Sour) 449.97 243 T
+(ces) 468.29 243 T
+0 F
+-0.04 (Spatial Domain) 110.95 228 P
+(Module Name) 173.08 228 T
+(\322SPDM\323) 249.35 228 T
+(Pro\336le) 428.68 228 T
+(Record ID) 173.08 213 T
+(\3221\323) 249.35 213 T
+(generated) 428.68 213 T
+(Spatial Domain) 173.08 198 T
+(T) 173.08 187 T
+(ype) 177.94 187 T
+(\322MINMAX\323) 249.35 198 T
+(Pro\336le) 428.68 198 T
+(Domain Spatial) 173.08 172 T
+(Address T) 173.08 161 T
+(ype) 209.64 161 T
+(\322INTERNAL\323) 249.35 172 T
+(Pro\336le) 428.68 172 T
+(Domain Spatial) 173.08 146 T
+(Address) 173.08 135 T
+(W) 249.35 146 T
+(, E, S, N Edge values from GRASS dig \336le) 257.01 146 T
+(header) 249.35 135 T
+(GRASS) 428.68 146 T
+107.95 691.75 107.95 483.25 2 L
+V
+0.5 H
+0 Z
+N
+170.08 692.25 170.08 482.75 2 L
+V
+N
+246.35 692.25 246.35 482.75 2 L
+V
+N
+425.68 692.25 425.68 482.75 2 L
+V
+N
+504.05 691.75 504.05 483.25 2 L
+V
+N
+107.7 692 504.3 692 2 L
+V
+N
+108.2 678.25 503.8 678.25 2 L
+V
+N
+108.2 675.75 503.8 675.75 2 L
+V
+N
+169.83 662 504.3 662 2 L
+V
+N
+169.83 647 504.3 647 2 L
+V
+N
+169.83 621 504.3 621 2 L
+V
+N
+169.83 595 504.3 595 2 L
+V
+N
+169.83 569 504.3 569 2 L
+V
+N
+169.83 543 504.3 543 2 L
+V
+N
+169.83 528 504.3 528 2 L
+V
+N
+169.83 513 504.3 513 2 L
+V
+N
+169.83 498 504.3 498 2 L
+V
+N
+107.7 483 504.3 483 2 L
+V
+N
+107.95 428.75 107.95 306.25 2 L
+V
+N
+170.08 429.25 170.08 305.75 2 L
+V
+N
+246.35 429.25 246.35 305.75 2 L
+V
+N
+425.68 429.25 425.68 305.75 2 L
+V
+N
+504.05 428.75 504.05 306.25 2 L
+V
+N
+107.7 429 504.3 429 2 L
+V
+N
+108.2 415.25 503.8 415.25 2 L
+V
+N
+108.2 412.75 503.8 412.75 2 L
+V
+N
+169.83 399 504.3 399 2 L
+V
+N
+169.83 384 504.3 384 2 L
+V
+N
+169.83 358 504.3 358 2 L
+V
+N
+169.83 332 504.3 332 2 L
+V
+N
+107.7 306 504.3 306 2 L
+V
+N
+107.95 251.75 107.95 129.25 2 L
+V
+N
+170.08 252.25 170.08 128.75 2 L
+V
+N
+246.35 252.25 246.35 128.75 2 L
+V
+N
+425.68 252.25 425.68 128.75 2 L
+V
+N
+504.05 251.75 504.05 129.25 2 L
+V
+N
+107.7 252 504.3 252 2 L
+V
+N
+108.2 238.25 503.8 238.25 2 L
+V
+N
+108.2 235.75 503.8 235.75 2 L
+V
+N
+169.83 222 504.3 222 2 L
+V
+N
+169.83 207 504.3 207 2 L
+V
+N
+169.83 181 504.3 181 2 L
+V
+N
+169.83 155 504.3 155 2 L
+V
+N
+107.7 129 504.3 129 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "25" 24
+%%Page: "24" 24
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(24) 477 748 T
+1 10 Q
+(Catalog/Dir) 249.88 701.33 T
+(ectory Module) 300.22 701.33 T
+1 9 Q
+(Field) 129.27 683 T
+(Sub\336eld) 192.48 683 T
+(Contents) 318.79 683 T
+(Sour) 449.97 683 T
+(ces) 468.29 683 T
+0 F
+(Catalog/Direc-) 110.95 668 T
+(tory) 110.95 657 T
+(Module Name) 173.08 668 T
+(\322CA) 249.35 668 T
+(TD\323) 264.83 668 T
+(Pro\336le) 428.68 668 T
+(Record ID) 173.08 653 T
+(determined by order in this module) 249.35 653 T
+(generated) 428.68 653 T
+(Name) 173.08 638 T
+(name of module referenced) 249.35 638 T
+(Pro\336le) 428.68 638 T
+(T) 173.08 623 T
+(ype) 177.94 623 T
+(primary \336eld name from module referenced) 249.35 623 T
+(Pro\336le) 428.68 623 T
+(File) 173.08 608 T
+(\336le name = user) 249.35 608 T
+(-supplied pre\336x + referenced) 306.9 608 T
+(module name + \322.DDF\323) 249.35 597 T
+(user) 428.68 608 T
+(-supplied) 443.48 608 T
+(\050v) 428.68 597 T
+(.out.sdts parame-) 435.58 597 T
+(ter\051) 428.68 586 T
+1 10 Q
+(Catalog/Cr) 235.26 535.33 T
+(oss-Refer) 282.83 535.33 T
+(ence Module) 322.61 535.33 T
+1 9 Q
+(Field) 129.27 517 T
+(Sub\336eld) 192.48 517 T
+(Contents) 318.79 517 T
+(Sour) 449.97 517 T
+(ces) 468.29 517 T
+0 F
+(Catalog/Cross-) 110.95 502 T
+(Reference) 110.95 491 T
+(Module Name) 173.08 502 T
+(\322CA) 249.35 502 T
+(TX\323) 264.83 502 T
+(Pro\336le) 428.68 502 T
+(Record ID) 173.08 487 T
+(determined by order in this module) 249.35 487 T
+(generated) 428.68 487 T
+(Name 1) 173.08 472 T
+(name of module referenced) 249.35 472 T
+(Pro\336le) 428.68 472 T
+(T) 173.08 457 T
+(ype 1) 177.94 457 T
+(primary \336eld name from module referenced by) 249.35 457 T
+(Name 1) 249.35 446 T
+(Pro\336le) 428.68 457 T
+(Name 2) 173.08 431 T
+(name of module cross-referenced) 249.35 431 T
+(Pro\336le) 428.68 431 T
+(T) 173.08 416 T
+(ype 2) 177.94 416 T
+(primary \336eld name from module referenced by) 249.35 416 T
+(Name 2) 249.35 405 T
+(Pro\336le) 428.68 416 T
+1 10 Q
+(Catalog/Spatial Domain Module) 237.14 354.33 T
+1 9 Q
+(Field) 129.27 336 T
+(Sub\336eld) 192.48 336 T
+(Contents) 318.79 336 T
+(Sour) 449.97 336 T
+(ces) 468.29 336 T
+0 F
+(Catalog/Spa-) 110.95 321 T
+(tial Domain) 110.95 310 T
+(Module Name) 173.08 321 T
+(\322CA) 249.35 321 T
+(TS\323) 264.83 321 T
+(Pro\336le) 428.68 321 T
+(Record ID) 173.08 306 T
+(determined by order in this module) 249.35 306 T
+(generated) 428.68 306 T
+(Name) 173.08 291 T
+(name of module referenced) 249.35 291 T
+(Pro\336le) 428.68 291 T
+(T) 173.08 276 T
+(ype) 177.94 276 T
+(primary \336eld name from module referenced by) 249.35 276 T
+(Name) 249.35 265 T
+(Pro\336le) 428.68 276 T
+(Map) 173.08 250 T
+(title from \322MYNAME\323 \336le in PERMANENT) 249.35 250 T
+(mapset) 249.35 239 T
+(generated) 428.68 250 T
+(Theme) 173.08 224 T
+(user) 249.35 224 T
+(-supplied vector map layer name) 264.14 224 T
+(user) 428.68 224 T
+(-supplied) 443.48 224 T
+(\050v) 428.68 213 T
+(.out.sdts parame-) 435.58 213 T
+(ter\051) 428.68 202 T
+(Aggregate Object) 173.08 187 T
+(NULL) 249.35 187 T
+(Aggregate Object) 173.08 172 T
+(T) 173.08 161 T
+(ype) 177.94 161 T
+(\322GT\323) 249.35 172 T
+(Pro\336le) 428.68 172 T
+107.95 691.75 107.95 580.25 2 L
+V
+0.5 H
+0 Z
+N
+170.08 692.25 170.08 579.75 2 L
+V
+N
+246.35 692.25 246.35 579.75 2 L
+V
+N
+425.68 692.25 425.68 579.75 2 L
+V
+N
+504.05 691.75 504.05 580.25 2 L
+V
+N
+107.7 692 504.3 692 2 L
+V
+N
+108.2 678.25 503.8 678.25 2 L
+V
+N
+108.2 675.75 503.8 675.75 2 L
+V
+N
+169.83 662 504.3 662 2 L
+V
+N
+169.83 647 504.3 647 2 L
+V
+N
+169.83 632 504.3 632 2 L
+V
+N
+169.83 617 504.3 617 2 L
+V
+N
+107.7 580 504.3 580 2 L
+V
+N
+107.95 525.75 107.95 399.25 2 L
+V
+N
+170.08 526.25 170.08 398.75 2 L
+V
+N
+246.35 526.25 246.35 398.75 2 L
+V
+N
+425.68 526.25 425.68 398.75 2 L
+V
+N
+504.05 525.75 504.05 399.25 2 L
+V
+N
+107.7 526 504.3 526 2 L
+V
+N
+108.2 512.25 503.8 512.25 2 L
+V
+N
+108.2 509.75 503.8 509.75 2 L
+V
+N
+169.83 496 504.3 496 2 L
+V
+N
+169.83 481 504.3 481 2 L
+V
+N
+169.83 466 504.3 466 2 L
+V
+N
+169.83 440 504.3 440 2 L
+V
+N
+169.83 425 504.3 425 2 L
+V
+N
+107.7 399 504.3 399 2 L
+V
+N
+107.95 344.75 107.95 155.25 2 L
+V
+N
+170.08 345.25 170.08 154.75 2 L
+V
+N
+246.35 345.25 246.35 154.75 2 L
+V
+N
+425.68 345.25 425.68 154.75 2 L
+V
+N
+504.05 344.75 504.05 155.25 2 L
+V
+N
+107.7 345 504.3 345 2 L
+V
+N
+108.2 331.25 503.8 331.25 2 L
+V
+N
+108.2 328.75 503.8 328.75 2 L
+V
+N
+169.83 315 504.3 315 2 L
+V
+N
+169.83 300 504.3 300 2 L
+V
+N
+169.83 285 504.3 285 2 L
+V
+N
+169.83 259 504.3 259 2 L
+V
+N
+169.83 233 504.3 233 2 L
+V
+N
+169.83 196 504.3 196 2 L
+V
+N
+169.83 181 504.3 181 2 L
+V
+N
+107.7 155 504.3 155 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "24" 23
+%%Page: "23" 23
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(23) 477 748 T
+(Pro\336le/GRASS) 98 707.83 T
+(selection from Pro\336le-de\336ned choices based on GRASS data) 179 707.83 T
+(user) 98 688.83 T
+(-supplied) 117.74 688.83 T
+-0.24 (external to GRASS, supplied by user through v) 179 688.83 P
+-0.24 (.sdts.meta or other) 403.1 688.83 P
+(external means) 179.36 674.83 T
+1 10 Q
+(Identi\336cation Module) 249.77 645.17 T
+1 9 Q
+(Field) 119.62 626.83 T
+(Sub\336eld) 185.46 626.83 T
+(Contents) 311.38 626.83 T
+(Sour) 442.85 626.83 T
+(ce) 461.17 626.83 T
+0 F
+(Identi\336cation) 101.76 611.83 T
+(Module Name) 164.96 611.83 T
+(\322IDEN\323) 245.43 611.83 T
+(Pro\336le) 419.77 611.83 T
+(Record ID) 164.96 596.83 T
+(\3221\323) 245.43 596.83 T
+(generated) 419.77 596.83 T
+(Standard ID) 164.96 581.83 T
+(\322Spatial Data T) 245.43 581.83 T
+(ransfer Standard\323) 301.03 581.83 T
+(Pro\336le) 419.77 581.83 T
+(Pro\336le ID) 164.96 566.83 T
+(\322SDTS T) 245.43 566.83 T
+(opological V) 278.51 566.83 T
+(ector Pro\336le\323) 324.19 566.83 T
+(Pro\336le) 419.77 566.83 T
+(Pro\336le V) 164.96 551.83 T
+(ersion) 196.67 551.83 T
+(\322V) 245.43 551.83 T
+(ersion 1.0 June 10, 1994\323) 254.91 551.83 T
+(Pro\336le) 419.77 551.83 T
+(Pro\336le Document) 164.96 536.83 T
+(Reference) 164.96 525.83 T
+(\322FIPS 173-1 Part 4\323) 245.43 536.83 T
+(Pro\336le) 419.77 536.83 T
+(T) 164.96 510.83 T
+(itle) 170.14 510.83 T
+(default = MAP NAME from dig \336le header) 245.43 510.83 T
+(GRASS, unless) 419.77 510.83 T
+(user) 419.77 499.83 T
+(-supplied) 434.56 499.83 T
+(\050v) 419.77 488.83 T
+(.sdts.meta\051) 426.67 488.83 T
+(Data Structure) 164.96 473.83 T
+-0.31 (\322GRASS vector [version number from dig \336le) 245.43 473.83 P
+-0.33 (header] format--transfer includes entity points) 245.43 462.83 P
+(and area points with pointers to surrounding) 245.43 451.83 T
+(GT) 245.43 440.83 T
+(-polygons\323) 256.59 440.83 T
+(Pro\336le and GRASS) 419.77 473.83 T
+(Map Date) 164.96 425.83 T
+(Original source date, YYYYMMDD or) 245.43 425.83 T
+(YYYY format) 245.43 414.83 T
+(user) 419.77 425.83 T
+(-supplied) 434.56 425.83 T
+(\050v) 419.77 414.83 T
+(.sdts.meta\051) 426.67 414.83 T
+(Data Set Creation) 164.96 399.83 T
+(Date) 164.96 388.83 T
+(system date function call) 245.43 399.83 T
+(generated) 419.77 399.83 T
+(Scale) 164.96 373.83 T
+(dig \336le header MAP SCALE) 245.43 373.83 T
+(GRASS) 419.77 373.83 T
+(Comment) 164.96 358.83 T
+-0.18 (default = \322see AP00 module for other ID info\323) 245.43 358.83 P
+(generated unless) 419.77 358.83 T
+(user) 419.77 347.83 T
+(-supplied) 434.56 347.83 T
+(\050v) 419.77 336.83 T
+(.sdts.meta\051) 426.67 336.83 T
+(Conformance) 101.76 321.83 T
+(Composites) 164.96 321.83 T
+(\322N\323) 245.43 321.83 T
+(generated) 419.77 321.83 T
+(V) 164.96 306.83 T
+(ector Geometry) 170.45 306.83 T
+(Only) 164.96 295.83 T
+(\322N\323) 245.43 306.83 T
+(Pro\336le) 419.77 306.83 T
+(V) 164.96 280.83 T
+(ector T) 170.45 280.83 T
+(opology) 195.53 280.83 T
+(\322Y\323) 245.43 280.83 T
+(Pro\336le) 419.77 280.83 T
+(Raster) 164.96 265.83 T
+(\322N\323) 245.43 265.83 T
+(Pro\336le) 419.77 265.83 T
+(External Spatial) 164.96 250.83 T
+(Reference) 164.96 239.83 T
+(\3221\323) 245.43 250.83 T
+(Pro\336le) 419.77 250.83 T
+(Feature Level) 164.96 224.83 T
+(\3224\323 \050means \322non-SDTS\323\051) 245.43 224.83 T
+(generated) 419.77 224.83 T
+(Attribute ID) 101.76 209.83 T
+(Module Name) 164.96 209.83 T
+(global attribute module name \322AP00\323) 245.43 209.83 T
+(generated) 419.77 209.83 T
+(Record ID) 164.96 194.83 T
+(\3221\323) 245.43 194.83 T
+(generated) 419.77 194.83 T
+96.76 635.58 96.76 189.08 2 L
+V
+0.5 H
+0 Z
+N
+159.96 636.08 159.96 188.58 2 L
+V
+N
+240.43 636.08 240.43 188.58 2 L
+V
+N
+414.77 636.08 414.77 188.58 2 L
+V
+N
+495.24 635.58 495.24 189.08 2 L
+V
+N
+96.51 635.83 495.49 635.83 2 L
+V
+N
+97.01 622.08 494.99 622.08 2 L
+V
+N
+97.01 619.58 494.99 619.58 2 L
+V
+N
+159.71 605.83 495.49 605.83 2 L
+V
+N
+159.71 590.83 495.49 590.83 2 L
+V
+N
+159.71 575.83 495.49 575.83 2 L
+V
+N
+159.71 560.83 495.49 560.83 2 L
+V
+N
+159.71 545.83 495.49 545.83 2 L
+V
+N
+159.71 519.83 495.49 519.83 2 L
+V
+N
+159.71 482.83 495.49 482.83 2 L
+V
+N
+159.71 434.83 495.49 434.83 2 L
+V
+N
+159.71 408.83 495.49 408.83 2 L
+V
+N
+159.71 382.83 495.49 382.83 2 L
+V
+N
+159.71 367.83 495.49 367.83 2 L
+V
+N
+96.51 330.83 495.49 330.83 2 L
+V
+N
+159.71 315.83 495.49 315.83 2 L
+V
+N
+159.71 289.83 495.49 289.83 2 L
+V
+N
+159.71 274.83 495.49 274.83 2 L
+V
+N
+159.71 259.83 495.49 259.83 2 L
+V
+N
+159.71 233.83 495.49 233.83 2 L
+V
+N
+96.51 218.83 495.49 218.83 2 L
+V
+N
+159.71 203.83 495.49 203.83 2 L
+V
+N
+96.51 188.83 495.49 188.83 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "23" 22
+%%Page: "22" 22
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(22) 477 748 T
+(name is used, with a \322.db\323 extension.) 72 712 T
+-0.25 (6.) 72 693 P
+3 F
+-0.25 (special case) 83.74 693 P
+0 F
+-0.25 (: if either the SDTS pre\336x, or the output map layer name chosen by the user lacks a) 141.78 693 P
+(leading alpha character \050e.g., as in TIGER/SDTS\325) 72 679 T
+(s 2500 pre\336x\051, the letter \322T\323 is arbitrarily) 310.15 679 T
+(prepended to the db-ready \336lenames in the creat_db and load_db scripts to create the actual data-) 72 665 T
+(base table names. This is done since Informix and other SQL RDBMS\325) 72 651 T
+(s require that both table) 413.12 651 T
+(names and databases begin with a letter) 72 637 T
+(. Thus, e.g., the database tablename for \3222500AP57.db\323) 261.2 637 T
+(would be \322T2500AP57\323.) 72 623 T
+1 F
+(B. GRASS-to-SDTS mapping: Spatial Objects) 72 599 T
+0 F
+(The following table illustrates the mapping GRASS spatial objects to SDTS spatial objects) 72 580 T
+(allowed under the T) 72 566 T
+(opological V) 167.42 566 T
+(ector Pro\336le. Note that GRASS \322Lines of type DOT\323 become) 228.38 566 T
+(\322Entity Points\323 in SDTS; a similar case is found with DLG-3, where objects of the \322Degenerate) 72 552 T
+(Line\323 type become Entity Points.]The T) 72 538 T
+(able also illustrates the fact that GRASS\325) 263.7 538 T
+(s distinction) 460.25 538 T
+(between AREA and LINE types are not preserved directly in the SDTS object modules \050the dis-) 72 524 T
+(tinction could be recorded in an attribute \336eld\051.) 72 510 T
+(Finally) 72 491 T
+(, it should be noted that the reverse mapping, from SDTS to GRASS is identical to that) 105.21 491 T
+(shown here, except that attributed nodes in SDTS map to Lines of T) 72 477 T
+(ype DOT in the current ver-) 397.95 477 T
+(sion of GRASS. Planar Nodes without attributes are not imported into GRASS, since they are) 72 463 T
+(generated within GRASS from the end-points of line segments.) 72 449 T
+1 F
+(C. GRASS to SDTS mapping: detailed listing of SDTS modules) 72 266 T
+0 F
+(Following is a listing, in tabular form, of each of modules included in a SDTS dataset produced) 72 247 T
+(by) 72 233 T
+3 F
+(v) 86.99 233 T
+(.out.sdts.) 91.43 233 T
+0 F
+(Each table lists all of the \336elds and sub\336elds that would be present, their contents,) 137.41 233 T
+(and the source of their contents.) 72 219 T
+0 10 Q
+(5) 225.22 223.8 T
+0 12 Q
+(T) 72 200 T
+(erms used in the \322Source\323 column are de\336ned as follows:) 78.49 200 T
+(Pro\336le) 108 181 T
+(content de\336ned by SDTS and the T) 189 181 T
+(opological V) 357.39 181 T
+(ector Pro\336le) 418.35 181 T
+(generated) 108 162 T
+(de\336ned within v) 189 162 T
+(.out.sdts, or the product of simple generation or) 266.18 162 T
+(counting procedure by v) 189.36 148 T
+(.out.sdts) 305.49 148 T
+(GRASS) 108 129 T
+(extracted from GRASS data or metadata) 189 129 T
+72 108 540 123 C
+81 121 225 121 2 L
+0.5 H
+2 Z
+0 X
+0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 K
+(5. The or) 90 101.33 T
+(ganization and many of the details of this section are based on the document, \322DLG-3 to SDTS) 126.18 101.33 T
+(V) 90 89.33 T
+(ector Pro\336le Mapping \050DRAFT May 5, 1993\051\323, produced by the SDTS T) 96.11 89.33 T
+(ask Force, U.S. Geological Sur-) 387.72 89.33 T
+(vey) 90 77.33 T
+(.) 103.78 77.33 T
+1 F
+(GRASS Spatial Objects Mapped to SDTS Spatial Objects) 183.42 419.33 T
+1 9 Q
+(GRASS Spatial Objects) 188.56 401 T
+(SDTS Spatial Objects) 336.3 401 T
+0 F
+(Node) 224.27 386 T
+(Planar Node \322NO\323) 344.06 386 T
+(Line of type DOT) 201.68 371 T
+(Entity Point \322NE\323) 345.3 371 T
+(Line of type LINE) 200.68 356 T
+(Complete Chain \322LE\323) 338.06 356 T
+(Line of type AREA) 198.68 341 T
+(Complete Chain \322NE\323) 337.56 341 T
+(Area) 225.27 326 T
+(GT Polygon \322PC\323) 345.3 326 T
+(Area attr) 176.09 311 T
+(. coords \050in dig_att \336le\051) 207.29 311 T
+(Area Point \322NA\323) 347.05 311 T
+162 409.75 162 305.25 2 L
+V
+0.5 H
+0 Z
+N
+306 410.25 306 304.75 2 L
+V
+N
+450 409.75 450 305.25 2 L
+V
+N
+161.75 410 450.25 410 2 L
+V
+N
+162.25 396.25 449.75 396.25 2 L
+V
+N
+162.25 393.75 449.75 393.75 2 L
+V
+N
+161.75 380 450.25 380 2 L
+V
+N
+161.75 365 450.25 365 2 L
+V
+N
+161.75 350 450.25 350 2 L
+V
+N
+161.75 335 450.25 335 2 L
+V
+N
+161.75 320 450.25 320 2 L
+V
+N
+161.75 305 450.25 305 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "22" 21
+%%Page: "21" 21
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(21) 477 748 T
+-0.17 (SDTS format, can be obtained via anonymous ftp, from the U.S. Geological Survey\325) 72 712 P
+-0.17 (s SDTS T) 475.05 712 P
+-0.17 (ask) 521.18 712 P
+(Force site,) 72 698 T
+3 F
+(sdts.er) 124.96 698 T
+(.usgs.gov) 155.28 698 T
+0 F
+( \050130.1) 199.92 698 T
+(1.52.170\051) 233.46 698 T
+(Information about production SDTS datasets for DLG-3 and DLG-E data may be obtained from:) 72 679 T
+(U.S. Geological Survey) 162 660 T
+(Earth Sciences Information Center) 162 646 T
+(507 National Center) 162 632 T
+(Reston V) 162 618 T
+(A 22092) 205.43 618 T
+(phone: 1-800-USAMAPS) 162 604 T
+(For TIGER/SDTS data:) 72 585 T
+(Customer Services) 162 566 T
+(U.S. Bureau of the Census) 162 552 T
+(W) 162 538 T
+(ashington DC 20233-8300) 172.36 538 T
+(general product information:) 108 519 T
+(phone: 1-301-763-4100) 162 505 T
+(fax: 1-301-763-4794) 162 491 T
+(TIGER-speci\336c information:) 108 472 T
+(phone: 1-301-763-1384) 162 458 T
+1 F
+(APPENDICES) 267.69 436 T
+(A. Import \336le names) 72 414 T
+0 F
+(The following conventions are observed in the naming of the various \336les that are created as a) 72 395 T
+(result of running) 72 381 T
+3 F
+(v) 154.95 381 T
+(.in.sdts) 159.38 381 T
+0 F
+(. Note that all \322database-ready\323 \336les have a \322.db\323 extension. This exten-) 193.37 381 T
+(sion will not appear in the \336les and table names created after running creat_db.sql and load_db.-) 72 367 T
+(sql.) 72 353 T
+(1.) 72 334 T
+3 F
+( vector map name) 81 334 T
+0 F
+(: if the SDTS dataset contains but a single map layer) 166.59 334 T
+(, or if only a single map) 417.95 334 T
+(layer from a multiple-map dataset is imported, the name speci\336ed as) 72 320 T
+1 F
+(output) 403.1 320 T
+0 F
+( is used as is. Other-) 437.09 320 T
+(wise, the name speci\336ed as) 72 306 T
+1 F
+(output) 205.24 306 T
+0 F
+(is extended with integers to specify the individual layers.) 242.22 306 T
+(2.) 72 287 T
+3 F
+(database-r) 83.99 287 T
+(eady attribute \336les) 135.52 287 T
+0 F
+(: will be named with the following format:) 224.8 287 T
+( 4-character SDTS pre\336x + 4-character module name + \322.db\323 extension, e.g.) 108 268 T
+(\322PRNMAP01.db\323, \322HY01LE01.db\323, etc.) 108 254 T
+(3.) 72 235 T
+3 F
+(database-r) 83.99 235 T
+(eady object tables) 135.52 235 T
+0 F
+(:) 222.12 235 T
+(if a single map, name = vector map name + \322.db\323; e.g., stuf) 108 216 T
+(f.d) 392.11 216 T
+-0.27 (if multiple maps, each name = \336rst letter of layer name + number of layer + 4-char-) 108 197 P
+(acter SDTS pre\336x +.db; e.g., s_1HY01.db.) 108 183 T
+(4.) 72 164 T
+3 F
+(intersect tables) 83.99 164 T
+0 F
+(: these tables each have the form: SDTS-pre\336x + intersect type code+\323db\323, for) 156.95 164 T
+(example:) 72 150 T
+(object/attribute intersect = PRNMobat.db) 108 131 T
+(composite/element intersect = PRNMf) 108 117 T
+(fel.db) 292.77 117 T
+(composite/attribute intersect = PRNMf) 108 103 T
+(fat.db) 294.77 103 T
+(5.) 72 84 T
+3 F
+(object/attribute table) 83.99 84 T
+0 F
+(: for simple imports that require only this table, the speci\336ed vector map) 184.94 84 T
+FMENDPAGE
+%%EndPage: "21" 20
+%%Page: "20" 20
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(20) 477 748 T
+(selection criteria speci\336ed by the user) 72 712 T
+(.) 252.2 712 T
+(Usage of this program, for our purposes, is) 72 693 T
+1 F
+(d.what.v) 111 674 T
+(.inf) 154.32 674 T
+0 F
+( -) 171.31 674 T
+1 F
+(s sql) 178.3 674 T
+0 F
+(=) 200.64 674 T
+3 F
+(\336lename) 207.4 674 T
+1 F
+(map) 251.03 674 T
+0 F
+(=) 273.69 674 T
+3 F
+(name) 280.45 674 T
+0 F
+-0.12 (where) 72 655 P
+1 F
+-0.12 (map) 104.18 655 P
+0 F
+-0.12 ( is a vector map imported from an SDTS dataset and) 126.84 655 P
+1 F
+-0.12 (\336lename) 380.36 655 P
+0 F
+-0.12 (names a \336le containing) 426.55 655 P
+-0.22 (an SQL SELECT statement. The \336rst example given below contains a typical query) 72 641 P
+-0.22 (, accessing all) 470.7 641 P
+(the attributes from a particular table \050AP01\051 for the selected object \050i.e. selected via mouse from) 72 627 T
+(the screen display\051:) 72 613 T
+0 10 Q
+(SELECT ap01.*) 144 595.33 T
+(FROM ap01, object) 171 583.33 T
+(WHERE ap01.obj_code = object.obj_code) 171 571.33 T
+(AND object.\336d = ?) 171 559.33 T
+0 12 Q
+(Handling composite objects demands a more complicated SELECT statement. The following) 72 541 T
+(example illustrates this. Assuming the dataset illustrated in Figure 7 above, it identi\336es the ele-) 72 527 T
+(mentary school district code \050e_school_code\051 for any polygon, i.e., city block, selected:) 72 513 T
+0 10 Q
+(SELECT ap47.e_school_code) 144 495.33 T
+(FROM ap47, comp_attr) 171 483.33 T
+(, comp_elem, object) 266.38 483.33 T
+(WHERE ap47.attr_code = comp_attr) 171 471.33 T
+(.attr_code) 318.76 471.33 T
+(AND comp_attr) 171 459.33 T
+(.comp_code = comp_elem.comp_code) 235.12 459.33 T
+(AND comp_elem.elem_code = object.obj_code) 171 447.33 T
+(AND object.\336d = ?) 171 435.33 T
+0 12 Q
+(The tediousness of this SELECT statement is perhaps mitigated somewhat by the understanding) 72 417 T
+-0.45 (that it is generic in foundation, and needs to me changed only minimally for retrieval of composite) 72 403 P
+(object attributes in other attribute tables. For instance, merely substituting \322ap34\323 for \322ap47\323 \050in) 72 389 T
+-0.03 (three places\051, and substituting \322voting_district\323 for \322e_school_code\323 retrieves the voting districts) 72 375 P
+(for any city block selected.) 72 361 T
+1 F
+(7. Enhancements to GRASS/SDTS TVP Softwar) 179.84 339 T
+(e) 426.83 339 T
+0 F
+(Several enhancements for the GRASS-SDTS software are being planned. Short-term develop-) 72 315 T
+(ment plans include the following:) 72 301 T
+(State Plane transfer) 108 282 T
+(Z-value coordinate import) 108 268 T
+(multi-volume import) 108 254 T
+(improved metadata preparation and export functionality) 108 240 T
+(tools to support improved SDTS-imported RDBMS access) 108 226 T
+(Further development will depend on the results of other major GRASS ef) 72 207 T
+(forts, including modi\336-) 423.89 207 T
+-0.24 (cations of the GRASS vector library and data structures now underway) 72 193 P
+-0.24 (, and the completion of the) 409.88 193 P
+(Generic Database Management Interface for GRASS.) 72 179 T
+1 F
+(8. Sour) 244.31 157 T
+(ces of SDTS data) 280.74 157 T
+0 F
+-0.27 (Sample datasets, for TIGER-SDTS and DLG-3-SDTS, accompany the installation package. After) 72 133 P
+-0.14 (installation of the package available from moon.cecer) 72 119 P
+-0.14 (.army) 327.94 119 P
+-0.14 (.mil \050see Section 1.3\051 sample data sets) 354.8 119 P
+(may be found under .) 72 105 T
+3 F
+(..sr) 174.26 105 T
+(c.contrib/CERL/SDTS/mapdev/v) 189.14 105 T
+(.in.sdts/sample_data) 343.83 105 T
+0 F
+(.) 442.45 105 T
+-0.05 (As noted, a far lar) 72 86 P
+-0.05 (ger sample of SDTS datasets, for GRASS, DLG-3, DLG-E, and TIGER data in) 157.86 86 P
+FMENDPAGE
+%%EndPage: "20" 19
+%%Page: "19" 19
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(19) 477 748 T
+1 F
+(6.4.6 DLG-E/SDTS: a special case?) 72 390.17 T
+0 F
+-0.42 (While a typical use of composite objects is to group smaller objects \050e.g., individual line segments) 72 371.17 P
+-0.22 (bundled into composites for named roads\051 there are other uses, re\337ecting dif) 72 357.17 P
+-0.22 (ferent ways of model-) 435.08 357.17 P
+(ling spatial data itself. In the prototype data model for SDTS/DLG-E, primitive spatial objects) 72 343.17 T
+(\050lines, polygons, nodes\051 do not carry attributes directly) 72 329.17 T
+(. Instead, \322feature objects\323 both carry) 334.04 329.17 T
+(attributes and references to their corresponding spatial objects. And these feature objects are rep-) 72 315.17 T
+-0.05 (resented by SDTS composite objects. Thus, for this kind of data, all object-attribute relationships) 72 301.17 P
+(must be discovered by tracing through comp/elem and comp/attr intersect tables. These data) 72 287.17 T
+(would look similar to those shown in Figure 7, except there would be no attribute tables, such as) 72 273.17 T
+(that represented by AP22, related directly to the Object T) 72 259.17 T
+(able.\051) 346.29 259.17 T
+1 F
+(6.5 SQL SELECT statements) 72 237.17 T
+0 F
+(There is no question that using an \322RDBMS-enhanced\323 GRASS with the kinds of data described) 72 218.17 T
+(here, especially with complex schemas like that exhibited by TIGER/SDTS, presents something) 72 204.17 T
+-0.25 (of a challenge. In the relatively near future, the task will be easier) 72 190.17 P
+-0.25 (. The Generic Database Manage-) 382.8 190.17 P
+(ment Interface \050GDMI\051 for GRASS, whose development is well underway) 72 176.17 T
+(, will greatly facilitate) 428.95 176.17 T
+(access to data such as that described here. Database utilities and application programs tailored to) 72 162.17 T
+(handle the kinds of relationships we have seen will also be of immense value) 72 148.17 T
+-0.26 (In the meantime, SDTS data imported with) 72 129.17 P
+3 F
+-0.26 (v) 280.08 129.17 P
+-0.26 (.in.sdts) 284.52 129.17 P
+0 F
+-0.26 ( can be used with available GRASS tools. Fol-) 318.51 129.17 P
+(lowing are examples of two SQL SELECT statements of the kind that could be used with the) 72 115.17 T
+(GRASS/Informix utility) 72 101.17 T
+(,) 187.51 101.17 T
+3 F
+(d.what.v) 193.51 101.17 T
+(.inf) 233.26 101.17 T
+0 F
+(. This program processes the object selections the user) 248.93 101.17 T
+(makes from a displayed vector map, retrieving associated attributes from a database according to) 72 87.17 T
+72 72 540 720 C
+72 408.17 540 708 C
+99 600 198 699 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(Object T) 121.86 673 T
+(able) 157.15 673 T
+2 7 Q
+(FID) 118.12 655.33 T
+(Obj_code) 157.33 655.33 T
+4 F
+(1) 121.81 642.33 T
+(PC00#23) 158.68 642.33 T
+(2) 121.81 629.33 T
+(PC00#24) 158.68 629.33 T
+(18) 119.86 616.33 T
+(PC01#88) 158.68 616.33 T
+99 663.75 99 612.25 2 L
+V
+0.5 H
+0 Z
+N
+148.5 664.25 148.5 611.75 2 L
+V
+0.25 H
+N
+198 663.75 198 612.25 2 L
+V
+0.5 H
+N
+98.75 664 198.25 664 2 L
+V
+N
+98.75 651 198.25 651 2 L
+V
+2 H
+N
+98.75 638 198.25 638 2 L
+V
+0.5 H
+N
+98.75 625 198.25 625 2 L
+V
+N
+98.75 612 198.25 612 2 L
+V
+N
+243 582 360 681 R
+7 X
+V
+2 9 Q
+0 X
+(Comp/elem intersect) 263.05 655 T
+2 7 Q
+(Elem_code) 256.67 637.33 T
+(Comp_code) 319.38 637.33 T
+4 F
+(PC01#23) 260.56 624.33 T
+(FF06#1) 327.33 624.33 T
+(PC01#24) 260.56 611.33 T
+(FF06#1) 327.33 611.33 T
+(PC01#88) 260.56 598.33 T
+(FF06#2) 327.33 598.33 T
+243 645.75 243 594.25 2 L
+V
+N
+307.25 646.25 307.25 593.75 2 L
+V
+0.25 H
+N
+371.5 645.75 371.5 594.25 2 L
+V
+0.5 H
+N
+242.75 646 371.75 646 2 L
+V
+N
+242.75 633 371.75 633 2 L
+V
+2 H
+N
+242.75 620 371.75 620 2 L
+V
+0.5 H
+N
+242.75 607 371.75 607 2 L
+V
+N
+242.75 594 371.75 594 2 L
+V
+N
+378 483 513 564 R
+7 X
+V
+2 9 Q
+0 X
+(AP47 Attribute T) 401.64 538 T
+(able) 471.38 538 T
+2 7 Q
+(Attr_code) 388.69 520.33 T
+(e_school_code) 447.25 520.33 T
+4 F
+(AP47#34) 390.62 507.33 T
+(472) 466.67 507.33 T
+(AP47#35) 390.62 494.33 T
+(593) 466.67 494.33 T
+378 528.75 378 490.25 2 L
+V
+N
+432 529.25 432 489.75 2 L
+V
+0.25 H
+N
+513 528.75 513 490.25 2 L
+V
+0.5 H
+N
+377.75 529 513.25 529 2 L
+V
+N
+377.75 516 513.25 516 2 L
+V
+2 H
+N
+377.75 503 513.25 503 2 L
+V
+0.5 H
+N
+377.75 490 513.25 490 2 L
+V
+N
+405 608.33 521.5 690 R
+7 X
+V
+2 9 Q
+0 X
+(Comp/attr intersect) 422.3 664 T
+2 7 Q
+(Comp_code) 414.25 646.33 T
+(Attr_code) 476.44 646.33 T
+4 F
+(FF06#1) 422.21 633.33 T
+(AP47#34) 478.38 633.33 T
+(FF06#2) 422.21 620.33 T
+(AP47#35) 478.38 620.33 T
+405 654.75 405 616.25 2 L
+V
+N
+463.5 655.25 463.5 615.75 2 L
+V
+0.25 H
+N
+522 654.75 522 616.25 2 L
+V
+0.5 H
+N
+404.75 655 522.25 655 2 L
+V
+N
+404.75 642 522.25 642 2 L
+V
+2 H
+N
+404.75 629 522.25 629 2 L
+V
+0.5 H
+N
+404.75 616 522.25 616 2 L
+V
+N
+90 429 270 528 R
+7 X
+V
+2 9 Q
+0 X
+(AP22 Attribute T) 140.64 502 T
+(able) 210.38 502 T
+2 7 Q
+(Attr_code) 100.69 484.33 T
+(Obj_code) 155.08 484.33 T
+(city_block_code) 211.31 484.33 T
+4 F
+(AP12#10) 102.62 471.33 T
+(PC01#23) 156.43 471.33 T
+(1) 233.19 471.33 T
+(1) 236.56 471.33 T
+(1) 239.93 471.33 T
+(AP12#1) 102.88 458.33 T
+(1) 127.23 458.33 T
+(PC01#24) 156.43 458.33 T
+(777) 232.67 458.33 T
+(AP12#54) 102.62 445.33 T
+(PC01#88) 156.43 445.33 T
+(473) 232.67 445.33 T
+90 492.75 90 441.25 2 L
+V
+N
+144 493.25 144 440.75 2 L
+V
+0.25 H
+N
+198 493.25 198 440.75 2 L
+V
+N
+279 492.75 279 441.25 2 L
+V
+0.5 H
+N
+89.75 493 279.25 493 2 L
+V
+N
+89.75 480 279.25 480 2 L
+V
+2 H
+N
+89.75 467 279.25 467 2 L
+V
+0.5 H
+N
+89.75 454 279.25 454 2 L
+V
+N
+89.75 441 279.25 441 2 L
+V
+N
+306 420 522 465 R
+7 X
+V
+1 10 Q
+0 X
+-0.03 (Figur) 308.32 458.33 P
+-0.03 (e 7. Composite and Simple Object-Attribute) 332.02 458.33 P
+(Relationships) 385.12 446.33 T
+167.55 588.46 170.83 600 174.16 588.47 170.85 589.67 4 Y
+V
+174.28 530.55 171 519.01 167.67 530.53 170.98 529.34 4 Y
+V
+170.85 589.67 170.98 529.33 2 L
+0.3 H
+N
+207.41 629.9 198 637.33 209.92 636.02 207.55 633.41 4 Y
+V
+233.58 626.44 242.99 619 231.07 620.32 233.44 622.92 4 Y
+V
+207.56 633.41 233.44 622.92 2 L
+N
+380.98 618.48 368.99 618 378.9 624.76 378.8 621.24 4 Y
+V
+393 629.36 404.99 629.84 395.07 623.08 395.18 626.6 4 Y
+V
+378.81 621.24 395.19 626.59 2 L
+N
+477.23 601.77 488.33 606.33 481.33 596.58 480.23 599.92 4 Y
+V
+434.09 559.57 422.99 555 429.99 564.75 431.1 561.41 4 Y
+V
+480.23 599.92 431.1 561.41 2 L
+N
+81 420 531 699 R
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "19" 18
+%%Page: "18" 18
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(18) 477 748 T
+(sist of nothing more than pointers to their attributes and to their constituent objects. Composite) 72 712 T
+(object tables can be identi\336ed by their FF pre\336x \050FF01, FF02, etc.\051.) 72 698 T
+(Adding to the complexity of composite objects is the fact that their relationships with both their) 72 679 T
+-0.47 (constituent parts and their attributes are very likely to be multiple. Many-to-many relations will be) 72 665 P
+(quite common between simple and composite objects, and also in at least some cases, between) 72 651 T
+(composite objects and attributes \050TIGER/SDTS is such a case, with multiple composite object) 72 637 T
+(and attribute tables with many-to-many relationships.\051) 72 623 T
+(T) 72 604 T
+(o handle this complexity) 78.49 604 T
+(,) 195.98 604 T
+3 F
+(v) 201.97 604 T
+(.in.sdts) 206.41 604 T
+0 F
+( generates two special intersect tables for datasets with com-) 240.4 604 T
+(posite objects: a composite/element \050comp/elem\051 intersect table and a composite/attribute \050comp/) 72 590 T
+(attr\051 intersect table.) 72 576 T
+-0.28 (The comp/elem table contains two \336elds: a) 72 557 P
+3 F
+-0.28 (comp_code) 278.87 557 P
+0 F
+-0.28 ( \336eld, combining composite object module) 333.49 557 P
+(name and record number; and an) 72 543 T
+3 F
+(elem_code) 232.53 543 T
+0 F
+( \336eld, entries in which would be either simple) 283.82 543 T
+3 F
+(obj_-) 506.34 543 T
+(code) 72 529 T
+0 F
+( or) 94.64 529 T
+3 F
+(comp_code) 110.63 529 T
+0 F
+(.) 165.25 529 T
+(The comp/attr intersect table contains) 72 510 T
+3 F
+(comp_codes) 255.54 510 T
+0 F
+( and) 314.82 510 T
+3 F
+(attr_codes) 338.13 510 T
+0 F
+( and functions like the object/) 388.77 510 T
+-0.28 (attr intersect table. The comp/elem table is similar) 72 496 P
+-0.28 (, but with an additional complication: it is inher-) 310.05 496 P
+-0.07 (ently recursive, since an element may be part of a composite which in turn is part of another com-) 72 482 P
+(posite. Entries in the elem_code \336eld may be composite codes that will also be entered in a) 72 468 T
+(dif) 72 454 T
+(ferent row in the comp_code column.) 85.11 454 T
+(As illustrated in Figure 7, traversing through a database with both attributed simple objects and) 72 254 T
+(attributed composite objects is somewhat complicated. In the example, the polygons listed in the) 72 240 T
+(object table represent city blocks, each of which has a \322city-block-code\323 attribute, in attribute) 72 226 T
+-0.16 (table AP22. Each city block, among other things, is identi\336ed with a particular elementary school) 72 212 P
+(district, and voting districts are modeled as composite objects with their attributes, \322e_school_-) 72 198 T
+(code\323, etc. in a separate attribute table \050AP47\051. T) 72 184 T
+(o discover the \322city-block-code\323 for a particular) 305.97 184 T
+(polygon is straightforward, but \336nding a city-block\325) 72 170 T
+(s elementary school district code means join-) 320.85 170 T
+(ing four dif) 72 156 T
+(ferent tables!) 126.41 156 T
+72 72 540 720 C
+80.42 269 531.58 431 C
+139.25 324.83 247.25 369.83 R
+7 X
+0 K
+V
+1 10 Q
+0 X
+(Figur) 142.68 363.17 T
+(e 6. composite/ele-) 166.38 363.17 T
+(ment intersect table) 151.06 351.17 T
+286.58 286.67 431.42 428.83 R
+7 X
+V
+2 9 Q
+0 X
+(Comp/elem intersect) 306.63 402.83 T
+2 7 Q
+(Elem_code) 300.26 385.17 T
+(Comp_code) 362.96 385.17 T
+4 F
+(FF07#1) 306.67 372.17 T
+(FF02#1) 370.92 372.17 T
+(PC01#1) 306.08 359.17 T
+(FF07#1) 370.92 359.17 T
+(FF07#3) 306.67 346.17 T
+(FF02#2) 370.92 346.17 T
+(FF07#2) 306.67 333.17 T
+(FF02#2) 370.92 333.17 T
+(PC01#434) 302.2 320.17 T
+(FF07#3) 370.92 320.17 T
+(PC01#353) 302.2 307.17 T
+(FF07#3) 370.92 307.17 T
+(PC01#184) 302.2 294.17 T
+(FF07#2) 370.92 294.17 T
+286.58 393.58 286.58 290.08 2 L
+V
+0.5 H
+0 Z
+N
+350.83 394.08 350.83 289.58 2 L
+V
+0.25 H
+N
+415.08 393.58 415.08 290.08 2 L
+V
+0.5 H
+N
+286.33 393.83 415.33 393.83 2 L
+V
+N
+286.33 380.83 415.33 380.83 2 L
+V
+2 H
+N
+286.33 367.83 415.33 367.83 2 L
+V
+0.5 H
+N
+286.33 354.83 415.33 354.83 2 L
+V
+N
+286.33 341.83 415.33 341.83 2 L
+V
+N
+286.33 328.83 415.33 328.83 2 L
+V
+N
+286.33 315.83 415.33 315.83 2 L
+V
+N
+286.33 302.83 415.33 302.83 2 L
+V
+N
+286.33 289.83 415.33 289.83 2 L
+V
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "18" 17
+%%Page: "17" 17
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(17) 477 748 T
+1 F
+(6.4.4 Many-to-many object-attribute r) 72 468 T
+(elationships) 267.3 468 T
+0 F
+(For this kind of data, an additional table, an) 72 449 T
+3 F
+(object/attribute intersect) 284.2 449 T
+0 F
+( table, which serves to link) 402.47 449 T
+-0.02 (the object table with the various attribute tables, is needed. The table has two \336elds, for) 72 435 P
+3 F
+-0.02 (obj_code) 493.05 435 P
+0 F
+(and for) 72 421 T
+3 F
+(attr_code) 109.3 421 T
+0 F
+(. In the object/attribute intersect table,) 155.27 421 T
+3 F
+(obj_code) 340.47 421 T
+0 F
+( has a foreign key relationship) 384.44 421 T
+(with the object table and) 72 407 T
+3 F
+(attr_code) 192.92 407 T
+0 F
+( has a foreign key relationship with one or another of the) 238.89 407 T
+(attribute tables. Figure 5 illustrates this solution to the many-to-many problem. Note that each) 72 393 T
+-0.24 (Line in the example has attributes in two dif) 72 379 P
+-0.24 (ferent tables \050e.g., LE01#1 has attributes AP01#1 and) 281.75 379 P
+(AP12#1\051, and attribute AP12#1 applies to both LE01#1 and LE01#2.) 72 365 T
+1 F
+(6.4.5 composite objects) 72 116 T
+0 F
+(Composite objects in SDTS are made up of one or more other objects, primitive or composite.) 72 97 T
+-0.16 (Composite objects can themselves have attributes. In fact, in SDTS composite object records con-) 72 83 P
+72 72 540 720 C
+72 486 540 708 C
+90 564 234 681 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(GRASS/RDBMS Object T) 100.41 655 T
+(able) 205.61 655 T
+2 7 Q
+(FID) 116.14 637.33 T
+(Obj_code) 177.84 637.33 T
+4 F
+(22) 117.88 624.33 T
+(PC01#22) 179.2 624.33 T
+(23) 117.88 611.33 T
+(PC01#23) 179.2 611.33 T
+(24) 117.88 598.33 T
+(PC01#24) 179.2 598.33 T
+90 645.75 90 594.25 2 L
+V
+0.5 H
+0 Z
+N
+153.53 646.25 153.53 593.75 2 L
+V
+0.25 H
+N
+234 645.75 234 594.25 2 L
+V
+0.5 H
+N
+89.75 646 234.25 646 2 L
+V
+N
+89.75 633 234.25 633 2 L
+V
+2 H
+N
+89.75 620 234.25 620 2 L
+V
+0.5 H
+N
+89.75 607 234.25 607 2 L
+V
+N
+89.75 594 234.25 594 2 L
+V
+N
+333 501 522 582 R
+7 X
+V
+2 9 Q
+0 X
+(GRASS/RDBMS AP02 Attribute T) 344.18 556 T
+(able) 483.83 556 T
+2 7 Q
+(Obj_code) 344.08 538.33 T
+(Attr_code) 397.69 538.33 T
+(Attribute_X) 458.17 538.33 T
+4 F
+(PC01#10) 345.43 525.33 T
+(AP02#1) 401.57 525.33 T
+(XXX) 470.01 525.33 T
+(PC01#24) 345.43 512.33 T
+(AP02#2) 401.57 512.33 T
+(YYY) 470.01 512.33 T
+333 546.75 333 508.25 2 L
+V
+N
+387 547.25 387 507.75 2 L
+V
+0.25 H
+N
+441 547.25 441 507.75 2 L
+V
+N
+513 546.75 513 508.25 2 L
+V
+0.5 H
+N
+332.75 547 513.25 547 2 L
+V
+N
+332.75 534 513.25 534 2 L
+V
+2 H
+N
+332.75 521 513.25 521 2 L
+V
+0.5 H
+N
+332.75 508 513.25 508 2 L
+V
+N
+250.24 599.52 238.33 601 249.21 606.06 248.54 602.6 4 Y
+V
+290.59 612.48 302.49 611 291.61 605.94 292.29 609.4 4 Y
+V
+248.54 602.6 292.3 609.4 2 L
+N
+243.15 587.58 236.66 597.67 247.51 592.55 244.43 590.86 4 Y
+V
+323.49 526.1 329.99 516.01 319.13 521.13 322.22 522.82 4 Y
+V
+244.43 590.85 322.23 522.81 2 L
+N
+81 501 297 537 R
+7 X
+V
+1 10 Q
+0 X
+(Figur) 113.11 530.33 T
+(e 4. one-to-many r) 136.81 530.33 T
+(elationships) 214.35 530.33 T
+72 492 531 699 R
+0.3 H
+N
+306 597.5 495 692.33 R
+7 X
+V
+2 9 Q
+0 X
+(GRASS/RDBMS AP01 Attribute T) 311.79 666.33 T
+(able) 451.43 666.33 T
+2 7 Q
+(Obj_code) 317.08 648.67 T
+(Attr_code) 368.89 648.67 T
+(Attribute_1) 424.36 648.67 T
+4 F
+(PC01#22) 318.43 635.67 T
+(AP01#492) 368.88 635.67 T
+(1) 431.4 635.67 T
+(12233) 434.77 635.67 T
+(PC01#23) 318.43 622.67 T
+(AP01#493) 368.88 622.67 T
+(445566) 431.14 622.67 T
+(PC01#24) 318.43 609.67 T
+(AP01#494) 368.88 609.67 T
+(778899) 431.14 609.67 T
+306 657.08 306 605.58 2 L
+V
+0.5 H
+N
+360 657.58 360 605.08 2 L
+V
+0.25 H
+N
+410.4 657.58 410.4 605.08 2 L
+V
+N
+475.2 657.08 475.2 605.58 2 L
+V
+0.5 H
+N
+305.75 657.33 475.45 657.33 2 L
+V
+N
+305.75 644.33 475.45 644.33 2 L
+V
+2 H
+N
+305.75 631.33 475.45 631.33 2 L
+V
+0.5 H
+N
+305.75 618.33 475.45 618.33 2 L
+V
+N
+305.75 605.33 475.45 605.33 2 L
+V
+N
+72 72 540 720 C
+0 0 612 792 C
+72 72 540 720 C
+76.5 134 535.5 342 C
+103.5 226 202.5 316 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(Object T) 126.36 290 T
+(able) 161.65 290 T
+2 7 Q
+(FID) 122.62 272.33 T
+(Obj_code) 161.83 272.33 T
+4 F
+(1) 126.31 259.33 T
+(LE01#1) 165.71 259.33 T
+(2) 126.31 246.33 T
+(LE01#2) 165.71 246.33 T
+103.5 280.75 103.5 242.25 2 L
+V
+0.5 H
+0 Z
+N
+153 281.25 153 241.75 2 L
+V
+0.25 H
+N
+202.5 280.75 202.5 242.25 2 L
+V
+0.5 H
+N
+103.25 281 202.75 281 2 L
+V
+N
+103.25 268 202.75 268 2 L
+V
+2 H
+N
+103.25 255 202.75 255 2 L
+V
+0.5 H
+N
+103.25 242 202.75 242 2 L
+V
+N
+229.5 172 335 289 R
+7 X
+V
+2 9 Q
+0 X
+(Obj/attr intersect) 243.04 263 T
+2 7 Q
+(Obj_code) 238.33 245.33 T
+(Attr_code) 287.44 245.33 T
+4 F
+(LE01#1) 242.21 232.33 T
+(AP01#1) 291.32 232.33 T
+(LE01#1) 242.21 219.33 T
+(AP12#1) 291.32 219.33 T
+(LE01#2) 242.21 206.33 T
+(AP01#2) 291.32 206.33 T
+(LE01#2) 242.21 193.33 T
+(AP12#1) 291.32 193.33 T
+229.5 253.75 229.5 189.25 2 L
+V
+N
+279 254.25 279 188.75 2 L
+V
+0.25 H
+N
+328.5 253.75 328.5 189.25 2 L
+V
+0.5 H
+N
+229.25 254 328.75 254 2 L
+V
+N
+229.25 241 328.75 241 2 L
+V
+2 H
+N
+229.25 228 328.75 228 2 L
+V
+0.5 H
+N
+229.25 215 328.75 215 2 L
+V
+N
+229.25 202 328.75 202 2 L
+V
+N
+229.25 189 328.75 189 2 L
+V
+N
+400.5 253 526.5 334 R
+7 X
+V
+2 9 Q
+0 X
+(AP01 Attribute T) 403.44 308 T
+(able) 473.18 308 T
+4 7 Q
+(Attr_code) 412.55 290.33 T
+(Field_3) 462.84 290.33 T
+(AP01#1) 415.07 277.33 T
+(1) 468.99 277.33 T
+(1) 472.36 277.33 T
+(1) 475.73 277.33 T
+(AP01#2) 415.07 264.33 T
+(777) 468.47 264.33 T
+400.5 298.75 400.5 260.25 2 L
+V
+N
+454.5 299.25 454.5 259.75 2 L
+V
+0.25 H
+N
+494.1 298.75 494.1 260.25 2 L
+V
+0.5 H
+N
+400.25 299 494.35 299 2 L
+V
+N
+400.25 286 494.35 286 2 L
+V
+2 H
+N
+400.25 273 494.35 273 2 L
+V
+0.5 H
+N
+400.25 260 494.35 260 2 L
+V
+N
+364.5 154 517.5 235 R
+7 X
+V
+2 9 Q
+0 X
+(AP12 Attribute T) 387.24 209 T
+(able) 456.98 209 T
+2 7 Q
+(Attr_code) 375.19 191.33 T
+(Field_3) 426.26 191.33 T
+(Field_4) 465.86 191.33 T
+4 F
+(AP12#1) 379.07 178.33 T
+(1) 432.99 178.33 T
+(1) 436.36 178.33 T
+(1) 439.73 178.33 T
+(222) 472.07 178.33 T
+364.5 199.75 364.5 174.25 2 L
+V
+N
+418.5 200.25 418.5 173.75 2 L
+V
+0.25 H
+N
+458.1 200.25 458.1 173.75 2 L
+V
+N
+497.7 199.75 497.7 174.25 2 L
+V
+0.5 H
+N
+364.25 200 497.95 200 2 L
+V
+N
+364.25 187 497.95 187 2 L
+V
+2 H
+N
+364.25 174 497.95 174 2 L
+V
+0.5 H
+N
+224.5 241.42 229.49 230.5 219.48 237.11 222.77 238.35 4 Y
+V
+202.5 262.14 222.78 238.35 2 L
+2 Z
+N
+226.36 228.59 229.49 217 220.7 225.17 224.15 225.85 4 Y
+V
+202.5 262.14 224.16 225.84 2 L
+N
+225.13 219.75 229.49 208.58 219.87 215.74 222.5 217.75 4 Y
+V
+202.5 244.28 222.51 217.74 2 L
+N
+226.66 208.09 229.49 196.43 220.91 204.82 224.38 205.41 4 Y
+V
+202.5 244.28 224.39 205.4 2 L
+N
+388.97 276.64 400.49 280 392.5 271.05 391.75 274.49 4 Y
+V
+328.5 235 391.76 274.48 2 L
+0.3 H
+N
+358.61 191.48 364.48 181.01 353.96 186.78 357.14 188.28 4 Y
+V
+328.5 217 357.16 188.27 2 L
+N
+389.57 264.31 400.49 269.29 393.86 259.28 392.63 262.58 4 Y
+V
+328.5 208 392.65 262.57 2 L
+N
+355.68 189.15 364.49 181 352.7 183.25 355.27 185.66 4 Y
+V
+328.5 199 355.28 185.65 2 L
+N
+112.5 154 301.5 172 R
+7 X
+V
+1 10 Q
+0 X
+(Figur) 126.67 165.33 T
+(e 5. many-to-many r) 150.37 165.33 T
+(elationships) 236.79 165.33 T
+76.5 144 535.5 342 R
+0 Z
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "17" 16
+%%Page: "16" 16
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(16) 477 748 T
+1 F
+(ships) 72 712 T
+0 F
+(A simple example of this type might have two attribute tables, one with line attributes and the) 72 693 T
+(other with polygon attributes.) 72 679 T
+3 F
+(v) 216.92 679 T
+(.in.sdts) 221.35 679 T
+0 F
+( would generate three database-ready \336les for this dataset,) 255.34 679 T
+(two for the attribute tables and a third for an object table connecting these attribute tables to the) 72 665 T
+(lines and polygons imported to GRASS. In the example in Figure 3, note that, \0501\051, there is a for-) 72 651 T
+-0.22 (eign key- primary key relationship between) 72 637 P
+3 F
+-0.22 (attr_code) 282.51 637 P
+0 F
+-0.22 ( in the object table and the) 328.48 637 P
+3 F
+-0.22 (attr_code) 456.5 637 P
+0 F
+-0.22 ( entries) 502.47 637 P
+(in each of the two attribute tables; \0502\051 the) 72 623 T
+3 F
+(obj_code) 272.85 623 T
+0 F
+( entries for lines \050LE01#1, LE01#2, etc.\051 and) 316.82 623 T
+(for polygons \050PC01#1, PC01#2, PC01#3, etc.\051 are, in this case, merely documentary in function;) 72 609 T
+(\0503\051 as usual, the) 72 595 T
+3 F
+(\336d) 150.94 595 T
+0 F
+( entries in the object table equal entries in the GRASS) 162.93 595 T
+3 F
+(dig_att) 425.1 595 T
+0 F
+( \336le.) 459.09 595 T
+0 10 Q
+(4) 480.41 599.8 T
+1 12 Q
+(6.4.3 One-to-many object-attribute r) 72 284 T
+(elationships) 258.64 284 T
+0 F
+-0.29 ( DLG-3/SDTS datasets exhibit this schema, with objects having a \322feature code\323 along with other) 72 265 P
+(attributes in one table, and with some of these objects having an additional, \322coincident code\323) 72 251 T
+-0.28 (attribute in a second table. This kind of data is imported in a manner dif) 72 237 P
+-0.28 (ferent from that illustrated) 411.9 237 P
+(in Figure 3, as follows:) 72 223 T
+3 F
+(attr_code) 185.94 223 T
+0 F
+( is omitted from the object table, and) 231.91 223 T
+3 F
+(obj_code) 411.46 223 T
+0 F
+( is added to the) 455.43 223 T
+(appropriate attribute tables. In this schema, reversing that just shown, there is a primary key-for-) 72 209 T
+(eign key relationship between) 72 195 T
+3 F
+(obj_codes) 218.56 195 T
+0 F
+(in the object table and the attribute table, respectively) 270.19 195 T
+(\050Figure 4\051.) 72 181 T
+72 96 540 111 C
+81 109 225 109 2 L
+0.5 H
+2 Z
+0 X
+0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 K
+(4. TIGER/SDTS datasets we have encountered employ this kind of schema, although it is complicated) 90 89.33 T
+(greatly by the presence of composite objects.) 90 77.33 T
+72 72 540 720 C
+72 302 540 572 C
+72 368 271.27 521 C
+70.93 368 271.26 521 R
+7 X
+0 K
+V
+79.93 377 232.93 512 R
+V
+2 9 Q
+0 X
+(GRASS/RDBMS Object T) 112.84 492 T
+(able) 218.04 492 T
+2 7 Q
+(FID) 101.3 475.33 T
+(Obj_code) 149.77 475.33 T
+(Attr_code) 216.89 475.33 T
+4 F
+(53) 103.05 462.33 T
+(PC01#1) 153.07 462.33 T
+(AP01#12) 218.82 462.33 T
+(54) 103.05 449.33 T
+(PC01#2) 153.07 449.33 T
+(AP01#13) 218.82 449.33 T
+(55) 103.05 436.33 T
+(PC01#3) 153.07 436.33 T
+(AP01#14) 218.82 436.33 T
+(56) 103.05 423.33 T
+(PC01#4) 153.07 423.33 T
+(AP02#47) 218.82 423.33 T
+(57) 103.05 410.33 T
+(PC01#5) 153.07 410.33 T
+(AP02#48) 218.82 410.33 T
+79.93 482.75 79.93 405.25 2 L
+V
+0.5 H
+0 Z
+N
+133.93 483.25 133.93 404.75 2 L
+V
+0.25 H
+N
+197.46 483.25 197.46 404.75 2 L
+V
+N
+268.93 482.75 268.93 405.25 2 L
+V
+0.5 H
+N
+79.68 483 269.18 483 2 L
+V
+N
+79.68 470 269.18 470 2 L
+V
+2 H
+N
+79.68 457 269.18 457 2 L
+V
+0.5 H
+N
+79.68 444 269.18 444 2 L
+V
+N
+79.68 431 269.18 431 2 L
+V
+N
+79.68 418 269.18 418 2 L
+V
+N
+79.68 405 269.18 405 2 L
+V
+N
+72 302 540 572 C
+307.27 467 514.27 557 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(GRASS/RDBMS AP01 Attribute T) 329.25 537 T
+(able) 468.9 537 T
+2 7 Q
+(Attr_code) 316.16 520.33 T
+(Attr_1) 372.77 520.33 T
+(Attr_2) 423.17 520.33 T
+(...) 480.75 520.33 T
+4 F
+(AP01#12) 318.09 507.33 T
+(aaaa) 375.09 507.33 T
+(123) 427.44 507.33 T
+(---) 480.17 507.33 T
+(AP01#13) 318.09 494.33 T
+(bbbb) 375.09 494.33 T
+(456) 427.44 494.33 T
+(---) 480.17 494.33 T
+(AP01#14) 318.09 481.33 T
+(cccc) 375.88 481.33 T
+(789) 427.44 481.33 T
+(---) 480.17 481.33 T
+307.27 527.75 307.27 476.25 2 L
+V
+0.5 H
+0 Z
+N
+357.67 528.25 357.67 475.75 2 L
+V
+0.25 H
+N
+408.07 528.25 408.07 475.75 2 L
+V
+N
+458.47 528.25 458.47 475.75 2 L
+V
+N
+508.87 527.75 508.87 476.25 2 L
+V
+0.5 H
+N
+307.02 528 509.12 528 2 L
+V
+N
+307.02 515 509.12 515 2 L
+V
+2 H
+N
+307.02 502 509.12 502 2 L
+V
+0.5 H
+N
+307.02 489 509.12 489 2 L
+V
+N
+307.02 476 509.12 476 2 L
+V
+N
+352.27 365 523.27 446 R
+7 X
+V
+2 9 Q
+0 X
+(GRASS/RDBMS AP02 Attribute) 363.51 426 T
+(T) 418.26 415 T
+(able) 423.09 415 T
+2 7 Q
+(Attr_code) 362.96 398.33 T
+(Attr_x) 421.37 398.33 T
+(Attr_y) 471.77 398.33 T
+4 8 Q
+(AP02#47) 362.82 384.67 T
+(xx) 427.47 384.67 T
+(88) 477.42 384.67 T
+(AP02#48) 362.82 370.67 T
+(yy) 427.47 370.67 T
+(99) 477.42 370.67 T
+352.27 405.75 352.27 365.25 2 L
+V
+N
+406.27 406.25 406.27 364.75 2 L
+V
+0.25 H
+N
+456.67 406.25 456.67 364.75 2 L
+V
+N
+507.07 405.75 507.07 365.25 2 L
+V
+0.5 H
+N
+352.02 406 507.32 406 2 L
+V
+N
+352.02 393 507.32 393 2 L
+V
+2 H
+N
+352.02 379 507.32 379 2 L
+V
+0.5 H
+N
+352.02 365 507.32 365 2 L
+V
+N
+294.54 500.49 304.15 507.67 299.81 496.48 297.9 499.44 4 Y
+V
+280.87 471.19 271.26 464.01 275.6 475.19 277.51 472.23 4 Y
+V
+297.92 499.44 277.52 472.23 2 L
+N
+340.24 392.37 349.16 384.34 337.34 386.42 339.88 388.86 4 Y
+V
+280.18 413.98 271.26 422 283.08 419.92 280.55 417.48 4 Y
+V
+339.88 388.86 280.55 417.47 2 L
+N
+91.27 329 370.27 347 R
+7 X
+V
+1 10 Q
+0 X
+(Figur) 115.87 340.33 T
+(e 3. one-to-one r) 139.57 340.33 T
+(elationships with multiple tables) 208.22 340.33 T
+73.27 320 532.27 563 R
+0.3 H
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "16" 15
+%%Page: "15" 15
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(15) 477 748 T
+1 F
+(6.4 Import schema) 72 712 T
+0 F
+(When) 72 693 T
+3 F
+(v) 103.64 693 T
+(.in.sdts) 108.08 693 T
+0 F
+( is run, the program analyzes the SDTS dataset being import, and on the basis of) 142.07 693 T
+(this analysis, selects the most appropriate from a set of generic attribute schemas to use for pro-) 72 679 T
+(gram output. Each of these schemas are explained below) 72 665 T
+(.) 343.34 665 T
+1 F
+(6.4.1 One-to-one object-attribute r) 72 643 T
+(elationships; all object attributes in a single \336le) 247.98 643 T
+0 F
+-0.04 (This is the simplest in structure of the SDTS datesets likely to be confronted by the GRASS user) 72 624 P
+-0.04 (.) 534.04 624 P
+-0.06 (In fact, a GRASS/SDTS dataset exported from GRASS to SDTS with) 72 610 P
+3 F
+-0.06 (v) 409.19 610 P
+-0.06 (.out.sdts) 413.63 610 P
+0 F
+-0.06 (would have such) 456.56 610 P
+(a structure.) 72 596 T
+(Here, only one \322database-ready\323 \336le, a single object/attribute table, is created. It simply copies) 72 577 T
+(over the single attribute table\325) 72 563 T
+(s \336elds, and prepends three \336elds to these: two of these,) 215.24 563 T
+3 F
+(\336d) 485.39 563 T
+0 F
+( and) 497.38 563 T
+3 F
+(obj_code) 72 549 T
+0 F
+(, derive from SDTS\325) 115.97 549 T
+(s object modules, while the third,) 213.91 549 T
+3 F
+(attr_code) 376.48 549 T
+0 F
+(, comes from the) 422.45 549 T
+(attribute table. The) 72 535 T
+3 F
+(\336d) 165.93 535 T
+0 F
+( entries, which match those in the) 177.93 535 T
+3 F
+(dig_att) 341.82 535 T
+0 F
+( \336le, provide the link between) 375.8 535 T
+(GRASS and the relational database. It should be noted that for this simple date,) 72 521 T
+3 F
+(obj_code) 455.75 521 T
+0 F
+( and) 499.72 521 T
+3 F
+(attr_code) 72 507 T
+0 F
+( have no function other than providing documentation of the transfer dataset \050Figure 2\051.) 117.97 507 T
+1 F
+(6.4.2 One-to-one object-attribute r) 72 94 T
+(elationships with multiple tables; many-to-one r) 247.98 94 T
+(elation-) 492.63 94 T
+72 72 540 720 C
+74.53 112 537.47 484 C
+83.53 386.5 254.53 476.5 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(PC01: SDTS Polygon Module) 107.11 450.5 T
+2 7 Q
+(MODN) 92.66 432.83 T
+(RCID) 132.59 432.83 T
+(Attribute Pointer) 179.26 432.83 T
+4 F
+(PC01) 94.59 419.83 T
+(9) 139.19 419.83 T
+(AP01 458) 191.48 419.83 T
+(PC01) 94.59 406.83 T
+(10) 137.25 406.83 T
+(AP01 459) 191.48 406.83 T
+83.53 441.25 83.53 402.75 2 L
+V
+0.5 H
+0 Z
+N
+123.13 441.75 123.13 402.25 2 L
+V
+0.25 H
+N
+159.13 441.75 159.13 402.25 2 L
+V
+N
+254.53 441.25 254.53 402.75 2 L
+V
+0.5 H
+N
+83.28 441.5 254.78 441.5 2 L
+V
+N
+83.28 428.5 254.78 428.5 2 L
+V
+2 H
+N
+83.28 415.5 254.78 415.5 2 L
+V
+0.5 H
+N
+83.28 402.5 254.78 402.5 2 L
+V
+N
+218.53 305.5 515.53 395.5 R
+7 X
+V
+2 9 Q
+0 X
+(AP01: SDTS Attribute T) 306.64 369.5 T
+(able) 405.84 369.5 T
+2 7 Q
+(MODN) 230.36 351.83 T
+(RCID) 274.79 351.83 T
+(Field_1) 319.89 351.83 T
+(Field_2) 377.49 351.83 T
+(Field_3) 435.09 351.83 T
+(...) 491.02 351.83 T
+4 F
+(AP01) 232.48 338.83 T
+(458) 277.5 338.83 T
+(aaa) 326.1 338.83 T
+(bbb) 383.7 338.83 T
+(ccc) 441.89 338.83 T
+(...) 491.02 338.83 T
+(AP01) 232.48 325.83 T
+(459) 277.5 325.83 T
+(xxx) 326.69 325.83 T
+(yyy) 384.29 325.83 T
+(zzz) 441.89 325.83 T
+(...) 491.02 325.83 T
+218.53 360.25 218.53 321.75 2 L
+V
+N
+263.53 360.75 263.53 321.25 2 L
+V
+0.25 H
+N
+303.13 360.75 303.13 321.25 2 L
+V
+N
+360.73 360.75 360.73 321.25 2 L
+V
+N
+418.33 360.75 418.33 321.25 2 L
+V
+N
+475.93 360.75 475.93 321.25 2 L
+V
+N
+511.93 360.25 511.93 321.75 2 L
+V
+0.5 H
+N
+218.28 360.5 512.18 360.5 2 L
+V
+N
+218.28 347.5 512.18 347.5 2 L
+V
+2 H
+N
+218.28 334.5 512.18 334.5 2 L
+V
+0.5 H
+N
+218.28 321.5 512.18 321.5 2 L
+V
+N
+115.03 166 488.53 251.5 R
+7 X
+V
+2 9 Q
+0 X
+(GRASS/RDBMS Object-Attribute T) 215.92 225.5 T
+(able) 361.55 225.5 T
+2 7 Q
+(FID) 131.9 207.83 T
+(Obj_code) 171.11 207.83 T
+(Attr_code) 226.52 207.83 T
+(Field_1) 288.39 207.83 T
+(Field_2) 345.99 207.83 T
+(Field_3) 403.59 207.83 T
+(...) 459.52 207.83 T
+4 F
+(9) 135.59 194.83 T
+(PC01#9) 174.41 194.83 T
+(AP01#458) 226.51 194.83 T
+(aaa) 294.6 194.83 T
+(bbb) 352.2 194.83 T
+(ccc) 410.39 194.83 T
+(...) 459.52 194.83 T
+(10) 133.65 181.83 T
+(PC01#10) 172.46 181.83 T
+(AP01#459) 226.51 181.83 T
+(xxx) 295.19 181.83 T
+(yyy) 352.79 181.83 T
+(zzz) 410.39 181.83 T
+(...) 459.52 181.83 T
+115.03 216.25 115.03 177.75 2 L
+V
+N
+160.03 216.75 160.03 177.25 2 L
+V
+0.25 H
+N
+214.03 216.75 214.03 177.25 2 L
+V
+N
+271.63 216.75 271.63 177.25 2 L
+V
+N
+329.23 216.75 329.23 177.25 2 L
+V
+N
+386.83 216.75 386.83 177.25 2 L
+V
+N
+444.43 216.75 444.43 177.25 2 L
+V
+N
+480.43 216.25 480.43 177.75 2 L
+V
+0.5 H
+N
+114.78 216.5 480.68 216.5 2 L
+V
+N
+114.78 203.5 480.68 203.5 2 L
+V
+2 H
+N
+114.78 190.5 480.68 190.5 2 L
+V
+0.5 H
+N
+114.78 177.5 480.68 177.5 2 L
+V
+N
+479.53 282.83 101.53 282.83 2 L
+N
+236.53 125.5 380.53 143.5 R
+7 X
+V
+1 10 Q
+0 X
+(Figur) 237.09 136.83 T
+(e 2. one-to-one r) 260.78 136.83 T
+(elationships) 329.43 136.83 T
+92.53 332.5 155.53 359.5 R
+7 X
+V
+2 14 Q
+0 X
+(SDTS) 92.53 350.17 T
+101.53 242.5 227.53 268.33 R
+7 X
+V
+0 X
+(GRASS/RDBMS) 101.53 259 T
+200.26 340.12 209.53 332.51 197.63 334.05 198.94 337.09 4 Y
+V
+182.53 395.5 M
+ 167.12 372.38 179.01 348.37 198.93 337.05 D
+N
+74.53 124 524.53 475 R
+0.3 H
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "15" 14
+%%Page: "14" 14
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(14) 477 748 T
+(carried over intact.) 72 712 T
+(Object tables contain records for each simple object in the original SDTS dataset.) 72 693 T
+3 F
+(These tables) 465.72 693 T
+(function as links between the RDBMS attribute tables, and the object data now stor) 72 679 T
+(ed in GRASS) 471.33 679 T
+(dig and dig_att \336les) 72 665 T
+0 F
+(. The object tables are simple, consisting only of a feature ID \050) 167.62 665 T
+3 F
+(FID) 467.4 665 T
+0 F
+(\051, an) 487.38 665 T
+3 F
+(obj_-) 511.69 665 T
+-0.44 (code) 72 651 P
+0 F
+-0.44 (, and in some schemas, an) 94.64 651 P
+3 F
+-0.44 (attr_code) 219.9 651 P
+0 F
+-0.44 (. There will be a single object table for each separate map) 265.87 651 P
+(layer in the data set. It is likely that in the most typical case, SDTS databases will consist of one) 72 637 T
+(object table linking a GRASS vector map layer with several attribute tables.) 72 623 T
+(Some SDTS datasets will be simpler) 72 604 T
+(, and will make use of a single object/attribute table instead) 247.09 604 T
+(of the multiple tables just described. On the other hand, some datasets will be much more com-) 72 590 T
+(plex, and will have to make use of various \322intersect\323 tables to achieve full functionality) 72 576 T
+(. These) 495.25 576 T
+(dif) 72 562 T
+(ferent possibilities will be illustrated in the section on \322Import schemas\323 below) 85.11 562 T
+(.) 463.75 562 T
+3 F
+(dig_att) 72 543 T
+0 F
+( and) 105.99 543 T
+3 F
+(dig_cats) 129.3 543 T
+0 F
+( \336les:) 169.95 543 T
+3 F
+(dig_att) 199.27 543 T
+0 F
+(\336le will be created under all possible scenarios, and will be) 236.26 543 T
+(identical to that described above \050in section 5\051.) 72 529 T
+3 F
+(Dig_cats) 299.5 529 T
+0 F
+( \336les will be somewhat dif) 342.81 529 T
+(ferent, how-) 469.52 529 T
+-0.08 (ever) 72 515 P
+-0.08 (. The) 91.98 515 P
+3 F
+-0.08 (dig_cats) 119.47 515 P
+0 F
+-0.08 ( \336le will be identical in content to that of the object table, or) 160.12 515 P
+-0.08 (, in the case of sim-) 446.45 515 P
+(ple datasets, the object-attribute table. It should be noted that, in the case of complex attribute) 72 501 T
+-0.01 (data,) 72 487 P
+3 F
+-0.01 (v) 97.97 487 P
+-0.01 (.in.sdt) 102.41 487 P
+0 F
+-0.01 (s makes no attempt to select a single attribute or attribute set from the data and popu-) 131.73 487 P
+-0.09 (late the dig_cats \336le accordingly) 72 473 P
+-0.09 (. The user may) 226.75 473 P
+-0.09 (, upon inspection of the output attribute tables and) 296.97 473 P
+(relevant metadata, may make such a selection and modify the) 72 459 T
+3 F
+(dig_cats) 370.11 459 T
+0 F
+( \336le accordingly) 410.75 459 T
+(.) 487.92 459 T
+1 F
+(6.3 Key \336elds) 72 437 T
+0 F
+-0.4 (For the most part, the contents and order of the data, and the names of \336elds, in the SDTS attribute) 72 418 P
+(tables are imported intact. However) 72 404 T
+(, key \336elds joining object tables, both simple and composite,) 243.05 404 T
+(with attribute tables are newly generated by) 72 390 T
+3 F
+(v) 284.83 390 T
+(.in.sdts) 289.27 390 T
+0 F
+( on import.) 323.26 390 T
+0 10 Q
+(3) 376.24 394.8 T
+0 12 Q
+( These \336elds are standardized,) 381.23 390 T
+(and include the following:) 72 376 T
+3 F
+(\336d) 108 357 T
+0 F
+(: feature ID, as already noted, is a unique integer identi\336er assigned to each) 119.99 357 T
+(attributed \050simple\051 object. It is also used for the integer identi\336ers in the) 108 343 T
+3 F
+(dig_att) 455.77 343 T
+0 F
+(\336le.) 108 329 T
+3 F
+(obj_code:) 108 310 T
+0 F
+(object code, one for each \336d. obj_code is generated on import by com-) 158.96 310 T
+(bining the SDTS object module name + \324#\325 + record ID, e.g., \322PC01#123\323 = poly-) 108 296 T
+(gon 123 from the PC01 module.) 108 282 T
+3 F
+-0.36 (attr_code) 108 263 P
+0 F
+-0.36 (: attribute code, one for each row in each attribute table. created similarly) 153.97 263 P
+(to) 108 249 T
+3 F
+(obj_code) 120.33 249 T
+0 F
+(, e.g., \322AP09#452\323 = attribute record 452 from the AP09 attribute pri-) 164.3 249 T
+(mary module.) 108 235 T
+3 F
+(comp_code) 108 216 T
+0 F
+(: composite object code, one for each composite object \050see Section) 162.62 216 T
+(6.4.5\051. constructed similarly to the other codes, e.g., \322FF01#22\323 = composite) 108 202 T
+(object 22 from the \322FF01\323 composite object module.) 108 188 T
+3 F
+(elem_code) 108 169 T
+0 F
+(: element code, i.e., code designating a constituent part of a composite) 159.28 169 T
+(object. Since composite objects can be made up of simple objects and/or other) 108 155 T
+(composite objects,) 108 141 T
+3 F
+(elem_codes) 200.28 141 T
+0 F
+( will match) 256.23 141 T
+3 F
+(obj_codes) 313.2 141 T
+0 F
+( in some cases and) 361.83 141 T
+3 F
+(comp_-) 454.09 141 T
+(codes) 108 127 T
+0 F
+( in others.) 135.31 127 T
+72 108 540 123 C
+81 121 225 121 2 L
+0.5 H
+2 Z
+0 X
+0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 K
+-0.01 (3. Key \336elds relating attribute primary and attribute secondary tables are de\336ned in the SDTS dataset. They) 90 101.33 P
+-0.19 (can be identi\336ed by consulting the SDTS \336les containing Catalog/Cross Reference \050CA) 90 89.33 P
+-0.19 (TX\051 and Data Dictio-) 436.82 89.33 P
+(nary/Schema \050DSH\051 modules.) 90 77.33 T
+FMENDPAGE
+%%EndPage: "14" 13
+%%Page: "13" 13
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(13) 477 748 T
+(the following section.) 72 712 T
+1 F
+(6. SDTS to GRASS: GRASS with a Relational Database) 163.24 690 T
+0 F
+(As is no doubt apparent, SDTS and the TVP are capable of handling data of great attribute com-) 72 666 T
+(plexity) 72 652 T
+(. As noted, SDTS distinguishes between two basic kinds of attributes: primary attributes) 104.54 652 T
+(that are related directly to spatial objects \050simple or composite\051, and secondary attributes related) 72 638 T
+(to primary or other secondary attributes. Attribute modules are equivalent to relational tables,) 72 624 T
+(with relations among primary and secondary attribute tables through common \336elds. Spatial) 72 610 T
+(objects may be linked, via foreign identi\336ers, to multiple attributes in one or more dif) 72 596 T
+(ferent) 481.53 596 T
+-0.21 (attribute tables. The schema of an SDTS TVP dataset--the number and kind of attribute \336elds and) 72 582 P
+-0 (attribute tables, and the relationships among attributes and objects--is not prede\336ned by SDTS or) 72 568 P
+(the TVP) 72 554 T
+(, but is determined by the producer of the dataset.) 110.98 554 T
+(For most kinds of data likely to be available through SDTS, optimal access requires use of) 72 535 T
+(GRASS in conjunction with a relational database management system. In support of this, on) 72 521 T
+(request,) 72 507 T
+3 F
+(v) 112.63 507 T
+(.in.sdts) 117.07 507 T
+0 F
+(imports SDTS attribute tables in a form ready for installation and use with your) 154.06 507 T
+(RDBMS.) 72 493 T
+1 F
+(6.1 Setting up the GRASS-SDTS database: cr) 72 471 T
+(eat_db.sql and load_db.sql) 304 471 T
+0 F
+-0.19 (On request,) 72 452 P
+3 F
+-0.19 (v) 129.92 452 P
+-0.19 (.in.sdts c) 134.35 452 P
+0 F
+-0.19 (reates \322relational database-ready\323 \336les. In addition, it generates two scripts,) 176.48 452 P
+3 F
+(cr) 72 438 T
+(eat_db.sql) 81.55 438 T
+0 F
+( and) 131.19 438 T
+3 F
+(load_db.sql) 154.5 438 T
+0 F
+(, along with the attribute \336les themselves.) 210.81 438 T
+3 F
+(Cr) 413.69 438 T
+(eat_db.sql) 425.91 438 T
+0 F
+( contains the) 475.55 438 T
+(SQL commands necessary to create a database and database tables conforming to the schema of) 72 424 T
+-0.03 (the imported SDTS data.) 72 410 P
+3 F
+-0.03 (Load_db.sql) 194.15 410 P
+0 F
+-0.03 ( contains commands to actually load the imported \336les into) 253.79 410 P
+(the newly-created database.) 72 396 T
+(Before running) 72 377 T
+3 F
+(cr) 147.94 377 T
+(eat_db.sq) 157.49 377 T
+0 F
+(l, you must \336rst specify a name for the new database. This is done by) 203.8 377 T
+(modifying the \336rst line of both scripts. Thus, for example, if the new database were to be named) 72 363 T
+(\322SDTSBASE1\323, the \336les would be modi\336ed as follows:) 72 349 T
+(creat_db.sql:) 108 330 T
+(change) 180 330 T
+(\322create database <database_name>;\323) 225 330 T
+(to) 180 316 T
+(\322create database SDTSBASE1;\323) 225 316 T
+(load_db.sql:) 108 278 T
+(change) 180 278 T
+(\322database <database_name>;\323) 225 278 T
+(to>) 180 264 T
+(\322database SDTSBASE1;\323) 225 264 T
+(These scripts have been tested with the Informix \050tm\051 RDBMS, but should work with little or no) 72 245 T
+(modi\336cation in other SQL RDBMS\325) 72 231 T
+(s. In Informix, the commands are \322) 246.59 231 T
+3 F
+(isql database [path]/cr) 414.46 231 T
+(e-) 524.63 231 T
+(at_db.sql) 72 217 T
+0 F
+(\323 and \322) 116.32 217 T
+3 F
+(isql database [path]/load_db.sql) 150.28 217 T
+0 F
+(\323, where) 307.21 217 T
+3 F
+(database) 350.83 217 T
+0 F
+( is the name of an already) 394.14 217 T
+(existing Informix database.) 72 203 T
+1 F
+(6.2 The GRASS-SDTS database: General design) 72 181 T
+0 F
+(Most typically) 72 162 T
+(, a relational database created as described above will contain relational tables of) 140.85 162 T
+(two kinds: attribute tables and object tables.) 72 148 T
+(Attribute tables correspond almost exactly in content and order to the attribute primary and) 72 129 T
+(attribute secondary tables in the SDTS dataset. They dif) 72 115 T
+(fer in that, \0501\051 the module name and) 339.93 115 T
+(record id \336elds in the original \336le are replaced by a new) 72 101 T
+3 F
+(attr_code) 343.12 101 T
+0 F
+( \336eld \050see below\051, and \0502\051 in) 389.09 101 T
+-0.06 (certain schemas, an additional) 72 87 P
+3 F
+-0.06 (obj_code) 219.31 87 P
+0 F
+-0.06 ( \336eld is added. All actual data \336elds, and their names, are) 263.27 87 P
+FMENDPAGE
+%%EndPage: "13" 12
+%%Page: "12" 12
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(12) 477 748 T
+(ther of these is of real concern to the user) 72 712 T
+(. First, since the TVP does not require Area Points \050for) 269.51 712 T
+(attaching attributes to polygons\051 and GRASS does, these points, in some cases, have to be newly) 72 698 T
+(created on import by) 72 684 T
+3 F
+(v) 174.59 684 T
+(.in.sdts) 179.03 684 T
+0 F
+(.Second, attributed nodes, permitted by the TVP but not allowed) 213.02 684 T
+(within GRASS, have to be converted to GRASS \322lines of type DOT) 72 670 T
+(.\323) 398.24 670 T
+(The TVP allows for the presence of another kind of object which is a problem for GRASS. Com-) 72 651 T
+(posite objects, which are formed of one or more other objects, simple or composite, are sanc-) 72 637 T
+(tioned by the TVP but not known to GRASS. Composite objects, therefore, are treated as special) 72 623 T
+(kinds of attributes. Composite objects are discussed in the section on attributes below) 72 609 T
+(.) 481.3 609 T
+1 F
+(4.2 Metadata) 72 585 T
+0 F
+-0.22 (GRASS is only able to make direct use of a small amount of the metadata that will be available in) 72 566 P
+(SDTS datasets. In fact, several SDTS modules dedicated to metadata are not processed by the) 72 552 T
+(GRASS-SDTS software. These include CA) 72 538 T
+(TX \050Catalog/Cross Reference\051, SCUR \050Security\051,) 279.53 538 T
+(DDDF and DDOM \050Data Dictionary/De\336nition and Data Dictionary/Domain\051, and the \336ve DQ) 72 524 T
+(modules \050Lineage, Positional Accuracy) 72 510 T
+(, Attribute Accuracy) 260.42 510 T
+(, and Completeness\051.) 357.89 510 T
+(The data in these modules, which is potentially quite valuable, can be read directly by the user) 72 491 T
+(with) 72 477 T
+3 F
+(m.sdts.r) 96.32 477 T
+(ead.) 133.86 477 T
+0 F
+(This program, a modi\336cation of a utility supplied by the U.S. Geological Sur-) 157.18 477 T
+(vey) 72 463 T
+(, prints the contents of SDTS modules in readable form.) 88.54 463 T
+1 F
+(5. SDTS to GRASS: Simple Attributes and \322Basic\323 GRASS) 154.24 441 T
+0 F
+(Figure 1, referred to in Section 2.4 above, illustrates the kind of attribute data that can be accom-) 72 417 T
+(modated relatively comfortably within the capabilities of \322basic\323 GRASS, i.e., making use of no) 72 403 T
+-0.25 (resources other than GRASS\325) 72 389 P
+-0.25 (s) 212.83 389 P
+3 F
+-0.25 (dig_att) 220.24 389 P
+0 F
+-0.25 ( and) 254.23 389 P
+3 F
+-0.25 (dig_cats) 277.05 389 P
+0 F
+-0.25 (to store the imported attributes. Such usage is) 320.45 389 P
+(adequate if two conditions prevail: if, one, there is a one-to-one relationship between spatial) 72 375 T
+-0.16 (objects and attribute records \050which may consist of several dif) 72 361 P
+-0.16 (ferent attribute \336elds\051; and, two, all) 368.43 361 P
+(object attributes in the SDTS dataset are in a single Primary Attribute module \050ensuring that the) 72 347 T
+(attribute schema is uniform for all objects\051.) 72 333 T
+-0.21 (For data of this type, the contents of the) 72 314 P
+3 F
+-0.21 (dig_att) 263.98 314 P
+0 F
+-0.21 (and) 300.75 314 P
+3 F
+-0.21 (dig_cats) 320.86 314 P
+0 F
+-0.21 ( \336les generated by) 361.5 314 P
+3 F
+-0.21 (v) 451.26 314 P
+-0.21 (.in.sdts) 455.7 314 P
+0 F
+-0.21 ( are as fol-) 489.68 314 P
+(lows:) 72 300 T
+3 F
+(dig_att) 108 281 T
+0 F
+(: contains an entry for each attributed non-composite object \050line segment,) 141.99 281 T
+(polygon, etc.\051. The category number in each entry is a unique integer value, func-) 108 267 T
+(tioning as a feature ID \050\336d\051.) 108 253 T
+3 F
+(dig_cats) 108 234 T
+0 F
+(: there will be a corresponding) 148.65 234 T
+3 F
+(dig_cats) 297.87 234 T
+0 F
+( record for each) 338.51 234 T
+3 F
+(dig_att) 417.09 234 T
+0 F
+( record.) 451.08 234 T
+(The) 108 220 T
+3 F
+(dig_cats) 129.65 220 T
+0 F
+( record will begin with the FID from the) 170.29 220 T
+3 F
+(dig_att) 366.49 220 T
+0 F
+( \336le, followed by the) 400.48 220 T
+(familiar \322:\323 \336eld separator) 108 206 T
+(. This is followed by an object code \050obj_code\051 derived) 233.57 206 T
+(from the SDTS object module, an attribute code \050attr_code\051 derived from the) 108 192 T
+(SDTS Primary Attribute module, and \336nally the attribute or attribute set itself.) 108 178 T
+(These latter \336elds are separated by \322|\323.) 108 164 T
+(A) 72 145 T
+3 F
+(dig_cats) 83.66 145 T
+0 F
+( record derived from the data given in Figure 1 would look like this:) 124.3 145 T
+(1:LE01#1|A001#1|132466|1946|33) 153 126 T
+-0.25 (V) 72 107 P
+-0.25 (ector) 79.33 107 P
+3 F
+-0.25 (dig_att) 106.05 107 P
+0 F
+-0.25 ( and) 140.04 107 P
+3 F
+-0.25 (dig_cats) 162.85 107 P
+0 F
+-0.25 (\336les are also generated by) 206.24 107 P
+3 F
+-0.25 (v) 332.54 107 P
+-0.25 (.in.sdts) 336.98 107 P
+0 F
+-0.25 ( when more complex TVP datasets) 370.97 107 P
+(are imported. The) 72 93 T
+3 F
+(dig_att) 160.6 93 T
+0 F
+( \336le is formed identically to that just described, but the) 194.59 93 T
+3 F
+(dig_cats) 459.76 93 T
+0 F
+( \336le is) 500.4 93 T
+(somewhat dif) 72 79 T
+(ferent, and in fact varies with dif) 136.74 79 T
+(ferent kinds of data. These matters are covered in) 293.4 79 T
+FMENDPAGE
+%%EndPage: "12" 11
+%%Page: "11" 11
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(1) 477 748 T
+(1) 482.55 748 T
+(nodes. The TVP does not. T) 72 712 T
+(o handle this discrepancy) 206.07 712 T
+(, nodes co-located with such data are) 326.87 712 T
+(exported as attributed nodes in place of the \322Line of type DOT\323. On import, the process is) 72 698 T
+(reversed \050GRASS does not permit nodes to have attributes\051.) 72 684 T
+1 F
+(3.2 Metadata) 72 660 T
+0 F
+(GRASS in its present form is limited in the amount of metadata it stores in association with par-) 72 641 T
+-0.22 (ticular map layers, mapsets and databases. For the most part, SDTS requirements can be satis\336ed,) 72 627 P
+(at least in rudimentary fashion, by the combination of the metadata stored with GRASS vector) 72 613 T
+(maps and that generated or supplied by the export software. However) 72 599 T
+(, SDTS and the TVP do) 404.92 599 T
+(require \336ve Data Quality Reports with every transfer) 72 585 T
+(, and these will have to be supplied by the) 324.99 585 T
+(user) 72 571 T
+(. In addition, much more metadata, if somehow available, would be desirable.) 91.32 571 T
+3 F
+(v) 72 552 T
+(.sdts.meta) 76.44 552 T
+0 F
+(,) 124.41 552 T
+3 F
+(v) 130.41 552 T
+(.sdts.meta.cp) 134.85 552 T
+0 F
+(, and) 197.14 552 T
+3 F
+(v) 223.45 552 T
+(.sdts.dq.cp ar) 227.89 552 T
+(e) 292.08 552 T
+0 F
+( utility programs to aid in the preparation of sup-) 297.4 552 T
+-0.34 (plemental metadata, and data quality reports intended to accompany a transfer dataset.) 72 538 P
+3 F
+-0.34 (v) 484.93 538 P
+-0.34 (.sdts.meta) 489.37 538 P
+0 F
+(is a menu-driven interface program for preparing and installing metadata and data quality \336les in) 72 524 T
+(the user) 72 510 T
+(\325) 110.08 510 T
+(s mapset in association with a particular GRASS vector mapset.) 113.41 510 T
+3 F
+(v) 422.88 510 T
+(.out.sdts) 427.32 510 T
+0 F
+( incorporates) 467.3 510 T
+-0.26 (this installed metadata in the transfer dataset.) 72 496 P
+3 F
+-0.26 (v) 289.39 496 P
+-0.26 (.sdts.meta.cp) 293.83 496 P
+0 F
+-0.26 (and) 358.86 496 P
+3 F
+-0.26 (v) 378.92 496 P
+-0.26 (.sdts.dq.cp) 383.36 496 P
+0 F
+-0.26 (are simple utilities to) 437.08 496 P
+-0.38 (install existing metadata and data quality \336les, created by) 72 482 P
+3 F
+-0.38 (v) 346.37 482 P
+-0.38 (.sdts.meta) 350.81 482 P
+0 F
+-0.38 (or by some other means. See) 401.4 482 P
+(the man pages for these programs; also see Appendix C for details about metadata items.) 72 468 T
+1 F
+(3.3 Attributes) 72 446 T
+3 F
+(v) 72 427 T
+(.out.sdts) 76.44 427 T
+0 F
+( exports two Attribute Primary modules with a GRASS vector map. Attribute Primary) 116.42 427 T
+(module AP00 consists of a single record with several \336elds, and contains global attributes, i.e.,) 72 413 T
+(metadata items applicable to the entire transfer set \050most are derived from the) 72 399 T
+3 F
+(dig) 446.71 399 T
+0 F
+(\336le header) 465.04 399 T
+(.) 514.66 399 T
+(Attribute Primary module AP01 contains the attribute data for the GRASS spatial objects them-) 72 385 T
+(selves. There are two attribute \336elds: A) 72 371 T
+(TTR_NUM contains the integer value attributes from the) 259.53 371 T
+(map layer) 72 357 T
+(\325) 120.07 357 T
+(s) 123.4 357 T
+3 F
+(dig_att) 131.07 357 T
+0 F
+(\336le; A) 168.05 357 T
+(TTR_LABEL contains the corresponding labels or descriptions from) 197.04 357 T
+(the) 72 343 T
+3 F
+(dig_cats) 89.65 343 T
+0 F
+(\336le.) 133.3 343 T
+(Default speci\336cations for these attributes are supplied to the various Data Dictionary modules) 72 324 T
+-0.18 (\050De\336nition, Domain, and Schema\051 by) 72 310 P
+3 F
+-0.18 (v) 254.62 310 P
+-0.18 (.out.sdts) 259.06 310 P
+0 F
+-0.18 (, unless superceded by user) 299.05 310 P
+-0.18 (-supplied metadata via) 428.97 310 P
+3 F
+(v) 72 296 T
+(.sdts.meta.) 76.44 296 T
+1 F
+(4. SDTS to GRASS: Spatial Objects and Metadata) 177.07 274 T
+0 F
+(Thus far) 72 255 T
+(, SDTS representative datasets from four dif) 111.82 255 T
+(ferent sources have been processed with the) 323.78 255 T
+(SDTS-to-GRASS transfer program,) 72 241 T
+3 F
+(v) 246.55 241 T
+(.in.sdts) 250.99 241 T
+0 F
+(: DLG-3/SDTS, DLG-E/SDTS, TIGER/SDTS, and,) 284.98 241 T
+(of course, GRASS/SDTS. It is worth noting that there are quite signi\336cant dif) 72 227 T
+(ferences among) 444.23 227 T
+(these types, particularly but not exclusively with regard to the constellation of attributes and) 72 213 T
+(attribute-object relationships each contain.) 72 199 T
+3 F
+(v) 278.85 199 T
+(.in.sdts) 283.29 199 T
+0 F
+(can handle these dif) 320.28 199 T
+(ferent kinds of data, and,) 415.65 199 T
+-0.17 (it is hoped, other kinds of data of similar complexity yet unseen. The TVP does allow the transfer) 72 185 P
+(of certain kinds of data and data or) 72 171 T
+(ganization that the current version of) 238.65 171 T
+3 F
+(v) 418.51 171 T
+(.in.sdts) 422.95 171 T
+0 F
+( does not accom-) 456.94 171 T
+(modate; some of these are identi\336ed in the section on) 72 157 T
+3 F
+(Enhancements to GRASS/SDTS TVP Soft-) 330.49 157 T
+(war) 72 143 T
+(e) 90.22 143 T
+0 F
+(below) 98.54 143 T
+(.) 127.07 143 T
+1 F
+(4.1 Spatial objects) 72 119 T
+0 F
+(There is very little problematic as regards the import of) 72 100 T
+3 F
+(simple) 340.47 100 T
+0 F
+(spatial objects from SDTS TVP) 374.79 100 T
+(datasets into GRASS. There are two areas in which some special procession is involved, but nei-) 72 86 T
+FMENDPAGE
+%%EndPage: "11" 10
+%%Page: "10" 10
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(10) 477 748 T
+(segment.) 72 712 T
+(2. Some module \336elds may repeat, i.e., they may have multiple entries for a single record. In the) 72 693 T
+-0.18 (Line Module, this is true for the series of coordinate pairs in the Spatial Address \336eld. It may also) 72 679 P
+-0.18 (be, and often is, true for the Attributes \336eld, which could contain multiple foreign identi\336ers for a) 72 665 P
+(single record, thus indicating one \050at least\051-to-many relationships between objects and attributes.) 72 651 T
+(3. The Attribute Module in the \336gure contains two \336elds, an \322Attribute Primary\323 \336eld, which in) 72 632 T
+-0.12 (turn consists of two sub\336elds, and an \322Attributes\323 \336eld made up of three sub\336elds. It is important) 72 618 P
+-0.13 (to note that while the \336elds and sub\336elds in the Line Module and other spatial object modules are) 72 604 P
+(de\336ned by SDTS, \050as is the \322Attribute Primary\323 \336eld in the Attribute Primary Module\051, the sub-) 72 590 T
+(\336elds in the \322Attributes\323 \336eld are de\336ned by the user) 72 576 T
+(. In fact, the number and content of these) 324.83 576 T
+(attribute sub\336elds, and the number of attribute modules themselves, are unlimited.) 72 562 T
+1 F
+(3. Cr) 124.22 540 T
+(eating an SDTS-TVP dataset fr) 149.98 540 T
+(om GRASS V) 309.67 540 T
+(ector Data: v) 379.2 540 T
+(.out.sdts) 445.14 540 T
+0 F
+-0.14 (W) 72 516 P
+-0.14 (ith) 82.84 516 P
+3 F
+-0.14 (v) 98.36 516 P
+-0.14 (.out.sdts) 102.8 516 P
+0 F
+-0.14 (, an SDTS dataset is created from data associated with a GRASS vector map layer) 142.79 516 P
+-0.14 (.) 534.15 516 P
+(This section presents a general discussion of the transfer process, highlighting some issues the) 72 502 T
+-0.37 (exporter of GRASS data via SDTS should be aware of. More detailed treatment of the mapping of) 72 488 P
+(individual data elements between GRASS and SDTS-TVP modules is found in two Appendices.) 72 474 T
+(Appendix B gives a general view of the mapping between GRASS spatial objects and SDTS spa-) 72 460 T
+(tial objects. Appendix C is or) 72 446 T
+(ganized in terms of SDTS-TVP modules, listing the contents and) 212.37 446 T
+(sources for each \336eld and sub\336eld represented in a GRASS-to-SDTS transfer set.) 72 432 T
+(For the actual mechanics of running) 72 413 T
+3 F
+(v) 247.87 413 T
+(.out.sdts,) 252.31 413 T
+0 F
+( see the GRASS) 295.29 413 T
+3 F
+(man) 375.91 413 T
+0 F
+( pages.) 396.57 413 T
+1 F
+(3.1 GRASS spatial data) 72 391 T
+3 F
+(Coor) 72 372 T
+(dinate conversion) 96.21 372 T
+0 F
+(: The TVP requires that coordinate data be transferred as 32-bit signed) 181.82 372 T
+(integers. This means that data must be converted on transfer between GRASS \050and other GIS\325) 72 358 T
+(s\051) 522.68 358 T
+(and SDTS. The GRASS-SDTS export software employs scaling factors, for geographic coordi-) 72 344 T
+(nates, of 1,000,000 for longitude and -1,000,000 for latitude, and 100 for UTM coordinates.) 72 330 T
+(Apart from coordinate conversion, for the most part, vector objects in GRASS--lines, nodes,) 72 311 T
+(areas, etc.--can be transferred to and from SDTS without modi\336cation. There are, however) 72 297 T
+(, two) 506.5 297 T
+(exceptions to this statement that the user should note:) 72 283 T
+(1. GRASS distinguishes between line segments that represent linear features, such as roads and) 72 264 T
+(streams, and line segments that represent area edges, such as soil polygons or \336eld boundaries.) 72 250 T
+(T) 72 236 T
+(opology is dif) 78.49 236 T
+(ferent for the two types in GRASS: area edges carry information about the poly-) 144.91 236 T
+-0.18 (gons on their left and right, but linear features do not. The TVP) 72 222 P
+-0.18 (, on the other hand, makes no such) 372.26 222 P
+(distinction:) 72 208 T
+3 F
+(all) 128.98 208 T
+0 F
+( lines \050Complete Chains\051 must carry left and right polygon markers.) 141.65 208 T
+3 F
+(v) 72 189 T
+(.out.sdts) 76.44 189 T
+0 F
+( generates polygon markers for the lines that lack them. This is not problematic, except) 116.42 189 T
+(in one respect. If a map layer contains both area edges and linear features, the creation of new) 72 175 T
+-0.2 (polygons can cause existing, attributed polygons to be altered \050imagine, for example, a grid of lin-) 72 161 P
+(ear features representing roads inside the bounds of a polygon representing a county\051, and hence) 72 147 T
+(their attribution to become uncertain. T) 72 133 T
+(o work around this problem, an \322area-only\323option in) 259.7 133 T
+3 F
+(v) 72 119 T
+(.out.sdts) 76.44 119 T
+0 F
+( allows for the screening out of linear features on export.) 116.42 119 T
+(2. Conversion is also necessary in the case of the export of certain kinds of point, or site, vector) 72 100 T
+(data from GRASS. GRASS allows such data, i.e., \322Lines of type DOT\323, to be co-located with) 72 86 T
+FMENDPAGE
+%%EndPage: "10" 9
+%%Page: "9" 9
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(9) 477 748 T
+(separate \336les on separate \337oppy discs.) 72 712 T
+(Filenames consist of an 8-character basename followed by) 72 693 T
+(, in most cases, the extension \322.DDF\323.) 352 693 T
+-0.29 (The same \336rst four characters of the basename, which can be any combination of numbers and let-) 72 679 P
+-0.38 (ters, are used for all \336les. The next four characters will be the name of the module contained in the) 72 665 P
+(\336le. Names can be modi\336ed in two ways to handle modules that span \336les: by adding a 9th char-) 72 651 T
+(acter to the basename of the \336le, or by modifying the last character of the extension \050\322.DDF\323,) 72 637 T
+(\322DDG\323, etc.\051.) 72 623 T
+0 10 Q
+(2) 138.6 627.8 T
+0 12 Q
+( All letters in \336lenames must be upper) 143.6 623 T
+(-case.) 326.24 623 T
+1 F
+(2.4 Module Contents and Interr) 72 601 T
+(elationships) 234.69 601 T
+0 F
+-0.25 (Figure 1 illustrates typical SDTS module usage. It displays a single record in a \322Complete Chain\323) 72 582 P
+(Line module, which is required by the TVP for line segments. It also displays a corresponding) 72 568 T
+(record in an associated Attribute Primary module.) 72 554 T
+(The following points about Figure 1 should be noted:) 72 247 T
+-0.07 (1. Each \336eld in the Line Module, with one exception, is made up of a pair of sub\336elds, with Mod-) 72 228 P
+(ule Name \050MODN\051 as the \336rst sub\336eld, and Record ID \050RCID\051 as the second. The only \336eld not) 72 214 T
+(of this type is the \322Spatial Address\323 \050SADR\051 \336eld. The \336rst MODN-RCID sub\336eld-pair in the) 72 200 T
+(record identi\336es the Line Module record itself. The contents of this \336rst MODN-RCID sub\336eld) 72 186 T
+(pair form a unique key for the record, and) 72 172 T
+3 F
+(this is true for all r) 275.83 172 T
+(ecor) 366.35 172 T
+(ds in all SDTS modules) 387.22 172 T
+0 F
+(. The) 499.17 172 T
+-0.43 (other MODN-RCID sub\336eld-pairs are) 72 158 P
+3 F
+-0.43 (for) 256.15 158 P
+-0.43 (eign identi\336ers,) 269.7 158 P
+0 F
+-0.43 (which are in ef) 346.47 158 P
+-0.43 (fect pointers to records in) 416.57 158 P
+(other modules. As is shown, one foreign identi\336er in the Line Module points to records in an) 72 144 T
+(Attribute Primary Module; others point to other modules \050not shown\051, which contain records for) 72 130 T
+-0.12 (the line segment\325) 72 116 P
+-0.12 (s start and end nodes, and for polygons on the left and right of the particular line) 153.7 116 P
+72 84 540 99 C
+81 97 225 97 2 L
+0.5 H
+2 Z
+0 X
+0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 K
+(2. Current GRASS-SDTS software cannot process multi-volume transfers.) 90 77.33 T
+72 72 540 720 C
+72 262 540 550 C
+90 417.67 504 507.67 R
+7 X
+0 K
+V
+2 9 Q
+0 X
+(LE01: Line \050Complete Chain\051 Module) 228.9 489.67 T
+2 7 Q
+(LINE) 114.44 470 T
+(Attributes) 167.1 470 T
+(Left Polygon) 223.64 470 T
+(Right Polygon) 285.92 470 T
+(Start Node) 356.73 470 T
+(End Node) 422.89 470 T
+(Spat. Addrs) 478.24 470 T
+(MODN) 95.53 453 T
+(RCID) 130.06 453 T
+(MODN RCID,...) 159.53 453 T
+(MODN) 217.93 453 T
+(MODN) 250.32 453 T
+(MODN) 282.73 453 T
+(RCID) 317.26 453 T
+(MODN) 347.52 453 T
+(RCID) 382.06 453 T
+(MODN) 412.33 453 T
+(RCID) 446.86 453 T
+(SADR,...) 484.07 453 T
+4 F
+(LE01) 98.04 436 T
+(1) 136.66 436 T
+(A001) 175.44 436 T
+(PC01) 219.86 436 T
+(72) 257.11 436 T
+(PC01) 284.66 436 T
+(85) 321.91 436 T
+(NO01) 349.07 436 T
+(18) 386.71 436 T
+(BO01) 414.07 436 T
+(19) 451.51 436 T
+-0.17 (x1, y1; x2, y2...) 474.6 436 P
+90 480.42 90 429.92 2 L
+V
+0.5 H
+0 Z
+N
+122.4 463.92 122.4 429.42 2 L
+V
+N
+154.8 480.92 154.8 429.42 2 L
+V
+N
+212.4 480.92 212.4 429.42 2 L
+V
+N
+244.8 463.92 244.8 429.42 2 L
+V
+N
+277.2 480.92 277.2 429.42 2 L
+V
+N
+309.6 463.92 309.6 429.42 2 L
+V
+N
+342 480.92 342 429.42 2 L
+V
+N
+374.4 463.92 374.4 429.42 2 L
+V
+N
+406.8 480.92 406.8 429.42 2 L
+V
+N
+439.2 463.92 439.2 429.42 2 L
+V
+N
+471.6 480.92 471.6 429.42 2 L
+V
+N
+524.1 480.42 524.1 429.92 2 L
+V
+N
+89.75 480.67 524.35 480.67 2 L
+V
+N
+89.75 463.67 524.35 463.67 2 L
+V
+N
+90.25 447.92 523.85 447.92 2 L
+V
+N
+90.25 445.42 523.85 445.42 2 L
+V
+N
+89.75 429.67 524.35 429.67 2 L
+V
+N
+207 323.5 468 395.5 R
+7 X
+V
+2 9 Q
+0 X
+(A001: Bridge Construction Attr) 235.36 377.5 T
+(. Module) 367.19 377.5 T
+2 7 Q
+(Attr) 218.43 357.83 T
+(. Primary) 230.46 357.83 T
+(Attributes) 335.4 357.83 T
+(MODN) 212.52 340.83 T
+4 F
+(RCID) 247.06 340.83 T
+2 F
+(Serial_No) 284.48 340.83 T
+(Constr_Date) 332.93 340.83 T
+(Material_code) 381.7 340.83 T
+4 F
+(A001) 215.04 323.83 T
+(1) 253.66 323.83 T
+(132466) 288.94 323.83 T
+(1946) 345.93 323.83 T
+(33) 401.11 323.83 T
+207 368.25 207 317.75 2 L
+V
+N
+239.4 351.75 239.4 317.25 2 L
+V
+N
+271.8 368.75 271.8 317.25 2 L
+V
+N
+329.4 351.75 329.4 317.25 2 L
+V
+N
+378 351.75 378 317.25 2 L
+V
+N
+432 368.25 432 317.75 2 L
+V
+N
+206.75 368.5 432.25 368.5 2 L
+V
+N
+206.75 351.5 432.25 351.5 2 L
+V
+N
+207.25 335.75 431.75 335.75 2 L
+V
+N
+207.25 333.25 431.75 333.25 2 L
+V
+N
+206.75 317.5 432.25 317.5 2 L
+V
+N
+196.07 329.29 207 324.34 195.1 322.74 195.59 326.02 4 Y
+V
+176.12 414.33 M
+ 154.87 398.65 142.69 378.41 154.87 351.6 D
+ 163.59 332.3 178.6 328.55 195.59 325.99 D
+N
+198 282.67 423 291.67 R
+7 X
+V
+1 10 Q
+0 X
+(Figur) 212.94 285 T
+(e 1. T) 236.64 285 T
+(ypical SDTS Module Relationships) 259.5 285 T
+81 271 531 541 R
+0.3 H
+N
+72 72 540 720 C
+0 0 612 792 C
+FMENDPAGE
+%%EndPage: "9" 8
+%%Page: "8" 8
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(8) 477 748 T
+1 F
+(2.3 Modules, Files and Filenames) 72 136 T
+0 F
+(Each \336le that makes up an SDTS-TVP dataset will contain one and only one module. In most) 72 117 T
+(cases, a module will only occupy a single \336le. A module will span \336les only when the size of a) 72 103 T
+(single \336le exceeds volume capacity due to media limitations, e.g., a module might be split into) 72 89 T
+1 F
+(T) 202.92 688 T
+(able 1: SDTS -TVP Modules) 209.82 688 T
+0 10 Q
+(Module T) 117.29 657.33 T
+(ype) 156.28 657.33 T
+(Name) 262.57 657.33 T
+(Min-Max) 339.35 657.33 T
+(GRASS) 393.39 663.33 T
+(export) 396.73 651.33 T
+(GRASS) 444.39 663.33 T
+(import) 447.17 651.33 T
+(Identi\336cation) 78 629.33 T
+(IDEN) 262.57 629.33 T
+(1) 356 629.33 T
+(Y) 405.89 629.33 T
+(Y) 456.89 629.33 T
+(Catalog/Directory) 78 609.33 T
+(CA) 261.45 609.33 T
+(TD) 274.23 609.33 T
+(1) 356 609.33 T
+(Y) 405.89 609.33 T
+(Y) 456.89 609.33 T
+(Catalog/Cross Reference) 78 589.33 T
+(CA) 261.45 589.33 T
+(TX) 274.23 589.33 T
+(0-1) 351.84 589.33 T
+(Y) 405.89 589.33 T
+(N) 456.89 589.33 T
+(Catalog/Spatial Domain) 78 569.33 T
+(CA) 262.28 569.33 T
+(TS) 275.05 569.33 T
+(1) 356 569.33 T
+(Y) 405.89 569.33 T
+(Y) 456.89 569.33 T
+(Security) 78 549.33 T
+(SCUr) 263.12 549.33 T
+(0-n) 351.84 549.33 T
+(N) 405.89 549.33 T
+(N) 456.89 549.33 T
+(Internal Spatial Reference) 78 529.33 T
+(IREf) 264.79 529.33 T
+(1-n) 351.84 529.33 T
+(Y) 405.89 529.33 T
+(Y) 456.89 529.33 T
+(External Spatial Reference) 78 509.33 T
+(XREF) 261.73 509.33 T
+(1) 356 509.33 T
+(Y) 405.89 509.33 T
+(Y) 456.89 509.33 T
+(Spatial Domain) 78 489.33 T
+(SPDm) 261.45 489.33 T
+(0-n) 351.84 489.33 T
+(Y) 405.89 489.33 T
+(Y) 456.89 489.33 T
+(Data Dictionary/De\336nition) 78 469.33 T
+(DDDf) 262.01 469.33 T
+(0-n) 351.84 469.33 T
+(Y) 405.89 469.33 T
+(N) 456.89 469.33 T
+(Data Dictionary/Domain) 78 449.33 T
+(DDOm) 259.79 449.33 T
+(1-n) 351.84 449.33 T
+(Y) 405.89 449.33 T
+(N) 456.89 449.33 T
+(Data Dictionary/Schema) 78 429.33 T
+(DDSh) 262.01 429.33 T
+(1-n) 351.84 429.33 T
+(Y) 405.89 429.33 T
+(N) 456.89 429.33 T
+(T) 78 409.33 T
+(ransfer Statistics) 83.76 409.33 T
+(ST) 262.96 409.33 T
+(A) 273.83 409.33 T
+(T) 279.93 409.33 T
+(1) 356 409.33 T
+(Y) 405.89 409.33 T
+(N) 456.89 409.33 T
+(Lineage) 78 389.33 T
+(DQHl) 262.29 389.33 T
+(1-n) 351.84 389.33 T
+(Y) 405.89 389.33 T
+(N) 456.89 389.33 T
+(Positional Accuracy) 78 369.33 T
+(DQPa) 262.29 369.33 T
+(1-n) 351.84 369.33 T
+(Y) 405.89 369.33 T
+(N) 456.89 369.33 T
+(Attribute Accuracy) 78 349.33 T
+(DQAa) 261.46 349.33 T
+(1-n) 351.84 349.33 T
+(Y) 405.89 349.33 T
+(N) 456.89 349.33 T
+(Logical Consistency) 78 329.33 T
+(DQLc) 262.01 329.33 T
+(1-n) 351.84 329.33 T
+(Y) 405.89 329.33 T
+(N) 456.89 329.33 T
+(Completeness) 78 309.33 T
+(DQCg) 261.45 309.33 T
+(1-n) 351.84 309.33 T
+(Y) 405.89 309.33 T
+(N) 456.89 309.33 T
+(Attribute Primary) 78 289.33 T
+(Axxx) 263.4 289.33 T
+(1-n) 351.84 289.33 T
+(Y) 405.89 289.33 T
+(Y) 456.89 289.33 T
+(Attribute Secondary) 78 269.33 T
+(Bxxx) 263.67 269.33 T
+(0-n) 351.84 269.33 T
+(N) 405.89 269.33 T
+(Y) 456.89 269.33 T
+(Point-Node) 78 249.33 T
+(NOxx) 262.29 249.33 T
+(NPxx, NLxx) 248.96 237.33 T
+(NExx, NAxx) 248.13 225.33 T
+(1-n) 351.84 249.33 T
+(0-n) 351.84 237.33 T
+(0-n) 351.84 225.33 T
+(Y) 405.89 249.33 T
+(N) 405.89 237.33 T
+(Y) 405.89 225.33 T
+(Y) 456.89 249.33 T
+(N) 456.89 237.33 T
+(Y) 456.89 225.33 T
+(Line \050Complete Chain\051) 78 205.33 T
+(LExx) 263.4 205.33 T
+(1-n) 351.84 205.33 T
+(Y) 405.89 205.33 T
+(Y) 456.89 205.33 T
+(Polygon) 78 185.33 T
+(PCxx) 263.39 185.33 T
+(1-n) 351.84 185.33 T
+(Y) 405.89 185.33 T
+(Y) 456.89 185.33 T
+(Composite) 78 165.33 T
+(FFxx) 263.95 165.33 T
+(0-n) 351.84 165.33 T
+(N) 405.89 165.33 T
+(Y) 456.89 165.33 T
+72 677.75 72 158.25 2 L
+V
+0.5 H
+0 Z
+N
+216 678.25 216 157.75 2 L
+V
+N
+333 678.25 333 157.75 2 L
+V
+N
+384 678.25 384 157.75 2 L
+V
+N
+435 678.25 435 157.75 2 L
+V
+N
+486 677.75 486 158.25 2 L
+V
+N
+71.75 678 486.25 678 2 L
+V
+N
+72.25 643.25 485.75 643.25 2 L
+V
+N
+72.25 640.75 485.75 640.75 2 L
+V
+N
+71.75 622 486.25 622 2 L
+V
+N
+71.75 602 486.25 602 2 L
+V
+N
+71.75 582 486.25 582 2 L
+V
+N
+71.75 562 486.25 562 2 L
+V
+N
+71.75 542 486.25 542 2 L
+V
+N
+71.75 522 486.25 522 2 L
+V
+N
+71.75 502 486.25 502 2 L
+V
+N
+71.75 482 486.25 482 2 L
+V
+N
+71.75 462 486.25 462 2 L
+V
+N
+71.75 442 486.25 442 2 L
+V
+N
+71.75 422 486.25 422 2 L
+V
+N
+71.75 402 486.25 402 2 L
+V
+N
+71.75 382 486.25 382 2 L
+V
+N
+71.75 362 486.25 362 2 L
+V
+N
+71.75 342 486.25 342 2 L
+V
+N
+71.75 322 486.25 322 2 L
+V
+N
+71.75 302 486.25 302 2 L
+V
+N
+71.75 282 486.25 282 2 L
+V
+N
+71.75 262 486.25 262 2 L
+V
+N
+71.75 218 486.25 218 2 L
+V
+N
+71.75 198 486.25 198 2 L
+V
+N
+71.75 178 486.25 178 2 L
+V
+N
+71.75 158 486.25 158 2 L
+V
+N
+FMENDPAGE
+%%EndPage: "8" 7
+%%Page: "7" 7
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(7) 477 748 T
+1 F
+(2.1.3 Spatial Object Modules \050SDTS Part 1, 2.3, 5.6\051) 72 712 T
+0 F
+-0.05 (NP \050Point\051: a zero-dimensional object specifying location. TVP only allows usage in data quality) 72 693 P
+(reports.) 72 679 T
+(NL \050Label point\051: reference point for displaying map and chart text.) 72 660 T
+(NE \050Entity point\051: point for identi\336cation of location of point features \050buildings, places, etc.\051) 72 641 T
+(NA \050Area point\051: representative point within an area usually carrying attribute information about) 72 622 T
+(the area.) 72 608 T
+(NO \050Planar node\051: zero-dimensional object joining two or more chains, or an endpoint of a chain.) 72 589 T
+-0.12 (LE \050Complete chain\051: a directed nonbranching sequence of line segments with left and right poly-) 72 570 P
+(gon references and start and end nodes.) 72 556 T
+(PC) 72 537 T
+0 10 Q
+(1) 86.67 541.8 T
+0 12 Q
+( \050GT) 91.67 537 T
+(-polygon\051: an area that is an atomic two-dimensional component of one and only one) 113.54 537 T
+(two-dimensional manifold, bounded by a set of complete chains.) 72 523 T
+(PW \050Universe polygon\051: the part of the universe outside the perimeter of the area covered by) 72 504 T
+(other GT) 72 490 T
+(-polygons.) 114.53 490 T
+-0.03 (PX \050V) 72 471 P
+-0.03 (oid polygon\051: de\336nes a part of a two-dimensional manifold bounded by other GT) 101.4 471 P
+-0.03 (-polygons) 489.05 471 P
+(but otherwise with the same characteristics as the universe polygon.) 72 457 T
+-0.45 (FF \050Composite object\051: constructed by aggregation, consisting of one or more other objects, either) 72 438 P
+(simple or composite.) 72 424 T
+-0.16 (LS, AC, AE, AU, AB, RU, PR, PU, and PX: object types only permitted as extensions \050Annexes\051) 72 405 P
+-0.04 (to the TVP) 72 391 P
+-0.04 (. These object types do not contain information not already found in other objects, and) 123.23 391 P
+(are not processed by the GRASS/SDTS software.) 72 377 T
+1 F
+(2.1.4 Attribute Modules \050SDTS Part1, 4.1.3.6, 5.4\051) 72 355 T
+0 F
+(A \050Attribute Primary\051: Attribute Primary modules contain attribute values that are associated) 72 336 T
+(directly with spatial objects.) 72 322 T
+(B \050Attribute Secondary\051: Attribute Secondary modules contain attribute values associated with) 72 303 T
+(values of primary as well as other secondary attribute modules.) 72 289 T
+1 F
+(2.2 SDTS modules and GRASS) 72 267 T
+0 F
+-0.27 (T) 72 248 P
+-0.27 (able 1 lists the modules which may be found in a TVP dataset. The table indicates, for each mod-) 78.49 248 P
+-0.01 (ule, the minimum and maximum number permitted in a transfer) 72 234 P
+-0.01 (, whether a module of this type is) 377.21 234 P
+-0.4 (created during the GRASS-to-SDTS export process, and whether or not the module, if found in an) 72 220 P
+(SDTS dataset, is processed by the current version of the GRASS/SDTS import software.) 72 206 T
+72 84 540 99 C
+81 97 225 97 2 L
+0.5 H
+2 Z
+0 X
+0 K
+N
+0 0 612 792 C
+0 10 Q
+0 X
+0 K
+(1. The object module code \322PC\323 is used for module names for all three polygon types: PC, PW) 90 77.33 T
+(, and PX.) 469.11 77.33 T
+FMENDPAGE
+%%EndPage: "7" 6
+%%Page: "6" 6
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(6) 477 748 T
+(can be changed to distinguish multiple modules.\051) 108 712 T
+(Following is a brief description of each of the modules that may) 72 693 T
+(, and in many cases must, be) 378.68 693 T
+-0.02 (found in a TVP dataset. For more detailed information, see the appropriate passages in the SDTS) 72 679 P
+(document itself.) 72 665 T
+1 F
+(2.1.1 Global Information Modules \050SDTS Part 1, 5.2\051) 72 643 T
+0 F
+(IDEN \050Identi\336cation\051: contains general identifying information about the contents of the transfer) 72 624 T
+(.) 535.34 624 T
+(CA) 72 605 T
+(TD \050Catalog/Directory\051: contains listing of the modules and \336les that make up the transfer) 87.33 605 T
+(.) 519.38 605 T
+(CA) 72 586 T
+(TX \050Catalog/Cross Reference\051: indicates pairwise relationships between modules) 87.33 586 T
+-0.31 (CA) 72 567 P
+-0.31 (TS \050Catalog/Spatial Domain\051: identi\336es modules with speci\336c domains, themes, map layers or) 87.33 567 P
+(aggregate objects \050manifolds\051 within the transfer) 72 553 T
+(.) 304.83 553 T
+(SCUR \050Security\051: contains information on the security of the data in the transfer) 72 534 T
+(.) 456.41 534 T
+(IREF \050Internal Spatial Reference\051: transformation parameters for translating and scaling between) 72 515 T
+(internal and external spatial reference systems.) 72 501 T
+(XREF \050External Spatial Reference\051: contains speci\336cation of the external spatial reference sys-) 72 482 T
+(tem.) 72 468 T
+(SPDM \050Spatial Domain\051: speci\336es a geographic area domain within which the spatial data of) 72 449 T
+(other modules are contained.) 72 435 T
+(DDDF \050Data Dictionary/De\336nition\051: de\336nitions of attributes and entities.) 72 416 T
+(DDOM \050Data Dictionary/Domain\051: speci\336es associated value domains of attributes.) 72 397 T
+-0.13 (DDSH \050Data Dictionary/Schema\051: describes relationships among attributes and entities, and com-) 72 378 P
+(position of, and key relationships among, attribute modules.) 72 364 T
+(ST) 72 345 T
+(A) 85.04 345 T
+(T \050T) 92.36 345 T
+(ransfer Statistics\051: contains table of module names, record counts, and spatial address) 113.59 345 T
+(counts.) 72 331 T
+1 F
+(2.1.2 Data Quality Modules \050SDTS Part 1, 3, 5.3\051) 72 309 T
+0 F
+(The \336ve data quality reports contain narrative text reports, or) 72 290 T
+(ganized into one or more records) 364.23 290 T
+(each, optionally containing speci\336c references to data records in other modules:) 72 276 T
+-0.4 (DQHL \050Data Quality/Lineage\051: contains a \322description of the source material from which the data) 72 257 P
+(were derived and the methods of derivation, including all transformations involved in producing) 72 243 T
+(the \336nal digital \336les. . . .\323 \050SDTS Part 1, 3.1\051.) 72 229 T
+(DQP) 72 210 T
+(A \050Data Quality/Positional Accuracy\051: includes an account of \322the degree of compliance to) 94.88 210 T
+(the spatial registration standard\323, etc. \050SDTS Part 1, 3.2\051) 72 196 T
+-0.3 (DQAA \050Data Quality/Attribute Accuracy\051: includes accounts of tests and assessments of attribute) 72 177 P
+(accuracy \050SDTS part 1, 3.3\051.) 72 163 T
+-0.25 (DQLC \050Data Quality/Logical Consistency\051: describes \322the \336delity of relationships encoded in the) 72 144 P
+(data structure of the digital spatial data\323, including an account of \322the tests performed and the) 72 130 T
+(results of such tests\323 \050SDTS Part 1, 3.4\051) 72 116 T
+(DQCG \050Data Quality/Completeness\051: includes \322information about selection criteria, de\336nitions) 72 97 T
+(used and other relevant mapping rules\323 \050SDTS Part 1, 3.5\051.) 72 83 T
+FMENDPAGE
+%%EndPage: "6" 5
+%%Page: "5" 5
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(5) 477 748 T
+(Spring\336eld, V) 108 712 T
+(A 22161) 174.42 712 T
+(\050703\051 487-4600) 108 698 T
+(Finally) 72 679 T
+(, for more information about the SDTS, you may contact:) 105.21 679 T
+(SDTS T) 108 660 T
+(ask Force) 146.81 660 T
+(U.S. Geological Survey) 108 646 T
+(526 National Center) 108 632 T
+(Reston, V) 108 618 T
+(A 22092) 154.43 618 T
+(F) 108 604 T
+(AX \050703\051 648-5542) 113.78 604 T
+(email: sdts@usgs.gov) 108 590 T
+1 F
+(2. SDTS and the T) 196.77 568 T
+(opological V) 289.97 568 T
+(ector Pr) 352.5 568 T
+(o\336le) 393.91 568 T
+0 F
+-0.13 (The following section describes SDTS and the T) 72 544 P
+-0.13 (opological V) 303.74 544 P
+-0.13 (ector Pro\336le. It gives enough details) 364.58 544 P
+-0.08 (to enable the user to make good use of the GRASS/SDTS software, but it is by no means compre-) 72 530 P
+(hensive. The reader is advised to obtain the Standard document itself, either from the USGS ftp) 72 516 T
+(site or from NTIS \050see the preceding section\051.) 72 502 T
+(The T) 72 483 T
+(opological V) 100.14 483 T
+(ector Pro\336le can be seen, in most respects, as a limited subset of the Standard) 161.1 483 T
+(itself. The Standard contains a great deal of optionality) 72 469 T
+(, as to elements that may or may not be) 334.7 469 T
+-0.28 (included in a transfer dataset and as to how various elements are encoded. The T) 72 455 P
+-0.28 (opological vector) 453.95 455 P
+(Pro\336le reduces this optionality signi\336cantly) 72 441 T
+(. It is designed for use with a speci\336c kind of data,) 280.45 441 T
+(namely) 72 427 T
+(, for \322geographic vector data with planar graph topology\323 It excludes \322raster data, geome-) 106.53 427 T
+(try-only vector data, planar graphs which do not have GT) 72 413 T
+(-polygons, and non-planar graph-based) 346.68 413 T
+-0.42 (network data [which] may be accommodated by other pro\336les, or future extensions to this pro\336le\323) 72 399 P
+(\050SDTS, Part 4, 1.1 and 1.1.2\051.) 72 385 T
+1 F
+(2.1 SDTS Modules) 72 363 T
+0 F
+(SDTS and the TVP or) 72 344 T
+(ganize data in terms of \322modules\323, containing records and \336elds. Among) 177.72 344 T
+(other things, there are dif) 72 330 T
+(ferent modules for dif) 192.69 330 T
+(ferent kinds of spatial objects, for attributes, and) 297.39 330 T
+(for metadata.) 72 316 T
+(The rules for module names are as follows:) 72 297 T
+-0.1 (1. All module names are standardized, and consist of four characters. All letters in) 108 278 P
+(module names must be upper case.) 108 264 T
+(2. For most module names and in most circumstances, the 4-character names are) 108 245 T
+(prescribed, and shall be identical to the 4-character \322primary \336eld module \336eld) 108 231 T
+-0.15 (mnemonic \050ISO 821) 108 217 P
+-0.15 (1 T) 205.2 217 P
+-0.15 (ag\051 speci\336ed for each module by SDTS: e.g., IDEN for the) 220.53 217 P
+(Identi\336cation module, CA) 108 203 T
+(TD for the Catalog/Directory module, and so on.) 232.26 203 T
+-0.4 (3. Object module names begin with the standard 2-character \322object representation) 108 184 P
+(code\323 for the objects shown in T) 108 170 T
+(able 1 below) 263.71 170 T
+(. The last two characters of the mod-) 324.22 170 T
+(ule name are then used to distinguish multiple modules of the same type.) 108 156 T
+(4. Attribute Primary and Secondary modules may be multiple, and are named) 108 137 T
+-0.26 (\322Axxx\323 and \322Bxxx\323 respectively \050where x is any number 0-9 or any upper case let-) 108 123 P
+(ter\051.) 108 109 T
+(5. Multiple modules of other types are indicated by changing the 4th character in) 108 90 T
+(the module\325) 108 76 T
+(s name. \050In T) 164.97 76 T
+(able 1, a lower) 228.08 76 T
+(-case letter) 298.44 76 T
+(, as in \322SCUr\323 indicates that it) 350.24 76 T
+FMENDPAGE
+%%EndPage: "5" 4
+%%Page: "4" 4
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(4) 477 748 T
+(SDTS installation package.) 72 712 T
+1 F
+(1.3 Installing and Compiling the GRASS-SDTS softwar) 72 690 T
+(e) 355.33 690 T
+0 F
+-0 (At the present time, you will need the) 72 671 P
+3 F
+-0 (gcc) 255.54 671 P
+0 F
+-0 ( compiler to compile the FIPS 123 Library and the vari-) 272.19 671 P
+(ous GRASS-SDTS programs.) 72 657 T
+(The software is currently available via) 72 638 T
+3 F
+(anonymous ftp) 259.18 638 T
+0 F
+(from the site at USACERL: moon.cecer) 332.47 638 T
+(.-) 523.68 638 T
+(army) 72 624 T
+(.mil \050129.229.20.254\051. There are three relevant \336les:) 95.87 624 T
+(/grass/incoming/sdts.README) 135 605 T
+(/grass/incoming/sdts_uguide.ps \050this document, in Postscript format\051) 135 591 T
+(/grass/incoming/sdts.tar) 135 577 T
+(.Z) 248.61 577 T
+(T) 72 558 T
+(o install and compile the programs, follow these steps:) 78.49 558 T
+(1. download all three \336les.) 108 539 T
+(2. read sdts.README, for possible instructions that may supercede those given) 108 520 T
+(here.) 108 506 T
+(3. uncompress sdts.tar) 108 487 T
+(.Z: zcat sdts.tar) 213.94 487 T
+(.Z) 286.56 487 T
+(4. cd ...src.contrib/CERL in your GRASS source tree) 108 468 T
+(5. tar -xf [path]/sdts.tar) 108 449 T
+(6. cd SDTS) 108 430 T
+(7. compile and install the FIPS 123 library and the various GRASS-SDTS pro-) 108 411 T
+(grams by running gmake4.1 \050or the equivalent\051 from the current directory \050...src.-) 108 397 T
+(contrib/CERL/SDTS\051.) 108 383 T
+(8. when compilation is completed, cd ../../../src/CMD) 108 364 T
+(9. run MAKELINKS \050if more than one MAKELINKS exists in the src/CMD) 108 345 T
+(directory) 108 331 T
+(, run the one that is appropriate for your machine.) 150.52 331 T
+(Once the compilation and installation process is completed, you may run) 72 312 T
+3 F
+(v) 424.44 312 T
+(.in.sdts) 428.88 312 T
+0 F
+(,) 462.86 312 T
+3 F
+(v) 468.86 312 T
+(.out.sdts) 473.3 312 T
+0 F
+(, etc.) 513.28 312 T
+(as you would any other GRASS program.) 72 298 T
+1 F
+(1.4 SDTS materials and the SDTS T) 72 276 T
+(ask For) 255.15 276 T
+(ce FTP Site) 293.91 276 T
+0 F
+(The SDTS T) 72 257 T
+(ask Force at the U.S. Geological Survey is maintaining an ftp site for public domain) 132.46 257 T
+(SDTS-related materials. Copies of the Standard document itself \050FIPS 173\051, including both the) 72 243 T
+(T) 72 229 T
+(opological V) 78.49 229 T
+(ector Pro\336le and Raster Pro\336le \050Parts 4 and 5\051, may be found there. Also available) 139.45 229 T
+(from the ftp site are several articles about SDTS, source and executable versions of the FIPS 123) 72 215 T
+(Library) 72 201 T
+(, sample SDTS vector datasets exported from DLG-3, DLG-E, TIGER, and GRASS, and) 107.19 201 T
+(sample digital orthophoto quad data compliant with the SDTS Raster Pro\336le.) 72 187 T
+(All the above materials may be downloaded via anonymous ftp from:) 72 168 T
+(sdts.er) 108 149 T
+(.usgs.gov \050130.1) 138.32 149 T
+(1.52.170\051) 217.16 149 T
+(In addition, printed copies of the Standard and Pro\336les may be obtained from:) 72 130 T
+(National T) 108 111 T
+(echnical Information Service \050NTIS\051) 158.79 111 T
+(Computer Products Of) 108 97 T
+(\336ce) 216.38 97 T
+(5285 Port Royal Road) 108 83 T
+FMENDPAGE
+%%EndPage: "4" 3
+%%Page: "3" 3
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(3) 477 748 T
+1 F
+(1. Intr) 267.46 706 T
+(oduction) 299.89 706 T
+0 F
+-0.12 (The purpose of this document is to help the GRASS user get the most out of the software that has) 72 682 P
+(been developed for the transfer of vector data to and from GRASS, in conformance with the) 72 668 T
+(SDTS T) 72 654 T
+(opological V) 110.81 654 T
+(ector Pro\336le. It aims to make clear) 171.77 654 T
+(, on the one hand, what is involved in the) 336.84 654 T
+(creation of an SDTS and TVP-conformant dataset from GRASS vector data, and on the other) 72 640 T
+(,) 518.86 640 T
+-0.35 (how the variety and richness of SDTS data that is becoming available can best be taken advantage) 72 626 P
+(of by the GRASS user) 72 612 T
+(.) 178.61 612 T
+1 F
+(1.1 GRASS Pr) 72 588 T
+(ograms for SDTS) 145.41 588 T
+0 F
+-0.04 (GRASS-SDTS software that has been completed thus far is for the transfer of) 72 569 P
+3 F
+-0.04 (vector) 446.86 569 P
+0 F
+-0.04 (spatial data,) 479.79 569 P
+(attributes, and associated metadata; software for the transfer of raster data between GRASS and) 72 555 T
+(SDTS is still under development. Following is a brief listing of the programs now available:) 72 541 T
+3 F
+-0.02 (v) 108 522 P
+-0.02 (.in.sdts:) 112.44 522 P
+0 F
+-0.02 (imports SDTS data conforming to the TVP into GRASS, creating one or) 153.4 522 P
+(more GRASS vector maps, along with associated attribute \336les ready for installa-) 108 508 T
+(tion in a relational database.) 108 494 T
+3 F
+(v) 108 475 T
+(.out.sdts:) 112.44 475 T
+0 F
+( exports a GRASS vector map layer) 156.42 475 T
+(, creating an SDTS dataset conform-) 327.82 475 T
+(ing to the TVP) 108 461 T
+(.) 177.63 461 T
+3 F
+(v) 108 442 T
+(.sdts.meta) 112.44 442 T
+0 F
+(: interactive menu-driven utility to create and install supplementary) 160.41 442 T
+-0.14 (metadata and data quality reports for a vector map layer) 108 428 P
+-0.14 (, preparatory to their incor-) 374.35 428 P
+(poration in an SDTS export dataset.) 108 414 T
+3 F
+(v) 108 395 T
+(.sdts.meta.cp) 112.44 395 T
+0 F
+(: simple utility for installing supplementary metadata from a user) 174.73 395 T
+(-) 486.63 395 T
+(speci\336ed \336le, created by) 108 381 T
+3 F
+(v) 227.57 381 T
+(.sdts.meta) 232.01 381 T
+0 F
+(or other means.) 282.98 381 T
+3 F
+-0.03 (v) 108 362 P
+-0.03 (.sdts.dq.cp) 112.44 362 P
+0 F
+-0.03 (: simple utility for installing SDTS data quality reports from user) 163.41 362 P
+-0.03 (-spec-) 474.7 362 P
+(i\336ed \336les, created by) 108 348 T
+3 F
+(v) 210.93 348 T
+(.sdts.meta) 215.37 348 T
+0 F
+(or other means.) 266.34 348 T
+3 F
+(m.sdts.r) 108 329 T
+(ead:) 145.54 329 T
+0 F
+(program for reading SDTS or other data from \336les in FIPS 123 \050ISO) 169.85 329 T
+(821) 108 315 T
+(1\051 format.) 125.55 315 T
+1 F
+(1.2 The FIPS 123 Library and Utility Pr) 72 293 T
+(ograms:) 277.02 293 T
+0 F
+(The required physical implementation for the SDTS-TVP is in accordance with that described in) 72 274 T
+-0.36 (Federal Information Processing Standard \050FIPS\051 123: Speci\336cation for a Data Descriptive File for) 72 260 P
+(Information Interchange, also known as ISO 821) 72 246 T
+(1. In order to facilitate use of the FIPS 123 for-) 305.72 246 T
+(mat, the U.S. Geological Survey has made available a FIPS 123 Function Library that was devel-) 72 232 T
+(oped for them by Computer Sciences Corporation. The various GRASS/SDTS programs make) 72 218 T
+(use of this library to read and write SDTS \336les in FIPS 123 format.) 72 204 T
+(Extensive documentation is included with the distribution of the FIPS 123 library) 72 182 T
+(. Also included) 462 182 T
+-0.1 (are several sample application and utility programs that make use of the library) 72 168 P
+-0.1 (.) 449.7 168 P
+3 F
+-0.1 (m.sdts.dump) 455.59 168 P
+0 F
+-0.1 (was) 518.46 168 P
+-0.15 (derived from one of these programs. Finally) 72 154 P
+-0.15 (, sample DLG3/SDTS and TIGER/SDTS datasets are) 281.86 154 P
+(included with the FIPS 123 Function Library) 72 140 T
+(. All of these materials are included in the GRASS-) 287.1 140 T
+FMENDPAGE
+%%EndPage: "3" 2
+%%Page: "2" 2
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(2) 477 748 T
+(ABSTRACT) 72 636 T
+(. This document is a guide to GRASS software for the transfer of spatial data in con-) 133.75 636 T
+(formance with the Federal Spatial Data T) 72 622 T
+(ransfer Standard and the SDTS T) 270.1 622 T
+(opological V) 428.8 622 T
+(ector Pro-) 489.77 622 T
+-0.41 (\336le. It describes the installation and use of the software, and also provides a introduction to SDTS,) 72 608 P
+(the TVP) 72 594 T
+(, and to ISO821) 110.98 594 T
+(1--the mandatory physical implementation for SDTS. It gives particular) 186.49 594 T
+-0.23 (attention to the use of imported SDTS data with GRASS in conjunction with a relational database) 72 580 P
+(management system. Appendices give comprehensive information about the mapping of spatial) 72 566 T
+(data between GRASS and the SDTS T) 72 552 T
+(opological V) 256.38 552 T
+(ector Pro\336le.) 317.34 552 T
+FMENDPAGE
+%%EndPage: "2" 1
+%%Page: "1" 1
+612 792 0 FMBEGINPAGE
+0 10 Q
+0 X
+0 K
+(GRASS-SDTS User Guide \050preliminary version\051) 72 749.33 T
+477 747 531 756 R
+7 X
+V
+0 12 Q
+0 X
+(1) 477 748 T
+108 513 522 558 R
+7 X
+V
+1 F
+0 X
+(GRASS-SDTS User Guide \050pr) 191.17 550 T
+(eliminary version\051) 345.22 550 T
+252 261 423 468 R
+7 X
+V
+0 F
+0 X
+(David Stigber) 252 460 T
+(g) 318.74 460 T
+(USACERL) 252 441 T
+(2902 Newmark Drive) 252 427 T
+(Champaign IL 61826) 252 413 T
+(217-352-651) 252 399 T
+(1 x7631) 313.51 399 T
+(217-373-7222 \050fax\051) 252 385 T
+FMENDPAGE
+%%EndPage: "1" 0
+%%Trailer
+%%BoundingBox: 0 0 612 792
+%%Pages: 31 -1
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold
+%%+ Helvetica-Bold
+%%+ Times-Italic
+%%+ Helvetica

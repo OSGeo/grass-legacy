@@ -5,7 +5,8 @@
 ** Modified by: Dave Gerdes 1 1990   more portable
 */
 
-#include "digit.h"
+#include <stdlib.h>
+#include "Vect.h"
 
 #define SUPPORT_PROG "v.support"
 

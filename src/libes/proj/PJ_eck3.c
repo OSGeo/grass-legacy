@@ -4,7 +4,7 @@ static const char SCCSID[]="@(#)PJ_eck3.c	4.1	94/02/15	GIE	REL";
 #define PROJ_PARMS__ \
 	double C_x, C_y, A, B;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(eck3, "Eckert III") "\n\tPCyl, Sph.";
 PROJ_HEAD(putp1, "Putnins P1") "\n\tPCyl, Sph.";
 PROJ_HEAD(wag6, "Wagner VI") "\n\tPCyl, Sph.";

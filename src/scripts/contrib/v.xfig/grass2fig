@@ -1,8 +1,7 @@
-#!/bin/awk -f
+#!/bin/sh
 
 # Name       : grass2fig
-# Version    : 0.3
-# Date       : Mon Jan 25 1999
+# Version    : $Id: grass2fig,v 1.4 2001-03-07 09:09:45 markus Exp $
 # Author     : Jacques Bouchard
 #
 # Description: convert an ASCII vector file exported from GRASS
@@ -10,6 +9,7 @@
 #
 # Usage      : grass2fig [inputfile ...] [> outputfile]
 
+awk '
 BEGIN {
     dpi=1200
 
@@ -59,3 +59,4 @@ NF == 2 && /^[ 0-9.+-]*$/ {
     y = y0 + (north - $1) * fact
     printf "%d %d\n", x, y
 }
+' $1 $2

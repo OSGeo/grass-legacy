@@ -1,7 +1,7 @@
 PGM=p.map
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I$(SRC)/paint
-ICONLIB = $(LIBDIR)/libicon.a
+
 LIST = main.o\
 	Pmap.o\
 	ask_bg.o \
@@ -24,9 +24,9 @@ LIST = main.o\
 	scan_scale.o\
 	yes.o
 
-$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB) $(INTERFACE) $(ICONLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(DATETIMELIB) $(TERMLIB) $(INTERFACE) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB) $(INTERFACE) $(DEPICONLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ICONLIB) $(GISLIB) $(DATETIMELIB) $(TERMLIB) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(INTERFACE): #
-$(ICONLIB): #
-$(GISLIB) $(DATETIMELIB): #
+$(DEPICONLIB): #
+$(DEPGISLIB) $(DEPDATETIMELIB): #

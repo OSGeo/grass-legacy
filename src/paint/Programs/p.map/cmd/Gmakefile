@@ -2,10 +2,11 @@ PGM = p.map
 
 PAINT = $(ETC)/paint
 
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../../Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(ICONLIB)
+DEPLIBS=	$(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPICONLIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE) -I../../../
+EXTRA_CFLAGS= -I../../../
 
 LIST =	main.o\
 	alloc_pats.o\
@@ -142,14 +143,12 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(BIN_MAIN_CMD)/$(PGM) \
+all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(BIN_MAIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB) -o $@
-saber:
-	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(MATHLIB)
+$(BIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc
 	cd $(PAINT); ./patcc patterns
@@ -260,9 +259,9 @@ vectr_info.o: misc.h
 windfile.o: misc.h
 window_cnv.o: graphics.h
 
-dumpfont: dumpfont.o font.o $(GISLIB) $(DATETIMELIB)
+dumpfont: dumpfont.o font.o $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ dumpfont.o font.o $(GISLIB) $(DATETIMELIB)
 ######################################################################
 $(INTERFACE):	#
-$(LIBES):	#
+$(DEPLIBS):	#
 

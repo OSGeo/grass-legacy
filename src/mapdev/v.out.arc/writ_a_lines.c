@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
+#include "Vect.h"
 #include "gtoa.h"
 
 int write_area_lines (struct Map_info *Map, FILE *ascii)
@@ -36,7 +36,7 @@ int write_area_lines (struct Map_info *Map, FILE *ascii)
 	    goto done;
         else if (type==AREA)
            {
-		   fprintf(ascii,"%d\n",++count);
+		   fprintf(ascii,"           %d\n",++count);
            xptr = Points.x;
 		   yptr = Points.y;
 		   while (Points.n_points--)
@@ -58,7 +58,7 @@ int write_area_lines (struct Map_info *Map, FILE *ascii)
 
         if (type==AREA)
 	    {
-		   fprintf(ascii,"%d\n",++count);
+		   fprintf(ascii,"           %d\n",++count);
            xptr = Points->x;
 		   yptr = Points->y;
 		   while (Points->n_points--)

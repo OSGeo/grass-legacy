@@ -1,0 +1,63 @@
+Debugging Flag File:
+
+ROUTINE   (0=Off, 1=On)                DESCRIPTION             FILENAME
+=======   =============                ===========             ========
+
+VERIFICATION TABLES:
+
+ 1) Water_Table. 0     /* Water processs tabular output.   [XXXXXXX.vt1] */
+ 2) Sed_Table... 0     /* Sediment process tabular output. [XXXXXXX.vt2] */
+ 3) Chem_Table.. 1     /* Chemical process tabular output. [XXXXXXX.vt3] */
+ 4) Fdlt_Table.. 0     /* Feedlot process tabular output.  [XXXXXXX.vt4] */
+ 5) Impnd_Table. 0     /* Impoundment tabular output.      [XXXXXXX.vt5] */
+ 6) Sdtrp_Table. 0     /* Sediment trap tabular output.    [XXXXXXX.vt6] */
+
+
+BASICS:
+
+ 1) Drain_area.. 0     /* Cell's drainage area calculations.[cellcalc.c] */
+ 2) Cell_info... 0     /* Cell position and characteristics.   [loop1.c] */
+ 3) Channel..... 0     /* Channel values.                   [cellcalc.c] */
+ 4) Flow........ 0     /* Flow values such as volume and peak.    ["".c] */
+ 5) Impound..... 0     /* Impoundment output calculation values.[ters.c] */
+ 6) Nutrient.... 0     /* Soil nutrient values in runoff.      [loop1.c] */
+ 7) Routing..... 0     /* Cell routing information.         [recroute.c] */
+ 8) Sediment.... 0     /* Sediment particle information.       [loop1.c] */
+ 9) TR-55....... 0     /* TR-55 method of ovrlnd flw calcs. [loop1tr5.c] */
+
+
+ROUTINES:
+
+ 1) Bulk_dens... 0     /* Soil bulk density lookup table.      [slnut.c] */
+ 2) Calc_chan... 0     /* Chan params calculated for TR-55. [chan_cal.c] */
+ 3) Calc_sed.... 0     /* Sums sedimnt values for the cell. [new_soil.c] */
+ 4) Cell_calc... 0     /* Calculated cell values.           [cellcalc.c] */
+ 5) Chan_calc... 0     /* Chan params calculated for AGNPS.     [sub1.c] */
+ 6) Chan_TR-55.. 0     /* Actual TR-55 calculations.        [chantr55.c] */
+ 7) Curve_num... 0     /* Calcs retention value and runoff vol.   [ro.c] */
+ 8) Curve#_ro... 0     /* SCS cn method from NEH-4.               [ro.c] */
+ 9) Decay_nut... 0     /* Decay nutrients within the channel.  [decay.c] */
+10) Feedlot..... 0     /* Feedlot submodel calculations.     [feedlot.c] */
+11) Hydrology... 0     /* Calcs pk flow and duratn as CREAMS.  [sub1e.c] */
+12) Impound..... 0     /* Sets impndmt params (incldng sed). [impound.c] */
+13) Init_sed.... 0     /* Set up sediment by particle class. [sedinit.c] */
+14) Length...... 0     /* Channel parameter calculations.     [length.c] */
+15) Newsoil..... 0     /* Calcs cell sediment deposition.    [newsoil.c] */
+16) Overland.... 0     /* Calcs time needed for conc flow.     [ovrld.c] */
+17) Part_pest... 0     /* Partitions pest on sed & in H2O.  [pesticid.c] */
+18) Pesticide... 0     /* Pesticide calculation routine.    [pesticid.c] */
+19) Pntsrc...... 0     /* Sums up feedlot model output.       [pntsrc.c] */
+20) Prep_route.. 0     /* Longest flow path to currnt cell. [recroute.c] */
+21) Rclmap...... 0     /* Receiving cell mapping routine.     [rclmap.c] */
+22) Recursive... 0     /* Recursive routing function.       [recroute.c] */
+23) Routing..... 0     /* Actual routing and accumulation.  [recroute.c] */
+24) Sed_flow.... 0     /* Sedimnt flo & trnsport cap for cell. [sub1e.c] */
+25) Sed_nutr.... 0     /* Calculate nutrients in sediment.    [sednut.c] */
+26) Soil_nutr... 0     /* Calculate nutrients in soil.         [slnut.c] */
+27) Src_cells... 0     /* Finds and marks source(prim) cells.  [sub1e.c] */
+28) Sum_Psrc.... 0     /* Sums point source nutrients.         [sub1e.c] */
+29) Terh........ 0     /* Calculate peak flow from impoundment. [terh.c] */
+30) Ters........ 0     /* Calcs sediment yield from an impound. [ters.c] */
+31) TR-55....... 0     /* Calcs overland flow TR-55 method. [loop1tr5.c] */
+32) Xeros....... 0     /* Soil erosion based on USLE.          [xeros.c] */
+
