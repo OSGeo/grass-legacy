@@ -1,43 +1,17 @@
 #include "globals.h"
 
 /*
- * run etc/i.find command in background to find all cell, vect files
+ * run etc/i.find command find all cell, vect files
  * in the target location.
  */
 find_target_files()
 {
-    int pid, w, status;
+    char command[1024];
 
     select_target_env();
-    pid = G_fork();	/* use G_fork() to inhibit signals */
-    if (pid < 0)
-    {
-	perror ("fork");
-	exit(1);
-    }
-
-/*
- * parent waits for child. this wait will be short since child
- * simply forks and exits. The grandchild runs in background
- * and grandma continues
- */
-    if (pid)
-    {
-	while ((w=wait(&status)) != pid && w != -1)
-		;
-    }
-    else
-    {
-	char command[1024];
-
-	sprintf (command, "%s/etc/i.find", G_gisbase());
-	if (fork())
-	    exit(0);	/* go into background */
-	execl (command, "i.find",
-		G_location(), G_mapset(),
-		"cell", cell_list,
-		"dig", vect_list,
-		(char *) 0);
-    }
+    sprintf (command, "%s/etc/i.find %s %s cell %s dig %s",
+	G_gisbase(), G_location(), G_mapset(), cell_list, vect_list);
     select_current_env();
+
+    system(command);
 }
