@@ -1,0 +1,43 @@
+.TH i.camera
+.nh
+.SH NAME
+\fIi.camera\fR \- An imagery function that establishes a camera
+reference file for an imagery group, and runs interactively.
+.br
+.I (GRASS Image Processing Program)
+.SH SYNOPSIS
+\fBi.camera\fR
+.SH DESCRIPTION
+.I i.camera
+selects a camera reference file to be used with an imagery group.
+In the imagery programs \fIi.ortho.reference\fR, \fIi.ortho.control\fR,
+and \fIi.ortho.rectify\fR, a camera reference file is required
+for computation of reference points and ortho-rectification parameters.
+\fIi.camera\fR enables the user to specify an existing camera reference
+file for a selected imagery group.
+
+\fIi.camera\fR is fully interactive.
+The program first prompts the user for the name of the imagery group
+that requires a camera reference file.
+This imagery group must already exist under the user's current MAPSET
+(see \fIi.group\fR).
+
+The program next asks the user for the name of an existing
+camera reference file to be used with the imagery group selected above.
+The GRASS program \fIi.mod.camera\fR can be used to create this camera
+reference file.
+.SH FILES
+$GISDBASE/$LOCATION_NAME/$MAPSET/group
+.SH SEE ALSO
+.I i.group,
+.I i.mod.camera,
+.I i.ortho.control,
+.I i.ortho.rectify, 
+.I i.ortho.reference
+.SH AUTHOR
+.nf
+Mike Baba
+DBA Systems, Inc.
+10560 Arrowhead Drive
+Fairfax, Virginia 22030
+.fi
