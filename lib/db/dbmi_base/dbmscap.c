@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include "dbmi.h"
+#include "gis.h"
 
 static
 char *dbmscap_files[] = {
