@@ -13,6 +13,22 @@ were last checked (dd/mm/yy).
 ========================================================================
 
 ANGLE
+
+ANOTHER_BUTTON:
+  define to click conveniently for two button mouse.
+  It's hard to click two buttons simultaneously with two button mouse,
+  #ifndef ANOTHER_BUTTON
+  #       define MIDDLEB  2
+  #       define RIGHTB   3
+  #else
+  #       define MIDDLEB  3
+  #       define RIGHTB   2
+  #endif
+
+
+ASIAN_CHARS:
+ define to input asian characters
+
 GRASS_BACKGROUNDCOLOR
 BAUD
 CMAP_SIZE
