@@ -1,0 +1,28 @@
+
+
+A_B_OFILES = \
+	in.o\
+	a2b.o
+
+B_A_OFILES = \
+	out.o\
+	b2a.o
+
+
+CMD_IN  = $(BIN_CMD)/v.in.ascii 
+CMD_OUT = $(BIN_CMD)/v.out.ascii 
+
+all: $(CMD_IN) $(CMD_OUT)
+
+
+#   compile the command programs
+
+$(CMD_IN):  $(A_B_OFILES) $(VECTLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(CMD_OUT):  $(B_A_OFILES) $(VECTLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(VECTLIB) $(GISLIB)  $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB) $(GISLIB) : #
+
+

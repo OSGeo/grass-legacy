@@ -1,0 +1,21 @@
+PGM       = d.vect
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+
+
+OBJS = \
+	main.o \
+	plot1.o\
+	plot2.o\
+	use_plot1.o
+
+CFILES = \
+	main.c \
+	plot1.c\
+	plot2.c\
+	use_plot1.c
+
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
