@@ -809,7 +809,8 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
       {
 	/* Can't use directly, so round to nearest integer */
 	val1 = (int) (DBFReadIntegerAttribute(hDBF, rec_num, att_num) + 0.5);
-	
+	G_warning("Truncating floating-point attribute to integer");
+
 	if(val1 == 0) {
 	  return (2);
 	}
@@ -865,6 +866,7 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 	else {
 	  sprintf(tmp_buf, "%ld", catval1);
 	  len1 = strlen(tmp_buf) - f_decs;
+	  if(len1 < 0)  len1 = 0;
 	  strncpy(buffer2, tmp_buf, len1);
 	  chptr = &tmp_buf[len1];
 	  strcat(buffer2, ".");
