@@ -4,4 +4,5 @@ interface_build {
     {entry map {Vector map:} 0 vector}
     {entry color {Color [red]:} 0 color}
     {checkbox -f {Fill selected area with color (not simply outline).} "" -f}
+    {checkbox -i {Exclude islands (holes) from polygon area.} "" -i}
 }
