@@ -48,7 +48,7 @@ G_gisinit("Export ATLAS");
 
 module = G_define_module();
 module->description =
-  "Export GRASS vector file to ATLAS GIS vector file";
+  "Export GRASS vector file to ATLAS GIS vector file. ";
 
 opt1 = G_define_option();
 opt1->key = "dig_name";
