@@ -63,6 +63,7 @@ V1_close_post (struct Map_info *Map)
 int
 V2_close_post (struct Map_info *Map)
 {
+  struct Coor_info CInfo;
   struct Plus_head *Plus;
 
   G_debug (1, "V2_close_post(): name = %s mapset= %s", Map->name,
@@ -72,6 +73,10 @@ V2_close_post (struct Map_info *Map)
 
   /* Save topo if necessary */
   if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
+      Vect_coor_info ( Map, &CInfo); /* Size and time is 0L for PostGIS) */
+      Plus->coor_size = CInfo.size;
+      Plus->coor_mtime = CInfo.mtime;
+      
       Vect_save_topo (Map);
       dig_free_plus (Plus);
   }
