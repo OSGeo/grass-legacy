@@ -14,13 +14,14 @@ unsigned char black;
 
 #include <stdio.h>
 
-main()
+main(argc,argv) char *argv[];
 {
     char buf[100];
 
     int ok;
     int repeat;
 
+    G_gisinit(argv[0]);
     Pconnect();
     Plock();
     Popen();
