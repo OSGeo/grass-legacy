@@ -1,13 +1,15 @@
 #include <stdio.h>
 
-#define	DBYTES	8
+#define	DBYTES		8
+#define	BUFFER_SIZE	256
 
 
 int
 main(int argc, char **argv)
 {
-	double	i[20000];
-	char	tfile[160], t1[160], t2[160], t3[160];
+	double	i;
+	char	tfile[BUFFER_SIZE],
+		t1[BUFFER_SIZE], t2[BUFFER_SIZE], t3[BUFFER_SIZE];
 	int	nl,ns,m,m2;
 	FILE	*fp, *fp2;
 
@@ -49,12 +51,11 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	for(m=0; m<nl; m++){
-		for(m2=0; m2<ns; m2++)
-			fscanf(fp, "%lf", &i[m2]);
-		for(m2=0; m2<ns; m2++)
-			fwrite(&i[m2], DBYTES, 1, fp2);
-	}
+	for(m=0; m<nl; m++)
+		for(m2=0; m2<ns; m2++){
+			fscanf(fp, "%lf", &i);
+			fwrite(&i, DBYTES, 1, fp2);
+		}
 
 	fclose(fp);
 	fclose(fp2);
