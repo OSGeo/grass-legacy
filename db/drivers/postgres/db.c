@@ -65,7 +65,7 @@ int db_driver_open_database(handle)
 
     /* Read internal codes */
     res = PQexec(pg_conn, "select oid, typname from pg_type where typname in ("
-	         " 'int2', 'int4', 'serial', 'oid', 'real', 'float8', 'char', 'varchar', "
+	         " 'int2', 'int4', 'serial', 'oid', 'real', 'float8', 'char', 'bpchar', 'varchar', "
 		 " 'text', 'time', 'date', 'timestamp' ) order by oid" );
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
@@ -101,6 +101,8 @@ int db_driver_open_database(handle)
 	    type = PG_TYPE_NUMERIC;
 	else if ( strcmp( PQgetvalue(res, row, 1), "char" ) == 0 )
 	    type = PG_TYPE_CHAR;
+	else if ( strcmp( PQgetvalue(res, row, 1), "bpchar" ) == 0 )
+	    type = PG_TYPE_BPCHAR;
 	else if ( strcmp( PQgetvalue(res, row, 1), "varchar" ) == 0 )
 	    type = PG_TYPE_VARCHAR;
 	/*

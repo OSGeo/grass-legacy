@@ -156,6 +156,7 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *sqltype, int *si
 	    break;
 
 	case PG_TYPE_CHAR:
+	case PG_TYPE_BPCHAR:
 	case PG_TYPE_VARCHAR:
 	    *sqltype = DB_SQL_TYPE_CHARACTER;
 	    *size = PQfmod(res, col) - 4; /* Looks strange but works, something better? */
