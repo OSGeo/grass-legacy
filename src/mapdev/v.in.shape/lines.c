@@ -548,6 +548,90 @@ int vertex_links_update(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
 }
   
 
+int vertex_links_remove(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) {
+
+  vertex *vptr1, *vptr2;
+  long idx1, idx2;
+  int res1;
+  int n_extra;
+  int missing_links = 0;
+  int idx_located;
+
+  /* loop */
+
+  int i, ix;
+
+  /* can't proceed if there are no values in the co-ordinates */
+
+  if(! ((vptr0a->v_status & V_WITH_LOCATION) && (vptr0b->v_status & V_WITH_LOCATION)) ) {
+    return (-1);
+  }
+
+  for(i = 0; i < 2; i++ ) {
+
+    if(i  == 0) {
+      vptr1 = vptr0a; vptr2 = vptr0b;
+      idx1 = idx0a; idx2 = idx0b;
+    }
+
+    else {
+      vptr1 = vptr0b; vptr2 = vptr0a;
+      idx1 = idx0b; idx2 = idx0a;
+    }
+
+    /* Find if there is a link with this index */
+
+    idx_located = -1;
+    if(vptr1->v_status & V_WITH_EXTRA) {
+
+      for(ix = 0; ix < 4; ix++) {
+	if(vptr1->links[ix] == idx2) {
+	  idx_located = ix;
+	  break;
+	}
+      }
+      
+      for(ix = 0; ix < vptr1->alloc_extra_links; ix++) {
+
+	if(vptr1->links2[ix] == idx2) {
+	  idx_located = ix + 4;
+	  break;
+	}
+      }
+
+    }
+
+    if(idx_located < 0) {
+      if(paric1->verbose_level > 1) {
+	fprintf(paric1->logptr, "    WARNING: Link from vertex %d to vertex %d absent. Not deleted.\n",
+		idx1, idx2);
+      }
+      continue;
+    }
+
+    /* If the link exists, remove it from the vertex. */
+
+    res1 = vertex_delete_link(vptr1, idx_located);
+
+    if(res1) {
+      if(paric1->verbose_level > 1) {
+	fprintf(paric1->logptr, "    WARNING: Could not delete link %d to vertex %d.\n",
+		idx1, idx2);
+      }
+    }
+      
+  }
+
+  return (0);
+
+}
+
+
+int vertex_delete_link(vertex *vt0, int idl0) {
+
+  /* Still to implement */
+}
+
 repository *get_repository_ptr(void) {
 
   return (rp1);
