@@ -11,7 +11,6 @@ char *dbmscap_files[] = {
     "/usr/local/dbmi/lib/dbmscap",
     NULL };
 
-extern char *getenv();
 static void add_entry();
 
 static char *

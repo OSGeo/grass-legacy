@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "list.h"
 
@@ -30,7 +31,7 @@ read_list (int check_if_empty)
     char text[100];
     int any;
     int line;
-    char *env, *getenv();
+    char *env;
 
     nlist = 0;
     list = 0;

@@ -19,7 +19,7 @@ spagetti (Map, thresh)
 {
     int A, B;
     P_LINE *Aline, *Bline;
-    char *p, *getenv ();
+    char *p;
     char buf[300];
 
     if (NULL != (p = getenv ("SPAG_THRESH")))

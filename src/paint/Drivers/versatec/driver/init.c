@@ -1,9 +1,9 @@
+#include <stdlib.h>
 #define GLOBAL
 #include "P.h"
 
 Pinit()
 {
-    char *getenv();
     rasterfile = getenv("RASTERFILE");
     if (rasterfile == NULL)
 	error ("RASTERFILE not set");

@@ -53,7 +53,6 @@ main (argc, argv)
 	char  file2[128] ;
 	char  file3[128] ;
 	char *p;
-	char  *getenv();
 
 	char  command[256] ;
 
