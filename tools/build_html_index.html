@@ -42,7 +42,7 @@ echo "[ " >> index.html
 k=0
 for i in $CMDLIST
 do
-  k=$(( $k + 1 ))
+  k=`echo $k + 1 | bc`
   echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> index.html
   if [ $k -lt $CMDLISTNO ] ; then
      echo -n " | " >> index.html
@@ -78,5 +78,12 @@ echo "</html>" >> index.html
 echo "Generated $HTMLDIR/index.html"
 echo "----------------------------------------------------------------------"
 echo "Following modules are missing the 'description.html' file in src code:"
-find . -name "*.html" | xargs fgrep --files-without-match 'DESCRIPTION' | grep -v './index.html'
+for i in `find . -name "*.html" | grep -v './index.html'`
+do
+  if grep 'DESCRIPTION' $i >/dev/null 2>&1 ; then 
+    :
+  else
+    echo `echo $i | sed 's?./??' | sed 's/.html//'`
+  fi
+done
 echo "----------------------------------------------------------------------"
