@@ -3,12 +3,12 @@ MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: current_time_s_ms
+PGM = current_time_s_ms
 
-current_time_s_ms: current_time_s_ms.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-	\mv current_time_s_ms $(ETC)
-	\rm -f current_time_s_ms.o
+default: $(PGM)
 
-current_time_s_ms.o: main.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+$(PGM): main.c
+	$(CC) $(CFLAGS) -o $(ETC)/$(PGM) -c $< $(LDFLAGS)
+
+clean:
+	\rm -f $(ETC)/$(PGM)
