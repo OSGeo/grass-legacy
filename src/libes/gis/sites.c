@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.3  1999-12-30 10:24:19  markus
+ * Revision 1.4  2000-06-30 11:33:12  markus
+ * Bill Brown: fix to parse multiple strings in site_list properly
+ *
+ * Revision 1.3  1999/12/30 10:24:19  markus
  * G__site_get, G__site_put: added return statements
  *
  * Revision 1.2  1999/12/30 10:20:40  markus
@@ -694,8 +697,12 @@ int G_site_put_head ( FILE *ptr, Site_head *head)
          if ((head->time=(struct TimeStamp *) 
                          G_malloc(sizeof(struct TimeStamp)))==NULL)
 	     G_fatal_error("Memory error in writing timestamp");
-	 else if (G_scan_timestamp (head->time, head->stime) < 0)
+	 else 
+	 if (G_scan_timestamp (head->time, head->stime) < 0)
+	 {         
 	     G_warning("Illegal TimeStamp string");
+	     return -1; /* added to prevent crash 5/2000 MN*/
+	 }
       }
 
       G_format_timestamp (head->time, head->stime);
@@ -823,7 +830,7 @@ int cleanse_string (char *buf)
    */
 
   /* find where this string terminates */
-  if (G_index (buf, DQUOTE) == (char) NULL)	/* if no DQUOTEs, */
+  if ( *buf != DQUOTE)	/* if no DQUOTEs, */
   {
     stop = G_index (buf, SPACE);/* then SPACE separates */
     if (stop == (char *) NULL)
