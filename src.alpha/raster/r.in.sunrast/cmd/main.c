@@ -1,26 +1,24 @@
 #include "gis.h"
+#include "rast.h"
 
-#ifndef NOT_SUN
-# include <rasterfile.h>
-#else
-# define RAS_MAGIC 0x59a66a95
-# define RT_STANDARD 1
-# define RT_BYTE_ENCODED 2
-# define RMT_EQUAL_RGB 1
-#endif
 
 int verbose;
+int adjust;
+
+#define CUR_MAX_CLR 256
+unsigned char *cats_used; /* dpg*/
+unsigned char red[CUR_MAX_CLR], grn[CUR_MAX_CLR], blu[CUR_MAX_CLR];
+
 
 main(argc, argv) char *argv[];
 {
-    char rasterfile[1024];
-    char cellfile[1024];
+    CELL cat;
     struct Cell_head window;
     struct Colors colors;
-    int nrows, ncols;
+    int nrows, ncols, depth;
     int fd1, fd2;
     struct Option *input, *output;
-    struct Flag *quiet;
+    struct Flag *quiet, *noadjust;
 
     G_gisinit (argv[0]);
     G_get_window (&window);
@@ -38,6 +36,10 @@ main(argc, argv) char *argv[];
     output->required = YES;
     output->gisprompt = "any,cell,raster";
 
+    noadjust = G_define_flag();
+    noadjust->key = 'a';
+    noadjust->description = "Don't adjust number of rows";
+
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = "Run quietly";
@@ -45,9 +47,12 @@ main(argc, argv) char *argv[];
     if (G_parser(argc,argv))
 	exit(1);
 
-    verbose = !quiet->answer;
+    cats_used = (unsigned char *)G_calloc (CUR_MAX_CLR,1);	/*dpg*/
 
-    fd1 = open_rasterfile (input->answer, &nrows, &ncols, &colors);
+    verbose = !quiet->answer;
+    adjust  = !noadjust->answer;
+
+    fd1 = open_rasterfile (input->answer, &nrows, &ncols, &depth);
     window.north = -0.5;
     window.south = -(nrows+0.5);
     window.west = 0.5;
@@ -57,13 +62,19 @@ main(argc, argv) char *argv[];
 
     fd2 = open_cellfile (output->answer);
 
-    if(rasttocell (fd1, fd2, nrows, ncols) < 0)
+    if(rasttocell (fd1, fd2, nrows, ncols, depth) < 0)
     {
 	perror (input->answer);
 	exit(1);
     }
     close (fd1);
     G_close_cell (fd2);
+
+    G_init_colors (&colors);
+    for (cat = 0; cat < CUR_MAX_CLR; cat++)
+      if (cats_used[cat])
+	G_set_color (cat, (int)red[cat], (int)grn[cat], (int)blu[cat], &colors);
+
     G_write_colors (output->answer, G_mapset(), &colors);
     exit(0);
 }
@@ -78,10 +89,9 @@ open_cellfile (name)
     return fd;
 }
 
-open_rasterfile(name, nrows, ncols, colors)
+open_rasterfile(name, nrows, ncols, depth)
     char *name;
-    int *nrows, *ncols;
-    struct Colors *colors;
+    int *nrows, *ncols, *depth;
 {
     int fd;
 
@@ -92,7 +102,7 @@ open_rasterfile(name, nrows, ncols, colors)
 	exit(1);
     }
 
-    switch (read_header(fd, nrows, ncols, colors))
+    switch (read_header(fd, nrows, ncols, depth))
     {
     case -1:
 	fprintf (stderr, "%s - not a sun rasterfile\n", name);
@@ -106,60 +116,101 @@ open_rasterfile(name, nrows, ncols, colors)
 }
 
 
-read_header (fd, nrows, ncols, colors)
-    int *nrows, *ncols;
-    struct Colors *colors;
+int					/* read an integer from the file and */
+read_integer (fd, i, size)		/* arrange the bytes in the correct  */
+    int fd, *i, size;			/* order -- sunrast uses big-endian  */
+{
+    unsigned int temp;
+    int retcode;
+    unsigned char *p;
+
+    if (size != sizeof(int)) {
+	fprintf(stderr,
+		"read_integer: warning: possible bogus read for size %d\n",
+		size);
+    }
+
+    *i = 0;
+    p = (unsigned char *) &temp;
+
+    if ( (retcode = read(fd, &temp, sizeof(temp))) == sizeof(temp) ) {
+		/* WARNING: We're assuming an int is four bytes wide! */
+	*i = (p[0] <<24) + (p[1] <<16) + (p[2] <<8) + p[3];
+
+#ifdef DEBUG
+	fprintf(stderr,"read_int: read: %x|%x|%x|%x, converted to %x\n",
+		p[0],p[1],p[2],p[3], *i);
+#endif /* DEBUG */
+    }
+
+    return retcode;
+}
+
+
+read_header (fd, nrows, ncols, depth)
+    int *nrows, *ncols, *depth;
 {
     int x;
-    CELL cat;
-    unsigned char red[256], grn[256], blu[256];
+    int colormap;
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
     if (x != RAS_MAGIC) return -1;
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
     *ncols = x;
     if (*ncols <= 0) return -1;
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
     *nrows = x;
     if (*nrows <= 0) return -1;
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
-    if (x != 8) return 0;	/* can't do this format */
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
+    *depth = x;
+    if (*depth != 8 && *depth != 1) return 0;	/* can't do this format */
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1; /* length - don't need */
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1; /* length - don't need */
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
     if (x != RT_STANDARD) return 0; /* can't do this format */
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
-    if (x != RMT_EQUAL_RGB) return 0; /* can't do this format */
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
+    colormap = x;
+    if (*depth == 8 && colormap != RMT_EQUAL_RGB) return 0; /* can't do this format */
+    if (*depth == 1)
+    {
+	red[0] = grn[0] = blu[0] = 255;
+	red[1] = grn[1] = blu[1] = 0;
+    }
 
-    if (read(fd, &x, sizeof x) != sizeof x) return -1;
-    if (x%3) return 0;
-    x /= 3;
-    if (x > 256) return 0;
+    if (read_integer(fd, &x, sizeof x) != sizeof x) return -1;
+    if (colormap)
+    {
+	if (x%3) return 0;
+	x /= 3;
+	if (x > CUR_MAX_CLR) return 0;
 
-    if (read(fd, red, x) != x) return -1;
-    if (read(fd, grn, x) != x) return -1;
-    if (read(fd, blu, x) != x) return -1;
-
-    G_init_colors (colors);
-    for (cat = 0; cat < x; cat++)
-	G_set_color (cat, (int)red[cat], (int)grn[cat], (int)blu[cat], colors);
+	if (read(fd, red, x) != x) return -1;
+	if (read(fd, grn, x) != x) return -1;
+	if (read(fd, blu, x) != x) return -1;
+    }
 
     if (verbose)
 	fprintf (stderr, "rasterfile is %d rows by %d columns\n", *nrows, *ncols);
     return 1;
 }
 
-rasttocell (rast_fd, cell_fd, nrows, ncols)
+rasttocell (rast_fd, cell_fd, nrows, ncols, depth)
 {
     unsigned char *raster;
     CELL *cell;
-    int row, col;
+    int row, col, inputcols;
+
+/* sun raster is padded to even number of cols */
+    if (depth == 8)
+	inputcols = ncols + (adjust?ncols%2:0);
+    else
+	inputcols = (ncols+7)/8;
 
     cell = G_allocate_cell_buf();
-    raster = (unsigned char *) G_malloc(ncols);
+    raster = (unsigned char *) G_malloc(inputcols);
 
     if (verbose)
 	fprintf (stderr, "complete ... ");
@@ -167,10 +218,21 @@ rasttocell (rast_fd, cell_fd, nrows, ncols)
     {
 	if (verbose)
 	    G_percent (row, nrows, 2);
-	if (read (rast_fd, raster, ncols) != ncols)
+	if (read (rast_fd, raster, inputcols) != inputcols)
 	    return -1;
+
 	for (col = 0; col < ncols; col++)
-	    cell[col] = (CELL) raster[col];
+	{
+	    register unsigned char tmp;
+
+	    if (depth == 8)
+		tmp =  raster[col];
+	    else
+		tmp =  (raster[col>>3] & (0200 >> (col & 7))) != 0 ;
+	    cats_used[tmp] = 1;		/* mark cat as existing */
+	    cell[col] = (CELL) tmp;
+	}
+
 	if (G_put_map_row (cell_fd, cell) < 0)
 	    exit(1);
     }
