@@ -27,6 +27,9 @@
 #define SQLP_NE   16    /* <> */
 #define SQLP_MTCH 17    /* ~ */
 
+#define SQLP_ISNULL  18    /* IS NULL */
+#define SQLP_NOTNULL 19    /* IS NULL */
+
    /* Logical */
 #define SQLP_AND  21
 #define SQLP_OR   22

@@ -695,6 +695,12 @@ double eval_node(SQLPNODE *nptr, int tab, int row, SQLPVALUE *value)
 			    return NODE_FALSE;
 		    }
 
+		case SQLP_ISNULL:
+		    return right == NODE_NULL ? NODE_TRUE : NODE_FALSE;
+
+		case SQLP_NOTNULL:
+		    return right != NODE_NULL ? NODE_TRUE : NODE_FALSE;
+
 		/* Logical */
 		case SQLP_AND:
 		    if ( left == NODE_NULL || right == NODE_NULL ) {
@@ -889,6 +895,10 @@ int eval_node_type(SQLPNODE *nptr, int tab ) {
 		    } else {
 			return SQLP_BOOL;
 		    }
+
+		case SQLP_ISNULL:
+		case SQLP_NOTNULL:
+		    return SQLP_BOOL;
 
 		/* Logical */
 		case SQLP_AND:

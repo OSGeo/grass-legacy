@@ -75,6 +75,7 @@
 %token PRECISION
 %token DATE
 %token ORDER BY
+%token IS
 
 %{
  
@@ -208,6 +209,12 @@ y_comparison:
 		}
 	|	y_expression COMPARISON_OPERATOR y_expression {
 		    $$ = sqpNewExpressionNode ( sqpOperatorCode($2), $1, $3);
+		}
+	|	y_expression IS NULL_VALUE {
+		    $$ = sqpNewExpressionNode ( SQLP_ISNULL, NULL, $1);
+		}
+	|	y_expression NOT NULL_VALUE {
+		    $$ = sqpNewExpressionNode ( SQLP_NOTNULL, NULL, $1);
 		}
 	;	
 
