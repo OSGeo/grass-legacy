@@ -334,7 +334,7 @@ then
     rm -f $makefile2
 fi
 
-sed -e 's#^GISBASE\([ 	]*\)=.*$#GISBASE\1= \${INST_DIR}#' $makefile \
+sed -e "s#^GISBASE\([ 	]*\)=.*\$#GISBASE\1= ${INST_DIR}#" $makefile \
 	> $makefile2
 
 echo "  make -f $makefile2 $*"
