@@ -1,8 +1,10 @@
 # Nviz 1.1
 # USACERL 3/11/96
+# further changes GRASS Development Team
 # This file contains a palette of commonly used widgets.  It is
 # expected that Nviz panels will be constructed using these widgets
 # plus basic Tk functionality.
+
 
 ##########################################################################
 # procedure to drag canvas item
@@ -248,8 +250,17 @@ proc Nv_mkScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd nu
 
 #Bind For Re-Draw Surface
     bind $S.scale <Any-ButtonRelease> {+ 
+if {![llength [info commands tkCancelRepeat]]} {
+tk::unsupported::ExposePrivateCommand tkCancelRepeat
+}
 tkCancelRepeat
+if {![llength [info commands tkScaleEndDrag]]} {
+tk::unsupported::ExposePrivateCommand tkScaleEndDrag
+}
 tkScaleEndDrag %W
+if {![llength [info commands tkScaleActivate]]} {
+tk::unsupported::ExposePrivateCommand tkScaleActivate
+}
 tkScaleActivate %W %x %y
 if {[Nauto_draw] == 1} {Ndraw_all} }
 
@@ -298,8 +309,17 @@ set num [expr int($num + 3)]
 
 #Bind For Re-Draw Surface
 bind $S.scale <Any-ButtonRelease> {+ 
+if {![llength [info commands tkCancelRepeat]]} {
+tk::unsupported::ExposePrivateCommand tkCancelRepeat
+}
 tkCancelRepeat
+if {![llength [info commands tkScaleEndDrag]]} {
+tk::unsupported::ExposePrivateCommand tkScaleEndDrag
+}
 tkScaleEndDrag %W
+if {![llength [info commands tkScaleActivate]]} {
+tk::unsupported::ExposePrivateCommand tkScaleActivate
+}
 tkScaleActivate %W %x %y
 if {[Nauto_draw] == 1} {Ndraw_all} }
 
