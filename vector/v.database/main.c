@@ -28,6 +28,7 @@ main(int argc, char *argv[])
     struct Option *driver, *database, *schema;
     struct GModule *module;
     dbConnection  connection;
+    char *drv, *db;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -43,6 +44,8 @@ main(int argc, char *argv[])
     driver->multiple   = NO ;
     driver->description = "Driver name." ;
     driver->options    = db_list_drivers();
+    if ( (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
+	driver->answer = G_store ( drv );
 
     database = G_define_option() ;
     database->key        = "database" ;
@@ -50,6 +53,8 @@ main(int argc, char *argv[])
     database->required   = NO  ;
     database->multiple   = NO ;
     database->description = "Database name." ;
+    if ( (db=G__getenv2("GV_DATABASE",G_VAR_MAPSET)) )
+	database->answer = G_store ( db );
 
     schema = G_define_option() ;
     schema->key        = "schema" ;
