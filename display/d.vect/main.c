@@ -207,10 +207,13 @@ main (int argc, char **argv)
         Clist = Vect_new_cat_list ();
 	Clist->field = atoi (field_opt->answer);
 	
+        /* open vector */
+        level = Vect_open_old (&Map, map_name, mapset);
+	
 	if (where_opt->answer)
 	  {
             chcat = 1;  
-            fi = Vect_get_field_info(map_name, mapset, Clist->field);
+            fi = Vect_get_field ( &Map, Clist->field);
             if ( fi != NULL )
 	      {
                 driver = db_start_driver(fi->driver);
@@ -341,12 +344,6 @@ main (int argc, char **argv)
 	        lattr.yref = LBOTTOM;
 		break;
 	  }
-	
-
-        /* open vector */
-        level = Vect_open_old (&Map, map_name, mapset);
-        if ( level < 1 )
-	    G_fatal_error ("Failed opening vector file"); 
 	
 	if (R_open_driver() != 0)
             G_fatal_error ("No graphics device selected");
