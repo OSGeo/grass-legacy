@@ -36,6 +36,7 @@ SUBDIRS = \
 	v.out.dxf \
 	v.out.pov \
 	v.overlay \
+	v.parallel \
 	v.patch \
 	v.perturb \
 	v.split \
