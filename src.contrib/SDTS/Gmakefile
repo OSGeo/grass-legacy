@@ -1,0 +1,10 @@
+
+
+all:
+	$(GMAKE) ./libes/fips123
+	$(GMAKE) ./mapdev/v.out.sdts
+	$(GMAKE) ./mapdev/v.in.sdts
+	$(GMAKE) ./mapdev/v.sdts.meta
+	$(GMAKE) ./mapdev/v.sdts.meta.cp
+	$(GMAKE) ./mapdev/v.sdts.dq.cp
+	$(GMAKE) ./misc/m.sdts.read
