@@ -1,0 +1,84 @@
+#!/bin/sh
+# g.mlist: Modified for g.list
+#
+# $Id$
+#
+# $Log$
+# Revision 1.1  2000-08-21 20:27:15  cho
+# added g.mlist
+#
+#
+
+type=rast
+
+for i
+do
+	case $i in
+		type=*)
+			itype=$(echo "$i" | sed 's/^type=//')
+			case $itype in
+				rast*)
+					type=rast;;
+				vect*)
+					type=vect;;
+				icon*)
+					type=icon;;
+				labels*)
+					type=labels;;
+				site*)
+					type=sites;;
+				region*)
+					type=region;;
+				group*)
+					type=group;;
+				3dview*)
+					type=3dview;;
+			esac;;
+		mapset=*)
+			mapset="mapset=$i";;
+		sep=*)
+			sep=$(echo "$i" | sed 's/^sep=//');;
+		*)
+			i=$(echo "$i" | sed 's/^map=//')
+			if [ x$search = x ]
+			then
+				search=$i
+			else
+				search="$search\|$i"
+			fi;;
+	esac
+done
+
+for i in $(g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset")
+do
+	if [ "x$search" = "x" ]
+	then
+		list="$list $i"
+	else
+		list="$list $(echo $i | grep $search)"
+	fi
+done
+
+if [ "x$list" = "x" ]
+then
+	exit 1
+fi
+
+start=0
+for i in $list
+do
+	if [ $start -ne 0 ]
+	then
+		if [ "x$sep" = "x" ]
+		then
+			printf "\n"
+		else
+			printf "%s" "$sep"
+		fi
+	fi
+	start=1
+	printf "%s" $i
+done
+
+exit 0
+
