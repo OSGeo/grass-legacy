@@ -207,9 +207,13 @@ int main(int argc, char *argv[]) {
   /* Parse input parameters */
   getParams(&input, &output, &decim);
 
+/*  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
+			G3D_TILE_SAME_AS_FILE,
+			G3D_NO_CACHE);*/
+  /* using cache mode due to bug */			
   map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			G3D_TILE_SAME_AS_FILE,
-			G3D_NO_CACHE);
+			G3D_USE_CACHE_DEFAULT);			
   if (map == NULL)
     G3d_fatalError("main: error opening g3d file");
 
