@@ -1,0 +1,12 @@
+LESS-THAN - command
+
+The LESS-THAN "<" command tells COMBINE to take input from the following
+named file.  When that file is exhausted, you regain control at the 
+keyboard.
+
+EXAMPLES:
+  < input    
+
+Where "input" is any name of a file that you have created that contains 
+commands for combine.  This file may be created from within "combine" by
+running an editor:   !vi input
