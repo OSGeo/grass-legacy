@@ -1,8 +1,8 @@
+#include <stdlib.h>
 #include "codes.h"
 #include "dbmi.h"
 #include "codes.h"
 #include "gis.h"
-#include <stdlib.h>
 #include "glocale.h"
 
 void parse_command_line();
@@ -21,14 +21,14 @@ main(int argc, char *argv[])
 
     list = db_read_dbmscap();
     if (list == NULL) {
-      G_message (stderr, _("Error trying to read dbmscap file\n"));
+      G_message ( _("Error trying to read dbmscap file\n"));
       exit(ERROR);
     }
 
     for (p = list; p; p = p->next) {
-      G_message (stdout,_("%s"), p->driverName);
-      if (parms.f) G_message (stdout,_(":%s"), p->comment);
-      fprintf (stdout,"\n");
+      G_message ( _("%s"), p->driverName);
+      if (parms.f) G_message ( _(":%s"), p->comment);
+      G_message ("\n");
     }
     exit(OK);
 }
@@ -44,18 +44,17 @@ parse_command_line (int argc, char *argv[])
 
     full = G_define_flag();
     full->key = 'f';
-    full->description = "Full output";
+    full->description = _("Full output");
 
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = "print tables and exit";    
+    print->description       = _("print tables and exit");    
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "List all database drivers.";
+    module->description = _("List all database drivers.");
 
-    if(G_parser(argc, argv))
+    if (G_parser(argc, argv))
 	exit(ERROR);
 
     parms.f = full->answer;

@@ -5,10 +5,10 @@
  *   describe a table
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
-#include <stdlib.h>
 #include "glocale.h"
 
 struct {
@@ -51,13 +51,12 @@ main(int argc, char *argv[])
     else
     {
         ncols = db_get_table_number_of_columns(table);
-        G_message (stdout, _("ncols:%d\n"), ncols);
+        G_message ( _("ncols:%d\n"), ncols);
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
-          G_message (stdout, _("Column %d: %s\n"), (col+1), db_get_column_name (column));
+          G_message ( _("Column %d: %s\n"), (col+1), db_get_column_name (column));
         }
-        fflush (stdout);
     }
     
     db_close_database(driver);
@@ -79,20 +78,20 @@ parse_command_line(int argc, char *argv[])
 
     cols = G_define_flag();
     cols->key               = 'c';
-    cols->description       = "print column names only instead of full column descriptions";
+    cols->description       = _("print column names only instead of full column descriptions");
 
     table 		= G_define_option();
     table->key 		= "table";
     table->type 	= TYPE_STRING;
     table->required 	= YES;
-    table->description 	= "table name";
+    table->description 	= _("table name");
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;
-    driver->description = "driver name";
+    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
@@ -100,14 +99,13 @@ parse_command_line(int argc, char *argv[])
     database->key 	= "database";
     database->type 	= TYPE_STRING;
     database->required 	= NO;
-    database->description = "database name";
+    database->description = _("database name");
     if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "Describe a table (in detail).";
+    module->description = _("Describe a table (in detail).");
 
 
     if(G_parser(argc, argv))

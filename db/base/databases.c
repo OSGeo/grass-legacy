@@ -1,7 +1,7 @@
+#include <stdlib.h>
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
-#include <stdlib.h>
 #include "glocale.h"
 
 void parse_command_line();
@@ -39,8 +39,8 @@ main(int argc, char *argv[])
     db_shutdown_driver (driver);
 
     for (i = 0; i < count; i++) {
-	G_message (stdout,_("%s"), db_get_handle_dbname(&handles[i]));
-	G_message (stdout,_("\n"));
+	G_message ( _("%s"), db_get_handle_dbname(&handles[i]));
+	G_message ( _("\n"));
     }
     exit(OK);
 }
@@ -59,19 +59,19 @@ parse_command_line(int argc, char *argv[])
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
-    driver->description = "driver name";
+    driver->description = _("driver name");
 
     location 		  = G_define_option();
     location->key 	  = "location";
     location->type 	  = TYPE_STRING;
     location->required 	  = NO;
     location->multiple 	  = YES;
-    location->description = "database location";
+    location->description = _("database location");
 
     
     /* Set description */
     module              = G_define_module();
-    module->description = "List all databases for a given driver and location.";
+    module->description = _("List all databases for a given driver and location.");
 
     if(G_parser(argc, argv))
         exit(ERROR);

@@ -5,10 +5,10 @@
  *  list all tables in a database
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
-#include <stdlib.h>
 #include "glocale.h"
 
 struct {
@@ -42,7 +42,7 @@ main(int argc, char *argv[])
     if(db_list_tables (driver, &names, &count, system_tables) != DB_OK)
 	exit(ERROR);
     for (i = 0; i < count; i++)
-	fprintf (stdout,"%s\n", db_get_string (&names[i]));
+	G_message ("%s\n", db_get_string (&names[i]));
 
     db_close_database(driver);
     db_shutdown_driver(driver);
@@ -66,7 +66,7 @@ parse_command_line(int argc, char *argv[])
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;
-    driver->description = "driver name";
+    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) ) 
 	driver->answer = drv;
 
@@ -74,22 +74,21 @@ parse_command_line(int argc, char *argv[])
     database->key 	= "database";
     database->type 	= TYPE_STRING;
     database->required 	= NO;
-    database->description = "database name";
+    database->description = _("database name");
     if ( (db=db_get_default_database_name()) ) 
 	database->answer = db;
 
     p = G_define_flag();
-    p->key               = 'p';
-    p->description       = "print tables and exit";    
+    p->key              = 'p';
+    p->description      = _("print tables and exit");    
 
     s			= G_define_flag();
     s->key		= 's';
-    s->description	= "system tables instead of user tables";
+    s->description	= _("system tables instead of user tables");
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "List all tables for a given database.";
+    module->description = _("List all tables for a given database.");
 
 
     if(G_parser(argc, argv))
