@@ -2,8 +2,8 @@ MODULE_TOPDIR = ../..
 
 PGM = r.param.scale
 
-LIBES = $(GISLIB)
-DEPENDENCIES = $(GISDEP)
+LIBES = $(GISLIB) $(GMATHLIB)
+DEPENDENCIES = $(GISDEP) $(GMATHDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
