@@ -44,6 +44,10 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #define DSKY	  1.0
 #define DIST     "1.0"
 
+#define AMAX1(arg1, arg2) ((arg1) >= (arg2) ? (arg1) : (arg2))
+#define AMIN1(arg1, arg2) ((arg1) <= (arg2) ? (arg1) : (arg2))
+#define DISTANCE2(x00, y00) ((xx0 - x00)*(xx0 - x00) + (yy0 - y00)*(yy0 - y00))
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -83,8 +87,6 @@ struct pj_info oproj;
 
 int INPUT(void);
 int OUTGR(void);
-double amax1(double, double);
-double amin1(double, double);
 int min(int, int);
 int max(int, int);
 void com_par(void);
@@ -99,7 +101,6 @@ void vertex(int, int);
 void line_x(int, int);
 void line_y(int, int);
 void cube(int, int);
-double distance2(double, double);
 void (*func)(int, int);
 
 void calculate(void);
@@ -132,36 +133,6 @@ double sin_phi_l, tan_lam_l, lum_C31_l, lum_C33_l;
 double beam_e, diff_e, refl_e, bh, dh,rr,insol_t;
 double cbh, cdh;
 double TOLER;
-
-inline double amax1(arg1,arg2)
- double arg1;
- double arg2;
-{
- double res;
- if (arg1>=arg2) {
-   res = arg1;
- }
- else  {
-   res = arg2;
- }
- return res;
-}
-
-
-inline double amin1(arg1,arg2)
- double arg1;
- double arg2;
-{
- double res;
- if (arg1<=arg2) {
-   res = arg1;
- }
- else  {
-   res = arg2;
- }
- return res;
-}
-
 
 int
 main(int argc, char *argv[])
@@ -619,7 +590,7 @@ if(coefdh != NULL) G_close_cell(fr2);
   {
 	  for (j = 0; j < n; j++)
 	  {
-		zmax = amax1(zmax,z[i][j]);
+		zmax = AMAX1(zmax,z[i][j]);
 		if ( o[i][j] != 0. ) {
 		   if( o[i][j] < 90. )
 			   o[i][j] = 90. - o[i][j];
@@ -921,10 +892,10 @@ void com_par(void)
 		  ypom = lum_Ly * lum_Ly;
 		  pom = sqrt(xpom + ypom);
 
-		sr_min = amin1(sr_min,sunrise_time);
-		sr_max = amax1(sr_max,sunrise_time);
-		ss_min = amin1(ss_min,sunset_time);
-                ss_max = amax1(ss_max,sunset_time);
+		sr_min = AMIN1(sr_min,sunrise_time);
+		sr_max = AMAX1(sr_max,sunrise_time);
+		ss_min = AMIN1(ss_min,sunset_time);
+                ss_max = AMAX1(ss_max,sunset_time);
 
 		  if (fabs(pom) > EPS) {
 			A0 = lum_Ly / pom;
@@ -1207,7 +1178,7 @@ int jmin, imin;
                 }
 
                 if (dist > 1.0)
-                zp = amax1(c1,c2);
+                zp = AMAX1(c1,c2);
         }
         else
                   func = NULL;
@@ -1234,24 +1205,12 @@ int jmin, imin;
 		}
 
 		if (dist > 1.0) 
-		zp = amax1(c1,c2);
+		zp = AMAX1(c1,c2);
 
         }
         else
                   func = NULL;
 
-}
-
-inline double distance2(x00, y00)
-double x00, y00;
-{
-        double dx, dy;
-
-        dx = xx0 - x00; dx *= dx;
-        dy = yy0 - y00; dy *= dy;
-	
-/*        return (sqrt(dx + dy));*/
-        return (dx + dy);
 }
 
 void cube(jmin, imin)
@@ -1268,14 +1227,14 @@ int jmin, imin;
         y1 = (double)jmin * stepy;
 		y2 = y1+stepy;
 
-        v[0] = distance2(x1, y1); 
+        v[0] = DISTANCE2(x1, y1); 
 		
 		if(v[0]<vmin)
 			{
 			ig=0;
 			vmin=v[0];
 			}
-	v[1] = distance2(x2, y1);
+	v[1] = DISTANCE2(x2, y1);
 	
 		if(v[1]<vmin)
 			{
@@ -1283,14 +1242,14 @@ int jmin, imin;
 			vmin=v[1];
 			}
 	
-        v[2] = distance2(x2, y2);
+        v[2] = DISTANCE2(x2, y2);
 		if(v[2]<vmin)
 			{
 			ig=2;
 			vmin=v[2];
 			}
 
-	v[3] = distance2(x1, y2);
+	v[3] = DISTANCE2(x1, y2);
 		if(v[3]<vmin)
 			{
 			ig=3;
@@ -1314,7 +1273,7 @@ int jmin, imin;
 	if (dist > 1.0) {
 		for (i = 0; i < 4; i++) {
 		if (c[i] != UNDEFZ) {
-			cmax = amax1(cmax,c[i]);
+			cmax = AMAX1(cmax,c[i]);
 			zp = cmax;
 			}
 			else
@@ -1454,18 +1413,18 @@ void calculate(void)
 				 slope = s[j][i] * DEG;
 			if(linkein!=NULL) {
 				linke = li[j][i];
-				li_max = amax1(li_max,linke);
-				li_min = amin1(li_min,linke);
+				li_max = AMAX1(li_max,linke);
+				li_min = AMIN1(li_min,linke);
 				}
 			if (albedo != NULL) {
 				alb = a[j][i];
-				al_max = amax1(al_max,alb);
-				al_min = amin1(al_min,alb);
+				al_max = AMAX1(al_max,alb);
+				al_min = AMIN1(al_min,alb);
 				}
                         if (latin != NULL) {
 			latitude = la[j][i];
-            la_max = amax1(la_max,latitude);
-            la_min = amin1(la_min,latitude);
+            la_max = AMAX1(la_max,latitude);
+            la_min = AMIN1(la_min,latitude);
             latitude = - latitude * DEG;
 			}
 	if (latin == NULL && lt == NULL) {
@@ -1498,14 +1457,14 @@ void calculate(void)
 	                exit(0);
 	        }
 
-                        la_max = amax1(la_max,latitude);
-                        la_min = amin1(la_min,latitude);
+                        la_max = AMAX1(la_max,latitude);
+                        la_min = AMIN1(la_min,latitude);
                         latitude = - latitude * DEG;
 	     } else
 		{ /* ll projection */
 			latitude = yp;
-		        la_max = amax1(la_max,latitude);
-                        la_min = amin1(la_min,latitude);
+                        la_max = AMAX1(la_max,latitude);
+                        la_min = AMIN1(la_min,latitude);
                         latitude = - latitude * DEG;
 		}
 	}
