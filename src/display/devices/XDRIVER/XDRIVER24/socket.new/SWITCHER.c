@@ -200,8 +200,8 @@ char *argv[];
      * fifo files. If so, we can't run.  The message printed in this
      * case is that the monitor is already running.  If the monitorcap
      * file is incorrect, this may not actually be the case. */
-    /*if (check_connection(me, argv[fifos]))*/      /* are our fifos in use? */
-    /*    exit(-1);*/               /* if so, we can't run now */
+    if (check_connection(me, argv[fifos]))      /* are our fifos in use? */
+        exit(-1);               /* if so, we can't run now */
 
     /* initialize graphics.  */
     debug("Initialize Graphics");
