@@ -5,6 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 SUBDIRS = \
 	d.redraw \
 	g.manual \
+	g.projinfo \
 	pg.postgisdb \
 	r.univar \
 	v.distance.connect \
