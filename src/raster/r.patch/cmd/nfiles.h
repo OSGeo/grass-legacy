@@ -1,6 +1,11 @@
-/* the number of cell files that can be patched together
- * all cell files will be opened at one time, so this number can not
+/* The number of cell files that can be patched together.
+ *
+ * All cell files will be opened at one time, so this number can not
  * be arbitrarily large.
+ *
+ * Must be smaller than MAXFILES as defined in src/libes/gis/G.h which 
+ * in turn must be smaller than the operating system's limit.
+ *  (Given by `cat /proc/sys/fs/file-max` in Linux 2.4)
  */
 
 #define MAXFILES 200
