@@ -145,7 +145,7 @@
 /* Needed until zlib stuff gets worked out, comment out if you
  * want to try G_zlib_*() funcs, also do the same in get_row.c
  */
-/* #define USE_LZW_COMPRESSION */
+#define USE_LZW_COMPRESSION
  
 /* convert type "RASTER_MAP_TYPE" into index */
 #define F2I(map_type) \
