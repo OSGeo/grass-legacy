@@ -12,3 +12,4 @@ all:
 	$(GMAKE) r3.showdspf.openGL
 # SGI-version:
 #	$(GMAKE) r3.showdspf.sgi
+	$(GMAKE) r3.to.sites
