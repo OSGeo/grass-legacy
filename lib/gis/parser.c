@@ -1197,7 +1197,10 @@ int G_gui (void)
 	        if(!opt->multiple) {
 		    append(cmd, " } \n");
 		    append(cmd, "pack $suf.val%d.val -side left\n", optn);
-		    append(cmd, " set optval(%d) \"%s\" \n", optn, p1 );
+		    if ( opt->answer )
+		        append(cmd, " set optval(%d) \"%s\" \n", optn, opt->answer );
+		    else
+		        append(cmd, " set optval(%d) \"%s\" \n", optn, p1 );
 		}
 		append(cmd, "set nmulti(%d) %d \n", optn, i - 1 );
 		G_free (top);
