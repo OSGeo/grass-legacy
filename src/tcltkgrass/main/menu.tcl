@@ -75,7 +75,7 @@ set display_vector {
         "source $env(TCLTKGRASSBASE)/module/d.vect"
     }
     "Display vector polygons" "" {
-        "source $env(TCLTKGRASSBASE)/module/d.area"
+        "source $env(TCLTKGRASSBASE)/module/d.vect.area"
     }
     "Display USGS DLG-3 files" "" {
         ""
