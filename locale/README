@@ -20,24 +20,25 @@ message strings in GRASS must be modified from
 to
  G_message ( _("..."), ...);
 
-a) to replace:
-- fprintf (stdout,    with G_message (
-- fprintf (stderr,    with G_message (
+Four steps:
+1) to replace (see example above:
+     a) fprintf (stdout,    with G_message (
+     b) fprintf (stderr,    with G_message (
 
-b) to add:
-- the macro _( ) 
+2) to add (see example above):
+     the macro _( ) 
 
-c) to remove:
-- \n at the end of single message strings
+3) to remove (see example above:
+     \n at the end of single message strings
 
-Also needed to be added:
-#include "glocale.h"
+4) to be added to file.c header:
+     #include "glocale.h"
 
-This line has to be added to each C file which contains
-user messages, preferably as last #include statement.
+   This line has to be added to each C file which contains
+   user messages, preferably as last #include statement.
 
-Such strings will be then extracted automatically into
-the POT file(s).
+All these messages strings will be then automatically 
+extracted.
 
 See for example ./vector/v.what.rast/main.c
 
@@ -46,13 +47,17 @@ See for example ./vector/v.what.rast/main.c
 GENERAL TRANSLATION PROCEDURE (no programming required)
 
  POT files ----> PO files      ----> MO files
- (original       (translated        (final message file
-  messages)       messages)          used by binaries)
+ (original       (translated        (final message file,
+  messages)       messages)          used by GRASS programs)
 
-Local Makefile usage:
+
+Semi-automated procedure, to perform in this locale/ directory:
+
    make pot        create grass.pot (containing original messages)
+
    make update-po  merge new messages into existing *.po files
      [Now translate the messages in the po/*.po files (using kbabel or other editor) ]
+
    make mo         create the mo files (containing translated messages as binary file)
 
 
@@ -60,13 +65,14 @@ A convenient software package to translate messages is 'kbabel'.
 It permits to enhance it's message database by loading existing
 .po files to semi-automate the translation.
 
-GRASS must be configured with '--with-nls' and recompiled.
+Note that GRASS must be configured with '--with-nls' and recompiled
+to make use of the translated messages.
 
 There is a file for all library messages and another for all
 module messages (this might be split in future).
 
 ------------------------------------------------------
-DETAILED PROCEDURE:
+DETAILED PROCEDURE :
 
 1. Define/check language settings
 
