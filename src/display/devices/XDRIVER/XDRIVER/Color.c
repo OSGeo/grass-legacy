@@ -4,15 +4,13 @@
  * 
  * Called by: Color() in ../lib/Color.c */
 #include <stdio.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include "../lib/colors.h"
 
 extern int NCOLORS;
 extern Display *dpy;
 extern GC gc;
-extern u_long xpixels[];
+extern u_long *xpixels;
 extern int table_type;
 
 SetXColor(number)
