@@ -1,0 +1,7 @@
+interface_build {
+    {r.surf.contour} 0
+    {Surface generation program.}
+    {entry input {Raster map containing contours (values != 0):} 0 raster}
+    {entry output {Output raster map containing a smooth surface:} 0 raster}
+    {checkbox -f {Invoke fast, but memory-intensive program operation.} "" -f}
+}
