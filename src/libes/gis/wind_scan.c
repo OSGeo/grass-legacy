@@ -58,5 +58,15 @@ scan_double (buf, value)
  */
     *junk = 0;
     *value = 0.0;
-    return (sscanf (buf, "%lf%1s", value, junk) == 1 && *junk == 0);
+    if(sscanf (buf, "%lf%1s", value, junk) == 1 && *junk == 0)
+    {
+       while(*buf) buf++;
+       buf--;
+       if(*buf>='A'&&*buf<='Z')
+ 	  return 0;
+       if(*buf>='a'&&*buf<='z')
+ 	  return 0;
+       return 1;
+     }
+     return 0;
 }
