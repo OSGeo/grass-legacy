@@ -88,7 +88,7 @@ G__read_row_ptrs (fd)
     for (row = 0; row <= NROWS; row++)
     {
 	v = 0;
-	for (n = 0; n < nbytes; n++)
+	for (n = 0; n < (int) nbytes; n++)
 	    v = (v << 8) + *b++;   /* v = (v * 256) + *b++; */
 	FCB.row_ptr[row] = v;
     }
