@@ -38,6 +38,19 @@ int Vect_array_to_cat_list (int *, int, struct cat_list *);
 int Vect_cat_in_cat_list (int, struct cat_list *);
 int Vect_destroy_cat_list (struct cat_list *);
 
+     /* DB connection - field info */
+struct dblinks *Vect_new_dblinks_struct ( void );
+void Vect_reset_dblinks ( struct dblinks *p );
+int Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
+int Vect_map_add_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
+struct field_info *Vect_get_field_info (char *, char *, int);
+int Vect_read_dblinks ( char *, char *,  struct dblinks *p );
+int Vect_write_dblinks ( char *, char *,  struct dblinks *p );
+struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type );
+struct field_info *Vect_get_dblink (  struct Map_info *Map, int link );
+
       /* List of FID (feature ID) (integers) */
 struct ilist *Vect_new_list (void);
 int Vect_list_append ( struct ilist *, int);
@@ -115,6 +128,8 @@ int Vect_close (struct Map_info *);
 int Vect_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
 long Vect_write_line (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 
+int Vect_get_num_dblinks (struct Map_info *map);
+    
       /* Level 2 only */
 int Vect_read_line (struct Map_info *, struct line_pnts *, struct line_cats *, int);
 int Vect_rewrite_line (struct Map_info *, int, int, struct line_pnts *, struct line_cats *);
@@ -179,7 +194,6 @@ int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, cha
 int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist *, double *);
 
     /* Miscellaneous */
-struct field_info *Vect_get_field_info (char *, char *, int);
 int Vect_topo_dump ( struct Plus_head *, FILE *);
 double Vect_points_distance ( double, double, double, double, double, double, int);
 int Vect_option_to_types (struct Option *);
@@ -191,6 +205,7 @@ int Vect_segment_intersection ( double, double, double, double, double, double,
 int Vect_line_intersection ( struct line_pnts *, struct line_pnts *,
                              struct line_pnts ***, struct line_pnts ***,
                              int *, int *, int );
+char *Vect_subst_var ( char *str, char *map, char *mapset );
 
 /* Internal functions, MUST NOT be used in modules */
 int Vect_init (void);
