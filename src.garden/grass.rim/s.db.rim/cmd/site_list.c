@@ -69,14 +69,16 @@ for (s1=Site_list; s1<=Last_site; s1++)
  {
         *desc = '\0';
         if (extra_flag==0 ||
-				!strcmp(extra_field,Field_info[Site_field].column_name))
+		    !strcmp(extra_field,Field_info[Site_field].column_name))
                 sprintf(desc,"#%d",s1->site_number);
         else
-        if (!strcmp(extra_field,Field_info[North_field].column_name))
-                sprintf(desc,"#%.2f",s1->north);
+        if (!strcmp(extra_field,Field_info[North_field].column_name)) {
+	   str_from_e_n(desc,North_field,s1->north);
+        }
         else
-        if (!strcmp(extra_field,Field_info[East_field].column_name))
-                sprintf(desc,"#%.2f",s1->east);
+        if (!strcmp(extra_field,Field_info[East_field].column_name)) {
+	   str_from_e_n(desc,East_field,s1->east);
+        }
         else {
                 sprintf(cmd, "select from data where %s = %d",
                 Field_info[Site_field].column_name, s1->site_number);
@@ -104,11 +106,15 @@ for (s1=Site_list; s1<=Last_site; s1++)
                         }
 
         }
-
-/* Use next line for GRASS 3.1 and later */
-/*              G_put_site(fp,s1->east,s1->north,desc); */
-/* and remove the following line */
-                fprintf(fp,"%.2f|%.2f|%s\n",s1->east,s1->north,desc?desc:"");
-        }  /* end of for loop for all sites */
+        G_put_site(fp,s1->east,s1->north,desc);
+  }  /* end of for loop for all sites */
 fclose(fp);
+}
+
+str_from_e_n(str,i,val)
+int i; double val; char *str;
+{
+char format[40];
+sprintf(format,"#%%%d.%dlf",Field_info[i].length,Field_info[i].next_field[1]);
+sprintf(str, format, val);
 }
