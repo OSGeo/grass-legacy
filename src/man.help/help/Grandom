@@ -1,0 +1,3 @@
+Creates a cell file consisting of random pixels, and an
+optional sites list. Useful for defining field locations
+for collecting random samples.
