@@ -10369,8 +10369,8 @@ esac
 
 
 
-OPENGLwINC=
-LGLWM=
+OPENGLWINC=
+OPENGLWM=
 
 if test -n "$USE_GLW"; then
 
@@ -10389,7 +10389,7 @@ echo "$ac_t""$with_glw_includes" 1>&6
 if test -n "$with_glw_includes" ; then
     for dir in $with_glw_includes; do
         if test -d "$dir"; then
-            OPENGLwINC="$OPENGLwINC -I$dir"
+            OPENGLWINC="$OPENGLWINC -I$dir"
         else
             { echo "configure: error: *** GLw includes directory $dir does not exist." 1>&2; exit 1; }
         fi
@@ -10399,7 +10399,7 @@ fi
 
 
 ac_save_cppflags="$CPPFLAGS"
-CPPFLAGS="$OPENGLwINC $XMINC $X_CFLAGS $OPENGLINC $CPPFLAGS"
+CPPFLAGS="$OPENGLWINC $XMINC $X_CFLAGS $OPENGLINC $CPPFLAGS"
 for ac_hdr in GL/GLwMDrawA.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
@@ -10499,7 +10499,7 @@ echo "$ac_t""$with_glw_libs" 1>&6
 if test -n "$with_glw_libs"; then
     for dir in $with_glw_libs; do
         if test -d "$dir"; then
-            LGLWM="$LGLWM -L$dir"
+            OPENGLWM="$OPENGLWM -L$dir"
         else
             { echo "configure: error: *** GLw library directory $dir does not exist." 1>&2; exit 1; }
         fi
@@ -10509,7 +10509,7 @@ fi
 
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateMDrawingArea in -lGLw""... $ac_c" 1>&6
@@ -10544,14 +10544,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLw "
+  OPENGLWM="$OPENGLWM -lGLw "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateM1DrawingArea in -lGLw""... $ac_c" 1>&6
@@ -10586,14 +10586,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLw "
+  OPENGLWM="$OPENGLWM -lGLw "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateM2DrawingArea in -lGLw""... $ac_c" 1>&6
@@ -10628,14 +10628,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLw "
+  OPENGLWM="$OPENGLWM -lGLw "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateMDrawingArea in -lGLwM""... $ac_c" 1>&6
@@ -10670,14 +10670,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLwM "
+  OPENGLWM="$OPENGLWM -lGLwM "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateM1DrawingArea in -lGLwM""... $ac_c" 1>&6
@@ -10712,14 +10712,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLwM "
+  OPENGLWM="$OPENGLWM -lGLwM "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 echo $ac_n "checking for GLwCreateM2DrawingArea in -lGLwM""... $ac_c" 1>&6
@@ -10754,14 +10754,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lGLwM "
+  OPENGLWM="$OPENGLWM -lGLwM "
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 
@@ -10798,7 +10798,7 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lMesaGLw "
+  OPENGLWM="$OPENGLWM -lMesaGLw "
 else
   echo "$ac_t""no" 1>&6
 
@@ -10834,14 +10834,14 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lMesaGLw $OPENGLULIB"
+  OPENGLWM="$OPENGLWM -lMesaGLw $OPENGLULIB"
 else
   echo "$ac_t""no" 1>&6
 
 LDFLAGS=${ac_save_ldflags}
 
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
+LDFLAGS="$OPENGLWM $XMLIB $OPENGL_LIB_PATH $LDFLAGS"
 
 
 
@@ -10878,7 +10878,7 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lMesaGLwM "
+  OPENGLWM="$OPENGLWM -lMesaGLwM "
 else
   echo "$ac_t""no" 1>&6
 
@@ -10914,7 +10914,7 @@ LIBS="$ac_save_LIBS"
 
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-  LGLWM="$LGLWM -lMesaGLwM $OPENGLULIB"
+  OPENGLWM="$OPENGLWM -lMesaGLwM $OPENGLULIB"
 else
   echo "$ac_t""no" 1>&6
 
@@ -12145,8 +12145,8 @@ s%@BLASLIB@%$BLASLIB%g
 s%@LAPACKLIB@%$LAPACKLIB%g
 s%@XMINC@%$XMINC%g
 s%@XMLIB@%$XMLIB%g
-s%@OPENGLwINC@%$OPENGLwINC%g
-s%@LGLWM@%$LGLWM%g
+s%@OPENGLWINC@%$OPENGLWINC%g
+s%@OPENGLWM@%$OPENGLWM%g
 s%@FTINC@%$FTINC%g
 s%@FTLIB@%$FTLIB%g
 s%@INTLLIB@%$INTLLIB%g

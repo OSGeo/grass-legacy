@@ -135,10 +135,10 @@ TIFFLIB             = @TIFFLIB@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
-OPENGLwINC          = @OPENGLwINC@
+OPENGLWINC          = @OPENGLWINC@
 OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
-LGLWM               = @LGLWM@
+OPENGLWM            = @OPENGLWM@
 
 #IrisGL files for SG3d
 GLINC               = @GLINC@

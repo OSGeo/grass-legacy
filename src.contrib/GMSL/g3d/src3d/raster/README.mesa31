@@ -135,11 +135,11 @@ because there they seem to work in ,my case with other libaries:
 
 original: 
 
-OGLLIB=  $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
+OGLLIB=  $(OPENGLULIB) -lGL $(OPENGLWM) -lXm -lX11 -lXt -lXext
 
 after some experiments it worked in my case with following configuration: 
 
-OGLLIB=  $(OPENGLULIB)  -lGL -lGLw -lMesaGLw -lMesaGLwM ${LGLWM} -lXm -lX11 -lXt -lXext
+OGLLIB=  $(OPENGLULIB)  -lGL -lGLw -lMesaGLw -lMesaGLwM $(OPENGLWM) -lXm -lX11 -lXt -lXext
 
 then i changed back to the main-directory of grass and did:
 
