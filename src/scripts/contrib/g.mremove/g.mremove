@@ -29,7 +29,7 @@ fi
 if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
         echo
-	g.remove help 2>&1 | sed 's/g.remove/g.mremove/g'
+	g.remove help 2>&1 | sed "s/g.remove/$program/g"
 	echo
 	echo "Note:"
 	echo "  You can use wildcard for name."
