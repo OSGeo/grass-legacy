@@ -1,6 +1,6 @@
 #
 # Copyright (C) 1998 The Information-technology Promotion Agency, Japan(IPA), LGPL
-# $Id: GNUmakefile,v 2.1 2000-11-26 13:20:36 markus Exp $
+# $Id: GNUmakefile,v 2.2 2000-11-26 13:28:09 markus Exp $
 #
 
 SHELL = /bin/sh
@@ -19,7 +19,7 @@ GRASS_SRC = ../../src
 
 # GRASS compilation name ('architecture' in terminology of GRASS
 # installation documentation)
-GRASS_ARCH = $(ARCH)
+GRASS_ARCH = `echo $(HEADER) | cut -d'.' -f2`
 
 # directory in the GRASS source tree that contains GIS library header files
 # if previous variables were set this should be ok
@@ -32,7 +32,8 @@ VECTH2 = $(GRASS_SRC)/libes/vect32/diglib
 
 # directory that contains a libgis.a for your grass compilation 
 # if previous variables were set this should be ok
-GISLIB = $(GRASS_SRC)/libes/LIB.$(GRASS_ARCH)
+#GISLIB = $(GRASS_SRC)/libes/LIB.$(ARCH)
+GISLIB = $(GRASS_SRC)/libes/$(LIBARCH)
 
 ## Settings to run the test programs
 
