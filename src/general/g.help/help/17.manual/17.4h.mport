@@ -9,6 +9,7 @@ RETURN key, then press ESC.
  \m.dmaUSGSread help\    \m.dted.examine help\   \m.dted.extract help\
  \m.examine.tape help\   \m.flip help\           \m.gc2ll help\ 
  \m.ll2gc help\          \m.ll2u help\           \m.lulc.USGS help\
- \m.lulc.read help\      \m.region.ll help\      \m.rot90 help\  
- \m.tiger.region help\   \m.u2ll help\
+ \m.lulc.read help\      \m.proj help\           \m.region.ll help\
+ \m.rot90 help\          \m.tiger.region help\   \m.u2ll help\
 
+ \tig.rim.sh help\       \tiger.info.sh help\
