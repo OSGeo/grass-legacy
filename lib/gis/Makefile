@@ -56,12 +56,7 @@ LIB_OBJS = \
     dalloc.o\
     date.o\
     debug.o\
-    def_window.o\
     distance.o\
-    done_msg.o\
-    edit_cats.o\
-    edit_cellhd.o\
-    edit_hist.o\
     eigen_tools.o\
     endian.o\
     env.o\
