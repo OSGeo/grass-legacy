@@ -106,6 +106,8 @@ draw_line(int x1, int y1, int x2, int y2)
 
 	store_xy(x, y);
 
+	modified = 1;
+
 	return 0;
 }
 
