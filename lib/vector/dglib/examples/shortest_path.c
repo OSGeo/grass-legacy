@@ -58,32 +58,35 @@ typedef struct {
 
 static int 	clipper 	(
 						gnGrpGraph_s * 	pgraph ,
-						gnInt32_t * 	pprevlink ,	/* previous link pointer */
-						gnInt32_t * 	pnodefrom ,	/* from node pointer */
-						gnInt32_t * 	plink ,		/* this link pointer */
-						gnInt32_t * 	pnodeto ,	/* to node pointer */
-						gnInt32_t * 	pcost ,		/* real cost pointer */
+						gnGrpSPClipInput_s * pIn ,
+						gnGrpSPClipOutput_s * pOut ,
 						void * 			pvarg		/* caller's pointer */
 						)
 {
 	ClipperContext_s * pclip = (ClipperContext_s*) pvarg;
-	gnInt32_t * pnFromXYZ = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pnodefrom) );
-	gnInt32_t * pnToXYZ   = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pnodeto) );
+	/*
+	gnInt32_t * pnFromXYZ = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pIn->pnNodeFrom) );
+	gnInt32_t * pnToXYZ   = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pIn->pnNodeTo) );
 
 	printf( "clipper called:\n" );
-	printf( "        from node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pnodefrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
-	printf( "        to   node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pnodeto), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
-	printf( "        link     : %d\n", GNGRP_LINK_USER(plink) );
+	printf( "        from node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pIn->pnNodeFrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
+	printf( "        to   node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pIn->pnNodeTo), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
+	printf( "        link     : %d\n", GNGRP_LINK_USER(pIn->pnLink) );
+	*/
 
 	if ( pclip )
 	{
-		if ( GNGRP_NODE_ID(pnodeto) == pclip->node_to_discard )
+		if ( GNGRP_NODE_ID(pIn->pnNodeTo) == pclip->node_to_discard )
 		{
+			/*
 			printf( "        discarder.\n" );
+			*/
 			return 1;
 		}
 	}
+	/*
 	printf( "        accepted.\n" );
+	*/
 	return 0;
 }
 
@@ -92,10 +95,9 @@ static int 	clipper 	(
 int main( int argc , char ** argv )
 {
 	gnGrpGraph_s  		graph;
-	gnInt32_t *			pflat;
 	gnInt32_t 			from , to;
 
-	int					fd , i , nret;
+	int					fd , nret;
 	gnGrpSPReport_s *	pSPReport;
 	ClipperContext_s	clipctx , * pclipctx;
 
@@ -173,7 +175,7 @@ int main( int argc , char ** argv )
 	{
 		int i;
 
-		printf( "shortest path report: total links %d - total distance %d\n" , pSPReport->cArc , pSPReport->distance );
+		printf( "shortest path report: total links %ld - total distance %ld\n" , pSPReport->cArc , pSPReport->distance );
 
 		for( i = 0 ; i < pSPReport->cArc ; i ++ )
 		{
