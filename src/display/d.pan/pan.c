@@ -28,6 +28,7 @@ int pan( int quiet, double mag)
 	  G_set_window(&window);
 	  redraw();
 
+          /*	  
 	  if (yes("Accept new region?"))
 	      continue;
 
@@ -35,6 +36,7 @@ int pan( int quiet, double mag)
 	  G_put_window(&window);
 	  G_set_window(&window);
 	  redraw();
+	  */
 	}
 	else
 	{
