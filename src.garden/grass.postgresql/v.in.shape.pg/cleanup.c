@@ -27,6 +27,7 @@
 #include <errno.h>
 #include "cleanup.h"
 #include "gis.h"
+#include "glocale.h"
 
 
 /* Apply vector cleanup procedures */
@@ -79,17 +80,17 @@ void vector_map_cleanup( char *mapname ) {
 
     switch(err0) {
     case ENOEXEC: {
-      sprintf( err_buf, "Insufficient environment space to run v.spag.\n" );
+      sprintf( err_buf, _("Insufficient environment space to run v.spag.\n") );
       G_fatal_error(err_buf);
       break;
     }
     case ENOMEM: {
-      sprintf( err_buf, "Insufficient memory to run v.spag.\n" );
+      sprintf( err_buf, _("Insufficient memory to run v.spag.\n") );
       G_fatal_error(err_buf); 
       break;
     }
     default: {
-      sprintf( err_buf, "v.spag returned error.\n" );
+      sprintf( err_buf, _("v.spag returned error.\n") );
       G_fatal_error(err_buf);
       break;
     }

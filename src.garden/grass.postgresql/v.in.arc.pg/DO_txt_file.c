@@ -5,6 +5,7 @@
 #include <string.h>
 #include "gis.h"
 #include "v_in_arc.h"
+#include "glocale.h"
 
 /**************************************************************/
 int DO_txt_file (char *fp_nam1, char *fp_nam2)
@@ -26,7 +27,7 @@ int DO_txt_file (char *fp_nam1, char *fp_nam2)
            {        /* modified data file, copy to temp file */
            /*rewind(fp1);*/
            inbuf[0] = '\0';
-           strcat(inbuf,"\tno column header available\n");
+           strcat(inbuf,_("\tno column header available\n"));
            goto RE_WRT;
            }
         else        /* looks like INFO output, process it */

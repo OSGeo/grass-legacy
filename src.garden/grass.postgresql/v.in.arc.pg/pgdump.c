@@ -34,6 +34,7 @@
 #include "gis.h"
 #include "shapefil.h"
 #include <libpq-fe.h>
+#include "glocale.h"
 
 typedef unsigned char uchar;
 
@@ -48,7 +49,7 @@ struct my_string {
 int init(struct my_string *str) {
   str->data = (char *)malloc(1024 *sizeof(char));
   if(str->data == NULL) {
-    fprintf(stderr, "Failed to allocate new memory.\n");
+    fprintf(stderr, _("Failed to allocate new memory.\n"));
     exit(-1);
   } 
   str->len = 1;
@@ -64,7 +65,7 @@ int append(struct my_string *str, const char *s) {
     str->totlen = str->len;
     str->data = (char *)realloc(str->data, sizeof(char) * str->len);
     if(str->data == NULL) {
-      fprintf(stderr, "Failed to allocate new memory.\n");
+      fprintf(stderr, _("Failed to allocate new memory.\n"));
       exit(-1);
     }
   }
@@ -187,7 +188,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
 	fwrite( single_line, strlen(single_line), 1, fp );
 	
 	if (ferror(fp)) {
-		fprintf(stderr,"Error occurred while writing to tmp file!\n");
+		fprintf(stderr,_("Error occurred while writing to tmp file!\n"));
 		fclose(fp);
 		exit(-1);
 	}
@@ -234,7 +235,7 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
             fprintf(stderr,
-                  "Please run g.select.pg to identify a current database.\n");
+                  _("Please run g.select.pg to identify a current database.\n"));
 	    exit(-1);
         }
 /* -------------------------------------------------------------------- */
@@ -255,7 +256,7 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 	 
 	if( hDBF == NULL )
         {
-            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+            sprintf (buf, _("%s - DBF not found, or wrong format.\n"), infile);
             G_fatal_error (buf);
         }
 
@@ -284,7 +285,7 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 			fld="float4";
 		break;
 		case 3:
-            		G_fatal_error ("Invalid field type - bailing out");
+            		G_fatal_error (_("Invalid field type - bailing out"));
 		break;
 	}
 	
@@ -325,15 +326,15 @@ int PgDumpFromDBF (char *infile, int normal_user) {
         
     	pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     	if (PQstatus (pg_conn) == CONNECTION_BAD) {
-     		printf ("Error Quering Postgres:%s\n",PQerrorMessage(pg_conn));
+     		printf (_("Error Quering Postgres:%s\n"),PQerrorMessage(pg_conn));
       		PQfinish(pg_conn);
       		exit (-1); 
     	}
-  	fprintf(stdout,"Executing %s\n",SQL_create.data);      
+  	fprintf(stdout,_("Executing %s\n"),SQL_create.data);      
    	res = PQexec (pg_conn, SQL_create.data);
 	
 		if (strlen(PQresultErrorMessage(res))){
-			fprintf(stdout,"FIXME: Postgres Says:\n**********************\n%s\nPlease make sure that created table name is not used by another table.\n", PQresultErrorMessage(res));
+			fprintf(stdout,_("FIXME: Postgres Says:\n**********************\n%s\nPlease make sure that created table name is not used by another table.\n"), PQresultErrorMessage(res));
 		PQclear(res);
 		PQfinish(pg_conn);
 		DBFClose( hDBF );
@@ -355,9 +356,9 @@ if (!normal_user) {
 	uchar ch='y';
 	
 
-	fprintf(stdout,"Additionally dump to ASCII file (enter full Unix name or hit <Enter> for none):\n");
+	fprintf(stdout,_("Additionally dump to ASCII file (enter full Unix name or hit <Enter> for none):\n"));
 	if (fgets(buf,sizeof(buf),stdin) == NULL || !strlen(buf)) {
-		fprintf(stdout, "OK, writing to temporary file\n");
+		fprintf(stdout, _("OK, writing to temporary file\n"));
 		tmpfile_nm = G_tempfile();
 		ch='n';
 
@@ -365,7 +366,7 @@ if (!normal_user) {
 		sscanf(buf,"%s",nm);
 		if (strlen(nm)) tmpfile_nm=nm;
 		else {
-			fprintf(stdout, "OK, writing to temporary file\n");
+			fprintf(stdout, _("OK, writing to temporary file\n"));
 			tmpfile_nm = G_tempfile();
 			ch='n';
 		}
@@ -373,7 +374,7 @@ if (!normal_user) {
 	}
 			
 	if((fp = fopen(tmpfile_nm,"w")) == NULL) {
-            fprintf(stderr, "File write error on temporary file %s\nHint: Check write permissions for current catalogue", tmpfile_nm);
+            fprintf(stderr, _("File write error on temporary file %s\nHint: Check write permissions for current catalogue"), tmpfile_nm);
 	    append(&SQL_insert, "drop table ");
 	    append(&SQL_insert, name);
 	    /*		snprintf(SQL_insert,4096,"drop table %s",name);*/	
@@ -397,7 +398,7 @@ if (!normal_user) {
 	/*	snprintf(SQL_insert,4096,"copy  %s from '%s' using delimiters ','",
 				name, tmpfile_nm);*/
 			
-		fprintf(stdout,"Executing %s\n",SQL_insert.data);
+		fprintf(stdout,_("Executing %s\n"),SQL_insert.data);
 		
 		res = PQexec (pg_conn, SQL_insert.data);
 		
@@ -405,7 +406,7 @@ if (!normal_user) {
 		/*explicitly close select result to avoid memory leaks*/  
 			
 			
-		fprintf(stdout,"********************\nFIXME: Postgres ERROR:%s\nThe table has NOT been created.\nYou must be Postgres superuser to COPY table. Choose normal user dumpmode.\n",PQresultErrorMessage(res));
+		fprintf(stdout,_("********************\nFIXME: Postgres ERROR:%s\nThe table has NOT been created.\nYou must be Postgres superuser to COPY table. Choose normal user dumpmode.\n"),PQresultErrorMessage(res));
 			
 			PQclear(res);
 			clear(&SQL_insert);
@@ -423,7 +424,7 @@ if (!normal_user) {
 			exit(-1);	
 		}
 	if (ch != 'y') unlink(tmpfile_nm);
-	fprintf(stdout,"\nTable %s successfully copied into Postgres. Congratulations!\n",name);	
+	fprintf(stdout,_("\nTable %s successfully copied into Postgres. Congratulations!\n"),name);	
 	/*explicitly close select result to avoid memory leaks*/  
 	PQclear(res);
 }
@@ -464,7 +465,7 @@ snprintf(fld,1024,"'%s'",DBFReadStringAttribute( hDBF, i, j));*/
 			append(&valstrng, fld);
 		break;
 		case 3:
-            		G_fatal_error ("Invalid field type - bailing out");
+            		G_fatal_error (_("Invalid field type - bailing out"));
 		break;
 	  }
 	  append(&valstrng,",");
@@ -487,13 +488,13 @@ snprintf(fld,1024,"'%s'",DBFReadStringAttribute( hDBF, i, j));*/
 		/*		snprintf(SQL_insert,4096,"insert into %s (%s) values (%s)",name, 
 					fldstrng,valstrng);*/
 			
-		fprintf(stdout,"Executing %s\n",SQL_insert.data);
+		fprintf(stdout,_("Executing %s\n"),SQL_insert.data);
 		
 		res = PQexec (pg_conn, SQL_insert.data);
 		/*explicitly close select result to avoid memory leaks*/  
 		PQclear(res);
    }
-	fprintf(stdout,"\nSuccessfully inserted %d records to Postgres table %s\n",
+	fprintf(stdout,_("\nSuccessfully inserted %d records to Postgres table %s\n"),
 		hDBF->nRecords,name);   
 }
 

@@ -28,7 +28,8 @@
 #include <setjmp.h>
 #include "dbutils.h"
 /* #include "gis.h" */
-#include <stdio.h> 
+#include <stdio.h>
+#include "glocale.h"
 
 
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
@@ -69,7 +70,7 @@ pntDescript *pb, *pc;
 
   /* Retrieve snap distance for map */
   if( procSnapDistance( GET_SD, &snap ) ) {
-    fprintf(stderr, "Could not set snap distance. Aborting." );
+    fprintf(stderr, _("Could not set snap distance. Aborting.") );
     exit(1);
   }
 

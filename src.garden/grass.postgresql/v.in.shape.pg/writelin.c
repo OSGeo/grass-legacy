@@ -29,6 +29,7 @@
 #include "writelin.h"
 #include "dbutils.h"
 #include "gbtree.h"
+#include "glocale.h"
 
 
 /* Create a repository of segments for inclusion into GRASS
@@ -74,12 +75,12 @@ void vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 					      (segmentDescript) );
 
   if( procMapType( GET_VAL, &maptype ) != 0 ) {
-    fprintf( stderr, "Could not retrieve map type. Defaulting to LINE.\n" );
+    fprintf( stderr, _("Could not retrieve map type. Defaulting to LINE.\n") );
     maptype = 1;
   }
 
   if( procMinSubtend( GET_VAL, &minangle ) != 0 ) {
-    fprintf( stderr, "Could not retrieve minimum angle at vertex. Setting default\n" );
+    fprintf( stderr, _("Could not retrieve minimum angle at vertex. Setting default\n") );
     minangle = 1.745e-4;
   }
   

@@ -48,7 +48,7 @@
  * Fairfax, Virginia 22030
  *
  */
-/*	Alex Shevlakov sixote@yahoo.com 02/2000 hack - use dbf for import to postgres
+/*	Alex Shevlakov sixote@yahoo.com 02/2000  use dbf for import to postgres
 *	and use id=CatNum simple rule for cats (no need of the text_file which is still
 *	set to non_NULL to use the original code)
 */
@@ -61,6 +61,7 @@
 #include "Vect.h"
 #include "AtoG.h"
 #include "v_in_arc.inter.h"
+#include "glocale.h"
 
 int GenToDigAreaLabels (FILE *pts_file, FILE *txt_file, FILE *atts_file,
 	char *cats_filename)
@@ -84,7 +85,7 @@ int GenToDigAreaLabels (FILE *pts_file, FILE *txt_file, FILE *atts_file,
 	NumCats = 1;
 	G_init_cats((CELL)NumCats,(char *)NULL,&new_cats);
 	
-	fprintf (stdout,"\nWorking...\n");
+	fprintf (stdout,_("\nWorking...\n"));
 	
 	/* LOOP - through the pts_file */
 	done = 0;
@@ -113,7 +114,7 @@ int GenToDigAreaLabels (FILE *pts_file, FILE *txt_file, FILE *atts_file,
 		   else
 		   {
 			/* error */
-			G_fatal_error("reading LABEL-POINTS file");
+			G_fatal_error(_("reading LABEL-POINTS file"));
 		   }
 		}
 	}

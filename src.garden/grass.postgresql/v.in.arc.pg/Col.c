@@ -11,21 +11,17 @@ int i=0,
 
 while (txt[i]!='\0')
    {
-   /*fprintf (stderr, "'%c'", txt[i]);*/ /*DEBUG*/
-   /*newline trap added--dks 2-91*/
    if (txt[i]!=' ' && txt[i] != '\n') 
       flag=1;
    else if (txt[i]==' ' && flag==1)
       {
       count++;
-/*	  fprintf (stderr, "\ncount = %d\n", count);*/ /*DEBUG*/
       flag=0;
       }
    i++;
    }
 if (flag==1)
    count++;
- /* fprintf (stderr, "\nreturning: count = %d\n", count);*/ /*DEBUG*/
 return(count);
 }
 

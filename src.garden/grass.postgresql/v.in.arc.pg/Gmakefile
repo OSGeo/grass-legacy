@@ -30,7 +30,9 @@ INTER_OBJ = Build_inter.o\
 
 PGM = v.in.arc.pg
 HOME = $(BIN_INTER)
-EXTRA_CFLAGS = $(PQINCPATH)
+PACKAGE = "v.in.arc.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 all:  $(HOME)/$(PGM)
 
