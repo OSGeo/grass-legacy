@@ -10,7 +10,7 @@ to geographic (latitude/longitude) coordinates.
 .br
 \fBm.u2ll help \fR
 .br
-\fBm.u2ll \fR[\fB-srwo\fR] \fBspheroid\*=\fIname \fR[\fBzone\*=\fIvalue\fR] [\fBinput\*=\fIname\fR] [\fBoutput\*=\fIname\fR]
+\fBm.u2ll \fR[\fB-srwod\fR] \fBspheroid\*=\fIname \fR[\fBzone\*=\fIvalue\fR] [\fBinput\*=\fIname\fR] [\fBoutput\*=\fIname\fR]
 .SH DESCRIPTION
 .I m.u2ll
 converts Universal Transverse Mercator (UTM) northings and eastings
@@ -35,7 +35,7 @@ The user can run the program non-interactively by entering desired flag settings
 and parameter values on the command line using the following format:
 .LP
 .RS
-\fBm.u2ll \fR[\fB-srwo\fR] \fBspheroid\*=\fIname \fR[\fBzone\*=\fIvalue\fR] [\fBinput\*=\fIname\fR] [\fBoutput\*=\fIname\fR]
+\fBm.u2ll \fR[\fB-srwod\fR] \fBspheroid\*=\fIname \fR[\fBzone\*=\fIvalue\fR] [\fBinput\*=\fIname\fR] [\fBoutput\*=\fIname\fR]
 .RE
 .LP
 
@@ -87,6 +87,9 @@ This option allows the user to pass an ascii vector file through \fIm.u2ll\fR.
 Do not flag invalid east, north input lines as errors.
 .IP \fB-o\fR 18
 Flag other invalid input lines as errors.
+.IP \fB-d\fR 18
+Output latitude/longitude values in decimal degrees,
+rather than in the form \fIdd:mm:ss\fR.
 .LP
 \fBParameters:\fR
 .IP \fBspheroid\*=\fIname\fR 18
@@ -109,26 +112,27 @@ AVAILABLE SPHEROIDS
 (The on-line listing includes only the spheroid names.)
 .sp .25
 .TS
+tab(;);
 l|c|l|l
 l|c|l|l
 l|c|l|l
 l|l|l|l.
-Spheroid:	Semi-major axis	Eccentricity sqrd (e),	Commonly used for:
-	(Equatorial Radius)	Flattening (f),	
-	(a):	or Polar Radius (b):	
+Spheroid:;Semi-major axis;Eccentricity sqrd (e),;Commonly used for:
+;(Equatorial Radius);Flattening (f),
+;(a):;or Polar Radius (b):
 _
-airy          a\*=6377563.396 e\*=.006670540
-australian     a\*=6378160     f\*=1/298.25	Australia
-bessel        a\*=6377397.155 e\*=.006674372	Japan
-clark66       a\*=6378206.4   b\*=6356583.8	N. America
-everest       a\*=6377276.345 e\*=.0066378466	India, Burma
-grs80         a\*=6378137     f\*=1/298.257
-hayford       a\*=6378388     f\*=1/297
-international a\*=6378388     f\*=1/297	Europe
-krasovsky     a\*=6378245     f\*=1/298.3
-wgs66         a\*=6378145     f\*=1/298.25	worldwide coverage
-wgs72         a\*=6378135     f\*=1/298.26	worldwide coverage
-wgs84         a\*=6378137     f\*=1/298.257223563	worldwide coverage
+airy;a\*=6377563.396;e\*=.006670540
+australian;a\*=6378160;f\*=1/298.25;Australia
+bessel;a\*=6377397.155;e\*=.006674372;Japan
+clark66;a\*=6378206.4;b\*=6356583.8;N. America
+everest;a\*=6377276.345;e\*=.0066378466;India, Burma
+grs80;a\*=6378137;f\*=1/298.257
+hayford;a\*=6378388;f\*=1/297
+international;a\*=6378388;f\*=1/297;Europe
+krasovsky;a\*=6378245;f\*=1/298.3
+wgs66;a\*=6378145;f\*=1/298.25;worldwide coverage
+wgs72;a\*=6378135;f\*=1/298.26;worldwide coverage
+wgs84;a\*=6378137;f\*=1/298.257223563;worldwide coverage
 .TE
 .SH EXAMPLE
 Assume the user has input the command:
