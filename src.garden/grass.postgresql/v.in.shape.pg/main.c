@@ -552,12 +552,14 @@ int main( int   argc, char *argv[])
     if( f_att != NULL ) {
       if(cat_field == -1)
 	G_warning( "No attribute value field assigned. Using record ID.\n" );	
-      else if(fd0[cat_field+4].fldType != 1)
-	G_warning( "Named attribute field is not integer value. Using record ID.\n" );	
+      else if(fd0[cat_field+4].fldType != 1 || fd0[cat_field+4].fldType != 2)
+	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
 	  if(fd0[cat_field+4].fldType == 1)
 	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
+	  else if(fd0[cat_field+4].fldType == 2)
+	    attval = round( fd0[cat_field+4].fldRecs[iRec].intField );
 	  else
 	    attval = iRec;
 	  fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
@@ -566,6 +568,8 @@ int main( int   argc, char *argv[])
 	else if( cover_type == AREA ) {
 	  if(fd0[cat_field+4].fldType == 1)
 	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
+	  else if(fd0[cat_field+4].fldType == 2)
+	    attval = round( fd0[cat_field+4].fldRecs[iRec].intField );
 	  else
 	    attval = iRec;
 	  fprintf( f_att, "A  %-12f  %-12f  %-8d \n",
