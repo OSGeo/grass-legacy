@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
     struct Flag *printinfo,	/* Print contents of PROJ_INFO & PROJ_UNITS */
         *printproj4,		/* Print projection in PROJ.4 format        */
         *datuminfo,		/* Check if datum information is present    */
-#ifdef HAVE_OGR
         *create,		/* Create new projection files              */
+#ifdef HAVE_OGR
         *printwkt,		/* Print projection in WKT format           */
         *esristyle,		/* Use ESRI-style WKT format                */
 #endif
