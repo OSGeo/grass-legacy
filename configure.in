@@ -620,23 +620,26 @@ AC_MSG_CHECKING(if we should build directly against GDAL)
 if test "`basename xx/$with_gdal`" = "gdal-config" ; then
   GDAL_CONFIG="$with_gdal"
   AC_MSG_RESULT(yes)
-  AC_DEFINE(HAVE_OGR)
 fi
 
-if test "$with_gdal" = "yes" ; then
+if test "$with_gdal" = "no" ; then
+  AC_MSG_RESULT(no)
+else
   AC_MSG_RESULT(yes)
   AC_PATH_PROG(GDAL_CONFIG, gdal-config, no)
 
   if test "$GDAL_CONFIG" = "no" ; then
     AC_MSG_ERROR([*** couldn't find gdal-config])
   fi
-else
-  AC_MSG_RESULT(no)
 fi
 
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS="`$GDAL_CONFIG --libs`"
   GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
+  
+  if test `$GDAL_CONFIG --ogr-enabled` = "yes" ; then
+    AC_DEFINE(HAVE_OGR)
+  fi
 else
   GDAL_LIBS=$DLLIB
   GDAL_CFLAGS=
