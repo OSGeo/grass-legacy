@@ -1,0 +1,14 @@
+# setup src for AIX systems
+cp AIX/*.f src
+cp AIX/*.d src
+cp AIX/*.c src
+cat <<endmake >Makefile
+# definitions for AIX rim
+RANLIB=ranlib
+PILE = fvs
+EXTRA = csubs.o dmy.o
+LIBEXTRA = csubs.o
+endmake
+cp Makefile src
+cat MAKEFILE >>Makefile
+cat src/MAKEFILE >>src/Makefile
