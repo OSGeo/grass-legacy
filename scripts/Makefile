@@ -6,6 +6,7 @@ SUBDIRS = \
 	d.rast.leg \
 	d.redraw \
 	d.slide.show \
+	db.test \
 	g3_scripts \
 	g.manual \
 	g.mlist \
