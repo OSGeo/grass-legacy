@@ -56,18 +56,35 @@ Next the user is asked to select one of two geographic region settings:
        image
 </PRE>
 
-<EM>i.rectify3</EM> will only rectify that portion of the image that occurs within the chosen geographic region setting.  Only that portion will be relocated in the target data base.  It is therefore important to check the current geographic region settings in the target location if choice number one is selected.
+<EM>i.rectify3</EM> will only rectify that portion of the image that occurs
+within the chosen geographic region setting.  Only that portion will be
+relocated in the target data base.  It is therefore important to check the
+current geographic region settings in the target location if choice number
+one is selected.
 
 <H2>NOTES</H2>
-The rectification process may take an hour or more depending on the resolution of the image, the number of files, and the size of the geographic region definition.
-<P>
+The rectification process may take an hour or more depending on the
+resolution of the image, the number of files, and the size of the geographic
+region definition. <P>
 
-The rectified (raster) image will be located in the target LOCATION when the program is completed.  The original unrectified raster map layers are not modified or removed.
+The rectified (raster) image will be located in the target LOCATION when the
+program is completed.  The original unrectified raster map layers are not
+modified or removed.
 
 <H2>SEE ALSO</H2>
 <A HREF="imagery.html">GRASS Tutorial: Image Processing</A>
 <P>
-<EM><A HREF="i.group.html">i.group</A>, <A HREF="i.points3.html">i.points3</A>, <A HREF="i.target.html">i.target</A></EM>
+<EM>
+<A HREF="m.proj.html">m.proj</A>,
+<A HREF="r.proj.html">s.proj</A>,          
+<A HREF="s.proj.html">s.proj</A>,
+<A HREF="v.proj.html">v.proj</A>,
+<A HREF="i.group.html">i.group</A>,
+<A HREF="i.points3.html">i.points3</A>,
+<A HREF="i.rectify.html">i.rectify</A>,
+<A HREF="i.rectify2.html">i.rectify2</A>,
+<A HREF="i.target.html">i.target</A>
+</EM>
 
 <H2>AUTHOR</H2>
 Mike Baba, DBA Systems.
