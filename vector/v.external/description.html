@@ -42,6 +42,15 @@ installation (OGR library), for details see
 
 <P>
 
+<H2>NOTES</H2>
+
+The simple feature data model used by OGR is very different from 
+the topological format used by GRASS. Instead of true topology, 
+so called 'pseudo topology' is created for data linked by v.external.
+User should learn the difference between those to formats, because 
+some modules working correctly with GRASS native data, 
+can produce wrong results with input layers created by v.external. 
+
 <H2>REFERENCES</H2>
 
 <a href="http://www.remotesensing.org/gdal/ogr/">OGR vector library</a>
