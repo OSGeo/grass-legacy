@@ -22,6 +22,7 @@ SUBDIRS = \
 	d.mapgraph \
 	d.measure \
 	d.mon \
+	d.paint.labels \
 	d.path \
 	d.profile \
 	d.rast \
