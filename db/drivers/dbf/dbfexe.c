@@ -91,8 +91,13 @@ int execute(char *sql, cursor * c)
 	|| st->command == SQLP_UPDATE) {
 	if (ncols > 0) {	/* colums were specified */
 	    cols = (int *) malloc(ncols * sizeof(int));
-	    for (i = 0; i < ncols; i++)
+	    for (i = 0; i < ncols; i++) {
 		cols[i] = find_column(tab, st->Col[i].s);
+		if ( cols[i] == -1 ) {
+	            sprintf(errMsg, "Column '%s' not found\n", st->Col[i].s);
+	            return DB_FAILED;
+		}
+	    }
 	}
 	else {			/* all columns */
 
@@ -321,6 +326,9 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     return nset;
 }
 
+/* TODO: don't use exit, set error message and return DB_FAILED to application */
+	
+/* Returns -1 on error */
 double eval_node(Node * nptr, int tab, int i)
 {
 
@@ -457,7 +465,7 @@ double eval_node(Node * nptr, int tab, int i)
     return (double) condition;
 }
 
-int eval_arithmvalue_type(Node * nptr, int tab) {
+int eval_arithmvalue_type(Node * nptr, int tab ) {
     int leval = 0, reval = 0;
     int ccol;
     COLUMN *col = NULL;
@@ -473,7 +481,7 @@ int eval_arithmvalue_type(Node * nptr, int tab) {
 	if (arithmptr->rexpr != NULL ) {
 	    reval = eval_arithmvalue_type(arithmptr->rexpr, tab);
 	    if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
-	        G_debug(0,"Incompatible types in comparison."); 
+	        fprintf(stderr,"Incompatible types in comparison."); 
 	        G_debug(3,"Exiting in eval_arithmvalue_type"); 
 		exit (-1);
 	    }
@@ -487,6 +495,10 @@ int eval_arithmvalue_type(Node * nptr, int tab) {
 	if (leval != SQLP_COL) return leval;
 	else {
 	    ccol = find_column(tab, valueptr->s);
+	    if ( ccol == -1 ) {
+		fprintf(stderr, "Column '%s' not found\n", valueptr->s);
+		exit (-1);
+	    }
 	    col = &(db.tables[tab].cols[ccol]);
 	    switch (col->type) {
 	    case DBF_CHAR:
