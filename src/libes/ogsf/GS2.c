@@ -1598,6 +1598,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    	/* might already exist if reusing */
 		gs_malloc_lookup(gs, att);
 		Gs_build_256lookup(filename, gs->att[att].lookup);
+		/* Get MAPSET to ensure names are fully qualified */
+		mapset = G_find_cell2 (filename, "");
 		filename = G_fully_qualified_name(filename, mapset);
 	    }
 	}
