@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     union RASTER_PTR elevbuf, tmpbuf, outbuf;
     CELL min, max;
     DCELL dvalue, dvalue2, dmin, dmax;
+    struct History  hist;
     RASTER_MAP_TYPE data_type;
     struct Range range;
     struct FPRange fprange;
@@ -474,8 +475,17 @@ int main(int argc, char *argv[])
     
     G_close_cell(output_fd);
     G_close_cell(elev_fd);
-    fprintf(stderr,"Finished.\n");
 
+    /* writing history file */
+    G_short_history(outname, "raster", &hist);
+    sprintf(hist.edhist[0], "%s", *argv); 
+    sprintf(hist.datsrc_1,"raster elevation file %s", name);
+    /* bug: long lines are truncated */
+    sprintf(hist.datsrc_2,"%s", G_recreate_command());
+    hist.edlinecnt = 3;
+    G_write_history (outname, &hist);
+
+    fprintf(stderr,"Finished.\n");
     exit(0);
 }
 
