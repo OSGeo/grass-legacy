@@ -1,12 +1,49 @@
-<H2>DESCRIPTION</H2>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>ps.map</TITLE>
 
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>ps.map</b></EM>  -
+Hardcopy PostScript map output utility.
+
+<BR>
+
+<EM>(GRASS Hardcopy PostScript Output Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>ps.map</B>
+
+<BR>
+
+<B>ps.map help</B>
+
+<BR>
+
+<B>ps.map</B> [<B>-r</B>] [<B>input=</B><EM>name</EM>] [<B>scale=</B><EM>mapscale</EM>] [<B>copies=</B><EM>n</EM>] <B>output=</B><EM>name</EM>
+
+<H2>CHANGES BETWEEN VERSION 5.0.x and 5.1/5.2</H2>
+<UL>
+<LI>Devices and ps.select do not exist any more. Paper is defined in <EM>paper</EM> instruction.</LI> 
+<LI><EM>vpoints</EM> are used instead of <EM>sites</EM> (points are read from vector).</LI>
+<LI><EM>vector</EM> is substituted by <EM>vpoints</EM>, <EM>vlines</EM> and <EM>vareas</EM>.</LI>
+<LI>Symbols are used instead of icons (different format and directory).</LI>
+</UL>
+
+<H2>DESCRIPTION</H2>
 
 <EM>ps.map</EM>
 produces an output file containing a PostScript program to
 produce hardcopy map products on your system's PostScript output
 device.  Output can include a raster map, any number of vector overlays,
-site data, text labels, and other spatial data.
-
+text labels, and other spatial data.
 
 <P>
 
@@ -19,6 +56,46 @@ user for items to be mapped and does not require the user
 to prepare a file of instructions (some options are not used
 in interactive mode).
 
+<P>
+
+The command line flag is:
+
+<DT><B>-r</B> 
+
+<DD>Rotate plot 90 degrees.
+
+<P>
+
+The command-line parameters are:
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>File containing mapping instructions.
+(or enter <B>input=-</B> to enter from keyboard).
+These instructions are described in detail below.
+
+<DT><B>scale=</B><EM>mapscale</EM> 
+
+<DD>Scale of the output map,  e.g. 1:25000
+
+<BR>
+
+Default:  1 panel
+
+
+<P>
+
+This parameter is provided as a convenience.  It is identical to the 
+<EM>scale</EM>
+mapping instruction described below.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name of output the file to contain the PostScript program.
+
+<P>
+
+<P>
 
 <H2>MAPPING INSTRUCTIONS</H2>
 
@@ -29,7 +106,6 @@ Some instructions are single line instructions while
 others are multiple line. Multiple line instructions consist of
 the main instruction followed by a subsection of one or more additional
 instructions.
-
 
 <P>
 
@@ -54,7 +130,6 @@ is less than or equal to zero, the default vertical location is used.
 
 </DT>
 <P>
-
 
 <H2>colortable</H2>
 
@@ -447,6 +522,43 @@ EXAMPLE:
 </PRE>
 <P>
 
+<H2>paper</H2>
+
+Specifies paper size and margines.
+<PRE>
+USAGE:	<B>paper</B> paper name
+	<B>point</B>
+	<B>height</B> #
+	<B>width</B> #
+	<B>left</B> #
+	<B>right</B> #
+	<B>bottom</B> #
+	<B>top</B> #
+	<B>end</B>	
+</PRE>
+<B>paper</B> may select predefined paper name (a4,a3,a2,a1,a0,us-legal,us-letter,us-tabloid).
+Defaul paper is a4.
+<B>left</B>, <B>right</B>, <B>bottom</B> and <B>top</B> are paper margines.
+<P>
+
+<PRE>
+EXAMPLE:
+	<B>paper</B> a3
+	<B>end</B>	
+</PRE>
+<P>
+<PRE>
+EXAMPLE:
+	<B>paper</B>
+	<B>width</B> 10
+	<B>height</B> 10
+	<B>left</B> 2
+	<B>right</B> 2
+	<B>bottom</B> 2
+	<B>top</B> 2
+	<B>end</B>	
+</PRE>
+<P>
 
 <H2>point</H2>
 
@@ -455,23 +567,16 @@ Places additional points or icons on the output map.
 USAGE:	<B>point</B> east north
 	<B>point</B> x% y%
 	<B>color</B> color
-	<B>icon</B> iconfile|<EM>list</EM>
+	<B>fcolor</B> color
+	<B>symbol</B> symbol group/name
 	<B>size</B> #
 	<B>masked</B> [y|n]
 	<B>end</B>	
 </PRE>
 The point location is entered in the main instruction line by giving either the map 
 coordinates or by using percentages of the geographic region.
-The user may also specify the point
-<B>color</B>,
-the <B>icon</B> file to be used to represent the point location
-(see the the manual entry for
-<EM>
-<A HREF="ps.icon.html">ps.icon</A>
-s)</EM>,
-the <B>size</B> of the icon as a multiple of the size of the
-pattern in the icon file (default is 1.0, aprroximately equivalent to a
-10 point character),
+The user may also specify the point <B>color</B>,
+the <B>size</B> is size of symbol in point 
 and whether the point is to be <B>masked</B>
 by the current mask. (See manual entry for <EM>
 <A HREF="r.mask.html">r.mask</A>
@@ -482,14 +587,14 @@ information on the mask.)
 
 This example would place a purple diamond (from icon file
 <EM>diamond</EM>) at the point (E456000 N7890000).  This diamond would be the 
-approximately the size of a 15 point character
-and would not be masked by the current mask.
+the size of a 15 points and would not be masked by the current mask.
 <PRE>
 EXAMPLE:
 	<B>point</B> 456000 7890000
-	<B>color</B> purple     
-	<B>icon</B> diamond
-	<B>size</B> 1.5
+	<B>fcolor</B> purple     
+	<B>color</B> black     
+	<B>symbol</B> basic/diamond
+	<B>size</B> 15
 	<B>masked</B> n
 	<B>end</B>	
 </PRE>
@@ -745,62 +850,6 @@ all the category values separated by commas (but with no spaces).
 <P>
 
 
-<H2>sites</H2>
-
-Selects sites data to be placed on the output map
-(see manual entry for <EM>
-<A HREF="s.menu.html">s.menu</A>
-</EM>).
-<PRE>
-USAGE:	<B>sites</B> sitemap|<EM>list</EM>
-	<B>color</B> color
-	<B>icon</B> iconfile|<EM>list</EM>
-	<B>eps</B> epsfile	
-	<B>size</B> #
-	<B>size_att</B> #
-	<B>rotate</B> #		
-	<B>desc</B> [y|n]
-	<B>font</B> font name
-	<B>end</B>
-</PRE>
-The user may specify the
-the <B>color</B> of the sites (see section on NAMED COLORS below);
-the <B>icon</B> to be used to represent the presence of a site
-(see the manual entry for <EM>
-<A HREF="p.icons.html">p.icons</A>
-</EM>);
-the <B>eps</B> Encapsulate Postscript file to be used to represent the presence of a site;
-If <B>$</B> is used in EPS file path it is replaced by category number. 
-the <B>size</B> of the icon (number of times larger than the size it is in
-the icon file);
-the <B>size_att</B> number of attribute used for size (if used size is equal
-to size * attribute_value);
-the <B>rotate</B> in degrees for clockwise rotation for EPS files; 
-and
-whether or not the <B>desc</B>ription associated with each site is also to be
-printed.
-If the <B>desc</B>ription is to be printed, the <B>font</B> name may be
-specified.  The size of the font is proportional to the icon <B>size</B>.
-This example would paint a sites map with blue windmills (from an icon file created
-by the user using the
-<EM>
-<A HREF="p.icons.html">p.icons</A>
-</EM>
-GRASS command) placed at all windmill locations (from a sites list).  These
-windmills would be two times larger than the size of the icon in the
-icon file and have descriptions from the sites list file printed beside them.
-<PRE>
-EXAMPLE:
-	<B>sites</B> windmills
-	<B>color</B> blue
-	<B>icon</B> windmill
-	<B>size</B> 2
-	<B>desc</B> y
-	<B>end</B>
-</PRE>
-<P>
-
-
 <H2>text</H2>
 
 Places text on the map.
@@ -927,13 +976,93 @@ EXAMPLE:
 <P>
 
 
-<H2>vector</H2>
+<H2>vareas</H2>
 
 Selects a vector map layer for output.
 <PRE>
-USAGE:	<B>vector</B> vectormap|<EM>list</EM>
+USAGE:	<B>vareas</B> vectormap
+	<B>field</B> # (field number used with cats/where option)
+	<B>cats</B> list of categories (e.g. 1,3,5-7)
+	<B>where</B> SQL where statement like: vlastnik = 'Cimrman'
+	<B>masked</B> [y|n]
 	<B>color</B> color
-	<B>acolor</B> r g b	
+	<B>fcolor</B> color
+	<B>width</B> #
+	<B>cats</B> area categories
+	<B>label</B> label in legend
+	<B>lpos</B> position in legend
+	<B>pat</B> pattern file
+	<B>pwidth</B> #
+	<B>scale</B> #
+	<B>end</B>
+</PRE>
+The user can specify:
+<P>
+<B>color</B> - color of the vector lines or area boundaries;
+<P>
+<B>fcolor</B> - the area fill color.
+<P>
+<B>width</B> - width of the vectors lines or area boundaries in pixels
+(accepts decimal points [floating points] as well as integers);
+<P>
+<B>masked</B> - whether or not the raster map layer is to be masked
+by the current mask 
+(see manual entry <EM>
+<A HREF="r.mask.html">r.mask</A>
+</EM> for more information on the mask);
+<P>
+<B>cats</B> - which categories should be plotted (default is all);
+<P>
+<B>label</B> - for description in vlegend. Default is: map(mapset);
+<P>
+<B>lpos</B> - position vector is plotted in legend. If lpos is
+0 then this vector is omitted in legend. If more vectors used the 
+same lpos then their symbols in legend are merged and label for
+first vector is used.
+<P>
+<B>pat</B> - full path to pattern file. Pattern file contains header and simple PS commands.
+It is similar to EPS but more limited, that means that each pattern file is EPS file but
+EPS files are not usually usefull as pattern files because contain restricted commands. Color and
+width of patterns is set by <B>acolor</B> and <B>pwidth</B> until it is overwritten in 
+pattern file. Currently the only way to create pattern file is text editor. Example of pattern file:
+<PRE>
+%!PS-Adobe-2.0 EPSF-1.2
+%%BoundingBox: 0 0 10 10
+newpath
+5 0 moveto
+5 10 lineto
+stroke
+</PRE>
+
+<P>
+<B>scale</B> - pattern scale
+<P>
+<B>pwidth</B> - pattern line width, width is used by pattern until the width is overwritten
+in pattern file.
+<P>
+
+<PRE>
+EXAMPLE:	
+	<B>vector</B> forest
+	<B>color</B> blue
+	<B>width</B> 1
+	<B>masked</B> y
+	<B>cats</B> 2,5-7	
+	<B>end</B>
+</PRE>
+<P>
+
+<H2>vlines</H2>
+
+Selects a vector map layer for output.
+<PRE>
+USAGE:	<B>vlines</B> vectormap|<EM>list</EM>
+	<B>type</B> lines and/or boundaries
+	<B>field</B> # (field number used with cats/where option)
+	<B>cats</B> list of categories (e.g. 1,3,5-7)
+	<B>where</B> SQL where statement like: vlastnik = 'Cimrman'
+	<B>masked</B> [y|n]
+	<B>color</B> color
 	<B>width</B> #
 	<B>cwidth</B> #
 	<B>hcolor</B> color
@@ -941,24 +1070,14 @@ USAGE:	<B>vector</B> vectormap|<EM>list</EM>
 	<B>offset</B> #
 	<B>coffset</B> #
 	<B>ref</B> left|right
-	<B>masked</B> [y|n]
 	<B>style</B>  0-9
-	<B>line_cat</B> #	
 	<B>label</B> label
-	<B>lpos</B> 0|1-20
-	<B>pat</B> name
-	<B>pwidth</B> #
-	<B>scale</B> #0
+	<B>lpos</B> #
 	<B>end</B>
 </PRE>
 The user can specify:
 <P>
 <B>color</B> - color of the vector lines or area boundaries;
-<P>
-<B>acolor</B> - the area color. If acolor is used areas are plotted
-instead of lines (accepts 3 integers from 0 to 255 for red, green
-and blue separated by spaces). This color is also used by pattern until
-overwritten in pattern file;
 <P>
 <B>width</B> - width of the vectors lines or area boundaries in pixels
 (accepts decimal points [floating points] as well as integers);
@@ -995,7 +1114,7 @@ non-digit characters are recognized as 0's. Using 0 would allow the
 colors of the raster map layer (or the background color
 if no raster map layer was selected) to show through;
 <P>
-<B>line_cat</B> - which category should be plotted (default is all);
+<B>cats</B> - which categories should be plotted (default is all);
 <P>
 <B>label</B> - for description in vlegend. Default is: 
 map(mapset);
@@ -1005,51 +1124,58 @@ map(mapset);
 same lpos then their symbols in legend are merged and label for
 first vector is used.
 <P>
-<B>pat</B> - full path to pattern file. Pattern file contains header and simple PS commands.
-It is similar to EPS but more limited, that means that each pattern file is EPS file but
-EPS files are not usually usefull as pattern files because contain restricted commands. Color and
-width of patterns is set by <B>acolor</B> and <B>pwidth</B> until it is overwritten in 
-pattern file. Currently the only way to create pattern file is text editor. Example of pattern file:
-<PRE>
-%!PS-Adobe-2.0 EPSF-1.2
-%%BoundingBox: 0 0 10 10
-newpath
-5 0 moveto
-5 10 lineto
-stroke
-</PRE>
-
-<P>
-<B>scale</B> - pattern scale
-<P>
-<B>pwidth</B> - pattern line width, width is used by pattern until the width is overwritten
-in pattern file.
-<P>
-
-<P>
-<P>
-
-This example would paint a map of the vector map layer
-named <EM>streams</EM>.
-These streams would be a total of 3 pixels wide (the inner two pixels blue and
-the outer highlight pixel white).  The map would not show streams outside of the
-current mask. Only streams of category 2 will be plotted.
-In legend appeares label 'Streams - category 2'.
 
 <PRE>
 EXAMPLE:	
-	<B>vector</B> streams
+	<B>vlines</B> streams
 	<B>color</B> blue
 	<B>width</B> 2
 	<B>hcolor</B> white
 	<B>hwidth</B> 1
 	<B>masked</B> y
-	<B>line_cat</B> 2	
+	<B>cats</B> 2	
 	<B>label</B> Streams - category 2
 	<B>end</B>
 </PRE>
 <P>
 
+<H2>vpoints</H2>
+
+Selects vector point data to be placed on the output map
+<PRE>
+USAGE:	<B>vpoints</B> vector
+	<B>type</B> point or/and centroid
+	<B>field</B> # (field number used with cats/where option)
+	<B>cats</B> list of categories (e.g. 1,3,5-7)
+	<B>where</B> SQL where statement like: vlastnik = 'Cimrman'
+	<B>masked</B> [y|n]
+	<B>color</B> color
+	<B>fcolor</B> color
+	<B>width</B> #
+	<B>eps</B> epsfile	
+	<B>symbol</B> symbol group/name	
+	<B>size</B> #
+	<B>cats</B> list of categories
+	<B>label</B> legend label		
+	<B>lpos</B> position in legend		
+	<B>end</B>
+</PRE>
+The user may specify the
+the <B>color</B> of the sites (see section on NAMED COLORS below);
+the <B>eps</B> Encapsulate Postscript file to be used to represent the presence of a site;
+If <B>$</B> is used in EPS file path it is replaced by category number. 
+the <B>size</B> of the icon (number of times larger than the size it is in
+the icon file);
+the <B>rotate</B> in degrees for clockwise rotation for EPS files; 
+<PRE>
+EXAMPLE:
+	<B>vpoints</B> windmills
+	<B>color</B> blue
+	<B>symbol</B> mills/windmill
+	<B>size</B> 10
+	<B>end</B>
+</PRE>
+<P>
 
 <H2>verbose</H2>
 
@@ -1137,6 +1263,9 @@ white
 yellow
 </PRE>
 
+<P>
+For vectors (vpoints, vlines, vareas) may be also used 'none' or 'r g b' (e.g '255 0 0').
+<P>
 
 <H2>EXAMPLE ps.map INPUT FILE</H2>
 
@@ -1222,11 +1351,10 @@ legend entries).
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="ps.icon.html">ps.icon</A></EM><br>
-<EM><A HREF="ps.select.html">ps.select</A></EM>
-
 <H2>AUTHOR</H2>
 
 Paul Carlson, USDA, SCS, NHQ-CGIS<BR>
 Modifications: Radim Blazek, Glynn Clements
 <p><i>Last changed: $Date$</i>
+</body>
+</html>
