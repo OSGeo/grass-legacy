@@ -1,0 +1,21 @@
+
+To install GRASS:
+
+Go to the src/CMD directory and read the 
+INSTALL42 text file.  For this new version
+of GRASS, the GRASS 4.1 Installation Guide
+is still valid if you need more detailed
+information.  
+
+All files and documentation are available
+through anonymous ftp at:
+
+keck.baylor.edu
+/pub/grass
+
+If you have any problems, please notify 
+us at:
+
+grass@baylor.edu
+
+
