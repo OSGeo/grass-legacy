@@ -1,0 +1,23 @@
+Sites2cell is a non-interactive program to convert a site file to a
+raster file. It has been created based on the modules in s.menu.
+The quad size, i.e. the number of cells in the raster file that will take
+on the value of one site, is fixed to 0, i.e. one cell.                    
+
+sites2cell sites=Site_file_name cell=Cell_file_name
+
+Katarina Johnsson
+Pacific Forestry Centre, Victoria, BC
+kjohnsso@alder.pfc.forestry.ca
+
+
+
+=-=-=-=-=
+s.to.rast is a modified version of sites2cell. The call is now as follows:
+
+s.to.rast -v input=Site_file_name output=Cell_file_name 
+ 
+The '-v' flag is for verbose running of the program.
+
+Tom Brauer
+USACERL, Champaign, IL
+brauer@zorro.cecer.army.mil
