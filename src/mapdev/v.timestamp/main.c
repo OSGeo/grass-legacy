@@ -95,12 +95,21 @@ int main (int argc, char *argv[])
     if (strcmp(date->answer,"none") == 0)
     {
 	G_remove_vector_timestamp(name);
+	Vect_close (&Map);
 	exit(0);
     }
 
-    G_scan_timestamp (&ts, date->answer);
-    G_write_vector_timestamp(name, &ts);
-    Vect_close (&Map);
-        
-    exit(0);
+    if(1 == G_scan_timestamp (&ts, date->answer))
+    {
+	G_write_vector_timestamp(name, &ts);
+	Vect_close (&Map);
+	exit(0);
+    }
+    else
+    {
+	Vect_close (&Map);
+	G_fatal_error("Invalid timestamp");
+    }
+
+    return(1);
 }
