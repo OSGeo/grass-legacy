@@ -45,7 +45,6 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <stdio.h>
-#include <iostream.h>
 #include <errno.h>
 
 #include "stats.h"

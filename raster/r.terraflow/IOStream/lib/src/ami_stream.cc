@@ -47,7 +47,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-#include <iostream.h>
 
 #include <ami_stream.h>
 

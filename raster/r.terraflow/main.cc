@@ -45,6 +45,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/types.h>
+
 #ifdef HAVE_STATVFS_H
 #include <sys/statvfs.h>
 #endif
@@ -454,7 +455,7 @@ main(int argc, char *argv[]) {
   Rtimer rtTotal;    
   char buf[BUFSIZ];
 
-  fprintf(stderr, "r.terraflow version 1.5, April 2003\n");
+  fprintf(stderr, "r.terraflow December 2003\n");
   fflush(stderr);
 
   /* initialize GIS library */

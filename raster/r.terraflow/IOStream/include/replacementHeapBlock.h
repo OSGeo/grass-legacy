@@ -42,7 +42,6 @@
 #ifndef REPLACEMENT_HEAPBLOCK_H
 #define REPLACEMENT_HEAPBLOCK_H
 
-#include <iostream.h>
 #include <assert.h>
 
 #include "mem_stream.h"

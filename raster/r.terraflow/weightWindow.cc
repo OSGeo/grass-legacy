@@ -39,7 +39,6 @@
 
 
 #include <stdio.h>
-#include <iostream.h>
 #include <assert.h>
 #include <math.h>
 
