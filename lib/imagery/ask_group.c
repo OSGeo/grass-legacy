@@ -10,6 +10,18 @@
 #include "imagery.h"
 static int ask_group(char *,char *);
 
+
+/*!
+ * \brief prompt for an existing group
+ *
+ * Asks the user to enter the name of an existing <b>group</b>
+ * in the current mapset.
+ *
+ *  \param prompt
+ *  \param group
+ *  \return int
+ */
+
 int I_ask_group_old (
     char *prompt,
     char *group)
@@ -26,6 +38,18 @@ int I_ask_group_old (
     }
 }
 
+
+/*!
+ * \brief prompt for new group
+ *
+ * Asks the user to enter a name for a <b>group</b> which does not exist
+ * in the current mapset.
+ *
+ *  \param prompt
+ *  \param group
+ *  \return int
+ */
+
 int I_ask_group_new (
     char *prompt,
     char *group)
@@ -41,6 +65,18 @@ int I_ask_group_new (
 	fprintf (stderr,"\n** %s - exists, select another name **\n\n", group);
     }
 }
+
+
+/*!
+ * \brief prompt for any valid group name
+ *
+ * Asks the user to enter a valid <b>group</b> name. The
+ * <b>group</b> may or may not exist in the current mapset.
+ *
+ *  \param prompt
+ *  \param group
+ *  \return int
+ */
 
 int I_ask_group_any (
     char *prompt,

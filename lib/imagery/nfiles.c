@@ -3,6 +3,7 @@
 * I_number_of_subgroup_ref_files (group, subgroup)
 *************************************************************/
 #include "imagery.h"
+#include "gis.h"
 #include <stdio.h>
 
 static int nfiles(char *,char *);
@@ -26,7 +27,7 @@ static int nfiles(char *group,char *subgroup)
     FILE *I_fopen_subgroup_ref_old();
     int n;
     char buf[1024];
-    char name[30], mapset[30];
+    char name[NAME_LEN], mapset[NAME_LEN];
 
     G_suppress_warnings(1);
     n = 0;
