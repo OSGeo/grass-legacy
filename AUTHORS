@@ -3,27 +3,30 @@ GRASS 5.7 authors
 $Date$
 
 VECTOR
- - Radim Blazek <blazek@itc.it>: vector engine core developer
+ - Radim Blazek <blazek itc it>: vector engine core developer
  - David D Gray: vector engine contributions
- - PostGRASS/PostGIS support:
-   - group of students at the University of Sannio (Benevento -
-     ITALY): Di Simone Alessio a.disimone@inwind.it
-             Di Sorbo Alessandro a.disorbo@inwind.it
-             Ragni Domenico domrag@inwind.it
-             Romano Enrico enr.omano@genie.it
-             Serino Antonio antoseri@libero.it
-     supervised by Prof. Giuliano Antoniol (antoniol@ieee.org)
-
+ - modules: see individual authors
+ 
 DBMI
- - based on original code from GRASS 5.0 (developer unknown)
- - Radim Blazek <blazek@itc.it>: core developer of 5.7 enhancements
+ - based on original code from GRASS 5.0 (developer unknown, CERL?)
+ - Radim Blazek <blazek itc it>: core developer of 5.7 enhancements
  - Alexander Shevlakov: drivers and sqlp contributions
 
 DGLib: vector networking
  - Roberto Micarelli: LIBDGL - graph library for vector network analysis
 
 FORMS library
- - Radim Blazek <blazek@itc.it>: core developer 
+ - Radim Blazek <blazek itc it>: core developer 
 
 RASTER
- see 5.0 authors
+ - Modules: see 5.3 authors
+ - Integration of modules: Markus Neteler <neteler itc it>
+
+PROJ
+ - Paul Kelly
+
+DOCUMENTATION
+ - new docs engine: Markus Neteler <neteler itc it>
+
+TCLTKGRASS
+ - see 5.3 authors, partially rewritten by Michael Barton
