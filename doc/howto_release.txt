@@ -2,16 +2,26 @@ How to release GRASS binaries and source code
 
 $Date$
 
-Note: This text contains some rules only applicable to the
-      development coordinator (currently Markus Neteler).
+Note: This text contains *some* rules only applicable to the
+      development coordinators (currently Markus Neteler, Radim Blazek).
 
 
 1. Local work (basically at ITC-irst)
 
+ o - Update VERSION file to release version
+   - Create release branch
+   
+ o Create Changelog file
+     make changelog
+     mv ChangeLog ChangeLog_$VERSION
+     gzip ChangeLog_$VERSION
+
+ o reset VERSION file to CVS version
+
  o Store the source tarball in:
      http://grass.itc.it/grass/grass6x/source/
      along with associated files:
-          NEWS.html ChangeLog SUBMITTING REQUIREMENTS.html INSTALL
+          NEWS.html ChangeLog_$VERSION SUBMITTING REQUIREMENTS.html INSTALL
 
  o update web site to new version (HTML in Web-CVS)
       - main.inc
