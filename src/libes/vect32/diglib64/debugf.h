@@ -1,1 +1,0 @@
-int debugf (char *t,...);

@@ -1,8 +1,0 @@
-non- 32-bit library.
-
-12/27/1999 - Bill Hughes   bhughes@grasshoppernet.com
-
-   This library implements routines to read the version 4.0
-Portable Vector Format files for 64-bit systems.  This code
-is not 64-bit specific, and should be portable to other
-platforms that don't like the original PVF code.
