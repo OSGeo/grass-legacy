@@ -331,7 +331,8 @@ Vect_point_in_area (
 		       int area)
  \brief returns area of area without areas of isles
  \return area of area without areas of isles
- \param Map_info structure, area number
+ \param Map_info structure
+ \param area number
 */
 double 
 Vect_get_area_area (
@@ -373,6 +374,7 @@ Vect_get_area_area (
 }
 
 /*!
+\brief fetches category number for given vector area and field
 \param vmap: Map input
 \param varea: area number
 \param vfield: field number
