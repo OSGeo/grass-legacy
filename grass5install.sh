@@ -3,7 +3,7 @@
 # GRASS 5 binary package installation tool
 # platform indendent
 
-# Version 7/Sun Jan  2 07:44:32 MET 2000
+# Version 8/Sun Jan 30 17:17:57 MET 2000
 # 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
@@ -46,8 +46,9 @@ if test ! -f $1; then
 fi
 
 # check, if package is first parameter and in tar.gz compression:
-PACKAGETYPE=`file $1|cut -f2 -d' '`
-if test "gzip" != "$PACKAGETYPE";then
+PACKAGETYPE=`file $1`
+echo $PACKAGETYPE  | grep gzip > /dev/null
+if [ $? -eq 1 ] ; then
     echo "ERROR: You need the GRASS binary package in .tar.gz compression."
     echo ""
     exit
