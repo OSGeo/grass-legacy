@@ -7,3 +7,4 @@ ctags:
 	ctags *.[ch]
 	sed 's/\?/\//g' tags > tags.tmp
 	mv tags.tmp tags
+tags: ctags ; #
