@@ -4,6 +4,6 @@
 # SCS contributions (note: machine specific programs should not be here)
 #
 ../src.contrib/SCS/display/DOS
-../src.contrib/SCS/display/d.6386
-../src.contrib/SCS/over_write/display
+../src.contrib/SCS/display/scs.savescreen
+../src.contrib/SCS/display/display
 ../src.contrib/SCS/display/devices
