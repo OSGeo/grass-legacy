@@ -125,10 +125,10 @@ get_defaults()
 	char buffer[128] ;
 	char name[128] ;
 	char *mapset ;
-	FILE *info ;
-	char *fgets() ;
 	CELL min, max ;
 	double sqrt() ;
+	struct G_3dview v;
+	int ret;
 
 	fprintf(stderr,"\n\nIf you have previously saved 3-D viewing options in this mapset\n") ;
 	fprintf(stderr,"you may recover them by entering the name under which they were saved.\n\n") ;
@@ -139,35 +139,50 @@ get_defaults()
 
 	if(mapset != NULL)
 	{
-		info = G_fopen_old("3d.view",name,mapset) ;
-		if (info == NULL)
-		{
-			fprintf(stderr,"File %s in data element %s in mapset %s not available.\n", 
-				name, "3d.view", mapset) ;
-			fprintf(stderr,"Generating default values instead\n") ;
-			sleep(1) ; 
-			goto defaults ;
-		}
+	    if(0 > (ret = G_get_3dview(name, mapset, &v)))
+	    {
+		    fprintf(stderr,"File %s in data element %s in mapset %s not readable.\n", 
+			    name, "3d.view", mapset) ;
+		    fprintf(stderr,"Generating default values instead\n") ;
+		    sleep(1) ; 
+		    goto defaults ;
+	    }
+	    
+	    to_easting = v.from_to[1][0];
+	    to_northing = v.from_to[1][1];
+	    to_height = v.from_to[1][2];
+	    from_easting = v.from_to[0][0];
+	    from_northing = v.from_to[0][1];
+	    from_height = v.from_to[0][2];
+	    exag = v.exag;
+	    line_freq = (int)(((double)v.mesh_freq/v.poly_freq) + 0.5); /* round */	
+	    field = v.fov;
+	    resolution = v.poly_freq*(v.vwin.north - v.vwin.south)/v.vwin.rows;
+	    if(v.display_type == 1)
+		strcpy(linesonly,"Y");
+	    else
+		strcpy(linesonly,"N");
+	    if(v.colorgrid)
+		strcpy(linecolor,"color");
+	    else
+		strcpy(linecolor,v.grid_col);
+	    if(v.dozero)
+		strcpy(dozero, "Y") ;
+	    else
+		strcpy(dozero, "N") ;
+	    strcpy(boxcolor, v.other_col) ;
+	    strcpy(erase, v.bg_col) ;
+	    if(v.doavg)
+		strcpy(doaverage, "Y") ;
+	    else
+		strcpy(doaverage, "N") ;
 
-		sscanf(fgets(buffer, 80, info),"%lf",&to_easting) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&to_northing) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&to_height) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&from_easting) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&from_northing) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&from_height) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&exag) ;
-		sscanf(fgets(buffer, 80, info),"%d",&line_freq) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&field) ;
-		sscanf(fgets(buffer, 80, info),"%lf",&resolution) ;
-		sscanf(fgets(buffer, 80, info),"%s",linesonly) ;
-		sscanf(fgets(buffer, 80, info),"%s",dozero) ;
-		sscanf(fgets(buffer, 80, info),"%s",linecolor) ;
-		sscanf(fgets(buffer, 80, info),"%s",boxcolor) ;
-		sscanf(fgets(buffer, 80, info),"%s",erase) ;
-		sscanf(fgets(buffer, 80, info),"%s",doaverage) ;
+	    if(exag){
+		to_height *= exag;
+		from_height *= exag;
+	    }
 
-		fclose(info) ;
-		return ;
+	    return ;
 	}
 
 defaults:
@@ -181,6 +196,8 @@ defaults:
 	from_easting = window.west - (window.east - window.west) ;
 	from_northing = window.south - (window.north - window.south) ;
 	exag = 2.0 ;
+        while((exag * max - exag * min) > (window.east - window.west)/5.)
+	     exag /= 5.;
 	to_height = (double)exag * (max + min) / 2 ;
 	from_height = to_height + .5 * sqrt(
 		(to_easting - from_easting)*(to_easting - from_easting) +
@@ -206,42 +223,60 @@ save_defaults()
 {
 	char name[128] ;
 	char *mapset ;
-	FILE *info ;
-	char *fgets() ;
+	struct G_3dview v;
+	struct Cell_head w;
+
 
 	fprintf(stderr,"\n\nYou can now save your viewing information for later use by this program.\n") ;
 	fprintf(stderr,"Enter nothing and hit <RETURN> to not save this information.\n\n") ;
 
-	mapset = G_ask_new("Enter name for saving 3-d viewing options: ",
-		name, "3d.view", "3d.view") ;
+	mapset = G_ask_any("Enter name for saving 3-d viewing options: ",
+		name, "3d.view", "3d.view", 1) ;
 
 	if(mapset != NULL)
 	{
-		info = G_fopen_new("3d.view",name,mapset) ;
-		if (info == NULL)
-		{
-			fprintf(stderr,"File %s in data element %s in mapset %s not available.\n", 
-				name, "3d.view", mapset) ;
-			sleep(1) ; 
-		}
+	    G_get_set_window (&w);
+	    G_get_3dview_defaults(&v,&w);
+	    
+	    strcpy(v.pgm_id,"d.3d");
+	    v.from_to[1][0] = to_easting;
+	    v.from_to[1][1] = to_northing;
+	    v.from_to[1][2] = exag? to_height/exag: to_height;
+	    v.from_to[0][0] = from_easting;
+	    v.from_to[0][1] = from_northing; 
+	    v.from_to[0][2] = exag? from_height/exag: from_height;
+	    v.exag = exag;
+	    v.fov = field;
+	    v.mesh_freq = line_freq;	
+	    v.poly_freq = 1;
+	    v.vwin.rows = (int)((w.north - w.south)/resolution);
+	    v.vwin.cols = (int)((w.east - w.west)/resolution);
+	    v.vwin.ns_res = v.vwin.ew_res = resolution;
 
-		fprintf(info,"%lf\n",to_easting) ;
-		fprintf(info,"%lf\n",to_northing) ;
-		fprintf(info,"%lf\n",to_height) ;
-		fprintf(info,"%lf\n",from_easting) ;
-		fprintf(info,"%lf\n",from_northing) ;
-		fprintf(info,"%lf\n",from_height) ;
-		fprintf(info,"%lf\n",exag) ;
-		fprintf(info,"%d\n",line_freq) ;
-		fprintf(info,"%lf\n",field) ;
-		fprintf(info,"%lf\n",resolution) ;
-		fprintf(info,"%s\n",linesonly) ;
-		fprintf(info,"%s\n",dozero) ;
-		fprintf(info,"%s\n",linecolor) ;
-		fprintf(info,"%s\n",boxcolor) ;
-		fprintf(info,"%s\n",erase) ;
-		fprintf(info,"%s\n",doaverage) ;
+	    /* undo window adjustment done in main */
+	    v.vwin.rows -= 2 ;
+	    v.vwin.cols -= 2 ;
+	    v.vwin.north -= v.vwin.ns_res ;
+	    v.vwin.south += v.vwin.ns_res ;
+	    v.vwin.east  -= v.vwin.ew_res ;
+	    v.vwin.west  += v.vwin.ew_res ;
 
-		fclose(info) ;
+	    v.display_type = lines_only? 1: 3;
+	    v.dozero = do_zero;
+	    if(!strcmp(linecolor,"color"))
+		v.colorgrid = 1;
+	    else
+		v.colorgrid = 0;
+
+	    strcpy(v.grid_col, linecolor) ;
+	    strcpy(v.other_col, boxcolor) ;
+	    strcpy(v.bg_col, erase) ;
+	    if(!strcmp(doaverage, "Y"))
+		v.doavg = 1;
+	    else
+		v.doavg = 0;
+
+	    G_put_3dview(name, mapset, &v, NULL);
+
 	}
 }
