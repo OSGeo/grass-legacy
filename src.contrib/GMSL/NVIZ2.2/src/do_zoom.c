@@ -272,6 +272,7 @@ int Create_OS_Ctx(int width, int height)
     }
 
 #ifdef HAVE_PBUFFERS
+#if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
     fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
     fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
@@ -287,6 +288,7 @@ int Create_OS_Ctx(int width, int height)
 	if (pbuffer)
 	    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
     }
+#endif
 #endif
 #ifdef HAVE_PIXMAPS
 #ifdef HAVE_PBUFFERS
