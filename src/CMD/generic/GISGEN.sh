@@ -59,7 +59,7 @@ fi
 # Make sure GISBASE sub-directories exist
 for i in \
     bin \
-    man man/help man/1 man/2 man/3 man/4 man/5 \
+    man man/help man/man1 man/man2 man/man3 man/man4 man/man5 \
     etc etc/paint etc/paint/driver etc/paint/driver.sh etc/paint/driver.uninst \
     etc/sites etc/dig_drivers etc/imagery \
     etc/bin etc/bin/main etc/bin/contrib \
