@@ -26,6 +26,8 @@ Missing modules:
 - write Vect_map_exists() and implement in g.remove and v.digit -n (radim)
 
 - add '-d' dissolve to v.reclass
+- add 'where=' to v.to.rast
+- add '-3' for 3D distance calculation in v.distance
 
 - change default color white to black:
    (better define DEFAULT_FG_COLOR, DEFAULT_BG_COLOR in gis.h, update in 5.0 and 5.7)
