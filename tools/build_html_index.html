@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #generates HTML man pages docs/html/index.html
-#Markus Neteler, 2003
+# Markus Neteler, 2003, 2004
 
 #exclude following list of modules from help index:
 # does not yet work for several modules:
@@ -36,7 +36,7 @@ write_html_footer()
 # $2: help index url
 echo "<hr>" >> $1
 echo "<a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
+echo "&copy; 2003-2004 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
 echo "</body>" >> $1   
 echo "</html>" >> $1
 }
@@ -131,7 +131,8 @@ do
   for i in `ls -1 $i.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $i .html`
-    echo "<li><a href=\"$i\">$BASENAME</a>" >> $FULLINDEX
+    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | head -1`"
+    echo "<li><a href=\"$i\">$BASENAME</a> - $SHORTDESC" >> $FULLINDEX
   done
   echo "</ul>" >> $FULLINDEX
   echo "<p>" >> $FULLINDEX
@@ -154,7 +155,8 @@ do
   for k in `ls -1 $k.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $k .html`
-    echo "<li><a href=\"$k\">$BASENAME</a>" >> $FILENAME
+    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | head -1`"
+    echo "<li><a href=\"$k\">$BASENAME</a> - $SHORTDESC" >> $FILENAME
   done
   echo "</ul>" >> $FILENAME
   echo "<p>"   >> $FILENAME
