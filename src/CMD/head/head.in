@@ -27,6 +27,9 @@ XTLIB               = -lXt
 XMLIB               = -lXm
 XEXTRALIBS          = @X_EXTRA_LIBS@
 
+PQLIB               = -L/usr/local/pgsql/lib -lpq -lcrypt
+PQINCPATH           = -I/usr/local/pgsql/include
+
 COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
