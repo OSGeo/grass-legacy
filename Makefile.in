@@ -25,6 +25,7 @@ VERSION=		`cat ${SRCDIR}/src/CMD/VERSION | head -1`
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
 #NAME_VER=   	    	@NAME_VER@
 NAME_VER=		`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
+GISBASE=		@prefix@/grass${NAME_VER}
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
