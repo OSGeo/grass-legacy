@@ -131,10 +131,11 @@ export PATH
 # first search local libs, then in GRASS lib/
 if [ ! "$LD_LIBRARY_PATH" ] ; then
   LD_LIBRARY_PATH=$GISBASE/lib
-  export LD_LIBRARY_PATH
 else
   LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
 fi
+  
+export LD_LIBRARY_PATH
 
 # Check for concurrent use
 "$ETC/lock" "$lockfile" $$
