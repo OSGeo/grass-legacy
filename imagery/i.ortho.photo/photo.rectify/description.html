@@ -13,20 +13,20 @@
 
 <EM>photo.rectify</EM> rectifies an image by using the image to photo
 coordinate transformation matrix created by <A HREF="photo.2image.html">photo.2image</A>
-
-and the rectification parameters created by <A HREF="photo.2target.html">photo.2target</A>. Rectification is the process by
-which the geometry of an image is made planimetric.  This is accomplished by
-mapping an image from one coordinate system to another. In photo.rectify the
-parameters computed by <A HREF="photo.2image.html">photo.2image</A>
- and
-
+and the rectification parameters created by <A HREF="photo.2target.html">photo.2target</A>.
+Rectification is the process by which the geometry of an image is made
+planimetric.  This is accomplished by mapping an image from one coordinate
+system to another. In photo.rectify the parameters computed by
+<A HREF="photo.2image.html">photo.2image</A> and
 <A HREF="photo.2target.html">photo.2target</A> are used in equations to
 convert x,y image coordinates to standard map coordinates for each pixel in
 the image.  The result is an image with a standard map coordinate system,
 compensated for relief distortions and photographic tilt. Upon completion of
 the program the rectified image is deposited in a previously targeted GRASS
-LOCATION. <P> You are asked to select the file(s) within the imagery group
-to be rectified: <P> Please select the file(s) to rectify by naming an
+LOCATION.
+<P> You are asked to select the file(s) within the imagery group
+to be rectified:
+<P> Please select the file(s) to rectify by naming an
 output file <P> <PRE>
 
                     gs13.1 in PERMANENT   gs13.orect...
@@ -49,16 +49,19 @@ The next prompt asks you to select one of two windows:
       1.   Use the current window in the target location
       2.   Determine the smallest window which covers the image
       &gt;
-</PRE> <P> <EM>photo.rectify</EM> will only rectify that portion of the
+</PRE>
+<P>
+<EM>photo.rectify</EM> will only rectify that portion of the
 image that occurs within the chosen window.  Only that portion will be
 relocated in the target database. It is therefore important to check the
-current window in the target LOCATION if choice number one is selected. <P>
-<EM>photo.rectify</EM> will run in the background and notify you by mail
-when it is finished. The process may take an hour or more depending on the
-size of the image, the number files, and the size and resolution of the
-selected window. <P> The rectified image will be located in the target
-LOCATION when the program is completed. The original unrectified files are
-not modified or removed.
+current window in the target LOCATION if choice number one is selected.
+<P>
+The process may take an hour or more depending on the size of the image,
+the speed of the computer, the number files, and the size and resolution
+of the selected window.
+<P>
+The rectified image will be located in the target LOCATION when the program
+is completed. The original unrectified files are not modified or removed.
 
 <H2>SEE ALSO</H2>
 
