@@ -255,7 +255,7 @@
 			{cascad "Hydrologic modeling" {} "" 1 {			
 			 {command "Depressionless elevation map and flowline map" {} "r.fill.dir" {} -command {execute r.fill.dir }}
 			 {command "Flow accumulation for massive grids" {} "r.terraflow" {} -command {spawn r.terraflow }}
-			 {command "Generate flow lines for raster map" {} "r.flow" {} -command {execute r.flow }}
+			 {command "Generate flow lines for raster map" {} "r.flow" {} -command {spawn r.flow }}
 			 {command "Topographic index map" {} "r.topidx" {} -command {execute r.topidx }}
 			 {command "TOPMODEL simulation" {} "r.topmodel" {} -command {execute r.topmodel }}
 			 {command "Watershed subbasins" {} "r.basins.fill" {} -command {execute r.basins.fill }}
