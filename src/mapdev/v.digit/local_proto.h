@@ -153,7 +153,7 @@ int check_map_buttons(void);
 int check_map_generic(void);
 int check_map_ft_swtch(void);
 /* scal_window.c */
-int scal_window_w_mouse(void);
+int scal_window_w_mouse(unsigned char type, struct line_pnts *Xpoints);
 /* screen_plt.c */
 int First(double *, double *);
 int Next(double *, double *);
@@ -178,7 +178,7 @@ int map_to_dig_thresh(double);
 int init_window(void);
 int set_window_w(void);
 /* slid_window.c */
-int slid_window_w_mouse(void);
+int slid_window_w_mouse(unsigned char type, struct line_pnts *Xpoints);
 /* snap.c */
 int near_zero(double);
 /* states.c */
@@ -211,9 +211,9 @@ int erase_window(void);
 int Save_Disp_settings(void);
 int Restore_Disp_settings(void);
 int Zero_Disp_settings(void);
-int zoom_window(void);
-int slid_window(void);
-int scal_window(void);
+int zoom_window(unsigned char type, struct line_pnts *Xpoints);
+int slid_window(unsigned char type, struct line_pnts *Xpoints);
+int scal_window(unsigned char type, struct line_pnts *Xpoints);
 #ifdef DIG___STRUCTS___
 int area_outside_window (P_AREA *);
 int line_outside_window (P_LINE *);

@@ -14,7 +14,7 @@
 #include "local_proto.h"
 
 int 
-slid_window_w_mouse (void)
+slid_window_w_mouse (unsigned char type, struct line_pnts *Xpoints)
 {
     char buffer[64] ;
     int screen_x, screen_y ;
@@ -74,6 +74,8 @@ slid_window_w_mouse (void)
 	        window_rout (N, S, E, W);
 		Clear_base ();
 	        replot(CMap);
+		if(Xpoints)
+			highlight_line (type, Xpoints, 0, NULL);
 		Clear_info();
 
 		break;
@@ -92,6 +94,8 @@ slid_window_w_mouse (void)
 	        window_rout (N, S, E, W);
 		Clear_base ();
 	        replot(CMap);
+		if(Xpoints)
+			highlight_line (type, Xpoints, 0, NULL);
 		Clear_info();
 
 		break;

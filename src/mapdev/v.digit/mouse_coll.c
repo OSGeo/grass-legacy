@@ -32,37 +32,40 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
     double	*yptr ;
     char message[128] ;
     int *n_points ;
-    int cnt;
 
     if (Points->alloc_points == 0)
     {
 	dig_alloc_points (Points, 500);
+    	Points->n_points = 0 ;
+    	Xlast = 0 ;
+    	Ylast = 0 ;
+    }else if(Points->n_points){
+	utm_to_screen (*(Points->x + Points->n_points - 1),
+		       *(Points->y + Points->n_points - 1),
+		       &Xlast, &Ylast) ;
+	Xraw = Xlast ;
+	Yraw = Ylast ;
+    }else{
+    	Xlast = 0 ;
+    	Ylast = 0 ;
     }
     n_points = &(Points->n_points);
     mode = POINT;
     run_mode = mode ;
-    xptr = Points->x ;
-    yptr = Points->y ;
+    xptr = Points->x + *n_points ;
+    yptr = Points->y + *n_points ;
 
     Clear_info() ;
 
     Write_info(1, " # Points       Easting     Northing") ;
 
-    {
-    Xlast = 0 ;
-    Ylast = 0 ;
-    *n_points = 0 ;
     stream_mode = 0 ;
     sprintf(message, "   %6d   %12.2f %12.2f", *n_points, 0.0, 0.0);
     Write_info(2, message) ;
     Write_info(4, " POINT mode ") ;
-    }
 
     loop = 1 ;
 
-    Xraw = Yraw = 100;
-
-    cnt = 0;
     /*  digitizing loop  */
     while (loop)
     {
@@ -70,7 +73,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 	{
 	   Write_base(12, "    Buttons:") ;
 	   Write_base(13, "       left:  Digitize a site") ;
-	   Write_base(14, "       Middle:  Abort/Quit") ;
+	   Write_base(14, "       Middle:  Zoom") ;
 	   Write_base(15, "       Right:   Abort/Quit") ;
 
 	   Write_info(2, "") ;
@@ -94,8 +97,12 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 		break ;
 
 	    case BACKUP:
-		if (type == DOT)	/* abort */
-		    return (mode);
+		if (type == DOT){	/* abort */
+			zoom_window (type, Points);
+
+			continue ;
+			break ;
+		}
 		if (*n_points <= 0)
 		{
 		    BEEP;
