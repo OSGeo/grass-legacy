@@ -279,7 +279,7 @@ int main (int argc, char *argv[])
       }
       break;
     case PHOTOMETRIC_RGB:
-      tif_pos = ftell((FILE *)tif);
+/*      tif_pos = ftell((FILE *)tif); */ /* commented 5/2000 */
       ncolors=count_colors(tif,height,width,buf);
       if (Verbose)fprintf (stdout,"Total colors = %d\n",ncolors);
       if(ncolors > maxcolors){
@@ -293,7 +293,7 @@ int main (int argc, char *argv[])
 	tif_pos = ftell((FILE *)tif);
 	num_colors=get_tif_colors(tif,height,width,buf)	;
 	if (Verbose)fprintf (stdout,"Total used colors = %d\n", num_colors);
-	fseek((FILE *)tif, tif_pos, 0);
+/*	fseek((FILE *)tif, tif_pos, 0);*/ /* commented 5/2000 */
       }
       break;
     case PHOTOMETRIC_PALETTE:
