@@ -17,7 +17,9 @@ proc make_help_window { w } {
 	frame $w.f1
         button $w.f2.quit  -command exit  -text Close -relief raised -bd 3
         scrollbar $w.f1.scrollbar  -command "$w.f1.text yview"  -orient v
+        scrollbar $w.f1.scrollbar1  -command "$w.f1.text xview"  -orient h
         text $w.f1.text  -yscrollcommand "$w.f1.scrollbar set" \
+        -xscrollcommand "$w.f1.scrollbar1 set" \
 	-padx 3 -pady 3 -takefocus 0 \
 	-background white -foreground black
 
@@ -27,6 +29,7 @@ proc make_help_window { w } {
         pack $w.f2.quit -side bottom -fill x -expand 0
 	pack $w.f1.text -side right -fill both -expand 1
 	pack $w.f1.scrollbar -side left -expand 0 -fill y
+	pack $w.f1.scrollbar1 -side bottom -expand 0 -fill x -before $w.f1.text
 
 }
 
