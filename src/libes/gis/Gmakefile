@@ -189,7 +189,7 @@ all: version.h \
 	$(ETC)/state83
 	cp $(LIBDIR)/libgis.a $(GISBASE)/lib
 #Required for R-statistical language interface:
-	(cd $(SRC)/include ; cp datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
+	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
 $(GISLIB): $(OBJ)
 	$(AR)
