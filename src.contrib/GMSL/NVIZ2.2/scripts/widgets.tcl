@@ -201,7 +201,7 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	    $S.scale configure -from $val
 	}
         if {$val != 0} {
-	if {$val < $res} {
+	if {$val < $res || $res == 0} {
         set res $val
         } else {
         set res [expr $val/floor($val/$res)]

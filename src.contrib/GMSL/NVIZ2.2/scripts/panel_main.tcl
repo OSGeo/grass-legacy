@@ -13,6 +13,7 @@
 
 proc mkmainPanel { BASE } {
     global Nv_
+    global XY
 
     catch {destroy $BASE}
 
@@ -86,10 +87,25 @@ proc mkmainPanel { BASE } {
 
 
 #pack frames
+    pack [frame $BASE.midt ] -side top -expand 1 -fill x
     pack [frame $BASE.midf ] -side left -expand 1
 
+    set draw_lab [label $BASE.midt.lab -text "View:" \
+                 -relief flat]
+    set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
+                 -variable draw_option -value 0 \
+		-command "change_display 1" ]
+
+    set draw_var2 [radiobutton $BASE.midt.b2 -text "center" \
+                 -variable draw_option -value 1 \
+                 -command "change_display 0" ]
+	$draw_var1 select 
+
+
+    pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
+
     # make  position "widget"
-    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_position]
+    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_eye_position]
     set H [mk_hgt_slider $BASE.midf]
     set E [mk_exag_slider $BASE.midf]
     pack $XY $H $E -side left -expand y
@@ -111,7 +127,7 @@ proc mkmainPanel { BASE } {
 	if {[Nauto_draw] == 1} {Ndraw_all} }
     button $BASE.midf.lookat.top -text top -command { Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
 # note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
-	update_position 0.496802 0.50100
+	update_eye_position 0.496802 0.50100
 	update
         if {[Nauto_draw] == 1} {Ndraw_all} }
     button $BASE.midf.lookat.cancel -text cancel -command no_focus
@@ -203,7 +219,7 @@ proc Nviz_main_load { file_hook } {
     set data [split "$data"]
     Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) \
 	[expr int([lindex $data 0] * 125)]  [expr int([lindex $data 1] * 125)]
-    update_position [lindex $data 0] [lindex $data 1]
+    update_eye_position [lindex $data 0] [lindex $data 1]
     update
 
     # focus
@@ -298,8 +314,9 @@ proc update_exag {exag} {
 #    Nquick_draw
 }
 
-proc update_position {x y} {
+proc update_eye_position {x y} {
     global Nv_ 
+
     Nchange_position $x $y 
 
     if {$Nv_(FollowView)} {
@@ -308,6 +325,72 @@ proc update_position {x y} {
 	set y [expr int($y*125)]
 	Nv_itemDrag $Nv_(LIGHT_XY) $Nv_(LIGHT_POS) $x $y
     }
+}
+
+proc update_center_position {x y} {
+    global Nv_
+
+     Nset_focus_gui $x $y
+    
+    if {$Nv_(FollowView)} {
+        set_lgt_position $x $y
+        set x [expr int($x*125)]
+        set y [expr int($y*125)]
+        Nv_itemDrag $Nv_(LIGHT_XY) $Nv_(LIGHT_POS) $x $y
+    }
+}
+
+
+proc change_display {flag} {
+global XY Nv_
+
+       set NAME $XY
+       set NAME2 [winfo parent $NAME]
+       catch "destroy $XY"
+
+if {$flag == 1} {
+#draw eye position 
+set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
+
+set E [lindex [Nget_position] 0]
+if {$E < 0.} {set $E 0.}
+if {$E > 1.} {set $E 1.}
+
+set N [lindex [Nget_position] 1]
+set N [expr 1. - $N]
+if {$N < 0.} {set $N 0.}
+if {$N > 1.} {set $N 1.}
+
+set E [expr $E * 125.]
+set N [expr $N * 125.]
+
+Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
+update
+
+} else {
+#draw center position
+set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
+pack $XY -side left -before $NAME2.height
+
+set E [lindex [Nget_focus_gui] 0]
+if {$E > 1.} { set E 1.}
+if {$E < 0.} {set E 0.}
+
+set N [lindex [Nget_focus_gui] 1]
+if {$N > 1.} {set N 1.}
+if {$N < 0.} {set N 0.}
+
+set E [expr ($E * 125.)]
+#reverse northing for canvas
+set N [expr 125 - ($N * 125.)]
+
+Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) $E $N
+update
+                 
+}
+
+       pack $XY -side left -before $NAME2.height
+
 }
 
 proc update_height {h} {

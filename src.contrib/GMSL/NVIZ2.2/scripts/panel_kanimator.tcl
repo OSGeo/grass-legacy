@@ -1060,7 +1060,18 @@ proc keyanimAddKey { BASE } {
 	    if {[lindex $i 2] != "null"} then {
 		set an_element [list [lindex $i 0] [[lindex $i 3]]]
 	    } else {
-		set an_element [list [lindex $i 0] values]
+		set value values
+                switch [lindex $i 0] {
+                "FromX" { set value [lindex [Nget_from] 0] }
+                "FromY" { set value [lindex [Nget_from] 1] }
+                "FromZ" { set value [lindex [Nget_from] 2] }
+		"DirX"  { set value [lindex [Nget_focus] 0] }
+		"DirY"  { set value [lindex [Nget_focus] 1] }
+		"DirZ"  { set value [lindex [Nget_focus] 2] }
+                "FOV"   { set value fov}
+                "TWIST" { set value twist}
+                }
+		set an_element [list [lindex $i 0] $value]
 	    }
 	    
 	    lappend new_elements $an_element
@@ -1320,8 +1331,12 @@ proc keyanimOneBackward { BASE } {
 #
 ############################################################################
 proc keyanimStop { BASE } {
-    global keyanimPlayState ScriptPlaying
-    
+    global keyanimPlayState ScriptPlaying keyanimOff
+   
+	if {$keyanimPlayState == "run_and_save"} {
+		if {$keyanimOff == 1} {
+	Noff_screen 0
+	}  }
     set keyanimPlayState stop
     if $ScriptPlaying then {
 	send script_play {set pause_play 1}
@@ -1334,7 +1349,7 @@ proc keyanimStop { BASE } {
 ############################################################################
 proc keyanimOneForward { BASE } {
     global keyanimPlayState keyanimKeyList keyanimFrameRate keyanimPrecis
-    global keyanimFrameNum keyanimSaveRenderStyle
+    global keyanimFrameNum keyanimSaveRenderStyle 
     
     # Get the current time from the time counter
     if {[llength $keyanimKeyList] < 2} then {
@@ -1609,7 +1624,7 @@ proc keyanimFindKeyForward { cname cindex } {
 proc keyanimRunAndSave { BASE } {
     global keyanimKeyList keyanimPlayState keyanimFrameRate
     global keyanimWaitPress keyanimBaseName keyanimSaveRenderStyle
-    global IMG keyanimFrameNum
+    global IMG keyanimFrameNum keyanimStartFrame keyanimOff
     
     if {[llength $keyanimKeyList] < 2} then { return }
     
@@ -1620,30 +1635,61 @@ proc keyanimRunAndSave { BASE } {
     toplevel .ras_fname
     frame .ras_fname.frame1
     frame .ras_fname.frame2
+    frame .ras_fname.frame3
+    frame .ras_fname.frame4
+    frame .ras_fname.frame5
     label .ras_fname.title -text "Enter a base name:"
     entry .ras_fname.enter -relief sunken
+
+    label .ras_fname.label -text "Render:"
     radiobutton .ras_fname.norm -text "Wireframe" \
 	-variable keyanimSaveRenderStyle -value 0
     radiobutton .ras_fname.fancy -text "Full Rendering" \
 	-variable keyanimSaveRenderStyle -value 1
+
     button .ras_fname.ok -text "Ok" -command "set keyanimWaitPress true"
-    label .ras_fname.label -text "" -relief raised
+
+    label .ras_fname.label1 -text "Image:"
     radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
     radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
     radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
 
+    label .ras_fname.label2 -text "Start Frame:"
+    entry .ras_fname.enter2 -relief sunken -width 6
+    checkbutton .ras_fname.check1 -text "Off-Screen" \
+    -variable "keyanimOff" 
+
 #Pack Menu
     pack .ras_fname.frame1 -side top -fill both -expand 1
-    pack .ras_fname.frame2 -side bottom -fill both -expand 1
-    pack .ras_fname.title .ras_fname.enter -side top \
+    pack .ras_fname.frame2 -side top -fill both -expand 1
+    pack .ras_fname.frame3 -side top -fill both -expand 1
+    pack .ras_fname.frame4 -side top -fill both -expand 1
+    pack .ras_fname.frame5 -side bottom -fill both -expand 1
+
+    pack .ras_fname.title .ras_fname.enter -side top\
     -in .ras_fname.frame1 -fill both
-    pack .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 \
-    -in .ras_fname.frame1 -side left -fill both
-    pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side top \
-    -in .ras_fname.frame2 -fill both 
-    pack .ras_fname.ok -side bottom -fill both -in .ras_fname.frame2 -expand 1
+    pack .ras_fname.label2 .ras_fname.enter2 -side left \
+    -in .ras_fname.frame2 -fill both
+    pack .ras_fname.check1 -side right \
+    -in .ras_fname.frame2 -fill both
+    pack .ras_fname.label1 .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 \
+    -in .ras_fname.frame3 -side left -fill both
+    pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side left \
+    -in .ras_fname.frame4 -fill both 
+    pack .ras_fname.ok -side bottom -fill both \
+    -in .ras_fname.frame5 -expand 1
+    .ras_fname.enter2 insert end "0"
+
+#Disable option for Off Screen render until checked
+    .ras_fname.check1 configure -state disabled
+
     tkwait variable keyanimWaitPress
+
+    if {$keyanimOff == 1} {
+	Noff_screen 1
+    }
     set keyanimBaseName [.ras_fname.enter get]
+    set keyanimStartFrame [.ras_fname.enter2 get]
     destroy .ras_fname
     
     # Automatically start from the beginning
@@ -1663,7 +1709,7 @@ proc keyanimRunAndSave { BASE } {
     set keyanimFrameNum 1
     
     keyanimOneForward $BASE
-    
+
 }
 
 ############################################################################
@@ -1671,14 +1717,16 @@ proc keyanimRunAndSave { BASE } {
 #
 ############################################################################
 proc keyanimSaveFrame { fnum } {
-    global IMG keyanimBaseName keyanimSaveRenderStyle
+    global IMG keyanimBaseName keyanimSaveRenderStyle keyanimStartFrame
     
     # First create a file name
     set fname $keyanimBaseName
-    set num $fnum
-    while {[string length $num] < 5} {
-	set num 0$num
-    }
+    set num [format "%04d" [expr $fnum + $keyanimStartFrame]]
+
+#    while {[string length $num] < 5} {
+#	set num 0$num
+#    }
+
 if {$IMG == 1} {
     append fname $num ".rgb"
     Nwrite_rgb $fname
@@ -1811,11 +1859,44 @@ proc keyanimLoadAnim { base } {
     foreach i $keyanimKeyList {
 	lappend old_tag_list [lindex $i 2]
     }
+
+      #Really make sure old frames are gone
+      Nclear_keys
+      Nupdate_frames	
+
+	#Attempt to set Key Frame positions from Mask
+	#TODO get and set other mask features
+        foreach i $tempKeyList {
+		set time [lindex $i 0]
+                set k [lindex $i 1] 
+                        set name [lindex $k 0]
+                        set value1 [lindex $name 1]
+                        set name [lindex $k 1]
+                        set value2 [lindex $name 1]
+                        set name [lindex $k 2]
+                        set value3 [lindex $name 1]
+                #Set Center of View
+                Nmove_to $value1 $value2 $value3
+                        set name [lindex $k 3]
+                        set value1 [lindex $name 1]
+                        set name [lindex $k 4]
+                        set value2 [lindex $name 1]
+                        set name [lindex $k 5]
+                        set value3 [lindex $name 1]
+		#Set Camera position
+		Nset_focus $value1 $value2 $value3
+	
+	Nadd_key $time KF_ALL_MASK 1 0.0
+
+		}
+
     set keyanimKeyList $tempKeyList
     keyanimDrawKeys $base $old_tag_list
 
     # Set the new framerate
     set keyanimFrameRate $tempFrameRate
+
+    keyanimUpdateFramesteps
 
     set keyanimSaved 1
 }
