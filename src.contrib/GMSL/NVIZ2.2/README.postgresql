@@ -15,6 +15,14 @@ As rule, postgres does not allow root to be a user, so if root holds
 PERMANENT folders on your GRASS server, change to a user account to work 
 with pg_grass modules.
 
+B. Compile NVIZ
+
+C. Use it...
+For those being interested in starting with PostgreSQL and                      
+GRASS may try our small "tutorial":                                             
+                                                                                
+http://www.geog.uni-hannover.de/grass/projects/postgresqlgrass/first-steps.txt  
+ 
 /*
                         alex shevlakov sixote@yahoo.com
 */
