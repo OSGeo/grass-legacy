@@ -1,0 +1,13 @@
+#COMPILE_FLAGS = -g
+#LDFLAGS = -g
+
+all: $(BIN_ALPHA_CMD)/d.save
+
+$(BIN_ALPHA_CMD)/d.save: main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+
+$(DISPLAYLIB): #
+$(RASTERLIB): #
+$(GISLIB): #
+
+
