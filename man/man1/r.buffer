@@ -9,12 +9,16 @@ surrounding cells that contain non-zero category values.
 .br
 \fBr.buffer help\fR
 .br
-\fBr.buffer input\*=\fIname \fBoutput\*=\fIname \fBdistances\*=\fIvalue\fR[,\fIvalue\fR,...] \
+.in +3
+.ti -3
+\fBr.buffer\fP [\fB-q\fP] \fBinput\*=\fIname \fBoutput\*=\fIname 
+\fBdistances\*=\fIvalue\fR[,\fIvalue\fR,...]
 [\fBunits\*=\fIname\fR]
+.in
 .SH DESCRIPTION
 .I r.buffer
 creates a new raster map layer
-showing buffer (aka, "distance" or "proximity") zones around all cells
+showing buffer (a.k.a. "distance" or "proximity") zones around all cells
 that contain non-zero category values in an existing raster map layer.
 The distances of buffer zones from cells with non-zero category values
 are user-chosen.
@@ -24,19 +28,19 @@ based on road information contained in the raster map layer shown on the left.
 .TS
 l l.
 
-000000000000000000000000	111122222222222222333333
-111000000000000000000000	000111111111112222222222
-000111111111100000000000	111000000000011112222222
-000000001000011100000000	221111110111100011111111
-000000001000000011111111	222222210122111100000000
-000000001000000000000000	322222210122222111111111
-000000001000000000000000	333332210122222222222222
-000000001000000000000000	333332210122332222222222
-000000001000000000000000	333332210122333333333333
-Category 0: No roads	Category 0: Road location
-Category 1: Roads	Category 1: Buffer Zone 1 around roads
-	Category 2: Buffer Zone 2 around roads
-	Category 3: Buffer Zone 3 around roads
+000000000000000000000000	222233333333333333444444
+111000000000000000000000	111222222222223333333333
+000111111111100000000000	222111111111122223333333
+000000001000011100000000	332222221222211122222222
+000000001000000011111111	333333321233222211111111
+000000001000000000000000	433333321233333222222222
+000000001000000000000000	444443321233333333333333
+000000001000000000000000	444443321233443333333333
+000000001000000000000000	444443321233444444444444
+Category 0: No roads	Category 1: Road location
+Category 1: Roads	Category 2: Buffer Zone 1 around roads
+	Category 3: Buffer Zone 2 around roads
+	Category 4: Buffer Zone 3 around roads
 .TE
 .SH INTERACTIVE PROGRAM USE
 The user can run the program interactively by simply typing \fBr.buffer\fR
@@ -67,11 +71,6 @@ requested distance rings around them.  This method works very fast
 when there are few cells containing the category values of interest,
 but works slowly when there are numerous cells containing the
 category values of interest spread throughout the area.]
-.LP
-The \fIr.buffer\fR program now runs the process in "background" and
-returns keyboard control to the user.  These processes can occasionally
-take up to an hour or more to finish;  however, because they run in the
-background, you are free to do other things with the computer in the interim.
 
 
 .SH NON-INTERACTIVE PROGRAM USE
@@ -79,11 +78,20 @@ The user can run \fIr.buffer\fR specifying all parameter values on the
 command line, using the form:
 .LP
 .RS
-\fBr.buffer input\*=\fIname \fBoutput\*=\fIname \fBdistances\*=\fIvalue\fR[,\fIvalue\fR,...] \
+.in +3
+.ti -3
+\fBr.buffer [-q] input\*=\fIname \fBoutput\*=\fIname
+\fBdistances\*=\fIvalue\fR[,\fIvalue\fR,...]
 [\fBunits\*=\fIname\fR]
+.in
+.RE
 
 .LP
-.RE
+\fBFlags:\fR
+.IP \fB-q\fP
+Run quietly
+
+.LP
 \fBParameters:\fR
 .IP \fBinput\*=\fIname\fR 18
 The name of an existing raster map layer
