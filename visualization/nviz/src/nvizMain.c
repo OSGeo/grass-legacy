@@ -4,6 +4,7 @@
  */
 
 #include <tk.h>
+#include "interface.h"
 
 /*
  * The following variable is a special hack that is needed in order for
@@ -38,6 +39,21 @@ int main(int argc,		/* Number of command-line arguments. */
 	 char **argv		/* Values of command-line arguments. */
     )
 {
+	char *tmp;
+	int i;
+
+	Tcl_FindExecutable(argv[0]);
+	if (argc > 1) {
+		if (strstr(argv[1], "-f") == NULL)
+		{
+			for (i = argc; i>= 1; i--)
+				argv[i] = argv[i-1];
+			argv[1] = (char *)malloc(2 * (sizeof(char)));
+			sprintf(argv[1], "--");
+			argc++;
+		}
+	}
+			
     Tk_Main(argc, argv, NVIZ_AppInit);
     return 0;			/* Needed only to prevent compiler warning. */
 }
