@@ -184,7 +184,7 @@ data <layer_ref> <site_ref> <cat> ...
 <site_ref>      reference number of the site
 <cat>           category which occurred
 .SH "SEE ALSO"
-.I s.db,
+.I s.db.rim,
 .I s.in.ascii,
 .I s.menu,
 .I s.out.ascii,
