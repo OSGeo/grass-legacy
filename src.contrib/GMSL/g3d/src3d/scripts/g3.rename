@@ -14,7 +14,7 @@ if [ "$1" = "" ] ; then
  exit
 fi
 
-if test ! -f $LOCATION/grid3/$1; then
+if test ! -d $LOCATION/grid3/$1; then
     echo "ERROR: G3D file $1 not found."
     exit
 fi

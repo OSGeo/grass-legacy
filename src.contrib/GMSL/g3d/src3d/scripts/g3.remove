@@ -19,7 +19,7 @@ if [ "$1" = "help" ] ; then
  exit
 fi
 
-if test ! -f $LOCATION/grid3/$1; then
+if test ! -d $LOCATION/grid3/$1; then
     echo "ERROR: G3D file $1 not found."
     exit
 fi
@@ -35,4 +35,6 @@ if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
   fi
 fi
 
-echo "Removed $1."
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+ echo "Removed $1."
+fi
