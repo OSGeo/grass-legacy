@@ -25,8 +25,7 @@ echo "/*!
 @{"					> $i.dox
 
 # extract function names starting with Vect_*():
-# TODO: improve extraction of Vect_*() function names:
-grep Vect_ $i* |grep -v Vect__ |grep '\\fn' | cut -d' ' -f4 | sed 's/$/();\
+cat $i.c | grep '\\fn '| sed '/^ *\\fn .*\(Vect_[a-zA-Z0-9_]*\).*$/s//\1/p' |sort -u | sed 's/$/();\
 /g' >> $i.dox
 
 #write footer:
