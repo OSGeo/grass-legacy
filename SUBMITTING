@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.17 2001-01-04 16:25:07 markus Exp $
+$Id: SUBMITTING,v 1.18 2001-03-26 07:56:02 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -46,7 +46,7 @@ care of following rules:
 *   	    	be used. Note that most linked list functionality (add,
 *   	    	remove, get) is supported, but their is no sorting
 *   	    	functionality.
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
