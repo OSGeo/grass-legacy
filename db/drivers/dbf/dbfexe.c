@@ -140,8 +140,8 @@ int execute(char *sql, cursor * c)
     switch (st->command) {
     case (SQLP_ADD_COLUMN):
 	load_table(tab);
-	get_col_def ( st, i, &dtype, &width, &decimals );
-	ret = add_column(tab, dtype, st->Col[i].s, width, decimals);
+	get_col_def ( st, 0, &dtype, &width, &decimals );
+	ret = add_column(tab, dtype, st->Col[0].s, width, decimals);
 	if ( ret == DB_FAILED ) {
 	    append_error("Cannot add column.\n");
 	    return DB_FAILED;
