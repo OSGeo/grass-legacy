@@ -100,14 +100,14 @@ edit_3dcellhd (cellhd)
       cellhd->depths = def_wind.depths;
 
       if (cellhd->proj != def_wind.proj) {
-	fprintf(stdout, "%s projection %d differs from default projection %d\n",
+	fprintf(stderr, "%s projection %d differs from default projection %d\n",
 		"region", cellhd->proj, def_wind.proj);
 	if (!G_yes("do you want to make them match? ", 1)) return -1;
 	cellhd->proj = def_wind.proj;
 	cellhd->zone = def_wind.zone;
       }
       if (cellhd->zone != def_wind.zone) {
-	fprintf(stdout, "%s zone %d differs from default zone %d\n",
+	fprintf(stderr, "%s zone %d differs from default zone %d\n",
 		"region", cellhd->zone, def_wind.zone);
 	    if (!G_yes("do you want to make them match? ", 1)) return -1;
 	cellhd->zone = def_wind.zone;
@@ -194,40 +194,40 @@ while(1)
     G_squeeze (ll_tbres);
 
     if (!G_scan_northing (ll_north, &cellhd->north, cellhd->proj)) {
-      fprintf(stdout, "Illegal value for north: %s\n",ll_north);
+      fprintf(stderr, "Illegal value for north: %s\n",ll_north);
       ok = 0;
     }
     if (!G_scan_northing (ll_south, &cellhd->south, cellhd->proj)) {
-      fprintf(stdout, "Illegal value for south: %s\n", ll_south);
+      fprintf(stderr, "Illegal value for south: %s\n", ll_south);
       ok = 0;
     }
     if (!G_scan_easting (ll_east, &cellhd->east, cellhd->proj)) {
-      fprintf(stdout, "Illegal value for east: %s\n", ll_east);
+      fprintf(stderr, "Illegal value for east: %s\n", ll_east);
       ok = 0;
     }
     if (!G_scan_easting (ll_west, &cellhd->west, cellhd->proj)) {
-      fprintf(stdout, "Illegal value for west: %s\n", ll_west);
+      fprintf(stderr, "Illegal value for west: %s\n", ll_west);
       ok = 0;
     }
     if (!scan_double (ll_top, &cellhd->top, cellhd->proj)) {
-      fprintf(stdout, "Illegal value for west: %s\n", ll_west);
+      fprintf(stderr, "Illegal value for west: %s\n", ll_west);
       ok = 0;
     }
     if (!scan_double (ll_bottom, &cellhd->bottom)) {
-      fprintf(stdout, "Illegal value for east: %s\n", ll_east);
+      fprintf(stderr, "Illegal value for east: %s\n", ll_east);
       ok = 0;
     }
 
     if (!G_scan_resolution (ll_ewres, &cellhd->ew_res, cellhd->proj)) {
-      fprintf(stdout, "Illegal east-west resolution: %s\n", ll_ewres);
+      fprintf(stderr, "Illegal east-west resolution: %s\n", ll_ewres);
       ok = 0;
     }
     if (!G_scan_resolution (ll_nsres, &cellhd->ns_res, cellhd->proj)) {
-      fprintf(stdout, "Illegal north-south resolution: %s\n", ll_nsres);
+      fprintf(stderr, "Illegal north-south resolution: %s\n", ll_nsres);
       ok = 0;
     }
     if (!scan_double (ll_tbres, &cellhd->tb_res)) {
-      fprintf(stdout, "Illegal north-south resolution: %s\n", ll_nsres);
+      fprintf(stderr, "Illegal north-south resolution: %s\n", ll_nsres);
       ok = 0;
     }
 
@@ -252,142 +252,142 @@ while(1)
     G3d_adjustRegionRes (cellhd);
 
 SHOW:
-    fprintf(stdout, "\n\n") ;
-    fprintf(stdout, "  projection:   %s\n", projection);
-    fprintf(stdout, "  zone:         %d\n", cellhd->zone);
+    fprintf(stderr, "\n\n") ;
+    fprintf(stderr, "  projection:   %s\n", projection);
+    fprintf(stderr, "  zone:         %d\n", cellhd->zone);
 
     G_format_northing (cellhd->north, buf,  cellhd->proj);
     G_format_northing (north,         buf2, cellhd->proj);
-    fprintf(stdout, "  north:       %s", buf);
+    fprintf(stderr, "  north:       %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     G_format_northing (cellhd->south, buf,  cellhd->proj);
     G_format_northing (south,         buf2, cellhd->proj);
-    fprintf(stdout, "  south:       %s", buf);
+    fprintf(stderr, "  south:       %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     G_format_easting (cellhd->east, buf,  cellhd->proj);
     G_format_easting (east,         buf2, cellhd->proj);
-    fprintf(stdout, "  east:        %s", buf);
+    fprintf(stderr, "  east:        %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     G_format_easting (cellhd->west, buf,  cellhd->proj);
     G_format_easting (west,         buf2, cellhd->proj);
-    fprintf(stdout, "  west:        %s", buf);
+    fprintf(stderr, "  west:        %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     format_double (cellhd->top, buf);
     format_double (top,         buf2);
-    fprintf(stdout, "  top:        %s", buf);
+    fprintf(stderr, "  top:        %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     format_double (cellhd->bottom, buf);
     format_double (bottom,         buf2);
-    fprintf(stdout, "  bottom:        %s", buf);
+    fprintf(stderr, "  bottom:        %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to match resolution)");
+	fprintf(stderr, "  (Changed to match resolution)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
     G_format_resolution (cellhd->ew_res, buf,  cellhd->proj);
     G_format_resolution (ewres,          buf2, cellhd->proj);
-    fprintf(stdout, "  e-w res:     %s", buf);
+    fprintf(stderr, "  e-w res:     %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to conform to grid)");
+	fprintf(stderr, "  (Changed to conform to grid)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
     G_format_resolution (cellhd->ns_res, buf,  cellhd->proj);
     G_format_resolution (nsres,          buf2, cellhd->proj);
-    fprintf(stdout, "  n-s res:     %s", buf);
+    fprintf(stderr, "  n-s res:     %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to conform to grid)");
+	fprintf(stderr, "  (Changed to conform to grid)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
     format_double (cellhd->tb_res, buf);
     format_double (tbres,          buf2);
-    fprintf(stdout, "  t-b res:     %s", buf);
+    fprintf(stderr, "  t-b res:     %s", buf);
     if (strcmp (buf, buf2) != 0)
     {
 	ok = 0;
-	fprintf(stdout, "  (Changed to conform to grid)");
+	fprintf(stderr, "  (Changed to conform to grid)");
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "\n");
 
 
-    fprintf(stdout, "\n");
-    fprintf(stdout, "  total   rows:  %15d\n",    cellhd->rows);
-    fprintf(stdout, "  total   cols:  %15d\n",    cellhd->cols);
-    fprintf(stdout, "  total depths:  %15d\n",    cellhd->depths);
+    fprintf(stderr, "\n");
+    fprintf(stderr, "  total   rows:  %15d\n",    cellhd->rows);
+    fprintf(stderr, "  total   cols:  %15d\n",    cellhd->cols);
+    fprintf(stderr, "  total depths:  %15d\n",    cellhd->depths);
     sprintf ( buf,"%ld",    (long) cellhd->rows * cellhd->cols * cellhd->depths);
     G_insert_commas(buf);
-    fprintf(stdout, "  total cells: %15s\n",    buf);
-    fprintf(stdout, "\n");
+    fprintf(stderr, "  total cells: %15s\n",    buf);
+    fprintf(stderr, "\n");
 
     if (cellhd->north > def_wind.north) {
-      fprintf(stdout, "warning - north falls outside the default region\n");
+      fprintf(stderr, "warning - north falls outside the default region\n");
       ok = 0;
     }
     if (cellhd->south < def_wind.south) {
-      fprintf(stdout, "warning - south falls outside the default region\n");
+      fprintf(stderr, "warning - south falls outside the default region\n");
       ok = 0;
     }
     if (cellhd->proj != PROJECTION_LL) {
       if (cellhd->east > def_wind.east) {
-	  fprintf(stdout, "warning - east falls outside the default region\n");
+	  fprintf(stderr, "warning - east falls outside the default region\n");
 	  ok = 0;
 	}
       if (cellhd->west < def_wind.west) {
-	fprintf(stdout, "warning - west falls outside the default region\n");
+	fprintf(stderr, "warning - west falls outside the default region\n");
 	ok = 0;
       }
     }
     if (cellhd->top < def_wind.top) {
-      fprintf(stdout, "warning - top falls outside the default region\n");
+      fprintf(stderr, "warning - top falls outside the default region\n");
       ok = 0;
     }
     if (cellhd->bottom < def_wind.bottom) {
-      fprintf(stdout, "warning - bottom falls outside the default region\n");
+      fprintf(stderr, "warning - bottom falls outside the default region\n");
       ok = 0;
     }
     
 
 ASK:
-    fprintf(stdout, "\nDo you accept this %s? (y/n) [%s] > ",
+    fprintf(stderr, "\nDo you accept this %s? (y/n) [%s] > ",
 	"region", ok?"y":"n") ;
     if(!G_gets(buf))
 	goto SHOW;
@@ -417,8 +417,8 @@ hitreturn()
 {
     char buf[100];
 
-    fprintf(stdout, "hit RETURN -->");
-    if (!gets(buf)) exit(0);
+    fprintf(stderr, "hit RETURN -->");
+    if (!G_gets(buf)) exit(0);
     G_strip (buf);
     if (strcmp (buf, "exit") == 0) exit(0);
 }
