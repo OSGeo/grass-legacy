@@ -22,13 +22,12 @@ get_line(fp, buffer)
 	char	*str;
 
 
-	buffer[0]=0;
+	buffer[0] = 0;
 	fscanf(fp, "%[^\n]", buffer);
+	getc(fp);
 
-	if(!buffer[0])
-		getc(fp);
 	if((str = (char *) strchr(buffer, '#')))
-		*str=0;
+		*str = 0;
 
 
 	return;
