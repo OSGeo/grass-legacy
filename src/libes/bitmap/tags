@@ -1,0 +1,20 @@
+BM_col_to_bit	bitmap.c	/^#define BM_col_to_bit(x)   ((x)%8)$/
+BM_col_to_byte	bitmap.c	/^#define BM_col_to_byte(x)  ((x)\/8)$/
+BM_create	bitmap.c	/^BM_create (x, y)$/
+BM_create_sparse	sparse.c	/^BM_create_sparse (x, y)$/
+BM_destroy	bitmap.c	/^BM_destroy (map)$/
+BM_destroy_sparse	sparse.c	/^BM_destroy_sparse (map)$/
+BM_dump_map_row_sparse	sparse.c	/^BM_dump_map_row_sparse (map, y)$/
+BM_dump_map_sparse	sparse.c	/^BM_dump_map_sparse (map)$/
+BM_file_read	bitmap.c	/^BM_file_read (fp)$/
+BM_file_write	bitmap.c	/^BM_file_write (fp, map)$/
+BM_file_write_sparse	sparse.c	/^BM_file_write_sparse (fp, map)$/
+BM_get	bitmap.c	/^BM_get (map, x, y)$/
+BM_get_map_size	bitmap.c	/^BM_get_map_size (map)$/
+BM_get_map_size_sparse	sparse.c	/^BM_get_map_size_sparse (map)$/
+BM_get_sparse	sparse.c	/^BM_get_sparse (map, x, y)$/
+BM_set	bitmap.c	/^BM_set (map, x, y, val)$/
+BM_set_sparse	sparse.c	/^BM_set_sparse (map, x, y, val)$/
+Mmain	main.c	/^main(argc, argv)$/
+Msmain	smain.c	/^main(argc, argv)$/
+dump_map	main.c	/^dump_map(map)$/
