@@ -50,7 +50,7 @@
   The digitizer device drivers for 3.0 are simpler and have less code  then
   the 2.0 versions, but there should be even less.  There shouldn't be any 
   calls to the dumb terminal with curses  (Write_info()) or to the graphics 
-  driver (plot_points()).  I ran out of time.   These will be taken out in 4.0 .
+  driver (plot_points()).  I ran out of time.   
 
 
   -michael h.
