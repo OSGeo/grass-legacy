@@ -14,6 +14,7 @@ SUBDIRS1 = \
 	v.format \
 	v.info \
 	v.in.ascii \
+	v.in.db \
 	v.in.sites \
 	v.proj \
 	v.net.alloc \
@@ -24,6 +25,7 @@ SUBDIRS1 = \
 	v.patch \
 	v.surf.rst \
 	v.transform \
+	v.to.db \
 	v.to.rast
 
 OGRBASED = v.out.ogr v.in.ogr
