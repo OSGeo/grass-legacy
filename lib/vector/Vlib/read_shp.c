@@ -91,14 +91,8 @@ V1_read_next_line_shp (
 	  if (!(itype & Map->Constraint_type))
 	    continue;
 	}
-      else
-	{
-	  /* if (!LINE_ALIVE ()) */
-	  if (itype & ELEMENT_TYPE_DEAD)	/* is it DEAD? */
-	    continue;
-	}
 
-/*  calculate the bounding box for the line  */
+      /*  calculate the bounding box for the line  */
       /* 4.0 dig_bound_box2() needs a scale to figure fudge factor
          **   I am not concered about fudge here, so just take 
          **   any number.  I picked 16000 cuz that is the default
@@ -237,7 +231,7 @@ Vect__Read_line_shp (
 		    long offset)
 {
   int i, n_points, size;
-  GRASS_V_NCATS n_cats;
+  int n_cats;
   int type;
   int shape, part;
   int first, last; 
@@ -278,7 +272,7 @@ Vect__Read_line_shp (
 	
       default:
 	G_warning ("Shape type %d not supported\n", Map->fInfo.shp.type);
-  	type = GV_DEAD_POINT;
+  	type = 0;
 	break;
   }
   

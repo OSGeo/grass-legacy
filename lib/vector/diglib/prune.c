@@ -1,3 +1,22 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 /*  @(#)prune.c 3.0  2/19/98  */
 /* by Michel Wurtz for GRASS 4.2.1 - <mw@engees.u-strasbg.fr>
  * This is a complete rewriting of the previous dig_prune subroutine.

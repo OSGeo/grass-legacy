@@ -18,6 +18,9 @@
 *
 *****************************************************************************/
 #include "stdio.h"
+#include "string.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "gis.h"
 #include "Vect.h"
 /*
@@ -185,16 +188,12 @@ Vect_open_new (
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
     fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, G_mapset());
     if ( fp == NULL) {
-#ifdef GDEBUG
-        G_debug ( 1, "Vector format: %d (non-native)", format);
-#endif
         format = GV_FORMAT_NATIVE;
+        G_debug ( 1, "Vector format: %d (native)", format);
     } else {
         format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
         fclose (fp); 
-#ifdef GDEBUG
         G_debug ( 1, "Vector format: %d (non-native)", format);
-#endif
     }
     Map->format = format;
     
@@ -203,5 +202,134 @@ Vect_open_new (
 
     Open_level = 0;
     return 1;
+}
+
+/*
+**  Returns: 1 OK
+**           0 error 
+*/
+int 
+Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
+{
+    char buf[2000], path[2000], *ptr;
+    struct stat stat_buf;
+    int ret;
+    
+    switch (  Map->format ) {
+        case GV_FORMAT_NATIVE :
+            sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+	    G__file_name (path, buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+            G_debug ( 1, "get coor info: %s", path);
+	    if (0 != stat (path, &stat_buf)) {
+		G_warning ("Could not stat file '%s'\n", path);
+		Info->size = -1L;
+		Info->mtime = -1L;
+	    } else {
+		Info->size = (long) stat_buf.st_size;      /* file size */
+		Info->mtime = (long) stat_buf.st_mtime;    /* last modified time */
+	    }
+	    break;
+        case GV_FORMAT_SHAPE :
+	    strcpy ( buf, Map->fInfo.shp.file ); 
+	    ptr = buf + strlen(buf) - 4;
+	    if ( (strcmp(ptr,".shp") == 0) || (strcmp(ptr,".SHP") == 0) ) {
+	        strcpy ( path, buf ); 
+                G_debug ( 1, "get coor info: %s", path);
+	        ret = stat (path, &stat_buf);
+	        if ( ret != 0 )
+		    G_warning ("Could not stat file '%s'\n", path);
+	    } else {
+                sprintf( path, "%s.shp", buf );
+                G_debug ( 1, "get coor info: %s", path);
+	        ret = stat (path, &stat_buf);
+		if ( ret != 0 ) {
+                    sprintf( path, "%s.SHP", buf );
+	            ret = stat (path, &stat_buf);
+                    G_debug ( 1, "get coor info: %s", path);
+		}
+	        if ( ret != 0 ) {
+                    sprintf( path, "%s[.shp|.SHP]", buf );
+		    G_warning ("Could not stat files '%s'\n", path);
+		}
+	    }
+	    if ( ret != 0 ) {
+		Info->size = -1L;
+		Info->mtime = -1L;
+	    } else {
+		Info->size = (long) stat_buf.st_size;      /* file size */
+		Info->mtime = (long) stat_buf.st_mtime;    /* last modified time */
+	    }
+	    break;
+        case GV_FORMAT_POSTGIS :
+ 	    Info->size = 0L;
+	    Info->mtime = 0L;
+	    break;
+    }
+    G_debug ( 1, "Info->size = %ld, Info->mtime = %ld", Info->size, Info->mtime);
+	
+    return 1;
+}
+
+/* Open topo file.
+*  
+*  Return: 0 success
+*         -1 error */
+int 
+Vect_open_topo (struct Map_info *Map)
+{
+    int  err;
+    char buf[500];
+    FILE *fp;
+    struct Coor_info CInfo;
+    struct Plus_head *Plus;
+    
+    G_debug (1, "Vect_open_topo(): name = %s mapset= %s", Map->name, Map->mapset);
+
+    Plus = &(Map->plus);
+    
+    
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
+
+    if ( fp == NULL ) { /* topo file is not available */
+	G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n", 
+		      Map->name, Map->mapset);
+	return -1;
+    }
+  
+    /* get coor info */ 
+    Vect_coor_info ( Map, &CInfo); 
+
+    /* load head */
+    dig_Rd_Plus_head (fp, Plus);
+    G_debug ( 1, "Topo head: coor size = %ld, coor mtime = %ld", 
+	                              Plus->coor_size, Plus->coor_mtime);
+
+    /* do checks */
+    err = 0;
+    if ( CInfo.size != Plus->coor_size ) {
+	G_warning ( "Size of 'coor' file differs from value saved in topo file.\n");
+	err = 1;
+    }
+    /* Do not check mtime because mtime is changed by copy */
+    /*
+    if ( CInfo.mtime != Plus->coor_mtime ) {
+	G_warning ( "Time of last modification for 'coor' file differs from value saved in topo file.\n");
+	err = 1;
+    }
+    */
+    if ( err ) {
+	G_warning ( "Please rebuild topology for vector '%s@%s'\n", Map->name,
+	                          Map->mapset );
+	return -1;
+    }
+    
+    /* load topo to memory */
+    dig_init_plus ( Plus );    
+    dig_load_plus ( Plus, fp );    
+   
+    fclose ( fp );  
+
+    return 0;
 }
 

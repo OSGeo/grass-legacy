@@ -1,3 +1,22 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,17 +57,13 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->Area_offset = 0L ;
     Plus->Isle_offset = 0L ;
 
+    Plus->Node_spidx_offset = 0L ;
+    Plus->Line_spidx_offset = 0L ;
+    Plus->Area_spidx_offset = 0L ;
+    Plus->Isle_spidx_offset = 0L ;
+    
     dig_spidx_init ( Plus );
     
-    /*
-    Plus->future3 = 0L ;
-    Plus->future4 = 0L ;
-    Plus->F1 = 0.0 ;
-    Plus->F2 = 0.0 ;
-    Plus->F3 = 0.0 ;
-    Plus->F4 = 0.0 ;
-    Plus->filler[0] = '\0' ;
-    */
     return 1;
 }
 
@@ -97,9 +112,6 @@ dig_free_plus (struct Plus_head *Plus)
 	if ( Area->alloc_isles > 0 ) 
 	    free ( Area->isles);
 	
-	if ( Area->alloc_centroids > 0 ) 
-	    free ( Area->centroids);
-	
         free (Area);
     }
     free ( Plus->Area );
@@ -142,12 +154,9 @@ dig_load_plus (	struct Plus_head *Plus,
   dig_init_plus ( Plus );
   
   /* Now let's begin reading the Plus file nodes, lines, areas and isles */
-
   
   dig_Rd_Plus_head (plus, Plus);
-  dig_set_cur_port ( &(Plus->port) ); /* in fact current port is set 
-					 in dig_Rd_Plus_head() already */
-  //dig_head_to_map (&P_head, map);
+  dig_set_cur_port ( &(Plus->port) ); 
 
   /* Nodes */
   fseek (plus, Plus->Node_offset, 0);
@@ -226,7 +235,6 @@ dig_write_plus_file (
       fprintf (stderr, "\nERROR: Can't write isles to plus file.\n");
       return (-1);
     }
-
 
   rewind (fp_plus);
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)

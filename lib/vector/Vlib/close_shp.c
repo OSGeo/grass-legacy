@@ -56,8 +56,24 @@ V1_close_shp (struct Map_info *Map)
 int 
 V2_close_shp (struct Map_info *Map)
 {
+    struct Coor_info CInfo;
+    struct Plus_head *Plus;
+	
     G_debug (1, "V2_close_shp()" );
+
+    Plus = &(Map->plus);
+    
+    if (Plus->mode & (MODE_WRITE | MODE_RW)) { 
+	Vect_coor_info ( Map, &CInfo);
+	Plus->coor_size = CInfo.size;
+	Plus->coor_mtime = CInfo.mtime;
+
+	Vect_save_topo ( Map );
+        dig_free_plus ( Plus );
+    } 
+
     V1_close_shp (Map);
+	
     return -1;
 }
 

@@ -29,11 +29,19 @@ static int V2__release_file_mem_nat (struct Map_info *);
 int 
 V1_close_nat (struct Map_info *Map)
 {
+  struct Coor_info CInfo;
+    
+  G_debug (1, "V1_close_nat(): name = %s mapset= %s", Map->name, Map->mapset);
   if (!VECT_OPEN (Map))
     return -1;
 
-  if (Map->mode == MODE_WRITE || Map->mode == MODE_RW)
+  if (Map->mode == MODE_WRITE || Map->mode == MODE_RW) {
+    Vect_coor_info ( Map, &CInfo);
+    Map->head.size = CInfo.size;
+    dig__write_head (Map);
+
     Vect__write_head (Map);
+  }
 
   free (Map->name);
   free (Map->mapset);
@@ -54,17 +62,34 @@ V1_close_nat (struct Map_info *Map)
 int 
 V2_close_nat (struct Map_info *Map)
 {
-  if (Map->mode & (MODE_WRITE | MODE_RW))
-    {
-      /* TODO update files */
+  struct Coor_info CInfo;
+  struct Plus_head *Plus;
+
+  G_debug (1, "V2_close_nat(): name = %s mapset= %s", Map->name, Map->mapset);
+  
+  Plus = &(Map->plus); 
+  
+  if (Map->mode & (MODE_WRITE | MODE_RW)) {
+      Vect_coor_info ( Map, &CInfo);
+      Map->head.size = CInfo.size;
+      dig__write_head (Map);
+      
       Vect__write_head (Map);
-    }
+ }
 
-
-  /* close files */
+  /* close coor file */
   fclose (Map->dig_fp);
 
-  //V2__release_file_mem_nat (Map);	/* from dig_P_fini()  4.0 */
+  /* Save topo if necessary */
+  if (Plus->mode & (MODE_WRITE | MODE_RW)) {
+      /* Get coor file checks */
+      Vect_coor_info ( Map, &CInfo);
+      Plus->coor_size = CInfo.size;
+      Plus->coor_mtime = CInfo.mtime;
+      
+      Vect_save_topo ( Map );
+      dig_free_plus ( Plus );
+  }
 
   free (Map->name);
   free (Map->mapset);

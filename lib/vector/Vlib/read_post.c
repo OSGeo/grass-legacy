@@ -99,9 +99,8 @@ V1_read_next_line_post (
 	}
       else
 	{
-	  /* if (!LINE_ALIVE ()) */
-	  if (itype & ELEMENT_TYPE_DEAD)	/* is it DEAD? */
-	    continue;
+	  /* if (itype & ELEMENT_TYPE_DEAD) */	/* is it DEAD? */
+	  /*  continue; */
 	}
 
       /*  calculate the bounding box for the line  */
@@ -142,7 +141,7 @@ Vect__Read_line_post (
 		    long id)
 {
   int i, np;
-  GRASS_V_NCATS n_cats;
+  int n_cats;
   int type;
   char  *coor;
 

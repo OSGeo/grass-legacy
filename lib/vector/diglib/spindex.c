@@ -1,3 +1,22 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include "Vect.h"
@@ -39,7 +58,7 @@ dig_spidx_add_node ( struct Plus_head *Plus, int node,
     BTREE *B;
     double coor[3];
     
-    G_debug(3, "dig_spidx_add_node(): node = %d", node );
+    G_debug(3, "dig_spidx_add_node(): node = %d, x,y,z = %f, %f, %f", node, x, y, z );
 
     B = &(Plus->Node_spidx);
 
@@ -237,7 +256,7 @@ int
 dig_write_spidx_nodes ( FILE * fp, struct Plus_head *Plus ) 
 {
     /* TODO */ 
-    
+
     return 0;
 }
 
@@ -293,7 +312,7 @@ dig_write_spidx_isles ( FILE * fp, struct Plus_head *Plus )
 int
 dig_read_spidx_nodes ( FILE * fp, struct Plus_head *Plus ) 
 {
-    /* TODO */ 
+    /* TODO */
     
     return 0;
 }

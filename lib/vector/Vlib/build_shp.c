@@ -146,16 +146,12 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	        Vect_reset_line ( CPoints );
 		Vect_append_point ( CPoints, Points[part]->x[0], Points[part]->y[0] );
 	        line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
+		Line = plus->Line[line];
+		Line->left = area;
 
 		/* register centroid to area */
 		Area = plus->Area[area];
-		n = Area->n_centroids;
-                if ( dig_area_alloc_centroid (Area, 1) == -1 )
-                    return 0;
-		
-		Area->centroids[n] = line;
-		Area->n_centroids++;
-                G_debug ( 3, "n_centroids = %d", Area->n_centroids);
+		Area->centroid = line;
 
 		/* find islands inside area */
 		for ( i = 0; i < nParts; i++ ) {

@@ -268,21 +268,28 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 	    
 	    ret = Vect_point_in_area (Map, area, Node->x, Node->y);
 	    if ( ret ) {
-                G_debug ( 3, "Centroid (line=%d) in area %d", i, j );
-		n = Area->n_centroids;
-                if ( dig_area_alloc_centroid (Area, 1) == -1 )
-                    return 0;
+                G_debug ( 3, "Centroid (line=%d) in area %d", i, area );
+	        if ( found == 0  ) {
+		    Area->centroid = line;
+		    Line->left = area;
+		}
+		found++;
+		if ( found == 2 ) 
+                    prnmsg ("\n");
 		
-		Area->centroids[n] = line;
-		Area->n_centroids++;
-                G_debug ( 3, "n_centroids = %d", Area->n_centroids);
-		found = 1;
-		break;
+		if ( found > 1 ) { 
+		    Line->left = -area;
+ 		    G_warning ( "%d. centroid found in area %d", found, area );
+		}
 	    }
 	}
-	//if(!found)
+	if ( found > 1 ) 
+	    prnmsg ("Attaching centroids: ");
+	    
+	//if( found == 0 )
 	//    G_warning ("No centroid in area %d", area);
     }
+    prnmsg ("\n");
 
     return 1;
 }

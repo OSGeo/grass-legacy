@@ -21,6 +21,7 @@
 
 static long write_dummy () { return -1; }
 static long rewrite_dummy () { return -1; }
+static int  delete_dummy () { return -1; }
 
 static long (*Write_line_array[][2]) () =
 {
@@ -31,12 +32,21 @@ static long (*Write_line_array[][2]) () =
 #endif
 };
 
-static long (*Rewrite_line_array[][2]) () =
+static long (*V1_rewrite_line_array[][2]) () =
 {
     { rewrite_dummy, V1_rewrite_line_nat } 
    ,{ rewrite_dummy, rewrite_dummy }
 #ifdef HAVE_POSTGRES
    ,{ rewrite_dummy, V1_rewrite_line_post } 
+#endif
+};
+
+static int (*V1_delete_line_array[][2]) () =
+{
+    { delete_dummy, V1_delete_line_nat } 
+   ,{ delete_dummy, delete_dummy }
+#ifdef HAVE_POSTGRES
+   ,{ delete_dummy, delete_dummy } 
 #endif
 };
 
@@ -71,7 +81,7 @@ Vect_write_line (Map, type, points, cats)
 *           -1 on error 
 */
 long
-Vect_rewrite_line (Map, offset, type, points, cats )
+V1_rewrite_line (Map, offset, type, points, cats )
      struct Map_info *Map;
      long offset;
      int type;
@@ -81,6 +91,23 @@ Vect_rewrite_line (Map, offset, type, points, cats )
 #ifdef GDEBUG
     G_debug (3, "Vect_rewrite_line(): name = %s", Map->name);
 #endif
-    return (*Rewrite_line_array[Map->format][Map->level]) (Map, offset, type, points, cats);
+    return (*V1_rewrite_line_array[Map->format][Map->level]) (Map, offset, type, points, cats);
+}
+
+/*
+*  Deletes line at the given offset. Map must be opened on level 2.
+*  
+*  Returns: 0 ok
+*          -1 on error 
+*/
+int
+V1_delete_line (Map, offset )
+     struct Map_info *Map;
+     long offset;
+{
+#ifdef GDEBUG
+    G_debug (3, "Vect_delete_line(): name = %s", Map->name);
+#endif
+    return (*V1_delete_line_array[Map->format][Map->level]) (Map, offset);
 }
 
