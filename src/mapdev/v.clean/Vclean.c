@@ -95,7 +95,8 @@ int export (char *dig_name, char *mapset)
 	    G_fatal_error ("Can't open vector file");
 
 	tmpfile = G_tempfile ();
-	Out = fopen (tmpfile, "w");
+	if( NULL == (Out = fopen (tmpfile, "w")) )
+		G_fatal_error("Can't open temp file");
 
 	if (0 > cp_filep (Map.dig_fp, Out))
 	    G_fatal_error ("File copy failed.  Cannot Proceed.");
