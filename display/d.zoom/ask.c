@@ -2,9 +2,7 @@
 #include "display.h"
 #include "local_proto.h"
 
-/*
 #define NEW_YES
-*/
 
 int
 yes (char *prompt)
