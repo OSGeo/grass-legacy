@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 
 #include "gis.h"
 #define MAX_LAYERS 15
