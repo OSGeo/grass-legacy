@@ -16,7 +16,7 @@
 #endif
 
 #define MAIN
-/*#define  USAGE  "v.cadlabel lines=linefile labels=labelfile"
+/*#define  USAGE  "v.cadlabel lines=linefile labels=labelfile" */
 
 /*
 #define DEBUG
