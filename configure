@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.14 2000-10-04 16:18:49 markus Exp $
+# $Id: configure,v 1.15 2000-10-04 17:08:25 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -41,15 +41,11 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-USE_TERMIO       define the compiler macro USE_TERMIO"
 ac_help="$ac_help
-  --with-tkdir            Change default top-level TK directory"
+  --with-tkdir=DIR        Change default top-level TK directory"
 ac_help="$ac_help
-  --with-tcldir           Change default top-level TCL directory"
+  --with-tcldir=DIR       Change default top-level TCL directory"
 ac_help="$ac_help
-  --with-opengl-includes=DIR
-                          Path to OpenGL includes"
-ac_help="$ac_help
-  --with-opengl-libs=DIR
-                          Path to OpenGL libs"
+  --with-opengl=DIR       Path to OpenGL directory"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -3379,100 +3375,75 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
     # Just to be doubly sure, check the prefix directory as well
     #
 
-    FOUND=1
-    if test -r "$TKDIR/lib/libtk.so" -a -r "$TCLDIR/lib/libtcl.so" -a \
-	-d "$TKDIR/lib/tk" -a -d "$TCLDIR/lib/tcl"; then
-	TKINCDIR=$TKDIR/include
-	TKLIBDIR=$TKDIR/lib/tk
-	TCLINCDIR=$TCLDIR/include
-	TCLLIBDIR=$TCLDIR/lib/tcl
-#	TCLTKLIBS="$TCLTKLIBS -L$TKDIR/lib -L$TCLDIR/lib -ltk -ltcl"
-	TCLTKLIBS="$TCLTKLIBS -ltk8 -ltcl8"
+    FOUND=0
+    for tcltkver in "" 8.0 8.1 8.2 8.3
+    do
+        ltcltkver=`echo $tcltkver | sed 's/\.//'`
+        if test \( \( -r "$TKDIR/lib/libtk$tcltkver.so" -a		\
+	              -r "$TCLDIR/lib/libtcl$tcltkver.so" \) -o		\
+	           \( -r "$TKDIR/lib/libtk$ltcltkver.so" -a		\
+	              -r "$TCLDIR/lib/libtcl$ltcltkver.so" \) \) -a	\
+	        -d "$TKDIR/lib/tk$tcltkver" -a				\
+		-d "$TCLDIR/lib/tcl$tcltkver"; then
 
-    elif test -r "$PREFIX/lib/libtk.so" -a -r "$PREFIX/lib/libtcl.so" -a \
-	-d "$PREFIX/lib/tk" -a -d "$PREFIX/lib/tcl"; then
-	TKINCDIR=$PREFIX/include
-	TKLIBDIR=$PREFIX/lib/tk
-	TCLINCDIR=$PREFIX/include
-	TCLLIBDIR=$PREFIX/lib/tcl
-#	TCLTKLIBS="$TCLTKLIBS -L$PREFIX/lib -L$PREFIX/lib -ltk -ltcl"
-	TCLTKLIBS="$TCLTKLIBS -ltk8 -ltcl8"
+	    TKLIBDIR=$TKDIR/lib/tk$tcltkver
+	    TCLLIBDIR=$TCLDIR/lib/tcl$tcltkver
+	    if test -d "$TKDIR/include/tk$tcltkver"; then
+	        TKINCDIR=$TKDIR/include/tk$tcltkver
+	    else
+	        TKINCDIR=$TKDIR/include
+	    fi
+	    if test -d "$TCLDIR/include/tcl$tcltkver"; then
+	        TCLINCDIR=$TCLDIR/include/tcl$tcltkver
+	    else
+	        TCLINCDIR=$TCLDIR/include
+	    fi
+	    if test -r "$TKDIR/lib/libtk$ltcltkver.so" -a	\
+	    	    -r "$TCLDIR/lib/libtcl$ltcltkver.so"; then
+#	        TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk$ltcltkver.so $TCLDIR/lib/libtcl$ltcltkver.so"
+	        TCLTKLIBS="$TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	    else
+#	        TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk$tcltkver.so $TCLDIR/lib/libtcl$tcltkver.so"
+	        TCLTKLIBS="$TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	    fi
 
-    elif test -r "$TKDIR/lib/libtk8.0.so" -a -r "$TCLDIR/lib/libtcl8.0.so" -a \
-	-d "$TKDIR/lib/tk8.0" -a -d "$TCLDIR/lib/tcl8.0"; then
-	TKINCDIR=$TKDIR/include
-	TKLIBDIR=$TKDIR/lib/tk8.0
-	TCLINCDIR=$TCLDIR/include
-	TCLLIBDIR=$TCLDIR/lib/tcl8.0
-#	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.0.so $TCLDIR/lib/libtcl8.0.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.0 -ltcl8.0"
+	    FOUND=1
+	    break
 
-    elif test -r "$PREFIX/lib/libtk8.0.so" -a -r "$PREFIX/lib/libtcl8.0.so" -a \
-	-d "$PREFIX/lib/tk8.0" -a -d "$PREFIX/lib/tcl8.0"; then
-	TKINCDIR=$PREFIX/include
-	TKLIBDIR=$PREFIX/lib/tk8.0
-	TCLINCDIR=$PREFIX/include
-	TCLLIBDIR=$PREFIX/lib/tcl8.0
-#	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.0.so $PREFIX/lib/libtcl8.0.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.0 -ltcl8.0"
+        elif test \( \( -r "$PREFIX/lib/libtk$tcltkver.so" -a		\
+		        -r "$PREFIX/lib/libtcl$tcltkver.so" \) -o	\
+                     \( -r "$PREFIX/lib/libtk$ltcltkver.so" -a		\
+		        -r "$PREFIX/lib/libtcl$ltcltkver.so" \) \) -a	\
+	          -d "$PREFIX/lib/tk$tcltkver" -a			\
+		  -d "$PREFIX/lib/tcl$tcltkver"; then
 
-    elif test -r "$TKDIR/lib/libtk8.1.so" -a -r "$TCLDIR/lib/libtcl8.1.so" -a \
-	-d "$TKDIR/lib/tk8.1" -a -d "$TCLDIR/lib/tcl8.1"; then
-	TKINCDIR=$TKDIR/include
-	TKLIBDIR=$TKDIR/lib/tk8.1
-	TCLINCDIR=$TCLDIR/include
-	TCLLIBDIR=$TCLDIR/lib/tcl8.1
-#	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.1.so $TCLDIR/lib/libtcl8.1.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.1 -ltcl8.1"
+	    TKLIBDIR=$PREFIX/lib/tk$tcltkver
+	    TCLLIBDIR=$PREFIX/lib/tcl$tcltkver
+	    if test -d "$PREFIX/include/tk$tcltkver"; then
+	        TKINCDIR=$PREFIX/include/tk$tcltkver
+	    else
+	        TKINCDIR=$PREFIX/include
+	    fi
+	    if test -d "$PREFIX/include/tcl$tcltkver"; then
+	        TCLINCDIR=$PREFIX/include/tcl$tcltkver
+	    else
+	        TCLINCDIR=$PREFIX/include
+	    fi
+	    if test -r "$PREFIX/lib/libtk$ltcltkver.so" -a	\
+	    	    -r "$PREFIX/lib/libtcl$ltcltkver.so"; then
+#	        TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk$ltcltkver.so $PREFIX/lib/libtcl$ltcltkver.so"
+	        TCLTKLIBS="$TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	    else
+#	        TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk$tcltkver.so $PREFIX/lib/libtcl$tcltkver.so"
+	        TCLTKLIBS="$TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	    fi
 
-    elif test -r "$PREFIX/lib/libtk8.1.so" -a -r "$PREFIX/lib/libtcl8.1.so" -a \
-	-d "$PREFIX/lib/tk8.1" -a -d "$PREFIX/lib/tcl8.1"; then
-	TKINCDIR=$PREFIX/include
-	TKLIBDIR=$PREFIX/lib/tk8.1
-	TCLINCDIR=$PREFIX/include
-	TCLLIBDIR=$PREFIX/lib/tcl8.1
-#	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.1.so $PREFIX/lib/libtcl8.1.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.1 -ltcl8.1"
+	    FOUND=1
+	    break
 
-    elif test -r "$TKDIR/lib/libtk8.2.so" -a -r "$TCLDIR/lib/libtcl8.2.so" -a \
-	-d "$TKDIR/lib/tk8.2" -a -d "$TCLDIR/lib/tcl8.2"; then
-	TKINCDIR=$TKDIR/include
-	TKLIBDIR=$TKDIR/lib/tk8.2
-	TCLINCDIR=$TCLDIR/include
-#	TCLLIBDIR=$TCLDIR/lib/tcl8.2
-	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.2.so $TCLDIR/lib/libtcl8.2.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.2 -ltcl8.2"
+	fi
+    done
 
-    elif test -r "$PREFIX/lib/libtk8.2.so" -a -r "$PREFIX/lib/libtcl8.2.so" -a \
-	-d "$PREFIX/lib/tk8.2" -a -d "$PREFIX/lib/tcl8.2"; then
-	TKINCDIR=$PREFIX/include
-	TKLIBDIR=$PREFIX/lib/tk8.2
-	TCLINCDIR=$PREFIX/include
-	TCLLIBDIR=$PREFIX/lib/tcl8.2
-#	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.2.so $PREFIX/lib/libtcl8.2.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.2 -ltcl8.2"
-
-    elif test -r "$TKDIR/lib/libtk8.3.so" -a -r "$TCLDIR/lib/libtcl8.3.so" -a \
-	-d "$TKDIR/lib/tk8.3" -a -d "$TCLDIR/lib/tcl8.3"; then
-	TKINCDIR=$TKDIR/include
-	TKLIBDIR=$TKDIR/lib/tk8.3
-	TCLINCDIR=$TCLDIR/include
-	TCLLIBDIR=$TCLDIR/lib/tcl8.3
-#	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.3.so $TCLDIR/lib/libtcl8.3.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.3 -ltcl8.3"
-
-    elif test -r "$PREFIX/lib/libtk8.3.a" -a -r "$PREFIX/lib/libtcl8.3.a" -a \
-	-d "$PREFIX/lib/tk8.2" -a -d "$PREFIX/lib/tcl8.3"; then
-	TKINCDIR=$PREFIX/include
-	TKLIBDIR=$PREFIX/lib/tk8.3
-	TCLINCDIR=$PREFIX/include
-	TCLLIBDIR=$PREFIX/lib/tcl8.3
-#	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.3.so $PREFIX/lib/libtcl8.3.so"
-	TCLTKLIBS="$TCLTKLIBS -ltk8.3 -ltcl8.3"
-
-    else
-	FOUND=0
-    fi
 
     if test "$FOUND" = "0"; then
 	echo "$ac_t""not found" 1>&6
@@ -3483,10 +3454,13 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 fi
 
 
-# Check whether --with-opengl-libs or --without-opengl-libs was given.
-if test "${with_opengl_libs+set}" = set; then
-  withval="$with_opengl_libs"
-  OPENGLLIB=$withval
+# Check whether --with-opengl or --without-opengl was given.
+if test "${with_opengl+set}" = set; then
+  withval="$with_opengl"
+  OPENGL=$withval
+  if test "$OPENGL" = "no"; then
+  	OPENGL=NO
+  else
         AGL="true"
         if test -f $OPENGL/include/GL/gl.h ; then
                 echo "$ac_t""found gl.h " 1>&6
@@ -3499,8 +3473,8 @@ if test "${with_opengl_libs+set}" = set; then
         else
                 echo "$ac_t""Non Mesa Open GL found using -lGL " 1>&6
         fi
-        echo "Building with OpenGL support OPENGLLIB= " $OPENGLLIB
-
+        echo "Building with OpenGL support OPENGL= " $OPENGL
+  fi
 fi
 
 # Check for Mesa OpenGL compatible include and library
