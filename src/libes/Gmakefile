@@ -10,7 +10,6 @@ all:
 	$(GMAKE) dlg
 #	$(GMAKE) dspf
 #	$(GMAKE) g3d
-	$(GMAKE) geom
 	$(GMAKE) gis
 	$(GMAKE) coorcnv
 	$(GMAKE) ibtree
