@@ -9,7 +9,8 @@
 
 **
 **  Added Vect_get_unique_area_points() and 
-**  Vect_get_unique_isle_points()
+**  Vect_get_unique_isle_points() later merged
+**  with Vect_get_area_points() etc.
 **  7/2000
 */
 
