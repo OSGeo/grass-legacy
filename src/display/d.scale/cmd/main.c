@@ -8,6 +8,7 @@ main(argc, argv)
 {
 	char buff[128] ;
 	char window_name[64] ;
+	char *D_color_list();
 	struct Cell_head window ;
 	int i ;
 	int t, b, l, r ;
@@ -16,17 +17,6 @@ main(argc, argv)
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
-
-	{
-		struct Cell_head W ;
-		G_get_window(&W) ;
-		if (W.proj == PROJECTION_LL)
-		{
-			fprintf(stderr,"\nSorry, %s does now work with a latitude-longitude data base.\n",
-				argv[0]) ;
-			exit(-1) ;
-		}
-	}
 
 	mouse = G_define_flag() ;
 	mouse->key        = 'm';
@@ -37,7 +27,7 @@ main(argc, argv)
 	opt1->type       = TYPE_STRING ;
 	opt1->answer     = "black" ;
 	opt1->required   = NO ;
-	opt1->options="red,orange,yellow,green,blue,indigo,violet,gray,brown,magenta,white,black";
+	opt1->options    = D_color_list();
 	opt1->description= "Color used for the background" ;
 
 	opt2 = G_define_option() ;
@@ -45,7 +35,7 @@ main(argc, argv)
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
 	opt2->required   = NO ;
-	opt2->options="red,orange,yellow,green,blue,indigo,violet,gray,brown,magenta,white,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Color used for the text" ;
 
 	opt3 = G_define_option() ;
@@ -72,8 +62,9 @@ main(argc, argv)
 	G_scan_northing(opt3->answers[1], &northing, G_projection());
 	coord_inp++;
 	*/
-	sscanf(opt3->answers[0],"%f",&east) ;
-	sscanf(opt3->answers[1],"%f",&north) ;
+	sscanf(opt3->answers[0],"%lf",&east) ;
+	sscanf(opt3->answers[1],"%lf",&north) ;
+	if((east>0)||(north>0)) coord_inp=1;
 
 	R_open_driver();
 
@@ -99,7 +90,7 @@ main(argc, argv)
 		G_fatal_error("Error in calculating conversions") ;
 
 	/* Draw the scale */
-	draw_scale(color1, color2, east, north, coord_inp, mouse->answer) ;
+	draw_scale(mouse->answer) ;
 
 	/* Add this command to list */
 	if (! mouse->answer)
