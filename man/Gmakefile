@@ -1,5 +1,5 @@
 all:
-	sh ./utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/..
+	sh ./utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/.. $(MAKE)
 	rm -rf $(HELP)/*
 	rm -rf $(MAN1)/* $(MAN1)/.class-title
 	rm -rf $(MAN2)/* $(MAN2)/.class-title
