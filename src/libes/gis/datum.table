@@ -9,6 +9,11 @@
 # dx, dy and dz are the datum shift parameters.
 # no spaces allowed before or after the =.
 #
+# If 99999 or above is given for all 3 parameters, then the parameters
+# listed in this file will not be offered to the user and there
+# must be at least one set of parameters for the corrseponding datum
+# in the datumtransform.table file
+#
 # Please comment and cite the source if you add new parameters 
 # to this list. 
 # cited from NIMA document TR8350.2
@@ -22,10 +27,10 @@ wgs84  "World Geodetic System 1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0
 wgs72  "World Geodetic System 1972"       wgs72         dx=0.0      dy=0.0      dz=5.0
 # North American 1927
 nad27  "North American 1927"              clark66       dx=-22.0    dy=157.0    dz=176.0
-# North American 1983 (CONUS)
+# North American 1983
 nad83	"North American 1983"		  grs80		dx=0.0	    dy=0.0	dz=0.0
 # Alaska and Canada
-a-can  "Alaska and Canada NAD27"          clark66       dx=-9.0     dy=151.0    dz=185.0 
+a-can  "Please use nad27 instead"         clark66       dx=-9.0     dy=151.0    dz=185.0
 # European datum
 eur    "European"                         international dx=-84.0    dy=-103.0   dz=-127.0
 # Tokyo datum mean
@@ -34,11 +39,11 @@ tokyo  "Tokyo mean"                       bessel        dx=-128.0   dy=481.0    
 aus    "Australian Geodetic"              australian    dx=-122.0   dy=-41.0    dz=146.0
 # Ordnance Survey of Great Britain (1936)
 osgb36 "Ordnance Survey of Great Britain" airy          dx=368.0    dy=-120.0   dz=425.0
-# South American 1969 (= SAD-69/Brazil)
-sam69 "South American 1969"               sam69         dx=-77.0    dy=3.0      dz=-45.0
-SAD-69 "SAD-69/Brasil"	            	  SAD-69        dx=-60.0    dy=-2.0     dz=-41.0
+# South American 1969 
+sam69 "South American 1969"               sam69         dx=-57      dy=1        dz=-41
+SAD-69  "Please use sam69 instead"	  sam69         dx=-60.0    dy=-2.0     dz=-41.0
 # Pulkovo 1942 ( = S-42)
-pulkovo "Pulkovo 1942"                    krassovsky    dx=28.0     dy=-130.0   dz=-95.0
+pulkovo "Please use S-42 instead"         krassovsky    dx=28.0     dy=-130.0   dz=-95.0
 # European 1950 mean
 eur50	"European 1950 mean"	  	  international dx=-87.0    dy=-98      dz=-121
 # European 1979 mean
@@ -50,19 +55,29 @@ agd84	"Australian Geodetic 1984"	  australian    dx=-134     dy=-48      dz=149
 # GDA94 (nearly the same as wgs84)
 # International Union of Geodesy and Geophysics Geographic Reference System 1980
 grs80	"Geographic Reference System 1980" wgs84        dx=0.0      dy=0.0      dz=0.0
-# Rome 1940
+# Rome 1940 (Sardinia Parameters)
 rome40	"Rome 1940"			  international	dx=-225     dy=-65      dz=9
 # from Geodetic Datum List, Peter H. Dana, 07/12/97, dlist.html
 # South Asia
 Sasia	"South Asia"			  fschr60m	dx=7.0 	    dy=-10.0    dz=-26.0
 # S-42 Pulkovo 1942
-S-42	"S-42"				  krassovsky	dx=28.0     dy=-121.0   dz=-77.0
+S-42	"System-1942 Pulkovo"		  krassovsky    dx=28.0     dy=-130.0   dz=-95.0
 # Potsdam Rauenberg 1950 DHDN
 potsdam "Potsdam Rauenberg 1950 DHDN"	  bessel	dx=606.0    dy=23.0     dz=413.0
 # Carthage 1934 Tunisia
 carthage "Carthage 1934 Tunisia"	  	  clark80	dx=-263.0	dy=6.0	dz=431.0
 # Hermannskogel
-hermannskogel "Hermannskogel"		  bessel	dx=653	    dy=-212     dz=449
-# Ireland 1965 - From NIMA document - but more accurate 7-parameter transform
-# from Ordnance Survey Ireland is specified in src/libes/proj/pj_datums.c
+hermannskogel "Hermannskogel 1871"	  bessel	dx=653	    dy=-212     dz=449
+# From NIMA document
 ire65    "Ireland 1965"                   modif_airy    dx=506      dy=-122     dz=611
+# http://www.asprs.org/asprs/resources/grids/07-2001-swiss.pdf
+ch1903   "Switzerland 1903 (CH1903+)"     bessel        dx=674.253  dy=15.053   dz=405.324
+# http://www.asprs.org/asprs/resources/grids/01-2001-france.pdf and http://crs.ifag.de/
+ntf87    "France 1887"                    plessis       dx=-168     dy=-60      dz=320
+etrf89   "European Terrestrial Reference Framework 1989"   grs80       dx=0        dy=0       dz=0
+# http://crs.ifag.de/
+rd18     "Rijksdriehoeks Datum 1918 (Netherlands)" bessel dx=99999  dy=99999    dz=99999
+bd72     "Belgian Datum 1972"             international dx=99999    dy=99999    dz=99999
+ptd73    "Portuguese Datum 1973"          international dx=99999    dy=99999    dz=99999
+hjors55  "Hjorsey 1955 (Iceland)"         international dx=-73      dy=46       dz=-86
+ptdlx    "Portuguese Lisbon Datum DLX"    international dx=99999    dy=99999    dz=99999

@@ -63,7 +63,7 @@ modif_airy	"Airy 1830 Modified"		a=6377340.189	f=1/299.3249646
 # South American 1969
 sam69		"South American 1969"		a=6378160.000	f=1/298.25
 # Brazil South American 1969
-SAD-69		"South American 1969"		a=6378160.000	f=1/298.25
+SAD-69		"Please use sam69 instead"     	a=6378160.000	f=1/298.25
 # WGS 1972
 wgs72		"World Geodetic System 1972"	a=6378135.000	f=1/298.26
 # WGS84 as defined by NIMA document TR8350.2
