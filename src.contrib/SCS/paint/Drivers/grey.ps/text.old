@@ -1,0 +1,17 @@
+#define HEADSPACE 210 /* roughly 3 * 72 per inch */
+#define LEFTMAR 36 /* .5 inch * 72 */
+#define CHARSIZE 10
+
+Ptext(s) char *s;
+{
+static int incr=0;
+int x, y;
+char buf[128];
+
+Pnpixels(&y,&x);
+sprintf(buf,"%d %d moveto\n",LEFTMAR,y + HEADSPACE - incr);
+Pouts(buf);
+sprintf(buf,"(%s) show\n",s);
+Pouts(buf);
+incr += CHARSIZE;
+}
