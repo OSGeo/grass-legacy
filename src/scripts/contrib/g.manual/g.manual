@@ -8,8 +8,8 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=command,command]
-   command command ...
+ `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=name,name]
+   name name ...
 
 Flags:
   -1   List all manual entries, one per line.
@@ -17,7 +17,7 @@ Flags:
   -d   Display a short description of all manual entries specified(NOT YET).
   -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
   -s   Run silently to set exit status if entry exists.
-       Requires only one command.
+       Requires only one command name.
   -q   Print man pages and quit.
        Requires rman:
           Please install RosettaMan (rman) version to 3.0.2 or later!
