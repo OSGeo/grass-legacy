@@ -70,6 +70,7 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
  * 
  * \return Pointer to an OGRSpatialReferenceH object representing the
  *         co-ordinate system defined by proj_info and proj_units
+ *         or NULL if it fails
  **/
 
 OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
@@ -91,11 +92,15 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     hSRS = OSRNewSpatialReference(NULL);
 
-    if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0)
-	G_fatal_error("Can't parse GRASS PROJ_INFO file");
+    if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0) {
+	G_warning("Can't parse GRASS PROJ_INFO file");
+	return NULL;
+    }
 
-    if ((proj4 = pj_get_def(pjinfo.pj, 0)) == NULL)
-	G_fatal_error("Can't get PROJ.4-style parameter string");
+    if ((proj4 = pj_get_def(pjinfo.pj, 0)) == NULL) {
+	G_warning("Can't get PROJ.4-style parameter string");
+	return NULL;
+    }
 
     unit = G_find_key_value("unit", proj_units);
     unfact = G_find_key_value("meters", proj_units);
@@ -104,12 +109,16 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     else
 	proj4mod = proj4;
 
-    if (OSRImportFromProj4(hSRS, proj4mod) != 0)
-	G_fatal_error("OGR can't parse PROJ.4-style parameter string:\n"
+    if (OSRImportFromProj4(hSRS, proj4mod) != 0) {
+	G_warning("OGR can't parse PROJ.4-style parameter string:\n" 
 		      "%s", proj4mod);
+	return NULL;
+    }
 
-    if (OSRExportToWkt(hSRS, &wkt) != 0)
-	G_fatal_error("OGR can't get WKT-style parameter string");
+    if (OSRExportToWkt(hSRS, &wkt) != 0) {
+	G_warning("OGR can't get WKT-style parameter string");
+	return NULL;
+    }
 
     ellps = G_find_key_value("ellps", proj_info);
     GPJ__get_ellipsoid_params(proj_info, &a, &es, &rf);
