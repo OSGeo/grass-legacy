@@ -17,6 +17,35 @@
  * returns: 1 if any clipping occured, 0 otherwise
  */
 
+
+/*!
+ * \brief clip coordinates to window
+ *
+ * A line
+ * represented by the coordinates <b>x, y</b> and <b>c_x, c_y</b> is clipped to
+ * the window defined by <b>s</b> (south), <b>n</b> (north), <b>w</b>
+ * (west), and <b>e</b> (east). Note that the following constraints must be
+ * true:
+ * w <e
+ * s <n
+ * The <b>x</b> and <b>c_x</b> are values to be compared to <b>w</b> and
+<b>e.</b> The <b>y</b> and <b>c_y</b> are values to be compared to
+<b>s</b> and <b>n.</b>
+ * The <b>x</b> and <b>c_x</b> values returned lie between <b>w</b> and 
+<b>e.</b> The <b>y</b> and <b>c_y</b> values returned lie between 
+<b>s</b> and <b>n.</b>
+ *
+ *  \param s
+ *  \param n
+ *  \param w
+ *  \param e
+ *  \param x
+ *  \param y
+ *  \param c_x
+ *  \param c_y
+ *  \return int
+ */
+
 int D_clip(
 	register double s,
 	register double n,

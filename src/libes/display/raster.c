@@ -71,6 +71,25 @@ int D_draw_c_raster(
     return draw_cell(A_row, (void *) carray, colors, CELL_TYPE);
 }
 
+
+/*!
+ * \brief render a raster row
+ *
+ * The <b>row</b> gives the map array row. The <b>raster</b>
+ * array provides the categories for each raster value in that row. The
+ * <b>colors</b> structure must be the same as the one passed to
+ * <i>D_set_colors.</i>
+ * This routine is called consecutively with the information necessary to draw a
+ * raster image from north to south. No rows can be skipped. All screen pixel
+ * rows which represent the current map array row are rendered. The routine
+ * returns the map array row which is needed to draw the next screen pixel row.
+ *
+ *  \param row
+ *  \param raster
+ *  \param colors
+ *  \return int
+ */
+
 int D_draw_cell(
     int A_row,
     CELL *carray,
@@ -180,6 +199,22 @@ static int draw_cell(
 /* Return the array row of the next row needed */
     return (cur_A_row) ;
 }
+
+
+/*!
+ * \brief prepare for raster graphic
+ *
+ * The raster display subsystem establishes
+ * conversion parameters based on the screen extent defined by <b>top,
+ * bottom, left</b>, and <b>right</b>, all of which are obtainable from
+ * <i>D_get_screen_window for the current frame.</i>
+ *
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
 
 int D_cell_draw_setup(int t,int b,int l,int r)
 {

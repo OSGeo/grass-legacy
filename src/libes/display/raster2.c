@@ -79,12 +79,45 @@ static int allocate_colors(int);
 
 int D__overlay_mode = 0; /* external for now, but to be fixed later */
 
+
+/*!
+ * \brief configure raster overlay mode
+ *
+ * This routine determines if <i>D_draw_cell</i> draws in overlay mode
+ * (locations with category 0 are left untouched) or not (colored with the color
+ * for category 0). Set <b>flag</b> to 1 (TRUE) for overlay mode; 0 (FALSE)
+ * otherwise.
+ *
+ *  \param flag
+ *  \return int
+ */
+
 int D_set_overlay_mode (int n)
 {
     D__overlay_mode = (n!=0);
 
     return 0;
 }
+
+
+/*!
+ * \brief establish raster colors for graphics
+ *
+ * This routine sets the colors to be used for raster graphics. The
+ * <b>colors</b> structure must be either be read using
+ * <i>G_read_colors</i> or otherwise prepared using the routines described in
+ * Raster_Color_Table.
+ * Return values are 1 if the colors will fit into the hardware color map; 0
+ * otherwise (in which case a fixed color approximation based on these colors
+ * will be applied). These return codes are not error codes, just information.
+ * <b>Note.</b> Due to the way this routine behaves, it is <b>not</b> correct
+ * to assume that a raster category value can be used to index the color
+ * registers. The routines <i>D_lookup_colors</i> or <i>D_color</i> must
+ * be used for that purpose.
+ *
+ *  \param colors
+ *  \return int
+ */
 
 int D_set_colors (struct Colors *colors)
 {
@@ -212,6 +245,26 @@ if(getenv("DEBUG"))fprintf (stderr, "# monitor colors = %d (mode: %s)\n", ncolor
  *              or cat not in min:max color range
  *    1 ok
  */
+
+/*!
+ * \brief reset raster color value
+ *
+ *  Modifies the hardware colormap, provided that the graphics are not
+ * using fixed more colors. The hardware color register corresponding to the
+ * raster data value is set to the combined values of <b>r,g,b.</b> This
+ * routine may only be called after a call to <i>D_set_colors.</i>
+ * <i>D_reset_color</i> is for use by modules such as d.colors. Returns 1 if
+ * the hardware colormap was updated, 0 if not. A 0 value will result if either a
+ * fixed color table transition is in effect, or because the data is not in the
+ * color range set by the call <i>D_set_colors.</i>
+ *
+ *  \param data
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \return int
+ */
+
 int D_reset_color (CELL cat,int r,int g,int b)
 {
     if (fixed) return 0;
@@ -253,6 +306,19 @@ int D_c_color ( CELL cat,
 }
 
 /* select color for line drawing */
+
+/*!
+ * \brief 
+ *
+ * Same functionality as <tt>D_color()</tt> except that the <em>value</em> is type 
+ * <tt>DCELL</tt>.  This implies that the floating-point interfaces to the <em>colors</em>
+ *  are used by this routine.
+ *
+ *  \param value
+ *  \param colors
+ *  \return int
+ */
+
 int D_d_color (DCELL val,
     struct Colors *colors)
 {
@@ -266,6 +332,19 @@ int D_d_color (DCELL val,
 }
 
 /* select color for line drawing */
+
+/*!
+ * \brief 
+ *
+ * Same
+ * functionality as <tt>D_color()</tt> except that the <em>value</em> is type <tt>FCELL</tt>. 
+ * This implies that the floating-point interfaces to the <em>colors</em> are used by this routine.
+ *
+ *  \param value
+ *  \param colors
+ *  \return int
+ */
+
 int D_f_color (
     FCELL val,
     struct Colors *colors)
@@ -278,6 +357,23 @@ int D_f_color (
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * If the <em>data_type</em> is CELL_TYPE,
+ * calls D_color((CELL *value, colors);
+ * If the <em>data_type</em> is FCELL_TYPE, calls D_f_color((FCELL *value,
+ * colors);
+ * If the <em>data_type</em> is DCELL_TYPE, calls D_d_color((DCELL *value,
+ * colors);
+ *
+ *  \param value
+ *  \param colors
+ *  \param data_type
+ *  \return int
+ */
 
 int D_color_of_type( void *raster,
     struct Colors *colors,
@@ -300,6 +396,21 @@ int D_lookup_colors ( CELL *raster,int ncols, struct Colors *colors)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Same functionality as <tt>D_lookup_colors()</tt>
+ * except that the resultant color numbers are placed into a separate <em>colornum</em> 
+ *  array (which the caller must allocate).
+ *
+ *  \param cell
+ *  \param colornum
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
+
 int D_lookup_c_raster_colors (
     CELL *raster,int ncols,
     struct Colors *colors)
@@ -308,6 +419,22 @@ int D_lookup_c_raster_colors (
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Same functionality as <tt>D_lookup_colors()</tt>
+ * except that the <em>fcell</em> array is type <tt>FCELL</tt> and that the resultant
+ * color numbers are placed into a separate <em>colornum</em> array (which the
+ * caller must allocate).
+ *
+ *  \param fcell
+ *  \param colornum
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
 
 int D_lookup_f_raster_colors (
     FCELL *fraster,
@@ -319,6 +446,22 @@ int D_lookup_f_raster_colors (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Same functionality as <tt>D_lookup_colors()</tt>
+ * except that the <em>dcell</em> array is type <tt>DCELL</tt> and that the resultant
+ * color numbers are placed into a separate <em>colornum</em> array (which the
+ * caller must allocate).
+ *
+ *  \param dcell
+ *  \param colornum
+ *  \param n
+ *  \param colors
+ *  \return int
+ */
+
 int D_lookup_d_raster_colors (
     DCELL *draster,
     int *color_buf,int ncols,
@@ -328,6 +471,26 @@ int D_lookup_d_raster_colors (
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * If the <em>data_type</em> is
+ * CELL_TYPE, calls D_lookup_c_raster_colors((CELL *) rast, colornum, n,
+ * colors);
+ * If the <em>data_type</em> is FCELL_TYPE, calls
+ * D_lookup_f_raster_colors((FCELL *) rast, colornum, n, colors);
+ * If the <em>data_type</em> is DCELL_TYPE, calls
+ * D_lookup_d_raster_colors((DCELL *) rast, colornum, n, colors);
+ *
+ *  \param rast
+ *  \param colornum
+ *  \param n
+ *  \param colors
+ *  \param data_type
+ *  \return int
+ */
 
 int D_lookup_raster_colors (
     void *raster,
@@ -379,6 +542,25 @@ int D_lookup_raster_colors (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * If <em>map_type</em> is
+ * CELL_TYPE, calls D_raster((CELL *) rast, ncols, nrows, colors);
+ * If <em>map_type</em> is FCELL_TYPE, calls D_f_raster((FCELL *) rast, ncols,
+ * nrows, colors);
+ * If <em>map_type</em> is DCELL_TYPE, calls D_d_raster((DCELL *) rast, ncols,
+ * nrows, colors);
+ *
+ *  \param rast
+ *  \param ncols
+ *  \param nrows
+ *  \param colors
+ *  \param data_type
+ *  \return int
+ */
+
 int D_raster_of_type (
     void *raster,int ncols,int nrows,
     struct Colors *colors,
@@ -399,6 +581,25 @@ int D_raster_of_type (
     return 0;
 }
 
+
+/*!
+ * \brief low level raster plotting
+ *
+ * This low-level routine plots raster data.
+ * The <b>raster</b> array has <b>n</b> values. The raster is plotted
+ * <b>repeat</b> times, one row below the other. The <b>colors</b> structure
+ * must be the <i>same one passed to D_set_colors.</i>
+ * <b>Note.</b> This routine does not perform resampling or placement.
+ * <i>D_draw_cell</i> does resampling and placement and then calls this
+ * routine to do the actual plotting.
+ *
+ *  \param raster
+ *  \param n
+ *  \param repeat
+ *  \param colors
+ *  \return int
+ */
+
 int D_raster ( CELL *raster,int ncols,int nrows, struct Colors *colors)
 {
     D_c_raster (raster, ncols, nrows, colors);
@@ -416,6 +617,21 @@ int D_c_raster (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Same functionality as <tt>D_raster()</tt> except that the <em>fcell</em> array 
+ * is type <tt>FCELL</tt>. This implies that the floating-point
+ * interfaces to the <em>colors</em> are used by this routine.
+ *
+ *  \param fcell
+ *  \param ncols
+ *  \param nrows
+ *  \param colors
+ *  \return int
+ */
+
 int D_f_raster (FCELL *fraster,int ncols,int nrows, struct Colors *colors)
 {
       /* reallocate color_buf if necessary */
@@ -431,6 +647,21 @@ int D_f_raster (FCELL *fraster,int ncols,int nrows, struct Colors *colors)
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  Same functionality as <tt>D_raster()</tt> except that the <em>dcell</em> array
+ *  is type <tt>DCELL</tt>. This implies that the floating-point
+ * interfaces to the <em>colors</em> are used by this routine.
+ *
+ *  \param dcell
+ *  \param ncols
+ *  \param nrows
+ *  \param colors
+ *  \return int
+ */
 
 int D_d_raster (
     DCELL *draster,int ncols, int nrows,struct Colors *colors)
@@ -467,6 +698,24 @@ int D_d_raster (
  * Note : in case of floating color rules, max - min + 1 is so big, that
  * hardware_colors size is guaranteed to be chosen
  *
+ */
+
+
+/*!
+ * \brief verify a range of colors
+ *
+ * This routine determines if the range of colors fits into
+ * the hardware colormap. If it does, then the colors can be loaded directly into
+ * the hardware colormap and color toggling will be possible. Otherwise a fixed
+ * lookup scheme must be used, and color toggling will <b>not</b> be possible.
+ * If the colors will fit, <b>ncolors</b> is set to the required number of
+ * colors (computed as max-min+2) and 1 is returned. Otherwise <b>ncolors</b>
+ * is set to the number of hardware colors and 0 is returned.
+ *
+ *  \param min
+ *  \param max
+ *  \param ncolors
+ *  \return int
  */
 
 int D_check_colormap_size (CELL min,CELL max,int *ncolors)

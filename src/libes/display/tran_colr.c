@@ -6,6 +6,19 @@
 #include "display.h"
 #include "colors.h"
 
+
+/*!
+ * \brief color name to number
+ *
+ * Takes a
+ * color <b>name</b> in ascii and returns the color number for that color.
+ * Returns 0 if color is not known. The color number returned is for lines and
+ * text, not raster graphics.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int D_translate_color(const char *str )
 {
 	if (! strcmp(str, "red"))	return(RED) ;

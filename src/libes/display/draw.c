@@ -41,6 +41,20 @@ static int window_set = 0;
 #define swap(x,y) {int t; t=x; x=y; y=t;}
 #define limit(a,x,b) x<a?a:(x>b?b:x)
 
+
+/*!
+ * \brief set clipping window
+ *
+ * Sets the clipping window to the pixel window that corresponds
+ * to the current database region. This is the default.
+ *
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int D_set_clip_window (int Top, int Bottom, int Left, int Right)
 {
 /* make sure top is above bottom, left is left of right */
@@ -67,6 +81,17 @@ int D_set_clip_window (int Top, int Bottom, int Left, int Right)
     return 0;
 }
 
+
+/*!
+ * \brief set clipping window to map window
+ *
+ * Sets the clipping window to the pixel window that corresponds to the
+ * current database region. This is the default.
+ *
+ *  \param ~
+ *  \return int
+ */
+
 int D_set_clip_window_to_map_window ()
 {
     D_set_clip_window (
@@ -78,6 +103,22 @@ int D_set_clip_window_to_map_window ()
 
     return 0;
 }
+
+
+/*!
+ * \brief line to x,y
+ *
+ * Draws a line from the
+ * current position to pixel location <b>x,y.</b> Any part of the line that
+ * falls outside the clipping window is not drawn.
+ * <b>Note.</b> The new position is <b>x,y</b>, even if it falls outside the
+ * clipping window. Returns 0 if the line was contained entirely in the clipping
+ * window, 1 if the line had to be clipped to draw it.
+ *
+ *  \param x
+ *  \param y
+ *  \return int
+ */
 
 int D_cont_abs (int x,int y)
 {
@@ -103,10 +144,35 @@ int D_cont_abs (int x,int y)
     return clipped;
 }
 
+
+/*!
+ * \brief line to x,y
+ *
+ * Equivalent to
+ * <i>D_cont_abs</i>(curx+x, cury+y) where <b>curx, cury</b> is the current
+ * pixel location.
+ *
+ *  \param x
+ *  \param y
+ *  \return int
+ */
+
 int D_cont_rel (int x,int y)
 {
     return D_cont_abs (curx+x, cury+y);
 }
+
+
+/*!
+ * \brief move to pixel
+ *
+ * Move without drawing to
+ * pixel location <b>x,y</b>, even if it falls outside the clipping window.
+ *
+ *  \param x
+ *  \param y
+ *  \return int
+ */
 
 int D_move_abs (int x,int y)
 {
@@ -114,6 +180,19 @@ int D_move_abs (int x,int y)
     cury = y;
     return 0;
 }
+
+
+/*!
+ * \brief move to pixel
+ *
+ * Equivalent to
+ * <i>D_move_abs</i>(curx+x, cury+y) where <b>curx, cury</b> is the current
+ * pixel location.
+ *
+ *  \param x
+ *  \param y
+ *  \return int
+ */
 
 int D_move_rel (int x,int y)
 {
