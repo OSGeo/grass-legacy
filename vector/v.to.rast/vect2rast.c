@@ -69,7 +69,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
     found = 0; ctype = -1;
     for (i = 0; i < ncols; i++) {
 	Column = db_get_table_column (Table, i);
-	if ( strcmp ( db_get_column_name(Column), column ) == 0 ) {
+	if ( G_strcasecmp ( db_get_column_name(Column), column ) == 0 ) {
 	    sqltype = db_get_column_sqltype(Column);
 	    ctype = db_sqltype_to_Ctype ( sqltype );
 	    found = 1;
