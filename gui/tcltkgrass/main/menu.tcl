@@ -1,3 +1,41 @@
+proc read_moncap {} {
+	global env moncap
+
+	set file [open [file join $env(GISBASE) etc monitorcap] r]
+	set data [read $file]
+	close $file
+
+	set data [subst -nocommands -novariables $data]
+	set moncap {}
+	foreach line [split $data \n] {
+		if {[string match {\#*} $line]} continue
+		if {![string match {*:*:*:*:*:*} $line]} continue
+		set fields {}
+		foreach field [split $line :] {
+			lappend fields [string trim $field]
+		}
+		lappend moncap $fields
+	}
+}
+
+proc monitor_menu {op} {
+	global moncap
+
+	set submenu {}
+	set last_driver {}
+	foreach mon $moncap {
+		set name [lindex $mon 0]
+		set driver [lindex $mon 1]
+		if {$last_driver != "" && $last_driver != $driver} {
+			lappend submenu -separator "" ""
+		}
+		set last_driver $driver
+		lappend submenu $name "" [list "run d.mon $op=$name"]
+	}
+
+	return $submenu
+}
+
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
@@ -6,7 +44,9 @@ pack .main_menu -expand yes -fill both
 
 # main menu
 
-menu_build 1 .main_menu {
+read_moncap
+
+menu_build 1 .main_menu [subst {
 "File" "Files in/out" {
 	"Import" "Import maps into GRASS" {
 	    "Raster map" "" {
@@ -184,42 +224,9 @@ menu_build 1 .main_menu {
 	"Start NVIZ (n-dimensional visualization module)" "nviz -q"
 	    {"spawn nviz -q"}
 	-separator "" ""
-	"Start displays" "" {
-	    X0 "" {"run d.mon start=x0"}
-	    X1 "" {"run d.mon start=x1"}
-	    X2 "" {"run d.mon start=x2"}
-	    X3 "" {"run d.mon start=x3"}
-	    X4 "" {"run d.mon start=x4"}
-	    X5 "" {"run d.mon start=x5"}
-	    X6 "" {"run d.mon start=x6"}
-	    -separator "" ""
-	    PNG "" {"run d.mon start=PNG"}
-	    -separator "" ""
-	    "Start/restart display at specified window size" ""
-	        {"execute d.monsize"}
-	}
-	"Stop displays" "" {
-	    X0 "" {"run d.mon stop=x0"}
-	    X1 "" {"run d.mon stop=x1"}
-	    X2 "" {"run d.mon stop=x2"}
-	    X3 "" {"run d.mon stop=x3"}
-	    X4 "" {"run d.mon stop=x4"}
-	    X5 "" {"run d.mon stop=x5"}
-	    X6 "" {"run d.mon stop=x6"}
-	    -separator "" ""
-	    PNG "" {"run d.mon stop=PNG"}
-	}
-	"Select displays" "" {
-	    X0 "" {"run d.mon select=x0"}
-	    X1 "" {"run d.mon select=x1"}
-	    X2 "" {"run d.mon select=x2"}
-	    X3 "" {"run d.mon select=x3"}
-	    X4 "" {"run d.mon select=x4"}
-	    X5 "" {"run d.mon select=x5"}
-	    X6 "" {"run d.mon select=x6"}
-	    -separator "" ""
-	    PNG "" {"run d.mon select=PNG"}
-	}
+	"Start displays" ""  {[monitor_menu start]}
+	"Stop displays" ""   {[monitor_menu stop]}
+	"Select displays" "" {[monitor_menu select]}
 	-separator "" ""
 	"Raster" "Display raster maps" {
 	    "Display raster maps" ""
@@ -812,4 +819,4 @@ menu_build 1 .main_menu {
 	"About GRASS" ""
 	    {"source $env(TCLTKGRASSBASE)/main/grassabout.tcl"}
 }
-}
+}]
