@@ -1,3 +1,7 @@
+/*
+* $Id$
+*/
+
 /* changed 10/99 Jaro*/
 /* Created new function GS_write_tif based
 * on RGB dump */
@@ -6,6 +10,7 @@
 #include <sys/types.h>
 #include "image.h"
 #include "tiffio.h"
+#include "gstypes.h"
 
 u_short config = PLANARCONFIG_CONTIG;
 u_short compression = -1;
@@ -15,9 +20,7 @@ unsigned short rbuf[8192];
 unsigned short gbuf[8192];
 unsigned short bbuf[8192];
 
-
-GS_write_tif(name)
-char *name;
+int GS_write_tif(char *name)
 {   
     TIFF *out;
     int y, x;
@@ -28,73 +31,96 @@ char *name;
     unsigned long *pixbuf;
     char all_buf[3];
 
- /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
-  * Markus Neteler
-  */
-    union {
+    /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
+    * Markus Neteler
+    */
+    union
+    {
         int testWord;
         char testByte[4];
     } endianTest;
+    
     int swapFlag;
 
     endianTest.testWord = 1;
-    if (endianTest.testByte[0] == 1) {
+    if (endianTest.testByte[0] == 1)
+    {
         swapFlag = 1; /*true: little endian */
-    } else {
+    }
+    else
+    {
         swapFlag = 0;
     }
 
-
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
-
-out = TIFFOpen(name, "w");
-if (out == NULL)
+    out = TIFFOpen(name, "w");
+    if (out == NULL)
+    {
 	fprintf (stderr, "Cannot open file for output\n"),exit(1);
-
-/* Write out TIFF Tags */
-/* Assuming 24 bit RGB Tif */
-
-        TIFFSetField(out, TIFFTAG_IMAGEWIDTH, xsize);
-        TIFFSetField(out, TIFFTAG_IMAGELENGTH, ysize);
-        TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_BOTLEFT);
-        TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, 24 > 8 ? 3 : 1);
-        TIFFSetField(out, TIFFTAG_BITSPERSAMPLE, 24 > 1 ? 8 : 1);
-        TIFFSetField(out, TIFFTAG_PLANARCONFIG, config);
-	mapsize = 1<<24;
-
-	TIFFSetField(out, TIFFTAG_PHOTOMETRIC, 24 > 8 ?
-                    PHOTOMETRIC_RGB : PHOTOMETRIC_MINISBLACK);
-linebytes = ((xsize*ysize+15) >> 3) &~ 1;
-if (TIFFScanlineSize(out) > linebytes)
-                buf = (u_char *)malloc(linebytes);
-        else
-                buf = (u_char *)malloc(TIFFScanlineSize(out));
-        if (rowsperstrip != (u_short)-1)
-                rowsperstrip = (u_short)(8*1024/linebytes);
-	TIFFSetField(out, TIFFTAG_ROWSPERSTRIP, rowsperstrip == 0 ? 1 : rowsperstrip);
-
-/* Done with Header Info*/
-
-	for(y=0; y<ysize; y++) {
-	tmpptr = buf;
-		for(x=0; x<(xsize); x++) {
-	if (!swapFlag) {
-	/* big endian: SUN et al. */
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-	} else {
-	/* little endian: Linux et al. */
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0x000000FF);
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
- 	}
-
-	    }
-	if (TIFFWriteScanline(out, buf, y, 0) < 0)
-		break;
-	}
-	(void) TIFFClose(out);
-	return(0);
     }
+
+    /* Write out TIFF Tags */
+    /* Assuming 24 bit RGB Tif */
+    TIFFSetField(out, TIFFTAG_IMAGEWIDTH, xsize);
+    TIFFSetField(out, TIFFTAG_IMAGELENGTH, ysize);
+    TIFFSetField(out, TIFFTAG_ORIENTATION, ORIENTATION_BOTLEFT);
+    TIFFSetField(out, TIFFTAG_SAMPLESPERPIXEL, 24 > 8 ? 3 : 1);
+    TIFFSetField(out, TIFFTAG_BITSPERSAMPLE, 24 > 1 ? 8 : 1);
+    TIFFSetField(out, TIFFTAG_PLANARCONFIG, config);
+    mapsize = 1<<24;
+
+    TIFFSetField(out, TIFFTAG_PHOTOMETRIC, 24 > 8 ?
+                PHOTOMETRIC_RGB : PHOTOMETRIC_MINISBLACK);
+
+    linebytes = ((xsize*ysize+15) >> 3) &~ 1;
+    
+    if (TIFFScanlineSize(out) > linebytes)
+    {
+     	buf = (u_char *)malloc(linebytes);
+    }
+    else
+    {
+    	buf = (u_char *)malloc(TIFFScanlineSize(out));
+    }
+    
+    if (rowsperstrip != (u_short)-1)
+    {
+    	rowsperstrip = (u_short)(8*1024/linebytes);
+    }
+    
+    TIFFSetField(out, TIFFTAG_ROWSPERSTRIP, rowsperstrip == 0 ? 1 : rowsperstrip);
+
+    /* Done with Header Info*/
+    for (y=0; y<ysize; y++)
+    {
+	tmpptr = buf;
+	
+	for (x=0; x<(xsize); x++)
+	{
+	    if (!swapFlag)
+	    {
+	    	/* big endian: SUN et al. */
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+	    }
+	    else
+	    {
+	    	/* little endian: Linux et al. */
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x000000FF);
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+	    	*tmpptr++ = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+ 	    }
+    	}
+	
+	if (TIFFWriteScanline(out, buf, y, 0) < 0)
+    	{
+	    break;
+	}
+    }
+    
+    (void) TIFFClose(out);
+    
+    return(0);
+}
