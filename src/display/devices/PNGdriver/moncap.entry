@@ -1,0 +1,3 @@
+PNG:driver/PNG:Create PNG Map: \
+     BASEDIR/dev/fifo.21a BASEDIR/dev/fifo.21b \
+     ::any terminal
