@@ -46,10 +46,6 @@ int asc_to_bin(
 		if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) 
 		    return ( err ( buff) );
 
-		if (!n_points)
-		    continue;
-
-		
 		switch(ctype)
 		{
 		case 'A':
