@@ -114,6 +114,12 @@ int Window (void)
 		    replot (CMap);
 		    Restore_Disp_settings ();
 		    break;
+		case MWC_ULINES:
+		    Zero_Disp_settings();
+		    Disp_ulines = 1;
+		    replot (CMap);
+		    Restore_Disp_settings ();
+		    break;
 		case MWC_CLEAR:
 		    R_standard_color (dcolors[CLR_ERASE]);
 		    erase_window();
@@ -551,6 +557,7 @@ static char S_Disp_outline;
 static char S_Disp_markers;
 static char S_Disp_llines;
 static char S_Disp_llabels;
+static char S_Disp_ulines;
 static char S_Disp_sites;
 static char S_Disp_slabels;
 
@@ -567,6 +574,7 @@ Save_Disp_settings (void)
     S_Disp_markers = Disp_markers;
     S_Disp_llines = Disp_llines;
     S_Disp_llabels = Disp_llabels;
+    S_Disp_ulines = Disp_ulines;
     S_Disp_sites = Disp_sites;
     S_Disp_slabels = Disp_slabels;
 
@@ -586,6 +594,7 @@ Restore_Disp_settings (void)
     Disp_markers = S_Disp_markers;
     Disp_llines = S_Disp_llines;
     Disp_llabels = S_Disp_llabels;
+    Disp_ulines = S_Disp_ulines;
     Disp_sites = S_Disp_sites;
     Disp_slabels = S_Disp_slabels;
 
@@ -605,6 +614,7 @@ Zero_Disp_settings (void)
     Disp_markers = 0;
     Disp_llines = 0;
     Disp_llabels = 0;
+    Disp_ulines = 0;
     Disp_sites = 0;
     Disp_slabels = 0;
 

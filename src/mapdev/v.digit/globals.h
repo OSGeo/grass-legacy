@@ -67,6 +67,7 @@ Global char Disp_outline;
 Global char Disp_markers;
 Global char Disp_llines;
 Global char Disp_llabels;
+Global char Disp_ulines;
 Global char Disp_thresh;
 Global char Disp_sites;
 Global char Disp_slabels;
