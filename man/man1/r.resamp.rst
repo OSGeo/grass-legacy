@@ -9,7 +9,7 @@ resolution) using regularized spline with tension and smoothing.
 (\*WGRASS Raster Program\*O)
 
 .br
-&nbsp;
+ 
 .SH 
 SYNOPSIS
 \*Lr.resamp.rst\*O
@@ -25,7 +25,7 @@ SYNOPSIS
 = val] [\*Ltension\*O = val]
 
 .br
-&nbsp;
+ 
 .SH 
 DESCRIPTION
 \*Wr.resamp.tps\*O
@@ -64,7 +64,7 @@ for overlaping rectangular segments. The user can define the width of overlap
 (in number of cells) by option \*Woverlap\*O.
 
 .br
-&nbsp;
+ 
 .SH 
 OPTIONS
 The user can run this program either interactively or non-interactively.
@@ -75,23 +75,23 @@ arguments and flag settings on the command line using the form:
 = name] [\*Lpcurv\*O = name] [\*Ltcurv\*O = name] [\*Lmcurv\*O = name]
 [\*Lsmooth\*O = name] [\*Lmaskmap\*O = name] [\*Loverlap\*O = val] [
 \*Lzmult \*O= val ] [\*Ltension\*O = val]
-Alternatively, the user can simply type&nbsp; \*Lr.resamp.rst\*O
+Alternatively, the user can simply type  \*Lr.resamp.rst\*O
 on the command line without program arguments. In this case, the user will
 be prompted for parameter values and flag settings using the standard GRASS
 parser interface described in the manual entry for \*Wparser \*O.
 \*LFlags\*O
-&nbsp;\*L-r\*O Indicates that zeroes in input map represent elevation.
+ \*L-r\*O Indicates that zeroes in input map represent elevation.
 \*L-d\*O Output partial derivatives instead of aspect, slope and curvatures
 \*LParameters\*O:
-&nbsp;\*Linput\*O =\*Wname\*O
+ \*Linput\*O =\*Wname\*O
 
 .br
 Use the existing site file \*Wname\*O as input.
-&nbsp;\*Lew_res \*O= \*Wval\*O
+ \*Lew_res \*O= \*Wval\*O
 
 .br
 Set desired east-west resolution to \*Wval\*O .
-&nbsp;\*Lns_res \*O= \*Wval\*O
+ \*Lns_res \*O= \*Wval\*O
 
 .br
 Set desired north-south resolution to \*Wval\*O .
@@ -139,26 +139,26 @@ Use the existing raster file \*Wname\*O as a mask.
 .br
 Use overlap \*Wval\*O cells to get additional points for interpolation
 for a given segment. Default value is 3.
-&nbsp;\*Lzmult \*O=\*Wval\*O
+ \*Lzmult \*O=\*Wval\*O
 
 .br
 Convert z-values using conversion factor \*Wval\*O . Default value
 is 1.
-&nbsp;\*Ltension \*O= \*Wval\*O
+ \*Ltension \*O= \*Wval\*O
 
 .br
 Set tension to \*Wval\*O .
 
 .br
-&nbsp;
+ 
 .SH 
-NOTES&nbsp;
+NOTES 
 \*Wr.resamp.rst\*O uses regularized spline with tension for interpolation
 (as described in Mitasova and Mitas, 1993). Region is temporarily changed
 while writing output files with desired resolution. Topographic parameters
 are computed the same way as in s.surf.rst. (See also Mitasova and Hofierka,
 1993) Raster file \*Wsmooth\*O should contain variable smoothing parameters
-that can be derived from errors, slope, etc. using&nbsp; \*Wr.mapcalc\*O.
+that can be derived from errors, slope, etc. using  \*Wr.mapcalc\*O.
 The program gives warning when significant overshoots appear and higher
 tension should be used. However, with tension too high the resulting surface
 changes its behavior to membrane (rubber sheet stretched over the data
@@ -190,14 +190,14 @@ the border of the mask. It therefore does not mask out the data points;
 if this is desirable, it must be done outside \*Wr.resamp.rst\*O .
 
 .br
-&nbsp;
+ 
 .SH 
 SEE ALSO
 \*Lr.resample\*O,
 \*L s.surf.rst\*O
 
 .br
-&nbsp;
+ 
 .SH 
 AUTHORS
 \*WOriginal version of program (in FORTRAN):\*O
@@ -206,7 +206,7 @@ AUTHORS
 Lubos Mitas, NCSA, University of Illinois at Urbana Champaign, Il
 
 .br
-Helena Mitasova, US Army CERL, Champaign, Illinois&nbsp;
+Helena Mitasova, US Army CERL, Champaign, Illinois 
 \*WModified program (translated to C, adapted for GRASS , segmentation
 procedure):\*O
 
@@ -217,7 +217,7 @@ Irina Kosinovsky, US Army CERL .
 Dave Gerdes, US Army CERL .
 
 .br
-&nbsp;
+ 
 .SH 
 REFERENCES
 Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F.
@@ -229,7 +229,7 @@ p.641-656.
 Mitasova, H. and Hofierka, L., 1993. Interpolation by regularized spline
 with tension: II. Application to terrain modeling and surface geometry
 analysis, Mathematical Geology No.25 p.657-667.
-&nbsp;Talmi, A. and Gilat, G., 1977. Method for smooth approximation
+ Talmi, A. and Gilat, G., 1977. Method for smooth approximation
 of data, Journal of Computational Physics , 23, pp 93-123.
 Wahba, G., 1990. Spline models for observational data, CNMS-NSF Regional
 Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.

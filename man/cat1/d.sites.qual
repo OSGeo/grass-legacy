@@ -27,14 +27,12 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
 
      examples:
 
-	  &nbsp; D3.100-200&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	  dimension 3 in range 100 to 200 &nbsp;
-	  C.eq7.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	  category equal 7.2 (note no number after C) &nbsp;
-	  A2.ge5000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2nd
-	  double attribute >= 5000 &nbsp;
-	  A1.-2.0--1.0&nbsp;&nbsp;&nbsp; 1st double attribute in
-	  range -2.0 to -1.0
+	    D3.100-200	    dimension 3 in range 100 to 200
+	    C.eq7.2	    category equal 7.2 (note no number
+	  after C)
+	    A2.ge5000	    2nd double attribute >= 5000
+	    A1.-2.0--1.0    1st double attribute in range -2.0 to
+	  -1.0
      If an output filename is provided, a new sites file
      containing the subset defined by the command will be written
      in the user's mapset. Header information will be copied from
@@ -57,6 +55,8 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
      can type simply  d.sites.qual on the command line; in this
      case, the program will prompt the user for parameter values
      using the standard GRASS parser interface described in the
+     manual entry for parser.
+
 
 
 
@@ -70,8 +70,6 @@ GRASS 5.0beta6	      GRASS Development Team			1
 d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
 
 
-
-     manual entry for parser.
 
      Flags
 
@@ -98,23 +96,23 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
 
      size
 
-     Size, in pixels, in which the icon is to be drawn&nbsp;
+     Size, in pixels, in which the icon is to be drawn
 
-     options: 0-1000&nbsp;
+     options: 0-1000
 
      default: 5
 
      <p>type
 
-     Specify the type of the icon&nbsp;
+     Specify the type of the icon
 
-     options: x, diamond, box, +&nbsp;
+     options: x, diamond, box, +
 
      default: x
 
      <p> rules
 
-     qualifying rules for display: [D|C|A]#.RANGE&nbsp;
+     qualifying rules for display: [D|C|A]#.RANGE
 
      where RANGE is one of #-#, ge#, le#, eq#
 
@@ -123,6 +121,8 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
      Name of a site file to output drawn sites
 
 
+
+     SEE ALSO
 
 
 
@@ -137,9 +137,6 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
 
 
 
-
-     SEE ALSO
-
      d.siter
 
 
@@ -147,6 +144,9 @@ d.sites.qual <main>   GRASS Reference Manual  <main> d.sites.qual
      AUTHOR
 
      Bill Brown, UI GMS Laboratory
+
+
+
 
 
 

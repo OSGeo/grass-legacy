@@ -28,35 +28,35 @@ s.info <main>	      GRASS Reference Manual	    <main> s.info
      should conform to the multiple attribute format as specified
      in GRASS5.0.
 
-     &nbsp;
+
 
 
      OPTIONS This program can be run non-interactively or
      interactively. The program will be run non-interactively; if
      the user spcifies program arguments and flag settings on the
      command line using the form s.info [-qwQ] sites=name
-     &nbsp;Alternately, the user can type simply s.info on the
-     command line; in this case, the program will prompt the user
-     for parameter values using the standard GRASS parser
-     interface described in the manual entry for parser.
-     &nbsp;Flags
+      Alternately, the user can type simply s.info on the command
+     line; in this case, the program will prompt the user for
+     parameter values using the standard GRASS parser interface
+     described in the manual entry for parser.
+      Flags
 
-     &nbsp; -q&nbsp;&nbsp; Load quietly
+       -q   Load quietly
 
-     &nbsp; -w&nbsp;&nbsp; Only count sites in current window for
-     min/max.
+       -w   Only count sites in current window for min/max.
 
-     &nbsp; -Q&nbsp;&nbsp; Show quartiles for decimal attributes
+       -Q   Show quartiles for decimal attributes
 
      Parameters
 
-     &nbsp;sites = name
+      sites = name
 
-     &nbsp;Name of sites file.
+      Name of sites file.
 
      Example output
 
      SITES FILENAME: r_analys --------------
+
 
 
 
@@ -176,7 +176,7 @@ s.info <main>	      GRASS Reference Manual	    <main> s.info
 
      BUGS If the -Q flag is given, the sites are cached in order
      to determine quartile values; otherwise the sites are read
-     sequentially without caching.&nbsp; Therefore, use of the -Q
+     sequentially without caching.  Therefore, use of the -Q
      option may result in an out-of-memory error for very large
      sites files. The algorithm used to find quartile values
      matches that used by s.univar, so if the number of sites is

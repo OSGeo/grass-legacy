@@ -15,7 +15,7 @@ SYNOPSIS
 \*Ls.surf.rst help\*O
 
 .br
-\*Ls.surf.rst [-d] [-t]&nbsp; input \*O= name [\*Lelev \*O= name]
+\*Ls.surf.rst [-d] [-t]  input \*O= name [\*Lelev \*O= name]
 [\*Lelatt\*O=val] [\*Lslope \*O= name] [\*Laspect
 \*O= name] [\*Lpcurv
 \*O=
@@ -29,7 +29,7 @@ val] [\*Lsmatt=\*Oval] [\*Lsegmax = \*Oval] [\*Lnpmin
 name] [\*Ltreefile \*O= name] [\*Loverfile \*O= name]
 
 .br
-&nbsp;
+ 
 .SH 
 DESCRIPTION
 \*Ws.surf.rst\*O
@@ -60,13 +60,13 @@ that are closer to each other than the given \*Wdmin\*O are removed. Parameter
 allows user to rescale the z-values for sites (useful e.g. for transformation
 of elevations given in feet to meters, so that the proper values of slopes
 and curvatures can be computed).
-Regularized spline with tension and smoothing is used for&nbsp; interpolation
+Regularized spline with tension and smoothing is used for  interpolation
 and approximation. The \*Wtension\*O parameter tunes the character of
 the resulting surface from thin plate to membrane. The flag \*W-t \*Ocan
 be set to use "dnorm independent tension", (see notes for more details
-about the tension behavior). For noisy data, it is possible to define&nbsp;
+about the tension behavior). For noisy data, it is possible to define 
 either a constant smoothing parameter \*Wsmooth\*O or a variable smoothing
-parameter by&nbsp; setting the parameter
+parameter by  setting the parameter
 \*Wsmatt\*O to the value j for
 the j-th floating point attribute in the\*W input\*O site file, representing
 the smoothing parameter for each point. When smoothing is used, it is possible
@@ -93,7 +93,7 @@ The user must run \*Wg.region\*O before the program to set the region
 and resolution for interpolation.
 
 .br
-&nbsp;
+ 
 .SH 
 OPTIONS
 The user can run this program either interactively or non-interactively.
@@ -114,7 +114,7 @@ interface described in the manual entry for\*W parser\*O.
 \*L-d\*O Output partial derivatives instead of aspect, slope and curvatures.
 
 .br
-\*L-t\*O&nbsp; Use dnorm independent tension
+\*L-t\*O  Use dnorm independent tension
 \*LParameters:\*O
 \*Linput \*O= \*Wname\*O
 
@@ -201,7 +201,7 @@ Output overlapping neighborhoods used for segmentation to vector file
 \*Wname\*O.
 
 .br
-&nbsp;
+ 
 .SH 
 NOTES
 \*Ws.surf.rst\*O\*L \*Ouses regularized spline with tensionfor interpolation
@@ -240,7 +240,7 @@ It is useful to know that the method is scale dependent and the \*Wtension\*O
 works as a rescaling parameter (high \*Wtension\*O "increases the distances
 between the points" and reduces the range of impact of each point, low\*W
 tension\*O "decreases the distance" and the points influence each other
-over longer range). Surface with&nbsp; \*Wtension\*O set too high behaves
+over longer range). Surface with  \*Wtension\*O set too high behaves
 like a membrane (rubber sheet stretched over the data points) with peak
 or pit ("crater") in each given point and everywhere else the surface goes
 rapidly to trend. If digitized contours are used as input data, high tension
@@ -255,10 +255,10 @@ There are two options how \*Wtension\*O can be applied in relation
 to \*Wdnorm\*O (dnorm rescales the coordinates depending on the average
 data density so that the size of segments with \*Wsegmax=\*O40 points
 is around 1 - this ensures the numerical stability of the computation):
-1. Default (used also in s.surf.tps): the given \*Wtension\*O&nbsp;
-is applied to normalized data (x/\*Wdnorm\*O..),&nbsp; that means that
+1. Default (used also in s.surf.tps): the given \*Wtension\*O 
+is applied to normalized data (x/\*Wdnorm\*O..),  that means that
 the distances are multiplied (rescaled) by \*Wtension/dnorm\*O. If density
-of points is changed, e.g.,&nbsp; by using higher \*Wdmin\*O, the \*Wdnorm\*O
+of points is changed, e.g.,  by using higher \*Wdmin\*O, the \*Wdnorm\*O
 changes and \*Wtension\*O needs to be changed too to get the same result.
 Because the \*Wtension\*O is applied to normalized data its suitable value
 is usually within the 10-100 range and does not depend on the actual scale
@@ -266,9 +266,9 @@ is usually within the 10-100 range and does not depend on the actual scale
 or cm for field experiments).
 
 .br
-2. Flag\*L -t \*O(experimental for s.surf.rst)\*L: \*OThe given&nbsp;
+2. Flag\*L -t \*O(experimental for s.surf.rst)\*L: \*OThe given 
 \*Wtension\*O is applied to un-normalized data (rescaled tension = t\*Wension*dnorm\*O/1000
-is applied to normalized data (x/\*Wdnorm\*O) and therefore&nbsp; \*Wdnorm\*O
+is applied to normalized data (x/\*Wdnorm\*O) and therefore  \*Wdnorm\*O
 cancels out) so here \*Wtension\*O truly works as a rescaling parameter.
 For regional applications with distances between points in km the suitable
 tension can be 0.1 or smaller, for detailed field scale analysis with distances
@@ -276,7 +276,7 @@ in cm it can be 500 or more. To help select how much the data need to be rescale
 the program writes
 \*Wdnorm\*O and rescaled tension=\*Wtension*dnorm\*O/1000 at the
 beginning of the program run. This rescaled \*Wtension\*O should be around
-20-30.&nbsp; If it is lower or higher, the given \*Wtension\*O parameter
+20-30.  If it is lower or higher, the given \*Wtension\*O parameter
 should be changed accordingly.
 The default is a recommended choice, however for the applications where
 the user needs to change density of data and preserve the interpolation
@@ -318,7 +318,7 @@ For examples of applications see \*Lhttp://www.cecer.army.mil/grass/viz/VIZ.html
 and\*Lhttp://www2.gis.uiuc.edu:2280/modviz/\*O
 
 .br
-&nbsp;
+ 
 .SH 
 SEE ALSO
 \*Lr.surf.idw\*O,
@@ -333,7 +333,7 @@ SEE ALSO
 \*Lr.resamp.rst\*O
 
 .br
-&nbsp;
+ 
 .SH 
 AUTHORS
 \*WOriginal version of program (in FORTRAN) and GRASS enhancements:\*O
@@ -359,17 +359,17 @@ Dave Gerdes, US Army CERL, Champaign, Illinois, USA
 Darrel McCauley, Purdue University, West Laffayette, Indiana, USA
 
 .br
-&nbsp;
+ 
 
 .br
-&nbsp;
+ 
 .SH 
 REFERENCES
 Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F.
 Goodchild, D.J. Maguire, D.W.Rhind (Eds.), \*WGeographical Information
 Systems: Principles, Techniques, Management and Applications\*O, Wiley,
 pp.481-492
-Mitasova H., Mitas L.,&nbsp; Brown W.M.,&nbsp; D.P. Gerdes, I. Kosinovsky,
+Mitasova H., Mitas L.,  Brown W.M.,  D.P. Gerdes, I. Kosinovsky,
 Baker, T.1995, Modeling spatially and temporally distributed phenomena:
 New methods and tools for GRASS GIS. \*WInternational Journal of GIS\*O,
 9 (4), special issue on Integrating GIS and Environmental modeling, 433-446.
@@ -391,5 +391,5 @@ Wahba, G., 1990, : Spline Models for Observational Data, CNMS-NSF Regional
 Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
 
 .br
-&nbsp;
+ 
 Updated November 14, 1999 by Helena Mitasova

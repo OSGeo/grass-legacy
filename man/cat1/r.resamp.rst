@@ -13,7 +13,7 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
 
      (GRASS Raster Program)
 
-     &nbsp;
+
 
 
      SYNOPSIS r.resamp.rst
@@ -25,7 +25,7 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      name] [tcurv = name] [mcurv = name] [smooth = name] [maskmap
      = name] [overlap = val] [zmult = val] [tension = val]
 
-     &nbsp;
+
 
 
      DESCRIPTION r.resamp.tps
@@ -83,7 +83,7 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      segments. The user can define the width of overlap (in
      number of cells) by option overlap.
 
-     &nbsp;
+
 
 
      OPTIONS The user can run this program either interactively
@@ -94,20 +94,21 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      = val elev = name [slope = name] [aspect = name] [pcurv =
      name] [tcurv = name] [mcurv = name] [smooth = name] [maskmap
      = name] [overlap = val] [ zmult = val ] [tension = val]
-     Alternatively, the user can simply type&nbsp; r.resamp.rst
-     on the command line without program arguments. In this case,
-     the user will be prompted for parameter values and flag
-     settings using the standard GRASS parser interface described
-     in the manual entry for parser .  Flags &nbsp;-r Indicates
-     that zeroes in input map represent elevation.  -d Output
-     partial derivatives instead of aspect, slope and curvatures
-     Parameters: &nbsp;input =name
+     Alternatively, the user can simply type  r.resamp.rst on the
+     command line without program arguments. In this case, the
+     user will be prompted for parameter values and flag settings
+     using the standard GRASS parser interface described in the
+     manual entry for parser .	Flags
+      -r Indicates that zeroes in input map represent elevation.
+     -d Output partial derivatives instead of aspect, slope and
+     curvatures Parameters:
+      input =name
 
-     Use the existing site file name as input.	&nbsp;ew_res =
-     val
+     Use the existing site file name as input.
+      ew_res = val
 
-     Set desired east-west resolution to val .	&nbsp;ns_res =
-     val
+     Set desired east-west resolution to val .
+      ns_res = val
 
      Set desired north-south resolution to val .  elev = name
 
@@ -122,7 +123,6 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
 
      Output profile curvature or fxx values to raster file named
      name tcurv=name
-
 
 
 
@@ -152,43 +152,43 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
 
      Use overlap val cells to get additional points for
      interpolation for a given segment. Default value is 3.
-     &nbsp;zmult =val
+      zmult =val
 
      Convert z-values using conversion factor val . Default value
-     is 1.  &nbsp;tension = val
+     is 1.
+      tension = val
 
      Set tension to val .
 
-     &nbsp;
 
 
-     NOTES&nbsp; r.resamp.rst uses regularized spline with
-     tension for interpolation (as described in Mitasova and
-     Mitas, 1993). Region is temporarily changed while writing
-     output files with desired resolution. Topographic parameters
-     are computed the same way as in s.surf.rst. (See also
-     Mitasova and Hofierka, 1993) Raster file smooth should
-     contain variable smoothing parameters that can be derived
-     from errors, slope, etc. using&nbsp; r.mapcalc.  The program
-     gives warning when significant overshoots appear and higher
-     tension should be used. However, with tension too high the
-     resulting surface changes its behavior to membrane (rubber
-     sheet stretched over the data points resulting in a peak or
-     pit in each given point and everywhere else the surface goes
-     rapidly to trend). Smoothing can also be used to reduce the
-     overshoots. When overshoots occure the resulting elev file
-     will have white color in the locations of overshoots since
-     the color table for the output file is the same as
-     colortable for raster input file.The program checks the
-     numerical stability of the algorithm by computation of
-     values in given points, and prints the maximum difference
-     found into the history file of raster map elev . Increase in
-     tension is suggested if the difference is unacceptable. For
-     computation with smoothing set to 0 this difference should
-     be 0. With smoothing parameter greater than zero the surface
-     will not pass through the data points and the higher the
-     parameter the closer the surface will be to the trend.  The
-     program writes the values of parameters used in computation
+
+     NOTES r.resamp.rst uses regularized spline with tension for
+     interpolation (as described in Mitasova and Mitas, 1993).
+     Region is temporarily changed while writing output files
+     with desired resolution. Topographic parameters are computed
+     the same way as in s.surf.rst. (See also Mitasova and
+     Hofierka, 1993) Raster file smooth should contain variable
+     smoothing parameters that can be derived from errors, slope,
+     etc. using	 r.mapcalc.  The program gives warning when
+     significant overshoots appear and higher tension should be
+     used. However, with tension too high the resulting surface
+     changes its behavior to membrane (rubber sheet stretched
+     over the data points resulting in a peak or pit in each
+     given point and everywhere else the surface goes rapidly to
+     trend). Smoothing can also be used to reduce the overshoots.
+     When overshoots occure the resulting elev file will have
+     white color in the locations of overshoots since the color
+     table for the output file is the same as colortable for
+     raster input file.The program checks the numerical stability
+     of the algorithm by computation of values in given points,
+     and prints the maximum difference found into the history
+     file of raster map elev . Increase in tension is suggested
+     if the difference is unacceptable. For computation with
+     smoothing set to 0 this difference should be 0. With
+     smoothing parameter greater than zero the surface will not
+     pass through the data points and the higher the parameter
+     the closer the surface will be to the trend.  The program
 
 
 
@@ -203,8 +203,9 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
 
 
 
-     into the comment part of the history file elev as well as
-     the following values which help to evaluate the results and
+     writes the values of parameters used in computation into the
+     comment part of the history file elev as well as the
+     following values which help to evaluate the results and
      choose the suitable parameters: minimum and maximum z values
      in the data file (zmin_data, zmax_data) and in the
      interpolated raster map (zmin_int, zmax_int), maximum
@@ -221,13 +222,13 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      therefore does not mask out the data points; if this is
      desirable, it must be done outside r.resamp.rst .
 
-     &nbsp;
+
 
 
      SEE ALSO r.resample,
       s.surf.rst
 
-     &nbsp;
+
 
 
      AUTHORS Original version of program (in FORTRAN):
@@ -235,15 +236,15 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      Lubos Mitas, NCSA, University of Illinois at Urbana
      Champaign, Il
 
-     Helena Mitasova, US Army CERL, Champaign, Illinois&nbsp;
-     Modified program (translated to C, adapted for GRASS ,
-     segmentation procedure):
+     Helena Mitasova, US Army CERL, Champaign, Illinois Modified
+     program (translated to C, adapted for GRASS , segmentation
+     procedure):
 
      Irina Kosinovsky, US Army CERL .
 
      Dave Gerdes, US Army CERL .
 
-     &nbsp;
+
 
 
      REFERENCES Mitas, L., Mitasova, H., 1999, Spatial
@@ -254,7 +255,6 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
      regularized spline with tension: I. Theory and
      implementation, Mathematical Geology No.25 p.641-656.
      Mitasova, H. and Hofierka, L., 1993. Interpolation by
-     regularized spline with tension: II. Application to terrain
 
 
 
@@ -269,14 +269,14 @@ r.resamp.rst <main>   GRASS Reference Manual  <main> r.resamp.rst
 
 
 
+     regularized spline with tension: II. Application to terrain
      modeling and surface geometry analysis, Mathematical Geology
-     No.25 p.657-667.  &nbsp;Talmi, A. and Gilat, G., 1977.
-     Method for smooth approximation of data, Journal of
-     Computational Physics , 23, pp 93-123.  Wahba, G., 1990.
-     Spline models for observational data, CNMS-NSF Regional
-     Conference series in applied mathematics, 59, SIAM,
-     Philadelphia, Pennsylvania.
-
+     No.25 p.657-667.
+      Talmi, A. and Gilat, G., 1977. Method for smooth
+     approximation of data, Journal of Computational Physics ,
+     23, pp 93-123.  Wahba, G., 1990. Spline models for
+     observational data, CNMS-NSF Regional Conference series in
+     applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
 
 
 

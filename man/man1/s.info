@@ -29,27 +29,27 @@ dimensions, and min and max values for each dimension, attribute, or category.
 For best results sites should conform to the multiple attribute format as specified in GRASS5.0.
 
 .br
-&nbsp;
+ 
 .SH 
 OPTIONS
 This program can be run non-interactively or interactively. The program
 will be run non-interactively; if the user spcifies program arguments and
 flag settings on the command line using the form
 \*Ls.info [-qwQ] sites\*O=name
-&nbsp;Alternately, the user can type simply s.info on the command line;
+ Alternately, the user can type simply s.info on the command line;
 in this case, the program will prompt the user for parameter values using
 the standard GRASS parser interface described in the manual entry for \*Wparser\*O.
-&nbsp;\*LFlags
+ \*LFlags
 .br
 
 .br
-\*O&nbsp; \*L-q\*O&nbsp;&nbsp; Load quietly
+\*O  \*L-q\*O   Load quietly
 .br
 
-&nbsp; \*L-w\*O&nbsp;&nbsp; Only count sites in current window for min/max.
+  \*L-w\*O   Only count sites in current window for min/max.
 .br
 
-&nbsp; \*L-Q\*O&nbsp;&nbsp; Show quartiles for decimal attributes
+  \*L-Q\*O   Show quartiles for decimal attributes
 .br
 
 .br
@@ -57,10 +57,10 @@ the standard GRASS parser interface described in the manual entry for \*Wparser\
 .br
 
 .br
-\*O&nbsp;\*Lsites \*O\*W= name
+\*O \*Lsites \*O\*W= name
 .br
 
-\*O&nbsp;Name of sites file.
+\*O Name of sites file.
 .br
 
 .br
@@ -156,7 +156,7 @@ TOTAL SITES COUNTED: 22993
 BUGS
 If the \*L-Q\*O flag is given, the sites are cached in order to
 determine quartile values; otherwise the sites are read
-sequentially without caching.&nbsp; Therefore, use of the \*L-Q \*Ooption
+sequentially without caching.  Therefore, use of the \*L-Q \*Ooption
 may result in an out-of-memory error for very large
 sites files. The algorithm used to find quartile values matches that used
 by \*Ws.univar\*O, so if the number of sites is not evenly

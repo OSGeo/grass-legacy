@@ -29,7 +29,7 @@ and type of marker, and buttons for \*Ldisplay\*O, \*Lerase\*O, \*Lreset
 scales\*O, and \*Lquit\*O.
 
 .br
-&nbsp;
+ 
 .LI
 When the \*Ldisplay\*O button is chosen, the GRASS program
 \*Ld.sites.qual\*O

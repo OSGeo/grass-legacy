@@ -18,14 +18,14 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
      s.surf.rst help
 
-     s.surf.rst [-d] [-t]&nbsp; input = name [elev = name]
-     [elatt=val] [slope = name] [aspect = name] [pcurv = name]
-     [tcurv = name] [mcurv = name] [maskmap = name] [dmin = val]
-     [zmult = val] [tension = val] [smooth = val] [smatt=val]
-     [segmax = val] [npmin = val] [devi = name] [treefile = name]
-     [overfile = name]
+     s.surf.rst [-d] [-t]  input = name [elev = name] [elatt=val]
+     [slope = name] [aspect = name] [pcurv = name] [tcurv = name]
+     [mcurv = name] [maskmap = name] [dmin = val] [zmult = val]
+     [tension = val] [smooth = val] [smatt=val] [segmax = val]
+     [npmin = val] [devi = name] [treefile = name] [overfile =
+     name]
 
-     &nbsp;
+
 
 
      DESCRIPTION s.surf.rst
@@ -54,9 +54,9 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      z-values for sites (useful e.g. for transformation of
      elevations given in feet to meters, so that the proper
      values of slopes and curvatures can be computed).
-     Regularized spline with tension and smoothing is used
-     for&nbsp; interpolation and approximation. The tension
-     parameter tunes the character of the resulting surface from
+     Regularized spline with tension and smoothing is used for
+     interpolation and approximation. The tension parameter tunes
+     the character of the resulting surface from thin plate to
 
 
 
@@ -71,26 +71,26 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
-     thin plate to membrane. The flag -t can be set to use "dnorm
-     independent tension", (see notes for more details about the
-     tension behavior). For noisy data, it is possible to
-     define&nbsp; either a constant smoothing parameter smooth or
-     a variable smoothing parameter by&nbsp; setting the
-     parameter smatt to the value j for the j-th floating point
-     attribute in the input site file, representing the smoothing
-     parameter for each point. When smoothing is used, it is
-     possible to output site file devi containing deviations of
-     the resulting surface from the given data.	 If the number of
-     given points is greater than segmax, segmented processing is
-     used. The region is split into rectangular segments, each
-     having less than segmax points and interpolation is
-     performed on each segment of the region. To ensure smooth
-     connection of segments the interpolation function for each
-     segment is computed using the points in given segment and
-     the points in its neighborhood which are in the rectangular
-     window surrounding the given segment. The number of points
-     taken for interpolation is controlled by npmin, the value of
-     which must be larger than segmax.	User can choose to output
+     membrane. The flag -t can be set to use "dnorm independent
+     tension", (see notes for more details about the tension
+     behavior). For noisy data, it is possible to define either a
+     constant smoothing parameter smooth or a variable smoothing
+     parameter by  setting the parameter smatt to the value j for
+     the j-th floating point attribute in the input site file,
+     representing the smoothing parameter for each point. When
+     smoothing is used, it is possible to output site file devi
+     containing deviations of the resulting surface from the
+     given data.  If the number of given points is greater than
+     segmax, segmented processing is used. The region is split
+     into rectangular segments, each having less than segmax
+     points and interpolation is performed on each segment of the
+     region. To ensure smooth connection of segments the
+     interpolation function for each segment is computed using
+     the points in given segment and the points in its
+     neighborhood which are in the rectangular window surrounding
+     the given segment. The number of points taken for
+     interpolation is controlled by npmin, the value of which
+     must be larger than segmax.  User can choose to output
      vector files treefile and overfile which represent the quad
      tree used for segmentation and overlapping neighborhoods
      from which additional points for interpolation on each
@@ -100,7 +100,7 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      output files.  The user must run g.region before the program
      to set the region and resolution for interpolation.
 
-     &nbsp;
+
 
 
      OPTIONS The user can run this program either interactively
@@ -119,10 +119,10 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      in the manual entry for parser.  Flags -d Output partial
      derivatives instead of aspect, slope and curvatures.
 
-     -t&nbsp; Use dnorm independent tension Parameters: input =
-     name
+     -t	 Use dnorm independent tension Parameters: input = name
 
      Use the existing site file name as input.	elev = name
+
 
 
 
@@ -203,8 +203,6 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
-     &nbsp;
-
 
      NOTES s.surf.rst uses regularized spline with tensionfor
      interpolation from point data. Point data should be in a new
@@ -245,7 +243,7 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      rescaling parameter (high tension "increases the distances
      between the points" and reduces the range of impact of each
      point, low tension "decreases the distance" and the points
-     influence each other over longer range). Surface with&nbsp;
+     influence each other over longer range). Surface with
      tension set too high behaves like a membrane (rubber sheet
      stretched over the data points) with peak or pit ("crater")
      in each given point and everywhere else the surface goes
@@ -255,6 +253,8 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      for such a case.
 
      Surface with tension set too low behaves like a stiff steel
+     plate and overshoots can appear in areas with rapid change
+     of gradient and segmentation can be visible. Increase
 
 
 
@@ -269,29 +269,26 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
-     plate and overshoots can appear in areas with rapid change
-     of gradient and segmentation can be visible. Increase
      tension should solve the problems.	 There are two options
      how tension can be applied in relation to dnorm (dnorm
      rescales the coordinates depending on the average data
      density so that the size of segments with segmax=40 points
      is around 1 - this ensures the numerical stability of the
      computation): 1. Default (used also in s.surf.tps): the
-     given tension&nbsp; is applied to normalized data
-     (x/dnorm..),&nbsp; that means that the distances are
-     multiplied (rescaled) by tension/dnorm. If density of points
-     is changed, e.g.,&nbsp; by using higher dmin, the dnorm
-     changes and tension needs to be changed too to get the same
-     result.  Because the tension is applied to normalized data
-     its suitable value is usually within the 10-100 range and
-     does not depend on the actual scale (distances) of the
-     original data (which can be km for regional applications or
-     cm for field experiments).
+     given tension is applied to normalized data (x/dnorm..),
+     that means that the distances are multiplied (rescaled) by
+     tension/dnorm. If density of points is changed, e.g.,  by
+     using higher dmin, the dnorm changes and tension needs to be
+     changed too to get the same result.  Because the tension is
+     applied to normalized data its suitable value is usually
+     within the 10-100 range and does not depend on the actual
+     scale (distances) of the original data (which can be km for
+     regional applications or cm for field experiments).
 
-     2. Flag -t (experimental for s.surf.rst): The given&nbsp;
-     tension is applied to un-normalized data (rescaled tension =
+     2. Flag -t (experimental for s.surf.rst): The given tension
+     is applied to un-normalized data (rescaled tension =
      tension*dnorm/1000 is applied to normalized data (x/dnorm)
-     and therefore&nbsp; dnorm cancels out) so here tension truly
+     and therefore  dnorm cancels out) so here tension truly
      works as a rescaling parameter.  For regional applications
      with distances between points in km the suitable tension can
      be 0.1 or smaller, for detailed field scale analysis with
@@ -299,7 +296,7 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      much the data need to be rescaled the program writes dnorm
      and rescaled tension=tension*dnorm/1000 at the beginning of
      the program run. This rescaled tension should be around
-     20-30.&nbsp; If it is lower or higher, the given tension
+     20-30.  If it is lower or higher, the given tension
      parameter should be changed accordingly.  The default is a
      recommended choice, however for the applications where the
      user needs to change density of data and preserve the
@@ -321,6 +318,9 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
      of smoothing effects can be performed using the output
      deviations option and running s.univar on the site file with
      deviations.  The program writes the values of parameters
+     used in computation into the comment part of history file
+     elev as well as the following values which help to evaluate
+     the results and choose the suitable parameters: minimum and
 
 
 
@@ -335,9 +335,6 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
-     used in computation into the comment part of history file
-     elev as well as the following values which help to evaluate
-     the results and choose the suitable parameters: minimum and
      maximum z values in the data file (zmin_data, zmax_data) and
      in the interpolated raster map (zmin_int, zmax_int),
      rescaling parameter used for normalization (dnorm), which
@@ -358,14 +355,14 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
      andhttp://www2.gis.uiuc.edu:2280/modviz/
 
-     &nbsp;
+
 
 
      SEE ALSO r.surf.idw, r.surf.idw2, r.surf.contour,
      s.surf.idw, v.to.sites, g.region, r.mask, s.surf.tps,
      v.surf.rst, r.resamp.rst
 
-     &nbsp;
+
 
 
      AUTHORS Original version of program (in FORTRAN) and GRASS
@@ -390,6 +387,9 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
+
+
+
 6		      GRASS Development Team	   GRASS 5.0beta6
 
 
@@ -401,38 +401,38 @@ s.surf.rst <main>     GRASS Reference Manual	<main> s.surf.rst
 
 
 
-     &nbsp;
-
-     &nbsp;
-
 
      REFERENCES Mitas, L., Mitasova, H., 1999, Spatial
      Interpolation. In: P.Longley, M.F.	 Goodchild, D.J. Maguire,
      D.W.Rhind (Eds.), Geographical Information Systems:
      Principles, Techniques, Management and Applications, Wiley,
-     pp.481-492 Mitasova H., Mitas L.,&nbsp; Brown W.M.,&nbsp;
-     D.P. Gerdes, I. Kosinovsky, Baker, T.1995, Modeling
-     spatially and temporally distributed phenomena: New methods
-     and tools for GRASS GIS. International Journal of GIS, 9
-     (4), special issue on Integrating GIS and Environmental
-     modeling, 433-446.	 Mitasova H. and Mitas L. 1993:
-     Interpolation by Regularized Spline with Tension: I. Theory
-     and Implementation, Mathematical Geology 25, 641-655.
-     Mitasova H. and Hofierka L. 1993: Interpolation by
-     Regularized Spline with Tension: II. Application to Terrain
-     Modeling and Surface Geometry Analysis, Mathematical Geology
-     25, 657-667.  Mitasova, H., 1992 : New capabilities for
-     interpolation and topographic analysis in GRASS,
-     GRASSclippings 6, No.2 (summer), p.13.  Mitas, L., Mitasova
-     H., 1988 : General variational approach to the interpolation
-     problem, Computers and Mathematics with Applications 16, p.
-     983 Talmi, A. and Gilat, G., 1977 : Method for Smooth
-     Approximation of Data, Journal of Computational Physics, 23,
-     p.93-123.	Wahba, G., 1990, : Spline Models for
-     Observational Data, CNMS-NSF Regional Conference series in
-     applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
+     pp.481-492 Mitasova H., Mitas L.,	Brown W.M.,  D.P. Gerdes,
+     I. Kosinovsky, Baker, T.1995, Modeling spatially and
+     temporally distributed phenomena: New methods and tools for
+     GRASS GIS. International Journal of GIS, 9 (4), special
+     issue on Integrating GIS and Environmental modeling,
+     433-446.  Mitasova H. and Mitas L. 1993: Interpolation by
+     Regularized Spline with Tension: I. Theory and
+     Implementation, Mathematical Geology 25, 641-655.	Mitasova
+     H. and Hofierka L. 1993: Interpolation by Regularized Spline
+     with Tension: II. Application to Terrain Modeling and
+     Surface Geometry Analysis, Mathematical Geology 25, 657-667.
+     Mitasova, H., 1992 : New capabilities for interpolation and
+     topographic analysis in GRASS, GRASSclippings 6, No.2
+     (summer), p.13.  Mitas, L., Mitasova H., 1988 : General
+     variational approach to the interpolation problem, Computers
+     and Mathematics with Applications 16, p. 983 Talmi, A. and
+     Gilat, G., 1977 : Method for Smooth Approximation of Data,
+     Journal of Computational Physics, 23, p.93-123.  Wahba, G.,
+     1990, : Spline Models for Observational Data, CNMS-NSF
+     Regional Conference series in applied mathematics, 59, SIAM,
+     Philadelphia, Pennsylvania.
 
-     &nbsp; Updated November 14, 1999 by Helena Mitasova
+
+     Updated November 14, 1999 by Helena Mitasova
+
+
+
 
 
 

@@ -117,11 +117,11 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
      Default value is 150, for data with heterogeneous spatial
      distribution higher value is suggested (see Notes).
 
-     &nbsp; &nbsp;
 
-     &nbsp;
 
-     &nbsp;
+
+
+
 
 
 
@@ -136,8 +136,6 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
-
-     &nbsp;
 
 
      NOTES LINUX There are some peculiar differences between
@@ -189,6 +187,8 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
      computation with smoothing set to 0 this difference should
      be 0. With smoothing parameter greater than zero the surface
      will not pass through the data points and the higher the
+     parameter the closer the surface will be to the trend. The
+     maximum difference between the given and approximated value
 
 
 
@@ -203,8 +203,6 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-     parameter the closer the surface will be to the trend. The
-     maximum difference between the given and approximated value
      in this case reflects the smoothing effect on data. For
      theory on smoothing with splines and their statistical
      interpretation see Talmi and Gilat 1977, Wahba 1990, and
@@ -237,24 +235,26 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
      was used for various applications with the following
      parameters : "interpolation of DEM from digitized contours"
 
-     smoothing 0.01 - 1.0 segmax&nbsp; 40 npmin&nbsp;&nbsp; 200 -
-     300 (low tension was used for relatively flat terrain, high
-     tension was necessary for terrain with sharp changes in
-     slope, low value of smoothing is usually sufficient for
-     dense and accurately digitized contours, for less dense and
-     not very carefully digitized contours, higher smoothing is
-     suggested)
+     smoothing 0.01 - 1.0 segmax 40 npmin 200 - 300 (low tension
+     was used for relatively flat terrain, high tension was
+     necessary for terrain with sharp changes in slope, low value
+     of smoothing is usually sufficient for dense and accurately
+     digitized contours, for less dense and not very carefully
+     digitized contours, higher smoothing is suggested)
 
 
      "interpolation of precipitation from climatic stations"
 
-     smoothing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0. - 2.
-     segmax&nbsp; 40 npmin&nbsp;&nbsp; 200
+     smoothing&nbsp; 0. - 2.  segmax 40 npmin 200
 
 
      "interpolation of concentration of chemicals"
 
-     smoothing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.5 - 5.0
+     smoothing 0.5 - 5.0
+
+
+     The user must run g.regionbefore the program to set the
+     region for interpolation.
 
 
 
@@ -268,9 +268,6 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
-
-     The user must run g.regionbefore the program to set the
-     region for interpolation.
 
 
      SEE ALSO s.surf.rst
@@ -321,6 +318,9 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
      Principles, Techniques, Management and Applications, Wiley,
      pp.481-492 Mitasova, H., 1992. New capabilities for
      interpolation and topographic analysis in GRASS,
+     GRASSClippings, v.6, No.2 (summer), p 13.	Mitasova, H.,
+     1992. Surfaces and modeling, GRASSclippings, v.6, No.3
+     (winter), pp 16-18.  Talmi, A. and Gilat, G., 1977. Method
 
 
 
@@ -335,9 +335,6 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-     GRASSClippings, v.6, No.2 (summer), p 13.	Mitasova, H.,
-     1992. Surfaces and modeling, GRASSclippings, v.6, No.3
-     (winter), pp 16-18.  Talmi, A. and Gilat, G., 1977. Method
      for smooth approximation of data, Journal of Computational
      Physics, 23, pp 93-123.  Wahba, G., 1990. Spline models for
      observational data, CNMS-NSF Regional Conference series in
@@ -348,6 +345,9 @@ NOTICE
      distribution.  Unlike the code in the main section of GRASS,
      the alpha code has not yet been fully tested for one release
      cycle.
+
+
+
 
 
 
