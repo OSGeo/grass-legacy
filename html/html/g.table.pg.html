@@ -1,0 +1,57 @@
+<html>
+<A NAME="g.table.pg">
+<TITLE>g.table.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>g.table.pg</B></EM> - Generate a list of database tables in the currently selected database. (GRASS-RDBMS General Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>g.table.pg</B><BR>
+<B>g.table.pg help</B>
+
+<H2>DESCRIPTION</H2>
+<EM>g.table.pg</EM> is used to generate a list of the tables in the currently selected SQL database. The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user. Otherwise, the names of the tables in the currently selected database are displayed on the screen in three columns. The names of the tables in the current database are needed to construct query criteria for use in many of the other dbSQL tools. This command can be run at any time and is provided for reference purposes, to be used while performing GRASS-RDBMS applications.
+
+<H2>COMMAND LINE OPTIONS</H2>
+None
+<P>
+
+<B>EXAMPLE</B><P>
+<EM>g.table.pg</EM><P>
+The following tables are available in database: nri
+<PRE>
+       county           cover             geoaggs
+       hydros           landclass         locks
+       mlra             nrifldvals        point
+       practices        priors            psu
+       psutrends        recorders         state
+       stdrpts          streams           treatments
+       trends82         trends87          udrpt
+       udsubj           utm               valuelist
+       water            windbreaks
+</PRE>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+
+</BODY>
+</HTML>
+
