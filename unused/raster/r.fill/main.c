@@ -28,7 +28,7 @@ main(int argc, char **argv)
 {
 	char	buf[1024];
 	char	*imap, *omap, *imapset, overwr, verbose;
-	int	fd, i, j, row, col, rows, cols, rbytes, nsinks;
+	int	fd, i, j, k, row, col, rows, cols, rbytes, nsinks;
 	double	min, max, lmin, val, val2, dh, maxdh;
 	RASTER_MAP	ibuf, obuf;
 
@@ -141,6 +141,7 @@ main(int argc, char **argv)
 	if(verbose)
 		fprintf(stderr, "Reading map...\n");
 
+	i = 0;
 	for(row=0; row<rows; row++){
 		ibuf.row[row].v = G_allocate_raster_buf(ibuf.type);
 		if(G_get_raster_row(fd, ibuf.row[row].v, row, ibuf.type) < 0){
@@ -152,11 +153,15 @@ main(int argc, char **argv)
 		obuf.row[row].v = G_allocate_raster_buf(ibuf.type);
 		G_copy(obuf.row[row].v, ibuf.row[row].v, rbytes);
 		for(col=0; col<cols; col++){
+			if(r_is_null_value2(ibuf.type, ibuf.row[row], col))
+				continue;
 			val = r_get_value2(ibuf.type, ibuf.row[row], col);
-			if((!row && !col) || min > val)
+			if(!i || min > val)
 				min = val;
-			if((!row && !col) || max < val)
+			if(!i || max < val)
 				max = val;
+			if(!i)
+				i = 1;
 		}
 	}
 	G_close_cell(fd);
@@ -170,19 +175,31 @@ main(int argc, char **argv)
 				G_percent(row, rows, 2);
 			for(col=0; col<cols; col++){
 				lmin = max;
+				k = 0;
 				for(i=-1; i<=1; i++){
 					for(j=-1; j<=1; j++){
 						if((!i && !j) ||
 						    row+i < 0 ||
 						    row+i > rows-1 ||
 						    col+j < 0 ||
-						    col+j > cols-1)
+						    col+j > cols-1 ||
+						    r_is_null_value2(obuf.type,
+							obuf.row[row+i], col+j))
 							continue;
+						k++;
 						val = r_get_value2(obuf.type,
 							obuf.row[row+i], col+j);
 						if(lmin > val)
 							lmin = val;
 					}
+				}
+				if(r_is_null_value2(obuf.type,
+						obuf.row[row], col)){
+					if(k == 8)
+						r_set_value2(obuf.type,
+							obuf.row[row], col,
+							lmin);
+					continue;
 				}
 				val = r_get_value2(obuf.type,
 						obuf.row[row], col);
