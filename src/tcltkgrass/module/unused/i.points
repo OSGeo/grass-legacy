@@ -1,0 +1,4 @@
+interface_build {
+    {i.points} 1
+    {An imagery function that enables the user to mark coordinate system points on an image to be rectified and then input the coordinates of each point for creation of a coordinate transformation matrix.}
+}
