@@ -12,7 +12,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.6  2000-11-08 20:32:54  andreas
+ * Revision 1.7  2000-11-24 08:33:47  justin
+ * Can't define COPYING with cat in Gmakefile - see main.c for proper definition
+ *
+ * Revision 1.6  2000/11/08 20:32:54  andreas
  * added automatic input of COPYING file for copyr. msg.
  *
  */
@@ -29,56 +32,56 @@
 #define VERSION_UPDATE_PKG "0.1"
 #endif
 #ifndef COPYING
-#define COPYING "Copyright and License Statement
-
-The Geographic Resources Analysis and Support System (GRASS)
-Geographic Information System (GIS) is Copyright by the
-GRASS Development Team headquartered at Baylor University,
-in Waco, Texas.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
-
-Parts of GRASS are not copyright by the GRASS development team.
-The original authors hold the copyrights and you have to abide
-to their licensing terms where noted.
-(Keep in mind that code linking into GRASS can only be distributed 
-if compatible with the GPL.)                               
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License (GPL) for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the
-  Free Software Foundation, Inc.,
-  59 Temple Place - Suite 330,
-  Boston, MA  02111-1307, USA.
-
-Questions regarding GRASS GIS should be directed to the
-GRASS Development Team at the following address:
-
-European Headquarters 
- GRASS Development Team
- Institute of Physical Geography-Landscape Ecology
- University of Hannover  
- Schneiderberg 50 
- 30167 Hannover, Germany 
- email: neteler@geog.uni-hannover.de
-
-United States Headquarters 
- GRASS Development Team
- Center for Applied Geographic and Spatial Research
- Baylor University
- P.O. Box 97351
- Waco, Texas  76798-7351
- Email:     grass@baylor.edu
-
-Internet:  http://www.baylor.edu/~grass
-           http://www.geog.uni-hannover.de/grass"
+#define COPYING "Copyright and License Statement\n\
+\n\
+The Geographic Resources Analysis and Support System (GRASS)\n\
+Geographic Information System (GIS) is Copyright by the\n\
+GRASS Development Team headquartered at Baylor University,\n\
+in Waco, Texas.\n\
+\n\
+This program is free software; you can redistribute it and/or modify it\n\
+under the terms of the GNU General Public License as published by the\n\
+Free Software Foundation; either version 2 of the License, or (at your\n\
+option) any later version.\n\
+\n\
+Parts of GRASS are not copyright by the GRASS development team.\n\
+The original authors hold the copyrights and you have to abide \n\
+to their licensing terms where noted.\n\
+(Keep in mind that code linking into GRASS can only be distributed\n\
+if compatible with the GPL.)\n\
+\n\
+This program is distributed in the hope that it will be useful,\n\
+but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+GNU General Public License (GPL) for more details.\n\
+\n\
+You should have received a copy of the GNU General Public License\n\
+along with this program; if not, write to the\n\
+  Free Software Foundation, Inc.,\n\
+  59 Temple Place - Suite 330,\n\
+  Boston, MA  02111-1307, USA.\n\
+\n\
+Questions regarding GRASS GIS should be directed to the\n\
+GRASS Development Team at the following address:\n\
+\n\
+European Headquarters\n\
+ GRASS Development Team\n\
+ Institute of Physical Geography-Landscape Ecology\n\
+ University of Hannover\n\
+ Schneiderberg 50\n\
+ 30167 Hannover, Germany\n\
+ email: neteler@geog.uni-hannover.de\n\
+\n\
+United States Headquarters\n\
+ GRASS Development Team\n\
+ Center for Applied Geographic and Spatial Research\n\
+ Baylor University\n\
+ P.O. Box 97351\n\
+ Waco, Texas  76798-7351\n\
+ Email:     grass@baylor.edu\n\
+\n\
+Internet:  http://www.baylor.edu/~grass\n\
+           http://www.geog.uni-hannover.de/grass\n"
 #endif
 
 /* did'nt work in practice, though it should,
