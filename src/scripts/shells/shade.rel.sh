@@ -153,12 +153,12 @@ az=`expr $az - 90`
 
 echo ""
 echo Running r.mapcalc, please stand by.
-echo Your new map will be named $ELEV.shade.  Please consider renaming.
+echo Your new map will be named $ELEV.relshade.  Please consider renaming.
 echo ""
 
 # Note: no space allowed after \\:
 r.mapcalc << EOF
-$ELEV.shade = eval( \\
+$ELEV.relshade = eval( \\
  x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
    -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\
  y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
@@ -172,7 +172,7 @@ $ELEV.shade = eval( \\
  if(isnull(cang), null(), 100.*cang))
 EOF
 
-r.colors $ELEV.shade color=grey
+r.colors $ELEV.relshade color=grey
 
 echo ""
-echo "Shaded relief map created and named $ELEV.shade. Consider renaming."
+echo "Shaded relief map created and named $ELEV.relshade. Consider renaming."
