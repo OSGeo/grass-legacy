@@ -144,6 +144,10 @@ do_label (FILE *fd)
 
 	    /* set font size */
 	    fontsize = size * PS.ns_to_y;
+
+	    /* fall back if no size defined*/
+	    if (size == 0) fontsize=10;
+
 	    /*
  	    if (fontsize < 10) fontsize = 10;
  	    if (fontsize > 50) fontsize = 50;
