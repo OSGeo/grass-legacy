@@ -116,7 +116,7 @@ int Curline ;
 
 	for(;;)
 	{
-		Usrcmnd = getchar() ;
+		Usrcmnd = getch() ;
 
 		switch(Usrcmnd)
 		{
@@ -161,6 +161,7 @@ int Curline ;
 					(Menlength - (MENWINHITE - 3)) ?
 						Curline :
 					(Menlength - (MENWINHITE - 3));
+				Curline = Curline < 1 ? 1 : Curline;
 				break;
 				}
 
@@ -434,7 +435,7 @@ int	Curline, Hlplength, Cmdlength, Linecntr, Hlpstat, Cmdstat;
 		      Cmdlength, CMDWINHITE - 2);
 	P_writowin (PrmptW, "(Return to Continue> ", 1, 1, 1);
 
-	while ((Usrcmnd = getchar()) != LF)
+	while ((Usrcmnd = getch()) != LF)
 		{
 		if (Usrcmnd == REFRESH)
 			wrefresh(curscr) ;
@@ -553,7 +554,7 @@ int	Charcntr;
 	Saveptr = Respbuf;
 	P_writowin (PrmptW, Prmptstr, 1, 1, 1);
 	
-	while ((*Respbuf = getchar()) != CR && *Respbuf != LF)
+	while ((*Respbuf = getch()) != CR && *Respbuf != LF)
 		{
 		if (*Respbuf == KILLINE)
 			{
