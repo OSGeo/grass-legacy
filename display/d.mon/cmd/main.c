@@ -20,9 +20,7 @@ int main(int argc, char *argv[])
 
 	struct GModule *module;
     struct Option *start, *stop, *select, *unlock;
-#ifndef ORIG
     struct Option *nlev;
-#endif /* ORIG */
     struct Flag *list, *status, *print, *release, *no_auto_select;
 
     G_gisinit(argv[0]);
@@ -55,13 +53,11 @@ int main(int argc, char *argv[])
     unlock->required=NO;
     unlock->description="Name of graphics monitor to unlock";
 
-#ifndef ORIG
     nlev = G_define_option();
     nlev->key="nlev";
     nlev->type=TYPE_INTEGER;
     nlev->required=NO;
     nlev->description="Number of color levels for each R/G/B";
-#endif /* ORIG */
 
     list = G_define_flag();
     list->key='l';
@@ -106,14 +102,10 @@ int main(int argc, char *argv[])
 	error += run("stop",stop->answer);
     if (start->answer)
     {
-#ifdef ORIG
-	error += run("start",start->answer);
-#else /* ORIG */
       if (nlev->answer )
 	error += run2("start",start->answer,nlev->answer);
       else 
 	error += run("start",start->answer);
-#endif /* ORIG */
         if(error) /* needed procedure failed */
           {
             if(mon_name != NULL)
@@ -158,11 +150,9 @@ int run (char *pgm, char *name)
     return system(command);
 }
 
-#ifndef ORIG
 int run2( char *pgm,char *name,char *par)
 {
     char command[1024];
-    char *getenv();
 
  if ( par[0] == '\0' ) 
     sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
@@ -170,4 +160,3 @@ int run2( char *pgm,char *name,char *par)
     sprintf (command, "%s/etc/mon.%s %s %s", G_gisbase(), pgm, name, par);
     return system(command);
 }
-#endif /* ORIG */
