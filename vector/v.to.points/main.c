@@ -47,7 +47,7 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
     /* Attributes */
     if ( !table ) {
 	db_zero_string ( &stmt );
-	sprintf (buf, "insert into %s values ( %d, %d, %lf )", Fi->table, point_cat, line_cat, along );
+	sprintf (buf, "insert into %s values ( %d, %d, %.15g )", Fi->table, point_cat, line_cat, along );
 	db_append_string ( &stmt, buf);
 
 	if (db_execute_immediate (driver, &stmt) != DB_OK ) {
@@ -84,17 +84,17 @@ void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat,
 		    int i, n;
 		    double x, y, z, dlen;
 		    
-		    if ( len < dmax ) continue;
+		    if ( len > dmax ) {
+			n = len / dmax + 1; /* number of segments */
+			dx /= n; dy /= n; dz /= n; dlen = len / n;
+			
+			for ( i = 1; i < n; i++ ) {
+			    x = LPoints->x[vert] + i * dx;
+			    y = LPoints->y[vert] + i * dy;
+			    z = LPoints->z[vert] + i * dz;
 
-		    n = len / dmax + 1; /* number of segments */
-		    dx /= n; dy /= n; dz /= n; dlen = len / n;
-		    
-		    for ( i = 1; i < n; i++ ) {
-			x = LPoints->x[vert] + i * dx;
-			y = LPoints->y[vert] + i * dy;
-			z = LPoints->z[vert] + i * dz;
-
-			write_point ( Out, x, y, z, cat, along + i * dlen, table);
+			    write_point ( Out, x, y, z, cat, along + i * dlen, table);
+			}
 		    }
 		}
 		along += len;
@@ -251,6 +251,8 @@ int main(int argc, char **argv)
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	    G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
+
+	db_begin_transaction ( driver );
     }
     
     point_cat = 1;
@@ -309,6 +311,7 @@ int main(int argc, char **argv)
     }	
 
     if ( !table_flag->answer ) {
+	db_commit_transaction ( driver );
         db_close_database_shutdown_driver ( driver );
     }
 
