@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       r.support (GRASS core)
@@ -28,14 +26,9 @@ int main (int argc, char *argv[])
     char *inmapset;
     char rname[256], rmapset[256];
     struct Cell_head cellhd;
-    int row, col, null_fd;
-    char element[300], path[400];
-    unsigned char *null_bits;
-    char buf[1024];
     int cellhd_ok;
     int is_reclass;
     int error();
-    char question[100];
     struct GModule *module;
     struct Option *map;
     struct Flag *rangeflag;
@@ -64,12 +57,9 @@ int main (int argc, char *argv[])
 
     name = map->answer;
 
-    inmapset = G_find_cell2 (name, "");
+    inmapset = G_find_cell (name, G_mapset());
     if (inmapset == NULL)
-    {
-     fprintf(stderr,"%s: raster map not found\n", name);
-     exit(1);
-    }
+      G_fatal_error("%s: raster map not found in current mapset\n", name);
                                 
 
 /* cell header */
