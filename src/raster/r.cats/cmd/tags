@@ -1,0 +1,5 @@
+Mmain	main.c	/^main(argc, argv)$/
+get_cats	cats.c	/^get_cats (name, mapset)$/
+next_cat	cats.c	/^next_cat (x)$/
+print_label	main.c	/^print_label (x)$/
+scan_cats	main.c	/^scan_cats (s, x, y)$/
