@@ -25,7 +25,7 @@
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
-#include "site.h"
+#include "Vect.h"
 
 #include "interpf.h"
 
@@ -55,10 +55,11 @@ int IL_check_at_points_2d (
   int n1, mm, m;
   double fstar2;
   int inside;
-  Site *site;
+  struct line_pnts *Points;
+  struct line_cats *Cats;
 
-  if ((site = G_site_new_struct (-1, 2, 0, 1)) == NULL)
-    G_fatal_error ("Memory error for site struct");
+  Points = Vect_new_line_struct ();
+  Cats = Vect_new_cats_struct ();
 
   fstar2 = params->fi * params->fi / 4.;
   errmax = .0;
@@ -96,11 +97,12 @@ int IL_check_at_points_2d (
 
     if (params->fddevi != NULL)
     {
-      site->dbl_att[0] = err;
-      site->east = xmm;
-      site->north = ymm;
-      if (inside)		/* if the point is inside the region */
-	G_site_put (params->fddevi, site);
+	Vect_reset_line (Points);
+	Vect_append_point (Points, xmm, ymm, err);
+      
+	if (inside) {		/* if the point is inside the region */
+	    Vect_write_line (params->fddevi, GV_POINT, Points, Cats);
+	}
     }
     if (inside)
       (*ertot) += err * err;

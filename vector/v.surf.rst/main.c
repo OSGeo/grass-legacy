@@ -50,7 +50,7 @@ double /* pargr */ ns_res, ew_res;
 double dmin, dmax, ertre;
 int KMAX2, KMIN, KMAX, totsegm, deriv, dtens;
 struct Map_info Map;
-struct Map_info TreeMap, OverMap;
+struct Map_info TreeMap, OverMap, DeviMap, *fddevi = NULL;
 struct Categories cats;
 
 struct interp_params params;
@@ -77,7 +77,7 @@ char *treefile = NULL;
 char *overfile = NULL;
 
 FILE *fdinp, *fdredinp, *fdzout, *fddxout, *fddyout, *fdxxout, *fdyyout,
-    *fd4, *fxyout, *fddevi = NULL;
+    *fd4, *fxyout;
 
 FCELL *zero_array_cell;
 
@@ -526,28 +526,20 @@ int main(int argc, char *argv[])
     inhead.stime = NULL;
 
     if (devi != NULL) {
-	fprintf(stderr,
-		"Attempting to open deviation file in old sites format ..\n");
-	if ((fddevi = G_fopen_sites_new(devi)) == NULL)
-	    G_fatal_error("Cannot open %s", devi);
-	else {
+	fprintf(stderr, "Attempting to open deviation file ..\n");
+	Vect_open_new (&DeviMap, devi, 1);
+	/*
 	    devihead.name = devi;
 	    devihead.desc = G_strdup("deviations at sample points");
 	    devihead.desc = (char *) G_malloc(128 * sizeof(char));
 	    sprintf(devihead.desc, "deviations of %s [raster] at %s [sites]",
 		    elev, input);
-	    devihead.time = inhead.time;	/*(DateTime *) G_malloc (sizeof (DateTime)); */
-	    devihead.stime = inhead.stime;	/*(char *) G_malloc (80 * sizeof (char)); */
+	    devihead.time = inhead.time;
+	    devihead.stime = inhead.stime;
 	    devihead.labels = NULL;
 	    devihead.form = NULL;
-	    /*
-	       if (datetime_get_local_timezone (&(devihead.time->tz)) == 0)
-	       datetime_get_local_time (devihead.time);
-	       else
-	       devihead.time = NULL;
-	     */
-	    G_site_put_head(fddevi, &devihead);
-	}
+        */
+	fddevi = &DeviMap;
     }
 
     ertot = 0.;
@@ -769,8 +761,10 @@ int main(int argc, char *argv[])
     if (mcurv != NULL)
 	unlink(Tmp_file_xy);
 
-    if (fddevi != NULL)
-	G_sites_close(fddevi);
+    if (fddevi != NULL) {
+	Vect_build (fddevi, stderr);
+	Vect_close ( fddevi );
+    }
 
     exit(0);
 }
