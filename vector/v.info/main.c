@@ -41,7 +41,7 @@ main (int argc, char *argv[])
   struct Map_info Map;
   struct dig_head v_head;
   BOUND_BOX box;
-  char *mapset, line[200], temp[50];
+  char *mapset, line[200];
   int i;
   int with_z;
 
@@ -78,13 +78,14 @@ main (int argc, char *argv[])
   printline (line);
   sprintf (line, "Location: %-29.29s  Name of creator: %s", G_location(), Vect_get_person(&Map));
   printline (line);
-  sprintf (line, "DataBase: %s", G_gisdbase ());
+  sprintf (line, "DataBase: %s", G_gisdbase() );
   printline (line);
-  sprintf (line, "Title:    %s", Vect_get_map_name(&Map));
+  sprintf (line, "Title:    %s", Vect_get_map_name(&Map) );
+  printline (line);
+  sprintf (line, "Map format: %s",  Vect_maptype_info(&Map) );
   printline (line);
 
   divider ('|');
-  printline ("");
 
   sprintf (line, "  Type of Map:  %s (level: %i)        ", "Vector", Vect_level (&Map));
 
@@ -111,7 +112,6 @@ main (int argc, char *argv[])
     printline (line);
   }
 
-  printline ("");
   sprintf (line, "  Projection: %s (zone %d)", G_database_projection_name(), G_zone());
   printline (line);
 
