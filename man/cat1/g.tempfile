@@ -1,7 +1,7 @@
 
 
 
-g.tempfile           GRASS Reference Manual            g.tempfile
+g.tempfile <main>    GRASS Reference Manual     <main> g.tempfile
 
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
