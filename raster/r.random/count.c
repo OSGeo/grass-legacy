@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <float.h>
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
