@@ -116,11 +116,11 @@ main(int argc, char *argv[])
 
     p = getenv ("GRASS_WIDTH");
     screen_left = 0;
-    screen_right = p ? atoi(p) : DEF_WIDTH;
+    screen_right = (p && atoi(p)) ? atoi(p) : DEF_WIDTH;
 
     p = getenv ("GRASS_HEIGHT");
     screen_top = 0;
-    screen_bottom = p ? atoi(p) : DEF_HEIGHT;
+    screen_bottom = (p && atoi(p)) ? atoi(p) : DEF_HEIGHT;
 
     if (Graph_Set(argc, argv, nlev) < 0)
         exit(1);
