@@ -1,9 +1,13 @@
+/*
+	added flashing selected vectors --alex, nov/02
+*/
 #include <string.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
 #include "what.h"
+#include "colors.h"
 
 static int nlines = 50;
 
@@ -31,7 +35,15 @@ int what(int once, int terse, int width, int mwidth,
   struct line_pnts * Points;
   char temp[512], *str;
   
+  char *panell;
+  int flash_basecolr, flash_colr;
+  
   G_get_set_window (&window);
+
+  G_setup_plot (
+	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
+	D_move_abs, D_cont_abs);
+
   G_begin_polygon_area_calculations();
   nrows = window.rows;
   ncols = window.cols;
@@ -45,15 +57,23 @@ int what(int once, int terse, int width, int mwidth,
   else 
     notty = 0;
   
+  panell = G_tempfile() ;
+  flash_basecolr=D_translate_color("gray");
+  
   do
     {
+    
+      R_panel_save(panell,R_screen_top(),R_screen_bot(),
+		R_screen_left(), R_screen_rite());
+
       if (!terse)
 	show_buttons (once);
       R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
       if (!once)
 	{
-	  if (button == 3) break;
-	  if (button == 2) continue;
+	  if (button == 3) {R_panel_delete(panell);break;}
+	  if (button == 2) {R_panel_delete(panell); flash_basecolr++; 
+	  	if (flash_basecolr == 14) flash_basecolr = 1;continue;}
 	}
       
       east  = D_d_to_u_col((double)screen_x) ;
@@ -73,7 +93,9 @@ int what(int once, int terse, int width, int mwidth,
       y1 = D_d_to_u_row ((double)(screen_y-WDTH));
       x2 = D_d_to_u_col ((double)(screen_x+WDTH));
       y2 = D_d_to_u_row ((double)(screen_y+WDTH));
-
+	
+      flash_colr = flash_basecolr;
+      
       for(i=0; i<nvects; i++)
         {
           line = dig_point_by_line (&Map[i], x1, y1, x2, y2, LINE|AREA|DOT);
@@ -113,7 +135,8 @@ int what(int once, int terse, int width, int mwidth,
             /* fprintf (stdout,"Line not found.\n") */
             ;
           else 
-            {
+            { 
+		
               Line = &(Map[i].Line[line]);
               if (Line->att)
                 {
@@ -123,8 +146,8 @@ int what(int once, int terse, int width, int mwidth,
 		  if(dodbmi){
 		    disp_attr( table, key, lcat );
 		  } else {
-            	    fprintf (stdout,"Line - Category %d %s\n", lcat,
-            		   G_get_cat(lcat, &Cats[i]));
+            	    fprintf (stdout,"Line - Category %d %s\n", lcat,  
+		    	G_get_cat(lcat, &Cats[i]));
             	    if (notty)
             	      fprintf (stderr,"Line - Category %d %s\n", lcat,
             		     G_get_cat(lcat, &Cats[i]));
@@ -148,6 +171,11 @@ int what(int once, int terse, int width, int mwidth,
             	fprintf (stderr,"Line - Category <not tagged>\n");
                 }
               nlines++ ;
+	      	      
+	      flash_line(&Map[i], line, Points, flash_colr);
+	      Vect_destroy_line_struct(Points);
+	      Points = Vect_new_line_struct();
+		
             }
           
           if (area == 0)
@@ -166,11 +194,11 @@ int what(int once, int terse, int width, int mwidth,
 		  if(dodbmi){
 		    disp_attr( table, key, acat );
 		  } else {
-            	    fprintf (stdout,"Area - Category %d %s\n", acat,
-            		   G_get_cat(acat, &Cats[i]));
+            	    fprintf (stdout,"Area - Category %d %s	Flash: %s\n", acat,
+            		   G_get_cat(acat, &Cats[i]), colr_str(flash_colr));
             	    if (notty)
-            	      fprintf (stderr,"Area - Category %d %s\n", acat,
-            		     G_get_cat(acat, &Cats[i]));
+            	      fprintf (stderr,"Area - Category %d %s	Flash: %s\n", acat,
+            		     G_get_cat(acat, &Cats[i]), colr_str(flash_colr));
 		  }
             	}
                   else 
@@ -178,21 +206,25 @@ int what(int once, int terse, int width, int mwidth,
 		  if(dodbmi){
 		    disp_attr( table, key, acat );
 		  } else {
-            	    fprintf (stdout,"Area - Category %d <not labeled>\n", acat);
+            	    fprintf (stdout,"Area - Category %d <not labeled>	Flash: %s\n", acat, colr_str(flash_colr));
             	    if (notty)
-            	      fprintf (stderr,"Area - Category %d <not labeled>\n", acat);
+            	      fprintf (stderr,"Area - Category %d <not labeled>	Flash: %s\n", acat, colr_str(flash_colr));
 		  }
             	}
                 }
               else 
                 {
-                  fprintf (stdout,"Area - Category <not tagged>\n");
+                  fprintf (stdout,"Area - Category <not tagged>	Flash: %s\n", colr_str(flash_colr));
                   if(notty)
-            	fprintf (stderr,"Area - Category <not tagged>\n");
+            	fprintf (stderr,"Area - Category <not tagged>	Flash: %s\n", colr_str(flash_colr));
                 }
               /* Area stats - just for grins */
               /* dig_find_area2(&Map[i], Area, &sq_meters); */
-              Vect_get_area_points(&Map[i], area, Points);
+		
+		Vect_get_area_points(&Map[i], area, Points);
+		
+			flash_area(&Map[i], area, Points, flash_colr);
+
               sq_meters = 
                 G_area_of_polygon(Points->x, Points->y, Points->n_points);
               /* substructing island areas */
@@ -202,7 +234,7 @@ int what(int once, int terse, int width, int mwidth,
                   sq_meters = sq_meters -
             	G_area_of_polygon(Points->x, Points->y, Points->n_points);
                 }
-              
+
               fprintf (stdout,"Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
             	   sq_meters, (sq_meters/10000.) );
               
@@ -219,7 +251,12 @@ int what(int once, int terse, int width, int mwidth,
               
             }
           fflush(stdout);
-        }
+	  flash_colr++; if (flash_colr==14) flash_colr=1;
+        } /*end for*/
+
+	R_panel_restore(panell);
+	R_panel_delete(panell);		
+
     }while (!once);
   Vect_destroy_line_struct(Points);
   
@@ -241,8 +278,48 @@ show_buttons (int once)
       fprintf (stderr, "Buttons\n");
       fprintf (stderr, " Left:  what's here\n");
       fprintf (stderr, " Right: quit\n");
-      nlines = 4;
+      fprintf (stderr, " Middle: toggle flash color\n");
+      nlines = 5;
     }
   
   return 0;
+}
+
+char * colr_str(int flash_colr)
+{
+static char str[10];
+memset(str,'\0',sizeof(str));
+
+switch(flash_colr)
+{
+    case RED: sprintf(str,"red");
+    	break;
+    case ORANGE: sprintf(str,"orange");
+    	break;
+    case YELLOW: sprintf(str,"yellow");
+    	break;
+    case GREEN: sprintf(str,"green");
+    	break;
+    case BLUE: sprintf(str,"blue");
+    	break;
+    case INDIGO: sprintf(str,"indigo");
+    	break;
+    case VIOLET: sprintf(str,"violet");
+    	break;
+    case WHITE: sprintf(str,"white");
+    	break;
+    case BLACK: sprintf(str,"black");
+    	break;
+    case GRAY: sprintf(str,"gray");
+    	break;
+    case BROWN: sprintf(str,"brown");
+    	break;
+    case MAGENTA: sprintf(str,"magenta");
+    	break;
+    case AQUA: sprintf(str,"aqua");
+    	break;
+    default:   sprintf(str,"unknown");
+    	break;
+}
+return str;
 }

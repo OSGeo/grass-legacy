@@ -1,6 +1,7 @@
 PGM = d.what.vect
 OFILES = \
 	attr.o \
+	flash.o \
 	main.o \
 	openvect.o\
 	what.o
