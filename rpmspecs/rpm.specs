@@ -8,7 +8,7 @@
 Summary: GRASS - Geographic Resources Analysis Support System
 Name: %PACKAGE_NAME
 Version: %PACKAGE_VERSION
-Release: 2
+Release: 3
 Source: grass5.0.0pre3.tar.gz
 Patch0: grass5_make.patch
 Copyright: GPL; Copyright by the GRASS Development Team
@@ -30,7 +30,7 @@ for X-Windows is provided.
 %package OpenGL
 Summary: NVIZ - a 3D-tool for grass
 Group:Applications/GIS
-Requires: Mesa tcl >= 8 tk >= 8 GRASS = %{version} gdbm >= 1.8.0
+Requires: Mesa tcl >= 8 tk >= 8 grass = %{version} gdbm >= 1.8.0
 %description OpenGL
 nviz is a GRASS module-in-progress which allows users to realistically
 render multiple surfaces in a 3D space, optionally
@@ -41,14 +41,14 @@ surfaces or as 3D point locations.
 %package postgreSQL
 Summary: postgres database interface
 Group:Applications/GIS
-Requires: postgresql GRASS = %{version}
+Requires: postgresql grass = %{version}
 %description postgreSQL
 postgres database interface for GRASS
 
 %package ODBC
 Summary: ODBC database interface
 Group:Applications/GIS
-Requires: GRASS = %{version}
+Requires: unixODBC grass = %{version}
 %description ODBC
 ODBC database interface for GRASS
 
@@ -87,8 +87,15 @@ cd ../../../../..
 %{buildroot}/%{_bindir}/gmakelinks5
 
 %install
-make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
+make prefix=%{buildroot}%{_prefix} BINDIR=%{buildroot}%{_bindir} \
 PREFIX=%{buildroot}%{_prefix} install-strip
+
+mv %{buildroot}%{_prefix}/bin/grass5 %{buildroot}%{_prefix}/bin/grass5.tmp
+cat  %{buildroot}%{_prefix}/bin/grass5.tmp |
+	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass5&" |
+    cat - > %{buildroot}%{_prefix}/bin/grass5
+rm %{buildroot}%{_prefix}/bin/grass5.tmp
+chmod +x %{buildroot}%{_prefix}/bin/grass5
 
 if  grep -q ignored error.log ; then
 	echo An error occurred and was ignored. 
@@ -99,6 +106,7 @@ fi
 
 %clean
 rm -rf %{buildroot}
+cd ..
 rm -rf grass%{version}
 
 %files
@@ -111,13 +119,71 @@ rm -rf grass%{version}
 %dir %{_prefix}/grass5/documents/html
 %dir %{_prefix}/grass5/driver
 %dir %{_prefix}/grass5/etc
+%dir %{_prefix}/grass5/etc/bin/inter
 %dir %{_prefix}/grass5/etc/bin
 %dir %{_prefix}/grass5/etc/bin/cmd
+%dir %{_prefix}/grass5/etc/Gcolortab
+%dir %{_prefix}/grass5/etc/Gcolortab/preview
+%dir %{_prefix}/grass5/etc/Gcolortab/shinko635
+%dir %{_prefix}/grass5/etc/Gcolortab/tek4695
+%dir %{_prefix}/grass5/etc/agnps50
+%dir %{_prefix}/grass5/etc/census.docs
+%dir %{_prefix}/grass5/etc/d.siter
+%dir %{_prefix}/grass5/etc/digitizers
+%dir %{_prefix}/grass5/etc/help
+%dir %{_prefix}/grass5/etc/help/01.instruc
+%dir %{_prefix}/grass5/etc/help/02.db.setup
+%dir %{_prefix}/grass5/etc/help/03.db.mgmt
+%dir %{_prefix}/grass5/etc/help/04.wind.mgmt
+%dir %{_prefix}/grass5/etc/help/05.tape.ex
+%dir %{_prefix}/grass5/etc/help/06.export
+%dir %{_prefix}/grass5/etc/help/07.interfaces
+%dir %{_prefix}/grass5/etc/help/08.mapdev
+%dir %{_prefix}/grass5/etc/help/09.imagery
+%dir %{_prefix}/grass5/etc/help/10.data.analy
+%dir %{_prefix}/grass5/etc/help/11.map.design
+%dir %{_prefix}/grass5/etc/help/12.map.display
+%dir %{_prefix}/grass5/etc/help/13.map.print
+%dir %{_prefix}/grass5/etc/help/14.reports
+%dir %{_prefix}/grass5/etc/help/15.macros
+%dir %{_prefix}/grass5/etc/help/16.glossary
+%dir %{_prefix}/grass5/etc/help/17.manual
+%dir %{_prefix}/grass5/etc/help/17.manual/Help.pages
+%dir %{_prefix}/grass5/etc/help/18.biblio
+%dir %{_prefix}/grass5/etc/help/Commands.def
+%dir %{_prefix}/grass5/etc/i.oif
+%dir %{_prefix}/grass5/etc/imagery
+%dir %{_prefix}/grass5/etc/lister
+%dir %{_prefix}/grass5/etc/paint
+%dir %{_prefix}/grass5/etc/paint/driver.sh
+%dir %{_prefix}/grass5/etc/paint/driver.uninst
+%dir %{_prefix}/grass5/etc/paint/driver
+%dir %{_prefix}/grass5/etc/paint/ps.devices
+%dir %{_prefix}/grass5/etc/r.fea
+%dir %{_prefix}/grass5/etc/water
 %dir %{_prefix}/grass5/man
 %dir %{_prefix}/grass5/man/man1
 %dir %{_prefix}/grass5/dev
 %dir %{_prefix}/grass5/tcltkgrass
+%dir %{_prefix}/grass5/tcltkgrass/docs
+%dir %{_prefix}/grass5/tcltkgrass/main
+%dir %{_prefix}/grass5/tcltkgrass/script
 %dir %{_prefix}/grass5/tcltkgrass/module
+%dir %{_prefix}/grass5/bwidget
+%dir %{_prefix}/grass5/bwidget/BWman
+%dir %{_prefix}/grass5/bwidget/demo
+%dir %{_prefix}/grass5/bwidget/images
+%dir %{_prefix}/grass5/bwidget/lang
+%dir %{_prefix}/grass5/fonts
+%dir %{_prefix}/grass5/include
+%dir %{_prefix}/grass5/lib
+%dir %{_prefix}/grass5/scripts
+%dir %{_prefix}/grass5/scripts/demo.scripts
+%dir %{_prefix}/grass5/txt
+%dir %{_prefix}/grass5/txt/COMBINE
+%dir %{_prefix}/grass5/txt/DIGIT
+%dir %{_prefix}/grass5/txt/WEIGHT
+
  
 %{_prefix}/grass5/dev/create_fifos.sh
 %{_prefix}/grass5/bin/r.agnps50.run
@@ -3682,8 +3748,8 @@ rm -rf grass%{version}
 %{_prefix}/grass5/lib/libgis.a
 %{_prefix}/grass5/lib/libdatetime.a
 %{_prefix}/bin/grass5
-%{_prefix}/bin/gmake5
-%{_prefix}/bin/gmakelinks5
+#%{_prefix}/bin/gmake5
+#%{_prefix}/bin/gmakelinks5
 
 %files OpenGL
 %defattr(-,root,root)
