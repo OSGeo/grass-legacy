@@ -37,11 +37,6 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     G_gisinit("HTMLMAP driver") ;
 
-    if (NULL == (p = getenv ("LOCATION"))) {
-	fprintf (stderr, "You must start this driver from within GRASS\n");
-        exit (1);
-    }
-
     /*
      * set the 'screen' resolution of the driver
      */
