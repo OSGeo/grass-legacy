@@ -1,6 +1,6 @@
 This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.8 2000-10-30 17:14:27 markus Exp $
+$Id: ONGOING,v 1.9 2000-11-19 17:29:20 markus Exp $
 
 
 GRASS 5.0 (stable) is scheduled for Autumn 2000.
@@ -51,6 +51,9 @@ Modules:
 - full RGB support to all display modules
   (Pierre de Mouveaux <pmx@audiovu.com> <pmx@free.fr>)
   -> will go into GRASS 5.1
+
+- vector network analysis
+  (Being worked on by Roberto Micarelli <mi.ro@iol.it>)
  
 - v.out.e00: make it working
   (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
