@@ -37,7 +37,7 @@ int do_patch (
 	    G_is_null_value(result, out_type))
 	{
 	    if(G_is_zero_value(patch, out_type) ||
-	       G_is_null_value(result, out_type))
+	       G_is_null_value(patch, out_type))
 		more = 1;
             else
 	    {
