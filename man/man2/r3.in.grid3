@@ -1,0 +1,72 @@
+.TH r3.in.grid3 1 "" "" "" ""
+
+
+
+
+
+
+.SH NAME
+
+\*Lr3.in.grid3\*O 
+format into G3D format.
+.br
+
+
+(GRASS 3D Program)
+
+.SH SYNOPSIS
+\*Lr3.in.grid3 [type = \*Odefault | double | float\*L]
+[precision = \*Odefault | max | 0 - 52\*L]
+[compression = \*Odefault | rle | lzw | rle+lzw | none\*L]
+[tiledimension = \*OXxYxZ\*L]
+[nv = \*Oyes | no\*L]
+input = \*Ogrid3-file\*L
+output = \*Og3d-map
+
+.SH DESCRIPTION
+
+.SH Parameters:
+
+.VL 4m
+
+.LI "\*Ltype\*O
+The default cell-type is float.
+Options: default, double, float
+
+.LI "\*Lprecision\*O
+Options: default, max, 0-52
+
+.LI "\*Lcompression\*O
+Note that the none option only specifies 
+that neither LZW nor RLE is used for compression.  It 
+does not turn off the compression all together.  G3D does
+not support non-compressed files.
+Options: default, rle, lzw, rle+lzw, none
+
+.LI "\*Ltiledimension\*O
+Format: XxYxZ
+
+.LI "\*Lnv\*O
+Specifies whether zeros in the grid3 file are converted to NULL-values.  Conversion
+is performed if the value is yes.
+
+.LI "\*Linput\*O
+Path and name of grid3 file to be imported
+
+.LI "\*Loutput\*O
+Name of the G3D output map
+
+
+.SH NOTES
+r3.in.grid3.
+.PP
+
+Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
+
+.SH AUTHORS
+Roman Waupotitsch, Michael Shapiro, 
+Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
+
