@@ -58,6 +58,7 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text
 </tt>
 
+
 <hr WIDTH="100%">
 <h2>List of selected (GRASS related) environment variables</h2>
 
@@ -65,7 +66,7 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; directory where GRASS lives
 
 <p>GISRC
-<br>&nbsp; name of .grassrc5 file
+<br>&nbsp; name of .grassrc6 file
 
 <p>GRASS_ADDON_PATH
 <br>[grass5] startup script
@@ -130,12 +131,15 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>[d.m, nviz]
 <br>&nbsp; set wish shell name to override 'wish'
 
-<p>OVERWRITE
-<br>[all vector modules]
-<br>&nbsp; toggles vector map overwrite protection (1: OFF, 0: ON)
-<br><tt>g.gisenv set=OVERWRITE=0</tt>
 
 <h2>List of selected GRASS variables</h2>
+
+[ Use <tt>g.gisenv</tt> to set/unset them ]
+
+<p>DEBUG
+<br>[entire GRASS]
+<br>&nbsp; sets level of debug message output (0: no debug messages)
+<br><tt>g.gisenv set=DEBUG=0</tt>
 
 <p>GISDBASE
 <br>&nbsp; initial database
@@ -144,8 +148,16 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; lock ID to prevent parallel GRASS use,
 <br>&nbsp; process id of the start-up shell script
 
+<p>GRASS_DB_ENCODING
+<br>[d.what.vect/forms library]
+<br>&nbsp; encoding of query form (utf-8, ascii, iso8859-1, koi8-r)
+
 <p>GRASS_GUI
 <br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
+
+<p>GRASS_MESSAGE_FORMAT
+<br>[d.m]
+<br>&nbsp; either "text" or "gui" to define non-/graphical message output
 
 <p>LOCATION
 <br>&nbsp;full path to location directory
@@ -156,15 +168,22 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <p>MAPSET
 <br>&nbsp; initial mapset
 
+<p>OVERWRITE
+<br>[all vector modules]
+<br>&nbsp; toggles vector map overwrite protection (1: OFF, 0: ON)
+<br><tt>g.gisenv set=OVERWRITE=0</tt>
+
+
 <h2>GRASS-related Files</h2>
 
-<p>$HOME/.grassrc57
+<p>$HOME/.grassrc6
 <br>to store GRASS variables (but not environment variables)
 
 <p>$HOME/GIS_ERROR_LOG
 <br>&nbsp; If this file exists, all GRASS error messages are stored here
 instead of sending a mail to the GIS user. To generate the file, use:
 <br>&nbsp;&nbsp; touch $HOME/GIS_ERROR_LOG
+
 
 <h3>SEE ALSO</h3>
 
