@@ -1,6 +1,6 @@
-PROG = $(BIN_CONTRIB_CMD)/r.surf.gauss
+PGM = r.surf.gauss
 
-LIBES = $(GISLIB) $(VASK) $(MATHLIB)
+LIBES = $(GISLIB) $(VASK)
 
 OBJ =\
 	main.o		\
@@ -8,7 +8,7 @@ OBJ =\
 	rand1.o		\
 	gauss.o 
 
-$(PROG): $(OBJ) $(LIBES)
-	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

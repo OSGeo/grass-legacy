@@ -1,5 +1,4 @@
-PGN = r.watershed
-BIN = $(BIN_MAIN_INTER)
+PGM = r.watershed
 
 SOURCE = main.c intro.c com_line.c basin_maps.c file_in.c read.c valid.c \
 	 free.c print.c accum_down.c insert_cat.c
@@ -7,16 +6,10 @@ SOURCE = main.c intro.c com_line.c basin_maps.c file_in.c read.c valid.c \
 LIST =   main.o intro.o com_line.o basin_maps.o file_in.o read.o valid.o \
 	 free.o print.o accum_down.o insert_cat.o
 
-$(BIN)/$(PGN): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
-
-saber_src:
-	#load $(CFLAGS)$(ADD_LIBS) $(SOURCE) $(GISLIB) $(MATHLIB)
-
-saber_obj:
-	#load $(LDFLAGS) $(ADD_LIBS) $(LIST) $(GISLIB) $(MATHLIB)
 
 main.o: watershed.h
 intro.o: watershed.h

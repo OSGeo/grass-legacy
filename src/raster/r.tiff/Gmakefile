@@ -10,7 +10,6 @@ PGM1OFILES = \
 PGM2OFILES = \
 	r.out.tiff.o
 
-#all:  $(BIN_CONTRIB_CMD)/$(PGM1) $(BIN_CONTRIB_CMD)/$(PGM2) $(MAN1)/$(PGM)
 all:  $(BIN_CONTRIB_CMD)/$(PGM1) $(BIN_CONTRIB_CMD)/$(PGM2)
 
 $(BIN_CONTRIB_CMD)/$(PGM1): $(PGM1OFILES) 
@@ -18,8 +17,5 @@ $(BIN_CONTRIB_CMD)/$(PGM1): $(PGM1OFILES)
 
 $(BIN_CONTRIB_CMD)/$(PGM2): $(PGM2OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(PGM2OFILES) $(GISLIB) $(LIBTIFF) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
-
-$(MAN1)/$(PGM): MAN
-	rm -f $@ ; cp $? $@; chmod +r $@
 
 $(GISLIB): #

@@ -1,6 +1,7 @@
+PGM = r.volume
 OBJS = main.o centroids.o
 
-$(BIN_MAIN_CMD)/r.volume: $(OBJS) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(DATETIMELIB) $(XDRLIB) $(MATHLIB) -o $@
+$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(DATETIMELIB): #

@@ -2,6 +2,6 @@ PGM = r.ros
 LIST =  main.o spot_dist.o
         
 $(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

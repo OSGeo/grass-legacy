@@ -1,10 +1,7 @@
-LIBRARIES = $(GISLIB) $(DATETIMELIB)
-
-
-PGM = $(BIN_CONTRIB_CMD)/r.to.sites
+PGM = r.to.sites
+LIBES = $(GISLIB) $(DATETIMELIB)
 
 OFILES = main.o
 
-
-$(PGM): $(OFILES) $(LIBRARIES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBRARIES) $(XDRLIB) $(MATHLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

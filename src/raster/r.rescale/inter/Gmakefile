@@ -3,8 +3,8 @@ HOME = $(BIN_MAIN_INTER)
 
 LIST = main.o ask.o get_range.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) $(VASK) -o $@
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASK)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VASKLIB): #
