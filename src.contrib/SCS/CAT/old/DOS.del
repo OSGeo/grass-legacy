@@ -1,0 +1,66 @@
+
+
+
+DOS.delete(1)  	     GRASS Reference Manual	    DOS.delete(1)
+
+
+
+NAME
+     DOS.delete - deletes DOS images from a PC6300 workstation hard
+     disk, that were created by DOS.save.
+     (Available for PC6300 workstations, only)
+
+SYNOPSIS
+     DOS.delete filename
+
+DESCRIPTION
+     DOS.delete allows a user to :
+     interactively remove PC6300 saved images from the MS-DOS
+     disk. DOS.save will store an image produced by "display",
+     "Dcell", etc. from the PC6300 to the 6300 hard disk. 
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
