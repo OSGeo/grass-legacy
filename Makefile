@@ -2,10 +2,10 @@
 #
 # MODULE:   	GRASS Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
-#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#		Markus Neteler - Germany - neteler@itc.it
-#		Andreas Lange - Germany - Andreas.Lange@Rhein-Main.de
-#		Radim Blazek - Italy - blazek@itc.it
+#   	    	Justin Hickey - Thailand - jhickey AT hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler AT itc.it
+#		Andreas Lange - Germany - Andreas.Lange AT Rhein-Main.de
+#		Radim Blazek - Italy - blazek AT itc.it
 # PURPOSE:  	It provides the commands necessary to compile, install,
 #		clean, and uninstall GRASS
 #		See INSTALL file for explanations.
@@ -46,7 +46,8 @@ SUBDIRS = \
 	sites \
 	tools \
 	vector \
-	visualization
+	visualization \
+	man
 
 ifneq ($(strip $(HAVE_NLS)),)
 	LOCALE=1
@@ -66,6 +67,7 @@ BIN_DIST_FILES = $(FILES) \
 	fonts \
 	include \
 	lib \
+	man \
 	scripts \
 	tcltkgrass
 
@@ -138,6 +140,7 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/locale/      2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/man/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null
@@ -230,6 +233,7 @@ real-install: FORCE
 	-cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; fi
