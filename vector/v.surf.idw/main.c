@@ -85,8 +85,9 @@ int main(int argc, char *argv[])
    
     noindex = G_define_flag();
     noindex->key = 'n';
-    noindex->description = "Don't index sites by cell (for very large regions;"
-                           " uses less memory)";
+    noindex->description = "Don't index points by raster cell (slower but uses"
+                           " less memory and includes points from outside region"
+                           " in the interpolation)";
 
     G_gisinit(argv[0]);
 
