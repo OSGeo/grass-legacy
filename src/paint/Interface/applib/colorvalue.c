@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "interface.h"
 
 Pcolorvalue (n, red, grn, blu)
