@@ -60,7 +60,7 @@ cat.name
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
@@ -126,7 +126,7 @@ layer.name
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
@@ -192,7 +192,7 @@ wind.res
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
@@ -248,7 +248,7 @@ SORRY, BUT ...
           define("<file>")
 
 SEE ALSO
-     s.db, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
+     s.db.rim, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
      sites.format, sites.occur, sites.report
 
 
@@ -258,7 +258,7 @@ SEE ALSO
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
