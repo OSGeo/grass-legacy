@@ -1,10 +1,12 @@
-#!/usr/local/grass-5.0b/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
 # Please log changes in the ChangeLog file in this directory
 # (Use "C-x 4 a" from emacs to add an entry)
 
+global src_boot
+
 catch {destroy .wait_ok}
 
-source $src_boot/config.tcl
+source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 # Create a simple list of script tools which are invoked by pressing
 # the specified buttons
