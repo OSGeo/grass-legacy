@@ -1,0 +1,10 @@
+LIST =\
+	main.o\
+	ask.o\
+	yes.o\
+	counter.o
+
+$(BIN_MAIN_CMD)/m.examine.tape: $(LIST)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST)
+	mv a.out $@
