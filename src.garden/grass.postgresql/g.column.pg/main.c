@@ -61,25 +61,25 @@ int main(argc, argv)
     }
 
     if (flag->answer) {
-	sprintf(SQL, "SELECT a.attname as ColumnName, t.typname as Type,
-		  a.attlen as Length,
-		  a.atttypmod as \"Mod_Length\"
-		 FROM pg_class c, pg_attribute a, pg_type t
-		 WHERE  c.relname = '%s' 
-		  and a.attnum > 0
-		  and a.attrelid = c.oid
-		  and a.atttypid = t.oid
-		  order by attnum", tbl->answer);
+	sprintf(SQL, "SELECT a.attname as ColumnName, t.typname as Type,"
+		"  a.attlen as Length,"
+		"  a.atttypmod as \"Mod_Length\""
+		" FROM pg_class c, pg_attribute a, pg_type t"
+		" WHERE  c.relname = '%s' "
+		"  and a.attnum > 0"
+		"  and a.attrelid = c.oid"
+		"  and a.atttypid = t.oid"
+		"  order by attnum", tbl->answer);
 
     }
     else {
 	/* no column descriptions */
-	sprintf(SQL, "SELECT a.attname as ColumnName
-		 FROM pg_class c, pg_attribute a
-		 WHERE  c.relname = '%s' 
-		  and a.attnum > 0
-		  and a.attrelid = c.oid
-		  order by attnum", tbl->answer);
+	sprintf(SQL, "SELECT a.attname as ColumnName"
+		" FROM pg_class c, pg_attribute a"
+		" WHERE  c.relname = '%s' "
+		"  and a.attnum > 0"
+		"  and a.attrelid = c.oid"
+		"  order by attnum", tbl->answer);
     }
 
 
