@@ -1,0 +1,18 @@
+**********************************
+d.site.db
+
+(m) means modified
+
+Katarina Johnsson April 19, 1993
+**********************************
+
+main
+	getAllOpts (m)
+		buildSQL (m, <=> buildInfxQry)
+			ingresUnTable (new)
+	getSelectOpts (m)
+		runSQL (m, <=> runInfxFile)
+			ingresUnTable     
+
+
+
