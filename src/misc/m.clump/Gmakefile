@@ -29,7 +29,7 @@ HOME = $(BIN_ALPHA_CMD)
 
 
 $(HOME)/$(PROG): $(OBJ) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(LIBES): #
 
