@@ -11,6 +11,17 @@
 
 #include "png.h"
 
+static void *get_ptr(int i)
+{
+#ifdef HAVE_GDIMAGECREATETRUECOLOR
+    return true_color
+	? (void *) im->tpixels[i]
+	: (void *) im->pixels[i];
+#else
+    return (void *) im->pixels[i];
+#endif
+}
+
 int Panel_save(char *name, int top, int bottom, int left, int right)
 {
     int width, height;
@@ -54,12 +65,7 @@ int Panel_save(char *name, int top, int bottom, int left, int right)
 
     /* write the data */
     for (i = 0; i < height; i++)
-    {
-	void *ptr = true_color
-	    ? (void *) im->tpixels[i]
-	    : (void *) im->pixels[i];
-	write(fd, ptr, bytes);
-    }
+	write(fd, get_ptr(i), bytes);
 
     close(fd);
 
@@ -92,12 +98,7 @@ int Panel_restore(char *name)
 
     /* read the data */
     for (i = 0; i < height; i++)
-    {
-	void *ptr = true_color
-	    ? (void *) im->tpixels[i]
-	    : (void *) im->pixels[i];
-	read(fd, ptr, bytes);
-    }
+	read(fd, get_ptr(i), bytes);
 
     close(fd);
 
