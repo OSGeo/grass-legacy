@@ -17,6 +17,7 @@ get_stats()
 	strcpy (buf, "r.stats -ac");
 	if (!masking) strcat (buf, "m");
 	if (!verbose) strcat (buf, "q");
+	if (z_option) strcat (buf, "z");
 	strcat (buf, " fs=: 'input=");
 
 	for (i = 0; i < nlayers; i++)
@@ -28,6 +29,7 @@ get_stats()
 
 	strcat (buf, " > ");
 	strcat (buf, stats_file);
+/*	G_fatal_error(buf);*/
 	if(system(buf))
 	{
 	    if (stats_flag == EVERYTHING)
