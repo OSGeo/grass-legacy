@@ -302,6 +302,51 @@ char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double efalse,
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
+char *calcKeyValue2( double xa, double ya, float sr, int decs, double efalse,
+		    double nfalse ) {
+  /* local */
+
+  double xtmp, ytmp;
+  char xbuf[128], ybuf[128];
+  char *retbuf;
+  int indx;
+  char *indx_ptr;
+  int idigits;
+
+  xtmp = ((long long)( (xa + efalse) / sr )) * sr;
+  ytmp = ((long long)( (ya + nfalse) / sr )) * sr;
+
+  /* To elliminate small negative values */
+  if(xtmp < 0.0) xtmp = 0.0;
+  if(ytmp < 0.0) xtmp = 0.0;
+
+  if(decs < 0 || decs > 16)
+    return NULL;
+
+  idigits = 16 - decs;
+
+  retbuf = (char *)malloc( 33 );
+  
+  snprintf( xbuf, 127, "%065.20f", xtmp );
+  snprintf( ybuf, 127, "%065.20f", ytmp );
+
+  indx_ptr = strchr( xbuf, '.' );
+  strncpy( retbuf, indx_ptr - idigits, idigits );
+  retbuf[idigits] = '\0';
+  strncat( retbuf, indx_ptr + 1, decs );
+  retbuf[16] = '\0';
+
+  indx_ptr = strchr( ybuf, '.' );
+  strncat( retbuf, indx_ptr - idigits, idigits );
+  retbuf[16 + idigits] = '\0';
+  strncat( retbuf, indx_ptr + 1, decs );
+  retbuf[32] = '\0';
+
+  return retbuf;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
 
 /* Helper function definitions */
 
@@ -583,3 +628,60 @@ int add_rec_spec(duff_recs_t *duff_recs, int recno, int fduff) {
 
   return 0;
 }
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+int key_outside_bounds(char *key1, char *key2) {
+
+  /* Determine if the second key is outside the bounds of the first 
+     set by the first, as the NE corner, and the origin
+  */
+
+  char tmp_key[33], tmp_chck[33], origin[33];
+  int is_west = 0, is_south = 0;   /* Check the relation to the upper bounds */
+
+  /* Set zero (origin) key */
+  memset(&origin[0], '0', 32);
+  origin[32] = '\0';
+
+  if( strncmp(key2, origin, 32) > 0 )
+    is_west = 1;
+
+  if( strncmp(key2, key1, 32) > 0 )
+    is_west = 0;
+
+
+  if(is_west) {
+
+    /* Invert the keys to check north/south location */
+
+    strncpy(tmp_key, &key2[16], 16);
+    tmp_key[16] = '\0';
+    strncat(tmp_key, key2, 16);
+    tmp_key[32] = '\0';
+  
+    strncpy(tmp_chck, &key1[16], 16);
+    tmp_chck[16] = '\0';
+    strncat(tmp_chck, key1, 16);
+    tmp_chck[32] = '\0';
+  
+
+    if( strncmp(tmp_key, origin, 32) > 0 )
+      is_south = 1;
+
+    if( strncmp(tmp_key, tmp_chck, 32) > 0 )
+      is_south = 0;
+
+  }
+
+  if(is_west && is_south)
+    return 0;
+  else
+    return 1;
+}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+

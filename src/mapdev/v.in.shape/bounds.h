@@ -1,3 +1,4 @@
 #include "shapefil.h"
+#include "shp2dig.h"
 
-int set_bounds(SHPHandle);
+int set_bounds(SHPHandle, region *);

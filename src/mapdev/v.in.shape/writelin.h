@@ -32,7 +32,7 @@
 
 /* Function prototypes */
 
-int vbase2segd( segmentList *seg0, BTREE *btr0 );
+int vbase2segd( segmentList *seg0, BTREE *btr0, region *r0 );
 int segLDispose( segmentList *seg0 );
 double reverse_angle(double phi0);
 int check_terminal_snapback( pntDescript *ppnt1, pntDescript *ppnt2, pntDescript **pmiddle );

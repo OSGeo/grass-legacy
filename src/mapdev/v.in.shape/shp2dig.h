@@ -85,6 +85,7 @@ struct _nodeDescript;
 struct _areaDescript;
 struct _fieldDescript;
 struct duff_recs_t_;
+struct region_;
 
 
 /* Declare typedefs on incomplete types */
@@ -99,7 +100,7 @@ typedef struct _nodeDescript nodeDescript;
 typedef struct _areaDescript areaDescript;
 typedef struct _fieldDescript fieldDescript;
 typedef struct duff_recs_t_ duff_recs_t;
-
+typedef struct region_ region;
 
 
 
@@ -254,6 +255,11 @@ struct duff_recs_t_ {
 
 };
 
+
+struct region_ {
+
+  double w, n, e, s;
+};
 
 
 
