@@ -89,7 +89,7 @@ char *me, *link;
     if( (out_file == -1) || (in_file == -1) )
 	return (0);
 
-    fprintf(stderr, "Graphics driver [%s] is already running\n", me);
+    fprintf(stderr, "Graphics driver [%s] is already running (now selected)\n", me);
     fflush(stderr);
     return (-1);                /* tell caller someone's listening */
   error:

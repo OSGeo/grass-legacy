@@ -103,7 +103,7 @@ int check_connection (char *me, char *link)
     signal(SIGALRM, def);       /* and restore normal operation */
     close(out_file);
     close(in_file);
-    fprintf(stderr, "Graphics driver [%s] is already running\n", me);
+    fprintf(stderr, "Graphics driver [%s] is already running (now selected)\n", me);
     fflush(stderr);
     return (-1);                /* tell caller someone's listening */
   error:
