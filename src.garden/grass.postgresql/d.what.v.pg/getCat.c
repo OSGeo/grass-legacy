@@ -163,6 +163,6 @@ getCat (Map, Cats,colr,fillcolr,fill)
 	  
 	  }
 	}
-Rflush(); 
+R_flush(); 
 return(button);
 }
