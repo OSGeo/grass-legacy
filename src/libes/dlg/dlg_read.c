@@ -1,4 +1,3 @@
-/* %W% %G% */
 /*  ./src/libes/dlg/dlg_read.c
  ***********************************************************************
  *  #include "dlg.h"
@@ -30,7 +29,6 @@ dlg_read(fd,dlg)
 	long ftell() ;
 	int num ;
 	char type ;
-	int n;
 	char *check_alloc() ;
 
 /* Make initial memory allocations */
