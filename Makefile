@@ -1,4 +1,4 @@
-#############################################################################
+	#############################################################################
 #
 # MODULE:   	GRASS Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -77,6 +77,7 @@ default:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
+		if [ ${LOCALE}=1 ] ; then $(MAKE) -C locale; fi \
 	done
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp
