@@ -18,6 +18,7 @@ what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
   float tmp_east, tmp_north;
   int button;
   double sq_meters;
+  char buf[1024];
 
   P_LINE *Line;
   P_AREA *Area;
@@ -43,8 +44,16 @@ what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
     }
     else
     {
-      if (scanf("%f %f", &tmp_east, &tmp_north) == EOF)
-        break;
+      while(buf[0] = 0, fgets(buf, 1024, stdin),
+	    sscanf(buf, "%f %f", &tmp_east, &tmp_north) != 2)
+	if(!strncmp(buf, "end\n", 4) || !strncmp(buf, "exit\n", 5) || !buf[0]){
+	  buf[0] = 0;
+          break;
+	}
+
+      if(!buf[0])
+	  break;
+
       east = (double) tmp_east;
       north = (double) tmp_north;
     }
