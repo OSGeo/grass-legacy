@@ -88,6 +88,9 @@ NOTESLIST="sql"
 #hardcoded list of drivers etc:
 DRIVERLIST="displaydrivers"
 
+#hardcoded list of variables etc:
+VARIABLES="variables"
+
 ################
 
 cd $HTMLDIR
@@ -199,6 +202,20 @@ done
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
+#############
+#variables:
+
+echo "<b>GRASS and environment variables:</b>" >> $FILENAME
+echo "<ul>" >> $FILENAME
+#for all drivers:
+for k in $VARIABLES
+do 
+  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
+done
+echo "</ul>" >> $FILENAME
+echo "<p>"   >> $FILENAME
+
+#############
 write_html_footer $FILENAME index.html
 
 #############
