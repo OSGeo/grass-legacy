@@ -1,3 +1,7 @@
+/* TODO: implement G_rhumbline_distance() in libgis 
+ */
+
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -9,7 +13,6 @@ int main (int argc, char *argv[])
 	int text_color = 0;
 	int use_mouse;
 	double lon1,lat1,lon2,lat2;
-	char msg[100];
 	struct GModule *module;
 	struct
 	    {
@@ -36,7 +39,7 @@ int main (int argc, char *argv[])
 	parm.lcolor->required   = NO ;
 	parm.lcolor->description= "Line color" ;
 	parm.lcolor->options    = D_color_list();
-	parm.lcolor->answer     = "white";
+	parm.lcolor->answer     = DEFAULT_FG_COLOR;
 
 #ifdef CAN_DO_DISTANCES
 	parm.tcolor = G_define_option() ;
@@ -86,13 +89,13 @@ int main (int argc, char *argv[])
 
 	line_color = D_translate_color (parm.lcolor->answer);
 	if (!line_color)
-		line_color = D_translate_color (parm.lcolor->answer = "white");
+		line_color = D_translate_color (parm.lcolor->answer = DEFAULT_FG_COLOR);
 
 #ifdef CAN_DO_DISTANCES
-	if(strcmp (parm.lcolor->answer, "white") == 0)
+	if(strcmp (parm.lcolor->answer, DEFAULT_FG_COLOR) == 0)
 		deftcolor = "red";
 	else
-		deftcolor = "white";
+		deftcolor = DEFAULT_FG_COLOR;
 
 	if (parm.tcolor->answer == NULL)
 		parm.tcolor->answer = deftcolor;
