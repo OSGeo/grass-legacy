@@ -55,3 +55,4 @@ int pj_get_kv PROTO((struct pj_info *, struct Key_Value *, struct Key_Value *));
 int pj_get_string PROTO((struct pj_info *, char *));
 int pj_zero_proj PROTO((struct pj_info *));
 const char * set_proj_lib PROTO((const char *));
+int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj);
