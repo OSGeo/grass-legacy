@@ -25,6 +25,7 @@
 #
 # Datum parameters for/from European Terrestrial Reference System ETRS89
 # are here: http://crs.ifag.de/crs_national.php
+#           http://crs.bkg.bund.de/crs-eu
 
 # World Geodetic System 1984
 wgs84  "WGS_1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0

@@ -40,6 +40,7 @@ nad83	"nadgrids=WO"           "Washington - Oregon" "Transforms 'Old NAD83' to '
 # http://www.gps.gov.uk/guide6.asp
 osgb36  "towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894" "Great Britain" "Accuracy 5m"
 # http://crs.ifag.de/
+# http://crs.bkg.bund.de/crs-eu
 hermannskogel "towgs84=577.326,90.129,463.919,5.1366,1.4742,5.2970,2.4232" "Austria" "Accuracy approx. 1.5m"
 hermannskogel "towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56" "Czech Republic" " "
 hermannskogel "towgs84=559.0,68.7,451.5,7.920,4.073,4.251,5.71" "Slovakia" " "
