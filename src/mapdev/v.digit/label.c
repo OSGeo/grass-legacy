@@ -900,7 +900,7 @@ int ask_for_name (int Type, struct Categories *pcats)
 	    " Do you wish to enter line labels? ", 1);
 	else if (Type == 2)    /* AREA */
 	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter area labels? ", 1);
+	    " Do you wish to enter area edges labels? ", 1);
 	else if (Type == 4)     /* DOT */
 	    ans = curses_yes_no_default(2,
 	    " Do you wish to enter site labels? ", 1);
