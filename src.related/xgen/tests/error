@@ -1,0 +1,13 @@
+environment a
+initialshells:b
+{
+    menu b
+    (
+	button "Run a command causing an error" 
+	    runforeground:"gurgleblykl"
+	    ;
+	button "Quit" 
+	    exit:0
+	    ;
+    )
+}
