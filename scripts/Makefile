@@ -7,7 +7,6 @@ SUBDIRS = \
 	d.redraw \
 	d.slide.show \
 	g.manual \
-	g.projinfo \
 	i.spectral \
 	pg.postgisdb \
 	r.out.gdal \
