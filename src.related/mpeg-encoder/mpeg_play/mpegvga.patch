@@ -1,0 +1,1206 @@
+*** gray.c	Tue Feb  2 23:58:35 1993
+--- mpegvga/gray.c	Sun Oct 17 17:19:39 1993
+***************
+*** 53,58 ****
+--- 53,59 ----
+    int i, max = w*h/16;
+  
+    for (i=0; i<max; i++) {
++ /*
+      out[0] = pixel[lum[0]];
+      out[1] = pixel[lum[1]];
+      out[2] = pixel[lum[2]];
+***************
+*** 69,74 ****
+--- 70,81 ----
+      out[13] = pixel[lum[13]];
+      out[14] = pixel[lum[14]];
+      out[15] = pixel[lum[15]];
++   */
++   /* For VGA, pixel[i] = i */
++     *(unsigned *)(&out[0]) = *(unsigned *)(&lum[0]);
++     *(unsigned *)(&out[4]) = *(unsigned *)(&lum[4]);
++     *(unsigned *)(&out[8]) = *(unsigned *)(&lum[8]);
++     *(unsigned *)(&out[12]) = *(unsigned *)(&lum[12]);
+      out += 16;
+      lum += 16;
+    }
+*** proto.h	Wed Feb  3 16:02:59 1993
+--- mpegvga/proto.h	Sun Oct 17 16:57:16 1993
+***************
+*** 49,55 ****
+--- 49,57 ----
+  
+  /* gdith.c */
+  void InitColor P((void ));
++ /*
+  int HandleXError P((Display *dpy , XErrorEvent *event ));
++ */
+  void InstallXErrorHandler P((void ));
+  void DeInstallXErrorHandler P((void ));
+  void ResizeDisplay P((int w , int h ));
+***************
+*** 102,109 ****
+--- 104,113 ----
+  void ColorDitherImage P((unsigned char *lum , unsigned char *cr , unsigned char *cb , unsigned char *out , int rows , int cols ));
+  
+  /* util32.c */
++ /*
+  Visual *FindFullColorVisual P((Display *dpy , int *depth ));
+  Window CreateFullColorWindow P((Display *dpy , int x , int y , int w , int h ));
++ */
+  
+  /* ordered.c */
+  void InitOrderedDither P((void ));
+*** util.c	Tue Feb  2 23:58:38 1993
+--- mpegvga/util.c	Sun Oct 17 16:48:04 1993
+***************
+*** 20,25 ****
+--- 20,26 ----
+   */
+  
+  #include <stdlib.h>
++ #include <vga.h>
+  #include "video.h"
+  #include "proto.h"
+  #include "util.h"
+***************
+*** 104,109 ****
+--- 105,111 ----
+        fprintf (stderr, "\n");
+        perror("Unexpected read error.");
+      }
++     vga_setmode(TEXT);
+      exit(1);
+    }
+    else if ((status == 0) && (bufLength < 1)) {
+***************
+*** 119,124 ****
+--- 121,127 ----
+  
+      if (loopFlag) longjmp(env, 1);
+      DestroyVidStream(curVidStream);
++     vga_setmode(TEXT);
+      exit(0);
+    }
+  #ifdef UTIL2
+*** video.c	Tue Feb  2 23:58:41 1993
+--- mpegvga/video.c	Sat Oct 23 14:04:06 1993
+***************
+*** 24,30 ****
+  
+  #include <stdio.h>
+  #include <stdlib.h>
+! #include <assert.h>
+  
+  #ifndef MIPS
+  #include <sys/time.h>
+--- 24,31 ----
+  
+  #include <stdio.h>
+  #include <stdlib.h>
+! /* #include <assert.h> */
+! #define assert(c)
+  
+  #ifndef MIPS
+  #include <sys/time.h>
+***************
+*** 32,37 ****
+--- 33,39 ----
+  #include <sys/types.h>
+  #include <sys/system.h>
+  #endif
++ #include <vga.h>
+  
+  #include "decoders.h"
+  #include "video.h"
+***************
+*** 985,990 ****
+--- 987,993 ----
+      if (data != SEQ_START_CODE) {
+        fprintf(stderr, "This is not an MPEG stream.");
+        DestroyVidStream(curVidStream);
++       vga_setmode(TEXT);
+        exit(1);
+      }
+      first = 0;
+***************
+*** 1024,1029 ****
+--- 1027,1033 ----
+        longjmp(env, 1);
+  
+      DestroyVidStream(curVidStream);
++     vga_setmode(TEXT);
+      exit(0);
+      break;
+  
+***************
+*** 1579,1584 ****
+--- 1583,1589 ----
+    while (vid_stream->ring[i]->locked != 0) {
+      if (++i >= RING_BUF_SIZE) {
+        perror("Fatal error. Ring buffer full.");
++       vga_setmode(TEXT);
+        exit(1);
+      }
+    }
+*** video.h	Tue Feb  2 23:58:41 1993
+--- mpegvga/video.h	Sun Oct 17 16:56:44 1993
+***************
+*** 21,28 ****
+--- 21,30 ----
+  #include <stdio.h>
+  #include <setjmp.h>
+  
++ /*
+  #include <X11/Xlib.h>
+  #include <X11/Xutil.h>
++ */
+  
+  #ifdef SH_MEM
+  #include <sys/ipc.h>
+***************
+*** 244,250 ****
+  extern VidStream *curVidStream;
+  
+  /* Declarataion of global display pointer. */
+! extern Display *display;
+  
+  /* Shared memory flag. */
+  extern int shmemFlag;
+--- 246,252 ----
+  extern VidStream *curVidStream;
+  
+  /* Declarataion of global display pointer. */
+! /* extern Display *display; */
+  
+  /* Shared memory flag. */
+  extern int shmemFlag;
+*** README.linux	Sun Jan 15 16:44:10 1995
+--- mpegvga/README.linux	Sun Jan 15 16:06:09 1995
+***************
+*** 0 ****
+--- 1,49 ----
++ 
++ This is a port of the Berkeley MPEG Video Software Decoder v2.0 to Linux.
++ 
++ Two binaries are provided. They require the ld.so shared library loader.
++ 
++ mpeg_play
++ 
++ A binary compiled from the stock sources, using the XFree86-2.0 libraries.
++ It was compiled with the flags: -O2 -fomit-frame-pointer -m486 (implicit)
++ using gcc 2.5.4, with some debugging code left out. Uses the X shared memory
++ extension that XFree86 v2.0 provides, which is a big win. The stock sources
++ compile cleanly and trivially.
++ 
++ mpeg_vga
++ 
++ A non-X version that uses svgalib. It is slightly faster than the X version
++ with shared memory and can use low resolution graphics modes. Also, with
++ truecolor graphics cards that svgalib supports (Cirrus, ET4000), full color
++ dithering can be used, which is very pretty. The graphics mode to be used can
++ be set with the GSVGAMODE environment variable. Requires svgalib 0.91 or
++ later installed.
++ 
++ For full color dithering (-dither color), 320x200x16M graphics mode is used
++ if it is available and the picture is small enough; if not, 640x480x16M is
++ used if available. 32K mode probed similarly.
++ 
++ For most other dithering methods, 320x200x256 standard VGA graphics mode is
++ used if the picture is small enough; 640x480x256 otherwise.
++ 
++ For mono dithering, 640x480x2 VGA graphics mode is used.
++ 
++ [NOTE: The previously uploaded version contained patches for some hacked
++ version of the stock sources; sorry for that.]
++ Patches for the stock sources are included (mpegvga.patch). It removes X
++ references, and uses svgalib instead. Also, the speed of gray dithering and
++ full-color dithering has been improved. svgalib v0.91 or later is required to
++ compile; it can be found on sunsite.unc.edu, directory /pub/Linux/libs.
++ [Speed hack have been incorporated into the main source]
++ 
++ mpeg_play -h (or any other invalid flag) displays dithering and other options.
++ 
++ Note that with gray dithering, very little time is spent converting from the
++ raw uncompressed data to a screen bitmap suitable for display, making it
++ significantly faster than the other methods.
++ 
++ The v2.0 source is available on sunsite.unc.edu. For sample MPEG data,
++ mm-ftp.cs.berkeley.edu, /pub/multimedia is one place to look.
++ 
++ hhanemaa@cs.ruu.nl
+*** gdith.c	Sun Jan 29 22:17:25 1995
+--- mpegvga/gdith.c	Sun Jan 29 22:44:59 1995
+***************
+*** 28,33 ****
+--- 28,35 ----
+   */
+  
+  #include <math.h>
++ #include <vga.h>
++ #include <vgagl.h>
+  #include "video.h"
+  #include "proto.h"
+  #include "dither.h"
+***************
+*** 52,65 ****
+  
+  extern int ditherType;
+  
+! /* Structures used by the X server. */
+! 
+! Display *display;
+! 
+! static XImage *ximage = NULL;
+! static Colormap cmap;
+! static Window window;
+! static GC gc;
+  
+  /* Frame Rate Info */
+  extern int framerate;
+--- 54,60 ----
+  
+  extern int ditherType;
+  
+! int vgamode = -1;
+  
+  /* Frame Rate Info */
+  extern int framerate;
+***************
+*** 155,351 ****
+  
+  }
+  
+- #ifdef SH_MEM
+- 
+- int gXErrorFlag = 0;
+- 
+- int HandleXError(dpy, event)
+-      Display *dpy;
+-      XErrorEvent *event;
+- {
+-   gXErrorFlag = 1;
+- 
+-   return 0;
+- }
+- 
+- void InstallXErrorHandler()
+- {
+-   int HandleXError();
+- 
+-   XSetErrorHandler(HandleXError);
+-   XFlush(display);
+- }
+  
+- void DeInstallXErrorHandler()
+- {
+-   XSetErrorHandler(NULL);
+-   XFlush(display);
+- }
+- #endif
+  
+- 
+- /*
+-  *--------------------------------------------------------------
+-  *
+-  * ResizeDisplay --
+-  *
+-  *	Resizes display window.
+-  *
+-  * Results:
+-  *	None.
+-  *
+-  * Side effects:
+-  *      None.
+-  *
+-  *--------------------------------------------------------------
+-  */
+  
+  void ResizeDisplay(w, h)
+       int w, h;
+  {
+! 
+!   if (ditherType == NO_DITHER || ditherType == PPM_DITHER) return;
+! 
+!   XResizeWindow(display, window, w, h);
+!   XFlush(display);
+  }
+  
+- 
+- /*
+-  *--------------------------------------------------------------
+-  *
+-  * MakeWindow --
+-  *
+-  *	Create X Window
+-  *
+-  * Results:
+-  *	Read the code.
+-  *
+-  * Side effects:
+-  *      None.
+-  *
+-  *--------------------------------------------------------------
+-  */
+  
+! #ifdef SH_MEM
+! int CompletionType = -1;
+! #endif
+  
+  static void 
+  MakeWindow(name) 
+  char *name;
+  {
+    
+!   XSizeHints hint;
+!   unsigned int fg, bg;
+!   char *hello = "MPEG Play";
+!   int screen;
+!   Screen *screen_ptr;
+!   Window CreateFullColorWindow();
+!   
+!   if (ditherType == NO_DITHER || ditherType == PPM_DITHER) return;
+! 
+!   display = XOpenDisplay(name);
+!   if (display == NULL) {
+!     fprintf(stderr, "Can not open display\n");
+!     exit(-2);
+!   }
+  
+! #ifdef SH_MEM
+!   if(shmemFlag)
+!     CompletionType = XShmGetEventBase(display) + ShmCompletion;
+! #endif
+  
+!   screen = DefaultScreen (display);
+!   screen_ptr = XDefaultScreenOfDisplay(display);
+!   
+!   /* Fill in hint structure */
+  
+!   hint.x = 200;
+!   hint.y = 300;
+!   hint.width = 150;
+!   hint.height = 150;
+!   hint.flags = PPosition | PSize;
+!   
+!   /* Get some colors */
+!   
+!   bg = WhitePixel (display, screen);
+!   fg = BlackPixel (display, screen);
+!   
+!   /* Make the window */
+    
+!   if (ditherType == FULL_COLOR_DITHER || ditherType==FULL_COLOR2_DITHER) {
+!     window = CreateFullColorWindow (display, hint.x, hint.y, hint.width, hint.height);
+!     if (window == 0) {
+!       fprintf (stderr, "-color option only valid on full color display\n");
+!       exit (-1);
+!     }
+    } else if (ditherType == MONO_DITHER || ditherType == MONO_THRESHOLD) {
+!     window = XCreateSimpleWindow (display,
+! 				  DefaultRootWindow (display),
+! 				  hint.x, hint.y,
+! 				  hint.width, hint.height,
+! 				  4, fg, bg);
+    } else {
+!     XVisualInfo vinfo, *vinfo_ptr;
+!     Visual *vis;
+!     XSetWindowAttributes attrib;
+!     unsigned long attrib_flags=0;
+!     
+!     if (!XMatchVisualInfo (display, screen, 8, PseudoColor, 
+! 			   &vinfo)) {
+!       if (!XMatchVisualInfo(display, screen, 8, GrayScale, 
+! 			    &vinfo)) {
+!         fprintf(stderr, "-requires 8 bit display\n");
+!         exit(-1);
+!       }
+!     }
+! 
+!     vis=vinfo.visual;
+!     if (XDefaultDepthOfScreen(screen_ptr) != 8) {
+!       attrib_flags |= CWColormap;
+!       attrib.colormap = XCreateColormap(display, DefaultRootWindow(display),
+! 					vis, AllocNone);
+!       owncmFlag = TRUE; 
+!     }
+! 
+!     attrib.background_pixel = bg;
+!     attrib.border_pixel = fg;
+!     attrib.backing_store = NotUseful;
+!     attrib.save_under = False;
+!     attrib.background_pixel = bg;
+!     attrib.border_pixel = bg;
+!     attrib_flags |= CWBackPixel | CWBorderPixel | CWBackingStore | CWSaveUnder;
+!     window = XCreateWindow (display,
+! 			    DefaultRootWindow (display),
+! 			    hint.x, hint.y,
+! 			    hint.width, hint.height, 4,
+! 			    8, InputOutput, vis,
+! 			    attrib_flags, &attrib);
+!   }
+!   
+!   XSelectInput(display, window, StructureNotifyMask);
+! 
+!   /* Tell other applications about this window */
+!   
+!   XSetStandardProperties (display, window, hello, hello, None, NULL, 0, &hint);
+!   
+!   /* Map window. */
+! 
+!   XMapWindow(display, window);
+! 
+!   /* Wait for map. */
+!   while(1) {
+!     XEvent	xev;
+! 
+!     XNextEvent(display, &xev);
+!     if(xev.type == MapNotify && xev.xmap.event == window)
+!       break;
+!   }
+! 
+!   XSelectInput(display, window, NoEventMask);
+  }
+!   
+  
+  /*
+   *--------------------------------------------------------------
+--- 150,286 ----
+  
+  }
+  
+  
+  
+  
+  void ResizeDisplay(w, h)
+       int w, h;
+  {
+!   vga_modeinfo *modeinfo;
+!   /* Check if current VGA mode is big enough. */
+!   modeinfo = vga_getmodeinfo(vgamode);
+!   if (w > modeinfo->width || h > modeinfo->height) {
+!     int fail = 0;
+!     if (w > 640 || h > 480)
+!       fail = 1;
+!     else
+!       if (modeinfo->width == 320) {
+!         fail = 1;
+!         switch (modeinfo->bytesperpixel) {
+!         case 1 :
+!   	  if (vga_hasmode(G640x480x256)) {
+!   	    Palette pal;
+!   	    gl_getpalette(&pal);
+!   	    vgamode = G640x480x256;
+! 	    vga_setmode(vgamode);
+! 	    gl_setpalette(&pal);
+! 	    gl_setcontextvga(vgamode);
+! 	    if (ditherType != GRAY_DITHER)
+! 		    gl_clearscreen(255);
+! 	    gl_enableclipping();
+! 	    fail = 0;
+! 	  }
+! 	  break;
+! 	case 2 :
+!   	  if (vga_hasmode(G640x480x32K)) {
+!   	    vgamode = G640x480x32K;
+! 	    vga_setmode(vgamode);
+! 	    gl_setcontextvga(vgamode);
+! 	    gl_enableclipping();
+! 	    fail = 0;
+! 	  }
+! 	  break;
+! 	case 3 :
+!   	  if (vga_hasmode(G640x480x16M)) {
+!   	    vgamode = G640x480x16M;
+! 	    vga_setmode(vgamode);
+! 	    gl_setcontextvga(vgamode);
+! 	    gl_enableclipping();
+! 	    fail = 0;
+! 	  }
+! 	  break;
+!         }
+!       }
+!       else
+!         fail = 1;
+!     if (fail) {
+!     	printf("MPEG screen size too big.\n");
+!     	vga_setmode(TEXT);
+!     	exit(-1);
+!     }
+!   }
+  }
+  
+  
+! void
+! restoretextmode() {
+!   vga_setmode(TEXT);
+! }
+  
+  static void 
+  MakeWindow(name) 
+  char *name;
+  {
+    
+!   if (ditherType == NO_DITHER) return;
+  
+!   /* Make the window */
+  
+!   vga_disabledriverreport();
+!   vga_init();
+  
+!   #define FIRSTRES(c) G320x200x##c
+!   #define SECONDRES(c) G640x480x##c
+    
+!   if (ditherType == FULL_COLOR_DITHER) {
+!     /* Look for hicolor/truecolor mode. */
+!     /* 640x480 resolution makes most animations very small. */
+!     /* 320x200 is more full-screen, but the distortions are very visible. */
+!     /* Check default svgalib mode. */
+!     vgamode = vga_getdefaultmode();
+!     if (vgamode != -1) {
+!        if (vga_getmodeinfo(vgamode)->bytesperpixel == 3)
+!          /* Default mode is a truecolor mode. */
+!          goto gotvgamode;
+!        if (vga_getmodeinfo(vgamode)->colors == 32768)
+!          goto gotvgamode;
+!     }
+!     if (vga_hasmode(FIRSTRES(16M)))
+!       vgamode = FIRSTRES(16M);
+!     else if (vga_hasmode(SECONDRES(16M)))
+!       vgamode = SECONDRES(16M);
+!     else if (vga_hasmode(FIRSTRES(32K)))
+!       vgamode = FIRSTRES(32K);
+!     else if (vga_hasmode(SECONDRES(32K)))
+!       vgamode = SECONDRES(32K);
+    } else if (ditherType == MONO_DITHER || ditherType == MONO_THRESHOLD) {
+!     /* set mode suitable for mono display if available */
+!     if (vga_hasmode(G640x480x2))
+!       vgamode = G640x480x2;
+    } else {
+!     /* set 256-color mode */
+!     /* Check default svgalib mode. */
+!     vgamode = vga_getdefaultmode();
+!     if (vgamode != -1)
+!        if (vga_getmodeinfo(vgamode)->bytesperpixel == 1)
+!          /* Default mode is a 256 color mode. */
+!          goto gotvgamode;
+!     if (vga_hasmode(FIRSTRES(256)))
+!       vgamode = FIRSTRES(256);
+!     else if (vga_hasmode(SECONDRES(256)))
+!       vgamode = SECONDRES(256);
+!   }
+!   if (vgamode == -1) {
+!   	printf("Cannot find suitable SVGA graphics mode for selected dithering.\n");
+!   	exit(-1);
+!   }
+! gotvgamode:
+!   printf("Using mode %s.\n", vga_getmodename(vgamode));
+!   vga_setmode(vgamode);
+!   gl_setcontextvga(vgamode);
+!   gl_enableclipping();
+  }
+! 
+  
+  /*
+   *--------------------------------------------------------------
+***************
+*** 366,429 ****
+  void InitDisplay(name)
+  char *name;
+  {
+  
+    int ncolors = LUM_RANGE*CB_RANGE*CR_RANGE;
+-   XColor xcolor;
+    int i, lum_num, cr_num, cb_num;
+!   unsigned char r, g, b;
+!   Colormap dcmap;
+  
+    if (ditherType == NO_DITHER) return;
+-   if (noDisplayFlag) return;
+  
+    MakeWindow(name);
+  
+!   gc = XCreateGC(display, window, 0, 0);
+! 
+!   dcmap = cmap = XDefaultColormap(display, DefaultScreen(display));
+! 
+!   xcolor.flags = DoRed | DoGreen | DoBlue;
+  
+-   if (owncmFlag) goto create_map;
+-   retry_alloc_colors:
+    for (i=0; i<ncolors; i++) {
+  
+      lum_num = (i / (CR_RANGE*CB_RANGE))%LUM_RANGE;
+      cr_num = (i / CB_RANGE)%CR_RANGE;
+      cb_num = i % CB_RANGE;
+  
+      ConvertColor(lum_values[lum_num], cr_values[cr_num], cb_values[cb_num], &r, &g, &b);
+  
+!     xcolor.red = r * 256;
+!     xcolor.green = g * 256;
+!     xcolor.blue = b * 256;
+! 
+!     if (XAllocColor(display, cmap, &xcolor) == 0 && cmap == dcmap) {
+!       int j;
+!       unsigned long tmp_pixel;
+!       XWindowAttributes xwa;
+! 
+!       if (!quietFlag) {
+!         fprintf(stderr, "Using private colormap.\n");
+!       }
+! 
+!       /* Free colors. */
+!       for(j = 0; j < i; j ++) {
+!         tmp_pixel = pixel[j];
+!         XFreeColors(display, cmap, &tmp_pixel, 1, 0);
+!       }
+! 
+!       create_map:
+!       XGetWindowAttributes(display, window, &xwa);
+!       cmap = XCreateColormap(display, window, xwa.visual, AllocNone);
+!       XSetWindowColormap(display, window, cmap);
+! 
+!       goto retry_alloc_colors;
+      }
+!     pixel[i] = xcolor.pixel;
+    }
+- 
+-   ximage = NULL;
+  }
+  
+  
+--- 301,336 ----
+  void InitDisplay(name)
+  char *name;
+  {
++ /* For 256 color modes. */
+  
+    int ncolors = LUM_RANGE*CB_RANGE*CR_RANGE;
+    int i, lum_num, cr_num, cb_num;
+!   int r, g, b;
+  
+    if (ditherType == NO_DITHER) return;
+  
+    MakeWindow(name);
+  
+!   gl_setpalettecolor(255, 0, 0, 0);	/* black */
+!   gl_clearscreen(255);
+  
+    for (i=0; i<ncolors; i++) {
+  
+      lum_num = (i / (CR_RANGE*CB_RANGE))%LUM_RANGE;
+      cr_num = (i / CB_RANGE)%CR_RANGE;
+      cb_num = i % CB_RANGE;
+  
++     r = g = b = 0;
+      ConvertColor(lum_values[lum_num], cr_values[cr_num], cb_values[cb_num], &r, &g, &b);
+  
+!     if (i > 256) {
+!       printf("mpeg_vga: not enough colors.\n");
+!       vga_setmode(TEXT);
+!       exit(-1);
+      }
+!     gl_setpalettecolor(i, r >> 2, g >> 2, b >> 2);
+!     pixel[i] = i;
+    }
+  }
+  
+  
+***************
+*** 443,572 ****
+   *--------------------------------------------------------------
+   */
+  
+! void InitGrayDisplay(name)
+! char *name;
+! {
+!   int ncolors = 128;
+!   XColor xcolor;
+!   int i;
+!   Colormap dcmap;
+! 
+!   MakeWindow(name);
+! 
+!   gc = XCreateGC(display, window, 0, 0);
+! 
+!   dcmap = cmap = XDefaultColormap(display, DefaultScreen(display));
+! 
+!   xcolor.flags = DoRed | DoGreen | DoBlue;
+! 
+!   if (owncmFlag) goto create_map;
+!   retry_alloc_grays:
+!   for (i=0; i<ncolors; i++) {
+! 
+!     xcolor.red = (i*2) * 256;
+!     xcolor.green = (i*2) * 256;
+!     xcolor.blue = (i*2) * 256;
+! 
+!     if(XAllocColor(display, cmap, &xcolor) == 0 && cmap == dcmap) {
+!       int j;
+!       unsigned long tmp_pixel;
+!       XWindowAttributes xwa;
+! 
+!       if (!quietFlag) {
+!         fprintf(stderr, "Using private colormap.\n");
+!       }
+! 
+!       /* Free colors. */
+!       for(j = 0; j < i; j ++) {
+!         tmp_pixel = pixel[j*2];
+!         XFreeColors(display, cmap, &tmp_pixel, 1, 0);
+!       }
+! 
+!       create_map:
+!       XGetWindowAttributes(display, window, &xwa);
+!       cmap = XCreateColormap(display, window, xwa.visual, AllocNone);
+!       XSetWindowColormap(display, window, cmap);
+! 
+!       goto retry_alloc_grays;
+!     }
+!     pixel[(i*2)] = xcolor.pixel;
+!     pixel[(i*2)+1] = xcolor.pixel;
+!   }
+  
+!   ximage = NULL;
+! }
+! 
+! 
+! /*
+!  *--------------------------------------------------------------
+!  *
+!  * InitGray256Display --
+!  *
+!  *	Initialized display for gray scale dither with 256 levels
+!  *
+!  * Results:
+!  *      None.
+!  *
+!  * Side effects:
+!  *      None.
+!  *
+!  *--------------------------------------------------------------
+!  */
+! 
+! 
+! void InitGray256Display(name)
+  char *name;
+  {
+!   int ncolors = 256;
+!   XColor xcolor;
+    int i;
+-   Colormap dcmap;
+-   int result;
+-   XWindowAttributes xwa;
+  
+    MakeWindow(name);
+  
+-   gc = XCreateGC(display, window, 0, 0);
+- 
+-   dcmap = cmap = XDefaultColormap(display, DefaultScreen(display));
+- 
+-   xcolor.flags = DoRed | DoGreen | DoBlue;
+- 
+-   if (owncmFlag) {
+-     XGetWindowAttributes(display, window, &xwa);
+-     cmap = XCreateColormap(display, window, xwa.visual, AllocNone);
+-     XSetWindowColormap(display, window, cmap);
+-   }
+- 
+-   retry_alloc_grays:
+    for (i=0; i<ncolors; i++) {
+!     xcolor.red = i * 256;
+!     xcolor.green = i * 256;
+!     xcolor.blue = i * 256;
+!     if((result=XAllocColor(display, cmap, &xcolor)) == 0 && cmap == dcmap) {
+!       int j;
+!       unsigned long tmp_pixel;
+! 
+!       if (!quietFlag) {
+!         fprintf(stderr, "Using private colormap.\n");
+!       }
+! 
+!       /* Free colors. */
+!       for(j = 0; j < i; j ++) {
+!         tmp_pixel = pixel[j];
+!         XFreeColors(display, cmap, &tmp_pixel, 1, 0);
+!       }
+! 
+!       XGetWindowAttributes(display, window, &xwa);
+!       cmap = XCreateColormap(display, window, xwa.visual, AllocNone);
+!       XSetWindowColormap(display, window, cmap);
+! 
+!       goto retry_alloc_grays;
+!     }
+!     pixel[i] = xcolor.pixel;
+    }
+- 
+-   ximage = NULL;
+  }
+  
+  
+--- 350,374 ----
+   *--------------------------------------------------------------
+   */
+  
+! #define NUM_COLORS 256
+  
+! void InitGrayDisplay(name)
+  char *name;
+  {
+!   int ncolors = NUM_COLORS;
+    int i;
+  
+    MakeWindow(name);
+  
+    for (i=0; i<ncolors; i++) {
+!     int r, g, b;
+!     r = i;
+!     g = i;
+!     b = i;
+!     
+!     gl_setpalettecolor(i, r / 4, g / 4, b / 4);
+!     pixel[i] = i;
+    }
+  }
+  
+  
+***************
+*** 589,608 ****
+  void InitMonoDisplay(name)
+  char *name;
+  {
+-   XGCValues xgcv;
+  
+    MakeWindow(name);
+  
+-   xgcv.background = BlackPixel(display, DefaultScreen(display));
+-   xgcv.foreground = WhitePixel(display, DefaultScreen(display));
+- 
+-   gc = XCreateGC(display, window, GCForeground | GCBackground, &xgcv);
+- 
+-   ximage = NULL;
+  }
+  
+  
+- 
+  /*
+   *--------------------------------------------------------------
+   *
+--- 391,402 ----
+***************
+*** 625,632 ****
+  
+    MakeWindow(name);
+  
+-   gc = XCreateGC(display, window, 0, 0);
+-   ximage = NULL;
+  }
+  
+  
+--- 419,424 ----
+***************
+*** 650,659 ****
+  ExecuteDisplay(vid_stream)
+       VidStream *vid_stream;
+  {
+-   char dummy;
+-   Visual *FindFullColorVisual();
+-   Visual *fc_visual;
+-   int depth;
+    static int rate_deal=-1, one_frame_time;
+    static struct timeval tftarget, tfnow;
+    int zero=0;
+--- 442,447 ----
+***************
+*** 664,669 ****
+--- 452,459 ----
+      fprintf (stderr, "%d\r", totNumFrames);
+    }
+  
++   if (ditherType == NO_DITHER) return;
++ 
+    if (partialFlag)
+      if (!((totNumFrames>=startFrame) && 
+  	  ((endFrame==-1) || (totNumFrames<=endFrame))))
+***************
+*** 722,790 ****
+      while ((foo=getchar())!='\n');
+    }
+  
+-   if (ditherType == NO_DITHER) return;
+    if (ditherType == PPM_DITHER) {
+      ExecutePPM(vid_stream);
+      return;
+    }
+  
+!   if (ximage == NULL) {
+!     
+!     if (ditherType == Twox2_DITHER) {
+!       ximage = XCreateImage(display, None, 8, ZPixmap, 0, &dummy,
+! 			    vid_stream->mb_width * 32,
+! 			    vid_stream->mb_height * 32, 8, 0);
+!     } else if (ditherType == FULL_COLOR_DITHER) {
+!       fc_visual = FindFullColorVisual(display, &depth);
+!       ximage = XCreateImage (display, fc_visual, depth, ZPixmap,
+! 			     0, &dummy, vid_stream->mb_width * 16,
+! 			     vid_stream->mb_height * 16, 32, 0);
+!     } else if (ditherType == FULL_COLOR2_DITHER) {
+!       fc_visual = FindFullColorVisual(display, &depth);
+!       ximage = XCreateImage (display, fc_visual, depth, ZPixmap,
+! 			     0, &dummy, vid_stream->mb_width * 32,
+! 			     vid_stream->mb_height * 32, 32, 0);
+!     } else if (ditherType == MONO_DITHER || ditherType == MONO_THRESHOLD) {
+!       ximage = XCreateImage (display, None, 1, XYBitmap, 0, &dummy,
+! 			     vid_stream->mb_width * 16,
+! 			     vid_stream->mb_height * 16, 8, 0);
+!       ximage->byte_order = MSBFirst;
+!       ximage->bitmap_bit_order = MSBFirst;
+!     } else {
+!       ximage = XCreateImage(display, None, 8, ZPixmap, 0, &dummy,
+! 			    vid_stream->mb_width * 16,
+! 			    vid_stream->mb_height * 16, 8, 0);
+!     }
+!   }
+!   
+!   if (!noDisplayFlag) {
+! #ifdef SH_MEM
+!     if (shmemFlag) {
+!       XShmPutImage(display, window, gc, vid_stream->current->ximage, 
+! 		   0, 0, 0, 0,
+! 		   vid_stream->current->ximage->width, 
+! 		   vid_stream->current->ximage->height, True);
+!       XFlush(display);
+!       
+!       while(1) {
+! 	XEvent xev;
+! 	
+! 	XNextEvent(display, &xev);
+! 	if(xev.type == CompletionType)
+! 	  break;
+!       }
+!     }
+!     else 
+! #endif
+!       
+        {
+! 	ximage->data = (char *) vid_stream->current->display; 
+  	
+! 	XPutImage(display, window, gc, ximage, 0, 0, 0, 0, ximage->width, ximage->height);
+        }
+-   }
+  }
+- 
+  
+  extern char *inputName;
+  extern char *strrchr();
+--- 512,623 ----
+      while ((foo=getchar())!='\n');
+    }
+  
+    if (ditherType == PPM_DITHER) {
+      ExecutePPM(vid_stream);
+      return;
+    }
+  
+!   if (!noDisplayFlag)
+        {
+! 	void *data = (char *) vid_stream->current->display; 
+  	
+! 	if (ditherType == Twox2_DITHER) {
+! 	  /* Twice the size; 256-color mode */
+! 	  gl_putbox(0, 0, vid_stream->h_size * 2,
+! 	    vid_stream->v_size * 2, data);
+! 	} else if (ditherType == FULL_COLOR_DITHER && BYTESPERPIXEL == 3) {
+! 	  /* Tricky conversion. */
+! 	  /* The data is padded to 32 bits per pixel, we need 24 bits. */
+! 	  int i, w;
+! 	  unsigned int *datap;
+! 	  void *box;
+! 	  unsigned char *boxp;
+! 	  datap = data;
+! 	  w = vid_stream->h_size;
+! 	  box = alloca(vid_stream->v_size * w * 3 + 3);
+! 	  boxp = box;
+! 	  for (i = 0; i < vid_stream->v_size; i++) {
+! 	    int j = 0;
+! 	    /* First byte is blue. */
+! 	    /* Nasty overlapping memory writes, but it is fast. */
+! 	    /* Note that boxp points to bytes, datap to words. */
+!             while (j + 7 < w) {
+!          	*(unsigned *)boxp = *datap;
+!             	*(unsigned *)(boxp + 3) = *(datap + 1);
+!             	*(unsigned *)(boxp + 6) = *(datap + 2);
+!             	*(unsigned *)(boxp + 9) = *(datap + 3);
+!             	*(unsigned *)(boxp + 12) = *(datap + 4);
+!             	*(unsigned *)(boxp + 15) = *(datap + 5);
+!             	*(unsigned *)(boxp + 18) = *(datap + 6);
+!             	*(unsigned *)(boxp + 21) = *(datap + 7);
+!             	j += 8;
+!             	boxp += 24;
+!             	datap += 8;
+!             }
+!             while (j < w) {
+!               *(unsigned *)boxp = *datap;
+!               j++;
+!               boxp += 3;
+!               datap++;
+!             }
+! 	  }
+! 	  gl_putbox(0, 0, vid_stream->h_size, vid_stream->v_size, box);
+! 	} else if (ditherType == FULL_COLOR_DITHER && BYTESPERPIXEL == 2) {
+! 	  /* The data is 8-8-8 truecolor padded to 32 bits, we need */
+! 	  /* 15-bit 5-5-5 truecolor. Pretty slow conversion. */
+! 	  int i, w;
+! 	  unsigned int *datap;
+! 	  void *box;
+! 	  unsigned char *boxp;
+! 	  datap = data;
+! 	  w = vid_stream->h_size;
+! 	  box = alloca(vid_stream->v_size * w * 2 + 3);
+! 	  boxp = box;
+! 	  for (i = 0; i < vid_stream->v_size; i++) {
+! 	    int j = 0;
+! 	    /* First byte is blue. */
+! 	    /* Note that boxp points to bytes, datap to words. */
+!             while (j + 1 < w) {
+!             	unsigned r, g, b;
+!         	b = *((unsigned char *)datap);
+!         	g = *((unsigned char *)datap + 1);
+!         	r = *((unsigned char *)datap + 2);
+!             	*(unsigned short *)boxp =
+!             		((r & 0xf8) << 7) + ((g & 0xf8) << 2) + (b >> 3);
+!         	b = *((unsigned char *)datap + 4);
+!         	g = *((unsigned char *)datap + 5);
+!         	r = *((unsigned char *)datap + 6);
+!             	*(unsigned short *)(boxp + 2) =
+!             		((r & 0xf8) << 7) + ((g & 0xf8) << 2) + (b >> 3);
+!             	j += 2;
+!             	boxp += 4;
+!             	datap += 2;
+!             }
+!             while (j < w) {
+!             	unsigned r, g, b;
+!         	r = *((unsigned char *)datap);
+!         	g = *((unsigned char *)datap + 1);
+!         	g = *((unsigned char *)datap + 2);
+!             	*(unsigned short *)boxp =
+!             		((r & 0xf8) << 7) + ((g & 0xf8) << 2) + (b >> 3);
+!             	j++;
+!             	boxp += 2;
+!             	datap++;
+!             }
+! 	  }
+! 	  gl_putbox(0, 0, vid_stream->h_size, vid_stream->v_size, box);
+!         } else if (ditherType == MONO_DITHER || ditherType == MONO_THRESHOLD) {
+!           /* It's MSBFirst, which is what we need. */
+!           int i;
+!           for (i = 0; i < vid_stream->v_size; i++)
+!             vga_drawscansegment(data + i * vid_stream->h_size / 8,
+!               0, i, vid_stream->h_size / 8);
+!         } else {
+!           /* default 256-color dithering */
+! 	  gl_putbox(0, 0, vid_stream->h_size, vid_stream->v_size, data);
+! 	}
+        }
+  }
+  
+  extern char *inputName;
+  extern char *strrchr();
+*** main.c	Sun Jan 29 22:17:25 1995
+--- mpegvga/main.c	Sun Jan 29 22:48:49 1995
+***************
+*** 128,133 ****
+--- 128,134 ----
+    }
+    if (curVidStream != NULL)
+      DestroyVidStream(curVidStream);
++   restoretextmode();
+    exit(1);
+  }
+  #else
+***************
+*** 140,145 ****
+--- 141,147 ----
+    }
+    if (curVidStream != NULL)
+      DestroyVidStream(curVidStream);
++   restoretextmode();
+    exit(1);
+  }
+  #endif
+***************
+*** 307,324 ****
+        exit(1);
+  #endif
+      }
+-     else if (strcmp(argv[mark], "-shmem_off") == 0) {
+-       argc--; mark++;
+-       shmemFlag = 0;
+-     }
+      else if (strcmp(argv[mark], "-quiet") == 0) {
+        argc--; mark++;
+        quietFlag = 1;
+      }
+-     else if (strcmp(argv[mark], "-owncm") == 0) {
+-       argc--; mark++;
+-       owncmFlag = 1;
+-     }
+      else if (strcmp(argv[mark], "-step") == 0) {
+        argc--; mark++;
+        requireKeypressFlag = 1;
+--- 309,318 ----
+***************
+*** 432,442 ****
+      break;
+  
+    case GRAY_DITHER:
+-     InitGrayDisplay(name);
+-     break;
+- 
+    case GRAY256_DITHER:
+!     InitGray256Display(name);
+      break;
+  
+    case FULL_COLOR_DITHER:
+--- 426,433 ----
+      break;
+  
+    case GRAY_DITHER:
+    case GRAY256_DITHER:
+!     InitGrayDisplay(name);
+      break;
+  
+    case FULL_COLOR_DITHER:
+***************
+*** 483,500 ****
+  
+    }
+  
+- #ifdef SH_MEM
+-     if (shmemFlag && (display != NULL)) {
+-       if (!XShmQueryExtension(display)) {
+- 	shmemFlag = 0;
+- 	if (!quietFlag) {
+- 	  fprintf(stderr, "Shared memory not supported\n");
+- 	  fprintf(stderr, "Reverting to normal Xlib.\n");
+- 	}
+-       }
+-     }
+- #endif
+- 
+    if (setjmp(env) != 0) {
+  
+      DestroyVidStream(theStream);
+--- 474,479 ----
+***************
+*** 568,575 ****
+      fprintf(stderr, "      [-framerate num]\n");
+      fprintf(stderr, "      [-no_display]\n");
+      fprintf(stderr, "      [-quiet]\n");
+-     fprintf(stderr, "      [-owncm]\n");
+-     fprintf(stderr, "      [-shmem_off]\n");
+  	fprintf(stderr, "      [-l_range num]\n");
+  	fprintf(stderr, "      [-cr_range num]\n");
+  	fprintf(stderr, "      [-cb_range num]\n");
+--- 547,552 ----
