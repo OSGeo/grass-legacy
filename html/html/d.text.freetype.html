@@ -9,9 +9,11 @@
 
 <H2>NAME</H2>
 
-<EM><b>d.text.freetype</b></EM> - Draws text in the active display frame on the graphics monitor using TrueType fonts. 
+<EM><b>d.text.freetype</b></EM> - 
+Draws text in the graphics monitor's active display frame using TrueType fonts
 <BR>
 <EM>(GRASS Display Program)</EM>
+<BR><BR>
 
 <H2>SYNOPSIS</H2>
 
@@ -21,8 +23,8 @@
 <BR>
 <B>d.text.freetype</B> 
 [<B>-rpsc</B>]
-[<B>text=</B><EM>name</EM>]
-[<B>east_north=</B><EM>east,north</EM>] 
+[<B>text=</B><EM>"string"</EM>]
+[<B>east_north=</B><EM>easting,northing</EM>] 
 [<B>font=</B><EM>name</EM>] 
 [<B>path=</B><EM>name</EM>] 
 [<B>charset=</B><EM>name</EM>] 
@@ -30,67 +32,73 @@
 [<B>size=</B><EM>value</EM>] 
 [<B>align=</B><EM>name</EM>]
 [<B>rotation=</B><EM>value</EM>]
+<BR><BR>
 
 <H2>DESCRIPTION</H2>
 
-<EM>d.text.freetype</EM> draws text in the active display frame on
-the graphics monitor using TrueType fonts.
-
+<EM>d.text.freetype</EM>
+draws text in the graphics monitor's active display frame using TrueType
+fonts already installed on the user's system.
+<BR>
 
 <H3>Flags:</H3>
 
 <DL>
 <DT><B>-r</B>
-<DD>Radian rotation
+<DD>Use radians instead of degrees for rotation
 <DT><B>-p</B>
-<DD>Pixel coordinates
+<DD>Use pixel coordinates ([0,0] is top left)
 <DT><B>-s</B>
-<DD>Pixel size
+<DD>Font size is height in pixels
 <DT><B>-c</B>
-<DD>Command mode (Compatibility with d.text)
+<DD>Command mode (Compatibility with <A HREF="d.text.html">d.text</a>)
 </DL>
-
 
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>text=</B><EM>name</EM>
-<DD>Text to be displayed.
-<DT><B>east_north=</B><EM>east,north</EM>
-<DD>Locates text at this point.
-    The user can click on the location instead of using this option.
+<DT><B>text=</B><EM>string</EM>
+<DD>Text to be displayed. Enclose multiple words "in quotes".
+
+<DT><B>east_north=</B><EM>easting,northing</EM>
+<DD>Locates the text at these map coordinates. If this option is omitted, 
+     the user will be prompted to use the mouse to specify the location.
 <DT><B>font=</B><EM>name</EM>
-<DD>Specifies a font with a fontname in the definition file, freetypecap.
-<DT><B>path=</B><EM>name</EM>
-<DD>Specifies a font with full pathname.
+<DD>Specifies a font listed in the GRASS 'freetypecap' definition file.
+
+<DT><B>path=</B><EM>/path/filename.ttf</EM>
+<DD>Specifies a TrueType font with full pathname.
+
 <DT><B>charset=</B><EM>name</EM>
-<DD>Sets character encoding for input <B>text</B>.
+<DD>Sets character encoding for input <B>text</B>. (e.g. <TT>ISO-8859-1</TT>)
+
 <DT><B>color=</B><EM>name</EM>
-<DD>Sets text color to <EM>name</EM>.<BR>
+<DD>Sets text color to <EM>name</EM>. It can also be a hexadecimal
+       value of <TT>0xRRGGBB</TT>.<BR>
     Options: red, orange, yellow, green, blue, indigo, 
     violet, gray, white, and black<BR>
     Default: <EM>gray</EM><BR>
-    It can also be a hexadecimal value of 0xRRGGBB.
+
 <DT><B>size=</B><EM>value</EM>
 <DD>Sets text height in percent of available frame height.<BR>
-    Default: 30
+    Default: 10
+
 <DT><B>align=</B><EM>name</EM>
 <DD>Aligns text in this way.<BR>
     Options: ll, lc, lr, cl, cc, cr, ul, uc, ur<BR>
-    Default: <EM>ll</EM><BR>
     l?: Lower, c?: Vertically Centered, u?: Upper,<BR>
-    ?l: Left, ?c: Horizontally Centered, ?r: Right
+    ?l: Left, ?c: Horizontally Centered, ?r: Right<BR>
+    Default: <EM>ll</EM>&nbsp; (Lower Left)<BR>
+
 <DT><B>rotation=</B><EM>value</EM>
-<DD>Rotates text counterclockwise.<BR>
+<DD>Rotates text counterclockwise. The default unit is degrees.<BR>
     Default: 0<BR>
-    The default unit is degree.
 </DL>
 
 
 <H3>Command mode:</H3>
 
-<H4>Note</H4>
-
+<H4>Key</H4>
 <DL>
 <DT>{REQUIRED}
 <DD>
@@ -104,42 +112,53 @@ the graphics monitor using TrueType fonts.
 <DD>Radian, Percentage, and Pixels respectively
 </DL>
 
-
 <H4>Commands</H4>
 
 <DL>
-<DT>.F {font|path}[:charset] <EM>font</EM>
+<DT><DD>.F {font|path}[:charset] <EM>font</EM>
 <DD>
-<DT>.C {color_name|0xRRGGBB} <EM>color</EM>
+<DT><DD>.C {color_name|0xRRGGBB} <EM>color</EM>
 <DD>
-<DT>.S [+|-]size[p] <EM>size</EM>
+<DT><DD>.S [+|-]size[p] <EM>size</EM>
 <DD>
-<DT>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM>
+<DT><DD>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM>
 <DD>
-<DT>.R [+|-]rotation[r] <EM>rotation</EM>
+<DT><DD>.R [+|-]rotation[r] <EM>rotation</EM>
 <DD>
-<DT>.X [+|-]x[%|p] <EM>x-coord</EM>
+<DT><DD>.X [+|-]x[%|p] <EM>x-coord</EM>
 <DD>
-<DT>.Y [+|-]y[%|p] <EM>y-coord</EM>
+<DT><DD>.Y [+|-]y[%|p] <EM>y-coord</EM>
 <DD>
-<DT>.L {0|1} <EM>linefeed</EM>
+<DT><DD>.L {0|1} <EM>linefeed</EM>
 <DD>
-<DT>.E [+|-]east[%|p] <EM>x-origin</EM>
+<DT><DD>.E [+|-]east[%|p] <EM>x-origin</EM>
 <DD>
-<DT>.N [+|-]north[%|p] <EM>y-origin</EM>
+<DT><DD>.N [+|-]north[%|p] <EM>y-origin</EM>
 <DD>
-<DT>.. <EM>dot</EM>
+<DT><DD>.. <EM>dot</EM>
 <DD>
 </DL>
 
-<H4>Example</H4>
+To end input, press Ctrl-d on a blank line.
+<BR><BR>
 
-The following example prints three lines: "GRASS d.text.freetype output",
-"See test.input file", and "for more details.".
+<H2>EXAMPLES</H2>
+
+<H4>Standard mode:</H4>
+
+<TT><B>d.text.freetype</B> text="GRASS GIS" east_north=2107055,5603133 \<BR>
+<DD>size=7 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf</TT>
+<BR><BR>
+
+<H4>Command mode:</H4>
+The following example prints three lines: "<TT><font color=gray>GRASS</font>
+ <font color=red>d.text.freetype</font> <font color=gray>output</font></TT>",
+"<TT><font color=gray>See test.input file</font></TT>", and 
+"<TT><font color=gray>for more details.</font></TT>".
 
 <DL>
-<DT><B>d.text.freetype -c</B>
-<dd>.F /usr/X11R6/lib/X11/fonts/TrueType/ttf1.ttf:ISO-8859-1
+<DT><TT><B>d.text.freetype -c</B>
+<dd>.F /usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:ISO-8859-1
 <dd>.S 20p
 <dd>.L 0
 <dd>GRASS 
@@ -149,14 +168,18 @@ The following example prints three lines: "GRASS d.text.freetype output",
 <dd> output
 <dd>.L 1
 <dd>See test.input file
-<dd>for more details.
+<dd>for more details.</TT>
 </DL>
+<BR>
 
+Command mode instructions may also be read directly from a text file:<BR><BR>
+<TT><B>d.text.freetype</B> -c < test.input</TT>
+<BR><BR>
 
 <H2>DEFINITION FILE</H2>
 
 To help users select fonts conveniently, the definition file,
-$(GISBASE)/etc/freetypecap, is provided.  Its format is as follows:
+<TT>$(GISBASE)/etc/freetypecap</TT>, is provided.  Its format is as follows:
 
 <PRE>
 	font:fontpath:charset:color:size:description
@@ -164,7 +187,7 @@ $(GISBASE)/etc/freetypecap, is provided.  Its format is as follows:
 </PRE>
 
 See the file for examples.
-
+<BR><BR>
 
 <H2>SEE ALSO</H2>
 
@@ -172,7 +195,9 @@ See the file for examples.
 <EM><A HREF="d.font.html">d.font</A></EM><br>
 <EM><A HREF="d.title.html">d.title</A></EM><br>
 <EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
 <EM><A HREF="parser.html">parser</A></EM>
+<BR><BR>
 
 <H2>AUTHOR</H2>
 
