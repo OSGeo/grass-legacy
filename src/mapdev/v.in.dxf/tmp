@@ -1,0 +1,112 @@
+/* Saber-C Project File */
+/* Set current directory */
+cd /grass.src/4.0/src/mapdev/v.in.dxf
+/* Options for project */
+unsetopt ansi
+setopt auto_compile
+unsetopt auto_reload
+setopt auto_replace
+unsetopt batch_load
+unsetopt batch_run
+unsetopt cc_prog
+setopt ccargs               -g
+unsetopt create_file
+unsetopt debug_child
+unsetopt echo
+setopt edit_jobs            5
+unsetopt eight_bit
+setopt line_edit
+setopt line_meta
+setopt lint_load            2
+setopt lint_run             2
+setopt list_action
+setopt load_flags           -I/grass.src/4.0/src/libes -I/grass.src/4.0/src/mapdev/lib -L/grass.src/4.0/src/libes/LIB.sun4 -L/grass.src/4.0/src/mapdev/lib/LIB.sun4
+unsetopt long_not_int
+unsetopt make_args
+setopt make_hfiles
+unsetopt make_offset
+setopt make_prog            make -f OBJ.sun4/make.rules
+setopt make_symbol          #
+setopt mem_config           16384
+unsetopt mem_trace
+setopt num_proc             1
+unsetopt page_cmds
+setopt page_list            23
+unsetopt page_load
+unsetopt path
+setopt proto_path           . /home/local/saber_dir30/sun4-40/proto /home/local/saber_dir30/sun4-40/../common/proto
+unsetopt preprocessor
+setopt program_name         a.out
+unsetopt print_custom
+setopt print_pointer
+setopt print_string         20
+unsetopt save_memory
+setopt sbrk_size            1048576
+setopt src_err              3
+setopt src_step             1
+setopt src_stop             3
+setopt sys_load_flags       -L/lib -L/usr/lib -L/usr/local/lib -I/usr/include -Dunix -Dsun -Dsparc
+unsetopt tab_stop
+unsetopt terse_suppress
+unsetopt terse_where
+setopt unset_value          191
+unsetopt win_fork_nodup
+unsetopt win_no_raise
+unsetopt win_message_list
+unsetopt win_project_list
+/* Suppressions for project */
+
+/* Contents of project */
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /lib/libc.a
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /grass.src/4.0/src/libes/LIB.sun4/libgis.a
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /lib/libm.a
+load -O\ -I/grass.src/4.0/src/mapdev/Vlib\ -I/grass.src/4.0/src/mapdev/diglib\ -I/grass.src/4.0/src/libes add_arc.c add_bounds.c add_circle.c add_extents.c add_line.c add_point.c add_polyline.c check_ext.c close_layer.c
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 debug.c
+load -O\ -I/grass.src/4.0/src/mapdev/Vlib\ -I/grass.src/4.0/src/mapdev/diglib\ -I/grass.src/4.0/src/libes entities.c find_lines.c header.c init_chars.c label_box.c main.c make_header.c open_layer.c reopen_layer.c which_layer.c /grass.src/4.0/src/mapdev/Vlib/close.c /grass.src/4.0/src/mapdev/Vlib/constraint.c /grass.src/4.0/src/mapdev/Vlib/get_area.c /grass.src/4.0/src/mapdev/Vlib/header.c /grass.src/4.0/src/mapdev/Vlib/init_head.c /grass.src/4.0/src/mapdev/Vlib/level.c /grass.src/4.0/src/mapdev/Vlib/level_two.c /grass.src/4.0/src/mapdev/Vlib/line_struct.c /grass.src/4.0/src/mapdev/Vlib/open.c /grass.src/4.0/src/mapdev/Vlib/open1.c /grass.src/4.0/src/mapdev/Vlib/open2.c /grass.src/4.0/src/mapdev/Vlib/portable_io.c /grass.src/4.0/src/mapdev/Vlib/read.c /grass.src/4.0/src/mapdev/Vlib/read1.c /grass.src/4.0/src/mapdev/Vlib/read2.c /grass.src/4.0/src/mapdev/Vlib/rewind.c /grass.src/4.0/src/mapdev/Vlib/window.c /grass.src/4.0/src/mapdev/Vlib/write.c /grass.src/4.0/src/mapdev/Vlib/x_point_io.c
+load -O\ -I/grass.src/4.0/src/mapdev/Vlib\ -I/grass.src/4.0/src/mapdev/diglib\ -I/grass.src/4.0/src/libes /grass.src/4.0/src/mapdev/Vlib/x_rw_binary.c /grass.src/4.0/src/mapdev/diglib/allocation.c /grass.src/4.0/src/mapdev/diglib/area.c /grass.src/4.0/src/mapdev/diglib/attribute.c /grass.src/4.0/src/mapdev/diglib/bound_box.c /grass.src/4.0/src/mapdev/diglib/calc_angl.c /grass.src/4.0/src/mapdev/diglib/check_node.c /grass.src/4.0/src/mapdev/diglib/chk_inside.c /grass.src/4.0/src/mapdev/diglib/clock.c /grass.src/4.0/src/mapdev/diglib/cont_lines.c /grass.src/4.0/src/mapdev/diglib/debugf.c /grass.src/4.0/src/mapdev/diglib/dig_box.c /grass.src/4.0/src/mapdev/diglib/file_checks.c /grass.src/4.0/src/mapdev/diglib/find_area.c /grass.src/4.0/src/mapdev/diglib/format.c /grass.src/4.0/src/mapdev/diglib/isle.c /grass.src/4.0/src/mapdev/diglib/line_dist.c /grass.src/4.0/src/mapdev/diglib/linecros.c /grass.src/4.0/src/mapdev/diglib/load_plus.c /grass.src/4.0/src/mapdev/diglib/map_to_head.c
+load -O\ -I/grass.src/4.0/src/mapdev/Vlib\ -I/grass.src/4.0/src/mapdev/diglib\ -I/grass.src/4.0/src/libes /grass.src/4.0/src/mapdev/diglib/memory_io.c /grass.src/4.0/src/mapdev/diglib/node_op.c /grass.src/4.0/src/mapdev/diglib/old2new.c /grass.src/4.0/src/mapdev/diglib/point_t_area.c /grass.src/4.0/src/mapdev/diglib/point_t_line.c /grass.src/4.0/src/mapdev/diglib/portable.c /grass.src/4.0/src/mapdev/diglib/portable2.c /grass.src/4.0/src/mapdev/diglib/prune.c /grass.src/4.0/src/mapdev/diglib/rw_ascii.c /grass.src/4.0/src/mapdev/diglib/struct_alloc.c /grass.src/4.0/src/mapdev/diglib/struct_copy.c /grass.src/4.0/src/mapdev/diglib/unit_conv.c /grass.src/4.0/src/mapdev/diglib/write_file.c /grass.src/4.0/src/mapdev/diglib/x_struct_io.c
+link
+
+/* Signals caught and ignored */
+catch HUP
+catch INT
+catch QUIT
+catch ILL
+catch TRAP
+catch IOT
+catch EMT
+catch FPE
+catch KILL
+catch BUS
+catch SEGV
+catch SYS
+catch PIPE
+catch TERM
+catch URG
+catch STOP
+catch TSTP
+catch TTIN
+catch TTOU
+catch IO
+catch XCPU
+catch XFSZ
+catch VTALRM
+catch PROF
+catch LOST
+catch USR1
+catch USR2
+ignore ALRM
+ignore CONT
+ignore CHLD
+ignore WINCH
+
+/* Status of project */
+display s
+display n
+display w
+display e
+display y
+display x
+stop at "add_extents.c":85
+stop at "check_ext.c":6
+stop at "add_extents.c":85
