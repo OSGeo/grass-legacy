@@ -30,7 +30,6 @@ static int color ;
 static double size ;
 static int background ;
 static int border ;
-static int opaque ;
 static char font[256];
 static char text[MAX_SITE_STRING];
 #define STANDARD_FONT "romans"
@@ -50,7 +49,6 @@ int initialize_options (void)
 	size = 1000. ;
 	background = D_translate_color("white") ;
 	border = D_translate_color("black") ;
-	opaque = YES ;
 	strcpy (font, STANDARD_FONT);
 
 	return 0;
@@ -118,7 +116,7 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
 
 int do_labels (FILE *infile, struct Cell_head window,
 	char *buff2, char *buff3, char *buff4, 
-	char *buff6, char *buff7, char *buff8, char *buff9,
+	char *buff6, char *buff7,  char *buff9,
 	int column, int index, int mouse)
 {
 	char *buff, *tbuff;
@@ -139,8 +137,6 @@ int do_labels (FILE *infile, struct Cell_head window,
 	sscanf(buff4,"%lf",&size) ;
 	background = D_translate_color(buff6) ;
 	border = D_translate_color(buff7) ;
-	if (! strncmp(buff8, "yes", 3)) opaque = YES ;
-	else opaque = NO ;
 	if (scan_ref (buff2) == 0)
 	{
 		xref = CENT ;
