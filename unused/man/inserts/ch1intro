@@ -1,0 +1,84 @@
+.IH "1	INTRODUCTION"
+\fBBackground\fR
+.sp 1.5
+This reference manual details the use of programs distributed with
+version 5.0 of the Geographical Resources Analysis Support System 
+(GRASS), a public domain, image processing and geographic information
+system (GIS).  The GRASS system is used to input, manipulate, 
+analyze, and output geographic data by users in both military and 
+non-military, public and private agencies based in North America, 
+Europe, and other parts of the world.
+.sp 
+Although most GRASS development has been conducted at USACERL, system
+integration, development, testing, distribution, training, and
+support are performed by numerous publicly and privately operated
+sites throughout the world. 
+.sp 2
+\fBReference Manual\fR
+.sp 1.5
+The manual explains the capabilities, syntax, and use of current
+GRASS programs.  Chapters 
+contain program entries which are ordered alphabetically by program name.
+Each entry contains:
+.sp
+	*  the program name 
+.br
+	*  a brief description
+.br
+	*  a synopsis of files associated with the program
+.br
+	*  a full description of the program's capabilities and uses
+.br
+	*  a summary of the command-line operations associated with the program
+.br
+	*  a list of associated or related programs
+.br
+	*  a list of program authors
+.sp 
+Each entry may optionally include a description of the program's operation
+in interactive mode, and a discussion of "bugs," program limitations, or special notes of interest.
+.sp
+Throughout the manual, program input to be explicitly entered by
+the user is printed in bold text.  User-specified input (i.e., variables
+set by the user) is set in italic type.  Boxed text shows information
+output to the user's terminal screen.
+.sp 2
+\fBGRASS Categories\fR
+.sp 1.5
+The GRASS code has been divided into the following categories according
+to reliability, testing, and application:
+.sp 2
+	*  Main and Alpha
+.br
+	*  UNIX Shell Scripts
+.br
+	*  Contributed
+.br
+	*  Garden
+.br	
+	*  Related
+.KE
+.sp
+Descriptions of Main and Alpha, Shell Script, and Contributed
+categories are presented at the introduction of
+each appropriate chapter in this manual.
+
+Other software distributed
+with GRASS but not documented in this manual includes:
+
+(1)	Hardware- and software-specific code:  SG3d (specific to Silicon Graphics computers) and XGRASS 
+(specific to 
+\fIMotif\fR).
+
+(2)	Garden and 
+Related programs contained in the
+.I src.garden
+and
+.I src.related 
+directories, which the user must compile separately (see the
+GRASS \fIInstallation Guide\fR for compilation instructions):  
+Any original documentation for these programs is compiled on-line with the
+directories.  Garden includes program interfaces that link GRASS 4.1
+with other related software.  Related includes programs to which GRASS has been
+interfaced and that program developers have allowed to be distributed
+with GRASS.
