@@ -152,7 +152,7 @@ fi
 r.colors map=$GIS_OPT_outprefix.1 color=grey
 r.colors map=$GIS_OPT_outprefix.2 color=grey
 r.colors map=$GIS_OPT_outprefix.3 color=grey
-if [ $GIS_FLAG_4 -nq 1 ] ; then
+if [ $GIS_FLAG_4 -ne 1 ] ; then
  r.colors map=$GIS_OPT_outprefix.4 color=grey
 fi
 
