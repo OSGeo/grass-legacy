@@ -1871,7 +1871,7 @@ if ![catch {open ~/.tcltkgrass r} stream] {
     close $stream
 }
 
-wm title . "TCLTKGRASS 3.0 (2000) - Location: $env(LOCATION_NAME) "
+wm title . "TCLTKGRASS 3.1 (2000) - Location: $env(LOCATION_NAME) "
 
 wm geometry . $main_menu(window_geometry)
 catch {

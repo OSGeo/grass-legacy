@@ -4,7 +4,7 @@
 
 help {Help} {-width 80} {-justify left} \
 {
-                                TclTkGRASS 3.0
+                                TclTkGRASS 3.1
                An open graphical user interface for GRASS GIS
 
 --------------------------------------------------------------------------------
