@@ -1,0 +1,13 @@
+interface_build {
+    {d.mon} 0
+    {To establish and control use of a graphics display monitor.}
+    {entry start {Graphics monitor to start:} 0 monitor}
+    {entry stop {Graphics monitor to stop:} 0 monitor}
+    {entry select {Graphics monitor to select:} 0 monitor}
+    {entry unlock {Graphics monitor to unlock:} 0 monitor}
+    {checkbox -l {List all monitors.} "" -l}
+    {checkbox -l {List all monitors with current status.} "" -L}
+    {checkbox -p {Print name of currently selected monitor.} "" -p}
+    {checkbox -r {Release currently selected monitor.} "" -r}
+    {checkbox -s {Do not automatically select when starting.} "" -s}
+}
