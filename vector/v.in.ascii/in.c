@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include "gis.h"
 #include "dbmi.h"
@@ -12,11 +13,13 @@ main (int argc, char *argv[])
 {
 	FILE *ascii;
 	struct GModule *module;
-	struct Option *old, *new, *columns_opt, *xcol_opt, *ycol_opt, *zcol_opt, *catcol_opt;
+	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
+		*ycol_opt, *zcol_opt, *catcol_opt;
 	int    xcol, ycol, zcol, catcol;
 	struct Flag *zcoorf, *t_flag, *e_flag;
 	char   *mapset, *table;
 	char   errmsg[200];
+	char   *fs;
 	int    zcoor=WITHOUT_Z, points_format, make_table; 
 
 	struct Map_info Map;
@@ -37,6 +40,14 @@ main (int argc, char *argv[])
 	old->description = "ascii file to be converted to binary vector file";
 
 	new = G_define_standard_option(G_OPT_V_OUTPUT);
+
+	delim_opt = G_define_option();
+	delim_opt->key = "fs";
+	delim_opt->key_desc = "character|space|tab";
+	delim_opt->type = TYPE_STRING;
+	delim_opt->required = NO;
+	delim_opt->description = "field separator";
+	delim_opt->answer = "|";
 
 	columns_opt = G_define_option();
 	columns_opt->key = "columns";
@@ -128,6 +139,15 @@ main (int argc, char *argv[])
 	    points_format = 1;
         }
 
+	if (  (fs = delim_opt->answer) ) {
+	    if(strcmp (fs, "space") == 0)
+		fs = " ";
+	    else if(strcmp (fs, "tab") == 0)
+		fs = "\t";
+	}
+	else
+	    fs = "|";
+
 	/* check dimension */
 	if (zcoorf->answer) {
 	    zcoor = 1;	    
@@ -158,7 +178,7 @@ main (int argc, char *argv[])
 	    }
 	    unlink(tmp);
 
-	    points_analyse ( stdin, ascii, "|", PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
+	    points_analyse ( stdin, ascii, fs, PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
@@ -332,7 +352,7 @@ main (int argc, char *argv[])
 		table = NULL;
 	    }
 
-	    points_to_bin ( ascii, rowlen, &Map, driver, table, "|", PNT_HEAD_NO, 
+	    points_to_bin ( ascii, rowlen, &Map, driver, table, fs, PNT_HEAD_NO, 
 		            ncols, coltype,  
 		            xcol, ycol, zcol, catcol );
 
