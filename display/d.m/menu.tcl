@@ -283,11 +283,11 @@
 			    {command "Edit category values of individual cells for displayed raster map" {} "" {} -command {term  d.rast.edit }}
 			    {separator}
 			    {command "Reclassify categories for areas of specified sizes" {} "" {} -command {execute  r.reclass.area }}
-			    {command "Reclassify categories using rules" {} "" {} -command {execute  $env(GISBASE)/etc/dm/script/r.reclass.rules }}
-			    {command "Reclassify categories using rules file" {} "" {} -command {execute  r.reclass }}
+			    {command "Reclassify categories using rules" {} "" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.rules }}
+			    {command "Reclassify categories using rules file" {} "" {} -command {execute $env(GISBASE)/etc/dm/script/r.reclass.file }}
 			    {separator}
-			    {command "Recode categories using rules (create new map)" {} "" {} -command {execute  $env(GISBASE)/etc/dm/script/r.recode.rules }}
-			    {command "Recode categories using rules file (create new map)" {} "" {} -command {execute  r.recode }}
+			    {command "Recode categories using rules (create new map)" {} "" {} -command {execute $env(GISBASE)/etc/dm/script/r.recode.rules }}
+			    {command "Recode categories using rules file (create new map)" {} "" {} -command {execute  $env(GISBASE)/etc/dm/script/r.recode.file }}
 			    {separator}
 			    {command "Rescale categories (create new map)" {} "" {} -command {execute  r.rescale }}
 			    {command "Rescale categories with equalized histogram (create new map)" {} "" {} -command {execute  r.rescale.eq }}
