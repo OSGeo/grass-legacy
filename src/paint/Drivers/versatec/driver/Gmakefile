@@ -1,0 +1,14 @@
+NAME=versatec
+LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
+PAINT = $(ETC)/paint
+LIST =\
+    main.o io.o alpha.o text.o raster.o \
+    chars.o graph_line.o graph_text.o \
+    npixels.o data.o rle.o init.o sun.o \
+    pictsize.o finish.o print.o write.o
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(MATHLIB) $(LIBS) -o $@
+
+$(LIST): P.h
+$(LIBS): #
