@@ -193,7 +193,10 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
                                 s/:$/:./
                                 s/:/ /g'`
     do
-        if [ -f "$i/konqueror" ] ; then
+        if [ -f "$i/htmlview" ] ; then  
+            GRASS_HTML_BROWSER=htmlview  
+            break  
+        elif [ -f "$i/konqueror" ] ; then  
             GRASS_HTML_BROWSER=konqueror
             break
         elif [ -f "$i/mozilla" ] ; then
