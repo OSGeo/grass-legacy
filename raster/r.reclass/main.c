@@ -6,6 +6,9 @@
 int main (int argc, char *argv[])
 {
     struct Categories cats;
+    struct FPRange range;
+    DCELL min, max;
+    int fp;
     char *title;
     char buf[1024];
     RULE *rules, *tail;
@@ -72,12 +75,19 @@ int main (int argc, char *argv[])
     }
 
     G_init_cats (0, "", &cats);
+    fp = G_raster_map_is_fp(old_name, old_mapset);
+    G_read_fp_range (old_name, old_mapset, &range);
+    G_get_fp_range_min_max (&range, &min, &max);
     rules = tail = NULL;
     any = 0;
 
     if(isatty(0))
 	{ 
 	  fprintf (stdout, "Enter rule(s), \"end\" when done, \"help\" if you need it\n");
+	  if (fp)
+	    fprintf (stdout, "fp: Data range is %.25f to %.25f\n", (double)min, (double)max);
+	  else
+	    fprintf (stdout, "Data range is %ld to %ld\n", (long)min, (long)max);
 	}
 
     while (input(buf))
