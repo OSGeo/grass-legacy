@@ -6,8 +6,9 @@ int
 main (int argc, char *argv[])
 {
     int i,n;
-	struct GModule *module;
+    struct GModule *module;
     struct Option **parm, *p;
+    struct Flag *overwr;
     char *old, *new;
 
     init (argv[0]);
@@ -30,6 +31,10 @@ main (int argc, char *argv[])
 	p->description = G_malloc (64);
 	sprintf (p->description, "%s file(s) to be renamed", list[n].alias);
     }
+
+    overwr		= G_define_flag();
+    overwr->key		= 'o';
+    overwr->description	= "Overwrite <new> file(s)";
 
     if (G_parser(argc, argv))
 	exit(1);
@@ -61,6 +66,11 @@ main (int argc, char *argv[])
 		fprintf (stderr, "<%s> not found\n", old);
 		continue;
 	    }
+	    if (!overwr->answer && find (n, new, ""))
+	    {
+		fprintf (stderr, "<%s> already exists\n", new);
+		continue;
+	    }
 	    if (G_legal_filename (new) < 0)
 	    {
 		fprintf (stderr, "<%s> illegal name\n", new);
@@ -72,6 +82,7 @@ main (int argc, char *argv[])
 		    parm[n]->key,old,new);
 		continue;
 	    }
+	    printf(">> %s => %s\n", old, new);
 	    do_rename (n, old, new);
 	}
     }

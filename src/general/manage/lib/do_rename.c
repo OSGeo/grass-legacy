@@ -16,6 +16,7 @@ int do_rename (int n, char *old, char *new)
 	fprintf (stdout," %-*s ", len, list[n].desc[i]);
 	fflush (stdout);
 
+	G_remove(list[n].element[i], new);
 	switch (G_rename (list[n].element[i], old, new))
 	{
 	case -1: fprintf (stdout,"COULD NOT RENAME"); break;
