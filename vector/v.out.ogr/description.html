@@ -38,10 +38,16 @@ Export areas of GRASS 5.7 vector map to SHAPE format (generates /tmp/testogr.shp
 
 Export lines to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
 <br>
-<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>line</em> 
+<b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
 <b>dsn=</b><em>/tmp/testogr.gml</em> <b>layer=</b><em>testogr</em> 
 <b>format=</b><em>GML</em>
+<p>
 
+Export areas directly to PostGIS:
+<br>
+<b>v.out.ogr input=</b><em>polygons</em> <b>type=</b><em>area</em>
+<b>dsn=</b><em>"PG:dbname=postgis"</em> <b>layer=</b><em>polymap</em>
+<b>format=</b><em>PostgreSQL</em>
 
 <H2>REFERENCES</H2>
 
