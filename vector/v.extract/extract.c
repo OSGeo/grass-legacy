@@ -86,7 +86,6 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 				if(have_left) break;
 			    }
 			}
-			/* TODO: remove orphaned centroids as well */
 			if(have_left && have_right)  continue;
 		     }
 		     /* write line */
