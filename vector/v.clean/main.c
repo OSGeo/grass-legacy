@@ -72,7 +72,7 @@ main (int argc, char *argv[])
 
 	x_flag = G_define_flag ();
 	x_flag->key             = 'x';
-	x_flag->description     = "Write out intersection points instead of broken lines";
+	x_flag->description     = "Write out intersection points instead of broken lines (break tool)";
 	
         if (G_parser (argc, argv))
 	    exit(-1); 
