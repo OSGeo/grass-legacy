@@ -7,6 +7,7 @@ source $formpath/html_library.tcl
 
 set submit_result ""
 set submit_msg ""
+set html ""
 
 set nb [NoteBook .nb]
 $nb configure -width 300 -height 500
@@ -27,10 +28,8 @@ proc create_submit_msg { formid  }  {
     $sbt configure -state disabled
 }
 
-proc add_form { formid title html } {
-    global nb formf
-
-    #puts "formid $formid : $title\n$html"
+proc add_form { formid title } {
+    global nb formf html
 
     set form($formid) [$nb insert end $formid -text $title]
     $nb raise $formid
@@ -58,7 +57,7 @@ proc HMsubmit_form {win param query} {
     global submit_result submit_msg
 
     regexp -- {\.nb\.f(.+)\.frm\.txt} $win r formid 
-    puts "win = $win formid = $formid"
+    #puts "win = $win formid = $formid"
 
     reset_values
     foreach {col val} $query {

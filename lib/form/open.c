@@ -70,7 +70,7 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
     int i, first, ncols, found, col, sqltype, keyval = 0, ret;
     char buf[2000];
-    dbString sql, table_name;
+    dbString sql, table_name, strval;
     dbDriver *driver;
     dbHandle handle;
     dbTable  *table;
@@ -80,6 +80,7 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     
     db_init_string (&sql);
     db_init_string(&table_name);
+    db_init_string(&strval);
     
     /* Check if all internal values are set */
     if ( Drvname == NULL || Dbname == NULL || Tblname == NULL || Key == NULL ) {
@@ -165,7 +166,9 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	if ( Cols[i].ctype == DB_C_TYPE_INT || Cols[i].ctype == DB_C_TYPE_DOUBLE ) {
             sprintf (buf, "%s = %s", Cols[i].name, Cols[i].value );
 	} else {
-            sprintf (buf, "%s = '%s'", Cols[i].name, Cols[i].value );
+	    db_set_string ( &strval, Cols[i].value );
+	    db_double_quote_string (&strval);
+            sprintf (buf, "%s = '%s'", Cols[i].name, db_get_string(&strval) );
 	}
         db_append_string (&sql, buf);
 	first = 0;
@@ -278,10 +281,12 @@ F_open ( char *title,  char *html )
 		    child_html = (char *) G_malloc ( length + 1 ); 
 		    fread ( child_html, length, 1, child_recv);
 		    child_html[length] = '\0';
+		    G_debug ( 2, "CHILD: html = %s", child_html );
 
                     /* Insert new page */
-		    sprintf (buf, "add_form %d \"", frmid );
-	            Tcl_VarEval( interp, buf,  child_title, "\" \"",  child_html, "\"", NULL);
+	            Tcl_SetVar ( interp, "html", child_html, 0);
+		    sprintf (buf, "add_form %d \"%s\"", frmid, child_title );
+	            Tcl_Eval( interp, buf );
 		    
 		    fprintf ( child_send, "O" ); /* OK */
 		    fflush ( child_send );
