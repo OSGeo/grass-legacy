@@ -407,9 +407,9 @@
 			    {command "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)" {} "" {} -command {execute  i.rgb.his }}
 			}}
 			{cascad "Rectify and georeference image group" {} "" 1 {			
-			    {command "Set ground control points (GCP's) from raster map" {} "" {} -command {execute  i.points }}
+			    {command "Set ground control points (GCP's) from raster map" {} "" {} -command {term i.points}}
 			    {command "Affine and Polynomial rectification (rubber sheet)" {} "" {} -command {execute  i.rectify }}
-			    {command "Ortho photo rectification" {} "" {} -command {execute  i.ortho.photo }}
+			    {command "Ortho photo rectification" {} "" {} -command {term  i.ortho.photo }}
 			}}
 			{separator}
 			{command "Brovey transformation and pan sharpening for Landsat ETM, SPOT, and Quickbird" {} "" {} -command {execute  i.fusion.brovey }}
@@ -419,7 +419,7 @@
 			    {command "Maximum likelyhood classification (MLC)" {} "" {} -command {execute  i.maxlik }}
 			    {command "Sequential maximum a posteriory classification (SMAP)" {} "" {} -command {execute  i.smap }}
 			    {separator}
-			    {command "Interactive input for supervised classification" {} "" {} -command {execute  i.class }}
+			    {command "Interactive input for supervised classification" {} "" {} -command {term  i.class }}
 			    {command "Non-interactive input for supervised classification (MLC)" {} "" {} -command {execute  i.gensig }}
 			    {command "Non-interactive input for supervised classification (SMAP)" {} "" {} -command {execute  i.gensigset }}
 			}}
