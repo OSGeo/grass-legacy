@@ -49,6 +49,13 @@ specified in addition to -c, then a new location will be created. Otherwise
 the projection information files in the current location will be
 overwritten. The program will warn before doing this.</P>
 
+<P>If compiled without OGR, the -c flag and <em>location</em> parameter will
+still be operational. However, since projection information cannot be read
+from an external source in this case, their use will be limited to creating a 
+new location with the same co-ordinate system as the current one (or
+overwriting the projection files in the current location with identical
+copies).</P>
+
 <H2>NOTES</H2>
 
 <P>GRASS uses a local copy of the GDAL CSV co-ordinate system and datum
@@ -72,6 +79,9 @@ Create a new location with the co-ordinate system referred to by EPSG code
 29900 (Irish Grid) <br>
 <b>g.proj -c proj4=</b><em>'+init=epsg:29900'</em>
 <b>location=</b><em>irish_grid</em> <br>
+Create a new location with the same co-ordinate system as the current
+location <br>
+<b>g.proj -c location=</b><em>newloc</em> <br>
 
 <H2>REFERENCES</H2>
 

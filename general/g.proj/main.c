@@ -6,9 +6,8 @@
  * MODULE:       g.proj 
  * AUTHOR(S):    Paul Kelly - paul-grass@stjohnspoint.co.uk
  * PURPOSE:      Provides a means of reporting the contents of GRASS
- *               projection information files. Will be extended to handle
- *               modification of and creation of new projection information 
- *               files.
+ *               projection information files and creating
+ *               new projection information files.
  * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
@@ -24,6 +23,7 @@
 #ifdef HAVE_OGR
 #  include <gdal.h>
 #  include <ogr_api.h>
+#  include <cpl_csv.h>
 #endif
 
 int main(int argc, char *argv[])
@@ -38,18 +38,20 @@ int main(int argc, char *argv[])
 #endif
         *dontprettify;		/* Print 'flat' output (no linebreaks)      */
 
+    struct Option *location	/* Name of new location to create           */
 #ifdef HAVE_OGR
-    struct Option *inwkt,	/* Input file with projection in WKT format */
-          *inproj4,		/* Projection in PROJ.4 format */
-          *ingeo,		/* Input geo-referenced file readable by 
+          ,
+          *inwkt,	        /* Input file with projection in WKT format */
+          *inproj4,		/* Projection in PROJ.4 format              */
+          *ingeo;		/* Input geo-referenced file readable by 
 				 * GDAL or OGR                              */
-          *location;		/* Name of new location to create           */
+          int importformats
 #endif
-
+          ;
+   
     struct Key_Value *projinfo = NULL, *projunits = NULL;
     struct Key_Value *old_projinfo = NULL, *old_projunits = NULL;
     struct Cell_head cellhd, old_cellhd;
-    int importformats;
 
     G_gisinit(argv[0]);
 
@@ -105,6 +107,7 @@ int main(int argc, char *argv[])
     inproj4->type = TYPE_STRING;
     inproj4->required = NO;
     inproj4->description = "PROJ.4 projection description (- for stdin)";
+#endif
 
     create = G_define_flag();
     create->key = 'c';
@@ -116,7 +119,6 @@ int main(int argc, char *argv[])
     location->type = TYPE_STRING;
     location->required = NO;
     location->description = "Name of new location to create";
-#endif
 
     if (G_parser(argc, argv))
 	exit(-1);
@@ -360,6 +362,7 @@ int main(int argc, char *argv[])
 	    else
 	        G_warning("%s: Unable to convert to WKT", G_program_name() );
 	}
+#endif
        
         if (create->answer) {
 	    
@@ -412,7 +415,6 @@ int main(int argc, char *argv[])
 		}
 	    }
 	}
-#endif
     }
 
     if (projinfo != NULL)
