@@ -1,0 +1,30 @@
+### Gmakefile for i.landsat.tm 
+
+PROG  = i.tape.tm3
+
+#HOME  = .
+HOME  = $(BIN_ALPHA_CMD) 
+
+###	required libary to link
+IMAGERYLIB_SUP  = ../libe/libimage_sup.a
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(IMAGERYLIB_SUP) $(COORCNVLIB)
+
+LIST  = landsat.o \
+	fileseq.o \
+	fast.o    \
+	quadrant.o \
+	rec_type.o \
+	utils.o    \
+	control_pt.o \
+	examine.o
+
+EXTRA_CFLAGS = -D_NO_PROTO -I../libe
+
+$(HOME)/$(PROG): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+
+$(LIST): landsat.h fileseq.h
+
+$(LIBES): # in case of changes
+
