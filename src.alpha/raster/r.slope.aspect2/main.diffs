@@ -1,0 +1,125 @@
+% diff -c main.c main.old
+*** main.c	Sat Nov 20 00:48:31 1993
+--- main.old	Sat Nov 20 00:07:39 1993
+***************
+*** 21,27 ****
+      struct Colors colr;
+      struct Categories cats;
+      int verbose;
+-     int carto_aspect;
+      int align;
+      int zero_is_nodata;
+      int elevation_fd;
+--- 21,26 ----
+***************
+*** 73,79 ****
+      } parm;
+      struct
+      {
+! 	struct Flag *a,*g,*q,*z;
+      } flag;
+  
+  
+--- 72,78 ----
+      } parm;
+      struct
+      {
+! 	struct Flag *a,*q,*z;
+      } flag;
+  
+  
+***************
+*** 126,135 ****
+      flag.a->key         = 'a' ;
+      flag.a->description = "Do not align the current region to the elevation layer" ;
+  
+-     flag.g = G_define_flag() ;
+-     flag.g->key         = 'g' ;
+-     flag.g->description = "Use geographic or cartographic definition of aspect (default=mathematical)" ;
+- 
+      flag.q = G_define_flag() ;
+      flag.q->key         = 'q' ;
+      flag.q->description = "Quiet" ;
+--- 125,130 ----
+***************
+*** 158,164 ****
+          exit(-1);
+  
+      verbose = (!flag.q->answer);
+-     carto_aspect = flag.g->answer;
+      align   = (!flag.a->answer);
+      zero_is_nodata =(!flag.z->answer);
+  
+--- 153,158 ----
+***************
+*** 438,450 ****
+                  else 
+  		{
+  		   aspect = (atan2(dy,dx)/degrees_to_radians);
+-                    if (carto_aspect)
+-                    /* instead of CCW starting at E=zero, make CW N=zero */
+-                       aspect=-aspect+90.;
+-                    /* two whiles in place of floating point mod op (%) */
+- 		   while(aspect<=0.)aspect+=360.;
+- 		   while(aspect>360.)aspect-=360.;
+  		   if((aspect<=0.5)&&(aspect>0)) aspect=360.;
+                  }
+  
+                  if(!((slope_fd > 0)&&(slp_in_perc < min_slp)))
+--- 432,439 ----
+                  else 
+  		{
+  		   aspect = (atan2(dy,dx)/degrees_to_radians);
+  		   if((aspect<=0.5)&&(aspect>0)) aspect=360.;
++ 		   if(aspect<=0.)aspect=360.+aspect;
+                  }
+  
+                  if(!((slope_fd > 0)&&(slp_in_perc < min_slp)))
+***************
+*** 476,506 ****
+          G_close_cell (aspect_fd);
+  
+          G_read_cats (aspect_name, G_mapset(), &cats);
+!         if (carto_aspect)
+!           G_set_cats_title ("aspect in degrees from north", &cats);
+!         else
+!           G_set_cats_title ("aspect in degrees from east", &cats);
+  
+  	printf("%d categor%s of aspect\n", cats.num, cats.num==1?"y":"ies");
+          G_set_cat ((CELL)0, "no aspect", &cats);
+-         if (carto_aspect)
+  	    for(i=1;i<=cats.num;i++)
+  	    {
+- 	       if(i==360)sprintf(buf,"north");
+- 	       else if(i==45)sprintf(buf,"east of north");
+- 	       else if(i==90)sprintf(buf,"east");
+- 	       else if(i==135)sprintf(buf,"east of south");
+- 	       else if(i==180)sprintf(buf,"south");
+- 	       else if(i==225)sprintf(buf,"west of south");
+- 	       else if(i==270)sprintf(buf,"west");
+- 	       else if(i==315)sprintf(buf,"west of north");
+-                else sprintf (buf, "%d degree%s from north", i, i==1?"":"s");
+-                G_set_cat ((CELL)(i), buf, &cats);
+- 	    }
+-         else
+- 	    for(i=1;i<=cats.num;i++)
+- 	    {
+  	       if(i==360)sprintf(buf,"east");
+  	       else if(i==45)sprintf(buf,"north of east");
+  	       else if(i==90)sprintf(buf,"north");
+  	       else if(i==135)sprintf(buf,"north of west");
+--- 465,478 ----
+          G_close_cell (aspect_fd);
+  
+          G_read_cats (aspect_name, G_mapset(), &cats);
+!         G_set_cats_title ("aspect in degrees from east", &cats);
+  
+  	printf("%d categor%s of aspect\n", cats.num, cats.num==1?"y":"ies");
+          G_set_cat ((CELL)0, "no aspect", &cats);
+  	    for(i=1;i<=cats.num;i++)
+  	    {
+  	       if(i==360)sprintf(buf,"east");
++ 	       else if(i==360)sprintf(buf,"east");
+  	       else if(i==45)sprintf(buf,"north of east");
+  	       else if(i==90)sprintf(buf,"north");
+  	       else if(i==135)sprintf(buf,"north of west");
