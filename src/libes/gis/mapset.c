@@ -22,6 +22,9 @@ G_mapset()
     char msg[100];
 
     m = G__mapset();
+    if( m == NULL )
+        G_fatal_error( "MAPSET is not set" );
+
     if (first)
 	    first = 0;
     else if (strcmp(mapset,m) == 0)
