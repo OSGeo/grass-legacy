@@ -6,6 +6,14 @@
 #
 # (unless you know what you are doing)
 ###################################################
+#
+# A branch can be checked out with
+#
+#   cvs checkout -r grassreleasebranch_5_0_0 grass
+#                   ^^^^^^^^^^^^^^^^^^^^^^^^
+#                             current branch tag
+#
+###################################################
 # This script is intented to tag GRASS stable releases
 # and branch
 #
@@ -30,8 +38,8 @@
 
 #enter branch tag here later:
 # (note: no $,. allowed)
-TAG="releasebranch_5_0_0"
-BRANCH="releasebranch_5_0_0"
+TAG="grassreleasebranch_5_0_0"
+BRANCH="grassreleasebranch_5_0_0"
 
 #catch all active modules from compile list:
 MODULE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
@@ -53,7 +61,7 @@ FURTHER_DIRECTORIES="documents ALPHA64 testsuite \
 
 
 #tag it...
-cvs tag $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
+#cvs tag $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
 
 # branch it....
-#cvs tag -b $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
+cvs tag -b $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
