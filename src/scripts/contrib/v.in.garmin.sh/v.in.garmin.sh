@@ -7,12 +7,65 @@
 # $Id$
 # 
 # requirements: GRASS 4.x or GRASS 5.0 with v.in.ascii
-#               gpstrans from Carsten Tschach et al. 
-#                 get gpstrans from: ftp://www.mayko.com/pub/gpstrans or from
-#                 http://www.metalab.unc.edu/pub/Linux/science/cartography/
-#               bourne shell
-#               unix tools: grep, cat, tac, cut, paste, awk/nawk/gawk, sed
+#      -  gpstrans from Carsten Tschach et al. 
+#           get gpstrans from one of:
+#             http://gpstrans.sourceforge.net
+#             http://www.metalab.unc.edu/pub/Linux/science/cartography/
+#             ftp://www.mayko.com/pub/gpstrans
+#      -  bourne shell
+#      -  unix tools: grep, cat, tac, cut, paste, awk/nawk/gawk, sed
 #
+
+#%Module
+#%  description: Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into a GRASS binary vector file, transformed into the current projection.
+#%End
+#%flag
+#%  key: v
+#%  description: verbose mode (version info)
+#%end
+#%flag
+#%  key: w
+#%  description: upload Waypoints
+#%end
+#%flag
+#%  key: r
+#%  description: upload Routes
+#%end
+#%flag
+#%  key: t
+#%  description: upload Track
+#%end
+##%flag
+##%  key: s
+##%  description: swap easting/northing (for tmerc projection)
+##%end
+#%flag
+#%  key: u
+#%  description: run v.support on new binary vector file
+#%end
+#%flag
+#%  key: k
+#%  description: do not attempt projection transform from WGS84
+#%end
+#%option
+#% key: vect
+#% type: string
+#% gisprompt: new,dig,vector
+#% description: name for new binary vector file (omit for display to stdout)
+#% required : no
+#%end
+#%option
+#% key: port
+#% type: string
+#% description: port Garmin receiver is connected to
+#% answer: /dev/gps
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
 
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
@@ -62,70 +115,43 @@ trap 'rm -f ${TMP}*' 2 3 15
 
 
 #### process command line arguments 
-WPT=0 ; RTE=0 ; TRK=0 ; OK=0 ; SWP=0 ; SUP=0
-while [ $# -ge 1 ] ; do
+WPT=0 ; RTE=0 ; TRK=0 ; SWP=0 ; SUP=0 ; KEEP_WGS84=0
 
-    case "$1" in
-    -h) OK=0
-       ;; 
-    h*) OK=0
-       ;;
-    n*) NAME=`echo "$1" | sed 's/.*=//g'` 1>&2 > /dev/null
-	echo "vect=$NAME" 1>&2
-       ;;
-    p*) GPSPORT=`echo "$1" | sed 's/.*=//g'` 1>&2 > /dev/null
-	echo "port=$GPSPORT" 1>&2
-	GPSPORT="-p$GPSPORT"
-       ;;
-    -v) echo $VERSION 1>&2
-	echo " " 1>&2
-       ;;
-    -w) WPT=1 ; OK=1
-       ;;
-    -r) RTE=1 ; OK=1
-       ;;
-    -t) TRK=1 ; OK=1
-       ;;
-    -s) SWP=1
-       ;;
-    -u) SUP=1
-	;;
-    *)  OK=0
-       ;;
-    esac
-    shift
-done
-
-
-#### print usage and exit
-if [ $OK -ne 1 ] ; then
-    echo "Description: " 1>&2
-    echo " Upload Waypoints, Routes and Tracks from a garmin gps reciever into" 1>&2
-    echo " GRASS binary vector file." 1>&2
-    echo " " 1>&2
-    echo "Usage: " 1>&2
-    echo " $PROG name=vect port=/dev/gps [-v] [-w] [-r] [-t] [-u] [-h]" 1>&2
-    echo " " 1>&2
-    echo "Flags: " 1>&2
-    echo "     -v        verbose output" 1>&2
-    echo "     -w        upload Waypoints" 1>&2
-    echo "     -r        upload Routes" 1>&2
-    echo "     -t        upload Track" 1>&2
-#   echo "     -s        swap easting/northing (for tmerc projection)" 1>&2
-    echo "     -u        run v.support on new binary vector file" 1>&2
-    echo "     -h        print this message" 1>&2
-    echo " " 1>&2
-    echo "Parameters: " 1>&2
-    echo " name=vect     name for new binary vector file" 1>&2
-    echo " port=/dev/gps port garmin receiver is connected to" 1>&2
-    echo " " 1>&2
+if [ "$GIS_OPT_vect" != "(null)" ] ; then
+    NAME="$GIS_OPT_vect"
+    echo "vect=$NAME" 1>&2
+fi
+if [ "$GIS_OPT_port" != "(null)" ] ; then
+    GPSPORT="-p$GIS_OPT_port"
+    echo "port=$GIS_OPT_port" 1>&2
+fi
+if [ $GIS_FLAG_v -eq 1 ] ; then
     echo $VERSION 1>&2
-    rm -f ${TMP}*
-    exit 1
+    echo " " 1>&2
+fi
+if [ $GIS_FLAG_w -eq 1 ] ; then
+    WPT=1
+fi
+if [ $GIS_FLAG_r -eq 1 ] ; then
+    RTE=1
+fi
+if [ $GIS_FLAG_t -eq 1 ] ; then
+    TRK=1
+fi
+#if [ $GIS_FLAG_s -eq 1 ] ; then
+#    SWP=1
+#fi
+if [ $GIS_FLAG_u -eq 1 ] ; then
+    SUP=1
+fi
+if [ $GIS_FLAG_k -eq 1 ] ; then
+    KEEP_WGS84=1
 fi
 
 
+
 #### check that receiver is responding on $GPSPORT
+# sadly gpstrans 0.39 returns 0 after timeout.. hopefully fixed someday.
 $GPSTRANS "$GPSPORT" -i 1> /dev/null
 if [ $? -ne 0 ] ; then
     echo "$PROG: Receiver on $GPSPORT not responding, exiting" 1>&2
@@ -148,6 +174,7 @@ if [ $WPT -eq 1 ] ; then
     #### check which projection we are working with
     PROJ="`head -1 $TMP | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
     # echo ${PROJ}_
+    IS_WGS84="`head -1 $TMP | grep 'WGS 84'`"
 
     case "$PROJ" in
 	UTM)
@@ -160,7 +187,7 @@ if [ $WPT -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	*)
-	    echo "Unsupported format" 1>&2
+	    echo "Unsupported format [$PROJ]" 1>&2
 	    exit 1
 	    ;;
     esac
@@ -180,6 +207,7 @@ if [ $RTE -eq 1 ] ; then
     #### check which projection we are working with
     PROJ="`head -1 $TMP | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
     # echo ${PROJ}_
+    IS_WGS84="`head -1 $TMP | grep 'WGS 84'`"
 
     case "$PROJ" in
 	UTM)
@@ -192,7 +220,7 @@ if [ $RTE -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
 	    ;;
 	*)
-	    echo "Unsupported format" 1>&2
+	    echo "Unsupported format [$PROJ]" 1>&2
 	    exit 1
 	    ;;
     esac
@@ -212,6 +240,7 @@ if [ $TRK -eq 1 ] ; then
     #### check which projection we are working with
     PROJ="`head -1 $TMP | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
     # echo ${PROJ}_
+    IS_WGS84="`head -1 $TMP | grep 'WGS 84'`"
 
     case "$PROJ" in
 	UTM)
@@ -224,11 +253,27 @@ if [ $TRK -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $4, $3) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	*)
-	    echo "Unsupported format" 1>&2
+	    echo "Unsupported format [$PROJ]" 1>&2
 	    exit 1
 	    ;;
     esac
 fi
+
+
+
+#### convert from WGS84 to current projection
+if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
+    echo "No projection transformation performed" 1>&2
+#    mv -f ${TMP}_P_raw ${TMP}_P
+else
+    echo "Attempting projection transform with m.proj2" 1>&2
+#    m.proj2 -i input=${TMP}_P_raw output=${TMP}_P
+#    if [ $? -ne 0 ] ; then
+#        echo "Projection transform failed, retaining WGS84" 1>&2
+#        mv -f ${TMP}_P_raw ${TMP}_P
+#    fi
+fi
+
 
 
 #### find boundaries for digit header
@@ -262,13 +307,13 @@ cat ${TMP}_P  >> $DIG
 
 #### if no name for vector file given, cat to stdout
 if [ "$NAME" = "" ] ; then
-    echo "output to stdout" 1>&2
+    echo "Output to stdout" 1>&2
     cat $DIG 2>/dev/null
 else 
 
 
     #### import to binary vector file 
-    echo "importing with v.in.ascii" 1>&2
+    echo "Importing with v.in.ascii" 1>&2
     v.in.ascii output=$NAME input=DIG_$$ $OPTS 1>&2 >/dev/null
 
 
