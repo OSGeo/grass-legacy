@@ -20,7 +20,7 @@ int get_point (int *x, int *y, char *east, char *north)
         else
             R_get_location_with_pointer(&curx, &cury, &button) ;
 
-        if (button == 3)
+        if (button == RIGHTB)
             return(0) ;
 
 	get_east_north (curx, cury, east, north);
