@@ -31,8 +31,7 @@ $(ETC)/GIS.sh: gis.head gis.shell gis.tail version.sed $(SRC)/CMD/VERSION
 GIS_SET = gis_set.o mke_mapset.o mke_loc.o chk_dbase.o other.o
 $(ETC)/gis_set: $(GIS_SET) $(GISLIB) $(VASKLIB)
 	rm -f a.out
-	$(CC) $(LDFLAGS) $(GIS_SET) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(GIS_SET) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/echo: echo.o
 	$(CC) $(LDFLAGS) echo.o -o $@
