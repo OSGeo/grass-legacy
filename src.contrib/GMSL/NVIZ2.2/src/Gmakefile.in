@@ -1,3 +1,7 @@
+# $Log$
+# Revision 1.2  2000-02-22 18:21:23  markus
+# added XDRLIB
+#
 # updated -ldl lib added (10/199) (pmx)
 # updated ogsf path to src/libes/ 10/99 MN
 # bugfixes 8/99 MN
@@ -14,7 +18,7 @@ TK_INCLUDE_PATH=sed
 SCRIPTS=sed
 NVWISH_VER=sed
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl
+OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
