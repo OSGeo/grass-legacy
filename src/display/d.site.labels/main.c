@@ -23,7 +23,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	int i, column, index ;
         struct Option *opt1, *opt2, *yref_opt, *opt3, *opt4, *opt6;
-	struct Option *opt7, *opt8, *opt9, *col_opt, *index_opt ;
+	struct Option *opt7, *opt9, *col_opt, *index_opt ;
 	struct Flag *mouse;
 	
 
@@ -102,14 +102,6 @@ int main (int argc, char **argv)
     opt7->answer     = "none" ;
     opt7->options    = "grey,red,white,magenta,brown,blue,indigo,yellow,black,orange,green,violet,none";
     opt7->description= "Border color" ;
-
-    opt8 = G_define_option() ;
-    opt8->key        = "opaque" ;
-    opt8->type       = TYPE_STRING ;
-    opt8->required   = NO ;
-    opt8->answer     = "no" ;
-    opt8->options    = "yes,no" ;
-    opt8->description= "opaque (yes / no)" ;
 
     opt9 = G_define_option() ;
     opt9->key        = "font" ;
@@ -199,7 +191,7 @@ int main (int argc, char **argv)
 	
 /* Go draw the cell file */
 	do_labels(infile,window, position, opt3->answer, opt4->answer, 
-			opt6->answer, opt7->answer, opt8->answer, 
+			opt6->answer, opt7->answer, 
 			opt9->answer, column, index, mouse->answer);
 
 	D_add_to_list(G_recreate_command()) ;
