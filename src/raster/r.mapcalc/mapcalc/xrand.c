@@ -11,10 +11,8 @@
 
 #ifdef __CYGWIN__
 #define drand48() rand()/32767.0
-#define srand48(sv) (srand((unsigned)(sv)))
 #else
 extern double drand48();
-extern double srand48();
 #endif
 
 int 
