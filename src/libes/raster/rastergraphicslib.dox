@@ -3,7 +3,7 @@
 
 <title>GRASS Raster Graphics Library</title>
 
-\section Introduction Introduction
+\section intro Introduction
 
 The <i>Raster Graphics Library</i> provides the programmer with access to 
 the GRASS graphics devices. <b>All video graphics calls are made 
@@ -43,7 +43,7 @@ conflicts, programmers should not create variables or routines in their own
 modules which use this prefix.
 
 
-\section connecting Connecting to the Driver
+\section conn Connecting to the Driver
 
 Before any other graphics calls can be made, a successful connection to a 
 running and selected graphics driver must be made.
@@ -53,7 +53,7 @@ R_open_driver()
 R_close_driver()
 </pre>
 
-\section colors Colors
+\section col Colors
 
 GRASS is highly dependent on color for distinguishing between different 
 categories. No graphic patterning is supported in any automatic way. There 
@@ -89,7 +89,7 @@ R_standard_color()
 R_RGB_color()
 </pre>
 
-\section Basic Graphics
+\section basic Basic Graphics
 
 <pre>
 R_screen_bot()
@@ -107,7 +107,7 @@ R_flush()
 R_stabilize()
 </pre>
 
-\section Poly Calls
+\section poly Poly Calls
 
 In many cases strings of points are used to describe a complex line, a series of
 dots, or a solid polygon. Absolute and relative calls are provided for each of
@@ -122,7 +122,7 @@ R_polyline_abs()
 R_polyline_rel()
 </pre>
 
-\section Raster Calls
+\section raster Raster Calls
 
 GRASS requires efficient drawing of raster information to the display device.
 These calls provide that capability.
@@ -133,7 +133,7 @@ R_set_RGB_color()
 R_RGB_raster()
 </pre>
 
-\section Text
+\section text Text
 
 These calls provide access to built-in vector fonts which may be sized and
 clipped to the programmer's specifications.
@@ -146,7 +146,7 @@ R_text()
 R_get_text_box()
 </pre>
 
-\section GRASS font support
+\section font GRASS font support
 
 The current mechanism of GRASS 5.0 font support is this (all files are in the
 directory src/display/devices/lib unless stated otherwise):
@@ -180,7 +180,7 @@ directory src/display/devices/lib unless stated otherwise):
   implemented separately by each display driver, e.g. XDRIVER).
 </ul>
 
-\section{User Input}
+\section user User Input
 
 The raster library provides mouse (or other pointing device) input from the
 user. This can be accomplished with a pointer, a rubber-band line or a
@@ -193,7 +193,7 @@ R_get_location_with_line()
 R_get_location_with_box()
 </pre>
 
-\section Loading the Raster Graphics Library
+\section load Loading the Raster Graphics Library
 
 The library is loaded by specifying $(RASTERLIB) in the Gmakefile. The
 following example is a complete Gmakefile which compiles code that uses this
