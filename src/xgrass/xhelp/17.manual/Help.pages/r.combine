@@ -1,0 +1,5 @@
+
+@man("r.combine") - Allows category values from several raster map layers
+to be combined.
+
+(GRASS Raster Program)
