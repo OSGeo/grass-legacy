@@ -35,6 +35,7 @@ main (int argc, char **argv)
 	struct Colors out_colors ;
 	struct Colors sat_colors ;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+	struct Flag *flg1 ;
 	char mg[100];
 
 	opt1 = G_define_option() ;
@@ -59,11 +60,15 @@ main (int argc, char **argv)
 	opt3->description= "Name of layer to be used for SATURATION" ;
 
 	opt4 = G_define_option() ;
-	opt4->key        = "out" ;
+	opt4->key        = "output" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO ;
 	opt4->gisprompt  = "new,cell,raster" ;
 	opt4->description= "Name of raster map to contain results" ;
+
+	flg1 = G_define_flag() ;
+	flg1->key	 = 'o' ;
+	flg1->description= "Overwrite output map" ;
 
 	G_gisinit(argv[0]) ;
 
@@ -191,10 +196,15 @@ main (int argc, char **argv)
 		}
 		else
 		{
-			sprintf (mg, "%s: <%s> cell file exists already\n", 
-			    G_program_name(), opt4->answer);
-			G_fatal_error(mg);
-			exit(-1);
+			if (flg1->answer)
+			    G_remove("cell", name4);
+			else
+			{
+			    sprintf (mg, "%s: <%s> cell file exists already\n", 
+			        G_program_name(), opt4->answer);
+			    G_fatal_error(mg);
+			    exit(-1);
+			}
 		}
 		if ((out_file = G_open_cell_new (name4)) < 0)
 		{
