@@ -9,4 +9,4 @@ default: lib symb
 
 symb:
 	mkdir -p $(ETC)/symbol
-	(cd symbol/ ; tar cBf - * --exclude=CVS | (cd $(ETC)/symbol/; tar xBf - ) )
+	find ./symbol -type f | grep -v CVS | xargs tar cBf - |(cd $(ETC); tar xBf -)
