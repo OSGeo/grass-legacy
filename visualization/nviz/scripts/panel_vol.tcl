@@ -81,12 +81,186 @@ proc Nviz_vol_reset {} {
 
 # Save procedure for saving state of Nviz
 proc Nviz_vol_save {file_hook} {
+    # Get the list of volumes
+    set vol_list [Nget_vol_list]
 
+    # Write out the total number of volumes
+    puts $file_hook "[llength $vol_list]"
+    
+    # Save attributes for each volume
+    foreach i $vol_list {
+
+    # Logical name
+    puts $file_hook "[Nvol$i get_logical_name]"
+    
+    # Map source
+    puts $file_hook "[Nvol$i get_att map]"
+
+    # position 
+    puts $file_hook "[Nvol$i get_trans]"
+    
+    # Save attributes for all isosurfaces
+    set num_isosurf [Nvol$i isosurf num_isosurfs]
+    puts $file_hook $num_isosurf
+    
+    # Polygon resolution
+    puts $file_hook "[Nvol$i isosurf get_res]"
+    
+    # Drawing mode
+    puts $file_hook "[Nvol$i isosurf get_drawmode]"
+    
+    # Loop in isosurfaces  
+    for {set j 0} {$j < $num_isosurf} {incr j} {        
+        # Attributes
+        foreach k [list threshold color mask transp shin emi] {
+            puts $file_hook "[Nvol$i isosurf get_att $j $k]"
+        } 
+        
+        # Mask mode
+        puts $file_hook "[Nvol$i isosurf get_mask_mode $j]"
+        
+        # Flags - normal direction, etc.
+        puts $file_hook "[Nvol$i isosurf get_flags $j]"
+    }
+    
+    # Save attributes for all slices
+    set num_slices [Nvol$i slice num_slices]
+    puts $file_hook $num_slices
+    
+    # Polygon resolution
+    puts $file_hook "[Nvol$i slice get_res]"
+    
+    # Drawing mode
+    puts $file_hook "[Nvol$i slice get_drawmode]"
+    
+    # Loop in slices
+    for {set j 0} {$j < $num_slices} {incr j} {        
+        # Position
+        puts $file_hook "[Nvol$i slice get_pos $j]"
+        
+        # Transparency
+        puts $file_hook "[Nvol$i slice get_transp $j]"
+    }
+
+    flush $file_hook
+    }
+
+    # Done...
 }
 
 # Load procedure for loading state of Nviz
 proc Nviz_vol_load { file_hook } {
+    # Read the number of volumes saved in this state file
+    gets $file_hook num_vols
 
+    # For each volume file, create a new volume with the given logical
+    # name and fill in the attributes as appropriate
+    for {set i 0} {$i < $num_vols} {incr i} {
+    # Read in the logical name for this new volume
+    gets $file_hook logical_name
+
+    # Now create a new volume with the given logical name
+    set new_vol [Nnew_map_obj vol "name=$logical_name"]
+
+    # Set all attributes as appropriate 
+    
+    # Set the map source
+    gets $file_hook vol_data
+    $new_vol set_att map $vol_data
+    
+    # Position
+    gets $file_hook vol_data
+    set vol_data [split "$vol_data"]
+    $new_vol set_trans [lindex $vol_data 0] [lindex $vol_data 1] [lindex $vol_data 2]        
+    
+    # Load all isosurfaces
+    gets $file_hook num_isosurf
+    
+    # Polygon resolution
+    gets $file_hook vol_data
+    set vol_data [split $vol_data]
+    $new_vol isosurf set_res [lindex $vol_data 0] [lindex $vol_data 1] [lindex $vol_data 2]    
+    
+    # Drawing mode
+    gets $file_hook vol_data
+    $new_vol isosurf set_drawmode $vol_data    
+    
+    # Loop in isosurfaces  
+    for {set j 0} {$j < $num_isosurf} {incr j} {        
+        # Add isosurface
+        $new_vol isosurf add
+        
+        # Attributes
+        foreach k [list threshold color mask transp shin emi] {
+            gets $file_hook vol_data
+            set vol_data [split "$vol_data"]
+            
+            if {"[lindex $vol_data 0]" == "map"} then {
+                $new_vol isosurf set_att $j $k [lindex $vol_data 1]
+            } elseif {"[lindex $vol_data 0]" == "const"} then {
+                $new_vol isosurf set_att $j $k constant [lindex $vol_data 1]
+            }
+        } 
+                            
+        # Mask mode
+        gets $file_hook vol_data
+        $new_vol isosurf set_mask_mode $j $vol_data        
+        
+        # Flags - normal direction, etc.
+        gets $file_hook vol_data
+        $new_vol isosurf set_flags $j $vol_data        
+    }
+    
+    # Load all slices
+    gets $file_hook num_slice
+    
+    # Polygon resolution
+    gets $file_hook vol_data
+    set vol_data [split $vol_data]
+    $new_vol slice set_res [lindex $vol_data 0] [lindex $vol_data 1] [lindex $vol_data 2]    
+    
+    # Drawing mode
+    gets $file_hook vol_data
+    $new_vol slice set_drawmode $vol_data    
+    
+    # Loop in slices  
+    for {set j 0} {$j < $num_slice} {incr j} {        
+        # Add slice
+        $new_vol slice add
+        
+        # Position
+        gets $file_hook vol_data
+        set vol_data [split $vol_data]
+        $new_vol slice set_pos $j [lindex $vol_data 0] [lindex $vol_data 1] [lindex $vol_data 2] \
+            [lindex $vol_data 3] [lindex $vol_data 4] [lindex $vol_data 5] [lindex $vol_data 6]
+        
+        # Transparency
+        gets $file_hook vol_data
+        $new_vol slice set_transp $j $vol_data
+    }
+    
+    }        
+
+    # Update the interface
+    update_vol_interface
+    look_center
+}
+
+# This routine updates the volume panel interface
+# If the current volume is invalid then we try to set 
+# a new one or 0 if no volumes are present.
+proc update_vol_interface {} {
+    set curr [Nget_current vol]
+    set map_list [Nget_map_list vol]
+    if {[llength $map_list] == 0} then {
+    set_new_curr vol 0
+    } else {
+    if {[lsearch $map_list $curr] == -1} then {
+        set_new_curr vol [lindex $map_list 0]
+    }
+    }
+
+    set_display_from_curr
 }
 
 # Add new volume
@@ -869,7 +1043,7 @@ proc isosurf_set_flags { BASE } {
 
 ##############################################################################
 
-# Create popup for positioning the current surface
+# Create popup for positioning the current volume
 proc mkVolPositionPanel { w } {
     global Nv_
 
