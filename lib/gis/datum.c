@@ -160,7 +160,7 @@ int G_ask_datum_params(char *datumname, char *params)
     {
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-            printf(("Cannot open temp file")) ;
+            G_warning(_("Cannot open temp file") );
         }
 
         fprintf(Tmp_fd,"Number\tDetails\t\n---\n");
@@ -292,7 +292,7 @@ static struct datum_transform_list *
     fd = fopen(file, "r");
     if (!fd)
     {
-        printf(_("unable to open datum table file: %s"), file);
+        G_warning(_("unable to open datum table file: %s"), file);
         return NULL;
     }
 
@@ -307,7 +307,7 @@ static struct datum_transform_list *
         if (sscanf(buf, "%99s \"%255[^\"]\" \"%255[^\"]\" \"%255[^\"]\"",
                    name, params, where_used, comment) != 4)
         {
-            printf(_("error in datum table file, line %d"), line);
+            G_warning(_("error in datum table file, line %d"), line);
             continue;
         }
 
