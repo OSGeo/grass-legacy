@@ -28,6 +28,8 @@ Graph_Close()
     Window.east=SCREEN_RIGHT-1;
     Window.south=0;
     Window.west=0;
+    Window.proj=0;
+    Window.zone=0;
     Window.ew_res=1;
     Window.ns_res=1;
 
