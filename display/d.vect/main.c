@@ -27,7 +27,6 @@ static char *icon_files(void)
 {
         char path[4096];
         char path_i[4096];
-	char *buf = NULL;
 	char *list = NULL;
 	int size = 0;
 	int len = 0;
@@ -48,7 +47,7 @@ static char *icon_files(void)
 
 		if (d->d_name[0] == '.')
 			continue;
-
+		
 		sprintf(path_i, "%s/etc/symbol/%s", G_gisbase(), d->d_name);
 		dir_i = opendir(path_i);
 		
@@ -58,20 +57,27 @@ static char *icon_files(void)
 		for (;;) { /*loop over each directory in etc/symbols*/
 		
 		  struct dirent *di = readdir(dir_i);
-		  int ni;
 
 		  if (!di)
 			break;
 
 		  if (di->d_name[0] == '.')
-			continue;
-
+		    continue;
+      
+		  int ni = 0;
+		  char *buf = NULL;
+		  char *buf2 = NULL;
+		  char *buf3 = NULL;
 		  ni = strlen(di->d_name);
-		  buf = G_realloc(buf, strlen(d->d_name) + ni + 1);
-		  sprintf(buf, "%s/%s", d->d_name, di->d_name);
+		  buf = G_realloc(buf,(strlen(d->d_name) + ni + 1));
+		  buf2 = G_realloc(buf2,strlen(d->d_name));
+		  buf3 = G_realloc(buf3,ni);
+		  sprintf(buf3, "%s",di->d_name);
+		  sprintf(buf2, "%s",d->d_name);
+		  sprintf(buf, "%s/%s",buf2,buf3);
 		  ni = strlen(buf);
 
-		  if (size < len + ni + 2 )
+		  if (size < len + ni + 2)
 		    {
 		      size = len + ni + 200;
 		      list = G_realloc(list, size);
