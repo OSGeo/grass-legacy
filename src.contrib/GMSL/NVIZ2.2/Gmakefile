@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.5 2000-10-04 12:50:48 markus Exp $
+# $Id: Gmakefile,v 1.6 2000-10-04 15:11:45 markus Exp $
 #
 # Toplevel makefile for building everything - used by configure script to 
 # build Gmakefile

@@ -1,11 +1,10 @@
-# $Id: Gmakefile,v 1.9 2000-10-04 12:50:50 markus Exp $
+# $Id: Gmakefile,v 1.10 2000-10-04 15:11:45 markus Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
 # These should be set by the configure script
 NVWISH_VER=NVWISH2.2
 PQ_OBJS=
-PQLIB=
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
