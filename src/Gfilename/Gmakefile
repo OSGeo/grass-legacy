@@ -1,0 +1,7 @@
+PGM=Gfilename
+LIST=main.o
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
