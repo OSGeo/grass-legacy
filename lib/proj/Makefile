@@ -2,7 +2,7 @@ MODULE_TOPDIR = ../..
 
 LIB_NAME = $(GPROJ_LIBNAME)
 
-EXTRA_CFLAGS = -I.
+EXTRA_CFLAGS = -I. $(PICFLAGS)
 
 azimuthal = \
 	PJ_aeqd.o PJ_gnom.o PJ_laea.o PJ_mod_ster.o \
@@ -49,11 +49,11 @@ support = \
 	pj_release.o pj_strerrno.o pj_transform.o pj_tsfn.o pj_units.o \
 	pj_utils.o pj_zpoly1.o rtodms.o strtod.o vector1.o
 
-GRASSINT = get_proj.o do_proj.o
-
 LIB_OBJS = $(azimuthal) $(conic) $(cylinder) $(misc) $(pseudo) $(support) $(GRASSINT)
 
 RLIB = pj_release.o
+
+GRASSINT = get_proj.o do_proj.o
 
 NAD_DIR = $(GISBASE)/etc/nad
 NAD2BIN = $(GISBASE)/etc/nad2bin
