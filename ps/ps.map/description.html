@@ -106,6 +106,7 @@ Prints the color table for the raster map layer anywhere on the page.
 <PRE>
 USAGE:	<B>colortable</B> [y|n]
 	<B>where</B> x y
+	<B>raster</B> raster file
 	<B>width</B> table width
 	<B>height</B> table height (FP legend only)
 	<B>cols</B> table columns
@@ -117,8 +118,7 @@ USAGE:	<B>colortable</B> [y|n]
 </PRE>
 The color table will display the colors for each raster map layer
 category value and the category label.
-To get a color table, you must have previously requested a raster
-map layer.
+If <B>raster</B> is omitted, the colortable defaults to a previously registered raster layer.
 The default location for the colortable is immediately below any other
 map legend information, starting at the left margin.
 The default text color is black.
@@ -239,6 +239,46 @@ Of course, multiple EPS pictures may be drawn with multiple
 instructions.
 <P>
 
+<H2>geogrid</H2>
+
+Overlays a geographic grid onto the output map.
+<PRE>
+USAGE:	<B>geogrid</B> spacing unit
+	<B>color</B> color
+	<B>numbers</B> # [color]
+	<B>font</B> font name
+	<B>fontsize</B> font size
+	<B>end</B>
+</PRE>
+The <B>spacing</B> and spacing unit of the geographic grid is given 
+on the main instruction line.  The <B>spacing</B> unit is given as one of <B>d</B> for
+degrees, <B>m</B> for minutes, and <B>s</B> for seconds. 
+The subsection instructions allow the user to specify
+the <B>color</B> of the geographic grid lines,
+whether coordinate <B>numbers</B> should appear
+on the geographic grid lines, and
+if they should appear every grid line (1), every other grid line 
+(2), etc., and what color the numbers should be.  The defaults are
+black grid lines, unnumbered.
+
+<P>
+
+NOTE: The <B>geogrid</B> draws grid numbers on the east and south borders of the map.
+
+<P>
+
+This example would overlay a blue geographic grid with a spacing of 30 minutes
+onto the output map.  Alternate grid
+lines would be numbered with yellow numbers.
+<PRE>
+EXAMPLE:
+	<B>geogrid</B> 30 m   
+	<B>color</B> blue
+	<B>numbers</B> 2 yellow
+	<B>end</B>
+</PRE>
+<P>
+
 <H2>greyrast</H2>
 
 Selects a raster map layer for output in shades of grey.
@@ -258,6 +298,7 @@ Overlays a coordinate grid onto the output map.
 USAGE:	<B>grid</B> spacing
 	<B>color</B> color
 	<B>numbers</B> # [color]
+	<B>cross</B> cross size
 	<B>font</B> font name
 	<B>fontsize</B> font size
 	<B>end</B>
@@ -267,11 +308,12 @@ system units) on the main instruction line.  The subsection instructions
 allow the user to specify
 the <B>color</B> of the grid lines,
 whether coordinate <B>numbers</B> should appear
-on the grid lines, and
-if they
+on the grid lines, and if they
 should appear every grid line (1), every other grid line 
-(2), etc., and what color the numbers should be.  The defaults are
-black grid lines, unnumbered.
+(2), etc., and what color the numbers should be.  
+The <B>cross</B> argument draws grid intersection crosses instead of grid lines, 
+with cross size given in geographic coordinate system units.
+The defaults are black grid lines, unnumbered.
 
 <P>
 
@@ -794,6 +836,43 @@ EXAMPLE:
 </PRE>
 <P>
 
+<H2>scalebar</H2>
+
+Draws a scalebar on the map.
+<PRE>
+USAGE:	<B>scalebar</B> [f|s]
+	<B>where</B> x y
+	<B>length</B> scale length
+	<B>height</B> scale height
+	<B>segment</B> no. segments
+	<B>numbers</B> #
+	<B>fontsize</B> font size
+	<B>end</B>
+</PRE>
+Draw one of two types of scales bars. 
+Fancy (f) draws alternating black and white scale boxes.
+Simple (s) draws a plain line scale. The default type is fancy.
+The subsection instructions allow the user to set <B>where</B> the scalebar is placed,
+the <B>length</B> of the scalebar (in geographic coordinate system units), 
+the <B>height</B> of the scalebar in inches, the number of <B>segments</B> (or tics for simple), and the <B>number</B> of annotations. The scalebar <B>length</B> is the only 
+required argument. The defaults are a fancy scalebar with 4 segments, 
+each segment labeled, and a height of 0.1 inches. The default location is 2 inches 
+from the top of the page and halfway across.
+<P>
+NOTE: The scalebar is centered on the location given.
+<P>
+This example draws a simple scalebar 1000 meters (for a metered database, like UTM) long,
+with tics every 200 meters, labeled every second tic. The scalebar is drawn 5 inches from the top and 4 inches from the left and is 0.25 inches high.
+<PRE>
+EXAMPLE:
+	<B>scalebar</B> s
+	<B>where</B> 4 5
+	<B>length</B> 1000
+	<B>height</B> 0.25
+	<B>segment</B> 5
+	<B>numbers</B> 2
+	<B>end</B>
+</PRE>
 
 <H2>setcolor</H2>
 
@@ -1323,5 +1402,5 @@ legend entries).
 <H2>AUTHOR</H2>
 
 Paul Carlson, USDA, SCS, NHQ-CGIS<BR>
-Modifications: Radim Blazek, Glynn Clements
+Modifications: Radim Blazek, Glynn Clements, Bob Covill
 <p><i>Last changed: $Date$</i>
