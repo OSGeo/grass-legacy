@@ -1,4 +1,6 @@
-EXTRA_CFLAGS = -I.
+SLIBDEPS = $(GISLIB)
+
+EXTRA_CFLAGS = -I. $(PICFLAGS)
 
 azimuthal = \
 	PJ_aeqd.o PJ_gnom.o PJ_laea.o PJ_mod_ster.o \
@@ -51,5 +53,5 @@ RLIB = pj_release.o
 
 GRASSINT = get_proj.o do_proj.o do_proj_nad.o datum_shift.o
 
-$(GPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
-	$(AR)
+$(DEPGPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
+	$(SLIBRULE)
