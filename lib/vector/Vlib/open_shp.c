@@ -18,6 +18,7 @@
 *
 *****************************************************************************/
 #include <unistd.h>
+#include <string.h>
 #include "Vect.h"
 #include "gis.h"
 #include "shapefil.h"
@@ -35,8 +36,12 @@ int
 V1_open_old_shp ( struct Map_info *Map )
 {
     SHPHandle hShp;
+    DBFHandle hDbf;
+    DBFFieldType col_type;
     int       ShapeType, nShapes;
     double    MinBound[4], MaxBound[4];
+    int       i, j;
+    char      col_name[15];
 
 #ifdef GDEBUG
     G_debug ( 1, "V1_open_old_shp(): shp file = %s", Map->fInfo.shp.file );
@@ -52,7 +57,44 @@ V1_open_old_shp ( struct Map_info *Map )
 	G_warning ("Cannot open shapefile: %s", Map->fInfo.shp.file);
 	return (-1);
     }
+
+    hDbf = DBFOpen( Map->fInfo.shp.file, "r" );
+    if ( hDbf == NULL) {
+	G_warning ("Cannot open dbf file: %s", Map->fInfo.shp.file);
+	SHPClose( hShp );
+	return (-1);
+    }
+   
+    /* find category column */
+    Map->fInfo.shp.cat_col_num = -1;
+    if ( Map->fInfo.shp.cat_col != NULL ) {
+	for( i = 0; i < DBFGetFieldCount(hDbf); i++ ) {
+	    col_type = DBFGetFieldInfo( hDbf, i, col_name, NULL, NULL );
+	    
+	    if( strcasecmp( Map->fInfo.shp.cat_col, col_name) == 0 ) {
+		if ( col_type == FTInteger ) {
+		    Map->fInfo.shp.cat_col_num = i;
+		}
+		break;
+	    }
+	}
+	if ( Map->fInfo.shp.cat_col_num == -1 ) { /* print error message */
+	    G_warning ("Column '%s' not found or is not integer. Available columns:", 
+		             Map->fInfo.shp.cat_col);
+	    for( j = 0; j < DBFGetFieldCount(hDbf); j++ ) {
+		col_type = DBFGetFieldInfo( hDbf, j, col_name, NULL, NULL );
+		fprintf ( stderr, "%s ", col_name);
+		if ( col_type == FTInteger ) 
+		    fprintf ( stderr, "(Integer)\n");
+		else
+		    fprintf ( stderr, "(Non-Integer)\n");
+	    }
+	}
+    }
+    G_debug ( 1, "category column number = %d", Map->fInfo.shp.cat_col_num );
+    
     Map->fInfo.shp.hShp = hShp;
+    Map->fInfo.shp.hDbf = hDbf;
     Map->fInfo.shp.shape = 0;
     Map->fInfo.shp.part = 0;
 

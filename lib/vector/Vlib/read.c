@@ -30,7 +30,7 @@ static int (*Read_next_line_array[][3]) () =
 #endif
 };
 
-static int (*Read_line_array[]) () =
+static int (*V1_read_line_array[]) () =
 {
    V1_read_line_nat 
    , V1_read_line_shp 
@@ -39,7 +39,16 @@ static int (*Read_line_array[]) () =
 #endif
 };
 
-static int (*Next_line_offset_array[]) () =
+static int (*V2_read_line_array[]) () =
+{
+   V2_read_line_nat 
+   , V2_read_line_shp 
+#ifdef HAVE_POSTGRES
+   /*, V2_read_line_post */
+#endif
+};
+
+static long (*Next_line_offset_array[]) () =
 {
    Vect_next_line_offset_nat 
    , Vect_next_line_offset_shp 
@@ -88,7 +97,7 @@ V1_read_line (Map, line_p, line_c, offset )
     if (!VECT_OPEN (Map))
         return -1;
 
-    return (*Read_line_array[Map->format]) (Map, line_p, line_c, offset);
+    return (*V1_read_line_array[Map->format]) (Map, line_p, line_c, offset);
 }
 
 /*
@@ -103,8 +112,6 @@ V2_read_line (Map, line_p, line_c, line )
      struct line_cats *line_c;
      int    line;
 {
-    long offset;
-    P_LINE_2D *Line;
 
 #ifdef GDEBUG
     G_debug (3, "V2_read_line()");
@@ -113,10 +120,7 @@ V2_read_line (Map, line_p, line_c, line )
     if (!VECT_OPEN (Map))
         return -1;
     
-    Line = Map->plus.Line_2d[line];
-    offset = Line->offset;
-    G_debug (3, "-> V1_read_line() on offset %d", offset);
-    return ( V1_read_line (Map, line_p, line_c, offset) );
+    return (*V2_read_line_array[Map->format]) (Map, line_p, line_c, line);
 }
 
 /*

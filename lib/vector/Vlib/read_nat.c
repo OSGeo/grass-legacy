@@ -121,7 +121,6 @@ V1_read_next_line_nat (
 /*
    ** reads any specified line   This is NOT affected by constraints
  */
-/* TODO needed ?, see V2_read_line */
 int 
 V2_read_line_nat (
 	       struct Map_info *Map,
@@ -129,12 +128,14 @@ V2_read_line_nat (
 	       struct line_cats *line_c,
 	       int line)
 {
-    P_LINE_2D *Line;
+    P_LINE *Line;
 
+    G_debug (3, "V2_read_line_nat()"); 
+    
     if (line < 1 || line > Map->plus.n_lines)	
         return -2;
 
-    Line = Map->plus.Line_2d[line]; 
+    Line = Map->plus.Line[line]; 
     return Vect__Read_line_nat (Map, line_p, line_c, Line->offset);
 }
 
@@ -148,7 +149,7 @@ V2_read_next_line_nat (
 		    struct line_cats *line_c)
 {
   register int line;
-  register P_LINE_2D *Line;
+  register P_LINE *Line;
 
   while (1)
     {
@@ -157,7 +158,7 @@ V2_read_next_line_nat (
       if (line > Map->plus.n_lines)
 	return (-2);
 
-      Line = Map->plus.Line_2d[line];
+      Line = Map->plus.Line[line];
 
       if ((Map->Constraint_type_flag && !(Line->type & Map->Constraint_type)))
 	{

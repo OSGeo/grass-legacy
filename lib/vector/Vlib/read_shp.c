@@ -135,10 +135,44 @@ V2_read_line_shp (
 	       struct line_cats *line_c,
 	       int line)
 {
-  if (line < 1 || line > Map->plus.n_lines)	/* ALL DONE */
-    return -2;
+    int    node, shape, cat;
+    long   offset;
+    P_LINE *Line; 
+    P_NODE *Node;
+    
+    G_debug (3, "V2_read_line_shp()");
+    
+    if (line < 1 || line > Map->plus.n_lines)	/* ALL DONE */
+        return -2;
 
-//  return Vect__Read_line_shp (Map, line_p, line_c, Map->plus.Line_2d[line].offset);
+    Line = Map->plus.Line[line]; 
+    if ( Line->type == GV_CENTROID ) {
+        G_debug (3, "Centroid");
+	node = Line->N1;
+	Node = Map->plus.Node[node]; 
+        
+	/* coordinates */
+	if ( line_p != NULL ) {
+	    Vect_reset_line ( line_p );
+	    Vect_append_point ( line_p, Node->x, Node->y );
+	}
+        
+        /* category */
+	if ( line_c != NULL ) {
+	    Vect_reset_cats ( line_c );
+	    offset = Line->offset;
+	    shape = ( offset >> 11 ) & 0x1FFFFF ;
+	    if ( Map->fInfo.shp.cat_col_num >= 0  ) {
+		cat = DBFReadIntegerAttribute( Map->fInfo.shp.hDbf, shape, 
+					       Map->fInfo.shp.cat_col_num );
+		Vect_cat_set ( line_c, 1, cat );
+	    }
+	}
+	
+        return (GV_CENTROID);
+    } else {
+        return Vect__Read_line_shp (Map, line_p, line_c, Line->offset);
+    }
 }
 
 /*
@@ -155,7 +189,7 @@ V2_read_next_line_shp (
 		    struct line_cats *line_c)
 {
   register int line;
-  register P_LINE_2D *Line;
+  register P_LINE *Line;
 
   return V1_read_next_line_shp (Map, line_p, line_c);
 /*  
@@ -166,7 +200,7 @@ V2_read_next_line_shp (
       if (line > Map->plus.n_lines)
 	return (-2);
 
-      Line = &(Map->plus.Line_2d[line]);
+      Line = &(Map->plus.Line[line]);
 
       if ((Map->Constraint_type_flag && !(Line->type & Map->Constraint_type)))
 	{
@@ -208,9 +242,9 @@ Vect__Read_line_shp (
   int shape, part;
   int first, last; 
   SHPObject *pShape;
+  int cat;
   
   G_debug (3, "Vect__Read_line_shp() offset = %d", offset);
-  /* offset = ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF); */
   shape = ( offset >> 11 ) & 0x1FFFFF ;
   part = offset & 0x7FF;
   G_debug (3, "shape = %d part = %d", shape, part);
@@ -220,52 +254,6 @@ Vect__Read_line_shp (
       return (-2); /* EOF reached */ 
   }
   
-  if ( c != NULL )
-    {
-      c->n_cats = 1;
-      Vect_reset_cats ( c );
-      /* TODO set cat to value of selected field */
-      Vect_cat_set ( c, 1, shape + 1 );
-    }
- 
-  pShape = SHPReadObject( Map->fInfo.shp.hShp, shape ); 
-  
-  Vect_reset_line ( p ); 
- 
-  if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
-        || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
-      first = 0; last = 0;
-  } else {
-      first = pShape->panPartStart[part];
-      if( part == pShape->nParts - 1 ) {
-          last = pShape->nVertices - 1;
-      } else {
-          last = pShape->panPartStart[part+1] - 1;
-      }
-  }
-
-  for ( i = first; i <= last; i++ ) {
-      /* TODO do it better (speed) */ 
-      Vect_append_point ( p,  pShape->padfX[i], pShape->padfY[i] ); 
-  }
-  
-  if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
-        || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
-      Map->fInfo.shp.shape = shape + 1 ;
-      Map->fInfo.shp.part = 0;
-      
-  } else {
-      if ( part == pShape->nParts - 1 ) {  
-	  Map->fInfo.shp.shape = shape + 1 ;
-	  Map->fInfo.shp.part = 0;
-      } else {
-	  Map->fInfo.shp.shape = shape ;
-	  Map->fInfo.shp.part = part + 1;
-      }
-  }
-
-  SHPDestroyObject(pShape);
-  
   switch ( Map->fInfo.shp.type ) {
       case SHPT_POINT :
       case SHPT_MULTIPOINT :
@@ -273,23 +261,80 @@ Vect__Read_line_shp (
       case SHPT_MULTIPOINTZ :
       case SHPT_POINTM :
       case SHPT_MULTIPOINTM :
-  	return (GV_POINT);
+  	type = GV_POINT;
+	break;
 	
       case SHPT_ARC :
       case SHPT_ARCZ :
       case SHPT_ARCM :
-  	return (GV_LINE);
+  	type = GV_LINE;
+	break;
 	
       case SHPT_POLYGON :
       case SHPT_POLYGONZ :
       case SHPT_POLYGONM :
-  	return (GV_BOUNDARY);
+  	type = GV_BOUNDARY;
+	break;
 	
       default:
 	G_warning ("Shape type %d not supported\n", Map->fInfo.shp.type);
-  	return (GV_DEAD_POINT);
+  	type = GV_DEAD_POINT;
+	break;
   }
+  
+
+  if ( c != NULL ) {
+      Vect_reset_cats ( c );
+      if ( Map->fInfo.shp.cat_col_num >= 0 &&
+	   ( type == GV_POINT || type == GV_LINE ) ) {
+	  cat = DBFReadIntegerAttribute( Map->fInfo.shp.hDbf, shape, 
+		        Map->fInfo.shp.cat_col_num );
+          Vect_cat_set ( c, 1, cat );
+      }
+  }
+ 
+  
+  if ( p != NULL ) {
+      pShape = SHPReadObject( Map->fInfo.shp.hShp, shape ); 
+      Vect_reset_line ( p ); 
+     
+      if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
+	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	  first = 0; last = 0;
+      } else {
+	  first = pShape->panPartStart[part];
+	  if( part == pShape->nParts - 1 ) {
+	      last = pShape->nVertices - 1;
+	  } else {
+	      last = pShape->panPartStart[part+1] - 1;
+	  }
+      }
+
+      for ( i = first; i <= last; i++ ) {
+	  /* TODO do it better (speed) */ 
+	  Vect_append_point ( p,  pShape->padfX[i], pShape->padfY[i] ); 
+      }
+      
+      if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
+	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	  Map->fInfo.shp.shape = shape + 1 ;
+	  Map->fInfo.shp.part = 0;
+	  
+      } else {
+	  if ( part == pShape->nParts - 1 ) {  
+	      Map->fInfo.shp.shape = shape + 1 ;
+	      Map->fInfo.shp.part = 0;
+	  } else {
+	      Map->fInfo.shp.shape = shape ;
+	      Map->fInfo.shp.part = part + 1;
+	  }
+      }
+      SHPDestroyObject(pShape);
+  }
+  
+  return type;
 }
+
 
 /*
 *  Returns  next line offset

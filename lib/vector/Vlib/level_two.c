@@ -144,10 +144,10 @@ Vect__P_init (struct Map_info *map, char *name, char *mapset)
   // set conversion matrices
   dig__init_head_portable ( &(map->head));
 
-  map->plus.Line_2d = NULL;
-  map->plus.Area_2d = NULL;
-  map->plus.Isle_2d = NULL;
-  map->plus.Node_2d = NULL;
+  map->plus.Line = NULL;
+  map->plus.Area = NULL;
+  map->plus.Isle = NULL;
+  map->plus.Node = NULL;
 
 //  if (0 > dig_load_plus (map, map->dig_fp, 1))
 //    return ("Error reading dig_plus file");
@@ -207,10 +207,10 @@ Vect__P_init_new_plus (struct Map_info *map, char *name)
   // set conversion matrices
   dig__init_head_portable ( &(map->head));
 
-  map->plus.Line_2d = NULL;
-  map->plus.Area_2d = NULL;
+  map->plus.Line = NULL;
+  map->plus.Area = NULL;
   //map->Isle = NULL;
-  map->plus.Node_2d = NULL;
+  map->plus.Node = NULL;
 
   // OK
   return (NULL);
@@ -240,9 +240,9 @@ V2_num_areas (struct Map_info *map)
 int 
 Vect_get_node_point (struct Map_info *map, int num, double *x, double *y)
 {
-    P_NODE_2D *Node;
+    P_NODE *Node;
 
-    Node = map->plus.Node_2d[num];
+    Node = map->plus.Node[num];
     *x = Node->x;
     *y = Node->y;
   
@@ -255,9 +255,9 @@ Vect_get_node_point (struct Map_info *map, int num, double *x, double *y)
 int 
 V2_line_att (struct Map_info *map, int line)
 {
-  P_LINE_2D *Line;
+  P_LINE *Line;
 
-  //Line = &(map->plus.Line_2d[line]);
+  //Line = &(map->plus.Line[line]);
 
   // TODO
   //if (line <= 0 || line > map->plus.n_lines || !LINE_ALIVE (Line) || !Line->att)
@@ -269,12 +269,12 @@ V2_line_att (struct Map_info *map, int line)
 int 
 V2_area_att (struct Map_info *map, int area)
 {
-  P_AREA_2D *Area;
+  P_AREA *Area;
 
   //if (area <= 0 || area > map->plus.n_areas)
   //  return (0);
 
-  //Area = &(map->plus.Area_2d[area]);
+  //Area = &(map->plus.Area[area]);
   // TODO
   //if (!AREA_ALIVE (Area) || !Area->att)
   //  return (0);
@@ -286,14 +286,14 @@ V2_area_att (struct Map_info *map, int area)
 /* note all areas may not be labeled */
 /* use get_area_att  > 0 for test of labelled */
 int 
-V2_get_area (struct Map_info *map, int num, P_AREA_2D ** Area)
+V2_get_area (struct Map_info *map, int num, P_AREA ** Area)
 {
     /*
   if (num <= 0 || num > map->plus.n_areas)
     return (-1);
-  if (!AREA_ALIVE (&(map->plus.Area_2d[num])))
+  if (!AREA_ALIVE (&(map->plus.Area[num])))
     return (-1);
-  *Area = &(map->plus.Area_2d[num]);
+  *Area = &(map->plus.Area[num]);
   return (0);
   */
 }
@@ -303,13 +303,13 @@ int
 V2_get_area_bbox (struct Map_info *map, int area,
 		  double *N, double *S, double *E, double *W)
 {
-  P_AREA_2D *Area;
+  P_AREA *Area;
 /*
   if (area <= 0 || area > map->plus.n_areas)
     return (-1);
-  if (!AREA_ALIVE (&(map->plus.Area_2d[area])))
+  if (!AREA_ALIVE (&(map->plus.Area[area])))
     return (-1);
-  Area = &(map->plus.Area_2d[area]);
+  Area = &(map->plus.Area[area]);
   *N = Area->N;
   *E = Area->E;
   *W = Area->W;
@@ -324,13 +324,13 @@ V2_get_line_bbox (
 		   struct Map_info *map, int line,
 		   double *N, double *S, double *E, double *W)
 {
-  P_LINE_2D *Line;
+  P_LINE *Line;
 /*
   if (line <= 0 || line > map->plus.n_lines)
     return (-1);
-  if (!LINE_ALIVE (&(map->plus.Line_2d[line])))
+  if (!LINE_ALIVE (&(map->plus.Line[line])))
     return (-1);
-  Line = &(map->plus.Line_2d[line]);
+  Line = &(map->plus.Line[line]);
   *N = Line->N;
   *E = Line->E;
   *W = Line->W;

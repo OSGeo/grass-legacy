@@ -44,7 +44,7 @@ V1_close_shp (struct Map_info *Map)
   Map->open = VECT_CLOSED_CODE;
 
   SHPClose( Map->fInfo.shp.hShp );
-  /* TODO close DBF */  
+  DBFClose( Map->fInfo.shp.hDbf );
 
   return 0;
 }
