@@ -37,7 +37,7 @@ You MUST comment out the next line if compiling under IRIX 3.x */
 #undef BLACK
 #endif
 
-#include <GL/gl.h>
+#include <gl.h>
 #include "panel.h"
 #include "gis.h"
 

@@ -59,7 +59,7 @@ PROG = $(BIN_CMD)/SG3d
 #PROG = ./sg3dnew
 
 $(PROG): $(OFILES) $(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm_s -lgl_s
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm -lgl
 	@rm -f a.out
 #	cp doc/catman $(MAN4)/SG3d
 
