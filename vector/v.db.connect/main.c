@@ -35,6 +35,7 @@ int main (int argc, char **argv)
     dbDriver *driver;
     struct field_info *Fi;
     int field;
+    struct Map_info Map;
 
     /* set up the options and flags for the command line parser */
 
@@ -68,7 +69,10 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
-    Fi = Vect_get_field_info( input, mapset, field);
+    Vect_set_open_level (1);
+    Vect_open_old ( &Map, inopt->answer, mapset);
+
+    Fi = Vect_get_field( &Map, field);
     if (Fi == NULL)
     {
        fprintf(stderr, "Database connection for map <%s> is not defined in DB file\n", input);
@@ -81,6 +85,7 @@ int main (int argc, char **argv)
     fprintf(stderr,"Vector map <%s> is connected to table <%s> in database <%s> through driver <%s>\n",  input, Fi->table, Fi->database, driver);
 
     /* here code should be added to optionally modify DB file */
+    Vect_close ( &Map);
     
     exit(0);
 }
