@@ -185,7 +185,6 @@ Vect_cat_del (struct line_cats *Cats, int field)
   for (n = 0; n < Cats->n_cats; n++) {
       if (Cats->field[n] == field) {
 	  for (m = n; m < Cats->n_cats - 1; m++) {
-	      G_debug(0,"<<");
 	      Cats->field[m] = Cats->field[m + 1];
 	      Cats->cat[m] = Cats->cat[m + 1];
 	  }
