@@ -29,9 +29,12 @@ Input_other (function, type)
 
     sprintf (msg, "%s input required", type);
     Menu_msg(msg);
+
     stat = (*function)();
     if (active)
+    {
 	use_mouse_msg();
+    }
 
     Menu_msg("");
     return stat;
