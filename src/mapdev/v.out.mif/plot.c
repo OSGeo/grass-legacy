@@ -106,7 +106,7 @@ writepoly(Map, index, Points)
 	    break;
 	case -2:
 	    printf ("Done\n");
-	    Vect_close (&Map);
+	    Vect_close (Map);
 	    return  0;
 	    break;
 	}
@@ -136,7 +136,7 @@ writeisle(Map, index, Points)
 	    break;
 	case -2:
 	    printf ("Done\n");
-	    Vect_close (&Map);
+	    Vect_close (Map);
 	    return  0;
 	    break;
 	}
