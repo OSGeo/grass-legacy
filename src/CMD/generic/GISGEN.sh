@@ -22,6 +22,7 @@ echo "GRASS GIS compilation log"  > $SRC/../$errorlog
 echo "-------------------------" >> $SRC/../$errorlog
 STARTTIME=`date`
 echo "Start of compilation: $STARTTIME" >> $SRC/../$errorlog
+echo "Errors:" >> $SRC/../$errorlog
 
 echo '####################################################################'
 echo "GISGEN                             " `date`
@@ -158,7 +159,8 @@ do
     case $i in
     DONE)
 	echo DONE generating GRASS GIS binary code
-	date >> $SRC/../$errorlog
+	ENDTIME=`date`
+	echo "End of compilation:   $ENDTIME" >> $SRC/../$errorlog
 	echo DONE generating GRASS GIS binary code >> $SRC/../$errorlog
 	exit 0
 	;;
