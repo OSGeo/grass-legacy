@@ -62,6 +62,7 @@ int main (int argc, char *argv[])
   Site *s;
   FILE *fd;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *output, *nsites;
@@ -72,7 +73,11 @@ int main (int argc, char *argv[])
   } flag;
 
   G_gisinit (argv[0]);
-
+  
+  module = G_define_module();
+  module->description =        
+                  "Randomly generate a GRASS sites list.";
+                  
   parm.nsites = G_define_option ();
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;

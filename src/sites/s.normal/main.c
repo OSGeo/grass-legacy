@@ -45,6 +45,7 @@ int main (argc, argv)
 
   long x, y;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *input, *tests;
@@ -58,6 +59,9 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "tests for normality for sites.";
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;

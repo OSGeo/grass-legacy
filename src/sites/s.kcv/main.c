@@ -56,6 +56,7 @@ main (int argc, char **argv)
   D *d;
   Z *z;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *output, *npartitions;
@@ -67,6 +68,10 @@ main (int argc, char **argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                "Randomly partition sites into test/train sets.";
+                
   parm.npartitions = G_define_option ();
   parm.npartitions->key = "k";
   parm.npartitions->type = TYPE_INTEGER;

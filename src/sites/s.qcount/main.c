@@ -52,6 +52,7 @@ int main (argc, argv)
   int i, sites_read, do_indices, do_counts, nsites, nquads, verbose, *counts;
 
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *input, *n, *r;
@@ -70,6 +71,10 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "indices for quadrat counts of sites lists";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;

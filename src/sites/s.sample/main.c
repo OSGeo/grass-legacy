@@ -64,6 +64,7 @@ int main (argc, argv)
   int usesitecat, usecelldesc, dodiff; /* indicator variables */
   int fdrast;	/* file descriptor for raster file is int */
   struct Cell_head window;
+  struct GModule *module;
   struct Categories cats;
   RASTER_MAP_TYPE map_type;
   int strs, dbls, dims;
@@ -80,7 +81,11 @@ int main (argc, argv)
   Site *outSite;
   
   G_gisinit (argv[0]);
-
+  
+  module = G_define_module();
+  module->description =        
+                  "Sample a raster file at site locations.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;

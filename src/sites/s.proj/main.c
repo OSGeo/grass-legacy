@@ -1,4 +1,3 @@
-
 /*
 * Name
 * 	s.proj -- convert a sites file to a new geographic projection.
@@ -69,12 +68,16 @@ main(int argc, char    **argv)
 	         *outmap,		 /* name of output layer	 */
 	         *inlocation,		 /* name of input location	 */
 	         *indbase;		 /* name of input database	 */
-
-
-
+        struct GModule *module;
+        
 
 	G_gisinit(argv[0]);
-
+        
+        module = G_define_module();
+        module->description =        
+                        "Allows the user to re-project a sites file from one "
+                        "location to the current location.";
+                        
 	newproj = G_projection();
 
 	inmap = G_define_option();

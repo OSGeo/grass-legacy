@@ -48,6 +48,7 @@ int main (argc, argv)
   int all, i, log, verbose, dcmp (), readz(), pltsqq();
 
   struct Cell_head window;
+  struct GModule *module;
   double factor;
   double  *z;
   FILE *fdsite;
@@ -62,6 +63,10 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Normal probability plot of a GRASS site list.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;

@@ -47,6 +47,7 @@ main (int argc, char **argv)
 
   FILE *fdisite, *fdosite;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *in, *out, *dist, *pars;
@@ -58,6 +59,10 @@ main (int argc, char **argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Random location perturbations of GRASS sites.";
+                  
   parm.in = G_define_option ();
   parm.in->key = "input";
   parm.in->type = TYPE_STRING;

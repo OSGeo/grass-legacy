@@ -37,6 +37,7 @@ main (int argc, char *argv[])
   int fd1, fd2, maskfd;
   DCELL *cell1, *cell2, *mask;
   struct Cell_head window;
+  struct GModule *module;
   int row, col;
   double north, east;
   double maxdist, dist;
@@ -152,6 +153,10 @@ main (int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Surface interpolation from site data via kriging";
+                  
   /* The following segment evaluates the command line input parameters  */
 
   /* Main I/O files first */
