@@ -575,14 +575,15 @@ esac
 # Display the version and license info
 tput clear
 
-if [ -f "$GISBASE/locale/$LCL/etc/license" ] ; then
-	cat "$GISBASE/locale/$LCL/etc/license"
+if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
+	cat "$GISBASE/locale/$LCL/etc/welcome"
 else
-	cat "$ETC/license"
+	cat "$ETC/welcome"
 fi
-echo 
-echo "This version running thru the $shellname ($SHELL)"
-echo "Help is available with the command:      g.manual"
+
+echo "GRASS homepage:                          http://grass.itc.it/"
+echo "This version running thru:               $shellname ($SHELL)"
+echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
