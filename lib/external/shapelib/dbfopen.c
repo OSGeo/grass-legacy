@@ -34,8 +34,8 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2005-03-24 14:26:44  markus
- * updated to GDAL 1.2.6
+ * Revision 1.5  2005-03-24 14:27:16  markus
+ * GDAL bugfix #809 (http://208.24.120.44/show_bug.cgi?id=809)
  *
  * Revision 1.59  2005/03/14 15:20:28  fwarmerdam
  * Fixed last change.
@@ -1002,8 +1002,7 @@ DBFGetFieldInfo( DBFHandle psDBF, int iField, char * pszFieldName,
              || psDBF->pachFieldType[iField] == 'F'
              || psDBF->pachFieldType[iField] == 'D' )
     {
-	if( psDBF->panFieldDecimals[iField] > 0 
-            || psDBF->panFieldSize[iField] > 10 )
+	if( psDBF->panFieldDecimals[iField] > 0 )
 	    return( FTDouble );
 	else
 	    return( FTInteger );
