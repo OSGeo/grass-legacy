@@ -1,3 +1,4 @@
+
 /*  @(#)w_bdlg_head.c	1.2  6/24/87  */
 /*
  * Writes a dlg file header out in binary format.
@@ -56,8 +57,8 @@ write_bdlg_head(bin, cnum)
 		fwrite (coors[i].corner, sizeof(*coors[i].corner),2, bin) ;
 		fwrite (&coors[i].lat,   sizeof(coors[i].lat),    1, bin) ;
 		fwrite (&coors[i].lon,   sizeof(coors[i].lon),    1, bin) ;
-		fwrite (&coors[i].utm_n, sizeof(coors[i].utm_n),  1, bin) ;
 		fwrite (&coors[i].utm_e, sizeof(coors[i].utm_e),  1, bin) ;
+		fwrite (&coors[i].utm_n, sizeof(coors[i].utm_n),  1, bin) ;
 	}
 
 	nlines = 14 ;
