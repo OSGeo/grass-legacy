@@ -54,14 +54,14 @@
  * _get_make_sock_path(), builds and tests the path for the socket
  * directory.  Returns NULL on any failure, otherwise it returns the
  * directory path. The path will be like 
- * "/tmp/grass'GRASS_VERSION_MAJOR''GRASS_VERSION_MINOR'-$USER-$GIS_LOCK".
+ * "/tmp/grass6-$USER-$GIS_LOCK".
  * ($GIS_LOCK is set in lib/init/init.sh to PID) 
  * ---------------------------------------------------------------------*/
 static char *
 _get_make_sock_path (void)
 {
     char *path, *user, *lock;
-    const char *prefix = "/tmp/grass";
+    const char *prefix = "/tmp/grass6";
     int len, status;
     struct stat theStat;
     
@@ -79,7 +79,7 @@ _get_make_sock_path (void)
     len = strlen(prefix) + strlen(user) + strlen(GRASS_VERSION_MAJOR) + strlen(GRASS_VERSION_MINOR) + strlen(lock) + 3;
     path = G_malloc (len);
     
-    sprintf (path, "%s%s%s-%s-%s", prefix, GRASS_VERSION_MAJOR, GRASS_VERSION_MINOR, user, lock);
+    sprintf (path, "%s-%s-%s", prefix, user, lock);
 
     if ((status = lstat (path, &theStat)) != 0)
     {
