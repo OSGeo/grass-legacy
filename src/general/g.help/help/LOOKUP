@@ -239,7 +239,7 @@ Soil Conservation Service data
 Satellite pour l'Observation de la Terre data
 05.tape.ex/05.05.12.spot
 EPA STORET (Water Quality) data
-05.tape.ex/05.05.13.storet
+05.tape.ex/05.05.13.stort
 U.S. Bureau of the Census data
 05.tape.ex/05.05.14.usbc
 U.S. Geological Survey-1 data
@@ -2096,15 +2096,15 @@ v.trim help
 17.manual/Help.pages/Gen.tractmap
 "GRASS User's Reference Manual"
 18.biblio/adp.n-87.22
-"GRASS 4.0 User's Reference Manual"
+"GRASS 4.1 User's Reference Manual"
 18.biblio/adp.n-87.22
 "DTED and DEM Elevation Data Extraction"
 18.biblio/adp.n-87.22
-"GRASS 4.0 Installation Guide"
+"GRASS 4.1 Installation Guide"
 18.biblio/adp.n-87.22
 "GRASS Imagery Tutorial"
 18.biblio/adp.n-87.22
-"GRASS 3.0 Programmer's Manual"
+"GRASS 4.1 Programmer's Manual"
 18.biblio/adp.n-89.14
 "GRASS Programmer's Manual"
 18.biblio/adp.n-89.14
@@ -2250,3 +2250,111 @@ Circular 895-A
 18.biblio/usgs.pubs
 895-G
 18.biblio/usgs.pubs
+-  d.igraph
+Commands.def/digraph.def
+-  d.measure.old
+Commands.def/dmeasureold.def
+-  d.p.labels
+Commands.def/dplabels.def
+-  g.setproj
+Commands.def/gsetproj.def
+-  i.gensig
+Commands.def/igensig.def
+-  i.maxlik.orig
+Commands.def/imaxlikorig.def
+-  i.ortho.photo
+Commands.def/iorthophoto.def
+-  i.quantize
+Commands.def/iquantize.def
+-  i.tape.spot
+Commands.def/itapespot.def
+-  i.tape.tm.fast
+Commands.def/itapetmfast.def
+-  m.proj
+Commands.def/mproj.def
+-  r.contour
+Commands.def/rcontour.def
+-  r.digit
+Commands.def/rdigit.def
+-  r.in.poly
+Commands.def/rinpoly.def
+-  r.mask.points
+Commands.def/rmaskpoints.def
+-  r.median
+Commands.def/rmedian.def
+-  r.water.outlet
+Commands.def/rwateroutlet.def
+-  r.weight2
+Commands.def/rweight2.def
+-  s.surf.tps
+Commands.def/ssurftps.def
+-  tig.rim.sh
+Commands.def/tigrimsh.def
+-  tiger.info.sh
+Commands.def/tigerinfosh.def
+-  v.alabel
+Commands.def/valabel.def
+-  v.cutter
+Commands.def/vcutter.def
+-  v.digit2
+Commands.def/vdigit2.def
+-  v.in.dlg2
+Commands.def/vindlg2.def
+-  v.in.tig.rim
+Commands.def/vintigrim.def
+-  v.in.transects
+Commands.def/vintransects.def
+d.igraph help
+17.manual/Help.pages/d.igraph
+d.measure.old help
+17.manual/Help.pages/d.measure.old
+d.p.labels help
+17.manual/Help.pages/d.p.labels
+g.setproj help
+17.manual/Help.pages/g.setproj
+i.gensig help
+17.manual/Help.pages/i.gensig
+i.maxlik.orig help
+17.manual/Help.pages/i.maxlik.orig
+i.ortho.photo help
+17.manual/Help.pages/i.ortho.photo
+i.quantize help
+17.manual/Help.pages/i.quantize
+i.tape.spot help
+17.manual/Help.pages/i.tape.spot
+i.tape.tm.fast help
+17.manual/Help.pages/i.tape.tm.fast
+m.proj help
+17.manual/Help.pages/m.proj
+r.contour help
+17.manual/Help.pages/r.contour
+r.digit help
+17.manual/Help.pages/r.digit
+r.in.poly help
+17.manual/Help.pages/r.in.poly
+r.mask.points help
+17.manual/Help.pages/r.mask.points
+r.median help
+17.manual/Help.pages/r.median
+r.water.outlet help
+17.manual/Help.pages/r.water.outlet
+r.weight2 help
+17.manual/Help.pages/r.weight2
+s.surf.tps help
+17.manual/Help.pages/s.surf.tps
+tig.rim.sh help
+17.manual/Help.pages/tig.rim.sh
+tiger.info.sh help
+17.manual/Help.pages/tiger.info.sh
+v.alabel help
+17.manual/Help.pages/v.alabel
+v.cutter help
+17.manual/Help.pages/v.cutter
+v.digit2 help
+17.manual/Help.pages/v.digit2
+v.in.dlg2 help
+17.manual/Help.pages/v.in.dlg2
+v.in.tig.rim help
+17.manual/Help.pages/v.in.tig.rim
+v.in.transects help
+17.manual/Help.pages/v.in.transects
