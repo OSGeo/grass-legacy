@@ -1,0 +1,86 @@
+This is the GRASS-INGRES interface for INGRES version 6.
+
+It is a modified version of the GRASS-INFORMIX interface, developed
+by Jim Farley at University of Arkansas.
+
+Note that this version of the GRASS-INGRES interface contains bugs!
+ 
+Most of the routines have first been modified for INGRES version 5. They
+have been tested on INGRES version 5. I have not had any possibility to test
+them all on INGRES version6. I have, however, done most of the modifications
+to make them work with INGRES version 6. Below follows a listing of the
+modules and the problems that may occur when running them with INGRES ver 6.
+
+In each directory you will find a file called MODIFICATIONS,
+that describes the modifications from the GRASS-INFORMIX interface,
+as well as the differences between INGRES version 5 and version6. There
+is also a file called STRUCTURE in each directory. It describes the program
+structure.
+
+The modification in SQL syntax for INGRES are described in the file 
+SQLsyntax in this directory.
+
+Problems that may occur when running the GRASS-INGRES interface with
+INGRES version 6:
+
+D.WHAT.R.DB
+D.WHAT.V.DB
+D.WHAT.S.DB
+
+These modules are the same for INGRES ver5 and 6,  Tested and OK.
+
+
+G.TABLE.DB
+G.SELECT.DB
+
+These modules have been developed and tested for INGRES ver6. There should
+not be any problems running them. They do not, however, give any explanatory 
+messages during execution. This has been added to all other routines (except
+g.column.db, see below).
+
+
+G.COLUMN.DB
+
+G.column.db was developed and tested for INGRES ver6, but may give problems 
+in verbose listing. I'm not sure whether this was implemented correctly for
+INGRES ver. 6 or not! This module does not give any explanatory messages
+during execution.
+
+
+G.STATS.DB
+
+G.stats.db will not work for INGRES ver.6. Checking for datatype is 
+system dependent and has not been implemented correctly for version 6. 
+
+
+D.RAST.DB
+D.VECT.DB
+D.SITE.DB
+
+The only thing that hasn't been tested with INGRES ver6 for these modules is
+the WHERE clause 'IS NOT NULL' (buildSQL). Problems may occur when running
+the module on joined tables. The subroutine 'ingresUnTable' is system
+specific, but it has been tested on INGRES ver6 and should work OK.
+
+
+R.RECLASS.DB
+V.RECLASS.DB
+
+These modules are the same for INGRES version 5 and 6. There should not
+be any problems running them. The subroutine 'ingresUnTable' is specific
+for INGRES version 6, but it has been tested and should work OK.      
+
+
+R.RESCALE.DB
+                    
+The only thing that hasn't been tested with INGRES ver 6 for this module is
+the WHERE clause 'IS NOT NULL' (sqlQry). Problems may occur when running
+the module on joined tables. Note that there are a number of bugfixes in
+this routine compared to the original GRASS-INFORMIX interface. The sub-
+routine 'ingresUnTable' is specific for INGRES version 6, but it has been
+tested and should work OK.
+
+Katarina Johnsson, Stockholm April 23, 1993
+Dept of Geodesy and Photogrammetry, 
+Royal Institute of Technology
+email: katarina@fmi.kth.se
