@@ -62,9 +62,11 @@ int main(argc, argv)
     double sum1, sum2;
 	float *data, value;
     int i,n,max,sz,cnt;
+    int field,  scan_int;
+    
     struct
     {
-	struct Option *input, *npoints, *output;
+	struct Option *input, *npoints, *output, *field;
     } parm;
 
     parm.input = G_define_option() ;
@@ -89,6 +91,12 @@ int main(argc, argv)
     parm.npoints->description="Number of interpolation points";
     parm.npoints->answer = "12";
 
+    parm.field = G_define_option();
+    parm.field ->key        = "field" ;
+    parm.field ->type       = TYPE_INTEGER ;
+    parm.field ->required   = NO ;
+    parm.field ->description="Number of z-field attribute";
+    parm.field ->answer = "1";
 
     G_gisinit(argv[0]);
 
@@ -114,10 +122,19 @@ int main(argc, argv)
 	exit(1);
     }
 
+    scan_int=sscanf(parm.field->answer,"%d",&field);
+    if ((scan_int <= 0) || field < 1)
+    {
+	fprintf (stderr, "%s=%s - illegal field number\n", 
+		parm.field->key, parm.field->answer);
+	G_usage();
+	exit(1);
+    }
+
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
 
 /* read the elevation points from the input sites file */
-    read_sites (parm.input->answer);
+    read_sites (parm.input->answer, field);
 
     if (npoints == 0)
     {
