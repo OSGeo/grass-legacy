@@ -29,7 +29,8 @@ main(int argc, char *argv[])
     struct GModule *module;
     dbConnection  connection;
     char *drv, *db;
-
+    char *fakestart;
+    
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
     
@@ -44,7 +45,8 @@ main(int argc, char *argv[])
     driver->multiple   = NO ;
     driver->description = "Driver name." ;
     driver->options    = db_list_drivers();
-    if ( (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
+    fakestart = getenv( "GRASS_FAKE_START" );
+    if ( fakestart == NULL && (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
 	driver->answer = G_store ( drv );
 
     database = G_define_option() ;
@@ -53,7 +55,7 @@ main(int argc, char *argv[])
     database->required   = NO  ;
     database->multiple   = NO ;
     database->description = "Database name." ;
-    if ( (db=G__getenv2("GV_DATABASE",G_VAR_MAPSET)) )
+    if ( fakestart == NULL && (db=G__getenv2("GV_DATABASE",G_VAR_MAPSET)) )
 	database->answer = G_store ( db );
 
     schema = G_define_option() ;
@@ -68,7 +70,7 @@ main(int argc, char *argv[])
     module              = G_define_module();
     module->description = "Set default driver / database for new vector attributes.";
 
-    if(G_parser(argc, argv)) exit(1);
+    if (G_parser(argc, argv)) exit(1);
 
     /* set */
     if ( driver->answer )
