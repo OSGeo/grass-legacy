@@ -1,21 +1,20 @@
-.c COMMANDS: .F .C .S .A .R .X .Y .L
-.c Other .* except COMMANDS and .. can be used for comments.
+. COMMANDS: .F .C .S .A .R .X .Y .L .E .N ..
+. Other .* except COMMANDS can be used for comments.
+.
+. .F {font|path}[:charset]		font
+. .C {color_name|0xRRGGBB}		color
+. .S [+|-]size[p]			size		p means pixel size
+. .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
+. .R [+|-]rotation[r]			rotation	r means radian rotation
+. .X [+|-]x[%|p]			set x-coord	+|- means relative dx
+. .Y [+|-]y[%|p]			set y-coord	% means percentage
+. .L {0|1}				set auto-linefeed
+. .E [+|-]east[%|p]			set x-origin
+. .N [+|-]north[%|p]			set y-origin
+. ..					draw one .
+.
+.c ALSO COMMENT
 .a ALSO COMMENT
-.c
-.c .F {font|path}[:charset]		font
-.c .C {color_name|0xRRGGBB}		color
-.c .S [+|-]size[p]			size		p means pixel size
-.c .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
-.c .R [+|-]rotation[r]			rotation	r means radian rotation
-.c .X [+|-]x[%|p]			set x-coord	+|- means relative dx
-.c .Y [+|-]y[%|p]			set y-coord	% means percentage
-.c .L {0|1}				set auto-linefeed
-.c .E [+|-]east[%|p]			set x-origin
-.c .N [+|-]north[%|p]			set y-origin
-.c ..					draw one .
-.
-. ALSO COMMENT
-.
 .
 .
 .E 100p
