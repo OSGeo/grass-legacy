@@ -3,7 +3,7 @@
 **  US Army Construction Engineering Research Lab
 */
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "debug.h"
 #include "raster.h"
 #include "display_line.h"

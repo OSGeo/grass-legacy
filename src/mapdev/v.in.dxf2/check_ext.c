@@ -1,7 +1,7 @@
 #include "dxf2vect.h"
 
-dxf_check_ext (x, y)
-double	x, y;
+int 
+dxf_check_ext (double x, double y)
 {
 	if (y < s)
 	{
@@ -19,4 +19,6 @@ double	x, y;
 	{
 		e = x;
 	}
+
+	return 0;
 }

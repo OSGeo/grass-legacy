@@ -3,18 +3,16 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
-#include "digit.h"
 #include "local_proto.h"
 
-
-int 
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 	struct Option *opt1;
 	char *name, *mapset;
 	struct Map_info Map;
 	struct Categories Cats;
 	int level;
+	struct Option  *dev;
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
@@ -25,6 +23,13 @@ main (int argc, char **argv)
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,dig,vector" ;
 	opt1->description= "Name of existing vector map" ;
+
+    dev              = G_define_option();
+    dev->key         = "device";
+    dev->type        = TYPE_STRING;
+    dev->required    = NO;
+    dev->description = "Graphics device";
+
 
 	if(G_parser(argc,argv))
 		exit(1);
@@ -41,7 +46,8 @@ main (int argc, char **argv)
 	}
 
 
-	R_open_driver();
+/*  	R_open_driver(); */
+	R_open_driver2(dev->answer);
 	D_setup(0);
 
 	level = Vect_open_old (&Map, name, mapset);

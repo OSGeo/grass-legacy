@@ -67,8 +67,6 @@
 #include "Vect.h"
 #include "linkm.h"
 #include "bitmap.h"
-#include "digit.h"
-#include "dig_head.h"
 
 #include "interpf.h"
 #include "surf.h"

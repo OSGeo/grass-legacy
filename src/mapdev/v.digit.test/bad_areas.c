@@ -4,7 +4,7 @@
 */
 
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "vask.h"
 #include "keyboard.h"
 #include "Map_proto.h"

@@ -1,5 +1,4 @@
 /*  @(#)find_area.c    2.1  6/26/87  */
-#include "digit.h"
 #include "Vect.h"
 #include <math.h>
 

@@ -15,9 +15,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "v_out_arc.h"
-/*#include "dig_head.h" */
 #include "gtoa.h"
 
 #define  USAGE  "Vexport.arc cover=line/edge dig=input arc=output\n"

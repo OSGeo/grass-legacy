@@ -3,10 +3,9 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "debug.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "wind.h"
 #include "local_proto.h"

@@ -12,7 +12,7 @@
 #include "debug.h"
 #include	"map.h"
 #include        "gis.h"
-#include        "digit.h"
+#include        "Vect.h"
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "keyboard.h"

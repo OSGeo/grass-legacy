@@ -2,8 +2,6 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
-#include "dig_structs.h"
-#include "dig_defines.h"
 #include "Vect.h"
 #include "local_proto.h"
 

@@ -9,8 +9,8 @@
 double atof();
 
 
-dxf_add_arc(dxf_file)
-    FILE	*dxf_file;
+int 
+dxf_add_arc (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */

@@ -14,9 +14,7 @@
 # endif
 
 #include    "gis.h"
-#include    "digit.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 #include "local_proto.h"
 
 

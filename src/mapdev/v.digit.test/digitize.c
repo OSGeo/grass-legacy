@@ -11,8 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "gis.h"
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "display_line.h"
 #include "Map_proto.h"

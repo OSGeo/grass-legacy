@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "local_proto.h"
 
 /******************************************************************/
 /*                                                                */
@@ -280,7 +282,7 @@ int getinfo( char *name, int flag)
 	strncpy( tmp, line+42, 4) ; tmp[4] = 0; info.ldr = atoi( tmp);
 	strncpy( tmp, line+46, 11) ; tmp[11] = 0; info.ndr = atol( tmp);
 	if (debug > 0)
-	    fprintf( fdlog, "%s %s %d %d %d\n", info.tname, info.aifile,
+	    fprintf( fdlog, "%s %s %d %d %ld\n", info.tname, info.aifile,
 		     info.nitems, info.ldr, info.ndr);
 	p = strchr( info.tname, '.');
 	if (p == 0)

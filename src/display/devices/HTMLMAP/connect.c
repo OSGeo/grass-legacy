@@ -1,20 +1,19 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <setjmp.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "driverlib.h"
 
 static jmp_buf save;
-static timeout()
+static void timeout (void)
 {
 	longjmp(save,-1);
 }
 
-
-get_connection(files,rfd, wfd)
-char *files;
-int *rfd, *wfd ;
+int get_connection (char *files, int *rfd, int *wfd)
 {
 	char input[1024], output[1024];
 	sscanf(files,"%s %s",input,output);
@@ -31,10 +30,14 @@ int *rfd, *wfd ;
 		perror (output);
 		exit(-1) ;
 	}
+
+	return 0;
 }
 
-prepare_connection()
+int prepare_connection (void)
 {
+
+	return 0;
 }
 
 /* check_connection - see if we are already running */
@@ -47,12 +50,9 @@ prepare_connection()
 /* this is the AT&T version. */
 
 
-check_connection(me, link)
-	char *me ;
-	char *link;
+int check_connection (char *me, char *link)
 {
 	struct stat buf ;
-	int timeout();
 	char in_fifo[1024], out_fifo[1024];
 	int time, in_file, out_file;
 	void (*def)();

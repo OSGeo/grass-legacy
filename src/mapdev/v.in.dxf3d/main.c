@@ -7,6 +7,7 @@ v.in.dxf. Este programa es una reconversion a C de un programa creado en
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h" 
 # define MAXFILE 256
 # define MAXLINE 80
@@ -14,10 +15,8 @@ v.in.dxf. Este programa es una reconversion a C de un programa creado en
 #define NUMLINES 256
 
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-
-	char *dxf_file; 
 	char nfout[MAXFILE]; 
 	FILE *dxf_fp;
 	FILE *fout[NUMLINES];
@@ -60,16 +59,14 @@ main(int argc, char *argv[])
                          
 /* Abrir el fichero DXF especificado */
 
-	dxf_file = dxf_opt->answer;
- 		
-	if ( dxf_file == NULL ) {
+	if ( dxf_opt->answer == NULL ) {
 		fprintf (stderr, "%s: Command line error.\n\n", argv[0]);
 	        G_usage();
 	        exit (-1);
         }
 	                                
-	if ((dxf_fp = fopen (dxf_file, "r")) == NULL) {
-	        fprintf (stderr, "\ncannot open [%s] for dxf file\n", dxf_file);
+	if ((dxf_fp = fopen (dxf_opt->answer, "r")) == NULL) {
+	        fprintf (stderr, "\ncannot open [%s] for dxf file\n", dxf_opt->answer);
 	        exit (-2);
 	}
 	      
@@ -77,8 +74,8 @@ main(int argc, char *argv[])
 	                                                                    
 /* Coger como prefijo el nombre del fichero DXF */
 
-	p = G_rindex (dxf_file,'/');
-	if (p == NULL) p = dxf_file;
+	p = G_rindex (dxf_opt->answer,'/');
+	if (p == NULL) p = dxf_opt->answer;
 	else p++;
 	strcpy (basename, p);
 	if (NULL != (p = G_rindex (basename, '.')))
@@ -164,5 +161,6 @@ main(int argc, char *argv[])
 		while (line_opt->answers[++i]) {
 			fclose(fout[i]);
 		}
-	}	
+	}
+	return 0;	
 }

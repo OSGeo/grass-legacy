@@ -1,14 +1,10 @@
-
 #include     <stdio.h>
 #include     <signal.h>
 #include     "sdts_in.h"
 #include     "gis.h"
-#include     <Vect.h>
+#include     "Vect.h"
 #include     "stc123.h"
 #include  "sdts_globals.h"
-#include "dig_head.h"
-
-
 
 char *le_tags [] = {
     "dummy",

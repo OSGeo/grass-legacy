@@ -10,6 +10,7 @@
 **
 ********************************************************************/
 #include <stdio.h>
+#include <string.h>
 #include "gis.h"
 
 extern int compressed;	/* 1 if compressed, 0 if not */
@@ -38,7 +39,7 @@ void addchar( char c)
 /* Read a character on compressed input file */
 /* ignore return or newline and also MS-DOS end of file ('^Z') */
 
-int mygetchar()
+int mygetchar(void)
 {
     int ch;
     while ((ch = fgetc( fde00)) != EOF) {

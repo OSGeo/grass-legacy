@@ -5,14 +5,18 @@
 /***         Jo Wood, Department of Geography, V1.2, 7th February 1992         ***/
 /*********************************************************************************/
 
+#include <stdlib.h>
 #include "param.h"
+extern char* driver;
+  
+int 
+interface (
+   int argc,	       /* Number of command line arguments.	*/
+   char *argv[]     /* Contents of command line arguments.	*/
+)
+  
+  {
 
-interface(argc,argv) 
-
-    int	     argc;			/* Number of command line arguments.	*/
-    char    *argv[];			/* Contents of command line arguments.	*/
-
-{
     /*--------------------------------------------------------------------------*/
     /*                                 INITIALISE				*/
     /*--------------------------------------------------------------------------*/ 
@@ -25,6 +29,7 @@ interface(argc,argv)
 			*expon,		/* Inverse distance exponent for weight.*/
 			*vert_sc;	/* Vertical scaling factor.		*/
 
+	struct Option  *dev;
     struct Flag		*constr,	/* Forces quadratic through the central	*/
 					/* cell of local window if selected.	*/
 			*fixed,		/* Fix axis scale.			*/
@@ -95,6 +100,12 @@ interface(argc,argv)
     vert_sc->required	  = NO;
     vert_sc->answer	  = "1.0";
 
+    dev              = G_define_option();
+    dev->key         = "device";
+    dev->type        = TYPE_STRING;
+    dev->required    = NO;
+    dev->description = "Graphics device";
+
     constr->key		  = 'c';
     constr->description   = "Constrain model through central window cell";
     
@@ -117,6 +128,8 @@ interface(argc,argv)
     sscanf(vert_sc->answer,"%lf",&zscale);
     sscanf(tol1_val->answer,"%lf",&slope_tol);
     sscanf(tol2_val->answer,"%lf",&curve_tol);
+
+	driver=dev->answer;
 
     if ((exponent<0.0) || (exponent >4.0))
 	exponent = 0.0;
@@ -191,5 +204,5 @@ interface(argc,argv)
     	sprintf(err,"Inappropriate window size (too big or even)");
     	G_fatal_error(err);
     }
-
+    return 0;
 }

@@ -6,10 +6,12 @@
 /***                                                                       ***/
 /*****************************************************************************/
 
+#include <stdlib.h>
+#include "raster.h"
 #include "param.h"
 #include <stdio.h>
 
-close_down()
+int close_down(void)
 {
     /* Close connection with existing input raster. */
 
@@ -19,4 +21,5 @@ close_down()
     
     system("d.frame -s full_screen");
     
+    return 0;
 }

@@ -2,7 +2,7 @@
 **  Written by David Stigberg 1994, derived from  Dave Gerdes v.out.dlg code
 **  US Army Construction Engineering Research Lab
 */
-#include "digit.h"
+#include "Vect.h"
 
 #include "stc123.h"
 #include "defines.h"

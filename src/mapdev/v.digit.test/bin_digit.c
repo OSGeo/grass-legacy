@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include	"gis.h"
-#include	"bin_digit.h"
+#include	"bin_Vect.h"
 #include        "ginput.h"
 #include "local_proto.h"
 #define		BIN    "bin"

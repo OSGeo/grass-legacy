@@ -1,5 +1,5 @@
 #include <string.h>
-#include "digit.h"
+#include "Vect.h"
 
 int dig_map_to_head (
     struct Map_info *map,

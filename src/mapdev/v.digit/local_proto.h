@@ -224,7 +224,7 @@ int line_in_window (P_LINE *);
 int window_rout(double, double, double, double);
 int fit_window(double *, double *, double *, double *);
 
-#ifdef DIG__HEAD__FOO__
+#ifdef GRASS_DIGHEAD_H
 /* head_info.c */
 int get_head_info(int, struct dig_head *);
 #endif

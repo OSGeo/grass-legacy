@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include "curses.h"
 #include "digit.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "gis.h"

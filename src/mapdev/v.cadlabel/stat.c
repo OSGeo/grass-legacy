@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 int 
 main (int argc, char *argv[])
 {

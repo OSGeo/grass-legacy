@@ -7,7 +7,7 @@
 #include	<stdio.h>
 #include <string.h>
 #include "D.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "keyboard.h"

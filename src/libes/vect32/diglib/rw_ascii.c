@@ -6,7 +6,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "dig_head.h"
+#include "Vect.h"
 #include "gis.h"
 
 /*

@@ -1,5 +1,4 @@
-#include "digit.h"
-#include "V_.h"
+#include "Vect.h"
 #include "line_coords.h"
 
 plus_t walk_back (struct Map_info*, plus_t);

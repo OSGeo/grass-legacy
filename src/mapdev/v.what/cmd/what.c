@@ -1,11 +1,13 @@
 #include "gis.h"
-#include "digit.h"
+#include "display.h"
+#include "raster.h"
+#include "Vect.h"
+#include "local_proto.h"
 
 static int nlines = 50;
 
-what (interactive, once, Map, Cats)
-  struct Map_info *Map;
-  struct Categories *Cats;
+int 
+what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
 {
   int lcat, acat;
   int row, col;
@@ -15,9 +17,6 @@ what (interactive, once, Map, Cats)
   double east, north;
   float tmp_east, tmp_north;
   int button;
-  double D_get_d_north (), D_get_d_south ();
-  double D_get_d_east (), D_get_d_west ();
-  double D_d_to_u_row (), D_d_to_u_col ();
   double sq_meters;
 
   P_LINE *Line;
@@ -109,20 +108,23 @@ what (interactive, once, Map, Cats)
       /* Area stats - just for grins */
       dig_find_area2 (Map, Area, &sq_meters);
 
-      printf ("Size - Sq Meters: %.3lf\t\tHectares: %.3lf\n",
+      printf ("Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
 	      sq_meters, (sq_meters / 10000.));
 
-      printf ("           Acres: %.3lf\t\tSq Miles: %.4lf\n",
+      printf ("           Acres: %.3f\t\tSq Miles: %.4f\n",
 	      ((sq_meters * 10.763649) / 43560.), ((sq_meters * 10.763649) / 43560.) / 640.);
       nlines += 3;
 
     }
 
   } while (!once);
+
+  return 0;
 }
 
 /* TODO */
-show_buttons (once)
+int 
+show_buttons (int once)
 {
   if (once)
   {
@@ -137,4 +139,6 @@ show_buttons (once)
     fprintf (stderr, " Right: quit\n");
     nlines = 4;
   }
+
+  return 0;
 }

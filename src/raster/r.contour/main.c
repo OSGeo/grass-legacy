@@ -10,7 +10,6 @@
 #include <ctype.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "local_proto.h"
 
 int main ( int argc, char *argv[])

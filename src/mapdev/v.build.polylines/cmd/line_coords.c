@@ -3,7 +3,8 @@
 
 #define kSize 50
 
-struct line_coords* init_line_coords ()
+struct line_coords *
+init_line_coords (void)
 {
   struct line_coords *coords;
   
@@ -23,8 +24,8 @@ struct line_coords* init_line_coords ()
   return coords;
 }
 
-int reset_line_coords (coords)
-struct line_coords *coords;
+int 
+reset_line_coords (struct line_coords *coords)
 {
   if ((coords->x == NULL) || (coords->y == NULL))
     return 0;
@@ -34,9 +35,8 @@ struct line_coords *coords;
 }
 
 
-int resize_line_coords (coords, min)
-struct line_coords *coords;
-int min;
+int 
+resize_line_coords (struct line_coords *coords, int min)
 {
   int no_blocks = 0;
   double *newx, *newy;
@@ -67,8 +67,8 @@ int min;
 }
 
 
-free_line_coords (coords)
-struct line_coords *coords;
+int 
+free_line_coords (struct line_coords *coords)
 {
   if (coords)         /* probably a moot test */
     {

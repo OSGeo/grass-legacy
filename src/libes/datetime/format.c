@@ -7,6 +7,12 @@ static char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 int datetime_format ( DateTime *dt, char *buf)
 {
+/* Format the DateTime structure as a human-readable string */
+/*  Returns 0 when successful, and buf is filled with the
+      formatted data.
+    Returns a negative number as an error code if the DateTime
+      structure is not valid.
+*/
     char temp[128];
     int n;
     double sec;

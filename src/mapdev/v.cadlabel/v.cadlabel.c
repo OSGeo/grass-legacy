@@ -6,8 +6,6 @@
 #include    <math.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "local_proto.h"
 
 #ifndef LINE_LABELED

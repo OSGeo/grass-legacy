@@ -14,8 +14,7 @@
 #include "dig_curses.h"
 
 #define MAIN
-#include "dig_head.h"
-#include "digit.h"
+#include "Vect.h"
 #include "ginput.h"
 #include "Map_proto.h"
 #include "debug.h"

@@ -20,7 +20,7 @@
 #include "raster.h"
 #include "dig_curses.h"
 #include "keyboard.h"
-#include "digit.h"
+#include "Vect.h"
 #include "Map_proto.h"
 #include "local_proto.h"
 

@@ -5,7 +5,7 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "raster.h"
 #include "wind.h"
 #include "dig_curses.h"

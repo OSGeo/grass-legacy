@@ -6,13 +6,18 @@
 /***									***/
 /**************************************************************************/
 
+#include "raster.h"
+#include "display.h"
 #include "param.h"
+#include "local_proto.h"
 
 
-disp_graph(scr_x,scr_y,param_ptr,mwsize)
-    int scr_x,scr_y,			/* Mouse screen coords.		*/
-    	*param_ptr,	  		/* Array storing paramtr values */
-	mwsize;				/* Maximum window size.		*/
+int disp_graph (
+    int scr_x,
+    int scr_y,			/* Mouse screen coords.		*/
+    int *param_ptr,	  		/* Array storing paramtr values */
+    int mwsize				/* Maximum window size.		*/
+)
 {
 
     /*------------------------------------------------------------------*/
@@ -252,7 +257,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
 	    if (fp[size] != 0.0)
 	    	entrop += -fp[size]*log(fp[size]);
 	}
-	fprintf(stdout, "Scaled Entropy\t%.3lf\n", entrop/EMAX);
+	fprintf(stdout, "Scaled Entropy\t%.3f\n", entrop/EMAX);
     }
     else
     {
@@ -265,7 +270,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
     	}
 	stdev = sqrt(stdev/n);
 
-	fprintf(stdout, "Mean\t%.3lf\nStdev\t%.3lf\n",mean,stdev);
+	fprintf(stdout, "Mean\t%.3f\nStdev\t%.3f\n",mean,stdev);
     }
 
 
@@ -278,6 +283,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
     D_set_cur_wind(dem_frame);
     D_set_clip_window_to_map_window();
 
+    return 0;
 }
 
 /******************************************************************/
@@ -285,14 +291,17 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
 /******************************************************************/
 
 
-plot_cross(scr_x,scr_y)
-    int scr_x,scr_y;		/* Centre of cross to plot.	*/
+int plot_cross (
+    int scr_x,
+    int scr_y		/* Centre of cross to plot.	*/
+)
 {
     D_move_abs(scr_x-2,scr_y-2);
     D_cont_rel(5,5);
     D_move_abs(scr_x-2,scr_y+2);
     D_cont_rel(5,-5);
     D_move_abs(scr_x,scr_y);
+    return 0;
 }
 
 
@@ -300,11 +309,15 @@ plot_cross(scr_x,scr_y)
 /***			 Box Plotting function. 		***/
 /******************************************************************/
 
-
-plot_box(scr_x,scr_y,top,bot,lef,rit,feature)
-    int scr_x,scr_y,		/* Centre of box to plot.	*/
-	bot,top,lef,rit,	/* Graph boundaries.		*/
-	feature;		/* Morphometric feature.	*/
+int plot_box (
+    int scr_x,
+    int scr_y,		/* Centre of box to plot.	*/
+    int top,
+    int bot,
+    int lef,
+    int rit,	/* Graph boundaries.		*/
+    int feature		/* Morphometric feature.	*/
+)
 {
     int n;
     n = (wsize-1)/2;		/* Number of samples.		*/
@@ -343,4 +356,5 @@ plot_box(scr_x,scr_y,top,bot,lef,rit,feature)
     D_cont_abs(scr_x+(rit-lef)/n,scr_y);
     D_cont_abs(scr_x,scr_y);
 
+    return 0;
 }

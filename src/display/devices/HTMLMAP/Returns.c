@@ -6,37 +6,39 @@ extern int SCREEN_BOTTOM;
 extern int SCREEN_TOP;
 #define  NCOLORS    256
 
-Screen_left(index)
-	int *index ;
+#include "driverlib.h"
+
+int Screen_left (int *index)
 {
 	*index = SCREEN_LEFT ;
+	return 0;
 }
 
-Screen_rite(index)
-	int *index ;
+int Screen_rite (int *index)
 {
 	*index = SCREEN_RIGHT ;
+	return 0;
 }
 
-Screen_bot(index)
-	int *index ;
+int Screen_bot (int *index)
 {
 	*index = SCREEN_BOTTOM ;
+	return 0;
 }
 
-Screen_top(index)
-	int *index ;
+int Screen_top (int *index)
 {
 	*index = SCREEN_TOP ;
+	return 0;
 }
 
-Get_num_colors(index)
-	int *index ;
+int Get_num_colors (int *index)
 {
 	*index = NCOLORS ;
+	return 0;
 }
 
-get_num_colors()
+int get_num_colors (void)
 {
 	return NCOLORS ;
 }

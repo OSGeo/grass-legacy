@@ -1,14 +1,12 @@
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 #include <math.h>
 #include "gis.h"
-#include "dig_structs.h"
-#include "dig_defines.h"
 #include "Vect.h"
 
 
-distance(Map)
-    struct Map_info *Map;
-
+int distance (struct Map_info *Map) 
 {
     double x, y, d,d2;
     double x1,y1,x2,y2;
@@ -29,18 +27,16 @@ distance(Map)
 	if (isatty(0))
 	    fprintf (stderr, "\neast north >  ");
 	if (fgets(buf,1024,stdin) == NULL) {
-              return;
+              return -1;
 	}
-	if (strcmp (buf, "end") == 0) {
-              return;
+	if (strncmp (buf, "end",3) == 0) {
+              return -1;
 	}
-	if (strcmp (buf, "exit") == 0) {
-              return;
+	if (strncmp (buf, "exit",4) == 0) {
+              return -1;
 	}
 	line++;
-	sprintf(text,"\0");
 	sscanf(buf, "%lf %lf %s", &x, &y, text);
-        sprintf(buf,"\0");
       	nlines=V2_num_lines(Map);	
 	V2_read_line(Map,Points,1);
 
@@ -61,6 +57,8 @@ distance(Map)
 printf("Next Line\n");
 */
 		}
-	printf("%lf|%lf|%s|%lf\n",x,y,text,d);
+	printf("%f|%f|%s|%f\n",x,y,text,d);
 	}
+
+	return 0;
 }

@@ -11,7 +11,7 @@
 *    coll_a_pnt() -  collect a point from digitizer.
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 int Collect_points(

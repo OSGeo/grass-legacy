@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "digit.h"
+#include "Vect.h"
 #include "vbuildlib.h"
 
 #ifdef LABEL

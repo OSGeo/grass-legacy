@@ -1,7 +1,7 @@
 #include	<stdio.h>
 #include <stdlib.h>
 #include "gis.h"
-#include	"bin_digit.h"
+#include	"bin_Vect.h"
 #include "local_proto.h"
 
 /*

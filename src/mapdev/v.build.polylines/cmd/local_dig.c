@@ -1,3 +1,5 @@
+#include "gis.h"
+#include "Vect.h"
 #include "local_dig.h"
 
 #define FIRST  { if (First_Time) Vect_init (); }
@@ -18,9 +20,8 @@ int vect_x__mem_get_no_line_points (long);
 /* Gets number of points in any specifies line.
    This is NOT affected by constraints */
 
-int v2_get_no_line_points (Map, line)
-     struct Map_info *Map; 
-     int line;
+int 
+v2_get_no_line_points (struct Map_info *Map, int line)
 {
   if (line < 1 || line > Map->n_lines)		/* ALL DONE */
     return -2;
@@ -30,10 +31,8 @@ int v2_get_no_line_points (Map, line)
 
 /***** Private functions */
 
-int
-vect__get_no_line_points (Map, offset)
-    struct Map_info *Map; 
-    long offset;
+int 
+vect__get_no_line_points (struct Map_info *Map, long offset)
 {
     FIRST;
     return (vect_x__get_no_line_points (Map, offset));
@@ -51,10 +50,8 @@ vect__get_no_line_points (Map, offset)
 **  in memory.
 */
 
-int
-vect_x__get_no_line_points (Map, offset)
-    struct Map_info *Map;
-    long offset;
+int 
+vect_x__get_no_line_points (struct Map_info *Map, long offset)
 {
     int n_points;
     long itype;
@@ -86,18 +83,16 @@ done:
 
 #ifndef  MEMORY_IO	/* not updated to 4.0 yet */
 
-int
-vect_x__mem_get_no_line_points (offset)
-     long offset;
+int 
+vect_x__mem_get_no_line_points (long offset)
 {
   G_fatal_error ("vect_x__mem_get_no_line_points() was called");
 }
 
 #else
 
-int
-vect_x__mem_get_no_line_points (offset)
-     long offset;
+int 
+vect_x__mem_get_no_line_points (long offset)
 {
   int n_points;
   long l_points;

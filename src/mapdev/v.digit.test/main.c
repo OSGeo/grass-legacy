@@ -9,10 +9,9 @@
 #include "debug.h"
 
 #define MAIN
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
-#include "digit.h"
+#include "Vect.h"
 #include "keyboard.h"
 #include "local_proto.h"
 

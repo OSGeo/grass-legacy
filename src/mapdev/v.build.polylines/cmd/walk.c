@@ -1,7 +1,9 @@
-
 #include <stdlib.h>
+#include "gis.h"
+#include "Vect.h"
 #include "walk.h"
 #include "global_vars.h"
+#include "local_dig.h"
 
 /* Start from some arbitrary line on a polyline and walk back to find
    the first node (i.e. for which the number of connected lines <> 2)
@@ -9,9 +11,7 @@
    cannot be a dead line because this has already been checked in
    main.c. */
 
-plus_t walk_back (map, start_line)
-     struct Map_info *map;
-     plus_t start_line;
+plus_t walk_back ( struct Map_info *map, plus_t start_line)
 {
   plus_t start_node;
   plus_t next_start_node;
@@ -105,14 +105,14 @@ plus_t walk_back (map, start_line)
    cannot be a dead line because this has already been checked in
    walk_back ()). */
 
-plus_t walk_forward_and_pick_up_coords (map, start_line, points, coords, 
-					lines_visited, ascii_line_type) 
-     struct Map_info *map;
-     plus_t start_line;
-     plus_t *lines_visited;
-     struct line_pnts *points;
-     struct line_coords *coords;
-     char *ascii_line_type;
+plus_t walk_forward_and_pick_up_coords (
+     struct Map_info *map,
+     plus_t start_line,
+     struct line_pnts *points,
+     struct line_coords *coords,
+     plus_t *lines_visited,
+     char *ascii_line_type
+)
 {
   char type;
   char next_line_type;

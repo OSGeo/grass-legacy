@@ -138,7 +138,7 @@ main (int argc, char *argv[])
 	
 	if ((opt5->answer != NULL) && (sscanf(opt5->answer, "%lf", &null_value) == 1))	{
 		exclude_nulls = 0;
-		printf("\nnull %lf\n",null_value);
+		printf("\nnull %f\n",null_value);
 	} 
 
 	if (opt3->answer) 

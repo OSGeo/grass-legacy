@@ -114,10 +114,10 @@ int main( int argc, char *argv[])
     ns = 0;
     fprintf( fde00, "LAB  3\n");
     while( G_site_get( fsite, site) == 0) {
-	fprintf( fde00, "%10d%10d%21.14lE%21.14lE\n",
+	fprintf( fde00, "%10d%10d%21.14E%21.14E\n",
 		 ++ns, 0, site->east, site->north);
-	fprintf( fde00, "%21.14lE%21.14lE\n", site->east, site->north);
-	fprintf( fde00, "%21.14lE%21.14lE\n", site->east, site->north);
+	fprintf( fde00, "%21.14E%21.14E\n", site->east, site->north);
+	fprintf( fde00, "%21.14E%21.14E\n", site->east, site->north);
 
 	if (site->east < xmin)
 	    xmin = site->east;
@@ -128,7 +128,7 @@ int main( int argc, char *argv[])
 	if (site->north > ymax)
 	    ymax = site->north;
     }
-    fprintf( fde00, "%10d%10d%21.14lE%21.14lE\n", -1, 0, 0.0, 0.0);
+    fprintf( fde00, "%10d%10d%21.14E%21.14E\n", -1, 0, 0.0, 0.0);
     fclose( fsite);
 
     /* no TOLERANCE SECTION */
@@ -156,7 +156,7 @@ int main( int argc, char *argv[])
       "YMIN              4-1   54-1  12 3 60-1  -1  -1-1                   2-",
       "XMAX              4-1   94-1  12 3 60-1  -1  -1-1                   3-",
       "YMAX              4-1  134-1  12 3 60-1  -1  -1-1                   4-");
-    fprintf( fde00, "%14.7lE%14.7lE%14.7lE%14.7lE\n", xmin, xmax, ymin, ymax);
+    fprintf( fde00, "%14.7E%14.7E%14.7E%14.7E\n", xmin, xmax, ymin, ymax);
 
     fsite = G_sites_open_old( infile, G_mapset());
     
@@ -181,7 +181,7 @@ int main( int argc, char *argv[])
 	id = &ns;
     ns = 0;
     while (G_site_get( fsite, site) == 0) {
-	fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n", 0.0, 0.0, ++ns, *id);
+	fprintf( fde00, "%14.7E%14.7E%11ld%11ld\n", 0.0, 0.0, ++ns, *id);
     }
 
     fclose( fsite);

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 #include "display.h"
 #include "keyboard.h"

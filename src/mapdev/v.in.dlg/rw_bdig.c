@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Vect.h"
-#include "dig_head.h"
 #include "gis.h"
 
 #ifdef OLD_LIB

@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 
 /* swap two P_LINEs and all references to them:
 **   Area->lines

@@ -56,7 +56,7 @@ void show_window(struct Cell_head* w) {
 		fprintf(stderr,"format: %d,cpmr: %d,rows: %d,cols: %d,proj: %d,zone %d\n",
 			   w->format,w->compressed,w->rows,w->cols,
 			   w->proj,w->zone);
-		fprintf(stderr,"ew %.2lf,ns %.2lf, N:%.2lf, S:%.2lf,E:%.2lf,W:%.2lf\n",
+		fprintf(stderr,"ew %.2f,ns %.2f, N:%.2f, S:%.2f,E:%.2f,W:%.2f\n",
 			   w->ew_res, w->ns_res,w->north,w->south, w->east, w->west);
 } 
 

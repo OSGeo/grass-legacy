@@ -3,7 +3,7 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 	static int Label_Device_Sav; 

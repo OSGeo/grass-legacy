@@ -74,11 +74,6 @@ int	*ivector();		/* Reserves memory for 1D int matrix.	*/
 CELL	param();		/* Calculates terrain parameters.	*/
 
 
-double	D_d_to_a_row(),		/* GRASS functions that should have 	*/
-      	D_d_to_a_col();		/* been prototyped in gis.h but were 	*/
-				/* not, so I have here.			*/
-
-
 /* ------ Global variables ------ */
 
 #ifndef MAIN

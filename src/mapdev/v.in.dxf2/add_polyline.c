@@ -4,18 +4,14 @@
 ** 7/23/90
 */
 
+#include <stdlib.h>
 #include <math.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "dxf2vect.h"
-
-/* DECLARING SUBROUTINES */
-double 	atof();
 
 #define DEG_TO_RAD (3.141592654/180.0)
 
-dxf_add_polyline (dxf_file)
-FILE	*dxf_file;
+int dxf_add_polyline (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -303,9 +299,8 @@ FILE	*dxf_file;
 }
 
 /* PRINTS OUT THE POLYLINE VERTEX DATA TO FILE DESIGNATED AS layer_fd */
-write_polylines(layer_fd,arr_size)
-    DXF_DIG	*layer_fd;
-	int		arr_size;
+int 
+write_polylines (DXF_DIG *layer_fd, int arr_size)
 {
     int  count; /* LOOPING VARIABLE */
 
@@ -319,7 +314,9 @@ write_polylines(layer_fd,arr_size)
     {
 	fprintf (layer_fd->fd, "L  %d\n", arr_size);
 	for (count = 0; count < arr_size ; count++) 
-	fprintf (layer_fd->fd, " %12.2lf %12.2lf \n", 
+	fprintf (layer_fd->fd, " %12.2f %12.2f \n", 
 		 yinfo[count], xinfo[count]);
     }
+
+    return 0;
 }

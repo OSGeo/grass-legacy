@@ -17,7 +17,7 @@
 */
 
 #include	<stdio.h>
-#include	"bin_digit.h"
+#include	"bin_Vect.h"
 #include "local_proto.h"
 
 #define		BUFFERSIZE	256

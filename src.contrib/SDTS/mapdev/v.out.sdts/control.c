@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "defines.h"
 #include "externs.h"
 #include "globals2.h"

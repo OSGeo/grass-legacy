@@ -1,4 +1,4 @@
-#include "dig_head.h"
+#include "Vect.h"
 #include "dxf2vect.h"
 /* JUST FOR REFERENCE */
 /*  struct dig_head
@@ -16,8 +16,8 @@
 */
 
 
-dxf_make_header (Layer)
-    DXF_DIG	*Layer;
+int 
+dxf_make_header (DXF_DIG *Layer)
 {
     char *date; 
     char *name;
@@ -89,4 +89,6 @@ dxf_make_header (Layer)
 		fprintf (Layer->fd, "MAP THRESH:   00.00\n");
 		fprintf (Layer->fd, "VERTI:         \n");
 	}
+
+	return 0;
 }

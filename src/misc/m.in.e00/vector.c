@@ -4,7 +4,7 @@
 
 #include "gis.h"
 #include "Vect.h"
-#define G_free(x) free(x)
+#include "local_proto.h"
 
 /******************************************************************/
 /*                                                                */

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "display_line.h"
 #include "debug.h"

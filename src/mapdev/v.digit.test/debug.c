@@ -7,8 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "curses.h"
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "gis.h"

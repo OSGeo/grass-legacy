@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 #include "globals2.h"
 
 #define AREA_THRES 1.0e-5

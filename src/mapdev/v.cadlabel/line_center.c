@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 
 /* 
 ** find a fast approximate point on a chain to place a label

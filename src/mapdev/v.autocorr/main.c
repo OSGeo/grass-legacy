@@ -21,6 +21,7 @@
 **/
 
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
@@ -35,18 +36,18 @@ int main (int argc, char **argv)
 {
   char *mapset;
   char name[20];
-  int c_matrix (), n, i;
+  int n, i;
   extern int **c, quiet;
   char gisbase[256], dig_cat_file[128];
   char err_msg[128];
   double gr, mc;		/* Geary Ratio and Moran Coefficient */
   double siggrr, sigmcr, siggrn, sigmcn;	/* Standard Errors */
   double mgrr, mmcr, mgrn, mmcn;/* Means Errors */
-  double *catarray, att2cat ();
+  double *catarray;
   FILE *fp_plus, *out;
   FILE *fp_att;
   struct Map_info *Map;
-  /* struct Plus_head *Plus; */
+
   struct
   {
     struct Flag *wmatrix, *cmatrix, *stats, *q, *h;

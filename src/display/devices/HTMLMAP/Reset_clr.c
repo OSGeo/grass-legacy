@@ -4,9 +4,7 @@
  * 0 represents 0 intensity; a value of 255 represents 100% intensity.
  */
 #include "htmlmap.h"
+#include "driverlib.h"
 
-reset_color(number, red, grn, blu)
-	int number ;
-	unsigned char red, grn, blu ;
-{
-}
+int reset_color (int number, int red, int grn, int blu)
+{return 0;}

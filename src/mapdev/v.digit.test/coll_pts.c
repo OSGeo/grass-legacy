@@ -6,7 +6,7 @@
 
 
 
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "D.h"
 #include "libtrans.h"

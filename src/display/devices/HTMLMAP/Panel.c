@@ -2,16 +2,13 @@
  * HTMLMAP doesn't do panels
  */
 
-Panel_save(name, top, bottom, left, right)
-	char *name ;
-{}
+int Panel_save (char *name, int top, int bottom, int left, int right)
+{return 0;}
 
 /* The saved panel associated with "name" is restored. */
-Panel_restore(name)
-	char *name ;
-{}
+int Panel_restore (char *name)
+{return 0;}
 
 /* The saved panel associated with "name" is deleted. */
-Panel_delete(name)
-	char *name ;
-{}
+int Panel_delete (char *name)
+{return 0;}

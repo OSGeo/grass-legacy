@@ -7,11 +7,13 @@
 /****************************************************************/
 
 
-lubksub(a,n,index,b)
-    int     n,		/* Size of side of matrix 		*/
-	    *index;	/* Row permutation effected by pivoting */
-    float   **a,	/* Matrix to be decomposed. 		*/
-	    *b;		/* Input as RHS vector, output as soln.	*/
+int 
+lubksub (
+    float **a,	/* Matrix to be decomposed. 		*/
+    int n,		/* Size of side of matrix 		*/
+    int *index,	/* Row permutation effected by pivoting */
+    float *b		/* Input as RHS vector, output as soln.	*/
+)
 
 {
     int    i, ii=0, ip, j;
@@ -41,5 +43,7 @@ lubksub(a,n,index,b)
 	
 	b[i] = sum/a[i][i];
     }
+
+    return 0;
 }
 

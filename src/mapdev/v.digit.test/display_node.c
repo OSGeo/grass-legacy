@@ -3,7 +3,7 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "raster.h"
 #include "display_node.h"
 #include "Map_proto.h"

@@ -5,7 +5,7 @@
 **   based upon mk_window.c,  by Dave Gerdes, CERL
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "raster.h"
 #include "wind.h"
 #include "keyboard.h"

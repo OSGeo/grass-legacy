@@ -1,8 +1,8 @@
 /* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 #include "dxf2vect.h"
 
-dxf_entities (dxf_file)
-FILE	*dxf_file;
+int 
+dxf_entities (FILE *dxf_file)
 {
 	dxf_fgets (dxf_line, 256, dxf_file); 
 	while (strcmp (dxf_line, entitie) != 0) 

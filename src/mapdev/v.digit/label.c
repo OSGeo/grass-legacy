@@ -11,7 +11,6 @@
 #include "raster.h"
 #include "debug.h"
 #include "digit.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "line_pnts.h"
 #include "display_line.h"

@@ -31,9 +31,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "v_out_arc.h"
-/*#include "dig_head.h" */
 #include "gtoa.h"
 
 #define  USAGE  "v.out.shape type=name vect=name shape_prefix=name\n"
