@@ -46,7 +46,7 @@ old2new (char *in, char *out, int endian)
     	fprintf(stderr,"dig_att file doesn't exist.\n"); 
     } else {
         if (NULL == (Attin = G_fopen_old ("dig_att", in, mapset))) {
-    	    fprintf(stderr,"Failed openning input dig_att file.\n"); 
+    	    fprintf(stderr,"Failed opening input dig_att file.\n"); 
 	} else {
 	   att = TRUE;
 	}
