@@ -1,66 +1,40 @@
-/**************************************************************
- *  routines to create a sorted list of random numbers
- *  NOTE: STORAGE MUST BE ALLOCATED IN THE CALLING ROUTINE
- *  Calling sequence is:
- *        create_rand(base, targets, count)
- *        int *base;    pointer to enough space to store n targets
- *        int targets;  number of sorted randoms to generate
- *        long count;   generated randoms will be in range [1,count]
- *  Duplicate values are discarded and replaced
- *  Random number seed is the current process id
- *************************************************************/
-#include <math.h>
+#ifndef USE_RAND
 
-static
-cmp(n1,n2)		/* functon to compare two integers */
-int *n1, *n2;		/*   called by qsort */
-{
-    return (*n1 - *n2);
-}
+#include <sys/types.h>
 
-create_rand(base, targets, count)
-    int *base;
-    long targets;
-    long count;
-{
-    int repeat;
-    long i ;
-    int *pix;
+extern long lrand48();
+extern void srand48();
+extern time_t time();
 
-    srand(getpid());
-    pix = base;
-    i = 0;
-    for (i=0; i < targets; i++)
-	*pix++  = make_rand() % count + 1;  /* get the numbers */
-
-    repeat=1;
-    while (repeat)
-    {
-	repeat = 0;
-	qsort (base, targets, sizeof(int), cmp);
-
-	/* check for duplicates */
-
-	for (pix = base, i=0; i < targets-1; i++, pix++)
-	{
-	    if (*pix == *(pix+1) )
-	    {
-		*pix = make_rand() % count + 1;
-		repeat = 1;
-	    }
-	}
-    }
-}
-
-/* rand() itself doesn't generate large enough numbers */
-/* call it twice and "add" them up */
+long
 make_rand()
 {
-    return abs(rand() + (rand() << 16));
+    return lrand48();
 }
 
-static
-abs(n)
+void
+init_rand()
+{
+    srand48( (long) time( (time_t *) 0) );
+}
+
+#else
+
+static long labs(n)
 {
     return n < 0 ? (-n) : n;
 }
+
+long
+make_rand()
+{
+    return (labs(rand() + (rand() << 16)));
+}
+
+void
+init_rand()
+{
+    srand(getpid());
+}
+
+#endif
