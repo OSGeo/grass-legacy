@@ -22,6 +22,9 @@
 #define H_GetFontlist(w,type) type ? w->help.hotword_fontlist : w->help.regular_fontlist
 #define H_GetFg(w,type) type ? w->help.hotword_fg : w->help.regular_fg
 
+#undef MAX
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+
 /*---------------------------------------------------*/
 /* forward declarations                              */
 /* */
@@ -600,7 +603,7 @@ _XgHelpLoadFile(HelpWidget w)
 	sprintf(name, "%s/%s", G_gisbase(), w->help.help_file);
     } else {
 	if ((dir = getenv("XGRASSHELPDIR")) == NULL) {
-	    printf("Error: Evnironment variable \"XGRASSHELPDIR\" not found\n");
+	    printf("Error: Environment variable \"XGRASSHELPDIR\" not found\n");
 	    exit(-1);
 	}
 	sprintf(name, "%s/%s", dir, w->help.help_file);
@@ -1030,6 +1033,7 @@ static CallbackStruct **FetchCallbackStruct(widget, name)
     return NULL;
 }
 
+# ifdef USED_ANYWAY
 extern XtCallbackList _XtGetCallbackList();
 
 XtCallbackList FetchXtCallbackList(widget, name)
@@ -1040,7 +1044,7 @@ XtCallbackList FetchXtCallbackList(widget, name)
 
     return _XtGetCallbackList((char *)cblist);
 }
-
+# endif
 static int
 #ifdef _NO_PROTO
 DoHotWord(parent, hot)
