@@ -8,6 +8,7 @@ Standards-Version: 3.6.0
 Package: grass-bin
 Section: science
 Architecture: any
+Depends: ${shlibs:Depends}
 Description: GRASS GIS
  Geographic Resources Analysis Support System, commonly referred to as
  GRASS, is a Geographic Information System (GIS) used for data

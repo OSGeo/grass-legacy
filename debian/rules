@@ -29,16 +29,18 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
-		--prefix=/usr \
-		--mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
+	CFLAGS="$(CFLAGS)" ./configure \
+		--host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr/lib \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
 		--enable-shared \
 		--with-gdal=/usr/bin/gdal-config \
 		--with-tcltk-includes=/usr/include/tcl8.3 \
 		--with-postgres-includes=/usr/include/postgresql \
 		--with-grass50=$(GRASS53SRC)
 	#merge relevant 5.3 code into 5.7 src dir:
-	make mix
+	$(MAKE) mix
 
 build: build-stamp
 
@@ -58,12 +60,15 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	-$(MAKE) distclean
+	#clean links to 5.3 code
+	-$(MAKE) mixclean
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
 	cp -f /usr/share/misc/config.sub config.sub
 endif
 ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess config.guess
 endif
+	dh_clean build-stamp configure-stamp
 
 
 install: build
