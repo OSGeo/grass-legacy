@@ -5,7 +5,8 @@
 int
 G_get_raster_row_colors(
 	int fd, int row, struct Colors *colors,
-	unsigned char *red, unsigned char *grn, unsigned char *blu)
+	unsigned char *red, unsigned char *grn, unsigned char *blu,
+	unsigned char *nul)
 {
 	static void *array;
 	static int array_size;
@@ -15,6 +16,8 @@ G_get_raster_row_colors(
 	int cols = G__.window.cols;
 	int type = G__.fileinfo[fd].map_type;
 	int size = G_raster_size(type);
+	void *p;
+	int i;
 
 	if (array_size < cols * size)
 	{
@@ -30,6 +33,10 @@ G_get_raster_row_colors(
 
 	if (G_get_raster_row(fd, array, row, type) < 0)
 		return -1;
+
+	if (nul)
+		for (i = 0, p = array; i < cols; i++, p = G_incr_void_ptr(p, size))
+			nul[i] = G_is_null_value(p, type);
 
 	G_lookup_raster_colors(array, red, grn, blu, set, cols, colors, type);
 

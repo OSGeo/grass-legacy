@@ -9,6 +9,10 @@
 int 
 main (int argc, char **argv)
 {
+	unsigned char *hue_n, *hue_r, *hue_g, *hue_b;
+	unsigned char *int_n, *int_r;
+	unsigned char *sat_n, *sat_r;
+	unsigned char *dummy;
 	CELL *r_array, *g_array, *b_array;
 	char *mapset ;
 	char *name_h, *name_i, *name_s ;
@@ -31,7 +35,6 @@ main (int argc, char **argv)
 	int offset ;
 	char window_name[64] ;
 	int t, b, l, r ;
-	struct { unsigned char *r, *g, *b, *i, *s; } buf;
 
 	G_gisinit(argv[0]) ;
 
@@ -103,6 +106,13 @@ main (int argc, char **argv)
 		G_fatal_error("Not able to open cellfile for [%s]",
 			      name_h) ;
 
+	hue_r = G_malloc(window.cols);
+	hue_g = G_malloc(window.cols);
+	hue_b = G_malloc(window.cols);
+	hue_n = G_malloc(window.cols);
+
+	dummy = G_malloc(window.cols);
+
 	/* Reading color lookup table */
 	if (G_read_colors(name_h, mapset, &hue_colors) == -1)
 		G_fatal_error("Color file for [%s] not available",
@@ -123,16 +133,16 @@ main (int argc, char **argv)
 				G_fatal_error("Not able to open cellfile for [%s]",
 					      name_i) ;
 
+			int_r = G_malloc(window.cols);
+			int_n = G_malloc(window.cols);
+
 			/* Reading color lookup table */
 			if (G_read_colors(name_i, mapset, &int_colors) == -1)
 				G_fatal_error("Color file for [%s] not available",
 					      name_i) ;
 		}
 		else
-		{
-		    G_fatal_error("Not able to find cellfile [%s]",
-					      name_i) ;
-		}
+			G_fatal_error("Not able to find cellfile [%s]", name_i) ;
 					      
 	}
 
@@ -152,27 +162,21 @@ main (int argc, char **argv)
 				G_fatal_error("Not able to open cellfile for [%s]",
 					      name_s) ;
 
+			sat_r = G_malloc(window.cols);
+			sat_n = G_malloc(window.cols);
+
 			/* Reading color lookup table */
 			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
 				G_fatal_error("Color file for [%s] not available",
 					      name_s) ;
 		}
 		else
-		{
-		    G_fatal_error("Not able to find cellfile [%s]",
-					      name_s) ;
-		}
+			G_fatal_error("Not able to find cellfile [%s]", name_s) ;
 	}
 
 	r_array = G_allocate_cell_buf () ;
 	g_array = G_allocate_cell_buf () ;
 	b_array = G_allocate_cell_buf () ;
-
-	buf.r = G_malloc(window.cols);
-	buf.g = G_malloc(window.cols);
-	buf.b = G_malloc(window.cols);
-	buf.i = G_malloc(window.cols);
-	buf.s = G_malloc(window.cols);
 
 	/* Make color table */
 	make_gray_scale(&gray_colors) ;
@@ -186,28 +190,34 @@ main (int argc, char **argv)
 	for (atrow=0; atrow<window.rows; )
 	{
 		G_percent (atrow, window.rows, 2);
-		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, buf.i, buf.g, buf.b) < 0))
-			G_fatal_error("error reading intensity data");
-		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, buf.s, buf.g, buf.b) < 0))
-			G_fatal_error("error reading saturation data");
-		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, buf.r, buf.g, buf.b) < 0)
+
+		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, hue_r, hue_g, hue_b, hue_n) < 0)
 			G_fatal_error("error reading hue data");
+		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, int_r, dummy, dummy, int_n) < 0))
+			G_fatal_error("error reading intensity data");
+		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, sat_r, dummy, dummy, sat_n) < 0))
+			G_fatal_error("error reading saturation data");
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
-			int r, g, b ;
+			if (hue_n[atcol]
+			    || (int_used && int_n[atcol])
+			    || (sat_used && sat_n[atcol]))
+			{
+				G_set_c_null_value(&r_array[atcol], 1);
+				G_set_c_null_value(&g_array[atcol], 1);
+				G_set_c_null_value(&b_array[atcol], 1);
+				continue;
+			}
 
 			if (int_used)
-				intensity = buf.i[atcol];
+				intensity = int_r[atcol];
 
 			if (sat_used)
-				saturation = buf.s[atcol];
+				saturation = sat_r[atcol];
 
-			r = buf.r[atcol];
-			g = buf.g[atcol];
-			b = buf.b[atcol];
-
-			HIS_to_RGB(r, g, b, intensity, saturation,
+			HIS_to_RGB(hue_r[atcol], hue_g[atcol], hue_b[atcol],
+				   intensity, saturation,
 				   &r_array[atcol], &g_array[atcol], &b_array[atcol]);
 		}
 

@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	char *mapset;
 	int atrow, atcol;
 	struct Cell_head window;
-	unsigned char *dummy;
+	unsigned char *dummy, *nulls;
 	int i, j;
 
 	G_gisinit(argv[0]);
@@ -148,6 +148,8 @@ int main(int argc, char **argv)
 
 	dummy = (unsigned char *) G_malloc(window.cols);
 
+	nulls = (unsigned char *) G_malloc(window.cols);
+
 	for (i = 0; i < 3; i++)
 	{
 		struct band *b = &B[i];
@@ -215,7 +217,8 @@ int main(int argc, char **argv)
 				    B[i].file, atrow, &B[i].colors,
 				    B[i].array[0],
 				    B[i].array[1],
-				    B[i].array[2]) < 0)
+				    B[i].array[2],
+				    nulls) < 0)
 				G_fatal_error("Error reading '%s' map", color_names[i]);
 
 			diff[i] = 0;
@@ -224,6 +227,12 @@ int main(int argc, char **argv)
 		for (atcol = 0; atcol < window.cols; atcol++)
 		{
 			int val[3];
+
+			if (nulls[atcol])
+			{
+				G_set_c_null_value(&out_array[atcol], 1);
+				continue;
+			}
 
 			for (i = 0; i < 3; i++)
 			{
