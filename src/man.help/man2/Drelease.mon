@@ -1,0 +1,64 @@
+.\" %W% %G%
+.TH Drelease.mon 2D D-language
+.SH NAME
+Drelease.mon \- Relinquish control of a graphics output device
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B "Drelease.mon"
+[-f] [\fImonitor_name\fR]
+.SH DESCRIPTION
+.I Drelease.mon
+relinquishes control of the named output device.  If
+.I monitor_name
+is omitted, the currently selected output device (specified in
+the GRASS enviroment variable \fImonitor\fR) is released by default.
+Use of the option \fI-f\fR
+will override the protection mechanisms and allow the device to be released
+even if it is locked by another user.  This is not a very friendly thing
+to do, but is sometimes necessary.
+The user who wants to select another output device with
+.I Dselect.mon
+should use
+.I Drelease.mon
+first, to free the monitor that user will no longer be using so
+that others can use it.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDlist.mon[2D]\fR	Lists all GRASS device driver programs (monitors)
+.br
+\fIDselect.mon[2D]\fR	Selects a graphics device for output
+.br
+\fIDstart.mon[2D]\fR	T{
+Loads graphics device driver program (i.e., starts the monitor)
+T}
+.br
+\fIDstatus.mon[2D]\fR	Lists the status of all GRASS device driver programs
+.br
+\fIDstop.mon[2D]\fR	Terminates graphics device driver program
+.br
+\fIDwhich.mon[2D]\fR	T{
+States which output device is currently selected for output
+T}
+.br
+\fImonitor[1]\fR	T{
+Highly interactive menu-driven program performing all of the functions
+of the D monitor commands listed above
+T}
+.br
+\fImonitorcap[5]\fR	Device driver database file format
+.TE
+.SH DIAGNOSTICS
+Unless the \fI-f\fR option is used,
+.I Drelease.mon
+will complain, but take no other action, if another user is using the
+output named device.
+.I Drelease.mon
+also complains if the named device does not exist.
+.SH "AUTHORS"
+Jean Ezell, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
