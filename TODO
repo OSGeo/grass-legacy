@@ -1,4 +1,4 @@
-$Id: TODO,v 1.65 2001-01-19 15:23:57 markus Exp $
+$Id: TODO,v 1.66 2001-01-27 18:57:36 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -14,12 +14,10 @@ Wishlist for GRASS 5
 
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
-     - search for JPEGINCPATH, JPEGLIBPATH
      - libg2c is required to make r.fill.dir, but configure doesn't check 
        for it's availability
      - search for "yacc" and "(f)lex"
-  (Being worked on by )
- -> a new make system is on the way... (by Eric Mitchell)
+  (Being worked on by Eric Miller)
 
 --------------------------------------------------------------------
 Removal of absolute path codings:
@@ -69,6 +67,7 @@ Libraries:
   (Being worked on by ?) 
 
 - remove LZW compression from rasterlib/g3dlib and use libz:
+  -> 1/2001: done!
   src/libes/gis > grep -l lzw *                                                 
    G.h          - just compression_bits from header
    G_dump.c     - same
@@ -124,18 +123,12 @@ Libraries:
     grass/src/libes/gis/put_row.c:    
 	    FCB.compression_bits = G_lzw_max_used_bits ();
 
-    Doesn't look like too bad of a job, provided a suitable replacement 
-    implementation can be written and a *robust* translator for old 
-    data sets can be made available.
-
-    Eric G. Miller <egm2@jps.net> Nov. 15, 2000
-
-  (Being worked on by Eric G. Miller, maybe not 'til 5.1?)
+   (Being worked on by Eric G. Miller)
 
 ---------------------------------------------------------------------
 XDriver
-- replace fifos by sockets
-  (Being worked on by ?) 
+- replace fifos by IPC
+  (Being worked on by Malcolm Blue <mblue@nb.sympatico.ca>)
   -> there is a new concept based on IPC available (see README.ipc)
 
 - Auto-redraw after resizing the monitor:
@@ -223,8 +216,8 @@ Modules:
    src/mapdev/v.bubble/v.bubble.c
    src/sites/*
 
-   All these files/functions should be replaced by a common
-   G_readsites() function with attribute selection etc.
+   All these files/functions should be replaced by the function
+   G_readsites_xyz() function with attribute selection etc.
  (being worked by Eric G. Miller)
 
 
@@ -359,12 +352,6 @@ r.proj/v.proj/s.proj:
 - r.water.outlet
   - needs FP update
 
-- r3.out.v5d:
-  Add check for cols/rows settings *before* starting to export:
-      Too many rows: 1200 (400 is maximum)
-      Too many columns: 1900 (800 is maximum)
-  (Being worked on by ?)
- 
 - v.buffer: write it
   (Being worked on by ?)
 
@@ -384,6 +371,7 @@ r.proj/v.proj/s.proj:
 - v.support:
   - add segmentation for large files
   - speed up v.build
+  (Being worked on by David D. Gray)
 
 - tcltkgrass:
  - Change the tcltkgrass code so that lists of choices appear as
