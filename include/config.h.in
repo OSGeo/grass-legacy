@@ -185,6 +185,12 @@
 /* define if <X11/GLw/GLwMDrawA.h> exists */
 #undef HAVE_X11_GLW_GLWMDRAWA_H
 
+/* define if putenv() exists */
+#undef HAVE_PUTENV
+
+/* define if setenv() exists */
+#undef HAVE_SETENV
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
