@@ -37,13 +37,13 @@ int main (int argc, char *argv[])
 {
     struct file_info  Current, Trans, Coord ;
     struct GModule *module;
-    struct Option *old, *new, *pointsfile, *zscale, *zshift;
-    struct Flag *quiet_flag, *tozero_flag;
+    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift, *zscale, *zrot;
+    struct Flag *quiet_flag, *tozero_flag, *shift_flag;
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
     int    day, yr; 
     BOUND_BOX box;
-    float ztozero;
+    double ztozero;
 
     G_gisinit(argv[0]) ;
 
@@ -58,6 +58,10 @@ int main (int argc, char *argv[])
     tozero_flag = G_define_flag();
     tozero_flag->key		= 't';
     tozero_flag->description = "shift all z values to bottom=0"; 
+
+    shift_flag = G_define_flag();
+    shift_flag->key		= 's';
+    shift_flag->description = "Instead of points use transformation options (xshift, yshift, zrot)"; 
 
     old = G_define_option();
     old->key			= "input";
@@ -82,13 +86,21 @@ int main (int argc, char *argv[])
     pointsfile->multiple	= NO;
     pointsfile->description	= "file holding transform coordinates";
 
-    zscale = G_define_option();
-    zscale->key		= "zscale";
-    zscale->type	= TYPE_DOUBLE;
-    zscale->required	= NO;
-    zscale->multiple	= NO;
-    zscale->description	= "scaling factor for z coordinates";
-    zscale->answer     = "1.0";
+    xshift = G_define_option();
+    xshift->key		= "xshift";
+    xshift->type	= TYPE_DOUBLE;
+    xshift->required	= NO;
+    xshift->multiple	= NO;
+    xshift->description	= "shifting value for x coordinates";
+    xshift->answer     = "0.0";
+
+    yshift = G_define_option();
+    yshift->key		= "yshift";
+    yshift->type	= TYPE_DOUBLE;
+    yshift->required	= NO;
+    yshift->multiple	= NO;
+    yshift->description	= "shifting value for y coordinates";
+    yshift->answer     = "0.0";
 
     zshift = G_define_option();
     zshift->key		= "zshift";
@@ -97,22 +109,40 @@ int main (int argc, char *argv[])
     zshift->multiple	= NO;
     zshift->description	= "shifting value for z coordinates";
     zshift->answer     = "0.0";
+
+    zscale = G_define_option();
+    zscale->key		= "zscale";
+    zscale->type	= TYPE_DOUBLE;
+    zscale->required	= NO;
+    zscale->multiple	= NO;
+    zscale->description	= "scaling factor for z coordinates";
+    zscale->answer     = "1.0";
+
+    zrot = G_define_option();
+    zrot->key		= "zrot";
+    zrot->type	= TYPE_DOUBLE;
+    zrot->required	= NO;
+    zrot->multiple	= NO;
+    zrot->description	= "rotation around z axis in degrees counterclockwise";
+    zrot->answer     = "0.0";
     
     if (G_parser (argc, argv))
 	exit (-1);
     
     strcpy (Current.name, old->answer);
     strcpy (Trans.name, new->answer);
-    
-    if (pointsfile->answer != NULL)
-	strcpy (Coord.name, pointsfile->answer);
-    else
-	Coord.name[0] = '\0';
-    
-    /* open coord file */
-    if ( Coord.name[0] != '\0' ){
-	if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
-	    G_fatal_error ("Could not open file with coordinates : %s\n", Coord.name) ;
+   
+    if ( !shift_flag->answer ) { 
+	if (pointsfile->answer != NULL)
+	    strcpy (Coord.name, pointsfile->answer);
+	else
+	    Coord.name[0] = '\0';
+	
+	/* open coord file */
+	if ( Coord.name[0] != '\0' ){
+	    if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
+		G_fatal_error ("Could not open file with coordinates : %s\n", Coord.name) ;
+	}
     }
     
     /* open vectors */
@@ -143,10 +173,12 @@ int main (int argc, char *argv[])
     Vect_set_zone ( &New, 0 );
     Vect_set_thresh ( &New, 0.0 );
     
-    create_transform_conversion( &Coord, quiet_flag->answer);
+    if ( !shift_flag->answer ) { 
+	create_transform_conversion( &Coord, quiet_flag->answer);
 
-    if (Coord.name[0] != '\0')
-	    fclose( Coord.fp) ;
+	if (Coord.name[0] != '\0')
+		fclose( Coord.fp) ;
+    }
     
     if (!quiet_flag->answer) fprintf (stdout,"\nNow transforming the vectors ...\n") ;
     
@@ -156,7 +188,9 @@ int main (int argc, char *argv[])
     else
        ztozero = 0;
 
-    transform_digit_file( &Old, &New, ztozero, atof(zscale->answer), atof(zshift->answer)) ;
+    transform_digit_file( &Old, &New, shift_flag->answer,
+	    atof(xshift->answer), atof(yshift->answer), atof(zshift->answer), ztozero,
+	    atof(zrot->answer), atof(zscale->answer)) ;
 
     Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
