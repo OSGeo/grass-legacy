@@ -72,7 +72,7 @@ main (int argc, char **argv)
                 exit(-1);
 
 		if (isatty(0))
-			fprintf (stdout,"\nPlease enter text instructions.  Enter EOF on last line to quit\n") ;
+			fprintf (stdout,"\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n") ;
 
         sscanf(opt1->answer,"%f",&size);
 
