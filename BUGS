@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.33 2000-10-17 17:18:49 markus Exp $
+$Id: BUGS,v 1.34 2000-10-18 13:00:27 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -127,22 +127,6 @@ p.map.new:
 ps.map: -fwritable-strings is required on Linux
    some variable implementation needs to be improved.
 
-r3.in.v5d/r3.out.v5d:
- src.contrib/GMSL/g3d/src3d/raster/r3.in.v5d/binio.c
- src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
- -> does not yet contain little/big endian sensivity (currently set only by
-   compiler flag)
-  solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
-
-
-r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
- - the dependency to OpenGL and Mesa should be checked automatically
-   and maybe the sgi-widget should be compiled in statically.
-   it will not work with standard Mesa RPMS, because the sgi-widgets
-   are missing. Generally you need to have the Mesa source and compile 
-   the libGLw yourself (which is described in the README.mesa31 in the
-   source for grass.) [Bernhard]
-   -> partly done by global configure
 
 r.binfer
  - bug in table.c causing segfault
@@ -187,6 +171,30 @@ r.in.ppm
 
 r.in.tiff/r.out.tiff
  - segm. fault (same thing with r.binfer)
+
+r.los:
+ r.los seems to work perfectly if the elevation data is UTM.  But if the         
+ elevation data is latitude-longitude, like most of my elevation data, the       
+ output map looks like a hollow footprint: mostly "N" for cell values, except    
+ for a few arcs of cells with values like 179 and 180, out where the horizon     
+ might be expected.  If indeed these values mark the horizon, why do so few      
+ (if any) cells between these arcs and the observer's cell have non-"N"          
+ values?
+ I tried a previous Grass version (5.0 beta 6) to see if r.los works with        
+ latitude-longitude-projected elevation data, but the output maps look just      
+ as bad.  Sometimes the output map looks like a TV-test-pattern: a really        
+ bizarre pattern of radial lines emanating from the observer towards the         
+ west.  Cells in this region have values in the millions or billions (I          
+ forget how many digits).  The lines don't converge all the way to the           
+ observer because the radial pattern is cut off along a vertical                 
+ (north-south) line.  To the east of this vertical line, the cells have          
+ smaller values - typically a few hundred - and form vertical stripes when       
+ when the color map is rescaled to the lower values.                             
+ Presumably the TV-test-pattern anomalies plagued only old versions of r.los,    
+ but the hollow footprint anomaly persists in the current version.  What am I    
+ doing wrong?
+ (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
+
 
 r.mapcalc
  - Values -129 in GRASS raster files are treated as Null
@@ -262,6 +270,24 @@ r.stats: some inconsistent results comparing to r.average
        ...
  *While d.what.rast was giving 110.794075. Is this a bug?
      Dr. Agustin Lobo, alobo@ija.csic.es
+
+r3.in.v5d/r3.out.v5d:
+ src.contrib/GMSL/g3d/src3d/raster/r3.in.v5d/binio.c
+ src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
+ -> does not yet contain little/big endian sensivity (currently set only by
+   compiler flag)
+  solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
+
+
+r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
+ - the dependency to OpenGL and Mesa should be checked automatically
+   and maybe the sgi-widget should be compiled in statically.
+   it will not work with standard Mesa RPMS, because the sgi-widgets
+   are missing. Generally you need to have the Mesa source and compile 
+   the libGLw yourself (which is described in the README.mesa31 in the
+   source for grass.) [Bernhard]
+   -> partly done by global configure
+
 
 s.in.ascii: 
      - errors with more than 2 dimensions (some numbers are read as
