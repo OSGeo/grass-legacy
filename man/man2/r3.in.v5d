@@ -1,62 +1,45 @@
 .TH r3.in.v5d 1 "" "" "" ""
-
-
-
-
-
-
 .SH NAME
-
 \*Lr3.in.v5d\*O  - Imports files in v5d format into G3D format.
-
-
 .br
-
-
 (GRASS 3D Program)
-
 .SH SYNOPSIS
 \*Lr3.in.v5d input = \*Oname\*L]\*O
-
 .SH DESCRIPTION
-
+Vis5D is a system for interactive visualization of large 5-D gridded data   
+sets such as those produced by numerical weather models. One
+can make isosurfaces, contour line slices, colored slices, volume
+renderings, etc of data in a 3-D grid, then rotate and animate the
+images in real time. There's also a feature for wind trajectory tracing, a
+way to make text anotations for publications, support for
+interactive data analysis, etc.   
 .SH Parameters:
-
 .VL 4m
-
 .LI "\*Linput\*O
 Path and name of v5d file to be imported
-
+(VIS5D)
 .LI "\*Loutput\*O
 Name of the G3D output raster map
-
 .LI "\*Lnv\*O
 String representing NULL value data cell (use 'none' if no such value)
 Default: none
-
 .LI "\*Ltype\*O
 Data type used in the output file
 Options: default, double, float
 Default: default
-
 .LI "\*Lprecision\*O
 Precision used in the output file
 Options: default, max, 0-52
 Default: default
-
 .LI "\*Lcompression\*O
 The compression method used in the output file
 Options: default, rle, lzw, rle+lzw, none
 Default: default
-
 .LI "\*Ltiledimension\*O
 The dimension of the tiles used in the output file
 Default: default
-
-
+.LE
 .SH SEE ALSO
 \*Lr3.out.v5d\*O
-
 .SH AUTHOR
 Jaro Hofierka
-
