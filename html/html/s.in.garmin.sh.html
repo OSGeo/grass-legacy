@@ -22,15 +22,10 @@
 <H2>DESCRIPTION</H2>
 
 <EM>s.in.garmin.sh</EM> allows to import waypoint, route and track data 
-from a locally connected garmin gps receiver via the <EM>gpstrans</EM> 
-program of Carsten Tschach. 
+from a locally connected garmin gps receiver via the <EM>
+<A HREF="http://gpstrans.sourceforge.net">gpstrans</a>
+</EM>program of Carsten Tschach. 
 <P>Use at your own risk. This software comes with absolutely no warranty.
-<P>
-No checks are performed for datum, projection and format of data.
-You must check by yourself that your receiver, gpstrans and GRASS
-use the same map datum and projection (this means as it is now that
-you can only use a GRASS database in lat/lon projection and in wgs84
-datum).
 <BR>
 
 <H3>Parameters:</H3>
@@ -52,11 +47,27 @@ datum).
 <DD>print this message
 <DD>
 </DL>
+<BR>
+
+<H2>NOTES</H2>
+No checks are performed for datum, projection and format of data.
+You must check by yourself that your receiver, gpstrans and GRASS
+use the same map datum and projection (this means as it is now that
+you can only use a GRASS database in lat/lon projection and in wgs84
+datum).
+<BR><BR>
+If you wish to use latitude-longitude input, the user should setup gpstrans
+as follows before running <EM>s.in.garmin.sh</EM>: <BR>
+<tt>
+$ <B>gpstrans -s</B><BR>
+datum:  100 (WGS84)<BR>
+format: 2 - lat/lon  ddd.ddddd<BR></tt>
+<BR>
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="v.in.garmin.sh.html">v.in.garmin.sh</A></EM><BR>
-gpstrans manual
+<A HREF="http://gpstrans.sourceforge.net">gpstrans</a> manual
 <P>
 
 <H2>AUTHOR</H2>
@@ -64,7 +75,8 @@ gpstrans manual
 Andreas Lange, 
 Andreas.Lange@Rhein-Main.de<BR>
 gpstrans was written by Carsten Tschach<BR>
-gpstrans is found at http://www.metalab.unc.edu/pub/Linux/science/cartography/ <BR>
+gpstrans is found at 
+<A HREF="http://gpstrans.sourceforge.net">http://gpstrans.sourceforge.net</a><BR>
 
 <p><i>Last changed: $Date$</i>
 </body>
