@@ -13,10 +13,6 @@ vect_translate(id, type, data, interp)
   vect = &(data->vect[data->CurVect]);
   
   GV_set_trans(vect->id, vect->xtrans, vect->ytrans, vect->ztrans);
-  
+*/ ;  
 }
-
-
-
-
 
