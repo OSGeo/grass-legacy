@@ -1,13 +1,13 @@
 
 
 
-d.erase <main>       GRASS Reference Manual        <main> d.erase
+d.erase	<main>	     GRASS Reference Manual	   <main> d.erase
 
 
 
 NAME
      d.erase - Erases the contents of the active display frame on
-     the user's graphics monitor.
+     the user's	graphics monitor.
      (GRASS Display Program)
 
 SYNOPSIS
@@ -16,19 +16,19 @@ SYNOPSIS
      d.erase [color=name]
 
 DESCRIPTION
-     d.erase erases the contents of the active graphics frame,
+     d.erase erases the	contents of the	active graphics	frame,
      and replaces it with the color black (by default) or by
-     whatever color is specified by the user.  d.erase will not
-     alter the assignment of the active frame.
+     whatever color is specified by the	user.  d.erase will not
+     alter the assignment of the active	frame.
 
      Parameter:
 
-     color=name        Color with which active frame will be
-                       erased.
-                       Options:  red, orange, yellow, green,
-                       blue, yellow, indigo, violet, black,
-                       white, gray, brown, and magenta
-                       Default:  black
+     color=name	       Color with which	active frame will be
+		       erased.
+		       Options:	 red, orange, yellow, green,
+		       blue, yellow, indigo, violet, black,
+		       white, gray, brown, and magenta
+		       Default:	 black
 
 SEE ALSO
      d.frame, d.mon
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
