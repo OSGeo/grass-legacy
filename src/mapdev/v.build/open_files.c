@@ -32,6 +32,14 @@ open_dig_files (name, fp_plus, Map, Plus)
     strncpy( Plus->Dig_name, name, HEADSTR) ;
 
 
+    G__file_name( dig_plus_file, PLUS_DIR, name, mapset) ;
+
+/* If you do that, Vlib routines think that the dig file is a Grass V.3
+   file and lauch v.from.3, which crash because the file is V.4  Why ??? */
+
+    *fp_plus = fopen(dig_plus_file, "w");
+    fclose( *fp_plus);
+
     /* Unsupported library routine */
     /* Kids, don't try this at home. */
     if (0 > V2__init_for_create_plus (Map, name))
@@ -39,9 +47,7 @@ open_dig_files (name, fp_plus, Map, Plus)
 		G_fatal_error ("Cannot open input file");
 	}
 
-
 /******************************************************************************/
-    G__file_name( dig_plus_file, PLUS_DIR, name, mapset) ;
 
     if ( (*fp_plus = fopen(dig_plus_file, "w"))  ==  NULL)
     {
