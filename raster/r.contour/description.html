@@ -1,0 +1,37 @@
+<h2>DESCRIPTION</h2>
+
+<em>r.contour</em> produces a GRASS binary vector map of specified contours from GRASS raster map layer.
+
+<OL>
+<LI>Contours are produced from a user-specified list of levels.</LI>
+<LI>
+Contours are produced at some regular increment from user-specified minimum
+level to maximum level. If no minimum or maximum level is specified, minimum
+or maximum data value will be used.</LI>
+</OL>
+
+<H2>
+NOTES</H2>
+<I>r.contour</I> will either step through incremental contours or produce
+contours from a list of levels, not both. If both a list of levels and
+a step are specified, the list will be produced and the step will be ignored.
+
+
+<P>Zero is treated as a valid data value by <I>r.contour</I>.
+
+<P>If a contour level exactly matches a category value in the raster file,
+the contour line may backtrack on itself, causing illegal arcs to be produced
+in the output GRASS vector file.
+
+<P>The optional <em>cut</em> parameter allows to specify a minimum number of
+point for a contour line to be put into output vector map, so that small
+spurs, single points and so on won't be present and the output will be more
+clear.
+
+<H2>
+AUTHORS</H2>
+Terry Baker, U.S. Army Construction Engineering Research Laboratory<br>
+3/2001: cut parameter and fixes by Andrea Aime (aaime@libero.it)
+
+<p><i>Last changed: $Date$</i>
+
