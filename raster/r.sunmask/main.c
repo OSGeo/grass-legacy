@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
       struct Option *opt1, *opt2, *opt3, *opt4, *north, *east, *year, 
                     *month, *day, *hour, *minutes, *seconds, *timezone;
     } parm;  
-    struct Flag *flag1, *flag2, *flag3;
+    struct Flag *flag1, *flag2, *flag3, *flag4;
     struct GModule *module;
     char *name, *outname;
     double dazi, dalti;
@@ -209,6 +209,9 @@ int main(int argc, char *argv[])
     flag3->key         = 's' ;
     flag3->description = "calculate sun position only and exit" ;
 
+    flag4 = G_define_flag();
+    flag4->key         = 'g' ;
+    flag4->description = "Print the sun position output in shell script style" ;
     
     if (G_parser(argc, argv))
       exit(-1);
@@ -310,15 +313,30 @@ int main(int argc, char *argv[])
       {
        if( flag2->answer || (flag3->answer && !flag2->answer))
        {
-        G_message ( _(" %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"),
-         pdat->year, pdat->month, pdat->day, pdat->daynum,  
-         pdat->hour, pdat->minute, pdat->second, 
-         pdat->hour + (pdat->minute * 100.0 / 60.0 + pdat->second * 100.0/3600.0)/100. );
-        G_message ( _(" long: %f, lat: %f, timezone: %f\n"), pdat->longitude, pdat->latitude, pdat->timezone);
-        G_message ( _(" Solar position: sun azimuth: %f,\n   sun angle above horz.(refraction corrected): %f\n"),
-         pdat->azim, pdat->elevref );
-        G_message ( _(" Sunrise time (without refraction): %02.0f:%02.0f\n"), floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
-        G_message ( _(" Sunset time  (without refraction): %02.0f:%02.0f\n"), floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+         if ( flag4->answer ) {
+	  fprintf (stdout, "date=%d.%02d.%02d\n", pdat->year, pdat->month, pdat->day);
+	  fprintf (stdout, "daynum=%d\n", pdat->daynum);
+	  fprintf (stdout, "time=%02i:%02i:%02i\n", pdat->hour, pdat->minute, pdat->second);
+	  fprintf (stdout, "decimaltime=%f\n", pdat->hour + (pdat->minute * 100.0 / 60.0 + pdat->second * 100.0/3600.0)/100.);
+	  fprintf (stdout, "longitudine=%f\n", pdat->longitude);
+	  fprintf (stdout, "latitude=%f\n", pdat->latitude);
+	  fprintf (stdout, "timezone=%f\n", pdat->timezone);
+	  fprintf (stdout, "sunazimuth=%f\n", pdat->azim);
+	  fprintf (stdout, "sunangleabovehorzizont=%f\n", pdat->elevref);
+	  fprintf (stdout, "sunrise=%02.0f:%02.0f\n", floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
+	  fprintf (stdout, "sunset=%02.0f:%02.0f\n", floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+	 }
+	 else {
+          G_message ( _(" %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"),
+           pdat->year, pdat->month, pdat->day, pdat->daynum,  
+           pdat->hour, pdat->minute, pdat->second, 
+           pdat->hour + (pdat->minute * 100.0 / 60.0 + pdat->second * 100.0/3600.0)/100. );
+          G_message ( _(" long: %f, lat: %f, timezone: %f\n"), pdat->longitude, pdat->latitude, pdat->timezone);
+          G_message ( _(" Solar position: sun azimuth: %f,\n   sun angle above horz.(refraction corrected): %f\n"),
+           pdat->azim, pdat->elevref );
+          G_message ( _(" Sunrise time (without refraction): %02.0f:%02.0f\n"), floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
+          G_message ( _(" Sunset time  (without refraction): %02.0f:%02.0f\n"), floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+         }
        }
        sunrise=pdat->sretr/60. ; /* decimal minutes */
        sunset =pdat->ssetr/60. ;
