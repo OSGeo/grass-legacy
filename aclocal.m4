@@ -110,6 +110,7 @@ AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$5 $CPPFLAGS"
 AC_TRY_RUN([
+#include <stdio.h> 
 #include <$1>
 int main(void) {
  FILE *fp = fopen("conftestdata","w");
@@ -119,8 +120,22 @@ int main(void) {
 ],
 [   $4=`cat conftestdata`
     AC_MSG_RESULT($$4)],
-[   AC_MSG_ERROR([*** Could not determine $3 version.]) ],
-[   $4=$5
+[   AC_TRY_RUN([
+#include <stdio.h>
+#include <$1>
+int main(void) {
+ FILE *fp = fopen("conftestdata","w");
+ fprintf(fp, "%d", $2);
+ return 0;
+}
+    ],
+    [   $4=`cat conftestdata`
+        AC_MSG_RESULT($$4)],
+    [   AC_MSG_ERROR([*** Could not determine $3 version.]) ],
+    [   $4=$6
+        AC_MSG_RESULT([unknown (cross-compiling)]) ])
+],
+[   $4=$6
     AC_MSG_RESULT([unknown (cross-compiling)]) ])
 CPPFLAGS=$ac_save_cppflags
 ])
