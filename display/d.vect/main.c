@@ -259,7 +259,7 @@ main (int argc, char **argv)
 
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
-	table_acolors_flag->description	= "Get area fill colors from map table column 'GRASSRGB' (RR:GG:BB)";
+	table_acolors_flag->description	= "Get area fill colors from map table column 'GRASSRGB' (RRR:GGG:BBB)";
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';

@@ -52,7 +52,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     dbCursor cursor;
     dbTable  *table;
     dbColumn *column;
-    char buf[2000], colorstring[8]; /* RR:GG:BB */
+    char buf[2000], colorstring[12]; /* RRR:GGG:BBB */
     int more, ret;
     unsigned char which;
 
@@ -62,7 +62,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     Cats = Vect_new_cats_struct ();
 
     if( table_colors_flag ) {
-      /* for reading RR:GG:BB color strings from table */
+      /* for reading RRR:GGG:BBB color strings from table */
       db_init_string (&stmt);
       db_init_string (&valstr);
       fi = Vect_get_field( Map, Clist->field);
@@ -162,7 +162,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
 		db_convert_column_value_to_string (column, &valstr);
 		sprintf (colorstring, "%s", db_get_string(&valstr));
-		
+
 		/* only draw if GRASSRGB was defined */
 		if (strlen(colorstring) != 0) {
 			G_debug(3, "area centroid %d: colorstring: %s", centroid, colorstring);
