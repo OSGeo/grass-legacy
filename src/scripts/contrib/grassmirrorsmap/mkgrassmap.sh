@@ -93,9 +93,9 @@ g.region  -dp res=0:00:36  >$out 2>&1
 echo "starting HTMLMAP and CELL drivers...."
 g.remove rast=D_cell  >$out 2>&1
 d.mon start=HTMLMAP   >$out 2>&1
-sleep 1
+sleep 2
 d.mon start=CELL      >$out 2>&1
-sleep 1
+sleep 2
 
 # draw background, blue oceans
 d.mon select=CELL    >$out 2>&1
@@ -164,7 +164,7 @@ do
 
     # draw the htmlmap areas
     d.mon select=HTMLMAP     >$out 2>&1
-    sleep 1
+    sleep 2
     echo $url | tr -d "\012" | d.text  >$out 2>&1
     d.vect.area map=temp__vec     >$out 2>&1
     g.remove vect=temp__vec  >$out 2>&1
@@ -178,9 +178,9 @@ done
 echo ""
 echo "stopping drivers..."
 d.mon stop=CELL         >$out 2>&1
-sleep 1
+sleep 2
 d.mon stop=HTMLMAP      >$out2 2>&1
-sleep 1
+sleep 2
 
 # convert the CELL into a graphic format
 
