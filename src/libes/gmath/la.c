@@ -486,7 +486,7 @@ vec_struct *
 G_matvect_get_column(mat_struct *mt, int col) {
 
   int i; /* loop */
-  vec_struct vc1;
+  vec_struct *vc1;
 
   if(col < 0 || col >= mt->cols) {
     fprintf(stderr, "Specified matrix column index is outside range\n");
@@ -621,19 +621,19 @@ G_vector_norm_euclid(vec_struct *vc) {
   integer incr, Nval;
   doublereal *startpt;
 
-  if(!mt->is_init) {
+  if(!vc->is_init) {
     fprintf(stderr, "Error: matrix is not initialised\n");
-    return NULL;
+    exit(-1);
   }
 
 
-  if(vc->mat_spec == ROWVEC_) {
+  if(vc->type == ROWVEC_) {
     Nval = (integer)vc->cols;
     incr = (integer)vc->ldim;
     if(vc->v_indx < 0)
       startpt = vc->vals;
     else
-      startpt = vc->vals + v_indx;
+      startpt = vc->vals + vc->v_indx;
   }
   else {
     Nval = (integer)vc->rows;
@@ -641,7 +641,7 @@ G_vector_norm_euclid(vec_struct *vc) {
     if(vc->v_indx < 0)
       startpt = vc->vals;
     else
-      startpt = vc->vals + v_indx * vc->ldim;
+      startpt = vc->vals + vc->v_indx * vc->ldim;
   }
 
   /* Call the BLAS routine dnrm2_() */
@@ -672,18 +672,18 @@ G_vector_norm_maxval(vec_struct *vc, int vflag) {
   int ix;       /* loop */
   int ncells, incr, cnt;
 
-  if(!mt->is_init) {
+  if(!vc->is_init) {
     fprintf(stderr, "Error: matrix is not initialised\n");
-    return NULL;
+    exit(-1);
   }
 
-  if(vc->mat_spec == ROWVEC_) {
+  if(vc->type == ROWVEC_) {
     ncells = (integer)vc->cols;
     incr = (integer)vc->ldim;
     if(vc->v_indx < 0)
       startpt = vc->vals;
     else
-      startpt = vc->vals + v_indx;
+      startpt = vc->vals + vc->v_indx;
   }
   else {
     ncells = (integer)vc->rows;
@@ -691,7 +691,7 @@ G_vector_norm_maxval(vec_struct *vc, int vflag) {
     if(vc->v_indx < 0)
       startpt = vc->vals;
     else
-      startpt = vc->vals + v_indx * vc->ldim;
+      startpt = vc->vals + vc->v_indx * vc->ldim;
   }
 
   xval = *startpt;
