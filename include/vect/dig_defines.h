@@ -9,6 +9,7 @@
 #define GRASS_VECT_FRMT_ELEMENT "frmt" /* format description, data location */ 
 #define GRASS_VECT_COOR_ELEMENT "coor" /* coordinates */
 #define GRASS_VECT_HEAD_ELEMENT "head" /* header information */
+#define GRASS_VECT_DBLN_ELEMENT "dbln" /* link to database */
 #define GV_TOPO_ELEMENT "topo"   /* topology */
 #define GV_SIDX_ELEMENT "sidx"   /* spatial index */
 
@@ -59,6 +60,10 @@
 #define GV_FORMAT_NATIVE   0 /* grass native format */
 #define GV_FORMAT_SHAPE    1 /* shapefile format */
 #define GV_FORMAT_POSTGIS  2 /* postgis format */
+
+/* How may tables linked to map */
+#define GV_1TABLE  0   /* One table */
+#define GV_MTABLE  1   /* More, many, multi */
 
 #define GV_MODE_READ  0
 #define GV_MODE_WRITE 1
