@@ -6,8 +6,9 @@ int main (int argc, char *argv[])
 {
     int i,n;
     char *mapset;
-	struct GModule *module;
+    struct GModule *module;
     struct Option **parm, *p;
+    struct Flag *overwr;
     char *from, *to;
 
     init (argv[0]);
@@ -31,6 +32,10 @@ int main (int argc, char *argv[])
         p->description = G_malloc (64);
         sprintf (p->description, "%s file(s) to be copied", list[n].alias);
     }
+
+    overwr		= G_define_flag();
+    overwr->key		= 'o';
+    overwr->description	= "Overwrite <to> file(s)";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -63,6 +68,11 @@ int main (int argc, char *argv[])
                 fprintf (stderr, "<%s> not found\n", from);
                 continue;
             }
+	    if (!overwr->answer && find (n, to, ""))
+	    {
+		fprintf (stderr, "<%s> already exists\n", to);
+		continue;
+	    }
             if (G_legal_filename (to) < 0)
             {
                 fprintf (stderr, "<%s> illegal name\n", to);
