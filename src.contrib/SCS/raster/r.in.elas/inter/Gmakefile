@@ -1,0 +1,17 @@
+#  @(#)Gmakefile	2.2  6/26/87
+
+PGM = r.in.elas
+
+OFILES = \
+	grelas.o \
+	eltran.o \
+	genproc.o
+
+all:	$(BIN_CONTRIB_INTER)/$(PGM)
+
+$(BIN_CONTRIB_INTER)/$(PGM):	$(OFILES)
+	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) -ltermcap $(SHAREDLIB)
+
+
+$(GISLIB): #
+
