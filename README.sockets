@@ -118,5 +118,5 @@ fi
 
 echo
 echo "Thanks for your time."
-echo "If you have more time, you would like to recompile entire sources. :-)"
+echo "If you have more time, you might want to recompile entire sources. :-)"
 echo
