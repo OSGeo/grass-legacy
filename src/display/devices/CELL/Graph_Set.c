@@ -49,10 +49,6 @@ int Graph_Set (int argc, char **argv)
 	for (j = 0 ; j < 3 ; j++)
 	    Color_table[i][j] = 0;
 
-    strcpy (buf, p);
-    strcat (buf, FILE_NAME);
-    Filename = G_store (buf);
-
     /* alloc tmp buffer for num_cols */
     Row_buf = (unsigned char *) G_malloc (screen_right - screen_left);
 
