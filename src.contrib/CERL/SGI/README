@@ -1,0 +1,8 @@
+This is the directory for the SG3d tools for use on
+SGI workstations.  There are a few GRASS-independant 
+programs and things that need to be conpiled BEFORE
+you compile the actual SG3d program.  Be sure and go
+through the directories and read the README files
+for this.
+
+
