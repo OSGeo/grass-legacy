@@ -166,8 +166,8 @@ AC_CHECK_LIB(dl, dlsym, DLLIB=-ldl)
 AC_SUBST(DLLIB)
 
 # Some search directories to use as the base for other searches when not specified
-my_inc_dirs="/usr/include /usr/local/include /opt/include /usr/freeware/include"
-my_lib_dirs="/usr/lib /usr/local/lib /opt/lib /usr/freeware/lib"
+my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include"
+my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib"
 
 # TIFF includes and library checks....
 AC_ARG_WITH(tiff-includes,
@@ -278,44 +278,6 @@ AC_ARG_WITH(tcltk-includes,
 	tkincdir="$withval"
     ])
 
-TKINCDIR=
-if test $tkincdir && test -z $HAVE_TK_H ; then
-    for dir in $tkincdir; do
-        if test -d "${dir}"; then
-            TKINCDIR="$TKINCDIR -I${dir}"
-            if test -f "${dir}/tk.h"; then
-                grep_cmd="grep TK_VERSION ${dir}/tk.h"
-                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-            fi
-        else
-            AC_MSG_WARN([*** TK include directory $dir does not exist.])
-        fi
-    done
-    AC_MSG_CHECKING(TK include dirs)
-    AC_MSG_RESULT($TKINCDIR)
-fi
-if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
-    AC_MSG_CHECKING(TK include dirs)
-    for my_dir in $my_inc_dirs; do
-        if test -z "$TKINCDIR" && test -d $my_dir; then
-            tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
-            for dir in $tk_try; do
-                if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
-                    grep_cmd="grep TK_VERSION ${my_dir}/${dir}/tk.h"
-                    tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-                    TKINCDIR="-I${my_dir}/${dir}"
-                fi
-            done
-        fi
-    done
-    AC_MSG_RESULT($TKINCDIR)
-fi
-
-if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
-    AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
-fi
-AC_SUBST(TKINCDIR)
-
 TCLINCDIR=
 if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
     for dir in $tclincdir; do
@@ -345,6 +307,11 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
                     TCLINCDIR="-I${my_dir}/${dir}"
                 fi
             done
+            if test -z "$TCLINCDIR" && test -f "$my_dir/tcl.h"; then
+                grep_cmd="grep TCL_VERSION ${my_dir}/tcl.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                TCLINCDIR="-I${my_dir}"
+            fi
         fi
     done
     AC_MSG_RESULT($TCLINCDIR)
@@ -353,6 +320,53 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
     AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
 fi
 AC_SUBST(TCLINCDIR)
+
+TKINCDIR=
+if test $tkincdir && test -z $HAVE_TK_H ; then
+    for dir in $tkincdir; do
+        if test -d "${dir}"; then
+            TKINCDIR="$TKINCDIR -I${dir}"
+            if test -f "${dir}/tk.h"; then
+                grep_cmd="grep TK_VERSION ${dir}/tk.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+            fi
+        else
+            AC_MSG_WARN([*** TK include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(TK include dirs)
+    AC_MSG_RESULT($TKINCDIR)
+fi
+if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
+    AC_MSG_CHECKING(TK include dirs)
+    for my_dir in $my_inc_dirs; do
+        if test -z "$TKINCDIR" && test -d $my_dir; then
+            tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
+            for dir in $tk_try; do
+                if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
+                    grep_cmd="grep TK_VERSION ${my_dir}/${dir}/tk.h"
+                    tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                    TKINCDIR="-I${my_dir}/${dir}"
+                fi
+            done
+            if test -z "$TKINCDIR" && test -f "$my_dir/tk.h"; then
+                grep_cmd="grep TK_VERSION ${my_dir}/tk.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                TKINCDIR="-I${my_dir}"
+            fi
+        fi
+    done
+    AC_MSG_RESULT($TKINCDIR)
+fi
+
+if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
+    AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
+fi
+AC_SUBST(TKINCDIR)
+
+if test `uname -s` = FreeBSD; then
+    tcltk_ver=`echo $tcltk_ver | sed 's/\.//g'`
+fi
 
 AC_ARG_WITH(tcltk-libs,
     [  --with-tcltk-libs=DIR   also search for TCL and TK libraries in DIR],
@@ -378,6 +392,20 @@ if test "$tcltk_lib_dirs"; then
     AC_MSG_CHECKING(additional TCL and TK library dirs)
     AC_MSG_RESULT($TCLTKLIBPATH)
 fi
+
+if test -z "$TCLTKLIBPATH"; then
+    AC_MSG_CHECKING(Tcl/Tk library dirs)
+    for dir in $my_lib_dirs; do
+        if test -z "$TCLTKLIBPATH" && test -d "$dir" && test -f "$dir/libtcl$tcltk_ver.a" && test -f "$dir/libtk$tcltk_ver.a"; then
+            TCLTKLIBPATH="-L$dir"
+        fi
+    done
+    AC_MSG_RESULT($TCLTKLIBPATH)
+fi
+if test -z "$TCLTKLIBPATH"; then
+	AC_MSG_WARN([*** Couldn't find tcl/tk library.])
+fi
+AC_SUBST(TCLTKLIBPATH)
 
 if test "$tcltk_ver"; then
     ac_save_ldflags="$LDFLAGS"
@@ -686,17 +714,17 @@ fi
 
 if test -n "$USE_OPENGL"; then
     ac_save_ldflags="$LDFLAGS"
-    LDFLAGS="$OPENGLLIB"
+    LDFLAGS="$LDFLAGS $MATHLIB $OPENGLLIB"
     AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
     LDFLAGS=${ac_save_ldflags}
 
     ac_save_ldflags="$LDFLAGS"
-    LDFLAGS="$LDFLAGS $OPENGLLIB"
+    LDFLAGS="$LDFLAGS $MATHLIB $OPENGLLIB"
     AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
     LDFLAGS=${ac_save_ldflags}
 
     ac_save_ldflags="$LDFLAGS"
-    LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
+    LDFLAGS="$LDFLAGS $MATHLIB $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
     AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
     AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
     LDFLAGS=${ac_save_ldflags}
@@ -724,17 +752,18 @@ AC_ARG_WITH(odbc-includes,
 	odbc_includes="$withval"
    ])
 
-if test -z "$odbc_includes"; then
+if test "$odbc_includes"; then
     for dir in $odbc_includes; do
         if test -d "$dir" && test -f "$dir/sql.h"; then
             ODBCINC="$ODBCINCPATH -I$dir"
         fi
     done
 else
-    for dir in "/usr/include /usr/include/odbc /usr/local/include \
-          /usr/local/include/odbc /usr/X11R6/include /opt/include"; do
+    for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/sql.h"; then
             ODBCINC="$ODBCINCPATH -I$dir"
+	elif test -d "$dir/odbc" && test -f "$dir/odbc/sql.h"; then
+            ODBCINC="$ODBCINCPATH -I$dir/odbc"
         fi
     done
 fi
@@ -783,6 +812,12 @@ if test "$jpeg_includes"; then
             AC_MSG_WARN([*** Directory $dir does not exist])
         fi
     done
+else
+    for dir in $my_inc_dirs; do
+        if test -d "$dir" && test -f "$dir/jpeglib.h"; then
+            JPEGINCPATH="$JPEGINCPATH -I$dir"
+        fi
+    done
 fi
 
 if test "$jpeg_libs"; then
@@ -791,6 +826,12 @@ if test "$jpeg_libs"; then
             JPEGLIBPATH="$JPEGLIBPATH -L$dir"
         else
             AC_MSG_WARN([*** Directory $dir does not exist])
+        fi
+    done
+else
+    for dir in $my_lib_dirs; do
+        if test -d "$dir" && test -f "$dir/libjpeg.a"; then
+            JPEGLIBPATH="$JPEGLIBPATH -L$dir"
         fi
     done
 fi                         
