@@ -17,6 +17,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include <string.h>
+#include "gis.h"
 #include "Vect.h"
 
 /*
@@ -54,9 +56,7 @@ dig_Rd_P_node (
 {
   P_NODE *ptr;
 
-#ifdef GDEBUG
   G_debug (3, "dig_Rd_P_node()");
-#endif
   
   ptr = dig_alloc_node();
   
@@ -65,9 +65,11 @@ dig_Rd_P_node (
   if (0 >= dig__fread_port_D (&(ptr->y), 1, fp))
     return (-1);
 
-  if ( Plus->with_z )
+  if ( Plus->with_z ) {
     if (0 >= dig__fread_port_D (&(ptr->z), 1, fp))
       return (-1);
+  } else
+      ptr->z = 0;
   
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
@@ -129,8 +131,8 @@ dig_Rd_P_line (
 		  int  n,
 		  FILE * fp)
 {
-  P_NODE *Node;
   P_LINE *ptr; 
+
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_line()");
 #endif
