@@ -202,10 +202,6 @@ written for PostGRASS, SHAPE-link.
 #define GV_FACE       0x10
 #define GV_KERNEL     0x20
 #define GV_AREA       0x40
-#define GV_VOLUME     0x80
-
-#define GV_POINTS (GV_POINT | GV_CENTROID )
-#define GV_LINES (GV_LINE | GV_BOUNDARY )
 </pre>
 
 Face and kernel are 3D equivalents of boundary and centroid, but there 
@@ -261,12 +257,11 @@ A, B above can never be exported from GRASS as polygon A with inner ring B
 because there are only 2 areas A and B and no island.
 
 
-
-<h3>Topology Example TIGER data:</h3>
+<h3>Topology Example 3:</h3>
 
 v.in.ogr/v.clean can identify dangles and change the type from boundary
-to line. Distinction between line and boundary isn't important only
-for dangles. Example:
+to line (in TIGER data for example). 
+Distinction between line and boundary isn't important only for dangles. Example:
 
 <pre>
 +-----+-----+
@@ -284,8 +279,6 @@ x     parcel centroid (identifies whole area)
 
 Because lines are not used to build areas, we have only one area/centroid,
 instead of 4 which would be necessary in TIGER.
-
-
 
 <HR>
 
