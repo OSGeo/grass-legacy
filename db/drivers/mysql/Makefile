@@ -30,7 +30,8 @@ OBJS 	=  \
 	mysqlexe.o \
 	select.o \
 	str.o \
-	table.o
+	table.o \
+	create_table.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 

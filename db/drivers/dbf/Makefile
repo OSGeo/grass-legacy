@@ -25,7 +25,8 @@ OBJS 	=  \
 	main.o \
 	select.o \
 	str.o \
-	table.o
+	table.o \
+	create_table.o
 
 D_OBJS 	=  \
 	column.o \
@@ -41,7 +42,8 @@ D_OBJS 	=  \
 	main_debug.o \
 	select.o \
 	str.o \
-	table.o
+	table.o \
+	create_table.o
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 D_ARCH_OBJS := $(foreach obj,$(D_OBJS),$(OBJDIR)/$(obj))

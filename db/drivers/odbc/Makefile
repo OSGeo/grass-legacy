@@ -24,7 +24,8 @@ OBJS 	=  \
 	listtab.o \
 	main.o \
 	select.o \
-	table.o
+	table.o \
+	create_table.o
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
