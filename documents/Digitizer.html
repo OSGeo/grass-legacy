@@ -1,0 +1,54 @@
+<html>
+<body bgcolor=#FFFFE0>
+<pre>
+Date: Tue, 30 Jun 1998 11:45:47 +0200
+To: grassu-list@pandora.cecer.army.mil
+From: Christian Kernbach <kerniebc@cetus.zrz.TU-Berlin.DE>
+Subject: digitizer settings for a calcomp drawing board III
+
+Calcomp Digitizer 34240 (Drawing Board III)
+
+With these settings and modifications we got our Calcomp Drawing Board III
+succesfull running with S.u.S.e. Linux 5.1 and GRASS4.2.1
+
+1) edit /etc/inittab to: S1:23:off:/sbin/mingetty ttyS1 9600
+
+2) chmod 666 /dev/ttyS1
+
+3) cd /usr/grass4.2/etc/dig_drivers
+chown root */*
+chmod 06775 */*
+
+4) edit .../grass4.2/etc/digcap :
+
+we use the cc95f5_16 Digitizer driver
+so the entry in digcap should look like this
+calcomp_f5:/dev/ttyS1:cc95f5_16:calcomp digitizer Binary 5
+
+5) edit .../grass4.2/etc/digitzers/cc95f5_16:
+
+type some wait commands like this
+
+startrun
+{
+wait = 0.1
+send = \027%^5\013 #set to format 5
+send = \027%R\013
+}
+etc....
+
+6) the settings on the Digitizer tablett for bank A and B
+
+    1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17  18
+A   1  1  0  0  1  0  1  1  1   1   0   0   0   1   0   1   0   1
+B   0  0  1  1  0  0  0  0  0   0   0   0   0   0   0   0   0   1
+
+
+Christian
+
+
+--------------------------------------------------------------
+Christian Kernbach         e-mail:  kerniebc@sp.zrz.TU-Berlin.DE
+
+</PRE>
+</HTML>
