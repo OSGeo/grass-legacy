@@ -16,7 +16,7 @@ assignment (fd, name)
 
     if (c != '=')
     {
-	fprintf ("You must say map = expression\n");
+	fprintf (stderr, "You must say map = expression\n");
 	return 0;
     }
 
