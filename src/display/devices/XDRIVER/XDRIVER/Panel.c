@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 
 extern int SCREEN_TOP;
 extern int SCREEN_BOTTOM;
@@ -36,22 +34,12 @@ int top, bottom, left, right;
         left = SCREEN_LEFT;
     if (right > SCREEN_RIGHT)
         right = SCREEN_RIGHT;
-    right += 2;                 /* Grab just a little more for luck */
 
-    /* Adjust width to an even number of pixels (whole shorts), */
-    /* but remain within edges of display space */
     height = bottom - top + 1;
-    width = right - left;
-    if (!(width % 2))
-        if (right < SCREEN_RIGHT)
-            right++;
-        else if (left > SCREEN_LEFT)
-            left--;
-        else
-            right--;
+    width = right - left+1;
 
     /* Get the image off the window */
-    if (backing_store != Always)
+    if (!backing_store)
         impanel = XGetImage(dpy, bkupmap, left, top, width, height,
                 AllPlanes, ZPixmap);
     else
@@ -64,12 +52,22 @@ int top, bottom, left, right;
     write(fd, (char *) &top, sizeof(top));
     write(fd, (char *) &width, sizeof(width));
     write(fd, (char *) &height, sizeof(height));
+    write(fd, (char *) &(impanel->bytes_per_line),
+			  sizeof(impanel->bytes_per_line));
+    write(fd, (char *) &(impanel->xoffset),
+			  sizeof(impanel->xoffset));
+    write(fd, (char *) &(impanel->depth),
+			  sizeof(impanel->depth));
     /* write the rasters, one line atta time */
     dpoint = impanel->data;
     for (i = 0; i < height; i++) {
         write(fd, dpoint, width);
+        write(fd, dpoint, impanel->bytes_per_line);
         dpoint += impanel->bytes_per_line;
     }
+/*   another way of writing data
+        write(fd, impanel->data, impanel->bytes_per_line*height);
+*/
 
     close(fd);
     XDestroyImage(impanel);
@@ -80,7 +78,7 @@ Panel_restore(name)
 char *name;
 {
     int fd, i;
-    int top, left, width, height;
+    int top, left, width, height, bytes_per_line, xoffset, depth;
     char *data, *tdata, *malloc();
     XImage *newimage;
     XWindowAttributes xwa;
@@ -94,13 +92,23 @@ char *name;
     read(fd, (char *) &top, sizeof(top));
     read(fd, (char *) &width, sizeof(width));
     read(fd, (char *) &height, sizeof(height));
+    read(fd, (char *) &bytes_per_line, sizeof(bytes_per_line));
+    read(fd, (char *) &xoffset, sizeof(xoffset));
+    read(fd, (char *) &depth, sizeof(depth));
 
     /* allocate space and read the data points */
+    /*
     data = malloc((unsigned) width * height);
+    */
+    data = malloc((unsigned) bytes_per_line * height);
+    /*   another way of reading data
+    read(fd, (char *) &data, bytes_per_line * height);
+    */
     tdata = data;
     for (i = 0; i < height; i++) {
         read(fd, tdata, width);
-        tdata += width;
+        read(fd, tdata, bytes_per_line);
+        tdata += bytes_per_line;
     }
     close(fd);
 
@@ -108,10 +116,14 @@ char *name;
      * it into an image, then draw it. */
     if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
         return (-1);
+/*
     newimage = XCreateImage(dpy, xwa.visual, 8, ZPixmap, 0,
             data, width, height, 8, width);
+*/
+    newimage = XCreateImage(dpy, xwa.visual, depth, ZPixmap, xoffset,
+            data, width, height, 8, bytes_per_line);
     XPutImage(dpy, grwin, gc, newimage, 0, 0, left, top, width, height);
-    if (backing_store != Always)
+    if (!backing_store)
         XPutImage(dpy, bkupmap, gc, newimage, 0, 0, left, top,
                 width, height);
     XDestroyImage(newimage);
