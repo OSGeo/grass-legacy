@@ -1,0 +1,221 @@
+
+###########################################################
+# We just build a library (which includes main.o)
+# the various versions of digit for each digitizer will
+# be built by the Gmakefiles in digitizers/<digitizer>
+#
+#  curses.c is not compiled in this directory since it is driver
+#  dependent, but it is compiled in each driver directory.
+#
+
+# Note: DIGIT_FLAGS is defined in CMD/makehead
+#       it should be -DATT for 3b2 like systems
+#       or -DMASSCOMP for masscomp 3.1C or earlier which can't do
+#         setuid handling properly
+
+LIB	= libdigit.a
+
+EXTRA_CFLAGS	= $(DIGITFLAGS) $(VECT_INCLUDE)
+
+OBJ = \
+	scal_window.o\
+	slid_window.o\
+	\
+	add_scale.o \
+	ask_driver.o \
+	area.o \
+	bad_areas.o \
+	backdrop.o \
+	break.o \
+	build_neat.o \
+	collect_p.o \
+	color.o \
+	compress.o \
+	contour.o \
+	customize.o \
+	debug.o \
+	digitize.o\
+	display_area.o \
+	display_line.o \
+	display_site.o \
+	display_node.o \
+	drawcell.o \
+	duplicate.o \
+	edit.o\
+	find_w_mouse.o\
+	find_w_dig.o\
+	flush.o \
+	flush_input.o \
+	get_point.o \
+	gorun.o \
+	graphics.o \
+	head_info.o\
+	help.o \
+	initialize.o \
+	interact.o\
+	intersect.o\
+	isle.o\
+	label.o \
+	label_mult.o \
+	leave.o \
+	list.o \
+	main.o\
+	map_ask.o\
+	map_coor.o\
+	map_init.o\
+	map_reg.o\
+	map_resid.o\
+	map_scale.o\
+	menus.o \
+	mk_window.o \
+	mouse_yn.o\
+	mouse_coll.o\
+	move_line.o \
+	move_point.o\
+	new_line.o \
+	node_color.o \
+	node_lines.o \
+	oplot.o \
+	overlay.o \
+	plot.o \
+	remove.o\
+	remove_block.o \
+	replot.o \
+	reset_map.o\
+	retype_line.o \
+	screen_plt.o \
+	set_key.o\
+	set_prior.o \
+	set_thresh.o\
+	set_window.o \
+	snap.o\
+	states.o \
+	tty.o \
+	toolbox.o \
+	where_am_i.o \
+	wind_conv.o \
+	wind_2_box.o \
+	window.o \
+	window_setup.o \
+	window_rout.o \
+	withinthresh.o
+
+
+CFILES = \
+	intersect.c\
+	scal_window.c\
+	slid_window.c\
+	\
+	add_scale.c \
+	ask_driver.c \
+	area.c \
+	backdrop.c \
+	bad_areas.c \
+	break.c \
+	build_neat.c \
+	collect_p.c \
+	color.c \
+	compress.c \
+	contour.c \
+	customize.c \
+	debug.c \
+	digitize.c\
+	display_area.c \
+	display_line.c \
+	display_site.c \
+	display_node.c \
+	drawcell.c \
+	duplicate.c \
+	edit.c\
+	find_w_mouse.c\
+	find_w_dig.c\
+	flush.c \
+	flush_input.c \
+	get_point.c \
+	gorun.c \
+	graphics.c \
+	head_info.c\
+	help.c \
+	initialize.c \
+	interact.c\
+	intersect.c\
+	label.c \
+	label_mult.c \
+	leave.c \
+	list.c \
+	main.c\
+	map_ask.c\
+	map_coor.c\
+	map_init.c\
+	map_reg.c\
+	map_resid.c\
+	map_scale.c\
+	menus.c \
+	mk_window.c \
+	mouse_coll.c\
+	mouse_yn.c\
+	move_line.c \
+	move_point.c\
+	new_line.c \
+	node_color.c \
+	node_lines.c \
+	oplot.c \
+	overlay.c \
+	plot.c \
+	remove.c\
+	remove_block.c \
+	replot.c \
+	reset_map.c\
+	retype_line.c \
+	screen_plt.c \
+	set_key.c\
+	set_prior.c \
+	set_thresh.c\
+	set_window.c \
+	snap.c\
+	states.c \
+	tty.c \
+	toolbox.c \
+	where_am_i.c \
+	wind_conv.c \
+	wind_2_box.c \
+	window.c \
+	window_setup.c \
+	window_rout.c \
+	withinthresh.c
+
+
+
+all:	$(LIB) $(TXT)/DIGIT2/Main
+
+$(LIB):	$(OBJ)
+	$(AR)
+
+$(TXT)/DIGIT2/Main:
+	cp help/* $(TXT)/DIGIT2/.
+
+
+saber_src:
+	#load $(CFLAGS) $(CFILES) \
+	../digitize/none/coll_pts.o \
+	../digitize/none/dig_curses.o \
+	../digitize/none/dig_dev.o \
+	../digitize/none/interface.o \
+	../digitize/none/setup_driver.o \
+	$(LIBDIG) $(LIBTRANS) $(LIBATTS) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) 
+
+check_node.o:	nodes.h 
+digitize.o:	
+edit.o:		
+interact.o:	
+move_point.o:
+remove.o:	
+set_thresh.o:	
+snap.o:	
+snap.o:	
+map_ask.o: map.h
+map_coor.o: map.h
+map_init.o: map.h
+map_resid.o: map.h
+map_scale.o:	
+menus.o:  menus.i
