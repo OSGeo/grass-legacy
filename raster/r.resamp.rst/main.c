@@ -317,8 +317,11 @@ int main (int argc, char *argv[])
   dtens = flag.cprght->answer;
 
   ertre = 0.1;
-  sscanf (parm.res_ew->answer, "%lf", &ew_res);
-  sscanf (parm.res_ns->answer, "%lf", &ns_res);
+
+  if (!G_scan_resolution (parm.res_ew->answer, &ew_res, winhd.proj))
+                        G_fatal_error("Cannot read ew_res value");
+  if (!G_scan_resolution (parm.res_ns->answer, &ns_res, winhd.proj))
+                        G_fatal_error("Cannot read ns_res value");
   sscanf (parm.fi->answer, "%lf", &fi);
   sscanf (parm.zmult->answer, "%lf", &zmult);
   sscanf (parm.overlap->answer, "%d", &overlap);
