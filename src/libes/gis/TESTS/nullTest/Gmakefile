@@ -1,3 +1,18 @@
+#############################################################################
+#
+# $Id: Gmakefile,v 1.2 2001-03-22 08:53:38 justin Exp $
+#
+# MODULE:   	GRASS gis library - NULL test
+# AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+# PURPOSE:  	To create the test program for testing NULL values in GRASS
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
 PGM = nullTest
 OBJ = main.o
 SOURCES = main.c

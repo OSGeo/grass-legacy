@@ -3,7 +3,7 @@
 *
 *****************************************************************************
 *
-* MODULE:   	GRASS gis library
+* MODULE:   	GRASS gis library - NULL test
 * AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 * PURPOSE:  	To test the capability of GRASS to set and check null values.
 *   	    	This is simply a test program and is not intended for use in
