@@ -1,0 +1,48 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>r.out.v5d.texture</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align="center" size="6" no="" shade="">
+<h2>
+NAME</h2>
+<b><i>r.out.v5d.texture</i></b>- Convert a GRASS raster map layer into
+a Vis5d texture file.
+<br><i>(GRASS Raster Data Export Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>r.out.v5d.texture</b>
+<br><b>r.out.v5d.texture help</b>
+<br><b>r.out.v5d.texture </b><i>grass_raster_file</i>
+<h2>
+DESCRIPTION</h2>
+<i>r.out.v5d.texture</i> is a shell script which converts a raster map
+layer into a Vis5d texture file suitable for display with Vis5d+.&nbsp;
+The output file will be the same name as the <i>grass_raster_file</i> with
+a .sgi extension and will be written to the current working directory.
+<p>This script requires the ImageMagick convert program.&nbsp; <a href="http://www.imagemagick.org/">ImageMagick</a>&nbsp;
+is a free collection of tools to read, write, and manipulate images in
+many formats.
+<p><a href="http://vis5d.sourceforge.net/">Vis5d+ </a>is a free OpenGL-based
+volumetric rendering program for scientific data sets in 3+ dimensions.
+<h2>
+NOTES</h2>
+The GRASS region extent (north, south, east, west) must match the Vis5d
+3D data region with which it will be displayed.&nbsp; However the resolution
+may differ.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.region.v5d.html">g.region.v5d</a></i>
+<br><i><a href="r.out.v5d.topo.html">r.out.v5d.topo</a></i>
+<br><i><a href="v.out.v5d.map.html">v.out.v5d.map</a></i>
+<br><i><a href="v5dconvert.examples.html">v5dconvert examples</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>

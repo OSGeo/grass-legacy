@@ -1,0 +1,2 @@
+all:
+	cp r.out.v5d.texture $(GISBASE)/scripts

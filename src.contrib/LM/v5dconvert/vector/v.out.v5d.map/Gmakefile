@@ -1,0 +1,13 @@
+PGM = v.out.v5d.map
+
+EXTRA_CFLAGS = -I../../libes/libv5d/lib $(VECT_INCLUDE)
+
+LIBES = $(LIBDIR)/libv5d.a $(VECTLIB) $(GISLIB)
+
+OFILES = main.o makemap.o
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB): #
+$(GISLIB): #

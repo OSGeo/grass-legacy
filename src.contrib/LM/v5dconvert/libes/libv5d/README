@@ -1,0 +1,14 @@
+Vis5d code for use to convert Grass data into Vis5d data.
+Beverly Wallace - beverly.t.wallace@lmco.com
+
+./:
+The vis5d_config.c program creates the config.h file for use by libv5d.
+The resulting config.h file is for use by original Vis5d code only.
+This directory should NOT be added to any CFLAGS.  
+
+./lib:
+The lib directory has original source from Vis5d+ (version 1.2.1).
+The Vis5d code in lib requires a "../config.h" file.
+The lib directory may be added to CFLAGS when libv5d is used.
+
+

@@ -1,0 +1,124 @@
+****************************************************************************
+*
+* MODULE:       v5dconvert documentation
+*
+* AUTHOR(S):    Beverly Wallace, beverly.t.wallace@lmco.com
+*
+* MANAGER:    	Steve Hall, steve.hall@lmco.com
+*
+* PURPOSE:      To convert GRASS data to Vis5d data.
+*
+* COPYRIGHT:    (C) 2001 by Lockheed Martin Space Systems, Sunnyvale, CA, USA 
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+--------
+Overview
+--------
+
+V5dconvert converts GRASS 2D raster and vector data into Vis5d 2D texture, 
+topography, and map outline data.
+
+The v5dconvert programs are:
+
+   g.region.v5d    	Set the GRASS region corresponding to a Vis5d data file.
+
+   r.out.v5d.topo  	Convert GRASS raster data into a Vis5d topography file.
+
+   v.out.v5d.map   	Convert GRASS vector data to Vis5d map outline format.
+
+   r.out.v5d.texture   	Convert GRASS raster data into a Vis5d texture file.
+
+Vis5d does not need to be installed to run these GRASS programs.  
+However g.region.v5d requires a Vis5d data file as an argument.
+Vis5d is needed to view the resulting files.
+
+r.out.v5d.texture is a script that requires the ImageMagick convert program.
+
+See the html documentation for a description of each program.
+
+------
+Vis5d+
+------
+
+Vis5d+ is a free OpenGL-based volumetric rendering program for scientific 
+datasets in 3+ dimensions.  For more information, see
+   http://vis5d.sourceforge.net/
+
+-----------
+ImageMagick
+-----------
+
+ImageMagick is a free collection of tools to read, write, and manipulate 
+images in many formats.  For more information, see
+   http://www.imagemagick.org/
+
+--------
+Examples
+--------
+
+Set the current region to match the Vis5d data (data.v5d):
+
+	g.region.v5d data.v5d
+
+Convert GRASS raster data (topo.) to Vis5d topo data (topo.topo):
+
+	r.out.v5d.topo input=topo. output=topo.topo
+
+Convert GRASS vector data (coastlines) to Vis5d map data (coastlines.topo):
+
+	v.out.v5d.map input=coastlines output=coastlines.map
+
+Convert GRASS raster data (nations) to Vis5d texture data (nations.sgi):
+
+	r.out.v5d.texture nations
+
+Run Vis5d to display the new data with the 3D Vis5d data (data.v5d):
+
+	vis5d -topo $PWD/topo.topo -map $PWD/coastlines.map \
+		-texture $PWD/nations.sgi data.v5d
+
+Run the demonstration scripts.  Note, the hole.v5d data requires a full path.
+
+	demo.v5d.topomap.sh hole.v5d topo. coastlines
+	demo.v5d.texture.sh hole.v5d nations 
+
+------------------
+Region differences
+------------------
+
+The Vis5d region passes through the center of the grid cells while the
+GRASS raster region is along the outside edge of the map itself.
+Vis5d longitudes are reversed (east is negative, west is positive).
+
+The GRASS region is outside of the Vis5d region by half the resolution in 
+each direction and the signs on the longitudes are the opposite. 
+The resolution, rows, and columns remain the same.
+
+GRASS:
+   ns_res = (grass_north - grass_south) / rows
+   ew_res = (grass_east - grass_west) / cols
+   rows   = (grass_north - grass_south) / ns_res
+   cols   = (grass_east - grass_west) / ew_res
+
+Vis5d:
+   ns_res = (vis5d_north - vis5d_south) / (rows - 1)
+   ew_res = (vis5d_west - vis5d_east) / (cols - 1)
+   rows   = (vis5d_north - vis5d_south) / ns_res + 1
+   cols   = (vis5d_west - vis5d_east) / ew_res + 1
+	
+Vis5d to GRASS:
+   grass_north = vis5d_north + (ns_res / 2)
+   grass_west  = -vis5d_west - (ew_res / 2)
+   grass_south = grass_north - (rows * ns_res)
+   grass_east  = grass_west + (cols * ew_res)
+
+GRASS to vis5d:
+   vis5d_north = grass_north - (ns_res / 2)
+   vis5d_south = grass_south + (ns_res / 2)
+   vis5d_east  = -grass_east + (ew_res / 2)
+   vis5d_west  = -grass_west - (ew_res / 2)

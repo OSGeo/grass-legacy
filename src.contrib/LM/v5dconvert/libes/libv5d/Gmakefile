@@ -1,0 +1,12 @@
+# First create the config.h file
+# Then make the rest
+
+
+all:	vis5d_config
+	$(MAKEALL)
+
+vis5d_config: vis5d_config.o
+	$(CC) $(LDFLAGS) -o $@ vis5d_config.o $(GISLIB)
+	rm -f ./config.h
+	./vis5d_config
+	rm -f ./vis5d_config

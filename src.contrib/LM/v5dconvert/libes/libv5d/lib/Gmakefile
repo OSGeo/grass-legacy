@@ -1,0 +1,10 @@
+
+VIS5DLIB  = $(LIBDIR)/libv5d.a
+
+OBJ = binio.o v5d.o
+
+$(VIS5DLIB): $(OBJ)
+	$(SLIBRULE)
+
+binio.c:  binio.h ../config.h
+v5d.c:  v5d.h ../config.h

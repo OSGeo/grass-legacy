@@ -1,0 +1,11 @@
+PGM=d.rast.viewproj
+
+EXTRA_CFLAGS = -I../../include $(PROJINC)
+
+LIBES  = $(LIBDIR)/libviewproj.a $(GPROJLIB) \
+	$(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+LIST = main.o Dcell_viewproj.o PPDA_viewproj.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(D__LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,0 +1,68 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>v.out.v5d.map</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>v.out.v5d.map</i></b> - Converts GRASS binary vector data to Vis5d
+map outline format.
+<br><i>(GRASS Vector Data Export Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>v.out.v5d.map</b>
+<br><b>v.out.v5d.map help</b>
+<br><b>v.out.v5d.map</b> <b>input=</b><i>name</i> <b>output=</b><i>name</i>
+<h2>
+DESCRIPTION</h2>
+<i>v.out.v5d.map</i> converts GRASS vector data (<b>input=</b><i>name</i>)
+to Vis5d map outline format (<b>output=</b><i>name</i>), suitable for display
+with Vis5d+.
+<p><a href="http://vis5d.sourceforge.net/">Vis5d+</a>&nbsp; is a free OpenGL-based
+volumetric rendering program for scientific data sets in 3+ dimensions.
+<h3>
+Parameters:</h3>
+<dl>
+<dt>
+<b>input=</b><i>name</i></dt>
+<dd>
+Name of an existing GRASS binary vector data file.</dd>
+<dt>
+<b>output=</b><i>name</i></dt>
+<dd>
+Name of the Vis5d map outline file to be created.&nbsp;&nbsp; The recommended
+file extension is .map.&nbsp; If a path is not specified, the file will
+be written to the current working directory.</dd>
+</dl>
+If the user does not use any arguments, the program will prompt the user
+to enter these names.
+<h2>
+NOTES</h2>
+The <i>v.out.v5d.map</i> program requires that the
+input vector map layer
+have full topological information associated with it. This means that the
+GRASS program <i><a href="v.support.html">v.support</a></i> should have
+been the last program to have changed the vector map layer before it is
+run through
+<i>v.out.v5d.map</i>. If this is not the case,
+<i>v.out.v5d.map</i>
+will terminate with a message that
+<i><a href="v.support.html">v.support</a></i>
+needs to be run.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.region.v5d.html">g.region.v5d</a></i>
+<br><i><a href="r.out.v5d.texture.html">r.out.v5d.texture</a></i>
+<br><i><a href="r.out.v5d.topo.html">r.out.v5d.topo</a></i>
+<br><i><a href="v5dconvert.examples.html">v5dconvert examples</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>

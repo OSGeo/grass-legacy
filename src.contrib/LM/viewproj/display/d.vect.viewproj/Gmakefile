@@ -1,0 +1,12 @@
+PGM=d.vect.viewproj
+
+EXTRA_CFLAGS = -I../../include $(VECT_INCLUDE) $(PROJINC)
+
+LIBES  = $(LIBDIR)/libviewproj.a $(GPROJLIB) \
+	$(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+
+LIST = main.o plot.o use_plot1.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(D__LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+

@@ -1,0 +1,67 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>r.out.v5d.topo</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>r.out.v5d.topo</i></b>- Converts a GRASS raster map layer into a
+Vis5d topography file.
+<br><i>(GRASS Raster Data Export Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>r.out.v5d.topo</b>
+<br><b>r.out.v5d.topo help</b>
+<br><b>r.out.v5d.topo input=</b><i>name</i> <b>output=</b><i>name</i>
+<h2>
+DESCRIPTION</h2>
+<i>r.out.v5d.topo</i> converts a raster map layer (<b>input=</b><i>name</i>)
+into a Vis5d topography file (<b>output=</b><i>name</i>) suitable for display
+with Vis5d+.
+<p><a href="http://vis5d.sourceforge.net/">Vis5d+
+</a>is a free OpenGL-based
+volumetric rendering program for scientific data sets in 3+ dimensions.
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>input=</b><i>name</i></dt>
+
+<dd>
+Name of an existing raster map layer.</dd>
+</dl>
+
+<dl>
+<dt>
+<b>output=</b><i>name</i></dt>
+
+<dd>
+Name of the Vis5d topo file to be created.&nbsp; The recommended file extension
+is .topo.&nbsp; If a path is not specified, the file will be written to
+the current working directory.</dd>
+</dl>
+If the user does not use any arguments, the program will prompt the user
+to enter these names.
+<h2>
+NOTES</h2>
+If Vis5d&nbsp; produces a "nan hgt!" error when using the resulting topo
+data, reduce the GRASS region resolution or increase the rows and columns,
+then remake the topo data with <i>r.out.v5d.topo</i>.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.region.v5d.html">g.region.v5d</a></i>
+<br><i><a href="r.out.v5d.texture.html">r.out.v5d.texture</a></i>
+<br><i><a href="v.out.v5d.map.html">v.out.v5d.map</a></i>
+<br><i><a href="v5dconvert.examples.html">v5dconvert examples</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>
