@@ -62,7 +62,7 @@ OBJ =	main.o \
 	eps.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
-	$(CC) -o $@ $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJ):		ps_info.h
 main.o:		vector.h labels.h map_info.h header.h colortable.h comment.h sites.h group.h
@@ -86,4 +86,3 @@ do_sites.o:	sites.h
 groupfile.o:	group.h
 
 $(LIBES):	#
-	  

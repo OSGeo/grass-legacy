@@ -7,7 +7,7 @@
 # (3) There is no interactive interface to the new features, particularly
 #     for legends
 
-PGM = $(BIN_ALPHA_CMD)/p.map.new
+PGM = p.map.new
 
 PAINT = $(ETC)/paint
 
@@ -172,15 +172,12 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(PGM) \
+all: $(BIN_ALPHA_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(INTERFACE) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
-
-saber:
-	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(INTERFACE) $(MATHLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc
 	cd $(PAINT); ./patcc patterns

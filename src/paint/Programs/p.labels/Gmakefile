@@ -1,3 +1,4 @@
+PGM=p.labels
 LIST =	main.o \
 		modify.o \
 		output.o\
@@ -7,11 +8,10 @@ LIST =	main.o \
 		setup.o\
 		update.o
 
-####################################################################
-$(BIN_MAIN_INTER)/p.labels: $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h
-####################################################################
+
 $(GISLIB):	# in case the library changes
 $(VASKLIB):	# in case the library changes

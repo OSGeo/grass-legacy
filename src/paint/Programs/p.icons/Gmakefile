@@ -1,8 +1,9 @@
+PGM=p.icons
 ICONLIB = $(LIBDIR)/libicon.a
 OBJS = main.o menu.o edit.o preview.o divider.o
 
-$(BIN_MAIN_INTER)/p.icons: $(OBJS) $(ICONLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJS) $(ICONLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_MAIN_INTER)/$(PGM): $(OBJS) $(ICONLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(ICONLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(ICONLIB): #
 $(GISLIB): #
