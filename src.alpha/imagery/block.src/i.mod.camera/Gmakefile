@@ -1,0 +1,12 @@
+IMAGERYLIB2  = ../lib.ortho/libI.a
+EXTRA_CFLAGS = -I../lib.ortho
+
+LIST = main.o mod_cam_info.o
+   
+$(BIN_ALPHA_INTER)/i.mod.camera: $(LIST) $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASK)
+
+$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
+
+
+
