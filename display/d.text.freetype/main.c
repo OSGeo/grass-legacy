@@ -18,20 +18,23 @@
 *
 *****************************************************************************/
 
-#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
 #include <ctype.h>
+
+#include "config.h"
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
+
 #include <freetype/freetype.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
 
 /* less speedy
 #define	FLUSH_EACH_CHAR
@@ -812,20 +815,21 @@ static void
 get_color(char *tcolor, int *color)
 {
 	int	r, g, b;
+	const int customcolor = MAXCOLORS + 1;
 	
 	if(sscanf(tcolor, "%d:%d:%d", &r, &g, &b) == 3)
 	{
 		if (r>=0 && r<256 && g>=0 && g<256 && b>=0 && b<256) {
-			*color = 1;
-			R_reset_color(r, g, b, *color);
+			R_reset_color(r, g, b, customcolor);
+			*color = customcolor;
 		}
 	}
 #define BACKWARDS_COMPATIBLE
 #ifdef BACKWARDS_COMPATIBLE
 	else if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
 	{
-		*color = 1;
-		R_reset_color(r, g, b, *color);
+		R_reset_color(r, g, b, customcolor);
+		*color = customcolor;
 	}
 #endif
 	else
