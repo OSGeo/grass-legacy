@@ -1,0 +1,8 @@
+interface_build {
+    {i.cca} 0
+    {Canonical components analysis (cca) program for image processing.}
+    {entry group {Imagery group:} 0 ""}
+    {entry subgroup {Imagery subgroup:} 0 ""}
+    {entry signature {ASCII file containing spectral signatures:} 0 ""}
+    {entry output {Output raster file prefix name:} 0 ""}
+}
