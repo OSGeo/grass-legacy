@@ -1,0 +1,35 @@
+.TH d.what.r.db
+.SH NAME
+\fId.what.r.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.what.r.db\fR
+.br
+\fBd.what.r.db help\fR
+.br
+\fBd.what.r.db\fR \fBmap=\fIname\fR \fBkeytable=\fIname\fR \fBcol=\fIname\fR \fB[join=\fItab,key,pkey]\fR
+.SH DESCRIPTION
+enter short description of d.what.r.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fImap\fR
+Name of raster map associated with database.
+.IP \fIkeytable\fR
+Table containing column associated with raster cat  values.
+.IP \fIcol\fR
+Column associated with raster category values.
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
