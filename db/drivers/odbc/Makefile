@@ -7,7 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/odbc
 
-LIBES = $(DBMILIB) $(DBSTUBSLIB) $(GISLIB) 
+LIBES = $(DBMILIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
 OBJS 	=  \
 	connect.o \
