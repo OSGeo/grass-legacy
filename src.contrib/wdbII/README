@@ -1,0 +1,18 @@
+This program was used to convert the CIA created WDB-II (World Data Base II)
+data into GRASS digit format.  
+
+After compiling, run with the following command:
+    wdbII2digit MAP_NAME < input
+
+MAP_NAME is any string (without blank spaces) which identifies the input
+data.   The "input" is often a tape drive; e.g. rmt0.
+
+
+12/1/89  dpg:
+
+
+    Will create 1 file per RANK  with file names:`
+
+	 MAP_NAME.NN  where NN is the RANK number
+
+    No longer send output to stdout
