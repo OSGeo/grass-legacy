@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.59 2000-10-31 16:47:41 markus Exp $
+$Id: BUGS,v 1.60 2000-11-01 16:42:30 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -181,7 +181,7 @@ p.map.new:
 [RC]r.buffer
   r.buffer doesn't treat zero as nulls anymore (contrary to documentation)
   (reported by Malcolm Williamson <malcolm@cast.uark.edu>)
-  (being worked on by ?)
+  -> fixed. New flag "-z": o.k. for all?
 
 [RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
   Though it is not a stability problem, I've found that if this module is
@@ -200,6 +200,24 @@ p.map.new:
   this as an extension, though I stress it is just a temporary fix.
   (script: v.asc.degen)
   (being worked on by David D Gray)
+
+[rc]r.cost
+ somehow I have the feeling that r.cost is not working for me:
+ Here is the command;
+ r.cost -k input=g10g coord=30:44:45E,28:40:45N
+   stop_coord=30:59:45E,31:23:15N output=g10g.cost max_cost=999999
+ The basic idea is to look for flow patterns in the Nile basin as a test,
+ but similar results obtain for the Danube, Mississippi, and Po.  In each
+ case (see the attached images for dem and cost maps) the cost map seems
+ to arbitrarily truncate at some cost value.
+ This leaves a map which is mostly null unassigned pixels.  The max cost
+ values in each case are not particularly large (always less than ~20,000),
+ but the program acts as if, in calculating the costs to nearest pixels
+ it reaches some innate maximum or limit, and shuts down.
+ Perhaps some carried sum exceeds the MAXINT value, or some such.  I have
+ no more good ideas.
+ Chris Cornuelle <bob@math.umn.edu> 
+
 
 [rc]r.flow
   bugreport: Issuing the command (-M switch is the problem):
