@@ -23,7 +23,7 @@
  \brief Remove duplicate lines from vector map.
 
  Remove duplicate lines of given types from vector map. Duplicate lines may be optionaly 
- written to error map. Input map must be opened on level 2 for update.
+ written to error map. Input map must be opened on level 2 for update. Categories are merged.
 
  \param Map input map where duplicate lines will be deleted
  \param type type of line to be delete
@@ -36,8 +36,8 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 {
 	struct line_pnts *APoints, *BPoints;
 	struct line_cats *ACats, *BCats, *Cats;
-        int    i, j, k, atype, btype, bline;
-	int    nlines, npoints;
+        int    i, j, k, c, atype, btype, bline;
+	int    nlines, npoints, nbcats_orig;
 	BOUND_BOX  ABox; 
 	struct ilist *List; 
 	int ndupl;
@@ -58,7 +58,7 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	*  this line and check if some of them is identical. If someone is identical
 	*  remove current line. (In each step just one line is deleted)
 	*/
-        /* TODO: Categories, 3D */
+        /* TODO: 3D */
 	ndupl = 0;
 	if ( msgout ) fprintf (msgout, "Duplicates: %5d", ndupl ); 
 	for ( i = 1; i <= nlines; i++ ){ 
@@ -107,6 +107,18 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 		}
 
 		Vect_delete_line (Map, i); 
+
+		/* Merge categories */
+		nbcats_orig = BCats->n_cats;
+		
+		for ( c = 0; c < ACats->n_cats; c++ ) 
+		    Vect_cat_set ( BCats, ACats->field[c], ACats->cat[c] );
+		
+		if ( BCats->n_cats > nbcats_orig ) {
+		    G_debug ( 4, "cats merged: n_cats %d -> %d", nbcats_orig, BCats->n_cats );
+		    Vect_rewrite_line ( Map, bline, btype, BPoints, BCats );
+		}
+		
 		ndupl++;
 		
 		if ( msgout ) {
