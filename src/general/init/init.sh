@@ -559,7 +559,7 @@ bash)
     bashrc="$HOME/.bashrc"
     rm -f "$bashrc"
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
-    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS:\w > '" >> "$bashrc"
 
@@ -584,7 +584,7 @@ cygwin)
     rm -f "$bashrc"
     # this does not work on cygwin for unknown reasons
     # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
-    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS:\w > '" >> "$bashrc"
 
