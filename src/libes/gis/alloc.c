@@ -50,47 +50,48 @@
  *      malloc(3), alloc(3), or realloc(3).
  **********************************************************************/
 
+extern char *malloc();
+extern char *calloc();
+extern char *realloc();
+
 char *
 G_malloc (n)
 {
-	char *buf;
-	char *malloc();
+    char *buf;
 
-	if (buf = malloc(n))
-		return buf;
-	
-	G_fatal_error ("G_malloc: out of memory");
-	return 0;
+    if (n <= 0) n = 1;	/* make sure we get a valid request */
+
+    if (buf = malloc(n)) return buf;
+
+    G_fatal_error ("G_malloc: out of memory");
+    return 0;
 }
 
 char *
 G_calloc (m,n)
 {
-	char *buf;
-	char *calloc();
+    char *buf;
 
-	if (buf = calloc(m,n))
-		return buf;
+    if (m <= 0) m = 1;	/* make sure we get a valid requests */
+    if (n <= 0) n = 1;
 
-	G_fatal_error ("G_calloc: out of memory");
-	return 0;
+    if (buf = calloc(m,n)) return buf;
+
+    G_fatal_error ("G_calloc: out of memory");
+    return 0;
 }
 
 char *
 G_realloc (buf,n)
-	char *buf;
+    char *buf;
 {
-	char *malloc();
-	char *realloc();
+    if (n <= 0) n = 1;	/* make sure we get a valid request */
 
-	if (!buf)
-		buf = malloc (n);
-	else 
-		buf = realloc(buf,n);
+    if (!buf) buf = malloc (n);
+    else      buf = realloc(buf,n);
 
-	if (buf)
-		return buf;
+    if (buf) return buf;
 
-	G_fatal_error ("G_realloc: out of memory");
-	return 0;
+    G_fatal_error ("G_realloc: out of memory");
+    return 0;
 }
