@@ -21,6 +21,7 @@
 #% key: size
 #% type: double
 #% description: type point size (default 5 points)
+#% answer: 5
 #% options: 1-100
 #% required : no
 #%end
