@@ -1,5 +1,11 @@
 /* SQL Parser */
 
+/* KEYWORD OPS */
+#define OP 1
+#define AND 2
+#define OR   3
+#define NOT   4
+
 /* SQL COMMANDS */
 #define SQLP_CREATE 1
 #define SQLP_DROP   2
@@ -29,6 +35,36 @@
 #define SQLP_MAX_TABLE  200  
 #define SQLP_MAX_ERR    500  
 
+typedef enum NodeTag
+{
+	T_A_Expr = 700,
+	T_Comparison
+} NodeTag;
+
+typedef struct Node
+{
+	NodeTag		type;
+} Node;
+
+typedef struct A_Expr
+{
+	NodeTag		type;
+	int		oper;			/* type of operation (OP,OR,AND,NOT) */
+	int	        opname;			/* name of operator */
+	Node	   *lexpr;			/* left argument */
+	Node	   *rexpr;			/* right argument */
+} A_Expr;
+
+
+
+#define nodeTag(nodeptr)		(((Node*)(nodeptr))->type)
+
+#define makeNode(_type_)		((_type_ *) newNode(sizeof(_type_),T_##_type_))
+#define NodeSetTag(nodeptr,t)	(((Node*)(nodeptr))->type = (t))
+
+#define IsA(nodeptr,_type_)		(nodeTag(nodeptr) == T_##_type_)
+
+
 typedef struct
 {
     int    type;
@@ -36,6 +72,15 @@ typedef struct
     int    i;
     double d;
 } SQLPVALUE;
+
+typedef struct Comparison
+{
+	NodeTag		type;
+	int		oper;			/* type of operation (should be OP) */
+	int	        opname;			/* name of operator */
+	SQLPVALUE	 *lexpr;		/* left argument */
+	SQLPVALUE	 *rexpr;		/* right argument */
+} Comparison;
 
 typedef struct
 {
@@ -53,13 +98,7 @@ typedef struct
     SQLPVALUE *Val;    /* values */
     int	      aVal; 	
     int	      nVal;
-    int	      aCom;   /* comparisons */
-    int	      nCom;
-    SQLPVALUE *ComCol; /* comparison columns */
-    int	      *ComOpe;    /* comparison operators */
-    SQLPVALUE *ComVal; /* comparison values */
-    int       numGroupCom; /* number of comparison groups */
-    int       *ComGrp;   /*number of current group*/
+    Node      *upperNodeptr;
 } SQLPSTMT;
 
 int	my_yyinput(char *buf, int max_size);
@@ -83,8 +122,13 @@ void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
 void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
-void sqpComparison( char *column, char *oper, char *strval, int intval, double dblval, int type );
-void sqpGroupIncrement( void );
+
+Node *parseComparison( char *column, char *oper, char *strval, int intval, double dblval, int type );
+Node *makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr);
+
+static Node *newNode(int size, NodeTag tag);
+static Node *makeComparison(int oper, int opname, SQLPVALUE *lexpr, SQLPVALUE *rexpr);
+
 
 #ifdef SQLP_MAIN
 SQLPSTMT *sqlpStmt;

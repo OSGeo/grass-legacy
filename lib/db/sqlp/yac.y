@@ -35,10 +35,11 @@
 	double floatval;
 	char *strval;
 	int subtok;
+	Node				*node;
 }
 
 	/* operators */
-
+%type <node>	y_comparison, y_condition, y_attr, y_attr2
 
 	/* literal keyword tokens */
 %token <strval> COMPARISON
@@ -54,6 +55,7 @@
 %token UPDATE SET
 %token AND
 %token OR
+%token NOT
 %token CREATE TABLE
 %token DROP TABLE
 %token VARCHAR
@@ -157,25 +159,37 @@ y_assignment:
         |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,$3, SQLP_D ); }
 	;
 
-y_condition:
-			
-		y_comparisons
-	|	'(' y_comparisons ')'			{ sqpGroupIncrement(); }
-	|	y_condition OR '(' y_comparisons ')'  { sqpGroupIncrement(); }
-
+y_condition:			
+		y_attr		{$$ = $1;}	
+	|	y_condition AND y_attr {
+			$$ = makeA_Expr(AND, 0, $1, $3);
+			    sqlpStmt->upperNodeptr = $$; 
+		}
+	|	y_condition OR y_attr {
+			$$ = makeA_Expr(OR, 0, $1, $3);
+			    sqlpStmt->upperNodeptr = $$; 
+		}
 	;
-	
-y_comparisons:
-		y_comparison
-	|	y_comparisons AND y_comparison
-	;
 
+y_attr:
+		y_attr2		{$$ = $1;}	
+
+	| 	'(' y_condition ')'
+				{$$ = $2;}
+	;
+y_attr2:
+		y_comparison	{$$ = (Node*) $1;}
+	|	NOT y_attr {
+			$$ = makeA_Expr(NOT, 0, NULL, $2); 
+			    sqlpStmt->upperNodeptr = $$; 
+		}
+	;
 y_comparison:
-		NAME EQUAL STRING		{ sqpComparison( $1, "=", $3,    0,  0, SQLP_S ); }
-        |	NAME EQUAL INTNUM		{ sqpComparison( $1, "=", NULL, $3,  0, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM		{ sqpComparison( $1, "=", NULL,  0, $3, SQLP_D ); }
-        |	NAME COMPARISON INTNUM		{ sqpComparison( $1, $2,  NULL, $3,  0, SQLP_I ); }
-        |	NAME COMPARISON FLOATNUM	{ sqpComparison( $1, $2,  NULL,  0, $3, SQLP_D ); }
+		NAME EQUAL STRING		{ $$ = parseComparison( $1, "=", $3,    0,  0, SQLP_S ); }
+        |	NAME EQUAL INTNUM		{ $$ = parseComparison( $1, "=", NULL, $3,  0, SQLP_I ); }
+        |	NAME EQUAL FLOATNUM		{ $$ = parseComparison( $1, "=", NULL,  0, $3, SQLP_D ); }
+        |	NAME COMPARISON INTNUM		{ $$ = parseComparison( $1, $2,  NULL, $3,  0, SQLP_I ); }
+        |	NAME COMPARISON FLOATNUM	{ $$ = parseComparison( $1, $2,  NULL,  0, $3, SQLP_D ); }
 	;
 
 

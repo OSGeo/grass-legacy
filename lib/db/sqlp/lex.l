@@ -21,9 +21,9 @@
 /****************     C-CODE   *****************/
 
 %{
+#include "sqlp.h"
 #include "y.tab.h"
 #include <string.h>
-#include "sqlp.h"
 
 #undef YY_INPUT
 #define YY_INPUT(b, r, ms) (r = my_yyinput(b, ms))
@@ -62,6 +62,7 @@
 [Ii][Nn][Tt][Ee][Gg][Ee][Rr]	{ return INTEGER; }
 [Dd][Oo][Uu][Bb][Ll][Ee]	{ return DOUBLE; }
 [Oo][Rr]			{ return OR; }
+[Nn][Oo][Tt]			{ return NOT; }
  /***************************************
   * EQUAL
   ***************************************/

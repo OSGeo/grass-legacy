@@ -77,30 +77,6 @@ int sqpAllocVal(SQLPSTMT *st, int n)
    return (1); 
 }
 
-/* allocate space for comparisons */
-int sqpAllocCom(SQLPSTMT *st, int n)
-{
-    int i;
-
-    if ( n > st->aCom )
-      {
-	n += 15;      
-        st->ComCol = (SQLPVALUE *) realloc ( st->ComCol, n * sizeof(SQLPVALUE));
-        st->ComOpe = (int *) realloc ( st->ComOpe, n * sizeof(int));
-        st->ComGrp = (int *) realloc ( st->ComGrp, n * sizeof(int));	
-        st->ComVal = (SQLPVALUE *) realloc ( st->ComVal, n * sizeof(SQLPVALUE));
-	
-        for (i = st->nCom; i < n; i++)
-	  {
-            st->ComCol[i].s = NULL ;
-            st->ComVal[i].s = NULL ;
-          }
-	    
-        st->aCom = n;
-      }
-   return (1); 
-}
-
 /* free space allocated by parser */
 int sqpFreeStmt(SQLPSTMT *st)
 {
@@ -125,20 +101,6 @@ int sqpFreeStmt(SQLPSTMT *st)
     st->aVal = 0;
     st->nVal = 0;
     
-    /* comparisons */
-    for (i=0; i < st->aCom; i++)
-      {    
-        free ( st->ComCol[i].s );
-        free ( st->ComVal[i].s );
-      }
-    free ( st->ComCol );
-    free ( st->ComOpe );
-    free ( st->ComGrp );    
-    free ( st->ComVal );
-    st->aCom = 0;
-    st->nCom = 0;
-    st->numGroupCom = 0;
-
     free ( st );
     return (1);
 }

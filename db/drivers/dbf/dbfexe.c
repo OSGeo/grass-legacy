@@ -24,6 +24,7 @@
 
 int sel(SQLPSTMT * st, int tab, int **set);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
+int eval_node(Node * nodeptr, int tab, int row);
 
 int execute(char *sql, cursor * c)
 {
@@ -236,111 +237,25 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 
 int sel(SQLPSTMT * st, int tab, int **selset)
 {
-    int i, j, ccol, condition, group_condition, g_count;
-    int *comcol;		/* array of indexes of comparison cols */
+    int i, group_condition;
     int *set;			/* pointer to array of indexes to rows */
     int aset, nset = 0;
-    COLUMN *col;
-    VALUE *val;
-    double dc, dv;
 
-    comcol = (int *) malloc(st->nCom * sizeof(int) );
-
-    /* find comparison cols and check the type */
-    for (i = 0; i < st->nCom; i++) {
-	ccol = find_column(tab, st->ComCol[i].s);
-	comcol[i] = ccol;
-	col = &(db.tables[tab].cols[ccol]);
-
-	if (((st->ComVal[i].type == SQLP_I) && (col->type == DBF_CHAR))
-	    || ((st->ComVal[i].type == SQLP_D) && (col->type == DBF_CHAR))
-	    || ((st->ComVal[i].type == SQLP_S) && (col->type == DBF_INT))
-	    || ((st->ComVal[i].type == SQLP_S) && (col->type == DBF_DOUBLE))) {
-	    sprintf(errMsg, "Incompatible types for column: %s\n", col->name);
-	    return (-1);
-	}
-    }
 
     load_table(tab);
 
     aset = 1;
     set = (int *) malloc(aset * sizeof(int));
 
-    if (st->nCom > 0) {
+    if (st->upperNodeptr) {
 	for (i = 0; i < db.tables[tab].nrows; i++) {
 
-	    group_condition = FALSE;
 
-	    for (g_count = 0; g_count < st->numGroupCom; g_count++) {
+	    if ((group_condition = eval_node( st->upperNodeptr, tab, i)) < 0)
+		return (-1);
 
-		condition = TRUE;
-
-		for (j = 0; j < st->nCom; j++) {
-		    if (st->ComGrp[j] != g_count)
-			continue;
-
-		    ccol = comcol[j];
-		    col = &(db.tables[tab].cols[ccol]);
-		    val = &(db.tables[tab].rows[i].values[ccol]);
-
-		    if (st->ComVal[j].type == SQLP_I)
-			dc = st->ComVal[j].i;
-		    else if (st->ComVal[j].type == SQLP_D)
-			dc = st->ComVal[j].d;
-
-		    if (col->type == DBF_INT)
-			dv = val->i;
-		    else if (col->type == DBF_DOUBLE)
-			dv = val->d;
-
-		    switch (st->ComVal[j].type) {
-		    case (SQLP_S):
-			if (st->ComOpe[j] != SQLP_EQ) {
-			    sprintf(errMsg,
-				    "Operator not supported for strings\n");
-			    return (-1);
-			}
-			if (strcmp(val->c, st->ComVal[j].s) != 0)
-			    condition = FALSE;
-			break;
-		    case (SQLP_I):
-		    case (SQLP_D):
-			switch (st->ComOpe[j]) {
-			case (SQLP_EQ):
-			    if (!(dv == dc))
-				condition = FALSE;
-			    break;
-			case (SQLP_LT):
-			    if (!(dv < dc))
-				condition = FALSE;
-			    break;
-			case (SQLP_LE):
-			    if (!(dv <= dc))
-				condition = FALSE;
-			    break;
-			case (SQLP_GT):
-			    if (!(dv > dc))
-				condition = FALSE;
-			    break;
-			case (SQLP_GE):
-			    if (!(dv >= dc))
-				condition = FALSE;
-			    break;
-			case (SQLP_NE):
-			    if (!(dv != dc))
-				condition = FALSE;
-			    break;
-			}
-			break;
-		    }
-
-		}		/*end for num of comparisons in group */
-
-		group_condition |= condition;
-		G_debug(3, "for group number %d total condition is %d",
-			g_count, group_condition);
-
-	    }			/*end for num of groups */
+	    G_debug(3, "for row %d total condition is %d", i,
+		    group_condition);
 
 	    if (group_condition == TRUE) {
 		if (nset == aset) {
@@ -363,4 +278,111 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     *selset = set;
 
     return nset;
+}
+
+int eval_node(Node * nptr, int tab, int i)
+{
+
+    int ccol, condition, leval = 0, reval = 0;
+    COLUMN *col = NULL;
+    VALUE *val = NULL;
+    double dc, dv;
+
+    Comparison *cmpptr = NULL;
+    A_Expr *aexprptr = NULL;
+    
+    if ( nptr == NULL) return 1; /* empty is true */
+
+    condition = TRUE;
+
+    switch (nptr->type) {
+
+    case T_Comparison:
+
+	cmpptr = (Comparison *) nptr;
+
+	ccol = find_column(tab, cmpptr->lexpr->s);
+	col = &(db.tables[tab].cols[ccol]);
+
+	if (((cmpptr->rexpr->type == SQLP_I) && (col->type == DBF_CHAR))
+	    || ((cmpptr->rexpr->type == SQLP_D) && (col->type == DBF_CHAR))
+	    || ((cmpptr->rexpr->type == SQLP_S) && (col->type == DBF_INT))
+	    || ((cmpptr->rexpr->type == SQLP_S) && (col->type == DBF_DOUBLE))) {
+	    sprintf(errMsg, "Incompatible types for column: %s\n", col->name);
+	    return (-1);
+	}
+
+	col = &(db.tables[tab].cols[ccol]);
+	val = &(db.tables[tab].rows[i].values[ccol]);
+
+	if (cmpptr->rexpr->type == SQLP_I)
+	    dc = cmpptr->rexpr->i;
+	else if (cmpptr->rexpr->type == SQLP_D)
+	    dc = cmpptr->rexpr->d;
+
+	if (col->type == DBF_INT)
+	    dv = val->i;
+	else if (col->type == DBF_DOUBLE)
+	    dv = val->d;
+
+	switch (cmpptr->rexpr->type) {
+	case (SQLP_S):
+	    if (cmpptr->opname != SQLP_EQ) {
+		sprintf(errMsg, "Operator not supported for strings\n");
+		return (-1);
+	    }
+	    if (strcmp(val->c, cmpptr->rexpr->s) != 0)
+		condition = FALSE;
+	    break;
+	case (SQLP_I):
+	case (SQLP_D):
+	    switch (cmpptr->opname) {
+	    case (SQLP_EQ):
+		if (!(dv == dc))
+		    condition = FALSE;
+		break;
+	    case (SQLP_LT):
+		if (!(dv < dc))
+		    condition = FALSE;
+		break;
+	    case (SQLP_LE):
+		if (!(dv <= dc))
+		    condition = FALSE;
+		break;
+	    case (SQLP_GT):
+		if (!(dv > dc))
+		    condition = FALSE;
+		break;
+	    case (SQLP_GE):
+		if (!(dv >= dc))
+		    condition = FALSE;
+		break;
+	    case (SQLP_NE):
+		if (!(dv != dc))
+		    condition = FALSE;
+		break;
+	    }
+	    break;
+	}
+	break;
+     case T_A_Expr:
+	aexprptr = (A_Expr *) nptr;
+	
+	if ( (leval = eval_node(aexprptr->lexpr, tab, i)) != 0 && leval != 1) return (-1);
+	if ( (reval = eval_node(aexprptr->rexpr, tab, i)) != 0 && reval != 1) return (-1);
+	
+	switch (aexprptr->oper) {
+	case OR:	    
+	    condition = leval | reval;		
+	    break;
+	case AND:
+	    condition = leval & reval;		
+	    break;
+	case NOT:
+	    condition = !reval;		
+	    break;
+	}
+	break;
+    }				/* switch type */
+    return condition;
 }
