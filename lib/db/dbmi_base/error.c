@@ -86,7 +86,7 @@ db_protocol_error()
 
     flag = auto_print_errors;
     auto_print_errors = auto_print_protocol_errors;
-    db_error ("dbmi: Protocol error (invalid column name or an unsupported column type)");
+    db_error ("dbmi: Protocol error (invalid table/column name or unsupported column type)");
     auto_print_errors = flag;
     err_code = DB_PROTOCOL_ERR;
 }
