@@ -38,6 +38,7 @@ SUBDIRS = \
 	display \
 	general \
 	imagery \
+	paint \
 	ps \
 	raster \
 	raster3d \
