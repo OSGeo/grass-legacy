@@ -132,3 +132,15 @@ Vect_next_line_offset ( struct Map_info *Map )
     return (*Next_line_offset_array[Map->format]) (Map);
 }
 
+/*
+*  Returns: 1 - line alive
+*           0 - line is dead
+*/
+int
+Vect_line_alive ( struct Map_info *Map, int line )
+{
+    if ( Map->plus.Line[line] != NULL ) return 1;
+    
+    return 0;
+}
+
