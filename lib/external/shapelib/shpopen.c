@@ -34,26 +34,11 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2005-03-17 10:51:11  markus
- * Updated from GDAL 1.2.6
+ * Revision 1.3  2005-03-21 10:04:08  markus
+ * reverted to GDAL 1.1.9 as 1.2.6 doesn't report INT as INT (but as FLOAT)
  *
- * Revision 1.46  2005/02/11 17:17:46  fwarmerdam
- * added panPartStart[0] validation
- *
- * Revision 1.45  2004/09/26 20:09:48  fwarmerdam
- * const correctness changes
- *
- * Revision 1.44  2003/12/29 00:18:39  fwarmerdam
- * added error checking for failed IO and optional CPL error reporting
- *
- * Revision 1.43  2003/12/01 16:20:08  warmerda
- * be careful of zero vertex shapes
- *
- * Revision 1.42  2003/12/01 14:58:27  warmerda
- * added degenerate object check in SHPRewindObject()
- *
- * Revision 1.41  2003/07/08 15:22:43  warmerda
- * avoid warning
+ * Revision 1.1  2003/12/04 16:26:15  radim
+ * shapelib from GDAL 1.1.9
  *
  * Revision 1.40  2003/04/21 18:30:37  warmerda
  * added header write/update public methods
@@ -182,6 +167,9 @@
  *
  */
 
+static char rcsid[] = 
+  "$Id$";
+
 #include "shapefil.h"
 
 #include <math.h>
@@ -189,9 +177,6 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-
-SHP_CVSID("$Id$")
 
 typedef unsigned char uchar;
 
@@ -323,15 +308,8 @@ void SHPWriteHeader( SHPHandle psSHP )
 /* -------------------------------------------------------------------- */
 /*      Write .shp file header.                                         */
 /* -------------------------------------------------------------------- */
-    if( fseek( psSHP->fpSHP, 0, 0 ) != 0 
-        || fwrite( abyHeader, 100, 1, psSHP->fpSHP ) != 1 )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shp header." );
-#endif
-        return;
-    }
+    fseek( psSHP->fpSHP, 0, 0 );
+    fwrite( abyHeader, 100, 1, psSHP->fpSHP );
 
 /* -------------------------------------------------------------------- */
 /*      Prepare, and write .shx file header.                            */
@@ -340,15 +318,8 @@ void SHPWriteHeader( SHPHandle psSHP )
     ByteCopy( &i32, abyHeader+24, 4 );
     if( !bBigEndian ) SwapWord( 4, abyHeader+24 );
     
-    if( fseek( psSHP->fpSHX, 0, 0 ) != 0 
-        || fwrite( abyHeader, 100, 1, psSHP->fpSHX ) != 1 )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shx header." );
-#endif
-        return;
-    }
+    fseek( psSHP->fpSHX, 0, 0 );
+    fwrite( abyHeader, 100, 1, psSHP->fpSHX );
 
 /* -------------------------------------------------------------------- */
 /*      Write out the .shx contents.                                    */
@@ -363,14 +334,7 @@ void SHPWriteHeader( SHPHandle psSHP )
 	if( !bBigEndian ) SwapWord( 4, panSHX+i*2+1 );
     }
 
-    if( (int)fwrite( panSHX, sizeof(int32)*2, psSHP->nRecords, psSHP->fpSHX ) 
-        != psSHP->nRecords )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shx contents." );
-#endif
-    }
+    fwrite( panSHX, sizeof(int32) * 2, psSHP->nRecords, psSHP->fpSHX );
 
     free( panSHX );
 
@@ -382,7 +346,7 @@ void SHPWriteHeader( SHPHandle psSHP )
 }
 
 /************************************************************************/
-/*                              shpopen()                               */
+/*                              SHPOpen()                               */
 /*                                                                      */
 /*      Open the .shp and .shx files based on the basename of the       */
 /*      files or either file name.                                      */
@@ -455,11 +419,6 @@ SHPOpen( const char * pszLayer, const char * pszAccess )
     
     if( psSHP->fpSHP == NULL )
     {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Unable to open %s.shp or %s.SHP.", 
-                  pszBasename, pszBasename );
-#endif
         free( psSHP );
         free( pszBasename );
         free( pszFullname );
@@ -476,11 +435,6 @@ SHPOpen( const char * pszLayer, const char * pszAccess )
     
     if( psSHP->fpSHX == NULL )
     {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Unable to open %s.shx or %s.SHX.", 
-                  pszBasename, pszBasename );
-#endif
         fclose( psSHP->fpSHP );
         free( psSHP );
         free( pszBasename );
@@ -505,16 +459,13 @@ SHPOpen( const char * pszLayer, const char * pszAccess )
 /* -------------------------------------------------------------------- */
 /*  Read SHX file Header info                                           */
 /* -------------------------------------------------------------------- */
-    if( fread( pabyBuf, 100, 1, psSHP->fpSHX ) != 1 
-        || pabyBuf[0] != 0 
+    fread( pabyBuf, 100, 1, psSHP->fpSHX );
+
+    if( pabyBuf[0] != 0 
         || pabyBuf[1] != 0 
         || pabyBuf[2] != 0x27 
         || (pabyBuf[3] != 0x0a && pabyBuf[3] != 0x0d) )
     {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  ".shx file is unreadable, or corrupt." );
-#endif
 	fclose( psSHP->fpSHP );
 	fclose( psSHP->fpSHX );
 	free( psSHP );
@@ -530,12 +481,7 @@ SHPOpen( const char * pszLayer, const char * pszAccess )
 
     if( psSHP->nRecords < 0 || psSHP->nRecords > 256000000 )
     {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Record count in .shp header is %d, which seems\n"
-                  "unreasonable.  Assuming header is corrupt.",
-                  psSHP->nRecords );
-#endif
+        /* this header appears to be corrupt.  Give up. */
 	fclose( psSHP->fpSHP );
 	fclose( psSHP->fpSHX );
 	free( psSHP );
@@ -592,23 +538,7 @@ SHPOpen( const char * pszLayer, const char * pszAccess )
         (int *) malloc(sizeof(int) * MAX(1,psSHP->nMaxRecords) );
 
     pabyBuf = (uchar *) malloc(8 * MAX(1,psSHP->nRecords) );
-    if( (int) fread( pabyBuf, 8, psSHP->nRecords, psSHP->fpSHX ) 
-			!= psSHP->nRecords )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Failed to read all values for %d records in .shx file.",
-                  psSHP->nRecords );
-#endif
-        /* SHX is short or unreadable for some reason. */
-	fclose( psSHP->fpSHP );
-	fclose( psSHP->fpSHX );
-        free( psSHP->panRecOffset );
-        free( psSHP->panRecSize );
-	free( psSHP );
-
-	return( NULL );
-    }
+    fread( pabyBuf, 8, psSHP->nRecords, psSHP->fpSHX );
 
     for( i = 0; i < psSHP->nRecords; i++ )
     {
@@ -638,9 +568,6 @@ void SHPAPI_CALL
 SHPClose(SHPHandle psSHP )
 
 {
-    if( psSHP == NULL )
-        return;
-
 /* -------------------------------------------------------------------- */
 /*	Update the header if we have modified anything.			*/
 /* -------------------------------------------------------------------- */
@@ -676,9 +603,6 @@ SHPGetInfo(SHPHandle psSHP, int * pnEntities, int * pnShapeType,
 
 {
     int		i;
-
-    if( psSHP == NULL )
-        return;
     
     if( pnEntities != NULL )
         *pnEntities = psSHP->nRecords;
@@ -743,26 +667,12 @@ SHPCreate( const char * pszLayer, int nShapeType )
     sprintf( pszFullname, "%s.shp", pszBasename );
     fpSHP = fopen(pszFullname, "wb" );
     if( fpSHP == NULL )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Failed to create file %s.",
-                  pszFullname );
-#endif
         return( NULL );
-    }
 
     sprintf( pszFullname, "%s.shx", pszBasename );
     fpSHX = fopen(pszFullname, "wb" );
     if( fpSHX == NULL )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Failed to create file %s.",
-                  pszFullname );
-#endif
         return( NULL );
-    }
 
     free( pszFullname );
     free( pszBasename );
@@ -797,14 +707,7 @@ SHPCreate( const char * pszLayer, int nShapeType )
 /* -------------------------------------------------------------------- */
 /*      Write .shp file header.                                         */
 /* -------------------------------------------------------------------- */
-    if( fwrite( abyHeader, 100, 1, fpSHP ) != 1 )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Failed to write .shp header." );
-#endif
-        return NULL;
-    }
+    fwrite( abyHeader, 100, 1, fpSHP );
 
 /* -------------------------------------------------------------------- */
 /*      Prepare, and write .shx file header.                            */
@@ -813,14 +716,7 @@ SHPCreate( const char * pszLayer, int nShapeType )
     ByteCopy( &i32, abyHeader+24, 4 );
     if( !bBigEndian ) SwapWord( 4, abyHeader+24 );
     
-    if( fwrite( abyHeader, 100, 1, fpSHX ) != 1 )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_AppDefined, 
-                  "Failed to write .shx header." );
-#endif
-        return NULL;
-    }
+    fwrite( abyHeader, 100, 1, fpSHX );
 
 /* -------------------------------------------------------------------- */
 /*      Close the files, and then open them as regular existing files.  */
@@ -902,9 +798,9 @@ SHPComputeExtents( SHPObject * psObject )
 
 SHPObject SHPAPI_CALL1(*)
 SHPCreateObject( int nSHPType, int nShapeId, int nParts,
-                 const int * panPartStart, const int * panPartType,
-                 int nVertices, const double *padfX, const double *padfY,
-                 const double * padfZ, const double * padfM )
+                 int * panPartStart, int * panPartType,
+                 int nVertices, double * padfX, double * padfY,
+                 double * padfZ, double * padfM )
 
 {
     SHPObject	*psObject;
@@ -962,22 +858,10 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
         for( i = 0; i < nParts; i++ )
         {
             psObject->panPartStart[i] = panPartStart[i];
-
             if( panPartType != NULL )
                 psObject->panPartType[i] = panPartType[i];
             else
                 psObject->panPartType[i] = SHPP_RING;
-        }
-
-        if( psObject->panPartStart[0] != 0 )
-        {
-#ifdef USE_CPL
-            CPLError( CE_Failure, CPLE_AppDefined,
-                      "panPartStart[0] != 0, patching internally.  Please fix your code!\n" );
-#else
-            fprintf( stderr, "panPartStart[0] != 0, patching internally.  Please fix your code!\n" );
-#endif
-            psObject->panPartStart[0] = 0;
         }
     }
 
@@ -1024,8 +908,8 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
 
 SHPObject SHPAPI_CALL1(*)
 SHPCreateSimpleObject( int nSHPType, int nVertices,
-                       const double * padfX, const double * padfY,
-                       const double * padfZ )
+                       double * padfX, double * padfY,
+                       double * padfZ )
 
 {
     return( SHPCreateObject( nSHPType, -1, 0, NULL, NULL,
@@ -1043,7 +927,7 @@ int SHPAPI_CALL
 SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 		      
 {
-    int	       	nRecordOffset, i, nRecordSize=0;
+    int	       	nRecordOffset, i, nRecordSize;
     uchar	*pabyRec;
     int32	i32;
 
@@ -1357,10 +1241,7 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     if( fseek( psSHP->fpSHP, nRecordOffset, 0 ) != 0
         || fwrite( pabyRec, nRecordSize, 1, psSHP->fpSHP ) < 1 )
     {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_FileIO, 
-                "Error in fseek() or fwrite() writing object to .shp file." );
-#endif
+        printf( "Error in fseek() or fwrite().\n" );
         free( pabyRec );
         return -1;
     }
@@ -1373,22 +1254,13 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     if( psSHP->adBoundsMin[0] == 0.0
         && psSHP->adBoundsMax[0] == 0.0
         && psSHP->adBoundsMin[1] == 0.0
-        && psSHP->adBoundsMax[1] == 0.0 )
+        && psSHP->adBoundsMax[1] == 0.0 
+        && psObject->nSHPType != SHPT_NULL )
     {
-        if( psObject->nSHPType == SHPT_NULL || psObject->nVertices == 0 )
-        {
-            psSHP->adBoundsMin[0] = psSHP->adBoundsMax[0] = 0.0;
-            psSHP->adBoundsMin[1] = psSHP->adBoundsMax[1] = 0.0;
-            psSHP->adBoundsMin[2] = psSHP->adBoundsMax[2] = 0.0;
-            psSHP->adBoundsMin[3] = psSHP->adBoundsMax[3] = 0.0;
-        }
-        else
-        {
-            psSHP->adBoundsMin[0] = psSHP->adBoundsMax[0] = psObject->padfX[0];
-            psSHP->adBoundsMin[1] = psSHP->adBoundsMax[1] = psObject->padfY[0];
-            psSHP->adBoundsMin[2] = psSHP->adBoundsMax[2] = psObject->padfZ[0];
-            psSHP->adBoundsMin[3] = psSHP->adBoundsMax[3] = psObject->padfM[0];
-        }
+        psSHP->adBoundsMin[0] = psSHP->adBoundsMax[0] = psObject->padfX[0];
+        psSHP->adBoundsMin[1] = psSHP->adBoundsMax[1] = psObject->padfY[0];
+        psSHP->adBoundsMin[2] = psSHP->adBoundsMax[2] = psObject->padfZ[0];
+        psSHP->adBoundsMin[3] = psSHP->adBoundsMax[3] = psObject->padfM[0];
     }
 
     for( i = 0; i < psObject->nVertices; i++ )
@@ -1437,16 +1309,8 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
 /* -------------------------------------------------------------------- */
 /*      Read the record.                                                */
 /* -------------------------------------------------------------------- */
-    if( fseek( psSHP->fpSHP, psSHP->panRecOffset[hEntity], 0 ) != 0 
-        || fread( psSHP->pabyRec, psSHP->panRecSize[hEntity]+8, 1, 
-                  psSHP->fpSHP ) != 1 )
-    {
-#ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_FileIO, 
-                "Error in fseek() or fread() reading object from .shp file." );
-#endif
-        return NULL;
-    }
+    fseek( psSHP->fpSHP, psSHP->panRecOffset[hEntity], 0 );
+    fread( psSHP->pabyRec, psSHP->panRecSize[hEntity]+8, 1, psSHP->fpSHP );
 
 /* -------------------------------------------------------------------- */
 /*	Allocate and minimally initialize the object.			*/
@@ -1882,9 +1746,6 @@ SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
     if( psObject->nSHPType != SHPT_POLYGON
         && psObject->nSHPType != SHPT_POLYGONZ
         && psObject->nSHPType != SHPT_POLYGONM )
-        return 0;
-
-    if( psObject->nVertices == 0 || psObject->nParts == 0 )
         return 0;
 
 /* -------------------------------------------------------------------- */
