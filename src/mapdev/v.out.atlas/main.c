@@ -2,6 +2,7 @@
 
 #define MAIN
 #include "gis.h"
+#include "Vect.h"
 
 #define  USAGE  "v.out.atlas dig_file atlas_file type\n"
 
