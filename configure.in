@@ -156,6 +156,35 @@ fi
 AC_SUBST(XDRLIB)
 
 ZLIB=
+AC_ARG_WITH(zlib-includes,
+  [  --with-zlib-includes=DIR  
+                          Specify path for ZLIB header files],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-zlib-includes.])
+	;;
+	esac
+	zlib_includes="$withval"
+   ])
+
+if test "$zlib_includes"; then
+    for dir in $zlib_includes; do
+        if test -d "$dir" && test -f "$dir/zlib.h"; then
+            ZLIBINC="$ZLIBINCPATH -I$dir"
+        fi
+    done
+else
+    for dir in $my_inc_dirs; do
+        if test -d "$dir" && test -f "$dir/zlib.h"; then
+            ZLIBINC="$ZLIBINCPATH -I$dir"
+	elif test -d "$dir/zlib" && test -f "$dir/zlib/zlib.h"; then
+            ZLIBINC="$ZLIBINCPATH -I$dir/zlib"
+        fi
+    done
+fi
+AC_SUBST(ZLIBINCPATH)
+
 if test -z "${ZLIB}"; then
 AC_CHECK_LIB(z, deflate, ZLIB=-lz)
 fi
