@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.23 2002-05-29 06:46:24 markus Exp $
+$Id: SUBMITTING,v 1.24 2002-08-27 06:55:57 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -201,7 +201,10 @@ care of following rules:
     
     The online WWW man pages will be updated over-night by CVS.
 
-18. If you write a shell script and search for a command in $PATH, do NOT
+18. If you write a shell script: as a general principle, shell variables
+    should almost always be quoted.
+
+19. If you write a shell script and search for a command in $PATH, do NOT
     use the "which" command or the "type -p" command. Both commands are not
     supported on all platforms, thus causing problems for some people. As an
     alternative, please use code similar to the following shell script snippet
@@ -224,7 +227,7 @@ care of following rules:
 	    fi
 	done
 
-19. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+20. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
     "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
     override the default names, so that developers don't need worry about the
     shell names.
@@ -242,22 +245,22 @@ care of following rules:
 	# the next line restarts using wish \
 	exec $GRASS_WISH "$0" "$@"
 
-20. For consistency, use README rather than README.txt for any README files.
+21. For consistency, use README rather than README.txt for any README files.
 
-21. Tell the other developers about the new code using the following e-mail:
+22. (GRASS) Environment variables:
+    If you add a new variable, please follow the naming convention.
+    All variables are described in
+    html/env_vars.html
+
+23. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/grassdevel.html
 
-22. In case of questions feel free to contact the developers at the above
+24. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/grassdevel.html#submission
-
-23. (GRASS) Environment variables:
-    If you add a new variable, please follow the naming convention.
-    All variables are described in
-    html/env_vars.html
-     
+    
 ...
 [please add further hints]
