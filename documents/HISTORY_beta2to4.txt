@@ -1,0 +1,2621 @@
+Modifications to GRASS 5 beta X
+
+The next lines after the change date indicate the
+name of the BETA-package.
+The history is organized bottom-up (latest comes first).
+Find the authors of every section behind the release date.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 25, 1999 (Morten Hulden, Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_4n.tar <--
+         published on Tue Oct 26
+         -------------------
+
+- src/general/g.setproj/main.c (MH)
+        -moves a G_set_key_value() statement forward in the file in order
+         to always get the projection name on the first line in the
+         PROJ_INFO file
+        -changes an !G_yes statement to G_yes, reversing the prompt and
+         the default on north/south (see below)
+  src/libes/gis/geo_init.c
+        -changes description of DESC[SOUTH] from 'Northern hemisphere'
+        to 'South hemisphere'.
+  src/libes/proj/get_proj.c
+        -changes two exit(0) statements to return -1. I checked that all
+        modules that use the functions in get_proj.c (v.digit, x.digit,
+        m.proj) expect the functions to return -1 on error. But the
+        functions in get_proj.c exit with 0 instead, which in general is
+        not a good thing to do. (The calling routine may have open files
+        etc.)
+- added src/mapdev/v.surf.spline  from GRASS 4.2.1 (MN)
+  (contains bug!!: all region borders have to be reached by at least
+   one vector line, only then it will work: use d.vect.zoom for this)
+- src/display/d.param.scale
+  src/raster/r.param.scale
+   added from GRASS 4.2.1
+- src.contrib/OTHER/r.concordance
+   added from CERL moon-ftp/outgoing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 21, 1999 (Morten Hulden, Markus Neteler, Bill Hughes)
+
+        -------------------
+   ----> grass5.0beta_4m.tar <--
+         -------------------
+- added src5/grass5.0beta/src.contrib/OTHER/r.concordance
+- src/libes/vect32_64 (BH)
+   added. first approach of a 32/64 bit compliant vector lib
+- added PROJ4.3.3 docs in src/libes/proj/doc/ (MN)
+- src/misc/m.proj/geo_func.c   (MH)
+  src/misc/m.proj/local_proto.h
+  src/misc/m.proj/process.c
+   fixed bug: "false easting" was not set properly
+- d.area ANSI-fy (BH)
+- r.flow ANSI-fy (BH)
+- libes/gis, debugging change to alloc.c, errors in cellhead (BH)
+- r.out.mpeg ANSI-fy (BH)
+- i.rectify: Fix the segfault with default region (BH)
+- src.contrib.bh1 - ANSI-fy three modules in src.contrib (BH)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 20, 1999 (Bill Brown, Helena Mitasova, Morten Hulden)
+
+        -------------------
+   ----> grass5.0beta_4l.tar <--
+         -------------------
+
+- src/misc/m.proj/main.c (Morten)
+   removed debug message line 111
+   cleaned unused files
+- src/general/g.setproj/ (Morten)
+   cleaned unused files
+- src/raster/r.flow (Helena/Bill)
+    updated. working now.
+- src/raster/r.colors (Helena/Bill B/Bill H)
+    updated from GMSL, updated again to new GRASS 5 code style. working now.
+- src/raster/r.slope.aspect (Helena/Bill B/Bill H)
+    updated from GMSL, updated again to new GRASS 5 code style. working now.
+- src/sites/s.surf.rst
+        updated from GMSL, updated again to new GRASS 5 code style
+        r.resamp.rst working now
+- src.contrib/SCS/misc/m.lulc.USGS/main.c (Bill H.)
+    bugfix
+- renamed src/raster/r.dist to r.circle (MN)
+   to avoid confusion with r.distance, changed lists/GRASS for that
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 17, 1999 (Bill Hughes, Morten Hulden)
+
+        -------------------
+   ----> grass5.0beta_4k.tar <--
+         -------------------
+Projections improvements (Morten):
+-src/include/geo.h <new>
+	the common header file for g.setproj and m.proj
+-src/libes/gis/geo_init.c <new>
+	common init functions (set default values for the projections)
+	for a few projections, some defaults have changed
+- src/libes/gis/Gmakefile
+	added one line so geo_init.c would compile
+- src/libes/gis/ellipse.table
+	added new ellipsoids from PROJ4.3.3 (some comments included)
+- src/libes/proj/get_proj.c
+	changed to include support for new projection options
+	used by m.proj for sanity tests
+	error messages from proj are now displayed on screen
+- src/misc/m.proj/
+	improved m.proj
+	support of all new projections, lot of bug fixes (did it ever work?)
+	now uses common headers (geo.h) and init functions (geo_init.c)
+	old local header (geo.h) and init file (table.c) removed
+- src/general/g.setproj/
+	now uses common headers (geo.h) and init functions (geo_init.c)
+	old local header (table.h) and init file (table.c) removed
+
+- source code improvements: (Bill H.)
+  src/CMD/lists/GRASS: added more modules, added comments
+  - struct Categories  changes for all modules in src.contrib
+    These modules have no more compiler-killing errors.  They still need
+   clean-up for typecasting and prototyping, but the Categories structures
+   are now up-to-date, and many other annoying things are fixed as well.
+   A few of them need much more work, and these are noted in the updated
+   build list (CMD/lists/GRASS.) No warranty.
+
+ - error reporting in libes/segment and libes/gis
+    libsegment.a should start throwing useful errors, now.  libgis.a will
+   do better, but there are still some wierd and useless error messages
+   in there.  
+ - src/libes/gis/G_dump.c
+   I also added a function G_dump() that prints the current
+   values in the G structure.  This is for debugging, it should not be
+   used in finished code.  This was part of the debugging I did on
+   i.rectify and r.surf.contour.
+
+ changes to:
+  src/display/d.siter/Gmakefile
+  src/display/d.vect.cats/main.c
+  src/display/d.vect.cats/plotCat.c
+  src/general/gis/lock.c
+  src/imagery/i.rectify/ask_files2.c
+  src/imagery/i.rectify/get_wind.c
+  src/imagery/i.rectify/main.c
+  src/imagery/i.rectify/write.c
+  src/include/P_site.h
+  src/libes/gis/G_dump.c
+  src/libes/gis/Gmakefile
+  src/libes/gis/alloc.c
+  src/libes/gis/cats.c
+  src/libes/gis/closecell.c
+  src/libes/gis/color_look.c
+  src/libes/gis/format.c
+  src/libes/gis/get_row.c
+  src/libes/gis/history.c
+  src/libes/gis/init_map.c
+  src/libes/gis/null_val.c
+  src/libes/gis/put_row.c
+  src/libes/gis/reclass.c
+  src/libes/gis/set_window.c
+  src/libes/gis/sites.c
+  src/libes/gis/store.c
+  src/libes/gis/tempfile.c
+  src/libes/gis/timestamp.c
+  src/libes/segment/format.c
+  src/libes/segment/get_row.c
+  src/libes/segment/init.c
+  src/libes/segment/pagein.c
+  src/libes/segment/pageout.c
+  src/libes/segment/put_row.c
+  src/libes/segment/seek.c
+  src/libes/segment/setup.c
+  src/libes/segment/try.c
+  src/raster/r.surf.contour/cmd/bseg_write.c
+  src/raster/r.surf.contour/cmd/err.implicit
+  src/raster/r.surf.contour/cmd/err.return
+  src/raster/r.surf.contour/cmd/main.c
+  src/scripts/shells/create_fifos.sh
+  src/sites/s.probplt/save.c
+  src/sites/s.rand/main.c
+  src/sites/s.surf.rst/interp_float/init2d.c
+  src/sites/s.univar/main.c
+  src.contrib/CAST/r.colors.paint/Gmakefile
+  src.contrib/CAST/r.colors.paint/assign_color.c
+  src.contrib/CAST/r.colors.paint/command.c
+  src.contrib/CAST/r.colors.paint/main.c
+  src.contrib/CAST/r.colors.paint/range.c
+  src.contrib/CAST/r.colors.paint/readfile.c
+  src.contrib/CAST/r.colors.paint/table.h
+  src.contrib/CERL/SGI/Dtrue/main.c
+  src.contrib/CERL/misc/m.regression/copy_data.c
+  src.contrib/CERL/misc/m.regression/correlation.c
+  src.contrib/CERL/misc/m.regression/errfun.c
+  src.contrib/CERL/misc/m.regression/gasdev.c
+  src.contrib/CERL/misc/m.regression/gaussj.c
+  src.contrib/CERL/misc/m.regression/local_proto.h
+  src.contrib/CERL/misc/m.regression/main.c
+  src.contrib/CERL/misc/m.regression/modify.c
+  src.contrib/CERL/misc/m.regression/mrqcof.c
+  src.contrib/CERL/misc/m.regression/mrqfit.c
+  src.contrib/CERL/misc/m.regression/nlfit.c
+  src.contrib/CERL/misc/m.regression/ran1.c
+  src.contrib/CERL/misc/m.regression/rational.c
+  src.contrib/CERL/misc/m.regression/read_data.c
+  src.contrib/CERL/misc/m.regression/solve.c
+  src.contrib/CERL/misc/m.regression/svbksb.c
+  src.contrib/CERL/misc/m.regression/svdcmp.c
+  src.contrib/CERL/misc/m.regression/svdfit.c
+  src.contrib/CERL/misc/m.regression/svdfit2.c
+  src.contrib/CERL/misc/m.regression/svdfitn.c
+  src.contrib/CERL/misc/m.regression/svdvar.c
+  src.contrib/CERL/misc/m.regression/try_rational.c
+  src.contrib/CERL/misc/m.regression/try_xy.c
+  src.contrib/CERL/misc/m.regression/utils.c
+  src.contrib/CERL/misc/m.regression/xformation.c
+  src.contrib/CERL/raster/r.linear.regression/Gmakefile
+  src.contrib/CERL/raster/r.linear.regression/errfun.c
+  src.contrib/CERL/raster/r.linear.regression/modify.c
+  src.contrib/CERL/raster/r.ndvi.model/modify.c
+  src.contrib/CERL/raster/r.rvi/closefiles.c
+  src.contrib/CERL/raster/r.rvi/globals.h
+  src.contrib/CERL/raster/r.rvi/local_proto.h
+  src.contrib/CERL/raster/r.rvi/main.c
+  src.contrib/CERL/raster/r.rvi/model.c
+  src.contrib/CERL/sites/s.surf.krig/NR.c
+  src.contrib/CERL/sites/s.surf.krig/d2nsamp.c
+  src.contrib/CERL/sites/s.surf.krig/dbtnsamp.c
+  src.contrib/CERL/sites/s.surf.krig/gaussj.c
+  src.contrib/CERL/sites/s.surf.krig/krigvar.c
+  src.contrib/CERL/sites/s.surf.krig/krigwts.c
+  src.contrib/CERL/sites/s.surf.krig/krigzest.c
+  src.contrib/CERL/sites/s.surf.krig/local_proto.h
+  src.contrib/CERL/sites/s.surf.krig/main.c
+  src.contrib/CERL/sites/s.surf.krig/misc.c
+  src.contrib/CERL/sites/s.surf.krig/newpoint.c
+  src.contrib/CERL/sites/s.surf.krig/nrutil.c
+  src.contrib/CERL/sites/s.surf.krig/read_cell.c
+  src.contrib/CERL/sites/s.surf.krig/read_sites.c
+  src.contrib/CERL/sites/s.surf.krig/sphdist.c
+  src.contrib/CERL/sites/s.surf.krig/variogrm.c
+  src.contrib/CORPS/FLOOD/finput.c
+  src.contrib/CORPS/FLOOD/flood.h
+  src.contrib/CORPS/FLOOD/fxsect.c
+  src.contrib/CORPS/FLOOD/rsv.h
+  src.contrib/CORPS/FLOOD/sort.c
+  src.contrib/CORPS/FLOOD/util.c
+  src.contrib/CORPS/FLOOD2/r.out.sites/r.out.sites.c
+  src.contrib/CWU/Census/scripts/Gmakefile
+  src.contrib/GMSL/ogl3d_linux/cmd/GLcolormap.c
+  src.contrib/GMSL/ogl3d_linux/cmd/GLx.c
+  src.contrib/GMSL/ogl3d_linux/cmd/Gmakefile
+  src.contrib/GMSL/ogl3d_linux/cmd/animation_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/before_pops.c
+  src.contrib/GMSL/ogl3d_linux/cmd/change_view.c
+  src.contrib/GMSL/ogl3d_linux/cmd/check.c
+  src.contrib/GMSL/ogl3d_linux/cmd/clear.c
+  src.contrib/GMSL/ogl3d_linux/cmd/close_me.c
+  src.contrib/GMSL/ogl3d_linux/cmd/closeb.c
+  src.contrib/GMSL/ogl3d_linux/cmd/color_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/cplane_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/create_menu.c
+  src.contrib/GMSL/ogl3d_linux/cmd/draw.c
+  src.contrib/GMSL/ogl3d_linux/cmd/drawpuck.c
+  src.contrib/GMSL/ogl3d_linux/cmd/info.c
+  src.contrib/GMSL/ogl3d_linux/cmd/init.c
+  src.contrib/GMSL/ogl3d_linux/cmd/lgtexp.c
+  src.contrib/GMSL/ogl3d_linux/cmd/light_dyn.c
+  src.contrib/GMSL/ogl3d_linux/cmd/light_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/load_colors.c
+  src.contrib/GMSL/ogl3d_linux/cmd/local_proto.h
+  src.contrib/GMSL/ogl3d_linux/cmd/main.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_arrows.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_fsbox.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_position.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_slider.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_text.c
+  src.contrib/GMSL/ogl3d_linux/cmd/make_title.c
+  src.contrib/GMSL/ogl3d_linux/cmd/pop_attr.c
+  src.contrib/GMSL/ogl3d_linux/cmd/pop_color.c
+  src.contrib/GMSL/ogl3d_linux/cmd/pop_transl.c
+  src.contrib/GMSL/ogl3d_linux/cmd/pops.c
+  src.contrib/GMSL/ogl3d_linux/cmd/primary_controls.c
+  src.contrib/GMSL/ogl3d_linux/cmd/quick_draw.c
+  src.contrib/GMSL/ogl3d_linux/cmd/reshow.c
+  src.contrib/GMSL/ogl3d_linux/cmd/separate.c
+  src.contrib/GMSL/ogl3d_linux/cmd/simp_menu.c
+  src.contrib/GMSL/ogl3d_linux/cmd/site_dyn.c
+  src.contrib/GMSL/ogl3d_linux/cmd/sites_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/surf_dyn.c
+  src.contrib/GMSL/ogl3d_linux/cmd/surface_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/tga_out.c
+  src.contrib/GMSL/ogl3d_linux/cmd/toggle.c
+  src.contrib/GMSL/ogl3d_linux/cmd/trackmouse.c
+  src.contrib/GMSL/ogl3d_linux/cmd/update_color.c
+  src.contrib/GMSL/ogl3d_linux/cmd/update_sliders.c
+  src.contrib/GMSL/ogl3d_linux/cmd/utils.c
+  src.contrib/GMSL/ogl3d_linux/cmd/vect_dyn.c
+  src.contrib/GMSL/ogl3d_linux/cmd/vector_panel.c
+  src.contrib/GMSL/ogl3d_linux/cmd/whats_here.c
+  src.contrib/GMSL/ogl3d_linux/gsf/Gmakefile
+  src.contrib/NMSU/WRAT/ga/Gmakefile
+  src.contrib/NMSU/WRAT/ga/ga.c
+  src.contrib/NMSU/WRAT/wrat/cn.c
+  src.contrib/NMSU/WRAT/wrat/cs.c
+  src.contrib/NMSU/WRAT/wrat/da.c
+  src.contrib/NMSU/WRAT/wrat/ideal.c
+  src.contrib/NMSU/WRAT/wrat/intro.c
+  src.contrib/NMSU/WRAT/wrat/qp.c
+  src.contrib/NMSU/WRAT/wrat/qual.c
+  src.contrib/NMSU/WRAT/wrat/remove.c
+  src.contrib/NMSU/WRAT/wrat/rout.c
+  src.contrib/NMSU/WRAT/wrat/runoff.c
+  src.contrib/NMSU/WRAT/wrat/ta.c
+  src.contrib/NMSU/WRAT/wrat/upall.c
+  src.contrib/NPS/distance/Gmakefile
+  src.contrib/NPS/distance/distance.h
+  src.contrib/NPS/r.in.elas/cmd/main.c
+  src.contrib/NPS/r.in.elas/inter/Gmakefile
+  src.contrib/NPS/r.in.elas/inter/main.c
+  src.contrib/NPS/r.in.utm/input.c
+  src.contrib/NPS/r.in.utm/isnumber.c
+  src.contrib/NPS/r.in.utm/local_proto.h
+  src.contrib/NPS/r.in.utm/main.c
+  src.contrib/NPS/r.in.utm/output.c
+  src.contrib/NPS/r.in.utm/row_col.c
+  src.contrib/NPS/r.in.utm/sph.c
+  src.contrib/NPS/r.in.utm/utm.h
+  src.contrib/NPS/r.in.utm/utm_value.c
+  src.contrib/NPS/r.in.utm/value.c
+  src.contrib/NPS/r.in.utm/warning.c
+  src.contrib/NPS/r.out.elas/Gmakefile
+  src.contrib/NPS/v.circle/cmd/Gmakefile
+  src.contrib/NPS/v.circle/cmd/main.c
+  src.contrib/NPS/v.circle/inter/Gmakefile
+  src.contrib/NPS/v.circle/inter/main.c
+  src.contrib/OTHER/HPXL300/cmd/Gmakefile
+  src.contrib/OTHER/numonics/Gmakefile
+  src.contrib/PURDUE/d.linegraph/cmd/linegraph.c
+  src.contrib/PURDUE/d.linegraph/cmd/linegraph.h
+  src.contrib/PURDUE/s.medp/Gmakefile
+  src.contrib/PURDUE/s.voronoi/Gmakefile
+  src.contrib/SCS/display/d.text/cmd/Gmakefile
+  src.contrib/SCS/display/d.text/cmd/main.c
+  src.contrib/SCS/mapdev/v.patch.scs/inter/Gmakefile
+  src.contrib/SCS/misc/Mlulc.read/header.c
+  src.contrib/SCS/misc/Mlulc.read/save/header.c
+  src.contrib/SCS/misc/dotmaps/v.scale.random/main.c
+  src.contrib/SCS/misc/m.futil/inter/Gmakefile
+  src.contrib/SCS/misc/m.lulc.USGS/Gmakefile
+  src.contrib/SCS/misc/m.lulc.read/header.c
+  src.contrib/SCS/misc/m.setproj/Gmakefile
+  src.contrib/SCS/misc/m.setproj/main.c
+  src.contrib/SCS/misc/m.strip99s/Gmakefile
+  src.contrib/SCS/paint/Drivers/driverlib/io.c
+  src.contrib/SCS/paint/Interface/driverlib/io.c
+  src.contrib/SCS/paint/Programs/color.map/cmd/Gmakefile
+  src.contrib/SCS/paint/Programs/color.map/inter/Gmakefile
+  src.contrib/SCS/paint/Programs/color.map/inter/ask_legend.c
+  src.contrib/SCS/paint/Programs/color.map/inter/input.c
+  src.contrib/SCS/paint/Programs/color.map/inter/newscreen.c
+  src.contrib/SCS/paint/Programs/color.map/inter/yes.c
+  src.contrib/SCS/paint/Programs/grey.map/cmd/Gmakefile
+  src.contrib/SCS/paint/Programs/grey.map/inter/Gmakefile
+  src.contrib/SCS/paint/Programs/grey.map/inter/ask_legend.c
+  src.contrib/SCS/paint/Programs/grey.map/inter/input.c
+  src.contrib/SCS/paint/Programs/grey.map/inter/newscreen.c
+  src.contrib/SCS/paint/Programs/grey.map/inter/yes.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/alloc_pats.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/barscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/builtin.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/case.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/cat_color.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/cellfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/chk_scale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/color.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/colrtable.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/comment.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/cont_move.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/ctable.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/diamond.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/distance.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_barscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_cat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_grid.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_labels.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_legend.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_newgrid.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_plfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_ramp.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_region.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_rscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_sites.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/do_vectors.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/dobackground.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/dot.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_barscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_cat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_dashbarscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_icon.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_line.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_ramp.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/draw_text.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/drwline.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/drwscale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/error.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/font.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/get_cat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/get_catcolor.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getcats.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getdata.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getgrid.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getrast.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getsite.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/getvect.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/graph_line.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/graph_pnt.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/graph_text.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/griddraw.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/header.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/input.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/input_pat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/key_data.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/label.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/lblfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/legendtable.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/line_eq.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/line_style.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/linefile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/local_proto.h
+  src.contrib/SCS/paint/Programs/newp.map/cmd/lookup.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/main.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/map.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/map_gd.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/mask_grid.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/mask_vctrs.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/outline.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/parse_list.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/patcc.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/patcolor.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/pattern.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/plfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/pre_legend.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/predef_pat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/regionfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/rotatebox.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/scale.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/scan_color.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/scan_gis.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/scan_misc.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/scan_ref.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/session.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/set_color.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/set_diffusion.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/set_grphcs.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/set_pat.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/set_width.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/sitefile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/title.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/trailer.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/vdrawb.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/vectdot.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/vectdraw.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/vectfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/vectr_info.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/windfile.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/window_cnv.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/window_lne.c
+  src.contrib/SCS/paint/Programs/newp.map/cmd/yesno.c
+  src.contrib/SCS/psu/do_lines.c
+  src.contrib/SCS/psu/psu.subj.c
+  src.contrib/SCS/raster/r.in.elas/inter/genproc.c
+  src.contrib/SCS/raster/r.in.elas/inter/grelas.c
+  src.contrib/SCS/raster/r.in.erdas/cmd/Gmakefile
+  src.contrib/SCS/raster/r.in.miads/cmd/miad.h
+  src.contrib/SCS/raster/r.in.miads/cmd/proces.c
+  src.contrib/SCS/raster/r.out.rlc/Gmakefile
+  src.contrib/SCS/raster/r.reclass.scs/inter/Gmakefile
+  src.contrib/SCS/raster/r.reclass.scs/inter/main.c
+  src.contrib/SCS/raster/r.tangent/cmd/Gmakefile
+  src.contrib/SCS/raster/r.tangent/cmd/r.in.tang.c
+  src.contrib/SCS/sites/s.dotmap.new/cmd/do_dot.c
+  src.contrib/SCS/sites/s.dotmap.new/cmd/find_area.c
+  src.contrib/SCS/sites/s.dotmap.new/inter/main.c
+  src.contrib/SCS/sites/s.dotmap.new/inter/sfactor.c
+  src.contrib/SCS/sites/s.dotmap.new/v.random/Gmakefile
+  src.contrib/SCS/sites/s.dotmap.new/v.random/chk_inside.c
+  src.contrib/SCS/sites/s.dotmap.new/v.random/do_dot.c
+  src.contrib/SCS/sites/s.dotmap.new/v.random/find_area.c
+  src.contrib/SCS/vector/v.dump/cmd/do_areas.c
+  src.contrib/SCS/vector/v.dump/cmd/do_lines.c
+  src.contrib/SCS/vector/v.dump/cmd/dump.h
+  src.contrib/SCS/vector/v.dump/cmd/edit_head.c
+  src.contrib/SCS/vector/v.dump/cmd/head_info.c
+  src.contrib/SCS/vector/v.dump/cmd/isle_area.c
+  src.contrib/SCS/vector/v.dump/cmd/local_proto.h
+  src.contrib/SCS/vector/v.dump/cmd/main.c
+  src.contrib/SCS/vector/v.dump/cmd/perimeter.c
+  src.contrib/SCS/vector/v.make.subj/cmd/local_proto.h
+  src.contrib/SCS/vector/v.make.subj/cmd/main.c
+  src.contrib/SCS/vector/v.mk_stats/Gmakefile
+  src.contrib/SCS/vector/v.mk_stats/do_stats.c
+  src.contrib/SCS/vector/v.mkquads/Gmakefile
+  src.contrib/SCS/vector/v.mkquads/ask_for.c
+  src.contrib/SCS/vector/v.mkquads/calc_quads.c
+  src.contrib/SCS/vector/v.mkquads/convert.c
+  src.contrib/SCS/vector/v.mkquads/init_head.c
+  src.contrib/SCS/vector/v.mkquads/init_quad.c
+  src.contrib/SCS/vector/v.mkquads/ll_to_secs.c
+  src.contrib/SCS/vector/v.mkquads/local_proto.h
+  src.contrib/SCS/vector/v.mkquads/mkquads_cm.c
+  src.contrib/SCS/vector/v.mkquads/quad_structs.h
+  src.contrib/SCS/vector/v.mkquads/reg_quads.c
+  src.contrib/SCS/vector/v.mkquads/report_quads.c
+  src.contrib/SCS/vector/v.mkquads/sites_quads.c
+  src.contrib/SCS/vector/v.mkquads/tryit.c
+  src.contrib/SCS/vector/v.mkquads/wind_quads.c
+  src.contrib/SCS/vector/v.mkquads/write_quads.c
+  src.contrib/SCS/vector/v.reclass/inter/Gmakefile
+  src.contrib/SCS/vector/v.reclass/inter/main.c
+  src.contrib/SCS/vector/v.report/cmd/do_v_stats.c
+  src.contrib/SCS/vector/v.report/cmd/format.c
+  src.contrib/SCS/vector/v.report/cmd/global.h
+  src.contrib/SCS/vector/v.report/cmd/header.c
+  src.contrib/SCS/vector/v.report/cmd/label.c
+  src.contrib/SCS/vector/v.report/cmd/main.c
+  src.contrib/SCS/vector/v.report/cmd/parse.c
+  src.contrib/SCS/vector/v.report/cmd/perimeter.c
+  src.contrib/SCS/vector/v.report/cmd/prt_report.c
+  src.contrib/SCS/vector/v.report/cmd/prt_unit.c
+  src.contrib/SCS/vector/v.report/cmd/report.c
+  src.contrib/SCS/vector/v.report/cmd/stats.c
+  src.contrib/SCS/vector/v.report/cmd/sums.c
+  src.contrib/SCS/vector/v.report/inter/Gmakefile
+  src.contrib/SCS/vector/v.report/inter/ask_layers.c
+  src.contrib/eurogis/r.to.SVF/cmd/Gmakefile
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 15, 1999 (Jaro Hofierka, Markus Neteler, Bill Hughes)
+
+        -------------------
+   ----> grass5.0beta_4j.tar <--
+         -------------------
+
+- src/mapdev/v.in.shape/main.c (MN)
+    added dig_cats support: text labels are imported from SHAPE file now
+
+ NVIZ: change export file format to xv-usable format: (Jaro)
+- moved src.contrib/GMSL/NVIZ2.2/libes/ogsf/ to
+        src/libes/ogsf/
+- updated NVIZ-Gmakefiles to reflect ogsf path changes
+- src/libes/ogsf/gsd_img.c
+   changed to write uncompressed IRIS RGB file: 
+   "imagedump" in NVIZ created files is readable by "xv" now
+- src.contrib/GMSL/NVIZ2.2/libimage/*
+   replaced by update
+
+- src.contrib/GMSL/xganim/Gmakefile (MN)
+   updated
+- g3d: compiles now
+  src/libes/g3d/header.c: bugfix line 217, 220
+  src/libes/g3d/rle.c: inserted #include statements
+
+- src/imagery/libe/ library renamed (to avoid confusion): (MN)
+   mv src/imagery/libe/ src/imagery/image3
+   - changed src/imagery/i.points3/Gmakefile
+             src/imagery/i.points3/inter/Gmakefile
+             src/imagery/i.rectify3/cmd/Gmakefile
+             src/imagery/i.rectify3/inter/Gmakefile
+             src/imagery/i.tape.tm3/Gmakefile
+     to reflect this.
+
+- src/libes/segment/put_row.c           (Bill H.)
+   patch to provide better error messages
+  (related to r.surf.contour problem)
+
+- src/raster/r.proj/cmd/r.proj.html (MN)
+  man/man1/r.proj 
+   updated
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 11, 1999 (Morten Hulden, Markus Neteler, Michael Schulz, Agus Carr)
+                  morten@tor.ngb.se
+
+         -------------------
+   ----> grass5.0beta_4i.tar <--
+         -------------------
+- number of supported projections is now 121! (Morten Hulden)
+   - read docs/projections_supported.txt
+   - Some of them are problematic (list coming soon)
+  From Morten:
+ - running g.setproj a second time now no longer leaves old options in
+   PROJ_INFO. (This was the second bug I mentioned in my README for the
+   previous patch. The "radius vs. a" -bug of course is fixed here too.)
+ - running g.setproj a second time saves the old PROJ_INFO and UNIT_INFO
+   files as PROJ_INFO~ and UNIT_INFO~. Useful if someone someone messes with
+   the projections and forgets the old values.
+ - for some projections that have fixed spheroids (alsk, labrd, nzmg,
+   gs48, gs50, ob_tran), the question about the spheroid is by-passed and the
+   correct spheroid is entered directly into PROJ_INFO. Some other default
+   options (lon_0, lat_0) are also by-passed.
+ - some projections have alternative methods to set options (omerc,
+   ob_tran). I have just implemented one of them.
+ - the ob_tran projection is special because it seems to be a
+   transforamtion procedure rather than a static projection. You can use it
+   to transform an existing projection when the pole moves (shrudder:-).
+   Entering two projections (input and output) in g.setproj requires the
+   g.setproj module, or part of it, to be called recursvively. I can't make
+   that extensive changes now, so I just hardcoded the input projection to
+   Equidistant Cylindrical.
+ - I cleaned up the coding style of main.c, adding proper indents and
+   splitting lines, in order to make it easier to read. And I do not agree 
+   on using infinite loops and 'breaking out' everywhere in the code, but I
+   don't have time for a complete rewrite.
+ - known problems with projections:
+     - still no sanity checks. It is possible that to enter invalid
+       option values into PROJ_INFO (e.g. lon_1 = lon_2, or k_0 = 0.
+     - either m.proj, m.geo or external proj will be necessary to find the
+       region borders when setting up a new location. I have of course proj, so I
+       don't have to care, but others may be left without any means to convert
+       lon-lat values to metric for the new projections.
+
+- /src/CMD/generic/POST_INSTALL.sh (MN)
+    message included concerning compiling NVIZ
+
+- src/scripts/shells/slide.show.sh (Agus Carr)
+    line 86: MAPSET fix
+- src/mapdev/v.geom (MN)
+    moved from sites/s.geom/v.geom/
+
+- src/raster/r.out.ppm/main.c (MN)
+    bugfix: G_set_window to check for user's region settings
+
+- src/raster/r.colors/cmd/rules.c (Michael Schulz)
+    lines 163, lines 165: fixes for "end" and "help" not understood
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 8, 1999 (Jacques Bouchard)
+
+         -------------------
+   ----> grass5.0beta_4h.tar <--
+         -------------------
+
+- src/libes/gis/set_windows.c
+97,100c97,98
+< /* code commented 10/1999 due to problems */
+< /*      else */
+<         /* opened for writing */
+< /*      {
+---
+>         else /* opened for writing */
+>         {
+105c103
+< */
+---
+> 
+107c105
+< /*      for (j=0;j< NULL_ROWS_INMEM; j++)
+---
+>         for (j=0;j< NULL_ROWS_INMEM; j++)
+112,113d109
+< */
+< 
+115c111
+< /*      G__.fileinfo[i].min_null_row = (-1) * NULL_ROWS_INMEM;
+---
+>         G__.fileinfo[i].min_null_row = (-1) * NULL_ROWS_INMEM;
+124d119
+< */
+
+- src.garden/grass.hdf
+   updated to HDF4.1.3 library, not yet working
+
+- src/display/d.area
+   added
+
+- src/display/d.site.labels
+   added
+
+- src/raster/r.statistics 
+    added and updated module calls: 
+    "r.stats -cz" -> "r.stats - cn"
+
+- src/mapdev/v.info
+   added
+
+- src/mapdev/v.export
+   added (from src.contrib/SCS/imp_exp/)
+
+- src/mapdev/diglib/portable.h
+  3c3
+  < #define LNG_SIZ  8
+  ---
+  > #define LNG_SIZ  4
+  The value of LNG_SIZ in portable.h was OK for 64-bits OS but not for 
+  Linux/Intel. This prevented *many* vector programs to work (e.g. d.vect).
+
+- d.profile works well in grass5.0beta4g after LNG_SIZ bug is corrected.
+
+- d.sites.qual: segmentation violation in command line mode
+  Corrected, but d.sites.qual doesn't work properly: not all the sites 
+  are used/displayed if the number of fields of the input site file is 
+  not constant. Compare with d.sites.
+  diff -r display/d.sites.qual.orig/cmd/main.c display/d.sites.qual/cmd/main.c
+ 204c204
+ <         fclose(outfile);
+ ---
+ >         if (outfile) fclose(outfile);
+ diff -r display/d.sites.qual.orig/cmd/qualify.c
+ display/d.sites.qual/cmd/qualify.c
+ 118a119
+ >     ret = 1;
+
+- src.contrib/CERL/raster/r.water.fea
+  src/inter/Gmakefile, src/programs/datafea/Gmakefile,
+  src/programs/select_basins/Gmakefile: $(MATHLIB) fixed
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 20, 1999 (Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_4g.tar <--
+         -------------------
+- src/raster/r.null/null.c
+     added fflush(stdout);
+- src.contrib/GMSL/ogl3d_linux/cmd/Gmakefile
+   small bugfix
+- src/scripts/contrib/m.statistics
+   updated for GRASS 5 (fp support still needed)
+- cleaned out code existing double from src.contrib/ to avoid
+  confusion
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 19, 1999 (Bill Hughes)
+
+         -------------------
+   ----> grass5.0beta_4f.tar <--
+         -------------------
+- src/display/d.vect.cats
+   moved from src.contrib/CAST and updated to GRASS 5
+- src/mapdev/v.random
+   moved from src.contrib/SCS/misc/dotmaps/v.random and updated GRASS 5
+- src/mapdev/v.extract
+  src/mapdev/v.merge
+  src/mapdev/v.autocorr
+   moved from src.contrib/SCS/vector and updated to GRASS 5
+   (vect cats have been changed between 4.x and 5.x)
+
+Comment on vector cats from Bill Hughes:
+The Categories structure was changed between 4.x and 5.0beta.
+The change seems to have moved the *labels element out of the list
+structure and replace list.num with the index to **labels.  The fix
+is to change the SCS/* code to use 'cats->labels[i]' instead of
+'cats->list[i].labels'  There will be breakage around 'list[i].num'
+as well, and probably these can be deleted, or use 'cats->num' instead.
+
+- added man pages
+   -nviz2.2
+   -v.autocorr
+
+- added "return statements" in following files and prototyping updates:
+  (pointer->int etc.)
+  src/general/g.setproj/main.c
+  src/imagery/i.ortho.photo/photo.elev/ask_elev.c
+  src/imagery/i.points3/inter/view_config.c
+  src/imagery/i.tape.tm3/fast.c
+  src/include/projects.h
+  src/include/transform.h
+  src/libes/Gmakefile
+  src/libes/dig_atts/read_att.c
+  src/libes/gis/sites.c
+  src/libes/proj/PJ_mod_ster.c
+  src/libes/proj/vector1.c
+  src/mapdev/diglib/portable.h
+  src/mapdev/v.area/where_am_i.c
+  src/mapdev/v.digit/build_neat.c
+  src/mapdev/v.digit/color.c
+  src/mapdev/v.digit/customize.c
+  src/mapdev/v.digit/debug.c
+  src/mapdev/v.digit/debugf.c
+  src/mapdev/v.digit/dig_dev.c
+  src/mapdev/v.digit/display_line.c
+  src/mapdev/v.digit/display_node.c
+  src/mapdev/v.digit/display_site.c
+  src/mapdev/v.digit/flush.c
+  src/mapdev/v.digit/flush_input.c
+  src/mapdev/v.digit/graph_input.c
+  src/mapdev/v.digit/graphics.c
+  src/mapdev/v.digit/head_info.c
+  src/mapdev/v.digit/help.c
+  src/mapdev/v.digit/interact.c
+  src/mapdev/v.digit/interface.c
+  src/mapdev/v.digit/label.c
+  src/mapdev/v.digit/map_coor_new.c
+  src/mapdev/v.digit/map_scale.c
+  src/mapdev/v.digit/menus.c
+  src/mapdev/v.digit/mk_window.c
+  src/mapdev/v.digit/oplot.c
+  src/mapdev/v.digit/overlay.c
+  src/mapdev/v.digit/plot.c
+  src/mapdev/v.digit/read_cap.c
+  src/mapdev/v.digit/remove.c
+  src/mapdev/v.digit/replot.c
+  src/mapdev/v.digit/reset_map.c
+  src/mapdev/v.digit/screen_plt.c
+  src/mapdev/v.digit/set_thresh.c
+  src/mapdev/v.digit/set_window.c
+  src/mapdev/v.digit/states.c
+  src/mapdev/v.digit/wind_2_box.c
+  src/mapdev/v.digit/wind_conv.c
+  src/mapdev/v.digit/window.c
+  src/mapdev/v.digit/window_rout.c
+  src/mapdev/v.digit/window_setup.c
+  src/mapdev/v.digit/withinthresh.c
+  src/mapdev/v.in.dlg/dlg_to_dig.c
+  src/mapdev/v.in.dlg/pad.c
+  src/mapdev/v.in.tig.basic/v.in.tig.bas.c
+
+(diff
+
+
+(diff
+
+  src/mapdev/v.in.tig.lndmk/areas.c
+  src/mapdev/v.in.transects/vect.c
+  src/mapdev/v.out.arc/write_areas.c
+  src/mapdev/v.out.arc/write_lines.c
+  src/mapdev/v.out.dlg/write_nodes.c
+  src/mapdev/v.reclass/cmd/add_rule.c
+  src/mapdev/v.reclass/inter/set_cats.c
+  src/mapdev/v.to.rast/do_lines.c
+  src/mapdev/v.to.rast/do_sites.c
+  src/mapdev/v.transform/setup_trans.c
+  src/misc/m.examine.tape/main.c
+  src/misc/m.ll2u/cmd/warning.c
+  src/misc/m.u2ll/cmd/output.c
+  src/paint/Programs/p.icons/preview.c
+  src/paint/Programs/p.labels/main.c
+  src/paint/Programs/p.map/cmd/diamond.c
+  src/paint/Programs/p.map/cmd/draw_icon.c
+  src/paint/Programs/p.map/cmd/set_color.c
+  src/paint/Programs/p.map/cmd/set_grphcs.c
+  src/paint/Programs/p.map/inter/ask_color.c
+  src/paint/Programs/p.map/inter/ask_icon.c
+  src/paint/Programs/p.map/inter/ask_labels.c
+  src/paint/Programs/p.map/inter/ask_masked.c
+  src/paint/Programs/p.map/inter/ask_scale.c
+  src/paint/Programs/p.map/inter/ask_sites.c
+  src/paint/Programs/p.map/inter/ask_vect.c
+  src/paint/Programs/p.map/inter/ask_width.c
+  src/paint/Programs/p.map/inter/input.c
+  src/paint/Programs/p.map/inter/main.c
+  src/paint/Programs/p.map/inter/newscreen.c
+  src/paint/Programs/p.select/inter/list.c
+  src/paint/Programs/p.select/inter/main.c
+  src/paint/Tests/ptest.c
+  src/raster/r.binfer/gram.c
+  src/raster/r.coin/cmd/cmd.c
+  src/raster/r.coin/cmd/make_coin.c
+  src/raster/r.coin/cmd/print_coin.c
+  src/raster/r.coin/cmd/print_hdr.c
+  src/raster/r.coin/cmd/totals.c
+  src/raster/r.combine/cmd/falloc.c
+  src/raster/r.combine/cmd/gis_pars.c
+  src/raster/r.cross/cats.c
+  src/raster/r.cross/store.c
+  src/raster/r.describe/cmd/dumplist.c
+  src/raster/r.digit/bnw_line.c
+  src/raster/r.digit/get_circle.c
+  src/raster/r.digit/get_label.c
+  src/raster/r.digit/main.c
+  src/raster/r.flow/calc.13.c
+  src/raster/r.in.gif/cmd/r.in.gif.c
+  src/raster/r.in.ll/cmd/row_col.c
+  src/raster/r.mapcalc/mapcalc/execute.c
+  src/raster/r.mapcalc/mapcalc/expression.c
+  src/raster/r.mapcalc/mapcalc/function.c
+  src/raster/r.mapcalc/mapcalc/logical.c
+  src/raster/r.mapcalc/mapcalc/math.c
+  src/raster/r.mapcalc/mapcalc/pool.c
+  src/raster/r.mapcalc/mapcalc/variables.c
+  src/raster/r.mapcalc/mapcalc/x2float.c
+  src/raster/r.mapcalc/mapcalc/x2int.c
+  src/raster/r.mapcalc/mapcalc/xabs.c
+  src/raster/r.mapcalc/mapcalc/xatan.c
+  src/raster/r.mapcalc/mapcalc/xcoor.c
+  src/raster/r.mapcalc/mapcalc/xcos.c
+  src/raster/r.mapcalc/mapcalc/xeval.c
+  src/raster/r.mapcalc/mapcalc/xexp.c
+  src/raster/r.mapcalc/mapcalc/xif.c
+  src/raster/r.mapcalc/mapcalc/xisnull.c
+  src/raster/r.mapcalc/mapcalc/xlog.c
+  src/raster/r.mapcalc/mapcalc/xmax.c
+  src/raster/r.mapcalc/mapcalc/xmedian.c
+  src/raster/r.mapcalc/mapcalc/xmin.c
+  src/raster/r.mapcalc/mapcalc/xmode.c
+  src/raster/r.mapcalc/mapcalc/xnull.c
+  src/raster/r.mapcalc/mapcalc/xrand.c
+  src/raster/r.mapcalc/mapcalc/xres.c
+  src/raster/r.mapcalc/mapcalc/xround.c
+  src/raster/r.mapcalc/mapcalc/xrowcol.c
+  src/raster/r.mapcalc/mapcalc/xsin.c
+  src/raster/r.mapcalc/mapcalc/xsqrt.c
+  src/raster/r.mapcalc/mapcalc/xtan.c
+  src/raster/r.mapcalc/polish/main.c
+  src/raster/r.mapcalc/polish/y.tab.c
+  src/raster/r.mfilter/cmd/execute.c
+  src/raster/r.mfilter/cmd/perform.c
+  src/raster/r.mfilter/cmd/uppercase.c
+  src/raster/r.neighbors/cmd/sort_cell.c
+  src/raster/r.out.ascii/cmd/main.c
+  src/raster/r.random/cmd/random.c
+  src/raster/r.report/cmd/format.c
+  src/raster/r.report/cmd/header.c
+  src/raster/r.report/cmd/maskinfo.c
+  src/raster/r.report/cmd/parse.c
+  src/raster/r.report/cmd/prt_report.c
+  src/raster/r.report/cmd/prt_unit.c
+  src/raster/r.surf.contour/cmd/flag_clr_all.c
+  src/raster/r.surf.contour/cmd/flag_set.c
+  src/raster/r.surf.contour/cmd/flag_unset.c
+  src/raster/r.tiff/cmd/r.in.tiff.c
+  src/raster/r.watershed/ram/flag_clr_all.c
+  src/raster/r.watershed/seg/init_vars.c
+  src/raster/r.weight/inter/falloc.c
+  src/raster/r.weight/inter/gis_pars.c
+  src/scripts/shells/create_fifos.sh
+  src/sites/s.in.ascii/main.c
+  src/sites/s.menu/Lib/rpt_screen.c
+  src/sites/s.menu/Lib/scopy.c
+  src/sites/s.menu/Lib/sort_int.c
+  src/sites/s.menu/occur_rpt/divider.c
+  src/sites/s.menu/occur_rpt/process.c
+  src/sites/s.menu/occur_rpt/title.c
+  src/sites/s.normal/main.c
+  src/sites/s.normal/readz.c
+  src/sites/s.perturb/main.c
+  src/sites/s.probplt/pltsqq.c
+  src/sites/s.probplt/probplot.c
+  src/sites/s.probplt/readz.c
+  src/sites/s.probplt/save.c
+  src/sites/s.qcount/count.c
+  src/sites/s.qcount/findquads.c
+  src/sites/s.qcount/main.c
+  src/sites/s.qcount/readsite.c
+  src/sites/s.rand/main.c
+  src/sites/s.sample/bilinear.c
+  src/sites/s.surf.rst/interp_float/distance.c
+  src/sites/s.surf.rst/interp_float/func2d.c
+  src/sites/s.surf.rst/interp_float/init2d.c
+  src/sites/s.surf.rst/interp_float/input2d.c
+  src/sites/s.surf.rst/interp_float/interp2d.c
+  src/sites/s.surf.rst/interp_float/interpf.h
+  src/sites/s.surf.rst/interp_float/matrix.c
+  src/sites/s.surf.rst/interp_float/minmax.c
+  src/sites/s.surf.rst/interp_float/newsegm2d.c
+  src/sites/s.surf.rst/interp_float/output2d.c
+  src/sites/s.surf.rst/interp_float/point2d.c
+  src/sites/s.surf.rst/interp_float/resout2d.c
+  src/sites/s.surf.rst/interp_float/resout2dmod.c
+  src/sites/s.surf.rst/interp_float/ressegm2d.c
+  src/sites/s.surf.rst/interp_float/secpar2d.c
+  src/sites/s.surf.rst/interp_float/segmen2d.c
+  src/sites/s.surf.rst/interp_float/vinput2d.c
+  src/sites/s.surf.rst/interp_float/write2d.c
+  src/sites/s.surf.rst/r.resamp.rst/local_proto.h
+  src/sites/s.surf.rst/r.resamp.rst/main.c
+  src/sites/s.surf.rst/s.surf.rst/main.c
+  src/sites/s.sv/angleok.c
+  src/sites/s.sv/cdpath.c
+  src/sites/s.sv/main.c
+  src/sites/s.sv/nbins.c
+  src/sites/s.sv/plthgpt.c
+  src/sites/s.sv/readsite.c
+  src/sites/s.sv/save.c
+  src/sites/s.sv/sv.h
+  src/sites/s.univar/main.c
+  src/sites/s.univar/readsite.c
+  src/sites/s.univar/univar.c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 19, 1999 (Bill Hughes)
+
+         -------------------
+   ----> grass5.0beta_4e.tar <--
+         -------------------
+- src.contrib/CAST/d.vect.cats
+   updated from GRASS 4.2.1
+- src/libes/gis/put_row.c
+  src/libes/gis/color_look.c
+  -> corrected include "math.h" to <math.h>
+  ==> still problem in src.contrib/CERL/raster/r.water.fea
+- src/sites/s.univar/univar.c
+    commented "random" definition (was already defined)
+
+- added "returns" in following files and 
+ a few prototyping updates:
+  src/display/d.colortable/cmd/main.c
+  src/display/d.display/do_exit.c
+  src/display/d.display/legend.c
+  src/display/d.display/show_leg.c
+  src/display/d.histogram/cmd/bar.c
+  src/display/d.leg.thin/main.c
+  src/display/d.mapgraph/cmd/do_graph.c
+  src/display/d.measure/cmd/draw_line.c
+  src/display/d.mon/cmd/main.c
+  src/display/d.mon/pgms/list.c
+  src/display/d.mon/pgms/release.c
+  src/display/d.mon/pgms/start.c
+  src/display/d.mon/pgms/status.c
+  src/display/d.mon/pgms/stop.c
+  src/display/d.profile/PlotProfile.c
+  src/display/d.rast.edit/main.c
+  src/display/d.what.sites/show.c
+  src/display/d.zoom/cmd/returns.c
+  src/display/devices/CELL/Panel.c
+  src/display/devices/CELL/Polygn_abs.c
+  src/display/devices/XDRIVER/XDRIVER24/Clr_table.c
+  src/general/g.access/inter/ask_perms.c
+  src/general/g.access/inter/main.c
+  src/general/g.access/inter/set_perms.c
+  src/general/g.manual/inter/main.c
+  src/general/g.mapsets/dsply_maps.c
+  src/general/g.mapsets/dsply_path.c
+  src/general/g.mapsets/get_maps.c
+  src/general/g.mapsets/main_inter.c
+  src/general/g.mapsets/set_path.c
+  src/general/g.region/cmd/adjust.c
+  src/general/g.region/inter/lister.c
+  src/general/g.region/inter/set.c
+  src/general/g.setproj/local_proto.h
+  src/general/g.setproj/main.c
+  src/general/manage/inter/copy.c
+  src/general/manage/inter/list.c
+  src/general/manage/inter/remove.c
+  src/general/manage/inter/rename.c
+  src/general/manage/lib/add_elem.c
+  src/general/manage/lib/do_copy.c
+  src/general/manage/lib/do_list.c
+  src/general/manage/lib/do_remove.c
+  src/general/manage/lib/do_rename.c
+  src/general/manage/lib/menu.c
+  src/general/manage/lib/show_elem.c
+  src/general/manage/lib/sighold.c
+  src/imagery/i.class/edge_point.c
+  src/imagery/i.class/g_init.c
+  src/imagery/i.class/init_reg.c
+  src/imagery/i.colors/main.c
+  src/imagery/i.grey.scale/grey_scale.c
+  src/imagery/i.grey.scale/main.c
+  src/imagery/i.group/editgroup/cellfiles.c
+  src/imagery/i.group/menu/main.c
+  src/imagery/i.group/menu/menu.c
+  src/imagery/i.group/subgroup/mke_subgrp.c
+  src/imagery/i.maxlik/cmd/classify.c
+  src/imagery/i.maxlik/cmd/hist.c
+  src/imagery/i.maxlik/cmd/open.c
+  src/imagery/i.ortho.photo/photo.elev/main.c
+  src/imagery/i.ortho.photo/photo.elev/mod_elev.c
+  src/imagery/i.ortho.photo/photo.rectify/aver_z.c
+  src/imagery/i.ortho.photo/photo.rectify/cp.c
+  src/imagery/i.ortho.photo/photo.rectify/equ.c
+  src/imagery/i.ortho.photo/photo.rectify/exec.c
+  src/imagery/i.ortho.photo/photo.rectify/mail.c
+  src/imagery/i.ortho.photo/photo.rectify/matrix.c
+  src/imagery/i.ortho.photo/photo.rectify/report.c
+  src/imagery/i.ortho.photo/photo.rectify/target.c
+  src/imagery/i.ortho.photo/photo.rectify/write.c
+  src/imagery/i.pca/cmd/eigen.c
+  src/imagery/i.points/analyze.c
+  src/imagery/i.points/ask.c
+  src/imagery/i.points/ask_mag.c
+  src/imagery/i.points/cellhd.c
+  src/imagery/i.points/colors.c
+  src/imagery/i.points/curses.c
+  src/imagery/i.points/debug.c
+  src/imagery/i.points/digit.c
+  src/imagery/i.points/dot.c
+  src/imagery/i.points/driver.c
+  src/imagery/i.points/equ.c
+  src/imagery/i.points/graphics.c
+  src/imagery/i.points/group.c
+  src/imagery/i.points/input.c
+  src/imagery/i.points/main.c
+  src/imagery/i.points/mark.c
+  src/imagery/i.points/mouse.c
+  src/imagery/i.points/points.c
+  src/imagery/i.points/target.c
+  src/imagery/i.points/title.c
+  src/imagery/i.points/tty.c
+  src/imagery/i.points/view.c
+  src/imagery/i.points/where.c
+  src/imagery/i.points3/inter/main.c
+  src/imagery/i.points3/inter/view_colors.c
+  src/imagery/i.points3/inter/view_config.c
+  src/imagery/i.points3/inter/view_conv.c
+  src/imagery/i.points3/inter/view_points.c
+  src/imagery/i.points3/inter/view_where.c
+  src/imagery/i.quantize/gen_colors.c
+  src/imagery/i.tape.spot/para_read.c
+  src/imagery/i.tape.tm3/examine.c
+  src/imagery/i.tape.tm3/fast.c
+  src/imagery/i.target/ask_target.c
+  src/imagery/i.vpoints/mark.c
+  src/imagery/i.zc/cmd/findzc.c
+  src/imagery/i.zc/cmd/getg.c
+  src/imagery/i.zc/cmd/mult.c
+  src/imagery/libe/convert_ll.c
+  src/imagery/libe/photo_trans.c
+  src/include/projects.h
+  src/libes/ibtree/free.c
+  src/libes/ibtree/rewind.c
+  src/libes/proj/pj_strerrno.c
+  src/mapdev/diglib/file_checks.c
+  src/mapdev/diglib/portable.c
+  src/mapdev/v.cadlabel/v.cadlabel.c
+  src/mapdev/v.cutter/dump.c
+  src/mapdev/v.cutter/interior.c
+  src/mapdev/v.cutter/sort.c
+  src/mapdev/v.digit/debugf.c
+  src/mapdev/v.digit/screen_plt.c
+  src/mapdev/v.in.dlg/r_dlg_head.c
+  src/mapdev/v.to.sites/local_proto.h
+  src/mapdev/v.to.sites/v.to_sites.c
+  src/paint/Programs/p.map/inter/ask_grid.c
+  src/paint/Programs/p.map/inter/ask_legend.c
+  src/paint/Programs/p.map/inter/record.c
+  src/paint/Programs/p.map.new/cmd/barscale.c
+  src/paint/Programs/p.map.new/cmd/do_newgrid.c
+  src/paint/Programs/p.map.new/cmd/griddraw.c
+  src/raster/r.coin/cmd/check.c
+  src/raster/r.cross/cats.c
+  src/raster/r.describe/cmd/dumplist.c
+  src/raster/r.in.gif/cmd/r.in.gif.c
+  src/raster/r.in.ppm/r.in.ppm.c
+  src/raster/r.mapcalc/mapcalc/xlog.c
+  src/raster/r.out.xyz/main.c
+  src/raster/r.report/cmd/report.c
+  src/raster/r.to.sites/main.c
+  src/sites/s.in.ascii/main.c
+  src/sites/s.kcv/readsite.c
+  src/sites/s.probplt/pltsqq.c
+  src/sites/s.sample/bilinear.c
+  src/sites/s.sample/cubic.c
+  src/sites/s.surf.tps/user1.c
+  src/sites/s.sv/main.c
+  src/sites/s.sv/plthgpt.c
+  src/sites/s.sv/save.c
+  src/sites/s.territory/territory.c
+  src/sites/s.univar/univar.c
+
+- updated prototyping and headers:
+  src/sites/s.surf.rst/interp_float/distance.c
+  src/sites/s.surf.rst/interp_float/func2d.c
+  src/sites/s.surf.rst/interp_float/init2d.c
+  src/sites/s.surf.rst/interp_float/input2d.c
+  src/sites/s.surf.rst/interp_float/interp2d.c
+  src/sites/s.surf.rst/interp_float/interpf.h
+  src/sites/s.surf.rst/interp_float/matrix.c
+  src/sites/s.surf.rst/interp_float/minmax.c
+  src/sites/s.surf.rst/interp_float/newsegm2d.c
+  src/sites/s.surf.rst/interp_float/output2d.c
+  src/sites/s.surf.rst/interp_float/point2d.c
+  src/sites/s.surf.rst/interp_float/resout2d.c
+  src/sites/s.surf.rst/interp_float/resout2dmod.c
+  src/sites/s.surf.rst/interp_float/ressegm2d.c
+  src/sites/s.surf.rst/interp_float/secpar2d.c
+  src/sites/s.surf.rst/interp_float/segmen2d.c
+  src/sites/s.surf.rst/interp_float/vinput2d.c
+  src/sites/s.surf.rst/interp_float/write2d.c
+  src/sites/s.surf.rst/r.resamp.rst/local_proto.h
+  src/sites/s.surf.rst/r.resamp.rst/main.c
+  src/sites/s.surf.rst/s.surf.rst/main.c
+
+- src.garden/grass.hdf
+    Gmakefiles updated, fp support still required.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 16, 1999 (Jacques Bouchard)
+
+         -------------------
+   ----> grass5.0beta_4d.tar <--
+         -------------------
+
+- fixed src/libes/proj/ tree
+    -> new projection software working
+- src/raster/r.slope.aspect/cmd/main.c
+   corrected "precision" default parameter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 16, 1999 (Morten Hulden - morten@ngb.se, Markus Neteler,
+                    Jacques Bouchard, Luca Palmeri)
+
+         -------------------
+   ----> grass5.0beta_4c.tar <--
+         -------------------
+
+- changed ENTIRE GRASS:  printf("") -> fprintf(stdout,"")
+  to fix empty screen/NVIZ mapset problems
+- src.contrib/GMSL/NVIZ2.2/src/Gmakefile
+   added compile flag -ldl
+- src.contrib/GMSL/NVIZ2.2/scripts/mapBrowser.tcl
+     fixed g.gisenv part
+- src/general/g.gisenv/main.c 
+   added return 0;
+- fixed src/scripts/contrib/Gmakefile
+- src/mapdev/v.to.rast
+   raster.c added:
+       G_suppress_warnings(1);
+       /* otherwise get complaints about window changes */
+   -> still no output in v.to.rast
+- src/raster/r.in.poly
+   main.c added:
+       G_suppress_warnings(1);
+       /* otherwise get complaints about window changes */
+   -> still no output in r.digit
+- src/general/g.setproj
+   main.c line 183: bugfix for ellipsoid if g.setproj is run a second time
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 13, 1999 (Bill Brown, Markus Neteler, Luca Palmeri)
+
+         -------------------
+   ----> grass5.0beta_4b.tar <--
+         -------------------
+- src/scripts/contrib/s.in.grid
+   added
+- bugfix /src/imagery/i.rectify2/write.c (from i.rectify/write.c)
+- src/libes/proj updated to latest code available
+   replaced existing proj4.2 with proj4.3 (from ftp://kai.er.usgs.gov)
+   -> some new projections etc., see local CHANGE-LOG
+- r.to.sites updated (sites format problems fixed)
+- s.surf.rst updated (timestamp and sites format problems fixed)
+- moved from src.contrib/CERL into section src/sites/
+   s.normal, s.perturb, s.qcount, s.probplt, s.rand, s.sample, s.sv
+   s.univar, s.kcv
+  updated src/CMD/lists/GRASS: added these modules
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 10, 1999 (Stefano Merler, Markus Neteler, Bill Brown)
+
+         -------------------
+   ----> grass5.0beta_4a.tar <--
+         -------------------
+
+- src/mapdev/v.digspline 
+     renamed to v.digit. Old v.digit moved to src/mapdev/v.digit_obsolete/
+  updated src/CMD/lists/GRASS
+- src/include/site.h updated (in sync with src/libes/gis/sites.c now)
+   fixes DateTime problem
+- INSTALL text: correction on compile flags
+- src/raster/r.tiff/cmd/r.in.tiff.c
+   updated to accept 24bit TIFF
+   features: color quantization and RGB-split in GRASS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+September 3, 1999 (Eliot Cline, Markus Neteler, Bill Brown)
+                    databridge@hotmail.com
+
+         -------------------
+   ----> grass5.0beta_3g.tar <--
+           published 3. Sept. 1999
+         -------------------
+- new src/libes/gis/sites.c
+    -> fixes problems with s.info and d.siter
+- changed "printf" -> "fprintf(stderr, "
+   src/libes/gis/legal_name.c
+   src/imagery/*  (all modules!!)
+
+- src.contrib/GMSL/ogl3d_linux added
+   -> ogl3d ported to Linux!
+
+- src/xgrass/libes/Xgi/Help.c
+   added MAX definition (needed for ogl3d)
+- man/man1/r.timestamp added
+  src/raster/r.timestamp/r.timestamp.html
+- man/man1/r.in.ppm added (24bit support)
+  src/raster/r.in.ppm/r.in.ppm.html
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 31, 1999 (Markus Neteler, Stefano Merler, ITC-Irst, Trento, Italy)
+                                         merler@itc.it
+         -------------------
+   ----> grass5.0beta_3e.tar <--
+         -------------------
+
+- src/raster/r.in.ppm (Stefano Merler)
+   added. NEW: true 24bit support, color quantization, RGB split
+   replaced r.in.pbm in src/CMD/lists/GRASS
+- src/CMD/generic/POST_INSTALL.sh
+   bugfix for creating locks/SERVERNAME directory
+- src/CMD/generic/CREATE_GMAKE
+   addition to create /usr/local/bin/gmakelinks5 (former src/CMD/MAKELINKS.sh)
+   for local module compiling with gmake5
+- src/xgrass_lib.h 
+   (commented line 125, 128 for /xgrass/lib/Xgi)
+- src/xgrass/libes/Xgi/ (modifications)
+   Interact.c  Region.c   editor.c   fontlist.c
+- several bugfixes for src.contrib/NVIZ2.2
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 29, 1999 (Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_3d.tar <--
+         -------------------
+
+- src/sites/s.territory
+    - Gmakefile: added $(XDRLIB)
+- man/man1/r.quant added (HTML pages as well in local directories)
+  man/man1/r.null 
+  man/man1/r.in.gif
+  man/man1/r.in.pbm
+  man/man1/r.in.tiff
+  man/man1/r.out.tiff
+  man/man1/r.proj
+- man/man2/v.to.sites updated
+
+- added latest NVIZ(2.2)
+    src.contrib/GMSL/NVIZ
+    src.contrib/GMSL/libes/ogsf
+
+- src/include/bitmap.h
+    corrected comment line 23
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 27, 1999 (Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_3c.tar <--
+         -------------------
+
+- src/imagery/i.ortho.photo
+   - successfully fixed (changed all "printf" to "fprintf(stderr, "
+- added missing src/imagery/i.rectify/write.c
+- added copying of "create_fifo.sh" to src/CMD/generic/POST_INSTALL.sh
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 25, 1999 (Bill Brown, Helena Mitasova, Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_3a.tar <--
+         -------------------
+
+- updated v.to.sites to new sites format
+  The flag we added was:
+    -d   Write attribute as double instead of cat
+- updates for s.surf.rst, r.resamp.rst
+  updated related HTML and man pages
+- small update to config.guess
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 24, 1999 (Roberto Flor, ITC-Irst, Trento, Italy)
+
+- new XDRIVER, 
+  new d.mon supporting FULL 24bit!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+August 22, 1999 (Bill Hughes,  Luca Palmeri)
+                               lpalmeri@ux1.unipd.it
+- src/imagery/i.rectify/write.c
+- set of bugfixes (patch1 and 2 from Bill Hughes)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July 22 (B.Byars, M. Neteler, and GDT)
+
+- Solaris 7 intel headers now included  
+  - src/raster/r.binfer/gram.c
+  - src/raster/r.combine/cmd/gis_pars.c
+  - src/raster/r.mapcalc/polish/y.tab.c
+  - src/raster/r.weight/inter/gis_pars.c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 21nd. 1999 (Markus Neteler)
+
+- removed unnecessary USE_TERMIO comments from
+    INSTALL
+    src/CMD/head/head.in
+  The USE_TERMIO problem was fixed properly in beta2p.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 21nd. 1999 (Bill Hughes)
+
+- src/display/devices/XDRIVER/XDRIVER24/SWITCHER.c
+   corrected improper debug statement (causing problems for i.points,
+   i.ortho.photo etc.)
+
+- src/CMD/generic/POST_INSTALL.sh
+   added "GRASS GIS compiled successfully." message
+
+Corrections for USE_TERMIO, USE_TERMIOS:
+  changed to HAVE_TERMIOS to reflect src/include/config.h (build by
+  autoconf)
+
+- src/display/d.colors/cmd/tty.c
+- src/imagery/i.ortho.photo/photo.2image/tty.c
+- src/imagery/i.ortho.photo/photo.2target/tty.c
+- src/imagery/i.points/tty.c
+- src/imagery/i.vpoints/tty.c
+- src/libes/digitizer/graph_input.c
+- src/libes/vask/SAVE/V_tty.c
+- src/mapdev/digitizers/altek/dig_dev.c
+- src/mapdev/digitizers/altek2/dig_dev.c
+- src/mapdev/digitizers/calcomp/dig_dev.c
+- src/mapdev/digitizers/calcomp/Diagnostics/dig_dev.c
+- src/mapdev/digitizers/kurta/dig_dev.c
+- src/mapdev/digitizers/kurta2/dig_dev.c
+- src/mapdev/unsupported/dig_to_dlg/tty.c
+- src/mapdev/unsupported/dlglabel/tty.c
+- src/mapdev/v.digit/graph_input.c
+- src/mapdev/v.digit/set_key.c
+- src/mapdev/v.digit/tty.c
+- src/mapdev/v.digit/Diagnostic/graph_input.c
+- src/mapdev/v.digit.scs/graph_input.c
+- src/mapdev/v.digit.scs/set_key.c
+- src/mapdev/v.digit.scs/tty.c
+- src/mapdev/v.digit.scs/Diagnostic/graph_input.c
+- src/mapdev/v.digit.scs/notused/tty.c
+- src/mapdev/v.digit2/set_key.c
+- src/mapdev/v.digit2/tty.c
+- src/mapdev/v.digspline/Diagnostic/graph_input.c
+- src/mapdev/v.digspline/tty.c
+- src/paint/Interface/driverlib/io.c
+- src/paint/Interface/driverlib.old/io.c
+- src/paint/drivers.junk/anadex/_wait.c
+- src/paint/drivers.junk/anadex/baud.c
+- src/paint/drivers.junk/anadex/flush.c
+- src/paint/drivers.junk/anadex/open.c
+- src/paint/drivers.junk/epson.24.180/_wait.c
+- src/paint/drivers.junk/epson.24.180/baud.c
+- src/paint/drivers.junk/epson.24.180/flush.c
+- src/paint/drivers.junk/epson.24.180/open.c
+- src/paint/drivers.junk/epson.24.90/_wait.c
+- src/paint/drivers.junk/epson.24.90/baud.c
+- src/paint/drivers.junk/epson.24.90/flush.c
+- src/paint/drivers.junk/epson.24.90/open.c
+- src/paint/drivers.junk/epson.8.90/_wait.c
+- src/paint/drivers.junk/epson.8.90/baud.c
+- src/paint/drivers.junk/epson.8.90/flush.c
+- src/paint/drivers.junk/epson.8.90/open.c
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 20nd. 1999 (Brook Milligan, Bill Hughes)
+
+         -------------------
+   ----> grass5.0beta_2n.tar <--
+         -------------------
+
+- src/raster/r.digit/create_map.c
+   added "rows=2040" to call of r.in.poly due to bug when writing map
+
+- src/CMD/head/head.in
+  configure.in
+  configure
+   added test for LDFLAG "-s" (was problem on SGI Irix 6.5)
+
+- Makefile.in
+   - bugfix for find commands (added "true" statement)
+
+- docs/REQUIREMENTS
+   added
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 19nd. 1999 (Bill Hughes, Bill Brown, Helena Mitasova, Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_2m.tar <--
+         -------------------
+
+- src/mapdev/v.in.tig.lndmk/Gmakefile
+   - fixed for SUN and SGI
+
+- src/mapdev/v.digspline/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- Makefile.in
+   improved "clean" section
+
+- removed src.related/LTPlus  -> outdated and not usable
+- removed src.related/pbmplus -> outdated, use netpbm-tools instead
+- cleared out parts of src.contrib/archive/ -> removed binary modules
+- added src.contrib/GMSL/NVIZ2.2 (needs openGL from SGI)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 19nd. 1999 (Bill Hughes, Markus Neteler)                                               
+         -------------------
+   ----> grass5.0beta_2l.tar <--
+         -------------------
+
+- src/CMD/generic/CREATE_GMAKE.sh
+   added to create /usr/local/bin/gmake5
+
+- src/CMD/generic/POST_INSTALL.sh
+   added to copy digcap file and to create locks-directory with permission
+
+- Makefile.in
+   - removing of OBJ-files quiet now
+   - modified for src/CMD/generic/CREATE_GMAKE.sh
+   - corrected BINDIR
+
+- src/sites/s.territory/load.c
+  src/sites/s.territory/local_proto.h
+  src/sites/s.territory/main.c
+  src/sites/s.territory/territory.c
+     - bugfixes, new prototyping
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 16nd. 1999 (Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_2k.tar <--
+         -------------------
+ 
+- src/display/devices/monitorcap/Gmakefile
+     -> changed to create etc/monitorcap instead of etc/moncap.sample
+  src/display/devices/monitorcap/monitorcap
+     -> uncommented x0 - x6, CELL as it is todays standard display
+        and compiled through src/CMD/lists/GRASS
+     This prevents us from annoying post-install work     
+
+- Makefile.in
+   - added line to copy etc/digcap.sample to etc/digcap
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 15nd. 1999 (Bill Hughes)
+
+         -------------------
+   ----> grass5.0beta_2j.tar <--
+         -------------------
+- Makefile.in
+    slight corrections (not perfect yet!)
+
+- src/libes/dspf/Viz.h
+- src/libes/dspf/cube_io.c
+- src/libes/dspf/dspf_header.c
+- src/libes/dspf/print_info.c
+- src/libes/dspf/struct_copy.c
+   patches for new prototyping
+
+- src/raster/r.flow/mem.13.c
+   G_allocate_cell_buf fixed
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 14nd. 1999 (Bill Brown, Helena Mitasova, Brook Milligan,
+                  Bill Hughes, Markus Neteler)
+         -------------------
+   ----> grass5.0beta_2i.tar <--
+         -------------------
+
+- src/imagery/i.points3/inter/text_tty.c
+  fixed for Solaris
+
+- src/imagery/i.points3/inter/protodefs.h
+   fixed for Solaris
+
+- src/mapdev/georef/set_key.c
+- src/mapdev/moss/moss.h
+- src/mapdev/v.digspline/set_key.c
+- src/mapdev/v.mkgrid/rotate.c
+- src/misc/m.in.e00/e00b2a/e00b2a.c
+- src/paint/Interface/driverlib/io.c
+- src/paint/Programs/p.map.new/cmd/dobackground.c
+- src/paint/Programs/p.map.new/cmd/griddraw.c
+- src/paint/Programs/p.map.new/cmd/legendtable.c
+- src/paint/Programs/p.map.new/cmd/regionfile.c
+- src/raster/r.binfer/main.c
+- src/raster/r.surf.area/main.c
+   fixes
+
+- src/CMD/head/head.in
+  configure.in
+  configure
+   fixed COMPATLIB, TERMLIB and XDRLIB
+
+- src/sites/s.geom
+   -added (requires src/libes/geom, src/include/geom, needs update to 4.2
+    sites API)
+
+- src/paint/p.vrml1.1
+   -added
+
+- src/libes/dspf
+  src/libes/ogsf
+    - added  (required for NVIZ)
+
+- added dspf and ogsf to src/CMD/lists/GRASS
+
+- src/sites/s.surf.rst/v.surf.rst/Gmakefile
+    - added missing flag: $(XDRLIB)
+
+- man/man1/r.slope.aspect
+    - updated to 5.0
+
+- man/man1/m.in.e00
+  man/man1/s.to.rast
+    - added
+
+- docs/progman50/
+   - added 5.x documentation (g3d, datetime, sites API, raster fp)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 12nd. 1999 (Bill Hughes, Brook Milligan, Bill Brown, 
+                  Jacques Bouchard, Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_2h.tar <--
+         -------------------
+      [ no update package provided due to heavy bugfixing ]
+
+- src/tcltkgrass updated
+- changes to configure.in, Makefile,in, src/CMD/head/head.in
+  Fixed:
+  Makefile.in: installation directory needs write permission for owner.
+  Many source files: USE_TERMIO -> HAVE_TERMIO_H
+
+- color allocation on X (XDRIVER24) is fixed (black is black now)
+- src/raster/r.neighbors updated
+
+- further changes to:
+Makefile
+src/display/d.colors/tty.c
+src/display/d.profile/DumpProfile.c
+src/display/d.profile/Range.c
+src/display/d.profile/show.c
+src/general/g.help/tty.c
+src/imagery/i.class/tty.c
+src/imagery/i.ortho.photo/photo.2image/tty.c
+src/imagery/i.ortho.photo/photo.2target/tty.c
+src/imagery/i.points/tty.c
+src/imagery/i.vpoints/tty.c
+src/libes/geom/optri/height.c
+src/libes/geom/optri/site.c
+src/libes/gis/intr_char.c
+src/libes/vask/V_tty.c
+src/mapdev/georef/tty.c
+src/mapdev/v.digspline/ginput.h
+src/mapdev/v.digspline/graph_input.c
+src/sites/s.surf.idw/cmd/main.c
+src/sites/s.surf.idw/cmd/proto.h
+src/sites/s.surf.idw/cmd/read_cell.c
+src/sites/s.surf.idw/cmd/read_sites.c
+src/sites/s.surf.rst/r.resamp.rst/main.c
+src/sites/s.surf.rst/v.surf.rst/main.c
+src/display/devices/XDRIVER/XDRIVER24/Clr_table.c
+src/display/devices/XDRIVER/XDRIVER24/Graph_Set.c
+src/display/devices/XDRIVER/XDRIVER24/SWITCHER.c
+src/display/devices/XDRIVER/lib/colors.h
+src/libes/display/color_list.c
+src/libes/display/colors.h
+src/libes/geom/optri/edgeinsert.c
+src/libes/geom/optri/graph.c
+src/libes/raster/Box.c
+src/libes/raster/io.c
+src/raster/r.neighbors/cmd/bufs.c
+src/raster/r.neighbors/cmd/c_ave.c
+src/raster/r.neighbors/cmd/c_divr.c
+src/raster/r.neighbors/cmd/c_intr.c
+src/raster/r.neighbors/cmd/c_max.c
+src/raster/r.neighbors/cmd/c_median.c
+src/raster/r.neighbors/cmd/c_min.c
+src/raster/r.neighbors/cmd/c_mode.c
+src/raster/r.neighbors/cmd/c_stddev.c
+src/raster/r.neighbors/cmd/c_var.c
+src/raster/r.neighbors/cmd/local_proto.h
+src/raster/r.neighbors/cmd/main.c
+src/raster/r.neighbors/cmd/method.h
+src/raster/r.neighbors/cmd/readcell.c
+src/imagery/i.in.erdas/cmd/main.c
+src/sites/s.menu/Lib/Gmakefile
+src/sites/s.menu/Lib/memcopy.c
+src/sites/s.menu/Lib/report.c
+src/display/d.leg.thin/main.c
+src/display/d.pan/center.c
+src/display/d.pan/local_proto.h
+src/display/d.pan/pan.c
+src/display/d.sites.qual/cmd/draw_point.c
+src/display/d.sites.qual/cmd/local_proto.h
+src/display/d.sites.qual/cmd/main.c
+src/display/d.sites.qual/cmd/qualify.c
+src/display/d.what.sites/main.c
+src/display/d.what.sites/opensite.c
+src/display/d.what.sites/show.c
+src/display/d.what.sites/what.c
+src/display/d.what.sites/what.h
+src/display/devices/CELL/Can_do.c
+src/display/devices/CELL/Color.c
+src/display/devices/CELL/Draw_line.c
+src/display/devices/CELL/Get_w_box.c
+src/display/devices/CELL/Get_w_line.c
+src/display/devices/CELL/Get_w_pnt.c
+src/display/devices/CELL/Graph_Clse.c
+src/display/devices/CELL/Graph_Clse.c.orig
+src/display/devices/CELL/Graph_Set.c
+src/display/devices/CELL/Panel.c
+src/display/devices/CELL/Polygn_abs.c
+src/display/devices/CELL/Reset_clr.c
+src/display/devices/CELL/Returns.c
+src/display/devices/CELL/bresline.c
+src/display/devices/CELL/cell.h
+src/display/devices/CELL/connect.c
+src/display/devices/CELL/file_io.c
+src/display/devices/CELL/polyfill.c
+src/include/geom/basic.h
+src/include/gisdefs.h
+src/include/segment.h
+src/libes/geom/basic/basic.c
+src/libes/geom/basic/basic.h
+src/libes/geom/basic/cb.c
+src/libes/geom/basic/cb_doprnt.c
+src/libes/geom/basic/counter.c
+src/libes/geom/basic/files.c
+src/libes/geom/basic/getarg.c
+src/libes/geom/basic/includebasic.h
+src/libes/geom/basic/isort.c
+src/libes/geom/basic/istaque.c
+src/libes/geom/basic/local_proto.h
+src/libes/geom/basic/malloc.c
+src/libes/geom/basic/math2.c
+src/libes/geom/basic/oldbasic.h
+src/libes/geom/basic/qsort.c
+src/libes/geom/basic/time.c
+src/libes/geom/basic/tokenize.c
+src/libes/geom/basic/uhash.c
+src/libes/geom/optri/angle.c
+src/libes/geom/optri/bitvector.c
+src/libes/geom/optri/bitvector.h
+src/libes/geom/optri/delaunay.c
+src/libes/geom/optri/edgeinsert.c
+src/libes/geom/optri/flips.c
+src/libes/geom/optri/graph.c
+src/libes/geom/optri/hdag.c
+src/libes/geom/optri/heap.c
+src/libes/geom/optri/height.c
+src/libes/geom/optri/heur.angle.c
+src/libes/geom/optri/heur.height.c
+src/libes/geom/optri/heur.slope.c
+src/libes/geom/optri/internoptri.h
+src/libes/geom/optri/local_proto.h
+src/libes/geom/optri/novisual.c
+src/libes/geom/optri/persquadedge.c
+src/libes/geom/optri/persquadedge.h
+src/libes/geom/optri/planesweep.c
+src/libes/geom/optri/pqe2qe.c
+src/libes/geom/optri/quadedge.c
+src/libes/geom/optri/queue.c
+src/libes/geom/optri/randtree.c
+src/libes/geom/optri/randtree.h
+src/libes/geom/optri/regular.c
+src/libes/geom/optri/site.c
+src/libes/geom/optri/slope.c
+src/libes/geom/optri/sos.regular.c
+src/libes/geom/optri/stack.c
+src/libes/geom/optri/stack.h
+src/libes/geom/optri/timer.c
+src/libes/geom/optri/triangulation.c
+src/libes/geom/sos/sos.h
+src/libes/gis/ll_scan.c
+src/libes/gis/set_prior.c
+src/libes/gis/sleep.c
+src/libes/gis/timestamp.c
+src/libes/gis/wind_scan.c
+src/libes/raster/ORIG/Reset_clrs.c
+src/libes/vask/V_call.c.orig
+src/libes/vask/V_call.c_orig
+src/libes/vask/V_tty.c
+src/mapdev/v.clean/Vclean.c
+src/mapdev/v.in.shape/dbfopen.c
+src/mapdev/v.in.shape/main.c
+src/mapdev/v.in.shape/shpopen.c
+src/raster/r.bilinear/main.c
+src/raster/r.binfer/gram.c
+src/raster/r.binfer/lex.c
+src/raster/r.combine/cmd/gis_lxcl.c
+src/raster/r.combine/cmd/gis_pars.c
+src/raster/r.dist/dist.c
+src/raster/r.in.arc/cmd/gethead.c
+src/raster/r.in.arc/cmd/local_proto.h
+src/raster/r.in.arc/cmd/main.c
+src/raster/r.in.dted/dt_util.c
+src/raster/r.in.dted/r.in.dted/dted_read.c
+src/raster/r.in.dted/r.in.dted/dtedgis.h
+src/raster/r.in.dted/r.in.dted/local_proto.h
+src/raster/r.in.dted/r.in.dted/main.c
+src/raster/r.in.dted/r.in.dted/read_write.c
+src/raster/r.mapcalc/polish/lex.yy.c
+src/raster/r.mapcalc/polish/y.tab.c
+src/raster/r.out.ppm/main.c
+src/raster/r.out.xyz/main.c
+src/raster/r.sum/main.c
+src/raster/r.support/modhead.c
+src/raster/r.support/row_addr.c
+src/raster/r.timestamp/main.c
+src/raster/r.to.sites/main.c
+src/raster/r.weight/inter/gis_lxcl.c
+src/raster/r.weight/inter/gis_pars.c
+src/scripts/shells/create_fifos.sh
+src/sites/s.info/describe.c
+src/sites/s.info/local_proto.h
+src/sites/s.info/main.c
+src/mapdev/v.digspline/dig_curses.c
+src/mapdev/v.digspline/local_proto.h
+src/mapdev/v.in.shape/main.c
+src/raster/r.in.pbm/r.in.pbm.c
+src/sites/s.surf.rst/data/dataquad.c
+src/sites/s.surf.rst/data/dataquad.h
+src/sites/s.surf.rst/data/local_proto.h
+src/sites/s.surf.rst/interp_float/input2d.c
+src/sites/s.surf.rst/interp_float/interp2d.c
+src/sites/s.surf.rst/interp_float/newsegm2d.c
+src/sites/s.surf.rst/interp_float/ressegm2d.c
+src/sites/s.surf.rst/interp_float/secpar2d.c
+src/sites/s.surf.rst/interp_float/segmen2d.c
+src/sites/s.surf.rst/interp_float/vinput2d.c
+src/sites/s.surf.rst/s.surf.rst/main.c
+src/sites/s.surf.rst/s.surf.rst/surf.h
+src/sites/s.surf.rst/tree/Gmakefile
+src/sites/s.surf.rst/tree/tree.c
+src/sites/s.surf.rst/tree/tree.h
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 10nd. 1999 (Bill Hughes)
+
+- src/libes/geom/optri/triangle.c: 48
+    grAllocate() needs another parameter. Fixed
+- src/libes/geom/optri/edgeinsert.c: 292
+    grAllocate() needs another parameter. Fixed.
+
+Comment on OPTRI:  I [Bill] have been working through some errors in src/libes/geom/optri
+ and I have a tarball of the directory attached below.  This is not
+ done yet, but it needs some expertise from somebody who understands
+ it.  Two references to grAllocate() have only 3 parameters.  I
+ don't understand what it does, so I can't really guess at what
+ should be passed as the final parameter.  I have put in 0 for the
+ moment to get the compile to work.
+
+- src/mapdev/v.in.shape
+   - updated to proper headers
+
+- src/mapdev/v.surf.spline
+   added this missing module (still buggy)
+- src/mapdev/v.surf.spline/scripts/tidy.sh (updated by Bill Hughes)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 9nd. 1999 (Brook Milligan)
+
+         -------------------
+   ----> grass5.0beta_2g.tar <--
+         -------------------
+
+- added autoconf feature
+  -> use "configure" now to guess the compiler options.
+     The old GISGEN.sh way to compile should still work.
+
+- moved docs to docs/
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 8nd. 1999 (Bill Hughes, Bill Brown, Markus Neteler)
+
+         -------------------
+   ----> grass5.0beta_2f.tar <--
+         -------------------
+
+- src/raster/r.in.pbm/Gmakefile
+  - corrected mistyped $(XDRLIB)
+
+- src/sites/s.surf.rst/interp_float/output2d.c
+  - If the data really were FCELL, then they should have used 
+    G_add_f_raster_color_rule, but the data1 and data2 are CELL
+    type, so delete the FCELL_TYPE argument. Fixed.
+
+- src/raster/r.flow/io.13.c
+  - updated line 344: G_open_update
+
+- src/raster/r.contour
+  fixed all problems.
+
+- src/mapdev/v.digspline/set_prior.c
+  - removed getuid() definitions
+  v.digspline is fixed now.
+
+- src/sites/s.in.ascii/main.c
+   corrected misspelling line 55
+
+- src/imagery/i.ortho.photo/photo.2image/
+diff cell.c cell.c.orig
+42c42
+<       if (!choose_groupfile(name,mapset))
+---
+>       if (!choose_cellfile(name,mapset))
+
+
+- man/utilities/man.header
+  - corrected from CERL -> GRASS Development Team
+
+- man/man1/r.bilinear
+  src/raster/r.bilinear/r.bilinear.man
+  - added
+
+- man/man1/s.surf.rst
+  src/sites/s.surf.rst/s.surf.rst.man
+  - updated
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 6nd. 1999 (Markus Neteler)
+         -------------------
+   ----> grass5.0beta_2e.tar <--
+         -------------------
+
+Comment: Flag $(XDRLIB) in Gmakefiles is required for SUN/Solaris
+
+- src/sites/s.to.vect/cmd/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/sites/s.info/Gmakefile
+  - added missing flag: $(XDRLIB) $(MATHLIB)
+
+- src/raster/r.to.sites/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.tiff/cmd/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.surf.area/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.sum/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.out.xyz/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.out.mpeg/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.in.pbm/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.in.gif/cmd/Gmakefile
+  - added missing flag: $(XDRLIB) $(MATHLIB)
+
+- src/raster/r.in.dted/r.in.dted/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.in.bin/Gmakefile
+  - added missing flag: $(XDRLIB) $(MATHLIB)
+
+- src/raster/r.in.arc/cmd/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/raster/r.dist/Gmakefile
+  - added missing flag: $(XDRLIB) $(MATHLIB)
+
+- src/raster/r.bilinear/Gmakefile (renamed this directory)
+  - added missing flag: $(XDRLIB) $(MATHLIB)
+
+- src/misc/m.in.e00/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/mapdev/v.mkquads/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/mapdev/v.in.shape/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/imagery/i.rectify3/inter/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/libes/gis/edit_cats.c
+  - corrected line 227: sprintf instead of fprintf
+
+- src/display/d.what.sites/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/display/d.pan/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/display/d.barscale/cmd/Gmakefile
+  - added missing flag: $(XDRLIB)
+
+- src/CMD/head/solaris26
+  - added missing entry: XDRLIB = -lnsl
+
+- src/include/geom/basic.h
+  - line 93: commented sprintf definition for SUN
+    (causing problems on Solaris2.6)
+
+- src/sites/s.in.ascii/main.c
+  - added flag for elevation data import (needs %-character in
+    sites_list instead of @-character for attribute)
+
+- src/raster/r.stats/cmd/main.c
+  - mistyping corrected for user interface (missing brace)
+
+- src/display/d.rast.zoom/cur_to_db.c
+  - newline bugfix
+
+- src/general/g.region/cmd/main.c
+  -> changed order: west coordinates are printed before east coordinates
+     now (according to r.in.ascii header and cycle direction in g.region)
+     means: n,s,w,e now instead of n,s,e,w
+
+- src/libes/gis/color_look.sv (changed printf -> fprintf for ncurses)
+- src/libes/gis/legal_name.c  (changed printf -> fprintf for ncurses)
+
+
+Further fixes based on patchfile from Bill and Bernhard:
+
+- fixed src/display/d.pan/ask.c
+- fixed src/display/d.pan/center.c (fixed missing "mag" as well)
+- fixed src/display/d.pan/local_proto.h - (fixed missing "mag" as well)
+- fixed src/libes/display/raster2.c
+- fixed src/general/gis/gis_set.c
+- fixed src/general/gis/echo.c
+- fixed src/display/devices/XDRIVER/XDRIVER24/version.h
+- fixed src/general/g.setproj/table.c
+- fixed src/libes/datetime/copy.c
+- fixed src/libes/datetime/scan.c
+- fixed src/display/devices/XDRIVER/XDRIVER.h
+- fixed src/misc/m.in.pl94.db3/m.in.pl94.db.c
+- fixed src/misc/m.in.stf1.db3/m.in.stf1.db.c
+- fixed src/raster/r.contour/cont.c
+- fixed src/raster/r.contour/main.c (there were already fixes from Baylor)
+- fixed src/raster/r.to.sites/main.c
+
+-------------------------------------
+July, 3nd. 1999 (Bill and Bernhard)
+
+  *** CODE changes for 32/64bit compliance ***
+- applied tons of patches from Bill Hughes and Berhard Reiter
+  to the code. It should be 32bit and rather 64bit compliant now. 
+
+Comments from the authors:
+ http://grasshopper.grasshoppernet.com/~bhughes/
+   Bill Hughes    - bhughes@grasshoppernet.com
+   Berhard Reiter - berhard@uwm.edu
+
+The src/libes changes are clearly right, and relatively well tested. Along
+with that, the src/include headers have usable prototypes, now. 
+
+The module changes are things that seem obviously right, like fixing
+function calls. We don't really understand what all of them do, however, so
+there's a non-zero chance that our "pretty" code won't actually work. We have 
+made a libes patch as our contribution to the people who actually understand 
+the modules, in hopes that they will be able to build on our fixes and
+prototypes, to make GRASS code work in 64-bit environments. 
+
+These patches represent bugfixes, debugging changes, bugfixes, prototyping,
+and a small amount of "better code." 
+
+* Better Code:
+      - gets() is an Achilles' heel for GRASS when used on the Web, or where
+        through ignorance or malice someone can overrun an input buffer. I 
+        have replaced gets() calls with the slightly safer fgets(). 
+      - G_warning() and G_fatal_error() are called throughout the GRASS code
+        tree as though they accepted variable arguments, i.e. 
+
+           G_warning("Oops: error in %s, i = %d\n",string,integer);
+
+        which is not how they were written. They were written to accept one
+        char*, which they write to the screen and/or log. I have re-written 
+        these functions so that they accept varargs. This change has not been
+        approved by anyone, nor passed any peer review. It just seems right. 
+      - G_free() as as companion to G_malloc() and friends. It is annoying
+        to have to replace all of the #include <malloc.h> with 
+        #include <stdlib.h> so instead I just created a function to be 
+        included in the gis.h header. This is portable, which is an 
+        improvement. 
+
+* Prototyping:
+      - It's much easier to track down the mismatched arguments and implicit
+        casts with prototypes. These patches provide prototypes for all of the
+        src/libes, and as many other libes and modules as I have gotten into. 
+      - In the module code, the 4.2.1v21 patch has automatically-created
+        header files to provide function prototypes within each module. Some 
+        of this is overkill. As I work through each module, these headers are 
+        fixed to be a little less intrusive. Right now, though, there are still 
+        compile warnings that are the fault of this prototyping.
+      - The 5.0 code has not had as much work as the 4.2-series, so there
+        are still a number of bad calls lurking in the modules. With the 
+        proper prototypes, maybe somebody can fix them. 
+
+* Bugfixes:
+     -  Functions with the wrong number of arguments. 
+     -  Functions with the wrong type of arguments. 
+     -  Functions with the wrong return type. Usually, this is because a
+        function is allowed to default to an 'int' return, even though it 
+        returns a char*, or struct*. This may work on 32-bit machines, but 
+        whenever sizeof(char*) != sizeof(int) (64-bit machines, for example) 
+        these functions overwrite memory, dump cores, and generally fail 
+        to work. 
+     -  Built-in functions without the proper headers. This leads to bad
+        return types. 
+
+In detail:
+- src/CMD/generic/GISGEN.sh
+	fixed path to mknod deleted, 
+
+- src/mapdev/libes/libtrans.h
+- src/mapdev/libes/transform/inverse.c
+	DEC's cc doesn't seem to like two-dimentional arrays in
+	function prototypes. Therefore moved gave the dimension and
+	moved its #define to libtrans.h.
+
+- src/paint/Programs/p.ppm/main.c
+- src/paint/Programs/p.select/cmd/mail.c
+	argument for G_no_gisinit() removed
+
+- src/raster/r.recode/recode.c
+	G_put_raster_row changed to G_put_d_raster_row() three times
+
+
+- src/raster/r.basins.fill/main.c
+- src/raster/r.drain/cmd/main.c
+- src/raster/r.los/cmd/main.c
+- src/raster/r.random/cmd/random.c
+- src/raster/r.thin/cmd/io.c
+- src/raster/r.watershed/seg/close_maps2.c
+- src/raster/r.watershed/seg/bseg_write.c
+- src/raster/r.watershed/seg/cseg_write.c
+- src/raster/r.watershed/seg/dseg_write.c
+- src/raster/r.cost/cmd/main.c
+- src/raster/r.surf.contour/cmd/main.c
+	removed last argument from G_put_map_row()
+
+- src/raster/r.grow/cmd/main.c
+	removed last argument from G_put_map_row() three times
+	removed last argument from G_open_cell_new()
+
+- src/raster/r.neighbors/cmd/c_intr.c
+	"&" was missing in G_set_d_null_value(&no_data, 1);  
+
+- src/raster/r.reclass/inter/maketable.c
+	splitted G_malloc() argument
+
+- src/raster/r.surf.idw/cmd/main.c
+	removed first argument of G_begin_geodesic_distance()
+
+- src/raster/r.volume/cmd/main.c
+	removed last arg of G_fopen_sites_new()
+
+- src/raster/r.weight/inter/execute.c
+	removed last argument from G_put_map_row()
+	removed last argument from G_open_cell_new()
+
+- src/paint/Programs/p.map.new/cmd/pre_legend.c
+	"&" missing from name = G_get_cats_title(&vcats);   
+
+- src/sites/s.surf.tps/main.c
+- src/sites/s.surf.tps/quad.c
+- src/sites/s.surf.tps/user1.c
+- src/sites/s.surf.tps/user2.c
+- src/sites/s.surf.tps/user3.c
+- src/sites/s.surf.tps/user4.c
+- src/misc/m.lulc.USGS/main.c
+- src/display/devices/CELL/polyfill.c
+	removed declarations for memory functions like mallloc()..
+
+- src/../src.contrib/CERL/raster/r.hydro.CASC2D/im_norm_calc.c
+	gave exit() calls a parameter
+
+src/imagery/libe/convert_ll.c
+108: Fourth Argument for pj_do_proj() should be *.
+220:   (Same)
+
+src/mapdev/v.digspline/get_point.c
+38: _Write_base() only takes two arguments.
+
+src/raster/r.binnfer/symtab.c
+174: too many arguments for printf()
+
+src/raster/r.los/make_pts.c
+15: NULL redefined.
+
+src/raster/r.out.tga/main.c
+75: too many arguments to targatail_rgb()
+82: too many arguments to targatail_lut()
+
+src/sites/s.to.rast/write_temp.c
+52: temp_name  is a char *, instead of int.
+242+: s->str_att should be de-referenced for *printf()
+
+src/paint/Programs/p.map.new/cmd/main.c
+504: NULL should be 0
+
+src/paint/Programs/p.map.new/cmd/getgrid.c
+74: NULL should be 0
+
+src/paint/Programs/p.map.new/cmd/graph_text.c
+68: too few arguments to move()
+
+src/paint/Programs/p.map.new/cmd/pattern.c
+314: close() should be fclose()
+
+misc/m.dted.extract/uhl.c
+59: wrong number of arguments to error()
+
+src.contrib/CERL/raster/r.hydro.CASC2D/write_files.c
+224+: variable 'colors' is already a pointer.
+
+src.contrib/CERL/raster.r.hydro.CASC2D/im_reservoir.c
+reservoir() final parameter is passed as a float instead of a double.
+
+src.contrib/CERL/raster.r.hydro.CASC2D/im_flow_route.c
+421: reservoir() final parameter is passed as a float instead of a float*.
+
+/usr/local/grass/srcs/grass5.0-alpha/src/mapdev/v.in.dlg/doit.c
+114: hd_dlg_to_dig() needs a (struct dlg *) instead of a FILE*
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+July, 2nd. 1999 (Markus Neteler, Jacques Bouchard)
+
+      -------------------
+  --> grass5.0beta2c.tar <--
+      --------------------
+ 
+- added manpages:
+   man/man1/d.sites.qual
+   man/man1/d.siter
+   man/man1/s.surf.rst
+   man/man1/s.info
+
+- src/scripts/contrib
+     g.html2man added
+
+- src/scripts/Gmakefile
+  - removed entry to delete the $GISBASE/scripts because it
+     always removes the d.siter script (which comes later in lists/GRASS).
+     Overwriting will to the same job.
+  - added scripts/contrib entry 
+  - corrected mkdir $(GISBASE)/scripts entry
+
+- src/display/d.siter
+  -> updated to tcl8.0/tk8.0
+
+- src/libes/datetime/*
+  -> replaced with the latest version from Bill Brown 
+     (received July, 1st 1999)
+
+- src/libes/gis/timestamp.c
+  -> replaced with the latest version from Bill Brown
+     (received July, 1st 1999)
+
+- src/sites/s.surf.rst/*
+  -> replaced with the latest version from Bill Brown
+     (received July, 1st 1999)
+
+- updated src/CMD/lists/GRASS
+  -> r.timestamp can be compiled now
+  -> s.surf.rst can be compiled now
+
+--------------------------------------
+
+changes until Jun 30 15:28:09 MEST 1999
+
+
+I feel several (known) bugfixes missing in your beta have gone lost 
+in your server crash some month ago... I hope I fixed them all.
+
+--------------------------------------
+1. Note:
+  - src/mapdev/mapdev_diglib.tar
+      can be removed safely. 
+
+2. Important:
+   It is quite unclear actually, which v.digit is official:
+    - v.digit
+    - v.digspline
+    - v.digit2
+    - v.digit.scs
+
+   I guess we go for v.digspline and call it "v.digit". 
+   Please remove the old versions...
+
+3. Unfortunately you have lost all hidden files
+   in /man.
+
+ man/cat1/.c*
+ man/cat2/.c*
+ man/cat3/.c*
+ man/cat4/.c*
+ man/cat5/.c*
+ man/man1/.class-*
+ man/man2/.class-*
+ man/man3/.class-*
+ man/man4/.class-*
+ man/man5/.class-*
+
+4. Please clean off old versions:
+   src.contrib/NPS: imagery.12oct93
+   src.contrib/NPS: imagery.27aug.93
+   src.contrib/NPS: imagery.29nov93
+   -> they are already included in src-tree (i.points3, i.rectify3 etc.)
+  
+5. grass5.0/src.contrib/archive
+   Do we still need this archive to be distributed? Seems to be rather
+   old.
+
+6. the src.related tree seems to be old:
+    - grass.hdf: use src.alpha/r.hdf (GRASS 4.2.1) instead.
+    - LTPlus should be taken out.(too big and unusable)
+    - mapgen should be taken out. (too big and unusable)
+
+
+
+------------------------------------------------------
+BUGFIXES: (well, a lot)
+So here we go: (this is mainly for your history file)
+--------------------------------------
+- src/CMD/head/*
+   - linux: use ncurses instead of curses. Fixed.
+   - solaris24: was oldish file with HTML code. Fixed.
+   - solaris25: fixed GISBASE directory
+   - irix6: fixed GISBASE directory
+   etc. 
+
+- src/CMD/
+   - missing GISGEN.sh, MAKELINKS.sh, gmake5.0 added
+
+- src/CMD/next_step
+  - must be empty before distributing!!
+
+- src/CMD/lists/GRASS
+  - several important additions:
+      src/libes/datetime
+      src/libes/geom
+      src/imagery/libe
+      src/display/d.vect.zoom
+      src/mapdev/v.to.sites
+      # r.tiff requirements are standard (and described in r.tiff/README)
+      src/raster/r.tiff
+      src/sites/s.to.vect
+      src/display/devices/CELL
+      src/display/devices/XDRIVER
+
+     Order of entry had to be changed:
+      src/paint/Interface
+      src/paint/Driver
+ 
+    Commented lines:
+      src/raster/r.timestamp
+      src/sites/s.surf.rst
+      src/sites/s.territory  -> none in compilable condition
+
+- src/sites/s.to.vect 
+   Missing directory! Added.
+
+- src.contrib/CERL/sites/
+   Corrected several bugs for nearly all modules.
+   This was obviously lost in your server crash.
+
+- src/display/d.3d/main.c
+  small thing: D3d renamed to d.3d in comment
+
+
+- src/display/d.sites/cmd/main.c: Addition:
+137a138
+> 	exit(0);
+
+- added missing module
+  src/display/d.vect.zoom/
+
+- src/libes/vask/V_call.c
+   file was in MSDOS encoding. fixed.
+
+- src/mapdev/v.mkquads/Gmakefile
+   fixed Gmakefile (missing $DATETIMELIB entry)
+
+- src/misc/m.in.pl94.db3/m.in.pl94.db.c
+   fixed compilation error
+
+- src/misc/m.in.stf1.db3/m.in.stf1.db.c
+   fixed compilation error
+
+- src/display/d.what.vect/cmd/what.c
+   fix for TclTkGRASS
+142c142
+< 
+---
+> 		fflush(stdout);
+
+
+- src/display/devices/CELL/Graph_Clse.c
+  fixed missing projection information:
+  Obviously lost in your server crash.
+
+- src/display/devices/CELL/README
+  improved.
+
+- src/general/g.setproj/table.h
+  src/general/g.setproj/table.c
+   file was in MSDOS encoding. fixed.
+
+
+- src/general/gis/gis.head
+   for safety reason (as discussed last year): use .gislock5 and .grassrc5
+6,7c6,7
+< lockfile=$home/.gislock
+< GISRC=$home/.grassrc
+---
+> lockfile=$home/.gislock5
+> GISRC=$home/.grassrc5
+65c65
+< if [ -x $home/.grassrc.VERSION_NUMBER ]
+---
+> if [ -x $home/.grassrc5.VERSION_NUMBER ]
+67,68c67,68
+< 	$home/.grassrc.VERSION_NUMBER
+< elif [ -x $GISBASE/grassrc ]
+---
+> 	$home/.grassrc5.VERSION_NUMBER
+> elif [ -x $GISBASE/grassrc5 ]
+70c70
+< 	$GISBASE/grassrc
+---
+> 	$GISBASE/grassrc5
+
+- src/general/gis/gis.head
+   removed clean_temp call, it is just required in gis.tail
+
+- src/general/gis/chk_dbase.c
+  src/general/gis/echo.c
+  src/general/gis/mke_loc.c
+  src/general/gis/chk_dbase.c
+  src/general/gis/clean_temp.c
+    changed printf -> fprintf  (otherwise problems with empty screens)
+
+- src/libes/gis/cats.c
+  src/libes/gis/closecell.c
+  src/libes/gis/color_look.c
+  src/libes/gis/color_org.c
+  src/libes/gis/color_read.c
+  src/libes/gis/edit_cats.c
+  src/libes/gis/edit_cellhd.c
+  src/libes/gis/get_row.c
+  src/libes/gis/gets.c
+  src/libes/gis/gishelp.c
+  src/libes/gis/list.c
+  src/libes/gis/make_colr.c
+  src/libes/gis/put_row.c
+  src/libes/gis/quant.c
+  src/libes/gis/try.c
+  src/libes/gis/window_map.c
+    changed printf -> fprintf  (otherwise problems with empty screens)
+    was already in my last bugfix package...
+
+- src/libes/gis/strip.c
+23c23
+<     if (a != buf)
+---
+>     if ((a != buf) && *a)
+   was obviously lost in your server crash (Solaris fix)
+
+- src/libes/gis/version.h
+   was totally outdated... fixed.
+
+- src/imagery/i.points3/inter/Gmakefile
+    corrected HOME variable
+    corrected missing $(XDRLIB) (for Solaris)
+
+- src/imagery/i.rectify3/cmd/Gmakefile
+    corrected HOME variable
+    corrected missing $(XDRLIB) (for Solaris)
+
+- src/imagery/i.rectify3/inter/Gmakefile
+    corrected HOME variable
+
+- src/imagery/i.tape.tm3/Gmakefile
+    corrected HOME variable
+    corrected missing $(XDRLIB) (for Solaris)
+
+     -> you may remove the old src.contrib/NPS code, if this 
+        here is later version
+
+- src/include/geom/basic.h
+    fixed a definition problem
+
+- src/libes/gis/G.h
+    changed number of maximal open files from 30 to 256
+
+- src/mapdev/README
+    updated from 4.2 -> 5.0
+
+- src/mapdev/v.digspline/Gmakefile
+    fixed Gmakefile (mkdir statements)
+    - hey, this was already in my last bugfix package from June!!
+
+- src/mapdev/v.to.sites/v.to_sites.c
+    - small correction in comment
+
+- src/raster/r.poly/cmd/io.c
+    - added bugfixes from 4.2.1: no more DEBUG output and
+      taking care for current region
+
+- src/raster/r.watershed/shed/basin_maps.c
+   old bugfix from March 5.0...:
+32c32
+< 		printf ("1) Basin only\n2) Basin and upstream\n3) Both\nOR
+0) to cancel program\n");
+---
+> 		printf ("1) Basin only\n2) Upstream only\n3) Both\nOR 0) to
+cancel program\n");
+44c44
+< 			output->do_accum = 0;
+---
+> 			output->do_accum = 1;
+
+
+- src/tcltkgrass/
+  I have replaced this TclTkGRASS with latest (we added a few nice things, see 
+  local history).
+
+- src/scripts/Gmakefile
+   corrected permissions for $GISBASE/scripts directory to 0755
+   (with 0555 it causes problems when recompiling - no user write perm.!!)
+
+- src/display/d.siter/Gmakefile
+   corrected permissions for $GISBASE/scripts/d.siter and tclsiter to 0755
+      (with 0555 it causes problems when recompiling - no user write perm.!!)
+   added test fro $GISBASE/scripts
+
+- src.contrib/CORPS/FLOOD/Gmakefile
+   corrected. Got lost obviously in your server crash.
+
+- src.contrib/UCB/gdbase
+   updated. Got lost obviously in your server crash.
+
+- src/libes/dbmi/lib/error.c
+   changed sys_error[errno] to strerror(errno): now ANSI C compatible
+   (learned from GRASS 4.2.1, r.infer)
+
+- src/libes/dbmi/Gmakefile
+   corrected directory name "driver" to "drivers"
+
+- src/libes/vask/V_call.c
+  - better version now: <ESC><ENTER> exits now
+         - cursor keys working
+         - return key cycling working as well
+         - in good condition now!!
+
+- src/general/gis/clean_temp.c
+  Commented this message (no need for printing in my opinion)
+66c66
+<       /*fprintf (stderr,"Removing old temporary files in mapset %s\n", mapset);*/
+---
+>       fprintf (stderr,"removing old temporary files in mapset %s\n", mapset);
+
+
+- src/imagery/i.ortho.photo/photo.init/mod_info.c
+    Corrected misspelling in menu entry ("devation" -> "deviation")
+
+- src/imagery/i.ortho.photo/photo.camera/mod_cam_info.c
+     Corrected misspelling in menu entry ("fiducail or reasue marks" ->
+                                          "fiducial or reseau marks")
+
+------------------------------------------------------------------------------
+
+
+HISTORY (Lisa Zygo, Bruce Byars, Bill Brown, Helena Mitasova)
+
+LZ 6/7/99
+
+Added/checked/verified following modules
+
+d.leg.thin
+d.pan
+d.siter
+d.sites.label
+d.sites.qual
+d.what.sites
+
+r.bilin
+r.colors
+r.dist
+r.flow
+r.in.arc
+r.in.dted
+r.in.pbm
+r.out.mpeg
+r.out.ppm
+r.out.xyz
+r.slope.aspect
+r.sum
+r.surf.area
+r.timestamp
+r.to.sites
+
+s.info
+s.surf.rst
+s.territory
+
+BB 6/(7,8)/99
+
+src/libes/gis/sites.c changed GMSL bugfix
+src/sites/s.surf.tps conforms to sites api and fixes s l o w n e s s problem
+src/raster/r.colors fixed
+src/raster/r.contour fixed
+src/raster/r.slope.aspect bugfixed
+
+bb 6/15/99
+
+gis.tail,head changed to reflect new standard.
+
+modules r.tiff, m.in.e00, and v.in.shape added
+list modified to reflect this also
+
+GDT 6/17/99
+
+Changes bug.report.sh to reflect new support addressing
+Cosmetics to gis.head
+Removed old codes no longer needed (most .old extensions
+
+src/imagery/i.tape.tm3/fast.c
+        return 0 deleted because void ParseUTM()
