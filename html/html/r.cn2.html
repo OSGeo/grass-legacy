@@ -8,7 +8,8 @@
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
-<EM><B>r.cn2</B></EM> - Generates a curve number map layer. (G Language Tool)
+<EM><B>r.cn2</B></EM> - Generates a curve number map layer.
+<BR><EM>(GRASS Raster Program)</EM> 
 
 <H2>SYNOPSIS</H2>
 <B>r.cn2 sg</B><EM>=hysoilgroup</EM> <B>lu</B><EM>=landusemap</EM> <B>pr</B><EM>=practicemap</EM> <B>hc</B><EM>=hyconditionmap</EM> <B>cn</B><EM>=cnmap</EM> <B>amc</B><EM>=AMCnumber</EM>
@@ -56,7 +57,7 @@ will create a CN map cnname for equivalent AMC condition II
 For the hydrologic soil group map the categories may be either A, B, C, or D.
 <P>
 
-For the landuse map layer the categories may be either fallow, row crops, small grain, close-seeded legumes, rotation meadow, pasture, range, meadow, woods, farm­steads, roads (dirt), hard surface, or water.
+For the landuse map layer the categories may be either fallow, row crops, small grain, close-seeded legumes, rotation meadow, pasture, range, meadow, woods, farm¡steads, roads (dirt), hard surface, or water.
 <P>
 
 For the practice or management map layer the categories may be either straight row, contoured, or contoured and terraced.
@@ -71,7 +72,8 @@ If the combination of the four layers categories does not exist in the NRCS (SCS
 The <EM>r.cn2</EM> program is sensitive to the current window setting.  Thus the program can be used to generate a CN map of any sub-area within the full map layer. Also, <EM>r.cn2</EM> is sensitive to any mask in effect.
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="r.weighted.cn.html">r.weighted.cn</A></EM>, CN
+<EM><A HREF="r.cn.html">r.cn</A></EM>,
+<EM><A HREF="r.weighted.cn.html">r.weighted.cn</A></EM>
 
 <H2>AUTHORS</H2>
 Raghavan Srinivasan and Dr. Bernie A. Engel, Agricultural Engineering Department, Purdue University 
