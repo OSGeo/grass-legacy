@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.126 2001-03-20 19:15:32 markus Exp $
+                 $Id: BUGS,v 1.127 2001-03-20 19:16:09 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -52,6 +52,7 @@ RC-Bug list:
  machine.  I haven't had a chance to really grok it, but I think "rowio"
  would be appropriate -- although, even that wouldn't be required.  I think
  at most it needs three rows in memory for cubic interpolation.
+ -> comment from Morten Hulden: This can only happen with *large* maps.
 
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
