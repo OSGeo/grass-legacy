@@ -72,6 +72,7 @@ double fstar2, tfsta2, xmin, xmax, ymin, ymax, zmin, zmax, gmin, gmax, c1min,
  c1max, c2min, c2max;
 double dnorm;
 double smc;
+double theta, scalex;
 
 FCELL *zero_array_cell;
 struct interp_params params;
@@ -141,7 +142,7 @@ int main (int argc, char *argv[])
   struct
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *smooth,
-    *maskmap, *zmult, *fi, *segmax, *npmin, *res_ew, *res_ns, *overlap;
+    *maskmap, *zmult, *fi, *segmax, *npmin, *res_ew, *res_ns, *overlap,*theta, *scalex;
   } parm;
   struct
   {
@@ -263,6 +264,18 @@ int main (int argc, char *argv[])
   parm.fi->required = NO;
   parm.fi->description = "Tension";
 
+  parm.theta = G_define_option ();
+  parm.theta ->key = "theta";
+  parm.theta ->type = TYPE_DOUBLE;
+  parm.theta ->required = NO;
+  parm.theta ->description = "Anisotropy angle (in degrees)";
+
+  parm.scalex = G_define_option ();
+  parm.scalex ->key = "scalex";
+  parm.scalex ->type = TYPE_DOUBLE;
+  parm.scalex ->required = NO;
+  parm.scalex ->description = "Anisotropy scaling factor";
+
   flag.cprght = G_define_flag ();
   flag.cprght->key = 't';
   flag.cprght->description = "Use dnorm independent tension";
@@ -335,6 +348,16 @@ int main (int argc, char *argv[])
   sscanf (parm.fi->answer, "%lf", &fi);
   sscanf (parm.zmult->answer, "%lf", &zmult);
   sscanf (parm.overlap->answer, "%d", &overlap);
+
+  if(parm.theta->answer)
+  sscanf (parm.theta->answer, "%lf", &theta);
+
+  if(parm.scalex->answer) {
+  sscanf (parm.scalex->answer, "%lf", &scalex);
+        if (!parm.theta->answer)
+        G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+        }
+
   /*
    * G_set_embedded_null_value_mode(1);
    */
@@ -517,8 +540,7 @@ int main (int argc, char *argv[])
 		     outhd.cols, az, adx, ady, adxx, adyy, adxy, fi, 
                      MAXPOINTS, SCIK1, SCIK2, SCIK3,
 		     smc, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, 
-                     inp_x_orig, inp_y_orig, deriv,
-		     0.0, 0.0,
+                     inp_x_orig, inp_y_orig, deriv, theta, scalex,
                      Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, 
                      Tmp_fd_yy, Tmp_fd_xy,NULL,NULL);
 /*  In the above line, the penultimate argument is supposed to be a 
