@@ -328,12 +328,14 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
     RASTER_MAP_TYPE data_type;
     GDALDataType    eGDT, eRawGDT;
     int row, col, nrows, ncols, complex;
-    int cf, cfR, cfI;
+    int cf, cfR, cfI, bNoDataEnabled;
     int indx;
     CELL *cell,*cellReal,*cellImg;
     float *bufComplex;
+    double dfNoData;
     char msg[100];
     char outputReal[200], outputImg[200];
+    char *nullFlags = NULL;
 
 /* -------------------------------------------------------------------- */
 /*      Select a cell type for the new cell.                            */
@@ -408,6 +410,16 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
     }
 
 /* -------------------------------------------------------------------- */
+/*      Do we have a null value?                                        */
+/* -------------------------------------------------------------------- */
+    dfNoData = GDALGetRasterNoDataValue( hBand, &bNoDataEnabled );
+    if( bNoDataEnabled )
+    {
+        nullFlags = (char *) G_malloc(sizeof(char) * ncols);
+        memset( nullFlags, 0, ncols );
+    }
+
+/* -------------------------------------------------------------------- */
 /*      Write the raster one scanline at a time.                        */
 /* -------------------------------------------------------------------- */
     for (row = 1; row <= nrows; row++)
@@ -429,6 +441,34 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
         {
             GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
                           cell, ncols, 1, eGDT, 0, 0 );
+
+            if( nullFlags != NULL )
+            {
+                memset( nullFlags, 0, ncols );
+
+                if( eGDT == GDT_Int32 )
+                {
+                    for( indx=0; indx < ncols; indx++ ) 
+                    {
+                        if( ((GInt32 *) cell)[indx] == (GInt32) dfNoData )
+                        {
+                            nullFlags[indx] = 1;
+                        }
+                    }
+                }
+                else if( eGDT == GDT_Float32 )
+                {
+                    for( indx=0; indx < ncols; indx++ ) 
+                    {
+                        if( ((float *) cell)[indx] == (float) dfNoData )
+                        {
+                            nullFlags[indx] = 1;
+                        }
+                    }
+                }
+
+                G_insert_null_values( cell, nullFlags, ncols, data_type);
+            }
             
             G_put_raster_row (cf, cell, data_type);
         }
@@ -454,6 +494,9 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
         fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
         G_close_cell (cf);
     }
+
+    if( nullFlags != NULL )
+        G_free( nullFlags );
 
 /* -------------------------------------------------------------------- */
 /*      Transfer colormap, if there is one.                             */
