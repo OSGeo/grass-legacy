@@ -560,7 +560,7 @@ make_area_label (map, line)
 	    P_AREA *Area;
 
 	    Area = &(map->Area[local_area]);
-	    expand_window (Area->N, Area->S, Area->E, Area->W);
+	    expand_window (Area->N, Area->S, Area->E, Area->W, 1);
 	}
 
 	highlight_area (area, map);
@@ -586,7 +586,7 @@ make_area_label (map, line)
 	else
 	{
 	    if (Auto_Window && area_outside_window (&Garea))
-		expand_window (Garea.N, Garea.S, Garea.E, Garea.W);
+		expand_window (Garea.N, Garea.S, Garea.E, Garea.W, 1);
 	    _highlight_area (&Garea, map);
 	}
     }
@@ -654,7 +654,7 @@ check_area (map, line, x, y)
     int line;
     double x, y;
 {
-    line = ABS (line);
+    line = abs (line);
 /*DEBUG*/ debugf ("Check_area: line %d R %d L %d (%lf, %lf)\n", line, map->Line[line].right, map->Line[line].left, x, y);
     if (map->Line[line].right > 0)   /* ISLE */
 	if (dig_point_in_area (map, x, y, &(map->Area[map->Line[line].right])) > 0.)
@@ -808,7 +808,7 @@ display_all_areas (map)
 	    display_area (i, map);
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
     return (ret);
 }
 
@@ -823,7 +823,7 @@ display_labeled_lines (map)
 	    V1_read_line (map, &Gpoints, map->Line[i].offset);
 	    _display_line (map->Line[i].type, &Gpoints, i, map);
 	}
-    R_flush ();
+    V_flush ();
 }
 
 /* this is (no longer) a hidden feature for whatever use */
@@ -841,7 +841,7 @@ label_all_lines (map, cat)
 
 	/* only do this for LINE lines */
 	/* if already labeled, leave it alone */
-	if (LINE_ALIVE (&(map->Line[line])) && map->Line[line].type == LINE && !map->Line[line].att)
+	if (LINE_ALIVE (&(map->Line[line])) && (map->Line[line].type & (DOT | LINE)) && !map->Line[line].att)
 	{
 
 	    if(0 > V1_read_line(map, &Gpoints, map->Line[line].offset))
@@ -1018,7 +1018,9 @@ label_psu  (map, cat)
 	      new_point_with_mouse (&x, &y, "Select point within area:");
 	      }
 	else
+#ifdef CURSORKEYS
 	      if (D_cursor_buttons())
+#endif
 	      {
 	         /* find_line_with_dig  fills Gpoints */
 	      new_point_with_dig (&x, &y, "Select point within area:");
@@ -1043,7 +1045,9 @@ label_psu  (map, cat)
 	          }
 	      }
 	else
+#ifdef CURSORKEYS
 	      if (D_cursor_buttons())
+#endif
 	      {
 	      if (0>=(line = find_line_with_dig (AREA, "Select a Boundary line:", tell_area_label)))
 	          {
@@ -1062,7 +1066,9 @@ label_psu  (map, cat)
               ret = 1;
 	      }
 	   else
+#ifdef CURSORKEYS
 	      if (D_cursor_buttons())
+#endif
 	      {
 	      if ( ! ask_driver_yes_no("Accept this area ? ") )
 			return(0) ;
