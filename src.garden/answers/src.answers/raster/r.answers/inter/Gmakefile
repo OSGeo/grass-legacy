@@ -1,4 +1,3 @@
-# %W% %G%
 ###############################################################
 # Chris Rewerts, Agricultural Enginering, Purdue University
 # rewerts@ecn.purdue.edu
@@ -61,7 +60,7 @@ user_file.o
 all:    $(BIN)/$(PGM)
 
 $(BIN)/$(PGM): $(OBJ) $(DEPGISLIB) $(DEPVASKLIB)
-	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(LDFLAGS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) 
+	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(LDFLAGS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
  
 
 $(DEPGISLIB): #

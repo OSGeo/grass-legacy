@@ -4,6 +4,6 @@ HOME=$(BIN_CMD)
 LIST = main.o opennew.o
 
 $(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) -o $@
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #
