@@ -1,0 +1,551 @@
+<html>
+<head>
+<title>GRASSLinks Installation Guide</title
+</head>
+<body bgcolor="#efefeg">
+
+<h2> GRASSLinks 3.1 at REGIS, UC BERKELEY</h2>
+<h3> Notes on customizing for a local installation</h3>
+<p>
+GRASSLinks is a World Wide Web interface to a geographic information system 
+(GIS), offering public access to mapped information. GRASSLinks provides 
+GIS display and analysis tools to facilitate data sharing and cooperation 
+between environmental planning agencies, public action groups, citizens, and 
+private entities.
+<p>
+GRASSLinks was created by Susan M. Huse, with the assistance of the REGIS
+staff, while a Ph.D. student at the University of California, Berkeley. 
+<p>
+<hr>
+<p>
+First and Foremost:
+<blockquote><b>
+You must read and agree to the <a href="#copyright">
+GRASSLinks copyright and disclaimer</a>. 
+Installation / local use of any of the GRASSLinks scripts or programs
+obtained from this site constitute agreement with the GRASSLinks
+copyright and disclaimer.
+<p>
+</blockquote></b>
+<p>
+<hr>
+<p>
+<h3>Requirements</h3>
+<li>GRASSLinks is a <b>perl</b> script and requires local access to perl.
+GRASSLinks has been tested under Digital Unix 4.0. It should run
+on any UNIX system or any system that has Perl 4.x or 5.x installed
+(though it will probably need more tweaking on a non-Unix system that what 
+is detailed herein).
+
+<li>You must have the software <b>GRASS</b> accessible from the same server 
+that is running GRASSLinks and you must have some existing GRASS 
+raster, vector and sites files.
+
+<li>You must have a web htdocs directory in which to locate GRASSLinks
+html files and helper files.
+
+<li>You must have the ability to run cgi scripts on your web server.
+
+<li>You will probably need access to super-user status on your
+system or the person with this status.
+<li>You will need to install the free <b>netpbm/pbmplus ppm</b> programs 
+which can be downloaded off the web.
+
+<li>GRASSLinks utilizes public domain software, 
+<a href="http://www.baylor.edu/~grass//GRASS.main.html">
+GRASS</a>, created by the US Army Corps of Engineers. 
+We assume that anyone installing GRASSLinks already
+has experience using GRASS.
+
+
+<p>
+<h3>Recommendations</h3>
+
+<li><b>Security!</b> You or your system administrator should have the 
+ability to understand the GRASSLinks scripts and programs so that you can 
+decide for yourself if they are safe enough and/or practical enough to 
+install on your system. We do not advocate taking system security lightly!
+
+<li> We ask that you email us and let us know that you are installing GRASSLinks
+on your system.  We would like to maintain links to other GRASSLinks systems
+from our web site.
+
+<li>We ask that you be kind and remember that this software was written
+as a labour of love (no $$).  We welcome very much your suggestions for 
+improvements but, due to lack of staff and funding, will probably be slow 
+to make changes or get back to you.
+
+<li>Please read about GRASSLinks so you understand what you
+are installing. Relevant links are provided at the bottom of this web page.
+
+<p>
+<hr> 
+<p>
+<h3>Obtaining GRASSLinks Software</h3> 
+You can obtain all of the scripts and programs needed to locally install
+ GRASSLinks 3.1 by downloading this gzipped, tar file:
+<a href="grasslinks3.1.tar.gz">grasslinks3.1.tar.gz</a>
+<p>
+
+
+<h3>About the GRASSLinks files and scripts </h3>
+
+<li>You should unzip and untar the GRASSLinks (hereafter referred to as GL)
+tar archive in an appropriate location under your server's <b>htdocs</b>
+directory so that the files therein can be accessible on the web.
+<p>
+<li>Here is a look at the files and directories you should see:
+<pre><b>
+/your_system/htdocs/
+	|
+	|-grasslinks/
+	|	|
+		|-GL_matrix.html
+		|-about_gl.html
+		|-gl_copyright.html
+		|-gl.html
+		|-glreadme.html
+		|-glreadme.txt
+		|-help.html
+		|-green_line.gif
+		|
+		|-progs/
+		|   |
+		    |-gl31.pl
+		    |-GL_list
+		    |-glmatrix.pl
+		    |-lookup.c
+		    |-Makefile.osf
+		    |-Makefile.solaris
+		    |-s.what
+		    |-clean_tmp
+		    |-checktimes.c
+
+</b></pre>
+<p>
+<H3>More detail on the above GL files and directories</h3>
+<p>
+<li><b>grasslinks/ </b><br>
+This is the directory in which to put GL files that need to be web accessible.
+THis directory (and the files in it) needs to be world readable but should 
+not be world-writeable or writeable by a group that includes the user under 
+which your web server runs (we'll call this user <b>web</b> in this document).
+<p>
+<b>Files in the grasslinks directory include:</b>
+<ul>
+<li><b>gl.html</b> - 
+This is the main html page that launches GL. It could be renamed index.html.
+This file is distributed as a template/model for your own GL installation.
+You will need to edit it to tailor it to your own site.  
+<b>We ask that you keep on this main GL page a link to the GL Copyright, 
+REGIS, and "more info about GL"</b>.  These links are already provided at 
+the bottom of the gl.html template.
+You can leave them there or make an indirect link via another html page.
+<p>
+<li><b>help.html</b> - 
+This is the GL help document. It doesn't need to be changed, but check it over
+in case it has some relative url links that won't work on your system. 
+<p>
+<li><b>GL_matrix.html</b> - 
+This is an html table view of the GRASS files available on your site 
+that is provided as a service to your
+GL users. It is an optional file that you decide
+whether or not to provide.  It is created by a helper perl script in the
+grasslinks/progs directory called <b>glmatrix.pl</b>. 
+The copy of the file provided with the GL distribution is just for reference.
+<p>
+<li><b>green_line.gif</b> -
+This is a decorative line gif that is used to jazz up the GL web pages.
+No need to change.
+<p>
+<li><b>glreadme.html </b> (and <b>glreadme.txt</b>) - 
+This file as well as a text version of it. No need to make changes. 
+<p>
+</ul>
+<p>
+<li><b>progs/ </b><br>
+Files in the <b>progs</b> directory are GL helper scripts / programs. 
+These do not need to be in an htdocs directory. They should not be
+writeable by the world or by the web user.  
+<p>
+<b>Files in the progs directory include:</b>
+<p>
+<ul>
+<li><b>gl31.pl</b> - the GL perl cgi-script. This will need to be moved to
+a cgi directory. GL won't run without this script and gl31.pl will need to
+be heavily customized! More details below.
+<p>
+<li><b>GL_list</b> -
+This is the file that should contain a list of GRASS files 
+(raster, vector, sites) that will be available at your site via GRASSLinks. 
+The one included in this distribution is just an example of how the file
+should be structured.  This is the main helper file for the GL cgi-script.
+GL won't run without it. It doesn't need to be in the htdocs directory and it
+should probably be located with the gl31.pl cgi-script. 
+<p>
+<li><b>glmatrix.pl</b> - see GL_matrix.html above.
+<p>
+<li><b>lookup.c</b> and related makefiles <b>Makefile.osf, Makefile.solaris</b>. -
+The lookup.c is used by the GL script subroutines that create little gifs for
+map legend boxes. The two makefiles are provided as an example of how to compile
+lookup.c on your system. In order to compile you will need to have GRASS source
+files on your system. Read the makefiles and go to the GRASS website for more
+info. None of the GL legends will display properly without lookup.c installed.
+<p>
+<li><b>s.what</b> - a borne shell script used for querying GRASS sites
+files.  This script should be placed in your GRASS scripts directory.
+<p>
+<li><b>clean_tmp</b> and <b>checktimes.c</b> - a borne shell script  and its
+helper C program used for cleaning up temporary GL files that are more than 
+an hour old. These are offered as an <i>examples only</i> of how to manage 
+the temporary files created by GL. <i>Use at your own risk!</i>
+<p>
+<li><b>netpbm/pbmplus ppm software</b> -  
+These freeware programs are not provided in
+the GL distribution. You will need to do a search and download off the web.
+They should be kept in the progs directory and/or with the other GL helper 
+programs.  You can review the GL cgi-script in detail to see which specific 
+programs are required by GL.  GL will not work without this software.
+</ul>
+<p>
+<li><b>tmp/ </b><br>
+You will need to create the directory <b>tmp</b> inside the <b>grasslinks</b> htdocs
+direcotory.  This directory will be used to store the temporary files created by
+GL.  This directory should be world-readable and writeable by the web user.  Since
+it is writeable by the web user you should be aware of the security risks this involves.
+This directory can grow to contain many files.  You should run a cronjob that
+automatically deletes files that are more than 1 hour old.
+<p>
+<li><b>legendGifs/ </b><br>
+You will need to create the directory <b>legendGifs</b> inside the <b>grasslinks</b> htdocs
+direcotory.  This directory will be used to store the tiny gif files created by
+the GL legend subroutines. THese files should not be deleted.  They will be created once
+as users make GL legends and then re-used again and again.  This will make GL process
+much faster.   This directory should be world-readable and writeable by the web user.  Since
+it is writeable by the web user you should be aware of the security risks this involves.
+<p>
+<hr>
+<p>
+<h3>Customizaton Details</h3>
+<p>
+<li><b>Creating the GL_list file</b>
+<br>
+Take a look at the sample GL_list file distributed with GL.  (It may be difficult
+to read because it has lots of characters on each line.)  This file is split into
+four sections: 1) GRASS raster files available in GL at this site; 2) GRASS vector 
+files available; 3) GRASS sites files available; 4) GL projects at this GL site.
+These four sections are implicitly organized by the first word (field 0) that
+appears in each line of the file. Each line contains a number of "fields" numbered
+from zero that are delimitted by the "|" character. For the GRASS files, these
+fields contain the following information:
+<ul>
+<li><b>field 0</b> - the GRASS file type (raster, vector, or sites)
+<br>
+<li><b>field 1</b> - the code(s) for the project(s) to which this file applies, 
+			or "!" if it applies to all projects or empty if you
+			want to "comment out" the file.
+<br>
+<li><b>field 2</b> - the actual grass file name in the form <b>grass_filename@mapset</b>
+<br>
+<li><b>field 3</b> - a title / brief description for the grass file
+<br>
+<li><b>field 4</b> - htdocs path and filename for relavent metadata file 
+<br>
+<li><b>field 5</b> - htdocs path and filename for relavent thumbnail gif
+<br>
+<li><b>field 6</b> - Longer, more detailed description of the file 
+</ul>
+<p>
+<b>NOTE:</b> Only fields 0-3 are used by the script <b>gl31.pl</b>; all fields
+are used by the script <b>glmatrix.pl</b>.
+<p>
+<pre><b>
+EXAMPLE LINE:
+
+raster|r|nichols.wright@PERMANENT|Nichols and Wright Historic Shoreline and Open Water|/metadata/nichols.wright.mdata|/thumbnails/nichols.wright.gif |Source: Donald Nichols and Nancy Wright, USGS, 1971, Scale 1125,000 Basic Data Contribution.
+</b>
+</pre>
+<p>
+
+The <b>project</b>  aspect of GL is important to understand .  
+GL was developed at REGIS where we make available many GRASS files. 
+We organize these files
+according to the projects for which they were created.  In GL, the project
+notion allows us to present different views / subsets of all of our GRASS files to
+users.  It is a way of organizing the files as the user may wish to view them. We
+also have one super-project that includes all of our site's GRASS files.  
+GL will work fine if you just have one project. But you need to configure GL 
+as though you might have more than one. 
+<p>
+The project section of the GL_list file contains information about each 
+GL project:
+<p>
+<ul>
+<li><b>field 0</b> - the word "project" to denote project information line 
+<li><b>field 1</b> - the code for this project. Must be a single unique alpha 
+or numeric character. 
+<li><b>field 2</b> - a title for the project that appears on top of GL html pages 
+<li><b>field 3</b> - a gif thumbnail image to represent this project
+<li><b>field 4</b> - the default GRASS region setting for this project 
+</ul>
+<p>
+<b>NOTE:</b> 
+See the demo GL_list file for examples of how to structure the project
+information.
+<p>
+
+<li><b>Creating the GL_matrix.html file</b><br>
+You should create the <b>GL_matrix.html</b> file after you create the GL_list
+file. See above for more info on this file. 
+<p>
+
+<li><b>Customizing the gl.html file</b>:
+<br>
+You should customize this file after creating the <b>GL_list file</b>. 
+What is important to note in this page is the method by which the GL 
+cgi script is called. For example:
+<p>
+<b>
+&#60a href="/cgi-bin/gl31.pl?PROJECT=r+ANALYSIS=display1"&#62
+</b>
+<p>
+The script when launched with the GET calling method requires that
+a PROJECT code as specified in the GLlist file be passed as an argument.
+The ANALYSIS argument is also required. The <b>display1</b> value launches
+the main GL display routine from which all other GL routines are available.
+<p>
+<li><b>Customizing the GRASS environment</b>
+<br>
+Before you can run GRASSLinks you need to set up some GRASSLink's 
+tailored GRASS mapsets.
+You need to decide how many simultaneous GRASSLinks users you will
+allow on your site. We allow a total of 5. For each one, you need to create
+a GRASS mapset, for example: <b> grasslinks1</b>.. <b>grasslinks5</b>.
+You will also need a <b>grasslinks0</b> mapset for GL's private use.
+Note that this naming scheme for the mapsets is important to maintain.
+<p>
+In addition to the standard GRASS mapset files and directories, you 
+will need to add two files to each mapset: 1) a <b>.grassrc</b> file
+and 2) an empty file named <b>UNLOCK</b>.  The UNLOCK file is renamed
+LOCK when GL uses the mapset and is renamed UNLOCK when GL is finished.
+The .grassrc file is used to set up the GRASS environment needed to
+run GRASS commands. Each of the GRASS mapsets (and all files and subdirectories
+under it) will need to be readable and writeable by the web user. (But they
+should not be world-writeable). You should understand the system security risks
+that this poses.
+<p>
+<b> Here is a sample of a GRASS mapset structure needed by GL if two simultaneous
+GL users are allowed: 
+<pre>
+
+	/grass/data/sfbay/
+		|
+		|- grasslinks0/
+			|
+			|- .grassrc
+
+		|- grasslinks1/
+			|
+			|- .grassrc
+			|-UNLOCK
+		|
+		|- grasslinks2
+		|	|
+			|- .grassrc
+			|-UNLOCK
+
+</pre>
+<p>
+Here is a sample of a GRASS .grassrc file needed by GL: 
+</b>
+<p>
+<pre>
+GISDBASE: /grass/data
+LOCATION_NAME: sfbay
+LOCATION: /grass/data/sfbay/grasslinks1
+PAINTER: ppm
+MAPLP: /htdocs/grasslinks/tmp/pmap.grasslinks1
+MAPSET: grasslinks1
+</pre>
+<b>NOTES:</b> 
+<ul>
+<li> The LOCATION, MAPSET and MAPLP variables must indicate the
+correct mapset (grasslinks1, grasslinks2, etc.)
+<li> Make a note of the path and filenames for the variables
+in this file as they will be needed in the configuration of
+the GL cgi script.
+<li>The GL operations <b>reclass, buffer, and combine</b> allow
+the user to create GRASS raster files.  You will need to have a
+method for deleting these files (cronjob, script) so that they don't 
+clutter your system.
+<li>The web user does not need and should not have write access to
+any other GRASS mapsets beyond those created for GL. 
+<p>
+<li>
+<img src="new.gif" alt="">
+GRASS uses the <b>ppm</b> paint driver to create GIF images of
+map layers.  The default ppm driver file that comes with GRASS needs
+to be slightly altered to work properly with GRASSLinks.  The distribution
+version of this file hard codes resultant images as 800x800 pixels; this
+should be changed to allow for predefined HEIGHT and WIDTH variables to
+over-ride the default.  Below are excerpts from the ppm original and
+altered file that indicate the needed changes.  The ppm file should be
+found in the <b>/paint/driver.sh/</b> or <b>/etc/paint/driver.sh</b> 
+subdirectory of the GRASS Code directory.
+<p>
+<pre>
+<b>Original ppm file: </b>
+	
+	MAPLP=${MAPLP-$HOME/paint.ppm}
+	WIDTH=800
+	HEIGHT=800
+	cp /dev/null $MAPLP
+	export HRES VRES NCHARS MAPLP WIDTH HEIGHT
+
+<b>Altered ppm file: </b>
+
+	MAPLP=${MAPLP-$HOME/paint.ppm}
+	: ${WIDTH:=800} ${HEIGHT:=800}
+	cp /dev/null $MAPLP
+	export HRES VRES NCHARS MAPLP WIDTH HEIGHT
+
+</pre>
+</ul>
+
+<p>
+<hr>
+<p>
+<li><b>Customizing the gl31.pl cgi perl script</b>
+<p>
+This should represent the biggest challenge in the GL installation.
+However, if you have reviewed the information above and created
+all the necessary GRASS mapsets, files, and the GL_list file, then
+this should be just tedious but not too confusing.
+<ol>
+<li><b>Print out and read the cgi perl script gl31.pl</b><br>
+Since GL will be running on your system via this script, it is
+best to read it through and understand what it is doing and
+what potential security risks it might present for your system.
+<p>
+<li><b>Configure the necessary subroutines for your environment</b><br>
+The following is a list of GL subroutines that you should edit to
+indicate appropriate options, files, directories, programs, etc., on
+your local system.  There are many comment lines in the script
+itself to help you.  As you work through this configuration your
+knowledge of how GL works will improve. Other subroutines could also
+be editted, but these are the most critical ones:
+<p>
+<ul>
+<li><b>set_glvars </b> - this subroutine sents GL variables.
+<p>
+<li><b> set_GRASSvars </b> - this subroutine sets GRASS specific GL variables. 
+<p>
+<li><b> set_gloptions</b> - this subroutine sets some minor GL options
+and defaults and can be used "as is" but you should review.
+<p>
+<li><b>lock_Gmapset</b> - this subroutine sets some GRASS variables
+depending on which GL GRASS mapset the user will be using. It assumes
+the presence of mapsets with the name structure grasslinks1, grasslinks2, etc. 
+You probably don't need to make any changes but you should review.
+<p>
+<li><b>begin_html</b> - this subroutine creates the HTML headers for each
+HTML document dynamically created by GL. You can use as is but will probably
+want to tailor it for your local site.
+<p>
+<li><b>end_html</b> - this subroutine creates the HTML footers for each
+HTML document dynamically created by GL. You can use as is but will probably
+want to tailor it for your local site.
+<p>
+</ul>
+<p>
+<li><b>GRASSLinks access log</b><br>
+GL can maintain a log of all accesses if you set the 
+<b>$GL_ACCESS_LOG</b> variable in the set_glvars subroutine. This
+might be helpful to track any security problems.  You should not let
+this file be publically accessible.  Also not that it could grow
+out of control if your GL site has a lot of visitors.
+
+<p>
+<li><b>You must edit the first line of the gl31.pl script to indicate
+the location of perl on your system!</b>
+<p>
+<li><b>You must make gl31.pl a recognized cgi script on your system.</b><br>
+For example, placing the script in a cgi-bin directory.
+<p>
+</ol>
+<p>
+<hr>
+<p>
+<b>FINAL NOTES:</b>
+<p>
+<li> You can make other customizations to GL as you see fit, but you
+cannot violate the spirit of the Copyright.
+<p>
+<li>You are basically on your own in terms of help with the installation.
+We very much lack staff time to assist you but will try to respond to
+your email as time permits.
+<p>
+<li> We would appreciate hearing any feedback or suggestions you have about
+GL. In particular, if you review the gl31.pl cgi script and see ways to
+make it safer or more efficient please let us know.  We will post at this
+location any future updates to the script that incorporate your suggested
+changes.
+<p>
+<hr>
+<p>
+<li><b><a href="mailto:pattyf@ced.berkeley.edu">Send us Email!</a></b><br>
+<li><a href="http://regis.berkeley.edu/grasslinks/">
+	GRASSLinks at REGIS, UC Berkeley</a></br>
+<li><a href="http://regis.berkeley.edu/">REGIS, UC Berkeley</a>
+<p>
+<hr>
+<p>
+<h3><a name="copyright">GRASSLinks Copyright Notice and Disclaimer</a></h3>
+<p>
+<pre>
+<b>
+Copyright (c) 1994-98
+Susan M. Huse and The Regents of the University of California
+All rights reserved.
+</b>
+
+Permission to use, copy, modify, and distribute this software and 
+its documentation for educational, research and non-profit purposes, 
+without fee, and without a written agreement is hereby granted, 
+provided that the above copyright notice, this paragraph and the 
+following three paragraphs appear in all copies. 
+
+Permission to incorporate this software into commercial products may 
+be obtained by contacting the University of California.
+
+This software program and documentation are copyrighted by Susan
+M. Huse and The Regents of the University of California. 
+The software program and documentation are supplied "as is", 
+without any accompanying services from Susan M. Huse or The Regents. 
+Susan M. Huse and The Regents do not warrant that the operation of the
+program will be uninterrupted or error-free. The end-user understands 
+that the program was developed for research purposes and is advised not 
+to rely exclusively on the program for any reason. 
+
+IN NO EVENT SHALL SUSAN M. HUSE OR THE UNIVERSITY OF CALIFORNIA 
+BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, 
+OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF 
+THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF SUSAN M.
+HUSE and/ or THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF 
+THE POSSIBILITY OF SUCH DAMAGE. SUSAN M. HUSE AND THE UNIVERSITY OF
+CALIFORNIA SPECIFICALLY DISCLAIM ANY WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+"AS IS" BASIS, AND SUSAN M. HUSE AND THE UNIVERSITY OF CALIFORNIA 
+HAVE NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, 
+ENHANCEMENTS, OR MODIFICATIONS. 
+
+</pre>
+<p>
+<hr>
+<p>
+Last updated 06/02/98<br>
+<p>
+
+</body>
+</html>
