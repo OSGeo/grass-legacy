@@ -1,0 +1,66 @@
+
+
+
+d.what.s.db()     MISC. REFERENCE MANUAL PAGES      d.what.s.db()
+
+
+
+NAME
+     _d._w_h_a_t._s._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     d.what.s.db
+     d.what.s.db help
+     d.what.s.db keytable=_n_a_m_e xcol=_n_a_m_e ycol=_n_a_m_e distance=_n_a_m_e
+        [join=_t_a_b,_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of d.what.s.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _k_e_y_t_a_b_l_e
+          Name of table containing X, Y coordinates.
+
+     _x_c_o_l X coordinate (E/W) column in keytable.
+
+     _y_c_o_l Y coordinate (N/S) column in keytable.
+
+     _d_i_s_t_a_n_c_e
+          Distance from mouse location to search.
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
