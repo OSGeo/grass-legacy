@@ -3,16 +3,13 @@
 ** 7/23/90
 */
 
-#include "dig_defines.h"
-#include "dig_head.h"
+#include <stdlib.h>
+#include "Vect.h"
 #include "dxf2vect.h"
 
 /* DECLARING SUBROUTINES */
-double 	atof();
 
-
-dxf_add_line (dxf_file)
-FILE	*dxf_file;
+int dxf_add_line (FILE *dxf_file)
 {
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int  xflag = 0;         /* INDICATES IF A x VALUE HAS BEEN FOUND */
@@ -110,7 +107,7 @@ FILE	*dxf_file;
 	{
 	    fprintf (layer_fd->fd, "L  2\n");
 	    for (count = 0; count < 2 ; count++) 
-		fprintf (layer_fd->fd, " %12.2lf %12.2lf \n", 
+		fprintf (layer_fd->fd, " %12.2f %12.2f \n", 
 		    yinfo[count], xinfo[count]);
 	}
     }

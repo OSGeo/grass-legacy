@@ -4,8 +4,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "dxf2vect.h"
 
 /* DECLARING SUBROUTINES */

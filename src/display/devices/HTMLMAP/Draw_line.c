@@ -5,8 +5,9 @@
  * Called by:
  *     Cont_abs() in ../lib/Cont_abs.c
  */
+#include "driverlib.h"
 
-
-draw_line(cur_x, cur_y, x, y)
+int draw_line (int cur_x, int cur_y, int x, int y)
 {
+	return 0;
 }

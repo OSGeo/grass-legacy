@@ -5,7 +5,7 @@ PAINT = $(ETC)/paint
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(ICONLIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE) -I../../../
+EXTRA_CFLAGS= -I../../../
 
 LIST =	main.o\
 	alloc_pats.o\

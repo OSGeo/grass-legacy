@@ -8,7 +8,7 @@
 
 #include <math.h>
 #include "raster.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "display_line.h"
 #include "keyboard.h"

@@ -12,9 +12,11 @@
 #include <math.h>
 
 
-CELL param(ptype,coeff)
-    int     ptype;		/* Type of terrain parameter to calculate */
-    float  *coeff;		/* Set of six quadratic coefficents.	  */
+CELL 
+param (
+    int ptype,		/* Type of terrain parameter to calculate */
+    float *coeff		/* Set of six quadratic coefficents.	  */
+)
 {
 
     /* Quadratic function in the form of

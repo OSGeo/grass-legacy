@@ -5,10 +5,9 @@
 */
 
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 #include "debug.h"
-#include "dig_externs.h"
 #include "D.h"
 #include "Map_proto.h"
 #include "dig_curses.h"
@@ -24,9 +23,6 @@
  *    calc_thresh()  -  calculates and updates thresholds.
  *    map_to_dig_thresh() -  computes digit_thresh from map_thresh
 **/
-
-#include "dig_head.h"
-
 /*  all the CM->head.foo  stuff is mods for 4.0  dig_head fixes */
 /*
 *    Upper (Scale) limit is the points per inch (PPI) of the digitizer and

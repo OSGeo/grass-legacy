@@ -12,8 +12,10 @@
 #include <math.h>
 
 
-CELL feature(coeff)
-    float *coeff;		/* Set of six quadratic coefficents. 	*/
+CELL 
+feature (
+    float *coeff		/* Set of six quadratic coefficents. 	*/
+)
 
 {
 

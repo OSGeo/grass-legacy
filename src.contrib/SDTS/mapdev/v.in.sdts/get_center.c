@@ -1,8 +1,6 @@
-
-#include "gis.h"
-#include "digit.h"
-#include "dig_head.h"
 #include <stdio.h>
+#include "gis.h"
+#include "Vect.h"
 
 double fabs ();
 

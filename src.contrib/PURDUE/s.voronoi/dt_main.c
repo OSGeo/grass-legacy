@@ -26,7 +26,6 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_structs.h"
 #include "vo_defs.h"
 
 struct Cell_head window;

@@ -57,6 +57,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
+#include "Vect.h"
 #include "global_vars.h"
 #include "walk.h"
 #include "line_coords.h"
@@ -64,9 +65,7 @@
 /* plus_t defined in mapdev/diglib/dig_structs.h:23 as 
    typedef int plus_t; */
 
-int main (argc, argv)
-int argc;
-char **argv;
+int main (int argc, char **argv)
 {
   FILE *output_fd;
   register plus_t line;
@@ -215,11 +214,11 @@ char **argv;
   fprintf (output_fd, "\nOTHER INFO:   %s", text);
   fprintf (output_fd, "\nMAP SCALE:    %ld", map.head.orig_scale);
   fprintf (output_fd, "\nZONE:         %d", map.head.plani_zone);
-  fprintf (output_fd, "\nWEST EDGE:    %lf", map.head.W);
-  fprintf (output_fd, "\nEAST EDGE:    %lf", map.head.E);
-  fprintf (output_fd, "\nSOUTH EDGE:   %lf", map.head.S);
-  fprintf (output_fd, "\nNORTH EDGE:   %lf", map.head.N);
-  fprintf (output_fd, "\nMAP THRESH:   %lf", map.head.map_thresh);
+  fprintf (output_fd, "\nWEST EDGE:    %f", map.head.W);
+  fprintf (output_fd, "\nEAST EDGE:    %f", map.head.E);
+  fprintf (output_fd, "\nSOUTH EDGE:   %f", map.head.S);
+  fprintf (output_fd, "\nNORTH EDGE:   %f", map.head.N);
+  fprintf (output_fd, "\nMAP THRESH:   %f", map.head.map_thresh);
   fprintf (output_fd, "\nVERTI:");
 
 
@@ -318,7 +317,7 @@ char **argv;
       fprintf (output_fd, "\n%c %d", ascii_line_type, points_in_polyline);
       for (i=0; i<points_in_polyline; i++)
 	{
-	  fprintf (output_fd, "\n %lf %lf", coords->y[i], coords->x[i]);
+	  fprintf (output_fd, "\n %f %f", coords->y[i], coords->x[i]);
 	}
 
       map.next_line++;

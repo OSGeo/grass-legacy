@@ -3,7 +3,7 @@
 **  
 */
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 #include "debug.h"
 #include "Map_proto.h"
 #include "dig_curses.h"

@@ -4,7 +4,6 @@
 #include    <sys/stat.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 
 #include    "stc123.h"
 #include    "defines.h"

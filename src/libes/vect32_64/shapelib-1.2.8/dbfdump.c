@@ -34,7 +34,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-05-22 14:45:28  markus
+ * Revision 1.2  2000-07-07 11:50:22  markus
+ * Bill Hughes: moves the vector headers and changes the modules to #include Vect.h instead of the individual dig_*.h headers.
+ *
+ * Revision 1.1  2000/05/22 14:45:28  markus
  * Frank Warmerdam: added shapelib
  *
  * Revision 1.5  1999/11/05 14:12:04  warmerda
@@ -54,6 +57,8 @@
 static char rcsid[] = 
   "$Id$";
 
+#include <stdlib.h>
+#include <string.h>
 #include "shapefil.h"
 
 int main( int argc, char ** argv )

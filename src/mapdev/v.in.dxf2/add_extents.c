@@ -2,8 +2,7 @@
 
 #include "dxf2vect.h"
 
-
-dxf_add_extents ()
+int dxf_add_extents (void)
 {
     int		count;
     char	filename[300];
@@ -63,16 +62,16 @@ dxf_add_extents ()
 	else /*FOR USE IN ASCII FILE */
 	{
 	    fseek (layers[count].fd, e_off, 0);
-	    fprintf (layers[count].fd, "%-60.2lf", e);
+	    fprintf (layers[count].fd, "%-60.2f", e);
 
 	    fseek (layers[count].fd, n_off, 0);
-	    fprintf (layers[count].fd, "%-60.2lf", n);
+	    fprintf (layers[count].fd, "%-60.2f", n);
 
 	    fseek (layers[count].fd, s_off, 0);
-	    fprintf (layers[count].fd, "%-60.2lf", s);
+	    fprintf (layers[count].fd, "%-60.2f", s);
 
 	    fseek (layers[count].fd, w_off, 0);
-	    fprintf (layers[count].fd, "%-60.2lf", w);
+	    fprintf (layers[count].fd, "%-60.2f", w);
 
 	/* GEE, this must be where the files get closed ... */
 	    fclose (layers[count].fd);
@@ -115,15 +114,17 @@ dxf_add_extents ()
 	else /*FOR USE IN ASCII FILE */
 	{
 	    fseek (fp, e_off, 0);
-	    fprintf (fp, "%-60.2lf", e);
+	    fprintf (fp, "%-60.2f", e);
 	    fseek (fp, n_off, 0);
-	    fprintf (fp, "%-60.2lf", n);
+	    fprintf (fp, "%-60.2f", n);
 	    fseek (fp, s_off, 0);
-	    fprintf (fp, "%-60.2lf", s);
+	    fprintf (fp, "%-60.2f", s);
 	    fseek (fp, w_off, 0);
-	    fprintf (fp, "%-60.2lf", w);
+	    fprintf (fp, "%-60.2f", w);
 
 	    fclose (fp);
 	}
     }
+
+    return 0;
 }

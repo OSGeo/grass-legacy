@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 
 /* routines for writing Dig+ structures to ascii. */
 /* return 0 on success, -1 on failure of whatever kind */

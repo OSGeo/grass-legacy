@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 
 /*code in this file borrowed from v.out.dlg--David Stigberg*/
 

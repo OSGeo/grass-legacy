@@ -5,7 +5,7 @@
 */
 
 #include    <stdio.h>
-#include "digit.h"
+#include "Vect.h"
 #include    "map.h"
 #include "dig_curses.h"
 #include "local_proto.h"

@@ -1,16 +1,18 @@
 #define MAIN
 #include "gis.h"
-#include "digit.h"
+#include "raster.h"
+#include "display.h"
+#include "Vect.h"
+#include "Vect.h"
+#include "local_proto.h"
 
 
-main (argc, argv)
-  int argc;
-
-  char **argv;
+int 
+main (int argc, char **argv)
 {
   struct Flag *once, *interactive;
   struct Option *opt1;
-  char *name, *mapset, *openvect ();
+  char *name, *mapset;
   struct Map_info Map;
   struct Categories Cats;
   int level;

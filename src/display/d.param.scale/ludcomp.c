@@ -6,14 +6,17 @@
 /* 		V.1.0, Jo Wood, 9th December, 1994.  	  	*/
 /****************************************************************/
 
-#include "param.h"
 #include <math.h>
+#include "param.h"
+#include "local_proto.h"
 
 
-ludcomp(a,n,index)
-    int     n,		/* Size of side of matrix 		*/
-	    *index;	/* Row permutation effected by pivoting */
-    float   **a;	/* Matrix to be decomposed. 		*/
+int 
+ludcomp (
+    float **a,	/* Matrix to be decomposed. 		*/
+    int n,		/* Size of side of matrix 		*/
+    int *index	/* Row permutation effected by pivoting */
+)
 
 {
     int	    i, imax,j,k;
@@ -91,6 +94,8 @@ ludcomp(a,n,index)
     }
 
     free_vector(vv,1,n);
+
+    return 0;
 }
 
 

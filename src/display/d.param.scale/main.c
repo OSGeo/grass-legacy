@@ -10,11 +10,12 @@
 
 #define MAIN
 
-#include "param.h"	
+#include "param.h"
+#include "local_proto.h"
+	
+char * driver = NULL;
 
-main(argc,argv) 
-    int argc;
-    char *argv[];
+int main(int argc, char *argv[])
 {
 
     /*--------------------------------------------------------------------------*/
@@ -50,4 +51,5 @@ main(argc,argv)
 
     close_down();
 
+    return 0;
 }

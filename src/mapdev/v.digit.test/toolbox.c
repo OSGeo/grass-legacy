@@ -14,9 +14,8 @@
 #include <unistd.h>
 #include "raster.h"
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "keyboard.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"

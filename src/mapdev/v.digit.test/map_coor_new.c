@@ -6,7 +6,7 @@
 #include    <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include    "map.h"
 #include "local_proto.h"

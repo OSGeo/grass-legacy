@@ -34,7 +34,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-05-22 14:45:29  markus
+ * Revision 1.2  2000-07-07 11:50:23  markus
+ * Bill Hughes: moves the vector headers and changes the modules to #include Vect.h instead of the individual dig_*.h headers.
+ *
+ * Revision 1.1  2000/05/22 14:45:29  markus
  * Frank Warmerdam: added shapelib
  *
  * Revision 1.26  2000/02/16 16:03:51  warmerda
@@ -130,6 +133,7 @@ static char rcsid[] =
 #include <math.h>
 #include <limits.h>
 #include <assert.h>
+#include <string.h>
 #include <stdlib.h>
 
 typedef unsigned char uchar;

@@ -90,7 +90,7 @@ DDSH  [KEY]        A     key code                external
 ****/
 
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "defines.h"
 #include "externs.h"
 #include "stc123.h"

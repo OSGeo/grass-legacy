@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 /*
 **  Written by Dave Gerdes  9/1988

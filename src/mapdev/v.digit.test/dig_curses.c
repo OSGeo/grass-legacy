@@ -3,7 +3,7 @@
 #include <curses.h>
 #include "gis.h"
 #include "vask.h"
-#include "digit.h"
+#include "Vect.h"
 #include "menu.h"
 #include "ginput.h"
 #include "dig_curses.h"

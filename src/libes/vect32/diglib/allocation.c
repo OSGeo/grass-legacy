@@ -1,6 +1,6 @@
-#include "digit.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include "Vect.h"
 
 /*  functions - alloc_space(), falloc(), frealloc() _falloc() _frealloc() */
 

@@ -2,8 +2,8 @@
 #include "dxf2vect.h"
 
 /* returns a zero if header not found, returns a 1 if found */
-dxf_header(dxf_file) 
-FILE	*dxf_file;
+int 
+dxf_header (FILE *dxf_file)
 {
 	dxf_fgets (dxf_line, 256, dxf_file); 
 	/* Some dxf files will not have header information*/

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <Vect.h>
+#include "Vect.h"
 #include "sdts_in.h"
 #include "stc123.h"
 #include "sdts_globals.h"

@@ -1,10 +1,15 @@
 /*
  * HTMLMAP doesn't respond
  */
+#include "driverlib.h"
 
-Get_location_with_line(cx, cy, wx, wy, button)
-	int cx, cy ;      /* current x,y coordinate   */
-	int *wx, *wy ;    /* new x,y coordinate       */
-	int *button ;     /* button pressed to return */
+int Get_location_with_line (
+    int cx,
+    int cy,      /* current x,y coordinate   */
+    int *wx,
+    int *wy,    /* new x,y coordinate       */
+    int *button     /* button pressed to return */
+)
 {
+	return 0;
 }

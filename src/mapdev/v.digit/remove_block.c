@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include "digit.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "wind.h"

@@ -7,8 +7,8 @@
 double atof();
 
 
-dxf_add_circle (dxf_file)
-FILE	*dxf_file;
+int 
+dxf_add_circle (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -83,14 +83,16 @@ FILE	*dxf_file;
     return(1);
 }
 
-make_arc(offset, centerx,centery,radius,start_angle,finish_angle,flag)
-    double 	centerx;
-    double	centery;
-    double	radius;
-    float	start_angle;
-    float	finish_angle;
-    int		flag;
-    int         offset; /* offset into array of points */
+int 
+make_arc (
+    int offset, /* offset into array of points */
+    double centerx,
+    double centery,
+    double radius,
+    double start_angle,
+    double finish_angle,
+    int flag
+)
 {
     float	theta; /* the angle used for calculating a given point */
     float	alpha; /* theta converted into radians for use in math */
@@ -99,7 +101,7 @@ make_arc(offset, centerx,centery,radius,start_angle,finish_angle,flag)
     int arr_size;
 
     arr_size = offset;
-    printf("making arc: offset %d  x %.1lf y %.1lf rad %.1lf a1 %.1f a2 %.1f  %d\n", offset, centerx,centery,radius,start_angle,finish_angle,flag);
+    printf("making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n", offset, centerx,centery,radius,start_angle,finish_angle,flag);
     if(start_angle > finish_angle) finish_angle = 360. + finish_angle;
 
     /* negative radius indicates that arc is to be drawn in a clockwise 

@@ -1,5 +1,5 @@
 #ifdef FOO
-#include "digit.h"
+#include "Vect.h"
 #endif
 
 #define A_out 0.35

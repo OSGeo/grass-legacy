@@ -18,7 +18,7 @@ int init_header (FILE *fp_digit, struct Cell_head *window,
 	d_head->map_thresh = 0.0 ;
 	d_head->plani_zone = window->zone ;
 
-/*  load default window settings into digit header  */
+/*  load default window settings into Vect.header  */
 	d_head->W = window->west ;
 	d_head->E = window->east ;
 	d_head->S = window->south ;

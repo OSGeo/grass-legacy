@@ -6,6 +6,7 @@
 
 #include "htmlmap.h"
 #include "gis.h"
+#include "driverlib.h"
 
 
 
@@ -13,9 +14,7 @@
 /* http://www.ecse.rpi.edu/Homepages/wrf/     */
 /* adapted for integer coordinates            */
 
-static int 
-pnpoly( npol, xp, yp, x, y)
-    int npol, *xp, *yp,  x,  y;
+static int pnpoly (int npol, int *xp, int *yp, int x, int y)
 {
   int i, j, c = 0;
   for (i = 0, j = npol-1; i < npol; j = i++) {
@@ -29,7 +28,8 @@ pnpoly( npol, xp, yp, x, y)
 
 
 
-Graph_Close()
+int 
+Graph_Close (void)
 {
      struct MapPoly *poly, *test_poly;
 
@@ -147,5 +147,5 @@ Graph_Close()
 
     fclose(output);
 
-
+	return 0;
 }

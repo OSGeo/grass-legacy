@@ -10,6 +10,7 @@
 #include <signal.h>
 #include "gis.h"
 #include "Vect.h"
+#include "local_proto.h"
 
 /******************************************************************/
 /*                                                                */
@@ -36,7 +37,6 @@ int usedatabase = 0;		/* set to 1 if we use an attributes database */
 double scale = 1.0;
 
 extern void getraster( char*, int, int);
-extern void ignore( char*, int);
 extern long read_e00_line( char*);
 extern int getinfo( char*, int);
 extern int getarcs( char*, int, int);
@@ -470,7 +470,7 @@ void skip_arc( int prec)
     char line[84];		/* line buffer for reading */
     long nbl, nbp;		/* number of lines and total of points */
 
-    nbp = nbl = 0;
+    nbp = nbl = 0L;
     while (1) {
 	read_e00_line( line);
 	sscanf( line, "%d %*d %*d %*d %*d %*d %d", &covnum, &npts);
@@ -565,7 +565,7 @@ void skip_pal( int prec)
 	    read_e00_line( line);
     }
     if (debug)
-	fprintf( fdlog, "PAL : %ld polygons (%ld arcs referenced)\n", nbp, nba);
+	fprintf( fdlog, "PAL : %d polygons (%d arcs referenced)\n", nbp, nba);
 }
 
 /* Skip TXT data  until a line beginning with -1 */
@@ -591,5 +591,5 @@ void skip_txt( int prec)
 	    read_e00_line( line);
     }
     if (debug)
-	fprintf( fdlog, "Annotations : %ld texts found\n", nbt);
+	fprintf( fdlog, "Annotations : %d texts found\n", nbt);
 }

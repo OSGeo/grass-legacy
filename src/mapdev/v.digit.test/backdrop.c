@@ -4,7 +4,7 @@
 */
 
 #include <string.h>
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 #include "wind.h"
 #include "keyboard.h"

@@ -14,19 +14,16 @@
 **	changed buf[100] to buf[256] and dxf_fgets(buf,100,dxf_file) to
 **		dxf_fgets(buf,256,dxf_file)
 */
+#include <stdlib.h>
 #include "dxf2vect.h"
 #include "math.h"
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 #ifndef PI
 #define PI  3.141592
 #endif
 
-double atof ();
-
-dxf_add_labelbox (dxf_file)
-FILE	*dxf_file;
+int dxf_add_labelbox (FILE *dxf_file)
 {
 	DXF_DIG	*layer_fd, *label_fd;
 /*	int	count, char_cnt, label, code;	/* changing label BCH-J */
@@ -174,7 +171,7 @@ FILE	*dxf_file;
 	   {
 	       fprintf (layer_fd->fd, "L  %d\n", arr_size);
 	       for (count = 0; count < arr_size; count++)
-		  fprintf (layer_fd->fd," %12.2lf %12.2lf\n", yinfo[count], xinfo[count]);
+		  fprintf (layer_fd->fd," %12.2f %12.2f\n", yinfo[count], xinfo[count]);
 	   }
 	}
 	/* And add info to the label file */
@@ -187,7 +184,7 @@ FILE	*dxf_file;
 	*/
 /*		Labels now characters, not integers  BCH-J */
 /*    fprintf (label_fd->fd, "L  %lf %lf %d\n",xinfo[0],yinfo[0],label);*/
-    fprintf (label_fd->fd, "L  %lf %lf %s\n",xinfo[0],yinfo[0],label);
+    fprintf (label_fd->fd, "L  %f %f %s\n",xinfo[0],yinfo[0],label);
     return (0);
 }
 
@@ -196,8 +193,8 @@ FILE	*dxf_file;
 ** returns atoi of line, or  -1 if NON-numeric  or -2 on EOF
 */
 
-dxf_readcode (dxf_file)
-    FILE *dxf_file;
+int 
+dxf_readcode (FILE *dxf_file)
 {
     char buf[256], *p;
     int ready = 0;

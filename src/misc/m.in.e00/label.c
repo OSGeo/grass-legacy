@@ -3,7 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
-#include "dig_defines.h"
+#include "Vect.h"
+#include "local_proto.h"
 
 /**********************************************************************/
 /*                                                                    */

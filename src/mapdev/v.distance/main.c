@@ -5,15 +5,14 @@
 */
 
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 #include <math.h>
 #include "gis.h"
-#include "dig_structs.h"
-#include "dig_defines.h"
 #include "Vect.h"
+#include "local_proto.h"
 
-main (argc, argv)
-    int argc;
-    char *argv[];
+int main (int argc, char *argv[])
 {
     register int ret, error;
     char vectname[1024];
@@ -64,8 +63,7 @@ main (argc, argv)
     exit (0);
 }
 
-oops (line, buf, msg)
-    char *buf, *msg;
+int oops (int line, char *buf, char *msg)
 {
     static int first = 1;
     if (!isatty(0))
@@ -79,4 +77,6 @@ oops (line, buf, msg)
 	fprintf (stderr, "line %d: %s\n", line, buf);
     }
     fprintf (stderr, "** %s **\n", msg);
+
+    return 0;
 }

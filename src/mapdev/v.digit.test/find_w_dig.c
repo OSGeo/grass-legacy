@@ -6,7 +6,7 @@
 #define  FIND_WIDTH 2
 
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 #include "raster.h"
 #include "display_line.h"
 #include "dig_curses.h"

@@ -6,7 +6,6 @@
 #include "digit.h"
 #include "debug.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "wind.h"
 #include "local_proto.h"

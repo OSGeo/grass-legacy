@@ -7,10 +7,8 @@
 
 #define DEBUG 
 
-dxf_reopen_layer (type, cl_count, o_count)
-    int type;
-    int cl_count;
-    int o_count;
+int 
+dxf_reopen_layer (int type, int cl_count, int o_count)
 {
     char	filename[300];
 	FILE *fp;
@@ -48,6 +46,6 @@ dxf_reopen_layer (type, cl_count, o_count)
 	closed_layers[cl_count].status = -2;
 
 
-
+    return 0;
 }
 

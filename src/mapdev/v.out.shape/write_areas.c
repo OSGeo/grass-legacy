@@ -1,5 +1,4 @@
 #include "gis.h"
-#include "digit.h"
 #include "gtoa.h"
 #include "Vect.h"
 #include <stdio.h>

@@ -6,7 +6,7 @@
  *      Color() in ../lib/Color.c
  */
 
-color(number)
-	int number ;
+int color (int number)
 {
+	return 0;
 }

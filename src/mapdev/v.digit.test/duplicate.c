@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "display_line.h"
 #include "Map_proto.h"

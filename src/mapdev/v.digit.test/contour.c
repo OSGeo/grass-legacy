@@ -5,7 +5,7 @@ angle*/
 
 #include <stdlib.h>
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 #include "display_line.h"
 #include "dig_curses.h"
 #include "debug.h"

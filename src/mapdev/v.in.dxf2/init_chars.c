@@ -1,6 +1,6 @@
 #include "dxf2vect.h"
 
-dxf_init_chars ()
+int dxf_init_chars (void)
 {
 	strcpy (zzero, "0");
 	strcpy (eeight, "8");
@@ -20,4 +20,6 @@ dxf_init_chars ()
 	strcpy (point, "POINT");
 	strcpy (vertex, "VERTEX");
 	strcpy (seqend, "SEQEND");
+
+	return 0;
 }

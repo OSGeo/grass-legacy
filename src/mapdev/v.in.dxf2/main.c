@@ -30,9 +30,8 @@ int all_lines = 1;	/* dump ALL lines unless user override */
 int all_atts = 1;	/* dump ALL atts  unless user override */
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int 
+main (int argc, char *argv[])
 {
     int   ret ;
     FILE *dxf_fp;
@@ -188,37 +187,21 @@ char *argv[];
 	dxf_add_boundaries ();
     */
     dxf_add_extents (); /*extents of map calculated as points were read in*/
-    
-
 
     exit (0);
 }
 
-#ifdef DEBUG
-debugf (format, a, b, c, d, e, f, g, h, i, j, k, l)
-    char *format;
-    int a, b, c, d, e, f, g, h, i, j, k, l;
+int add_line_layer (char *str)
 {
-    fprintf (stderr, format, a, b, c, d, e, f, g, h, i, j, k, l);
-}
-#endif
-
-add_line_layer (str)
-    char *str;
-{
-    add_layer (str, line_list, &num_lines);
+    return add_layer (str, line_list, &num_lines);
 }
 
-add_att_layer (str)
-    char *str;
+int add_att_layer (char *str)
 {
-    add_layer (str, label_list, &num_labels);
+    return add_layer (str, label_list, &num_labels);
 }
 
-add_layer (str, list, num)
-    char *str;
-    char *list[][2];
-    int *num;
+int add_layer (char *str, char *list[][2], int *num)
 {
     char buf[200], *buf_p, *p = NULL;
 
@@ -242,13 +225,10 @@ add_layer (str, list, num)
 	    p = buf_p;	/* output is same as original layer */
     }
 
-    _add_layer (list, num, buf_p, p);
+    return _add_layer (list, num, buf_p, p);
 }
 
-_add_layer (list, num, from, to)
-    char *list[][2];
-    int *num;
-    char *from, *to;
+int _add_layer (char *list[][2], int *num, char *from, char *to)
 {
     list[*num][0] = G_store (from);
     if (to == NULL)
@@ -256,12 +236,12 @@ _add_layer (list, num, from, to)
     else
 	list[*num][1] = G_store (to);
     (*num)++;
+
+    return *num;
 }
 
 char *
-remap (str, type)
-    char *str;
-    int type;
+remap (char *str, int type)
 {
     /*
     char *list[][2];
@@ -306,10 +286,7 @@ remap (str, type)
 
 
 char *
-dxf_fgets (buf, size, fp)
-    char *buf;
-    int size;
-    FILE *fp;
+dxf_fgets (char *buf, int size, FILE *fp)
 {
     char *p;
     static unsigned long current_size =0;
@@ -324,31 +301,32 @@ dxf_fgets (buf, size, fp)
     return (p);
 }
 
-extra_help()
+int 
+extra_help (void)
 {
     fprintf (stderr, "\n\nWhere lines and labels are one or more of:\n\n");
     fprintf (stderr, "    layername1[,layername2,layername3,...]\n\n");
     fprintf (stderr, "      and/or   \n\n");
     fprintf (stderr, "    in_layername1:out_layername1[,inlayername2:outlayername2,.....]\n");
+
+    return 0;
 }
 /***************************  big_percent  **********************************/
 /* this is a modified version of G_percent created because of the 
 use of unsigned long ints which G_percent does not use */
 
 
-big_percent (n,d,s)
-unsigned long n,d;
-int s;
+int big_percent (unsigned long n, unsigned long d, int s)
 {
     unsigned long x;
     static unsigned long prev = -1;
 
     x = n*100/d ;
-    if (x % s) return;
+    if (x % s) return 1;
     if (n <= 0 || n >= d || x != prev)
     {
         prev = x;
-        fprintf (stderr,"%4d%%\b\b\b\b\b",x);
+        fprintf (stderr,"%4ld%%\b\b\b\b\b",x);
         fflush (stderr);
     }
     if (x >= 100)
@@ -356,4 +334,6 @@ int s;
         fprintf (stderr,"\n");
         prev = -1;
     }
+
+    return 0;
 }

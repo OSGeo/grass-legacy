@@ -7,9 +7,9 @@
 /*****************************************************************************/
 
 #include "param.h"
+#include "local_proto.h"
 
-
-open_files()
+int open_files (void)
 {
     /* Open existing file and set the input file descriptor. */
 
@@ -19,4 +19,6 @@ open_files()
         sprintf(err,"ERROR: Problem opening input file.");
         G_fatal_error(err);
     }
+
+    return 0;
 }

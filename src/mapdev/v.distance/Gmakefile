@@ -1,4 +1,4 @@
-OFILES = main.o  distance.o box_closer.o
+OFILES = main.o  distance.o
 
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 

@@ -3,9 +3,8 @@
 
 /*#define DEBUG*/
 
-dxf_open_layer (type, count)
-    int type;
-    int count;
+int 
+dxf_open_layer (int type, int count)
 {
     char	filename[300];
     FILE	*layer_fd;

@@ -11,11 +11,13 @@
 #include <math.h>
 
 
-CELL stats(ptype,coeff,z,w)
-    int     ptype;		/* Type of terrain parameter to calculate */
-    float  *coeff;		/* Set of six quadratic coefficents.	  */
-    CELL   *z;			/* Array storing local window.		  */
-    double *w;			/* Array storing weights.		  */
+CELL 
+stats (
+    int ptype,		/* Type of terrain parameter to calculate */
+    float *coeff,		/* Set of six quadratic coefficents.	  */
+    CELL *z,			/* Array storing local window.		  */
+    double *w			/* Array storing weights.		  */
+)
 
 {
 

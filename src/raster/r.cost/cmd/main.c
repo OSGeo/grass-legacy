@@ -24,7 +24,7 @@
 
 #define SEGCOLSIZE 	256
 
-
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
@@ -1023,7 +1023,7 @@ OUT:
 	if (verbose)
 		G_percent (row, nrows, 2);
 
-	printf("Peak cost value: %lf\n",peak);
+	printf("Peak cost value: %f\n",peak);
 
 	segment_release(&in_seg);   /* release memory  */
 	segment_release(&out_seg);

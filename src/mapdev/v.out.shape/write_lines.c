@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include "Vect.h"
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "v_out_arc.h"
 #include "gtoa.h"
 

@@ -2,8 +2,8 @@
 #include "dxf2vect.h"
 
 
-dxf_close_layer (o_count)
-    int o_count;
+int 
+dxf_close_layer (int o_count)
 {
     int found_flag = 0; /* Reinitilized each time */
     int count;
@@ -55,4 +55,6 @@ dxf_close_layer (o_count)
 	fclose (layers[o_count].Map->dig_fp);
     else
 	fclose(layers[o_count].fd);
+
+    return 0;
 }

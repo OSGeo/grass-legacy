@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "dig_head.h"
+#include "Vect.h"
 #include "libtrans.h"
 
 static int _transform_head_info (struct dig_head *);

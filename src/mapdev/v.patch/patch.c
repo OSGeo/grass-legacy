@@ -18,10 +18,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
-#include "digit.h"
 #include "Vect.h"
 #include "dig_atts.h"
-#include "dig_head.h"
 
 int patch(struct Map_info *, struct Map_info *, struct line_pnts *);
 

@@ -1,4 +1,3 @@
-#include "digit.h"
 #include "gis.h"
 #include "Vect.h"
 #include "format.h"

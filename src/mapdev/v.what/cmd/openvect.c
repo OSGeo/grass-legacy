@@ -1,8 +1,7 @@
 #include "gis.h"
 
 char *
- openvect (name)
-  char *name;
+openvect (char *name)
 {
   char *mapset;
 

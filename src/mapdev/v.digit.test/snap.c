@@ -4,7 +4,7 @@
 */
 
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 #include "Map_proto.h"
 #include "debug.h"
 #include "display_line.h"

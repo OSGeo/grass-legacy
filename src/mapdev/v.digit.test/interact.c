@@ -5,9 +5,8 @@
 
 #include <stdio.h>
 #include "local_proto.h"
-#include "digit.h"
+#include "Vect.h"
 #include "debug.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "local_proto.h"
 

@@ -8,11 +8,6 @@
 #include    "gis.h"
 #include "Vect.h"
 #include    "vbuildlib.h"
-/*
-#include    "dig_structs.h"
-*/
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "local_proto.h"
 
 /*  will install this after fixing  digit code to be able to handle

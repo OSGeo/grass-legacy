@@ -22,13 +22,10 @@
 **   fall within the map location.
 */
 
-
+#include <stdlib.h>
 #include "dxf2vect.h"
 
-double atof();
-
-dxf_find_lines (dxf_file)
-    FILE	*dxf_file;
+int dxf_find_lines (FILE *dxf_file)
 {
     int code; /* atoi of line if numeric */ 
     int header_flag; /* set to true if HEADER section found */
@@ -166,5 +163,5 @@ dxf_find_lines (dxf_file)
 
 	dxf_fgets (dxf_line, 256, dxf_file);
     }
-    return;
+    return 0;
 }

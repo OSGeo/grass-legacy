@@ -178,7 +178,7 @@
 **/
 
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "defines.h"
 #include "externs.h"
 #include "globals2.h"

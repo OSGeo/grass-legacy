@@ -3,15 +3,11 @@
 ** 7/23/90
 */
 
+#include <stdlib.h>
 #include "dxf2vect.h"
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "Vect.h"
 
-double atof();
-
-
-dxf_add_point (dxf_file)
-    FILE	*dxf_file;
+int dxf_add_point (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */
@@ -91,7 +87,7 @@ dxf_add_point (dxf_file)
 	    {
 		fprintf (layer_fd->fd, "P  %d\n",2);
 		for (count = 0; count < 2 ; count++) 
-		    fprintf (layer_fd->fd, " %12.2lf %12.2lf \n", yinfo[count],
+		    fprintf (layer_fd->fd, " %12.2f %12.2f \n", yinfo[count],
 			xinfo[count]);
 	    }
 	}

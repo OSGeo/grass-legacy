@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 #include "dig_atts.h"
 /*
 **  Written by: Dave Gerdes 5 1988

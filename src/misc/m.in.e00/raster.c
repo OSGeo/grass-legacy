@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "local_proto.h"
 
 /********************************************************************/
 /*                                                                  */

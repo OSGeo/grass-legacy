@@ -1,11 +1,10 @@
 /*#include <dig_atts.h>*/
 #include     <stdio.h>
-#include <Vect.h>
+#include "gis.h"
+#include "Vect.h"
 #include "sdts_in.h"
 #include "sdts_globals.h"
 #include "stc123.h"
-#include "dig_head.h"
-#include "gis.h"
 
 
 struct Sdts_PC *polygon_modns;

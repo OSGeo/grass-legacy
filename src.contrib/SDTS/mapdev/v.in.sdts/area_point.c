@@ -1,11 +1,10 @@
 #include "sdts_in.h"
 /*#include <dig_atts.h>*/
-#include <Vect.h>
 #include <stdio.h>
 #include "sdts_globals.h"
 #include "stc123.h"
-#include "dig_head.h"
 #include "gis.h"
+#include "Vect.h"
 
 /**NA  (Area Point) processing:
 

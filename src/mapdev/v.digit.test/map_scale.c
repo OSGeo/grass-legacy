@@ -9,10 +9,8 @@
 #include <stdio.h>
 #include <math.h>
 #include "D.h"
-#include "digit.h"
+#include "Vect.h"
 #include "libtrans.h"
-#include "dig_externs.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"

@@ -7,9 +7,7 @@
 #define DEBUG
 
 DXF_DIG *
-dxf_which_layer (layer_name, type)
-    char	*layer_name;
-    int type;
+dxf_which_layer (char *layer_name, int type)
 {
     
     int	open_count, closed_count;
@@ -106,19 +104,21 @@ dxf_which_layer (layer_name, type)
 }
 
 /* file status is incremented with most recently used file's status set to 0 */
-set_status(count)
-    int count;
+int 
+set_status (int count)
 {
     int	t; /*LOOPING VARIABLE */
 
     for (t=0; t< num_open_layers; t++)
 		layers[t].status++;
     layers[count].status = 0; /* sets to most recent status */
+
+    return 0;
 }
 
 /* the file with the highest .status is closed if necessary */
-int
-find_highest_status()
+int 
+find_highest_status (void)
 {
     int count;
     int highest = 0;

@@ -1,6 +1,6 @@
 /*  @(#)coll_pts.c	1.1  5/4/87  */
 #include "raster.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "keyboard.h"
 #include "local_proto.h"

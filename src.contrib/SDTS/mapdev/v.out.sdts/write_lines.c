@@ -5,7 +5,7 @@
 **  last modifed 11/14/94
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "stc123.h"
 #include "defines.h"
 #include "externs.h"

@@ -4,7 +4,7 @@
 */
 
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "raster.h"
 #include "graphics.h"
 #include "wind.h"

@@ -1,11 +1,10 @@
 /*  @(#)a_b_main.c	2.1  6/26/87  */
 #include <stdio.h>
-#include <Vect.h>
 #include "gis.h"
+#include "Vect.h"
 
 #define MAIN
 #include "dlg.h"
-#include "dig_head.h"
 #include "l_proto.h"
 
 /*

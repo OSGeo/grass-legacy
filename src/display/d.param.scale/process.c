@@ -6,9 +6,13 @@
 /***                                                                       ***/
 /*****************************************************************************/
 
+#include <stdlib.h>
+#include "raster.h"
+#include "display.h"
 #include "param.h"
+#include "local_proto.h"
 
-process()
+int process (void)
 {
 
     /*--------------------------------------------------------------------------*/
@@ -222,4 +226,6 @@ process()
     free_matrix(normal_ptr,1,6,1,6);
     free_vector(obs_ptr,1,6);
     free_ivector(index_ptr,1,6);
+
+    return 0;
 }

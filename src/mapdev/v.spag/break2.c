@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 static int _do_break_line(struct Map_info *,struct line_pnts *,

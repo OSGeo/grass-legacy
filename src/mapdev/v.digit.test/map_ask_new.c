@@ -4,7 +4,7 @@
 #include "gis.h"
 #include "vask.h"
 #include    "map.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_curses.h"
 #include "local_proto.h"
 
