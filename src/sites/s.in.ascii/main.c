@@ -141,6 +141,7 @@ format_double (double value, char *buf)
 #define ispipe(c) (c==PIPE)
 #define isnull(c) (c==(char)NULL)
 #define isquote(c) (c==DQUOTE)
+#define isbslash(c) (c==BSLASH)
 
 int 
 G_site_put_new (FILE *fptr, Site *s, int has_cat)
@@ -213,6 +214,12 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
 	  {
 	    xbuf[k++] = BSLASH;
 	    xbuf[k++] = DQUOTE;
+	  }
+	  else
+	  if (isbslash(s->str_att[i][j]))
+	  {
+	    xbuf[k++] = BSLASH;
+	    xbuf[k++] = BSLASH;
 	  }
 	  else
 	    xbuf[k++] = s->str_att[i][j];

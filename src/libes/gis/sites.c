@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.9  2001-01-13 07:42:11  eric
+ * Revision 1.10  2001-02-06 15:53:29  cho
+ * backslash bug fixed
+ *
+ * Revision 1.9  2001/01/13 07:42:11  eric
  * Small fix for G_site_describe() when extra dims present, but no cat, decimal
  * or string attributes are present.  Previously exited with error code
  * incorrectly when format was like:
@@ -857,7 +860,7 @@ static int format_double ( double value, char *buf)
 
 int cleanse_string (char *buf)
 {
-  char *stop, *p;
+  char *stop, *p, *p2;
 
   p = buf;
 
@@ -892,9 +895,11 @@ int cleanse_string (char *buf)
     }
   }
   /* remove backslashes between buf and stop */
-  while ((p = G_index (buf, BSLASH)) != (char *) NULL && p <= stop)
+  p = buf;
+  while ((p = G_index (p, BSLASH)) != (char *) NULL && p <= stop)
   {
-    if (*(p + 1) != (char) NULL && *(p + 1) == DQUOTE)
+    p2 = p + 1;
+    if (*p2 != (char) NULL && (*p2 == DQUOTE || *p2 == BSLASH))
     {
       while (*p != (char) NULL)
       {
@@ -903,6 +908,7 @@ int cleanse_string (char *buf)
       }
       stop--;
     }
+    p = p2;
   }
   return (int) (stop - buf);
 }
