@@ -1,7 +1,13 @@
+
+#
+# Note:  4.1 this moved to v.digit2 and was replaced by
+#   the new code in the v.digit directory to support new digitizer drivers
+#
+#
 EXTRA_CFLAGS	= -I../lib   -I../libes
 
 
-PROG = $(BIN_MAIN_INTER)/v.digit
+PROG = $(BIN_MAIN_INTER)/v.digit2
 
 #  filename bin_digit.c retained for consistency with 3.2
 
@@ -24,8 +30,8 @@ $(PROG): $(OFILES) $(GISLIB)
 #  update the digitcap file
 
 $(ETC)/digitcap:  digitcap
-	rm -f $(ETC)/digcap.sampl
-	cp  digitcap  $(ETC)/digcap.sampl
-	chmod  644  $(ETC)/digcap.sampl
+	rm -f $(ETC)/digitcap.sampl
+	cp  digitcap  $(ETC)/digitcap.sampl
+	chmod  644  $(ETC)/digitcap.sampl
 
 
