@@ -17,8 +17,8 @@ proc GSelect_::create { element } {
     variable selected
 
     toplevel .selwin -width 40 -height 80 
-    set sw    [ScrolledWindow .selwin.sw -relief sunken -borderwidth 2]
-   
+    set sw    [ScrolledWindow .selwin.sw -relief sunken -borderwidth 2 ]
+    wm title .selwin "Select item"
 
     set tree  [Tree $sw.tree \
                    -relief flat -borderwidth 0 -width 15 -highlightthickness 0\
