@@ -27,6 +27,7 @@
 *****************************************************************************/
 
 #include "gis.h"
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -98,6 +99,7 @@ int
 G_sock_bind (char *name)
 {
     int    sockfd;
+    size_t size;
     struct sockaddr_un addr;
 
     if (name == NULL)
@@ -122,7 +124,10 @@ G_sock_bind (char *name)
 
     sockfd = socket (PF_LOCAL, SOCK_STREAM, 0);
 
-    if (bind (sockfd, (struct sockaddr *) &addr, SUN_LEN (&addr)) != 0)
+    size = (offsetof (struct sockaddr_un, sun_path) 
+            + strlen (addr.sun_path) + 1);
+
+    if (bind (sockfd, (struct sockaddr *) &addr, size) != 0)
         return -1;
 
     return sockfd;
