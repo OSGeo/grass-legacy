@@ -1,4 +1,8 @@
- o Figure out correct way of handling polygons. 
- o Consider producing a category file with all the attributes. 
- o Try and get the v.to.rast process to work. 
- o Implement a v.out.shape
+ o Process more import shapefile errors correctly.
+ o Implement a s.in.shape. This capability is already removed
+   from the current module. [In progress]
+ o Incorporate changes into postgres modules
+ o Update documentation.
+ o General cleanup of code.
+ o Module for TCLTKGRASS.
+ 

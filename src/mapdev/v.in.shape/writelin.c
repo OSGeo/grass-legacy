@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 8th. Apr. 2000
- * Last updated 9th. Apr. 2000
+ * Last updated 23rd. Apr. 2000
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -23,9 +23,11 @@
 
 
 #include <stdlib.h>
+#include <math.h>
+#include "shapefil.h"
 #include "shp2dig.h"
 #include "writelin.h"
-#include "btree.h"
+#include "gbtree.h"
 
 
 /* Create a repository of segments for inclusion into GRASS
@@ -38,16 +40,16 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
   int segsize0 = 50;
   int segincr = 20;
   int segID = 0;
+  int maptype;
 
   int chainLength = 100;
   int chainIncr = 50;
   int pntID = 0;
 
+  double phi; /* Temp angle var */
+
   char *tmpKey;
   void *tmpData;
-
-  char *tffile = "/tmp/tree_data.log";
-  FILE *datalog;
 
   int chaining;  /* flag set while tracking a segment is active */
   
@@ -60,13 +62,13 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
   tmpKey = (char *)malloc( 33 );
   seg0->segments = (segmentDescript *)malloc( segsize0 * sizeof
 					      (segmentDescript) );
-  
 
-  if( (datalog = fopen( tffile, "w" )) == NULL ) {
-    fprintf( stderr, "Could not open file to log data errors" );
-    exit(1);
+  if( procMapType( GET_MT, &maptype ) != 0 ) {
+    fprintf( stderr, "Could not retrieve map type. Defaulting to LINE.\n" );
+    maptype = 1;
   }
   
+
   /* Rewind database to root */
   btree_rewind( btr0 );
 
@@ -80,32 +82,14 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
     data1 = (pntDescript **)tmpData;
     pcurr = *data1;
 
-    if( pcurr->linknum == 1 )
-      fprintf( datalog, "Single-end node at %.6f, %.6f\n",
-	pcurr->xPosn, pcurr->yPosn );
-    if( pcurr->linknum == 2 )
-      fprintf( datalog, "Vertex interior to polyline. Not starting at %.6f %.6f (%d)\n",
-	       pcurr->xPosn, pcurr->yPosn, pcurr->duff );
-    if( pcurr->linknum == 0 )
-      fprintf( datalog, "Isolated point at %.6f %.6f. Skipping.\n",
-	       pcurr->xPosn, pcurr->yPosn );
     if( pcurr->linknum == 2 ||  pcurr->linknum == 0 ) continue;
     else {
-      fprintf( datalog, "\nTracking from node at %.6f %.6f\n",
-	      pcurr->xPosn, pcurr->yPosn );
-      for( i0 = 0; i0 < pcurr->linknum; ++i0 )
-	fprintf( datalog, "   Track %d leads to point registered at %X ( %.6f %.6f)\n",
-		 i0, pcurr->linkverts[i0], pcurr->linkverts[i0]->xPosn,
-		 pcurr->linkverts[i0]->yPosn );
       pinit = pcurr;
-      for( i0 = 0; i0 < pcurr->linknum; ++i0 ) {
+      for( i0 = 0; i0 < pinit->linknum; ++i0 ) {
 	/* Initialise the starting node */
 	pcurr = pinit;
 	/* Get the first link */
 	pnext = pcurr->linkverts[i0];
-	fprintf( datalog, "Starting track %d:", i0 );
-	if( pnext->duff ) fprintf( datalog, "Old track. Not continuing.\n" );
-	else fprintf( datalog, "\n" );
 	if( pnext->duff ) continue; /* Old track */
 	else /* Track it */
 	  {
@@ -117,10 +101,10 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 	    }
 	    seg0->numSegments++;
 	    segID = seg0->numSegments;
-	    if( pcurr->linknum == 1 )
+	    if( pcurr->linknum == 1 && maptype == 2 )
 	      seg0->segments[segID-1].duff = 1;
-	    else
-	      seg0->segments[segID-1].duff = 0;
+	    else 
+	    seg0->segments[segID-1].duff = 0;
 
 	    /* Now initialise the pointer list for vertices */
 
@@ -172,7 +156,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 		  }
 		}
 
-	      if( pcurr->linknum == 1 ) seg0->segments[segID].duff = 1;
+	      if( pcurr->linknum == 1 && maptype == 2 ) seg0->segments[segID].duff = 1;
 
 	      /* Deal with the anomalous case of a single link
 		 between two nodes 
@@ -195,39 +179,42 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 		pnew->linkverts = NULL; /* ignore links */
 		pnew->linkdirect = NULL;
 		pnew->linknum = 0; 
-
-		fprintf( datalog, "Vertex at %.6f %.6f.\n",
-			 pnew->xPosn, pnew->yPosn );
-		fprintf( datalog, "Ending node at %.6f %.6f.\n",
-			 pcurr->xPosn, pcurr->yPosn );
 		seg0->segments[segID-1].vertices[1] = pnew;
 		seg0->segments[segID-1].vertices[2] = pcurr;
 		seg0->segments[segID-1].numVertices = 3;
-		if( pcurr->linknum == 1 )
-		  seg0->segments[segID-1].duff = 1;
+		/* if( pcurr->linknum == 1 )
+		   seg0->segments[segID-1].duff = 1; */
+		/* Does this link overwrite a colinear track from another segment? */
+		for( k0 = 0; k0 < pprev->linknum; ++k0 ) {
+		  if( i0 == k0 ) continue;
+		  if( fabs(pprev->linkdirect[i0] - pprev->linkdirect[k0]) 
+		      < 1.745e-4 ) {  /* 1% of 1 degree (in radians) */
+		    seg0->segments[segID-1].duff = 1;
+		    break;
+		  }
+		}
+		if( pprev->linknum == 1 ) {
+		  for( k0 = 0; k0 < pcurr->linknum; ++k0 ) {
+		    phi = reverse_angle( pcurr->linkdirect[k0] );
+		    if( fabs( phi - pprev->linkdirect[i0] ) < 1.745e-4 )
+		      seg0->segments[segID-1].duff = 1;
+		  }
+		}
 		continue;
 	      }
 
 	      /* Otherwise add the point and blank it */
 	      if( chaining == 1 ) pcurr->duff = 1;
-	      if( chaining == 0 && pcurr->linknum == 1 )
-		seg0->segments[segID-1].duff = 1;
-	      if( chaining == 0 ) fprintf( datalog, "Ending node " );
-	      else fprintf( datalog, "Vertex " );
-	      fprintf( datalog, "at %.6f %.6f.\n",
-		       pcurr->xPosn, pcurr->yPosn );
+	      /* if( chaining == 0 && pcurr->linknum == 1 )
+		 seg0->segments[segID-1].duff = 1; */
 	      seg0->segments[segID-1].vertices[pntID] = pcurr;
 	    }
-	    fprintf( datalog, "\nAggregate segment %d completed\n\n",
-		    segID );
 	      
 	  }
       }
     }
 
   }
-
-  return 1;
 
   /* still have to check for simple islands */
   btree_rewind( btr0 );
@@ -240,7 +227,12 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
     data1 = (pntDescript **)tmpData;
     pcurr = *data1;
 
+    /* Go on if this is not a simple link in a chain */
     if( pcurr->linknum != 2 ) continue;
+
+    /* And go on if this is a link that has already been encountered */
+    if( pcurr->duff ) continue;
+
     else
       {
 	/* Get the first link */
@@ -288,7 +280,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 
 	      pprev = pcurr;
 	      pcurr = pnext;
-	      seg0->segments[segID].numVertices++;
+	      seg0->segments[segID-1].numVertices++;
 	      pntID = seg0->segments[segID-1].numVertices - 1;
 
 	      /* If we're back to the start, stop */
@@ -319,4 +311,42 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
       }
 
   }
+}
+
+/* Function to dispose of segmentList cleanly */
+
+int segLDispose( segmentList *seg0 ) {
+  
+  /* Local vars */
+  int i0, j0, k0;
+
+  for( i0 = 0; i0 < seg0->numSegments; ++i0 ) {
+    for( j0 = 0; j0 < seg0->segments[i0].numVertices; ++j0 ) {
+      if( seg0->segments[i0].vertices[j0] )
+	seg0->segments[i0].vertices[j0] = NULL;
+    }
+
+    if( seg0->segments[i0].vertices )
+      free( seg0->segments[i0].vertices );
+  }
+
+  if( seg0->segments )
+    free( seg0->segments );
+
+  if( seg0 ) free( seg0 );
+
+  return(1);
+}
+
+
+double reverse_angle( double phi0 ) {
+  
+  /* local */
+  double psi;
+
+  psi = phi0 + PI ;
+  if( psi >= 2 * PI )
+    psi -= 2 * PI ;
+
+  return psi;
 }

@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>`
  * 14th. Mar. 2000
- * Last updated 14th. Mar. 2000
+ * Last updated 23rd. Apr. 2000
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -25,6 +25,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <setjmp.h>
 #include "dbutils.h"
 /* #include "gis.h" */
 
@@ -32,7 +33,6 @@
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
   static void *ptr_old = NULL;
-  static int nDecs = 3;	
   static int currerror = 0;
 
   static int num_registered = 0;
@@ -44,6 +44,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   int res, res1;
   int result = 0;
   char *pkey;
+  float snap;
 
   double angle0, angle1;
   int linked, lnum;
@@ -55,10 +56,24 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   pntDescript **dataHolder, **tmpdataHolder;
   pntDescript **pntPtrPtr;
 
+  jmp_buf startpnt;
+
+
   np = part1->numPoints;
 
+  /* Go on if any point should be invalid */
+
+  if( setjmp(startpnt) ) return 0;
+
+  /* Retrieve snap distance for map */
+  if( procSnapDistance( GET_SD, &snap ) ) {
+    fprintf(stderr, "Could not set snap distance. Aborting." );
+    exit(1);
+  }
+
+  /* Assign key value */
   pkey = (char *)malloc( 33 );
-  strncpy( pkey, calcKeyValue( &part1->linepnts[pt_indx], nDecs ), 33 );
+  strncpy( pkey, calcKeyValue( &part1->linepnts[pt_indx], snap ), 33 );
 
 
   /* Is this point registered in the database? */
@@ -96,9 +111,12 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
     else{
       pc = *( (pntDescript **) dataHolder );
 
-      /* Determine angle of link to previous vertex */
       if( pt_indx > 0 ) {
 	pb = (pntDescript *) ptr_old;
+
+	/* Is this the same vertex. If so skip */
+
+	if( pc == pb ) longjmp( startpnt, 1);
 
 	/* Are we already linked to this? */
 	linked = 0;
@@ -108,6 +126,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 	    linked = 1;
 	}
 
+	/* Determine angle of link to previous vertex */
 
 	angle0 = atan2(( pb->yPosn - pc->yPosn ), ( pb->xPosn - pc->xPosn ) );
 	if( angle0 < 0 ) angle0 += 2 * PI ;
@@ -164,10 +183,10 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
     /* Point is added: reflect new links */
     pc = *( (pntDescript **) dataHolder );
     num_registered++;
+    result = 1;
 
     /* Determine angle of link to previous vertex */
     if( pt_indx > 0 ) {
-      result = 1;
       pb = (pntDescript *) ptr_old;
 
 
@@ -218,37 +237,37 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-char *calcKeyValue( pntDescript *pnt1, int decs ) {
+char *calcKeyValue( pntDescript *pnt1, float sr ) {
   /* local */
 
+  double xtmp, ytmp;
   char xbuf[40], ybuf[40];
   char *retbuf;
-  int wholepart;
   int indx;
   char *indx_ptr;
 
+  xtmp = ((int)( pnt1->xPosn / sr )) * sr;
+  ytmp = ((int)( pnt1->yPosn / sr )) * sr;
+
   retbuf = (char *)malloc( 33 );
   
-  snprintf( xbuf, 35, "%035.10f", pnt1->xPosn );
-  snprintf( ybuf, 35, "%035.10f", pnt1->yPosn );
-
-  wholepart = 16 - decs;
+  snprintf( xbuf, 35, "%035.10f", xtmp );
+  snprintf( ybuf, 35, "%035.10f", ytmp );
 
   indx_ptr = strchr( xbuf, '.' );
-  strncpy( retbuf, indx_ptr - wholepart, wholepart );
-  retbuf[wholepart] = '\0';
-  strncat( retbuf, indx_ptr + 1, decs );
+  strncpy( retbuf, indx_ptr - 13, 13 );
+  retbuf[13] = '\0';
+  strncat( retbuf, indx_ptr + 1, 3 );
   retbuf[16] = '\0';
 
   indx_ptr = strchr( ybuf, '.' );
-  strncat( retbuf, indx_ptr - wholepart, wholepart );
-  retbuf[wholepart+16] = '\0';
-  strncat( retbuf, indx_ptr + 1, decs );
+  strncat( retbuf, indx_ptr - 13, 13 );
+  retbuf[29] = '\0';
+  strncat( retbuf, indx_ptr + 1, 3 );
   retbuf[32] = '\0';
 
   return retbuf;
 }
-
 
 /* Helper function definitions */
 
@@ -256,6 +275,27 @@ int btree_compare( char *key1, char *key2 ) {
   /* Just compare lexicographically */
 
   return strncmp( key1, key2, 32 );
+}
+
+
+int procSnapDistance( int iswitch, float *sd ) {
+  
+  /* Set or get the SNAP_DISTANCE variable */
+
+  static float snap_distance = 0.0;
+
+  if( iswitch == SET_SD ) {
+    if(sd) {
+      snap_distance = *sd;
+      return 0;
+    }
+    else return 1;
+  }
+  else if( iswitch == GET_SD ) {
+    *sd = snap_distance;
+    return 0;
+  }
+  else return 1;
 }
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
