@@ -1,52 +1,88 @@
 <HEAD>
-<TITLE>GRASS 5.1 Vector Format and API</TITLE>
+<TITLE>GRASS 5.7 Vector Format and API</TITLE>
 </HEAD>
 <BODY>
 <P>
-<H1>GRASS 5.1 Vector Format and API</H1>
+<H1>GRASS 5.7 Vector Format and API</H1>
 
 This document describes new format for <B>GRASS vector files</B> with 
 <B>multicategory</B> and optional <B>3D</B> support.
 <P>
-You can send any comments to
-<A href=mailto:ddgray@armadce.demon.co.uk>David D. Gray</A> and
-<A href=mailto:blazek@itc.it>Radim Blazek</A>
+You can send any comments to <A href=mailto:blazek@itc.it>Radim Blazek</A> and
+<A href=mailto:ddgray@armadce.demon.co.uk>David D. Gray</A>
 <P>
-See also:<br>
+See also:
+<ul>
+<li><A HREF="http://grass.itc.it/grass57/index.html#development">Draft GRASS 5.7 Programmer's manual</A>
+<li><A HREF="http://www.ing.unitn.it/~grass/conferences/GRASS2002/proceedings/proceedings/pdfs/Blazek_Radim.pdf">The 
+  new GRASS 5.1 vector architecture</a>, R. Blazek, M. Neteler, M. Micarelli 2002. Proc. 'Open source GIS -
+  GRASS users conference', Sept. 2002, Trento, Italy.
+</ul>
 
-<A HREF="http://mpa.itc.it/markus/grass51/">Draft GRASS 5.1 Programmer's manual</A>
+<h2>GRASS 5.7 vector architecture features </h2>
+
+The new GRASS 5.7 vector architecture implementation covers 
+the new 3D, multi-attribute, multi-layer vector features. 
+Current available are:   
+
+<ul>
+<li> multi-layer: features in one vector may represent more layers and 
+    may be linked to more external tables;
+<li> multi-attribute: attributes saved in external Relational Database Management 
+      System (RDBMS) connected through DBMI library and drivers;
+<li> 2D and 3D vector geometry with topology;
+<li> multi-format: external data formats supported (SHAPE- file, PostGRASS etc.);
+<li> portability: platform independent internal format for 32bit,
+      64bit etc. computer architectures;
+<li> integrated Directed Graph Library: support for vector network analysis
+<li> spatial index: based on R-tree method for fast vector geometry access
+</ul>
 
 <HR>
-
-<H4><A HREF="#intro">Introduction</A></H4>
-<H4><A HREF="#dir">Directory structure</A></H4>
-<H4><A HREF="#coor">coor Format Specification</A></H4>
-<H4><A HREF="#head">head Format Specification</A></H4>
-<H4><A HREF="#topo">topo Format Specification</A></H4>
-<H4><A HREF="#lib">Library</A></H4>
-<H4><A HREF="#structures">New or Modified Constants, Structures, Functions</A></H4>
-<H4><A HREF="#attr">Attributes</A></H4>
-<H4><A HREF="#other">Other informations</A></H4>
-<H4><A HREF="v.example.c">Example vector module</A></H4>
-<H4><A HREF="v.modules.html">Vector Modules Status</A></H4>
-<H4><A HREF="#ascii">Vector ascii Format Specification</A></H4>
-<H4><A HREF="#options">Vector modules and options</A></H4>
+<ul>
+<li><A HREF="#intro">Introduction</A></H4>
+<li><A HREF="#dir">Directory structure</A></H4>
+<li><A HREF="#coor">coor Format Specification</A></H4>
+<li><A HREF="#head">head Format Specification</A></H4>
+<li><A HREF="#topo">topo Format Specification</A></H4>
+<li><A HREF="#lib">Library</A></H4>
+<li><A HREF="#structures">New or Modified Constants, Structures, Functions</A></H4>
+<li><A HREF="#attr">Attributes</A></H4>
+<li><A HREF="#other">Other informations</A></H4>
+<li><A HREF="#ascii">Vector ascii Format Specification</A></H4>
+<li><A HREF="#options">Vector modules and options</A></H4>
+<li><A HREF="#status">Vector Modules Status</A></H4>
+<li><A HREF="#example">Example vector module</A></H4>
+</ul>
 <HR>
 
 <H2><A NAME="intro">Introduction</A></H2>
 <P>
-New format is very similar to old GRASS vector format.
+The new format is very similar to old GRASS 4.x (5.0/5.3) vector format.
 <P>
-Each element may have none, one or more categories (cats).
-More cats are distinguished by field number (field).
-Only one cat with cat_num=1 will be used in first stage
-and multi-category support on modules level will be added in
-future.
-<P>
-Z-coordinate will be optional and both 2d and 3d files may
-be written.
+GRASS vector maps are stored in an arc-node representation, consisting of 
+curves called arcs. An arc is stored as a series of x,y,z coordinate pairs.
+The two endpoints of an arc are called nodes. Two consecutive x,y,z pairs 
+define an arc segment. The user specifies the type on input to GRASS,
+GRASS doesn't decide. GRASS allows for the line definition which allows 
+for the multiple type to co-exist in the same map. Centroid are assigned to
+area it is within/inside (geometrically). An area is identified by an x,y,z
+centroid point geometrically inside with a category number. This identifies
+the area. Such centroids are stored in the same binary 'coor' file with 
+other primitives.
+Each element may have none, one or more categories (cats). More cats are 
+distinguished by field number (field). Single and multi-category support 
+on modules level is implemented.
+Z-coordinate is optional and both 2d and 3d files may be written. 
 
 
+<h3>Topology general characteristics</h3>
+
+<ol>
+<li> geometry and attributes are stored separately
+   (don't read both if it is not necessary (usually it is not))
+<li> the format is topological (areas build from boundaries)
+</ol>
 <HR>
 
 <H2><A NAME="dir">Directory structure</A></H2>
@@ -56,11 +92,14 @@ All vector files for one vector map are stored in one
 directory:<BR>
 <B>$MAPSET/vector/vector_name/</B> <BR>
 This directory contains these files:<BR><BR>
-<B>coor</B> - binary file, coordinates, former dig/ file<BR>
-<B>head</B> - text file, header information, former part of dig/<BR>
-<B>topo</B> - binary file, topology, former dig_plus/<BR>
-<B>misc</B> - miscellaneous - what's that?<BR>
-<B>regi</B> - registration points <BR>
+<ul>
+<li><b>coor</b> - binary file, coordinates [former dig/ file]
+<li><b>topo</b> - binary file, topology [former dig_plus/ file]
+<li><b>sidx</b> - binary file, spatial index 
+<li><b>head</b> - text file, header information [former part of dig/ file]
+<li><b>dbln</b> - text file, link(s) to attribute table(s) <br>
+<li><b>hist</b> - text file, vector map change history <br>
+</ul>
 
 <HR>
 
@@ -149,7 +188,104 @@ MAP THRESH
 
 <H2><A NAME="topo">topo file format</A></H2>
 
-Is not defined yet. 
+[docs missing]
+<P>
+Topology is written for native format, pseudo-topology is
+written for PostGRASS, SHAPE-link.
+
+<pre>
+/* Vector types used in memory on run time - may change */
+#define GV_POINT      0x01
+#define GV_LINE       0x02
+#define GV_BOUNDARY   0x04
+#define GV_CENTROID   0x08
+#define GV_FACE       0x10
+#define GV_KERNEL     0x20
+#define GV_AREA       0x40
+#define GV_VOLUME     0x80
+
+#define GV_POINTS (GV_POINT | GV_CENTROID )
+#define GV_LINES (GV_LINE | GV_BOUNDARY )
+</pre>
+
+Face and kernel are 3D equivalents of boundary and centroid, but there 
+is no support (yet) for 3D topology (volumes). The only current use of 
+face is possibility to display vertical planes in NVIZ.
+
+<pre>
+/* Topology level details */
+#define GV_BUILD_NONE  0
+#define GV_BUILD_BASE  1
+#define GV_BUILD_AREAS  2
+#define GV_BUILD_ATTACH_ISLES 3  /* Attach islands to areas */
+#define GV_BUILD_CENTROIDS 4 /* Assign centroids to areas */
+#define GV_BUILD_ALL GV_BUILD_CENTROIDS
+</pre>
+
+GV_BOUNDARY contains geometry and it is used to build areas.
+GV_LINE cannot form an area.
+<h3>Topology Example 1:</h3>
+
+A polygon may be formed by many boundaries (more primitives but connected).
+One boundary is shared by adjacent areas.
+
+<pre>
++--1--+--5--+
+|     |     |
+2  A  4  B  6
+|     |     |
++--3--+--7--+
+
+1,2,3,4,5,6,7 = 7 boundaries (primitives)
+A,B = 2 areas
+</pre>
+
+
+<h3>Topology Example 2:</h3>
+
+This is handled correctly in GRASS: A can be filled, B filled differently.
+
+<pre>
++---------+
+|    A    |
++-----+   |
+|  B  |   |
++-----+   |
+|         |
++---------+
+</pre>
+
+In GRASS, whenever 'inner' ring touches the boundary of outside area, even in
+one point, it is no more 'inner' ring, it is simply another area.
+A, B above can never be exported from GRASS as polygon A with inner ring B
+because there are only 2 areas A and B and no island.
+
+
+
+<h3>Topology Example TIGER data:</h3>
+
+v.in.ogr/v.clean can identify dangles and change the type from boundary
+to line. Distinction between line and boundary isn't important only
+for dangles. Example:
+
+<pre>
++-----+-----+
+|     .     |
+|     .     |
++.....+.....+
+|     .     |
+|  x  .     |
++-----+-----+
+
+----  road + boundary of one parcel => type boundary
+....  road => type line
+x     parcel centroid (identifies whole area)
+</pre>
+
+Because lines are not used to build areas, we have only one area/centroid,
+instead of 4 which would be necessary in TIGER.
+
+
 
 <HR>
 
@@ -163,7 +299,7 @@ Vlib, Vect_*(), VECTLIB_REAL, libvect.a, vector library, grass4.x<BR><BR>
 
 Vector library was introduced in grass4.0 to hide vector files' formats
 and structures. 
-In GRASS 5.1 everything is accessed via Vect_* functions, for example:
+In GRASS 5.7 everything is accessed via Vect_* functions, for example:
 <PRE>
     xx = Map.Att[Map.Area[area_num].att].x;
 </PRE>by new function<PRE>
@@ -243,6 +379,17 @@ Wild cards <B>*</B> and <B>?</B> may be used in map and mapset names.
 Variables <B>$GISDBASE, $LOCATION, $MAPSET, $MAP, $FIELD</B>
 may be used in table, key, database and driver names. Note that
 $MAPSET is not current mapset but mapset of the map the rule is defined for.
+
+<P>Note that features in GRASS vector may have attributes
+in different tables or may be without attributes. Boundaries
+forms areas but it may happen that some boundaries are not closed
+(such boundaries would not appear in polygon layer).
+Boundaries may have attributes. All types may be mixed in one vector.
+<P>
+Link to the table is permanent and it is stored in 'dbln' file in vector
+directory. Tables are considered to be a part of the vector and g.remove,
+for example, deletes linked tables of the vector.
+Attributes must be joined with geometry.
 
 <P>
 <H3>Examples:</H3>
@@ -392,7 +539,21 @@ Dimension is kept. Input 2D vector is written as 2D, 3D as 3D.
 <B>field=</B> field number <BR>
 <B>where=</B> condition of SQL statement for selection of records <BR>
 <B>col=</B> column name (in external table) <BR>
+<P>
 
+<HR>
+<H2><A NAME="status">Vector module upgrade status</A></H2>
+
+<a href=v.modules.html>Vector upgrade status</a>
+
+<HR>
+<H2><A NAME="example">Vector module programming example</A></H2>
+
+<a href=v.example.c>Vector module C programming example</a> (slightly outdated, you better start
+from new modules)
+
+<hr>
+<i>Document updated 2004 by  M. Neteler</i><br>
+$Date$
 </BODY>
 </HTML>
-
