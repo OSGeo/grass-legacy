@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	int next_row;
 	struct Cell_head window ;
 	struct GModule *module;
+	struct Flag *flag_o;
 	int t, b, l, r ;
 	int i;
 
@@ -31,6 +32,10 @@ int main(int argc, char **argv)
 	module->description =
 		"Displays three user-specified raster map layers "
 		"as red, green, and blue overlays in the active graphics frame.";
+
+	flag_o = G_define_flag();
+	flag_o->key = 'o';
+	flag_o->description = "Overlay (non-null values only)";
 
 	for (i = 0; i < 3; i++)
 	{
@@ -83,6 +88,7 @@ int main(int argc, char **argv)
 	G_get_window(&window) ;
 
 	D_set_colors_RGB();
+	D_set_overlay_mode(flag_o->answer);
 
 	next_row = 0;
 	for (row = 0; row < window.rows; )

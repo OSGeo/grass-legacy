@@ -65,7 +65,7 @@ int Number_of_colors(int *);
 int Polydots_abs(int *,int *,int);
 int Polydots_rel(int *,int *,int);
 int Set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
-int RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,int);
+int RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
 int Raster_char( int ,int ,unsigned char *,int,int);
 int Raster_int_def( int ,int ,int *,int,int);
 int Reset_colors( int ,int ,unsigned char *,unsigned char *,unsigned char *);

@@ -48,14 +48,14 @@ parameter value using the standard GRASS
 <DT><B>-o</B>
 
 <DD>Overlay the named raster map layer onto whatever is
-already displayed in the active graphics frame. Any zero
-category value data areas in the named raster map will seem
+already displayed in the active graphics frame. Any no
+data areas in the named raster map will seem
 transparent, and reveal the underlying image previously
 displayed in the graphics frame.  If the <B>-o</B> flag is set,
-only cells containing non-zero category values will be
+only cells containing non-null values will be
 displayed from the <EM>overlaid</EM> raster map.  All other
-areas (i.e., the portions of the overlaid map that contain
-category value 0) will leave the underlying display
+areas (i.e., the portions of the overlaid map that are
+null) will leave the underlying display
 untouched.  If the <B>-o</B> flag is not set by the user,
 <EM>d.rast</EM> will (by default) completely overwrite
 whatever appears in the active graphics display frame.
@@ -69,7 +69,7 @@ whatever appears in the active graphics display frame.
 
 <DL>
 
-<DT><B>map=</B><EM>name</B>
+<DT><B>map=</B><EM>name</EM>
 
 <DD>Name of the raster map to be displayed.  If the active
 graphics frame already contains text or graphics, and the
@@ -86,11 +86,11 @@ used to enhance the plot.
 
 <DD>List of categories to be displayed (INT maps).
 
-<DT><B>vallist=</B><EM>list</B>
+<DT><B>vallist=</B><EM>list</EM>
 
 <DD>List of values to be displayed (FP maps).
 
-<DT><B>bg=</B><EM>color</B>
+<DT><B>bg=</B><EM>color</EM>
 
 <DD>Background color for null.
 </DL>

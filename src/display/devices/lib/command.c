@@ -43,9 +43,11 @@ static PAD *curpad;       /* current selected pad */
 static unsigned char *blua;
 static unsigned char *grna;
 static unsigned char *reda;
+static unsigned char *nula;
 static int blu_alloc;
 static int grn_alloc;
 static int red_alloc;
+static int nul_alloc;
 
 static int *xarray;
 static int *yarray;
@@ -82,9 +84,7 @@ process_command(int c)
 
     int t, b, l, r;
     int x, y;
-    unsigned char blu;
-    unsigned char grn;
-    unsigned char red;
+    unsigned char red, grn, blu;
     int min, max;
     int number;
     int index;
@@ -235,11 +235,13 @@ process_command(int c)
 	reda = (unsigned char *) xalloc(reda, &red_alloc, x, sizeof(*reda));
 	grna = (unsigned char *) xalloc(grna, &grn_alloc, x, sizeof(*grna));
 	blua = (unsigned char *) xalloc(blua, &blu_alloc, x, sizeof(*blua));
+	nula = (unsigned char *) xalloc(nula, &nul_alloc, x, sizeof(*nula));
 	REC(reda, x * sizeof(char));
 	REC(grna, x * sizeof(char));
 	REC(blua, x * sizeof(char));
+	REC(nula, x * sizeof(char));
 	REC(&t, sizeof t);
-	RGB_raster(x, y, reda, grna, blua, t);
+	RGB_raster(x, y, reda, grna, blua, t ? nula : NULL);
 	break;
     case RGB_COLORS:
 	reda = (unsigned char *) xalloc(reda, &red_alloc, 256, sizeof(*reda));
