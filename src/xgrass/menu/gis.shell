@@ -16,13 +16,13 @@ clear
 cat << EOF
 Welcome to GRASS VERSION_NUMBER (VERSION_DATE)
 
-Geographical Resources Analysis Support Systems (GRASS) is a Trademark
-of U.S. Army Construction Engineering Research Laboratories (USACERL)
+This version of the Geographical Resources Analysis Support Systems 
+(GRASS) GIS was developed by Baylor University, with the cooperation
+of the U.S. Army Construction Engineering Research Laboratories (USACERL)
 
-New releases of GRASS are coordinated and produced by the Office of
-GRASS Integration (OGI) located at USACERL, and incorporate software
-contributions from numerous sources
-
+New releases of GRASS are coordinated and produced by the GRASS Research
+Group at Baylor University, and incorporate software contributions from 
+numerous sources
 
 This version running thru the $shellname ($SHELL)
 Help is available with the command: g.help
