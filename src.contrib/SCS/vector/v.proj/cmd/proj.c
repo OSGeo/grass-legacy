@@ -220,10 +220,11 @@ fprintf(stderr,"\n");
 
 	cmnd1[0] = '\0';
 	cmnd2[0] = '\0';
+	sprintf(buffa,"%s/etc/v.projINV",G_gisbase());
         /********** get input proj parameters **********************/
         if ((tf = fopen(parms->answer,"r")) == NULL) 
 	        G_fatal_error("Error can not open temp file\n");
-        if (strcmp(argv[0],"v.projINV") == 0) 
+        if (strcmp(argv[0],buffa) == 0) 
 	        fgets(cmnd1,256,tf);
         else
 	        fgets(cmnd2,256,tf);
@@ -238,14 +239,23 @@ if (strncmp(p,"+zone=",5) == 0){
 p = (char *) (p + 1);
 }
 
-p = (char *) cmnd2;
-while ( strlen(p) > 0){
-if (strncmp(p,"+proj=",5) == 0){
-	p = (char *) p + 6;
-	sscanf(p,"%s",proj_out);
-	}
-p = (char *) (p + 1);
+if (strlen(cmnd2) > 0) {
+        p = (char *) cmnd2;
+        while ( strlen(p) > 0){
+        if (strncmp(p,"+proj=",5) == 0){
+	        p = (char *) p + 6;
+	        sscanf(p,"%s",proj_out);
+	        }
+        p = (char *) (p + 1);
+        }
 }
+else  {
+sprintf(proj_out,"ll");
+out_zone = 0;
+}
+
+/*DEBUG fprintf(stderr,"1__ %s\n",cmnd1);*/
+/*DEBUG fprintf(stderr,"2__ %s\n",cmnd2);*/
  
         fprintf(stderr,"\nLoading <%s> vector information.\n",map_name);
 
@@ -287,6 +297,8 @@ p = (char *) (p + 1);
         HS = Map.head.S;
         HW = Map.head.W;
         HN = Map.head.N;
+
+/*DEBUG		fprintf(stderr,"N_%lf S_%lf E_%lf W_%lf\n",HN,HS,HE,HW);*/
 
         oform = "%.10f";
         /*SE*/
@@ -348,6 +360,8 @@ p = (char *) (p + 1);
         else Out_Map.head.N = HN;
         if (HW > W) Out_Map.head.W = W;
         else Out_Map.head.W = HW;
+/*DEBUG		fprintf(stderr,"N_%lf S_%lf E_%lf W_%lf\n",HN,HS,HE,HW);*/
+/*DEBUG		fprintf(stderr,"N_%lf S_%lf E_%lf W_%lf\n\n",N,S,E,W);*/
 
 	Out_Map.head.plani_zone = out_zone;
 
@@ -373,9 +387,15 @@ p = (char *) (p + 1);
 	   num = (int)(Out_Map.head.W -1);
            G_format_easting (num,buffb,Out_proj);
            fprintf (wnd, "west:       %s\n", buffb);
-	   i = (int)((Out_Map.head.E - Out_Map.head.W) / 100.);
+	   if (Out_proj == 3)
+	      i = (int)((Out_Map.head.E - Out_Map.head.W) * 60.);
+           else
+	      i = (int)((Out_Map.head.E - Out_Map.head.W) / 100.);
 	   fprintf (wnd, "cols:       %d\n",i);
-	   i = (int)((Out_Map.head.N - Out_Map.head.S) / 100.);
+	   if (Out_proj == 3)
+	      i = (int)((Out_Map.head.N - Out_Map.head.S) * 60.);
+           else
+	      i = (int)((Out_Map.head.N - Out_Map.head.S) / 100.);
 	   fprintf (wnd, "rows:       %d\n",i);
 	   fprintf (wnd, "e-w resol:  100\n");
 	   fprintf (wnd, "n-s resol:  100\n");
