@@ -36,10 +36,8 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 		fflush (stdout);
 	}
 
-    /*
-    if (NULL != (err = dig__P_init (name, mapset, &P_map)))
-    */
-    if (2 > Vect_open_old (&P_map, name, mapset))
+    Vect_set_open_level(2);
+    if (0 > Vect_open_old (&P_map, name, mapset))
     {
 	/*
 	fprintf (stderr, "\nWARNING: vector file [%s] - Could not open Level 2\n", name);
