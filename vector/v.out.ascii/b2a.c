@@ -1,12 +1,13 @@
 #include "Vect.h"
 #include "gis.h"
+#include "local_proto.h"
 
 int bin_to_asc(
     FILE *ascii,
     FILE *att,
     struct Map_info *Map,
     int ver,
-    int pnt)
+    int format)
 {
 	int type, ctype, i, cat;
 	double *xptr, *yptr, *zptr, x, y;
@@ -32,7 +33,7 @@ int bin_to_asc(
 		if (type == -2)	/* EOF */
 	            return (0);
 
-		if ( pnt && !(type & GV_POINT) ) continue;
+		if ( format == FORMAT_POINT && !(type & GV_POINTS) ) continue;
 
 		if ( ver < 5 ) { Vect_cat_get ( Cats, 1, &cat ); }
 
@@ -73,7 +74,7 @@ int bin_to_asc(
 			break;
 		}
 
-		if ( pnt ) {
+		if ( format == FORMAT_POINT ) {
 		    /* fprintf(ascii, "%c", ctype); */
 		    G_format_easting (Points->x[0], buf1, -1);
 		    G_format_northing (Points->y[0], buf2, -1);
@@ -98,8 +99,13 @@ int bin_to_asc(
 		    
 		    while (Points->n_points--)
 		    {
-			    G_format_northing (*yptr++, buf1, -1);
-			    G_format_easting (*xptr++, buf2, -1);
+			    if ( ver == 4 ) {
+			        G_format_northing (*yptr++, buf1, -1);
+			        G_format_easting (*xptr++, buf2, -1);
+			    } else {
+			        G_format_easting (*xptr++, buf1, -1);
+			        G_format_northing (*yptr++, buf2, -1);
+			    }
 			    
 			    if ( Map->head.with_z  && ver == 5 ) {
 				fprintf(ascii, " %-12s %-12s %-12f\n", buf1, buf2, *zptr++);

@@ -10,10 +10,10 @@
 int main (int argc, char *argv[])
 {
 	FILE *ascii, *att;
-	struct Option *old, *new;
+	struct Option *old, *new, *format_opt;
 	struct Flag *verf;
+	int  format;
 	char *mapset;
-	char errmsg[200];
 	struct Map_info Map;
 	int    ver=5, pnt=0; 
 	struct GModule *module;
@@ -30,8 +30,17 @@ int main (int argc, char *argv[])
 	new->type		=  TYPE_STRING;
 	new->required		=  NO;
 	new->multiple		=  NO;
-	new->gisprompt  	= "new,dig_ascii,ascii vector" ;
-	new->description	= "name of resulting ascii file";
+	new->gisprompt  	= "file,file,file" ;
+	new->description	= "path to resulting ascii file or ASCII vector name if '-o' is defined";
+
+	format_opt = G_define_option();
+	format_opt->key		= "format";
+	format_opt->type	=  TYPE_STRING;
+	format_opt->required	=  NO;
+	format_opt->multiple	=  NO;
+	format_opt->options	= "point,standard";
+	format_opt->answer	= "point";
+	format_opt->description	= "output format";
 
         verf = G_define_flag ();
         verf->key               = 'o';
@@ -39,39 +48,42 @@ int main (int argc, char *argv[])
 
 	if (G_parser (argc, argv)) exit(-1);
 
-	if (!*(old->answer))
-	{
-    	    fprintf (stderr, "%s: Command line error: missing input name.\n\n", argv[0]);
-	    G_usage();
-    	    exit (-1);
+	if ( format_opt->answer[0] == 'p' )
+	    format = FORMAT_POINT;
+	else 
+	    format = FORMAT_ALL;
+	
+	if ( verf->answer ) ver = 4;	
+
+	if ( ver == 4 && format == FORMAT_POINT ) {
+	   G_fatal_error ("format 'point' is not supported for old version" );
 	}
 
-	if ((mapset = G_find_vector2 (old->answer, "")) == NULL)
-	{
-		sprintf (errmsg, "Could not find vector file <%s>\n", old->answer);
-		G_fatal_error (errmsg);
+	if ( ver == 4 && new->answer == NULL ) {
+	   G_fatal_error ("'output' must be given for old version" );
 	}
-	
+
 	Vect_set_open_level (1);	/* only need level I */
 	Vect_open_old (&Map, old->answer, mapset); 
 
-	if ( verf->answer )
- 	    ver = 4;	
 		
-	if ( new->answer != NULL ) {
-	    if ( (ascii = G_fopen_new("dig_ascii", new->answer) ) == NULL )
-	    {
-		    sprintf(errmsg, "Not able to open ascii file <%s>\n", new->answer) ;
-		    G_fatal_error (errmsg);
+	if ( new->answer ) {
+	    if ( ver == 4 ) {
+	        ascii = G_fopen_new("dig_ascii", new->answer);
+	    } else {
+	        ascii = fopen ( new->answer, "w" );
 	    }
-	    pnt = 0;
-	    
+		
+	    if ( ascii == NULL ) {
+		G_fatal_error("Cannot open file [%s]", new->answer );
+	    }
+	} else {
+	    ascii = stdout;
+	}
+	
+	if ( format == FORMAT_ALL ) {
 	    write_head(ascii, &Map) ;
 	    fprintf (ascii, "VERTI:\n");
-
-	} else { /* write points to stdout */
-	    ascii = stdout;
-	    pnt = 1;
         }
 
 	/* Open dig_att */
@@ -84,9 +96,9 @@ int main (int argc, char *argv[])
 	        G_fatal_error ( "Not able to open dig_att file <%s>\n", new->answer) ;
 	}
 
-	bin_to_asc (ascii, att, &Map, ver, pnt) ;
+	bin_to_asc (ascii, att, &Map, ver, format ) ;
 
-	if ( !pnt )  fclose(ascii) ;
+	if ( ascii != NULL )  fclose(ascii) ;
 	if ( att != NULL )  fclose(att) ;
 
 	Vect_close (&Map);
