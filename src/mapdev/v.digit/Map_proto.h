@@ -31,6 +31,7 @@ int check_area(struct Map_info *, int, double, double);
 int display_labeled_areas(struct Map_info *);
 int display_all_areas(struct Map_info *);
 int display_labeled_lines(struct Map_info *);
+int display_unlabeled_lines(struct Map_info *);
 int label_all_lines(struct Map_info *, int);
 int label_mlines(struct Map_info *, int);
 int check_scale(struct Map_info *);

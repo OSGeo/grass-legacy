@@ -122,7 +122,7 @@ int display_all_lines (struct Map_info *map)
     ret = 0;
     Write_info (3, "");
 
-if (!Disp_lines && !Disp_llines && !Disp_llabels && !Disp_points && !Disp_nodes && !Disp_sites && !Disp_slabels)
+if (!Disp_lines && !Disp_llines && !Disp_llabels && !Disp_ulines && !Disp_points && !Disp_nodes && !Disp_sites && !Disp_slabels)
 	return (1);
     set_keyboard ();
     for (i = 1 ; i <= map->n_lines ; i++)

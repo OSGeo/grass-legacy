@@ -807,6 +807,20 @@ int display_labeled_lines (struct Map_info *map)
     return 0;
 }
 
+int display_unlabeled_lines (struct Map_info *map)
+{
+    register int i;
+    for (i = 1 ; i <= map->n_lines ; i++)
+	if (LINE_ALIVE (&(map->Line[i])) && !map->Line[i].att && 
+		line_in_window (&(map->Line[i]))) 
+	{
+	    V1_read_line (map, &Gpoints, map->Line[i].offset);
+	    _display_line (map->Line[i].type, &Gpoints, i, map);
+	}
+    V_flush ();
+    return 0;
+}
+
 /* this is (no longer) a hidden feature for whatever use */
 int label_all_lines (struct Map_info *map, int cat)
 {
