@@ -116,6 +116,7 @@
 static void
 break_compile (void)
 {
+    /* if ZLIB is not installed, a compile error is generated here */
     NULL = 1;
 }
 
