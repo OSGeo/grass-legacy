@@ -1,0 +1,7 @@
+color red
+move 10. 10.
+draw 90. 10.
+color green
+size 20 20
+move 10. 50.
+text ab c
