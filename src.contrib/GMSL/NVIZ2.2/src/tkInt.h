@@ -1,4 +1,11 @@
-/* adjusted path in line 28   8/99 MN */
+/* 
+  $Log$
+  Revision 1.2  2000-01-12 08:52:08  markus
+  commented line 46: Tk_PostscriptInfo
+
+  adjusted path in line 28   8/99 MN 
+ */
+
 /*
  * tkInt.h --
  *
@@ -39,7 +46,7 @@
 
 typedef struct TkColormap TkColormap;
 typedef struct TkGrabEvent TkGrabEvent;
-typedef struct Tk_PostscriptInfo Tk_PostscriptInfo;
+/*typedef struct Tk_PostscriptInfo Tk_PostscriptInfo;*/
 typedef struct TkpCursor_ *TkpCursor;
 typedef struct TkRegion_ *TkRegion;
 typedef struct TkStressedCmap TkStressedCmap;
@@ -58,7 +65,6 @@ typedef Window (TkClassCreateProc) _ANSI_ARGS_((Tk_Window tkwin,
 typedef void (TkClassGeometryProc) _ANSI_ARGS_((ClientData instanceData));
 typedef void (TkClassModalProc) _ANSI_ARGS_((Tk_Window tkwin,
 	XEvent *eventPtr));
-
 
 /*
  * Widget class procedures used to implement platform specific widget
