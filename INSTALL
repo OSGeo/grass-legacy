@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.2 2000-05-02 17:38:47 markus Exp $)
+($Id: INSTALL,v 1.3 2000-05-02 17:41:59 markus Exp $)
 
 The intent of the new install method is to have the following sequence
 of commands work to install GRASS on any platform.  If for some reason
@@ -14,9 +14,12 @@ INSTALL.gmake for instruction.
 The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
 (see below) containing dependency information.  The `make' command
-should compile the programs but not touch the filesystem outside of
-the extracted source.  The `make install' command should install GRASS
-in the main filesystem.  NOTE:  You may need to be 'root' to do this!
+at time only generates a few internal files.
+The `make install' command should compile and install GRASS
+in the main filesystem. The `gmakelinks5' generates internal links
+finally for every module.
+
+NOTE:  You may need to be 'root' to do this!
 
 If you want to change this, use a sequence like this:
 
