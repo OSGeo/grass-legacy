@@ -1,0 +1,35 @@
+Each record is preceded by a four byte ascii number which defines the
+length of that record.  To read a record: read that number, read that
+number -4 bytes into your record buffer.   This seems like it can cause
+problems with long records (e.g. many coordinates for one line segment.)
+
+Each record contains a unique 5byte ID number
+
+Occasionally a record is followed by a number of ^ characters which must be
+skipped before attempting to read the next record.
+
+ERROR:
+Each record type is supposed to have its own record type id number; 0001
+for header records, 0002 for edge records, etc.  All appear to have 0001.
+
+Between integer values in records (except header records) is an octal 37
+character which must be skipped.
+
+Trouble with "record type".  Documentation places this as first field
+in all records.  The first field is actually a 4char ascii code like
+NODI, FACI, etc.   Following this are one or two numbers which are documented
+as 1) rec type and 2) record id.  The numbers found in these positions do not
+seem to be consistent.
+EDGI   892 448 more------>
+NODI   293 1054 more----->
+FACI   764 216 more------>
+FCIN   505 1 more-------->
+1111222223 4..    1- Undocumented ascii code
+				  2- Undocumented (record length?)
+				  3- record type (supposed to be I2)
+				  4- record ID
+
+There is a maximum record length of 99999 bytes.  
+
+There seems to be a maximum coordinate count of 110 for edges.  Edges longer
+are forcibly broken with nodes.
