@@ -1082,12 +1082,8 @@ int append (char *cmd, char *frm, ...)
 /* Build gui */
 int G_gui (void)
 {
-    char buf[1000];
-    struct Option *opt ;
-    struct Flag *flag ;
     char *type;
-    char *s, *top, *p1;
-    int i, optn, n_options;
+    int optn;
     FILE *fp;
 		
     if (!pgm_name)
@@ -1095,116 +1091,66 @@ int G_gui (void)
     if (!pgm_name)
 	pgm_name = "??";
 
-/*    fp = popen("tee dump.tcl | $GRASS_WISH", "w"); */
-    fp = popen("$GRASS_WISH", "w");
+    if (getenv("GRASS_DEBUG_GUI"))
+	fp = popen("tee gui_dump.tcl | $GRASS_WISH", "w");
+    else
+	fp = popen("$GRASS_WISH", "w");
+
     if (!fp)
 	    G_fatal_error("unable to spawn wish");
 
-    fprintf(fp, "set pgm_name %s\n", pgm_name);
     fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
 
-    if (module_info.description)
-	fprintf(fp, "module_description {%s}\n", module_info.description);
+    fprintf(fp, "begin_dialog {%s} {%s}\n", pgm_name,
+	    module_info.description ? module_info.description : "");
 
     optn = 1;
     
-    if(n_opts)
+    if (n_opts)
     {
-	opt= &first_option;
-	while(opt != NULL)
+	struct Option *opt;
+
+	for (opt = &first_option; opt; opt = opt->next_opt, optn++)
 	{
-	    switch (opt->type) {
-		    case TYPE_INTEGER:
-			    type = "integer";
-			    break ;
-		    case TYPE_DOUBLE:
-			    type = "float";
-			    break ;
-		    case TYPE_STRING:
-			    type = "string";
-			    break ;
-		    default:
-			    type = "string";
-			    break;
+	    switch (opt->type)
+	    {
+	    case TYPE_INTEGER:
+		type = "integer";
+		break;
+	    case TYPE_DOUBLE:
+		type = "float";
+		break;
+	    case TYPE_STRING:
+		type = "string";
+		break;
+	    default:
+		type = "string";
+		break;
 	    }
-	    
-	    /* Set key name and type */
-	    fprintf(fp, "set optname(%d) {%s}\n", optn, opt->key);
-	    fprintf(fp, "set opttype(%d) %s\n", optn,
-		    opt->multiple && opt->options ? "multi" : "opt");
-	    fprintf(fp, "set optmulti(%d) %d\n", optn, opt->multiple);
 
-	    /* Option label */ 
-	    fprintf(fp, "do_label %d {%s} {%s} %d\n",
-		    optn, opt->description, type, opt->required == YES);
-	    
-	    /* Option value */
-	    fprintf(fp, "frame $suf.val%d\n", optn );
-	    if(opt->options) {
-		top = G_calloc(strlen(opt->options) + 1, 1);
-		strcpy(top, opt->options);
-		s = strtok(top, ",");
-		p1 = s;
-		i = 1;
-	        if(opt->multiple) {
-		    while (s) {
-			fprintf(fp, "do_check %d %d {%s}\n", optn, i, s);
-			s = strtok(NULL, ",");
-			i++;
-		    }
-		}
-		else {
-		    fprintf(fp, "do_combo %d {\n");
-		    while (s) {
-			fprintf(fp, "\t{%s}\n", s);
-			s = strtok(NULL, ",");
-			i++;
-		    }
-		    fprintf(fp, "}\n");
-		    fprintf(fp, "set optval(%d) {%s}\n",
-			    optn, opt->answer ? opt->answer : p1);
-		}
-		fprintf(fp, "set nmulti(%d) %d\n", optn, i - 1);
-		G_free(top);
-	    }
-	    else {
-		if ( opt->gisprompt ) {
-		    if (strncmp(opt->gisprompt, "file", 4) == 0)
-			fprintf(fp, "do_button_file %d\n", optn);
-		    if (strncmp(opt->gisprompt, "old", 3) == 0) {
-		        strcpy(buf, opt->gisprompt);
-		        s = strtok(buf, ",");
-		        s = strtok(NULL, ",");
-			fprintf(fp, "do_button_old %d {%s}\n", optn, s);
-		    }
-		}
-	        fprintf(fp, "do_entry %d\n", optn);
-		if(opt->def)
-		    fprintf(fp, "set optval(%d) {%s}\n", optn, opt->def);
-
-	    }
-	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn);
-
-	    opt = opt->next_opt ;
-	    optn++;
+	    fprintf(fp, "add_option %d {\n", optn);
+	    fprintf(fp, " name {%s}\n", opt->key);
+	    fprintf(fp, " type %s\n", type);
+	    fprintf(fp, " multi %d\n", opt->multiple);
+	    fprintf(fp, " desc {%s}\n", opt->description);
+	    fprintf(fp, " required %d\n", opt->required);
+	    fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
+	    fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
+	    fprintf(fp, " prompt {%s}\n", opt->gisprompt ? opt->gisprompt : "");
+	    fprintf(fp, "}\n");
 	}
     }
 
-    if(n_flags)
+    if (n_flags)
     {
-	flag= &first_flag;
-	while(flag != NULL)
-	{
-	    fprintf(fp, "do_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
-	    flag = flag->next_flag ;
-	    optn++;
-	}
+	struct Flag *flag;
+
+	for (flag = &first_flag; flag; flag = flag->next_flag, optn++)
+	    fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
     }
    
-    n_options = optn - 1; 
-    fprintf(fp, "set nopt %d\n", n_options);
+    fprintf(fp, "end_dialog %d\n", optn - 1);
 
-    fprintf(fp, "add_buttons\n");
     pclose(fp);
 
     return 0;
