@@ -115,6 +115,9 @@ int main ( int argc, char **argv)
 
   nsites = G_readsites (fdsite, all, verbose, field, &z);
 
+  if (nsites == 0)
+    G_fatal_error ("No sites found in sites file [%s]", sitefile);
+
   stats = univariate (z, nsites, verbose, field);
 
   if (scriptstyle)
