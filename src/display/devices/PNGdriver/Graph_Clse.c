@@ -4,6 +4,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <png.h>
 
 #include "gis.h"
@@ -19,6 +20,8 @@ Graph_Close(void)
 	int x, y;
 	unsigned int *p;
 	png_bytep line;
+	const char *str;
+	int compress;
 
 	png_ptr = png_create_write_struct(
 		PNG_LIBPNG_VER_STRING, &jbuf, NULL, NULL);
@@ -65,6 +68,10 @@ Graph_Close(void)
 	}
 
 	png_set_invert_alpha(png_ptr);
+
+	str = getenv("GRASS_PNG_COMPRESSION");
+	if (str && sscanf(str, "%d", &compress) == 1)
+		png_set_compression_level(png_ptr, compress);
 
 	png_write_info(png_ptr, info_ptr);
 
