@@ -7,7 +7,7 @@ OBJ =\
 	randsurf.o	\
 	rand1.o 
 
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+$(PROG): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ ${OBJ} $(LIBES) $(XDRLIB)
 
 $(LIBES): #
