@@ -170,10 +170,23 @@ process_command(int c)
 	REC(&b, sizeof b);
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	Get_location_with_box(t, b, &x, &y, &button);
-	SEND(&x, sizeof x);
-	SEND(&y, sizeof y);
-	SEND(&button, sizeof button);
+	Get_location_with_box2(t, b, &x, &y, &button, 1); /* start */
+        while ( 1 ) {
+	    /* Check monitor and send result back */
+	    ret = Get_location_with_box2(t, b, &x, &y, &button, 2);
+	    if ( ret == 0 ) button = 0;
+	    /* we send back current position but button set to 0 */
+	    SEND(&x, sizeof x);
+	    SEND(&y, sizeof y);
+	    SEND(&button, sizeof button);
+	    if ( ret == 1 ) break;
+	    /* Should we continue (0) or break (1) */
+	    REC(&ret, sizeof ret );
+	    if ( ret == 1 ) { /* break */
+	        ret = Get_location_with_box2(t, b, &x, &y, &button, 3);
+            	break;
+	    }
+	}	
 	break;
     case GET_LOCATION_WITH_LINE:
 	REC(&t, sizeof t);

@@ -8,7 +8,7 @@ int reset_color(int, int, int, int);
 /* Draw_line.c */
 int draw_line(int, int, int, int);
 /* Get_w_box.c */
-int Get_location_with_box(int, int, int *, int *, int *);
+int Get_location_with_box2(int, int, int *, int *, int *, int);
 /* Get_w_line.c */
 int Get_location_with_line2(int, int, int *, int *, int *, int);
 /* Get_w_pnt.c */
