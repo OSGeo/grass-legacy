@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>s.edgedetection</title>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>NAME</h2>
+<em><b>s.edgedetection</b></em>
+<h2>SYNOPSIS</h2>
+<b>s.edgedetection</b><br>
+<b>s.edgedetection help</b><br>
+<b>s.edgedetection</b><b>input</b>=<em>string</em> <b>outClas</b>=<em>string</em>
+<b>Sge</b>=<em>float</em> <b>Sgn</b>=<em>float</em> [<b>lambda_g</b>=<em>float</em>]
+[<b>Tg</b>=<em>float</em>] [<b>tg</b>=<em>float</em>] [<b>theta_g</b>=<em>float</em>]
+[<b>lambda_r</b>=<em>float</em>]
+<h2>DESCRIPTION</h2>
+<em>s.edgedetection</em> allows in a digital surface model <span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">the
+detection
+of the edges of the objects: an edge is a boundary between two
+different regions, i.e. a
+significant change in the height value corresponding to a small shift
+of the
+horizontal position.<br>
+<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">The command
+is part of a procedure to filter </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">airbone
+laser scanning (LIDAR) data in order to extract Digital Terrain Model.<br>
+This procedure involves the execution of the following</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">
+commands:<br>
+1) s.edgedetection - 2) s.growing - 3) s.correction - </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">4)
+s.bspline.reg</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span>
+<h2> OPTIONS</h2>
+The user can run this program either interactively
+or non- interactively. The program is ran non-interactively if the
+user
+specifies program arguments and flag settings on the command line using
+the
+form:<br>
+<br>
+s.edgedetection input=<em>string</em> outClas=<em>string</em>
+Sge=<em>float</em> Sgn=<em>float</em> [lambda_g=<em>float</em>]
+[Tg=<em>float</em>] [tg=<em>float</em>] [theta_g=<em>float</em>]
+[lambda_r=<em>float</em>]<br>
+<br>
+Alternately, the user can simply type <span style="font-style: italic;">s.edgedetection</span>
+on the command
+line without program arguments. In this case, the user is prompted
+for parameter values and flag settings using the standard GRASS parser
+interface described in the manual entry for<i> parser</i>.
+<h3>Parameters:</h3>
+<dl>
+  <dt><b>input</b>=<em>string</em> </dt>
+  <dd>input observation sites list file name</dd>
+  <dt><b>outClas</b>=<em>string</em> </dt>
+  <dd>output classification sites list file name</dd>
+  <dt><b>Sge</b>=<em>float</em> </dt>
+  <dd>interpolation spline step value in east direction</dd>
+  <dt><b>Sgn</b>=<em>float</em> </dt>
+  <dd>interpolation spline step value in north direction</dd>
+  <dt><b>lambda_g</b>=<em>float</em> </dt>
+  <dd>regularization weight in gradient evaluation</dd>
+  <dd>Default: <em>0.01</em></dd>
+  <dt><b>Tg</b>=<em>float</em> </dt>
+  <dd>high gradient threshold for edge classification</dd>
+  <dd>Default: <em>6</em></dd>
+  <dt><b>tg</b>=<em>float</em> </dt>
+  <dd>low gradient threshold for edge classification</dd>
+  <dd>Default: <em>3</em></dd>
+  <dt><b>theta_g</b>=<em>float</em> </dt>
+  <dd>angle treshold to identify the direction </dd>
+  <dd>Default: <em>0.26</em></dd>
+  <dt><b>lambda_r</b>=<em>float</em> </dt>
+  <dd>regularization weight in residual evaluation</dd>
+  <dd>Default:<span style="font-style: italic;">2</span></dd>
+</dl>
+<div style="text-align: left;">
+<h2>NOTES</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">The
+<span style="font-style: italic;">input </span>in LIDAR data analisys
+is the last pulse site list file.<br>
+<br>
+The
+edge detection procedure involves two different spline
+interpolations: a bilinear one and a bicubic one </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">with
+different regularization weight values (<span
+ style="font-style: italic;">lambda_g</span> and <span
+ style="font-style: italic;">lambda_r</span>). [see
+s.bspline.reg]</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+<br>
+The gradient magnitude (G), derived from the bilinear spline surface,
+the
+bias value (S), between the bicubic spline surface and the raw data,
+and the </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">maximum slope
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">direction (D)
+are
+computed for every sites of the input.<br>
+<br>
+Knowing that:<br>
+- an edge is characterized by a hight gradient magnitude, a
+positive bias value and to belong to a chain element<br>
+- a point belongs to a chain element if its nearest points have
+similar D values along the direction perpendicular to the maximum slope
+direction<br>
+<br>
+Taking into account a point P, being P1 and P2 the two nearest points
+of P and D1
+and D2 their </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">maximum slope
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">direction, </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">P
+is classified as object if: <br>
+(i) </span><span style="font-style: italic;">G&gt;Tg</span> and <span
+ style="font-style: italic;">S&gt;0</span><br>
+or <br>
+(ii) <span style="font-style: italic;">G&gt;tg,</span> <span
+ style="font-style: italic;">S&gt;0</span>, <span
+ style="font-style: italic;">(D-D1)&lt;theta_g</span> and <span
+ style="font-style: italic;">(D-D2) &lt;theta_g</span> and there is
+almost one
+point in the nearest eight&lt;of P with <span
+ style="font-style: italic;">G&gt;Tg</span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Every
+point in the input site file is examinated and reclassified as:</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Terrain (0)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Object (1)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Uncertain (2)</span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+<span style="font-style: italic;">input </span>format </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">example</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(x|y|z)</span>:<br>
+<br>
+<div style="margin-left: 40px;">513629.21|5403205.11|#0 %291.24 <br>
+513629.25|5403206.53|#0 %291.28 <br>
+513629.29|5403208.16|#0 %291.27 <br>
+513629.33|5403209.69|#0 %291.29 <br>
+513629.37|5403211.12|#0 %291.32<span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span>
+</div>
+<span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;; font-style: italic;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">outClas </span>format
+example (</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">x|y|z%classification%bicubic_interpolated_value):</span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">&nbsp;</span><br>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">499827.48|5418882.79|#0
+%247.49 %0 %247.06513365 <br>
+499827.1|5418870.68|#0 %246.7 %0 %246.32005415 <br>
+499826.72|5418858.43|#0 %245.7 %1 %245.59059607 <br>
+499826.33|5418846.07|#0 %244.65 %0 %244.9670436 <br>
+499825.96|5418833.6|#0 %244.23 %2 %244.52604082 <br>
+</span></div>
+<h2>SEE ALSO</h2>
+s.correction, s.bspline, s.growing, s.to.qrast
+<h2>AUTHORS</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Maria
+A. Brovelli, Politecnico di Milano - Campus Como<br>
+Massimiliano Cannata</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Ulisse M.
+Longoni</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span>
+<h2>REFERENCES</h2>
+<p class="MsoBodyTextIndent"><font class="textcitation">Brovelli M.A.;
+Cannata M.; Longoni U.M., </font><font class="head2"><span
+ style="font-style: italic;">LIDAR Data Filtering and DTM Interpolation
+Within GRASS</span><br>
+</font> Transactions in GIS, April 2004, vol. 8, no. 2, pp.
+155-174(20)&nbsp; - Blackwell Publishing Ltd</p>
+<span lang="EN-GB" style="font-size: 12pt;">Pratt K
+1991 <i style="">Digital image processing</i> (Second
+edition). New York, NY, John Wiley and Sons<o:p></o:p></span>
+<br>
+</div>
+<dl>
+  <dd style="text-align: left;"><em></em><br>
+  </dd>
+  <dd><em><br>
+    <br>
+    </em></dd>
+</dl>
+<em></em><em></em>
+</body>
+</html>

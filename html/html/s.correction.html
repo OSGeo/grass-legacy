@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>s.correction</title>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>NAME</h2>
+<em><b>s.correction</b></em>
+<h2>SYNOPSIS</h2>
+<b>s.correction</b><br>
+<b>s.correction help</b><br>
+<b>s.correction</b> [-<b>g</b>] <b>input</b>=<em>string</em> <b>output</b>=<em>string</em>
+<b>out_ter</b>=<em>string</em> <b>Sce</b>=<em>float</em> <b>Scn</b>=<em>float</em>
+[<b>lambda_c</b>=<em>float</em>] [<b>Tc</b>=<em>float</em>] [<b>tc</b>=<em>float</em>]
+<h2>DESCRIPTION</h2>
+<em>s.correction </em>allows a user <span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">to refine the
+classification produced by <span style="font-style: italic;">s.growing</span>
+command.<br>
+<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">
+This command is part of a procedure to filter </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">airbone
+laser scanning (LIDAR) data in order to extract Digital Terrain Model.<br>
+The procedure involves the execution of the following</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">
+commands:<br>
+1) s.edgedetection - 2) s.growing - 3) s.correction - </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">4)
+s.bspline.reg</span><br>
+<h2> OPTIONS</h2>
+The user can run this program either interactively
+or non- interactively. The program will be run non-interactively if the
+user
+specifies program arguments and flag settings on the command line using
+the
+form:<br>
+<br>
+s.correction [-g] input=<em>string</em> output=<em>string</em> out_ter=<em>string</em>
+Sce=<em>float</em> Scn=<em>float</em> [lambda_c=<em>float</em>] [Tc=<em>float</em>]
+[tc=<em>float</em>]<br>
+<br>
+Alternately, the user can simply type <span style="font-style: italic;">s.correction
+</span>on the command
+line without program arguments. In this case, the user will be prompted
+for parameter values and flag settings using the standard GRASS parser
+interface described in the manual entry for<i> parser</i>.
+<h3>Flags:</h3>
+<dl>
+  <dt><b>-g</b> </dt>
+  <dd>gridded output sites list file</dd>
+</dl>
+<h3>Parameters:</h3>
+<dl>
+  <dt><b>input</b>=<em>string</em> </dt>
+  <dd>input sites list file name (s.growing output)</dd>
+  <dt><b>output</b>=<em>string</em> </dt>
+  <dd>output classificated sites list file name</dd>
+  <dt><b>out_ter</b>=<em>string</em> </dt>
+  <dd>output bere earth sites list file name</dd>
+  <dt><b>Sce</b>=<em>float</em> </dt>
+  <dd>interpolation spline step value in east direction</dd>
+  <dt><b>Scn</b>=<em>float</em> </dt>
+  <dd>interpolation spline step value in north direction</dd>
+  <dt><b>lambda_c</b>=<em>float</em> </dt>
+  <dd>regualarization weight in reclassification evaluation</dd>
+  <dd>Default: <em>1</em></dd>
+  <dt><b>Tc</b>=<em>float</em> </dt>
+  <dd>high threshold for object to terrain reclassification</dd>
+  <dd>Default: <em>2</em></dd>
+  <dt><b>tc</b>=<em>float</em> </dt>
+  <dd>low threshold for terrain to object reclassification</dd>
+  <dd>Default: <em>1<br>
+    <br>
+    </em></dd>
+  <dd style="text-align: left;"><em></em><br>
+  </dd>
+</dl>
+<div style="text-align: left;">
+<h2>NOTES</h2>
+M<span lang="EN-US" style="">isclassification in the procedure
+output remains, due to particular geometry of some objects (</span><span
+ lang="EN-US" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">the
+simplest we can recall is the case where we have unusual roofs
+with pitches at different heights).</span><br>
+<span lang="EN-GB">To overcome
+this problem, a bilinear interpolation with
+Tikhonov regularising parameter </span><span
+ style="font-style: italic;">lambda_c</span><span lang="EN-GB"> only on
+the points classified as bare earth is performed. The
+analysis of the residuals (</span><span lang="EN-GB"
+ style="font-family: Symbol;"><span style="">D</span></span><span
+ lang="EN-GB">) between
+the observations and the interpolated values compared with two
+thresholds <span style="font-style: italic;">t</span><sub
+ style="font-style: italic;">c</sub>
+,<span style="font-style: italic;">T</span><sub
+ style="font-style: italic;">c</sub> show four cases:</span>
+<br>
+<br>
+<!--[if !supportLists]--><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-GB">if the point is
+classified as
+ground and </span><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">D</span></span><span lang="EN-GB"> &gt; T<sub>c</sub> , it is
+reclassified as object;</span>
+<br>
+<!--[if !supportLists]--><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-GB">if the point is
+classified as
+&#8216;double pulse ground&#8217; and </span><span lang="EN-GB"
+ style="font-family: Symbol;"><span style="">D</span></span><span
+ lang="EN-GB"> &gt; T<sub>c</sub>
+, it is reclassified as &#8216;double pulse object&#8217; (edge or vegetation);</span>
+<br>
+<!--[if !supportLists]--><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-GB">if the point is
+classified as
+object and |</span><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">D</span></span><span lang="EN-GB">| &lt; t<sub>c</sub> , it
+is
+reclassified as ground;</span>
+<br>
+<!--[if !supportLists]--><span lang="EN-GB" style="font-family: Symbol;"><span
+ style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-GB">if the point is
+classified as
+&#8216;double pulse object&#8217; and |</span><span lang="EN-GB"
+ style="font-family: Symbol;"><span style="">D</span></span><span
+ lang="EN-GB">| &lt; t<sub>c</sub>,
+it is reclassified as &#8216;double pulse ground&#8217;. </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Every point
+of the input site file is examinated and reclassified in the <span
+ style="font-style: italic;">output </span>file as:</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">terrain (0)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">terrain with
+double pulse (1)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">object with
+double pulse (2)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">object (3)</span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+<span style="font-style: italic;">input </span>format </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">example</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(x|y|z)</span>:<br>
+<br>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">499453.39|5418722.51|#0
+%245.99 %1 <br>
+499453.52|5418725.56|#0 %246.19 %1 <br>
+499453.67|5418728.67|#0 %246.2 %2 <br>
+499453.81|5418731.8|#0 %246.2 %3 <br>
+499453.9|5418734.65|#0 %247.13 %0 <br>
+499454.66|5418734.31|#0 %246.99 %0&nbsp;</span>
+</div>
+<span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;; font-style: italic;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">output </span>format
+example (</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">x|y|z%classification%bicubic_interpolated_value):</span>&nbsp;
+<br>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+499453.39|5418722.51|#0 %245.99 %1 <br>
+499453.52|5418725.56|#0 %246.19 %2 <br>
+499453.67|5418728.67|#0 %246.2 %1 <br>
+499453.81|5418731.8|#0 %246.2 %0 <br>
+499453.9|5418734.65|#0 %247.13 %0 <br>
+499454.66|5418734.31|#0 %246.99 %0 <br>
+</span></div>
+<br>
+<h2>SEE ALSO</h2>
+s.edgedetection, s.bspline, s.growing, s.to.qrast
+<h2>AUTHORS</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Maria
+A. Brovelli, Politecnico di Milano - Campus Como<br>
+Massimiliano Cannata</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Ulisse M.
+Longoni</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span>
+<h2>REFERENCES</h2>
+<p class="MsoBodyTextIndent"><font class="textcitation">Brovelli M.A.;
+Cannata M.; Longoni U.M., </font><font class="head2"><span
+ style="font-style: italic;">LIDAR Data Filtering and DTM Interpolation
+Within GRASS</span><br>
+</font> Transactions in GIS, April 2004, vol. 8, no. 2, pp.
+155-174(20)&nbsp; - Blackwell Publishing Ltd</p>
+</div>
+</body>
+</html>

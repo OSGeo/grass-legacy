@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>s.bspline.reg</title>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>NAME</h2>
+<em><b>s.bspline.reg </b></em>- Interpolate a site file with
+bidimensional spline to produce a surface.
+<h2>SYNOPSIS</h2>
+<b>s.bspline.reg</b><br>
+<b>s.bspline.reg help</b><br>
+<b>s.bspline.reg</b> [-<b>g</b>] <b>input</b>=<em>string</em> <b>output</b>=<em>string</em>
+<b>Sie</b>=<em>float</em> <b>Sin</b>=<em>float</em> [<b>type</b>=<em>string</em>]
+[<b>lambda_i</b>=<em>float</em>]
+<h2>DESCRIPTION</h2>
+<em>s.bispline.reg</em> allows a user to create a (binary) GRASS raster
+map layer representing a distributed field starting from pointwise
+samples.<span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+Sites data are&nbsp; interpolated by bicubic or bilinear spline
+functions (Meissl
+1982) with Tikhonov regularisation (Vinod and Ullah 1981, Engl et al.
+1996) in
+a least square approach.<br>
+<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">This command
+is part of a procedure to filter </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">airbone
+laser scanning (LIDAR) data in order to extract Digital Terrain Model.<br>
+The procedure involves the execution of the following</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">
+commands:<br>
+1) s.edgedetection - 2) s.growing - 3) s.correction - </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">4)
+s.bspline.reg</span><br>
+<h2> OPTIONS</h2>
+The user can run this program either interactively
+or non- interactively. The program will be run non-interactively if the
+user
+specifies program arguments and flag settings on the command line using
+the
+form:<br>
+<br>
+s.bspline.reg [-g] input=<em>string</em> output=<em>string</em>
+Sie=<em>float</em> Sin=<em>float</em> [type=<em>string</em>]
+[lambda_i=<em>float</em>]<br>
+<br>
+Alternately, the user can simply type <span style="font-style: italic;">s.bispline.reg</span>
+on the command
+line without program arguments. In this case, the user will be prompted
+for parameter values and flag settings using the standard GRASS parser
+interface described in the manual entry for<i> parser</i>.<br>
+<h3>Flags:</h3>
+<dl>
+  <dt><b>-g</b> </dt>
+  <dd>rast output instead sites list file output<br>
+  </dd>
+</dl>
+<h3>Parameters:</h3>
+<b>input</b>=<em>string</em>
+<br>
+<div style="margin-left: 40px;">input observation sites list file name<br>
+</div>
+<b>output</b>=<em>string</em>
+<br>
+<div style="margin-left: 40px;">output interpolated file name (default
+is a sites list)<br>
+</div>
+<b>Sie</b>=<em>float</em>
+<br>
+<div style="margin-left: 40px;">interpolation spline step value in east
+direction<br>
+</div>
+<b>Sin</b>=<em>float</em>
+<br>
+<div style="margin-left: 40px;">interpolation spline step value in
+north direction<br>
+</div>
+<b>type</b>=<em>string</em>
+<br>
+<div style="margin-left: 40px;">spline type<br>
+</div>
+<div style="margin-left: 40px;">Options: <em>bilinear,bicubic</em><br>
+</div>
+<div style="margin-left: 40px;">Default: <em>bilinear</em><br>
+</div>
+<b>lambda_i</b>=<em>float</em>
+<br>
+<div style="margin-left: 40px;">Tikhonov regularization weigth<br>
+</div>
+<div style="margin-left: 40px;">Default: <em>1</em><br>
+<em></em></div>
+<em></em><br>
+<h2>NOTES</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">The
+spline step (Sie- Sin) choice depends on the
+mean planimetric resolution of the raw data: in airbone laser scanning
+data
+we have chosen 3 to 4 times this
+parameter. <br>
+<br>
+The Tikhonov regularisation parameter (</span><span lang="IT"
+ style="font-size: 12pt; font-family: Symbol; font-style: italic;"><span
+ style="">lambda_i</span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">)
+permits&nbsp; (i) to avoid local and global singularity
+in the least square approach (in case of&nbsp; missing observations
+areas) (ii) to assure the regularity of the surface in </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">empty
+areas</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, minimising
+the gradient (in case of<span style="font-style: italic;"> type=bilinear</span>)
+or the curvature (in case of <span style="font-style: italic;">type=bicubic</span>)
+(iii) to produce a surface that&nbsp;</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> feels as
+little
+as possible the influence of possible outliers. </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+Imposing a high value for </span><span lang="IT"
+ style="font-size: 12pt; font-family: Symbol; font-style: italic;"><span
+ style="">lambda_i</span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> a
+surface with a behaviour quite
+different from an exact interpolator is obtained.<br>
+<br>
+The <span style="font-style: italic;">type </span>parameter selects
+the spline function type; is to be noted that
+<span style="font-style: italic;">bicubic </span>produces a smoothed
+surface while <span style="font-style: italic;">bilinear </span>permits
+a more
+accurate data fitting. For these reasons, in DTM
+extraction, the first type is preferred for outlier detection and the
+second </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">one </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">for
+surface reconstruction.<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Input format </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">example</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(x|y|z)</span>:<br>
+<div style="margin-left: 40px;">513629.21|5403205.11|#0 %291.24 <br>
+513629.25|5403206.53|#0 %291.28 <br>
+513629.29|5403208.16|#0 %291.27 <br>
+513629.33|5403209.69|#0 %291.29 <br>
+513629.37|5403211.12|#0 %291.32<br>
+</div>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+A bug in analysing very large data set has been reported. <br>
+Please report any further bug to massimiliano.cannata@supsi.ch<br>
+</span>
+<h2>SEE ALSO</h2>
+s.correction, s.edgedetection, s.growing, s.to.qrast, <a
+ href="http://grass.itc.it/gdp/html_grass5/html/s.surf.rst.html">s.surf.rst</a>.
+<h2>AUTHORS</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Maria
+A. Brovelli, Politecnico di Milano - Campus Como<br>
+Massimiliano Cannata</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Ulisse M.
+Longoni</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span>
+<h2>REFERENCES</h2>
+<p class="MsoBodyTextIndent"><font class="textcitation">Brovelli M.A.;
+Cannata M.; Longoni U.M., </font><font class="head2"><span
+ style="font-style: italic;">LIDAR Data Filtering and DTM Interpolation
+Within GRASS</span><br>
+</font> Transactions in GIS, April 2004, vol. 8, no. 2, pp.
+155-174(20)&nbsp; - Blackwell Publishing Ltd</p>
+<p class="MsoBodyTextIndent"><span lang="EN-GB" style="font-size: 12pt;">Meissl
+P
+1982 <i style="">Least Squares Adjustment: a Modern
+Approach</i>. </span><span lang="DE" style="font-size: 12pt;"><br>
+Mitteilungen der Geod&auml;tischen Institute der Technischen
+Universit&auml;t Graz,
+Folge 43<br>
+</span></p>
+<p class="MsoBodyTextIndent"></p>
+<p class="MsoBodyTextIndent"><span lang="EN-GB" style="font-size: 12pt;">Vinod
+H.
+and Ullah A. 1981 <i style="">Recent advances in
+regression methods</i>. Marcel Dekker.<o:p></o:p></span></p>
+<font class="textcitation"></font>
+<p class="MsoBodyTextIndent"><span lang="DE" style="font-size: 12pt;"><o:p></o:p></span></p>
+<em></em>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>s.to.qrast</title>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>NAME</h2>
+<em><b>s.to.qrast</b></em>
+<h2>SYNOPSIS</h2>
+<b>s.to.qrast</b><br>
+<b>s.to.qrast help</b><br>
+<b>s.to.qrast</b><b>input</b>=<em>string</em> <b>rast</b>=<em>string</em>
+[<b>type</b>=<em>string</em>] [<b>findex</b>=<em>integer</em>]
+<h2>DESCRIPTION</h2>
+<em>s.to.qrast </em>converts a GRASS site file to a GRASS raster
+file<span style="font-family: &quot;times new roman&quot;;"> allowing to compute
+for each cell the minimum, maximum, mean, sqm of the site points
+belonging to it.</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span>
+<h3>Parameters:</h3>
+<dl>
+  <dt><b>input</b>=<em>string</em> </dt>
+  <dd>input site list file name</dd>
+  <dt><b>rast</b>=<em>string</em> </dt>
+  <dd>output raster file name</dd>
+  <dt><b>type</b>=<em>string</em> </dt>
+  <dd>computed statistic</dd>
+  <dd>Options: <em>min,max,mean,sqm</em></dd>
+  <dd>Default: <em>mean</em></dd>
+  <dt><b>findex</b>=<em>integer</em> </dt>
+  <dd>Attribute field number to use for operations</dd>
+  <dd>Default: <em>0<br>
+    </em></dd>
+  <dd style="text-align: left;"><em></em><br>
+  </dd>
+</dl>
+<div style="text-align: left;">
+<h2>SEE ALSO</h2>
+s.to.rast
+<h2>AUTHORS</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Maria
+A. Brovelli, Politecnico di Milano - Campus Como<br>
+Massimiliano Cannata</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Ulisse M.
+Longoni</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como</span><br>
+</div>
+</body>
+</html>
