@@ -1,0 +1,155 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-06 13:20+0300\n"
+"PO-Revision-Date: 2002-03-06 13:20+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: getAllOpts.c:48 getSopts.c:67
+msgid "Vector map to run query on:"
+msgstr "Векторная карта, на которой выполняется запрос:"
+
+#: getAllOpts.c:55
+msgid "Postgres table with categories:"
+msgstr "Таблица Postgres:"
+
+#: getAllOpts.c:62
+msgid "Column with categories from this table:"
+msgstr "Столбец ID в этой таблице:"
+
+#: getAllOpts.c:69 getSopts.c:82
+msgid "Selected lines color:"
+msgstr "Выбранный цвет линий:"
+
+#: getAllOpts.c:74 getSopts.c:87
+msgid "Fill polygons?"
+msgstr "Закрасить полигоны"
+
+#: getAllOpts.c:81
+msgid "Selected areas color (for fill):"
+msgstr "Цвет заливки:"
+
+#: getAllOpts.c:87 getSopts.c:100
+msgid "Type of database output - [h/v]:"
+msgstr "Формат вывода - [h/v]:"
+
+#: getAllOpts.c:108 getSopts.c:131
+#, c-format
+msgid "Unable to open %s\n"
+msgstr "Невозможно открыть %s\n"
+
+#: getAllOpts.c:115 getSopts.c:142
+msgid "Can't open vector file"
+msgstr "Не могу открыть векторный файл"
+
+#: getAllOpts.c:117 getSopts.c:144
+msgid "You must first run v.support on vector file"
+msgstr "Сначала выполните v.support для данной векторной карты"
+
+#: getCat.c:55
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Кнопки:\n"
+
+#: getCat.c:56
+msgid "Left:   Choose object for query.\n"
+msgstr "Левая: Выберите объект для запроса. \n"
+
+#: getCat.c:57
+msgid "Middle: Toggle object color.\n"
+msgstr "Средняя: Изменить цвет объекта. \n"
+
+#: getCat.c:58
+msgid ""
+"Right:  Finish. \n"
+"\n"
+"\n"
+msgstr ""
+"Правая:  Закончить. \n"
+"\n"
+"\n"
+
+#: getCat.c:80
+msgid "Nothing found.\n"
+msgstr "Ничего не найдено.\n"
+
+#: getCat.c:93 getCat.c:179
+msgid "Read error\n"
+msgstr "Ошибка чтения\n"
+
+#: getCat.c:110
+msgid ""
+"Line category not found\n"
+"Area not found\n"
+msgstr ""
+"Категория линии не найдена\n"
+"Область не найдена\n"
+
+#: getCat.c:171
+msgid "Area category not found\n"
+msgstr "Категория области не найдена\n"
+
+#: getCat.c:196
+msgid "Line category not found\n"
+msgstr "Категория линии не найдена\n"
+
+#: getSopts.c:59
+msgid "Use [-s] for SQL command file input."
+msgstr "Используйте [-s] для ввода через командный файл SQL."
+
+#: getSopts.c:75
+msgid "Name of the SQL command file: "
+msgstr "Название файла команд SQL:"
+
+#: getSopts.c:94
+msgid "Selected areas color (for polys):"
+msgstr "Цвет выбранных площадей:"
+
+#: getSopts.c:159
+#, c-format
+msgid "File read error on %s\n"
+msgstr "Ошибка чтения файла %s\n"
+
+#: main.c:62
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: openvect.c:13
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr "предупреждение: %s - векторная карта не найдена\n"
+
+#: runInfxQry.c:38
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Postgres:%s\n"
+
+#: runInfxQry.c:48
+#, c-format
+msgid "Error: Connecting to Postgres:%s\n"
+msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxQry.c:80
+#, c-format
+msgid ""
+"\n"
+"%d rows selected\n"
+"\n"
+msgstr ""
+"\n"
+"%d записей выбрано\n"
+"\n"
