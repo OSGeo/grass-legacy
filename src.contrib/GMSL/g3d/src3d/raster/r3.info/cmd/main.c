@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "G3d.h"
 
@@ -30,7 +33,13 @@ int main (argc, argv)
     int hist_ok;
     char *G_program_name();
     struct Option *opt1;
+    struct GModule *module;
 
+    G_gisinit(argv[0]);
+   
+    module = G_define_module();
+    module->description =
+     "Outputs basic information about a user-specified 3D raster map layer.";
 
     opt1 = G_define_option() ;
     opt1->key        = "grid3" ;
@@ -38,8 +47,6 @@ int main (argc, argv)
     opt1->required   = YES ;
     opt1->gisprompt  = "old,grid3,3d raster" ;
     opt1->description= "Name of existing 3dcell map" ;
-
-    G_gisinit(argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);

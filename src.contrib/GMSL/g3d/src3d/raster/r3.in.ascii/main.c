@@ -7,6 +7,8 @@
 #include "gis.h"
 #include "G3d.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*---------------------------------------------------------------------------*/
 
@@ -193,6 +195,7 @@ fprintf(stderr,"rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->d
 
 /*---------------------------------------------------------------------------*/
 
+int
 main (argc, argv) 
      
      int argc;
@@ -206,10 +209,14 @@ main (argc, argv)
   int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
   G3D_Region region;
   FILE *fp;
+  struct GModule *module;
 
   map = NULL;
 
   G_gisinit(argv[0]);
+  module = G_define_module();
+  module->description =
+   "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer ";
 
   setParams ();
   G3d_setStandard3dInputParams ();
@@ -238,6 +245,8 @@ main (argc, argv)
     fatalError ("main: error closing new g3d file");
   map = NULL;
   if (fclose (fp)) fatalError ("main: error closing ascii file");
+
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/
