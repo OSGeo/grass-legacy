@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.105 2001-01-18 15:07:32 markus Exp $
+$Id: BUGS,v 1.106 2001-01-21 15:09:34 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -46,33 +46,6 @@ Vector:
    A little more context for the BUG report seems in order since this really
    doesn't seem to be a "bug", but a shortcoming.
  (being worked on by ?)
-
-G3D libraries bug:
- Markus Neteler wrote:
-  If I have more than around 60.000 cubes (tiles) (when setting high 
-  resolutions in WIND3) I regularly get this error message:
-  r3.out.v5d map=3dvol out=3d.v5d
-    FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
- 
-  r3.out.ascii map=3dvol > 3d.asc
-    FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
-
- Jaro Hofierka wrote:
- Markus,
-  briefly, the problem might be in cache modes. The functions G3d_getValue () should be 
-  used in a cache mode, however, we open maps using non-cache mode:
-  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
-   G3D_TILE_SAME_AS_FILE,
-   G3D_NO_CACHE);
-
-  Please try to change G3D_NO_CACHE parameter to G3D_USE_CACHE_DEFAULT, and 
-  re-compile main.c for r3.out.ascii with G3d_getWindow() and G3d_getValue() 
-  commands or previous version of r3.out.v5d. Currently I have not enough 
-  time to try it.
-   Jaro
- -> needs to be fixed
-   (being worked on by Jaro)
-
 
 - GRASS raster colors bug:
   GRASS becomes extremely slow in case more than 8000 colors are within
