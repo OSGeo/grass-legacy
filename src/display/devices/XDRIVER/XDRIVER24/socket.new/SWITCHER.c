@@ -18,7 +18,6 @@
 #include <signal.h>
 #include <string.h>
 #include <stdlib.h>
-#include <setjmp.h>
 #include <unistd.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -32,38 +31,22 @@
 #undef SWITCHER
 
 #define BYTE unsigned char
-#define REC(a,b)    if (eof=rec((char*)(a),(int)(b))) break
+#define REC(a,b)    if ((eof=rec((char*)(a),(int)(b)))) break
 #define SEND(a,b)   _send((char*)(a),(int)(b))
-#define RECTEXT(x)  if (eof=rectext(x)) break
-
-#ifdef DEBUG
-#include <stdarg.h>
-int debug(char *x,...) {
-   va_list ap;
-   va_start(ap,x);
-   vfprintf (stderr,x,ap);
-   va_end(ap);
-   fprintf(stderr,"\n");
-   return 0;
-}
-#else
-#define debug 
-#endif  /* DEBUG */
+#define RECTEXT(x)  if ((eof=rectext(x))) break
 
 #include "pad.h"
 
 static char *me, *sockpath;
 static int _wfd, _rfd;
-static int eof, broken_pipe;
+static int eof;
 static int n_read;
 static int atbuf;
 static char inbuf[4096];
 static char current_command;
 PAD *padlist;            /* user created pads */
 PAD *curpad;             /* current selected pad */
-static jmp_buf savenv;
 static int get_command(char *);
-static void timeout(int);
 static int rec(char *,int);
 static int rectext(char *);
 static int _rectext(char *);
@@ -71,7 +54,6 @@ static int get1(char *);
 static int read1(char *);
 static int _send(char *, int);
 static int sendtext(char *);
-static void catch(int);
 static void close_mon();
 static char *xalloc(char *,int *,int,int);
 static ITEM *new_item(PAD *,char *);
@@ -98,7 +80,6 @@ int main (int argc, char *argv[])
     int syntax, listenfd;
     int nlev;
     int sts, waitime, opened;
-    void (*def)();
     int t, b, l, r;
     int x, y;
     static int blu_alloc = 0, grn_alloc = 0, red_alloc = 0;
@@ -111,8 +92,8 @@ int main (int argc, char *argv[])
     /* How many commands for each check of Xevents?? */
     static int cmd_loop_count;  
     struct timeval timeout;
-    struct sigaction mysig_catch, mysig_close;
-    sigset_t m_catch, m_close;
+    struct sigaction  mysig_close;
+    sigset_t  m_close;
 
     /* whoami */
     me = argv[0];
@@ -162,6 +143,19 @@ int main (int argc, char *argv[])
     }
 
     /*****************
+     * Make sure it's not already in use...
+     *****************/
+    if (G_sock_exists(sockpath))
+    {
+        if ((listenfd = G_sock_connect(sockpath)) != -1)
+        {
+	    close (listenfd);
+	    G_fatal_error ("Monitor <%s> is already running", me);
+        }
+        unlink (sockpath);
+    }
+    
+    /*****************
      * Try to bind to the unix socket.  This will fail if another process
      * already has it bound.  We'll listen after we make fork(s).
      ****************/
@@ -172,9 +166,8 @@ int main (int argc, char *argv[])
 			"Already in use?\n", me);
 	exit (EXIT_FAILURE);
     }
-    
+
     /* initialize graphics.  */
-    debug("Initialize Graphics");
     if ( nlev == 0 ) {
 	fprintf(stderr,"Nlev is zero, resetting to 32\n");
 	nlev=32;
@@ -192,7 +185,6 @@ int main (int argc, char *argv[])
         exit(-1);
 
     /* Initialize color map stuff */
-    debug("Initialize color map");
     Color_table_fixed();
     waitime = 1;
 
@@ -214,14 +206,6 @@ int main (int argc, char *argv[])
     /* setpgrp(0, getpid());*/
     setsid();
 
-#ifdef SIGPIPE
-    sigemptyset(&m_catch);
-    mysig_catch.sa_handler = catch;
-    mysig_catch.sa_mask = m_catch;
-    mysig_catch.sa_flags = 0;
-    sigaction(SIGPIPE, &mysig_catch, NULL);
-    /*    signal(SIGPIPE, catch); */
-#endif
     sigemptyset(&m_close);
     mysig_close.sa_handler = close_mon;
     mysig_close.sa_mask = m_close;
@@ -237,7 +221,6 @@ int main (int argc, char *argv[])
     }
 
     for (;;) {                 /* re-open upon EOF */
-        debug("Wait for a connection");
     
 	for (;;)
 	{
@@ -269,11 +252,10 @@ int main (int argc, char *argv[])
 		exit (EXIT_FAILURE);
 	    }
         }
-        debug("Opened");
 
         atbuf = n_read = 0;
 
-        eof = broken_pipe = 0;
+        eof = 0;
         current_command = 0;
         cmd_loop_count  = 1;
 
@@ -281,208 +263,26 @@ int main (int argc, char *argv[])
         /* loop until getting an eof on the fifo, checking alternately
          * for an X event to handle and for something to read on the
          * fifo. */
-        while (eof <= 0 && !broken_pipe) {
-
-            if(--cmd_loop_count==0) {
+        while (eof <= 0) 
+        {
+            if(--cmd_loop_count==0) 
+            {
                 Service_Xevent();  /* take care of any events */
                 cmd_loop_count = LOOP_PER_SERVICE;
             }
 
             sts = get_command(&c);
-            if (sts == 1) {     /* see if EOF from fifo */
-                debug("get_command failed!");
-                break;
-            } else if (sts == -1) {
-                Service_Xevent();  /* take care of any events */
-                continue;       /* if timed out repeat the loop */
-	    }
-
-            /* if we get this far we have received something */
-#ifdef DEBUG
-            switch (c) {
-            case BEGIN:
-                debug("BEGIN");
-                break;
-            case GET_NUM_COLORS:
-                debug("GET_NUM_COLORS");
-                break;
-            case STANDARD_COLOR:
-                debug("STANDARD_COLOR");
-                break;
-            case RGB_COLOR:
-                debug("RGB_COLOR");
-                break;
-            case COLOR:
-                debug("COLOR");
-                break;
-            case COLOR_TABLE_FIXED:
-                debug("COLOR_TABLE_FIXED");
-                break;
-            case COLOR_TABLE_FLOAT:
-                debug("COLOR_TABLE_FLOAT");
-                break;
-            case COLOR_OFFSET:
-                debug("COLOR_OFFSET");
-                break;
-            case COLOR_PRINT:
-                debug("COLOR_PRINT");
-                break;
-            case CONT_ABS:
-                debug("CONT_ABS");
-                break;
-            case CONT_REL:
-                debug("CONT_REL");
-                break;
-            case ERASE:
-                debug("ERASE");
-                break;
-            case GET_LOCATION_WITH_BOX:
-                debug("GET_LOCATION_WITH_BOX");
-                break;
-            case GET_LOCATION_WITH_LINE:
-                debug("GET_LOCATION_WITH_LINE");
-                break;
-            case GET_LOCATION_WITH_POINTER:
-                debug("GET_LOCATION_WITH_POINTER");
-                break;
-            case GRAPH_CLOSE:
-                debug("GRAPH_CLOSE");
-                break;
-            case LINEMOD:
-                debug("LINEMOD");
-                break;
-            case MOVE_ABS:
-                debug("MOVE_ABS");
-                break;
-            case MOVE_REL:
-                debug("MOVE_REL");
-                break;
-            case POLYGON_ABS:
-                debug("POLYGON_ABS");
-                break;
-            case POLYGON_REL:
-                debug("POLYGON_REL");
-                break;
-            case POLYLINE_ABS:
-                debug("POLYLINE_ABS");
-                break;
-            case POLYLINE_REL:
-                debug("POLYLINE_REL");
-                break;
-            case POLYDOTS_ABS:
-                debug("POLYDOTS_ABS");
-                break;
-            case BOX_REL:
-                debug("BOX_REL");
-                break;
-            case BOX_ABS:
-                debug("BOX_ABS");
-                break;
-            case POLYDOTS_REL:
-                debug("POLYDOTS_REL");
-                break;
-            case RASTER_CHAR:
-                debug("RASTER_CHAR");
-                break;
-            case RASTER_INT:
-                debug("RASTER_INT");
-                break;
-            case ZRASTER:
-                debug("ZRASTER");
-                break;
-            case RGB_RASTER:
-                debug("RGB_RASTER");
-                break;
-            case RGB_COLORS:
-                debug("RGB_COLORS");
-                break;
-            case RESET_COLORS:
-                debug("RESET_COLORS");
-                break;
-            case RESET_COLOR:
-                debug("RESET_COLOR");
-                break;
-            case SCREEN_LEFT:
-                debug("SCREEN_LEFT");
-                break;
-            case SCREEN_RITE:
-                debug("SCREEN_RITE");
-                break;
-            case SCREEN_BOT:
-                debug("SCREEN_BOT");
-                break;
-            case SCREEN_TOP:
-                debug("SCREEN_TOP");
-                break;
-            case SET_WINDOW:
-                debug("SET_WINDOW");
-                break;
-            case GET_TEXT_BOX:
-                debug("GET_TEXT_BOX");
-                break;
-            case FONT:
-                debug("FONT");
-                break;
-            case TEXT:
-                debug("TEXT");
-                break;
-            case TEXT_SIZE:
-                debug("TEXT_SIZE");
-                break;
-            case TEXT_ROTATION:
-                debug("TEXT_ROTATION");
-                break;
-            case RESPOND:
-                debug("RESPOND");
-                break;
-            case PANEL_SAVE:
-                debug("PANEL_SAVE");
-                break;
-            case PANEL_RESTORE:
-                debug("PANEL_RESTORE");
-                break;
-            case PANEL_DELETE:
-                debug("PANEL_DELETE");
-                break;
-            case PAD_CREATE:
-                debug("PAD_CREATE");
-                break;
-            case PAD_CURRENT:
-                debug("PAD_CURRENT");
-                break;
-            case PAD_DELETE:
-                debug("PAD_DELETE");
-                break;
-            case PAD_INVENT:
-                debug("PAD_INVENT");
-                break;
-            case PAD_LIST:
-                debug("PAD_LIST");
-                break;
-            case PAD_SELECT:
-                debug("PAD_SELECT");
-                break;
-
-            case PAD_APPEND_ITEM:
-                debug("PAD_APPEND_ITEM");
-                break;
-            case PAD_DELETE_ITEM:
-                debug("PAD_DELETE_ITEM");
-                break;
-            case PAD_GET_ITEM:
-                debug("PAD_GET_ITEM");
-                break;
-            case PAD_LIST_ITEMS:
-                debug("PAD_LIST_ITEMS");
-                break;
-            case PAD_SET_ITEM:
-                debug("PAD_SET_ITEM");
-                break;
-
-            default:
+            if (sts == 1) 
+            {     /* see if EOF from socket */
                 break;
             }
-#endif  /* DEBUG */
+            else if (sts == -1)
+            {
+                Service_Xevent();  /* take care of any events */
+                continue;       /* if timed out repeat the loop */
+            }
+
+            /* if we get this far we have received something */
             switch (c) {
             case BEGIN:
                 c = 0;
@@ -492,7 +292,7 @@ int main (int argc, char *argv[])
                 SEND(&c, 1);
                 break;
             case RESPOND:
-		XSync(dpy, 1);	
+                XSync(dpy, 1);	
                 SEND(&c, 1);
                 break;
             case GET_NUM_COLORS:
@@ -933,33 +733,26 @@ int main (int argc, char *argv[])
                 break;
             }
             lc = c;
-        }                       /* end of the "while (eof<=0 &&
-                                 * !broken_pipe)" block */
-        /* read encountered EOF. close fifos now */
-        close(_wfd);
+        }                       /* end of the "while (eof<=0) */
+        /* read encountered EOF. close socket now */
+        close(_wfd); 
         close(_rfd);
-    }                           /* end of the "while(1)" way back
-                                 * around line 170 */
+    } /* end of the "for(;;)" way back */
 }
 
 static int get_command(char *c)
 {
     /* is there a command char pending? */
-    if (*c = current_command) {
-        debug("get_command from current_command...");
+    if ((*c = current_command)) {
         current_command = 0;
         return 0;
     }
-    debug("get_command from fifo...");
-    /* read the fifo. look for 1 (or more) COMMAND_ESC chars followed
+    /* read the socket. look for 1 (or more) COMMAND_ESC chars followed
      * by a non-zero command token char. If there is an eof return 1,
      * else return 0. */
     while (read1(c) == 0) {     /* while not EOF */
         if (*c != COMMAND_ESC)
             continue;
-#ifdef DEBUG
-        fprintf(stderr, "Got command esc(%d)\n", *c);
-#endif  /* DEBUG */
         while (*c == COMMAND_ESC)
             if (read1(c) != 0)
                 return 1;
@@ -969,22 +762,15 @@ static int get_command(char *c)
     return 1;                   /* EOF */
 }
 
-static void timeout (int dummy)
-{
-    longjmp(savenv, -1);
-}
 
 static int rec(char *buf, int n)
 {
     int stat;
 
-    debug("rec: reading %d chars", n);
     while (n-- > 0) {
         if ((stat = get1(buf++)) != 0)
             return stat;        /* EOF or COMMAND_ESC */
-        debug(" %x ",*(buf-1));
     }
-    debug("rec: Got em all");
     return 0;
 }
 
@@ -993,10 +779,8 @@ static int rectext(char *s)
     int stat;
     char buf[80];
 
-    debug("rectext");
     stat = _rectext(s);
     sprintf(buf, "  stat=%d\n", stat);
-    debug(buf);
     return stat;
 }
 
@@ -1013,26 +797,19 @@ static int _rectext(char *s)
 
 static int get1(char *c)
 {
-    /* debug ("get1"); */
     if (read1(c) != 0) {
-        debug("get1: EOF");
         return 1;               /* EOF */
     }
     if (*c != COMMAND_ESC) {
-        /* debug (" OK");   */
         return 0;               /* OK */
     }
-    debug("get1: COMMAND?");
     if (read1(c) != 0) {
-        debug("get1: EOF!");
         return 1;               /* EOF */
     }
     if (*c) {
-        debug("get1: YES!");
         current_command = *c;
         return -1;              /* Got command within data */
     }
-    debug("get1: NO!");
     *c = COMMAND_ESC;           /* sequence COMMAND_ESC,0 becomes data
                                  * COMMAND_ESC */
     return 0;                   /* OK */
@@ -1061,15 +838,6 @@ static int sendtext(char *s)
 {
     SEND(s, strlen(s) + 1);
     return 0;
-}
-
-static void catch(int n)
-{
-    signal(n, catch);
-#ifdef SIGPIPE
-    if (n == SIGPIPE)
-        broken_pipe = 1;
-#endif
 }
 
 static char *store(char *s)
@@ -1307,4 +1075,5 @@ static char *xalloc(char *buf,int *cur,int new,int len)
     return buf;
 }
 
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
 /*** end SWITCHER.c ***/
