@@ -338,7 +338,7 @@ double eval_node(Node * nptr, int tab, int i)
 	    G_debug(3,"Exiting in eval_node, T_A_Expr."); 
 	    exit (-1);
 	}
-	if ( leval == reval == SQLP_S) {
+	if ( leval == reval && leval == SQLP_S) {
 	    if ( aexprptr->opname != SQLP_EQ) {
 	        G_debug(0,"Impossible operator for string values."); 
 		exit(-1);
