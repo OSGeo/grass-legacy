@@ -1,11 +1,12 @@
+PGM=p.chart
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 EXTRA_CFLAGS = -I../../
 
 LIST =	main.o
 
-$(BIN_MAIN_INTER)/p.chart:	$(LIST) $(INTERFACE) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
-$(INTERFACE):	# incase the library changes
-$(GISLIB):	# incase the library changes
+$(INTERFACE):	# in case the library changes
+$(GISLIB):	# in case the library changes
