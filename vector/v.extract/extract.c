@@ -17,7 +17,9 @@ int
 xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_info *Out,
              int cat_new, int select_type, int dissolve, int field)
 {
-	int cat, areal, arear, catl, catr, centroid, line;
+	int line_cat_old, left_cat_old, right_cat_old;
+	int line_cat_new, left_cat_new, right_cat_new;
+	int areal, arear, centroid, line;
 	int type;
 	int i, j;
 	struct line_pnts *Points, *CPoints;
@@ -36,14 +38,14 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	     G_debug ( 2, "Line = %d", line );
 	     type = Vect_read_line ( In, Points, Cats, line);
 	     
-	     cat = catr = catl = -1;
+	     line_cat_old = left_cat_old = right_cat_old = -1;
 	     /* get the line category */
-	     Vect_cat_get ( Cats, field, &cat );
+	     Vect_cat_get ( Cats, field, &line_cat_old );
 	     
-	     /* skip anything other than the selected line type and get the category */
-	     if ( type == GV_BOUNDARY ) {
-	         if ( !(select_type & GV_BOUNDARY) && !(select_type & GV_AREA) ) continue;
-		 if ( select_type & GV_AREA ) { /* get left right category */
+	    /* skip anything other than the selected line type and get the category */
+	    if ( type == GV_BOUNDARY ) {
+	        if ( !(select_type & GV_BOUNDARY) && !(select_type & GV_AREA) ) continue;
+		if ( select_type & GV_AREA ) { /* get left right category */
 		     Vect_get_line_areas ( In, line, &areal, &arear );
 
 		     if ( areal < 0 ) 
@@ -52,7 +54,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			 centroid = Vect_get_area_centroid ( In, areal );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
-			     Vect_cat_get ( CCats, field, &catl );
+			     Vect_cat_get ( CCats, field, &left_cat_old );
 			 }
 		     } 
 		     
@@ -62,41 +64,72 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			 centroid = Vect_get_area_centroid ( In, arear );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
-			     Vect_cat_get ( CCats, field, &catr );
+			     Vect_cat_get ( CCats, field, &right_cat_old );
 			 }
 		     }
-		 }
-	     } else {
-	         if ( !(type & select_type) )   continue;
-	     }
+		}
+	    } else {
+	        if ( !(type & select_type) )   continue;
+	    }
 
-	     /* check against the user category list */
-             for ( i = 0 ; i < num_index ; i++) {
-                 if ( cat == num_array[i] || catr == num_array[i] || catl == num_array[i] ) {  
-		    if ( type == GV_BOUNDARY && dissolve ) {
-			int have_left=FALSE, have_right=FALSE;
+	    line_cat_new = left_cat_new = right_cat_new = -1;
 
-			for (j=0; j < num_index; j++) {
-			    if(catl == num_array[j]) {
-				have_left=TRUE;
-				if(have_right) break;  /* we've got what we came for, no point looking any further */
-			    }
-			    if(catr == num_array[j]) {
-				have_right=TRUE;
-				if(have_left) break;
-			    }
-			}
-			if(have_left && have_right)  continue;
-		     }
-		     /* write line */
-		     if ( cat_new > 0 && cat >= 0 ) { /* assign the new category value */
-			 Vect_field_cat_del ( Cats, field, -1 ); /* delete all cats of given field */
-		         Vect_cat_set (Cats, field, cat_new); 
-		     }
-		     Vect_write_line (Out, type, Points, Cats);
+	    /* check against the user category list */
+	    for ( i = 0 ; i < num_index ; i++) {
+                if ( line_cat_old == num_array[i] ) {
+		    if ( cat_new >= 0 )
+		        line_cat_new = cat_new;
+		    else 
+			line_cat_new = line_cat_old;
+		}
+
+
+		if ( type == GV_BOUNDARY && (select_type & GV_AREA) ) {
+		    if ( left_cat_old == num_array[i] ) {
+			if ( cat_new >= 0 )
+			    left_cat_new = cat_new;
+			else 
+			    left_cat_new = left_cat_old;
+		    }
+		    
+		    if ( right_cat_old == num_array[i] ) {
+			if ( cat_new >= 0 )
+			    right_cat_new = cat_new;
+			else 
+			    right_cat_new = right_cat_old;
+		    }
+
+		    if ( line_cat_old >= 0 && left_cat_new >= 0 && right_cat_new >= 0 ) {
+			/* all found */
+			break;
+		    }
+		} else { 
+		    if ( line_cat_new >= 0 ) {
+			/* found */
+			break;
+		    }
+		}
+	    }
+
+		
+	     /*  Note: type was previously checked, no need to recheck here again. */
+	    if ( line_cat_new >= 0 
+		 || 
+		 ( type == GV_BOUNDARY && (select_type & GV_AREA) 
+		   && ( left_cat_new >= 0 || right_cat_new >= 0) 
+		   && ( !dissolve || (left_cat_new != right_cat_new) ) 
+		 )
+	       ) 
+	    {
+		Vect_field_cat_del ( Cats, field, -1 ); /* delete all cats of given field */
+
+		/* Set new category */
+		if ( line_cat_new >= 0 )
+		     Vect_cat_set (Cats, field, line_cat_new); 
+		
+		/* write line */
+		Vect_write_line (Out, type, Points, Cats);
 		      
-		     break;
-	         }
              } /* end for num_index */
         }  /* end lines section */
 
