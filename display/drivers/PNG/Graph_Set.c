@@ -78,9 +78,9 @@ int Graph_Set (int argc, char **argv)
 
     p = getenv("GRASS_BACKGROUNDCOLOR");
     if (p && *p && sscanf(p, "%x", &bgcol) == 1) {
-	int r = bgcol >> 16;
-	int g = bgcol >> 8;
-	int b = bgcol >> 0;
+	int r = (bgcol >> 16) & 0xff;
+	int g = (bgcol >>  8) & 0xff;
+	int b = (bgcol >>  0) & 0xff;
 	int color = _get_lookup_for_color(r, g, b);
 
 	gdImageFilledRectangle(im, screen_left, screen_top,
