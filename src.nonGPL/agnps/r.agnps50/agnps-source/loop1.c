@@ -169,7 +169,7 @@ Date    	Bug#   Prog   Description
   {
 
 #ifdef _DOS
-   printf("  %d  ... Loop #1 : Executing Loop#1            \r",column_number);
+   fprintf (stderr,"  %d  ... Loop #1 : Executing Loop#1            \r",column_number);
 #endif
 
    gullyptr = columndata[column_number]->gully;
@@ -267,7 +267,7 @@ Date    	Bug#   Prog   Description
 	  columndata[column_number]->area);
        fprintf(errorfp,"        Area not terraced (acres): %f \n",
 		columndata[column_number]->area_not_terraced);
-       printf("Error encountered-Program stopped-Check error.log");
+       fprintf (stderr,"Error encountered-Program stopped-Check error.log");
        fclose(errorfp);
        sleep(5);
        exit(1);
@@ -276,11 +276,11 @@ Date    	Bug#   Prog   Description
  
 /*   if(bflags.cell_info)
     {
-     printf("****\n");
-     printf("1.1 CALCULATED AREA OF CURRENT CELL\n");
-     printf("INPUTS: Division 1=%d  Division 2=%d  Division 3=%d Base Cell Area=%f(acres)\n",
+     fprintf (stderr,"****\n");
+     fprintf (stderr,"1.1 CALCULATED AREA OF CURRENT CELL\n");
+     fprintf (stderr,"INPUTS: Division 1=%d  Division 2=%d  Division 3=%d Base Cell Area=%f(acres)\n",
 	   division1,division2,division3,initialptr->base_cell_area);
-     printf("OUTPUTS: Cell Area = %f (acres) Error Code= %d \n\n",
+     fprintf (stderr,"OUTPUTS: Cell Area = %f (acres) Error Code= %d \n\n",
 	    columndata[column_number]->area,error_code);
     }
  
@@ -295,10 +295,10 @@ Date    	Bug#   Prog   Description
 
    if(bflags.cell_info)
     {
-     printf("****\n");
-     printf("1.2 LOCATE RECEIVING CELL POSITION\n");
-     printf("INPUTS: Column Number= %d\n",column_number);
-     printf("OUTPUTS: Receiving Cell = %d  Error Code %d \n\n",
+     fprintf (stderr,"****\n");
+     fprintf (stderr,"1.2 LOCATE RECEIVING CELL POSITION\n");
+     fprintf (stderr,"INPUTS: Column Number= %d\n",column_number);
+     fprintf (stderr,"OUTPUTS: Receiving Cell = %d  Error Code %d \n\n",
 	    columndata[column_number]->receiving_cell_position,error_code);
     }
  
@@ -311,10 +311,10 @@ Date    	Bug#   Prog   Description
       columndata[column_number]->receiving_cell_position = 0;
       if(bflags.cell_info)
        {
-	printf("****\n");
-	printf("1.3 CHECK FOR A SINKHOLE\n");
-	printf("INPUTS: Column Number %d\n",column_number);
-	printf("OUTPUTS: SINKHOLE\n\n");
+	fprintf (stderr,"****\n");
+	fprintf (stderr,"1.3 CHECK FOR A SINKHOLE\n");
+	fprintf (stderr,"INPUTS: Column Number %d\n",column_number);
+	fprintf (stderr,"OUTPUTS: SINKHOLE\n\n");
        }
      }
  
@@ -335,11 +335,11 @@ Date    	Bug#   Prog   Description
  
       if(bflags.cell_info)
        {
-	printf("****\n");
-	printf("1.4 SET UP THE OUTLET CELL\n");
-	printf("INPUTS: Number of Columns %d  Receiving Cell %d\n",
+	fprintf (stderr,"****\n");
+	fprintf (stderr,"1.4 SET UP THE OUTLET CELL\n");
+	fprintf (stderr,"INPUTS: Number of Columns %d  Receiving Cell %d\n",
 		    columns,temp_receiving_cell);
-	printf("OUTPUTS:  THIS IS THE OUTLET CELL\n\n");
+	fprintf (stderr,"OUTPUTS:  THIS IS THE OUTLET CELL\n\n");
        }
      }
 
@@ -350,12 +350,12 @@ Date    	Bug#   Prog   Description
  
     if(bflags.cell_info)
      {
-      printf("****\n");
-      printf("1.5 ADJUST CELLS FLOWING INTO CELL\n");
-      printf("INPUTS: Receiving Cell %d\n",temp_receiving_cell);
-      printf("OUTPUTS: Number of Cells Flowing in %d\n",
+      fprintf (stderr,"****\n");
+      fprintf (stderr,"1.5 ADJUST CELLS FLOWING INTO CELL\n");
+      fprintf (stderr,"INPUTS: Receiving Cell %d\n",temp_receiving_cell);
+      fprintf (stderr,"OUTPUTS: Number of Cells Flowing in %d\n",
 		 columndata[temp_receiving_cell]->primary_cell);
-      printf("This number may change once the routing is complete!\n\n");
+      fprintf (stderr,"This number may change once the routing is complete!\n\n");
      }
  
  
@@ -384,7 +384,7 @@ Date    	Bug#   Prog   Description
 
     if (rflags.xeros)
      {
-      printf("%d ",column_number);
+      fprintf (stderr,"%d ",column_number);
      }
 
     xeros(slopestruct->slope_shape_code,
@@ -490,8 +490,8 @@ Date    	Bug#   Prog   Description
 
      if(bflags.sediment)
       {
-       printf("****\n");
-       printf("1.10 CALCULATE SEDIMENT INFORMATION...Col %d:\n",column_number);
+       fprintf (stderr,"****\n");
+       fprintf (stderr,"1.10 CALCULATE SEDIMENT INFORMATION...Col %d:\n",column_number);
       }
 
      runoffstruct->total_eroded_sediment  =
@@ -499,7 +499,7 @@ Date    	Bug#   Prog   Description
 
      if(bflags.sediment)
       {
-       printf("INPUTS: Total Eroded Sediment from Cell %f\n",
+       fprintf (stderr,"INPUTS: Total Eroded Sediment from Cell %f\n",
 	      runoffstruct->total_eroded_sediment);
       }
 
@@ -512,9 +512,9 @@ Date    	Bug#   Prog   Description
 	 {
 	  if(bflags.sediment)
 	   {
-	     printf("INTER: <FOUND A GULLY IN THIS CELL>\n");
-	     printf(" Gully Soil Type... %d\n\n",gullyptr->gully_soil);
-	     printf(" Part Size  Fraction   Avail Sediment   Gully Erosion\n");
+	     fprintf (stderr,"INTER: <FOUND A GULLY IN THIS CELL>\n");
+	     fprintf (stderr," Gully Soil Type... %d\n\n",gullyptr->gully_soil);
+	     fprintf (stderr," Part Size  Fraction   Avail Sediment   Gully Erosion\n");
 	   }
 
 
@@ -559,7 +559,7 @@ Date    	Bug#   Prog   Description
 
 	     if(bflags.sediment)
 	      {
-	       printf("%d    %f      %f               %f\n",particle_size,
+	       fprintf (stderr,"%d    %f      %f               %f\n",particle_size,
 	       particle_fraction,runoffstruct->available_sediment[particle_size],
 	       outlet_sediment[particle_size].gully_erosion);
 
@@ -575,7 +575,7 @@ Date    	Bug#   Prog   Description
 
 
 	  if(bflags.sediment)
-	    printf("OUTPUT: Total Gully Erosion= %f\n",
+	    fprintf (stderr,"OUTPUT: Total Gully Erosion= %f\n",
 		    outlet_sediment[6].gully_erosion);
 
 	  gullyptr=gullyptr->next;
@@ -646,7 +646,7 @@ Date    	Bug#   Prog   Description
 	       &phosphorus_runoff);  /* lbs/acre */
  
 	if (bflags.nutrient)
-	    printf("Nitrogen RO= %f lbs/acre Phosphorus RO= %f lbs/acre\n",
+	    fprintf (stderr,"Nitrogen RO= %f lbs/acre Phosphorus RO= %f lbs/acre\n",
 					nitrogen_runoff,phosphorus_runoff);
  
 
@@ -667,7 +667,7 @@ Date    	Bug#   Prog   Description
 
 
 	if(bflags.nutrient)
-	 printf("OUTPUT:nitrogen runoff %f(kg/ha)  phos. runoff %f(kg/ha) cod runoff %f(kg/ha)\n\n",
+	 fprintf (stderr,"OUTPUT:nitrogen runoff %f(kg/ha)  phos. runoff %f(kg/ha) cod runoff %f(kg/ha)\n\n",
 	 nitrogen_runoff,phosphorus_runoff,runoffstruct->cod_runoff);
 
  /*** 1.12  CALCULATE SOLUBLE NUTRIENT YIELD (IN LBS) ***/
@@ -678,8 +678,8 @@ Date    	Bug#   Prog   Description
 
 	if(bflags.nutrient)
 	 {
-	  printf("****\n");
-	  printf("1.12 SOLUBLE NUTRIENT YIELD...Col %d:\n",column_number);
+	  fprintf (stderr,"****\n");
+	  fprintf (stderr,"1.12 SOLUBLE NUTRIENT YIELD...Col %d:\n",column_number);
 	 }
 
 

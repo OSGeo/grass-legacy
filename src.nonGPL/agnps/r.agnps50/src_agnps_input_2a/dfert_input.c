@@ -48,9 +48,9 @@
            dfert_lvl_input();
            i = fcel_id;
            if(fcel_id <= 0 || fcel_id > tot_cells) {
-             printf("Illegal cell number %d\n",fcel_id);
-             printf("Please enter a valid cell number\n");
-             printf("between 1 and %i\n",tot_cells);
+             fprintf (stderr,"Illegal cell number %d\n",fcel_id);
+             fprintf (stderr,"Please enter a valid cell number\n");
+             fprintf (stderr,"between 1 and %i\n",tot_cells);
              dfert_lvl_input();
              }
            cel[i].fert_level = 5;

@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 /*	January, 1991	Agricultural Engineering, Purdue University
 	Raghavan Srinivasan (srin@ecn.purdue.edu)
 	
@@ -15,7 +17,7 @@ char *name;
 	fd = G_open_cell_new(name);
 	if (fd < 0) 
 	{
-	 	printf("oops - can`t open cell file %s\n",name);
+	 	fprintf (stderr,"oops - can`t open cell file %s\n",name);
 	}
 
 	return(fd);

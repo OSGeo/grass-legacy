@@ -152,7 +152,7 @@ void header_info(FILE *nps,float run_vol,float converter, float area_of_ws)
    fputs("INITIAL\n",nps);
 
 #ifdef _DOS
-   printf("     ... Initial Output Being Created                \r");
+   fprintf (stderr,"     ... Initial Output Being Created                \r");
 #endif
 
    fprintf(nps,"%s", initialptr->watershed);
@@ -279,7 +279,7 @@ float  enrich_ratio  = 0.0;    /* enrichment ratio                       */
    for (i=1; i<=6; i++)
 	  {
 #ifdef _DOS
-	  printf("   %d ... Sediment Output Being Created            \r",i);
+	  fprintf (stderr,"   %d ... Sediment Output Being Created            \r",i);
 #endif
 
 	  ave_wt_ero    = outlet_sediment[i].area_weighted_erosion;
@@ -395,7 +395,7 @@ float runoff_value;         /* vol of water entering cell      in-acre */
    for (i=1; i<=columns; i++)
 	{
 #ifdef _DOS
-	printf("  %d ... Soil Loss Output Being Created         \r",i);
+	fprintf (stderr,"  %d ... Soil Loss Output Being Created         \r",i);
 #endif
 
 	equiv_runoff_value = (columndata[i]->accumulated->runoff_vol_below -
@@ -693,7 +693,7 @@ fputs("PESTICIDE\n",nps);
 
        if (pest->soluble_pest_exit >0)
 #ifdef _DOS
-      printf(" %d...Pesticide Output Being Created              \r",i);
+      fprintf (stderr," %d...Pesticide Output Being Created              \r",i);
 #endif
 
 
@@ -865,7 +865,7 @@ float cod_run        = 0.0;  /* soluable COD in runoff from cell lbs/ac  */
        {
 
 #ifdef _DOS
-       printf("  %d ... Nutrient Output Being Created           \r",i);
+       fprintf (stderr,"  %d ... Nutrient Output Being Created           \r",i);
 #endif
 
        tot_sed_yield[6] = 0.0;
@@ -1125,7 +1125,7 @@ FEEDLOT_TOTALS *totalptr;
        while (temp!=NULL)
 	   {
 #ifdef _DOS
-	    printf("  %d ... Feedlot Output Being Created          \r",i);
+	    fprintf (stderr,"  %d ... Feedlot Output Being Created          \r",i);
 #endif
 
 	    fprintf(nps,"%d %.3d %.3f %.3f %.3f %.3f %.3f %.3f %d\n",

@@ -68,7 +68,7 @@ char	*land_use_label;
 
 	else
 	{
-	   printf("The %s type landuse is not defined!!\n Please reclassify the map \n",land_use_label);
+	   fprintf (stderr,"The %s type landuse is not defined!!\n Please reclassify the map \n",land_use_label);
 	   clean_up();
 	   exit(0);
 	}

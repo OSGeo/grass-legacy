@@ -46,7 +46,7 @@ float EI_calc(char type[], double precip, double dur)
 	   Valid_storm = 1;
 	   }
 	else {
-	   printf("Invalid storm type!\n");
+	   fprintf (stderr,"Invalid storm type!\n");
 	   return 0;
 	   }
 

@@ -99,16 +99,16 @@ SEE ALSO:
 
     if (rflags.routing)
      {
-      printf("ROUTING routine: \n");
-      printf("   Input:  %d...outlet_column\n",outlet_column);
-      printf("   Output: none\n");
+      fprintf (stderr,"ROUTING routine: \n");
+      fprintf (stderr,"   Input:  %d...outlet_column\n",outlet_column);
+      fprintf (stderr,"   Output: none\n");
      }
 
     sinkhole = FALSE;
 
     if(rflags.recursive)
       {
-       printf("RECURSIVE routine: column...%d",outlet_column);
+       fprintf (stderr,"RECURSIVE routine: column...%d",outlet_column);
       }
 
     recursive_route( outlet_column );
@@ -143,7 +143,7 @@ extern int debuginfo;
 	{
         if (rflags.recursive)
          {
-          printf("-->%d",temp->source_column);
+          fprintf (stderr,"-->%d",temp->source_column);
          }
 	recursive_route(temp->source_column);
 	temp = temp->next;
@@ -151,20 +151,20 @@ extern int debuginfo;
 
     if (rflags.recursive)
      {
-      printf("...routing path                 \n");
+      fprintf (stderr,"...routing path                 \n");
      }
 
     if(bflags.routing)
      {
-       printf("*****************************************************\n");
-       printf("   Routing Cell # %d %d\n",columndata[column]->cell_number,
+       fprintf (stderr,"*****************************************************\n");
+       fprintf (stderr,"   Routing Cell # %d %d\n",columndata[column]->cell_number,
 	   columndata[column]->cell_division);
-       printf("*****************************************************\n");
+       fprintf (stderr,"*****************************************************\n");
      }
  
  
 #ifdef _DOS
-    printf("  %d  ... Executing Routing Loop            \r",column);
+    fprintf (stderr,"  %d  ... Executing Routing Loop            \r",column);
 #endif
 
     prepare_to_route( column );
@@ -564,10 +564,10 @@ int            j;
 
     if (rflags.prep_route)
      {
-      printf("PREP_ROUTE routine:                \n");
-      printf("   Input:  %d...col_number\n",column);
-      printf("   Output: %f...drainage_area   %f...cn_area\n",curaccum->drainage_area,curaccum->cn_area);
-      printf("           %f...soluble_pest    %f...sediment_pest\n",curcolumn->pesticide->soluble_pest_exit,curcolumn->pesticide->sediment_pest_exit);
+      fprintf (stderr,"PREP_ROUTE routine:                \n");
+      fprintf (stderr,"   Input:  %d...col_number\n",column);
+      fprintf (stderr,"   Output: %f...drainage_area   %f...cn_area\n",curaccum->drainage_area,curaccum->cn_area);
+      fprintf (stderr,"           %f...soluble_pest    %f...sediment_pest\n",curcolumn->pesticide->soluble_pest_exit,curcolumn->pesticide->sediment_pest_exit);
      }
 
 

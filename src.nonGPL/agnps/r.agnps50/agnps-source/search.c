@@ -101,11 +101,11 @@ long source_cell_lo;
 /*** 1.1.5.5.  MARK CELL NOT FOUND ***/
  
   if (lo > hi)
-      printf("PROBLEM error or cannot find source cell");
+      fprintf (stderr,"PROBLEM error or cannot find source cell");
  
  
   if( problem_flag )
-      printf("PROBLEM");
+      fprintf (stderr,"PROBLEM");
  
  
  

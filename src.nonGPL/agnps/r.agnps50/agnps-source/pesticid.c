@@ -464,12 +464,12 @@ PEST_REC pest_data;
 
  if (rflags.pesticide)
   {
-   printf("PESTICIDE routine: \n");
-   printf("   Input:  %d...col_number   %d...soil_id\n",column_number,soil_type);
-   printf("           %f...rainfall     %f...runoff\n",rainfall,runoff);
-   printf("           %f...sediment     %f...cell_area\n",sediment,cell_area);
-   printf("   Output: %f...pesticide_in_sediment \n",pest->sediment_pest);
-   printf("           %f...soluble_pesticide \n",pest->soluble_pest);
+   fprintf (stderr,"PESTICIDE routine: \n");
+   fprintf (stderr,"   Input:  %d...col_number   %d...soil_id\n",column_number,soil_type);
+   fprintf (stderr,"           %f...rainfall     %f...runoff\n",rainfall,runoff);
+   fprintf (stderr,"           %f...sediment     %f...cell_area\n",sediment,cell_area);
+   fprintf (stderr,"   Output: %f...pesticide_in_sediment \n",pest->sediment_pest);
+   fprintf (stderr,"           %f...soluble_pesticide \n",pest->soluble_pest);
   }
 
 
@@ -604,7 +604,7 @@ PEST_REC pest_data;
 	     genpest->organic_carbon_sorption);
        fprintf(errorfp,"        Soil Organic Matter     :     %d \n",
 	     columndata[column_number]->soil->soil_organic_matter);
-       printf("Error encountered-Program stopped-Check error.log");
+       fprintf (stderr,"Error encountered-Program stopped-Check error.log");
        fclose(errorfp);
        sleep(5);
        exit(1);
@@ -879,7 +879,7 @@ RUNOFF_INFO *runoffpath;
 	       Kd_adjust);
        fprintf(errorfp,"        Sediment amount         :     %d \n",
 		sediment);
-       printf("Error encountered-Program stopped-Check error.log");
+       fprintf (stderr,"Error encountered-Program stopped-Check error.log");
        fclose(errorfp);
        sleep(5);
        exit(1);

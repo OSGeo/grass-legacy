@@ -94,7 +94,7 @@ for (counter=1; counter<columns+2; counter++)
    if (columndata[counter]->accumulated == NULL)
        memory_out(700, counter);
  
-/*   printf("There is %lu bytes after loading up cell num %d \n",
+/*   fprintf (stderr,"There is %lu bytes after loading up cell num %d \n",
        (unsigned long) coreleft(),counter); */
  
    }

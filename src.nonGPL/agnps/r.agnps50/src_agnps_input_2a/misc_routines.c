@@ -109,7 +109,7 @@ CN_hy_cond()
         strcpy(landuse->p, landuse_tempfile_name);
         /* end of code section added by Dave Peterson, April 1996 */
 
-        printf("Creating hy_cond map\n");
+        fprintf (stderr,"Creating hy_cond map\n");
         sprintf(buf,"r.reclass input=%s output=%s < %s",landuse->p, hy_cond->p, tempfile);
         G_system(buf);
         sprintf(buf,"/bin/rm -f %s",tempfile);
@@ -119,9 +119,9 @@ CN_hy_cond()
         /* assume default AMC as II */
         amc = 2;
         system("rm -f temp_cn"); /* added by Dave Peterson, April 1996 */
-        printf("Creating CN map\n");
+        fprintf (stderr,"Creating CN map\n");
         sprintf(buf,"r.cn2 sg=%s hc=%s lu=%s pr=%s amc=%d cn=temp_cn",hyg->p,hy_cond->p,landuse->p,mgt_practice->p,amc);  /* changed to r.cn2 12/96 MN */
-        printf("%s\n",buf);
+        fprintf (stderr,"%s\n",buf);
         G_system(buf);
 
         strcpy(temp_cn_map->p, "temp_cn");

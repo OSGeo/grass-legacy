@@ -195,26 +195,26 @@ xeros(int   slope_shape_code,
  
  if((sedimentinfo) || (bflags.sediment))
   {
-   printf("****\n");
-   printf("1.7 CALCUALTE UPLAND EROSION\n");
-   printf("INPUTS: Shape Code= %d  Land Slope= %f (per) Slope Length= %d (feet)\n",
+   fprintf (stderr,"****\n");
+   fprintf (stderr,"1.7 CALCUALTE UPLAND EROSION\n");
+   fprintf (stderr,"INPUTS: Shape Code= %d  Land Slope= %f (per) Slope Length= %d (feet)\n",
 	    slope_shape_code,average_land_slope,slope_length);
-   printf("        Storm EI= %f Soil Erodibility= %f  Cropping Factor= %f\n",
+   fprintf (stderr,"        Storm EI= %f Soil Erodibility= %f  Cropping Factor= %f\n",
       storm_energy_intensity,soil_erodibility_factor,cropping_factor);
-   printf("         Practice Factor= %f\n",practice_factor);
-   printf("OUTPUTS:  Upland Erosion= %f (tons/acre)  Error Code= %d\n\n",
+   fprintf (stderr,"         Practice Factor= %f\n",practice_factor);
+   fprintf (stderr,"OUTPUTS:  Upland Erosion= %f (tons/acre)  Error Code= %d\n\n",
 	  *upland_erosion,error_code);
   }
 
 
   if (rflags.xeros)
    {
-    printf("XEROS routine: \n");
-    printf("   Input:  %d...slope_shp_code     %f...ave_land_slope\n",slope_shape_code,average_land_slope);
-    printf("           %d...storm_ei           %f...soils_erod_fact\n",storm_energy_intensity,soil_erodibility_factor);
-    printf("           %f...c_factor           %f...p_factor\n",cropping_factor,practice_factor);
+    fprintf (stderr,"XEROS routine: \n");
+    fprintf (stderr,"   Input:  %d...slope_shp_code     %f...ave_land_slope\n",slope_shape_code,average_land_slope);
+    fprintf (stderr,"           %d...storm_ei           %f...soils_erod_fact\n",storm_energy_intensity,soil_erodibility_factor);
+    fprintf (stderr,"           %f...c_factor           %f...p_factor\n",cropping_factor,practice_factor);
 
-    printf("   Output: %f...upland_erosion\n",*upland_erosion);
+    fprintf (stderr,"   Output: %f...upland_erosion\n",*upland_erosion);
    }
 
 

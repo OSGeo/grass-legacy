@@ -59,7 +59,7 @@ CN_hy_cond()
 	}
 
 	fclose(fd);
-	printf("Creating hy_cond map\n");
+	fprintf (stderr,"Creating hy_cond map\n");
 	sprintf(buf,"r.reclass input=%s output=%s < %s",landuse->p, hy_cond->p, tempfile);
 	G_system(buf);
 	sprintf(buf,"/bin/rm -f %s",tempfile);
@@ -68,9 +68,9 @@ CN_hy_cond()
 	if(amc <=0 || amc>3)
 	/* assume default AMC as II */
 	amc = 2;
-	printf("Creating CN map\n");
+	fprintf (stderr,"Creating CN map\n");
         sprintf(buf,"r.cn sg=%s hc=%s lu=%s pr=%s amc=%d cn=temp_cn",hyg->p,hy_cond->p,landuse->p,mgt_practice->p,amc);
-	printf("%s\n",buf);
+	fprintf (stderr,"%s\n",buf);
 	G_system(buf);
 
 	strcpy(temp_cn_map->p, "temp_cn");

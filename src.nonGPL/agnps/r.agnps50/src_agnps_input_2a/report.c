@@ -39,12 +39,12 @@ char *argv[];
 	FILE *fs, *fd, *fopen(), *fclose();
 
 	/*
-	printf("\nEnter the .nps file name to prepare the report --> ");
+	fprintf (stderr,"\nEnter the .nps file name to prepare the report --> ");
 	scanf("%s",file_name);
 	*/
 
 	if ((fs = fopen(argv[1],"r")) == NULL){
-		printf("File not found\n");
+		fprintf (stderr,"File not found\n");
 		exit(0);
 		}
 

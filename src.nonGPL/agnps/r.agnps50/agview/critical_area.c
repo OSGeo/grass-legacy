@@ -238,8 +238,8 @@ END ADDITIONS BY MIKE FOSTER 2-19-96
 /* MIKE FOSTER 2-19-96 */
 
       system("clear");
-      printf("\nPlease enter the output file name without its .nps extension\n");
-      printf("(ex: gaston) >");
+      fprintf (stderr,"\nPlease enter the output file name without its .nps extension\n");
+      fprintf (stderr,"(ex: gaston) >");
       fgets(file_entered,30,stdin);
       strcpy(infilename,file_entered);
       strcpy(input_nps_filename, file_entered);

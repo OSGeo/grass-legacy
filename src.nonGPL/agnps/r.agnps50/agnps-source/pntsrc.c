@@ -181,10 +181,10 @@ int   feedlot_number    = 0;
 
   if (rflags.pntsrc)
    {
-    printf("PNTSRC routine: \n");
-    printf("   Input:  %d...col_number    %d...rec_column \n",column,temp_receiving_cell);
-    printf("   Output: %f...psrc_N     %f...psrc_P\n",feedlot_n_yield,feedlot_p_yield);
-    printf("           %f...psrc_COD\n",feedlot_cod_yield);
+    fprintf (stderr,"PNTSRC routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number    %d...rec_column \n",column,temp_receiving_cell);
+    fprintf (stderr,"   Output: %f...psrc_N     %f...psrc_P\n",feedlot_n_yield,feedlot_p_yield);
+    fprintf (stderr,"           %f...psrc_COD\n",feedlot_cod_yield);
    }
 
     return;

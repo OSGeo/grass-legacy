@@ -115,8 +115,8 @@ loop1.c
  
  if(bflags.tr_55)
    {
-    printf("****\n");
-    printf("1.9 Calculate Overland Duration -TR55\n");
+    fprintf (stderr,"****\n");
+    fprintf (stderr,"1.9 Calculate Overland Duration -TR55\n");
    }
  
  
@@ -192,25 +192,25 @@ loop1.c
 
  if(bflags.tr_55)
    {
-    printf("INPUTS: overland mannings %f  slope length %d(feet)\n",
+    fprintf (stderr,"INPUTS: overland mannings %f  slope length %d(feet)\n",
 	  columndata[col_num]->overland_mannings,columndata[col_num]->
 	  slope->slope_length);
-    printf("        storm rainfall %f(inches) land slope %f(%) area %f(acres)\n",
+    fprintf (stderr,"        storm rainfall %f(inches) land slope %f(%) area %f(acres)\n",
 	   initialptr->storm_rainfall,columndata[col_num]->slope->
 	   average_land_slope,columndata[col_num]->area);
-    printf("INTER:  shallow velocity %f(ft/sec) shallow length %d(feet) cell width %f(feet)\n",
+    fprintf (stderr,"INTER:  shallow velocity %f(ft/sec) shallow length %d(feet) cell width %f(feet)\n",
 	  velocity_shallow,shallow_length,time_shallow);
-    printf("OUTPUTS:overland time %f(hours) shallow time %f(hours) overland duration %f(hours)\n\n",
+    fprintf (stderr,"OUTPUTS:overland time %f(hours) shallow time %f(hours) overland duration %f(hours)\n\n",
 	  time_overland,time_shallow,*overland_duration);
    }
 
  if (rflags.tr_55)
    {
-    printf("TR-55 routine: \n");
-    printf("   Input:  %d...col_number\n",col_num);
-    printf("    Vars:  %f...cell_width   %f...shallow_length\n",cell_width,shallow_length);
-    printf("           %f...velocity_shallow  %f...time_shallow\n",velocity_shallow,time_shallow);
-    printf("   Output: %f...time_overland\n",time_overland);
+    fprintf (stderr,"TR-55 routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number\n",col_num);
+    fprintf (stderr,"    Vars:  %f...cell_width   %f...shallow_length\n",cell_width,shallow_length);
+    fprintf (stderr,"           %f...velocity_shallow  %f...time_shallow\n",velocity_shallow,time_shallow);
+    fprintf (stderr,"   Output: %f...time_overland\n",time_overland);
    }
 
 

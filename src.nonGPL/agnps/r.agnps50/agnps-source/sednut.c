@@ -210,11 +210,11 @@ SEE ALSO:
 
  if (rflags.calc_sed)
   {
-   printf("CALC_SED routine: \n");
-   printf("   Input:  %d...col_number\n",column);
-   printf("   Output: %f...ovrlnd_N    %f...ovrlnd_P\n",*overland_nit,*overland_phos);
-   printf("           %f...total_gully_sediment \n",total_gully_sed);
-   printf("           %f...tot_N_within_cell   %f...tot_P_within_cell\n",runoffdata->total_n_within_cell,runoffdata->total_p_within_cell);
+   fprintf (stderr,"CALC_SED routine: \n");
+   fprintf (stderr,"   Input:  %d...col_number\n",column);
+   fprintf (stderr,"   Output: %f...ovrlnd_N    %f...ovrlnd_P\n",*overland_nit,*overland_phos);
+   fprintf (stderr,"           %f...total_gully_sediment \n",total_gully_sed);
+   fprintf (stderr,"           %f...tot_N_within_cell   %f...tot_P_within_cell\n",runoffdata->total_n_within_cell,runoffdata->total_p_within_cell);
   }
 
   if (tflags.chem_table)

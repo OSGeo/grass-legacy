@@ -105,9 +105,9 @@ int mid;
 
   if (rflags.rclmap)
    {
-    printf("RCLMAP routine: \n");
-    printf("   Input:  %d...col_number\n",column_number);
-    printf("   Output: %d...rec_cell_position\n",columndata[column_number]->receiving_cell_position);
+    fprintf (stderr,"RCLMAP routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number\n",column_number);
+    fprintf (stderr,"   Output: %d...rec_cell_position\n",columndata[column_number]->receiving_cell_position);
    }
   return;
 }

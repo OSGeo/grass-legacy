@@ -174,15 +174,15 @@ char	*argv[];
 	/*
 	amc = 0;
 
-	printf("\n	The Curver Number map created will contain curver number\n 	equivalent to AMC II condition.\n\n");
-	printf("	Would you like to revise to AMC I or AMC III (y/n)? ");
+	fprintf (stderr,"\n	The Curver Number map created will contain curver number\n 	equivalent to AMC II condition.\n\n");
+	fprintf (stderr,"	Would you like to revise to AMC I or AMC III (y/n)? ");
 	scanf("%s",buf);
 
 	if ((strcmp(buf,"y") == 0) || (strcmp(buf,"Y") == 0) || (strcmp(buf,"yes") == 0) || (strcmp(buf,"YES") == 0))
 	{
 	    for (;;)
 	    {
-	    printf("\n		Enter 1 for AMC I or 3 for AMC III --> ");
+	    fprintf (stderr,"\n		Enter 1 for AMC I or 3 for AMC III --> ");
 	    scanf("%d",&amc);
 	    if (amc != 2 && amc > 0 && amc < 4) break;
 	    else continue;

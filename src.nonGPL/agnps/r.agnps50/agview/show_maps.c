@@ -178,29 +178,29 @@ for (; ; )
  { system("clear");
    for (; ; )
     { 
-      printf("\nWhat type of AGNPS model output would you like to view?\n\n");
-      printf("  1=Sediment-attached nitrogen (lbs/acre)\n");
-      printf("  2=Total soluble nitrogen (lbs/acre)\n");
-      printf("  3=Sediment-attached phosphorus (lbs/acre)\n");
-      printf("  4=Total soluble phosphorus (lbs/acre)\n");
-      printf("  5=Total soluble COD (lbs/acre)\n");
-      printf("  6=Cell erosion (tons/acre)\n");
-      printf("  7=Sediment yield (tons)\n");
-      printf("  8=Summary of nutrient and sediment yields at outlet cell\n");      
-      printf("  9=Pesticide in runoff(lbs/acre)\n");
-      printf(" 10=Pesticide in sediment(lbs/acre)\n");
-      printf(" 11=Pesticide percolation within cell(lbs/acre)\n");
-      printf(" 12=Summary of pesticide yields at outlet cell\n");
-      printf("  0=Quit\n\n");
-      printf("Please enter 0-12 for your choice of contaminant>");              
+      fprintf (stderr,"\nWhat type of AGNPS model output would you like to view?\n\n");
+      fprintf (stderr,"  1=Sediment-attached nitrogen (lbs/acre)\n");
+      fprintf (stderr,"  2=Total soluble nitrogen (lbs/acre)\n");
+      fprintf (stderr,"  3=Sediment-attached phosphorus (lbs/acre)\n");
+      fprintf (stderr,"  4=Total soluble phosphorus (lbs/acre)\n");
+      fprintf (stderr,"  5=Total soluble COD (lbs/acre)\n");
+      fprintf (stderr,"  6=Cell erosion (tons/acre)\n");
+      fprintf (stderr,"  7=Sediment yield (tons)\n");
+      fprintf (stderr,"  8=Summary of nutrient and sediment yields at outlet cell\n");      
+      fprintf (stderr,"  9=Pesticide in runoff(lbs/acre)\n");
+      fprintf (stderr," 10=Pesticide in sediment(lbs/acre)\n");
+      fprintf (stderr," 11=Pesticide percolation within cell(lbs/acre)\n");
+      fprintf (stderr," 12=Summary of pesticide yields at outlet cell\n");
+      fprintf (stderr,"  0=Quit\n\n");
+      fprintf (stderr,"Please enter 0-12 for your choice of contaminant>");              
       mapflag=atoi(fgets(mapflagstring,2,stdin)); 
       
-      printf("\nThe choice you entered was %d\n",mapflag);
+      fprintf (stderr,"\nThe choice you entered was %d\n",mapflag);
       
       if (mapflag >=0 && mapflag <= 12) break;
       else {
-        printf("Please review the choices and make a new selection\n");
-        printf("Press any key to continue> "); 
+        fprintf (stderr,"Please review the choices and make a new selection\n");
+        fprintf (stderr,"Press any key to continue> "); 
         fgets(mapflagstring,2,stdin); 
         
         system("clear");
@@ -215,14 +215,14 @@ for (; ; )
    
       for (; ; )
        { 
-         printf("\nPlease enter your cell size in meters (1-9999)>");
+         fprintf (stderr,"\nPlease enter your cell size in meters (1-9999)>");
          res=atoi(fgets(resstring,2,stdin)); 
-         printf("\nThe resolution you entered was %d\n",res);
+         fprintf (stderr,"\nThe resolution you entered was %d\n",res);
                  
          if (res >= 1 && res <= 9999) break;
 
-         printf("The number entered should be 1-9999\n");
-         printf("Press any key to continue> ");
+         fprintf (stderr,"The number entered should be 1-9999\n");
+         fprintf (stderr,"Press any key to continue> ");
          fgets(resstring,2,stdin); 
          system("clear");
        }
@@ -257,7 +257,7 @@ for (; ; )
 
       /* open input file for reading */
       if ( (input_nps_file = fopen(input_nps_filename, "rb")) == NULL )
-        { printf("Error opening file %s.\n", input_nps_filename);
+        { fprintf (stderr,"Error opening file %s.\n", input_nps_filename);
           exit(1);
         }
 
@@ -267,7 +267,7 @@ for (; ; )
             find_max_cell_num(input_nps_file, &max_cell_num)   ||
             get_cell_data(input_nps_file, outlet_cell_num, runoff, sediment,
                           n_sediment, n_soluble, p_sediment, p_soluble) )
-        { printf("Error: file %s has unrecognized format.\n",
+        { fprintf (stderr,"Error: file %s has unrecognized format.\n",
                  input_nps_filename);
           fclose(input_nps_file);
           exit(1);
@@ -280,10 +280,10 @@ for (; ; )
        /* allow user to display other cells until user is done */
        for (; ; )
         { /* allow user to view another cell */
-          printf(
+          fprintf (stderr,
           "To see output from another cell, enter the cell number [1 - %d],\n",
           max_cell_num);
-          printf("or enter 0 when done viewing cells ==========================> ");
+          fprintf (stderr,"or enter 0 when done viewing cells ==========================> ");
           cell_choice = atoi(fgets(cell_choice_str,81,stdin));
 
           system("clear"); /* clear the screen */
@@ -294,7 +294,7 @@ for (; ; )
            { /* get data for another cell */
              if (get_cell_data(input_nps_file, cell_choice, runoff, sediment,
                                n_sediment, n_soluble, p_sediment, p_soluble))
-              { printf("Error: file %s has unrecognized format.\n",
+              { fprintf (stderr,"Error: file %s has unrecognized format.\n",
                        input_nps_filename);
                 fclose(input_nps_file);
                 exit(1);
@@ -305,7 +305,7 @@ for (; ; )
                           p_sediment, p_soluble, 0);
            }
           else
-           printf("You have entered an invalid choice.  Please try again.\n\n");
+           fprintf (stderr,"You have entered an invalid choice.  Please try again.\n\n");
         }
 
        fclose(input_nps_file);
@@ -343,13 +343,13 @@ void show_summary(int cell, char *runoff, char *sediment, char *n_sediment,
    pad_string(p_soluble, 7);
 
    /* display data for cell */
-   if (at_outlet) printf("\n\nSummary of Yields at Watershed Outlet:\n\n");
-   else           printf("\n\nSummary of Yields:\n\n");
-   printf("                           (    nitrogen    )   (   phosphorus   )\n");
-   printf("cell   runoff   sediment   sediment   soluble   sediment   soluble\n");
-   printf("        (in)     (tons)    (lb/ac)    (lb/ac)   (lb/ac)    (lb/ac)\n");
-   printf("------------------------------------------------------------------\n");
-   printf("%4i   %s   %s   %s   %s   %s   %s\n\n", cell, runoff, sediment,
+   if (at_outlet) fprintf (stderr,"\n\nSummary of Yields at Watershed Outlet:\n\n");
+   else           fprintf (stderr,"\n\nSummary of Yields:\n\n");
+   fprintf (stderr,"                           (    nitrogen    )   (   phosphorus   )\n");
+   fprintf (stderr,"cell   runoff   sediment   sediment   soluble   sediment   soluble\n");
+   fprintf (stderr,"        (in)     (tons)    (lb/ac)    (lb/ac)   (lb/ac)    (lb/ac)\n");
+   fprintf (stderr,"------------------------------------------------------------------\n");
+   fprintf (stderr,"%4i   %s   %s   %s   %s   %s   %s\n\n", cell, runoff, sediment,
           n_sediment, n_soluble, p_sediment, p_soluble);
  }
 

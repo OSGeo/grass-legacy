@@ -57,7 +57,7 @@ int	clay, sand, silt;
 	return(10.0); /* default from AGNPS users guide */
 
 	/*
-	   printf("The combination of %d, %d and %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper channel side slope \n",clay,sand,silt);
+	   fprintf (stderr,"The combination of %d, %d and %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper channel side slope \n",clay,sand,silt);
 	   clean_up();
 	   exit(0);
 	*/

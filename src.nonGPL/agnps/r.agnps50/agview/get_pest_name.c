@@ -36,8 +36,8 @@ char get_pest_name(char *input_file, int num, int resolution)
 	if(pesticide[0]<65 || pesticide[0]>122){
 		 system("clear");
 	   do {
-	     printf("\nPesticide data not found\n");
-         printf("Press return to continue...");
+	     fprintf (stderr,"\nPesticide data not found\n");
+         fprintf (stderr,"Press return to continue...");
          scanf("%c", &check);
         }while(check != '\n');    
       }

@@ -83,27 +83,27 @@ get_input_map_names()
                 create_grid_map();
     
                 sprintf(buf3,"$GISBASE/etc/agnps50/create_asp_map %s %s\n",buf2,buf4);
-  printf("The content fo buf3 is: %s\n",buf3);
-  printf("Creating temporary work map\n");
-  printf("Please wait.  It may take a few minutes\n");
+  fprintf (stderr,"The content fo buf3 is: %s\n",buf3);
+  fprintf (stderr,"Creating temporary work map\n");
+  fprintf (stderr,"Please wait.  It may take a few minutes\n");
                 system(buf3);
                 system("clear");
-                printf("  \n");
-                printf("  \n");
-                printf("A NEW FLOW MAP %s  HAS BEEN CREATED\n",buf2);
-                printf("  \n");
-                printf("HOWEVER, THE FLOW DIRECTIONS ARE NOT GUARANTEED TO\n");
-                printf("  \n");
-                printf("BE CORRECT FOR ALL CELLS BECAUSE OF THE INHERENT\n");
-                printf("  \n");
-                printf("LIMITATION OF GRASS FUNCTIONS.\n");
-                printf("  \n");
-                printf("THE USER IS URGED TO EDIT THIS MAP FIRST!!!\n");
-                printf("  \n");
-                printf("  \n");
-                printf("Please edit the flow map and run again \n");
-                printf("  \n");
-                printf("  \n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"A NEW FLOW MAP %s  HAS BEEN CREATED\n",buf2);
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"HOWEVER, THE FLOW DIRECTIONS ARE NOT GUARANTEED TO\n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"BE CORRECT FOR ALL CELLS BECAUSE OF THE INHERENT\n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"LIMITATION OF GRASS FUNCTIONS.\n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"THE USER IS URGED TO EDIT THIS MAP FIRST!!!\n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"Please edit the flow map and run again \n");
+                fprintf (stderr,"  \n");
+                fprintf (stderr,"  \n");
                 /*
                 gets(buf5);
                 if((strncmp(buf5,"Y",1)) == 0) exit(0);
@@ -123,7 +123,7 @@ get_input_map_names()
 	if((find_old_map(buf2)) == 1) strcpy(K_fac->p,buf2);
 	else { 
 		do{
-		printf("Do you have a USLE K factor map (y/n) ");
+		fprintf (stderr,"Do you have a USLE K factor map (y/n) ");
 		} while(!G_gets(buf));
 		   if(buf[0] == 'y' || buf[0] == 'Y'){
 		   buf1 = get_old_name("USLE K factor map", 1);
@@ -140,7 +140,7 @@ get_input_map_names()
 	if((find_old_map(buf2)) == 1) strcpy(hyg->p,buf2);
 	else { 
 		do{
-		printf("Do you have a hydrological soil group map (y/n) ");
+		fprintf (stderr,"Do you have a hydrological soil group map (y/n) ");
 		} while(!G_gets(buf));
 		   if(buf[0] == 'y' || buf[0] == 'Y'){
 		   buf1 = get_old_name("Hydrological soil group map", 1);
@@ -157,7 +157,7 @@ get_input_map_names()
 	if((find_old_map(buf2)) == 1) strcpy(sand->p,buf2);
 	else { 
 		do{
-		printf("Do you have a sand texture map (y/n) ");
+		fprintf (stderr,"Do you have a sand texture map (y/n) ");
 		} while(!G_gets(buf));
 		   if(buf[0] == 'y' || buf[0] == 'Y'){
 		   buf1 = get_old_name("Sand texture Map", 1);
@@ -174,7 +174,7 @@ get_input_map_names()
 	if((find_old_map(buf2)) == 1) strcpy(clay->p,buf2);
 	else { 
 		do{
-		printf("Do you have a clay texture map (y/n) ");
+		fprintf (stderr,"Do you have a clay texture map (y/n) ");
 		} while(!G_gets(buf));
 		   if(buf[0] == 'y' || buf[0] == 'Y'){
 		   buf1 = get_old_name("Clay texture Map", 1);
@@ -272,8 +272,8 @@ get_input_map_names()
 
 /*
 		do{
-		printf("Do you have a Channel Slope map (y/n)\n ");
-		printf("If no, 50%% of overland slope is assumed as recommendad by the AGNPS manual\n "); 
+		fprintf (stderr,"Do you have a Channel Slope map (y/n)\n ");
+		fprintf (stderr,"If no, 50%% of overland slope is assumed as recommendad by the AGNPS manual\n "); 
 
 		} while(!G_gets(buf));
  

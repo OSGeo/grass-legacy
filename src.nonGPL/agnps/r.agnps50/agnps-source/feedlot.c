@@ -420,11 +420,11 @@ float weighted_feedlot_rating_factor;
 
   if (rflags.pntsrc)
    {
-    printf("FEEDLOT routine: \n");
-    printf("   Input:  %d...col_number    %d...feedlot_number \n",column,feedlot_number);
-    printf("           %f...rainfall \n",rainfall);
-    printf("   Output: %f...feedlot_N     %f...feedlot_P\n",*point_source_N,*point_source_P);
-    printf("           %f...feedlot_COD\n",*point_source_COD);
+    fprintf (stderr,"FEEDLOT routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number    %d...feedlot_number \n",column,feedlot_number);
+    fprintf (stderr,"           %f...rainfall \n",rainfall);
+    fprintf (stderr,"   Output: %f...feedlot_N     %f...feedlot_P\n",*point_source_N,*point_source_P);
+    fprintf (stderr,"           %f...feedlot_COD\n",*point_source_COD);
    }
 
 

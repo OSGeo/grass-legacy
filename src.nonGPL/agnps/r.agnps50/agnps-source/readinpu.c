@@ -417,7 +417,7 @@ int readinput(fp1,sdataname)
      htable.ht[i].total_cell_area = initialptr->base_cell_area;
    }
  
-/*  printf("There is %lu bytes after the header info is loaded. \n",
+/*  fprintf (stderr,"There is %lu bytes after the header info is loaded. \n",
      (unsigned long) coreleft()); */
  
  
@@ -436,7 +436,7 @@ int readinput(fp1,sdataname)
  
 
 #ifdef _DOS
-   printf("  %d ... Reading in Cell Information                     <AGNPS 5.00>\r",column_number);
+   fprintf (stderr,"  %d ... Reading in Cell Information                     <AGNPS 5.00>\r",column_number);
 #endif
 
  
@@ -1008,7 +1008,7 @@ int readinput(fp1,sdataname)
 	column_number++;
  
  
-/*      printf("There is %lu bytes after loading up cell num %d \n",
+/*      fprintf (stderr,"There is %lu bytes after loading up cell num %d \n",
        (unsigned long) coreleft(),column_number); */
  
  

@@ -118,7 +118,7 @@ char	*argv[];
 
 	weighted_cn = total_cn / acres;
 
-	printf("	The weighted curve number of the %s map is %5.2f\n",cn_name,weighted_cn);
+	fprintf (stderr,"	The weighted curve number of the %s map is %5.2f\n",cn_name,weighted_cn);
 
 	weighted_cn_id = cell_open_new(weighted_cn_name);
 

@@ -193,7 +193,7 @@ CELL	veg_cover,land_use, hy_cond;
 
 	else
 	{
-	   printf("The combination of %s, %s and %s is not defined!!\n Please reclassify the map and refer USDA Curver Number table\n",land_use_label,veg_cover_label,hy_cond_label);
+	   fprintf (stderr,"The combination of %s, %s and %s is not defined!!\n Please reclassify the map and refer USDA Curver Number table\n",land_use_label,veg_cover_label,hy_cond_label);
 	   exit(0);
 	}
 }
