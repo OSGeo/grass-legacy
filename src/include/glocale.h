@@ -2,7 +2,7 @@
 
 extern char * G_gettext(const char *, const char *);
 
-#ifdef HAVE_LIBINTL_H
+#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
 #include <libintl.h>
 #define _(str) G_gettext(PACKAGE,(str))
 #else

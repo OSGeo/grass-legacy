@@ -1034,6 +1034,10 @@ AC_SUBST(FTLIB)
 
 LOC_CHECK_USE(nls,NLS,USE_NLS)
 
+if test -n "${USE_NLS}" ; then
+    AC_DEFINE(USE_NLS)
+fi
+
 # Check for optional packages
 
 USE_TOGL=
