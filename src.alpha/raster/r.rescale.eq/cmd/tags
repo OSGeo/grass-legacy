@@ -1,0 +1,4 @@
+Mmain	main.c	/^main (argc, argv)$/
+get_range	get_range.c	/^get_range (statf, min, max)$/
+get_stats	get_stats.c	/^get_stats (name, mapset, statf, quiet)$/
+reclass	main.c	/^reclass (cat1, cat2, value)$/
