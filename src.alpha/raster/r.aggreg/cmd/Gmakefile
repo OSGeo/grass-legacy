@@ -1,0 +1,17 @@
+PGM	= r.aggreg
+HOME	= $(BIN_CONTRIB_CMD)
+
+
+COMPILE_FLAGS 	= -O 
+FFLAGS 		= -O
+
+
+COBJ = main_c.o read_data.o write_data.o init_and_parse.o
+FOBJ = main_f.o aggreg.o procag.o neibor.o
+
+$(HOME)/$(PGM): $(COBJ) $(FOBJ) $(GISLIB)
+	f77 -o $@ $(COBJ) $(FOBJ) $(GISLIB) $(LDFLAGS)
+
+$(GISLIB): # in case library changes
+
+$(COBJ): tools.h
