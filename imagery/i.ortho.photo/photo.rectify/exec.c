@@ -23,7 +23,7 @@ int exec_rectify (void)
     struct History hist;
     int colr_ok, hist_ok, cats_ok;
     long start_time, rectify_time, compress_time;
-
+    char *mailfile;
 
     /* allocate the output cell matrix */
     cell_buf = (CELL **) G_calloc (NROWS, sizeof (void *));
@@ -33,6 +33,27 @@ int exec_rectify (void)
 	cell_buf[i] = (void *) G_malloc (n);
 	G_set_null_value(cell_buf[i], NCOLS, map_type);
     }
+
+    /* go into background */
+    fprintf (stderr, "\nYou will receive mail when %s is complete\n",
+	G_program_name());
+    sleep(3);
+
+    if (G_fork())  exit(0);
+
+    /* note: all calls to G_tempfile() should happen after the fork */
+
+    /* create a mailfile */
+    mailfile = G_tempfile();
+    unlink (mailfile);
+    close(creat(mailfile,0666));
+
+/* open stderr to /dev/null so all GRASS error messages will be
+ * mailed to the user
+ */
+
+    freopen ("/dev/null","w",stderr);
+    freopen ("/dev/null","w",stdout);
 
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++)
@@ -58,12 +79,15 @@ int exec_rectify (void)
 #endif        
 	select_current_env();
 
+	G_suppress_warnings(1);
 	cats_ok = G_read_cats (name, mapset, &cats) >= 0;
 	colr_ok = G_read_colors (name, mapset, &colr) > 0;
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
 #ifdef DEBUG3
         fprintf (Bugsr,"reading was fine...\n");
 #endif
+	G_suppress_warnings(0);
+
 	time (&start_time);
 #ifdef DEBUG3
         fprintf (Bugsr,"Starting the rectification...\n");
@@ -92,17 +116,19 @@ int exec_rectify (void)
 		time (&compress_time);
 	    else
 		compress_time = rectify_time;
-	    report (name, mapset, result, rectify_time-start_time, compress_time-rectify_time, 1);
+	    report (mailfile, name, mapset, result, rectify_time-start_time, compress_time-rectify_time, 1);
 	}
 	else
 	{
 #ifdef DEBUG3
         fprintf (Bugsr,"Could not rectify. Mhhh.\n");
 #endif
-	    report (name, mapset, result, (long)0, (long)0, 0);
+
+	    report (mailfile, name, mapset, result, (long)0, (long)0, 0);
 	}
     }
+    mail (mailfile);
+    unlink (mailfile);
 
-    G_done_msg ("");
     return 0;
 }
