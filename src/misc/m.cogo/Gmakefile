@@ -1,0 +1,10 @@
+PGM=m.cogo
+
+OBJ=main.o
+SOURCES=main.c
+
+LIBES=$(GISLIB)
+DEPLIB=$(DEPGIS)
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
