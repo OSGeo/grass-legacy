@@ -884,7 +884,7 @@ int G_usage_html (void)
 					break;
 			}
 			if( !opt->required )
-			     fprintf(stdout,"[");
+			     fprintf(stdout," [");
 			fprintf(stdout,
 				"<b>%s</b>=<em>%s</em>", opt->key, type);
 			if( !opt->required )
