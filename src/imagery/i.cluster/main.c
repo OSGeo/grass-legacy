@@ -1,4 +1,3 @@
-/* %W% %G% */
 #define GLOBAL
 #include "global.h"
 
@@ -74,11 +73,11 @@ main(argc,argv) char *argv[];
     fprintf (report, "Subgroup: %s\n", subgroup);
     for (n=0; n < ref.nfiles; n++)
     {
-	fprintf (report, " %s in %s\n", ref.file[n].name, ref.file[n].mapset);
+	fprintf (report, " %s@%s\n", ref.file[n].name, ref.file[n].mapset);
     }
     fprintf (report,"Result signature file: %s\n", outsigfile);
     fprintf (report, "\n");
-    fprintf (report, "Window\n");
+    fprintf (report, "Region\n");
     fprintf (report, "  North: %12.2lf  East: %12.2lf\n",
 	    window.north, window.east);
     fprintf (report, "  South: %12.2lf  West: %12.2lf\n",
@@ -139,7 +138,7 @@ main(argc,argv) char *argv[];
 
     if (C.npoints < 2)
     {
-	error = "Not enough non-zero sample data points. Check your current window (and mask)";
+	error = "Not enough non-zero sample data points. Check your current region (and mask)";
 	done();
 	exit(1);
     }
@@ -201,6 +200,7 @@ done()
 		fprintf (mail, "%s", buf);
 	pclose (mail);
 	unlink (reportfile);
+	G_done_msg ("Check your mail");
 #endif
     }
 }
