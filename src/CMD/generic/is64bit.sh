@@ -29,17 +29,16 @@ int main()
 }
 EOM
 ########################
-$CC 64test.c -o a.out
+$CC 64test.c -o a
 
-SIZEOFLONG=`./a.out`
+SIZEOFLONG=`./a`
 
-rm ./a.out 64test.c
+rm -f ./a.out a.exe 64test.c
 
 ######################## Is that an alpha ?
 ARCHIT=`echo $ARCH | grep -i "alpha"`
 
-if test $SIZEOFLONG -eq 8 -a \
-	 X$ARCHIT != X ; then
+if [ "$SIZEOFLONG" -eq "8" -a "X$ARCHIT" != "X" ]; then
 	 echo "[ 64bit alpha ]"
 	 echo "  --> Using 64-bit PVF library"
 	 cat $GRASSLIST | \
