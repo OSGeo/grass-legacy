@@ -37,21 +37,25 @@ main(argc,argv) char *argv[];
     parm.rows->type = TYPE_INTEGER;
     parm.rows->required = YES;
     parm.rows->description = "Number of rows in the input file";
-    parm.rows->options = "1-";
+    parm.rows->options = "1-9999999";
 
     parm.cols = G_define_option();
     parm.cols->key = "cols";
     parm.cols->type = TYPE_INTEGER;
     parm.cols->required = YES;
     parm.cols->description = "Number of columns in the input file";
-    parm.cols->options = "1-";
+    parm.cols->options = "1-9999999";
 
     parm.bpc = G_define_option();
     parm.bpc->key = "bpc";
     parm.bpc->type = TYPE_INTEGER;
     parm.bpc->required = YES;
     parm.bpc->description = "Number of bytes per cell (ie, per data value)";
-    parm.bpc->options = "1-";
+    {
+      static char str[20];
+      sprintf (str, "1-%d", sizeof (CELL));
+      parm.bpc->options = str;
+    }
 
     flag.q = G_define_flag();
     flag.q->key = 'q';
