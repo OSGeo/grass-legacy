@@ -1,0 +1,23 @@
+interface_build {
+    {r.texture} 0
+    {Generate images with textural features from a raster map.}
+    {entry input {Name of the input raster map:} 0 raster}
+    {entry output {Name of the output raster map:} 0 raster}
+    {entry side {The side of the sliding window [odd and >= 3]:} 0 ""}
+    {entry distance {The distance between two samples [>= 1]:} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -a {Angular Second Moment.} "" -a}
+    {checkbox -c {Contrast.} "" -c}
+    {checkbox -k {Correlation.} "" -k}
+    {checkbox -v {Variance.} "" -v}
+    {checkbox -i {Inverse Diff Moment.} "" -i}
+    {checkbox -s {Sum Average.} "" -s}
+    {checkbox -w {Sum Variance.} "" -w}
+    {checkbox -x {Sum Entropy.} "" -x}
+    {checkbox -e {Entropy.} "" -e}
+    {checkbox -d {Difference Variance.} "" -d}
+    {checkbox -p {Difference Entropy.} "" -p}
+    {checkbox -m {Meas of Correlation-1.} "" -m}
+    {checkbox -n {Meas of Correlation-2.} "" -n}
+    {checkbox -o {Max Correlation Coeff.} "" -o}
+}

@@ -547,6 +547,9 @@ menu_build 1 .main_menu {
             "Clump small areas" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.clump"
             }
+            "Create map raster with textural features" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.texture"
+            }
             -separator
             "Create color table or histogram contrast grey scale" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.colors"
