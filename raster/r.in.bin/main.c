@@ -390,8 +390,9 @@ fprintf(stderr, "Percent Complete: ");
 		for (col = 0 ; col < ncols; col++ ) {
 	if(bytes < 4) {
 	/* Import 2 byte Short */
-	if (swap == 1) TIFFSwabShort((uint16 *)&x_s[col]);
-	cell[col] = (CELL)x_s[col] ;
+	if (swap == 1 && bytes == 2)
+	    TIFFSwabShort((uint16 *)&x_s[col]);
+	cell[col] = (CELL) (bytes == 1) ? *(((uint8 *)x_s) + col): x_s[col] ;
 	if (sflag && cell[col] > 127) cell[col] -= 256;
 	if(oldval) {
 	if (cell[col] == (int)oldval) G_set_c_null_value(&cell[col], 1) ;
