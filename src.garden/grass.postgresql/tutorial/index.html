@@ -7,99 +7,100 @@
    <title>GRASS GIS and PostgreSQL</title>
 </head>
 <body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<font face="Arial, Helvetica"><font size=+1>
 
 <h2>
-<b><font face="Arial,Helvetica"><font size=+1>GRASS and PostgreSQL - First
-Steps</font></font></b></h2>
-<font face="Arial,Helvetica"><font size=+1>[$Id: index.html,v 1.1 2000/03/10
-10:57:57 markus Exp $]</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Recommended reading:</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp; <a href="http://www.postgresql.org/docs/tutorial/index.html">http://www.postgresql.org/docs/tutorial/index.html</a></font></font>
+<b>GRASS and PostgreSQL - First
+Steps</b></h2>
+[$Id: index.html,v 1.1 2000/03/10
+10:57:57 markus Exp $]
+<p>Recommended reading:
+<br>&nbsp; <a href="http://www.postgresql.org/docs/tutorial/index.html">http://www.postgresql.org/docs/tutorial/index.html</a>
 <p>
 <hr WIDTH="100%">
 <h2>
-<font face="Arial,Helvetica"><font size=+1>General Module Overview:</font></font></h2>
-<font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp;&nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;
-By <a href="mailto:sixote@yahoo.com">Alex Shevlakov</a></b></font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Modules in this pack, in
-general, provide the following functions:</font></font>
+General Module Overview:</h2>
+&nbsp;&nbsp;&nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;
+By <a href="mailto:sixote@yahoo.com">Alex Shevlakov</a></b>
+<p>Modules in this pack, in
+general, provide the following functions:
 <ul>
 <li>
-<font face="Arial,Helvetica"><font size=+1>g.select.pg - select a database
-to use with GRASS.</font></font></li>
+g.select.pg - select a database
+to use with GRASS.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>g.table.pg - list tables in
-currently selected DB.</font></font></li>
+g.table.pg - list tables in
+currently selected DB.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>g.columns.pg - list columns
-information in a table of the selected DB.</font></font></li>
+g.columns.pg - list columns
+information in a table of the selected DB.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>g.stats.pg - calculate means,
-min,max, frequencies for a specified numeric column.</font></font></li>
+g.stats.pg - calculate means,
+min,max, frequencies for a specified numeric column.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.site.pg - display and optionally
-copy/reclass sites selected with a DB query.</font></font></li>
+d.site.pg - display and optionally
+copy/reclass sites selected with a DB query.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.vect.pg - display lines/areas
-selected with a DB query.</font></font></li>
+d.vect.pg - display lines/areas
+selected with a DB query.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.rast.pg - display(optionally)
-and reclass raster maps with a DB query.</font></font></li>
+d.rast.pg - display(optionally)
+and reclass raster maps with a DB query.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.what.s.pg - query sites on
+d.what.s.pg - query sites on
 graphics monitor with mouse. Like d.what.sites, it gives coordinates, but
 lists all attributes. Gives option to geometry filter sites and dump the
 fields in comma-separated lists for other statistics programs (like R or
-Gnumeric).</font></font></li>
+Gnumeric).</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.what.v.pg - query lines/areas
+d.what.v.pg - query lines/areas
 with mouse. Like d.what.vect, lists attributes. Optionally fills queried
 areas (like v.area). May be used for the UPDATE command in Postgres through
 the input SQL file. The idea is to prepare an arbitrary algorithm, code
 it in SQL, and then update DB with clicking on chosen polys/lines. You
 may consider this as piping anything you grabbed on screen through various
-filters.</font></font></li>
+filters.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>d.what.r.pg - does the same
-as above on the raster maps.</font></font></li>
+d.what.r.pg - does the same
+as above on the raster maps.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>v.reclass.pg - reclasses vector
-maps according to the SELECT filter.</font></font></li>
+v.reclass.pg - reclasses vector
+maps according to the SELECT filter.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>v.in.shape.pg - does the same
+v.in.shape.pg - does the same
 as the v.in.shape module plus dumping the relevant dbf information directly
 to postgres table. Although, using the module v.in.shape versus v.in.arc
 seems not quite an idea, since as Frank Warmerdam who wrote v.in.shape
-points out:</font></font></li>
+points out:</li>
 
-<br><i><font face="Arial,Helvetica"><font size=+1>"Label for polygons are
+<br><i>"Label for polygons are
 located on the edge, rather than interior to the polygon.&nbsp; This is
 ambiguous in cases of polygons that share boundaries with other polygons
-and will cause conflicts when running v.support."</font></font></i>
-<br><font face="Arial,Helvetica"><font size=+1>So if you imported a coverage
+and will cause conflicts when running v.support."</i>
+<br>So if you imported a coverage
 with polygons whose attributes were stored in dbf-file by means of ArcView
 shapefile (and v.in.shape.pg), the table data would be relevant to polys,
 while labels would now belong to lines (after v.support really gets confused).
 If you are not bothered with this fact (say importing lines),&nbsp; then
-try use v.in.shape.pg.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Admin/normal_user dump modes
+try use v.in.shape.pg.
+<br>Admin/normal_user dump modes
 differ in the way the new records inserted. Admin takes&nbsp; less time,
 while "normal user" dump is accompanied with HDD rattles.&nbsp; This s
 is due to safety limitation of Postgres which allows direct copying of
-large files to its super-users only.</font></font>
+large files to its super-users only.
 <li>
-<font face="Arial,Helvetica"><font size=+1>v.in.arc.pg - works in interactive
+v.in.arc.pg - works in interactive
 mode. A lot more straightforward than the original "v.in.arc". Just UNGEN
 lines and points in arc/info, then copy the lines and labels files to your
 work directory (yes, no need to dig them into /db/your_database/your_name/arc),
@@ -107,232 +108,232 @@ and also copy PAT.dbf&nbsp; (or AAT.dbf) there too, possibly renaming them
 to more reasonable names, as these would be taken by Postgres tables when
 they are created. Then run v.in.arc.pg and it would create area/line coverages
 (with categories set to line/areas id's) plus dump the dbf to postgres.
-Then you would probably want to run v.reclass.pg to set proper cats.</font></font></li>
+Then you would probably want to run v.reclass.pg to set proper cats.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>pg.in.dbf - just the hatcheted
+pg.in.dbf - just the hatcheted
 dumper from the two above modules. Takes DBF file name from user and dumps
-all columns to postgres.</font></font></li>
+all columns to postgres.</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>NVIZ2.2 - Postgres interface.
+NVIZ2.2 - Postgres interface.
 I have added new entries field in the "What's here" panel; Postgres queries
-may be disabled in "Attributes" checkbox.</font></font></li>
+may be disabled in "Attributes" checkbox.</li>
 </ul>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>Bugs and other possible
-caveats reports are welcome.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Alex Shevlakov,</font></font>
-<br><font face="Arial,Helvetica"><font size=+1><a href="mailto:sixote@yahoo.com">sixote@yahoo.com</a></font></font>
-<p><font face="Arial,Helvetica"><font size=+1>==================================================================</font></font>
+<p><br>Bugs and other possible
+caveats reports are welcome.
+<p>Alex Shevlakov,
+<br><a href="mailto:sixote@yahoo.com">sixote@yahoo.com</a>
+<p>==================================================================
 <h2>
-<font face="Arial,Helvetica"><font size=+1>Short introduction to GRASS/PostgreSQL
-interface</font></font></h2>
+Short introduction to GRASS/PostgreSQL
+interface</h2>
 
-<blockquote><b><font face="Arial,Helvetica"><font size=+1>by</font></font></b>
-<br><b><font face="Arial,Helvetica"><font size=+1>&nbsp; Markus Neteler and
-Alex Shevlakov</font></font></b></blockquote>
+<blockquote><b>by</b>
+<br><b>&nbsp; Markus Neteler and
+Alex Shevlakov</b></blockquote>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>The following text shall
-introduce you to interface usage. This text is subject to change...</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Let's start.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Enter GRASS 5. Of course
-you need to have a location defined and some data you want to import here.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>A) First see, if PostgreSQL
-is working - check for errors</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>We begin with looking at
-the list of existing databases:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.select.pg -l</font></font></blockquote>
+<p><br>The following text shall
+introduce you to interface usage. This text is subject to change...
+<p>Let's start.
+<p>Enter GRASS 5. Of course
+you need to have a location defined and some data you want to import here.
+<p>------------------------------------------------------------------------
+<br><b>A) First see, if PostgreSQL
+is working - check for errors</b>
+<br>------------------------------------------------------------------------
+<p>We begin with looking at
+the list of existing databases:
+<blockquote>g.select.pg -l</blockquote>
 
-<p><br><i><font face="Arial,Helvetica"><font size=+1>Error: select Postgres:connectDB()
-failed: Is the postmaster running and</font></font></i>
-<br><i><font face="Arial,Helvetica"><font size=+1>accepting TCP/IP(with
--i) connections at '130.77.22.66' on port '5432'?</font></font></i>
-<p><font face="Arial,Helvetica"><font size=+1>See for the log file:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>cat /var/log/postgresql.log</font></font></blockquote>
+<p><br><i>Error: select Postgres:connectDB()
+failed: Is the postmaster running and</i>
+<br><i>accepting TCP/IP(with
+-i) connections at '130.77.22.66' on port '5432'?</i>
+<p>See for the log file:
+<blockquote>cat /var/log/postgresql.log</blockquote>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>It tells us:</font></font>
-<blockquote><i><font face="Arial,Helvetica"><font size=+1>-> No data directory
--- can't proceed.</font></font></i>
-<br><i><font face="Arial,Helvetica"><font size=+1>/usr/lib/pgsql/bin/postmaster
-does not find the database system.&nbsp; Expected</font></font></i>
-<br><i><font face="Arial,Helvetica"><font size=+1>to find it in the PGDATA
-directory "/var/lib/pgsql/data", but unable to open</font></font></i>
-<br><i><font face="Arial,Helvetica"><font size=+1>file with pathname "/var/lib/pgsql/data/base/template1/pg_class".</font></font></i></blockquote>
-<font face="Arial,Helvetica"><font size=+1>In this case we have to install
-further packages (here: SuSe Linux, names may be different in your installation):</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; - pg_datab.rpm
-needs to be installed</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; - ps_ifa.rpm,
-maybe pg_iface.rpm</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Restart the "postmaster"
-(the daemon listening for db-queries):</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>cd /sbin/init.d/rc2.d/</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>./S25postgres start</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>ps -ax |grep postmaster</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Is postmaster there? You should
-see it in the process list.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Check again, if it working
-now:</font></font>
+<p><br>It tells us:
+<blockquote><i>-> No data directory
+-- can't proceed.</i>
+<br><i>/usr/lib/pgsql/bin/postmaster
+does not find the database system.&nbsp; Expected</i>
+<br><i>to find it in the PGDATA
+directory "/var/lib/pgsql/data", but unable to open</i>
+<br><i>file with pathname "/var/lib/pgsql/data/base/template1/pg_class".</i></blockquote>
+In this case we have to install
+further packages (here: SuSe Linux, names may be different in your installation):
+<br>&nbsp;&nbsp; - pg_datab.rpm
+needs to be installed
+<br>&nbsp;&nbsp; - ps_ifa.rpm,
+maybe pg_iface.rpm
+<p>Restart the "postmaster"
+(the daemon listening for db-queries):
+<blockquote>cd /sbin/init.d/rc2.d/
+<br>./S25postgres start
+<p>ps -ax |grep postmaster</blockquote>
+Is postmaster there? You should
+see it in the process list.
+<br>Check again, if it working
+now:
 <br>&nbsp;
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.select.pg -l</font></font></blockquote>
+<blockquote>g.select.pg -l</blockquote>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>If you get the error:</font></font>
-<blockquote><i><font face="Arial,Helvetica"><font size=+1>Error: select
-Postgres: User authentication failed</font></font></i></blockquote>
-<font face="Arial,Helvetica"><font size=+1>you need to setup the PostgreSQL
-user's list. Otherwise jump to letter B in the text.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>In case of error, enter:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>su</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Set a password for user "postgres"
-(this is needed first time only!):</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>passwd postgres</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>[set the password]</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>exit</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Now login as user "postgres":</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>su - postgres</font></font></blockquote>
+<p><br>If you get the error:
+<blockquote><i>Error: select
+Postgres: User authentication failed</i></blockquote>
+you need to setup the PostgreSQL
+user's list. Otherwise jump to letter B in the text.
+<br>In case of error, enter:
+<blockquote>su</blockquote>
+Set a password for user "postgres"
+(this is needed first time only!):
+<blockquote>passwd postgres
+<br>[set the password]
+<br>exit</blockquote>
+Now login as user "postgres":
+<blockquote>su - postgres</blockquote>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>and add yourself as PostgreSQL-user:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>createuser neteler</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Enter user's postgres ID
-or RETURN to use unix user ID: 601 -> &lt;return></font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Is user "neteler" allowed
-to create databases (y/n) y</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Is user "neteler" allowed
-to add users? (y/n) n</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>createuser: neteler was
-successfully added</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>exit</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Now you are again back in GRASS
-environment: Again we try:</font></font>
+<p><br>and add yourself as PostgreSQL-user:
+<blockquote>createuser neteler
+<p>Enter user's postgres ID
+or RETURN to use unix user ID: 601 -> &lt;return>
+<br>Is user "neteler" allowed
+to create databases (y/n) y
+<br>Is user "neteler" allowed
+to add users? (y/n) n
+<br>createuser: neteler was
+successfully added
+<p>exit</blockquote>
+Now you are again back in GRASS
+environment: Again we try:
 <br>&nbsp;
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.select.pg -l</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; The following
-databases are in the Unix catalogue:</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp;&nbsp; template1</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>This indicates that you PostgreSQL
-environment is o.k.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Fine. Now we can proceed
-and start using the interface.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>B) Using GRASS/PostgreSQL:
-creating a database table</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Say, you have a SHAPE-file
-set: humus.shp, humus.shx and humus.dbf.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>The file *.shp will be imported
-into GRASS, the file *.dbf into PostgreSQL.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Now you have to use "createdb"
-do create database tables.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>First we create an empty
-table:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>createdb humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>This new table we select in
-GRASS:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.select.pg database=humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>[BTW: To destroy a database
-use: destroydb humus]</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>In this first step we import
-the plain attribute table only without importing geographical features.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>To import the Dbase-table
-into PostgreSQL enter:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>pg.in.dbf in=humus.dbf</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp; Executing create
-table humus (AREA float4,PERIMETER float4,G2_UEB09_</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp; int8,G2_UEB09_I int8,STONR
-int4,BOTYP text,HORIZ text,BODART text,HUMUS</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp; float4,SKELETT text)</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>You will be asked: Additionally
-dump to ASCII file (enter full Unix name or hit&nbsp; &lt;return> for none):</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Enter "ENTER" if you don't
-need an additional ASCII file in your local directory.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>The table is imported into
-PostgreSQL now. Note: The vectors are not yetr imported!</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>C) Getting simple table
-statistics</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Now we want to get some
-information:</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>For teaching real life we
-start with an error...</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.stats.pg table=humus
-col=BOTYP</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;Error: connect Postgres:ERROR:&nbsp;
-No such function 'min' with the specified attributes</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>The reason is that BOTYP is
+<blockquote>g.select.pg -l
+<br>&nbsp;&nbsp; The following
+databases are in the Unix catalogue:
+<br>&nbsp;&nbsp;&nbsp; template1</blockquote>
+This indicates that you PostgreSQL
+environment is o.k.
+<br>Fine. Now we can proceed
+and start using the interface.
+<p>------------------------------------------------------------------------
+<br><b>B) Using GRASS/PostgreSQL:
+creating a database table</b>
+<br>------------------------------------------------------------------------
+<p>Say, you have a SHAPE-file
+set: humus.shp, humus.shx and humus.dbf.
+<br>The file *.shp will be imported
+into GRASS, the file *.dbf into PostgreSQL.
+<p>Now you have to use "createdb"
+do create database tables.
+<br>First we create an empty
+table:
+<blockquote>createdb humus</blockquote>
+This new table we select in
+GRASS:
+<blockquote>g.select.pg database=humus</blockquote>
+[BTW: To destroy a database
+use: destroydb humus]
+<p>In this first step we import
+the plain attribute table only without importing geographical features.
+<br>To import the Dbase-table
+into PostgreSQL enter:
+<blockquote>pg.in.dbf in=humus.dbf
+<br>&nbsp; Executing create
+table humus (AREA float4,PERIMETER float4,G2_UEB09_
+<br>&nbsp; int8,G2_UEB09_I int8,STONR
+int4,BOTYP text,HORIZ text,BODART text,HUMUS
+<br>&nbsp; float4,SKELETT text)</blockquote>
+You will be asked: Additionally
+dump to ASCII file (enter full Unix name or hit&nbsp; &lt;return> for none):
+<br>Enter "ENTER" if you don't
+need an additional ASCII file in your local directory.
+<p>The table is imported into
+PostgreSQL now. Note: The vectors are not yetr imported!
+<p>------------------------------------------------------------------------
+<br><b>C) Getting simple table
+statistics</b>
+<br>------------------------------------------------------------------------
+<br>Now we want to get some
+information:
+<br>For teaching real life we
+start with an error...
+<blockquote>g.stats.pg table=humus
+col=BOTYP
+<br>&nbsp;Error: connect Postgres:ERROR:&nbsp;
+No such function 'min' with the specified attributes</blockquote>
+The reason is that BOTYP is
 a text field (yes, see above in the output of pg.in.dbf!). Of course we
-cannot calculate statistics from letters.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>So we try another field:</font></font>
+cannot calculate statistics from letters.
+<br>So we try another field:
 <br>&nbsp;
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.stats.pg table=humus
-col=HUMUS</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<blockquote>g.stats.pg table=humus
+col=HUMUS
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Min,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Max,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Mean</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>-------------------------------------</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.81,&nbsp;&nbsp;&nbsp; 1.72372</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Aha, quite nice. It tells us
-about humus contents of soil patches in percent.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>To proceed we remove this
-table:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>destroydb humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>D) Importing a SHAPE
-file with DBASE table (*.dbf)</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Now it is becoming more amazing!
-We will import our SHAPE file:</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Using "verbose=9" we get
+Mean
+<br>-------------------------------------
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.81,&nbsp;&nbsp;&nbsp; 1.72372</blockquote>
+Aha, quite nice. It tells us
+about humus contents of soil patches in percent.
+<br>To proceed we remove this
+table:
+<blockquote>destroydb humus</blockquote>
+------------------------------------------------------------------------
+<br><b>D) Importing a SHAPE
+file with DBASE table (*.dbf)</b>
+<br>------------------------------------------------------------------------
+<p>Now it is becoming more amazing!
+We will import our SHAPE file:
+<br>Using "verbose=9" we get
 information about import progress. First step is to create an empty Postgres
-table:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>createdb humus</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>v.in.shape.pg input=humus.shp
-verbose=9 pgdump=humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>NOTE: You don't have to import
+table:
+<blockquote>createdb humus
+<br>v.in.shape.pg input=humus.shp
+verbose=9 pgdump=humus</blockquote>
+NOTE: You don't have to import
 the .dbf table manually. It is done by v.in.shape.pg automatically (many
-thanks to Alex Shevlakov)!</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>See if the GRASS map there:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.list vect</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>----------------------------------------------</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>vector files available in
-mapset geosum:</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>humus</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>----------------------------------------------</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>First we have to build the map
-topology:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>v.support m=humus
-o=build</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Start a GRASS monitor:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.mon x0</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>...and display the map:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.vect humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Query it using PostgreSQL:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.what.v.pg -f m=humus
-tab=humus col=HUMUS</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>-> Now we see that v.in.shape[.pg]
-only supports lines</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>but not areas yet. We hope
-for an upgrade...</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Interim solution:</font></font>
+thanks to Alex Shevlakov)!
+<p>See if the GRASS map there:
+<blockquote>g.list vect
+<br>----------------------------------------------
+<br>vector files available in
+mapset geosum:
+<br>humus
+<br>----------------------------------------------</blockquote>
+First we have to build the map
+topology:
+<blockquote>v.support m=humus
+o=build</blockquote>
+Start a GRASS monitor:
+<blockquote>d.mon x0</blockquote>
+...and display the map:
+<blockquote>d.vect humus</blockquote>
+Query it using PostgreSQL:
+<blockquote>d.what.v.pg -f m=humus
+tab=humus col=HUMUS
+<p>-> Now we see that v.in.shape[.pg]
+only supports lines
+<br>but not areas yet. We hope
+for an upgrade...</blockquote>
+Interim solution:
 <ul>
 <li>
-<font face="Arial,Helvetica"><font size=+1>import vector maps as E00 or
-ARC ungenerate files instead of SHAPE using v.in.arc.pg</font></font></li>
+import vector maps as E00 or
+ARC ungenerate files instead of SHAPE using v.in.arc.pg</li>
 
 <li>
-<font face="Arial,Helvetica"><font size=+1>rename to table name then to
-assign the PG-table to your map "virtually"</font></font></li>
+rename to table name then to
+assign the PG-table to your map "virtually"</li>
 </ul>
-<font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>E) Getting table information</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Here we can use</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>g.column.pg -v table=humus</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; </font></font><tt>|
+------------------------------------------------------------------------
+<br><b>E) Getting table information</b>
+<br>------------------------------------------------------------------------
+<p>Here we can use
+<blockquote>g.column.pg -v table=humus</blockquote>
+&nbsp;&nbsp; <tt>|
 columnname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 | type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | length&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
 <br><tt>&nbsp;----------------------------------------------------</tt>
@@ -366,127 +367,130 @@ var |</tt>
 <br><tt>&nbsp;| skelett&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 | text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 var |</tt>
-<p><font face="Arial,Helvetica"><font size=+1>As you can see you get information
-about the field types within the PostgreSQL table.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>F) Selecting table entries
-and displaying on the map</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>To select map features and
-display the the selected areas/lines in GRASS Monitor, you can use</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.vect.pg</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>A SQL-statement is required
-to select the features of interest.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Create an ASCII file "sql.query"&nbsp;
-(using an text editor) with contents:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>select stonr from
-humus where HUMUS > 1.2</font></font></blockquote>
+<p>As you can see you get information
+about the field types within the PostgreSQL table.
+<p>------------------------------------------------------------------------
+<br><b>F) Selecting table entries
+and displaying on the map</b>
+<br>------------------------------------------------------------------------
+<p>To select map features and
+display the the selected areas/lines in GRASS Monitor, you can use
+<blockquote>d.vect.pg</blockquote>
+A SQL-statement is required
+to select the features of interest.
+<br>Create an ASCII file "sql.query"&nbsp;
+(using an text editor) with contents:
+<blockquote>select stonr from
+humus where HUMUS > 1.2</blockquote>
 
-<p><br><font face="Arial,Helvetica"><font size=+1>[change "humus" to your
-table name and "HUMUS" to a column existing</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;in your table]</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Now query:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.vect.pg -f&nbsp;
--s sql.query map=humus color=red</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Alternate method: Write query
-into command line:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.vect.pg -f key=HUMUS
-tab=humus where='HUMUS>1.2' map=humus col=red</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; Executing</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; SELECT Distinct
-HUMUS from humus&nbsp; where&nbsp; HUMUS>1.2 and HUMUS is not null;</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;&nbsp; 16 Rows</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>&nbsp;key is the column name,
-tab the table, and where the statement.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>&nbsp;"-f" fills the selected
-areas, col defines their colors.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>&nbsp;Now you see the selected
-areas in the GRASS Monitor.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>G) Query example 1</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>There's a map of digitized
+<p><br>[change "humus" to your
+table name and "HUMUS" to a column existing
+<br>&nbsp;in your table]
+<p>Now query:
+<blockquote>d.vect.pg -f&nbsp;
+-s sql.query map=humus color=red</blockquote>
+Alternate method: Write query
+into command line:
+<blockquote>d.vect.pg -f key=HUMUS
+tab=humus where='HUMUS>1.2' map=humus col=red</blockquote>
+&nbsp;&nbsp; Executing
+<br>&nbsp;&nbsp; SELECT Distinct
+HUMUS from humus&nbsp; where&nbsp; HUMUS>1.2 and HUMUS is not null;
+<br>&nbsp;&nbsp; 16 Rows
+<p>&nbsp;key is the column name,
+tab the table, and where the statement.
+<br>&nbsp;"-f" fills the selected
+areas, col defines their colors.
+<p>&nbsp;Now you see the selected
+areas in the GRASS Monitor.
+<p>------------------------------------------------------------------------
+<br><b>G) Query example 1</b>
+<br>------------------------------------------------------------------------
+<p>There's a map of digitized
 forest stands called "terney_id" (say three hundred in the region); each
-plot has unique rec_id in database table info_terney.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Now we'd like to calculate
+plot has unique rec_id in database table info_terney.
+<br>Now we'd like to calculate
 correlations between hights and diameters of trees in plots with main species
 Pinus koraensis (type_id &lt;21), with age more than 100 years, growing
 in southern slopes and lying along specific routes. (Remember: If you forgot
-the column names of your table, use g.column.pg - see above)</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>First thing we highlight
+the column names of your table, use g.column.pg - see above)
+<p>First thing we highlight
 red all plots that satisfy these conditions. We write a sql-statement ASCII
-file "query1.sql":</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>select rec_id from
-info_terney where type_id &lt;21 and age > 100 and expo ~ 's'</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Then we use the query command:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.vect.pg -f -s
-query1.sql map=terney_id color=red</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Then, we pick these plots in
-d.what.v.pg, following along our routes:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>d.what.v.pg -f map=terney_id
-tab=info_terney col=rec_id color=green fillcolor=gray hv=h</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Recommendation: Use the TclTkGRASS
-with PostgreSQL support. Then you can easily copy-paste results.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>After this module is done,
+file "query1.sql":
+<blockquote>select rec_id from
+info_terney where type_id &lt;21 and age > 100 and expo ~ 's'</blockquote>
+Then we use the query command:
+<blockquote>d.vect.pg -f -s
+query1.sql map=terney_id color=red</blockquote>
+Then, we pick these plots in
+d.what.v.pg, following along our routes:
+<blockquote>d.what.v.pg -f map=terney_id
+tab=info_terney col=rec_id color=green fillcolor=gray hv=h</blockquote>
+Recommendation: Use the TclTkGRASS
+with PostgreSQL support. Then you can easily copy-paste results.
+<br>After this module is done,
 we Control-C the results from tcltkgrass output window and paste them to
-spreadsheet.</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Now we can calculate correlations
-(and other stats).</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>H) Import of ARC ungenerate
-files</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Note: Currently import is
-limited to interactive mode.</font></font>
-<p><font face="Arial,Helvetica"><font size=+1>In this example we have a
+spreadsheet.
+<br>Now we can calculate correlations
+(and other stats).
+<p>------------------------------------------------------------------------
+<br><b>H) Import of ARC ungenerate
+files</b>
+<br>------------------------------------------------------------------------
+<br>Note: Currently import is
+limited to interactive mode.
+<p>In this example we have a
 landuse map in ungen format (one file containing lines, one file containing
-label points and one file containing label text = attributes).</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>The files will be found
+label points and one file containing label text = attributes).
+<br>The files will be found
 in your current directory (opposite to v.in.arc which expects them in $LOCATION/arc/
-!).</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Copy PAT.dbf&nbsp; (or AAT.dbf)
+!).
+<br>Copy PAT.dbf&nbsp; (or AAT.dbf)
 there, too, and rename to a reasonable name comparing to your other ungen
-files.</font></font>
-<br><i><font face="Arial,Helvetica"><font size=+1>Note: PostgreSQL does
+files.
+<br><i>Note: PostgreSQL does
 not allow field names containing "-" (ilde-id is forbidden, ilde_id is
-accepted)!</font></font></i><font face="Arial,Helvetica"><font size=+1></font></font>
-<p><font face="Arial,Helvetica"><font size=+1>Our files are:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>il_nutz.pnt&nbsp;
-il_nutz.pol&nbsp; il_nutz.dbf</font></font></blockquote>
-<font face="Arial,Helvetica"><font size=+1>Now we start to import:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>createdb il_nutz</font></font><font face="Arial,Helvetica"><font size=+1></font></font>
-<p><font face="Arial,Helvetica"><font size=+1>v.in.arc.pg</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>GRASS vector file: landuse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(the new name of map in GRASS)</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Coverage type: polygon</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Neatline: no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-(a neatline is a line surrounding the map)</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Lines file ARC/INFO: il_nutz.pol</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Labels file ARCINFO: il_nutz.pnt</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Name of .dbf file to be
-imported: il_nutz.dbf</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Admin/normal user dump mode:
-&lt;return></font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Additionally dump to ASCII
-file: &lt;return></font></font><i><font face="Arial,Helvetica"><font size=+1></font></font></i>
-<p><i><font face="Arial,Helvetica"><font size=+1>Table il_nutz successfully
-copied into Postgres. Congratulations!</font></font></i>
-<br><font face="Arial,Helvetica"><font size=+1></font></font>&nbsp;</blockquote>
-<font face="Arial,Helvetica"><font size=+1>Now run v.support on the imported
-vector map.</font></font>
-<br><i><font face="Arial,Helvetica"><font size=+1></font></font></i>&nbsp;
-<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><b><font face="Arial,Helvetica"><font size=+1>I) Reclass of vector
-map</font></font></b>
-<br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>v.reclass.pg</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>[...]</font></font>
+accepted)!</i>
+<p>Our files are:
+<blockquote>il_nutz.pnt&nbsp;
+il_nutz.pol&nbsp; il_nutz.dbf</blockquote>
+Now we start to import:
+<blockquote>createdb il_nutz &nbsp;&nbsp;(only if you do not have a database created)
+<p>v.in.arc.pg
+<br>GRASS vector file: landuse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(the new name of map in GRASS)
+<br>Coverage type: polygon
+<br>Neatline: no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(a neatline is a line surrounding the map)
+<br>Lines file ARC/INFO: il_nutz.pol
+<br>Labels file ARCINFO: il_nutz.pnt
+<br>Name of .dbf file to be
+imported: il_nutz.dbf
+<br>Admin/normal user dump mode:
+&lt;return>
+<br>Additionally dump to ASCII
+file: &lt;return><i></i>
+<p><i>Table il_nutz successfully
+copied into Postgres. Congratulations!</i>
+<br>&nbsp;</blockquote>
+Now run v.support on the imported
+vector map.
+<br><i></i>&nbsp;
+<p>------------------------------------------------------------------------
+<br><b>I) Reclass of vector
+map</b>
+<br>------------------------------------------------------------------------
+<br>v.reclass.pg
+<br>[...]
 <p>
 <hr WIDTH="100%">
-<br><i><font face="Arial,Helvetica"><font size=+1>Please send tutorial
-improvements to</font></font></i>
-<br><i><font face="Arial,Helvetica"><font size=+1><a href="mailto:neteler@geog.uni-hannover.de">Markus
-Neteler</a></font></font></i>
+<br><i>Please send tutorial
+improvements to</i>
+<br><i><a href="mailto:neteler@geog.uni-hannover.de">Markus
+Neteler</a></i>
 <br>&nbsp;
+</font>
+</font>
+
 </body>
 </html>
