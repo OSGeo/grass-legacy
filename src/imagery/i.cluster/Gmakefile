@@ -9,7 +9,7 @@ LIST = main.o\
 	print5.o\
 	print6.o
 
-$(BIN)/i.cluster: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.cluster: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 	$(CC) -o $@ $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
 
 ask_files.o: global.h
