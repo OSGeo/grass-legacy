@@ -1,5 +1,4 @@
-/* $Id$
- * **************************************************************
+/*
  * D_new_window(name, t, b, l, r)
  *   creates a new window with given coordinates
  *   if "name" is an empty string, the routine returns a unique
@@ -41,6 +40,23 @@
 #include "display.h"
 #include "raster.h"
 
+
+/*!
+ * \brief create new graphics frame
+ *
+ * Creates a new frame <b>name</b> with
+ * coordinates <b>top, bottom, left</b>, and <b>right.</b> If <b>name</b>
+ * is the empty string '''' (i.e., *<b>name</b> = = 0), the routine returns a
+ * unique string in <b>name.</b>
+ *
+ *  \param name
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int D_new_window(char *name , int t,int  b,int  l,int  r)
 {
 	int stat;
@@ -79,6 +95,18 @@ pad_error:
 	R_pad_perror (buff, stat);
 	return(-1) ;
 }
+
+
+/*!
+ * \brief set current graphics frame
+ *
+ * Selects the frame <b>name</b> to be the current frame. The previous current frame
+ * (if there was one) is outlined in grey. The selected current frame is outlined
+ * in white.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int D_set_cur_wind( char *name )
 {
@@ -145,6 +173,16 @@ int D_set_cur_wind( char *name )
 	return(0) ;
 }
 
+
+/*!
+ * \brief identify current graphics frame
+ *
+ * Captures the name of the current frame in string <b>name.</b>
+ *
+ *  \param name
+ *  \return int
+ */
+
 int D_get_cur_wind( char *name )
 {
     int count;
@@ -166,6 +204,20 @@ int D_get_cur_wind( char *name )
 	return(0) ;
 }
 
+
+/*!
+ * \brief outlines current frame
+ *
+ * Outlines
+ * current frame in <b>color.</b> Appropriate colors are found in
+ * $GISBASE/src/D/libes/colors.h\remarks{$GISBASE is the directory where GRASS
+ * is installed. See UNIX_Environment for details.} and are spelled
+ * with lowercase letters.
+ *
+ *  \param color
+ *  \return int
+ */
+
 int D_show_window( int color )
 {
 	int t, b, l, r ;
@@ -185,6 +237,20 @@ int D_show_window( int color )
 	return(0) ;
 }
 
+
+/*!
+ * \brief retrieve current frame coordinates
+ *
+ * Returns current frame's
+ * coordinates in the pointers <b>top, bottom, left</b>, and <b>right.</b>
+ *
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int D_get_screen_window(int *t,int *b,int *l,int *r)
 {
 	int stat ;
@@ -200,6 +266,21 @@ int D_get_screen_window(int *t,int *b,int *l,int *r)
 
 	return(0) ;
 }
+
+
+/*!
+ * \brief assign/retrieve current map region
+ *
+ * Graphics frames can have GRASS map regions associated with
+ * them. This routine passes the map <b>region</b> to the current graphics
+ * frame. If a GRASS region is already associated with the graphics frame, its
+ * information is copied into <b>region</b> for use by the calling module.
+ * Otherwise <b>region</b> is associated with the current graphics frame.
+ * Note this routine is called by <i>D_setup.</i>
+ *
+ *  \param region
+ *  \return int
+ */
 
 int D_check_map_window(struct Cell_head *wind )
 {
@@ -251,6 +332,20 @@ int D_check_map_window(struct Cell_head *wind )
 	}
 }
 
+
+/*!
+ * \brief resets current frame position
+ *
+ * Re-establishes the screen position of a
+ * frame at the location specified by <b>top, bottom, left, and right.</b>
+ *
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int D_reset_screen_window(int t,int b,int l,int r)
 {
 	int stat;
@@ -267,6 +362,18 @@ int D_reset_screen_window(int t,int b,int l,int r)
 
 	return(0) ;
 }
+
+
+/*!
+ * \brief give current time to frame
+ *
+ * Timestamp the current
+ * frame. This is used primarily to identify which frames are on top of other,
+ * specified frames.
+ *
+ *  \param ~
+ *  \return int
+ */
 
 int D_timestamp()
 {
@@ -300,6 +407,17 @@ int D_timestamp()
 	return (R_pad_set_item ("time", buff)) ;
 }
 
+
+/*!
+ * \brief remove a frame
+ *
+ * Removes any trace of the
+ * current frame.
+ *
+ *  \param ~
+ *  \return int
+ */
+
 int D_remove_window()
 {
 	R_pad_delete() ;
@@ -311,6 +429,17 @@ int D_remove_window()
 
 	return 0;
 }
+
+
+/*!
+ * \brief erase current frame
+ *
+ * Erases the frame on the
+ * screen using the currently selected color.
+ *
+ *  \param ~
+ *  \return int
+ */
 
 int D_erase_window()
 {

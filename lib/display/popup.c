@@ -32,6 +32,50 @@
 #define Y_BORDER	5
 #define X_BORDER	5
 
+
+/*!
+ * \brief pop-up menu
+ *
+ * This routine provides a pop-up type menu
+ * on the graphics screen. The <b>bcolor</b> specifies the background color.
+ * The <b>tcolor</b> is the text color. The <b>dcolor</b> specifies the color
+ * of the line used to divide the menu items. The <b>top</b> and <b>left</b>
+ * specify the placement of the top left corner of the menu on the screen. 0,0 is
+ * at the bottom left of the screen, and 100,100 is at the top right. The
+ * <b>size</b> of the text is given as a percentage of the vertical size of the
+ * screen.  The <b>options</b> array is a NULL terminated array of character
+ * strings.  The first is a menu title and the rest are the menu options (i.e.,
+ * options[0] is the menu title, and options[1], options[2], etc., are the menu
+ * options). The last option must be the NULL pointer.
+ * The coordinates of the bottom right of the menu are calculated based on the
+ * <b>top left</b> coordinates, the <b>size</b>, the number of
+ * <b>options</b>, and the longest option text length. If necessary, the menu
+ * coordinates are adjusted to make sure the menu is on the screen.
+ * <i>D_popup(~)</i> does the following:
+ * <ol>
+<li> Current screen contents under the menu are saved.
+</li>
+<li> Area is blanked with the background color and fringed with the text color.
+</li>
+<li> Menu options are drawn using the current font.
+</li>
+<li> User uses the mouse to choose the desired option.
+</li>
+<li> Menu is erased and screen is restored with the original contents.
+</li>
+<li> Number of the selected option is returned to the calling module.
+</li></ol>
+ *
+ *  \param bcolor
+ *  \param tcolor
+ *  \param dcolor
+ *  \param top
+ *  \param left
+ *  \param size
+ *  \param options[]
+ *  \return int
+ */
+
 int D_popup(
      int back_colr,int text_colr,int div_colr,
      int top,int left,int percent_per_line,

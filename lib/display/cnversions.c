@@ -46,6 +46,24 @@ static double D_to_A_xconv, D_to_A_yconv ;     /* Dot to Array */
 static double ew_resolution ;
 static double ns_resolution ;
 
+
+/*!
+ * \brief initialize conversions
+ *
+ * The relationship between the
+ * earth <b>region</b> and the <b>top, bottom, left</b>, and <b>right</b>
+ * screen coordinates is established, which then allows conversions between all
+ * three coordinate systems to be performed.
+ * Note this routine is called by <i>D_setup.</i>
+ *
+ *  \param region
+ *  \param top
+ *  \param bottom
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
 int D_do_conversions(struct Cell_head *window , int t,int b,int l,int r)
 {
 	int ARRAY_ROWS, ARRAY_COLS ;
@@ -153,50 +171,161 @@ double D_get_d_east(void)		{	return(D_east) ;	}
 double D_get_d_north(void)		{	return(D_north) ;	}
 double D_get_d_south(void)		{	return(D_south) ;	}
 
+
+/*!
+ * \brief earth to array (north)
+ *
+ * Returns a <i>row</i> value in the array coordinate system when provided the
+ * corresponding <b>north</b> value in the earth coordinate system.
+ *
+ *  \param north
+ *  \return double
+ */
+
 double D_u_to_a_row(double U_row)
 { 
 	return (U_north - U_row) / ns_resolution;
 }
+
+
+/*!
+ * \brief earth to array (east
+ *
+ * Returns a <i>column</i> value in the array coordinate system when provided the
+ * corresponding <b>east</b> value in the earth coordinate system.
+ *
+ *  \param east
+ *  \return double
+ */
 
 double D_u_to_a_col(double U_col)
 { 
 	return (U_col - U_west) / ew_resolution; 
 }
 
+
+/*!
+ * \brief array to screen (row)
+ *
+ * Returns a <i>y</i> value in the screen coordinate system when provided the
+ * corresponding <b>row</b> value in the array coordinate system.
+ *
+ *  \param row
+ *  \return double
+ */
+
 double D_a_to_d_row(double A_row)
 { 
 	return D_north + (A_row - A_north) / D_to_A_yconv;
 }
+
+
+/*!
+ * \brief array to screen (column)
+ *
+ * Returns an <i>x</i> value in the screen coordinate system when
+ * provided the corresponding <b>column</b> value in the array coordinate
+ * system.
+ *
+ *  \param column
+ *  \return double
+ */
 
 double D_a_to_d_col(double A_col)
 { 
 	return D_west + (A_col - A_west) / D_to_A_xconv; 
 }
 
+
+/*!
+ * \brief earth to screen (north)
+ *
+ * Returns a <i>y</i> value in the screen coordinate system when provided the
+ * corresponding <b>north</b> value in the earth coordinate system.
+ *
+ *  \param north
+ *  \return double
+ */
+
 double D_u_to_d_row(double U_row)
 { 
 	return D_north + (U_north - U_row) * U_to_D_yconv; 
 }
+
+
+/*!
+ * \brief earth to screen (east)
+ *
+ * Returns an <i>x</i> value in the screen coordinate system when provided the
+ * corresponding <b>east</b> value in the earth coordinate system.
+ *
+ *  \param east
+ *  \return double
+ */
 
 double D_u_to_d_col(double U_col)
 { 
 	return D_west + (U_col - U_west) * U_to_D_xconv; 
 }
 
+
+/*!
+ * \brief screen to earth (y)
+ *
+ * Returns a <i>north</i> value in the earth coordinate system when provided the
+ * corresponding <b>y</b> value in the screen coordinate system.
+ *
+ *  \param y
+ *  \return double
+ */
+
 double D_d_to_u_row(double D_row)
 { 
 	return U_north - (D_row - D_north) / U_to_D_yconv;
 }
+
+
+/*!
+ * \brief screen to earth (x)
+ *
+ * Returns an <i>east</i> value in the earth coordinate system when provided the
+ * corresponding <b>x</b> value in the screen coordinate system.
+ *
+ *  \param x
+ *  \return double
+ */
 
 double D_d_to_u_col(double D_col)
 { 
 	return U_west + (D_col - D_west) / U_to_D_xconv;
 }
 
+
+/*!
+ * \brief screen to array (y)
+ *
+ * Returns a <i>row</i> value in the array coordinate system when provided the
+ * corresponding <b>y</b> value in the screen coordinate system.
+ *
+ *  \param y
+ *  \return double
+ */
+
 double D_d_to_a_row(double D_row)
 { 
 	return A_north + (D_row - D_north) * D_to_A_yconv; 
 }
+
+
+/*!
+ * \brief screen to array (x)
+ *
+ * Returns a <i>column</i> value in the array coordinate system when provided the
+ * corresponding <b>x</b> value in the screen coordinate system.
+ *
+ *  \param x
+ *  \return double
+ */
 
 double D_d_to_a_col(double D_col)
 { 

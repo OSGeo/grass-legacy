@@ -65,12 +65,36 @@
 #include "display.h"
 #include "raster.h"
 
+
+/*!
+ * \brief add raster map name to display list
+ *
+ * Stores the raster\remarks{As with the change from <i>window</i> to
+ * <i>frame</i>, GRASS 4.0 changed word usage from <i>cell</i> to
+ * <i>raster.</i> For compatibility with existing code, the routines have not
+ * changed their names.} map <b>name</b> in the information associated with
+ * the current frame.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int D_set_cell_name( char *name )
 {
 	R_pad_delete_item("cell") ;
 
 	return(R_pad_set_item ("cell", name)) ;
 }
+
+
+/*!
+ * \brief retrieve raster map name
+ *
+ * Returns the <b>name</b> of the raster map associated with the current frame.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int D_get_cell_name(char *name )
 {
@@ -87,12 +111,33 @@ int D_get_cell_name(char *name )
 	return(0) ;
 }
 
+
+/*!
+ * \brief add vector map name to display list
+ *
+ * Stores the vector map <b>name</b> in the information associated with
+ * the current frame.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int D_set_dig_name( char *name )
 {
 	R_pad_delete_item("dig") ;
 
 	return(R_pad_set_item ("dig", name)) ;
 }
+
+
+/*!
+ * \brief retrieve vector map name
+ *
+ * Returns the <b>name</b> of the vector map associated with the current frame.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int D_get_dig_name(char *name )
 {
@@ -109,12 +154,33 @@ int D_get_dig_name(char *name )
 	return(0) ;
 }
 
+
+/*!
+ * \brief add site map name to display list
+ *
+ * Stores the site map <b>name</b> in the information associated with the
+ * current frame.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int D_set_site_name( char *name )
 {
 	R_pad_delete_item("site") ;
 
 	return(R_pad_set_item ("site", name)) ;
 }
+
+
+/*!
+ * \brief retrieve site map name
+ *
+ * Returns the <b>name</b> of the site map associated with the current frame.
+ *
+ *  \param name
+ *  \return int
+ */
 
 int D_get_site_name(char *name )
 {
@@ -176,6 +242,21 @@ int D_get_site_list(char ***list, int *count )
 	return(0) ;
 }
 
+
+/*!
+ * \brief add command to frame display list
+ *
+ * Adds <b>string</b> to list of screen contents. By convention,
+ * <b>string</b> is a command string which could be used to recreate a part of
+ * the graphics contents. This should be done for all screen graphics except for
+ * the display of raster maps. The <i>D_set_cell_name</i> routine,the
+ * <i>D_set_dig_name</i> routine and the <i>D_set_site_name</i> routine
+ * are used for this special case.
+ *
+ *  \param string
+ *  \return int
+ */
+
 int D_add_to_list( char *string)
 {
 	return(R_pad_append_item("list", string, 0)) ;
@@ -190,6 +271,27 @@ int D_get_list(char ***list, int *count )
 
 	return(0) ;
 }
+
+
+/*!
+ * \brief clears information about current frame
+ *
+ * Removes all information about the current frame. This includes the map region and the
+ * frame content lists.
+ *
+ *  \param ~
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief clear frame display lists
+ *
+ * Removes all display information lists associated with the current frame.
+ *
+ *  \param ~
+ *  \return int
+ */
 
 int D_clear_window()
 {
