@@ -1,0 +1,11 @@
+%_
+LOCATION: %-27l  DATE: %d
+MAPSET:   %-27m  USER: %u
+
+RASTER MAP: %c
+MASK:     %x
+%_
+Produced by: US Army CERL, Champaign Illinois
+Software:    GRASS
+%_
+
