@@ -40,8 +40,7 @@ install:
 	(cd scripts; cp -L script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
 	cp -L scripts/*.tcl $(INSTALL_DIR)/scripts
 	cp -L scripts/*Index $(INSTALL_DIR)/scripts
-#	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
-	cp -L bitmaps/* $(INSTALL_DIR)/bitmaps
+	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	cp -L scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
 	cp -L scripts/$(PROG) $(GISBASE)/bin
 	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
