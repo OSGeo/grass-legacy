@@ -192,10 +192,10 @@ then
 	exit
 fi
 
-if [ ! -f $GISBASE/dev/create_buffers.sh ]
+if [ ! -f $GISBASE/dev/create_ipcs.sh ]
 then
-	sed "s|@prefix@|$GISBASE|g" src/scripts/shells/create_buffers.sh.in > $GISBASE/dev/create_buffers.sh
-	chmod 755 $GISBASE/dev/create_buffers.sh
+	sed "s|@prefix@|$GISBASE|g" src/scripts/shells/create_ipcs.sh.in > $GISBASE/dev/create_ipcs.sh
+	chmod 755 $GISBASE/dev/create_ipcs.sh
 fi
 
 if [ ! -f $GISBASE/dev/create_fifos.sh ]
@@ -206,7 +206,7 @@ fi
 
 if [ "$cmd" = "new" -a -p $GISBASE/dev/fifo.1a ]
 then
-	sh $GISBASE/dev/create_buffers.sh $GISBASE
+	sh $GISBASE/dev/create_ipcs.sh $GISBASE
 elif [ "$cmd" = "orig" -a -f $GISBASE/dev/fifo.1a ]
 then
 	sh $GISBASE/dev/create_fifos.sh $GISBASE

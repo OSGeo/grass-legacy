@@ -994,6 +994,7 @@ AC_ARG_WITH(fifo,
 
 AC_MSG_CHECKING(for XDriver)
 AC_MSG_RESULT($XDRIVER)
+AC_SUBST(XDRIVER)
 
 if test "$XDRIVER" = "ipc"; then
     echo env GRASS_IN_CONFIGURE=yes ./README.ipc new

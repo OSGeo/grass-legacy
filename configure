@@ -4502,6 +4502,7 @@ echo $ac_n "checking for XDriver""... $ac_c" 1>&6
 echo "configure:4503: checking for XDriver" >&5
 echo "$ac_t""$XDRIVER" 1>&6
 
+
 if test "$XDRIVER" = "ipc"; then
     echo env GRASS_IN_CONFIGURE=yes ./README.ipc new
     env GRASS_IN_CONFIGURE=yes ./README.ipc new
@@ -4704,6 +4705,7 @@ s%@ODBCINC@%$ODBCINC%g
 s%@JPEGLIB@%$JPEGLIB%g
 s%@JPEGLIBPATH@%$JPEGLIBPATH%g
 s%@JPEGINCPATH@%$JPEGINCPATH%g
+s%@XDRIVER@%$XDRIVER%g
 
 CEOF
 EOF
