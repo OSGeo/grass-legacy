@@ -24,10 +24,10 @@ do_reclass(ptr)
     local = index_to_att(local,LayerAttribute,init);
     while(local->s_type  == AttributeSymbol ) {
         if ( local->element.att->a_type != LayerAttribute )  break;
-        sprintf(local->reclassname,"binferXX%s",local->name);
+        sprintf(local->reclassname,"r.binferXX%s",local->name);
         sprintf(reclassfile,"/tmp/%sXXX",local->name);
         fprintf(stderr,".");
-        sprintf(cmd,"Greclass %s binferXX%s < /tmp/%sXXX",
+        sprintf(cmd,"r.reclass input=%s output=r.binferXX%s < /tmp/%sXXX",
                 local->element.att->name,local->name,local->name);
         if ((reclassfp = fopen(reclassfile,"w")) == NULL ) {
             fprintf(stderr,"cannot open reclass rule file.\n");
@@ -58,7 +58,7 @@ cleanup_reclass(ptr)
     while(( local = index_to_att(local,LayerAttribute,init) ) != NULL ) {
         init = 1;
         fprintf(stderr,".");
-        sprintf(cmd,"Gremove cell %s > /dev/null",local->reclassname);
+        sprintf(cmd,"g.remove rast=%s > /dev/null",local->reclassname);
         system(cmd);
     }
     fprintf(stderr,"\n");
