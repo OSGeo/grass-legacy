@@ -20,5 +20,10 @@ include $(MODULE_TOPDIR)/include/Make/Stlib.make
 include $(MODULE_TOPDIR)/include/Make/Shlib.make
 
 #lib: stlib shlib
+
+#static libs:
 lib: stlib
 
+#shared libs:
+#also change at top of ./Grass.make
+#lib: shlib
