@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.19 2002-02-22 05:34:41 glynn Exp $
+# $Id: Gmakefile,v 1.20 2002-04-14 11:25:56 glynn Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
@@ -37,4 +37,4 @@ nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
-	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff $(XLIB)
+	$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) $(XLIB)
