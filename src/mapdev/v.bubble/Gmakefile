@@ -2,10 +2,11 @@ PGM=v.bubble
 HOME=$(BIN_MAIN_CMD)
 OBJS=v.bubble.o support.o bubbling.o
 
-$(HOME)/$(PGM): $(OBJS) $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB)
+
+$(HOME)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VECTLIB): #
-$(MATHLIB): #
 $(DATETIMELIB) : #
