@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = "Break lines at intersections.";
+	module->description = "Toolset to clean vector topology.";
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
 		    	"or 2 islands from boundary to line;"
 		"snap;snap lines to vertex in threshold;"
 		"rmdac;remove duplicate area centroids ('type' option ignored);"
-		"bpol;break (topologicaly clean) polygons (imported from "
+		"bpol;break (topologically clean) polygons (imported from "
 		      	"non topological format (like shapefile). Boundaries are broken on each "
 		      	"point shared between 2 and more polygons where angles of segments are different;"
 		"prune;remove vertices in threshold from lines and boundaries, "
