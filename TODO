@@ -1,4 +1,4 @@
-$Id: TODO,v 1.59 2000-12-03 21:48:53 markus Exp $
+$Id: TODO,v 1.60 2000-12-20 10:49:34 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -352,9 +352,17 @@ Modules:
 - v.buffer: write it
   (Being worked on by ?)
 
+- v.cutter
+  improve it, add category "transport" to new file
+
 - v.digit:
   add an optional circle with radius of snapping threshold
   (Being worked on by ?)
+
+- v.support:
+  - add segmentation for large files
+  - speed up v.build
+
 
 - tcltkgrass:
  - Change the tcltkgrass code so that lists of choices appear as
