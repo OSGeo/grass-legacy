@@ -1,7 +1,7 @@
 /*
 ****************************************************************************
 *
-* MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
+* MODULE:       v.vol.rst: program for 3D(volume) interpolation and geometry
 *               analysis from scattered point data using regularized spline
 *               with tension
 *
@@ -11,7 +11,7 @@
 *               GRASS 4.2, GRASS 5.0 version and modifications:
 *               H. Mitasova,  I. Kosinovsky, D. Gerdes, J. Hofierka
 *
-* PURPOSE:      s.vol.rst interpolates the values to 3-dimensional grid from
+* PURPOSE:      v.vol.rst interpolates the values to 3-dimensional grid from
 *               point data (climatic stations, drill holes etc.) given in a
 *               sites file named input. Output grid3 file is elev. 
 *               Regularized spline with tension is used for the
@@ -58,12 +58,12 @@ double *az, *adx, *ady, *adxx, *adyy,
 double ertot, ertre,zminac,zmaxac,wmult,zmult,zminacell,zmaxacell;
 struct octtree *root;
 
-int             wtotal   = 0;
+int    wtotal   = 0;
 int    NPOINT = 0;
 int    OUTRANGE = 0;
 int    NPT = 0;
 
-double DETERM;
+double  DETERM;
 int    NERROR, cond1, cond2;
 char   fncdsm[32];
 char   filnam[10];
@@ -104,6 +104,8 @@ including 3D topo parameters, and 2nd RST derivatives
 12/07/00 (MN) - added field selection parameter for sites lists
 
 02/03/03 (jh) - added deviation site file to the output
+
+13/05/2004 (MN) - updated to 5.7 (renamed field -> colnum to avoid confusion)
 */
 
 char *input;
@@ -161,7 +163,7 @@ int main (int argc, char *argv[])
     double          amin1 ();
     int             max1 ();
     int             min1 ();
-    int             field, scan_int;
+    int             colnumber, scan_int;
     int             per,npmin;
     int             ii,i, n_rows, n_cols, n_levs;
     double          x_orig, y_orig, z_orig;
@@ -172,11 +174,11 @@ int main (int argc, char *argv[])
     int dims, strs, dbls = 0;
     RASTER_MAP_TYPE map_type;
 /*DEBUG  int testout = 1; */
-  Site_head inhead, devihead;
+    Site_head inhead, devihead;
 
     struct
     {
-       struct Option  *input, *field, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
+       struct Option  *input, *colnum, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
  	     *outz, *rsm, *maskmap,*zmult,
  	     *gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv,*cellinp,*cellout,*devi;
     }  parm;
@@ -201,9 +203,9 @@ int main (int argc, char *argv[])
     n_rows = current_region.rows;
     x_orig = current_region.west;
     y_orig = current_region.south;
-        n_levs = current_region.depths;
-        tb_res = current_region.tb_res;
-	z_orig = current_region.bottom;
+    n_levs = current_region.depths;
+    tb_res = current_region.tb_res;
+    z_orig = current_region.bottom;
 
     dmin = amin1 (ew_res, ns_res) / 2;
     disk = n_rows*n_cols*sizeof(float);
@@ -229,12 +231,12 @@ int main (int argc, char *argv[])
     parm.cellinp->gisprompt = "old,cell,raster";
     parm.cellinp->description = "Name of the surface cell file";
 
-    parm.field = G_define_option();
-    parm.field ->key        = "field" ;
-    parm.field ->type       = TYPE_INTEGER ;
-    parm.field ->required   = NO ;
-    parm.field ->description="Number of z-field attribute to use for calculation";
-    parm.field ->answer = "1";
+    parm.colnum = G_define_option();
+    parm.colnum ->key        = "colnum" ;
+    parm.colnum ->type       = TYPE_INTEGER ;
+    parm.colnum ->required   = NO ;
+    parm.colnum ->description="Column number of w attribute to use for calculation (counting only float type columns)";
+    parm.colnum ->answer = "1";
                         
     parm.fi = G_define_option ();
     parm.fi->key = "tension";
@@ -369,11 +371,11 @@ int main (int argc, char *argv[])
     iw2 = 1;
     input = parm.input->answer;
 
-    scan_int=sscanf(parm.field->answer,"%d",&field);
-    if ((scan_int <= 0) || field < 1)
+    scan_int=sscanf(parm.colnum->answer,"%d",&colnumber);
+    if ((scan_int <= 0) || colnumber < 1)
     {
-      fprintf (stderr, "%s=%s - illegal field number\n",
-               parm.field->key, parm.field->answer);
+      fprintf (stderr, "%s=%s - illegal column number\n",
+               parm.colnum->key, parm.colnum->answer);
       G_usage();
       exit(1);  
     }
@@ -475,7 +477,7 @@ int main (int argc, char *argv[])
     if (dims < 3)
       G_fatal_error("Only found %i dimensions in sites file %s. Need 3 dimensions.", dims, input);
     
-    ii=INPUT(field);
+    ii=INPUT(colnumber);
 
   if (devi != NULL)
   {
