@@ -3,7 +3,7 @@
 
 main (argc, argv) char *argv[];
 {
-    char name[40];
+    char name[128];
     char *mapset;
     struct Categories cats;
     static int vector = 0;
