@@ -81,6 +81,9 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   l1->numLines = s1->nRecords;
   l1->lines = (lineDescript *)malloc( l1->numLines * sizeof( lineDescript ));
   for( i0 = 0; i0 < l1->numLines; ++i0 ) {
+
+    fprintf(stderr, "   Processing shape %7d of %7d.\n", i0 + 1, l1->numLines);
+    
     tmpShp = SHPReadObject( s1, i0 );
     if( i0 == 0 ) {  
       l1->typeofLine = tmpShp->nSHPType;

@@ -57,6 +57,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
   char *tmpKey;
   void *tmpData;
 
+  int track_line = 0;
   int chaining;  /* flag set while tracking a segment is active */
   int isdone;    /* flag to avoid extracting further vertices */
   
@@ -137,6 +138,8 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 	if( pnext->duff ) continue; /* Old track */
 	else /* Track it */
 	  {
+	    fprintf(stderr, "   Tracking line %7d.\n", ++track_line);
+
 	    if( seg0->numSegments >= segsize0 ) {
 	      segsize0 += segincr;
 	      seg0->segments = (segmentDescript *)realloc( seg0->segments, 
@@ -337,6 +340,9 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 	if( pnext->duff ) continue; /* Somehow we've reached an old track */
 	else /* start tracking */
 	  {
+
+	    fprintf(stderr, "   Tracking line %7d.\n", ++track_line);
+
 	    if( seg0->numSegments >= segsize0 ) {
 	      segsize0 += segincr;
 	      seg0->segments = (segmentDescript *)realloc( seg0->segments, 
