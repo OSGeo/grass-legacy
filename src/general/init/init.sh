@@ -431,11 +431,11 @@ echo "When ready to quit enter:                exit"
 case "$sh" in
 
 csh|tcsh)
-    USERHOME=$HOME      # save original home
-    HOME=$LOCATION
+    USERHOME="$HOME"      # save original home
+    HOME="$LOCATION"
     export HOME
-    cshrc=$HOME/.cshrc
-    tcshrc=$HOME/.tcshrc
+    cshrc="$HOME/.cshrc"
+    tcshrc="$HOME/.tcshrc"
     rm -f $cshrc $tcshrc
     echo "set home = $USERHOME" > $cshrc
     echo "set history = 500 savehist = 500  noclobber ignoreeof" >> $cshrc
@@ -445,24 +445,24 @@ csh|tcsh)
     echo "GRASS VERSION_NUMBER > '" >> $cshrc
     echo 'set BOGUS=``;unset BOGUS' >> $cshrc
 
-    if [ -r $USERHOME/.grass.cshrc ]
+    if [ -r "$USERHOME/.grass.cshrc" ]
     then
-	cat $USERHOME/.grass.cshrc >> $cshrc
+	cat "$USERHOME/.grass.cshrc" >> $cshrc
     fi
 
-    if [ -r $USERHOME/.cshrc ]
+    if [ -r "$USERHOME/.cshrc" ]
     then
-	grep '^ *set  *mail *= *' $USERHOME/.cshrc >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.cshrc" >> $cshrc
     fi
 
-    if [ -r $USERHOME/.tcshrc ]
+    if [ -r "$USERHOME/.tcshrc" ]
     then
-	grep '^ *set  *mail *= *' $USERHOME/.tcshrc >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.tcshrc" >> $cshrc
     fi
 
-    if [ -r $USERHOME/.login ]
+    if [ -r "$USERHOME/.login" ]
     then
-	grep '^ *set  *mail *= *' $USERHOME/.login >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.login" >> $cshrc
     fi
 
     echo "set path = ( $PATH ) " | sed 's/:/ /'g >> $cshrc
@@ -470,31 +470,31 @@ csh|tcsh)
     cp $cshrc $tcshrc
     $ETC/run $SHELL
 
-    HOME=$USERHOME
+    HOME="$USERHOME"
     export HOME
     ;;
 
 bash)
-    USERHOME=$HOME      # save original home
-    HOME=$LOCATION      # save .bashrc in $LOCATION
+    USERHOME="$HOME"      # save original home
+    HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
-    bashrc=$HOME/.bashrc
+    bashrc="$HOME/.bashrc"
     rm -f $bashrc
     echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
     echo "test -e ~/.alias && . ~/.alias" >> $bashrc
     echo "umask 022" >> $bashrc
     echo "PS1='GRASS:\w > '" >> $bashrc
 
-    if [ -r $USERHOME/.grass.bashrc ]
+    if [ -r "$USERHOME/.grass.bashrc" ]
     then
-        cat $USERHOME/.grass.bashrc >> $bashrc
+        cat "$USERHOME/.grass.bashrc" >> $bashrc
     fi
 
     echo "export PATH=\"$PATH\"" >> $bashrc
     echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
 
     $ETC/run $SHELL
-    HOME=$USERHOME
+    HOME="$USERHOME"
     export HOME
     ;;
 
