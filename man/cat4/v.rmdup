@@ -1,0 +1,66 @@
+
+
+
+v.rmdup <contrib>     GRASS Reference Manual	<contrib> v.rmdup
+
+
+
+NAME
+     v.rmdup - Remove duplicate items GRASS vector file.
+     (GRASS Vector Program)
+
+SYNOPSIS
+     v.rmdup
+     v.rmdup help
+     v.rmdup vect=name [thresh=number]
+
+DESCRIPTION
+     v.rmdup removes duplicate lines, areas, and points from a
+     binary vector file (vect=name).  Duplicate may be defined as
+     exact (less than 1.12e-16 for IEEE double precision), or
+     defined with a threshold (thresh=number).
+
+     Parameters:
+
+     vect=name	       Name of a binary vector file.
+
+     thresh=number     Threshold for defining duplicate lines,
+		       areas, and points.
+
+     v.rmdup overwrites the existing file, so it may be a good
+     idea to save a backup using g.copy.  The search technique
+     used by v.rmdup is not extremely sophisticated and may take
+     a long time for large files.  Instead,  only two sets of
+     lines, areas, or points are active at any one time (so it is
+     conservative with memory).
+
+SEE ALSO
+     g.copy and iszero(1).
+
+BUGS
+     Please send all bug fixes and comments to the author.
+
+AUTHOR
+     James Darrell McCauley, Purdue University
+     (mccauley@ecn.purdue.edu)
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
