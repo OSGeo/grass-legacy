@@ -1,7 +1,7 @@
 
 
 
-sites.occur          GRASS Reference Manual           sites.occur
+sites.occur	     GRASS Reference Manual	      sites.occur
 
 
 
@@ -10,45 +10,45 @@ NAME
      produced by s.menu.
 
 DESCRIPTION
-     This is a discussion of the site occurrence report produced
-     by s.menu.
+     This is a discussion of the site occurrence report	produced
+     by	s.menu.
 
 
 SAMPLE OUTPUT
 
 
-                             SITE OCCURRENCE REPORT
-                        Yakima Firing Center, Washington
+			     SITE OCCURRENCE REPORT
+			Yakima Firing Center, Washington
 
 
 Location:  yakima
-Mapset:    sample
-Site List: arch_erosion - archeology (34 sites)
+Mapset:	   sample
+Site List: arch_erosion	- archeology (34 sites)
 
 Analysis Region:
-                    north: 5199975.00
-   west:  692975.00                       east:  737975.00
-                    south: 5154975.00
+		    north: 5199975.00
+   west:  692975.00			  east:	 737975.00
+		    south: 5154975.00
 
 
 ============================================================================
 
-Layer: arch_survey          Archeologic Survey Areas (arch_survey)
+Layer: arch_survey	    Archeologic	Survey Areas (arch_survey)
 
 cells in analysis region:     810000
-sites in analysis region:         34
+sites in analysis region:	  34
 
-                                                                     degrees
-                             cells     %    expected actual   chi      of
-Site Characteristics         cover   cover   sites    sites  square  freedom
---------------------        ------- ------- -------- ------ -------- -------
-(  0) No data                764310                      11
+								     degrees
+			     cells     %    expected actual   chi      of
+Site Characteristics	     cover   cover   sites    sites  square  freedom
+--------------------	    ------- ------- -------- ------ -------- -------
+(  0) No data		     764310			 11
 
-(  1) Hartmann,phase 1        25821    56.5     19.2      6    9.088     1
-(  2) Hartmann,phase 2        11032    24.1      8.2     14    4.084     1
-(  3) Wapora,phase 3           8837    19.3      6.6      3    1.945     1
-                            ------- ------- -------- ------ -------- -------
-      Totals                  45690   100.0     34.0     23   15.117     2
+(  1) Hartmann,phase 1	      25821    56.5	19.2	  6    9.088	 1
+(  2) Hartmann,phase 2	      11032    24.1	 8.2	 14    4.084	 1
+(  3) Wapora,phase 3	       8837    19.3	 6.6	  3    1.945	 1
+			    ------- ------- -------- ------ -------- -------
+      Totals		      45690   100.0	34.0	 23   15.117	 2
 
 ============================================================================
 
@@ -60,14 +60,14 @@ Site Characteristics         cover   cover   sites    sites  square  freedom
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-sites.occur          GRASS Reference Manual           sites.occur
+sites.occur	     GRASS Reference Manual	      sites.occur
 
 
 
@@ -75,45 +75,43 @@ EXPLANATION
      The "Site Occurrence Report" provides aggregate site
      information organized by raster map layers.
 
-     The report header contains the following information:
+     The report	header contains	the following information:
 
-        Location
-             GRASS database location (e.g., yakima),
+	Location
+	     GRASS database location (e.g., yakima),
 
-        Mapset
-             GRASS mapset (e.g., sample)
+	Mapset
+	     GRASS mapset (e.g., sample)
 
-        Analysis Region
-             the rectangular area in which the analysis
-             was run, reflecting the current geographic
-             settings of the user's mapset.
+	Analysis Region
+	     the rectangular area in which the analysis
+	     was run, reflecting the current geographic
+	     settings of the user's mapset.
 
-        Site List
-             name and description of the site list used
-             for the report and the number of sites in
-             the list.  See manual entry for s.menu for
-             more discussion about these site lists.
+	Site List
+	     name and description of the site list used
+	     for the report and	the number of sites in
+	     the list.	See manual entry for s.menu for
+	     more discussion about these site lists.
 
-     The rest of the report is divided into reports for each
-     raster map layers specified by the user.  In this SAMPLE
-     OUTPUT, only one map layer (arch_survey) was specified.
+     The rest of the report is divided into reports for	each
+     raster map	layers specified by the	user.  In this SAMPLE
+     OUTPUT, only one map layer	(arch_survey) was specified.
 
-     Certain information heads up each of these reports:
+     Certain information heads up each of these	reports:
 
-        layer
-             identifies the raster map layer along with
-             the map layer title.
+	layer
+	     identifies	the raster map layer along with
+	     the map layer title.
 
-        cells in analysis region
-             the size of the analysis region (in
-             cells).
-
-
-        sites in analysis region
-             the number of sites in the analysis
-             region.
+	cells in analysis region
+	     the size of the analysis region (in
+	     cells).
 
 
+	sites in analysis region
+	     the number	of sites in the	analysis
+	     region.
 
 
 
@@ -126,90 +124,92 @@ EXPLANATION
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+
+
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-sites.occur          GRASS Reference Manual           sites.occur
+sites.occur	     GRASS Reference Manual	      sites.occur
 
 
 
-     For each map layer category which occurs in a cell falling
-     within the boundaries of the analysis region, as well as
-     totals for the map layer as a whole, various statistics are
+     For each map layer	category which occurs in a cell	falling
+     within the	boundaries of the analysis region, as well as
+     totals for	the map	layer as a whole, various statistics are
      presented:
 
 
-        Site Characteristics
-             These are the numbers (i.e., values) and
-             names (i.e., descriptions) for each
-             category (i.e., characteristic) which
-             occurs in the map layer.
+	Site Characteristics
+	     These are the numbers (i.e., values) and
+	     names (i.e., descriptions)	for each
+	     category (i.e., characteristic) which
+	     occurs in the map layer.
 
-        cells cover
-             the number of cells in the analysis region
-             having the category value (i.e., site
-             characteristic).
+	cells cover
+	     the number	of cells in the	analysis region
+	     having the	category value (i.e., site
+	     characteristic).
 
-        % cover
-             the predominance of the category within
-             the analysis region.
+	% cover
+	     the predominance of the category within
+	     the analysis region.
 
-        expected sites
-             the number of sites in the analysis region
-             which would be expected to be observed
-             having the category value if all sites
-             were evenly distributed by in the region.
+	expected sites
+	     the number	of sites in the	analysis region
+	     which would be expected to	be observed
+	     having the	category value if all sites
+	     were evenly distributed by	in the region.
 
-        actual sites
-             the number of sites in the analysis region
-             which were occurred in cells having the
-             category value.
+	actual sites
+	     the number	of sites in the	analysis region
+	     which were	occurred in cells having the
+	     category value.
 
-        chi square
-             gives the user a statistical test of the
-             hypothesis that 'site distribution is
-             dependent on environmental factors'.  For
-             this hypothesis to be true, the chi-square
-             test must fail since we are calculating
-             expected sites according to the hypothesis
-             that 'sites are randomly distributed'.
+	chi square
+	     gives the user a statistical test of the
+	     hypothesis	that 'site distribution	is
+	     dependent on environmental	factors'.  For
+	     this hypothesis to	be true, the chi-square
+	     test must fail since we are calculating
+	     expected sites according to the hypothesis
+	     that 'sites are randomly distributed'.
 
-        degrees of freedom
-             Number of degrees of freedom for the chi-
-             square test.  Each category value will
-             have 1 degree of freedom, and can be
-             tested alone.  The entire map layer will
-             have 1 less degree of freedom than the
-             number of categories.
-
-
-
-
-
-
-
-GRASS 4.1                U.S. Army CERL                         3
+	degrees	of freedom
+	     Number of degrees of freedom for the chi-
+	     square test.  Each	category value will
+	     have 1 degree of freedom, and can be
+	     tested alone.  The	entire map layer will
+	     have 1 less degree	of freedom than	the
+	     number of categories.
 
 
 
 
 
 
-sites.occur          GRASS Reference Manual           sites.occur
+
+GRASS 4.2		Baylor University			3
+
+
+
+
+
+
+sites.occur	     GRASS Reference Manual	      sites.occur
 
 
 
 NOTE
-     Category zero (0) throughout GRASS represents "no data".
-     Therefore, it is reported, but not included in the totals or
-     in the computation of the chi-square statistics.
+     Category zero (0) throughout GRASS	represents "no data".
+     Therefore,	it is reported,	but not	included in the	totals or
+     in	the computation	of the chi-square statistics.
 
 SEE ALSO
-     s.db.rim, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
+     s.db.rim, s.in.ascii, s.menu, s.out.ascii,	s.surf.idw,
      sites.S, sites.format, sites.report
 
 
@@ -258,7 +258,7 @@ SEE ALSO
 
 
 
-GRASS 4.1                U.S. Army CERL                         4
+GRASS 4.2		Baylor University			4
 
 
 
