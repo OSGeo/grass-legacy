@@ -22,7 +22,9 @@
 
 <BR>
 
-<B>v.proj</B> <B>map=</B><EM>name [</EM><B>out=</B><EM>name</EM>] <B>inloc=</B><EM>name</EM> [<B>dbase=</B><EM>name</EM>] [<B>set=</B><EM>name</EM>]
+<B>v.proj</B> <B>input=</B><EM>name 
+<B>location=</B><EM>name</EM> [<B>dbase=</B><EM>name</EM>]
+[<B>mapset=</B><EM>name</EM>] [</EM><B>out=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -34,28 +36,28 @@ PROJ_INFO files).
 
 <P>
 
-<EM>v.proj</EM> will create <EM>dig</EM>, <EM>dig_att</EM>, and <EM>dig_cats</EM>
-directories in the output mapset, if they do NOT exist.
-Map files for <EM>dig</EM>, <EM>dig_att</EM>, and <EM>dig_cats</EM>
-are also created for the new map layer.
+<EM>v.proj</EM> will create <EM>dig</EM>, <EM>dig_att</EM>, and
+<EM>dig_cats</EM> directories in the output mapset, if they do NOT exist.
+Map files for <EM>dig</EM>, <EM>dig_att</EM>, and <EM>dig_cats</EM> are also
+created for the new map layer.
 
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>map=</B><EM>name</EM> 
-<DD>Name of the input vector file.
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of the input vector map.
 
-<DT><B>out=</B><EM>name</EM> 
-<DD>Name of the output vector file.
-
-<DT><B>inloc=</B><EM>name</EM> 
-<DD>Name of the location containing input vector file
+<DT><B>location=</B><EM>name</EM> 
+<DD>Name of the location containing input vector map
 
 <DT><B>dbase=</B><EM>name</EM> 
-<DD>Name of the database containing input location 
+<DD>path to GRASS database of input location
 
-<DT><B>set=</B><EM>name</EM> 
-<DD>Name of the mapset containing input vector file
+<DT><B>mapset=</B><EM>name</EM> 
+<DD>Name of the mapset containing input vector map
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name of the output vector map.
 </DL>
 <P>
 

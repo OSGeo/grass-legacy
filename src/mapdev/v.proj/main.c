@@ -52,34 +52,35 @@ int main (int argc, char *argv[])
 		 /* set up the options and flags for the command line parser */
 
         mapopt = G_define_option();
-        mapopt->key             = "map";
+        mapopt->key             = "input";
         mapopt->type            =  TYPE_STRING;
         mapopt->required        =  YES;
-        mapopt->description     = "input vector file name";
-
-        omapopt = G_define_option();
-        omapopt->key             = "out";
-        omapopt->type            =  TYPE_STRING;
-        omapopt->required        =  NO;
-        omapopt->description     = "output vector file name";
+        mapopt->description     = "input vector map";
 
         ilocopt = G_define_option();
-        ilocopt->key             =  "inloc";
+        ilocopt->key             =  "location";
         ilocopt->type            =  TYPE_STRING;
         ilocopt->required        =  YES;
-        ilocopt->description     =  "Location containing INput vector map";
+        ilocopt->description     =  "location containing input vector map";
 
         ibaseopt = G_define_option();
         ibaseopt->key             =  "dbase";
         ibaseopt->type            =  TYPE_STRING;
         ibaseopt->required        =  NO;
-        ibaseopt->description     =  "Database containing INput location";
+        ibaseopt->description     =  "path to GRASS database of input location";
 
         isetopt = G_define_option();
-        isetopt->key             =  "set";
+        isetopt->key             =  "mapset";
         isetopt->type            =  TYPE_STRING;
         isetopt->required        =  NO;
-        isetopt->description     =  "mapset containing INput vector map";
+        isetopt->description     =  "mapset containing input vector map";
+
+        omapopt = G_define_option();
+        omapopt->key             = "output";
+        omapopt->type            =  TYPE_STRING;
+        omapopt->required        =  NO;
+        omapopt->description     = "output vector map";
+
 /*
         osetopt = G_define_option();
         osetopt->key             =  "outset";
