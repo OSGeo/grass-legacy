@@ -15,7 +15,7 @@ if [ "$#" -lt 1 ]; then
       echo ""
       echo "Import of TIFF (8bit) raster file and ARC/INFO .tfw file as GRASS raster map"
       echo ""
-      echo "Usage: r.in.arctiff filename (without .tif extension!)"
+      echo "Usage: r.in.arctiff filename"
       echo ""
       exit
 fi
@@ -25,7 +25,7 @@ if [ "$1" = "help" ]; then
       echo ""
       echo "Import of TIFF (8bit) raster file and ARC/INFO .tfw file as GRASS raster map"
       echo ""
-      echo "Usage: r.in.arctiff filename (without .tif extension!)"
+      echo "Usage: r.in.arctiff filename"
       echo ""
       exit
 fi
@@ -35,8 +35,11 @@ fi
 
 cellfile=`echo $1 | sed 's/\ /_/g'`
 
+# remove .tif extension, if there
+INFILE=`echo $1 | sed s/tif=// | sed 's/\.tif$//'`
+
 # First import the image, then create a new header with coordinates:
-r.in.tiff -v input="$1.tif" output=${cellfile}
+r.in.tiff -v input="$INFILE.tif" output=${cellfile}
 
 #check the exit status:
 if [ $? != 0 ]; then
@@ -53,14 +56,14 @@ fi
 
 echo "Creating raster file header..."
 # get image information:
-#tiffinfo $1.tif > /tmp/tiffinfo.txt
+#tiffinfo $INFILE.tif > /tmp/tiffinfo.txt
 #XWIDTH="`grep Image /tmp/tiffinfo.txt |grep -v Description | head -3 |tail -1 |cut -d' ' -f5`"
 #YHEIGHT="`grep Image /tmp/tiffinfo.txt |grep -v Description| head -3 |tail -1 |cut -d' ' -f8`"
 #rm -f /tmp/tiffinfo.txt
 
-XWIDTH="`tiffinfo \"$1.tif\" | sed -n \
+XWIDTH="`tiffinfo \"$INFILE.tif\" | sed -n \
 's/^\ *Image\ Width:\ \([0-9]*\)\ Image\ Length:\ [0-9]*$/\1/p'`" 
-YHEIGHT="`tiffinfo \"$1.tif\" | sed -n \
+YHEIGHT="`tiffinfo \"$INFILE.tif\" | sed -n \
 's/^\ *Image\ Width:\ [0-9]*\ Image\ Length:\ \([0-9]*\)$/\1/p'`"
 #check the exit status:
 if [ $? != 0 ]; then
@@ -84,27 +87,27 @@ fi
 # store image north, west, n-s-resolution, e-w-resolution, xwidth and yheight 
 # in one line in $1.info:
    # .tfw - last line (north):
-cat "$1.tfw" |tail -1 > "/tmp/$1.n"
-sed -e '1,$s/\ //g' "/tmp/$1.n" > "/tmp/$1.i"
+cat "$INFILE.tfw" |tail -1 > "/tmp/$INFILE.n"
+sed -e '1,$s/\ //g' "/tmp/$INFILE.n" > "/tmp/$INFILE.i"
 
    # .tfw - last but one line (west):
-cat "$1.tfw" |tail -2 |head -1 > "/tmp/$1.w"
-sed -e '1,$s/\ //g' "/tmp/$1.w" >>"/tmp/$1.i"
+cat "$INFILE.tfw" |tail -2 |head -1 > "/tmp/$INFILE.w"
+sed -e '1,$s/\ //g' "/tmp/$INFILE.w" >>"/tmp/$INFILE.i"
 
    # .tfw - last but two line (n-s resol) and eliminate "-":
-cat "$1.tfw" |tail -3 |head -1 > "/tmp/$1.rns"
-sed -e '1,$s/\ //g' "/tmp/$1.rns" | sed -e '1,$s/\-//g' >>"/tmp/$1.i"
+cat "$INFILE.tfw" |tail -3 |head -1 > "/tmp/$INFILE.rns"
+sed -e '1,$s/\ //g' "/tmp/$INFILE.rns" | sed -e '1,$s/\-//g' >>"/tmp/$INFILE.i"
 
    # .tfw - first line (e-w resol):
-cat "$1.tfw" |head -1 > "/tmp/$1.rew"
-sed -e '1,$s/\ //g' "/tmp/$1.rew" >>"/tmp/$1.i"
+cat "$INFILE.tfw" |head -1 > "/tmp/$INFILE.rew"
+sed -e '1,$s/\ //g' "/tmp/$INFILE.rew" >>"/tmp/$INFILE.i"
 
-echo $XWIDTH >>"/tmp/$1.i"
-echo $YHEIGHT  >>"/tmp/$1.i"
+echo $XWIDTH >>"/tmp/$INFILE.i"
+echo $YHEIGHT  >>"/tmp/$INFILE.i"
 
    #create one line file for awk
-paste -s "/tmp/$1.i" > "/tmp/$1.info"
-rm -f /tmp/$1.i /tmp/$1.n /tmp/$1.w /tmp/$1.rns /tmp/$1.rew
+paste -s "/tmp/$INFILE.i" > "/tmp/$INFILE.info"
+rm -f /tmp/$INFILE.i /tmp/$INFILE.n /tmp/$INFILE.w /tmp/$INFILE.rns /tmp/$INFILE.rew
 
 
 # write image cellhd-file: #############################
@@ -112,24 +115,24 @@ rm -f /tmp/$1.i /tmp/$1.n /tmp/$1.w /tmp/$1.rns /tmp/$1.rew
 # 1. proj and zone info:
 cat $LOCATION/WIND |head -2 > "$LOCATION/cellhd/${cellfile}"
 
-# structure of /tmp/$1.info 
+# structure of /tmp/$INFILE.info 
 #north, west, n-s-resolution, e-w-resolution, xwidth and yheight 
 # $1     $2       $3             $4             $5         $6
 
 # 2. north and south info (take n-s res):
 north=`awk '{ distx = ( $1 + ($3 / 2)) }
-            { printf "%.4f\n", distx }' "/tmp/$1.info"`
+            { printf "%.4f\n", distx }' "/tmp/$INFILE.info"`
 
 south=`awk '{ distx = ( $1 + ($3 / 2)) - $6 * $3 }
-            { printf "%.4f\n", distx }' "/tmp/$1.info"`
+            { printf "%.4f\n", distx }' "/tmp/$INFILE.info"`
 echo "north:      $north" >> "$LOCATION/cellhd/${cellfile}"
 echo "south:      $south" >> "$LOCATION/cellhd/${cellfile}"
 
 # 3. west and east (take ew-res)
  west=`awk '{ disty = ( $2 - ($4 / 2)) }
-            { printf "%.4f\n", disty }' "/tmp/$1.info"`
+            { printf "%.4f\n", disty }' "/tmp/$INFILE.info"`
  east=`awk '{ disty = ( $2 - ($4 / 2)) + $5 * $4}
-            { printf "%.4f\n", disty }' "/tmp/$1.info"`
+            { printf "%.4f\n", disty }' "/tmp/$INFILE.info"`
 
 echo "east:       $east" >> "$LOCATION/cellhd/${cellfile}"
 echo "west:       $west" >> "$LOCATION/cellhd/${cellfile}"
@@ -142,8 +145,8 @@ echo "cols:       $XWIDTH"   >> "$LOCATION/cellhd/${cellfile}"
 echo "rows:       $YHEIGHT"  >> "$LOCATION/cellhd/${cellfile}"
 
 # 5. resolution:
-nsres=`awk '{ printf "%.4f\n", $3 }' "/tmp/$1.info"`
-ewres=`awk '{ printf "%.4f\n", $4 }' "/tmp/$1.info"`
+nsres=`awk '{ printf "%.4f\n", $3 }' "/tmp/$INFILE.info"`
+ewres=`awk '{ printf "%.4f\n", $4 }' "/tmp/$INFILE.info"`
 
 echo "N-S Resolution: $nsres"
 echo "W-E Resolution: $ewres"
@@ -153,8 +156,8 @@ echo "n-s resol:  $nsres"  >> "$LOCATION/cellhd/${cellfile}"
 # 6. format (0=1 byte) and compressed (yes, due to r.compress) status
 echo "format:     0"  >> "$LOCATION/cellhd/${cellfile}"
 echo "compressed: 1"  >> "$LOCATION/cellhd/${cellfile}"
-rm -f "/tmp/$1.info"
+rm -f "/tmp/$INFILE.info"
 
 # The cell-header file is complete now.
 
-echo "Your file $1.tif was successfully imported into GRASS."
+echo "Your file $INFILE.tif was successfully imported into GRASS."
