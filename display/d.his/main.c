@@ -231,7 +231,7 @@ main (int argc, char **argv)
 	next_row = 0;
 	for (atrow=0; atrow<window.rows; )
 	{
-		G_percent (atrow, window.rows, 5);
+		G_percent (atrow, window.rows, 2);
 		if(G_get_c_raster_row(hue_file, hue_array, atrow) < 0)
 			exit(1);
 		if (int_used && (G_get_c_raster_row(int_file, int_array, atrow) < 0))
