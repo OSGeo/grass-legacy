@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <setjmp.h>
 #include <fcntl.h>
-#include <signal.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
@@ -59,7 +58,7 @@ char *me, *link;
     int time, in_file, out_file;
     void (*def) () = NULL;
 
-    time = 10;                  /* time to wait for opens below */
+    time = 1;                  /* time to wait for opens below */
     sscanf(link, "%s %s", in_fifo, out_fifo);
     /* Check existence and access of in_fifo */
     if (-1 == stat(in_fifo, &buf)) {
@@ -93,20 +92,11 @@ char *me, *link;
                 out_fifo, buf.st_mode & 0666);
         goto error;
     }
-    if (setjmp(save)) {         /* if timed out waiting below */
-        signal(SIGALRM, def);   /* back to normal for timer */
-        return (0);             /* tell caller nobody's listening */
-    }
-    /* else first time through */
-    def = signal(SIGALRM, timeout);     /* where to go when timer goes
-                                         * off */
-    alarm(time);                /* set timer */
-    out_file = open(in_fifo, O_WRONLY); /* reading here? */
-    in_file = open(out_fifo, O_RDONLY); /* writing here? */
-    alarm(0);                   /* turn off alarm */
-    signal(SIGALRM, def);       /* and restore normal operation */
-    close(out_file);
-    close(in_file);
+    out_file = msgget(ftok(in_fifo,0), 0600); /* reading here? */
+    in_file = msgget(ftok(out_fifo,0), 0600); /* writing here? */
+    if( (out_file == -1) || (in_file == -1) )
+	return (0);
+
     fprintf(stderr, "Graphics driver [%s] is already running\n", me);
     fflush(stderr);
     return (-1);                /* tell caller someone's listening */
