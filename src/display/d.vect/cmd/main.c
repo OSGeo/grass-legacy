@@ -1,4 +1,4 @@
-/*
+/*   $Id$
  *   d.vect (was: d.vect.cats)
  *
  *   - merged d.vect code into 1/2002 Markus Neteler
@@ -9,6 +9,7 @@
  *   jaf 12/1/91
  *
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -19,6 +20,7 @@
 #include "colors.h"
 #define MAIN
 #include "local_proto.h"
+
 int quiet = 1;
 
 static int check_catlist (const char *answer)
@@ -44,9 +46,9 @@ static int check_catlist (const char *answer)
 int main( int argc , char **argv )
 {
     char *mapset ;
-    char buf[1024] ;
     int stat=0;
-    int color,fill;
+    int R, G, B, color=0, fill;
+    const int customcolor = MAXCOLORS + 1;
     char map_name[128] ;
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3;
@@ -72,8 +74,8 @@ int main( int argc , char **argv )
     opt2->key        = "color" ;
     opt2->type       = TYPE_STRING ;
     opt2->answer     = "white" ;
-    opt2->options    = D_COLOR_LIST ;
-    opt2->description= "Color desired for drawing map" ;
+/*    opt2->options    = D_COLOR_LIST ; */
+    opt2->description= "Name of color desired for drawing map or R:G:B triplet";
 
     opt3 = G_define_option();
     opt3->key	= "catnum" ;
@@ -93,7 +95,7 @@ int main( int argc , char **argv )
 
     /* Check command line */
     if (G_parser(argc, argv))
-        exit(-1);
+        exit(1);
 
     fill=0;
     fill=flag1->answer;
@@ -101,7 +103,21 @@ int main( int argc , char **argv )
 
     strcpy(map_name, opt1->answer);
 
-    color = D_translate_color(opt2->answer);
+
+    /* Parse and select text color */
+    /* this isn't a totally correct use of the color table(s), but it works */
+    if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+	if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+	    R_reset_color(R, G, B, customcolor);
+	    color = customcolor;
+	}
+    }
+    else {
+	color = D_translate_color(opt2->answer);
+    }
+    if(!color)
+	G_fatal_error("[%s]: No such color", opt2->answer);
+
 
     /* Make sure map is available */
     mapset = G_find_file2 ("dig", map_name, "") ;
@@ -112,7 +128,11 @@ int main( int argc , char **argv )
         G_fatal_error ("No graphics device selected");
 
     D_setup(0);
-    R_standard_color(color) ;
+
+    if(color > MAXCOLORS)      /* ie custom RGB color */
+	R_color(customcolor);
+    else
+	R_standard_color(color);
 
     /********** First try level 2 vector read ***********/
     Points = Vect_new_line_struct ();
