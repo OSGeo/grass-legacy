@@ -6,9 +6,56 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include "gis.h"
 #include "local_proto.h"
 
+
+static char *rules_files(void)
+{
+	char path[4096];
+	char *list = NULL;
+	int size = 0;
+	int len = 0;
+	DIR *dir;
+
+	sprintf(path, "%s/etc/colors", G_gisbase());
+
+	dir = opendir(path);
+	if (!dir)
+		return NULL;
+
+	for (;;)
+	{
+		struct dirent *d = readdir(dir);
+		int n;
+
+		if (!d)
+			break;
+
+		if (d->d_name[0] == '.')
+			continue;
+
+		n = strlen(d->d_name);
+
+		if (size < len + n + 2)
+		{
+			size = len + n + 200;
+			list = G_realloc(list, size);
+		}
+
+		if (len > 0)
+			list[len++] = ',';
+
+		memcpy(&list[len], d->d_name, n + 1);
+		len += n;
+	}
+
+	closedir(dir);
+
+	return list;
+}
 
 int main (int argc, char *argv[])
 {
@@ -60,6 +107,7 @@ int main (int argc, char *argv[])
     opt4->type        = TYPE_STRING;
     opt4->required    = NO;
     opt4->description = "name of predefined rules file";
+    opt4->options     = rules_files();
 
     flag1 = G_define_flag();
     flag1->key = 'w';
