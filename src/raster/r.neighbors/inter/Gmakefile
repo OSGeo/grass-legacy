@@ -1,0 +1,15 @@
+PGM = r.neighbors
+HOME = $(BIN_MAIN_INTER)
+
+LIST =  main.o\
+	ask_method.o\
+	ask_nsize.o\
+	ask_title.o\
+	explain.o\
+	new_screen.o\
+	scan_int.o
+
+$(HOME)/$(PGM):  $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(GISLIB):      # incase this changes
