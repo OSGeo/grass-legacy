@@ -11,6 +11,8 @@
 #include	"png.h"
 #include	"pngfunc.h"
 
+#include	<math.h>
+
 
   
 extern	int	scan_lines;
@@ -31,8 +33,6 @@ short int 	write_PNG_rgbpixel();
 unsigned char	PNG_pixel ;
 
 #define MaxColors	256 /* that's for palette*/
-/*#define MAXCOLOR	167772168 -so big - crashes your prog unless you have big ram*/
-/*#define MAXCOLOR	65536 - that's ok, but we'd still ask user to choose*/	
 
 #define TRUECOLOR24	167772168
 #define TRUECOLOR16	65536
@@ -43,13 +43,7 @@ struct ColorEntry
     {
     unsigned char red, green, blue;
     };
-/*
-struct mycolor {
-	int red;
-	int grn;
-	int blu;
-} ppm_color[MAXCOLOR];
-*/
+    
 
   typedef struct {
 	int red;
@@ -58,6 +52,8 @@ struct mycolor {
   } mycolor;
   
   mycolor * ppm_color;
+  
+  int knum = 0;
 
 #define SIG_CHECK_SIZE 4
 
@@ -360,11 +356,21 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 			fprintf(stdout,"\nMAXCOLOR set to 16 bit\n");
 		}
 	
-	ppm_color = (mycolor*) malloc(longcolor * sizeof(mycolor));
+/*	ppm_color = (mycolor*) malloc(longcolor * sizeof(mycolor));
   
   	if (ppm_color == NULL) {
     		fprintf(stderr,"\nCouldn't allocate space for image.\n Try reduce MAXCOLOR to 16bit,\nor - increase your comp's RAM\n");
     	exit(-1);
+  	}
+*/
+	knum = (int) floor(longcolor/100);
+	
+
+	ppm_color = (mycolor*) malloc(knum * sizeof(mycolor));
+  
+  	if (ppm_color == NULL) {
+    		fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
+    		exit(-1);
   	}
    }
     if (info_ptr->valid & PNG_INFO_tRNS) {
@@ -565,9 +571,12 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 
   /* but if background was specified from the command-line, we always use that	*/
   /* I chose to do no gamma-correction in this case; which is a bit arbitrary	*/
+
   if (background > -1)
   {
-    backcolor = ppm_parsecolor (backstring, maxval);
+/*	Here avoid ppm_parsecolor to no use ppm, pnm, ... libs in gmakefile -ash*/
+
+/*    backcolor = ppm_parsecolor (backstring, maxval);
     switch (info_ptr->color_type) {
       case PNG_COLOR_TYPE_GRAY:
       case PNG_COLOR_TYPE_GRAY_ALPHA:
@@ -581,6 +590,13 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
         bgb = PPM_GETB (backcolor);
         break;
     }
+*/
+
+    png_destroy_read_struct (&png_ptr, &info_ptr, (png_infopp)NULL);
+    fclose (ifp);
+    fprintf(stderr,"\nimages with background not supported .. exiting\n");
+    exit(-1);
+
   }
   png_read_image (png_ptr, png_image);
   png_read_end (png_ptr, info_ptr);
@@ -884,7 +900,18 @@ int match = 0;
 			ppm_color[maxcolor].grn = c2;
 			ppm_color[maxcolor].blu = c3;
 			maxcolor++;
-
+			
+			if (knum < maxcolor + 1) {
+			
+			knum *= 2;
+			ppm_color = (mycolor*) realloc((void*) ppm_color,knum * sizeof(mycolor));
+			
+  				if (ppm_color == NULL) {
+    					fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
+    					exit(-1);
+  				}
+			}
+			
 			if (maxcolor == longcolor)
 				G_fatal_error("Exceeded maximum colors - exiting");
 		}
