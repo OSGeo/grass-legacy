@@ -11,8 +11,14 @@ proc Nv_itemDrag {c info x y} {
     set lastx [St_get $info lastx]
     set lasty [St_get $info lasty]
     set item  [St_get $info item]
+    set w [St_get $info width]
+    set h [St_get $info height]
     set x [$c canvasx $x]
     set y [$c canvasy $y]
+    if { $item == "puck"} {
+    $c delete line
+    $c create line $x $y [expr $w/2] [expr $h/2] -fill gray60 -arrow last -tags line
+    }
     $c move $item [expr $x-$lastx] [expr $y-$lasty]
     St_set $info lastx $x
     St_set $info lasty $y
@@ -47,6 +53,13 @@ proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 
     set y1 [expr $y - 5]
     set y2 [expr $y + 5]
     if {[string compare $type puck] == 0} {
+    #Draw North Arrow
+        $C create text [expr $width - 2] [expr $height/2] -text W -fill black
+	$C create text 3 [expr $height/2] -text E -fill black -anchor w
+	$C create text [expr $width/2] 2 -text N -fill black -anchor n
+	$C create text [expr $width/2] $height -text S -fill black -anchor s
+	$C create line $x $y [expr $width/2] [expr $height/2] -tags line \
+	   -fill gray60 -arrow last
 	$C create arc $x1 $y1 $x2 $y2 -style arc -width 1 -outline gray60 \
 	    -start 210 -extent 210 -tags puck
 	$C create arc $x1 $y1 $x2 $y2 -style arc -width 1 -outline white \
