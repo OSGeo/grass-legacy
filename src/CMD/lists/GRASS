@@ -393,6 +393,7 @@ src/sites/s.territory
 src/sites/s.to.rast
 src/sites/s.to.vect
 src/sites/s.univar
+src/sites/s.windavg
 src/sites/sroff
 src/tcltkgrass
 #######################################
