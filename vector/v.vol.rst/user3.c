@@ -32,6 +32,8 @@
 #include <unistd.h>
 #include <fcntl.h> 
 #include "gis.h"
+#include "Vect.h"
+#include "dbmi.h"
 
 #include "site.h"
 #include "oct.h"
@@ -41,6 +43,7 @@
 #include "userglobs.h"
 #include "user.h"
 #include "G3d.h"
+#include "points.h"
 
 
 int secpar_loop(ngstc,nszc,i)
@@ -48,12 +51,12 @@ int secpar_loop(ngstc,nszc,i)
 	int    nszc;
 	int    i;
 {
-double  dnorm1, ro, dx2, dy2, dz2, grad1, grad2, slp, grad, oor1, oor2, disk,
-		curn, curm, curg, arc, temp, dxy2, dxz2, dyz2;
-double  r2, dg1, dg2, dg3, dg4, dg5, dg6, h11, h12, h22, h13, h23, h33,
+double  dnorm1, ro, dx2, dy2, dz2, grad1, grad2, slp, grad, oor1, oor2,
+		curn, curm, curg, dxy2, dxz2, dyz2;
+double  dg1, dg2, dg3, dg4, dg5, dg6, h11, h12, h22, h13, h23, h33,
 		dm1, dm2, dm3, dm4, dm5, dm6, dnorm5;
 double  gradmin;
-int     j, bmask=1;
+int     bmask=1;
 static int first_t = 1;
 
 ro = 57.295779;
@@ -216,7 +219,7 @@ return 1;
 
 
 int
-COGRR1 (x_or, y_or, z_or, n_rows, n_cols, n_levs, n_points, points)
+COGRR1 (x_or, y_or, z_or, n_rows, n_cols, n_levs, n_points, points,skip_point)
 	double          x_or;
 	double          y_or;
 	double          z_or;
@@ -225,6 +228,7 @@ COGRR1 (x_or, y_or, z_or, n_rows, n_cols, n_levs, n_points, points)
 	int             n_levs;
 	int             n_points;
 	struct quadruple *points;
+	struct point_3d skip_point;
 /*C
 C       INTERPOLATION BY FUNCTIONAL METHOD : TPS + complete regul.
 c
@@ -235,14 +239,14 @@ c
 	static double   *wz2 = NULL;
         static double   *wz1 = NULL;
 	double 	        amaxa;
-	double          stepix, stepiy, stepiz, RO,xx,yy,zz,xg,yg,zg,yy2,xx2,zz2;
+	double          stepix, stepiy, stepiz, RO,xx,yy,zz,xg,yg,zg,xx2;
 	double          wm, dx, dy, dz, dxx, dyy, dxy, dxz, dyz, dzz, h, bmgd1,
 			bmgd2, etar, zcon, r, ww, wz, r2, hcell, zzcell2, 
 			etarcell, rcell, wwcell, zzcell;
-	int             n1, k1, k2, k, i1, l, l1, n4, n5, m, i, icont, ncont;
+	int             n1, k1, k2, k, i1, l, l1, n4, n5, m, i;
 	int             NGST, LSIZE, ngstc, nszc, ngstr, nszr, ngstl, nszl;
 	int             POINT ();
-	int             j,j1,ind,ind1;
+	int             ind,ind1;
 	static int      first_time_z = 1;
 	int             offset, offset1,offset2;
 	int             bmask = 1;
@@ -286,6 +290,11 @@ c
       points[i - 1].y = (points[i - 1].y - y_or) / dnorm;
       points[i - 1].z = (points[i - 1].z - z_or) / dnorm;
     }
+    if (cv) {
+	    skip_point.x = (skip_point.x - x_or) / dnorm;
+	    skip_point.y = (skip_point.y - y_or) / dnorm;
+	    skip_point.z = (skip_point.z - z_or) / dnorm;
+    }
     n1 = n_points + 1;
 /*
 C
@@ -311,7 +320,14 @@ C
 	k1 = k * n1 + 1;
 	k2 = k + 1;
 	i1 = k1 + k;
-	A[i1] = RO;
+	if (rsm < 0.) /*indicates variable smoothing */
+	{
+	    A[i1] = points[k-1].sm; 
+	}
+	else
+	{
+	A[i1] = RO; /* constant smoothing*/
+	}
 	for (l = k2; l <= n_points; l++)
 	{
 	    xx = points[k - 1].x - points[l - 1].x;
@@ -321,9 +337,9 @@ C
             etar = (fi*r)/2.;
 	    if (etar == 0.) 
 	    {
-		printf ("ident. points in segm.  \n");
+/*		printf ("ident. points in segm.  \n");
 		printf ("x[%d]=%lf,x[%d]=%lf,y[%d]=%lf,y[%d]=%lf\n",
-			k - 1, points[k - 1].x, l - 1, points[l - 1].x, k - 1, points[k - 1].y, l - 1, points[l - 1].y);
+			k - 1, points[k - 1].x, l - 1, points[l - 1].x, k - 1, points[k - 1].y, l - 1, points[l - 1].y);*/
 	    }
 	    i1 = k1 + l;
 	    A[i1] = crs (etar);
@@ -376,7 +392,9 @@ C
 	}
 	b[n_points + 1] = A[n4];
 
-	POINT (n_points, points);
+	POINT (n_points, points, skip_point);
+	if (cv) return 1;
+	if (devi != NULL && sig1 == 1) return 1;
 /*
 C
 C         INTERPOLATION   *  MOST INNER LOOPS !
@@ -601,10 +619,12 @@ C
 
 
 int 
-POINT (n_points, points)
+POINT (n_points, points, skip_point)
 
     int             n_points;
     struct quadruple *points;
+    struct point_3d skip_point;
+
 
 /*
 c  interpolation check of z-values in given points
@@ -612,7 +632,7 @@ c
 */
 
 {
-    double          rfsta2, errmax, h, xx, yy, r2, hz, zz, ww, err, xmm, ymm,
+    double          errmax, h, xx, yy, r2, hz, zz, ww, err, xmm, ymm,
                     zmm, wmm, r, etar;
     int             n1, mm, m, mmax,inside;
     Site *site;
@@ -621,6 +641,7 @@ c
     G_fatal_error ("Memory error for site struct");
     errmax = .0;
     n1 = n_points + 1;
+    if(!cv) {
     for (mm = 1; mm <= n_points; mm++)
     {
 	h = b[n1];
@@ -648,16 +669,7 @@ c
       inside = 1;
     else
       inside = 0;
-
-    if (dev != NULL)
-    {
-      site->dbl_att[0] = err;
-      site->east = xmm;
-      site->north = ymm;
-      site->dim[0] = zmm;
-      if (inside)           /*     if the point is inside the region */
-        G_site_put (dev, site);
-     }
+    if (devi != NULL && inside == 1) point_save(xmm,ymm,zmm,err);
 
 	if (err < 0)
 	{
@@ -684,6 +696,45 @@ c
 	printf (" x(i) = %f  y(i) = %f \n", xmm, ymm);
 	printf (" z(i) = %f  w(i) = %f \n", zmm, wmm);*/
     }
+}
+   
+      /* cv stuff */
+  if (cv) {
+
+    h = b[n1];/* check this if h=b[0] used in 2d should be applied here */
+    for (m = 1; m <= n_points; m++) /* number of points is already 1 less (skip_point) */
+    {
+      xx = points[m - 1].x - skip_point.x;
+      yy = points[m - 1].y - skip_point.y;
+      zz = points[m - 1].z - skip_point.z;
+
+      r2 = yy * yy + xx * xx + zz * zz;
+      if (r2 != 0.)
+      {
+        r = sqrt(r2);
+        etar = (fi * r)/2.;
+        h = h + b[m] * crs(etar);
+      }
+    }
+    hz = h + wmin;
+    ww = skip_point.w + wmin;
+    err = hz - ww;
+    xmm = (skip_point.x * dnorm) + xmn + current_region.west;
+    ymm = (skip_point.y * dnorm) + ymn + current_region.south;
+    zmm = (skip_point.z * dnorm) / zmult + zmn / zmult + current_region.bottom;
+
+    if ((xmm >= xmn+ current_region.west) && (xmm <= xmx+ current_region.west) &&
+    (ymm >= ymn+ current_region.south) && (ymm <= ymx+ current_region.south) &&
+    (zmm >= zmn/zmult+ current_region.bottom) && (zmm <= zmx/zmult+ current_region.bottom))
+	    inside = 1;
+    else
+	    inside = 0;
+
+if (inside == 1) point_save(xmm,ymm,zmm,err);
+	    
+    } /* cv */
+
+    
     return 1;
 }
 
