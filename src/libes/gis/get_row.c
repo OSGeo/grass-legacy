@@ -96,7 +96,7 @@ printf("get_row(%s in %s) %d: %d bytes\n\r",FCB.name,FCB.mapset,row,FCB.nbytes);
 	while(i-- > 0)
 	    *cell++ = 0;
 
-	sprintf (msg,"[%s in %s] - read request for row %d is outside window",
+	sprintf (msg,"[%s in %s] - read request for row %d is outside region",
 		FCB.name, FCB.mapset, row);
 	G_warning (msg);
 
@@ -135,7 +135,7 @@ printf ("read row %d\n", r);
 		char msg[128];
 
 		sprintf (msg,
-		    "error reading %sdata layer [%s] in mapset [%s], row %d",
+		    "error reading %smap [%s] in mapset [%s], row %d",
 		    COMPRESSED ? "compressed " : "", FCB.name, FCB.mapset, r);
 		G_warning (msg);
 		FCB.io_error = 1;
