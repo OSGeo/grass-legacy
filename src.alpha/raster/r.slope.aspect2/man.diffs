@@ -1,0 +1,100 @@
+diff -c r.slope.aspect r.slope.aspect.old
+*** r.slope.aspect	Sat Nov 20 00:38:29 1993
+--- r.slope.aspect.old	Sat Nov 20 00:28:19 1993
+***************
+*** 9,15 ****
+  .br
+  \fBr.slope.aspect help\fR
+  .br
+! \fBr.slope.aspect \fR[\fB-agqz\fR] \fBelevation\*=\fIname \fR[\fBslope\*=\fIname\fR] [\fBaspect\*=\fIname\fR] \fR[\fBformat\*=\fIname\fR] \fR[\fBzfactor\*=\fIvalue\fR]
+  .SH DESCRIPTION
+  \fIr.slope.aspect\fR generates raster map layers of slope and aspect 
+  from a raster map layer of true elevation values.
+--- 9,15 ----
+  .br
+  \fBr.slope.aspect help\fR
+  .br
+! \fBr.slope.aspect \fR[\fB-aqz\fR] \fBelevation\*=\fIname \fR[\fBslope\*=\fIname\fR] [\fBaspect\*=\fIname\fR] \fR[\fBformat\*=\fIname\fR] \fR[\fBzfactor\*=\fIvalue\fR]
+  .SH DESCRIPTION
+  \fIr.slope.aspect\fR generates raster map layers of slope and aspect 
+  from a raster map layer of true elevation values.
+***************
+*** 23,29 ****
+  program inputs and any desired options on the command line, using the form
+  .LP
+  .RS
+! \fBr.slope.aspect \fR[\fB-agqz\fR] \fBelevation\*=\fIname \fR[\fBslope\*=\fIname\fR] [\fBaspect\*=\fIname\fR] \fR[\fBslope\*=\fIname\fR] \fR[\fBzfactor\*=\fIvalue\fR]
+  .RE
+  .LP
+  If the user runs:
+--- 23,29 ----
+  program inputs and any desired options on the command line, using the form
+  .LP
+  .RS
+! \fBr.slope.aspect \fR[\fB-aq\fR] \fBelevation\*=\fIname \fR[\fBslope\*=\fIname\fR] [\fBaspect\*=\fIname\fR] \fR[\fBslope\*=\fIname\fR] \fR[\fBzfactor\*=\fIvalue\fR]
+  .RE
+  .LP
+  If the user runs:
+***************
+*** 40,48 ****
+  Do not align the settings of the current geographic region (to which the output
+  slope and aspect map layers will be set) to those of the elevation layer.
+  See NOTES.
+- .IP \fB-g\fR 18
+- Use a geographic or cartographic definition of aspect, instead of a
+- mathematical. See ASPECT RASTER MAP.
+  .IP \fB-q\fR 18
+  Run quietly, and suppress the printing of information on program operations
+  during execution.
+--- 40,45 ----
+***************
+*** 73,82 ****
+  true elevation values, \fInot\fR rescaled or categorized data.
+  .SH ASPECT RASTER MAP
+  The raster aspect map layer which is created indicates the direction
+! that slopes are facing.  The default
+! aspect categories represent the number degrees
+! of east (counterclockwise). The \fB-g\fR flag changes this to the 
+! number of degrees of north (clockwise).
+  
+  Category and color table files are also generated for the aspect map layer.
+  .SH SLOPE RASTER MAP
+--- 70,77 ----
+  true elevation values, \fInot\fR rescaled or categorized data.
+  .SH ASPECT RASTER MAP
+  The raster aspect map layer which is created indicates the direction
+! that slopes are facing.  The aspect categories represent the number degrees
+! of east.
+  
+  Category and color table files are also generated for the aspect map layer.
+  .SH SLOPE RASTER MAP
+***************
+*** 179,188 ****
+  meanings:  they may either be areas of "no data" or areas having 0 elevation.
+  If the user wishes \fIr.slope.aspect\fR to assume that cells assigned category
+  value zero in the elevation map layer represent true elevation values,
+! not areas of "no data", the user should set the \fB-z\fR flag when running 
+! this program.
+  
+! If the \fB-z\fR flag is not set and the raster map layer of true elevation
+  contains areas of "no data" that are assigned to category 0,
+  either at its edges or in its interior,
+  incorrect (and usually quite large) slopes will result.
+--- 174,182 ----
+  meanings:  they may either be areas of "no data" or areas having 0 elevation.
+  If the user wishes \fIr.slope.aspect\fR to assume that cells assigned category
+  value zero in the elevation map layer represent true elevation values,
+! not areas of "no data", the user should set the -z flag when running this program.
+  
+! If the -z flag is not set and the raster map layer of true elevation
+  contains areas of "no data" that are assigned to category 0,
+  either at its edges or in its interior,
+  incorrect (and usually quite large) slopes will result.
+***************
+*** 195,199 ****
+  Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+  
+  Olga Waupotitsch, U.S. Army Construction Engineering Research Laboratory
+- 
+- Addition of \fB-g\fR flag by Darrell McCauley, Purdue University
+--- 189,191 ----
