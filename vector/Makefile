@@ -1,7 +1,7 @@
 
 MODULE_TOPDIR = ..
 
-SUBDIRS1 = \
+SUBDIRS = \
 	v.buffer \
 	v.build \
 	v.build.polylines \
@@ -44,19 +44,17 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 OGRBASED = v.out.ogr v.in.ogr
 
 #compile if OGR present:
-ifneq ($(strip $(OGR_LIB)),)
-    SUBDIRS2 = $(OGRBASED)
+ifneq ($(USE_OGR),)
+    SUBDIRS += $(OGRBASED)
 endif
 
 
 OPENDWGBASED = v.in.dwg
 
 #compile if OPENDWG present:
-ifneq ($(strip $(OPENDWGINCPATH)),)
-    SUBDIRS3 = $(OPENDWGBASED)
+ifneq ($(USE_OPENDWG),)
+    SUBDIRS += $(OPENDWGBASED)
 endif
-
-SUBDIRS = $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3)
 
 default: subdirs
 
