@@ -111,11 +111,11 @@ SEE ALSO:
  
       if(sedimentinfo)
 	{
-	   printf("INITIAL SEDIMENT INFORMATION \n");
-	   printf("                       sediment   sediment   overland  Cumul.\n");
-	   printf("  particle             flow rate  flow rate  available  area\n");
-	   printf("    size    fraction      into     within    sediment  erosion\n");
-	   printf("--------------------------------------------------------------\n");
+	   fprintf (stderr,"INITIAL SEDIMENT INFORMATION \n");
+	   fprintf (stderr,"                       sediment   sediment   overland  Cumul.\n");
+	   fprintf (stderr,"  particle             flow rate  flow rate  available  area\n");
+	   fprintf (stderr,"    size    fraction      into     within    sediment  erosion\n");
+	   fprintf (stderr,"--------------------------------------------------------------\n");
 	}
  
  
@@ -167,7 +167,7 @@ SEE ALSO:
 	       runoff->total_eroded_sediment * particle_fraction / 2000.0;
  
 	 if(sedimentinfo)
-	    printf("%d      %f    %f    %f     %f     %f\n",j,particle_fraction,
+	    fprintf (stderr,"%d      %f    %f    %f     %f     %f\n",j,particle_fraction,
 		  sediment[j].sed_flow_rate_into,sediment[j].sed_flow_rate_within,
 		  sediment[j].sed_available,outlet_sediment[j].area_weighted_erosion);
  

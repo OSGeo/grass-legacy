@@ -626,7 +626,7 @@ main()
 
 /*      Begin process input data for each cell  */ 
 
-        printf("Create input for each cell\n");
+        fprintf (stderr,"Create input for each cell\n");
         ct = 1;
         for(i = 0; i < nrows; i++) {
 
@@ -937,8 +937,8 @@ slope length exceeds */
                  if(grid_res > 0)
                   system(cmd);
                  else
-                  { printf("ERROR: The map resolution must be greater than 0\n");
-                    printf("       Your current set is %i \n",grid_res);
+                  { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
+                    fprintf (stderr,"       Your current set is %i \n",grid_res);
                     exit(0);
                   }
                  fprintf(stderr,"Please resize the GRASS monitor\n");
@@ -991,8 +991,8 @@ slope length exceeds */
                     if(grid_res > 0)
                      system(cmd);
                     else
-                     { printf("ERROR: The map resolution must be greater than 0\n");
-                       printf("       Your current set is %i \n",grid_res);
+                     { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
+                       fprintf (stderr,"       Your current set is %i \n",grid_res);
                        exit(0);
                      }
                     fprintf(stderr,"Please resize the GRASS monitor\n");
@@ -1035,8 +1035,8 @@ slope length exceeds */
                     if(grid_res > 0)
                      system(cmd);
                     else
-                     { printf("ERROR: The map resolution must be greater than 0\n");
-                       printf("       Your current set is %i \n",grid_res);
+                     { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
+                       fprintf (stderr,"       Your current set is %i \n",grid_res);
                        exit(0);
                      }
                     fprintf(stderr,"Please resize the Grass monitor\n");
@@ -1094,14 +1094,14 @@ slope length exceeds */
                                " 1 " : " 0 ");
               strcat(name_str, "1 0");
 
-              printf("Running AGNPS model on file %s ...", in_fl_name);
+              fprintf (stderr,"Running AGNPS model on file %s ...", in_fl_name);
               if (system(name_str))
-               { printf(
+               { fprintf (stderr,
 "\nError running AGNPS model: process returned nonzero exit code.\n");
                  break;
                }
               else
-               { printf("\nAGNPS model finished running, press ENTER:");
+               { fprintf (stderr,"\nAGNPS model finished running, press ENTER:");
                  getchar();
                }
 
@@ -1118,7 +1118,7 @@ slope length exceeds */
         clean_up();
 
         system("rm cell_id.out");
-        printf("Done\n");
+        fprintf (stderr,"Done\n");
 
         /* start of code section added by Dave Peterson, April 1996 */
         sprintf(command, "rm -f %s", landuse->p);
@@ -1229,10 +1229,10 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
    struct a1     nfdltpts[9];
    struct a2     fdltpts[9];
 
-   printf("Creating AGNPS input file %s ...\n", in_fl_name);
+   fprintf (stderr,"Creating AGNPS input file %s ...\n", in_fl_name);
 
    if ((fs = fopen (in_fl_name,"w")) == NULL)
-    { printf ("Input file for AGNPS model can't open\n");
+    { fprintf (stderr,"Input file for AGNPS model can't open\n");
       clean_up();
       exit();
     }
@@ -1333,7 +1333,7 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
          /* INSTEAD, CHECK THE PTSRC_FLAG */
 
       if (ptsrc_flag)
-       { /* printf("check the point sources\n"); */
+       { /* fprintf (stderr,"check the point sources\n"); */
 
          if((fdlot = fopen("fdlot.dat","r")) == NULL)
           { fprintf(stderr,"Cannot open feedlot data file\n");
@@ -1382,7 +1382,7 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
              }
             sscanf(line,"%i \n",&cell_id);
 /*
-            printf("The cell ID of FeedLot %i\n",cell_id);
+            fprintf (stderr,"The cell ID of FeedLot %i\n",cell_id);
 */
             if(cell_id == i )
              { fgets(line,80,fdlot);
@@ -1695,7 +1695,7 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
 
    fclose(fs);
 
-   printf("Done creating AGNPS input file %s, press ENTER:", in_fl_name);
+   fprintf (stderr,"Done creating AGNPS input file %s, press ENTER:", in_fl_name);
    getchar(); 
  }
 
@@ -1735,8 +1735,8 @@ void get_user_pest_data(pest_scenario *scenarios)
        break;
 
       V_clear();
-      printf("Your choice for herbicide must be a number between 1 and %d.\n\n",NUM_PEST);
-      printf("Please press ENTER and try again: ");
+      fprintf (stderr,"Your choice for herbicide must be a number between 1 and %d.\n\n",NUM_PEST);
+      fprintf (stderr,"Please press ENTER and try again: ");
       getchar();
     }
 
@@ -1789,9 +1789,9 @@ void get_pest_scenario_data(pest_scenario *sc, int sc_num)
        break;
 
       V_clear();
-      printf("Your choice for application time must be a number between\n");
-      printf("1 and 3.\n\n");
-      printf("Please press ENTER and try again: ");
+      fprintf (stderr,"Your choice for application time must be a number between\n");
+      fprintf (stderr,"1 and 3.\n\n");
+      fprintf (stderr,"Please press ENTER and try again: ");
       getchar();
     }
 

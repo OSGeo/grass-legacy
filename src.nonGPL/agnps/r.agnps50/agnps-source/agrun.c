@@ -336,7 +336,7 @@ int main(
     }
    else
     {
-     printf("Error: Data file [%s] not present...\n",sDATANAME);
+     fprintf (stderr,"Error: Data file [%s] not present...\n",sDATANAME);
      return(1);
     }
    /******************************************************************/
@@ -567,7 +567,7 @@ int main(
     {
 
 #ifdef _DOS
-      printf("  %d  ... Creating Water Verification Table :     \r",i);
+      fprintf (stderr,"  %d  ... Creating Water Verification Table :     \r",i);
 #endif
 
      htable.ht[i].column_id = i;
@@ -612,7 +612,7 @@ int main(
     {
 
 #ifdef _DOS
-      printf("  %d  ... Creating Sediment Verification Table :    \r",i);
+      fprintf (stderr,"  %d  ... Creating Sediment Verification Table :    \r",i);
 #endif
 
      stable.st[i].column_id = i;
@@ -641,7 +641,7 @@ int main(
     {
 
 #ifdef _DOS
-      printf("  %d  ... Creating Chemical Verification Table :  \r",i);
+      fprintf (stderr,"  %d  ... Creating Chemical Verification Table :  \r",i);
 #endif
 
      ctable.ct[i].column_id = i;
@@ -692,40 +692,40 @@ void memory_out(location, column_number)
 {
     switch (location)
 	{
-	case 0:  printf("\nMemory error in initial calloc...column #%d\n",column_number);
+	case 0:  fprintf (stderr,"\nMemory error in initial calloc...column #%d\n",column_number);
 		 break;
-	case 1:  printf("\nMemory error in mallocing COLLUMN_INFO for column %d\n",column_number);
+	case 1:  fprintf (stderr,"\nMemory error in mallocing COLLUMN_INFO for column %d\n",column_number);
 		 break;
-	case 2:  printf("\nMemory error in mallocing CHANNEL_INFO for column %d\n",column_number);
+	case 2:  fprintf (stderr,"\nMemory error in mallocing CHANNEL_INFO for column %d\n",column_number);
 		 break;
-	case 3:  printf("\nMemory error in mallocing MANAGEMENT_INFO for column %d\n",column_number);
+	case 3:  fprintf (stderr,"\nMemory error in mallocing MANAGEMENT_INFO for column %d\n",column_number);
 		 break;
-	case 4:  printf("\nMemory error in mallocing SLOPE_INFO for column %d\n",column_number);
+	case 4:  fprintf (stderr,"\nMemory error in mallocing SLOPE_INFO for column %d\n",column_number);
 		 break;
-	case 5:  printf("\nMemory error in mallocing SOIL_INFO for column %d\n",column_number);
+	case 5:  fprintf (stderr,"\nMemory error in mallocing SOIL_INFO for column %d\n",column_number);
 		 break;
-	case 6:  printf("\nMemory error in mallocing RUNOFF_INFO for column %d\n",column_number);
+	case 6:  fprintf (stderr,"\nMemory error in mallocing RUNOFF_INFO for column %d\n",column_number);
 		 break;
-	case 7:  printf("\nMemory error in mallocing NONFEEDLOT_INFO for column %d\n",column_number);
+	case 7:  fprintf (stderr,"\nMemory error in mallocing NONFEEDLOT_INFO for column %d\n",column_number);
 		 break;
-	case 8:  printf("\nMemory error in mallocing more NONFEEDLOT_INFO for column %d\n",column_number);
+	case 8:  fprintf (stderr,"\nMemory error in mallocing more NONFEEDLOT_INFO for column %d\n",column_number);
 		 break;
-	case 9:  printf("\nMemory error in mallocing FEEDLOT_INFO for column %d\n",column_number);
+	case 9:  fprintf (stderr,"\nMemory error in mallocing FEEDLOT_INFO for column %d\n",column_number);
 		 break;
-	case 10: printf("\nMemory error in mallocing more FEEDLOT_INFO for column %d\n",column_number);
+	case 10: fprintf (stderr,"\nMemory error in mallocing more FEEDLOT_INFO for column %d\n",column_number);
 		 break;
-	case 11: printf("\nMemory error in mallocing FEEDLOT_TOTALS for column %d\n",column_number);
+	case 11: fprintf (stderr,"\nMemory error in mallocing FEEDLOT_TOTALS for column %d\n",column_number);
 		 break;
-	case 12: printf("\nMemory error in mallocing flow_path_upto in loop3\n");
+	case 12: fprintf (stderr,"\nMemory error in mallocing flow_path_upto in loop3\n");
 		 break;
-	case 13: printf("\nMemory error in mallocing flow_path_out in loop3\n");
+	case 13: fprintf (stderr,"\nMemory error in mallocing flow_path_out in loop3\n");
 		 break;
-	case 14: printf("\nMemory error in mallocing sum_runoff_in in loop3\n");
+	case 14: fprintf (stderr,"\nMemory error in mallocing sum_runoff_in in loop3\n");
 		 break;
-	case 15: printf("\nMemory error in mallocing num_cells_drain_in in loop3\n");
+	case 15: fprintf (stderr,"\nMemory error in mallocing num_cells_drain_in in loop3\n");
 		 break;
-	default: printf("\nGeneral out of memory error in location %d for cell %d.\n", location, column_number);
+	default: fprintf (stderr,"\nGeneral out of memory error in location %d for cell %d.\n", location, column_number);
 	}
-    printf("Program terminated\n");
+    fprintf (stderr,"Program terminated\n");
     exit(1);
 }

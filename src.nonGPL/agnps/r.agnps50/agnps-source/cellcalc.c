@@ -241,9 +241,9 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
     if(bflags.drain_area)                 /* JW 03/29/95 SUPP!*/
        {
-	printf("****\n");
-	printf("1.0 CALCULATE TOP OF CELL VALUES...Col %d:\n",column);
-	printf("Drainage Area Above= %f (acres)  Runoff Volume Above = %f (cu. ft.)\n\n",
+	fprintf (stderr,"****\n");
+	fprintf (stderr,"1.0 CALCULATE TOP OF CELL VALUES...Col %d:\n",column);
+	fprintf (stderr,"Drainage Area Above= %f (acres)  Runoff Volume Above = %f (cu. ft.)\n\n",
 	 drainage_area_above,runoff_volume_above);
        }
 
@@ -262,13 +262,13 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
  
     if(bflags.flow)
       {
-	printf("****\n");
-	printf("2.0 CALCUATE TIME TO PEAK AT TOP OF CELL...Col %d:\n",column);
-	printf("INPUTS: K Triangle=%f  Runoff Volume Top=%f (cu. ft.)\n",
+	fprintf (stderr,"****\n");
+	fprintf (stderr,"2.0 CALCUATE TIME TO PEAK AT TOP OF CELL...Col %d:\n",column);
+	fprintf (stderr,"INPUTS: K Triangle=%f  Runoff Volume Top=%f (cu. ft.)\n",
 	     initialptr->K_triangle,runoff_volume_above);
-	printf("        Runoff Flow Top=%f (cfs) Drainage Area Above=%f (acres)\n",
+	fprintf (stderr,"        Runoff Flow Top=%f (cfs) Drainage Area Above=%f (acres)\n",
 	     accumpath->runoff_flow_above,drainage_area_above);
-	printf("OUTPUTS: Time to Peak Top=%f (sec) Error Code=%d \n\n",
+	fprintf (stderr,"OUTPUTS: Time to Peak Top=%f (sec) Error Code=%d \n\n",
 	     time_to_peak_in,error_code);
       }
  
@@ -284,9 +284,9 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
     if(bflags.drain_area)
      {
-      printf("****\n");
-      printf("3.0 CALCULATE DRAINAGE AREA\n");
-      printf("OUTPUTS: Drainage Area Below %f(acres)\n\n",
+      fprintf (stderr,"****\n");
+      fprintf (stderr,"3.0 CALCULATE DRAINAGE AREA\n");
+      fprintf (stderr,"OUTPUTS: Drainage Area Below %f(acres)\n\n",
 	     drainage_area_below);
      }
  
@@ -315,8 +315,8 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
  
     if(bflags.flow)
      {
-      printf("LENGTH CALCULATION FOR FLOW PATH\n");
-      printf("Flow Length= %f\n",accumpath->length_to_bottom);
+      fprintf (stderr,"LENGTH CALCULATION FOR FLOW PATH\n");
+      fprintf (stderr,"Flow Length= %f\n",accumpath->length_to_bottom);
      }
 
 
@@ -377,7 +377,7 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
 
     if(bflags.flow)
-	printf("runoff Below %f\n",runoff_volume_below);
+	fprintf (stderr,"runoff Below %f\n",runoff_volume_below);
 
 /**** 7.0 ADD POINT SOURCES ABOVE THE CELL TO FLOW RATE ****/
 
@@ -391,7 +391,7 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
       accumpath->runoff_flow_below = flow_rate_below;
  
     if(bflags.flow)
-	printf("7. flow rate below = %f\n",flow_rate_below);
+	fprintf (stderr,"7. flow rate below = %f\n",flow_rate_below);
  
 /**** 8.0  CALCULATE BOTTOM OF CELL DURATION ***/
 
@@ -405,7 +405,7 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
  
     if(bflags.flow)
-	printf("8. time to peak out %f\n",time_to_peak_out);
+	fprintf (stderr,"8. time to peak out %f\n",time_to_peak_out);
  
 /**** 9.0 CALCULATE THE AVERAGE DURATION FOR THE CELL ****/
 
@@ -486,14 +486,14 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
 
     if(bflags.flow)
-	printf("9. Duration = %f\n",duration);
+	fprintf (stderr,"9. Duration = %f\n",duration);
 
 /**** 10.0 CALCULATE THE DURATION OF EACH INCREMENT IN HYDROGRAPH ****/
 
     base_increment_duration = time_to_peak_ave /3.0;
 
     if(bflags.flow)
-	printf("10. Increment Duration = %f\n",base_increment_duration);
+	fprintf (stderr,"10. Increment Duration = %f\n",base_increment_duration);
 
 /**** 11.0 SUM POINT SOURCE FLOW RATES AND VOLUMES IN THE CURRENT CELL ****/
 
@@ -615,14 +615,14 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
     if (ave_incr_upflowrate == NULL)
      {
-      printf("Error in Calloc [CELLCALC.C #617]\n");
+      fprintf (stderr,"Error in Calloc [CELLCALC.C #617]\n");
       exit(1);
      }
 
     ave_incr_downflowrate = (float*) calloc(max_increments+1, sizeof(float));
     if (ave_incr_downflowrate == NULL)
      {
-      printf("Error in Calloc [CELLCALC.C #623] col %d...\n",column);
+      fprintf (stderr,"Error in Calloc [CELLCALC.C #623] col %d...\n",column);
       exit(1);
      }
 
@@ -630,12 +630,12 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
     if(bflags.flow)
       {
-    /*  printf("14. peak flow bottom = %f  chan width= %f\n",peak_flow_bottom,
+    /*  fprintf (stderr,"14. peak flow bottom = %f  chan width= %f\n",peak_flow_bottom,
 	    channel_width_out); */
 
-	printf("BEFORE ADDING IN IMPOUNDMENTS\n");
+	fprintf (stderr,"BEFORE ADDING IN IMPOUNDMENTS\n");
 
-       printf(" Increment      Top Flow     Bottom Flow \n");
+       fprintf (stderr," Increment      Top Flow     Bottom Flow \n");
       }
 
 
@@ -1075,8 +1075,8 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
 /*     if(bflags.channel)
 	   {
-	     printf("          channel      channel     Shear      Shear    Velocity    Velocity\n");
-	     printf("Increment width in    width out  Stress in  Stress in     in          out\n");
+	     fprintf (stderr,"          channel      channel     Shear      Shear    Velocity    Velocity\n");
+	     fprintf (stderr,"Increment width in    width out  Stress in  Stress in     in          out\n");
 	   } */
 
     for (increment=1; increment<=max_increments; increment++)
@@ -1106,11 +1106,11 @@ CHANNEL_INFO   *channel = columndata[column]->channel;
 
 	 if(bflags.channel)
 	   {
-	    printf("\n***********  Column #%d  Increment #%d ************\n",column,increment);
-	    printf("Width: In=%f  Out=%f \n",channel_width_in,channel_width_out);
-	    printf("Shear Stress: In=%f  Out=%f\n",shear_stress_in,shear_stress_out);
-	    printf("Velocity: In=%f  Out=%f\n",velocity_in,velocity_out);
-	    printf("Channel Depth Out = %f \n",channel_depth_out);
+	    fprintf (stderr,"\n***********  Column #%d  Increment #%d ************\n",column,increment);
+	    fprintf (stderr,"Width: In=%f  Out=%f \n",channel_width_in,channel_width_out);
+	    fprintf (stderr,"Shear Stress: In=%f  Out=%f\n",shear_stress_in,shear_stress_out);
+	    fprintf (stderr,"Velocity: In=%f  Out=%f\n",velocity_in,velocity_out);
+	    fprintf (stderr,"Channel Depth Out = %f \n",channel_depth_out);
 	   }
 	 }
 

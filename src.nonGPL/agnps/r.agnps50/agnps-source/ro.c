@@ -233,7 +233,7 @@ SEE ALSO:
      fprintf(errorfp,"        Equation Top:     %f \n",equation_top);
      fprintf(errorfp,"        Equation Bottom:  %f \n\n",equation_bottom);
      fprintf(errorfp,"OUTPUT: Runoff:          (inch-acres)         %f \n",*runoff);
-     printf("Error encountered-Program stopped-Check error.log");
+     fprintf (stderr,"Error encountered-Program stopped-Check error.log");
      sleep(10);
     exit(1);
     fclose(errorfp);
@@ -242,10 +242,10 @@ SEE ALSO:
 
   if (rflags.curve_ro)
    {
-    printf("CURVE#_RUNOFF routine: column #%d \n",column);
-    printf("   Input:  %f...curve_number    %f...storm_rainfall\n",curve_number,storm_rainfall);
-    printf("           %s...location   \n",location);
-    printf("   Output: %f...retention_factor  %f...runoff(in)\n",retention_factor,*runoff);
+    fprintf (stderr,"CURVE#_RUNOFF routine: column #%d \n",column);
+    fprintf (stderr,"   Input:  %f...curve_number    %f...storm_rainfall\n",curve_number,storm_rainfall);
+    fprintf (stderr,"           %s...location   \n",location);
+    fprintf (stderr,"   Output: %f...retention_factor  %f...runoff(in)\n",retention_factor,*runoff);
    }
 
 
@@ -254,11 +254,11 @@ SEE ALSO:
 /*
   if ((hydro_info) || (bflags.flow))
     {
-     printf("****\n");
-     printf("1.8   SCS curve number routine output\n ");
-     printf("INPUT:  Storm Rainfall = %f in.  Curve Number = %f\n",storm_rainfall,
+     fprintf (stderr,"****\n");
+     fprintf (stderr,"1.8   SCS curve number routine output\n ");
+     fprintf (stderr,"INPUT:  Storm Rainfall = %f in.  Curve Number = %f\n",storm_rainfall,
 	     curve_number);
-     printf("OUTPUT: Retention Factor = %f in  Runoff = %f in. Error Code = %d\n\n",
+     fprintf (stderr,"OUTPUT: Retention Factor = %f in  Runoff = %f in. Error Code = %d\n\n",
 	     retention_factor,*runoff,error_code);
     }
 */

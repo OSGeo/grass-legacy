@@ -140,12 +140,12 @@ IMPOUND_INFO *impoundptr;
   {
    if(increment<=last_overland_incr)
     {
-     printf("Sediment Rates including Overland sediment flows.\n");
-     printf("   \n");
-     printf("                                                      Sed    Total\n");
-     printf("          Part                                        Flow   Overland\n");
-     printf("Column	Size	Factor    Temp1    Temp2    Temp3   Rate   Sediment\n");
-     printf("===================================================================\n");
+     fprintf (stderr,"Sediment Rates including Overland sediment flows.\n");
+     fprintf (stderr,"   \n");
+     fprintf (stderr,"                                                      Sed    Total\n");
+     fprintf (stderr,"          Part                                        Flow   Overland\n");
+     fprintf (stderr,"Column	Size	Factor    Temp1    Temp2    Temp3   Rate   Sediment\n");
+     fprintf (stderr,"===================================================================\n");
     }
   }
  
@@ -337,13 +337,13 @@ IMPOUND_INFO *impoundptr;
 
     if(sedimentinfo)
      {
-      printf("Constant Prop.= %f  Shear Velocity= %f \n",constant_prop,
+      fprintf (stderr,"Constant Prop.= %f  Shear Velocity= %f \n",constant_prop,
 	  shear_velocity);
-      printf("Transport Capacity= %f sed. flow in= %f sed flow out= %f\n",
+      fprintf (stderr,"Transport Capacity= %f sed. flow in= %f sed flow out= %f\n",
 	   trans_capacity_out[j],sed_flow_rate_in,sed_flow_rate_out);
-      printf("flow length %f flow rate %f channel width %f \n",
+      fprintf (stderr,"flow length %f flow rate %f channel width %f \n",
 	   flow_length,downstream_qp,channel_width_out);
-      printf("Nd = %f \n",Nd);
+      fprintf (stderr,"Nd = %f \n",Nd);
 
       }
 
@@ -352,7 +352,7 @@ IMPOUND_INFO *impoundptr;
        sed_flow_out[j] = sed_flow_rate_out * channel_width_out * increment_duration;
 
     if(sedimentinfo)
-    printf("sed. flow out %f\n",sed_flow_out[j]);
+    fprintf (stderr,"sed. flow out %f\n",sed_flow_out[j]);
 
 
       if(sedimentinfo)
@@ -378,8 +378,8 @@ IMPOUND_INFO *impoundptr;
 	 sed_yield_for_j[j]+=sed_flow_out[j];
      if(sedimentinfo)
       {
-       printf("SED YIELD BY TOTAL %f\n",sed_yield_for_j[j]);
-       printf("****\n");
+       fprintf (stderr,"SED YIELD BY TOTAL %f\n",sed_yield_for_j[j]);
+       fprintf (stderr,"****\n");
       }
 
      }
@@ -397,14 +397,14 @@ IMPOUND_INFO *impoundptr;
       {
        if(j==1)
 	{
-	 printf("Sediment Flow Rates for channel flow only\n\n");
-	 printf("\n                            |------sediment------| \n");
-	 printf("Part  Froude Eff.  Trans Cap    flow       flow  tot \n");
-	 printf("size   out   out      out      rate in  rate out sed \n");
-	 printf("---------------------------------------------------------------------------\n");
-	 printf(" \n");
+	 fprintf (stderr,"Sediment Flow Rates for channel flow only\n\n");
+	 fprintf (stderr,"\n                            |------sediment------| \n");
+	 fprintf (stderr,"Part  Froude Eff.  Trans Cap    flow       flow  tot \n");
+	 fprintf (stderr,"size   out   out      out      rate in  rate out sed \n");
+	 fprintf (stderr,"---------------------------------------------------------------------------\n");
+	 fprintf (stderr," \n");
 	}
-       printf("%d %8.2f %f %.4f %.4f %.4f %.2f\n",
+       fprintf (stderr,"%d %8.2f %f %.4f %.4f %.4f %.2f\n",
 	  j,froude_value_outa[j],efficiency_outa[j],trans_capacity_out[j],
 	  old_seda[j],old_sedb[j],sed_flow_out[j]);
       }

@@ -67,7 +67,7 @@ void hydrology(float area,            /* acres               */
 float term1, term2;
  
  if((bflags.flow) || (bflags.flow))
-   printf("*** HYDRO PEAK FLOW CALCULATION");
+   fprintf (stderr,"*** HYDRO PEAK FLOW CALCULATION");
  
     if (area > 0.0)
 	{
@@ -95,9 +95,9 @@ float term1, term2;
  
     if ((bflags.channel) || (bflags.flow))
        {
-       printf("INPUTS: Runoff = %f Area= %f Chan. Length= %f Chan. Slope= %f\n",
+       fprintf (stderr,"INPUTS: Runoff = %f Area= %f Chan. Length= %f Chan. Slope= %f\n",
 	       runoff,area,chan_length,chan_slope);
-       printf("OUTPUT: Peak flow %f cfs \n", *peak_flow);
+       fprintf (stderr,"OUTPUT: Peak flow %f cfs \n", *peak_flow);
        }
 }
  
@@ -166,9 +166,9 @@ float decimal_channel_slope, /* channel slope as a decimal number      */
  
     if (bflags.channel)
     {
-       printf("Non-Geomorphic Calculations\n");
-       printf("shear stress %f l/f2 channel width %f ft velocity %f f/s\n",*shear_stress,*channel_width,*velocity);
-       printf("Flow Rate %f \n",flow_rate);
+       fprintf (stderr,"Non-Geomorphic Calculations\n");
+       fprintf (stderr,"shear stress %f l/f2 channel width %f ft velocity %f f/s\n",*shear_stress,*channel_width,*velocity);
+       fprintf (stderr,"Flow Rate %f \n",flow_rate);
     }
 
  
@@ -293,7 +293,7 @@ float temp3 = 0.0;
  
      if (bflags.sediment)
      {
-	printf("INITIAL SED FLOW: sed flow rate out %f l/s trans cap out %f l/s/f\n",*sed_flow_rate_out,*trans_capacity_out);
+	fprintf (stderr,"INITIAL SED FLOW: sed flow rate out %f l/s trans cap out %f l/s/f\n",*sed_flow_rate_out,*trans_capacity_out);
      }
  
 }
@@ -454,9 +454,9 @@ SINKHOLEPTR tempsinkhole = first_sink;
 
     if (rflags.src_cells)
      {
-      printf("SRC_CELLS routine: \n");
-      printf("   Input:  %d...col_number\n",columns);
-      printf("   Output: %d...outlet_cell\n",outletcell);
+      fprintf (stderr,"SRC_CELLS routine: \n");
+      fprintf (stderr,"   Input:  %d...col_number\n",columns);
+      fprintf (stderr,"   Output: %d...outlet_cell\n",outletcell);
      }
 
 

@@ -119,16 +119,16 @@ extern FLAGS_ROUTINE  rflags;
  
      if(bflags.impound)
       if(particle_size==1)
-	printf("Soil Type %d  Infiltration %f  Runoff Volume %f\n",
+	fprintf (stderr,"Soil Type %d  Infiltration %f  Runoff Volume %f\n",
 	     soilpath->soil_type,infiltration,total_runoff_volume);
  
 
      if (rflags.ters)
       {
-       printf("TERS routine: \n");
-       printf("   Input:  %d...col_number    %d...particle_size\n",column_number,particle_size);
-       printf("           %f...upland_erosion\n",upland_erosion);
-       printf("   Output: %f...sediment_leaving_pond\n",sed_leaving_pond);
+       fprintf (stderr,"TERS routine: \n");
+       fprintf (stderr,"   Input:  %d...col_number    %d...particle_size\n",column_number,particle_size);
+       fprintf (stderr,"           %f...upland_erosion\n",upland_erosion);
+       fprintf (stderr,"   Output: %f...sediment_leaving_pond\n",sed_leaving_pond);
       }
 
 

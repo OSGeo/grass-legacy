@@ -135,8 +135,8 @@ void show_pest(char *input_nps)
 	   system("clear");
 	   do {
 	     fflush(stdin);
-	     printf("\nPesticide data not found\n");
-         printf("Press return to continue...");
+	     fprintf (stderr,"\nPesticide data not found\n");
+         fprintf (stderr,"Press return to continue...");
          scanf("%c", &check);
         }while(check != '\n');    
        }
@@ -196,10 +196,10 @@ int find(char *filename, int place, FILE *ifile, char temp[], int limit)
                break;  }
             else if(place!=a1 && a1==limit) {
               system("clear");
-              printf("No cell data for cell number %d\n",place);
-              printf("Using starting cell as default\n");
+              fprintf (stderr,"No cell data for cell number %d\n",place);
+              fprintf (stderr,"Using starting cell as default\n");
               fflush(stdin);
-              printf("Press return to continue...");
+              fprintf (stderr,"Press return to continue...");
               scanf("%c",&check);
               scanf("%c",&check);
               place=0;
@@ -215,21 +215,21 @@ int find(char *filename, int place, FILE *ifile, char temp[], int limit)
 int display(int cellNumber, char pestType[], float drain, float run, float sed, float per, int end)
 {
 	int temp;
-	printf("Summary of Pesticide Yields at Outlet Cell:\n\n");
-	printf("                             (   cell outlet   )\n");
-	printf(" cell	drain  pesticide    mass in	 mass in    mass in\n");
-	printf("number  area                runoff      sediment    percolate\n");
-	printf("        (ac)                (lb/ac)     (lb/ac)     (lb/ac)\n");
-	printf("-------------------------------------------------------------\n");
-	printf("  %d     %1.2f   %s       %1.2f       %1.2f        %1.2f\n", cellNumber, drain, pestType, run, sed, per);
-	printf("\nTo see output from another cell, enter the cell number [1-%d],\n",end);
-	printf("or enter 0 when done viewing cells ==========================> ");
+	fprintf (stderr,"Summary of Pesticide Yields at Outlet Cell:\n\n");
+	fprintf (stderr,"                             (   cell outlet   )\n");
+	fprintf (stderr," cell	drain  pesticide    mass in	 mass in    mass in\n");
+	fprintf (stderr,"number  area                runoff      sediment    percolate\n");
+	fprintf (stderr,"        (ac)                (lb/ac)     (lb/ac)     (lb/ac)\n");
+	fprintf (stderr,"-------------------------------------------------------------\n");
+	fprintf (stderr,"  %d     %1.2f   %s       %1.2f       %1.2f        %1.2f\n", cellNumber, drain, pestType, run, sed, per);
+	fprintf (stderr,"\nTo see output from another cell, enter the cell number [1-%d],\n",end);
+	fprintf (stderr,"or enter 0 when done viewing cells ==========================> ");
 	scanf("%d",&temp);
 	while((temp!=0) && ((temp<1) || (temp>end))) {
 	  system("clear");
-	  printf("\nThe cell number entered was not within the valid range\n");
-	  printf("\nTo see output from another cell, enter the cell number [1-%d],\n",end);
-	  printf("or enter 0 when done viewing cells ==========================> ");
+	  fprintf (stderr,"\nThe cell number entered was not within the valid range\n");
+	  fprintf (stderr,"\nTo see output from another cell, enter the cell number [1-%d],\n",end);
+	  fprintf (stderr,"or enter 0 when done viewing cells ==========================> ");
 	  scanf("%d",&temp);
 	  
 	 }   

@@ -253,10 +253,10 @@ static float transport_factor[5]={0.0,0.85,1.00,1.15,1.5};
 
   if (rflags.impound)
    {
-    printf("IMPOUND routine: \n");
-    printf("   Input:  %d...col_number    %d...rec_cell\n",column_number,temp_receiving_cell);
-    printf("           %f...upland_eros   %f...impoundmt_area\n",upland_erosion,impounded_area);
-    printf("   Output: %f...impound_N_leaving  %f...impound_P_leaving\n",impound_n_leaving,impound_p_leaving);
+    fprintf (stderr,"IMPOUND routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number    %d...rec_cell\n",column_number,temp_receiving_cell);
+    fprintf (stderr,"           %f...upland_eros   %f...impoundmt_area\n",upland_erosion,impounded_area);
+    fprintf (stderr,"   Output: %f...impound_N_leaving  %f...impound_P_leaving\n",impound_n_leaving,impound_p_leaving);
    }
 
   return;

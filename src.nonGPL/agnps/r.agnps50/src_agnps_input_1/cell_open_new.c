@@ -31,7 +31,7 @@ char *name;
 	fd = G_open_cell_new(name);
 	if (fd < 0) 
 	{
-	 	printf("Oops - can`t open cell file %s\n",name);
+	 	fprintf (stderr,"Oops - can`t open cell file %s\n",name);
 	}
 
 	return(fd);

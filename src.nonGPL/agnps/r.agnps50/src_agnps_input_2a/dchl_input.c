@@ -48,9 +48,9 @@
                      dchannel00_dat(i);
                      i               = chl_cel_id; 
                      if(i <= 0 || i > tot_cells) {
-                        printf("Illegal cell number %d\n",i);
-                        printf("Please enter a valid cell number\n");
-                        printf("between 1 and %i\n",tot_cells);
+                        fprintf (stderr,"Illegal cell number %d\n",i);
+                        fprintf (stderr,"Please enter a valid cell number\n");
+                        fprintf (stderr,"between 1 and %i\n",tot_cells);
                         dchannel00_dat(i);
                         i = chl_cel_id; 
                         }
@@ -73,9 +73,9 @@
                      dchannel01_dat(i);
                      i = chl_cel_id; 
                      if(i <= 0 || i > tot_cells) {
-                        printf("Illegal cell number %d\n",i);
-                        printf("Please enter a valid cell number\n");
-                        printf("between 1 and %i\n",tot_cells);
+                        fprintf (stderr,"Illegal cell number %d\n",i);
+                        fprintf (stderr,"Please enter a valid cell number\n");
+                        fprintf (stderr,"between 1 and %i\n",tot_cells);
                         dchannel00_dat(i);
                         i = chl_cel_id; 
                         }
@@ -101,9 +101,9 @@
                      dchannel10_dat(i);
                      i = chl_cel_id; 
                      if(i <= 0 || i > tot_cells) {
-                        printf("Illegal cell number %d\n",i);
-                        printf("Please enter a valid cell number\n");
-                        printf("between 1 and %i\n",tot_cells);
+                        fprintf (stderr,"Illegal cell number %d\n",i);
+                        fprintf (stderr,"Please enter a valid cell number\n");
+                        fprintf (stderr,"between 1 and %i\n",tot_cells);
                         dchannel00_dat(i);
                         i = chl_cel_id; 
                         }
@@ -133,9 +133,9 @@
                      dchannel11_dat(i);
                      i               = chl_cel_id; 
                      if(i <= 0 || i > tot_cells) {
-                        printf("Illegal cell number %d\n",i);
-                        printf("Please enter a valid cell number\n");
-                        printf("between 1 and %i\n",tot_cells);
+                        fprintf (stderr,"Illegal cell number %d\n",i);
+                        fprintf (stderr,"Please enter a valid cell number\n");
+                        fprintf (stderr,"between 1 and %i\n",tot_cells);
                         dchannel00_dat(i);
                         i = chl_cel_id; 
                         }

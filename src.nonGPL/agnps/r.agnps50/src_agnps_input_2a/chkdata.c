@@ -36,7 +36,7 @@ chkdata()
 	outlet_num = NO;
 	error	= NO;
 		 
-	printf("Start routing through each cell\n");
+	fprintf (stderr,"Start routing through each cell\n");
 
 	for(i = 1; i <= tot_cells; i++)
 	{
@@ -46,7 +46,7 @@ chkdata()
 		   ct = j;
 		   j = cel[j].rcell_num;
 		   if(ct == cel[j].rcell_num){
-			printf("Cells %d and %d collide each other\n",ct,j);
+			fprintf (stderr,"Cells %d and %d collide each other\n",ct,j);
 			error = YES;
 			}
 
@@ -57,13 +57,13 @@ chkdata()
 			  break;
 			  }
 			else{
-		          printf("More than one outlet cell %d and %d\n",outlet_num,ct);
+		          fprintf (stderr,"More than one outlet cell %d and %d\n",outlet_num,ct);
 			error = YES;
 			  }
 			 }
 		   count = count +1;
 		   if (count > tot_cells) {
-			printf("Found circularity in cells %d %d\n",j,ct);
+			fprintf (stderr,"Found circularity in cells %d %d\n",j,ct);
 			error = YES;
 			break;
 			}
@@ -72,12 +72,12 @@ chkdata()
 
 	for(i = 1; i <= tot_cells; i++){
 		if(cel[i].rcell_num == 0){
-			printf("Sink holes found in cell number %d\n",i);
+			fprintf (stderr,"Sink holes found in cell number %d\n",i);
 			error	= YES;
 			}
 		}
 		if (error == YES) {clean_up(); exit(0);}
-		printf("Outlet cell number is %d\n",outlet_num);
+		fprintf (stderr,"Outlet cell number is %d\n",outlet_num);
 
 /* find number of cells accumulating to a cell and the flow direction entering
 the cell*/

@@ -92,11 +92,11 @@
 
 /* old code section ...
 
-           printf("The cell number is:  %i\n",cell_id);
-           printf("\n");
-           printf("\n");
-           printf("Is this the cell you want to enter point source (y/n)?\n");
-           printf("You will be asked to select a cell again if answer NO\n");
+           fprintf (stderr,"The cell number is:  %i\n",cell_id);
+           fprintf (stderr,"\n");
+           fprintf (stderr,"\n");
+           fprintf (stderr,"Is this the cell you want to enter point source (y/n)?\n");
+           fprintf (stderr,"You will be asked to select a cell again if answer NO\n");
 
            gets(answer);
            if ((strncmp(answer,"Y",1) == 0) || (strncmp(answer,"y",1) == 0)) {

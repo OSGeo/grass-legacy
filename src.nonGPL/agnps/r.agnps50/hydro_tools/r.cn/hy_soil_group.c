@@ -24,7 +24,7 @@ int	value;
 	else if (strcmp(label,"D") == 0) return(3);
 	else 
 	{
-	     printf("unknown catagories other than A,B,C,D in %s map layer",hy_soil_group_name);
+	     fprintf (stderr,"unknown catagories other than A,B,C,D in %s map layer",hy_soil_group_name);
 	     exit(-1);
 	}
 }

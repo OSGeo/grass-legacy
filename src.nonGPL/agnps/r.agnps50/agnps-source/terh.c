@@ -69,7 +69,7 @@ RUNOFF_INFO *runoffpath;
   currentptr->peak_flow =                      /*  cfs */
 		cor * sqrt(depth) / 3600.0;
   if(bflags.impound)
-   printf("pond depth %f(feet)  vol. runoff %f(cu ft.))  peak flow %f(cfs)\n",
+   fprintf (stderr,"pond depth %f(feet)  vol. runoff %f(cu ft.))  peak flow %f(cfs)\n",
 	 depth,currentptr->volume_runoff,currentptr->peak_flow);
 
   if(hydro_info)
@@ -87,9 +87,9 @@ RUNOFF_INFO *runoffpath;
 
   if (rflags.terh)
    {
-    printf("TERH routine: \n");
-    printf("   Input:  %d...col_number  & Impoundment structure pointer\n",column_number);
-    printf("   Output: %f...vol_runoff    %f...peak_flow\n",currentptr->volume_runoff,currentptr->peak_flow);
+    fprintf (stderr,"TERH routine: \n");
+    fprintf (stderr,"   Input:  %d...col_number  & Impoundment structure pointer\n",column_number);
+    fprintf (stderr,"   Output: %f...vol_runoff    %f...peak_flow\n",currentptr->volume_runoff,currentptr->peak_flow);
    }
 
   return;

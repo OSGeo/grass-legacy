@@ -48,14 +48,14 @@ cell_num_id()
 
 
 /* get the original window information  from the watershed cell header */
-	printf("Creating cell number map using the %s\n",wshd->p);
+	fprintf (stderr,"Creating cell number map using the %s\n",wshd->p);
 
 	G_get_cellhd(wshd->p,wshd->mapset,&orig_window);
 
 /* if the user choose a grid size other than the original cell size of the watershed
   modify the window accordingly and set all the window parameters */
 
-	printf("The grid size selected by the user is %d meters \n",grid_res);
+	fprintf (stderr,"The grid size selected by the user is %d meters \n",grid_res);
 
 	if(grid_res != 0){
 	   orig_window.ns_res = (double) grid_res;

@@ -103,20 +103,20 @@ float  overland_flow_duration;   /* seconds                  */
 
    if(bflags.flow)
     {
-     printf("****\n");
-     printf("1.10  OVERLAND FLOW CALULATION, USING AGNPS\n");
-     printf("INPUT: slope= %f  Slope Length= %d Surface Condition= %f\n",
+     fprintf (stderr,"****\n");
+     fprintf (stderr,"1.10  OVERLAND FLOW CALULATION, USING AGNPS\n");
+     fprintf (stderr,"INPUT: slope= %f  Slope Length= %d Surface Condition= %f\n",
 	    slope,slope_length,surface_condition);
-     printf("OUTPUT: Overland Flow Duration= %f\n\n",overland_flow_duration);
+     fprintf (stderr,"OUTPUT: Overland Flow Duration= %f\n\n",overland_flow_duration);
     }
 
 
    if(rflags.overland)
     {
-     printf("OVRLD routine: \n");
-     printf("   Input:   %f...slope   %d...slope_length\n",slope,slope_length);
-     printf("            %f...surface_condition\n",surface_condition);
-     printf("   Output:  %f...overland_flow_duration (seconds)\n",overland_flow_duration);
+     fprintf (stderr,"OVRLD routine: \n");
+     fprintf (stderr,"   Input:   %f...slope   %d...slope_length\n",slope,slope_length);
+     fprintf (stderr,"            %f...surface_condition\n",surface_condition);
+     fprintf (stderr,"   Output:  %f...overland_flow_duration (seconds)\n",overland_flow_duration);
     }
 
 

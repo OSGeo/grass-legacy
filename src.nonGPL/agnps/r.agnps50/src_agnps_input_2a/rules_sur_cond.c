@@ -89,7 +89,7 @@ int	land_use_label;
 
 	else
 	{
-	   printf("The combination of %s, %s and %s is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper surface condition constant\n",land_use_label,mgmt_pr,hy_cond_label);
+	   fprintf (stderr,"The combination of %s, %s and %s is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper surface condition constant\n",land_use_label,mgmt_pr,hy_cond_label);
 	   clean_up();
 	   exit(0);
 	}

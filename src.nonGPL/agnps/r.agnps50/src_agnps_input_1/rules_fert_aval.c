@@ -64,7 +64,7 @@ int	land_use_label;
 
 	else
 	{
-	   printf("The combination of %s or %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper fertilizer availability factor \n",implements, land_use_label);
+	   fprintf (stderr,"The combination of %s or %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper fertilizer availability factor \n",implements, land_use_label);
 	   clean_up();
 	   exit(0);
 	}

@@ -45,7 +45,7 @@ int	clay, sand, silt;
 	   else return(SILT);
 
 	   /*
-	   printf("The combination of %d, %d and %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper soil texture \n",clay,sand,silt);
+	   fprintf (stderr,"The combination of %d, %d and %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper soil texture \n",clay,sand,silt);
 	   clean_up();
 	   exit(0);
 	   */

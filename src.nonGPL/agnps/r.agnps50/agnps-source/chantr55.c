@@ -172,7 +172,7 @@ cellcalc, loop1tr5, tr55prim
      (channel_length < 0.0))
    {
 #ifdef _DOS
-    printf("ERROR: Channel segment length in column %d < 0.0\n",col_num);
+    fprintf (stderr,"ERROR: Channel segment length in column %d < 0.0\n",col_num);
 #endif
     exit(1);
    }
@@ -266,14 +266,14 @@ cellcalc, loop1tr5, tr55prim
  
     if (bflags.tr_55)
 	{
-          printf("Column %d:\n",col_num);
-	  printf("INPUT: Width %f  Depth %f  Chan. slope %f Chan. mannings %f \n",
+          fprintf (stderr,"Column %d:\n",col_num);
+	  fprintf (stderr,"INPUT: Width %f  Depth %f  Chan. slope %f Chan. mannings %f \n",
 		columndata[col_num]->channel->width,
 		columndata[col_num]->channel->depth,
 		columndata[col_num]->channel->channel_slope,
 		columndata[col_num]->channel->channel_mannings);
-	  printf("       Channel Length %f \n",calc_length);
-	  printf("INTER: hydraulic radius %f chan velocity %f \n",
+	  fprintf (stderr,"       Channel Length %f \n",calc_length);
+	  fprintf (stderr,"INTER: hydraulic radius %f chan velocity %f \n",
 		 r,channel_velocity);
 	}
  
@@ -302,7 +302,7 @@ cellcalc, loop1tr5, tr55prim
     {
      if(total_time >10.0)
        {
-	printf("Total time of flow has exceeded the 10 hour limit imposed by TR55\n");
+	fprintf (stderr,"Total time of flow has exceeded the 10 hour limit imposed by TR55\n");
 	exit(1);
        }
     } */
@@ -310,10 +310,10 @@ cellcalc, loop1tr5, tr55prim
  
    if (bflags.tr_55)
      {
-       printf("overland time %f hours",columndata[col_num]->runoff->time_overland);
-       printf("Shallow time %f hours",columndata[col_num]->runoff->time_shallow);
-       printf("total time %f hours\n",total_time);
-       printf("conc. time %f hours\n",columndata[col_num]->runoff->time_concentrated);
+       fprintf (stderr,"overland time %f hours",columndata[col_num]->runoff->time_overland);
+       fprintf (stderr,"Shallow time %f hours",columndata[col_num]->runoff->time_shallow);
+       fprintf (stderr,"total time %f hours\n",total_time);
+       fprintf (stderr,"conc. time %f hours\n",columndata[col_num]->runoff->time_concentrated);
      }
  
    columndata[col_num]->runoff->total_time=total_time;
@@ -327,7 +327,7 @@ cellcalc, loop1tr5, tr55prim
    if(hydro_info)
      hydro_route->iap=iap;
    if(bflags.tr_55)
-     printf("IAP value= %f",iap);
+     fprintf (stderr,"IAP value= %f",iap);
 
    if(iap< 0.1)
      iap=0.1;
@@ -387,7 +387,7 @@ cellcalc, loop1tr5, tr55prim
  
  
   if(bflags.tr_55)
-     printf("coeff. 1= %f coeff 2= %f coeff 3= %f",c0,c1,c2);
+     fprintf (stderr,"coeff. 1= %f coeff 2= %f coeff 3= %f",c0,c1,c2);
  
  
    if(cells_in != NULL)
@@ -420,7 +420,7 @@ cellcalc, loop1tr5, tr55prim
      +(0.8*s));
  
   if(bflags.tr_55)
-    printf("\n retention factor= %f runoff vol= %f",s,q);
+    fprintf (stderr,"\n retention factor= %f runoff vol= %f",s,q);
  
  
   *peak_flow=qu*(drainage_area/640)*q;
@@ -504,10 +504,10 @@ cellcalc, loop1tr5, tr55prim
    }
 /*  Added this line for verification -JW 03/21/95     (SUPP!) */
 /*
-  printf("Col: %d  Tot: %f  ",col_num,total_time);
-  printf("IAP: %f C0: %f C1: %f C2: %f Qu: %f DA: %f \n",iap,c0,c1,c2,qu,drainage_area); 
-  printf("T1: %f T2: %f T3: %f temp: %f", temp1, temp2, temp3, temp);
+  fprintf (stderr,"Col: %d  Tot: %f  ",col_num,total_time);
+  fprintf (stderr,"IAP: %f C0: %f C1: %f C2: %f Qu: %f DA: %f \n",iap,c0,c1,c2,qu,drainage_area); 
+  fprintf (stderr,"T1: %f T2: %f T3: %f temp: %f", temp1, temp2, temp3, temp);
 */
   if (bflags.tr_55)
-     printf("peak flow %f ft/sec\n",*peak_flow);
+     fprintf (stderr,"peak flow %f ft/sec\n",*peak_flow);
 }

@@ -38,14 +38,14 @@
 
        /* get the original window information from  */
        /* the watershed cell header file.           */
-	printf("Creating grid map for watershed %s\n",wshd->p);
+	fprintf (stderr,"Creating grid map for watershed %s\n",wshd->p);
 
 	G_get_cellhd(wshd->p,wshd->mapset,&orig_window);
 
        /* Reset the window and set all the window   */ 
        /* parameters so as to get correct grid map  */
 
-	printf("The grid size selected by the user is %d meters \n",grid_res);
+	fprintf (stderr,"The grid size selected by the user is %d meters \n",grid_res);
 
 	if(grid_res != 0){
 	   orig_window.ns_res = (double) grid_res;
@@ -60,24 +60,24 @@
              orig_window.east - (orig_window.cols* orig_window.ew_res);
 	   }
 
-        printf("After window reset\n");
+        fprintf (stderr,"After window reset\n");
 	G_set_window(&orig_window);
 	G_put_window(&orig_window);
-        printf("After put window in effect \n");
+        fprintf (stderr,"After put window in effect \n");
 
 	nrow = orig_window.rows;
 	ncol = orig_window.cols;
 
 
 	wshd->fd = cell_open(wshd->p,wshd->mapset);
-        printf("After water shed map \n");
+        fprintf (stderr,"After water shed map \n");
 
 	strcpy(temp_grid_map->p, "temp_grid_map");
-        printf("After copy \n");
+        fprintf (stderr,"After copy \n");
 	temp_grid_map->fd = cell_open_new(temp_grid_map->p);
-        printf("After open temp grid map \n");
+        fprintf (stderr,"After open temp grid map \n");
 	temp_grid_map->rbuf = G_allocate_cell_buf();
-        printf("After allocate memory \n");
+        fprintf (stderr,"After allocate memory \n");
 
 
 

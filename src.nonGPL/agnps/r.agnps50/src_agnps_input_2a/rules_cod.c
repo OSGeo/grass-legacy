@@ -69,7 +69,7 @@ int	land_use_label;
 
 	else
 	{
-	   printf("The %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper COD factor \n",land_use_label);
+	   fprintf (stderr,"The %d is not defined!!\n Please reclassify the map and refer AGNPS user manaual for proper COD factor \n",land_use_label);
 	   clean_up();
 	   exit(0);
 	}

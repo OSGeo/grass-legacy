@@ -119,8 +119,8 @@ double	per_p_fert;
 
  if(bflags.nutrient)
   {
-   printf("****\n");
-   printf("1.11 CALCULATE NUTRIENT RUNOFF VALUES\n");
+   fprintf (stderr,"****\n");
+   fprintf (stderr,"1.11 CALCULATE NUTRIENT RUNOFF VALUES\n");
   }
  
  mgmtpath  = columndata[column_number]->management;
@@ -331,30 +331,30 @@ double	per_p_fert;
  
  if(bflags.nutrient)
   {
-   printf("INPUTS: rainfall %f(mm) runoff %f(mm) porosity %f\n",
+   fprintf (stderr,"INPUTS: rainfall %f(mm) runoff %f(mm) porosity %f\n",
 	   rainfall,run_off,porosity);
-   printf("        Nit fert. rate %f(kg/ha) p fert. rate %f(kg/ha)\n",
+   fprintf (stderr,"        Nit fert. rate %f(kg/ha) p fert. rate %f(kg/ha)\n",
 	  nitrogen_fert,phosphorus_fert);
-   printf("        Nit avail. %d(per)  p avail. %d(per)  soil pore Nit %f (ppm)\n",
+   fprintf (stderr,"        Nit avail. %d(per)  p avail. %d(per)  soil pore Nit %f (ppm)\n",
 	  mgmtpath->nitrogen_availability,mgmtpath->phosphorus_availability,
 	  soilpath->soil_pore_nitrogen);
-   printf("        soil pore p %f(ppm) n leaching extract. %f\n",
+   fprintf (stderr,"        soil pore p %f(ppm) n leaching extract. %f\n",
 	  soilpath->soil_pore_phosphorus,soilpath->nitrogen_leaching_extraction);
-   printf("        p leaching extract. %f n runoff extrct. %f\n",
+   fprintf (stderr,"        p leaching extract. %f n runoff extrct. %f\n",
 	  soilpath->phosphorus_leaching_extraction,soilpath->
 	  nitrogen_runoff_extraction);
-   printf("        p runoff extract. %f\n",soilpath->phosphorus_runoff_extraction);
-   printf("INTER:  soluble nitrogen %f(kg/ha) soluble phosphorus %f (kg/ha)\n",
+   fprintf (stderr,"        p runoff extract. %f\n",soilpath->phosphorus_runoff_extraction);
+   fprintf (stderr,"INTER:  soluble nitrogen %f(kg/ha) soluble phosphorus %f (kg/ha)\n",
 	  soluble_nitrogen,soluble_phosphorus);
-   printf("        effective infiltration %f(mm) total porosity %f(mm)\n",
+   fprintf (stderr,"        effective infiltration %f(mm) total porosity %f(mm)\n",
 	  effective_infiltration,total_porosity);
-   printf("        effective rainfall %f(mm) porosity factor %f\n",
+   fprintf (stderr,"        effective rainfall %f(mm) porosity factor %f\n",
 	  effective_rainfall,porosity_factor);
-   printf("        avail soil n %f(kg/ha) avail soil p %f(kg/ha) init phos %f(kg/ha)\n",
+   fprintf (stderr,"        avail soil n %f(kg/ha) avail soil p %f(kg/ha) init phos %f(kg/ha)\n",
 	  available_soluble_nitrogen,available_soluble_phosphorus,
 	  available_initial_phosphorus);
-   printf("        avail rainfall n %f(kg/ha)\n",available_rainfall_nitrogen);
-   printf("        down. mov. n %f  down. mov. p %f  runoff mov. n %f  runoff mov. p %f\n",
+   fprintf (stderr,"        avail rainfall n %f(kg/ha)\n",available_rainfall_nitrogen);
+   fprintf (stderr,"        down. mov. n %f  down. mov. p %f  runoff mov. n %f  runoff mov. p %f\n",
 	  downward_movement_n,downward_movement_p,runoff_movement_n,
 	  runoff_movement_p);
 
@@ -362,9 +362,9 @@ double	per_p_fert;
 
  if (rflags.soil_nutr)
   {
-   printf("SOIL_NUTR routine: \n");
-   printf("   Input:  %d...col_number   %f...runoff\n",column_number,run_off);
-   printf("   Output: %f...N_runoff     %f...P_runoff\n",*nitrogen_runoff,*phosphorus_runoff);
+   fprintf (stderr,"SOIL_NUTR routine: \n");
+   fprintf (stderr,"   Input:  %d...col_number   %f...runoff\n",column_number,run_off);
+   fprintf (stderr,"   Output: %f...N_runoff     %f...P_runoff\n",*nitrogen_runoff,*phosphorus_runoff);
   }
 
 
@@ -412,36 +412,36 @@ float bulk_den_lookup(int type_of_soil)
  
  if (rflags.bulk_dens)
   {
-   printf("BULK_DENS routine: \n");
+   fprintf (stderr,"BULK_DENS routine: \n");
    if (type_of_soil == 1)
     {
-     printf("   Input:    1 = Sand soil type\n");
-     printf("   Output: 1.6...Bulk_Density\n");
+     fprintf (stderr,"   Input:    1 = Sand soil type\n");
+     fprintf (stderr,"   Output: 1.6...Bulk_Density\n");
     }
    else if (type_of_soil == 2)
     {
-     printf("   Input:    2 = Silt soil type\n");
-     printf("   Output: 1.3...Bulk_Density\n");
+     fprintf (stderr,"   Input:    2 = Silt soil type\n");
+     fprintf (stderr,"   Output: 1.3...Bulk_Density\n");
     }
    else if (type_of_soil == 3)
     {
-     printf("   Input:    3 = Clay soil type\n");
-     printf("   Output: 1.4...Bulk_Density\n");
+     fprintf (stderr,"   Input:    3 = Clay soil type\n");
+     fprintf (stderr,"   Output: 1.4...Bulk_Density\n");
     }
    else if (type_of_soil == 4)
     {
-     printf("   Input:    4 = Peat soil type\n");
-     printf("   Output: 1.2...Bulk_Density\n");
+     fprintf (stderr,"   Input:    4 = Peat soil type\n");
+     fprintf (stderr,"   Output: 1.2...Bulk_Density\n");
     }
    else if (type_of_soil == 5)
     {
-     printf("   Input:    5 = Water cell\n");
-     printf("   Output: 0.0...Bulk_Density\n");
+     fprintf (stderr,"   Input:    5 = Water cell\n");
+     fprintf (stderr,"   Output: 0.0...Bulk_Density\n");
     }
    else
     {
-     printf("   Input:    %d = Unknown soil type\n",type_of_soil);
-     printf("   Output: 0.0...Bulk_Density\n");
+     fprintf (stderr,"   Input:    %d = Unknown soil type\n",type_of_soil);
+     fprintf (stderr,"   Output: 0.0...Bulk_Density\n");
     }
   }
 

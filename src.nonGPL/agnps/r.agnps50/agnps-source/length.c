@@ -155,8 +155,8 @@ loop1.c
  
       if(bflags.channel)
        {
-	printf("****\n");
-	printf("1.6 CALCULATE CHANNEL INFORMATION\n");
+	fprintf (stderr,"****\n");
+	fprintf (stderr,"1.6 CALCULATE CHANNEL INFORMATION\n");
        }
  
  
@@ -165,7 +165,7 @@ loop1.c
 	if (initialptr->geomorphic_calc == NONGEOMORPHIC)
 	    {
 	     if (bflags.channel)
-		printf("  TR55   NON-GEOMORPHIC CALCULATIONS\n");
+		fprintf (stderr,"  TR55   NON-GEOMORPHIC CALCULATIONS\n");
  
 	if((chanpath->channel_indicator != 0 ) &&
 	   (soilpath->soil_type != 5))
@@ -191,7 +191,7 @@ loop1.c
 	     if(initialptr->geomorphic_calc == GEOMORPHIC)
 	      {
 		if(bflags.channel)
-		  printf("    TR55   GEOMORPHIC CALCULATION\n");
+		  fprintf (stderr,"    TR55   GEOMORPHIC CALCULATION\n");
  
  
 		chanpath->depth = chanpath->depth_coef *
@@ -234,7 +234,7 @@ loop1.c
 	 {
  
 	   if(bflags.channel)
-	      printf("Minimum channel side slope has been set to 0.1\n");
+	      fprintf (stderr,"Minimum channel side slope has been set to 0.1\n");
  
  
 	   chanpath->channel_side_slope = 0.1;
@@ -246,7 +246,7 @@ loop1.c
       {
  
        if(bflags.channel)
-	     printf("User has not input channel slope, calculate\n");
+	     fprintf (stderr,"User has not input channel slope, calculate\n");
  
        chanpath->channel_slope = slopepath->average_land_slope/2;
       }
@@ -257,7 +257,7 @@ loop1.c
       {
  
 	if(bflags.channel)
-	   printf("User has not input side slope, set to 10 percent\n");
+	   fprintf (stderr,"User has not input side slope, set to 10 percent\n");
  
 	chanpath->channel_side_slope = 10;
       }
@@ -268,7 +268,7 @@ loop1.c
        {
 
        if(bflags.channel)
-	printf("Maximum channel side slope has been set to 100\n");
+	fprintf (stderr,"Maximum channel side slope has been set to 100\n");
  
 	chanpath->channel_side_slope = 100;
        }
@@ -279,7 +279,7 @@ loop1.c
       {
  
 	if(bflags.channel)
-	   printf("Minimum Channel Slope has been set to 0.1\n");
+	   fprintf (stderr,"Minimum Channel Slope has been set to 0.1\n");
  
 	chanpath->channel_slope = 0.1;
       }
@@ -305,7 +305,7 @@ loop1.c
      if (chanpath->channel_indicator == 0)
 	{
 	 if(bflags.channel)
-	  printf("WATER CELL, VALUES ADJUSTED\n");
+	  fprintf (stderr,"WATER CELL, VALUES ADJUSTED\n");
  
 	 if(chanpath->channel_slope == 0.0);
 		 chanpath->channel_slope      = 0.001;/* This slope is in % */
@@ -383,7 +383,7 @@ loop1.c
 	 /* Finish BUG A-8 */
 
 	 if(bflags.channel)
-	   printf("NO DISCERNABLE CHANNEL, VALUES ADJUSTED\n");
+	   fprintf (stderr,"NO DISCERNABLE CHANNEL, VALUES ADJUSTED\n");
 
 	if (chanpath->channel_slope == 0.0)
 	  chanpath->channel_slope    = slopepath->average_land_slope/2;
@@ -426,18 +426,18 @@ loop1.c
 
     if (rflags.length)
        {
-        printf("LENGTH routine: \n");
-        printf("   Input:  %d...column_number\n");
-        printf("   Output: %f...chan_length    %f...chan_width \n",chanpath->channel_length,chanpath->width);
-        printf("           %f...chan_depth     %f...chan_slope \n",chanpath->depth,chanpath->channel_slope);
-        printf("           %f...chan_side_slope \n",chanpath->channel_side_slope);
+        fprintf (stderr,"LENGTH routine: \n");
+        fprintf (stderr,"   Input:  %d...column_number\n");
+        fprintf (stderr,"   Output: %f...chan_length    %f...chan_width \n",chanpath->channel_length,chanpath->width);
+        fprintf (stderr,"           %f...chan_depth     %f...chan_slope \n",chanpath->depth,chanpath->channel_slope);
+        fprintf (stderr,"           %f...chan_side_slope \n",chanpath->channel_side_slope);
        }
 
 
     if (bflags.channel)
        {
-	printf("OUTPUTS: slope= %f  side slope= %f \n",chanpath->channel_slope,chanpath->channel_side_slope);
-	printf("         width= %f  length= %f depth= %f \n\n",
+	fprintf (stderr,"OUTPUTS: slope= %f  side slope= %f \n",chanpath->channel_slope,chanpath->channel_side_slope);
+	fprintf (stderr,"         width= %f  length= %f depth= %f \n\n",
 		chanpath->width,chanpath->channel_length,chanpath->depth);
        }
  
