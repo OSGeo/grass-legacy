@@ -373,12 +373,12 @@ real-bindist: FORCE
 	    -e "s/TEST_STR=/TEST_STR=executable/" \
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
-	    binaryInstall.src > grass${NAME_VER}_${ARCH}_install.sh  ; true
-	${SHELL} -c "chmod a+x grass${NAME_VER}_${ARCH}_install.sh  2>/dev/null ; true"
+	    binaryInstall.src > grass${VERSION}_${ARCH}_install.sh  ; true
+	${SHELL} -c "chmod a+x grass${VERSION}_${ARCH}_install.sh  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS.html ${INST_DIR}/TODO.txt ; true"
 	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
 	@ echo "Distribution binary package: grass${VERSION}_${ARCH}_bin.tar.gz ready."
-	@ echo "DO NOT FORGET!! Upload BOTH grass${VERSION}_${ARCH}_bin.tar.gz and grass${NAME_VER}_${ARCH}_install.sh to the GRASS ftp server."
+	@ echo "DO NOT FORGET!! Upload BOTH grass${VERSION}_${ARCH}_bin.tar.gz and grass${VERSION}_${ARCH}_install.sh to the GRASS ftp server."
 	@ echo "Both files are required!!."
 	@ echo "The binary package is stored at ${SRCDIR}."
 
