@@ -1,0 +1,45 @@
+EXTRA_CFLAGS= -g $(VECT_INCLUDE)
+
+OFILES = \
+	main.o \
+	c_matrix.o\
+	geary_moran.o\
+	open_files.o \
+	init_plus_s.o \
+	printmatrix.o \
+	std_err.o \
+	ranlib.o \
+        com.o \
+	linpack.o \
+	mean.o \
+	att2cat.o
+
+CFILES = \
+        main.c \
+        c_matrix.c\
+        geary_moran.c\
+        open_files.c \
+        init_plus_s.c \
+        printmatrix.c \
+        std_err.c \
+        ranlib.c \
+        com.c \
+        linpack.c \
+        mean.c \
+        att2cat.c
+
+PROG = $(BIN_CONTRIB_CMD)/v.autocorr 
+#PROG = v.autocorr 
+
+$(PROG): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+	rm -f a.out $@
+	cc $(LDFLAGS) $(OFILES) $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	strip a.out
+	mv a.out $@
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(COORCNVLIB): #
+$(GISLIB): #
+$(VECTLIB): #
+
