@@ -1072,7 +1072,7 @@ echo $ac_n "checking for source directory""... $ac_c" 1>&6
 echo "configure:1073: checking for source directory" >&5
 
 if test -z "$srcdir" ; then
-  SRCDIR=`pwd`
+  SRCDIR=`$pwd`
 else
   SRCDIR=`(cd "$srcdir" ; $pwd)`
 fi
@@ -1082,7 +1082,7 @@ echo "$ac_t"""$SRCDIR"" 1>&6
 echo $ac_n "checking for build directory""... $ac_c" 1>&6
 echo "configure:1084: checking for build directory" >&5
 
-DSTDIR=`pwd`
+DSTDIR=`$pwd`
 
 echo "$ac_t"""$DSTDIR"" 1>&6
 
@@ -12156,7 +12156,6 @@ echo "Generating Makefiles for alternate build mechanism"
 cp -f src/CMD/head/head mk/vars.mk
 cp -f Makefile ${SRCDIR}
 cp -f mk/Makefile .
-( cd ${SRCDIR}; ./mk/mkmakefiles )
 
 fi
 

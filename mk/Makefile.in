@@ -8,14 +8,14 @@ SERVERNAME=		`uname -n`
 ARCH=			@ARCH@
 MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 
-all: dirs gmake docs binaries links post-compile
+all: makefiles dirs gmake docs binaries links post-compile
 
 makefiles:
 	@echo "making makefiles ..."
 	-find ${SRCDIR} -name Gmakefile -print | \
 		sed -e 's#^\(.*\)/Gmakefile#\1#' | \
 		while read dir ; do \
-			sed -f ${SRCDIR}/mk/genmake.sed < $$dir/Gmakefile > $$dir/makefile ; \
+			${MAKE} $$dir/makefile >/dev/null ; \
 		done
 
 dirs:
