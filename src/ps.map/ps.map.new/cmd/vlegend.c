@@ -119,6 +119,7 @@ int vect_legend (void)
 	    {	
         	fprintf(PS.fp, "%.8f W\n", vector.width[i] );
 		set_rgb_color(vector.colors[i][0]);
+		fprintf(PS.fp, "[] 0 setdash\n");
 		fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectstroke\n",
 		    x + 10.0 , y , 52.0, 0.8 * fontsize);
 	    }	    
