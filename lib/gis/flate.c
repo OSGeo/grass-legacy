@@ -116,7 +116,10 @@
 static void
 break_compile (void)
 {
-    /* if ZLIB is not installed, a compile error is generated here */
+    /* if ZLIB is not installed, a compile error is generated here
+     * The HAVE_ZLIB_H flag is set in src/include/config.h by
+     * configure
+     */
     NULL = 1;
 }
 
@@ -136,7 +139,7 @@ _init_zstruct (z)
     z_stream *z;
 {
     /* The types are defined in zlib.h, we set to NULL so zlib uses
-     * its default functions 
+     * its default functions.
      */
     z->zalloc = (alloc_func)0;
     z->zfree  = (free_func)0;
