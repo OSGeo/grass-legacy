@@ -4,7 +4,7 @@ MODULE_TOPDIR = ../..
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 #always compile dbf driver:
-SUBDIRS1 = dbf
+SUBDIRS1 = dialog dbf
 
 #odbc:
 ifneq ($(strip $(ODBCLIB)),)
