@@ -39,6 +39,7 @@ proc GSelect_::create { element } {
 
     $tree bindText  <ButtonPress-1>        "GSelect_::select $tree"
     $tree bindImage <ButtonPress-1>        "GSelect_::select $tree"
+    $tree bindText  <Double-ButtonPress-1> "GSelect_::selectclose $tree"
 
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset $env(MAPSET)
@@ -106,6 +107,11 @@ proc GSelect_::select { tree node } {
     $tree selection set $node
     update
     set selected $node
+}
+
+proc GSelect_::selectclose { tree node } {
+    GSelect_::select $tree $node
+    destroy .selwin
 }
 
 proc GSelect_::moddir { idx tree node } {
