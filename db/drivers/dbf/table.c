@@ -268,6 +268,7 @@ save_table ( int t)
 
       }
     
+    G_debug (2, "Write %d rows", nrows);
     rec = 0;
     for( i = 0; i < nrows; i++ )
       {
@@ -301,6 +302,7 @@ save_table ( int t)
            }
 	 rec++;
       }
+    G_debug (2, "Written %d records", rec);
 
     DBFClose ( dbf );
 

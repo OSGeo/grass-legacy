@@ -29,6 +29,14 @@ int add_column (int tab, int type, char *name, int width, int decimals)
 
     G_debug (3, "add_column(): tab = %d, type = %d, name = %s, width = %d, decimals = %d",
 	                       tab, type, name, width, decimals);
+
+    /* Check if the column exists */
+    for ( c = 0; c < db.tables[tab].ncols; c++ ) {
+	if ( G_strcasecmp( db.tables[tab].cols[c].name, name ) == 0 ) {
+	    append_error( "Column '%s' already exists (duplicate name)\n", name);
+	    return DB_FAILED;
+	}
+    }
 	    
     c = db.tables[tab].ncols; 
     

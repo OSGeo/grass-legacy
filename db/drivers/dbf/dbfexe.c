@@ -24,6 +24,7 @@
 #include "proto.h"
 
 int yyparse(void);
+void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals );
 int sel(SQLPSTMT * st, int tab, int **set);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
 double eval_node(Node * nodeptr, int tab, int row);
@@ -36,6 +37,7 @@ int execute(char *sql, cursor * c)
     int i, j, tab, ret;
     SQLPSTMT *st;
     ROW *dbrows;
+    VALUE *dbval;
     int row, nrows;
     int *cols, ncols, col;
     int *selset;
@@ -81,7 +83,7 @@ int execute(char *sql, cursor * c)
     }
 
     if ((st->command == SQLP_DROP) || (st->command == SQLP_DELETE) ||
-        (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE)
+        (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE) || (st->command == SQLP_ADD_COLUMN)
     ) {
 	if ( db.tables[tab].write == FALSE ) {
   	    append_error( "Cannot modify table, don't have write permission for DBF file.\n");
@@ -129,6 +131,27 @@ int execute(char *sql, cursor * c)
 
     /* do command */
     switch (st->command) {
+    case (SQLP_ADD_COLUMN):
+	load_table(tab);
+	get_col_def ( st, i, &dtype, &width, &decimals );
+	ret = add_column(tab, dtype, st->Col[i].s, width, decimals);
+	if ( ret == DB_FAILED ) {
+	    append_error("Cannot add column.\n");
+	    return DB_FAILED;
+	}
+	/* Add column to each row */
+	for ( i = 0; i < db.tables[tab].nrows; i++ ) {
+	    db.tables[tab].rows[i].values = 
+	        (VALUE *) realloc( db.tables[tab].rows[i].values, db.tables[tab].ncols * sizeof(VALUE));
+
+            dbval = &(db.tables[tab].rows[i].values[db.tables[tab].ncols-1]);
+	    dbval->i = 0;
+	    dbval->d = 0.0;
+	    dbval->c = NULL;
+	}
+	db.tables[tab].updated = TRUE;
+	break;
+
     case (SQLP_CREATE):
 	if (tab >= 0) {
 	    append_error("Table %s already exists\n", st->table);
@@ -142,29 +165,13 @@ int execute(char *sql, cursor * c)
 	db.tables[tab].write = TRUE;
 
 	for (i = 0; i < ncols; i++) {
-	    switch (st->ColType[i]) {
-	    case (SQLP_INTEGER):
-		dtype = DBF_INT;
-		width = 11;
-		decimals = 0;
-		break;
-	    case (SQLP_VARCHAR):
-		dtype = DBF_CHAR;
-		width = st->ColWidth[i];
-		decimals = 0;
-		break;
-	    case (SQLP_DATE):  /* DATE treated as string unless SHAPELIB/DBFLIB supports date type */
-		dtype = DBF_CHAR;
-		width = 10;   /* 2004-01-23 = 10 chars */
-		decimals = 0;
-		break;
-	    case (SQLP_DOUBLE):
-		dtype = DBF_DOUBLE;
-		width = 20;
-		decimals = 6;
-		break;
+	    get_col_def ( st, i, &dtype, &width, &decimals );
+	    ret = add_column(tab, dtype, st->Col[i].s, width, decimals);
+	    if ( ret == DB_FAILED ) {
+		append_error("Cannot create table.\n");
+	        db.tables[tab].alive = FALSE;
+		return DB_FAILED;
 	    }
-	    add_column(tab, dtype, st->Col[i].s, width, decimals);
 	}
 	db.tables[tab].described = TRUE;
 	db.tables[tab].loaded = TRUE;
@@ -255,6 +262,33 @@ int execute(char *sql, cursor * c)
     }
 
     return DB_OK;
+}
+
+/* for given parser result and column index finds dbf column definition */
+void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals )
+{
+    switch (st->ColType[col]) {
+	case (SQLP_INTEGER):
+	    *type = DBF_INT;
+	    *width = 11;
+	    *decimals = 0;
+	    break;
+	case (SQLP_VARCHAR):
+	    *type = DBF_CHAR;
+	    *width = st->ColWidth[col];
+	    *decimals = 0;
+	    break;
+	case (SQLP_DATE):  /* DATE treated as string unless SHAPELIB/DBFLIB supports date type */
+	    *type = DBF_CHAR;
+	    *width = 10;   /* 2004-01-23 = 10 chars */
+	    *decimals = 0;
+	    break;
+	case (SQLP_DOUBLE):
+	    *type = DBF_DOUBLE;
+	    *width = 20;
+	    *decimals = 6;
+	    break;
+    }
 }
 
 int set_val(int tab, int row, int col, SQLPVALUE * val)
