@@ -6,10 +6,14 @@
 #ATKIS = Amtliches Topographisch-Kartographisches Informationssystem
 #
 # $Id$
-# written by Otto Dassau, 
-#           Institute of Physical Geography and Landscape Ecology
-#           University of Hannover
-#           <Otto.Dassau@stud.uni-hannover.de>
+#
+#        Copyright (C) 2000 by the GRASS Development Team
+#        Author: Otto Dassau <Otto.Dassau@stud.uni-hannover.de>
+#                Institute of Physical Geography and Landscape Ecology
+#                University of Hannover
+#
+#        This program is free software under the GPL (>=v2)
+#        Read the file COPYING coming with GRASS for details.
 #
 #Skript zum Importieren von ATKIS-DGM Hoehendaten
 #in eine für GRASS lesbare Site-Datei unter $LOCATION/site_lists/...
