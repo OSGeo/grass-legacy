@@ -30,6 +30,11 @@ resolved automatically).
 <br><b>v.db.connect map=</b><em>circles_db</em> <b>table=</b><em>archsites</em> <b>field=</b><em>1</em> 
     <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
 
+<h2>BUGS</h2>
+For some data v.buffer can produce strange results, especially if the buffer size is 
+bigger than input features. Usually you can solve the problem if you run v.buffer 
+more times with smaller buffer.
+
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.type.html">v.type</a></em>,
