@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) driverlib
+	$(GMAKE) deblib
