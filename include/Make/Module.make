@@ -25,13 +25,13 @@ cmd: $(BIN_CMD)/$(PGM) htmlcmd
 
 $(BIN_CMD)/$(PGM): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
+	@test -x $(BIN)/$(PGM) || ln -s ../etc/front.end $(BIN)/$(PGM)
 
 inter: $(BIN_INTER)/$(PGM) htmlinter
 
 $(BIN_INTER)/$(PGM): $(ARCH_INTER_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) -o $@ $(ARCH_INTER_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
+	@test -x $(BIN)/$(PGM) || ln -s ../etc/front.end $(BIN)/$(PGM)
 
 etc: $(ETC)/$(PGM) htmletc
 
