@@ -18,6 +18,14 @@ ERROR_LOG=error.log
 
 trap "exit" 2 3 9 15
 
+#are we in the main GRASS directory?
+if ! test -f ./configure
+then
+  echo "Be sure to run this script inside the GRASS source code main directory"
+  exit
+fi
+
+
 echo "building new makefiles. Takes a while..."
 mk/mkmakefiles   
 

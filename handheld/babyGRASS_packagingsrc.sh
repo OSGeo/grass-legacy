@@ -9,12 +9,14 @@
 
 TARBALL=babyGRASS_src.tar.gz
 
+#are we in the main GRASS directory?
 if ! test -f ./configure
 then
   echo "Be sure to run this script inside the GRASS source code main directory"
   exit
 fi
 
+#list of directories to be included:
 LIST='mk
 src/CMD
 src/include
