@@ -21,7 +21,7 @@ file is from lower left to upper right (reverse to GRASS).
 
 <H2>NOTES</H2>
 
-The output from <EM>r.out.arc</EM> may be placed into a file
+The output from <EM>r.out.arc</EM> may also be placed into a file
 by using the UNIX redirection mechanism;  e.g.:
 
 <DL>
@@ -32,6 +32,13 @@ by using the UNIX redirection mechanism;  e.g.:
 The output file <EM>out.grd</EM> can then be copied
 onto a CDROM or floppy disk for export purposes.
 
+<P><BR>
+An Arc ASCII grid can be loaded into ArcGIS 8.3 though ArcToolbox.<BR>
+Use the "Import to Raster" -> "ASCII to Grid" tool to create a binary grid 
+which can be selected using ArcCatalog. The spatial analyst extension may 
+need to be installed and activated within Arc.
+
+<P>
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="r.in.arc.html">r.in.arc</A></EM>
