@@ -1,0 +1,5 @@
+interface_build {
+    {v.support option=edit} 1
+    {Edit categories of vector file.}
+    {entry map {Name of the GRASS vector file to be edited:} 0 vector}
+}
