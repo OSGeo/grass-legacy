@@ -87,6 +87,12 @@ void G_set_gisrc_mode ( int mode )
     varmode = mode; 
 }
 
+/* Get info where variables are stored */
+int G_get_gisrc_mode ( void )
+{
+    return ( varmode ); 
+}
+
 static int 
 read_env ( int loc )
 {
