@@ -193,6 +193,7 @@ src/mapdev/v.in.tig.basic
 src/mapdev/v.in.tig.lndmk
 src/mapdev/v.in.transects
 src/mapdev/v.info
+src/mapdev/v.llabel
 src/mapdev/v.merge
 src/mapdev/v.mkgrid
 src/mapdev/v.mkquads
