@@ -178,8 +178,7 @@ exp_cond	: exp_log
 		;
 
 exp_let		: exp_cond
-		| NAME '=' exp_let	{ $$ = binding($1,$3); define_variable($$);	}
-		| VARNAME '=' exp_let	{ $$ = binding($1,$3);	}
+		| name '=' exp_let	{ $$ = binding($1,$3); define_variable($$);	}
 		;
 
 exp		: exp_let
