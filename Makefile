@@ -29,7 +29,6 @@ INST_DIR=		${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
-MAKE=			make
 INSTALL=    	    	cp
 
 
@@ -67,10 +66,10 @@ BIN_DIST_FILES = $(FILES) \
 default:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && $(MAKE) ) || exit 1; \
+		$(MAKE) -C $$subdir; \
 	done
-	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
-	${SHELL} -c "cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp ; true"
+	-cp -f $(FILES) ${ARCH_DISTDIR}/
+	-cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.html")
 
 LIBDIRS = \
@@ -87,10 +86,10 @@ LIBDIRS = \
 libs:
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && $(MAKE) ) || exit 1; \
+		$(MAKE) -C $$subdir; \
 	done
-	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
-	${SHELL} -c "cp -fr --parents include ${ARCH_DISTDIR}/ ; true"
+	-cp -f $(FILES) ${ARCH_DISTDIR}/
+	-cp -fr --parents include ${ARCH_DISTDIR}/
 
 mix:
 	GRASS_PERL=${PERL} sh ./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
@@ -102,7 +101,7 @@ copymix:
 	cat $(GRASS50)/src/CMD/RELEASE >> MIX
 
 mixclean:
-	${SHELL} -c "find . -type l -exec rm {} \; 2>/dev/null ; true"
+	-find . -type l -exec rm {} \; 2>/dev/null
 	rm -f MIX 
 
 # Copy binary modules
@@ -114,36 +113,36 @@ binmix:
 FORCE:
 
 cleandistdirs: 
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/bin/         2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/bwidget/     2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/docs/        2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/driver/      2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/etc/         2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/fonts/       2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null ; true"
-	${SHELL} -c "rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null ; true"
-	${SHELL} -c "rmdir ${ARCH_DISTDIR} ; true"
-	${SHELL} -c "rm -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} 2>/dev/null ; true"
-	${SHELL} -c "rmdir ${ARCH_BINDIR} ; true"
+	-rm -rf ${ARCH_DISTDIR}/bin/         2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/bwidget/     2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/docs/        2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/driver/      2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/etc/         2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/fonts/       2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
+	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null
+	-rmdir ${ARCH_DISTDIR}
+	-rm -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} 2>/dev/null
+	-rmdir ${ARCH_BINDIR}
 
 clean: cleandistdirs
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && $(MAKE) clean) || exit 1; \
+		$(MAKE) -C $$subdir clean; \
 	done
 
 libsclean: cleandistdirs
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
-		(cd $$subdir && $(MAKE) clean) || exit 1; \
+		$(MAKE) -C $$subdir clean; \
 	done
 
 distclean: clean
-	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
-	${SHELL} -c "rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null ; true"
+	-rm -f config.cache config.log config.status 2>/dev/null
+	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
 
 strip: FORCE
 	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
@@ -151,7 +150,7 @@ strip: FORCE
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
 	fi; \
-	${SHELL} -c "cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \; ; true"	
+	-cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \;
 
 install: FORCE
 	@ # The following action MUST be a single action. That is, all lines
@@ -206,28 +205,28 @@ real-install: FORCE
 	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
 	@##### test -d ${INST_DIR}/dev || ${MAKE_DIR_CMD} ${INST_DIR}/dev
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
-	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} > ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ; true"
-	${SHELL} -c "chmod a+x ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	@##### ${SHELL} -c "cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	-sed -e "s#^GISBASE.*#GISBASE=${INST_DIR}#" ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} > ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
+	-chmod a+x ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
+	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	@##### -cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
 	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
 	@ # high risk of deleteing system files since PREFIX is defined by
 	@ # default to be /usr/local
-	@##### ${SHELL} -c "cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
-	@##### ${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
-	${SHELL} -c "chmod -R a+rX ${INST_DIR} 2>/dev/null ; true"
+	@##### -cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
+	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
+	-chmod -R a+rX ${INST_DIR} 2>/dev/null
 
 install-strip: FORCE
 	${MAKE} strip
@@ -236,7 +235,7 @@ install-strip: FORCE
 
 bindist:  
 	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
-	date=`date '+%d_%m_%Y'`; name=grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
+	-date=`date '+%d_%m_%Y'`; name=grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
 	    sed -e "s/BIN_DIST_VERSION/${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
@@ -245,43 +244,43 @@ bindist:
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
 	    binaryInstall.src > grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
-	    chmod a+x grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null ; true
+	    chmod a+x grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null
 
 # make a source package for distribution (we include the 5.3.0 stuff):
 srcdist: FORCE distclean
-	${SHELL} -c "${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	-${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
 
 	@ # needed to store code in package with grass-version path:
-	${SHELL} -c "mv * ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	-mv * ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	@ #we use -h to get the linked files into as real files:
 	tar cvfzh grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
 	@ # restore src code location:
-	${SHELL} -c "mv ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* ." ; true
-	${SHELL} -c "rmdir ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	-mv ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* .
+	-rmdir ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	@ echo "Distribution source package: grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
 
 # make a source package for library distribution (we include the 5.3.0 stuff):
 srclibsdist: FORCE distclean
-	${SHELL} -c "${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	-${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
-     
-	@ # needed to store code in package with grass-version path:
-	${SHELL} -c "cp -L * ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL tools ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL include ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-	${SHELL} -c "cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
 
-	${SHELL} -c "cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
-        
+	@ # needed to store code in package with grass-version path:
+	-cp -L * ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL tools ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL include ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+
+	-cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+
 	tar cvfz grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
-	${SHELL} -c "rm -r ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}" ; true
+	-rm -r ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
 
 htmldocs:
