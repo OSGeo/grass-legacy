@@ -22,26 +22,49 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
-<h3><font color="#00A000">What's new in GRASS 5.0.3/CVS comparing to 5.0.2</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.3.0/CVS comparing to 5.0.3</font></h3>
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
 <li>all projection related modules support datum transformations now:
     r.proj, s.proj, v.proj, m.proj2, g.region, ... (Paul Kelly)
+<li>d.grid: added optional border marks plotting (Markus Neteler)
+<li>NVIZ: various updates and add-ons in kanimator and main window (Bob
+    Covill)
+<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>added GIPs - GRASS Improvement Proposals in grass5/gip/
+<li>C++ compilation support added (Glynn Clements)
+<li>proj: major overhaul, datum transformation cleaned and general support added (Paul Kelly)
+<li>proj: external PROJ.4 (libproj) support added (Paul Kelly)
+<li>parser: added G_html_usage() for g.parser and scripts convenience to
+    write new HTML pages (Markus Neteler)
+</ul>
+
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.3/CVS comparing to 5.0.2</font></h3>
+[GRASS 5.0.3 released XX August 2003]<p>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
 <li>d.barscale: added -t flag to optionally draw text
 	on top rather than to the right (Markus Neteler)
-<li>d.grid: added optional border marks plotting (Markus Neteler)
 <li>d.histogram: bugfix (Eric Miller)
 <li>d.sites: fix to handle a window spanning the date line (Eric Miller)
 <li>d.what.sites: fixed wrong distance bug (Paul Kelly)
 <li>g.parser: made usable (Glynn Clements)
-<li>NVIZ: various updates and add-ons in kanimator and main window (Bob
-    Covill)
 <li>r.in.gdal: color names written as names now instead of numbers (Markus Neteler)
+<li>r.fill.dir: segfaults bug #1969 (Hamish Bowman)
+<li>r.los: updated to floating point (Markus Neteler)
 <li>r.mapcalc3: fix bug in #colour modifiers (Glynn Clements)
 <li>r.spread: several fixes (Eric Miller)
-<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
 <li>r.timestamp: timestamp writing fix (Hamish Bowman)
 <li>s.in.ascii: timestamp writing fix (Hamish Bowman)
+<li>s.in.dbf: timestamp writing fix (Hamish Bowman)
+<li>shade.rel.sh: fixes for Lat/Long (Gordon Keith)
 <li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
 <li>s.vol.rst: added deviation sites map (Jaro Hofierka)
 <li>v.digit: print map scale in snapping threshold menu (Markus Neteler)
@@ -52,13 +75,7 @@ Many thanks to all contributors!
 
 <b>Source Code:</b><br>
 <ul>
-<li>added GIPs - GRASS Improvement Proposals in grass5/gip/
-<li>C++ compilation support added (Glynn Clements)
 <li>HTML pages: various bugfixes (Hamish Bowman)
-<li>proj: major overhaul, datum transformation cleaned and general support added (Paul Kelly)
-<li>proj: external PROJ.4 (libproj) support added (Paul Kelly)
-<li>parser: added G_html_usage() for g.parser and scripts convenience to
-    write new HTML pages (Markus Neteler)
 <li>gislib: fixed bug #1502 (Glynn Clements)
 <li>grass.src, init.sh: script cleanup (Markus Neteler, Glynn Clements)
 <li>added white space support for GRASS startup, basically for MS-Windows (Markus Neteler)
