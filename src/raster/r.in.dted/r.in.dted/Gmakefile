@@ -3,6 +3,8 @@ OBJS= main.o \
       dted_read.o \
       read_write.o
 
+all: $(BIN_CMD)/$(PGM)
+
 $(OBJS): dtedgis.h
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
