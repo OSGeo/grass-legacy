@@ -112,13 +112,16 @@ dig_read_cidx_head (   GVFILE * fp, struct Plus_head *plus)
 
     /* check version numbers */
     if ( plus->cidx_Version_Major > GV_CIDX_VER_MAJOR || plus->cidx_Version_Minor > GV_CIDX_VER_MINOR ) {
-      if ( plus->cidx_Back_Major > GV_CIDX_EARLIEST_MAJOR 
-	      || plus->cidx_Back_Minor > GV_CIDX_EARLIEST_MINOR ) {
+      /* The file was created by GRASS library with higher version than this one */
+
+  	if ( plus->cidx_Back_Major > GV_CIDX_VER_MAJOR || plus->cidx_Back_Minor > GV_CIDX_VER_MINOR ) {
+          /* This version of GRASS lib is lower than the oldest which can read this format */	  
 	  G_fatal_error ( "Category index format version %d.%d is not supported by this release."
 			  " Try to rebuild topology or upgrade GRASS.", 
 			   plus->spidx_Version_Major, plus->spidx_Version_Minor);
 	  return (-1);
       }
+
       G_warning ( "Your GRASS version does not fully support category index format %d.%d of the vector."
 		  " Consider to rebuild topology or upgrade GRASS.",
 		      plus->cidx_Version_Major, plus->cidx_Version_Minor );

@@ -94,13 +94,16 @@ dig_Rd_spindx_head (   GVFILE * fp,
   
   /* check version numbers */
   if ( ptr->spidx_Version_Major > GV_SIDX_VER_MAJOR || ptr->spidx_Version_Minor > GV_SIDX_VER_MINOR ) {
-      if ( ptr->spidx_Back_Major > GV_SIDX_EARLIEST_MAJOR 
-	      || ptr->spidx_Back_Minor > GV_SIDX_EARLIEST_MINOR ) {
+      /* The file was created by GRASS library with higher version than this one */
+      
+      if ( ptr->spidx_Back_Major > GV_SIDX_VER_MAJOR || ptr->spidx_Back_Minor > GV_SIDX_VER_MINOR ) {
+	  /* This version of GRASS lib is lower than the oldest which can read this format */
 	  G_fatal_error ( "Spatial index format version %d.%d is not supported by this release."
 		          " Try to rebuild topology or upgrade GRASS.", 
 			   ptr->spidx_Version_Major, ptr->spidx_Version_Minor);
 	  return (-1);
       }
+
       G_warning ( "Your GRASS version does not fully support spatial index format %d.%d of the vector."
 	          " Consider to rebuild topology or upgrade GRASS.",
 	              ptr->spidx_Version_Major, ptr->spidx_Version_Minor );
