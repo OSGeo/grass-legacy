@@ -1,0 +1,62 @@
+.\" %W% %G%
+.TH Dcell 2D D-language
+.SH NAME
+Dcell
+\- Tool for viewing maps
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dcell
+.I "mapname" [overlay=\fI1/0\fR]
+.SH DESCRIPTION
+.I Dcell 
+displays the grid cell map
+.I mapname
+in the current graphics window, where
+.I mapname
+is the name of an available cell file in the user's mapset search path.
+If the currently chosen window already contains text or graphics, it is
+wise to first invoke
+.I Derase
+to clear the current window before running
+.I Dcell.
+After running \fIDcell\fR, other \fID\fR programs such as
+.I Dvect
+and
+.I Dgrid
+can be used to enhance the plot.
+.PP
+If run without the overlay=1 option,
+.I Dcell
+overwrites any image already in the current window (also obscuring
+those portions of any windows which overlap the current window).
+.PP
+If the option overlay=1 is used, those portions of the image
+already in the current window which contain category 0
+are left untouched.  The \fIDoverlay\fR command is simply the
+running of \fIDcell\fR with this option set.
+.sp
+The default is to set overlay=0, which will cause \fIDcell\fR to
+completely overwrite whatever is in the current window.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+.sp
+\fIDchoose[2D]\fR	T{
+To choose a current window in which graphics can be displayed
+T}
+.br
+\fIDerase[2D]\fR	To erase the contents of the current window
+.br
+\fIDgrid[2D]\fR	To overlay the contents of the current window with a grid
+.br
+\fIDoverlay[2D]\fR	To overlay a cell file with another cell file
+.br
+\fIDvect[2D]\fR	T{
+To overlay the contents of the current window with a vector file
+T}
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
