@@ -1,0 +1,72 @@
+.\" @(#)ps.7p - 1.5
+.nr LL 5.5i
+.TH PS 7P 1/17/91 "USGS"
+.ad b
+.hy 1
+.SH NAME
+ps - PostScript internal device driver for program plotter
+.SH SYNOPSIS
+.LP
+.B plotter -d ps ...
+.SH DESCRIPTION
+This device driver produces output compatible with
+Adobe's PostScript display language.
+
+The following
+.B \-D plotter
+command line control parameters can appear in any order:
+.TP
+.BI \-Dx
+.br
+Suppress PostScript
+.B showpage
+at end of plot.
+This allows concatenation of output to create composite plot.
+.TP
+.BI \-Dt
+.br
+Suppress PostScript initialization string and
+.B showpage.
+This option should be employed when output is employed
+with programs that convert TeX dvi files to PostScript programs.
+See note below.
+.TP
+.BI \-Do x,y
+.br
+Identical to plotter
+.B \-XY
+command and may be discontinued.
+.SH SIZE AND RESOLUTION
+Maximum x and y axis sizes are respectively
+5588 and 4318 (11.5\(mu8 inches) with a resolution of 200 counts/cm.
+.SH SPECIAL STRING OPERATIONS
+None.
+.SH MECHANICAL PENS
+Eight pen widths may be selected by mechanical pen numbers 0\-7 that
+are respectively: 1, 5, 10, 15, 20, 30, 40 and 50 \(mu 0.142 points
+(1/72.27 inch) wide.
+By adding 8, 16 and 24 to the pen number the lines are respectively drafted
+with
+.B setgray
+levels of .25, .5 and .75.
+.SH NOTES
+The following initialization operations must precede driver
+output if the
+.B -Dt
+option is employed:
+.RS 0
+.sp
+\f(CW/L { {rlineto} repeat currentpoint stroke moveto} bind def
+ /U { moveto } bind def
+ 1 setlinecap
+ 1 setlinejoin\fR
+.RE
+.SH SEE ALSO
+ Device Independent Vector Graphics manual.
+ plotter(1)
+.SH DIAGNOSTICS
+Invalid
+.B \-D
+option will quietly cause initialization failure.
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA 02543
