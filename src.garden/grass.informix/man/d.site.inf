@@ -1,0 +1,132 @@
+.TH d.site.inf
+.SH NAME
+\fId.site.inf\fR \- Display select sites from a database query.
+.br
+.I "(GRASS-RDBMS Interface Display Program)"
+.SH SYNOPSIS
+\fBd.site.inf\fR
+.br
+\fBd.site.inf help\fR
+.br
+\fBd.site.inf\fR \fBtab=\fIname\fR \fBcoords=\fIX-column,Y-column\fR \fBwhere=\fIname\fR \fB[map=\fIname]\fR \fB[plot=\fIcolor,icon,size]\fR \fB[join=\fItab,tabkey,pkey]\fR
+.SH ALTERNATE
+\fBd.site.inf -s help\fR
+.br 
+\fBd.site.inf\fR \fB-s\fR \fBsql=\fIfilename\fR \fB[map=name]\fB[plot=color,icon,size]\fR 
+.SH DESCRIPTION
+d.site.inf displays select point location information returned from a database query.  The site locations returned from the database query are displayed as icons in the active frame. The user controls the color, size and icon used in the graphic output. At the users option a site list of the database output is generated and placed in the current mapset/location.
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fItab=database_table_name\fR
+Table containing X, Y coordinate values.
+.IP \fIcoords=database_column_names\fR
+Columns containing x,y coordinate values.
+.IP \fIwhere=SQL_where_clause\fR
+SQL "WHERE" clause which specifies the query criteria to be used in subsetting the database. The information specified in the WHERE option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
+
+For example, if you want to select only those records from the table type7 where the value for cfcc is either D43 
+or D44 the following could be entered:
+
+.br
+	type7.cfcc = "D43" or type7.cfcc = "D44"
+
+.br
+
+To select all type7 records which are not educational institutions (eg. NOT D43):
+
+.br
+	type7.cfcc NOT MATCHES "D43"
+
+If the database column used as the selection criteria is a character field then the associated value must be placed in double quotes. To determine the data types associated with columns in the currently selected database use the g.column.inf command with the -v flag.
+
+In addition to the operators presented in the examples above a range of relational operators including OR and BETWEEN etc. are supported. There may be some differences in the relational operators which are supprted with different database drivers.
+
+The examples presented above were created using the command line parser.  If d.site.inf is being called from a shell script remember to escape quoted strings. The follwing example presents a component of a shell script used to join two tables and display point features where the database column cfcc is set to "D44".
+
+.br
+	d.site.inf tab=type7 coords=utm_e,utm_n 
+.br
+		  where='cfcc matches "D44"' 
+.br
+		  map=blckgrp.ids plot=green,plus,2
+
+Queries which are more complex than these are best implemented using the
+-s flag and a prepared SQL file.
+.br
+.IP \fImap=list\fR
+Name of sites list to output.
+.IP \fIplot=color,icon,size\fR
+Colors:red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black.
+.br
+Icon: diamond, box, plus, x.
+.br
+Size: 1-9. 
+.br
+default: gray, x, 3
+.IP \fIjoin=tab,tabkey,pkey\fR
+Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+
+For instance, assume that type7 is a table containing X,Y coordinate values and that type7_owners is a
+table containing ownership information associated with type7 landmark data. To base a query on site location which
+would return attribute data on ownership and locational information in the table type7 the following join
+would be needed on the command line:.
+
+     tab = type7
+     join=type7_owners,type7_owners.type7_id,type7.type7_id
+
+The column type7_id is common to both the type7 and the type7_owners table. Because of this attribute data
+from both tables will be returned if the coordinates registered by the mouse return a record from the
+table type7 within a radius specified by the distance parameter on the command line.
+Specifying these conditions would insure that all rows from table type7_owners which satisfy the query criteria would be matched with the corresponding rows in table type7, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the -s option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+
+
+.SH "ALTERNATE COMMAND LINE USAGE"
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the [-s] flag on the command line. When using this flag the user must include the name of a text file on the command line as type7. This file must include a complete, type7 formed SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer. 
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line. The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the -s flag.
+
+.br
+	SELECT DISTINCT utm_e, utm_n FROM type7
+.br
+	WHERE cfcc="D65" 
+.br
+	      AND utm_e > 0 AND utm_n > 0
+.br
+	ORDER BY utm_e, utm_n
+
+
+
+.LP
+Flags
+.IP \fI-s\fR
+SQL select statements are input from a prepared file.
+.LP
+Parameters
+.IP \fIsql=filename\fR
+SQL statements specifying well formed selection criteria.
+.IP \fImap=list\fR
+Name of sites list to output.
+.IP \fIplot=color,icon,size\fR
+Colors:red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black; 
+.br
+Icon: diamond, box, plus, x; 
+.br
+Size: 1-9. 
+.br
+default: gray, x, 3
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
