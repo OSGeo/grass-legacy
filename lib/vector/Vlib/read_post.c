@@ -210,6 +210,8 @@ Vect__Read_line_post (struct Map_info *Map,
   
   G_debug (3, "Vect__Read_line_post(): id = %d", id);
 
+  Map->head.last_offset = id;
+
   sprintf (query, "select %s, NumPoints(%s) , Dimension(%s)  FROM  %s where %s  = %ld;",
              Map->fInfo.post.geom_type,
              Map->fInfo.post.geom_geom, Map->fInfo.post.geom_geom,
