@@ -76,7 +76,47 @@ do
 	esac
 done
 
-echo g.remove rast=$rast vect=$vect icon=$icon labels=$labels sites=$sites region=$region group=$group 3dview=$dview
+if [ "$rast" ]
+then
+	rast="rast=$rast"
+fi
+
+if [ "$vect" ]
+then
+	vect="vect=$vect"
+fi
+
+if [ "$icon" ]
+then
+	icon="icon=$icon"
+fi
+
+if [ "$labels" ]
+then
+	labels="labels=$labels"
+fi
+
+if [ "$sites" ]
+then
+	sites="sites=$sites"
+fi
+
+if [ "$region" ]
+then
+	region="region=$region"
+fi
+
+if [ "$group" ]
+then
+	group="group=$group"
+fi
+
+if [ "$dview" ]
+then
+	dview="3dview=$dview"
+fi
+
+echo g.remove $rast $vect $icon $labels $sites $region $group $dview
 
 yn=y
 if [ ! "$force" ]
@@ -88,6 +128,6 @@ fi
 
 if [ "$yn" = "y" -o "$yn" = "Y" ]
 then
-	echo g.remove rast=$rast vect=$vect icon=$icon labels=$labels sites=$sites region=$region group=$group 3dview=$dview
+	g.remove $rast $vect $icon $labels $sites $region $group $dview
 fi
 
