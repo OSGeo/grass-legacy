@@ -5,7 +5,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>v.llabel</b></EM>  - Bulk-labels unlabeled lines in a binary GRASS vector file.
+<EM><b>v.llabel</b></EM>  - Bulk-labels unlabeled points or lines in a binary GRASS vector file.
 
 <BR>
 
@@ -18,12 +18,12 @@
 <B>v.llabel help</B>
 <BR>
 <B>v.llabel</B> [<B>-in</B>] <B>map=</B><EM>name</EM> 
-[<B>value=</B><EM>value</EM>]
+[<B>type=</B><EM>name</EM>] [<B>value=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
 <EM>v.llabel</EM> allows the user to bulk-label currently
-unlabeled lines (not area features) in a binary GRASS
+unlabeled points or lines (not area features) in a binary GRASS
 vector file (i.e., a <EM>dig</EM> file).  The user must run
 
 <EM><A HREF="v.support.html">v.support</A></EM> 
@@ -92,6 +92,13 @@ immediately.
 <DD>Name of binary GRASS vector data file whose unlabeled
 lines are to be labelled.  This map layer must exist in the
 user's current GRASS mapset.
+
+<DT><B>type=name</B>
+<DD>Select type of primitives to be labeled.
+<DD>Options: point, line, both
+<BR>
+Default:  line
+</DL>
 
 <DT><B>value=</B><EM>value</EM> 
 <DD>The category value to be assigned to all unlabeled lines in the
