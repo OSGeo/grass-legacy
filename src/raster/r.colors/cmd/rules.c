@@ -18,7 +18,7 @@ struct colr {
     int set;
 };
 
-int read_color_rules (struct Colors *colors, DCELL min, DCELL max, int fp)
+int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, int fp)
 {
     struct rule *rule = NULL;
     struct colr df, null;
@@ -97,7 +97,7 @@ int read_color_rules (struct Colors *colors, DCELL min, DCELL max, int fp)
 	rule[nrules-1].set = 1;
     }
 
-    if(rule[0].val > min || rule[nrules-1].val < max)
+    if((rule[0].val > min || rule[nrules-1].val < max) && !quiet)
        G_warning("Your color rules do not cover the whole range of data!");
 
 /* fill in all unset val */
