@@ -225,7 +225,7 @@ int main (int argc, char **argv)
 
 #ifdef FROM_BUILD
     fprintf (stdout,"    Building areas\n");
-    build_all_areas (&Map);
+    build_all_areas (&Map, NULL);
 
     if (do_islands) /*ISLE*/
     {
@@ -259,7 +259,7 @@ int main (int argc, char **argv)
     compress (&Map, 1);
 
     fprintf (stdout,"    Building areas\n");
-    build_all_areas (&Map);
+    build_all_areas (&Map, NULL);
 
     if (do_islands) /*ISLE*/
     {
