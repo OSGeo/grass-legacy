@@ -152,7 +152,7 @@ static int get_ref (
 
     while (fgets(buf, sizeof buf, fd))
     {
-	n=sscanf (buf, "%39s %39s %15s", name, mapset, color);
+	n=sscanf (buf, "%29s %29s %15s", name, mapset, color);
 	if (n==2 || n==3)
 	{
 	    I_add_file_to_group_ref (name, mapset, ref);
