@@ -78,6 +78,8 @@ int main (int argc, char *argv[])
     
     Vect_open_new (&Map, out_opt->answer, 0);
 
+    Vect_hist_command ( &Map );
+
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 

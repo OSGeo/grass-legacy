@@ -177,6 +177,8 @@ main (int argc, char *argv[])
     G_fatal_error ( "Cannot open vector output file <%s>\n", dig_file);
   }
 
+  Vect_hist_command ( &Map );
+
   /* Open database, create table */
   Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
   Vect_map_add_dblink ( &Map, Fi->number, Fi->name, Fi->table, Fi->key, Fi->database, Fi->driver);

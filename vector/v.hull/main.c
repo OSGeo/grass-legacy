@@ -267,6 +267,8 @@ int main(int argc, char **argv) {
     if (0 > Vect_open_new (&Map, output->answer, 0) )
         G_fatal_error ("Unable to open vector file <%s>\n", output->answer);
 
+    Vect_hist_command ( &Map );
+
     /* compute convex hull */
     numHullPoints = convexHull(points, numSitePoints, &hull);
 
