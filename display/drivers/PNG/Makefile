@@ -1,10 +1,8 @@
-
 MODULE_TOPDIR = ../../..
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
-
 
 EXTRA_CFLAGS = $(PNGINC) -I../lib
 
@@ -14,6 +12,7 @@ OBJS =  \
 	Clr_table.o\
 	Color.o\
 	Draw_line.o\
+	Draw_point.o\
 	Get_w_box.o\
 	Get_w_line.o\
 	Get_w_pnt.o\
@@ -25,7 +24,7 @@ OBJS =  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-LIBES = $(DRIVERLIB) $(GISLIB)
+LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB)
 DEPENDENCIES = $(DRIVERDEP) $(GISLIBDEP)
 PGM=pngdriver
 

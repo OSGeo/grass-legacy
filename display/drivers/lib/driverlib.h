@@ -7,12 +7,14 @@ int can_do_float(void);
 int reset_color(int, int, int, int);
 /* Draw_line.c */
 int draw_line(int, int, int, int);
+/* Draw_point.c */
+int draw_point(int, int);
 /* Get_w_box.c */
-int Get_location_with_box2(int, int, int *, int *, int *, int);
+int Get_location_with_box(int, int, int *, int *, int *);
 /* Get_w_line.c */
-int Get_location_with_line2(int, int, int *, int *, int *, int);
+int Get_location_with_line(int, int, int *, int *, int *);
 /* Get_w_pnt.c */
-int Get_location_with_pointer2(int *, int *, int *, int);
+int Get_location_with_pointer(int *, int *, int *);
 /* Panel.c */
 int Panel_save(char *, int, int, int, int);
 int Panel_restore(char *);
@@ -91,6 +93,18 @@ int soft_text(int ,int ,double ,double ,double ,char *);
 int onechar(int ,int ,double ,double ,double ,unsigned char);
 int _get_color_index(int);
 int _get_color_index_array(int *,int);
+
+/* freetype */
+int Font_freetype_get(char*);
+int Font_freetype_release();
+int isFont_freetype();
+int init_font_freetype(char*);
+char* getFreeTypeName();
+int init_font_charset(char* str);
+char* getCharset();
+int soft_text_freetype(int ,int ,double ,double ,double ,char *);
+int soft_text_ext_freetype(int ,int ,double ,double ,double ,char *);
+int get_text_ext_freetype(int*,int*,int*,int*);
 
 /* connect_{sock,fifo}.c */
 #ifdef USE_G_SOCKS

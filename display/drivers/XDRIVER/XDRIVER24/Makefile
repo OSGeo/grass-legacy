@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-LIBES = $(DRIVERLIB) $(GISLIB)
+LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB)
 DEPENDENCIES = $(DRIVERDEP) $(GISDEP)
 
 # if you are compiling under X11R3 add this define
@@ -40,6 +40,7 @@ OBJS =  \
 	Clr_table.o\
 	Color.o\
 	Draw_line.o\
+	Draw_point.o\
 	Get_w_box.o\
 	Get_w_line.o\
 	Get_w_pnt.o\
