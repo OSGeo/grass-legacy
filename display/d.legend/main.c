@@ -46,6 +46,8 @@ int main( int argc, char **argv )
 	struct FPRange fprange ;
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
+	CELL min_colr, max_colr;
+	DCELL min_dcolr, max_dcolr;
 	int x0, x1, y0, y1, xyTemp;
 	double X0, X1, Y0, Y1;
 	int SigDigits, MaxLabelLen;
@@ -311,11 +313,21 @@ int main( int argc, char **argv )
 		}
 		G_get_range_min_max (&range, &min_ind, &max_ind);
 
+		G_get_color_range(&min_colr, &max_colr, &colors);
+
 		if(UserRange) {
 			if(min_ind < UserRangeMin)
 				min_ind = (int)ceil(UserRangeMin);
 			if(max_ind > UserRangeMax)
 				max_ind = (int)floor(UserRangeMax);
+			if(min_ind > UserRangeMin) {
+				min_ind = UserRangeMin < min_colr ? min_colr : (int)ceil(UserRangeMin);
+				G_warning("Color range exceeds lower limit of actual data");
+			}
+			if(max_ind < UserRangeMax) {
+				max_ind = UserRangeMax > max_colr ? max_colr : (int)floor(UserRangeMax);
+				G_warning("Color range exceeds upper limit of actual data");
+			}
 		}
 		
 		/*  cats_num is total number of categories in raster                  */
@@ -407,12 +419,22 @@ int main( int argc, char **argv )
 			G_fatal_error(buff) ;
 		}
 		G_get_fp_range_min_max(&fprange, &dmin, &dmax);
-		
+
+		G_get_d_color_range(&min_dcolr, &max_dcolr, &colors);
+
 		if(UserRange) {
 			if(dmin < UserRangeMin)
 				dmin = UserRangeMin;
 			if(dmax > UserRangeMax)
 				dmax = UserRangeMax;
+			if(dmin > UserRangeMin) {
+				dmin = UserRangeMin < min_dcolr ? min_dcolr : UserRangeMin;
+				G_warning("Color range exceeds lower limit of actual data");
+			}
+			if(dmax < UserRangeMax) {
+				dmax = UserRangeMax > max_dcolr ? max_dcolr : UserRangeMax;
+				G_warning("Color range exceeds upper limit of actual data");
+			}
 		}
 				
 		do_cats = 0;	/* if only to get rid of the compiler warning  */
