@@ -1,0 +1,20 @@
+OFILES	= main.o do_leave.o tty.o  \
+		menu.o 
+
+all: $(BIN)/g.help  the_help
+
+$(BIN)/g.help:	$(OFILES) $(GISLIB)
+	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES)
+
+the_help:
+	rm -rf $(GISBASE)/etc/help
+	tar cf - help | (cd $(GISBASE)/etc; tar xf -)
+
+do_call.o: do_climb.h
+do_call.o: menu.h
+do_climb.o: do_climb.h
+do_climb.o: menu.h
+do_leave.o: menu.h
+menu.o: menu.h
+
+$(GISLIB): #
