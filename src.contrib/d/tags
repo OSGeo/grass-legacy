@@ -1,0 +1,30 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+begin_script	script.c	/^begin_script()$/
+cell	cell.c	/^cell (argc, argv) char **argv;$/
+choose_mon	choose_mon.c	/^nd)) break;$/
+clear_script	script.c	/^clear_script()$/
+display	display.c	/^urn window (argc-1, argv+1); $/
+erase	erase.c	/^erase (argc, argv) char *argv[];$/
+find_color	getcolor.c	/^find_color (name) char *name;$/
+find_icon	geticon.c	/^find_icon (name) char *name;$/
+getcolor	getcolor.c	/^getcolor (argc, argv, msg, n)$/
+geticon	geticon.c	/^geticon (argc, argv, msg, n)$/
+getname	getname.c	/^getname (argc, argv, element, desc, n)$/
+getsize	getsize.c	/^getsize (argc, argv, msg, n)$/
+help	help.c	/^help()$/
+init	init.c	/^init()$/
+input	input.c	/^}$/
+labels	labels.c	/^labels (argc, argv) char **argv;$/
+overlay	overlay.c	/^overlay (argc, argv) char **argv;$/
+repeat	repeat.c	/^);$/
+run	run.c	/^}$/
+run_script	script.c	/^run_script(choose_window)$/
+script	script.c	/^script (command, level) char *command;$/
+set_background_color	erase.c	/^set_background_color (color) char *color;$/
+set_cell	script.c	/^set_cell (name) char *name;$/
+show_colors	getcolor.c	/^show_colors()$/
+show_icons	geticon.c	/^show_icons()$/
+sites	sites.c	/^sites (argc, argv) char **argv;$/
+vect	vect.c	/^vect (argc, argv) char **argv;$/
+window	window.c	/^window (argc, argv) char *argv[];$/
+zoom	zoom.c	/^}$/
