@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "Vect.h"
+#include "gis.h"
 
 /*!
  \fn struct dblinks *Vect_new_dblinks_struct ( void )
