@@ -1,5 +1,6 @@
 #include <unistd.h>
-/* menu.c */
+#include <stdlib.h>
+#include <string.h>
 #include "imagery.h"
 #include "orthophoto.h"
 #include "local_proto.h"
@@ -25,21 +26,29 @@ int main (int argc, char **argv)
 
     /* get and check the group reference files */
     if (!I_get_group_ref (group.name, &group.group_ref))
-    exit(1);
-    if (group.group_ref.nfiles <= 0)
     {
-        fprintf (stderr, "Group [%s] contains no files\n", group.name);
-        sleep(3);
-        exit(1);
+      G_warning("Pre-selected group <%s> not found.",group.name);
+      /* clean the wrong name in GROUPFILE*/
+      I_put_group("");
+
+      /* ask for new group name */
+      if (!I_ask_group_old ("Enter imagery group for ortho-rectification",group.name))
+        exit(0);
+      I_get_group_ref (group.name, &group.group_ref);
     }
+
+    if (group.group_ref.nfiles <= 0)
+        G_fatal_error ("Group [%s] contains no files\n", group.name);
     
+    I_put_group(group.name);
+
     while (1)
     {
-
         if (!I_get_group(group.name)) { 
            exit(0);
         }
-	/* print the screenfull of options */ 
+        
+	/* print the screen full of options */ 
         sprintf (title, "i.ortho.photo -- \tImagery Group = %s ", group.name);
 	G_clear_screen();
 
