@@ -1,0 +1,44 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffdump.1,v 1.5 90/11/25 11:15:56 sam Exp $
+.\"
+.\" Copyright (c) 1989 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFDUMP 1 "May 2, 1990"
+.SH NAME
+tiffdump \- print verbatim information about
+.SM TIFF
+files
+.SH SYNOPSIS
+.B tiffdump
+.I "name \&..."
+.SH DESCRIPTION
+.I Tiffdump
+displays directory information from files created according
+to the Tag Image File Format, Revision 5.0.
+The header of each
+.SM TIFF
+file (magic number, version, and first directory offset)
+is displayed, followed by the tag contents of each directory in the file.
+For each tag, the name, datatype, count, and value(s) is displayed.
+When the symbolic name for a tag or datatype is known, the symbolic
+name is displayed followed by it's numeric (decimal) value.
+Tag values are displayed enclosed in ``<>'' characters immediately
+preceded by the value of the count field.
+For example, an
+.I ImageWidth
+tag might be displayed as ``ImageWidth (256) SHORT (3) 1<800>''.
+.PP
+.I Tiffdump
+is particularly useful for investigating the contents of
+.SM TIFF
+files that
+.I libtiff
+does not understand.
+.SH "SEE ALSO"
+.IR tiffinfo (1),
+.IR libtiff (3)
