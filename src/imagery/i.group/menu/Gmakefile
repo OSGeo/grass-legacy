@@ -1,11 +1,8 @@
-# %W% %G%
-
-
 LIST = main.o\
 	menu.o\
 	run.o
 
-$(BIN)/i.group: $(LIST) $(GISLIB) $(IMAGERYLIB) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.group: $(LIST) $(GISLIB) $(IMAGERYLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
 
 $(GISLIB) $(IMAGERYLIB) $(VASKLIB): #
