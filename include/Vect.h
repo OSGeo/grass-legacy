@@ -200,7 +200,17 @@ int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
 
 
-      /* Overlay */
+    /* Cleaning */
+void Vect_break_lines ( struct Map_info *, int, struct Map_info *, FILE * );
+void Vect_break_polygons ( struct Map_info *, int, struct Map_info *, FILE * );
+void Vect_remove_duplicates ( struct Map_info *, int, struct Map_info *, FILE * );
+void Vect_snap_vertices ( struct Map_info *, int, double, struct Map_info *, FILE * );
+void Vect_remove_dangles ( struct Map_info *, int, double, struct Map_info *, FILE * );
+void Vect_chtype_dangles ( struct Map_info *, double, struct Map_info *, FILE * );
+void Vect_remove_bridges ( struct Map_info *, struct Map_info *, FILE * );
+void Vect_chtype_bridges ( struct Map_info *, struct Map_info *, FILE * );
+
+    /* Overlay */
 int Vect_overlay_str_to_operator ( char * );
 int Vect_overlay ( struct Map_info *, int, struct ilist *, struct ilist *, 
 	           struct Map_info *, int, struct ilist *, struct ilist *,
