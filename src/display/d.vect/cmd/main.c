@@ -18,8 +18,10 @@ char **argv ;
 	char buf[128] ;
 	int i, stat ;
 	int color;
+	char *D_color_list();
 	char map_name[128] ;
 	struct Option *opt1, *opt2;
+	struct Flag   *levone;
 	struct line_pnts *Points;
 
 	opt1 = G_define_option() ;
@@ -34,8 +36,12 @@ char **argv ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Color desired for drawing map" ;
+
+	levone = G_define_flag ();
+	levone->key		= 'm';
+	levone->description	= "Use less memory";
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -66,7 +72,7 @@ char **argv ;
 
 	Points = Vect_new_line_struct ();
 
-	if (use_plot1(map_name, mapset))
+	if (use_plot1(map_name, mapset) || levone->answer )
 		stat = plot1 (map_name, mapset, Points);
 	else if (stat = plot2 (map_name, mapset, Points))
 	{
@@ -85,5 +91,4 @@ char **argv ;
 }
 
 /* NULL function to bypass debugf() in dig library */
-debugf() { 
-}
+debugf() {}
