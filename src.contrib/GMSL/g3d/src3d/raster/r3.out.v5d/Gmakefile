@@ -9,6 +9,6 @@ PGM=r3.out.v5d
 HOME=$(BIN_MAIN_CMD)
 
 $(HOME)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(LINKMLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(G3DLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(G3DLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
 
 $(GISLIB): #
