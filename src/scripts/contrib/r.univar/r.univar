@@ -76,7 +76,7 @@ if [ $# -eq 1 -a $gotitBASE -eq 0 -a $gotitCOVER -eq 0 ] ; then
        cover="${fullname}"
        COVER="${name}"
        if [ "$cover" = "" ] ; then
-          echo "ERROR: cover raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
+          echo "ERROR: cover raster map [$1] does not exist."
           exit 1
        fi
 fi
