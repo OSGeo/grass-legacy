@@ -1,0 +1,28 @@
+HOWTO - Adding new header files from tcl/tk:
+
+Problem: The header files tkInt.h and tkIntDecls.h differ between
+         the various TK library versions. If not updated, NVIZ
+         will just crash (or doesn't compile at all).
+
+Solution: We have to add the individual header files (tkInt.h and
+          tkIntDecls.h) from the tk source code. For that
+          they are renamed according to their version number.
+          The togl.c contains a set of 'if' + 'elif' to reflect
+          the various version numbers.
+
+Step-by-step:
+
+1. download from http://tcl.sourceforge.net and add here (rename!)
+   tkInt.h      -> tkInt8.x.h (e.g. tkInt8.4.h)
+   tkIntDecls.h -> tkIntDecls8.x.h (e.g. tkIntDecls8.x.h)
+
+2. change in tkInt8.x.h the include statement to tkIntDecls8.x.h
+
+3. edit togl.c
+   add 'elif' statement with new names according to version
+   of TK
+
+4. complain about these stupid things to Tcl/Tk developers
+
+
+Markus
