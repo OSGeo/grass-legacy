@@ -4525,12 +4525,13 @@ echo "$ac_t""$XDRIVER" 1>&6
 
 
 if test "$XDRIVER" = "ipc"; then
-    echo GRASS_IN_CONFIGURE=yes ./README.ipc new
-    GRASS_IN_CONFIGURE=yes ./README.ipc new
+    xdriver=new
 else
-    echo GRASS_IN_CONFIGURE=yes ./README.ipc orig
-    GRASS_IN_CONFIGURE=yes ./README.ipc orig
+    xdriver=orig
 fi
+
+echo GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
+GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
 
 
 trap '' 1 2 15
