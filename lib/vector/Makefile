@@ -15,7 +15,7 @@ clean: cleansubdirs
 
 #check for program
 checkdoxygen:
-	@(type -p doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
+	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
 generatelocaldox:
 	(cd Vlib ; sh generate_dox.sh)
