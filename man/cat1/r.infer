@@ -1,7 +1,7 @@
 
 
 
-r.infer              GRASS Reference Manual               r.infer
+r.infer <main>       GRASS Reference Manual        <main> r.infer
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.infer              GRASS Reference Manual               r.infer
+r.infer <main>       GRASS Reference Manual        <main> r.infer
 
 
 
@@ -126,14 +126,14 @@ COMMANDS AND STATEMENTS
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.infer              GRASS Reference Manual               r.infer
+r.infer <main>       GRASS Reference Manual        <main> r.infer
 
 
 
@@ -192,14 +192,14 @@ r.infer              GRASS Reference Manual               r.infer
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.infer              GRASS Reference Manual               r.infer
+r.infer <main>       GRASS Reference Manual        <main> r.infer
 
 
 
@@ -258,14 +258,14 @@ r.infer              GRASS Reference Manual               r.infer
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-r.infer              GRASS Reference Manual               r.infer
+r.infer <main>       GRASS Reference Manual        <main> r.infer
 
 
 
@@ -324,7 +324,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
