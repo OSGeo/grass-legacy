@@ -1,0 +1,19 @@
+PGM       = $(GARDEN_BIN)/d.what.r.inf
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+
+
+
+OBJS = \
+	main.o  \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o \
+	getCat.o  \
+	opencell.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
