@@ -342,7 +342,7 @@ int G_get_cellhd(char *, char *, struct Cell_head *);
 int G_ask_ellipse_name(char *);
 /* get_ellipse.c */
 int G_get_ellipsoid_parameters(double *, double *);
-int G_get_ellipsoid_by_name(char *, double *, double *);
+int G_get_ellipsoid_by_name(const char *, double *, double *);
 char *G_ellipsoid_name(int);
 /* get_proj_name.c */
 /* get_projinfo.c */
