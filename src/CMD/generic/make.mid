@@ -37,7 +37,7 @@ X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
 DIG_LIBDIR  = $(SRC)/libes/vect32/libes
 DIG_INCLUDE  = $(SRC)/libes/vect32/lib
-VECT_INCLUDE = -I$(SRC)/libes/vect32/Vlib -I$(SRC)/libes/vect32/diglib
+VECT_INCLUDE = -I$(SRC)/include/vect
 
 VASKLIB     = $(LIBDIR)/libvask.a
 VASK        = $(VASKLIB) $(CURSES)
