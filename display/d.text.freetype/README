@@ -41,6 +41,7 @@ Usage
 
 Bugs
 ----
+
 With some PCF files, it cannot handle bitmap images correctly.
 Could anyone fix this?
 
