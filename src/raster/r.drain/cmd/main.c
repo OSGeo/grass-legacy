@@ -31,6 +31,12 @@
 
 #include "drain_cmd.h"
 
+struct metrics {
+	double ew_res, ns_res, diag_res;
+};
+
+
+
 struct Cell_head window;
 CELL *value;
 int nrows, ncols;
@@ -38,6 +44,8 @@ SEGMENT in_seg, out_seg;
 int data_type;
 int exclude_nulls = 1;
 double null_value = 0.0;
+
+struct metrics* m = NULL;
 
 int 
 main (int argc, char *argv[])
@@ -247,6 +255,26 @@ main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 
+	m = (struct metrics*) malloc(nrows*sizeof(struct metrics));
+	
+	if (m==NULL)
+		G_fatal_error("Metrics allocation");
+
+	G_begin_distance_calculations();
+	{
+		double e1,n1,e2,n2;
+		e1=window.east;
+		n1=window.north;
+		e2=e1+window.ew_res;
+		n2=n1-window.ns_res;
+		for (n=0;n<nrows;n++) {
+			m[n].ew_res = G_distance(e1,n1,e2,n1);
+			m[n].ns_res = G_distance(e1,n1,e1,n2);
+			m[n].diag_res = G_distance(e1,n1,e2,n2);
+			e2=e1+window.ew_res;
+			n2=n1-window.ns_res;
+		}
+	}
 
 	/*  Open elevation cell layer for reading  */
 	elevation_fd = G_open_cell_old
@@ -605,11 +633,20 @@ make_neighbors_list (POINT *head, int row, int col, double data, int p_row, int 
 {
 	POINT *make_point();
 	double dist, slope, sqrt(), atan();
+#if 0	
 
 	dist = sqrt((((row - p_row) * window.ns_res) *
 	    ((row - p_row) * window.ns_res))
 	    + (((col - p_col) * window.ew_res) *
 	    ((col - p_col) * window.ew_res)));
+#else								/* (pmx) true distance , relevant whith lat-lon projections and large maps */
+	if ((p_row!=row)&&(p_col!=col))
+		dist = m[row].diag_res;
+	else if (p_row==row)
+		dist = m[row].ew_res;
+	else
+		dist = m[row].ns_res;
+#endif
 
 	slope = atan((data - p_elev)/dist);
 
