@@ -8,6 +8,9 @@ global argv
 #set ENV for script
 set NVIZ_SCRIPTS $env(GISBASE)/etc/nviz2.2/scripts
 
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 #Execute Command
 if {$argv == ""} {
