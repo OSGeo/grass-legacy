@@ -71,6 +71,8 @@ vertex *vertex_init(const double, const double);
 void vertex_free(vertex *);
 int vertex_add_link(vertex *, long);
 int vertex_links_update(vertex *, vertex *, long, long);
+int vertex_links_remove(vertex *, vertex *, long, long);
+int vertex_delete_link(vertex *, int);
 repository *get_repository_ptr(void);
 int close_repository(void);
 int delete_repository(void);
