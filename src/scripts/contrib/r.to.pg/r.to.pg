@@ -8,7 +8,8 @@
 #      to tell "awk" about it?
 #      Problem is to use environment variables within "awk".
 #
-# Jul 19 17:42:19 MEST 2000
+# $Id$
+#
 # by  Markus Neteler
 #     neteler@geog.uni-hannover.de
 
