@@ -1,0 +1,11 @@
+PGM = r.drain
+LIST =  main.o
+ 
+LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+ 
+$(LIST): stash.h point.h
+ 
+$(LIBES): #
+
