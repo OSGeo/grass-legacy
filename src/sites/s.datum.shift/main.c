@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "projects.h"
 #include "CC.h"
 #include "local_proto.h"
