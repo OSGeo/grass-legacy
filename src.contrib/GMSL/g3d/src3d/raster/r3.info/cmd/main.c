@@ -33,11 +33,11 @@ int main (argc, argv)
 
 
     opt1 = G_define_option() ;
-    opt1->key        = "map" ;
+    opt1->key        = "grid3" ;
     opt1->type       = TYPE_STRING ;
     opt1->required   = YES ;
     opt1->gisprompt  = "old,grid3,3d raster" ;
-    opt1->description= "Name of existing raster map" ;
+    opt1->description= "Name of existing 3dcell map" ;
 
     G_gisinit(argv[0]);
 
