@@ -10,7 +10,6 @@
      Changed to dynamic allocation of x_screen, y_screen to remove the
      4096 vector line limit. */
 
-#include <math.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
@@ -203,7 +202,7 @@ static int
 ScreenPolyMoveNearest (SCREENPOLY *a, SCREENPOLY *b)
 {
     int i, j;
-    double dmin, dcur;
+    double dmin, dcur, dx, dy;
     SCREENPOLY  *u, *v;
     SCREENPOINT *uPnt, *vPnt, *uSave, *vSave;
 
@@ -239,8 +238,10 @@ ScreenPolyMoveNearest (SCREENPOLY *a, SCREENPOLY *b)
                 vPnt = vPnt->next;
             }
 
-            dcur = sqrt ((uPnt->x - vPnt->x)*(uPnt->x - vPnt->x) +
-                         (uPnt->y - vPnt->y)*(uPnt->y - vPnt->y));
+            /* Find the square of the distance */
+            dx = (double)(uPnt->x - vPnt->x);
+            dy = (double)(uPnt->y - vPnt->y);
+            dcur = dx*dx + dy*dy;
             if (i == 0 && j == 0)
             {
                 dmin = dcur;
