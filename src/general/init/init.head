@@ -1,5 +1,13 @@
 : ${GISBASE?}
 
+# set PAGER environment variable if not set
+
+if [ ! "$PAGER" ]
+then
+	PAGER=more
+	export PAGER
+fi
+
 # get home directory, name of lockfile and gisrc file
 
 home=`cd;pwd`
