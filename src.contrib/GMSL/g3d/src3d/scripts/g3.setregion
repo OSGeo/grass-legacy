@@ -10,6 +10,11 @@
 #TODO:
 #
 
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program."
 exit
@@ -20,7 +25,9 @@ function usage()
  echo ""
  echo "g3.setregion modifies current 3D region"
  echo ""
- echo "Usage: g3.setregion  [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=]"
+ echo "Usage: g3.setregion [-u] [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=]"
+ echo ""
+ echo "   -u update WIND3 from WIND/DEFAULT_WIND3"
  echo ""
  echo "   n=north"
  echo "   s=south"
@@ -39,6 +46,12 @@ if [ "$1" = "" -o "$1" = "help" -o "$1" = "-help" -o "$1" = "-h" ]
 then
  usage
  exit
+else
+ if [ "$1" != "-u" ]  # update WIND3 from WIND
+ then
+   usage
+   exit
+ fi
 fi
 
 if test ! -f $LOCATION/WIND3
