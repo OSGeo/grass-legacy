@@ -129,6 +129,7 @@ These calls provide that capability.
 
 <pre>
 R_raster()
+R_raster_char()
 R_set_RGB_color()
 R_RGB_raster()
 </pre>
