@@ -45,7 +45,7 @@ in the manual entry for \fIparser\fR.
 
 Input can be entered from the keyboard or from an input file.
 In either case, input should be entered with one longitude and latitude pair per line,
-in the form:
+in either of the below forms:
 .nf
 .LP
 .RS
@@ -53,6 +53,19 @@ degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
 degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
 degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
 degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
+  .
+  .
+end
+.RE
+.LP
+.fi
+.nf
+.LP
+.RS
+degrees.decimal{E|W} degrees.decimal{N|S}
+degrees.decimal{E|W} degrees.decimal{N|S}
+degrees.decimal{E|W} degrees.decimal{N|S}
+degrees.decimal{E|W} degrees.decimal{N|S}
   .
   .
 end
@@ -94,7 +107,9 @@ UTM zone number (results will be forced into this UTM zone).
 Options:  1-60
 .IP \fBinput\*=\fIname\fR 18
 Name of an existing input file containing longitude, latitude coordinates to be
-converted.
+converted.  Input lines may either be input in the form of
+degrees:minutes:seconds, or as decimal degrees.  If input as decimal
+degrees, \fIm.ll2u\fR recognizes negative numbers.
 .IP \fBoutput\*=\fIname\fR 18
 Name to be assigned to the output file containing UTM coordinates and zone designations.
 .LP
@@ -185,6 +200,10 @@ ellipsoid parameter definition file in $GISBASE/etc/ellipse.table.
 
 Read the marginalia of your source map to determine
 which spheroid was used to produce the map on which you are working.
+
+This program recognizes negative numbers if coordinates are
+input in decimal degrees rather than in the form of
+degrees:minutes:seconds.
 
 This program has received only limited testing.
 It should be used with some caution.
