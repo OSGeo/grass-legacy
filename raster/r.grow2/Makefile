@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = r.grow2
+PGM = r.grow
 
 LIBES = $(GISLIB)
 DEPENDENCIES = $(GISDEP)
