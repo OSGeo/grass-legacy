@@ -11,7 +11,7 @@ src/libes/imagery
 src/libes/icon
 src/libes/dlg
 #lib for display files (dspf) of isosurfaces from volume data (grid3 files):
-src/libes/dspf
+#src/libes/dspf
 ###ogsf requires OpenGL / MESA:
 #src/libes/ogsf
 #src/libes/g3d
@@ -38,6 +38,8 @@ src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
 src/display/devices/HTMLMAP
+#requires Gd lib from Boutell:
+#src/display/devices/PNGdriver
 src/fonts/for_grass
 src/front.end
 ##### DBMI DRIVERS #####    
@@ -78,7 +80,7 @@ src/display/d.histogram
 src/display/d.icons
 src/display/d.label
 src/display/d.labels
-##from Pierre: for new layered XDRIVER2:
+##from Pierre: for new layered XDRIVER2, currently in src.unused/:
 #src/display/d.layers
 src/display/d.leg.thin
 src/display/d.legend
@@ -123,7 +125,7 @@ src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
 src/general/g.version
-#note: manage contains g.list, g.remove, g.rename:
+#note: manage/ contains g.list, g.remove, g.rename:
 src/general/manage
 src/imagery/i.ask
 src/imagery/i.cca
@@ -138,8 +140,9 @@ src/imagery/i.gensigset
 src/imagery/i.grey.scale
 src/imagery/i.group
 src/imagery/i.in.erdas
-src/imagery/i.in.gtc
-src/imagery/i.in.pri
+#don't work, r.in.gdal can be used:
+#src/imagery/i.in.gtc
+#src/imagery/i.in.pri
 src/imagery/i.maxlik
 src/imagery/i.ortho.photo
 src/imagery/i.out.erdas
@@ -155,7 +158,8 @@ src/imagery/i.smap
 src/imagery/i.tape.mss
 src/imagery/i.tape.mss.h
 src/imagery/i.tape.other
-src/imagery/i.tape.slc
+#doesn't work, r.in.gdal can be used:
+#src/imagery/i.tape.slc
 src/imagery/i.tape.spot
 src/imagery/i.tape.tm
 #src/imagery/i.tape.tm3
@@ -184,8 +188,10 @@ src/mapdev/v.in.arc
 src/mapdev/v.in.arc.poly
 src/mapdev/v.in.ascii
 src/mapdev/v.in.atlas
+# which one to keep??:
 src/mapdev/v.in.dlg
 src/mapdev/v.in.dlg2
+# which one to keep??:
 src/mapdev/v.in.dxf
 src/mapdev/v.in.dxf2
 src/mapdev/v.in.dxf3d
@@ -255,10 +261,12 @@ src/misc/m.tiger.region
 src/misc/m.u2ll
 src/paint/Interface
 src/paint/Drivers
+# which one to keep??:
 src/paint/Drivers/preview
 src/paint/Drivers/preview2
 src/paint/Programs
 src/paint/Programs/p.map.new/cmd
+# do we need this?:
 src/paint/Tests
 src/ps.map
 src/raster/r.agnps50
@@ -348,6 +356,7 @@ src/raster/r.surf.area
 src/raster/r.surf.contour
 src/raster/r.surf.fractal
 src/raster/r.surf.gauss
+#should be merged:
 src/raster/r.surf.idw
 src/raster/r.surf.idw2
 src/raster/r.surf.random
@@ -361,6 +370,7 @@ src/raster/r.transect
 src/raster/r.volume
 src/raster/r.water.outlet
 src/raster/r.watershed
+#should be merged:
 src/raster/r.weight
 src/raster/r.weight2
 src/raster/r.what
@@ -371,7 +381,6 @@ src/sites/s.in.dbf
 src/sites/s.in.shape
 src/sites/s.info
 #src/sites/s.kcv  # needs update to 5.0 API
-#src/sites/s.menu # needs update to 5.0 API
 src/sites/s.normal
 src/sites/s.o2n.tps
 src/sites/s.out.ascii
@@ -397,21 +406,25 @@ src.contrib/CERL/raster/r.distance
 src.contrib/CERL/raster/r.hydro.CASC2D
 #
 # requires MOTIF:
-# src.contrib/GMSL/xganim
+#src.contrib/GMSL/xganim
 # src.contrib/GMSL/ogl3d_linux
 #
 src.contrib/GMSL/NVIZ2.2
 #
 # only on SGI:
-# src.contrib/GMSL/SG3d
+#src.contrib/GMSL/SG3d
+#src.contrib/GMSL/sg4d
 #
-# grid3d support (raster voxel):
+# grid3d (raster voxel), still buggy:
 #src.contrib/GMSL/g3d
 #
 #######################################
 # PostgreSQL support: (working!)
 #src.garden/grass.postgresql
 #######################################
+#src/raster/r.fill.dir # needs F77-> C finishing
+src.garden/answers/src.answers/raster/r.fill.dir
+#
 # from here onwards it becomes experimental!!
 #
 src.contrib/CERL/imagery/i.rvi.prediction2
@@ -423,7 +436,7 @@ src.contrib/CERL/raster/r.out.mpeg
 src.contrib/CERL/raster/r.rational.regression
 src.contrib/CERL/raster/r.rvi
 src.contrib/CERL/raster/r.water.fea/src
-#src.contrib/CERL/sites/s.surf.krig # not working
+#src.contrib/CERL/sites/s.surf.krig # not working, see src/sites/s.surf.krig
 # src.contrib/CORPS/FLOOD        # not working
 # src.contrib/CORPS/FLOOD2/cmd   # not working
 # src.contrib/CWU/Census/scripts # requires RIM DBMS
@@ -433,15 +446,11 @@ src.contrib/CERL/raster/r.water.fea/src
 # src.contrib/NPS/d.distance # needs dig_P_*() functions
 # src.contrib/NPS/d.distance/curses # um, huh?
 src.contrib/NPS/r.in.elas
-src.contrib/NPS/r.in.elas/cmd
-src.contrib/NPS/r.in.elas/inter
 src.contrib/NPS/r.in.utm
 src.contrib/NPS/r.out.elas
 src.contrib/NPS/v.circle
-src.contrib/NPS/v.circle/cmd
-src.contrib/NPS/v.circle/inter
 # src.contrib/OTHER/HPXL300  # very special
-# src.contrib/OTHER/numonics # update the Gmakefile
+# src.contrib/OTHER/numonics # NUMONICS digitizing tablet driver
 src.contrib/OTHER/v.in.poly
 src.contrib/PURDUE/d.linegraph
 src.contrib/PURDUE/i.texture
@@ -459,12 +468,13 @@ src.contrib/SCS/display/d.text
 # src.contrib/SCS/imp_exp/v.export # already in src/
 # src.contrib/SCS/mapdev/dlg_to_bdlg.scs # compile error
 src.contrib/SCS/mapdev/v.in.dlg
+# do we want this ??:
 src.contrib/SCS/mapdev/v.patch.scs
 # src.contrib/SCS/misc/FIPS_proj/inter
 # src.contrib/SCS/misc/FIPS_proj/lib
 src.contrib/SCS/misc/dotmaps/v.scale.random
-src.contrib/SCS/misc/m.bsplit/cmd
-src.contrib/SCS/misc/m.futil/inter
+src.contrib/SCS/misc/m.bsplit
+src.contrib/SCS/misc/m.futil
 src.contrib/SCS/misc/m.qcalc
 src.contrib/SCS/misc/m.strip99s
 #  SCS paint modules need to be integrated with the src/paint
@@ -490,11 +500,12 @@ src.contrib/SCS/misc/m.strip99s
 # src.contrib/SCS/paint/Programs/newp.map/inter
 # src.contrib/SCS/paint/Programs/ps.map
 # src.contrib/SCS/paint/Programs/trymap
-# src.contrib/SCS/psu # struct Categories breakage
+# src.contrib/SCS/psu                 # struct Categories breakage
 # src.contrib/SCS/raster/r.in.elas    # curses problems tgoto()
 # src.contrib/SCS/raster/r.in.erdas   # obsolete? i.in.erdas
 src.contrib/SCS/raster/r.in.miads
 src.contrib/SCS/raster/r.out.rlc
+# do we want this??: not in sync with src/raster/r.reclass:
 src.contrib/SCS/raster/r.reclass.scs
 src.contrib/SCS/raster/r.tangent
 # src.contrib/SCS/scripts                  # problems
@@ -502,6 +513,7 @@ src.contrib/SCS/raster/r.tangent
 # src.contrib/SCS/sites/s.dotmap.new/v.random # obsolete, already in src/mapdev/
 src.contrib/SCS/vector/v.dump
 src.contrib/SCS/vector/v.make.subj
+# weird name not meeting convention:
 src.contrib/SCS/vector/v.mk_stats
 # src.contrib/SCS/vector/v.mkquads  # src/mapdev/v.mkquads also there
 # src.contrib/SCS/vector/v.proj     # obsolete! already in src/mapdev/
@@ -513,8 +525,7 @@ src.contrib/SDTS
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
-#src.garden/grass.hdf/hdf3
-src.garden/answers/src.answers/raster/r.fill.dir
+#src.garden/grass.hdf/hdf3 # needs 5.0 update
 #src.nonGPL/raster/r.param.scale
 #src.nonGPL/display/d.param.scale
 #src.nonGPL/libes/geom
