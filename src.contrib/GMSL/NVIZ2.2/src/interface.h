@@ -61,6 +61,7 @@ type-ins & sliders easier, too) */
 #define SV_ATT_MAP      -6
 #define SV_ATT_FLAT     -7
 
+GLuint FontBase;
 
 /*------------------------------------------------------------------------ 
 -            this is the data type declaration section                   -
