@@ -1,4 +1,4 @@
-LIST = main.o percent.o usage.o
+LIST = main.o
 
 $(BIN_MAIN_CMD)/r.resample: $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
