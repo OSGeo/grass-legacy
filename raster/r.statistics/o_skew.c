@@ -24,9 +24,7 @@ o_skew (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
     mem = MEM * sizeof(double);
     tab = (double *) G_malloc(mem);
     
-  /*  sprintf(command, "r.stats -cz input='%s,%s' fs=space", basemap, covermap); */
     sprintf(command, "r.stats -cn input='%s,%s' fs=space", basemap, covermap);
-
     stats = popen(command,"r");  
 
     sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
