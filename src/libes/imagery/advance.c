@@ -38,7 +38,7 @@ I_tape_advance(fd,n)
 
 I_tape_advance(fd,n)
 {
-    char buf[128];
+    char buf[32767]; /* hope this is big enough for most records */
     if (n < 0)
 	while (read (fd, buf, sizeof buf) > 0)
 		;
