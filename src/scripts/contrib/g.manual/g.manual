@@ -1,0 +1,14 @@
+#!/bin/sh
+if [ $# -lt 1 ]
+  then
+    echo Usage: `basename $0` [-1] [-a] entries=command,command,...
+    exit -1
+fi
+case $1 in
+-1) /bin/ls $GISBASE/man/1 | more ;;
+-a) /bin/ls -C $GISBASE/man/1 | more ;;
+-f|-e|-s) echo Usage: `basename $0` [-1] [-a] entries=command,command,...; exit -1 ;;
+entries=*) man $GISBASE/man/1/`echo $1 | sed -e 's!entries=!!' \
+           -e "s!, *!.1 $GISBASE/man/1/!g"`.1;;
+*) man $GISBASE/man/1/$1.1;;
+esac
