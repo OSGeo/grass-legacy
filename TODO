@@ -1,4 +1,4 @@
-$Id: TODO,v 1.56 2000-11-21 19:48:10 markus Exp $
+$Id: TODO,v 1.57 2000-11-24 18:08:09 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -365,6 +365,7 @@ Modules:
    (Being worked on by ?)
  - added nice icons for mostly used commands
  - generate module windows by parser.c
+ - integrate src/tcltkgrass/todo/r_mapcalc.tcl (map calculator)
 
 ---------------------------------------------------------------------
 PostgreSQL/ODBC support:
