@@ -1,6 +1,6 @@
 #
 # Copyright (C) 1998 The Information-technology Promotion Agency, Japan(IPA), LGPL
-# $Id: GNUmakefile,v 1.2 2000-03-14 14:29:32 markus Exp $
+# $Id: GNUmakefile,v 1.3 2000-03-14 14:35:28 markus Exp $
 #
 
 SHELL = /bin/sh
@@ -130,7 +130,8 @@ clean:
 	rm -f $(H_GIS) $(H_VECT) *.class *.o core* GRASS/*.class
 
 distclean: clean cleandocs
-	rm -f *.so *.jar
+	rm -f *.so *.jar 
+	rm -rf OBJ.*
 
 # these are tags common for GNU programs but I have not yet implemented them
 install uninstall install-strip:
