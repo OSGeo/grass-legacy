@@ -709,4 +709,11 @@ int gvld_slice(geovol *, int);
 int gvld_wire_slices(geovol *);
 int gvld_wind3_box(geovol *);
 
+/* from gsd_fringe.c */
+void gsd_display_fringe (geosurf *, int[4]);
+void gsd_fringe_horiz_poly (float, geosurf *, int, int);
+void gsd_fringe_horiz_line (float, geosurf *, int, int);
+void gsd_fringe_vert_poly (float, geosurf *, int, int);
+void gsd_fringe_vert_line (float, geosurf *, int, int);
+
 #endif /* _OGSF_LOCAL_PROTO_H */
