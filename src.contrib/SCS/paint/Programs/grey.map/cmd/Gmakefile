@@ -1,0 +1,260 @@
+PGM = grey.map
+
+PAINT = $(ETC)/paint
+
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB)
+
+EXTRA_CFLAGS=$(VECT_INCLUDE)
+
+LIST =	main.o\
+	alloc_pats.o\
+	builtin.o\
+	case.o\
+	cat_color.o\
+	cellfile.o\
+	chk_scale.o\
+	color.o\
+	comment.o\
+	cont_move.o\
+	ctable.o\
+	diamond.o\
+	distance.o\
+	vectdraw.o\
+	vectdot.o\
+	vectfile.o\
+	do_grid.o\
+	do_labels.o\
+	do_plfile.o\
+	do_sites.o\
+	do_vectors.o\
+	dot.o\
+	draw_icon.o\
+	draw_line.o\
+	draw_text.o\
+	error.o\
+	font.o\
+	getcats.o\
+	getgrid.o\
+	graph_line.o\
+	graph_pnt.o\
+	graph_text.o\
+	header.o\
+	input.o\
+	input_pat.o\
+	key_data.o\
+	label.o\
+	lblfile.o\
+	line_eq.o\
+	line_style.o\
+	lookup.o\
+	map.o\
+	mask_vctrs.o\
+	outline.o\
+	parse_list.o\
+	pattern.o\
+	plfile.o\
+	predef_pat.o\
+	patcolor.o\
+	scale.o\
+	scan_color.o\
+	scan_gis.o\
+	scan_misc.o\
+	scan_ref.o\
+	session.o\
+	set_color.o\
+	set_grphcs.o\
+	set_pat.o\
+	set_width.o\
+	sitefile.o\
+	title.o\
+	trailer.o\
+	vectr_info.o\
+	windfile.o\
+	yesno.o
+
+SRCLIST =	main.c\
+	alloc_pats.c\
+	builtin.c\
+	case.c\
+	cat_color.c\
+	cellfile.c\
+	chk_scale.c\
+	color.c\
+	comment.c\
+	cont_move.c\
+	ctable.c\
+	diamond.c\
+	distance.c\
+	vectdraw.c\
+	vectdot.c\
+	vectfile.c\
+	do_grid.c\
+	do_labels.c\
+	do_plfile.c\
+	do_sites.c\
+	do_vectors.c\
+	dot.c\
+	draw_icon.c\
+	draw_line.c\
+	draw_text.c\
+	error.c\
+	font.c\
+	getcats.c\
+	getgrid.c\
+	graph_line.c\
+	graph_pnt.c\
+	graph_text.c\
+	header.c\
+	input.c\
+	input_pat.c\
+	key_data.c\
+	label.c\
+	lblfile.c\
+	line_eq.c\
+	line_style.c\
+	lookup.c\
+	map.c\
+	mask_vctrs.c\
+	outline.c\
+	parse_list.c\
+	pattern.c\
+	plfile.c\
+	predef_pat.c\
+	patcolor.c\
+	scale.c\
+	scan_color.c\
+	scan_gis.c\
+	scan_misc.c\
+	scan_ref.c\
+	session.c\
+	set_color.c\
+	set_grphcs.c\
+	set_pat.c\
+	set_width.c\
+	sitefile.c\
+	title.c\
+	trailer.c\
+	vectr_info.c\
+	windfile.c\
+	yesno.c
+
+####################################################################
+
+
+all: $(BIN_CONTRIB_CMD)/$(PGM) \
+     $(PAINT)/header
+
+$(BIN_CONTRIB_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) -o $@
+saber:
+	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(MATHLIB)
+
+
+
+$(PAINT)/header: HEADER
+	rm -f $@ ; cp $? $@; chmod +r $@
+
+######################################################################
+
+alloc_pats.o: parms.h
+builtin.o: misc.h
+builtin.o: parms.h
+builtin.o: pattern.h
+builtin.o: pattern.h
+cat_color.o: parms.h
+cat_color.o: pattern.h
+cellfile.o: parms.h
+cellfile.o: pattern.h
+comment.o: parms.h
+comment.o: pattern.h
+color.o: colormode.h
+ctable.o: misc.h
+ctable.o: colormode.h
+vectdraw.o: graphics.h
+vectfile.o: vector.h
+vectfile.o: misc.h
+do_grid.o: graphics.h
+do_grid.o: text.h
+do_grid.o: misc.h
+do_grid.o: parms.h
+do_grid.o: pattern.h
+do_grid.o: fullwindow.h
+do_labels.o: text.h
+do_labels.o: labels.h
+do_labels.o: misc.h
+do_labels.o: fullwindow.h
+do_plfile.o: parms.h
+do_plfile.o: pattern.h
+do_sites.o: sites.h
+do_sites.o: text.h
+do_sites.o: misc.h
+do_vectors.o: vector.h
+do_vectors.o: misc.h
+dot.o: graphics.h
+draw_line.o: graphics.h
+draw_text.o: text.h
+draw_text.o: graphics.h
+getcats.o: parms.h
+getcats.o: pattern.h
+getgrid.o: parms.h
+getgrid.o: pattern.h
+getgrid.o: misc.h
+graph_pnt.o: graphics.h
+header.o: parms.h
+header.o: pattern.h
+label.o: labels.h
+label.o: misc.h
+label.o: text.h
+lblfile.o: labels.h
+line_style.o: graphics.h
+lookup.o: parms.h
+lookup.o: pattern.h
+lookup.o: misc.h
+main.o: sites.h
+main.o: vector.h
+main.o: graphics.h
+main.o: fullwindow.h
+main.o: labels.h
+main.o: parms.h
+main.o: pattern.h
+main.o: misc.h
+main.o: colormode.h
+map.o: graphics.h
+map.o: parms.h
+map.o: pattern.h
+map.o: vector.h
+map.o: misc.h
+map.o: fullwindow.h
+map.o: colormode.h
+mask_vctrs.o: graphics.h
+outline.o: parms.h
+outline.o: pattern.h
+outline.o: misc.h
+pattern.o: pattern.h
+pattern.o: misc.h
+plfile.o: parms.h
+plfile.o: pattern.h
+plfile.o: misc.h
+predef_pat.o: misc.h
+scan_color.o: misc.h
+scan_misc.o: fullwindow.h
+set_color.o: graphics.h
+set_grphcs.o: graphics.h
+set_pat.o: parms.h
+set_pat.o: pattern.h
+set_pat.o: misc.h
+set_width.o: graphics.h
+sitefile.o: sites.h
+sitefile.o: misc.h
+vectr_info.o: vector.h
+vectr_info.o: misc.h
+windfile.o: misc.h
+window_cnv.o: graphics.h
+
+dumpfont: dumpfont.o font.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ dumpfont.o font.o $(GISLIB)
+######################################################################
+$(INTERFACE):	#
+$(LIBES):	#
+
