@@ -31,7 +31,7 @@
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);
-int xtract_line(int, int [], char *, char *, char *, int, int, int);
+int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int);
 
 static void add_cat(int x)
 {
@@ -55,6 +55,8 @@ int main (int argc, char **argv)
     struct GModule *module;
     struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
     struct Option *whereopt;
+    struct Map_info Map;
+    struct Map_info Out_Map;
     struct field_info *Fi;
 /*    struct Flag *d_flag;*/
     FILE *in;
@@ -122,8 +124,7 @@ int main (int argc, char **argv)
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;
 
-    if (!mapset)
-	G_fatal_error("Vector file [%s] not available in search list", input);
+    if (!mapset) G_fatal_error("Vector file [%s] not available in search list", input);
       
     G_debug ( 3, "Mapset = %s", mapset);
     /* set output vector file name */
@@ -134,6 +135,19 @@ int main (int argc, char **argv)
     if (!newopt->answer) new_cat = 0;
     else new_cat = atoi(newopt->answer);
 
+    /* Do initial read of input file */
+    Vect_set_open_level (2);
+    Vect_open_old(&Map, input, mapset);
+    
+    /* Open output file */
+    if ( Vect_open_new( &Out_Map, output, Vect_is_3d (&Map) ) < 0) {
+           Vect_close ( &Map );
+           G_fatal_error ( "Can't create output vector file <%s> \n", output) ;
+    }
+
+    /* Read and write header info */
+    Vect_copy_head_data(&Map, &Out_Map);
+    
     /* Read categoy list */
     if ( listopt->answer != NULL ) {
 	/* no file of categories to read, process cat list */
@@ -170,7 +184,7 @@ int main (int argc, char **argv)
 	}
 	fclose(in);
     } else { 
-        Fi = Vect_get_field_info( input, mapset, 1);
+        Fi = Vect_get_field( &Map, 1);
 	fprintf(stderr,"Load cats from the database (table = %s, db = %s).\n",  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
@@ -194,9 +208,13 @@ int main (int argc, char **argv)
 
     type = Vect_option_to_types ( typopt );
     
-    max_att = xtract_line( cat_count, cat_array, input, mapset, output, new_cat, type, dissolve);
+    max_att = xtract_line( cat_count, cat_array, &Map, &Out_Map, new_cat, type, dissolve);
     if ( 0 > max_att)
 	G_fatal_error("Error in line/site extraction processing");
+
+    Vect_close (&Map);
+    Vect_build ( &Out_Map, stdout );
+    Vect_close (&Out_Map);
 
     /* give the user this message  */
     fprintf(stderr, "\nExtracted vector map <%s> has been created.\n",output);

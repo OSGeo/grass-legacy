@@ -163,7 +163,7 @@ main (int argc, char *argv[])
     /* Vector attributes -> OGR fields */
     if ( field > 0 ) {
 	 doatt = 1; /* do attributes */
-	 Fi = Vect_get_field_info( Vect_get_name(&In), mapset, field);
+	 Fi = Vect_get_field( &In, field);
 	 if ( Fi == NULL ) {
 	     G_warning ("Cannot read field info -> using categories only for attributes");
 	     
