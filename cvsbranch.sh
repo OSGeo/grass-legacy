@@ -1,9 +1,16 @@
 #!/bin/sh
 
-# script to tag GRASS stable releases
+###################################################
+#
+# DO NOT USE THIS SCRIPT!
+#
+# (unless you know what you are doing)
+###################################################
+# it is intented to tag GRASS stable releases
 #
 # VERY ALPHA QUALITY!!
 #
+###################################################
 # Markus Neteler
 # $Id$
 
@@ -21,7 +28,7 @@ FURTHER_FILES="config.guess \
 	configure.in configure NEWS.html"
 
 #list of extra directories not in compile list:
-FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused"
+FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused src/CMD"
 
 
 #tag it...
