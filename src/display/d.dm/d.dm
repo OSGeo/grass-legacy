@@ -518,7 +518,7 @@ proc element_list { element } {
 	    }    
 	} else {
     	    foreach name [lsort $names] {
-		append list $name@$dir
+		lappend list $name@$dir
 	    }
 	}
     }
