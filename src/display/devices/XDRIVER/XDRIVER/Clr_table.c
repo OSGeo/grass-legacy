@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include "../lib/colors.h"
 
 /* The systems color represented by "number" is set using the color
@@ -9,14 +7,15 @@
  * variables.  A value of 0 represents 0 intensity; a value of 255
  * represents 100% intensity. */
 
+
 extern int scrn, NCOLORS;
 extern Display *dpy;
-extern int     scrn;
 extern Colormap floatcmap, fixedcmap;
+extern char *calloc();
 Window grwin;
-static int Red[256], Grn[256], Blu[256];
-u_long xpixels[256];
+u_long *xpixels;
 int table_type = FIXED;
+static int Red[256], Grn[256], Blu[256];
 
 
 reset_color(number, red, grn, blu)
@@ -29,6 +28,7 @@ u_char red, grn, blu;
         fprintf(stderr, "reset_color: can't set color %d\n", number);
         return;
     }
+
     /* convert to the 0-65535 range for X, put into XColor struct, and
      * set. */
     color.pixel = (u_long) number;
@@ -53,23 +53,23 @@ Color_table_float()
         return (-1);
     XSetWindowColormap(dpy, grwin, floatcmap);
 
-	cmap = DefaultColormap(dpy, scrn);
+    cmap = DefaultColormap(dpy, scrn);
 
     table_type = FLOAT;
     Color_offset(0);
-    reset_color(20 + RED, 255, 0, 0);
-    reset_color(20 + ORANGE, 255, 127, 0);
-    reset_color(20 + YELLOW, 255, 255, 0);
-    reset_color(20 + GREEN, 0, 255, 0);
-    reset_color(20 + BLUE, 0, 0, 255);
-    reset_color(20 + INDIGO, 0, 127, 255);
-    reset_color(20 + VIOLET, 255, 0, 255);
-    reset_color(20 + WHITE, 255, 255, 255);
-    reset_color(20 + BLACK, 0, 0, 0);
-    reset_color(20 + GRAY, 127, 127, 127);
-    reset_color(20 + BROWN, 180, 75, 25);
-    reset_color(20 + MAGENTA, 255, 0, 127);
-    reset_color(20 + AQUA, 100, 127, 255);
+    reset_color(RED, 255, 0, 0);
+    reset_color(ORANGE, 255, 127, 0);
+    reset_color(YELLOW, 255, 255, 0);
+    reset_color(GREEN, 0, 255, 0);
+    reset_color(BLUE, 0, 0, 255);
+    reset_color(INDIGO, 0, 127, 255);
+    reset_color(VIOLET, 255, 0, 255);
+    reset_color(WHITE, 255, 255, 255);
+    reset_color(BLACK, 0, 0, 0);
+    reset_color(GRAY, 127, 127, 127);
+    reset_color(BROWN, 180, 75, 25);
+    reset_color(MAGENTA, 255, 0, 127);
+    reset_color(AQUA, 100, 127, 255);
 
 /*
 	cmap = DefaultColormap(dpy, scrn);
@@ -125,6 +125,8 @@ Colormap InitColorTableFixed()
             Grn[i] = (int) ((i / 256.0) * n_levels) * n_levels;
             Blu[i] = (int) ((i / 256.0) * n_levels);
         }
+	/* allocate xpixels array */
+	xpixels = (u_long *) calloc(n_levels*n_levels*n_levels, sizeof(u_long));
     }
     cmap = DefaultColormap(dpy, scrn);
     /* Generate "fixed" color table */
@@ -148,7 +150,6 @@ Colormap InitColorTableFixed()
                     }
                 }
                 xpixels[i++] = xcolor.pixel;
-
             }
         }
     }
