@@ -30,15 +30,15 @@ static int clipper ( gnGrpGraph_s    *pgraph ,
                      gnInt32_t *     pcost ,         /* real cost pointer */
                      void *          pvarg )         /* caller's pointer */
 {
-    double *cost;
+    double cost;
     
     G_debug ( 2, "Net: clipper()" );
     /* This direct access to graph is not probably best */
     if ( pgraph->NodeAttrSize > 0 ) {
-	cost = (double *) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pnodefrom));
+	memcpy( &cost, GNGRP_NODE_ATTR_PTR(pnodefrom), sizeof(cost) );
 	G_debug ( 2, "  node = %d pcost = %d + %f (arc + node)", 
-		           GNGRP_NODE_ID(pnodefrom), *pcost, *cost );
-	*pcost += (gnInt32_t) *cost;
+		           GNGRP_NODE_ID(pnodefrom), *pcost, cost );
+	*pcost += (gnInt32_t) cost;
     }
     
     return 0;   
@@ -50,19 +50,20 @@ static int clipper ( gnGrpGraph_s    *pgraph ,
 */
 int
 Vect_net_build_graph (  struct Map_info *Map,
-			int ltype,  /* line type for arcs */
-       			int afield, /* arc costs field (if 0, use length) */
-			int nfield, /* node costs field (if 0, do not use node costs) */
+			int ltype,   /* line type for arcs */
+       			int afield,  /* arc costs field (if 0, use length) */
+			int nfield,  /* node costs field (if 0, do not use node costs) */
 			char *afcol, /* column with forward costs for arc */
 			char *abcol, /* column with backward costs for arc (if NULL, back = forward) */
-			char *ncol, /* column with costs for nodes */
+			char *ncol,  /* column with costs for nodes */
+			int geo,     /* use geodesic calculation for length (LL) */
 		        int algorithm ) /* not used, in future code for algorithm */
 {
     int    i, j, from, to, line, nlines, ret, type, cat, skipped, cfound;
     int    *vals, nval, dofw, dobw;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    double dcost;
+    double dcost, ll;
     gnInt32_t  cost, bcost;
     gnGrpGraph_s *gr;
     gnInt32_t opaqueset[ 16 ] = { 360000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -79,6 +80,10 @@ Vect_net_build_graph (  struct Map_info *Map,
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
+    ll = 0;
+    if( G_projection() == 3) /* LL */
+        ll = 1;
+	
     gr = &(Map->graph);
     if ( nfield > 0 )
         gnGrpInitialize ( gr, 1, sizeof(double), 0, opaqueset ); 
@@ -152,7 +157,14 @@ Vect_net_build_graph (  struct Map_info *Map,
 			        "(direction of line skipped)", i, cat);
 	    }
 	} else {
-	    cost = (gnInt32_t) Vect_line_length ( Points );
+	    if ( ll ) { 
+		if ( geo )
+	            cost = (gnInt32_t) Vect_line_geodesic_length ( Points );
+		else
+	            cost = (gnInt32_t) 1000000 * Vect_line_length ( Points );
+	    } else
+	        cost = (gnInt32_t) Vect_line_length ( Points );
+	    
 	    bcost = cost;
 	}
 	if ( dofw ) {

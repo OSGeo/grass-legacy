@@ -62,7 +62,7 @@ Vect_destroy_list (struct ilist *list)
   return 0;
 }
 
-/* Append new item to the end of list 
+/* Append new item to the end of list if not yet present 
 *
 *  returns: 0 - OK
 *           1 - error
@@ -70,11 +70,16 @@ Vect_destroy_list (struct ilist *list)
 int
 Vect_list_append ( struct ilist *list, int val )
 {
-    int size;
+    int i, size;
     
     if ( list == NULL ) 
         return 1;
 	
+    for ( i = 0; i < list->n_values; i++ ) {
+	if ( val == list->value[i] )
+	    return 0;
+    }
+    
     if ( list->n_values == list->alloc_values ) {
 	size = list->n_values + 1000;
         list->value = (int *) G_realloc ( (void *) list->value, size );
@@ -87,3 +92,66 @@ Vect_list_append ( struct ilist *list, int val )
     return 0;
 }
 
+/* Append list to existing list 
+*
+*  returns: 0 - OK
+*           1 - error
+*/
+int
+Vect_list_append_list ( struct ilist *alist,  struct ilist *blist )
+{
+    int i;
+    
+    if ( alist == NULL || blist == NULL ) 
+        return 1;
+	
+    for ( i = 0; i < blist->n_values; i++ ) 
+        Vect_list_append ( alist, blist->value[i] );
+    
+    return 0;
+}
+
+/* Remove value from list 
+*
+*  returns: 0 - OK
+*           1 - error
+*/
+int
+Vect_list_delete ( struct ilist *list, int val )
+{
+    int i, j;
+    
+    if ( list == NULL ) 
+        return 1;
+	
+    for ( i = 0; i < list->n_values; i++ ) {
+	if ( val == list->value[i] ) {
+            for ( j = i + 1; j < list->n_values; j++ ) 
+                list->value[j - 1] = list->value[j];
+		
+            list->n_values--;
+	    return 0;
+	}
+    }
+    
+    return 0;
+}
+
+/* Delete list from existing list 
+*
+*  returns: 0 - OK
+*           1 - error
+*/
+int
+Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
+{
+    int i;
+    
+    if ( alist == NULL || blist == NULL ) 
+        return 1;
+	
+    for ( i = 0; i < blist->n_values; i++ ) 
+        Vect_list_delete ( alist, blist->value[i] );
+    
+    return 0;
+}

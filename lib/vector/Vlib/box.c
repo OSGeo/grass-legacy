@@ -17,6 +17,7 @@
 *
 *****************************************************************************/
 #include <stdlib.h>
+#include "gis.h"
 #include "Vect.h"
 
 /* 
@@ -226,3 +227,24 @@ Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
 
     return 1;
 }
+
+/* 
+*  Vect_region_box ()
+*  
+*  returns: 1 OK
+*           0 error
+*/
+int 
+Vect_region_box ( struct Cell_head *Window , BOUND_BOX *Box )
+{
+    
+    Box->N = Window->north;
+    Box->S = Window->south;
+    Box->E = Window->east;
+    Box->W = Window->west;
+    Box->T = PORT_DOUBLE_MAX;
+    Box->B = -PORT_DOUBLE_MAX;
+
+    return 1;
+}
+

@@ -154,6 +154,13 @@ Vect_get_full_name (struct Map_info *Map)
     return (ptr);
 }
 
+/* Is 3D (with z ) ? */
+int
+Vect_is_3d (struct Map_info *Map )
+{
+    return ( Map->head.with_z );
+}
+
 /* organization */
 int
 Vect_set_organization (struct Map_info *Map, char *str )
