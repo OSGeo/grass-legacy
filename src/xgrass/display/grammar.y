@@ -149,7 +149,7 @@ GlobalElement
           char *copy = malloc(strlen($2) + 1);
           char *ptr = NULL;
 
-          if ( (pageWidth = (double)strtod($2, &ptr, 10)) == 0 ) {
+          if ( (pageWidth = strtod($2, &ptr)) == 0 ) {
               if ( ptr != NULL && !strcmp($2, ptr) ) {
                   yyerror("Illegal type: PAGEWIDTH must be an integer/real");
                   return;
@@ -171,7 +171,7 @@ GlobalElement
           char *copy = malloc(strlen($2) + 1);
           char *ptr = NULL;
 
-          if ( (pageHeight = (double)strtod($2, &ptr, 10)) == 0 ) {
+          if ( (pageHeight = strtod($2, &ptr)) == 0 ) {
               if ( ptr != NULL && !strcmp($2, ptr) ) {
 		  yyerror("Illegal type: PAGEHEIGHT must be an integer/real");
 		  return;
@@ -605,7 +605,7 @@ GeoSpecifics
 	      double ew_res;
 	      char *ptr = NULL;
 
-	      if ( (ew_res = (double)strtod($8, &ptr, 10)) == 0 ) {
+	      if ( (ew_res = strtod($8, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($8, ptr) ) {
 		  yyerror("Illegal type: east-west res. must be an int/real");
 		  return;
@@ -619,7 +619,7 @@ GeoSpecifics
 	      double ns_res;
 	      char *ptr = NULL;
 
-	      if ( (ns_res = (double)strtod($10, &ptr, 10)) == 0 ) {
+	      if ( (ns_res = strtod($10, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($10, ptr) ) {
 		  yyerror("Illegal type: north-south res. must be an int/real");
 		  return;
@@ -633,7 +633,7 @@ GeoSpecifics
 	      double north;
 	      char *ptr = NULL;
 
-	      if ( (north = (double)strtod($12, &ptr, 10)) == 0 ) {
+	      if ( (north = strtod($12, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($12, ptr) ) {
 		      yyerror("Illegal type: north edge must be an int/real");
 		      return;
@@ -647,7 +647,7 @@ GeoSpecifics
 	      double south;
 	      char *ptr = NULL;
 
-	      if ( (south = (double)strtod($14, &ptr, 10)) == 0 ) {
+	      if ( (south = strtod($14, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($14, ptr) ) {
 		      yyerror("Illegal type: south edge must be an int/real");
 		      return;
@@ -661,7 +661,7 @@ GeoSpecifics
 	      double east;
 	      char *ptr = NULL;
 
-	      if ( (east = (double)strtod($16, &ptr, 10)) == 0 ) {
+	      if ( (east = strtod($16, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($16, ptr) ) {
 		      yyerror("Illegal type: east edge must be an int/real");
 		      return;
@@ -675,7 +675,7 @@ GeoSpecifics
 	      double west;
 	      char *ptr = NULL;
 
-	      if ( (west = (double)strtod($18, &ptr, 10)) == 0 ) {
+	      if ( (west = strtod($18, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($18, ptr) ) {
 		      yyerror("Illegal type: west edge must be an int/real");
 		      return;
@@ -839,7 +839,7 @@ fprintf(stderr,"mapset = %s\n",  siteTempl.mapset);
               double gap;
               char *ptr = NULL;
 
-              if ( (gap = (double)strtod($6, &ptr, 10)) == 0 ) {
+              if ( (gap = strtod($6, &ptr)) == 0 ) {
                   if ( ptr != NULL && !strcmp($6, ptr) ) {
 		      yyerror("Illegal type: grid gap must be an int/real");
 		      return;
@@ -1024,7 +1024,7 @@ fprintf(stderr,"mapset = %s\n",  siteTempl.mapset);
 	      double length;
 	      char *ptr = NULL;
 
-	      if ( (length = (double)strtod($14, &ptr, 10)) == 0 ) {
+	      if ( (length = strtod($14, &ptr)) == 0 ) {
 		  if ( ptr != NULL && !strcmp($14, ptr) ) {
 		  yyerror("Illegal type: barscale length must be an int/real");
 		  return;
