@@ -39,13 +39,15 @@ int main(int argc, char **argv)
 	mapset = NULL;
 
 /* Set the font to quick and simple */
-	R_open_driver();
+	if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 	R_font("romans") ;
 	R_close_driver();
 
 	for(;;)
 	{
-		R_open_driver();
+		if (R_open_driver() != 0)
+			G_fatal_error ("No graphics device selected");
 		tell_em_to_use_mouse() ;
 		answer = D_popup(
 			background_color,

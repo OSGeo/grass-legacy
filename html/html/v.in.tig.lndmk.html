@@ -1,0 +1,537 @@
+<TITLE>v.in.tig.lndmk</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.tig.lndmk</b></EM>  - Create GRASS vector map from TIGER files
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.tig.lndmk</B>
+<B>v.in.tig.lndmk help</B>
+<B>v.in.tig.lndmk t1=TIGER.1</B>
+<DL>
+<B>v.in.tig.lndmk [-is] t1</B>=<EM>TIGER_1</EM> [<B>t2=</B><EM>TIGER_2</EM>] [<B>t7=</B><EM>TIGER_7</EM>] [<B>t8=</B><EM>TIGER_8</EM>]
+<DD>[<B>tI=</B><EM>TIGER_I</EM>] [<B>tP=</B><EM>TIGER_P</EM>] [<B>input=</B><EM>file</EM>] [<B>vect=</B><EM>name</EM>] [<B>site=</B><EM>name</EM>]
+<DD>[<B>zone=</B><EM>value</EM>] [<B>spheroid=</B><EM>name</EM>] </B>
+</DL>
+<P>
+<H2>DESCRIPTION</H2>
+
+This program creates a GRASS site or vector map of Census "Landmark" features
+in the current mapset (UTM or Lat-Long locations only) with labelled
+points, areas or lines constructed from the TIGER file records.  Each
+point or area Landmark is a record in the Type 7 TIGER/Line file for
+a county.
+<P>
+The user may select the Landmark Features to include in the new map
+by specifying CFCC's (Census Feature Classification Code), or by specifying
+text string(s) to match with the Landmark Feature Name field.
+[Many Landmark records do not have an entry in the Feature Name
+field, so use the string matching selection with care.]
+<P>
+Point Landmarks are generated only from information in the Type 7 file.
+Area Landmarks, which often comprise several individually labelled
+polygons, are generated from data in TIGER file Types 7, 8, I, P, 1 and 2
+(in order of use).
+<P>
+When making "line" maps, this program functions as a selection front end
+to the <EM>
+<A HREF="v.in.tig.basic.html">v.in.tig.basic</A>
+</EM> program; see that programs documentation for the
+information on how these line maps will be labelled.
+<P>
+TIGER/Line files from multiple counties should not be mixed or
+concatenated when using this program.
+<P>
+The program should function well independent of the termination 
+character(s) at the end of each line in the input files.  &lt;LF&gt;,
+&lt;CR&gt;, neither, one, or both are acceptable.  Different distribution 
+media apparently have different record delimiting characters.
+<P>
+
+<H2>OPTIONS</H2>
+<B>PARAMETERS</B>
+<DL>
+<DT><B>t1=</B><EM>name</EM>
+<DD>Path/name of Type 1 Tiger File
+<DT><B>t2=</B><EM>name</EM>
+<DD>Path/name of Type 2 Tiger File
+<DT><B>t7=</B><EM>name</EM>
+<DD>Path/name of Type 7 Tiger File
+<DT><B>t8=</B><EM>name</EM>
+<DD>Path/name of Type 8 Tiger File
+<DT><B>tI=</B><EM>name</EM>
+<DD>Path/name of Type I Tiger File
+<DT><B>tP=</B><EM>name</EM>
+<DD>Path/name of Type P Tiger File
+<DT><B>input=</B><EM>name</EM>
+<DD>file path/name for input commands
+<DT><B>vect=</B><EM>name</EM>
+<DD>Name of vector map to create
+<DT><B>site=</B><EM>name</EM>
+<DD>Name of site map to create
+<DT><B>zone=</B><EM>value</EM>
+<DD>UTM zone number; default is location zone<BR>
+options: 1-60<BR>
+default: 12
+<DT><B>spheroid=</B><EM>keyword</EM>
+<DD>Spheroid for LL to UTM conversion; see m.gc.ll<BR>
+default: clark66
+</DL>
+
+<P>
+
+<B> Flags:</B>
+<DT><B>-i</B>
+<DD>Force interactive mode
+<DT><B>-s</B>
+<DD>Input commands from stdin
+</DL>
+<P>
+Notes: <B>-i</B> flag implied if neither flag set and no <B>input</B>
+file specified.  Omitted Tiger file names will be derived from the
+TIGER.1 name given by suitably changing the last character.
+<P>
+
+
+
+<H2>THE COMMAND MODE OF OPERATION</H2>
+
+Starting <EM>v.in.tig.lndmk</EM> with the <EM>-s</EM> flag invokes the command
+mode of operation.  Commands are expected from <EM>stdin</EM>, that is, the
+a terminal or a file redirected with '|' or '&lt;'.  When using a terminal
+for input, the prompt lists the available commands thus:
+<P>
+<B>.p(oints) .a(reas) .l(ines) .c(ode)list</B>
+
+<BR>
+
+<B>.s(trings) .m(atch)both .e(nd) .ex(it) &gt;&gt;</B>
+
+<P>
+<B>"Syntax for the dot commands"</B>
+
+<P>
+
+<B>.points [site_map]</B>
+<DT>
+<DD>lines containing requested CFCC Codes
+<DD>(CFCC&gt;&gt; prompt will be given if input is from a terminal)
+</DT>
+<B>.end</B>
+
+
+<P>
+
+<B>.areas [vect_map]</B>
+<DT>
+<DD>lines containing requested CFCC Codes
+<DD>CFCC&gt;&gt; prompt will be given if input is from a terminal)
+</DT>
+<B>.end</B>
+
+
+<P>
+
+<B>.lines [vect_map]</B>
+<DT>
+<DD>lines containing requested CFCC Codes
+<DD>(CFCC&gt;&gt; prompt will be given if input is from a terminal)
+</DT>
+<B>.end</B>
+
+
+<P>
+
+<B>.strings [output_file]</B>
+<DT>
+<DD>       1 to 10 lines of 30 chars to match with Landmark names;
+<DD>       use '!' as first character to require exact case match;
+<DD>       (<EM>String #n:</EM> prompt will be given if input is from a terminal)
+</DT>
+<B>.end</B>
+ 
+<B>.matchboth [no]</B>
+<P>
+<B>.codes [P|A|L[=output_file]]</B>
+<P>
+<B>.exit</B>
+<P>
+<B>"The details of the dot commands"</B>
+<P>
+Note:  Always use the <B>.strings</B>, <B>.matchboth</B>
+and/or <B>.codes</B> commands prior to creating a map
+with <B>.points</B>, <B>.areas</B> or <B>.lines</B>.
+<P>
+<B>.points mapname</B>
+begins the process of making a GRASS4.1 site map of point locations.
+This site map name takes precedence over the site=name parameter that
+may be given on the command line.
+<P>
+Specification of the CFCC's, if any,
+for the features you want included in the map should be done on the
+line(s) following <B>.points</B> and should conclude with a line
+containing <B>.end</B>, which begins the map generation process.  The
+CFCC's should be of the form Dnn (<EM>e.g.</EM>, D00; D10 D85 | D23, H12);
+several may be given on one line, separated by any common
+separator character.  Requested CFCC's may be abbreviated to D1
+(meaning D10 through D19) or just D (meaning D00 through D99).
+<P>
+If matching text strings are desired (see <EM>.strings\'fR), they must be
+specified prior to the </EM><B>.points</B> command.
+<P>
+<B>.areas mapname</B>
+begins the process of making a GRASS4.1 vector map of polygons (areas).
+This vector map name takes precedence over the vect=name parameter
+that may be given on the command line.
+Specification of the CFCC's, if any,
+for the features you want included in the map should be done on the
+line(s) following <B>.areas</B> and should conclude with a line
+containing <B>.end</B>, which begins the map generation process.
+<P>
+If matching text strings are desired (see <EM>.strings\'fR), they must be
+specified prior to the </EM><B>.areas</B> command.
+<P>
+<B>.lines mapname</B>
+begins the process of making a GRASS4.1 vector map of lines.  This 
+option uses only the Type 1 and 2 TIGER files.  It searches the Type 1
+records for the specified CFCC's and matches any specified text strings
+to the Feature Name (FENAME) field in the Type 1 records.
+Specification of the CFCC's, if any,
+for the features you want included in the map should be done on the
+line(s) following <B>.areas</B> and should conclude with a line
+containing <B>.end</B>, which begins the map generation process.
+<P>
+If matching text strings are desired (see <EM>.strings\'fR), they must be
+specified prior to the </EM><B>.lines</B> command.
+<P>
+<B>.codes</B>
+searches the Type 7 Landmark file and sends to stdout, or to a file if
+one specified, the CFCC and the Classification description of each
+CFCC present.  If a 'P' or 'A' is specified, both the point and area
+codes present are listed.  'L' lists the CFCC codes contained in the
+Type 1 file.  The default type, if no type is specified, is 'P'.
+This command is provided as a useful aid to the user.
+
+
+<P>
+
+<B>.strings</B>
+records up to 10 following lines (until ".end") as text strings to 
+match to the Landmark Feature Name Field in the Type 7 records (Type 1
+for making ".line" maps).  A match is made if any of the specfied 
+strings is a <EM>substring</EM> of the Feature Name.  If exact case
+matching is required, '!' should be the first character of the
+entered text strings.  Example:  The Feature Name "Walter Reed Army
+Hospital" would be matched by any of the following strings.
+<PRE>
+  !Walt
+  hosp
+  Reed
+  army hosp
+</PRE>
+If the optional filename parameter is given, Type 7 records which match
+the specified strings are reported to that file, otherwise they
+are reported to stdout.
+
+
+<P>
+
+<B>.matchboth</B>
+is used to specify that a Landmark record (or Type 1 record for ".lines")
+must match both one of the specified CFCC's <EM>and</EM> one of
+the specified text strings to be selected.  A match to <EM>either</EM>
+condition is the default mode, and can be explicitly set or reset by the
+optional "no" parameter; <EM>i.e.</EM>, <B>.matchboth no</B>.
+
+
+<P>
+
+<B>.exit</B>
+is used to exit from the program.
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>THE INTERACTIVE MODE OF OPERATION</H2>
+<P>
+The following "VASK" menus will be encountered in using the interactive
+mode of this program.  Comments following each menu will help you
+decide how to answer the questions and create products.
+<P>
+       GRASS IMPORT FROM CENSUS LANDMARK FEATURE RECORDS
+<P>
+
+STEP 1:  Select Type(s) of features to be extracted
+<PRE>
+   There are Point and Area (polygon) Landmark feature types.
+     in the Landmark (Type 7) Records
+
+   There may also be some Line (vector) Landmark features
+     in the Basic Data (Type 1) Records
+
+   Mark one feature type you wish extracted:
+                                                                               
+                   Point   x
+                   Area    _
+                   Line    _
+
+   View CFCC Codes for selected type  x
+
+   or  Exit program  _
+
+       AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+                     (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+
+Comments:  This is the "Main Menu."  You must select (by entering 'x')
+<B>one</B> of the Point, Area or Line choices.
+The viewing of the CFCC codes is optional, but is usually done initially.
+<P>
+The following screen results from a request to View CFCC Codes after
+selecting Point features:
+<PRE>
+     TIGER Type 7 file &lt;tgr53037.f47&gt;
+     examined.  15 unique CFCC codes found in 123 records.
+
+     Mark 'x' to see list on screen  _
+
+     Enter file name (home directory) to save list to file  ______________
+
+     AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+                    (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+Comments:  You may request to see the list on the screen, or have the
+list sent to a file in your home directory, or both.  If you request
+neither, the program returns to the Main Menu.  Both point
+and area landmarks are reported if either "Point" or "Area" was
+selected on the Main Menu.  If "Line" was requested on the Main Menu,
+all the CFCC codes in the Type 1 (Basic Data Record) file will be
+tabulated (this can be a useful product for other purposes); remember
+that the Type 1 file is large and this processing may take a few
+minutes or more.
+<P>
+The following is typical output of CFCC Codes:
+<PRE>
+TIGER Type 7 file &lt;tgr53037.f47&gt;
+Number of Each Area Landmark CFCC
+     6 D00 Landmark Feature, Class Unknown or Not Elsewhere Classified
+     3 D10 Military installation
+     1 D28 Campground
+     1 D31 Hospital
+     5 D43 Educational institution
+     1 D81 Golf course
+     7 D82 Cemetery
+    14 D85 State or local park or forest
+     7 H00 Water Feature, Class Unknown or Not Elsewhere Classified
+     8 H11 Perennial stream
+     9 H30 Lake or pond
+    32 H31 Perennial lake or pond
+     1 H32 Intermittent lake or pond
+Total Area Records: 95
+
+Number of Each Point Landmark CFCC
+     1 D00 Landmark Feature, Class Unknown or Not Elsewhere Classified
+     5 D28 Campground
+     1 D31 Hospital
+    10 D43 Educational institution
+     4 D44 Religious institution
+     5 D71 Lookout tower
+     1 D81 Golf course
+     1 D82 Cemetery
+Total Point Records: 28
+</PRE>
+
+After reviewing the list of available CFCC Codes, select "Point,
+Area or Line" again on the Main Menu and something like the following
+two menus will appear.  On the first one, select any number of CFCC
+Codes (categories) that you desire to be included in a new map.
+<PRE>
+	LANDMARK FEATURE CATEGORY SELECTION MENU: POINT LANDMARKS
+	D00 _ Landmark Feature, Class Unknown or Not Elsewhere Classified
+
+	D28 x Campground
+	D31 _ Hospital
+	D43 _ Educational institution
+	D44 _ Religious institution
+	D71 _ Lookout tower
+	D81 _ Golf course
+	D82 _ Cemetery
+
+	Done: _  Start over: _
+
+      AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+                    (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+Comments:  In this case "Point" was selected on the Main Menu, and the
+user has indicated that a GRASS site map of Campgrounds is to be made.
+<P>
+Now you have the opportunity to enter character strings which will be
+matched against the Feature Name field (in the Type 7 record in the
+case of "Point" or "Area" maps, and in the Type 1 record for "Line"
+maps).
+<PRE>
+  Step 1C  Enter text(s) to match in finding Landmark Features.
+           (Use ! as first char to require exact case match.)
+
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+                    _______________________________
+
+           Check for any Landmark Records that match your
+           text strings before proceeding to next step?  _
+
+           File to save matches to (omit for screen display):
+          __________________________________________________
+
+        AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+               (OR &lt;Ctrl-C&gt; TO ERASE AND START OVER)
+</PRE>
+Comments:  See <EM>.strings</EM> discussion in the command line section of
+this manual page for examples of what can be entered on the lines.  If
+no entries are made then no string matching to the Feature Name field
+will be done.
+
+
+<P>
+
+
+<H2>BUGS/RESTRICTIONS</H2>
+
+Some area features are included in the Type 7 (Landmark)
+file which do not fit the definition given of "Landmark" (CFCC's
+beginning with 'D'), as a mechanism to have them included in the
+Tiger/Line data.  Many Hydrography area features fall in this category
+for some counties.  Also, there may be records in both the Type 1 and
+Type 7 files for some Landmark features, such as airports, and to make
+a complete airport map for a county both sets must be extracted.
+
+
+<P>
+
+In the first trials of this program is was discovered that the TIGER/Line
+files have several defects in topological completeness when area landmark
+polygons are created.  These defects express themselves when 
+<A HREF="v.support.html">v.support</A>
+ is run
+(automatically) to attach labels to the polygons and is unable to attach
+one or more label points.  Some editing with 
+<A HREF="v.digit.html">v.digit</A>
+ should be able to
+resolve these problems.
+
+
+<P>
+
+<B>Caution:</B> 
+This program will overwrite an existing vector map of
+the same name without warning.  Site_list maps will not be overwritten.
+
+
+<P>
+
+Since this program opens many TIGER files at once, the set for a county
+must reside on a disk or CD-ROM, not tape.  Only file types 1, 2, 7, 8,
+I and P are used so only those would have to be copied from tape to disk.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+
+<P>
+<i>
+<A HREF="v.in.tig.basic.html">v.in.tig.basic</A>
+</i> is called automatically to produce the area and line maps.
+
+<BR>
+
+<i>
+<A HREF="v.apply.census.html">v.apply.census</A>
+</i> will generate polygon labels for Census
+tracts, block groups, etc., from STF1 or PL94-171 files.
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne, GIS Laboratory, Central Washington University, 1992.
+
+<H2>APPENDIX</H2>
+<B>"List of Census CFCC Landmark 'D' Codes"</B>
+<PRE>
+[Extracted from file CODESTIG.ASC on TIGER distribution CD-ROM.]
+     CFCC    CLASSIFICATION D = LANDMARK FEATURES
+     D00     Landmark Feature, Classification Unknown or Not Elsewhere 
+              Classified
+     D10     Military installation 
+     D20     Multihousehold and transient quarters
+     D21     Apartment building or complex
+     D22     Rooming or boarding house
+     D23     Trailer court or mobile home park
+     D24     Marina
+     D25     Crew of vessel
+     D26     Housing facility for workers
+     D27     Hotel, motel, resort, spa, YMCA, or YWCA
+     D28     Campground
+     D29     Shelter or mission 
+     D30     Custodial facility
+     D31     Hospital
+     D32     Halfway house
+     D33     Nursing home, retirement home, or home for the aged
+     D34     County home or poor farm
+     D35     Orphanage
+     D36     Jail or detention center
+     D37     Federal penitentiary, state prison, or prison farm
+     D40     Educational or religious institution
+     D41     Sorority or fraternity
+     D42     Convent or monastery
+     D43     Educational institution
+     D44     Religious institution 
+     D50     Transportation terminal
+     D51     Airport or airfield
+     D52     Train station
+     D53     Bus terminal
+     D54     Marine terminal
+     D55     Seaplane anchorage 
+     D60     Employment center
+     D61     Shopping center or major retail center
+     D62     Industrial building or industrial park
+     D63     Office building or office park
+     D64     Amusement center
+     D65     Government center
+     D66     Other employment center 
+     D70     Tower
+     D71     Lookout tower 
+     D80     Open space
+     D81     Golf course
+     D82     Cemetery
+     D83     National park or forest
+     D84     Other federal land
+     D85     State or local park or forest 
+     D90     Special purpose landmark
+     D91     Post office box ZIP code
+</PRE>

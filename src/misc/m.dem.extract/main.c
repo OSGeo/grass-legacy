@@ -9,12 +9,18 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
    int examine_only,new,nrow,hdr_stat,i,first,last;
    int tape_min_elev, tape_max_elev, Unexp_C;
    char temp_buf[300];
    struct Option *opt1, *opt2, *opt3, *opt4, *opt5 ;
 
    G_gisinit(argv[0]);
+
+   	module = G_define_module();
+	module->description =
+		"Extracts USGS Digital Elevation Model (DEM) data from "
+		"1/2-inch magnetic tape.";
 
 /* check command line for accuracy */
 

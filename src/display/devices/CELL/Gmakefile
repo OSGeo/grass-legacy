@@ -1,7 +1,8 @@
+EXTRA_CFLAGS = -I../lib
+
 GRAPH = 
 
 OFILES =  \
-	connect.o\
 	bresline.o\
 	file_io.o\
 	polyfill.o\
@@ -15,14 +16,12 @@ OFILES =  \
 	Graph_Set.o\
 	Panel.o\
 	Polygn_abs.o\
-	Reset_clr.o \
-	Returns.o
+	Reset_clr.o
 
-$(GISBASE)/driver/CELL: CELL
-	mv CELL $@
+LIBES=$(DRIVERLIB) $(GISLIB) $(GRAPH)
 
-CELL: $(OFILES) $(DRIVERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(GISBASE)/driver/CELL: $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DRIVERLIB): #
 $(GISLIB): #

@@ -29,8 +29,6 @@
          {"coor",START_PT}
     };
 
-    static int n_variables = 3;
-
     char drain_path_layer[64];
     char elevation_layer[64];
     struct point  *head_start_pt = NULL;

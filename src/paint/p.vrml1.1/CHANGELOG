@@ -1,6 +1,0 @@
-
-Tue Sep 17 1996
-Changed "#ifdef DCELL" in pv.h to "#ifdef DCELL_TYPE"; DCELL is
-a typedef, so floating point grass was not being recognized for
-compilation.
-

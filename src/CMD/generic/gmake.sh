@@ -1,8 +1,10 @@
+# $Id$
+
 SHELL=/bin/sh
 export SHELL
 umask 002
 ##################################################################
-# This file is sourced (with the . command) by the real gmake
+# This file is sourced (with the . command) by the real gmake5
 me=$0
 if test "$SRC" = ""
 then
@@ -14,6 +16,11 @@ then
     echo `basename $me` - CMD variable NULL or not set
     exit 1
 fi
+#if test "$UNUSED" = ""
+#then
+#    echo `basename $me` - UNUSED variable NULL or not set
+#    exit 1
+#fi
 if test "$HEADER" = ""
 then
     echo `basename $me` - HEADER variable NULL or not set
@@ -21,6 +28,7 @@ then
 fi
 
 all=no
+install=no
 parseonly=no
 while test $# != 0
 do
@@ -58,6 +66,7 @@ do
 	    test -d $dirname || mkdir $dirname
 	    exit $?
 	    ;;
+	-i) install=yes;me="$me -i";shift;;
 
 	 *) break
     esac
@@ -83,6 +92,7 @@ then
     exit 1
 fi
 
+prefix="`sed 's/=/ /' $HEAD | awk '$1 ~ /^prefix$/ {if(NF>1)print $2}'`"
 GISBASE="`sed 's/=/ /' $HEAD | awk '$1 ~ /^GISBASE$/ {if(NF>1)print $2}'`"
 VERSION_NUMBER=
 VERSION_DATE=
@@ -107,9 +117,14 @@ ARCH="`sed 's/=/ /' $HEAD | awk '$1 ~ /^ARCH$/ {if(NF>1)print $2}'`"
 
 if test $parseonly = sh
 then
+    if test $install = yes
+    then
+        GISBASE=$prefix/grass5
+    fi
     echo GISBASE=$GISBASE
     echo SRC=$SRC
     echo CMD=$CMD
+    echo UNUSED=$UNUSED
     echo HEADER=$HEADER
     echo ARCH=$ARCH
     exit 0
@@ -117,9 +132,14 @@ fi
 
 if test $parseonly = csh
 then
+    if test $install = yes
+    then
+        GISBASE=$prefix/grass5
+    fi
     echo set GISBASE=$GISBASE
     echo set SRC=$SRC
     echo set CMD=$CMD
+    echo set UNUSED=$UNUSED
     echo set HEADER=$HEADER
     echo set ARCH=$ARCH
     exit 0
@@ -149,6 +169,7 @@ if test ! "$GMAKE_VERBOSE" = no
 then
     echo "  SRC     = $SRC"
     echo "  CMD     = $CMD"
+    echo "  UNUSED  = $UNUSED"
     echo "  HEADER  = $HEADER"
     echo "  ARCH    = $ARCH"
     echo "  GISBASE = $GISBASE"
@@ -218,16 +239,21 @@ then
     echo "  mkdir $OBJARCH"
     mkdir $OBJARCH || exit 1
 fi
+if test -f $makefile
+then
+    rm -f $makefile
+fi
 
 (
 # build the make.rules file
 # 
-# define VERSION, SRC, OBJARCH for .o files, LIBARCH for .a files
+# define VERSION, SRC, UNUSED, OBJARCH for .o files, LIBARCH for .a files
 echo VERSION_NUMBER="$VERSION_NUMBER"
 echo VERSION_DATE="$VERSION_DATE"
 echo VERSION_UPDATE_PKG="$VERSION_UPDATE_PKG"
 echo VERSION_FILE="$VERSION_FILE"
 echo SRC=$SRC
+echo UNUSED=$UNUSED
 echo OBJARCH=$OBJARCH
 echo LIBARCH=$LIBARCH
 echo ""
@@ -267,14 +293,18 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	if test -f $file.f
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.f
-	    echo '	rm -f $@'
-	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(FC) $(FFLAGS) -c' ${file}.f -o '$@'
 	else
 	    echo '$(OBJARCH)/'${file}.o: ${file}.c
-	    echo '	rm -f $@'
-	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
 	fi
     done
  )
@@ -284,13 +314,45 @@ cat $TAIL
 
 echo "  make -f $makefile $*"
 echo ""
-make -f $makefile $*
+${MAKE} -f $makefile $*
 status=$?
 if test $status != 0 
 then
     exit $status
 fi
 
+if test $install = no
+then
+    if test "$GMAKE_DEL_OBJ" != ""
+    then
+       echo rm -rf $OBJARCH
+       rm -rf $OBJARCH
+    fi
+    exit 0
+fi
+
+
+###########
+# install #
+###########
+
+makefile2=$OBJARCH/make2.rules
+if test -f $makefile2
+then
+    rm -f $makefile2
+fi
+
+sed -e 's#^GISBASE\([ 	]*\)=.*$#GISBASE\1= \${prefix}/grass5#' $makefile \
+	> $makefile2
+
+echo "  make -f $makefile2 $*"
+echo ""
+${MAKE} -f $makefile2 $*
+status=$?
+if test $status != 0 
+then
+    exit $status
+fi
 
 if test "$GMAKE_DEL_OBJ" != ""
 then

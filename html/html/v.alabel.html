@@ -1,0 +1,155 @@
+<TITLE>v.alabel</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.alabel</b></EM>  - Bulk-labels unlabeled area features in
+a binary GRASS vector file.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.alabel</B>
+
+<BR>
+
+<B>v.alabel help</B>
+
+<BR>
+
+<B>v.alabel</B> [<B>-i</B>] <B>map=</B><EM>name</EM>
+[<B>value=</B><EM>value</EM>]
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.alabel allows the user to bulk-label currently unlabeled polygons</EM>
+(area features) in a binary GRASS vector file (i.e., a <EM>dig</EM> file).
+The user must run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+on the vector file before running
+<EM>v.alabel</EM> if any modifications have been made to the file
+since the last time 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+was run on it, to ensure that
+all area features are properly identified in the file topology.
+
+
+<P>
+
+The user must also run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+on the vector file after <EM>v.alabel</EM> is run for
+labeling changes to be made evident.
+
+
+<P>
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+builds GRASS support files for (binary) GRASS vector
+data files.  These support files supply topology (<EM>dig_plus</EM>)
+and category (<EM>dig_att</EM>) information that are needed by other GRASS
+programs (e.g., by 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>, 
+<EM><A HREF="v.to.rast.html">v.to.rast</A></EM>, etc.).
+
+<H2>OPTIONS</H2>
+
+Program parameters and flags have the following meanings.
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-i</B> 
+
+<DD>Label areas incrementally.  For each unique, unlabeled
+polygon in the vector file, increment the category value by
+one, starting from the initial user-assigned
+<EM>value</EM>.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name of binary GRASS vector data file whose unlabeled areas
+are to be labelled.  This map layer must exist in the
+user's current GRASS mapset.
+
+<DT><B>value=</B><EM>value</EM> 
+
+<DD>The category value to be assigned to all unlabeled areas in the
+vector map layer.  If the <EM>-i</EM> flag is set, <EM>v.alabel</EM>
+will increment the initial <EM>value</EM> by one for each unique unlabeled
+polygon in the vector map.
+
+<BR>
+
+Default:  1
+</DL>
+
+
+<P>
+
+The user can run this program non-interactively by specifying parameter
+values (and optionally, the flag setting) on the command line.
+
+
+<P>
+
+Alternately, the user can simply type the command <B>v.alabel</B> on
+the command line.  In this event, the program will prompt the user to
+enter parameter values and flag settings.
+
+<H2>NOTES</H2>
+
+A <EM>dig_plus</EM> file must be created for each imported vector map
+before it can be used in post-GRASS 3.0 versions of <EM>digit</EM>
+(now referred to as <EM><A HREF="v.digit.html">v.digit</A></EM>).
+
+
+<P>
+
+Topological information for GRASS vector files can also be
+built using <EM>option 4</EM> of the
+<EM><A HREF="v.import.html">v.import</A></EM> program.
+
+<P>
+
+The user can bulk-label unlabeled line features in a
+binary vector file using 
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><BR>
+<EM><A HREF="v.import.html">v.import</A></EM><BR>
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM><BR>
+<EM><A HREF="v.prune.html">v.prune</A></EM><BR>
+<EM><A HREF="v.support.html">v.support</A></EM><BR>
+<EM><A HREF="v.to.rast.html">v.to.rast</A></EM>
+
+<H2>AUTHORS</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory

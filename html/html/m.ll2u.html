@@ -1,0 +1,344 @@
+<TITLE>m.ll2u</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+
+<H2>NAME</H2>
+
+<EM><b>m.ll2u</b></EM>  - Converts geographic coordinates to Universal Transverse
+Mercator (UTM) coordinates.
+
+<BR>
+
+(GRASS Data Import/Processing Program) 
+
+<H2>SYNOPSIS</H2>
+
+<B>m.ll2u</B>
+<BR>
+<B>m.ll2u help</B>
+<BR>
+<B>m.ll2u</B> [<B>-rwoz</B>] <B>spheroid=</B><EM>name</EM> 
+[<B>zone=</B><EM>value</EM>] [<B>input=</B><EM>name</EM>] 
+[<B>output=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.ll2u</EM> converts geographic coordinates (i.e.,
+latitudes and longitudes) to Universal Transverse Mercator
+(UTM) eastings and northings.  
+
+<H2>OPTIONS</H2>
+
+The user must specify the spheroid on which to base the UTM
+conversion.  The user may optionally specify the UTM zone;
+however, the program can determine this from the geographic
+coordinates submitted.
+
+<P>
+
+The list of spheroids available is somewhat dynamic.  At
+the time of this release, available spheroids included:
+airy, australian, bessel, clark66, everest, grs80, hayford,
+international, krasovsky, wgs66, wgs72, and wgs84 (see
+<A HREF="#table">table</A> below).
+
+
+<P>
+
+This command can be run either non-interactively or
+interactively.  The user can run the program
+non-interactively by entering desired flag settings and
+parameter values on the command line using the following
+format:
+
+<DL>
+<DD><B>m.ll2u </B>[<B>-rwoz</B>] <B>spheroid=</B><EM>name </EM>
+[<B>zone=</B><EM>value</EM>] [<B>input=</B><EM>name</EM>] 
+[<B>output=</B><EM>name</EM>]
+</DL>
+
+Alternately, the user can simply type:
+
+
+<DL>
+<DD><B>m.ll2u</B>
+</DL>
+
+
+on the command line.  In this case, the user will be prompted for
+parameter values and flag settings through the standard interface described
+in the manual entry for <EM><A HREF="parser.html">parser</A></EM>.
+
+
+<P>
+
+Input can be entered from the keyboard or from an input
+file.  In either case, input should be entered with one
+longitude and latitude pair per line, in either of the
+below forms:
+
+<DL>
+<DD>
+degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}<BR>
+degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}<BR>
+degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}<BR>
+degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}<BR>
+  .<BR>
+  .<BR>
+end
+</DL>
+
+
+<DL>
+<DD>
+degrees.decimal{E|W} degrees.decimal{N|S}<BR>
+degrees.decimal{E|W} degrees.decimal{N|S}<BR>
+degrees.decimal{E|W} degrees.decimal{N|S}<BR>
+degrees.decimal{E|W} degrees.decimal{N|S}<BR>
+  .<BR>
+  .<BR>
+end
+</DL>
+
+
+If the user sets the <B>-r</B> flag, <EM>m.ll2u</EM> will
+expect the order of the coordinates to be reversed, and
+stated as latitude, longitude pairs, rather than as
+longitude, latitude pairs.
+
+<P>
+
+Similarly, the user can elect to send output to an output
+file or (by default) to standard output (the user's
+terminal screen).  If the user sets the <B>-w</B> flag,
+output will be printed in a format suitable for input to
+programs like
+
+<EM><A HREF="d.points.html">d.points</A></EM>.
+
+Example input and output are shown below (see 
+<A HREF="#example">EXAMPLE</A>).
+
+<P>
+
+Program flag settings and parameters have the following meanings.
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-r</B> 
+<DD>The order of coordinates is reversed in the input, and
+entered as:  <EM>lat lon</EM>
+
+<DT><B>-w</B> 
+<DD>Do not flag invalid lon,lat input lines as errors.
+
+<DT><B>-o</B> 
+<DD>Flag other invalid input lines as errors.
+
+<DT><B>-z</B> 
+<DD>Suppress printing of the UTM zone in the output.
+(Note.  This will produce output in a format suitable for
+direct input to programs like
+<EM><A HREF="d.points.html">d.points</A></EM>.)
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>spheroid=</B><EM>name</EM> 
+<DD>Reference spheroid (ellipsoid).<BR>
+Options:  airy, australian, bessel, clark66, everest,
+grs80, hayford, international, krasovsky, wgs66, wgs72,
+wgs84
+
+<DT><B>zone=</B><EM>value</EM> 
+<DD>UTM zone number (results will be forced into this UTM
+zone).<BR>
+Options:  1-60
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of an existing input file containing longitude,
+latitude coordinates to be converted.  Input lines may
+either be input in the form of degrees:minutes:seconds, or
+as decimal degrees.  If input as decimal degrees,
+<EM>m.ll2u</EM> recognizes negative numbers.
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name to be assigned to the output file containing UTM
+coordinates and zone designations.
+
+</DL>
+
+
+<H3><A NAME="table">AVAILABLE SPHEROIDS</A></H3>
+
+
+(<EM>The on-line listing includes only the spheroid names</EM>)
+
+<PRE>
+Spheroid:    |Semi-major axis| Eccentricity     |  Commonly 
+             | Equatorial    | sqrd (e),        |  used for:
+             | Radius (a):   | Flattening (f) or|
+             |               | Polar Radius (b):|
+_____________|_______________|__________________|______________
+airy         | a=6377563.396 | e=.006670540     |
+australian   | a=6378160     | f=1/298.25       | Australia
+bessel       | a=6377397.155 | e=.006674372     | Japan
+clark66      | a=6378206.4   | b=6356583.8      | N. America
+everest      | a=6377276.345 | e=.0066378466    | India, Burma
+grs80        | a=6378137     | f=1/298.257      |
+hayford      | a=6378388     | f=1/297          |
+international| a=6378388     | f=1/297          | Europe
+krasovsky    | a=6378245     | f=1/298.3        |
+wgs66        | a=6378145     | f=1/298.25       | worldwide cov
+wgs72        | a=6378135     | f=1/298.26       | worldwide cov
+wgs84        | a=6378137     | f=1/298.257223563| worldwide cov
+</PRE>
+
+<H2><A NAME="example">EXAMPLE</A></H2>
+
+Assume the user has input the command:
+
+<DL>
+<DD><B>m.ll2u  spheroid=</B><EM>wgs72</EM>  <B>input=</B><EM>ll.infile</EM>  <B>output=</B><EM>utm.outfile </EM>
+</DL>
+
+where the input file <EM>ll.infile</EM> contains the
+following longitude, latitude values:
+<PRE>
+	155:30:00W 19:35:00N&lt;
+	165:30:00W 19:35:00N&lt;
+	145:30:00W 20:00:00N&lt;
+	135:30:00W 21:00:00N&lt;
+</PRE>
+Output would then be sent to the output file
+<EM>utm.outfile</EM>, containing the below Easting and
+Northing coordinate values and UTM zone designations:
+<PRE>
+	237740.85270818 2167292.1076231  5
+	447560.64349407 2165450.19058336 3
+	656921.61734802 2212183.40032627 6
+	448035.11644906 2322228.3038167  8
+	end
+</PRE>
+
+<H2>NOTES</H2>
+
+Spheroids, the solids associated with an ellipse, are also
+known as ellipsoids.  They are used as the best possible
+model to simulate the shape of the earth with its flattened
+poles and bulging equator.  They are the mathematical means
+for establishing control points to use as a reference when
+determining exact locations on the earth.  A cohesive set
+of these control points is called a <B>datum</B>.
+
+<P>
+
+The spheroids listed above have been used as the basis for
+a number of different datums.  The North American Datum of
+1927 (NAD 27) was based on the Clark 1866 ("clark66")
+spheroid.  This was a recent current standard datum for
+North America.  Be aware, however, that a new datum, NAD
+83, has been developed using the Geodetic Reference System
+1980 spheroid; this is now available in <EM>m.ll2u</EM> as
+the "grs80" spheroid.  The "wgs66", "wgs72", and "wgs84"
+spheroids are for worldwide use.  The "wgs72" spheroid has
+been used fairly widely by the Department of Defense (DOD)
+and is the basis for the World Geodetic System 1972 datum.
+This datum has also been recently replaced; the new DOD
+datum is WGS 84 (wgs84).  Both datums are available within
+<EM>m.ll2u</EM>.
+
+<P>
+
+To use spheroids other than those listed here, the user can
+add lines to the ellipsoid parameter definition file in
+<KBD>$GISBASE/etc/ellipse.table</KBD>.
+
+<P>
+
+Read the marginalia of your source map to determine which
+spheroid was used to produce the map on which you are
+working.
+
+
+<P>
+
+This program recognizes negative numbers if coordinates are
+input in decimal degrees rather than in the form of
+degrees:minutes:seconds.
+
+
+<P>
+
+This program has received only limited testing.  It should
+be used with some caution.
+
+<H2>FILES</H2>
+
+See ellipsoid parameter definition file in
+<KBD>$GISBASE/etc/ellipse.table</KBD>.
+
+<H2>SEE ALSO</H2>
+
+For australian, clark66, grs80, hayford, international,
+krasovsky, and wgs72 ellipsoid parameters, see:
+
+<BR>
+
+John P. Snyder, <EM>Map Projections - A  Working  Manual</EM>,
+U.S. Government Printing Office, Washington DC, 1989.
+U.S. Geological Survey Professional Paper 1395;  from Table 1, p.12.
+
+
+<P>
+
+For bessel, airy, everest, and wgs66 ellipsoid parameter values, see:
+
+<BR>
+
+Thomas O. Seppelin, <EM>The  Department  of Defense World
+Geodetic System 1972</EM>, presented at the International
+Symposium on Problems Related to the Redefinition of
+North American Geodetic Networks, Fredericton, New 
+Brunswick, Canada in May, 1974;  see Table 9, p.35.
+
+
+<P>
+
+For wgs84 parameter values, see:
+
+<BR>
+
+U.S. Naval Oceanographic Labs.
+
+
+<P>
+
+Also read GRASS User's Reference Manual entries for:
+
+<BR>
+
+<EM><A HREF="d.label.html">d.label</A></EM><br>
+<EM><A HREF="d.points.html">d.points</A></EM><br>
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM><br>
+<EM><A HREF="m.gc2ll.html">m.gc2ll</A></EM><br>
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM><br>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

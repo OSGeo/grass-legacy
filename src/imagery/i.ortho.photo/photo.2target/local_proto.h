@@ -69,7 +69,11 @@ int Input_other(int (*)(void), char *);
 int Menu_msg(char *);
 int Start_mouse_in_menu(void);
 /* main.c */
+#ifdef __GNUC_MINOR__
 int quit(int) __attribute__ ((__noreturn__));
+#else
+int quit(int);
+#endif
 int error(char *, int);
 /* mark.c */
 int mark(int, int, int);

@@ -9,6 +9,7 @@
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     char *polyfile;
     char name[256];
     FILE *fd;
@@ -16,6 +17,12 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Interactive tool used to draw and save "
+		"vector features on a graphics monitor using a pointing "
+		"device (mouse).";
 
 #ifdef DEBUG
     polyfile = "/tmp/r.digit.out";

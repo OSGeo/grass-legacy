@@ -1,0 +1,107 @@
+<html>
+
+<TITLE>g.rename</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.rename</b></EM>  - To rename data base element files in
+the user's current mapset.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.rename</B>
+
+<BR>
+
+<B>g.rename help</B>
+
+<BR>
+
+<B>g.rename</B> 
+[<B>rast=</B><EM>old,new</EM>] 
+[<B>vect=</B><EM>old,new</EM>] 
+[<B>icon=</B><EM>old,new</EM>] 
+[<B>labels=</B><EM>old,new</EM>] 
+[<B>sites=</B><EM>old,new</EM>]
+[<B>region=</B><EM>old,new</EM>] 
+[<B>group=</B><EM>old,new</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>g.rename</EM> allows the user to rename data base
+element files in the user's current mapset.  The user can
+specify all necessary information to <EM>g.rename</EM> on
+the command line, by specifying:  the type of data base
+element to be renamed (one or more of:  <B>rast</B>,
+<B>vect</B>, <B>icon</B>, <B>labels</B>, <B>sites</B>,
+<B>region</B>, and <B>group</B>); the specific file element
+in the current mapset to be renamed (<EM>old</EM>); and the
+new name to be assigned to this file element (<EM>new</EM>)
+in the current mapset.  The file element <EM>old</EM> is
+then renamed to <EM>new</EM>.
+
+
+<P>
+
+Users can also simply type <B>g.rename</B> without
+arguments on the command line, to receive a menu of
+existing data base element types and files from which to
+choose for possible renaming:
+
+
+<P>
+
+<OL>
+<LI>raster maps
+<LI>binary vector maps
+<LI><A HREF="paint.html">paint</A> icon files
+<LI><A HREF="paint.html">paint</A> label files
+<LI>site list files
+<LI>region definition files
+<LI><A HREF="i.group.html">imagery</A> group files
+<P>
+RETURN to exit
+</OL>
+
+<H2>NOTE</H2>
+
+If a data base element has support files (e.g., as is
+commonly the case with raster files), these support files
+also are renamed.
+
+
+<P>
+
+If the user attempts to rename a file to itself by setting
+the <EM>new</EM> file name equal to the <EM>old</EM> file
+name (e.g., <B>g.rename rast=soils,soils</B>),
+<EM>g.rename</EM> will not execute the rename, but instead
+state that no rename is needed.  However, <EM>g.rename</EM>
+will allow the user to overwrite other existing files in
+the current mapset by making the <EM>new</EM> file name
+that of an already existing file.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.copy.html">g.copy</A></EM><br>
+<EM><A HREF="g.list.html">g.list</A></EM><br>
+<EM><A HREF="g.remove.html">g.remove</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

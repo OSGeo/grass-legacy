@@ -1,0 +1,50 @@
+<TITLE>r.le.trace</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.le.trace</B></EM> - the <EM>r.le.trace</EM> program can be used to display the boundary of each patch and show how the boundary is traced, display the attribute, size, perimeter, and shape indices for each patch, and save the data in an output file.<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.le.trace</B><BR>
+<B>r.le.trace help</B><BR>
+<B>r.le.trace</B> [<B>-npt</B>] <B>map=</B><EM>name</EM> [<B>out=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+When sampling the whole map (sam=W), the <EM>r.le.trace</EM> program can be used to do three things: (1) display the boundary of each patch and show how the boundary is traced, (2) display the attribute, size, perimeter, and shape indices for each patch, and (3) save these data in an output file.
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-n</B>
+<DD>Output map 'num' with patch numbers.
+
+<DT><B>-p</B>
+<DD>Include sampling area boundary as perimeter.
+
+<DT><B>-t</B>
+<DD>Use 4 neighbor tracing instead of 8 neighbor.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map</B>
+<DD>Raster map to be analyzed.
+
+<DT><B>out</B>
+<DD>Name of output file to store patch data.
+</DL>
+
+<H2>SEE ALSO</H2>
+The <A HREF="../../terrain/r_le_22.html"><EM>r.le</EM> Programs</A> Users Guide<BR>
+<EM><A HREF="r.le.dist.html">r.le.dist</A>, <A HREF="r.le.null.html">r.le.null</A>, <A HREF="r.le.patch.html">r.le.patch</A>, <A HREF="r.le.pixel.html">r.le.pixel</A>, <A HREF="r.le.rename.html">r.le.rename</A>, <A HREF="r.le.setup.html">r.le.setup</A></EM>
+
+<H2>AUTHOR</H2>
+William L. Baker, Department of Geography and Recreation, University of Wyoming

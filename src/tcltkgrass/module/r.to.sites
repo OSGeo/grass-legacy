@@ -1,0 +1,9 @@
+interface_build {
+    {r.to.sites} 0
+    {Converts a GRASS raster map to a GRASS sites map.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output sites map:} 0 sites}
+    {entry label {Label for site values (default: No Label):} 0 ""}
+    {checkbox -a {Output as decimal attribute rather than cat.} "" -a}
+    {checkbox -z {Output as third dimension rather than cat.} "" -z}
+}

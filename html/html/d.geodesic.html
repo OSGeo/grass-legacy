@@ -1,0 +1,90 @@
+<TITLE>d.geodesic</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.geodesic</b></EM>  - Displays a geodesic line, tracing the shortest distance 
+between two geographic points along a great circle, in a longitude/latitude 
+data set. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.geodesic</B> 
+<BR>
+<B>d.geodesic help</B> 
+<BR>
+<B>d.geodesic</B> 
+[<B>coor=</B><EM>lon1,lat1,lon2,lat2</EM>] 
+[<B>lcolor=</B><EM>name</EM>] 
+[<B>tcolor=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.geodesic</EM> displays a geodesic line in the active frame on the user's 
+graphics monitor. This line traces the shortest distance between two 
+user-specified points on the curved surface of a longitude/latitude data set. 
+The two coordinate locations named must fall within the boundaries of the 
+user's current geographic region. 
+
+<H2>OPTIONS</H2>
+
+This program can be run either interactively or non-interactively. 
+If the user types <B>d.geodesic</B> on the command line without other program 
+parameters, the mouse will be activated; the user is asked to use 
+the mouse to indicate the starting and ending points of each geodesic line 
+to be drawn. The default line color (white) and text color (red) 
+will be used. 
+
+<P>
+Alternately, the user can specify the starting and ending coordinates 
+of the geodesic, line color, and text color on the command line, 
+and run the program non-interactively. 
+
+<P>
+Once the user indicates the starting and ending coordinates 
+of the geodesic, the line and its length (in miles) are displayed to 
+the user's graphics monitor. 
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>coor=</B><EM>lon1,lat1,lon2,lat2</EM>
+<DD>Starting and ending coordinates, in longitude and latitude values, of 
+    the geodesic line to be drawn. 
+<DT><B>lcolor=</B><EM>name</EM>
+<DD>Line color in which geodesic will be displayed. 
+<BR>
+    Options: red, orange, yellow, green, blue, magenta, 
+    indigo, violet, gray, white, black 
+<BR>
+    Default: white 
+<DT><B>tcolor=</B><EM>name</B>
+<DD>Text color in which the length of the geodesic will be displayed. 
+<BR>
+    Options: red, orange, yellow, green, blue, magenta, 
+    indigo, violet, gray, white, black. 
+    Default: red 
+</DL>
+
+<H2>NOTES</H2>
+
+This program works only on GRASS data bases using a longitude/latitude 
+coordinate system. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rhumbline.html">d.rhumbline</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+

@@ -1,0 +1,106 @@
+<TITLE>s.normal</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.normal</b></EM> - tests for normality for sites.
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.normal</B>
+<BR>
+<B>s.normal help</B>
+<BR>
+<B>s.normal</B> [<B>-q</B>]
+<B>input=</B><EM>name</EM>
+[<B>tests=</B><EM>range</EM>[,<EM>range</EM>,...]]
+<B>[field=</B><EM>value</EM><B>]</B>
+
+<H2>DESCRIPTION</H2>
+<EM>s.normal</EM>
+computes tests of normality on a site list.
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-q</B>
+<DD>Quiet. Cut out the chatter when reading site list.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of sites list.
+
+<DT><B>tests=</B><EM>range</EM>[,<EM>range</EM>,...]] 
+<DD>Tests of normality requested (see below).
+
+<DT><B>field</B>
+<DD>Number of z-field attribute to use for calculation
+<DD>default: 1  
+</DL>
+
+</DL>
+
+<H2>NOTES</H2>
+
+The tests that <EM>s.normal</EM> performs are indexed
+below.  The tests that are performed are specified by
+giving an index, ranges of indices, or multiple thereof.
+
+<OL>
+<LI> Sample skewness and kurtosis
+<LI> Geary's a-statistic and an approximate normal transformation
+<LI> Extreme normal deviates
+<LI> D'Agostino's D-statistic 
+<LI> Modified Kuiper V-statistic 
+<LI> Modified Watson U^2-statistic 
+<LI> Durbin's Exact Test (modified Kolmogorov)
+<LI> Modified Anderson-Darling statistic 
+<LI> Modified Cramer-Von Mises W^2-statistic 
+<LI> Kolmogorov-Smirnov D-statistic (modified for normality testing)
+<LI> Chi-Square test statistic (equal probability classes) and 
+     the number of degrees of freedom
+<LI> Shapiro-Wilk W Test
+<LI> Weisberg-Binghams W'' (similar to Shapiro-Francia's W')
+<LI> Royston's extension of W for large samples
+<LI> Kotz Separate-Families Test for Lognormality vs. Normality
+</OL>
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DD><B>s.normal input=</B><EM>soils</EM><B> tests=</B><EM>1-3,14</EM>
+</DL>
+
+computes the sample skewness and kurtosis, Geary's
+a-statistic and an approximate normal transformation,
+extreme normal deviates, and Royston's W for the
+<EM>soils</EM> site list.
+
+<H2>SEE ALSO</H2>
+<A HREF="s.univar.html">s.univar</A>
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover.de/grass/</tt></a>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at:
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+</HTML>

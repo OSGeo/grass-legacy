@@ -1,0 +1,152 @@
+<html>
+<head>
+<TITLE>v.in.ascii</TITLE>
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.ascii</b></EM>  - Converts ASCII vector map layers
+into binary vector map layers.
+
+<BR>
+
+<EM>(GRASS Vector Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.ascii</B>
+<BR>
+<B>v.in.ascii help</B>
+<BR>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.ascii</EM> converts a vector map in ASCII format
+to a vector map in binary format.  
+
+<H2>OPTIONS</H2>
+
+The user can run this
+program non-interactively by specifying all program options
+on the command line, in the form:
+
+<DL>
+<DD>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an ASCII vector file to be converted to binary vector file.
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name given to binary vector output file.
+</DL>
+
+If the user runs <EM>v.in.ascii</EM> without giving program
+arguments on the command line, the program will prompt the
+user for <EM>input</EM> and <EM>output</EM> file names.
+
+<H2>NOTES</H2>
+
+After running this program, GRASS support files must be built for
+the binary <EM>output</EM> file before the user can use the file in 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+The user can run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+to create GRASS support files
+for the <EM>output</EM> file.
+<P>
+
+Example ASCII vector file:<p>
+<pre>
+       ORGANIZATION:
+       DIGIT DATE:   Apr 24 2001
+       DIGIT NAME:   nds_gem
+       MAP NAME:     nds_gem
+       MAP DATE:
+       MAP SCALE:    500000
+       OTHER INFO:   /home/neteler/grassdata5/langeoog/PERMANENT/dig_cats
+       ZONE:         0
+       WEST EDGE:    3326228.1
+       EAST EDGE:    3690891.8
+       SOUTH EDGE:   5670297.1
+       NORTH EDGE:   5987928.8
+       MAP THRESH:   381
+       VERTI:
+       A  1
+        5819822.9 3343726.42
+        5819801.5 3343947.43
+        5820154.9 3344395.23
+        5817559.7 3346542.47
+       A  2
+        5819822.83 3343726.42
+        5827223.34 3348523.95
+        5827298.34 3348556.25
+        5827351.35 3348584.35
+       L  3
+        5821947.6 3344082.3
+        5822086.8 3344101.9
+        5822306.2 3344138.2
+        5822883.7 3344227.3
+</pre>
+
+The associated dig_cats file needs following format:<p>
+<pre>
+       # 3 categories
+
+       0.00 0.00 0.00 0.00
+	1:Stade
+	2:Cuxhaven
+	3:BAB
+</pre>
+<P>
+To (re-)set map metadata like ORGANIZATION etc., <EM>v.digit</EM> can be
+used.
+
+<p>
+The GRASS program <EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM>
+performs the function of <EM>v.in.ascii</EM> in reverse;
+i.e., it converts vector files in binary format to ASCII
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
+
+<P>
+
+The input from <EM>v.in.ascii</EM> has to be placed into
+<KBD>$LOCATION/dig_ascii</KBD> (this directory must be created if not existing).
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.import.html">v.import</A></EM><br>
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM><br>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory<BR>
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

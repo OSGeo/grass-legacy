@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     int oops;
     char *mon_name;
 
+	struct GModule *module;
     struct Option *start, *stop, *select, *unlock;
 #ifndef ORIG
     struct Option *nlev;
@@ -25,6 +26,10 @@ int main(int argc, char *argv[])
     struct Flag *list, *status, *print, *release, *no_auto_select;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"To establish and control use of a graphics display monitor.";
 
     start = G_define_option();
     start->key="start";

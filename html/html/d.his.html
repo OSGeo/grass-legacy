@@ -1,0 +1,183 @@
+<TITLE>d.his</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.his</b></EM>  - Produces and displays a raster map layer combining 
+hue, intensity, and saturation (his) values 
+from user-specified input raster map layers. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.his</B> 
+<BR>
+<B>d.his help</B> 
+<BR>
+<B>d.his</B> [<B>-o</B>] <B>h_map=</B><EM>name</EM>
+[<B>i_map=</B><EM>name</EM>] 
+[<B>s_map=</B><EM>name</EM>] 
+[<B>output=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>his</EM> stands for hue, intensity, and saturation.
+This program produces a raster map layer providing a
+visually pleasing combination of hue, intensity, and
+saturation values from two or three user-specified raster
+map layers.
+
+<P>
+
+The human brain automatically interprets the vast amount of
+visual information available according to basic rules.
+Color, or <EM>hue</EM>, is used to categorize objects.
+Shading, or <EM>intensity</EM>, is interpreted as
+three-dimensional texturing.  Finally, the degree of
+haziness, or <EM>saturation</EM>, is associated with
+distance or depth.  This program allows data from up to
+three raster map layers to be combined into one new raster
+map layer which retains the original information in terms
+of <EM>hue</EM>, <EM>intensity</EM>, and <EM>saturation</EM>.
+
+<H2>OPTIONS</H2>
+
+This program can be run non-interactively or
+interactively.  It will run non-interactively if the user
+specifies on the command line the name of a map containing
+hue values (<B>h_map</B>), and the name(s) of map(s)
+containing intensity values (<B>i_map</B>) and/or
+saturation values (<B>s_map</B>).  If the user also names
+an output map (<B>output</B>) on the command line, the
+combined hue, saturation, and intensity values will be
+saved as a raster map layer in the user's current mapset;
+otherwise, the resulting image will only be displayed in
+the active display frame on the graphics monitor.
+
+<P>
+
+Alternately, the user can run the program interactively by
+typing <B>d.his</B> without naming parameter values on the
+command line.  In this case, the program will prompt the
+user for parameter values using the standard GRASS 
+<A HREF="parser.html">parser</A> interface.
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-o</B>
+
+<DD>Overwrite output map.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>h_map=</B><EM>name</EM>
+
+<DD>Name of input raster map layer to be used for HUE values. 
+
+<DT><B>i_map=</B><EM>name</EM>
+
+<DD>Name of input raster map layer to be used for INTENSITY values. 
+
+<DT><B>s_map=</B><EM>name</EM>
+
+<DD>Name of input raster map layer to be used for SATURATION values. 
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name of the output raster map layer combining hue,
+    intensity, and saturation values from input layers.
+
+</DL>
+
+<P>
+
+While any raster map layer can be used to represent the hue
+information, map layers with a few very distinct colors
+work best.  Only raster map layers representing
+continuously varying data like elevation, aspect, weights,
+intensities, or amounts can suitably be used to provide
+intensity and saturation information.
+
+<P>
+
+For example, a visually pleasing raster map layer can be
+made by using a watershed map for the <EM>hue</EM> factor,
+an aspect map for the <EM>intensity</EM> factor, and an
+elevation map for <EM>saturation</EM>.  (The user may wish
+to leave out the elevation information for a first try.)
+Ideally, the resulting image should resemble the view from
+an aircraft looking at a terrain on a sunny day with a bit
+of haze in the valleys.
+
+<H2>THE PROCESS</H2>
+
+Each map cell is processed individually. First, the working
+color is set to the color of the corresponding cell in the
+map layer chosen to represent <EM>HUE</EM>.  Second, this
+color is multiplied by the <EM>red</EM> intensity of that
+cell in the <EM>INTENSITY</EM> map layer.  This map layer
+should have an appropriate gray-scale color table
+associated with it. You can ensure this by using the color
+manipulation capabilities of
+<EM><A HREF="d.display.html">d.display</A></EM> or 
+<EM><A HREF="d.colors.html">d.colors</A></B>.</EM> 
+Finally, the color is made somewhat gray-based on the
+<EM>red</EM> intensity of that cell in the
+<EM>SATURATION</EM> map layer.  Again, this map layer
+should have a gray-scale color table associated with it.
+
+<H2>NOTES</H2>
+
+This program produces an image and (optionally) a raster
+map layer with 1000 colors (10 intensities each of red,
+green, and blue).  The resulting image and raster map
+layers will not display properly if the graphics display
+monitor does not have at least 1000 colors while the user
+is running in <EM>float</EM> colormode.  Thus, unless the
+display device has 1000 colors, it is necessary to run the
+GRASS command:
+
+<DL>
+<DD>
+<B><A HREF="d.colormode.html">d.colormode</A> mode=</B>fixed</B>
+</DL>
+
+before running <EM>d.his</EM>. Otherwise, the colors will be incorrectly 
+displayed on the graphics monitor. 
+
+<P>
+
+Either (but not both) of the intensity or the saturation
+map layers may be omitted. This means that it is possible
+to produce output images that represent combinations of
+<EM>his, hi,</EM> or <EM>hs</EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.3d.html">d.3d</A></EM><br>
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
+<EM><A HREF="d.colors.html">d.colors</A></EM><br>
+<EM><A HREF="d.colortable.html">d.colortable</A></EM><br>
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="hsv.rgb.sh.html">hsv.rgb.sh</A></EM><br>
+<EM><A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+

@@ -8,7 +8,7 @@
 #include "options.h"
 #include "l_proto.h"
 
-static char erase[16] ;
+static char g_erase[16] ;
 static char linesonly[2] ;
 static char donull[2] ;
 static char doaverage[2] ;
@@ -17,7 +17,7 @@ static char boxcolor[16] ;
 static double resolution ;
 
 int 
-get_inputs (int *do_it, char *erase_color)
+get_inputs (int *do_it, char *g_erase_color)
 {
 	static int here_already = 0 ;
 	static char go[2] ;
@@ -62,7 +62,7 @@ V_line (20,"--------------------------------------------------------------------
 	V_const( wbuf           ,   's',  4,  6, 10) ;
 	V_const( ebuf           ,   's',  4, 27, 10) ;
 	V_ques ( go             ,   's',  2, 64,  2) ;
-	V_ques ( erase          ,   's',  3, 64,  8) ;
+	V_ques ( g_erase          ,   's',  3, 64,  8) ;
 	V_ques ( &exag          ,   'd',  4, 64,  7) ;
 	V_float_accuracy(2) ;
 	V_ques ( &field         ,   'd',  5, 64,  7) ;
@@ -103,10 +103,10 @@ V_line (20,"--------------------------------------------------------------------
 	else
 		*do_it = 0 ;
 
-	if (erase[0] == 'N' || erase[0] == 'n')
-		erase_color[0] = '\0' ;
+	if (g_erase[0] == 'N' || g_erase[0] == 'n')
+		g_erase_color[0] = '\0' ;
 	else
-		strcpy(erase_color, erase) ;
+		strcpy(g_erase_color, g_erase) ;
 
 	if (! strcmp(linecolor, "color"))
 		line_color = -1 ;
@@ -174,7 +174,7 @@ int get_defaults (void)
 	    else
 		strcpy(donull, "N") ;
 	    strcpy(boxcolor, v.other_col) ;
-	    strcpy(erase, v.bg_col) ;
+	    strcpy(g_erase, v.bg_col) ;
 	    if(v.doavg)
 		strcpy(doaverage, "Y") ;
 	    else
@@ -219,7 +219,7 @@ defaults:
 	strcpy(doaverage, "N") ;
 	strcpy(linecolor, "color") ;
 	strcpy(boxcolor, "none") ;
-	strcpy(erase, "black") ;
+	strcpy(g_erase, "black") ;
 
 	return 0;
 }
@@ -276,7 +276,7 @@ save_defaults (void)
 
 	    strcpy(v.grid_col, linecolor) ;
 	    strcpy(v.other_col, boxcolor) ;
-	    strcpy(v.bg_col, erase) ;
+	    strcpy(v.bg_col, g_erase) ;
 	    if(!strcmp(doaverage, "Y"))
 		v.doavg = 1;
 	    else

@@ -6,7 +6,7 @@
  *
  *   Interactively prompts the user for category names for
  *   cats->ncats categories.  Uses screen oriented prompting through
- *   the visual_ask library.  Compile with $(VASK)
+ *   the visual_ask library.  Compile with $(VASKLIB) and $(CURSES)
  *
  *   name is used for informatin on the screen only.
  *   No files are read or written
@@ -181,7 +181,7 @@ int G_edit_cats (
  *
  *   Interactively prompts the user for category names for
  *   fp ranges of data.  Uses screen oriented prompting through
- *   the visual_ask library.  Compile with $(VASK)
+ *   the visual_ask library.  Compile with $(VASKLIB) and $(CURSES)
  *
  *   name is used for informatin on the screen only.
  *   No files are read or written

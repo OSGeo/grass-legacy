@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <strings.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 typedef int FILEDESC;

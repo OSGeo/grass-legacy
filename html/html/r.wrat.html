@@ -1,0 +1,615 @@
+<html>
+<TITLE>r.wrat</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<b>wrat</b> - Water Resource Assessment Tool <P>
+ 
+<H2>USAGE</H2>
+This module must be used interactively.<p>
+
+<H2>INPUT MAP CODES</H2>
+elevation:       meters, as well as cell resolution <p>
+rainfall maps:   100ths of an inch  <p>
+K factor:        K factor times 100  K of .35 = 35 <p>
+ 
+<H2>Introduction</H2>
+     The Water Resource Assessment Tool is a collection of
+programs run within the GRASS GIS. These programs are an aid
+in understanding the nature of runoff in a study area based
+on information typically available for a GIS. The programs
+analyze the terrain to define drainage direction and areas,
+simulate runoff and peak runoff and model nonpoint source
+pollution and map contaminant source areas and contaminant
+pathways. This users guide outlines the typical analytical
+sequence, describes input data requirements and possible
+output. Some suggestion for interpreting output are
+included. It is assumed the user is familiar with the basics
+of GRASS.<p>
+ 
+<H2>Input</H2>
+     Map layers required: digital elevation model, land
+cover, soil maps of hydrologic soil group, soil texture, and
+erodiblity factor (K factor). Optional maps describe best
+managment practices for sediment, nitrogen phosphorous and
+chemical oxygen demand (COD).  <p>
+ 
+<H2>Typical Analysis</H2>
+     Three interrelated areas of analysis are available:
+terrain analysis, hydrology and pollution (see figure X1).
+Because these areas are not distinct, analysis should
+proceed in a logical order since some portions build on
+previous results. Terrain analysis and runoff generation
+must proceed routing peak discharge, which in turn must
+proceed contaminant routing. The following steps provide a
+natural sequence of analysis through all of the tools.
+However, a great deal of valuable information may be gained
+executing only a portion of the available programs. This is
+a tool kit, not a prescription for studying every area.<p>
+
+<pre>
+Terrain Analysis	Hydrology		Pollution
+_________________	_________________	_________________
+|               |       |		|	|		|
+| Elevation     |	| Land Cover	|	| Land Cover	|
+| Model         |	|		|	|		|
+--------+--------	| Hydrologic	|	| Soils		|
+        |		| Soil Group	|	| K factor	|
+________V________	--------+--------	| Texture	|
+|		|	        |		--------+--------	
+| Idealized	|		|			|
+| Elevation	|		|			|
+| Model		|		|			|
+|		|		|			|
+| Drainage	|		|			|
+| Direction	|		|			|
+|		|		|			|
+| Drainage	|	________V________		|
+| Accumulation	|	|		|		|
+|		|	| Runoff Map	|		|
+| Slope		|	-+------+--------		|
+--------+--------	 |	|			|
+	|	     +----	|			|
+	--------+----(---------&gt;|&lt;-----------------------	
+		|    |	________V________	_________________
+		|&lt;---+	|		|	|		|
+		|	| Contaminant   |	| Best 		|
+		|	| Source Areas  |	| Management	|
+		|	--------+--------	| Practices	|
+	________V________	|		--------+--------
+	|		|	|			|
+	| Peak 		|	------------+------------
+	| Discharge	|		    |
+	-----------------	    ________V________
+				    |		    |
+				    | Contaminant   |
+				    | Routing	    |
+				    -----------------
+
+			figure X1.
+
+</pre><p>
+ 
+<H2>Defining the study area</H2>
+     GRASS looks at the world through a rectangular
+"window". The window should be set to include the entire
+area of interest with several cells to spare in all
+directions. Because of difficulty interpreting terrain at
+the edge of the window, the analysis moves in from the
+window edge. The extra area is particularly important if the 
+top of a watershed of interest is not marked by a steep
+decline into the adjacent watershed.<p>
+ 
+    Routing routines assume that the entire watershed is
+within the current window. This is not always true or even
+practical. For instance, an analysis along the side of a
+long river will provide valuable information about local
+contributions to the larger resource. However, calculations
+in the long river itself can not take into account upstream
+effects outside the current window and are thus invalid. Yet
+those local contributions may be of considerable interest.
+Great care must be taken interpreting results of watersheds
+only partially contained within the operating window.<p>
+ 
+     Cell resolution, the size of each cell, should be set
+as large as is appropriate for your purposes. In no case
+should the resolution be smaller than the spatial resolution
+of your best input layer. Doubling the cell length and width
+will cut computation times by 3/4s!  The east-west
+resolution need not match the north-south resolution.
+However, large deviations from square cells will distort
+some of the neighbor concepts used by some algorithms to
+"feel their way" across the terrain.<p>
+ 
+     Once the analysis is begun, the same window, including
+cell resolution, must be maintained throughout the project. 
+The interface program tries to insure this. Changing the
+boundaries invalidates the drainage accumulation maps.
+Changing the cell resolution can have disastrous effects on
+the drainage direction map, such as creating dead end and
+circular drainages. The idealized elevation model will lose
+its "ideal" character if resampled. If the window must be
+changed, start the analysis from the beginning.<p>
+ 
+     Some of the output maps may be resampled to a smaller
+window or different cell size after the analysis is
+finished. Contaminant source area maps are produced in units
+of mass per unit area and may be resampled. This may be
+useful for presentation of results or incorporation within
+another GIS analysis.<p>
+ 
+<H2>Temporal scale</H2>
+     Hydrologic simulations are based on single storms,
+presumably one day events. Actual or design storms may be
+employed.<p>
+ 
+<H2>Terrain analysis</H2>
+     The actual analysis may begin using the digital
+elevation model to produce an idealized elevation model. 
+Real data has, for a number of reasons, sections which are
+difficult to drain. The idealized elevation model has no
+cells which can not drain to the edge of the window. This
+assumes complete surface drainage is possible. This
+condition is never completely true and in some regions, such
+as those with karst topography, so far from the case as to
+invalidate the peak discharge and contaminant routing
+results.  <p>
+ 
+     The idealized elevation model is used to determine the
+direction in which each cell will drain. This is done by
+searching the edge of the window for the lowest point and
+draining the watershed that leads there.  Then the next
+lowest outlet is found and its watershed drained, and so on
+until the entire area is drained.  <p>
+ 
+     The drainage direction map is used to produce a
+drainage accumulation map. The values in a drainage
+accumulation map are the total number of cells including
+that cell, which drain through that cell. If multiplied by
+the area of a cell, the drainage accumulation map will yield
+the area of the watershed above and including each cell.<p>
+ 
+<H2>Hydrology</H2>
+     Two programs contribute to the hydrology section:
+runoff and peak discharge. The runoff section is based on
+the Soil Conservation Services Curve number method (Soil
+Conservation Service, USDA, 1971).  Curve numbers, from 0 to
+100, describe the potential for runoff. Curve numbers are
+inferred from the land cover map and the map of hydrologic
+soil groups. A depth of precipitation for a design storm or
+a rainfall map is required to produce a runoff map.<p>
+ 
+     To this point the terrain analysis and the hydrology
+could progress independently. From this point on the
+distinctions between terrain analysis, hydrology and
+pollution, as separate lines of analysis begin to fade.
+Actually pollution analysis will always be dependent to some
+extent on hydrology but that will be dealt with in a later
+section. Peak discharge combines the results of the terrain
+analysis and runoff sections.<p>
+ 
+     Peak discharge, the volume of water passing out of a
+cell per unit time, is calculated with an empirical
+relationship developed by Smith and Williams (1980) and
+employed in CREAMS and AGNPS. Watershed characteristics are
+interpreted from several all of the results from the terrain
+analysis. The resulting map of peak discharge, significant
+by itself, is also used in the routing of contaminants.<p>
+ 
+<H2>Pollution</H2>
+     Contaminant sources are mapped as the contaminant
+originating per unit area.  Sediment, nitrogen, phosphorous
+and COD may be modeled. The algorithms used to predict
+contaminant mobilization depend on the landcover of the cell
+involved. The universal soil loss equation and adaptations
+from AGNPS and CREAMS are employed for rural, agricultural
+and open lands. An algorithm from SWMM is adopted for urban
+areas. Land cover, soil texture and erodibility factors,
+rainfall, runoff and peak discharge maps are the required
+inputs for this section.  <p>
+ 
+     The final part of the analysis routes contaminants. It
+requires the results of the preceding sections. Sediment,
+nitrogen and phosphorous nutrients and COD may be modeled.
+The routing is done as a mass balance accounting for imports
+of contaminants into a cell, contaminants originating within
+the cell, losses to infiltration and deposition and exports
+to the next cell. Figure X2 is a schematic representation.<p>
+ 
+<pre>          
+                       rainfall with
+                       contaminants
+                             |
+                       ______________
+imports from          /             /       Surface exports
+up gradient      -   /             /  -    down gradient
+                    /_____________/
+ 
+                           |
+ 
+                   losses to infiltration
+                   and deposition
+ 
+                                  figure X2.
+ 
+</pre>
+<p>
+ 
+<H2>Some practical considerations:</H2>
+     GRASS only stores integers, assuming values less then
+one to be equal to zero. Therefore small units of measure
+have been employed. Rainfall and runoff are described in
+hundredths of inches, while quantities of sediment are in
+kilograms with nutrients in grams. Flows are measured in
+cubic feet per second. The mixing of english and metric
+units employs those units in common usage in the U.S.  Maps
+may be converted to any appropriate set of units using
+"<a href=r.mapcalc.html>r.mapcalc</a>" to multiply the map by the appropriate conversion
+factor.<p>
+ 
+<H2>Preparing map layers</H2>
+     GRASS associates numeric values with cells as their
+attributes. Sometimes these numbers have real meanings, as
+in an elevation model in which the cell's value is its
+elevation. Some are more arbitrary codes representing
+qualitative categories, such as landcover. The following
+tables provide guides to units and codes used in the water
+resource assessment tools. The GRASS tool "r.reclass" allows
+speedy recoding of map layers to these codes.<p>
+ 
+<H2>Input layers and data</H2>
+ 
+<H2>Elevation</H2>
+     Values in the digital elevation model represent the
+altitude above mean sea level expressed in meters. <p>
+ 
+<H2>Rainfall</H2>
+     Rainfall maps should be rainfall for a single day,
+measured in hundredths of an inch. Thus a one and a quarter
+inch rainfall would be represented as 125. The GRASS command
+"s.surf.idw" can be used to interpolate a rainfall map between
+observation stations, however, s.surf.idw does not understand
+the effects of terrain on rainfall and will make significant
+mistakes in hilly country and for thunderstorms passing
+through a widely scattered set of observation points. A
+design storm may be preferable for assessment purposes.<p> 
+<H2>Soil, texture </H2>
+     Values are a code for the dominant texture.
+<pre>
+     1 = clay soils
+     2 = silt soils
+     3 = sandy soils
+     4 = peat
+     5 = water
+</pre><p>
+ 
+<H2>Soil, hydrologic soil group</H2>
+     Hydrologic soil group is primarily dependent on the
+soil texture. However depth to bed rock and depth to water
+table may strongly influence a soil's classification. <p>
+
+<pre>
+     1 = hydrologic soil group A
+     2 = hydrologic soil group B
+     3 = hydrologic soil group C
+     4 = hydrologic soil group D
+     5 = water
+</pre>
+<p>
+ 
+<H2>Soil, erodibility K factor</H2>
+     K factors are a decimal value greater then zero and
+typically less then .5. Formally they represent the soil
+loss rate per unit of per erosion index unit for a specified
+test plot. (Agriculture Handbook Number 537 "Predicting
+Rainfall Erosion Losses", USDA 1978) Information about local
+soils should be available from your local Soil Conservation
+Service office. Because GRASS uses only integer values,
+multiply K factors by 100. Thus a K factor of .37 would be
+coded as 37. Use a code of 100 for water.<p>
+ 
+<H2>Landcover</H2>
+The landcover map must be coded so the water resource
+assessment tools can recognize the landcovers indicated. 
+The following table illustrates the 15 landcover category
+codes expected.  When attempting to make the best fit of
+available data to this encoding scheme, remember to think of
+the areas both in terms of their ability to slow runoff and
+their contributions to water quality.  Some creative lies
+may be useful for special purposes.  For instance, a
+development built to the performance standard that peak
+discharge is not to exceed a field in good condition could
+be coded as an old field for hydrologic analysis and built
+up for pollution analysis.    <p>
+
+<pre>
+   1 = corn
+   2 = rye
+   3 = oats
+   4 = soybeans
+   5 = hay
+   6 = grass
+   7 = old field (grass)
+   8 = old field (shrub)
+   9 = pasture
+   10 = forest
+   11 = wetlands
+   12 = fens
+   13 = water
+   14 = built up
+   15 = barren
+</pre>
+ 
+<H2>Output Map layers</H2>
+     Many maps can be produced with the water resource
+assessment tools. The following sections outline how these
+maps are prepared, the units of measure and codes employed
+along with some notes as to how they should and should not
+be used. More complete information is available in the model
+documentation. The source code is also provided and contains
+a great deal of internal documentation. Output maps are
+presented in the approximate order in which they would be
+produced. <p>
+ 
+     The idealized elevation file is a digital elevation
+file. Cell values represent elevation in meters.  This
+elevation model will differ from the input DEM provided by
+the user, in that depressions in the data are filled in so
+that water landing anywhere on the idealized surface can
+flow to the edge. Although useful for analyzing terrain, and
+employed for slope measurements, the idealized elevation
+model is probably further removed from reality then the
+original data upon which it is based. The idealized
+elevation data may not be resampled to a different cell
+resolution and retain its desired "idealized"
+characteristics.<p>
+ 
+<h2>Drainage Direction</H2>
+    Cells in the drainage direction map are coded to
+indicate the neighboring cell into which they drain. The
+eight nearest neighbors are represented by the integers 1
+through 8 as depicted in figure X3.<p>
+
+<pre>
+                            4 3 2
+                            5   1
+                            6 7 8
+ 
+                            figure X3.
+</pre> 
+ 
+     Drainage direction is similar to aspect. However they
+are not exactly the same thing.  In an aspect map, the cells
+at the bottom of a V shaped valley may face each other
+without draining into each other. This map is produced by
+searching the border of the window for the lowest cell and
+draining all cells in that drainage. The algorithm moves up
+through the drainage one unit of elevation at a time until
+all adjacent cells of that elevation are drained, trying to
+assign the most direct drainage direction. Then the next
+lowest undrained border cell is found and that watershed is
+drained until the entire map is drained. The routine
+sometimes has difficulty at the top of watersheds if the
+next valley does not clearly drop away.<p>
+ 
+<H2>Drainage Accumulation</H2>
+     Values in the drainage accumulation map represent the
+number of cells, including the cell with the value, that
+drain through the cell. Thus the minimum drainage
+accumulation is one, while the maximum is the number of
+cells in the largest watershed in the study area. The
+drainage accumulation map is used to find the watershed area
+for each cell in the study area and to guide a search up the
+watershed to find the length of the longest stream. The
+drainage accumulation map can be used to define the stream
+networks by reclassifying the cells below a minimum
+accumulated drainage to zero. The remainder represents the
+streams. Drainage accumulation is drainage area represented
+in cells. Multiplying a drainage accumulation by the area of
+a cell yields the drainage area above that cell.<p>
+ 
+<H2>Runoff</H2>
+     The values in the runoff map represent the depth of
+water expected to run off that cell, from the input
+rainfall, based on the soil and landcover maps specified.
+Values could range between zero and the amount of rain that
+fell on that cell.  Runoff, like rainfall, is measured in
+hundredths of inches.  A value of 75 represents .75 inchs of
+runoff. Runoff values can be multiplied by the area of each
+cell to give a volume of runoff. However, care should be
+taken when converting units because cell sizes in GRASS are
+defined in meters. Upgradient values in the runoff map are
+summed during the peak discharge calculations and used in
+the contaminant source area and routing calculations.<p>
+ 
+<H2>Peak Discharge</H2>
+     Peak discharge is the maximum rate at which water
+passes through a cell measured in cubic feet per second.
+These estimates are based on an empirical relationship which
+describes the entire upstream portion of the watershed. If
+the entire upstream portion of the watershed is not within
+the current window, the model assumes the upstream edge is
+the top of the watershed. This is  wrong and estimates of
+peak discharge in streams which enter the window are
+meaningless as are routings of contaminants based on peak
+discharge. The calculations are retained so that local
+contributions from side streams and slopes may be modeled. 
+These local effects may be of substantial importance to
+those involved in the local area regardless of distant
+conditions.<p>
+ 
+<H2>Contaminant Source Areas</H2>
+     Sediment, nitrogen and phosphorus nutrients and COD can
+be simulated. The algorithms used to predict contaminant
+mobilization are dependent on the contaminant and the
+landcover class. In non urban areas sediment production is
+based on the universal soil loss equation. Nitrogen and
+phosphorous are modeled both in solution and associated with
+sediment in rural areas and only as a function of sediment
+in urban areas. COD is assumed to be soluble and is
+calculated by loading factors.<p>
+ 
+     Sediment loadings are expressed as kilograms per
+hectare. Nutrients and COD loadings are expressed as grams
+per hectare.  <p>
+ 
+     These loadings are a function of the rainfall, the
+soil, slope and landcover. They do not represent the natural
+scatter found in natural events. Results may be used as a
+relative indicator of contaminant generation. As such these
+maps may highlight those areas in a watershed that would
+benefit most from conservation efforts. Subtracting two
+source area maps generated for different scenarios would
+help locate the areas of greatest change.<p>
+ 
+<H2>Routing of Contaminants</H2>
+     Contaminants are routed down stream assuming total
+conservation unless a best management practice map for the
+particular contaminant is used. If a best management
+practice map is used contaminants flux across a BMP is
+reduced by the percentage indicated.<p>
+ 
+     The output maps indicate the totak mass of contaminant
+passing through a cell. These maps can be used as indicators
+of the contaminants delivered to any point down stream.
+Similar analysis for varying land cover regimes could be
+subtracted with "<a href=r.mapcalc.html>r.mapcalc</a>" to find areas of greatest
+positive and negative change resulting from the changes in
+scenarios. Again these numbers represent relative
+indicators.<p> 
+ 
+<H2>Interface Program</H2>
+     The Water resopurces assessment tool is run through an
+interface program invoked from the grass environment at any
+GRASS prompt by typing wrat. Work is organized in projects
+which should represent the investigation of a geographic
+area. The user interface is a series of menus which guide
+the user through the program. A project file is created
+which keeps track of the options used and input and output
+map names. The project file also creates a database window
+based on the active window at the time a project is started.
+The active window is returned to this active window for
+subsequent work sessions on the project.<p>
+ 
+<H2>First Menu</H2>
+At this menu the user can:<p>
+
+     1 start a new project<br>
+     2 start a project based on an existing project<br>
+     3 work on an existing project<br>
+     4 remove project files<br>
+     5 exit <p>
+ 
+The user is prompted for needed information such as the name
+of the project to work on with the option of listing project
+files if needeed.  Once a project is selected the secon menu
+is offered. The User may do:<p>
+ 
+     1 Terrain Analysis<br>
+     2 Runoff Analysis<br>
+     3 Contaminant Analysis<br>
+     4 return to main menu<p>
+
+Choices 1, 2 or 3 lead to menus for each of those analysis.<p>
+
+In the Terrain Analysis the options are:<p>
+
+     1 Create an idealized elevation model<br>
+     2 Create a drainage direction map<br>
+     3 Create a drainage accumulation map<br>
+     4 Create a slope map<br>
+     5 Return to the previous menu<p>
+
+In each case except option 5 the user is prompted for needed
+information. where appropriate the likely choices are
+supplied if not insisted upon. The drainage direction map
+must be based on the idealized elevation map. The drainage
+accumulation map needs a drainage direction map which should
+be the output map from option 2. In this way the user is
+guided along.<p>
+ 
+In the <b>runoff analysis section</b> there are only three options:<p>
+
+     1 Create a runoff map<br>
+     2 Simulate peak discharge<br>
+     3 Return to the previous menu<p>
+
+In this section the options are not as straight forward and
+the user is coached along.  The user must provide the names
+of several input maps and can obtain a listing by entering
+list instead of a map name where requested. The user must
+also choose between a design storm and rainfall map. The
+most difficult information requested of the user is the
+anticeedent moisture condition. This is a number between 1
+and 3 inclusivly which describes the amount of moisture
+already in the soil which effects the amount of rain which
+can be absorbed during the current storm. 1 represents
+extreemly dry conditions and 3 extreemley wet conditions.
+The concept comes from the Soil Conservation Service curve
+number method of predicting runoff. The basic guidance from
+the SCS is offered with the request and a value of 2 neither
+wet or dry is the default. Peak discharge is quite sensative
+to thee anticeedent moisture condition so some care should
+be taken here. <p>
+ 
+The <b>contaminant section</b> has only three options as well:<p>
+
+     1 Model Contaminant source areas<br>
+     2 Rout contaminants through the watershed<br>
+     3 Return to the previous menu<p>
+
+When modeling contaminant source areas the user may model
+just sediment or sediment and any combination of nitrogen,
+phosphorpus and COD. Because nutrients are associated with
+sediment sediment predictions are required for nutrient
+modeling. Most input for this section is straight forward
+except the number of days since the last significant rain.
+The  amount of dirt available to wash off of urban areas
+accumulates between rainstorms. Rain storms wash urban areas
+clean. a default of 7 days is suggested because this puts
+urban and rural areas on roughly even footings for
+comparison. To complicate the issue street sweeping also
+removes contaminants from road ways and so if the study area
+has a regular streeet cla\eaning program that should be
+reflected by entering fewer dry days. Several minor rain
+storms, especially short hard rains will accomplish the same
+cleaning as a long large rain.  SWMM assumes that a half
+inch of rain removes half of the available dirt and the next
+half inch removes half of what is left an so on. A worst
+case for urban areas is a rain ater an extended dry period.
+However the goal is to compare watersheds or source areas. 
+Agriculturlal areas contribute the most poultion with an
+anticeedent moisture condition of 3 since that is when the
+most runoff and erosion takes place.<p>
+ 
+ 
+<H2>Summary</H2>
+     The tools presented here run within the GRASS GIS. A
+flow chart of input and analysis (figure X1) can be used as
+a guide for the order of analysis. The system of units and
+means for encoding qualitative information are supplied for
+both input and output map layers. Careful preparation of
+input maps is strongly encouraged since this effort will
+likely save time and trouble later in the analysis. <p>
+ 
+     The ultimate utility of analyses performed with these
+water resource assessment tools is dependent on the
+interpretation of the user. Always keep in mind that these
+results are based on empirical relationships which represent
+expectations over a long term average. For this reason
+numerical results should be used only for comparison of
+areas and scenarios. Employing the entire set of tools from
+the tool kit may be inappropriate, and or redundant
+information.<p>
+ 
+You can't hurt the model by running it! So feel free to
+experiment!
+
+<HR>
+<ADDRESS>
+AUTHOR    Brian R. Brodeur    Cook College Remote Sensing Center<BR>
+&lt;bbrodeur_dep_boston@state.ma.us&gt;
+</ADDRESS>
+</BODY>
+</HTML>

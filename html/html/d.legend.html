@@ -1,0 +1,142 @@
+<TITLE>d.legend</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.legend</b></EM> - Displays a legend for a raster map layer in the 
+active frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.legend</B> 
+<BR>
+<B>d.legend help</B> 
+<BR>
+<B>d.legend [<B>-n</B>] map=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+[<B>lines=</B><EM>value</EM>] 
+[<B>show=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.legend</EM> displays a legend for a user-specified
+raster map layer in the active frame on the graphics
+monitor.  The legend's size is based on the height of the
+active frame.  The user should therefore take care to
+create a display frame of suitable dimensions before
+running <EM>d.legend</EM>.  <EM>d.legend</EM> will only
+obscure those portions of the active frame that directly
+underlie the legend.
+
+<P>
+
+The user can run <EM>d.legend</EM> either non-interactively
+or interactively.  If the user specifies the name of a
+raster <EM>map</EM> layer on the command line, the program
+will run non-interactively.  Default legend text
+<EM>color</EM> and number of <EM>lines</EM> will be used
+unless the user specifies other values on the command
+line.
+
+<P>
+
+Alternately, the user can simply type <B>d.legend</B> on the command line; 
+in this case, the program will prompt the user for parameter values 
+using the standard GRASS <A HREF="parser.html">parser</A> interface.
+
+<P>
+
+<H3>Flag:</H3>
+   
+<DL>
+<DT><B>-n</B>
+<DD>Do not display no data (NULL) values in legend.
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of a raster map layer whose legend is to be displayed in the active 
+display frame. 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the legend text color to the <EM>name</EM> stated. 
+<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown, 
+gray, white, and black. 
+<BR>
+Default: <EM>white</EM> 
+<DT><B>lines=</B><EM>value</EM>
+<DD>Number of lines to appear in the map legend. 
+<BR>
+The number of lines refers to the maximum number of lines
+of type that can be displayed given the height of the
+active display frame. If unspecified by the user, the
+program will divide the display frame into the number of
+lines required to display all of the category labels and
+colors associated with the named <EM>map</EM>.  To decrease
+the size of the displayed text, increase the number of
+lines.
+<BR>
+Options: 1 - 1000 
+<BR>
+Default: Set <EM>lines</EM> value equal to the number of
+<EM>map</EM> categories
+<DT><B>show=</B><EM>name</EM>
+<DD> Show either values or categories. Or both
+<BR>      options: val,cat
+<BR>      default: val,cat
+</DL>
+
+<H2>NOTES</H2>
+
+The legend text size is based on the number of <EM>lines</EM> requested 
+(or, by default, on the number of lines needed to display the legend). 
+If the user attempts to display a very long legend in a relatively short 
+display frame, the legend may appear in unreadably small text. 
+
+<H2>SEE ALSO</H2>
+
+<table width=550>
+<tr>
+	<td><em><a href="d.colormode.html">d.colormode</a></em></td>
+	<td><em><a href="d.colors.html">d.colors</a></em></td>
+	<td><em><a href="d.colortable.html">d.colortable</a></em></td>
+	<td><em><a href="d.display.html">d.display</a></em></td>
+
+</tr>
+<tr>
+	<td><em><a href="d.erase.html">d.erase</a></em></td>
+	<td><em><a href="d.font.html">d.font</a></em></td>
+	<td><em><a href="d.frame.html">d.frame</a></em></td>
+	<td><em><a href="d.grid.html">d.grid</a></em></td>
+
+</tr>
+<tr>
+	<td><em><a href="d.label.html">d.label</a></em></td>
+               <td><em><a href="d.labels.html">d.labels</a></em></td>
+	<td><em><a href="d.rast.html">d.rast</a></em></td>
+	<td><em><a href="d.scale.html">d.scale</a></em></td>
+</tr>
+<tr>
+	<td><em><a href="parser.html">parser</a></em></td>
+	
+
+</tr>
+</table>
+
+
+
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+

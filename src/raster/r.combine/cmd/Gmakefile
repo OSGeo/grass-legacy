@@ -1,3 +1,4 @@
+PGM=r.combine
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 OFILES  =\
 	main.o\
@@ -28,24 +29,24 @@ OFILES  =\
 	sigint.o\
 	write.o
 
-all: clean $(BIN_MAIN_CMD)/r.combine $(ETC)/r.combine text
+all: clean $(BIN_CMD)/$(PGM) $(ETC)/$(PGM) text
 
 clean:
 	-rm -f gis_lxcl.c gis_pars.c gis_pars.h gis_pars.out
 
-$(BIN_MAIN_CMD)/r.combine:
+$(BIN_CMD)/$(PGM):
 	rm -f $@
 	cp combine.sh $@
 	chmod 0755 $@
 
 
-$(ETC)/r.combine:      $(OFILES) $(LIBES)
+$(ETC)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
 text:
 	rm -rf $(TXT)/COMBINE
 	mkdir $(TXT)/COMBINE
-	cp HELP_TEXT/* $(TXT)/COMBINE
+	(cd HELP_TEXT/ ; tar -cf - * | (cd $(TXT)/COMBINE ; tar -xf - 2>/dev/null ) ; true )
 
 #
 

@@ -1,9 +1,0 @@
-PGM=r.slope
-HOME=$(BIN_ALPHA_CMD)
-
-LIST = main.o opennew.o
-
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) -o $@
-
-$(GISLIB): #

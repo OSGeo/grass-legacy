@@ -1,0 +1,127 @@
+<HTML>
+
+<TITLE>d.site.labels</TITLE>
+
+<BODY bgcolor="white">
+
+<IMG src="grass.smlogo.gif">
+
+<HR width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><B>d.site.labels</B></EM> - Interactively label sites using a string or double 
+attribute value or the category value on the current graphics monitor.
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.site.labels</B><BR>
+<B>d.site.labels -m file=</B><EM>name</EM>
+	[<B>attr=</B>string|cat|double|coords|dim]
+	[<B>index=</B><EM>number</EM>]
+	[<B>xref=</B>left|center|right]
+	[<B>yref=</B>top|center|bottom]
+	[<B>size=</B><EM>number</EM>]
+	[<B>color=</B><EM>colorname</EM>]
+	[<B>backgr=</B><EM>colorname</EM>]
+	[<B>border=</B><EM>colorname</EM>]
+	[<B>font=</B><EM>fontname</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<P>
+
+<EM>d.site.labels</EM> performs interactive placement of labels for a 
+GRASS <EM>sites_list</EM> on the
+current graphics monitor.  Labels can be chosen from the category value, a
+double attribute or a string attribute, the coordinates, or a dimension.  The
+default uses the first string attribute. The <EM>index</EM> is a number greater
+than zero for the attribute to use as a label.  The user may select the
+position, color and sizing of the labels.  Labels are only drawn within the
+current region.
+
+ 
+<P>
+This program can be run non-interactively or interactively.  If the user
+gives the name of a GRASS <EM>sites_list</EM> and (optionally) any other
+parameters, the command will be run non-interactively.  Any parameter
+left unspecified will be set to its default value (see below). Alternatively,
+the user can type <EM>d.site.labels</EM> at the command line and be prompted
+for the parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+ 
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>-m</B>
+<DD>Use the mouse to place labels interactively. If the user chooses no, this
+program behaves similarly to <A HREF="d.sites.label.html">d.sites.label</A>.<BR>
+Default: <EM>No</EM>
+<DT><B>file=</B><EM>name</EM>
+<DD>Name of a GRASS <EM>sites_list</EM> map in the user's current mapset
+	search path.
+<DT><B>attr=</B>string|cat|double|coords|dim
+<DD>Type of attribute to use for the label.<BR>
+Default: <EM>string</EM>
+<DT><B>index=</B><EM>number</EM>
+<DD>Index number to the attribute. For instance, <EM>3</EM> would request
+values from the third attribute column. This option is ignored if the
+<EM>attr</EM> option is set to <EM>cat</EM> or <EM>coords</EM>.<BR>
+Default: <EM>1</EM>
+<DT><B>xref=</B>left|center|right
+<DD>Horizontal label placement in relation to the site point.<BR>
+Default: <EM>center</EM>
+<DT><B>yref=</B>top|center|bottom
+<DD>Vertical label placement in relation to the site point.<BR>
+<DT><B>size=</B><EM>number</EM>
+<DD>The size of letters in pixels.<BR>
+Default: <EM>10</EM>
+<DT><B>color=</B><EM>colorname</EM>
+<DD>The GRASS <EM>colorname</EM> to use for the label text.<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+	gray, white or black<BR>
+Default: <EM>white</EM>
+<DT><B>backgr=</B><EM>colorname</EM>
+<DD>Color to use for text box background.<BR>
+Options: grey, red, white, magenta, brown, blue, indigo, yellow, black, orange, 
+	green, violet, none<BR>
+Default: none
+<DT><B>border=</B><EM>colorname</EM>
+<DD>Color to use for text box border.<BR>
+Options: grey, red, white, magenta, brown, blue, indigo, yellow, black, orange, 
+	green, violet, none<BR>
+Default: none
+<DT><B>font=</B><EM>fontname</EM>
+<DD>The GRASS <EM>fontname</EM> to use for the label.<BR>
+Options: cyrilc, gothgbt, gothgrt, gothitt, greekc, greekcs, greekp,
+	greeks, italicc, italiccs, italict, romanc, romancs, romand, 
+	romans, romant, scriptc or scripts<BR>
+Default: <EM>romans</EM>
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><BR>
+<EM><A HREF="d.icons.html">d.icons</A></EM><BR>
+<EM><A HREF="d.sites.html">d.sites</A></EM><BR>
+<EM><A HREF="d.sites.label.html">d.sites.label</A></EM><BR>
+<EM><A HREF="d.points.html">d.points</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.vect.html">d.vect</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+
+<H2>AUTHOR</H2>
+<P>
+Eric G. Miller, <EM>Unknown others</EM>
+ <P>
+<EM>$Id$</EM>
+ 
+</BODY>
+</HTML>
+
+

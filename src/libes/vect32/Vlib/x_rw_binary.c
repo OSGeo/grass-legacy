@@ -4,12 +4,10 @@
 **
 **  Modified by Dave Gerdes 1/91   more portable
 */
-#include "digit.h"
-#include "Vect.h"
-#include <string.h>
-#include "gis.h"
-#include "dig_head.h"
 #include <stdio.h>
+#include <string.h>
+#include "Vect.h"
+#include "gis.h"
 
 
 /* routines to read and write DIGIT header */
@@ -50,9 +48,9 @@ int Vect_x_write_head_binary (
 
      /************ Stuff in 4.0 DATA at end of old OTHER INFO line *******/
 
-    strncpy (buf, dhead->line_3, NEW_LINE_3_SIZE);
+    strncpy ((char *) buf, dhead->line_3, NEW_LINE_3_SIZE);
     buf[NEW_LINE_3_SIZE-1] = 0;
-    if (0>= dig__fwrite_port_C (buf ,NEW_LINE_3_SIZE, Map->dig_fp)) return -1;
+    if (0>= dig__fwrite_port_C ((char *) buf ,NEW_LINE_3_SIZE, Map->dig_fp)) return -1;
 
     for (i = 0 ; i < VERS_4_DATA_SIZE ; i++)
 	buf[i] = 0;
@@ -65,7 +63,7 @@ int Vect_x_write_head_binary (
     buf[5] = EARLIEST_MINOR;
     buf[6] = Defhd->portable;
     buf[7] =  (unsigned char) ~(Defhd->portable);
-    if (0>= dig__fwrite_port_C (buf ,VERS_4_DATA_SIZE, Map->dig_fp)) return -1;
+    if (0>= dig__fwrite_port_C ((char *) buf ,VERS_4_DATA_SIZE, Map->dig_fp)) return -1;
 
      /******************************* and continue ***********************/
 
@@ -150,7 +148,7 @@ int Vect_x_read_head_binary (
 
     if (0 >= dig__fread_port_C(dhead->line_3,     NEW_LINE_3_SIZE, digit)) return -1;
     dhead->line_3[NEW_LINE_3_SIZE-1] = 0;	/* terminate string */
-    if (0 >= dig__fread_port_C(buf, VERS_4_DATA_SIZE, digit)) return -1;
+    if (0 >= dig__fread_port_C((char *) buf, VERS_4_DATA_SIZE, digit)) return -1;
 
     if (buf[0] != '%' || buf[1] != '%') /* Version3.0 */
     {

@@ -1,0 +1,103 @@
+<TITLE>d.frame</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.frame</b></EM>  - Manages display frames on the user's graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.frame</B> 
+<BR>
+<B>d.frame help</B> 
+<BR>
+<B>d.frame</B> 
+[<B>-cepsD</B>] 
+[<B>frame=</B><EM>name</EM>] 
+[<B>at=</B><EM>bottom,top,left,right</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+This program manages display frames on the user's graphics
+monitor.  GRASS display programs at run-time connect with
+graphics rendering programs.  While the display programs
+are identical on every hardware platform, the graphics
+rendering programs are (essentially the only GRASS
+programs) designed for individual hardware devices. These
+rendering programs are managed with the GRASS program
+<EM><A HREF="d.mon.html">d.mon</A></B>.</EM> Graphics
+are displayed in rectangular frames on whatever graphics
+monitor the user is currently directing GRASS display
+output to.  These frames are created and managed with this
+program, <B>Note</B> that GRASS frame contents are not
+retained when one frame covers another.</B> You cannot
+shuffle frames from top to bottom and then back again.
+They simply define rectangular areas on the screen where
+subsequent drawing will occur.  
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-c</B>
+<DD>Creates a new display frame on the graphics monitor. 
+<DT><B>-e</B>
+<DD>Removes all existing display frames and reinitializes the 
+    entire graphics screen 
+    (the full-screen display frame). 
+<DT><B>-p</B>
+<DD>Prints the name of the active frame, in which GRASS display 
+    output will appear. 
+<DT><B>-s</B>
+<DD>Selects a frame for the display of GRASS graphics. This frame is then 
+    known as the "active frame". 
+<DT><B>-D</B>
+<DD>Prints the status of the user's graphics monitor and
+    active display frame to standard output. Information
+    includes the name and the dimensions of the current frame
+    on the graphics monitor, given in the form <EM>bottom</EM>
+    top left right</B>. This function is useful for debugging
+    output, and for determining display screen coordinates.
+</DL>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>frame=</B><EM>name</B>
+<DD>The name of the display frame to be created/selected. 
+<DT><B>at=</B><EM>bottom,top,left,right</B>
+<DD>Where to place the frame (implies <B>-c</B>). 
+    Frame coordinates are stated in the form: 
+    <EM>bottom,top,left,right</B>.</EM> The lower-left corner of the graphics 
+    monitor always is at location 0,0 while the monitor's upper-right corner 
+    is always at 100,100. 
+</DL>
+
+<H2>NOTES</H2>
+
+If the user has created multiple display frames that overlap one another, 
+whatever the user displays in the active frame will overwrite 
+those portions of the underlying frame where these frames overlap. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.mon.html">d.mon</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering 
+Research Laboratory
+<BR>
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory

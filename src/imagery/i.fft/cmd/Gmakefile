@@ -13,13 +13,13 @@ INVOBJS = ifftmain.o fft.o orig_wind.o
 LIBES= $(GISLIB)
 
 
-all: $(BIN_MAIN_CMD)/$(PGM) $(BIN_MAIN_CMD)/$(PGMI)
+all: $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGMI)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
-$(BIN_MAIN_CMD)/$(PGMI): $(INVOBJS) $(LIBES)
+$(BIN_CMD)/$(PGMI): $(INVOBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(INVOBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

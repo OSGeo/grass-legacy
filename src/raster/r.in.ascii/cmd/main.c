@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "global.h"
 #include "local_proto.h"
 
 FILE *Tmp_fd = NULL;
@@ -23,6 +22,7 @@ main (int argc, char *argv[])
 	int nrows, ncols;
 	double x;
 	char y[128];
+	struct GModule *module;
 	struct
 	{
 		struct Option *input, *output, *title, *mult, *nv;
@@ -37,6 +37,10 @@ main (int argc, char *argv[])
 	double atof();
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Convert an ASCII raster text file into a (binary) raster map layer.";
 
 	parm.input = G_define_option();
 	parm.input->key = "input";

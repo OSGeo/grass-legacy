@@ -30,9 +30,14 @@ main (int argc, char **argv)
         int start_line ;
         int t, b, l, r ;
         int tsize ;
+		struct GModule *module;
         struct Option *opt1, *opt2, *opt3;
         char *wind_file_name;
         FILE *wind_file;
+
+		module = G_define_module();
+		module->description =
+			"Draws text in the active display frame on the graphics monitor.";
 
         opt1 = G_define_option() ;
         opt1->key        = "size" ;
@@ -67,7 +72,7 @@ main (int argc, char **argv)
                 exit(-1);
 
 		if (isatty(0))
-			fprintf (stdout,"\nPlease enter text instructions.  Enter EOF on last line to quit\n") ;
+			fprintf (stdout,"\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n") ;
 
         sscanf(opt1->answer,"%f",&size);
 
@@ -82,7 +87,8 @@ main (int argc, char **argv)
 
 
         /* */
-        R_open_driver();
+        if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
         if (D_get_cur_wind(window_name))
                 G_fatal_error("No current window") ;

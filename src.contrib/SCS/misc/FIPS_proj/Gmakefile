@@ -1,5 +1,0 @@
-
-
-all:
-	$(GMAKE) lib
-	$(GMAKE) inter

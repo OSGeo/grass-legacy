@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 #include "raster.h"
 #include "display.h"
 
@@ -19,8 +20,14 @@ int main( int argc , char **argv )
 	int i, num;
 	int t, b, l, r ;
 	struct Cell_head window ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
 	struct Flag *do_num;
+
+	module = G_define_module();
+	module->description =
+		"Displays a subset of a sites list based on "
+		"site attributes.";
 
 	opt4 = G_define_option() ;
 	opt4->key        = "sitefile";
@@ -133,7 +140,8 @@ int main( int argc , char **argv )
 		type = TYPE_DIAMOND ;
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current frame") ;

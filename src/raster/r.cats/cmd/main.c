@@ -15,11 +15,17 @@ main (int argc, char *argv[])
     double dx;
     RASTER_MAP_TYPE map_type;
     int i;
+	struct GModule *module;
 
     struct
     {
 	struct Option *raster, *fs, *cats, *vals;
     } parm;
+
+	module = G_define_module();
+	module->description =
+		"Prints category values and labels associated "
+		"with user-specified raster map layers.";
 
     parm.raster = G_define_option() ;
     parm.raster->key        = "map";

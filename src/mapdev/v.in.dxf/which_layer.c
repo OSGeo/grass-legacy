@@ -2,15 +2,16 @@
 ** 7/23/90     
 */
 
-#include <stdlib.h>
 #include "dxf2vect.h"
 
 #define DEBUG
 
-DXF_DIG *dxf_which_layer (char *layer_name, int type)
+DXF_DIG *
+dxf_which_layer (char *layer_name, int type)
 {
     
-    int	open_count, closed_count = 0;
+    int	open_count, closed_count;
+    int find_highest_status();
     int found_flag = 0;
 
     /* convert DXF name to user alias before doing any file or 'layers' stuff */

@@ -1,0 +1,26 @@
+
+
+The code in the directories cmd and SH make up a first cut at reading
+a Digital Orthophoto Quad distributed by USGS in the standard (ST1-15-2)
+format.
+
+The directory cmd contains the GRASS code for a command line program
+that reads a DOQ file on disk and writes a GRASS raster file.
+
+The directory SH has two machine dependent shell scripts that make
+it easier for the user to read DOQ file(s) from tape on a SUN4.
+These scripts may need to be modified for specific instalations.
+
+
+NOTE!!!!!!!!!!!
+
+The current version of the program fixes the pixel resolution of the
+DOQ at 1 meter. Early release of DOQ by USGS have the wrong resolution
+in the header. When USGS has fixed this problem the program can be
+changed.
+
+
+Any problems/comments call Marty Holko
+
+phone: (202)720-4409
+a16holko@attmail.com

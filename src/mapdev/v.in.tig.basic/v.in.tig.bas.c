@@ -59,9 +59,10 @@ struct r2 {
 #include "v_in_tig_basic.h"
 
 /* for qsort of type 2 records by tlid  and rtsq*/
-int cmp_type2 (struct r2 *q1, struct r2 *q2)
+int cmp_type2 (const void *qq1, const void *qq2)
 {
-int diff;
+  const struct r2 *q1 = qq1, *q2 = qq2;
+  int diff;
   if (diff = (q1->tlid - q2->tlid) )
     return (diff) ;
   return ( q1->rs - q2->rs );

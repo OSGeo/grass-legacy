@@ -11,7 +11,7 @@ struct menu
     char *name;  	/* method name				 */
     char *text;		/* menu display - full description	 */
 };
-
+int bordwalk(struct Cell_head *, struct Cell_head *, struct pj_info *, struct pj_info *, char[256]);
 FCELL **readcell(int);
 /* declare resampling methods */
 /* bilinear.c */

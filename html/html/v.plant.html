@@ -1,0 +1,105 @@
+<TITLE>v.plant</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.plant</b></EM>  -  module to insert intermediate points on 
+GRASS vector lines.
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.plant</B> 
+<BR>
+<B>v.plant help</B> 
+<BR>
+<B>v.plant map=</B><EM>name</EM> 
+<p>
+v.plant is an interactive program.<p>
+
+<H2>DESCRIPTION</H2>
+This report describes the use and operation of the program <I>v.plant</I>, used with 
+the GRASS GIS system.  The report contains (i) a discussion of the problem which 
+motivated the development of the program, (ii) a description of the method used, 
+(iii) the manual page describing the usage of the program,  (iv) a listing of the source-code.
+
+<H2>Introduction</H2>
+<P></B><I>Map projections
+<P></I>Projections are representations of information defined on curved surfaces 
+(usually spheroids) in two-dimensional space.  This allows the description of the 
+location information in cartesian or other plane coordinate systems.  Particular 
+projections are defined by precise mathematical relations, which allows conversion 
+of maps from between projections to be achieved using straightforward mathematical
+ operations [1].  
+
+<P><I>Projecting line segments
+<P></I>When converted from one map projection to another, straight-lines become 
+curves.  Thus, a line segment which can be described by four parameters only (eg 
+the coordinates of the end points) in one projection becomes an arc which needs 
+more parameters in other projections.  In GIS systems which describe arcs as a 
+sequence of line segments, this means that intermediate points between the ends 
+of the segment are used.  The easiest method of projecting a line accurately is 
+to include intermediate points in the description in the source projection, so 
+that all these points are included in the target map.  
+
+<P><I>Context within the GRASS GIS
+<P></I>Vector maps (lines and arcs) in the GRASS GIS are represented by a relatively 
+straightforward format.  This is exemplified in the ascii version of vector files, 
+as produced by <I><a href=v.out.ascii.html>v.out.ascii</a></I> [2] and described 
+in the programmer's manual [3].  Individual vector segments are described by
+ a sequence of coordinate pairs, with the number of coordinated pairs for the 
+segment recorded in a brief header for each segment.  The program <I>v.prune</I> 
+[4] is provided to remove points which are considered redundant through being too 
+close together within a segment.  <I><a href=v.prune.html>v.plant</a></I> has 
+been designed as the complement of this, to insert extra points at a specified 
+spacing along straight-line segments.  
+
+<P><B> Design of v.plant
+<P></B><I>v.plant</I> has been implemented as a Bourne shell script.  The basic
+ procedure is as follows:
+<P>1.  Write out the existing map in the <I>dig_ascii</I> format;  
+<P>2.  Use an included <I>awk</I> script to process each vector segment in turn, 
+moving from point to point along the segment.  If a span between two adjacent points
+ is greater than the specified threshold (in map units) extra points are inserted collinearly.
+<P>3.  The modified <I>dig_ascii</I> file is re-imported, overwriting the original file.  
+<P>Because the original <I>dig</I> file is overwritten, all the support files are
+ preserved.  Since the vector segments remain in the same sequence, and all the 
+original points remain in the modified map, including the end-points of each 
+segment, all topology, attributes, etc are maintained.  
+
+<P>The usage is exemplified in the attached manual page.  The source code is also
+ attached, which may be examined for a detailed understanding of the method.  
+
+<H2>TODO</H2>
+A command-line version of <I>v.plant</I> would be highly desirable.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.prune.html">v.prune</A></EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>References</H2>
+[1]	Evenden, G.I.  (1990) Cartographic projection procedures for the 
+UNIX environment - a user's manual.  USGS Open-File Report 90-284  
+(Also see Interim Report and 2nd Interim Report on Release 4, Evenden 1994).  
+<P>[2]	Higgins, M. &amp; Westervelt, J.  v.out.ascii - Converts a binary 
+GRASS vector map layer into an ASCII GRASS vector map layer.  
+GRASS 4.1 documentation (main section).
+<P>[3]	Shapiro, M., Westervelt, J, Gerdes, D., Larson, M. &amp; 
+Brownfeld, K.R.  (1993) GRASS 4.1 programmer's manual.  
+US Army Construction Engineering Research Laboratory.
+<P>[4]	Gerdes D.,  v.prune - Prunes points from binary GRASS 
+vector data files.  GRASS 4.1 documentation (main section).<BR>
+
+<HR>
+<P><A HREF="http://www.agcrc.csiro.au/publications/9596/">Copyright &copy;  1997 AGCRC &amp; CSIRO</A>
+<ADDRESS>
+<P>CSIRO Exploration &amp; Mining Report 239F, March 1996.</P>
+<p><a href=mailto:simon@ned.dem.csiro.au>S.J.D. Cox</a></p>
+<P><I>AGCRC, CSIRO Exploration &amp; Mining, Nedlands, WA</I></TH>
+
+</ADDRESS>
+

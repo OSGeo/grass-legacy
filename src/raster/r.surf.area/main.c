@@ -1,27 +1,30 @@
 /* main.c - r.surf.area */
 
+/* 
+ * $Id$ 
+ */
+
 /* Copyright Notice
  * ---------------- 
  * Written by Bill Brown, USACERL December 21, 1994 
  * Copyright 1994, Bill Brown, USACERL
  * brown@gis.uiuc.edu
  *
- * Permission to use, copy, and distribute this program in its entirety, for
- * non-commercial purposes, is hereby granted without fee, provided that
- * this notice appear in all copies.
- * 
- * The software may be modified for your own purposes, but modified
- * versions may NOT be distributed without prior consent of the author.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * This software is provided 'as-is', without any express or implied
- * warranty.  In no event will the author be held liable for any damages
- * arising from the use of this software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * If you would like to do something with this software that this copyright
- * notice prohibits (such as distributing it with a commercial product,
- * using portions of the source in some other program, etc.), please
- * contact the author (preferably via email).  Arrangements can
- * probably be worked out.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   59 Temple Place - Suite 330,
+ *   Boston, MA  02111-1307, USA.
 */
 
 
@@ -45,31 +48,47 @@
  *      4) scaling of calculated area to current GRASS region 
 */
 
+/* Modified by Eric G. Miller to work with FP rasters and to handle
+ * NULL value cells.  I'm not too sure how bad the surface area
+ * calculation will get if there are alot of NULL cells mixed around.
+ * Added function prototypes and removed a couple unneccessary typedefs
+ * Added the add_null_area() function.
+ * 2000-10-17
+ */
 
 #include "gis.h"
 #include "math.h"
-
-typedef int FILEDESC;
-double atof();
 
 #define X 0
 #define Y 1
 #define Z 2
 
+void add_row_area(DCELL *, DCELL *, double, struct Cell_head *, 
+		double *, double *);
+void v3cross(double v1[3], double v2[3], double v3[3]);
+void v3mag(double v1[3], double *mag);
+void add_null_area(DCELL *, struct Cell_head *, double *);
+
+int
 main(argc, argv)
     int argc;
     char *argv[];
 {
 
+    struct GModule *module;
     struct Option 	*surf, *vscale;
     char 		*cellmap, errbuf[100];
-    CELL		*cell_buf[2];
+    DCELL                *cell_buf[2];
     int 		row;
     struct Cell_head	w;
-    FILEDESC    	cellfile = (FILEDESC) NULL;
-    double 		minarea, maxarea, sz;
+    int			cellfile = -1;
+    double 		minarea, maxarea, sz, nullarea;
 
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+        "Surface area estimation for rasters.";
 
     surf = G_define_option();
     surf->key                    = "input";
@@ -94,7 +113,6 @@ main(argc, argv)
 	sz = atof(vscale->answer);
     else sz = 1.0;
 
-
     G_get_set_window (&w); 
 
     /* open cell file for reading */
@@ -104,38 +122,40 @@ main(argc, argv)
 	    sprintf(errbuf,"Couldn't find raster file %s", surf->answer);
 	    G_fatal_error(errbuf);
 	}
-
 	if ((cellfile = G_open_cell_old(surf->answer, cellmap)) == -1) 
 	{
 	    sprintf(errbuf,"Not able to open cellfile for [%s]", surf->answer);
 	    G_fatal_error(errbuf);
 	}
     }
-
-    cell_buf[0] = (CELL *)G_malloc (w.cols * sizeof (CELL));
-    cell_buf[1] = (CELL *)G_malloc (w.cols * sizeof (CELL));
     
-    fprintf(stderr,"\n");
+    cell_buf[0] = (DCELL *) G_malloc (w.cols * G_raster_size(DCELL_TYPE));
+    cell_buf[1] = (DCELL *) G_malloc (w.cols * G_raster_size(DCELL_TYPE));
+    
+    fprintf(stdout,"\n");
     {
-    CELL *top, *bottom;
+    DCELL *top, *bottom;
 	
-	minarea = maxarea = 0.0;
+	minarea = maxarea = nullarea = 0.0;
 	for (row=0; row < w.rows-1; row++){
 	    if(!row){
-		G_get_map_row(cellfile, cell_buf[1], 0); 
-		top=cell_buf[1];
+		G_get_raster_row(cellfile, cell_buf[1], 0, DCELL_TYPE);
+                top = cell_buf[1];
 	    }
-	    G_get_map_row(cellfile, cell_buf[row%2], row+1); 
-	    bottom=cell_buf[row%2];
-	    add_row_area(top, bottom, sz, &w, &minarea, &maxarea);
+	    G_get_raster_row(cellfile, cell_buf[row%2], row+1, DCELL_TYPE);
+            bottom = cell_buf[row%2]; 
+            add_row_area(top, bottom, sz, &w, &minarea, &maxarea);
+            add_null_area(top, &w, &nullarea);
 	    top=bottom;
 	    G_percent (row, w.rows, 10);
 	}
+        /* Get last null row area */
+        add_null_area(top, &w, &nullarea);
     }
 
 
-    free(cell_buf[0]);
-    free(cell_buf[1]);
+    G_free(cell_buf[0]);
+    G_free(cell_buf[1]);
     G_close_cell(cellfile);
 
     { /* report */
@@ -144,41 +164,35 @@ main(argc, argv)
 	flat_area = (w.cols-1) * (w.rows-1) * w.ns_res * w.ew_res;
 	reg_area = w.cols * w.rows * w.ns_res * w.ew_res;
 	estavg = (minarea+maxarea) / 2.0;
-/*
-	fprintf(stderr,"Plan area used in calculation: %.4lf\n", flat_area);
-	fprintf(stderr,
-	    "Surface Area Calculation(low, high, avg):\n\t%.4lf %.4lf %.4lf\n", 
-	    minarea, maxarea, estavg);
 
-	fprintf(stderr,"Current Region plan area: %.4lf\n", reg_area);
-	fprintf(stderr,"Estimated Region Surface Area: %.4lf\n", 
-		reg_area * estavg /flat_area );
-*/
-	fprintf(stderr,"Plan area used in calculation: %e\n", flat_area);
-	fprintf(stderr,
+        fprintf(stdout,"Null value area ignored in calculation %e\n", nullarea);
+	fprintf(stdout,"Plan area used in calculation: %e\n", 
+                flat_area);
+	fprintf(stdout,
 	    "Surface Area Calculation(low, high, avg):\n\t%e %e %e\n",
 	    minarea, maxarea, estavg);
 
-	fprintf(stderr,"Current Region plan area: %e\n", reg_area);
-	fprintf(stderr,"Estimated Region Surface Area: %e\n", 
-		reg_area * estavg /flat_area );
-	fprintf(stderr,"\nDone.\n"); 
+	fprintf(stdout,"Current Region plan area: %e\n", 
+                reg_area);
+	fprintf(stdout,"Estimated Region Surface Area: %e\n", 
+		reg_area * estavg / flat_area );
+	fprintf(stdout,"\nDone.\n"); 
     }
     
-    return(1);
+    return(0); /* Zero means success */
 }
 
 /************************************************************************/
 
+void
 add_row_area(top, bottom, sz, w, low, high)
-CELL *top, *bottom;
+DCELL *top, *bottom;
 double sz;
 struct Cell_head	*w;
 double *low, *high;
 {
 double guess1, guess2, mag, tedge1[3], tedge2[3], crossp[3];
 int col;
-
 
 	for(col = 0; col < w->cols-1; col++) {
 
@@ -193,6 +207,14 @@ int col;
 	    the center point of four cells, since these are the 
 	    known elevation points.
 	    */
+	    
+	    /* If NAN go to next or we get NAN for everything */
+            if(G_is_d_null_value(&(bottom[col+1]))    || 
+                    G_is_d_null_value(&(top[col]))    ||
+                    G_is_d_null_value(&(top[col+1]))  ||
+                    G_is_d_null_value(&(bottom[col]))
+                    )
+                continue;
 	    
 	    /* guess1 --- ul to lr diag */
 	    {
@@ -243,15 +265,30 @@ int col;
 		v3mag(crossp, &mag);
 		guess2 += .5 * mag;
 	    }
-	    *low += (guess1 < guess2? guess1: guess2);
-	    *high += (guess1 < guess2? guess2: guess1);
+	    *low  += (guess1 < guess2) ? guess1 : guess2;
+	    *high += (guess1 < guess2) ? guess2 : guess1;
 
 	} /* ea col */
 
 }
 
 /************************************************************************/
+/* calculate the running area of null data cells */
+void
+add_null_area(DCELL *rast, struct Cell_head *region, double *area)
+{
+    int col;
+
+    for (col = 0; col < region->cols ; col++) {
+        if(G_is_d_null_value(&(rast[col]))) {
+            *area += region->ew_res * region->ns_res;
+        }
+    }
+}
+
+/************************************************************************/
 /* return the cross product v3 = v1 cross v2 */
+void
 v3cross(v1, v2, v3)
 double v1[3], v2[3], v3[3];
 {
@@ -262,10 +299,11 @@ double v1[3], v2[3], v3[3];
 
 /************************************************************************/
 /* magnitude of vector */
+void
 v3mag(v1, mag)
 double v1[3], *mag;
 {
     *mag = sqrt(v1[X] * v1[X] + v1[Y] * v1[Y] +v1[Z] * v1[Z]);
 }
 /************************************************************************/
-/************************************************************************/
+/* vim: softtabstop=4 shiftwidth=4 expandtab */

@@ -34,8 +34,16 @@ main (int argc, char **argv)
 	struct Colors int_colors ;
 	struct Colors out_colors ;
 	struct Colors sat_colors ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+	struct Flag *flg1 ;
 	char mg[100];
+
+	module = G_define_module();
+	module->description =
+		"Produces and displays a raster map layer combining "
+		"hue, intensity, and saturation (his) values "
+		"from user-specified input raster map layers.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "h_map" ;
@@ -59,11 +67,15 @@ main (int argc, char **argv)
 	opt3->description= "Name of layer to be used for SATURATION" ;
 
 	opt4 = G_define_option() ;
-	opt4->key        = "out" ;
+	opt4->key        = "output" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO ;
 	opt4->gisprompt  = "new,cell,raster" ;
 	opt4->description= "Name of raster map to contain results" ;
+
+	flg1 = G_define_flag() ;
+	flg1->key	 = 'o' ;
+	flg1->description= "Overwrite output map" ;
 
 	G_gisinit(argv[0]) ;
 
@@ -191,10 +203,15 @@ main (int argc, char **argv)
 		}
 		else
 		{
-			sprintf (mg, "%s: <%s> cell file exists already\n", 
-			    G_program_name(), opt4->answer);
-			G_fatal_error(mg);
-			exit(-1);
+			if (flg1->answer)
+			    G_remove("cell", name4);
+			else
+			{
+			    sprintf (mg, "%s: <%s> cell file exists already\n", 
+			        G_program_name(), opt4->answer);
+			    G_fatal_error(mg);
+			    exit(-1);
+			}
 		}
 		if ((out_file = G_open_cell_new (name4)) < 0)
 		{
@@ -221,12 +238,12 @@ main (int argc, char **argv)
 	next_row = 0;
 	for (atrow=0; atrow<window.rows; )
 	{
-		G_percent (atrow, window.rows, 5);
-		if(G_get_map_row(hue_file, hue_array, atrow) < 0)
+		G_percent (atrow, window.rows, 2);
+		if(G_get_c_raster_row(hue_file, hue_array, atrow) < 0)
 			exit(1);
-		if (int_used && (G_get_map_row(int_file, int_array, atrow) < 0))
+		if (int_used && (G_get_c_raster_row(int_file, int_array, atrow) < 0))
 			exit(1);
-		if (sat_used && (G_get_map_row(sat_file, sat_array, atrow) < 0))
+		if (sat_used && (G_get_c_raster_row(sat_file, sat_array, atrow) < 0))
 			exit(1);
 
 		for (atcol=0; atcol<window.cols; atcol++)
@@ -240,15 +257,17 @@ main (int argc, char **argv)
 
 			G_get_color(hue_array[atcol], &r, &g, &b, &hue_colors) ;
 
-			out_array[atcol] = (CELL) G_HIS(atcol, r, g, b, intensity, saturation ) ;
+			if(r==255 && g==255 && b==255 && intensity==255 && saturation==255)
+				G_set_c_null_value(&out_array[atcol], 1);
+			else
+				out_array[atcol] = (CELL) G_HIS(atcol, r, g, b, intensity, saturation ) ;
 		}
 
 		if (atrow == next_row)
 			next_row = D_draw_cell(next_row, out_array, &out_colors);
 		if (out_used)
 		{
-			/*if(G_put_map_row (out_file, out_array, &out_colors) < 0)*/
-			if(G_put_map_row (out_file, out_array) < 0)
+			if(G_put_c_raster_row (out_file, out_array) < 0)
 				out_used = 0;
 		}
 		if (out_used)

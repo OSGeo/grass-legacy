@@ -1,0 +1,92 @@
+<html>
+
+<TITLE>m.examine.tape</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.examine.tape</b></EM>  - Provides a description of the
+files on a 1/2-inch magnetic tape.
+
+<BR>
+
+<EM>(GRASS File Management Tool)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.examine.tape</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.examine.tape</EM> is a convenient tool for previewing
+a tape and obtaining block size values.  After the user
+enters the command
+
+<DL>
+<DD>
+<B>m.examine.tape</B>
+</DL>
+
+the program will prompt the user for the full path name of
+the tape device on which the tape is mounted.  In most
+cases, this will be <KBD>/dev/rmt0</KBD>.  However, the
+user must enter this, as there is no default value for the
+tape device name.  The user is then prompted to enter the
+buffer size to be used when reading the tape.  The buffer
+size is the amount of memory allocated to read one physical
+record of the tape.  If the user hits RETURN, the program
+will assume a default buffer size of 32767 bytes.
+
+<P>
+
+<EM>m.examine.tape</EM> reads the tape specified by the
+user and reports back the block size (record length) and
+the number of blocks for each file contained on the tape.
+<EM>m.examine.tape</EM> can be used on any 1/2-inch
+magnetic tape.  The user has the option of sending the
+output into a file or viewing the output on the terminal
+screen.
+
+<H2>NOTES</H2>
+
+The buffer size is the amount of memory allocated to read
+one physical record on the tape.  Magnetic tape devices
+will accept a request to read more bytes than actually
+exist in any given record on a tape.  However,
+<EM>m.examine.tape</EM> reads only as many bytes as
+physically exist on the tape and returns the number of
+bytes actually read.  The user is allowed to alter the
+buffer size in order to request smaller reads for tape
+devices unable to handle requests this large (32767 bytes),
+or to request larger reads for tapes with larger record
+sizes read on drives able to handle larger record sizes.
+
+
+<P>
+
+Note that <EM>m.examine.tape</EM> cannot be used to examine
+the content of either ordinary files or 1/4-inch tape
+cartridges.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.dem.examine.html">m.dem.examine</A></EM><br>
+<EM><A HREF="m.dem.extract.html">m.dem.extract</A></EM><br>
+<EM><A HREF="m.dmaUSGSread.html">m.dmaUSGSread</A></EM><br>
+<EM><A HREF="m.dted.examine.html">m.dted.examine</A></EM><br>
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM><br>
+<EM><A HREF="m.lulc.USGS.html">m.lulc.USGS</A></EM><br>
+<EM><A HREF="m.lulc.read.html">m.lulc.read</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

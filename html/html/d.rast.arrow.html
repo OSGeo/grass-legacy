@@ -1,0 +1,163 @@
+<TITLE>d.rast.arrow</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rast.arrow</b></EM>  - Draws arrows representing cell
+aspect direction for a raster map layer.
+
+<BR>
+
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rast.arrow</B>
+
+<BR>
+
+<B>d.rast.arrow help</B>
+
+<BR>
+
+<B>d.rast.arrow</B> [<B>map=</B><EM>name</EM>] [<B>type=</B><EM>name</EM>]
+[<B>arrow_color=</B><EM>name</EM>] [<B>grid_color=</B><EM>name</EM>]
+[<B>x_color=</B><EM>name</EM>] [<B>unknown_color=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.arrow</EM>
+is designed to help users better visualize surface water flow direction,
+as indicated in an aspect raster map layer.  There are two ways to specify
+the aspect layer the program is to use.  The first is to display the aspect
+map layer on the graphics monitor before running <EM>d.rast.arrow</EM>.
+The second method involves setting the <EM>map</EM> parameter
+to the name of the desired aspect map.
+This allows the arrows to be drawn over any other maps already displayed
+on the graphics monitor.
+
+
+<P>
+
+<EM>d.rast.arrow</EM> will draw an arrow over each displayed cell
+to indicate in which direction the cell slopes.
+An arrow can point in one of eight directions.  If the aspect
+layer has a category value denoting locations of "unknown" aspect,
+<EM>d.rast.arrow</EM> draws a question mark over the displayed cells
+of that category.
+Cells of category 0 (no data) will be marked with an "X".
+
+
+<P>
+
+<B> Note:</B>  Arrows are cell size and cannot be seen if the raster map
+is relatively close in scale.  From a command line mode, the user
+cannot run <EM>d.rast.arrow</EM> and then run 
+<EM><A HREF="d.zoom.html">d.zoom</A></EM>
+and still see the
+arrows.  The zooming action erases the arrows and the user must
+run <EM>d.rast.arrow</EM> again.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name of an existing raster map layer to be displayed.
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Type of existing raster data to be displayed.
+
+<BR>
+
+Options:  grass, agnps, answers
+
+<BR>
+
+Default:  grass
+
+<BR>
+
+Using this information, <EM>d.rast.arrow</EM> uses internal
+information to convert category values into appropriate
+arrow directions.
+
+<DT><B>arrow_color=</B><EM>name</EM> 
+
+<DD>Color in which arrows will be drawn.
+
+<BR>
+
+Options:  white, red, orange, yellow, green, blue, indigo, violet, 
+magenta, brown, gray, black
+
+<BR>
+
+Default:  green
+
+<DT><B>grid_color=</B><EM>name</EM> 
+
+<DD>Color in which grid outlines will be drawn.
+
+<BR>
+
+Options:  white, red, orange, yellow, green, blue, indigo, violet, 
+magenta, brown, gray, black
+
+<BR>
+
+Default:  gray
+
+<DT><B>x_color=</B><EM>name</EM> 
+
+<DD>Color in which x's will be drawn.
+
+<BR>
+
+Options:  white, red, orange, yellow, green, blue, indigo, violet, 
+magenta, brown, gray, black
+
+<BR>
+
+Default:  white
+
+<DT><B>unknown_color=</B><EM>name</EM> 
+
+<DD>Color in which unknown information will be displayed.
+
+<BR>
+
+Options:  white, red, orange, yellow, green, blue, indigo, violet, 
+magenta, brown, gray, black
+
+<BR>
+
+Default:  red
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.frame.html">d.frame</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.rast.edit.html">d.rast.edit</A></EM><BR>
+<EM><A HREF="d.rast.num.html">d.rast.num</A></EM><BR>
+<EM><A HREF="d.zoom.html">d.zoom</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="r.mask.html">r.mask</A></EM><BR>
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Chris Rewerts, 
+Agricultural Engineering, 
+Purdue University

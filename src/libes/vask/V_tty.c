@@ -23,9 +23,9 @@
 #include <signal.h>
 #ifdef SIGTSTP
 
-   static int (*tstp_old)(int);
-   static int (*tstp_new)(int);
-#  define get_tstp(x) x = (int (*)()) signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
+   static RETSIGTYPE (*tstp_old)(int);
+   static RETSIGTYPE (*tstp_new)(int);
+#  define get_tstp(x) x = signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
 #  define set_tstp(x) signal(SIGTSTP,x)
 
 #else

@@ -1,5 +1,6 @@
-#include "dig_head.h"
+#include "Vect.h"
 #include "dxf2vect.h"
+
 /* JUST FOR REFERENCE */
 /*  struct dig_head
     char organization[30] ;
@@ -15,8 +16,8 @@
     double map_thresh ;
 */
 
-
-int dxf_make_header (DXF_DIG *Layer)
+int
+dxf_make_header (DXF_DIG *Layer)
 {
     char *date; 
     char *name;

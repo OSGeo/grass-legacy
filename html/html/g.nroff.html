@@ -1,0 +1,78 @@
+<html>
+
+<TITLE>g.nroff</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.nroff</b></EM>  - runs nroff on a GRASS manual page
+<BR>
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.nroff help</B>
+<BR>
+<B>g.nroff</B> <EM>name</EM> [<EM>value</EM>]
+<BR>
+<B>g.nroff</B> &lt; <EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>g.nroff</EM>
+is a Bourne shell script that runs <EM>nroff</EM>
+on a GRASS manual page and prints the results
+to standard output.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><EM>name</EM> 
+<DD>Name of a GRASS man page (full path to roff source)
+<DT><EM>section</EM> 
+<DD>Integer section of the manual.
+<BR>
+1 for main programs
+<BR>
+2 for alpha programs
+<BR>
+3 for shell scripts
+<BR>
+4 for contributed, untested code
+<BR>
+5 file format descriptions
+<BR>
+Default: 4
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>g.nroff</EM>
+is likely to be used by programmers when preparing
+documentation for their code.
+
+<H2>FILES</H2>
+
+<KBD>$GISBASE/scripts/g.nroff</KBD>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.manual.html">g.manual</A></EM>
+<br>
+<EM><A HREF="start.man.sh.html">start.man.sh</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, <br>Agricultural
+Engineering<br>
+Purdue University
+
+</body>
+</html>

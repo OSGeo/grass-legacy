@@ -1,0 +1,146 @@
+<TITLE>r.mask.points</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.mask.points</b></EM>  -Examines and filters lists of points constituting lines
+to determine if they fall within current region and mask and optionally 
+an additional
+raster map. 
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.mask.points</B>
+
+<BR>
+
+<B>r.mask.points help</B>
+
+<BR>
+
+<B>r.mask.points</B> [<B> -r</B>] <B>[mask=</B><EM>name</EM>] <B>[input=</B><EM>name</EM>] <B>[fs=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<B>r.mask.points</B>
+filters a list of points based on the current region and current mask.
+The point list consists of lines which have the following format
+<PRE>
+	easting		northing	[text]
+		  	   .
+			   .
+			   .
+	easting		northing	[text]
+</PRE>
+The eastings and northings define points in the coordinate space. Each line
+is examined to determine if the point falls within the current region, current
+mask (if any), and optionally an additional raster map that acts as a secondary
+mask. If the point falls outside the current region or falls in a grid cell
+that has value zero (either in the current mask, or the specified mask file),
+then the entire line is suppressed. Otherwise it is printed exactly as it is input.
+There may be arbitrary text following the coordinate pairs and this text
+is output as well.
+
+<H2>OPTIONS</H2>
+<P>
+<B>Flags</B>
+
+<DT><B>-r</B> 
+
+<DD>Coordinates are reversed: north east
+
+
+<P>
+
+Normal input has the east first and the north second. This option allows
+the order of the coordinates to be north first and east next.
+</DT>
+
+
+<P>
+
+<B>Parameters</B>
+
+<DT><B>mask=</B><EM>name</EM> 
+
+<DD>Raster map used to mask points
+
+
+<P>
+
+This parameter is optional. If not specified, then the points are
+mask by the default mask (if there is one). If it is specified,
+then the points are mask by this layer as well as the default mask.
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Unix input containing point list
+
+
+<P>
+
+If not specified it is assumed that the user will either redirect the input
+from a file:
+<P>
+<DL>
+<DD><B>r.mask.points</B> &lt; file
+</DL>
+<P>
+or pipe the results from some other process (e.g., a DBMS query) into
+<EM> r.mask.points</EM>
+<P>
+<DL>
+<DD>some_process | <B>r.mask.points</B> 
+</DL>
+<P>
+<DT><B>fs=</B><EM>character</EM> 
+
+<DD>Input field separator character
+
+
+<P>
+
+If the coordinates are not separated by white space, but by some other
+character, this option specifies that character. For example, if a colon
+is used between the east and north, then
+<EM> r.mask..point</EM>
+can be told this by:
+<P>
+<DL>
+<DD><B> r.mask.points fs=</B><EM>:</EM>
+</DL>
+<P>
+</DL>
+
+<H2>NOTES</H2>
+
+Lines that make it through the filtering are output intact. This means
+that if the coordinates are reversed they will remain reversed on output.
+If there is a field separator, it will also be output.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.mask.html">r.mask</A></EM><BR>
+
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+
+<EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
+
+<EM><A HREF="d.points.html">d.points</A></EM>
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering  
+Research Laboratory

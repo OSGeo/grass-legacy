@@ -19,9 +19,13 @@ main (int argc, char *argv[])
 	char	*con_name, *alt_name, *con_mapset, s_f;
 	int	file_fd;
 	CELL	value;
+	struct GModule *module;
 	struct Flag *flag1;
 	struct Option *opt1, *opt2;
 
+    module = G_define_module();
+    module->description =
+		"Surface generation program from rasterized contours.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -125,6 +129,7 @@ main (int argc, char *argv[])
 		}
 		G_put_map_row(file_fd, alt_row);
 	}
+	G_percent (r, nrows, 1);
 	cseg_close (&con);
 	if (s_f) {
 		flag_destroy (seen);

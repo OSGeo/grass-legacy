@@ -1,6 +1,5 @@
 #include "gis.h"
-#include "dig_atts.h"
-#include "digit.h"
+#include "Vect.h"
 #include "vbuildlib.h"
 
 static int label_line(struct Map_info *,P_ATT *);

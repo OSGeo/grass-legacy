@@ -4,6 +4,8 @@
 #include "Vect.h"
 #include "display.h"
 
+extern int quiet;
+
 int plot1 (
     char *name,char *mapset,
     struct line_pnts *Points)
@@ -21,8 +23,8 @@ int plot1 (
 	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 	D_move_abs, D_cont_abs);
 
-
-    fprintf (stdout,"Plotting ... "); fflush (stdout);
+	if (!quiet)
+			fprintf (stdout,"Plotting ... "); fflush (stdout);
     while (1)
     {
         switch (Vect_read_next_line (&Map, Points))
@@ -32,7 +34,8 @@ int plot1 (
 	    fprintf (stderr, "\nERROR: vector file [%s] - can't read\n", name);
 	    return -1;
 	case -2: /* EOF */
-	    fprintf (stdout,"Done\n");
+		if (!quiet)
+			fprintf (stdout,"Done\n");
 	    Vect_close (&Map);
 	    return  0;
 	}

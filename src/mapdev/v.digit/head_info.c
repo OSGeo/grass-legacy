@@ -7,7 +7,7 @@
 #include <string.h>
 #include "gis.h"
 #include "vask.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 int get_head_info(int have_old, struct dig_head *dhead)
@@ -52,6 +52,7 @@ int get_head_info(int have_old, struct dig_head *dhead)
 	dhead->S = Window.south;
 	dhead->N = Window.north;
 	dhead->E = Window.east;
+	dhead->orig_scale = 1;  /* preset new map's scale */
 #ifdef NO_PORTABLE	/* added Aug 22, 1991  -dpg */
 	dhead->portable = 0;
 #else

@@ -14,7 +14,7 @@
 
 /******************************************************************/
 /*                                                                */
-/* m.in.e00 -- import an ESRI e00 archive - M. Wurtz (1998-10-10) */
+/* m.in.e00 -- import an ESRI e00 archive - M. Wurtz (v1.1) 11/99 */
 /*                                                                */
 /* This program is an attempt to read a .e00 file                 */
 /* Since e00 is NOT a public format, this program                 */
@@ -30,30 +30,60 @@ enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
 int debug = 0;			/* debug level (verbosity) */
 FILE *fde00, *fdlog;		/* input and log file descriptors */
 
+int compressed;			/* 1 if e00 file is compressed, 0 else */
+int current_position;		/* Where are we in input file ? */
+int usecovnum = 1;		/* set to 1 if we want link table by COVER#  */
+int usedatabase = 0;		/* set to 1 if we use an attributes database */
 double scale = 1.0;
 
-int main (int argc, char *argv[])
+extern void getraster( char*, int, int);
+extern long read_e00_line( char*);
+extern int getinfo( char*, int);
+extern int getarcs( char*, int, int);
+extern void getproj( void);
+extern void getsites( char*, int);
+extern void getlabels( char*, int, int);
+
+int main( int argc, char *argv[]) 
 {
-    char line[1024];		/* line buffer for reading */
+    extern void skip_arc( int);
+    extern void skip_dat( void);
+    extern void skip_lab( int);
+    extern void skip_msk( void);
+    extern void skip_pal( int);
+    extern void skip_txt( int);
+
+    char line[84];		/* line buffer for reading */
     char name[80], *p, *q;	/* name of output files */
 
     char *infile, *newmapset;
     long offset_grd = 0,
 	 offset_arc = 0,
-	 offset_lab = 0,
-	 offset_pal = 0;
+	 offset_lab = 0,	/* offset and precision of grid */
+	 offset_pal = 0;	/* values and coordinates for   */
+    int  prec_grd, prec_arc,	/* each section in e00 file :   */
+	 prec_lab, prec_pal;	/* 0 = float, 1 = double        */
     int cover_type;		/* type of coverage (line, point, area) */
-    int cover=0;			/* 1 if AAT, 2 if PAT, 3 if both */
+    int cover = 0;		/* 1 if AAT, 2 if PAT, 3 if both        */
 
-    char buf[256];
+    char buf[1024];
+    char msg[256];
 
+	struct GModule *module;
     struct {
-	struct Option *input, *mapset, *logfile, *action, *verbose;
+	struct Option *input, *mapset, *action, *verbose, *logfile;
     } parm;
+    struct {
+	struct Flag *db, *link, *support;
+    } flag;
 
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Read an ESRI e00 file.";
 
     /* define the different options */
 
@@ -90,6 +120,19 @@ int main (int argc, char *argv[])
     parm.logfile->required   = NO;
     parm.logfile->description= "Name of file where log operations";
 
+    flag.link = G_define_flag() ;
+    flag.link->key         = 'i';
+    flag.link->description = "Link attributes by coverage-ID not by coverage-#" ;
+
+    flag.db = G_define_flag() ;	/* not working yet... */
+    flag.db->key           = 'd';
+    flag.db->description   = "Use database for storing attributes" ;
+
+    flag.support = G_define_flag();
+    flag.support->key = 's';
+    flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
+
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
@@ -103,8 +146,8 @@ int main (int argc, char *argv[])
 	fdlog = stderr;
     else
 	if ((fdlog = fopen( parm.logfile->answer, "w")) == NULL) {    
-	    sprintf (buf, "Cannot open log file \"%s\"", parm.logfile->answer);
-	    G_fatal_error( buf);
+	    sprintf (msg, "Cannot open log file \"%s\"", parm.logfile->answer);
+	    G_fatal_error( msg);
 	}
     switch (parm.action->answer[0]){
 	case 'a': if (parm.action->answer[1] == 'l')
@@ -116,6 +159,11 @@ int main (int argc, char *argv[])
 	case 'l': todo = LINES; break;
 	case 'v': todo = VECTOR; break;
     }
+
+    if (flag.link->answer)
+	usecovnum = 0;
+    usedatabase = flag.db->answer;
+
     if ((todo == ANALYSE) && (debug < 5))
 	debug = 5;
 
@@ -128,18 +176,23 @@ int main (int argc, char *argv[])
     fde00 = fopen (infile, "r");
     if (fde00 == NULL)
     {
-	sprintf (buf, "%s - not found\n", infile);
-	G_fatal_error (buf);
+	sprintf (msg, "%s - not found\n", infile);
+	G_fatal_error (msg);
     }
 
-    fgets( line, 1024, fde00);
+    fgets( line, 84, fde00);
     if (strncmp( line, "EXP", 3)) {
-	sprintf( buf, "\"%s\" is not an Arc-Info Ascii Export file !\n", infile);
-	G_fatal_error (buf);
+	sprintf( msg, "\"%s\" is not an Arc-Info Export file !\n", infile);
+	G_fatal_error (msg);
     }
-    if (strtol( line+4, NULL, 10)) {
-	sprintf( buf, "Cannot handle \"%s\" : Binary export file...\n", infile);
-	G_fatal_error (buf);
+    switch (line[5]) {
+	case '0': compressed = 0;
+		  break;
+	case '1': compressed = 1;
+		  break;
+	default:  sprintf( msg, "Cannot handle \"%s\" : type %c\n", infile,
+			line[5]);
+		  G_fatal_error (msg);
     }
 
     if (debug)
@@ -149,17 +202,17 @@ int main (int argc, char *argv[])
 
     if (newmapset != NULL) {
 	if (G_legal_filename( newmapset) < 0) {
-	    sprintf (buf, "MAPSET <%s> - illegal name\n", newmapset);
-	    G_fatal_error( buf);
+	    sprintf (msg, "MAPSET <%s> - illegal name\n", newmapset);
+	    G_fatal_error( msg);
 	}
 	if (todo == ANALYSE)
 	    fprintf( fdlog, "Mapset %s not created (analyse only)\n", newmapset);
 	else {    
-	    sprintf( buf, "%s/%s", G_location_path(), newmapset);
-	    if (access( buf, F_OK) == -1)
-		if (mkdir( buf, 0755) == -1) {
-		    sprintf( buf, "Cannot create MAPSET %s", newmapset);
-		    G_fatal_error( buf);
+	    sprintf( msg, "%s/%s", G_location_path(), newmapset);
+	    if (access( msg, F_OK) == -1)
+		if (mkdir( msg, 0755) == -1) {
+		    sprintf( msg, "Cannot create MAPSET %s", newmapset);
+		    G_fatal_error( msg);
 		}
 	    G__setenv( "MAPSET", newmapset);
 	    if (debug > 2)
@@ -170,9 +223,15 @@ int main (int argc, char *argv[])
     /* extract name from header (cut .E00 and rewind until first separator) */
 
     p = strrchr( line, '.');
-    if (p == NULL)
-	strcpy( name, infile);	/* too bad to be stopped here */
-    else {
+    if (p == NULL) {		/* too bad to be stopped here */
+	p = strrchr( infile, '/');
+	if (p == (char *) NULL)
+	    p = infile;		/* we don't need complete path */
+	strcpy( name, p);
+	p = strchr( name, '.');	/* strip .e00 at end of name */
+	if (p && p != name)
+	    *p = 0;
+    } else {
 	*p-- = 0;
 	while ((*p == '_') || isalnum( *p))
 	    p--;
@@ -188,13 +247,14 @@ int main (int argc, char *argv[])
     /* main loop through the archive */
 
     do {
-	fgets( line, 1024, fde00);
+	current_position = read_e00_line( line);
 	if (debug)
-	    fprintf( fdlog, line);
+	    fprintf( fdlog, "%s\n", line);
 
 	if (!strncmp( line, "GRD  ", 5)) {      /* GRID SECTION */
 	    if (todo == RASTER || todo == ALL || todo == ANALYSE) {
-		offset_grd = ftell( fde00);
+		offset_grd = current_position;
+		prec_grd = line[5] - '2';
 		if (debug > 2)
 		    fprintf( fdlog, "GRD found at offset %ld\n", offset_grd);
 		ignore( "EOG", 0);
@@ -205,59 +265,76 @@ int main (int argc, char *argv[])
 
 	if (!strncmp( line, "ARC  ", 5)) {	/* ARC SECTION */
 	    if (todo == VECTOR || todo == LINES || todo == ALL) {
-		offset_arc = ftell( fde00);
+		offset_arc = current_position;
+		prec_arc = line[5] - '2';
 		if (debug > 2)
 		    fprintf( fdlog, "ARC found at offset %ld\n", offset_arc);
 	    }
-	    skip_data();
+	    skip_arc( prec_arc);
 	    continue;
 	}
 
-	if (!strncmp( line, "PAL  ", 5)) {      /* POLYGON TOPOLOGY */
-	    offset_pal = ftell( fde00);
-	    skip_pal();				/* to see later ?   */
+	if (!strncmp( line, "PAL  ", 5) ||
+	    !strncmp( line, "PFF  ", 5)) {      /* POLYGON TOPOLOGY */
+	    offset_pal = current_position;
+	    prec_pal = line[5] - '2';
+	    if (debug > 2)
+		fprintf( fdlog, "P%c%c found at offset %ld\n",
+			line[1], line[2], offset_pal);
+	    skip_pal( prec_pal);		/* to see later ?   */
 	    continue;
 	}
 
 	if (!strncmp( line, "CNT  ", 5)) {      /* CENTROID SECTION */
-	    skip_data();			/* to see later ?   */
+	    skip_dat();				/* is it realy useful ? */
 	    continue;
 	}
 
 	if (!strncmp( line, "LAB  ", 5)) {      /* LABEL SECTION */
 	    if (todo == VECTOR || todo == LINES || todo == ALL) {
-		offset_lab = ftell( fde00);
+		offset_lab = current_position;
+		prec_lab = line[5] - '2';
 		if (debug > 2)
 		    fprintf( fdlog, "LAB found at offset %ld\n", offset_lab);
 	    }
-	    skip_data();
+	    skip_lab( prec_lab);
 	    continue;
 	}
 
-	if (!strncmp( line, "IFO  ", 5)) {      /* INFO SECTION */
-	    if (todo == VECTOR || todo == ALL) 	/* Allways at end, but we want */
-		if (todo == ANALYSE)		/* it just after projection to */
-		    cover = getinfo( name, 0);	/* find wether it's a polygone */
-		else				/* line or point coverage      */
+	if (!strncmp( line, "IFO  ", 5)) {     /* INFO SECTION */
+	    if (todo == VECTOR || todo == ALL) /* Allways at end, but we want */
+		if (todo == ANALYSE)	       /* it just after projection to */
+		    cover = getinfo( name, 0); /* find wether it's a polygone */
+		else			       /* line or point coverage      */
 		    cover = getinfo( name, 1 + (newmapset != NULL));
 	    else
 		ignore( "EOI", 1);
 	    continue;
 	}
 
-	if (!strncmp( line, "RPL  ", 5)) {      /* UNKNOW KEYWORD SECTION */
-	    ignore( "JABBERWOCKY", 1);          /* Don't know what to do with */
+	if (!strncmp( line, "RPL  ", 5)) {      /* Specific to regions */
+	    ignore( "JABBERWOCKY", 1);          /* Contains PAL formated data */
+	    continue;				/* for each subclass */
+	}
+
+	if (!strncmp( line, "RXP  ", 5)) {      /* Specific to regions */
+	    ignore( "JABBERWOCKY", 1);          /* Seems to link regions IDs */
+	    continue;				/* to PAL polygons IDs */
+	}
+
+	if (!strncmp( line, "TXT  ", 5)) {      /* Annotations (text) */
+	    skip_txt( line[5] - '2');           /* To be imported ? */
 	    continue;				/* Does anybody have an idea? */
 	}
 
-	if (!strncmp( line, "RXP  ", 5)) {      /* UNKNOW KEYWORD SECTION */
-	    ignore( "JABBERWOCKY", 1);          /* Don't know what to do with */
-	    continue;				/* Does anybody have an idea? */
+	if (!strncmp( line, "TX6  ", 5)) {      /* Other kind of annotations */
+	    ignore( "JABBERWOCKY", 1);          /* not same termination  */
+	    continue;				/* Other differences ? */
 	}
 
-	if (!strncmp( line, "TX6  ", 5)) {      /* UNKNOW KEYWORD SECTION */
-	    ignore( "JABBERWOCKY", 1);          /* Don't know what to do with */
-	    continue;				/* Does anybody have an idea? */
+	if (!strncmp( line, "TX7  ", 5)) {      /* Very close from TX6 */
+	    ignore( "JABBERWOCKY", 1);          /* So same questions and */
+	    continue;				/* same rules... */
 	}
 
 	if (!strncmp( line, "LNK  ", 5)) {      /* UNKNOW KEYWORD SECTION */
@@ -266,17 +343,33 @@ int main (int argc, char *argv[])
 	}
 
 	if (!strncmp( line, "SIN  ", 5)) {      /* SPATIAL INDEX SECTION */
-	    ignore( "EOX", 1);                  /* Don't know what to do with */
+	    ignore( "EOX", 1);                  /* Noting to do with it */
+	    continue;
+	}
+
+	if (!strncmp( line, "CLN  ", 5) ||      /* Line pattern and palette  */
+	    !strncmp( line, "CSH  ", 5)) {	/* Shade pattern and palette */
+	    ignore( "EOS", 1);                  /* End same as e00 archive ! */
+	    continue;
+	}
+
+	if (!strncmp( line, "FNT  ", 5)) {      /* Font description ? */
+	    ignore( "EOF", 1);                  /* Noting to do with it */
+	    continue;
+	}
+
+	if (!strncmp( line, "MSK  ", 5)) {      /* Mask description ? */
+	    skip_msk();				/* Noting to do with it */
 	    continue;
 	}
 
 	if (!strncmp( line, "TOL  ", 5)) {      /* TOLERANCE SECTION */
-	    skip_data();                        /* should we really yse that ? */
+	    skip_dat();				/* should we really use it ? */
 	    continue;
 	}
 
 	if (!strncmp( line, "PLT  ", 5)) {      /* PLOT SECTION */
-		ignore( "EOP", 1);              /* why should we import this ? */
+		ignore( "EOP", 1);              /* why should we import it ? */
 	    continue;
 	}
 
@@ -292,9 +385,9 @@ int main (int argc, char *argv[])
 		if (debug > 2)
 		    fprintf( fdlog, "Current Mapset : Ignoring projection data\n");
 		do {
-		    fgets( line, 1024, fde00);
+		    read_e00_line( line);
 		    if (debug > 3 && *line != '~')
-			fprintf( fdlog, line);
+			fprintf( fdlog, "%s\n", line);
 		    if (!strncmp( line, "Units", 5))
 			sscanf( line+6, "%lf", &scale);
 		} while (strncmp( line, "EOP", 3));
@@ -311,9 +404,9 @@ int main (int argc, char *argv[])
     if (offset_grd > 0) {
 	fseek( fde00, offset_grd, SEEK_SET);
 	if (todo == RASTER || todo == ALL)
-	    getraster( name, 1 + (newmapset != NULL));
+	    getraster( name, 1 + (newmapset != NULL), prec_grd);
 	else
-	    getraster( name, 0);
+	    getraster( name, 0, prec_grd);
     }
 
     switch (cover) {
@@ -324,7 +417,7 @@ int main (int argc, char *argv[])
 		 else
 		    cover_type = DOT;
 		 break;
-	case 3 : if (offset_pal != 0)
+	case 3 : if (offset_pal != 0 || offset_lab != 0)
 		    cover_type = AREA;
 		 else
 		    cover_type = LINE;
@@ -337,15 +430,27 @@ int main (int argc, char *argv[])
     }
     if (offset_arc != 0) {
 	fseek( fde00, offset_arc, SEEK_SET);
-	cover_type = getarcs( name, cover_type);
+	cover_type = getarcs( name, cover_type, prec_arc);
     }
     if (offset_lab != 0) {
 	fseek( fde00, offset_lab, SEEK_SET);
 	if (cover_type == DOT)
-	    getsites( name);
+	    getsites( name, prec_lab);
 	else
-	    getlabels( name, cover_type);
+	    getlabels( name, cover_type, prec_lab);
     }
+    if (debug)
+	fprintf( fdlog, "Import of %s complete\n", name);
+    
+   /* If "-s" flag is passed as argument then run "v.support" on */
+   /* newly created vector file (output).                        */
+   if (flag.support->answer)
+    {
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), name);
+     G_system(buf);
+     fprintf(stderr, "Done .\n");
+    }
+
     exit(0);
 }
 
@@ -355,7 +460,7 @@ void ignore( char *end, int flag)
 {
     /* flag   {0,1}  indicate whether to print debug messages */
     int l;
-    char line[1024];		/* line buffer for reading */
+    char line[84];		/* line buffer for reading */
 
     l = strlen( end);
     if (debug > 2 && flag)
@@ -364,10 +469,9 @@ void ignore( char *end, int flag)
 	fprintf( fdlog, "Start of data ignored ---------->\n");
 
     do {
-	if (fgets( line, 1024, fde00) == NULL)
-	    G_fatal_error( "End of file unexpected");
+	read_e00_line( line);
 	if (debug > 5 && flag)
-	    fprintf( fdlog, line);
+	    fprintf( fdlog, "%s\n", line);
     } while (strncmp( line, end, l));
 
     if (debug > 5 && flag)
@@ -375,41 +479,138 @@ void ignore( char *end, int flag)
 }
 
 /* Skip all numeric data until a line beginning with -1 */
-/* it seems that PAL section in double precision has a  */
-/* line of coordinates after... it is silently ignored  */
-/* by the main loop, but appears in the log file...     */
+/* we must have different functions for each section,   */
+/* objects having different and variable size (ARC, LAB */
+/* and PAL). lines of coordinates are silently ignored  */
 
-void skip_data (void)
+/* Skip all ARC data until a arc # of -1 */
+
+void skip_arc( int prec)
+{
+    int i, covnum, npts;
+    char line[84];		/* line buffer for reading */
+    long nbl, nbp;		/* number of lines and total of points */
+
+    nbp = nbl = 0L;
+    while (1) {
+	read_e00_line( line);
+	sscanf( line, "%d %*d %*d %*d %*d %*d %d", &covnum, &npts);
+        if (covnum == -1)
+	    break;
+	nbl++; nbp +=npts;
+	if (prec == 0)
+	    npts = (npts+1)/2;	/* number of coordinate lines */
+	for (i = 0; i < npts; i++)
+	    read_e00_line( line);
+    }
+    if (debug)
+	fprintf( fdlog, "Arc coverage : %ld arcs (%ld points)\n",
+			nbl, nbp);
+}
+
+/* Skip all data until a line beginning with -1 (TOL and CNT sections) */
+
+void skip_dat( void)
 {
     int j;
-    char line[1024];		/* line buffer for reading */
+    char line[84];		/* line buffer for reading */
 
-    while (fgets( line, 1024, fde00) != NULL) {
+    while (1) {
+	read_e00_line( line);
 	sscanf( line, "%d", &j);
         if (j == -1)
 	    break;
     }
 }
 
-/* Skip all PAL data until a line beginning with -1. We */
-/* cannot use skip_data, because the structure of this  */
-/* section... it can be some -1 value at start of line  */
+/* Skip all LAB data until a arc # of -1 */
 
-void 
-skip_pal (void)
+void skip_lab( int prec)
 {
-    int j;
+    int covid;
     char line[84];		/* line buffer for reading */
-    int i, n;
-    double x1, y1, x2, y2;
+    long nbl = 0;		/* number of label points */
+
+    while (1) {
+	read_e00_line( line);
+	sscanf( line, "%d", &covid);
+        if (covid == -1)
+	    break;
+	nbl++;
+	read_e00_line( line);
+	if (prec)		  /* two lines of coordinates */
+	    read_e00_line( line); /* in double precision */
+    }
+    if (debug)
+	fprintf( fdlog, "Label table : %ld entries\n", nbl);
+}
+
+/* Skip MSK data -- number of lines to skip may be false... */
+
+void skip_msk()
+{
+    char line[84];
+    double xmin, ymin, xmax, ymax, res, sk;
+    long xsize, ysize, nskip;
+
+    read_e00_line( line);
+    sscanf( line, "%lf %lf %lf", &xmin, &ymin, &xmax);
+    read_e00_line( line);
+    sscanf( line, "%lf %lf %ld %ld", &ymax, &res, &xsize, &ysize);
+    sk = ((ymax-ymin)/res) * ((xmax-xmin)/res) / 32.0;
+    nskip = (long) ceil( sk/7.0);
+    if (debug)
+	fprintf( fdlog, "lines to skip : %ld (%ld x %ld)\n",
+		 nskip, xsize, ysize);
+    while (nskip--)
+	read_e00_line( line);
+}
+
+/* Skip all PAL data until a line beginning with -1 */
+
+void skip_pal( int prec)
+{
+    char line[84];		/* line buffer for reading */
+    int i, narcs, nbp, nba;	/* counts arcs and polygons */
+
+    nbp = nba = 0;
+    for(;;) {
+	read_e00_line( line);
+	sscanf( line, "%d", &narcs);
+	if (prec)		  /* two lines of coordinates */
+	    read_e00_line( line); /* in double precision */
+	if (narcs == -1)
+	    break;
+	nbp++; nba += narcs;
+	for (i = (narcs + 1) / 2; i; i--)
+	    read_e00_line( line);
+    }
+    if (debug)
+	fprintf( fdlog, "PAL : %d polygons (%d arcs referenced)\n", nbp, nba);
+}
+
+/* Skip TXT data  until a line beginning with -1 */
+
+void skip_txt( int prec)
+{
+    char line[84];		/* line buffer for reading */
+    int i, n, nskip, nbt;
+
+    nbt = 0;
+    if (prec)
+	nskip = 7;
+    else
+	nskip = 5;
 
     for(;;) {
-	fscanf( fde00, "%d %lf %lf %lf %lf", &n, &x1, &y1, &x2, &y2);
-	if (n == -1) {
-	    fgets( line, 84, fde00);
+	read_e00_line( line);
+	sscanf( line, "%d", &n);
+	if (n == -1)
 	    break;
-	}
-	for (i = n*3; i; i--)
-	    fscanf( fde00, "%d", &j);
+	nbt++;
+	for( i=0; i < nskip; i++)
+	    read_e00_line( line);
     }
+    if (debug)
+	fprintf( fdlog, "Annotations : %d texts found\n", nbt);
 }

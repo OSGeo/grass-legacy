@@ -9,6 +9,7 @@
 /**(lex doesn't like my normal comment style...?)**/
 /**/
 
+
 %{
 int s_lookup(int);
 #ifdef DEBUG
@@ -36,7 +37,17 @@ int yynerrs = 0;
 
 #endif   DEBUG
 
-int yylineno = 1;
+#ifndef sgi
+#ifndef sparc
+#ifndef linux
+#ifndef __FreeBSD__
+#ifndef __CYGWIN__
+/* int yylineno = 1; */
+#endif
+#endif
+#endif
+#endif
+#endif
 
 #define   END(v)   (v-1 + sizeof v / sizeof v[0])
 static int screen();
@@ -51,7 +62,7 @@ new_line         [\n]
 other            .
 %%
 
-"#".*$                     ; /* Strip out comments */
+"#".*\n        ; /* Strip out comments */
 
 [Nn][Oo][Pp][Rr][Oo][Bb][Aa][Bb][Ii][Ll][Ii][Tt][Yy][Mm][Aa][Pp][Ss] {
 return token(NO_PROBABILITY_MAPS); }
@@ -107,7 +118,7 @@ return token(Constant);
 {white_space}+             ;
 
 {new_line}                 {
-yylineno++;
+  /* yylineno++; */
 }
 
 {other}                    return token(yytext[0]);

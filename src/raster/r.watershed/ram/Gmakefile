@@ -1,5 +1,5 @@
 BIN = $(ETC)/water
-PGN = ram
+PGM = ram
 
 SOURCE = main.c init_vars.c find_pour.c \
 	close_maps.c ramseg.c \
@@ -19,16 +19,10 @@ LIST =	main.o init_vars.o find_pour.o \
 	flag_destroy.o flag_get.o flag_set.o flag_unset.o\
 	usage.o
 
-$(BIN)/$(PGN): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
-
-saber_src:
-	#load $(CFLAGS)$(ADD_LIBS) $(SOURCE) $(GISLIB) $(MATHLIB)
-
-saber_obj:
-	#load $(LDFLAGS) $(ADD_LIBS) $(LIST) $(GISLIB) $(MATHLIB)
 
 Gwater.h: ramseg.h
 add_pt.o: Gwater.h
@@ -53,4 +47,3 @@ slope_len.o: Gwater.h
 split_str.o: Gwater.h
 usage.o: Gwater.h
 $(LIST): ramseg.h
-

@@ -42,11 +42,16 @@ int main (int argc, char *argv[])
         double *data[2]; /* Data structure containing real & complex values of FFT */
         double *dptr ;
         int save_args(); /* function to stash the command line arguments */
+		struct GModule *module;
         struct Option *op1, *op2, *op3, *op4;
         char *me;
 
         G_gisinit(argv[0]);
         me = G_program_name();
+
+	    module = G_define_module();
+	    module->description =
+			"Fast Fourier Transform (FFT) for image processing.";
 
         /* define options */
         op1=G_define_option();
@@ -127,8 +132,7 @@ int main (int argc, char *argv[])
         cols = max_pow2(oc);
         totsize = rows * cols;
 
-        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); *
-   /
+        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); */
 
         /* Allocate appropriate memory for the structure containing
      the real and complex components of the FFT.  DATA[0] will

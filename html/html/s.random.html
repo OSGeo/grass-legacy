@@ -1,0 +1,78 @@
+<TITLE>s.random</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<B> This program is not included in this distribution</B>
+
+<H2>NAME</H2>
+
+<EM><b>s.random</b></EM>  - Randomly generate a GRASS sites list.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.random</B>
+<BR>
+<B>s.random help</B>
+<BR>
+<B>s.random</B> [<B>-r</B>|<B>d</B>] 
+<B>n=</B><EM>value</EM> <B>sites=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.random</EM>
+randomly generates sites using the selected random number
+generator.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-r</B> 
+<DD>Use <EM>rand()</EM> (the default).
+<DT><B>-l</B> 
+<DD>Use <EM>drand48().</EM>
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>n=</B><EM>value</EM> 
+<DD>Positive integer value indicating the number of sites to be created.
+
+<DT><B>sites=</B><EM>name</EM> 
+<DD>Name of a sites file to store random points in.
+</DL>
+
+<H2>SEE ALSO</H2>
+
+UNIX man pages for <EM>rand(3)</EM> and <EM>drand48(3)</EM>.
+
+<P>
+<EM><A HREF="s.perturb.html">s.perturb</A></EM>
+
+<H2>BUGS</H2>
+
+The RNG used by 
+<EM><A HREF="s.perturb.html">s.perturb</A></EM>
+should probably be added to this program.
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover.</tt></a>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+</HTML>
+

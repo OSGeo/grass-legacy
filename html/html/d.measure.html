@@ -1,0 +1,104 @@
+<TITLE>d.measure</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.measure</b></EM> - Measures the lengths and areas of features 
+drawn by the user in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.measure</B> 
+<BR>
+<B>d.measure help</B> 
+<BR>
+<B>d.measure</B> 
+[<B>c1=</B><EM>name</EM>] 
+[<B>c2=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.measure</EM> provides the user with an interactive
+way to measure the lengths and areas of lines and polygons
+drawn by the user in the active frame on the graphics
+monitor.  Lines and polygons are drawn using a pointing
+device (mouse).  Each line segment is drawn in colors
+<EM>c1</EM> and <EM>c2</EM>.  A mouse button menu indicates
+that the user can find out the geographic coordinates of
+the cursor location, draw line segments between
+user-specified vertices, and quit <EM>d.measure</EM>. Lines
+and polygons are defined by the series of vertices marked
+by the user. If more than two successive vertices are
+drawn, <EM>d.measure</EM> prints the area encompassed
+(<EM>d.measure</EM> will assume the area is closed even if
+the user has not joined the first and last vertices).  Line
+lengths are stated in the same units as those of the
+current LOCATION.  Areas are stated in hectares, square
+miles, and square meters.
+
+Lines and polygons drawn using <EM>d.measure</EM> will
+overlay (not overwrite) whatever display currently appears
+in the active frame on the graphics monitor.  The user can,
+for example, run 
+<EM><A HREF="d.rast.html">d.rast</A></EM> or 
+<EM><A HREF="d.vect.html">d.vect</A></EM> prior to running
+<EM>d.measure</EM>, and use raster and/or vector maps
+as a backdrop.
+
+<H2>OPTIONS</H2>
+
+The user can specify the colors in which line segments will
+be drawn by setting the values of <EM>c1</EM> and
+<EM>c2</EM> on the command line.  Default line colors (see
+below) will be used if the user does not specify the values
+of <EM>c1</EM> and <EM>c2</EM> on the command line.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>c1=</B><EM>name</EM>
+<DD>The first color in which each line segment is drawn, 
+    while being positioned. 
+<BR>
+    Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown, 
+    gray, white, and black 
+<BR>
+    Default: <EM>white</EM> 
+<DT><B>c2=</B><EM>name</EM>
+<DD>The second color in which each line segment is drawn, 
+    after its vertices are fixed. 
+    Options: Same as <EM>c1</EM>.
+<BR>
+    Default: <EM>white</EM> 
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>d.measure</EM> uses all segments drawn by the user when computing area. 
+If the user draws an area within another area, the combined 
+area of both regions will be output. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="d.graph.html">d.graph</A></EM><br>
+<EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM>
+
+<H2>AUTHORS</H2>
+
+James Westervelt, 
+<BR>
+Michael Shapiro, <BR>
+U.S. Army Construction Engineering 
+Research Laboratory

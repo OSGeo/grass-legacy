@@ -10,6 +10,7 @@ typedef int FILEDESC;
 int main( int argc, char *argv[])
 {
 
+	struct GModule *module;
     struct Option 	*rast;
     char		*cellmap;
     FILEDESC    	cellfile = (FILEDESC) NULL;
@@ -23,6 +24,10 @@ int main( int argc, char *argv[])
     int mtype;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Export GRASS raster files into xyz format.";
 
     rast = G_define_option();
     rast->key            	   = "input";

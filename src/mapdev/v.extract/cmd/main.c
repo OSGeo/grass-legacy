@@ -1,6 +1,9 @@
-/* updated GRASS 5 Bill Hughes 9/99 */
-/* main.c    1.0   10/01/89
-/* main.c    1.1   1/30/91
+/*
+ * $Id$
+ * updated by David D Gray <ddgray@armadce.demon.co.uk> 4/2000 
+ * updated GRASS 5 Bill Hughes 9/99
+ * main.c    1.0   10/01/89
+ * main.c    1.1   1/30/91
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *	      Provides a means of generating vector (digit) files
@@ -44,21 +47,27 @@ char  buf[1024] ;
 struct dig_head Head;
 
 
-int main (int argc, char *argv[])
+int main (int argc, char **argv)
 {
 	int i, ier, cat_index, new_cat, max_att;
+	int cat_count, morecats;
+	int result;
 	int dissolve=0, cnt, x, y;
         char buffr[80], file_name[80], text[80];
         char *input, *output, *mapset;
-        struct Categories cats;
+        struct Categories cats, temp_cats;
+		struct GModule *module;
         struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
         struct Flag *d_flag, *n_flag;
         FILE *in, *catf;
 
 
-    G_gisinit (argv[0]);
-
             /* set up the options and flags for the command line parser */
+
+	module = G_define_module();
+	module->description =
+		"Selects vectors from an existing vector map and "
+		"creates a new map containing only the selected vectors.";
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
@@ -99,6 +108,7 @@ int main (int argc, char *argv[])
     listopt->key             = "list";
     listopt->type            =  TYPE_STRING;
     listopt->required        =  NO;
+    listopt->multiple        =  YES;
     listopt->key_desc        = "range";
     listopt->description     = "Category ranges: e.g. 1,3-8,13\n           Category list: e.g. Abc,Def2,XyZ " ;
 
@@ -108,16 +118,26 @@ int main (int argc, char *argv[])
     fileopt->required        =  NO;
     fileopt->description     = "Text file name for category range/list ";
 
+
+    G_gisinit (argv[0]);
+
+
        /* heeeerrrrrre's the   PARSER */
     if (G_parser (argc, argv))
         exit (-1);
 
        /* start checking options and flags */
-    
+
+    if (listopt->answers == NULL && fileopt->answer == NULL)
+	{
+        	fprintf(stderr,"\nEither [list] or [file] should be given.\n");
+		exit(1);
+	}
 
        /* set input vector file name and mapset */
     input = inopt->answer;
     mapset = G_find_vector (input, "") ;
+    cat_index = 0;
     if (mapset == NULL)
 	{
 		sprintf(buffr,"Vector file [%s] not available in search list",
@@ -192,6 +212,7 @@ int main (int argc, char *argv[])
 	    }
 
             /* valid list, put into cat value array */
+	 cat_index = 0;
          for (i = 0; listopt->answers[i]; i++)
             {
             scan_cats (listopt->answers[i], &x, &y);
@@ -217,6 +238,7 @@ int main (int argc, char *argv[])
            if (!fgets (buffr, 39, in)) break;
            sscanf(buffr, "%s", text);
            scan_cats (text, &x, &y);
+	   cat_index = 0;
            while (x <= y)
               {
               cat_array[cat_index] = x++; cat_index++; 
@@ -247,51 +269,78 @@ int main (int argc, char *argv[])
           }
        }
                      /* Open output "dig_cats" file */
-    G__file_name(file_name, CAT_DIR, output, G_mapset()) ;
-    if ( (catf = fopen (file_name, "w")) == NULL)
+    /* G__file_name(file_name, CAT_DIR, output, G_mapset()) ; */
+    result = G_init_cats( (CELL)0, "", &temp_cats);
+    fprintf( stderr, "Result of cats initialisation is %d\n", result );
+    /* if ( (catf = fopen (file_name, "w")) == NULL)
        {
        fprintf(stderr,"Can't create output dig_cats file <%s> \n", file_name) ;
        return (-1);
-       }
+       } */
+    G_set_cats_title( output, &temp_cats );
+    G_set_cat( 0, "no data", &temp_cats);
 
     fprintf (stdout,"\n");
     fprintf (stdout,"    Making category file\n");
 
                       /* make a cats file */
-    if (dissolve)
+    /* if (dissolve)
        sprintf(buffr,"# %d categories\nTitle %s\n",new_cat,output);
     else
        sprintf(buffr,"# %d categories\nTitle %s\n",max_att,output);
     fputs(buffr,catf);
     sprintf(buffr,"\n0.00 0.00 0.00 0.00\n0:no data\n");
     fputs(buffr,catf);
-    if (dissolve)
-       for (i = 1; i <= new_cat; i++)
+    */
+
+    if (dissolve) {
+      /* for (i = 1; i <= new_cat; i++)
            {
            sprintf(buffr,"%d:\n",i);
            fputs(buffr,catf);
            }
+      */
+      if( new_cat == 0 ) new_cat = cat_array[0];
+      if (G_read_vector_cats(input, mapset, &cats) == 0)
+	G_set_cat( new_cat, G_get_cat(new_cat, &cats), &temp_cats);
+      else
+	G_set_cat(new_cat, "", &temp_cats);
+    }
      else
 	 {
 		      /* first try reading parent cat file data */
-         if (G_read_vector_cats(input, mapset, &cats) == 0) 
-            {
-	    for ( i = 1; i <= max_att; i++)
-		{
-                sprintf(buffr,"%d:%s\n",i,cats.labels[i]);
-                fputs(buffr,catf);
-		}
-            }
+	   if (G_read_vector_cats(input, mapset, &cats) == 0) 
+	     {
+	       if(new_cat == 0)
+		 {
+		   cat_count = 0;
+		   while(cat_array[cat_count])
+		     {
+		       G_set_cat( cat_array[cat_count], G_get_cat(cat_array[cat_count],
+								  &cats), &temp_cats );
+		       cat_count++;
+		     }
+		 }
+	       else
+		 G_set_cat(new_cat, G_get_cat(new_cat, &cats), &temp_cats);
+	     }
          else   /* build an empty cat file */
 	    {
-	    for ( i = 1; i <= max_att; i++)
-		{
-                sprintf(buffr,"%d:\n",i);
-                fputs(buffr,catf);
-		}
+	       if(new_cat == 0)
+		 {
+		   cat_count = 0;
+		   while(cat_array[cat_count])
+		     {
+		       G_set_cat( cat_array[cat_count], "", &temp_cats );
+		       cat_count++;
+		     }
+		 }
+	       else
+		 G_set_cat(new_cat, "", &temp_cats);
 	    }
 	 }
-     fclose(catf) ;
+     if( G_write_vector_cats( output, &temp_cats ) < 0 )
+       fprintf( stderr, "Could not write category file, see error above." );
 
      sprintf( buffr, "%s/etc/v.build  map=%s  thresh=no",G_gisbase(),output);
      system(buffr);

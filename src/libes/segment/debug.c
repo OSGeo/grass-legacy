@@ -13,12 +13,12 @@
 
 static int check(SEGMENT *,int,int,char *);
 
-int segment_get (SEGMENT *SEG,CELL *buf,int row,int col)
+int segment_get (SEGMENT *SEG,void *buf,int row,int col)
 {
     int n;
     int index;
     int i;
-    char *b;
+    char *b, *p=buf;
 
     if (!check(SEG, row, col, "segment_get"))
 	return -1;
@@ -30,17 +30,17 @@ int segment_get (SEGMENT *SEG,CELL *buf,int row,int col)
 
     n = SEG->len;
     while (n-- > 0)
-	*buf++ = *b++;
+	*p++ = *b++;
     
     return 1;
 }
 
-int segment_put (SEGMENT *SEG,CELL *buf,int row,int col)
+int segment_put (SEGMENT *SEG,void *buf,int row,int col)
 {
     int n;
     int index;
     int i;
-    char *b;
+    char *b, *p = buf;
 
     if (!check(SEG, row, col, "segment_put"))
 	return -1;
@@ -53,7 +53,7 @@ int segment_put (SEGMENT *SEG,CELL *buf,int row,int col)
 
     n = SEG->len;
     while (n-- > 0)
-	*b++ = *buf++;
+	*b++ = *p++;
     return 1;
 }
 

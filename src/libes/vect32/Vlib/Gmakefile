@@ -1,6 +1,5 @@
 ###########################################################
 
-EXTRA_CFLAGS	= $(VECTLIBFLAGS) $(VECT_INCLUDE)
 
 # get_area_xy2.o
 # dig_hd.o

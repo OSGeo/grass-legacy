@@ -1,9 +1,0 @@
-
-all: $(BIN_CONTRIB_CMD)/r.in.pbm
-
-PGM2=r.in.pbm.o
-
-$(BIN_CONTRIB_CMD)/r.in.pbm: $(PGM2) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(PGM2) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
-
-$(GISLIB): #

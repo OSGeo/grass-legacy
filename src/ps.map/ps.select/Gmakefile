@@ -1,7 +1,7 @@
 PGM = ps.select
 LIST = main.o devices.o list.o show.o select.o get.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,0 +1,83 @@
+From: "Eric G . Miller" <egm2@jps.net>
+To: grass5 developers list <grass5@geog.uni-hannover.de>
+Subject: Re: [GRASS5] Severe (simple to fix?) problem with current GRASS
+
+On Wed, Jan 10, 2001 at 06:21:07PM +0000, Markus Neteler wrote:
+> Hi all,
+> 
+> after changing all Gmakefiles I have seen that
+> GRASS doesn't start any more :-)
+> 
+> ERROR: program 'g.gisenv' cannot be executed because:
+> 
+> Neither a command line (cmd) or interactive (inter) version was found
+>    in any of the main, alpha, or contrib directories.
+> 
+> This should be simple to fix as the
+> src/front.end/main.c
+> 
+> needs to be updated to reflect the removed main, alpha, or contrib
+> directories (real_path variable). However, I can't manage this...
+> Sorry, expert wanted. generally it should be simple to fix (I got
+> lost with all the pointers and lists there).
+
+Before fixing this problem.  Should we consider maybe eliminating it?
+The only programs it really serves a purpose for are shell scripts and
+compiled programs that have not yet implemented a G_parser() interface.
+
+I would suggest we consider just putting the executables in grass5/bin
+directly and try to avoid some of these convoluted pathways (and weak
+links) to the programs.  Undoubtedly I haven't considered something.
+But I wanted to make the suggestion anyway. 
+
+The README says:
+----------------------------------------------------
+This program is to decide if it should run
+etc/interactive programs or etc/command programs.
+
+It should live in etc/front.end and be linked to
+names in bin that have programs/shell scripts in
+etc/interactive and etc/command of the same name:
+
+ln etc/front.end bin/window
+for etc/command/window and etc/interactive/window
+
+When user runs window, this executes etc/front.end
+but argv[0] will have the name "window", which
+front.end will use to build the two program names
+etc/interactive/window and etc/command/window.
+---------------------------------------------------
+
+But, generally we have been eliminating this distinction between
+interactive and command scripts.  It's easy enough for an interactive
+only program to do something like:
+
+--------------------------------------
+if (argc > 1)
+  { 
+    G_fatal_error ("This program must be run interactively.");
+  }
+--------------------------------------
+
+or probably better (even though it's more code...)
+
+--------------------------------------
+struct GModule *mod;
+
+G_gisinit(argv[0]);
+
+mod = G_define_module();
+mod->description = "pgm -- do xyz interactive thing." ;
+
+/* No options */
+
+if(!G_parser())
+    exit(-1);
+
+if (!isatty())
+   G_fatal_error ("This program must be run interactively!");
+--------------------------------------
+
+-- 
+Eric G. Miller <egm2@jps.net>
+

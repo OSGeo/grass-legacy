@@ -34,11 +34,8 @@ int run_report(int full)
       if (!word_cnt) exit(1);
       }
     
-#ifdef SYSV
-    sprintf(name,"pg %s",temp_file);
-#else
-    sprintf(name,"more %s",temp_file);
-#endif
+    sprintf(name,"$GRASS_PAGER %s",temp_file);
+
     run(name);
     unlink (temp_file);
 

@@ -1,0 +1,65 @@
+<TITLE>v.make.subj</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.make.subj</b></EM>  - Create a "subject" file from all category labels
+found in a set of listed vector maps.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.make.subj</B>
+
+<BR>
+
+<B>v.make.subj help</B>
+
+<BR>
+
+<B>v.make.subj map=</B><EM>name</EM>[,<EM>name</EM>,...] <B>subj=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+Program to read the <EM>dig_cats</EM> file for each listed map.
+The program then creates (or appends to, if the SUBJ file exists)
+a "subject" file of all of the labels, giving a unique category value
+to each.
+
+
+<P>
+
+This program was designed to create a common category file from maps of
+areas that have the same category labels, but different category
+values;  and that must be joined/merged together.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Vector map--source for composite.
+
+<DT><B>subj=</B><EM>name</EM> 
+
+<DD>New SUBJ file name.
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<A HREF="v.merge.html">v.merge</A>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn , USDA, SCS, NHQ-CGIS

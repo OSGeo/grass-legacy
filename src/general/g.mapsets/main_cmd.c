@@ -22,9 +22,16 @@ main (int argc, char *argv[])
     char **ptr;
     char **tokens, **p;
     FILE *fp;
+	struct GModule *module;
     struct Option *opt1;
     struct Flag *print;
     struct Flag *list;
+
+	module = G_define_module();
+	module->description =
+		"Modifies the user's current mapset "
+		"search path, affecting the user's access to data existing "
+		"under the other GRASS mapsets in the current location.";
 
     opt1 = G_define_option() ;
     opt1->key        = "mapset" ;

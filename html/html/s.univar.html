@@ -1,0 +1,86 @@
+<TITLE>s.univar</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.univar</b></EM>  - Univariate statistics for a GRASS sites list.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.univar</B>
+<BR>
+<B>s.univar help</B>
+<BR>
+<B>s.univar</B> [<B>-aglq</B>]
+<B>sites=</B><EM>name</EM> 
+<B>[field=</B><EM>value</EM><B>]</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.univar</EM> calculates univariate statistics of sites
+lists.  This includes the number of sites, mean, standard
+deviation, coefficient of variation, mininum, first
+quartile, median, third quartile, and maximum.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-a</B> 
+<DD>Use all sites found in the named <EM>sites</EM> file, rather than
+limiting output to sites falling within the current geographic region.
+
+<DT><B>-g</B> 
+<DD>Print the statistics in shell script style (similar to <EM>g.region</EM>).
+
+<DT><B>-l</B> 
+<DD>Use site descriptions (category labels) for z values.
+Sites must be in the (E|N|#n desc) format for this to work.
+Default format is just three pipe-separated floating point
+numbers (E|N|desc).
+
+<DT><B>-q</B> 
+<DD>Quiet. Cut out the chatter.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>sites=</B><EM>name</EM> 
+<DD>Name of an existing sites file.
+
+<DT><B>field</B>
+<DD>Number of z-field attribute to use for calculation
+<DD>default: 1  
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.normal.html">s.normal</A></EM>,
+<EM><A HREF="r.univar.html">r.univar</A></EM>,
+
+
+<H2>BUGS</H2>
+
+Needs to do as many calculations as possible without storing individual site
+records (requires a lot of memory).
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover.</tt></a>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+</HTML>

@@ -1,9 +1,10 @@
-#include "stdio.h"
-#include "vask.h"
+#include <stdio.h>
 #include <pwd.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <curses.h>
+#include "config.h"
+#include "vask.h"
 
 int V__dump_window()
 {
@@ -48,7 +49,11 @@ int V__remove_trail( int ans_col , char *ANSWER )
 	ANS_PTR = ANSWER + ans_col ;
 	while (ans_col>=0) 
 	{
-		if ((*ANS_PTR > '\040') && (*ANS_PTR < '\177') && (*ANS_PTR != '\137')) 
+#ifdef ASIAN_CHARS
+		if (((*ANS_PTR > '\040') && (*ANS_PTR < '\177') && (*ANS_PTR != '\137')) || *ANS_PTR < 0)
+#else
+		if ((*ANS_PTR > '\040') && (*ANS_PTR < '\177') && (*ANS_PTR != '\137'))
+#endif
 			return(0) ;
 		*ANS_PTR = 00 ;
 		ans_col-- ;

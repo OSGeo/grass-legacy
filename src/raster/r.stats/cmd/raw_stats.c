@@ -114,8 +114,6 @@ raw_stats (int fd[], int verbose, int with_coordinates, int with_xy, int with_la
 	    fprintf (stdout,"\n");
 	}
     }
-    if (verbose)
-	G_percent (nrows, nrows, 2);
 
     return 0;
 }

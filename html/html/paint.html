@@ -1,0 +1,110 @@
+<TITLE>paint</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>paint</b></EM>  - Description of hardcopy color output system for GRASS.
+
+<H2>INTRODUCTION</H2>
+
+The <B>paint</B> system allows the user to produce color hardcopy
+maps of vector, raster, and sites file data at any scale.
+For a discussion of the GRASS <B>paint</B> functions, see the
+manual entries for
+<EM><A HREF="p.chart.html">p.chart</A></EM>, 
+<EM><A HREF="p.colors.html">p.colors</A></EM>, 
+<EM><A HREF="p.icons.html">p.icons</A></EM>, 
+<EM><A HREF="p.labels.html">p.labels</A></EM>, 
+<EM><A HREF="p.map.html">p.map</A></EM>, 
+and <EM><A HREF="p.select.html">p.select</A></EM>.
+
+<H2>PAINT DEVICES</H2>
+
+The GRASS paint system supports multiple color printers
+using a <EM>device</EM> driver concept.  The paint (p.)
+functions listed above send graphics requests to
+device-dependent paint drivers.  These drivers translate
+the application requests into device-dependent requests to
+produce hardcopy maps.
+
+<H2>INSTALLING A PAINT DRIVER</H2>
+
+A number of paint drivers have been distributed with
+GRASS.  The installation of a driver is a 2 step process.
+The first involves identifying the driver(s) which
+correspond to printer(s) connected to your system and
+compiling those drivers.  The second involves telling each
+driver which i/o port it is to use.
+
+
+<OL>
+
+<LI>The source code for the drivers lives in
+<KBD>$GISBASE/../src/paint/Drivers</KBD> (The variable
+GISBASE refers to the directory in which GRASS is installed
+on your system.)
+
+<BR>
+
+The selection and compilation of the drivers is done when GRASS
+is compiled as a whole.
+
+<LI>The port configuration is handled using the UNIX
+<EM>ln</EM> command.
+
+</OL>
+
+Each driver expects to send its output to <KBD>/dev/</KBD><EM>driver</EM>.
+For example, the <B>tek4695</B> driver expects to find a
+tektronix 4695 (or 4696) printer on <KBD>/dev/tek4695</KBD>.
+
+
+<P>
+
+Suppose the printer is actually on <KBD>/dev/tty10</KBD>.
+Then, a link named <KBD>/dev/tek4695</KBD> is made to <KBD>/dev/tty10</KBD>:
+
+
+<DL>
+<DD><KBD>ln /dev/tty10 /dev/tek4695</KBD>
+</DL>
+
+<H2>NOTES</H2>
+
+There are 2 drivers which do not use i/o ports.  One is the
+<B>preview</B> driver, which sends its output to the
+graphics screen instead of a hardcopy printer.  This driver
+is very handy and should definitely be compiled on your
+system.
+
+
+<P>
+
+The other is the <B>null</B> driver, which is used for
+debugging purposes and probably should not be compiled on
+your system.
+
+
+<P>
+
+If you compile either of these drivers, you shouldn't create
+a <KBD>/dev</KBD> file for them.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="p.chart.html">p.chart</A></EM><br>
+<EM><A HREF="p.colors.html">p.colors</A></EM><br>
+<EM><A HREF="p.icons.html">p.icons</A></EM><br>
+<EM><A HREF="p.labels.html">p.labels</A></EM><br>
+<EM><A HREF="p.map.html">p.map</A></EM><br>
+<EM><A HREF="p.select.html">p.select</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

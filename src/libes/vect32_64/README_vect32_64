@@ -1,6 +1,0 @@
-This is a first approach for a 64 compliant
-PVF (portable vector format) library.
-
-The standard PVF lib (32bit) is in src/mapdev/.
-
-Bill Hughes 1999

@@ -1,0 +1,94 @@
+<html>
+
+<TITLE>d.sites</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.sites</b></EM> - Displays site markers in the active display frame 
+on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.sites</B> 
+<BR>
+<B>d.sites help</B> 
+<BR>
+<B>d.sites sitefile=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+[<B>type=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.sites</EM> displays a 
+GRASS <EM>site_lists</EM> map using site markers of a 
+color, size, and type specified by the user. 
+Output is displayed in the active frame on the graphics monitor. 
+
+<P>
+
+This program can be run non-interactively or
+interactively.  If the user gives the name of a GRASS
+<EM>site_lists</EM> map and (optionally) specifies other
+parameter values on the command line the program will be
+run non-interactively; any parameter values left
+unspecified are set to their default values (see below).
+Alternately, the user can type simply <B>d.sites</B> on the
+command line; in this case, the program will prompt the
+user for parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>sitefile=</B><EM>name</EM>
+<DD>Name of a GRASS <EM>site_lists</EM> map in the user's current mapset search path. 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current color to <EM>name</EM>.</EM> 
+<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown, 
+gray, white, and black 
+<BR>
+Default: <EM>gray</EM> 
+<DT><B>size=</B><EM>value</EM>
+<DD>Size, in pixels, in which the site icons are to be drawn. 
+<BR>
+Options: 0-1000 
+<BR>
+Default: 5 
+<DT><B>type=</B><EM>name</EM>
+<DD>The type of icon to be displayed at site locations. 
+<BR>
+Options: x, diamond, box, + 
+<BR>
+Default: x 
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.icons.html">d.icons</A></EM><br>
+<EM><A HREF="d.points.html">d.points</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

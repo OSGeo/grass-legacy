@@ -1,0 +1,174 @@
+<TITLE>m.in.stf1.tape</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.in.stf1.tape</b></EM>  - Filter to extract lines from a text file based on
+column contents, especially for Bureau of the Census STF1 files.
+
+<BR>
+
+<EM>(GRASS Support Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.in.stf1.tape</B>
+
+<BR>
+
+<B>m.in.stf1.tape help</B>
+
+<BR>
+
+<B>m.in.stf1.tape -f</B>
+
+<BR>
+
+<B>m.in.stf1.tape [-n] sc=str [sc=str . . .] &lt; infile &gt; outfile</B>
+
+
+<P>
+
+This program must be run in command mode only.
+
+
+<P>
+
+
+<H2>PARAMETERS</H2>
+
+
+
+<P>
+
+<EM>sc</EM> is a starting column number of a desired field in the input file,
+or is the name of one of the Identification Section field names for the 
+STF1 records (all upper case letters), and <EM>str</EM> is a string to match 
+against input lines starting at column <EM>sc</EM>. <EM>sc=str</EM> may be 
+repeated resulting in a conjunction (anding) of the results of each 
+<EM>sc=str</EM> expression.  A '?' may be used as a single character wild card 
+in <EM>str</EM>; if <EM>sc=str</EM> contains '?' or other shell interpreted 
+characters, it should be protected in quotes.  Preceeding <EM>sc</EM> by 'N', 
+or preceeding the <EM>=</EM> by '!' reverses the sense of the test ("not equals").
+
+
+<P>
+
+
+<DL>
+<DD><B>m.in.stf1.tape </B><EM>11=050  &lt; infile &gt; outfile</EM>
+
+
+<DD><B>m.in.stf1.tape </B><EM>SUMLEV=050  &lt; infile &gt; outfile</EM>
+
+
+<DD><B>m.in.stf1.tape </B><EM>1=T450 '7=Bu??s' &lt; infile &gt; outfile</EM>
+
+
+<DD><B>m.in.stf1.tape </B><EM>51=tract N37=9753 &lt; infile &gt; outfile</EM>
+
+
+<DD><B>m.in.stf1.tape </B><EM>51=tract 37!=9753 &lt; infile &gt; outfile</EM>
+
+<BR>
+</DL>
+  
+Running the program with the <EM>-f</EM> flag generates the list of STF1
+Identification Section field names to stdout.
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+
+
+<P>
+
+This is a text filter program written in C especially to work
+with the Census STF1 files, but useful for selecting subsets of lines
+from any text file.  It will work with arbitrarily long input lines,
+up to 10,000 characters.  Input lines may be of variable length.
+
+
+<P>
+
+A <EM>sc=str</EM> condition which refers to columns beyond the end of
+the input line is assumed to be true.
+
+
+<P>
+
+Multiple tests are 'anded' into a single test; that is, lines which
+pass all tests are written to the output file.
+
+
+<P>
+
+Null characters are always filtered out; thus, this
+program can be used as a null filter by specifying a <EM>sc=str</EM> condition
+which will always be true (e.g., '1=?').  In the same way, files with lines
+terminated with &lt;LF&gt;&lt;CR&gt; or just &lt;CR&gt; can be "fixed" to have the
+standard Unix &lt;LF&gt; terminator.
+
+
+<P>
+
+NOTE: One special property of <EM>m.in.stf1.tape</EM> is that it will pad
+(with 0) its output lines to 4806 characters if the line begins with
+the characters "STF1" and is greater than 4000 characters long.
+Experience has shown that some STF1 records
+are a few characters short (but no data has been omitted), and this
+corrects them so that other programs will be able to read full lines.
+
+
+<P>
+
+
+<H2>BUGS/FEATURES</H2>
+
+Input lines must be terminated with &lt;LF&gt;, &lt;CR&gt; or &lt;LF&gt;&lt;CR&gt;.
+Output lines will be terminated with &lt;LF&gt; only.
+
+
+<P>
+
+Input characters lexically less than 'space' (32 decimal; the "control"
+characters) which are not line terminators will be perceived as line
+terminators and thus cause improper functioning.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+For extracting lines from files, Unix programs such as <EM>grep</EM>,
+or <EM>awk</EM> are somewhat more flexible than <EM>m.in.stf1.tape</EM>,
+but have line length limitations and do not adapt to lines terminated
+with &lt;LF&gt; and &lt;CR&gt;.
+
+
+<P>
+
+This program was created as a preprocessor for Census STF1 files,
+to produce input files for the program <EM>
+<A HREF="v.apply.census.html">v.apply.census</A>
+</EM>.
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne, GIS Laboratory, Central Washington University.
+
+
+<P>
+

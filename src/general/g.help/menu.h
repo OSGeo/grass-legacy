@@ -32,7 +32,6 @@ static int HELPWINHITE ;
 
 #define NULLSTR "\0\n"   
 #define	LF	'\n'
-#define	CR	'\012'
 #define	ESC	'\033'
 #define	VERTCHAR	' '
 #define	HORZCHAR	'-'
@@ -43,12 +42,18 @@ static int HELPWINHITE ;
 #define BOTPAG   '\005'			/*      e */
 #define BAKPAG   '\002'			/*      b */
 #define FORPAG   '\006'			/*      f */
-#define BAKLIN   '\004'			/*      d */
-#define FORLIN   '\025'			/*      u */
+#define BAKLIN   '\025'			/*      u */
+#define FORLIN   '\004'			/*      d */
 #define REFRESH  'r'
 #define PRINTOUT '\001' 		/* Ctrl a */ 
 #define HELP   	 '?'  
- 
+#define PAGETOP       't'
+#define PAGEBOT       'e'
+#define PAGEUP        'b'
+#define PAGEDOWN      'f'
+#define LINEUP        'u'
+#define LINEDOWN      'd'
+
 #define MICRORESP	1
 #define MICROMESG	"Immediate response"
 #define MINIRESP	2

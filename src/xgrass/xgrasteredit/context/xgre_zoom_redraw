@@ -1,5 +1,0 @@
-This button will cause the zoom area to 
-be redrawn.  Any edits that have been made
-in the window will redisplayed according 
-to the raster map colortable and the 
-undo buffer will be cleared. 

@@ -1,0 +1,129 @@
+<TITLE>m.ll2gc</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+
+<H2>NAME</H2>
+
+<EM><b>m.ll2gc</b></EM>  - Converts geographic coordinates to geocentric coordinates.
+
+<BR>
+
+(GRASS Data Import/Processing Program) 
+
+<H2>SYNOPSIS</H2>
+
+<B>m.ll2gc</B>
+<B>lat=</B><EM>dd.mm.ss</EM>{<EM>n</EM>|<EM>s</EM>}
+<B>lon=</B><EM>dd.mm.ss</EM>{<EM>e</EM>|<EM>w</EM>}
+[<B>h=</B><EM>height</EM>] <B>s=</B><EM>spheroid</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.ll2gc</EM> returns geocentric coordinates for
+geographic coordinates (latitude and longitude).
+Geographic coordinates are in degrees, minutes, and seconds
+and must include designation of north or south
+{<EM>n</EM>|<EM>s</EM>} and east or west
+{<EM>e</EM>|<EM>w</EM>}.  The spheroid on which they are
+based must also be entered.  The height (in meters) above
+the spheroid is optional.
+
+<P>
+
+The list of spheroids available is somewhat dynamic.  It
+may not contain exactly the ones listed below.  To
+determine the current list of possible spheroids, type in:
+
+<DL>
+<DD><B>m.ll2gc lat=</B><EM>0n</EM> <B>lon=</B><EM>0w</EM> <B>s=</B><EM>help</EM>
+</DL>
+
+A list of available spheroids will be printed on the
+screen.  If the spheroid desired is not on the list, the
+values for the semi-major axis and the eccentricity squared
+for the spheroid may be entered in place of a spheroid name
+in the following format:
+
+<DL>
+<DD><B>s=a=</B><EM>semi-major_axis</EM>,<B>e=</B><EM>eccentricity_squared</EM>
+</DL>
+
+<H3>SOME POSSIBLE SPHEROIDS</H3>
+
+(<EM>The on-line listing includes only the spheroid names</EM>)
+
+<PRE>
+Spheroid     |  Commonly used for:|  Semi-major axis|  Eccentricity sqrd
+_____________|____________________|_________________|___________________
+australian   |  Australia         |  6378160.0      |  0.0066945419
+bessel       |  Japan             |  6377739.155    |  0.0066743722
+clark66      |  N. America        |  6378206.4      |  0.006768658
+clark80      |  France, Africa    |  6378249.145    |  0.0068035113
+everest      |  India, Burma      |  6377276.345    |  0.0066378466
+international|  Europe            |  6378388.0      |  0.00672267
+wgs72        |  worldwide coverage|  6378135.0      |  0.006694317778
+</PRE>
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DD><B>m.ll2gc lat=</B><EM>0n</EM> <B>lon=</B><EM>90w</EM> <B>s=</B><EM>wgs72</EM>
+<DT>Results: 4
+<DD>
+x=0.0 <BR>
+y=6378135.0 <BR>
+z=0.0
+</DL>
+
+The distances designated by "x," "y" and "z" are in meters
+from the center of the earth. Because the sample point is
+on the equator and is at 90 degrees west, two of the three
+parameters have a value of zero (i.e., the point is at the
+origin of those two dimensions).
+
+<H2>NOTES</H2>
+
+For a brief discussion of spheroids see 
+
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM>.
+
+
+<P>
+
+Geographic coordinates (latitude/longitude) describe the
+location of a point on the earth relative to the equator in
+the north/south directions and relative to Greenwich in the
+east/west directions.  The same point will have different
+coordinates depending on the spheroid used as the
+approximation of the shape of the earth.  The geocentric
+coordinates given here describe the point on the basis of
+the same spheroid, but they use the center of the spheroid
+as their origin.  This can be thought of as being the
+center of the earth, which is why they are called
+"geocentric."  Describing the location of a point in a
+spheroid requires three points: x, y, and z;  these are
+measured out from the center along three different axes.
+The distances given are in meters.
+
+
+<P>
+
+This is an experimental program.  It is part of initial
+efforts to incorporate geographic coordinates into GRASS.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM><br>
+<EM><A HREF="m.gc2ll.html">m.gc2ll</A></EM><br>
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM><br>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

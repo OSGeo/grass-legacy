@@ -234,8 +234,8 @@ free_product_list (struct prob *ptr)
     struct prob *local = ptr;
 
     while (local != NULL) {
-        free(ptr);
         local = local->next;
+        free(ptr);
         ptr = local;
     }
 

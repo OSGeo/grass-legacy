@@ -1,3 +1,5 @@
+/* improved from v.bubble code 6/2000 MN*/
+
 /* Function: "main.c" for GRASS Program "v.circle".               */
 /* "v.circle" creates vector "circle" polygons using points from  */
 /* the site_lists files as the centers of the those "polygon"     */
@@ -13,8 +15,7 @@
 #include <math.h>
 #include "Vect.h"
 #include "gis.h"
-
-int Date(char *);
+#include "v.circle.h"
 
 int main( int argc, char **argv )
  {
@@ -35,8 +36,6 @@ int main( int argc, char **argv )
   double n, e, n_circum, e_circum, theta;
   long int deg;
   FILE *fd_site;
-  double site_east, site_north;
-  char *site_desc;
   struct Map_info map;
   struct dig_head *local_head;
   struct line_pnts *pnts;
@@ -44,12 +43,17 @@ int main( int argc, char **argv )
   double max_x, max_y;
   double min_x, min_y;
   short int once;
-  int Date(); 
   char today[20];
   char command[1024];
   struct Flag *flag;
   long int count;
-
+  circlesite *bsite;
+  int nsites; /*number of sites*/
+  int i1,i2,i3;
+  struct Categories cats;
+  char catbuffer[80];
+  FILE *f_att = NULL;
+      
 /* Initialize the GIS calls */
   G_gisinit(argv[0]) ;
 
@@ -112,7 +116,7 @@ ac(acres), sqmi(square miles), hec(hectares).";
   opt_output->key = "output";
   opt_output->type = TYPE_STRING;
   opt_output->required = YES;
-  opt_output->gisprompt = "new,dig,vector";
+  opt_output->gisprompt = "any,dig,vector";
   opt_output->description = "Vector file to be created (output).";
   opt_output->answer = "";
 
@@ -190,7 +194,7 @@ Please use one  these units of measure:  \"sqm\" (for square meters), or \
 
 /* Make sure that the current projection is UTM or   */
 /* Unreferenced XY projection.                       */
-  if ((G_projection() != 0)&&(G_projection() != 1))
+  if ((G_projection() != 0)&&(G_projection() != 1) &&(G_projection() != 99))
    {
     char msg[256];      
     sprintf(msg,"%s:  Projection must be either Unreferenced XY (value 0) or \
@@ -388,17 +392,6 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
   /* Get "mapset". */
   vect_mapset = G_mapset();
 
-/* Make sure that vector file "output" does not already exist in "vect_mapset". */
-  if ( (vect_mapset = G_find_vector2(output,vect_mapset)) != NULL )
-   {
-    char msg[256];
-    sprintf(msg,"%s: Vector file name: <%s> already exists in mapset \"%s\".  \
-Please choose a different vector file name.\n",
-    G_program_name(), output, G_mapset() );
-    G_fatal_error (msg);
-    exit(1);
-   }
-
   fqn = fqn_output;
   fqn = G_fully_qualified_name(output,vect_mapset);
    
@@ -438,14 +431,35 @@ Please choose a different vector file name.\n",
 
   once = 0;
   count = 0;
-  while (G_get_site(fd_site,&site_east,&site_north,&site_desc) > 0)
+
+   if ((nsites = readsites (fd_site,1,1,1, &bsite))==0) {
+       G_fatal_error("No sites found.");
+   } 
+   else {
+       fprintf(stderr, "%i sites found\n",nsites);
+   }
+
+   /* write atts file */
+      f_att = G_fopen_new( "dig_att", output);
+      if (f_att == NULL)
+          G_fatal_error("Unable to create attribute file.");
+         
+   /*     Create empty dig_cats file            */
+   G_init_cats( (CELL)0,"",&cats);
+   if (G_write_vector_cats(output, &cats) != 1)
+       G_fatal_error("Writing dig_cats file");
+
+  for (i1=0;i1<nsites;i1++)
    {
     for (deg=0; deg <= 360; deg++)
      {
       e =  radius * cos( (double)(deg) * theta ); 
       n =  radius * sin( (double)(deg) * theta ); 
-      x[deg] = site_east + e;
-      y[deg] = site_north + n;
+      x[deg] = bsite[i1].x + e;
+      y[deg] = bsite[i1].y + n;
+      
+
+
       if (once==0)
        {
         max_x = x[deg];
@@ -463,6 +477,27 @@ Please choose a different vector file name.\n",
     Vect_write_line(&map,AREA,pnts);
     count += 1;
    }
+ 
+  /* cycle again through the sites list */
+  count = 0;
+    
+  for (i1=0;i1<nsites;i1++)
+   {
+      sprintf(catbuffer, "%g", bsite[i1].z); /* use sites z-value as cat */
+
+      /* write att file */
+      fprintf( f_att, "A  %-12f  %-12f  %s \n",
+      		   bsite[i1].x, bsite[i1].y, catbuffer);
+      		   
+      /* copy z value from sites as vector cat */
+      if (G_set_cat(i1+1, catbuffer, &cats) != 1)
+         G_fatal_error("Error setting category in dig_cats");
+         
+      count += 1;
+   }
+   
+  /* update cats file with new values */
+  G_write_vector_cats(output, &cats) != 0;                                
 
   /* Initialize "dig_head" structure "local_head" with vector info. */
   local_head = (struct dig_head *) G_malloc (sizeof(struct dig_head)); 
@@ -524,42 +559,10 @@ Vector file <%s> has no circles in it.\n",
   /* newly created vector file (output).                        */
   if (flag->answer == 0x01)
    {
-    sleep(8);
+    fprintf(stderr, "Creating support file...");
+    sleep(8); /* sleep to avoid timing problems */
     sprintf(command,"%s/bin/v.support map=%s",G_gisbase(), output );
     system(command);
    }
   exit(0);
- }
-
-
-/* Function "Date" provides today's date. */
-int 
-Date (char *today)
- {
-  char month[4];
-  char day[3];
-  char year[5];
-  char date[30];
-  FILE *date_ptr;
-
-  date_ptr = popen("date","r");
-  fread(date,sizeof(date),1,date_ptr);
-  *(month+0) = *(date+4);
-  *(month+1) = *(date+5);
-  *(month+2) = *(date+6);
-  *(month+3) = '\0';
-  if (*(date+8) == ' ')
-    *(day+0) = '0';
-  else
-    *(day+0) = *(date+8);
-  *(day+1) = *(date+9);
-  *(day+2) = '\0';
-  *(year+0) = *(date+24);
-  *(year+1) = *(date+25);
-  *(year+2) = *(date+26);
-  *(year+3) = *(date+27);
-  *(year+4) = '\0';
-  pclose(date_ptr);
-  sprintf(today,"%s %s, %s",month,day,year);
-  return(0);
  }

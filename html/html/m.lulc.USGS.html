@@ -1,0 +1,171 @@
+<TITLE>m.lulc.USGS</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM>m.lulc.USGS</EM>  - Creates raster map layers from a Composite Theme Grid
+(CTG) file created by <EM>
+<A HREF="m.lulc.read.html">m.lulc.read</A>
+</EM>.  <EM>m.lulc.read</EM> extracts the CTG
+data from an ASCII landuse/landcover (lulc) CTG format file 
+supplied by the USGS.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.lulc.USGS </B><EM>input_file</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.lulc.USGS</EM> creates the following raster map layers from the CTG file
+created by <EM>
+<A HREF="m.lulc.read.html">m.lulc.read</A>
+</EM>, and places them into the user's current mapset:
+
+
+<P>
+
+<DL>
+<DD>
+1. Land Use &amp; Land Cover
+
+<BR>
+
+2. Political Units
+
+<BR>
+
+3. Census Units
+
+<BR>
+
+4. Hydrologic Units
+
+<BR>
+
+5. Federal Land Ownership
+
+<BR>
+
+6. State Land Ownership
+</DL>
+
+
+<P>
+
+Since the CTG file may not contain all of layers listed above,
+<EM>m.lulc.USGS</EM> will extract only the raster map layers which exist
+in the CTG file.
+
+
+<P>
+
+The CTG file contains all of the geographic region definition
+information necessary for creating the raster map layers, including: 
+
+
+<P>
+
+<DL>
+<DD>
+1.  Grid Zone
+
+<BR>
+
+2.  Projection Type (UTM)
+
+<BR>
+
+3.  Cell Resolution (ew_res = nw_res)
+
+<BR>
+
+4.  Multi-byte data formation
+
+<BR>
+
+5.  Geographic region coordinates    
+</DL>
+
+
+<P>
+
+<EM>m.lulc.USGS</EM> will use the geographic region information definition
+supplied with the CTG file and NOT the geographic region definition
+currently set for the user's mapset;
+(note that this is different than is the case with many of the other
+GRASS map development commands).
+
+
+<P>
+
+When <EM>m.lulc.USGS</EM> is executed, it will check the file for a specified
+layer and then ask the user if he wishes to extract the associated
+raster map layer.
+The user is then prompted for the name of a new raster file
+in which output is to be placed.  <EM>m.lulc.USGS</EM>
+will then create this raster file and all supporting
+(e.g., category, cell header, color table, etc.) files.
+
+<H2>EXAMPLE</H2>
+
+In the example below, raster data is extracted from a CTG file
+(named <EM>lulc</EM>) that contains only LAND USE/LAND COVER data:
+<P>
+<B>m.lulc.USGS lulc</B>
+<PRE>
+	MAP TITLE: DODGE CITY, KS 1:250,000 LU, PB, CN, HU, FO
+	The Composite Theme Grid file contains &lt;1&gt; overlays
+	and has a map code type of &lt;01&gt;
+ 
+	Do you Wish to Create &lt;LAND USE/LAND COVER&gt; Raster File (y/n) [y] <B>y</B>
+
+	Enter File Name for LAND USE/LAND COVER Overlay
+	Enter 'list' for a list of existing raster files
+	Hit RETURN to cancel request
+	
+	&gt; <B>landuse</B>
+
+
+	Creating &lt;landuse&gt; from &lt;LAND USE/LAND COVER&gt; Overlay: 95%
+	Number of Categories: 76  (UNLABELED)
+	Writing Cell Header Information
+	Writing Color Table Information
+
+	Conversion is Complete
+</PRE>
+
+<H2>BUGS</H2>
+
+<EM>m.lulc.USGS</EM> does not currently extract Census unit data.
+Also, only the cataloging unit is extracted from the CTG file
+(see the <EM>Land Use and Land Cover Data User's Guide</EM> supplied by the
+USGS).  
+
+<H2>SEE ALSO</H2>
+
+USGS <B>Land Use and Land Cover Data User's Guide</B>
+
+
+<P>
+
+<EM>
+<A HREF="g.region.html">g.region</A>
+</EM><br>
+<EM>
+<A HREF="m.lulc.read.html">m.lulc.read</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Kenneth Shepardson
+Spectrum Sciences &amp; Software, Inc.
+(904) 862-3031

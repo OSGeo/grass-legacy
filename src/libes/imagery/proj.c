@@ -10,7 +10,7 @@ int I_must_be_imagery_projection()
     fprintf (stdout,"ERROR: LOCATION %s has a projection of %d (%s)\n",
 	G_location(), proj, G_database_projection_name());
     fprintf (stdout,"\nImagery data must be extracted into a location\n");
-    fprintf (stdout,"whi.has a projection of %d (row-column only)\n", PROJECTION_XY);
+    fprintf (stdout,"which has a xy-projection of %d (row-column only)\n", PROJECTION_XY);
     fprintf (stdout,"\nUnable to proceed\n");
     exit(1);
 }

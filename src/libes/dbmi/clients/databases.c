@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -51,7 +55,7 @@ parse_command_line(argc, argv) char *argv[];
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->required 	= YES;
+    driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
     driver->description = "driver name";
 
     location 		= G_define_option();
@@ -64,10 +68,12 @@ parse_command_line(argc, argv) char *argv[];
     l 			= G_define_flag();
     l->key 		= 'l';
     l->description	= "output database location also";
-
+    
     G_disable_interactive();
-    if (G_parser(argc, argv))
-	exit(ERROR);
+
+    if (argc > 1) {
+	if (G_parser(argc, argv)) exit(ERROR);
+    }
 
     parms.driver     = driver->answer;
     parms.l          = l->answer;

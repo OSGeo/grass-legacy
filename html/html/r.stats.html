@@ -1,0 +1,159 @@
+<TITLE>r.stats</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><b>r.stats</b></EM>  - Generates area statistics for raster map layers.<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.stats</B>
+<BR>
+<B>r.stats help</B>
+<BR>
+<B>r.stats </B>[<B>-1aclmqzgxnNCri</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] [<B>fs=</B><EM>character|space</EM>] [<B>output=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.stats</EM> calculates the area present in each of the categories of user-selected raster map layer(s). Area statistics are given in units of square meters and/or
+cell counts. This analysis uses the current geographic region and mask settings.
+Output can be sent to a file in the user's current working directory.
+<P>
+
+The program will be run non-interactively if the user specifies the program arguments and desired options on the command line, using the form
+
+<P>
+<B>r.stats </B>[<B>-1aclmqzgxnNCri</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] [<B>fs=</B><EM>character|space</EM>] [<B>output=</B><EM>name</EM>]
+
+<P>
+where each input <EM>name</EM> is the name of a raster map layer on which area/cell statistics are to be generated, the (optional) output <EM>name</EM> is the name of a file to contain program output (sent to the user's current working directory), the fs <EM>character</EM> or space is the field separator to be used to separate data fields in the output file (default is a space if unspecified), and the (optional) flags <EM>-1</EM>, <EM>-a</EM>, <EM>-c</EM>, <EM>-l</EM>, <EM>-m</EM>, <EM>-q</EM>, <EM>-z</EM>, <EM>-g</EM>, <EM>-x</EM>, <EM>-n</EM>, <EM>-N</EM>, <EM>-C</EM>, <EM>-r</EM>, and <EM>-i</EM> have the meanings described in the OPTIONS section.
+
+<P>
+Alternately, the user can simply type <B>r.stats</B> on the command line, without program arguments.  In this case, the user will be prompted for needed inputs and option choices using the standard GRASS <A HREF="parser.html">parser</A> interface described in the manual entry for <EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-1</B> 
+<DD>The data for each cell in the current geographic region will be output, one cell per line, rather than the totals for each distinct combination.
+
+<DT><B>-a</B> 
+<DD>Print area totals in square meters.
+
+<DT><B>-c</B> 
+<DD>Print total cell counts.
+
+<DT><B>-m</B> 
+<DD>Report all zero values present in the <EM>input</EM> map layer(s), whether or not they fall inside or outside the current mask (see <EM><A HREF="r.mask.html">r.mask</A></EM>).
+When a mask is present, <EM>r.stats</EM> will only report zero values falling within the mask area unless the user runs <EM>r.stats</EM> with the <EM>-m</EM> option.  When the user runs <EM>r.stats</EM> with the <EM>-m</EM> option, <EM>r.stats</EM> will report zero values falling outside the mask area, in addition to those within the mask.
+
+<DT><B>-l</B> 
+<DD>Prints the category label(s) as well as the category number(s).
+
+<DT><B>-q</B> 
+<DD>Run quietly, and suppress printing of percent complete messages to standard output.
+
+<DT><B>-z</B> 
+<DD>Report only non-zero data values. Zero data will not be reported.  However, for multiple map layers this means that if zero values occur in every map layer, they will not be reported; if non-zero category values occur in any map layer (along with zeros in others), the non-zero values along with the zero values will be reported.
+
+<DT><B>-g</B> 
+<DD>Print the grid coordinates (easting and northing), for each cell. This option works only if the <EM>-1</EM> option is also specified.
+
+<DT><B>-x</B> 
+<DD>Print the x and y (column and row) values, for each cell. This option works only if the <EM>-1</EM> option is also specified.
+
+<DT><B>-n</B>
+<DD>Suppress reporting of any nulls.
+
+<DT><B>-N</B>
+<DD>Suppress reporting of nulls when all values are null.
+
+<DT><B>-C</B>
+<DD> Report for cats fp ranges (fp maps only).
+
+<DT><B>-r</B>
+<DD>Print raw indexes of fp ranges (fp maps only).
+
+<DT><B>-i</B>
+<DD>Read fp map as integer (use map's quant rule).
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM> 
+<DD>The name(s) of one or more existing raster map layer(s) whose cell counts or area statistics are to be calculated.
+
+<DT>"<B>fs=</B><EM>character</EM> or <B>fs=</B><EM>space</EM>" 
+<DD>The field separator (fs) to be used to separate data fields in the <EM>output</EM> file.
+<DD>Options:  a character or space
+<BR>
+Default:  a space
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>The name to be assigned to the ASCII output file.
+</DL>
+
+<H2>NON-INTERACTIVE PROGRAM USE</H2>
+If users invoke program options on the command line, <EM>r.stats</EM> will print out area statistics for the user-specified raster map layers in a columnar format suitable for input to UNIX programs like <EM>awk</EM> and <EM>sed</EM>. Output can be saved by specifying the name of an <EM>output</EM> file on the command line.
+
+<P>
+If a single map layer is specified on the command line, a list of areas in square meters (assuming the map's coordinate system is in meters) for each category in the raster map layer will be printed. (If the <EM>-c</EM> option is chosen, areas will be stated in number of cells.) If multiple raster map layers are specified on the command line, a cross-tabulation table of areas for each combination of categories in the map layers will be printed.
+
+<P>
+For example, if one raster map layer were specified, the output would look like:
+<PRE>
+          1:1350000.00
+          2:4940000.00
+          3:8870000.00
+</PRE>
+If three raster map layers <EM>a, b</EM>, and <EM>c</EM>, were specified, the output would look like:
+<PRE>
+          0:0:0:8027500.00
+          0:1:0:1152500.00
+          1:0:0:164227500.00
+          1:0:1:2177500.00
+          1:1:0:140092500.00
+          1:1:1:3355000.00
+          2:0:0:31277500.00
+          2:0:1:2490000.00
+          2:1:0:24207500.00
+          2:1:1:1752500.00
+          3:0:0:17140000.00
+          3:1:0:11270000.00
+          3:1:1:2500.00
+</PRE>
+Within each grouping, the first field represents the category  value of map layer <EM>a</EM>, the second represents the category values associated with map layer <EM>b</EM>, the third represents category values for map layer <EM>c</EM>, and the last field gives the area in square meters for the particular combination of these three map layers' categories.
+For example, above, combination 3,1,1 covered 2500 square meters. Fields are separated by colons.
+
+<H2>NOTES</H2>
+<EM>r.stats</EM> works in the current geographic region with the current mask.
+
+<P>
+If a nicely formatted output is desired, pipe the output into a command which can create columnar output.  For example, the command:
+
+<P>
+    <B>r.stats input=</B>a,b,c | pr -3 | cat -s
+
+<P>
+will create a three-column output 
+<PRE>
+1:4:4:10000.00       2:1:5:290000.00      2:4:5:2090000.00
+1:4:5:1340000.00     2:2:5:350000.00      3:1:2:450000.00
+2:1:1:1090000.00     2:4:1:700000.00      3:1:3:5280000.00
+2:1:3:410000.00      2:4:3:10000.00       3:1:5:3140000.00
+</PRE>
+
+The output from <EM>r.stats</EM> on more than one map layer is sorted.
+
+<P>
+Note that the user has only the option of printing out cell statistics in terms of cell counts and/or area totals. Users wishing to use different units than are available here
+should use the GRASS program <EM><A HREF="r.report.html">r.report</A></EM>.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.region.html">g.region</A>, <A HREF="r.coin.html">r.coin</A>, <A HREF="r.describe.html">r.describe</A>, <A HREF="r.mask.html">r.mask</A>, <A HREF="r.report.html">r.report</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory

@@ -43,7 +43,13 @@ int main (int argc, char *argv[])
   CELL *rowbuf1, *rowbuf2;
   double *d_buf; /* a cell buf only double in order not to loose precision */
 
+  struct GModule *module;
   struct Option *opt1, *opt2, *opt3 ;
+
+  module = G_define_module();
+  module->description =
+	"Principal components analysis (pca) "
+	"program for image processing.";
 
   /* Define the different options */
 
@@ -188,7 +194,7 @@ int main (int argc, char *argv[])
 	     covar[k][j] = 0.;
    for (j=0 ; j<bands ; j++)
    {
-      fprintf(stdout, "Computing row number %d of covatiance matrix...", (j+1));
+      fprintf(stdout, "Computing row number %d of covariance matrix...", (j+1));
       fflush(stdout);
       for (row=0 ; row<rows ; row++)
       {

@@ -1,11 +1,11 @@
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* written by J Moorman
 ** 7/23/90
 */
 
-#include "dxf2vect.h"
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "dxf2vect.h"
+#include "Vect.h"
 
 int dxf_add_point (FILE *dxf_file)
 {
@@ -14,7 +14,7 @@ int dxf_add_point (FILE *dxf_file)
     int  xflag = 0;         /* INDICATES IF A x VALUE HAS BEEN FOUND */
     int  yflag = 0;         /* INDICATES IF A y value has been found */
     char *nolayername = "UNIDENTIFIED"; 
-    DXF_DIG *layer_fd = NULL; /* POINTER TO LAYER NAME */
+    DXF_DIG *layer_fd;         /* POINTER TO LAYER NAME */
     int  code;  /* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int  count; /* LOOPING VARIABLE */ 
 
@@ -24,7 +24,7 @@ int dxf_add_point (FILE *dxf_file)
     {
 	if (code == -2)  /* EOF */
 	    return(0);
-	dxf_fgets (dxf_line,80,dxf_file);  
+	dxf_fgets (dxf_line,256,dxf_file);  
 	if (feof(dxf_file) != 0) /* EOF */
 	    return(0);
 

@@ -90,7 +90,7 @@ int measurements(int color1,int color2)
                 break ;
             }
         } while (button != 3) ;
-	R_flush();
+	R_stabilize();
 
         G_clear_screen() ;
         fprintf (stdout, "\nButtons:\n") ;

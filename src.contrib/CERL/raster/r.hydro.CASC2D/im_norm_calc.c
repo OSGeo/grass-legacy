@@ -148,10 +148,10 @@ norm_calc (
    if(ltype[nl]==1)  /* this is a trapezoidal link */
       {
       guess=10.0;
-      sidsl=sslope[nx1[nl]+nx1[nl]*NODES];
+      sidsl=sslope[nx1[nl]+nl*NODES];
       cz=2.0*sqrt(1.0+sidsl*sidsl);
-      width=bottom[nx1[nl]+nx1[nl]*NODES];
-      mann=strick[nx1[nl]+nx1[nl]*NODES];
+      width=bottom[nx1[nl]+nl*NODES];
+      mann=strick[nx1[nl]+nl*NODES];
       count=0;
       while(diff>tol)
          {

@@ -1,5 +1,5 @@
 /* v.in.tig.bas.c */
-int cmp_type2(struct r2 *, struct r2 *);
+int cmp_type2(const void *, const void *);
 int usage(char *);
 double mscale(double);
 int make_sort_name(char *, FILE *);

@@ -1,0 +1,168 @@
+<TITLE>s.in.ascii</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.in.ascii</b></EM>  - Converts an ASCII listing of site locations and 
+their descriptions into a GRASS site list file. 
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.in.ascii</B> 
+<BR>
+<B>s.in.ascii help</B> 
+<BR>
+<B>s.in.ascii</B> 
+<B>sites=</B><EM>name</EM> 
+[<B>input=</B><EM>name</EM>] 
+[<B>d=</B><EM>value</EM>]
+[<B>fs=</B>character|space|tab] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.in.ascii</EM> converts an ASCII listing of site
+locations and category labels into a file in GRASS site
+list file format.
+
+<P>
+
+Input can be entered via standard input or from the file
+<B>input=</B><EM>name</EM>. Each line of input should
+contain the easting, northing, and (optionally) the
+category label associated with a site.  The
+<B>fs=</B><EM>name</EM> option (where <EM>name</EM> is
+either a character, a space, or a tab) can be used to
+specify the use of a particular field separator between
+these three input fields. This is useful when input is
+obtained from other programs (see NOTES, below).  Output is
+stored in the file <B>sites=</B><EM>name</EM> and placed in
+the site_lists directory under the user's current mapset.
+
+<P>
+
+The GRASS program <EM>s.out.ascii</EM> can be used to
+perform the reverse function, converting a file in GRASS
+site list format into an ASCII listing of eastings,
+northings, and category labels associated with site
+locations.
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>sites=</B><EM>name</EM>
+<DD>Name of the new GRASS site list file to be output. 
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing ASCII file containing site locations and labels. 
+<DT><B>d=</B><EM>value</EM>
+<DD>number of dimensions (default=2)
+<DT>"<B>fs=</B><EM>character|space|tab</EM>"
+<DD>The field separator separating the easting, northing, and category label 
+    in each line of the <EM>input</EM> file. 
+    The field separator can be a character, a space, or a tab. 
+<BR>
+    Default: space 
+</DL>
+
+<P>
+
+<EM>s.in.ascii</EM> can be run either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies a name to be assigned to the
+<EM>sites</EM> file output, the name of an existing ASCII
+file containing <EM>input</EM>, and (optionally) a field
+separator <EM>fs</EM> appearing in the <EM>input</EM> file,
+using the form:
+
+<P>
+<DL>
+<DD>
+<B>s.in.ascii</B> 
+<B>sites=</B><EM>name</EM> 
+[<B>input=</B><EM>name</EM>] 
+[<B>fs=</B>character|space|tab] 
+</DL>
+
+<P>
+
+Alternately, the user can simply type <B>s.in.ascii</B> on
+the command line, without program arguments. In this case,
+the user will be prompted for parameter values using the
+standard GRASS parser interface described in the manual
+entry for <EM>parser</EM>. If the user does not specify the
+name of an <EM>input</EM> file containing site locations
+and (optionally) category labels, these should be entered
+to the program via standard input. The parameter <EM>d</EM> allows 
+to specify that more than 2 dimensions will be imported. Otherwise
+the third (or further) column in input file is treated as attribute.
+
+
+<H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
+
+If the user wants to directly generate site files, the following information
+can be used:<br>
+Each line of the ascii input file should contain either two or three
+coordinates (x,y and optionally z) separated by a user-selectable
+field-delimiting character.  After the coordinates there are optional
+attribute fields separated from the coordinates and from each other with
+the same user-selectable field delimiter.
+<P>
+The attribute field may be a category number, a decimal value or a string.
+Category numbers must be preceded by the "#" character and string values
+must be preceded by the "@" character.  Floating point values may be
+preceded by the "%" character but if there is no "#" or "@" preceding the
+attribute then it is assumed to be a floating point value.  Also, string
+values that contain blanks must be quoted or the part of the string
+following the first blank will be parsed as a separate field, which may
+cause an error.
+<p>
+easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
+<p>
+
+such as:
+<p>
+739865.8|4279785.5|#2965 %396685 %194919 %160392 %10941 %2.473222 @"St.Louis" @MO @city
+<p>
+There can be many dimensions between pipes (|), but no #%@. <p>
+There can be only one cat, preceded by #, then there may be 
+many FP or text attributes.
+
+<H2>NOTES</H2>
+
+Other GRASS programs can be used to produce output in a
+format suitable for input to <EM>s.in.ascii</EM>. For
+example, the user might pipe output produced by
+<EM>d.where</EM> into <EM>s.in.ascii</EM> to create a site
+list file called <EM>my.sites</EM> containing site
+locations pointed to with the mouse, as illustrated below.
+In this example it was unnecessary to specify the field
+separator used in the input, since <EM>d.where</EM> output
+separates the easting and northing values with spaces, and
+spaces are the default field separator assumed by
+<EM>s.in.ascii</EM>.
+
+<P>
+<DL>
+<DD><B>d.where</B> | <B>s.in.ascii sites=</B>my.sites
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.points.html">d.points</A></EM><br>
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,  
+U.S. Army Construction Engineering 
+Research Laboratory
+

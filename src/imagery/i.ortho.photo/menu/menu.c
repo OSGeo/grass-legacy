@@ -17,7 +17,10 @@ int main (int argc, char **argv)
     if (!I_get_group(group.name)) { 
        if (!I_ask_group_old ("Enter imagery group for ortho-rectification", 
 		       group.name))
-       exit(0);
+	{
+	 fprintf(stderr, "Use i.group to create a image group!\n");
+         exit(0);
+        }
     }
 
     /* get and check the group reference files */
@@ -51,8 +54,8 @@ int main (int argc, char **argv)
 	fprintf (stderr, "Transformation Parameter Computations:\n");
 	fprintf (stderr, "\n");
 	fprintf (stderr, "   5.     Compute image-to-photo transformation\n");
-	fprintf (stderr, "   6.     Compute ortho-rectification parameters\n");
-	fprintf (stderr, "   7.     Initialize exposure station parameters\n");
+	fprintf (stderr, "   6.     Initialize exposure station parameters\n");
+	fprintf (stderr, "   7.     Compute ortho-rectification parameters\n");
 	fprintf (stderr, "\n");
 	fprintf (stderr, "Ortho-rectification Option:\n");
 	fprintf (stderr, "\n");
@@ -81,9 +84,9 @@ int main (int argc, char **argv)
 	if (strcmp (buf, "5") == 0)
 	    run_etc_imagery ("photo.2image", group.name); 
 	if (strcmp (buf, "6") == 0)
-	    run_etc_imagery ("photo.2target", group.name); 
-	if (strcmp (buf, "7") == 0)
 	    run_etc_imagery ("photo.init", group.name); 
+	if (strcmp (buf, "7") == 0)
+	    run_etc_imagery ("photo.2target", group.name); 
 	if (strcmp (buf, "8") == 0)
 	    run_etc_imagery ("photo.rectify", group.name); 
     }

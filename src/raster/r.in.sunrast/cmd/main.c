@@ -25,11 +25,16 @@ int main (int argc, char *argv[])
     struct Colors colors;
     int nrows, ncols, depth;
     int fd1, fd2;
+	struct GModule *module;
     struct Option *input, *output;
     struct Flag *quiet, *noadjust;
 
     G_gisinit (argv[0]);
     G_get_window (&window);
+
+	module = G_define_module();
+	module->description =
+		"Converts a SUN raster file to a GRASS raster file.";
 
     input = G_define_option();
     input->key = "input";

@@ -1,7 +1,6 @@
-#include "gis.h"
 #include <string.h>
+#include "gis.h"
 #include "Vect.h"
-#include "dig_structs.h"
 
 struct site_list
 {

@@ -1,0 +1,172 @@
+<TITLE>r.in.ll</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.ll</b></EM>  - Converts raster data referenced using latitude and longitude 
+coordinates to a UTM-referenced map layer in GRASS raster format. 
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.ll</B> 
+<BR>
+<B>r.in.ll help</B> 
+<BR>
+<B>r.in.ll</B> [<B>-s</B>] 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>bpc=</B><EM>value</EM> 
+<B>corner=</B><EM>corner,lat,lon</EM> 
+<B>dimension=</B><EM>rows,cols</EM> 
+<B>res=</B><EM>latres,lonres</EM> 
+<B>spheroid=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+This program converts raster data referenced using latitude
+and longitude coordinates to a UTM-referenced map layer in
+GRASS raster format.  <EM>r.in.ll</EM> is primarily used as
+the final program in converting DTED and DEM digital
+elevation data to GRASS raster format, but is not limited
+to this use.  <EM>r.in.ll</EM> uses the user's current
+geographic region settings.  Only data that falls within
+the current geographic region will appear in the final
+raster map layer.
+
+<H2>OPTIONS</H2>
+
+<EM>r.in.ll</EM> requires the user to enter the following information: 
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-s</B>
+<DD>Signed data (high bit means negative value). 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing input raster map layer. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to the output raster map layer. 
+<DT><B>bpc=</B><EM>value</EM>
+<DD>Number of bytes per cell. 
+<DT><B>corner=</B><EM>corner,lat,lon</EM>
+<DD>One corner latitude and longitude of the input. 
+<BR>
+Format: {nw|ne|sw|se},dd:mm:ss{N|S},ddd:mm:ss{E|W} 
+
+<P>
+
+The latitude and longitude are specified as
+<B>dd.mm.ssH</B> where dd is degrees, mm is minutes, ss is
+seconds, and H is the hemisphere (<B>N</B> or <B>S</B> for
+latitudes, <B>E</B> or <B>W</B> for longitudes).
+
+<P>
+
+For example, to specify the southwest corner:
+<B>corner=</B><EM>sw,46N,120W</EM>
+
+<P>
+
+Note: the latitude and longitude specified are for the
+center of the corner cell.
+
+<DT><B>dimension=</B><EM>rows,cols</EM>
+<DD>Number of rows and columns in the input file. 
+
+<DT><B>res=</B><EM>latres,lonres</EM>
+<DD>Resolution of the input (in arc seconds). 
+
+<DT><B>spheroid=</B><EM>name</EM>
+<DD>Name of spheroid to be used for coordinate conversion. 
+<BR>
+Options: airy, australian, bessel, clark66, everest, grs80,
+hayford, international, krasovsky, wgs66, wgs72, wgs84
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+The command line: 
+
+<DL>
+<DD>
+<B>r.in.ll input=</B><EM>rot.out</EM> <B>output=</B><EM>import.out</EM> <B>dimension=</B><EM>358,301</EM> <B>bpc=</B><EM>2</EM> 
+<B>res=</B><EM>3,3</EM> <B>corner=</B><EM>sw,37:13N,103:45W</EM> <B>spheroid=</B><EM>wgs72 </EM> 
+</DL>
+
+reads data from the file <EM>rot.out</EM>, converts the
+data, and stores them in the file <EM>import.out</EM>. The
+data to be converted are made up of 358 rows and 301
+columns, and have a resolution of 3x3 arc seconds.
+
+<H2>NOTES</H2>
+
+In the conversion of DTED and DEM elevation data to raster map layer format, 
+<EM>r.in.ll</EM>
+follows execution of the data rotation program 
+<EM><A HREF="m.rot90.html">m.rot90</A></EM>.
+Because the user can glean information on the number of rows and columns, 
+the resolutions of the latitude and longitude, and the number of bytes 
+per column from the header file produced by the tape extraction programs 
+
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM> 
+
+and 
+
+<EM><A HREF="m.dmaUSGSread.html">m.dmaUSGSread</A></EM>, 
+
+the user should recall that 
+
+<EM><A HREF="m.rot90.html">m.rot90</A></EM>
+
+has rotated the files produced by the tape extraction
+programs 90 degrees; this means that the user should
+INTERCHANGE the numbers of rows and columns present in the
+header file for input to <EM>r.in.ll</EM>.  The number of
+rows shown in the tape extract header file now become the
+number of columns in the
+
+<EM><A HREF="m.rot90.html">m.rot90</A></EM> 
+
+output file; the number of columns shown in the tape
+extract header file are now the number of rows present in
+the
+
+<EM><A HREF="m.rot90.html">m.rot90</A></EM> output file. 
+
+<P>
+
+The user should also note that the raster map layer
+imported into GRASS will be based on the current geographic
+region settings.  The boundaries of this geographic region
+should therefore be checked before importing the raster map
+layer.  Data outside of the geographic region will not be
+imported and missing data will be assigned the category
+value "no data".
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.dmaUSGSread.html">m.dmaUSGSread</A></EM>,
+<EM><A HREF="m.dted.examine.html">m.dted.examine</A></EM>,
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM>,
+<EM><A HREF="m.rot90.html">m.rot90</A></EM>,
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM>,
+<EM><A HREF="r.in.bin.html">r.in.bin</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+

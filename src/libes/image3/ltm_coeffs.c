@@ -19,8 +19,6 @@ int
 get_ltm_coeffs_data (Rectify_Group *group)
 {
 Coeffs_Ltm  *coeffs;
-char           msg[100];
-
 
     /* make auxilary visiable */
     coeffs = (Coeffs_Ltm *) group->coefs;

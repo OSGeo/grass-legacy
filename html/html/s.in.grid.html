@@ -1,0 +1,66 @@
+<TITLE>s.in.grid</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.in.grid</b></EM> - convert Arc GRIDASCII output to site list.
+<BR>
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.in.grid file</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.in.grid</EM>
+is a <EM>awk</EM> script that reads the output of
+Arc/INFO's GRIDASCII command and converts it to a GRASS
+site list.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><EM>file</EM>
+<DD>Name of the output of GRIDASCII.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+Typing the following:
+
+<DL>
+<DD>Arc: <B>GRIDASCII nitrates tmp</B>
+<DD>Arc: <B>quit</B>
+<DD>...
+<DD>GRASS GRID&gt; <B>s.in.grid tmp | s.in.ascii nitrates fs=</B>'|'
+<DD>GRASS GRID&gt; <B>rm tmp</B>
+</DL>
+
+This procedure
+exports the GRID file <EM>nitrates</EM> from Arc/INFO and imports
+it as the GRASS site list <EM>nitrates</EM>.
+
+<H2>NOTES</H2>
+
+<EM>awk</EM> may not be able to handle large ASCII grids.
+In these instances, try using <EM>nawk</EM>, or better yet,
+<EM>gawk</EM>.
+
+<H2>FILES</H2>
+
+<KBD>$GISBASE/scripts/s.in.grid</KBD>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, Agricultural
+Engineering, Purdue University

@@ -6,7 +6,7 @@ OBJ =\
 	Cont_abs.o\
 	Cont_rel.o\
 	Erase.o\
-	Font.o\
+	Font_get.o\
 	Get_t_box.o\
 	Linemod.o\
 	Move_abs.o\
@@ -21,24 +21,29 @@ OBJ =\
 	Raster_chr.o\
 	Raster_def.o\
 	Reset_clrs.o\
-	SWITCHER.o\
+	Respond.o\
+	Returns.o\
 	Set_window.o\
 	Text.o\
 	Text_size.o\
+	Work.o\
 	clip.o\
 	color_supp.o\
-	connect.o\
+	command.o\
+	connect_fifo.o\
+	connect_sock.o\
 	font.o\
+	main.o\
+	pad.o\
+	utils.o\
 	RGB.o\
-	text.o
+	Text2.o
 
 all: driverlib.a
 
 driverlib.a: $(OBJ)
 	$(AR)
 
-Clr_table.o: colors.h
-Color.o: colors.h
 Cont_abs.o: driver.h
 Cont_rel.o: driver.h
 Get_t_box.o: driver.h
@@ -47,8 +52,5 @@ Move_rel.o: driver.h
 Plylne_rel.o: driver.h
 Polygn_rel.o: driver.h
 Raster.o: driver.h
-Reset_clrs.o: colors.h
-SWITCHER.o: graph.h
-SWITCHER.o: driver.h
 Text.o: driver.h
 Text_size.o: driver.h

@@ -1,0 +1,23 @@
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+PGM=v.to.db
+
+LIBES= $(VECTLIB) $(GISLIB) $(DBMILIB)
+LIST = main.o\
+	parse.o\
+	lines.o\
+	calc.o\
+	find.o\
+	report.o\
+	alloc.o\
+	update.o\
+	points.o\
+	areas.o\
+	units.o	
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): global.h
+
+$(LIBES): #

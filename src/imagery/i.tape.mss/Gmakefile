@@ -1,3 +1,4 @@
+PGM=i.tape.mss
 LIST = main.o \
 	annotation.o\
 	ask_info.o\
@@ -11,10 +12,10 @@ LIST = main.o \
 	tape_vol.o\
 	tapename.o
 
-LIBES = $(IMAGERYLIB) $(GISLIB)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
-$(BIN_MAIN_INTER)/i.tape.mss: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h
-$(LIBES) $(VASKLIB): #
+$(LIBES): #

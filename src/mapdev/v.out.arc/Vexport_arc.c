@@ -15,9 +15,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "v_out_arc.h"
-/*#include "dig_head.h" */
 #include "gtoa.h"
 
 #define  USAGE  "Vexport.arc cover=line/edge dig=input arc=output\n"
@@ -50,19 +48,14 @@ main (int argc, char **argv)
 		*mapset,
 		name[1000],
 		dig_filepath[1000],
-	    dig_filename[1000],
-	    lin_filename[100],
-	    lab_filename[100],
-	    txt_filename[100],
-	    lin_filepath[1000],
-	    lab_filepath[1000],
-	    txt_filepath[1000];
+		lin_filename[1000],
+		lab_filename[1000],
+		txt_filename[1000];
 
-	FILE
-			*pol_file,
-			*lin_file,
-			*lab_file,
-			*txt_file;
+	FILE	*pol_file,
+		*lin_file,
+		*lab_file,
+		*txt_file;
 
 	struct Option *opt1, *opt2, *opt3, *opt4;
 
@@ -177,44 +170,33 @@ main (int argc, char **argv)
 	}
 #endif /*OLD_LIB*/
 
-	G__make_mapset_element("arc") ;
-	G__file_name(full_prefix, "arc", arc_prefix, G_mapset()) ;
-
-
 	strcpy(lin_filename,arc_prefix);
-	strcpy(lin_filepath,full_prefix);
 	if (coverage == POLY_TYPE) /*if POLY, line file is prefix.pol--dks*/
 	{
 	    strcat(lin_filename,".pol");
-	    strcat(lin_filepath,".pol");
 	}
     else                        /*if LINE, file is prefix.lin*/
 	{
 	    strcat(lin_filename,".lin");
-	    strcat(lin_filepath,".lin");
 	}
 
 	strcpy(lab_filename,arc_prefix);
 	strcat(lab_filename,".lab");
-	strcpy(lab_filepath,full_prefix);
-	strcat(lab_filepath,".lab");
 
 	strcpy(txt_filename,arc_prefix);
 	strcat(txt_filename,".txt");
-	strcpy(txt_filepath,full_prefix);
-	strcat(txt_filepath,".txt");
 
-	if ( (lin_file = G_fopen_new("arc", lin_filename )) == NULL )
+	if ( (lin_file = fopen( lin_filename, "w" )) == NULL )
 	{
 		sprintf(errmsg, "Cannot open ARC/INFO lines file <%s>\n", lin_filename) ;
 		G_fatal_error (errmsg);
 	}
-	if ( (lab_file = G_fopen_new("arc", lab_filename )) == NULL )
+	if ( (lab_file = fopen( lab_filename, "w")) == NULL )
 	{
 		sprintf(errmsg,"Can't open ARC/INFO label-points file <%s>\n",lab_filename);
 		G_fatal_error (errmsg);
 	}
-	if ( (txt_file = G_fopen_new("arc", txt_filename )) == NULL )
+	if ( (txt_file = fopen( txt_filename, "w")) == NULL )
 	{
 		sprintf(errmsg, "Cannot open ARC/INFO label-text file <%s>\n", txt_filename) ;
 		G_fatal_error (errmsg);
@@ -246,15 +228,15 @@ main (int argc, char **argv)
 
 	if (!lin_flg)
 	{
-			unlink (lin_filepath);
+		unlink (lin_filename);
 	}
 	if (!lab_flg)
 	{
-		unlink (lab_filepath);
+		unlink (lab_filename);
 	}
 	if (!txt_flg)
 	{
-		unlink (txt_filepath);
+		unlink (txt_filename);
 	}
 
 	exit(0);

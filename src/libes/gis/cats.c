@@ -324,7 +324,7 @@
 
 static int get_cond ( char **, char *, DCELL);
 static int get_fmt ( char **, char *, int *);
-static int cmp (int *, int *);
+static int cmp (const void *, const void *);
 
 int G_read_cats (
     char *name ,
@@ -1191,7 +1191,7 @@ int G_sort_cats (struct Categories *pcats)
    for(i = 0; i < ncats; i++)
        indexes[i] = i;
 
-   qsort (indexes, ncats, sizeof (int), &cmp);
+   qsort (indexes, ncats, sizeof (int), cmp);
    G_init_raster_cats(save_cats.title, pcats);
    for(i = 0; i < ncats; i++)
    {
@@ -1207,8 +1207,9 @@ int G_sort_cats (struct Categories *pcats)
    return 0;
 }
 
-static int cmp (int *a, int *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const int *a = aa, *b = bb;
     DCELL min_rast1, min_rast2, max_rast1, max_rast2; 
     CELL index;
     G_quant_get_ith_rule(&(save_cats.q), *a,
@@ -1216,9 +1217,9 @@ static int cmp (int *a, int *b)
     G_quant_get_ith_rule(&(save_cats.q), *b,
         &min_rast2, &max_rast2, &index, &index);
     if(min_rast1 < min_rast2)
-    return -1;
+	return -1;
     if(min_rast1 > min_rast2)
-    return 1;
+	return 1;
     return 0;
 }
 

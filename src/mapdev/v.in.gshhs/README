@@ -1,0 +1,17 @@
+v.in.gshhs
+
+Program to extract and import binned shoreline data
+available from:
+
+http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html
+
+The Global Self Consistant Hierarchical High Resolution Shorelines
+(GSHHS) are available at 5 resolutions.
+
+- crude
+- low
+- intermediate
+- high
+- full
+
+

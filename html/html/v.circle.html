@@ -1,0 +1,110 @@
+<TITLE>v.circle</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<B><i><b>v.circle</b></i></B>  - Creates a vector file which consists of circle(s) which uses each point in a "site_lists" file as the center of those circle(s).
+
+<BR>
+
+(GRASS Vector Program)
+
+<H2>SYNOPSIS</H2>
+
+<B>v.circle</B>
+
+<BR>
+
+<B>v.circle help</B>
+
+<BR>
+
+<B>v.circle</B> [<B> -s</B>] <B>[radius=</B><EM>value]</EM> <B>[radius_uom=</B><EM>name]</EM> <B>[area=</B><EM>value]</EM>
+   <B>[area_uom=</B><EM>name]</EM> <B>sitefile=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+"v.circle" will create "polygon" circle(s) around points read from an existing
+"site_lists" file.  The "site_lists" point(s) will be the center(s) for those
+circle(s) with one circle created per point.  The "polygon" circle(s) will be
+written to a binary vector file.  Each "polygon" circle will have 361 points
+with each point on the circumference of the circle representing 1 degree of
+arc.
+
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+Flags
+
+<DT><EM>-s</EM> 
+
+<DD>Automatically run "v.support" on newly created vector file.
+
+
+<P>
+
+<h2>Parameters</h2>
+
+<DT><EM><b>radius</b></EM> 
+
+<DD>Radius of circle(s) with "site_lists" point(s) as center(s).  If radius selected then area values are not used for computations.  If both radius and area selected, then radius has precedence over area.
+
+<BR>
+
+default: 0.0
+<p>
+<DT><EM><b>radius_uom</b></EM> 
+
+<DD>Radius unit of measure,  ie. (m)meters,  ft(feet),  (mi)miles.
+
+<BR>
+
+default: m
+<p>
+<DT><EM><b>area</b></EM> 
+
+<DD>Area of circle(s) with "site_lists" point(s) as center(s).  If area selected then radius values are not used for computations.
+
+<BR>
+
+default: 0.0
+<p>
+<DT><EM><b>area_uom</b></EM> 
+
+<DD>Area unit of measure,  ie. sqm(square meters),  ac(acres),  sqmi(square miles),  hec(hectares).
+
+<BR>
+
+default: sqm
+<p>
+<DT><EM><b>sitefile</b></EM> 
+
+<DD>GRASS site_lists file (input).
+
+<BR>
+
+
+<DT><EM><b>output</b></EM> 
+
+<DD>Vector file to be created (output).
+
+<P>
+
+<H2>SEE ALSO</H2>
+<a href=s.buffer.html>s.buffer</a>
+<H2>AUTHOR</H2>
+
+Bruce Powell, National Park Service

@@ -1,0 +1,89 @@
+<TITLE>s.menu</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+       <b>s.kcv</b> - Randomly partition sites into test/train sets.
+       <I>(GRASS</I> <I>Sites</I> <I>Program)</I>
+
+
+<H2>SYNOPSIS</H2>
+       <B>s.kcv</B><br>
+       <B>s.kcv</B> <B>help</B><br>
+       <B>s.kcv</B> [<B>-dq</B>] <B>k=value</B> <B>sites</B>=<I>name</I>
+
+<H2>DESCRIPTION</H2>
+       <I>s.kcv</I>  randomly  divides  a  sites  lists  into  <I>k</I> sets of
+       test/train data (for <B>k</B>-fold <B>c</B>ross <B>v</B>alidation).
+       Test  partitions  are  mutually  exclusive.  That  is,  a site will
+       appear in only one test partition and <I>k-1</I> training  partitions.
+
+       The  program  generates  a random point using the selected
+       random number generator and then finds the closest site to
+       it.  This site is removed from the candidate list (meaning
+       that it will not be selected for any other test  set)  and
+       saved  in the first test partition file.  This is repeated
+       until enough points have been selected for the test partition.
+       The  number  of  sites  chosen for test partitions
+       depends upon the number of sites available and the  number
+       of partitions chosen (this number is made as consistent as
+       possible while ensuring that all sites will be chosen  for
+       testing).  This  process of filling up a test partition is
+       done <I>k</I> times.
+
+<h2>Flags:</h2>
+
+       <B>-d</B>   Use <I>drand48()</I> (default is <I>rand()).</I><br>
+
+       <B>-q</B>  Run quietly. Don't report progress.<br>
+
+<h2>Parameters:</h2>
+
+       <B>k</B>=<I>value</I>            Positive integer  value  indicating  the
+                         number of partitions.<br>
+
+
+       <B>sites</B>=<I>name</I>         Name  of  a  sites  file to store random
+                         points in.<p>
+
+       Test/train pairs are saved as sites list using <I>name</I>  as  a
+       basename. Test sites are saved in <I>name</I>-test.<I>i</I> while train­
+       ing sites are saved in <I>name</I>-train.<I>i</I>, where <I>i</I>  ranges  from
+       zero to <I>k.</I>
+
+
+<H2>NOTES</H2>
+       Existing files are silently overwritten.<p>
+
+       An ideal random sites generator will follow a Poisson dis­
+       only be as random as the  original  sites.   This  program
+       simply divides sites up in a random manner.<p>
+
+       Be  warned  that  random number generation occurs over the
+       intervals defined by the current region.<p>
+
+       This program may not work properly with Lat-long data.
+
+<H2>SEE ALSO</H2>
+<I><a href=s.random.html>s.random</a></I> and 
+<I><a href=g.region.html>g.region</a></I>
+
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover.de/grass/</tt></a>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+
+</BODY>
+</HTML>

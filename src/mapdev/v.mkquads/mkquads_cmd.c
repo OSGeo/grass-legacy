@@ -1,4 +1,21 @@
 /*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       v.mkquads
+ * AUTHOR(S):    Michael H.
+ *               DKS ?
+ * PURPOSE:      make quads for USGS maps. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/*
 *  Creates as many quads as it can in the current window.
 *  Find the lower left quad point in the window. 
 *  From that calculate number of quads that will fit in window.
@@ -65,11 +82,19 @@ int main (int argc, char *argv[])
 	struct Option *map, *type;
 	struct Flag *e_flag, *r_flag, *s_flag, *v_flag, *x_flag;
 	int hsize=0, vsize=0;
+	struct GModule *module;
 
 	PROG = argv[0] ;
 	G_gisinit(argv[0]) ;
-	system("clear") ;
+	/* commented by Andreas Lange, 11/2000 */
+	/* system("clear") ; */
 	setbuf(stdout, NULL) ;
+
+	module = G_define_module();
+	module->description = 
+	  "Create a vector map layer and/or sites list and/or " 
+	  "geographic region definintion file for a USGS 7.5"
+	  "-minute quadrangle. ";
 
 	map = G_define_option();
 	map->key		= "map";

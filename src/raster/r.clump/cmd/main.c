@@ -14,6 +14,7 @@ main (int argc, char *argv[])
     char name[100];
     char *OUTPUT;
     char *INPUT; 
+	struct GModule *module;
     struct Flag *flag1 ;
     struct Option *opt1 ;
     struct Option *opt2 ;
@@ -23,6 +24,11 @@ main (int argc, char *argv[])
 
 /* Define the different options */
 
+	module = G_define_module();
+	module->description =
+		"Recategorizes data in a raster map layer by grouping cells " 
+		"that form physically discrete areas into unique categories.";
+						
     opt1 = G_define_option() ;
     opt1->key        = "input";
     opt1->type       = TYPE_STRING;

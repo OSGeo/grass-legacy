@@ -1,0 +1,108 @@
+<HTML>
+
+<TITLE>d.save</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.save</b></EM>  - Creates a list of commands for recreating screen graphics. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.save</B> 
+<BR>
+<B>d.save help</B> 
+<BR>
+<B>d.save</B> [<B>-ca</B>] [<B>frame=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>remove=</B><EM>val</EM>[,<EM>val</EM>,...]]
+[<B>move=</B><EM>from,to</EM>[,<EM>from,to</EM>,...]]
+
+<H2>DESCRIPTION</H2>
+
+When GRASS display (<EM>d.</EM>) commands are used to
+generate graphical images on the graphics monitor, some
+commands are noted in lists that the current graphics
+driver (see manual entry for 
+<EM><A HREF="d.mon.html">d.mon</A></EM>) maintains. This
+command, <EM>d.save</EM>, uses this information to
+create a shell script that can be used to recreate graphics
+in another frame at another time. The shell script is sent
+to standard output (the user's terminal). If you wish to
+save the shell script created by <EM>d.save</EM>, its
+output should be redirected to a file; for example:
+<DL>
+<DD> <B>d.save &gt; script.out </B> 
+</DL>
+
+The user can run the program non-interactively by
+specifying flag settings and parameter values on the
+command line. If the user types <B>d.save</B> without
+specifying these program arguments, the user will be
+prompted for inputs through the standard user interface
+described in the manual entry for 
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-c</B>
+<DD>Shell script will contain only information for regenerating graphics 
+from the active (current) frame. Use of this flag overrides the 
+<EM>frame</EM> option (below). 
+<DT><B>-a</B>
+<DD>Save information needed to regenerate all the frames on the graphics 
+monitor. The shell script can be used to completely 
+reconstruct the contents of the graphics screen. 
+</DL>
+
+<H3>Parameter:</H3> 
+<DL>
+<DT><B>frame=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of those display frame(s) to be saved. 
+<BR>
+Options: All available frames 
+<BR>
+Default: Active frame 
+
+<DT><B>remove=</B><EM>val</EM>[,<EM>val</EM>,...]
+<DD>List no's to be removed.
+
+<DT><B>move=</B><EM>from,to</EM>[,<EM>from,to</EM>,...]
+<DD>List no's to be moved, "from" to "to".
+remove option will be done first, if any.
+</DL>
+
+<H2>NOTES</H2>
+
+List no's are displayed in the right-most comments.
+
+<P>
+
+Display commands used interactively, and those that take
+their graphic instructions from standard input, will not be
+saved by <EM>d.save</EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="d.mon.html">d.mon</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Satnik, 
+Central Washington University
+
+</body>
+
+<HTML>

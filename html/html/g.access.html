@@ -1,0 +1,111 @@
+<HTML>
+
+<TITLE>g.access</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.access</b></EM>  - Controls user access to the current GRASS mapset. 
+<BR>
+<EM>(GRASS</EM> File Management Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>g.access</B>
+
+<H2>DESCRIPTION</H2>
+
+This program allows the user to control access to the
+current mapset.  Normally, any user can read data from any
+GRASS mapset. But sometimes it is desirable to prohibit
+access to certain sensitive data. The <EM>g.access</EM>
+command allows a user to restrict read and execute access
+to the current mapset (see UNIX <EM>chmod</EM> command).
+<EM>g.access</EM> will not modify write access to the
+current mapset.
+
+<P>
+
+The user may, for example, allow only users in the same
+UNIX group to read data files in the mapset, or restrict
+the mapset to personal use only.
+
+<P>
+After typing 
+<DL>
+<DD>
+<B>g.access</B> 
+</DL>
+the user will be presented with a screen page which reflects the current 
+mapset permissions. The user can then change them. 
+The screen page looks like: 
+
+<PRE>
+ __________________________________________________________
+| LOCATION: spearfish                          MAPSET: demo|
+|                                                          |
+| This program allows you to control access to your        | 
+| mapset by other users.                                   |
+|                                                          |
+| Access may be granted/removed for everyone, or for       |
+| everyone in your group.                                  |
+|                                                          |
+| Mark an 'x' to allow access;  erase the field to         |
+| restrict access.                                         |
+|                                                          |
+|     GROUP: _x_                                           |
+|     OTHER: _x_                                           |
+|                                                          |
+|    AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE	   |
+|                  (OR &lt;Ctrl-C&gt; TO CANCEL)             	           |
+|__________________________________________________________|
+
+</PRE>
+
+If you remove the x (using the space bar), access will be denied to that 
+class of user (group or other). 
+If you type an x, access will be granted to that class of user. 
+
+<H2>NOTES</H2>
+
+There is no non-interactive version of <EM>g.access</B>.</EM> 
+
+<P>
+Under GRASS version 4.0, access to the mapset PERMANENT must be open 
+to all users. 
+This is because GRASS looks for the user's default geographic region definition 
+settings and the location TITLE in files 
+that are stored under the PERMANENT mapset directory. 
+The <EM>g.access</EM> command, therefore, will not allow you to restrict 
+access to the PERMANENT mapset. 
+
+<P>
+The 
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM>
+command isn't smart enough to tell 
+if access to a specified mapset is restricted, and the user is therefore 
+allowed to include the names of restricted mapsets in his search path. 
+However, the data in a restricted mapset is still protected; any attempts 
+to look for or use data in a restricted mapset will fail. 
+The user will simply not see any data listed for a restricted mapset. 
+
+<H2>SEE ALSO</H2>
+
+UNIX manual entries for <EM>chmod</EM> and <EM>group</EM> 
+<BR>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM> 
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</BODY>
+</HTML>
+

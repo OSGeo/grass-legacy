@@ -129,7 +129,7 @@ int draw_scale (int use_mouse)
 		}
 		R_move_abs (x_pos + 40 + (int) line_len, y_pos + 25) ;
 		R_text(scales[incr].name) ;
-		R_flush();
+		R_stabilize();
 
 		if(use_mouse)
 			{

@@ -16,7 +16,7 @@
 #include "gis.h"
 
 int sort_by_label(struct Categories *);
-int cmp(char *, char *);
+int cmp(const void *, const void *);
 
 int main (int argc, char *argv[])
 {
@@ -243,11 +243,8 @@ int sort_by_label( struct Categories *pcats)
 	return 0;
 }
 
-int cmp ( char *a,char *b)
+int cmp (const void *a, const void *b)
 {
-	if(strcmp(a , b) < 0) 
-	    return -1;
-	if(strcmp(a , b) > 0)  
-	    return 1;
-	return 0;
+	return strcmp(a, b);
 }
+

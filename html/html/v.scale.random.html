@@ -1,0 +1,118 @@
+<TITLE>v.scale.random</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.scale.random</b></EM>  - Creates a site_lists file of randomly placed symbols
+within a GRASS vector area.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.scale.random</B>
+
+<BR>
+
+<B>v.scale.random help</B>
+
+<BR>
+
+<B>v.scale.random</B> [<B> -n</B>] <B>map=</B><EM>name </EM><B>site=</B><EM>name </EM><B>dot=</B><EM>name</EM> [<B>outdot=</B><EM>name</EM>]
+   <B>scale=</B><EM>value</EM> [<B>cover=</B><EM>value</EM>] [<B>size=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.scale.random</EM> allows a user to create a GRASS site_lists file
+containing sites randomly placed within an area.  This program is designed
+as an interface to <EM>v.random</EM> to aid the user in determining
+the number of dots to locate.  This progam uses the
+same type of file listing the category and counts.  This file is then
+modified to try to produce a pleasing dot count for a map of a
+specified scale.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-n</B> 
+
+<DD>Use category values, NOT category names.
+
+
+<P>
+
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Input vector file name.
+
+<DT><B>site=</B><EM>name</EM> 
+
+<DD>Output site_lists file name.
+
+<DT><B>dot=</B><EM>name</EM> 
+
+<DD>Name of file containing labels and counts.
+
+<DT><B>outdot=</B><EM>name</EM> 
+
+<DD>Name of new file to contain scaled counts.
+
+<DT><B>scale=</B><EM>value</EM> 
+
+<DD>The denominator of the map scale.
+
+<BR>
+
+Options:  1 - 999999999999
+
+<DT><B>cover=</B><EM>value</EM> 
+
+<DD>The fraction of the most dense area to cover with dots.
+
+<BR>
+
+Options:  0 - 1
+
+<DT><B>size=</B><EM>value</EM> 
+
+<DD>The size of each dot, in centimeters.
+
+<BR>
+
+Options:  0 - 100
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.menu.html">s.menu</A></EM><br>
+<EM><A HREF="s.random.html">s.random</A></EM><br>
+<EM><A HREF="v.random.html">v.random</A></EM>
+
+<H2>AUTHOR</H2>
+
+M.L. Holko, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

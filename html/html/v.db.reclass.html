@@ -1,0 +1,153 @@
+<TITLE>v.db.reclass</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.db.reclass</b></EM>  - Changes vector category values for an existing vector map
+according to results of SQL queries.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.db.reclass</B>
+
+<BR>
+
+<B>v.db.reclass help</B>
+
+<BR>
+
+<B>v.db.reclass</B> [<B> -d</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name </EM><B>output=</B><EM>name  </EM><B>table=</B><EM>name</EM> [</EM><B>key=</B><EM>name</EM>] </EM><B>rules=</B><EM>name</EM> [</EM><B>TITLE=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.db.reclass</EM> allows a user to create a new vector map based on the
+reclassification of an existing vector map.
+The user provides the program with a rules file, input
+vector map name, an output vector map name, and the type of
+input map, table, key.  There is an option (d) to dissolve common boundaries between
+adjoining map areas of the same re-classed category value.
+
+
+<P>
+
+<B>Note:</B>
+The dissolve option will work on only those areas which are of the same
+conversion category value.  If a map area is inside (island) a converted
+area and is NOT converted to the same value, its boundaries are output
+to the resultant map.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-d</B> 
+
+<DD>Dissolve common boundaries (default is no) .
+
+
+<P>
+
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Select area, line, or site.
+
+<BR>
+
+Options:  area, line, site (multiple allowed)
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Vector input map name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Vector output map name.
+
+<DT><B>table=</B><EM>name</EM> 
+
+<DD>Database table.
+
+
+<DT><B>key=</B><EM>name</EM> 
+
+<DD> Column corresponding to cats in vector map.
+
+
+<DT><B>rules=</B><EM>name</EM> 
+
+<DD>Name of text file containing reclassification rules. Rules file may contain
+on each row either pair: <BR>
+<I>keyword&nbsp;value</I> <BR>
+(separated by space) or comment beginning by #(hash). 
+Definition of new category begins with kyeword <I>cat</I> followed by new category value.
+Keyword <I>where</I> specifies SQL where condition and optionaly <I>label</I> keyword
+specifies category label.
+
+
+<DT><B>TITLE=</B><EM>name</EM> 
+
+<DD>Title for the resulting vector map.
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+<DT>
+<DD><B>v.db.reclass -d input=</B><EM>land</EM> <B>output=</B><EM>land_u</EM> <B>type=</B><EM>area</EM>
+ <B>table=</B><EM>tland</EM> <B>key=</B><EM>id</EM> <B>rules=</B><EM>land.rcl</EM>
+<BR>
+</DT>
+<P>
+the rules file contains :
+<PRE>
+# land reclass file
+cat 1
+where use = 'E13' and owner = 'Jara Cimrman'
+cat 2
+where use = 'E14'
+label Use type E14
+</PRE>
+Produces a new vector area file <EM>land_u</EM> containing 'area'
+boundaries from <EM>land</EM> with area category values selected 
+from database by SQL select statement: <I>select id from tland where
+use = 'E13' and owner = 'Jara Cimrman' </I> changed to category 1;  
+values selected from database by SQL select statement: <I>select id from tland where
+use = 'E14' </I> changed to category 2.
+
+Any common boundaries are dissolved.
+
+<BR>
+
+<P>
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.extract.html">v.extract</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS<BR>
+from v.reclass to v.db.reclass rewritten by Radim Blazek
+

@@ -1,0 +1,68 @@
+<Andreas.Lange@Rhein-Main.de>
+
+Requirements for NVIZ: shared libraries of OpenGL or Mesa 3.0 or higher
+
+written by
+Andreas Lange, Wiesbaden, Germany
+<Andreas.Lange@Rhein-Main.de>
+
+Installing Mesa 3.1 libraries (do this as root!) on linux:
+
+
+(I did not test this on other unix platforms, but the mesa
+documentation says that autoconf works on all unix platforms
+with X11). 
+(You must have installed the X11-development libraries, see
+the documentation of your distribution which packets you need).
+
+1. Get the sources for the libraries from:
+   http://www.mesa3d.org/
+   http://mesa3d.sourceforge.net/download.html
+   (please use a mirror near you!)
+
+   You need the file:   Mesalib-3.1.tar.gz (1.6 MB)
+   (and optional:       MesaDemos-3.1.tar.gz (1.1 MB) )
+   
+2. unpack the sources in a directory of your choice (e. g. /tmp):
+
+     tar xzf Mesalib-*.tar.gz
+     (tar xzf Mesa-Demos-*.tar.gz)
+
+3. cd to the new directory:
+     cd Mesa*
+   read the docs/README file (less docs/README)
+   read the docs/INSTALL file (less docs/INSTALL)
+   configure the libraries with:
+     ./configure --prefix=/usr
+   compile and install the libraries with:
+     make install 
+   
+   if you want to test the libraries:
+     make check
+   if you want to execute and install the demos:
+     make exec
+
+   In contradiction to the Mesa-docs you do not need to 
+   install the include directory or the library files 
+   manually. 
+
+   You do not need to compile the SGI widgets, they
+   are superseded by the GLUT utils, which are compiled by 
+   default. 
+
+   Do _not_ install the mesa-libraries under /usr/local/lib
+   (this is the default!), because on most systems /usr/local/lib
+   is not included in the search path for shared libraries.
+   If you must install the libraries in your home directory or another
+   local path, you must 'export LD_LIBRARY_PATH=/path/to/shared_libs'.
+   Or add manually the path to the libraries to /etc/ld.so.conf, 
+   but this requires root privileges, so you could easily install the shared 
+   libraries in /usr/lib. Run ldconfig after any change of /etc/ld.so.conf,
+   see man ldconfig for further details. 
+
+4. compile NVIZ2.2, see the file README in
+   grass5.0beta/src.contrib/GMSL/NVIZ2.2
+
+
+andreas.lange@rhein-main.de, 16/03/2000
+$Id$

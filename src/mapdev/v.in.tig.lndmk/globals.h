@@ -100,7 +100,7 @@ extern char match_string[NMATCHES][32]; /* for matching strings */
 #endif
 
 /* areas.c */
-int cmp_int(int *, int *);
+int cmp_int(const void *, const void *);
 int do_areas(void);
 int area_yes(char *);
 int track(int);

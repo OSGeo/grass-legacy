@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "global.h"
 #include "crs.h"     /* CRS HEADER FILE */
-static int cmp (IDX *,IDX *);
+static int cmp (const void *, const void *);
 
 int compute_georef_matrix (struct Cell_head *win1,
     struct Cell_head *win2, int order)
@@ -92,7 +92,8 @@ int compute_georef_matrix (struct Cell_head *win1,
     return 0;
 }
 
-static int cmp (IDX *a, IDX *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const IDX *a = aa, *b = bb;
     return (int) (row_min[*a] - row_min[*b]);
 }

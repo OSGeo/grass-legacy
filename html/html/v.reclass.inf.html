@@ -1,0 +1,129 @@
+<TITLE>v.reclass.inf</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.reclass.inf</b></EM>  - Generate new vector map layer derived from attribute data in the currently selected
+database.
+
+<BR>
+
+<EM>(GRASS-RDBMS Vector Interface Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.reclass.inf</B>
+
+<BR>
+
+<B>v.reclass.inf help</B>
+
+<BR>
+
+<B>v.reclass.inf</B> <B>[-d]</B> <B>sql=</B><EM>name</EM> <B>key=</B><EM>name</EM> <B>type=</B><EM>name</EM> <B>input=</B><EM>name</EM> <B>[output=</B><EM>name]</EM> 
+
+<H2>DESCRIPTION</H2>
+
+v.reclass.inf generates a new vector map layer based on the results of one or more queries to the currently selected database. 
+The user constructs a series of mutually exclusive SQL select statments designed to return groups of records from the database. Each group of records should be
+internally consistent in terms of attribute characteristics specified by the user in the SELECT clause. These
+groups should also be mutually exclusive, thereby insuring that a row returned by one SELECT clause is
+not also returned by a subsequent SELECT clause. Each group of records therefore forms the basis for a single
+category in the resulting GRASS vector map. v.reclass.inf processes each SELECT statement in order returning
+groups of records which will form a single category in the resulting map.
+As each SELECT statement is processed the group of
+records returned receives a common category value. The category value is incremented by one for each
+subsequent SELECT statment which is processed. The resulting reclass map will have one category for each
+of the original SELECT statements.
+
+
+<P>
+
+For example, the rows associated with the first SELECT statement will be assigned to category 1, those 
+associated with the second SELECT statement will be assigned to category 2 and so on. The output map will 
+contain only those line segments associated with database rows returned by the SELECT statement(s).
+
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+<B>Flags:</B>
+
+<DT><B>-d</B> 
+<DD>Disolve common boundaries between reclassed areas.
+</DT>
+<P>
+
+<B>Parameters:</B>
+
+<DT><B>sql=</B><EM>filename</EM> 
+<DD>Name of file containing SQL query statements.
+
+<DT><B>key=</B><EM>database_column_name</EM> 
+<DD>Key column in db.
+
+<DT><B>type=</B><EM>area/line.</EM> 
+<DD>Key column in db.
+
+<DT><B>input=</B><EM>map</EM> 
+<DD>Name of existing vector file to be reclassed using query output.
+
+<DT><B>output=</B><EM>map</EM> 
+<DD>Name of new raster (reclass),  file.
+</DT>
+<P>
+<P>
+
+<H2>EXAMPLE: produces vector map of primary and secondary roads.</H2>
+<P>
+</DT>
+<DD><B>v.reclass.inf sql=</B><EM>vect.sql</EM> <B>key=</B><EM>tlid</EM> <B>input=</B><EM>t.roads.inf</EM> <B>output=</B><EM>t.roads.12</EM>
+</DT>
+<P>
+<PRE>
+      <EM>vect.sql</EM>:
+
+	SELECT UNIQUE tlid,cfcc FROM type1 
+	WHERE cfcc MATCHES "A1*" 
+	ORDER BY tlid;
+	SELECT UNIQUE tlid,cfcc FROM type1 
+	WHERE cfcc MATCHES "A2*" 
+	ORDER BY tlid
+</PRE>
+
+
+<H2>BUGS</H2>
+
+None known.
+
+
+<P>
+
+
+<H2>NOTE</H2>
+
+This program requires the Informix database software.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.rescale.inf
+
+<P>
+
+<H2>AUTHOR</H2>
+
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST

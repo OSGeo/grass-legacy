@@ -1,0 +1,28 @@
+README for GRASS on cygwin under MS Windows
+
+The cygwin port to Win32 is still experimental.
+
+Please read the file README in this directory for general information about
+GRASS.
+
+More information about GRASS on cygwin is found in the file
+README_cygwin.html in the documents directory of this distribution.
+
+Please refer to the file cygwin_grass50compile.html in the documents
+directory for a full discription on how to compile with the cygnus tools under
+Win32.
+
+The file cygwin_grass50bininstall.html contains a description for the
+installation of the binary distribution under cygwin. 
+
+If you have problems or questions regarding the cygwin port of GRASS, please
+contact the cygwin windows GRASS mailing list:
+
+wingrass@geog.uni-hannover.de, see at 
+
+http://www.geog.uni-hannover.de/grass/wingrass.html 
+
+for subscription information. 
+
+-- 
+Andreas Lange, Andreas.Lange@Rhein-Main.de

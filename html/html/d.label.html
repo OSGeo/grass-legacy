@@ -1,0 +1,130 @@
+<TITLE>d.label</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.label</b></EM> - Creates and displays text labels 
+in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.label</B> 
+<BR>
+<B>d.label help</B> 
+<BR>
+<B>d.label</B> 
+[<B>size=</B><EM>value</EM>] 
+[<B>backcolor=</B><EM>name</EM>] 
+[<B>textcolor=</B><EM>name</EM>] 
+[<B>font=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.label</EM> allows the user to create and display text
+labels in the active frame on the graphics monitor.  It
+interactively requests that the user type in text and use
+the pointing device (mouse) to identify where this text is
+to be placed within the active graphics frame. The program
+will prompt the user for label size, background color, text
+color, and text font type, if the user fails to specify
+these values on the command line.  Program prompts use the
+standard GRASS <A HREF="parser.html">parser</A>
+interface.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>size=</B><EM>value</EM>
+<DD>Sets the label text size to the specified number. 
+    Values are stated as a percentage of the frame height;
+    e.g., a size of 10 will make each line of text equal to
+    one-tenth the height of the display frame.
+<BR>
+Options: 0-1000 
+<BR>
+Default: 10 
+<DT><B>backcolor=</B><EM>name</EM>
+<DD>Sets the color of the label background to the <EM>name</EM> stated. 
+<BR>
+    Options: red, orange, yellow, green, blue, indigo, 
+    violet, gray, white, and black. 
+<BR>
+    Default: <EM>black</EM> 
+<DT><B>textcolor=</B><EM>name</EM>
+<DD>Sets the color of the label text to the <EM>name</EM> stated. 
+<BR>
+    Options: same as for <EM>backcolor</EM>.</EM> 
+<BR>
+    Default: <EM>white</EM> 
+<DT><B>font=</B><EM>name</EM>
+<DD>Sets the font type used for the label's text to <EM>name</B>.
+<BR>Options: romand, romanp, romant, romans, scriptc, scripts,
+    romancs, italicc, italiccs, gothitt, gothgrt, and gothgbt.
+    The user can view these available fonts by running
+    <EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM>.
+<BR>
+    Default: <EM>romans</EM> (Roman simplex font type), or
+    whatever font the user has set the font type to before
+    entering <EM>d.label</EM>.
+</DL>
+
+<H2>NOTES</H2>
+
+This program will allow the user to display labels anywhere in the active 
+display frame, even in areas lying outside of the current geographic region. 
+
+<P>
+
+<EM>d.label</EM> will only allow the user to type in one
+line of text.  The fully interactive program 
+<EM><A HREF="d.labels.html">d.labels</A></EM> 
+can be used to
+create text labels having as many as four lines.
+
+<P>
+<EM>d.label</EM> does not create paint labels files displayable by 
+<EM><A HREF="d.paint.labels.html">d.paint.labels</A></EM> -- 
+<EM><A HREF="d.labels.html">d.labels</A></EM> 
+does. 
+These programs should be integrated in future GRASS releases. 
+
+<H2>BUGS</H2>
+
+If the user is running GRASS under X Windows, and the user
+enters a text label longer than 80 characters (i.e., allows
+text to wrap onto a second line), X Windows will stop the
+user's GRASS graphics monitor without throwing the user out
+of GRASS.  If this happens, the user should simply restart
+a graphics monitor, using 
+<EM><A HREF="d.mon.html">d.mon</A></B>.</EM>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="d.labels.html">d.labels</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.mon.html">d.mon</A></EM><br>
+<EM><A HREF="d.paint.labels.html">d.paint.labels</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.scale.html">d.scale</A></EM><br>
+<EM><A HREF="d.text.html">d.text</A></EM><br>
+<EM><A HREF="d.title.html">d.title</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM><br>
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

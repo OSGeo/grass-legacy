@@ -1,0 +1,129 @@
+<TITLE>v.trim</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.trim</b></EM>  - Trims small spurs, and removes excessive nodes 
+from a binary GRASS vector (<EM>dig</em>) file. 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.trim</B> 
+<BR>
+<B>v.trim help</B> 
+<BR>
+<B>v.trim input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> [<B>trim=</B><EM>value</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.trim</EM> scans the user-specified GRASS vector
+<B>input</B> file and removes from it all lines having a
+length less than a user-specified trimming factor.  Excess
+nodes (those unnecessary to a line's definition) between
+line junctions are also removed.  The resulting vector
+output is sent to a user-named <B>output</B> file; the
+original vector <B>input</B> file is not modified by
+<EM>v.trim</EM>.
+
+<P>
+
+The trimming factor parameter (<B>trim=</B><EM>value</EM>)
+gives the user control over the size of small spurs or
+"dangling lines" to be removed. The trimming factor is
+expressed in the same units (map coordinates) as the vector
+(<EM>dig</EM>) data within the user's current GRASS data
+base LOCATION (e.g.: in meters for UTM locations; in pixels
+or cells for locations in an x,y coordinate system; etc.).
+
+<H2>OPTIONS</H2>
+
+The user can run this program either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies program arguments on the command
+line, using the form:
+
+<DL>
+<DD>
+<B>v.trim input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> [<B>trim=</B><EM>value</EM>] 
+</DL>
+
+If vector map <B>input</B> and <B>output</B> names are
+given on the command line, any other parameter values left
+unspecified on the command line will be set to their
+default values (see below).  Alternately, the user can
+simply type <B>v.trim</B> on the command line, without
+program arguments. In this case, the user will be prompted
+for needed parameter values using the standard GRASS 
+
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an existing vector map layer in the user's
+current mapset search path containing lines to be
+"trimmed".
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name of a new vector file to contained the "trimmed"
+output.
+
+<DT><B>trim=</B><EM>value</EM>
+
+<DD>A user-specified trimming factor, denoting the length
+of trimmed lines in map units.  All lines having a length
+less than this trimming factor will be "trimmed" (i.e.,
+removed) from the named vector input file.
+
+<BR>
+Default: 10 (in units of meters or cells) 
+
+</DL>
+
+<H2>NOTES</H2>
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+must be run on the vector <B>input</B> file prior to
+running <EM>v.trim</EM>.
+
+<P>
+
+<EM><A HREF="v.support.html">v.support</A></EM> must
+also be run on the resultant vector <B>output</B> file to
+build the needed topology information stored under the
+user's <EM>dig_plus</EM> directory.
+
+<P>
+
+<EM>r.line</EM> maintains the same format (binary or ASCII)
+and attribute type (linear or area edge) as those of the
+original vector (<EM>dig</EM>) <B>input</B> file.
+
+<P>
+
+A trimming factor of zero (0) will not remove any small
+spurs, but will remove all excess nodes.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.import.html">v.import</A></EM><br>
+<EM><A HREF="v.support.html">v.support</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Mike Baba 
+<BR>
+DBA Systems, Inc. 
+

@@ -26,7 +26,7 @@ int
 main (int argc, char *argv[])
 {
     char command[1024];
-    char list_name[40], name[40], cat_list[128], new_cat[10];
+    char list_name[40], name[40], cat_list[128], new_cat[30];
     char *mapset, *tmp_file, *G_tempfile();
     int nfiles;
     char prompt[80];
@@ -176,6 +176,7 @@ main (int argc, char *argv[])
             fgets (new_cat,8,stdin) ;
             new_cat[strlen(new_cat)-1] = '\0';  /* Trim the linefeed */
             if (!strlen(new_cat) ) break;
+	    fprintf( stderr, "\nString Length is %d\n", strlen(new_cat) );
             if (strlen(cat_list) > 0) strcat(cat_list,",");
             strcat(cat_list,new_cat);
 	    }
@@ -217,7 +218,7 @@ main (int argc, char *argv[])
     fflush (stdout);
     G_clear_screen ();
     fprintf (stderr,"\n Extraction process begins:\n");
-/*  fprintf(stderr," %s\n",command);   sleep(4);*/
+    fprintf(stderr," %s\n",command);   sleep(15);
     system (command); 
     exit(0);
 }

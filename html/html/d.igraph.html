@@ -1,0 +1,209 @@
+<TITLE>d.igraph</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.igraph</b></EM>  - Graphics interface for GRASS on the
+Intergraph.
+
+<BR>
+
+<EM>(Map Development Tool)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.igraph</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.igraph</EM> is the GRASS interface to the GRASS
+graphics driver on the Intergraph workstations.  GRASS can
+be run from an ascii terminal or from a window on the
+Intergraph workstation.  There are some pitfalls to running
+GRASS from a window; these are discussed in the NOTES
+section below.
+
+<P>
+
+When <EM>d.igraph</EM> is run a pull-down menu will appear
+on the workstation screen and some information will be
+displayed on the ascii terminal.  The pull-down menu, which
+works the same way other Intergraph pull down-menus work,
+will look like this:
+
+<PRE>
+  _______________________
+  |  GRASS Commands      |
+  |  start/select        |
+  |  stop                |
+  |  GRASS Graphics      |
+  |  resize/move         |
+  |  virtual screens    &gt;|
+  |  colors             &gt;|
+  | EXIT                 |
+  |______________________|
+</PRE>
+
+The menu is divided into two categories: <EM>GRASS
+Commands</EM> and <EM>GRASS Graphics</EM>.  <EM>GRASS
+Commands</EM> in the pull-down menu have GRASS command-line
+equivalents. These command-line equivalents can be used
+without running <EM>d.igraph</EM>, although users may find
+the pull-down menu commands easier and faster to use.  On
+the other hand, there are no command-line equivalents for
+the <EM>GRASS Graphics</EM> commands in the pull-down
+menu.  These commands, which must be run from inside
+<EM>d.igraph</EM>, enable you to modify the size,
+placement, and number of colors, of the graphics window.
+
+<P>
+
+The first command under <EM>GRASS Commands</EM> is
+<EM>start/select</EM>; selecting this command with the
+mouse will start the graphics driver <EM>IGRAPH</EM> and
+then select it for output.  This pull-down menu command is
+equivalent to typing the following commands at the GRASS
+command line:
+
+<DL>
+<DT><B>d.mon start=IGRAPH</B>  
+<DD>(start and select the IGRAPH graphics driver)
+</DL>
+
+or
+
+<DL>
+<DT><B>d.mon -s start=IGRAPH </B>
+<DD>(start but don't select the IGRAPH driver)
+<DT><B>d.mon select=IGRAPH </B>
+<DD>(select the already started IGRAPH driver)
+</DL>
+
+
+Using the <EM>start/select</EM> option saves the user from
+having to type the above command(s).  After the graphics
+driver is started, the pull-down menu will disappear and
+the <EM>d.igraph</EM> program will exit, leaving the user
+at the GRASS prompt.  When the second command
+(<EM>stop</EM>) under <EM>GRASS Commands</EM> is selected,
+the graphics driver <EM>IGRAPH</EM> will stop and the GRASS
+window will disappear.  The equivalent GRASS command-line
+command is: <B>d.mon stop=IGRAPH</B>.
+
+
+<P>
+
+The second category (<EM>GRASS Graphics</EM>) in the
+pull-down menu contains three commands written for the
+GRASS graphics driver <EM>IGRAPH</EM>.  These commands
+establish parameters for size, location, and number of
+colors the graphics driver will use to create a GRASS
+graphics window. Therefore, they should be run
+<EM>before</EM> starting the graphics driver with the
+<EM>start/select</EM> command.  These parameters will not
+affect a GRASS window that has already been started, but
+they will be saved and used the next time the graphics
+driver is started.
+
+<P>
+
+The first command in the second category is
+<EM>resize/move</EM>.  When the <EM>resize/move</EM>
+command is selected, the pull-down menu will disappear and
+a special <EM>Resize</EM> window, colored grey, will be
+created on the graphics monitor.  The <EM>Resize</EM>
+window will be the exact size and at the same location as
+the GRASS graphics window would be if the graphics driver
+had been started.  Use the resize and move icons on the
+<EM>Resize</EM> window to modify the window.  When the
+desired size and position has been achieved, <B>delete</B>
+the <EM>Resize</EM> window.  To do this, move the mouse to
+the left side of the icon strip at the top of the
+<EM>Resize</EM> window and click the mouse on the small
+box  containing an <B>X</B>.  Note that the window size is
+displayed on the ascii terminal in which the
+<EM>d.igraph</EM> program was started.  Now, each time the
+graphics monitor is started, the window will be the same
+size and at the same location as the <EM>Resize</EM>
+window.
+
+<P>
+
+The second command is <EM>virtual screens</EM>.  This
+command has a sub-menu with a listing of virtual screen
+numbers (from 0 to 3).  Of the virtual screen numbers
+listed (0 to 3), only one or two of those numbers will be
+active and selectable from the sub-menu.  The number of
+selectable virtual screen numbers will depend on the type
+of workstation and its virtual screen configuration.  When
+the <EM>IGRAPH</EM> driver is started, it will create a
+GRASS window on the virtual screen whose number was picked
+by this command.  Note that the current virtual screen
+number is displayed on the ascii terminal n which the
+<EM>d.igraph</EM> program was started.
+
+<P>
+
+The third graphics command is <EM>colors</EM>.  This
+command has a sub-menu with a listing of the possible range
+of active colors the workstations will support (16 to
+512).  The number of active colors is determined by the
+number of planes the graphics processor supports  (9 planes
+will give 512 active colors).  We do not suggest running
+GRASS with fewer than <B>256</B> active colors.
+
+<P>
+
+Each workstation can be configured differently with regard
+to the number of virtual screens and the available number
+of colors.  A certain amount of testing will have to been
+done to determine what works best with a particular
+workstation.
+
+<P>
+
+The last command is the <EM>EXIT</EM> command.  This
+command is used to leave the <EM>d.igraph</EM> program.
+
+
+<H2>USING THE GRAPHICS WINDOW</H2>
+
+Once the GRASS graphics driver is started, a window will
+appear on the screen.  The GRASS graphics window is
+mouse-activated.  The mouse must be within the GRASS
+graphics window for the true GRASS colors to be displayed
+on the graphics window.  The mouse doesn't have to be
+clicked inside the window; just moving the mouse within the
+window is enough to activate the window.  While the mouse
+is outside the GRASS graphics window, the colors in the
+graphics window will be random.
+
+<H2>NOTES</H2>
+
+Obsolete for LINUX, of course!
+<P>
+When using the GRASS program <EM>d.colors</EM> or the
+<EM>interact</EM> selection in the <EM>d.display</EM>
+program, the mouse must be within the GRASS graphics window
+when toggling or highlighting categories.  If the mouse is
+not within the graphics window, the colors will not
+represent the true category colors.  Using the two programs
+mentioned above while running GRASS from an Intergraph
+window (ascii window) creates a problem; The mouse must be
+within the graphics window at all times for those programs
+to work properly, but the mouse also must be moved to the
+ascii window to activate the ascii window so that commands
+can be typed.  This is not a problem when GRASS is run from
+an ascii terminal, because the mouse can be left within the
+GRASS graphics window at all times.
+
+<H2>AUTHOR</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory

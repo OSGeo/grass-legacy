@@ -1,4 +1,4 @@
-#!/usr/local/grass-5.0b/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
 # This file handles script playing events by sourcing
 # the selected script file.  Within the script file,
 # "send" commands are used to actually send the events
@@ -9,7 +9,9 @@
 
 catch {destroy .wait_ok}
 
-source $src_boot/config.tcl
+global src_boot
+
+source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 # Globals
 global ProcessName

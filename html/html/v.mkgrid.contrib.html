@@ -1,0 +1,129 @@
+<TITLE>v.mkgrid.contrib</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.mkgrid</b></EM>  - Creates a (binary) GRASS vector map of a user-defined grid.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.mkgrid</B>
+
+<BR>
+
+<B>v.mkgrid help</B>
+
+<BR>
+
+<B>v.mkgrid</B> <B>map=</B><EM>name</EM> <B>grid=</B><EM>rows,columns</EM> <B>coordinate=</B><EM>x,y</EM> <B>box=</B><EM>length,width</EM> [<B>angle=</B><EM>degree</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.mkgrid</EM> will create a binary format, vector map representation of a
+regular coordinate grid.
+
+
+<P>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-q</B> 
+
+<DD>Quiet. Cut out the chatter.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name to be assigned to binary vector map layer output.
+
+<DT><B>grid=</B><EM>rows,columns</EM> 
+
+<DD>Number of ROWS and COLUMNS to appear in grid.
+
+<DT><B>coordinate=</B><EM>x,y</EM> 
+
+<DD>Lower left EASTING and NORTHING coordinates of vector map layer output.
+
+<DT><B>box=</B><EM>length,width</EM> 
+
+<DD>LENGTH and WIDTH of boxes in grid.
+
+<DT>[<B>angle=</B><EM>degree</EM>] 
+
+<DD>optional rotate grid counter-clockwise about the origin (<B>coordinate</B>).
+</DL>
+
+
+<P>
+
+If the user simply types <B>v.mkgrid</B> on the command line without
+specifying parameter values, the program will prompt the user for inputs
+using the standard interface described in the manual entry for <EM>parser</EM>.
+
+<H2>NOTES</H2>
+
+The new binary vector map output is placed under the <EM>dig</EM> directory
+in the user's current mapset, and can be used like any vector map layer.
+Run <EM>v.support</EM> to build the topology information for the vector map
+before using <EM>v.mkgrid</EM> map layer outputs in the <EM>v.digit</EM> program.
+
+
+<P>
+
+Since the grid is computer-generated, the corner coordinates will be exact
+and can be used when patching together several <EM>v.mkgrid</EM> grids.
+
+
+<P>
+
+This is NOT to be used to generate a vector map of USGS quadrangles,
+because USGS quads are not exact rectangles.
+To generate a vector map of USGS quads, use the program <EM>v.mkquads</EM>.
+
+
+<P>
+
+The program ignores the current GRASS geographic region settings.  It will
+create the complete grid even if part of this grid falls outside the current
+geographic region.
+
+
+<P>
+
+Rotating the grid should not usually be necessary under normal usage, but 
+this option is available.
+
+<H2>SEE ALSO</H2>
+
+<A HREF="v.digit.html">v.digit</A>,
+<A HREF="v.mkquads.html">v.mkquads</A>,
+<A HREF="v.patch.html">v.patch</A>,
+<A HREF="v.support.html">v.support</A>
+and
+<A HREF="parser.html">parser</A>
+
+<H2>AUTHOR</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory

@@ -1,0 +1,249 @@
+<TITLE>m.geo</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.geo</b></EM>  - Calculates conversion coordinates for geographic positions.
+
+<BR>
+
+<EM>"(SCS GRASS Map Development Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.geo</B>
+
+<BR>
+
+<B>m.geo help</B>
+
+<H2>DESCRIPTION</H2>
+
+This program allows a user to interactively:
+convert projection coordinates Northings and
+Eastings to Latitude and Longitude values,  or
+
+
+<P>
+
+allows a user to interactively:
+convert Latitude and Longitude values to
+projection coordinate Northings and Eastings.
+
+
+<P>
+
+It allows a user to do all of the above:
+reading from a file, writing to the screen,  or
+reading from the keyboard, writing to a file, or
+reading from a file, writing to a file,      
+
+
+<P>
+
+Note:  The program does not transform GRASS files, it is 
+designed to determine coordinate values on an 
+individual position.
+
+
+<P>
+
+Several map projections are currently supported:
+
+<PRE>
+stp - State Plane,<BR>
+      for all CONUS, Alaska, Hawaii, Puerto Rico, Guam, Virgin Islands,
+      American Samoa, Northern Mariana Islands, Palau, and
+      U.S. Minor Outlying Islands
+
+airy   - Airy-F
+aea    - Albers Egual Area-FI
+apian  - Apian Globular I-F 	  
+aeqd   - Azimuthal equidistant-FI
+aitoff - Aitoff-F
+august - August Epicycloidal-F
+
+bacon  - Bacon Globular-F
+bipc   - Bipolar Conic-FI
+boggs  - Boggs Eumorphic-F
+bonne  - Bonne-FI
+
+cass   - Cassini-FI
+cc     - Central Cylindrical-FI 
+cea    - Cylindrical Equal Area-FI 
+collg  - Collignon-FI 			
+
+dense  - Denoyer Semi-Elliptical-F
+
+eck1   - Eckert I-FI 		  eck2 - Eckert II-FI
+eck3   - Eckert III-FI 		  eck4 - Eckert IV-FI
+eck5   - Eckert V-FI 		  eck6 - Eckert VI-FI
+eisen  - Eisenlohr-F 		 
+eqc    - Equidistant Cylindrical-FI
+eqdc   - Equidistant Conic-FI
+
+fourn  - Fournier Globular-F
+
+gall   - Gall (Stereographic)-FI 	  
+goode  - Goode Homolosine-F
+gnom   - Gnomonic-FI 			
+
+hammer - Hammer (Elliptical)-F    
+hataea - Hatano Asymmetrical Equal Area-FI 
+
+lagrng - Lagrange-F                 
+laea   - Lambert Azimuthal Equal Area-FI
+leac   - Lambert Equal Area Conic-FI 
+lcc    - Lambert Conformal Conic-FI
+loxim  - Loximuthal-FI
+
+mbtfpp - McBryde-Thomas Flat-Polar Parabolic-FI 
+mbtfps - McBryde-Thomas Flat-Polar Sinusoidal-FI
+mbtfpq - McBryde-Thomas Flat-Polar Quartic-FI 
+merc   - Mercator-FI
+mill   - Miller-FI 
+moll   - Mollweides-FI
+
+nicol  - Nicolosi Globular-F 
+nsper  - General Vertical Persepective-FI
+
+ocea   - Oblique Cylindrical Equal Area-FI 
+omerc  - Oblique Mercator-FI
+ortel  - Ortelius-F 
+ortho  - Orthographic-FI
+
+parab  - Caster Parabolic-FI 
+pconic - Perspective Conic-F
+poly   - Polyconic (American)-FI 
+putp2  - Putnins P2'-FI
+putp5  - Putnins P5-FI
+
+quau   - Quartic Authalic-FI 
+
+rpoly  - Rectangular Polyconic-F
+robin  - Robinson-FI
+
+sinu   - Sinusoidal-FI 
+stere  - Stereographic-FI
+
+tcc    - Transverse Central Cylindrical-FI 
+tcea   - Transverse Cylindrical Equal Area-FI
+tmerc  - Transverse Mercator-FI 
+tpers  - Tilted perspective-FI
+
+ups    - Universal Polar Stereographic-FI 
+utm    - Universal Transverse Mercator-FI
+
+vandg  - Van der Grinten-FI 
+vandg2 - Van der Grinten II-F
+vandg3 - Van der Grinten III-F 
+vandg4 - Van der Grinten IV-F
+
+wag7   - Wagner VII-F 
+wink1  - Winkel I-FI
+wintri - Winkel Tripel-F
+</PRE>
+
+Each of the above projections (with the exception of
+State Plane) can be computed with the following spheroids:
+<PRE>
+MERIT     - MERIT 1983
+GRS80     - GRS 1980(IUGG, 1980)
+IAU76     - IAU 1976
+airy      - Airy 1830
+aust_ntl  - Australian Natl, S. Amer., IAU 64
+GRS67     - GRS 67(IUGG 1967)
+bessel    - Bessel 1841
+clrk66    - Clarke 1866
+clrk80    - Clarke 1880 mod.
+everest   - Everest 1830
+hough     - Hough
+intl      - International 1909 (Hayford)
+krass     - Krassovsky, 1942
+mercury   - Mercury 1960
+mod_airy  - Modified Airy
+mod_ever  - Modified Everest
+mod_merc  - Modified Merc 1968
+new_intl  - New International 1967
+SEasia    - Southeast Asia
+walbeck   - Walbeck
+WGS66     - WGS 66
+WGS72     - WGS 72
+sphere    - Sphere of 6370997 m
+</PRE>
+
+
+<H2>INPUT FILE FORMAT</H2>
+
+When reading from a file of LATITUDE/LONGITUDE data the
+file will contain three (3) columns of information:
+
+<BR>
+
+the first column - latitude   - in degrees minutes seconds,
+
+<BR>
+
+the second column - longitude - in degrees minutes seconds,
+
+<BR>
+
+the third column - zone       - zero(0) if not required.
+
+
+<P>
+
+For example:
+<PRE>
+           +40 36 31.4563	-87 2 7.8193	16
+           40n 36 31.4563	87w 2 7.8193	16
+</PRE>
+
+
+<P>
+
+When reading from a file of PROJECTION COORDINATES data the
+file will contain three (3) columns of information:
+
+<BR>
+<DL>
+<DD>the first column - easting - ground coordinates
+
+<BR>
+
+<DD>the second column - northing - ground coordinates
+
+<BR>
+
+<DD>the third column - zone       - zero(0) if not required.
+</DL>
+
+<P>
+
+For example:
+<PRE>
+       500000.00	4496918.64	16	&lt;- utm
+      -424489.11	1908736.13	0	&lt;- lambert
+
+</PRE>
+<P>
+Note: NO column headings are required, just the numbers.
+<BR>
+
+<H2>SEE ALSO</H2>
+
+<EM>Mapgen</EM>,
+<EM>proj</EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

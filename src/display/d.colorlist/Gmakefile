@@ -1,0 +1,12 @@
+PGM=d.colorlist
+
+LIBES=$(GISLIB) $(DISPLAYLIB)
+
+OFILES	= \
+	main.o
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #
+$(DISPLAYLIB): #

@@ -2,7 +2,7 @@ PGM      = m.proj
 
 LIST =  main.o get_deg.o get_stp.o geo_func.o process.o geo_supp.o
 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(GISLIB) $(GPROJLIB) 
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(GPROJLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(GPROJLIB) $(MATHLIB) $(XDRLIB)
 
 $(GPROJLIB) $(GISLIB): #

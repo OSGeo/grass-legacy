@@ -1,0 +1,131 @@
+<html>
+
+<TITLE>i.fft</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.fft</b></EM>  - Fast Fourier Transform (FFT) for image processing.
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.fft</B>
+
+<BR>
+
+<B>i.fft help</B>
+
+<BR>
+
+<B>i.fft input_image=</B><EM>name </EM><B>real_image=</B><EM>name</EM>
+<B>imaginary_image=</B><EM>name </EM>[<B>range=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.fft</EM> is an image processing program based on the
+algorithm given by Press (1988), with enhancements by Vali
+(1990), that processes a single input raster map layer
+(<B>input_image</B>) and constructs the real and
+imaginary Fourier components in frequency space.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input_image=</B><EM>name</EM>
+
+<DD>Input raster map layer on which the fast Fourier
+transform is run.
+
+<DT><B>real_image=</B><EM>name</EM>
+
+<DD>Output real part arrays stored as raster map layer.
+
+<DT><B>imaginary_image=</B><EM>name</EM> 
+
+<DD>Output imaginary part arrays stored as raster map layer.
+
+<DT><B>range=</B><EM>value</EM> 
+
+<DD>Range of values used during fast Fourier transformation.
+</DL>
+
+<H2>NOTES</H2>
+
+The real and imaginary components are stored as arrays of
+doubles in the <EM>cell_misc</EM> directory (for use in the
+inverse transform program,
+
+<EM><A HREF="i.ifft.html">i.ifft</A></EM>),
+
+and are also scaled and formatted into the
+<B>real_image</B> and <B>imaginary_image</B> raster map
+layers for inspection, masking, etc.  In these raster map
+layers the low frequency components are in the center and
+the high frequency components are toward the edges.  The
+<B>input_image</B> need not be square;  before
+processing, the X and Y dimensions of the
+<B>input_image</B> are padded with zeroes to the next
+highest power of two in extent (i.e., 256 x 256 is
+processed at that size, but 200 x 400 is padded to 256 x
+512).  The cell category values for viewing, etc., are
+calculated by taking the natural log of the actual values
+then rescaling to 255, or whatever optional range is given
+on the command line, as suggested by Richards (1986).  A
+color table is assigned to the resultant map layer.
+
+
+<P>
+
+The current geographic region and mask settings are
+respected when reading the input file.  The presence of a
+mask will, in general, make the resulting fast Fourier
+transform invalid, or at least difficult to interpret.
+
+<H2>SEE ALSO</H2>
+
+<B>Numerical Recipes in C</B>,
+by William H. Press,
+Cambridge University Press, 1988.
+
+<P>
+
+<B>Remote Sensing Digital Image Analysis</B>,
+by John A. Richards,
+Springer-Verlag, 1986.
+
+
+<P>
+
+Personal communication,
+between progam author and Ali R. Vali,
+Space Research Center, 
+<A HREF="http://www.utexas.edu">University of Texas</A>, Austin, 1990.
+
+<P>
+
+<EM><A HREF="i.cca.html">i.cca</A></EM><br>
+<EM><A HREF="i.class.html">i.class</A></EM><br>
+<EM><A HREF="i.ifft.html">i.ifft</A></EM><br>
+<EM><A HREF="i.pca.html">i.pca</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Satnik, GIS Laboratory, 
+Central Washington University
+
+</body>
+</html>
+

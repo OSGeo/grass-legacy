@@ -10,10 +10,16 @@ int
 main (int argc, char *argv[])
 {
 	int n, len;
+	struct GModule *module;
 	struct Option *mapset;
 	struct Flag *full;
 
 	init (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Lists available GRASS data base files "
+		"of the user-specified data type to standard output.";
 
 	element = G_define_option();
 	element->key =      "type";

@@ -7,6 +7,7 @@ main (argc, argv)
 {
  int i;
  char *mapf, *reff; 
+ struct GModule *module;
  struct { 
    struct Option *map, *ref, *output, *titles;
  } parms;
@@ -17,6 +18,12 @@ main (argc, argv)
 
  G_gisinit(argv[0]);
  G_get_window (&window);
+
+ module = G_define_module();
+ module->description =
+  "Calculate error matrix and kappa "
+  "parameter for accuracy assessment of classification "
+  "result.";
 
  parms.map = G_define_option();
  parms.map->key		="classification";

@@ -1,0 +1,23 @@
+
+Regularly this bug meets GRASS:
+
+    BUG IN DYNAMIC LINKER ld.so: dl-version.c: 210: _dl_check_map_versions: 
+    Assertion 'needed != ((void *)0)' failed! 
+
+What you can try:
+
+* You might take a look at the program and at the shared libraries it
+  uses with "objdump -R" and see if (and where) any odd relocation types
+  show up.
+
+* Check that your libraries have not been corrupted. 
+
+* Problem with libstdc++xxxx.so ? How many libstdc's are present on your
+  system (and where)?
+
+* Which gcc version?
+  gcc -v
+
+* Did you install Mesa? Try running 'ldconfig' to
+  update the symlinks in /lib, /usr/lib, etc. if you missed that command.
+

@@ -1,0 +1,79 @@
+<html>
+<TITLE>g.manual</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 noshade>
+<H2>NAME</H2>
+<EM><B>g.manual</B></EM>  - Accesses GRASS User's Reference Manual entries.
+<BR>
+<EM>(GRASS File Management Program)</EM>
+<H2>SYNOPSIS</H2>
+<B>g.manual</B>
+<BR>
+<B>g.manual help</B>
+<BR>
+<B>g.manual</B> [<B>-1</B>] [<B>-a</B>] [<B>-d</B>] [<B>-m</B>] [<B>-s</B>]
+[<B>-q</B>] [<B>entries=</B><EM>name</EM>[,<EM>name</EM>,...]] name name ...
+<BR>
+<H2>DESCRIPTION</H2>
+The <EM>g.manual</EM> command provides user access to the
+on-line <B>GRASS User's Reference Manual</B> entries.  The
+user may request a list of available manual entries, and
+may get a manual entry printed to the terminal screen.
+
+<H2>OPTIONS</H2>
+
+<DT><B>-1</B> 
+
+<DD>This option will list all manual entries, one per line.
+
+<DT><B>-a</B> 
+
+<DD>This option will list all manual entries in a more
+appealing format.  The manual page list will be separated
+by manual section.
+
+<DT><B>-d</B> 
+
+<DD>This option will display a short description of all manual entries
+specified.  If this option is used without a manual entrie's <EM>name</EM>
+a summary of all manual entries will be displayed (option yet not active).
+
+<DT><B>-m</B>
+
+<DD>Force to use man program rather than GRASS_TEXT_BROWSER, if any.
+
+<DT><B>-s</B>
+
+<DD>Run silently to set exit status if entry exists. Requires only one
+command.
+
+<DT><B>-q</B>
+
+<DD>Print man pages and quit.<BR>
+Requires rman at <A HREF="ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z">ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z</A>.
+
+</DL>
+
+<P>
+
+These entries may also be accessed through the 
+<EM><A HREF="g.help.html">g.help</A></EM> command.
+
+<H2>NOTES</H2>
+
+To use hyperlink features of html pages, set env variable GRASS_TEXT_BROWSER
+to any text-based web browser that you want, e.g., lynx, w3m.
+
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://www.geog.uni-hannover.de/grass/gdp/">GRASS User's Reference Manual</A></B>
+<br>
+<EM><A HREF="g.help.html">g.help</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michel Wurtz - Cemagref/DIG
+
+</body>
+</html>

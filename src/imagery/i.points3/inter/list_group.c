@@ -28,11 +28,7 @@
 #include "globals.h"
 
          /* internal function prototypes */
-#ifdef _NO_PROTO
-    static cmp();
-#else
-    static int cmp(int *, int *);
-#endif
+static int cmp(const void *, const void *);
 
 /*---------------------------------------------------------------------*/
 int prepare_group_list (void)
@@ -93,8 +89,9 @@ int choose_groupfile (char *name,char *mapset)
 
 
 /*----------------------------------------------------------------------*/
-static int cmp(int *a,int *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const int *a = aa, *b = bb;
     int n;
 
     if(n = strcmp (group.ref.file[*a].mapset, group.ref.file[*b].mapset))

@@ -1,0 +1,123 @@
+<TITLE>split.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>split.sh</b></EM>  - Divides the graphics monitor into two
+frames and then displays two maps in these frames.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>split.sh mapname mapname </B>
+[<B>cmd=</B><EM>GRASS_command</EM>] 
+[<B>cmd2=</B><EM>GRASS_command</EM>] 
+[<B>view=horiz</B>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>split.sh</EM> is a Bourne shell (<EM>sh</EM>) script
+that clears the entire graphics screen and divides it into
+two display frames.  Map layers are then displayed in each
+of the two frames.  This command is very useful for
+visually comparing maps (raster, vector, and 3-d views) and
+can be used by other GRASS shell macros.  It is also useful
+for creating demos.  
+
+Program parameters are given below.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>view=horiz</B> 
+
+<DD>The graphics screen can be split either horizontally or
+vertically.  The default view splits the screen into two
+frames, one on the left and one on the right (a vertical
+split).  Some maps (3-d views) are better represented with
+more width then height (horizontal split).  The first map
+name listed on the command line will be displayed in the
+top or left window (depending on whether the screen was
+split horizontally or vertically), and The second map will
+be displayed in the bottom or right window.
+
+<DT><B>cmd=</B><EM>GRASS_command</EM> 
+
+<DD>The GRASS command used to display the named <EM>mapname</EM>s.
+If no command is specified by the user, 
+<EM><A HREF="d.rast.html">d.rast</A></EM> is used by default.
+However, any GRASS display command (e.g., 
+<EM><A HREF="d.3d.html">d.3d</A>, 
+<A HREF="d.vect.html">d.vect</A></EM>, etc...)
+can be entered.
+
+<DT><B>cmd2=</B><EM>GRASS_command</EM> 
+
+<DD>This command will be used to display map data in the second frame only.
+<BR>
+If the user fails to specify the values of both <EM>cmd</EM> and <EM>cmd2</EM>,
+<EM>split.sh</EM> will use the default command 
+(<EM><A HREF="d.rast.html">d.rast</A></EM>) to display
+user-specified map layer names in both frames.
+If the user specifies only the value of <EM>cmd</EM> on the command line,
+then that command will be executed for both frames.
+If the user specifies the values of both <EM>cmd</EM> and <EM>cmd2</EM> on the 
+command line, the <EM>cmd</EM> command will be executed in frame 1 and the
+<EM>cmd2</EM> command will be executed in frame 2.
+</DL>
+
+<H2>EXAMPLES</H2>
+
+<DL>
+<DD>
+<B>split.sh </B> soils  vegcover
+</DL>
+
+<DL>
+<DD>
+<B>split.sh</B>  soils <B> cmd2=<A HREF="d.legend.html">d.legend</A> 
+</B>"soils red"
+</DL>
+
+
+<DL>
+<DD>
+<B>split.sh </B>elevation vegcover <B>cmd=</B><A HREF="d.3d.html">d.3d</A>  
+<B>view=</B>horiz
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>split.sh</EM> leaves the frame that the last map was
+drawn in as the active frame.  The order in which the
+options (<EM>cmd</EM>, <EM>cmd2</EM>, <EM>view</EM>) are
+placed on the command line doesn't matter, but the order is
+important for the map names.
+
+<H2>FILES</H2>
+
+This program is simply a shell script.  Users are
+encouraged to make their own shell scripts using similar
+techniques.  See <KBD>$GISBASE/scripts/split.sh</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.3d.html">d.3d</A></EM><BR>
+<EM><A HREF="d.frame.html">d.frame</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.sites.html">d.sites</A></EM><BR>
+<EM><A HREF="d.vect.html">d.vect</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory

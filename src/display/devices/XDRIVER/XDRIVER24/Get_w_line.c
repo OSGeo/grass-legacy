@@ -12,7 +12,7 @@
  * *button. */
 
 #include "includes.h"
-#include "../lib/colors.h"
+#include "local_proto.h"
 
 
 extern Display *dpy;
@@ -50,19 +50,27 @@ int Get_location_with_line (
 	XGCValues gcValues;
 	unsigned gcMask;
 
-	event_mask = PointerMotionMask | ButtonPressMask;
+	event_mask = PointerMotionMask | ButtonPressMask | ExposureMask;
 	XSelectInput(dpy, grwin, event_mask);
 	    /* XOR, so double drawing returns pixels to original state */
-   gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth;
+   gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth ;
    gcValues.function = GXxor;
    gcValues.line_width = 3;
    gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
    gcValues.foreground = 0xffffffff;
    xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
 
+/*   event_mask |= ExposureMask; */
 
 	while (1) {
 		XWindowEvent(dpy, grwin, event_mask, &event);
+		/****************
+	        while (XCheckWindowEvent(dpy, grwin, event_mask, &event) == False)
+	        {
+		    Service_Xevent();
+		    sleep(1); 
+		}
+	        ****************/
 		switch (event.type) {
 		case MotionNotify:
 			*nx = event.xbutton.x;

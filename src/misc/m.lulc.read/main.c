@@ -9,6 +9,7 @@
 int main (int argc, char *argv[])
 {
 
+	struct GModule *module;
 	char buffer[255];
 	FILE  *f2;
 	int num, map_code, value[MAX_OVERLAYS];
@@ -16,6 +17,12 @@ int main (int argc, char *argv[])
 	char map_name[80], header[20];
 	struct Cell_head window;
 	struct Option *opt1;
+
+	module = G_define_module();
+	module->description =
+		"Extracts Landuse/Landcover data in the ASCII "
+		"Composite Theme Grid (CTG) data format distributed by the "
+		"USGS in to a working file for m.lulc.USGS.";
 
         opt1 = G_define_option() ;
 	opt1->key        = "output" ;

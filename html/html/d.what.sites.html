@@ -1,0 +1,174 @@
+<html>
+
+<TITLE>d.what.sites</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.what.sites</b></EM> - interactively query a single site
+list descriptions 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.what.sites</B>
+<BR>
+<B>d.what.sites help</B>
+<BR>
+<B>d.what.sites</B> [<B>-1tq</B>] 
+[<B>sitefile=</B><EM>name</EM>] 
+[<B>dcolor=</B><EM>color</EM>] [<B>recolor=</B><EM>color</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.what.sites</EM> outputs the east, north coordinate
+values and descriptions with site(s) nearest to the
+user-specified location(s) on user-named site list.
+
+
+<P>
+
+The program will query the contents of site list
+named by the user on the command line.  These site lists
+must exist in the user's current mapset search path. 
+
+
+<P>
+
+The program activates the mouse, and expects the user to
+indicate the site location(s) to be queried by depressing a
+mouse button over desired location(s) within the current
+geographic region in the active display frame on the graphic
+monitor.
+
+
+<H3>Flag:</H3>
+
+
+<DL>
+<DT><B>-1</B>
+<DD>Identify and query just one point location. Only one mouse click is 
+executed. This option is provided for shell scripts and programs that 
+want to obtain only one point from the user. 
+<DT><B>-t</B>
+<DD>Provide only terse output. This option is provided to simplify the 
+parsing of output by other programs. 
+<DT><B>-q</B>
+<DD>Load quietly. Do not show progress in loading the sites file into memory.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>sitefile=</B><EM>name</EM> 
+
+<DD>Name of existing site list.
+
+<DT><B>dcolor=</B><EM>name</EM>
+
+<DD> Sets the display color to name.  Options:  red,
+orange, yellow, green, blue, indigo, violet, magenta,
+brown, gray, white, and black Default:  red
+
+<DT><B>recolor=</B><EM>name</EM> 
+
+<DD>Sets the redraw color to name.  Options:  red, orange,
+yellow, green, blue, indigo, violet, magenta, brown, gray,
+white, and black Default:  yellow
+
+<DT><B>size=</B><EM>value</EM> 
+
+<DD>Size, in pixels, in which the site icons
+are to be drawn.
+<BR>
+Options:  0-1000
+<BR>
+Default:  5
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>The type of icon to be displayed at site
+locations.
+<BR>
+Options:  x, diamond, box, +
+<BR>
+Default:  x
+
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+It is helpful, but not necessary, to first display a site
+list to be used for reference in the active display frame
+before running <EM>d.what.sites</EM>.  For example, the user might
+type the following series of commands and receive the
+output below.
+
+
+<DL>
+<DD><B><A HREF="d.sites.html">d.sites</A> sitefile=</B><EM>wells</EM>
+</DL>
+
+To first display the well site list in the active frame.
+
+
+<DL>
+<DD><B>d.what.sites sitefile=</B><EM>wells</EM>
+</DL>
+
+User then moves the mouse to desired location on the
+displayed well site list, and presses the left mouse button
+to query the category contents of the nearest well
+location.  The program then outputs the below information
+to the user's terminal.
+
+<PRE>
+the closest site is: -613988.990000 east, 804343.040000 north
+08376300 1968 1980 13
+</PRE>
+
+The query may be repeated as often as desired using the left
+mouse button.  The right button on the mouse is used to quit
+the <EM>d.what.sites</EM> session. 
+The middle button will allow to redraw the site
+list.
+
+<H2>NOTES</H2>
+
+<EM>d.what.sites</EM> will always print its output to the terminal
+screen.  <EM>d.what.sites</EM> output can be redirected into a file;
+however, if it is, the output will go both to the screen and
+to the file.  For example:
+
+<DL>
+<DD><B>d.what.sites sitefile=</B><EM>wells</EM><B> &gt; what.out</B>
+</DL>
+
+will both send d.what.sites output to the screen and capture
+its output in the file named <EM>what.out</EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Raghavan Srinivasan, 
+
+Blackland Research Center, TAES, Temple, TX 76502
+
+</body>
+</html>

@@ -8,11 +8,13 @@
 extern int get_idnum();
 extern void free();
 
-int Nplace_label_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nplace_label_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float x, y, z;
   int sx, sy,id;

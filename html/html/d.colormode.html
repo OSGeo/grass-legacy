@@ -1,0 +1,123 @@
+<TITLE>d.colormode</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.colormode</b></EM> - Allows the user to establish whether a map will be 
+displayed using its own color table or the fixed color table 
+of the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.colormode</B> 
+<BR>
+<B>d.colormode help</B> 
+<BR>
+<B>d.colormode mode=</B><EM>name</B> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.colormode</EM>
+establishes what color table will be used to display maps 
+to the graphics monitor. 
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>mode=</B><EM>name</EM>
+<DD>Options: <EM>fixed</EM> or <EM>float</EM> 
+</DL>
+
+<P>
+Each time a new raster map layer is drawn on the screen, 
+a color table associated with that map is loaded into the graphics 
+display monitor. 
+The command <B>d.colormode mode=fixed</B> 
+requests that the monitor's color look-up table be <EM>fixed</EM> (i.e., static). 
+The effect is that colors drawn on the screen by graphics calls will not 
+change when subsequent maps are drawn to the screen. 
+When the 
+<EM>fixed</EM>
+option is used, the colors in the map's color table are mapped to the 
+nearest colors available in the monitor's fixed color table. 
+When the 
+<EM>float</EM>
+option is used, the map's color table is loaded directly into 
+the monitor's color look-up table. 
+
+<P>
+There are advantages to using each color display mode. The <EM><A HREF="../html/d.display.html">d.display</A></EM> 
+and <EM><A HREF="../html/d.colors.html">d.colors</A></EM> programs allow the user to interactively modify 
+the color tables of maps displayed to the graphics monitor. 
+This is done by allowing the user to directly modify the monitor's 
+color look-up table. 
+Hence, to accommodate this option in <EM><A HREF="../html/d.display.html">d.display</A></EM> and <EM><A HREF="../html/d.colors.html">d.colors</A></B>,</EM> 
+the <EM>float</EM> option is chosen. 
+However, this option has the sometimes undesirable effect 
+of changing the colors in which other maps are subsequently displayed 
+to the graphics monitor (although it does not actually change the 
+<EM>color tables</EM> of these latter maps). 
+The <EM>float</EM> colormode is therefore best used when the user wishes to 
+interactively change a map's color table, or when the user wishes to display 
+one or more maps having the same color table. 
+The <EM>fixed</EM> option allows any number of maps to be displayed 
+to the screen, where each map uses different colors, but all use the 
+same fixed color look-up table. 
+You cannot toggle a map's color table when running in fixed mode. 
+
+<P>
+This program will be run non-interactively if the user specifies the color 
+<EM>mode</EM> on the command line 
+(e.g., by typing <B>d.colormode mode=fixed</B> or 
+<B>d.colormode mode=float</B>). 
+Alternately, if the user simply types <B>d.colormode</B> on the command line, 
+the program will prompt the user for the color mode using the standard 
+GRASS <EM><A HREF="../html/parser.html">parser</A></EM> interface.
+
+<H2>NOTES</H2>
+
+Some devices support only a fixed color look-up; e.g.,
+ink-jet printers, plotters, and the AT&amp;T 6300 (running
+a DEB board). The number of color categories capable of
+being displayed is also device-dependent; if your colors
+fall outside this range when in <EM>float</EM> mode, they
+may not be <EM>displayed</EM> in the colors indicated in
+the map's color table file.  However, the color table files
+themselves will accurately represent the user's changes.
+
+<P>
+
+Color table files associated with raster map layers are
+stored in the user's current mapset under the <EM>colr</EM>
+and <EM>colr2</EM> directories.
+
+<H2>BUGS</H2>
+
+It is strongly recommended that the user erase the graphics monitor screen 
+(e.g., by running <EM><A HREF="../html/d.erase.html">d.erase</A></B>)</EM> 
+immediately after changing the mode between 
+<EM>fixed</EM>
+and 
+<EM>float.</EM>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.colors.html">d.colors</A>,</EM><br>
+<EM><A HREF="d.colortable.html">d.colortable</A>,</EM><br>
+<EM><A HREF="d.display.html">d.display</A>,</EM><br>
+<EM><A HREF="d.erase.html">d.erase</A>,</EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM>,<br> 
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+

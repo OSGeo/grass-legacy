@@ -1,0 +1,163 @@
+<TITLE>r.covar</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.covar</b></EM>  - Outputs a covariance/correlation matrix 
+for user-specified raster map layer(s). 
+<BR>
+<EM>(GRASS</EM> Raster Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>r.covar</B> 
+<BR>
+<B>r.covar help</B> 
+<BR>
+<B>r.covar</B> [<B>-mrq</B>] <B>map=</B><EM>name</EM>[,<EM>name</EM>,...]
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.covar</EM>
+outputs a covariance/correlation matrix for user-specified 
+raster map layer(s). 
+The output can be printed, 
+or (if run non-interactively) saved by redirecting output into a file. 
+
+<P>
+
+The output is an N x N symmetric covariance (correlation) matrix, 
+where N is the number of raster map layers specified on the command line. 
+For example, 
+
+<DL>
+<DD>
+<B>r.covar</B> map=</B><EM>layer.1</EM>,<EM>layer.2</EM>,<EM>layer.3</EM>
+</DL>
+
+would produce a 3x3 matrix (values are example only): 
+
+<PRE>
+     462.876649     480.411218     281.758307 
+     480.411218     513.015646     278.914813 
+     281.758307     278.914813     336.326645 
+</PRE>
+
+<H2>OPTIONS</H2>
+
+The program will be run non-interactively, if the user specifies 
+the names of raster map layers and any desired options on the 
+command line, using the form 
+
+<DL>
+<DD>
+<B>r.covar</B> [<B>-mrq</B>] <B>map=</B><EM>name</EM>[,<EM>name</EM>,...]
+</DL>
+
+where each <EM>name</EM> specifies the name of a raster map layer to 
+be used in calculating the correlations, and the (optional) flags 
+<B>-m</B>, <B>-r</B>, and <B>-q</B> have meanings given below. 
+If these flags are not specified on the command line, their answers 
+default to "no". 
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-m</B>
+<DD>Include zero values in the correlation calculations, due to the mask. 
+<DT><B>-r</B>
+<DD>Print out the correlation matrix. 
+<DT><B>-q</B>
+<DD>Run quietly (without comments on program progress). 
+
+</DL>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Existing raster map layer(s) to be included in the covariance/correlation 
+matrix calculations. 
+</DL>
+
+<P>
+Alternately, the user can simply type <B>r.covar</B> on the command line, 
+without program arguments. In this case, the user will be prompted for 
+flag settings and parameter values using the standard GRASS 
+<A HREF="parser.html">parser</A> interface.
+
+<H2>PRINCIPLE COMPONENTS</H2>
+
+This module can be used as the first step of a principle components 
+transformation. 
+The covariance matrix would be input into a system which determines 
+eigen values and eigen vectors. An NxN covariance matrix would result in 
+N real eigen values and N eigen vectors (each composed of N real numbers). 
+In the above example, the eigen values and corresponding eigen vectors 
+for the covariance matrix are: 
+
+<PRE>
+component   eigen value               eigen vector
+    1       1159.745202   &lt; 0.691002    0.720528    0.480511 &gt;
+    2          5.970541   &lt; 0.711939   -0.635820   -0.070394 &gt;
+    3        146.503197   &lt; 0.226584    0.347470   -0.846873 &gt;
+</PRE>
+
+The component corresponding to each vector can be produced using 
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+as follows: 
+
+<DL>
+<DD>
+<B>r.mapcalc</B> 'pc.1 = 0.691002*layer.1 + 0.720528*layer.2 + 0.480511*layer.3'
+<BR>
+<B>r.mapcalc</B> 'pc.2 = 0.711939*layer.1 - 0.635820*layer.2 - 0.070394*layer.3'
+<BR>
+<B>r.mapcalc</B> 'pc.3 = 0.226584*layer.1 + 0.347470*layer.2 - 0.846873*layer.3'
+</DL>
+
+Note that based on the relative sizes of the eigen values, 
+<EM>pc.1</EM>
+will contain about 88% of the variance in the data set, 
+<EM>pc.2</EM>
+will contain about 1% of the variance in the data set, and 
+<EM>pc.3</EM>
+will contain about 11% of the variance in the data set. 
+
+Also, note that the range of values produced in 
+<EM>pc.1</EM>, <EM>pc.2</EM>, and <EM>pc.3</EM> will 
+not (in general) be the same as those for 
+<EM>layer.1</EM>, <EM>layer.2</EM>, and <EM>layer.3</EM>.
+It may be necessary to rescale 
+<EM>pc.1</EM>, <EM>pc.2</EM> and <EM>pc.3</EM> to 
+the desired range (e.g. 0-255). 
+This can be done with <EM><A HREF="r.rescale.html">r.rescale</A></EM>.
+
+<H2>NOTES</H2>
+
+If your 
+system has a FORTRAN compiler, then the program 
+<EM><A HREF="m.eigensystem.html">m.eigensystem</A></EM>
+in src.contrib 
+can be compiled and used to generate the eigen values and vectors. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="i.pca.html">i.pca</A></EM><br>
+<EM><A HREF="m.eigensystem.html">m.eigensystem</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+

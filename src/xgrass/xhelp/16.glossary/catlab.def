@@ -1,6 +1,0 @@
-
-
-category label - Alpha-numeric text that describes a category's
-content (e.g., "Areas of 0-2% slope").  Maps in vector format store
-category labels underneath the 'dig_cats' directory, while maps in
-raster format store these labels under the 'cats' directory.

@@ -1,0 +1,189 @@
+<html>
+
+<TITLE>m.datum.shift</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.datum.shift</b></EM>  - Datum shift program.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.datum.shift</B> 
+<B>lat=</B><EM>dd.mm.ss</EM>{<EM>n</EM>|<EM>s</EM>}
+<B>lon=</B><EM>dd.mm.ss</EM>{<EM>e</EM>|<EM>w</EM>}
+<B>h=</B><EM>heigth above ellipsoid</EM>
+<BR>
+<B>id=</B><EM>input_datum</EM>
+<B>od=</B><EM>output_datum</EM>
+<BR>
+<B>is=</B><EM>input_spheroid</EM> 
+<B>os=</B><EM>output_spheroid</EM> 
+<B>dx=</B><EM>xshift</EM> <B>dy=</B><EM>yshift</EM> <B>dz=</B><EM>zshift</EM>
+<BR>
+<BR>
+<B>-b</B><EM> use block shift method</EM><BR>
+<B>-m</B><EM> use Molodensky formula</EM><BR>
+<B>-w</B><EM> use Bursa Wolf 7 parameter transformation (not yet implemented)</EM><BR>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.datum.shift</EM> returns geographic coordinates based
+on a different datum (and spheroid/ellipsoid) than the one used to
+obtain the original coordinates.
+
+<P>
+
+The input and output spheroids, <EM>is</EM> and
+<EM>os</EM>, are the spheroids for two different datums.
+The input spheroid is the one on which the original
+coordinates are based. The output spheroid is that on
+which the resultant coordinates will be based. The
+"shifting" occurs between the two datums.  The shift
+values, <EM>dx</EM>, <EM>dy</EM>, and <EM>dz</EM>, are
+constants. They indicate the mean differences between
+points in the second datum versus the first as measured in
+meters.
+
+<P>
+If both input and output datum <EM>id</EM> and <EM>od</EM> are 
+listed in the system datum
+table, it is sufficient to provide input and output datum for
+the datum shift. The shift values, <EM>dx</EM>, <EM>dy</EM> and <EM>dz</EM> 
+are read from the datum table.
+
+<P>
+
+The list of datums and spheroids available is somewhat dynamic.  It
+may not contain exactly the ones listed below.  To
+determine the current list of possible spheroids, type in
+the command:
+
+<DL>
+<DD>
+<B>m.datum.shift lat=</B><EM>0n</EM> <B>lon=</B><EM>0w</EM> <B>dx=</B><EM>0</EM> <B>dy=</B><EM>0</EM> <B>dz=</B><EM>0</EM> <B>is=</B><EM>help</EM> <B>os=</B><EM>help</EM>
+</DL>
+
+A list of available spheroids will be printed on the
+screen.  
+
+To determine the current list of possible datums, type in the command:
+<DL>
+<DD>
+<B>m.datum.shift lat=</B><EM>0n</EM> <B>lon=</B><EM>0w</EM> <B>id=</B><EM>help</EM> <B>od=</B><EM>help</EM>
+</DL>
+
+If the datum or spheroid desired is not on the list, the values should
+be added to the system datum.table or ellipse.table. 
+
+<P>
+The height above the ellipsoid is usually not known in GRASS. You should approximate this by zero (default for <EM>h</EM>). Obviously the resulting height is not a reasonable value. 
+
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DD>
+<B>m.datum.shift lat=</B><EM>0n</EM> <B>lon=</B><EM>175w</EM> <B>is=</B><EM>clark66</EM> <B>os=</B><EM>wgs72</EM> <B>dx=</B><EM>-22</EM> <B>dy=</B><EM>157</EM> <B>dz=</B><EM>176</EM><P>
+<DT>Results: 3
+<DD><PRE>
+ lat=0.00.05.72999N <BR>
+ lon=174.59.55.004133W<BR>
+(h  =  107 [m])
+</PRE>
+</DL>
+
+<H2>NOTES</H2>
+
+Essentially, the program follows these steps for the block shift method.  
+The original
+point, as defined by a latitude and a longitude, is
+converted to geocentric coordinates.  The shift values are
+added to the geocentric coordinates.  The summed values are
+then converted to latitude and longitude based on the
+output spheroid.
+
+<P>
+The Molodensky method uses a one-step calculation without
+converting to and from geocentric coordinates. The Molodensky
+formula may be inaccurate for latitudes near the poles. The coordinate conversion library will take this into account and use the block shift formula for those latitudes.
+
+<P>
+
+Some hints on accuracy:<BR>
+Generally the accuracy depends on the transformation method
+used and the accuracy and spatially applicability of the parameters 
+supplied to the transformation function.
+You always must check if the formula is applicable to 
+your problem and supplies the needed accuracy!
+
+<PRE>
+block shift with cartesian coordinates ~ 10 m
+
+molodensky transformation ~ 5 m
+
+bursa-wolf transformation ~ 1 m
+
+3d similarity transformation ~ 1 m (needs national similarity parameters)
+
+multiple regression equation (MRE) transformation, 
+other methods up to 10 cm (generally not needed for GRASS)
+</PRE>
+
+The transformation parameters in datum.table are meant 
+to transform from local datum to wgs84 with the Block shift method or
+Molodensky function. (reverse the sign for the reverse transformation from
+wgs84 to the local datum).
+All transformations need input and output ellipsoid for the
+calculation of Rm and Rn.
+<BR>
+You can not use the parameters for the Block shift and Molodensky formula
+with any other datum shift formula. The Bursa-Wolf datum 
+transformation needs 7 parameters (3 xyz-shift, 3 xyz-rotational, 
+1 scale factor), which can not be used with any other formula. 
+Specifically do not use the 3 xyz-shift parameters for the Bursa-
+Wolf transformation with the Block shift or Molodensky formula, as the parameters
+are not independent from another. 
+
+<P>
+
+For a brief discussion of spheroids and datums 
+see <EM><A HREF="m.ll2u.html">m.ll2u</A></EM>.
+For a brief discussion of geocentric coordinates 
+see <EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM>.
+
+
+<P>
+
+This remains under testing and is still an experimental
+program.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.gc2ll.html">m.gc2ll</A></EM><BR>
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM><BR>
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM><BR>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM><BR>
+<EM><A HREF="s.in.gps">s.in.gps</A></EM><BR>
+<EM><A HREF="v.in.gps">v.in.gps</A></EM><BR>
+<EM><A HREF="s.track.gps">s.track.gps</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+<BR>
+Andreas Lange, <ADDRESS><A HREF="mailto:andreas.lange@rhein-main.de">andreas.lange@rhein-main.de</A></ADDRESS>
+
+</body>
+
+</html>

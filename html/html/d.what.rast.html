@@ -1,0 +1,225 @@
+<html>
+
+<TITLE>d.what.rast</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<B><EM>d.what.rast</EM> </B> - Allows the user to interactively query the category 
+contents of multiple raster map layers at user-specified locations within 
+the current geographic region. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.what.rast</B> 
+<BR>
+<B>d.what.rast help</B> 
+<BR>
+<B>d.what.rast</B> [<B>-1tc</B>] [<B>map=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>fs=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.what.rast</EM> outputs the category values and labels
+associated with cell(s) at user-specified location(s) on
+user-named raster map layer(s).
+
+<P>
+
+The program will query the contents of raster map layer(s)
+named by the user on the command line. These map layers
+must exist in the user's current mapset search path.  If
+the user does not name any raster map layers on the command
+line, <EM>d.what.rast</EM> will query the category contents
+of whatever raster map layer is already displayed in the
+active frame on the graphics monitor.
+
+<P>
+
+The program activates the mouse, and expects the user to
+indicate the cell location(s) to be queried by depressing a
+mouse button over desired location(s) within the current
+geographic region in the active display frame on the
+graphic monitor.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-1</B>
+<DD>Identify and query just one point location. Only one mouse click is 
+executed. This option is provided for shell scripts and programs that 
+want to obtain only one point from the user. 
+<DT><B>-t</B>
+<DD>Provide only terse output. This option is provided to simplify the 
+parsing of output by other programs. 
+<DT><B>-c</B>
+<DD>Print out column and row for entire map region.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of existing raster map layer(s). Limit: 15 maps 
+<BR>
+Default: Query map currently displayed in the active graphics frame. 
+<DT><B>fs=</B><EM>name</EM>
+<DD>Output field separator to be used (in terse mode only). 
+<BR>
+Default: <B>:</B> 
+</DL>
+
+<P>
+
+<EM>d.what.rast</EM> output consists of the geographic
+coordinates of the location pointed to, and, for each map
+layer, the map layer name, the category value, and category
+label in the named raster map layers at this location.
+
+<H2>EXAMPLE</H2>
+
+It is helpful, but not necessary, to first display a map to
+be used for reference in the active display frame before
+running <EM>d.what.rast</EM>.  For example, the user might
+type the following series of commands and receive the
+output below.
+
+<DT>
+<DD><B><A HREF="d.rast.html">d.rast</A> map=</B><EM>soils</EM>
+<DD>To first display the <EM>soils</EM> map in the active frame. 
+<P>
+<DD><B>d.what.rast map=</B><EM>soils,aspect</EM>
+
+<DD>User then moves the mouse to desired location on the
+displayed <EM>soils</EM> map layer, and presses the left
+mouse button to query the category contents of the
+<EM>soils</EM> and <EM>aspect</EM> maps at this geographic
+location.  The program then outputs the below information
+to the user's terminal.
+
+<DD>
+<PRE>
+617112(E) 3732014(N) 
+soils in PERMANENT (44)Nunn clay loam, NdC 
+aspect in PERMANENT (20)15 degrees north of west 
+</PRE>
+</DT>
+
+
+<P>
+The first line of output gives the easting (E) and northing (N) coordinates 
+of the geographic location at which the user clicked the mouse. 
+The subsequent two lines give the map name and mapset, map category value 
+(within parentheses), and map category label corresponding to this 
+user-selected map location, for each of the maps queried by the user. 
+
+<P>
+
+The query may be repeated as often as desired using the
+left mouse button.  The right button on the mouse is used
+to quit the <EM>d.what.rast</EM> session.
+
+<P>
+
+Users can set the <B>-t</B> flag to obtain a terse output
+from <EM>d.what.rast</EM>.  This is useful when the user
+wishes output to be parsed by another program (like
+<EM>awk</EM>). If the <B>-t</B> flag is set, users can also
+select the field separator used (with the
+<B>fs=</B><EM>name</EM> option), or elect to use the
+default <B>:</B> field separator.  In this case, the
+command
+
+<DL>
+<DT><B>d.what.rast -t map=</B><EM>soils,aspect</EM>
+</DL>
+
+produces output in the form shown below. The first line of
+output gives the easting, northing, and the mouse button
+return value (see <A HREF="#notes.html">NOTES</A>, below).  Each
+subsequent line gives the map name and its mapset, the
+category value, and category label of the point specified
+on the user-named raster map layers.  The default output
+field separator, a colon, is used since none was specified
+on the command line.
+
+<DL>
+<DD>
+<PRE>
+617112:3732014:1 
+soils@PERMANENT:44:Nunn clay loam, NdC 
+aspect@PERMANENT:20:15 degrees north of west 
+</PRE>
+</DL>
+
+
+<P>
+
+Users can also use this program inside of shell scripts
+that require as input a map category value and a mouse
+button depressed.  Users can choose an option to run
+<EM>d.what.rast</EM> only once, and return only the map
+category value found and the number of the mouse button
+depressed.
+
+<H2>NOTES</H2></A>
+
+Mouse button return values are as follows: 0 indicates no
+button was pressed, 1 indicates that the left mouse button
+was pressed, 2 indicates the middle button was pressed, and
+3 indicates that the right mouse button was pressed.
+
+<P>
+
+<EM>d.what.rast</EM> will always print its output to the
+terminal screen.  <EM>d.what.rast</EM> output can be
+redirected into a file; however, if it is, the output will
+go both to the screen and to the file.  For example:
+
+<DL>
+<DD>
+<B>d.what.rast map=</B><EM>soils,aspect</EM><B> &gt; what.out</B> 
+</DL>
+
+will both send <EM>d.what.rast</EM> output to the screen
+and capture its output in the file named
+<EM>what.out</EM>.
+
+<P>
+
+The maximum number of raster map layers that can be queried
+at one time is 15.
+
+<P>
+
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM>
+allows the user to interactively query the category
+contents of multiple vector map layers at user-specified
+locations.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

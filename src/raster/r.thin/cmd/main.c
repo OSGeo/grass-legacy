@@ -23,8 +23,14 @@ int
 main (int argc, char *argv[])
 {
 	char *input, *output;
+	struct GModule *module;
 	struct Option *opt1, *opt2;
 
+    module = G_define_module();
+    module->description =
+		"Thins non-zero cells that denote linear "
+		"features in a raster map layer.";
+					        
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;

@@ -8,6 +8,7 @@
  * modified by Mitasova in August 1999 (fix for elev color)
  * modified by Brown in September 1999 (fix for Timestamps)
  * Modified by Mitasova in Nov. 1999 (write given tension into hist)
+ * $Id$
  *
  */
 
@@ -631,15 +632,24 @@ int IL_output_2d (
      */
 
     if(dtens)
-    {
-    sprintf (hist.edhist[0], "giventension=%f, smoothing=%f",
-	     params->fi * 1000. / dnorm, params->rsm);
-    }
+        {
+        if(params->rsm == -1)
+            sprintf (hist.edhist[0], "giventension=%f, smoothing att=%d",
+                 params->fi * 1000. / dnorm, params->smatt);
+        else
+            sprintf (hist.edhist[0], "giventension=%f, smoothing=%f",
+                 params->fi * 1000. / dnorm, params->rsm);
+        
+        }
     else
-    {
-    sprintf (hist.edhist[0], "tension=%f, smoothing=%f",
-             params->fi, params->rsm);
-    }
+        {
+        if(params->rsm == -1)
+            sprintf (hist.edhist[0], "tension=%f, smoothing att=%d",
+                 params->fi * 1000. / dnorm, params->smatt);
+         else
+            sprintf (hist.edhist[0], "tension=%f, smoothing=%f",
+                 params->fi, params->rsm);
+        }
 
     sprintf (hist.edhist[1], "dnorm=%f, dmin=%f, zmult=%f",
 	     dnorm, params->dmin, params->zmult);

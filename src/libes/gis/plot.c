@@ -32,7 +32,7 @@ POINT
     double x;
     int y;
 };
-static int edge_order(struct point *,struct point *);
+static int edge_order(const void *, const void *);
 static int row_fill(int,double,double);
 static int ifloor(double);
 static int iceil(double);
@@ -507,8 +507,9 @@ static int edge_point( double x, register int y)
     return 1;
 }
 
-static int edge_order(struct point *a,struct point *b)
+static int edge_order(const void *aa, const void *bb)
 {
+    const struct point *a = aa, *b = bb;
     if (a->y < b->y) return (-1);
     if (a->y > b->y) return (1);
 

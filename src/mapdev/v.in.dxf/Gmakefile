@@ -1,9 +1,4 @@
-
-EXTRA_CFLAGS =  $(VECT_INCLUDE)
-
-PROG = $(BIN_MAIN_CMD)/v.in.dxf
-
-LDFLAGS = 
+PGM = v.in.dxf
 
 SOURCES =	\
 		add_bounds.c \
@@ -50,15 +45,7 @@ OBJ =	\
 	main.o
 
 
-all:	$(PROG)
-
-$(PROG): $(OBJ)  $(GISLIB) $(VECTLIB)
+$(BIN_CMD)/$(PGM): $(OBJ)  $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(CFLAGS) $(SOURCES) ../Vlib/*.c ../diglib/*.c $(GISLIB) $(MATHLIB)
-
-saber_obj:
-	#load $(OBJ)

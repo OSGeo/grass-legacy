@@ -1,0 +1,89 @@
+<html>
+<head>
+<TITLE>s.sweep</TITLE>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>s.sweep</B></EM> - computes Voronoi diagram or Delaunay triangulation
+(used by s.voronoi and s.delaunay)
+
+<H2>SYNOPSIS</H2>
+<B>s.sweep [-dstp]</B>
+
+<H2>DESCRIPTION</H2>
+       s.sweep reads the standard input for a set  of  points  in
+       the  plane  and  writes  either the Voronoi diagram or the
+       Delaunay triangulation to the standard output.  Each input
+       line  should  consist  of  two  real numbers, separated by
+       white space.
+
+       The program is used by s.voronoi and s.delaunay and is not
+       meant to be useful as a standalone program.
+
+       If  option  -t  is  present, the Delaunay triangulation is
+       produced.  Each output line is a triple i j k,  which  are
+       the  indices  of  the three points in a Delaunay triangle.
+       Points are numbered starting at 0.
+
+       If option -t is not present, the Voronoi diagram  is  
+       produced.  There are four output record types.
+
+<pre>
+       s a b  indicates  that  an  input point at coordinates a b
+              was seen.
+
+       l a b c
+              indicates a line with equation ax + by = c.
+
+       v a b  indicates a vertex at a b.
+
+       e l v1 v2
+              indicates a Voronoi segment which is  a  subsegment
+              of line number l with endpoints numbered v1 and v2.
+              If v1 or v2 is -1, the line extends to infinity.
+</pre>
+
+       The other options are:
+
+<pre>
+       s      The input is sorted by  y  coordinate  (the  second
+              number  in  the pair).  The first input line should
+              be npoints xmin xmax ymin ymax.  This describes the
+              number of points and the range of the points.  This
+              line is used to determine internal hash table size;
+              it  need not be exact but performance suffers if it
+              is grossly wrong.
+
+       p      Produce output suitable  for  input  to  plot  (1),
+              rather than the forms described above.
+</pre>
+
+       On unsorted data uniformly distributed in the unit square,
+       s.sweep uses about 20n+140/n bytes of storage.  On sorted
+       data, s.sweep uses about 160/n bytes.
+
+
+<H2>REFERENCES</H2>
+       Steve  J.  Fortune,  (1987).   A  Sweepline  Algorithm for
+       Voronoi Diagrams, Algorithmica 2, 153-174.
+
+<H2>SEE ALSO</H2>
+<EM>
+<A HREF="v.autocorr.html">v.autocorr</A>,     
+<A HREF="v.spag.html">v.spag</A>, 
+<A HREF="v.support.html">v.support</A>, 
+<A HREF="s.delaunay.html">s.delaunay</A>,         
+<A HREF="s.sweep.html">s.sweep</A></EM> 
+
+<H2>AUTHOR</H2>
+James Darrell McCauley,<br>
+GRASS 5 update, improvements: <a href=mailto:aaime@libero.it>Andrea
+Aime</a>, Modena, Italy
+
+</BODY>
+</HTML>

@@ -26,11 +26,12 @@
 #include "interface.h"
 #include <stdlib.h>
 int 
-Nchange_persp_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nchange_persp_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int fov, persp;
@@ -47,8 +48,7 @@ Nchange_persp_cmd(data, interp, argc, argv)
   return 0;
 }
 
-normalize (v)
-     float *v;
+int normalize (float *v)
 {
   float len;
   
@@ -56,15 +56,17 @@ normalize (v)
   v[0] /= len;
   v[1] /= len;
   v[2] /= len;
+
+  return 0;
 }
 /**********************************************************************/
 
-int
-Nchange_position_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nchange_position_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   float xpos, ypos, from[3];
@@ -106,12 +108,13 @@ Nchange_position_cmd(data, interp, argc, argv)
 
 /**********************************************************************/
 
-int
-Nchange_height_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nchange_height_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float temp;
   float from[3];
@@ -142,11 +145,13 @@ Nchange_height_cmd(data, interp, argc, argv)
    return (0);
 }
 
-Nset_light_to_view_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_light_to_view_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float from[3];
   GS_get_from_real(from);
@@ -161,8 +166,8 @@ Nset_light_to_view_cmd (data, interp, argc, argv)
 
 /**********************************************************************/
 /* call whenever a new surface is added, deleted, or exag changes */
-update_ranges(dc)
-     Nv_data *dc;
+int 
+update_ranges (Nv_data *dc)
 {
   float zmin, zmax, exag, texag;
   int nsurfs, i, *surf_list;
@@ -190,12 +195,13 @@ update_ranges(dc)
 
 /**********************************************************************/
 
-int
-Nchange_exag_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nchange_exag_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   /*int i;*/
   float val;

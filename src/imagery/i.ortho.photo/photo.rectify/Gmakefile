@@ -1,5 +1,4 @@
 PROGRAM      = photo.rectify
-#HOME         = ../bin
 HOME         = $(ETC)/imagery
 
 EXTRA_CFLAGS = -I../libes
@@ -28,7 +27,7 @@ LIST = main.o\
 	target.o\
 	write.o
 
-LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASK)
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASKLIB)
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)

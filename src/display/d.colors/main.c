@@ -20,7 +20,9 @@ main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
+
     if(D_get_cell_name (name) < 0)
 	*name = 0;
     R_close_driver();
@@ -57,7 +59,8 @@ main (int argc, char **argv)
     }
 
 /* connect to the driver */
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
 /* Read in the map region associated with graphics window */
     D_setup(0);

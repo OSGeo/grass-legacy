@@ -1,6 +1,6 @@
 LIST=r.in.tang.o
 
-$(BIN_CONTRIB_CMD)/r.in.tang: $(LIST) $(GISLIB)
+$(BIN_CMD)/r.in.tang: $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -18,6 +18,7 @@ int main (int argc, char *argv[])
     char fmt[50];
     char *mapset;
 
+	struct GModule *module;
     struct 
     {
 	struct Option *mask, *input, *fs;
@@ -28,6 +29,12 @@ int main (int argc, char *argv[])
     } flag;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Examines and filters lists of points constituting lines "
+		"to determine if they fall within current region and mask "
+		"and optionally an additional raster map.";
 
     parm.mask = G_define_option();
     parm.mask->key = "mask";

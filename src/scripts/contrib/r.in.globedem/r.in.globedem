@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# $Id$
+# written by Markus Neteler
+#            neteler@geog.uni-hannover.de
+# developed from r.in.arctiff
+# using notes from David Hastings <dhastings@ngdc.noaa.gov>
+#
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program."
+ exit
+fi
+
+if [ "$#" -lt 1  -o "$1" = "-help" -o "$1" = "help" ]; then
+      echo ""
+      echo ""
+      echo "Import of GLOBE DEM file as GRASS raster map"
+      echo ""
+      echo "Usage: r.in.globedem globe_mapname (without extension!)"
+      echo ""
+      echo "Note: Download GLOBE DEM data in Unix format."
+      echo "http://www.ngdc.noaa.gov/cgi-bin/seg/ff/nph-demo.pl"
+      exit
+fi
+
+# Convert spaces in input file name to underscores for name of 
+# cell files.
+
+cellfile=`echo $1 | sed 's/\ /_/g'`
+
+# get boundary coordinates:
+west=`grep left_map_x $1.hdr | awk '{printf "%.1f",$3}'`
+east=`grep right_map_x $1.hdr | awk '{printf "%.1f",$3}'`
+north=`grep upper_map_y $1.hdr | awk '{printf "%.1f",$3}'`
+south=`grep lower_map_y $1.hdr | awk '{printf "%.1f",$3}'`
+rows=`grep number_of_rows $1.hdr | awk '{printf "%.0f",$3}'`
+columns=`grep number_of_columns $1.hdr | awk '{printf "%.0f",$3}'`
+grid_size=`grep grid_size $1.hdr | awk '{printf "%f",$3}'`
+
+# First import the image, then create a new header with coordinates:
+echo "Setting the region:"
+g.region -p n=$north s=$south w=$west e=$east res=$grid_size
+
+echo ""
+echo "Importing raster map: $1..."
+echo r.in.bin input="$1.bin" output=${cellfile}.tmp north=$north south=$south west=$west east=$east r=$rows c=$columns bytes=2
+r.in.bin input="$1.bin" output=${cellfile}.tmp north=$north south=$south west=$west east=$east r=$rows c=$columns bytes=2
+
+#check the exit status:
+#if [ $? ]; then
+# echo ".... an error occured"
+# echo "Import stopped."
+# exit
+#fi
+
+echo "Re-ordering GLOBE byte format to GRASS format..."
+r.mapcalc $cellfile="if(${cellfile}.tmp-32768,${cellfile}.tmp-65536,${cellfile}.tmp,${cellfile}.tmp)"
+
+echo "Removing temp file:"
+g.remove "${cellfile}.tmp"
+echo "Finish: $cellfile imported successfully."

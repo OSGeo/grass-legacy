@@ -1,4 +1,4 @@
-PGM      = r.weight.new
+PGM  = r.weight.new
 
 LIST = main.o\
 	input.o\
@@ -6,7 +6,7 @@ LIST = main.o\
 	main_loop.o
 
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB):      # in case library changes

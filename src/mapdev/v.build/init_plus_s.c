@@ -1,8 +1,6 @@
-
-
 #include	<stdio.h>
 #include	"gis.h"
-#include	"dig_structs.h"
+#include	"Vect.h"
 
 
 int 

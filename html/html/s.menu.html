@@ -1,0 +1,416 @@
+<TITLE>s.menu</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.menu</b></EM>  - Accesses and manipulates GRASS site location data.
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.menu</B>
+
+<H2>OVERVIEW</H2>
+
+The <EM>s.menu</EM> program provides the user with the capability of
+interfacing site location data with the geographic data in raster map layers.
+Two types of spatial analysis reports on sites can be generated,
+and an interface to the "S" statistical package is provided.
+
+<H2>DESCRIPTION</H2>
+
+The <EM>s.menu</EM> program is an interface to functions that allow
+the user to manipulate GRASS site "lists".
+A site list is a list of eastings and northings
+describing the location of some point feature.
+It can also contain a category value and category label
+for each site location.  The program is interactive.
+After typing <B>s.menu</B> on the command line,
+the user selects site functions from a menu.
+
+
+<P>
+
+The main menu is shown below:
+<PRE>
+
+SITES MAIN MENU    (current list: no sites)
+
+LOCATION: spearfish    REGION 4928000.00(N)  4914000.00(S) 100.00 (RES)
+MAPSET:   PERMANENT            609000.00(E)   590000.00(W) 100.00 (RES)
+MASK:  none
+
+Please select one of the following
+
+   1  Read an existing site list
+   2  Mask current site list
+   3  Save the current site list in your mapset
+
+   4  Check site list for duplicate sites
+   5  Edit site list using a UNIX editor
+
+   6  Convert site list to raster file (0/1)
+   7  Convert site list to raster file (frequency of occurrence)
+
+   8  Run reports on the current site list
+
+stop  Leave the s.menu program
+</PRE>
+
+At the top of the menu is general information about the
+user's current MAPSET, LOCATION, etc.
+Note the above message in parentheses "current list:  no sites."
+This message will vary depending on the status of the list.
+For example, after the user reads the existing site list file
+<EM>arch_sites</EM>, the message would read (given the geographic
+region indicated):
+"current list: 25 sites, 24 in current region."
+<OL>
+<LI> Read an existing site list
+<BR>
+
+This option will copy an existing site list file
+into the current site list within the sites server.
+Existing site lists are stored under a GRASS data base
+and are pulled into the <EM>s.menu</EM> server via this option.
+Other sites menu functions operate only on the current site list file
+in the server -- you must therefore "read an existing site list" file
+BEFORE performing any of the other sites menu functions.
+<BR>
+Note:  Site lists can be created and placed into a GRASS data base
+using <EM>s.menu</EM> option 5 (edit) followed by option 3 (save).
+However, the user can also create site lists using other methods or programs.
+One simple way to do this is to create a site list file
+in the appropriate format using any text editor (e.g., "vi"),
+and to put this site list file under the <EM>site_lists</EM> directory
+under the user's current GRASS mapset (i.e., under $LOCATION/site_lists).
+The user can do this either inside of GRASS or outside of GRASS.
+Alternately, the user can run other GRASS programs which format their output
+as a GRASS site list file (<EM><A HREF="r.random.html">r.random</A>, <A HREF="s.db.rim.html">s.db.rim</A>, <A HREF="v.mkquads.html">v.mkquads</A>, <A HREF="v.to.sites.html">v.to.sites</A></EM>),
+or the user can use UNIX programs like <EM>awk</EM> and <EM>sed</EM> to format
+other GRASS programs' output in the form of a site list file
+(<EM><A HREF="d.what.rast.html">d.what.rast</A>, <A HREF="d.what.vect.html">d.what.vect</A></EM>).
+<BR>
+<P>
+<LI> Mask current site list
+
+<BR>
+
+The site list can be reduced to a subset that includes only sites
+which fall in specific categories within a specified raster map layer.
+The user will be asked to specify the name of a raster map layer to form
+the basis for the mask, and will then be allowed to specify categories
+from this raster map that will limit the site list.
+As with
+<EM><A HREF="r.mask.html">r.mask</A></EM>,
+the category values selected designate the areas of the map in which
+information will remain.  Areas assigned category values <EM>not</EM>
+selected will be re-assigned to category value "0" ("no data").
+<BR>Note:  This masking operation is performed only against the
+site list itself and not against other raster map layers.
+If the user wishes to analyze masked raster map layers,
+a mask should be create using the
+<EM><A HREF="r.mask.html">r.mask</A></EM>
+program.
+<BR>
+<P>
+
+<LI> Save the current site list in your mapset
+
+<BR>
+
+The current site list can be stored permanently in your
+current mapset with this option.  You will be asked to name the saved site list
+and to provide a short description of it.  Saved site lists
+can be retrieved (option 1) during later runs of
+<EM>s.menu.</EM>
+Once saved, these site list files can be used with other GRASS programs,
+like <EM><A HREF="d.sites.html">d.sites</A>, <A HREF="d.points.html">d.points</A>, <A HREF="d.icons.html">d.icons</A>, <A HREF="p.icons.html">p.icons</A>, <A HREF="s.surf.idw.html">s.surf.idw</A></EM>, and <EM><A HREF="s.db.rim.html">s.db.rim</A></EM>.<BR>
+Note:  Saved lists will be removed if the GRASS mapset<BR> under which they
+are stored is removed.
+<BR>
+
+<P>
+
+<LI>  Check site list for duplicate sites
+
+<BR>
+
+It is not desirable that a site list contain multiple references
+to the same site.  This option attempts to recognize duplicate
+sites.  Duplicates are displayed to the user and can be removed
+automatically if the user desires.
+Duplicates can also be removed by hand using option 5<BR>(edit).
+<P>
+
+<LI>  Edit site list using a UNIX editor
+<BR>
+
+The user can modify the current site list or create a new site list
+by hand using a UNIX editor.  You will be asked to specify
+the text editor you prefer to use.
+You should exercise some care if you select this option.
+Lines in the site list which have invalid formats
+will be (silently) ignored by <EM>s.menu</EM>.
+See the GRASS manual entry <EM><A HREF="sites.format.html">sites.format</A></EM>
+for a description of the site list format.<BR>
+Note:  This option will only modify the site list copied
+into the server.  It does not modify the original site list
+stored under a GRASS mapset.
+If you wish to modify a stored site list file, you will
+have to combine options 1 (read), 5 (edit) and 3 (save).
+<P>
+<LI>  Convert site list file to raster file (0/1)
+
+<BR>
+You can create a raster data representation of the site list
+in your GRASS mapset.<BR>
+Once created, this raster map layer can be used with other raster
+map layers in further analyses.
+Allowing the user to create a raster map layer of sites opens up the
+full analysis capabilities for site data
+that are available for raster map layers within GRASS.
+<BR>
+You have the option of specifying the number of cells to represent a site.
+The minimum is one cell per site.
+The alternatives are squares around the site:  3x3, 5x5, 7x7, etc.
+<BR>
+The number of categories present in the new raster map layers
+will depend on the format of your site list file (see <EM><A HREF="sites.format.html">sites.format</A></EM>).
+You can create a non-binary raster map layer representation of your site list
+by creating the site list in the format:
+<BR>
+<B>"E|N|"</B>
+<EM>"#n label"</EM>
+<BR>where <B>E</B> is the Easting, <B>N</B> is the Northing, and <EM>#n label</EM>
+is the description field.  The description field consists of a
+pound sign # followed by the category value
+<EM>n</EM> to be associated
+with the site's cell location,
+and the category label <EM>label</EM>
+for <EM>n</EM>.
+<BR>If the user does not include a description field starting with
+<BR><EM>#n</EM>
+<BR>beside the Easting and Northing on <EM>every line</EM> in
+the sites list file,
+a binary raster map layer will be created instead.
+In the binary raster file,
+each site will be represented as the category value 1.
+Non-site cells will be coded as category value 0.
+
+
+<P>
+
+Note that only sites within the current geographic region
+will be considered.
+However, if the size of the sites is more than one cell ( 3x3, 5x5, etc.)
+and a site lies near an edge of the geographic region,
+some of the cells for the site may fall outside the geographic region.
+These cells will not appear in the raster map layer,
+and the site will no longer be 3x3 or 5x5
+but will be clipped to fit the geographic region.
+<BR>
+
+<P>
+
+<LI>  Convert site list file to raster file (frequency of occurrence)
+
+<BR>
+
+You can also create a frequency of occurrence raster map layer
+representation of the site list file.
+<BR>
+The raster category values will be coded as the number of sites
+that fall within the cell.
+<BR>
+In this function, you do NOT have the option of specifying the number
+of cells to represent a site.
+<BR>
+<P>
+
+<LI>  Run reports on the current site list
+
+<BR>
+
+The current list of sites is passed to the report server after removing
+sites which do not fall within the geographic region of the user's current
+GRASS mapset (see <EM><A HREF="g.region.html">g.region</A></EM>).
+The user then selects the names of one or more raster map layers for analysis.
+Data at (or near) the sites extracted from these raster map layers
+form the basis for all reports.
+<BR>
+The user specifies the 'size' of a site in cells.
+The 'size' may be specified as a single cell, or as a 3x3 square
+around the site, or 5x5, or 7x7, etc (where the size is an odd integer).
+<BR>
+
+<P>
+
+
+
+<P>
+
+The following menu of reports is then presented:
+<PRE>
+SITES REPORT MENU
+
+Please select one of the following
+
+   1  Site characteristics report
+   2  Site occurrence report
+
+   3  Convert data to S input format
+   4  Produce machine-readable data file
+
+stop  return to SITES MAIN MENU
+</PRE>
+<OL>
+<LI>  Site characteristics report
+
+<BR>
+
+This report provides geographic information about each site.
+<BR>
+Each site is identified by description and locational information.
+The 'description' is an identification of the site.
+The site location is an easting and a northing.
+(The location does not denote the extent of the site, since,
+for example, an archeologic site which takes up two
+hectares would be represented as a single point).
+<BR>
+The information reported for each site is displayed by raster map layer,
+and, within each map layer,
+gives the categories (i.e., characteristics) that occurred at the site
+(as well as a count of the number of cells in each category).
+<BR>
+This can easily generate a massive amount of information, which is difficult
+to handle or digest quickly.  Therefore, option 2
+produces a synopsis of the information.
+
+<P>
+
+<LI>  Site occurrence report
+
+<BR>
+
+This report provides aggregate site characteristic information
+organized by raster map layer.
+The report produces chi-square statistics for each raster map layer, measuring
+number of expected sites (assuming a random distribution of sites)
+against actual site occurrence.  The site characteristic is
+the most frequently occurring
+cell category in the site (i.e., the statistical mode).
+See the GRASS manual entry for <EM><A HREF="sites.occur.html">sites.occur</A></EM> for details on this report.
+
+
+<P>
+
+<LI>  Convert data to S input format
+
+<BR>
+
+This function converts the GRASS data extracted for the sites into
+a form usable by the S statistical package.  The user
+provides a file to contain the information.
+Once the file is written, the user must exit
+<EM>s.menu</EM>,
+run S on an S data base, and issue the S command
+
+
+<P>
+
+<B>source <EM>file</EM></B>
+
+
+<P>
+
+to bring the data into the S data base.
+(Of course, <EM>file</EM>
+would be the name of the actual file supplied by the user.)
+See manual entry <EM><A HREF="sites.S.html">sites.S</A></EM> for an explanation of the
+S data structures created by this interface.
+
+
+<P>
+
+<LI>  Produce machine-readable data file
+
+<BR>
+
+This option provides a mechanism for the user to write his/her own
+reports.
+The data is written into a user-specified file as a text file,
+which has a format readable by UNIX utilities (e.g., <EM>awk</EM>)
+or user-written programs.
+See GRASS manual entry <EM><A HREF="sites.report.html">sites.report</A></EM> for details on this format.
+</OL> 
+</OL>
+<H2>FILES</H2>
+
+$LOCATION/site_list/&lt;file &gt;
+
+<H2>SEE ALSO</H2>
+
+<table width=75%>
+	<tr>
+		<td><em><a href="d.icons.html">d.icons</a></em></td>
+		<td><em><a href="d.graph.html">d.graph</a></em></td>
+		<td><em><a href="d.points.html">d.points</a></em></td>
+	</tr>
+
+	<tr>
+		<td><EM><A HREF="d.sites.html">d.sites</A></EM></td>
+		<td><EM><A HREF="p.icons.html">p.icons</A></EM></td>
+		<td><EM><A HREF="r.random.html">r.random</A></EM></td>
+	</tr>
+
+	<tr>
+		<td><EM><A HREF="d.what.rast.html">d.what.rast</A></EM></td>
+		<td><EM><A HREF="d.what.vect.html">d.what.vect</A></EM></td>
+		<td><EM><A HREF="r.what.html">r.what</A></EM></td>
+	</tr>
+
+	<tr>
+		<td><EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM></td>
+		<td><EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM></td>
+		<td><EM><A HREF="s.db.rim.html">s.db.rim</A></EM></td>
+	</tr>
+	<tr>
+		<td><EM><A HREF="s.surf.idw.html">s.surf.idw</A></EM></td>
+		<td><EM><A HREF="s.surf.rst.html">s.surf.rst</A></EM></td>
+		<td><EM><A HREF="v.db.rim.html">v.db.rim</A></EM></td>
+	</tr>
+	<tr>
+		<td><EM><A HREF="v.mkquads.html">v.mkquads</A></EM></td>
+		<td><EM><A HREF="v.to.sites.html">v.to.sites</A></EM></td>
+		<td><em><a href="sites.format.html">sites.format</a></em></td>
+	</tr>
+	
+	<tr>
+		<td><em><a href="sites.report.html">sites.report</a></em></td>
+		<td><em><a href="sites.occur.html">sites.occur</a></em></td>
+		<td><em><a href="sites.S.html">sites.S</a></em></td>
+	</tr>
+</table>
+
+
+
+<H2>AUTHORS</H2>
+
+Michael Shapiro, 
+U.S.Army Construction Engineering 
+Research Laboratory
+
+<P>
+
+James Farley, 
+Arkansas Archeological Survey, 
+University of Arkansas
+<BR>
+contributed the frequency of
+occurrence sites to cell function

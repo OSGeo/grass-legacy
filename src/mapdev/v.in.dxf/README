@@ -1,3 +1,25 @@
+/* 2001-APR-19 change from Michel Wurtz <michel.wurtz@teledetection.fr> */
+	Cleaning and merge diffs from v.in.dxf2 - v.in.dxf only good
+/* 1998-OCT-06 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Changed dxf_line[80] to dxf_line[256] when I found 250 char label in
+one of my DXF files <dxf2vect.h>.
+	Changed label[80] to label[256], and buf[100] to buf[256] <label_box.c>.
+	Changed layername[80] to layername[256] <add_polyline.c>
+	Changed "80" to "256" in the dxf_fgets calls.
+
+	modified: dxf2vect.h, add_arc.c, add_circle.c, add_line.c,
+		  add_polyline.c, entities.c, find_lines.c, header.c,
+		  label_box.c
+
+/* 1998-OCT-01 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Changed label from int to char (my character labels weren't coming
+through from my DXF files), changed other things to support single digit/char
+labels (char_cnt).
+	modified: label_box.c
+
+/* 1998-SEP-30 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Added flag "-n" to allow suppression of text boxes
+	modified: dxf2vect.h, main.c, label_box.c
 
 /* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 Problem:

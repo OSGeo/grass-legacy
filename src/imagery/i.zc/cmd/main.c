@@ -35,11 +35,17 @@ int main( int argc, char *argv[])
         long totsize; /* the Total number of data points */
         double *data[2]; /* Data structure containing real & complex values of FFT */
         int save_args(); /* function to stash the command line arguments */
+		struct GModule *module;
         struct Option *input_map, *output_map, *width, *threshold, *orientations ;
         char *me ;
 
         G_gisinit(argv[0]);
         me = G_program_name();
+
+		module = G_define_module();
+		module->description =
+			"Zero-crossing \"edge detection\" raster "
+			"function for image processing.";
 
         /* define options */
         input_map = G_define_option();

@@ -1,6 +1,7 @@
 #include "gis.h"
 #include "mapcalc.h"
-/* Author: Michael Shapiro. 16 feb 1993 
+
+/* Author: Michael Shapiro. 16 feb 1993 / update 12/99 on __CYGWIN__
  * NOTE:
  *   This depends on the Unix function drand48() which returns a
  *   double between 0.0 and 1.0
@@ -8,7 +9,11 @@
  * g_randseed(): it does nothing at present
  */
 
+#if defined(__CYGWIN__) || defined(__APPLE__)
+#define drand48() rand()/32767.0
+#else
 extern double drand48();
+#endif
 
 int 
 g_randseed (void)

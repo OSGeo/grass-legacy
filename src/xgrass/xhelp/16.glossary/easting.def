@@ -1,5 +1,0 @@
-
-
-easting - The x coordinate of a geographic point location.  Frequently 
-used to describe the easternmost and westernmost boundaries of a map,
-especially when stated in @glossary("UTM",16.glossary/utm.def) coordinates.

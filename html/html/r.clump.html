@@ -1,0 +1,106 @@
+<TITLE>r.clump</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.clump</b></EM>  - Recategorizes data in a raster map layer by grouping cells 
+that form physically discrete areas into unique categories. 
+<BR>
+<EM>(GRASS</EM> Raster Program)
+
+<H2>SYNOPSIS</H2>
+
+<B>r.clump</B> 
+<BR>
+<B>r.clump</B> help</B> 
+<BR>
+<B>r.clump</B> [<B>-q</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> [<B>TITLE=</B><EM>"string"</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.clump</EM> finds all areas of contiguous cell category values in the input 
+raster map layer <EM>name</B>.</EM> It assigns a unique category value to each 
+such area ("clump") in the resulting output raster map layer <EM>name</B>.</EM> 
+If the user does not provide input and output map layer names 
+on the command line, the program will prompt the user for these names, 
+using the standard 
+<A HREF="parser.html">parser</A> 
+interface (see manual entry for <EM>parser</B>).</EM> 
+
+Category distinctions in the input raster map layer are preserved. 
+This means that if distinct category values are adjacent, 
+they will NOT be clumped together. 
+(The user can run 
+<EM><A HREF="r.reclass.html">r.reclass</A></EM> prior to <EM>r.clump</EM> 
+to recategorize cells and reassign cell category values.) 
+
+<P>
+<H3>Flag:</H3> 
+<DL>
+<DT><B>-q</B>
+<DD>Run quietly, without printing messages on program 
+    progress to standard output. 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing raster map layer being used for input. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name of new raster map layer to contain program output. 
+<DT><B>TITLE=</B><EM>"string"</EM>
+<DD>Optional TITLE for output raster map layer, in quotes. 
+If the user fails to assign a TITLE for the <EM>output</EM> map layer, 
+none will be assigned it. 
+</DL>
+
+<H2>ALGORITHM</H2>
+
+<EM>r.clump</EM> moves a 2x2 matrix over the input raster map layer. 
+The lower right-hand corner of the matrix is grouped with the cells above it, 
+or to the left of it. 
+(Diagonal cells are not considered.) 
+
+<H2>NOTES</H2>
+
+<EM>r.clump</EM> works properly with raster map layers that
+contain only "fat" areas (more than a single cell in
+width).  Linear elements (lines that are a single cell
+wide) may or may not be clumped together depending on the
+direction of the line -- horizontal and vertical lines of
+cells are considered to be contiguous, but diagonal lines
+of cells are not considered to be contiguous and are broken
+up into separate clumps.
+
+<P> 
+
+A random color table and other support files are
+generated for the <EM>output</EM> raster map layer.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.average.html">r.average</A></EM><br>
+<EM><A HREF="r.buffer.html">r.buffer</A></EM><br>
+<EM><A HREF="r.combine.html">r.combine</A></EM><br>
+<EM><A HREF="r.grow.html">r.grow</A><br></EM>
+<EM><A HREF="r.infer.html">r.infer</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.mfilter.html">r.mfilter</A></EM><br>
+<EM><A HREF="r.neighbors.html">r.neighbors</A></EM><br>
+<EM><A HREF="r.poly.html">r.poly</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+<EM><A HREF="r.support.html">r.support</A></EM><br>
+<EM><A HREF="r.weight.html">r.weight</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+

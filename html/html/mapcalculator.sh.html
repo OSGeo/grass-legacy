@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>mapcalculator.sh</TITLE>
+</HEAD>
+<BODY bgcolor=white><img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>mapcalculator.sh</B></EM>   - TCLTK-Frontend for r.mapcalc
+
+<H2>SYNOPSIS</H2>
+<B>mapcalculator.sh </B>  
+<B>[help=[</B><I>help,man</I><B>]] 
+[expert=</B><I>expert</I><B>] 
+A_MAP=[</B><I>map</I>
+<B>] B_MAP=[</B><I>map</I><B>]...</B>  
+ 
+<H2>DESCRIPTION</H2>
+<B>mapcalculator.sh </B> 
+is a bash-script  usally called via <B>mapcalculator</B> in TCLTKGRASS. It creates a r.mapcalc call 
+from the parameters you choose in mapcalculator. If you want to use mapcalc on the commandline you 
+should use the original r.mapcalc command.<br>
+
+In <B>TCLTKGRASS </B> you can choose up to six 
+maps  [<I>entries A - F</I>] to be included in the calculation. Then you have  
+to enter a formula and a name for the resulting raster map. You won't receive 
+a warning, if you choose the name of an allready existing raster map, 
+but you can protect your files from overwriting by activating the appropriate 
+checkbox. <br>
+
+You can create a calculation formula in the field formula 
+like this: <BR><I>A+C</I> or (more complex:) <I>exp(A+C)+(B-2)*7.<BR></I> A, B, C, etc. are your 
+choosen raster maps. You must not insert the output file:  <P>
+
+<B>Right:</B> <I>A+B</I> <BR>
+
+<B>Wrong: </B> <I>newfile = A+ B </I> </P>
+
+Use no blanks! Blanks are inserted by the 
+script to devide the map names from the rest of the formula. 
+<P>
+The script won't check the syntax or logic of the formula and you will only receive 
+the error messages from r.mapcalc, if  anything went wrong.
+
+For details on creating a formula see the <A
+Href="r.mapcalc.html"><I>r.mapcalc</I></A> manual page (man r.mapcalc).
+ 
+<H2>BUGS</H2>
+It is not possible to choose maps from different mapsets with the 
+<I>raster</I> button. But you can choose maps from different mapsets by entering 
+the name  <I>map@mapset</I> in any of the map fields  <I>[A-E].</I>  
+
+<P>
+You may have difficulties 
+to calculate formulas containing  <I>neighborhood</I> modifier. The only way to 
+use  <I>neighborhood</I> modifier is entring them directly into the formula field: 
+ <blockquote>A+B*map_with_modifier\[x,y\]   </blockquote>
+where map_with_modifier is the name of your 
+map. The name of your map should not contain any uppercase <I>A - F</I>, because they will be interpreted as raster
+map entries. Don't forget to mask the brackets with backslashes,  or you will receive 
+errormessages form  <B>TCLTKGRASS.</B>  </P>
+ 
+<H2>SEE ALSO</H2>
+<A HREF="r.mapcalc.html">r.mapcalc</A>
+ 
+<H2>AUTHOR</H2>
+<B><a href=mailto=r.brunzema@web.de>R. Brunzema</A></B> <P>
+
+</BODY>
+</HTML>

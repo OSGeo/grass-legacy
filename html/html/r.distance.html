@@ -1,0 +1,86 @@
+<html>
+<A NAME="r.distance">
+<TITLE>r.distance</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.distance</B></EM> - Locates the closest points between objects in two raster maps. (GRASS Raster Program)
+
+<H2>SYNOPSIS</H2>
+<B>r.distance</B><BR>
+<B>r.distance help</B><BR>
+<B>r.distance [-lq] maps</B><EM>=map1,map2</EM> [<B>fs</B><EM>=name</EM>]
+
+<H2>DESCRIPTION</H2>
+Locates the closest points between "objects" in two raster maps.  An "object" is defined as all the grid cells that have the same category number, and closest means having the shortest "straight-line" distance.
+<P>
+
+The output is an ascii list, one line per pair of objects
+<PRE>
+           cat1:cat2:distance:east1:north1:east2:north2
+</PRE>
+
+<H3>Explanation:</H3>
+<DL>
+<DT><B>cat1</B>
+<DD>Category number from map1
+
+<DT><B>cat2</B>
+<DD>Category number from map2
+
+<DT><B>distance</B>
+<DD>The distance in meters between "cat1" and "cat2"
+
+<DT><B>east1,north1</B>
+<DD>The coordinates of the grid cell "cat1" which is closest to "cat2"
+
+<DT><B>east2,north2</B>
+<DD>The coordinates of the grid cell "cat2" which is closest to "cat1"
+</DL>
+
+<H2>COMMAND LINE OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-l</B>
+<DD>Include category labels in the output
+
+<DT><B>-q</B>
+<DD>Run quietly
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>maps</B>
+<DD>Maps for computing inter-class distances
+
+<DT><B>fs</B>
+<DD>Output field separator
+<DD>Default is a colon (:)
+</DL>
+
+<H2>NOTES</H2>
+The output format lends itself to filtering.  For example, to "see" lines connecting each of the category pairs in two maps, filter the output using awk and then into <EM>d.map</EM> graph:
+<P>
+
+<DD><EM>r.distance maps=map1,map2 | \
+<DD>awk -F: '{print "move",$4,$5;"draw",$6,$7}' | d.mapgraph</EM>
+
+<P>
+To create a site list of all the "map1" coordinates, filter the output into awk and then into <EM>s.in.ascii</EM>:
+<P>
+
+<DD><EM>r.distance maps=map1,map2 | \
+<DD>awk -F: '{print $4,$5}' | s.in.ascii sites=name</EM>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.buffer.html">r.buffer</A>, <A HREF="r.cost.html">r.cost</A>, <A HREF="r.drain.html">r.drain</A></EM>
+
+<H2>AUTHOR</H2>
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+
+</BODY>
+</HTML>

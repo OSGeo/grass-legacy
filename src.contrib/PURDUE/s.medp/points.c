@@ -12,7 +12,6 @@
 #include "polish.h"
 #include "gis.h"
 #include "Vect.h"
-#include "dig_structs.h"
 
 void 
 write_points (struct Map_info *Map, int n, int verbose)

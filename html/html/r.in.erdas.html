@@ -1,0 +1,92 @@
+<TITLE>r.in.erdas</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.erdas</b></EM>  - Creates raster files from ERDAS files.  It
+creates one raster file for each band, and creates color support
+if an ERDAS trailer file is specified.
+
+<BR>
+
+<EM>"(SCS GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.erdas</B>
+
+<BR>
+
+<B>r.in.erdas help</B>
+
+<BR>
+
+<B>r.in.erdas erdas=</B><EM>name</EM> [<B>trl=</B><EM>name</EM>] <B>prefix=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+This command prompts the user twice:
+
+
+<P>
+
+<DL>
+<DD>
+First the user is asked if he wishes to select a subset of
+the bands available in the ERDAS file for output.
+If unspecified by the user, all bands are used, by default.
+
+
+<P>
+
+Second, the user is asked if he wishes to select a subregion
+of the image available in the ERDAS file.  If unspecified by the
+user, the complete image is used, by default.
+</DL>
+
+
+<P>
+
+Note: 
+<DL>
+<DD>
+GRASS raster files will be named <EM>prefix.band</EM>
+Remember that it is necessary to run:
+<EM>r.support</EM>: to create the histogram or change the color table.
+<EM>i.group</EM>: to associate the individual raster files as an image group.
+</DL>
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>erdas=</B><EM>name</EM> 
+
+<DD>Input ERDAS file name.
+
+<DT><B>trl=</B><EM>name</EM> 
+
+<DD>Input ERDAS trailer file name.
+
+<DT><B>prefix=</B><EM>name</EM> 
+
+<DD>Prefix of the GRASS raster files to be created.
+</DL>
+
+<H2>AUTHOR</H2>
+
+M.L. Holko, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

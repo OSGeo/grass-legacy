@@ -1,3 +1,62 @@
+NVIZ update history file
+
+---------------------------------------------------------------
+Update:
+From bcovill@tekmap.ns.ca Wed Nov 22 19:34:33 2000
+Date: Wed, 22 Nov 2000 14:47:03 -0400
+From: Bob Covill <bcovill@tekmap.ns.ca>
+To: Markus Neteler <neteler@geog.uni-hannover.de>
+Subject: NVIZ update
+
+Markus,
+
+I have attached 2 tar files with updates for NVIZ.
+
+The first Src.tar is a new versions of init_commands.c and draw.c to be
+placed in .../NVIZ2.2/src. These files create two new functions. The
+first Nauto_draw returns the status of the auto-draw checkbutton from
+tcl. The second function is Ndraw_all which simply calls all three draw
+functions (surf, vect, site). I added this one to save on typing.
+
+The second tar file Scripts.tar contains new versions of panel_main.tcl,
+panel_vect.tcl, panel_site.tcl, panel_vol.tcl, and widgets.tcl. These
+should be placed in .../NVIZ2.2/scripts. A number of changes have been
+made to the TCL scripts including:
+- auto-draw is bound to all sliders and associated checkboxes.
+- auto-draw is bound to XY position puck
+- auto-draw is bound to "Look here" and "center" buttons.
+- all vector and sites files provided from the command line will be
+enabled at startup on all surfaces
+
+I have tried to improve the callbacks from the float (not int) sliders
+and associated entry boxes. The callbacks now recalculate the number of
+digits (precision) and resolution (increment) for the sliders each time
+each time a new value is set. This should help reduce the number of bad
+redraws when setting values. A bad redraw is when the window finishes
+drawing and reverts to wire. A value now set in an entry box should not
+get rounded to another number. I also added a auto parameter that
+automatically sets the size the entry box based on the startup value
+provided.
+
+You will find that if the redraw is interupted with the scales or entry
+boxes the screen will reset after the new redraw. In other words the old
+draw will continue after the new draw is finished.
+
+Give the new setup a try and let me know how it works.
+
+Bob Covill                                                                      
+                                                                                
+Tekmap Consulting                                                               
+P.O. Box 2016                                                                   
+Fall River, N.S.                                                                
+B2T 1K6                                                                         
+Canada                                                                          
+                                                                                
+E-Mail: bcovill@tekmap.ns.ca                                                    
+Phone: 902-860-1496                                                             
+Fax: 902-860-1498        
+
+---------------------------------------------------------------
 # Update to nviz2.2
 # 31 oct. 1999  - Pierre de Mouveaux
 # p_de_mouveaux@hotmail.com

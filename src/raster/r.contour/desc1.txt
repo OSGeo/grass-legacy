@@ -1,0 +1,75 @@
+Date: Mon, 12 Mar 2001 17:35:54 +0700
+From: Justin Hickey <jhickey@hpcc.nectec.or.th>
+Organization: HPCC, NECTEC
+
+Hi Andrea & Markus
+
+> Justin, any description of the current algorithm would be welcomed.
+
+OK, I'll try and I hope I don't confuse anyone. Terry uses the term cell
+in her code, but it does not refer to a single raster cell. It is a 2x2
+cell "window" of the raster map. She defines the upper left cell as the
+"origin" and goes clockwise around the four cells to define their order.
+That is, the order would be as follows:
+
+*---*---*
+| 0 | 1 |
+*---*---*
+| 3 | 2 |
+*---*---*
+
+She also defines an "edge" which are the edges of this 2x2 cell. She uses
+this window to scan the file for a contour line using sub-cell 0 as an
+index reference. Once she finds one, she follows the line until it goes
+outside the map edge or comes back to the starting point, keeping track
+of which edge the contour line enters and leaves the window (thus
+following the line). The line can be followed in either clockwise or
+counter-clockwise direction. I assume this is determined by the current
+"edge" but I didn't check it.
+
+The scanning order for the map is top, bottom, left, right (at this
+point all contour lines that go past the edge of the map are defined
+leveing only complete loops inside), and then the inside of the map.
+
+One problem is that she keeps track of a "hit" array which indicates
+which raster cell indices (row and column coordinates) have been used to
+define a contour point for this particular level. She mainly uses this to
+find the starting point of a contour. The problem is that she does not
+use the hit array while calculating the contour points. Thus, we get
+duplicate points causing the problems we see. In trying to use this hit
+array to detect duplicate points, I found that although the hit array is
+indexed on sub-cell 0, the calculated contour point can be indexed on
+any of the four sub-cells or even fractions of the cells due to the
+interpolation of the contour point. Basically, the calculated contour
+point in raster cell coordinates (before the conversion to UTM
+coordinates) does not necessarily match the coordinates used for the hit
+array. I have come up with a way to still use the hit array to detect
+duplicates, but haven't tested it yet.
+
+As she calculates points for the contour line, she appends them to a
+line_pnts structure and then writes the new vector line to the vector
+file. One thing I fixed was that her algorithm could sometimes create
+consecutive duplicate points. I changed this so that only points
+different from the previous point are appended to the line.
+
+That's it in a nutshell, the only other thing to add is that she finds
+all contour lines for a level, then cleans the hit array and goes to the
+next level.
+
+As I said, I still don't understand all of the algorithm but at least I
+have a general idea of how it works. Please let me know if either of you
+have questions or comments.
+
+-- 
+Sincerely,
+
+Jazzman (a.k.a. Justin Hickey)  e-mail: jhickey@hpcc.nectec.or.th
+High Performance Computing Center
+National Electronics and Computer Technology Center (NECTEC)
+Bangkok, Thailand
+==================================================================
+People who think they know everything are very irritating to those
+of us who do.  ---Anonymous
+
+Jazz and Trek Rule!!!
+==================================================================

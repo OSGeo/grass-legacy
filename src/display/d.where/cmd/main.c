@@ -7,6 +7,7 @@
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     struct Option *spheroid;
     struct Flag *once;
     char s_names[2048];
@@ -18,6 +19,11 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Identifies the geographic coordinates associated with "
+		"point locations in the active frame on the graphics monitor.";
 
     once = G_define_flag() ;
     once->key        = '1' ;
@@ -63,7 +69,8 @@ int main (int argc, char **argv)
 	}
     }
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
     D_setup(0);
     where_am_i(once->answer, have_spheroid) ;
     R_close_driver();

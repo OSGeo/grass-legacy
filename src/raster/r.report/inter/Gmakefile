@@ -1,11 +1,10 @@
 PGM=r.report
-HOME=$(BIN_MAIN_INTER)
 
 LIST=main.o ask_layers.o ask_units.o run_report.o
 
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(VASKLIB): #
 

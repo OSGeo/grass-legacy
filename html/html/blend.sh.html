@@ -1,0 +1,152 @@
+<TITLE>blend.sh</TITLE>
+
+<BODY BGCOLOR="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>blend.sh</b></EM>  - Combines the red, green, and blue
+color components of two raster map layers.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>blend.sh </B>file1 file2 perc outbase
+
+<H2>DESCRIPTION</H2>
+
+<EM>blend.sh</EM> is a Bourne shell (sh(1)) script that
+extracts the red (R), green (G), and blue (B) color
+components from each of two raster map layers, and creates
+three new raster map layers whose category values
+respectively represent the combined red, combined blue, and
+combined green color values from the two input layers.
+Category values in each of the output map layers will fall
+within the range of 0 - 255.
+
+
+<P>
+
+The R,G,B values from the two input map layers
+(<EM>file1</EM> and <EM>file2</EM>) are not simply added
+together, but are instead combined by a user-named
+percentage (<EM>perc</EM>) of the R,G,B values in
+<EM>file1</EM>.  Specifically, <EM>blend.sh</EM> executes
+three <EM><A HREF="../html/r.mapcalc.html">r.mapcalc</A></EM>
+statements that:  
+
+<OL>
+<LI> convert the R,G,B values in
+<EM>file1</EM> and <EM>file2</EM> to the range 0 - 255; 
+
+<LI>
+multiply the R, G, and B values in <EM>file1</EM> by a
+user-named percentage (<EM>perc</EM>); 
+
+<LI> multiply the R,
+G, and B values in <EM>file2</EM> by (100 -
+<EM>perc</EM>)%; 
+
+<LI> create three new raster map layers,
+whose category values represent the summed R, summed G, or
+summed B values resulting from (2) and (3).  Resulting R,
+G, and B values will respectively be stored in three new
+raster map layers named <EM>outbase</EM>.r,
+<EM>outbase</EM>.g and <EM>outbase</EM>.b.
+
+</OL>
+
+<H2>OPTIONS</H2>
+
+This program runs non-interactively;  the user must state
+all parameter values on the command line.
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><EM>file1</EM> 
+
+<DD>Name of a first raster map layer, whose R, G, and B color components will
+be combined with those of the second raster map layer (<EM>file2</EM>) named.
+The percent value (<EM>perc</EM>) given will apply to <EM>file1</EM>.
+
+<DT><EM>file2</EM> 
+
+<DD>Name of a second raster map layer, whose color
+components will be combined with those of <EM>file1</EM>.
+The percent value (<EM>perc</EM>) given will apply to the
+R,G,B values in <EM>file1</EM>.  The R, G, and B values in
+<EM>file2</EM> will be multiplied by (100 -
+<EM>perc</EM>)%.
+
+<DT><EM>perc</EM> 
+
+<DD>Percentage or amount of the color contribution in terms
+of color intensity.  This value is multiplied by the R,G,B
+values in <EM>file1</EM>.
+
+<DT><EM>outbase</EM> 
+
+<DD>The root name assigned to each of the three output
+files created.  A suffix is added to each file name,
+indicating which hold the red, green, and blue color
+values.
+
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>blend.sh</EM> executes three 
+<EM><A HREF="../html/r.mapcalc.html">r.mapcalc</A></EM> statements:
+
+<DL>
+<DD><B>r.mapcalc</B> "<EM>outbase</EM>.r = r#<EM>file1</EM> 
+* .<EM>perc</EM> + (1.0 - .<EM>perc</EM>) * r#<EM>file2</EM>"
+<DD><B>r.mapcalc</B> "<EM>outbase</EM>.g = g#<EM>file1</EM> 
+* .<EM>perc</EM> + (1.0 - .<EM>perc</EM>) * g#<EM>file2</EM>"
+<DD><B>r.mapcalc</B> "<EM>outbase</EM>.b = b#<EM>file1</EM> 
+* .<EM>perc</EM> + (1.0 - .<EM>perc</EM>) * b#<EM>file2</EM>"
+</DL>
+
+<P>
+
+It uses the # operator to separately extract the red,
+green, and blue components in the named raster map layers,
+essentially allowing color separates to be made.
+
+<H2>EXAMPLE</H2>
+
+Typing the following at the command line:
+
+<DL>
+<DD>
+<B>blend.sh </B> aspect elevation 40 elev.asp 
+</DL>
+
+will create three new raster map layers named
+<EM>elev.asp.r</EM>, <EM>elev.asp.g</EM>, and
+<EM>elev.asp.b</EM>, that, respectively, contain 40% of the
+red, green, and blue components of the <EM>elevation</EM>
+map layer and contain 60% of the red, green, and blue
+components of the <EM>aspect</EM> map layer.
+
+<H2>FILES</H2>
+
+This program is simply a shell script.  Users are
+encouraged to make their own shell scripts using similar
+techniques.  See <KBD>$GISBASE/scripts/blend.sh</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.colors.html">r.colors</A></EM>,<br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering Research Laboratory

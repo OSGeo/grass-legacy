@@ -1,0 +1,90 @@
+<TITLE>v.to.sites</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.to.sites</b></EM>  - Converts point data in a binary GRASS vector map layer into
+a GRASS <EM>site_lists</EM> file.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.to.sites</B>
+
+<BR>
+
+<B>v.to.sites help</B>
+
+<BR>
+
+<B>v.to.sites input=</B><EM>name </EM><B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+The <EM>v.to.sites</EM> program extracts site data from a
+GRASS vector map layer and stores output in a new GRASS
+<KBD>site_lists</KBD> file.  The resulting sites map layer
+can be used with such programs as
+
+<EM><A HREF="d.sites.html">d.sites</A></EM>.
+
+Only site (point) features in the named vector map layer
+are extracted and placed into the resulting site list.
+Lines and areas in the vector file are ignored.
+
+<H2>OPTIONS</H2>
+
+The user can run the program non-interactively by
+specifying the names of an existing vector <EM>input</EM>
+map layer and a new site list file to be <EM>output</EM> on
+the command line.  The program will be run interactively if
+the user types <B>v.to.sites</B> without arguments on the
+command line.  In this case, the user will be prompted to
+enter parameter values through the standard user interface
+described in the manual entry for
+
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of an existing binary vector map layer from which
+site data are to be extracted.
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name to be assigned to the resultant <EM>site_lists</EM> file.
+</DL>
+
+
+<P>
+
+If any of the sites have been labeled in 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>
+
+then the resultant site list will contain category
+information.  If none of the sites are labeled, a binary
+(0/1) site list file will be produced.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A></EM>,
+<EM><A HREF="s.db.rim.html">s.db.rim</A></EM>,
+<EM><A HREF="s.menu.html">s.menu</A></EM>,
+<EM><A HREF="v.db.rim.html">v.db.rim</A></EM>,
+<EM><A HREF="v.digit.html">v.digit</A></EM>
+and
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S. Army Construction Engineering 
+Research Laboratory

@@ -1,11 +1,11 @@
 PGM=r.quant
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 
 LIST =  main.o\
 	read_rules.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 $(GISLIB): #

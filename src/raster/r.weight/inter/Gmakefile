@@ -23,19 +23,20 @@ OFILES  =\
 
 
 all: clean pgm shell help
-shell: $(BIN_MAIN_INTER)/r.weight
+shell: $(BIN_INTER)/r.weight
 pgm: $(ETC)/r.weight
 
 $(ETC)/r.weight: $(OFILES) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB) $(LEXLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
-$(BIN_MAIN_INTER)/r.weight: weight.sh
+$(BIN_INTER)/r.weight: weight.sh
 	rm -f $@ ; cp $? $@ ; chmod 0755 $@
 
 help:
 	rm -rf $(TXT)/WEIGHT
 	mkdir $(TXT)/WEIGHT
-	cp HELP_TEXT/* $(TXT)/WEIGHT
+#	cp HELP_TEXT/* $(TXT)/WEIGHT
+	(cd HELP_TEXT/ ; tar -cvf - * | (cd $(TXT)/WEIGHT ; tar -xvf - 2>/dev/null ) ; true )
 
 clean:
 	-rm -f gis_pars.c gis_pars.h gis_lxcl.c gis_pars.o gis_lxcl.o

@@ -1,0 +1,72 @@
+<HTML>
+<TITLE>v.in.garmin.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.garmin.sh</b></EM>  - Import gps data from garmin receiver into GRASS binary vector file
+<BR>
+<EM>(GRASS Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.garmin.sh</B>
+<BR>
+<B>v.in.garmin.sh</B> <EM>-h</EM>
+<BR>
+<B>v.in.garmin.sh </B> <EM><b>name=</B>vectorfile <B>port=</B>/dev/gps -v -w -r -t -u </EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.garmin.sh</EM> allows to import waypoint, route and track
+ data from a locally connected garmin gps receiver via the 
+gpstrans program of Carsten Tschach. 
+<P>Use at your own risk. This software comes with absolutely no warranty.
+<P>
+No checks are performed for datum, projection and format of data.
+You must check by yourself that your receiver, gpstrans and GRASS
+use the same map datum and projection (this means as it is now that
+you can only use a GRASS database in lat/lon projection and in wgs84
+datum).
+<BR>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>name=</B><EM>vectorfile</EM> 
+<DD>name for new binary vector file
+<DT><B>port=</B><EM>/dev/gps </EM> 
+<DD>port garmin receiver is connected to
+<DT><EM>-v </EM> 
+<DD>verbose output
+<DT><EM>-w </EM> 
+<DD>upload Waypoints
+<DT><EM>-r </EM> 
+<DD>upload Routes
+<DT><EM>-t </EM> 
+<DD>upload Track
+<DT><EM>-u </EM> 
+<DD>run v.support on new binary vector file
+<DT><EM>-h </EM> 
+<DD>print this message
+<DD>
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.in.garmin.sh.html">s.in.garmin.sh</A></EM><BR>
+<EM><A HREF="s.track.gps.html">s.track.gps</A></EM><BR>
+gpstrans manual
+
+
+<H2>AUTHOR</H2>
+
+Andreas Lange,
+Andreas.Lange@Rhein-Main.de<BR>
+gpstrans was written by Carsten Tschach<BR>
+gpstrans is found at http://www.metalab.unc.edu/pub/Linux/science/cartography/ <BR>
+
+</BODY>
+</HTML>

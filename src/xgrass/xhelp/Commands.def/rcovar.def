@@ -1,9 +1,0 @@
-
-
-r.covar - 
-
-r.covar outputs a covariance/correlation matrix for user-specified
-@glossary("raster",16.glossary/rastdata.def) map layer(s).  The output can be printed or (if run
-@glossary("interactively",16.glossary/interactve.def)) saved by redirecting output into a file.
-
-Manual entry for @man("r.covar")

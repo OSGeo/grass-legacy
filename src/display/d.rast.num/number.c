@@ -52,10 +52,16 @@ main (int argc, char **argv)
 	int t, b, l, r ;
 	struct Cell_head window ;
 	struct Colors colors;
+	struct GModule *module;
 	struct Option *opt1, *opt2 ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Overlays cell category values on a raster map layer "
+		"displayed to the graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -77,7 +83,8 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(-1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (opt1->answer)
 		strcpy(full_name, opt1->answer);

@@ -2,6 +2,8 @@
 #
 /***********************************************************************
 
+$Id$
+
 Modified by Jacques Bouchard and Markus Neteler 6/99 to make cursor
 keys working. Exit now with ESC-CR.
 
@@ -85,6 +87,7 @@ CALLS:
 ***********************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include "config.h"
 #include "vask.h"
 
 static int centered(char *);
@@ -249,7 +252,11 @@ int V_call()
     {
 	getyx (stdscr, y, x);
 
+#ifdef ASIAN_CHARS
+	c = getch();
+#else
 	c = getch() & 0177;
+#endif
 	if(c == EOF)
 	{
 	    move (y, x);
@@ -392,9 +399,9 @@ fprintf(stderr,"Returning from V_call\n");
                     } else if (newchar == 66) { /* DOWN */
 		        at_answer = (at_answer+1) % num_answers ;
 		        ans_col  = 0 ;
-                    } else if (newchar == 67) { /* LEFT */
-		        if (ans_col+1 < LENGTH && ANSWER[ans_col+1]) ++ans_col;
-                    } else if (newchar == 68) { /* RIGHT */
+                    } else if (newchar == 67) { /* RIGHT */
+		        if (ans_col+1 < LENGTH && ANSWER[ans_col]) ++ans_col;
+                    } else if (newchar == 68) { /* LEFT */
 		        ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
                     } else if (newchar == 50) { /* DELETE */
                         break;
@@ -405,7 +412,11 @@ fprintf(stderr,"Returning from V_call\n");
                 }
 		if (ans_col >= LENGTH) 
 		    break ;
-		if ((newchar >= '\040') && (newchar < '\176')) 
+#ifdef ASIAN_CHARS
+		if (((newchar >= '\040') && (newchar < '\176')) || newchar < 0)
+#else
+		if ((newchar >= '\040') && (newchar < '\176'))
+#endif
 		{
 		    addch(newchar) ;
 		    ANSWER[ans_col] = newchar ;

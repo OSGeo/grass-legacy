@@ -1,0 +1,15 @@
+all:
+	$(GMAKE) d.rast.pg
+	$(GMAKE) d.site.pg
+	$(GMAKE) d.vect.pg
+	$(GMAKE) d.what.s.pg
+	$(GMAKE) d.what.v.pg
+	$(GMAKE) d.what.r.pg
+	$(GMAKE) v.reclass.pg
+	$(GMAKE) g.column.pg
+	$(GMAKE) g.select.pg
+	$(GMAKE) g.stats.pg
+	$(GMAKE) g.table.pg
+	$(GMAKE) v.in.shape.pg
+	$(GMAKE) v.in.arc.pg
+	$(GMAKE) pg.in.dbf

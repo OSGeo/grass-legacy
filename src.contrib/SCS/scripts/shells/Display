@@ -1,4 +1,0 @@
-GISRC=$HOME/.grass3rc
-GISBASE=$GRASS
-export GISRC GISBASE
-$GRASS/bin/Dstart.mon DIS1

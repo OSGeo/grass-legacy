@@ -18,8 +18,8 @@ struct order {
     DCELL dvalue[NFILES];
 };
 
-static int by_row(struct order *, struct order *);
-static int by_point(struct order *, struct order *);
+static int by_row(const void *, const void *);
+static int by_point(const void *, const void *);
 
 static int tty;
 
@@ -184,7 +184,8 @@ int main(int argc,char *argv[])
 	else
 	{
 	  line++;
-	  if (strcmp (buffer, "end") == 0 || strcmp (buffer, "exit") == 0)
+	  if (strncmp (buffer, "end\n",  4) == 0 ||
+	      strncmp (buffer, "exit\n", 5) == 0)
 	    done = 1;
 	  else
 	  {
@@ -367,14 +368,16 @@ oops (int line, char *buf, char *msg)
 
 
 /* for qsort,  order list by row */
-static int by_row (struct order *i, struct order *j)
+static int by_row (const void *ii, const void *jj)
 {
+  const struct order *i = ii, *j = jj;
   return i->row - j->row;
 }
 
 
 /* for qsort,  order list by point */
-static int by_point (struct order *i, struct order *j)
+static int by_point (const void *ii, const void *jj)
 {
+  const struct order *i = ii, *j = jj;
   return i->point - j->point;
 }

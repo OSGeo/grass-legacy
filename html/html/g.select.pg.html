@@ -1,0 +1,46 @@
+<html>
+<A NAME="g.select.pg">
+<TITLE>g.select.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>g.select.pg</B></EM> - Select a Postgres database to be used in subsequent GRASS-RDBMS applications. (GRASS-RDBMS General Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>g.select.pg</B><BR>
+<B>g.select.pg help</B><BR>
+<B>g.select.pg database</B><EM>=name</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>g.select.pg</EM> is used to identify a Postgres database for subsequent GRASS-RDBMS applications.  The program checks the directories identified in the envionment variable $DBPATH for a database directory named [name.pgs].  If the database specified on the command line can be found <EM>g.select.pg</EM> sets the GRASS environment variable PGDBASE to this name.  If the database is not found a list of the database directories is provided to the user.  This program and all other dbSQL tools assume that database queries have been granted to the user.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameter:</H3>
+<DL>
+<DT><B>database=databasename</B>
+<DD>Name of existing Postgres database
+</DL>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</BODY>
+</HTML>
+

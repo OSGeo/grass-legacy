@@ -1,0 +1,6 @@
+PGM = s.out.e00
+LIST = 	s.out.e00.o
+
+LIBES=$(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)

@@ -1,0 +1,39 @@
+<TITLE>r.weighted.cn</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+<H2>NAME</H2>
+<EM><b>r.weighted.cn</b></EM><BR>
+Generates a weighted SCS curve number map layer
+<BR><EM>(GRASS Raster Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+<B>r.weighted.cn input=</B>cn_map <B>output=</B>weighted_cn_map
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B> input=</B>map
+<DD>curve number map name
+<DT><B>output=</B>map
+<DD>weighted curve number map name
+</DL>
+<P>
+The command-line ordering can be in any  form  but  all  key
+words must be there to run the program.
+<P>
+<H2>NOTE</H2>
+The r.weighted.cn program is sensitive to the current window settings.
+Thus the program can be used to generate a weighted
+CN map of any sub-area within  the  full  map  layer.  Also,
+r.weighted.cn is sensitive to any mask in effect.
+<P>
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.cn.html">r.cn</A></EM>,                     
+<EM><A HREF="r.cn2.html">r.cn2</A></EM>    
+<P>
+<H2>AUTHORS</H2>
+Raghavan Srinivasan and Dr. Bernie A. Engel,<BR>
+Agricultural Engineering Department, Purdue University 

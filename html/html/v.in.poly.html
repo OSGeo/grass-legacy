@@ -1,0 +1,132 @@
+<TITLE>v.in.poly</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.poly</b></EM>  - Create a vector file of polygons centered on given locations
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.poly</B>
+
+<BR>
+
+<B>v.in.poly help</B>
+
+<BR>
+
+<B>v.in.poly</B> [<B> -t</B>] [<B>input=</B><EM>name</EM>] <B>vect=</B><EM>name</EM> <B>radius=</B><EM>value</EM>
+   [<B>segments=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program creates a vector map of polygons of specified radius around
+center points which may be input as coordinate pairs from a file or
+from stdin.
+
+<H2>COMMAND LINE OPTIONS</H2>
+<P>
+<B>Flags</B>
+<P>
+<DT><B>-t</B> 
+<DD>Do not automatically build topology for the new map
+</DT>
+<P>
+<B>Parameters</B>
+<P>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of input file (omit or use - for input from stdin)
+<BR>
+default: - (stdin)
+
+<DT><B>vect=</B><EM>name</EM> 
+<DD>Name of new vector map to create
+
+<DT><B>radius=</B><EM>value</EM> 
+<DD>Radius of polygon's circumscribed circle
+<BR>
+default: none
+
+<DT><B>segments=</B><EM>value</EM>
+<DD>Number of straight line segments bounding the polygon
+<BR>
+default: set to give perimeter point spacing of 0.02% of the width of the
+current region based on the radius given.  The smallest number of
+segments that will be automatically used is six(6).
+Values down to 3 may be explicitly 
+selected on the command line or in input lines (see below).  A value of 3
+results in an equilateral triangle, 4 a square, etc.
+<P>
+</DT>
+<H2>DISCUSSION AND ADDITIONAL INPUT LINE PARAMETERS</H2>
+
+If input is from a keyboard, a prompt will be given for each input line.
+The input lines from the file or stdin should look like this:
+<PRE>
+
+  easting northing [label] [category desc]
+              or
+  easting northing [#label] [category desc]
+
+</PRE>
+
+The "#label" for is for center points piped from s.out.ascii,
+like this:
+<PRE>
+  <B>s.out.ascii -d </B> sitefile | <B>v.in.poly vect=</B>newvect <B>radius=</B>500
+</PRE>
+
+The polygon (area) label and category description are optional.  "label"
+is an integer and the "category desc" is any text string.  If the 
+label value is missing,
+the label value used is one greater than the last and the description
+is "n-sided polygon," where n is the number of bounding segments.
+In this way a series of sequentially numbered polygons
+may be created by just giving the easting and northing center coordinates.
+<P>
+Two optional command lines may be interspersed with the input lines
+containing the coordinate and optional label and category descriptions.
+These lines begin with ".S" or ".R".  Note the restrictions on
+values of radius and segments parameters below.
+<PRE>
+
+ .S 500
+
+</PRE>
+Changes the number of straight line segments which bound the polygon
+to a new value.  With large values (greater than 20) the polygons
+will approximate circles.  The minimum value of 3 will create an
+equilateral triangle.  Very large values are allowed, but the
+resulting "circles" may have more definition than is needed and will
+take lots of storage space for the vector map.
+<PRE>
+
+ .R 100
+
+</PRE>
+Changes the radius of the circle to a new value.  Radius must be
+greater than 0.0; however, very small values may give meaningless
+circles and v.support may not be able to construct the topology
+if the points on the perimeter are too closely spaced.
+<P>
+<H2>BUGS</H2>
+Circles in Lat-Long locations are not really round.  Really large
+Lat-Long circles or polygons may look oddly misshappen when displayed.
+<P>
+<H2>SEE ALSO</H2>
+<EM><A HREF="v.to.rast.html">v.to.rast</A></EM> can be used to convert the polygons to raster maps for
+masking, etc.
+<P>
+<H2>AUTHOR</H2>
+
+Dr. James R. Hinthorne, GIS Laboratory, Central Washington University.
+April 1992.

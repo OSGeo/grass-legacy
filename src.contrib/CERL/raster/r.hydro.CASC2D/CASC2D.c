@@ -97,6 +97,7 @@ int main (int argc, char *argv[])
      int    row,col,rowout,colout;
      int    itime,niter,nitrn,jj,kk,l;
      int    rindex;
+     int    yes_rg_mmhr;
      int    yes_mask;
      int    yes_dist_rough;
      int    yes_flow_out,set_flow_out_basin;
@@ -198,7 +199,7 @@ int main (int argc, char *argv[])
 	    *inf_rate_file[2000],*dis_rain_file[2000];
      char   *radar_file[10000];
 
-     struct Colors *colors;
+     struct Colors colors;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   Explicit Channel Variables 
@@ -288,7 +289,7 @@ int main (int argc, char *argv[])
 
      struct
      {
-	  struct Flag  *o,*t,*e,*i,*p,*u,*q,*d,*b;
+	  struct Flag  *s,*m,*o,*t,*e,*i,*p,*u,*q,*d,*b;
        }  flag;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -450,7 +451,8 @@ int main (int argc, char *argv[])
      parm.raingage-> description="raingage rainfall input file name (ASCII), intensities in in/hr";
 
      parm.outlet=G_define_option();
-     parm.outlet-> key       ="outlet_east&north&slope";
+     /* removed & in parameter definition, Andreas Lange, 11/2000 */
+     parm.outlet-> key       ="outlet_eastNnorthNslope";
      parm.outlet-> type      = TYPE_DOUBLE;
      parm.outlet-> required  = YES;
      parm.outlet-> key_desc  ="east,north,bedslope";  
@@ -579,6 +581,14 @@ int main (int argc, char *argv[])
 /*!!!!!!!!!!!!!!!!!!!
   DEFINING FLAGS 
 !!!!!!!!!!!!!!!!!!!*/
+
+     flag.s=G_define_flag();
+     flag.s->key         = 's';
+     flag.s->description ="do not check square tolerance";
+
+     flag.m=G_define_flag();
+     flag.m->key         = 'm';
+     flag.m->description ="r_gage_file units in mm/hr";
 
      flag.t=G_define_flag();
      flag.t->key         = 't';
@@ -746,6 +756,8 @@ int main (int argc, char *argv[])
 	yes_write=TRUE;
 	sscanf(parm.num_write->answer,"%i", &writime);
      }
+
+     yes_rg_mmhr=flag.m->answer;
 
      yes_flow_out=flag.o->answer;
 
@@ -1293,7 +1305,7 @@ int main (int argc, char *argv[])
      fprintf(stderr, "   north: %f\n   south: %f\n   east: %f\n   west: %f\n   n_s resolution in meters: %f\n   e_w resolution in meters: %f\n   number of rows: %d\n   number of columns: %d \n\n", window.north,window.south,window.east,window.west, window.ns_res/wunit,window.ew_res/wunit,nrows,ncols);
 
 
-     if(abs(1.-window.ew_res/window.ns_res) > 1e-3) 
+     if(abs(1.-window.ew_res/window.ns_res) > 1e-3 && !flag.s->answer) 
      {
        fprintf(stderr, "The cells are not square within a tolerance of 0.1 percent\n ew_res=%f ns_res=%f\n",window.ew_res,window.ns_res);
        exit(1);
@@ -2322,7 +2334,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		 yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		 depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		 dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		 yes_lake,elev,colors);
+		 yes_lake,elev,&colors);
         }
      }
 
@@ -2335,8 +2347,10 @@ for ( itime=1; itime<=niter+1; itime++ )
 	{
            icall=1;
            READ_GAGE_FILE(rgint,nrg,rain_fd);
-           if(!yes_thiessen) RAIN_SQ_DIS(space,nrg,grow,gcol,rgint,rint);
-           if(yes_thiessen) RAIN_THIESSEN(space,nrg,grow,gcol,rgint,rint);
+           if(!yes_thiessen) RAIN_SQ_DIS(yes_rg_mmhr,
+			   			space,nrg,grow,gcol,rgint,rint);
+           if(yes_thiessen) RAIN_THIESSEN(yes_rg_mmhr,
+			   			space,nrg,grow,gcol,rgint,rint);
 	}
      }
 
@@ -2438,7 +2452,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		   yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		   depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		   dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		   yes_lake,elev,colors);
+		   yes_lake,elev,&colors);
 	       goto PRINT;
              }
 
@@ -2504,11 +2518,19 @@ for ( itime=1; itime<=niter+1; itime++ )
 		if(htop>hch[node+link*NODES])
 		{
                    qtoch=3.27*w*pow((base=h[vect]),(power=1.5));
+		/* To force qtoch < current flow: cho
+		   if(qtoch > h[vect]*w*w/dt)
+			   qtoch = h[vect]*w*w/dt;
+		*/
                    h[vect]=h[vect]-qtoch*dt/(w*w);
                 }
 		else
 		{
                    qtoch=-1.*(hch[node+link*NODES]-htop)*(wid+2.*z*depth)*w/dt;
+		/* To force qtoch < current flow: cho
+		   if(qtoch > h[vect]*w*(w+wid+2.*z*depth)/dt)
+			   qtoch = h[vect]*w*(w+wid+2.*z*depth)/dt;
+		*/
                    h[vect]=h[vect]-qtoch*dt/(w*(w+wid+2.*z*depth));
                 }   
 
@@ -2534,7 +2556,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		   yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		   depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		   dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		   yes_lake,elev,colors);
+		   yes_lake,elev,&colors);
 
 		   goto PRINT; 
 
@@ -2679,6 +2701,10 @@ for ( itime=1; itime<=niter+1; itime++ )
 
              qtoch=2.0*w*(2.0/3.0)*sqrt((double)(2.0*9.81/3.0))*pow((double)
                    (h[con_vect[node+link*NODES]]),(double)(3.0/2.0));
+	  /* To force qtoch < current flow: cho
+	     if(qtoch > h[con_vect[node+link*NODES]]*w*w/dt)
+		   qtoch = h[con_vect[node+link*NODES]]*w*w/dt;
+	  */
              qlat[node+link*NODES]=qtoch/w;
 	     h[con_vect[node+link*NODES]]=h[con_vect[node+link*NODES]]
 		        		     -qtoch*dt/(w*w);
@@ -2753,6 +2779,10 @@ for ( itime=1; itime<=niter+1; itime++ )
      {
         hout=h[vectout]; 
         qoutov=w*alfaovout*pow((base=hout),(power=1.667));
+     /* To force qoutov < current flow: cho
+	if(qoutov > h[vectout]*w*w/dt)
+	   qoutov = h[vectout]*w*w/dt;
+     */
         h[vectout]=h[vectout]-qoutov*dt/(w*w);
         qout=qoutov;
      }

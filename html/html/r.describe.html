@@ -1,0 +1,204 @@
+<TITLE>r.describe</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.describe</b></EM>  - Prints terse list of category values found in a raster map layer.
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.describe</B>
+<BR>
+<B>r.describe help</B>
+<BR>
+<B>r.describe</B> [<B>-1rqd</B>] <B>map=</B><EM>name</EM>[<B>nv=</B><EM>string</EM>][<B>nsteps=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.describe</EM> prints a terse listing of category values found in
+a user-specified raster map layer.
+
+
+<H2>OPTIONS</H2>
+
+The program will be run non-interactively, if the user specifies
+the name of a raster map layer and any desired flags on the
+command line, using the form
+
+<DL>
+<DD>
+<B>r.describe</B> [<B>-1rqd</B>] <B>map=</B><EM>name</EM>
+</DL>
+
+where the map <EM>name</EM> is the name of a raster map
+layer whose categories are to be described, and the
+(optional) flags <B>-1</B>, <B>-r</B>, <B>-q</B>, and
+<B>-d</B> have the meanings described below.
+
+<P>
+
+Alternately, the user can simply type <B>r.describe</B> on the command line,
+without program arguments.  In this case, the user will be prompted for
+needed flag settings and the parameter value using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H3>PROGRAM USE</H3>
+
+The user can select one of the following two output reports
+from <EM>r.describe</EM>:
+
+
+<DL COMPACT>
+
+<DT>(1) RANGE.
+
+<DD>A range of category values found in the raster map
+layer will be printed.  The range is divided into three
+groups:  negative, positive, and zero.  If negative values
+occur, the minimum and maximum negative values will be
+printed.  If positive values occur, the minimum and maximum
+positive values will be printed.  If zero occurs, this will
+be indicated.
+
+<DT>(2) FULL LIST.
+
+<DD>A list of all category values that were found in the
+raster map layer will be printed.
+
+<P>
+
+The following sample output from <EM>r.describe</EM>:
+
+<DL>
+<DD> 0 2-4 10-13
+</DL>
+
+means that category data values 0, 2 through 4, and 10
+through 13 occurred in the named map layer.
+
+</DL>
+
+The user must choose to read the map layer in one of two ways:
+
+<DL COMPACT>
+
+<DT>(1) DIRECTLY.
+
+<DD>The current geographic region and mask are ignored and the full 
+raster map layer is read.  This method is useful if the
+user intends to <EM>reclassify</EM> or
+<EM>rescale</EM> the data, since these functions 
+(<EM><A HREF="r.reclass.html">r.reclass</A></EM> and
+<EM><A HREF="r.rescale.html">r.rescale</A></EM>) 
+also ignore the current <EM>geographic region</EM>
+and <EM>mask</EM>.
+
+<DT>(2) REGIONED and MASKED.
+
+<DD>The map layer is read within the current geographic region,
+masked by the current mask.
+
+</DL>
+
+<H3>NON-INTERACTIVE PROGRAM USE</H3>
+
+<EM>r.describe</EM> examines a user-chosen raster map
+layer.  If run non-interactively, the layer name must be
+supplied on the command line.
+
+<P>
+
+A compact list of category values that were found in the
+data layer will be printed.
+
+<P>
+
+Following is a sample output:
+
+<DL>
+<DD>0 2-4 10-13
+</DL>
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-l</B>
+
+<DD>Print the output one value per line, instead of the
+default short form.  In the above example, the <B>-1</B>
+option would output:
+
+<PRE>
+0
+2
+3
+4
+10
+11
+12
+13
+</PRE>
+
+
+<DT><B>-r</B>
+
+<DD>Only print the range of the data.  The highest and
+lowest positive values, and the highest and lowest negative
+values, are output. In the above example, the <B>-r</B>
+option would output:
+
+<DL>
+<DD>0 2 13
+</DL>
+
+<P>
+
+If the <B>-1</B> option is also specified, the output
+appears with one category value per line.
+
+<DT><B>-q</B>
+
+<DD>Quiet. The <B>-q</B> option will tell r.describe to be
+silent while reading the raster file.  If not specified,
+program percentage-completed messages are printed.
+
+<DT><B>-d</B>
+
+<DD>Use the current geographic region settings.  Normally,
+<EM>r.describe</EM> will read the data layer directly,
+ignoring both the current region settings and mask.  The
+<B>-d</B> option tells <EM>r.describe</EM> to read the map
+layer in the current region masked by the current mask (if
+any).
+
+</DL>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of raster map.
+
+<DT><B>nv=</B><EM>string</EM>
+<DD>String representing no data cell value.
+
+<DT><B>nsteps=</B><EM>value</EM>
+<DD>Number of quantization steps.
+</DL>
+
+<H2>NOTES</H2>
+
+The range report will generally run faster than the full list.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A>, <A HREF="r.mask.html">r.mask</A>, <A HREF="r.reclass.html">r.reclass</A>, <A HREF="r.rescale.html">r.rescale</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory

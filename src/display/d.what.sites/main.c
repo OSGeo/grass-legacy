@@ -1,38 +1,101 @@
 #define GLOBAL
-#include "what.h"
+#include "local_proto.h"
 
-int main(
-int argc ,
-char **argv )
+int main(int argc, char **argv)
 {
 	struct Cell_head window ;
 	char temp[128] ;
-	int t, b, l, r ;
+	char *str;
+	int i, j, t, b, l, r ;
+	int ml;
+	int width, mwidth;
 	struct Option *opt1;
-	struct Flag *shh;
-
+	struct Flag *shh, *once, *terse;
+	struct GModule *module;
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
+	if(D_get_site_list (&site, &nsites) < 0)
+		site = NULL;
+	else
+	{
+		site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+		site[nsites] = NULL;
+	}
+
+	R_close_driver();
 
 	opt1 = G_define_option() ;
-	opt1->key        = "sites" ;
+	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->multiple   = NO ;
-	opt1->gisprompt  = "old,site_lists,Sites" ;
+	opt1->multiple   = YES ;
+	if (site)
+		opt1->answers = site;
+	opt1->required   = NO ;
+	opt1->gisprompt  = "old,site_lists,sites" ;
 	opt1->description= "Name of existing sites file"; 
 
+	once = G_define_flag();
+	once->key = '1';
+	once->description ="Identify just one site";
+	
+	terse = G_define_flag();
+	terse->key = 't';
+	terse->description = "Terse output. For parsing by programs.";
+	
 	shh = G_define_flag ();
 	shh->key = 'q';
 	shh->description = "Load quietly";
+	
+	module = G_define_module();
+	module->description = 
+	  "Allows the user to interactively query site list descriptions. ";
 
+	if(!site)
+		opt1->required = YES;
 
-	if (G_parser(argc, argv))
+	if ((argc > 1 || !site) && G_parser(argc, argv))
 	    exit(-1);
 
-	R_open_driver();
+	if(opt1->answers && opt1->answers[0])
+	    site = opt1->answers;
+
+	if(site)
+	{
+	    for(i=0; site[i]; i++);
+	    nsites = i;
+
+	    ml = strlen(G_mapset());
+	    width = mwidth = 0;
+	    for(i=0; i<nsites; i++)
+	    {
+		str = strchr(site[i], '@');
+		if(str) j = str - site[i];
+		else	j = strlen(site[i]);
+		if(j > width)
+			width = j;
+
+		if(str) j = strlen(str+1);
+		else	j = ml;
+		if(j > mwidth)
+			mwidth = j;
+
+	        if(G_find_sites2(site[i], (str ? str+1 : "")) == NULL)
+		{
+		    char msg[256];
+		    sprintf(msg, "Site file [%s] not available", site[i]);
+		    G_fatal_error(msg);
+		}
+	    }
+	    Snum = (int *) G_malloc(sizeof(int)*nsites);
+	    CurSites = (Site ***) G_malloc(sizeof(Site **)*nsites);
+	}
+
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(temp))
 		G_fatal_error("No current graphics window") ;
@@ -55,10 +118,11 @@ char **argv )
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 	
-	if(open_sites(opt1->answer)){
-	    load_sites(&window, !(shh->answer));
-	    what (0, 0) ;
+	for(i=0; i<nsites; i++){
+	    load_sites(i, &window, !(shh->answer));
 	}
+
+	what (once->answer, terse->answer, width, mwidth);
 
 	free_cached_sites();
 

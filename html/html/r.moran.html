@@ -1,0 +1,38 @@
+<html>
+<TITLE>r.moran</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<b>r.moran</b> - GRASS module that calculates Moran's I for a raster surface and 
+	optionally creates a surface of local moran values.
+<P>
+
+<H2>Usage:</H2>
+ <b>r.moran</b> [-zb] <b>in=</b>name [<b>out=</b>name] [<b>size=</b>value]
+
+<h2>Flags:</H2>
+  -z   Exclude zeros in calculation<p>
+  -b   Brief output only<p>
+
+<H2>Parameters:</H2>
+    in   Raster surface layer to measure<p>
+   out   Output raster layer containing local Moran measures<p>
+  size   Size of processing window (odd number only)<br>
+         default: 3<p>
+
+<H2>HISTORY</h2>
+<pre>
+Jo Wood 21st October, 1994
+------- 
+Modified to give brief version of output with increased significant
+figures. Also reports on average local variance - roughness measure.
+Jo Wood, 3rd April, 1995
+</PRE> 
+<HR>
+<ADDRESS>
+<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A></ADDRESS>
+
+<BR><A HREF="http://www.geog.le.ac.uk/assist/index.html">ASSIST's home</A>
+</BODY>
+</HTML>

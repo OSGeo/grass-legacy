@@ -1,0 +1,25 @@
+From: Justin Hickey <jhickey@hpcc.nectec.or.th>
+
+$Id$
+
+
+Step by step procedure for our pre-testers:
+
+For testing the source code
+o Download and unpack new distribution in a new directory
+o Run configure
+o Run make
+o Run make install
+o Check if Grass runs (does "make check" work?) - maybe better to have
+  this before "Run make install"
+o Run make uninstall
+o Run make distclean
+
+For testing the binary distributions
+o Download and unpack new distribution in a new directory
+o Run grass5install.sh
+o Check if Grass runs (maybe use testgrass.sh or some script created 
+  from the testsuite directory)
+o check if maps can be displayed properly
+o Run grass5uninstall (new feature in CVS tree, not in beta 11)
+

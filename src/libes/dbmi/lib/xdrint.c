@@ -52,7 +52,7 @@ db__send_int_array (x, n)
 	stat = DB_PROTOCOL_ERR;
     for (i = 0; stat == DB_OK && i < n; i++)
     {
-	if(!xdr_int (&xdrs, &x))
+	if(!xdr_int (&xdrs, x))
 	    stat = DB_PROTOCOL_ERR;
 	x++;
     }

@@ -1,0 +1,5 @@
+interface_build {
+    {db.columns} 0
+    {List table columns.}
+    {entry table {Table:} 0 ""}
+}

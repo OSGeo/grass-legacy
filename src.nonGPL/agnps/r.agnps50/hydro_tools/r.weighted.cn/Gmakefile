@@ -1,0 +1,11 @@
+PGM = r.weighted.cn
+OBJ = r.weighted.cn.o\
+	usage.o\
+	cell_open.o\
+	cell_open_new.o
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
+	$(CC) -o $(BIN)/$(PGM) $(LDFLAGS) $(OBJ) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+
+$(GISLIB): #

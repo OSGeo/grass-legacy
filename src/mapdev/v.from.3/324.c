@@ -10,8 +10,6 @@
 #include <unistd.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "digit.h"
-#include    "dig_head.h"
 
 
 #define MAIN

@@ -1,7 +1,6 @@
 PGM       = d.vect
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJS = \
 	main.o \
@@ -16,11 +15,7 @@ CFILES = \
 	use_plot1.c
 
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES)  /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
-

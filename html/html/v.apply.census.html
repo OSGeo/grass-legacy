@@ -1,0 +1,396 @@
+<TITLE>v.apply.census</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.apply.census</b></EM>  - Calculate/Import Demographics from Census STF1 Files
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.apply.census</B>
+
+<BR>
+
+<B>v.apply.census help</B>
+
+<BR>
+
+<B>v.apply.census [-d] [-p] [-l] [-u]</B>
+<DT>
+<B>v.apply.census input_stf1=</B>name
+<DD>[<B>out=</B>name] [<B>ef=</B>name] [<B>formula=</B>mapname=expression]
+<DD>[<B>name_field=</B>name] [<B>zone=</B>value] [<B>spheroid=</B>name]
+</DT>
+
+<H2>DESCRIPTION</H2>
+<P>
+This program reads a previously selected subset of STF1 or
+PL94-171 U.S. Census Bureau demographic records (see <EM>m.in.stf1.tape</EM>),
+and writes one of the following:
+<DL>
+<DD>GRASS site list (coordinates and a value).
+<DD>GRASS vector polygon attribute labels file (coordinates and a label value).
+<DD>Text report to stdout in one of two formats.
+</DL>
+<P>
+
+Any arithmetic expression combining constants with any of the more than
+900 hundred demographic (numeric) fields can be defined and
+will be evaluated (by the Unix <EM>bc -l</EM> utility) to compute the
+value for each input record.
+
+
+<P>
+
+The location coordinates for the polygon label point or the site location
+is obtained from certain columns (269-287) in the input records, 
+making this program quite specific for the specified types of STF1 and
+PL94-171 input file records.  Use with other types of input data is not
+advised.
+
+
+<P>
+
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-d</B>
+<DD>Output IDENTIFICATION SECTION to stdout (20 pages)
+<DT><B>-p</B>
+<DD>Output STF1 MATRIX TABLE to stdout (30 pages)
+<DT><B>-l</B>
+<DD>Output PL94-171 MATRIX TABLE to stdout (1 page)
+<DT><B>-u</B>
+<DD>Output STF1 SUMLEV TABLE to stdout (4 pages)
+<P>
+<DT><B>Note:</B>
+<DD>Only the first flag given will be executed; the program exits after
+sending one table to stdout.  Other parameters are ignored.
+</DL>
+<P>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input_stf1=</B><EM>name</EM>
+<DD>Path/name of STF1 or PL94 input file
+<DT><B>out=</B><EM>name</EM>
+<DD>Type of output: <PRE>site | atts | table:Lxxx | - (stdout)</PRE>
+default: -
+<DL>
+<DT><EM>att</EM>
+<DD>for results to vector map attribute file
+<DT><EM>site</EM>
+<DD>for results to site list
+<DT>-
+<DD>for results to stdout; this is the default
+<DT><EM>table</EM>
+<DD>for results in table form to stdout with
+the column value(s) represented by the ':Lxxx:Lxxx' string
+preceeding the expression value instead of easting and northing.
+Lxxx is in same choice of representation as column designation  
+in formula (see below).
+</DL>
+<DT><B>ef=</B><EM>name</EM>
+<DD>Path/name of text file with formula expression(s)
+<DT><B>formula=</B><EM>map=expression</EM>
+<DD>mapname=Computation with STF1A columns, constants and <EM>bc</EM> operators
+(see below).  mapname of vector or site map to make is required
+in all cases (but ignored for '-' or 'table:' output modes).
+<DT><B>name_field=</B><EM>name</EM>
+<DD>field name for parsing stdin lines (-a to ignore)<BR>
+default: -a<BR>
+<EM>name</EM> is Keyword in stdin stream preceeding the number of a STF1 record
+to read from input_stf1 file.  The number is a physical sequence
+number, not a record identification number.  This parameter is
+appropriate only in special uses of this program.  If '-a' is
+given, or this parameter is omitted, all records in STF.file will
+be processed.
+<DT><B>zone=</B><EM>value</EM>
+<DD>UTM zone number; default is location zone<BR>
+options: 1-60<BR>
+default: 10
+<DT><B>spheroid=</B><EM>name</EM>
+<DD>Spheroid for LL to UTM conversion; see m.gc.ll<BR>
+default: clark66
+</DL>
+<P>
+NOTE:  Only one of the "ef" or "formula" input fields may be used.
+<P>
+<H2>THE "formula" PARAMETER</H2>
+
+The string after the '=' in this parameter almost always must 
+be enclosed in quotes to protect it from Shell interpretation of characters
+such as * / (  ) and spaces (which may be used to increase readability,
+but are not necessary).  This string is always of the form
+<EM>mapname=expression</EM>.
+
+
+<P>
+
+The <EM>mapname</EM> string can be any legal GRASS map name (up to 14 characters).
+The second '=' is required and may be preceeded and followed by a space.
+
+
+<P>
+
+In the <EM>expression</EM>, great flexibility is provided for the
+computation of interesting combinations of the data fields contained
+in the demographic records.
+
+
+<P>
+
+The usual operators used in the <EM>expression</EM> include: +, -, *, /, and %.
+The user should review the Unix manual entry for the <EM>bc</EM> calculator
+for the complete list of available functions and other operators.
+
+
+<P>
+
+Parentheses are used in the normal algebraic manner.
+
+
+<P>
+
+The operands in the <EM>expression</EM> may consist of any mixture of:
+
+
+<P>
+
+     integer constants
+     real constants
+     functions allowed by <EM>bc</EM>
+     numeric fields from the demographic records
+
+
+<P>
+
+Numeric fields from both the IDENTIFICATION and MATRIX SECTIONS of the 
+demographic records may be used.  Review the User and Technical Documentation
+for these demographic files; or use the <EM>-p</EM> option of this program
+to print the MATRIX SECTION document (the demographic data fields).
+
+When substituting values from the numeric fields into
+the expression, &lt;SPACE&gt; characters are replaced by zero.  (Spaces, which
+are rare in the demographic data, are usually the result of missing
+values or restricted information).
+
+
+<P>
+
+The numeric fields from the demographic records may be designated in
+one of three ways in the <EM>expression</EM>.
+
+
+<P>
+<OL>
+<LI>'Lcccc', where 'L' is an upper case alphabetic letter which indicates the
+length of the numeric field in the data records: A=1, B=2, ... , I=9,
+J=10, O=15, etc; and 'cccc' is the starting column number for the data field
+of interest: 301 for 100% population count, 7221 for total number
+of four-room housing units, 58 for 101st Congressional District, etc. 
+The proper specification of the Congressional District number would
+be 'B58' because it is a two-column field.  'I301' would indicate that
+the 100% poplation should be used in the calculation; it's a nine-column
+field.
+<P>
+<LI> 'Pnna0nnn' or 'Hnna0nnn', where 'n' is a digit and 'a' is a digit or
+(rarely) upper case letter.  These forms represent the MATRIX field naming
+schemes used in the CD-ROM "dBase 3" files.  They can be used in
+processing STF1 records extracted from the CD-ROM or TAPE distribution
+media.  All eight characters of the field name must be used.  (Note:
+this form cannot be used in processing the PL94-171 records.)
+<P>
+<LI>'ID_NAME'.  The STF1 and PL94-171 files use the same set of
+IDENTIFICATION SECTION field names (67 fields) for the "locational"
+information contained in the first 300 characters of each record.  The
+field name, in all upper case letters, may be used if the numeric value
+of the field is needed in the <EM>expression</EM>.  Two of the most useful
+fields are AREALAND and AREAWAT which allow the direct computation of
+population density values.
+<P>
+</OL>
+The <EM>bc</EM> calculator usually returns a value with a very large number
+of decimal places.  Vector attributes are automatically truncated(!) to
+integers by the 
+<A HREF="v.support.html">v.support</A>
+ program when the topology file is built.  Site
+list descriptions are likewise truncated to integers by GRASS programs
+which use the descriptions as numeric values (e.g., sites to cell in
+<EM>
+<A HREF="s.menu.html">s.menu</A>
+</EM>).
+
+
+<P>
+
+
+<H2>THE 'out=table:' PARAMETER</H2>
+
+The default operation of <EM>v.apply.census</EM> when tabular reports are
+produced to <EM>stdout</EM> (when not making a sites list or vector attribute
+file) is to print the easting and northing coordinates and then the
+value resulting from the <EM>expression</EM>.  Often the user wishes to 
+have an identifier different from the coordinates.  The construction
+<EM>out=table:field</EM> will replace the coordinates with the character string
+indicated by <EM>field</EM>, which may have any of the three
+forms used for numeric fields in the formula <EM>expression</EM>, see
+above.  Note: a special case exists for the 66 character description
+field which begins in column 192; the entire field will be printed if
+designated by either of these two forms: <EM>out=table:ANPSADPI</EM> or
+<EM>out=table:Z192</EM>.
+
+
+<P>
+
+Complex tables may be produced by making multiple runs of
+<EM>v.apply.census</EM>, redirecting the tabular output to files, and using the
+Unix tools <EM>cut, paste</EM>, and <EM>colrm</EM> to combine the resulting files.
+
+
+<P>
+
+
+<H2>EXAMPLES</H2>
+
+[These examples assume that STF1 records for the census tracts
+(SUMLEV=140) in a particular county (CNTY=037) have been extracted from
+the distribution source (with <EM>m.in.stf1.tpe</EM>)
+and saved in a file named 037.140 in the current directory.]
+<P>
+<OL>
+<LI>Create a site list where the label values are the percentage of
+females in each input record:
+<P>
+<DL>
+<DD><B>v.apply.census in</B>=037.140 <B>out=</B>site <B>formula=</B>'pct.female = 100 * (I373 / I301)'
+</DL>
+<P>
+<LI>Label an existing vector map (named tract.pop) of tract boundaries
+with the total population of each tract (run <EM>
+<A HREF="v.support.html">v.support</A>
+</EM> and build 
+topology after creating the attributes file):
+<P>
+<DL>
+<DD><B>v.apply.census in=</B>037.140 <B>out=</B>atts <B>formula=</B>tract.pop=P0010001  (or)
+<DD><B>v.apply.census in=</B>037.140 <B>out=</B>atts <B>formula=</B>tract.pop=I301
+</DL>
+
+<P>
+
+<LI>Produce a tabular report of the census tract numbers and the number
+of Hispanics per square kilometer:
+<P>
+<DL>
+<DD><B>v.apply.census in</B>=037.140 <B>out=</B>table:TRACTBNA <B>formula=</B>"m=(P0080001/AREALAND)*1000"
+</DL>
+<P>
+<LI>Produce a tabular report of the number of people per housing unit
+for each tract and the coordinates of the internal (label) point:
+<P>
+<DL>
+<DD><B>v.apply.census in=</B>037.140 <B>formula=</B>"map=P0010001/H0010001"
+</DL>
+<P>
+</OL>
+
+<H2>FORMAT OF THE FORMULA TEXT FILE</H2>
+
+Running this program with the <EM>ef=file</EM> command line parameter causes
+the named file to be read and each formula contained therein to be processed
+as if it were entered on the command line.  The <EM>out=</EM> parameter
+may optionally be respecified in this file; each <EM>out=</EM> selection
+remains in effect until explicitly changed.  The program exits after
+the last formula is processed.
+
+
+<P>
+
+The following is a sample formula file.  Note the use of lines beginning
+with '#' as manditory formula separators and comment lines.  Also note
+that expressions may be continued on successive lines; the lines are
+concatenated to a maximum of 500 characters for a single formula.  Blank
+lines are ignored.
+<PRE>
+popden.sqkm = 1000 * P0010001 / (AREALAND+AREAWAT)
+# that computes population density in people per sq. km.
+#
+# next do people per sq. mile as a vector attribute file
+out=att
+popden.sqmi = 2.59*1000 *
+P0010001 / (AREALAND+
+AREAWAT)
+#
+# next do total population as a vector attribute file
+total.pop = I301
+#
+# output the county identification numbers as the descriptions
+# in a site list
+out=sites county = CNTY
+#
+# output the 66 char. description and FIPS Place Code as a table
+out=table:ANPSADPI
+map=PLACEFP
+# optional ending comment line
+</PRE>
+
+
+<H2>BUGS/FEATURES</H2>
+
+Computational errors in <EM>bc</EM> are not handled too gracefully: a warning is
+output and a zero result is used.
+
+
+<P>
+
+<EM>bc</EM> tends to output lots of decimal places.  The user must clean this
+up for output sent to stdout.
+
+
+<P>
+
+The GRASS site list output format used includes the '#' before the
+label value to facilitate the production of raster maps with cell
+values representing the results of the formula execution.
+
+
+<P>
+
+If using the "name_field" and "ef" parameters, the formula file may
+contain only one formula.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><a href="m.in.stf1.tape.html">m.in.stf1.tape</a></EM> is used as a preprocessor to select subsets of
+STF1 or PL-171 tape format records for input to this program.<p>
+<EM>
+Unix utility programs
+such at <EM>grep</EM> or <EM>awk</EM> can also be used to select subsets of
+lines from the PL94-171 files, but not from the STF1 tape files due to
+their very long record lengths.
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne, GIS Laboratory, Central Washington University.
+July, 1992.
+
+
+<P>
+

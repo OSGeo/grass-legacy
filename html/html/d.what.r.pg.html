@@ -1,0 +1,125 @@
+<html>
+<A NAME="d.what.r.pg">
+<TITLE>d.what.r.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>d.what.r.pg</B></EM> - Report database attributes associated with a raster category value at a specified location. (GRASS-RDBMS Attribute Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>d.what.r.pg</B><BR>
+<B>d.what.r.pg help</B><BR>
+<B>d.what.r.pg map</B><EM>=name</EM> <B>tab</B><EM>=name</EM> <B>col</B><EM>=name</EM> [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+
+<H2>ALTERNATE</H2>
+<B>d.what.r.pg -s help</B><BR>
+<B>d.what.r.pg -s sql</B><EM>=filename</EM> <B>map</B><EM>=name</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>d.what.r.pg</EM> reports database attributes from the currently selected database associated with a raster category at a specific location on a raster map.  The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user.  The current raster location is selected by the user with the mouse.  If no join parameters are provided by the user on the command line the attributes in the table directly linked to the GRASS raster structure via the category value are returned.  However, if a join is specified then attributes from a related table are displayed. If the alternate form of this command is selected with the <EM>-s</EM> flag the user has greater control over the number of relational joins and the manner in which the attribute information is displayed.  Using the <EM>-s</EM> option the attributes from more than one table can be returned and displayed.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map=map</B>
+<DD>Name of an existing raster map with category values linked to the currently selected database.
+<P>
+
+<DT><B>tab=databasetablename</B>
+<DD>Table in the currently selected database containing a column associated with raster category values.
+<P>
+
+<DT><B>col=databasecolumnname</B>
+<DD>Column associated with raster category values.
+<P>
+
+<DT><B>join=tab,tabkey,pkey</B>
+<DD>Tab is the table used to develop the current SQL query.  Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+</DL>
+<P>
+
+For instance, assume that secosoilcats is a table containing column values associated with category values in a the GRASS raster file soils (cropname).  In addition, assume that compyld is a table containing attribute data on the crop production capacity in the same area.  In this example secosoilcats is the table associated with the GRASS raster map and grasscats is the column linking secosoilcats to the GRASS category file, the table compyld contains the attribute information to base the query/reclass on and it is linked to secosoilcats via the common column muid.  To specify a query based on attribute values in the table compyld:
+<P>
+
+<DD><EM>d.rast.pg key=grasscat tab=secosoilcats col=cropname input=soils join=compyld,compyld.muid,secosoilcats.muid</EM>
+
+<P>
+Specifying these conditions would insure that all rows from table compyld which satisfy the query criteria would be matched with the corresponding rows in table secosoilcats, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+
+<P>
+This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+
+<H2>ALTERNATE COMMAND LINE USAGE</H2>
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
+SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+<P>
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the <EM>-s</EM> flag.
+<P>
+
+<B>EXAMPLE (single table)</B><P>
+<EM>d.what.r.pg -s sql=statsgo.sql map=secosoils</EM>
+<P>
+
+statsgo.sql:<BR>
+<EM>retrieve unique (secosoilcats.all)<BR>
+where secosoilcats.tlid=?</EM>
+<P>
+
+<B>Results:</B><BR>
+Reports all attributes from the table secosoilcats associated with the raster category value at the current mouse location the raster map secosoils.
+<P>
+
+<B>EXAMPLE (two table join)</B><P>
+<EM>d.what.r.pg -s sql=statsgo.sql map=secosoils</EM>
+<P>
+
+statsgo.sql:<BR>
+<EM>retrieve unique (secosoilcats.all, mapunit.all, compyld.all)<BR>
+where secosoilcats.grasscat=? and secosoilcats.muid=mapunit.muid and mapunit.muid=compyld.muid</EM>
+<P>
+
+<B>Results:</B><BR>
+Reports all attributes from the table secosoilcats, mapunit and compyld associated with the raster category value at the current mouse location in the raster map secosoils.
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>SQL select statements are input from a prepared file.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sql=filename</B>
+<DD>SQL statements specifying well formed selection criteria.
+<P>
+
+<DT><B>map=map</B>
+<DD>Name of an existing raster map with category values linked to a database.
+</DL>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</BODY>
+</HTML>
+
+

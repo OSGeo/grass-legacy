@@ -25,6 +25,7 @@ main (int argc, char *argv[])
     int check_at();
     char buf[1024];
     int create, select, print, debug;
+	struct GModule *module;
     struct
     {
 	struct Option *frame, *at;
@@ -37,6 +38,10 @@ main (int argc, char *argv[])
 	struct Flag *create;
 	struct Flag *erase;
     } flag;
+
+	module = G_define_module();
+	module->description =
+		"Manages display frames on the user's graphics monitor.";
 
     flag.create = G_define_flag();
     flag.create->key = 'c';
@@ -77,7 +82,8 @@ main (int argc, char *argv[])
     if (G_parser(argc,argv))
 	exit(1);
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 
     create = flag.create->answer;
     print  = flag.print->answer;
@@ -134,7 +140,8 @@ main (int argc, char *argv[])
 
     if (print)
     {
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_get_cur_wind(buf) ;
 	D_set_cur_wind(buf) ;
 	R_close_driver() ;

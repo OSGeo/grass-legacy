@@ -11,7 +11,7 @@ proc init_graphics {} {
 	if {$Init == 0} {
 		Nset_fov 3
 		Ninit_view
-#		Nset_focus_map
+		Nset_focus_map
 		set $Init 1
 	}
 	set p [expr 20.0/125.0]

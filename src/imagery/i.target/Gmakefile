@@ -1,6 +1,7 @@
+PGM=i.target
 LIST = main.o ask_target.o
+LIBES=$(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST)  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_INTER)/i.target: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
-
-$(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
+$(LIBES): #

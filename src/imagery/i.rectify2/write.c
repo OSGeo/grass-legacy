@@ -45,6 +45,7 @@ int write_map(char *name)
    char buf[100];
    void *rast;
    
+   G_set_window(&target_window); 
 
    rast = G_allocate_raster_buf(map_type);
    close(temp_fd);

@@ -1,0 +1,82 @@
+<html>
+
+<TITLE>d.db</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.db</b></EM> - Displays sites from DB table in the active 
+graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.db</B> 
+<BR>
+<B>d.db help</B> 
+<BR>
+<B>d.db table=</B><EM>table_name</EM>
+<B>x=</B><EM>column_name</EM> 
+<B>y=</B><EM>column_name</EM>
+[<B>where=</B><EM>SQL_where_clause</EM>] 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+[<B>icon=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.db</EM> displays sites from table in database with coordinates in 
+x, y columns using site markers of a 
+color, size, and type specified by the user. 
+Output is displayed in the active graphics monitor. 
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>table=</B><EM>name</EM>
+<DD>Name of a <EM>table</EM> in the database.
+<DT><B>x=</B><EM>column_name</EM>
+<DD>Name of a <EM>column</EM> containing x coordinates.
+<DT><B>y=</B><EM>column_name</EM>
+<DD>Name of a <EM>column</EM> containing y coordinates.
+<DT><B>where=</B><EM>SQL_where</EM>
+<DD><EM>SQL WHERE</EM> clause without 'where'.
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current color to <EM>name</EM>.</EM> 
+<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown, 
+gray, white, and black 
+<BR>
+Default: <EM>gray</EM> 
+<DT><B>size=</B><EM>value</EM>
+<DD>Size, in pixels, in which the site icons are to be drawn. 
+<BR>
+Options: 0-1000 
+<BR>
+Default: 5 
+<DT><B>icon=</B><EM>name</EM>
+<DD>The type of icon to be displayed at site locations. 
+<BR>
+Options: x, diamond, box, + 
+<BR>
+Default: x 
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="db.connect.html">db.connect</A></EM><br>
+
+<H2>AUTHOR</H2>
+
+Radim Blazek, Radim.Blazek@dhv.cz
+
+</body>
+</html>

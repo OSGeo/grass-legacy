@@ -2,7 +2,7 @@
 # from Dr. Agustin Lobo - alobo@ija.csic.es
 #
 # LANDSAT-4 TM coefficients
-#
+# Identical to ERDAS Imagine
 
 #set echo
 #set verbose

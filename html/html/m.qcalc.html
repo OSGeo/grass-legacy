@@ -1,0 +1,155 @@
+<TITLE>m.qcalc</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.qcalc</b></EM>  - Creates tables, performs conversions, and performs
+simple math calculations.
+
+<BR>
+
+<EM>(SCS GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.qcalc</B>
+
+<BR>
+
+<B>m.qcalc help</B>
+
+<BR>
+
+<B>m.qcalc</B> [<B> -sahcm</B>] <B>init=</B><EM>value</EM> [<B>end=</B><EM>value</EM>] [<B>incr=</B><EM>value</EM>] [<B>unit=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program
+
+<OL> 
+
+<LI> allows a user to create a table of cell sizes, 
+showing how many square feet, acres, and 
+hectares each cell would represent.
+
+<LI>allows a user to create a table of acreage sizes, 
+showing how many square feet, hectares, and 
+what cell size would be represented.
+
+<LI>allows a user to create a table of hectare sizes, 
+showing how many square feet, acres, and 
+what cell size would represented.
+
+<LI>allows a user to convert values among feet, meters, miles, and kilometers.
+
+<LI>allows a user to use the UNIX <EM>bc</EM> simple math calculator.
+</OL>
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-s</B> 
+
+<DD>Create a cell size table.
+
+<DT><B>-a</B> 
+
+<DD>Create an acres size table.
+
+<DT><B>-h</B> 
+
+<DD>Create a hectares size table.
+
+<DT><B>-c</B> 
+
+<DD>Convert value to user-stated units.
+
+<DT><B>-m</B> 
+
+<DD>Perform a math calculation.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>init=</B><EM>value</EM> 
+
+<DD>Initial value.
+
+<DT><B>end=</B><EM>value</EM> 
+
+<DD>Ending value.
+
+<DT><B>incr=</B><EM>value</EM> 
+
+<DD>Increment value.
+
+<DT><B>unit=</B><EM>name</EM> 
+
+<DD>Units of measure.
+
+<BR>
+
+Options:  ft, mt, mi, km
+</DL>
+
+<H2>EXAMPLE</H2>
+
+The command:
+
+
+<P>
+
+<DL>
+<DD>
+<B>g.qcalc -s init=</B><EM>100</EM> <B>end=</B><EM>400</EM> <B>incr=</B><EM>100 </EM>
+</DL>
+
+
+<P>
+
+produces the following table:
+<PRE>
+	Cell Size	Sq.Ft.   Acres   Hectares
+	100 x 100    107639.31	  2.47       1.00
+	200 x 200    430557.23	  9.88       4.00
+	300 x 300    968753.77	 22.24       9.00
+	400 x 400   1722228.93	 39.54      16.00
+
+</PRE>
+The command:
+<P>
+<DL>
+<DD> <B>g.qcalc -c init=</B><EM>100</EM> <B>unit=</B><EM>ft</EM>
+</DL>
+<P>
+produces the following:
+<PRE>
+	Feet	Meters	Miles	Kilometers
+	100.0	30.4	0.02	0.03 
+</PRE>
+
+<H2>AUTHOR</H2>
+
+R.L.Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

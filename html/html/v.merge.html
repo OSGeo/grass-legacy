@@ -1,0 +1,116 @@
+<TITLE>v.merge</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.merge</b></EM>  - Merges vector map files.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.merge</B>
+
+<BR>
+
+<B>v.merge help</B>
+
+<BR>
+
+<B>v.merge</B> [<B> -mv</B>] <B>map=</B><EM>name</EM>[,<EM>name</EM>,...]
+<B>output=</B><EM>name </EM><B>subj=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+Program to read the <EM>dig_cats</EM> file for each named map.  The program then
+compares the category label (NOT the value) to the labels in the named
+subject file. If the label is found in the subject file, the
+corresponding attribute values of the map are changed to the subject
+file category value.  When all maps are completed a patch operation is
+performed.
+
+<BR>
+
+This program was designed to merge maps for areas that have the same
+category labels, but different category values associated with those labels.
+
+<BR>
+
+There are two flags for <EM>v.merge</EM>:
+
+
+<P>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-m</B> 
+
+<DD>Use RAM to hold subject file category values.  This may be faster than
+the default (use of disc files);  however, memory may not be large
+enough for all of the subject file.
+
+<DT><B>-v</B> 
+
+<DD>By default, only the name of the mapset processing is sent to standard
+output.  In verbose mode, the user is given additional information
+on program operations.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT>"<B>map=</B><EM>name,name,...</EM>" 
+
+<DD>Vector map--source for composite.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>New name assigned to vector composite map.
+
+<DT><B>subj=</B><EM>name</EM> 
+
+<DD>SUBJ file name.
+</DL>
+
+<H2>NOTES</H2>
+
+The program <EM>v.make.subj</EM> can be run prior to using <EM>v.merge</EM>.
+<EM>v.make.subj</EM>
+will read the category labels of each map in its list and create a
+subject file of labels and values.  Users may opt to create the
+subject file by other means if they wish.
+
+
+<P>
+
+<EM>v.rmedge</EM> must be run on any mapsets in the <EM>v.merge</EM> list prior to
+issuing the <EM>v.merge</EM> command.  Common edges will need to be removed prior
+to the <EM>v.merge</EM> operation.
+
+<H2>SEE ALSO</H2>
+
+<EM><a href="v.make.subj.html">v.make.subj</a><br>
+<a href="v.rmedge.html">v.rmedge</a></em>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

@@ -1,0 +1,259 @@
+<TITLE>v.reclass.scs</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.reclass</b></EM>  - Changes vector category values for an existing vector map.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.reclass</B>
+
+<BR>
+
+<B>v.reclass help</B>
+
+<BR>
+
+<B>v.reclass</B> [<B> -d</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>file=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.reclass</EM> allows a user to create a new vector map based on the
+reclassification of an existing vector map.
+The user provides the program with a category conversion file, input
+vector map name, an output vector map name, and the type of
+input map.  There is an option (d) to dissolve common boundaries between
+adjoining map areas of the same re-classed category value.
+
+
+<P>
+
+<B>Note:</B>
+The dissolve option will work on only those areas which are of the same
+conversion category value.  If a map area is inside (island) a converted
+area and is NOT converted to the same value, its boundaries are output
+to the resultant map.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-d</B> 
+
+<DD>Dissolve common boundaries (default is no) .
+
+
+<P>
+
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Select area, line, or site.
+
+<BR>
+
+Options:  area, line, site
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Vector input map name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Vector output map name.
+
+<DT><B>file=</B><EM>name</EM> 
+
+<DD>Text file name for category conversion.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+<DT>
+<DD><B>v.reclass -d input=</B><EM>soils</EM> <B>output=</B><EM>soil_groupa</EM> <B>type=</B><EM>area</EM><BR> <B>file=</B><EM>convert1,convert2,convert3</EM>
+</DT>
+<P>
+the input map <EM>soils</EM> contains 15 map area categories,
+<BR>
+the conversion files contain :
+<PRE>
+  convert1	convert2	convert3
+   1:1	           3:2	          2:3
+  10:1	           4:2	          7:3
+  12:1	           5:2	          8:3
+  15:1	           6:2	          9:3
+    	          11:2	         13:3
+    	    	  14:3
+</PRE>
+Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
+boundaries from <EM>soilss</EM> with area category values of 1,10,12,15 changed
+to category 1;  values of 3-6,11 changed to 2;  and values 2,7-9,13-14
+changed to 3.  Any common boundaries are dissolved.
+<P>
+
+NOTE:
+
+<BR>
+
+The format for "category label" is:
+<PRE>
+if NO SPACES in the labels	if SPACES in the labels
+         Abc	                   area name 1:
+         Def1	                   area name 2:
+         12A	                   .    .   .
+         WWd	                 area name n:
+
+</PRE>
+<P>
+The format for "category value" is:
+<DT> 
+
+<DD>1
+
+<DT> 
+
+<DD>10
+
+<DT> 
+
+<DD>12
+
+<DT> 
+
+<DD>15
+
+</DT>
+
+<H2>INTERACTIVE MODE</H2>
+
+<B>v.reclass</B>
+
+<BR>
+
+o  The first question asked is the map type:
+<P>
+<DT>
+<DD>Enter the type of map (area, line, site) [area] :
+<BR>
+
+<DD>The default is for areas.
+<BR>
+</DT>
+
+<P>
+o  The next question is if common boundaries are dissolved :
+<P>
+<DT> 
+<DD>Do you want common boundaries dissolved ?(y/n) [n]
+<P>
+<DD>The default is no, meaning all exiting boundaries will be retained.
+</DT>
+<P>
+
+o  The next question is an option for using category labels :
+<P>
+<DT> 
+<DD>Do you want to use category names ?(y/n) [n]
+<P>
+<DD>The default is no, meaning the user will be using category values.
+</DT>
+<P>
+o  The next question asks for the name of the input map :
+<P>
+<DT> 
+<DD>Enter vector map
+<BR>
+Enter 'list' for a list of exiting vector files
+<BR>
+Hit RETURN to cancel request
+<BR>
+&gt;
+<BR>
+<P>
+<DD>Any map is the user's search list is available.
+</DT>
+<P>
+
+o  The next question asks for the name of the output map :
+<P>
+<DT> 
+<DD>Enter name for resultant vector map
+<BR>
+Enter 'list' for a list of exiting vector files
+<BR>
+Hit RETURN to cancel request
+<BR>
+&gt;
+<P>
+<DD>If the name is for an existing map, the user will be asked if the map
+can be over-written.
+</DT>
+<P>
+o  The next question asks if a file of labels/categories is to be used :
+<P>
+If names was selected previously:
+<P>
+<DT> 
+<DD>Do you want to use a file of labels?(y/n) [n]
+<P>
+</DT>
+If names was NOT selected previously:
+<P>
+<DT> 
+<DD>Do you want to use a file of categories?(y/n) [n]
+</DT>
+<P>
+o  At this time the user will be asked for category 1 information:
+<P>
+<DT> 
+<DD>1. be asked to enter a file name - if file input was selected, or
+<DD>2. be asked to enter the information manually.
+</DT>
+<P>
+Then the user will be asked for category 2 information:
+<BR>
+Then the user will be asked for category 3 information:
+<BR>
+.
+<BR>
+.
+Then the user will be asked for category n information:
+<P>
+o	When no entry is provided the program will begin.
+<P>
+<P>
+<H2>NOTES</H2>
+This manual-page differs from the v.reclass documentation available via
+<EM>g.manual</EM> from the GRASS prompt (Comment WW).
+<P>
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.extract.html">v.extract</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+

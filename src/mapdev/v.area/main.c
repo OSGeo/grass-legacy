@@ -11,6 +11,15 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+
+#ifndef GET_VAL
+#define GET_VAL 0
+#endif
+
+#ifndef SET_VAL
+#define SET_VAL 1
+#endif
+
 struct Cell_head window ;
 
 int main(int argc, char *argv[])
@@ -22,13 +31,20 @@ int main(int argc, char *argv[])
     char color[8];
     int fill;
     int length;
+    int i_flag;
+    int f2;
     static int cflag = {0};
     char gisbase[256];
     char command[512];
     char Dvect_color[8];
-    struct Flag *flag1 ;
+	struct GModule *module;
+    struct Flag *flag1, *flag2 ;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
+
+	module = G_define_module();
+	module->description =
+		"Display GRASS area and perimeter information for GRASS vector map.";
 
 	/* Define the different options */
 
@@ -52,6 +68,9 @@ int main(int argc, char *argv[])
 	flag1->description = "fill" ;
 
 
+	flag2 = G_define_flag();
+	flag2->key  = 'i';
+	flag2->description = "subtract area of islands";
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -93,6 +112,11 @@ fprintf(stderr,"\nFile name:'%s' is LONGER than 19 chars\n\n",opt1->answer);
      {
       fprintf(stderr,"\nThe default color 'red' will be used.\n\n");
      }
+/* Do we calculate and subtract the inner areas (islands)? */
+
+    f2 = (int)flag2->answer;
+    proc_i_flag( SET_VAL, &f2 );
+    fprintf(stderr, "Value set is %d\n", flag2->answer);
 
 /* Check if color is "white" and fill option is "off" */
     if ( (strcmp(color,"white")==0) && (fill!=1) )

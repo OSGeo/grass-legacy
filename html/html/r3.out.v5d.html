@@ -1,0 +1,57 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+<TITLE>r3.out.v5d</TITLE>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img SRC="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<h2>NAME</h2>
+<b>r3.out.v5d</b> - Exports G3D grids to v5d format (VIS5D).
+<br>(GRASS 3D Program)
+
+<h2>
+SYNOPSIS</h2>
+<b>r3.out.v5d [-m] grid3=</b><i>name</i><b> [output=</b><i>name</i><b>]</b>
+
+<h2>
+DESCRIPTION</h2>
+Exports <i>G3D</i> grids to <i>v5d</i> format. <i>map</i> is a valid G3D
+grid in the current mapset. <i>output</i> is the name of a v5d file which
+will be written in the current working directory. <a href="http://www.ssec.wisc.edu/~billh/vis5d.html">VIS5D</a>
+is a system for interactive visualization of large 5-D gridded data sets
+such as those produced by numerical weather models. One can make isosurfaces,
+contour line slices, colored slices, volume renderings, etc of data in
+a 3-D grid, then rotate and animate the images in real time. There's also
+a feature for wind trajectory tracing, a way to make text anotations for
+publications, support for interactive data analysis, etc.
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-m</B>
+<DD>Use map coordinates instead of xyz coordinates
+</DL>
+
+<h3>Parameters:</h3>
+
+<dl>
+<dt>
+<b>grid3</b></dt>
+<dd>
+G3d grid map to be converted to v5d</dd>
+
+<dt>
+<b>output</b></dt>
+<dd>
+Name for v5d output file</dd>
+</dl>
+
+<h2>
+SEE ALSO</h2>
+<i><a href="r3.in.v5d.html">r3.in.v5d</a></i>
+<h2>
+AUTHOR</h2>
+Jaro Hofierka, GeoModel s.r.o., Slovakia
+</body>
+</html>

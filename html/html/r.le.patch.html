@@ -1,0 +1,133 @@
+<TITLE>r.le.patch</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<B><EM>r.le.patch</EM></B> - This program can be used to calculate attribute, patch size, core (interior) size, shape, fractal dimension, and perimeter measures for sets of patches in a landscape<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.le.patch</B><BR>
+<B>r.le.patch help</B><BR>
+<B>r.le.patch</B> [<B>-bcnptu</B>] <B>map=</B><EM>name</EM> [<B>sam=</B><EM>name</EM>] [<B>reg=</B><EM>name</EM>] [<B>att=</B><EM>name[,name,...]</EM>] [<B>siz=</B><EM>name[,name,...]</EM>] [<B>co1=</B><EM>value</EM>] [<B>co2=</B><EM>name[,name,...]</EM>] [<B>sh1=</B><EM>name</EM>] [<B>sh2=</B><EM>name[,name,...]</EM>] [<B>fra=</B><EM>name</EM>] [<B>per=</B><EM>name[,name,...]</EM>] [<B>out=</B><EM>name</EM>]
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-b</B>
+<DD>Run in background.
+
+<DT><B>-c</B>
+<DD>Output map 'interior' with patch cores.
+
+<DT><B>-n</B>
+<DD>Output map 'num' with patch numbers.
+
+<DT><B>-p</B>
+<DD>Include sampling area boundary as perimeter.
+
+<DT><B>-t</B>
+<DD>Use 4 neighbor tracing instead of 8 neighbor.
+
+<DT><B>-u</B>
+<DD>Output maps 'units_x' with sampling units for each scale x.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map</B>
+<DD>Raster map to be analyzed.
+
+<DT><B>sam</B>
+<DD>Sampling method (choose only 1 method): w=whole map, u=units, m=moving window, r=regions
+<DD>Default: w
+
+<DT><B>reg</B>
+<DD>Name of regions map, only when sam = r; omit otherwise.
+
+<DT><B>att</B>
+<DD>Attribute measures:  
+<DD>Options: a1, a2, a3, a4, a5, a6, a7
+<DD>	a1 = mean pixel attribute
+<DD>	a2 = st. dev. pixel attribute
+<DD>	a3 = mean patch attribute
+<DD>	a4 = st. dev. patch attribute
+<DD>	a5 = cover by gp
+<DD>	a6 = density by gp
+<DD>	a7 = total density
+
+<DT><B>siz</B>
+<DD>Patch size measures:
+<DD>Options: s1, s2, s3, s4, s5, s6
+<DD>	s1 = mean patch size
+<DD>	s2 = st. dev. patch size
+<DD>	s3 = mean patch size by gp
+<DD>	s4 = st. dev. patch size by gp
+<DD>	s5 = no. by size class
+<DD>	s6 = no. by size class by gp
+
+<DT><B>co1</B>
+<DD>Edge width in pixels (integer) for use with co2
+
+<DT><B>co2</B>
+<DD>Core size measures (required if co1 was specified):
+<DD>Options: c1, c2, c3, c4, c5, c6, c7, c8, c9, c10
+<DD>	c1 = mean core size
+<DD>	c2 = st. dev. core size
+<DD>	c3 = mean edge size
+<DD>	c4 = st. dev. edge size
+<DD>	c5 = mean core size by gp 
+<DD>	c6 = st. dev. core size by gp
+<DD>	c7 = mean edge size by gp 
+<DD>	c8 = st. dev. edge size by gp
+<DD>	c9 = no. by size class
+<DD>	c10 = no. by size class by gp
+
+<DT><B>sh1</B>
+<DD>Shape method (choose only 1 method):
+<DD>	m1 = perim./area  
+<DD>	m2 = corr. perim./area 
+<DD>	m3 = rel. circum. circle
+
+<DT><B>sh2</B>
+<DD>Shape measures (required if sh1 was specified):   
+<DD>Options: h1, h2, h3, h4, h5, h6
+<DD>	h1 = mean patch shape
+<DD>	h2 = st. dev. patch shape
+<DD>	h3 = mean patch shape by gp
+<DD>	h4 = st. dev. patch shape by gp
+<DD>	h5 = no. by shape class
+<DD>	h6 = no. by shape class by gp
+
+<DT><B>fra</B>
+<DD>Fractal dimension measures:   
+<DD>Options: f1
+<DD>	f1 = perim.-area fractal dim.
+
+<DT><B>per</B>
+<DD>Perimeter measures (required if pe1 was specified):   
+<DD>Options: p1, p2, p3, p4, p5, p6
+<DD>	p1 = sum of perims.
+<DD>	p2 = mean perim.
+<DD>	p3 = st. dev. perim.           
+<DD>	p4 = sum of perims. by gp
+<DD>	p5 = mean perim. by gp 
+<DD>	p6 = st. dev. perim. by gp
+
+<DT><B>out</B>
+<DD>Name of output file for individual patch measures, when sam=w, u, r; if out=head, then column headings will be printed
+</DL>
+
+<H2>SEE ALSO</H2>
+The <A HREF="../../terrain/r_le_22.html"><EM>r.le</EM> Programs</A> Users Guide<BR>
+<EM><A HREF="r.le.dist.html">r.le.dist</A>, <A HREF="r.le.null.html">r.le.null</A>, <A HREF="r.le.pixel.html">r.le.pixel</A>, <A HREF="r.le.rename.html">r.le.rename</A>, <A HREF="r.le.setup.html">r.le.setup</A>, <A HREF="r.le.trace.html">r.le.trace</A></EM>
+
+<H2>AUTHOR</H2>
+William L. Baker, Department of Geography and Recreation, University of Wyoming

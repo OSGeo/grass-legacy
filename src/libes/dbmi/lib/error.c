@@ -1,9 +1,11 @@
 #include "dbmi.h"
-
+#ifndef __CYGWIN__
 extern int errno;
 /*extern char *sys_errlist[];*/ /* bugfix Neteler 6/99 use ANSI C*/
 extern int sys_nerr;
-
+#else
+#include <errno.h>
+#endif
 static int  err_flag = 0;
 static int  err_code = DB_OK;
 static char *err_msg = 0;
@@ -76,7 +78,11 @@ db_syserror(s)
     if (who)
 	sprintf (lead, "%s: ", who);
 
+#ifndef __CYGWIN__
     if (errno > 0 && errno < sys_nerr)
+#else
+    if (errno > 0)
+#endif
 /*	sprintf (msg, "%s%s: %s", lead, sys_errlist[errno], s);*/ /* bugfix Neteler 6/99: use ANSI C */
 	sprintf (msg, "%s%s: %s", lead, strerror(errno), s);
     else

@@ -1,0 +1,122 @@
+<TITLE>m.region.ll</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+
+<H2>NAME</H2>
+
+<EM><b>m.region.ll</b></EM>  - Converts Universal Transverse
+Mercator (UTM) coordinates falling within the current
+geographic region from UTM coordinates to geographic
+(latitude/longitude) coordinates.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing)
+
+<H2>SYNOPSIS</H2>
+
+<B>m.region.ll</B>
+<BR>
+</EM><B>m.region.ll help</B>
+<BR>
+<B>m.region.ll spheroid=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.region.ll</EM> takes current geographic region
+settings in UTM coordinates, and converts them to
+geographic coordinates (i.e., latitudes and longitudes).
+It also prints the length (in meters) of one arc-second at
+each of the four edges of the geographic region.  The user
+must enter the spheroid upon which to base the geographic
+coordinates.
+
+
+<P>
+
+The list of spheroids available is somewhat dynamic.  It
+may not contain exactly the ones listed below.  To
+determine the current list of possible spheroids, simply
+type in:
+
+
+<DL>
+<DD>
+<B>m.region.ll help</B>
+</DL>
+
+A list of available spheroids will be printed on the screen.
+
+<H3>AVAILABLE SPHEROIDS</H3>
+
+(The on-line listing includes only the spheroid names.)
+
+<PRE>
+Spheroid:	Semi-major axis	Eccentricity sqrd (e),	Commonly used for:
+		(Equatorial Radius)	Flattening (f),	
+		(a):	or Polar Radius (b):	
+_
+airy          	a=6377563.396 e=.006670540
+australian    	a=6378160     f=1/298.25		Australia
+bessel        	a=6377397.155 e=.006674372		Japan
+clark66       	a=6378206.4   b=6356583.8		N. America
+everest       	a=6377276.345 e=.0066378466		India, Burma
+grs80         	a=6378137     f=1/298.257
+hayford       	a=6378388     f=1/297
+international 	a=6378388     f=1/297			Europe
+krasovsky     	a=6378245     f=1/298.3
+wgs66         	a=6378145     f=1/298.25		worldwide coverage
+wgs72         	a=6378135     f=1/298.26		worldwide coverage
+wgs84         	a=6378137     f=1/298.257223563		worldwide coverage
+</PRE>
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DD>
+<B>m.region.ll spheroid=</B><EM>clark66</EM>
+</DL>
+
+
+Results:
+
+<PRE>
+WINDOW 4928000.00N 609000.00E ZONE 13
+       4914000.00S 590000.00W
+
+	 44.30.06N 44.29.57N
+	103.52.04W 103.37.44W
+
+	 44.22.32N 44.22.23N
+	103.52.13W 103.37.55W
+
+	At northern edge 1 arc-second longitude=22.088500m
+
+	At southern edge 1 arc-second longitude=22.135998m
+
+	At western edge 1 arc-second latitude=30.860285m
+
+	At eastern edge 1 arc-second latitude=30.863082m
+</PRE>
+
+The values for the geographic coordinates are rounded to
+the nearest second in this example.   They would be more
+precise in the actual output that is printed on the
+screen.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM><br>
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM><br>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM><br>
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

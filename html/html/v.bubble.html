@@ -1,0 +1,109 @@
+<TITLE>v.bubble</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<B><i><b>v.bubble</b></i></B>  - Creates a vector file which consists of  
+bubble(s)  for each point in a site-file and with a size relative to the z value
+of that point.
+
+
+
+<BR>
+
+(GRASS Vector Program)
+
+<H2>SYNOPSIS</H2>
+
+<B>v.bubble</B>
+
+<BR>
+
+<B>v.bubble help</B>
+
+<BR>
+
+<B>v.bubble</B> [<B> -s</B>] <B>[radius=</B><EM>value]</EM>
+<B>sitefile=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> <B>field=</B><EM>value</EM>
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+
+"v.bubble" will create "polygon" circles or bubbles  around points read from an
+ existing
+"site_lists" file.  The "site_lists" points will be the centers for those
+bubbles with one bubble created per point. The size of the bubble is relative to
+the z value (or "height" attribute") at that point. The maximum z value
+corresponds to a size of "radius". 
+
+The "polygon" bubbles will be written to a binary vector file.  Each "polygon"
+bubble will have 361 points with each point on the circumference of the bubble 
+representing 1 degree of arc.
+
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+
+<P>
+
+<h2>Parameters</h2>
+
+<DT><EM><b>radius</b></EM> 
+
+<DD>Maximum radius corresponding with the maximum z value in the "site-file".
+One Unit of radius corresponds with one unit of the map.
+<BR>
+
+default: 1.0
+<p>
+<DT><EM><b>sitefile</b></EM> 
+
+<DD>GRASS site_lists file (input).
+
+<BR>
+
+
+<DT><EM><b>output</b></EM> 
+
+<DD>Vector file to be created (output).
+
+<P>
+
+<DT><EM><b>field</b></EM>
+
+<DD>Attribute field number to use for operation
+
+<P>
+
+The field number specifies the attribute field in sites list (point map)
+which shall be used. This is useful in case of multiple attribute
+sites maps.
+
+<h2>Flags</h2>
+
+<DT><EM>-s</EM> 
+
+<DD>Automatically run "v.support" on newly created vector file.
+
+<H2>NOTES</H2>
+The programm is based on <a href=v.circle.html>v.circle</a>
+
+<H2>SEE ALSO</H2>
+<a href=v.circle.html>v.circle</a>
+<H2>AUTHOR</H2>
+
+Job Spijker (spijker@geo.uu.nl) , Utrecht University/Department of Geochemistry

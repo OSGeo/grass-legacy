@@ -1,14 +1,6 @@
-PROG =    $(BIN_MAIN_CMD)/v.out.dxf
+PGM = v.out.dxf
 
-all:   $(PROG)
-
-$(PROG): v.out.dxf.o $(GISLIB)
+$(BIN_CMD)/$(PGM): v.out.dxf.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
-
-saber_src:
-	#load v.out.dxf.c $(GISLIB) $(TERMLIB) $(MATHLIB)
-
-saber_obj:
-	#load v.out.dxf.o 

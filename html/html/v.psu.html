@@ -1,0 +1,85 @@
+<TITLE>v.psu</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.psu</b></EM>  - Program to build PSU polygon and PSU sites
+from single labeled line segment.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.psu</B>
+
+<BR>
+
+<B>v.psu help</B>
+
+<BR>
+
+<B>v.psu input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>psu=</B><EM>name </EM><B>subj=</B><EM>name</EM> [<B>xdist=</B><EM>name</EM>] 
+   [<B>ydist=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program builds a complete PSU polygon and PSU points from a single
+labeled line segment identifying the west edge of the PSU.
+The resultant polygon and points will be automatically labeled based
+on the original line segment label.
+
+
+<P>
+
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Vector input file name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Vector output file name.
+
+<DT><B>psu=</B><EM>name</EM> 
+
+<DD>psu_data file name.
+
+<DT><B>subj=</B><EM>name</EM> 
+
+<DD>Subject file name.
+
+<DT><B>xdist=</B><EM>value</EM> 
+
+<DD>x distance.
+
+<DT><B>ydist=</B><EM>value</EM> 
+
+<DD>y distance.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+<B>psu.vect in=</B><EM>spri</EM> <B>out=</B><EM>spri.psu</EM> <B>psu=</B><EM>SD009.PNT</EM> <B>subj=</B><EM>bonhomme.psu</EM> 
+
+<H2>NOTES</H2>
+
+Refer to SCS PSU Digitizing Manual for examples and further instruction.
+
+<H2>AUTHOR</H2>
+
+Paul H. Fukuhara, USDA SCS National Cartographic Center

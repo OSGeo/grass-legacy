@@ -1,0 +1,288 @@
+<HTML>
+
+<TITLE>i.tape.spot</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.tape.spot</b></EM>  - An imagery function that extracts
+SPOT imagery from half-inch tape.
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.tape.spot</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.tape.spot</EM> is a program that extracts SPOT
+imagery from 9-track, half-inch tape.
+
+<P>
+
+This program must be run in a LOCATION_NAME with an x,y coordinate
+system (i.e., a coordinate system with projection 0).
+For further information regarding 
+this LOCATION_NAME type refer to the <EM>imagery</EM> manual entry.
+
+
+<P>
+
+The first prompt in <EM>i.tape.spot</EM> asks the user for the 
+tape device name.  
+
+<DL>
+<DD><KBD>Enter tape device name:</KBD>
+</DL>
+
+This is sometimes  <KBD>/dev/rmt0</KBD> (for a half-inch
+tape having a density of 1600 bpi), but this varies with
+each machine.
+
+<P>
+
+The next prompt is:
+<P>
+
+<DL>
+<DD><KBD>Mount SPOT tape and  hit RETURN --&gt;</KBD>
+</DL>
+
+<H2>IMAGE IDENTIFICATION MENU</H2>
+
+The first menu in the program asks the user for information
+about the data.
+
+
+<PRE>
+      Please enter the following information
+
+TAPE IDENTIFICATION:                             __
+
+IMAGE DESCRIPTION:                               __
+
+TITLE FOR THE EXTRACTED CELL (RASTER) FILES:     __
+
+AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+              (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+
+This program automatically reads the satellite name, tape
+product code, instrument name, interleaving indicator,
+spectral mode, preprocessing level and work order number
+into the field for TAPE IDENTIFICATION.  The mission, path,
+row, scene shift, scene center date and time, orientation,
+incidence, azimuth, elevation angle, and absolute
+calibration coefficients and offsets are automatically
+entered into the field for IMAGE DESCRIPTION.  User can
+type in any other messages into the two sections and a
+description as the TITLE of raster map layer.  The second
+menu is:
+
+<PRE>
+                SPOT IMAGE EXTRACT
+    Please select region of the image to extract
+
+             start row: 0______(1-3002)
+               end row: 0______(1-3002)
+
+             start col: 0______(1-3166)
+               end col: 0______(1-3166)
+
+
+AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+              (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+
+The numbers in parentheses are the total number of rows and
+columns on the tape including zeros (filler).  This
+information and additional information can also be obtained
+by running the program
+
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM>.
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM> 
+
+will read any tape and provide the user with the number of
+files on a tape, the number of records on a tape, and the
+record lengths.  Any subset of the image on the tape may be
+extracted.  For a discussion of row and column extraction
+see the subheading enTITLEd 
+<A HREF="#rcx">ROW AND COLUMN EXTRACTION</A> below.
+
+
+<P>
+
+The next menu is:
+
+<PRE>
+  Please mark an x by the bands you want extracted
+
+                      _____ 1
+                      _____ 2
+                      _____ 3
+
+AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+              (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+
+SPOT imagery has three bands, but the user may want to extract 
+a subset of these bands.  See the subheading in this entry
+enTITLEd 
+<A HREF="#rcx">ROW AND COLUMN EXTRACTION</A>.
+
+
+<P>
+
+The user then is asked to enter the prefix/group name for the raster band
+files to be created.  This name will precede each band file
+extracted into GRASS.  For example, if two bands are extracted 
+the following two band files will result:
+
+
+<P>
+
+<EM>prefixname.1</EM>
+
+<BR>
+
+<EM>prefixname.2</EM>
+
+
+<P>
+
+The specified <EM>prefixname</EM>
+will also automatically become the name for the imagery group 
+file being created.  Each image or subset (i.e., each run of <EM>i.tape.spot</EM>)
+should be given a unique prefix/group name.
+
+
+<P>
+
+
+</PRE>
+The extraction process will begin by first skipping a number
+of files which are not data or not requested,
+advancing to the first band requested, 
+forwarding to the requested column, and then reading the data.
+After extracting the requested rows and columns from each band, the
+program creates support files for the raster band map layer.
+The percent completion of the extraction is displayed
+on the screen.  Because sometimes SPOT imagery is very large and is  
+stored in multiple tape sets, the program is designed to read
+image by pausing when the tape need to be changed and inform
+the user to mount and load next tape. 
+The number of tapes required to store one scene depends on the
+number of bytes per inch (bpi) in which the data are stored.
+
+
+<P>
+
+The extracted band files will be listed as raster map layers
+available in the current MAPSET and may be displayed using the GRASS
+commands 
+
+<EM><A HREF="d.display.html">d.display</A></EM>, 
+<EM><A HREF="d.rast.html">d.rast</A></EM>, or 
+<EM><A HREF="i.points.html">i.points</A></EM>.
+
+<A NAME="rcx"><H2>ROW AND COLUMN EXTRACTION</H2></A>
+
+The display options in GRASS allow the user to locate rows
+and columns on the digital image.  If enough disk space is
+available, one band of an entire image or one band of a
+portion of an image known to contain the area of interest,
+can be extracted and displayed.  The <EM>measurements</EM>
+option in
+
+<EM><A HREF="d.display.html">d.display</A></EM>, or 
+<EM><A HREF="d.where.html">d.where</A></EM> 
+(following use of <EM><A HREF="d.rast.html">d.rast</A></EM>)
+
+will echo x and y coordinates to the screen.  (These
+coordinates will display negative numbers in the
+north-south direction, but ignoring the negative sign will
+yield the row number.)  See the 
+
+<EM><A HREF="../imagery.html">imagery</A></EM> manual
+entry for further explanation.
+
+
+<P>
+
+Each scene of a SPOT image contains filler on both the left
+and right sides of the quad.  The user may want to identify
+the row and column numbers in order to exclude the filler.
+This filler will otherwise be extracted with the image and
+take up unnecessary disk space.
+
+
+<P>
+
+If a photograph of the digital image is available, the rows
+and columns to be extracted can be determined from it by
+associating inches with the total number of known rows and
+columns in the scene.  For example, if the total length of
+the photograph is 12 inches, the total number of rows on
+the tape is 2000, and the northwest corner of the area of
+interest begins 2 inches from the top of the photo, then:
+
+
+<DL>
+<DD>12" / 2000 rows = 2" / x rows
+<DD>x = 333.333
+</DL>
+
+The northwest corner of the area of interest starts at row
+333.  The starting row, ending row, starting column, and
+ending column can be calculated in this manner.
+
+<H2>NOTES</H2>
+
+After extracting an image from tape the geographic region
+definition in the x,y coordinate LOCATION_NAME will be set
+based upon the extracted rows and columns from the tape.
+The relationship between the image rows and columns and the
+coordinates of the geographic region is discussed in the
+
+<EM><A HREF="../imagery.html">imagery</A></EM> 
+format manual entry.
+
+<P>
+
+This program is interactive and requires no command line
+arguments.
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Pro
+cessing</A></EM>
+
+<P>
+
+<EM><A HREF="d.display.html">d.display</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.where.html">d.where</A></EM><BR>
+<EM><A HREF="i.group.html">i.group</A></EM><BR>
+<EM><A HREF="i.points.html">i.points</A></EM><BR>
+<EM><A HREF="i.tape.mss.html">i.tape.mss</A></EM><BR>
+<EM><A HREF="i.tape.mss.h.html">i.tape.mss.h</A></EM><BR>
+<EM><A HREF="i.tape.other.html">i.tape.other</A></EM><BR>
+<EM><A HREF="i.tape.tm.html">i.tape.tm</A></EM><BR>
+<EM><A HREF="../imagery.html">imagery</A></EM> <BR>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM>
+
+<H2>AUTHOR</H2>
+
+Tao Wen, University of Illinois at 
+Urbana-Champaign
+
+</BODY>
+</HTML>

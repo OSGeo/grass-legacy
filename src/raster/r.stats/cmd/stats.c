@@ -27,7 +27,7 @@ struct Node
 
 static struct Node **hashtable;
 static struct Node *node_list = NULL;
-static int node_count = 0;
+static int node_count = 0, total_count = 0;
 
 int initialize_cell_stats (int n)
 {
@@ -145,6 +145,7 @@ int update_cell_stats (CELL **cell, int ncols, double area)
 		{
 		    q->count++;
 		    q->area += area;
+		    total_count++;
 		    break;
 		}
 		else if (p == NULL)
@@ -165,10 +166,11 @@ int update_cell_stats (CELL **cell, int ncols, double area)
 }
 
 int 
-node_compare (register struct Node **p, register struct Node **q)
+node_compare (const void *pp, const void *qq)
 {
+    struct Node * const *p = pp, * const *q = qq;
     register int i, x;
-    register CELL *a, *b;
+    register const CELL *a, *b;
     a = (*p)->values;
     b = (*q)->values;
     for (i = nfiles; --i >= 0; )
@@ -202,13 +204,16 @@ print_node_count (void)
 }
 
 int 
-print_cell_stats (char *fmt, int with_counts, int with_areas, int with_labels, char *fs)
+print_cell_stats (char *fmt, int with_percents, int with_counts, int with_areas, int with_labels, char *fs)
 {
     int i,n, nulls_found;
     struct Node *node;
     CELL tmp_cell, null_cell;
     DCELL dLow, dHigh;
     char str1[50], str2[50];
+
+    if(no_nulls)
+	total_count -= sorted_list[node_count-1]->count;
 
     G_set_c_null_value(&null_cell, 1);
     if (node_count <= 0)
@@ -220,6 +225,8 @@ print_cell_stats (char *fmt, int with_counts, int with_areas, int with_labels, c
 	    fprintf (stdout,"%s0.0",fs);
 	if (with_counts)
 	    fprintf (stdout,"%s0",fs);
+	if (with_percents)
+	    fprintf (stdout,"%s0.00%",fs);
 	if (with_labels)
 	    fprintf (stdout,"%s%s", fs, G_get_cat (null_cell, &labels[i]));
 	fprintf (stdout,"\n");
@@ -298,6 +305,8 @@ print_cell_stats (char *fmt, int with_counts, int with_areas, int with_labels, c
 	    }
 	    if (with_counts)
 		fprintf (stdout,"%s%ld", fs, (long) node->count);
+	    if (with_percents)
+		fprintf (stdout,"%s%6.2lf%%", fs, (double) 100*node->count/total_count);
 	    fprintf (stdout,"\n");
 	}
     }

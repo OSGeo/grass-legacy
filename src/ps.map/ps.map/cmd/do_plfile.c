@@ -13,11 +13,11 @@ int do_plfile (int after_masking)
 {
     FILE *fp, *icon_fp;
     char buf[1024];
-    char name[50], prev_name[50], mapset[50];
-    double e1, n1, e2, n2;
-    int color;
+    char name[1024], prev_name[50], mapset[50];
+    double e1, n1, e2, n2, llx, lly, urx, ury;
+    int color, fcolor, fill;
     int masked;
-    double size;
+    double size, scale, rotate;
     int i, j;
     int x_int, y_int;
     double width, s, x, y, x_off, y_off, xo[50], yo[50];
@@ -56,6 +56,35 @@ int do_plfile (int after_masking)
 	    fprintf(PS.fp, " stroke\n");
 	}
 	break;
+	
+    case 'R':
+	if(sscanf(buf, "R %d %lf %lf %lf %lf %d %d %d %lf",
+	    &masked, &e1, &n1, &e2, &n2, &color, &fcolor, &fill, &width) == 9)
+	{
+	    if ( masked &&  after_masking) continue;
+	    if (!masked && !after_masking) continue;
+
+	    fprintf(PS.fp, " NP\n");
+	    G_plot_where_xy(e1, n1, &x_int, &y_int);
+	    llx = (double) x_int / 10.;
+	    lly = (double) y_int / 10.;
+	    G_plot_where_xy(e2, n2, &x_int, &y_int);
+	    urx = (double) x_int / 10.;
+	    ury = (double) y_int / 10.;	    
+
+	    fprintf(PS.fp, " %.1f %.1f M %.1f %.1f LN\n", llx, lly, urx, lly);
+	    fprintf(PS.fp, " %.1f %.1f LN %.1f %.1f LN\n", urx, ury, llx, ury);
+	    fprintf(PS.fp, " CP\n");
+	    if (fill)
+	    {
+		set_rgb_color(fcolor);
+		fprintf(PS.fp, " F\n");		
+	    }
+	    set_rgb_color(color);
+	    set_line_width(width);
+	    fprintf(PS.fp, " D\n");
+	}
+	break;	
 
     case 'P':
 	i = sscanf (buf,"P %d %lf %lf %d %lf %s %s",
@@ -108,6 +137,28 @@ int do_plfile (int after_masking)
 	    for (j = 1; j < points; j++) 
 	       fprintf(PS.fp, "%.1f %.1f LN\n", x + s * xo[j], y + s * yo[j]);
 	    fprintf(PS.fp, "CF\n");
+	}
+	break;
+	
+	case 'E':  /* EPS file */
+	if (sscanf (buf,"E %d %lf %lf %lf %lf %s",
+	    &masked, &e1, &n1, &scale, &rotate, name) == 6 );
+	{
+	    if ( masked &&  after_masking) continue;
+	    if (!masked && !after_masking) continue;
+	    
+	    /* find eps bbox */
+    	    if ( !eps_bbox(name, &llx, &lly, &urx, &ury) ) continue;
+	    
+	    G_plot_where_xy(e1, n1, &x_int, &y_int);
+	    x = (double) x_int / 10.;
+	    y = (double) y_int / 10.;
+	    
+	    /* calculate translation */
+	    eps_trans (llx, lly, urx, ury, x, y, scale, rotate, &x_off, &y_off);
+	    
+	    /* write eps to PS */
+	    eps_draw ( PS.fp, name, x_off, y_off, scale, rotate);	    
 	}
 	break;
     }

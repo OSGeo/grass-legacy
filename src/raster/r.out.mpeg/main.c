@@ -107,17 +107,14 @@ int main ( int  argc, char **argv)
 
 int load_files()
 {
-CELL 	*cell;
-FCELL   *fcell;
-DCELL   *dcell;
 void    *voidc;
 int     rtype;
 register int i, rowoff, row, col, vxoff, vyoff, offset;
 int 	cnt, ret, fd, size, tsiz, coff;
 int	vnum;
 int	y_rows, y_cols;
-unsigned char  *pr, *pg, *pb;
-char    *tr, *tg, *tb, *tset;
+char    *pr, *pg, *pb;
+unsigned char *tr, *tg, *tb, *tset;
 int     R, G, B;
 char	*mpfilename, *mapset, name[BUFSIZ];
 char 	cmd[1000], *yfiles[MAXIMAGES];
@@ -125,40 +122,33 @@ struct Colors colors;
 
     size = nrows * ncols;
 
-    if(NULL == (pr = (unsigned char *)malloc
-		 (size*sizeof(unsigned char)))){
+    if(NULL == (pr = malloc(size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
-    if(NULL == (pg = (unsigned char *)malloc
-		 (size*sizeof(unsigned char)))){
+    if(NULL == (pg = malloc(size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
-    if(NULL == (pb = (unsigned char *)malloc
-		 (size*sizeof(unsigned char)))){
+    if(NULL == (pb = malloc(size))){
 	    fprintf(stderr,"Can't malloc memory for imagebuffer\n");
 	    exit(1);
     }
     tsiz = G_window_cols();
 
-    cell = G_allocate_c_raster_buf();
-    fcell = G_allocate_f_raster_buf();
-    dcell = G_allocate_d_raster_buf();
-
-    if(NULL == (tr = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tr = (unsigned char *) malloc(tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tg = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tg = (unsigned char *) malloc(tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tb = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tb = (unsigned char *) malloc(tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
-    if(NULL == (tset = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tset = (unsigned char *) malloc(tsiz))){
         fprintf(stderr,"Unable to malloc.\n");
         exit (0);
     }
@@ -172,11 +162,8 @@ struct Colors colors;
 	    break;
 	}
 
-	for(i=0; i< size; i++){
-	    *(pr+i) = 0;
-	    *(pg+i) = 0;
-	    *(pb+i) = 0;
-	}
+	for(i=0; i< size; i++)
+	    pr[i] = pg[i] = pb[i] = 0;
 
 	for(vnum = 0; vnum < numviews; vnum++){
 	    if(icols == vcols){
@@ -220,30 +207,30 @@ struct Colors colors;
 
             rtype = G_raster_map_type(name, mapset);
             if (rtype == CELL_TYPE)
-                voidc = (CELL *)cell;
+                voidc = G_allocate_c_raster_buf();
             else if (rtype == FCELL_TYPE)
-                voidc = (FCELL *)fcell;
+                voidc = G_allocate_f_raster_buf();
             else if (rtype == DCELL_TYPE)
-                voidc = (DCELL *)dcell;
+                voidc = G_allocate_d_raster_buf();
             else
                 exit(1);
 
 	    for (row = 0; row < vrows; row++){
-		if (G_get_raster_row (fd, (void *)voidc, 
+		if (G_get_raster_row (fd, voidc, 
                                       (int)(row/vscale), rtype) < 0)
 		    exit(1);
 		rowoff = (vyoff+row)*ncols;
-                G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
-                    &colors, rtype);
+                G_lookup_raster_colors(voidc, tr, tg, tb,
+				       tset, tsiz, &colors, rtype);
                 for (col = 0; col < vcols; col++){
                     coff= (int)(col/vscale);
 		    offset = rowoff + col + vxoff;
                     if(!tset[coff])
-                        pr[offset] = pg[offset] = pb[offset] = 255;
+                        pr[offset] = pg[offset] = pb[offset] = (char) 255;
 		    else{
-			pr[offset] = tr[coff];	
-			pg[offset] = tg[coff];	
-			pb[offset] = tb[coff];	
+			pr[offset] = (char) tr[coff];	
+			pg[offset] = (char) tg[coff];	
+			pb[offset] = (char) tb[coff];	
 		    }	
                 }
 	    }
@@ -276,9 +263,7 @@ struct Colors colors;
 
     clean_files(mpfilename, yfiles, cnt);
 
-    free(cell);
-    free(fcell);
-    free(dcell);
+    free(voidc);
     free(tset);
     free(tr);
     free(tg);
@@ -372,10 +357,15 @@ char *argv[];
 char *vfiles[MAXVIEWS][MAXIMAGES];
 int *numframes, *numviews, *quality, *convert;
 {
+	struct GModule *module;
     struct Option *viewopts[MAXVIEWS], *out, *qual; 
     struct Flag *qt, *conv;
     char buf[BUFSIZ], **wildfiles;
     int i,j,k, numi, wildnum;
+
+	module = G_define_module();
+	module->description =
+		"Raster File Series to MPEG Conversion Program.";
 
     *numviews = *numframes = 0;
     for(i=0; i<MAXVIEWS; i++){

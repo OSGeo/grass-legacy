@@ -27,6 +27,9 @@
 /* define if values.h exists */
 #undef HAVE_VALUES_H
 
+/* define if zlib.h exists */
+#undef HAVE_ZLIB_H
+
 /* define if sys/ioctl.h exists */
 #undef HAVE_SYS_IOCTL_H
 
@@ -60,6 +63,9 @@
 /* define uid_t type */
 #undef uid_t
 
+/* Define the return type of signal handlers */
+#define RETSIGTYPE int
+
 /* define curses.h WINDOW structure component */
 #define CURSES_MAXY @CURSES_MAXY@
 
@@ -75,8 +81,6 @@
 /* define if lseek() exists */
 #undef HAVE_LSEEK
 
-/* define if nice() exists */
-#undef HAVE_NICE
 
 /* define if time() exists */
 #undef HAVE_TIME
@@ -98,6 +102,28 @@
 
 /* define if setpgrp() takes no argument */
 #undef SETPGRP_VOID
+
+/* define if PNG support exists */
+#undef HAVE_PNG
+
+/* define if PQcmdTuples in lpq */
+#undef HAVE_PQCMDTUPLES
+
+/* define if jpeglib.h exists */
+#undef HAVE_JPEGLIB_H
+
+/* Whether or not we are using G_socks for display communications */
+#undef USE_G_SOCKS
+
+/* Uncomment below to input Korean(Asian?) characters in v.digit or etc. */
+#undef ASIAN_CHARS
+
+/*
+ * It's hard to click two buttons simultaneously with two button mouse.
+ * Situation is worse, if it requires continuous clicking.
+ * In this case uncomment below.
+ */
+#undef ANOTHER_BUTTON
 
 /*
  * configuration information solely dependent on the above

@@ -1,0 +1,89 @@
+<html>
+
+<TITLE>g.setproj</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.setproj</b></EM>  - Allows the user to create the PROJ_INFO and the 
+PROJ_UNITS files to record the projection information associated with a 
+current location. 
+<BR>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.setproj</B> 
+
+<H2>DESCRIPTION</H2>
+
+Allows a user to create a PROJ_INFO file in the PERMANENT mapset of the 
+current location. PROJ_INFO file is used to record the projection information 
+associated with the specified mapset. 
+
+<H2>NOTES</H2> 
+
+User running <EM>g.setproj</EM> must own PERMANENT mapset.
+It is highly recommended to run <EM>g.setproj</EM> after
+creating a new location so that conversion programs (such
+as <EM>v.proj</B>)</EM> can be run.
+
+<P>
+
+The current location must not contain a PROJ_INFO or 
+PROJ_UNITS file. 
+
+<P>
+
+The user will be prompted for the projection name. 
+
+<P>
+
+The specification of any projection other than ll and stp will generate 
+a request to the user for a name of a standard ellipse. 
+
+<P> 
+
+The user will be asked for a map datum. If no map datum support is needed, the question should be answered with no, so that no map datum is specified in the PROJ_INFO file. 
+The program assures that the ellipsoid matches the ellipsoid defined with the map datum from the datum table within GRASS. If the map datum used is not listed within this program, the user/administrator should add the definition to the systems datum.table. 
+If the ellipsoid specified does not match the one from the definition in the datum table, the program exits with an error. 
+
+<P>
+
+The projections of aea, lcc, merc, leae (GRASS 5.x), leac (GRASS 5.x), and tmerc will generate a request to the user for the prime meridian and standard parallel for the output 
+map. 
+
+<P>
+
+The projection of stp will generate a request to the user for the 
+choice of zone for the output map. 
+
+<P>
+
+The user will be prompted for the spheroid and zone of the UTM 
+projection. 
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.proj.html">v.proj</A></EM><BR>
+<EM><A HREF="s.proj.html">s.proj</A></EM><BR>
+<EM><A HREF="r.proj.html">r.proj</A></EM><BR>
+<EM><A HREF="m.proj.html">m.proj</A></EM><BR>
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM> 
+
+
+<H2>AUTHOR</H2>
+
+Irina Kosinovsky, 
+U.S. Army Construction Engineering 
+Research Laboratory<BR>
+Morten Hulden, morten@tor.ngb.se - rewrote module and added 121 projections <BR>
+Andreas Lange, andreas.lange@rhein-main.de - added prelimnary map datum support
+</body>
+</html>
+

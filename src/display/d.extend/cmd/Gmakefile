@@ -1,0 +1,9 @@
+PGM=d.extend
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+
+LIST   = main.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

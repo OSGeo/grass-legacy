@@ -119,7 +119,7 @@ proc mksitePanel { BASE } {
 	-anchor nw -variable Nv_(sitedisplay) -value surfdisp \
 	-command change_site_mode
     
-    Nv_mkSurfacelist $tmp.list $maplist Nsite$curr
+    Nv_mkSurfacelist $tmp.list $maplist Nsite$curr site
     pack $tmp.sitedisp.threed $tmp.sitedisp.surfdisp -fill x 
     pack $tmp.sitedisp $tmp.list  -side top
     pack $tmp -side right -fill y -expand 1

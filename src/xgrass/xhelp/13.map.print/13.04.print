@@ -1,8 +1,0 @@
-                     PRINTING HARDCOPY MAP OUTPUT 
-
-The following commands are used to print or save the output
-produced by the various GRASS print commands:
-
-	@ref("-  p.map ",Commands.def/pmap.def)
-	@ref("-  p.ppm ",17.manual/Help.pages/p.ppm)
-	@ref("-  p.screen ",Commands.def/pscreen.def)

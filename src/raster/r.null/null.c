@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     char buf[1024];
     int is_reclass;
 
+	struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -33,6 +34,11 @@ int main(int argc, char *argv[])
         struct Flag *c;
         struct Flag *r;
     } flags;
+
+	module = G_define_module();
+	module->description =
+		"The function of r.null is to explicitly create the NULL-value "
+		"bitmap file.";
 
 	parms.map = G_define_option();
 	parms.map->key    = "map";

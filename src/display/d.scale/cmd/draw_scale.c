@@ -115,7 +115,7 @@ draw_scale (int use_mouse)
 
 		R_move_abs (x_pos + 40 + line_len, y_pos + 25) ;
 		R_text(scales[incr].name) ;
-		R_flush();
+		R_stabilize();
 
 		if(use_mouse)
 		{
@@ -125,6 +125,7 @@ draw_scale (int use_mouse)
 				!strcmp("no",yn) || !strcmp("NO",yn))
 			{
 				R_panel_restore(tmp_fname);
+				R_stabilize();
 				fprintf (stdout,"Try again? [y] ? ");
 				fgets(yn,128,stdin);
 				if (!strcmp("n",yn) || !strcmp("N",yn) ||

@@ -1,0 +1,14 @@
+PGM = $(BIN_CMD)/r.fill.dir
+
+OBJ = main.o\
+	filldir.o\
+	dopolys.o\
+	wtrshed.o\
+	ppupdate.o\
+	tinf.o\
+	resolve.o
+
+$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

@@ -1,0 +1,80 @@
+<TITLE>start.man.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>start.man.sh</b></EM>  - Creates the template for a manual
+entry in standard User's Reference Manual format for a
+user-specified GRASS 4.1 command.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>start.man.sh </B><EM>4.1_program.name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>start.man.sh</EM> is a Bourne shell (<EM>sh</EM>)
+script which, when given a GRASS 4.1 program name, creates
+a basic manual entry for that program in the same standard
+format as that used by the GRASS User's Reference Manual.
+The named program must already exist under a directory for
+GRASS main, alpha, or contributed source code.
+
+<H2>OPTIONS</H2>
+
+This program is not interactive;  the user must specify the
+name of a 4.1 program on the command line.
+
+
+<P>
+
+By default, program output will be sent to standard output
+(i.e., displayed to the user's text terminal).  If the user
+wishes to save the manual entry created by
+<EM>start.man.sh</EM>, program output can be redirected
+into a file.  For example, the below command will create a
+manual entry for the program <EM>new.program</EM>, and save
+output to the file <EM>new.program.man</EM> in the user's
+current directory.
+
+<DL>
+<DD>
+<B>start.man.sh </B>new.program &gt; new.program.man
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><EM>4.1_program.name</EM> 
+
+<DD>The name of an existing GRASS program located in a
+source code directory for main, alpha, or contributed
+software.  
+
+</DL>
+
+<H2>FILES</H2>
+
+This shell script is stored under the
+<KBD>$GISBASE/scripts</KBD> directory on the user's
+system.  The user is encouraged to examine the shell script
+commands stored in this directory and to produce similar
+scripts for their own use.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="bug.report.sh.html">bug.report.sh</A></EM><BR>
+<EM><A HREF="g.help.html">g.help</A></EM><BR>
+<EM><A HREF="g.manual.html">g.manual</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

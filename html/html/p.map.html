@@ -1,0 +1,1186 @@
+<TITLE>p.map</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>p.map</b></EM>  -
+Hardcopy color map output utility.
+
+<BR>
+
+<EM>(GRASS Hardcopy Output Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>p.map</B>
+
+<BR>
+
+<B>p.map help</B>
+
+<BR>
+
+<B>p.map</B> [<B>input=</B><EM>name</EM>] [<B>scale=</B><EM>mapscale</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>p.map</EM>
+produces hardcopy color map products on your system's color output
+device.  Output can include a raster map, any number of vector overlays,
+site data, text labels, and other spatial data.
+
+
+<P>
+
+This program has 2 distincts modes of operation.  The command-line
+mode requires the user to prepare a file of mapping instructions describing
+the various spatial and textual information to be printed prior to running
+<EM>p.map</EM>.
+The interactive mode (i.e., no command-line arguments) will prompt the
+user for items to be mapped and does not require the user
+to prepare a file of instructions.
+
+
+<P>
+
+The command-line parameters are:
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>File containing mapping instructions.
+(or enter <B>input=-</B> to enter from keyboard).
+These instructions are described in detail below.
+
+<DT><B>scale=</B><EM>mapscale</EM> 
+
+<DD>Scale of the output map,  e.g. 1:25000
+
+<BR>
+
+Default:  1panel
+
+
+<P>
+
+This parameter is provided as a convenience.  It is identical to the 
+<EM>scale</EM>
+mapping instruction described below.
+
+
+<P>
+
+
+
+<P>
+
+Note: the user must select an output device using
+<EM><A HREF="p.select.html">p.select</A></EM>
+before running <EM>p.map</EM>.  Also, the
+<EM>preview</EM>
+device can be selected to view the output from
+<EM>p.map</EM>
+on the graphics monitor instead of sending it to a paper printer.
+</DT>
+
+<P>
+
+
+<H2>MAPPING INSTRUCTIONS</H2>
+
+The mapping instructions allow the user to specify various spatial data
+to be plotted. These instructions are normally prepared in a regular
+text file using a system editor.
+Some instructions are single line instructions while
+others are multiple line. Multiple line instructions consist of
+the main instruction followed by a subsection of one or more additional
+instructions.
+
+
+<P>
+
+
+<H2>colormode</H2>
+
+Selects the appropriate method to color raster map layers and images.
+
+
+<P>
+
+
+<PRE>
+USAGE:	<B>colormode</B> approx | best
+
+</PRE>
+
+
+<P>
+
+There are two methods:
+<EM>approximate</EM>
+and
+<EM>best.</EM>
+From a user perspective,
+<EM>approximate</EM>
+can be used for raster map layers with few categories,
+such as soils, and
+<EM>best</EM>
+should be used for images like LANDSAT images or NHAP photos, or maps
+with many categories.
+The
+<EM>approximate</EM>
+mode treats each pixel independently, giving it the printer color
+that best approximates the true color.  The
+<EM>best</EM>
+mode "blends" colors from pixel to pixel using a dithering technique
+to simulate more colors than the printer can actually print.
+The default, if unspecified, is
+<EM>best.</EM>
+
+
+<P>
+
+This example would select the
+<EM>approximate</EM>
+colormode.  The assumption is that the raster map layer being printed is
+has few colors or that the colors would not look good dithered.
+
+
+<P>
+
+
+<PRE>
+EXAMPLE:	
+	<B>colormode</B> approx
+
+</PRE>
+
+
+<P>
+
+
+<H2>colortable</H2>
+
+Includes the color table for the raster map layer in the legend
+below the map
+
+
+<P>
+
+
+<PRE>
+USAGE:	<B>colortable</B> [y|n]
+
+</PRE>
+
+
+<P>
+
+The color table will display the colors for each raster map layer
+category value and the category label.
+To get a color table, you must have previously requested a raster
+map layer.
+Omitting the <B>colortable</B> instruction would result in
+no color table.  <B>Note</B>:  Be careful about asking for color tables for
+raster map layers which have many categories, such as elevation.
+This could result in the printing of an extremely long color table!!!!!
+
+
+<P>
+
+This example would print a color table as part of the legend to the map.
+
+<PRE>
+EXAMPLE:
+	<B>colortable</B> y
+
+</PRE>
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>comments</H2>
+
+Prints comments beneath the map .
+You may submit comment text line by line during <EM>p.map</EM> execution
+or a via a prepared comments file.
+
+
+<P>
+
+
+<PRE>
+USAGE:	<B>comments</B> [commentfile]
+	comments
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+This example prints the comment "This is a comment" in the
+legend below the map.
+
+<PRE>
+EXAMPLE:	
+	<B>comments</B>
+	This is a comment.
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+This example prints whatever is in the file <EM>veg.comments</EM> in the
+legend below the map.
+
+<PRE>
+EXAMPLE:
+	<B>raster</B> vegetation
+	<B>comments</B> veg.comments
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+Presumably, the file
+<EM>veg.comments</EM>
+contain comments
+pertaining to the raster map layer <EM>vegetation</EM>,
+such as "This map was created by classifying a LANDSAT TM image".
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>defpat</H2>
+
+Defines area fill patterns to be used in the
+<EM>setpat</EM>
+instruction.
+
+
+<P>
+
+
+<PRE>
+USAGE:	<B>defpat</B> name
+	pattern
+	<B>color</B> # color
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+
+
+<P>
+
+The pattern is given a name on the <EM>defpat</EM>
+instruction line.  The pattern which follows
+is composed of a sequence of numbers 0-9 (and blanks, which are equivalent to 0).
+The blanks or zeros indicate holes in the pattern where the normal
+category color would show thru. The other number 1-9 indicate pattern
+pixels and can be assigned any color.
+The default color for all the digits will be black unless specified
+with the
+<EM>color</EM>
+instruction.  The color option will begin by entering the word 
+<EM>color</EM>
+followed by one of the digits (1-9) in the pattern, followed by one of
+the NAMED COLORS.  This should be repeated for each of the digits specified to
+avoid using black.  The instruction
+<EM>end</EM>
+terminates the pattern definition.
+Of course, the user can define more patterns by entering more
+<EM>defpat</EM>
+instructions.
+
+
+<P>
+
+<B>NOTE:</B>
+Do NOT indent the pattern.  Leading blank spaces will be 
+interpreted as 0's.
+
+
+<P>
+
+This example creates a black horizontal line pattern.
+
+<PRE>
+EXAMPLE:
+	<B>defpat</B> horiz
+	1
+	0
+	0
+	0
+	<B>color</B> 1 black
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+This example creates a green vertical line pattern.
+
+<PRE>
+EXAMPLE:
+	<B>defpat</B> vert
+	1000
+	<B>color</B> 1 green
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+This example creates a red diagonal line pattern.
+
+<PRE>
+EXAMPLE:
+	<B>defpat</B> diag
+	00001
+	0001
+	001
+	01
+	1
+	<B>color</B> 1 red   	
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+This example creates a two-toned tree pattern with orange
+trunks and green leaves.
+
+<PRE>
+EXAMPLE:
+	<B>defpat</B> tree
+	     2
+	    222
+	   22122
+	  22 1 22
+	     1   
+
+
+
+	               2
+	              222
+	             22122
+	            22 1 22
+	               1   
+	<B>color</B> 1 orange 
+	<B>color</B> 2 black
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+
+<H2>endpanel</H2>
+
+Specifies which panel number to end printing.  The default is 0,
+and will print all panels from the startpanel to the last panel.
+
+
+<P>
+
+
+<PRE>
+EXAMPLE:
+	<B>endpanel</B> 4
+
+</PRE>
+
+
+<P>
+
+This example would end output at panel 4.
+
+
+<P>
+
+
+<H2>grid</H2>
+
+Overlays a coordinate grid onto the output map.
+
+
+<P>
+
+
+<PRE>
+USAGE:	<B>grid</B> spacing
+	<B>color</B> color
+	<B>numbers</B> # [color]
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+The <B>spacing</B> of the grid is given (in the geographic coordinate
+system units) on the main instruction line.  The subsection instructions
+allow the user to specify
+the <B>color</B> of the grid lines,
+whether coordinate <B>numbers</B> should appear
+on the grid lines, and
+if they
+should appear every grid line (1), every other grid line 
+(2), etc., and what color the numbers should be.  The defaults are
+black grid lines, unnumbered.
+
+
+<P>
+
+This example would overlay a green grid with a spacing of 10000 meters
+(for a metered database, like UTM) onto the output map.  Alternate grid
+lines would be numbered with red numbers.
+
+<PRE>
+EXAMPLE:
+	<B>grid</B> 10000   
+	<B>color</B> green
+	<B>numbers</B> 2 red
+	<B>end</B>
+
+</PRE>
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>labels</H2>
+
+Selects a labels file for output (see manual entry for
+<EM><A HREF="p.labels.html">p.labels</A>).</EM>
+<PRE>
+USAGE:	<B>labels</B>  labelfile|<EM>list</EM>
+</PRE>
+This example would <A HREF="paint.html">paint</A> labels from the labels file called
+<EM>town.names</EM>.  Presumably, these labels would indicate the names of
+towns on the map.
+<PRE>
+EXAMPLE:
+	<B>labels</B> town.names
+</PRE>
+
+<H2>line</H2>
+
+Draws lines on the output map.
+<PRE>
+USAGE:	<B>line</B> east north east north
+	<B>line</B> x% y% x% y%
+	<B>color</B> color
+	<B>width</B> #
+	<B>masked</B> [y|n]
+	<B>end</B>
+
+</PRE>
+The beginning and ending points of the line are entered on the main
+instruction.  These points can be defined either by map coordinates or
+by using percentages of the geographic region.
+The user may also specify line
+<B>color</B>,
+<B>width</B>
+in pixels,
+and if the line is to be
+<B>masked</B>
+by the current mask. (See manual entry for <EM><A HREF="r.mask.html">r.mask</A></EM> for more
+information on the mask.)
+<P>
+<P>
+This example would draw a yellow line from the point x=10% y=80%
+to the point x=30% y=70%. This line
+would be 2 pixels wide and would appear even if there is a mask.
+<PRE>
+EXAMPLE:
+	<B>line</B> 10% 80% 30% 70%
+	<B>color</B> yellow
+	<B>width</B> 2
+	<B>masked</B> n
+	<B>end</B>
+
+</PRE>
+Of course, multiple lines may be drawn with multiple
+<EM>line</EM>
+instructions.
+<P>
+
+<H2>outline</H2>
+
+Outlines the areas of a raster map layer with a specified color.
+<PRE>
+USAGE:	<B>outline</B>
+	<B>color</B>  color
+	<B>end</B>
+
+</PRE>
+Distinct areas of the raster map will be separated from each other visually
+by drawing a border (or outline) in the specified
+<B>color</B>
+(default: black).
+Note: it is
+important the user enter the instruction <B>end</B> even if a color is not
+chosen.
+(It is hoped that in the future the outline of a different raster map
+layer other than the one currently being <A HREF="paint.html">paint</A>ed may be placed on the map.)
+<P>
+This example would outline the category areas of the
+<EM>soils</EM>
+raster map layer
+in grey.
+<PRE>
+EXAMPLE:
+	<B>raster</B> soils
+	<B>outline</B>   
+	<B>color</B> grey
+	<B>end</B>
+
+</PRE>
+
+<H2>point</H2>
+
+Places additional points or icons on the output map.
+<P>
+<PRE>
+USAGE:	<B>point</B> east north
+	<B>point</B> x% y%
+	<B>color</B> color
+	<B>icon</B> iconfile|<EM>list</EM>
+	<B>size</B> #
+	<B>masked</B> [y|n]
+	<B>end</B>	
+
+</PRE>
+The point location is entered in the main instruction line by giving either the map 
+coordinates or by using percentages of the geographic region.
+The user may also specify the point
+<B>color</B>,
+the <B>icon</B> file to be used to represent the point location
+(see the the manual entry for
+<EM><A HREF="p.icons.html">p.icons</A>)</EM>,
+the <B>size</B> of the icon in integer multiples of the pattern in the icon file,
+and whether the point is to be <B>masked</B>
+by the current mask. (See manual entry for <EM><A HREF="r.mask.html">r.mask</A></EM> for more
+information on the mask.)
+<P>
+This example would place a purple diamond (from icon file
+<EM>diamond</EM>) at the point (E456000 N7890000).  This diamond would be the same
+size it is in the diamond icon file and would not be masked by the current
+mask.
+<PRE>
+EXAMPLE:
+	<B>point</B> 456000 7890000
+	<B>color</B> purple     
+	<B>icon</B> diamond
+	<B>size</B> 1
+	<B>masked</B> n
+	<B>end</B>	
+</PRE>
+Of course, multiple points may be drawn with multiple
+<EM>point</EM>
+instructions.
+<P>
+
+<H2>raster</H2>
+
+Selects a raster map layer for output.
+<PRE>
+USAGE:	<B>raster</B> mapname|<EM>list</EM>
+</PRE>
+For each 
+<EM>p.map</EM>
+run, only one raster map layer can be requested.  If no raster map layer
+is requested, a completely white map will be produced.
+It can be useful to select no raster map layer in order to
+provide a white background for vector images.
+<P>
+This example would <A HREF="paint.html">paint</A> a map of the raster map layer <EM>soils</EM>.
+<PRE>
+EXAMPLE:	
+	<B>raster</B> soils
+</PRE>
+<P>
+
+<H2>read</H2>
+
+Provides <EM>p.map</EM> with a previously prepared input stream.
+<PRE>
+USAGE:	<B>read</B> previously prepared UNIX file
+</PRE>
+Mapping instructions can be placed into a file and read into
+<EM>p.map.</EM>
+
+
+<P>
+
+<B>Note:</B>
+<EM>p.map</EM>
+will not search for this file.  The user must be in the
+correct directory or specify the full path on the <B>read</B> instruction.
+(Note to /bin/csh users: ~ won't work with this instruction).
+<P>
+This example reads the UNIX file <EM>pmap.roads</EM> into <EM>p.map</EM>.
+This file may contain all the <EM>p.map</EM> instructions for placing
+the vector map layer <EM>roads</EM> onto the output map.
+<P>
+<PRE>
+EXAMPLE: 
+	<B>read</B> pmap.roads
+</PRE>
+The user may have created this file because this vector map layer
+is particularly useful for many <EM>p.map</EM>
+outputs.  By using the <B>read</B> option, the user need not enter all the input
+for the <B>vector</B> instruction, but simply <B>read</B> the previously prepared
+file with the correct instructions.
+<P>
+<H2>region</H2>
+
+Places the outline of a smaller geographic region
+on the output.
+<PRE>
+USAGE:	<B>region</B> regionfile | <EM>list</EM>
+	<B>color</B> color
+	<B>width</B> #
+	<B>end</B>
+</PRE>
+Geographic region settings are created and saved using <EM><A HREF="g.region.html">g.region</A></EM>.
+The <EM>p.map</EM> <EM>region</EM> option can be used to show an outline of
+a smaller region which was printed on a separate run of <EM>p.map</EM>
+on other user-created maps.
+<P>
+The user can specify the <B>color</B>
+and the <B>width</B> (in pixel units) of the outline.
+The default is a black border of one pixel width.
+<P>
+<P>
+<P>
+This example would place a white outline, 2 pixels wide, of the
+geographic region
+called <EM>fire.zones</EM> onto the output map.  This geographic region
+would have been created and saved using <EM><A HREF="g.region.html">g.region</A></EM>.
+<P>
+<PRE>
+EXAMPLE:
+	<B>region</B> fire.zones
+	<B>color</B> white
+	<B>width</B> 2
+	<B>end</B>
+</PRE>
+<P>
+<H2>scale</H2>
+
+Selects a scale for the output map.
+<PRE>
+USAGE:	<B>scale</B> <EM>scale</EM>
+</PRE>
+<P>
+
+The scale can be selected either as:
+<DT> 
+<DD>a relative ratio, e.g. 1:25000;
+
+<DT> 
+<DD>an absolute width of the printed map, e.g. 10 inches;
+
+<DT> 
+<DD>the number of printed paper panels, e.g. 3 panels;
+
+<DT> 
+<DD>the number of miles per inch, e.g. 1 inch equals 4 miles.
+<P>
+<P>
+
+</DT>
+
+This example would set the scale of the map to 1 unit = 25000
+units.
+
+<PRE>
+EXAMPLE:
+	<B>scale</B> 1:25000
+</PRE>
+<P>
+
+
+<H2>setcolor</H2>
+
+Overrides the color assigned to one or more categories
+of the raster map layer.
+<P>
+<PRE>
+USAGE:	<B>setcolor</B> cat(s) color
+</PRE>
+<P>
+<P>
+This example would set the color for categories 2,5 and 8 of the raster
+map layer <EM>watersheds</EM> to white and category 10 to green.
+(<B>NOTE</B>: no spaces are inserted between the category values.)
+<P>
+<PRE>
+EXAMPLE:	
+	<B>raster</B> watersheds
+	<B>setcolor</B> 2,5,8 white
+	<B>setcolor</B> 10 green
+
+</PRE>
+
+
+<P>
+
+Of course,
+<EM>setcolor</EM>
+can be requested more than once to override the default color for additional
+categories.  More than one category can be changed for each request by listing
+all the category values separated by commas (but with no spaces).
+
+
+<P>
+
+
+<H2>setpat</H2>
+
+Assigns a (previously defined) pattern on a raster map layer category.
+<PRE>
+USAGE:	<B>setpat</B> cat name
+  or	<B>setpat</B> <EM>builtin</EM>
+  or	<B>setpat</B> <EM>all</EM>
+</PRE>
+The user can choose to use:
+the name of a specific pattern created using <B>defpat</B> (see above);
+the patterns built into <EM>p.map</EM>;
+or all the patterns the user may have created.
+<P>
+This example assigns the vertical pattern created using
+<B>defpat</B> (see example in <B>defpat</B> above) to category 3 of the raster
+map layer <EM>vegetation</EM> and the
+tree pattern (see example in <B>defpat</B> above) to category 10. 
+<PRE>
+EXAMPLE:
+	<B>raster</B> veg
+	<B>setpat</B> 3 vert
+	<B>setpat</B> 10 tree
+</PRE>
+This example reads a previously prepared UNIX file
+<EM>horiz.pat</EM>
+with the correct 
+<B>defpat</B> instructions for creating a black horizontal pattern (see example in
+<B>defpat</B> above) and assigns that pattern to category 5 of the raster
+map layer <EM>soils</EM> via the <B>setpat</B> instruction.
+
+<PRE>
+EXAMPLE:
+	<B>raster</B> soils
+	<B>read</B> horiz.pat
+	<B>setpat</B> 5 horiz
+</PRE>
+To select the builtin patterns:
+<PRE>
+EXAMPLE:	
+	<B>raster</B> soils
+	<B>setpat</B> builtin
+</PRE>
+To select individual builtin patterns:
+<PRE>
+EXAMPLE:
+	<B>raster</B> soils
+	<B>setpat</B> 5 #1
+	<B>setpat</B> 10 #2
+</PRE>
+
+
+<H2>startpanel</H2>
+
+Specifies at which panel number to begin printing.  Default is 0
+and would start printing from the first panel.
+<PRE>
+EXAMPLE:
+	<B>startpanel</B> 2
+</PRE>
+This example would begin printing at panel 2.
+<P>
+
+<H2>sites</H2>
+
+Selects sites data to be placed on the output map
+(see manual entry for <EM><A HREF="s.menu.html">s.menu</A></EM>).
+<PRE>
+USAGE:	<B>sites</B> sitemap |<EM>list</EM>
+	<B>color</B> color
+	<B>icon</B> iconfile |<EM>list</EM>
+	<B>size</B> #
+	<B>desc</B> [y|n]
+	<B>end</B>
+</PRE>
+The user may specify the
+the <B>color</B> of the sites (see section on NAMED COLORS below);
+the <B>icon</B> to be used to represent the presence of a site
+(see the manual entry for <EM><A HREF="p.icons.html">p.icons</A></EM>);
+the <B>size</B> of the icon (number of times larger than the size it is in
+the icon file);
+and
+whether or not the <B>desc</B>ription associated with each site is also to be
+printed.
+<P>
+This example would <A HREF="paint.html">paint</A> a sites map with blue windmills (from an icon file created
+by the user using the
+<EM><A HREF="p.icons.html">p.icons</A></EM>
+GRASS command) placed at all windmill locations (from a sites list).  These
+windmills would be two times larger than the size of the icon in the
+icon file and have descriptions from the sites list file printed beside them.
+<PRE>
+EXAMPLE:	
+	<B>sites</B> windmills
+	<B>color</B> blue
+	<B>icon</B> windmill
+	<B>size</B> 2
+	<B>desc</B> y
+	<B>end</B>
+</PRE>
+<P>
+
+<H2>text</H2>
+
+Places text on the map.
+<P>
+<PRE>
+USAGE:	<B>text</B>  east north text
+	<B>text</B>  x% y% text
+	<B>font</B> fontname
+	<B>color</B> color|none
+	<B>width</B> #
+	<B>hcolor</B> color|none
+	<B>hwidth</B> #
+	<B>background</B> color|none
+	<B>border</B> color|none
+	<B>size</B> #
+	<B>ref</B> reference point
+	<B>xoffset</B> #
+	<B>yoffset</B> #
+	<B>opaque</B> [y|n]
+	<B>end</B>
+</PRE>
+The user specifies where the text will be placed by
+providing map coordinates or percentages of the geographic region map.
+The text follows these coordinates
+on the same instruction line.
+More than one line of text can be
+specified by notating the end of a line with
+<B>\en</B>
+(e.g. USA\|\enCERL).
+<P>
+<P>
+The user can then specify various text features:
+<P>
+<B>font:</B>
+cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks italicc
+italiccs italict romanc romancs romand romans romant scriptc scripts
+(The default font is romans);
+<P>
+<B>color</B>
+(see NAMED COLORS);
+<P>
+<B>width</B>
+of the lines used to draw the text (to make thicker letters);
+<P>
+<B>size</B>
+as the vertical height of the letters in meters on the
+ground (text size will grow or shrink depending on the scale at which
+the map is <A HREF="paint.html">paint</A>ed);
+<P>
+the highlight color (<B>hcolor</B>) and
+the width of the highlight color (<B>hwidth</B>);
+<P>
+the text-enclosing-box <B>background</B> color;
+the text box <B>border</B> color;
+<P>
+<B>ref.</B>
+This reference point specifies the text handle - what
+part of the text should be placed on the location specified by the map
+coordinates.  Reference points can refer to:
+[lower|upper|center]\ [left|right|center] of the text to be printed;
+<P>
+
+<B>yoffset</B>,
+which provides finer placement of text by shifting the
+text a vertical distance in pixels from the specified north.  The vertical 
+offset will shift the location to the south if positive, north if negative;
+
+<P>
+
+<B>xoffset</B>,
+which shifts the text a horizontal distance in pixels from
+the specified east The horizontal offset will shift the location east if 
+positive, west if negative;
+
+<P>
+
+whether or not the text should be <B>opaque</B> to vectors.  Entering <B>no</B>
+to the opaque option will allow the user to see any vectors which go
+through the text's background box.  Otherwise, they will end at the box's edge.
+
+<P>
+
+<P>
+
+This example would place the text
+<EM>SPEARFISH LAND COVER</EM>
+at the coordinates E650000 N7365000. The text would be a total of
+3 pixels wide (2 pixels of red text and 1 pixel black highlight), have a white
+background enclosed in a red box, and be 500 meters in size.  The lower right
+corner of the text would be centered over the coordinates provided.  All
+vectors on the map would stop at the border of this text.
+<PRE>
+EXAMPLE:	
+	<B>text</B> 650000 7365000 SPEARFISH LAND COVER
+	<B>font</B> romand
+	<B>color</B> red
+	<B>width</B> 2
+	<B>hcolor</B> black
+	<B>hwidth</B> 1
+	<B>background</B> white
+	<B>border</B> red
+	<B>size</B> 500
+	<B>ref</B> lower left 
+	<B>opaque</B> y
+	<B>end</B>
+</PRE>
+<P>
+<P>
+<H2>vector</H2>
+
+Selects a vector map layer for output.
+<PRE>
+USAGE:	<B>vector</B> vectormap|<EM>list</EM>
+	<B>color</B> [#] color
+	<B>width</B> #
+	<B>hcolor</B> color
+	<B>hwidth</B> #
+	<B>masked</B> [y|n]
+	<B>style</B>  0-9
+	<B>end</B>
+</PRE>
+
+
+<P>
+
+The user can specify
+the <B>color</B> of the vectors;
+the <B>width</B> of the vectors lines in pixels;
+the highlight color (<B>hcolor</B>) for the vector lines;
+the width of the highlight color (<B>hwidth</B>) in pixels;
+whether or not the raster map layer is to be <B>masked</B>
+by the current mask
+(see manual entry <EM><A HREF="r.mask.html">r.mask</A></EM> for more information on the mask);
+and the line <B>style</B>.
+The line style allows the vectors
+to be dashed in different patterns and colors.  This is done by typing a
+series of numbers (0-9) in a desired sequence or pattern.  Colors for the
+numbers (1-9) can be assigned using the <B>color</B> instruction.  Blanks and
+non-digit characters are recognized as 0's. Using 0 would allow the
+colors of the raster map layer (or the background color
+if no raster map layer was selected) to show through.
+
+<P>
+
+<P>
+
+This example would <A HREF="paint.html">paint</A> a map of the vector map layer
+named <EM>streams</EM>.
+These streams would be a total of 3 pixels wide (the inner two pixels blue and
+the outer highlight pixel white).  The map would not show streams outside of the
+current mask.
+<PRE>
+EXAMPLE:
+	<B>vector</B> streams
+	<B>color</B> blue
+	<B>width</B> 2
+	<B>hcolor</B> white
+	<B>hwidth</B> 1
+	<B>masked</B> y
+	<B>end</B>
+</PRE>
+
+
+<P>
+
+This example would <A HREF="paint.html">paint</A> a map of the vector map layer <EM>roads</EM>.  These
+roads would be 2 pixels wide and would be dashed blank-black-red (the blank 
+areas would show what lies under the roads). This map would show roads inside 
+and outside of the current mask.
+<PRE>
+EXAMPLE:
+	<B>vector</B> roads
+	<B>width</B> 2  
+	<B>style</B> 001122
+	<B>color</B> 1 black 
+	<B>color</B> 2 red
+	<B>masked</B> n
+	<B>end</B>
+</PRE>
+
+<H2>verbose</H2>
+
+Changes the amount of talking <EM>p.map</EM> will do.
+<P>
+<PRE>
+USAGE: <B>verbose</B> [0|1|2]
+</PRE>
+A higher value implies more chatter.  The default is 2.
+This example sets the amount of chatter to a
+minimum.
+<PRE>
+EXAMPLE:
+	<B>verbose</B> 0
+</PRE>
+
+<H2>end</H2>
+
+Terminates input and begin <A HREF="paint.html">paint</A>ing the map.
+<PRE>
+USAGE:	<B>end</B>
+</PRE>
+
+<H2>NAMED COLORS</H2>
+
+The following are the colors that are accepted by <EM>p.map</EM>:
+<PRE>
+	aqua
+	black
+	blue
+	brown
+	cyan
+	gray
+	green
+	grey
+	indigo
+	magenta
+	orange
+	purple
+	red
+	violet
+	white
+	yellow
+</PRE>
+
+
+<H2>ICONS VS. PATTERNS</H2>
+
+Icons and patterns as used in <EM>p.map</EM> are not the same thing.
+Patterns are defined and are normally used to cover those extended areas
+covered by a raster map layer category.  A pattern will repeat
+above, below and adjacent to itself.
+Icons are used to represent a single point.
+
+
+<P>
+
+Patterns are supported directly within
+<EM>p.map</EM>
+using the
+<EM>defpat</EM>
+instruction, while icons must be created
+using the
+<EM><A HREF="p.icons.html">p.icons</A></EM>
+program.
+<P>
+
+
+<H2>EXAMPLE p.map INPUT FILE</H2>
+
+The following is an example of a <EM>p.map</EM> script file. The file has been
+name
+<EM>spear.soils</EM>.  For the purposes of illustration, the file is in
+two columns.  This script file can be entered at the command line:
+<P>
+<B>p.map input=</B><EM>spear.soils</EM>
+<PRE>
+	(cont.)
+<B>raster</B> soils		<B>defpat</B> diag
+<B>vector</B> streams		000001
+   <B>color</B> blue		00001
+   <B>width</B> 2		0001
+   <B>hcolor</B> white		001
+   <B>hwidth</B> 1		01
+   <B>masked</B> y		1
+   <B>end</B> 	   		   <B>color</B> 1 red
+<B>vector</B> roads 	   	   <B>end</B>
+   <B>width</B> 2		<B>setpat</B> 4 diag
+   <B>style</B> 001122		<B>text</B> 608000.00 3476004.73 SPEARFISH SOILS MAP
+   <B>color</B> 1 black	   <B>color</B> red  
+   <B>color</B> 2 red	   	   <B>width</B> 2  
+   <B>masked</B> n	   	   <B>hcolor</B> black
+   <B>end</B>	   		   <B>hwidth</B> 1  
+<B>labels</B> town.names	   <B>background</B> white
+<B>region</B> subregion	   <B>border</B> red  
+   <B>color</B> white	   	   <B>size</B> 500
+   <B>width</B> 2	   	   <B>ref</B> lower left
+   <B>end</B>	   		   <B>opaque</B> y
+<B>grid</B> 10000	   	   <B>end</B>
+   <B>color</B> green		<B>line</B> 606969.73 3423092.91 616969.73 3423092.91
+   <B>numbers</B> 2 red	   <B>color</B> yellow
+   <B>end</B>	   		   <B>width</B> 2
+<B>outline</B>	   		   <B>opaque</B> yes
+   <B>color</B> black	   	   <B>end</B>
+   <B>end</B>			<B>point</B> 40% 60%
+<B>colortable</B> y	   	   <B>color</B> purple
+<B>comments</B>	   	   <B>icon</B> diamond
+   This is a comment   	   <B>size</B> 2	
+   <B>end</B>	   		   <B>masked</B> n
+<B>scale</B> 1:25000    	   <B>end</B>	
+<B>setcolor</B> 6,8,9 white	<B>end</B>	
+<B>setcolor</B> 10 green
+
+</PRE>
+
+<H2>INTERACTIVE MODE</H2>
+
+If the user simply enter
+<EM>p.map</EM>
+without arguments, then a simple prompting session occurs.
+Some, but not all of the non-interactive requests are available
+at this level.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="p.chart.html">p.chart</A></EM><br>
+<EM><A HREF="p.icons.html">p.icons</A></EM><br>
+<EM><A HREF="p.labels.html">p.labels</A></EM><br>
+<EM><A HREF="p.select.html">p.select</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

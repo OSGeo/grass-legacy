@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.35 i586) [Netscape]">
+   <TITLE>r.param.scale</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<IMG SRC="grass.smlogo.gif" >&nbsp;
+<HR width=100% align=center size=6 no shade>
+<H2>
+NAME</H2>
+<B>r.param.scale</B> - GRASS module that extracts terrain parameters from
+a DEM. Uses a multi-scalar approach by taking fitting quadratic parameters
+to any size window (via least squares).
+<H2>
+Usage:</H2>
+<B>r.param.scale</B> [-c] <B>in=</B>name <B>out=</B>name [<B>s_tol=</B>value]
+[<B>c_tol=</B>value] [<B>size=</B>value] [<B>param=</B>name] [<B>exp=</B>value]
+[<B>zscale=</B>value]
+<BR>&nbsp;
+<H2>
+Flags:</H2>
+-c Constrain model through central window cell
+<H2>
+Parameters:</H2>
+<P><B>&nbsp;in </B>Raster surface layer to process
+
+<P><B>&nbsp;out </B>Output raster layer containing morphometric parameter
+
+<P><B>&nbsp;s_tol</B> Slope tolerance that defines a `flat' surface (degrees)
+<BR>default: 1.0
+
+<P><B>&nbsp;c_tol</B> Curvature tolerance that defines `planar' surface
+<BR>default: 1.0
+
+<P><B>&nbsp;size </B>Size of processing window (odd number only)
+<BR>default: 3
+
+<P><B>&nbsp;param</B> Morphometric parameter to calculate
+<BR>options: elev,slope,aspect,profc,planc,longc,crosc,minic,maxic, feature
+<BR>default: elev
+
+<P><B>&nbsp;exp</B> Exponent for distance weighting (0.0-4.0)
+<BR>default: 0.0
+
+<P><B>&nbsp;zscale</B> Vertical scaling factor
+<BR>default: 1.0
+
+<P>&nbsp;
+
+<P><B><I>r.param.scale can calculate the following:</I></B>
+
+<P>&nbsp;elev: Generalised elevation value.
+
+<P>&nbsp;slope: Maximum gradient at a point.
+
+<P>&nbsp;aspect: Direction of maximum gradient.
+
+<P>&nbsp;profc: Profile convexity (vertical in direction of steepest slope).
+
+<P>&nbsp;planc: Plan convexity (contour curvature).
+
+<P>&nbsp;crosc: Cross sectional convexity (tangent to contours, downslope).
+
+<P>&nbsp;longc: Longitudinal convexity (perpendicular to contours downslope).
+
+<P>&nbsp;minic: Minimum convexity.
+
+<P>&nbsp;maxic: Maximum convexity.
+
+<P>&nbsp;features: Morphometric features:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+peaks, ridges, passes, channels, pits and planes.
+<BR>&nbsp;
+<H2>
+HISTORY</H2>
+
+<PRE>Modified to include constrained fitting.&nbsp;
+Jo Wood, April, 1995&nbsp;
+-------
+Modified to include weighting matrix and double precision arithmetic.
+Jo Wood, 9th May, 1995.
+-------
+Modified to include two separate tolerance values for feature detection.
+Jo Wood, 23rd May, 1995.</PRE>
+
+<H2>Still to do</H2>
+
+Fix bug when `constrain through central cell' option selected. Create colour
+tables for all output files (presently only on features).<p>
+
+<H2>SEE ALSO</H2>
+<i><a href=d.param.scale.html>d.param.scale</a></i><p>
+
+<P>See also Java Code in <A HREF="http://www.geog.le.ac.uk/jwo/research/LandSerf">LandSerf
+</A>that implements the same procedure&nbsp;
+<HR>
+<ADDRESS>
+<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A></ADDRESS>
+
+<BR><A HREF="http://www.geog.le.ac.uk/assist/index.html">ASSIST's home</A>
+
+<H2>REFERENCE</H2>
+
+Wood, J. (1996): The Geomorphological characterisation of Digital Elevation
+Models. Diss., Department of Geography, University of Leicester, U.K. <br>
+online at:<br>
+<a href=http://www.geog.le.ac.uk/jwo/research/dem_char/thesis/index.html>
+            www.geog.le.ac.uk/jwo/research/dem_char/thesis/index.html</a>
+</BODY>
+</HTML>

@@ -18,10 +18,16 @@ int main (int argc, char *argv[])
     char *type, *cmap, *cmapset;
     char errbuf[256];
     int fp;
+	struct GModule *module;
     struct Flag *flag1, *flag2;
     struct Option *opt1, *opt2, *opt3;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates/Modifies the color table associated with "
+		"a raster map layer.";
 
     opt1 = G_define_option();
     opt1->key         = "map";

@@ -42,8 +42,9 @@ return 0;
 
 /* sort sites on y, then x, coord */
 int 
-scomp (struct Point *s1, struct Point *s2)
+scomp (const void *ss1, const void *ss2)
 {
+	const struct Point *s1 = ss1, *s2 = ss2;
 	if(s1 -> y < s2 -> y) return(-1);
 	if(s1 -> y > s2 -> y) return(1);
 	if(s1 -> x < s2 -> x) return(-1);

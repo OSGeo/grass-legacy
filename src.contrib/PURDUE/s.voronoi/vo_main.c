@@ -26,7 +26,6 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_structs.h"
 #include "vo_defs.h"
 
 struct Cell_head window;
@@ -55,8 +54,14 @@ main (int argc, char **argv)
     struct Option *input, *output;
   } parm;
 
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description = 
+    "Create a Voronoi diagram (Thiessen polygon) from a sites list "
+    "in a GRASS binary vector file. ";
 
   parm.input = G_define_option ();
   parm.input->key = "sites";
@@ -152,7 +157,7 @@ main (int argc, char **argv)
 
   init_header (Map.dig_fp, &window, &Map.head);
   tmpfile = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s | s.sweep -d > %s", sitefile, tmpfile);
+  sprintf(buf, "s.out.ascii %s | $GISBASE/etc/s.sweep -d > %s", sitefile, tmpfile);
   G_system(buf);
   write_polygons (&Map, tmpfile, verbose);
   if (label)

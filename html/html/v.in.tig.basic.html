@@ -1,0 +1,147 @@
+<TITLE>v.in.tig.basic</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.tig.basic</b></EM>  - Create GRASS vector map from TIGER files
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.tig.basic</B>
+<B>v.in.tig.basic help</B>
+<DT>
+<B>v.in.tig.basic [-pqt] t1=</B><EM>TIGER.1</EM> <B>t2=</B><EM>TIGER.2</EM><B> out=</B><EM>name</EM> [<B>zone=</B><EM>utm_zone</EM>]
+<DD>[<B>spheroid=</B><EM>spheroid</EM>] [<B>tlid=</B><EM>file</EM>]
+</DT>
+<P>
+
+<H2>DESCRIPTION</H2>
+
+This program creates a GRASS vector map in the current mapset (UTM or
+Lat-Long locations only) with labelled line segments constructed from
+the end points (nodes) from the Type 1 TIGER file records and shape
+points from the Type 2 TIGER file.  The nodes and shape points are
+matched by the TIGER record number (TLID field).  In the attribute
+(label) file which is built (in the <EM>dig_att</EM> directory), the
+lines are given the "area boundary" type and line labels are the
+record numbers (9 digits!).
+<P>
+The Type 1 file may contain the records for a complete county, a subset
+for a county, or those from more than one county concatenated.  The
+Type 2 file must contain all those records corresponding to the Type 1
+records, but may contain extra records which will not be used.
+Typically, a subset of Type 1 records is used and a full county Type 2
+file is used.
+<P>
+The program should function well independent of the termination 
+character(s) at the end of each line in the input files.  &lt;LF&gt;,
+&lt;CR&gt;, neither, one, or both are acceptable.  Different distribution 
+media apparently have different record delimiting characters.
+<P>
+The -p flag should not normally be used.  It causes the program
+to build a disk file pointer table for all of the Type 2
+records each time the program runs, rather than using the table
+built previously.  Detection, naming and verification of the
+pointer file are automatic.  It is created in the "tmp" space in
+the user's location.
+<P>
+<H2>OPTIONS</H2>
+<B>Flags:</B>
+<DL>
+<DT><B>-p</B>
+<DD>Create new disk file for Type 2 pointers every time
+<DT><B>-q</B>
+<DD>Perform functions quietly
+<DT><B>-t</B>
+<DD>Build topology (dig_plus) file when done (can't be quiet)
+</DL>
+<P>
+<B>Parameters</B>
+<P>
+<DL>
+<DT><B>t1=</B><EM>name</EM>
+<DD>TIGER Type 1 path/file name
+<DT><B>t2=</B><EM>name</EM>
+<DD>TIGER Type 2 path/file name
+<DT><B>out=</B><EM>name</EM>
+<DD>Name of vector map to create
+<DT><B>zone=</B><EM>value</EM>
+<DD>UTM zone number; default is location zone<BR>
+options: 1-60<BR>
+default: (current zone)
+<DT><B>spheroid=</B><EM>keyword</EM>
+<DD>Spheroid for LL to UTM conversion; see m.gc.ll<BR>
+<DD>default: clark66                                                         
+<DT><B>tlid=</B><EM>name</EM>                    
+<DD>Path/file for list of TLID numbers to process from TIGER.1 File<BR>
+default: nonE                           
+</DL>                  
+<H2>THE tlid PARAMETER</H2>
+
+The file specified by the <EM>tlid</EM> parameter may be of any size.
+Any number at the beginning of a line will be interpreted to be the
+TLID of a Type 1 record which is to be included in the output map.
+Other information on these lines is ignored, as are lines which do
+not begin with a number.  If fewer than 5000 numbers are in this
+file, it is only read once and execution speed is greatly enhanced.
+Normally, a full Type 1 file will be specified by the <EM>t1</EM>
+parameter when a <EM>tlid</EM> file is used.
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>BUGS/RESTRICTIONS</H2>
+
+<B>Caution:</B> This program will overwrite an existing vector map of
+the same name without warning.
+
+
+<P>
+
+The Type 2 input file must be on a device capable of "seeking," i.e.,
+not a tape drive. CD-ROM is OK (but program will run much faster
+from disk files).
+
+
+<P>
+
+Input lines in a <EM>tlid</EM> file are limited to 300 characters in
+length.  If the system can allocate space to store all the TLID numbers
+read from this file, it is only read once and execution speed is
+greatly enhanced; on a typical system, space for more than 10,000
+numbers can be allocated.
+
+<H2>SEE ALSO</H2>
+
+<P>
+<i>
+<A HREF="v.apply.census.html">v.apply.census</A>
+</i> will generate polygon labels for Census
+tracts, block groups, etc., from STF1 or PL94-171 files.
+
+<BR>
+
+<i>
+<A HREF="m.in.stf1.tape.html">m.in.stf1.tape</A>
+</i> and/or unix text tools can be used to
+extract/concatenate useful subsets of TIGER Type 1 records prior
+to running <B>v.in.tig.basic</B>.
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne, GIS Laboratory, Central Washington University

@@ -1,8 +1,0 @@
-PGM=r.to.SVF
-HOME=$(BIN_CONTRIB_CMD)
-
-$(HOME)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) main.o $(GISLIB) $(MATHLIB)
-	mv a.out $@
-
-$(GISLIB): #

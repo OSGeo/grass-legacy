@@ -1,0 +1,121 @@
+<TITLE>v.stats</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.stats</b></EM>  - Prints information about a binary GRASS vector map layer. 
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.stats</B>
+<BR>
+<B>v.stats help</B>
+<BR>
+<B>v.stats</B> [<B>-h</B>] <B>map=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+The program <EM>v.stats</EM> will print to standard output
+information about a user-specified binary GRASS vector map
+layer.
+
+<P>
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-h</B>
+<DD>Display header information from the vector file. 
+</DL>
+
+<P>
+<H3>Parameter:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of the binary GRASS vector file to be queried. 
+</DL>
+
+<P>
+
+The program will be run non-interactively if the user
+specifies the parameter value and (optionally) sets the 
+<B>-h</B>
+flag on the command line, using the form:
+
+<P>
+
+<DL>
+<DD>
+<B>v.stats</B> [<B>-h</B>] <B>map=</B><EM>name</EM> 
+</DL>
+
+<P>
+
+If the user instead simply types <B>v.stats</B> without specifying program 
+arguments on the command line, the program will prompt the user to enter 
+inputs through the standard user interface described in the 
+manual entry for <EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>NOTES</H2>
+
+Sample output follows: 
+
+<DL>
+<DD>
+Format: Version 4.0 (Level 2 access) (Portable) 
+<BR>
+Number of Lines: 3 
+<BR>
+Number of Nodes: 2 
+<BR>
+Number of Areas: 2 (complete) 
+<BR>
+Number of Isles: 1 (complete) 
+<BR>
+Number of Atts : 2 
+</DL>
+
+<P>
+
+The GRASS version number is given. Parenthetical text
+following this describes the read access level available
+and notes whether or not the file is in GRASS version 4.0
+portable data format.  The access level indicates the types
+of data available for the named vector map layer.  "Level
+1" denotes a binary vector file (without any accompanying
+<EM>dig_plus</EM> file), while "Level 2" denotes the
+existence of a <EM>dig_plus</EM> (vector topology) file for
+the named map layer (generally created by 
+<EM><A HREF="v.support.html">v.support</A></EM>). 
+If only Level 1 information is available for a vector map layer,
+only the number of lines and (optionally) the file header
+will be printed to standard output.
+
+<P>
+
+If all areas and islands (isles) in the vector file have
+been identified (usually by 
+<EM><A HREF="v.support.html">v.support</A></EM>), their
+counts will be followed by "<EM>complete</EM>." If not, they
+will be followed by "<EM>incomplete</EM>".  The
+<EM>dig_plus</EM> file, which is created and updated by
+<EM><A HREF="v.support.html">v.support</A></EM>,
+must exist for this information to be output.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A>,</EM>
+<EM><A HREF="v.import.html">v.import</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A>,</EM>
+and 
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Gerdes, U.S. Army Construction Engineering 
+Research Laboratory
+

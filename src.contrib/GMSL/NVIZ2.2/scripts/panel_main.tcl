@@ -31,12 +31,16 @@ proc mkmainPanel { BASE } {
     pack [frame $BASE.redrawf.f1] 	-side top -fill x
     pack [frame $BASE.redrawf.f2] 	-side top -fill x 
 
-    set auto [checkbutton $BASE.redrawf.f1.autoclear -text "Auto Clear" \
+    set labl1 [label $BASE.redrawf.f1.label1  -text Auto: ]
+    set auto [checkbutton $BASE.redrawf.f1.autoclear -text "Clear" \
 		  -variable autoc ] 
     $auto select
-    set labl [label $BASE.redrawf.f1.label  -text REDRAW] 
+    set auto_d [checkbutton $BASE.redrawf.f1.autodraw -text "Draw" \
+                  -onvalue 1 -offvalue 0 -variable auto_draw ]
+    $auto_d select
+    set labl2 [label $BASE.redrawf.f1.label2  -text REDRAW] 
     set clr [button $BASE.redrawf.f1.clear -text Clear -command do_clear]
-    pack $auto $labl $clr -side left -expand 1 -fill x
+    pack $labl1 $auto $auto_d $labl2 $clr -side left -expand 1 -fill x
 
     pack \
 	[button $BASE.redrawf.f2.surface -text Surface -command Nsurf_draw_all] \
@@ -69,9 +73,12 @@ proc mkmainPanel { BASE } {
 #-command {bind .top.canvas <Button> {if [%W islinked] {look_here %W %x %y}}}
 
     button $BASE.midf.lookat.here -text here \
-	-command {bind .top.canvas <Button> {look_here %W %x %y}}
+	-command {bind .top.canvas <Button> {look_here %W %x %y
+	if {[Nauto_draw] == 1} {Ndraw_all}
+	}}
 
-    button $BASE.midf.lookat.center -text center -command look_center
+    button $BASE.midf.lookat.center -text center -command { look_center
+	if {[Nauto_draw] == 1} {Ndraw_all} }
     button $BASE.midf.lookat.cancel -text cancel -command no_focus
     pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
 	$BASE.midf.lookat.center $BASE.midf.lookat.cancel \

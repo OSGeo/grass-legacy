@@ -26,13 +26,16 @@
 #include "sv.h"
 
 char *plot_file, *data_file;
+const char *plot_program;
+
+struct Cell_head window;
 
 int 
 main (int argc, char **argv)
 {
   char *mapset, *sitefile, *graphfile, errmsg[200], sep;
   int i, j, k, nh, nsites, once=0, tick;
-  int verbose, plot;
+  int verbose, plot, field;
   double h, htol, a, atol;
   int omnidirectional;
   double distance, direction, diffsq;
@@ -45,10 +48,15 @@ main (int argc, char **argv)
   } flag;
   struct
   {
-    struct Option *input, *lag, *lagtol, *angle, *angtol, *save;
+    struct Option *input, *lag, *lagtol, *angle, *angtol, *save, *dfield;
   } parm;
-
+  struct GModule *module;
+  extern struct Cell_head window;
+    
   G_gisinit (argv[0]);
+  module = G_define_module();
+  module->description =      
+                      "Sample semivariogram of a GRASS sites list.";
 
   parm.input = G_define_option ();
   parm.input->key = "sites";
@@ -87,6 +95,14 @@ main (int argc, char **argv)
   parm.save->required = NO;
   parm.save->description = "basename of a graphing data/commands files (implies -p)";
 
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
+
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -99,8 +115,11 @@ main (int argc, char **argv)
     exit (1);
   G_sleep_on_error (0);
 
+  plot_program = getenv("GRASS_GNUPLOT");
+
   /* Process arguments */
   verbose = (!flag.q->answer);
+  sscanf(parm.dfield->answer,"%d", &field);
 
   if ((i = sscanf (parm.lag->answer, "%lf", &h)) != 1)
     G_fatal_error ("error scanning lag");
@@ -135,12 +154,10 @@ main (int argc, char **argv)
   if (parm.save->answer)
     plot=1;
     
-
-  /* need graphics. program will exit here if driver is not available */
-  if (plot)
-  { 
-    R_open_driver ();
-    R_close_driver ();
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
   }
 
   /* Find sites file and read it */
@@ -155,19 +172,20 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
+  G_get_window (&window);
   fdsite = G_fopen_sites_old (parm.input->answer, mapset);
   if (fdsite == NULL)
   {
     sprintf (errmsg, "can't open sites file [%s]", sitefile);
     G_fatal_error (errmsg);
   }
-  nsites = readsites (fdsite, 0, 0, verbose, &z);
+  
+  nsites = G_readsites (fdsite, 0, verbose, field, &z);
   }
   else
   {
     fdsite = stdin;
-    /* nsites = readsites2 (fdsite, 0, 0, verbose, &z); */
-    nsites = readsites (fdsite, 0, 0, verbose, &z);
+    nsites = G_readsites (fdsite, 0, verbose, field, &z);
   }
   if (nsites==0)
     G_fatal_error ("No sites found. Check your region.");
@@ -197,7 +215,7 @@ main (int argc, char **argv)
     fprintf (stderr, "Computing sample semivariogram ...  ");
   for (i = 0, k = 0; i < nsites; ++i)
   {
-    /* for (j = i + 1; j < nsites; ++j) /* 0<=angle<=180 */
+    /* for (j = i + 1; j < nsites; ++j) */ /* 0<=angle<=180 */
     for (j = 0; j < nsites; ++j)/* 0<=angle<=360 */
     {
       if (i != j)		/* 0<=angle<=360 */

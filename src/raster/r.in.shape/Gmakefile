@@ -1,0 +1,16 @@
+PGM = r.in.shape
+
+SHAPELIB_DIR=$(SRC)/libes/vect32_64/shapelib-1.2.8
+SHAPELIB=$(SHAPELIB_DIR)/libshape.a
+
+EXTRA_CFLAGS = -I../../libes/vect32_64/shapelib-1.2.8/
+LIST = 	main.o
+
+LIBES=$(VECTLIB) $(VECTLIB_REAL) $(DIG2LIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(GMAKE) $(SHAPELIB_DIR)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	$(SHAPELIB) $(CURSES) $(MATHLIB) $(XDRLIB) 
+	
+$(VECTLIB): #
+$(GISLIB): # 

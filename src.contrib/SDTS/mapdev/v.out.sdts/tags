@@ -1,0 +1,82 @@
+Mtfips	tfips.c	/^main()$/
+Mtst	tst.c	/^main()$/
+Mv.out.sdts	v.out.sdts.c	/^main(argc, argv)$/
+Open_sdtsfile	v.out.sdts.c	/^Open_sdtsfile (sdts_path, file_name, fp, mode)$/
+backup_and_write_atid	write_nodes.c	/^backup_and_write_atid (fpout, lead_id, att_str)$/
+backup_and_write_coords	write_coords.c	/^backup_and_write_coords (fpout, lead_id)$/
+begin_sdts_ddr	v.out.sdts.c	/^begin_sdts_ddr (fpout, file_title)$/
+build_all_polygon	polygon.c	/^build_all_polygon ( map )$/
+build_area_one	area_one.c	/^build_area_one (map)$/
+build_ddr_fldstr	v.out.sdts.c	/^build_ddr_fldstr (ddr_str, name_str, label_str, fm/
+build_polygon	polygon.c	/^build_polygon (map, line)$/
+check_exist	tt.c	/^check_exist( s )$/
+conv_bitfld	write_coords.c	/^conv_bitfld (i, b)$/
+cwuedit_mod	tt.c	/^cwuedit_mod(mod_name, rep_str, type)$/
+cwutest	tt.c	/^cwutest(mod_name, rep_str)$/
+debugf	v.out.sdts.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
+delete_poly	polygon.c	/^delete_poly ( map, poly_num )$/
+dig_angle_next_poly_line	polygon.c	/^dig_angle_next_poly_line (map, current_line, direc/
+dig_build_polygon_with_line	polygon.c	/^dig_build_polygon_with_line (map, first_line, Area/
+dig_in_area_bbox	chk_inside.c	/^dig_in_area_bbox (Area, x, y)$/
+dig_isle_in_area	polygon.c	/^dig_isle_in_area (map, pi)$/
+dig_new_area2	polygon.c	/^dig_new_area2 (map, Area, att)$/
+dig_new_isle2	polygon.c	/^dig_new_isle2 (map, Area, area)$/
+dig_point_in_area	chk_inside.c	/^dig_point_in_area(map, X, Y, Area)$/
+dig_point_in_poly	chk_inside.c	/^dig_point_in_poly (X, Y, Points)$/
+dig_x_intersect	chk_inside.c	/^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $/
+export	v.out.sdts.c	/^export(dig_name, mapset, sdts_prefix, sdts_path, l/
+fill_univ_info	area_one.c	/^fill_univ_info (map, N, S, E, W)$/
+for	tt.c	/^for(i=k; i<20; i++) edline[i][0]='\\0';$/
+get_IDEN_DAST	control.c	/^get_IDEN_DAST (map)$/
+get_IDEN_DCDT	control.c	/^get_IDEN_DCDT ()$/
+get_cats_maxlen	control.c	/^get_cats_maxlen (map, dig_name, mapset)$/
+get_cats_struct	write_atts.c	/^get_cats_struct (vector_name, vector_mapset, cats)/
+get_edline	tt.c	/^get_edline(mode_name, edline)$/
+get_generated_dd_entries	control.c	/^get_generated_dd_entries (map, dig_name, mapset)$/
+get_grass_dddf_entry	control.c	/^get_grass_dddf_entry (tag, label, buf)$/
+get_grass_ddsh_entry	control.c	/^get_grass_ddsh_entry (tag, label, buf)$/
+get_metadata	control.c	/^get_metadata (map, meta_flag, dig_name, mapset)$/
+get_univ_bbox	area_one.c	/^get_univ_bbox (map, rN, rS, rE, rW)$/
+init_SDTS_proj_info	spatial_ref.c	/^init_SDTS_proj_info (Map)$/
+is_lonely_node	write_lines.c	/^is_lonely_node (map, node)$/
+legal_SDTS_file_prefix	legal_names.c	/^legal_SDTS_file_prefix (s)$/
+line_fixup	struct_swap.c	/^line_fixup (map, from, to)$/
+line_swap	struct_swap.c	/^line_swap (map, a, b)$/
+next_dot	shuffle_dots.c	/^next_dot (map, lo)$/
+next_undot	shuffle_dots.c	/^next_undot (map, hi)$/
+open_sdtsfile	v.out.sdts.c	/^open_sdtsfile (out_name, fp, mode)$/
+open_space	area_one.c	/^open_space (map)$/
+process_multi_line_metadata_entry	control.c	/^process_multi_line_metadata_entry (buf, type)$/
+read_metadata_from_user_metafile	control.c	/^read_metadata_from_user_metafile (fpin)$/
+setup_ll_conv	utm_ll.c	/^setup_ll_conv (zone_answer, spheroid_answer, spher/
+shuffle_dots	shuffle_dots.c	/^shuffle_dots (map)$/
+spheroid_list	utm_ll.c	/^spheroid_list()$/
+test_fipslib	test_fipslib.c	/^test_fipslib(out_name)$/
+utm_to_ll	utm_ll.c	/^utm_to_ll (east, north, int_lat, int_lon, zone )$/
+write_EP_coords	write_coords.c	/^write_EP_coords (fpout, num, Xptr, Yptr, zone )$/
+write_LE_coords	write_coords.c	/^write_LE_coords (fpout, num, Xptr, Yptr, zone, fin/
+write_NA_coords	write_coords.c	/^write_NA_coords (fpout, x, y, zone)$/
+write_NO_coords	write_coords.c	/^write_NO_coords (fpout, x, y, zone, option2)$/
+write_SDTS_areas	write_areas.c	/^write_SDTS_areas (map, pc_name, pc_title, na_name,/
+write_SDTS_atts	write_atts.c	/^write_SDTS_atts (map, file_name, file_title, ll_in/
+write_SDTS_catd	wr_globals.c	/^write_SDTS_catd (map, sdts_prefix, sdts_path)$/
+write_SDTS_cats	wr_globals.c	/^write_SDTS_cats (map, sdts_prefix, sdts_path, laye/
+write_SDTS_catx	wr_globals.c	/^write_SDTS_catx (map, sdts_prefix, sdts_path)$/
+write_SDTS_dict_mods	wr_dict_mods.c	/^write_SDTS_dict_mods(map, sdts_prefix, sdts_path, /
+write_SDTS_global_atts	wr_globals.c	/^write_SDTS_global_atts (map, sdts_prefix, sdts_pat/
+write_SDTS_global_mods	wr_globals.c	/^write_SDTS_global_mods (map, sdts_prefix, sdts_pat/
+write_SDTS_iden	wr_globals.c	/^write_SDTS_iden (map, sdts_prefix, sdts_path)$/
+write_SDTS_iref	wr_globals.c	/^write_SDTS_iref (map, sdts_prefix, sdts_path)$/
+write_SDTS_le_and_ne	write_lines.c	/^write_SDTS_le_and_ne (map, le_name, le_title, ne_n/
+write_SDTS_nodes	write_nodes.c	/^write_SDTS_nodes (map, file_name, file_title, ll_i/
+write_SDTS_quality_mods	wr_globals.c	/^write_SDTS_quality_mods (map, sdts_prefix, sdts_pa/
+write_SDTS_spdm	wr_globals.c	/^write_SDTS_spdm (map, sdts_prefix, sdts_path)$/
+write_SDTS_stat	wr_globals.c	/^write_SDTS_stat (map, sdts_prefix, sdts_path)$/
+write_SDTS_xref	wr_globals.c	/^write_SDTS_xref (map, sdts_prefix, sdts_path)$/
+write_coords	write_coords.c	/^write_coords (fpout, x, y, zone, lead_id, option1,/
+write_dd_fld	v.out.sdts.c	/^write_dd_fld (fpout, tag, name_str, label_str, fmt/
+write_dddf_mod	wr_dict_mods.c	/^write_dddf_mod (map, sdts_prefix, sdts_path, mod_i/
+write_ddom_mod	wr_dict_mods.c	/^write_ddom_mod (map, sdts_prefix, sdts_path, mod_i/
+write_ddsh_mod	wr_dict_mods.c	/^write_ddsh_mod (map, sdts_prefix, sdts_path, mod_i/
+write_quality_mod	data_quality.c	/^write_quality_mod (map, sdts_prefix,  sdts_path, m/
+write_str	tt.c	/^write_str( name, rep_str)$/

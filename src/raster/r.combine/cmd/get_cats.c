@@ -50,7 +50,7 @@ int get_cats (char *name)
 	char command[1024];
 
 	fclose (fd);
-	sprintf (command, "more %s", tempfile);
+	sprintf (command, "$GRASS_PAGER %s", tempfile);
 	system(command);
 	unlink (tempfile);
     }

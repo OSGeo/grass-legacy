@@ -25,6 +25,7 @@
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
+#include "site.h"
 
 #include "interpf.h"
 

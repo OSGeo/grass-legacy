@@ -1,0 +1,159 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>s.info</TITLE>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+
+<hr width=100% align=center size=6 no shade>
+<P>
+<h2>NAME</h2>
+<b><i>s.info</i></b> - reports attribute, label, and other information
+about a sites file.<br>
+(<i>GRASS Sites Program</i>)<br>
+<br>
+<h2>SYNOPSIS</h2>
+<b>s.info<br>
+s.info help<br>
+s.info [-qwQ] sites</b>=name<br>
+<h2>DESCRIPTION</h2>
+<i>s.info</i> reads the entire sites file and reports header &amp;
+label information, type of category, number of attributes &amp;
+dimensions, and min and max values for each dimension, attribute, or category.
+For best results sites should conform to the multiple attribute format as specified in GRASS5.0.
+<br>&nbsp;
+<h2>OPTIONS</h2>
+This program can be run non-interactively or interactively. The program
+will be run non-interactively; if the user spcifies program arguments and
+flag settings on the command line using the form
+<p><b>s.info [-qwQ] sites</b>=name
+<p>&nbsp;Alternately, the user can type simply s.info on the command line;
+in this case, the program will prompt the user for parameter values using
+the standard GRASS parser interface described in the manual entry for <i>parser</i>.
+<p>&nbsp;<b>Flags<br>
+<br>
+</b>&nbsp; <b>-q</b>&nbsp;&nbsp; Load quietly<br>
+&nbsp; <b>-w</b>&nbsp;&nbsp; Only count sites in current window for min/max.<br>
+&nbsp; <b>-Q</b>&nbsp;&nbsp; Show quartiles for decimal attributes<br>
+<br>
+<b>Parameters<br>
+<br>
+</b>&nbsp;<b>sites </b><i>= name<br>
+</i>&nbsp;Name of sites file.<br>
+<br>
+<b>Example output</b>
+<PRE>
+<HR>
+SITES FILENAME: r_analys
+--------------
+
+Header Information:
+------------------
+        name          r_analys
+        description   soil data from Germany
+        format        |||%%%%%%%
+        labels        X|Y|Horizon|%pH%Kcal%Pcal%Corg%Ccarb%Nt%Trd
+
+Number of DIMENSIONS:         3
+--------------------
+                 - - MIN - -     - - MAX - -
+        dim  1  4457986.000000  4459536.000000  X
+        dim  2  5372514.000000  5374314.000000  Y
+        dim  3      0.000000      120.000000    Horizon
+
+Type of CATEGORY information: NO CATEGORY
+----------------------------
+
+Number of DOUBLE attributes:  7
+---------------------------
+                 - - MIN - -     - - Q1 - -      - - MED - -     - - Q3 - -      - - MAX - -
+        dbl  1             0             5.4               6             6.2             7.7    pH
+        dbl  2             0           0.058             0.1           0.174           1.212    Kcal
+        dbl  3             0           0.009           0.017           0.044           0.415    Pcal
+        dbl  4             0            0.18            0.34            1.09           13.68    Corg
+        dbl  5             0               0               0               0            3.82    Ccarb
+        dbl  6             0           0.031            0.05           0.117           0.744    Nt
+        dbl  7          0.31            1.45            1.55             1.6            1.89    Trd
+
+Number of STRING attributes:  0
+---------------------------
+
+TOTAL SITES COUNTED: 2343
+
+<P>
+<HR>
+
+SITES FILENAME: US.places
+--------------
+
+Header Information:
+------------------
+        name          US Places
+        description   names of populated places in the United States
+        format        ||#@@@%%%%%
+        labels        easting|northing|#FIPS@place@state@place_type%population%households%land_area%water_area%popu
+lation_density
+        time          21 Jul 1995
+
+Number of DIMENSIONS:         2
+--------------------
+                 - - MIN - -     - - MAX - -
+        dim  1   -124.610970      -67.012039    easting
+        dim  2     24.562840       48.996136    northing
+
+Type of CATEGORY information: CELL_TYPE
+----------------------------
+                 - - MIN - -     - - MAX - -
+                      100124         5686665    FIPS
+
+Number of DOUBLE attributes:  5
+---------------------------
+                 - - MIN - -     - - Q1 - -      - - MED - -     - - Q3 - -      - - MAX - -
+        dbl  1             0             437            1371            4605     7.32256e+06    population
+        dbl  2             0             190             583            1905     2.99217e+06    households
+        dbl  3             5            1659            3973           10396     1.96495e+06    land_area
+        dbl  4             0               0               0              76          781914    water_area
+        dbl  5             0        0.191793        0.393334        0.712237          17.692    population_density
+
+Number of STRING attributes:  3
+---------------------------
+                 - MIN_LEN -     - MAX_LEN -
+        str  1        3              35         place
+        str  2        2               2         state
+        str  3        3               7         place_type
+
+TOTAL SITES COUNTED: 22993
+----------------------------------------------------------
+
+
+<HR>
+
+</PRE>
+
+<P>
+<h2>BUGS</h2>
+
+If the <b>-Q</b> flag is given, the sites are cached in order to
+determine quartile values; otherwise the sites are read
+sequentially without caching.&nbsp; Therefore, use of the <b>-Q </b>option
+may result in an out-of-memory error for very large
+sites files. The algorithm used to find quartile values matches that used
+by <i>s.univar</i>, so if the number of sites is not evenly
+divisible by 4, the resulting Q1 and Q3 values may not exist in the data,
+but is an average of the two neighboring values. Likewise, if the
+number of sites is not evenly divisible by 2, the resulting median will
+be an average of its neighbors.<br>
+<br>
+<h2>SEE ALSO</h2>
+<a href=d.sites.html>d.sites</a>, 
+<a href=d.siter.html>d.siter</a>, 
+<a href=d.sites.qual.html>d.sites.qual</a>, 
+<a href=s.univar.html>s.univar</a><br>
+<h2>AUTHOR</h2>
+Bill Brown, UI GMS Laboratory<br>
+<BR>
+</body>
+</html>

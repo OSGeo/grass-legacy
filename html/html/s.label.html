@@ -1,0 +1,103 @@
+<TITLE>s.label</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>s.label</b></EM>  - makes a label-file from a GRASS sites list.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.label</B>
+<BR>
+<B>s.label help</B>
+<BR>
+<B>s.label</B> 
+ [-r] sites=name label=name [xoffset=value] [yoffset=value]
+   [reference=name] [font=name] [ps_font=name] [size=value] [color=name]
+   [width=value] [hcolor=name] [hwidth=value] [background=name]
+   [border=name] [opaque=name]
+
+<H2>FLAG</H2>
+-r make sites from label file<p>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.label</EM> makes a label-file from a GRASS sites list.
+
+<P>
+
+<H2>PARAMETERS</H2>
+    sites   Name of a site list<p>
+       label   Name of a paint-label file<p>
+     xoffset   Offset label in x-direction<br>
+               default: 0<p>
+     yoffset   Offset label in y-direction<br>
+               default: 0<p>
+   reference   Reference position<br>
+               options: center,left,right,upper,lower<br>
+               default: center<p>
+        font   Font<br>
+               options: standard,cyrilc,gothgbt,gothgrt,gothitt,greekc,
+                        greekcs, grrekp,greeks,italicc,italiccs,italict,
+                        romanc,romancs,romand,romanp,romans, scriptc,scripts<br>
+               default: standard<p>
+     ps_font   PostScript font (for use with ps.map); N.B. screen display
+               will be in standard font!<br>
+               options: Helvetica,Helvetica-Bold,Helvetica-Oblique,
+                        Helvetica-BoldOblique,Times-Roman,Times-Bold,
+                        Times-Italic,Times-BoldItalic,Courier,Courier-Bold,
+                        Courier-BoldOblique,Symbol,AvantGarde-Book,
+                        AvantGarde-BookOblique,AvantGarde-Demi,
+                        AvantGarde-DemiOblique,Bookman-Demi,
+                        Bookman-DemiItalic, Bookman-Light,Bookman-LightItalic,
+                        Helvetica-Narrow,Helvetica-Narrow-Bold,
+                        Helvetica-Narrow-Oblique,
+                        Helvetica-Narrow-BoldOblique,NewCenturySchlbk-Roman,
+                        NewCenturySchlbk-Italic,NewCenturySchlbk-Bold,
+                        NewCenturySchlbk-BoldItalic,Palatino-Roman,
+                        Palatino-Italic,Palatino-BoldItalic,
+                        ZapfChancery-MediumItalic<p>
+        size   Label size (in map-units)<br>
+               options: 1-1000<br>
+               default: 100<p>
+       color   Text color<br>
+               options: aqua,black,blue,brown,cyan,gray,green,grey,indigo,
+                        magenta, orange,purple,red,violet,white,yellow<br>
+               default: black<p>
+       width   Line width of text (only for p.map output)<br>
+               options: 1-100<br>
+               default: 1<p>
+      hcolor   Highlight color for text (only for p.map output)<br>
+               options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+                        indigo,magenta, orange,purple,red,violet,white,yellow<br>
+               default: none<p>
+      hwidth   Line width of highlight color (only for p.map output)<br>
+               options: 0-100<br>
+               default: 0<p>
+  background   Background color<br>
+               options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+                        indigo,magenta, orange,purple,red,violet,white,yellow<br>
+               default: none<p>
+      border   Border color<br>
+               options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+                        indigo,magenta, orange,purple,red,violet,white,yellow<br>
+               default: none<p>
+      opaque   Opaque to vector (only relevant if background color is selected)<br>
+               options: yes,no<br>
+               default: yes<p>
+
+<H2>AUTHOR</H2>
+
+<address>
+Philip Verhagen<br>
+S t i c h t i n g  R A A P<br>
+Regionaal Archeologisch Archiverings Projekt<br>
+adress:         Plantage Muidergracht 14<br>
+                1018 TV Amsterdam<br>
+                THE NETHERLANDS<br>
+e-mail:         motte@xs4all.nl
+
+</address>

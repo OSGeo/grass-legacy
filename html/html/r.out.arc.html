@@ -1,0 +1,133 @@
+<html>
+<head>
+<TITLE>r.out.arc</TITLE>
+</head>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.out.arc</b></EM>  - Converts a raster map layer 
+into an ESRI ARC-GRID file.
+
+<BR>
+
+<EM>(GRASS Raster Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.out.arc</B>
+
+<BR>
+
+<B>r.out.arc help</B>
+
+<BR>
+
+<B>r.out.arc </B>[<B>-h</B>]  </B>[<B>-1</B>] <B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> [<B>dp=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.out.arc</EM> converts a user-specified raster map layer
+(<B>input=</B><EM>name</EM>) into an ESRI ARC-GRID ascii file
+(<B>output=</B><EM>name</EM>) suitable for export to other computer systems. 
+The dp=<EM>value</EM> option (where <EM>value</EM> is a number of the user's
+choice) can be used to request that numbers after decimal points are
+limited.  However, to use this, the user should know the maximum number of
+digits that will occur in the output file.  The user can find the maximum
+number of digits occurring in the output file by running <EM>r.out.arc</EM>
+without the <B>dp=</B><EM>value</EM> option.
+
+
+<P>
+
+The GRASS program 
+<EM><A HREF="r.in.arc.html">r.in.arc</A></EM> 
+can be used to perform the reverse
+function, converting an ESRI ARCGRID ascii file in suitable format to GRASS
+raster file format. The order of cell values in file is from lower left to
+upper right (reverse to GRASS).
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-h</B> 
+<DD>Suppress printing of header information.
+</DL>
+
+
+<DL>
+<DT><B>-1</B> 
+<DD>List one entry per line.
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of an existing raster map layer.
+
+<DT><B>output</B>
+<DD>Name of an output binary file (use output=- for stdout)
+
+<DT><B>dp=</B><EM>value</EM> 
+<DD>The minimum number of decimals (per cell) to be printed.
+</DL>
+
+<EM>r.out.arc</EM> can be run either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies the name of a raster map layer and
+(optionally) a value for <EM>dp</EM>, using the form
+
+
+<DL>
+<DD>
+<B>r.out.arc input=</B><EM>inname</EM> <B>output=</B><EM>outname</EM> [<B>dp=</B><EM>value</EM>]
+</DL>
+
+where <EM>inname</EM> is the name of a raster map layer to be converted to
+ARC-GRID format, <EM>outname</EM> is the name of a raster map layer to be
+exported, and <EM>value</EM> is the minimum number of digits (per cell) to
+be printed to output.  The user can also the <B>-h</B> option to suppress
+the output of file header information.
+
+<P>
+
+Alternately, the user can simply type <B>r.out.arc</B> on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H2>NOTES</H2>
+
+The output from <EM>r.out.arc</EM> may be placed into a file
+by using the UNIX redirection mechanism;  e.g.:
+
+<DL>
+<DD>
+<B>r.out.arc input=</B>soils <B>output=-</B> &gt; out.grd
+</DL>
+
+The output file <EM>out.grd</EM> can then be copied
+onto a CDROM or floppy disk for export purposes.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.in.arc.html">r.in.arc</A></EM>
+<br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Markus Neteler, University of Hannover, Germany, <br>
+based on r.out.ascii from <br>
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

@@ -1,0 +1,89 @@
+<TITLE>r.digit</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.digit</b></EM> - Interactive tool used to draw and save
+vector features on a graphics monitor using a pointing
+device (mouse)
+
+<H2>SYNOPSIS</H2>
+
+<B>r.digit</B>
+
+<H2>DESCRIPTION</H2>
+
+The GRASS tool <EM>r.digit</EM> provides the user with a
+way to draw lines, areas, and circles on a monitor screen,
+and to save these features in a cell file.  Lines, areas,
+and circles are to be drawn using a pointing device
+(mouse).  A mouse button menu indicates the consequences of
+pressing each mouse button.  The user is requested to enter
+the category number associated with the line, area, or
+circle subsequently drawn by the user.  Lines, areas, and
+circles are defined by the series of points marked by the
+user inside the map window.  <EM>r.digit</EM> will close
+areas when the user has not.  By drawing a series of such
+features, the user can repair maps, identify areas of
+interest, or simply draw graphics for advertisement.  When
+drawing is completed, a raster map based on the user's
+instructions is generated.  It is available for use as a
+mask, in analyses, and for display.
+
+<P>
+
+Digitizing is done in a "polygon" method.  Each area is
+circumscribed completely.  Two or more areas and/or lines
+might define a single part of a map.  Each part of the map,
+however, is assigned only the LAST area or line which
+covered it.
+
+<H3>THE PROCESS:</H3>
+
+<OL>
+
+<LI>Choose to define an area or line, quit, or finish.
+If you quit, the session exits with nothing created.
+If you choose to finish (<EM>done</EM>), you will be prompted for a
+new map name;  the new map is then created.
+
+<LI>If you choose to make an area or line you must identify
+the category number for that area or line.
+
+<LI>Using the mouse trace the line or circumscribe the area;
+or, finish (go to Step 1).
+
+</OL>
+
+<H2>SEE ALSO</H2>
+
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>
+Highly interactive tool for digitizing, editing, and labeling
+vector data
+
+<P>
+
+<EM><A HREF="d.display.html">d.display</A></EM>
+Tool for displaying and producing maps
+
+<P>
+
+<EM><A HREF="d.mapgraph.html">d.mapgraph</A></EM>
+Draws simple graphics on a map
+
+<P>
+
+<EM><A HREF="r.in.poly.html">r.in.poly</A></EM>
+Tool for importing "polygon" data to raster format
+
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

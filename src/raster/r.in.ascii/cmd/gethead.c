@@ -2,7 +2,6 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
-#include "global.h"
 #include "local_proto.h"
 
 #define DOT 	   "."		/* for determining data type -tw */

@@ -1,17 +1,17 @@
-LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+PGM=d.pan
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+
+EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
 
 LIST   = main.o \
 	 ask.o\
 	 center.o\
 	 returns.o \
-	 pan.o
+	 pan.o \
+	 redraw.o
 
-PROG = $(BIN_CONTRIB_CMD)/d.pan
-#PROG = ./d.pan
-
-$(PROG): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 returns.o: graphics.h
 
-$(LIBES): #

@@ -5,6 +5,6 @@ LIST = main.o\
 	mke_subgrp.o
 
 $(ETC)/imagery/subgroup: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES) $(VASKLIB): #

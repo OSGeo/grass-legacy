@@ -1,0 +1,79 @@
+<TITLE>v.out.dlg</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.dlg</b></EM>  - Converts binary GRASS vector data to 
+DLG-3 Optional vector data format. 
+<BR>
+<EM>(GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.dlg</B>
+<BR>
+<B>v.out.dlg help</B>
+<BR>
+<B>v.out.dlg</B> 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>v.out.dlg</EM> allows the user to
+convert GRASS vector data to DLG-3 Optional format, for
+export to other systems.
+
+The user can run the program non-interactively by
+specifying all program arguments on the command line, in
+the form:
+
+<DL>
+<DD>
+<B>v.out.dlg</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of the binary GRASS vector data file to be converted to DLG-3 format. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to the DLG-3 Optional format output file created. 
+</DL>
+
+<P>
+
+If the user does not give the names of an input and output
+file on the command line, the program will prompt the user
+to enter these names.
+
+<H2>NOTES</H2>
+
+The <EM>v.out.dlg</EM> program requires that the
+<EM>input</EM> vector map layer have full topological
+information associated with it.  This means that the GRASS
+program <EM><A HREF="v.support.html">v.support</A></EM>
+should have been the last program to have effected any
+changes upon the vector map layer before it is run through
+<EM>v.out.dlg</EM>. If this is not the case,
+<EM>v.out.dlg</EM> will terminate with a message that
+<EM><A HREF="v.support.html">v.support</A></EM> needs
+to be run.
+
+The output from <EM>v.out.dlg</EM> will be placed in
+<EM>$LOCATION/dlg</EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.import.html">v.import</A>,</EM>
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A>,</EM>
+<EM><A HREF="v.in.dlg.html">v.in.dlg</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+David Gerdes, U.S. Army Construction Engineering 
+Research Laboratory
+

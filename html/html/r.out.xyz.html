@@ -1,0 +1,41 @@
+<html>
+<A NAME="r.out.xyz">
+<TITLE>r.out.xyz</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.out.xyz</B></EM> - Export GRASS raster files into xyz format<BR>
+<EM>(GRASS Raster Data Export Command)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.out.xyz help</B><BR>
+<B>r.out.xyz input</B><EM>=name</EM>
+
+<H3>Parameter:</H3>
+<DL>
+<DT><B>input</B>
+<DD>Name of raster file
+</DL>
+
+<H3>Example:</H3>
+<PRE>
+3566625.220431 5763805.084400 145.010000
+3566675.164037 5763805.084400 148.240000
+3566725.107644 5763805.084400 151.480000
+3566775.051250 5763805.084400 NULL
+3566824.994856 5763805.084400 163.660000
+3566874.938462 5763805.084400 165.900000
+</PRE>
+
+<H2>NOTE</H2>
+Using unix piping the result can be directed into a file
+<PRE>
+r.out.xyz in=dgm12 &gt; dgm12.txt
+</PRE>
+
+</BODY>
+</HTML>

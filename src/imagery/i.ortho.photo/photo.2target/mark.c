@@ -1,7 +1,11 @@
 #include <unistd.h>
+#include <stdio.h>
 #include "raster.h"
 #include "globals.h"
 #include "local_proto.h"
+
+/* define MOUSE_YN to answer y/n by mouse click */
+#define	MOUSE_YN
 
 static int get_point2 (double *,double *,double *);
 static int keyboard (void);
@@ -74,7 +78,10 @@ int mark_point (View *view, int x, int y)
 	Curses_write_window (MENU_WINDOW, 8, 3, buf);
 	sprintf (buf, "North:     %10.2f", n2);
 	Curses_write_window (MENU_WINDOW, 9, 3, buf);
-	sprintf (buf, "Elevation: %10.2f", z2);
+	if(G_is_d_null_value(&z2))
+		sprintf (buf, "Elevation:       NULL");
+	else
+		sprintf (buf, "Elevation: %10.2f", z2);
 	Curses_write_window (MENU_WINDOW, 10, 3, buf);
 
 	I_new_con_point (&group.control_points,  ee1, nn1, z1, e2, n2, z2, 1);
@@ -123,7 +130,10 @@ static int get_point2 (double *east, double *north, double *elev)
     if(stat) {
 	*east = E;
 	*north = N;
-        *elev = Z;
+	if(G_is_d_null_value(&Z))
+		G_set_d_null_value(elev, 1);
+	else
+        	*elev = Z;
     }
 
     return stat ;
@@ -159,18 +169,34 @@ static int _keyboard (void)
 	Curses_write_window (INFO_WINDOW, 2, 2, buf);
 	sprintf (buf, "North:     %f\n", N);
 	Curses_write_window (INFO_WINDOW, 3, 2, buf);
-	sprintf (buf, "Elevation: %f\n", Z);
+	if(G_is_d_null_value(&Z))
+		sprintf (buf, "Elevation:       NULL");
+	else
+		sprintf (buf, "Elevation: %f\n", Z);
 	Curses_write_window (INFO_WINDOW, 4, 2, buf);
+#ifdef	MOUSE_YN
+	Curses_write_window (INFO_WINDOW, 6, 1, "Look ok? (Left: y / Right: n) ");
+#else
 	Curses_write_window (INFO_WINDOW, 6, 1, "Look ok? (y/n) ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+		return 1;
+	    else if (b == 3)
+		break;
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
 		return 1;
 	    if (c == 'n' || c == 'N')
 		break;
+#endif
 	    Beep();
 	}
     }
@@ -192,17 +218,39 @@ char buf[100];
 	    Curses_write_window (INFO_WINDOW, 3, 2, buf);
 	    sprintf (buf, "North:     %f\n", N);
 	    Curses_write_window (INFO_WINDOW, 4, 2, buf);
-	    sprintf (buf, "Elevation: %f\n", Z);
+	    if(G_is_d_null_value(&Z))
+		sprintf (buf, "Elevation:       NULL");
+	    else
+	    	sprintf (buf, "Elevation: %f\n", Z);
 	    Curses_write_window (INFO_WINDOW, 5, 2, buf);
+#ifdef	MOUSE_YN
+	    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (Left: y / Right: n) ");
+#else
 	    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (y/n) ");
+#endif
 	  
 	    while(1)
 	      {
+#ifdef	MOUSE_YN
+		int x, y, b;
+		R_get_location_with_pointer(&x,&y,&b);
+		if (b == 1)
+		{
+			ok = 1;
+			break;
+		}
+		else if (b == 3)
+		{
+			ok = -1;
+			break;
+		}
+#else
 		c = Curses_getch(0);
 		if (c == 'y' || c == 'Y')
 		  {ok = 1; break;}
 		if (c == 'n' || c == 'N')
 		  {ok = -1; break;}
+#endif
 		Beep();
 	      }
 	    Curses_clear_window (INFO_WINDOW);
@@ -236,18 +284,40 @@ static int screen (int x, int y, int button)
     Curses_write_window (INFO_WINDOW, 3, 2, buf);
     sprintf (buf, "North:     %10.2f\n", N);
     Curses_write_window (INFO_WINDOW, 4, 2, buf);
-    sprintf (buf, "Elevation: %10.2f\n", Z);
+    if(G_is_d_null_value(&Z))
+	sprintf (buf, "Elevation:       NULL");
+    else
+    	sprintf (buf, "Elevation: %10.2f\n", Z);
     Curses_write_window (INFO_WINDOW, 5, 2, buf);
+#ifdef	MOUSE_YN
+    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (Left: y / Right: n) ");
+#else
     Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (y/n) ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+	    {
+		ok = 1;
+		break;
+	    }
+	    else if (b == 3)
+	    {
+		ok = -1;
+		break;
+	    }
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
 	      { ok = 1; break;}
 	    if (c == 'n' || c == 'N')
               { ok = -1; break;}
+#endif
 	    Beep();
 	}
     Curses_clear_window (INFO_WINDOW);
@@ -262,15 +332,20 @@ static int get_z_from_cell (double north, double east)
 char buf[100];
 int row, col;
 struct Cell_head elevhd;
+RASTER_MAP_TYPE data_type;
+double atof();
 
 /* allocate the elev buffer */
+    
     select_target_env();
     G_get_cellhd (elev_layer, mapset_elev, &elevhd);
     G_set_window(&elevhd);
+    
+    data_type = G_raster_map_type(elev_layer, mapset_elev);
     elev = G_open_cell_old (elev_layer, mapset_elev);
     if (elev < 0) return 0;
 
-    elevbuf = G_allocate_cell_buf(); 
+    elevbuf = G_allocate_raster_buf(data_type); 
 
 /* find row, col in elevation cell file */
     row = (int) northing_to_row (&elevhd, north);
@@ -302,13 +377,31 @@ struct Cell_head elevhd;
 	    Beep();
         }      
     }
-    else if (G_get_map_row_nomask ( elev, elevbuf, row) > 0)
+    else if (G_get_raster_row ( elev, elevbuf, row, data_type) > 0)
     {
-       Z = elevbuf[col];
-       G_close_cell (elev);
-       G_free(elevbuf);
-       select_current_env();
-       return (1);
+	if((data_type ==  CELL_TYPE &&
+		!G_is_c_null_value(( CELL *)&(( CELL *) elevbuf)[col])) ||
+	   (data_type == FCELL_TYPE &&
+	    	!G_is_f_null_value((FCELL *)&((FCELL *) elevbuf)[col])) ||
+	   (data_type == DCELL_TYPE &&
+	    	!G_is_d_null_value((DCELL *)&((DCELL *) elevbuf)[col])))
+	{
+            if(data_type == CELL_TYPE)
+              Z = (double) ((CELL *) elevbuf)[col];
+            else if(data_type == FCELL_TYPE)
+              Z = (double) ((FCELL *) elevbuf)[col];
+            else if(data_type == DCELL_TYPE)
+              Z = (double) ((DCELL *) elevbuf)[col];
+	}
+	else
+	{
+	    G_set_d_null_value(&Z, 1);
+	}
+
+	G_close_cell (elev);
+	G_free(elevbuf);
+	select_current_env();
+	return (1);
     }
     G_close_cell (elev);
     G_free(elevbuf);
@@ -320,3 +413,4 @@ static int cancel (void)
 {
     return -1;
 }
+

@@ -1,0 +1,184 @@
+<html>
+
+<TITLE>m.dted.extract</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.dted.extract</b></EM>  - Extracts digital terrain elevation data
+(DTED - levels 1 and 2) produced and supplied by the Defense Mapping Agency
+(DMA) on 1/2-inch magnetic tapes.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+
+<B>m.dted.extract</B> 
+<B>if=</B><EM>name</EM> 
+<B>of=</B><EM>name</EM> 
+<B>hf=</B><EM>name</EM> 
+<B>n=</B>"<EM>string</EM>"
+<B>s=</B>"<EM>string</EM>"
+<B>e=</B>"<EM>string</EM>"
+<B>w=</B>"<EM>string</EM>"
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.dted.extract</EM>
+extracts DTED (Levels 1 and 2) digital terrain elevation data
+produced by the Defense Mapping Agency (DMA) from 1/2-inch magnetic tapes
+obtained from DMA.
+
+<H2>OPTIONS</H2>
+
+Data is read from the input file (<B>if</B>).  If the user
+does not specify any input file name on the command line,
+the program assumes that input is coming from
+<KBD>/dev/rmt0</KBD>.  The extracted data is placed in the
+output file (<B>of</B>).  This program should be used in
+conjunction with the programs
+
+<EM><A HREF="m.rot90.html">m.rot90</A></EM> and 
+
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM> 
+
+to convert DTED data to GRASS
+raster format.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>if</B>=<EM>name</EM>
+
+<DD>The pathname of the tape device where the raw DTED data exists 
+(default is <KBD>/dev/rmt0</KBD>)
+
+<DT><B>of</B>=<EM>name</EM>
+
+<DD>The full pathname of the output file into which the extracted tape data is
+to be copied
+
+<DT><B>hf</B>=<EM>name</EM>
+
+<DD>The full pathname of a file to contain descriptive information about
+the extracted data;  should be placed in the same directory as the output file
+
+<DT><B>n</B>="<EM>string</EM>"
+
+<DD>North latitude value defining the boundaries of the extraction geographic
+region 
+(format: <EM>dd.mm.ss[n|s]</EM>)
+
+<DT><B>s</B>="<EM>string</EM>"
+
+<DD>South latitude value defining the extraction geographic region
+(format: <EM>dd.mm.ss[n|s]</EM>)
+
+<DT><B>ea</B>="<EM>string</EM>"
+
+<DD>East longitude value defining the extraction geographic region
+(format: <EM>dd.mm.ss[e|w]</EM>)
+
+<DT><B>w</B>="<EM>string</EM>"
+
+<DD>West longitude value defining the extraction geographic region
+(format: <EM>dd.mm.ss[e|w]</EM>)
+
+</DL>
+
+The <B>n</B>, <B>s</B>, <B>e</B> and <B>w</B>
+parameters define a
+geographic region that should completely encompass the data
+set.  <EM>dd.mm.ss</EM> are degree, minute, and second
+values.  Only data that falls within this defined
+geographic region will be extracted from the tape.
+
+<H2>EXAMPLE</H2>
+
+
+The command line:
+
+<DL>
+<DD>
+<B>m.dted.extract if=</B><EM>/dev/rmt0</EM> <B>of=</B><EM>dted.out</EM> <B>hf=</B><EM>dted.head</EM> 
+<B>n=</B><EM>37.30.00n</EM> <B>s=</B><EM>37.15.00n</EM> <B>e=</B><EM>103.30.00w</EM> <B> w=</B><EM>103.45.00w</EM>
+</DL>
+
+
+will extract DTED data from <KBD>/dev/rmt0</KBD>, 
+store it in a file named <KBD>dted.out</KBD>,
+and store some supporting information in the file <KBD>dted.head</KBD>.
+Only data that falls within the geographic region
+defined by the coordinates <B>n</B>, <B>s</B>, <B>e</B> and <B>w</B> 
+will be extracted.
+
+<H2>NOTE</H2>
+
+The user should examine the contents of the header file produced by
+this program; it contains information needed as inputs to the 
+data rotation and raster file import programs
+
+<EM><A HREF="m.rot90.html">m.rot90</A></EM>
+
+and
+
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM>,
+
+respectfully.
+
+<H2>BUGS</H2>
+
+The format of the header file for DTED Level 1 and 2 data was changed in 1987.
+<EM>m.dted.extract</EM> and 
+
+<EM><A HREF="m.dted.examine.html">m.dted.examine</A></EM> 
+
+only operate on DTED data containing pre-1987 headers.
+DTED data containing the pre-1987 headers may be purchased
+from the DMA upon request.
+
+<H2>DIAGNOSTICS</H2>
+
+Invalid requests are so designated.
+
+<H2>SEE ALSO</H2>
+
+<EM>Pursuance of Elevation Data</EM>, by 
+Stuart Bradshaw, USACERL
+
+<BR>
+
+<EM>DTED and DEM Elevation Data
+Extraction</EM>, by
+Stuart Bradshaw, Mary Martin,
+and Chester Kos, 
+USACERL
+
+
+<P>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="m.dmaUSGSread.html">m.dmaUSGSread</A></EM><br>
+<EM><A HREF="m.dted.examine.html">m.dted.examine</A></EM><br>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM><br>
+<EM><A HREF="m.region.ll.html">m.region.ll</A></EM><br>
+<EM><A HREF="m.rot90.html">m.rot90</A></EM><br>
+<EM><A HREF="r.describe.html">r.describe</A></EM><br>
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM><br>
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

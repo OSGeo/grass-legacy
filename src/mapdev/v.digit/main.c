@@ -1,618 +1,355 @@
-/*  @(#)main.c    2.1  6/26/87  */
-/*
-**  Last modified by Dave Gerdes  5/1988
-**  US Army Construction Engineering Research Lab
-*/
-
-#include <signal.h>
-#include "gis.h"
-#include "debug.h"
-
 #define MAIN
-#include "dig_head.h"
-#include "dig_curses.h"
-#include "Map_proto.h"
-#include "digit.h"
-#include "keyboard.h"
-#include "local_proto.h"
-
-/*
-#define DEBUG
-*/
-
-#ifdef DEBUG
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
 #include <sys/types.h>
-#include <time.h>
-#endif
+#include <sys/stat.h>
+
+#include "gis.h"
+#include "bin_digit.h"
+#include "ginput.h"
+#include "local_proto.h"
+#include "digit.h"
+
+#define		BIN    "bin"
+/*  Sun needs a null string, not just a null  */
+#define		NULL_STRING	""
+
+static int lock_file (char *,int);
+static int find_process (int);
+static int get_pid (char *,int *);
 
 
-/*
-static char *N_dig_file;
-static char *N_plus_file;
-static char *N_att_file;
-static char *N_coor_file;
-static char *N_digitizer;
-static char *N_path;
-static char *N_name;
-static char *N_PPID;
-*/
-
-/*
-**  calling sequence
-**  digit file_name path_to_mapset parent_pid digitizer_tty
-*/
-int main(int argc, char **argv)
+int main (int argc, char *argv[])
 {
-    FILE *digit, *attr, *plus;
-    char buf[1024];
-    int have_old;
-    int have_plus;
-    int have_attr;
-    int ret;
-    char *memptr;	/* for load_file */
+	struct GModule *module;
 
-#ifdef HIGHPRIORITY
-#ifndef MASSCOMP
-    if (geteuid () != 0 && getuid () != 0)
-    {
-	/* if running w/ no digitizer this is not important */
-	if (strcmp (argv[4], "nodig"))
+	FILE	*fp;
+
+	int   pid ;
+	int   lock ;
+	int   (*sigint)(),  (*sigquit)() ;
+
+	char  *mapset ;
+	char  *env_digitizer ;
+	char  *pid_string ;
+
+	char  map_path[128] ;
+
+	char  lock_name[128] ;
+	char  command[500] ;
+	char  buf[1024];
+	char  tmpbuf[200];
+	char  *p;
+
+	struct  driver_desc  Driver ;
+
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"A menu-driven, highly interactive map "
+		"development program used for vector digitizing, editing, "
+		"labeling and converting vector data to raster format.";
+
+	if (argc > 1 && !strcmp (argv[1], "help"))
 	{
-	fprintf (stdout, "Warning!  Digit not running as root.\n");
-	fprintf (stdout, "Please consult GRASS installation manual on how to set up DIGIT\n");
-	if (!G_yes ("Do you want to continue any way?", 1))
-	    exit (0);
+fprintf(stderr,"\n\n");
+fprintf(stderr,"Digit is an interactive vector map digitizing and editing\n");
+fprintf(stderr,"  tool designed to work with the GRASS vector 'dig' files.\n");
+fprintf (stderr, "\nThere are NO arguments required.\n\n");
+	    exit (1);
 	}
-    }
-#endif
-    init_priority ();	/* set up permissions and stuff for higher nice value */
-#endif HIGHPRIORITY
+
+	/* digit sets DPG_LOCK when forking a shell */
+	if (NULL != getenv ("DPG_LOCK"))
+	    fprintf (stderr, "Sorry, You are already running DIGIT\n"),exit(-1);
+
+	system("clear") ;
+
+/*  set the monitor up for digit and give them something to look at  */
+
+	sprintf( command, "d.frame -e") ;
+	if ( system( command))
+		exit(-1) ;
+
+
+/*  open digitizer cap file  */
+/* CHANGE DIRECTORIES */
+    sprintf( Driver.name, "%s/etc/digcap", G_gisbase()) ; 
+
+	if ( (fp = fopen(Driver.name, "r"))  ==  NULL)
+	{
+		fprintf(stderr, "Can't open file for read: %s\n", Driver.name) ;
+		fprintf(stderr, "Contact your GRASS system administrator\n") ;
+		exit(-1) ;
+	}
+
+
+/*  get current digitizer from .gisrc  */
+
+	if ( (env_digitizer = G__getenv("DIGITIZER")) == NULL)
+		env_digitizer = NULL_STRING ;
+
+/*  let them select another digitizer if they wish  */
+
+	if (select_digitizer( fp, env_digitizer, &Driver) != 1)
+	{
+
+	/*  update the DIGITIZER variable in .gisrc  */
+		G_setenv( "DIGITIZER", Driver.name) ;
+
+		fprintf (stdout,"\n Selected digitizer is: %-20s \n\n", Driver.name) ;
+	}
+
+	fclose(fp) ;
 
 #ifdef DEBUG
-    init_debug (argv[2]);
-#endif
+fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
+	Driver.name, Driver.device, Driver.dig_filename, Driver.dig_desc) ;
+#endif /* DEBUG */
 
-    Data_Loaded = 0;
-    Files_Open = 0;
-    signal(SIGFPE, close_down) ;    /*  in case of floating point error  */
 
-    /* Couldn't call G_gisinit () because of UID stuff */
-    G_no_gisinit (argv[0]);
-
-    G_putenv ("DPG_LOCK", "LOCKED");
-
-    if (argc != 5)
-    {
-	sprintf(buf, "Usage: %s  path/mapset  file_name  PPID [ digitizer_tty | 'nodig' ]\n", argv[0]);
-	G_fatal_error (buf);
-    }
-
-    CMap = &Map1;
-
-    /* store the original file names */
-    {
-	N_name = argv[2];
-	N_path = argv[1];
-	N_PPID = argv[3];
-
-	sprintf (buf, "%s/%s/%s", N_path, "dig", N_name);
-	N_dig_file= G_store (buf);
-
-	sprintf (buf, "%s/%s/%s", N_path, "dig_plus", N_name);
-	N_plus_file = G_store (buf);
-
-	sprintf (buf, "%s/%s/%s", N_path, "dig_att", N_name);
-	N_att_file = G_store (buf);
-
-	sprintf (buf, "%s/%s/%s", N_path, "reg", N_name);
-	N_coor_file = G_store (buf);
-
-	N_digitizer = argv[4];
-    }
-
-    Vect_init ();	/* TODO 4.0 */
-
-    have_old = have_plus = have_attr = 0;
-    if ( (digit = fopen(N_dig_file, "r+")) != NULL )
-    {
-	V2__setup_for_digit (CMap, N_name);
-	CMap->dig_fp = digit;
-	have_old = 1;
-/* 4.0 **************************************************************/
-/* Check to see if we have a 3.0 file and if so, update to 4.0 */
+/*  get the process id and create lock file   pid = getpid()  */
+	if ( (pid_string = getenv("GIS_LOCK")) == NULL)
 	{
-	    struct dig_head thead;
+		fprintf( stderr, "ERROR - Can't find gis key to lock digitizer\n") ;
+		fprintf( stderr, "gis key is the gis environment variable GIS_LOCK\n") ;
+		exit(-1) ;
+	}
 
-	    /* TODO */
-	    /* simulate dig_init on digit file */
+	pid = atoi(pid_string) ;
+	sprintf( lock_name, "%s/locks/%s", G_gisbase(), Driver.name) ;
 
-	    Vect__read_head_binary (CMap, &thead);
+/*  get the digit filename and create the file paths  */
 
-	    if (thead.Version_Major < 4)
+askagain:
+	fprintf (stdout,"\n");
+	fprintf (stdout,"\nEnter the name of a map to work with.\n");
+	fprintf (stdout,"    If name is entered that does not already exist, it\n");
+	fprintf (stdout,"    will be created at this time.\n\n");
+	mapset = G_ask_any( " DIGIT FILENAME ", buf, "dig", "digit", 0);
+
+	if ( ! mapset)
+		exit(0) ;
+
+    /*  CHANGE  create current map path  */
+	G__file_name( map_path, "", "", mapset) ;
+
+
+	/* ask user if map is in same units as mapset */
+	{
+	    int proj;
+	    char buff[1024];
+	if (NULL == G_find_file ("dig", buf, G_mapset ()))
+	{
+	    sprintf (tmpbuf, "You requested to create new file: '%s'. Is this correct? ", buf);
+	    if (!G_yes (tmpbuf, 0))
+		goto askagain;
+
+	    proj = G_projection ();
+	    if (proj == 0)
 	    {
-		char buf[200];
-
-    /*DEBUG*/ fprintf (stderr, "Converting %s from 3.0 to 4.0\n", N_name);
-		/* call  etc/v.from.3 to update file */
-
-		fclose (digit);
-
-		sprintf (buf, "%s/etc/v.from.3 %s", G_gisbase(), N_name);
-		ret = system (buf);
-		if (ret & 0xff00)
-		    G_fatal_error ("File conversion failed. Possibly Disk Full.\n");
-
-		/* and get back to where we were */
-		digit = fopen(N_dig_file, "r+");
-	    }
-	}
-/********************************************************************/
-    }
-    else
-    {
-	if ( (digit = fopen(N_dig_file, "w+") ) == NULL )
-	{
-	    sprintf (buf, "Not able to open <%s>\n", N_dig_file);
-	    G_fatal_error (buf);
-	}
-	V2__setup_for_digit (CMap, N_name);
-
-	fprintf (stdout, "\nCreating a new vector file\n");
-	have_old = 0;
-    }
-
-    CMap->dig_fp = digit;		/* 4.0 */
-
-    if ((plus = fopen (N_plus_file, "r+")) != NULL)
-    {
-	fclose (plus);
-	have_plus = 1;
-    }
-    else
-    {
-	if ( (plus = fopen(N_plus_file, "w+") ) == NULL )
-	{
-	    if (have_old)
-	    {
-		G_fatal_error ("No dig_plus file exists. You must run v.support.\n");
-	    }
-	    sprintf (buf, "Not able to open <%s>\n", N_plus_file);
-	    G_fatal_error  (buf);
-	}
-	fclose (plus);
-	unlink (N_plus_file);
-	have_plus = 0;
-    }
-
-
-    if ((attr = fopen (N_att_file, "r+")) != NULL)
-	have_attr = 1;
-    else
-    {
-	if ( (attr = fopen(N_att_file, "w+") ) == NULL )
-	{
-	    sprintf (buf, "Not able to open <%s>\n", N_att_file);
-	    G_fatal_error (buf);
-	}
-	have_attr = 0;
-    }
-
-    /* do the work of dig_init()  for 4.0 */
-    {
-	if (have_old)
-	    Vect__read_head_binary (CMap, &(CMap->head));
-    }
-
-    if (have_old)
-    {
-	ret = dig_do_file_checks (CMap, N_plus_file, N_dig_file, N_att_file);
-	if (ret < 0)
-	{
-	    fprintf (stderr, "Could not open dig_plus file\n");
-	    fprintf (stderr, "You must first run v.support.\n");
-	    sleep (4);
-	    exit (-1);
-	}
-    }
-
-    get_head_info(have_old, &(CMap->head));
-
-    Vect__write_head_binary(CMap, &(CMap->head));
-
-    initialize (digit, attr, N_plus_file, N_coor_file);
-    CMap->digit_file = N_dig_file;
-    CMap->att_file = N_att_file;
-    Files_Open = 1;
-
-    /* if we have created a new dig file, then create new dig_plus file */
-    if (!have_old)
-	if ( 0 > write_out (0))
-	{
-	    fprintf (stderr, "\nError creating 'dig_plus' file!\n");
-	    close_down (0);
-	}
-
-    if (! leave())
-        goto clean_up;
-
-    /* what follows is a big chunk of unorganized code to set states */
-    /* correctly when there is no digitizer enabled. */
-    /* this mostly involves turning off commands that only make sense */
-    /* with a digitizer */
-    if (strcmp ("nodig", N_digitizer) == 0)
-    {
-	register int i;
-/*DEBUG*/ debugf ("Setting DIG_ENABLED = OFF\n");
-
-/*MDIG 	Set_G_Mask (MG_DIGIT, OFF); 	Disable Digitize Menu */
-	Dig_Enabled = 0;		/* Disable Digitizer */
-	Window_Device = MOUSE; 		/* Setup Mouse as windowing device */
-	Digtiz_Device = MOUSE;
-
-	/* disable Point Marker */
-	/* could have used ME_MARK as index but dont trust 
-	** it the way I have been changing menus  
-	*/
-	for (i = 0 ; M_edit.item[i].text != NULL ; i++)
-	    if (M_edit.item[i].command == MEC_MARK)
-	    {
-		M_edit.item[i].enabled = 0;
-		break;
-	    }
-	/* Disable Toggle Pointing/Windowing/Digitizing Device */
-	for (i = 0 ; M_custom.item[i].text != NULL ; i++)
-	{
-	    switch (M_custom.item[i].command) {
-		case MCC_WINDOW:
-		case MCC_DIGTIZ:
-		case MCC_POINT:
-		    M_custom.item[i].enabled = 0;
-		    break;
-		default:
-		    break;
-	    }
-	}
-	/* Disable Digitizing in stream mode */
-	for (i = 0 ; M_digit.item[i].text != NULL ; i++)
-	{
-	    switch (M_digit.item[i].command) {
-		case MDC_MODE:
-		    M_digit.item[i].enabled = 0;
-		    break;
-		default:
-		    break;
-	    }
-	}
-	/* Disable Re-registering Map / Create Neat Line */
-	/* I would like to be able to do this eventually */
-	for (i = 0 ; M_tool.item[i].text != NULL ; i++)
-	{
-	    switch (M_tool.item[i].command) {
-		case MTC_NEAT:
-		case MTC_REGIST:
-		    M_tool.item[i].enabled = 0;
-		    break;
-		default:
-		    break;
-	    }
-	}
-    }
-
-    /* if we have a digit file, but no plus file, complain and exit */
-    if (have_old && !have_plus)
-    {
-	BEEP;
-	fprintf (stderr, "\n");
-	fprintf(stderr, "No 'dig_plus' file exists. Run import.vect first\n\n");
-	close_down (0);
-
-	Extended_Edit = 0;
-    }
-
-    if (Dig_Enabled)
-    {
-	if (D_setup_driver(N_digitizer) <0)
-	    close_down(0) ;
-
-	if ( reset_map(CMap, N_coor_file) <0)
-	    close_down(0) ;
-    }
-    else
-    {
-	if (CMap->head.orig_scale == 0)
-	{
-	    BEEP;
-	    fprintf (stderr, "\r\n Original Scale is not set!\n");
-	    sleep (3);
-	    close_down(0);
-	}
-    }
-    /* set_thresh() is called after load_plus () */
-    
-
-/*DEBUG*/ debugf ("entering write_head_binary ()\n");
-    Vect__write_head_binary(CMap, &(CMap->head));
-
-    if (do_graphics()) 
-    {
-	Write_info (2, " Graphics set.");
-
-/*DEBUG*/ debugf ("entering init_window ()\n");
-	init_window();
-	R_standard_color( dcolors[CLR_ERASE]);
-	erase_window();
-	outline_window();
-    }
-
-    if (have_old)
-    {
-/*DEBUG*/ debugf ("HAVE_OLD\n");
-	Vect__read_head_binary(CMap, &(CMap->head));
-/*DEBUG*/ debugf ("   Read head\n");
-	if (!Extended_Edit)
-	{
-	    fprintf (stderr, "\nFIRST_PLOT REACHED.  EXITTING\n"), close_down (-1);
-	    /*first_plot(digit);*/
-	}
-	else
-	{
-	    dig_load_plus (CMap, digit, 0);
-	    replot (CMap);
-	}
-    }
-    else
-    {
-/*DEBUG*/ debugf ("Creating new PLUS file\n");
-	if (Extended_Edit)
-	    init_plus (CMap);	/* initialize arrays */
-    }
-    set_thresh();
-
-    Data_Loaded = 1;
-
-/*DEBUG*/ debugf ("Entering INTERACT\n");
-    interact();
-
-    if (do_graphics())
-	R_close_driver();
-
-    _Clear_info ();
-    if (Changes_Made)
-    {
-	    if ( 0 > write_out (1))
-	    {
-		ret = -1;
-		goto clean_up;
-	    }
-#ifdef FOO
-	if (curses_yes_no (2, "  Changes Made: Do you want to save this session? "))
-	{
-	    if ( 0 > write_out (1))
-	    {
-		ret = -1;
-		goto clean_up;
-	    }
-	}
-	else
-	{
-	    if (curses_yes_no (2, "   Changes will be lost!  Do you want to save the session? "))
-		if (0 > write_out (1))
-		{
-		    ret = -1;
-		    goto clean_up;
-		}
-	}
-#endif
-    }
-
-    ret = 0;	/* normal termination code */
-clean_up:
-    last_words (CMap, ret);
-    exit (ret);  /*redundant */
-}
-
-int 
-last_words (struct Map_info *map, int ret)
-{
-    register int att;
-    P_ATT *Att;
-
-    fclose (map->dig_fp);
-    if (Extended_Edit)
-    {
-	fclose (map->att_fp);
-	if (Changes_Made)
-	{
-	    if (curses_yes_no_default (3, "Do you want to compress the Atts file? ", 0))
-	    {
-		Write_info (3, "Updating Att file...");
-		/* update the dig_att file to agree with the digit atts */
-		if (0 > unlink (map->att_file))
-		{
-		    Write_info (3, "Error trying to unlink att file");
-		}
-		if (NULL == (map->att_fp = fopen (map->att_file, "w")))
-		{
-		    Write_info (3, "Error openning att file. Attributes may be lost");
-		}
-		else
-		{
-		    for (att = 1 ; att <= map->n_atts ; att++)
-		    {
-			Att = &(map->Att[att]);
-			if (ATT_ALIVE (Att))
-			{
-			    write_att (map->att_fp, (char) dig_new_to_old_type (Att->type), Att->x, Att->y, Att->cat);
-			}
-		    }
-		    fclose (map->att_fp);
-		    Write_info (3, "Updating Att file... DONE.");
-		}
-	    }
-	}
-    }
-
-    if (Curses_state ())
-	Close_curses();
-#ifdef DEBUG
-    close_debug();
-#endif
-
-    do_file_checks (map);
-
-    exit (ret);
-}
-
-int do_file_checks (struct Map_info *map)
-{
-    FILE *fp;
-    struct Plus_head Plus;
-
-    if ((fp = fopen (map->plus_file, "r+")) == NULL)
-    {
-	G_fatal_error ("Can't open Plus file for final write\n");
-    }
-    dig_Rd_Plus_head (map, &Plus, fp);
-    rewind (fp);
-    dig_write_file_checks (fp, map, &Plus);
-    fclose (fp);
-}
-
-/* exit status code needs to be finished */
-/* EXIT (-5)  abnormal, but data should be ok */
-/* EXIT (-1)  abnormal, Data should not be trusted */
-void close_down (int dummy)
-{
-	int ret;
-
-	Close_curses() ;
-
-	if (Data_Loaded)
-	{
-	    Write_info(1, "Program exitting abnormally! Attempting to save data ");
-		    if ( 0 > write_out (1))
-		    {
-			BEEP;
-			Write_info (2, "Write FAILED!!!");
-			sleep (4);
-			ret = -1 ;
-		    }
-		    else
-		    {
-			Changes_Made = 0;
-			Write_info (2, "File updated...");
-			sleep (2);
-			ret = -5 ;
-		    }
-
-	}
-	    
-	ret = -5 ;
-end:
-
-    last_words (CMap, ret);
-    exit (ret); /* redundant */
-}
-
-
-#ifdef DEBUG
-
-static FILE *debugfp;
-static int debug_on;
-
-int init_debug (char *file)
-{
-    char *getenv ();
-
-    debug_on = 0;
-    if (!getenv ("DEBUG"))
-	return ;
-    if (strcmp ("wy50", getenv ("DEBUG")) == 0)
-    {
-	/* set 43 lines/page */
-	fprintf (stderr, "%ce+", 27);
-	/* split  24/19 */
-	fprintf (stderr, "%cx18", 27);
-	sleep (1);
-	flush_keyboard ();
-	debug_on = 1;
-    }
-    else
-    {
-	if ((debugfp = fopen (getenv ("DEBUG"), "a")) == NULL)
-	{
-	    if ((debugfp = fopen (getenv ("DEBUG"), "w")) == NULL)
-	    {
-		fprintf (stderr, "NO DEBUG\n");
-		debug_on = 0;
+		if (!G_yes ( "Mapset units are undefined. Continue? ", 1))
+		    return (-1);
 	    }
 	    else
-		debug_on = 2;
-	}
-	else
-	    debug_on = 2;
-    }
-    if (debug_on)
-    {
-	long timer;
-
-	setbuf (debugfp, NULL);
-	time (&timer);
-	debugf ("\n\nSTARTUP: %s", asctime (localtime(&timer)));
-	debugf ("USER: %s  File: %s\n", G_whoami(), file);
-    }
-}
-
-int 
-close_debug (void)
-{
-    switch (debug_on) {
-	case 1:
-#ifdef FOO
-	    /* set 24 rows */
-	    fprintf (stderr, "%ce(", /*)*/  27);
-	    /* set to full screen */
-	    fprintf (stderr, "%cx0", 27);
-	    flush_keyboard ();
-#endif
-	    break;
-	case 2:
-	    fclose (debugfp);
-	    break;
-	default:
-	    break;
-    }
-    debug_on = 0;
-}
-
-int debugf (char *format, int a, int b, int c, int d, int e, int f, int g, int h, int i, int j, int k, int l)
-{
-      
-    char buf[1024], *p;
-
-    if (!debug_on)
-	return 0;
-
-    switch (debug_on) {
-	case 1:
-	    /* { */
-	    fprintf (stderr, "%c}", 27);
-
-	    sprintf (buf, format, a, b, c, d, e, f, g, h, i, j, k, l);
-	    for (p = buf ; *p ; p++)
 	    {
-		fputc (*p, stderr);
-		if (*p == '\n')
-		    fputc ('\r', stderr);
+		fprintf (stdout, "\n\nCurrent mapset is %s.\n", G_database_projection_name ());
+		sprintf (buff, "  Is this map in %s %s? ", 
+		  G_database_projection_name (), G_database_unit_name (1));
+		if (!G_yes (buff, 1))
+		{
+		    fprintf (stdout, "Sorry, GRASS does not currently support mixing map units\n");
+		    return (-1);
+		}
+		else
+		    fprintf (stdout, "Thank You\n");
+		fprintf (stdout, "\n");
 	    }
+	}
+	}
 
-	    fprintf (stderr, "%c]", 27);
-	    break;
-	case 2:
-	    fprintf (debugfp, format, a, b, c, d, e, f, g, h, i, j, k, l);
-	    break;
-	default:
-	    break;
-    }
+
+	G__make_mapset_element ("dig");
+	G__make_mapset_element ("dig_plus");
+	G__make_mapset_element ("dig_att");
+	G__make_mapset_element ("reg");
+
+
+/********  everything is okay, block signals and lock the digitizer  */
+
+	sigint = (int (*)())signal(SIGINT, SIG_IGN) ;
+	sigquit = (int (*)())signal(SIGQUIT, SIG_IGN) ;
+
+        if (strcmp (Driver.name, "none"))
+        {
+            lock = lock_file( lock_name, pid) ;
+            if ( ! lock)
+            {
+                fprintf( stderr, "Digitizer is already being used.\n") ;
+                exit(0) ;
+            }
+            if ( lock < 0)
+            {
+                fprintf (stderr, "ERROR - Could not lock digitizer.\n") ;
+                fprintf (stderr, "Check for existance of %s/locks.\n", G_gisbase()) ;
+                fprintf(stderr, "Contact your GRASS system administrator\n^G ") ;
+                exit(-1) ;
+            }
+        }
+
+/* Panning threshold from window boundary */
+	pan_threshold = ((p = getenv("GRASS_PAN_THRESHOLD")) ?
+				atof(p) / 100 : 0.05);
+
+	pan_threshold = (pan_threshold >= 0.0 && pan_threshold <= 0.25 ?
+				pan_threshold : 0.05);
+
+	Cat_name = NULL;
+	
+/*  NOW execute the digit program  */
+
+	/* device can == "nodig" if working w/out digitizer */
+	/* see digitcap for more info */
+	/*
+	sprintf( command, "%s/etc/%s/%s/%s %s %s %d %s", G_gisbase(),
+		DRIVER_DIR, Driver.name,  Driver.dig_filename,
+		map_path, buf, pid,  Driver.device) ;
+	system( command) ;
+	    */
+	sprintf (digdevice.digname, "%s", Driver.name);
+	digmain(Driver.dig_filename, map_path, buf, pid,  Driver.device, 
+	lock_name) ;
+
+/*  unlock the digitizer for the next person and leave them smiling  */
+
+/*	unlock_file( lock_name) ; */
+
+	fprintf (stdout,"\n\n") ;
+
+	return 0;
 }
-#endif
+
+
+
+/******************************************************************
+* lock_file (file,pid)
+*   char *file
+*
+*   this routine "locks" the file for process pid as follows:
+*
+*   1. if file exists, the old pid is read out of the file.
+*
+*      if the old pid and the new pid are the same, then
+*      nothing more is done and the request is successful.
+*
+*      if this the old pid process is still running, the file is
+*      considered locked.
+*
+*   2. if file does not exist, or if file exists but process is not
+*      running (ie, lock was not removed), the file is locked for
+*      process pid by writing pid into the file.
+*
+*
+* note: since file is created by this routine, it shouldn't be
+*       a file that is used for any other purpose.
+*
+*       also, this lock mechanism is advisory. programs must call this
+*       routine and check the return status.
+*
+* returns:
+*       1 ok lock is in place.
+*       0 could not lock because another process has the file locked already
+*      -1 error. could not create the lock file
+*      -2 error. could not read the lock file.
+*      -3 error. could not write the lock file.
+******************************************************************/
+
+#include	<errno.h>
+
+#define OK 1
+#define ALREADY_LOCKED 0
+#define CANT_CREATE -1
+#define CANT_READ -2
+#define CANT_WRITE -3
+
+extern	int	errno ;
+
+static int lock_file (char *file,int lock_pid)
+{
+    int fd;
+    int locked;
+    int mask;
+    int n;
+    int old_pid;
+
+
+    locked = 0;
+    if (access (file, 0) == 0) /* file exists */
+    {
+	for (n = 0; n < 2; n++)
+	{
+	    if (get_pid (file, &old_pid))
+		break;
+	    if (n == 0)
+		sleep(1); /* allow time for file creator to write its pid */
+	}
+	if (n == 2)
+	    return CANT_READ;
+	if (lock_pid == old_pid)
+	    return OK;
+	locked = find_process (old_pid);
+    }
+    if (locked)
+	return ALREADY_LOCKED;
+    mask = umask (0);
+    fd = creat (file, 0666) ;
+    umask (mask);
+    if (fd < 0)
+	return CANT_CREATE;
+    if (write(fd, &lock_pid, sizeof lock_pid) != sizeof lock_pid)
+    {
+	close (fd);
+	return CANT_WRITE;
+    }
+    close (fd);
+    return OK;
+}
+
+static int get_pid (char *file,int *old_pid)
+{
+    int fd;
+    int n;
+
+    if ((fd = open (file, 0)) < 0)
+	return 0;
+    n = read (fd, old_pid, sizeof (*old_pid));
+    close (fd);
+    return n == sizeof (*old_pid);
+}
+
+static int find_process (int pid)
+{
+/* attempt to kill pid with NULL signal. if success, then
+   process pid is still running. otherwise, must check if
+   kill failed because no such process, or because user is
+   not owner of process
+*/
+    if (kill (pid, 0) == 0)
+	return 1;
+    return errno != ESRCH;
+}
+
+int unlock_file (char *file)
+{
+    if (access (file,0) != 0)
+	return 0;
+    unlink (file);
+    if (access (file,0) != 0)
+	return 1;
+    return -1;
+}
+
+#undef MAIN

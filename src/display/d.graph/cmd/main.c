@@ -17,7 +17,13 @@
 int main (int argc, char **argv)
 {
 	char window_name[64] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2 ;
+
+	module = G_define_module();
+	module->description =
+		"Program for generating and displaying simple graphics to the "
+		"graphics display monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -69,7 +75,8 @@ int main (int argc, char **argv)
 		}
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

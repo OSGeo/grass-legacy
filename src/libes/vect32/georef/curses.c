@@ -266,7 +266,7 @@ curses_yes_no (int n, char *s)
     return 0;
 }
 
-int suspend (void)
+int mysuspend (void)
 {
     move (LINES-1, 0);
     refresh ();
@@ -275,7 +275,7 @@ int suspend (void)
     return 0;
 }
 
-int respend (void)
+int myrespend (void)
 {
     New_tty();
     move (0, 0);

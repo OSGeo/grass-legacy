@@ -11,8 +11,10 @@
 #include "gis.h"
 
 
-extern int SCREEN_BOTTOM;
-extern int SCREEN_RIGHT;
+extern int screen_top;
+extern int screen_left;
+extern int screen_bottom;
+extern int screen_right;
 
 int Graph_Close (void)
 {
@@ -25,14 +27,11 @@ int Graph_Close (void)
     /* now copy temp file into cell file */
     /* and write color table */
 
-
-#define NEWCODE
-#ifdef NEWCODE
     fseek (Temp_fp, 0L, 0);
-    Window.north=SCREEN_BOTTOM-1;
-    Window.east=SCREEN_RIGHT-1;
-    Window.south=0;
-    Window.west=0;
+    Window.north=screen_bottom;
+    Window.east=screen_right;
+    Window.south=screen_top;
+    Window.west=screen_left;
     Window.proj=0;
     Window.zone=0;
     Window.ew_res=1;
@@ -45,16 +44,16 @@ int Graph_Close (void)
 	fprintf (stderr, "Error creating cell file '%s'\n", Filename), exit(-1);
     
 
-    for (row = 0 ; row < SCREEN_BOTTOM ; row++)
+    for (row = screen_top; row < screen_bottom; row++)
     {
-	if (0 >= fread (Row_buf, 1, SCREEN_RIGHT, Temp_fp))
+	if (0 >= fread (Row_buf, 1, screen_right - screen_left, Temp_fp))
 	{
 	    fprintf (stderr, "Error reading tmp file in CELL driver\n");
 	    break;
 	}
-	for (i = 0 ; i < SCREEN_RIGHT ; i++)
+	for (i = 0 ; i < screen_right - screen_left ; i++)
 	    Cellbuf[i] = Row_buf[i];
-	G_put_map_row (newmap, Cellbuf);
+	G_put_c_raster_row (newmap, Cellbuf);
     }
 
     G_close_cell (newmap);
@@ -68,7 +67,6 @@ int Graph_Close (void)
     }
     G_write_colors (FILE_NAME, G_mapset(), &Color);
 
-#endif
     unlink (Filename);
     fclose (Temp_fp);
 

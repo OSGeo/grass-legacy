@@ -78,7 +78,7 @@ struct Point PQ_min(void);
 struct Halfedge *PQextractmin(void);
 int PQinitialize(void);
 /* sw_main.c */
-int scomp(struct Point *, struct Point *);
+int scomp(const void *, const void *);
 struct Site *nextone(void);
 int readsites(void);
 struct Site *readone(void);

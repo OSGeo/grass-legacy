@@ -2,10 +2,13 @@
 
 #define DELTA_Y	0.05
 #define MAX_PSFILES	20
-/* Now using G_plot_where_xy()
+/* Following XCONV, YCONV were commented because of using G_plot_where_xy()
+ * and uncommented again because G_adjust_easting 
+ * in it is not best for each case,  RB Jan 2000 
+ */
 #define XCONV(E_COORD)	(PS.map_left + PS.ew_to_x * ((E_COORD) - PS.w.west))
 #define YCONV(N_COORD)	(PS.map_bot  + PS.ns_to_y * ((N_COORD) - PS.w.south))
-*/
+
 
 struct PS_data 
 {

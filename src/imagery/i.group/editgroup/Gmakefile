@@ -6,6 +6,6 @@ LIST = main.o\
 	$(GISLIB) $(IMAGERYLIB)
 
 $(ETC)/imagery/editgroup: $(LIST) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(IMAGERYLIB) $(VASKLIB): #

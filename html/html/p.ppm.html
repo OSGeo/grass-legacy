@@ -1,0 +1,172 @@
+<TITLE>p.ppm</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>p.ppm</b></EM>  - Reads portable pixmap (ppm) files created by PPM utilities.
+
+<BR>
+
+<EM>(GRASS Paint/Print Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>p.ppm</B>
+
+<BR>
+
+<B>p.ppm help</B>
+
+<BR>
+
+<B>p.ppm </B>[<B>-f</B>] [<B>input=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program, <EM>p.ppm</EM>, reads a user-specified portable pixmap
+(ppm) file and outputs it to the currently selected printer
+(see <EM><A HREF="p.select.html">p.select</A></EM>).
+The <EM>input</EM> ppm file should be one that has been created
+using the PPM utilities developed by Jeff Poskanzer.
+These utilities can import various image formats (including Sun raster,
+X Windows pixmaps, and others) into the PPM formats <EM>ppm</EM>
+(color pixmaps), <EM>pgm</EM> (grey scale maps), and <EM>pbm</EM>
+(black and white bit-maps).
+
+
+<P>
+
+If the image doesn't fit the output device, it won't get printed.
+If you want the image printed (but clipped), use the <B>p.ppm -f</B> option,
+or scale the input using <EM>ppmscale</EM>,
+or rotate the image using <EM>ppmrotate</EM>
+(if it will fit that way -- otherwise you might have to scale it as well).
+If the image doesn't fit, <EM>p.ppm</EM> will tell you what
+scaling value to enter to <EM>ppmscale</EM> that will make it fit.
+
+
+<P>
+
+
+<H2>EXAMPLES</H2>
+
+If the user is running GRASS under SunOS, the following command
+could be used to send a monitor screen image to the printer:
+
+
+<P>
+
+<DL>
+<DD>
+<B>screendump | rasttoppm | p.ppm </B>
+</DL>
+
+
+<P>
+
+
+
+<P>
+
+If you are running suntools, the user might type:
+
+
+<P>
+
+<DL>
+<DD>
+<B>sleep 10; screendump | rasttoppm | ppmrotate 90 | p.ppm </B>
+</DL>
+
+
+<P>
+
+The UNIX <EM>sleep</EM> command allows you time to arrange the frames
+before the screen dump starts.
+The <EM>ppmrotate</EM> is usually needed because the Sun screens
+are wider than they are long
+(and wider than 1024 pixels - which is the width of most of our printers).
+
+
+<P>
+
+If you are running X, the user might type:
+
+
+<P>
+
+<DL>
+<DD>
+<B>xwd | xwdtoppm | ppmrotate 90 | p.ppm </B>
+</DL>
+
+<H2>NOTES</H2>
+
+This program only supports the ppm binary format (P6).
+
+
+<P>
+
+Maximum color level is 255.  If the ppm file has more color
+levels, use <EM>ppmcscale</EM> to reduce the number of colors.
+
+
+<P>
+
+No scaling is done.  Use <EM>ppmscale</EM> to change image size.
+
+
+<P>
+
+No rotation is done.  Use <EM>ppmrotate</EM> to rotate the image.
+
+<H2>SEE ALSO</H2>
+
+See also:
+
+
+<P>
+
+The PPM utilities
+<EM>ppmrotate</EM> (rotates ppm images),
+<EM>ppmscale</EM> (scales ppm images for printing),
+<EM>rasttoppm</EM> (converts a Sun raster file to ppm format),
+and
+<EM>xwdtoppm</EM> (converts an X Windows dump file to ppm format).
+
+
+<P>
+
+The SunOS program <EM>screendump</EM> (dumps the image on
+the color graphics monitor into a file in Sun raster file format).
+
+
+<P>
+
+The X program <EM>xwd</EM> (dumps the image in an X window into a file
+in X window dump [xwd] format).
+
+
+<P>
+
+The GRASS programs<br>
+<EM><A HREF="d.save.html">d.save</A></EM><br>
+<EM><A HREF="p.map.html">p.map</A></EM><br>
+<EM><A HREF="p.select.html">p.select</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+
+<P>
+
+This program uses the 
+PPM utilities, developed by Jeff Poskanzer.

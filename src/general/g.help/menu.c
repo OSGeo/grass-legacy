@@ -1,6 +1,7 @@
 #include "config.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <pwd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "menu.h"
@@ -19,19 +20,19 @@
  |	culinary delicacy.
  |
  |====================================================================
- |		Each of the routines herein has been prepared 
+ |		Each of the routines herein has been prepared
  |	and documented ala carte and can be called as such.
  | 	TablW is left totally untouched (except for refreshment) by
  |	the menu complex, thereby leaving its contents under control
  |	of the calling program. The utility routine P_writowin()
  |	serves this end.
  |
- |		P_menuint() must be called before
+ |		P_menuinit() must be called before
  |	any other as these initialize the terminal and 'curses'
  |	facilities, repectively. Upon program termination
  |	P_menuexit() will restore the terminal to its original
  |	state.
- |	
+ |
  |	The protocal of the F_menu function is as follows:
  |		Choicefile - Input
  |			The name of the file containing the
@@ -47,7 +48,7 @@
  |			information in the MenuW.
  |		Choice - Output
  |			Upon return contains the number of characters
- |			entered by the user during any type of 
+ |			entered by the user during any type of
  |			response except LONGRESPONSE, which implies
  |			a file edit response.
  |		Respbuf - Output
@@ -69,7 +70,7 @@
  |		practical errors which may happen during control
  |		by F_menu (file errors, memory allocations, etc.)
  |		are handled internal to F_menu.
- |		
+ |
  */
 
 int F_menu (
@@ -83,7 +84,7 @@ char	*F_universe() ;
 char	buffer[128] ;
 int	Menlength;
 int	Menstat, Hlpstat, Tmpstat;
-int Curline ;
+int	Curline ;
 
 	Tmpstat = 0;
 	Menstat = F_fetchfile (Choicefile, &Men_strbuf, &Menlength);
@@ -102,7 +103,7 @@ int Curline ;
 			}
 		}
 	*/
-		
+
 	Curline = *curline;
 
 	/*
@@ -126,100 +127,86 @@ int Curline ;
 	for(;;)
 	{
 		Usrcmnd = getch() ;
-
 		switch(Usrcmnd)
 		{
-			case REFRESH:
-				{
-				wrefresh (curscr);
-				break ;
-				}
+		case REFRESH:
+		case KEY_REFRESH:
+			wrefresh(curscr);
+			break ;
 
-			case HELP:
-				{
-				Hlpstat = F_helpctrl (Helpfile);
+		case HELP:
+		case KEY_HELP:
+		case KEY_F(1):
+			Hlpstat = F_helpctrl (Helpfile);
 
-				if (Menstat < 0)
-					P_menuerror (Menstat, Choicefile);
-				else
-					P_writowin (PlanetW, buffer, 1, 1, 1);
-				box (TablW, VERTCHAR, HORZCHAR);
-				wrefresh (TablW);
-				break ;
-				}
+			if (Menstat < 0)
+				P_menuerror (Menstat, Choicefile);
+			else
+				P_writowin (PlanetW, buffer, 1, 1, 1);
+			box (TablW, VERTCHAR, HORZCHAR);
+			wrefresh (TablW);
+			break ;
 
-			case PRINTOUT:
-				{
-				dump_window() ;
-				break ;
-				}
+		case PRINTOUT:
+		case KEY_PRINT:
+			dump_window() ;
+			break ;
 
-			case 'd':
-				{
-				if (Curline <
-					((Menlength - (MENWINHITE - 3)))) 
-						Curline++;
-				break;
-				}
+		case LINEDOWN:
+		case KEY_DOWN:
+			if (Curline <
+			    ((Menlength - (MENWINHITE - 3))))
+				Curline++;
+			break;
 
-			case 'D':
-				{
-				Curline += (MENWINHITE - 4);
-				Curline =
-					Curline <=
-					(Menlength - (MENWINHITE - 3)) ?
-						Curline :
-					(Menlength - (MENWINHITE - 3));
-				Curline = Curline < 1 ? 1 : Curline;
-				break;
-				}
+		case PAGEDOWN:
+		case KEY_NPAGE:
+			Curline += (MENWINHITE - 4);
+			Curline =
+				Curline <=
+				(Menlength - (MENWINHITE - 3)) ?
+				Curline :
+				(Menlength - (MENWINHITE - 3));
+			Curline = Curline < 1 ? 1 : Curline;
+			break;
 
-			case 'u':
-				{
-				if (Curline > 1)
-					Curline--;
-				break;
-				}
+		case LINEUP:
+		case KEY_UP:
+			if (Curline > 1)
+				Curline--;
+			break;
 
-			case 'U':
-				{
-				Curline -= (MENWINHITE - 4);
-				Curline =
-					Curline < 1 ? 1 : Curline;
-				break;
-				}
+		case PAGEUP:
+		case KEY_PPAGE:
+			Curline -= (MENWINHITE - 4);
+			Curline =
+				Curline < 1 ? 1 : Curline;
+			break;
 
-			case 't':
-				{
-				Curline = 1;
-				break;
-				}
+		case PAGETOP:
+		case KEY_HOME:
+			Curline = 1;
+			break;
 
-			case 'b':
-				{
-				Curline = Menlength - (MENWINHITE - 3); 
-				break;
-				}
+		case PAGEBOT:
+		case KEY_END:
+			Curline = Menlength - (MENWINHITE - 3);
+			break;
 
-			case CR:
-				{
-				(*hilite)++ ;
-				break ;
-				}
+		case LF:
+			(*hilite)++;
+			break;
 
-			case ESC:
-				{
-				*Respbuf = ESC ; *(Respbuf+1) = '\0' ;
-				goto doreturn ;
-				}
+		case 'q':
+			Respbuf[0] = ESC;
+			Respbuf[1] = '\0';
+			goto doreturn;
 
-			case BLANK:
-				{
-				goto doreturn;
-				}
+		case BLANK:
+			goto doreturn;
 
-			default:
-				break;
+		default:
+			break;
 		}
 
 		P_writo_Menu_win (MenuW, Men_strbuf, Curline, Menlength,
@@ -232,7 +219,7 @@ int Curline ;
 
 doreturn:
 	if (Men_strbuf != NULL)
-		free (Men_strbuf);
+		G_free (Men_strbuf);
 
 	return (Menstat);
 }
@@ -246,7 +233,7 @@ doreturn:
 
 void P_termexit(int dummy)
 {
- 	signal (SIGINT, P_termexit);  
+ 	signal (SIGINT, P_termexit);
  	signal (SIGQUIT, P_termexit);
 	signal (SIGTERM, P_termexit);
 	Old_tty();
@@ -321,6 +308,8 @@ int P_menuinit ()
 	erase ();
 	refresh ();
 
+	keypad(stdscr, 1);
+
 	MENWINHITE = LINES - TABLWINHITE - 1 ;
 	HELPWINHITE = LINES - CMDWINHITE + 1 ;
 	PlanetW = newwin (3, COLS - 1, 0, 0);
@@ -338,7 +327,7 @@ int P_menuinit ()
 	werase (MenuW);
 	werase (CommandhelpW);
 	werase (PrmptW);
-	
+
 	return 0;
 }
 
@@ -414,8 +403,9 @@ static char	Dumstring[256];
 
 int F_helpctrl (char	*Helpfile)
 {
-char	*Hlp_strbuf, *Cmd_strbuf, *Strptr, Usrcmnd;
+char	*Hlp_strbuf, *Cmd_strbuf, *Strptr;
 int	Curline, Hlplength, Cmdlength, Hlpstat, Cmdstat;
+int	Usrcmnd;
 
 	Hlpstat = F_fetchfile (Helpfile, &Hlp_strbuf, &Hlplength);
 	Cmdstat = F_fetchfile (COMMANDFILE, &Cmd_strbuf, &Cmdlength);
@@ -438,91 +428,93 @@ int	Curline, Hlplength, Cmdlength, Hlpstat, Cmdstat;
 	P_writowin (PrmptW, "(Return to Continue> ", 1, 1, 1);
 
 	while ((Usrcmnd = getch()) != LF)
-		{
-		if (Usrcmnd == REFRESH)
-			wrefresh(curscr) ;
-		else if(Usrcmnd == PRINTOUT)
-			dump_window() ;
-/*
-			{
-			P_writowin (PlanetW, NULLSTR, 1, 1, 1);
-			P_writowin (StatehelpW, NULLSTR, 1, 1, 1);
-			P_writowin (CommandhelpW, NULLSTR, 1, 1, 1);
-			P_writowin (PrmptW, NULLSTR, 1, 1, 1);
-
-			if (Hlpstat < 0)
-				P_menuerror (Hlpstat, Helpfile);
-			else
-				{
-				Strptr = F_universe (Helpfile);
-				P_writowin (PlanetW, Strptr, 1, 1, 1);
-				}
-			P_writowin (StatehelpW, Hlp_strbuf, Curline,
-				    Hlplength, HELPWINHITE - 2);
-			P_writowin (CommandhelpW, Cmd_strbuf, Curline,
-				      Cmdlength, CMDWINHITE - 2);
-			P_writowin (PrmptW, "(Return to Continue> ",
-						 1, 1, 1);
-			}
-*/
-
-		else if (Hlplength > (HELPWINHITE - 3))
-		{
+	{
 		switch (Usrcmnd)
+		{
+		case REFRESH:
+		case KEY_REFRESH:
+			wrefresh(curscr) ;
+			break;
+
+		case PRINTOUT:
+		case KEY_PRINT:
+			dump_window() ;
+			break;
+#if 0
+			{
+				P_writowin (PlanetW, NULLSTR, 1, 1, 1);
+				P_writowin (StatehelpW, NULLSTR, 1, 1, 1);
+				P_writowin (CommandhelpW, NULLSTR, 1, 1, 1);
+				P_writowin (PrmptW, NULLSTR, 1, 1, 1);
+
+				if (Hlpstat < 0)
+					P_menuerror (Hlpstat, Helpfile);
+				else
+				{
+					Strptr = F_universe (Helpfile);
+					P_writowin (PlanetW, Strptr, 1, 1, 1);
+				}
+				P_writowin (StatehelpW, Hlp_strbuf, Curline,
+					    Hlplength, HELPWINHITE - 2);
+				P_writowin (CommandhelpW, Cmd_strbuf, Curline,
+					    Cmdlength, CMDWINHITE - 2);
+				P_writowin (PrmptW, "(Return to Continue> ",
+					    1, 1, 1);
+			}
+#endif
+
+		default:
+			if (Hlplength <= (HELPWINHITE - 3))
+				break;
+
+			switch (Usrcmnd)
 			{
 			case FORLIN:
-				{
-				if (Curline <
-					((Hlplength - (HELPWINHITE - 3)))) 
-						Curline++;
+			case KEY_DOWN:
+				if (Curline < Hlplength - (HELPWINHITE - 3))
+					Curline++;
 				break;
-				}
 
 			case FORPAG:
-				{
+			case KEY_NPAGE:
 				Curline += (HELPWINHITE - 3);
 				Curline =
-					Curline <=
-					(Hlplength - (HELPWINHITE - 3)) ?
-						Curline :
-					(Hlplength - (HELPWINHITE - 3));
+					Curline <= Hlplength - (HELPWINHITE - 3)
+					? Curline
+					: Hlplength - (HELPWINHITE - 3);
 				break;
-				}
 
 			case BAKLIN:
-				{
+			case KEY_UP:
 				if (Curline > 1)
 					Curline--;
 				break;
-				}
 
 			case BAKPAG:
-				{
+			case KEY_PPAGE:
 				Curline -= (HELPWINHITE - 3);
-				Curline =
-					Curline < 1 ? 1 : Curline;
+				Curline = Curline < 1
+					? 1
+					: Curline;
 				break;
-				}
 
 			case TOPPAG:
-				{
+			case KEY_HOME:
 				Curline = 1;
 				break;
-				}
 
 			case BOTPAG:
-				{
-				Curline = Hlplength - (HELPWINHITE - 3); 
+			case KEY_END:
+				Curline = Hlplength - (HELPWINHITE - 3);
 				break;
-				}
 
 			default:
 				break;
 			}
 
-		P_writowin (StatehelpW, Hlp_strbuf, Curline,
-				Hlplength, HELPWINHITE - 2);
-		P_writowin (PrmptW, "(Return to Continue> ", 1, 1, 1);
+			P_writowin (StatehelpW, Hlp_strbuf, Curline,
+				    Hlplength, HELPWINHITE - 2);
+			P_writowin (PrmptW, "(Return to Continue> ", 1, 1, 1);
 		}
 	}
 
@@ -554,8 +546,8 @@ int	curx, cury;
 	Charcntr = 0;
 	Saveptr = Respbuf;
 	P_writowin (PrmptW, Prmptstr, 1, 1, 1);
-	
-	while ((*Respbuf = getch()) != CR && *Respbuf != LF)
+
+	while ((*Respbuf = getch()) != LF)
 		{
 		if (*Respbuf == KILLINE)
 			{
@@ -610,7 +602,7 @@ int	Procid, Status, Returnval;
 			return (~FRKERR_ERRNUM);
 			break;
 			}
-		case 0: 
+		case 0:
 			{
 			/*execl ("/usr/ucb/vi", "vi", TMPFILE);*/
 			execl ("vi", "vi", TMPFILE);
@@ -624,7 +616,7 @@ int	Procid, Status, Returnval;
 			clear ();
 			erase ();
 			refresh ();
-						
+
 			break;
 			}
 		}
@@ -700,15 +692,15 @@ struct stat	Filestatus;
  |	a number of lines of text to the window whose pointer is passed
  |	as Windoname. The text is written in the window beginning at the
  |	upper left hand corner and will go to the next window line upon
- |	reaching a newline character, a NULL character, or if the 
- |	length of the line of text is longer 
+ |	reaching a newline character, a NULL character, or if the
+ |	length of the line of text is longer
  |	than the width of the window minus a righthand margin width,
  |	until the bottom line of the window is reached. It is therfore
  |	indestructible to the display
  |	in that it simply refuses to venture outside the boundries of
  |	its window. If the passed Bufptr is NULL, a box is drawn
- |	around the window perimeter and the routine returns. 
- |	Segmentation faults can occur if an inaccurate buffer length 
+ |	around the window perimeter and the routine returns.
+ |	Segmentation faults can occur if an inaccurate buffer length
  |	(Buflength) is passed. (See F_linecnt). If all
  |	is well, Numline lines are printed, beginning with the line in
  |	the buffer whose number is Firstline.
@@ -748,7 +740,7 @@ int Firstline,int Buflength,int Numlines)
 		while ((*Bufptr != '\0') && (*Bufptr++ != LF))
 			;
 	}
-	
+
 	werase (Windoname);
 
 	std_out_on = 0 ;
@@ -850,7 +842,7 @@ int P_writo_Menu_win (
 		while ((*Bufptr != '\0') && (*Bufptr++ != LF))
 			;
 		}
-	
+
 	werase (Windoname);
 
 	at_hilite = 0 ;
@@ -879,7 +871,7 @@ int P_writo_Menu_win (
 							*ptr2++ = *ptr1 ;
 						*ptr2 = '\0' ;
 					}
-							
+
 					else
 					{
 						waddch (Windoname, ' ') ;
@@ -978,8 +970,6 @@ static char	*Screwupmsg[] = {
 
 	return 0;
 }
-
-#include <pwd.h>
 
 int dump_window(void)
 {
