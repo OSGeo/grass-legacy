@@ -319,7 +319,9 @@ read_capfile(void)
 {
 	char freetypecap[4096], buf[4096];
 	char ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
+	/* speed-sensitive?
 	int fonts_size = 0;
+	 */
 	int font_names_size = 0;
 	FILE *fp;
 	int i;
@@ -347,12 +349,17 @@ read_capfile(void)
 			  ifont, ipath, icharset, icolor, isize) != 5)
 			continue;
 
+		/* speed-sensitive?
+		 * too much unused memory as more fonts get added.
 		if (fonts_count >= fonts_size)
 		{
 			fonts_size = fonts_size ? fonts_size * 2 : 10;
 			fonts = (capinfo *)
 				G_realloc(fonts, fonts_size * sizeof(capinfo));
 		}
+		 */
+		fonts = (capinfo *)
+			G_realloc(fonts, (fonts_count + 1) * sizeof(capinfo));
 
 		font = &fonts[fonts_count];
 
