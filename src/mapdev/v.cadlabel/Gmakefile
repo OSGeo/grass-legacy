@@ -22,6 +22,8 @@ $(PROG): $(OBJ) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
 	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
 	mv a.out $@
 
+$(VECTLIB) $(DIG_ATTLIB) $(GISLIB): #
+
 saber_src:
 	#load $(SOURCE) $(CFLAGS) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
 
