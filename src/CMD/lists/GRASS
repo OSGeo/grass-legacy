@@ -201,6 +201,7 @@ src/mapdev/v.transform
 src/mapdev/v.trim
 src/mapdev/v.what
 # src/misc/m.datum.shift
+src/misc/m.clump
 src/misc/m.dem.examine
 src/misc/m.dem.extract
 src/misc/m.dmaUSGSread
@@ -213,6 +214,8 @@ src/misc/m.in.e00
 src/misc/m.in.pl94.db3
 src/misc/m.in.stf1.db3
 src/misc/m.in.stf1.tape
+src/misc/m.ipf
+src/misc/m.kappa
 src/misc/m.ll2gc
 src/misc/m.ll2u
 src/misc/m.lulc.USGS
@@ -220,6 +223,7 @@ src/misc/m.lulc.read
 src/misc/m.proj
 src/misc/m.region.ll
 src/misc/m.rot90
+src/misc/m.svfit
 src/misc/m.tiger.region
 src/misc/m.u2ll
 src/paint/Interface
@@ -311,6 +315,7 @@ src/raster/r.surf.idw
 src/raster/r.surf.idw2
 src/raster/r.surf.random
 src/raster/r.thin
+src/raster/r.tiff
 src/raster/r.timestamp
 src/raster/r.to.sites
 src/raster/r.transect
