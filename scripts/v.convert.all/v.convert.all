@@ -15,8 +15,8 @@
 #############################################################################
 
 #%Module
-#%  description: convert all old GRASS < V5.7 vector maps to current format in current mapset
-#%End
+#%  description: convert all old GRASS < V5.7 vector maps in current mapset to current format
+#%end
 #%flag
 #%  key: r
 #%  description: run non-interactively
@@ -27,7 +27,7 @@ if test "$GISBASE" = ""; then
     exit 1
 fi
 
-if [ $# -eq 0 ] ; then
+if [ $# -eq 0 -o $1 = "-h" -o $1 = "help" -o $1 = "-help" ] ; then
   if [ "$1" != "@ARGS_PARSED@" ] ; then
      exec g.parser "$0" "$@"
   fi
