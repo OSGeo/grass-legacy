@@ -667,6 +667,8 @@ int main ( int argc, char *argv[])
 	                             info, &xmin, &xmax, &ymin, &ymax, &zmin, &zmax, &NPOINT, &dmax);
   if (totsegm <= 0)
     clean_fatal_error ("Input failed");
+
+  Vect_set_release_support (&Map);
   Vect_close (&Map);
 
   if (treefile != NULL)
