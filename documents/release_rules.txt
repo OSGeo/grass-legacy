@@ -210,10 +210,6 @@ BINARIES
        make pre-compile
        gmake5 src.garden/grass.postgresql
 
-   o compile PNGDriver (requires "libgd1.8.x" from
-     http://www.boutell.com/gd/, usually shipping with Linux distros):
-       gmake5 -i src/display/devices/PNGdriver
-
    o Run again to link the additional modules:
        gmakelinks5
      or 
