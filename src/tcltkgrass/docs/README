@@ -1,0 +1,41 @@
+Contents in this directory                   5. March 1999
+
+  FUNDING.txt 
+      - information about funding of the "historically" TCLTKGRASS
+        -> the current version is developed by us for free :))
+
+  HISTORY.txt
+      - changes to the package
+
+  INST_tcltkgrass.txt
+      - description of TCLTKGRASS installation (quite simple!)
+
+  INST_tcltk_libs_binaries.txt
+      - short instructions for those people, who needs to install the
+        required TCL/TK 8.0 libraries before using TCLTKGRASS.
+           -> describes installation of pre-compiled binary library
+              (currently offered binary libraries: Linux, Solaris 2.6)
+
+  INST_tcltk_libs_source.txt
+      - short instructions for those people, who needs to install the
+        required TCL/TK 8.0 libraries before using TCLTKGRASS.
+           -> describes installation of library in source code
+              (platform independent, very easy!)
+  
+  Programming_intro.txt
+      - instructions for TCLTKGRASS programming
+
+  README
+      - you are reading this now
+
+  TODO.txt
+      - wish-list for TCLTKGRASS
+
+-------------------------------------------------------------------
+Main site of TCLTKGRASS
+
+    http://www.geog.uni-hannover.de/grass/
+-------------------------------------------------------------------
+
+Jacques Bouchard    and   Markus Neteler 1998-1999
+bouchard@onera.fr         neteler@geog.uni-hannover.de
