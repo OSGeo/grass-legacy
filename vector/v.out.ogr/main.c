@@ -256,6 +256,8 @@ main (int argc, char *argv[])
 
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
+	if ( Vect_get_num_areas(&In) > 0)
+	   G_warning("Requested types: points and lines, but (additionally) areas found. Check 'type' parameter.");
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 	    int j;
 
