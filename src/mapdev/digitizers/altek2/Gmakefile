@@ -1,6 +1,6 @@
 
 LIBTRANS	= ../../libes/libtrans.a
-LIBDIGIT	= ../../v.digit/libdigit.a
+LIBDIGIT	= ../../v.digit2/libdigit.a
 LIBGEO		= ../../georef/libgeo.a
 
 DIG_DRIVER		= $(ETC)/dig_drivers
@@ -8,10 +8,9 @@ DIG_DRIVER		= $(ETC)/dig_drivers
 DRIVER_DIR	= $(DIG_DRIVER)/altek2
 DRIVER_NAME	= ALTEK
 
-
 COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-EXTRA_CFLAGS	= $(DIGIFLAGS)  $(VECT_INCLUDE)
+EXTRA_CFLAGS	= $(DIGITFLAGS) $(VECT_INCLUDE)
 
 
 OBJ = \
@@ -47,20 +46,19 @@ all:  driver  geo.reg  geo.point
 #
 
 
-driver: mk_driver_dev  mk_driver_dig
+driver:  mk_driver_dev  mk_driver_dig
 
-#  make directory that contains all the drivers and altek  in ../etc
+#  make directory that contains all the drivers and altek2  in ../etc
 $(DRIVER_DIR):
 	mkdir $(DRIVER_DIR)
-
 
 
 mk_driver_dev:
 	@echo "";   echo	'  Compiling  $(DRIVER_NAME)  driver.';  echo ""
 #  make sure libdigit.a is there
-	$(GMAKE)  $(SRC)/mapdev/v.digit
+	$(GMAKE)  $(SRC)/mapdev/v.digit2
 
-mk_driver_dig: $(OBJ) $(DRIVER_DIR)
+mk_driver_dig: $(OBJ) $(DRIVER_DIR) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB)
 #  compile driver into the program
 	$(CC) $(COMPILE_DIGIT)
 	rm -f $(DRIVER_DIR)/digit
@@ -73,24 +71,28 @@ mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 
 #    geo.reg goes to etc/dig_drivers/? and is called by geo.reg in etc
 
-geo.reg: $(GEO_REG) $(DRIVER_DIR)
+geo.reg: $(GEO_REG) $(DRIVER_DIR) $(LIBGEO) $(LIBTRANS) $(VECTLIB) $(VASKLIB) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 	rm -f $(DRIVER_DIR)/geo.reg
 	mv geo.reg $(DRIVER_DIR)/geo.reg
 
 #    geo.point goes to etc/dig_drivers/? and is called by geo.point in etc
 
-geo.point: $(GEO_POINT) $(DRIVER_DIR)
+geo.point: $(GEO_POINT) $(DRIVER_DIR) $(LIBGEO) $(LIBTRANS) $(GISLIB)  $(LOCKLIB)
 #  compile driver into the program
 	$(CC) $(LDFLAGS) -o  geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(MATHLIB) $(GISLIB)  $(LOCKLIB)
 	rm -f $(DRIVER_DIR)/geo.point
 	mv geo.point $(DRIVER_DIR)/geo.point
 
+$(RASTERLIB) $(DISPLAYLIB) (VASKLIB) $(GISLIB): #
+$(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB): #
+$(LIBGEO) $(LOCKLIB): #
 
-coll_pts.o: ../../v.digit/digit.h  ../../v.digit/globals.h 
+
+coll_pts.o: ../../v.digit2/digit.h  ../../v.digit2/globals.h 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  ../../v.digit/digit.h
-dig_curses.o:  ../../v.digit/menu.h
-dig_curses.o:  ../../v.digit/curses.C
-dig_curses.o:  
+dig_curses.o:  ../../v.digit2/digit.h
+dig_curses.o:  ../../v.digit2/menu.h
+dig_curses.o:  ../../v.digit2/curses.C
+dig_curses.o:  ../../diglib/dig_head.h
 
