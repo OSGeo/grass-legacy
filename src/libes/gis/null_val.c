@@ -390,6 +390,10 @@ int G_set_c_null_value(
        p += size;
     }
 
+#ifdef ANOTHER_CELL_NULL
+    G_free(conv.p);
+#endif
+
     return 0;
 } 
 
