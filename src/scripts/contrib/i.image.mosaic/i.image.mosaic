@@ -1,5 +1,5 @@
 #!/bin/sh
-# written by Markus Neteler 18. August 1998 / 20. Jan. 1999
+# written by Markus Neteler 18. August 1998 / 20. Jan. 1256
 #            neteler@geog.uni-hannover.de
 # mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
 #
@@ -58,11 +58,11 @@ if [ "$#" -eq 2 ]; then
 
      eval `g.findfile element=cell file=$1`
      mapset1="${mapset}"
-     cat $LOCATION_NAME/$mapset1/colr/$1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$1.$2.mosaic
+     cat $GISDBASE/$LOCATION_NAME/$mapset1/colr/$1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$1.$2.mosaic
 
      eval `g.findfile element=cell file=$2`
      mapset2="${mapset}"
-     cat $LOCATION_NAME/$mapset2/colr/$2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.mosaic
+     cat $GISDBASE/$LOCATION_NAME/$mapset2/colr/$2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.mosaic
      
      echo "Ready. File $1.$2.mosaic created."
      exit
