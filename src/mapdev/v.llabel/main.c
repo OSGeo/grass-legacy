@@ -8,8 +8,10 @@ main (argc, argv)
 {
     struct Map_info Map;
 	struct GModule *module;
-    struct Option *vectfile, *value, *typopt;
+    struct Option *vectfile, *value, *clabel, *typopt;
     struct Flag *incr, *Nosup;
+    struct Categories cats;
+    struct Cell_head window;
     char *mapset;
     char errmsg[1000];
     int level;
@@ -48,8 +50,13 @@ main (argc, argv)
     value->type		= TYPE_INTEGER;
     value->required		= NO;
     value->multiple		= NO;
-    value->description	= "value of label";
+    value->description	= "category number";
     value->answer = "1";
+
+    clabel              = G_define_option();
+    clabel->key         = "label";
+    clabel->description = "category label";
+    clabel->type        = TYPE_STRING;
 
     incr = G_define_flag ();
     incr->key 		= 'i';
@@ -120,10 +127,16 @@ main (argc, argv)
 	exit (1);
     }
 
+    G_get_default_window (&window);
+    window.north = Map.head.N;
+    window.south = Map.head.S;
+    window.east  = Map.head.E;
+    window.west  = Map.head.W;
     label = atoi (value->answer);
+    G_init_cats ((CELL) label, vectfile->answer, &cats);
     for (i = 1 ; i <= Map.n_lines ; i++)
     {
-	if (0 != Map.Line[i].att)
+	if (0 != V2_line_att (&Map, i))
 	    continue;
 
         if ( 0 >= (type = V2_read_line(&Map, Points,i)))
@@ -145,11 +158,14 @@ main (argc, argv)
 	else if (type == LINE)
 	{ 
 	    X = Points->x[1] + 0.5*(Points->x[0] - Points->x[1]);
+            X = G_adjust_easting (X, &window); /* for LL wrap ? */
             Y = Points->y[1] + 0.5*(Points->y[0] - Points->y[1]);
 	    tp = 'L';
         }
 
 	write_att (afp, tp, X, Y, label);
+        G_set_cat ((CELL) label,
+                (clabel->answer) ? clabel->answer : "", &cats);
 	if (incr->answer)
 	    label++;
 	cnt++;
@@ -159,6 +175,9 @@ main (argc, argv)
     fclose (afp);
     Vect_destroy_line_struct(Points);
     Vect_close (&Map);
+
+    if (G_write_vector_cats (vectfile->answer, &cats) != 1)
+        G_warning ("failed to write dig_cats.");
 
     fprintf (stderr, "Labeled %d new lines.\n\n", cnt);
 
