@@ -43,12 +43,7 @@ int
 main(int argc, char **argv)
 {
 	char      *setname,		 /* ptr to name of input mapset	 */
-	          errbuf[256],		 /* buffer for error messages	 */
-		  in_datum[64], 	 /* input datum name */
-		  in_ellipse[64], 	 /* input ellipse name */
-		  out_datum[64], 	 /* output datum name */
-		  out_ellipse[64], 	 /* output datum name */
-		  *hold;
+	          errbuf[256];		 /* buffer for error messages	 */
 
 	int       permissions,		 /* mapset permissions		 */
 		  oldproj, newproj;
@@ -83,7 +78,7 @@ main(int argc, char **argv)
         module = G_define_module();
         module->description =        
                         "Allows the user to re-project a sites file from one "
-                        "location to the current location (no datum transformation yet).";
+                        "location to the current location.";
                         
 	newproj = G_projection();
 
@@ -150,14 +145,6 @@ main(int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
-   /* for datum conversion, get output datum and ellipse */
-	*out_datum='\0';
-	if((hold=G_database_datum_name()))
-	   strncpy(out_datum,hold,sizeof(out_datum));
-	*out_ellipse='\0';
-	if((hold=G_database_ellipse_name()))
-	   strncpy(out_ellipse,hold,sizeof(out_ellipse));
-
    /* Change the location 		 */
 	G__create_alt_env();
 	G__setenv("GISDBASE", indbase->answer == NULL
@@ -165,14 +152,6 @@ main(int argc, char **argv)
 		  : indbase->answer);
 	G__setenv("LOCATION_NAME", inlocation->answer);
 	permissions = G__mapset_permissions(setname);
-
-	/* for datum conversion, get output datum and ellipse */
-	*in_datum='\0';
-	if((hold=G_database_datum_name()))
-	   strncpy(in_datum,hold,sizeof(in_datum));
-	*in_ellipse='\0';
-	if((hold=G_database_ellipse_name()))
-	   strncpy(in_ellipse,hold,sizeof(in_ellipse));
 
 	if (permissions >= 0) {
 
@@ -267,15 +246,12 @@ main(int argc, char **argv)
 	    si = G_site_new_struct(rtype,ndim,nstr,ndec); 
 	}
 
-	/* find out which do_proj to use */
-	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
-
 	while (G__site_get (infile, si, oldproj) >= 0) {
         
 	    xcoord = si->east;
 	    ycoord = si->north;
 
-	    if(proj_f(&xcoord, &ycoord, &iproj, &oproj) < 0 ) {
+	    if(pj_do_proj(&xcoord, &ycoord, &iproj, &oproj) < 0 ) {
                 fprintf(stderr,"Error in pj_do_proj\n");
                 exit(0);
             }

@@ -50,7 +50,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	for (idx=from_hd->west+from_hd->ew_res/2; idx<from_hd->east; idx+=from_hd->ew_res) {
 		hx = idx;
 		hy = from_hd->north - from_hd->ns_res/2;
-		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+		if (pj_do_proj(&hx, &hy, from_pj, to_pj) < 0)
 			continue;
 		/* check if we are within the region, but allow for some 'almost inside' points */
 		/* (should probably be a factor based on input and output resolutions) */
@@ -74,7 +74,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	for (idx=from_hd->north-from_hd->ns_res/2; idx>from_hd->south; idx-=from_hd->ns_res) {
 		hx = from_hd->east - from_hd->ew_res/2;
 		hy = idx;
-		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+		if (pj_do_proj(&hx, &hy, from_pj, to_pj) < 0)
 			continue;
 		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
 			xmin = !(hx > xmin) ? hx : xmin;
@@ -96,7 +96,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	for (idx=from_hd->east-from_hd->ew_res/2; idx>from_hd->west; idx-=from_hd->ew_res) {
 		hx = idx;
 		hy = from_hd->south + from_hd->ns_res/2;
-		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+		if (pj_do_proj(&hx, &hy, from_pj, to_pj) < 0)
 			continue;
 		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
 			xmin = !(hx > xmin) ? hx : xmin;
@@ -118,7 +118,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	for (idx=from_hd->south+from_hd->ns_res/2; idx<from_hd->north; idx+=from_hd->ns_res) {
 		hx = from_hd->west + from_hd->ew_res/2;
 		hy = idx;
-		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+		if (pj_do_proj(&hx, &hy, from_pj, to_pj) < 0)
 			continue;
 		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
 			xmin = !(hx > xmin) ? hx : xmin;
@@ -141,7 +141,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	if (xmin > to_hd->west) {
 		hx = to_hd->west + to_hd->ew_res/2;
 		hy = to_hd->south + (to_hd->north - to_hd->south)/2;
-		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		if (!(pj_do_proj(&hx, &hy, to_pj, from_pj) < 0) &&
 		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
 		    !(hy<from_hd->south) && !(hy>from_hd->north))
 			xmin = to_hd->west + to_hd->ew_res/2;
@@ -150,7 +150,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	if (xmax < to_hd->east) {
 		hx = to_hd->east - to_hd->ew_res/2;
 		hy = to_hd->south + (to_hd->north - to_hd->south)/2;
-		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		if (!(pj_do_proj(&hx, &hy, to_pj, from_pj) < 0) &&
 		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
 		    !(hy<from_hd->south) && !(hy>from_hd->north))
 			xmax = to_hd->east - to_hd->ew_res/2;
@@ -159,7 +159,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	if (ymin > to_hd->south) {
 		hx = to_hd->west + (to_hd->east - to_hd->west)/2;
 		hy = to_hd->south + to_hd->ns_res/2;
-		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		if (!(pj_do_proj(&hx, &hy, to_pj, from_pj) < 0) &&
 		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
 		    !(hy<from_hd->south) && !(hy>from_hd->north))
 			ymin = to_hd->south + to_hd->ns_res/2;
@@ -168,7 +168,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	if (ymax < to_hd->north) {
 		hx = to_hd->west + (to_hd->east - to_hd->west)/2;
 		hy = to_hd->north - to_hd->ns_res/2;
-		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		if (!(pj_do_proj(&hx, &hy, to_pj, from_pj) < 0) &&
 		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
 		    !(hy<from_hd->south) && !(hy>from_hd->north))
 			ymax = to_hd->north - to_hd->ns_res/2;

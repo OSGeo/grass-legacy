@@ -166,8 +166,7 @@ main(int argc, char **argv)
 	G_fatal_error("Can't get projection key values of output map");
 
       /* set up projection for lat/long reprojection */
-      (void) pj_zero_proj(&pjll);
-      sprintf(pjll.proj, "ll");
+      (void) pj_get_string(&pjll, NULL);
     }
   
   if (molod->answer) {

@@ -115,8 +115,7 @@ fprintf(stderr, "IN coord: longitude: %f, latitude: %f\n", longitude, latitude);
 #endif
 
      /* set output projection to lat/long for solpos*/
-     pj_zero_proj(&oproj);
-     sprintf(oproj.proj, "%s", "ll");
+     pj_get_string(&oproj, NULL);
 
      /* XX do the transform 
       *               outx        outy    in_info  out_info */

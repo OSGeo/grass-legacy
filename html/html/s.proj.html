@@ -58,23 +58,15 @@ to create the new file.
 
 <H2>NOTES</H2>
 
-v.proj supports transformations between nad27 and nad83.  It performs the 
-transformation automatically based on the datum specified in the mapset region.
-See BUGS section.
 <P>
+<EM>s.proj</EM> supports general datum transformations, making use of the
+<EM>PROJ.4</EM> co-ordinate system translation library.
+</P>
 
 <H2>BUGS</H2>
 
-Currently v.proj does not support general datum conversions.  It only supports 
-conversion between nad27 and nad83, and only within the CONUS conversion grid; 
-20 degrees to 50 degrees north latitude, 63 degrees to 131 degrees west 
-longitude.  That covers all of the conterminous USA plus Mexico north of 
-Mexico City and most of Canada farther south than Winnipeg, Manitoba.
-
-
 <H2>SEE ALSO</H2> 
 <EM>
-<A HREF="m.proj.html">m.proj</A>,
 <A HREF="r.proj.html">r.proj</A>,
 <A HREF="v.proj.html">v.proj</A>,
 <A HREF="g.setproj.html">g.setproj</A>,

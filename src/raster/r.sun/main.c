@@ -1431,8 +1431,8 @@ void calculate(void)
                 if(pj_get_kv(&iproj,in_proj_info,in_unit_info) < 0)
                 G_fatal_error("Can't get projection key values of current location");
 
-                pj_zero_proj(&oproj);
-                sprintf(oproj.proj,"%s","ll");
+                /* Set output projection to latlong */
+                pj_get_string(&oproj, NULL);
 
 		longitude = xp;
 		latitude = yp;
