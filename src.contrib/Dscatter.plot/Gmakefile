@@ -1,0 +1,7 @@
+LIBS=$(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+LIST = main.o
+
+$(BIN)/Dscatter.plot: $(LIST) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBS) $(MATHLIB)
+
+$(LIBS): #
