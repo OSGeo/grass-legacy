@@ -1,0 +1,11 @@
+interface_build {
+    {s.in.garmin.sh} 0
+    {Import waypoint, route and track data from garmin gps receiver via gpstrans program}
+    {entry name {name for new sites file:} 0 ""}
+    {entry port {port garmin receiver is connected to:} 0 ""}
+    {checkbox -w {upload waypoints} "" -w} 
+    {checkbox -r {upload routes} "" -r} 
+    {checkbox -t {upload track} "" -t} 
+    {checkbox -v {verbose output} "" -v} 
+    {checkbox -h {print help message} "" -h}
+}
