@@ -29,6 +29,7 @@ int PS_fcolortable (void)
     double step;   /* step between two values */
     int    ncols, cur_step, ddig;
     double nice_steps[NNSTEP] = { 1.0, 2.0, 2.5, 5.0 }; /* nice steps */
+    struct Colors colors;
     struct FPRange range;
     double ex, cur_d, cur_ex;
 
@@ -36,16 +37,21 @@ int PS_fcolortable (void)
     if (verbose > 1)
     {
         fprintf (stdout,"PS-PAINT: creating color table for <%s in %s> ...",
-	    PS.cell_name, PS.cell_mapset);
+	    ct.name, ct.mapset);
         fflush(stdout);
     }
 
     /* Get color range */
-    if (G_read_fp_range(PS.cell_name, PS.cell_mapset, &range) == -1) {
+    if (G_read_fp_range(ct.name, ct.mapset, &range) == -1) {
          G_warning( "Range information not available (run r.support).");
 	 return 1;
     }
     G_get_fp_range_min_max(&range, &dmin, &dmax);
+
+    if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
+    {
+	    G_warning( "Unable to read colors for colorbar\n");
+    }
     
     /* set font */
     fontsize = (double)ct.fontsize;
@@ -92,7 +98,7 @@ int PS_fcolortable (void)
     fprintf(PS.fp, "%.8f W\n", cwidth);
     for ( i = 0; i < ncols; i++ ) {
 	val = dmin + i * step; 
-	G_get_d_raster_color(&val, &R, &G, &B, &PS.colors);
+	G_get_d_raster_color(&val, &R, &G, &B, &colors);
 	fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
 	fprintf(PS.fp, "NP\n");
         fprintf(PS.fp, "%f %f M\n", x1, y); 
@@ -112,11 +118,14 @@ int PS_fcolortable (void)
     /* maximum number of parts we can divide into */
     k = (ncols - 1) * cwidth / dy;
     /* step in values for labels */
-    step = (dmax - dmin ) / k; /* raw step - usually decimal number with many places, not nice */
-    
-    /* find nice step and first nice value for label: nice steps are 1, 2, 2.5 or 5 * 10^n,
-    *  we need nice step which is first >= raw step, we take each nice step and find 'n'
-    *  and then compare differences */
+    step = (dmax - dmin ) / k; 
+
+    /* raw step - usually decimal number with many places, not nice */
+    /* find nice step and first nice value for label: nice steps are 
+     * 1, 2, 2.5 or 5 * 10^n,
+     * we need nice step which is first >= raw step, we take each nice 
+     * step and find 'n' and then compare differences */
+
     for ( i = 0; i < NNSTEP; i++ ) {
 	/* smalest n for which nice step >= raw step */
         if ( nice_steps[i] <= step ) {
@@ -140,8 +149,10 @@ int PS_fcolortable (void)
     val = k * step;
     if ( val < dmin ) val += step;
     
-    x1 = l + width; 
-    x2 = x1 + 0.5 * width; 
+    x1 = l + width + 0.1; 
+    /* changed to draw tic through bar ?? */
+    x2 = x1 - width;
+    /* x2 = x1 + 0.5 * width; */
     
     /* do nice label: we need so many decimal places to hold all step decimal digits */	
     if ( step > 100 ) { /* nice steps do not have > 2 digits, important separate, otherwise */
@@ -168,12 +179,13 @@ int PS_fcolortable (void)
 	if ( ddig > 0 ) ch++;
 	*ch = '\0';
 
-	fprintf(PS.fp, "(%s) %f %f MS\n", buf, x2 + 0.2 * fontsize , y - 0.35 * fontsize);
+	/* changed text X-location to x1 */
+	fprintf(PS.fp, "(%s) %f %f MS\n", buf, x1 + 0.2 * fontsize , y - 0.35 * fontsize);
 	
 	val += step;
     }
 
-    G_free_colors(&PS.colors);
+    G_free_colors(&colors);
     
     if (verbose > 1) fprintf (stdout,"\n");
 
