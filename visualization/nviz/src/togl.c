@@ -1,95 +1,9 @@
-/* 
- * $Id$ */
-
 /*
  * Togl - a Tk OpenGL widget
  * Version 1.5
  * Copyright (C) 1996-1997  Brian Paul and Ben Bederson
  * See the LICENSE file for copyright details.
  */
-
-
-/*
- * $Log$
- * Revision 1.4  2002-05-13 08:52:14  glynn
- * Remove (Debian-specific) tkInt8.0.5.h, and references thereto
- *
- * Revision 1.3  2002/05/09 20:58:46  glynn
- * Add tkInt8.0.5.h
- * Rename tkInt8.0p2.h to tkInt8.0.2.h for consistency
- *
- * Revision 1.2  2002/01/22 04:51:41  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.1.1.1.4.4  2001/10/03 15:47:44  markus
- * ifdef'd X11 code not needed for windows
- *
- * Revision 1.1.1.1.4.3  2001/08/23 12:36:21  markus
- * added preliminary tk8.4 support
- *
- * Revision 1.1.1.1.4.2  2001/08/23 12:29:08  markus
- * added more subversions... thanks to tcl developers
- *
- * Revision 1.1.1.1.4.1  2001/08/22 14:26:59  markus
- * Roberto Flor <flor@itc.it>: upgraded to TOGL 1.5, fixed NVIZ crash with DRI and Xfree 4.0.3/4.1.0 by using the right tkInt file (wrong version was included)
- *
- * Revision 1.2  2000/11/01 17:40:53  markus
- * updated CVS-Id style
- *
- * Revision 1.1.1.1  1999/12/29 15:12:26  markus
- * initial CVS import
- *
- * Revision 1.45  1998/08/22 03:05:53  brianp
- * added -indirect config option
- *
- * Revision 1.44  1998/05/04 23:42:43  brianp
- * fixed NULL pointer dereference bug in ToglCmdDeletedProc()
- *
- * Revision 1.43  1998/03/12 04:10:47  brianp
- * added display list and OpenGL context sharing options
- *
- * Revision 1.42  1998/03/12 03:20:31  brianp
- * fixed a few overlay update bugs (Yang Guo Liang)
- *
- * Revision 1.41  1998/01/20 01:05:10  brianp
- * added more destroy/clean-up code
- * added a few Tcl 7.4 / Tk 4.0 #if/#else/#endifs (David Laur)
- *
- * Revision 1.40  1997/12/13 02:27:46  brianp
- * only call Tcl_DeleteCommandFromToken() is using Tcl/Tk 8.0 or later
- *
- * Revision 1.39  1997/12/13 02:26:02  brianp
- * test for STEREO to enable SGI stereo code
- * general code clean-up
- *
- * Revision 1.38  1997/12/11 02:21:18  brianp
- * added support for Tcl/Tk 8.0p2
- *
- * Revision 1.37  1997/11/15 04:11:30  brianp
- * added Adrian J. Chung's widget destroy code
- *
- * Revision 1.36  1997/11/15 03:33:13  brianp
- * fixed multi-expose/redraw problem (Andy Colebourne)
- *
- * Revision 1.35  1997/11/15 03:28:42  brianp
- * removed code in Togl_Configure(), added for stereo, that caused a new bug
- *
- * Revision 1.34  1997/11/15 02:58:48  brianp
- * added Togl_TkWin() per Glenn Lewis
- *
- * Revision 1.33  1997/10/01 02:50:57  brianp
- * added SGI stereo functions from Ben Evans
- *
- * Revision 1.32  1997/10/01 00:25:22  brianp
- * made small change for HP compilation (Glenn Lewis)
- *
- * Revision 1.31  1997/09/17 02:41:07  brianp
- * added Geza Groma's Windows NT/95 patches
- *
- * Revision 1.30  1997/09/12 01:21:05  brianp
- * a few more tweaks for Windows compilation
- */
-
 
 /*
  * Currently support X11 and WIN32
@@ -127,6 +41,7 @@
 #endif /*X11*/
 
 /*** Tcl/Tk headers ***/
+/*** get from http://tcl.sourceforge.net/ ***/
 #ifdef X11
 #ifndef _TKPORT
 #define _TKPORT  /* This eliminates need to include a bunch of Tk baggage */
