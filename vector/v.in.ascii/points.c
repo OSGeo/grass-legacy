@@ -208,31 +208,33 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
 	Vect_write_line ( Map, GV_POINT, Points, Cats );
 
 	/* Attributes */
-	sprintf ( buf2, "insert into %s values ( ", table);
-	db_set_string (&sql, buf2 );
+	if ( driver ) {
+	    sprintf ( buf2, "insert into %s values ( ", table);
+	    db_set_string (&sql, buf2 );
 
-	if ( catcol < 0 ) {
-	    sprintf ( buf2, "%d, ", cat );
-	    db_append_string (&sql, buf2 );
-	}
-
-	for ( i = 0; i < ntokens; i++ ) {
-	    if ( i > 0 ) db_append_string (&sql, ", " );
-
-	    if ( coltype[i] == DB_C_TYPE_INT || coltype[i] == DB_C_TYPE_DOUBLE ) {
-		sprintf ( buf2, "%s", tokens[i] );
-	    } else { 
-		db_set_string (&val, tokens[i]);
-		db_double_quote_string ( &val );
-		sprintf ( buf2, "'%s'", db_get_string ( &val ) );
+	    if ( catcol < 0 ) {
+		sprintf ( buf2, "%d, ", cat );
+		db_append_string (&sql, buf2 );
 	    }
-	    db_append_string (&sql, buf2 );
-	}
-	db_append_string (&sql, ")" );
-	G_debug ( 3, db_get_string ( &sql ) );
 
-	if (db_execute_immediate (driver, &sql) != DB_OK ) {
-	    G_fatal_error ( "Cannot insert values: %s", db_get_string ( &sql )  );
+	    for ( i = 0; i < ntokens; i++ ) {
+		if ( i > 0 ) db_append_string (&sql, ", " );
+
+		if ( coltype[i] == DB_C_TYPE_INT || coltype[i] == DB_C_TYPE_DOUBLE ) {
+		    sprintf ( buf2, "%s", tokens[i] );
+		} else { 
+		    db_set_string (&val, tokens[i]);
+		    db_double_quote_string ( &val );
+		    sprintf ( buf2, "'%s'", db_get_string ( &val ) );
+		}
+		db_append_string (&sql, buf2 );
+	    }
+	    db_append_string (&sql, ")" );
+	    G_debug ( 3, db_get_string ( &sql ) );
+
+	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
+		G_fatal_error ( "Cannot insert values: %s", db_get_string ( &sql )  );
+	    }
 	}
 
 	G_free_tokens(tokens);
