@@ -1,0 +1,21 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PGM=v.reclass
+
+HOME=$(BIN_ALPHA_CMD)
+
+LIST = main.o\
+	add_rule.o\
+	input.o\
+	parse.o\
+	rclas_area.o\
+	rclas_lines.o\
+	reclass.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(EXTRALIB)
+
+$(LIST): rule.h
+$(GISLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #
