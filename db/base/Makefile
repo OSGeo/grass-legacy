@@ -3,7 +3,7 @@ MODULE_TOPDIR = ../..
 
 HOME=$(BIN_CMD)
 
-LIBES = $(DBMILIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
+LIBES = $(DBMILIB) $(GISLIB) $(DATETIMELIB)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
