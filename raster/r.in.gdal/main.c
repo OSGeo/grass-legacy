@@ -154,21 +154,31 @@ int main (int argc, char *argv[])
 
 /* -------------------------------------------------------------------- */
 /*      List supported formats and exit.                                */
+/*         code from GDAL 1.2.5  gcore/gdal_misc.cpp                    */
+/*         Copyright (c) 1999, Frank Warmerdam                          */
 /* -------------------------------------------------------------------- */
-   if(flag_f->answer) {
-      int iDr;
+    if(flag_f->answer) {
+	int iDr;
 
-      fprintf(stdout, "Supported Formats:\n" );
-      for( iDr = 0; iDr < GDALGetDriverCount(); iDr++ )
-      {
-	  GDALDriverH hDriver = GDALGetDriver(iDr);
+	fprintf(stdout, "Supported Formats:\n" );
+	for( iDr = 0; iDr < GDALGetDriverCount(); iDr++ ) {
+	    GDALDriverH hDriver = GDALGetDriver(iDr);
+	    const char *pszRWFlag;
 
-	  fprintf(stdout, "  %s: %s\n",
-	      GDALGetDriverShortName( hDriver ),
-	      GDALGetDriverLongName( hDriver ) );
-      }
-      exit(0);
-   }
+	    if( GDALGetMetadataItem( hDriver, GDAL_DCAP_CREATE, NULL))
+		pszRWFlag = "rw+";
+	    else if( GDALGetMetadataItem( hDriver, GDAL_DCAP_CREATECOPY, NULL))
+		pszRWFlag = "rw";
+	    else
+		pszRWFlag = "ro";
+
+	    fprintf(stdout, "  %s (%s): %s\n",
+	        GDALGetDriverShortName( hDriver ),
+	        pszRWFlag,
+	        GDALGetDriverLongName( hDriver ) );
+	}
+	exit(0);
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Open the file.                                                  */
