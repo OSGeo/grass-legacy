@@ -33,7 +33,8 @@ int asc_to_bin(
 	Cats = Vect_new_cats_struct ();	
 
 	end_of_file = 0 ;
-	alloc_points     = 1000 ;
+	//alloc_points     = 1000 ;
+	alloc_points     = 1;
 	xarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
 	yarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
 	zarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;	
@@ -96,37 +97,23 @@ int asc_to_bin(
 			    fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
 			    return 0;
 			}    
+			G_debug( 5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff), *x, *y, *z);
 			
 			n_points++;
 			x++;
 			y++;
 			z++;			
 	
-
-
 			if (n_points >= alloc_points)
 			{
 				xarray = (double *)dig_frealloc((char *)xarray, alloc_points + 1000, sizeof(double), alloc_points);
 				yarray = (double *)dig_frealloc((char *)yarray, alloc_points + 1000, sizeof(double), alloc_points);
-				zarray = (double *)dig_frealloc((char *)yarray, alloc_points + 1000, sizeof(double), alloc_points);				
+				zarray = (double *)dig_frealloc((char *)zarray, alloc_points + 1000, sizeof(double), alloc_points);				
 				alloc_points = n_points + 1000 ;
 				x = xarray + n_points ;
 				y = yarray + n_points ;
 				z = zarray + n_points ;				
 			}
-		}
-
-		if (n_points == 1)
-		{
-		    /*
-		    ** deal with situation where ASCII file has
-		    ** single coordinate pair.
-		    ** we make a degenerate line segment out of it.
-		    */
-		    xarray[1] = xarray[0];
-		    yarray[1] = yarray[0];
-		    zarray[1] = yarray[0];			
-		    n_points = 2;
 		}
 
 	        /* Collect the cats */
