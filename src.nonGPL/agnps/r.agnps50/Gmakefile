@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.3 2000-09-19 14:24:07 markus Exp $
+# $Id: Gmakefile,v 1.4 2000-09-19 14:31:41 markus Exp $
 
 all:
 	if [ ! -d $(GISBASE)/etc/agnps50 ]; then mkdir $(GISBASE)/etc/agnps50 ; fi
@@ -8,4 +8,4 @@ all:
 	$(GMAKE) src_agnps_input_1
 	$(GMAKE) src_agnps_input_2a
 	cp scripts/r.agnps50.input $(GISBASE)/scripts/
-	(cd scripts/ ; ls -1 | grep -v CVS | grep -v Gmakefile | tar -cvf - - | ( cd $(GISBASE)/etc/agnps50 ; tar -xvf - ) 2>/dev/null ; true )
+	(cd scripts/ ; tar -cf - * | ( cd $(GISBASE)/etc/agnps50 ; tar -xf - ) 2>/dev/null ; true )
