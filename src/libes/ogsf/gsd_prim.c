@@ -714,6 +714,38 @@ int gsd_getimage(unsigned long **pixbuf, unsigned int *xsize,
 }
 
 /************************************************************************/
+int gsd_getViewport(GLint tmp[4], GLint num[2])
+{
+
+	/* Save current viewport to tmp */
+	glGetIntegerv(GL_VIEWPORT, tmp);
+	glGetIntegerv(GL_MAX_VIEWPORT_DIMS, num);
+
+	return(1);
+}
+
+
+/************************************************************************/
+int gsd_writeView(unsigned long **pixbuf, unsigned int xsize, unsigned int ysize)
+{
+
+	/* Malloc Buffer for image */
+	if (NULL == (*pixbuf =
+	(unsigned long *)malloc(xsize * ysize * sizeof(unsigned long))))
+	{
+	fprintf(stderr, "MALLOC Failed\n");
+	return (0);
+	}
+
+	/* Read image buffer */
+	glReadBuffer(GL_FRONT);
+	
+	/* Read Pixels into Buffer */
+	glReadPixels(0, 0, xsize , ysize , GL_RGBA, GL_UNSIGNED_BYTE, *pixbuf);
+        return(1);
+}
+
+/************************************************************************/
 void gsd_blend(int yesno)
 {
     if (yesno)
@@ -784,7 +816,7 @@ void gsd_viewport(int l, int r, int b, int t)
 {
     /* Screencoord */
     glViewport(l, b, r, t);
-    
+
     return;
 }
 

@@ -69,7 +69,7 @@ void GS_libinit(void)
     Region[2] = wind.west;
     Region[3] = wind.east;
 
-if (wind.proj == PROJECTION_LL) {
+if (wind.proj == 10) {
 G_begin_distance_calculations();
 E1_DIST = G_distance( wind.east,wind.north,wind.west,wind.north);
 E2_DIST = G_distance( wind.east,wind.south,wind.west,wind.south);
@@ -2315,6 +2315,24 @@ void GS_get_from_real(float *fr)
     GS_v3eq(fr, Gv.from_to[FROM]);
     gsd_model2real(fr);
     
+    return;
+}
+
+/***********************************************************************/
+/* This function returns current viewport settings (tmp) and */
+/* Max viewport size (num) */
+void GS_zoom_setup(int *a, int *b, int *c, int *d, int *maxx, int *maxy)
+{
+GLint tmp[4];
+GLint num[2];
+    gsd_getViewport(&tmp, &num);
+    *a = tmp[0];
+    *b = tmp[1];
+    *c = tmp[2];
+    *d = tmp[3];
+    *maxx = num[0];
+    *maxy = num[1];
+
     return;
 }
 
