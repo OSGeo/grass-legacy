@@ -1,0 +1,24 @@
+Qcalc -s <initial size> [up to size] [size increment]
+         creates a table : 
+         Cell Size       Sq.Ft.      Acres       Hectares
+
+      -a <initial acres> [up to acres] [acre increment]
+         creates a table : 
+         Acres           Sq.Ft.      Acres       Cell Size
+
+      -h <initial hectares> [up to hectares] [hectare increment]
+         creates a table : 
+         Hectares        Sq.Ft.      Acres       Cell Size
+
+ Useful tool for determining cell resolution.
+
+Qcalc -c <ft> <value>
+      -c <mt> <value>
+      -c <mi> <value>
+      -c <km> <value>
+
+ Useful conversion table for feet, meters, miles, and kilometers
+
+Qcalc -m <arithmetic>
+
+ Desk calculator
