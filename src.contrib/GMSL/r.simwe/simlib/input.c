@@ -545,7 +545,7 @@ printf("\n MITER, timec %d %f",miter,timec);
 		if( sigma[k][l] != 0.)
 /* rate of weight loss - w=w*sigma , vaha prechadzky po n-krokoch je sigma^n */
 		sigma[k][l] = exp(-sigma[k][l] * deltap * slope[k][l]); /* not clear what's here :-\ */
-/* if(sigma[k][l]<0.5) warning, napocitaj, ak vacsie ako 50% skonci, zmensi deltap)
+/* if(sigma[k][l]<0.5) warning, napocitaj, ak vacsie ako 50% skonci, zmensi deltap)*/
 		}
 		} /*DEFined area */
 	   }
