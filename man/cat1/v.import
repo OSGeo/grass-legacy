@@ -1,7 +1,7 @@
 
 
 
-v.import             GRASS Reference Manual              v.import
+v.import <main>      GRASS Reference Manual       <main> v.import
 
 
 
@@ -19,6 +19,14 @@ DESCRIPTION
      import programs.  It allows you to import DLG or ASCII
      vector files into GRASS vector format.  It also runs
      v.support.  No arguments are required on the command line.
+     However, before running v.import, the user should move the
+     ASCII DLG files to be imported into GRASS in a directory
+     named dlg under the user's current GRASS mapset (i.e., under
+     the directory known to GRASS as $LOCATION).  If a dlg
+     directory does not already exist under the user's current
+     GRASS mapset, then the user will have to make one using the
+     UNIX mkdir command, and then move the ASCII DLG files to be
+     imported under that new dlg directory.
 
      This program performs all of the processes that are needed
      to convert ASCII Digital Line Graph (DLG) files, binary DLG
@@ -49,26 +57,25 @@ IMPORT FILES
      new vector file is in the correct units for the data base
      location.  If the new vector file is not in the correct
      units, v.import will not allow it to be placed in the
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+v.import <main>      GRASS Reference Manual       <main> v.import
+
+
+
      current data base location.  For each data base location,
      all map layers should have the same units.  If, for some
      reason, a map layer uses different units than the rest of
      the map layers in the same data base location, a new data
      base location will have to be created for it.
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-v.import             GRASS Reference Manual              v.import
-
 
 
 ASCII DLG File to GRASS Vector Format:
@@ -116,6 +123,20 @@ ASCII DLG File to GRASS Vector Format:
 
 Binary DLG File to GRASS Vector Format:
      Converts binary DLG files (such as those created in GRASS
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+v.import <main>      GRASS Reference Manual       <main> v.import
+
+
+
      2.0) to a vector file and creates the dig_plus and dig_att
      support files. The user is asked whether precedence should
      be given to Areas or Lines and if nodes should be snapped to
@@ -123,20 +144,6 @@ Binary DLG File to GRASS Vector Format:
 
      This process is done in two phases:
      1. The binary dlg file is converted to a binary vector file,
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-v.import             GRASS Reference Manual              v.import
-
-
-
      and the dig_att vector support file containing attribute
      information is created.
      2. The dig_plus vector support file is created by analyzing
@@ -166,12 +173,36 @@ Binary Vector file to GRASS Vector Format:
      1. The dig_plus vector support file is created by analyzing
      the vector file for topological information.
 
+NOTES
+     Before running v.import, the user should move the ASCII DLG
+     files to be imported into GRASS in a directory named dlg
+     under the user's current GRASS mapset (i.e., under the
+     directory known to GRASS as $LOCATION).  If a dlg directory
+     does not already exist under the user's current GRASS
+     mapset, then the user will have to make one using the UNIX
+     mkdir command, and then move the ASCII DLG files to be
+     imported under that new dlg directory.
+
 SEE ALSO
      v.digit, v.in.ascii, v.support
 
 AUTHORS
      Michael Higgins, U.S. Army Construction Engineering Research
      Laboratory
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+v.import <main>      GRASS Reference Manual       <main> v.import
+
+
+
      Dave Gerdes, U.S. Army Construction Engineering Research
      Laboratory
 
@@ -192,7 +223,42 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
