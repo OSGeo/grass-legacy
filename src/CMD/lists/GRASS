@@ -201,6 +201,7 @@ src/mapdev/v.in.tig.basic
 src/mapdev/v.in.tig.lndmk
 src/mapdev/v.in.transects
 src/mapdev/v.info
+src/mapdev/v.label
 src/mapdev/v.llabel
 #src/mapdev/v.merge # needs v.make.subj
 src/mapdev/v.mkgrid
@@ -436,12 +437,17 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 # 2D-case working:
 src.contrib/GMSL/g3d/src3d/sites/s.vol.rst
 #
+#new 2003, requires also C++
+src.contrib/DUKE/r.terraflow
+#
+#new 2003, not yet to be enabled:
+#src.contrib/GMSL/r.simwe
 #######################################
 # PostgreSQL support: (working!)
 #src.garden/grass.postgresql
 #######################################
 #
-# from here onwards it becomes experimental!!
+# from here onwards it becomes partially experimental!!
 #
 src.contrib/CERL/imagery/i.rvi.prediction2
 # requires FFTW
