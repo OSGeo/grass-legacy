@@ -1,0 +1,121 @@
+Check_igraph_events	../../Check_events.c	/^Check_igraph_events() $/
+Check_window_refresh	../../window_act.c	/^Check_window_refresh()$/
+Clear_button_hits	../../Mouse.c	/^Clear_button_hits()$/
+Clear_message_win	curses.c	/^Clear_message_win()$/
+Close_curses	curses.c	/^Close_curses()$/
+Color_table_fixed	../../Clr_table.c	/^Color_table_fixed()$/
+Color_table_float	../../Clr_table.c	/^Color_table_float()$/
+Color_window	modify.c	/^Color_window(wno)$/
+Erase	../../Erase.c	/^Erase()$/
+Get_location_with_box	../../Get_w_box.c	/^Get_location_with_box(cx, cy, wx, wy, button)$/
+Get_location_with_line	../../Get_w_line.c	/^Get_location_with_line(cx, cy, wx, wy, button)$/
+Get_location_with_pointer	../../Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_new_tty	tty.c	/^Get_new_tty()$/
+Get_num_colors	../../Returns.c	/^Get_num_colors(index)$/
+Get_old_tty	tty.c	/^Get_old_tty()$/
+Graph_Close	../../Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	../../Graph_Set.c	/^Graph_Set() $/
+Hide_cursor	../../Mouse.c	/^Hide_cursor()$/
+Init_band_line	../../Band_lines.c	/^Init_band_line()$/
+Init_color_lookup	../../Reset_clr.c	/^Init_color_lookup() $/
+Initialize_curses	curses.c	/^Initialize_curses()$/
+MSWITCHER	../../SWITCHER.c	/^main(argc,argv)$/
+Mmain	main.c	/^main( argc, argv)$/
+Mouse_window_activation	../../window_act.c	/^Mouse_window_activation()$/
+New_tty	tty.c	/^New_tty()$/
+Old_tty	tty.c	/^Old_tty()$/
+Panel_delete	../../Panel.c	/^Panel_delete(name)$/
+Panel_restore	../../Panel.c	/^Panel_restore(name)$/
+Panel_save	../../Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polygon_abs	../../Polygn_abs.c	/^Polygon_abs(xarray, yarray, number)$/
+Put_to_grass_env	../../Put_env.c	/^Put_to_grass_env() $/
+REC	../../SWITCHER.c	/^#define REC(x,y) if (eof=rec(x,y)) break$/
+RECTEXT	../../SWITCHER.c	/^#define RECTEXT(x) if (eof=rectext(x)) break$/
+RESULT	../../SWITCHER.c	/^RESULT(n)$/
+Raster_box_abs	../../Raster_box.c	/^Raster_box_abs( x1, y1, x2, y2, short_array)$/
+Raster_char	../../Raster_chr.c	/^Raster_char(num, nrows, array, withzeros, color_ty/
+Raster_int	../../Raster_int.c	/^Raster_int(num, nrows, array, withzeros, color_typ/
+Raster_overlay	../../Raster_over.c	/^Raster_overlay(num, nrows, array)$/
+Raster_short_def	../../R.c	/^Raster_short_def(num, nrows, array, overwrite, col/
+Replot_screen	curses.c	/^Replot_screen() $/
+Reset_color	../../Reset_clrs.c	/^Reset_color(red, grn, blu, num)$/
+Reset_colors	../../Reset_clrs.c	/^Reset_colors(min, max, red, grn, blu)$/
+Reset_events	../../Graph_Set.c	/^Reset_events()$/
+Resize_igraph	../../Resize.c	/^Resize_igraph() $/
+Restore_band_box	../../Band_lines.c	/^Restore_band_box()$/
+Restore_band_line	../../Band_lines.c	/^Restore_band_line()$/
+Return_last_color	../../Color.c	/^Return_last_color()$/
+Screen_bot	../../Returns.c	/^Screen_bot(index)$/
+Screen_left	../../Returns.c	/^Screen_left(index)$/
+Screen_rite	../../Returns.c	/^Screen_rite(index)$/
+Screen_top	../../Returns.c	/^Screen_top(index)$/
+Set_screen_parameters	../../Set_env.c	/^Set_screen_parameters() $/
+Show_band_box	../../Band_lines.c	/^Show_band_box( base_x, base_y, mouse_x, mouse_y)$/
+Show_band_line	../../Band_lines.c	/^Show_band_line( base_x, base_y, mouse_x, mouse_y)$/
+Show_cursor	../../Mouse.c	/^Show_cursor()$/
+Touch_win	curses.c	/^Touch_win() $/
+Write_message	curses.c	/^Write_message(line, message)$/
+XMouse_window_activation	../../window_act.c	/^XMouse_window_activation()$/
+XXMouse_window_activation	../../window_act.c	/^XXMouse_window_activation()$/
+_draw_band_line	../../Band_lines.c	/^static _draw_band_line( x1, y1, x2, y2)$/
+_fixed_Reset_color	../../Reset_clrs.c	/^_fixed_Reset_color(red, grn, blu, number)$/
+_fixed_Reset_colors	../../Reset_clrs.c	/^_fixed_Reset_colors(min, max, red, grn, blu)$/
+_float_Reset_color	../../Reset_clrs.c	/^_float_Reset_color(red, grn, blu, incr)$/
+_float_Reset_colors	../../Reset_clrs.c	/^_float_Reset_colors(min, max, red, grn, blu)$/
+_get_lookup_for_color	../../Clr_table.c	/^_get_lookup_for_color(red, grn, blu)$/
+_rectext	../../SWITCHER.c	/^_rectext (s)$/
+_restore_band_line	../../Band_lines.c	/^static _restore_band_line( x1, y1, x2, y2, band)$/
+_store_band_line	../../Band_lines.c	/^static _store_band_line( x1, y1, x2, y2, band)$/
+append_item	../../SWITCHER.c	/^append_item (pad, name, value)$/
+can_do_float	../../Can_do.c	/^can_do_float()$/
+catch	../../SWITCHER.c	/^static catch (n)$/
+close_mon	../../SWITCHER.c	/^close_mon()$/
+color	../../Color.c	/^color(number)$/
+create_pad	../../SWITCHER.c	/^create_pad (name)$/
+delete_item	../../SWITCHER.c	/^delete_item (pad, name)$/
+delete_pad	../../SWITCHER.c	/^delete_pad (pad)$/
+delink_pad	../../SWITCHER.c	/^delink_pad (pad)$/
+do_nothing	../../R.c	/^do_nothing(n)$/
+draw_line	../../Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+edge	../../polyfill.c	/^edge (x0,y0,x1,y1)$/
+edge_order	../../polyfill.c	/^edge_order (a, b)$/
+edge_point	../../polyfill.c	/^edge_point (x, y)$/
+fillrout	../../Polygn_abs.c	/^fillrout (row, x1, x2)$/
+find_item	../../SWITCHER.c	/^find_item (pad, name)$/
+find_pad	../../SWITCHER.c	/^find_pad (name)$/
+find_primary_screen	get_env.c	/^find_primary_screen(desc)$/
+free_item	../../SWITCHER.c	/^free_item (item)$/
+get1	../../SWITCHER.c	/^get1 (c)$/
+get_command	../../SWITCHER.c	/^get_command(c)$/
+get_num_colors	../../Returns.c	/^get_num_colors()$/
+get_screen_parameters	get_env.c	/^get_screen_parameters( desc) $/
+get_table_type	../../Clr_table.c	/^get_table_type()$/
+handle_events	../../Check_events.c	/^handle_events (cur_events)$/
+handle_refresh	modify.c	/^handle_refresh( op_mask, desc)$/
+if	pd_menu.c	/^if (pd_command != EXIT_NUM)$/
+invent_pad	../../SWITCHER.c	/^invent_pad (name)$/
+load_color_table	../../Reset_clr.c	/^load_color_table() $/
+make_cross_cursor	../../Mouse.c	/^make_cross_cursor()$/
+migrate_pad	../../SWITCHER.c	/^migrate_pad (pad)$/
+modify_window	modify.c	/^modify_window (desc)$/
+new_item	../../SWITCHER.c	/^new_item (pad, name)$/
+polyfill	../../polyfill.c	/^polyfill (x,y,n,fill)$/
+print_current_parameters	print.c	/^print_current_parameters (desc) $/
+print_description	print.c	/^print_description ( desc) $/
+pull_down_menu	pd_menu.c	/^pull_down_menu (desc)$/
+put_to_grass_env	../../Put_env.c	/^put_to_grass_env (str , value )$/
+r_handle_events	../../Resize.c	/^r_handle_events (cur_events)$/
+read1	../../SWITCHER.c	/^read1 (c)$/
+rec	../../SWITCHER.c	/^rec (buf, n)$/
+rectext	../../SWITCHER.c	/^rectext (s)$/
+reset_color	../../Reset_clr.c	/^reset_color(number, red, grn, blu)$/
+send	../../SWITCHER.c	/^static send (buf, n)$/
+sendtext	../../SWITCHER.c	/^static sendtext (s)$/
+set_debug	../../Graph_Set.c	/^set_debug()$/
+store	../../SWITCHER.c	/^store (s) char *s;$/
+store_color	store_env.c	/^store_color (desc)$/
+store_dimensions	store_env.c	/^store_dimensions (desc)$/
+store_to_grass_file	store_env.c	/^store_to_grass_file (str , value )$/
+store_vs	store_env.c	/^store_vs (desc)$/
+write_debug	../../Graph_Set.c	/^write_debug( s) $/
+xalloc	../../SWITCHER.c	/^xalloc (buf, cur, new, len)$/
