@@ -50,8 +50,6 @@ OBJ	=	\
                 BallMath.o \
                 main_ogl.o
 
-all: $(SRC)/libes/dspf $(BIN_CMD)/$(PGM)
-
 $(BIN_CMD)/$(PGM): $(OBJ) $(DEPG3DLIB) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(EXTRA_CFLAGS) $(LIBES) $(OGLLIB) $(SUNLDFLAGS) $(MATHLIB) $(XDRLIB)
 
