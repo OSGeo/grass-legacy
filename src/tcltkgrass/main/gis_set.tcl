@@ -264,6 +264,7 @@ proc gisSetWindow {} {
 
     global database
     global location
+    global mymapset
     global mapset
     global oldDb oldLoc oldMap
 
@@ -326,6 +327,7 @@ proc gisSetWindow {} {
     	-text "Browse..." \
     	-command {GetDir .frame0.frame1.mid.entry .frame0.frame2.listbox \
     	    .frame0.frame3.listbox}
+
 
     pack .frame0.frame1.left.label -side top
     pack .frame0.frame1.mid.entry -side top -fill x
@@ -397,6 +399,49 @@ proc gisSetWindow {} {
     	.frame0.frame3.hscrollbar { bottom fillx } \
     	.frame0.frame3.listbox { left expand fill }
 
+    # -----------------------------------
+    # build .frame0.frame5
+    # -----------------------------------
+    frame .frame0.frame5 \
+    	-borderwidth {2}
+
+    frame .frame0.frame5.left \
+    	-borderwidth {2}
+
+    frame .frame0.frame5.mid \
+    	-borderwidth {2}
+
+    frame .frame0.frame5.right \
+    	-borderwidth {2}
+
+    label .frame0.frame5.left.label \
+    	-anchor {n} \
+    	-text [G_msg "New mapset : "]
+
+    entry .frame0.frame5.mid.entry \
+    	-relief {sunken} \
+    	-textvariable mymapset \
+    	-width 15
+	
+    button .frame0.frame5.right.button \
+    	-text "Create..." \
+     	-command { 
+            if { $mymapset != "" } {
+            	CheckLocation
+		cd $database
+        	cd $location
+                file mkdir $mymapset
+            }
+	}
+#TODO: the MAPSET list should be refreshed
+
+    pack append .frame0.frame5
+    pack .frame0.frame5.left.label -side top
+    pack .frame0.frame5.mid.entry -side top -fill x
+    pack .frame0.frame5.right.button -side left -fill x
+    pack .frame0.frame5.left -side top  -anchor n
+    pack .frame0.frame5.mid -side top -expand yes
+    pack .frame0.frame5.right -side bottom -anchor n -expand yes
 
     # ----------------------------------
     # build .frame0.frame4
@@ -460,10 +505,13 @@ proc gisSetWindow {} {
 
     # pack widget .frame0
     pack append .frame0 \
-    	.frame0.frame4 { bottom expand fill } \
     	.frame0.frame1 { top expand fill } \
-    	.frame0.frame2 { left expand fill } \
-    	.frame0.frame3 { right expand fill }
+    	.frame0.frame4 { bottom expand fill } \
+    	.frame0.frame2 { left expand  } \
+   	.frame0.frame3 { left expand  } \
+     	.frame0.frame5 { right expand fill }
+
+    .frame0.frame5.right.button configure -state disabled
 
     pack append . \
     	.frame0 { top frame center expand fill }
@@ -554,6 +602,11 @@ proc gisSetWindow {} {
            set database [exec pwd]
         }
 	.frame0.frame4.ok configure -state disabled
+	.frame0.frame5.right.button configure -state disabled
+  }
+
+  bind .frame0.frame5.mid.entry <KeyRelease> {
+	.frame0.frame5.right.button configure -state active
   }
 
   bind .frame0.frame2.listbox <Double-ButtonPress-1> {
