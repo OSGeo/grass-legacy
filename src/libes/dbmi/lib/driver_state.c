@@ -5,7 +5,7 @@ static dbDriverState state;
 void
 db__init_driver_state()
 {
-    db_zero(&state, sizeof(state));
+    db_zero((void *)&state, sizeof(state));
 }
 
 dbDriverState *
@@ -53,7 +53,7 @@ db__add_cursor_to_driver_state(cursor)
 /* if not found, extend list */
     if (i >= state.ncursors)
     {
-	list = (dbCursor **) db_realloc (list, (i+1) * sizeof(dbCursor *));
+	list = (dbCursor **) db_realloc ((void *)list, (i+1) * sizeof(dbCursor *));
 	if (list == NULL)
 	    return;
 	state.cursor_list = list;

@@ -16,11 +16,11 @@ db_store(s)
     return a;
 }
 
-char *
+void *
 db_malloc(n)
     int n;
 {
-    char *s;
+    void *s;
 
     if (n <= 0)
 	n = 1;
@@ -30,12 +30,12 @@ db_malloc(n)
     return s;
 }
 
-char *
+void *
 db_calloc(n,m)
     int n;
     int m;
 {
-    char *s;
+    void *s;
 
     if (n <= 0)
 	n = 1;
@@ -47,9 +47,9 @@ db_calloc(n,m)
     return s;
 }
 
-char *
+void *
 db_realloc(s,n)
-    char *s;
+    void *s;
     int n;
 {
     if (n <= 0)
