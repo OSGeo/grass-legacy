@@ -1,7 +1,7 @@
 interface_build {
     {d.what.sites} 0
     {Queries sites map layers on their category values and category labels.}
-    {entry sites {Sites maps to be queried (name[,name,...]):} 0 +sites}
+    {entry map {Sites maps to be queried (name[,name,...]):} 0 +sites}
     {checkbox -1 {Identify just one location.} "" -1}
     {checkbox -q {Run quietly.} "" -q}
     {checkbox -t {Terse output.} "" -t}
