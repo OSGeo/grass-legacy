@@ -21,6 +21,7 @@ SUBDIRS = \
 	ogsf \
 	rst \
 	init \
+	form \
 	front.end
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
