@@ -20,7 +20,7 @@ int
 mark_visible_points (struct point *head, SEGMENT *seg_out_p, int row_viewpt, int col_viewpt, double color_factor, double COLOR_SHIFT)
 {
         struct point *PT_TO_MARK;
-        CELL data ;
+        FCELL data ;
 
         PT_TO_MARK =  head;
 
@@ -29,12 +29,12 @@ mark_visible_points (struct point *head, SEGMENT *seg_out_p, int row_viewpt, int
 	segment_get(seg_out_p,&data,
                row_viewpt-PT_TO_MARK_Y, PT_TO_MARK_X+col_viewpt);
 
-	if(data != (CELL)1){	/* point has not been deleted previously	*/
+	if(data != (FCELL)1){	/* point has not been deleted previously	*/
 /* old value	
-data = (CELL ) (PT_TO_MARK_INCL* 57.3 * color_factor 
+data = (FCELL ) (PT_TO_MARK_INCL* 57.3 * color_factor 
 						+ COLOR_SHIFT);
 end of old data	*/
-		data = (CELL ) (PT_TO_MARK_INCL * 57.325 + 90.0);
+		data = (FCELL ) (PT_TO_MARK_INCL * 57.325 + 90.0);
         	segment_put(seg_out_p,&data, 
 	       		row_viewpt-PT_TO_MARK_Y, PT_TO_MARK_X+col_viewpt);
 	} 
