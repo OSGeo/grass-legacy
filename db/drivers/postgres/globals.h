@@ -29,6 +29,7 @@ typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_NUMERIC,   /* numeric, decimal */
   
   PG_TYPE_CHAR,      /* char,	character */
+  PG_TYPE_BPCHAR,    /* ??? blank padded character, oid of this type is returned for char fields */
   PG_TYPE_VARCHAR,   /* varchar,	character varying */
   
   PG_TYPE_TEXT,      /* text */
