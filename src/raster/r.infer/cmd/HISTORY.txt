@@ -1,0 +1,10 @@
+The 
+   sys_err
+
+was changed (not ANSI C) to make the source compilable
+on Linux Redhat, Slackware, SGI and Solaris.
+
+See more information in ./linux_info/
+
+Jacques Bouchard
+March 1998
