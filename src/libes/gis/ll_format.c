@@ -42,6 +42,11 @@ G_lat_format (lat, buf)
     G_lat_parts (lat, &d, &m, &s, &h);
     format (buf, d,m,s,h);
 }
+char *
+G_lat_format_string()
+{
+    return "dd:mm:ss{N|S}";
+}
 
 G_lon_format (lon, buf)
     double lon;
@@ -53,6 +58,11 @@ G_lon_format (lon, buf)
 
     G_lon_parts (lon, &d, &m, &s, &h);
     format (buf, d,m,s,h);
+}
+char *
+G_lon_format_string()
+{
+    return "ddd:mm:ss{E|W}";
 }
 
 G_llres_format (res, buf)
@@ -67,6 +77,11 @@ G_llres_format (res, buf)
     h = 0;
     format (buf, d,m,s,h);
 }
+char *
+G_llres_format_string()
+{
+    return "dd:mm:ss";
+}
 
 
 static
@@ -78,7 +93,6 @@ format (buf, d,m,s,h)
 {
     char temp[50];
     double ss;
-    int x;
 
     sprintf (temp, "%lf", s);
     sscanf (temp, "%lf", &ss);
@@ -152,9 +166,18 @@ ll_parts (ll, d, m, s)
     int *d, *m; /* degrees, minutes */
     double *s;  /* seconds */
 {
-    *d = ll ;
-    *m = (ll - *d) * 60;
-    if (*m < 0) *m = 0;
-    *s = ((ll - *d) * 60 - *m) * 60 ;
-    if (*s < 0) *s = 0;
+    if (ll == 0.0)
+    {
+	*d = 0;
+	*m = 0;
+	*s = 0.0;
+    }
+    else
+    {
+	*d = ll ;
+	*m = (ll - *d) * 60;
+	if (*m < 0) *m = 0;
+	*s = ((ll - *d) * 60 - *m) * 60 ;
+	if (*s < 0) *s = 0;
+    }
 }
