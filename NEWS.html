@@ -22,30 +22,70 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <h3><font color="#00FE00">What's new in GRASS 5 betaCVS comparing to beta8</font></h3>
 <b>Modules</b>
 <menu>
+<li> d.legend: -n option fixed (Huidae Cho)
+<li> d.rast.edit: fixed grid color menu, convenient two mouse clicking
+ (Huidae Cho)
 <li> d.rast.pg: added labels with reclass (for float reclass through
-r.mapcalc) (Alex Shevlakov)
+ r.mapcalc) (Alex Shevlakov)
+<li> d.site.labels: updated, includes d.sites.label now (Eric G . Miller)
 <li> i.smap: fixed to write correct file and on NULL (Roger Miller)
+<li> ps.map: bugfix due to wrong module call (Markus Neteler)
+<li> r.flow: fixed floating point exception (Huidae Cho)
+<li> r.in.gdal: added - might become general raster import module (Frank
+     Warmerdam)
 <li> r.in.gridatb: added, imports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.hydro.CASC2D: added new flags (Huidae Cho)
 <li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho)
+<li> r.out.arctiff: added command line support (Markus Neteler)
 <li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.patch: -z flag allows to use 0 for transparency
+	instead of NULL (Markus Neteler/Huidae Cho/Alex Shevlakov)
 <li> r.topidx: added, creates topographic index, ln(a/tan(beta)), map from
-elevation map (Huidae Cho/Keith Beven)
+  elevation map (Huidae Cho/Keith Beven)
 <li> r.topmodel: added, physically based hydrologic model (Huidae Cho/Keith
      Beven)
 <li> r3.showdspf(.opengl): bugfix on dsp files/mapsets (Beverly Wallace)
+<li> s.in.ascii: fixed parsing problem when no category or other attributes
+    are specified (just dimensions) (Eric G . Miller)
+<li> s.in.atkisdgm: import bugfix (Otto Dassau/Markus Neteler)
 <li> s.surf.krig: bugfixed and improved (David D. Gray)
+<li> v.clean: bugfixed (David D. Gray)
 <li> v.digit: panning on-the-fly implemented to ease digitizing of long
-     vectors (Huidae Cho)
-<li> v.in.shape: bugfix for DBF data types (David D. Gray)
-<li> v.surf.rst: fixed incorrect elevations (Helena Mitasova)
+     vectors, added "Show unlabeled lines" into Window menu,  added text
+     labelling, modified "Label/UnLabel Multiple Lines" menu to click once 
+     only to perform (Huidae Cho)
+<li> v.in.shape: bugfix for DBF data types and snap distances (David D. Gray)
+<li> v.surf.rst: fixed incorrect elevations calculation (Helena Mitasova)
 <p>
-<li> NVIZ: writes images in PPM format now (Bob Covill)
+<li> tcltkgrass: independent of installed tcl/tk version (Markus Neteler)
+<p>
+<li> NVIZ:
+<menu>
+<li> writes image dumps in PPM/SGI/TIFF format now (Bob Covill)
+<li> local configure replaced by global configure (Huidae Cho)
 </menu>
+</menu>
+
 <b>Source Code</b>
 <menu>
 <li> new library "gmath": wrapper to support LAPACK/BLAS routines and to
      provide stable numerical algorithm for GRASS modules (David D. Gray)
 <li> compilable on CRAY now (Justin Hickey, Bill Brown, Markus Neteler)
+<li> updated global configure to find header files and libs (Huidae Cho, Markus Neteler)
+<li> testgrass.sh: added as initial GRASS test suite (Markus Neteler)
+<li> grass5install.sh: heavily updated (Justin Hickey)
+<li> projections: added false easting/false northing to aea:Albers Equal Area projection
+ (Eric G. Miller/Morten Hulden)
+<li> "libgrass": a new GRASS I/O library is under development (Frank
+    Warmerdam)
+<li> new G_readsites_xyz() function to read sites (Eric G. Miller)
+<p>
+<li> Portability:
+<menu>
+<li> updated to compile on CRAY T3E (Justin Hickey, Markus
+     Neteler, Bill Brown, David Gray )
+<li> improved WINDOWS/NT portability (John Huddleston)
+</menu>
 </menu>
 <hr>
 <p>
