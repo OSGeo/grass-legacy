@@ -102,10 +102,10 @@ int main (int argc, char *argv[])
 
 	line++;
 	V_line (line, loc_text);
-	V_ques (location_name, 's', line++, 12, 14);
+	V_ques (location_name, 's', line++, 12, 25);
 
 	V_line (line, map_text);
-	V_ques (mapset, 's', line++, 12, 14);
+	V_ques (mapset, 's', line++, 12, 25);
 
 	line++;
 	V_line (line, "DATABASE:");
