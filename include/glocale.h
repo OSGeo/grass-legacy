@@ -2,8 +2,10 @@
 
 #ifdef HAVE_LIBINTL_H
 #include <libintl.h>
-#include <locale.h>
-#define _(str) gettext(str)
+#define _(str) libgrass_gettext(str)
+
+char * libgrass_gettext(const char *);
+
 #else
 #define _(str) str
 #endif
