@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.86 2000-11-23 20:50:11 markus Exp $
+$Id: BUGS,v 1.87 2000-11-25 09:39:42 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -77,7 +77,7 @@ d.param.scale
 d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
 
-[RC]d.rgb: Is there a difference between d.rgb and i.composite?
+d.rgb: Is there a difference between d.rgb and i.composite?
   (being worked on by ?)  
 
 [RC]d.sites.qual: not all the sites are used/displayed
@@ -188,11 +188,6 @@ p.map.new:
   (reported by DIETER LEHMANN <lehmann@fh-nuertingen.de>)
   (being worked on by David D Gray)  
 
-[RC]r.buffer
-  r.buffer doesn't treat zero as nulls anymore (contrary to documentation)
-  (reported by Malcolm Williamson <malcolm@cast.uark.edu>)
-  -> fixed. New flag "-z": o.k. for all?
-
 [RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
   Though it is not a stability problem, I've found that if this module is
   run on an elev raster with an active old-style mask, i.e applied with
@@ -289,6 +284,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - Values -129 in GRASS raster files are treated as Null
    (already fixed for FreeBSD/Linux. Check for other platforms, 
    further corrections go here:   src/libes/gis/null_val.c)
+   test with r.mapcalc test=-129, if you get range: -129 -129 it's fixed.
   (being worked on by ?)
  -  r.mapcalc does not like it if the cellvalues are very high for eg.,            
     initially I put the col=fips which ranges from 1001 to 55141 - it 
@@ -346,9 +342,6 @@ r.random.surface
  needs to be updated to GRASS 5 FP/NULL
  (being worked on by ?)
 
-[RC]r.reclass:
- - segm. fault on Pentium CPU (same problem as r.binfer,...)
-
 r.resamp.rst:
   When processing quite a big DEM file with r.resamp.rst I got the  
   following message for output file:                                                                                                               
@@ -370,9 +363,10 @@ r.rescale:
   switches this behaviour from writing NULL to writing "0" (zero).
   (being worked on by Andreas Lange)
 
-[RC]r.surf.contour
+r.surf.contour
   (supports currently CELL type only)
   (being worked on by ?)
+  -> v.surf.rst could be used
 
 r.stats: some inconsistent results comparing to r.average
  *First, I compute the per-class averages:
