@@ -1,9 +1,13 @@
 #include "list.h"
+#include "gis.h"
+#include "Vect.h"
+#include <string.h>
 
 int do_remove (int n, char *old)
 {
     int i, ret;
     int len;
+    char *mapset;
 
     fprintf (stdout,"REMOVE [%s]\n", old);
 
@@ -11,6 +15,8 @@ int do_remove (int n, char *old)
 
     hold_signals(1);
     if ( strcmp(list[n].alias, "vect") == 0 ) {
+	if ((mapset = G_find_vector2 (old, "")) == NULL)
+		G_fatal_error ("Vector map <%s> not found\n", old);
 	ret = Vect_delete ( old );
 	if ( ret == -1 ) {
 	    G_warning ("Cannot delete vector %", old );
