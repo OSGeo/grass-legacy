@@ -22,7 +22,7 @@ MUTL=$(SRC)/../man/utilities
 all:
 	echo "#!"$(AWK)" -f" > $(PROG)
 	cat s.in.grid.awk >> $(PROG)
-	chmod 0555 $(PROG)
+	chmod 755 $(PROG)
 
 man:
 	-cp $(PGM).man $(MDIR)/$(PGM)
