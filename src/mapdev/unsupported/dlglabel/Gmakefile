@@ -1,4 +1,3 @@
-#  %W%  %G%
 OFILES		= \
 			add_scale.o \
 			add_sub.o \
