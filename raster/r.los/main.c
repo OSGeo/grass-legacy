@@ -177,15 +177,6 @@ main (int argc, char *argv[])
         exit(1);
     }
 
-    /*   check if specified output layer is unique      */
-    if (G_find_cell (out_layer, current_mapset))
-    {
-        sprintf (buf,
-            "%s - already exits. can't overwrite", out_layer);
-        G_fatal_error (buf);
-        exit(1);
-    }
-
     /*  read header info for elevation layer        */
     if(G_get_cellhd(elev_layer,old_mapset,&cellhd_elev)<0)
     {
