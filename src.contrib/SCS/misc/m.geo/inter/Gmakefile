@@ -1,0 +1,26 @@
+SCSFIPS      = $(LIBDIR)/scsfips.a
+
+PGM      = m.geo
+
+LIST =  main.o \
+	geo_func.o  \
+	geo_supp.o
+
+all: LIBPROJ $(BIN_CONTRIB_INTER)/$(PGM)
+
+
+$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) 
+	cc $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(SCSFIPS) $(CURSES) $(MATHLIB)
+
+START:
+	cp $(SRC)/../src.related/mapgen/proj/SetProj.c SetProj.c
+	cp $(SRC)/../src.related/mapgen/proj/projects.h projects.h
+
+LIBPROJ: $(LIBPROJ) $(LIBSUPP)
+	cd $(SRC)/../src.related/mapgen/proj; grassmke $(LIBARCH) $(GISBASE) $(SRC)
+main.o: geo.h
+geo_func.o: geo.h
+geo_supp.o: geo.h
+$(GISLIB): #
+$(COORCNVLIB): #
+$(SCSFIPS): #
