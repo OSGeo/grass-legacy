@@ -28,6 +28,7 @@
 #include "vizual.h"
 #include "gis.h"
 #include "G3d.h"
+#include <math.h>
 
 char *check_get_any_dspname();
 
