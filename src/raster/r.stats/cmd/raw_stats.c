@@ -1,6 +1,6 @@
 #include "global.h"
 
-raw_stats (fd, verbose, non_zero, with_coordinates, with_rowcol)
+raw_stats (fd, verbose, non_zero, with_coordinates, with_xy, with_labels)
     int fd[];
 {
     CELL **cell;
@@ -21,7 +21,7 @@ raw_stats (fd, verbose, non_zero, with_coordinates, with_rowcol)
 
 /* here we go */
     if (verbose)
-	fprintf (stderr, "%s:  complete ... ", G_program_name());
+	fprintf (stderr, "%s: ", G_program_name());
 
     for (row = 0; row < nrows; row++)
     {
@@ -52,11 +52,17 @@ raw_stats (fd, verbose, non_zero, with_coordinates, with_rowcol)
 		G_format_easting (G_col_to_easting(col+.5, &window), ebuf, -1);
 		printf ("%s%s%s%s", ebuf,fs,nbuf,fs);
 	    }
-	    if (with_rowcol)
+	    if (with_xy)
 		printf ("%d%s%d%s", col+1,fs,row+1,fs);
 	    printf ("%ld", (long)cell[0][col]);
+	    if (with_labels)
+		printf ("%s%s", fs, G_get_cat (cell[0][col], &labels[0]));
 	    for (i = 1; i < nfiles; i++)
+	    {
 		printf ("%s%ld", fs, (long)cell[i][col]);
+		if (with_labels)
+		    printf ("%s%s", fs, G_get_cat (cell[i][col], &labels[i]));
+	    }
 	    printf ("\n");
 	}
     }
