@@ -98,10 +98,10 @@ Vect_write_line (
 
 /*!
  \fn int Vect_rewrite_line (
-     struct Map_info *Map;
-     int line;
-     int type;
-     struct line_pnts *points;
+     struct Map_info *Map,
+     int line,
+     int type,
+     struct line_pnts *points,
      struct line_cats *cats)
  \brief rewrites line info at the given offset. The number of points
    or cats or type may change. If necessary, the old line is deleted and
@@ -110,12 +110,12 @@ Vect_write_line (
  \param Map_info structure, line number, vector type, line_pnts structure, line_cats structure
 */
 int
-Vect_rewrite_line (Map,line,type,points,cats)
-     struct Map_info *Map;
-     int line;
-     int type;
-     struct line_pnts *points;
-     struct line_cats *cats;
+Vect_rewrite_line (
+     struct Map_info *Map,
+     int line,
+     int type,
+     struct line_pnts *points,
+     struct line_cats *cats)
 {
 #ifdef GDEBUG
     G_debug (3, "Vect_rewrite_line(): name = %s", Map->name);
@@ -131,9 +131,9 @@ Vect_rewrite_line (Map,line,type,points,cats)
 */
 /*
 int
-V1_delete_line (Map, offset )
-     struct Map_info *Map;
-     long offset;
+V1_delete_line (
+     struct Map_info *Map,
+     long offset)
 {
 #ifdef GDEBUG
     G_debug (3, "V1_delete_line(): name = %s", Map->name);
@@ -144,16 +144,16 @@ V1_delete_line (Map, offset )
 
 /*!
  \fn int Vect_delete_line (
-     struct Map_info *Map;
+     struct Map_info *Map,
      int line)
  \brief deletes line of given number. Map must be opened on level 2.
  \return 0 on success, -1 on error
  \param Map_info structure, line number
 */
 int
-Vect_delete_line (Map, line)
-     struct Map_info *Map;
-     int line;
+Vect_delete_line (
+     struct Map_info *Map,
+     int line)
 {
     int ret;
     
