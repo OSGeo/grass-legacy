@@ -10,6 +10,7 @@ int main (int argc, char *argv[])
     RULE *rules, *tail;
     int any;
     char *old_name, *old_mapset;
+    char rname[256], rmapset[256]; /* for reclass check only */
     char *new_name;
 	struct GModule *module;
     struct
@@ -69,6 +70,13 @@ int main (int argc, char *argv[])
 	G_fatal_error ("input map can NOT be the same as output map");
 	exit(1);
     }
+
+    if (G_is_reclass (old_name, G_mapset(), rname, rmapset) > 0)
+    {
+      sprintf(buf, "%s is a reclass of another map. Exiting.", old_name);
+	  G_fatal_error(buf);
+    }
+
 
     G_init_cats (0, "", &cats);
     rules = tail = NULL;
