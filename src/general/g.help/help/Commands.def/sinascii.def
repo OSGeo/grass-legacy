@@ -1,0 +1,11 @@
+
+
+s.in.ascii - 
+
+s.in.ascii converts an ASCII listing of \site\ locations and \category\
+labels into a file in GRASS site list format.  Input can be entered
+via standard input or from a designated input file.  Each line of input
+should contain the easting, northing and (optionally) the category label
+associated with a site.
+
+Manual entry for \s.in.ascii\
