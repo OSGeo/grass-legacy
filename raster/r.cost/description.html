@@ -64,7 +64,7 @@ the command line.
 </DL>
 
 <P>The <B>input</B><EM>name</EM> is the name of a raster map layer
-representing the cost surface map, the <B>output</B><EM>name</EM> is the
+representing the cost surface map, the <B>output=</B><EM>name</EM> is the
 name of a raster map layer of cumulative cost, and each <EM>x</EM>,<EM>y</EM>
 coordinate pair gives the geographic location of a point from which
 the transportation cost should be figured. These starting points could be read
@@ -85,13 +85,9 @@ interface.
 </P>
 <P><EM>r.cost</EM> can be run with two different methods of
 identifying the starting point(s). One or more points (geographic
-coordinate pairs) can be provided on the command line or site file.
-In lieu of these coordinates, the output map (e.g., <B>output</B>) is
-presumed to contain starting points. All non-zero cells are
-considered to be starting points. <B>Beware:</B> doing this will
-overwrite <B>output</B> with the results of the calculations. If
-<B>output</B> does exist and points are also given on the command
-line or through a site file, the <B>output</B> file is ignored.
+coordinate pairs) can be provided on the command line, sites file or raster map.
+All non-NULL cells are
+considered to be starting points.
 </P>
 <H3>Flags:</H3>
 <P><B>-v</B> 
@@ -134,9 +130,7 @@ surface cost.
 </P>
 <P><B>output=</B><EM>name</EM> 
 </P>
-<P>Name of raster map layer to contain output. Also can be used as
-the map layer of the input starting points. If so used, the input
-starting point map will be overwritten by the output.   </P>
+<P>Name of raster map layer to contain output.</P>
 <P>
 <B>start_sites=</B><EM>name</EM></P>
 <P> <EM>name</EM> is the name of a site file that holds the coordinates of
@@ -232,19 +226,6 @@ adjacent costs. These cells could then be retained as null cells into
 the output map through the <B>-n</B> flag.</P>
 
 <H2>NOTES</H2>
-
-<P>If you submit the starting point map on the command line by
-specifying: 
-</P>
-<P><B>output=start_pt_map</B> 
-</P>
-
-<P>the starting point map will be overwritten by the calculated
-output. It is wise to copy or rename (e.g., using <EM><A HREF="g.copy.html">g.copy</A></EM>
-or <EM><A HREF="g.rename.html">g.rename</A></EM>) the map of starting
-points to another name before submitting it to <EM>r.cost</EM>;
-otherwise, its contents will be overwritten. 
-</P>
 
 <P>Sometimes, when the differences among <B>integer</B> cell category values the
 <EM>r.cost</EM> cumulative cost surface output are small, this
