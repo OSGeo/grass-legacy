@@ -1,4 +1,4 @@
-LIBES  = $(GISLIB) $(VASK) $(MATHLIB)
+LIBES  = $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
 
 
 PGM = $(GISBASE)/bin/agnps_input_2a 
