@@ -2,10 +2,7 @@
 #include "site.h"
 #include "univar.h"
 
-int readsites (fdsite, all, verbose, field, xyz)
-  FILE *fdsite;
-  int all, verbose, field;
-  Z ** xyz;
+int readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
 
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
