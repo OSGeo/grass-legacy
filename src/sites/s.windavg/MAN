@@ -1,0 +1,79 @@
+.TH s.windavg
+.SH NAME
+\fIs.windavg\fR \- Window average filter for sites.
+.br
+.I (GRASS Sites Program)
+.SH SYNOPSIS
+\fBs.windavg\fR
+.br
+\fBs.windavg help\fR
+.br
+\fBs.windavg \fR[\fB-glqz\fR] \fBinput\*=name\fR [\fBoutput\*=\fIname\fR]
+.SH DESCRIPTION
+.I s.windavg
+averages sites. The non-overlapping window for each average
+is defined by the cell size for current geographic region; sites
+within a rectangular window with the same boundaries as raster 
+cells are averaged.  Output locations are at window centers. 
+.LP
+\fBFlags:\fR
+.IP \fB-l\fR 18
+If site is in the \fIE|N|#n desc\fR format (instead of the
+\fIE|N|desc\fR format), use
+the numeric \fIdesc\fR as the site value. 
+.IP \fB-z\fR 18
+Suppress printing locations with a zero average.
+.IP \fB-g\fR 18
+Output in 
+.I g.gnuplot
+format. This overrides the \fB-z\fR flag and the 
+\fBoutput\fR option is set to standard output (which
+may be redirected to a file; see below).
+.IP \fB-q\fR 18
+Quiet. Cut out the chatter.
+.LP
+\fBParameters:\fR
+.IP \fBinput\*=\fIname\fR 18
+Name of sites list to be averaged.
+.LP
+.IP \fBoutput\*=\fIname\fR 18
+Optional name of sites list in which output will be stored. 
+Standard output is used if this is missing.
+.LP
+.SH NOTES
+It is very important, with or without the \fB-cdl\fR flag,
+that site descriptions be numeric.  No error checking is done.
+.LP
+Output files are silently overwritten.
+.LP
+The \fB-g\fR option to produce output suitable for use with
+.I g.gnuplot,
+a scientific plotting program capable of plotting surfaces.
+.IP Example 12
+s.windavg -qz input=name > plottingdata
+.br
+g.gnuplot
+.br
+gnuplot> set parametric
+.br
+gnuplot> splot 'plottingdata' with linespoints
+.LP
+This will give a quick look at spatial trends in your
+input sites list.
+.LP
+.SH SEE ALSO
+.I s.univar,
+.I g.region,
+and
+.I GNUPLOT\- An Interactive Plotting Program
+(kept in src*/g.gnuplot/docs)
+.SH BUGS
+No special data structure is used to store sites, so for a
+very large site file, run time could increase substantially
+(if you don't run out of memory first)
+.LP
+Please send all bug fixes and comments to the author.
+.SH AUTHOR
+James Darrell McCauley, Purdue University 
+.if n .br 
+(mccauley@ecn.purdue.edu)
