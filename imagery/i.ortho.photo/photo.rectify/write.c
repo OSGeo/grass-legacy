@@ -30,7 +30,7 @@ int write_matrix (int row, int col)
                                 != G_raster_size(map_type)*matrix_cols)
         {
            unlink(temp_name);
-           G_fatal_error("error while writing to temp file (disk full?)");
+           G_fatal_error("error while writing to temp file. You might want to check available disk space and write permissions.");
         }
     }
     select_current_env();
@@ -69,7 +69,7 @@ int write_map(char *name)
        }
        if(G_put_raster_row(fd,rast, map_type) < 0)
        {
-          G_fatal_error("error while writing to raster file (disk full?)");
+          G_fatal_error("error while writing to raster file. You might want to check available disk space and write permissions.");
           unlink(temp_name);
        }
    }
