@@ -1,6 +1,6 @@
 
 LIBTRANS	= ../../libes/libtrans.a
-LIBDIGIT	= ../../digit/libdigit.a
+LIBDIGIT	= ../../v.digit/libdigit.a
 LIBGEO		= ../../georef/libgeo.a
 
 DIG_DRIVER		= $(ETC)/dig_drivers
@@ -8,10 +8,9 @@ DIG_DRIVER		= $(ETC)/dig_drivers
 DRIVER_DIR	= $(DIG_DRIVER)/altek
 DRIVER_NAME	= ALTEK
 
+COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(DIGLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
-
-EXTRA_CFLAGS	= $(DIGIFLAGS)  -I../libes -I../lib 
+EXTRA_CFLAGS	= $(DIGITFLAGS) $(VECT_INCLUDE)
 
 
 OBJ = \
@@ -57,7 +56,7 @@ $(DRIVER_DIR):
 mk_driver_dev:
 	@echo "";   echo	'  Compiling  $(DRIVER_NAME)  driver.';  echo ""
 #  make sure libdigit.a is there
-	$(GMAKE)  $(SRC)/mapdev/digit
+	$(GMAKE)  $(SRC)/mapdev/v.digit
 
 mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 #  compile driver into the program
@@ -73,7 +72,7 @@ mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 #    geo.reg goes to etc/dig_drivers/? and is called by geo.reg in etc
 
 geo.reg: $(GEO_REG) $(DRIVER_DIR)
-	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(DIGLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 	rm -f $(DRIVER_DIR)/geo.reg
 	mv geo.reg $(DRIVER_DIR)/geo.reg
 
@@ -86,10 +85,10 @@ geo.point: $(GEO_POINT) $(DRIVER_DIR)
 	mv geo.point $(DRIVER_DIR)/geo.point
 
 
-coll_pts.o: ../../libes  ../../digit/digit.h  ../../digit/globals.h 
+coll_pts.o: ../../v.digit/digit.h  ../../v.digit/globals.h 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  ../../digit/digit.h
-dig_curses.o:  ../../digit/menu.h
-dig_curses.o:  ../../digit/curses.c
-dig_curses.o:  ../../libes/head.h
+dig_curses.o:  ../../v.digit/digit.h
+dig_curses.o:  ../../v.digit/menu.h
+dig_curses.o:  ../../v.digit/curses.C
+dig_curses.o:  ../../diglib/dig_head.h
 
