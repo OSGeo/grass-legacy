@@ -1,0 +1,11 @@
+The modules (still) crashes if the the WIND3 region differs from
+the volume coordinates (region settings which where used when
+the volume was generated).
+
+1/2001 MN
+
+G3D library bug?
+        G3d_getValueRegion (map, x, y, z, d1p, typeIntern);                  
+     produces output with different orientation comparing to:
+        G3d_getValue(map, x, y, z, d1p, typeIntern); 
+
