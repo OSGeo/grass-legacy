@@ -48,11 +48,12 @@ main(argc, argv) char *argv[];
     if (db_open_database(driver, &handle) != DB_OK)
 	exit(ERROR);
 
-    stat = OK;
-    while(stat == OK && get_stmt (fd, &stmt))
+    while( get_stmt(fd, &stmt) )
     {
-	if(!stmt_is_empty(&stmt))
-	    stat = execute_immediate(driver, &stmt);
+	if(!stmt_is_empty(&stmt)) {
+	    G_debug (3, "sql: %s", db_get_string(&stmt) );
+            db_execute_immediate (driver, &stmt);
+	}
     }
 
     db_close_database(driver);
@@ -103,34 +104,32 @@ parse_command_line(argc, argv) char *argv[];
     parms.input		= input->answer;
 }
 
-execute_immediate (driver, stmt)
-    dbDriver *driver;
-    dbString *stmt;
-{
-    return db_execute_immediate (driver, stmt) == DB_OK ? OK : ERROR;
-}
-
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
 {
-    char buf[1024];
-    int n;
-    static int first = 1;
+    char buf[4000], *str;
+    int n, len, row = 0;
 
     db_init_string (stmt);
 
-    if (!first)
-	return 0;
-    first = 0;
-
-    while ( ( n = fread (buf, 1, sizeof(buf)-1, fd)) > 0)
+    while ( fgets (buf, 4000, fd) != NULL )
     {
-	buf[n] = 0;
+	G_chop (buf);
 	db_append_string (stmt, buf);
+	len = strlen (buf);
+	if ( buf[ len - 1 ] == ';' ) {  /* end of statement */
+	    str = db_get_string(stmt);
+	    len = strlen ( str );
+	    str [len - 1] = 0;
+	    return 1;
+	}
+	row++;
     }
 
-    return 1;
+    if ( row > 0 ) return 1;
+
+    return 0;
 }
 
 stmt_is_empty(stmt)
