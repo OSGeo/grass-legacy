@@ -1,0 +1,67 @@
+<html>
+
+<TITLE>db.select</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>db.select</b></EM> - Select data from database. 
+<BR>
+<EM>(GRASS DB Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>db.select</B> 
+<BR>
+<B>db.select help</B> 
+<BR>
+<B>db.select</B> 
+[<B>-c</B>]
+[<B>-d</B>]
+[<B>-h</B>]
+[<B>input=</B><EM>file</EM>] 
+[<B>fs=</B><EM>character(s)</EM>] 
+[<B>vs=</B><EM>character(s)</EM>] 
+[<B>nv=</B><EM>character(s)</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>db.select</EM> prints result of selection from database 
+based on SQL statement read from input file or from standard input 
+to standard output.
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>-c</B>
+<DD>Include column names in output. 
+<DT><B>-h</B>
+<DD>Horizontal output (instead of vertical). 
+<DT><B>input=</B><EM>file</EM>
+<DD>Name of a <EM>file</EM> containing SQL select statement.
+<DT><B>fs=</B><EM>character(s)</EM>
+<DD>Output field separator, default: |.
+<DT><B>vs=</B><EM>character(s)</EM>
+<DD>Output vertical record separator.
+<DT><B>vn=</B><EM>character(s)</EM>
+<DD>Null value indicator.
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="db.connect.html">db.connect</A></EM><br>
+
+<H2>AUTHOR</H2>
+?<BR>
+Modifications and man:
+Radim Blazek, Radim.Blazek@dhv.cz
+
+</body>
+</html>
