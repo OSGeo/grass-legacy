@@ -5,6 +5,14 @@ exec $GRASS_WISH "$0" "$@"
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
+
+set gisdbase [exec g.gisenv get=GISDBASE]
+set location_name [exec g.gisenv get=LOCATION_NAME]
+set mapset [exec g.gisenv get=MAPSET]
+
 set dmpath $env(GISBASE)/etc/dm/
 
 source $dmpath/cmd.tcl
@@ -291,11 +299,12 @@ proc Dm::query { } {
 
 # save tree/options to file
 proc Dm::save { } {
+    global gisdbase location_name mapset
     global env
     variable rcfile
     variable tree
 
-    set fpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/.dmrc"
+    set fpath "$gisdbase/$location_name/$mapset/.dmrc"
     set rcfile [open $fpath w]
 
     DmGroup::save $tree 0 "root"
@@ -340,6 +349,7 @@ proc Dm::save_node { depth node } {
 
 # load tree/options from file
 proc Dm::load { } {
+    global gisdbase location_name mapset
     global env
     variable rcfile
     variable tree
@@ -347,7 +357,7 @@ proc Dm::load { } {
     variable prgtext
 
     set prgtext "Loading layers..."
-    set fpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/.dmrc"
+    set fpath "$gisdbase/$location_name/$mapset/.dmrc"
     if { ![file exist $fpath] || ![file readable $fpath] } { return }
     set rcfile [open $fpath r]
     set file_size [file size $fpath]
