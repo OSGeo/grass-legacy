@@ -170,7 +170,7 @@ void gsd_update_cpnorm(int num)
     P_rot(Cp_rot[num][Z], 'z');
     P_rot(Cp_rot[num][Y], 'y');
     P_rot(Cp_rot[num][X], 'x');
-    P_transform (1, v, Cp_norm[num]);
+    P_transform (1, v, &Cp_norm[num]);
     P_popmatrix();
 
     return;
