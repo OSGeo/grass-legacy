@@ -88,7 +88,7 @@ CALLS:
 #include <stdlib.h>
 #include <string.h>
 #include "vask.h"
-#include "curses.h"
+#include <curses.h>
 
 static int centered(char *);
 static int fmt(char *,int,double);
