@@ -17,14 +17,20 @@ static int G3d_maskMapExistsVar = 0;
 static G3D_Map *G3d_maskMap;
 
 /*--------------------------------------------------------------------------*/
+static void dummy(void)
+{
+   return;
+}
+
 
 static float G3D_MASKNUMmaskValue;
 
+/* Call to dummy() to match void return type of G3d_setNullValue() */
 #define G3D_MASKNUM(map,Xmask,Ymask,Zmask,VALUEmask,TYPEmask) \
 \
    (G3D_MASKNUMmaskValue = G3d_getMaskFloat (map, Xmask, Ymask, Zmask), \
     ((G3d_isNullValueNum (&G3D_MASKNUMmaskValue, G3D_FLOAT)) ? \
-      G3d_setNullValue (VALUEmask, 1, TYPEmask) : NULL))
+      G3d_setNullValue (VALUEmask, 1, TYPEmask) : dummy()))
 
 /*--------------------------------------------------------------------------*/
 
