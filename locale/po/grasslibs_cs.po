@@ -4,14 +4,51 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
-"POT-Creation-Date: 2004-10-29 16:43+0200\n"
+"POT-Creation-Date: 2004-11-17 09:31+0100\n"
 "PO-Revision-Date: 2004-10-29 15:58+0200\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
-"Language-Team: \n"
+"Language-Team: Czech <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
+
+#: ../lib/gis/env.c:268
+msgid "GISRC - variable not set"
+msgstr ""
+
+#: ../lib/gis/env.c:286 ../lib/gis/env.c:298
+#, c-format
+msgid "%s not set"
+msgstr ""
+
+#: ../lib/gis/error.c:162
+msgid "WARNING: "
+msgstr ""
+
+#: ../lib/gis/error.c:163
+msgid "ERROR: "
+msgstr ""
+
+#: ../lib/gis/gisinit.c:44
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "MAPSET %s - pøístup odepøen"
+
+#: ../lib/gis/gisinit.c:49 ../lib/gis/mapset.c:60
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "MAPSET %s nebyla nalezena"
+
+#: ../lib/gis/gisinit.c:75
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr ""
+"CHYBA: System není inicializován. Programátor zapomìl volat G_gisinit()\n"
+
+#: ../lib/gis/mapset_msc.c:69
+#, c-format
+msgid "can't make mapset element %s (%s)"
+msgstr ""
 
 #: ../lib/gis/parser.c:306
 msgid ""
@@ -258,214 +295,6 @@ msgstr "Je to správnì? "
 msgid "to accept the default"
 msgstr "pou¾ít defaultní"
 
-#: ../lib/gis/adj_cellhd.c:66
-msgid "Illegal n-s resolution value"
-msgstr "Neplatné n-s rozli¹ení"
-
-#: ../lib/gis/adj_cellhd.c:71
-msgid "Illegal row value"
-msgstr "Neplatný poèet øádek"
-
-#: ../lib/gis/adj_cellhd.c:76
-msgid "Illegal e-w resolution value"
-msgstr "Neplatné e-w rozli¹ení"
-
-#: ../lib/gis/adj_cellhd.c:81
-msgid "Illegal col value"
-msgstr "Neplatný poèet sloupcù"
-
-#: ../lib/gis/adj_cellhd.c:88
-msgid "Illegal latitude for North"
-msgstr "Neplatná ¹íøka pro sever"
-
-#: ../lib/gis/adj_cellhd.c:90
-msgid "Illegal latitude for South"
-msgstr "Neplatná ¹íøka pro jih"
-
-#: ../lib/gis/adj_cellhd.c:99
-msgid "North must be north of South"
-msgstr "Sever musí být severnì oproti jihu"
-
-#: ../lib/gis/adj_cellhd.c:101
-msgid "North must be larger than South"
-msgstr "Sever musí být vìt¹í ne¾ jih"
-
-#: ../lib/gis/adj_cellhd.c:104
-msgid "East must be larger than West"
-msgstr "Východ musí být vìt¹í ne¾ západ"
-
-#: ../lib/gis/adj_cellhd.c:124
-msgid "Invalid coordinates"
-msgstr "Neplatné souøadnice"
-
-#: ../lib/gis/gisinit.c:44
-#, c-format
-msgid "MAPSET %s - permission denied"
-msgstr "MAPSET %s - pøístup odepøen"
-
-#: ../lib/gis/gisinit.c:49 ../lib/gis/mapset.c:60
-#, c-format
-msgid "MAPSET %s not found"
-msgstr "MAPSET %s nebyla nalezena"
-
-#: ../lib/gis/gisinit.c:75
-msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr "CHYBA: System není inicializován. Programátor zapomìl volat G_gisinit()\n"
-
-#: ../lib/gis/ask.c:293
-msgid "to cancel request"
-msgstr "zru¹it po¾adavek"
-
-#: ../lib/gis/ask.c:348
-#, c-format
-msgid "Enter a new %s file name"
-msgstr ""
-
-#: ../lib/gis/ask.c:352
-#, c-format
-msgid "Enter the name of an existing %s file"
-msgstr "Zadat jméno existujícího %s souboru"
-
-#: ../lib/gis/ask.c:355
-#, c-format
-msgid "Enter %s file name"
-msgstr ""
-
-#: ../lib/gis/ask.c:372
-#, c-format
-msgid "Enter 'list' for a list of existing %s files\n"
-msgstr "Zadat 'list' pro výpis existujících %s souborù\n"
-
-#: ../lib/gis/ask.c:375
-msgid "Enter 'list -f' for "
-msgstr "Zadat 'list -f' pro"
-
-#: ../lib/gis/ask.c:377
-#, c-format
-msgid "a list %s"
-msgstr "výpis %s"
-
-#: ../lib/gis/ask.c:379
-msgid "an extended list"
-msgstr "roz¹íøený výpis"
-
-#: ../lib/gis/ask.c:383
-#, c-format
-msgid "Hit RETURN %s\n"
-msgstr "Stisknou RETURN %s\n"
-
-#: ../lib/gis/ask.c:437
-#, c-format
-msgid ""
-"\n"
-"**<%s> illegal name **\n"
-msgstr ""
-"\n"
-"**<%s> neplatné jméno **\n"
-
-#: ../lib/gis/ask.c:452
-#, c-format
-msgid ""
-"\n"
-"** %s - illegal request **\n"
-msgstr ""
-
-#: ../lib/gis/ask.c:467
-#, c-format
-msgid ""
-"\n"
-"** %s - exists, select another name **\n"
-msgstr ""
-
-#: ../lib/gis/ask.c:477
-#, c-format
-msgid ""
-"\n"
-"** %s exists. ok to overwrite? "
-msgstr ""
-
-#: ../lib/gis/ask.c:491 ../lib/gis/ask.c:513
-#, c-format
-msgid ""
-"\n"
-"** %s - not found **\n"
-msgstr ""
-
-#: ../lib/gis/ask.c:495
-msgid "ask: can't happen"
-msgstr ""
-
-#: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
-#: ../lib/gis/ask_cell.c:109
-msgid "with titles"
-msgstr ""
-
-#: ../lib/gis/ask_cell.c:121
-msgid "(no title)"
-msgstr ""
-
-#: ../lib/gis/auto_mask.c:53
-msgid "Unable to open automatic MASK file"
-msgstr ""
-
-#: ../lib/gis/cats.c:384
-#, c-format
-msgid "category support for [%s] in mapset [%s] %s"
-msgstr ""
-
-#: ../lib/gis/cats.c:423
-#, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
-msgstr ""
-
-#: ../lib/gis/color_read.c:123
-#, c-format
-msgid "color support for [%s] in mapset [%s] %s"
-msgstr ""
-
-#: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
-#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
-#: ../lib/proj/datum.c:221
-msgid "Cannot open temp file"
-msgstr ""
-
-#: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
-#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
-#: ../lib/proj/datum.c:298
-msgid "Hit RETURN to cancel request\n"
-msgstr ""
-
-#: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:344
-#: ../lib/proj/datum.c:418
-#, c-format
-msgid "unable to open datum table file: %s"
-msgstr ""
-
-#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
-#: ../lib/proj/datum.c:432
-#, c-format
-msgid "error in datum table file, line %d"
-msgstr ""
-
-#: ../lib/gis/env.c:268
-msgid "GISRC - variable not set"
-msgstr ""
-
-#: ../lib/gis/env.c:286 ../lib/gis/env.c:298
-#, c-format
-msgid "%s not set"
-msgstr ""
-
-#: ../lib/gis/done_msg.c:29
-#, c-format
-msgid "%s complete. %s\n"
-msgstr ""
-
-#: ../lib/gis/format.c:162
-#, c-format
-msgid "Fail of initial read of compressed file [%s in %s]"
-msgstr ""
-
 #: ../lib/gis/G_dump.c:6
 #, c-format
 msgid "Size of cell in fp maps = %d\n"
@@ -681,6 +510,191 @@ msgstr ""
 msgid "Minimum row null row number in memory %d\n"
 msgstr ""
 
+#: ../lib/gis/adj_cellhd.c:66
+msgid "Illegal n-s resolution value"
+msgstr "Neplatné n-s rozli¹ení"
+
+#: ../lib/gis/adj_cellhd.c:71
+msgid "Illegal row value"
+msgstr "Neplatný poèet øádek"
+
+#: ../lib/gis/adj_cellhd.c:76
+msgid "Illegal e-w resolution value"
+msgstr "Neplatné e-w rozli¹ení"
+
+#: ../lib/gis/adj_cellhd.c:81
+msgid "Illegal col value"
+msgstr "Neplatný poèet sloupcù"
+
+#: ../lib/gis/adj_cellhd.c:88
+msgid "Illegal latitude for North"
+msgstr "Neplatná ¹íøka pro sever"
+
+#: ../lib/gis/adj_cellhd.c:90
+msgid "Illegal latitude for South"
+msgstr "Neplatná ¹íøka pro jih"
+
+#: ../lib/gis/adj_cellhd.c:99
+msgid "North must be north of South"
+msgstr "Sever musí být severnì oproti jihu"
+
+#: ../lib/gis/adj_cellhd.c:101
+msgid "North must be larger than South"
+msgstr "Sever musí být vìt¹í ne¾ jih"
+
+#: ../lib/gis/adj_cellhd.c:104
+msgid "East must be larger than West"
+msgstr "Východ musí být vìt¹í ne¾ západ"
+
+#: ../lib/gis/adj_cellhd.c:124
+msgid "Invalid coordinates"
+msgstr "Neplatné souøadnice"
+
+#: ../lib/gis/ask.c:376
+msgid "to cancel request"
+msgstr "zru¹it po¾adavek"
+
+#: ../lib/gis/ask.c:432
+#, c-format
+msgid "Enter a new %s file name"
+msgstr ""
+
+#: ../lib/gis/ask.c:437
+#, c-format
+msgid "Enter the name of an existing %s file"
+msgstr "Zadat jméno existujícího %s souboru"
+
+#: ../lib/gis/ask.c:440
+#, c-format
+msgid "Enter %s file name"
+msgstr ""
+
+#: ../lib/gis/ask.c:459
+#, c-format
+msgid "Enter 'list' for a list of existing %s files\n"
+msgstr "Zadat 'list' pro výpis existujících %s souborù\n"
+
+#: ../lib/gis/ask.c:462
+msgid "Enter 'list -f' for "
+msgstr "Zadat 'list -f' pro"
+
+#: ../lib/gis/ask.c:464
+#, c-format
+msgid "a list %s"
+msgstr "výpis %s"
+
+#: ../lib/gis/ask.c:466
+msgid "an extended list"
+msgstr "roz¹íøený výpis"
+
+#: ../lib/gis/ask.c:470
+#, c-format
+msgid "Hit RETURN %s\n"
+msgstr "Stisknou RETURN %s\n"
+
+#: ../lib/gis/ask.c:492 ../lib/gis/ask.c:599 ../lib/gis/ask.c:621
+#, c-format
+msgid ""
+"\n"
+"** %s - not found **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:499 ../lib/gis/ask.c:585
+#, c-format
+msgid ""
+"\n"
+"** %s exists. ok to overwrite? "
+msgstr ""
+
+#: ../lib/gis/ask.c:545
+#, c-format
+msgid ""
+"\n"
+"**<%s> illegal name **\n"
+msgstr ""
+"\n"
+"**<%s> neplatné jméno **\n"
+
+#: ../lib/gis/ask.c:560
+#, c-format
+msgid ""
+"\n"
+"** %s - illegal request **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:575
+#, c-format
+msgid ""
+"\n"
+"** %s - exists, select another name **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:603
+msgid "ask: can't happen"
+msgstr ""
+
+#: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
+#: ../lib/gis/ask_cell.c:109
+msgid "with titles"
+msgstr ""
+
+#: ../lib/gis/ask_cell.c:121
+msgid "(no title)"
+msgstr ""
+
+#: ../lib/gis/auto_mask.c:53
+msgid "Unable to open automatic MASK file"
+msgstr ""
+
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/color_read.c:123
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
+#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
+#: ../lib/proj/datum.c:221
+msgid "Cannot open temp file"
+msgstr ""
+
+#: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
+#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
+#: ../lib/proj/datum.c:298
+msgid "Hit RETURN to cancel request\n"
+msgstr ""
+
+#: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:344
+#: ../lib/proj/datum.c:418
+#, c-format
+msgid "unable to open datum table file: %s"
+msgstr ""
+
+#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
+#: ../lib/proj/datum.c:432
+#, c-format
+msgid "error in datum table file, line %d"
+msgstr ""
+
+#: ../lib/gis/done_msg.c:29
+#, c-format
+msgid "%s complete. %s\n"
+msgstr ""
+
+#: ../lib/gis/format.c:162
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr ""
+
 #: ../lib/gis/get_cellhd.c:75 ../lib/gis/get_cellhd.c:104
 #, c-format
 msgid "Can't read header file for [%s in %s]\n"
@@ -754,6 +768,22 @@ msgid ""
 "invalid datum\n"
 msgstr ""
 
+#: ../lib/gis/get_ell_name.c:44
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+
+#: ../lib/gis/get_ell_name.c:45
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr ""
+
+#: ../lib/gis/get_ell_name.c:62
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+
 #: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
 #, c-format
 msgid "invalid a: field %s in file %s in %s"
@@ -787,22 +817,6 @@ msgstr ""
 #: ../lib/gis/get_ellipse.c:456
 #, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
-msgstr ""
-
-#: ../lib/gis/get_ell_name.c:44
-msgid ""
-"\n"
-"Please specify ellipsoid name\n"
-msgstr ""
-
-#: ../lib/gis/get_ell_name.c:45
-msgid "Enter 'list' for the list of available ellipsoids\n"
-msgstr ""
-
-#: ../lib/gis/get_ell_name.c:62
-msgid ""
-"\n"
-"invalid ellipsoid\n"
 msgstr ""
 
 #: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
@@ -902,6 +916,20 @@ msgstr ""
 msgid "No help available for command [%s]\n"
 msgstr ""
 
+#: ../lib/gis/list.c:110
+#, c-format
+msgid "no %s files available in mapset %s\n"
+msgstr ""
+
+#: ../lib/gis/list.c:123
+msgid "hit RETURN to continue -->"
+msgstr ""
+
+#: ../lib/gis/list.c:178
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr ""
+
 #: ../lib/gis/histogram.c:60
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
@@ -943,20 +971,6 @@ msgstr ""
 #: ../lib/gis/legal_name.c:34
 #, c-format
 msgid "Illegal filename. character <%c> not allowed."
-msgstr ""
-
-#: ../lib/gis/list.c:110
-#, c-format
-msgid "no %s files available\n"
-msgstr ""
-
-#: ../lib/gis/list.c:123
-msgid "hit RETURN to continue -->"
-msgstr ""
-
-#: ../lib/gis/list.c:178
-#, c-format
-msgid "%s files available in mapset %s:\n"
 msgstr ""
 
 #: ../lib/gis/location.c:48
@@ -1024,11 +1038,6 @@ msgstr ""
 msgid ""
 "\n"
 "%s invalid; Try again > "
-msgstr ""
-
-#: ../lib/gis/mapset_msc.c:69
-#, c-format
-msgid "can't make mapset element %s (%s)"
 msgstr ""
 
 #: ../lib/gis/mapset.c:41
@@ -1508,7 +1517,9 @@ msgid " Window saved in \"%s\" is completely outside of current GRASS window."
 msgstr ""
 
 #: ../lib/gis/view.c:548
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+#, c-format
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 
 #: ../lib/proj/ellipse.c:85
@@ -1640,77 +1651,6 @@ msgstr ""
 msgid "ERROR: GISBASE not set\n"
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:42
-msgid "Requested format is not compiled in this version"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:95
-msgid "Warning, Programmer requested unknown open_level\n"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:155
-#, c-format
-msgid "Cannot find vector %s"
-msgstr "Vektor %s nebyl nalezen"
-
-#: ../lib/vector/Vlib/open.c:165
-msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:183
-#, c-format
-msgid "Cannot open old vector %s"
-msgstr "Nelze otevøít vektor %s"
-
-#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:243
-#: ../lib/vector/Vlib/open.c:259
-#, c-format
-msgid "Cannot open old vector %s on level %d"
-msgstr "Vektor %s nelze otevøít na level %d"
-
-#: ../lib/vector/Vlib/open.c:306 ../lib/vector/Vlib/open.c:490
-#, c-format
-msgid "Cannot open history file for vector '%s'"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:444
-msgid "Map name is not SQL compliant."
-msgstr "Jméno vektoru nevyhovuje podmínkám SQL."
-
-#: ../lib/vector/Vlib/open.c:460
-#, c-format
-msgid "The vector '%s' already exists."
-msgstr "Vektor '%s' ji¾ existuje."
-
-#: ../lib/vector/Vlib/open.c:463
-#, c-format
-msgid "The vector '%s' already exists and will be overwritten."
-msgstr "Vektor '%s' ji¾ existuje a bude pøepsán."
-
-#: ../lib/vector/Vlib/open.c:467
-#, c-format
-msgid "Cannot delete existing vector %s"
-msgstr "Nelze smazat existující vektor %s."
-
-#: ../lib/vector/Vlib/open.c:481
-#, c-format
-msgid "Cannot open new vector %s"
-msgstr "Nelze otevøít nový vektor %s"
-
-#: ../lib/vector/Vlib/open.c:533
-#, c-format
-msgid "Could not stat file '%s'"
-msgstr ""
-
-#: ../lib/vector/Vlib/open.c:619
-msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Velikost souboru 'coor' se li¹í od hodnot ulo¾ených v 'topo' souboru"
-
-#: ../lib/vector/Vlib/open.c:630
-#, c-format
-msgid "Please rebuild topology for vector '%s@%s'"
-msgstr ""
-
 #: ../lib/vector/Vlib/build.c:127
 msgid "Building topology ...\n"
 msgstr "Vytváøení topologie ...\n"
@@ -1827,16 +1767,16 @@ msgstr ""
 msgid "Area of size = 0.0 ignored"
 msgstr ""
 
-#: ../lib/vector/Vlib/build_nat.c:466
+#: ../lib/vector/Vlib/build_nat.c:465
 msgid "Registering lines: "
 msgstr "Registrace linií: "
 
-#: ../lib/vector/Vlib/build_nat.c:507
+#: ../lib/vector/Vlib/build_nat.c:506
 #, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitivy zaregistrovány       \n"
 
-#: ../lib/vector/Vlib/build_nat.c:540
+#: ../lib/vector/Vlib/build_nat.c:533
 #, c-format
 msgid ""
 "\r%d areas built      \n"
@@ -1845,13 +1785,80 @@ msgstr ""
 "\r%d plochy vytvoøeny      \n"
 "%d ostrovy vytvoøeny\n"
 
-#: ../lib/vector/Vlib/build_nat.c:548
+#: ../lib/vector/Vlib/build_nat.c:541
 msgid "Attaching islands: "
 msgstr "Pøipojování ostrovù: "
 
-#: ../lib/vector/Vlib/build_nat.c:570
+#: ../lib/vector/Vlib/build_nat.c:555
 msgid "Attaching centroids: "
 msgstr "Pøipojování centroidù: "
+
+#: ../lib/vector/Vlib/field.c:73
+msgid "Field number must be 1 or greater."
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:78
+msgid "Cannot add database link, map is not opened in WRITE mode."
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:84
+msgid "Cannot add database link."
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:90 ../lib/vector/Vlib/field.c:133
+msgid "Cannot write database links."
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:188
+#, fuzzy, c-format
+msgid "Field number <%d> or name <%s> already exists"
+msgstr "Vektor '%s' ji¾ existuje."
+
+#: ../lib/vector/Vlib/field.c:247
+msgid ""
+"Default driver / database for vectors set to:\n"
+"driver: dbf\n"
+"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:255
+msgid ""
+"Database connection (for db.* modules) set to:\n"
+"driver: dbf\n"
+"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:267
+msgid "Default driver is not set"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:269
+msgid "Default database is not set"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:319
+#, c-format
+msgid "Requested dblink %d, maximum link number %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:398
+#, fuzzy
+msgid "Cannot open OGR DBMI driver."
+msgstr "Nelze otevøít vektor %s"
+
+#: ../lib/vector/Vlib/field.c:418
+#, c-format
+msgid "Don't know how to read links for format %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:446
+#, c-format
+msgid "Error in rule on row %d in %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:573
+msgid "Bug: attempt to update map which is not in current mapset."
+msgstr ""
 
 #: ../lib/vector/Vlib/legal_vname.c:23
 #, c-format
@@ -1883,3 +1890,84 @@ msgstr "Vstupní mapa %s nebyla nalezena"
 msgid "Output map '%s' is used as input"
 msgstr "Výstupní mapa '%s' je pou¾ita jako vstup."
 
+#: ../lib/vector/Vlib/map.c:108 ../lib/vector/Vlib/map.c:202
+#: ../lib/vector/Vlib/open.c:493
+#, c-format
+msgid "The vector '%s' already exists and will be overwritten."
+msgstr "Vektor '%s' ji¾ existuje a bude pøepsán."
+
+#: ../lib/vector/Vlib/map.c:210
+#, c-format
+msgid "Input vector '%s' not found"
+msgstr ""
+
+#: ../lib/vector/Vlib/map.c:213
+#, fuzzy, c-format
+msgid "Cannot copy vector '%s' to '%s'"
+msgstr "Nelze otevøít vektor %s"
+
+#: ../lib/vector/Vlib/open.c:42
+msgid "Requested format is not compiled in this version"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:95
+msgid "Warning, Programmer requested unknown open_level\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:155
+#, c-format
+msgid "Cannot find vector %s"
+msgstr "Vektor %s nebyl nalezen"
+
+#: ../lib/vector/Vlib/open.c:165
+msgid "A map which is not in the current mapset cannot be opened for update."
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:183
+#, c-format
+msgid "Cannot open old vector %s"
+msgstr "Nelze otevøít vektor %s"
+
+#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:243
+#: ../lib/vector/Vlib/open.c:259
+#, c-format
+msgid "Cannot open old vector %s on level %d"
+msgstr "Vektor %s nelze otevøít na level %d"
+
+#: ../lib/vector/Vlib/open.c:306 ../lib/vector/Vlib/open.c:520
+#, c-format
+msgid "Cannot open history file for vector '%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:474
+msgid "Map name is not SQL compliant."
+msgstr "Jméno vektoru nevyhovuje podmínkám SQL."
+
+#: ../lib/vector/Vlib/open.c:490
+#, c-format
+msgid "The vector '%s' already exists."
+msgstr "Vektor '%s' ji¾ existuje."
+
+#: ../lib/vector/Vlib/open.c:497
+#, c-format
+msgid "Cannot delete existing vector %s"
+msgstr "Nelze smazat existující vektor %s."
+
+#: ../lib/vector/Vlib/open.c:511
+#, c-format
+msgid "Cannot open new vector %s"
+msgstr "Nelze otevøít nový vektor %s"
+
+#: ../lib/vector/Vlib/open.c:563
+#, c-format
+msgid "Could not stat file '%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:649
+msgid "Size of 'coor' file differs from value saved in topo file."
+msgstr "Velikost souboru 'coor' se li¹í od hodnot ulo¾ených v 'topo' souboru"
+
+#: ../lib/vector/Vlib/open.c:660
+#, c-format
+msgid "Please rebuild topology for vector '%s@%s'"
+msgstr ""

@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-12 19:45+0100\n"
+"POT-Creation-Date: 2004-11-17 09:31+0100\n"
 "PO-Revision-Date: 2004-11-12 19:44+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
-"Language-Team: Deutsch <de@li.org>\n"
+"Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9\n"
 
 #: ../db/base/connect.c:107
@@ -34,7 +34,6 @@ msgid "%s"
 msgstr "%s"
 
 #: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
-#, c-format
 msgid "\n"
 msgstr "\n"
 
@@ -49,7 +48,6 @@ msgid "Column %d: %s\n"
 msgstr "Zeile %d: %s\n"
 
 #: ../db/base/drivers.c:24
-#, c-format
 msgid "Error trying to read dbmscap file\n"
 msgstr "Fehler beim Lesen der Datei dbmscap\n"
 
@@ -94,7 +92,6 @@ msgid "precision:%d\n"
 msgstr "Präzision: %d\n"
 
 #: ../db/base/printtab.c:40
-#, c-format
 msgid "default:"
 msgstr "Standard:"
 
@@ -104,17 +101,14 @@ msgid "nullok:%s\n"
 msgstr "nullok:%s\n"
 
 #: ../db/base/printtab.c:62
-#, c-format
 msgid "yes"
 msgstr "Ja"
 
 #: ../db/base/printtab.c:63
-#, c-format
 msgid "no"
 msgstr "Nein"
 
 #: ../db/base/printtab.c:64
-#, c-format
 msgid "?"
 msgstr "?"
 
@@ -143,23 +137,58 @@ msgstr "Maßstab%s%d\n"
 msgid "precision%s%d\n"
 msgstr "Präzision%s%d\n"
 
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr ""
+"Selektiert die Schriftart, in welcher der Text auf dem Graphik-Monitor des "
+"Benutzers angezeigt wird."
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
+"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Zeichenkodierung"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Keine Graphik-Augabe ausgewählt."
+
+#: ../display/d.font.freetype/main.c:170
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+" Einstellungen des FreeType-Releases\n"
+
 #: ../display/d.paint.labels/do_labels.c:143
 #, c-format
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
-#, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
+msgstr ""
+"Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
-#, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+msgstr ""
+"Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.path/select.c:32
-#, c-format
 msgid "L: from  M: to R: quit\n"
 msgstr "L: Startpunkt M: Zielpunkt R: Abbrechen\n"
 
@@ -169,7 +198,6 @@ msgid "Node %d: %f %f\n"
 msgstr "Knoten %d: %f %f\n"
 
 #: ../display/d.path/select.c:133
-#, c-format
 msgid "Destination unreachable\n"
 msgstr "Ziel unerreichbar\n"
 
@@ -186,7 +214,6 @@ msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 #: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
-#, c-format
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
@@ -195,24 +222,20 @@ msgstr ""
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
 #: ../display/d.vect/main.c:417
-#, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
 #: ../display/d.vect/main.c:426
-#, c-format
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
 "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:480
-#, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
 
 #: ../display/d.what.vect/main.c:150
-#, c-format
 msgid "Done.\n"
 msgstr "Fertig\n"
 
@@ -222,7 +245,6 @@ msgid "warning: %s - vector file not found\n"
 msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
-#, c-format
 msgid "Nothing Found.\n"
 msgstr "Nichts gefunden.\n"
 
@@ -272,7 +294,6 @@ msgid "Area height: %f\n"
 msgstr "Höhe der Fläche: %f\n"
 
 #: ../display/d.what.vect/what.c:287
-#, c-format
 msgid "Area\n"
 msgstr "Fläche:\n"
 
@@ -311,7 +332,6 @@ msgstr ""
 "Kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
-#, c-format
 msgid "Database connection not defined\n"
 msgstr "Datenbankverbindung ist nicht definiert.\n"
 
@@ -329,7 +349,6 @@ msgstr ""
 "Key-Spalte: %s\n"
 
 #: ../display/d.what.vect/what.c:421
-#, c-format
 msgid ""
 "\n"
 "Click mouse button on desired location\n"
@@ -340,81 +359,32 @@ msgstr ""
 "\n"
 
 #: ../display/d.what.vect/what.c:426
-#, c-format
 msgid "Buttons\n"
 msgstr "Mausknopfbelegung:\n"
 
 #: ../display/d.what.vect/what.c:427
-#, c-format
 msgid " Left:  what's here\n"
 msgstr " Links:  Was ist hier?\n"
 
 #: ../display/d.what.vect/what.c:429
-#, c-format
 msgid " Middle: toggle flash color\n"
 msgstr ""
 " Mitte: wechselt zwischen den Farben, die auf dem Bildschirm aufleuchten "
 "sollen.\n"
 
 #: ../display/d.what.vect/what.c:434
-#, c-format
 msgid " Right: quit\n"
 msgstr " Rechts:  Beenden\n"
 
-#: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
-#, c-format
-msgid ""
-"\n"
-"\n"
-"Buttons:\n"
-msgstr ""
-"\n"
-"\n"
-"Mausknöpfe:\n"
-
-#: ../display/d.zoom/zoom.c:16
-#, c-format
-msgid "%s Zoom menu\n"
-msgstr "%s Zoom-Menü\n"
-
-#: ../display/d.zoom/zoom.c:17 ../display/d.zoom/pan.c:21
-#, c-format
-msgid "%s Pan\n"
-msgstr "%s Verschieben (Pan)\n"
-
-#: ../display/d.zoom/zoom.c:18 ../display/d.zoom/pan.c:22
-#, c-format
-msgid "%s Quit\n"
-msgstr "%s Beenden\n"
-
-#: ../display/d.zoom/zoom.c:41
-#, c-format
-msgid ""
-"This region now saved as current region.\n"
-"\n"
-msgstr ""
-"Diese Region wurde nun als aktive Region abgespeichert.\n"
-"\n"
-
-#: ../display/d.zoom/zoom.c:42
-#, c-format
-msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr ""
-"Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
-"Region einzustellen.\n"
-
 #: ../display/d.zoom/main.c:158
-#, c-format
 msgid "ERROR: can not get \"list\" items\n"
 msgstr "FEHLER: Kann keine \"list\" Werte finden\n"
 
 #: ../display/d.zoom/main.c:159
-#, c-format
 msgid "-j flag forced\n"
 msgstr "Benutzung des -j Flags erzwungen.\n"
 
 #: ../display/d.zoom/main.c:196
-#, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt\n"
 
@@ -424,14 +394,51 @@ msgid "%d raster%s, %d vector%s\n"
 msgstr "%d Raster%sm %d Vektor%s\n"
 
 #: ../display/d.zoom/main.c:346
-#, c-format
 msgid "Zooming finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Mausknöpfe:\n"
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+msgid "%s Pan\n"
+msgstr "%s Verschieben (Pan)\n"
+
+#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s Beenden\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr "%s Zoom-Menü\n"
+
+#: ../display/d.zoom/zoom.c:41
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+"Diese Region wurde nun als aktive Region abgespeichert.\n"
+"\n"
+
+#: ../display/d.zoom/zoom.c:42
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+"Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
+"Region einzustellen.\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
-#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
-#, c-format
 msgid "Monitor: interactive command in redraw\n"
 msgstr "Monitor: Interaktives Kommando zum erneuten Zeichnen\n"
 
@@ -441,7 +448,6 @@ msgid "found %d visuals of type TrueColor\n"
 msgstr "Habe %d Ansichten vom Typ TrueColor gefunden\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
-#, c-format
 msgid "searching for highest bit depth\n"
 msgstr "Suche die höchste Bit-Tiefe...\n"
 
@@ -461,54 +467,14 @@ msgid "Monitor: waitpid: expected %d but got %d\n"
 msgstr "Monitor: Waitpid: erwarte %d, habe aber %d bekommen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
-#, c-format
 msgid "Monitor: XGetWMName failed\n"
 msgstr "Monitor: XGetWMName fehlgeschlagen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
-#, c-format
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
 
-#: ../display/d.font.freetype/main.c:52
-msgid ""
-"Selects the font in which text will be displayed on the user's graphics "
-"monitor."
-msgstr ""
-"Selektiert die Schriftart, in welcher der Text auf dem Graphik-Monitor des "
-"Benutzers angezeigt wird."
-
-#: ../display/d.font.freetype/main.c:60
-msgid ""
-"Font name (not supported interactively, see also -l flag) or path to "
-"TrueType font (including file name)"
-msgstr ""
-"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
-"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
-
-#: ../display/d.font.freetype/main.c:62
-msgid "Path to TrueType font (including file name)"
-msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
-
-#: ../display/d.font.freetype/main.c:71
-msgid "Character encoding"
-msgstr "Zeichenkodierung"
-
-#: ../display/d.font.freetype/main.c:102
-msgid "No graphics device selected"
-msgstr "Keine Graphik-Augabe ausgewählt."
-
-#: ../display/d.font.freetype/main.c:170
-#, c-format
-msgid ""
-"\n"
-"Setting release of FreeType\n"
-msgstr ""
-"\n"
-" Einstellungen des FreeType-Releases\n"
-
 #: ../raster/r.colors/rules.c:45
-#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
 "Eingabe der Regeln. Bitte am Ende \"end\" eingeben. \"help\" liefert eine "
@@ -531,12 +497,10 @@ msgstr ""
 "Datenspanne!"
 
 #: ../raster/r.colors/rules.c:188
-#, c-format
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Bitte geben Sie eine Regel in einem der folgende Formate ein:\n"
 
 #: ../raster/r.colors/rules.c:190
-#, c-format
 msgid " val color\n"
 msgstr "Wert Farbe\n"
 
@@ -546,22 +510,18 @@ msgid " n%% color\n"
 msgstr "n%% Farbe\n"
 
 #: ../raster/r.colors/rules.c:192
-#, c-format
 msgid " nv color\n"
 msgstr "nv color\n"
 
 #: ../raster/r.colors/rules.c:193
-#, c-format
 msgid " default color\n"
 msgstr "Standard-Farbe\n"
 
 #: ../raster/r.colors/rules.c:194
-#, c-format
 msgid "color can be one of:\n"
 msgstr "Farben können sich wie folgt zusammensetzen:\n"
 
 #: ../raster/r.colors/rules.c:196
-#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "oder eine R:G:B Tripel, zum Beispiel 0:127:255\n"
 
@@ -575,7 +535,6 @@ msgstr ""
 #: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
 #: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
-#, c-format
 msgid "** rule is not added **\n"
 msgstr "** Regel nicht hinzugefügt **\n"
 
@@ -587,7 +546,6 @@ msgstr ""
 "%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
-#, c-format
 msgid "** warning: no such value **\n"
 msgstr "** Warnung: Solche Werte sind nicht vorhanden **\n"
 
@@ -597,7 +555,6 @@ msgid "%s:line %d:%s\n"
 msgstr "%s:Linie %d:%s\n"
 
 #: ../raster/r.colors/rules.c:403
-#, c-format
 msgid "** bad color specification **\n"
 msgstr "** Falsche Farbspezifikation **\n"
 
@@ -607,6 +564,285 @@ msgid "%s - unknown color\n"
 msgstr "%s - unbekannte Farbe\n"
 
 #: ../raster/r.colors/rules.c:425
-#, c-format
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
+
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+#, fuzzy
+msgid "Input vector was not found."
+msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created."
+msgstr ""
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr ""
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+msgid "Cannot open database %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:74
+#, c-format
+msgid "Cannot create table: %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:92
+#, c-format
+msgid "Cannot insert into table: %s"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:135
+#, c-format
+msgid "%-5d centroids written to output file."
+msgstr ""
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:75
+msgid "Input file is version 3."
+msgstr ""
+
+#: ../vector/v.convert/read.c:78
+msgid "Input file is version 4."
+msgstr ""
+
+#: ../vector/v.convert/read.c:87
+msgid "Input file is portable."
+msgstr ""
+
+#: ../vector/v.convert/read.c:89
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr ""
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory."
+msgstr ""
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:220
+#, fuzzy, c-format
+msgid "Error: %s"
+msgstr "Fehler: %s\n"
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr ""
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:268
+#, c-format
+msgid "%-5d categories read into memory."
+msgstr ""
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:38
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:50
+#, c-format
+msgid "%d records selected from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:80
+#, c-format
+msgid "No record for line (cat = %d)"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:91
+#, c-format
+msgid "%d points loaded\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:124
+#, c-format
+msgid "Number of points that have been entered: %d"
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:91
+#, c-format
+msgid "You need to enter at least %d points."
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+msgid "%d categories loaded from vector"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+msgid "%d categories from vector missing in table"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+msgid "%d duplicate categories in vector"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors"
+msgstr ""
