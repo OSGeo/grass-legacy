@@ -1,0 +1,44 @@
+#!/bin/sh
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 9
+.C yellow
+
+
+  * 
+EOF
+
+Dchoose explain
+Derase
+Dtext << EOF
+.S 5
+
+  Analyses using mathematical equations are
+  very useful.  Such analyses treat the
+  category values of a map as real values
+  however.  (This is not the case with the
+  weighted overlays and boolean operations).
+
+  You can enter meaningful expressions like:
+.C yellow
+    newmap = elevation / 2
+    erosion = slope * soils.texture
+.C white
+
+  If you use maps which contain nominal
+  data your mathematical results will be
+  nonsense:
+.C yellow
+    newmap = geology * soils / landuse
+.C white
+  Though these maps are encoded with numbers,
+  the numbers are simply shorthand for a
+  long text description.
+EOF
+
+./continue.yes
+
+exit 1
