@@ -2,6 +2,19 @@
 
 static int add_gyr_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make green,yellow,red colors
+ *
+ * Generates a color table that goes from
+ * green to yellow to red.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int 
 G_make_gyr_colors (struct Colors *colors, CELL min, CELL max)
 {

@@ -13,6 +13,19 @@
 
 static int add_grey_scale_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make linear grey scale
+ *
+ * Generates a grey scale color table. Each color
+ * is a level of grey, increasing from black to white.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int 
 G_make_grey_scale_colors (struct Colors *colors, CELL min, CELL max)
 {

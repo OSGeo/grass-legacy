@@ -13,6 +13,20 @@
 
 static int add_wave_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make color wave
+ *
+ * Generates a color table with 3 sections: red only,
+ * green only, and blue only, each increasing from none to full intensity and
+ * back down to none.  This table is good for continuous data like elevation.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int 
 G_make_wave_colors (struct Colors *colors, CELL min, CELL max)
 {

@@ -7,6 +7,28 @@ static int add_color_rule (void *,int,int,int,
            struct _Color_Info_ *,int,
            DCELL *,DCELL *,RASTER_MAP_TYPE);
 
+
+/*!
+ * \brief 
+ *
+ * Adds the floating-point rule that the range [<em>v1,v2</em>] gets a
+ * linear ramp of colors from [<em>r1,g1,b1</em>] to
+ * [<em>r2,g2,b2</em>].
+ * If either <em>v1</em> or <em>v2</em> is the NULL-value, this call is converted into
+ * <tt>G_set_null_value_color (r1, g1, b1, colors)</tt>
+ *
+ *  \param v1
+ *  \param r1
+ *  \param g1
+ *  \param b1
+ *  \param v2
+ *  \param r2
+ *  \param g2
+ *  \param b2
+ *  \param colors
+ *  \return int
+ */
+
 int 
 G_add_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *val2, int r2, int g2, int b2, struct Colors *colors)
 {
@@ -14,6 +36,28 @@ G_add_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *val2, int
 	&colors->cmin, &colors->cmax, DCELL_TYPE);
     return 1;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Adds the floating-point rule that the range [<em>v1,v2</em>] gets a
+ * linear ramp of colors from [<em>r1,g1,b1</em>] to
+ * [<em>r2,g2,b2</em>].
+ * If either <em>v1</em> or <em>v2</em> is the NULL-value, this call is converted into
+ * <tt>G_set_null_value_color (r1, g1, b1, colors)</tt>
+ *
+ *  \param v1
+ *  \param r1
+ *  \param g1
+ *  \param b1
+ *  \param v2
+ *  \param r2
+ *  \param g2
+ *  \param b2
+ *  \param colors
+ *  \return int
+ */
 
 int 
 G_add_f_raster_color_rule (FCELL *cat1, int r1, int g1, int b1, FCELL *cat2, int r2, int g2, int b2, struct Colors *colors)
@@ -23,6 +67,24 @@ G_add_f_raster_color_rule (FCELL *cat1, int r1, int g1, int b1, FCELL *cat2, int
     return 1;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Calls G_add_color_rule(*v1, r1, g1, b1, *v2, r2, g2, b2, colors).
+ *
+ *  \param v1
+ *  \param r1
+ *  \param g1
+ *  \param b1
+ *  \param v2
+ *  \param r2
+ *  \param g2
+ *  \param b2
+ *  \param colors
+ *  \return int
+ */
+
 int 
 G_add_c_raster_color_rule (CELL *cat1, int r1, int g1, int b1, CELL *cat2, int r2, int g2, int b2, struct Colors *colors)
 {
@@ -31,6 +93,30 @@ G_add_c_raster_color_rule (CELL *cat1, int r1, int g1, int b1, CELL *cat2, int r
     return 1;
 }
 
+
+/*!
+ * \brief 
+ *
+ * If <em>map_type</em> is CELL_TYPE, calls G_add_c_raster_color_rule ((CELL
+ * *) v1, r1, g1, b1, (CELL *) v2, r2, g2, b2, colors);
+ * If <em>map_type</em> is FCELL_TYPE, calls G_add_f_raster_color_rule
+ * ((FCELL *) v1, r1, g1, b1, (FCELL *) v2, r2, g2, b2, colors);
+ * If <em>map_type</em> is DCELL_TYPE, calls G_add_d_raster_color_rule
+ * ((DCELL *) v1, r1, g1, b1, (DCELL *) v2, r2, g2, b2, colors);
+ *
+ *  \param v1
+ *  \param r1
+ *  \param g1
+ *  \param b1
+ *  \param v2
+ *  \param r2
+ *  \param g2
+ *  \param b2
+ *  \param colors
+ *  \param map_type
+ *  \return int
+ */
+
 int 
 G_add_raster_color_rule (void *val1, int r1, int g1, int b1, void *val2, int r2, int g2, int b2, struct Colors *colors, RASTER_MAP_TYPE data_type)
 {
@@ -38,6 +124,43 @@ G_add_raster_color_rule (void *val1, int r1, int g1, int b1, void *val2, int r2,
 	&colors->cmin, &colors->cmax, data_type);
     return 1;
 }
+
+
+/*!
+ * \brief set colors
+ *
+ * This is the heart
+ * and soul of the new color logic. It adds a color rule to the <b>colors</b>
+ * structure. The colors defined by the red, green, and blue values
+ * <b>r1,g1,b1</b> and <b>r2,g2,b2</b> are assigned to <b>cat1</b> and
+ * <b>cat2</b> respectively. Colors for data values between <b>cat1</b> and
+ * <b>cat2</b> are not stored in the structure but are interpolated when
+ * queried by <i>G_lookup_colors</i> and<i>G_get_color.</i> The color
+ * components <b>r1,g1,b1</b> and <b>r2,g2,b2</b> must be in the range
+ * 0 -- 255.
+ * For example, to create a linear grey scale for the range 200 -- 1000:
+ \code
+  struct Colors colr;
+  G_init_colors (&colr);
+  G_add_color_rule ((CELL)200, 0,0,0, (CELL)1000, 255,255,255);
+ \endcode
+ * The programmer is encouraged to review Raster_Color_Table_Format how
+ * this routine fits into the 5.x raster color logic.
+ * <b>Note.</b> The <b>colors</b> structure must have been initialized by
+ * <i>G_init_colors.</i> See Predefined_Color_Tables for routines to
+ * build some predefined color tables. 
+ *
+ *  \param cat1
+ *  \param r1
+ *  \param g1
+ *  \param b1
+ *  \param cat2
+ *  \param r2
+ *  \param g2
+ *  \param b2
+ *  \param colors
+ *  \return int
+ */
 
 int 
 G_add_color_rule (CELL cat1, int r1, int g1, int b1, CELL cat2, int r2, int g2, int b2, struct Colors *colors)
