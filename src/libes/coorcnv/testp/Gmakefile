@@ -1,0 +1,8 @@
+OBJ = main.o 
+
+TEST = testp
+
+LIBES = $(GISLIB) $(COORCNVLIB) $(MATHLIB)
+
+$(TEST): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) $(EXTRA_FLAGS) -o $@ $(GISLIB) $(OBJ) $(LIBES)
