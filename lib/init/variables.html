@@ -173,8 +173,10 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <br>&nbsp; initial mapset
 
 <p>OVERWRITE
-<br>[all vector modules]
-<br>&nbsp; toggles vector map overwrite protection (1: OFF, 0: ON)
+<br>[all modules]
+<br>&nbsp; toggles map overwrite.
+  With 0 maps are protected (default), 
+  with 1 maps with identical names will be overwritten.
 <br><tt>g.gisenv set=OVERWRITE=0</tt>
 
 
