@@ -1,0 +1,42 @@
+(Map Development Tool)
+Developed to handle DLG-3 ascii import of data, specifically a DLG
+WITHOUT category/attribute codes. DLG files with this affliction will
+require a flat ascii file having a 1 to 1 correspondence between
+DLG area number and a text label.
+
+(DESCRIPTION)
+When import.to.vect in run, the user is asked if the file contains GRASS
+category codes, if the response is no, the following are executed:
+
+   dlgcat  -  program to read flat ascii attribute file and create a
+       specially formatted attribute/category file. This file is stored in
+       the <mapset>/dlg directory; the file is named the same as the original
+       attribute file, but has a "2" appended. The file is used by the
+       imp_dlg routines as a look-up table of GRASS category codes assigned 
+       to each DLG area in the imported file. A subject matter master category 
+       file is created and stored in the <mapset>/cats/master directory; this 
+       file contains alphanumeric names, arranged in category code order. In 
+       the case of multiple import files within one mapset, this file will 
+       control the category code assignments (for consistancy across all 
+       imported files). Finally, a dig_cat category file is created and stored 
+       ; this file is a by-product of the import functions. It allows the 
+       alphanumeric names available in the attribute file to be automatically 
+       inserted, ready for the vector "support" feature.
+
+   imp_dlg  -  reads ascii DLG-3 file, for each area record, uses the
+       area number to access the attribute/category file produced by
+       dlgcat. An attribute record is then created and output as a binary
+       record in the binary dlg file. In addition, certain records are
+       checked, if registration points are in the file (only 4 will be used), 
+       the coordinate in conversion parameters (record 10) are saved and used 
+       in further processing of all coordinate values; invalid link record 
+       counts are noted; if the ascii DLG-3 is produced by ARC/INFO the 
+       universal border is deleted; DLG-3 from INTERGRAPH contain additional
+       coordinates defining the closed polygon for each area record, this 
+       program ignores them.
+
+When imp_dlg is finished control passes back to import.to.vect for completion.
+
+.SH "AUTHOR"
+R.L.Glenn, USDA, Soil Conservation Service
+Paul Carlson, USDA, Soil Conservation Service
