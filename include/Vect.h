@@ -15,6 +15,7 @@ int Vect_copy_pnts_to_xyz (struct line_pnts *, double *, double *, double *, int
 int Vect_reset_line (struct line_pnts *);
 int Vect_destroy_line_struct (struct line_pnts *);
 int Vect_point_on_line ( struct line_pnts *, double, double *, double *, double *, double *, double *);
+int Vect_line_segment ( struct line_pnts *InPoints, double start, double end, struct line_pnts *OutPoints );
 double Vect_line_length ( struct line_pnts *);
 double Vect_line_geodesic_length ( struct line_pnts *);
 int Vect_line_distance ( struct line_pnts *, double, double, double, int, 

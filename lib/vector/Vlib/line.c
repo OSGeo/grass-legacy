@@ -290,6 +290,54 @@ Vect_point_on_line ( struct line_pnts *Points, double distance,
     return 0;
 }
 
+/*!
+ \fn int Vect_line_segment ( struct line_pnts *InPoints, 
+                double start, double end,
+	        struct line_pnts *OutPoints )
+ \brief  Create segment of InPoints from start to end measured along the line
+         and write it to OutPoints.
+
+  If the distance is greater than line length or negative, error is returned.
+
+ \return  1 success
+          0 error when start > length or end < 0 
+ \param line_pnts * structure, start, end, line_pnts * structure 
+*/
+int 
+Vect_line_segment ( struct line_pnts *InPoints, double start, double end, 
+	            struct line_pnts *OutPoints )
+{
+    int i, seg1, seg2;
+    double length, tmp;
+    double x1, y1, z1, x2, y2, z2;
+
+    Vect_reset_line (OutPoints);
+    
+    if ( start > end ) {
+	tmp = start;
+	start = end;
+	end = tmp;
+    }
+    
+    /* Check start/end */
+    if ( end < 0 ) return 0; 
+    length = Vect_line_length ( InPoints );
+    if ( start > length ) return 0;
+    
+    /* Find coordinates and segments of start/end */
+    seg1 = Vect_point_on_line ( InPoints, start, &x1, &y1, &z1, NULL, NULL);
+    seg2 = Vect_point_on_line ( InPoints, end, &x2, &y2, &z2, NULL, NULL);
+    
+    Vect_append_point ( OutPoints, x1, y1, z1 );
+
+    for ( i = seg1; i < seg2; i++ ) {
+	Vect_append_point ( OutPoints, InPoints->x[i], InPoints->y[i], InPoints->z[i] );
+    };
+
+    Vect_append_point ( OutPoints, x2, y2, z2 );
+
+    return 1;
+}
 
 /*!
  \fn double Vect_line_length ( struct line_pnts *Points )
