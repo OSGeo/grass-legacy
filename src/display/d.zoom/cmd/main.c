@@ -18,7 +18,7 @@ main (int argc, char **argv)
 {
     int stat;
     int rotate;
-    struct Flag *quiet, *recreate, *pan;
+    struct Flag *quiet, *just, *pan;
     struct Option *action;
     struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
@@ -84,11 +84,6 @@ main (int argc, char **argv)
     smap->required = NO;
     smap->gisprompt = "old,site_lists,sites" ;
     smap->description = "Name of site file";
-                                                        
-    if(!rast && !vect && !site)
-    {
-	    rmap->required = YES;
-    }
 
     action = G_define_option();
     action->key = "action";
@@ -110,13 +105,19 @@ main (int argc, char **argv)
     quiet->key = 'q';
     quiet->description = "Quiet";
 
-    recreate = G_define_flag();
-    recreate->key = 'r';
-    recreate->description = "Recreate current window";
+    just = G_define_flag();
+    just->key = 'j';
+    just->description = "Just redraw current maps using default colors";
 
     pan = G_define_flag();
     pan->key = 'p';
     pan->description = "Unzoom with panning";
+
+    if(!rast && !vect && !site)
+    {
+	  rmap->required = YES;
+	  just->answer = 1;
+    }
 
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
@@ -128,7 +129,7 @@ main (int argc, char **argv)
        quiet->answer=1;
 
     cmd = NULL;
-    if (recreate->answer)
+    if (!just->answer)
     {
         R_open_driver();
 	stat = R_pad_get_item("list", &list, &nlists);
@@ -136,8 +137,8 @@ main (int argc, char **argv)
 	if (stat || !nlists)
 	{
 	    fprintf(stderr, "ERROR: can not get \"list\" items\n");
-	    fprintf(stderr, "-r flag ignored\n");
-	    recreate->answer = 0;
+	    fprintf(stderr, "-j flag forced\n");
+	    just->answer = 1;
 	}
 	else
 	{
@@ -152,7 +153,7 @@ main (int argc, char **argv)
 	}
     }
 
-    if (!recreate->answer)
+    if (just->answer)
     {
     	if (rmap->answers && rmap->answers[0])
 	    rast = rmap->answers;
@@ -179,7 +180,10 @@ main (int argc, char **argv)
 
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
-	exit(0);
+    {
+	fprintf(stderr, "ERROR: No map is given\n");
+	exit(1);
+    }
 
     if (rast)
     {
