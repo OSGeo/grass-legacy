@@ -7,6 +7,7 @@
 #include "display.h"
 #include "raster.h"
 #include "options.h"
+#include "colors.h"
 
 int color1;
 int color2;
@@ -25,6 +26,9 @@ int main (int argc, char **argv)
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *mouse, *feet, *top, *linescale ;
 	struct Cell_head W ;
+	int R, G, B;
+	const int customFGcolor = MAXCOLORS + 1;
+	const int customBGcolor = MAXCOLORS + 2;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
@@ -54,15 +58,15 @@ int main (int argc, char **argv)
 	opt1->type       = TYPE_STRING ;
 	opt1->answer     = DEFAULT_BG_COLOR ;
 	opt1->required   = NO ;
-	opt1->description= "Color used for the background, or \"none\"" ;
+	opt1->description= "Background color, either a standard GRASS color, R:G:B triplet, or \"none\"" ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->required   = NO ;
-	opt2->options    = D_color_list();
-	opt2->description= "Color used for the text" ;
+/*	opt2->options    = D_color_list(); */
+	opt2->description= "Text color, either a standard GRASS color or R:G:B triplet (separated by colons)" ;
 
 	opt3 = G_define_option() ;
 	opt3->key        = "at";
@@ -71,7 +75,7 @@ int main (int argc, char **argv)
 	opt3->answer     = "0.0,0.0";
 	opt3->options    = "0-100" ;
 	opt3->required   = NO;
-	opt3->description= "the screen coordinates for top-left corner of label" ;
+	opt3->description= "The screen coordinates for top-left corner of label ([0,0] is top-left of frame)" ;
 
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
@@ -86,17 +90,38 @@ int main (int argc, char **argv)
 
 	use_feet = feet->answer ? 1 : 0;
 
-	if (opt1->answer && !strcmp ("none", opt1->answer)) {
-		do_background = 0;
-		color1 = 1;	/* dummy value */
+
+        /* Parse and select background color */
+	if(sscanf(opt1->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+		R_reset_color(R, G, B, customBGcolor);
+		color1 = customBGcolor;
+	    }
 	}
-	else {
-		color1 = D_translate_color(opt1->answer) ;
-		if( 0 == color1 )
-			G_fatal_error ("Bad color name");
+	else if (!strcmp("none", opt1->answer)) {
+	    do_background = 0;
+	    color1 = 1;	/* dummy value */
 	}
-	
-	color2 = D_translate_color(opt2->answer) ;
+	else
+	    color1 = D_translate_color(opt1->answer);
+
+	if(!color1)
+	    G_fatal_error("[%s]: No such color", opt1->answer);
+
+
+        /* Parse and select foreground color */
+	if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+	    if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+		R_reset_color(R, G, B, customFGcolor);
+		color2 = customFGcolor;
+	    }
+	}
+	else
+	    color2 = D_translate_color(opt2->answer);
+
+	if(!color2)
+	    G_fatal_error("[%s]: No such color", opt2->answer);
+
 
 	sscanf(opt3->answers[0], "%lf", &east) ;
 	sscanf(opt3->answers[1], "%lf", &north) ;
