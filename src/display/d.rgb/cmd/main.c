@@ -10,7 +10,7 @@ char **argv ;
 	CELL *b3_array ;
 	CELL *out_array ;
 	char *mapset ;
-	char *name[20] ;
+	char name[20] ;
 	char buff[128] ;
 	int atrow, atcol ;
 	int next_row;
