@@ -18,8 +18,8 @@ Following methods are available:
  <li>diversity: number of different values
  <li>slope: linear regression slope
  <li>offset: linear regression offset
- <li>min_raster: raster with the min. time-series value
- <li>max_raster: raster with the max. time-series value
+ <li>min_raster: raster map number with the minimum time-series value
+ <li>max_raster: raster map number with the maximum time-series value
  </ul> 
 
 <H2>NOTES</H2>
@@ -34,7 +34,10 @@ handle data as they choose. Mostly, they just compute the aggregate
 over the non-NULL values, producing a NULL result only if all inputs
 are NULL.
 <p>
-The <EM> min_raster </EM> and <EM> max_raster </EM> methods generate a map with the name of the raster that holds the minimum/maximum value of the time-series. The numbering starts at <EM> 0 </EM> up to <EM> n </EM> for the first and the last raster listed in <EM> input = </EM>, respectively. 
+The <EM>min_raster</EM> and <EM>max_raster</EM> methods generate a map with the
+number of the raster map that holds the minimum/maximum value of the
+time-series. The numbering starts at <EM>0</EM> up to <EM>n</EM> for the
+first and the last raster listed in <EM>input=</EM>, respectively. 
 
 
 
