@@ -17,11 +17,16 @@ OFILES =  \
 LIBES = $(DRIVERLIB) $(GISLIB)
 DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
 
-$(GISBASE)/driver/PNG: $(OFILES) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(GDLIB)
+all: $(GISBASE)/driver/PNG
 	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo PNG already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding PNG driver to $(ETC)/monitorcap ; \
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
+
+$(GISBASE)/driver/PNG: $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(GDLIB)
+
+$(DEPDRIVERLIB): #
+$(DEPGISLIB): #
