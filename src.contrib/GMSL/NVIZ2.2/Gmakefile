@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.12 2000-10-18 18:13:16 markus Exp $
+# $Id: Gmakefile,v 1.13 2000-10-25 13:30:50 markus Exp $
 #
 # Toplevel makefile for building everything
 
@@ -21,7 +21,7 @@ configure:
 nvwish:
 	$(GMAKE) $(LIBDIR)/libimage
 	$(GMAKE) $(LIBDIR)/ogsf
-	cd src ; $(GMAKE) 
+	cd src ; $(GMAKE)
 
 nviz:
 	'rm' -rf $(INSTALL_DIR)
@@ -29,7 +29,7 @@ nviz:
 
 # Install the scripts in the appropriate directory
 install:
-	'rm' -rf $(INSTALL_DIR)
+	'rm' -rf $(INSTALL_DIR)/
 	mkdir $(INSTALL_DIR)
 	mkdir $(INSTALL_DIR)/scripts
 	mkdir $(INSTALL_DIR)/bitmaps
@@ -45,3 +45,4 @@ install:
 		$(INSTALL_DIR)/scripts/script_play \
 		$(INSTALL_DIR)/scripts/script_tools \
 		$(GISBASE)/bin/$(NV_VER)
+	mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER)
