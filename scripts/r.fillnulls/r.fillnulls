@@ -118,15 +118,28 @@ r.mapcalc $TMP1="if(isnull($GIS_OPT_input),1,null())"
 nsres=`g.region -gm | grep 'nsres=' | sed s/nsres=//`
 ewres=`g.region -gm | grep 'ewres=' | sed s/ewres=//`
 RES=`echo $nsres $ewres | awk '{printf "%.8f", ($1 + $2)}'`  # avg*2
+#echo "RES = [$RES]"
 
 r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
+if [ $? -ne 0 ] ; then
+    echo "ERROR detected: $0 abandoned. Removing temporary map:"
+    g.remove rast=$TMP1
+    g.rename mask_$$,MASK > /dev/null
+    exit 1
+fi
+
 r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
 
 # now we only see the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
 echo "Creating interpolation points..."
 r.to.vect input=$GIS_OPT_input output=vecttmp_fillnulls_$$ feature=point
-
+if [ $? -ne 0 ] ; then
+    echo "ERROR detected: $0 abandoned. Removing temporary maps:"
+    g.remove rast=MASK,$TMP1,$TMP1.buf
+    g.rename mask_$$,MASK > /dev/null
+    exit 1
+fi
 
 #count number of points to control segmax parameter for interpolation:
 POINTSNUMBER="`v.info map=vecttmp_fillnulls_$$ | grep 'Number of points' | awk '{print $5}'`"
@@ -148,13 +161,14 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   fi
   
   #cleanup
-  g.remove rast=$TMP1,$TMP1.buf,rfillnulls_$TMP1 > /dev/null
+  g.remove rast=$TMP1,$TMP1.buf > /dev/null
 
   exit 1
 fi
 
 echo ""
 echo "Note: Below warnings may be ignored."
+echo "------------------------------------"
 echo ""
 
 #remove internal MASK first
