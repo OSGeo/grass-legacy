@@ -13,7 +13,7 @@
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
 #   	    	command line options for setting the GISDBASE, LOCATION, and/or
-#   	    	MAPSET. Finally it starts grass with the appropriate user
+#   	    	MAPSET. Finally it starts GRASS with the appropriate user
 #   	    	interface and cleans up after it is finished.
 # COPYRIGHT:    (C) 2000 by the GRASS Development Team
 #
@@ -84,7 +84,7 @@ for i in "$@" ; do
     esac
 done
 
-# Set the GRASSRC file
+# Set the grassrc file
 GISRC="$HOME/.grassrc57"
 export GISRC
 
@@ -94,17 +94,17 @@ if [ $? -eq 0 ] ; then
    rm -f "$GISRC"
 fi
 
-# At this point the grass user interface variable has been set from the
+# At this point the GRASS user interface variable has been set from the
 # command line, been set from an external environment variable, or is 
 # not set. So we check if it is not set
 if [ ! "$GRASS_GUI" ] ; then
     
-    # Check for a reference to the grass user interface in the grassrc file
+    # Check for a reference to the GRASS user interface in the grassrc file
     if [ -f "$GISRC" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
     
-    # Set the grass user interface to the default if needed - currently tcltk
+    # Set the GRASS user interface to the default if needed - currently tcltk
     if [ ! "$GRASS_GUI" ] ; then
     	GRASS_GUI="tcltk"
     fi
@@ -239,7 +239,7 @@ if [ ! "$GRASS_GNUPLOT" ] ; then
     export GRASS_GNUPLOT
 fi
 
-# First time user - GISRC is defined in the grass script
+# First time user - GISRC is defined in the GRASS script
 if [ ! -f "$GISRC" ] ; then
 
     if [ ! -f "$GISBASE/locale/$LCL/etc/grass_intro" ] ; then
@@ -425,6 +425,8 @@ if [ ! "$LOCATION" ] ; then
 	tcltk)
 	    eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
 	    thetest=$?
+	        #0: failure
+	        #1: successfully read environment
         
 		###########################################################################
 		# at the moment when the EPSG facility is used, the eval returns "1"
@@ -435,13 +437,13 @@ if [ ! "$LOCATION" ] ; then
 	    fi
 		############################################################################
             
-	    case thetest in
+	    case $thetest in
      	    	1)
 
          	    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
 		    echo "Error in Tcl/Tk startup. If necessary, please"
-		    echo "report this error to the Grass developers."
+		    echo "report this error to the GRASS developers."
 		    echo "Switching to text mode now."
 		    echo "Hit RETURN to continue..."
 		    read ans
@@ -502,7 +504,7 @@ if [ ! "$LOCATION" ] ; then
 	*)
 	    # Shouldn't need this but you never know
 	    echo "ERROR: Invalid user interface specified - $GRASS_GUI."
-	    echo "Use the -help option to grass for valid interfaces."
+	    echo "Use the -help option to select a valid interface."
 	    exit
 	    ;;
     esac
@@ -683,7 +685,7 @@ esac
 
 trap 2 3 15
 
-# Grass session finished
+# GRASS session finished
 tput clear
 echo "Cleaning up temporary files....."
 
