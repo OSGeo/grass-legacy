@@ -1,12 +1,10 @@
 /* 
- * 
- * merged select_vNsds.c 3/2002 Markus Neteler
- *
- * GRASS 4.x r.in.hdf written by Bill Brown, USA-CERL, NCSA.
- * December 28, 1992
- */
- 
-/*************************************************************************
+* 
+* 4/2002:
+* merged select_vNsds.c from NASA into this code. Markus Neteler
+*
+* HDF docs: http://hdf.ncsa.uiuc.edu/training/HDFtraining/RefManual
+*
 * select_vNsds.c (public domain from NASA)
 *
 * http://daac.gsfc.nasa.gov/CAMPAIGN_DOCS/MODIS/software.shtml
@@ -38,7 +36,11 @@
 *    2) Output filenames automatically created by replacing 'HDF' suffix
 *       of input file with selected parameter (SDS) names
 *
-**************************************************************************/
+*************************************************************************
+* GRASS 4.x r.in.hdf written by Bill Brown, USA-CERL, NCSA.
+* December 28, 1992
+*
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -342,7 +344,7 @@ main(int argc, char *argv[])
  * Out put sds to binary data file
  */
 
-/* see number in
+/* see numbers in
    4.1r5-linux/include/hntdefs.h
  */
         tempfile = strdup(infile);
@@ -410,12 +412,17 @@ main(int argc, char *argv[])
         G_system(cmd);
 
        /* coltable*/
-        sprintf(cmd, "r.colors %s col=grey.eq",outfile);
+        fprintf(stderr, "Grey.eq color table...\n");
+        sprintf(cmd, "g.region save=%s.tmpreg.%s; g.region rast=%s;\
+                      r.colors %s col=grey.eq;\
+                      g.region region=%s.tmpreg.%s;
+                      g.remove region=%s.tmpreg.%s >/dev/null ",
+                      outfile,outfile,outfile,outfile,outfile,outfile,outfile,outfile);
         G_system(cmd);
 
        /* delete interim binary file */
-/*        sprintf(cmd, "rm -f %s",outfile);
-        G_system(cmd);*/
+        sprintf(cmd, "rm -f %s",outfile);
+        G_system(cmd);
         fprintf(stderr, "GRASS file successfully created:\n %s\n", outfile);
 
         switch (num_type)
