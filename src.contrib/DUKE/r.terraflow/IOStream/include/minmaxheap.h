@@ -151,8 +151,10 @@ public:
 
 
 private:
-  long log2(long n) const;
-  int isOnMaxLevel(HeapIndex i) const { return (log2(i) % 2); };
+  // just in case log2() macro was already defined in math.h.
+  // e.g., log2() is defined in CYGWIN GCC by default.
+  long log2_(long n) const;
+  int isOnMaxLevel(HeapIndex i) const { return (log2_(i) % 2); };
   int isOnMinLevel(HeapIndex i) const { return !isOnMaxLevel(i); };
 
   HeapIndex leftChild(HeapIndex i) const { return 2*i; };
@@ -195,9 +197,9 @@ HeapIndex BasicMinMaxHeap<T>::size() const {
 // ----------------------------------------------------------------------
 
 template <class T> 
-long BasicMinMaxHeap<T>::log2(long n) const {
+long BasicMinMaxHeap<T>::log2_(long n) const {
   long i=-1;
-  // let log2(0)==-1
+  // let log2_(0)==-1
   while(n) {
 	n = n >> 1;
 	i++;
