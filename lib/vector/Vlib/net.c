@@ -824,7 +824,7 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
 
     /* Find the shortest variant from maximum 4 */
     for ( i = 0; i < nfnodes; i++ ) {
-	for ( j = 0; j < nfnodes; j++ ) {
+	for ( j = 0; j < ntnodes; j++ ) {
 	    double ncst, cst;
 	    int ret;
 
