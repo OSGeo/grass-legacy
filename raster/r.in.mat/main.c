@@ -50,11 +50,6 @@ int main(int argc, char *argv[]) {
     int i,row,col; /* counters */
 
     int machine_endianness, file_endianness, endian_mismatch;  /* 0=little, 1=big */
-    union {
-	int testWord;
-	char testByte[4];
-    } endianTest;
-    
     int data_format; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int (ie text) */
     int data_type;   /* 0=numbers  1=text */
     long format_block;  /* combo of endianness, 0, data_format, and type */
@@ -122,14 +117,11 @@ int main(int argc, char *argv[]) {
 
   /******  SETUP  ****************************************************/
     /* Check Endian State of Host Computer*/
-    endianTest.testWord = 1;
-    if (endianTest.testByte[0] == 1)
+    if (G_is_little_endian())
 	machine_endianness = 0;   /* ie little endian */
     else
 	machine_endianness = 1;   /* ie big endian */
-    if(verbose->answer)
-	fprintf(stdout, "Machine is %s endian.\n", machine_endianness ? "big" : "little");
-
+    G_debug(1, "Machine is %s endian.", machine_endianness ? "big" : "little");
 
     infile = inputfile->answer;
     outfile = outputfile->answer;
@@ -152,8 +144,7 @@ int main(int argc, char *argv[]) {
     else
 	endian_mismatch = 0;
 
-    if(verbose->answer)
-	fprintf(stdout, "File is %s endian.\n\n", file_endianness ? "big" : "little");
+    G_debug(1, "File is %s endian.\n", file_endianness ? "big" : "little");
 
     if(format_block > 51)
 	G_warning("only little endian MAT-File(v4) binaries have been tested so far! Probably won't work.");
@@ -161,7 +152,7 @@ int main(int argc, char *argv[]) {
 
 
   /******  READ MAP  ****************************************************/
-    fprintf(stdout, "Reading MAT-File ..\n");
+    fprintf(stderr, "Reading MAT-File ..\n");
 
     while (!feof(fp1)) {
 
@@ -207,14 +198,12 @@ int main(int argc, char *argv[]) {
 	    if (c == '\0') break;
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "array name     = [%s]\n", array_name);
-	fprintf(stderr, "  format block = [%04ld]\n", format_block);
-	fprintf(stderr, "  data format  = [%d]\n", data_format);
-	fprintf(stderr, "  data type    = [%d]\n", data_type);
-	fprintf(stderr, "  rows         = [%ld]\n", mrows);
-	fprintf(stderr, "  cols         = [%ld]\n", ncols);
-#endif
+	G_debug(3, "array name     = [%s]", array_name);
+	G_debug(3, "  format block = [%04ld]", format_block);
+	G_debug(3, "  data format  = [%d]", data_format);
+	G_debug(3, "  data type    = [%d]", data_type);
+	G_debug(3, "  rows         = [%ld]", mrows);
+	G_debug(3, "  cols         = [%ld]", ncols);
 
 	if(strcmp(array_name, "map_name") == 0) {
 	    have_name = 1;
@@ -232,9 +221,7 @@ int main(int argc, char *argv[]) {
 
 	    map_name[ncols] = '\0';
 	    G_strip(map_name);  /* remove leading and trailing whitespace*/
-	    #ifdef DEBUG
-	    fprintf(stderr, "map name= <%s>\n", map_name);
-	    #endif
+	    G_debug(1, "map name= <%s>", map_name);
 	}
 
 	else if (strcmp(array_name, "map_northern_edge") == 0) {
@@ -242,9 +229,7 @@ int main(int argc, char *argv[]) {
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
 		G_fatal_error("invalid 'map_northern_edge' array");
 	    fread(&region.north, sizeof(double), 1, fp1);
-	    #ifdef DEBUG
-	    fprintf(stderr, "northern edge=%f\n", region.north);
-	    #endif
+	    G_debug(1, "northern edge=%f", region.north);
 	}
 
 	else if (strcmp(array_name, "map_southern_edge") == 0) {
@@ -252,9 +237,7 @@ int main(int argc, char *argv[]) {
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
 		G_fatal_error("invalid 'map_southern_edge' array");
 	    fread(&region.south, sizeof(double), 1, fp1);
-	    #ifdef DEBUG
-	    fprintf(stderr, "southern edge=%f\n", region.south);
-	    #endif
+	    G_debug(1, "southern edge=%f", region.south);
 	}
 
 	else if (strcmp(array_name, "map_eastern_edge") == 0) {
@@ -262,9 +245,7 @@ int main(int argc, char *argv[]) {
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
 		G_fatal_error("invalid 'map_eastern_edge' array");
 	    fread(&region.east, sizeof(double), 1, fp1);
-	    #ifdef DEBUG
-	    fprintf(stderr, "eastern edge=%f\n", region.east);
-	    #endif
+	    G_debug(1, "eastern edge=%f", region.east);
 	}
 
 	else if (strcmp(array_name, "map_western_edge") == 0) {
@@ -272,9 +253,7 @@ int main(int argc, char *argv[]) {
 	    if(mrows != 1 || ncols != 1 || data_format != 0 || data_type != 0)
 		G_fatal_error("invalid 'map_western_edge' array");
 	    fread(&region.west, sizeof(double), 1, fp1);
-	    #ifdef DEBUG
-	    fprintf(stderr, "western edge=%f\n", region.west);
-	    #endif
+	    G_debug(1, "western edge=%f", region.west);
 	}
 
 	else if (strcmp(array_name, "map_title") == 0) {
@@ -293,9 +272,7 @@ int main(int argc, char *argv[]) {
 
 	    map_title[ncols] = '\0';
 	    G_strip(map_title);  /* remove leading and trailing whitespace*/
-	    #ifdef DEBUG
-	    fprintf(stderr, "map title= [%s]\n", map_title);
-	    #endif
+	    G_debug(1, "map title= [%s]", map_title);
 	}
 
 	else if (strcmp(array_name, "map_data") == 0) {
@@ -309,25 +286,19 @@ int main(int argc, char *argv[]) {
 	    switch (data_format) {
 	    /*   0=double	1=float   2=32bit signed int   5=8bit unsigned int(text)   */
 	      case 0: 
-	        #ifdef DEBUG
-		fprintf(stderr, " double map\n");
-	        #endif
+		G_debug(1, " double map");
 		map_type = DCELL_TYPE;
 		array_data = G_calloc(mrows*(ncols+1), G_raster_size(map_type));
 		fread(array_data, sizeof(double), mrows*ncols, fp1);
 		break;
 	     case 1:
-	        #ifdef DEBUG
-		fprintf(stderr, " float map\n");
-	        #endif
+		G_debug(1, " float map");
 		map_type = FCELL_TYPE;
 		array_data = G_calloc(mrows*(ncols+1), G_raster_size(map_type));
 		fread(array_data, sizeof(float), mrows*ncols, fp1);
 		break;
 	      case 2:
-	        #ifdef DEBUG
-		fprintf(stderr, " int map\n");
-	        #endif
+		G_debug(1, " int map");
 		map_type = CELL_TYPE;
 		array_data = G_calloc(mrows*(ncols+1), G_raster_size(map_type));
 		fread(array_data, sizeof(int), mrows*ncols, fp1);
@@ -337,7 +308,7 @@ int main(int argc, char *argv[]) {
 	} /* endif map_data */
 
 	else {
-	    fprintf(stdout, "Skipping unknown array '%s'\n", array_name);
+	    fprintf(stderr, "Skipping unknown array '%s'\n", array_name);
 	    switch (data_format) {
 	    /*   0=double	1=float   2=32bit signed int   5=8bit unsigned int(text)   */
 	      case 0: 
@@ -356,11 +327,9 @@ int main(int argc, char *argv[]) {
 	    }
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Read array '%s' [%ld,%ld] format=%d type=%d\n", 
+	G_debug(3, "Read array '%s' [%ld,%ld] format=%d type=%d\n", 
 	    array_name, ncols, mrows, data_format, data_type);
-	fprintf(stdout, "\n");
-#endif
+
     } /* while !EOF */
 
 
@@ -373,18 +342,18 @@ int main(int argc, char *argv[]) {
     if(have_name) {
         if(outfile) {
 	    if( 0 != strcmp(outfile, map_name) )
-		fprintf(stdout, "Setting map name to <%s> which overrides <%s>\n",
+		fprintf(stderr, "Setting map name to <%s> which overrides <%s>\n",
 		    outfile, map_name);
 	    strncpy(map_name, outfile, 61);
 	}
     }
     else {
 	if(outfile) {
-	    fprintf(stdout, "Setting map name to <%s>\n", outfile);
+	    fprintf(stderr, "Setting map name to <%s>\n", outfile);
 	    strncpy(map_name, outfile, 61);
 	}
 	else {
-	    fprintf(stdout, "No 'map_name' array found; using <MatFile>\n");
+	    fprintf(stderr, "No 'map_name' array found; using <MatFile>\n");
 	    strcpy(map_name, "MatFile");
 	}
     }
@@ -416,15 +385,15 @@ int main(int argc, char *argv[]) {
     G_set_window(&region);
 
     if(verbose->answer) {
-	fprintf(stdout, "\nMap <%s> bounds set to:\n", map_name);
-	fprintf(stdout, "northern edge=%f\n", region.north);
-	fprintf(stdout, "southern edge=%f\n", region.south);
-	fprintf(stdout, "eastern edge=%f\n", region.east);
-	fprintf(stdout, "western edge=%f\n", region.west);
-	fprintf(stdout, "nsres=%f\n", region.ns_res);
-	fprintf(stdout, "ewres=%f\n", region.ew_res);
-	fprintf(stdout, "rows=%d\n", region.rows);
-	fprintf(stdout, "cols=%d\n\n", region.cols);
+	fprintf(stderr, "\nMap <%s> bounds set to:\n", map_name);
+	fprintf(stderr, "northern edge=%f\n", region.north);
+	fprintf(stderr, "southern edge=%f\n", region.south);
+	fprintf(stderr, "eastern edge=%f\n", region.east);
+	fprintf(stderr, "western edge=%f\n", region.west);
+	fprintf(stderr, "nsres=%f\n", region.ns_res);
+	fprintf(stderr, "ewres=%f\n", region.ew_res);
+	fprintf(stderr, "rows=%d\n", region.rows);
+	fprintf(stderr, "cols=%d\n\n", region.cols);
     }
 
 
@@ -436,8 +405,8 @@ int main(int argc, char *argv[]) {
 	G_fatal_error ("unable to create raster map <%s>", outfile);
 
     /* write new raster map*/
-    fprintf(stdout, "Writing new raster map ..");
-    fflush(stdout);
+    fprintf(stderr, "Writing new raster map ..");
+    fflush(stderr);
 
     mrows = region.rows;
     ncols = region.cols;
@@ -508,7 +477,7 @@ int main(int argc, char *argv[]) {
 
 
     if(verbose->answer)
-	fprintf(stdout, "\ndone.\n\n");
+	G_done_msg("\n");
 
     return 0;
 }
