@@ -1,0 +1,32 @@
+CFLAGS      = $(COMPILE_FLAGS) -I$(LIBDIR) -D$(OS) $(EXTRA_CFLAGS)
+GMAKE       = $(GIS)/src/CMD/Gmake
+MAKEALL     = $(GIS)/src/CMD/Makeall $(GMAKE)
+MANROFF     = tbl -TX $(GIS)/src/man.help/man.header $? | nroff -Tlp | col -b > $@
+MAN1        = $(GIS)/man/1
+MAN2        = $(GIS)/man/2
+HELP        = $(GIS)/man/help
+
+BIN         = $(GIS)/bin
+ETC         = $(GIS)/etc
+SRC         = $(GIS)/src
+TXT         = $(GIS)/txt
+LIBDIR      = $(GIS)/src/libes
+
+VASKLIB     = $(LIBDIR)/libvask.a
+VASK        = $(VASKLIB) $(CURSES)
+
+GISLIB      = $(LIBDIR)/libgis.a
+LOCKLIB     = $(LIBDIR)/liblock.a
+IMAGERYLIB  = $(LIBDIR)/libI.a
+ROWIOLIB    = $(LIBDIR)/librowio.a
+SEGMENTLIB  = $(LIBDIR)/libsegment.a
+BTREELIB    = $(LIBDIR)/libbtree.a
+COORCNVLIB  = $(LIBDIR)/libcoorcnv.a
+RASTERLIB   = $(LIBDIR)/libraster.a
+DISPLAYLIB  = $(LIBDIR)/libdisplay.a
+D_LIB       = $(LIBDIR)/libD.a
+
+DLGLIB      = $(LIBDIR)/libdlg.a
+DIGLIB      = $(LIBDIR)/libdig.a
+DIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
+
