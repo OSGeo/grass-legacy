@@ -25,11 +25,6 @@ int main(int argc, char *argv[]) {
     unsigned long filesize;
 
     int endianness;  /* 0=little, 1=big */
-    union {
-        int testWord;
-        char testByte[sizeof(int)];
-    } endianTest;
-    
     int data_format;    /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int (ie text) */
     int data_type;      /* 0=numbers  1=text */
     long format_block;  /* combo of endianness, 0, data_format, and type */
@@ -111,15 +106,11 @@ int main(int argc, char *argv[]) {
 
 
     /* Check Endian State of Host Computer*/
-    endianTest.testWord = 1;
-    if (endianTest.testByte[0] == 1)
+    if (G_is_little_endian())
         endianness = 0;   /* ie little endian */
     else
         endianness = 1;   /* ie big endian */
-
-#ifdef DEBUG
-    fprintf(stderr, "Machine is %s endian.\n", endianness ? "big" : "little");
-#endif
+    G_debug(1, "Machine is %s endian.\n", endianness ? "big" : "little");
 
     G_get_window (&region);
 
@@ -299,9 +290,7 @@ int main(int argc, char *argv[]) {
     format_block = (endianness*1000) + (data_format*10) + data_type;
     fwrite(&format_block, sizeof(long), 1, fp1);
 
-#ifdef DEBUG
-    fprintf(stderr, "map data format is [%04ld]\n", format_block);
-#endif
+    G_debug(3, "map data format is [%04ld]\n", format_block);
 
     /* 4 byte number of rows & columns*/
     fwrite(&mrows, sizeof(long), 1, fp1);
@@ -319,10 +308,9 @@ int main(int argc, char *argv[]) {
 
     /* data array, by increasing column */
     raster = G_calloc ((G_window_rows()+1)*(G_window_cols()+1), G_raster_size(map_type));
-#ifdef DEBUG
-    fprintf(stderr, "mem alloc is %d bytes\n", /* I think _cols()+1 is unneeded? */
+
+    G_debug(1, "mem alloc is %d bytes\n", /* I think _cols()+1 is unneeded? */
     	G_raster_size(map_type)*(G_window_rows()+1)*(G_window_cols()+1) );
-#endif
 
     fprintf(stderr, "Reading in map .. ");
     fflush(stderr);
@@ -397,6 +385,6 @@ int main(int argc, char *argv[]) {
     if(verbose->answer)
 	printf("\n%ld bytes written to '%s'.\n", filesize, outfile);
 
-
+    G_done_msg("");
     return 0;
 }
