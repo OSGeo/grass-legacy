@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildInfxQry	buildInfxQry.c	/^buildInfxQry(ktab,keycat, joinargs, curcat)$/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getCat	getCat.c	/^getCat (Map, Cats)$/
+getSelectOpts	getSopts.c	/^getSelectOpts(argc, argv)$/
+openvect	openvect.c	/^openvect (name)$/
+runInfxFile	runInfxFile.c	/^runInfxFile(sqlin, curcat)$/
