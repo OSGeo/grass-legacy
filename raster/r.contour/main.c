@@ -70,6 +70,12 @@ int main ( int argc, char *argv[])
     map->gisprompt  = "old,cell,raster";
     map->description= "Name of an existing raster map" ;
 
+    vect=G_define_option () ;
+    vect->key        = "output";
+    vect->type       = TYPE_STRING;
+    vect->required   = YES;
+    vect->description= "Name of output vector file" ;
+
     levels=G_define_option () ;
     levels->key        = "levels";
     levels->type       = TYPE_DOUBLE;
@@ -101,12 +107,6 @@ int main ( int argc, char *argv[])
     cut->required   = NO;
     cut->answer = "0";
     cut->description= "Minimum number of points for a contour line (0 -> no limit)" ;
-
-    vect=G_define_option () ;
-    vect->key        = "output";
-    vect->type       = TYPE_STRING;
-    vect->required   = YES;
-    vect->description= "Name of output vector file" ;
 
     quiet = G_define_flag() ;
     quiet->key        = 'q';
