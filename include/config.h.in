@@ -14,6 +14,9 @@
 /* define if curses.h exists */
 #undef HAVE_CURSES_H
 
+/* define if keypad in lib[n]curses */
+#undef HAVE_KEYPAD
+
 /* define if limits.h exists */
 #undef HAVE_LIMITS_H
 
@@ -56,6 +59,12 @@
 /* define if sys/utsname.h exists */
 #undef HAVE_SYS_UTSNAME_H
 
+/* define if g2c.h exists */
+#undef HAVE_G2C_H
+
+/* define if f2c.h exists */
+#undef HAVE_F2C_H
+
 /* define gid_t type */
 #undef gid_t
 
@@ -83,7 +92,6 @@
 /* define if lseek() exists */
 #undef HAVE_LSEEK
 
-
 /* define if time() exists */
 #undef HAVE_TIME
 
@@ -105,8 +113,8 @@
 /* define if setpgrp() takes no argument */
 #undef SETPGRP_VOID
 
-/* define if PNG support exists */
-#undef HAVE_PNG
+/* define if drand48() exists */
+#undef HAVE_DRAND48
 
 /* define if postgres is to be used */
 #undef HAVE POSTGRES
@@ -117,14 +125,63 @@
 /* define if PQcmdTuples in lpq */
 #undef HAVE_PQCMDTUPLES
 
-/* define if jpeglib.h exists */
-#undef HAVE_JPEGLIB_H
-
 /* define if ODBC exists */
 #undef HAVE_SQL_H
 
+/* define if PNG support exists */
+#undef HAVE_PNG
+
+/* define if jpeglib.h exists */
+#undef HAVE_JPEGLIB_H
+
+/* define if gdImageGif() exists */
+#undef HAVE_GDIMAGEGIF
+
+/* define if gdImagePng() exists */
+#undef HAVE_GDIMAGEPNG
+
+/* define if gdImageCreateTrueColor() exists */
+#undef HAVE_GDIMAGECREATETRUECOLOR
+
+/* define if fftw.h exists */
+#undef HAVE_FFTW_H
+
+/* define if dfftw.h exists */
+#undef HAVE_DFFTW_H
+
+/* define if BLAS exists */
+#undef HAVE_LIBBLAS
+
+/* define if LAPACK exists */
+#undef HAVE_LIBLAPACK
+
+/* define if dbm.h exists */
+#undef HAVE_DBM_H
+
+/* define if readline exists */
+#undef HAVE_READLINE_READLINE_H
+
 /* Whether or not we are using G_socks for display communications */
 #undef USE_G_SOCKS
+
+/* define if X is disabled or unavailable */
+#undef X_DISPLAY_MISSING
+
+/* define if libintl.h exists */
+#undef HAVE_LIBINTL_H
+
+/* define if iconv.h exists */
+#undef HAVE_ICONV_H
+
+/* define if NLS requested */
+#undef USE_NLS
+
+/*
+ * It's hard to click two buttons simultaneously with two button mouse.
+ * Situation is worse, if it requires continuous clicking.
+ * In this case uncomment below.
+ */
+#undef ANOTHER_BUTTON
 
 /*
  * configuration information solely dependent on the above
