@@ -102,10 +102,22 @@ CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v "\
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
-echo "Generating HTML manual pages..."
+echo "Generating HTML manual pages index (help system)..."
 write_html_header $FULLINDEX "GRASS GIS 5.7 Reference Manual"
 echo "<b>Full command index:</b>" >> $FULLINDEX
-
+echo "<table border=0>" >> $FULLINDEX
+echo "<tr><td>d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>db.* </td><td>database commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>pg.* </td><td>postGRASS commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
+echo "</table>" >> $FULLINDEX
+ 
 #generate main index of all modules:
 echo "[ " >> $FULLINDEX
 k=0
