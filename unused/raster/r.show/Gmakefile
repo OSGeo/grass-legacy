@@ -1,5 +1,5 @@
 PGM    = r.show
-SRCS   = libr.c
+SRCS   = ../libr/libr.c
 OBJS   = libr.o
 CFLAGS+= -DR_SHOW
 LIBES  = $(GISLIB)
