@@ -1,0 +1,69 @@
+#***************************************************************************#
+#		NOTES FOR INSTALLATION OF THE NCSA HDF LIBRARY 		    #
+#				FOR USE IN GRASS			    #
+#***************************************************************************#
+
+The directory HDF.lib contains NCSA HDF version 3.2 release 3, 1 Dec 1992. 
+
+	#******************************************************#
+
+	TO COMPILE:
+	1)  cd to HDF.lib.
+	2)  Copy the MAKE.xxx file for your machine to "Makefile".
+	3)  Run gmake4.1
+
+	#******************************************************#
+
+The Gmakefile is the only file in the HDF.lib directory
+that has been added or changed for the inclusion of the 
+NCSA HDF library with GRASS.  The contents of three subdirectories 
+(util, test, bkwdtest) which NCSA includes with their release of HDF 
+have not been included here.
+
+The only current GRASS routines that use this library are:
+
+		    r.in.hdf
+		    r.out.hdf
+
+See the README file in their respective directories for compilation info.
+
+The library includes source code to compile in either C or Fortran,
+but you only need to compile the C code for installation of the 
+above GRASS programs.
+
+
+Programmers who wish to use the HDF library:
+
+    As of January 1993, the full documentation for HDF version 3.2 has not
+    been released, so we include here an ascii version of the documentation
+    for HDF version 3.1.  Major changes are documented in the file
+    MigrationNotes.
+
+    To get the full library with examples and PostScript documentation,
+    you may want to ftp from ftp.ncsa.uiuc.edu.  
+    (Also see HDF.lib/README.FIRST)
+
+
+#***************************************************************************
+#
+#
+#                         NCSA HDF version 3.2 release 3
+#                            December 1, 1992
+#
+# NCSA HDF Version 3.2 source code and documentation are in the public
+# domain.  Specifically, we give to the public domain all rights for future
+# licensing of the source code, all resale rights, and all publishing rights.
+#
+# We ask, but do not require, that the following message be included in all
+# derived works:
+#
+# Portions developed at the National Center for Supercomputing Applications at
+# the University of Illinois at Urbana-Champaign, in collaboration with the
+# Information Technology Institute of Singapore.
+#
+# THE UNIVERSITY OF ILLINOIS GIVES NO WARRANTY, EXPRESSED OR IMPLIED, FOR THE
+# SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT LIMITATION,
+# WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE
+#
+#***************************************************************************
+
