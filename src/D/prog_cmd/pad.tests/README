@@ -1,0 +1,28 @@
+Programs in this directory are concerned with testing the scratch pad
+capabilities of the graphics monitor program. They are as follows
+
+    create [<pad>]
+	create a new scratch pad. If no pad is specified
+	a name is invented and this pad is created.
+
+    delete <pad> [<item>]
+	if only <pad> is specified, the named pad is deleted.
+	else if both <pad> and <item> are specified, the item
+	  on the specified pad is deleted.
+
+    change <pad> <item> <value>
+	the <item> on the specified <pad> is set to value
+
+    append <pad> <item> <value>
+	<value> is appened to the <item> on the specified <pad>
+
+    show [<pad> [<item>]]
+	with no arguments, the names of the existing pads are listed
+	    note: the "" pad is not listed
+	with 1 argument, the names of the items for the specified <pad>
+	    are listed
+	with 2 arguments, the value(s) associated with the specified
+	    <item> for the specified <pad> are listed.
+
+    dumper
+	a complete dump of the pads, items, and values is printed.
