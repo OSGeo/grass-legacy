@@ -4,7 +4,7 @@
 
 global file_browser
 global last_dir
-set last_dir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/rgb
+set last_dir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/images
 
 if {![file isdirectory $last_dir]} {
     set last_dir $env(HOME)
