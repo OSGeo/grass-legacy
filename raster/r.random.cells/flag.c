@@ -1,6 +1,10 @@
+/*
+ * $Id$
+ */
+
 #include "flag.h"
 
-FlagClearAll(flags)
+void FlagClearAll(flags)
 FLAG *flags;
 {
 	register int r, c;
@@ -13,6 +17,7 @@ FLAG *flags;
 		}
 	}
 }
+
 
 FLAG *
 FlagCreate(nrows,ncols)
@@ -52,7 +57,7 @@ int nrows, ncols;
 	return(new_flag);
 }
 
-FlagDestroy(flags)
+void FlagDestroy(flags)
 FLAG *flags;
 {
 	free(flags->array[0]);
@@ -60,21 +65,21 @@ FLAG *flags;
 	free(flags);
 }
 
-FlagGet(flags, row, col)
+int FlagGet(flags, row, col)
 FLAG *flags;
 int row, col;
 {
 	return(flags->array[row][col>>3] & (1 << (col & 7)));
 }
 
-FlagSet(flags, row, col)
+void FlagSet(flags, row, col)
 FLAG *flags;
 int row, col;
 {
 	flags->array[row][col>>3] |= (1 << (col & 7));
 }
 
-FlagUnset(flags, row, col)
+void FlagUnset(flags, row, col)
 FLAG *flags;
 int row, col;
 {
