@@ -1,0 +1,21 @@
+These are the patches to dbSQL-tools for postgres database.
+The SQL-queries are transformed to postquel-form  and the queries
+are made with the monitor program of postgres. 
+
+The tools are tested with grass4.1, Postgres 4.1 and sunOS 4.1.1.
+
+You need the Postgres package of Berkeley university to run these
+programs. There is also a program which purpose is to link postgres and
+grass datastructure (called postgrass or something) , but I have nothing to do
+with that program. 
+
+The purpose of these tools is to connect basic grass data with attribute
+data in Postgres.
+
+These programs are in very alpha stage, so please report any bugs.
+
+The original dbSQL-tools are made by J.A.Farley, W.Song and W.F.Limp from the
+University of Arkansas.
+
+Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+jsoi@gis.joensuu.fi
