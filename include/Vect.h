@@ -156,7 +156,7 @@ int Vect_overlay ( struct Map_info *, int, struct ilist *, struct ilist *,
 
     /* Network (graph) */
 int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int, int);
-int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist * );
+int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist *, double *);
 
     /* Miscellaneous */
 struct field_info *Vect_get_field_info (char *, char *, int);
