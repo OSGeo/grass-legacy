@@ -19,13 +19,11 @@ SYSTEM=			`uname -s`
 ARCH=			@ARCH@
 #GISBASE=                @GISBASE@
 GISBASE=		@prefix@/grass@NAME_VER@
-#VERSION=		@VERSION@
-VERSION=		`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+VERSION=		@VERSION@
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
-#NAME_VER=   	    	@NAME_VER@
-NAME_VER=		`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
+NAME_VER=   	    	@NAME_VER@
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
