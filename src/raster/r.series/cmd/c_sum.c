@@ -1,15 +1,26 @@
 #include "gis.h"
 
-DCELL c_sum(DCELL *values, int n)
+void c_sum(DCELL *result, DCELL *values, int n)
 {
-	double sum;
+	DCELL sum;
+	int count;
 	int i;
 
 	sum = 0.0;
+	count = 0;
 
 	for (i = 0; i < n; i++)
-		sum += values[i];
+	{
+		if (G_is_d_null_value(&values[i]))
+			continue;
 
-	return sum;
+		sum += values[i];
+		count++;
+	}
+
+	if (count == 0)
+		G_set_d_null_value(result, 1);
+	else
+		*result = sum;
 }
 

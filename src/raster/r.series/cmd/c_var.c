@@ -1,30 +1,44 @@
 #include "gis.h"
 
-double d_var(DCELL *values, int n)
+void c_var(DCELL *result, DCELL *values, int n)
 {
-	double sum, ave, sumsq;
+	DCELL sum, ave, sumsq;
+	int count;
 	int i;
 
-	sum = 0;
+	sum = 0.0;
+	count = 0;
 
 	for (i = 0; i < n; i++)
-		sum += values[i];
+	{
+		if (G_is_d_null_value(&values[i]))
+			continue;
 
-	ave = sum / n;
+		sum += values[i];
+		count++;
+	}
+
+	if (count == 0)
+	{
+		G_set_d_null_value(result, 1);
+		return;
+	}
+
+	ave = sum / count;
 
 	sumsq = 0;
 
 	for (i = 0; i < n; i++)
 	{
-		double d = values[i] - ave;
+		DCELL d;
+
+		if (G_is_d_null_value(&values[i]))
+			continue;
+
+		d = values[i] - ave;
 		sumsq += d * d;
 	}
 
-	return sumsq / n;
-}
-
-DCELL c_var(DCELL *values, int n)
-{
-	return (DCELL) d_var(values, n);
+	*result = sumsq / count;
 }
 

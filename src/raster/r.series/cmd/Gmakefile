@@ -9,7 +9,8 @@ METHODS = \
 	c_stddev.o \
 	c_sum.o \
 	c_var.o \
-	c_divr.o
+	c_divr.o \
+	c_reg.o
 
 LIST = main.o sort_cell.o $(METHODS)
 

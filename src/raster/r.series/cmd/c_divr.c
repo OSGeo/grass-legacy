@@ -1,7 +1,7 @@
 #include "gis.h"
 #include "local_proto.h"
 
-DCELL c_divr (DCELL *values, int n)
+void c_divr(DCELL *result, DCELL *values, int n)
 {
 	int count;
 	DCELL prev;
@@ -9,7 +9,13 @@ DCELL c_divr (DCELL *values, int n)
 
 	/* sort the array of values, then count differences */
 
-	sort_cell(values, n);
+	n = sort_cell(values, n);
+
+	if (n == 0)
+	{
+		*result = 0;
+		return;
+	}
 
 	count = 1;
 	prev = values[0];
@@ -21,6 +27,6 @@ DCELL c_divr (DCELL *values, int n)
 			count++;
 		}
 
-	return (DCELL) count;
+	*result = (DCELL) count;
 }
 
