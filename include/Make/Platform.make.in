@@ -37,6 +37,7 @@ ARCH                = @host@
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
+INST_DIR            = @prefix@/grass-@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@
 
 
 DL_LIBS             = @DL_LIBS@
@@ -51,7 +52,7 @@ LDFLAGS_OPTIMIZE    = @LDFLAGS_OPTIMIZE@
 CC_SEARCH_FLAGS     = @CC_SEARCH_FLAGS@
 LD_SEARCH_FLAGS     = @LD_SEARCH_FLAGS@
 LD_LIBRARY_PATH_VAR = @LD_LIBRARY_PATH_VAR@
-LIB_RUNTIME_DIR     = @prefix@/grass-@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@/lib
+LIB_RUNTIME_DIR     = $(INST_DIR)/lib
 
 #static libs:
 STLIB_LD            = @STLIB_LD@
@@ -153,10 +154,10 @@ TIFFLIB             = @TIFFLIB@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
-OPENGLwINC          = @OPENGLwINC@
+OPENGLWINC          = @OPENGLWINC@
 OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
-LGLWM               = @LGLWM@
+OPENGLWM            = @OPENGLWM@
 #USE_GLWM            = @USE_GLWM@
 
 #tcl/tk stuff
