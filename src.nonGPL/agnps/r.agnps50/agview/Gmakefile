@@ -1,7 +1,8 @@
 LIBES  = $(GISLIB) $(VASK)
 
 
-PGM = $(GISBASE)/bin/r.agnps50.view
+#PGM = $(GISBASE)/bin/r.agnps50.view
+PGM=$(BIN_MAIN_INTER)/r.agnps50.view
 LIST = \
         psu_agnps_view.o\
         critical_area.o\
@@ -12,6 +13,6 @@ LIST = \
 
 
 $(PGM): $(LIST) $(LIBES)
-			$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
