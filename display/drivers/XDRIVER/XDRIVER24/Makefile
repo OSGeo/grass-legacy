@@ -40,7 +40,6 @@ OBJS =  \
 	Clr_table.o\
 	Color.o\
 	Draw_line.o\
-	Draw_point.o\
 	Get_w_box.o\
 	Get_w_line.o\
 	Get_w_pnt.o\
@@ -59,6 +58,13 @@ OBJS =  \
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 PGM=xdriver
+
+FREETYPEBASED = Draw_point.o
+
+#compile if FreeType Lib present:
+ifneq ($(strip $(FTLIB)),)
+    OBJS += $(FREETYPEBASED)
+endif
 
 default: $(DRIVERDIR)/XDRIVER htmlgen
 
