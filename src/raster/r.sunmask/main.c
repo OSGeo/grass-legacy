@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
 {
     char *mapset;
     struct Cell_head window;
-    void *cellbuf, *tmpcellbuf, *outcellbuf;
-    CELL value,value2 ,min, max;
-    DCELL dmin, dmax;
+    void *elevbuf, *tmpcellbuf, *outcellbuf;
+    CELL value,value2, min, max;
+    DCELL dvalue, value2, dmin, dmax;
     RASTER_MAP_TYPE data_type;
     struct Range range;
     struct FPRange fprange;
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     struct Option *opt1, *opt2, *opt3, *opt4;
     struct Flag *flag1;
     struct GModule *module;
-    char *name, *name2;
+    char *name, *outname;
     double dazi, dalti;
     double azi, alti;
     double nstep,estep;
@@ -98,27 +98,27 @@ int main(int argc, char *argv[])
     sscanf(opt3->answer,"%lf",&dalti);
     sscanf(opt4->answer,"%lf",&dazi);
     name = opt1->answer;
-    name2= opt2->answer;
+    outname= opt2->answer;
 
 
-    if((mapset = G_find_cell2 (name, "")) < 0)
-    {
-      sprintf (buf,"%s not found", name);
-      G_fatal_error(buf);
-    }
+    mapset = G_mapset();
+    
+    /* Search for output layer in all mapsets ? 
+       G_find_cell2 () */
+
     if((elev_fd = G_open_cell_old (name, mapset)) < 0)
     {
       sprintf (buf,"can't open %s", name);
       G_fatal_error(buf);
     }
-    if((output_fd = G_open_cell_new(name2)) < 0)
+    if((output_fd = G_open_cell_new(outname)) < 0)
     {
-      sprintf (buf,"can't open %s", name2);
+      sprintf (buf,"can't open %s", outname);
       G_fatal_error(buf);
     }
 
     data_type = G_raster_map_type(name, mapset);
-    cellbuf = G_allocate_raster_buf(data_type);
+    elevbuf = G_allocate_raster_buf(data_type);
     outcellbuf = G_allocate_raster_buf(CELL_TYPE); /* binary map */
     tmpcellbuf = G_allocate_raster_buf(CELL_TYPE);
 
@@ -148,13 +148,13 @@ int main(int argc, char *argv[])
 fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 	    col1=0;
 	    drow=-1;
-	    if (G_get_raster_row(elev_fd, cellbuf, row1, data_type) < 0)
+	    if (G_get_raster_row(elev_fd, elevbuf, row1, data_type) < 0)
 	      G_fatal_error("can't read row in input elevation map");
 
 	    while (col1<window.cols)
 	      {
-		value = cellbuf[col1];
-		outcellbuf[col1]=1;
+		value = &elevbuf[col1];
+		&outcellbuf[col1]=1;
 		OK=1;
 		east=G_col_to_easting(col1+0.5,&window);
 		north=G_row_to_northing(row1+0.5,&window);
