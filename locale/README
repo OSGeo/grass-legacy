@@ -32,7 +32,8 @@ GENERAL PROCEDURE
 Local Makefile usage:
    make pot        create grass.pot (containing original messages)
    make update-po  merge new messages into existing *.po files
-   make mo         create the mo files
+     [Now translate the messages in the po/*.po files (using kbabel or other editor) ]
+   make mo         create the mo files (containing translated messages as binary file)
 
 
 A convenient software package to translate messages is 'kbabel'.
