@@ -1,7 +1,25 @@
+#############################################################################
+#
+# $Id: Gmakefile,v 1.9 2000-11-28 05:30:52 justin Exp $
+#
+# MODULE:   	Grass Initialization
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+# PURPOSE:  	To create the various scripts and programs which are required
+#   	    	to start grass.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
 NAME_VER=`cat $(SRC)/CMD/VERSION | head -1 | sed 's/\..*//'`
-shell=grass$(NAME_VER)
+START_UP=grass$(NAME_VER)
 
 EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\" -DVERSION_UPDATE_PKG=\"'$(VERSION_UPDATE_PKG)'\"
+SET_DATA = set_data.o mke_mapset.o mke_loc.o chk_dbase.o other.o
 
 all: unix \
      $(ETC)/Init.sh \
@@ -15,21 +33,15 @@ all: unix \
 unix:
 	@test -d $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not found; exit 1)
 	@test -w $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not writeable; exit 1)
-	rm -f $(UNIX_BIN)/$(shell)
-	echo ':' > $(UNIX_BIN)/$(shell)
-	echo GISBASE=$(GISBASE) >> $(UNIX_BIN)/$(shell)
-	echo export GISBASE >> $(UNIX_BIN)/$(shell)
-	echo exec '$$'GISBASE/etc/Init.sh '$$'@ >> $(UNIX_BIN)/$(shell)
-	chmod +x $(UNIX_BIN)/$(shell)
+	rm -f $(UNIX_BIN)/$(START_UP)
+	$(SHELL) -c "sed -e \"s#GISBASE_VALUE#$(GISBASE)#\" grass.src > $(UNIX_BIN)/$(START_UP) 2>/dev/null ; true"
+	chmod a+x $(UNIX_BIN)/$(START_UP)
 
-$(ETC)/Init.sh: init.head init.shell init.tail version.sed $(SRC)/CMD/VERSION
+$(ETC)/Init.sh: init.sh version.sed $(SRC)/CMD/VERSION
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.head > $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.shell >> $@
-	cat init.tail >> $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.sh > $@
 	chmod +x $@
 
-SET_DATA = set_data.o mke_mapset.o mke_loc.o chk_dbase.o other.o
 $(ETC)/set_data: $(SET_DATA) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
