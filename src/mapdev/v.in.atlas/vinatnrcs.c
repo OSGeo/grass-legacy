@@ -41,14 +41,9 @@ char *argv[];
 	flag->key = 'd';
 	flag->description = "Do areas or lines adjoin creating duplicate arcs";
 	
-	if(G_parser(argc,argv))
-	{	printf("ERROR - see log\n");
-		fprintf(log,"%s %s: Command line error.\n\n",argv[0],input->answer);
-		fprintf(log,"USAGE: v.in.atlas  atlas_file_name(no ext)  type(A,L,P)\n");
-		fprintf(log,"       adjoin_areas(Y,N)\n");
-		fprintf(log,"******************************\n");
-		exit(-1);
-	}
+	if (G_parser(argc,argv))
+		exit(1);
+            
 	G_strcpy(atl_file,input->answer);
 	G_strcat(atl_file,".bna");
 	G_strcpy(tmpi,"tmpi23");
