@@ -4,13 +4,14 @@ PGM  = i.tape.tm3
 
 ####    required - suplimental imagery libary
 IMAGERY_SUBINC  = $(SRC)/libes/image3
-IMAGERYLIB_SUP  = $(SRC)/libes/image3/libimage_sup.a
 
-LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB) $(COORCNVLIB)\
-DEPLIBS=  $(DEPIMAGERYLIB) $(IMAGERYLIB_SUP) $(DEPD_LIB) $(DEPCOORCNVLIB)\
+LIBES =  $(IMAGERYLIB) $(IMAGESUPLIB) $(D_LIB) $(COORCNVLIB)\
          $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
-         $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-         $(GISLIB) $(VASKLIB)
+         $(GPROJLIB) $(GISLIB) $(VASKLIB)
+
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB) $(DEPCOORCNVLIB)\
+         $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) \
+         $(DEPGPROJLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
 LIST  = landsat.o \
 	fileseq.o \

@@ -117,6 +117,9 @@ VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
 DEPDBMILIB     = $(LIBDIR)/libdbmi.a
 DBMILIB        = -ldbmi
 
+DEPIMAGESUPLIB = $(LIBDIR)/libgrass_image_sup.so.$(LIB_VER)
+IMAGESUPLIB    = -lgrass_image_sup
+
 # triangulation libraries
 
 DEPSOSLIB      = $(LIBDIR)/libgrass_sos.so.$(LIB_VER)

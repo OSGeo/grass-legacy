@@ -24,7 +24,7 @@
 /*
 **  These routines taken by dpg so I could create my own script panel
 */
-#include <gl.h>
+#include <GL/gl.h>
 #include <device.h>
 #include <panel.h>
 

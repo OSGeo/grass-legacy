@@ -1,5 +1,5 @@
 LDIR = $(SRC)/libes/dspf
-DSPLIB	=	$(LDIR)/libdsp3.a
+DSPLIB	=	$(LIBDIR)/dspf/libdsp3.a
 
 EXTRA_CFLAGS	=	-I$(LDIR) -I$(INCLUDE_DIR)
 
@@ -17,7 +17,7 @@ SOURCES	=	\
 
 OBJ	=	\
 		fill_cfax.o \
-   		iso_surface.o \
+		iso_surface.o \
 		calc_linefax.o \
 		make_header.o \
 		r3_data.o \
