@@ -476,7 +476,7 @@ AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
 AC_SUBST(INTLLIB)
 
 AC_CHECK_FUNC(socket, SOCKLIB=, [
-AC_CHECK_LIB(socket, socket, SOCKLIB=-socket, [
+AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
     AC_MSG_WARN([*** Unable to locate socket() function.])
 ])])
 AC_SUBST(SOCKLIB)
