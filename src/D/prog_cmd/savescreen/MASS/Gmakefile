@@ -1,0 +1,15 @@
+# %W%   %G%
+# this program is for the MASSCOMP only
+# modify the next line to indicate the number of color planes
+# (note aurora 12 plane system only has 10 planes of color)
+
+NPLANES=10
+
+LIST = main.o savescreen.o convert.o build.o
+EXTRA_CFLAGS=-DNPLANES=$(NPLANES)
+
+PGM = Dsavescreen
+
+all: $(BIN)/$(PGM)
+$(BIN)/$(PGM): $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) -lgp
