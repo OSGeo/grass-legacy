@@ -1,0 +1,11 @@
+LIBES    = $(VECTLIB) $(GISLIB)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+
+LIST   = main.o die.o
+
+$(BIN_MAIN_CMD)/g.gnuplot.3d: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	
+
+$(LIBES): #
