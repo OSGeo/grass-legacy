@@ -1,7 +1,7 @@
 
 
 
-m.rot90              GRASS Reference Manual               m.rot90
+m.rot90 <main>       GRASS Reference Manual        <main> m.rot90
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.rot90              GRASS Reference Manual               m.rot90
+m.rot90 <main>       GRASS Reference Manual        <main> m.rot90
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
