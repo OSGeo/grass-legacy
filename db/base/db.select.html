@@ -23,11 +23,23 @@ be directed to a file.
 <b>db.select -c driver</b><em>=odbc</em> <b>database=</b><em>g51test</em> 
 <b>table=</b><em>roads</em> <b>sql=</b><em>file.sql</em> > <em>result.csv</em>
 
+<P>
+<em>Select some string attribute, exclude others:</em><br>
+<tt>echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select</tt>
+
+<P>
+<em>Select some string attribute with ZERO length:</em><br>
+<tt>echo "SELECT * FROM archsites WHERE str1 IS NULL" | db.select</tt>
+
 <h2>SEE ALSO</h2>
 
-<em><a HREF="http://grass.itc.it/grass51/tutorial/ex_complex.html#shortestpath">GRASS 5.1
-tutorial pages</a>,
-<em><a HREF="db.connect.html">db.connect</a></em>
+<em><a HREF="http://grass.itc.it/grass57/tutorial/index.html">GRASS 5.7 tutorial pages</a>,
+<em><a HREF="db.connect.html">db.connect</a>,
+<a HREF="db.describe.html">db.describe</a>,
+<a HREF="db.drivers.html">db.drivers</a>,
+<a HREF="db.droptable.html">db.droptable</a>,
+<a HREF="db.execute.html">db.execute</a>,
+<a HREF="db.tables.html">db.tables</a></em>
 
 <h2>AUTHOR</h2>
 ?<br>
