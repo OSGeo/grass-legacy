@@ -9,7 +9,7 @@ on map layers drawn in the active graphics monitor display frame.
 .br
 \fBd.mapgraph help\fR
 .br
-\fBd.mapgraph \fR[\fBinput\*=\fIname\fR] [\fBcolor\*=\fIname\fR] [\fBvsize\*=\fIvalue\fR] [\fBhsize\*=\fIvalue\fR] 
+\fBd.mapgraph \fR[\fBinput\*=\fIname\fR] [\fBcolor\*=\fIname\fR]  
 .SH DESCRIPTION
 \fId.mapgraph\fR draws graphics that are described in standard input (default)
 or the UNIX input file \fIname\fR.  If commands are entered via standard
@@ -25,7 +25,7 @@ by specifying the name of a file containing \fId.mapgraph\fR
 graphics commands and the values of all needed parameters on the command line.
 .\" (If the name of a graphics \fIinput\fR file is given on the command line,
 .\" any other parameter values left unspecified on the command line
-.\" [e.g., the \fIcolor\fR, \fIvsize\fR, and/or \fIhsize\fR] are set to their
+.\" [e.g., the \fIcolor\fR] are set to their
 .\" default values.)
 The user can instead elect to run the program partially interactively,
 by specifying any/all of the parameters \fIexcept\fR
@@ -51,20 +51,6 @@ Options:  red, orange, yellow, green, blue, indigo, violet, magenta, brown,
 gray, white, and black.
 .br
 Default:  \fIwhite\fR
-.\" .IP \fBvsize\*=\fIvalue\fR 18
-.\" Vertical text height given as a percentage of the current display frame's
-.\" height.
-.\" .br
-.\" Options:  0-100
-.\" .br
-.\" Default:  5.0
-.\" .IP \fBhsize\*=\fIvalue\fR 18
-.\" Horizontal text width given as a percentage of the current display frame's
-.\" width.
-.\" .br
-.\" Options:  0-100
-.\" .br
-.\" Default:  5.0
 .LP
 \fId.mapgraph\fR is used for drawing simple graphics on top of
 map layers.
@@ -124,7 +110,6 @@ percent of the display frame height.
 If not specified by the user, the text size becomes 5 percent of the
 active frame's width and 5 percent of the frame's height.
 This is equivalent to entering \fBsize 5 5\fR.
-.\" or alternately, to specifying an hsize and vsize of 5 on the command line.
 .br
 .ns
 .TP 
