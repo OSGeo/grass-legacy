@@ -70,7 +70,8 @@ int main (int argc, char **argv)
 		  in_datum[64],		 /* data and ellipses for datum  */
 		  in_ellipse[64],	 /* conversion */
 		  out_datum[64],
-		  out_ellipse[64];
+		  out_ellipse[64],
+		  hold;
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -225,8 +226,12 @@ int main (int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
-	strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
-	strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
+	*out_datum='\0';
+	if((hold=G_database_datum_name()))
+	   strncpy(out_datum,hold,sizeof(out_datum));
+	*out_ellipse='\0';
+	if((hold=G_database_ellipse_name()))
+	   strncpy(out_ellipse,hold,sizeof(out_ellipse));
 
 
    /* Change the location 		 */
@@ -276,8 +281,12 @@ int main (int argc, char **argv)
 		if (!G_projection())	/* XY data 		 */
 			G_fatal_error("Can't work with xy data");
 
-		strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
-		strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
+		*in_datum='\0';
+		if((hold=G_database_datum_name()))
+		   strncpy(in_datum,hold,sizeof(in_datum));
+		*in_ellipse='\0';
+		if((hold=G_database_ellipse_name()))
+		   strncpy(in_ellipse,hold,sizeof(in_ellipse));
 
 	} else {		/* can't access mapset 	 */
 
