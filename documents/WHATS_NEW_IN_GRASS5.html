@@ -22,6 +22,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <p>
 <b>Modules</b>
 <menu>
+<li> i.colors: automated refresh added (Markus Neteler)
 <li> r.agnps.*: updated to make it work within GRASS 5 (Markus Neteler)
 <li> r.cn, r.cn2: updated (Markus Neteler, John Huddleston)
 <li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
@@ -32,6 +33,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.in.shape: added (Radim Blazek)
 <li> r.line working now with Grass5 (Pierre de Mouveaux)
 <li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
+<li> r.to.sites: bugfix for seg. fault (Bill Brown)
 <li> s.in.shape: added, reads an ArcView Shapefile with points or
      multipoint SHAPES (David D. Gray)
 <li> v.autocorr: compile and bug fix (David D. Gray)
@@ -54,7 +56,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <menu>
 <li>new ODBC driver (based on <a href=http://www.unixodbc.org>unixODBC</a>
 to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
-<li>v.db.reclass, v.to.db: using ODBC (Radim Blazek)
+<li>d.db, v.db.reclass, v.to.db: using ODBC (Radim Blazek)
 </menu>
 
 <b>G3D-support</b> (new 3D raster format "voxels")
@@ -62,7 +64,6 @@ to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
 <li>new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
     data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
 <li>g3.createwind added to create 3D region from 2D region (Markus Neteler)
-<li>r3.out.ascii region sensitive now (Jaro Hofierka)
 </menu>
 
 <b>Simulation models</b>
