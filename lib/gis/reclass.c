@@ -255,14 +255,14 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     		G__location_path(), reclass->mapset, buf2);
 
     fd = fopen(buf1, "a+");
-    fseek (fd, 0L, SEEK_SET);
-
     if (fd == NULL)
     {
         G_warning ("Unable to create dependency file in [%s in %s]",
     	    buf2, reclass->mapset);
-        return -1;
+        return 1;
     }
+
+    fseek (fd, 0L, SEEK_SET);
 
     sprintf (buf2, "%s@%s\n", name, G_mapset());
     for (i=0; !feof(fd) && fgets(buf3, 255, fd); )
