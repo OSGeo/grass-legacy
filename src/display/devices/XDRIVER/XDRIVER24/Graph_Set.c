@@ -133,8 +133,8 @@ int Graph_Set (int argc, char **argv, int nlev)
     use_visual = 0;
     
 /*	The Following line dead loops under XFree85 3.3.5 if the bit depth is 
-/*	the same as your bit depth.  The same is not true under SUN openwin.		*/
-/*    result = XMatchVisualInfo (dpy, scrn, 16, TrueColor, mvisual_info);
+ *	the same as your bit depth.  The same is not true under SUN openwin.		*/
+ *    result = XMatchVisualInfo (dpy, scrn, 16, TrueColor, mvisual_info);
 */
 
 /* special flag to indicate a search for a True Color Display */
