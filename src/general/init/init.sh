@@ -140,7 +140,7 @@ fi
 case $? in
     0) ;;
     1)
-    	echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    	echo `whoami` is currently running GRASS VERSION_NUMBER. Concurrent use not allowed.
     	exit ;;
     *)
     	echo Unable to properly access "$lockfile"
