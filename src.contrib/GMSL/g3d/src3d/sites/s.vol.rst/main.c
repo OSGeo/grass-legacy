@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
@@ -29,10 +27,12 @@
 *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <malloc.h>
 #include "gis.h"
+#include "site.h"
 #include "userglobs.h"
 
 /* include G3d defs */
@@ -164,6 +164,9 @@ int main (int argc, char *argv[])
     struct octdata *data;
     struct octfunc *functions;
     struct octtree *tree;
+    int dims, strs, dbls = 0;
+    RASTER_MAP_TYPE map_type;
+    
 /*DEBUG */ int testout = 1;
 
     struct
@@ -452,7 +455,12 @@ int main (int argc, char *argv[])
         sprintf (msg, "Cannot open %s", input);
         G_fatal_error (msg);
     }
-    
+
+    if (G_site_describe(fdinp, &dims, &map_type, &strs, &dbls) < 0)
+      G_fatal_error("%s: Unable to guess sites format", G_program_name());
+    if (dims < 3)
+      G_fatal_error("Only found %i dimensions in sites file %s. Need 3 dimensions.", dims, input);
+   
     ii=INPUT(field);
     if (ii>0)
     {
