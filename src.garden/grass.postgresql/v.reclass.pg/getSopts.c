@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "dbvect.h"
+#include "glocale.h"
 
 int
 getSelectOpts (argc, argv)
@@ -31,11 +32,11 @@ getSelectOpts (argc, argv)
 
         select = G_define_flag();
         select->key     = 's';
-        select->description     = "Use [-s] for file SQL input.";
+        select->description     = _("Use [-s] for file SQL input.");
 	
 	disolve = G_define_flag();
         disolve->key     = 'd';
-        disolve->description = "Dissolve common boundaries (default is no)." ;
+        disolve->description = _("Dissolve common boundaries (default is no).") ;
 
 
         input = G_define_option() ;
@@ -44,7 +45,7 @@ getSelectOpts (argc, argv)
         input->type       = TYPE_STRING ;
         input->required   = YES  ;
         input->multiple   = NO ;
-        input->description= "Name of existing vector file.";
+        input->description= _("Name of existing vector file.");
 
 	sql = G_define_option() ;
         sql->key        = "sql" ;
@@ -52,7 +53,7 @@ getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "File with SQL command.";
+        sql->description= _("File with SQL command.");
 
         output = G_define_option() ;
         output->key        = "output" ;
@@ -60,7 +61,7 @@ getSelectOpts (argc, argv)
         output->type       = TYPE_STRING ;
         output->required   = NO  ;
         output->multiple   = NO ;
-        output->description= "Name of new reclass file.";
+        output->description= _("Name of new reclass file.");
 	
 	vtype = G_define_option() ;
         vtype->key        = "type" ;
@@ -68,7 +69,7 @@ getSelectOpts (argc, argv)
         vtype->required   = YES  ;
         vtype->multiple   = NO ;
 	vtype->options    =  "area,line,site";
-        vtype->description= "Select area, line or site.";
+        vtype->description= _("Select area, line or site.");
 
         /* Check for help flag */
         for (i=0; i<argc; i++)
@@ -88,12 +89,12 @@ getSelectOpts (argc, argv)
             exit(-1);
 
         if (! (G_find_vector2(input->answer,"")))  {
-             fprintf(stderr,"Vector map %s not found.\n",input->answer);
+             fprintf(stderr,_("Vector map %s not found.\n"),input->answer);
              exit(-1);
 	}
 
 	if((fp = fopen(sql->answer,"r")) == NULL) {
-            fprintf(stderr, "File read error on select file (%s)\n",sql->answer);
+            fprintf(stderr, _("File read error on select file (%s)\n"),sql->answer);
             exit(-1);
            }
 
