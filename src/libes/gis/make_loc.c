@@ -166,18 +166,6 @@ G_compare_projections( struct Key_Value *proj_info1,
     }
 
 /* -------------------------------------------------------------------- */
-/*      Do they both have the same zone?                           */
-/* -------------------------------------------------------------------- */
-
-    sprintf(buf1,"%s",G_find_key_value( "zone", proj_info1 ));
-    G_tolcase(buf1);
-    sprintf(buf2,"%s",G_find_key_value( "zone", proj_info2 ));
-    G_tolcase(buf2);
-
-    if ( strcmp(buf1, buf2) != 0 )
-        return -5;
-
-/* -------------------------------------------------------------------- */
 /*      Add more details in later.                                      */
 /* -------------------------------------------------------------------- */
 
