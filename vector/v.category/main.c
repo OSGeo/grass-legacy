@@ -179,14 +179,9 @@ main (int argc, char *argv[])
         Points = Vect_new_line_struct ();
 	Cats = Vect_new_cats_struct ();
 
-	/* find input vector */
-	if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	   G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
-	}
-	
 	/* open input vector */
         Vect_set_open_level (2); 
-	Vect_open_old (&In, in_opt->answer, mapset); 
+	Vect_open_old (&In, in_opt->answer, ""); 
 
 	/* open output vector if needed */
 	if (option == O_ADD || option == O_DEL || option == O_CHFIELD || option == O_SUM) {
