@@ -1,0 +1,17 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+PROG=$(BIN_MAIN_CMD)/v.clean
+
+
+all:  $(PROG)
+	
+
+$(PROG): Vclean.o $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) Vclean.o $(VECTLIB) $(GISLIB) $(MATHLIB) 
+	mv a.out $@
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) Vclean.c ../Vlib/*.c ../diglib/*.c $(GISLIB)
+
