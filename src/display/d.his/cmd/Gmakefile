@@ -1,10 +1,13 @@
+PGM=d.his
 OFILES =  main.o his.o init_his.o
 
-$(BIN_MAIN_CMD)/d.his: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) ${GISLIB} $(TERMLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 his_color: his_color.o his.o
-	$(CC) $(LDFLAGS) -o $@ his_color.o his.o ${GISLIB} $(TERMLIB)
+	$(CC) $(LDFLAGS) -o $@ his_color.o his.o $(GISLIB) $(TERMLIB)
 $(GISLIB): #
 $(DISPLAYLIB): #
 $(RASTERLIB): #

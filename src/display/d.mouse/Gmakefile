@@ -1,10 +1,9 @@
 PGM = d.mouse
-HOME = $(BIN_MAIN_CMD)
 
 OBJ = main.o setup.o where.o
-LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(HOME)/$(PGM): $(OBJ) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

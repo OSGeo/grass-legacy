@@ -1,3 +1,4 @@
+PGM=d.where
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
 
 LIST = \
@@ -6,7 +7,7 @@ LIST = \
 	where.o
 
 
-$(BIN_MAIN_CMD)/d.where: $(LIST) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@  $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 

@@ -1,10 +1,12 @@
+PGM=d.title
 OFILES = \
     fancy.o\
     main.o\
     normal.o
 
-$(BIN_MAIN_CMD)/d.title: $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(RASTERLIB): #
