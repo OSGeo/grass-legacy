@@ -706,12 +706,12 @@ int main (int argc, char *argv[])
 
 	i=0;
 
-	if(erdashd.maptyp == 0) /* integer data */
-		data_type = CELL_TYPE;
 	if(erdashd.maptyp == 99) { /* floating-point data */
 		data_type = FCELL_TYPE;
 		G_fatal_error("Floating point import doesn't work yet.");
 	}
+
+	data_type = CELL_TYPE;
 
 	for (band=outband[0];band!=0;band=outband[++i]) {
 		sprintf(grassname,"%s.%d",outopt->answer,band);
