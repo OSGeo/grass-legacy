@@ -1,9 +1,0 @@
-
-
-old.cmd.sh - 
-
-old.cmd.sh is a Bourne shell script which, when given a GRASS 3.2
-program name, will provide the new GRASS4.0 program name.  This program
-is useful as a quick on-line reference between GRASS versions 3 and 4.
-
-Manual entry for @man("old.cmd.sh")

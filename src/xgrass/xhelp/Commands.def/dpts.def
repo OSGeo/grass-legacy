@@ -1,9 +1,0 @@
-
-
-d.points - 
-
-d.points displays points whose coordinate locations are specified by
-the user and located within the current @glossary("geographic region",16.glossary/georeg.def) in the
-active display @glossary("frame",16.glossary/graphframe.def) on the graphics monitor.
- 
- Manual entry for @man("d.points")

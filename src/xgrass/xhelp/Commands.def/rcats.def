@@ -1,8 +1,0 @@
-
-
-r.cats - 
-
-r.cats prints the @glossary("category values",16.glossary/catval.def) and @glossary("labels",16.glossary/label.def) for the raster map
-layer, specified by the user, to standard output.
-
-Manual entry for @man("r.cats")

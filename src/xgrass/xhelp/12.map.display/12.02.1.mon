@@ -1,8 +1,0 @@
-                     STARTING A GRAPHICS MONITOR 
-
-To display on-screen GRASS graphics, the user must start and select a
-graphics monitor.  The user can run start several graphics monitors
-running simultaneously, if his hardware configuration supports this. 
-Desired monitor(s) can be started once, and left running even when no
-GRASS session is being run.  A monitor program runs in the background. 
-Monitors need not be restarted unless they are stopped.

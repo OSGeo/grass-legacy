@@ -1,9 +1,0 @@
-
-
-i.ifft - 
-
-i.ifft. is an image processing program based on an algorithm which
-converts real and imaginary frequency space images (produced by
-@man("i.fft")) into a normal image.
-
-Manual entry for @man("i.ifft")

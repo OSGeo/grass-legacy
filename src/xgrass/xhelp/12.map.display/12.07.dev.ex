@@ -1,1 +1,0 @@
-              Supported Graphics Display Devices

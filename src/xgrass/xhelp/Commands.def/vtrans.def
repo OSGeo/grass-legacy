@@ -1,8 +1,0 @@
-
-
-v.transform - 
-
-This program is used to import @glossary("vector",16.glossary/vector.def) files that were in scanner or
-digitizer (x,y) coordinates and transform them into @glossary("UTM",16.glossary/utm.def) coordinates.
-
-Manual entry for @man("v.transform")

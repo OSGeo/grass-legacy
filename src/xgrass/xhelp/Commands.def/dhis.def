@@ -1,9 +1,0 @@
-
-
-d.his - 
-
-d.his produces a @glossary("raster",16.glossary/rastdata.def) map layer providing a visually pleasing
-combination of hue, intensity and saturation (his) values from two or
-three user-specified raster map layers.
-
-Manual entry for @man("d.his")
