@@ -7,13 +7,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods fr 5.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-28 07:47+0200\n"
-"PO-Revision-Date: 2004-09-28 07:46+0200\n"
+"POT-Creation-Date: 2004-10-19 06:08+0200\n"
+"PO-Revision-Date: 2004-10-19 06:14+0200\n"
 "Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
 "Language-Team: French <grass5@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: ../display/d.font.freetype/main.c:33
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr ""
+"Selectionnez la police à utiliser pour afficher le texte sur le moniteur graphique."
+
+#: ../display/d.font.freetype/main.c:40
+msgid "Path to TrueType font (including file name)"
+msgstr "Chemin pour la police TrueType (nom de fichier inclu)"
+
+#: ../display/d.font.freetype/main.c:47
+msgid "Character encoding"
+msgstr "Encodage du caractère"
+
+#: ../display/d.font.freetype/main.c:58
+msgid "No graphics device selected"
+msgstr "Aucune sortie graphique sélectionnée"
+
+#: ../display/d.font.freetype/main.c:117
+#, c-format
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+"Paramétrage du nettoyage de FreeType\n"
 
 #: ../raster/r.colors/rules.c:45
 #, c-format
@@ -117,3 +145,4 @@ msgstr "%s - couleur inconnue\n"
 #, c-format
 msgid "Valid colors are:\n"
 msgstr "Les couleurs valides sont:\n"
+
