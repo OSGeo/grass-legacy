@@ -28,6 +28,7 @@ main (int argc, char **argv)
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
 	opt1->description= "Unix file containg graphing instructions";
+	opt1->gisprompt  = "file,file,file";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
