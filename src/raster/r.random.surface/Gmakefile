@@ -9,7 +9,7 @@ OBJS =	cpfilter.o gennorm.o makepp.o decay.o init.o save.o \
 	dd.o makebigf.o zero.o
 
 $(HOME)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(MATHLIB) -o $@
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) -o $@
 
 $(OBJS): ransurf.h
 
