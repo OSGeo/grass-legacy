@@ -24,7 +24,7 @@
 int 
 V1_rewind_nat (struct Map_info *Map)
 {
-    return (fseek (Map->dig_fp,  Map->head.head_size, SEEK_SET ));
+    return ( dig_fseek ( &(Map->dig_fp),  Map->head.head_size, SEEK_SET ));
 }
 
 int 

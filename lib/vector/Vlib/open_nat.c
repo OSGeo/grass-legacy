@@ -38,18 +38,23 @@ V1_open_old_nat ( struct Map_info *Map, int update )
   G_debug (1, "V1_open_old_nat(): name = %s mapset = %s", Map->name, Map->mapset);
   
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+  dig_file_init ( &(Map->dig_fp) );
   if ( update )
-      Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
+      Map->dig_fp.file = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
   else
-      Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+      Map->dig_fp.file = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
 
-  if ( Map->dig_fp == NULL ) return -1;
+  if ( Map->dig_fp.file == NULL ) return -1;
 
   if ( !(dig__read_head (Map)) ) return (-1);
   check_coor ( Map );
 
   /* set conversion matrices */
   dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
+
+  /* load to memory */
+  if ( !update )
+      dig_file_load ( &(Map->dig_fp) );
   
   return (0);
 }
@@ -72,11 +77,14 @@ V1_open_new_nat (
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
 
   /* TODO open better */
-  Map->dig_fp = G_fopen_new (buf, GRASS_VECT_COOR_ELEMENT);
-  if ( Map->dig_fp == NULL ) return (-1);
-  fclose ( Map->dig_fp );
-  Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
-  if ( Map->dig_fp == NULL ) return (-1);
+  dig_file_init ( &(Map->dig_fp) );
+  Map->dig_fp.file = G_fopen_new (buf, GRASS_VECT_COOR_ELEMENT);
+  if ( Map->dig_fp.file == NULL ) return (-1);
+  fclose ( Map->dig_fp.file );
+
+  dig_file_init ( &(Map->dig_fp) );
+  Map->dig_fp.file = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
+  if ( Map->dig_fp.file == NULL ) return (-1);
 
   /* check to see if dig_plus file exists and if so, remove it */
   G__file_name (name_buf, buf, GV_TOPO_ELEMENT, G_mapset ());
@@ -132,12 +140,13 @@ V2_open_old_nat (struct Map_info *Map, int update)
     
     /* open dig file */
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    dig_file_init ( &(Map->dig_fp) );
     if ( update )
-        Map->dig_fp = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
+        Map->dig_fp.file = G_fopen_modify (buf, GRASS_VECT_COOR_ELEMENT);
     else
-        Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
+        Map->dig_fp.file = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
     
-    if ( Map->dig_fp == NULL ) {
+    if ( Map->dig_fp.file == NULL ) {
 	dig_free_plus ( &(Map->plus) ); 
 	return -1;
     }
@@ -148,6 +157,10 @@ V2_open_old_nat (struct Map_info *Map, int update)
     dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
     
     Map->next_line = 1;
+
+    /* load to memory */
+    if ( !update )
+        dig_file_load ( &(Map->dig_fp) );
 
     return 0;
 }

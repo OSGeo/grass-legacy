@@ -79,6 +79,11 @@
 
 #define VECT_OPEN(Map)   (Map->open == VECT_OPEN_CODE)
 
+/* Memory mode */
+#define GV_MEMORY_ALWAYS 1
+#define GV_MEMORY_NEVER  2
+#define GV_MEMORY_AUTO   3
+
 #define GV_COOR_HEAD_SIZE 14
 
 #define GRASS_V_VERSION       "5.0"

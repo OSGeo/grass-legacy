@@ -161,7 +161,7 @@ dig_free_plus (struct Plus_head *Plus)
 */
 int 
 dig_load_plus (	struct Plus_head *Plus,
-		FILE * plus)
+		GVFILE * plus)
 {
   int i;
 
@@ -182,7 +182,7 @@ dig_load_plus (	struct Plus_head *Plus,
   dig_set_cur_port ( &(Plus->port) ); 
 
   /* Nodes */
-  fseek (plus, Plus->Node_offset, 0);
+  dig_fseek (plus, Plus->Node_offset, 0);
   dig_alloc_nodes ( Plus, Plus->n_nodes );
   for (i = 1; i <= Plus->n_nodes; i++)
     {
@@ -191,7 +191,7 @@ dig_load_plus (	struct Plus_head *Plus,
     }
   
   /* Lines */
-  fseek (plus, Plus->Line_offset, 0);
+  dig_fseek (plus, Plus->Line_offset, 0);
   dig_alloc_lines ( Plus, Plus->n_lines );
   for (i = 1; i <= Plus->n_lines; i++)
     {
@@ -200,7 +200,7 @@ dig_load_plus (	struct Plus_head *Plus,
     }
   
   /* Areas */
-  fseek (plus, Plus->Area_offset, 0);
+  dig_fseek (plus, Plus->Area_offset, 0);
   dig_alloc_areas ( Plus, Plus->n_areas );
   for (i = 1; i <= Plus->n_areas; i++)
     {
@@ -209,7 +209,7 @@ dig_load_plus (	struct Plus_head *Plus,
     }
   
   /* Isles */
-  fseek (plus, Plus->Isle_offset, 0);
+  dig_fseek (plus, Plus->Isle_offset, 0);
   dig_alloc_isles ( Plus, Plus->n_isles );
   for (i = 1; i <= Plus->n_isles; i++)
     {
@@ -221,13 +221,12 @@ dig_load_plus (	struct Plus_head *Plus,
 }
 
 int 
-dig_write_plus_file (
-		      FILE * fp_plus,
+dig_write_plus_file ( GVFILE * fp_plus,
 		      struct Plus_head *Plus)
 {
 
   dig_set_cur_port(&(Plus->port));  
-  rewind (fp_plus);
+  dig_rewind (fp_plus);
 
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)
     {
@@ -259,27 +258,26 @@ dig_write_plus_file (
       return (-1);
     }
 
-  rewind (fp_plus);
+  dig_rewind (fp_plus);
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)
     {
       fprintf (stderr, "\nERROR: Can't write head to plus file.\n");
       return (-1);
     }
 
-  fflush (fp_plus);
+  dig_fflush (fp_plus);
   return (0);
 }				/*  write_plus_file()  */
 
 
 int 
-dig_write_nodes (
-		  FILE * plus,
+dig_write_nodes ( GVFILE * plus,
 		  struct Plus_head *Plus)
 {
   int i;
 
 
-  Plus->Node_offset = ftell (plus);
+  Plus->Node_offset = dig_ftell (plus);
 
   for (i = 1; i <= Plus->n_nodes; i++)
     {
@@ -292,14 +290,13 @@ dig_write_nodes (
 
 
 int 
-dig_write_lines (
-		  FILE * plus,
+dig_write_lines ( GVFILE * plus,
 		  struct Plus_head *Plus)
 {
   int i;
 
 
-  Plus->Line_offset = ftell (plus);
+  Plus->Line_offset = dig_ftell (plus);
 
   for (i = 1; i <= Plus->n_lines; i++)
     {
@@ -312,14 +309,13 @@ dig_write_lines (
 }				/*  write_line()  */
 
 int 
-dig_write_areas (
-		  FILE * plus,
+dig_write_areas ( GVFILE * plus,
 		  struct Plus_head *Plus)
 {
   int i;
 
 
-  Plus->Area_offset = ftell (plus);
+  Plus->Area_offset = dig_ftell (plus);
 
   for (i = 1; i <= Plus->n_areas; i++)
     {
@@ -333,14 +329,13 @@ dig_write_areas (
 
 
 int 
-dig_write_isles (
-		  FILE * plus,
+dig_write_isles ( GVFILE * plus,
 		  struct Plus_head *Plus)
 {
   int i;
 
 
-  Plus->Isle_offset = ftell (plus);
+  Plus->Isle_offset = dig_ftell (plus);
 
   for (i = 1; i <= Plus->n_isles; i++)
     {

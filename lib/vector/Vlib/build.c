@@ -115,7 +115,7 @@ Vect_save_topo ( struct Map_info *Map )
 {
     struct Plus_head *plus ;
     char   fname[1024], buf[1024];
-    FILE   *fp;
+    GVFILE  fp;
     
     G_debug (1, "Vect_save_topo()"); 
 
@@ -125,8 +125,9 @@ Vect_save_topo ( struct Map_info *Map )
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     G__file_name (fname, buf, GV_TOPO_ELEMENT, Map->mapset);
     G_debug (1, "Open topo: %s", fname);
-    fp = fopen( fname, "w");
-    if ( fp ==  NULL) {
+    dig_file_init ( &fp );
+    fp.file = fopen( fname, "w");
+    if ( fp.file ==  NULL) {
         G_warning("Can't open topo file for write: %s\n", fname);
 	    return 0;
     }
@@ -134,12 +135,12 @@ Vect_save_topo ( struct Map_info *Map )
     /* set portable info */
     dig_init_portable ( &(plus->port), dig__byte_order_out ());
     
-    if ( 0 > dig_write_plus_file (fp, plus) ) {
+    if ( 0 > dig_write_plus_file (&fp, plus) ) {
         G_warning ("Error writing out topo file.\n");
 	return 0;
     }
     
-    fclose( fp );
+    fclose( fp.file );
 
     return 1;
 }
@@ -250,7 +251,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
 {
     struct Plus_head *plus ;
     char   fname[1024], buf[1024];
-    FILE   *fp;
+    GVFILE   fp;
     
     G_debug (1, "Vect_save_spatial_index()"); 
 
@@ -260,8 +261,9 @@ Vect_save_spatial_index ( struct Map_info *Map )
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     G__file_name (fname, buf, GV_SIDX_ELEMENT, Map->mapset);
     G_debug (1, "Open sidx: %s", fname);
-    fp = fopen( fname, "w");
-    if ( fp ==  NULL) {
+    dig_file_init ( &fp );
+    fp.file = fopen( fname, "w");
+    if ( fp.file ==  NULL) {
         G_warning("Can't open spatial index file for write: %s\n", fname);
 	    return 0;
     }
@@ -269,12 +271,12 @@ Vect_save_spatial_index ( struct Map_info *Map )
     /* set portable info */
     dig_init_portable ( &(plus->spidx_port), dig__byte_order_out ());
     
-    if ( 0 > dig_write_spidx (fp, plus) ) {
+    if ( 0 > dig_write_spidx (&fp, plus) ) {
         G_warning ("Error writing out spatial index file.\n");
 	return 0;
     }
     
-    fclose( fp );
+    fclose( fp.file );
 
     return 1;
 }

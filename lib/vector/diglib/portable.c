@@ -50,46 +50,25 @@ buf_alloc (int needed)
    portable format and the native machine.
  */
 
-/* Change byte order */
-/*static void
-chorder ( void * ptr, int size , int step, int count)
-{
-    int            i,j;
-    unsigned char  c;
-
-    for (i = 0; i < count; i++)
-      {
-        for (j = 0; j < size/2; j++)
-          {
-            c = ((unsigned char *) ptr)[j];
-            ((unsigned char *) c)[j] = ((unsigned char *) c)[size-j-1];
-            ((unsigned char *) c)[size-j-1] = c;
-          }
-	ptr += step;
-      }	
-}
-*/
-
 /* read doubles from the PVF file */
 int 
-dig__fread_port_D (		
-		    double *buf,
+dig__fread_port_D ( double *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int i, j, ret;
   unsigned char *c1, *c2;
 
   if ( Cur_Head->dbl_quick)
     {
-      if (0 >= (ret = fread (buf, PORT_DOUBLE, cnt, fp)))
+      if (0 >= (ret = dig_fread (buf, PORT_DOUBLE, cnt, fp)))
         return (ret);
     }  
   else
     {
       /* read into buffer */
       buf_alloc (cnt * PORT_DOUBLE);
-      if (0 >= (ret = fread (buffer, PORT_DOUBLE, cnt, fp)))
+      if (0 >= (ret = dig_fread (buffer, PORT_DOUBLE, cnt, fp)))
         return (ret);
       /* read from buffer in changed order */
       c1 = (unsigned char *) buffer;
@@ -112,21 +91,21 @@ int
 dig__fread_port_F (		
 		    float *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int i, j, ret;
   unsigned char *c1, *c2;
 
   if ( Cur_Head->flt_quick)
     {
-      if (0 >= (ret = fread (buf, PORT_FLOAT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buf, PORT_FLOAT, cnt, fp)))
         return (ret);
     }  
   else
     {
       /* read into buffer */
       buf_alloc (cnt * PORT_FLOAT);
-      if (0 >= (ret = fread (buffer, PORT_FLOAT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buffer, PORT_FLOAT, cnt, fp)))
         return (ret);
       /* read from buffer in changed order */
       c1 = (unsigned char *) buffer;
@@ -149,7 +128,7 @@ int
 dig__fread_port_L (		
 		    long *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int i, j, ret;
   unsigned char *c1, *c2;
@@ -157,12 +136,12 @@ dig__fread_port_L (
   if ( Cur_Head->lng_quick )
     {
 #if NATIVE_LONG == PORT_LONG
-      if (0 >= (ret = fread (buf, PORT_LONG, cnt, fp)))
+      if (0 >= (ret = dig_fread (buf, PORT_LONG, cnt, fp)))
           return (ret);
 #else
       /* read into buffer */
       buf_alloc (cnt * PORT_LONG);
-      if (0 >= (ret = fread (buffer, PORT_LONG, cnt, fp)))
+      if (0 >= (ret = dig_fread (buffer, PORT_LONG, cnt, fp)))
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(long)); 
@@ -193,7 +172,7 @@ dig__fread_port_L (
     {
       /* read into buffer */
       buf_alloc (cnt * PORT_LONG);
-      if (0 >= (ret = fread (buffer, PORT_LONG, cnt, fp)))  
+      if (0 >= (ret = dig_fread (buffer, PORT_LONG, cnt, fp)))  
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(long)); 
@@ -224,7 +203,7 @@ int
 dig__fread_port_I (		
 		    int *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int i, j, ret;
   unsigned char *c1, *c2;
@@ -232,12 +211,12 @@ dig__fread_port_I (
   if ( Cur_Head->int_quick )
     {
 #if NATIVE_INT == PORT_INT
-      if (0 >= (ret = fread (buf, PORT_INT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buf, PORT_INT, cnt, fp)))
           return (ret);
 #else
       /* read into buffer */
       buf_alloc (cnt * PORT_INT);
-      if (0 >= (ret = fread (buffer, PORT_INT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buffer, PORT_INT, cnt, fp)))
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(int)); 
@@ -268,7 +247,7 @@ dig__fread_port_I (
     {
       /* read into buffer */
       buf_alloc (cnt * PORT_INT);
-      if (0 >= (ret = fread (buffer, PORT_INT, cnt, fp)))  
+      if (0 >= (ret = dig_fread (buffer, PORT_INT, cnt, fp)))  
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(int)); 
@@ -299,7 +278,7 @@ int
 dig__fread_port_S (		
 		    short *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int i, j, ret;
   unsigned char *c1, *c2;
@@ -307,12 +286,12 @@ dig__fread_port_S (
   if ( Cur_Head->shrt_quick )
     {
 #if NATIVE_SHORT == PORT_SHORT
-      if (0 >= (ret = fread (buf, PORT_SHORT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buf, PORT_SHORT, cnt, fp)))
           return (ret);
 #else
       /* read into buffer */
       buf_alloc (cnt * PORT_SHORT);
-      if (0 >= (ret = fread (buffer, PORT_SHORT, cnt, fp)))
+      if (0 >= (ret = dig_fread (buffer, PORT_SHORT, cnt, fp)))
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(short)); 
@@ -343,7 +322,7 @@ dig__fread_port_S (
     {
       /* read into buffer */
       buf_alloc (cnt * PORT_SHORT);
-      if (0 >= (ret = fread (buffer, PORT_SHORT, cnt, fp)))  
+      if (0 >= (ret = dig_fread (buffer, PORT_SHORT, cnt, fp)))  
           return (ret);
       /* set buffer to zero (positive numbers) */
       memset (buf, 0, cnt * sizeof(short)); 
@@ -371,21 +350,19 @@ dig__fread_port_S (
 
 /* read chars from the PVF file */
 int 
-dig__fread_port_C (
-		    char *buf,
+dig__fread_port_C ( char *buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
-  return fread (buf, PORT_CHAR, cnt, fp);
+  return dig_fread (buf, PORT_CHAR, cnt, fp);
 }
 
 /* read plus_t from the PVF file */
 /* plus_t is defined as int so we only retype pointer and use int function */
 int 
-dig__fread_port_P (
-		    plus_t * buf,
+dig__fread_port_P ( plus_t * buf,
 		    int cnt,
-		    FILE * fp)
+		    GVFILE * fp)
 {
   int *ibuf, ret;
 
@@ -400,15 +377,14 @@ dig__fread_port_P (
 /***************************** WRITE ************************************/
 
 int 
-dig__fwrite_port_D (		/* DOUBLE */
-		     double *buf,
+dig__fwrite_port_D ( double *buf,		/* DOUBLE */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   int i,j;	
   unsigned char *c1, *c2;	
   if ( Cur_Head->dbl_quick )
-      return fwrite (buf, PORT_DOUBLE, cnt, fp);
+      return dig_fwrite (buf, PORT_DOUBLE, cnt, fp);
   else
     {
       buf_alloc (cnt * PORT_DOUBLE);
@@ -421,20 +397,19 @@ dig__fwrite_port_D (		/* DOUBLE */
 	  c1 += sizeof (double);
 	  c2 += PORT_DOUBLE;
 	} 
-      return fwrite (buffer, PORT_DOUBLE, cnt, fp);
+      return dig_fwrite (buffer, PORT_DOUBLE, cnt, fp);
     }
 }
 
 int 
-dig__fwrite_port_F (		/* FLOAT */
-		     float *buf,
+dig__fwrite_port_F ( float *buf,		/* FLOAT */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   int i,j;	
   unsigned char *c1, *c2;	
   if ( Cur_Head->flt_quick )
-      return fwrite (buf, PORT_FLOAT, cnt, fp);
+      return dig_fwrite (buf, PORT_FLOAT, cnt, fp);
   else
     {
       buf_alloc (cnt * PORT_FLOAT);
@@ -447,22 +422,21 @@ dig__fwrite_port_F (		/* FLOAT */
 	  c1 += sizeof (float);
 	  c2 += PORT_FLOAT;
 	} 
-      return fwrite (buffer, PORT_FLOAT, cnt, fp);
+      return dig_fwrite (buffer, PORT_FLOAT, cnt, fp);
     }
 }
 
 int 
-dig__fwrite_port_L (		/* LONG */
-		     long *buf,
+dig__fwrite_port_L ( long *buf,		/* LONG */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   int i,j;	
   unsigned char *c1, *c2;	
   
   if ( Cur_Head->lng_quick )
 #if NATIVE_LONG == PORT_LONG
-      return fwrite (buf, PORT_LONG, cnt, fp);
+      return dig_fwrite (buf, PORT_LONG, cnt, fp);
 #else
     {
       buf_alloc (cnt * PORT_LONG);
@@ -478,7 +452,7 @@ dig__fwrite_port_L (		/* LONG */
           c1 += PORT_LONG;
           c2 += sizeof (long);
 	}  
-      return fwrite (buffer, PORT_LONG, cnt, fp);
+      return dig_fwrite (buffer, PORT_LONG, cnt, fp);
     }  
 #endif
   else
@@ -493,22 +467,21 @@ dig__fwrite_port_L (		/* LONG */
 	  c1 += sizeof (long);
 	  c2 += PORT_LONG;
 	} 
-      return fwrite (buffer, PORT_LONG, cnt, fp);
+      return dig_fwrite (buffer, PORT_LONG, cnt, fp);
     }
 }
 
 int 
-dig__fwrite_port_I (		/* INT */
-		     int *buf,
+dig__fwrite_port_I ( int *buf,		/* INT */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   int i,j;	
   unsigned char *c1, *c2;	
   
   if ( Cur_Head->int_quick )
 #if NATIVE_INT == PORT_INT
-      return fwrite (buf, PORT_INT, cnt, fp);
+      return dig_fwrite (buf, PORT_INT, cnt, fp);
 #else
     {
       buf_alloc (cnt * PORT_INT);
@@ -524,7 +497,7 @@ dig__fwrite_port_I (		/* INT */
           c1 += PORT_INT;
           c2 += sizeof (int);
 	}
-      return fwrite (buffer, PORT_INT, cnt, fp);
+      return dig_fwrite (buffer, PORT_INT, cnt, fp);
 #endif
   else
     {
@@ -538,22 +511,21 @@ dig__fwrite_port_I (		/* INT */
 	  c1 += sizeof (int);
 	  c2 += PORT_INT;
 	} 
-      return fwrite (buffer, PORT_INT, cnt, fp);
+      return dig_fwrite (buffer, PORT_INT, cnt, fp);
     }
 }
 
 int 
-dig__fwrite_port_S (		/* SHORT */
-		     short *buf,
+dig__fwrite_port_S ( short *buf,		/* SHORT */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   int i,j;	
   unsigned char *c1, *c2;	
   
   if ( Cur_Head->shrt_quick )
 #if NATIVE_SHORT == PORT_SHORT
-      return fwrite (buf, PORT_SHORT, cnt, fp);
+      return dig_fwrite (buf, PORT_SHORT, cnt, fp);
 #else
     {
       buf_alloc (cnt * PORT_SHORT);
@@ -569,7 +541,7 @@ dig__fwrite_port_S (		/* SHORT */
           c1 += PORT_SHORT;
           c2 += sizeof (short);
 	}
-      return fwrite (buffer, PORT_SHORT, cnt, fp);
+      return dig_fwrite (buffer, PORT_SHORT, cnt, fp);
 #endif
   else
     {
@@ -583,27 +555,25 @@ dig__fwrite_port_S (		/* SHORT */
 	  c1 += sizeof (short);
 	  c2 += PORT_SHORT;
 	} 
-      return fwrite (buffer, PORT_SHORT, cnt, fp);
+      return dig_fwrite (buffer, PORT_SHORT, cnt, fp);
     }
 }
 
 /* plus_t is defined as int so we only retype pointer and use int function */
 int 
-dig__fwrite_port_P (		/* PLUS_T->INT */
-		     plus_t * buf,
+dig__fwrite_port_P ( plus_t * buf,		/* PLUS_T->INT */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
   return ( dig__fwrite_port_I ( (int *) buf, cnt, fp) );   	
 }
 
 int 
-dig__fwrite_port_C (		/* CHAR */
-		     char *buf,
+dig__fwrite_port_C ( char *buf,		/* CHAR */
 		     int cnt,
-		     FILE * fp)
+		     GVFILE * fp)
 {
-  return fwrite (buf, PORT_CHAR, cnt, fp);
+  return dig_fwrite (buf, PORT_CHAR, cnt, fp);
 }
 
 /* set portable info structure to byte order of file */

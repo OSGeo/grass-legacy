@@ -46,20 +46,20 @@ int dig_set_cur_port (struct Port_info *);
 int dig__write_head (struct Map_info *);
 int dig__read_head (struct Map_info *);
 
-int dig__fread_port_D (double *, int, FILE *);
-int dig__fread_port_F (float *, int, FILE *);
-int dig__fread_port_L (long *, int, FILE *);
-int dig__fread_port_S (short *, int, FILE *);
-int dig__fread_port_I (int *, int, FILE *);
-int dig__fread_port_P (plus_t *, int, FILE *);
-int dig__fread_port_C (char *, int, FILE *);
-int dig__fwrite_port_D (double *, int, FILE *);
-int dig__fwrite_port_F (float *, int, FILE *);
-int dig__fwrite_port_L (long *, int, FILE *);
-int dig__fwrite_port_S (short *, int, FILE *);
-int dig__fwrite_port_I (int *, int, FILE *);
-int dig__fwrite_port_P (plus_t *, int, FILE *);
-int dig__fwrite_port_C (char *, int, FILE *);
+int dig__fread_port_D (double *, int, GVFILE *);
+int dig__fread_port_F (float *, int, GVFILE *);
+int dig__fread_port_L (long *, int, GVFILE *);
+int dig__fread_port_S (short *, int, GVFILE *);
+int dig__fread_port_I (int *, int, GVFILE *);
+int dig__fread_port_P (plus_t *, int, GVFILE *);
+int dig__fread_port_C (char *, int, GVFILE *);
+int dig__fwrite_port_D (double *, int, GVFILE *);
+int dig__fwrite_port_F (float *, int, GVFILE *);
+int dig__fwrite_port_L (long *, int, GVFILE *);
+int dig__fwrite_port_S (short *, int, GVFILE *);
+int dig__fwrite_port_I (int *, int, GVFILE *);
+int dig__fwrite_port_P (plus_t *, int, GVFILE *);
+int dig__fwrite_port_C (char *, int, GVFILE *);
 
 
 /******************************************************************************/
@@ -89,7 +89,7 @@ int dig_in_area_bbox (P_AREA *, double, double); */
 int dig_start_clock (long *);
 int dig_stop_clock (long *);
 char *dig_stop_clock_str (long *);
-int dig_write_file_checks (FILE *, struct Plus_head *);
+int dig_write_file_checks (GVFILE *, struct Plus_head *);
 int dig_do_file_checks (struct Map_info *, char *, char *);
 /* int dig_find_area (struct Map_info *, P_AREA *, double *, double *, double *, double);
 int dig_find_area2 (struct Map_info *, P_AREA *, double *); */
@@ -103,7 +103,7 @@ int dig_find_intersection (double, double, double, double, double, double, doubl
 
 int dig_init_plus (struct Plus_head *);
 int dig_free_plus (struct Plus_head *);
-int dig_load_plus (struct Plus_head *, FILE *);
+int dig_load_plus (struct Plus_head *, GVFILE *);
 int dig_map_to_head (struct Map_info *, struct Plus_head *);
 int dig_head_to_map (struct Plus_head *, struct Map_info *);
 int dig_spindex_init ( struct Plus_head *);
@@ -148,21 +148,10 @@ int dig_select_isles ( struct Plus_head *, BOUND_BOX *, struct ilist *);
 int dig_find_node ( struct Plus_head *, double, double, double);
 
 int dig_spidx_init (struct Plus_head *);
-int dig_write_spidx (FILE *, struct Plus_head *);
+int dig_write_spidx (GVFILE *, struct Plus_head *);
 int dig_dump_spidx (FILE *, struct Plus_head *);
-/*
-int dig_write_spidx_nodes ( FILE *, struct Plus_head *);
-int dig_write_spidx_lines ( FILE *, struct Plus_head *);
-int dig_write_spidx_areas ( FILE *, struct Plus_head *);
-int dig_write_spidx_isles ( FILE *, struct Plus_head *);
-*/
-int dig_read_spidx (FILE *, struct Plus_head *);
-/*
-int dig_read_spidx_nodes ( FILE *, struct Plus_head *);
-int dig_read_spidx_lines ( FILE *, struct Plus_head *);
-int dig_read_spidx_areas ( FILE *, struct Plus_head *);
-int dig_read_spidx_isles ( FILE *, struct Plus_head *);
-*/
+int dig_read_spidx (GVFILE *, struct Plus_head *);
+
 /* int dig_in_line_bbox (P_LINE *, double, double); */
 int dig_check_dist (struct Map_info *, int, double, double, double *);
 int dig__check_dist (struct Map_info *, struct line_pnts *, double, double, double *);
@@ -191,20 +180,30 @@ int dig_isle_alloc_line (P_ISLE *, int);
 int dig_out_of_memory (void);
 int dig_struct_copy (void *, void *, int);
 int dig_rmcr (char *);
-int dig_write_plus_file (FILE *, struct Plus_head *);
-int dig_write_nodes (FILE *, struct Plus_head *);
-int dig_write_lines (FILE *, struct Plus_head *);
-int dig_write_areas (FILE *, struct Plus_head *);
-int dig_write_isles (FILE *, struct Plus_head *);
+int dig_write_plus_file (GVFILE *, struct Plus_head *);
+int dig_write_nodes (GVFILE *, struct Plus_head *);
+int dig_write_lines (GVFILE *, struct Plus_head *);
+int dig_write_areas (GVFILE *, struct Plus_head *);
+int dig_write_isles (GVFILE *, struct Plus_head *);
 
-int dig_Rd_P_node (struct Plus_head *, int i, FILE *);
-int dig_Wr_P_node (struct Plus_head *, int i, FILE *);
-int dig_Rd_P_line (struct Plus_head *, int i, FILE *);
-int dig_Wr_P_line (struct Plus_head *, int i, FILE *);
-int dig_Rd_P_area (struct Plus_head *, int i, FILE *);
-int dig_Wr_P_area (struct Plus_head *, int i, FILE *);
-int dig_Rd_P_isle (struct Plus_head *, int i, FILE *);
-int dig_Wr_P_isle (struct Plus_head *, int i, FILE *);
-int dig_Rd_Plus_head (FILE *, struct Plus_head *);
-int dig_Wr_Plus_head (FILE *, struct Plus_head *);
+int dig_Rd_P_node (struct Plus_head *, int i, GVFILE *);
+int dig_Wr_P_node (struct Plus_head *, int i, GVFILE *);
+int dig_Rd_P_line (struct Plus_head *, int i, GVFILE *);
+int dig_Wr_P_line (struct Plus_head *, int i, GVFILE *);
+int dig_Rd_P_area (struct Plus_head *, int i, GVFILE *);
+int dig_Wr_P_area (struct Plus_head *, int i, GVFILE *);
+int dig_Rd_P_isle (struct Plus_head *, int i, GVFILE *);
+int dig_Wr_P_isle (struct Plus_head *, int i, GVFILE *);
+int dig_Rd_Plus_head (GVFILE *, struct Plus_head *);
+int dig_Wr_Plus_head (GVFILE *, struct Plus_head *);
 
+/* file loaded to memory */
+long dig_ftell ( GVFILE *file );
+int dig_fseek ( GVFILE *file, long offset, int whence );
+void dig_rewind ( GVFILE *file );
+int dig_fflush ( GVFILE *file );
+size_t dig_fread ( void *ptr, size_t size, size_t nmemb, GVFILE *file );
+size_t dig_fwrite ( void *ptr, size_t size, size_t nmemb, GVFILE *file );
+void dig_file_init ( GVFILE *file );
+int dig_file_load ( GVFILE *file );
+void dig_file_free ( GVFILE *file );

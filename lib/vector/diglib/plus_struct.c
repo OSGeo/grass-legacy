@@ -52,7 +52,7 @@ int
 dig_Rd_P_node (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int cnt, n_edges;
   P_NODE *ptr;
@@ -109,7 +109,7 @@ int
 dig_Wr_P_node (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int i, n_edges = 0;
   P_NODE *ptr; 
@@ -159,7 +159,7 @@ int
 dig_Rd_P_line (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int n_edges, vol;
   char  tp;
@@ -246,7 +246,7 @@ int
 dig_Wr_P_line (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int n_edges = 0, vol = 0;
   char ch;
@@ -316,7 +316,7 @@ int
 dig_Rd_P_area (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int cnt;
   P_AREA *ptr; 
@@ -372,10 +372,9 @@ dig_Rd_P_area (
 }
 
 int 
-dig_Wr_P_area (
-		  struct Plus_head *Plus,
+dig_Wr_P_area (   struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int i;
   P_AREA *ptr; 
@@ -418,10 +417,9 @@ dig_Wr_P_area (
 }
 
 int 
-dig_Rd_P_isle (
-		  struct Plus_head *Plus,
+dig_Rd_P_isle (	  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int cnt;
   P_ISLE *ptr; 
@@ -472,7 +470,7 @@ int
 dig_Wr_P_isle (
 		  struct Plus_head *Plus,
 		  int  n,
-		  FILE * fp)
+		  GVFILE * fp)
 {
   int i;
   P_ISLE *ptr; 
@@ -510,13 +508,13 @@ dig_Wr_P_isle (
 
 
 int 
-dig_Rd_Plus_head (   FILE * fp,
+dig_Rd_Plus_head (   GVFILE * fp,
 		     struct Plus_head *ptr)
 {
   unsigned char buf[5];
   int byte_order;
 
-  rewind (fp);
+  dig_rewind (fp);
 
   /* bytes 1 - 5 */
   if (0 >= dig__fread_port_C (buf, 5, fp)) return (-1);
@@ -595,19 +593,19 @@ dig_Rd_Plus_head (   FILE * fp,
 
   G_debug (2, "  coor size %d", ptr->coor_size );
 
-  fseek ( fp, ptr->head_size, SEEK_SET );
+  dig_fseek ( fp, ptr->head_size, SEEK_SET );
 
   return (0);
 }
 
 int 
-dig_Wr_Plus_head ( FILE * fp,
+dig_Wr_Plus_head ( GVFILE * fp,
 		     struct Plus_head *ptr)
 {
   unsigned char buf[10];
   long length = 142;
     
-  rewind (fp);
+  dig_rewind (fp);
   dig_set_cur_port (&(ptr->port)); 
 
   /* bytes 1 - 5 */
@@ -662,7 +660,7 @@ dig_Wr_Plus_head ( FILE * fp,
   /* bytes 139 - 142 : Coor size and time */
   if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp)) return (-1);
 
-  G_debug (2, "topo body offset %d", ftell( fp) );
+  G_debug (2, "topo body offset %d", dig_ftell( fp) );
   
   return (0);
 }
