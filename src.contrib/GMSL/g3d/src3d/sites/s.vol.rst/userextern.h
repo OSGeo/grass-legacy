@@ -12,7 +12,8 @@ extern char           *input;
 extern char           *cellinp;
 extern char           *cellout;
 extern char           *maskmap;
-extern char           *mapset ;
+extern char           *mapset;
+extern char	      *devi;
 extern char           *outz,*gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv;
 
 
@@ -49,7 +50,6 @@ extern char *Tmp_file_cell;
 
 
 extern struct Cell_head cellhd;
-
 
 
 

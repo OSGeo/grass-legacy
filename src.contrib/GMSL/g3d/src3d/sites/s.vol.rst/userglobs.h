@@ -18,7 +18,10 @@ int             n_rows_in; /* fix by JH 04/24/02 */
 char            msg[80];
 int             totsegm;
 
+FILE *dev;
+
 float *zero_array1, *zero_array2, *zero_array3, *zero_array4, *zero_array5, *zero_array6, *zero_array7;
 FCELL   *zero_array_cell;
 int out_cond1,out_cond2;  
 double z_orig_in,tb_res_in;
+double xmn,xmx,ymn,ymx,zmn,zmx;
