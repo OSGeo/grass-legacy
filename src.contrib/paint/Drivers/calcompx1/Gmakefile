@@ -1,0 +1,26 @@
+# %W% %G%
+NAME=calcompx1
+LIB = $(SRC)/paint/Interface/driverlib
+INTERFACE = $(LIB)/main.o $(LIB)/io.o $(LIB)/colors125.o
+PAINT = $(ETC)/paint
+LIST =\
+    alpha.o \
+    finish.o \
+    data.o \
+    init.o \
+    npixels.o \
+    pictsize.o \
+    raster.o \
+    rle.o \
+    text.o
+
+all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LOCKLIB)
+	cc $(LDFLAGS) $(INTERFACE) $(LOCKLIB) $(LIST) -o $@
+$(PAINT)/driver.sh/$(NAME): DRIVER.sh
+	cp $? $@
+	chmod +x $@
+
+$(LIST): P.h
+$(LOCKLIB): #
