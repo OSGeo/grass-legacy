@@ -1,0 +1,25 @@
+r3.mapcalc: 3D map algebra for GRASS GIS. GRASS G3D library is required.
+
+(c) Copyright 2000: GeoModel s.r.o. Bratislava, Slovakia, 
+    http://www.geomodel.sk
+
+If necessary, please contact the authors at hofierka@geomodel.sk or 
+paudits@gssr.sk
+
+This program both binary and source is copyrighted, but available without fee 
+for education,  research and non-commercial purposes. Users may distribute the
+binary and source code to third parties provided that the copyright notice 
+and this statement appears on all copies and that no charge is made for such 
+copies.  Any entity wishing to integrate all or part of the source code into 
+a product for  commercial use or resale, should  
+contact copyright holders/authors of the software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY.
+GeoModel s.r.o. or authors SHALL NOT BE LIABLE FOR
+ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
+
+By copying this program, you, the user, agree to abide by the copyright
+conditions and understandings with respect to any software which is
+marked with a copyright notice.
+
+Note: This program is based partly on r.mapcalc (2D) grass command.
