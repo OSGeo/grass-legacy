@@ -1,0 +1,23 @@
+#!/bin/sh
+
+echo ""
+echo "Identify window to be moved"
+echo ""
+OLDWIN=`Dchoose`
+
+Dsave > /tmp/sav$$
+
+echo ""
+echo "Make a new window"
+echo ""
+NEWWIN=`Dnew`
+
+Dchoose $NEWWIN
+
+Dremove $OLDWIN
+
+Derase
+
+sh /tmp/sav$$
+
+rm /tmp/sav$$
