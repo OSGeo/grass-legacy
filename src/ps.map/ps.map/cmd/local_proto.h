@@ -101,6 +101,8 @@ int record_eps(double, double);
 int add_to_plfile(char *);
 /* ps_clrtbl.c */
 int ps_colortable(void);
+/* ps_fclrtbl.c */
+int ps_fcolortable(void);
 /* ps_colors.c */
 int get_color_number(char *);
 int get_color_rgb(int, float *, float *, float *);
@@ -181,6 +183,7 @@ int eps_trans (double, double, double, double, double, double, double, double, d
 int eps_save (FILE*,char*,char*);
 int eps_draw_saved (FILE *, char *, double, double, double, double);
 int eps_draw (FILE *, char *, double, double, double, double);
+int pat_save (FILE*,char*,char*);
 #endif
 /* rgbfile.c */
 int rgbfile(char *key, char *data);

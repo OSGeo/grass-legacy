@@ -116,3 +116,25 @@ int eps_draw (FILE *fp, char *eps, double x, double y, double scale, double rota
 
     return (1);
 }
+
+/* save EPS patter file into PS file for later use */
+/* For pattern we have to remove header comments */
+int pat_save (FILE *fp, char *epsf, char *name)
+{
+    char buf[1024];
+    FILE *epsfp;
+
+    if ((epsfp = fopen(epsf, "r")) == NULL) return (0);
+
+    fprintf(fp, "\n/%s {\n", name);
+    while (fgets(buf, 1024, epsfp) != NULL) {
+	if ( strncmp ( buf, "%!PS-Adobe", 10 ) == 0 ||
+	     strncmp ( buf, "%%BoundingBox", 13 ) == 0 ) continue;
+       	fprintf(fp, "%s", buf);
+    }
+    fprintf(fp, "} def\n");
+    fclose(epsfp); 
+
+    return (1);
+}
+
