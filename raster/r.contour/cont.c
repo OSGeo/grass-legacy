@@ -103,7 +103,7 @@ void contour (
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
 			    Vect_reset_cats ( Cats );
-			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_cat_set ( Cats, 1, n+1 );
 			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
 			Vect_reset_line ( Points );
@@ -144,7 +144,7 @@ void contour (
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
 			    Vect_reset_cats ( Cats );
-			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_cat_set ( Cats, 1, n+1 );
 			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
 			Vect_reset_line ( Points );
@@ -184,7 +184,7 @@ void contour (
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
 			    Vect_reset_cats ( Cats );
-			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_cat_set ( Cats, 1, n+1 );
 			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
 			Vect_reset_line ( Points );

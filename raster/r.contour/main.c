@@ -29,6 +29,7 @@
 #include <ctype.h>
 #include <float.h>
 #include "gis.h"
+#include "dbmi.h"
 #include "Vect.h"
 #include "local_proto.h"
 
@@ -44,6 +45,7 @@ int main ( int argc, char *argv[])
     struct Option *cut;
     struct Flag *quiet, *noerr;
 
+    int i;
 
     struct Cell_head Wind;
     char   *name;
@@ -55,6 +57,12 @@ int main ( int argc, char *argv[])
     double *lev; 
     int nlevels;
     int n_cut;
+
+    /* Attributes */
+    struct field_info *Fi;
+    dbDriver *Driver;
+    char buf[2000];
+    dbString sql;
 
     G_gisinit (argv[0]);
 
@@ -145,12 +153,46 @@ int main ( int argc, char *argv[])
 
     Vect_open_new (&Map, vect->answer, 1);
     Vect_hist_command (&Map);
+
+    db_init_string (&sql);
+
+    /* Open database, create table */
+    Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
+    Vect_map_add_dblink ( &Map, Fi->number, Fi->name, Fi->table, Fi->key, Fi->database, Fi->driver);
+    
+    Driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
+    if (Driver == NULL)
+      G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+
+    sprintf ( buf, "create table %s ( cat integer, level double precision )", Fi->table );
+
+    db_set_string ( &sql, buf);
+
+    G_debug ( 1, "SQL: %s", db_get_string(&sql) );
+    
+    if (db_execute_immediate (Driver, &sql) != DB_OK ) {
+      G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql ) );
+    }
     
     z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
     lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
     displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels, quiet->answer);
     n_cut = atoi(cut->answer);
     contour(lev, nlevels,  Map, z_array, Wind, quiet->answer, noerr->answer, n_cut);
+
+    /* Write levels */
+    for ( i = 0; i < nlevels; i++ ) {
+	sprintf ( buf, "insert into %s values ( %d, %e )", Fi->table, i, lev[i] );
+	db_set_string ( &sql, buf);
+
+        G_debug ( 3, "SQL: %s", db_get_string(&sql) );
+
+	if (db_execute_immediate (Driver, &sql) != DB_OK ) {
+	    G_fatal_error ( "Cannot insert row: %s", db_get_string ( &sql ) );
+	}
+    }
+  
+    db_close_database_shutdown_driver(Driver);
     
     Vect_build (&Map, stderr);
     Vect_close (&Map);
