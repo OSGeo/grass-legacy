@@ -1,0 +1,33 @@
+D	chars.c	/^# define D(x,y) (x << 8 | (y & 0xFF) | 0x8000)	\/* /
+D2R	graph_text.c	/^# define D2R(d) ((double)(d * RpD))         \/* deg/
+M	chars.c	/^# define M(x,y) (x << 8 | (y & 0xFF))		\/* Moveto(x/
+Mtry	try.c	/^main()$/
+Palpha	alpha.c	/^Palpha()$/
+Pclose	io.c	/^Pclose()$/
+Pdata	data.c	/^Pdata (buf, n)$/
+Pfinish	finish.c	/^Pfinish ()$/
+Pflush	io.c	/^Pflush ()$/
+Pinit	init.c	/^Pinit()$/
+Pnpixels	npixels.c	/^Pnpixels (rows, cols)$/
+Popen	io.c	/^Popen(port)$/
+Pout	io.c	/^Pout (buf, len)$/
+Poutc	io.c	/^Poutc ( c)$/
+Pouts	io.c	/^Pouts (s)$/
+Ppictsize	pictsize.c	/^Ppictsize (r, c)$/
+Praster	raster.c	/^Praster()$/
+Prle	rle.c	/^Prle (buf, n)$/
+Ptext	text.c	/^Ptext (s) char *s;$/
+draw	graph_text.c	/^static draw (x, y)$/
+drawchar	graph_text.c	/^drawchar (size, sinrot, cosrot, character)$/
+graph_char	graph_text.c	/^graph_char (x, y, size, rotation, achar)$/
+graph_line	graph_line.c	/^graph_line (x0,y0,x1,y1)$/
+graph_point	graph_line.c	/^graph_point (x, y)$/
+graph_text	graph_text.c	/^graph_text (x, y, size, rotation, string)$/
+initialize	graph_text.c	/^static initialize ()$/
+initialize_rasterfile	sun.c	/^initialize_rasterfile(fd)$/
+move	graph_text.c	/^static move (x, y)$/
+print_rasterfile	print.c	/^print_rasterfile()$/
+put_int	sun.c	/^put_int (fd, n)$/
+set_rasterfile_size	sun.c	/^set_rasterfile_size (fd, rows, cols)$/
+where	sun.c	/^#define where(fd) lseek(fd, 0L, 1)$/
+write_rasterfile	write.c	/^write_rasterfile(buf,n)$/
