@@ -1,0 +1,14 @@
+all: $(BIN)/Mu2ll $(BIN)/Mll2u $(BIN)/Mll2gc $(BIN)/Mgc2ll $(BIN)/Mdshift
+
+$(BIN)/Mdshift: dshift.o $(COORCNVLIB)
+	$(CC) $(LDFLAGS) dshift.o $(COORCNVLIB) $(MATHLIB) -o $@
+$(BIN)/Mu2ll: u2ll.o $(COORCNVLIB)
+	$(CC) $(LDFLAGS) u2ll.o $(COORCNVLIB) $(MATHLIB) -o $@
+$(BIN)/Mll2u: ll2u.o $(COORCNVLIB)
+	$(CC) $(LDFLAGS) ll2u.o $(COORCNVLIB) $(MATHLIB) -o $@
+$(BIN)/Mll2gc: ll2gc.o $(COORCNVLIB)
+	$(CC) $(LDFLAGS) ll2gc.o $(COORCNVLIB) $(MATHLIB) -o $@
+$(BIN)/Mgc2ll: gc2ll.o $(COORCNVLIB)
+	$(CC) $(LDFLAGS) gc2ll.o $(COORCNVLIB) $(MATHLIB) -o $@
+
+$(COORCNVLIB): # in case LIB changes
