@@ -333,9 +333,8 @@ int main (int argc, char *argv[])
 	if (name = parm.sites->answer)
 	{
 		FILE *fp;
-		int i;
-                Site mysite;
-                mysite.dim_alloc=mysite.dbl_alloc=mysite.str_alloc=0;
+		int i, rtype, ndim, nstr, ndec;
+                Site *mysite;
 
 		mapset = G_find_sites2 (name, "");
 		if (!mapset)
@@ -349,29 +348,39 @@ int main (int argc, char *argv[])
 			G_fatal_error (msg);
 		}
 
-		for (i = 0; G_site_get (fp, &mysite) == 0; i++)
+		rtype = -1;
+		G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
+		mysite = G_site_new_struct(rtype, ndim, nstr, ndec);
+
+		for (i = 0; G_site_get (fp, mysite) == 0; i++)
 		{
 			if (i==0)
 			{
 				G_copy (&temp_window, &window, sizeof(window));
-				window.east = window.west = mysite.east;
-				window.north = window.south = mysite.north;
+				window.east = window.west = mysite->east;
+				window.north = window.south = mysite->north;
 			}
 			else
 			{
-				if (mysite.east > window.east) 
-					window.east = mysite.east;
-				if (mysite.east < window.west) 
-					window.west = mysite.east;
-				if (mysite.north > window.north) 
-					window.north = mysite.north;
-				if (mysite.north < window.south) 
-					window.south = mysite.north;
+				if (mysite->east > window.east) 
+					window.east = mysite->east;
+				if (mysite->east < window.west) 
+					window.west = mysite->east;
+				if (mysite->north > window.north) 
+					window.north = mysite->north;
+				if (mysite->north < window.south) 
+					window.south = mysite->north;
 			}
 		}
+		G_free(mysite);
 		fclose (fp);
 		if (i)
 		{
+		     window.east += 100;
+		     window.west -= 100;
+		     window.south -= 100;
+		     window.north += 100;
+
        	             if(window.north == window.south)
        	             {
        	                   window.north = window.north + 0.5 * temp_window.ns_res;
