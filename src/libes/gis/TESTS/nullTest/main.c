@@ -64,7 +64,7 @@ int main ( int argc, char *argv[])
     G_set_d_null_value(dcellArr, 3);
     
     /* Print out the null values for CELL type */
-    fprintf(stderr, "\nNull value of CELL should be equal to INT_MIN\n");
+    fprintf(stderr, "Null value of CELL should be equal to INT_MIN\n");
     fprintf(stderr, "INT_MIN = %X in hex code\n", INT_MIN);
     fprintf(stderr, "Value of null value for type CELL, 3 values\n");
     
@@ -145,11 +145,11 @@ int main ( int argc, char *argv[])
     
     if (G_is_d_null_value(&dcellArr[0]))
     {
-    	fprintf(stderr, "DCELL null value detected\n\n");
+    	fprintf(stderr, "DCELL null value detected\n");
     }
     else
     {
-    	fprintf(stderr, "DCELL null value NOT detected\n\n");
+    	fprintf(stderr, "DCELL null value NOT detected\n");
     }
     
     return(0);
