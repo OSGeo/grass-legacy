@@ -18,7 +18,7 @@
 <B>map</B><EM>=name</EM> 
 [<B>color</B><EM>=name|R:G:B</EM>]
 [<B>linecolor</B><EM>=name|R:G:B</EM>]
-[<B>legend</B><EM>=filename</EM>]
+[<B>legend</B><EM>=filename|"-"</EM>]
 
 
 <H3>Flags:</H3>
@@ -46,7 +46,8 @@ standard grass color name, or as an RGB triplet (e.g. 127:127:127).
 
 <DT><B>legend</B>
 <DD>Name of a legend file specifying what color to use for 
-each category (see below).
+each category (see below). If "-" is specified, the legend
+will be read from standard input.
 <DD>Default: none
 </DL>
 
