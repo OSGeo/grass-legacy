@@ -1,0 +1,111 @@
+.\" %W% %G%
+.TH Grandom 2G G-language
+.SH NAME
+Grandom \- Create a 
+.CT map "cell map"
+and 
+.CT "sites list" "site map"
+containing randomly located sites
+.br
+.I "(G Language Tool)"
+.SH SYNOPSIS
+.B Grandom
+[-vz] \fIinputmap outputmap n[%] [sitefile]\fR
+.SH DESCRIPTION
+.I Grandom
+provides a means for creating an
+.I outputmap
+.CT layer "cell map"
+and a
+.I sitefile
+.CT "(sites list file)" "(site map)"
+containing sites whose locations are determined randomly.
+The general region in which to generate these random locations is determined
+by the current 
+.CT window "geographic window"
+and mask, and within non-zero data areas on the
+.I inputmap
+on a current 
+.CT "map layer" "cell map"
+specified by the user.  The user may specify
+the random locations to be generated either as an \fIabsolute number\fR
+(e.g., 10), or as a \fIpercentage of the 
+.CT "map's" "cell map's"
+total size\fR
+(e.g., 1%, or 3.05%).
+If specified as a percentage, the number of random locations generated
+will be set equal to the number of 
+.XT grid 
+cells appearing in that percentage
+of the 
+.CT "map." "cell map." 
+(Note that percentages less than 1% may be stated as decimals.)
+The 
+.I outputmap
+.CT layer "cell map"
+is created
+in the current mapset and contains randomly located 
+.CT "pixels." "cells."
+The categories on the
+.I inputmap
+where
+random cells hit are copied to the 
+.I outputmap.
+The category names from the
+.I inputmap
+are copied for the new 
+.CT "map." "cell map."
+A  color table for the
+.I outputmap
+is generated to contrast with the colors in the
+.I inputmap.
+
+The
+.I sitefile
+created will have
+coordinates which are the
+.I centers
+of the randomly selected cells.
+.fi
+
+
+The user can elect to supress generation of the \fIoutputmap\fR by specifying
+a dash \fB-\fR in place of an output 
+.CT file "cell map"
+name on the command line.
+Since generation of the \fIsitefile\fR is optional, the user can
+supress generation of the \fIsitefile\fR simply by failing to include
+one on the command line.
+
+The
+.I outputmap
+may be suppressed by specifying "-".
+.SH OPTIONS
+.IP -v
+Supresses verbose. \fIGrandom\fR will normally output to the error output
+messages as it runs. The -v option will suppress the printing of
+these messages.
+.IP -z
+Generate random locations against category zero as well.
+If the -z option is specified,
+the locations which fall in category zero
+will be added as a new category to the output 
+.CT "map." "cell map."
+.SH NOTES
+If it is desired to create random locations within some, but not all,
+non-zero categories of the input 
+.CT "map," "cell map,"
+the user must first create a
+reclassified 
+.CT map "cell map"
+of the original 
+.CT map "cell map"
+(e.g., using the GRASS
+tool \fIreclass\fR) which contains only the desired categories,
+and then use the reclassed 
+.CT map "cell map"
+as input to \fIGrandom\fR.
+.SH SEE ALSO
+\fIrandom[1], reclass[1]\fR
+.SH "AUTHOR"
+Dr. James Hinthorne, GIS Lab, Central Washington University
