@@ -57,6 +57,7 @@ int main( int   argc, char *argv[])
     char         *tmpfile;
     struct line_pnts points;    
     FILE         *tmp;
+	struct GModule *module;
     struct {
 	struct Option *input, *output, *attribute, *catlabel;
     } parm;
@@ -64,6 +65,10 @@ int main( int   argc, char *argv[])
     char         name[128], buf[1024];
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Read an ArcView Shapefile (polygons and lines).";
 
     /* define the different options */
 

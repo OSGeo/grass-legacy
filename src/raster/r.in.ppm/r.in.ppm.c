@@ -58,6 +58,7 @@ main (int argc, char *argv[])
 	struct Colors colors, *pcolr;
 	struct Colors bwcolors, *pbwcolr;
 	int red,grn,blu,num_colors;
+	struct GModule *module;
 	struct Option *inopt, *outopt, *nlevopt;
 	int *levels;
 	struct Flag *vflag, *bflag;
@@ -80,6 +81,11 @@ main (int argc, char *argv[])
 	pbwcolr=&bwcolors;
 	
 	G_gisinit (argv[0]);
+	module = G_define_module();
+	module->description =
+		"Converts an ASCII/BINARY PPM image file to "
+		"a GRASS raster file.";
+
 	inopt = G_define_option();
 	outopt = G_define_option();
 	nlevopt = G_define_option();

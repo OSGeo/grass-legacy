@@ -8,6 +8,7 @@ typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option 	*rastin, *rastout;
     struct Option 	*eastoff, *northoff;
     char                *inmap;
@@ -21,6 +22,10 @@ int main( int argc, char *argv[])
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bilinear interpolation utility for raster map layers.";
 
     rastin = G_define_option();
     rastin->key            	   = "input";

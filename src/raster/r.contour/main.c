@@ -14,6 +14,7 @@
 
 int main ( int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *map;
     struct Option *levels;
     struct Option *vect;
@@ -37,6 +38,11 @@ int main ( int argc, char *argv[])
     int nlevels;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Produces a GRASS binary vector map of specified "
+		"contours from GRASS raster map layer.";
 
     map=G_define_option () ;
     map->key        = "input";
