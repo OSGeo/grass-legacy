@@ -30,6 +30,7 @@
 #include "gis.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -126,6 +127,8 @@ G_compare_projections( struct Key_Value *proj_info1,
                        struct Key_Value *proj_units2 )
 
 {
+    char  buf1[512], buf2[512];
+    
     if( proj_info1 == NULL && proj_info2 == NULL )
         return TRUE;
     
