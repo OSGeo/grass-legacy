@@ -1,13 +1,13 @@
 
 
 
-r.transect           GRASS Reference Manual            r.transect
+r.transect <main>    GRASS Reference Manual     <main> r.transect
 
 
 
 NAME
      r.transect - Outputs raster map layer values lying along
-     user-defined transect line(s).
+     user defined transect line(s).
      (GRASS Raster Program)
 
 SYNOPSIS
@@ -60,14 +60,14 @@ COMMAND LINE OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.transect           GRASS Reference Manual            r.transect
+r.transect <main>    GRASS Reference Manual     <main> r.transect
 
 
 
@@ -126,14 +126,14 @@ OUTPUT FORMAT
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.transect           GRASS Reference Manual            r.transect
+r.transect <main>    GRASS Reference Manual     <main> r.transect
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
