@@ -1,0 +1,66 @@
+
+
+
+Dvect(2D)            GRASS Reference Manual             Dvect(2D)
+
+
+
+NAME
+     Dvect - Tool for viewing GRASS vector (digit) maps
+     (D Language Tool)
+
+SYNOPSIS
+     Dvect name [color]
+     Dvect [option=value] [option=value]
+
+DESCRIPTION
+     Dvect displays the vector map (in binary form) name in the
+     current graphics window.  Options are:
+
+     name=mapname
+          Name of vector map to be displayed.
+     color=color
+          Color desired for drawing map.  Default color is white,
+          if unstated.
+
+BUGS
+     This tool cries for massive upgrade including:
+          1) Allowing different colors and textures for lines.
+          2) Allowing different fill patterns and colors for
+          areas.
+          3) An associated program for identifying these options.
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
