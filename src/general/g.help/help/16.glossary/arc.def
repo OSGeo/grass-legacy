@@ -1,0 +1,15 @@
+
+
+arc - GRASS \vector maps\ are stored in an \arc-node\ representation
+consisting of non-intersecting curves called arcs.  An arc (a.k.a.,
+\vector\) is stored as a series of x,y coordinate pairs.  The two
+end-points of an arc are called \nodes\.  Two consecutive x,y pairs
+define an arc segment (a.k.a., line segment).  Arcs, either singly
+or in combination with other arcs, form higher-level \map features\:
+line features (e.g., roads or streams) and \area\ features (e.g.,
+soil types or timber cutting units).  Areas are also called \polygons\.
+GRASS vector format does not store the polygons explicitly; they are
+reconstructed by finding the particular arcs which form the polygon
+perimeter.  Arcs that form linear features are sometimes called
+\lines\ and arcs that outline areas are called area edges or area
+lines.
