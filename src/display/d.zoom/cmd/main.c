@@ -5,7 +5,6 @@
  */
 
 #include "gis.h"
-#include "datetime.h"
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"
@@ -17,7 +16,7 @@ main (int argc, char **argv)
 {
     int stat;
     int rotate;
-#ifdef DEPRECATED
+#ifdef QUIET
     struct Flag *quiet;
 #endif
     struct Flag *just, *pan;
@@ -103,7 +102,7 @@ main (int argc, char **argv)
     zoom->options    = "0.001-1000.0" ;
     zoom->description= "magnification: >1.0 zooms in, <1.0 zooms out" ;
 
-#ifdef DEPRECATED
+#ifdef QUIET
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = "Quiet";
@@ -128,7 +127,7 @@ main (int argc, char **argv)
 
     sscanf(zoom->answer,"%lf", &magnify);
 
-#ifdef DEPRECATED
+#ifdef QUIET
     /* if map was found in monitor: */
     if (rast || vect || site) 
        quiet->answer=1;
@@ -404,7 +403,7 @@ main (int argc, char **argv)
 		    nvects, (nvects > 1 ? "s":""),
 		    nsites, (nsites > 1 ? "s":""));
     /* Do the zoom */
-#ifndef DEPRECATED
+#ifndef QUIET
         stat = zoomwindow(1, rotate, magnify, pan->answer);
 #else
         stat = zoomwindow(quiet->answer, rotate, magnify, pan->answer);
