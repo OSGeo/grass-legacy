@@ -31,6 +31,7 @@ src/libes/vect32/Vlib
 src/libes/vect32/diglib
 src/libes/vect32/georef
 src/libes/image3
+src/libes/bwidget
 src/general/gis
 src/display/devices/lib
 src/display/devices/monitorcap
@@ -382,7 +383,7 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 # only on SGI:
 # src.contrib/GMSL/SG3d
 # grid3d support (raster voxel):
-src.contrib/GMSL/g3d
+#src.contrib/GMSL/g3d
 #
 #######################################
 # PostgreSQL support: (working!)
