@@ -6,7 +6,8 @@
 #
 # MODULE:		d.out.png (based on d.redraw)
 # AUTHOR(S):	Michael Barton; 
-#              Routine to read current display geometry by Hamish & Glynn Clements
+#               Routine to read current display geometry by Hamish Bowman 
+#                & Glynn Clements
 # PURPOSE:	To redraw current displayed maps to 24 bit PNG output
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -22,7 +23,7 @@ if  [ -z $GISBASE ] ; then
  exit 1
 fi   
 
-if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" ]
+if [ "$1" = "-help" -o "$1" = "--help" -o "$1" = "help" -o "$1" = "-h" ]
 then
 	echo
 	echo "Usage: d.out.png output=file_name res=1|[2]|4"
