@@ -7,6 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/odbc
 EXTRA_INC = $(ODBCINC)
+DEPENDENCIES = $(GISDEP)
 
 LIBES = $(DBMILIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
@@ -29,6 +30,6 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 default: $(DRIVER)
 
-$(DRIVER): $(ARCH_OBJS) $(LIBES)
+$(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB)
 

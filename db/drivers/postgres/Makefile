@@ -1,6 +1,8 @@
 
 MODULE_TOPDIR = ../../..
 
+DEPENDENCIES = $(GISDEP)
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
@@ -35,7 +37,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 default: $(DRIVER)
 
-$(DRIVER): $(ARCH_OBJS) $(LIBES)
+$(DRIVER): $(ARCH_OBJS)
 	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(CRYPTLIB)  $(TCLTKLIBPATH) $(TCLTKLIBS) \
 		$(MATHLIB) $(XDRLIB)
 
