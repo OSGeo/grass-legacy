@@ -223,7 +223,7 @@ main (int argc, char *argv[])
     
     Vect_build ( &Map, stdout );
     if (Vect_get_num_areas(&Map) > 0)
-        G_warning ("Area boundaries are not cleaned by this module. Run v.clean on imported vector on new map <%s>.", out_opt->answer);
+        G_warning ("Area boundaries are not cleaned by this module. Run v.clean (tool=rmdupl,bpol) on imported vector on new map <%s>.", out_opt->answer);
 
     Vect_close ( &Map );
 
