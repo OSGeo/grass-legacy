@@ -1,0 +1,10 @@
+PGM = Xgrid
+OFILES =  main.o \
+	command.o \
+	draw_grid.o
+LIBES = $(GISLIB) $(XDISPLAYLIB) $(DISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
