@@ -13,6 +13,11 @@
 *   	    	for details.
 *
 * DBF API:      http://shapelib.maptools.org/dbf_api.html
+*
+* DBFFieldType: FTString, FTInteger, FTDouble, FTLogical, FTInvalid
+*                  0          1          2         4         5
+*                DBF_CHAR   DBF_INT   DBF_DOUBLE  
+*                  1          2          3
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,9 +26,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "gis.h"
-#include "dbmi.h"
-#include "shapefil.h"
+#include <gis.h>
+#include <dbmi.h>
+#include <shapefil.h>
 #include "globals.h"
 #include "proto.h" 
 
@@ -114,15 +119,21 @@ load_table_head( int t)
 	 
 	 switch ( dtype )
 	   {
-             case FTInteger:
-		 type = DBF_INT;    
-                 break;
              case FTString:
 		 type = DBF_CHAR;    
+                 break;
+             case FTInteger:
+		 type = DBF_INT;    
                  break;
              case FTDouble:
 		 type = DBF_DOUBLE;    
                  break;
+	     case FTInvalid:
+	    	 G_warning ("invalid/unsupported DBFFieldType");
+		 break;
+	     default:
+	      	 G_warning ("unknown DBFFieldType");
+	      	 break;
 	   }
 	 
 	 add_column ( t, type, fname, width, decimals);  
