@@ -37,6 +37,7 @@ main (int argc, char *argv[])
 	struct GModule *module;
     struct Option *opt1;
     struct Flag *rflag;
+    struct Flag *sflag;
 
     G_gisinit(argv[0]);
 
@@ -55,6 +56,10 @@ main (int argc, char *argv[])
     rflag = G_define_flag();
     rflag->key            = 'r';
     rflag->description    = "print range only.";
+
+    sflag = G_define_flag();
+    sflag->key            = 's';
+    sflag->description    = "print resolution (NS-res, EW-res) only.";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -79,7 +84,7 @@ main (int argc, char *argv[])
 
     out = stdout;
 
-  if (!rflag->answer)
+  if (!rflag->answer && !sflag->answer)
   {
     divider ('+');
 
@@ -233,8 +238,10 @@ main (int argc, char *argv[])
 
     fprintf(out,"\n");
    }
-   else /* rflag->answer */
+   else /* rflag or sflag */
    {
+
+     if (rflag->answer){
         if (data_type ==  CELL_TYPE)
         {
 	  fprintf(out, "min=%i\n", (CELL)zmin);
@@ -245,6 +252,17 @@ main (int argc, char *argv[])
 	  fprintf(out, "min=%f\n", zmin);
 	  fprintf(out, "max=%f\n", zmax);
 	}
+     } else {
+      if (sflag->answer){
+	G_format_resolution (cellhd.ns_res, tmp3, cellhd.proj);
+        fprintf (out, "nsres=%s\n",
+	    tmp3);
+
+	G_format_resolution (cellhd.ew_res, tmp3, cellhd.proj);
+        fprintf (out, "ewres=%s\n",
+	    tmp3);
+      }
+     }
    }
     return 0;
 }
