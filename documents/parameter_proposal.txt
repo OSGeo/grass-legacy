@@ -27,6 +27,14 @@ Imagery modules:
 Sites modules:
   map= for map (no analysis modules)
   input= output= for maps (analysis modules) 
+  field   Attribute field type to use for operation
+           options: dim,decimal,cat
+           default: decimal
+  findex   Attribute field number to use for operation
+           default: 1
+  string   String attribute number to use for description
+           default: 1
+  -> important: attribute field selection
 
 Misc modules:
   map= for map (no analysis modules)
