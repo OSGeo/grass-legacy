@@ -16,7 +16,7 @@ main(int argc, char *argv[])
     dbConnection conn;
     struct Flag *print;
 /*    struct Option *driver, *database, *user, *password, *keycol;*/
-    struct Option *driver, *database, *schema;
+    struct Option *driver, *database, *schema, *group;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -52,6 +52,14 @@ main(int argc, char *argv[])
     schema->description = "Database schema. Don't use this option if schemas are not supported "
                           "by driver/database server.";
     
+    group = G_define_option() ;
+    group->key        = "group" ;
+    group->type       = TYPE_STRING ;
+    group->required   = NO  ;
+    group->multiple   = NO ;
+    group->answer     = db_get_default_group_name();
+    group->description = "Default group of database users to which select privilege is granted.";
+
 /* commented due to new mechanism:
     user = G_define_option() ;
     user->key        = "user" ;
@@ -91,6 +99,9 @@ main(int argc, char *argv[])
 	if ( schema->answer )
 	    conn.schemaName = schema->answer;
 
+	if ( group->answer )
+	    conn.group = group->answer;
+
 /* commented due to new mechanism:
 	if ( user->answer )
 	    conn.user = user->answer;
@@ -112,6 +123,7 @@ main(int argc, char *argv[])
     fprintf(stdout, _("driver:%s\n"), conn.driverName);
     fprintf(stdout, _("database:%s\n"), conn.databaseName);    
     fprintf(stdout, _("schema:%s\n"), conn.schemaName);    
+    fprintf(stdout, _("group:%s\n"), conn.group);    
 /* commented due to new mechanism:
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    
