@@ -223,11 +223,13 @@ to category 2 with the label "good quality" in the output map layer.
 <DD>2. This example reclassifies input raster map layer categories 1 thru 10 to output 
 map layer category 1, input map layer categories 11 thru 20 to output map layer
 category 2, and input map layer categories 21 thru 30 to output map layer
-category 3, all without labels.
+category 3, all without labels. The range from 30 to 40 is reclassified as
+NULL.
 <PRE>
      1 thru 10	= 1
     11 thru 20	= 2
     21 thru 30	= 3
+    30 thru 40  = NULL
 </PRE>
 
 <DD>3. Subsequent rules override previous rules.  Therefore, the below example
