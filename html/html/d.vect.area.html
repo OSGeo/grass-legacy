@@ -17,13 +17,15 @@
 [<B>-r</B>] 
 <B>map</B><EM>=name</EM> 
 [<B>color</B><EM>=name|R:G:B</EM>]
+[<B>linecolor</B><EM>=name|R:G:B</EM>]
 [<B>legend</B><EM>=filename</EM>]
 
 
 <H3>Flags:</H3>
 <DL>
 <DT><B>-r</B> 
-<DD>"Randomly" fill all areas by cycling through standard GRASS colors
+<DD>Fill all areas with a randomly selected color from a small color palette,
+and draw all boundaries in black.
 </DL>
 
 <H3>Parameters:</H3>
@@ -37,6 +39,11 @@
 grass color name, or as an RGB triplet (e.g. 80:198:255).
 <DD>Default: white
 
+<DT><B>linecolor</B>
+<DD>Color desired for drawing area boundaries.  May be specified as a
+standard grass color name, or as an RGB triplet (e.g. 127:127:127).
+<DD>Default: black
+
 <DT><B>legend</B>
 <DD>Name of a legend file specifying what color to use for 
 each category (see below).
@@ -47,9 +54,9 @@ each category (see below).
 
 Use <EM>d.vect.area</EM> to draw labelled areas from a vector map to the GRASS
 display.  Using, the "<EM>-r</EM>" flag, the program will cycle through the
-standard GRASS named colors, overriding any <EM>color</EM> argument.  If
-a <EM>legend</EM> file is specified, it will be used.
-Otherwise, the color used for filling areas is as specified.
+standard GRASS named colors, overriding any <EM>color</EM> or
+<EM>linecolor</EM> argument.  If a <EM>legend</EM> file is specified, it will
+be used.  Otherwise, the color used for filling areas is as specified.
 
 <P>
 
@@ -59,44 +66,54 @@ form <EM>&lt;num&gt;:&lt;num&gt;:&lt;num&gt;</EM> where <EM>num</EM> is
 between 0 and 255.
 <P>
 
+The <EM>linecolor</EM> argument is used in conjunction with the
+<EM>color</EM> argument for drawing boundaries and has the
+same format.
+
+<P>
 More control can be had by creating a <EM>legend</EM> file.  At the
 time of this writing, GRASS does not have any management functions
 for specifying how vectors should be drawn, so this file must be
 created by "hand".  The easiest way to create such a file, is
 to copy the category file for the vector map, and edit it to
 contain color specifications.  The format of the <EM>legend</EM>
-file is <EM>category red green blue</EM>, with one entry per
-line. If a category for a map is not included in this file,
-it will not be drawn unless there is a special "default"
-entry with a category of -1.  
+file is <EM>category red green blue [red green blue]</EM>,
+with one entry per line.  The first RGB color specifies the fill
+color, while the optional second one specifies the boundary
+line color.
+If a category for a map is not included
+in this file, it will not be drawn unless there is a special "default"
+entry with a category of -1.  Boundary lines are not drawn unless
+either a boundary color is specified for the category, or there is
+a default boundary color.
 
 <DL>
 <DT><B>Example Legend File</B>
 <DD>
--1 255 255 255<BR>
+-1 255 255 255 127 127 127<BR>
 1  210 198 168<BR>
 5  168 198 220<BR>
 </DL>
 
 <P>
 
-In the above, all labelled areas will be drawn in white (255, 255, 255),
+In the above, all labelled areas will be drawn in white (255, 255, 255)
+with dark gray boundaries (127, 127, 127)
 except those labelled as categories 1 or 5.  If the "default" entry
 had been omitted, then only areas labelled 1 or 5 would have been drawn.
+Since the entries for 1 and 5 don't specify a color for boundary lines,
+no boundary lines are drawn.
+
+<P>
+One may place comments on any line in the legend file by starting it
+with a non-numeric character ('#' is a good choice).  Empty lines
+are ignored.
 
 <H2>NOTES</H2>
-<P>
-The <EM>d.vect.area</EM> module does not draw boundary lines.  It only
-flood fills areas.
 <P>
 It is expected that the legend specification aspect of this module
 will change when an infrastructure for managing vector drawing
 styles is implemented.
-
-<H2>BUGS</H2>
-It might be considered a bug, that malformed legend file entries
-are silently dropped.  Only if no entries could be parsed, will
-an error be raised.
 
 <H2>AUTHOR</H2>
 Eric G. Miller
