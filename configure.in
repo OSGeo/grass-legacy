@@ -61,7 +61,7 @@ AC_PATH_PROG(pwd, pwd, pwd)
 AC_MSG_CHECKING(for source directory)
 
 if test -z "$srcdir" ; then
-  SRCDIR=`pwd`
+  SRCDIR=`$pwd`
 else
   SRCDIR=`(cd "$srcdir" ; $pwd)`
 fi
@@ -70,7 +70,7 @@ AC_MSG_RESULT("$SRCDIR")
 
 AC_MSG_CHECKING(for build directory)
 
-DSTDIR=`pwd`
+DSTDIR=`$pwd`
 
 AC_MSG_RESULT("$DSTDIR")
 
@@ -1186,7 +1186,6 @@ LOC_MSG([Generating Makefiles for alternate build mechanism])
 cp -f src/CMD/head/head mk/vars.mk
 cp -f Makefile ${SRCDIR}
 cp -f mk/Makefile .
-( cd ${SRCDIR}; ./mk/mkmakefiles )
 
 fi
 
