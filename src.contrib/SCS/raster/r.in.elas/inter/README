@@ -1,0 +1,34 @@
+******************************************************* 
+*                                                     *
+*               README FILE FOR GRELAS                *
+*                                                     *
+*******************************************************
+
+Succesful use of the Grelas software implies the following assumptions
+
+1) All ELAS data is under /usr/elas/data
+
+2) Both the GRASS LOCATION and MAPSET specified
+   are already present.
+
+3) User has RW permissions to all files.
+
+4) User environment variable PATH specifies /usr/gis/bin
+
+5) Files needed: grelas.c
+                 genproc.c
+                 eltran.c
+                 makefile
+
+6) To compile the Grelas source code enter the following:
+
+   cd /usr/gis/src/Grelas
+   ucb
+   make
+
+7) The Grelas command will be placed in /usr/gis/bin as Grelas.
+
+8) The Grelas interface has not been fully tested. This code may
+   contain bugs.
+
+
