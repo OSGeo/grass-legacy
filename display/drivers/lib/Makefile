@@ -1,5 +1,6 @@
 MODULE_TOPDIR = ../../..
 
+EXTRA_CFLAGS=$(FTINC)
 EXTRA_LIBS=$(GISLIB)
 LIB_NAME = $(DRIVER_LIBNAME)
 
@@ -43,9 +44,9 @@ LIB_OBJS =\
 	pad.o\
 	utils.o\
 	RGB.o\
-	Text2.o
-
-
+	Text2.o\
+	Text3.o\
+	font_freetype.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
