@@ -1,0 +1,35 @@
+NAME=hpd500c
+SRC=$(GIS)/src
+LIBDIR=$(GIS)/src/libes/LIB
+LOCKLIB=$(LIBDIR)/liblock.a
+LIBS = $(SRC)/paint/Interface/driverlib/LIB/lib.a $(LOCKLIB)
+ETC=$(GIS)/etc
+PAINT = $(ETC)/paint
+LIST =\
+    main.o \
+    alpha.o \
+    clear.o \
+    colors.o \
+    cym.o \
+    data.o \
+    dither.o \
+    esc.o \
+    finish.o \
+    formfeed.o \
+    init.o \
+    npixels.o \
+    pictsize.o \
+    raster.o \
+    rle.o \
+    text.o
+
+all: $(PAINT)/driver/$(NAME) $(PAINT)/driver.sh/$(NAME)
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBS) -o $@
+$(PAINT)/driver.sh/$(NAME): DRIVER.sh
+	cp $? $@
+	chmod +x $@
+
+$(LIST): P.h
+$(LIBS): #
