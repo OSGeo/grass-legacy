@@ -1,4 +1,3 @@
-.\" %W% %G%
 .TH V.mkgrid 2
 .SH NAME
 V.mkgrid \- Creates a vector (digit) map of a user-defined grid
