@@ -84,7 +84,7 @@ int main (int argc, char **argv)
     	} parm;
 
 
-	G_init_locale(PACKAGE);
+	G_init_locale();
 
 	G_gisinit(argv[0]);
 
