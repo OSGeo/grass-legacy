@@ -1,0 +1,16 @@
+PGM=v.in.dgn
+
+OBJ = main.o
+
+DGNLIB=$(LIBDIR)/libdgn.a
+CPLLIB=$(LIBDIR)/libcpl.a
+
+LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) -lz
+
+
+$(BIN_CMD)/$(PGM):  $(OBJ) $(LIBES) 
+	$(CC) -o $@ $(OBJ) $(LIBES)
+
+$(VECTLIB): #
+$(GISLIB): #
+
