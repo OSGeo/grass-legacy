@@ -30,7 +30,7 @@ G_gishelp(helpfile, request)
     if (! access(file, 04))
     {
 	printf("one moment...\n") ;
-	sprintf(buffer, "more -d %s", file) ;
+	sprintf(buffer, "more %s", file) ;
 	system(buffer) ;
     }
     else
