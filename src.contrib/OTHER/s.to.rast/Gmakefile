@@ -1,0 +1,13 @@
+HOME = $(BIN_CONTRIB_CMD)
+PGM = s.to.rast
+I = Include
+EXTRA_CFLAGS  = -I$I
+ 
+LIST =  main.o get_site.o write_cell.o site.o read_sites.o parse.o\
+	announce.o ut_to_cell.o scn_double.o scopy.o
+
+$HOME/$(PGM): $(LIST) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(HOME)/$(PGM) $(LIST) $(GISLIB) $(TERMLIB)
+ 
+$(LIST):	$I/site.h $I/dir.h
+$(GISLIB):	#
