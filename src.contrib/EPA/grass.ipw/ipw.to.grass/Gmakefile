@@ -1,5 +1,5 @@
 #
-# SCCS version: %Z%   %M%   %I%   %G%
+# SCCS version: @(#)   Gmakefile   1.5   9/5/91
 #
 # Gmakefile for
 #	ipw.to.grass
@@ -16,17 +16,17 @@ OBJS  = ipw2grass.o headers.o main.o
 
 IPWLIB = $(IPW)/lib/libipw.\a
 
-ALL:  CHECK $(BIN)/ipw.to.grass
+ALL:  CHECK $(BIN_CONTRIB_CMD)/ipw.to.grass
 
 CHECK:
-	if [ $(IPW) ]; \
+	@if [ -n "$(IPW)" ]; \
 	then exit 0; \
-	else echo '$$IPW not set . . .'; \
+	else echo 'Image Processing Workbench source code not available - $$IPW not defined'; \
 		echo "  cannot compile ipw.to.grass"; \
 		exit 1; \
 	fi
 
-$(BIN)/ipw.to.grass:	$(OBJS) $(GISLIB)
+$(BIN_CONTRIB_CMD)/ipw.to.grass:	$(OBJS) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(IPWLIB) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): #
