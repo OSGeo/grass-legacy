@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<TITLE>r.in.bin</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.bin</b></EM>  - Import a binary raster file into a GRASS raster map layer. 
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.bin</B> 
+<BR>
+<B>r.in.bin help</B> 
+<BR>
+<B>r.in.bin input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>title=</B>"<EM>phrase</EM>"] 
+[<B>mult=</B><EM>value</EM>] 
+[<B>bytes=</B><EM>value</EM>]
+<B>north=</B><EM>value </EM>
+<B>south=</B><EM>value </EM>
+<B>east=</B><EM>value </EM>
+<B>west=</B><EM>value </EM>
+<B>r=</B><EM>value</EM>
+<B>c=</B><EM>value </EM>
+[<B>subst=</B><EM>old,new</EM>]
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.bin</EM> allows a user to create a (binary) GRASS raster map layer 
+from a binary raster input file with (optional) title. 
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing ASCII raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer. 
+<DT><B>title=</B>"<EM>phrase</EM>"
+<DD>Title to be assigned to resultant raster map layer. 
+<DT><B>mult=</B><EM>value</B>
+<DD>Multiply all raster cell values by <EM>value</EM>. 
+<EM>value</EM> is a floating point value, and has a default value of 1.0.
+<DT><B>bytes=</B><EM>value</EM>
+<DD>Number of bytes per cell (1, 2, 4), default: 1
+<DT><B>north=</B><EM>value </EM> 
+<DD>Northern limit of geographic region
+<DT><B>south=</B><EM>value </EM> 
+<DD>Southern limit of geographic region
+<DT><B>east=</B><EM>value </EM> 
+<DD> Eastern limit of geographic region
+<DT><B>west=</B><EM>value </EM> 
+<DD>Western limit of geographic region
+<DT><B>r=</B><EM>value</EM> 
+<DD>Number of rows
+<DT><B>c=</B><EM>value </EM> 
+<DD>Number of columns
+<DT><B>subst=</B><EM>old,new</EM> 
+<DD>Replace 1st value by 2nd one, default: 0,0
+
+</DL>
+
+The north, south, east, and west field values entered 
+are the coordinates of the edges of the geographic region. 
+The rows and cols field values entered describe the dimensions 
+of the matrix of data to follow. 
+The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
+<p>
+
+<H2>EXAMPLE</H2>
+
+The following is a sample call of <EM>r.in.bin</B> to import GTOPO30 DEM
+data:</EM> 
+<P>
+<TT>
+r.in.bin -s input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
+east=60 west=20 r=6000 c=4800
+</TT>
+<P>
+(you can add "subst=-9999,0" if you want sea level to have 0 value)
+
+
+<H2>NOTES</H2>
+
+The geographic coordinates north, south, east, and west
+describe the outer edges of the geographic region.  They
+run along the edges of the cells at the edge of the
+geographic region and <EM>not</EM> through the center of the cells
+at the edges.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A>, <EM><A HREF="r.out.ascii.html">r.out.ascii</A>, <A HREF="r.in.arc.html">r.in.arc</A>, <A HREF="r.out.arc.html">r.out.arc</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+
+</HTML>
