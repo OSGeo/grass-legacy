@@ -1,0 +1,27 @@
+.TH v.to.rast
+.SH "NAME"
+\fIv.to.rast\fR \- Converts a binary GRASS vector map layer
+into a GRASS raster map layer.
+.br
+.I "(GRASS Vector Program)"
+.SH "SYNOPSIS"
+.B v.to.rast
+.br
+.B v.to.rast help
+.br
+\fBv.to.rast input\*=\fIname output\*=\fIname\fR [rows\*=\fIvalue\fR]
+.SH "DESCRIPTION"
+\fIv.to.rast\fR transforms (binary) GRASS vector map layers into
+GRASS raster map layer format.
+
+.LP
+\fBParameters:\fR
+.IP \fBinput\*=\fIname\fR 18
+Name of the binary vector map layer to be converted.
+.IP \fBoutput\*=\fIname\fR 18
+Name to be assigned to the raster map layer output.
+.IP \fBrows\*=\fIvalue\fR 18
+Number of rows of memory to use when converting to raster.
+(Default is 512).
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
