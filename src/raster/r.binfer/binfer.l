@@ -64,7 +64,7 @@ new_line         [\n]
 other            .
 %%
 
-"#".*$; /* Strip out comments */
+"#".*\n        ; /* Strip out comments */
 
 [Nn][Oo][Pp][Rr][Oo][Bb][Aa][Bb][Ii][Ll][Ii][Tt][Yy][Mm][Aa][Pp][Ss] {
 return token(NO_PROBABILITY_MAPS); }
