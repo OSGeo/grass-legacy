@@ -41,6 +41,8 @@ html:
 	for prog in $(PROGRAMS) ; do \
 		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
+		echo "<HR>" >> $$prog.tmp ; \
+		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
 		echo "</body></html>" >> $$prog.tmp ; \
 		mkdir -p $(GISBASE)/docs/html ; \
 		mv $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
