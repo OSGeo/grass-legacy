@@ -1,0 +1,28 @@
+                     REGIONAL ANALYSIS AND FILTERS
+
+GRASS can also be used to analyze and filter data "regions". 
+Neighborhood filters modify each \cell\ value as a function of the cell
+values found in its (square) neighborhood.  Regional filters make each
+cell value a function of the values found within its (user-defined)
+region/clump of cells.  A region can be defined as a contiguous group
+of cells having the same category value.  Such filters are useful for
+imagery analysis and other applications.
+
+Listed below are GRASS programs which can be used for regional analysis
+and filtering.  
+
+         \-  i.zc \                   \-  r.clump \ 
+         \-  r.average \              \-  r.volume \
+
+For more information on a specific command, select a command and press
+ESC.
+
+
+
+
+
+
+
+
+
+
