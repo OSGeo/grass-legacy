@@ -1,0 +1,13 @@
+PGM = Xcolormode
+OFILES = \
+	colormode.o \
+	command.o
+LIBES = $(GISLIB) $(XDISPLAYLIB) $(DISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
+
+colormode.o:	options.h
+command.o:	options.h
