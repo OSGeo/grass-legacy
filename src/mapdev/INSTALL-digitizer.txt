@@ -1,0 +1,77 @@
+These instructions assume you are in the GRASS source directory
+mapdev and that a Gmake has been executed on the Gmakefile in this directory.
+
+If you have a digitizer on your system, please do the following to
+let the programs know about your digitizer (defining) and to build the digitizer
+program "digit" :
+
+1. To let the programs know where to find the digitizer it has to be described.
+   This is done by editing the file in dig_front/digitcap.  There is
+   information on how to edit 'digitcap' in the file dig_front/README .
+   Editing 'digitcap' has to be done before going on.
+
+	Once the file is edited to your satisfaction.  Compile it:
+
+       gmake4.2 dig_front
+
+2. select the appropriate driver code for your digitizer and compile the
+   driver:
+
+	  ls digitizers
+
+	  (you will see directories for each digitizer GRASS supports select the
+       directory for your digitizer and substitute its name in the next command.
+       at this point on this machine we support the Kurta, Altek, Geographics,
+       and the NONE (null) digitizer)
+
+	gmake4.2 digitizers/<digitizers>
+
+	In the case of the Altek it would be:
+
+	gmake4.2 digitizers/altek
+
+
+
+3. 'su' to root for the next steps
+
+	the tty(s) the digitizer is connected to has to be setup.  this is
+	accomplished by editing the  file  '/etc/inittab'.
+
+	this is what our line for the digitizer in 'inittab' looks like:
+
+		05:23:off:/etc/getty tty5 9600
+	
+	the getty must be off for tty5.
+	yours will be tty? instead of tty5.
+
+
+5.  still as root
+
+		chmod 666 /dev/tty?
+	
+6.  still as root
+ 	have the computer reset the tty to reflect the changes to 'inittab':
+
+			/etc/init 2
+
+7.  The drivers now reside in /usr/grass3/etc/dig_drivers/<digitizer> .
+		cd  /usr/grass3/etc/dig_drivers 
+		chown root */*
+		chmod 06775  */*
+	
+8.  The hardware for the digitizer should also be setup at this point.
+    For specific information on your digitizer read the INSTALL file in the
+    driver directory  /usr/grass3/src/mapdev/digitizers/<digitizers> .
+	
+
+NOTE:  
+    Digit is a very CPU intensive program.  Having a system with other users
+  on it and having a high load average can slow digit down.  If it seems that
+  'digit' isn't responding rapidly enough the priority for the program may
+  have to be raised.  This is accomplished by changing the file in 
+  ../src/mapdev/digit/set_prior.c .  Up the priority by changing this line:
+  "#define PRIORITY -13"
+  Change '-13'  to  '-15' but no higher then '-16'.
+  Then recompile the digitizer driver.
+
+
