@@ -1,0 +1,4 @@
+clcode
+    Generates coded stream network where each channel segment is
+    coded with a different category number.  Input layer must be a
+    one pixel wide stream network.
