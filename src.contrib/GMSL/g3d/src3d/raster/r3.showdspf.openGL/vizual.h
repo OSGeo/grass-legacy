@@ -1,4 +1,4 @@
-#include "Viz.h"
+#include "vizual2.h"
 #include <GL/gl.h>
 
 #include "gis.h"
