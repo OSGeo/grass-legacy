@@ -161,25 +161,25 @@ int main (int argc, char *argv[])
 	parm.north->key = "north";
 	parm.north->type = TYPE_DOUBLE;
 	parm.north->required = NO;
-	parm.north->description = "Northern limit of geographic region" ;
+	parm.north->description = "Northern limit of geographic region (outer edge)" ;
 
 	parm.south = G_define_option();
 	parm.south->key = "south";
 	parm.south->type = TYPE_DOUBLE;
 	parm.south->required = NO;
-	parm.south->description = "Southern limit of geographic region" ;
+	parm.south->description = "Southern limit of geographic region (outer edge)" ;
 
 	parm.east = G_define_option();
 	parm.east->key = "east";
 	parm.east->type = TYPE_DOUBLE;
 	parm.east->required = NO;
-	parm.east->description = "Eastern limit of geographic region" ;
+	parm.east->description = "Eastern limit of geographic region (outer edge)" ;
 
 	parm.west = G_define_option();
 	parm.west->key = "west";
 	parm.west->type = TYPE_DOUBLE;
 	parm.west->required = NO;
-	parm.west->description = "Western limit of geographic region" ;
+	parm.west->description = "Western limit of geographic region (outer edge)" ;
 
 	parm.rows = G_define_option();
 	parm.rows->key = "rows";
