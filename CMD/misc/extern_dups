@@ -1,0 +1,116 @@
+:
+
+# change this next line if you have installed grass somewhere else
+GIS=/home/sun3/grassdev
+
+# looks for duplicate external definitions in object-files and libraries
+# options:
+#   -lname  - converts name to full library name
+#   -Ldir   - add dir to library search path
+#   -L      - clear search path
+#   -o      - include object file names in output
+#
+# note: 
+#   Externals which appear multiple times within a single object
+#   are treated as a single external. This should probably only
+#   happen for global variables, not routines.
+#   This isn't important for .o files since the compiler will catch
+#   multiply defined routines. For libraries it may be since
+#   the loader may not catch mutiply defined routines in the same library.
+
+usage()
+{
+	echo Usage: `basename $0` [-Llibdir] [-llib] object-files 1>&2
+	exit 1
+}
+
+temp=/tmp/$$
+trap "rm -f $temp; exit 1" 2 3
+
+
+obj=no
+for i 
+do
+    if [ "$i" = -o ]
+    then
+	obj=yes
+    fi
+done
+
+(
+any=0
+libpath="/usr/lib /lib $GIS/src/libes $GIS/src/D/libes $GIS/src/mapdev/lib"
+
+for i
+do
+    case $i in
+
+    -o)		continue
+		;;
+    -l)		usage
+		;;
+    -L)		libpath=
+		continue
+		;;
+    -L*)	dir=`echo $i | sed s/..//`
+		libpath="$libpath $dir"
+		continue
+		;;
+    -l*)	name=`echo $i | sed s/..//`
+		lib=
+		if [ "$libpath" != "" ]
+		then
+		    for dir in $libpath
+		    do
+			if [ -r $dir/lib${name}.a ]
+			then
+			    lib=$dir/lib${name}.a
+			elif [ -r $dir/${name}lib.a ]
+			then
+			    lib=$dir/${name}lib.a
+			fi
+		    done
+		fi
+		if [ "$lib" = "" ]
+		then
+		    echo Library $i not found 1>&2
+		    continue
+		fi
+		file=$lib
+		;;
+      -*)	usage
+		;;
+      *)	file=$i
+		if [ ! -r $file ]
+		then
+			echo File $file not found 1>&2
+			continue
+		fi
+		;;
+    esac
+
+    echo $file 1>&2
+    nm -g $file | awk '/:/{obj=$1}NF==3{print $3, source, obj}' source=$file -
+    any=1
+done
+exit $any
+
+) > $temp
+
+if [ $? = 0 ]
+then
+	rm -f $temp
+	usage
+fi
+
+echo ""
+if [ $obj = yes ]
+then
+    sort -u $temp | \
+    awk '$1==name {if(dup==0) {print name; print "\t" obj "\t" file};dup=1} $1==name {print "\t" $3 "\t" $2} $1!=name {dup=0} {name=$1;file=$2;obj=$3}'
+else
+    sort -u $temp | \
+    awk '$1==name {if(dup==0) {print name; print "\t" file};dup=1} $1==name {print "\t" $2} $1!=name {dup=0} {name=$1;file=$2}'
+fi
+
+rm -f $temp
