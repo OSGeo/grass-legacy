@@ -14,8 +14,6 @@
 #include "Vect.h"       /* Must be included in programs that manipulate */
                         /* vectors.                                     */
 
-#include "dig_head.h"   /* Used for vector header information.          */
-
 #include "ntf.h"
 
 #include <stdio.h>

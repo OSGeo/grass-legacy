@@ -23,8 +23,7 @@
 #include <math.h>
 
 #include    "gis.h"
-#include    "digit.h"
-#include    "dig_head.h"
+#include    "Vect.h"
 
 #define MAIN
 
