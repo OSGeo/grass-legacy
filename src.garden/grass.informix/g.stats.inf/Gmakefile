@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/g.stats.inf
+PGM       = $(BIN_MAIN_CMD)/g.stats.inf
 LIBES     = $(GISLIB)
 
 #EXTRA_CFLAGS	= -Dunlink=puts

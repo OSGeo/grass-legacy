@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/r.reclass.ora
+PGM       = $(BIN_MAIN_CMD)/r.reclass.ora
 LIBES     = $(GISLIB) 
 
 

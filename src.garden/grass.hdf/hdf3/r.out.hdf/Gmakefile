@@ -22,7 +22,6 @@ MACH_TYPE = SUN
 EXTRA_CFLAGS	=  -I$(HDFINCL) $(VECT_INCLUDE) -D$(MACH_TYPE)
 
 PGM = $(BIN_CONTRIB_CMD)/r.out.hdf
-#PGM = $(GARDEN_BIN)/r.out.hdf
 
 OFILES = r.out.hdf.o
 

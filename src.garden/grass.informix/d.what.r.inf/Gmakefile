@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/d.what.r.inf
+PGM       = $(BIN_MAIN_CMD)/d.what.r.inf
 LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 
 
