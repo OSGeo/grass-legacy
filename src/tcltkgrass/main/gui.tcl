@@ -1211,7 +1211,7 @@ proc start_monitor {monitor} {
     set env(GRASS_TOP)    $top
 
     script_add "d.mon start=$monitor" "cmd"
-    exec xterm -geometry 40x5 -e d.mon start=$monitor
+    exec d.mon start=$monitor &
 }
 
 ###############################################################################
