@@ -19,7 +19,7 @@
 #include <X11/cursorfont.h>
 #include "icon.bit"
 #include "win.h"
-#include "version.h"
+#include "winname.h"
 
 #define BORDER  3
 #define FONT "fixed"
