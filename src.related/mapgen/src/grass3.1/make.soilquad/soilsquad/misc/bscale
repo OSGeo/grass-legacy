@@ -1,0 +1,21 @@
+legend -m map.def -o ovm/bscale << EOF
+-w d
+-p 1
+-f -
+-s 0.150
+-l 0.300
+-x |
+-y -1.500
+-b 1,mi,1,10,MILE
+-x |-3.8
+-y -2.160
+-b 1000,ft,7,2,FEET
+-x |
+-y -2.820
+-b 1,km,1,10,KILOMETER
+-s 0.350
+-x |
+-y -0.75
+-j c
+-d
+EOF
