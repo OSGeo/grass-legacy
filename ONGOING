@@ -1,6 +1,6 @@
 GRASS 5 - ongoing projects
 
-$Id: ONGOING,v 1.3 2000-09-08 13:48:24 markus Exp $
+$Id: ONGOING,v 1.4 2000-09-09 13:48:13 markus Exp $
 
 Developers: Please add your project below.
 
@@ -30,6 +30,11 @@ Libraries:
   (Being worked on by Frank Warmerdam <warmerda@home.com> /
    Bernhard Reiter <bernhard@intevation.de>)
 
+- new 3D vector format: see documents/v3d_proposal.txt
+  Being worked on by: 
+  David D Gray, Radim Blazek
+   <ddgray@armadce.demon.co.uk>
+   <Radim.Blazek@dhv.cz>
 
 XDRIVER
 - remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
