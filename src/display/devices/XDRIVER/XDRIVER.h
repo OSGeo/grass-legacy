@@ -29,7 +29,7 @@ int Polydots_rel(int *, int *, int);
 /* RGB.c */
 /* Raster_def.c */
 int Raster_char(int, int, unsigned char *, int, int);
-int Raster_int_def(int, int, unsigned int *, int, int);
+int Raster_int_def(int, int, int *, int, int);
 /* Reset_clrs.c */
 int Reset_colors(int, int, unsigned char *, unsigned char *, unsigned char *);
 int Reset_color(unsigned char, unsigned char, unsigned char, int);
@@ -78,7 +78,7 @@ int SetXColor(int);
 int Cont_abs(int, int);
 int Cont_rel(int, int);
 /* Raster.c */
-int Raster_int(int, int, unsigned int *, int, int);
+int Raster_int(int, int, int *, int, int);
 /* Returns.c */
 int Screen_left(int *);
 int Screen_rite(int *);

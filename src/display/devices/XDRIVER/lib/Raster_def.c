@@ -51,9 +51,9 @@ int Raster_char (int num, int nrows,
 }
 
 int Raster_int_def (int num, int nrows,
-    unsigned int *array, int withzeros, int color_type)
+    int *array, int withzeros, int color_type)
 {
-    register unsigned cur_color, *arr;
+    register int cur_color, *arr;
     register int npixles;
     int our_x, our_y;
     int (*ColorFunc) ();
