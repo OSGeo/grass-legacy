@@ -45,13 +45,7 @@ main (int argc, char *argv[])
     opt_in->description = "input vector map";  
     
     /* output vector map */
-    opt_out = G_define_option();
-    opt_out->key         = "output";
-    opt_out->type        = TYPE_STRING ;
-    opt_out->required    = YES ;
-    opt_out->multiple    = NO ;
-    opt_out->gisprompt   = "vector" ;
-    opt_out->description = "output vector map";      
+    opt_out = G_define_standard_option(G_OPT_V_OUTPUT);
 
     /* output version */
     opt_ver = G_define_option();

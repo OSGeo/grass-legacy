@@ -18,13 +18,7 @@ int main (int argc, char *argv[])
 
 	G_gisinit(argv[0]);
 
-	old = G_define_option();
-	old->key		= "input";
-	old->type		=  TYPE_STRING;
-	old->required		=  YES;
-	old->multiple		=  NO;
-	old->gisprompt  	= "old,vector,vector" ;
-	old->description	= "binary vector file to be converted to ascii";
+	old = G_define_standard_option(G_OPT_V_INPUT);
 
 	new = G_define_option();
 	new->key		= "output";
@@ -61,11 +55,7 @@ int main (int argc, char *argv[])
 	}
 	
 	Vect_set_open_level (1);	/* only need level I */
-	if ( (Vect_open_old (&Map, old->answer, mapset) ) < 1)
-	{
-		sprintf(errmsg, "Could not open vector file <%s>\n", old->answer);
-		G_fatal_error (errmsg);
-	}
+	Vect_open_old (&Map, old->answer, mapset); 
 
 	if ( verf->answer )
  	    ver = 4;	
@@ -78,7 +68,7 @@ int main (int argc, char *argv[])
 	    }
 	    pnt = 0;
 	    
-	    dig_write_head_ascii(ascii, &(Map.head)) ;
+	    write_head(ascii, &Map) ;
 	    fprintf (ascii, "VERTI:\n");
 
 	} else { /* write points to stdout */

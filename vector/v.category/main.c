@@ -56,30 +56,9 @@ main (int argc, char *argv[])
 	module->description = 
 		"Attach, delete or report vector categories.";
 
-	in_opt = G_define_option();
-	in_opt->key = "input";
-	in_opt->type =  TYPE_STRING;
-	in_opt->required = YES;
-	in_opt->multiple = NO;
-	in_opt->gisprompt = "old,vector,vector";
-	in_opt->description  = "Name of input vector";
-	
-	out_opt = G_define_option();
-	out_opt->key = "output";
-	out_opt->type =  TYPE_STRING;
-	out_opt->required = NO;
-	out_opt->multiple = NO;
-	out_opt->gisprompt = "new,dig,vector";
-        out_opt->description = "Name of resulting vector";
-
-	type_opt = G_define_option() ;
-	type_opt->key        = "type" ;
-	type_opt->type       = TYPE_STRING ;
-	type_opt->required   = NO ;
-	type_opt->multiple   = YES ;
-	type_opt->answer     = "line" ;
-	type_opt->options    = "point,line,boundary,centroid,area";
-	type_opt->description= "Select type: point, line, boundary, centroid or area" ;
+	in_opt = G_define_standard_option(G_OPT_V_INPUT);
+	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+	type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
 	
 	option_opt = G_define_option();
 	option_opt->key = "option";
@@ -90,21 +69,11 @@ main (int argc, char *argv[])
 	option_opt->answer = "add";
         option_opt->description = "Action to be done";
 
-	cat_opt = G_define_option();
-	cat_opt->key = "cat";
-	cat_opt->type =  TYPE_INTEGER;
-	cat_opt->required = NO;
-	cat_opt->multiple = NO;
+	cat_opt = G_define_standard_option(G_OPT_V_CAT);
 	cat_opt->answer = "1";
-        cat_opt->description = "Category value";
 	
-	field_opt = G_define_option();
-	field_opt->key = "field";
-	field_opt->type =  TYPE_INTEGER;
-	field_opt->required = NO;
-	field_opt->multiple = NO;
+	field_opt = G_define_standard_option(G_OPT_V_FIELD);
 	field_opt->answer = "1";
-        field_opt->description = "Field value";
 
 	step_opt = G_define_option();
 	step_opt->key = "step";
@@ -113,7 +82,6 @@ main (int argc, char *argv[])
 	step_opt->multiple = NO;
 	step_opt->answer = "1";
         step_opt->description = "Category increment";
-
 	
 	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
@@ -162,7 +130,7 @@ main (int argc, char *argv[])
 	      }
 	    i++;
 	  }
-
+	
 	if ( (option != O_REP) && (out_opt->answer == NULL) )
 	  {
 	    sprintf (errmsg, "Output vector wasn't entered.\n");
@@ -173,32 +141,26 @@ main (int argc, char *argv[])
 	Cats = Vect_new_cats_struct ();
 	
 	/* open input vector */
-        if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL)
-	  {
+        if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
 	     sprintf (errmsg, "Could not find input %s\n", in_opt->answer);
 	     G_fatal_error (errmsg);
-	  }
+	}
 	
         Vect_set_open_level (1); 
-	if (1 > Vect_open_old (&In, in_opt->answer, mapset) )
-	  {
-	     sprintf (errmsg, "Could not open input\n");
-	     G_fatal_error (errmsg);
-	  }
+	Vect_open_old (&In, in_opt->answer, mapset); 
 
 	/* open output vector if needed */
 	if (option == O_ADD || option == O_DEL)
           {
 	    with_z = In.head.with_z;
 	
-	    if (0 > Vect_open_new (&Out, out_opt->answer, with_z))
-	      {
-	         sprintf (errmsg, "Could not open output\n");
+	    Vect_set_fatal_error (GV_FATAL_PRINT);
+	    if (0 > Vect_open_new (&Out, out_opt->answer, with_z)) {
 	         Vect_close (&In);
-	         G_fatal_error (errmsg);
-	      }
+	         exit (1);
+	    }
 
-	    Vect_copy_head_data (&(In.head), &(Out.head));
+	    Vect_copy_head_data (&In, &Out);
           }
 
 
