@@ -86,8 +86,8 @@ ODBCINC             = @ODBCINC@
 ODBCLIB             = @ODBCLIB@
 
 #Image formats:
-PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
-PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+PNGINC              = @PNGINC@
+PNGLIB              = @PNGLIB@
 
 JPEGINCPATH         = @JPEGINCPATH@
 JPEGLIBPATH         = @JPEGLIBPATH@
