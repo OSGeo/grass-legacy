@@ -1,12 +1,15 @@
 Mmain	main.c	/^main(argc,argv) char *argv[];$/
 get_buf	usgs_buf.c	/^get_buf()$/
 get_dfloat	usgs_num.c	/^get_dfloat(num)$/
+get_double	usgs_num.c	/^get_double(num)$/
 get_efloat	usgs_num.c	/^get_efloat(num)$/
+get_float	usgs_num.c	/^get_float(num)$/
 get_hdr	usgs_hdr.c	/^get_hdr()$/
 get_int	usgs_num.c	/^get_int(num)$/
 get_profile	profile.c	/^get_profile()$/
-getargs	getargs.c	/^getargs (argc, argv)$/
 hdr_list	usgs_hdr.c	/^hdr_list(file)$/
+next_record	usgs_buf.c	/^next_record()$/
+nget_int	usgs_num.c	/^int nget_int(num)$/
 opentape	usgs_buf.c	/^opentape(dev)$/
 skip_file	usgs_buf.c	/^skip_file()$/
 window_list	usgs_hdr.c	/^window_list(file)$/
