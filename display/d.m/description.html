@@ -6,11 +6,12 @@ d.dm is quit by <em>'Exit'</em> button in the <em>'File'</em> menu.
 
 <h2>BUTTON FUNCTIONS</h2>
 
-<h3>Display Layers</h3>
+<h3>Display selected layers (current region)</h3>
 
-is used to display all selected maps at current resolution and region extend.
+is used to display all selected maps at current resolution and region extend. A
+monitor will be started automatically if not already open.
 
-<h3>Display All</h3>
+<h3>Display selected layers (default region)</h3>
 
 resets region to full default region and displays all selected maps.
 
@@ -19,11 +20,16 @@ resets region to full default region and displays all selected maps.
 Zoom function is used for zooming in the current active monitor. 
 As in the module <em>d.zoom</em> a mouse-button menu will appear directing the user.
 
-<h3>Query Map</h3>
+<h3>Display from saved region settings</h3>
 
-Query Map button is used to query selected map.
+is used to display all selected maps at a saved region (see g.region -help).
 
-<h3>Create New Group</h3>
+<h3>Query Map (select map first)</h3>
+
+Query Map button is used to query selected map. A map has to be
+selected before query.
+
+<h3>Add Group</h3>
 
 creates an empty map group. User can rename the group by 
 double click on group name and retyping text. Further group may be added by 
@@ -31,7 +37,7 @@ pressing the 'Create New Group' button again . Existing groups may be
 selected by single click on group name. Selected group may be removed pressing 
 'Cut selection' button.
 
-<h3>Create New Raster</h3>
+<h3>Add Raster</h3>
 
 is used to add a new raster map. An existing raster map may be 
 selected by single click on raster name. User can rename the raster map 
@@ -39,13 +45,19 @@ by double click on raster map name and retyping text. Further raster map
 may be added pressing the 'Create new raster' button again. Selected raster map 
 may be removed pressing 'Cut selection' button.
 
-<h3>Create New Vector</h3>
+<h3>Add Vector</h3>
 
 is used to add a new vector map. An existing vector map may be 
 selected by single click on vector name. User can rename the vector map 
 by double click on vector name and retyping text. Further vector map may be 
 added pressing the 'Create new vector' button again. Selected vector map 
 may be removed pressing 'Cut selection' button.
+
+
+<h3>Add paint labels (from directory paint/labels)</h3>
+
+is used to add paint labels (see <a href="v.label.html">v.label</a>) to maps. 
+
 
 <h3>Create New Command</h3>
 
@@ -55,21 +67,39 @@ by double click on command name and retyping text. Further command may be
 added pressing the 'Create new command' button again. Selected commands 
 may be removed pressing 'Cut selection' button.
 
+<h3>Digitize vector map (select or create new vector first)</h3>
+
+starts the module v.digit to digitize in existing vector map. You have to create or select a
+vector map first (see <a href="v.digit.html">v.digit</a>).
+
 <h3>Cut Selection</h3>
 
 is used to delete selected groups, maps or commands.
 
-<h3>Create New File</h3>
+<h3>Create a new d.m settings file (erase current settings first)</h3>
 
-creates a new file
+creates a new settings file for your project.
 
-<h3>Save File</h3>
+<h3>Open an existing File</h3>
 
-saves created file 
+opens an existing d.m setting file (.dm or .dmrc) with defined project settings.
+
+<h3>Save d.m settings File</h3>
+
+saves a created d.m setting for the current project with e.g. 
+selected maps with its definded colors,
+SQL commands or display order. The ascii file (.dm or .dmrc) can be edited outside
+GRASS session. 
+
+<h3>Print map</h3>
+
+allows to print displayed maps. Currently supported formats are Postscript, PDF and PNG. 
 
 <h2>SEE ALSO</h2>
 
-<a href="d.mon.html">d.mon</a>
+<a href="d.mon.html">d.mon</a>,
+<a href="v.digit.html">v.digit</a>,
+<a href="v.label.html">v.label</a>
 
 <h2>AUTHOR</h2>
 
