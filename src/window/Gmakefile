@@ -1,0 +1,29 @@
+LIBES    = $(GISLIB)
+
+PGM      = window
+
+LIST     = main.o\
+	   cur_frm_db.o\
+	   cur_frm_df.o\
+	   cur_to_db.o\
+	   edit_window.o\
+	   lister.o\
+	   from_cell.o\
+	   mke_curr.o\
+	   modify_cur.o\
+	   modify_db.o\
+	   new_db.o\
+	   set_window.o\
+	   yes.o
+
+$(BIN)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+#==============================================================
+# include dependencies
+
+$(LIST): glob.h
+
+#==============================================================
+
+$(LIBES):   #
+$(VASKLIB): #
