@@ -36,4 +36,5 @@ GLOBAL int count_rows_with_data;
 
 #define FEET_TO_METERS 0.3048
 #define MILES_TO_METERS 1609.344
+#define NAUT_MILES_TO_METERS 1852.0
 #define KILOMETERS_TO_METERS 1000.0
