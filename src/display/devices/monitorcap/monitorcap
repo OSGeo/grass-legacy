@@ -8,30 +8,30 @@
 #  full pathname of tty from which device must be started (if any) :
 #  message user gets if driver is started from wrong tty
 #
-#x0:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.1a BASEDIR/dev/fifo.1b \
-#     ::any terminal
-#x1:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.2a BASEDIR/dev/fifo.2b \
-#     ::any terminal
-#x2:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.3a BASEDIR/dev/fifo.3b \
-#     ::any terminal
-#x3:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.4a BASEDIR/dev/fifo.4b \
-#     ::any terminal
-#x4:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.5a BASEDIR/dev/fifo.5b \
-#     ::any terminal
-#x5:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.6a BASEDIR/dev/fifo.6b \
-#     ::any terminal
-#x6:driver/XDRIVER:X-windows graphics display: \
-#     BASEDIR/dev/fifo.7a BASEDIR/dev/fifo.7b \
-#     ::any terminal
-#CELL:driver/CELL:Create GRASS Raster File: \
-#     BASEDIR/dev/fifo.8a BASEDIR/dev/fifo.8b \
-#     ::any terminal
+x0:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.1a BASEDIR/dev/fifo.1b \
+     ::any terminal
+x1:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.2a BASEDIR/dev/fifo.2b \
+     ::any terminal
+x2:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.3a BASEDIR/dev/fifo.3b \
+     ::any terminal
+x3:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.4a BASEDIR/dev/fifo.4b \
+     ::any terminal
+x4:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.5a BASEDIR/dev/fifo.5b \
+     ::any terminal
+x5:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.6a BASEDIR/dev/fifo.6b \
+     ::any terminal
+x6:driver/XDRIVER:X-windows graphics display: \
+     BASEDIR/dev/fifo.7a BASEDIR/dev/fifo.7b \
+     ::any terminal
+CELL:driver/CELL:Create GRASS Raster File: \
+     BASEDIR/dev/fifo.8a BASEDIR/dev/fifo.8b \
+     ::any terminal
 #sunview:driver/SUNVIEW:Sun graphics display: \
 #     BASEDIR/dev/fifo.9a BASEDIR/dev/fifo.9b \
 #     ::any terminal
