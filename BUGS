@@ -1,11 +1,14 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.17 2000-09-11 19:01:08 markus Exp $
+$Id: BUGS,v 1.18 2000-09-19 16:25:54 markus Exp $
 
 Maintained by
    Markus Neteler
    neteler@geog.uni-hannover.de
 Please send a note if detecting an unknown bug.
 Bugfixes are very welcome!
+
+Bugfix formula:
+http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
 
 ----------------------------------------------------------------
 [In sync with GRASS 5 beta 9/CVS]
@@ -171,6 +174,9 @@ yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
 r.null:
  does not work with reclassified maps
 
+r.patch:
+ sometimes does not transfer colors properly when merging CELL maps.
+
 r.random
  needs to be updated to GRASS 5
 
@@ -290,7 +296,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.17  2000-09-11 19:01:08  markus
+ Revision 1.18  2000-09-19 16:25:54  markus
+ added bugreport form
+
+ Revision 1.17  2000/09/11 19:01:08  markus
  added G3D cache bug
 
  Revision 1.16  2000/09/09 11:55:18  markus
