@@ -94,11 +94,6 @@ if [ $GIS_FLAG_l -eq 1 ] ; then
   exit 0
 fi
 
-if [ "$FORMAT" = "(null)" ] ; then
-  echo "ERROR: output format not specified"
-  exit 1
-fi
-
 #DEBUG:
 #echo $INPUT $FORMAT $OUTPUT
 #echo $GDAL_INPUT_FORMATS
@@ -108,6 +103,24 @@ eval `g.findfile element=cell file=$INPUT`
 if [ ! "$file" ] ; then
   echo "Input map not found"
   exit 1
+fi
+
+if [ "$FORMAT" = "(null)" ] ; then
+  echo "ERROR: output format not specified"
+  exit 1
+fi
+
+if [ "$TYPE" = "(null)" ] ; then
+  echo "ERROR: output TYPE not specified"
+  echo "(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
+  exit 1
+fi
+
+if [ "$CREATEKEY" = "-co (null)" ] ; then
+  unset CREATEKEY
+fi
+if [ "$METAKEY"   = "-mo (null)" ] ; then
+  unset METAKEY
 fi
 
 #do it
