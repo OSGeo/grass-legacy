@@ -11,7 +11,7 @@ SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
 ARCH=			@ARCH@
-VERSION=		`cat src/CMD/VERSION | head -1`
+VERSION=		`cat ${SRCDIR}/src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
