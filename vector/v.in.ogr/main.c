@@ -78,6 +78,8 @@ main (int argc, char *argv[])
     char **available_layer_names; /* names of layers to be imported */
     int navailable_layers; 
     int layer_id;
+    int overwrite;
+    char *overstr;
 
     G_gisinit(argv[0]);
 
@@ -189,7 +191,21 @@ main (int argc, char *argv[])
     extend_flag->key = 'e';
     extend_flag->description = "Extend location extents based on new dataset.";
 
+    /* The parser checks if the map already exists in current mapset, this is wrong 
+     * if location options is used, so we switch out the check and do it in the module after the parser */
+    overwrite = 0;
+    if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
+	overwrite = atoi ( overstr );
+    }
+    G__setenv ( "OVERWRITE", "1" ); 
+
     if (G_parser (argc, argv)) exit(-1); 
+        
+    if ( !outloc_opt->answer && !overwrite ) { /* Check if the map exists */
+	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
+	    G_fatal_error ( "The vector '%s' already exists.", out_opt->answer );
+	}
+    }
 
     min_area = atof (min_area_opt->answer);
     snap = atof (snap_opt->answer);
