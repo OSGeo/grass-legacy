@@ -4,17 +4,21 @@
 # Copy html tree (without the other files) in $(GISBASE)/documents
 # The manual in html format will be in $(GISBASE)/documents/html
 # (default in tcltkgrass ?)
+# The manual in postscript format will be in $(GISBASE)/documents/postscript
 #
 
 # default manual section number is 1
 SECT = man1
 GRASS_MANDIR=$(GISBASE)/man/$(SECT)
 GRASS_HTMLDIR=$(GISBASE)/documents
+GRASS_PSDIR=$(GISBASE)/documents/postscript
 HTML_DIR = html
 HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
+HTML2PS = html2ps -n
 
-
+#all: htmlpages manpages postscript-docs
 all: htmlpages manpages
+
 
 # copy the HTML pages only and related images
 htmlpages:
@@ -43,3 +47,17 @@ manpages:
 		if [ ! -f $$m -o $$m -ot $$h ]; then $(HTML2MAN) $$h $$m $(SECT); fi; \
 	  done)
 
+#Postscript-docs:
+#http://www.tdb.uu.se/~jan/html2ps.html
+postscript-docs:
+	if [ ! -d $(GRASS_PSDIR) ]; then mkdir $(GRASS_PSDIR); fi
+	$(HTML2PS) html/d*.html > $(GRASS_PSDIR)/grass5display.ps
+	$(HTML2PS) html/g*.html > $(GRASS_PSDIR)/grass5general.ps
+	$(HTML2PS) html/i*.html > $(GRASS_PSDIR)/grass5imagery.ps
+	$(HTML2PS) html/m*.html > $(GRASS_PSDIR)/grass5misc.ps
+	$(HTML2PS) html/r*.html > $(GRASS_PSDIR)/grass5raster.ps
+	$(HTML2PS) html/s*.html > $(GRASS_PSDIR)/grass5sites.ps
+	$(HTML2PS) html/v*.html > $(GRASS_PSDIR)/grass5vector.ps
+	$(HTML2PS) html/?3*.html html/*.vol.*.html > $(GRASS_PSDIR)/grass5grid3d.ps
+	$(HTML2PS) html/db*.html html/*pg.html > $(GRASS_PSDIR)/grass5database.ps
+	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5shells.ps
