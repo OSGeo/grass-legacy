@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.104 2001-01-13 08:57:51 markus Exp $
+$Id: BUGS,v 1.105 2001-01-18 15:07:32 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -162,7 +162,7 @@ p.map.new:
  -> 5/2000: still a problem??
   (being worked on by ?)  
 
-[RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
+r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
   Though it is not a stability problem, I've found that if this module is
   run on an elev raster with an active old-style mask, i.e applied with
   r.mask, the contour lines which terminate on the mask boundary (but only
@@ -180,7 +180,7 @@ p.map.new:
   (script: v.asc.degen)
   (being worked on by David D Gray)
 
-[rc]r.cost
+r.cost
  somehow I have the feeling that r.cost is not working for me:
  Here is the command;
  r.cost -k input=g10g coord=30:44:45E,28:40:45N
@@ -262,19 +262,6 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   when use median method. It fails in -0.001 value with 3x3 window. 
   (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
   (being worked on by ?)
-
-r.null:
- does not work with reclassified maps.
- Comment from Eric G. Miller:
-   The problem is, if r.null was run on the reclass raster it would alter    
-   the original and any other reclass rasters of the original.  So, there are
-   two basic approaches, let the user make a raster out of the reclass that  
-   isn't a reclass (e.g. echo 'newmap = reclass' | r.mapcalc) or have        
-   r.null do this for them.  With the second, a new raster has to be made     
-   and what do you name it?  If you name it the same as the reclass and      
-   blow away the reclass, is that okay? 
- (being worked on by ?)
-
 
 [RC]r.poly
 bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
@@ -415,12 +402,6 @@ v.cutter:
 v.out.e00:
   Doesn't output any information about projection, datum, etc.
   (being worked on by ?)
-
-[RC]v.out.shape:
-  segmentation fault on Pentium II CPUs /Linux
-  (reported by Stephan.Holl@stud.uni-hannover.de
-   and David Finlayson <david_finlayson@yahoo.com>)
-  (being worked on by David D Gray)
 
 v.sdts.meta
  src.contrib/SDTS/mapdev/v.sdts.meta/inter/v.sdts.meta
