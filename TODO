@@ -1,4 +1,4 @@
-$Id: TODO,v 1.1 2000-06-07 16:44:51 markus Exp $
+$Id: TODO,v 1.2 2000-06-07 16:46:44 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -6,6 +6,10 @@ TODO for GRASS GIS:
 
 
 Wishlist for GRASS 5
+
+Configure:
+- update missing features in "configure"
+- extended "autoconf" for entire package
 
 Libraries:
 - src/libes/gis/sites.c: Required is a new function which allows
@@ -16,6 +20,9 @@ Libraries:
 - projection datum support for maps
 
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
+
+Package:
+- split into packages: GRASS-CORE, GRASS-Raster, ...
 
 
 Modules:
