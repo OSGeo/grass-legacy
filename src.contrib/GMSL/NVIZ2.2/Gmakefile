@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.8 2000-10-11 06:52:24 cho Exp $
+# $Id: Gmakefile,v 1.9 2000-10-11 08:35:56 markus Exp $
 #
 # Toplevel makefile for building everything
 
@@ -12,7 +12,7 @@ SCRIPTDIR=$(NV_VER)/scripts
 all: preconfigure nvwish nviz install
 
 preconfigure:
-	@PRECONFIGURE=YES ./preconfig $(VER) "$(PQLIB)"
+	@PRECONFIGURE=YES ./preconfigure $(VER) "$(PQLIB)"
 
 nvwish:
 	$(GMAKE) $(LIBDIR)/libimage
