@@ -1,20 +1,29 @@
-/*	November, 1991	Agricultural Engineering, Purdue University
-	Raghavan Srinivasan (srin@ecn.purdue.edu)
-	
-	r.fill.dir input=elevation_map elevation=filled_elev_map direction=flow_direction_map type=agnps(,answers or grass)
-
-	This creates two layers from a user specified elevation map.
-	The output maps are filled elevation or rectified elevation map and
-	a flow direction map based on one of the type specified.
-	The filled or rectified elevation map generated will be filled for 
-	depression, removed any circularity or conflict flow direction is
-	resolved. This program helps to get a proper elevation map that
-	could be used for delineating watershed using r.watershed program.
-
-	However, the boundaries may have problem and could be resolved using
-	the cell editor d.rast.edit program.
-
-*/
+****************************************************************************
+*
+* MODULE:       r.fill.dir
+* AUTHOR(S):    Original author unknown - Raghavan Srinivasan Nov, 1991
+*               (srin@ecn.purdue.edu) Agricultural Engineering, 
+*               Purdue University
+*               Markus Neteler: update to FP (C-code)
+*                             : update to FP (Fortran)
+* PURPOSE:      fills a DEM to become a depression-less DEM
+*               This creates two layers from a user specified elevation map.
+*               The output maps are filled elevation or rectified elevation
+*               map and a flow direction map based on one of the type
+*               specified. The filled or rectified elevation map generated
+*               will be filled for depression, removed any circularity or
+*               conflict flow direction is resolved. This program helps to
+*               get a proper elevation map that could be used for
+*               delineating watershed using r.watershed module. However, the
+*               boundaries may have problem and could be resolved using
+*               the cell editor d.rast.edit
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
 
 #include <stdio.h>
 #include <strings.h>
