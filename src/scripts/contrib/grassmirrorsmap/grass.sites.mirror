@@ -1,7 +1,9 @@
+ARGENTINA=http://ftp.fcaglp.unlp.edu.ar/pub/grass/index2.html
 AUSTRALIA=http://mirror.aarnet.edu.au/pub/grass/grass/index2.html
 BELGIUM=http://bib99.ruca.ua.ac.be/grass/index2.html
 BRAZIL=http://vps.fmvz.usp.br/grass/index2.html
 CROATIA=http://grass.zvne.fer.hr/index2.html
+FINLAND=http://grass.ecology.helsinki.fi/index2.html
 FRANCE=http://ludique.u-bourgogne.fr/grass/index2.html
 GERMANY=http://www.geog.uni-hannover.de/grass/index2.html
 ITALY=http://www.geo.unipr.it/grassmirror/index2.html
@@ -14,4 +16,5 @@ KOREA, REPUBLIC OF=http://pinus.chinju.ac.kr/grass/index2.html
 TAIWAN=http://grass.cis.sinica.tw.edu/index2.html
 THAILAND=http://www.hpcc.nectec.or.th/grass/index2.html
 TURKEY=http://mars.prosoft.com.tr/grass/index2.html
+URUGUAY=http://www.dinama.gub.uy/grass/index2.html
 USA=http://grass.ibiblio.org/index2.html
