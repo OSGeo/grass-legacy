@@ -3,22 +3,26 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "gis.h"
+#include "config.h"
 #include "raster.h"
 #include "display.h"
 
-/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
- * Read src/CMD/head/head and do not define here for consistency.
-#define ANOTHER_BUTTON
-*/
 
-#define LEFTB	1
+/* left button */
+#define	LEFTB	1
+/* left button string */
+#define	LEFTS	"Left:  "
 
 #ifndef	ANOTHER_BUTTON
-#	define MIDDLEB	2
-#	define RIGHTB	3
+#	define	MIDDLEB	2
+#	define	RIGHTB	3
+#	define	MIDDLES	"Middle:"
+#	define	RIGHTS	"Right: "
 #else
-#	define MIDDLEB	3
-#	define RIGHTB	2
+#	define	MIDDLEB	3
+#	define	RIGHTB	2
+#	define	MIDDLES	"Right: "
+#	define	RIGHTS	"Middle:"
 #endif
 
 
