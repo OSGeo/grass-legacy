@@ -3,10 +3,10 @@
  *
  * Project:  Shapelib
  * Purpose:  Implementation of core Shapefile read/write functions.
- * Author:   Frank Warmerdam, warmerda@home.com
+ * Author:   Frank Warmerdam, warmerdam@pobox.com
  *
  ******************************************************************************
- * Copyright (c) 1999, Frank Warmerdam
+ * Copyright (c) 1999, 2001, Frank Warmerdam
  *
  * This software is available under the following "MIT Style" license,
  * or at the option of the licensee under the LGPL (see LICENSE.LGPL).  This
@@ -34,17 +34,30 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2000-05-24 17:35:23  david
+ * Revision 1.3  2002-03-27 21:41:00  david
  *
- * Listing fields contained in dbf file now handled by flag `-l'.
- * Category support fixed.
- * Now no longer necessary to specify `.shp' extension for input.
- * Any of basename, full pathname or prefix only will do.
- * However the input files must still be in the current directory.
- * Documentation updated.
+ * Complete re-write of module. see README.testing for details.
  *
- * Revision 1.1  2000/05/22 14:45:29  markus
- * Frank Warmerdam: added shapelib
+ * Revision 1.33  2001/07/03 12:18:15  warmerda
+ * Improved cleanup if SHX not found, provied by Riccardo Cohen.
+ *
+ * Revision 1.32  2001/06/22 01:58:07  warmerda
+ * be more careful about establishing initial bounds in face of NULL shapes
+ *
+ * Revision 1.31  2001/05/31 19:35:29  warmerda
+ * added support for writing null shapes
+ *
+ * Revision 1.30  2001/05/28 12:46:29  warmerda
+ * Add some checking on reasonableness of record count when opening.
+ *
+ * Revision 1.29  2001/05/23 13:36:52  warmerda
+ * added use of SHPAPI_CALL
+ *
+ * Revision 1.28  2001/02/06 22:25:06  warmerda
+ * fixed memory leaks when SHPOpen() fails
+ *
+ * Revision 1.27  2000/07/18 15:21:33  warmerda
+ * added better enforcement of -1 for append in SHPWriteObject
  *
  * Revision 1.26  2000/02/16 16:03:51  warmerda
  * added null shape support
@@ -140,6 +153,7 @@ static char rcsid[] =
 #include <limits.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef unsigned char uchar;
 
@@ -311,7 +325,8 @@ static void SHPWriteHeader( SHPHandle psSHP )
 /*      files or either file name.                                      */
 /************************************************************************/
    
-SHPHandle SHPOpen( const char * pszLayer, const char * pszAccess )
+SHPHandle SHPAPI_CALL
+SHPOpen( const char * pszLayer, const char * pszAccess )
 
 {
     char		*pszFullname, *pszBasename;
@@ -376,7 +391,12 @@ SHPHandle SHPOpen( const char * pszLayer, const char * pszAccess )
     }
     
     if( psSHP->fpSHP == NULL )
+    {
+        free( psSHP );
+        free( pszBasename );
+        free( pszFullname );
         return( NULL );
+    }
 
     sprintf( pszFullname, "%s.shx", pszBasename );
     psSHP->fpSHX = fopen(pszFullname, pszAccess );
@@ -387,7 +407,13 @@ SHPHandle SHPOpen( const char * pszLayer, const char * pszAccess )
     }
     
     if( psSHP->fpSHX == NULL )
+    {
+        fclose( psSHP->fpSHX );
+        free( psSHP );
+        free( pszBasename );
+        free( pszFullname );
         return( NULL );
+    }
 
     free( pszFullname );
     free( pszBasename );
@@ -425,6 +451,16 @@ SHPHandle SHPOpen( const char * pszLayer, const char * pszAccess )
     psSHP->nRecords = (psSHP->nRecords*2 - 100) / 8;
 
     psSHP->nShapeType = pabyBuf[32];
+
+    if( psSHP->nRecords < 0 || psSHP->nRecords > 256000000 )
+    {
+        /* this header appears to be corrupt.  Give up. */
+	fclose( psSHP->fpSHP );
+	fclose( psSHP->fpSHX );
+	free( psSHP );
+
+	return( NULL );
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Read the bounds.                                                */
@@ -501,7 +537,8 @@ SHPHandle SHPOpen( const char * pszLayer, const char * pszAccess )
 /*	Close the .shp and .shx files.					*/
 /************************************************************************/
 
-void	SHPClose(SHPHandle psSHP )
+void SHPAPI_CALL
+SHPClose(SHPHandle psSHP )
 
 {
 /* -------------------------------------------------------------------- */
@@ -537,8 +574,9 @@ void	SHPClose(SHPHandle psSHP )
 /*      Fetch general information about the shape file.                 */
 /************************************************************************/
 
-void SHPGetInfo(SHPHandle psSHP, int * pnEntities, int * pnShapeType,
-                double * padfMinBound, double * padfMaxBound )
+void SHPAPI_CALL
+SHPGetInfo(SHPHandle psSHP, int * pnEntities, int * pnShapeType,
+           double * padfMinBound, double * padfMaxBound )
 
 {
     int		i;
@@ -565,7 +603,8 @@ void SHPGetInfo(SHPHandle psSHP, int * pnEntities, int * pnShapeType,
 /*      shape file with read/write access.                              */
 /************************************************************************/
 
-SHPHandle SHPCreate( const char * pszLayer, int nShapeType )
+SHPHandle SHPAPI_CALL
+SHPCreate( const char * pszLayer, int nShapeType )
 
 {
     char	*pszBasename, *pszFullname;
@@ -696,7 +735,8 @@ static void	_SHPSetBounds( uchar * pabyRec, SHPObject * psShape )
 /*      SHPCreateObject().                                              */
 /************************************************************************/
 
-void SHPComputeExtents( SHPObject * psObject )
+void SHPAPI_CALL
+SHPComputeExtents( SHPObject * psObject )
 
 {
     int		i;
@@ -733,10 +773,11 @@ void SHPComputeExtents( SHPObject * psObject )
 /*      SHPDestroyObject().                                             */
 /************************************************************************/
 
-SHPObject *SHPCreateObject( int nSHPType, int nShapeId, int nParts,
-                            int * panPartStart, int * panPartType,
-                            int nVertices, double * padfX, double * padfY,
-                            double * padfZ, double * padfM )
+SHPObject SHPAPI_CALL1(*)
+SHPCreateObject( int nSHPType, int nShapeId, int nParts,
+                 int * panPartStart, int * panPartType,
+                 int nVertices, double * padfX, double * padfY,
+                 double * padfZ, double * padfM )
 
 {
     SHPObject	*psObject;
@@ -805,29 +846,31 @@ SHPObject *SHPCreateObject( int nSHPType, int nShapeId, int nParts,
 /*      Capture vertices.  Note that Z and M are optional, but X and    */
 /*      Y are not.                                                      */
 /* -------------------------------------------------------------------- */
-    psObject->padfX = (double *) calloc(sizeof(double),nVertices);
-    psObject->padfY = (double *) calloc(sizeof(double),nVertices);
-    psObject->padfZ = (double *) calloc(sizeof(double),nVertices);
-    psObject->padfM = (double *) calloc(sizeof(double),nVertices);
-
-    assert( padfX != NULL );
-    assert( padfY != NULL );
-    
-    for( i = 0; i < nVertices; i++ )
+    if( nVertices > 0 )
     {
-        psObject->padfX[i] = padfX[i];
-        psObject->padfY[i] = padfY[i];
-        if( padfZ != NULL && bHasZ )
-            psObject->padfZ[i] = padfZ[i];
-        if( padfM != NULL && bHasM )
-            psObject->padfM[i] = padfM[i];
+        psObject->padfX = (double *) calloc(sizeof(double),nVertices);
+        psObject->padfY = (double *) calloc(sizeof(double),nVertices);
+        psObject->padfZ = (double *) calloc(sizeof(double),nVertices);
+        psObject->padfM = (double *) calloc(sizeof(double),nVertices);
+
+        assert( padfX != NULL );
+        assert( padfY != NULL );
+    
+        for( i = 0; i < nVertices; i++ )
+        {
+            psObject->padfX[i] = padfX[i];
+            psObject->padfY[i] = padfY[i];
+            if( padfZ != NULL && bHasZ )
+                psObject->padfZ[i] = padfZ[i];
+            if( padfM != NULL && bHasM )
+                psObject->padfM[i] = padfM[i];
+        }
     }
 
 /* -------------------------------------------------------------------- */
 /*      Compute the extents.                                            */
 /* -------------------------------------------------------------------- */
     psObject->nVertices = nVertices;
-    
     SHPComputeExtents( psObject );
 
     return( psObject );
@@ -840,9 +883,10 @@ SHPObject *SHPCreateObject( int nSHPType, int nShapeId, int nParts,
 /*      SHPDestroyObject().                                             */
 /************************************************************************/
 
-SHPObject *SHPCreateSimpleObject( int nSHPType, int nVertices,
-                                  double * padfX, double * padfY,
-                                  double * padfZ )
+SHPObject SHPAPI_CALL1(*)
+SHPCreateSimpleObject( int nSHPType, int nVertices,
+                       double * padfX, double * padfY,
+                       double * padfZ )
 
 {
     return( SHPCreateObject( nSHPType, -1, 0, NULL, NULL,
@@ -856,7 +900,8 @@ SHPObject *SHPCreateSimpleObject( int nSHPType, int nVertices,
 /*      only possible to write vertices at the end of the file.         */
 /************************************************************************/
 
-int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
+int SHPAPI_CALL
+SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 		      
 {
     int	       	nRecordOffset, i, nRecordSize;
@@ -869,7 +914,19 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /*      Ensure that shape object matches the type of the file it is     */
 /*      being written to.                                               */
 /* -------------------------------------------------------------------- */
-    assert( psObject->nSHPType == psSHP->nShapeType );
+    assert( psObject->nSHPType == psSHP->nShapeType 
+            || psObject->nSHPType == SHPT_NULL );
+
+/* -------------------------------------------------------------------- */
+/*      Ensure that -1 is used for appends.  Either blow an             */
+/*      assertion, or if they are disabled, set the shapeid to -1       */
+/*      for appends.                                                    */
+/* -------------------------------------------------------------------- */
+    assert( nShapeId == -1 
+            || (nShapeId >= 0 && nShapeId < psSHP->nRecords) );
+
+    if( nShapeId != -1 && nShapeId >= psSHP->nRecords )
+        nShapeId = -1;
 
 /* -------------------------------------------------------------------- */
 /*      Add the new entity to the in memory index.                      */
@@ -879,9 +936,9 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 	psSHP->nMaxRecords =(int) ( psSHP->nMaxRecords * 1.3 + 100);
 
 	psSHP->panRecOffset = (int *) 
-	  SfRealloc(psSHP->panRecOffset,sizeof(int) * psSHP->nMaxRecords );
+            SfRealloc(psSHP->panRecOffset,sizeof(int) * psSHP->nMaxRecords );
 	psSHP->panRecSize = (int *) 
-	  SfRealloc(psSHP->panRecSize,sizeof(int) * psSHP->nMaxRecords );
+            SfRealloc(psSHP->panRecSize,sizeof(int) * psSHP->nMaxRecords );
     }
 
 /* -------------------------------------------------------------------- */
@@ -893,13 +950,13 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /* -------------------------------------------------------------------- */
 /*  Extract vertices for a Polygon or Arc.				*/
 /* -------------------------------------------------------------------- */
-    if( psSHP->nShapeType == SHPT_POLYGON
-        || psSHP->nShapeType == SHPT_POLYGONZ
-        || psSHP->nShapeType == SHPT_POLYGONM
-        || psSHP->nShapeType == SHPT_ARC 
-        || psSHP->nShapeType == SHPT_ARCZ
-        || psSHP->nShapeType == SHPT_ARCM
-        || psSHP->nShapeType == SHPT_MULTIPATCH )
+    if( psObject->nSHPType == SHPT_POLYGON
+        || psObject->nSHPType == SHPT_POLYGONZ
+        || psObject->nSHPType == SHPT_POLYGONM
+        || psObject->nSHPType == SHPT_ARC 
+        || psObject->nSHPType == SHPT_ARCZ
+        || psObject->nSHPType == SHPT_ARCM
+        || psObject->nSHPType == SHPT_MULTIPATCH )
     {
 	int32		nPoints, nParts;
 	int    		i;
@@ -931,7 +988,7 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
         /*
          * Write multipatch part types if needed.
          */
-        if( psSHP->nShapeType == SHPT_MULTIPATCH )
+        if( psObject->nSHPType == SHPT_MULTIPATCH )
         {
             memcpy( pabyRec + nRecordSize, psObject->panPartType,
                     4*psObject->nParts );
@@ -962,9 +1019,9 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
         /*
          * Write the Z coordinates (if any).
          */
-        if( psSHP->nShapeType == SHPT_POLYGONZ
-            || psSHP->nShapeType == SHPT_ARCZ
-            || psSHP->nShapeType == SHPT_MULTIPATCH )
+        if( psObject->nSHPType == SHPT_POLYGONZ
+            || psObject->nSHPType == SHPT_ARCZ
+            || psObject->nSHPType == SHPT_MULTIPATCH )
         {
             ByteCopy( &(psObject->dfZMin), pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
@@ -985,13 +1042,13 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
         /*
          * Write the M values, if any.
          */
-        if( psSHP->nShapeType == SHPT_POLYGONM
-            || psSHP->nShapeType == SHPT_ARCM
+        if( psObject->nSHPType == SHPT_POLYGONM
+            || psObject->nSHPType == SHPT_ARCM
 #ifndef DISABLE_MULTIPATCH_MEASURE            
-            || psSHP->nShapeType == SHPT_MULTIPATCH
+            || psObject->nSHPType == SHPT_MULTIPATCH
 #endif            
-            || psSHP->nShapeType == SHPT_POLYGONZ
-            || psSHP->nShapeType == SHPT_ARCZ )
+            || psObject->nSHPType == SHPT_POLYGONZ
+            || psObject->nSHPType == SHPT_ARCZ )
         {
             ByteCopy( &(psObject->dfMMin), pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
@@ -1013,9 +1070,9 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /* -------------------------------------------------------------------- */
 /*  Extract vertices for a MultiPoint.					*/
 /* -------------------------------------------------------------------- */
-    else if( psSHP->nShapeType == SHPT_MULTIPOINT
-             || psSHP->nShapeType == SHPT_MULTIPOINTZ
-             || psSHP->nShapeType == SHPT_MULTIPOINTM )
+    else if( psObject->nSHPType == SHPT_MULTIPOINT
+             || psObject->nSHPType == SHPT_MULTIPOINTZ
+             || psObject->nSHPType == SHPT_MULTIPOINTM )
     {
 	int32		nPoints;
 	int    		i;
@@ -1038,7 +1095,7 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 
 	nRecordSize = 48 + 16 * psObject->nVertices;
 
-        if( psSHP->nShapeType == SHPT_MULTIPOINTZ )
+        if( psObject->nSHPType == SHPT_MULTIPOINTZ )
         {
             ByteCopy( &(psObject->dfZMin), pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
@@ -1056,8 +1113,8 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
             }
         }
 
-        if( psSHP->nShapeType == SHPT_MULTIPOINTZ
-            || psSHP->nShapeType == SHPT_MULTIPOINTM )
+        if( psObject->nSHPType == SHPT_MULTIPOINTZ
+            || psObject->nSHPType == SHPT_MULTIPOINTM )
         {
             ByteCopy( &(psObject->dfMMin), pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
@@ -1077,11 +1134,11 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     }
 
 /* -------------------------------------------------------------------- */
-/*      Extract vertices for a point.                                   */
+/*      Write point.							*/
 /* -------------------------------------------------------------------- */
-    else if( psSHP->nShapeType == SHPT_POINT
-             || psSHP->nShapeType == SHPT_POINTZ
-             || psSHP->nShapeType == SHPT_POINTM )
+    else if( psObject->nSHPType == SHPT_POINT
+             || psObject->nSHPType == SHPT_POINTZ
+             || psObject->nSHPType == SHPT_POINTM )
     {
 	ByteCopy( psObject->padfX, pabyRec + 12, 8 );
 	ByteCopy( psObject->padfY, pabyRec + 20, 8 );
@@ -1091,20 +1148,28 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 
         nRecordSize = 28;
         
-        if( psSHP->nShapeType == SHPT_POINTZ )
+        if( psObject->nSHPType == SHPT_POINTZ )
         {
             ByteCopy( psObject->padfZ, pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
             nRecordSize += 8;
         }
         
-        if( psSHP->nShapeType == SHPT_POINTZ
-            || psSHP->nShapeType == SHPT_POINTM )
+        if( psObject->nSHPType == SHPT_POINTZ
+            || psObject->nSHPType == SHPT_POINTM )
         {
             ByteCopy( psObject->padfM, pabyRec + nRecordSize, 8 );
             if( bBigEndian ) SwapWord( 8, pabyRec + nRecordSize );
             nRecordSize += 8;
         }
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Not much to do for null geometries.                             */
+/* -------------------------------------------------------------------- */
+    else if( psObject->nSHPType == SHPT_NULL )
+    {
+        nRecordSize = 12;
     }
 
     else
@@ -1143,7 +1208,7 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     if( !bBigEndian ) SwapWord( 4, &i32 );
     ByteCopy( &i32, pabyRec + 4, 4 );
 
-    i32 = psSHP->nShapeType;				/* shape type */
+    i32 = psObject->nSHPType;				/* shape type */
     if( bBigEndian ) SwapWord( 4, &i32 );
     ByteCopy( &i32, pabyRec + 8, 4 );
 
@@ -1163,12 +1228,16 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /* -------------------------------------------------------------------- */
 /*	Expand file wide bounds based on this shape.			*/
 /* -------------------------------------------------------------------- */
-    if( psSHP->nRecords == 1 )
+    if( psSHP->adBoundsMin[0] == 0.0
+        && psSHP->adBoundsMax[0] == 0.0
+        && psSHP->adBoundsMin[1] == 0.0
+        && psSHP->adBoundsMax[1] == 0.0 
+        && psObject->nSHPType != SHPT_NULL )
     {
-	psSHP->adBoundsMin[0] = psSHP->adBoundsMax[0] = psObject->padfX[0];
-	psSHP->adBoundsMin[1] = psSHP->adBoundsMax[1] = psObject->padfY[0];
-	psSHP->adBoundsMin[2] = psSHP->adBoundsMax[2] = psObject->padfZ[0];
-	psSHP->adBoundsMin[3] = psSHP->adBoundsMax[3] = psObject->padfM[0];
+        psSHP->adBoundsMin[0] = psSHP->adBoundsMax[0] = psObject->padfX[0];
+        psSHP->adBoundsMin[1] = psSHP->adBoundsMax[1] = psObject->padfY[0];
+        psSHP->adBoundsMin[2] = psSHP->adBoundsMax[2] = psObject->padfZ[0];
+        psSHP->adBoundsMin[3] = psSHP->adBoundsMax[3] = psObject->padfM[0];
     }
 
     for( i = 0; i < psObject->nVertices; i++ )
@@ -1193,7 +1262,8 @@ int SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 /*	for one shape.							*/
 /************************************************************************/
 
-SHPObject *SHPReadObject( SHPHandle psSHP, int hEntity )
+SHPObject SHPAPI_CALL1(*)
+SHPReadObject( SHPHandle psSHP, int hEntity )
 
 {
     SHPObject		*psShape;
@@ -1520,12 +1590,13 @@ SHPObject *SHPReadObject( SHPHandle psSHP, int hEntity )
 /*                            SHPTypeName()                             */
 /************************************************************************/
 
-const char *SHPTypeName( int nSHPType )
+const char SHPAPI_CALL1(*)
+SHPTypeName( int nSHPType )
 
 {
     switch( nSHPType )
     {
-      case 0:
+      case SHPT_NULL:
         return "NullShape";
 
       case SHPT_POINT:
@@ -1576,7 +1647,8 @@ const char *SHPTypeName( int nSHPType )
 /*                          SHPPartTypeName()                           */
 /************************************************************************/
 
-const char *SHPPartTypeName( int nPartType )
+const char SHPAPI_CALL1(*)
+SHPPartTypeName( int nPartType )
 
 {
     switch( nPartType )
@@ -1608,7 +1680,8 @@ const char *SHPPartTypeName( int nPartType )
 /*                          SHPDestroyObject()                          */
 /************************************************************************/
 
-void SHPDestroyObject( SHPObject * psShape )
+void SHPAPI_CALL
+SHPDestroyObject( SHPObject * psShape )
 
 {
     if( psShape == NULL )
