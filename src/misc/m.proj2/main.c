@@ -236,7 +236,10 @@ int main(int argc, char *argv[])
 	    strcat(buf, label);
 	}
 	/* Write Out Results */
-	fprintf(stderr, "%s", buf);
+	if(output->answer)
+		fprintf(stderr, "%s", buf);
+	else
+		fprintf(stdout, "%s", buf);
 	put_output(buf, (int)output->answer);
     }	/* end for loop */
 
