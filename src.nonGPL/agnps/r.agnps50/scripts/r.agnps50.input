@@ -1,8 +1,20 @@
 #!/bin/sh
 #
 # Remove any temp files from previous runs
+if [ "$#" -lt 1 ]; then
+      echo "r.agnps50.input is an interactive module"
+      echo "Usage:"
+      echo "      r.agnps50.input"
+      exit   
+fi
+if [ "$1" = "help" ]; then
+      echo "r.agnps50.input is an interactive module"
+      echo "Usage:"
+      echo "      r.agnps50.input"
+      exit   
+fi
 
-unalias rm
+@unalias rm
 
 rm -f tmpoutfile 
 $GISBASE/etc/agnps50/remove_old_tmp_files.sh >tmpoutfile
