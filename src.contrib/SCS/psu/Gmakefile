@@ -9,10 +9,10 @@ OFILES = \
 all: $(BIN_CONTRIB_CMD)/v.psu $(BIN_CONTRIB_CMD)/v.psu.subj $(GISBASE)/scripts/v.psu.fips $(GISBASE)/scripts/v.psu.patch
 
 $(BIN_CONTRIB_CMD)/v.psu.subj: psu.subj.o
-	$(CC) $(LDFLAGS) -o $@ psu.subj.o $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ psu.subj.o $(GISLIB) $(VECTLIB) $(MATHLIB)
 
 $(BIN_CONTRIB_CMD)/v.psu: $(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 $(GISBASE)/scripts/v.psu.fips:	psu.fips
 	rm -f $@
