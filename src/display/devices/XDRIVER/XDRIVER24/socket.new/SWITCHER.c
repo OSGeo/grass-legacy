@@ -245,10 +245,9 @@ char *argv[];
 	/* change process groups to be shielded from keyborad
 	 * signals note: use BSD form of call, which will also work
 	 * for ATT */
-/*
-	setpgrp(0, getpid());
-*/
-	setpgid(0, getpid());
+	/* setpgrp(0, getpid()); */
+	/* setpgid(0, getpid()); */
+	   setsid();
 /* FIFO
 	setsid();
 */
