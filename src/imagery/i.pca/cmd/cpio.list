@@ -1,0 +1,14 @@
+Gpca
+Gpca/allocate.c
+Gpca/main.c
+Gpca/stats.c
+Gpca/jacobi.c
+Gpca/cpio.list
+Gpca/transform.c
+Gpca/Gmakefile
+Gpca/globals.h
+Gpca/command.c
+Gpca/Gpca.help
+Gpca/main.lint
+Gpca/Gpca.man
+Gpca/rotate.c
