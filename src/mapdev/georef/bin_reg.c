@@ -36,7 +36,7 @@ main( argc, argv)
 		exit( -1) ;
 	}
 
-	G_gisinit("GEO_DIGIT") ;
+	G_gisinit(argv[0]) ;
 
 	system("clear") ;
 
