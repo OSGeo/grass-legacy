@@ -24,10 +24,10 @@ int main (int argc, char **argv)
     FILE *infile ;
     char buff[128] ;
     int t, b, l, r ;
-    int i, column, index ;
+    int column, index, precision;
     struct GModule *module;
     struct Option *site_opt, *xref_opt, *yref_opt, *color_opt, *size_opt, *backgr_opt;
-    struct Option *border_opt, *font_opt, *col_opt, *index_opt ;
+    struct Option *border_opt, *font_opt, *col_opt, *index_opt, *precision_opt;
     struct Flag *mouse;
 	
 
@@ -122,6 +122,14 @@ int main (int argc, char **argv)
 	"romans,romant,scriptc,scripts";
     font_opt->answer     = "romans" ;
     font_opt->description= "Fontname" ;
+	
+    precision_opt = G_define_option();
+    precision_opt->key        = "precision";
+    precision_opt->type       = TYPE_INTEGER;
+    precision_opt->required   = NO;
+    precision_opt->answer     = "2";
+    precision_opt->options    = "0-10";
+    precision_opt->description= "Number of digits after decimal point when attr=double";
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -167,6 +175,11 @@ int main (int argc, char **argv)
         G_fatal_error("Unknown attribute type!\n");
     }
 
+    sscanf(precision_opt->answer,"%d",&precision);
+    if (precision != 2)
+        if (strcmp(col_opt->answer, "double") != 0)
+            G_fatal_error("Precision is only applicable to floating point attributes!\n");
+
     index = atoi(index_opt->answer) - 1;
     if (index < 0) {
         G_fatal_error("Index must be a positive number greater than zero!\n");
@@ -203,7 +216,7 @@ int main (int argc, char **argv)
 /* Go draw the cell file */
     do_labels(infile,window, position, color_opt->answer, size_opt->answer, 
             backgr_opt->answer, border_opt->answer, 
-            font_opt->answer, column, index, mouse->answer);
+            font_opt->answer, column, index, mouse->answer, precision);
 
     D_add_to_list(G_recreate_command()) ;
 

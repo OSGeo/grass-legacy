@@ -56,13 +56,14 @@ int initialize_options (void)
     return 0;
 }
 
-void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
+void my_attr_copy(char *theText, Site *theSite, int attr, int index, int precision) {
         char *ptr = theText;
+        char numformat[7];
     switch (attr) {
         case SITE_ATTR_CAT:
             if (theSite->cattype == CELL_TYPE)
                 sprintf(theText, "%d", theSite->ccat);
-            else if (theSite->cattype == FCELL_TYPE)
+            else if (theSite->cattype == FCELL_TYPE)	/* floating point cats ??? */
                 sprintf(theText, "%f", theSite->fcat);
             else if (theSite->cattype == DCELL_TYPE)
                 sprintf(theText, "%lf", theSite->dcat);
@@ -82,7 +83,8 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
                 G_fatal_error("No double attributes!\n");
             if (theSite->dbl_alloc <= index)
                 G_fatal_error("Double index out of range!\n");
-            sprintf(theText, "%lf", theSite->dbl_att[index]);
+            sprintf(numformat, "%%.%dlf", precision);
+            sprintf(theText, numformat, theSite->dbl_att[index]);
             break;
         case SITE_ATTR_COORD:
             *ptr = '(';
@@ -114,7 +116,7 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
 int do_labels (FILE *infile, struct Cell_head window,
 	char *position, char *text_color, char *text_size, 
 	char *bg_color, char *border_color,  char *font_name,
-	int column, int index, int mouse)
+	int column, int index, int mouse, int precision)
 {
     char prn_east[80], prn_north[80];
     int screenx, screeny, button, nDims, nDbls, nStrs;
@@ -167,7 +169,7 @@ int do_labels (FILE *infile, struct Cell_head window,
                     north = tnorth;
                     east = teast;
                     dist = tdist;
-                    my_attr_copy(text, theSite, column, index);
+                    my_attr_copy(text, theSite, column, index, precision);
                 }
             }
             show_it(mouse); 
@@ -185,7 +187,7 @@ int do_labels (FILE *infile, struct Cell_head window,
                     north >= window.south && 
                     north <= window.north)
             {
-                my_attr_copy(text, theSite, column, index); 
+                my_attr_copy(text, theSite, column, index, precision); 
                 show_it(mouse);
                 /* This is probably useless...
                 G_format_easting(east, prn_east, G_projection());
