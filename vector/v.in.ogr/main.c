@@ -93,7 +93,7 @@ main (int argc, char *argv[])
     spat_opt->type = TYPE_DOUBLE;
     spat_opt->multiple = YES;
     spat_opt->required = NO;
-    spat_opt->description = "xmin,ymin,xmax,ymax";
+    spat_opt->description = "Import subregion only (xmin,ymin,xmax,ymax)";
     
     if (G_parser (argc, argv)) exit(-1); 
 
