@@ -1,7 +1,17 @@
+/***********************************************************************
+ * GRASS 5.0 coorcnv library
+ * scan_ll.c, scanning of coordinates from strings
+ *
+ * Andreas Lange, andreas.lange@rhein-main.de
+ * version 0.9
+ * modified Jun 10 2000 
+ *
+ ***********************************************************************/
+
 #include <stdio.h>
 #include "CC.h"
 
-static int scan_ll ( char *, char *, double *);
+static int scan_ll (char *, char *, double *);
 
 int 
 CC_lat_scan (char *buf, double *lat)
@@ -15,10 +25,11 @@ CC_lon_scan (char *buf, double *lon)
     return scan_ll (buf, "ew", lon);
 }
 
-static int scan_ll ( char *buf, char *dir, double *result)
+static int 
+scan_ll (char *buf, char *dir, double *result)
 {
     char temp[3];
-    int d,m,s;
+    int d, m, s;
     char ps[20], *pps;
     double p, f;
 
