@@ -75,6 +75,25 @@ default:
 	${SHELL} -c "cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp ; true"
 	@(cd tools ; sh -c "./build_html_index.html")
 
+LIBDIRS = \
+	lib/external/shapelib \
+	lib/datetime \
+	lib/gis \
+	lib/linkm \
+	lib/db \
+	lib/form \
+	lib/vector \
+	db/drivers
+
+# Compile libraries only
+libs:
+	@list='$(LIBDIRS)'; \
+	for subdir in $$list; do \
+		(cd $$subdir && make) || exit 1; \
+	done
+	${SHELL} -c "cp -f $(FILES) ${ARCH_DISTDIR}/ ; true"
+	${SHELL} -c "cp -fr --parents include ${ARCH_DISTDIR}/ ; true"
+
 mix:
 	GRASS_PERL=${PERL} sh ./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
 
@@ -92,11 +111,7 @@ binmix:
 # If we switch to GNU Make then this feature can be replaced with .PHONY
 FORCE:
 
-clean: 
-	@list='$(SUBDIRS)'; \
-	for subdir in $$list; do \
-		(cd $$subdir && make clean) || exit 1; \
-	done
+cleandistdirs: 
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/bin/         2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/bwidget/     2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${ARCH_DISTDIR}/docs/        2>/dev/null ; true"
@@ -110,6 +125,18 @@ clean:
 	${SHELL} -c "rmdir ${ARCH_DISTDIR} ; true"
 	${SHELL} -c "rm -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} 2>/dev/null ; true"
 	${SHELL} -c "rmdir ${ARCH_BINDIR} ; true"
+
+clean: cleandistdirs
+	@list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+		(cd $$subdir && make clean) || exit 1; \
+	done
+
+libsclean: cleandistdirs
+	@list='$(LIBDIRS)'; \
+	for subdir in $$list; do \
+		(cd $$subdir && make clean) || exit 1; \
+	done
 
 distclean: clean
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
@@ -228,6 +255,28 @@ srcdist: FORCE distclean
 	${SHELL} -c "rmdir ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
 	@ echo "Distribution source package: grass-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
 
+# make a source package for library distribution (we include the 5.3.0 stuff):
+srclibsdist: FORCE distclean
+	${SHELL} -c "${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	echo "" > ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}/SRCPKG
+     
+	@ # needed to store code in package with grass-version path:
+	${SHELL} -c "cp -L * ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL tools ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL include ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	${SHELL} -c "cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+
+	${SHELL} -c "cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+        
+	tar cvfz grass-lib-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}/* --exclude=CVS
+	${SHELL} -c "rm -r ./grass-lib-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
 
 htmldocs:
 	(cd lib/db/ ; make htmldocs)

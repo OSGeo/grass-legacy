@@ -48,9 +48,13 @@ make bindist       - make a binary package with install script
 make srcdist       - make a source package for distribution (including the
                      5.3.0 files)
 
+make srclibsdist    - make a source package for library distribution (including the 5.3.0 files)
+make libs          - make libraries
+
 make clean         - delete all files created by 'make' 
 make distclean     - 'make clean' + delete all files created by './configure'
 make mixclean      - delete all symbolic links created by make mix
+make libsclean     - clean libraries compiled by 'make libs'
 
 
 INSTALLATION (first time)
