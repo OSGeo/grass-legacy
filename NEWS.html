@@ -28,8 +28,13 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li>pg.in.dbf: fixed for inserting fields longer than 128 bytes (Federico Ponchio)
 <li>ps.map: Add some standard US paper configs (Eric G. Miller)
 <li>r.drain: fixed for floating-point elevations (Markus Neteler)
+<li>r.out.tiff: file extensions fix (tif, tfw), color bugfix (Eric G. Miller)
 <li>r.support: added cmd line support (Markus Neteler)
+<li>s.to.vect: several new flags, fixed "find mapset" problem, fixed 'dim'
+index error, fix for FP cats, category selection parameter (Eric G. Miller)
 <li>v.digit: fixed core dump on SGI (Justin Hickey)
+<li>v.in.shape: bunch of bugfixes, selective import supported now (David D.
+Gray)
 <p>
 <li> Added one line description for "-help" parameter to describe purpose of
 each module (Jan Wagner, not yet finished)
@@ -41,6 +46,8 @@ each module (Jan Wagner, not yet finished)
 clean" (Justin Hickey)
 <li>configure: tcl/tk libs detection fixed (John Huddleston, Eric G. Miller)
 <li>Gmakefiles: major cleanup (Markus Neteler, Justin Hickey)
+<li>LZW removal ready to switch on: will come for GRASS 5.0 stable. Using
+DEFLATE/zlib now (Eric G. Miller)
 </menu>
 
 <hr>
@@ -115,6 +122,7 @@ each module (Jan Wagner and others, not yet finished)
 <li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho), changed
  return value in case of wrong statement (Andreas Lange)
 <li> r3.mapcalc: bugfix on region error (Jaro Hofierka)
+<li> r.null: Bug fixed: skip null values (Huidae Cho)
 <li> r.out.bin: added to export <a href=http://www.soest.hawaii.edu/gmt/>GMT</a>/BIL/...
      formats (Bob Covill)
 <li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
