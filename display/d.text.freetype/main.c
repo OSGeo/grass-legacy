@@ -38,7 +38,7 @@
  */
 
 #define	DEFAULT_CHARSET		"ISO-8859-1"
-#define	DEFAULT_SIZE		"5"
+#define	DEFAULT_SIZE		"10"
 #define	DEFAULT_COLOR		"gray"
 
 #define	DEFAULT_ALIGN		"ll"
