@@ -11,21 +11,23 @@ process (meta_report, site_list, layer_list, quadsize, with_stats)
     char mapset[100];
     int n;
     int r, c;
-    int north, east;
+    double north, east;
     char *desc;
     struct Cell_head window;
+    char buff1[50], buff2[50];
+    char *format_east(), *format_north(), *format_res();
 
 
     G_get_window (&window);
 
     fprintf (meta_report,"location|%s|%s\n", G_location(), G_myname());
     fprintf (meta_report,"mapset|%s\n", G_mapset());
-    fprintf (meta_report,"north|%lf\n",window.north);
-    fprintf (meta_report,"south|%lf\n",window.south);
-    fprintf (meta_report,"west|%lf\n",window.west);
-    fprintf (meta_report,"east|%lf\n",window.east);
-    fprintf (meta_report,"nsres|%lf\n",window.ns_res);
-    fprintf (meta_report,"ewres|%lf\n",window.ew_res);
+    fprintf (meta_report,"north|%s\n",format_north(window.north, buff1, -1));
+    fprintf (meta_report,"south|%s\n",format_north(window.south, buff1, -1));
+    fprintf (meta_report,"west|%s\n",format_east(window.west, buff1, -1));
+    fprintf (meta_report,"east|%s\n",format_east(window.east, buff1, -1));
+    fprintf (meta_report,"nsres|%s\n",format_res(window.ns_res, buff1, -1));
+    fprintf (meta_report,"ewres|%s\n",format_res(window.ew_res, buff1, -1));
 
 /* print the site list */
 
@@ -36,8 +38,9 @@ process (meta_report, site_list, layer_list, quadsize, with_stats)
 
     rewind_site_list (site_list);
     for (n = 1; next_site (site_list, &north, &east, &desc); n++)
-	    fprintf(meta_report,"point|%d|%d|%d|%s\n",
-		    n, east, north, desc);
+	    fprintf(meta_report,"point|%d|%s|%s|%s\n",
+		    n, format_east(east, buff1, -1), 
+                    format_north(north, buff2, -1), desc);
 
 /* print layer names */
 
