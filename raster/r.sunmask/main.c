@@ -6,7 +6,10 @@
  * r.sunmask:
  *   Calculates the real shadows from a DEM from
  *
- * Janne Soimasuo, Finland
+ * input: DEM (int, float, double)
+ * output: binary shadow map
+ *
+ * Author: Janne Soimasuo, Finland 1994
  *
  * GPL >= 2
  *
