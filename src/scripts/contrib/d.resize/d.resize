@@ -1,21 +1,21 @@
 #!/bin/sh
 width=$1
 height=$2
-if [ -z $width -o -z $height ] ; then
+if [ -z "$width" -o -z "$height" ] ; then
   echo 'Usage: d.resize <width> <height>' >&2
   exit 1
 fi
 
-if [ -z $HOSTNAME ] ; then
-    HOSTNAME=`uname -n`
+if [ -z "$HOSTNAME" ] ; then
+  HOSTNAME=`uname -n`
 fi
 
-tmpfile=$LOCATION/.tmp/$HOSTNAME/$$.1
+tmpfile=`g.tempfile pid=$$`
 mon=`d.mon -L | fgrep selected | awk '{print $1}'`
-if [ $? -eq 0 ]
+if [ -z "$mon" ]
 then
- echo "ERROR: No monitor selected"
- exit
+  echo "ERROR: No monitor selected"
+  exit
 fi
 
 d.save -a > $tmpfile
@@ -29,3 +29,4 @@ d.mon start=$mon
 
 sh $tmpfile 
 
+rm -f $tmpfile
