@@ -275,23 +275,28 @@ Vect_net_build_graph (  struct Map_info *Map,
 int
 Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
 {
-    int i, line, *pclip, cArc;
+    int i, line, *pclip, cArc, nRet;
     gnGrpSPReport_s * pSPReport;
 
     if ( List != NULL )
         Vect_reset_list ( List);
     
+   /*
+    * gnInt32_t nDistance;
+    * nRet =  gnGrpShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));
+    */
+
     pclip = NULL;
-    if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip, &(Map->spCache))) == NULL ) {
-        if (  gnGrpErrno( &(Map->graph) ) == 0  ) {
-            /* G_warning( "Destination node %d is unreachable from node %d\n" , to , from ); */	    
-	    if ( cost != NULL )
-		*cost = PORT_DOUBLE_MAX;
-	    
-	    return -1;
-	}
-        else
-                 fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
+    nRet = gnGrpShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));
+    if ( nRet == 0 ) {
+        /* G_warning( "Destination node %d is unreachable from node %d\n" , to , from ); */	    
+	if ( cost != NULL )
+	   *cost = PORT_DOUBLE_MAX;
+	return -1;
+    }
+    else if ( nRet < 0 ) {
+        fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
+	return -1;
     }
 
     if ( List != NULL ) {
