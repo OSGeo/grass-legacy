@@ -3,10 +3,10 @@
 */
 
 /*  gstypes.h
-    Bill Brown, USACERL  
+    Bill Brown, USACERL
     January 1993
 */
-	
+
 #ifndef _GSTYPES_H
 #define _GSTYPES_H
 
@@ -14,9 +14,8 @@
 #include "bitmap.h"
 #include <GL/gl.h>
 
-/*
-#define TRACE_FUNCS
-*/
+/*#define TRACE_FUNCS*/
+/*#define DEBUG*/
 
 #define X 0
 #define Y 1
@@ -47,8 +46,8 @@
 #define ATTY_NULL       32   /* internal use only */
 #define ATTY_MASK       16   /* can't use this one for numbytes */
 #define ATTY_FLOAT       8   /* can't use this one for numbytes */
-#define ATTY_INT         4 
-#define ATTY_SHORT       2 
+#define ATTY_INT         4
+#define ATTY_SHORT       2
 #define ATTY_CHAR        1
 #define ATTY_ANY        63   /* internal use only */
 #define LEGAL_TYPE(t)    \
@@ -122,9 +121,9 @@ typedef struct{
 typedef struct{
     IFLAG     att_src;     /* NOTSET_ATT, MAP_ATT, CONST_ATT, FUNC_ATT */
     IFLAG     att_type;    /* ATTY_INT, ATTY_SHORT, ATTY_CHAR, or ATTY_FLOAT */
-    int     hdata;      /* handle to dataset */ 
+    int     hdata;      /* handle to dataset */
     int     (*user_func)();
-    float     constant;     
+    float     constant;
     int     *lookup;      /* TODO: use transform instead */
     float   min_nz, max_nz, range_nz;
     float   default_null;
@@ -141,7 +140,7 @@ typedef struct g_surf{
     float z_exag;
     float x_trans, y_trans, z_trans;
     float xmin, xmax, ymin, ymax, zmin, zmax, zminmasked;
-    float xrange, yrange, zrange; 
+    float xrange, yrange, zrange;
     float zmin_nz, zmax_nz, zrange_nz;
     int x_mod, y_mod, x_modw, y_modw; /*cells per viewcell, per wire viewcell*/
     int nz_topo, nz_color;  /* no zero flags */
@@ -153,11 +152,11 @@ typedef struct g_surf{
 } geosurf;
 
 /* maybe put attribute info here instead of in geovect - allow a single
-   vector file to have multiple attributes ?   Cached lines should 
+   vector file to have multiple attributes ?   Cached lines should
    usually be stored as 2d, since they may be draped on multiple
    surfaces & Z will vary depending upon surface. */
 typedef struct g_line{
-    int type;           
+    int type;
     float norm[3];
     int dims, npts;
     Point3 *p3;
@@ -173,7 +172,7 @@ typedef struct g_vect{
     int n_surfs;
     int color, width;
     char filename[NAME_SIZ];
-    float x_trans, y_trans, z_trans; 
+    float x_trans, y_trans, z_trans;
 /* also maybe center & rotate? */
     geoline *lines;
     geoline *fastlines;
@@ -201,29 +200,80 @@ typedef struct g_site{
     char filename[NAME_SIZ];
     transform attr_trans;
     float size;
-    float x_trans, y_trans, z_trans; 
+    float x_trans, y_trans, z_trans;
     geopoint *points;
     int (*bgn_read)(), (*end_read)(), (*nxt_site)();
     struct g_site *next;
     void *clientdata;
 } geosite;
 
-typedef struct dspinfo{
-    int num_levels;
-    /* stuff to define which isosurfaces available and which ON,
-       file name, etc
-       Also maybe where to put fence cuts, normals direction, solid 
-       vs. slices, etc */
-} geodsp;
+typedef struct
+{
+    int data_id; /* id */
+    IFLAG file_type; /* file type */
+    unsigned int count; /* number of referencies to this file */
+    char file_name[NAME_SIZ]; /* file name */
+
+    IFLAG data_type;
+    void *map; /* pointer to volume file descriptor */
+    double min, max; /* minimum, maximum value in file */
+
+    IFLAG status; /* current status */
+    IFLAG mode; /* current read mode */
+
+    void *buff; /* data buffer */
+} geovol_file;
+
+typedef struct{
+    IFLAG att_src;
+
+    int hfile;
+    int (*user_func)();
+    float constant;
+
+    void *att_data;
+    int changed;
+} geovol_isosurf_att;
+
+typedef struct{
+    int inout_mode;
+    geovol_isosurf_att att[MAX_ATTS];
+
+    int data_desc;
+    unsigned char *data;
+} geovol_isosurf;
+
+typedef struct{
+    int dir;
+	float x1, x2, y1, y2, z1, z2;
+    unsigned char *data;
+	int changed;
+
+	int mode, transp;
+} geovol_slice;
 
 typedef struct g_vol{
-    char filename[NAME_SIZ];
     int gvol_id;
-    int drape_surf_id;
-    int n_dsp;
-    float x_trans, y_trans, z_trans; 
-    struct dspinfo *dspis[MAX_DSP];
     struct g_vol *next;
+
+    int hfile;
+    int cols, rows, depths;
+    double ox, oy, oz;
+    double xres, yres, zres;
+    double xmin, xmax, ymin, ymax, zmin, zmax;
+    double xrange, yrange, zrange;
+    float x_trans, y_trans, z_trans;
+
+    int n_isosurfs;
+    geovol_isosurf *isosurf[MAX_ISOSURFS];
+    int isosurf_x_mod, isosurf_y_mod, isosurf_z_mod;
+    IFLAG isosurf_draw_mode;
+
+	int n_slices;
+	geovol_slice *slice[MAX_SLICES];
+	int slice_x_mod, slice_y_mod, slice_z_mod;
+    IFLAG slice_draw_mode;
+
     void *clientdata;
 } geovol;
 
