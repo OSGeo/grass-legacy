@@ -166,7 +166,6 @@ LOC_ARG_WITH(cxx, C++, no)
 LOC_ARG_WITH(jpeg, JPEG)
 LOC_ARG_WITH(tiff, TIFF)
 LOC_ARG_WITH(png, PNG)
-#LOC_ARG_WITH(gd, GD)
 LOC_ARG_WITH(tcltk, Tcl/Tk)
 LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(mysql, MySQL, no)
@@ -208,9 +207,6 @@ LOC_ARG_WITH_LIB(tiff, TIFF)
 
 LOC_ARG_WITH_INC(png, PNG)
 LOC_ARG_WITH_LIB(png, PNG)
-
-#LOC_ARG_WITH_INC(gd, GD)
-#LOC_ARG_WITH_LIB(gd, GD)
 
 LOC_ARG_WITH_INC(tcltk, Tcl/Tk)
 LOC_ARG_WITH_LIB(tcltk, Tcl/Tk)
@@ -713,42 +709,6 @@ AC_SUBST(PNGLIB)
 
 # Done checking PNG
 
-# Enable GD option
-#
-#LOC_CHECK_USE(gd,GD,USE_GD)
-#
-#GDINC=
-#GDLIB=
-#
-#if test -n "$USE_GD"; then
-#
-## With GD includes directory
-#
-#LOC_CHECK_INC_PATH(gd,GD,GDINC)
-#
-#LOC_CHECK_INCLUDES(gd.h,GD,$GDINC)
-#
-## With GD library directory
-#
-#LOC_CHECK_LIB_PATH(gd,GD,GDLIB)
-#
-#LOC_CHECK_LIBS(gd,gdImagePng,GD,$GDLIB,GDLIB,,,[
-#LOC_CHECK_LIBS(gd,gdImageGif,GD,$GDLIB,GDLIB,,,)
-#],$X_LIBS -lXpm $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,-lfreetype,$JPEGLIBPATH $JPEGLIB,$PNGLIB,$MATHLIB)
-#
-#AC_CHECK_LIB(gd, gdImagePng, AC_DEFINE(HAVE_GDIMAGEPNG), [], $GDLIB)
-#AC_CHECK_LIB(gd, gdImageGif, AC_DEFINE(HAVE_GDIMAGEGIF), [], $GDLIB)
-#
-#AC_CHECK_LIB(gd, gdImageCreateTrueColor, AC_DEFINE(HAVE_GDIMAGECREATETRUECOLOR), [], $GDLIB)
-#
-#fi # $USE_GD
-#
-#AC_SUBST(GDINC)
-#AC_SUBST(GDLIB)
-#AC_SUBST(USE_GD)
-#
-## Done checking GD
-
 # Enable TCLTK option
 
 LOC_CHECK_USE(tcltk,Tcl/Tk,USE_TCLTK)
@@ -915,7 +875,7 @@ if test -n "$USE_OPENGL"; then
 
 LOC_CHECK_INC_PATH(opengl,OpenGL,OPENGLINC)
 
-LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC)
+LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC $X_CFLAGS)
 
 # With OpenGL library directory
 
@@ -1062,7 +1022,7 @@ if test -n "$USE_MOTIF"; then
 
 LOC_CHECK_INC_PATH(motif,Motif,XMINC)
 
-LOC_CHECK_INCLUDES(Xm/Xm.h,Motif,$XMINC)
+LOC_CHECK_INCLUDES(Xm/Xm.h,Motif,$XMINC $X_CFLAGS)
 
 # With Motif library directory
 
@@ -1258,7 +1218,6 @@ LOC_MSG_USE(DBM support,USE_DBM)
 LOC_MSG_USE(JPEG support,USE_JPEG)
 LOC_MSG_USE(TIFF support,USE_TIFF)
 LOC_MSG_USE(PNG support,USE_PNG)
-#LOC_MSG_USE(GD support,USE_GD)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(MySQL support,USE_MYSQL)
