@@ -106,9 +106,17 @@ default: sqm
 <DD>Vector file to be created (output).
 
 <P>
+<H2>BUGS</H2>
+Due to the limitations of the vector engine in versions of GRASS prior to 
+5.7, display of overlapping circles may not work correctly.
+You have two options:
+a) make your radius smaller.
+b) Install GRASS 5.7 or newer and use <B>v.buffer</B> and <B>v.patch</B>
+in a loop or <B>d.vect.chart ctype=pie</B> with one data column.
+Sorry for the inconvenience.
 
+<P>
 <H2>SEE ALSO</H2>
-<a href=s.buffer.html>s.buffer</a>,
 <a href=v.bubble.html>v.bubble</a>
 
 <H2>AUTHOR</H2>
