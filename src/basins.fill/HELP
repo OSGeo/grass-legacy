@@ -1,0 +1,3 @@
+dual
+    Generates subbasin areas given a coded stream network and 
+    a map layer denoting all ridges (including watershed boundary).
