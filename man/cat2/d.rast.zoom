@@ -6,8 +6,8 @@ d.rast.zoom <alpha>  GRASS Reference Manual   <alpha> d.rast.zoom
 
 
 NAME
-     d.rast.zoom - To interactively zoom in or zoom out of
-     regions on a raster map displayed in the active frame on the
+     d.rast.zoom - To interactively zoom in or zoom out	of
+     regions on	a raster map displayed in the active frame on the
      graphics monitor.
      (GRASS Display Program)
 
@@ -16,17 +16,17 @@ SYNOPSIS
      d.rast.zoom help
 
 DESCRIPTION
-     d.rast.zoom allows the user to zoom in or out of a region of
-     interest on the raster map layer currently displayed in the
-     active frame of the graphics monitor.  The user zooms in and
-     out interactively, using a mouse to establish the zoom
-     region.  To zoom, click the left mouse button to establish a
+     d.rast.zoom allows	the user to zoom in or out of a	region of
+     interest on the raster map	layer currently	displayed in the
+     active frame of the graphics monitor.  The	user zooms in and
+     out interactively,	using a	mouse to establish the zoom
+     region.  To zoom, click the left mouse button to establish	a
      corner, then drag the mouse to estabilsh the second
-     (diagonal) corner and hit the right mouse button to accept
-     the region.  "Unzoom" will move back one step (i.e., to the
-     last modified region).  If the user tries to unzoom once
-     again, the zoom region will be set equal to the default
-     region settings.  The user can zoom or unzoom any number of
+     (diagonal)	corner and hit the right mouse button to accept
+     the region.  "Unzoom" will	move back one step (i.e., to the
+     last modified region).  If	the user tries to unzoom once
+     again, the	zoom region will be set	equal to the default
+     region settings.  The user	can zoom or unzoom any number of
      times until satisfied.
 
 NOTES
@@ -45,8 +45,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -60,7 +60,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
