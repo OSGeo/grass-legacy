@@ -251,12 +251,12 @@ if ((cmd1_cnt > 0 ) && (cmd2_cnt > 0))
 	  fclose(tf);
       if (strcmp(proj_in,"State Plane") == 0) 
 	  	sprintf(buffb,
-	       "v.projINV map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
-	                map_name,iset_name,G_mapset(),omap_name,tmpfile);
+	       "%s/etc/v.projINV map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
+	        G_gisbase(),map_name,iset_name,G_mapset(),omap_name,tmpfile);
 	else
 	  sprintf(buffb,
-	       "v.projINV map=%s inset=%s outset=%s omap=%s parms=%s\n",
-	               map_name,iset_name,G_mapset(),omap_name,tmpfile);
+	       "%s/etc/v.projINV map=%s inset=%s outset=%s omap=%s parms=%s\n",
+	        G_gisbase(),map_name,iset_name,G_mapset(),omap_name,tmpfile);
 	  if (system(buffb) != 0)
 		G_fatal_error("Could not do Inverse projection\n");
 /************ DO forward **************************/
@@ -268,12 +268,12 @@ if ((cmd1_cnt > 0 ) && (cmd2_cnt > 0))
 	  fclose(tf);
       if (strcmp(proj_out,"State Plane") == 0) 
 	  	sprintf(buffb,
-	       "v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
-			     	omap_name,G_mapset(),oset_name,map_name,tmpfile);
+	       "%s/etc/v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
+		G_gisbase(),omap_name,G_mapset(),oset_name,map_name,tmpfile);
 	else
 	  sprintf(buffb,
-		"v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s\n",
-			     omap_name,G_mapset(),oset_name,map_name,tmpfile);
+		"%s/etc/v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s\n",
+		G_gisbase(),omap_name,G_mapset(),oset_name,map_name,tmpfile);
 	  if (system(buffb) != 0)
 		G_fatal_error("Could not do Forward projection\n");
 	  }
@@ -290,12 +290,12 @@ else if (cmd1_cnt > 0)
 	  fclose(tf);
       if (strcmp(proj_in,"State Plane") == 0) 
 	  	sprintf(buffb,
-	       "v.projINV map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
-			     	map_name,iset_name,oset_name,map_name,tmpfile);
+	       "%s/etc/v.projINV map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
+		G_gisbase(), map_name,iset_name,oset_name,map_name,tmpfile);
 	else
 	  sprintf(buffb,
-		"v.projINV map=%s inset=%s outset=%s omap=%s parms=%s\n",
-			     map_name,iset_name,oset_name,map_name,tmpfile);
+		"%s/etc/v.projINV map=%s inset=%s outset=%s omap=%s parms=%s\n",
+		G_gisbase(), map_name,iset_name,oset_name,map_name,tmpfile);
 	  if (system(buffb) != 0)
 		G_fatal_error("Could not do Inverse projection\n");
 	  }
@@ -311,12 +311,12 @@ else if (cmd2_cnt > 0)
 	  fclose(tf);
       if (strcmp(proj_out,"State Plane") == 0) 
 	  	sprintf(buffb,
-	       "v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
-			      map_name,iset_name,oset_name,map_name,tmpfile);
+	       "%s/etc/v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s stp=yes\n",
+		G_gisbase(), map_name,iset_name,oset_name,map_name,tmpfile);
 	else
 	  sprintf(buffb,
-		"v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s\n",
-			      map_name,iset_name,oset_name,map_name,tmpfile);
+		"%s/etc/v.projFOR map=%s inset=%s outset=%s omap=%s parms=%s\n",
+		G_gisbase(), map_name,iset_name,oset_name,map_name,tmpfile);
 	  if (system(buffb) != 0)
 		G_fatal_error("Could not do Forward projection\n");
 	  }
