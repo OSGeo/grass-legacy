@@ -19,8 +19,10 @@ SUBDIRS1 = \
 	v.in.sites \
 	v.label \
 	v.proj \
+	v.net \
 	v.net.alloc \
 	v.net.iso \
+	v.net.path \
 	v.net.salesman \
 	v.net.steiner \
 	v.out.ascii \
