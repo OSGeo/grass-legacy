@@ -169,10 +169,10 @@ main (int argc, char *argv[])
 	    if ( zcol >= minncols ) G_fatal_error ( "zcol > minimum last column number"); 
 	    if ( catcol >= minncols ) G_fatal_error ( "catcol > minimum last column number"); 
 
-	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "xcol is not number");
-	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "ycol is not number");
-	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "zcol is not number");
-	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "catcol is not number");
+	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "xcol is not a number type");
+	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "ycol is not a number type");
+	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "zcol is not a number type");
+	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "catcol is not a number type");
 
 	    /* Create table */
 	    make_table = 0;
