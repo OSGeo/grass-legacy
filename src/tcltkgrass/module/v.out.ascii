@@ -1,0 +1,6 @@
+interface_build {
+    {v.out.ascii} 0
+    {Converts a binary GRASS vector map into an ASCII GRASS vector file.}
+    {entry input {Binary vector map (input):} 0 vector}
+    {entry output {Name of resulting ascii file:} 0 vector_ascii}
+}
