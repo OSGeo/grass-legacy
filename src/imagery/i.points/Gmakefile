@@ -30,7 +30,9 @@ LIST=main.o\
 	zoom_box.o\
 	zoom_pnt.o
 
-LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+EXTRA_CFLAGS = -D_NO_PROTO
+
+LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 $(BIN_MAIN_INTER)/i.points: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB)
 
