@@ -82,6 +82,9 @@ FULLINDEX=full_index.html
 
 cd $HTMLDIR
 
+#hardcoded list of notes etc:
+NOTESLIST="sql"
+
 #get list of available GRASS modules:
 CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v '$EXCLUDEHTML' | cut -d'.' -f1 | sort -u`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
@@ -152,6 +155,8 @@ done
 #next write main page:
 FILENAME=index.html
 write_html_header $FILENAME "GRASS GIS 5.1 Reference Manual"
+
+#modules:
 echo "<b>Manual sections:</b>" >> $FILENAME
 echo "<ul>" >> $FILENAME
 #for all module groups:
@@ -162,6 +167,18 @@ do
 done
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
+
+#notes:
+echo "<b>Notes sections:</b>" >> $FILENAME
+echo "<ul>" >> $FILENAME
+#for all notes:
+for k in $NOTESLIST
+do 
+  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
+done
+echo "</ul>" >> $FILENAME
+echo "<p>"   >> $FILENAME
+
 write_html_footer $FILENAME index.html
 
 
