@@ -1,0 +1,26 @@
+all: $(BIN)/Dnew $(BIN)/Dchoose $(BIN)/Dwhich $(BIN)/Dremove $(BIN)/Derase
+
+$(BIN)/Dnew: new_window.o cmd_new.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(D_LIB)
+	$(CC) $(LDFLAGS) -o $@ new_window.o cmd_new.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN)/Dchoose: choose_win.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ choose_win.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN)/Dwhich: which_win.o cmd_which.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ which_win.o cmd_which.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN)/Dremove: remove.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ remove.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN)/Derase: erase.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ erase.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(D_LIB): #
+$(GISLIB): #
+
+new_window.o:	opt_new.h
+cmd_new.o:	opt_new.h
+which_win.o:	opt_which.h
+cmd_which.o:	opt_which.h
