@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "gis.h"
 
 static long *index, nchars;
 static unsigned char *font;

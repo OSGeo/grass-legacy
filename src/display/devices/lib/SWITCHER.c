@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #define SWITCHER
+#include "gis.h"
 #include "graph.h"
 #include "driverlib.h"
 #include "driver.h"
@@ -1233,7 +1234,7 @@ static char *xalloc ( void *buf,int *cur,int new,int len)
     if (*cur >= new)
         return buf;
     if (*cur)
-        buf = (char *)realloc ((void *)buf, (size_t) (new * len));
+        buf = (char *)G_realloc ((void *)buf, (size_t) (new * len));
     else
         buf = (char *)G_malloc ((size_t) (new*len));
     *cur = new;

@@ -32,6 +32,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "driverlib.h"
 
 static unsigned char red[256], grn[256], blu[256] ;
@@ -72,7 +73,7 @@ RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char 
 		if (array == NULL)
 			array = (int *)G_malloc((size_t)(array_alloc * sizeof(int))) ;
 		else
-			array = (int *)realloc((void *)array, (size_t) (array_alloc * sizeof(int))) ;
+			array = (int *)G_realloc((void *)array, (size_t) (array_alloc * sizeof(int))) ;
 		if(array == NULL)
 		{
 			fprintf(stderr,"ERROR: insufficient memory in RGB_raster\n") ;
