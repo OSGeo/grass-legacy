@@ -5,10 +5,21 @@
 */
 #include "cell.h"
 
-extern int screen_left   ;
-extern int screen_right  ;
-extern int screen_bottom ;
-extern int screen_top    ;
+int put_row(int y, int x1, int x2, const unsigned char *data)
+{
+    int width = screen_right - screen_left;
+    fseek(Temp_fp, (long) (y - screen_top) * width + x1, SEEK_SET);
+    fwrite(data, 1, x2 - x1, Temp_fp);
+    return 0;
+}
+
+int get_row(int y, int x1, int x2, unsigned char *data)
+{
+    int width = screen_right - screen_left;
+    fseek(Temp_fp, (long) (y - screen_top) * width + x1, SEEK_SET);
+    fread(data, 1, x2 - x1, Temp_fp);
+    return 0;
+}
 
 int store_xy (int x, int y)
 {
@@ -18,7 +29,6 @@ int store_xy (int x, int y)
 	 y < screen_top  || y >= screen_bottom )
 	    return 0;
 
-/*DEBUG fprintf (stderr, "STORE_XY  (%d,%d)  %d\n", x, y, Cur_color); */
     fseek (Temp_fp, y * width + x, 0);
     fwrite (&Cur_color, 1, 1,  Temp_fp);
 
@@ -48,7 +58,8 @@ int horiz_line (int y, int x1, int x2)
     for (i = 0 ; i < len ; i++)
 	Row_buf[i] = Cur_color;
 
-    fseek (Temp_fp, (long) (y - screen_top) * width + x1, 0);
-    fwrite (Row_buf, 1, len,  Temp_fp);
-    return (0);
+    put_row(y, x1, x2, Row_buf);
+
+    return 0;
 }
+

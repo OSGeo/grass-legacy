@@ -1,9 +1,16 @@
+#include <stdio.h>
+#include <unistd.h>
+
 #include "gis.h"
 #include "display.h"
-#include "D.h"
 #include "raster.h"
-#define MAIN
 #include "options.h"
+
+int color1;
+int color2;
+double east;
+double north;
+int use_feet;
 
 int main (int argc, char **argv)
 {
@@ -12,7 +19,8 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse ;
+	struct Flag *mouse, *feet ;
+	struct Cell_head W ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
@@ -21,20 +29,13 @@ int main (int argc, char **argv)
 	module->description =
 		"Displays a barscale on GRASS monitor.";
 
-	{
-		struct Cell_head W ;
-		G_get_window(&W) ;
-		if (W.proj == PROJECTION_LL)
-		{
-			fprintf(stderr,"\nSorry, %s does now work with a latitude-longitude data base.\n",
-				argv[0]) ;
-			exit(-1) ;
-		}
-	}
-
 	mouse = G_define_flag() ;
 	mouse->key        = 'm';
 	mouse->description= "Use mouse to interactively place scale" ;
+
+	feet = G_define_flag() ;
+	feet->key        = 'f';
+	feet->description= "Use feet/miles instead of meters" ;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
@@ -61,24 +62,22 @@ int main (int argc, char **argv)
 	opt3->required   = NO;
 	opt3->description= "the screen coordinates for top-left corner of label" ;
 
-	coord_inp = 0;
+	G_get_window(&W) ;
+	if (W.proj == PROJECTION_LL)
+		G_fatal_error("%s does now work with a latitude-longitude location",
+			      argv[0]) ;
 
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
+
+	use_feet = feet->answer ? 1 : 0;
 
 	color1 = D_translate_color(opt1->answer) ;
 
 	color2 = D_translate_color(opt2->answer) ;
 
-	/*
-	G_scan_easting(opt3->answers[0], &easting, G_projection());
-	coord_inp++;
-	G_scan_northing(opt3->answers[1], &northing, G_projection());
-	coord_inp++;
-	*/
-	sscanf(opt3->answers[0],"%lf",&east) ;
-	sscanf(opt3->answers[1],"%lf",&north) ;
-	if((east>0)||(north>0)) coord_inp=1;
+	sscanf(opt3->answers[0], "%lf", &east) ;
+	sscanf(opt3->answers[1], "%lf", &north) ;
 
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
@@ -104,14 +103,31 @@ int main (int argc, char **argv)
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 
-	/* Draw the scale */
-	draw_scale(mouse->answer) ;
+	if (!mouse->answer)
+	{
+		/* Draw the scale */
+		draw_scale(NULL) ;
 
-	/* Add this command to list */
-	if (! mouse->answer)
+		/* Add this command to list */
 		D_add_to_list(G_recreate_command()) ;
+	}
+	else if (mouse_query())
+	{
+		char at[100];
+		int i;
+
+		R_close_driver();
+		sprintf(at, "at=%f,%f", east, north);
+		for (i = 0; i < argc; i++)
+			if (argv[i][0] == '-' && argv[i][1] == 'm')
+				argv[i] = at;
+		execvp(argv[0], argv);
+		perror("Failed to execute command");
+		return 1;
+	}
 
 	R_close_driver();
 
- 	exit(0);
+	return 0;
 }
+
