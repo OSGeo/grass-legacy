@@ -99,7 +99,7 @@ dig_build_area_with_line (map, first_line, Area)
 	    /*
 	    if (next_line == array[i])
 	    */
-	    if (ABS(next_line) == ABS(array[i]))
+	    if (abs(next_line) == abs(array[i]))
 	    {
 /*DEBUG*/ debugf ("Unclosed area:");
 		return (0);			/* ran into a different area */
@@ -160,14 +160,14 @@ dig_new_area (map, Area, att)
 
 	if (line < 0)			/* reference lines to area */
 	{
-/*DEBUG*/ if (map->Line[ABS(line)].left)
-/*DEBUG*/ debugf ("Line %d already had area %d to left.\n", line, map->Line[ABS(line)].left);
-	    map->Line[ABS(line)].left = area;
+/*DEBUG*/ if (map->Line[abs(line)].left)
+/*DEBUG*/ debugf ("Line %d already had area %d to left.\n", line, map->Line[abs(line)].left);
+	    map->Line[abs(line)].left = area;
 	}
 	else
 	{
-/*DEBUG*/ if (map->Line[ABS(line)].right)
-/*DEBUG*/ debugf ("Line %d already had area %d to right.\n", line, map->Line[ABS(line)].right);
+/*DEBUG*/ if (map->Line[abs(line)].right)
+/*DEBUG*/ debugf ("Line %d already had area %d to right.\n", line, map->Line[abs(line)].right);
 	    map->Line[line].right = area;
 	}
     }
@@ -201,7 +201,7 @@ dig__del_area (map, area)
 	line = Area->lines[i];
 	if (line < 0)
 	{
-	    line = ABS (line);
+	    line = abs (line);
 	    map->Line[line].left = 0;
 	}
 	else
@@ -253,7 +253,7 @@ dig_del_area (map, area)
 	line = Area->lines[i];
 	if (line < 0)
 	{
-	    line = ABS (line);
+	    line = abs (line);
 	    map->Line[line].left = 0;
 	}
 	else
@@ -298,7 +298,7 @@ dig_angle_next_line (map, current_line, direction)
     P_NODE *Node;
 
     if (current_line < 0)
-	node = map->Line[ABS(current_line)].N2;
+	node = map->Line[abs(current_line)].N2;
     else
 	node = map->Line[current_line].N1;
     Node = &(map->Node[node]);
@@ -319,7 +319,7 @@ start:
 		next = 0;
 	    else
 		next++;
-	} while (map->Line[ABS(Node->lines[next])].type != AREA && next != current);
+	} while (map->Line[abs(Node->lines[next])].type != AREA && next != current);
     }
     else
     {
@@ -328,7 +328,7 @@ start:
 		next = Node->n_lines -1;
 	    else
 		next--;
-	} while (map->Line[ABS(Node->lines[next])].type != AREA && next != current);
+	} while (map->Line[abs(Node->lines[next])].type != AREA && next != current);
     }
     return ((int) (Node->lines[next]));
 }
@@ -346,12 +346,12 @@ dig_area_bound_box (map, Area)
     P_LINE *LP;
 
     /* initialize N and E */
-    Area->N = Area->S = map->Line[ABS(Area->lines[0])].N;
-    Area->E = Area->W = map->Line[ABS(Area->lines[0])].E;
+    Area->N = Area->S = map->Line[abs(Area->lines[0])].N;
+    Area->E = Area->W = map->Line[abs(Area->lines[0])].E;
 
     for (i = 0 ; i < Area->n_lines ; i ++)
     {
-	LP = &(map->Line[ABS(Area->lines[i])]);
+	LP = &(map->Line[abs(Area->lines[i])]);
 	if (LP->N > Area->N) Area->N = LP->N;
 	if (LP->E > Area->E) Area->E = LP->E;
 
