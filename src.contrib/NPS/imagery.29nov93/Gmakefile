@@ -1,0 +1,11 @@
+####
+####   Top Level Gmakefile
+####
+####   NOTE: libe is needed for i.points3, i.rectify3, and i.tape.tm3
+
+
+all:
+	$(GMAKE)  libe
+	$(GMAKE)  i.points3
+	$(GMAKE)  i.rectify3
+	$(GMAKE)  i.tape.tm3
