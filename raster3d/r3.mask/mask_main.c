@@ -18,7 +18,7 @@ setParams ()
 
 {
   params.map = G_define_option();
-  params.map->key = "grid3";
+  params.map->key = "map";
   params.map->type = TYPE_STRING ;
   params.map->required = YES ;
   params.map->multiple = NO ;
