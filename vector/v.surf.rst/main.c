@@ -201,14 +201,14 @@ int main(int argc, char *argv[])
     parm.field->answer = "1";
 
     parm.zcol = G_define_option();
-    parm.zcol->key = "zcol";
+    parm.zcol->key = "zcolumn";
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description = "Name of the column containing z values";
     parm.zcol->answer = "flt1";
 
     parm.scol = G_define_option();
-    parm.scol->key = "scol";
+    parm.scol->key = "scolumn";
     parm.scol->type = TYPE_STRING;
     parm.scol->required = NO;
     parm.scol->description =
