@@ -1,5 +1,4 @@
 PGM=p.icons
-ICONLIB = $(LIBDIR)/libicon.a
 OBJS = main.o menu.o edit.o preview.o divider.o
 
 $(BIN_INTER)/$(PGM): $(OBJS) $(DEPICONLIB) $(DEPGISLIB)

@@ -26,8 +26,8 @@ src/libes/bitmap
 src/libes/D
 src/libes/rst_gmsl
 src/libes/vect32/libes
-src/libes/vect32/Vlib
 src/libes/vect32/diglib
+src/libes/vect32/Vlib
 src/libes/vect32/georef
 src/libes/image3
 src/libes/bwidget
