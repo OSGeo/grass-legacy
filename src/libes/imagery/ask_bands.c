@@ -11,7 +11,7 @@ static int ask_bandname_prefix(int *,int);
 
 char *I_bandname (int n)
 {
-    static char name[30];
+    static char name[NAME_LEN];
 
     sprintf (name, "%s.%d",prefix,n+1);
     return name;
