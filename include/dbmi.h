@@ -223,7 +223,7 @@ typedef struct
 typedef struct _db_connection
 {
     char *driverName;
-    char *hostName;
+    /* char *hostName; */
     char *databaseName;
     char *location;
     char *user;
