@@ -123,34 +123,48 @@ if [ "$cmd" = "new" ]
 then
 	for i in $SOURCES
 	do
-		orig=`echo $i | sed 's/SOCKET_NEW\///'`
-		new=`echo $i | sed 's/SOCKET_NEW\//socket.new\//'`
-		diff $orig $new > /dev/null 2>&1
+		src=`echo $i | sed 's|SOCKET_NEW/||'`
+		new=`echo $i | sed 's|SOCKET_NEW/|socket.new/|'`
+		diff $new $src > /dev/null 2>&1
 		if [ $? -eq 0 ]
 		then
 			continue
 		fi
 		changed=1
-		echo cp $orig $orig.orig
-		cp $orig $orig.orig
-		echo cp $new $orig
-		cp $new $orig
+		echo cp $new $src
+		cp $new $src
 	done
 elif [ "$cmd" = "orig" ]
 then
 	for i in $SOURCES
 	do
-		orig=`echo $i | sed 's/SOCKET_NEW\///'`
-		if [ ! -f $orig.orig ]
+		src=`echo $i | sed 's|SOCKET_NEW/||'`
+		org=`echo $i | sed 's|SOCKET_NEW/|fifo.orig/|'`
+		diff $org $src > /dev/null 2>&1
+		if [ $? -eq 0 ]
 		then
 			continue
 		fi
 		changed=1
-		echo cp $orig.orig $orig
-		cp $orig.orig $orig
-		echo rm $orig.orig
-		rm $orig.orig
+		echo cp $org $src
+		cp $org $src
 	done
+fi
+
+GISBASE=`sed 's| ||g; s|\t||g' src/CMD/head/head | awk -F '=' '/^GISBASE=/{print $2}'`
+
+if [ ! -f $GISBASE/dev/create_buffers.sh ]
+then
+	sed "s|@prefix@|$GISBASE|g" src/scripts/shells/create_buffers.sh.in > $GISBASE/dev/create_buffers.sh
+	chmod 755 $GISBASE/dev/create_buffers.sh
+fi
+
+if [ "$cmd" = "new" -a -p $GISBASE/dev/fifo.1a ]
+then
+	sh $GISBASE/dev/create_buffers.sh
+elif [ "$cmd" = "orig" -a -f $GISBASE/dev/fifo.1a ]
+then
+	sh $GISBASE/dev/create_fifos.sh
 fi
 
 if [ $changed -eq 0 -a $compile -ne 2 -a "$cmd" != "" ]
@@ -167,11 +181,11 @@ then
 	exit
 fi
 
+
 if [ $compile -eq 0 ]
 then
 	exit
 fi
-
 
 (cd src/display/devices/XDRIVER && gmake5)
 (cd src/libes/raster && gmake5)
@@ -186,6 +200,7 @@ else
 	(cd src/paint/Drivers/preview && gmake5)
 	(cd src/paint/Drivers/preview2 && gmake5)
 fi
+
 
 echo
 echo "Thanks for your time."
