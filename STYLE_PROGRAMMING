@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.2 2000-07-24 10:46:00 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.3 2000-07-26 07:36:00 markus Exp $
 
 Please improve this list!
 Get the latest
@@ -25,10 +25,21 @@ GRASS GIS programming style standards
 3. When writing Gmakefiles, use the current standard
    [insert module example here]
 
-4. Insert return statements for functions
+   Take care of this:
 
-5. Use fprintf instead of printf
+   Couple notes for your Gmakefiles: 
+     - do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
+     - please add them before these
 
-6. Put a new line at end-of-file
+4. Platform dependent code:
+   Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
+   their encapsulated lines from source code (one example was that someone
+   removed drand48 definition.)
+
+5. Insert return statements for functions
+
+6. Use fprintf instead of printf
+
+7. Put a new line at end-of-file
 
 ...
