@@ -73,7 +73,7 @@ int main (int argc, char **argv)
 
 	G_get_window(&W) ;
 	if (W.proj == PROJECTION_LL)
-		G_fatal_error("%s does now work with a latitude-longitude location",
+		G_fatal_error("%s does not work with a latitude-longitude location",
 			      argv[0]) ;
 
 	use_feet = feet->answer ? 1 : 0;
