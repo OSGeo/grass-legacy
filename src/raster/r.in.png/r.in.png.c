@@ -162,7 +162,9 @@ int main(int argc, char *argv[])
 
 	struct Option *inopt, *outopt, *titleopt;
 	struct Flag *vflag;
+	struct Flag *hflag;
 	int Verbose = 0;
+	int Header = 0; /* added for r.in.geopng MN */
 	char command[256];
 	
   char sig_buf [SIG_CHECK_SIZE];
@@ -214,6 +216,10 @@ int main(int argc, char *argv[])
 	titleopt->required	= NO;
 	titleopt->description	= "Title for new raster file";
 
+/*	hflag = G_define_flag();
+	hflag->key		= 'h';
+	hflag->description	= "Output image file header only.";
+*/
 	vflag = G_define_flag();
 	vflag->key		= 'v';
 	vflag->description	= "Verbose mode on.";
@@ -224,6 +230,7 @@ int main(int argc, char *argv[])
 	input = inopt->answer;
 	layer = outopt->answer;
 	Verbose = vflag->answer;
+/*	Header = hflag->answer;*/
 	*title = '\0';
 	if (titleopt->answer != NULL)
 		G_strcpy(title,titleopt->answer);
@@ -389,6 +396,20 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 		  info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
 		  type_string, alpha_string, gamma_string,
 		  info_ptr->interlace_type ? ", Adam7 interlaced" : "");
+
+    /* output header only for r.in.geopng and exit: */
+/*    if (Header)
+ *   {
+ *     fprintf(stderr,"\nreading a %d x %d image, %d bit%s %s%s%s%s",
+ *		  info_ptr->width, info_ptr->height,
+ *		  info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
+ *		  type_string, alpha_string, gamma_string,
+ *		  info_ptr->interlace_type ? ", Adam7 interlaced" : "");
+ *	fclose (ifp);    
+ *	exit (-1);
+ *   }
+ */
+ 
   }
 
   png_image = (png_byte **)malloc (info_ptr->height * sizeof (png_byte*));
