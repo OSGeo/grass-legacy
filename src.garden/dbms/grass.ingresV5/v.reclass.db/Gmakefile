@@ -1,0 +1,28 @@
+MAN	  = doc/v.reclass.db
+PGM       = $(BIN_CONTRIB_CMD)/v.reclass.db
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(DIG2LIB) $(DIG_ATTLIB) $(RASTERLIB) $(GISLIB) -ltermcap
+
+
+
+OBJS = \
+	main.o  \
+	bsearch.o \
+	find.o \
+	sqlQry.o \
+	ingresUtils.o \
+	modCat.o 
+
+EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	ln $(GISBASE)/etc/front.end $(BIN)/v.reclass.db
+	cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+###########################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
