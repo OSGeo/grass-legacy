@@ -1,5 +1,5 @@
 # phil's makefile
-# $Header: /home2/vs/svn/grass-cvs/grass/src.related/gctp/Attic/Makefile,v 1.1 1999-12-29 15:13:14 markus Exp $
+# $Header: /home2/vs/svn/grass-cvs/grass/src.related/gctp/Attic/Makefile,v 1.2 2000-05-30 16:43:32 markus Exp $
 
 # Look in the user's environment for $MACHTYPE if not defined by make.
 # MACHINE       = $${MACHTYPE}
@@ -61,7 +61,7 @@ ci:  $(HDRS) $(SRCS)
 	@ci -l -q -m"$(RCS_LOG)" $(HDRS) $(SRCS)
 	@chmod g+w $(HDRS) $(SRCS)
 
-clean:;		@rm -f $(OBJS) core *.o tags linted *~ *.BAK *.bak
+clean:;		@rm -f $(OBJS) core *.o tags linted *~ *.BAK *.bak lib/*.o
 
 spotless:	clean
 	(cd $(LIBDIR); make $(MFLAGS) LIBNAME=$(LIBNAME) clean)
