@@ -196,6 +196,7 @@ int more_usage (void)
     fprintf (stderr, "  grey      (linear grey scale)\n");
     fprintf (stderr, "  grey.eq   (histogram equalized grey scale)\n");
     fprintf (stderr, "  grey.log  (histogram logarithmic transformed grey scale)\n");
+    fprintf (stderr, "  byr       (blue through yellow to red colors)\n");
     fprintf (stderr, "  gyr       (green through yellow to red colors)\n");
     fprintf (stderr, "  rainbow   (rainbow color table)\n");
     fprintf (stderr, "  ramp      (color ramp)\n");
