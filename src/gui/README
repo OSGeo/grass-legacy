@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2000-10-31 16:58:01 jan Exp $
+$Id: README,v 1.2 2000-11-01 16:22:30 markus Exp $
 
 Contents of this directory:
 
@@ -10,3 +10,9 @@ python/
 	A simple automatic wxPython GUI builder
 	based on the xml-based GRASS user interface
 	descriptions.
+
+        Requirements:
+         Python     (python.rpm)
+         Python-XML (pyxml.rpm)
+         wxWindows  (wxwin.rpm)
+         wxPython   (wxPython.rpm)
