@@ -451,7 +451,8 @@ int main (int argc, char *argv[])
      parm.raingage-> description="raingage rainfall input file name (ASCII), intensities in in/hr";
 
      parm.outlet=G_define_option();
-     parm.outlet-> key       ="outlet_east&north&slope";
+     /* removed & in parameter definition, Andreas Lange, 11/2000 */
+     parm.outlet-> key       ="outlet_eastnnorthnslope";
      parm.outlet-> type      = TYPE_DOUBLE;
      parm.outlet-> required  = YES;
      parm.outlet-> key_desc  ="east,north,bedslope";  
