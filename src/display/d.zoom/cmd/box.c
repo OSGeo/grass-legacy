@@ -87,7 +87,7 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 		else
 		{
 			reached = 1;
-			fprintf(stderr,"** Reached at region boundary **\n");
+			fprintf(stderr, "** Reached at region boundary **\n");
 		}
 	        button=3;
 	        quitonly=2;   /* leave after unzoom */

@@ -72,7 +72,7 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 	}
     }
 
-#ifdef DEPRECATED
+#ifdef QUIET
     if(!quiet)
     {
 	fprintf(stderr, "This region now saved as current region.\n\n") ;
