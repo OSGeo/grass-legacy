@@ -8,7 +8,6 @@ LIB_OBJS = card.o \
 	index.o \
 	node.o \
 	rect.o \
-	sphvol.o \
 	split_q.o 
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
