@@ -102,8 +102,11 @@ MAP THRESH:   0.500000" > head
 #write DB file
 cd $GISDBASE/$LOCATION_NAME/$MAPSET
 ####    file  field table  CAT_COLUMN  path                  driver
-echo "$SHAPE.shp 1 $SHAPE $USERIDFIELD \$GISDBASE/\$LOCATION/shp dbf" >> DB
+echo "$SHAPE.shp 1 $SHAPE $USERIDFIELD $LOCATION/shp dbf" >> DB
 
 ### that's it
-echo "$SHAPE.shp is registered now. Consider to run v.build:"
+echo "$SHAPE.shp is registered now."
+echo "The SHAPE files (.shp, shx and .dbf) were copied to:"
+echo "   $GISDBASE/$LOCATION_NAME/shp"
+echo "Consider to run v.build:"
 echo "     v.build $SHAPE.shp"
