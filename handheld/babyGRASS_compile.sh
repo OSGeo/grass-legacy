@@ -31,7 +31,9 @@ mk/mkmakefiles
 
 echo "configuring"
 
-CFLAGS="-Os" LDFLAGS="-s"  ./configure --prefix=$PREFIX --bindir=$BINDIR --without-motif --without-lapack --without-blas --without-fftw --without-freetype --without-gdal --without-dbm --without-tcltk --without-postgres --without-obdc --without-tiff --without-png --without-gd --without-opengl --without-dbm --without-odbc
+#CFLAGS="-Os" LDFLAGS="-s"
+#working flags for iPAQ:
+CFLAGS="-g  -gstabs" LDFLAGS=""  ./configure --prefix=$PREFIX --bindir=$BINDIR --without-motif --without-lapack --without-blas --without-fftw --without-freetype --without-gdal --without-dbm --without-tcltk --without-postgres --without-obdc --without-tiff --without-png --without-gd --without-opengl --without-dbm --without-odbc
 if [ $? -eq 1 ]
 	then
 	 echo "an error occured"
