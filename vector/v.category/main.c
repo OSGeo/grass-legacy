@@ -162,7 +162,7 @@ main (int argc, char *argv[])
 	
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     sprintf (errmsg, "Could not find input %s\n", in_opt->answer);
+	     sprintf (errmsg, "Could not find input map <%s>\n", in_opt->answer);
 	     G_fatal_error (errmsg);
 	}
 	
