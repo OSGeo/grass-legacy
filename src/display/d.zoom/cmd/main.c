@@ -4,13 +4,12 @@
  *   Get region through graphics
  */
 
-#define	MAIN
-
 #include "gis.h"
 #include "datetime.h"
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"
+#define	MAIN
 #include "local_proto.h"
 
 int 
@@ -426,6 +425,4 @@ main (int argc, char **argv)
 
     exit(stat);
 }
-
-#undef	MAIN
 
