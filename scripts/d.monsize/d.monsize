@@ -1,11 +1,10 @@
 #!/bin/sh
-# $Id: d.monsize,v 1.6 for GRASS 6.0 (2004/12/07) 
 ############################################################################
 #
-# MODULE:		d.monsize, v 1.6 for GRASS 6.0 (2004/12/07) 
-#			based on d.monsize for GRASS 5
+# MODULE:	d.monsize, v 1.6 for GRASS 6.0 (2004/12/07) 
+#		based on d.monsize for GRASS 5
 # AUTHOR(S):	Unknown; 
-#			updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
+#		updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
 # PURPOSE:	selects/starts specified monitor at specified window size
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -23,7 +22,7 @@
 
 
 #%Module
-#%  description: d.monsize - selects/starts specified monitor at specified size
+#%  description: Selects/starts specified monitor at specified size
 #%End
 #%option
 #% key: setmonitor

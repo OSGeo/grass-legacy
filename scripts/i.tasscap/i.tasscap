@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:	i.tasscap
-# AUTHOR(S):	Markus Neteler. neteler@itc.it
+# AUTHOR(S):	Markus Neteler. neteler itc.it
 # PURPOSE:	At-satellite reflectance based tasseled cap transformation.
 # COPYRIGHT:	(C) 1997-2004 by the GRASS Development Team
 #
@@ -31,7 +31,7 @@
 #############################################################################
 #
 #%Module
-#%  description: i.tasscap - Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data
+#%  description: Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data
 #%End
 #%flag
 #%  key: 4

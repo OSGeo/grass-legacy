@@ -1,9 +1,8 @@
 #!/bin/sh
-# $Id: d.resize,v 1.4 2004/04/03 
 #
 ############################################################################
 #
-# MODULE:               d.resize for GRASS 5.7, based on d.resize for GRASS 5
+# MODULE:       d.resize for GRASS 5.7, based on d.resize for GRASS 5
 # AUTHOR(S):    CERL?; updated for GRASS 5.7 by Michael Barton
 # PURPOSE:      Resizes active display
 # COPYRIGHT:    (C) 2004 by the GRASS Development Team
@@ -16,7 +15,7 @@
 
 
 #% Module
-#% description: d.resize - Resizes active display monitor
+#% description: Resizes active display monitor
 #% End
 #% option
 #% key: width
