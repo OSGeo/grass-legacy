@@ -1,0 +1,11 @@
+# %W% %G%
+LIST =\
+	main.o\
+	ask.o\
+	yes.o\
+	counter.o
+
+$(BIN)/examine.tape: $(LIST)
+	$(CC) $(LDFLAGS) $(LIST) -o $@
+
+main.o: bufsize.h
