@@ -1,22 +1,36 @@
 REQUIREMENTS to compile GRASS GIS
 
 A workstation running some flavor of unix like Solaris,
-Irix, or Linux.  Ideally, you should have at least 500
+Irix, Linux or MacOS.  Ideally, you should have at least 500
 Mb for data and 32 Mb RAM. The source code package needs
-around 100MB uncompressed.
+around 100MB uncompressed. The resulting binaries may need
+between 60MB and 160MB depending on your platform.
 
 General requirements:
+(most tools are standard tools on Linux, for other platforms you
+ may have to install some of them.)
 
  - C-compiler (cc, gcc, egcs, ...)
+    gcc: http://www.gnu.org/software/gcc/gcc.html
+
  - Fortran compiler (f77, g77, ...) for a few modules
+    g77: coming along with gcc
+
  - lexical analyzer generator (flex), 
    (lex is no longer supported, please use flex instead)
+    flex: http://www.gnu.org/software/flex/flex.html
+
  - parser generator (yacc, bison)
+    bison: http://www.gnu.org/software/bison/bison.html
+
  - libncurses4.x/5.x
-     [ftp://ftp.gnu.org/pub/gnu/ncurses/]
+     http://www.gnu.org/software/ncurses/ncurses.html
+     ftp://ftp.gnu.org/pub/gnu/ncurses/
+
  - X11 window system for graphical output, development libraries
    (X development libraries, in some linux distributions 
     they are separate packages)
+     http://www.xfree.org
  
 Optional requirements:
 
@@ -37,11 +51,12 @@ Optional requirements:
  - libtiff (for r.in.tiff, r.out.tiff), usually already installed. 
      [http://www.libtiff.org]
      
- - libg2c (for r.fill.dir)
+ - libg2c (for r.fill.dir, or use g77)
      [http://?]
      
  - postgreSQL libraries (for the postgres database interface)
      [http://www.postgresql.org]
+
  - Unix ODBC (for the ODBC database interface)
      [http://www.unixodbc.org]
 
@@ -53,8 +68,16 @@ Optional requirements:
           src.contrib/GMSL/ogl3d
      [http://www.lesstif.org]
 
+--------------
+Compiling on Mac-OS:
+ 
+ - MacOS X system
+ - some of above tools missing in:
+ - developer tools: http://developer.apple.com/membership/online.html
+   (join the "Online" ADC for free)
+
 
 GRASS Development Team 2000
 grass@baylor.edu
 
-$Id: REQUIREMENTS,v 1.4 2000-10-23 17:43:29 andreas Exp $
+$Id: REQUIREMENTS,v 1.5 2000-11-13 12:55:59 markus Exp $
