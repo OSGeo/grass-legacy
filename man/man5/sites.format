@@ -57,7 +57,7 @@ recommended.
 Invalid records will be (silently) ignored by the sites
 software.  Other record types may be added in the future.
 .SH SEE ALSO
-.I s.db,
+.I s.db.rim,
 .I s.in.ascii,
 .I s.menu,
 .I s.out.ascii,
