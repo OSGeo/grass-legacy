@@ -9,10 +9,10 @@ More information about GRASS on cygwin is found in the file
 README_cygwin.html in the documents directory of this distribution.
 
 Please refer to the file cygwin_grass50compile.html in the documents
-directory for a full discription how to compile with the cygnus tools under
-win32.
+directory for a full discription on how to compile with the cygnus tools under
+Win32.
 
-The file cygwin_grass50compile.html contains a description for the
+The file cygwin_grass50bininstall.html contains a description for the
 installation of the binary distribution under cygwin. 
 
 -- 
