@@ -1,46 +1,50 @@
 .TH r.in.erdas
 .SH NAME
-\fIr.in.erdas\fR \- Creates raster files from ERDAS files.  It
-creates one raster file for each band, and creates color support
-if an ERDAS trailer file is specified.
+\fIr.in.erdas\fR \- creates raster files from ERDAS files.
+      \- creates one raster file for each band.
+	  \- creates color support if an erdas trailer file is specified.
 .br
-.I "(SCS GRASS Raster Program)"
+.I "(GRASS Raster Program)"
 .SH SYNOPSIS
 \fBr.in.erdas\fR
 .br
 \fBr.in.erdas help\fR
 .br
-\fBr.in.erdas erdas\*=\fIname\fR [\fBtrl\*=\fIname\fR] \fBprefix\*=\fIname\fR
+\fBr.in.erdas\fR \fBerdas=\fIname\fR \fB[trl=\fIname]\fR \fBprefix=\fIname\fR
 .SH DESCRIPTION
+.nf
 This command prompts the user twice:
 
-.nf
-.RS
-First the user is asked if he wishes to select a subset of
-the bands available in the ERDAS file for output.
-If unspecified by the user, all bands are used, by default.
+	First the user is asked if they want to select a subset of
+	the bands available in the ERDAS file for output. The default
+	is all bands.
 
-Second, the user is asked if he wishes to select a subregion
-of the image available in the ERDAS file.  If unspecified by the
-user, the complete image is used, by default.
-.RE
+	Secondly the user is asked if they want to select a subwindow 
+	of the image available in the ERDAS file. The default is the
+	complete image.
 
 Note: 
-.RS
-GRASS raster files will be named \fIprefix.band\fR
-Remember that it is necessary to run:
-\fIr.support\fR: to create the histogram or change the color table.
-\fIi.group\fR: to associate the individual raster files as an image group.
-.RE
+	GRASS raster files will be named prefix.band
+	Remember that it is necessary to run:
+	support : To create the histogram or change the color table.
+	group: To associate the individual raster files as an image group.
 .fi
+
 .SH "COMMAND LINE OPTIONS"
-\fBParameters:\fR
-.IP \fBerdas\*=\fIname\fR 18
-Input ERDAS file name.
-.IP \fBtrl\*=\fIname\fR 18
-Input ERDAS trailer file name.
-.IP \fBprefix\*=\fIname\fR 18
-Prefix of the GRASS raster files to be created.
+.LP
+Usage.
+.IP \fIr.in.erdas\fR
+erdas=name [trl=name] prefix=name.
+.LP
+Parameters.
+.IP \fIerdas\fR
+input erdas file name.
+.IP \fItrl\fR
+input erdas trailer file name.
+.IP \fIprefix\fR
+Prefix of the GRASS raster files to be created..
+.SH BUGS
+.SH "SEE ALSO"
 .SH AUTHOR
-M.L. Holko, USDA, SCS, NHQ-CGIS
+M.L.Holko, USDA, SCS, NHQ-CGIS
 
