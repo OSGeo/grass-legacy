@@ -1,4 +1,5 @@
 /* plotCat - uses level 2 access to vector data for reads */
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
