@@ -1,0 +1,91 @@
+#!/bin/sh
+# This script reads a GRASS cellhd file and creates a 
+# "world" file and "header" file for display in ArcView 
+# or ArcInfo as a "bil" file. T. D'Avello 12/18/97.
+# (Color schemes in GRASS won't replicate in AV)
+# USAGE: r.out.bil <raster_file>
+
+if [ "${1}" = "" ]
+    then
+      echo "Enter GRASS raster FILENAME  "
+       read FILENAME
+	else
+	 FILENAME=$1
+fi
+
+if [ "${FILENAME}" = "" ]
+     then
+       echo "ERROR: You MUST enter a filename.  -- Command aborted!"
+	exit 4
+fi
+
+
+if [ ! -s $LOCATION/cellhd/${FILENAME} ]
+   then
+	echo "ERROR:  File not found"
+	echo "ERROR:  Run this command in MAPSET containing data"
+	exit 5
+fi
+
+cell=$LOCATION/cellhd
+
+#  Get info from cellhd for bilw and hdr
+
+res=`cut -c13- $cell/$FILENAME | sed -n '9p'` 
+
+col=`cut -c13- $cell/$FILENAME | sed -n '7p'` 
+
+row=`cut -c13- $cell/$FILENAME | sed -n '8p'` 
+
+nrt=`cut -c13- $cell/$FILENAME | sed -n '3p'` 
+
+wst=`cut -c13- $cell/$FILENAME | sed -n '6p'` 
+
+compress=`cut -c13 $cell/$FILENAME | sed -n '12p'`
+
+# check for compression status and uncompress if needed
+
+ if [ "$compress" -eq 1 ]
+   then
+     r.compress -u map=$FILENAME
+      echo "Uncompressing GRASS file"
+ fi
+
+# Make directory "BIL" to store resulting files
+
+if [ ! -d $LOCATION/BIL ]
+     then
+     mkdir $LOCATION/BIL
+fi
+
+# Write Header file
+echo "nrows $row" >> $LOCATION/BIL/$FILENAME.hdr
+echo "ncols $col" >> $LOCATION/BIL/$FILENAME.hdr
+echo "nbands 1" >> $LOCATION/BIL/$FILENAME.hdr
+echo "nbits 8" >> $LOCATION/BIL/$FILENAME.hdr
+echo "layout bil" >> $LOCATION/BIL/$FILENAME.hdr
+echo "skipbytes 0" >> $LOCATION/BIL/$FILENAME.hdr
+echo "bandrowbytes $col" >> $LOCATION/BIL/$FILENAME.hdr
+echo "totalrowbytes $col" >> $LOCATION/BIL/$FILENAME.hdr
+
+
+# Variables for world file
+echo "$wst	$nrt	$res" > 1.tmp
+
+# Write World file
+
+ulx=`cat 1.tmp | awk '{ printf("%f",$1-($3*0.5)) }'`  
+uly=`cat 1.tmp | awk '{ printf("%f",$2-($3*0.5)) }'`
+
+echo "$res" >> $LOCATION/BIL/$FILENAME.bilw
+echo "0.0" >> $LOCATION/BIL/$FILENAME.bilw
+echo "0.0" >> $LOCATION/BIL/$FILENAME.bilw
+echo "-$res" >> $LOCATION/BIL/$FILENAME.bilw
+echo "$ulx" >> $LOCATION/BIL/$FILENAME.bilw
+echo "$uly" >> $LOCATION/BIL/$FILENAME.bilw
+
+
+cp $LOCATION/cell/$FILENAME $LOCATION/BIL/$FILENAME.bil
+
+
+rm 1.tmp
