@@ -1,0 +1,12 @@
+OFILES = \
+	allocation.o \
+	do_graph.o \
+	graphics.o \
+	main.o
+
+$(BIN_MAIN_CMD)/d.graph: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
