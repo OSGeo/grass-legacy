@@ -74,6 +74,8 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_ZOOM_REGION;
     else if ( strcmp ( tl, "redraw" ) == 0 )
 	Tool_next = TOOL_REDRAW;
+    else if ( strcmp ( tl, "settings" ) == 0 )
+	Tool_next = TOOL_DISPLAY_SETTINGS;
     else {
 	G_warning ( "c_next_tool(): Unknown tool: %s", tl );
 	return TCL_ERROR;
@@ -352,3 +354,21 @@ c_set_bgcmd ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     return TCL_OK;
 }
 
+/* Add blank field for bgcmd */
+int
+c_add_blank_bgcmd ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    char buf[100];
+    int k=0;
+    
+    G_debug (3, "c_add_blank_bgcmd()");
+	
+    memset(buf, '\0', strlen(buf));
+    k = bg_add("");
+    
+    sprintf (buf, "set comrow %d", k-1);
+    Tcl_Eval ( Toolbox, buf );
+
+    
+    return TCL_OK;
+}

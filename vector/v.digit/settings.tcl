@@ -17,6 +17,7 @@ proc set_on { code on } {
 }
 
 set tabrow 1
+set comrow 0
 
 proc set_col_type { rnum } {
     global columns
@@ -59,6 +60,38 @@ proc table_buttons { } {
                        -command { add_tab_col "" "integer" 50 1 1 0 }]
     set cretab [Button $table_page.cretab -text "Create table"  -command { make_table } ]
     pack $addcol $cretab  -side left -anchor s
+}
+
+proc add_command { } {
+    global comrow GWidget GBgcmd
+
+    c_add_blank_bgcmd
+    
+    set GBgcmd($comrow,on) 1
+
+    set GBgcmd($comrow,cmd) ""
+
+    set row [ frame $GWidget(bgcmd).row$comrow ]
+
+    checkbutton $row.a -variable GBgcmd($comrow,on) -height 1 
+ 
+    Entry $row.b -width 40 -textvariable GBgcmd($comrow,cmd) 
+
+    pack $row.a $row.b -side left
+
+    pack $row -side top -fill x -expand no -anchor n
+
+    bind $GWidget(bgcmd).row$comrow.b <KeyRelease> 
+		{c_create_bgcmd}
+    incr comrow
+
+}
+
+proc command_buttons { } {
+    global GWidget
+    set addcom [Button $GWidget(bgcmd).addcom -text "Add command"  \
+                       -command { add_command }]
+   pack $addcom -side left -anchor s
 }
 
 proc clear_table { } {
@@ -254,6 +287,7 @@ proc settings {} {
     # --- Background commands ---
     set GWidget(bgcmd) [$nb insert end bgcmd -text "Background"]
 
+    command_buttons
     c_create_bgcmd
     
     # -- pack notebook --

@@ -174,7 +174,7 @@ $bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
 
 # --- Others ---
 $bbox add -image [image create photo -file "$vdpath/settings.gif"] \
-        -command "settings" \
+        -command "c_next_tool settings" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
         -helptext "Open settings"
 

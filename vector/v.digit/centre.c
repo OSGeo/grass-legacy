@@ -81,6 +81,10 @@ tool_centre ( void )
 		Tool_next = TOOL_NOTHING;
 		display_attributes ();
 		break;
+	    case TOOL_DISPLAY_SETTINGS :
+		Tool_next = TOOL_NOTHING;
+		Tcl_Eval(Toolbox, "settings");
+		break;
 	    case TOOL_ZOOM_WINDOW :
 		Tool_next = TOOL_NOTHING;
 		zoom_window ();
