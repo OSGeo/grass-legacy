@@ -13,6 +13,7 @@ int Vect_append_points (struct line_pnts *, struct line_pnts *, int);
 int Vect_line_insert_point (struct line_pnts *, int, double, double, double);
 int Vect_line_delete_point (struct line_pnts *, int);
 int Vect_line_prune (struct line_pnts *);
+int Vect_line_prune_thresh (struct line_pnts *, double);
 void Vect_line_reverse (struct line_pnts *);
 int Vect_copy_xyz_to_pnts (struct line_pnts *, double *, double *, double *, int);
 int Vect_copy_pnts_to_xyz (struct line_pnts *, double *, double *, double *, int *);
