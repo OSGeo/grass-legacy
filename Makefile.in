@@ -280,7 +280,7 @@ strip: FORCE
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
 	fi; \
-	${SHELL} -c "cd ${GISBASE} ; find . -type f -exec strip {} \; ; true"	
+	${SHELL} -c "cd ${GISBASE} ; find . -type f -perm +111 -exec strip {} \; ; true"	
 
 install-strip: FORCE
 	${MAKE} strip
