@@ -194,7 +194,7 @@ static Block* new_block (digits)
   b = MALLOC (Block, 1);
   MARK (b, LIA_MAGIC);
   b->storage =  MALLOC (Lia, digits);
-  /* >>> BZERO (b->storage,    Lia, digits);  /* not needed? */
+  /* >>> BZERO (b->storage,    Lia, digits); */ /* not needed? */
   MARK (b->storage, LIA_MAGIC);
   b->first = 0;
   b->last = digits - 1;
