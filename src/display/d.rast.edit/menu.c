@@ -80,7 +80,7 @@ main_menu (void)
     case 3:
     /* zoom */
            R_close_driver();
-           G_system("d.rast.zoom");
+           G_system("d.zoom");
            R_open_driver();
            use_mouse();
            break;
