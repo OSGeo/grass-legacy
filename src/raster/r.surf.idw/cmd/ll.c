@@ -74,10 +74,8 @@ SHORT           row, col,
     	if (*active) {
 	    distance = distance_LL (row, col, *Mptr);
 
-            if (*neighbors < npoints) {
-            	add_neighbor (Mptr, nbr_head, distance);
-            	++(*neighbors);
-            	}
+            if (*neighbors < npoints) 
+            	add_neighbor (Mptr, nbr_head, distance, ++(*neighbors));
             else if (!replace_neighbor (Mptr, nbr_head, distance)) 
             	*active = FALSE;       /* curtail search in this direction */
             
