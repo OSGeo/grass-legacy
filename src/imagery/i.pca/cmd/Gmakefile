@@ -1,0 +1,17 @@
+OBJS = main.o allocate.o jacobi.o \
+	rotate.o stats.o transform.o
+
+LIBES= $(GISLIB) $(MATHLIB)
+
+$(BIN_MAIN_CMD)/i.pca: $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(MAN2)/i.pca: Gpca.man
+	$(MANROFF)
+
+$(HELP)/i.pca: Gpca.help
+	cp Gpca.help $@
+
+$(OBJS): globals.h
+
+$(LIBES): #
