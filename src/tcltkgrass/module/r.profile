@@ -7,3 +7,4 @@ interface_build {
     {entry res {Resolution along profile (default = curr. reg. res.):} 0 ""}
     {checkbox -i {Interactively select End-Points} "" -i}
     {checkbox -g {Output Geographic Coordinates} "" -g}
+}
