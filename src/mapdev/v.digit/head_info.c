@@ -51,6 +51,11 @@ get_head_info(have_old, dhead)
 	dhead->S = Window.south;
 	dhead->N = Window.north;
 	dhead->E = Window.east;
+#ifdef NO_PORTABLE	/* added Aug 22, 1991  -dpg */
+	dhead->portable = 0;
+#else
+	dhead->portable = 1;
+#endif
     }
 
     V_ques( &dhead->W,           'd', 11, 20, 14) ;
