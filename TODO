@@ -1,4 +1,4 @@
-$Id: TODO,v 1.66 2001-01-27 18:57:36 markus Exp $
+$Id: TODO,v 1.67 2001-01-28 10:55:25 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -353,6 +353,11 @@ r.proj/v.proj/s.proj:
   - needs FP update
 
 - v.buffer: write it
+  (Being worked on by ?)
+
+- s.patch: write it
+  To merge to multi-dim/multi-attr site files is pretty difficult
+  by scripts. A module would be good idea.
   (Being worked on by ?)
 
 - v.cutter
