@@ -34,6 +34,27 @@ int I_read_control_points (
     return 1;
 }
 
+
+/*!
+ * \brief add new control point
+ *
+ * Once the
+ * control points have been read into the <b>cp</b> structure, this routine
+ * adds new points to it. The new control point is given by <b>e1</b> (column)
+ * and <b>n1</b> (row) on the image, and the <b>e2</b> (east) and <b>n2</b>
+ * (north) for the target database. The value of <b>status</b> should be 1 if
+ * the point is a valid point; 0 otherwise.\remarks{Use of this routine implies
+ * that the point is probably good, so <b>status</b> should be set to 1.}
+ *
+ *  \param cp
+ *  \param e1
+ *  \param n1
+ *  \param e2
+ *  \param n2
+ *  \param status
+ *  \return int
+ */
+
 int I_new_control_point (struct Control_Points *cp,
     double e1,double n1,double e2,double n2, int status)
 {
@@ -74,6 +95,21 @@ int I_write_control_points(FILE *fd, struct Control_Points *cp)
     return 0;
 }
 
+
+/*!
+ * \brief read group control points
+ *
+ * Reads the control points from the POINTS file
+ * for the <b>group</b> into the <b>cp</b> structure. Returns 1 if
+ * successful; 0 otherwise (and prints a diagnostic error).
+ * <b>Note.</b> An error message is printed if the POINTS file is invalid, or
+ * does not exist.
+ *
+ *  \param group
+ *  \param cp
+ *  \return int
+ */
+
 int I_get_control_points (
     char *group,
     struct Control_Points *cp)
@@ -102,6 +138,20 @@ int I_get_control_points (
     }
     return 1;
 }
+
+
+/*!
+ * \brief write group control points
+ *
+ * Writes the control points from the
+ * <b>cp</b> structure to the POINTS file for the specified group.
+ * <b>Note.</b> Points in <b>cp</b> with a negative <i>status</i> are not
+ * written to the POINTS file.
+ *
+ *  \param group
+ *  \param cp
+ *  \return int
+ */
 
 int I_put_control_points (
     char *group,

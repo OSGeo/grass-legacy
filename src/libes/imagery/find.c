@@ -6,6 +6,17 @@
 #include "imagery.h"
 #include "gis.h"
 
+
+/*!
+ * \brief does group exist?
+ *
+ * Returns 1 if the
+ * specified <b>group</b> exists in the current mapset; 0 otherwise.
+ *
+ *  \param group
+ *  \return int
+ */
+
 int I_find_group(char *group)
 {
     if (group == NULL || *group == 0)

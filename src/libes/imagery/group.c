@@ -1,5 +1,3 @@
-
-
 /**********************************************************
 * I_get_group (group);
 * I_put_group (group);
@@ -86,12 +84,40 @@ int I_put_subgroup(char *group,char *subgroup)
     return 1;
 }
 
+
+/*!
+ * \brief read group REF file
+ *
+ * Reads the contents of the REF file for the specified <b>group</b> into
+ * the <b>ref</b> structure.
+ * Returns 1 if successful; 0 otherwise (but no error messages are printed).
+ *
+ *  \param group
+ *  \param ref
+ *  \return int
+ */
+
 int I_get_group_ref(
     char *group,
     struct Ref *ref)
 {
     return get_ref (group, "", ref);
 }
+
+
+/*!
+ * \brief read subgroup REF file
+ *
+ * Reads the contents of the REF file for the
+ * specified <b>subgroup</b> of the specified <b>group</b> into the
+ * <b>ref</b> structure.
+ * Returns 1 if successful; 0 otherwise (but no error messages are printed).
+ *
+ *  \param group
+ *  \param subgroup
+ *  \param ref
+ *  \return int
+ */
 
 int I_get_subgroup_ref(
     char *group,
@@ -108,7 +134,7 @@ static int get_ref (
 {
     int n;
     char buf[200];
-    char name[30], mapset[30];
+    char name[NAME_LEN], mapset[NAME_LEN];
     char color[20];
     FILE *fd;
     FILE *I_fopen_group_ref_old();
@@ -126,7 +152,7 @@ static int get_ref (
 
     while (fgets(buf, sizeof buf, fd))
     {
-	n=sscanf (buf, "%29s %29s %15s", name, mapset, color);
+	n=sscanf (buf, "%39s %39s %15s", name, mapset, color);
 	if (n==2 || n==3)
 	{
 	    I_add_file_to_group_ref (name, mapset, ref);
@@ -210,10 +236,42 @@ int I_init_ref_color_nums(struct Ref *ref)
 	return 0;
 }
 
+
+/*!
+ * \brief write group REF file
+ *
+ * Writes the contents of the <b>ref</b> structure to the REF file for
+ * the specified <b>group.</b>
+ * Returns 1 if successful; 0 otherwise (and prints a diagnostic error).
+ * <b>Note.</b> This routine will create the <b>group</b>, if it does not
+ * already exist.
+ *
+ *  \param group
+ *  \param ref
+ *  \return int
+ */
+
 int I_put_group_ref(char *group, struct Ref *ref)
 {
     return put_ref (group, "", ref);
 }
+
+
+/*!
+ * \brief write subgroup REF file
+ *
+ * Writes the contents of the <b>ref</b>
+ * structure into the REF file for the specified <b>subgroup</b> of the
+ * specified <b>group.</b>
+ * Returns 1 if successful; 0 otherwise (and prints a diagnostic error).
+ * <b>Note.</b> This routine will create the <b>subgroup</b>, if it does not
+ * already exist.
+ *
+ *  \param group
+ *  \param subgroup
+ *  \param ref
+ *  \return int
+ */
 
 int I_put_subgroup_ref(char *group, char *subgroup, struct Ref *ref)
 {
@@ -253,6 +311,26 @@ static int put_ref( char *group, char *subgroup, struct Ref *ref)
     return 1;
 }
 
+
+/*!
+ * \brief add file name to Ref structure
+ *
+ * This routine adds the file
+ * <b>name</b> and <b>mapset</b> to the list contained in the <b>ref</b>
+ * structure, if it is not already in the list.  The <b>ref</b> structure must
+ * have been properly initialized. This routine is used by programs, such as
+ * <i>i.maxlik</i>, to add to the group new raster files created from files
+ * already in the group.
+ * Returns the index into the <i>file</i> array within the <b>ref</b>
+ * structure for the file after insertion; see
+ * Imagery_Library_Data_Structures.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ref
+ *  \return int
+ */
+
 int I_add_file_to_group_ref(char *name, char *mapset, struct Ref *ref)
 {
     int n;
@@ -273,6 +351,33 @@ int I_add_file_to_group_ref(char *name, char *mapset, struct Ref *ref)
     return n;
 }
 
+
+/*!
+ * \brief copy Ref lists
+ *
+ * This routine is used to copy file names from one
+ * <i>Ref</i> structure to another. The name and mapset for file <b>n</b>
+ * from the <b>src</b> structure are copied into the <b>dst</b> structure
+ * (which must be properly initialized).
+ * For example, the following code copies one <i>Ref</i> structure to another:
+  \code
+   struct Ref src,dst;
+   int n;
+   // some code to get information into <b>src</b>
+   ...
+   I_init_group_ref (&dst);
+   for (n = 0; n < src.nfiles; n++)
+       I_transfer_group_ref_file (&src, n, &dst);
+  \endcode
+ * This routine is used by <i>i.points</i> to create the REF file for a
+ * subgroup.
+ *
+ *  \param src
+ *  \param n
+ *  \param dst
+ *  \return int
+ */
+
 int I_transfer_group_ref_file (struct Ref *ref2, int n, struct Ref *ref1)
 {
     int k;
@@ -292,6 +397,21 @@ int I_transfer_group_ref_file (struct Ref *ref2, int n, struct Ref *ref1)
 }
 
 
+
+/*!
+ * \brief initialize Ref
+ *       structure
+ *
+ * This routine initializes the <b>ref</b> structure for other
+ * library calls which require a <i>Ref</i> structure. This routine must be
+ * called before any use of the structure can be made.
+ * <b>Note.</b> The routines I_get_group_ref and I_get_subgroup_ref call
+ * this routine automatically.
+ *
+ *  \param ref
+ *  \return int
+ */
+
 int I_init_group_ref( struct Ref *ref)
 {
     ref->nfiles = 0;
@@ -300,6 +420,16 @@ int I_init_group_ref( struct Ref *ref)
 
 	return 0;
 }
+
+
+/*!
+ * \brief free Ref structure
+ *
+ * This routine frees memory allocated to the <b>ref</b> structure.
+ *
+ *  \param ref
+ *  \return int
+ */
 
 int I_free_group_ref(struct Ref *ref)
 {
