@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.23 2004-02-05 16:42:39 paul Exp $
+# $Id: Gmakefile,v 1.24 2004-05-11 16:42:23 paul Exp $
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -48,6 +48,7 @@ $(ETC)/Init.sh: init.sh $(SRC)/CMD/VERSION
 	-e \"s#VERSION_DATE#$(VERSION_DATE)#\" \
 	-e \"s#VERSION_UPDATE_PKG#$(VERSION_UPDATE_PKG)#\" \
 	-e \"s#START_UP#$(START_UP)#\" \
+	-e \"s#NAME_VER#$(NAME_VER)#\" \
 	init.sh > $@ 2>/dev/null ; true"
 	chmod +x $@
 
