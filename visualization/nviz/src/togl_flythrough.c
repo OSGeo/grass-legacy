@@ -572,8 +572,8 @@ void do_navigation (struct Togl *togl)
 	GS_get_viewdir(cur_dir);
 	twist = cur_twist = GS_get_twist();
 
-	p=asinf(cur_dir[Z]);
-	h=atan2f(-cur_dir[X], -cur_dir[Y]);
+	p=asin(cur_dir[Z]);
+	h=atan2(-cur_dir[X], -cur_dir[Y]);
 
 	speed = fly->scale[TOGL_MOVE] * fly->valuator[0];
 
@@ -583,7 +583,7 @@ void do_navigation (struct Togl *togl)
 	if (!fly->lateral) /* in case of "lateral" doesn't change pitch */
 		p -= fly->scale[TOGL_TURN] * fly->valuator[2];
 
-	h = fmodf (h + pi, double_pi) - pi;
+	h = fmod (h + pi, double_pi) - pi;
 
 	if (p < -quasi_half_pi) p = -quasi_half_pi;	/* Internal flythrough tcl callbacks */
 	else if (p > quasi_half_pi) p = quasi_half_pi;
