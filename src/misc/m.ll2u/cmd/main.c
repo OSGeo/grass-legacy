@@ -43,6 +43,7 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct
     {
 	struct Option *spheroid, *zone, *input, *output;
@@ -66,6 +67,11 @@ int main (int argc, char *argv[])
     char buf[1024];
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts geographic coordinates to Universal Transverse "
+		"Mercator (UTM) coordinates.";
 
     parm.spheroid = G_define_option();
     parm.spheroid->key = "spheroid";

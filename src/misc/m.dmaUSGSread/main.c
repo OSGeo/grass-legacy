@@ -23,6 +23,7 @@ int profile(int, int, int, int, int, int);
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
 	struct
 	{
 		struct Option *bottom, *top, *left, *right, *output, *logfile;
@@ -41,6 +42,13 @@ int main (int argc, char *argv[])
 	FILE *fp, *fopen();
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Extracts digital terrain elevation data (DTED) "
+		"produced by the Defense Mapping Agency (DMA) "
+		"but supplied by the USGS (in a different tape format) "
+		"on 1/2-inch magnetic tape.";
 
 	parm.top = G_define_option();
 	parm.top->key = "top";

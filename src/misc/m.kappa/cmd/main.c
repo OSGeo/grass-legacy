@@ -6,6 +6,7 @@ main (argc, argv)
  char *argv[];
 {
  int i;
+ struct GModule *module;
  struct { 
    struct Option *input, *output, *titles;
  } parms;
@@ -15,6 +16,11 @@ main (argc, argv)
  } flags;
 
  G_gisinit(argv[0]);
+
+ module = G_define_module();
+ module->description =
+	"Calculate error matrix and kappa parameter for accuracy "
+	"assessment of classification result.";
 
  parms.input = G_define_option();
  parms.input->key	="input";

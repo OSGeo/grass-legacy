@@ -26,6 +26,7 @@ int main (int argc, char *argv[])
   char infile[15];
   int infd;
   
+  struct GModule *module;
   struct Option *input, *zone_in, *spheroid;
   
   int i,j;
@@ -45,6 +46,11 @@ int main (int argc, char *argv[])
      latlon->description="Use lat/lon coordinates";
      */
   
+  module = G_define_module();
+  module->description =
+	"Finds geographic region information "
+	"for U.S. Census Bureau TIGER input data.";
+
   input = G_define_option();
   input->key="infile";
   input->type=TYPE_STRING;

@@ -14,6 +14,7 @@
 
 int main(int argc, char *argv[])
 {
+	struct GModule *module;
     struct
     {
 	struct Option *lat, *lon, *s, *h;
@@ -22,6 +23,10 @@ int main(int argc, char *argv[])
     double a,e;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts geographic coordinates to geocentric coordinates.";
 
     parm.lat = G_define_option();
     parm.lat->key = "lat";

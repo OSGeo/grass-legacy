@@ -13,6 +13,7 @@ int main (int argc, char *argv[])
     int ncols ;
     int bpc ;
 
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *rows, *cols, *bpc;
@@ -23,6 +24,11 @@ int main (int argc, char *argv[])
     } flag;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Rotates elevation data extracted by either m.dted.extract "
+		"or m.dmaUSGSread.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

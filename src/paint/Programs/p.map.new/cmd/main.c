@@ -54,6 +54,7 @@ static char *help[]=
 #include <signal.h>
 int main(int argc,char *argv[])
 {
+	struct GModule *module;
     struct Cell_head window;
     char buf[1024];
     char name[100], mapset[50];
@@ -71,6 +72,10 @@ int main(int argc,char *argv[])
 
     setbuf (stderr, NULL);
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Color map output utility.";
 
     input_file = G_define_option();
     input_file->key = "input";
