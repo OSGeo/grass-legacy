@@ -258,7 +258,7 @@ write_html_footer $FILENAME index.html
 echo "Generated HTML docs in $HTMLDIR/index.html"
 echo "----------------------------------------------------------------------"
 echo "Following modules are missing the 'description.html' file in src code:"
-for i in `find . -name "*.*.html" | sort | grep -v "$FULLINDEX"  | grep -v 'index.html'`
+for i in `find . -name "*.*.html" | sort | grep -v "$FULLINDEX"  | grep -v 'index.html' | grep -v "$EXCLUDEHTML"`
 do
   if grep 'DESCRIPTION' $i >/dev/null 2>&1 ; then 
     :
