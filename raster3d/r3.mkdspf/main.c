@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     G_gisinit (argv[0]);
 
     name=G_define_option () ;
-    name->key        = "grid3";
+    name->key        = "input";
     name->type       = TYPE_STRING;
     name->required   = YES;
     name->gisprompt  = "old,grid3,3dcell";  
