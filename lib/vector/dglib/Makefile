@@ -4,7 +4,7 @@ MODULE_TOPDIR = ../../..
 LIB_NAME = $(GRAPH_LIBNAME)
 
 LIB_OBJS = \
-	bst.o \
+	avl.o \
 	graph.o \
 	heap.o \
 	tree.o 
@@ -13,12 +13,12 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 DGLINC = $(ARCH_INCDIR)/dgl/
 
-default: $(DGLINC)/bst.h $(DGLINC)/graph.h $(DGLINC)/heap.h \
+default: $(DGLINC)/avl.h $(DGLINC)/graph.h $(DGLINC)/heap.h \
 	 $(DGLINC)/tree.h $(DGLINC)/type.h $(ARCH_INCDIR)/dgl.h lib
 
-$(DGLINC)/bst.h: bst.h
+$(DGLINC)/avl.h: avl.h
 	mkdir -p $(DGLINC)
-	cp bst.h $(DGLINC)/bst.h
+	cp avl.h $(DGLINC)/avl.h
 
 $(DGLINC)/heap.h: heap.h
 	cp heap.h $(DGLINC)/heap.h
