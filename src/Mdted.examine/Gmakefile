@@ -1,0 +1,10 @@
+# %W% %G%
+PGM      = Mdted.examine
+
+LIST	= main.o tape.o 
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+
+$(GISLIB):      # in case library changes
