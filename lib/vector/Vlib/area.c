@@ -17,6 +17,8 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include <stdlib.h>
+#include "gis.h"
 #include "Vect.h"
 
 /*
@@ -168,7 +170,7 @@ Vect_get_area_isle (
   struct Plus_head *Plus;
   P_AREA *Area;
   
-  G_debug ( 3, "Vect_get_area_num_isles(): area = %d", area );	
+  G_debug ( 3, "Vect_get_area_isle(): area = %d", area );	
 
   Plus = &(Map->plus);
   Area = Plus->Area[area];
@@ -191,7 +193,7 @@ Vect_point_in_area (
   P_AREA *Area;
   double poly;
   static struct line_pnts *Points;
-  static first_time = 1;
+  static int first_time = 1;
   
   Plus = &(Map->plus);
   Area = Plus->Area[area];
@@ -219,4 +221,35 @@ Vect_point_in_area (
   return 1;
 }
 
+/* Returns area of are without areas of isles */ 
+double 
+Vect_get_area_area (
+		       struct Map_info *Map,
+		       int area)
+{
+  struct Plus_head *Plus;
+  P_AREA *Area;
+  struct line_pnts * Points;
+  double size;
+  int i;
+  
+  G_debug ( 3, "Vect_get_area_area(): area = %d", area );	
+
+  Points = Vect_new_line_struct();
+  Plus = &(Map->plus);
+  Area = Plus->Area[area];
+ 
+  Vect_get_area_points(Map, area, Points);
+  size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+
+  /* substructing island areas */
+  for(i = 0; i < Area->n_isles; i++) {
+      Vect_get_isle_points(Map, Area->isles[i], Points);
+      size -= G_area_of_polygon(Points->x, Points->y, Points->n_points);
+  }
+  
+  Vect_destroy_line_struct(Points);
+  
+  return ( size );
+}
 

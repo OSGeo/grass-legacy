@@ -54,7 +54,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    isle = Vect_get_area_isle ( Map, area, i );   
 	    Vect_get_isle_points ( Map, isle, IPoints );
 	    Vect_append_points ( Points, IPoints, GV_FORWARD);
-	    Vect_append_point ( Points, xl, yl ); /* ??? */
+	    Vect_append_point ( Points, xl, yl, 0 ); /* ??? */
 	}
 	
         R_color(fcolor) ;

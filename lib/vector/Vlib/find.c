@@ -1,4 +1,5 @@
 #include <math.h>
+#include "gis.h"
 #include "Vect.h"
 
 
@@ -19,7 +20,7 @@
 int 
 Vect_find_line (
 		    struct Map_info *map,
-		    double ux, double uy,
+		    double ux, double uy, double uz,
 		    int type, double maxdist )
 {
   int choice;
@@ -53,7 +54,7 @@ Vect_find_line (
   
       V2_read_line (map, Points, NULL, i);
 
-      Vect_line_distance ( Points, ux, uy, NULL, NULL, &new_dist, NULL, NULL);
+      Vect_line_distance ( Points, ux, uy, uz, NULL, NULL, NULL, &new_dist, NULL, NULL);
       G_debug( 3, " line = %d distance = %f", i,  new_dist);
       if ((++gotone == 1) || (new_dist <= cur_dist)) {
 	  if (new_dist == cur_dist)

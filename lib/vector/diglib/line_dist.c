@@ -46,17 +46,17 @@ dig_set_distance_to_line_tolerance (double t)
 */
 
 double 
-dig_distance2_point_to_line (
-				 double x, double y,	  /* point */
-				 double x1, double y1, double x2, double y2,	/* line segment */
-				 double *px, double *py,  /* point on segment */
-				 double *pdist,	          /* distance of point on segment from the */
-							  /* first point of segment */
-				 int *status)
+dig_distance2_point_to_line ( 
+	double x, double y, double z,       /* point */
+	double x1, double y1, double z1,    /* line segment */
+	double x2, double y2, double z2,	
+	double *px, double *py, double *pz, /* point on segment */
+	double *pdist, /* distance of point on segment from the first point of segment */
+        int *status)
 {
-    register double dx, dy;
-    register double dpx, dpy;
-    register double tpx, tpy;
+    register double dx, dy, dz;
+    register double dpx, dpy, dpz;
+    register double tpx, tpy, tpz;
     double t;
     int    st;
 
@@ -64,39 +64,46 @@ dig_distance2_point_to_line (
 
     dx = x2 - x1;
     dy = y2 - y1;
+    dz = z2 - z1;
 
-    if (ZERO (dx) && ZERO (dy))	{ /* line is degenerate */
+    if (ZERO (dx) && ZERO (dy) && ZERO (dz) )	{ /* line is degenerate */
       dx = x1 - x;
       dy = y1 - y;
+      dz = z1 - z;
       tpx = x1;
       tpy = y1;
+      tpz = z1;
     } else {
-	t = (dx * (x - x1) + dy * (y - y1)) / (dx * dx + dy * dy);
+	t = (dx * (x - x1) + dy * (y - y1) + dz * (z - z1)) / (dx * dx + dy * dy + dz * dz);
 
-	if (t < 0.0) {			/* go to x1,y1 */
+	if (t < 0.0) {			/* go to x1,y1,z1 */
 	    t = 0.0;
 	    st = -1;
-	} else if (t > 1.0) {		/* go to x2,y2 */
+	} else if (t > 1.0) {		/* go to x2,y2,z2 */
 	    t = 1.0;
 	    st = 1;
 	}
 
-	/* go t from x1,y1 towards x2,y2 */
+	/* go t from x1,y1,z1 towards x2,y2,z2 */
 	tpx = dx * t + x1;
 	tpy = dy * t + y1;
+	tpz = dz * t + z1;
 	dx = tpx - x;
 	dy = tpy - y;
+	dz = tpz - z;
     }
 
     if ( px ) *px = tpx;
     if ( py ) *py = tpy;
+    if ( pz ) *pz = tpz;
     if ( status ) *status = st;
     if ( pdist ) {
 	dpx = tpx - x1;
 	dpy = tpy - y1;
-	*pdist = sqrt ( dpx * dpx + dpy * dpy ); 
+	dpz = tpz - z1;
+	*pdist = sqrt ( dx * dx + dy * dy + dpz * dpz ); 
     }
-    
-    return dx * dx + dy * dy;
+   
+    return (dx * dx + dy * dy + dz * dz);
 }
 

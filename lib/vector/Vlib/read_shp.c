@@ -39,6 +39,8 @@
 #include "gis.h"
 #include "Vect.h"
 
+int Vect__Read_line_shp ( struct Map_info *, struct line_pnts *, struct line_cats *, long );
+
 /*
 *  Read line from coor file on given offset.
 *
@@ -148,7 +150,7 @@ V2_read_line_shp (
 	/* coordinates */
 	if ( line_p != NULL ) {
 	    Vect_reset_line ( line_p );
-	    Vect_append_point ( line_p, Node->x, Node->y );
+	    Vect_append_point ( line_p, Node->x, Node->y, 0 );
 	}
         
         /* category */
@@ -182,10 +184,13 @@ V2_read_next_line_shp (
 		    struct line_pnts *line_p,
 		    struct line_cats *line_c)
 {
+/*    
   register int line;
   register P_LINE *Line;
-
+*/
+    
   return V1_read_next_line_shp (Map, line_p, line_c);
+
 /*  
   while (1)
     {
@@ -230,8 +235,7 @@ Vect__Read_line_shp (
 		    struct line_cats *c,
 		    long offset)
 {
-  int i, n_points, size;
-  int n_cats;
+  int i;
   int type;
   int shape, part;
   int first, last; 
@@ -306,7 +310,7 @@ Vect__Read_line_shp (
 
       for ( i = first; i <= last; i++ ) {
 	  /* TODO do it better (speed) */ 
-	  Vect_append_point ( p,  pShape->padfX[i], pShape->padfY[i] ); 
+	  Vect_append_point ( p,  pShape->padfX[i], pShape->padfY[i], 0 ); 
       }
       
       if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ

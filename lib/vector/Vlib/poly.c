@@ -62,12 +62,13 @@ int
 Vect_get_point_in_area (
 		       struct Map_info *Map, int area, double *X, double *Y)
 {
+/*
   static struct line_pnts *Points;
   static struct line_pnts **IPoints;
   static int first_time = 1;
   static int isl_allocated = 0;
   register int i;
-/*
+
   if (first_time)
     {
       Points = Vect_new_line_struct ();
@@ -160,7 +161,7 @@ Vect__intersect_line_with_poly (
 	  perc = (y - a) / (b - a);
 	  x = perc * (d - c) + c;	/* interp X */
 
-	  if (0 > Vect_append_point (Inter, x, y))
+	  if (0 > Vect_append_point (Inter, x, y, 0))
 	    return -1;
 	}
     }

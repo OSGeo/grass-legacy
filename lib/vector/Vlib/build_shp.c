@@ -35,20 +35,18 @@ extern int prnmsg ( char *msg, ...) ;
 int
 Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
     struct Plus_head *plus ;
-    int    i, j, s, n, type, n_points, node, lineid, offset, ret;
-    int    n_lines, side, line;
-    int    area, isle, direction;
-    int    found;
+    int    i, n, lineid, offset, ret;
+    int    line;
+    int    area, isle;
     plus_t lines[1];
     struct line_pnts **Points, *CPoints;
     int    alloc_parts;
     int    *ptype;
     struct line_cats *Cats;
-    P_LINE *Line, *BLine;
-    P_NODE *Node;
+    P_LINE *Line;
     P_AREA *Area;
     P_ISLE *Isle;
-    double area_size, poly;
+    double area_size;
     int     progress;
     int     nShapes, nParts, shape, part;
     int     first, last;
@@ -109,7 +107,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	    Vect_reset_line ( Points[part] );
 	    for ( i = first; i <= last; i++ ) {
 		/* TODO do it better (speed) */
-		Vect_append_point ( Points[part], pShape->padfX[i], pShape->padfY[i] );
+		Vect_append_point ( Points[part], pShape->padfX[i], pShape->padfY[i], 0 );
 	    }
 	    
 	    /* register line */
@@ -154,7 +152,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 		/* TODO calculate better centroid coordinates */
 	        offset =  ( shape << 11 ) ;
 	        Vect_reset_line ( CPoints );
-		Vect_append_point ( CPoints, Points[part]->x[0], Points[part]->y[0] );
+		Vect_append_point ( CPoints, Points[part]->x[0], Points[part]->y[0], 0 );
 	        line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
 	        dig_line_box ( CPoints, &box );
 		dig_line_set_box (plus, line, &box);
