@@ -9,7 +9,10 @@ Maintained by
 [In sync with GRASS 5 beta 6f]
 
  $Log$
- Revision 1.1  2000-02-01 17:47:04  markus
+ Revision 1.2  2000-02-01 18:47:42  markus
+ d.legend/d.rast.leg bugs fixed (Markus)
+
+ Revision 1.1  2000/02/01 17:47:04  markus
  was former known_bugs_jan2000.txt, added d.mon -L bug
 
  Revision 1.6  2000/01/19 09:50:45  markus
@@ -33,12 +36,6 @@ Maintained by
 ----------- modules ---------------------------------------------
 configure script:
  - should create --with-bin-dir directory if not existing
-
-d.legend and also d.rast.leg are displaying the wrong category numbers
- in the legend. d.legend always starts with the cat-number 0 which is in
- my case cat-number 1. There is also a empty category at the end of the
- legend. The colors for the cats represent the colors used in the map,
- except for the first category. It is always displayed in white.
 
 d.mon: hangs with "-L" option
    (would be nice to fix to improve "d.monsize" script
