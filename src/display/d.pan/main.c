@@ -144,6 +144,7 @@ int main (int argc, char **argv)
       	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
       	system(command);
       }
+      R_pad_freelist(rast, nrasts);
     }
 
 /* Redraw vector map */
@@ -154,6 +155,7 @@ int main (int argc, char **argv)
       	sprintf(command, "d.vect map=%s", vmap->answers[i]);
       	system(command);
       }
+      R_pad_freelist(vect, nvects);
     }
     
 
