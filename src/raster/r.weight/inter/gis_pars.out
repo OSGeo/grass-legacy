@@ -983,16 +983,16 @@ state 129
 	.  reduce 29
 
 
-23/300 terminals, 14/450 nonterminals
-68/1200 grammar rules, 130/1600 states
+23/300 terminals, 14/300 nonterminals
+68/600 grammar rules, 130/1000 states
 0 shift/reduce, 0 reduce/reduce conflicts reported
-68/490 working sets used
-memory: states,etc. 784/24000, parser 13/36000
-16/780 distinct lookahead sets
+68/350 working sets used
+memory: states,etc. 784/24000, parser 13/12000
+16/600 distinct lookahead sets
 0 extra closures
 115 shift entries, 1 exceptions
 14 goto entries
 0 entries saved by goto default
-Optimizer space used: input 246/24000, output 129/36000
+Optimizer space used: input 246/24000, output 129/12000
 129 table entries, 0 zero
 maximum spread: 277, maximum offset: 277
