@@ -313,20 +313,20 @@ check_open (fd, random)
     {
     case OPEN_OLD:
 	sprintf (msg,
-	    "%s: layer [%s] not open for write - request ignored",
+	    "%s: map [%s] not open for write - request ignored",
 	    me, FCB.name);
 	break;
     case OPEN_NEW_COMPRESSED:
     case OPEN_NEW_UNCOMPRESSED:
 	if (!random) return 1;
 	sprintf (msg,
-	    "%s: layer [%s] not open for random write - request ignored",
+	    "%s: map [%s] not open for random write - request ignored",
 	    me, FCB.name);
 	break;
     case OPEN_NEW_RANDOM:
 	if (random) return 1;
 	sprintf (msg,
-	    "%s: layer [%s] not open for sequential write - request ignored",
+	    "%s: map [%s] not open for sequential write - request ignored",
 	    me, FCB.name);
 	break;
     default:
@@ -375,7 +375,7 @@ write_error (fd, row)
 
     if (FCB.io_error) return;
 
-    sprintf (msg,"layer [%s] - unable to write row %d", FCB.name, row);
+    sprintf (msg,"map [%s] - unable to write row %d", FCB.name, row);
     G_warning(msg);
     FCB.io_error = 1;
 }
