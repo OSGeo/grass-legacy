@@ -9,6 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: \
 	$(HOME)/db.columns \
+	$(HOME)/db.copy \
 	$(HOME)/db.createdb \
 	$(HOME)/db.dropdb \
 	$(HOME)/db.droptable \
@@ -19,11 +20,14 @@ default: \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
 	$(HOME)/db.connect \
-	$(ETC)/db.attr
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o $(OBJDIR)/list_drivers.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(OBJDIR)/list_drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -e $(BIN)/db.columns || ln $(ETC)/front.end $(BIN)/db.columns
+
+$(HOME)/db.copy: $(OBJDIR)/copy.o $(OBJDIR)/list_drivers.o $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(OBJDIR)/list_drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	@test -e $(BIN)/db.copy || ln $(ETC)/front.end $(BIN)/db.copy
 
 $(HOME)/db.createdb: $(OBJDIR)/createdb.o $(OBJDIR)/list_drivers.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/createdb.o $(OBJDIR)/list_drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -65,7 +69,4 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o $(OBJDIR)/list_drivers.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(OBJDIR)/list_drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -e $(BIN)/db.connect || ln $(ETC)/front.end $(BIN)/db.connect
 	
-$(ETC)/db.attr: db.attr
-	cp db.attr $(ETC)
-	chmod 0755 $(ETC)/db.attr
 
