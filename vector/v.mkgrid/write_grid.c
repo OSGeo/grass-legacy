@@ -8,7 +8,7 @@ int write_grid (struct grid_description *grid_info,
   struct Map_info *Map, int quiet)
 {
 
-  int i, k;
+  int i, k, j;
   int rows, cols, x_cols;
   int num_v_rows, num_v_cols;
   double x, y, x_len;
@@ -45,22 +45,31 @@ int write_grid (struct grid_description *grid_info,
   y = grid_info->origin_y;
   for (i = 0; i < num_v_rows; ++i)
   {
-    x = grid_info->origin_x;
-    for (k = 0; k < x_cols; ++k)
+    double startx;
+    startx = grid_info->origin_x;
+    for (k = 0; k < cols; k++)
     {
-      next_x = x + x_len;
+	x = startx;
+	for (j = 0; j < 3; j++)
+	{
+	  if ( j < 2 ) 
+	      next_x = x + x_len;
+	  else 
+	      next_x = startx + length;
 
-      sx = x;
-      sy = y;
-      snext_x = next_x;
-      dum = y;
+	  sx = x;
+	  sy = y;
+	  snext_x = next_x;
+	  dum = y;
 
-      rotate (&x, &y, grid_info->origin_x, grid_info->origin_y, angle);
-      rotate (&next_x, &dum, grid_info->origin_x, grid_info->origin_y, angle);
-      write_vect (x, y, next_x, dum, Map, Points);
+	  rotate (&x, &y, grid_info->origin_x, grid_info->origin_y, angle);
+	  rotate (&next_x, &dum, grid_info->origin_x, grid_info->origin_y, angle);
+	  write_vect (x, y, next_x, dum, Map, Points);
 
-      y = sy;
-      x = next_x = snext_x;
+	  y = sy;
+	  x = next_x = snext_x;
+	}
+	startx += length; 
     }
     y += width;
   }
@@ -89,9 +98,7 @@ int write_grid (struct grid_description *grid_info,
       y = next_y = snext_y;
     }
     /* To get exactly the same coordinates as above, x+=length is wrong */
-    x += x_len;
-    x += x_len;
-    x += x_len;
+    x += length;
   }
 
   /* new with Vlib */
