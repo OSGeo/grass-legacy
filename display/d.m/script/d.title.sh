@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:		d.title.sh for GRASS 6
+# MODULE:	d.title.sh for GRASS 6
 # AUTHOR(S):	Michael Barton 
 # PURPOSE:	    Use d.title and d.text to display raster map title
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -57,32 +57,32 @@
 #% description: bold text
 #%end
 
-if  [ -z $GISBASE ] ; then
- echo "You must be in GRASS GIS to run this program."
- exit 1
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program."
+    exit 1
 fi   
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 cmd1="d.title map=$GIS_OPT_map"
 cmd2="d.text"
 
-if [ $GIS_OPT_size ] ; then
-    cmd1=$cmd1" size="$GIS_OPT_size
+if [ -n "$GIS_OPT_size" ] ; then
+    cmd1="$cmd1 size=$GIS_OPT_size"
 fi
 
-if [ $GIS_OPT_color ] ; then
-    cmd1=$cmd1" color="$GIS_OPT_color
+if [ -n "$GIS_OPT_color" ] ; then
+    cmd1="$cmd1 color=$GIS_OPT_color"
 fi
 
-if [ $GIS_OPT_line ] ; then
-    cmd2=$cmd2" line="$GIS_OPT_line
+if [ -n "$GIS_OPT_line" ] ; then
+    cmd2="$cmd2 line=$GIS_OPT_line"
 fi
 
-if [ $GIS_FLAG_b = 1 ] ; then
-    cmd2=$cmd2" -b"
+if [ $GIS_FLAG_b -eq 1 ] ; then
+    cmd2="$cmd2 -b"
 fi
 
 eval `$cmd1 | $cmd2`
