@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
-#include "dig_inter.h"
+#include "Vect.h"
 #include "georef.h"
 
 #define BEEP	   putchar ('\007')
