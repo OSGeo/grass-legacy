@@ -29,39 +29,23 @@ echo "Starting GRASS ..."
 if [ $GRASS_GUI = "tcltk" ] ; then
     
     # Search for a wish program
-    SEARCHCOMMAND=wish8
-    
-    # Save the current directory since we cd later on
-    CURR_DIR=`pwd`
-
-    k=0
-    PATHLIST=""
+    SEARCHCOMMAND=wish
     found=0
-
-    SEARCHPATHS=`echo $PATH | tr -s ':' ' '`
-    
-    for i in $SEARCHPATHS ; do
-    	k=`expr $k + 1`
-    	cd $i
-    	ls -1 |grep $SEARCHCOMMAND > /dev/null
-    
-    	if [ $? = 0 ] ; then
+    WISH=`type -p $SEARCHCOMMAND`
+    if [ $? = 0 ] ; then
     	    
 	    # Found a wish
-    	    found=`expr $found + 1`
-    	    PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
-    	fi
-    done
+    	    found=1
+    else
+     WISH=
+    fi
 
-    # Restore the current directory
-    cd $CURR_DIR
+    #NEEDED: is wish >= wish8.0? Because wish4.2 won't work.
 
     # Check if any wish8.x programs are stored in $PATHLIST 
     if [ $found -gt 0 ] ; then
     	
 	# Take the first and the tcltkgrass base directory
-    	WISH=`echo "$PATHLIST"| cut -d' ' -f1`
-
 	TCLTKGRASSBASE=$GISBASE/tcltkgrass
 	export TCLTKGRASSBASE
     else
@@ -254,7 +238,7 @@ case $GRASS_GUI in
     
     # Check for tcltk interface
     tcltk)
-        $GISBASE/etc/tcltkgrass.start $WISH&
+        $GISBASE/bin/tcltkgrass &
 	;;
     
     # Ignore others
@@ -284,10 +268,10 @@ echo
 echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
 echo "See the licence terms with:              g.version"
-
-if [ $GRASS_GUI = "text" ] ; then
+#
+#if [ $GRASS_GUI = "text" ] ; then
     echo "Start the graphical user interface with: tcltkgrass&"
-fi
+#fi
 
 echo "When ready to quit enter:                exit"
 
