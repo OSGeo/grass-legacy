@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 /*  @(#)find_w_dig.c    1.0  03/18/91  */
 /*
 **--> created from find_w_mouse.c by RL Glenn  1/1990
