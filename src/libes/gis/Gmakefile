@@ -83,7 +83,7 @@ OBJ = \
     home.o\
     ialloc.o\
     index.o\
-    intr_char.o\
+    intr_char.o \
     key_value1.o\
     key_value2.o\
     key_value3.o\
