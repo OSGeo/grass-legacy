@@ -5,7 +5,7 @@ PGM = g.mapsets
 GUI = $(GISBASE)/etc/g.mapsets.tcl
 
 LIBES     = $(GISLIB) $(VASKLIB)
-
+DEPENDENCIES= $(GISDEP) $(VASKDEP)
 
 INTER_OBJS = \
 	main_inter.o

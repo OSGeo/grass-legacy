@@ -11,6 +11,10 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd
 
-
-
-
+html:
+	GISBASE=$(GISBASE)
+	GISRC=/tmp/grass51_makefile_gisrc.$(PGM)
+	echo $(GISBASE)
+	result=`echo "LOCATION_NAME=none.$(PGM)" > $(GISRC)`
+	LOCATION_NAME=none.$(PGM)
+	$(GISBASE)/etc/bin/cmd/$(PGM) --html-description
