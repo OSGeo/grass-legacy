@@ -370,6 +370,27 @@ G_matrix_transpose(mat_struct *mt) {
 
 #if defined(HAVE_LIBBLAS) && defined(HAVE_LIBLAPACK)
 
+
+/*!
+ * \brief Solve a general system A.X=B
+ *
+ * Solve a general
+ * system A.X=B, where A is a NxN matrix, X and B are NxC matrices, and we are to
+ * solve for C  arrays in X given B. Uses LU decomposition.<br>
+ * Links to LAPACK function dgesv_() and similar to perform the core routine.
+ * (By default solves for a general non-symmetric matrix.)
+ * mtype is a flag to indicate what kind of matrix (real/complex, Hermitian,
+ * symmetric, general etc.) is used (NONSYM, SYM, HERMITIAN).
+ * <b>Warning:</b> NOT YET COMPLETE: only some solutions' options
+ * available. Now, only general real matrix is supported.
+ *
+ *  \param mt1
+ *  \param xmat0
+ *  \param bmat
+ *  \param mtype
+ *  \return int
+ */
+
 int
 G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0, 
 			const mat_struct *bmat, mat_type mtype) {
@@ -577,6 +598,17 @@ G_matrix_inverse(mat_struct *mt) {
  ************************************************************/
 
 
+
+/*!
+ * \brief Free up allocated matrix
+ *
+ * Free up
+ * allocated matrix.
+ *
+ *  \param mt
+ *  \return void
+ */
+
 void
 G_matrix_free(mat_struct *mt) {
 
@@ -600,6 +632,17 @@ G_matrix_free(mat_struct *mt) {
  *                                                          *
  ************************************************************/
 
+
+
+/*!
+ * \brief Print out a matrix
+ *
+ * Print out a
+ * representation of the matrix to standard output.
+ *
+ *  \param mt
+ *  \return void
+ */
 
 void
 G_matrix_print(mat_struct *mt) {
@@ -639,6 +682,22 @@ G_matrix_print(mat_struct *mt) {
  ************************************************************/
 
 
+
+/*!
+ * \brief Set the value of the (i,j)th element
+ *
+ * Set the value of the
+ * (i,j)th element to a double value. Index values are C-like ie. zero-based.
+ * The row number is given first as is conventional. Returns -1 if the
+ * accessed cell is outside the bounds.
+ *
+ *  \param mt
+ *  \param rowval
+ *  \param colval
+ *  \param val
+ *  \return int
+ */
+
 int
 G_matrix_set_element(mat_struct *mt, int rowval, int colval,
 		     double val) {
@@ -672,6 +731,20 @@ G_matrix_set_element(mat_struct *mt, int rowval, int colval,
  *                                                          *
  ************************************************************/
 
+
+
+/*!
+ * \brief Retrieve value of the (i,j)th element
+ *
+ * Retrieve the value of the
+ * (i,j)th element to a double value. Index values are C-like ie. zero-based.
+ * <b>Note:</b> Does currently not set an error flag for bounds checking.
+ *
+ *  \param mt
+ *  \param rowval
+ *  \param colval
+ *  \return double
+ */
 
 double
 G_matrix_get_element(mat_struct *mt, int rowval, int colval) {
@@ -779,6 +852,20 @@ G_matvect_get_row(mat_struct *mt, int row) {
  ************************************************************/
 
 
+
+/*!
+ * \brief Convert matrix to vector
+ *
+ * Convert the current matrix structure to
+ * a vector structure. The vtype is RVEC or CVEC which specifies a row vector or
+ * column vector. The indx indicates the row/column number (zero based).
+ *
+ *  \param mt
+ *  \param vt
+ *  \param indx
+ *  \return int
+ */
+
 int
 G_matvect_extract_vector( mat_struct *mt, vtype vt, int indx ) {
 
@@ -829,6 +916,17 @@ G_matvect_extract_vector( mat_struct *mt, vtype vt, int indx ) {
  * Revert a vector structure to a matrix                    *
  *                                                          *
  ************************************************************/
+
+
+/*!
+ * \brief Revert a
+ *       vector to matrix
+ *
+ * Revert a vector structure to a matrix.
+ *
+ *  \param vc
+ *  \return int
+ */
 
 int
 G_matvect_retrieve_matrix(vec_struct *vc) {
@@ -999,6 +1097,23 @@ G_vector_sub(vec_struct *v1, vec_struct *v2, vec_struct *out) {
  *                                                          *
  ************************************************************/
 
+
+/*!
+ * \brief Set
+ *       parameters for vector structure
+ *
+ * Set parameters for a vector structure that is
+ * allocated but not yet initialised fully. The vtype is RVEC or
+ * CVEC which specifies a row vector or column vector.
+ *
+ *  \param A
+ *  \param cells
+ *  \param ldim
+ *  \param vt
+ *  \param vindx
+ *  \return int
+ */
+
 int
 G_vector_set(vec_struct *A, int cells, int ldim, vtype vt, int vindx) {
 
@@ -1055,6 +1170,18 @@ G_vector_set(vec_struct *A, int cells, int ldim, vtype vt, int vindx) {
 
 #if defined(HAVE_LIBBLAS)
 
+
+/*!
+ * \brief Calculates euclidean
+ *       norm
+ *
+ * Calculates the euclidean norm of a row or column vector, using BLAS
+ * routine dnrm2_()
+ *
+ *  \param vc
+ *  \return double
+ */
+
 double
 G_vector_norm_euclid(vec_struct *vc) {
 
@@ -1106,6 +1233,23 @@ G_vector_norm_euclid(vec_struct *vc) {
  * vector.                                                  *
  *                                                          *
  ************************************************************/
+
+
+/*!
+ * \brief Calculates
+ *       maximum value
+ *
+ * Calculates the maximum value of a row or column vector.
+ * The vflag setting defines which value to be calculated:
+ * vflag:
+ * 1 Indicates maximum value<br>
+ * -1  Indicates minimum value<br>
+ * 0 Indicates absolute value [???]
+ *
+ *  \param vc
+ *  \param vflag
+ *  \return double
+ */
 
 double
 G_vector_norm_maxval(vec_struct *vc, int vflag) {
