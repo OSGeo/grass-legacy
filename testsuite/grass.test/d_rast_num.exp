@@ -1,0 +1,4 @@
+# d.rast.num, some numbers displayed in wrong color
+# can not be tested automated
+set test "d.rast.num, some numbers displayed in wrong color"
+unresolved "$test"

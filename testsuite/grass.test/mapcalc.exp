@@ -1,57 +1,42 @@
 # re-implementation of testgrass.sh from Markus Neteler as a tcl/expect script
 # c) Andreas Lange, andreas.lange@rhein-main.de
 
-
 set test "r.mapcalc test"
 set timeout 5
 
-
-source ./grass.test/grass.tcl
-# source ./grass.test/testframe.tcl
-
-
 # check if grass is running
-if { $env(GISBASE) == "" } {
+if { [getenv GISBASE] == "" } {
     perror "$GRASS not running"
-    exit -1
 }
-
 
 # check if we find the r.mapcalc executable
 set test "r.mapcalc existing"
-if { ![file exists [file join $env(GISBASE) bin r.mapcalc]] } {
+if { ![isgrassbin r.mapcalc] } {
     fail "$test"
 } else {
     pass "$test"
 }
 
-
-# create a grass location
-# UTM projection, zone 12, north, south, east, west, ewres, nsres
-grass_create_location $env(GISDBASE) $env(LOCATION_NAME) 1 13 4928000.00 4914000.00 609000.00 590000.00 50.00 50.00
-
-
 # invoke mapcalc for creating raster map
 set test "r.mapcalc bug for value = -129"
 
-send "g.region -d -p \n"
+spawn "g.region" "-d" "-p"
 expect {
-    -re {.*projection:.*}  { send_user "projection set to default\n" }
-    timeout                { perror "g.region timeout" }
+    -re {.*projection:.*$}  { verbose "projection set to default" }
+    timeout                 { perror "g.region timeout"; slay "g.region" }
 }
 
-send "r.mapcalc testmap=-129 \n"
+spawn "r.mapcalc" "testmap=-129"
 expect {
-    -re {.*range.*} { send_user "map testmap created\n" }
-    timeout         { perror "r.mapcalc timeout" }
+    -re {.*GRASS.*$} { verbose "map testmap created\n" }
+    timeout          { perror "r.mapcalc timeout"; slay "r.mapcalc" }
 }
 
-send "r.stats -q testmap \n"
+spawn "r.stats" "-q" "testmap"
 expect {
-    -re {.*-129.*} { pass "$test" }
-    timeout        { fail "$test" }
+    -re {-129.*$}      { pass "$test" }
+    -re {.*[^-129].*$} { fail "$test" }
+    timeout            { fail "$test"; slay "r.stats" }
 }
 
-# remove the grass location
-# grass_remove_location $env(GISDBASE)
-
+slay "r.stats"

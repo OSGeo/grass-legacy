@@ -1,0 +1,15 @@
+set test "GRASS environment variables test"
+set ok 1
+foreach ev {GISBASE GISDBASE LOCATION LOCATION_NAME MAPSET GISRC PATH ETC} {
+    set tmp [getenv $ev]
+    verbose "$ev: $tmp"
+    if { "$tmp" == "" } {
+	fail "$test: $ev not set"
+	set ok 0
+    }
+}
+
+if { $ok == 1 } {
+    pass "$test"
+}
+

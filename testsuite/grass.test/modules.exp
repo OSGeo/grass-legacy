@@ -1,49 +1,328 @@
 # automated GRASS5 functionality check
-# see grass/documents/list5_of_modules
+# see grass/documents/list5_of_modules.txt
+# 
+# one problem: if i start each module with a spawn,
+# i recieve after a certain amount of stared modules an error:
+# parent: sync byte read: bad file number
+# child: sync byte write: bad file number
+# I suspect that i am running out of filedescriptors (max 256?)
+# here, so that i alternatively use send to start the module from
+# a grass shell.
+# This is a lot faster than spawning each module, but has the
+# disadvantage that most modules must be killed and has the 
+# danger that a module with output not catched by the re of the
+# expect command will stay running and interfere with other send
+# commands. 
+# I fear that there is no optimal solution to this. 
+# Andreas Lange, andreas.lange@rhein-main.de
+# 
+# module(name,var)
+# var: if     interface: cmd, inter, etc.
+#      type   exe, script
+#      test   status from list5_of_modules.txt
+#      status status from testsuite
+#  
 
+# on heavy loaded machines this could cause problems!
+# but timeout of 15s is too long for average usage
+set timeout 5
 
-source ./grass.test/grass.tcl
+# mbad is list of modules with possible problems to exclude:
+set mbad {{m.lulc.USGS} {Mlulc.read}}
 
-
-# read in GRASS modules list
-set fn [file join $env(SRCDIR) "src" "CMD" "lists" "GRASS"]
-if { [catch {open $fn r} fd] } {
-    perror "$fn missing"
+# for output list of all modules
+set mlist ""
+if { [catch {open "./../documents/modules-list.html" w} htmlfd] } {
+    perror "./../documents/modules-list.html can no be opened!"
+    exit -1
 }
 
-foreach line [split [read $fd] \n] {
-    if { [empty_line $line] } {
-	continue
-    }
-    set fqn "/$line"
-    set module [string trim [file tail $fqn]]
-    if { [regexp {.*\..*} $module] } {
-	set test "module: $module"
-	verbose "checking $module"
-	set type "exe"
-	if { ![file exists [file join $env(GISBASE) "bin" "$module"]] } {
-	    if { ![file exists [file join $env(GISBASE) "scripts" "$module"]] } {
-		fail "$module missing in $env(GISBASE)/bin and in scripts"
-	    } else {
-		verbose "$module is script"
-		set type "script"
-	    }
-	} else {
-	    if { $type == "exe" } {
-		verbose "$module is executable"
-		send "$module help \n"
-		expect {
-		    -re {.*Usage.*}       { unresolved "$module: basic test worked" }
-		    -re {.*Help System.*} { unresolved "$module: interactive module" }
-		    -re {.*not found.*}   { fail "$module: not found" }
-		    -re {.*egmentation.*} { fail "$module: segmentation fault" }
-		    -re {.*core dump.*}   { fail "$module: dumps core" }
-		    timeout               { fail "$module: timed out" }
+
+# creating a list of all avail. modules in path
+proc grass_modules_list { path type interface } {
+    global module
+    global mlist
+
+    foreach exe [glob -nocomplain $path/*] {
+	if { [file executable $exe] } {
+	    set tmp [file tail $exe]
+	    if { [lsearch -exact $mlist $tmp] >= 0 } {
+		if { [info exists module($tmp,if)] } {
+		    if { ![regexp "$interface" "$module($tmp,if)" ] } {
+			set module($tmp,if) [append module($tmp,if) "," "$interface"]
+		    }
 		} else {
-		    verbose "$module can not be tested"
-		    untested "$module: script"
+		    set module($tmp,if) "$interface"
 		}
+	    } else {
+		set module($tmp,type) "$type"
+		set module($tmp,if) "$interface"
+		set module($tmp,status) " "
+		set module($tmp,test) " "
+		lappend mlist $tmp
 	    }
 	}
     }
-} 
+    return
+}
+
+
+# sources for the modules list:
+# list5_of_modules.txt
+# $GISBASE/bin
+# $GISBASE/scripts
+# $GISBASE/etc/bin/{main|contrib}/inter
+# $GISBASE/etc/bin/{main|contrib}/cmd
+set gisbase [getenv GISBASE]
+
+# collect all executables from bin dir
+set path [file join $gisbase "bin"]
+#grass_modules_list "$path" "exe" ""
+
+# collect all scripts from scripts dir
+set path [file join $gisbase "scripts"]
+grass_modules_list "$path" "script" "script"
+
+# add all executables from main/interactive dir
+set path [file join $gisbase "etc" "bin" "main" "inter"]
+grass_modules_list "$path" "exe" "inter"
+
+# add all executables from main/commandline dir
+set path [file join $gisbase "etc" "bin" "main" "cmd"]
+grass_modules_list "$path" "exe" "cmd"
+
+# add all executables from contrib/interactive dir
+set path [file join $gisbase "etc" "bin" "contrib" "inter"]
+grass_modules_list "$path" "exe" "inter"
+
+# add all executables from contrib/commandline dir
+set path [file join $gisbase "etc" "bin" "contrib" "cmd"]
+grass_modules_list $path "exe" "cmd"
+
+# add the modules from the moduleslist
+set fn [file join [getenv SRCDIR] "documents" "list5_of_modules.txt"]
+if { ![file exists $fn] } {
+    perror "$fn missing!"
+} else { 
+    if { [catch {open $fn r} fd] } {
+	perror "$fn can no be opened!"
+    } else {
+	set status ""
+	set modname ""
+	foreach line [split [read $fd] \n] {
+	    if { [empty_line $line] } {
+		continue
+	    }
+	    regexp {^(.)  (.*)$} $line dummy status modname
+	    set tmp [string trim $modname]
+	    if { [lsearch -exact $mlist $tmp] >= 0 } {
+		set module($tmp,status) "$status"
+		set module($tmp,test) "?"
+	    } else {
+		# puts "$modname not found!"
+		set module($tmp,type) "unkn"
+		set module($tmp,if) "n/a"
+		set module($tmp,status) "$status"
+		set module($tmp,test) "-"
+		lappend mlist $tmp
+	    }
+	    # puts "$module($tmp,status)  $module($tmp,test)  $tmp\t$module($tmp,type)\t$module($tmp,if)"
+	}
+	close $fd
+    }
+}
+
+
+# start a grass shell
+set path [file join [getenv LOCATION] [getenv MAPSET]]
+spawn "$GRASS" "$path"
+expect {
+    -re {.*o such.*$}     { perror "Can't start $GRASS" }
+    -re {.*GRASS.*$}      { verbose "$GRASS shell started" }
+    timeout               { perror "Timeout starting $GRASS" ; slay "$GRASS" }
+}
+
+
+# process all from modules list
+foreach line $mlist {
+    set mod [string trim "$line"]
+    if { [lsearch -exact $mbad $mod] >= 0 } {
+	continue
+    }
+    verbose  "$mod help command line test"
+    set test "$mod help command line test"
+    if { ![isgrassbin "$mod"] } {
+	fail "$test: module missing"
+	set $module($mod,type) "unkn"
+	set $module($mod,status) "-"
+    } else {
+	if { [file executable [file join [getenv GISBASE] "scripts" "$mod"]] } {
+	    verbose "$mod is script"
+	    untested "$test: scripts can not be tested"
+	    set $module($mod,type) "script"
+	    set $module($mod,test) "."
+	} elseif { $module($mod,type) == "unkn" } {
+	    verbose "$mod is unknown type"
+	    untested "$test: module type unknown"
+	    set $module($mod,type) "unkn"
+	    set $module($mod,test) "."
+	} elseif { $module($mod,type) == "exe" } {
+	    verbose "$mod is executable"
+	    verbose "testing $mod help "
+	    send "$mod help \n"
+	    # wait one moment to let things settle down...
+	    after 500
+	    set status 0
+	    expect {
+		-re {.*Usage.*$}              { unresolved "$test: basic test worked" ; slay "$mod" ; set status 1 }
+		-re {.*USAGE.*$}              { fail "$test: unusual Usage message" ; slay "$mod" ; set status -1 }
+		-re {.*confused me.*$}        { unresolved "$test: basic test worked" ; slay "$mod" ; set status 1 }
+		-re {.*o graphics monitor.*$} { unresolved "$test: display module can not be tested" ; slay "$mod" ; set status 1 }
+		-re {.*egmentation f.*$}      { fail "$test: segmentation fault" ; slay "$mod" ; set status -1 }
+		-re {.*core dump.*$}          { fail "$test: core dump" ; slay "$mod" ; set status -1 }
+		-re {.*ERROR.*$}              { fail "$test: ERROR condition" ; slay "$mod" ; set status -1 }
+		timeout                       { fail "$test: timed out" ; slay "$mod" ; set status -1 }
+	    }
+	    # if the module is not already killed, slay it once more.
+	    slay "$mod"
+	    if { $status == -1 } {
+		set $module($mod,test) "f"
+	    } elseif { $status == 1 } {
+		set $module($mod,test) "?"
+	    } elseif { $status == 0 } {
+		set $module($mod,test) "p"
+	    }
+	    set test "$mod xml interface description"
+	    verbose "testing xml interface-description for $mod"
+	    send "$mod --interface-description \n"
+	    # wait one moment to let things settle down...
+	    after 500
+	    expect {
+		-re {.*illegal.*$}            { fail "$test: does not support parser" ; slay "$mod" }
+		-re {.*ERROR.*$}              { fail "$test: does not support parser correctly" ; slay "$mod" }
+		-re {.*<task name.*$}         { pass "$test" ; slay "$mod" }
+		-re {.*USAGE.*$}              { fail "$test: does not support parser" ; slay "$mod" }
+		-re {.*must be run interactively.*$} { unresolved "$test: only interactively" ; slay "$mod" }
+		-re {.*o graphics monitor.*$} { unresolved "$test: display modules can not be tested" ; slay "$mod" }
+		-re {.*egmentation f.*$}      { fail "$test: Segmentation fault" ; slay "$mod" }
+		-re {.*ot found.*$}           { fail "$test: does not support xml desc correctly" ; slay "$mod" }
+		timeout                       { fail "$test: timeout" ; slay "$mod" }
+	    }
+	    # better kill it once more ...
+	    slay "$mod"
+	}
+    }
+}
+
+
+#end grass shell
+send "exit \n"
+expect {
+    -re {.*Goodbye.*$} { verbose "GRASS exited" }
+    timeout            { verbose "timeout" ; slay "grass5" }      
+}
+
+
+# write out html-version of modules-list
+proc put_modules {} {
+    global module
+    global mlist
+    global htmlfd
+
+    set scripts 0
+    set exes    0
+    set inter   0
+    set cmd     0
+    set both    0    
+    puts $htmlfd "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
+    <HTML>
+      <HEAD>
+        <TITLE>
+          GRASS 5.0 Modules List
+        </TITLE>
+      </HEAD>
+    <BODY>
+    <H1>GRASS 5.0 Modules List</H1>"
+    puts $htmlfd "<PRE>"
+    puts $htmlfd "
+# Automated functionality test of GRASS 5
+#
+# Legend: 
+# Test, GRASS Test:
+#        +  working
+#        o  partly functional, some functionality missing or not working
+#        -  failing, not working
+#        ?  unknown, untested, waiting for your comments
+#
+# Status, GRASS Testsuite
+#        ? unresolved, module is there and starts
+#        - module missing
+#        . module can not be tested (scripts etc)
+#        f module failed in test
+#        p module passed test
+#        i interface problem with module
+#
+# Name of Module
+#
+# Type of Module
+#        script bash, c-shell, tcl/tk etc script
+#        exe    binary executable file
+#        unkn   not known
+#
+# Interface is
+#        inter  only interactive usage
+#        cmd    commandline, uses GRASS parser
+#        script shell script (bourne, c, tcl/tk, wish)
+#        other  other interface
+#        n/a    not applicable, not known
+#
+# Please send updates and comments to
+# Markus Neteler
+# neteler@geog.uni-hannover.de
+#
+"
+    puts $htmlfd "</PRE><P>"
+    puts $htmlfd "<TABLE COLS= WIDTH=\"90%\"><TT>"
+    puts $htmlfd "<TR>\n<TD>T</TD>\n<TD>S</TD>\n<TD>Name</TD>\n<TD>Type</TD>\n<TD>Interface</TD>\n<TR>"
+    foreach mod [lsort -ascii $mlist] {
+	if { $module($mod,type) == "exe" } {
+	    incr exes
+	} else {
+	    incr scripts
+	}
+	incr both
+	#puts "module name: $mod"
+	#puts "\ttype: $module($mod,type)"
+	if { [regexp "inter" $module($mod,if)] } {
+	    incr inter
+	} 
+	if { [regexp "cmd" $module($mod,if)] } {
+	    incr cmd
+	}
+	#puts "\tinterface: $module($mod,if)"
+	#puts ""
+	puts $htmlfd "\n<TR>\n<TD>$module($mod,status)</TD>\n<TD>$module($mod,test)</TD>\n<TD>$mod</TD>\n<TD>$module($mod,type)</TD>\n<TD>$module($mod,if)</TD>\n</TR>\n"
+    }
+    puts $htmlfd "</TT>
+</TABLE>"
+puts $htmlfd "<P><PRE>"
+
+    puts $htmlfd "All modules/scripts counted:"
+    puts $htmlfd "    $both"
+    puts $htmlfd "Modules without parser interface (interactive):"
+    puts $htmlfd "    $inter"
+    puts $htmlfd "Modules with parser interface (commandline):"
+    puts $htmlfd "    $cmd"
+    puts $htmlfd "Scripts:"
+    puts $htmlfd "    $scripts"
+    puts $htmlfd ""
+    puts $htmlfd "</PRE>
+  </BODY>
+</HTML>"
+    return
+}
+
+
+put_modules
+close $htmlfd
+return 0
