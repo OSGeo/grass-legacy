@@ -446,7 +446,8 @@ proc Dm::pan { } {
 # erase to white
 proc Dm::erase { } {
     
-    set cmd "d.erase white"
+#    set cmd "d.erase white"
+    set cmd "d.frame -e"
     run $cmd 
 
 }
