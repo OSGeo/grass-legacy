@@ -13,12 +13,11 @@ NAD_TABLES = FL.lla MD.lla TN.lla WI.lla WO.lla alaska.lla conus.lla \
 NT_TABLES = ntv1_can.dat nzgd2kgrid0005.gsb
 
 NAD_DIR = $(GISBASE)/etc/nad
+NAD2BIN = nad2bin
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make 
 
 default: lib $(NAD_DIR)
-
-NAD2BIN = nad2bin
 
 $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
 	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
@@ -26,3 +25,7 @@ $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
 	cp -f $(NT_TABLES) $@
 	@ touch $@
 
+# Note for future improvement:
+# nad2bin should be compiled from source if we are cross compiling and then the
+# above NAD_TABLES files created during installation rather than compilation
+$(NAD2BIN): #
