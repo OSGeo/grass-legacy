@@ -1,0 +1,38 @@
+HOME = $(BIN_MAIN_INTER)
+PGM      = d.labels
+
+LIST =	main.o \
+	get_loc.o \
+	opencell.o\
+	display.o\
+	in_window.o\
+	check_resp.o\
+        show.o\
+	where.o\
+	modify.o \
+	output.o\
+	gather.o\
+	proc_new.o\
+	proc_old.o\
+	setup.o\
+	show_a_label.o\
+        do_label.o\
+        update.o
+
+#all: $(HOME)/$(PGM) $(HELP)/$(PGM) $(MAN1)/$(PGM)
+all: $(HOME)/$(PGM)
+####################################################################
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(RASTERLIB) 
+	cc $(LDFLAGS) $(LIST) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB) -o $@
+
+#$(HELP)/$(PGM): HELP
+#	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+#$(MAN1)/$(PGM): MAN
+#	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(LIST): config.h
+check_resp.o : check_resp.c helptext.h
+####################################################################
+$(GISLIB):	# in case the library changes
+$(VASKLIB):	# in case the library changes
