@@ -59,7 +59,7 @@ fi
 echo "Starting GRASS 5 ..."
 
 #grab the GRASS 5 install path from grass5 start script:
-BINPATH=`type -p grass5`
+BINPATH=`which grass5`
 GISBASE=`grep GISBASE $BINPATH | head -1 | cut -d'=' -f2`
 export GISBASE
 
@@ -131,7 +131,7 @@ eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
 # unset the MONITOR variable to force user to select one if they are going
 # to do graphics.
 
-g.gisenv MONITOR=
+# g.gisenv MONITOR=
 
 #
 # get gisrc into the environment
@@ -145,8 +145,16 @@ if [ $LOCATION_NAME == "##NONE##" ] ; then
   rm -f ~/.grassrc5
   $GISBASE/etc/set_data
   if [ $? != 0 ]; then
+    echo "GISDBASE: $OLD_DB" > $GISRC
+    echo "LOCATION_NAME: $OLD_LOC" >> $GISRC
+    echo "MAPSET: $OLD_MAP" >> $GISRC
     exit
   fi
+fi
+
+if [ $LOCATION_NAME == "##ERROR##" ] ; then
+  echo "The selected location is not a valid GRASS location"
+  exit
 fi
 
 # echo $LOCATION
