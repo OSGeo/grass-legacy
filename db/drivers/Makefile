@@ -3,10 +3,10 @@ MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-ifeq ($(strip $(ODBCINC)),)
-    SUBDIRS = dbf
+ifeq ($(strip $(ODBCLIB)),)
+    SUBDIRS = dbf postgres
 else
-    SUBDIRS = dbf odbc
+    SUBDIRS = dbf odbc postgres
 endif
 
 default: subdirs
