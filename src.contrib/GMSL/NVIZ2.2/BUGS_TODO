@@ -1,5 +1,5 @@
 From: Helena Mitasova - staff <helena@gis.uiuc.edu>
-Date: Thu, 19 Oct 2000 12:57:55 -0500
+Date: 2/2002
 To: nvizlist@geog.uni-hannover.de
 Subject: [NVIZ] NVIZ-todo-bugs-problems
 
@@ -22,6 +22,8 @@ does not render completely (only its parts), you have to lower
 zscale to get it render completely - this may be caused by
 limits in OPENGL or the integer normals issue (see problem 1.2)
 
+ - 2/2002 not working or tested as expected
+
 1.1 Scripting is not there at all, if I remember correctly
 it did not work in the SGI OpenGL version but it worked very well
 in the original SGI version - it is a powerful tool for 
@@ -29,22 +31,19 @@ doing complex animations (especially if you know tcl/tk,
 but even if you don't know it the tutorial and GUI is good enough
 to be able to some advanced dynamic visualization.
 Does anybody know where the script_tools are?
+ 
+ - 2/2002 Scripting needs more testing, but it seems to be working in
+         principle.
 
-Error in startup script: couldn't read file "script_tools": no such file or directory
 
-1.2  The lights do not work if the surface values are floating point
-between 0.0 - 1.0 - this was fixed in SGI version and I believe that it
-was due to the fact that the surface normals were computed as integers.
-It is still possible to view a surface with small numbers by using high
-value of ambient light, however the lighting and shading won't be there.
-With very small numbers or values stretching over several magnitudes
-you have to adjust the height of view by typing in the numbers to get
-it right - this is not a bug though.
+[1.2  lights - fixed by Bob Covill.]
 
 [1.3 - fixed by Bob Covill.]
 
 1.4 when mask is removed it still draws a hole there
-but otherwise the mask seems to be working OK.
+ but otherwise the mask seems to be working OK.
+
+ - 2/2002 needs testing
 
 1.5 After hitting the maximum site files loaded, it correctly displays
 an error but then hangs-on with "please wait" (probably trying
@@ -58,17 +57,27 @@ the height or zscale slide, but on LINUX it happens even more often, We
 spent quite a bit of time with Bill trying to find out what it is
 with no success. Whoever fixes this should win a prize.
 
+ - Under RedHat7.2 with GRASSCVS from december 2001 it happens rarely, but
+   it is still there.
+
 2. things which were in SG3d but were never ported to nviz
 ----------------------------------------------------------
 
 2.1 Legends, labels, including labels for sites
 2.2 Scale, north
 2.3 More options for display of sites based on their attributes
+2.4 Display of lat/long data on a sphere (globe) or its part
 
 3. Experimental capabilities for combining volumes and surfaces in sg4d
 ----------------------------------------------------------------------
 
 3.1 Integration of r3.showdspf with surface visualization
+
+4. Capabilities of nviz added to some older versions but not included in the
+   release
+---------------------------------------------------
+4.1 Where it will draw a flow line from a queried point
+
 
 other than that it runs great so far - although I haven't yet tried
 everything
