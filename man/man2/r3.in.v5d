@@ -1,0 +1,62 @@
+.TH r3.in.v5d 1 "" "" "" ""
+
+
+
+
+
+
+.SH NAME
+
+\*Lr3.in.v5d\*O  - Imports files in v5d format into G3D format.
+
+
+.br
+
+
+(GRASS 3D Program)
+
+.SH SYNOPSIS
+\*Lr3.in.v5d input = \*Oname\*L]\*O
+
+.SH DESCRIPTION
+
+.SH Parameters:
+
+.VL 4m
+
+.LI "\*Linput\*O
+Path and name of v5d file to be imported
+
+.LI "\*Loutput\*O
+Name of the G3D output raster map
+
+.LI "\*Lnv\*O
+String representing NULL value data cell (use 'none' if no such value)
+Default: none
+
+.LI "\*Ltype\*O
+Data type used in the output file
+Options: default, double, float
+Default: default
+
+.LI "\*Lprecision\*O
+Precision used in the output file
+Options: default, max, 0-52
+Default: default
+
+.LI "\*Lcompression\*O
+The compression method used in the output file
+Options: default, rle, lzw, rle+lzw, none
+Default: default
+
+.LI "\*Ltiledimension\*O
+The dimension of the tiles used in the output file
+Default: default
+
+
+.SH SEE ALSO
+\*Lr3.out.v5d\*O
+
+.SH AUTHOR
+Jaro Hofierka
+

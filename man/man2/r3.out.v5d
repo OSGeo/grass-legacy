@@ -1,0 +1,36 @@
+.TH r3.out.v5d 1 "" "" "" ""
+
+
+
+
+
+.SH NAME
+\*Lr3.out.v5d\*O
+(GRASS 3D Program)
+
+.SH SYNOPSIS
+\*L r3.out.v5d map=\*Oname\*L]\*O
+
+.SH DESCRIPTION
+Outputs \*WG3D\*O maps in \*Wv5d\*O format.  \*Wmap\*O is
+a valid G3D map in the current mapset.  \*Woutput\*O is the name of
+a v5d file which will be written in the current working directory.
+
+.SH Parameters:
+
+.VL 4m
+
+.LI "\*Lmap\*O
+G3d raster map to be converted to v5d
+
+.LI "\*Loutput\*O
+Name for v5d output file
+
+
+.SH SEE ALSO
+\*Lr3.in.v5d\*O
+
+.SH AUTHOR
+Jaro Hofierka
+
+

@@ -23,16 +23,19 @@ SYNOPSIS
 
 DESCRIPTION
 Parameters:
-     Options: default, double, float
+     Data type used in the output file Options: default, double,
+     float
 
-     Options: default, max, 0-52
+     Precision used in the output file Options: default, max,
+     0-52
 
      Note that the none option only specifies that neither LZW
      nor RLE is used for compression.  It does not turn off the
      compression all together.	G3D does not support non-
      compressed files.	Options: default, rle, lzw, rle+lzw, none
 
-     Format: XxYxZ
+     The dimension of the tiles used in the output file.  The
+     format is: XxYxZ
 
      Specifies which value to convert to NULL-value.  If the
      specified value is none.
@@ -54,13 +57,10 @@ NOTES
      This header is followed by the cell values in floating point
      format organized in rows with constant col coordinate.  The
      rows are organized by constant level coordinate. Individual
-     cell values are separated by space.
 
 
 
-
-
-GRASS 5.0beta7	      GRASS Development Team			1
+GRASS 5.0beta8	      GRASS Development Team			1
 
 
 
@@ -70,6 +70,8 @@ GRASS 5.0beta7	      GRASS Development Team			1
 r3.in.ascii <alpha>   GRASS Reference Manual  <alpha> r3.in.ascii
 
 
+
+     cell values are separated by space.
 
      NOTE: Currently, after the file has been imported, the
      stored values are compared with the original data. This
@@ -124,9 +126,7 @@ NOTICE
 
 
 
-
-
-2		      GRASS Development Team	   GRASS 5.0beta7
+2		      GRASS Development Team	   GRASS 5.0beta8
 
 
 
