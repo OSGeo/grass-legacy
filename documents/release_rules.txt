@@ -1,19 +1,34 @@
 How to release GRASS 5 binaries:
 
-1. Build it:
+0. Check version string:
+
+   src/CMD/VERSION
+
+
+1. Build GRASS:
+ 
  o wipe out binaries, (re-)compile everything,
 
- o re-compile NVIZ *without* PostgreSQL support
-   for distribution
+ o compile PostgreSQL modules:
+     gmake5 src.garden/grass.postgresql
+
+ o compile NVIZ *without* PostgreSQL support
+   for distribution:
+     configure --enable-postgres=no
+     gmake5 src.contrib/GMSL/NVIZ2.2
 
  o check, if libgdal is in place ($GISBASE/lib/)
    ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
    (ldd libgdal.1.1.so:
     ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
 
+ o compile s.vol.rst from extra directory (not distributed with sources)
+
+
 2. Package it with
 
    make bindist
+
 
 3. Publish it on web site:
  - grass5x_y_bin.tar.gz
