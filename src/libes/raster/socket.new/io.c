@@ -343,7 +343,7 @@ R_open_driver()
             unlock_driver(1);
             return(NO_RUN);
         default:
-            return(OKOK);
+            return(OK);
         }
     }
 
@@ -375,11 +375,16 @@ fifoto(input,output,alarm_time)
 {
     no_mon = 0;
     _wfd = msgget(ftok(output,0), 0600);
-    _rfd = msgget(ftok(input,0),  0600) ;
+    _rfd = msgget(ftok(input,0),  0600);
     if( (_wfd == -1) || (_rfd == -1) )
         return -1;
 
-    return 1 ;
+    /* NO_RUN */
+    return 0;
+
+    /* OK
+    return 1;
+    */
 }
 
 static int
