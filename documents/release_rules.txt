@@ -11,19 +11,35 @@ Note: This text contains some rules only applicable to the development
 
 --------------------------------------------------------------
 
-General methodolgy: pre-testing - bug fixes - publish
+General methodolgy: call for release - pre-testing - bug fixes - publish
 
-0. Create a branch using CVS for the release. All code for the 
-   stable release will come from this branch. The only changes
-   allowed to this branch are bug fixes for errors discovered by
-   pretesters. All such bug fixes should include "Release bug fix:"
-   at the start of each log message for easy monitoring of committed
-   code. That is, any code committed without this phrase at the start 
-   of the log message will be backed out. All developers who subscribe
-   to the commit list (who are we?) should take responsibility for
-   monitoring the code committed to the release branch. All other code
-   can be committed to the MAIN branch as usual, thus development
-   does not need to be halted.
+
+0. Prepare to create a release
+
+   o Make a list of bugs that we would like to see fixed for the release
+     (probably the RC list in BUGS)
+
+   o Request that developers claim any of these bugs that they think they
+     can fix on RT
+
+   o After a few days or a week, any remaining bugs are left for the next
+     release - if nobody claims them they obviously won't be fixed
+
+   o Create a branch on CVS for bug fixing (call it bugFixes or something).
+     All code for the stable release will come from this branch.
+
+   o The only commits to this branch are bug fixes (not necessarily only
+     those claimed) - other developments are committed to MAIN. All such
+     bug fixes should include "Release bug fix:" at the start of each log
+     message for easy monitoring of committed code. That is, any code
+     committed without this phrase at the start of the log message will
+     be backed out. All developers who subscribe to the commit list (who
+     are we?) should take responsibility for monitoring the code committed
+     to the release branch. As stated, all other code can be committed to
+     the MAIN branch as usual, thus development does not need to be halted.
+
+   o Once all claimed bugs are fixed, tag this branch as pre release 1
+     and start the pretest phase
 
 1. Add disclaimer to all mails:
 
@@ -60,6 +76,16 @@ General methodolgy: pre-testing - bug fixes - publish
 
 4. Merge the changes in the release branch back into the MAIN branch
    using CVS.
+
+5. One of the keys to this scheme is cooperation among the developers.
+   Basically the developers have to concentrate on fixing bugs, but those
+   who cannot fix bugs can still commit features if they wish. Another key
+   is that the developers should ask Markus if their new code can be
+   committed to the bug fix branch before committing it, especially if they
+   are not sure if it should or not. Finally, this will work well if the
+   time period for the branch to exist is relatively small. That is, the
+   changes to MAIN are minimal so that merging the branch back is not a
+   big hassle.
 
 --------------------------------------------------------------
 
