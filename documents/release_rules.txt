@@ -156,7 +156,7 @@ Create source and binary distributions:
 
      - build source tarball (including the parent directory): 
        Note the file name convention:
-        tar cvfz grass-5.0.X_src.tar.gz grass5.0.X
+        tar cvfz grass-5.0.X_src.tar.gz grass-5.0.X
 
    o Markus:
      Update the PDF-docs on server (needs "htmldoc" tool):
@@ -174,10 +174,14 @@ Create source and binary distributions:
 
    o update web site to new version (HTML in /cvsweb )
       - index.html
-      - grass5/index.html
       - download.html
+      - grass5/index.html
+      - grasshist.html
+      - grass_releases.html
       - bugtracking/bugreport.html
-
+      
+     write announcement
+      - store in Web as announces/announce_grass503.html
 
 
 BINARIES
