@@ -41,13 +41,13 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     G_limit_west  (&west, window->proj);
     if (  window->proj == PROJECTION_LL ) {
 	if ( (east - west) > 360 ) {
-	    fprintf(stderr, "> 360 -> reset\n") ;
+	    fprintf(stderr, "(longitude range > 360) -> resetting\n") ;
 	    td = (east + west) / 2;
 	    east = td + 180;
 	    west = td - 180;
 	}
     }
-    
+
     resetres = 1;
     while ( resetres ) {
 	nsr = round_to(window->ns_res, 3); 
@@ -132,24 +132,36 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     if ( window->proj == PROJECTION_LL ) {
 	if(tnorth > 90)   tnorth = 90;
 	if(tsouth < -90)  tsouth = -90;
+	if(teast > 360)   teast -= 360; /* allow 0->360 as easting (e.g. Mars) */
+	if(twest > 360)   twest -= 360;
+	if(teast < -180)   teast += 360;
+	if(twest < -180)   twest += 360;
     }
-    
+
     if ( tnorth == tsouth ) tnorth += window->ns_res;
-    if (  window->proj != PROJECTION_LL ) 
-        if ( teast == twest ) teast += window->ew_res;
-    
+    if ( window->proj != PROJECTION_LL ) {
+	if ( teast == twest )
+	    teast += window->ew_res;
+    }
+    else {
+	if( (fabs(teast-twest) <= window->ew_res) || 
+	   (fabs(teast-360-twest) <= window->ew_res) ) {
+		teast -= window->ew_res;
+	}
+    }
+
     if ( resetwin ) {
 	window->north = tnorth;
 	window->south = tsouth;
 	window->east  = teast ;
 	window->west  = twest ;
-	
+
 	if ( !hand ) {
 	    fprintf(stderr, "\n") ;
 	    print_win ( window, north, south, east, west );
 	    fprintf(stderr, "\n") ;
 	}
-	
+
 	limit = print_limit ( window, &defwin );
 
 	G_adjust_Cell_head (window, 0, 0); 
@@ -157,7 +169,7 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	G_set_window(window);
 	redraw();
     }
-	    
+    
     return 1; 
 }
 
