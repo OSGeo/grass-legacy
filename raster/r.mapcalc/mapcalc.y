@@ -25,6 +25,7 @@
 
 %token <sval> VARNAME
 %token <sval> NAME
+%token <sval> VARSTRING
 %token <sval> STRING
 %token <ival> INTEGER
 %token <fval> FLOAT
@@ -54,7 +55,6 @@
 
 %type <sval> name
 %type <sval> map
-%type <sval> newmap
 
 %type <list> expr_list
 
@@ -82,11 +82,8 @@ defs		: def			{ $$ = list($1,NULL);		}
 		| def ';' defs		{ $$ = list($1,$3);		}
 		;
 
-def		: newmap '=' exp	{ $$ = binding($1,$3); define_variable($$);	}
-		;
-
-newmap		: STRING
-		| NAME
+def		: STRING '=' exp	{ $$ = binding($1,$3); define_variable($$);	}
+		| NAME '=' exp		{ $$ = binding($1,$3); define_variable($$);	}
 		;
 
 map		: STRING
@@ -111,7 +108,8 @@ expr_list	: exp			{ $$ = singleton($1);		}
 		| exp ',' expr_list	{ $$ = list($1, $3);		}
 		;
 
-atom_var	: VARNAME		{ $$ = variable($1);		}
+atom_var	: VARSTRING		{ $$ = variable($1);		}
+		| VARNAME		{ $$ = variable($1);		}
 		;
 
 atom_map	: map '[' index ']'	{ $$ = mapname($1,'M',$3,0);	}
