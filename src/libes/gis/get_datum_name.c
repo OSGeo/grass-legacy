@@ -52,7 +52,7 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
         if (strcmp(answer,"list") == 0) {
             Tmp_file = G_tempfile ();
             if (NULL == (Tmp_fd = fopen (Tmp_file, "w")))
-                fprintf(stderr, (_("Cannot open temp file")) );
+                G_warning(_("Cannot open temp file") );
             else
 	    { 
                 fprintf(Tmp_fd,"Short Name\tLong Name / Description\n---\n");
