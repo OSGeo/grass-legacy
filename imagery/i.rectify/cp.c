@@ -1,5 +1,6 @@
-#include "global.h"
+#include <stdlib.h>
 #include <string.h>
+#include "global.h"
 #include "crs.h"     /* CRS HEADER FILE */
 int 
 get_control_points (
