@@ -285,12 +285,14 @@ main (int argc, char *argv[])
 
 	    /* Output one feature for each category */
 	    for ( j = -1; j < Cats->n_cats; j++ ) {
-		if ( j == -1 && cat == 0 ) break; /* no cat(s) exists */
-
-		if ( Cats->field[j] == field )
-		    cat = Cats->cat[j];
-		else 
-		    continue;
+		if ( j == -1 ) {
+		    if ( cat > 0 ) continue; /* cat(s) exists */
+		} else {
+		    if ( Cats->field[j] == field )
+			cat = Cats->cat[j];
+		    else 
+			continue;
+		}
 	        
 		mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
 	        OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
