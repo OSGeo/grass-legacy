@@ -1,7 +1,7 @@
 
 
 
-d.measure            GRASS Reference Manual             d.measure
+d.measure <main>     GRASS Reference Manual      <main> d.measure
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.measure            GRASS Reference Manual             d.measure
+d.measure <main>     GRASS Reference Manual      <main> d.measure
 
 
 
@@ -88,6 +88,8 @@ SEE ALSO
 AUTHOR
      Jim Westervelt, U.S. Army Construction Engineering Research
      Laboratory
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory, 4.1 Release
 
 
 
@@ -124,9 +126,7 @@ AUTHOR
 
 
 
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
