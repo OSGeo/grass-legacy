@@ -694,6 +694,9 @@ menu_build 1 .main_menu {
             "ARC/INFO ungenerate file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.in.arc"
             }
+            "ESRI shapefile" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.in.shape"
+            }
             "Various formats" "" {
                 "run v.import &"
             }
