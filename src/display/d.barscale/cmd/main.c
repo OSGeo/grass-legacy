@@ -47,14 +47,14 @@ int main (int argc, char **argv)
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
 	opt1->type       = TYPE_STRING ;
-	opt1->answer     = "black" ;
+	opt1->answer     = DEFAULT_BG_COLOR ;
 	opt1->required   = NO ;
 	opt1->description= "Color used for the background, or \"none\"" ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->answer     = "white" ;
+	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->required   = NO ;
 	opt2->options    = D_color_list();
 	opt2->description= "Color used for the text" ;
