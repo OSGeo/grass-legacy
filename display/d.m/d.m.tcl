@@ -681,7 +681,7 @@ proc Dm::OpenFileBox {w} {
     if { $win == ""} {set win $mainwindow}
     
     set types {
-        {{Adm Resource Files} {.dmrc}}
+        {{Adm Resource Files} {{.dm} {.dmrc}}}
         {{All Files} *}
     }
 
@@ -710,7 +710,7 @@ proc Dm::SaveFileBox {w} {
     catch {if { [ regexp -- {^Untitled.dmrc$} $::Dm::filename r]} {unset ::Dm::filename}}
     if {[catch {Dm::save $::Dm::filename}]} {
         set types {
-            {{Adm Resource Files} {.dmrc}}
+            {{Adm Resource Files} {{.dm} {.dmrc}}}
             {{All Files} *}
         }
         if {[catch {tk_getSaveFile \
