@@ -1,0 +1,25 @@
+MAN	  = doc/r.rescale.db
+PGM       = $(BIN_CONTRIB_CMD)/r.rescale.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+# EXTRA_CFLAGS	= -Dunlink=puts
+
+
+
+OBJS = \
+	main.o \
+	ingresUtils.o \
+	sqlQry.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	ln $(GISBASE)/etc/front.end $(BIN)/r.rescale.db
+	cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+###########################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
