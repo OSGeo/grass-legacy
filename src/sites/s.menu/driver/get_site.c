@@ -1,6 +1,6 @@
 #include "gis.h"
 #include "site.h"
-#include "dir.h"
+#include "site_dir.h"
 get_site(site_list)
 
 	SITE_LIST *site_list;
