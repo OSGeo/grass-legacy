@@ -9,7 +9,7 @@
 static  int     popen_pid[50];
 
 FILE *
-popen(cmd,mode)
+G_popen(cmd,mode)
     char    *cmd;
     char    *mode;
 {
@@ -42,10 +42,11 @@ popen(cmd,mode)
     return(fdopen(me, mode));
 }
 
-pclose(ptr)
+G_pclose(ptr)
     FILE *ptr;
 {
-    int f, r, (*sighup)(), (*sigint)(), (*sigquit)();
+    void (*sighup)(), (*sigint)(), (*sigquit)();
+    int f, r;
     int status;
 
     f = fileno(ptr);
