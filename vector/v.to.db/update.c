@@ -23,7 +23,9 @@ update (struct Map_info *Map)
 
     db_init_string (&stmt);	
 
-    Fi = Vect_get_field ( Map, options.field);
+    if ( (Fi = Vect_get_field ( Map, options.field)) == NULL)
+         G_fatal_error("Database connection not defined for field <%d>", options.field);
+
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
