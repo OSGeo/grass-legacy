@@ -52,3 +52,37 @@ Solaris:
 etc.
 
 See INSTALL/ for further platforms.
+
+--------------------------------------------------------------------
+Usage:
+
+Sample Gmakefile:
+
+PGM=test
+HOME=.
+
+LIBES=$(GMATHLIB) $(GISLIB) -lblas -llapack -lg2c
+LIST = main.o
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+        $(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+#$(LIST): global.h
+
+$(LIBES): #
+
+
+
+Sample module:
+
+#include "la.h" 
+#include "gis.h"
+
+int main(int argc, char *argv[])
+{
+  mat_struct *matrix;
+
+  matrix=G_matrix_init(3, 3, 1);
+  G_matrix_free(matrix);
+}
+
