@@ -28,8 +28,11 @@ agnps_input_1
 # changes                       19.12.96 Markus Neteler
 # check error status:
 
-if [ $? -eq 0 ]
-then 
+if [ $? -ne 0 ]
+then
+  echo "Check for More than one outlet cell! If present, use d.rast.edit"
+  echo "on aspect map to fix this."
+else
   agnps_input_2a
 fi
 
@@ -44,7 +47,5 @@ fi
 # 
 
 $GISBASE/etc/agnps50/copy_cell_num.sh
-echo "Check for More than one outlet cell! If present, use d.rast.edit"
-echo "on aspect map to fix this."
-echo "If o.k., run"
+echo "If all o.k., then proceed and run"
 echo "    r.agnps50.run"
