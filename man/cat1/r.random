@@ -1,7 +1,7 @@
 
 
 
-r.random             GRASS Reference Manual              r.random
+r.random <main>      GRASS Reference Manual       <main> r.random
 
 
 
@@ -20,7 +20,7 @@ DESCRIPTION
      The program r.random allows the user to create a raster map
      layer and a site list file containing geographic coordinates
      of points whose locations have been randomly determined.
-     The program locates these randomly-generated sites within
+     The program locates these randomly generated sites within
      the current geographic region and mask (if any), on non-zero
      category value data areas within a user-specified raster map
      layer.  If the user sets the -z flag, sites will be randomly
@@ -31,13 +31,11 @@ DESCRIPTION
      current mapset.  The category values and corresponding
      category names already associated with the random site
      locations in the input map layer are assigned to these sites
-     in the raster_output map layer.  A color table, designed to
-     contrast with that assigned to the input, is generated for
-     the raster_output.
+     in the raster_output map layer.
 
      The site_lists file created by r.random contains a listing
      of the sites' geographic coordinates;  these coordinates are
-     the center points of the randomly-selected cells.
+     the center points of the randomly selected cells.
 
 OPTIONS
      The user may specify the quantity of random locations to be
@@ -57,22 +55,22 @@ OPTIONS
      r.random can be run interactively or non-interactively.  The
      user may provide program arguments on the command line,
      specifying an input map layer name (input=name), output
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.random             GRASS Reference Manual              r.random
-
-
-
      raster map layer name (raster_output=name), output site list
      file name (sites_output=name), and (optionally) give the
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+r.random <main>      GRASS Reference Manual       <main> r.random
+
+
+
      number of sites to be randomly generated as a total number
      of sites (nsites=number) or as a percentage of the map's
      size (nsites=number%).  The user can also direct that
@@ -123,22 +121,22 @@ r.random             GRASS Reference Manual              r.random
                        number is the number of sites (i.e.,
                        number of cells) to appear in the
                        raster_output layer and/or sites_output
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-r.random             GRASS Reference Manual              r.random
-
-
-
                        file.
                        Options:  Non-percentage values should be
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+r.random <main>      GRASS Reference Manual       <main> r.random
+
+
+
                        given as positive integer values less than
                        or equal to the number of cells in the
                        input map layer.  Percentage values given
@@ -189,76 +187,12 @@ SEE ALSO
 
 AUTHOR
      Dr. James Hinthorne, GIS Laboratory, Central Washington
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-r.random             GRASS Reference Manual              r.random
-
-
-
      University
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
