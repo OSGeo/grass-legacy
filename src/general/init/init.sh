@@ -134,8 +134,6 @@ else
     fi
 fi
 
-export GRASS_GUI
-
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f $GISRC ] ; then
@@ -239,12 +237,13 @@ if [ ! "$LOCATION" ] ; then
      	    	1)
 		    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
+		    echo "Please report this error to the Grass developers"
+		    echo "Switching to text mode"
 		    echo "Hit RETURN to continue..."
 		    read ans
 		    
 		    GRASS_GUI="text"
 
-		    export GRASS_GUI
                     if [ -f $GISRC ] ; then
                         awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
                         echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
@@ -282,7 +281,7 @@ if [ ! "$LOCATION" ] ; then
 		    ;;
 		    
 		*)
-		    echo "Invalid return code from gis_set.tcl."
+		    echo "ERROR: Invalid return code from gis_set.tcl."
 		    echo "Please advise GRASS developers of this error."
 		    ;;
     	    esac
@@ -290,7 +289,7 @@ if [ ! "$LOCATION" ] ; then
 	    ;;
 	*)
 	    # Shouldn't need this but you never know
-	    echo "ERROR: Invalid user interface specified."
+	    echo "ERROR: Invalid user interface specified - $GRASS_GUI."
 	    echo "Use the -help option to grass for valid interfaces."
 	    exit
 	    ;;
