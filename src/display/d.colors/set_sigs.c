@@ -1,3 +1,4 @@
+#define MAIN
 #include "externs.h"
 #include <signal.h>
 
