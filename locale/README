@@ -3,10 +3,15 @@ HOWTO translate GRASS messages
 
 $Id$
 
+
+[ Web page: http://grass.itc.it/i18n.html ]
+
 Updating the message catalogs currently only works on 
 unix-like systems and requires xgettext.
 
-REQUIRED SOURCE CODE CHANGES
+------------------------------------------------------
+
+REQUIRED SOURCE CODE CHANGES (programming required)
 
 Generally, to support i18N multiple languages,
 message strings in GRASS must be modified from
@@ -17,13 +22,16 @@ to
 
 These strings will be then extracted automatically into the
 POT file. 
+
 Also needed:
  #include "glocale.h"
-This line has to be added to each file with messages.
+ 
+This line has to be added to each C file which contains 
+user messages.
 
 ------------------------------------------------------
 
-GENERAL PROCEDURE
+GENERAL TRANSLATION PROCEDURE (no programming required)
 
  POT files ----> PO files      ----> MO files
  (original       (translated        (final message file
