@@ -1,5 +1,9 @@
 %{
 #include "gis_pars.h"
+#ifdef getc
+#undef getc
+#endif
+#define getc mygetc
 
 extern FILE *e_sav_fil ;
 FILE *newinput ;
