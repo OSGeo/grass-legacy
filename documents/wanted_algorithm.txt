@@ -1,3 +1,4 @@
+http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/documents/wanted_algorithm.txt
 Wanted Algorithm for GRASS GIS
 
 $Id$
@@ -6,17 +7,28 @@ This page contains algorithm we would like to integrate
 into GRASS GIS on GPL license basis.
 
 Please contact us if you can help!
+ neteler@geog.uni-hannover.de or, better:
+ http://www.geog.uni-hannover.de/grass/grassdevel.html
 
 
 Image processing:
 
- - bundle block adjustment
+ - bundle block adjustment for aerial photographs
+
  - stereo visualization and measurement
+   (Perhaps started by Buciu Claudiu <claudiub@rol.ro> 1/2001?
 
 
 Vector analysis:
 
  - network analysis
+   Started 10/2000 by Roberto Micarelli <mi.ro@iol.it>, help needed
+
+ - help needed for new 3D vector format implementation
+   contacts:   David D Gray, Radim Blazek
+    <ddgray@armadce.demon.co.uk>
+    <Radim.Blazek@dhv.cz>
+
 
 
 GRASS Development Team
