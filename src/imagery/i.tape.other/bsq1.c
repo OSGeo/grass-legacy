@@ -14,10 +14,11 @@ bsq1()
 	if (wantband[band])
 	{
 	    I_tape_advance (tapefd, skiprecords);
+	    first[band] = 1;
 	    if(!readbsq (band))
 		break;
 	}
 	if (band < lastband)
-	    I_tape_advance (tapefd, -1);
+	    I_tape_advance (tapefd, -999);
     }
 }
