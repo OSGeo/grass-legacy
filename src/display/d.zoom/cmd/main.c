@@ -187,7 +187,7 @@ main (int argc, char **argv)
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
     {
-	fprintf(stderr, "ERROR: No map is given\n");
+	fprintf(stderr, "ERROR: No map is displayed in GRASS monitor\n");
 	exit(1);
     }
 
