@@ -83,7 +83,7 @@ int IL_vector_input_data_2d (
     fprintf (stdout, "Loading data from attribute table ...\n");
     
     Fi = Vect_get_field( Map, field);
-    if ( Fi == NULL ) G_fatal_error ("Cannot get field info");   
+    if ( Fi == NULL ) G_fatal_error ("Cannot get layer info");   
     G_debug ( 3, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
     db_init_handle (&handle);
     db_init_string ( &stmt);
