@@ -51,11 +51,11 @@ main (int argc, char *argv[])
       "into a GRASS site list file.";
 
     parm.output = G_define_option();
-    parm.output->key = "sites";
+    parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
-    parm.output->description = "sites file to be created";
-    parm.output->gisprompt = "any,site_lists,sites";
+    parm.output->description = "vector file to be created";
+    parm.output->gisprompt = "any,vector,vector";
 
     parm.input = G_define_option();
     parm.input->key = "input";

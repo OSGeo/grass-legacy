@@ -33,11 +33,11 @@ int main(int argc, char *argv[])
                     "site locations and their descriptions.";
                     
     parm.input = G_define_option();
-    parm.input->key = "sites";
+    parm.input->key = "input";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
-    parm.input->description = "name of a sites file to be output";
-    parm.input->gisprompt = "old,site_lists,sites";
+    parm.input->description = "name of a vector file to be output";
+    parm.input->gisprompt = "old,vector,vector";
 
     parm.fs = G_define_option();
     parm.fs->key = "fs";
