@@ -1,3 +1,6 @@
+#include "Vect.h"
+#define QRY_LENGTH 1024
+
 struct Sql
 {
 	double centX	;   /* x coordinate 			*/
@@ -12,14 +15,9 @@ struct Sql
 	double maxX	;   /* east				*/
 };
 
-
-struct Stats
-{
-	int count	;  /* count aggregate			*/
-	float sum	;  /* sum column aggregate		*/
-	float avg	;  /* average agregate			*/
-	float min	;  /* min column value			*/
-	float max	;  /* max column value			*/
-	float freq	;  /* freq not used currently		*/
-	float mode	;  /* mode for column value		*/
-};
+char * buildPg(char *, char *, int);
+char * buildPgSite(char *, char *, char *);
+char * runPg(char *);
+char * do_query(char *, struct Sql *);
+char *getCat(struct Map_info *, float , float, int *);
+int fillSQLstruct(struct Sql *, float, float, int);
