@@ -1,3 +1,7 @@
+#fetch GRASS Version number:
+set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
+set GRASSVERSION [read -nonewline $fp]
+close $fp
 
 namespace eval DmPrint {
 }
@@ -138,6 +142,7 @@ proc DmPrint::init_tmpfiles { } {
 
 proc DmPrint::window { } {
     global PWid PVar PPap PView
+    global GRASSVERSION
 
     # check if opened
     if { [winfo exists .printwin] } {
@@ -147,7 +152,7 @@ proc DmPrint::window { } {
     }
 
     set PW [toplevel .printwin]
-    wm title $PW [G_msg "Print / Plot (Display Manager - GRASS 5.7)"]
+    wm title $PW [G_msg "Print / Plot (Display Manager - GRASS $GRASSVERSION)"]
 
     # Left part paper + output
     set PWid(left) [ frame $PW.left ]  
@@ -283,6 +288,7 @@ proc DmPrint::window { } {
 
 proc DmPrint::print { ptype } {
     global PWid PVar PPap PView
+    global GRASSVERSION
 
     DmPrint::paper
 
@@ -368,7 +374,7 @@ proc DmPrint::print { ptype } {
 	    raise $PWid(preview)
 	} else {
 	    toplevel $PWid(preview)
-	    wm title $PWid(preview) "Preview ( Print / Plot - Display Manager - GRASS 5.7)"
+	    wm title $PWid(preview) "Preview ( Print / Plot - Display Manager - GRASS $GRASSVERSION)"
         }
 	image create photo preview_image -format PPM -file $PVar(tmpppmfile)
 	set pv [ label $PWid(preview).pvl -image preview_image -bd 1 -relief sunken -width $size -height $size ]
