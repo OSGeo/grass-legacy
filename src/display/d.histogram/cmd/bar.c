@@ -209,10 +209,12 @@ int bar (
 				if (xscale > 1)
 				{
 					draw=NO;
-				/*
+
+#ifdef notdef 
 					draw=YES;
 					bar_color = D_translate_color("black");
 					bar_height = yoffset; /* zero */
+#endif
 				}
 				else
 					draw=NO;
