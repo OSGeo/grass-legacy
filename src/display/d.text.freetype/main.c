@@ -181,7 +181,7 @@ main(int argc, char **argv)
 	param.path = G_define_option();
 	param.path->key         = "path";
 	param.path->type        = TYPE_STRING;
-	param.path->required    = fonts_count ? NO : YES;
+	param.path->required    = NO;
 	param.path->description = "Font path";
 
 	param.charset = G_define_option();
