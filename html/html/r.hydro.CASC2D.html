@@ -24,7 +24,7 @@ Note: This is beta software: version 1.01.
 <P>
 <I>r.hydro.CASC2D, r.hydro.CASC2D help, r.hydro.CASC2D </I>[-smtoepibduq]
 elevation=mapname time_step=value tot_time=value discharge=mapname
-outlet_eastnnorthnslope=east,north,bedslope rain_duration=value
+outlet_eastNnorthNslope=east,north,bedslope rain_duration=value
 [watershed_mask=mapname] [initial_depth=mapname] [storage_capacity=mapname]
 [interception_coefficient=mapname] [roughness_map=mapname] [Manning_n=value]
 [conductivity=mapname] [capillary=mapname] [porosity=mapname]
@@ -132,7 +132,7 @@ TOPOGRAPHY
 <P>
 <I>elevation=mapname</I> map of elevation (DEM).
 <P>
-<I>outlet_eastnnorthnslope=value</I>,<I>easting, northing</I>,
+<I>outlet_eastNnorthNslope=value</I>,<I>easting, northing</I>,
 and <I>bed slope</I> at the outlet
 <P>
 value,value (comma delimited)
@@ -729,7 +729,7 @@ gage_time_step=120, and rain_duration=600. For state plane (SP)
 coordinate system the eastings and northing will have to be in
 feet rather than meters.
 <P>
-15) outlet_eastnnorthnslope: These three values determine
+15) outlet_eastNnorthNslope: These three values determine
 the location of the outlet, in terms of its easting and northing,
 and the outlet bed slope. One needs to make sure that the outlet
 described by its easting and northing is not only within the active
