@@ -54,8 +54,6 @@ struct Bunch {
 };
 extern struct Bunch *CreateBunch();
 
-extern int errno;
-
 void XCInterrupt();
 char *XCParseCommand();
 void _XcWMClientMessage();
