@@ -73,12 +73,29 @@ do
     s) opts=1 ;;
 
     q) optq=1
-      which rman > /dev/null 2>&1
-      if [ $? -ne 0 ]
-      then
-        echo ERROR: rman not installed.
-        exit 1
-      fi ;;
+## old:
+#       which rman > /dev/null 2>&1
+#       if [ $? -ne 0 ]
+
+## new:
+       found=
+       for i in `echo $PATH | sed 's/^:/.:/
+                                   s/::/:.:/g
+                                   s/:$/:./
+                                   s/:/ /g'`
+       do
+         if [ -f $i/rman ] ; then
+	   found=1
+           break
+         fi
+       done
+
+       if [ ! "$found" ]
+##
+       then
+         echo ERROR: rman not installed.
+         exit 1
+       fi ;;
 
     *) echo "$HELP"
        exit 1 ;;
@@ -115,8 +132,24 @@ if [ "$optd" -o "$optq" ]
 then
   GRASS_TEXT_BROWSER=
 else
-  which $GRASS_TEXT_BROWSER > /dev/null 2>&1
-  if [ $? -ne 0 -o "$optm" ]
+## old:
+#  which $GRASS_TEXT_BROWSER > /dev/null 2>&1
+#  if [ $? -ne 0 -o "$optm" ]
+
+## new:
+  found=
+  for i in `echo $PATH | sed 's/^:/.:/
+                              s/::/:.:/g
+                              s/:$/:./
+                              s/:/ /g'`
+  do
+    if [ -f $i/$GRASS_TEXT_BROWSER ] ; then
+      found=1
+      break
+    fi
+  done
+  if [ ! "$found" -o "$optm" ]
+##
   then
     if [ "$GRASS_TEXT_BROWSER" -a ! "$optm" -a ! "$opts" ]
     then
