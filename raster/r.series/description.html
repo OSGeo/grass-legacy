@@ -18,7 +18,9 @@ Following methods are available:
  <li>diversity: number of different values
  <li>slope: linear regression slope
  <li>offset: linear regression offset
-</ul> 
+ <li>min_raster: raster with the min. time-series value
+ <li>max_raster: raster with the max. time-series value
+ </ul> 
 
 <H2>NOTES</H2>
 
@@ -31,6 +33,9 @@ NULLs) is passed to the aggregate function. Individual aggregates can
 handle data as they choose. Mostly, they just compute the aggregate
 over the non-NULL values, producing a NULL result only if all inputs
 are NULL.
+
+
+
 
 <H2>EXAMPLE</H2>
 
