@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.95 2000-12-07 18:07:32 markus Exp $
+$Id: BUGS,v 1.96 2000-12-11 10:55:13 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -251,6 +251,10 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
     OK with an 8-bit image.
     (reported by Steve Trick <TrickSG1@cf.ac.uk>)
   (being worked on by David D Gray)
+ - r.in.png does not work                                                          
+  (r.out.png, then r.in.png with this image gives me a totally white              
+  raster on IRIX). r.stats says: 100% * (NULL)                                    
+  (being worked on by ?)
 
 [RC]r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
@@ -287,24 +291,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
    (already fixed for FreeBSD/Linux. Check for other platforms, 
    further corrections go here:   src/libes/gis/null_val.c)
    test with r.mapcalc test=-129, if you get range: -129 -129 it's fixed.
-  (being worked on by ?)
- -  r.mapcalc does not like it if the cellvalues are very high for eg.,            
-    initially I put the col=fips which ranges from 1001 to 55141 - it 
-    core dumped ... I guess the limit in r.mapcalc is 32xxx which 
-    is a "huge" limitation
-    (reported by Anantha Prasad  aprasad@fs.fed.us)
-  (being worked on by Andreas Lange)
- - r.mapcalc/polish: (when compiling)
-  make[2]: Entering directory
-  /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
-  rm -f lex.yy.c y.tab.c
-  rm -f OBJ.i586-linux-elf/main.o
-  gcc -g -O2   -I/home/neteler/src5/grass5.0beta/src/include  -c main.c
-  mv main.o OBJ.i586-linux-elf/main.o
-  flex pol.l
-  yacc pol.y
-  yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
-  (being worked on by Andreas Lange)
+   -> Any platforms mising?
 
 [RC]r.neighbors 
   seems doesn't work with a float number                   
@@ -417,13 +404,6 @@ r3.in.v5d/r3.out.v5d:
    compiler flag)
   solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
   (being worked on by ?)
-
-r3.mapcalc/polish: (when compiling)
-  mv main.o OBJ.i586-linux-elf/main.o
-  flex pol.l
-  yacc pol.y
-  yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
-  (being worked on by Andreas Lange)
 
 r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
  - the dependency to OpenGL and Mesa should be checked automatically
