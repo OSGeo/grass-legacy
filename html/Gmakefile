@@ -1,18 +1,26 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.26 2001-03-05 05:16:49 justin Exp $
+# $Id: Gmakefile,v 1.27 2001-04-04 12:49:26 markus Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
-# PURPOSE:  	Creates all manpages in $(GISBASE)/man/man1
-#   	    	(Think to add grass programmer's manual pages in
-#   	    	$(GISBASE)/man/man3 and file format in $(GISBASE)/man/man5
-#   	    	later...) Copy html tree (without the other files) in
-#   	    	$(GISBASE)/documents The manual in html format will be in
-#   	    	$(GISBASE)/documents/html (default in tcltkgrass ?) The
-#   	    	manual in postscript format will be in
-#   	    	$(GISBASE)/documents/postscript
-# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+# PURPOSE:  	o Creates all manpages in $(GISBASE)/man/man1
+#   	    	  (Think to add grass programmer's manual pages in
+#   	    	  $(GISBASE)/man/man3 and file format in $(GISBASE)/man/man5
+#   	    	  later...) 
+#		o Copies html tree (without the other files) in
+#   	    	  $(GISBASE)/documents The manual in html format will be in
+#   	    	  $(GISBASE)/documents/html (default in tcltkgrass) The
+#		  manual in postscript format will be in
+#   	    	  $(GISBASE)/documents/postscript, the manual in pdf will
+#		  be in $(GISBASE)/documents/pdf
+#
+#		default: html
+#		ps:      gmake5 . postscript-docs
+#		pdf:     gmake5 . pdf-docs
+#                               ^-- current directory
+#
+# COPYRIGHT:    (C) 2000-2001 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -112,8 +120,12 @@ pdf-docs:
 	$(HTML2PDF) --webpage general.html html/g*.html -f $(GRASS_PDFDIR)/grass5general.pdf
 	$(HTML2PDF) --webpage imagery.html html/i*.html -f $(GRASS_PDFDIR)/grass5imagery.pdf
 	$(HTML2PDF) --webpage misc.html html/m*.html -f $(GRASS_PDFDIR)/grass5misc.pdf
+	$(HTML2PDF) --webpage paint.html html/p.*.html -f $(GRASS_PDFDIR)/grass5paint.pdf
+	$(HTML2PDF) --webpage photo.html html/i.ortho*.html html/photo*.html -f $(GRASS_PDFDIR)/grass5photo.pdf
+	$(HTML2PDF) --webpage ps.html html/ps.*.html -f $(GRASS_PDFDIR)/grass5ps.pdf
 	$(HTML2PDF) --webpage raster.html html/r*.html -f $(GRASS_PDFDIR)/grass5raster.pdf
-	$(HTML2PDF) --webpage        html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
+#	$(HTML2PDF) --webpage sites.html html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
+	$(HTML2PDF) --webpage  html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
 	$(HTML2PDF) --webpage vector.html html/v*.html -f $(GRASS_PDFDIR)/grass5vector.pdf
 	$(HTML2PDF) --webpage grid3d.html html/?3*.html html/*.vol.*.html -f $(GRASS_PDFDIR)/grass5grid3d.pdf
 	$(HTML2PDF) --webpage scripts.html html/*sh.html -f $(GRASS_PDFDIR)/grass5scripts.pdf
