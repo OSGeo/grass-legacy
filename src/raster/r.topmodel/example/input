@@ -1,14 +1,14 @@
-# ntimestep:	Number of timestep
-# dt:		Time increment
+# ntimesteps:	Number of timesteps
+# dt:		Time increment(timestep)
 #									    [h]
 # R:		Rainfall
-#								   [m/timestep]
+#								         [m/dt]
 # Ep:		Potential evapotranspiration
-#								   [m/timestep]
+#								         [m/dt]
 #
 
-# ntimestep  dt
-        950   1
+# ntimesteps  dt
+         950   1
 
 #     R        Ep
       0  6.19e-05
