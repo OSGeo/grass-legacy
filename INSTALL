@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.14 2001-01-05 04:16:13 justin Exp $)
+($Id: INSTALL,v 1.15 2001-01-05 04:42:16 justin Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -202,10 +202,7 @@ make uninstall		- deletes the installation files, by default
 COMPILING MODULES NOT COMPILED BY DEFAULT
 
 As part of the installation a general "gmake5" script is created in
-/usr/local/bin (default) which allows you to compile modules separately. If
-you did not run "make install" then gmake5 and gmakelinks5 will be located
-in the bin.$ARCH/ directory. Note that you will have to specify the path
-to these executables in order to run them.
+/usr/local/bin (default) which allows you to compile modules separately.
 
 To compile a single module go into the module's directory and compile it with:
 
@@ -217,6 +214,13 @@ Finally the module has to be linked to the GRASS front.end by:
 
 Then you should be able to use the module. Note that gmakelinks5 only needs to
 be run once after the module is compiled.
+
+If you did not run "make install" then gmake5 and gmakelinks5 will be located
+in the bin.$ARCH/ directory. Note that you will have to specify the absolute 
+path to these executables in order to run them. For example
+    
+    /home/grass/bin.i686-pc-linux-gnu/gmake5
+    /home/grass/bin.i686-pc-linux-gnu/gmakelinks5
 
 If you want to compile your own modules then please see the SUBMITTING file
 for instructions regarding programming and submitting GRASS modules.
