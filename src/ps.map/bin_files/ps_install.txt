@@ -1,0 +1,38 @@
+<html>
+<pre>
+ (19.1.1998)
+Here you find some definitions for postscript drivers.
+
+
+
+Installing is _very_ easy:
+
+1. cd /usr/local/grass42 (or whereever you stored the package)
+
+2. Store the psdriver-package there and unpack it
+    
+   tar xvfz psdriver.tar.gz
+ 
+3. Have fun!
+
+   If you want to change these layoutfiles, go to
+   cd etc/paint/ps.devices/
+
+   Edit the files there (or create your own).
+
+4. Use the drivers with
+    ps.select and
+    ps.map
+
+
+That is all...
+ 
+ Markus Neteler
+   Department of Geography
+   Institute of Physical Geography
+   University of Hannover
+   Germany
+   email: neteler@geog.uni-hannover.de
+
+</pre>
+</html>
