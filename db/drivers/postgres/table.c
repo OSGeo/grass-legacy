@@ -137,24 +137,25 @@ int load_table(int t, char *stmt)
     for (i = 0; i < nflds; i++) {
 	dtype = PQftype(res, i);
 	fname = PQfname(res, i);
-	fsize = PQfsize(res, i);
-
 
 	switch (dtype) {
 	case INT8OID:
 	case INT2OID:
 	case INT4OID:
 	    type = PG_INT;
+	    fsize = PQfsize(res, i);
 	    break;
 	case CHAROID:
 	case BPCHAROID:
 	case VARCHAROID:
 	case TEXTOID:
 	    type = PG_CHAR;
+	    fsize = PQfmod(res, i) - 4; /* Looks strange but works, something better? */
 	    break;
 	case FLOAT4OID:
 	case FLOAT8OID:
 	    type = PG_DOUBLE;
+	    fsize = PQfsize(res, i);
 	    break;
 	default:
 	    if(!header_only) {
@@ -169,6 +170,7 @@ int load_table(int t, char *stmt)
 
 	}
 
+	G_debug(3, "col: %s type : %d width :%d", fname, type, fsize);
 	add_column(t, type, fname, fsize);
 	
 	G_debug(3, "load_table() - number of cols is %d", db.tables[t].ncols);
