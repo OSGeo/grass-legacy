@@ -13,7 +13,8 @@ main (int argc, char **argv)
 {
   int   i, j;
   int   err = 0;
-  struct Map_info Map;
+  int   byte_order;
+  struct Port_info port;
   FILE  *fp;
   
   double db, td[] = { -(PORT_DOUBLE_MAX), -(D_TEST), -(PORT_DOUBLE_MIN),
@@ -32,12 +33,12 @@ main (int argc, char **argv)
         return (1);
       }  
 
-    dig__set_cur_head (&(Map.head));
+    dig_set_cur_port (&port);
       
-    Map.head.byte_order = ENDIAN_LITTLE;
+    byte_order = ENDIAN_LITTLE;
     for ( i = 0; i < 2; i++ )
       {
-        dig__init_head_portable ( &(Map.head) );
+        dig_init_portable ( &(port), byte_order );
         for (j=0; j < 7; j++)
           {
 	    fprintf (fp, "double  ");	  
@@ -121,7 +122,7 @@ main (int argc, char **argv)
 
 	    
 	  }  
-        Map.head.byte_order = ENDIAN_BIG;
+        byte_order = ENDIAN_BIG;
       }	  
 
   fclose ( fp );

@@ -5,36 +5,20 @@ LIB_NAME = $(DIG2_LIBNAME)
 
 LIB_OBJS = \
     allocation.o  \
-    area.o \
-    bound_box.o  \
-    calc_angl.o  \
-    check_node.o  \
-    chk_inside.o \
-    clock.o \
-    cont_lines.o \
-    debugf.o \
-    file_checks.o \
-    find_area.o \
-    format.o \
+    angle.o  \
+    file_checks.o  \
     frmt.o \
-    isle.o \
-    linecros.o \
+    inside.o \
     line_dist.o \
-    load_plus.o \
-    map_to_head.o  \
-    memory_io.o \
-    node_op.o  \
-    point_t_line.o \
-    point_t_area.o \
-    prune.o  \
-    rw_ascii.o  \
-    struct_alloc.o  \
-    struct_io.o  \
-    struct_copy.o \
-    unit_conv.o \
-    write_file.o \
+    plus.o \
+    plus_area.o  \
+    plus_line.o \
+    plus_node.o \
+    plus_struct.o \
+    poly.o \
     portable.o \
-    x_struct_io.o 
+    rw_ascii.o  \
+    struct_alloc.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
@@ -49,7 +33,7 @@ $(ARCH_INCDIR)/portable.h:
 	
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c 
-	$(CC) $(LDFLAGS) $(ALLINC) -static -o $@ test.c $(DIG2LIB)
+	$(CC) $(LDFLAGS) $(ALLINC) -static -o $@ test.c $(DIG2LIB) $(GISLIB)
 	cd $(OBJDIR); ./test
 
 

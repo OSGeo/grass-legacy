@@ -140,3 +140,4 @@ end:
   *py = y + dy;
   return dx * dx + dy * dy;
 }
+

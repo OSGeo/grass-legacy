@@ -3,6 +3,7 @@
    **  US Army Construction Engineering Research Lab
  */
 
+#include <stdlib.h>
 #include "Vect.h"
 
 /*  These routines all eventually call calloc() to allocate and zero
@@ -12,149 +13,194 @@
  */
 
 /* alloc_node (map, add)
-   ** alloc_line (map, add)
-   ** alloc_area (map, add)
-   ** alloc_points (map, num)
-   ** node_alloc_line (node, add)
-   ** area_alloc_line (node, add)
-   **
-   **   Allocate array space to add 'add' elements
- */
+** alloc_line (map, add)
+** alloc_area (map, add)
+** alloc_points (map, num)
+** node_alloc_line (node, add)
+** area_alloc_line (node, add)
+**
+** Allocate array space to add 'add' elements
+*/
 
-/* node_alloc_line (node, add)
-   **     allocate space in  P_node,  lines and angles arrays to add 'add' more
-   **     lines
-   **
-   **  Returns   0 ok    or    -1 on error
- */
+
+/* allocate new node structure */
+P_NODE_2D *
+dig_alloc_node_2d ( ){
+    P_NODE_2D *Node;
+
+    Node = (P_NODE_2D *) malloc ( sizeof(P_NODE_2D) );
+    if (Node == NULL) return NULL;
+
+    Node->n_lines = 0;
+    Node->alloc_lines = 0;
+    Node->lines == NULL;
+    Node->angles == NULL;
+
+    return (Node);
+}
+
+/* dig_node_alloc_line (node, add)
+**     allocate space in  P_node,  lines and angles arrays to add 'add' more
+**     lines
+**
+**  Returns   0 ok    or    -1 on error
+*/
+
 int 
-dig_node_alloc_line (
-		      P_NODE * node,
-		      int add)
-{
-  int alloced;
+dig_node_alloc_line_2d ( P_NODE_2D * node, int add) {
+  int  num;
   char *p;
-  int num;
 
   num = node->n_lines + add;
 
-  alloced = node->alloc_lines;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 2, (char *) node->lines,
-			  sizeof (plus_t))))
-    {
-      return (dig_out_of_memory ());
-    }
+  p = realloc ( node->lines, num * sizeof(plus_t) );
+  if ( p == NULL ) return -1; 
   node->lines = (plus_t *) p;
-
-  alloced = node->alloc_lines;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 2, (char *) node->angles,
-			  sizeof (float))))
-    {
-      return (dig_out_of_memory ());
-    }
+  
+  p = realloc ( node->angles, num * sizeof(float) );
+  if ( p == NULL ) return -1;
   node->angles = (float *) p;
-  node->alloc_lines = alloced;
+  
+  node->alloc_lines = num;
   return (0);
 }
 
+
+/* Reallocate array of pointers to nodes.
+*  Space for 'add' number of nodes is added.
+* 
+*  Returns: 0 success
+*          -1 error
+*/
 int 
-dig_alloc_node (
-		 struct Map_info *map,
-		 int add)
-{
-  int alloced;
-  char *p;
-  int num;
+dig_alloc_nodes_2d ( struct Plus_head *Plus, int add) {
+    int  size;
+    char *p;
 
-  num = map->n_nodes + 1 + add;
+    size = Plus->alloc_nodes + 1 + add;
+    p = realloc ( Plus->Node_2d, size * sizeof(P_NODE_2D *) );
+    if ( p == NULL ) return -1;
+	 
+    Plus->Node_2d = (P_NODE_2D **) p;
+    Plus->alloc_nodes = size - 1;
 
-  alloced = map->alloc_nodes;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 128, (char *) map->Node,
-			  sizeof (P_NODE))))
-    {
-      return (dig_out_of_memory ());
-    }
-  map->Node = (P_NODE *) p;
-  map->alloc_nodes = alloced;
-  return (0);
+    return (0);
 }
 
-int 
-dig_alloc_line (
-		 struct Map_info *map,
-		 int add)
-{
-  int alloced;
-  char *p;
-  int num;
+/* allocate new line structure */
+P_LINE_2D *
+dig_alloc_line_2d ( ){
+    P_LINE_2D *Line;
 
-  num = map->n_lines + 1 + add;
+    Line = (P_LINE_2D *) malloc ( sizeof(P_LINE_2D) );
+    if (Line == NULL) return NULL;
 
-  alloced = map->alloc_lines;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 128, (char *) map->Line,
-			  sizeof (P_LINE))))
-    {
-      return (dig_out_of_memory ());
-    }
-  map->Line = (P_LINE *) p;
-  map->alloc_lines = alloced;
-  return (0);
+    return (Line);
 }
 
+/* Reallocate array of pointers to lines.
+*  Space for 'add' number of lines is added.
+* 
+*  Returns: 0 success
+*          -1 error
+*/
 int 
-dig_alloc_area (
-		 struct Map_info *map,
-		 int add)
-{
-  int alloced;
-  char *p;
-  int num;
+dig_alloc_lines_2d ( struct Plus_head *Plus, int add) {
+    int  size;
+    char *p;
 
-  num = map->n_areas + 1 + add;
+    size = Plus->alloc_lines + 1 + add;
+    p = realloc ( Plus->Line_2d, size * sizeof(P_LINE_2D *) );
+    if ( p == NULL ) return -1;
+	 
+    Plus->Line_2d = (P_LINE_2D **) p;
+    Plus->alloc_lines = size - 1;
 
-  alloced = map->alloc_areas;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 128, (char *) map->Area,
-			  sizeof (P_AREA))))
-    {
-      return (dig_out_of_memory ());
-    }
-  map->Area = (P_AREA *) p;
-  map->alloc_areas = alloced;
-  return (0);
+    return (0);
 }
 
+/* Reallocate array of pointers to areas.
+*  Space for 'add' number of areas is added.
+* 
+*  Returns: 0 success
+*          -1 error
+*/
 int 
-dig_alloc_isle (
-		 struct Map_info *map,
-		 int add)
+dig_alloc_areas_2d ( struct Plus_head *Plus, int add) {
+    int  size;
+    char *p;
+
+    size = Plus->alloc_areas + 1 + add;
+    p = realloc ( Plus->Area_2d, size * sizeof(P_AREA_2D *) );
+    if ( p == NULL ) return -1;
+	 
+    Plus->Area_2d = (P_AREA_2D **) p;
+    Plus->alloc_areas = size - 1;
+
+    return (0);
+}
+
+/* Reallocate array of pointers to isles.
+*  Space for 'add' number of isles is added.
+* 
+*  Returns: 0 success
+*          -1 error
+*/
+int 
+dig_alloc_isles_2d ( struct Plus_head *Plus, int add) {
+    int  size;
+    char *p;
+
+    G_debug (3, "dig_alloc_isle_2d():");
+    size = Plus->alloc_isles + 1 + add;
+    p = realloc ( Plus->Isle_2d, size * sizeof(P_ISLE_2D *) );
+    if ( p == NULL ) return -1;
+	 
+    Plus->Isle_2d = (P_ISLE_2D **) p;
+    Plus->alloc_isles = size - 1;
+
+    return (0);
+}
+
+/* allocate new area structure */
+P_AREA_2D *
+dig_alloc_area_2d (){
+    P_AREA_2D *Area;
+
+    Area = (P_AREA_2D *) malloc ( sizeof(P_AREA_2D) );
+    if (Area == NULL) return NULL;
+
+    Area->n_lines = 0;
+    Area->alloc_lines = 0;
+    Area->lines == NULL;
+
+    Area->alloc_centroids = 0;
+    Area->n_centroids = 0;
+    Area->centroids = NULL;
+
+    Area->alloc_isles = 0;
+    Area->n_isles = 0;
+    Area->isles = NULL;
+
+    return (Area);
+}
+
+/* alloc new isle structure */
+P_ISLE_2D * 
+dig_alloc_isle_2d ()
 {
-  int alloced;
-  char *p;
-  int num;
+    P_ISLE_2D *Isle;
 
-  num = map->n_isles + 1 + add;
+    Isle = (P_ISLE_2D *) malloc ( sizeof(P_ISLE_2D) );
+    if (Isle == NULL) return NULL;
 
-  alloced = map->alloc_isles;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 128, (char *) map->Isle,
-			  sizeof (P_ISLE))))
-    {
-      return (dig_out_of_memory ());
-    }
-  map->Isle = (P_ISLE *) p;
-  map->alloc_isles = alloced;
-  return (0);
+    Isle->n_lines = 0;
+    Isle->alloc_lines = 0;
+    Isle->lines = NULL;
+    
+    Isle->area = 0;
+
+    return (Isle);
 }
 
 
@@ -238,126 +284,93 @@ dig_alloc_cats (
   return (0);
 }
 
-/* area_alloc_line (area, num)
-   **     allocate space in  P_area,  line array to num lines
-   **
-   **  Returns   0 ok    or    -1 on error
- */
+/* area_alloc_line (area, add)
+**     allocate space in  P_area for add new lines
+**
+**  Returns   0 ok    or    -1 on error
+*/
 int 
-dig_area_alloc_line (
-		      P_AREA * area,
-		      int num)
-{
-  int alloced;
-  char *p;
-/*
-   int num;
-
-   num = area->n_lines + add;
- */
-
-  alloced = area->alloc_lines;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 4, (char *) area->lines,
-			  sizeof (plus_t))))
-    {
-      return (dig_out_of_memory ());
-    }
-  area->lines = (plus_t *) p;
-
-  area->alloc_lines = alloced;
-  return (0);
-}
-
-/* area_alloc_isle (area, num)
-   **     allocate space in  P_area,  isle array to num isle
-   **
-   **  Returns   0 ok    or    -1 on error
- */
-int 
-dig_area_alloc_isle (
-		      P_AREA * Area,
-		      int num)
-{
-  int alloced;
-  char *p;
-/*
-   int num;
-
-   num = Area->n_isles + add;
- */
-
-  alloced = Area->alloc_isles;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 4, (char *) Area->isles,
-			  sizeof (plus_t))))
-    {
-      return (dig_out_of_memory ());
-    }
-  Area->isles = (plus_t *) p;
-
-  Area->alloc_isles = alloced;
-  return (0);
-}
-
-
-/* isle_alloc_line (isle, num)
-   **     allocate space in  P_isle,  line array to num lines
-   **
-   **  Returns   0 ok    or    -1 on error
- */
-int 
-dig_isle_alloc_line (
-		      P_ISLE * isle,
-		      int num)
-{
-  int alloced;
-  char *p;
-/*
-   int num;
-
-   num = isle->n_lines + add;
- */
-
-  alloced = isle->alloc_lines;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 4, (char *) isle->lines,
-			  sizeof (plus_t))))
-    {
-      return (dig_out_of_memory ());
-    }
-  isle->lines = (plus_t *) p;
-
-  isle->alloc_lines = alloced;
-  return (0);
-}
-
-int 
-dig_alloc_att (
-		struct Map_info *map,
-		int add)
-{
-  int alloced;
-  char *p;
+dig_area_alloc_line_2d ( P_AREA_2D * area, int add) {
   int num;
+  char *p;
 
-  num = map->n_atts + 1 + add;
+  num = area->alloc_lines + add;
 
-  alloced = map->alloc_atts;
-  /* alloc_space will just return if no space is needed */
-  if (!(p =
-	dig__alloc_space (num, &alloced, 128, (char *) map->Att,
-			  sizeof (P_ATT))))
-    {
-      return (dig_out_of_memory ());
-    }
-  map->Att = (P_ATT *) p;
-  map->alloc_atts = alloced;
+  p = realloc ( area->lines, num * sizeof(plus_t) );
+  if ( p == NULL ) return -1; 
+  area->lines = (plus_t *) p;
+ 
+  area->alloc_lines = num;
+  
   return (0);
 }
+
+/* area_alloc_isle (area, add)
+**     allocate space in  P_area for add new isles
+**
+**  Returns   0 ok    or    -1 on error
+*/
+int 
+dig_area_alloc_isle_2d ( P_AREA_2D * area, int add) {
+  int num;
+  char *p;
+
+  num = area->alloc_isles + add;
+
+  p = realloc ( area->isles, num * sizeof(plus_t) );
+  if ( p == NULL ) return -1; 
+  area->isles = (plus_t *) p;
+
+  area->alloc_isles = num;
+  return (0);
+}
+
+/* area_alloc_centroid (area, add)
+**     allocate space in  P_area for add new centroids
+**
+**  Returns   0 ok    or    -1 on error
+*/
+int 
+dig_area_alloc_centroid_2d ( P_AREA_2D * area, int add) {
+  int num;
+  char *p;
+
+  num = area->alloc_centroids + add;
+
+  p = realloc ( area->centroids, num * sizeof(plus_t) );
+  if ( p == NULL ) return -1; 
+  area->centroids = (plus_t *) p;
+
+  area->alloc_centroids = num;
+  return (0);
+}
+
+/* dig_isle_alloc_line (isle, add)
+   **     allocate space in  P_isle for add new lines
+   **
+   **  Returns   0 ok    or    -1 on error
+ */
+
+int 
+dig_isle_alloc_line_2d (
+		      P_ISLE_2D * isle,
+		      int add)
+{
+  int num;
+  char *p;
+
+  G_debug (3, "dig_isle_alloc_line_2d():");
+  num = isle->alloc_lines + add;
+
+  p = realloc ( isle->lines, num * sizeof(plus_t) );
+  if ( p == NULL ) return -1; 
+  isle->lines = (plus_t *) p;
+ 
+  isle->alloc_lines = num;
+  
+  return (0);
+}
+
 
 
 /* for now just print message and return error code */
@@ -367,3 +380,4 @@ dig_out_of_memory ()
   fprintf (stderr, "OUT OF MEMORY!\n");
   return (-1);
 }
+
