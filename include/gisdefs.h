@@ -582,6 +582,7 @@ char *G__get_window(struct Cell_head *, char *, char *, char *);
 
 /* getl.c */
 int G_getl(char *, int, FILE *);
+int G_getl2(char *, int, FILE *);
 
 /* gets.c */
 int G_gets(char *);

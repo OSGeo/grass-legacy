@@ -87,7 +87,7 @@ main (int argc, char *argv[])
   if ( histf->answer ) {
       Vect_hist_rewind ( &Map );
       while ( Vect_hist_read ( buf, 1000, &Map ) != NULL ) {
-	 fprintf ( stdout, buf );
+	 fprintf ( stdout, "%s\n", buf );
       }
   } else {
      if ( columns->answer ) {
