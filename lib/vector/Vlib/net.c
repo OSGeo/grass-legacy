@@ -179,7 +179,6 @@ Vect_net_build_graph (  struct Map_info *Map,
         }
 	    
     }
-    fprintf ( stderr, "\n");
     G_debug ( 2, "Arcs registered");
     
     if ( afield > 0 && skipped > 0 ) 
@@ -267,7 +266,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 *
 *  List (must be initialised before) is filled with arcs (lines) or NULL.
 *
-*  Returns: number of segments : ( 0 is correct for from = to )
+*  Returns: number of segments : ( 0 is correct for from = to, or List == NULL )
 *              ? sum of costs is better return value
 *           -1 : destination unreachable
 */
@@ -277,17 +276,18 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 {
     int i, line, *pclip, cArc, nRet;
     gnGrpSPReport_s * pSPReport;
+    gnInt32_t nDistance;
 
     if ( List != NULL )
         Vect_reset_list ( List);
     
-   /*
-    * gnInt32_t nDistance;
-    * nRet =  gnGrpShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));
-    */
 
     pclip = NULL;
-    nRet = gnGrpShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));
+    if ( List != NULL ) 
+        nRet = gnGrpShortestPath ( &(Map->graph), &pSPReport, from, to, clipper, pclip, &(Map->spCache));
+    else 
+        nRet = gnGrpShortestDistance ( &(Map->graph), &nDistance, from, to, clipper, pclip, &(Map->spCache));
+
     if ( nRet == 0 ) {
         /* G_warning( "Destination node %d is unreachable from node %d\n" , to , from ); */	    
 	if ( cost != NULL )
@@ -313,12 +313,19 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 	}
     }
 
-    cArc = pSPReport->cArc;
 	
-    if ( cost != NULL )
-	*cost = (double) pSPReport->distance;
-
-    gnGrpFreeSPReport( &(Map->graph), pSPReport );
+    if ( cost != NULL ) {
+        if ( List != NULL ) 
+	    *cost = (double) pSPReport->distance;
+	else    
+	    *cost = (double) nDistance;
+    }
+	
+    if ( List != NULL ) {
+        cArc = pSPReport->cArc;
+        gnGrpFreeSPReport( &(Map->graph), pSPReport );
+    } else
+	cArc = 0;
 
     return (cArc);
 }
