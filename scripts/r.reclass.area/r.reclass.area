@@ -55,15 +55,15 @@ if [ $? -eq 0 ] ; then
  exit
 fi
 
-if [ "$GIS_OPT_lesser" != "(null)" ] ; then
+if [ -n "$GIS_OPT_lesser" ] ; then
   op=0
   limit=$GIS_OPT_lesser
 fi
-if [ "$GIS_OPT_greater" != "(null)" ] ; then
+if [ -n "$GIS_OPT_greater" ] ; then
   op=1
   limit=$GIS_OPT_greater
 fi
-if [ "$GIS_OPT_greater" = "(null)" -a "$GIS_OPT_lesser" = "(null)" ] ; then
+if [ -z "$GIS_OPT_greater" -a -z "$GIS_OPT_lesser" ] ; then
   echo "ERROR: you have to specify either lesser= or greater="
   exit 1
 fi

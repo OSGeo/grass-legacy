@@ -106,26 +106,26 @@ if [ ! "$file" ] ; then
   exit 1
 fi
 
-if [ "$FORMAT" = "(null)" ] ; then
+if [ -z "$FORMAT" ] ; then
   echo "ERROR: output format not specified"
   exit 1
 fi
 
 #set output if required
-if [ "$OUTPUT" = "(null)" ] ; then
+if [ -z "$OUTPUT" ] ; then
   OUTPUT=$INPUT
 fi
 
-if [ "$TYPE" = "(null)" ] ; then
+if [ -z "$TYPE" ] ; then
   echo "ERROR: output TYPE not specified"
   echo "(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
   exit 1
 fi
 
-if [ "$CREATEKEY" = "-co (null)" ] ; then
+if [ "$CREATEKEY" = "-co " ] ; then
   unset CREATEKEY
 fi
-if [ "$METAKEY"   = "-mo (null)" ] ; then
+if [ "$METAKEY"   = "-mo " ] ; then
   unset METAKEY
 fi
 
