@@ -306,8 +306,9 @@ main (int argc, char **argv)
 	fprintf(stdout, "Converting $LOCATION/arc_tmp/%s.%s to SHAPE file...\n", shape_prefix, extension);
 	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
 	G_system(buf);
-	
+
 	/* remove the temporal ungenerate files */
+	sleep(2); /* DANGEROUS!! This might not be enough */
 	G_remove("arc_tmp", lin_filename);
 	G_remove("arc_tmp", lab_filename);
 	G_remove("arc_tmp", txt_filename);
