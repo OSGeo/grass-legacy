@@ -1,0 +1,40 @@
+.TH pnmpaste 1 "07 April 1989"
+.SH NAME
+pnmpaste - paste a rectangle into a portable anymap
+.SH SYNOPSIS
+.B pnmpaste
+.I frompnmfile x y
+.RI [ intopnmfile ]
+.SH DESCRIPTION
+Reads two portable anymaps as input.
+Inserts the first anymap into the second at the specified location,
+and produces a portable anymap the same size as the second as output.
+If the second anymap is not specified, it is read from stdin.
+The
+.I x
+and
+.I y
+can be negative, in which case they are interpreted
+relative to the right and bottom of the anymap, respectively.
+.PP
+This tool is most useful in combination with
+.IR pnmcut .
+For instance, if you want to edit a small segment of a large
+image, and your image editor is TOO STUPID to edit the
+large image, you can cut out the segment you are interested in,
+edit it, and then paste it back in.
+.PP
+The
+.I pbmpaste
+tool is like this one, except that since it only has to work
+with bitmaps, it implements bitblt-style logical operations.
+.SH "SEE ALSO"
+pbmpaste(1), pnmcut(1), pnm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
