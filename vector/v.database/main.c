@@ -25,6 +25,7 @@ main(int argc, char *argv[])
     driver->required   = NO  ;
     driver->multiple   = NO ;
     driver->description= "driver name:" ;
+    driver->options    = db_list_drivers();
 
     database = G_define_option() ;
     database->key        = "database" ;
