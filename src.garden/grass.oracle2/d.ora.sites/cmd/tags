@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+draw_points_box	draw_point.c	/^draw_points_box(size)$/
+draw_points_diamond	draw_point.c	/^draw_points_diamond(size)$/
+draw_points_plus	draw_point.c	/^draw_points_plus(size)$/
+draw_points_x	draw_point.c	/^draw_points_x(size)$/
+set_default_options	command.c	/^set_default_options()$/
+stash_away	command.c	/^stash_away(pos, option)$/
