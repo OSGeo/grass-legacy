@@ -28,7 +28,7 @@
 #
 # See also:	d.rast, d.legend.
 #
-# Markus Neteler 8/2002: added simple d.legend logic
+# Markus Neteler 8/2002: added simple d.legend logic (-o), cosmetics
 # Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
 ##############################################################################
 
@@ -56,6 +56,8 @@ fi
 
 d.frame -e
 
+#at=bottom,top,left,right
+
 if [ $# = 0 ]
 then
     d.frame -s at=0,100,0,65
@@ -69,24 +71,43 @@ else
     if [ $# = 1 ]
     then
 	d.frame -s at=0,100,0,65
-    	d.rast $1
-    	d.frame -s at=0,100,65,100
+        d.erase col=white
+    	d.rast map=$1 b=white
+
+#draw title
+        d.frame -s at=90,100,65,100
+        d.erase col=white
+        echo "$1" | d.text col=black size=70
+
+#draw legend
+    	d.frame -s at=0,90,65,100
         if test -f $HISTFILEDIR/$1/histogram
           then
-    	     d.legend -o $1
+             d.erase col=white
+    	     d.legend -o map=$1 col=black
           else
-             d.legend $1
+             d.erase col=white
+             d.legend map=$1 col=black
           fi
     	d.frame -s at=0,100,0,65
     else
 	d.frame -s at=0,100,0,65
-    	d.rast $1
-    	d.frame -s at=0,100,65,100
+        d.erase col=white
+    	d.rast map=$1 b=white
+#draw title
+        d.frame -s at=90,100,65,100
+        d.erase col=white
+        echo "$1" | d.text col=black size=70
+ 
+#draw legend
+    	d.frame -s at=0,90,65,100
         if test -f $HISTFILEDIR/$1/histogram
           then
-             d.legend -o $1 lines=$2
+             d.erase col=white
+             d.legend -o map=$1 col=black lines=$2
           else
-             d.legend $1
+             d.erase col=white
+             d.legend map=$1 col=black
           fi
     	d.frame -s at=0,100,0,65
     fi
