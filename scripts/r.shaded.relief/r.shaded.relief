@@ -18,7 +18,11 @@
 #
 #############################################################################
 #
-#   5 April 2004 - updated for GRASS 5.7 by Michael Barton 
+#   September 2004 - Added z exaggeration control (Michael Barton) 
+#   April 2004 - updated for GRASS 5.7 by Michael Barton 
+#
+#   9/2004 Adds scale factor input (as per documentation); units set scale only if specified for lat/long regions
+#    Also, adds option of controlling z-exaggeration.
 #
 #   6/2003 fixes for Lat/Long Gordon Keith <gordon.keith@csiro.au>
 #   If n is a number then the ewres and nsres are mulitplied by that scale
@@ -49,6 +53,13 @@
 #%  required : yes
 #% end
 #% option
+#%  key: shadedmap
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: Shaded relief map name
+#%  required : no
+#% end
+#% option
 #%  key: altitude
 #%  type: integer
 #%  description: Altitude of the sun in degrees above the horizon (must be 1-89).
@@ -63,12 +74,26 @@
 #%  answer: 270
 #% end
 #% option
+#%  key: zmult    
+#%  type: double
+#%  description: Factor for exaggerating relief (default=1).
+#%  required : no
+#%  answer: 1
+#% end
+#% option
+#%  key: scale
+#%  type: double
+#%  description: Scale factor for converting horizontal units to elevation units (default=1).
+#%  required : no
+#%  answer: 1
+#% end
+#% option
 #%  key: units
 #%  type: string
-#%  description: Elevation map units.
+#%  description: Set scaling factor for lat./lon. regions  (default=not lat/lon).
 #%  required : no
-#%  options: meters,feet
-#%  answer: meters
+#%  options: not lat/lon,meters,feet
+#%  answer: not lat/lon
 #% end
 
 if  [ -z "$GISBASE" ]
@@ -84,20 +109,32 @@ then
 	exec g.parser "$0" "$@"
 fi
 
-#default units in meters
-set scale=111120
+# set nsres and ewres (unneeded because functions in r.mapcalc)
+#nsres=`g.region -g | grep 'nsres=' | sed s/nsres=//`
+#ewres=`g.region -g | grep 'ewres=' | sed s/ewres=//`
 
-# set nsres and ewres
-#eval `g.region -g`
 PROG=`basename $0`
 
 alt=$GIS_OPT_altitude
 az=$GIS_OPT_azimuth
 elev=$GIS_OPT_map
+zmult=$GIS_OPT_zmult
+scale=$GIS_OPT_scale
 
 eval `g.findfile element=cell file=$elev`
-elev="${name}"
-ELEVSHADE="${name}_relshade" 
+elev=$GIS_OPT_map
+
+if [ "$GIS_OPT_map" = "$GIS_OPT_shadedmap" ]; then
+	echo ""
+	echo "Input elevation map and output relief map must have different names"
+	return
+fi
+
+if [ "$GIS_OPT_shadedmap" = "" ]; then
+	ELEVSHADE="$GIS_OPT_map_relshade" 
+else
+	ELEVSHADE=$GIS_OPT_shadedmap
+fi
 
 if test $alt -lt 0 -o $alt -gt 90
 then
@@ -110,17 +147,16 @@ then
 	echo "Sorry, azimuth must be between 0 and 360"
 	exit 1
 fi
-		
-		
-if [ "$GIS_OPT_units" = "meters" ]
+
+if [ "$GIS_OPT_units" = "meters (lat/lon)" ]
 then
-	scale=111120
+scale=111120
 fi
-		
-if [ "$GIS_OPT_units" = "feet" ]
+
+if [ "$GIS_OPT_units" = "feet (latlon)" ]
 then
-	scale=370400
-fi
+scale=370400
+fi		
 
 #correct azimuth to East (GRASS convention):
 az=`expr $az - 90`
@@ -130,15 +166,14 @@ echo "Running r.mapcalc, please stand by."
 echo "Your new map will be named $ELEVSHADE.  Please consider renaming."
 echo ""
 
-echo "elev = $elev and ELEV = $ELEVSHADE"
-
 # Note: no space allowed after \\:
+
 r.mapcalc << EOF
 $ELEVSHADE = eval( \\
- x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
-   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\
- y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
-   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()*$scale) , \\
+ x=($zmult*$elev[-1,-1] + 2*$zmult*$elev[0,-1] + $zmult*$elev[1,-1] \\
+   -$zmult*$elev[-1,1] - 2*$zmult*$elev[0,1] - $zmult*$elev[1,1])/(8.*ewres()*$scale) , \\
+ y=($zmult*$elev[-1,-1] + 2*$zmult*$elev[-1,0] + $zmult*$elev[-1,1] \\
+   -$zmult*$elev[1,-1] - 2*$zmult*$elev[1,0] - $zmult*$elev[1,1])/(8.*nsres()*$scale) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
  a=if(isnull(a),1,a), \\

@@ -3,7 +3,7 @@
 
 <EM>r.shaded.relief</EM> is a Bourne shell (sh(1)) script that
 creates a raster shaded relief map based on current
-resolution settings and on sun altitude and azimuth values
+resolution settings and on sun altitude, azimuth, and z-exaggeration values
 entered by the user.  The new shaded relief map is
 named <EM>&lt;elevation&gt;.shade</EM> and stored in the user's current
 mapset.  The map is assigned a grey-scale color table.
@@ -33,16 +33,20 @@ would be a map layer of elevation;  however, any raster map layer
 can be named.
 
 <LI>The scaling parameter, which compensates for a different horizontal
-<B>scale</B> than vertical scale.
-For example, when a latitude-longitude projection is used with an elevation
-map measured in meters.
-If 'scale' is a number then the ewres and nsres are multiplied by that
-scale to calculate the shading. If 'scale' is 'meters' the number of 
-meters in a degree of latitude is used as the scale.
-If 'scale' is 'feet' then the number of feet in a degree is used.
-The script scales latitude and longitude equally, so
-it's only approximately right, but for shading its close enough. It makes
-the difference between a usable and unusable shade.
+<B>scale</B> than vertical scale. If 'scale' is a number then the ewres 
+and nsres are multiplied by that scale to calculate the shading. (Default=1.0 
+for equivalent horizontal and vertical scales.)
+
+<LI>For the special case when a latitude-longitude projection is used 
+with an elevation map measured in meters or feet, the <B>units<B> can
+be set to automatically set the horizontal scale to the the number of 
+meters or feet in a degree of latitude. The script scales latitude and 
+longitude equally, so it's only approximately right, but for shading 
+it's close enough. It makes the difference between a usable and unusable shade.
+
+<LI>A z exaggeration factor that changes the apparent <B>relief</B> 
+for the shaded relief map.  This can be any positive (or negative) 
+floating point value. (Default=1.0)
 
 </OL>
 
