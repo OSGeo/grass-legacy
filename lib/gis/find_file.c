@@ -86,7 +86,7 @@ static char *G__find_file (
 	if ( cnt > 0 ) {
 	    /* If the same name exists in more mapsets and print a warning */
 	    if ( cnt > 1 ) 
-		G_warning ("'%s/%s' was found in more mapsets.", element, pname);
+		G_warning ("'%s/%s' was found in more mapsets (also found in %s).", element, pname, pselmapset);
 	    return pselmapset;
 	}
     }
