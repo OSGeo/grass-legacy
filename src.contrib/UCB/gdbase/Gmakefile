@@ -1,6 +1,6 @@
 HOME=$(BIN)
 DBASEDIR=$(ETC)/gdbase
-SCRIPTS= r.gdbase s.gdbase s.reclass v.gdbase
+SCRIPTS= r.gdbase s.gdbase v.gdbase
 
 all:
 	echo $(UNIX_SYS)
@@ -9,5 +9,5 @@ all:
 	(cd $(HOME) ; chmod +rx $(SCRIPTS);)
 	rm -rf $(DBASEDIR) ;
 	mkdir $(DBASEDIR) ;
-	cd scripts; tar cvf - . | (cd $(DBASEDIR) ; tar xvf -) ;
+	cd scripts; tar cf - . | (cd $(DBASEDIR) ; tar xf -) ;
 	cd $(DBASEDIR) ; chmod +rx gdb.* ;
