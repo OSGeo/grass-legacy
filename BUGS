@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.35 2000-10-18 13:30:13 markus Exp $
+$Id: BUGS,v 1.36 2000-10-18 15:14:05 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -51,6 +51,9 @@ G3D libraries bug:
    Jaro
  -> needs to be fixed
    (being worked on by ?)
+
+----------- docs ------------------------------------------------
+Update html/Gmakefile
 
 ----------- modules ---------------------------------------------
 [RC] d.his: 
