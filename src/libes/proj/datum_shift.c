@@ -11,7 +11,10 @@ void set_datumshift(
 	char *in_ellipse, 
 	char *out_datum,
 	char *out_ellipse)
+
 {
+	char cnv_table[513];
+
 	if(strcmp(in_datum,out_datum)!=0)
 	{
 		if(!strcmp(in_datum,"nad83") && !strcmp(out_datum,"nad27"))
@@ -23,7 +26,8 @@ void set_datumshift(
 		        G_warning("Ellipse for nad27 should be clark66");
 
 		    INVERSE_FLAG=1;
-		    CONVERSION_TABLE=nad_init("/usr/local/grass5/etc/nad/conus");
+		    sprintf(cnv_table,"%s/etc/nad/conus",G_gisbase());
+		    CONVERSION_TABLE=nad_init(cnv_table);
 		    proj_f=pj_do_proj_nad;
 		    return;
 		}
