@@ -1,6 +1,0 @@
-PROG = $(BIN_CONTRIB_CMD)/s.label
-
-$(PROG): s.label.o $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) s.label.o $(GISLIB)
-	mv a.out $@
