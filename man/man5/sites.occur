@@ -179,7 +179,7 @@ Therefore, it is reported,
 but not included in the totals or in the computation
 of the chi-square statistics.
 .SH SEE ALSO
-.I s.db,
+.I s.db.rim,
 .I s.in.ascii,
 .I s.menu,
 .I s.out.ascii,
