@@ -56,6 +56,7 @@ int         db_copy_table_by_ints ( char *, char *, char *, char *, char *, char
 void        db_copy_value             P((dbValue *dst , dbValue *src ));
 int         db_create_database        P((dbDriver *driver , dbHandle *handle ));
 int         db_create_index           P((dbDriver *driver , dbIndex *index ));
+int         db_create_index2          (dbDriver *driver, char *table_name, char *column_name );
 int         db_create_table           P((dbDriver *driver , dbTable *table ));
 int         db_d_add_column           P((void ));
 int         db_d_bind_update          P((void ));

@@ -351,8 +351,13 @@ main (int argc, char *argv[])
 		    
 
 		}
+
+		if ( db_create_index2(driver, Fi->table, key ) != DB_OK )
+		    G_warning ( "Cannot create index" );
+
 		Vect_map_del_dblink ( &Map, 1 );
 		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, key, Fi->database, Fi->driver);
+		
 		table = Fi->table;
 	    } else { 
 		driver = NULL;
