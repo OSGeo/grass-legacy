@@ -47,6 +47,7 @@
 #include "dataoct.h"
 #include "user.h"
 #include "bitmap.h"
+#include "dbmi.h"
 
 /* pargr */
 double ns_res, ew_res, tb_res;
@@ -107,6 +108,8 @@ including 3D topo parameters, and 2nd RST derivatives
 02/03/03 (jh) - added deviation site file to the output
 
 13/05/2004 (MN) - updated to 5.7 (renamed field -> colnum to avoid confusion)
+
+04/01/2005 (jh) - variable smoothing and CV
 */
 
 char *input;
@@ -114,6 +117,7 @@ char *cellinp = NULL;
 char *cellout = NULL;
 char *mapset = NULL;
 
+char *scol = NULL;
 char *outz = NULL;
 char *gradient = NULL;
 char *aspect1 = NULL;
@@ -125,6 +129,7 @@ char *mcurv = NULL;
 char *maskmap = NULL;
 char *redinp = NULL;
 char *devi = NULL;
+char *cvdev = NULL;
 
 int  sdisk,disk;
 FILE *Tmp_fd_z = NULL;
@@ -174,15 +179,20 @@ int main (int argc, char *argv[])
     struct octtree *tree;
     RASTER_MAP_TYPE map_type;
 /*DEBUG  int testout = 1; */
-    Site_head devihead;
     struct Map_info In;
 
     struct
     {
-       struct Option  *input, *colnum, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
- 	     *outz, *rsm, *maskmap,*zmult,
+       struct Option  *input, *colnum, *scol, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
+ 	     *outz, *rsm, *maskmap,*zmult, *cvdev,
  	     *gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv,*cellinp,*cellout,*devi;
     }  parm;
+
+    struct
+    {
+	    struct Flag *cv;
+    } flag;
+
     struct GModule *module;
 
     G_gisinit (argv[0]);
@@ -217,7 +227,6 @@ int main (int argc, char *argv[])
     nsizl = n_levs;
     n_rows_in = n_rows; /* fix by JH 04/24/02 */
 
-    /* This should now be a sites file using the new API */
     parm.input = G_define_option ();
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
@@ -233,10 +242,18 @@ int main (int argc, char *argv[])
     parm.cellinp->description = "Name of the surface cell file";
 
     parm.colnum = G_define_option();
-    parm.colnum ->key        = "column" ;
+    parm.colnum ->key        = "wcolumn" ;
     parm.colnum ->type       = TYPE_STRING ;
     parm.colnum ->required   = NO ;
-    parm.colnum ->description="Column name of w attribute to use for calculation";
+    parm.colnum ->description="Name of the column containing w attribute to interpolate";
+    parm.colnum->answer = "flt1";
+
+    parm.scol = G_define_option();
+    parm.scol->key = "scolumn";
+    parm.scol->type = TYPE_STRING;
+    parm.scol->required = NO;
+    parm.scol->description =
+        "Name of the column containing smoothing parameters";
                         
     parm.fi = G_define_option ();
     parm.fi->key = "tension";
@@ -258,6 +275,13 @@ int main (int argc, char *argv[])
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,vector,vector";
     parm.devi->description = "Name of the output deviations vector file";
+
+    parm.cvdev = G_define_option ();
+    parm.cvdev->key = "cvdev";
+    parm.cvdev->type = TYPE_STRING;
+    parm.cvdev->required = NO;
+    parm.cvdev->gisprompt = "new,vector,vector";
+    parm.cvdev->description = ("Name of the output cross-validation vector file");
 
     parm.maskmap = G_define_option ();
     parm.maskmap->key = "maskmap";
@@ -364,24 +388,33 @@ int main (int argc, char *argv[])
     parm.mcurv->gisprompt = "new,grid3,3d raster";
     parm.mcurv->description = "Mean curvature g3d-file";
 
+    flag.cv = G_define_flag ();
+    flag.cv->key = 'c';
+    flag.cv->description = ("Perform a cross-validation procedure");
+
     if (G_parser (argc, argv))
       exit(-1);
-    
+
     per = 1;  /*flag.per->answer; */
     iw2 = 1;
+    sig1 = 0;
     input = parm.input->answer;
 
     cellinp = parm.cellinp->answer;
     cellout = parm.cellout->answer;
+    scol = parm.scol->answer;
     maskmap = parm.maskmap->answer;
     outz = parm.outz->answer;
     devi = parm.devi->answer;
+    cvdev = parm.cvdev->answer;
     gradient = parm.gradient->answer;
     aspect1 = parm.aspect1->answer;
     aspect2 = parm.aspect2->answer;
     ncurv = parm.ncurv->answer;
     gcurv = parm.gcurv->answer;
     mcurv = parm.mcurv->answer;
+
+    cv = flag.cv->answer;
 
     ertre = 0.1;
     sscanf (parm.dmin1->answer, "%lf", &dmin);
@@ -391,6 +424,24 @@ int main (int argc, char *argv[])
     sscanf (parm.npmin->answer, "%d", &npmin);
     sscanf (parm.wmult->answer, "%lf", &wmult);
     sscanf (parm.zmult->answer, "%lf", &zmult);
+    
+      if(rsm < 0.0)
+            G_fatal_error(("Smoothing must be a positive value"));
+
+        if(parm.scol->answer)
+        rsm = -1; /* used in InterpLib to indicate variable smoothing */
+
+      if ((cv != NULL && cvdev == NULL) || (cv == NULL && cvdev != NULL))
+              G_fatal_error(("Both crossvalidation options (cv, cvdev) must be specified"));
+      if(cv != NULL && devi != NULL)
+              G_fatal_error(("Both crossvalidation and deviations file specified"));
+      if(cellinp==NULL && outz==NULL && cellout==NULL && gradient==NULL && aspect1==NULL && aspect2==NULL && ncurv==NULL && gcurv==NULL && mcurv==NULL) {
+              sig1 = 1;
+      }
+
+      if((cellinp!=NULL || outz!=NULL || cellout!=NULL || gradient!=NULL || aspect1!=NULL || aspect2!=NULL || ncurv!=NULL || gcurv!=NULL || mcurv!=NULL || devi != NULL) && cv != NULL)
+              G_fatal_error("The crossvalidation cannot be computed simultanuously with output grids or devi file");
+
     z_orig_in = z_orig;
     tb_res_in = tb_res;
     z_orig = z_orig*zmult;
@@ -403,34 +454,34 @@ int main (int argc, char *argv[])
     KMIN = npmin;
     /***************        KMAX2 = GRADPARAM1*npmax;***************/
     az = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! az) 
+    if (! az)
       G_fatal_error("Not enough memory for az");
     adx = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adx) 
+    if (! adx)
       G_fatal_error ("Not enough memory for adx");
     ady = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! ady) 
+    if (! ady)
       G_fatal_error ("Not enough memory for ady");
     adxx = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adxx) 
+    if (! adxx)
       G_fatal_error ("Not enough memory for adxx");
     adyy = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adyy) 
+    if (! adyy)
       G_fatal_error ("Not enough memory for adyy");
     adxy = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adxy) 
+    if (! adxy)
       G_fatal_error ("Not enough memory for adxy");
     adz = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adz) 
+    if (! adz)
       G_fatal_error ("Not enough memory for adz");
     adxz = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adxz) 
+    if (! adxz)
       G_fatal_error ("Not enough memory for adxz");
     adyz = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adyz) 
+    if (! adyz)
       G_fatal_error ("Not enough memory for adyz");
     adzz = (double *) malloc (sizeof (double) * (n_cols + 1));
-    if (! adzz) 
+    if (! adzz)
       G_fatal_error ("Not enough memory for adzz");
 
 
@@ -458,29 +509,40 @@ int main (int argc, char *argv[])
     if ( !Vect_is_3d(&In) )
 	G_warning ( "The vector is not 3D" );
 
-    ii=INPUT( &In, parm.colnum->answer);
+    ii=INPUT( &In, parm.colnum->answer, parm.scol->answer);
 
     Vect_close ( &In );
 
-  if (devi != NULL)
+  if (devi != NULL || cvdev != NULL)
   {
-    if ((fddev = G_fopen_sites_new (devi)) == NULL)
-    {
-      sprintf (msg, "Cannot open %s", devi);
-      G_fatal_error (msg);
-    }
-    else
-    {
-      devihead.name = devi;
-      devihead.desc = G_strdup ("deviations at sample points");
-      devihead.desc = (char *) G_malloc (128 * sizeof (char));
-      sprintf (devihead.desc, "deviations of %s [raster] at %s [sites]",
-               cellout, input);
-      devihead.labels = NULL;
-      devihead.form = NULL;
-      G_site_put_head (fddev, &devihead);
-	dev = fddev;
-    }
+          Pnts = Vect_new_line_struct();
+      Cats = Vect_new_cats_struct ();
+      db_init_string (&sql);
+
+      if (devi != NULL) Vect_open_new (&Map, devi, 1);
+      else
+         Vect_open_new (&Map, cvdev, 1);
+      Vect_hist_command ( &Map );
+      f = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
+      Vect_map_add_dblink ( &Map, 1, NULL, f->table, "cat", f->database, f->driver);
+      /* Create new table */
+      db_zero_string (&sql);
+      sprintf ( buf, "create table %s ( ", f->table );
+      db_append_string ( &sql, buf);
+      db_append_string ( &sql, "cat integer" );
+      db_append_string ( &sql, ", flt1 double precision" );
+      db_append_string ( &sql, ")" );
+      G_debug ( 1, db_get_string ( &sql ) );
+      driver = db_start_driver_open_database ( f->driver, f->database );
+      if ( driver == NULL )
+      G_fatal_error ( "Cannot open database %s by driver %s", f->database,f->driver );
+
+      if (db_execute_immediate (driver, &sql) != DB_OK ) {
+              db_close_database(driver);
+              db_shutdown_driver(driver);
+              G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+      }
+      count = 1;
   }
 
     if (ii>0)
@@ -709,8 +771,11 @@ fprintf(stderr,"finished interpolating\n");
 	  unlink(Tmp_file_xy);
         }
 
-        if (fddev != NULL)
-           fclose (fddev);
+	if (cvdev != NULL || devi != NULL) {
+		db_close_database_shutdown_driver ( driver );
+		Vect_build (&Map, stderr);
+		Vect_close (&Map);
+	}
 
 	fprintf (stderr, "\n");
 	fprintf (stderr, "The number of points in sites file is %d\n", NPT);
