@@ -1,4 +1,3 @@
-/* %W% %G% */
 clear (buf, n)
     register char *buf;
     register int n;
