@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.27.2.1 2004-10-23 12:25:42 paul Exp $)
+($Id: INSTALL,v 1.27.2.2 2004-10-31 20:07:51 paul Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -16,7 +16,6 @@ instruction file and contains the following sections:
     COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
     THINGS TO DO
     UNINSTALLING GRASS
-    APPENDIX: LZW compression note
 
 Please read through these sections before installing GRASS.
 
@@ -24,10 +23,18 @@ Please read through these sections before installing GRASS.
 INSTALLATION
 
 Before you compile GRASS, please read the file "REQUIREMENTS.html". 
-Note: If your system does not fulfill all requirements, some modules
-won't be compiled (for example PostgresSQL or fftw, see section on
-CONFIGURE OPTIONS). However, for the general usability of GRASS this
-is no problem.
+Note: Building of modules that depend on certain pre-requisite software
+may be disabled by passing options to the configure script (for example 
+PostgreSQL or fftw, see section on CONFIGURE OPTIONS). For general 
+usability of GRASS, leaving out a few modules will often pose no problem.
+
+This release of GRASS uses a new build system by default, known as 
+the 'Alternate' build system. This uses separate build and source 
+directories, i.e. you cannot run ./configure from the top-level source
+directory. This is convenient when dealing with a project with such a 
+large code base as GRASS. In addition the alternate build system allows
+to compile the core GRASS libraries as shared, greatly reducing the 
+size of the compiled binaries and install footprint.
 
 The intent of the install method is to have the following sequence
 of commands work to install GRASS on any platform.
@@ -44,6 +51,20 @@ identify relevant system dependencies and create several files
 (see below) containing dependency information. Make sure to read the 
 output of
 	./configure --help
+
+In addition, for faster smaller binaries you may want to enable
+optimisation and stripping. This may be done by, for example,
+
+	CFLAGS=-O2 LDFLAGS=-s ../grass-5.4.0/configure ...
+
+in Bourne or Bash shell or
+
+	setenv CFLAGS -O2
+	setenv LDFLAGS -s
+	../grass-5.4.0/configure ...
+
+in C shell. This should not be done if you need to debug the GRASS 
+binaries. See section CODE OPTIMIZATION below for additional hints.
 
 The `make' command will compile the sources in the current directory. Note
 that you do not need root access to run `make'. If any compilation errors
@@ -349,4 +370,4 @@ in /usr/local/grass54):
 should suffice.
 
 
-$Date: 2004-10-23 12:25:42 $
+$Date: 2004-10-31 20:07:51 $
