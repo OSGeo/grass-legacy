@@ -1,0 +1,15 @@
+# %W%  %G%
+
+DLIB  = $(SRC)/D/libes/Dlib.a
+
+OFILES = main.o Dcell.o
+
+Dtrue: $(BIN)/Dtrue
+
+$(BIN)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -Zg
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(D_LIB): #
