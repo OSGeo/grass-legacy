@@ -99,8 +99,9 @@ int main(int argc, char *argv[])
     long retval;
     int solparms, locparms, use_solpos;
     double sunrise, sunset, current_time;
-    int sretr =0, ssetr=0;
-    
+    int sretr =0, ssetr=0, sretr_sec=0, ssetr_sec=0;
+    double dsretr, dssetr;
+
     G_gisinit (argv[0]);
 
     module = G_define_module();
@@ -304,9 +305,13 @@ int main(int argc, char *argv[])
       G_debug (3, "\nlat:%f  long:%f", north, east);
       retval = G_calc_solar_position (east, north, timezone, year, month, day, hour, minutes, seconds);
 
-      sretr = (int) floor(pdat->sretr + 0.5);
-      ssetr = (int) floor(pdat->ssetr + 0.5);
       /* Remove +0.5 above if you want round-down instead of round-to-nearest */
+      sretr = (int) floor(pdat->sretr); /* sunrise */
+      dsretr = pdat->sretr;
+      sretr_sec = (int) floor(((dsretr - floor(dsretr)) * 60 - floor((dsretr - floor(dsretr)) * 60)) * 60);
+      ssetr = (int) floor(pdat->ssetr); /* sunset */
+      dssetr = pdat->ssetr;
+      ssetr_sec = (int) floor(((dssetr - floor(dssetr)) * 60 - floor((dssetr - floor(dssetr)) * 60)) * 60);
 
       /* print the results */
       if (retval == 0) /* error check */
@@ -322,11 +327,11 @@ int main(int argc, char *argv[])
 	  fprintf (stdout, "latitude=%f\n", pdat->latitude);
 	  fprintf (stdout, "timezone=%f\n", pdat->timezone);
 	  fprintf (stdout, "sunazimuth=%f\n", pdat->azim);
-	  fprintf (stdout, "sunangleabovehorzizont=%f\n", pdat->elevref);
+	  fprintf (stdout, "sunangleabovehorizon=%f\n", pdat->elevref);
 	
 	  if ( sretr/60 <= 24.0 ) {
-	       fprintf (stdout, "sunrise=%02d:%02d\n", sretr/60, sretr%60);
-	       fprintf (stdout, "sunset=%02d:%02d\n", ssetr/60, ssetr%60);
+	       fprintf (stdout, "sunrise=%02d:%02d:%02d\n", sretr/60, sretr%60, sretr_sec);
+	       fprintf (stdout, "sunset=%02d:%02d:%02d\n", ssetr/60, ssetr%60, ssetr_sec);
 	  }
 	 }
 	 else {
@@ -339,8 +344,8 @@ int main(int argc, char *argv[])
            pdat->azim, pdat->elevref );
 
 	  if ( sretr/60 <= 24.0 ) {
-               G_message ( _(" Sunrise time (without refraction): %02d:%02d\n"), sretr/60, sretr%60);
-               G_message ( _(" Sunset time  (without refraction): %02d:%02d\n"), ssetr/60, ssetr%60);
+               G_message ( _(" Sunrise time (without refraction): %02d:%02d:%02d\n"), sretr/60, sretr%60, sretr_sec);
+               G_message ( _(" Sunset time  (without refraction): %02d:%02d:%02d\n"), ssetr/60, ssetr%60, ssetr_sec);
 	  }
          }
        }
@@ -362,24 +367,25 @@ int main(int argc, char *argv[])
  /* check sunrise */
   if (use_solpos)
   {
+    G_debug(3, "current_time:%f sunrise:%f",current_time,sunrise);
     if ((current_time < sunrise))
     {
         if ( sretr/60 <= 24.0 )
-             G_message ( _("Time (%02i:%02i:%02i) is before sunrise (%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
-                         sretr/60, sretr%60);
+             G_message ( _("Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
+                         sretr/60, sretr%60, sretr_sec);
 	else
              G_message ( _("Time (%02i:%02i:%02i) is before sunrise!\n"), pdat->hour, pdat->minute, pdat->second);
 	
-        G_fatal_error( _("Please correct time settings."));
+        G_warning( _("Nothing to calculate. Please verify settings."));
     }
     if ((current_time > sunset))
     {
         if ( sretr/60 <= 24.0 )
-             G_message ( _("Time (%02i:%02i:%02i) is after sunset (%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
-                         ssetr/60, ssetr%60);
+             G_message ( _("Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
+                         ssetr/60, ssetr%60, ssetr_sec);
 	else
              G_message ( _("Time (%02i:%02i:%02i) is after sunset!\n"), pdat->hour, pdat->minute, pdat->second);
-        G_fatal_error( _("Please correct time settings."));
+        G_warning( _("Nothing to calculate. Please verify settings."));
     }
   }
  
