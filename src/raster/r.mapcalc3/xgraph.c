@@ -66,12 +66,16 @@ f_graph(int argc, const int *argt, void **args)
 
 		if (x <= X(0))
 		{
+			if (IS_NULL_D(&Y(0)))
+				goto null;
 			res[i] = Y(0);
 			continue;
 		}
 
 		if (x >= X(n-1))
 		{
+			if (IS_NULL_D(&Y(n-1)))
+				goto null;
 			res[i] = Y(n-1);
 			continue;
 		}
