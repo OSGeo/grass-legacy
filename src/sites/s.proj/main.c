@@ -214,11 +214,16 @@ main(int argc, char    **argv)
         }
 
 	{
-	int nstr, ndim, ndec;
+	int nstr, ndim, ndec, err;
 	RASTER_MAP_TYPE rtype;
 
 	    rtype = -1;
-	    G_site_describe (infile, &ndim, &rtype, &nstr, &ndec);
+	    err=G_site_describe (infile, &ndim, &rtype, &nstr, &ndec);
+	    if (err == -1)
+	    	G_fatal_error("Sites map is empty");
+	    if (err == -2)
+	      	G_fatal_error("Input sites map: Format error.");
+
 	    si = G_site_new_struct(rtype,ndim,nstr,ndec); 
 	}
 
