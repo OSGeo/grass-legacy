@@ -2,7 +2,7 @@ interface_build {
     {m.in.e00} 0
     {Converts an ESRI ArcInfo e00 file to a GRASS vector or raster file.}
     {entry input {Input e00 file:} 0 file}
-    {checkbox action {Analyze e00 file and exit.} "" analyze}
+    {checkbox action {Analyse e00 file and exit.} "" analyse}
     {checkbox action {Import all coverage types [default]} "" all}
     {checkbox action {Import only raster grid coverages.} "" raster}
     {checkbox action {Import point/line/polygon coverages without attributes.} "" lines}
