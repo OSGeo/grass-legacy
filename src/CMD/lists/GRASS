@@ -36,7 +36,7 @@ src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
 #XDRIVER2 is a layers XDRIVER for d.layers
-src/display/devices/XDRIVER2
+#src/display/devices/XDRIVER2
 src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
@@ -62,7 +62,7 @@ src/display/d.histogram
 src/display/d.icons
 src/display/d.label
 src/display/d.labels
-src/display/d.layers
+#src/display/d.layers
 src/display/d.leg.thin
 src/display/d.legend
 src/display/d.mapgraph
