@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.13 2000-12-27 06:24:42 justin Exp $
+# $Id: Gmakefile,v 1.14 2000-12-27 10:50:18 justin Exp $
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -65,9 +65,9 @@ $(BIN)/exit:
 	touch $@
 	chmod 600 $@
 
-$(ETC)/grass_intro: grass_intro.txt
+$(ETC)/grass_intro: grass_intro.txt version.sed $(SRC)/CMD/VERSION
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt >$@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $@
 	chmod +r $@
 
 $(GISLIB): # in case library changes
