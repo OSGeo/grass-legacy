@@ -1,5 +1,6 @@
 #include "gis.h"
 #include "dbmi.h"
+#include <stdio.h>
 
 int disp_attr(dbDriver *driver, char *tabname, char *key, int *keyval )
 {
