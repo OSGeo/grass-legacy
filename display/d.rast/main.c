@@ -15,6 +15,7 @@ int main(
     char *name ;
     int overlay;
     int invert, fp;
+	struct GModule *module;
     struct Option *map;
     struct Option *catlist;
     struct Option *vallist;
@@ -24,6 +25,11 @@ int main(
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays and overlays raster map layers "
+		"in the active display frame on the graphics monitor.";
 
 /* set up command line */
     map              = G_define_option();
