@@ -25,7 +25,7 @@ all:
 	cp r.reclass.area/r.reclass.area $(SCRIPTS)
 	cp r.regression.line/r.regression.line $(SCRIPTS)
 	$(GMAKE) s.in.grid
-	cp r.univar/r.univar $(SCRIPTS)
+	cp r.univar/r.univar.sh $(SCRIPTS)
 	cp r.to.pg/r.to.pg $(SCRIPTS)
 	cp s.in.atkisdgm/s.in.* $(SCRIPTS)
 	# cp s.in.gps/s.in.gps $(SCRIPTS)
