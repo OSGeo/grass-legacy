@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.10  2001-02-06 15:53:29  cho
+ * Revision 1.11  2001-02-06 16:05:59  cho
+ * fixed to print out sites data correctly using s.out.ascii
+ *
+ * Revision 1.10  2001/02/06 15:53:29  cho
  * backslash bug fixed
  *
  * Revision 1.9  2001/01/13 07:42:11  eric
@@ -217,6 +220,7 @@
 #define ispipe(c) (c==PIPE)
 #define isnull(c) (c==(char)NULL)
 #define isquote(c) (c==DQUOTE)
+#define isbslash(c) (c==BSLASH)
 
 static int format_double ( double , char *);
 char *next_att (char *);
@@ -1180,6 +1184,10 @@ char *G_site_format (Site *s, char *fs, int id)
     {
       /* escape double quotes */
       j = k = 0;
+
+      /* do not uncomment this code because sites file was created
+       * as we want. So it's enough to print them out as it is.
+       *
       if (G_index (s->str_att[i], DQUOTE) != (char *) NULL)
       {
 	while (!isnull(s->str_att[i][j]))
@@ -1196,6 +1204,8 @@ char *G_site_format (Site *s, char *fs, int id)
 	xbuf[k] = (char) NULL;
       }
       else
+      */
+
 	G_strcpy (xbuf, s->str_att[i]);
 
       G_strcpy (s->str_att[i], xbuf);
