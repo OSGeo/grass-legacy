@@ -20,7 +20,7 @@ write_lines (name,mapset,map,lines_file,text_file)
    int line, left, right;
    int type;
    int count=0,num;
-   char att[1000];
+   char *att;
    int n_points, n_atts;
    int attflag;
    static struct line_pnts *GPoints;
@@ -33,11 +33,8 @@ write_lines (name,mapset,map,lines_file,text_file)
    
    GPoints = Vect_new_line_struct ();
 
-   if ((catflag=G_read_vector_cats(name,mapset,&cats)) != -1)
-   {
-	   n = cats.count;
-       G_sort_cats (&cats);
-   }
+   catflag=G_read_vector_cats(name,mapset,&cats);
+	  /*  n = cats.count; */
 
    for (line = 1 ; line <= map->n_lines ; line++)
    {
@@ -77,24 +74,26 @@ write_lines (name,mapset,map,lines_file,text_file)
         if (attflag==1 && catflag!=-1)
         {
            /* get attribute text */
-           i=0; att[0]=0;
-           do {
-              if (cats.list[i].num == map->Att[Line->att].cat)
-              {
-                 sscanf(cats.list[i].label,"%s",att);
-                 i=n;
-              }   
-              i++;
-           }   
-           while (i<n);
+	   att = G_get_cat(map->Att[Line->att].cat, &cats);
+	   if(space) 
+	   {
+	     i = 0;
+	     while(att[i])
+	     {
+		if(att[i]==' ') att[i] = '_';
+		i++;
+             }
+           }
 
-           fprintf(text_file,"%d %d %d %s\n",
-                   line,map->Att[Line->att].cat,line,att);
+           fprintf(text_file,"%d%c%d%c%d%c%s\n",
+                   line, separator, map->Att[Line->att].cat, separator, line, 
+						 separator, att);
            txt_flg=1;
         }
 	    else if (attflag==1)
 	    {
-	        fprintf(text_file,"%d %d %d\n",line,map->Att[Line->att].cat,line);
+	        fprintf(text_file,"%d%c%d%c%d\n", line, separator, map->Att[Line->att].cat,
+	                	      separator, line);
 		    txt_flg=1;
         } 
        
