@@ -42,6 +42,9 @@ d.sites.qual: not all the sites are used/displayed
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
    immediately in orange color (right window)
+ - GIS WARNING: Can't write embedded null values for map open for random
+   access: i.ortho.photo/photo.rectify/write.c needs to be updated.
+
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
@@ -262,7 +265,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.13  2000-05-11 17:57:26  markus
+ Revision 1.14  2000-05-15 18:13:38  markus
+ added i.ortho.photo NULL bug
+
+ Revision 1.13  2000/05/11 17:57:26  markus
  added p.map.new bug (is it still there?)
 
  Revision 1.12  2000/05/09 13:37:26  markus
