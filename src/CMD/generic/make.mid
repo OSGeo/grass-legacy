@@ -61,6 +61,7 @@ SEGMENTLIB  = $(LIBDIR)/libsegment.a
 GPROJLIB    = $(LIBDIR)/libproj.a
 BTREELIB    = $(LIBDIR)/libbtree.a
 IBTREELIB   = $(LIBDIR)/libibtree.a
+GMATHLIB    = $(LIBDIR)/libgmath.a
 DLGLIB      = $(LIBDIR)/libdlg.a
 RASTERLIB   = $(LIBDIR)/libraster.a
 DISPLAYLIB  = $(LIBDIR)/libdisplay.a
