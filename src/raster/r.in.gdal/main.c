@@ -279,7 +279,7 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Do we want to generate a simple raster, or an imagery group?    */
 /* -------------------------------------------------------------------- */
-    if( (GDALGetRasterCount(hDS) > 1 && parm.band->answer != NULL)
+    if( (GDALGetRasterCount(hDS) > 1 && parm.band->answer == NULL)
         || GDALGetGCPCount( hDS ) > 0 )
         force_imagery = TRUE;
 
