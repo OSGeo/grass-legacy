@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
     parm.g = G_define_flag() ;
     parm.g->key         = 'g' ;
-    parm.g->description = "Output Geographic Coordinates" ;
+    parm.g->description = "Output easting and northing in first two columns of four column output" ;
 
 
     if (G_parser(argc, argv))
