@@ -42,7 +42,10 @@ OBJ =\
 	ref.o\
 	set_window.o\
 	sig.o\
+	sig2cats.o\
 	sigfile.o\
+	sigset.o\
+	sigsetfile.o\
 	tape_info.o\
 	target.o\
 	title.o\
@@ -50,84 +53,9 @@ OBJ =\
 	var.o\
 	vask_group.o
 
-HEADER = ${LIBDIR}/imagery.h
-HEADER_DEFS = ${LIBDIR}/imagedefs.h
-
-all: ${HEADER} ${HEADER_DEFS} $(IMAGERYLIB) 
+all: $(IMAGERYLIB) 
 
 $(IMAGERYLIB): ${OBJ}
 	${AR}
-$(HEADER): imagery.h
-	rm -f $@; cp $? $@; chmod +r $@
-$(HEADER_DEFS): imagedefs.h
-	rm -f $@; cp $? $@; chmod +r $@
 
-ask_bands.o: imagery.h
-ask_bands.o: imagedefs.h
-ask_colors.o: imagery.h
-ask_colors.o: imagedefs.h
-ask_group.o: imagery.h
-ask_group.o: imagedefs.h
-ask_subgrp.o: imagery.h
-ask_subgrp.o: imagedefs.h
-band_io.o: imagery.h
-band_io.o: imagedefs.h
-c_assign.o: imagery.h
-c_assign.o: imagedefs.h
-c_begin.o: imagery.h
-c_begin.o: imagedefs.h
-c_clear.o: imagery.h
-c_clear.o: imagedefs.h
-c_distinct.o: imagery.h
-c_distinct.o: imagedefs.h
-c_exec.o: imagery.h
-c_exec.o: imagedefs.h
-c_execmem.o: imagery.h
-c_execmem.o: imagedefs.h
-c_means.o: imagery.h
-c_means.o: imagedefs.h
-c_merge.o: imagery.h
-c_merge.o: imagedefs.h
-c_nclasses.o: imagery.h
-c_nclasses.o: imagedefs.h
-c_point.o: imagery.h
-c_point.o: imagedefs.h
-c_reassign.o: imagery.h
-c_reassign.o: imagedefs.h
-c_reclass.o: imagery.h
-c_reclass.o: imagedefs.h
-c_sep.o: imagery.h
-c_sep.o: imagedefs.h
-c_sig.o: imagery.h
-c_sig.o: imagedefs.h
-c_sum2.o: imagery.h
-c_sum2.o: imagedefs.h
-colors.o: imagery.h
-colors.o: imagedefs.h
-georef.o: imagery.h
-georef.o: imagedefs.h
-group.o: imagery.h
-group.o: imagedefs.h
-image.o: imagery.h
-image.o: imagedefs.h
-list_subgp.o: imagery.h
-list_subgp.o: imagedefs.h
-ls_groups.o: imagery.h
-ls_groups.o: imagedefs.h
-points.o: imagery.h
-points.o: imagedefs.h
-ref.o: imagery.h
-ref.o: imagedefs.h
-sig.o: imagery.h
-sig.o: imagedefs.h
-sigfile.o: imagery.h
-sigfile.o: imagedefs.h
-tape_info.o: imagery.h
-tape_info.o: imagedefs.h
-target.o: imagery.h
-target.o: imagedefs.h
-title.o: imagery.h
-title.o: imagedefs.h
-
-try: try.o $(IMAGERYLIB)
-	$(CC) try.o $(IMAGERYLIB) $(GISLIB) $(VASK) -o try
+$(OBJ): $(INCLUDE_DIR)/imagery.h $(INCLUDE_DIR)/imagedefs.h
