@@ -158,6 +158,7 @@ main (int argc, char *argv[])
 	/* Copy input to output */
 	Vect_copy_head_data (&In, &Out);
 	Vect_copy_map_lines ( &In, &Out );
+	Vect_copy_tables ( &In, &Out, 0 );
 	Vect_build ( &Out, NULL );
 	Vect_close (&In);
 	Vect_close (&Out);
