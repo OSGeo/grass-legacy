@@ -75,7 +75,7 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	    fprintf(stderr, "\nResolution is too low for selected region.\n") ;
 	    fprintf(stderr, "Buttons:\n") ;
-	    fprintf(stderr, "%s Increase resolution to n-s = %.20f e-w = %.20f\n", lefts, nsr, ewr);
+	    fprintf(stderr, "%s Increase resolution to n-s = %g e-w = %g\n", lefts, nsr, ewr);
 	    fprintf(stderr, "%s Cancel (keep previous region)\n", middles) ;
 	    fprintf(stderr, "%s Cancel (keep previous region)\n", rights) ;
 	    
@@ -83,7 +83,9 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	    if(button == leftb){
 		    window->ns_res = nsr;
+		    window->ns_res3 = nsr;
 		    window->ew_res = ewr;
+		    window->ew_res3 = ewr;
 	    }else{
 		    resetres = 0;
 		    resetwin = 0;
@@ -108,7 +110,9 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	if(button == leftb){
 		window->ns_res = nsr;
+		window->ns_res3 = nsr;
 		window->ew_res = ewr;
+		window->ew_res3 = ewr;
 		td = rint (tnorth / nsr);
 		tnorth = td * nsr;
 		td = rint (tsouth / nsr);

@@ -3,6 +3,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <string.h>
+#include "gis.h"
 #include "G3d_intern.h"
 #include "g3dkeys.h"
 
@@ -58,8 +60,10 @@ G3d_readWriteWindow (windowKeys, doRead,
   return 0;
 }
 
-/*---------------------------------------------------------------------------*/
-
+/*
+ * If windowName == NULL -> G3D_WINDOW_ELEMENT ("$MAPSET/WIND3")
+ * otherwise G3D_WINDOW_DATABASE ("$MAPSET/windows3d/$NAME")
+ */
 static void
 G3d_getFullWindowPath (path, windowName)
      
@@ -90,7 +94,7 @@ G3d_getFullWindowPath (path, windowName)
 }
 
 /*---------------------------------------------------------------------------*/
-
+/*
 static void
 G3d_getWindowLocation (path, windowName)
      
@@ -123,6 +127,7 @@ G3d_getWindowLocation (path, windowName)
   }
   if (slash != NULL) *slash = 0;
 }
+*/
 
 /*---------------------------------------------------------------------------*/
 
@@ -148,61 +153,66 @@ G3d_readWindow (window, windowName)
      char *windowName;
 
 {
+  struct Cell_head win;
   struct Key_Value *windowKeys;
   char path[1024], msg[1024];
-  int status, returnVal;
+  int status;
 
-  G3d_getFullWindowPath (path, windowName);
 
   if (windowName == NULL) {
-    if (access(path, R_OK) != 0) {
-      sprintf (msg,"G3d_readWindow: unable to find [%s], using default.", path);
-      G_warning (msg);
+      G_get_window (&win);
+
+      window->proj = win.proj;
+      window->zone = win.zone;
+      window->north = win.north;
+      window->south = win.south;
+      window->east = win.east;
+      window->west = win.west;
+      window->top = win.top;
+      window->bottom = win.bottom;
+      window->rows = win.rows3;
+      window->cols = win.cols3;
+      window->depths = win.depths;
+      window->ns_res = win.ns_res3;
+      window->ew_res = win.ew_res3;
+      window->tb_res = win.tb_res;
+  } else {
+      G3d_getFullWindowPath (path, windowName);
       
-      G__file_name (path, "", G3D_DEFAULT_WINDOW_ELEMENT, G3D_PERMANENT_MAPSET);
       if (access(path, R_OK) != 0) {
-	sprintf (msg,"G3d_readWindow: unable to find [%s].", path);
-	G_warning (msg);
-	
+          G_warning ( "G3d_readWindow: unable to find [%s].", path);
+          return 0;
+      }
+
+      windowKeys = G_read_key_value_file (path, &status);
+      if (status != 0) {
+	sprintf (msg, "G3d_readWindow: Unable to open %s", path);
+	G3d_error (msg);
 	return 0;
       }
-    }
-  } else 
-    if (access(path, R_OK) != 0) {
-      sprintf (msg,"G3d_readWindow: unable to find [%s].", path);
-      G_warning (msg);
-	
-      return 0;
-    }
-  
-  windowKeys = G_read_key_value_file (path, &status);
-  if (status != 0) {
-    sprintf (msg, "G3d_readWindow: Unable to open %s", path);
-    G3d_error (msg);
-    return 0;
+
+      if (! G3d_readWriteWindow (windowKeys, 1, 
+				 &(window->proj), &(window->zone),
+				 &(window->north), &(window->south), 
+				 &(window->east), &(window->west), &(window->top),
+				 &(window->bottom), &(window->rows), 
+				 &(window->cols), &(window->depths),
+				 &(window->ew_res), &(window->ns_res), 
+				 &(window->tb_res))) {
+	sprintf (msg, "G3d_readWindow: error extracting window key(s) of file %s", path);
+	G3d_error (msg);
+	return 0;
+      }
+
+      G_free_key_value (windowKeys);
   }
 
-  if (! G3d_readWriteWindow (windowKeys, 1, 
-			     &(window->proj), &(window->zone),
-			     &(window->north), &(window->south), 
-			     &(window->east), &(window->west), &(window->top),
-			     &(window->bottom), &(window->rows), 
-			     &(window->cols), &(window->depths),
-			     &(window->ew_res), &(window->ns_res), 
-			     &(window->tb_res))) {
-    sprintf (msg, "G3d_readWindow: error extracting window key(s) of file %s",
-	     path);
-    G3d_error (msg);
-    return 0;
-  }
-
-  G_free_key_value (windowKeys);
   return 1;
 }
 
 /*---------------------------------------------------------------------------*/
 /* modified version of G__make_mapset_element */
-
+/*
 static int
 G3d_createPath (thePath)
 
@@ -217,8 +227,9 @@ G3d_createPath (thePath)
   strcpy (path = command, "mkdir ");
   while (*path) path++;
   p = path;
-
+*/
   /* now append element, one directory at a time, to path */
+/*
   while (1) {
     if (*thePath == '/') *p++ = *thePath++;
     pOld = p;
@@ -237,6 +248,7 @@ G3d_createPath (thePath)
     }
   }
 }
+*/
 
 /*---------------------------------------------------------------------------*/
 
@@ -255,6 +267,7 @@ G3d_createPath (thePath)
  *          0 ... otherwise.
  */
 
+/*
 int
 G3d_writeWindow (window, windowName)
 
@@ -262,40 +275,9 @@ G3d_writeWindow (window, windowName)
      char *windowName;
 
 {
-  struct Key_Value *windowKeys;
-  char path[1024], msg[1024];
-  int status;
-
-  windowKeys = G_create_key_value();
-
-  G3d_getWindowLocation (path, windowName);
-  G3d_createPath (path);
-
-  if (! G3d_readWriteWindow (windowKeys, 0, 
-			     &(window->proj), &(window->zone),
-			     &(window->north), &(window->south), 
-			     &(window->east), &(window->west), &(window->top),
-			     &(window->bottom), &(window->rows), 
-			     &(window->cols), &(window->depths),
-			     &(window->ew_res), &(window->ns_res), 
-			     &(window->tb_res))) {
-    sprintf (msg, "G3d_writeWindow: error adding window key(s) for file %s", 
-	     path);
-    G3d_error (msg);
-    return 0;
-  }
-
-  G3d_getFullWindowPath (path, windowName);
-  G_write_key_value_file (path, windowKeys, &status);
-
-  G_free_key_value(windowKeys);
-
-  if (status == 0) return 1;
-
-  sprintf (msg, "G3d_writeWindow: error writing window file %s", path);
-  G3d_error (msg);
   return 0;
 }
+*/
   
 /*---------------------------------------------------------------------------*/
 

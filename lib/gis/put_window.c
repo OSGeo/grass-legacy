@@ -40,7 +40,7 @@ int G__put_window ( struct Cell_head *window , char *dir, char *name)
     if (!(fd = G_fopen_new(dir, name)))
 	return -1 ;
 
-    G__write_Cell_head (fd, window, 0);
+    G__write_Cell_head3 (fd, window, 0);
     fclose (fd);
 
     return 1;

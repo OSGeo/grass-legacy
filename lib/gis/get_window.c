@@ -31,6 +31,7 @@
  *
  * Reads the database region as stored in the WIND file in the user's
  * current mapset <b>into region.</b>
+ * 3D values are set to defaults if not available in WIND file.
  * An error message is printed and exit( ) is called if there is a problem reading
  * the region.
  * <b>Note.</b> GRASS applications that read or write raster files should not
@@ -75,8 +76,8 @@ int G_get_window (struct Cell_head *window )
 /*!
  * \brief read the default region
  *
- * Reads the default region for the location into
- * <b>region.</b>
+ * Reads the default region for the location into <b>region.</b>
+ * 3D values are set to defaults if not available in WIND file.
  * An error message is printed and exit( ) is called if there is a problem
  * reading the default region.
  *

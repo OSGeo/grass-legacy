@@ -33,6 +33,7 @@
 
 /* adj_cellhd.c */
 char *G_adjust_Cell_head(struct Cell_head *, int, int);
+char *G_adjust_Cell_head3(struct Cell_head *, int, int, int);
 
 /* align_window.c */
 char *G_align_window(struct Cell_head *, struct Cell_head *);
@@ -1156,6 +1157,7 @@ int G_row_repeat_nomask(int, int);
 
 /* wr_cellhd.c */
 int G__write_Cell_head(FILE *, struct Cell_head *, int);
+int G__write_Cell_head3(FILE *, struct Cell_head *, int);
 
 /* writ_zeros.c */
 int G_write_zeros(int, long);
