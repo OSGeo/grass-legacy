@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.5 2000-10-01 16:46:10 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
 
 Please improve this list!
  
@@ -46,6 +46,21 @@ GRASS GIS programming style standards
 8. Don't use C++ comment style! This confuses several compilers.
    Use instead:
        /* C-comments */
+
+9. If you add   
+    $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
+
+    to a file for CVS-versioning, note that this is not allowed in the
+    *first* line of a comment. Some compilers will get confused.
+
+    Forbidden:
+
+    /* $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $ */
+ 
+    Allowed:
+    /*
+     * $Id: STYLE_PROGRAMMING,v 1.6 2000-11-01 17:24:13 markus Exp $
+     */
 
 ...
 [add further hints]
