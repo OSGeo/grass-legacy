@@ -1,0 +1,6 @@
+Mmain	main.c	/^main(argc, argv)$/
+opencell	opencell.c	/^opencell (fullname, name, mapset)$/
+show_buttons	show.c	/^show_buttons (once)$/
+show_cat	show.c	/^show_cat (width, mwidth, name, mapset, cat, label,/
+show_utm	show.c	/^show_utm (north, east, window, terse, button, fs)$/
+what	what.c	/^what (once, terse, fs)$/
