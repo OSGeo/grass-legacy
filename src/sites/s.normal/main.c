@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Modification History:
+ * <23 Jan 2001> - added field parameter, fixed reading of sites (MN)
  * <27 Aug 1994> - began coding. Adapted cdh.f from statlib (jdm)
  * <30 Sep 1994> - finished alpha version of cdh-c (jdm)
  * <10 Oct 1994> - announced version 0.1B on pasture.ecn.purdue.edu (jdm)
@@ -42,13 +43,13 @@ int main (argc, argv)
 {
   char *isiteslist, errmsg[256], *mapset;
   int i, nsites, verbose, warn_once = 0, readz (), scan_cats ();
-
+  int field;
   long x, y;
   struct Cell_head window;
   struct GModule *module;
   struct
   {
-    struct Option *input, *tests;
+    struct Option *input, *tests, *dfield;
   } parm;
   struct
   {
@@ -77,6 +78,14 @@ int main (argc, argv)
   parm.tests->required = YES;
   parm.tests->description = "Lists of tests: e.g. 1,3-8,13";
 
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
+
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -96,6 +105,7 @@ int main (argc, argv)
 
   isiteslist = parm.input->answer;
   verbose = (flag.q->answer == (char) NULL) ? 1 : 0;
+  sscanf(parm.dfield->answer,"%d", &field);
 
   G_get_window (&window);
 
@@ -110,7 +120,14 @@ int main (argc, argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readz (fdisite, verbose, &z, window);
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
+  }
+  
+
+  nsites = readz (fdisite, verbose, field, &z, window);
 
   /* fprintf (stdout,"%g %g ... %g %g\n",z[0],z[1],z[nsites-2],z[nsites-1]); */
 
