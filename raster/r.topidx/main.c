@@ -7,30 +7,12 @@
  * $Id$
  *
  *	Copyright (C) 2000 by the GRASS Development Team
- *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *	Author: Huidae Cho <hdcho@water.knu.ac.kr>
  *		Hydro Laboratory, Kyungpook National University
  *		South Korea
  *
  *	This program is free software under the GPL (>=v2)
  *	Read the file COPYING coming with GRASS for details.
- *
- *
- * $Log$
- * Revision 1.4  2002-01-22 04:51:31  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.3.4.1  2001/06/15 18:37:36  glynn
- * Call G_gisinit(argv[0]) before anything else
- *
- * Revision 1.3  2000/11/22 09:34:40  jan
- * added module description
- *
- * Revision 1.2  2000/11/01 17:26:35  cho
- * updated copyleft
- *
- * Revision 1.1  2000/08/20 05:57:16  cho
- * Huidae Cho <hdcho@geni.knu.ac.kr>: TOPMODEL simulation and other stuff
- *
  *
  */
 

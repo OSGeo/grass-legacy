@@ -7,43 +7,12 @@
  * $Id$
  *
  *	Copyright (C) 2000 by the GRASS Development Team
- *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *	Author: Huidae Cho <hdcho@water.knu.ac.kr>
  *		Hydro Laboratory, Kyungpook National University
  *		South Korea
  *
  *	This program is free software under the GPL (>=v2)
  *	Read the file COPYING coming with GRASS for details.
- *
- *
- * $Log$
- * Revision 1.7  2002-01-22 04:51:31  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.6.4.2  2001/11/25 14:27:37  glynn
- * Include stdlib.h for definition of atoi()
- * Fix bug in r.in.doq, calling exit() without arguments
- *
- * Revision 1.6.4.1  2001/06/15 18:37:36  glynn
- * Call G_gisinit(argv[0]) before anything else
- *
- * Revision 1.6  2000/11/22 09:34:41  jan
- * added module description
- *
- * Revision 1.5  2000/11/01 17:26:36  cho
- * updated copyleft
- *
- * Revision 1.4  2000/09/05 08:58:10  cho
- * added Qobs parameter and cosmetics
- *
- * Revision 1.3  2000/08/21 04:21:21  cho
- * modulized and cosmetics
- *
- * Revision 1.2  2000/08/20 06:35:19  cho
- * cosmetics
- *
- * Revision 1.1  2000/08/20 05:57:21  cho
- * Huidae Cho <hdcho@geni.knu.ac.kr>: TOPMODEL simulation and other stuff
- *
  *
  */
 
