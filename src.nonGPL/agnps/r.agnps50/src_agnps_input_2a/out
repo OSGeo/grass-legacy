@@ -1,6 +1,0 @@
-agnps_input.c:           fprintf(stderr,"Cannot open feedlot data file\n");
-agnps_input.c:           fprintf(stderr,"Cannot open nfeedlot data file\n");
-agnps_input.c.baknew:           fprintf(stderr,"Cannot open feedlot data file\n");
-agnps_input.c.baknew:           fprintf(stderr,"Cannot open nfeedlot data file\n");
-ptsrc_input.c:           fprintf(stderr,"Cannot open feedlot data file");
-ptsrc_input.c:           fprintf(stderr,"Cannot open nfeedlot data file");
