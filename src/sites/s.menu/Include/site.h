@@ -4,8 +4,8 @@
 
 SITE
 {
-    int north;
-    int east;
+    double north;
+    double east;
     char *desc;
     SITE *next;
 };
