@@ -29,42 +29,37 @@
 #include "gis.h"
 #include "projects.h"
 
-int 
-bordwalk(
-    struct Cell_head *from_hd, 
-    struct Cell_head *to_hd, 
-    struct pj_info *from_pj, 
-    struct pj_info *to_pj,
-    char errbuf[256])
+void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd, 
+	      struct pj_info *from_pj, struct pj_info *to_pj)
 {
-double 	idx, 
-	hx, hy,
-	xmin, xmax, 
-	ymin, ymax;
+	double idx;
+	double hx, hy;
+	double xmin, xmax; 
+	double ymin, ymax;
  
-    /* Set some (un)reasonable defaults before we walk the borders */
+	/* Set some (un)reasonable defaults before we walk the borders */
 
 	xmax = to_hd->west-0.000001;
 	xmin = to_hd->east+0.000001;
 	ymin = to_hd->north+0.000001;
 	ymax = to_hd->south-0.000001;
 
-    /* Start walking */
+	/* Start walking */
 
-    /* Top */
+	/* Top */
 	for (idx=from_hd->west+from_hd->ew_res/2; idx<from_hd->east; idx+=from_hd->ew_res) {
-	    hx = idx;
-	    hy = from_hd->north - from_hd->ns_res/2;
-	    if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
-		continue;
-	    /* check if we are within the region, but allow for some 'almost inside' points */
-	    /* (should probably be a factor based on input and output resolutions) */
-	    if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
-		xmin = !(hx > xmin) ? hx : xmin;
-		xmax = !(hx < xmax) ? hx : xmax;
-		ymin = !(hy > ymin) ? hy : ymin;
-		ymax = !(hy < ymax) ? hy : ymax;
-	    }
+		hx = idx;
+		hy = from_hd->north - from_hd->ns_res/2;
+		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+			continue;
+		/* check if we are within the region, but allow for some 'almost inside' points */
+		/* (should probably be a factor based on input and output resolutions) */
+		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
+			xmin = !(hx > xmin) ? hx : xmin;
+			xmax = !(hx < xmax) ? hx : xmax;
+			ymin = !(hy > ymin) ? hy : ymin;
+			ymax = !(hy < ymax) ? hy : ymax;
+		}
 	}
 
 #ifdef DEBUG
@@ -75,18 +70,18 @@ double 	idx,
 	fprintf(stderr, "ymax: %f\n", ymax);
 #endif
 
-    /* Right */
+	/* Right */
 	for (idx=from_hd->north-from_hd->ns_res/2; idx>from_hd->south; idx-=from_hd->ns_res) {
-	    hx = from_hd->east - from_hd->ew_res/2;
-	    hy = idx;
-	    if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
-		continue;
-	    if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
-		xmin = !(hx > xmin) ? hx : xmin;
-		xmax = !(hx < xmax) ? hx : xmax;
-		ymin = !(hy > ymin) ? hy : ymin;
-		ymax = !(hy < ymax) ? hy : ymax;
-	    }
+		hx = from_hd->east - from_hd->ew_res/2;
+		hy = idx;
+		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+			continue;
+		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
+			xmin = !(hx > xmin) ? hx : xmin;
+			xmax = !(hx < xmax) ? hx : xmax;
+			ymin = !(hy > ymin) ? hy : ymin;
+			ymax = !(hy < ymax) ? hy : ymax;
+		}
 	}
 
 #ifdef DEBUG
@@ -97,18 +92,18 @@ double 	idx,
 	fprintf(stderr, "ymax: %f\n", ymax);
 #endif
 
-    /* Bottom */
+	/* Bottom */
 	for (idx=from_hd->east-from_hd->ew_res/2; idx>from_hd->west; idx-=from_hd->ew_res) {
-	    hx = idx;
-	    hy = from_hd->south + from_hd->ns_res/2;
-	    if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
-		continue;
-	    if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
-		xmin = !(hx > xmin) ? hx : xmin;
-		xmax = !(hx < xmax) ? hx : xmax;
-		ymin = !(hy > ymin) ? hy : ymin;
-		ymax = !(hy < ymax) ? hy : ymax;
-	    }
+		hx = idx;
+		hy = from_hd->south + from_hd->ns_res/2;
+		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+			continue;
+		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
+			xmin = !(hx > xmin) ? hx : xmin;
+			xmax = !(hx < xmax) ? hx : xmax;
+			ymin = !(hy > ymin) ? hy : ymin;
+			ymax = !(hy < ymax) ? hy : ymax;
+		}
 	}
 
 #ifdef DEBUG
@@ -119,18 +114,18 @@ double 	idx,
 	fprintf(stderr, "ymax: %f\n", ymax);
 #endif
 
-    /* Left */
+	/* Left */
 	for (idx=from_hd->south+from_hd->ns_res/2; idx<from_hd->north; idx+=from_hd->ns_res) {
-	    hx = from_hd->west + from_hd->ew_res/2;
-	    hy = idx;
-	    if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
-		continue;
-	    if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
-		xmin = !(hx > xmin) ? hx : xmin;
-		xmax = !(hx < xmax) ? hx : xmax;
-		ymin = !(hy > ymin) ? hy : ymin;
-		ymax = !(hy < ymax) ? hy : ymax;
-	    }
+		hx = from_hd->west + from_hd->ew_res/2;
+		hy = idx;
+		if (proj_f(&hx, &hy, from_pj, to_pj) < 0)
+			continue;
+		if (!(hx<to_hd->west-to_hd->ew_res) && !(hx>to_hd->east+to_hd->ew_res) && !(hy<to_hd->south-to_hd->ns_res) && !(hy>to_hd->north+to_hd->ns_res)) { 
+			xmin = !(hx > xmin) ? hx : xmin;
+			xmax = !(hx < xmax) ? hx : xmax;
+			ymin = !(hy > ymin) ? hy : ymin;
+			ymax = !(hy < ymax) ? hy : ymax;
+		}
 	}
 
 #ifdef DEBUG
@@ -144,39 +139,39 @@ double 	idx,
 	/* check some special cases by reversing the projection */
 
 	if (xmin > to_hd->west) {
-	    hx = to_hd->west + to_hd->ew_res/2;
-	    hy = to_hd->south + (to_hd->north - to_hd->south)/2;
-	    if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
-		!(hx<from_hd->west) && !(hx>from_hd->east) &&
-		!(hy<from_hd->south) && !(hy>from_hd->north))
-		xmin = to_hd->west + to_hd->ew_res/2;
+		hx = to_hd->west + to_hd->ew_res/2;
+		hy = to_hd->south + (to_hd->north - to_hd->south)/2;
+		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
+		    !(hy<from_hd->south) && !(hy>from_hd->north))
+			xmin = to_hd->west + to_hd->ew_res/2;
 	}
     
 	if (xmax < to_hd->east) {
-	    hx = to_hd->east - to_hd->ew_res/2;
-	    hy = to_hd->south + (to_hd->north - to_hd->south)/2;
-	    if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
-		!(hx<from_hd->west) && !(hx>from_hd->east) &&
-		!(hy<from_hd->south) && !(hy>from_hd->north))
-		xmax = to_hd->east - to_hd->ew_res/2;
+		hx = to_hd->east - to_hd->ew_res/2;
+		hy = to_hd->south + (to_hd->north - to_hd->south)/2;
+		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
+		    !(hy<from_hd->south) && !(hy>from_hd->north))
+			xmax = to_hd->east - to_hd->ew_res/2;
 	}
 
 	if (ymin > to_hd->south) {
-	    hx = to_hd->west + (to_hd->east - to_hd->west)/2;
-	    hy = to_hd->south + to_hd->ns_res/2;
-	    if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
-		!(hx<from_hd->west) && !(hx>from_hd->east) &&
-		!(hy<from_hd->south) && !(hy>from_hd->north))
-		ymin = to_hd->south + to_hd->ns_res/2;
+		hx = to_hd->west + (to_hd->east - to_hd->west)/2;
+		hy = to_hd->south + to_hd->ns_res/2;
+		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
+		    !(hy<from_hd->south) && !(hy>from_hd->north))
+			ymin = to_hd->south + to_hd->ns_res/2;
 	}
     
 	if (ymax < to_hd->north) {
-	    hx = to_hd->west + (to_hd->east - to_hd->west)/2;
-	    hy = to_hd->north - to_hd->ns_res/2;
-	    if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
-		!(hx<from_hd->west) && !(hx>from_hd->east) &&
-		!(hy<from_hd->south) && !(hy>from_hd->north))
-		ymax = to_hd->north - to_hd->ns_res/2;
+		hx = to_hd->west + (to_hd->east - to_hd->west)/2;
+		hy = to_hd->north - to_hd->ns_res/2;
+		if (!(proj_f(&hx, &hy, to_pj, from_pj) < 0) &&
+		    !(hx<from_hd->west) && !(hx>from_hd->east) &&
+		    !(hy<from_hd->south) && !(hy>from_hd->north))
+			ymax = to_hd->north - to_hd->ns_res/2;
 	}
 
 #ifdef DEBUG
@@ -187,21 +182,18 @@ double 	idx,
 	fprintf(stderr, "ymax: %f\n\n", ymax);
 #endif
 
-   /* if we still have some unresonable default minmax left, then abort */	
+	/* if we still have some unresonable default minmax left, then abort */	
 
 	if ((xmin > to_hd->east) || (xmax < to_hd->west) 
-	    || (ymin > to_hd->north) || (ymax < to_hd->south)) {
-		sprintf(errbuf, "Input map is outside current region\n");
-		return -1;
-	}
-			
+	    || (ymin > to_hd->north) || (ymax < to_hd->south))
+		G_fatal_error("Input map is outside current region");
 
 	if (xmin<to_hd->west+to_hd->ew_res/2) xmin=to_hd->west+to_hd->ew_res/2;
 	if (xmax>to_hd->east-to_hd->ew_res/2) xmax=to_hd->east-to_hd->ew_res/2;
 	if (ymin<to_hd->south+to_hd->ns_res/2) ymin=to_hd->south+to_hd->ns_res/2;
 	if (ymax>to_hd->north-to_hd->ns_res/2) ymax=to_hd->north-to_hd->ns_res/2;
 
-   /* adjust to edges */
+	/* adjust to edges */
              
 	idx = (int) G_easting_to_col(xmin, to_hd);
 	xmin = G_col_to_easting(idx+0.0, to_hd);
@@ -224,6 +216,5 @@ double 	idx,
 	fprintf(stderr, "ymin: %f ", ymin);
 	fprintf(stderr, "ymax: %f\n\n", ymax);
 #endif
-
-	return 0;
 }
+
