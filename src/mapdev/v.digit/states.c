@@ -46,7 +46,7 @@ set_default_display (void)
     Disp_markers = 1;	/* area ID markers (dot) */
     Disp_llines =  1;	/* labelled lines */
     Disp_llabels = 0;	/* line labels (category #s)*/
-    Disp_ulines =  1;	/* unlabelled lines */
+    Disp_ulines =  0;	/* unlabelled lines */
     Disp_thresh  = 0;	/* all snapping thresholds */
     Disp_sites =   1;   /* Sites */
     Disp_slabels = 0;   /* site labels*/
@@ -71,7 +71,7 @@ set_default_display (void)
            Disp_markers = 1; /* area ID markers (dot) */
            Disp_llines =  1; /* labelled lines */
            Disp_llabels = 0; /* line labels (category #s)*/
-           Disp_ulines =  1; /* unlabelled lines */
+           Disp_ulines =  0; /* unlabelled lines */
            Disp_thresh  = 0; /* all snapping thresholds */
            Disp_sites =   1; /* Sites */
            Disp_slabels = 0; /* site labels*/
