@@ -22,6 +22,7 @@
 #include "globals.h"
 #include "proto.h"
 
+int yyparse(void);
 int sel(SQLPSTMT * st, int tab, int **set);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
 double eval_node(Node * nodeptr, int tab, int row);
@@ -331,11 +332,8 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 /* Returns -1 on error */
 double eval_node(Node * nptr, int tab, int i)
 {
-
-    int ccol, condition, leval = 0, reval = 0;
-    COLUMN *col = NULL;
-    VALUE *val = NULL;
-    double dc, dv;
+    int leval = 0, reval = 0;
+    double condition;
     double dleval, dreval;
     SQLPVALUE lstr, rstr;
     int lres = 0, rres = 0;
@@ -445,16 +443,16 @@ double eval_node(Node * nptr, int tab, int i)
 	else dreval = 0.0;
 	switch (arithmptr->opname) {
 	case SQLP_ADD:	    
-	    (double) condition = dleval + dreval;		
+	    condition = dleval + dreval;		
 	    break;
 	case SQLP_SUBTR:
-	    (double) condition = dleval - dreval;		
+	    condition = dleval - dreval;		
 	    break;
 	case SQLP_MLTP:
-	    (double) condition = dleval * dreval;		
+	    condition = dleval * dreval;		
 	    break;
 	case SQLP_DIV:
-	    if (dreval != 0.0) (double) condition = dleval / dreval;
+	    if (dreval != 0.0) condition = dleval / dreval;
 	    else {
 	    G_debug(0,"Floating point exception - division by zero inside comparison\n");
 	    return ((double) 0xfffffffe);
@@ -462,7 +460,7 @@ double eval_node(Node * nptr, int tab, int i)
 	    break;
 	}
     }				/* switch node type */
-    return (double) condition;
+    return condition;
 }
 
 int eval_arithmvalue_type(Node * nptr, int tab ) {
@@ -512,10 +510,12 @@ int eval_arithmvalue_type(Node * nptr, int tab ) {
 	}
 	break;
     }
+    
+    return 0;  /* OK ? */
 }
 
 double get_arithmvalue(Node * nptr, int tab, int i, SQLPVALUE * res) {
-    int ccol, leval;
+    int ccol;
     COLUMN *col = NULL;
     VALUE *val = NULL;
     double dleval, dreval;
@@ -584,6 +584,8 @@ double get_arithmvalue(Node * nptr, int tab, int i, SQLPVALUE * res) {
 	}
 	break;
     }
+
+    return 0;  /* OK ? */
 }
 
 void free_all_nodes(Node * nptr)
