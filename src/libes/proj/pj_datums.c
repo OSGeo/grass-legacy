@@ -28,7 +28,11 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2002-05-29 10:21:22  markus
+ * Revision 1.3  2003-01-24 12:09:43  paul
+ * Add support for Ireland 1965 Datum
+ * Fix missing underscores in pj_ellps.c and pj_datums.c
+ *
+ * Revision 1.2  2002/05/29 10:21:22  markus
  * added Krovak and Krovakgis projection (Krovak already present in latest PROJ4 CVS version, added Hermannskogel datum for Krovakgis
  *
  * Revision 1.1  2002/04/20 19:13:44  roger
@@ -56,7 +60,7 @@ struct PJ_DATUMS pj_datums[] = {
 /* id       definition                               ellipse  comments */
 /* --       ----------                               -------  -------- */
 "ggrs87",   "towgs84=-199.87,74.79,246.62",          "grs80", "Greek Geodetic Reference System 1987",
-"nad27",    "nadgrids=conus,ntv1 can.dat",           "clark66", "North American Datum 1927",
+"nad27",    "nadgrids=conus,ntv1_can.dat",           "clark66", "North American Datum 1927",
 "wgs84",  "towgs84=0.0,0.0,0.0",  "wgs84",  "World Geodetic System 1984",
 "wgs72",  "towgs84=0.0,0.0,5.0",  "wgs72",  "World Geodetic System 1972",
 "nad83",  "towgs84=0.0,0.0,0.0",  "grs80",  "North American 1983",
@@ -79,5 +83,6 @@ struct PJ_DATUMS pj_datums[] = {
 "potsdam",  "towgs84=606.0,23.0,413.0",  "bessel",  "Potsdam Rauenberg 1950 DHDN",
 "carthage",  "towgs84=-263.0,6.0,431.0",  "clark80",  "Carthage 1934 Tunisia",
 "hermannskogel", "towgs84=653.0,-212.0,449.0",  "bessel",  "Hermannskogel",
+"ire65",  "towgs84=482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15",  "modif_airy",  "Ireland 1965",
 NULL,       NULL,                                    NULL,    NULL ,
 };

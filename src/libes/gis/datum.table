@@ -63,3 +63,6 @@ potsdam "Potsdam Rauenberg 1950 DHDN"	  bessel	dx=606.0    dy=23.0     dz=413.0
 carthage "Carthage 1934 Tunisia"	  	  clark80	dx=-263.0	dy=6.0	dz=431.0
 # Hermannskogel
 hermannskogel "Hermannskogel"		  bessel	dx=653	    dy=-212     dz=449
+# Ireland 1965 - From NIMA document - but more accurate 7-parameter transform
+# from Ordnance Survey Ireland is specified in src/libes/proj/pj_datums.c
+ire65    "Ireland 1965"                   modif_airy    dx=506      dy=-122     dz=611
