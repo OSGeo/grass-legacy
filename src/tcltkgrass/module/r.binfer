@@ -1,0 +1,7 @@
+interface_build {
+    {r.binfer} 0
+    {Bayesian expert system development program.}
+    {entry input {File containing instructions:} 0 file}
+    {entry output {File to capture output information [r.binfer.out]:} 0 File}
+    {checkbox -v {Run verbosely.} "" -v}
+}
