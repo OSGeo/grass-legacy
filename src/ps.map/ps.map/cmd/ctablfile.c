@@ -18,6 +18,7 @@ static char *help[] =
     "font       fontname",
     "fontsize   fontsize",
     "color      color",
+    "nodata	nodata",
     ""
 };
 
@@ -26,13 +27,14 @@ ctablfile (void)
 {	
     char buf[1024];
     char *key, *data;
-    int color, fontsize, cols;
+    int color, fontsize, cols, nodata;
     double w, x, y;
 
     fontsize = 0;
     color = BLACK;
     cols = 1;
     w = x = y = 0.0;
+    ct.nodata = 1;
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -91,6 +93,13 @@ ctablfile (void)
 	    ct.font = G_store(data);
 	    continue;
 	}
+	if (KEY("nodata"))
+	{
+	    nodata = yesno(key, data);
+	    ct.nodata = nodata;
+	    continue;
+        }
+
 	error(key, data, "illegal colortabe sub-request");
     }
     ct.x = x;
