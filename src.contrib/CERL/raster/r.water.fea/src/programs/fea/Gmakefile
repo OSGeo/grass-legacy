@@ -1,6 +1,6 @@
 PGM= feapro.bd
 RFEA=$(GISBASE)/etc/r.fea
-LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES= $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 LIST = main.o timedata.o mstifgeo.o timecalc.o other.o band.o infiltration.o draw.o 
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)

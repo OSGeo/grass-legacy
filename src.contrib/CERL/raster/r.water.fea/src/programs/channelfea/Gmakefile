@@ -1,6 +1,6 @@
 PGM=cfeapro.bd
 RFEA=$(GISBASE)/etc/r.fea
-LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES= $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 LIST= main.o chantimecalc.o chantimedata.o draw.o
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)
