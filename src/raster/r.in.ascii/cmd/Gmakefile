@@ -1,0 +1,10 @@
+PGM    = r.in.ascii
+HOME   = $(BIN_MAIN_CMD)
+
+LIST   = main.o gethead.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
