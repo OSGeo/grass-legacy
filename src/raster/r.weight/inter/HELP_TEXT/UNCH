@@ -1,0 +1,10 @@
+
+------------------------------------------------------------------
+KEYWORD: unchoose
+    "unchoose" is the opposite of choose.  It deletes a chosen map
+    from the possible list of 6.
+
+EXAMPLE:
+    unchoose geology
+------------------------------------------------------------------
+
