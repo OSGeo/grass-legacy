@@ -1,0 +1,11 @@
+LIST = main.o sph.o
+
+PGM      = m.region.ll
+
+LIBES	= $(GISLIB) $(COORCNVLIB) $(MATHLIB) $(TERMLIB) 
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(COORCNVLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) -o $@
+
+$(GISLIB): #
+$(COORCNVLIB): #
