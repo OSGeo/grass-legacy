@@ -290,7 +290,7 @@ int main(int argc, char *argv[])
     for (option = ctx.first_option; option; option = option->next_opt)
     {
 	char buff[1024];
-	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer);
+	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer ? option->answer : "");
 	putenv(G_store(buff));
     }
 
