@@ -1,9 +1,0 @@
-PGM=r3.null
-
-$(BIN_CMD)/$(PGM): main.o ../r3.mask/mask.o $(DEPG3DLIB) $(DEPGISLIB) 
-	$(CC) $(LDFLAGS) -o $@ ../r3.mask/mask.o main.o $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
-$(DEPG3DLIB): #
-$(DEPGISLIB): #
-
-#main.o: main.c gis.h G3d.h G3d_intern.h
