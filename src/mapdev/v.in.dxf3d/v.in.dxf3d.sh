@@ -3,7 +3,7 @@
 for i do
 	case $i in
 		dxf=*)
-			DXF=`echo $i | sed s/dxf=// | sed s/.dxf//` ;;
+			DXF=`echo $i | sed s/dxf=// | sed 's/\.dxf//'` ;;
 		line1=*)
 			LINE1=`echo $i | sed s/line1=//` ;;
 		line2=*)
