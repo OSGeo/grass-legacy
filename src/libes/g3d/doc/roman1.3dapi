@@ -1,0 +1,718 @@
+From waupo@sal.cs.uiuc.edu Tue Sep  5 18:16:20 1995
+Received: from sal.cs.uiuc.edu by gomez.gis.uiuc.edu with SMTP id AA03922
+  (5.67b/IDA-1.5 for <helena@gis.uiuc.edu>); Tue, 5 Sep 1995 18:16:20 -0500
+Received: by sal.cs.uiuc.edu id AA23616
+  (5.67b/IDA-1.5 for helena@gis.uiuc.edu); Tue, 5 Sep 1995 18:08:03 -0500
+From: Roman Waupotitsch <waupo@sal.cs.uiuc.edu>
+Message-Id: <199509052308.AA23616@sal.cs.uiuc.edu>
+Subject: please read before the meeting
+To: helena@gis.uiuc.edu, brown@diego.cecer.army.mil, mshapiro@ncsa.uiuc.edu
+Date: Tue, 5 Sep 1995 18:08:02 -0500 (CDT)
+Cc: olga@diego.cecer.army.mil, waupo@sal.cs.uiuc.edu (Roman Waupotitsch)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Content-Length: 23744     
+Status: RO
+
+
+this is a summary of the design of the g3d cash for tiles for those
+which have missed parts of the discussion, and also as a reminder for 
+those who took part in the design.
+
+
+since g3d data is organized in 3d-tiles, rather than rows, keeping
+track of tiles in the memory can become a significant effort for some
+algorithms. for example, if in order to evaluate the value of a
+certain cell one needs information from the neighboring cells, the
+program has to ensure that the tiles which contain these cells are
+available in the memory. since the 3d-data will be too large to fit in
+it's entirety into memory a bookkeeping scheme will be required. such
+a bookkeeping scheme has to be smart enough to avoid excessive i/o to
+and from the disk. 
+
+we designed an i/o scheme which allows the programmer to do his own
+bookkeeping or use a cash-system in which case he does not need to be
+concerned with the underlying tiling of the space (this convenience
+comes of course with a performance tradeoff).
+
+tile read and write operations support both cash and non-cash
+mode. the cash is very basic and can be used as a real cash or just as
+a memory management tool. for most of the functions the cash is
+transparent and the functions can be used in cash and non-cash
+mode. using the cash for reading and writing is not symmetrical, since
+for writing a file-cash is used in addition to the memory-cash.
+
+
+g3d read functionality:
+
+the straightforward way to read from file is via G3d_readTile () which
+reads one tile from file into a buffer which is provided by the
+application. this function can be used in cash and non-cash mode.
+
+in non-cash mode the map structure provides a buffer which can hold
+one tile. the application can use this buffer via the function
+G3d_getTilePtr (), which reads data from the file into this
+buffer. however, any subsequent read operation can overwrite the
+contents of this buffer. the application can also read a single cell
+via G3d_getValue (), e.g.. 
+
+in cash mode the map structure provides a set of buffers. the number
+of buffers can be set when the file is being opened; typically this
+will be the number of tiles in a row, or the number of tiles in a
+plane. the functions to access tile data are G3d_getTilePtr () and
+G3d_getValue () (G3d_readTile () reads directly into the application
+buffer, without using the cash). as long as there is an unused buffer
+in the cash a read request will be satisfied by reading data into that
+buffer. if all the buffers already store some tile, the contents of
+one of the buffers is destroyed, and the new tile is stored in it's
+place. the tile which is destroyed is determined in a
+first-in-first-out fashion among the "unlocked" tiles. 
+
+tiles can be "locked" with G3d_lockTile (). the contents of a locked
+tile cannot be destroyed until the tile is unlocked with
+G3d_unlockTile (), G3d_unlockAll (), G3d_removeTile (), or
+G3d_flushAllTiles (). in order to provide correct functionality of the
+cash, all but one tile can be locked. the application can
+significantly improve the performance of the cash (i.e. increase the
+number of cash accesses which do not require a read from file) if
+locking is being used. to simplify the use of locks "cycles" or
+"passes" can be used. to start a cycle use G3d_beginCycle (). this
+unlocks all tiles which are currently in the cash and then
+automatically locks any tile which is accessed before the next call to
+G3d_endCycle (). to take advantage of the cycle the application needs
+to make sure that all the tiles which are used in two subsequent
+cycles are used before any of the new tiles are used. this can, e.g.,
+be done explicitly with G3d_tileLoad (). 
+
+
+g3d write functionality:
+
+although, reading tiles in cash and non-cash mode is very similar this
+is not the case for writing since in addition to the cash
+(memory-cash) a file-cash is used. 
+
+the straightforward way to write to file is via G3d_writeTile () which
+writes one tile from a buffer to the file. this function can be used
+in cash and non-cash mode. 
+
+in non-cash mode the map structure provides a buffer which can hold
+one tile. the application can access this buffer via the function
+G3d_getTilePtr (), G3d_putValue (), and G3d_getValue (). using these
+functions in non-cash mode is somewhat awkward since the contents of
+the buffer is destroyed if the tile in the buffer and the tile which
+is given as argument do not match. (it is assumed in this case that
+the buffer has already been written to the file). to write the buffer
+to the file use G3d_flushTile ().
+
+in cash mode the map structure provides a set of memory-buffers. the
+number of buffers can be set when the file is being opened; typically
+this will be the number of tiles in a row, or the number of tiles in a
+plane. in addition the map structure provides buffers on a temporary
+file. the number of these file-buffers is unlimited. file-buffers are
+stored uncompressed in order to allow space which has been freed up to
+be reused. 
+
+the functions to access tile data are G3d_getTilePtr (), G3d_putValue
+(), and G3d_getValue (). (G3d_writeTile () writes directly into the
+application buffer, without using the cash). as long as there is an
+unused buffer in the memory-cash a request for a buffer will be
+satisfied by returning a pointer to that buffer. if all the buffers
+already store some tile, the contents of one of the buffers is written
+into the file-cash, and the new tile is stored in it's place. the tile
+which is flushed is determined in a first-in-first-out fashion among
+the tiles. 
+
+tiles are written to the outputfile via G3d_flushTile (),
+G3d_flushTileCube (), or G3d_flushAllTiles (). every tile can be
+written to the output file only once. subsequent requests are
+ignored. at any point where all the tiles in the buffers (either
+memory or file) contain the final cell values G3d_flushAllTiles ()
+should be used in order to avoid the temporary file to grow too
+large. similarly, G3d_flushTileCube () can be used. flushing tiles to
+the output file does not inhibit the application from using this tile
+later in the process: if a tile which has been flushed already cannot
+be found in the memory cash, it is read from the output file. if at
+some point it needs to be flushed from the memory-cash due to lack of
+buffers the behavior for this tile is the same as in the read mode.
+
+the functionality of "locking" is the same as in the read mode.
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+functions for old file, without cash:
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_readTile (map, tileIndex, tile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     char *tile;
+
+reads tile with index "tileIndex" from file and copies the data into "tile".
+
+/*---------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into internal buffer and returns a
+pointer to this buffer. data in the buffer has the same type as the
+data on file.
+
+NOTE: any subsequent access to data of "map" may change the contents
+      of the buffer.
+
+/*---------------------------------------------------------------------------*/
+
+double
+G3d_getDouble (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns the value at (x, y, z) in double format. this function can be
+used independently of the type of the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+float
+G3d_getFloat (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns the value at (x, y, z) in float format. this function can be
+used independently of the type of the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_getValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     char *value;
+
+returns the value at (x, y, z) in "value". the type of the data
+returned corresponds to the type of the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_removeTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+no action;
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+functions for old file, with cash:
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+G3d_readTile (map, tileIndex, tile)
+G3d_getDouble (map, x, y, z)
+G3d_getFloat (map, x, y, z)
+G3d_getValue (map, x, y, z, value)
+
+same functionality as without cash.
+
+/*---------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into cash buffer and returns a
+pointer to this buffer. 
+
+NOTE: any subsequent access to data of "map" may change the contents
+      of the buffer.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_tileLoad (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into cash buffer. 
+
+NOTE: this function is useful in combination with G3d_lockTile (), 
+      G3d_unlockTile (), and with "cycles" (see G3d_beginCycle ()).
+
+/*---------------------------------------------------------------------------*/
+
+int
+G3d_lockTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+
+locks tile with index "tileIndex" in cash. if tile with this index
+does not exist in cash the function terminates with error. 
+
+returns 1 if successful
+        0 if unsuccessful
+
+NOTE: the cash needs at least one unlocked tile, therefore an attempt
+      to lock a tile which is the only remaining unlocked tile will be
+      unsuccessful.  
+
+NOTE: a "locked" tile is a tile which will not be modified by any 
+      subsequent access to data of "map".
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_unlockTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+unlocks tile with index "tileIndex" in cash. if tile with this index
+does not exist in cash the function terminates with error.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_unlockAll (map)
+
+     G3D_Map *map; 
+
+
+unlocks all tiles in the cash of map.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_autolockOn (map)
+
+     G3D_Map *map; 
+
+turns the automatic locking mechanism on.
+
+NOTE: when autolock is turned on any access to a tile in the cash
+      (independent of the status of this tile, i.e. already in cash or
+      not) will automatically lock this tile if possible (see also
+      G3d_lockTile ()).    
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_autolockOff (map)
+
+     G3D_Map *map; 
+
+turns the automatic locking mechanism off.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_beginCycle (map)
+
+     G3D_Map *map; 
+
+initiates a new reading cycle: first, all tiles are unlocked, and then
+autolocking is activated. 
+
+NOTE: the concept of a "cycle" can be used to increase the number of
+      successful cash accesses if information about the order of
+      accesses is available. For example, after completion of one
+      cycle, one can lock all the tiles which were used in the
+      previous cycle and will be used in the next cycle. to do this
+      use G3d_beginCycle () or make sure that all the tiles which are
+      used in both cycles are used before any of the new tiles are
+      used (especially, the ones which are already in the cash). one
+      can use G3d_tileLoad (), e.g.. 
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_endCycle (map)
+
+     G3D_Map *map; 
+
+identical to G3d_autolockOff ().
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_removeTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+removes tile "tileIndex" from cash, independently of the "lock" status.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_flushAllTiles (map)
+
+     G3D_Map *map;
+
+removes all the tiles from the cash.
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+functions for new file, without cash:
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_writeTile (map, tileIndex, tile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     char *tile;
+
+writes data in "tile" to file. Tiles which have already been written 
+before and have returned into the cash via G3d_getTilePtr () or 
+G3d_getXXXX () will not be written again. note, that this implies that 
+changes made after the tile has been written to the output file for the
+first time will be ignored.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_flushTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+if the tile in the internal buffer is identical to tile "tileIndex",
+this tile is written to the file, otherwise the internal buffer is
+set to a NULL-tile which is then written to the file.
+
+/*---------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into internal buffer and returns a
+pointer to this buffer. data in the buffer has the same type as the
+data on file.
+
+NOTE: there are three possibilities. a) the internal buffer already
+      contains the tile with index "tileIndex". in this case the only
+      action of the function is to return the pointer. b) the internal
+      buffer does not contain this tile and the tile is not on file
+      either. in this case the contents of the buffer is set to
+      NULL-values. c) the internal buffer does not contain this tile
+      however the tile has already been written to the file. in this
+      case the tile is copied from the file to the buffer.
+
+NOTE: b) and c) destroy the existing contents of the buffer.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_putDouble (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     double value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the double value of "value" into the
+corresponding position of the buffer. this function can be used
+independently of the type of the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_putFloat (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     float value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the float value of "value" into the
+corresponding position of the buffer. this function can be used
+independently of the type of the data stored on file.
+
+*---------------------------------------------------------------------------*/
+
+void
+G3d_putValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     void *value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the value of "value" into the corresponding
+position of the buffer. it is assumed that the data in "value" is of
+the same type as the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+functions for new file, with cash:
+
+NOTE: the contents of tiles in the cash will never be destroyed due to
+      lack of available buffers. if no cash buffer space is available,
+      tiles will be stored in a file-cash. to remove a tile from the
+      cash use G3d_removeTile () or G3d_flushTile ().
+
+NOTE: the cash functionality is not the full functionality one might 
+      expect from a cash. most notably, there is no concept of dirty
+      tiles in this cash. this means that the cash does not know 
+      whether or not a tile is modified. so the application has to
+      make sure to write the files from the cash to the output file.
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+G3d_writeTile (map, tileIndex, tile)
+
+same functionality as without cash. Tiles which have already been written 
+before and have returned into the cash via G3d_getTilePtr () or 
+G3d_getXXXX () will not be written again. note, that this implies that 
+changes made after the tile has been written to the output file for the
+first time will be ignored.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_flushTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+writes tile "tileIndex" from cash to file and removes the tile from
+the cash. 
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
+
+     G3D_Map *map;
+     int xMin, yMin, zMin, xMax, yMax, zMax;
+
+flushes a cube of tiles. non-existing tiles are flushed as NULL-tiles.
+
+/*---------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into the cash and returns a pointer
+to the buffer. data in the buffer has the same type as the data on
+file. 
+
+NOTE: there are three possibilities. a) the cash already contains the
+      tile with index "tileIndex". in this case the only action of the
+      function is to return the pointer to the corresponding
+      buffer. b) the cash does not contain this tile and the tile is
+      not on file (here file stands for the output file, not the 
+      cash-file) either. in this case the contents of the buffer is
+      set to NULL-values. c) the cash does not contain this tile
+      however the tile has already been written to the file. in this
+      case the tile is copied from the file to a buffer. 
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_putDouble (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     double value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the double value of "value" is copied into the corresponding position
+of the buffer. this function can be used independently of the type of
+the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_putFloat (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     float value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the float value of "value" is copied into the corresponding position
+of the buffer. this function can be used independently of the type of
+the data stored on file.
+
+*---------------------------------------------------------------------------*/
+
+void
+G3d_putValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     void *value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the float value of "value" is copied into the corresponding position
+of the buffer. it is assumed that the data in "value" is of the same
+type as the data stored on file.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_flushAllTiles (map)
+
+     G3D_Map *map;
+
+writes all the tiles in the cash (including the file-cash) into the
+output file, and removes the tiles from the cash. see also G3d_flushTile ().
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+misc tile support
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+char *
+G3d_alloc_tiles (map, nofTiles)
+
+     G3D_Map *map;
+     int nofTiles;
+
+allocates enough space to conatain "nofTiles" tiles as used in "map".
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_free_tiles (tiles)
+
+     char *tiles;
+
+frees the space pointed to by "tiles".
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_tileIndex2tile (map, tileIndex, xTile, yTile, zTile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     int *xTile, *yTile, *zTile;
+
+converts a "tileIndex" into tile coordinates.
+
+/*---------------------------------------------------------------------------*/
+
+int
+G3d_tile2tileIndex (map, xTile, yTile, zTile)
+
+     G3D_Map *map; 
+     int xTile, yTile, zTile;
+
+returns the tileIndex corresponding to the tile (xTile, yTile, zTile).
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_coord2tileCoord (map, x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs)
+
+     G3D_Map *map; 
+     int x, y, z;
+     int *xTile, *yTile, *zTile, *xOffs, *yOffs, *zOffs;
+
+converts the location (x, y, z) into the corresponding tile
+coordinates and offset inside the tile.
+
+/*---------------------------------------------------------------------------*/
+
+void
+G3d_coord2tileIndex (map, x, y, z, tileIndex, offs)
+
+     G3D_Map *map; 
+     int x, y, z;
+     int *tileIndex, *offs;
+
+converts the location (x, y, z) into the corresponding "tileIndex" and
+"offs"set.
+
+/*---------------------------------------------------------------------------*/
+
+int 
+G3d_coordInRegion (map, x, y, z)
+
+     G3D_Map *map; 
+     int x, y, z;
+
+returns 1 iff the location (x, y, z) lies inside the region of "map".
+
+/*---------------------------------------------------------------------------*/
+
+int
+G3d_tileIndexInRange (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+
+returns 1 iff "tileIndex" is a valid index for "map".
+
+/*---------------------------------------------------------------------------*/
+
+int
+G3d_tileInRange (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns 1 iff the (x, y, z) corresponds to a tile in "map".
+
+/*---------------------------------------------------------------------------*/
+
+int
+G3d_computeClippedTileDimensions (map, tileIndex,
+				  xMax, yMax, zMax,
+				  xRedundant, yRedundant, zRedundant)
+
+     G3D_Map *map; 
+     int tileIndex;
+     int *xMax, *yMax, *zMax, *xRedundant, *yRedundant, *zRedundant;
+
+returns in "xMax" the number of cells of tile "tileIndex" which lie
+inside the region of "map". returns in "xRedundant" the number of
+cells of tile "tileIndex" which lie outside the region of "map".
+similar for "yMax", "zMax", "yRedundant", and "zRedundant".
+
+returns the number of cells of tile "tileIndex" which lie inside the
+region. 
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+
+

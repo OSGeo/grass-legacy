@@ -1,0 +1,796 @@
+From waupo@sal.cs.uiuc.edu Sun Aug 27 20:35:32 1995
+Received: from diego.cecer.army.mil by gomez.gis.uiuc.edu with SMTP id AA03006
+  (5.67b/IDA-1.5 for <helena@arnold.gis.uiuc.edu>); Sun, 27 Aug 1995 20:35:31 -0500
+Received: from sal.cs.uiuc.edu (sal.cs.uiuc.edu [128.174.252.12]) by diego.cecer.army.mil (8.6.9/8.6.9) with SMTP id UAA28414 for <helena@zorro.cecer.army.mil>; Sun, 27 Aug 1995 20:28:32 -0500
+Received: by sal.cs.uiuc.edu id AA01502
+  (5.67b/IDA-1.5 for helena@zorro.cecer.army.mil); Sun, 27 Aug 1995 20:27:14 -0500
+From: Roman Waupotitsch <waupo@sal.cs.uiuc.edu>
+Message-Id: <199508280127.AA01502@sal.cs.uiuc.edu>
+Subject: G3D
+To: mshapiro@ncsa.uiuc.edu, helena@zorro.cecer.army.mil,
+        brown@diego.cecer.army.mil, waupo@sal.cs.uiuc.edu (Roman Waupotitsch)
+Date: Sun, 27 Aug 1995 20:27:14 -0500 (CDT)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Content-Length: 1028      
+Status: RO
+
+
+i wrote up a little bit about the io. all my functions currently take
+the G3D_Map structure as an argument. also my tile functions return
+pointers to an array instead of a tile structure. i am aware that this
+does not conform with bill's design. to change this will not be a big
+effort ... also my function names are usually different. i will update
+this later ...
+
+Q: currently the internal type of data is the same as the type of
+data on file. should that be changed? should we specify the type in
+which data is represented internally? 
+
+Q: i am not very clear about regions. bill's G3D_Region declares north,
+south, east, west, top, and bottom as "double". however later there
+is a function "G3d_where" which takes "int" arguments. are these
+already converted coordinates?
+
+Q: why is "precision" part of the region and not of map?
+
+
+maybe we should schedule a meeting to discuss the status and where we
+go from here. but i would appreciate comments by email so that i can
+incorporate the changes before the meeting.
+
+
+roman
+
+From waupo@sal.cs.uiuc.edu Sun Aug 27 20:36:25 1995
+Received: from diego.cecer.army.mil by gomez.gis.uiuc.edu with SMTP id AA03017
+  (5.67b/IDA-1.5 for <helena@arnold.gis.uiuc.edu>); Sun, 27 Aug 1995 20:36:24 -0500
+Received: from sal.cs.uiuc.edu (sal.cs.uiuc.edu [128.174.252.12]) by diego.cecer.army.mil (8.6.9/8.6.9) with SMTP id UAA28420 for <helena@zorro.cecer.army.mil>; Sun, 27 Aug 1995 20:29:26 -0500
+Received: by sal.cs.uiuc.edu id AA01537
+  (5.67b/IDA-1.5 for helena@zorro.cecer.army.mil); Sun, 27 Aug 1995 20:28:08 -0500
+From: Roman Waupotitsch <waupo@sal.cs.uiuc.edu>
+Message-Id: <199508280128.AA01537@sal.cs.uiuc.edu>
+Subject: G3D (compression)
+To: mshapiro@ncsa.uiuc.edu, helena@zorro.cecer.army.mil,
+        brown@diego.cecer.army.mil, waupo@sal.cs.uiuc.edu (Roman Waupotitsch)
+Date: Sun, 27 Aug 1995 20:28:07 -0500 (CDT)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Content-Length: 4194      
+Status: RO
+
+
+compression:
+
+i have implemented a compression scheme which uses a combination of
+precision, rle encoding, and lzw compression. i implemented it for
+both floating point and double precision. i also experimented with
+additional subdivision of tiles into smaller tiles to improve locality
+but this scheme did not consistently improve compression. using
+maximum precision i get a compression of 20% - 25% for float data. 
+for "double" i can't really say since i only have "converted float" data
+available (i.e. data which i converted from float to double). this
+converted float should ideally compress to the same size as the
+original float, which it of course does not. it is approximately 20%
+larger than the float data. reading and writing with compression is 
+approximately twice as slow than without compression. there are 
+several reasons for this. first, there is additional work involved in
+reordering the bytes and rle. but in addition i use multiple lzw reads
+and writes for each tile. this improves compression. 
+
+the compression scheme for float: 
+
+(in xdr a float is stored as follows: 1s7e 1e7m 8m 8m)
+
+
+a) convert array of floats into xdr format
+
+	b00b01b02b03b10b11b12......
+
+b) reorder the bytes 
+
+	b01b11b21b31...b02b12b22b32...b03b13b23b33...b00b10b20b30...
+
+c) lzw-write the mantissa bytes (including the least significant
+   exponent bit) (i.e. b01b11b21b31...b02b12b22b32...b03b13b23b33...)
+
+d) rle-encode the high-bytes (including the sign bit) of the exponent
+   (i.e. b00b10b20b30...) and lzw-write the rle encoded string
+
+lzw-compression and rle-encoding is done only if the resulting string
+is shorter than the original. individual lzw-writes are used since it
+can be assumed that the dictionary of the mantissa bytes is very
+different from the dictionary of the exponent bytes. most of the
+compression is the result of the rle/lzw-compression of the exponent.
+only one file pointer is required to read the two parts of the
+number.
+
+a precision in the range of 0 to 23 can be specified. if the precision
+is less than 23 the unused bits are set to 0 and only those bytes
+which contain at least one non-redundant bit are written to the
+file. currently i do not compactify partial bytes since lzw seems to
+be doing a good job in compressing those bytes.
+
+
+NULL values:
+
+because of lack of a better solution i currently defined the
+xdr-number "11111111 11111111 11111111 11111111" to represent a NULL
+float. if the precision is less than 23 (i.e. the maximum) i use an
+additional bit to indicate NULL values. this bit is added as the least
+significant bit of the mantissa.
+
+
+there are obviously several improvements possible:
+
+i) if the precision is less than the maximum reorder the mantissa
+   bytes s.t. that partial bytes occurs first. this might improve
+   the xdr compression, since in the current scheme, if the dictionary
+   is too small, xdr might run out of possible codes. 
+  
+ii) the null indicator bit could be written separately. this would
+    allow me to avoid writing the bytes for the NULL values all 
+    together.
+
+iii) currently the index is stored in non-compressed format. it could
+     also be compressed.
+
+
+Note: xdr double format is 1s7e 4e4m 6x(8m)
+
+
+Here are some sample results. they are based on 8x8x8 tiles. tiles are
+truncated if they extend beyond the region. 
+
+the data is "wellt6lgoo_9.grid3" with size 520878:
+	
+	78 status bytes and 130200 floats in a 93 x 100 x 14 cube.
+
+precision = 0 size = 27669
+precision = 1 size = 34056
+precision = 2 size = 42471
+precision = 3 size = 53436
+precision = 4 size = 66853
+precision = 5 size = 82628
+precision = 6 size = 99139
+precision = 7 size = 204704
+precision = 8 size = 214644
+precision = 9 size = 224148
+precision = 10 size = 233913
+precision = 11 size = 243144
+precision = 12 size = 248984
+precision = 13 size = 251436
+precision = 14 size = 252308
+precision = 15 size = 388733
+precision = 16 size = 388453
+precision = 17 size = 389302
+precision = 18 size = 389511
+precision = 19 size = 389656
+precision = 20 size = 389735
+precision = 21 size = 389768
+precision = 22 size = 389778
+precision = 23 size = 389772
+
+the size is in bytes and includes the index and 48 bytes of header information.
+
+
+
+
+
+From waupo@sal.cs.uiuc.edu Sun Aug 27 20:37:34 1995
+Received: from diego.cecer.army.mil by gomez.gis.uiuc.edu with SMTP id AA03027
+  (5.67b/IDA-1.5 for <helena@arnold.gis.uiuc.edu>); Sun, 27 Aug 1995 20:37:33 -0500
+Received: from sal.cs.uiuc.edu (sal.cs.uiuc.edu [128.174.252.12]) by diego.cecer.army.mil (8.6.9/8.6.9) with SMTP id UAA28432 for <helena@zorro.cecer.army.mil>; Sun, 27 Aug 1995 20:30:35 -0500
+Received: by sal.cs.uiuc.edu id AA01588
+  (5.67b/IDA-1.5 for helena@zorro.cecer.army.mil); Sun, 27 Aug 1995 20:29:16 -0500
+From: Roman Waupotitsch <waupo@sal.cs.uiuc.edu>
+Message-Id: <199508280129.AA01588@sal.cs.uiuc.edu>
+Subject: G3D (io)
+To: mshapiro@ncsa.uiuc.edu, helena@zorro.cecer.army.mil,
+        brown@diego.cecer.army.mil, waupo@sal.cs.uiuc.edu (Roman Waupotitsch)
+Date: Sun, 27 Aug 1995 20:29:16 -0500 (CDT)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Content-Length: 16571     
+Status: RO
+
+
+i implemented tile read and write operations supporting cash and
+non-cash mode. the cash is very basic and can be used as a real cash
+or just as a memory management tool. for most of the functions the cash
+is transparent and the functions can be used in cash and non-cash
+mode. using the cash for reading and writing is not symmetrical, since
+for writing a file-cash is used in addition to the memory-cash if the
+memory-cash runs out of space.
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+functions for old file, without cash:
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_readTile (map, tileIndex, tile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     char *tile;
+
+reads tile with index "tileIndex" and copies the data into "tile".
+
+/*--------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into internal buffer and returns a
+pointer to this buffer. data in the buffer has the same type as the
+data on file.
+
+NOTE: any subsequent access to data of "map" may change the contents
+      of the buffer.
+
+/*--------------------------------------------------------------------------*/
+
+double
+G3d_getDouble (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns the value at (x, y, z) in double format. this function can be
+used independently of the type of the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+float
+G3d_getFloat (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns the value at (x, y, z) in float format. this function can be
+used independently of the type of the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_getValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     char *value;
+
+returns the value at (x, y, z) in "value". the type of the data
+returned corresponds to the type of the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_removeTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+no action;
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+functions for old file, with cash:
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+G3d_readTile (map, tileIndex, tile)
+G3d_getDouble (map, x, y, z)
+G3d_getFloat (map, x, y, z)
+G3d_getValue (map, x, y, z, value)
+
+same functionality as without cash.
+
+/*--------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into cash buffer and returns a
+pointer to this buffer. 
+
+NOTE: any subsequent access to data of "map" may change the contents
+      of the buffer.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_tileLoad (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into cash buffer. 
+
+NOTE: this function is useful in combination with G3d_lockTile (), 
+      G3d_unlockTile (), and with "cycles" (see G3d_beginCycle ()).
+
+/*--------------------------------------------------------------------------*/
+
+int
+G3d_lockTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+
+locks tile with index "tileIndex" in cash. if tile with this index
+does not exist in cash the function terminates with error. 
+
+returns 1 if successful
+        0 if unsuccessful
+
+NOTE: the cash needs at least one unlocked tile, therefore an attempt
+      to lock a tile which is the only remaining unlocked tile will be
+      unsuccessful.  
+
+NOTE: a "locked" tile is a tile which will not be modified by any 
+      subsequent access to data of "map".
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_unlockTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+unlocks tile with index "tileIndex" in cash. if tile with this index
+does not exist in cash the function terminates with error.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_unlockAll (map)
+
+     G3D_Map *map; 
+
+
+unlocks all tiles in the cash of map.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_autolockOn (map)
+
+     G3D_Map *map; 
+
+turns the automatic locking mechanism on.
+
+NOTE: when autolock is turned on any access to a tile in the cash
+      (independent of the status of this tile, i.e. already in cash or
+      not) will automatically lock this tile if possible (see also
+      G3d_lockTile ()).    
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_autolockOff (map)
+
+     G3D_Map *map; 
+
+turns the automatic locking mechanism off.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_beginCycle (map)
+
+     G3D_Map *map; 
+
+initiates a new reading cycle: first, all tiles are unlocked, and then
+autolocking is activated. 
+
+NOTE: the concept of a "cycle" can be used to increase the number of
+      successful cash accesses if information about the order of
+      accesses is available. For example, after completion of one
+      cycle, one can lock all the tiles which were used in the
+      previous cycle and will be used in the next cycle. to do this
+      use G3d_beginCycle () and make sure that all the tiles which are
+      used in both cycles are used before any of the new tiles are
+      used (especially, the ones which are already in the cash). one
+      can use G3d_tileLoad (), e.g.. 
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_endCycle (map)
+
+     G3D_Map *map; 
+
+identical to G3d_autolockOff ().
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_removeTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+removes tile "tileIndex" from cash, independently of the "lock" status.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_flushAllTiles (map)
+
+     G3D_Map *map;
+
+removes all the tiles from the cash.
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+functions for new file, without cash:
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_writeTile (map, tileIndex, tile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     char *tile;
+
+writes data in "tile" to file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_flushTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+same as G3d_writeTile ().
+
+/*--------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into internal buffer and returns a
+pointer to this buffer. data in the buffer has the same type as the
+data on file.
+
+NOTE: there are three possibilities. a) the internal buffer already
+      contains the tile with index "tileIndex". in this case the only
+      action of the function is to return the pointer. b) the internal
+      buffer does not contain this tile and the tile is not on file
+      either. in this case the contents of the buffer is set to
+      NULL-values. c) the internal buffer does not contain this tile
+      however the tile has already been written to the file. in this
+      case the tile is copied from the file to the buffer.
+
+NOTE: b) and c) destroy the contents of the buffer.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_putDouble (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     double value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the double value of "value" into the
+corresponding position of the buffer. this function can be used
+independently of the type of the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_putFloat (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     float value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the float value of "value" into the
+corresponding position of the buffer. this function can be used
+independently of the type of the data stored on file.
+
+*---------------------------------------------------------------------------*/
+
+void
+G3d_putValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     void *value;
+
+it is assumed that the tile stored in the internal buffer contains the
+location (x, y, z). copies the value of "value" into the corresponding
+position of the buffer. it is assumed that the data in "value" is of
+the same type as the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+functions for new file, with cash:
+
+NOTE: the contents of tiles in the cash will never be destroyed due to
+      lack of available buffers. if no cash buffer space is available,
+      tiles will be stored in a file-cash. to remove a tile from the
+      cash use G3d_removeTile () or G3d_flushTile ().
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+G3d_writeTile (map, tileIndex, tile)
+
+same functionality as without cash.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_flushTile (map, tileIndex)
+
+     G3D_Map *map; 
+     int tileIndex;
+
+writes tile "tileIndex" from cash to file and removes the tile from
+the cash.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
+
+     G3D_Map *map;
+     int xMin, yMin, zMin, xMax, yMax, zMax;
+
+flushes a cube of tiles. non-existing tiles are flushed as NULL-tiles.
+
+
+/*--------------------------------------------------------------------------*/
+
+char *
+G3d_getTilePtr (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+     
+reads tile with index "tileIndex" into the cash and returns a pointer
+to the buffer. data in the buffer has the same type as the data on
+file. 
+
+NOTE: there are three possibilities. a) the cash already contains the
+      tile with index "tileIndex". in this case the only action of the
+      function is to return the pointer to the corresponding
+      buffer. b) the cash does not contain this tile and the tile is
+      not on file either. in this case the contents of the buffer is
+      set to NULL-values. c) the cash does not contain this tile
+      however the tile has already been written to the file. in this
+      case the tile is copied from the file to a buffer. 
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_putDouble (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     double value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the double value of "value" is copied into the corresponding position
+of the buffer. this function can be used independently of the type of
+the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_putFloat (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     float value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the float value of "value" is copied into the corresponding position
+of the buffer. this function can be used independently of the type of
+the data stored on file.
+
+*---------------------------------------------------------------------------*/
+
+void
+G3d_putValue (map, x, y, z, value)
+
+     G3D_Map *map;
+     int x, y, z;
+     void *value;
+
+computes the tileIndex corresponding to location (x, y, z) and gets
+the buffer which contains this position with G3d_getTilePtr (). then
+the float value of "value" is copied into the corresponding position
+of the buffer. it is assumed that the data in "value" is of the same
+type as the data stored on file.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_flushAllTiles (map)
+
+     G3D_Map *map;
+
+writes all the tiles in the cash (including the file-cash) into the
+output file, and removes the tiles from the cash.
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+misc tile support
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+char *
+G3d_alloc_tiles (map, nofTiles)
+
+     G3D_Map *map;
+     int nofTiles;
+
+allocates enough space to conatain "nofTiles" tiles as used in "map".
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_free_tiles (tiles)
+
+     char *tiles;
+
+frees the space pointed to by "tiles".
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_tileIndex2tile (map, tileIndex, xTile, yTile, zTile)
+
+     G3D_Map *map; 
+     int tileIndex;
+     int *xTile, *yTile, *zTile;
+
+converts a "tileIndex" into tile coordinates.
+
+/*--------------------------------------------------------------------------*/
+
+int
+G3d_tile2tileIndex (map, xTile, yTile, zTile)
+
+     G3D_Map *map; 
+     int xTile, yTile, zTile;
+
+returns the tileIndex corresponding to the tile (xTile, yTile, zTile).
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_coord2tileCoord (map, x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs)
+
+     G3D_Map *map; 
+     int x, y, z;
+     int *xTile, *yTile, *zTile, *xOffs, *yOffs, *zOffs;
+
+converts the location (x, y, z) into the corresponding tile
+coordinates and offset inside the tile.
+
+/*--------------------------------------------------------------------------*/
+
+void
+G3d_coord2tileIndex (map, x, y, z, tileIndex, offs)
+
+     G3D_Map *map; 
+     int x, y, z;
+     int *tileIndex, *offs;
+
+converts the location (x, y, z) into the corresponding "tileIndex" and
+"offs"set.
+
+/*--------------------------------------------------------------------------*/
+
+int 
+G3d_coordInRegion (map, x, y, z)
+
+     G3D_Map *map; 
+     int x, y, z;
+
+returns 1 iff the location (x, y, z) lies inside the region of "map".
+
+/*--------------------------------------------------------------------------*/
+
+int
+G3d_tileIndexInRange (map, tileIndex)
+
+     G3D_Map *map;
+     int tileIndex;
+
+returns 1 iff "tileIndex" is a valid index for "map".
+
+/*--------------------------------------------------------------------------*/
+
+int
+G3d_tileInRange (map, x, y, z)
+
+     G3D_Map *map;
+     int x, y, z;
+
+returns 1 iff the (x, y, z) corresponds to a tile in "map".
+
+/*--------------------------------------------------------------------------*/
+
+int
+G3d_computeClippedTileDimensions (map, tileIndex,
+				  xMax, yMax, zMax,
+				  xRedundant, yRedundant, zRedundant)
+
+     G3D_Map *map; 
+     int tileIndex;
+     int *xMax, *yMax, *zMax, *xRedundant, *yRedundant, *zRedundant;
+
+returns in "xMax" the number of cells of tile "tileIndex" which lie
+inside the region of "map". returns in "xRedundant" the number of
+cells of tile "tileIndex" which lie outside the region of "map".
+similar for "yMax", "zMax", "yRedundant", and "zRedundant".
+
+returns the number of cells of tile "tileIndex" which lie inside the
+region. 
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+
+
+From waupo@sal.cs.uiuc.edu Thu Jan  4 10:29:03 1996
+Received: from diego.cecer.army.mil by gomez.gis.uiuc.edu with SMTP id AA06557
+  (5.67b/IDA-1.5); Thu, 4 Jan 1996 10:29:02 -0600
+Received: from sal.cs.uiuc.edu (sal.cs.uiuc.edu [128.174.252.12]) by diego.cecer.army.mil (8.7/8.7) with ESMTP id KAA15443; Thu, 4 Jan 1996 10:28:58 -0600 (CST)
+Received: (from waupo@localhost) by sal.cs.uiuc.edu (8.7.1/8.7.1) id KAA18669; Thu, 4 Jan 1996 10:28:11 -0600 (CST)
+From: Roman Waupotitsch <waupo@cs.uiuc.edu>
+Message-Id: <199601041628.KAA18669@sal.cs.uiuc.edu>
+Subject: g3d
+To: mshapiro@ncsa.uiuc.edu, helena@diego.cecer.army.mil,
+        brown@diego.cecer.army.mil, olga@demaco1.demaco.com,
+        waupo@sal.cs.uiuc.edu (Roman Waupotitsch)
+Date: Thu, 4 Jan 1996 10:28:11 -0600 (CST)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Status: RO
+
+
+hi,
+
+i would like to discuss how to continue with g3d this semester. i remember
+that there was a request for a program to convert grid3 to g3d. other than
+that i recall that mapcalc3d was the first on a list of programs to be 
+provided.
+
+maybe we could set up a meeting. any time is fine with me.
+
+roman
+

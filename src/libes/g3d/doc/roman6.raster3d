@@ -1,0 +1,59 @@
+From waupo@cs.uiuc.edu Fri May 17 01:26:08 1996
+Received: from diego.cecer.army.mil by gomez.gis.uiuc.edu with SMTP id AA20636
+  (5.67b/IDA-1.5); Fri, 17 May 1996 01:26:07 -0500
+Received: from sal.cs.uiuc.edu (sal.cs.uiuc.edu [128.174.252.12]) by diego.cecer.army.mil (8.7/8.7) with ESMTP id BAA28595; Fri, 17 May 1996 01:26:06 -0500 (CDT)
+Received: from sal.cs.uiuc.edu (localhost [127.0.0.1]) by sal.cs.uiuc.edu (8.7.5/8.7.3) with SMTP id BAA01345; Fri, 17 May 1996 01:26:05 -0500 (CDT)
+Sender: waupo@cs.uiuc.edu
+Message-Id: <319C1BFD.4DE0@cs.uiuc.edu>
+Date: Fri, 17 May 1996 01:26:05 -0500
+From: Roman Waupotitsch <waupo@cs.uiuc.edu>
+X-Mailer: Mozilla 2.02 (X11; I; SunOS 5.4 sun4m)
+Mime-Version: 1.0
+To: Bill Brown <brown@diego.cecer.army.mil>, Mark Astley <astley@cs.uiuc.edu>,
+        Helena Mitasova <helena@diego.cecer.army.mil>
+Cc: waupo@sal.cs.uiuc.edu
+Subject: windows
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Status: RO
+
+hi,
+
+i just finished implementing windows, except for the commandline 
+support.
+
+there is now one additional argument for openCellOld, which 
+specifies the window to be used for this map. you can use the
+default window also. it is initially the window stored in 
+WIND3, or the window set with G3d_setWindow. the window of
+a map can be modified even after the map has been opened. with
+G3d_setWindowMap. (btw all of these functions are in the doc)
+
+the get{Value,Double,Float} functions return now the values relative
+to the window. there are three functions get{Value,Double,Float}Region
+which have the previous functionality of get{Value,Double,Float}, i.e.
+they return values relative to the coordiante of the data-cube on file.
+instead of getRegionCoordinates one should use getWindowCoordiantes
+if you use the windows.
+
+if you want to make a program work with and without window you can
+(after opening) set the window to the region of the map.
+
+I have adapted all the programs in the raster3d directory to the new
+notation, i.e. they use the "region" versions of the "get" functions.
+can you please test each program at least once to make sure i did
+not miss anything. maybe you can even make them use windows.
+
+the window verions of the get functions use by default a nearest
+neighbor scheme. this can be set before or after (i forgot) the
+map is opened. so you can add your on re-sampling.
+
+the things which have to be done are:
+
+	document every new g3d function (i will do this next)
+	write a consistent commandline window interface.
+	make windows for writing also?
+
+
+roman
+
