@@ -2,6 +2,7 @@
 
 within_window (north, east, window)
 
+	double north, east;
 	struct Cell_head *window;
 {
 	return (
