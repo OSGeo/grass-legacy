@@ -13,10 +13,7 @@ OFILES = \
 	wind_quads.o \
 	write_quads.o
 
-PROG =   $(BIN_CMD)/v.mkquads
+PROG = v.mkquads.scs
 
-all:  $(PROG)
-
-
-$(PROG): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PROG): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)
