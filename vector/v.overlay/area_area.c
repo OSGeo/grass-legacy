@@ -35,6 +35,10 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     fprintf ( stderr, "Removing duplicates ...\n" );
     Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, stderr );
 
+    fprintf (stderr, SEP );
+    fprintf ( stderr, "Cleaning boundaries at nodes ...\n" );
+    Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, stderr );
+
     /* ?: May be result of Vect_break_lines() + Vect_remove_duplicates() any dangle or bridge?
      * In that case, calls to Vect_remove_dangles() and Vect_remove_bridges() would be also necessary */
     
