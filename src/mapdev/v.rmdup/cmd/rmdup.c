@@ -17,7 +17,9 @@
 **/
 
 #include <stdio.h>
+#ifndef __CYGWIN__
 #include <values.h>
+#endif
 #include <math.h>
 
 #include    "gis.h"
@@ -189,8 +191,11 @@ killdups (Closet, Suitcase)
  * -> but today?
  */
  /*     while (match == 0 && Closet->dig_fp->_cnt) */
-
+#ifndef __CYGWIN__
     while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
+#else
+    while (match == 0 && Closet->dig_fp->_bf._size)
+#endif
     {
       if (0 < (type = V1_read_line (Closet, Points_b, new_offset)))
       {
