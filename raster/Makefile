@@ -83,6 +83,7 @@ SUBDIRS = \
 	r.topmodel \
 	r.transect \
 	r.water.outlet \
+	r.watershed \
 	r.what \
 	wildfire
 
