@@ -1,10 +1,10 @@
 /***************************************************************
  *
- * MODULE:       v.clean
+ * MODULE:       v.info
  * 
  * AUTHOR(S):    CERL, updated to 5.1 by Markus Neteler
  *               
- * PURPOSE:      Clean lines
+ * PURPOSE:      print vector map info
  *               
  * COPYRIGHT:    (C) 2002 by the GRASS Development Team
  *
