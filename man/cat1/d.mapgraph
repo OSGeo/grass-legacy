@@ -1,164 +1,164 @@
 
 
 
-dd..mmaappggrraapphh <main>     GRASS Reference Manual    <main> dd..mmaappggrraapphh
+d.mapgraph <main>    GRASS Reference Manual	<main> d.mapgraph
 
 
 
-NNAAMMEE
-     _d_._m_a_p_g_r_a_p_h - Generates and displays simple graphics on map
-     layers drawn in the active graphics monitor display frame.
-     _(_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m_)
+NAME
+     d.mapgraph	- Generates and	displays simple	graphics on map
+     layers drawn in the active	graphics monitor display frame.
+     (GRASS Display Program)
 
-SSYYNNOOPPSSIISS
-     dd..mmaappggrraapphh
-     dd..mmaappggrraapphh hheellpp
-     dd..mmaappggrraapphh [iinnppuutt==_n_a_m_e] [ccoolloorr==_n_a_m_e]
+SYNOPSIS
+     d.mapgraph
+     d.mapgraph	help
+     d.mapgraph	[input=name] [color=name]
 
-DDEESSCCRRIIPPTTIIOONN
-     _d_._m_a_p_g_r_a_p_h draws graphics that are described in standard
-     input (default) or the UNIX input file _n_a_m_e.  If commands
-     are entered via standard input, a _c_t_r_l_-_d is used to signal
-     the end of input to _d_._m_a_p_g_r_a_p_h.  This program performs
-     essentially the same function as _d_._g_r_a_p_h; however, point
-     locations are specified to _d_._m_a_p_g_r_a_p_h in the geographic
-     coordinate system of the user's current mapset and location
-     (i.e., in map coordinates), rather than in graphics display
+DESCRIPTION
+     d.mapgraph	draws graphics that are	described in standard
+     input (default) or	the UNIX input file name.  If commands
+     are entered via standard input, a ctrl-d is used to signal
+     the end of	input to d.mapgraph.  This program performs
+     essentially the same function as d.graph; however,	point
+     locations are specified to	d.mapgraph in the geographic
+     coordinate	system of the user's current mapset and	location
+     (i.e., in map coordinates), rather	than in	graphics display
      screen coordinates.
 
-     The program can be run interactively or non-interactively.
+     The program can be	run interactively or non-interactively.
      The user can run the program completely non-interactively by
-     specifying the name of a file containing _d_._m_a_p_g_r_a_p_h graphics
-     commands and the values of all needed parameters on the
-     command line.  The user can instead elect to run the program
+     specifying	the name of a file containing d.mapgraph graphics
+     commands and the values of	all needed parameters on the
+     command line.  The	user can instead elect to run the program
      partially interactively, by specifying any/all of the
-     parameters _e_x_c_e_p_t the graphics input=_n_a_m_e parameter on the
-     command line.  In this case, _d_._m_a_p_g_r_a_p_h will expect the user
-     to input _d_._m_a_p_g_r_a_p_h graphics commands from standard input
-     (i.e., the keyboard) and will (silently) prompt the user for
-     these graphics commands.  Alternately, the user can simply
-     type dd..mmaappggrraapphh on the command line, and be prompted for the
-     values of all parameters (the user can still input graphics
+     parameters	except the graphics input=name parameter on the
+     command line.  In this case, d.mapgraph will expect the user
+     to	input d.mapgraph graphics commands from	standard input
+     (i.e., the	keyboard) and will (silently) prompt the user for
+     these graphics commands.  Alternately, the	user can simply
+     type d.mapgraph on	the command line, and be prompted for the
+     values of all parameters (the user	can still input	graphics
      commands from an input file using this form.)  In this case,
-     the user is presented with the standard GRASS parser
-     interface described in the manual entry for _p_a_r_s_e_r.
+     the user is presented with	the standard GRASS parser
+     interface described in the	manual entry for parser.
 
-     PPaarraammeetteerrss::
+     Parameters:
 
-     iinnppuutt==_n_a_m_e        Name of a UNIX file containing graphics
-                       instructions.  Specify the full path name
-                       of the file if not in the current
-                       directory.  If no file name is given,
-                       commands are taken from standard input.
+     input=name	       Name of a UNIX file containing graphics
+		       instructions.  Specify the full path name
+		       of the file if not in the current
+		       directory.  If no file name is given,
+		       commands	are taken from standard	input.
 
-     ccoolloorr==_n_a_m_e        Starting color desired for graphics.
-                       Options:  red, orange, yellow, green,
-                       blue, indigo, violet, magenta, brown,
-                       gray, white, and black.
-                       Default:  _w_h_i_t_e
-
-
-
-
-GRASS 4.1                 U.S. Army CERL                        1
+     color=name	       Starting	color desired for graphics.
+		       Options:	 red, orange, yellow, green,
+		       blue, indigo, violet, magenta, brown,
+		       gray, white, and	black.
+		       Default:	 white
 
 
 
 
+GRASS 4.2		Baylor University			1
 
 
-dd..mmaappggrraapphh <main>     GRASS Reference Manual    <main> dd..mmaappggrraapphh
 
 
 
-     _d_._m_a_p_g_r_a_p_h is used for drawing simple graphics on top of map
-     layers.  The coordinate system used by _d_._m_a_p_g_r_a_p_h is the
-     same as that of the map layer displayed in the active
+
+d.mapgraph <main>    GRASS Reference Manual	<main> d.mapgraph
+
+
+
+     d.mapgraph	is used	for drawing simple graphics on top of map
+     layers.  The coordinate system used by d.mapgraph is the
+     same as that of the map layer displayed in	the active
      display frame on the graphics monitor (or that of the user's
-     current region, if no map is displayed).
+     current region, if	no map is displayed).
 
      The graphics language is simple and uses the following
      commands:
 
-     ## _c_o_m_m_e_n_t
-          A line of comment which is ignored in the processing.
-     mmoovvee _x_p_o_s _y_p_o_s
-          The current location is updated to _x_p_o_s _y_p_o_s (where
-          these, respectively, are the easting and northing of
-          geographic coordinates stated in the map coordinate
-          system of the user's current GRASS location, falling
-          within the current region and active frame).  If
-          unspecified by the user, the current location becomes
-          (0,0).  If, as most likely, the point (0,0) falls
-          outside of the user's current region, graphics drawn
-          there will not appear in the graphics frame.
-          Note:  use _g_._r_e_g_i_o_n to obtain the coordinates of
-          current location.  Use _d_._w_h_e_r_e to obtain specific map
-          coordinates of various points on the raster map
-          displayed in the active frame.
-          Note:  there must be a space between _x_p_o_s and _y_p_o_s.
-     ddrraaww _x_p_o_s _y_p_o_s
-          A line is drawn in the current color from the current
-          location to the new location _x_p_o_s _y_p_o_s, which then
-          becomes the current location.  _x_p_o_s and _y_p_o_s are
-          (respectively) an easting and northing stated in the
-          map coordinate system of the user's current GRASS
-          location, and located within the user's current
-          geographic region and active frame.
-          Note:  there must be a space between _x_p_o_s and _y_p_o_s.
-     ccoolloorr _c_o_l_o_r
-          Sets the current color to that stated.  Color options
-          are: _r_e_d_, _o_r_a_n_g_e_, _y_e_l_l_o_w_, _g_r_e_e_n_, _b_l_u_e_, _i_n_d_i_g_o_, _v_i_o_l_e_t_,
-          _m_a_g_e_n_t_a_, _b_r_o_w_n_, _g_r_a_y_, _w_h_i_t_e, and _b_l_a_c_k.
-     ssiizzee _x_p_e_r _y_p_e_r
-          Subsequent text will be drawn such that the text is
-          _x_p_e_r percent of the display frame's width and _y_p_e_r
-          percent of the display frame height.  If not specified
-          by the user, the text size becomes 5 percent of the
-          active frame's width and 5 percent of the frame's
-          height.  This is equivalent to entering ssiizzee 55 55.
-     tteexxtt _l_i_n_e_-_o_f_-_t_e_x_t
-          The stated text is drawn at the current location using
-          the current color and the current size.
-     iiccoonn _t_y_p_e _s_i_z_e _x _y
-          Draws an icon of types o, x, or + with specified size
-          at location x,y.  Note:  type o designates a square.
+     # comment
+	  A line of comment which is ignored in	the processing.
+     move xpos ypos
+	  The current location is updated to xpos ypos (where
+	  these, respectively, are the easting and northing of
+	  geographic coordinates stated	in the map coordinate
+	  system of the	user's current GRASS location, falling
+	  within the current region and	active frame).	If
+	  unspecified by the user, the current location	becomes
+	  (0,0).  If, as most likely, the point	(0,0) falls
+	  outside of the user's	current	region,	graphics drawn
+	  there	will not appear	in the graphics	frame.
+	  Note:	 use g.region to obtain	the coordinates	of
+	  current location.  Use d.where to obtain specific map
+	  coordinates of various points	on the raster map
+	  displayed in the active frame.
+	  Note:	 there must be a space between xpos and	ypos.
+     draw xpos ypos
+	  A line is drawn in the current color from the	current
+	  location to the new location xpos ypos, which	then
+	  becomes the current location.	 xpos and ypos are
+	  (respectively) an easting and	northing stated	in the
+	  map coordinate system	of the user's current GRASS
+	  location, and	located	within the user's current
+	  geographic region and	active frame.
+	  Note:	 there must be a space between xpos and	ypos.
+     color color
+	  Sets the current color to that stated.  Color	options
+	  are: red, orange, yellow, green, blue, indigo, violet,
+	  magenta, brown, gray,	white, and black.
+     size xper yper
+	  Subsequent text will be drawn	such that the text is
+	  xper percent of the display frame's width and	yper
+	  percent of the display frame height.	If not specified
+	  by the user, the text	size becomes 5 percent of the
+	  active frame's width and 5 percent of	the frame's
+	  height.  This	is equivalent to entering size 5 5.
+     text line-of-text
+	  The stated text is drawn at the current location using
+	  the current color and	the current size.
+     icon type size x y
+	  Draws	an icon	of types o, x, or + with specified size
+	  at location x,y.  Note:  type	o designates a square.
 
 
 
-GRASS 4.1                 U.S. Army CERL                        2
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-dd..mmaappggrraapphh <main>     GRASS Reference Manual    <main> dd..mmaappggrraapphh
+d.mapgraph <main>    GRASS Reference Manual	<main> d.mapgraph
 
 
 
-     ppoollyyggoonn
-          _x_p_o_s _y_p_o_s
-          _x_p_o_s _y_p_o_s
-          .
-          .
-          .
-          The map coordinates appearing on lines beneath the word
-          _p_o_l_y_g_o_n, one pair per line, circumscribe a polygon
-          which is to be filled with the current color.
+     polygon
+	  xpos ypos
+	  xpos ypos
+	  .
+	  .
+	  .
+	  The map coordinates appearing	on lines beneath the word
+	  polygon, one pair per	line, circumscribe a polygon
+	  which	is to be filled	with the current color.
 
-NNOOTTEESS
-     _d_._m_a_p_g_r_a_p_h is identical to the _d_._g_r_a_p_h command, except for
+NOTES
+     d.mapgraph	is identical to	the d.graph command, except for
      the difference in coordinate systems used.
-     _d_._m_a_p_g_r_a_p_h will complain if the user enters something to
-     standard input that it does not understand.  Blank lines in
-     the input file will result in this error message.
+     d.mapgraph	will complain if the user enters something to
+     standard input that it does not understand.  Blank	lines in
+     the input file will result	in this	error message.
 
-SSEEEE AALLSSOO
-     _d_._I_N_T_R_O_, _d_._f_r_a_m_e_, _d_._g_r_a_p_h_, _d_._r_a_s_t_, _d_._z_o_o_m_, _g_._r_e_g_i_o_n_,
-     _g_r_a_s_s_._l_o_g_o_._s_h_, and _p_a_r_s_e_r
+SEE ALSO
+     d.INTRO, d.frame, d.graph,	d.rast,	d.zoom,	g.region,
+     grass.logo.sh, and	parser
 
-AAUUTTHHOORR
+AUTHOR
      James Westervelt, U.S. Army Construction Engineering
      Research Laboratory
 
@@ -192,7 +192,7 @@ AAUUTTHHOORR
 
 
 
-GRASS 4.1                 U.S. Army CERL                        3
+GRASS 4.2		Baylor University			3
 
 
 
