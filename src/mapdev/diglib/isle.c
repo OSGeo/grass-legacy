@@ -63,9 +63,9 @@ dig_new_isle (map, Area, area)
 	/* all code must be cleaned up */
 	if (line < 0)	/*ISLE*/		/* reference lines to isle */
 	{
-/*DEBUG*/ if (map->Line[ABS(line)].left)
-/*DEBUG*/ debugf ("Line %d already had isle %d to left.\n", line, map->Line[ABS(line)].left);
-	    map->Line[ABS(line)].left = -isle;
+/*DEBUG*/ if (map->Line[abs(line)].left)
+/*DEBUG*/ debugf ("Line %d already had isle %d to left.\n", line, map->Line[abs(line)].left);
+	    map->Line[abs(line)].left = -isle;
 	}
 	else
 	{
@@ -92,7 +92,7 @@ dig_del_isle (map, isle)
     P_ISLE *Isle;
     P_ATT *Att;
 
-    isle = ABS (isle);
+    isle = abs (isle);
     Isle = &(map->Isle[isle]);
 
     for (i = 0 ; i < Isle->n_lines ; i++)	/* delete references in lines */
@@ -100,7 +100,7 @@ dig_del_isle (map, isle)
 	line = Isle->lines[i];
 	if (line < 0)	/* ISLE */
 	{
-	    map->Line[ABS(line)].left = 0;
+	    map->Line[abs(line)].left = 0;
 	}
 	else
 	    map->Line[line].right = 0;
