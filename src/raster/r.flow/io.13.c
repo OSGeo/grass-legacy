@@ -147,11 +147,11 @@ parse_command_line(argc, argv)
 			"Maximum magnitude of random grid point offset", 
 			default_offset_ans); 
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
-			"Output flowline file", NULL);
+			"Output flowline vector file", NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output slope length file", NULL);
+			"Output slope length raster file", NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output flowline density file", NULL);
+			"Output flowline density raster file", NULL);
 
     fup	  = flag('u', "Compute upslope flowlines");
     flg	  = flag('3', "3-D lengths instead of 2-D");
