@@ -506,7 +506,10 @@ dig_Wr_P_isle (
   return (0);
 }
 
-
+/*
+ \return -1 error
+ \return  0 OK 
+*/
 int 
 dig_Rd_Plus_head (   GVFILE * fp,
 		     struct Plus_head *ptr)

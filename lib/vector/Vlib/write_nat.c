@@ -80,9 +80,13 @@ V1_write_line_nat (  struct Map_info *Map,
 {
   long offset;
 
-  dig_fseek ( &(Map->dig_fp), 0L, SEEK_END);	/*  end of file */
+  if ( dig_fseek ( &(Map->dig_fp), 0L, SEEK_END) == -1 ) /* set to  end of file */
+      return -1;
+  
   offset = dig_ftell ( &(Map->dig_fp) );
-
+  if ( offset == -1 )
+      return -1;
+  
   return V1__rewrite_line_nat (Map, offset, type, points, cats);
 }
 
@@ -308,6 +312,7 @@ V1_rewrite_line_nat (  struct Map_info *Map,
        && cats->n_cats == old_cats->n_cats
        && (   ( (type & GV_POINTS) && (old_type & GV_POINTS) )   
            || ( (type & GV_LINES ) && (old_type & GV_LINES ) ) ) ) {
+
       /* equal -> overwrite the old */
       return V1__rewrite_line_nat (Map, offset, type, points, cats);
   } else {
@@ -316,8 +321,12 @@ V1_rewrite_line_nat (  struct Map_info *Map,
       V1_delete_line_nat ( Map, offset);
       
       /* write new */
-      dig_fseek ( &(Map->dig_fp), 0L, SEEK_END);	/*  end of file */
+      if ( dig_fseek ( &(Map->dig_fp), 0L, SEEK_END) == -1 ) 	/*  end of file */
+	  return -1;
+      
       new_offset = dig_ftell ( &(Map->dig_fp) );
+      if ( new_offset == -1 )
+	  return -1;
 
       return V1__rewrite_line_nat (Map, new_offset, type, points, cats);
   }
@@ -366,7 +375,9 @@ V1__rewrite_line_nat (
   
   dig_set_cur_port (&(Map->head.port));
   dig_fp = &(Map->dig_fp);
-  dig_fseek ( dig_fp, offset, 0);
+  
+  if ( dig_fseek ( dig_fp, offset, 0) == -1 )
+      return -1;
 
   /* first byte:   0 bit: 1 - alive, 0 - dead
   *                1 bit: 1 - categories, 0 - no category
@@ -382,8 +393,9 @@ V1__rewrite_line_nat (
   }
   rhead |= 0x01; /* written/rewritten is always alive */
   
-  if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp))
+  if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp)) {
     return -1;
+  }
 
   if (cats->n_cats > 0) {
       if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
@@ -415,7 +427,8 @@ V1__rewrite_line_nat (
       n_points = 1;	  
   } else {
       n_points = points->n_points;
-      dig__fwrite_port_I (&n_points, 1, dig_fp);
+      if (0 >= dig__fwrite_port_I (&n_points, 1, dig_fp) )
+	  return -1;
   }
 
   if (0 >= dig__fwrite_port_D (points->x, n_points, dig_fp))
@@ -428,7 +441,8 @@ V1__rewrite_line_nat (
           return -1;
   }
   
-  dig_fflush (dig_fp);
+  if ( 0 != dig_fflush (dig_fp) )
+      return -1;
 
   return offset;
 }
@@ -450,7 +464,9 @@ V1_delete_line_nat (
   
   dig_set_cur_port (&(Map->head.port));
   dig_fp = &(Map->dig_fp);
-  dig_fseek ( dig_fp, offset, 0);
+  
+  if ( dig_fseek ( dig_fp, offset, 0) == -1 )
+      return -1;
 
   /* read old */
   if (0 >= dig__fread_port_C (&rhead, 1, dig_fp))
@@ -458,9 +474,14 @@ V1_delete_line_nat (
   
   rhead &= 0xFE; 
   
-  dig_fseek (dig_fp, offset, 0);
+  if ( dig_fseek (dig_fp, offset, 0) == -1 )
+      return -1;
+
   if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp))
-    return -1;
+      return -1;
+
+  if ( 0 != dig_fflush (dig_fp) )
+      return -1;
 
   return 0;
 }

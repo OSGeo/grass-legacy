@@ -15,6 +15,9 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
 
@@ -380,36 +383,50 @@ Vect_cidx_save ( struct Map_info *Map )
 
 /*!
  \fn int Vect_cidx_open ( struct Map_info *Map )
- \brief read category index from file
+ \brief read category index from file if exists
  \return 0 on success 
- \return 1 on error
+ \return 1 if file does not exist
+ \return -1 error, file exists but cannot be read
  \param Map_info structure
 */
 int 
 Vect_cidx_open ( struct Map_info *Map, int head_only ) 
 {
-    char buf[500];
+    int ret;
+    char buf[500], file_path[2000];
     GVFILE fp;
     struct Plus_head *Plus;
+    struct stat info;
     
     G_debug (2, "Vect_cidx_open(): name = %s mapset= %s", Map->name, Map->mapset);
 
     Plus = &(Map->plus);
     
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    G__file_name ( file_path, buf, GV_CIDX_ELEMENT, G_mapset ());
+
+    if (stat (file_path, &info) != 0) /* does not exist */
+	return 1;
+	
+
     dig_file_init ( &fp );
     fp.file = G_fopen_old (buf, GV_CIDX_ELEMENT, Map->mapset);
 
     if ( fp.file == NULL ) { /* category index file is not available */
 	G_warning( "Cannot open category index file for vector '%s@%s'.", Map->name, Map->mapset);
-	return 1;
+	return -1;
     }
   
     /* load category index to memory */
     dig_cidx_init ( Plus);
-    dig_read_cidx ( &fp, Plus, head_only );    
-   
+    ret = dig_read_cidx ( &fp, Plus, head_only );
+    
     fclose ( fp.file );  
+    
+    if ( ret == 1 ) {
+	G_debug (3, "Cannot read cidx");
+	return -1;
+    }
 
     return 0;
 }

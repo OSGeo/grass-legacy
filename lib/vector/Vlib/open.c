@@ -118,7 +118,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   char buf[200], buf2[200], xname[512], xmapset[512], errmsg[2000];
   FILE *fp;
   int level, level_request, ferror;
-  int format;
+  int format, ret;
   char *fmapset;
 
   G_debug (1, "Vect_open_old(): name = %s mapset= %s update = %d", name, mapset, update);
@@ -207,9 +207,12 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   if (level_request == 0 || level_request == 2 ) {
       level = 2; /* We expect success */
       /* open topo */
-      if ( Vect_open_topo(Map, head_only) == -1 ) { /* topo file is not available */
-	  G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
+      ret = Vect_open_topo(Map, head_only);
+      if ( ret == 1 ) { /* topo file is not available */
+	  G_debug( 1, "Topo file for vector '%s' not available.", Vect_get_full_name (Map));
 	  level = 1;
+      } else if ( ret == -1 ) {
+	  G_fatal_error ( "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
       }
       /* open spatial index, not needed for head_only */
       /* spatial index is not loaded anymore */
@@ -224,11 +227,14 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       */
       /* open category index */
       if ( level == 2 ) {
-	  if ( Vect_cidx_open(Map, head_only) ) { /* category index is not available */
-	      G_debug( 1, "Cannot open category index file for vector '%s'.", Vect_get_full_name (Map) );
+	  ret = Vect_cidx_open(Map, head_only);
+	  if ( ret == 1 ) { /* category index is not available */
+	      G_debug( 1, "Category index file for vector '%s' not available.", Vect_get_full_name (Map) );
 	      dig_free_plus ( &(Map->plus) ); /* free topology */
 	      dig_spidx_free ( &(Map->plus) ); /* free spatial index */
 	      level = 1;
+	  } else if ( ret == -1 ) { /* file exists, but cannot be opened */
+	      G_fatal_error ( "Cannot open category index file for vector '%s'.", Vect_get_full_name (Map) );
 	  }
       }
 #ifdef HAVE_OGR
@@ -614,23 +620,30 @@ Vect_maptype_info ( struct Map_info *Map )
 /*!
  \fn int Vect_open_topo (struct Map_info *Map)
  \brief Open topo file
- \return 0 on success, -1 on error
+ \return 0 on success
+ \return 1 file doe not exist
+ \return -1 on error
  \param Map_info structure
 */
 int 
 Vect_open_topo (struct Map_info *Map, int head_only)
 {
-    int  err;
-    char buf[500];
+    int  err, ret;
+    char buf[500], file_path[2000];
     GVFILE fp;
     struct Coor_info CInfo;
     struct Plus_head *Plus;
+    struct stat info;
     
     G_debug (1, "Vect_open_topo(): name = %s mapset= %s", Map->name, Map->mapset);
 
     Plus = &(Map->plus);
     
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    G__file_name ( file_path, buf, GV_TOPO_ELEMENT, G_mapset ());
+
+    if (stat (file_path, &info) != 0) /* does not exist */
+	return 1;
 
     dig_file_init ( &fp );
     fp.file = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
@@ -645,7 +658,8 @@ Vect_open_topo (struct Map_info *Map, int head_only)
     Vect_coor_info ( Map, &CInfo); 
 
     /* load head */
-    dig_Rd_Plus_head (&fp, Plus);
+    if ( dig_Rd_Plus_head (&fp, Plus) == -1 ) return -1;
+	
     G_debug ( 1, "Topo head: coor size = %ld, coor mtime = %ld", 
 	                              Plus->coor_size, Plus->coor_mtime);
 
@@ -671,10 +685,12 @@ Vect_open_topo (struct Map_info *Map, int head_only)
     /* dig_file_load ( &fp); */
 
     /* load topo to memory */
-    dig_load_plus ( Plus, &fp, head_only );    
+    ret = dig_load_plus ( Plus, &fp, head_only );    
    
     fclose ( fp.file );  
     /* dig_file_free ( &fp); */
+
+    if ( ret == 0 ) return -1;
 
     return 0;
 }

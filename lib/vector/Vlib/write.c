@@ -15,22 +15,24 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include "gis.h"
+#include "glocale.h"
 #include "Vect.h"
 
 static long write_dummy () { 
-    G_warning ( "Vect_write_line() for this format/level not supported");
+    G_warning ( _("Vect_write_line() for this format/level not supported") );
     return -1; 
 }
 static int rewrite_dummy () { 
-    G_warning ( "Vect_rewrite_line() for this format/level not supported");
+    G_warning ( _("Vect_rewrite_line() for this format/level not supported") );
     return -1; 
 }
 static int  delete_dummy () { 
-    G_warning ( "Vect_delete_line() for this format/level not supported");
+    G_warning ( _("Vect_delete_line() for this format/level not supported") );
     return -1; 
 }
 
-static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+static int format () { G_fatal_error ( _("Requested format is not compiled in this version") ); return 0; }
 
 static long (*Write_line_array[][3]) () =
 {
@@ -69,7 +71,10 @@ static int (*Vect_delete_line_array[][3]) () =
      struct line_pnts *points,
      struct line_cats *cats)
  \brief writes new line to the end of file (table)
- \return offset into file where the line starts, -1 on error
+        the function calls fatal error on error
+ \return offset into file where the line starts
+ 
+ 
  \param Map_info structure, vector type, line_pnts structure, line_cats structure
 */
 long
@@ -79,11 +84,13 @@ Vect_write_line (
      struct line_pnts *points,
      struct line_cats *cats)
 {
+    long offset;
+    
     G_debug (3, "Vect_write_line(): name = %s, format = %d, level = %d", 
 	           Map->name, Map->format, Map->level);
 
     if (!VECT_OPEN (Map))
-	return -1; 
+	G_fatal_error ( _("Cannot write line, the map is not opened") );
 
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
@@ -91,7 +98,12 @@ Vect_write_line (
         Map->plus.cidx_up_to_date = 0;
     }
 
-    return (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
+    offset = (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
+
+    if ( offset == -1 )
+	G_fatal_error ( _("Cannot write line") );
+
+    return offset;
 }
 
 
@@ -116,7 +128,12 @@ Vect_rewrite_line (
      struct line_pnts *points,
      struct line_cats *cats)
 {
+    long ret;
+    
     G_debug (3, "Vect_rewrite_line(): name = %s", Map->name);
+    
+    if (!VECT_OPEN (Map))
+	G_fatal_error ( _("Cannot rewrite line, the map is not opened") );
     
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
@@ -124,7 +141,12 @@ Vect_rewrite_line (
         Map->plus.cidx_up_to_date = 0;
     }
 
-    return (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
+    ret = (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
+
+    if ( ret == -1 )
+	G_fatal_error ( _("Cannot rewrite line") );
+
+    return ret;
 }
 
 /*
@@ -164,13 +186,11 @@ Vect_delete_line (
     G_debug (3, "Vect_delete_line(): name = %s", Map->name);
     
     if ( Map->level < 2 ) {
-	G_warning ("Cannot delete the line, map '%s' is not opened on level 2", Map->name );
-        return -1;
+	G_fatal_error ( _("Cannot delete the line, map '%s' is not opened on level 2"), Map->name );
     }
     
     if ( Map->mode != GV_MODE_RW && Map->mode != GV_MODE_WRITE ) {
-	G_warning ("Cannot delete the line, map '%s' is not in opened in 'write' mode", Map->name );
-        return -1;
+	G_fatal_error ( _("Cannot delete the line, map '%s' is not in opened in 'write' mode"), Map->name );
     }
     
     dig_line_reset_updated ( &(Map->plus) );
@@ -182,8 +202,8 @@ Vect_delete_line (
     ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
 
     if ( ret == -1 )
-	G_warning ( "Vect_delete_line() failed");
-    
+	G_fatal_error ( _("Cannot delete line") );
+
     return ret;
 }
 

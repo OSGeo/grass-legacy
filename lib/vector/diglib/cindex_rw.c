@@ -89,7 +89,7 @@ dig_write_cidx_head ( GVFILE * fp, struct Plus_head *plus)
     return (0);
 }
 
-
+/* return: 0 OK, -1 error */
 int 
 dig_read_cidx_head (   GVFILE * fp, struct Plus_head *plus)
 {
@@ -180,7 +180,7 @@ dig_read_cidx_head (   GVFILE * fp, struct Plus_head *plus)
 	if (0 >= dig__fread_port_L ( &(ci->offset), 1, fp)) return (0);
     }
 
-    dig_fseek ( fp, plus->cidx_head_size, SEEK_SET );
+    if ( dig_fseek ( fp, plus->cidx_head_size, SEEK_SET ) == -1 ) return (-1);
 
     return (0);
 }
@@ -234,7 +234,10 @@ dig_read_cidx ( GVFILE * fp, struct Plus_head *plus, int head_only)
     dig_cidx_init ( plus);
 
     dig_rewind (fp);
-    dig_read_cidx_head ( fp, plus);
+    if ( dig_read_cidx_head ( fp, plus) == -1 ) {
+	G_debug (3, "Cannot read cidx head");
+	return 1;
+    }
 
     if ( head_only ) {
         plus->cidx_up_to_date = 1; /* OK ?*/
@@ -252,8 +255,9 @@ dig_read_cidx ( GVFILE * fp, struct Plus_head *plus, int head_only)
 	ci->a_cats = ci->n_cats;
 	ci->cat = (int *) G_malloc ( ci->a_cats * 3 * sizeof(int) );
 
-	dig_fseek ( fp, ci->offset, 0);
-        if (0 >= dig__fread_port_I ( (int *)ci->cat, 3 * ci->n_cats, fp)) return (-1);
+	if ( dig_fseek ( fp, ci->offset, 0) == -1 ) return 1;
+	
+        if (0 >= dig__fread_port_I ( (int *)ci->cat, 3 * ci->n_cats, fp)) return 1;
 
         /* convert type  */
 	for ( j = 0; j < ci->n_cats; j++ )
