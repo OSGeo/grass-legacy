@@ -118,6 +118,7 @@ LIB_OBJS = \
 	lu.o\
 	mach_name.o\
 	make_colr.o\
+	make_loc.o\
 	mapcase.o\
 	mapset.o\
 	mapset_msc.o\
