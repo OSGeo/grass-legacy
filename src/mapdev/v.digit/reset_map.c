@@ -5,6 +5,7 @@
 */
 
 #include	<stdio.h>
+#include "digit.h"
 
 reset_map(Map, coor_file)
 	struct Map_info *Map;
