@@ -126,6 +126,8 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
 	
 	Vect_get_line_nodes ( Map, line, &node1, &node2 );
 
+	if ( abs(node1) == abs(node2) ) continue; /* either zero length or loop -> cannot be a bridge */
+
 	current_line = -line; /* we start with negative (go forward, node2 ) */
 
 	dangle = 0;
@@ -141,7 +143,6 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
 	    else	
 	        Vect_list_append ( CycleList, abs(next_line) );
 	    
-	    G_debug (3, "  next_line = %d", next_line );
 	    if ( abs(next_line) == abs(current_line) ) {
 	        G_debug (4, "  dangle -> no bridge" );
 		dangle = 1;
