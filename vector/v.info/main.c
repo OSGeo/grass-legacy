@@ -71,9 +71,8 @@ main (int argc, char *argv[])
   Vect_set_fatal_error (GV_FATAL_PRINT);
 
   if ((cats_ok=G_read_vector_cats (in_opt->answer, mapset, &cats)) < 0) {
-      G_fatal_error ("Could not find category file for %s", in_opt->answer);
+      G_warning ("Could not find category file for %s", in_opt->answer);
   }
-
   v_head = Map.head;
 
   divider ('+');
@@ -96,9 +95,9 @@ main (int argc, char *argv[])
 
   sprintf (line, "  Type of Map:  %s (level: %i)        ", "Vector", Vect_level (&Map));
 
-  strcat (line, "Number of Categories: ");
+  strcat (line, "Number of categories: ");
 
-  if (cats_ok)
+  if (cats_ok > 0)
   {
     sprintf (temp, "%-9ld", (long)cats.num);
     strcat (line, temp);
