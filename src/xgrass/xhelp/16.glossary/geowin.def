@@ -8,4 +8,4 @@ with it, which specify the dimensions assumed by @glossary("cells",16.glossary/c
 geographic window.
 
 NOTE:  This term is now obsolete.  Geographic windows are referred to
-as "geographic regions" in GRASS version 4.0.
+as "geographic regions" in GRASS version 4.2.
