@@ -127,6 +127,7 @@ src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
 src/general/g.version
+src/general/manage
 src/imagery/i.ask
 src/imagery/i.cca
 src/imagery/i.class
@@ -273,6 +274,7 @@ src/raster/r.contour
 src/raster/r.cost
 src/raster/r.covar
 src/raster/r.cross
+src/raster/r.sss
 src/raster/r.describe
 src/raster/r.digit
 src/raster/r.drain
