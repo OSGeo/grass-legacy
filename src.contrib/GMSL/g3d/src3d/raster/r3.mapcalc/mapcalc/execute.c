@@ -8,7 +8,7 @@ execute(result)
     int stat;
     int i;
     double value;
-
+   
     nrows=current_region.rows;
     ncols=current_region.cols;
     ndepths=current_region.depths;
@@ -18,30 +18,28 @@ execute(result)
       {
         G_percent (current_depth, ndepths, 2);
         execute_stack_depth = 0;
-	if(!evaluate(nrows,ncols,ndepths))
-	{
-	    fprintf (stderr, "\n** expression evaluation failure **\n");
-	    return 0;
-	}
-        execute_stack_depth = 0;
-    
-	if (current_row == 0 && current_depth == 0)
-	{
-            outfd = G3d_openCellNew (result, G3D_DOUBLE,  G3D_USE_CACHE_DEFAULT, &current_region);
-            if (outfd == NULL)
+	    if(!evaluate(nrows,ncols,ndepths))
 	    {
-		fprintf (stderr, "\nOOPS can't create cell file [%s]\n", result);
-		return 0;
+	      fprintf (stderr, "\n** expression evaluation failure **\n");
+	      return 0;
 	    }
-        }
+        execute_stack_depth = 0;
 
+	    if (current_row == 0 && current_depth == 0)
+	    {
+            outfd = G3d_openCellNew (result, G3D_DOUBLE,  G3D_USE_CACHE_DEFAULT, &current_region);
+            if (outfd == NULL) {
+		       fprintf (stderr, "\nOOPS can't create cell file [%s]\n", result);
+		       return 0;
+			}
+		}
         for (i=0;i<ncols;i++)
         {
-            if (ISNULL_D(&execute_stack[0].xcell[i]))
+			if (ISNULL_D(&execute_stack[0].xcell[i]))
               G3d_setNullValue (&execute_stack[0].xcell[i], 1, G3D_DOUBLE);
-            G3d_putDouble (outfd, current_row, i, current_depth, execute_stack[0].xcell[i]);
+            G3d_putDouble (outfd, i, current_row, current_depth, execute_stack[0].xcell[i]);
         }
-        return_buffer_to_pool (execute_stack[0].n);
+		return_buffer_to_pool (execute_stack[0].n);
       }
     }
     G_percent (current_depth, ndepths, 2);
