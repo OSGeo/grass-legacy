@@ -17,6 +17,7 @@ SUBDIRS1 = \
 	v.in.ascii \
 	v.in.db \
 	v.in.sites \
+	v.label \
 	v.proj \
 	v.net.alloc \
 	v.net.iso \
