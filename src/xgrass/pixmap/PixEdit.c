@@ -1806,7 +1806,7 @@ void main(argc, argv)
 						    "editButton", 
 						    wargs, 1);
     XtManageChild(editButton_widget);
-    XtAddCallback(editButton_widget, XmNcascadingCallback, FixMenu);
+    XtAddCallback(editButton_widget, XmNcascadingCallback, FixMenu, NULL);
 
     for (i = 0; i < XtNumber(edit_menu); i++) {
       if (edit_menu[i].id == Dummy)
