@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.17 2001-02-07 04:14:22 cho Exp $
+# $Id: Gmakefile,v 1.18 2001-02-07 04:26:40 cho Exp $
 #
 # Toplevel makefile for building everything
 
@@ -16,7 +16,7 @@ all: configure nvwish nviz install
 # SOME make WON'T WORK IF TARGET AND SHELL NAME ARE EQUAL.
 #
 configure:
-	@DOCONFIGURE=YES ./doconfigure $(VER) "$(PQLIB)"
+	@GRASS_IN_GMAKEFILE=yes ./doconfigure $(VER) "$(PQLIB)"
 
 nvwish:
 	$(GMAKE) $(LIBDIR)/libimage
