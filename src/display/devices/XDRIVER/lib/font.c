@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 static long *index, nchars;
 static unsigned char *font;
@@ -64,16 +63,18 @@ unsigned char **X;
 unsigned char **Y;
 {
     unsigned char *work_point;
+    int i;
 
     if (font == NULL) {
         *n = 0;
         return;
     }
-    if (achar < 041 || achar > 0176) {
+    i = (int) achar - 040;   /* translate achar to char# in font index */
+    if (i < 1 || i >= nchars) {
         *n = 0;
         return;
     }
-    work_point = font + index[achar - 040];
+    work_point = font + index[i];
 
     /* n = *((int *) work_point) ; */
     /* alignment problem, resolve by copying pseudo int to int variable */
@@ -90,3 +91,4 @@ int n;
     while (n-- > 0)
         *a++ = *b++;
 }
+
