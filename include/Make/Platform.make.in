@@ -150,6 +150,10 @@ FTLIB               = @FTLIB@
 PROJINC             = @PROJINC@
 PROJLIB             = @PROJLIB@
 
+#OPENDWG:
+OPENDWGINC             = @OPENDWGINC@
+OPENDWGLIB             = @OPENDWGLIB@ ad2.a
+
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
 
