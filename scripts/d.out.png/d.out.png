@@ -61,7 +61,7 @@ fi
 old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
 old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
 old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
-curr_mon=`d.mon -p | awk '{printf "%s", $1}'`
+curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
 #defaults
 res=2
