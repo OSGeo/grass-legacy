@@ -43,6 +43,8 @@ typedef struct expr_data_map {
 
 typedef struct expr_data_func {
 	const char *name;
+	const char *oper;
+	int prec;
 	func_t *func;
 	int argc;
 	struct expression **args;
@@ -92,12 +94,10 @@ extern expression *constant_float(float x);
 extern expression *constant_double(double x);
 extern expression *variable(const char *name);
 extern expression *mapname(const char *name, int mod, int row, int col);
+extern expression *operator(const char *name, const char *oper, int prec,
+			    expr_list *args);
 extern expression *function(const char *name, expr_list *args);
 extern expression *binding(const char *var, expression *val);
-
-extern expression *to_int(expression *e);
-extern expression *to_float(expression *e);
-extern expression *to_double(expression *e);
 
 extern func_desc func_descs[];
 
