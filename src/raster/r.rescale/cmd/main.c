@@ -16,6 +16,7 @@ int main (int argc, char *argv[])
 	char *old_name;
 	char *new_name;
 	char *mapset;
+	struct GModule *module;
 	struct
 	    {
 		struct Option *input, *from, *output, *to, *title;
@@ -27,6 +28,11 @@ int main (int argc, char *argv[])
 
 	G_gisinit (argv[0]);
 
+	module = G_define_module();
+    module->description =
+		"Rescales the range of category values "
+		"in a raster map layer.";
+				        
 	/* Define the different options */
 
 	parm.input = G_define_option() ;

@@ -75,6 +75,7 @@ main(argc, argv)
     char *argv[];
 {
 
+    struct GModule *module;
     struct Option 	*surf, *vscale;
     char 		*cellmap, errbuf[100];
     DCELL                *cell_buf[2];
@@ -84,6 +85,10 @@ main(argc, argv)
     double 		minarea, maxarea, sz, nullarea;
 
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+        "Surface area estimation for rasters.";
 
     surf = G_define_option();
     surf->key                    = "input";

@@ -31,6 +31,7 @@ int main (int argc, char **argv)
     SHORT nrows, ncols;
     SHORT datarows;
     int npoints;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *npoints;
@@ -43,6 +44,10 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls 					*/
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Surface interpolation utility for raster map layers.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

@@ -37,8 +37,15 @@ int main (
   FILE *fd_sites = NULL;
   Site *mysite;
   Site_head site_info;
+  struct GModule *module;
   struct Option *opt1, *opt2, *opt3;
   struct Flag *flag1, *flag2;
+
+  module = G_define_module();
+  module->description =
+	"Calculates the volume of data \"clumps\", "
+	"and (optionally) produces a GRASS site_lists file "
+	"containing the calculated centroids of these clumps.";
 
   opt1 = G_define_option ();
   opt1->key = "data";
