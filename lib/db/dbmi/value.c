@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "dbmi.h"
 
 int
@@ -19,6 +20,30 @@ db_get_value_double(value)
     dbValue *value;
 {
     return (value->d);
+}
+/* for given value and C type of value returns double representation */
+double
+db_get_value_as_double(value, ctype)
+    dbValue *value;
+    int ctype;
+{
+    double val;
+    
+    switch ( ctype )
+      {
+	case ( DB_C_TYPE_INT ):
+	    val = (double) db_get_value_int(value);
+	    break;
+	case ( DB_C_TYPE_STRING ):
+	    val = atof ( db_get_value_string(value) );
+	    break;
+	case ( DB_C_TYPE_DOUBLE ):
+	    val = db_get_value_double(value);
+	    break;
+	default:
+	    val = 0;
+      }
+    return val;
 }
 
 char *
@@ -185,4 +210,24 @@ db_set_value_datetime_not_current (value)
 {
     value->t.current = 0;
     db_set_value_not_null(value);
+}
+
+/* copy value from src to destination */
+void
+db_copy_value ( dst, src )
+    dbValue *dst;
+    dbValue *src;
+{
+    dst->isNull = src->isNull;
+    dst->i = src->i;
+    dst->d = src->d;
+    if ( src->s.nalloc > 0 )
+        db_copy_string ( &(dst->s), &(src->s) );
+    dst->t.current = src->t.current;
+    dst->t.year = src->t.year;
+    dst->t.month = src->t.month;
+    dst->t.day = src->t.day;
+    dst->t.hour = src->t.hour;
+    dst->t.minute = src->t.minute;
+    dst->t.seconds = src->t.seconds;
 }

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "dbmi.h"
 
 dbColumn *
@@ -84,6 +85,53 @@ db_get_column_host_type (column)
     return column->hostDataType;
 }
 
+/* returns column sqltype  or -1 on error*/
+int
+db_column_sqltype ( 
+    dbDriver *driver,  
+    char *tab, /* table name */ 
+    char *col) /* column  name*/
+{
+    dbTable *table;
+    dbString table_name;
+    dbColumn *column;
+    int ncol, cl, type;
+
+    db_init_string(&table_name);
+    db_set_string(&table_name, tab);
+    
+    if(db_describe_table (driver, &table_name, &table) != DB_OK)
+       return -1;
+    
+    db_free_string ( &table_name );
+    ncol = db_get_table_number_of_columns(table);
+    for (cl = 0; cl < ncol; cl++) {
+	column = db_get_table_column (table, cl);
+	if ( strcmp (  db_get_column_name(column), col ) == 0 ) {
+	    type = db_get_column_sqltype(column);
+	    return type;
+	}
+    }
+    
+    return -1;
+}
+
+/* returns column Ctype  or -1 on error */
+int
+db_column_Ctype ( 
+    dbDriver *driver,  
+    char *tab, /* table name */ 
+    char *col) /* column  name*/
+{
+    int type;
+    if ( ( type = db_column_sqltype ( driver, tab, col ) ) >= 0 ) {
+	type = db_sqltype_to_Ctype(type); 
+	return type;
+    }
+
+    return -1;
+}
+    
 void
 db_set_column_has_defined_default_value(column)
     dbColumn *column;
@@ -197,6 +245,7 @@ db_set_column_select_priv_not_granted (column)
     column->select = DB_NOT_GRANTED;
 }
 
+int
 db_get_column_select_priv (column)
     dbColumn *column;
 {
@@ -217,6 +266,7 @@ db_set_column_update_priv_not_granted (column)
     column->update = DB_NOT_GRANTED;
 }
 
+int
 db_get_column_update_priv (column)
     dbColumn *column;
 {
