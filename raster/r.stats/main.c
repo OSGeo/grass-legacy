@@ -274,7 +274,7 @@ int main (int argc, char *argv[])
 	   {
 	      if(! G_quant_nof_rules (&labels[i].q))
 	      {
-	         sprintf(msg, "%s: cats for %s sre either missing or have no explicit labels. Using nsteps=%d", G_program_name(),name, nsteps);
+	         sprintf(msg, "%s: cats for %s are either missing or have no explicit labels. Using nsteps=%d", G_program_name(),name, nsteps);
 	         G_warning(msg);
 		 cat_ranges = 0;
               }
