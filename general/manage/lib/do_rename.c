@@ -11,7 +11,7 @@ int do_rename (int n, char *old, char *new)
     *  3. Should be PostGis tables renamed?
     *  4. Should be PostGis tables moved to current default PostGis database? */
     if ( strcmp(list[n].alias, "vect") == 0 ) { 
-	G_warning ( "Vectors are not supported by g.rename" );
+	G_warning ( "Vectors are not supported by g.rename (use g.copy, g.remove instead)" );
 	return -1;
     }
 
