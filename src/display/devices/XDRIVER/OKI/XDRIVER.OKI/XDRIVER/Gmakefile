@@ -1,0 +1,37 @@
+PGM=XDRIVER
+#EXTRA_CFLAGS = 
+
+# DMJ - make sure that the ucb compiler is used
+#CC = /usr/ucb/cc
+
+# DMJ - added the X11 library 
+LIB = ../lib/driverlib.a $(D_LIB) -L/usr/lib/X11
+
+OFILES =  \
+	Box_abs.o\
+	Can_do.o\
+	Color.o\
+	Cont_abs.o\
+	Clr_table.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Plylne_abs.o\
+	Polygn_abs.o\
+	Returns.o\
+	Serve_Xevent.o\
+	SWITCHER.o\
+	alloc.c\
+	command_pend.o\
+	Raster.o
+
+# DMJ - added the ccs C-library before the ucb library
+$(GIS)/driver/$(PGM): $(OFILES) $(LIB)
+	$(CC) $(LDFLAGS) $(OFILES) /usr/ccs/lib/libc.a -lucb $(LIB) $(MATHLIB) -DSYSV -lX11
+	mv a.out $@
+
+$(LIB): #
