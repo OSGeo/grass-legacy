@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.3 2000-07-26 07:36:00 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.4 2000-08-21 12:42:31 markus Exp $
 
 Please improve this list!
 Get the latest
@@ -30,6 +30,8 @@ GRASS GIS programming style standards
    Couple notes for your Gmakefiles: 
      - do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
      - please add them before these
+     - The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
+       into the $(CC) line.
 
 4. Platform dependent code:
    Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
@@ -42,4 +44,9 @@ GRASS GIS programming style standards
 
 7. Put a new line at end-of-file
 
+8. Don't use C++ comment style! This confuses several compilers.
+   Use instead:
+       /* C-comments */
+
 ...
+[add further hints]
