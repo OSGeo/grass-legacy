@@ -36,18 +36,9 @@ main (int argc, char **argv)
                 exit(1);
                 
         
-    /* argument */
-/*    if (NULL == freopen(input_file->answer, "r", stdin))
-       {
-          fprintf(stderr, "%s - ", G_program_name());
-          perror(input_file->answer);
-          exit(1);
-       }
-*/
-    /* open the icon file */
     infile = input_file->answer;
-fprintf(stderr,"%s ", infile);
-exit(0);    
+
+    /* open the icon file */
     open_icon_file(infile);
 
     /* set up display */
