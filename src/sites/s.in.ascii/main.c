@@ -166,17 +166,20 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
   }                                                    
   else /* no cat there, so data in x,y,%z will be imported   12/99 MN */
   {
-     sprintf (xbuf, "#%d ", loop); /* we create a #cat from the currentsite number 11/99 */
+     /* we create a #cat entry in site_list from the currentsite number 11/99 */
+     sprintf (xbuf, "#%d ", loop);
      loop++;
      G_strcat (buf, xbuf);
   }
-  
+
+ /* now import attributes */  
   for (i = 0; i < s->dbl_alloc; ++i)
   {
     format_double (s->dbl_att[i], nbuf);
     sprintf (xbuf, "%%%s ", nbuf);
     G_strcat (buf, xbuf);
   }
+  
   for (i = 0; i < s->str_alloc; ++i)
   {
     if (strlen (s->str_att[i]) != 0)
