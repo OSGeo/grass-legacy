@@ -135,7 +135,11 @@ do-compile:
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
 	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
-install:
+# Any target that has a dependency on this target will be forced to be made.
+# If we switch to GNU Make then this feature can be replaced with .PHONY
+FORCE:
+
+install: FORCE
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -284,6 +288,92 @@ real-uninstall:
 	${SHELL} -c "rm -rf ${INST_DIR}/lib ; true"
 	${SHELL} -c "rmdir ${INST_DIR} ; true"
 
+# make a source package for distribution:
+srcdist: distclean
+	@ echo "create Changelog file without initial messages..."
+	@ # cvs2cl.pl creates a GNU style ChangeLog file:
+	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	cvs2cl.pl
+	@ echo "reduce Changelog file... Dont want the initial upload included."
+	head -${CUTLINE} ChangeLog    > ChangeLog.cut
+	echo "   initial CVS import" >> ChangeLog.cut
+	${SHELL} -c "mv ChangeLog.cut ChangeLog"
+	${SHELL} -c "rm -f ChangeLog.bak"
+	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
+	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+
+# make a binary package for distribution:
+#  Bug: VER is not expanded properly (wrong directory):
+bindist:
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if the user is root and check if grass has been installed
+	@ if [ `whoami` != "root" ] ; then \
+		echo "ERROR: You need to be user root to create a binary distribution."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been installed yet."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	INST_MOD_TIME=`${INST_DIR}/etc/getModTime ${BINDIR}/grass${NAME_VER}`; \
+	if [ "$$INST_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${BINDIR}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	COMP_MOD_TIME=`${INST_DIR}/etc/getModTime ${GRASS_BIN}/grass${NAME_VER}`; \
+	if [ "$$COMP_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${GRASS_BIN}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
+		echo "WARNING: The GRASS installation is not up to date."; \
+		echo "  Do you want to exit and run 'make install'? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "n" ] ; then \
+            		echo "Creation of binary distribution aborted, exiting Make."; \
+			exit; \
+        	fi; \
+	fi; \
+	${MAKE} real-bindist
+
+real-bindist:
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
+	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
+	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
+	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
+	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
+	@ echo "The binary package is stored at ${SRCDIR}."
+
+# automatically run DejaGNU tests:
+# added 10/2000 by Andreas Lange
+check: binaries
+	@ echo "running tests on GRASS ${VERSION}"
+	@ echo "logfile for all tests is in ./testsuite/grass.log,"
+	@ echo "a summary of all test results is in ./testsuite/grass.sum"
+	@ echo "please report all bugs and problems to neteler@geog.uni-hannover.de "
+	EXPECT=${EXPECT} ; export EXPECT; \
+	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
+	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
+	  export TCL_LIBRARY; fi; export GISBASE=${GISBASE} ; export SRCDIR=${SRCDIR} ; \
+	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)
+
 # GRASS source code cleaning options:
 #
 # There are five options for cleaning the GRASS source code. The first four
@@ -380,88 +470,3 @@ savebinclean: mostlyclean
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 
-# make a source package for distribution:
-srcdist: distclean
-	@ echo "create Changelog file without initial messages..."
-# cvs2cl.pl creates a GNU style ChangeLog file:
-# http://www.red-bean.com/~kfogel/cvs2cl.shtml
-	cvs2cl.pl
-	@ echo "reduce Changelog file... Dont want the initial upload included."
-	head -${CUTLINE} ChangeLog    > ChangeLog.cut
-	echo "   initial CVS import" >> ChangeLog.cut
-	${SHELL} -c "mv ChangeLog.cut ChangeLog"
-	${SHELL} -c "rm -f ChangeLog.bak"
-	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
-	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
-
-# make a binary package for distribution:
-#  Bug: VER is not expanded properly (wrong directory):
-bindist:
-	@ # The following action MUST be a single action. That is, all lines
-	@ # except the last line must have a backslash (\) at the end to
-	@ # continue the statement. The reason for this is that Make does not
-	@ # have an exit command thus, exit terminates the shell. However, 
-	@ # Make creates a new shell for each action listed for a target.
-	@ # Therefore, the only way exit will quit Make is if there is only
-	@ # a single action for the target.
-	@ # Check if the user is root and check if grass has been installed
-	@ if [ `whoami` != "root" ] ; then \
-		echo "ERROR: You need to be user root to create a binary distribution."; \
-		echo "  Creation of binary distribution aborted, exiting Make."; \
-		exit; \
-	fi; \
-	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
-		echo "ERROR: Grass has not been installed yet."; \
-		echo "  Creation of binary distribution aborted, exiting Make."; \
-		exit; \
-	fi; \
-	INST_MOD_TIME=`${INST_DIR}/etc/getModTime ${BINDIR}/grass${NAME_VER}`; \
-	if [ "$$INST_MOD_TIME" = "-1" ]; then \
-		echo "ERROR: Invalid file: ${BINDIR}/grass${NAME_VER}"; \
-		echo "  Please advise the GRASS developers of this error."; \
-		echo "  Creation of binary distribution aborted, exiting Make."; \
-		exit; \
-	fi; \
-	COMP_MOD_TIME=`${INST_DIR}/etc/getModTime ${GRASS_BIN}/grass${NAME_VER}`; \
-	if [ "$$COMP_MOD_TIME" = "-1" ]; then \
-		echo "ERROR: Invalid file: ${GRASS_BIN}/grass${NAME_VER}"; \
-		echo "  Please advise the GRASS developers of this error."; \
-		echo "  Creation of binary distribution aborted, exiting Make."; \
-		exit; \
-	fi; \
-	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
-		echo "WARNING: The GRASS installation is not up to date."; \
-		echo "  Do you want to exit and run 'make install'? [y/n]"; \
-        	read ans; \
-		ans=`echo "$$ans" | tr A-Z a-z`; \
-		if [ "$$ans" != "n" ] ; then \
-            		echo "Creation of binary distribution aborted, exiting Make."; \
-			exit; \
-        	fi; \
-	fi; \
-	${MAKE} real-bindist
-
-real-bindist:
-	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
-	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
-	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
-	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
-	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
-	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO ; true"
-	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
-	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
-	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
-	@ echo "The binary package is stored at ${SRCDIR}."
-
-# automatically run DejaGNU tests:
-# added 10/2000 by Andreas Lange
-check: binaries
-	@ echo "running tests on GRASS ${VERSION}"
-	@ echo "logfile for all tests is in ./testsuite/grass.log,"
-	@ echo "a summary of all test results is in ./testsuite/grass.sum"
-	@ echo "please report all bugs and problems to neteler@geog.uni-hannover.de "
-	EXPECT=${EXPECT} ; export EXPECT; \
-	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
-	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
-	  export TCL_LIBRARY; fi; export GISBASE=${GISBASE} ; export SRCDIR=${SRCDIR} ; \
-	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)
