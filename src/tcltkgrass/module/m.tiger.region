@@ -1,0 +1,7 @@
+interface_build {
+    m.tiger.region 0
+    {Finds geographic region information for U.S. Census Bureau TIGER input data.}
+    {entry infile {Filename for raw tiger data (type 1):} 0 file}
+    {entry zone {UTM zone for this count (-60-60) [0]:} 0 File}
+    {entry spheroid {Spheroid:} 0 spheroid}
+}
