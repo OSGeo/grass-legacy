@@ -5,6 +5,11 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef __CYGWIN__
+#define MODE 0644
+#else
+#define MODE 0666
+#endif
 
 int get_connection (char *files, int *rfd, int *wfd)
 {
@@ -63,9 +68,9 @@ int check_connection (char *me, char *link)
         goto error;
     }
 #endif  /* FIFO */
-    if ((buf.st_mode & 0666) != 0666) {
-        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be 0666\n",
-                in_fifo, buf.st_mode & 0666);
+    if ((buf.st_mode & MODE) != MODE) {
+        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be %o\n",
+                in_fifo, buf.st_mode & MODE, MODE);
         goto error;
     }
     if (-1 == stat(out_fifo, &buf)) {
@@ -79,9 +84,9 @@ int check_connection (char *me, char *link)
         goto error;
     }
 #endif  /* FIFO */
-    if ((buf.st_mode & 0666) != 0666) {
-        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be 0666\n",
-                out_fifo, buf.st_mode & 0666);
+    if ((buf.st_mode & MODE) != MODE) {
+        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be %o\n",
+                out_fifo, buf.st_mode & MODE, MODE);
         goto error;
     }
     if (setjmp(save)) {         /* if timed out waiting below */
