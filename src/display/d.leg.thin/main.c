@@ -469,7 +469,7 @@ int main( int argc, char **argv )
 					y0 = ((b-t) - (dots_per_line*lines))/2;
 		}
 
-	/*	R_text_size((int)(dots_per_line*4/5), (int)(dots_per_line*4/5)) ;    redundand */
+	/*	R_text_size((int)(dots_per_line*4/5), (int)(dots_per_line*4/5)) ;    redundant */
 		/* if(G_is_c_null_value(&min_ind) && G_is_c_null_value(&max_ind))
 		   {
 		    min_ind = 1;
@@ -527,128 +527,146 @@ int main( int argc, char **argv )
 	    int ppl;
 	    int tcell;
 
-	    if(horiz){
+	    if(horiz) {
 		lleg = x1-x0;
 		dx = 0;
 		dy = y1-y0;
 		if(fp)
 		    flip = !flip;	/* horiz floats look better not flipped by default */
 	    }
-	    else{
+	    else {
 		lleg = y1-y0;
 		dy = 0;
 		dx = x1-x0;
 	    }
 
+	    /* Draw colors */
+	    R_move_abs(x0, y0);
+	    for (k = 0; k < lleg; k++) {
+		if (!fp) {
+		    if(!flip)
+			tcell = min_ind + k * (double)(1 + max_ind - min_ind)/lleg;
+		    else
+			tcell = (max_ind+1) - k * (double)(1 + max_ind - min_ind)/lleg;
+		    D_color((CELL)tcell,&colors);
+		}
+		else {
+		    if(!flip)
+			val = dmin + k * (dmax - dmin)/lleg;
+		    else
+			val = dmax - k * (dmax - dmin)/lleg;
+		    D_d_color(val,&colors) ;
+		}
+
+		R_cont_rel(dx,dy) ;
+		R_move_rel(dx? -dx:1,dy? -dy:1) ;
+	    }
+
+	    /* Format text */
 	    if(!fp) {				/* cut down labelnum so they don't repeat */
 		if(do_cats < steps)
 		    steps = do_cats;
 		if(1 == steps) steps = 2;	/* ward off the ppl floating point exception */ 
 	    }
 
-	    R_move_abs(x0, y0);
-	    txsiz = (int)((y1-y0)/20);
-	    ppl = (lleg)/(steps-1);
-	    R_text_size(txsiz, txsiz);
+	    for(k = 0; k< steps; k++) {
+		if(!fp) {
+		    if(!flip)
+			 tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
+		    else
+			tcell = max_ind - k * (double)(max_ind - min_ind)/(steps-1);
 
-	    for (k = 0; k < lleg; k++){
-		if (!fp){
-			if(!flip)
-				tcell = min_ind + k * (double)(1 + max_ind - min_ind)/lleg;
-			else
-				tcell = (max_ind+1) - k * (double)(1 + max_ind - min_ind)/lleg;
-			D_color((CELL)tcell,&colors) ;
-		}
-		else {
-			if(!flip)
-				val = dmin + k * (dmax - dmin)/lleg;
-			else
-				val = dmax - k * (dmax - dmin)/lleg;
-			D_d_color(val,&colors) ;
-		}
-				
-		R_cont_rel(dx,dy) ;
-		R_move_rel(dx? -dx:1,dy? -dy:1) ;
-	    }
-
-	    if(!horiz){
-	/*  if(!use_mouse || !horiz){    ???? what was this || all about */
-		R_standard_color(color) ;
-		for(k = 0; k< steps; k++){
-		    /* Draw text */
-		    if (!fp){	
-			if(!flip)
-			    tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
-			else
-			    tcell = max_ind - k * (double)(max_ind - min_ind)/(steps-1);
-
-		        cstr = G_get_cat(tcell, &cats);
-		        if(!cstr[0]) /* no cats found, disable str output */
-			    hide_catstr=1;
-			else
-			    hide_catstr = hidestr->answer;
-		        if(hide_catnum && ! hide_catstr) /* str only */
-			    sprintf(buff, " %s", cstr);
-		        else{
-			    if(! hide_catnum && hide_catstr) /* num only */
-			        sprintf(buff, "%2d", tcell);
-			    else{
-			        if(hide_catnum && hide_catstr) /* nothing, box only */
-			           buff[0] = 0;
-			        else
-			           sprintf(buff, "%2d) %s", tcell, cstr); /* both */
-			    }
-			}
-		    } 
+		    cstr = G_get_cat(tcell, &cats);
+		    if(!cstr[0]) /* no cats found, disable str output */
+			hide_catstr=1;
+		    else
+			hide_catstr = hidestr->answer;
+		    if(hide_catnum && ! hide_catstr) /* str only */
+			sprintf(buff, " %s", cstr);
 		    else {
-		        /* FP map */
-			if(!flip)
-				val = dmin + k * (dmax - dmin)/(steps-1);
-			else
-				val = dmax - k * (dmax - dmin)/(steps-1); 
-
-			if( 0 == (dmax - dmin) )		/* trap divide by 0 for single value rasters */
-				sprintf(buff, "%f", val);
+			if(! hide_catnum && hide_catstr) /* num only */
+			    sprintf(buff, "%2d", tcell);
 			else {
-				SigDigits = (int)ceil(log10(fabs(25/(dmax - dmin)))); /* determine how many significant digits to display based on range */
-				if(SigDigits < 0)
-					SigDigits = 0;
-				if(SigDigits < 7)
-					sprintf(DispFormat, "%%.%df", SigDigits);
-				else
-					sprintf(DispFormat, "%%.2g");	/* eg 4.2e-9  */
-				sprintf(buff, DispFormat, val);
+			    if(hide_catnum && hide_catstr) /* nothing, box only */
+			       buff[0] = 0;
+			    else
+			       sprintf(buff, "%2d) %s", tcell, cstr); /* both */
 			}
 		    }
-		    if(!k) /* first  */
-			R_move_abs(x1+4, y0+txsiz) ;
-		    else if(k == steps-1) /* last */
-			R_move_abs(x1+4,y1) ;
+		}
+		else {   /* ie FP map */
+		    if(!flip)
+			val = dmin + k * (dmax - dmin)/(steps-1);
 		    else
-			R_move_abs(x1+4,y0+ppl*k + txsiz/2) ;
-		    if(! hide_catnum)
-			R_text(buff) ;
-		} /* for */
-	    } /* !use_mouse || !horiz */
+			val = dmax - k * (dmax - dmin)/(steps-1); 
+
+		    if( 0 == (dmax - dmin) )		/* trap divide by 0 for single value rasters */
+			sprintf(buff, "%f", val);
+		    else {
+			/* determine how many significant digits to display based on range */
+			SigDigits = (int)ceil(log10(fabs(25/(dmax - dmin))));
+			if(SigDigits < 0)
+			    SigDigits = 0;
+			if(SigDigits < 7)
+			    sprintf(DispFormat, "%%.%df", SigDigits);
+			else
+			    sprintf(DispFormat, "%%.2g");	/* eg 4.2e-9  */
+			sprintf(buff, DispFormat, val);
+		    }
+		}
+
+		/* Draw text */
+		if(!horiz)
+		    txsiz = (int)((y1-y0)/20);
+		else
+		    txsiz = (int)((x1-x0)/20);
+		R_text_size(txsiz, txsiz);
+		R_standard_color(color);
+
+		ppl = (lleg)/(steps-1);
+
+		if(!horiz) {
+		    if(!k) /* first  */
+			R_move_abs(x1+4, y0+txsiz);
+		    else if(k == steps-1) /* last */
+			R_move_abs(x1+4, y1);
+		    else
+			R_move_abs(x1+4, y0+ppl*k + txsiz/2);
+		}
+		else {
+		/* text width is 0.81 of text height? so even though we set width 
+			to txsiz with R_text_size(), we still have to reduce.. hmmm */
+		    if(!k) /* first  */
+			R_move_abs(x0-(strlen(buff)*txsiz*.81/2), y1+4+txsiz);			
+		    else if(k == steps-1) /* last */
+			R_move_abs(x1-(strlen(buff)*txsiz*.81/2), y1+4+txsiz);
+		    else
+			R_move_abs(x0 +ppl*k -(strlen(buff)*txsiz*.81/2), y1+4+txsiz);
+		}
+
+		if(! hide_catnum)
+		    R_text(buff);
+
+	    } /*for*/
 
 	    lleg = y1-y0;
 	    wleg = x1-x0;
 
 	    /* Black box */
-	    R_standard_color(black) ;
-	    R_move_abs(x0+1, y0+1) ;
-	    R_cont_rel(0,lleg-2) ;
-	    R_cont_rel(wleg-2, 0) ;
-	    R_cont_rel(0, 2-lleg) ;
-	    R_cont_rel(2-wleg, 0) ;
+	    R_standard_color(black);
+	    R_move_abs(x0+1, y0+1);
+	    R_cont_rel(0,lleg-2);
+	    R_cont_rel(wleg-2, 0);
+	    R_cont_rel(0, 2-lleg);
+	    R_cont_rel(2-wleg, 0);
 
 	    /* White box */
-	    R_standard_color(white) ;
-	    R_move_abs(x0, y0) ;
-	    R_cont_rel(0,lleg) ;
-	    R_cont_rel(wleg, 0) ;
-	    R_cont_rel(0, -lleg) ;
-	    R_cont_rel(-wleg, 0) ;
+	    R_standard_color(white);
+	    R_move_abs(x0, y0);
+	    R_cont_rel(0,lleg);
+	    R_cont_rel(wleg, 0);
+	    R_cont_rel(0, -lleg);
+	    R_cont_rel(-wleg, 0);
 
 	}
 	else{   /* non FP, no smoothing */
