@@ -20,9 +20,13 @@ HTMLDIR="../dist.$ARCH/docs/html"
 
 cd $HTMLDIR
 
-echo "<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 <html>
-<TITLE>GRASS GIS 5.1 Reference Manual</TITLE>
+<head>
+ <title>GRASS GIS 5.1 Reference Manual</title>
+ <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
+ <meta name=\"Author\" content=\"GRASS Development Team\">
+</head>
 <body bgcolor=\"#FFFFFF\">
 <h2>GRASS GIS 5.1 Reference Manual</h2>
 This reference manual details the use of modules distributed with
@@ -39,7 +43,7 @@ k=0
 for i in $CMDLIST
 do
   k=$(( $k + 1 ))
-  echo -n "<b><a href="#$i">$i.*</a></b>" >> index.html
+  echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> index.html
   if [ $k -lt $CMDLISTNO ] ; then
      echo -n " | " >> index.html
   fi
@@ -47,12 +51,12 @@ done
 
 echo " ]
 <p>
-<ul>" >> index.html
+" >> index.html
 
 #for all module groups:
 for i in $CMDLIST
 do 
-  echo "<a name="$i"></a>" >> index.html
+  echo "<a name=\"$i\"></a>" >> index.html
   echo "<b>$i.* commands:</b>" >> index.html
   echo "<ul>" >> index.html
 
@@ -66,7 +70,6 @@ do
   echo "<p>" >> index.html
 done
 
-echo "</ul>" >> index.html
 echo "<hr>" >> index.html
 echo "&copy; 2003 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> index.html
 echo "</body>" >> index.html   
