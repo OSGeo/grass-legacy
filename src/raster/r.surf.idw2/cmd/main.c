@@ -182,7 +182,7 @@ main(argc, argv)
 		    break;
 		}
 	    }
-	    cell[col] = (CELL) (sum1/sum2);
+	    cell[col] = (CELL) (sum1/sum2 + 0.5);
 	}
 	G_put_map_row (fd, cell);
     }
