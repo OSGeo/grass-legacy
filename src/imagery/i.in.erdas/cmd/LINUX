@@ -1,0 +1,5 @@
+ i.in.erdas has to be compiled with the -DATT_386 flag for LINUX on PC.
+Otherwise, an ERDAS file head will not be read correctly because of byte
+swap problem.
+
+George Chou June 1998
