@@ -185,15 +185,14 @@ main(int argc, char **argv)
 
 	l = strlen(text);
 
-	ol = 2 * l;
-
-	out = G_malloc(ol);
+	ol = 4 * (l + 1);
+	out = (unsigned char *) G_malloc(ol);
 
 #ifdef HAVE_ICONV_H
 	p1 = text;
-	p2 = (char *) out;
+	p2 = out;
 	i = ol;
-	if((cd = iconv_open("UCS-2", charset)) < 0)
+	if((cd = iconv_open("UCS-4", charset)) < 0)
 		error("Unable to create conversion context");
 
 	if(iconv(cd, (const char **)&p1, &l, (char **)&p2, &i) < 0)
@@ -202,12 +201,14 @@ main(int argc, char **argv)
 	iconv_close(cd);
 	l = ol - i;
 #else
-	for (i = 0; i < l; i++)
+	for (i = 0; i <= l; i++)
 	{
-		out[2*i+0] = '\0';
-		out[2*i+1] = text[i];
+		out[2*i+0] = 0;
+		out[2*i+1] = 0;
+		out[2*i+2] = 0;
+		out[2*i+3] = text[i];
 	}
-	l *= 2;
+	l *= 4;
 #endif
 
 	D_setup(0);
@@ -253,11 +254,11 @@ main(int argc, char **argv)
 		color = D_translate_color(DEFAULT_COLOR);
 	}
 
-	for(i=0; i<l; i+=2)
+	for(i=0; i<l; i+=4)
 	{
 		int j, k;
 
-		ch = (out[i] << 8) | out[i+1];
+		ch = (out[i+2] << 8) | out[i+3];
 
 		if(!(index = FT_Get_Char_Index(face, ch)))
 			continue;
@@ -379,7 +380,7 @@ read_capfile(void)
 	for (i = 0; i < fonts_count; i++)
 		font_names_size += strlen(fonts[i].cfont) + 1;
 
-	font_names = G_malloc(font_names_size);
+	font_names = (char *) G_malloc(font_names_size);
 	font_names[0] = '\0';
 	for (i = 0; i < fonts_count; i++)
 	{
