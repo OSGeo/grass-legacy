@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_execute_immediate (driver, SQLstatement)
-    dbDriver *driver;
-    dbString *SQLstatement;
+/*!
+ \fn int db_execute_immediate (dbDriver *driver, dbString *SQLstatement)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_execute_immediate (dbDriver *driver, dbString *SQLstatement)
 {
     int ret_code;
 

@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_zero(s, n)
     void *s;

@@ -1,12 +1,20 @@
+#include <string.h>
+#include <stdlib.h>
 #include "dbmi.h"
 
-extern char *malloc();
-extern char *calloc();
-extern char *realloc();
+/*can be deleted?:*/
+/* extern char *malloc(); */
+/* extern char *calloc(); */
+/* extern char *realloc(); */
 
+/*!
+ \fn char *db_store(char *s)
+ \brief 
+ \return 
+ \param 
+*/
 char *
-db_store(s)
-    char *s;
+db_store(char *s)
 {
     char *a;
 
@@ -16,9 +24,14 @@ db_store(s)
     return a;
 }
 
+/*!
+ \fn void *db_malloc(int n)
+ \brief 
+ \return 
+ \param 
+*/
 void *
-db_malloc(n)
-    int n;
+db_malloc(int n)
 {
     void *s;
 
@@ -30,10 +43,14 @@ db_malloc(n)
     return s;
 }
 
+/*!
+ \fn void *db_calloc(int n, int m)
+ \brief 
+ \return 
+ \param 
+*/
 void *
-db_calloc(n,m)
-    int n;
-    int m;
+db_calloc(int n, int m)
 {
     void *s;
 
@@ -47,10 +64,14 @@ db_calloc(n,m)
     return s;
 }
 
+/*!
+ \fn void *db_realloc(void *s, int n)
+ \brief 
+ \return 
+ \param 
+*/
 void *
-db_realloc(s,n)
-    void *s;
-    int n;
+db_realloc(void *s, int n)
 {
     if (n <= 0)
 	n = 1;

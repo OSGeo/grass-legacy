@@ -3,6 +3,12 @@
 
 extern char *getenv();
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_driver(argc, argv)
     char *argv[];

@@ -2,6 +2,12 @@
 
 static void print_priv();
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_print_table_definition(fd,table)
     FILE *fd;

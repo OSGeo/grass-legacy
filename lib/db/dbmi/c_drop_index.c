@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_drop_index (driver, name)
-    dbDriver *driver;
-    dbString *name;
+/*!
+ \fn int db_drop_index (dbDriver *driver, dbString *name)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_drop_index (dbDriver *driver, dbString *name)
 {
     int ret_code;
 

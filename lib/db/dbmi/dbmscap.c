@@ -33,18 +33,36 @@ dbmscap_filename(err_flag)
     return ((char *)NULL);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_dbmscap_filename()
 {
     return dbmscap_filename(1);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_has_dbms()
 {
     return (dbmscap_filename(0) != NULL);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_copy_dbmscap_entry(dst, src)
     dbDbmscap *dst, *src;
@@ -54,6 +72,12 @@ db_copy_dbmscap_entry(dst, src)
     strcpy (dst->startup, src->startup);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* dbmscap file was used in grass5.0 but it is not used in
  * grass5.1 until we find it necessary. All code for dbmscap
  * file is commented here. 
@@ -183,6 +207,12 @@ add_entry (list, name, startup, comment)
     *list = head;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_dbmscap (list)
     dbDbmscap *list;

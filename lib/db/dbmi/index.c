@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_init_index (index)
     dbIndex *index;
@@ -11,6 +17,12 @@ db_init_index (index)
     index->unique = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_index (index)
     dbIndex *index;
@@ -22,6 +34,12 @@ db_free_index (index)
     db_init_index(index);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_alloc_index_columns (index, ncols)
     dbIndex *index;
@@ -35,6 +53,12 @@ db_alloc_index_columns (index, ncols)
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbIndex *
 db_alloc_index_array (count)
     int count;
@@ -51,6 +75,12 @@ db_alloc_index_array (count)
     return list;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_index_array (list, count)
     dbIndex *list;
@@ -66,6 +96,12 @@ db_free_index_array (list, count)
     }
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_index_name (index, name)
     dbIndex *index;
@@ -74,6 +110,12 @@ db_set_index_name (index, name)
     return db_set_string (&index->indexName, name);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_index_name (index)
     dbIndex *index;
@@ -81,6 +123,12 @@ db_get_index_name (index)
     return db_get_string (&index->indexName);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_index_table_name (index, name)
     dbIndex *index;
@@ -89,6 +137,12 @@ db_set_index_table_name (index, name)
     return db_set_string (&index->tableName, name);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_index_table_name (index)
     dbIndex *index;
@@ -96,6 +150,12 @@ db_get_index_table_name (index)
     return db_get_string (&index->tableName);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_index_number_of_columns (index)
     dbIndex *index;
@@ -103,6 +163,12 @@ db_get_index_number_of_columns (index)
     return index->numColumns;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_index_column_name (index, column_num, name)
     dbIndex *index;
@@ -117,6 +183,12 @@ db_set_index_column_name (index, column_num, name)
     return db_set_string (&index->columnNames[column_num], name);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_index_column_name (index, column_num)
     dbIndex *index;
@@ -130,24 +202,48 @@ db_get_index_column_name (index, column_num)
     return db_get_string (&index->columnNames[column_num]);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_set_index_type_unique (index)
     dbIndex *index;
 {
     index->unique = 1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_set_index_type_non_unique (index)
     dbIndex *index;
 {
     index->unique = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_test_index_type_unique (index)
     dbIndex *index;
 {
     return index->unique != 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_print_index(fd, index)
     FILE *fd;
     dbIndex *index;

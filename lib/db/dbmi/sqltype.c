@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_sqltype_name(sqltype)
     int sqltype;

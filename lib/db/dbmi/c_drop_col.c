@@ -1,10 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_drop_column (driver, tableName, columnName)
-    dbDriver *driver;
-    dbString *tableName;
-    dbString *columnName;
+/*!
+ \fn int db_drop_column (dbDriver *driver, dbString *tableName, dbString *columnName)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_drop_column (dbDriver *driver, dbString *tableName, dbString *columnName)
 {
     int ret_code;
 

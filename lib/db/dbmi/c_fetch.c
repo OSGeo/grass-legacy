@@ -1,10 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_fetch (cursor, position, more)
-    dbCursor *cursor;
-    int position;
-    int *more;
+/*!
+ \fn int db_fetch (dbCursor *cursor, int position, int *more)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_fetch (dbCursor *cursor, int position, int *more)
 {
     int ret_code;
 

@@ -1,3 +1,9 @@
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_whoami()
 {

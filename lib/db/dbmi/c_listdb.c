@@ -1,12 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_databases (driver, path, npaths, handles, count)
-    dbDriver *driver;
-    dbString *path;
-    int npaths;
-    dbHandle **handles;
-    int *count;
+/*!
+ \fn int db_list_databases (dbDriver *driver, dbString *path, int npaths, dbHandle **handles, int *count)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_list_databases (dbDriver *driver, dbString *path, int npaths, dbHandle **handles, int *count)
 {
     int ret_code;
     int i;

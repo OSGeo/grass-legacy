@@ -1,8 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_close_database (driver)
-    dbDriver *driver;
+/*!
+ \fn int db_close_database (dbDriver *driver)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_close_database (dbDriver *driver)
 {
     int ret_code;
 

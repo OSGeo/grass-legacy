@@ -1,5 +1,5 @@
 Directory contents:
 
-dbmi: DataBase Management Interface
-sqlp: SQL driver
-stubs: ? (please add here)
+dbmi: DataBase Management Interface (db_*() functions)
+sqlp: SQL parser library
+stubs: stubs for unimplemented DB functions

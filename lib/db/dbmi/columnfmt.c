@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_convert_Cstring_to_column_value (Cstring, column)
     char *Cstring;
@@ -13,6 +19,12 @@ db_convert_Cstring_to_column_value (Cstring, column)
     return db_convert_Cstring_to_value (Cstring, sqltype, value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_convert_Cstring_to_column_default_value (Cstring, column)
     char *Cstring;
@@ -26,6 +38,12 @@ db_convert_Cstring_to_column_default_value (Cstring, column)
     return db_convert_Cstring_to_value (Cstring, sqltype, value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_convert_column_value_to_string (column, string)
     dbColumn *column;
@@ -39,6 +57,12 @@ db_convert_column_value_to_string (column, string)
     return db_convert_value_to_string (value, sqltype, string);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_convert_column_default_value_to_string (column, string)
     dbColumn *column;

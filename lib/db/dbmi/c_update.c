@@ -1,6 +1,12 @@
 #include "dbmi.h"
 #include "macros.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_update (cursor)
     dbCursor *cursor;
 {

@@ -1,76 +1,122 @@
 #include <string.h>
 #include "dbmi.h"
 
+/*!
+ \fn dbColumn *db_get_table_column (dbTable *table, int n)
+ \brief 
+ \return 
+ \param 
+*/
 dbColumn *
-db_get_table_column (table, n)
-    dbTable *table;
-    int n;
+db_get_table_column (dbTable *table, int n)
 {
     if (n < 0 || n >= table->numColumns)
 	return ((dbColumn *)NULL);
     return &table->columns[n];
 }
 
+/*!
+ \fn dbValue *db_get_column_value (dbColumn *column)
+ \brief 
+ \return 
+ \param 
+*/
 dbValue *
-db_get_column_value (column)
-    dbColumn *column;
+db_get_column_value (dbColumn *column)
 {
     return &column->value;
 }
 
+/*!
+ \fn dbValue *db_get_column_default_value (dbColumn *column)
+ \brief 
+ \return 
+ \param 
+*/
 dbValue *
-db_get_column_default_value (column)
-    dbColumn *column;
+db_get_column_default_value (dbColumn *column)
 {
     return &column->defaultValue;
 }
 
+/*!
+ \fn void db_set_column_sqltype (dbColumn *column, int sqltype)
+ \brief 
+ \return 
+ \param 
+*/
 void
-db_set_column_sqltype (column, sqltype)
-    dbColumn *column;
-    int sqltype;
+db_set_column_sqltype (dbColumn *column, int sqltype)
 {
     column->sqlDataType = sqltype;
 }
 
+/*!
+ \fn void db_set_column_host_type (dbColumn *column, int type)
+ \brief 
+ \return 
+ \param 
+*/
 void
-db_set_column_host_type (column, type)
-    dbColumn *column;
-    int type;
+db_set_column_host_type (dbColumn *column, int type)
 {
     column->hostDataType = type;
 }
 
+/*!
+ \fn void db_get_column_host_type (dbColumn *column)
+ \brief 
+ \return 
+ \param 
+*/
 int
-db_get_column_scale (column)
-    dbColumn *column;
+db_get_column_scale (dbColumn *column)
 {
     return column->scale;
 }
 
+/*!
+ \fn void db_set_column_scale (dbColumn *column, int scale)
+ \brief 
+ \return 
+ \param 
+*/
 void
-db_set_column_scale (column, scale)
-    dbColumn *column;
-    int scale;
+db_set_column_scale (dbColumn *column, int scale)
 {
     column->scale = scale;
 }
 
+/*!
+ \fn int db_get_column_precision (dbColumn *column)
+ \brief 
+ \return 
+ \param 
+*/
 int
-db_get_column_precision (column)
-    dbColumn *column;
+db_get_column_precision (dbColumn *column)
 {
     return column->precision;
 }
 
+/*!
+ \fn void db_set_column_precision (dbColumn *column, int precision)
+ \brief 
+ \return 
+ \param 
+*/
 void
-db_set_column_precision (column, precision)
-    dbColumn *column;
-    int precision;
+db_set_column_precision (dbColumn *column, int precision)
 {
     column->precision = precision;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_column_sqltype (column)
     dbColumn *column;
@@ -85,6 +131,12 @@ db_get_column_host_type (column)
     return column->hostDataType;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* returns column sqltype  or -1 on error*/
 int
 db_column_sqltype ( 
@@ -116,6 +168,12 @@ db_column_sqltype (
     return -1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* returns column Ctype  or -1 on error */
 int
 db_column_Ctype ( 
@@ -132,6 +190,12 @@ db_column_Ctype (
     return -1;
 }
     
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_has_defined_default_value(column)
     dbColumn *column;
@@ -139,6 +203,12 @@ db_set_column_has_defined_default_value(column)
     column->hasDefaultValue = DB_DEFINED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_has_undefined_default_value(column)
     dbColumn *column;
@@ -146,6 +216,12 @@ db_set_column_has_undefined_default_value(column)
     column->hasDefaultValue = DB_UNDEFINED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_unset_column_has_default_value(column)
     dbColumn *column;
@@ -153,6 +229,12 @@ db_unset_column_has_default_value(column)
     column->hasDefaultValue = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_column_has_default_value(column)
     dbColumn *column;
@@ -160,6 +242,12 @@ db_test_column_has_default_value(column)
     return (column->hasDefaultValue != 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_column_has_defined_default_value(column)
     dbColumn *column;
@@ -167,6 +255,12 @@ db_test_column_has_defined_default_value(column)
     return (column->hasDefaultValue == DB_DEFINED);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_column_has_undefined_default_value(column)
     dbColumn *column;
@@ -174,6 +268,12 @@ db_test_column_has_undefined_default_value(column)
     return (column->hasDefaultValue == DB_UNDEFINED);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_use_default_value(column)
     dbColumn *column;
@@ -181,6 +281,12 @@ db_set_column_use_default_value(column)
     column->useDefaultValue = 1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_unset_column_use_default_value(column)
     dbColumn *column;
@@ -188,6 +294,12 @@ db_unset_column_use_default_value(column)
     column->useDefaultValue = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_column_use_default_value(column)
     dbColumn *column;
@@ -195,6 +307,12 @@ db_test_column_use_default_value(column)
     return (column->useDefaultValue != 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_null_allowed(column)
     dbColumn *column;
@@ -202,6 +320,12 @@ db_set_column_null_allowed(column)
     column->nullAllowed = 1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_unset_column_null_allowed(column)
     dbColumn *column;
@@ -209,6 +333,12 @@ db_unset_column_null_allowed(column)
     column->nullAllowed = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_column_null_allowed(column)
     dbColumn *column;
@@ -216,6 +346,12 @@ db_test_column_null_allowed(column)
     return (column->nullAllowed != 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_column_length (column)
     dbColumn *column;
@@ -223,6 +359,12 @@ db_get_column_length (column)
     return column->dataLen;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_length (column, length)
     dbColumn *column;
@@ -231,6 +373,12 @@ db_set_column_length (column, length)
     column->dataLen = length;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_select_priv_granted (column)
     dbColumn *column;
@@ -238,6 +386,12 @@ db_set_column_select_priv_granted (column)
     column->select = DB_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_select_priv_not_granted (column)
     dbColumn *column;
@@ -245,6 +399,12 @@ db_set_column_select_priv_not_granted (column)
     column->select = DB_NOT_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_column_select_priv (column)
     dbColumn *column;
@@ -252,6 +412,12 @@ db_get_column_select_priv (column)
     return column->select;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_update_priv_granted (column)
     dbColumn *column;
@@ -259,6 +425,12 @@ db_set_column_update_priv_granted (column)
     column->update = DB_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_column_update_priv_not_granted (column)
     dbColumn *column;
@@ -266,6 +438,12 @@ db_set_column_update_priv_not_granted (column)
     column->update = DB_NOT_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_column_update_priv (column)
     dbColumn *column;
@@ -273,6 +451,12 @@ db_get_column_update_priv (column)
     return column->update;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_init_column (column)
     dbColumn *column;
@@ -284,6 +468,12 @@ db_init_column (column)
     db_init_string (&column->defaultValue.s);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_column_name (column, name)
     dbColumn *column;
@@ -292,6 +482,12 @@ db_set_column_name (column, name)
     return db_set_string (&column->columnName, name);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_column_name (column)
     dbColumn *column;
@@ -299,6 +495,12 @@ db_get_column_name (column)
     return db_get_string (&column->columnName);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_column_description (column, description)
     dbColumn *column;
@@ -307,6 +509,12 @@ db_set_column_description (column, description)
     return db_set_string (&column->description, description);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_column_description (column)
     dbColumn *column;
@@ -314,6 +522,12 @@ db_get_column_description (column)
     return db_get_string (&column->description);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_column (column)
     dbColumn *column;

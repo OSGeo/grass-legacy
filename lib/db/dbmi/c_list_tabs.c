@@ -1,11 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_tables (driver, names, count, system)
-    dbDriver *driver;
-    dbString **names;
-    int *count;
-    int system;
+/*!
+ \fn int db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
 {
     int ret_code;
 

@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_delete_database (driver, handle)
-    dbDriver *driver;
-    dbHandle *handle;
+/*!
+ \fn int db_delete_database (dbDriver *driver, dbHandle *handle)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_delete_database (dbDriver *driver, dbHandle *handle)
 {
     int ret_code;
 

@@ -2,8 +2,14 @@
 #include "macros.h"
 
 
-db_close_cursor (cursor)
-    dbCursor *cursor;
+/*!
+ \fn int db_close_cursor (dbCursor *cursor)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_close_cursor (dbCursor *cursor)
 {
     int ret_code;
 

@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_create_database (driver, handle)
-    dbDriver *driver;
-    dbHandle *handle;
+/*!
+ \fn int db_create_database (dbDriver *driver, dbHandle *handle)
+ \brief create database
+ \return nothing
+ \param driver, handle
+*/
+int
+db_create_database (dbDriver *driver, dbHandle *handle)
 {
     int ret_code;
 

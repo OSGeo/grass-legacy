@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_create_index (driver, index)
-    dbDriver *driver;
-    dbIndex *index;
+/*!
+ \fn int db_create_index (dbDriver *driver, dbIndex *index)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_create_index (dbDriver *driver, dbIndex *index)
 {
     int ret_code;
 

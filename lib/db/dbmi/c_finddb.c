@@ -1,10 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_find_database (driver, handle, found)
-    dbDriver *driver;
-    dbHandle *handle;
-    int *found;
+/*!
+ \fn int db_find_database (dbDriver *driver, dbHandle *handle, int *found)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_find_database (dbDriver *driver, dbHandle *handle, int *found)
 {
     int ret_code;
     int stat;

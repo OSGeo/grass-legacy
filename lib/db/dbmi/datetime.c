@@ -3,6 +3,12 @@
 static char ds = '-';
 static char ts = ':';
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_convert_value_datetime_into_string (value, sqltype, string)
     dbValue *value;
     int sqltype;
@@ -157,6 +163,12 @@ db_convert_value_datetime_into_string (value, sqltype, string)
     return db_set_string (string, buf);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* NAME: db_convert_Cstring_to_value_datetime
  * INPUT: buf, a C string formated as indicated by sqltype, value, a dbValue
  *  to put the converted value into

@@ -5,6 +5,12 @@
 
 static int cmp();
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* selet array of ordered integers
  *
  * return: number of selected values
@@ -86,6 +92,12 @@ int db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pv
     return (count);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* selet one (first) value from table/column for key/id
  *
  * return: number of selected values
