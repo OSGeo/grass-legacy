@@ -48,6 +48,9 @@ links:
 			ln ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
 		done
 
+documents:
+	${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -f ${SRCDIR}/mk/Makefile.docs documents
+
 install:
 	-mkdir -p ${INST_DIR}
 	-tar cfC - ${GISBASE} . | tar xBfC - ${INST_DIR}
@@ -76,62 +79,3 @@ clean-makefiles:
 %/makefile: %/Gmakefile
 	${SRCDIR}/mk/genmake.sed < $< > $@
 
-# documents (HTML, manpages)
-
-HTMLSRC		= ${SRCDIR}/html
-HTMLSRC1	= ${HTMLSRC}
-HTMLSRC2	= ${HTMLSRC}/html
-
-HTMLDIR		= ${GISBASE}/documents
-HTMLDIR1	= ${HTMLDIR}
-HTMLDIR2	= ${HTMLDIR}/html
-
-MANSECT		= 1
-MANDIR		= ${GISBASE}/man/man${MANSECT}
-CATDIR		= ${GISBASE}/man/cat${MANSECT}
-
-MAN2CAT		= man
-HTML2MAN	= GRASS_PERL=${PERL} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html2man
-
-documents:	htmlpages images manpages catpages
-
-htmlpages:	htmlpages1 htmlpages2
-
-htmlpages1:	$(patsubst ${HTMLSRC1}/%.html,${HTMLDIR1}/%.html,$(wildcard ${HTMLSRC1}/*.html))
-htmlpages2:	$(patsubst ${HTMLSRC2}/%.html,${HTMLDIR2}/%.html,$(wildcard ${HTMLSRC2}/*.html))
-
-images:		images1 images2
-
-images1:	$(patsubst ${HTMLSRC1}/%.gif,${HTMLDIR1}/%.gif,$(wildcard ${HTMLSRC1}/*.gif))
-images2:	$(patsubst ${HTMLSRC2}/%.gif,${HTMLDIR2}/%.gif,$(wildcard ${HTMLSRC2}/*.gif))
-
-manpages:	${MANDIR} manpages1 manpages2
-
-${MANDIR}:
-		-mkdir -p ${MANDIR}
-
-manpages1:	$(patsubst ${HTMLSRC1}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
-manpages2:	$(patsubst ${HTMLSRC2}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC2}/*.html))
-
-catpages:	${CATDIR} catpages1 catpages2
-
-${CATDIR}:
-		-mkdir -p ${CATDIR}
-
-catpages1:	$(patsubst ${HTMLSRC1}/%.html,${CATDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
-catpages2:	$(patsubst ${HTMLSRC2}/%.html,${CATDIR}/%.${MANSECT},$(wildcard ${HTMLSRC2}/*.html))
-
-${HTMLDIR}/%.html:	${HTMLSRC}/%.html
-	cp -f $< $@
-
-${HTMLDIR}/%.gif:	${HTMLSRC}/%.gif
-	cp -f $< $@
-
-${MANDIR}/%.${MANSECT}:	${HTMLSRC1}/%.html
-	${HTML2MAN} $< $@ $(MANSECT)
-
-${MANDIR}/%.${MANSECT}:	${HTMLSRC2}/%.html
-	${HTML2MAN} $< $@ $(MANSECT)
-
-${CATDIR}/%.${MANSECT}:	${MANDIR}/%.${MANSECT}
-	${MAN2CAT} $< > $@
