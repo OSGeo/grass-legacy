@@ -1,0 +1,4 @@
+v.distance              Calculates a distance from a point to nearest
+                        line or point in vector layer.
+
+Janne Soimasuo, Finland
