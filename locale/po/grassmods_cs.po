@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
-"POT-Creation-Date: 2004-11-17 09:31+0100\n"
+"POT-Creation-Date: 2004-11-17 18:05+0100\n"
 "PO-Revision-Date: 2004-10-29 15:58+0200\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"
@@ -24,7 +24,7 @@ msgid "database:%s\n"
 msgstr ""
 
 #: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
-#: ../db/base/select.c:126
+#: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
 #, c-format
 msgid "%s"
 msgstr ""
@@ -441,6 +441,10 @@ msgstr ""
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr ""
 
+#: ../imagery/i.group/main.c:86
+msgid "No input map(s) specified."
+msgstr ""
+
 #: ../raster/r.colors/rules.c:45
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
@@ -532,7 +536,7 @@ msgid "Input vector was not found."
 msgstr ""
 
 #: ../vector/v.convert/att.c:36
-msgid "No category labels (dig_cats) found, no table created."
+msgid "No category labels (dig_cats) found, no table created.\n"
 msgstr ""
 
 #: ../vector/v.convert/att.c:41
@@ -567,7 +571,7 @@ msgid "Failed opening input dig_att file."
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:71
-msgid "Attaching categories..."
+msgid "Attaching categories...\n"
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:89
@@ -581,33 +585,33 @@ msgid "WARNING: line %d label: %d matched another label: %d."
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:100
-msgid "Writing new file..."
+msgid "Writing new file...\n"
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:121
 #, c-format
-msgid "%-5d points and lines written to output file."
+msgid "%-5d points and lines written to output file.\n"
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:135
 #, c-format
-msgid "%-5d centroids written to output file."
+msgid "%-5d centroids written to output file.\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:41
-msgid "Reading dig file..."
+msgid "Reading dig file...\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:75
-msgid "Input file is version 3."
+msgid "Input file is version 3.\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:78
-msgid "Input file is version 4."
+msgid "Input file is version 4.\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:87
-msgid "Input file is portable."
+msgid "Input file is portable.\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:89
@@ -618,56 +622,56 @@ msgstr ""
 
 #: ../vector/v.convert/read.c:161
 #, c-format
-msgid "%-5d points read to memory"
+msgid "%-5d points read to memory\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:162
 #, c-format
-msgid "%-5d lines read to memory"
+msgid "%-5d lines read to memory\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:164
 #, c-format
-msgid "%-5d points read and written to output"
+msgid "%-5d points read and written to output\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:165
 #, c-format
-msgid "%-5d lines read and written to output"
+msgid "%-5d lines read and written to output\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:167
 #, c-format
-msgid "%-5d area boundaries read and written to output"
+msgid "%-5d area boundaries read and written to output\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:168
 #, c-format
-msgid "%-5d dead points skipped"
+msgid "%-5d dead points skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:169
 #, c-format
-msgid "%-5d dead lines skipped"
+msgid "%-5d dead lines skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:170
 #, c-format
-msgid "%-5d dead area boundaries skipped"
+msgid "%-5d dead area boundaries skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:171
 #, c-format
-msgid "%-5d elements of unknown type skipped"
+msgid "%-5d elements of unknown type skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:173
 #, c-format
-msgid "%-5d elements read to memory."
+msgid "%-5d elements read to memory.\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:212
-msgid "Reading dig_att file..."
+msgid "Reading dig_att file...\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:220
@@ -682,42 +686,42 @@ msgstr ""
 
 #: ../vector/v.convert/read.c:260
 #, c-format
-msgid "%-5d point categories read"
+msgid "%-5d point categories read\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:261
 #, c-format
-msgid "%-5d line categories read"
+msgid "%-5d line categories read\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:262
 #, c-format
-msgid "%-5d centroids read"
+msgid "%-5d centroids read\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:263
 #, c-format
-msgid "%-5d dead point categories skipped"
+msgid "%-5d dead point categories skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:264
 #, c-format
-msgid "%-5d dead line categories skipped"
+msgid "%-5d dead line categories skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:265
 #, c-format
-msgid "%-5d dead centroids skipped"
+msgid "%-5d dead centroids skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:266
 #, c-format
-msgid "%-5d categories of unknown type skipped"
+msgid "%-5d categories of unknown type skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:268
 #, c-format
-msgid "%-5d categories read into memory."
+msgid "%-5d categories read into memory.\n"
 msgstr ""
 
 #: ../vector/v.convert/type.c:29
@@ -762,9 +766,92 @@ msgstr ""
 msgid "%d points loaded\n"
 msgstr ""
 
-#: ../vector/v.transform/creat_trans.c:124
+#: ../vector/v.transform/ask_trans.c:83
+msgid "ask_transform_coor():  Leaving session.. \n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:69
 #, c-format
-msgid "Number of points that have been entered: %d"
+msgid " Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:100
+msgid "Please answer yes or no"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:123
+#, c-format
+msgid "Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:166
+#, c-format
+msgid "Could not open file with coordinates : %s\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:172
+#, c-format
+msgid "Could not find input map <%s>\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:206
+msgid ""
+"\n"
+"Now transforming the vectors ...\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:224
+#, c-format
+msgid "New vector map <%s> boundary coordinates:\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:225
+#, c-format
+msgid " N: %-10.3f    S: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:226
+#, c-format
+msgid " E: %-10.3f    W: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:227
+#, c-format
+msgid " B: %6.3f    T: %6.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:232
+#, c-format
+msgid "'%s' has finished the transformation of the vectors.\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:29
+msgid ""
+"                          CHECK MAP RESIDUALS\n"
+"\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:30
+msgid "                Current Map                  New Map\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:31
+msgid ""
+" POINT      X coord    Y coord  |        X coord   Y coord    |      "
+"residuals\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:43
+#, c-format
+msgid ""
+"\n"
+"\n"
+"  Number of points: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:44
+#, c-format
+msgid "  Residual mean average   : %f\n"
 msgstr ""
 
 #: ../vector/v.transform/setup_trans.c:88
@@ -778,30 +865,30 @@ msgstr ""
 
 #: ../vector/v.what.rast/main.c:330
 #, c-format
-msgid "%d categories loaded from table"
+msgid "%d categories loaded from table\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:331
 #, c-format
-msgid "%d categories loaded from vector"
+msgid "%d categories loaded from vector\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:332
 #, c-format
-msgid "%d categories from vector missing in table"
+msgid "%d categories from vector missing in table\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:333
 #, c-format
-msgid "%d duplicate categories in vector"
+msgid "%d duplicate categories in vector\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:334
 #, c-format
-msgid "%d records updated"
+msgid "%d records updated\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:335
 #, c-format
-msgid "%d update errors"
+msgid "%d update errors\n"
 msgstr ""
