@@ -132,6 +132,8 @@ system (buf);
 		    fprintf (stderr, "NOTE: overflow occured in the calculation\n");
 		    allok = 1;
 		}
+		if (integer_division_occurred)
+		    fprintf (stderr, "NOTE: integer division occured in the calculation; precision lost\n");
 		create_support_files (result, tempfile);
 		print_range (result);
 	    }

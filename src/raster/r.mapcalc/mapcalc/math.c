@@ -120,6 +120,7 @@ divide (CELL *a, CELL *b, int n)
 	else
 	{
 	    *a /= *b;
+	    integer_division_occurred = 1;
 	}
     }
 
