@@ -1,5 +1,3 @@
-/*  %W%  %G%  */
-
 #define FUDGE 30.
 reset_color(number, red, grn, blu)
 	int number ;
