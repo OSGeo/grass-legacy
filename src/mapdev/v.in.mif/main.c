@@ -4,7 +4,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 10th. Aug. 2000
- * Last updated 17th. Oct. 2000
+ * Last updated 14th. Jan. 2001
  *
 
  * This file is part of GRASS GIS. It is free software. You can 
@@ -30,7 +30,8 @@
 #include "Vect.h"
 #include "local_structs.h"
 #include "scanner.h"
-#include "static.h"
+#include "store.h"
+#include "cpoly.h"
 
 
 /* Globals */
@@ -41,6 +42,7 @@ site_array *site0;  /* Deals with collecting point data */
 line_array *line0;  /* Deals with collecting line data  */
 line_array *area0;  /* Deals with collecting area data  */
 type_array *type0;
+ring_offsets *roffs;
 
 double *xcenter;
 double *ycenter;
@@ -73,6 +75,7 @@ field_data field_type;
 
 extern d_type del0;
 extern char delchar;
+extern region uni_bb;
 
 extern FILE *yyin;
 extern int yylex();
@@ -89,8 +92,15 @@ int main(int argc, char *argv[] ) {
   FILE *logfp = NULL;
   char basename[128], mif_input[128], mid_input[128];
   char attname[128], outfile[128];
+  char digits_buf[512];
 
   int scale0;
+  double snap_default = 0.000001;
+  double tol_default = 1.745e-4;
+  int scale_default = 200;
+  double snap, tol;
+  double false_easting, false_northing;
+  int idigits;
 
 
   /* Main structures */
@@ -128,21 +138,19 @@ int main(int argc, char *argv[] ) {
   parm.logfile->description= "Name of file where log operations";
   parm.logfile->answer     = "";
 
-  /* parm.snapd = G_define_option() ;
-     parm.snapd->key        = "snapdist";
-     parm.snapd->type       = TYPE_STRING;
-     parm.snapd->required   = NO;
-     parm.snapd->description= "Snap distance in ground units (Default = 0.000001)";
-     parm.snapd->answer     = "0.000001";
-  */
+  parm.snapd = G_define_option() ;
+  parm.snapd->key        = "snapdist";
+  parm.snapd->type       = TYPE_STRING;
+  parm.snapd->required   = NO;
+  parm.snapd->description= "Snap distance in ground units (Default = 0.000001)";
+  parm.snapd->answer     = "0.000001";
 
-  /* parm.minangle = G_define_option() ;
-     parm.minangle->key        = "sliver";
-     parm.minangle->type       = TYPE_STRING;
-     parm.minangle->required   = NO;
-     parm.minangle->description= "Min. angle subtended by a wedge at node (radians)";
-     parm.minangle->answer     = "1.745e-4"; 
-  */
+  parm.minangle = G_define_option() ;
+  parm.minangle->key        = "sliver";
+  parm.minangle->type       = TYPE_STRING;
+  parm.minangle->required   = NO;
+  parm.minangle->description= "Min. angle subtended by a wedge at node (radians)";
+  parm.minangle->answer     = "1.745e-4"; 
 
   parm.scale = G_define_option() ;
   parm.scale->key        = "scale";
@@ -208,13 +216,53 @@ int main(int argc, char *argv[] ) {
     strcpy(attname, "__NO_FIELD__");
 
 
+  /* Process the snap distance */
+
+  if(strcmp(parm.snapd->answer, "") == 0) {
+    /* set default value */
+
+    if( G_process_snap_distance(SET_VAL, &snap_default) < 0 )
+      G_warning("Unable to store snap distance value");
+  }
+
+  else {
+    snap = atof(parm.snapd->answer);
+    if( G_process_snap_distance(SET_VAL, &snap) < 0 )
+      G_warning("Unable to store snap distance value");
+  }
+
+  /* Process the angular tolerance */
+
+  if(strcmp(parm.minangle->answer, "") == 0) {
+    /* set default value */
+
+    if( G_process_colinear_tolerance(SET_VAL, &tol_default) < 0 )
+      G_warning("Unable to store snap distance value");
+  }
+
+  else {
+    tol = atof(parm.minangle->answer);
+    if( G_process_colinear_tolerance(SET_VAL, &tol) < 0 )
+      G_warning("Unable to store colinear tolerance value");
+  }
+
+
 
   /* Store the initial scale */
 
-  scale0 = atoi(parm.scale->answer);
+  if(strcmp(parm.scale->answer, "") == 0) {
+    /* set default value */
 
-  if( proc_init_scale(SET_VAL, &scale0 ) < 0 )
-    G_warning("Unable to set specified initial scale value\n");
+    if( G_process_scale_value(SET_VAL, &scale_default) < 0 )
+      G_warning("Unable to set specified initial scale value");
+  }
+
+  else {
+    scale0 = atoi(parm.scale->answer);
+    if( G_process_scale_value(SET_VAL, &scale0) < 0 )
+      G_warning("Unable to store colinear tolerance value");
+  }
+
   
   /* Check for mif-file */
 
@@ -302,12 +350,46 @@ int main(int argc, char *argv[] ) {
 
   site0 = (site_array *)G_malloc( sizeof(site_array) );
   line0 = (line_array *)G_malloc( sizeof(line_array) );
+  area0 = (line_array *)G_malloc( sizeof(line_array) );
 
   /* Now the main business */
 
   yyin = mif_file;
   yylex();
 
+
+  /* Process the key generation params. This must be done after
+     the input files are parsed
+  */
+
+  if(uni_bb.w < 0.0) {
+    false_easting = - ((long long)(uni_bb.w / snap) - 3) * snap;
+  }
+
+  else {
+    false_easting = - ((long long)(uni_bb.w / snap) - 2) * snap;
+  }
+
+  if(uni_bb.s < 0.0) {
+    false_northing = - ((long long)(uni_bb.s / snap) - 3) * snap;
+  }
+
+  else {
+    false_northing = - ((long long)(uni_bb.s / snap) - 2) * snap;
+  }
+
+  snprintf(digits_buf, 16, "%ld", (long)(uni_bb.e + false_easting) + 2 );
+  idigits = strlen(digits_buf);
+
+  snprintf(digits_buf, 16, "%ld", (long)(uni_bb.n + false_northing) + 2 );
+  if(strlen(digits_buf) > idigits) idigits = strlen(digits_buf);
+
+  if(idigits > 16)
+    G_fatal_error("Values of co-ordinate locations are outside viable range.");
+
+  if(G_process_key_params(SET_VAL, &idigits, &false_easting, &false_northing) < 0) {
+    G_warning("Unable to store regional parameters for key generation");
+  }
 
   /* Deal with the listflag first */
 
@@ -324,7 +406,7 @@ int main(int argc, char *argv[] ) {
 
   /* Now write lines and data */
 
-  line_data_write(site0, line0, data_info, del0, nsites, nglines,
+  line_data_write(site0, line0, area0, roffs, data_info, del0, nsites, nglines, nrings,
 		  outfile, logfp, attname);
 
 
