@@ -45,6 +45,8 @@ static int (*error)() = 0;
 static int no_warn = 0;
 static int no_sleep = 0;
 
+extern char *getenv();
+
 
 G_fatal_error (msg)
     char *msg;
@@ -123,7 +125,7 @@ static print_error (msg, fatal)
 	    if (!no_sleep)
 		sleep (5);
 	}
-	else
+	else if (!getenv("GRASS_STDERR"))
 	    mail_msg (msg, fatal);
     }
     active = 0;
@@ -139,14 +141,14 @@ static log_error (msg, fatal)
     char *gisbase;
 
     long time();
-    FILE *popen();
+    FILE *G_popen();
 
 /* get time */
     clock = time(0);
 
 /* get current working directory */
     sprintf(cwd,"?");
-    if (pwd = popen ("pwd","r"))
+    if (pwd = G_popen ("pwd","r"))
     {
 	if (fgets(cwd, sizeof cwd, pwd))
 	{
@@ -156,7 +158,7 @@ static log_error (msg, fatal)
 		if (*c == '\n')
 		    *c = 0;
 	}
-	pclose (pwd);
+	G_pclose (pwd);
     }
 
 /* write the 2 possible error log files */
@@ -177,7 +179,6 @@ static write_error (msg, fatal, dir, clock, cwd)
     char logfile[1000];
     FILE *log;
     char *ctime();
-    FILE *popen();
 
     if (dir == 0 || *dir == 0)
 	return;
@@ -205,7 +206,7 @@ static write_error (msg, fatal, dir, clock, cwd)
 static mail_msg (msg, fatal)
     char *msg;
 {
-    FILE *mail, *popen();
+    FILE *mail, *G_popen();
     char command[64];
     char *user;
 
@@ -214,10 +215,10 @@ static mail_msg (msg, fatal)
 	return;
 
     sprintf (command, "mail '%s'", G_whoami());
-    if (mail = popen (command, "w"))
+    if (mail = G_popen (command, "w"))
     {
 	fprintf(mail,"GIS %s: %s\n",fatal?"ERROR":"WARNING",msg);
-	pclose (mail);
+	G_pclose (mail);
     }
 }
 
