@@ -1,12 +1,12 @@
 MYLIBDIR =	$(SRC)/libes/dspf
 DSPLIB	=	$(SRC)/libes/dspf/libdsp3.a
 
-XMINCPATH = -I/usr/X11R6/include
-XINCPATH = -I/usr/X11R6/include
+XMINCPATH = -I/usr/X11R6/include -I/usr/include/GL -I/usr/X11R6/include/X11/GLw
+XINCPATH = -I/usr/X11R6/include -I/usr/include/GL -I/usr/X11R6/include/X11/GLw
 
 OGLHOME = /usr
-OGLINCLUDES = $(XMINCPATH)  $(XINCPATH) -I$(OGLHOME)/include
-EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCLUDES)
+OGLINCLUDES = $(XMINCPATH)  $(XINCPATH) -I$(OGLHOME)/include -I/usr/openwin/include/X11/GLw
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCLUDES) $(XCFLAGS)
 SUNLDFLAGS = $(XMLIBPATH) $(XLIBPATH) -L$(OGLHOME)/lib -L/lib
 OGLLIB	= 	-lGLU -lGL -lGLw -lXm -lX11 -lXt -lXext
 
