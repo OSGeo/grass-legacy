@@ -2,6 +2,8 @@
 #define REPORT "r.report"
 #define PAGE_LENGTH 66
 
+static int z_option = 0;
+
 run_report(full)
 {
     char command[1024];
@@ -9,6 +11,12 @@ run_report(full)
     char temp[256];
     static int pl = PAGE_LENGTH;
 
+    if(!full)
+    {
+	if(G_yes(
+         "\nWould you like to filter out zero category data?", -1))
+          z_option=1;
+    }
     build_command(command,full,0,"|","more");
     if(!run(command)) exit(1);
     if (!full) return;
@@ -63,6 +71,7 @@ build_command (command, full, pl, redirect, where)
 {
     int i;
     int any;
+    int format_needed=0;
 
     sprintf (command, "%s '%s%s' pl=%d 'map=", REPORT, full?"<":">",stats_file,pl);
     for (i=0; i < nlayers; i++)
@@ -72,7 +81,10 @@ build_command (command, full, pl, redirect, where)
     }
     strcat (command, "'");
     if (!full)
+    {
+        if(z_option) strcat (command, " -z");
 	return;
+    }
 
     any = 0;
     for (i = 0; units[i].name; i++)
@@ -84,8 +96,14 @@ build_command (command, full, pl, redirect, where)
 	    else
 		strcat (command, " units=");
 	    strcat (command, units[i].code);
+	    if(i<=4) format_needed = 1;
 	}
     }
+    if(format_needed) 
+    if(G_yes(
+      "\nWould you like to use scientific notation for very large numbers?",
+      -1))
+          strcat (command, " -e ");
     strcat (command, redirect);
     strcat (command, where);
 }
