@@ -70,26 +70,26 @@ at some of the documentation available at this site.</font>
 select all available packages, or at least:</font>
 <ul>
 <li>
-<font face="Arial,Helvetica">ash, autoconf, automake, bash, binutils, bison</font></li>
-
-<br><font face="Arial,Helvetica">byacc, bzip2, clear, cvs, cygwin, dejagnu, diff,
-expect</font>
+<font face="Arial,Helvetica">ash, autoconf*, automake*, bash, binutils,
+bison,</font>
+<br><font face="Arial,Helvetica">byacc, bzip2, clear, cvs*, cygwin, dejagnu*, diff,
+expect*, </font>
 <br><font face="Arial,Helvetica">file, fileutils, findutils, flex, gawk,
-gcc, gdb</font>
-<br><font face="Arial,Helvetica">gdbm, gettext, grep, groff, gzip, inetutils,
-jpeg</font>
-<br><font face="Arial,Helvetica">less, libpng, login, m4, make, man, mingw,
-ncurses</font>
-<br><font face="Arial,Helvetica">opengl, patch, perl, popt, readline, regex,
-sed</font>
+gcc, gdb*, </font>
+<br><font face="Arial,Helvetica">gettext, grep, groff, gzip, inetutils,
+jpeg, </font>
+<br><font face="Arial,Helvetica">less, libpng, login, m4*, make, man,
+ncurses, </font>
+<br><font face="Arial,Helvetica">opengl, patch, perl, readline, regex,
+sed, </font>
 <br><font face="Arial,Helvetica">sh-utils/shellutils, tar, tcltk, tcsh,
-termcap, texinfo</font>
-<br><font face="Arial,Helvetica">textutils, tiff, time, unzip, vim, w32api,
-zip, zlib</font>
+termcap, texinfo, </font>
+<br><font face="Arial,Helvetica">textutils, tiff, time, unzip, vim*, w32api,
+zip, zlib.</font>
 <li>
-<font face="Arial,Helvetica">This list contains packages that are not
-strictly required, but are very useful for practical work or enhance the
-capabilities of the setup. </font></li>
+<font face="Arial,Helvetica">The packages marked with an asterisk (*) in
+this list are not strictly required for compiling GRASS, but may be
+useful for development work. </font></li>
 </ul>
 <font face="Arial,Helvetica">If you install all available packages it will
 save you from much hassle later when you need these libraries for GRASS.</font>
@@ -123,16 +123,28 @@ of your choice, e. g. in your home directory:</font>
 <font face="Arial,Helvetica">For compiling the GRASS XDRIVER (monitors
 for graphical output), you need the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
 Download at least the following packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
-devel, DLLs, fonts, Xterm, Xwin, Prog, twm, updates.</font>
-<br><font face="Arial,Helvetica">Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
+devel, DLLs, fonts, Prog, twm, Xterm, Xwin and updates.</font>
+
+<p><font face="Arial,Helvetica">Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
 install guide</a> for further details.</font>
 <p><font face="Arial,Helvetica">Please check out yourself the actual version
 and source as this changes frequently.</font>
-<p><font face="Arial,Helvetica">If you don't want to use the XFree Server
-(which is beta-quality and runs only in full screen mode), you can download
-the Starnet X Server from <a href="http://www.starnet.com/products/">http://www.starnet.com/products/</a>.
-This is a demo version that will time out after 2 hours. You can restart
-it again after it times out.</font>
+
+<h2>
+<font face="Arial,Helvetica">3a. Get the tcl/tk 8.x libraries</font>
+</h2>
+
+<font face="Arial,Helvetica">Download the actual precompiled tcl/tk 8.x
+libraries and executables from</font>
+<br><font face="Arial,Helvetica"><a
+href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/</a>.</font>
+
+<p><font face="Arial,Helvetica">
+Go to the root directory (<tt>cd /</tt>) and unpack this file:</font>
+
+<pre><tt>&nbsp; tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz</tt></pre>
+
+
 <h2>
 <font face="Arial,Helvetica">4. Install sunrpc/xdrlib</font></h2>
 <font face="Arial,Helvetica">You need the sun rpc (remote procedure call)
@@ -184,7 +196,11 @@ steps with the following commands:</font>
 
 <pre><tt>&nbsp;&nbsp;&nbsp; --x-includes=/usr/X11R6/include \</tt></pre>
 
-<pre><tt>&nbsp;&nbsp;&nbsp; --x-libraries=/usr/X11R6/lib</tt></pre>
+<pre><tt>&nbsp;&nbsp;&nbsp; --x-libraries=/usr/X11R6/lib \</tt></pre>
+
+<pre><tt>&nbsp;&nbsp;&nbsp; --with-tcltk-libs=/usr/local/lib \</tt></pre>
+
+<pre><tt>&nbsp;&nbsp;&nbsp; --with-tcltk-includes=/usr/local/include</tt></pre>
 
 <pre><tt>&nbsp; make</tt></pre>
 
@@ -223,22 +239,6 @@ file should read:</font>
 <font face="Arial,Helvetica">9. Running GRASS</font></h2>
 <font face="Arial,Helvetica">Please read the <a href="cygwin_grass50bininstall.html#Start GRASS">paragraph
 "Starting GRASS 5" in the binary installation document</a>.</font>
-<p><font face="Arial,Helvetica">Start your X-Server. The Starnet X-Server
-is started from the start menu as:</font>
-<p><font face="Arial,Helvetica">Start->Programs->X-Win32->X-Win32</font>
-<p><font face="Arial,Helvetica">Start a DOS command window and type the
-following commands (You have to adapt the paths to your setup!):</font>
-<pre><tt>&nbsp; @echo off&nbsp;
-&nbsp; SET DISPLAY=127.0.0.1:0.0&nbsp;
-&nbsp; SET PATH=c:\usr\X11R6\bin;c:\bin;%PATH%&nbsp;
-&nbsp; start XWin -screen 0 1024x768x16 -whitepixel 255 -blackpixel 0&nbsp;
-&nbsp; start /B xterm -sl 1000 -sb -rightbar -ms red -fg yellow -bg black -e bash&nbsp;
-&nbsp; start /B mwm</tt></pre>
-<font face="Arial,Helvetica">These should be put into a DOS .bat file for
-easier use.</font>
-<p><font face="Arial,Helvetica">Now start GRASS. In the xterm window type:</font>
-<pre><tt>&nbsp;&nbsp; grass5</tt></pre>
-<font face="Arial,Helvetica">then follow the normal GRASS startup procedure.</font>
 
 <h2>
 <font face="Arial,Helvetica">10. This build was compiled with Cygwin 1.1.8</font></h2>
