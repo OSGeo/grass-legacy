@@ -7127,8 +7127,8 @@ EOF
   fi
 fi
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $GDAL_LIBS"
+ac_save_libs="$LIBS"
+LIBS="$GDAL_LIBS $LIBS"
 echo $ac_n "checking for GDALOpen""... $ac_c" 1>&6
 echo "configure:7134: checking for GDALOpen" >&5
 
@@ -7173,7 +7173,7 @@ if eval "test \"`echo '$ac_cv_func_'GDALOpen`\" = yes"; then
 else
   echo "$ac_t""no" 1>&6
 
-LDFLAGS="$LDFLAGS $GDAL_DEP_LIBS"
+LIBS="$GDAL_DEP_LIBS $LIBS"
 echo $ac_n "checking for GDALOpen""... $ac_c" 1>&6
 echo "configure:7179: checking for GDALOpen" >&5
 
@@ -7225,7 +7225,7 @@ fi
 
 fi
 
-LDFLAGS=${ac_save_ldflags}
+LIBS=$ac_save_libs
 
 
 
@@ -12118,57 +12118,6 @@ else
   fi
 fi
 
-for ac_declaration in \
-   ''\
-   '#include <stdlib.h>' \
-   'extern "C" void std::exit (int) throw (); using std::exit;' \
-   'extern "C" void std::exit (int); using std::exit;' \
-   'extern "C" void exit (int) throw ();' \
-   'extern "C" void exit (int);' \
-   'void exit (int);'
-do
-  cat > conftest.$ac_ext <<EOF
-#line 12132 "configure"
-#include "confdefs.h"
-#include <stdlib.h>
-$ac_declaration
-int main() {
-exit (42);
-; return 0; }
-EOF
-if { (eval echo configure:12140: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
-  :
-else
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  continue
-fi
-rm -f conftest*
-  cat > conftest.$ac_ext <<EOF
-#line 12150 "configure"
-#include "confdefs.h"
-$ac_declaration
-int main() {
-exit (42);
-; return 0; }
-EOF
-if { (eval echo configure:12157: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
-  rm -rf conftest*
-  break
-else
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-fi
-rm -f conftest*
-done
-if test -n "$ac_declaration"; then
-  echo '#ifdef __cplusplus' >>confdefs.h
-  echo $ac_declaration      >>confdefs.h
-  echo '#endif'             >>confdefs.h
-fi
-
-
 else
 	CXX=
 	CXXFLAGS=
@@ -12182,7 +12131,7 @@ fi
 
 
 echo $ac_n "checking whether to use openDWG""... $ac_c" 1>&6
-echo "configure:12186: checking whether to use openDWG" >&5
+echo "configure:12135: checking whether to use openDWG" >&5
 echo "$ac_t"""$with_opendwg"" 1>&6
 case "$with_opendwg" in
 	"no")	USE_OPENDWG=	;;
@@ -12202,7 +12151,7 @@ if test -n "${USE_OPENDWG}"; then
 
 
 echo $ac_n "checking for location of openDGW includes""... $ac_c" 1>&6
-echo "configure:12206: checking for location of openDGW includes" >&5
+echo "configure:12155: checking for location of openDGW includes" >&5
 case "$with_opendwg_includes" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-includes." 1>&2; exit 1; }
@@ -12228,15 +12177,15 @@ for ac_hdr in ad2.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:12232: checking for $ac_hdr" >&5
+echo "configure:12181: checking for $ac_hdr" >&5
 
 cat > conftest.$ac_ext <<EOF
-#line 12235 "configure"
+#line 12184 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:12240: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:12189: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -12270,7 +12219,7 @@ CPPFLAGS=$ac_save_cppflags
 
 
 echo $ac_n "checking for location of openDWG library""... $ac_c" 1>&6
-echo "configure:12274: checking for location of openDWG library" >&5
+echo "configure:12223: checking for location of openDWG library" >&5
 case "$with_opendwg_libs" in
 y | ye | yes | n | no)
 	{ echo "configure: error: *** You must supply a directory to --with-opendwg-libs." 1>&2; exit 1; }
