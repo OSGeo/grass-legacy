@@ -209,7 +209,7 @@ char *G_strdup(char *string)
 }
 
 
-char * G_strchg(char* bug, char character, char new) {
+char *G_strchg(char* bug, char character, char new) {
  /* replace all occurencies of "character" in string(bug) with
   * "new", returns new string */
 
@@ -227,8 +227,16 @@ char * G_strchg(char* bug, char character, char new) {
   \return Returns the newly allocated string, input buffer is unchanged 
   
    Author Beverly Wallace (LMCO) 3/11/04, slightly modified RB/MN
+ 
+  Code example:
+  \verbatim
+      char name[1024];
+      name = G_str_replace ( inbuf, ".exe", "" );
+      ... 
+      free(name);
+  \endverbatim
 --------------------------------------------------------------------*/
-char * G_str_replace(char* buffer, char* old_str, char* new_str) 
+char *G_str_replace(char* buffer, char* old_str, char* new_str) 
 {
 
 	char *B, *R, *N;
