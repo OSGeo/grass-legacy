@@ -38,3 +38,11 @@ html:
 	echo "</body></html>" >> $(PGM).html
 	mkdir -p $(GISBASE)/docs/html
 	mv $(PGM).html $(GISBASE)/docs/html
+
+# html rules for scripts
+htmlscript:
+	GRASS_FAKE_START=1 $(GISBASE)/scripts/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
+	@test ! -f description.html || ( cat description.html >> $(PGM).html )
+	echo "</body></html>" >> $(PGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(PGM).html $(GISBASE)/docs/html

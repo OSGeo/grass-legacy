@@ -10,7 +10,7 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: $(PROG1) $(PROG2) htmlscripts
+default: $(PROG1) $(PROG2) htmlscript
 
 $(PROG1): v.format 
 	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
