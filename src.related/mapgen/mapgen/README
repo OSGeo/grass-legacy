@@ -1,0 +1,44 @@
+
+The map/plot-gen system consists of several basic subdivisions:
+	device independent graphics under ./graphics
+	mapgen system, under ./mapgen
+	plotgen system, under ./plotgen
+	supplementary library support, under ./lib
+	complete xx.1 documentation sources, under ./man
+
+All generation of programs or scripts is provided by standard UNIX
+System V.2+ make files or Bourne (or Korn) shell scripts in files
+with names [Mm]ake*.  These procedures expect that the
+GRAPH and RANLIB environment parameters are appropriately set.
+In all cases, executables are placed in the directory $GRAPH/bin and
+supplementary support files are placed in $GRAPH/lib when employing
+the 'install' option.  Once the system is installed and tested it
+may be relocated to alternate 'bin's' and 'lib's'.
+
+Before installation the installer should edit the file
+graphics/plotter/devlist.c to select the supported devices to be
+included in program plotter.  This is done by moving the initialization
+lines before or after the conditional compile statement #ifdef IGNORE.
+The installer may also wish to change local identification of the
+particular driver by altering the string within the quotes.  It is
+a good idea to create a backup copy before performing this operation.
+
+The installation script INSTALL may be employed to generate all of
+the programs and support files in the map/plot-gen system.  If the
+installer has device independent troff and wishes to install this
+feature then the directory /usr/lib/font/devGRAPH must be created
+and made writable by the installer.  Local version of the UNIX program
+makedev must also be available in the search path of the installer.
+If the troff feature is not desired, error messages generated
+by the INSTALL procedure can be ignored.
+
+INSTALL also creates the files sh_locenv and csh_locenv which may
+be 'sourced' by the user after generation to alter environment so
+that the new system may be tested without disturbing existing
+older versions.  A third file is created by INSTALL, install.mon,
+which lists the error status of each section as they are created.
+
+		>>>>>>>>>>>>>  N O T E <<<<<<<<<<<<<<
+		The 'proj' subsystem has been removed
+		from this system and must be installed
+		from it's own distribution file.
