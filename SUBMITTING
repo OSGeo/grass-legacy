@@ -1,17 +1,16 @@
-$Id: SUBMITTING,v 1.4 2000-11-02 09:35:57 justin Exp $
+$Id: SUBMITTING,v 1.5 2000-11-19 12:24:16 markus Exp $
 
 Dear (new) GRASS Developer,
 
 When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
-- For programming style, please take a look at 
-  STYLE_PROGRAMMING file
+- For programming style, please see below.
 
 - Get the latest GRASS 5 Programmer's Manual here:
-  http://www.geog.uni-hannover.de/grass/grassdevel.html
+  http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
 
-  or (better) grab it from CVS server (Latex):
+  or (better) grab it from GRASS CVS server (Latex):
     cvs -z3 co progmangrass50
 
 - Add a header section to each file you submit and make sure you include
@@ -73,3 +72,76 @@ care of following rules:
   mailing list.
 
 That's it. We are glad to receive your contributions!
+
+
+-----------------------------------------------------------------------
+GRASS GIS programming style standards
+
+$Id: SUBMITTING,v 1.5 2000-11-19 12:24:16 markus Exp $
+
+Please improve this list!
+ 
+ Get the latest GRASS 5 Programmer's Manual here:
+   http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+ or (better) grab it from CVS server (Latex):
+   cvs -z3 co progmangrass50
+
+-----------------------------------------------------------
+GRASS GIS programming style standards
+
+1. Use the directory structure to place your module
+
+2. documents go to
+    ./html and
+    ./man
+   See local examples about documentation style. To convert
+   to MAN format, the g.html2man can be used.
+
+3. When writing Gmakefiles, use the current standard
+   [insert module example here]
+
+   Take care of this:
+
+   Couple notes for your Gmakefiles: 
+     - do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
+     - please add them before these
+     - The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
+       into the $(CC) line.
+
+4. Platform dependent code:
+   Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
+   their encapsulated lines from source code (one example was that someone
+   removed drand48 definition.)
+
+5. Insert return statements for functions
+
+6. Use fprintf instead of printf
+
+7. Put a new line at end-of-file
+
+8. Don't use C++ comment style! This confuses several compilers.
+   Use instead:
+       /* C-comments */
+
+9. If you add the CVS Id flag (<$>Id<$>) (without angle brackets)
+
+    to a file for CVS-versioning, note that this is not allowed in the
+    *first* line of a comment. Some compilers will get confused. Note do
+    NOT include the angle brackets <>
+
+    Forbidden:
+
+    /* <$>Id<$> */
+ 
+    Allowed:
+    /*
+     * <$>Id<$>
+     */
+
+10. For consistency, use README rather than README.txt.
+
+11. Add your copyright notice (see template above)
+
+...
+[add further hints]
