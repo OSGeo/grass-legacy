@@ -32,6 +32,12 @@ main (int argc, char *argv[])
 	p->type = TYPE_STRING;
 	p->required = NO;
 	p->multiple = NO;
+	if ( strcmp(list[n].alias, "rast") == 0 ) p->gisprompt   = "old,cell,raster" ;
+	if ( strcmp(list[n].alias, "vect") == 0 ) p->gisprompt   = "old,vector,vector" ;
+	if ( strcmp(list[n].alias, "oldvect") == 0 ) p->gisprompt   = "old,dig,vector" ;
+	if ( strcmp(list[n].alias, "labels") == 0 ) p->gisprompt   = "old,paint/labels,paint labels" ;
+	if ( strcmp(list[n].alias, "sites") == 0 ) p->gisprompt   = "old,site_lists,sites" ;
+	/* ?? icon, region, group, 3dview ?*/
 	p->description = G_malloc (64);
 	sprintf (p->description, "%s file(s) to be renamed", list[n].alias);
     }
