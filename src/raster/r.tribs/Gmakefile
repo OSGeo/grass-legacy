@@ -1,0 +1,14 @@
+PGM    = $(BIN_CONTRIB_CMD)/r.tribs
+GISLIB = $(LIBDIR)/libgis.a
+
+OFILES =	debug.o \
+		find_tribs.o \
+		imatrix.o \
+		ivector.o \
+		main.o \
+		neighbors.o \
+		stream_order.o
+
+$(PGM): $(OFILES) $(GISLIB)
+	$(CC) $(OFILES) $(GISLIB) -o $(PGM)
+$(GISLIB): #
