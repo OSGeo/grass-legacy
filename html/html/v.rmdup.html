@@ -8,35 +8,49 @@
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
-<EM><B>v.rmdup</B></EM> - Remove duplicate items GRASS vector file. (GRASS Vector Program)
+<EM><B>v.rmdup</B></EM> - Remove duplicate items GRASS vector file. (GRASS
+Vector Program)
 
 <H2>SYNOPSIS</H2>
 <B>v.rmdup</B><BR>
 <B>v.rmdup help</B><BR>
-<B>v.rmdup vectname [threshnumber]</B>
+<B>v.rmdup input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+[<B>threshold=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>v.rmdup</EM> removes duplicate lines, areas, and points from a binary vector file (vectname).  Duplicate may be defined as exact (less than 1.12e-16 for IEEE double precision), or defined with a threshold (threshnumber).
+<EM>v.rmdup</EM> removes duplicate lines, areas, and points from a binary
+vector file (input).  Duplicate may be defined as exact (less than
+1.12e-16 for IEEE double precision), or defined with a threshold.
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>vectname</B>
+<DT><B>input=</B><EM>name</EM>
 <DD>Name of a binary vector file
 
-<DT><B>threshnumber</B>
+<DT><B>output=</B><EM>name</EM>
+<DD>Name given to binary vector output file.
+
+<DT><B>threshold=</B><EM>value</EM>
 <DD>Threshold for defining duplicate lines, areas, and points.
 </DL>
 
-<EM>v.rmdup</EM> overwrites the existing file, so it may be a good idea to save a backup using <EM>g.copy</EM>.  The search technique used by <EM>v.rmdup</EM> is not extremely sophisticated and may take a long time for large files.  Instead, only two sets of lines, areas, or points are active at any one time (so it is conservative with memory).
+The search technique used by <EM>v.rmdup</EM> is not extremely sophisticated
+and may take a long time for large files.  Instead, only two sets of lines,
+areas, or points are active at any one time (so it is conservative with
+memory).
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="g.copy.html">g.copy</A></EM> and iszero(1)
-
-<H2>BUGS</H2>
-Please send all bug fixes and comments to the author.
+<EM>
+<A HREF="v.clean.html">v.clean</A>,
+<A HREF="v.digit.html">v.digit</A>,
+<A HREF="v.prune.html">v.prune</A>,
+<A HREF="v.spag.html">v.spag</A>,
+<A HREF="v.support.html">v.support</A>
+</EM>
 
 <H2>AUTHOR</H2>
-James Darrell McCauley, Purdue University
+James Darrell McCauley, Purdue University<br>
+GRASS 5 fixes by Roger S. Miller
 
 </BODY>
 </HTML>
