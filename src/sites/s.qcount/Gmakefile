@@ -61,5 +61,3 @@ count.o:  quaddefs.h
 findquads.o: quaddefs.h 
 indices.o:  quaddefs.h 
 main.o:  quaddefs.h 
-
-$(LIBES): #
