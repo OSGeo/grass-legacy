@@ -1,4 +1,5 @@
 Derase(color)
+        char *color;
 {
 	int t, b, l, r ;
 	int line ;
