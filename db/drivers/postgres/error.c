@@ -12,7 +12,7 @@ init_error ( void )
         db_init_string (errMsg);
     }
 
-    db_set_string ( errMsg, "DBMI-ODBC driver error:\n");
+    db_set_string ( errMsg, "DBMI-Postgres driver error:\n");
 }
 
 /* append error message */
