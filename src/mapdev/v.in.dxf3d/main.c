@@ -6,25 +6,28 @@ v.in.dxf. Este programa es una reconversion a C de un programa creado en
  ------------------------------------------------------ E. QUIROGA, 1995 -- */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h" 
 # define MAXFILE 256
 # define MAXLINE 80
+
+#define NUMLINES 256
 
 
 main(int argc, char *argv[])
 {
 
-	FILE *dxf_file; 
+	char *dxf_file; 
 	char nfout[MAXFILE]; 
 	FILE *dxf_fp;
-	FILE *fout[3];
+	FILE *fout[NUMLINES];
 	char basename[100];
 	char linein[MAXLINE];
 	char layer[MAXLINE];
 	char linelayer[MAXLINE];
-	char xcoord[MAXLINE];
-	char ycoord[MAXLINE];
-	char zcoord[MAXLINE];
+	double xcoord;
+	double ycoord;
+	int zcoord;
 	int nvert;
 	char *p;
 	int i;
@@ -89,9 +92,9 @@ main(int argc, char *argv[])
 /* Abrir los ficheros de salida de las distintas Layers */
 
 	if (line_opt->answers != NULL) {
-		i = 0;
-		while (line_opt->answers[i]) {
-			sprintf(nfout,"%s.%s", basename,line_opt->answers[i++]);
+		i = -1;
+		while (line_opt->answers[++i]) {
+			sprintf(nfout,"%s.%s", basename,line_opt->answers[i]);
 
 			fout[i] = G_fopen_new("dig_att",nfout);
 		/*	fout[i] = fopen(nfout,"w"); */
@@ -123,25 +126,25 @@ main(int argc, char *argv[])
 							while (strcmp(linein,"VERTEX\n")!=0) {          /* Captura de las coordenadas X, Y y Z */
 								if (strcmp(linein," 10\n")==0) {
 									fgets(linein,MAXLINE,dxf_fp);
-									strncpy(xcoord,linein,(strlen(linein) - 1));
+									xcoord = atof(linein);
 								}
 								if (strcmp(linein," 20\n")==0) {
 									fgets(linein,MAXLINE,dxf_fp);
-									strncpy(ycoord,linein,(strlen(linein) - 1));
+									ycoord = atof(linein);
 								}
 								if (strcmp(linein," 30\n")==0) {
 									fgets(linein,MAXLINE,dxf_fp);
-									strncpy(zcoord,linein,(strlen(linein) - 1));
+									zcoord = atoi(linein);
 								}
 								fgets(linein,MAXLINE,dxf_fp);
 							}		
 							
 						/*  Impresion de las coordenadas la fichero dig_att */
 							if (line_opt->answers != NULL) {
-								i = 0 ;
-								while (line_opt->answers[i]) {
-									sprintf(linelayer,"%s\n",line_opt->answers[i++]);						
-									if (strcmp(layer,linelayer)==0) fprintf(fout[i],"L %s %s %s \n", xcoord, ycoord, zcoord);
+								i = -1 ;
+								while (line_opt->answers[++i]) {
+									sprintf(linelayer,"%s\n",line_opt->answers[i]);						
+									if (strcmp(layer,linelayer)==0) fprintf(fout[i],"L %f %f %d \n", xcoord, ycoord, zcoord);
 							  	}
 							}
 							
@@ -156,5 +159,10 @@ main(int argc, char *argv[])
 		else	continue;
 	}
 	fclose(dxf_fp);
-	fclose(fout);
+	if (line_opt->answers != NULL) {
+		i = -1;
+		while (line_opt->answers[++i]) {
+			fclose(fout[i]);
+		}
+	}	
 }
