@@ -1,0 +1,15 @@
+#!/bin/sh
+files=
+
+for i $*
+do
+   case $i in
+
+   -*) ;;
+   *) files="$files $i" ;;
+
+   esac
+done
+
+pg $files
+fi
