@@ -13,8 +13,6 @@
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
- * TODO:  improve this, check for level 1 data, check for categories
- *
  **************************************************************/
 #include <string.h>
 #include <stdlib.h>
@@ -41,11 +39,10 @@ main (int argc, char *argv[])
   struct GModule *module;
   struct Option *in_opt;
   struct Map_info Map;
-  struct Categories cats;
   struct dig_head v_head;
   BOUND_BOX box;
   char *mapset, line[200], temp[50];
-  int cats_ok, i;
+  int i;
   int with_z;
 
   module = G_define_module();
@@ -68,16 +65,11 @@ main (int argc, char *argv[])
   Vect_set_open_level (2);
   Vect_open_old (&Map, in_opt->answer, mapset);
   with_z = Vect_is_3d (&Map);
+  v_head = Map.head;
 
   Vect_set_fatal_error (GV_FATAL_PRINT);
 
-  if ((cats_ok=G_read_vector_cats (in_opt->answer, mapset, &cats)) < 0) {
-      G_warning ("Could not find category file for %s", in_opt->answer);
-  }
-  v_head = Map.head;
-
   divider ('+');
-
   sprintf (line, "Mapset:   %-29.29s  Organization: %s", mapset, Vect_get_organization(&Map));
   printline (line);
   sprintf (line, "Layer:    %-29.29s  Source Date: %s", in_opt->answer, Vect_get_map_date(&Map));
@@ -96,15 +88,6 @@ main (int argc, char *argv[])
 
   sprintf (line, "  Type of Map:  %s (level: %i)        ", "Vector", Vect_level (&Map));
 
-  strcat (line, "Number of categories: ");
-
-  if (cats_ok > 0)
-  {
-    sprintf (temp, "%-9ld", (long)cats.num);
-    strcat (line, temp);
-  }
-  else
-    strcat (line, "??");
   printline (line);
 
   if ( Vect_level (&Map) > 1)
