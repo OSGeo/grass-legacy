@@ -11,6 +11,7 @@ main(argc, argv)
 	char **argv ;
 {
 	char *map_name ;
+	char *D_color_list();
 	int color ;
 	int lines ;
 	int cols ;
@@ -50,7 +51,7 @@ main(argc, argv)
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options= "red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt2->options=D_color_list();
 	opt2->description= "Color of lines separating the colors of the color table";
 
 	opt3 = G_define_option() ;
@@ -182,7 +183,7 @@ main(argc, argv)
 			R_cont_rel(0, (dots_per_line-4)) ;
 			R_cont_rel((4-dots_per_col), 0) ;
 			/* Color box */
-			R_color(atcat) ;
+			D_color((CELL)atcat, &colors) ;
 			R_move_abs(cur_dot_col+4, (cur_dot_row-3)) ;
 			R_polygon_rel(x_box, y_box, 5) ;
 
