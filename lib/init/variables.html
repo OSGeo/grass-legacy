@@ -22,9 +22,9 @@ There are two types of variables:
 <h2>Setting environment variables</h2>
 
 <br>Setting environment variables depends on the shell being used:
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
-<br>or
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+<br>&nbsp;&nbsp;Bash:&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
+<br>&nbsp;&nbsp;&nbsp;or
+<br>&nbsp;&nbsp;Csh:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
 
 <h2>Setting environment variables permanently</h2>
 <ul>
@@ -180,15 +180,17 @@ If the user just specifies a variable name, it defaults to "get" mode. Example:
 <p>OVERWRITE
 <br>[all modules]
 <br>&nbsp; toggles map overwrite.
-  With 0 maps are protected (default), 
-  with 1 maps with identical names will be overwritten.
-<br><tt>g.gisenv set=OVERWRITE=0</tt>
+<br>&nbsp; &nbsp; With 0 maps are protected (default), 
+<br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
+<br>&nbsp; You can force a protected overwrite by adding "--o" to the command.
+<br>e.g.:
+<br><tt>g.gisenv set="OVERWRITE=0"</tt>
 
 
 <h2>GRASS-related Files</h2>
 
 <p>$HOME/.grassrc6
-<br>to store GRASS variables (but not environment variables)
+<br>&nbsp; stores the GRASS variables (but not environment variables)
 
 <p>$HOME/GIS_ERROR_LOG
 <br>&nbsp; If this file exists, all GRASS error messages are stored here
