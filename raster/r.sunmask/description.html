@@ -31,6 +31,29 @@ Note: In latitude/longitude locations the position coordinates pair
 not specified, the map center's coordinates will be used.
 Also <em>g.region -l</em> displays the map center's coordinates.
 
+<P>
+Note for module usage with <em>-g</em> flag and calculations
+close to sunset/sunrise:
+
+<pre>
+ [...]
+ sunangleabovehorizont=0.434240
+ sunrise=07:59:19
+ sunset=16:25:17
+ Time (07:59:02) is before sunrise (07:59:19)!
+ WARNING: Nothing to calculate. Please verify settings.
+ No map calculation requested. Finished.
+</pre>
+
+In above calculation appears to be a mistake as
+the program indicates that we are before sunrise while
+the <i>sun angle above horizon</i> is already positive.
+The reason is that <i>sun angle above horizon</i> is
+calculated with correction for atmosphere refraction while
+<i>sunrise</i> and <i>sunset</i> are calculated <b>without</b>
+correction for atmosphere refraction. The output without 
+<em>-g</em> flag contains related indications.
+
 
 <h2>Acknowledgements</h2>
 Acknowledgements: National Renewable Energy Laboratory for their <a href=http://rredc.nrel.gov/solar/codes_algs/solpos/>SOLPOS 2.0</a> sun position
