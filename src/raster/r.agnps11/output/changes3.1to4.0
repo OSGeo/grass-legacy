@@ -1,0 +1,28 @@
+changes from 3.1 to 4.0
+
+There are changes in map_gen.h
+i.e the path of gis.h and the sig_fac as 10 for 4.0 instead of 100
+
+change Dchoose, Dnew, Gremove, Greclass, Gcopy, Dnumber etc.
+window_management.c
+read_output.c
+clean_up.c
+analyze.c
+copy_map.c
+cr_usr_maps.c
+get_inputs.c
+usr_display.c
+draw_scale.c "D_reset_colrs" changed to D_set_colors and D_reset_color
+
+change Derase(D_translate_color("black")) as Derase("black") in the following routines
+window_management.c
+analyze.c
+display_map.c
+display_new.c
+wshd_wind.c
+usr_avg_stats.c
+
+change Dcell and Dvect in 
+usr_display.c
+
+chage R_color() fn in draw_scale.c to D_color((CELL) value,&colors)
