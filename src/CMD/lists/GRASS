@@ -1,4 +1,5 @@
-man
+#The man stuff is generated from HTML now:
+#man
 html
 src/libes/vask
 src/libes/segment
@@ -77,6 +78,7 @@ src/display/d.histogram
 src/display/d.icons
 src/display/d.label
 src/display/d.labels
+##from Pierre: for new layered XDRIVER2:
 #src/display/d.layers
 src/display/d.leg.thin
 src/display/d.legend
@@ -97,10 +99,7 @@ src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
-# the following both modules need to be updated to new sites API:
-# Check! Deprecated d.sites.label in favor of d.site.labels
 src/display/d.site.labels
-#src/display/d.sites.label
 src/display/d.siter
 src/display/d.sites
 src/display/d.sites.qual
@@ -127,7 +126,7 @@ src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
 src/general/g.version
-# manage contains g.list, g.remove, g.rename:
+#note: manage contains g.list, g.remove, g.rename:
 src/general/manage
 src/imagery/i.ask
 src/imagery/i.cca
@@ -221,7 +220,6 @@ src/mapdev/v.reclass
 src/mapdev/v.rm.dangles
 src/mapdev/v.rmdup
 src/mapdev/v.spag
-#src/mapdev/v.spag.ascii
 src/mapdev/v.stats
 src/mapdev/v.support
 src/mapdev/v.surf.rst
@@ -232,7 +230,7 @@ src/mapdev/v.to.sites
 src/mapdev/v.transform
 src/mapdev/v.trim
 src/mapdev/v.what
-#src/misc/m.clump # does not compile
+src/misc/m.clump
 src/misc/m.datum.shift
 src/misc/m.dem.examine
 src/misc/m.dem.extract
@@ -243,6 +241,7 @@ src/misc/m.examine.tape
 src/misc/m.flip
 src/misc/m.gc2ll
 src/misc/m.in.e00
+#buggy: new version from Mark Lake planned:
 #src/misc/m.in.ntf
 src/misc/m.in.pl94.db3
 src/misc/m.in.stf1.db3
@@ -408,6 +407,7 @@ src.contrib/GMSL/NVIZ2.2
 #
 # only on SGI:
 # src.contrib/GMSL/SG3d
+#
 # grid3d support (raster voxel):
 #src.contrib/GMSL/g3d
 #
@@ -431,9 +431,9 @@ src.contrib/CERL/raster/r.water.fea/src
 # src.contrib/CORPS/FLOOD        # not working
 # src.contrib/CORPS/FLOOD2/cmd   # not working
 # src.contrib/CWU/Census/scripts # requires RIM DBMS
-# src.contrib/EPA/grass.ipw/grass.to.ipw # need Image Processing Workbench
-# src.contrib/EPA/grass.ipw/ipw.to.grass # need Image Processing Workbench
-# src.contrib/NMSU/WRAT    # not working
+# src.contrib/EPA/grass.ipw/grass.to.ipw # needs Image Processing Workbench
+# src.contrib/EPA/grass.ipw/ipw.to.grass # needs Image Processing Workbench
+# src.nonGPL/src.contrib/NMSU/WRAT    # not working
 # src.contrib/NPS/d.distance # needs dig_P_*() functions
 # src.contrib/NPS/d.distance/curses # um, huh?
 src.contrib/NPS/r.in.elas
@@ -466,7 +466,6 @@ src.contrib/SCS/mapdev/v.in.dlg
 src.contrib/SCS/mapdev/v.patch.scs
 # src.contrib/SCS/misc/FIPS_proj/inter
 # src.contrib/SCS/misc/FIPS_proj/lib
-# src.contrib/SCS/misc/Mlulc.read/save
 src.contrib/SCS/misc/dotmaps/v.scale.random
 src.contrib/SCS/misc/m.bsplit/cmd
 src.contrib/SCS/misc/m.futil/inter
