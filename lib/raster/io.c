@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <errno.h>
 
+#ifndef __MINGW32__
+
 #ifndef USE_G_SOCKS
 #include <fcntl.h>
 #include <pwd.h>
@@ -841,3 +843,4 @@ R_stabilize(void)
     return 0;
 }
 
+#endif /* __MINGW32__ */
