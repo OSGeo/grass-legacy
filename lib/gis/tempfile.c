@@ -23,9 +23,10 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include "gis.h"
 
-char *G_tempfile()
+char *G_tempfile(void)
 {
     return G__tempfile(getpid());
 }
@@ -36,6 +37,7 @@ char *G__tempfile (int pid)
     char name[20];
     char element[100];
     static int uniq = 0;
+    struct stat st;
 
     if (pid <= 0)
 	pid = getpid();
@@ -45,7 +47,7 @@ char *G__tempfile (int pid)
 	sprintf (name, "%d.%d", pid, uniq++) ;
 	G__file_name (path, element, name, G_mapset()) ;
     }
-    while (access (path, 0) == 0) ;
+    while (stat(path, &st) == 0) ;
 
     return G_store (path);
 }
