@@ -1,0 +1,10 @@
+PGM=m.rot90
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o rotate.o fill.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
