@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 #define dig_menu_lines	16
 
 char *dig_menu[] = {
