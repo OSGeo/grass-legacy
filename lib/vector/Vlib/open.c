@@ -171,6 +171,14 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   }
   Map->format = format;
 
+  if ( format == GV_FORMAT_SHAPE ) {
+      G_warning ( "External format 'shape' is deprecated, you can use 'ogr' format instead. "
+  		  "Use v.external to recreate your vector");
+  } else if ( format == GV_FORMAT_POSTGIS ) {
+      G_warning ( "External format 'postgis' is deprecated, you can use either 'ogr' format "
+  		  "(use v.external) or GRASS native format (use g.copy).");
+  }
+
 #ifndef HAVE_POSTGRES
   if ( Map->format == GV_FORMAT_POSTGIS )
       G_fatal_error ("PostGIS support is not compiled in GRASS vector library.\n");
@@ -441,13 +449,12 @@ Vect_open_new (
     Map->format = format;
     G_debug ( 3, "  format = %d", format);
 
-    if ( format == GV_FORMAT_NATIVE ) {
-	ret = V1_open_new_nat (Map, name, with_z);
-    } else { /* GV_FORMAT_POSTGIS */
-	ret = V1_open_new_post (Map, name, with_z);
+    if ( format == GV_FORMAT_POSTGIS ) {
+        G_warning ( "External format 'postgis' is deprecated, GRASS native format was used." );
     }
+    Map->format = GV_FORMAT_NATIVE;
 
-    if ( ret < 0 ) {
+    if ( V1_open_new_nat (Map, name, with_z) < 0 ) {
         sprintf ( errmsg, "Cannot open new vector %s", Vect_get_full_name(Map) ); 
 	fatal_error (ferror , errmsg );
 	return (-1);
