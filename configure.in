@@ -1179,6 +1179,20 @@ AC_SUBST(USE_OPENDWG)
 
 # Done checking OPENDWG
 
+# Enable LFS
+dnl Check for large file support
+dnl Do this last to make sure that no large file definition
+dnl in confdefs.h will modify our results
+AC_SYS_LARGEFILE
+dnl Warning do not run this test. it interferes with the test
+dnl AC_CHECK_FUNCS(fseeko ftello) from above.
+dnl The test AC_HAVE_LARGEFILES will check whether ftello/fseeko
+dnl are available in Large File mode
+dnl AC_FUNC_FSEEKO
+AC_HAVE_LARGEFILES
+
+# Done large file support
+
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
 
