@@ -96,6 +96,8 @@ char *argv[];
     unsigned char grn ;
     unsigned char red ;
 
+	int new_stuf;
+    static int loop_cnt = 0; 
     int  window_updated ;
 
     /* whoami */
@@ -230,6 +232,7 @@ char *argv[];
                 break;
 	    }
 
+	    loop_cnt = 0;
 	    window_updated = 1 ;
 
             switch(c)
@@ -666,10 +669,31 @@ char *argv[];
             }
             lc = c ;
 
+	    /*could this be source of problem for d.colors?*/
 	    /*  If mouse is in window, activate the window  */
-            Mouse_window_activation() ;   /*  This is in window_act.c  */
-	    flushbuffer(WNO) ;
 
+			Check_window_refresh() ;   /*  This is in window_act.c  */
+			
+			/*
+			debug ("checking mouse A");
+			*/
+			Mouse_window_activation() ;
+			flushbuffer(WNO) ;
+
+#ifdef HUH
+			loop_cnt++;
+			if (loop_cnt > 10)
+			{
+			sleep (1);
+			loop_cnt = 0;
+			}
+			else
+			{
+			/* let's try this: it's an Intergraph-specific command */
+			vsync (WNO);
+			vsync (WNO);
+			}
+#endif /*HUH*/
         }
 
         /* read encountered EOF. close fifos now */
@@ -678,16 +702,36 @@ char *argv[];
         close (_rfd);
 	**/
 
-	/*****  Time to save graphics
-	if (window_updated)
-	{
-	    window_updated = 0 ;
-	}
-        ****/
+	/*****  Time to save graphics ***/
+		if (window_updated)
+		{
+			_save_screen ();  /* in Graph_Set.c */
+			window_updated = 0 ;
+		}
 
         Check_window_refresh() ;   /*  This is in window_act.c  */
-        Mouse_window_activation() ;   /*  This is in window_act.c  */
-	flushbuffer(WNO) ;
+		flushbuffer(WNO) ;
+		
+		debug ("checking mouse B");
+        Mouse_window_activation() ; /*  This is in window_act.c  */
+		
+		flushbuffer(WNO) ;
+	    loop_cnt++;
+	    if (loop_cnt > 10)
+	    {
+		sleep (1);
+		loop_cnt = 0;
+	    }
+	    else
+	    {
+		/* altho the vsync command causes no problems on the 6000-series
+		** Interpro, it conflicts with mouse movement on the Interpro 240
+		*/
+		/*
+		vsync (WNO);
+		vsync (WNO);
+		*/
+	    }
 
     } /*  while(1) upon EOF  */
 }
