@@ -11,5 +11,5 @@ default: etc
 	mkdir -p $(ETC)/water
 	mv $(ETC)/$(PGM) $(ETC)/water
 
-htmlcmd:
-	echo nothing to do
+htmletc:
+	@echo "No docs to generate." 
