@@ -19,58 +19,36 @@ all: 	$(HOME)/db.columns \
 	$(HOME)/db.connect 	
 
 $(HOME)/db.columns: columns.o $(LIBES)
-	rm -f a.out
-	$(CC) columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.createdb: createdb.o $(LIBES)
-	rm -f a.out
-	$(CC) createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.dropdb: dropdb.o $(LIBES)
-	rm -f a.out
-	$(CC) dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.droptable: droptable.o $(LIBES) 
-	rm -f a.out
-	$(CC) droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.databases: databases.o $(LIBES)
-	rm -f a.out
-	$(CC) databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.describe: describe.o printtab.o $(LIBES)
-	rm -f a.out
-	$(CC) describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.drivers: drivers.o $(LIBES)
-	rm -f a.out
-	$(CC) drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.execute: execute.o $(LIBES)
-	rm -f a.out
-	$(CC) execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.select: select.o $(LIBES)
-	rm -f a.out
-	$(CC) select.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ select.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.tables: tables.o $(LIBES)
-	rm -f a.out
-	$(CC) tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.connect: connect.o $(LIBES)
-	rm -f a.out
-	$(CC) connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	
 $(LIBES): #

@@ -30,9 +30,7 @@ OBJ 	=  \
 DRIVER = main.o $(OBJ)
 
 $(HOME)/odbc: $(HOME) $(DRIVER) $(LIBES)
-	rm -f a.out
-	$(CC) $(LDFLAGS) $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lnsl -lodbc
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lnsl -lodbc
 
 
 $(HOME):

@@ -3,9 +3,7 @@ EXTRA_CFLAGS	= $(VECT_INCLUDE)
 PROG=$(BIN_CONTRIB_CMD)/v.rmdup
 
 $(PROG): rmdup.o $(VECTLIB) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) rmdup.o $(VECTLIB) $(GISLIB) $(MATHLIB) 
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ rmdup.o $(VECTLIB) $(GISLIB) $(MATHLIB) 
 
 saber_src:
 	#load $(EXTRA_CFLAGS) $(CFLAGS) rmdup.c ../Vlib/*.c ../diglib/*.c $(GISLIB)
