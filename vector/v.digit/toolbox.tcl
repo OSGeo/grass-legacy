@@ -1,6 +1,7 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1 
 
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 
 set vdpath $env(GISBASE)/etc/v.digit/ 
@@ -11,10 +12,10 @@ set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
-set prompt "Welcome to v.digit"
-set prompt_left "Left"
-set prompt_middle "Middle"
-set prompt_right "Right"
+set prompt [G_msg "Welcome to v.digit"]
+set prompt_left [G_msg "Left"]
+set prompt_middle [G_msg "Middle"]
+set prompt_right [G_msg "Right"]
 set coor ""
 
 # GVariable stores variables by key, this variables are (should be) synchronized with
@@ -36,15 +37,15 @@ proc new_line_options { create } {
 	set row1 [frame $lineopt.row1]
 	pack $row1 -fill x -side top
 
-	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text "Field"
+	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Field"]
 	set GWidget(field) [Entry $row1.fval -width 10 -textvariable GVariable(field) \
 			    -command { c_var_set field $GVariable(field) } ]
         bind $GWidget(field) <KeyRelease> { c_var_set field $GVariable(field) } 
-	Label $row1.clab -padx 2 -pady 2 -relief sunken -anchor w -text "Category"
+	Label $row1.clab -padx 2 -pady 2 -relief sunken -anchor w -text [G_msg "Category"]
 	set GWidget(cat) [Entry $row1.cval -width 10 -textvariable GVariable(cat) \
 			    -command { c_var_set cat $GVariable(cat) }]
         bind $GWidget(cat) <KeyRelease> { c_var_set cat $GVariable(cat) } 
-	set GWidget(cat_mode) [ComboBox $row1.cmode -label "Mode" -width 20  -textvariable cmode \
+	set GWidget(cat_mode) [ComboBox $row1.cmode -label [G_msg "Mode"] -width 20  -textvariable cmode \
 			-modifycmd {
 			    set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]
                             c_var_set cat_mode $GVariable(cat_mode)
@@ -57,7 +58,7 @@ proc new_line_options { create } {
         
         checkbutton $row2.ins -variable GVariable(insert) \
                               -command { c_var_set insert $GVariable(insert) }
-	Label $row2.ilab -padx 2 -pady 2 -anchor w -text "Insert new record to table"
+	Label $row2.ilab -padx 2 -pady 2 -anchor w -text [G_msg "Insert new record to table"]
     
 	pack $row2.ins $row2.ilab -fill x  -side left
 
@@ -74,74 +75,74 @@ pack $bbox -side top -anchor w
 $bbox add -image [image create photo -file "$vdpath/new.point.gif"] \
         -command "c_next_tool new_point" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Digitize new point"
+        -helptext [G_msg "Digitize new point"]
 
 $bbox add -image [image create photo -file "$vdpath/new.line.gif"] \
         -command "c_next_tool new_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Digitize new line"
+        -helptext [G_msg "Digitize new line"]
 
 $bbox add -image [image create photo -file "$vdpath/new.boundary.gif"] \
         -command "c_next_tool new_boundary" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Digitize new boundary"
+        -helptext [G_msg "Digitize new boundary"]
 
 $bbox add -image [image create photo -file "$vdpath/new.centroid.gif"] \
         -command "c_next_tool new_centroid" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Digitize new centroid"
+        -helptext [G_msg "Digitize new centroid"]
 
 # --- Edit old ---
 $bbox add -image [image create photo -file "$vdpath/move.vertex.gif"] \
         -command "c_next_tool move_vertex" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Move vertex"
+        -helptext [G_msg "Move vertex"]
 
 $bbox add -image [image create photo -file "$vdpath/add.vertex.gif"] \
         -command "c_next_tool add_vertex" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Add vertex"
+        -helptext [G_msg "Add vertex"]
 
 $bbox add -image [image create photo -file "$vdpath/rm.vertex.gif"] \
         -command "c_next_tool rm_vertex" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Remove vertex"
+        -helptext [G_msg "Remove vertex"]
 
 $bbox add -image [image create photo -file "$vdpath/split.line.gif"] \
         -command "c_next_tool split_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Split line"
+        -helptext [G_msg "Split line"]
 
 $bbox add -image [image create photo -file "$vdpath/move.line.gif"] \
         -command "c_next_tool move_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Move line"
+        -helptext [G_msg "Move line"]
 
 $bbox add -image [image create photo -file "$vdpath/delete.line.gif"] \
         -command "c_next_tool delete_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Delete line"
+        -helptext [G_msg "Delete line"]
 
 # --- Zoom / Display ---
 $bbox add -image [image create photo -file "$vdpath/zoom.window.gif"] \
         -command "c_next_tool zoom_window" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Zoom in by window"
+        -helptext [G_msg "Zoom in by window"]
 
 $bbox add -image [image create photo -file "$vdpath/zoom.out.centre.gif"] \
         -command "c_next_tool zoom_out_centre" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Zoom out"
+        -helptext [G_msg "Zoom out"]
 
 $bbox add -image [image create photo -file "$vdpath/zoom.pan.gif"] \
         -command "c_next_tool zoom_pan" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Pan"
+        -helptext [G_msg "Pan"]
 
 $bbox add -image [image create photo -file "$vdpath/zoom.default.gif"] \
         -command "c_next_tool zoom_default" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Zoom to default region"
+        -helptext [G_msg "Zoom to default region"]
 
 proc zoom_region { } {
     set reg [GSelect windows]
@@ -154,23 +155,23 @@ proc zoom_region { } {
 $bbox add -image [image create photo -file "$vdpath/zoom.region.gif"] \
         -command "zoom_region" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Zoom to region"
+        -helptext [G_msg "Zoom to region"]
 
 $bbox add -image [image create photo -file "$vdpath/redraw.gif"] \
         -command "c_next_tool redraw" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Redraw"
+        -helptext [G_msg "Redraw"]
 
 # --- Attributes ---
 $bbox add -image [image create photo -file "$vdpath/display.cats.gif"] \
         -command "c_next_tool display_cats" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Display categories"
+        -helptext [G_msg "Display categories"]
 
 $bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
         -command "c_next_tool display_attributes" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Display attributes"
+        -helptext [G_msg "Display attributes"]
 
 # --- Stop ---
 #$bbox add -image [image create photo -file "$vdpath/stop.gif"] \
@@ -182,12 +183,12 @@ $bbox add -image [image create photo -file "$vdpath/display.attributes.gif"] \
 $bbox add -image [image create photo -file "$vdpath/settings.gif"] \
         -command "c_next_tool settings" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Open settings"
+        -helptext [G_msg "Open settings"]
 
 $bbox add -image [image create photo -file "$vdpath/exit.gif"] \
         -command "c_next_tool exit" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext "Exit"
+        -helptext [G_msg "Exit"]
 
 frame .pf
 pack .pf -fill x -side top
