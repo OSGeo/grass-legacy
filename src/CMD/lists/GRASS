@@ -383,7 +383,6 @@ src/sites/s.rand
 src/sites/s.sample
 src/sites/s.surf.idw
 src/sites/s.surf.rst
-src/sites/s.surf.tps
 src/sites/s.sv    
 src/sites/s.territory
 src/sites/s.to.rast
