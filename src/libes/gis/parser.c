@@ -494,6 +494,24 @@ int G_usage (void)
         return 0;
 }
 
+void print_escaped_for_xml (FILE * fp, char * str) {
+	for (;*str;str++) {
+		switch (*str) {
+			case '&':
+				fputs("&amp;", fp);
+				break;
+			case '<':
+				fputs("&lt;", fp);
+				break;
+			case '>':
+				fputs("&gt;", fp);
+				break;
+			default:
+				fputc(*str, fp);
+		}
+	}
+}
+
 int G_usage_xml (void)
 {
 	struct Option *opt ;
@@ -505,6 +523,9 @@ int G_usage_xml (void)
 	    pgm_name = G_program_name ();
 	if (!pgm_name)
 	    pgm_name = "??";
+
+	fprintf(stdout, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
 
 	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
 
@@ -539,11 +560,17 @@ int G_usage_xml (void)
 				opt->required == YES ? "yes" : "no",
 				opt->multiple == YES ? "yes" : "no");
 
-			if (opt->description)
-				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t%s\n\t\t\t</description>\n",
-					opt->description);
-			if(opt->def)
-				fprintf(stdout, "\t\t\t<default>\n\t\t\t\t%s\n\t\t\t</default>\n", opt->def);
+			if (opt->description) {
+				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t");
+				print_escaped_for_xml(stdout, opt->description);
+				fprintf(stdout, "\n\t\t\t</description>\n");
+			}
+
+			if(opt->def) {
+				fprintf(stdout, "\t\t\t<default>\n\t\t\t\t");
+				print_escaped_for_xml(stdout, opt->def);
+				fprintf(stdout, "\n\t\t\t</default>\n");
+			}
 
 			if(opt->options) {
 				fprintf(stdout, "\t\t\t<values>\n");
@@ -551,7 +578,9 @@ int G_usage_xml (void)
 				strcpy(s, opt->options);
 				s = strtok(s, ",");
 				while (s) {
-					fprintf(stdout, "\t\t\t\t<value>%s</value>\n", s);
+					fprintf(stdout, "\t\t\t\t<value>");
+					print_escaped_for_xml(stdout, s);
+					fprintf(stdout, "</value>\n");
 					s = strtok(NULL, ",");
 				}
 				fprintf(stdout, "\t\t\t</values>\n");
@@ -561,8 +590,7 @@ int G_usage_xml (void)
 			 * add something like
 			 * 	 <range min="xxx" max="xxx"/>
 			 * to <values>
-			 * - multiple
-			 * - key_desc
+			 * - key_desc?
 			 * - there surely are some more. which ones?
 			 */
 
@@ -579,9 +607,11 @@ int G_usage_xml (void)
 		{
 			fprintf (stdout, "\t\t<parameter name=\"%c\" type=\"flag\">\n", flag->key);
 
-			if (flag->description)
-				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t%s\n\t\t\t</description>\n",
-							flag->description);
+			if (flag->description) {
+				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t");
+				print_escaped_for_xml(stdout, flag->description);
+				fprintf(stdout, "\n\t\t\t</description>\n");
+			}
 			flag = flag->next_flag ;
 			fprintf (stdout, "\t\t</parameter>\n");
 		}
