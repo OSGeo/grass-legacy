@@ -258,16 +258,16 @@ AC_SUBST(TIFF_LIBRARY_DIRS)
 
 # TCL/TK includes and library tests...
 # Check headers in default location first.
-AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
-AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
-tcltk_ver=
-if test "$HAVE_TK_H"; then
-    tcltk_ver=`grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-fi
+#AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
+#AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
+#tcltk_ver=
+#if test "$HAVE_TK_H"; then
+#    tcltk_ver=`grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+#fi
 
 AC_ARG_WITH(tcltk-includes,
     [  --with-tcltk-includes=DIR
-                          site header files for TCL and TK in DIR],
+                          site header files for Tcl and Tk in DIR],
     [
 	case "$withval" in
 	"" | y | ye | yes | n | no)
@@ -277,6 +277,8 @@ AC_ARG_WITH(tcltk-includes,
 	tclincdir="$withval"
 	tkincdir="$withval"
     ])
+
+tcltk_ver=
 
 TCLINCDIR=
 if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
@@ -288,18 +290,23 @@ if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
                 tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
             fi
         else
-            AC_MSG_WARN([*** TCL include directory $dir does not exist.])
+            AC_MSG_WARN([*** Tcl include directory $dir does not exist.])
         fi
     done
-    AC_MSG_CHECKING(TCL include dirs)
+    AC_MSG_CHECKING(Tcl include dirs)
     AC_MSG_RESULT($TCLINCDIR)
 fi
 # NEEDS else check known places ...
 if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
-    AC_MSG_CHECKING(TCL include dirs)
+    AC_MSG_CHECKING(Tcl include dirs)
+    tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
     for my_dir in $my_inc_dirs; do
         if test -z "$TCLINCDIR" && test -d $my_dir; then
-            tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
+            if test -z "$TCLINCDIR" && test -f "$my_dir/tcl.h"; then
+                grep_cmd="grep TCL_VERSION ${my_dir}/tcl.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                TCLINCDIR="-I${my_dir}"
+            fi
             for dir in $tk_try; do
                 if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
                     grep_cmd="grep TCL_VERSION ${my_dir}/${dir}/tcl.h"
@@ -307,11 +314,6 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
                     TCLINCDIR="-I${my_dir}/${dir}"
                 fi
             done
-            if test -z "$TCLINCDIR" && test -f "$my_dir/tcl.h"; then
-                grep_cmd="grep TCL_VERSION ${my_dir}/tcl.h"
-                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-                TCLINCDIR="-I${my_dir}"
-            fi
         fi
     done
     AC_MSG_RESULT($TCLINCDIR)
@@ -331,17 +333,22 @@ if test $tkincdir && test -z $HAVE_TK_H ; then
                 tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
             fi
         else
-            AC_MSG_WARN([*** TK include directory $dir does not exist.])
+            AC_MSG_WARN([*** Tk include directory $dir does not exist.])
         fi
     done
-    AC_MSG_CHECKING(TK include dirs)
+    AC_MSG_CHECKING(Tk include dirs)
     AC_MSG_RESULT($TKINCDIR)
 fi
 if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
-    AC_MSG_CHECKING(TK include dirs)
+    AC_MSG_CHECKING(Tk include dirs)
+    tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
     for my_dir in $my_inc_dirs; do
         if test -z "$TKINCDIR" && test -d $my_dir; then
-            tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
+            if test -z "$TKINCDIR" && test -f "$my_dir/tk.h"; then
+                grep_cmd="grep TK_VERSION ${my_dir}/tk.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                TKINCDIR="-I${my_dir}"
+            fi
             for dir in $tk_try; do
                 if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
                     grep_cmd="grep TK_VERSION ${my_dir}/${dir}/tk.h"
@@ -349,11 +356,6 @@ if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
                     TKINCDIR="-I${my_dir}/${dir}"
                 fi
             done
-            if test -z "$TKINCDIR" && test -f "$my_dir/tk.h"; then
-                grep_cmd="grep TK_VERSION ${my_dir}/tk.h"
-                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-                TKINCDIR="-I${my_dir}"
-            fi
         fi
     done
     AC_MSG_RESULT($TKINCDIR)
@@ -369,7 +371,7 @@ if test `uname -s` = FreeBSD; then
 fi
 
 AC_ARG_WITH(tcltk-libs,
-    [  --with-tcltk-libs=DIR   also search for TCL and TK libraries in DIR],
+    [  --with-tcltk-libs=DIR   also search for Tcl and Tk libraries in DIR],
     [
 	case "$withval" in
 	"" | y | ye | yes | n | no)
@@ -386,10 +388,10 @@ if test "$tcltk_lib_dirs"; then
         if test -d "$dir"; then
             TCLTKLIBPATH="$TCLTKLIBPATH -L${dir}"
         else
-            AC_MSG_WARN([*** TCL/TK library directory $dir does not exist.])
+            AC_MSG_WARN([*** Tcl/Tk library directory $dir does not exist.])
         fi
     done
-    AC_MSG_CHECKING(additional TCL and TK library dirs)
+    AC_MSG_CHECKING(additional Tcl and Tk library dirs)
     AC_MSG_RESULT($TCLTKLIBPATH)
 fi
 
@@ -414,12 +416,12 @@ if test "$tcltk_ver"; then
     if test "$has_tk_lib"; then
         TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
     else
-        AC_MSG_WARN([*** Failed to find TCL/TK libraries])
+        AC_MSG_WARN([*** Failed to find Tcl/Tk libraries])
     fi
     LDFLAGS=${ac_save_ldflags}
     AC_SUBST(TCLTKLIBS)
 else
-    AC_MSG_WARN([*** Unable to find TCL/TK libraries and headers])
+    AC_MSG_WARN([*** Unable to find Tcl/Tk libraries and headers])
 fi
 AC_SUBST(TCLTKLIBPATH)
 
