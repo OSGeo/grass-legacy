@@ -11,7 +11,7 @@ SUBDIRS = \
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 # compile PNGdriver if lib available:
-ifneq ($(USE_PNGLIB),)
+ifneq ($(USE_PNG),)
   SUBDIRS += PNG
 endif
 
