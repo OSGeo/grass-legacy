@@ -58,8 +58,15 @@ OBJS =  \
 	alloc.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
+XDRIVERPGM=xdriver
 
 default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
+	cat description.html >> $(XDRIVERPGM).html
+	echo "<HR>" >> $(XDRIVERPGM).html
+	echo "<P><a href=index.html>Help Index</a>" >> $(XDRIVERPGM).html
+	echo "</body></html>" >> $(XDRIVERPGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(XDRIVERPGM).html $(GISBASE)/docs/html
 
 $(DRIVERDIR)/$(PGM): $(ARCH_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)

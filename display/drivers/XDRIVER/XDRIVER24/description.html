@@ -1,0 +1,50 @@
+<H2>NAME</H2>
+
+<EM><B>XDRIVER - GRASS Monitor</B></EM>  - driver to display GRASS maps in
+X11 environment<BR> 
+<EM>(drivers)</EM>
+<H2>DESCRIPTION</H2>
+
+The GRASS XDRIVER can be used to display GRASS maps in X11 environment.
+
+<h2>Usage in details</h2>
+
+<ul>
+<li>Set the map size for the XDRIVER:
+<ul>
+<dd><tt>export GRASS_WIDTH=xxx</tt> &nbsp;&nbsp; (default is 640)
+<dd><tt>export GRASS_HEIGHT=yyy</tt> &nbsp;&nbsp; (default is 480)<br>
+<dd>If "export" command is not accepted by your shell, use "setenv" instead:
+<dd><tt> setenv GRASS_WIDTH xxx</tt>
+<dd><tt> setenv GRASS_HEIGHT yyy</tt>
+</ul>
+</ul>
+
+<ul>
+<li>Further variables:
+<ul>
+<dd>XDRIVER_LEFT
+<br>&nbsp; defines the left position of GRASS monitor
+<dd>XDRIVER_TOP
+<br>&nbsp; define the upper position of GRASS monitor
+</ul>
+</ul>
+
+To control the XDRIVER, use the <A HREF="d.mon.html">d.mon</A> module.
+<p>
+The maximum color depth depends on the current X Server settings.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.region.html">g.region</A>,
+<A HREF="d.mon.html">d.mon</A>,
+<A HREF="htmlmapdriver.html">htmlmapdriver</A>,
+<A HREF="celldriver.html">celldriver</A>,
+<A HREF="pngdriver.html">PNGdriver</A>
+</EM><BR>
+
+<H2>AUTHOR</H2>
+CERL<br>
+various improvements from several authors.<br>
+Rewritten 2001 by Glynn Clements
+
+<p><i>Last changed: $Date$</i>

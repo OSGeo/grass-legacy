@@ -4,15 +4,16 @@ MODULE_TOPDIR = ../..
 SUBDIRS = \
 	lib \
 	monitorcap \
-	XDRIVER
+	XDRIVER \
+	HTMLMAP
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-ifneq ($(USE_GD),)
+# compile PNGdriver if lib available:
+ifneq ($(USE_PNGLIB),)
   SUBDIRS += PNG
 endif
 
 default: subdirs
 
 clean: cleansubdirs
-
