@@ -1,3 +1,12 @@
+/* 10/2000 Huidae Cho <hdcho@geni.knu.ac.kr>
+ * Input Korean Characters with Get_curses_[char|text]().
+ *
+ * #define ASIAN_CHARS in dig_curses.c file.
+ *
+ * See dig_curses.c for more infomation.
+ */
+
+
 /* 9/1999 Neteler
    
    This is the code v.digspline.
