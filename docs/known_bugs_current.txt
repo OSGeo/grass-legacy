@@ -43,9 +43,6 @@ i.ortho.photo
 i.rectify/i.rectify2
  - do not work properly
 
-i.shape
- seg.fault at zc_curve.c:137
-
 r.binfer
   bug in table.c causing segfault
 
@@ -249,7 +246,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.11  2000-02-16 12:02:41  markus
+ Revision 1.12  2000-02-22 17:33:12  markus
+ i.shape fixed, removed here
+
+ Revision 1.11  2000/02/16 12:02:41  markus
  added r.contour bug
 
  Revision 1.10  2000/02/15 17:57:10  markus
