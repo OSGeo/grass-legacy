@@ -1,7 +1,7 @@
 
 
 
-r.stats              GRASS Reference Manual               r.stats
+r.stats <main>       GRASS Reference Manual        <main> r.stats
 
 
 
@@ -12,22 +12,22 @@ NAME
 SYNOPSIS
      r.stats
      r.stats help
-     r.stats [-1acmqzgx] input=name[,name,...]
+     r.stats [-1aclmqzgx] input=name[,name,...]
      [fs=character|space] [output=name]
 
 DESCRIPTION
      r.stats calculates the area present in each of the
      categories of user-selected raster map layer(s).  Area
-     statistics can be given in units of acres, hectares, square
-     miles, and cell counts.  This analysis uses the current
-     geographic region and mask settings.  Output can be sent to
-     a file in the user's current working directory.
+     statistics are given in units of square meters and/or cell
+     counts.  This analysis uses the current geographic region
+     and mask settings.  Output can be sent to a file in the
+     user's current working directory.
 
      The program will be run non-interactively if the user
      specifies the program arguments and desired options on the
      command line, using the form
 
-     r.stats [-1acmqzgx] input=name[,name,...]
+     r.stats [-1aclmqzgx] input=name[,name,...]
      [fs=character|space] [output=name]
 
      where each input name is the name of a raster map layer on
@@ -37,8 +37,8 @@ DESCRIPTION
      directory), the fs character or space is the field separator
      to be used to separate data fields in the output file
      (default is a space if unspecified), and the (optional)
-     flags -1, -a, -c, -m, -q, -z, -g, and -x have the meanings
-     described in the OPTIONS section.
+     flags -1, -a, -c, -l, -m, -q, -z, -g, and -x have the
+     meanings described in the OPTIONS section.
 
      Alternately, the user can simply type r.stats on the command
      line, without program arguments.  In this case, the user
@@ -52,41 +52,53 @@ OPTIONS
      -1                The data for each cell in the current
                        geographic region will be output, one cell
                        per line, rather than the totals for each
-                       distinct combination.  Also prints the
-                       geographic coordinates (eastings, and
-                       northings) associated with each cell.
+                       distinct combination.
 
-     -a                Print area totals.
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.stats              GRASS Reference Manual               r.stats
-
-
+     -a                Print area totals in square meters.
 
      -c                Print total cell counts.
 
-     -m                Report zero values, because a mask is
-                       present and the user is interested in zero
-                       data values falling within the mask.
 
-     -q                Run quietly, and supress printing of
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+r.stats <main>       GRASS Reference Manual        <main> r.stats
+
+
+
+     -m                Report all zero values present in the
+                       input map layer(s), whether or not they
+                       fall inside or outside the current mask
+                       (see r.mask).  When a mask is present,
+                       r.stats will only report zero values
+                       falling within the mask area unless the
+                       user runs r.stats with the -m option.
+                       When the user runs r.stats with the -m
+                       option, r.stats will report zero values
+                       falling outside the mask area, in addition
+                       to those within the mask.
+
+     -l                Prints the category label(s) as well as
+                       the category number(s).
+
+     -q                Run quietly, and suppress printing of
                        percent complete messages to standard
                        output.
 
      -z                Report only non-zero data values.  Zero
-                       data will not be output.  For multiple map
-                       layers this means that zero category
-                       values in every map layer will not be
-                       output; non-zero category values in any
-                       map layer will be output.
+                       data will not be reported.  However, for
+                       multiple map layers this means that if
+                       zero values occur in every map layer, they
+                       will not be reported; if non-zero category
+                       values occur in any map layer (along with
+                       zeros in others), the non-zero values
+                       along with the zero values will be
+                       reported.
 
      -g                Print the grid coordinates (easting and
                        northing), for each cell.  This option
@@ -96,7 +108,9 @@ r.stats              GRASS Reference Manual               r.stats
      -x                Print the x and y (column and row) values,
                        for each cell.  This option works only if
                        the -1 option is also specified.
-                       Parameters:
+
+
+     Parameters:
 
      input=name        The name(s) of one or more existing raster
                        map layer(s) whose cell counts or area
@@ -109,6 +123,20 @@ r.stats              GRASS Reference Manual               r.stats
                        Default:  a space
 
      output=name       The name to be assigned to the ASCII
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+r.stats <main>       GRASS Reference Manual        <main> r.stats
+
+
+
                        output file.
 
 NON-INTERACTIVE PROGRAM USE
@@ -123,20 +151,6 @@ NON-INTERACTIVE PROGRAM USE
      coordinate system is in meters) for each category in the
      raster map layer will be printed.  (If the -c option is
      chosen, areas will be stated in number of cells.) If
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-r.stats              GRASS Reference Manual               r.stats
-
-
-
      multiple raster map layers are specified on the command
      line, a cross-tabulation table of areas for each combination
      of categories in the map layers will be printed.
@@ -152,17 +166,17 @@ r.stats              GRASS Reference Manual               r.stats
      output would look like:
 
           0:0:0:8027500.00
-          1:0:0:164227500.00
-          2:0:0:31277500.00
-          3:0:0:17140000.00
-          1:0:1:2177500.00
-          2:0:1:2490000.00
           0:1:0:1152500.00
+          1:0:0:164227500.00
+          1:0:1:2177500.00
           1:1:0:140092500.00
-          2:1:0:24207500.00
-          3:1:0:11270000.00
           1:1:1:3355000.00
+          2:0:0:31277500.00
+          2:0:1:2490000.00
+          2:1:0:24207500.00
           2:1:1:1752500.00
+          3:0:0:17140000.00
+          3:1:0:11270000.00
           3:1:1:2500.00
 
      Within each grouping, the first field represents the
@@ -173,6 +187,21 @@ r.stats              GRASS Reference Manual               r.stats
      combination of these three map layers' categories.  For
      example, above, combination 3,1,1 covered 2500 square
      meters.  Fields are separated by colons.
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+r.stats <main>       GRASS Reference Manual        <main> r.stats
+
+
 
 NOTES
      r.stats works in the current geographic region with the
@@ -186,35 +215,13 @@ NOTES
 
      will create a three-column output
 
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-r.stats              GRASS Reference Manual               r.stats
-
-
-
      1:4:4:10000.00          2:1:5:290000.00         2:4:5:2090000.00
      1:4:5:1340000.00        2:2:5:350000.00         3:1:2:450000.00
      2:1:1:1090000.00        2:4:1:700000.00         3:1:3:5280000.00
      2:1:3:410000.00         2:4:3:10000.00          3:1:5:3140000.00
 
-     Also, the output in the examples given happen to be in
-     sorted order, but the output from r.stats on more than one
-     map layer is not guaranteed to be in any particular order.
-     If the user desires sorted output, use the UNIX sort
-     command.  For example:
-
-         r.stats input=a,b,c | sort -t: -0n
+     The output from r.stats on more than one map layer is
+     sorted.
 
      Note that the user has only the option of printing out cell
      statistics in terms of cell counts and/or area totals.
@@ -222,11 +229,9 @@ r.stats              GRASS Reference Manual               r.stats
      should use the GRASS program r.report.
 
 SEE ALSO
-     g.region, r.coin, r.describe, r.report, and parser
+     g.region, r.coin, r.describe, r.mask, r.report, and parser
 
-AUTHORS
-     Michael O'Shea, U.S. Army Construction Engineering Research
-     Laboratory
+AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
 
@@ -253,12 +258,7 @@ AUTHORS
 
 
 
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
