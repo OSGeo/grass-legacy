@@ -1,0 +1,21 @@
+# %W%  %G%
+
+PGM=Garmsed.stats
+
+BACK = backend.o fslope.o usage.o output.o
+#FRONT = frontend.o
+
+#all: $(BIN)/collect $(BIN)/Gcollect
+
+#$(BIN)/collect: $(FRONT) $(GISLIB)
+#	$(CC) $(LDFLAGS) $(FRONT) $(GISLIB) $(TERMLIB) -o $@
+
+$(ETC)/Garmsed.stats: $(BACK) $(GISLIB)
+	$(CC) $(LDFLAGS) $(BACK) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+	cp soils.table $(ETC)/soils.table
+
+backend.o:  stat.h
+output.o:  stat.h
+fslope.o:  stat.h
+
+$(GISLIB): #
