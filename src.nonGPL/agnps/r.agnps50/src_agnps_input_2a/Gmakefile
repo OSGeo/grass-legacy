@@ -1,7 +1,7 @@
 LIBES  = $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
 
 
-PGM = $(GISBASE)/bin/agnps_input_2a 
+PGM = $(GISBASE)/etc/agnps50/agnps_input_2a 
 LIST = \
 	cell_open.o\
 	cell_open_new.o\
