@@ -58,5 +58,7 @@ cmp(a,b)
 choose_groupfile (name, mapset)
     char *name, *mapset;
 {
-    return ask_gis_files ("cell", group_list, name, mapset, -1);
+    int stat;
+    stat = ask_gis_files ("raster", group_list, name, mapset, -1);
+    return(stat);
 }
