@@ -63,7 +63,6 @@ src/libes/dbmi/clients
 src/display/d.3d
 # Deprecated
 # src/display/d.area
-src/display/d.vect.area
 src/display/d.ask
 src/display/d.barscale
 src/display/d.colormode
@@ -112,7 +111,9 @@ src/display/d.sites.qual
 src/display/d.text
 src/display/d.title
 src/display/d.vect
+src/display/d.vect.area
 src/display/d.vect.labels
+src/display/d.vect.line
 src/display/d.what.db
 src/display/d.what.rast
 src/display/d.what.sites
