@@ -235,6 +235,8 @@ main(int argc, char **argv)
 
 	G_free(out);
 
+	D_add_to_list(G_recreate_command());
+
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 	R_close_driver();

@@ -95,9 +95,11 @@
  ***************************************************************************
 */
 
-#include <string.h>
-#include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
 #include "gis.h"
 
 #define BAD_SYNTAX  1
@@ -1405,92 +1407,133 @@ static int gis_prompt (struct Option *opt, char *buff)
 	return 0;
 }
 
+static struct {
+	char *buff;
+	int size;
+	int ptr;
+} buffer;
+
+static void clear(void)
+{
+	buffer.ptr = 0;
+}
+
+static void append(const char *str)
+{
+	int len;
+
+	len = strlen(str);
+
+	if (buffer.ptr + len >= buffer.size)
+	{
+		buffer.size += len + 1024;
+		buffer.buff = G_realloc(buffer.buff, buffer.size);
+	}
+
+	strcpy(buffer.buff + buffer.ptr, str);
+	buffer.ptr += len;
+
+	buffer.buff[buffer.ptr] = '\0';
+}
+
+static void append_safe(const char *str)
+{
+	static const char normal[] = "+,-./:=_";
+	const char *p;
+	int special = 0;
+	int quotes = 0;
+	int len = 0;
+
+	for (p = str; *p; p++)
+	{
+		if (!isalnum(*p) && !strchr(normal, *p))
+			special = 1;
+		if (*p == '\'')
+			quotes++;
+		len++;
+	}
+
+	if (!special)
+	{
+		append(str);
+		return;
+	}
+
+	len += 2;
+	len += quotes * 4;
+
+	if (buffer.ptr + len >= buffer.size)
+	{
+		buffer.size += len + 1024;
+		buffer.buff = G_realloc(buffer.buff, buffer.size);
+	}
+
+	if (special)
+		buffer.buff[buffer.ptr++] = '\'';
+
+	for (p = str; *p; p++)
+	{
+		if (*p == '\'')
+		{
+			strcpy(buffer.buff + buffer.ptr, "'\\''");
+			buffer.ptr += 4;
+		}
+		else
+			buffer.buff[buffer.ptr++] = *p;
+	}
+
+	if (special)
+		buffer.buff[buffer.ptr++] = '\'';
+
+	buffer.buff[buffer.ptr] = '\0';
+}
+
 char *G_recreate_command (void)
 {
-	char flg[4] ;
-	static char *buff, *cur, *tmp;
-	struct Flag *flag ;
-	struct Option *opt ;
-	int n , len, slen;
-	int nalloced = 0;
+	clear();
 
-	/* Flag is not valid if there are no flags to set */
-	
-	buff = G_calloc (1024, sizeof(char));
-	nalloced += 1024;
-	tmp = G_program_name();
-	len = strlen (tmp);
-	if (len >= nalloced)
-	{
-		nalloced += (1024 > len) ? 1024 : len + 1;
-		buff = G_realloc (buff, nalloced);
-	}
-	cur = buff;
-	strcpy (cur, tmp);
-	cur += len;
+	append(G_program_name());
 
-	if(n_flags)
+	if (n_flags)
 	{
-		flag= &first_flag;
-		while(flag != '\0')
+		struct Flag *flag;
+
+		for (flag = &first_flag; flag; flag = flag->next_flag)
 		{
-			if( flag->answer == 1 )
-			{
-				flg[0] = ' '; flg[1] = '-'; flg[2] = flag->key; flg[3] = '\0';
-				slen = strlen (flg);
-				if (len + slen >= nalloced)
-				{
-					nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
-					buff = G_realloc (buff, nalloced);
-					cur = buff + len;
-				}
-				strcpy (cur, flg);
-				cur += slen;
-				len += slen;
-			}
-			flag = flag->next_flag ;
+			static char flg[4] = " -x";
+
+			if (!flag->answer)
+				continue;
+
+			flg[2] = flag->key;
+			append(flg);
 		}
 	}
 
-	opt= &first_option;
-	while(opt != '\0')
+	if (n_opts)
 	{
-		if (opt->answer != '\0')
+		struct Option *opt ;
+
+		for (opt = &first_option; opt; opt = opt->next_opt)
 		{
-			slen = strlen (opt->key) + strlen (opt->answers[0]) + 2;
-			if (len + slen >= nalloced)
+			int i;
+
+			if (!opt->answer)
+				continue;
+
+			append(" ");
+			append(opt->key);
+			append("=");
+			append_safe(opt->answers[0]);
+
+			for (i = 1; opt->answers[i]; i++)
 			{
-				nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
-				buff = G_realloc (buff, nalloced);
-				cur = buff + len;
-			}
-			strcpy (cur, " ");
-			cur++;
-			strcpy (cur, opt->key);
-			cur = strchr (cur, '\0');
-			strcpy (cur, "=");
-			cur++;
-			strcpy (cur, opt->answers[0]);
-			cur = strchr (cur, '\0');
-			len = cur - buff;
-			for(n=1;opt->answers[n] != '\0';n++)
-			{
-				slen = strlen (opt->answers[n]) + 1;
-				if (len + slen >= nalloced)
-				{
-					nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
-					buff = G_realloc (buff, nalloced);
-					cur = buff + len;
-				}
-				strcpy (cur, ",");
-				cur++;
-				strcpy (cur, opt->answers[n]);
-				cur = strchr(cur, '\0');
-				len = cur - buff;
+				append(",");
+				append_safe(opt->answers[i]);
 			}
 		}
-		opt = opt->next_opt ;
 	}
 
-	return(buff) ;
+	return buffer.buff;
 }
+
