@@ -1,4 +1,4 @@
-$Id: TODO,v 1.62 2001-01-04 16:22:26 markus Exp $
+$Id: TODO,v 1.63 2001-01-12 16:47:45 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -167,6 +167,11 @@ So two ways from there to improve the situation:
       (Unlikely to work.)
  Bernhard
   (Being worked on by ?)
+
+ -> perhaps the lock files could go into
+    /var/grass5/locks
+    would be o.k. for Linux, AT&T SVR4 compliant OS (HP-UX, OSF/1, etc.)
+    but NOT SGI.
 
 - this might be related to a daemon serving a session key (see there).
   (Being worked on by ?)
