@@ -1,5 +1,6 @@
                    INSTALL GRASS 5.0 source code
-                    (updated 7th December 1999)
+
+($Id: INSTALL,v 1.2 2000-05-02 17:38:47 markus Exp $)
 
 The intent of the new install method is to have the following sequence
 of commands work to install GRASS on any platform.  If for some reason
@@ -8,6 +9,7 @@ INSTALL.gmake for instruction.
 
 	./configure
 	make install
+        gmakelinks5
 
 The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
@@ -20,6 +22,7 @@ If you want to change this, use a sequence like this:
 
 	./configure --prefix=/opt/grass5.0 --with-bindir=/usr/bin/
 	make install
+        gmakelinks5
 
 This will install the GRASS modules, help, and other need libraries
 etc. in the directory /opt/grass5.0 and the startup file 'grass5.0'
