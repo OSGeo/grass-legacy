@@ -6,7 +6,7 @@ interface_build {
     {entry lines {Number of lines in the legend (0-1000) [0]:} 0 ""}
     {entry thin {Thinning factor (thin=10 gives cats 0,10,20...) [1]:} 0 ""}
     {entry labelnum {Number of text labels for smooth gradient legend (2-100) [5]:} 0 ""}
-    {entry at {Placement coordinates (0-100% of graphics monitor) (x1,y1,x2,y2) [auto]:} 0 ""}
+    {entry at {Placement coordinates (0-100% of graphics monitor) (bottom,top,left,right) [auto]:} 0 ""}
     {entry range {Category range (min,max) [all]:} 0 ""}
     {checkbox -v {Do not show category labels.} "" -v}
     {checkbox -c {Do not show category numbers.} "" -c}
