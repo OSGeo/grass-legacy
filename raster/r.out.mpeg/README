@@ -2,14 +2,19 @@
 ######### PREREQUISITE
 
 In order to use this program, you need to have the program "mpeg_encode",
-available via anonymous ftp from:
-s2k-ftp.CS.Berkeley.EDU
-in the directory: /pub/multimedia/mpeg
+available from Berkeley:
+    http://bmrc.berkeley.edu/frame/research/mpeg/mpeg_encode.html
+or as part of the netpbm package (ppmtompeg):
+    http://netpbm.sourceforge.net
+
 Both source code and binaries for several platforms are available. 
 
 After successful compilation, put the executable named "mpeg_encode" in
-a bin that any users of GRASS have in their path (I put it in /usr/local/bin 
-or you could put it in $(GISBASE)/bin)
+a bin/ directory that any users of GRASS have in their path 
+(I put it in /usr/local/bin or you could put it in $(GISBASE)/bin)
+If you intend to use ppmtompeg, make sure you make a soft link to it:
+    ln -s /usr/bin/ppmtompeg /usr/local/bin/mpeg_encode
+
 
 I have version 1.3 and found one bug that you may need to fix (it's been
 reported, but probably not fixed in the current release yet):
@@ -32,15 +37,16 @@ mpeg_encode version 1.3, file param.c, around line 770:
 There are a couple of versions for X that I know of:
 
 The standard player -
-ftp s2k-ftp.CS.Berkeley.EDU
-/pub/multimedia/mpeg/mpeg_play-2.0 
+ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/play/
 
 An enhanced version of above with Motif playback controls:
+ (ftp site no longer functional??)
 ftp ftp.geom.umn.edu
 /priv/daeron/bin/mpeg_play-arch.tar.Z (where arch = your machine architecture)
 
+
 There are also Public Domain or shareware players available
-for Windows and MacIntosh at various ftp sites.
+for Windows and MacIntosh at various sites on the internet.
 
 ######################
 
