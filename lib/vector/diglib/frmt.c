@@ -33,6 +33,8 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
   char *ptr;
   int  frmt = -1;
 
+  G_debug ( 3, "dig_read_frmt_ascii()" );
+	  
   /* read first line which must be FORMAT: */
   if ( NULL != fgets (buff, sizeof (buff), dascii) ) {
       G_chop (buff);
@@ -64,7 +66,6 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
   switch ( frmt ) {
       case GV_FORMAT_SHAPE :
 	  finfo->shp.file = NULL;
-	  finfo->shp.cat_col = NULL;
           break;
 	  
 #ifdef HAVE_POSTGRES	  
@@ -102,11 +103,35 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
      
       switch ( frmt ) {
           case GV_FORMAT_SHAPE :
-              if (strcmp (buf1, "SHAPE") == 0)
+              G_debug ( 3, "format: GV_FORMAT_SHAPE" );
+              if (strcmp (buf1, "SHAPE") == 0) {
 	          finfo->shp.file = G_store (ptr);
-	      else if (strcmp (buf1, "CAT_COLUMN") == 0)
-	          finfo->shp.cat_col = G_store (ptr);
-              else
+		  G_debug ( 3, "Shape file = '%s'", finfo->shp.file);
+		  /* baseName */
+                  ptr = finfo->shp.file + strlen ( finfo->shp.file );
+  	          while ( ptr > finfo->shp.file ) {
+		      if ( ptr[0] == '/' ) {
+                          ptr++;
+			  break;
+		      }
+		      ptr--;
+ 	          }
+	          finfo->shp.baseName = G_store (ptr);
+		  G_debug ( 3, "Shape baseName = '%s'", finfo->shp.baseName);
+
+		  /* dirName */
+		  finfo->shp.dirName = G_store ( finfo->shp.file );
+		  ptr = finfo->shp.dirName + strlen ( finfo->shp.dirName );
+                  while ( ptr > finfo->shp.dirName ) {
+		      if ( ptr[0] == '/' ) {
+			  ptr++;
+			  ptr[0] = '\0';
+			  break; 
+		      }
+		      ptr--;
+		  }
+		  G_debug ( 3, "Shape dirName = '%s'", finfo->shp.dirName);
+	      } else
 	          G_warning ("unknown keyword '%s' in vector format file\n", buff);
 
 	      break;
