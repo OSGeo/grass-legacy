@@ -96,30 +96,6 @@ BINDIR=$(exec_prefix)/bin
 else
 BINDIR="${bindir}"
 fi
-
-
-AC_ARG_WITH(bindir,
-    [  --with-bindir=DIR       user executables installed in DIR [/usr/local/bin] ],
-    [
-	case "$withval" in
-	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-bindir option.])
-	  ;;
-	esac
-	WITH_BINDIR="$withval"
-    ])
-
-if test "$WITH_BINDIR"; then
-	for dir in $WITH_BINDIR; do
-		if test -d "$dir"; then
-			BINDIR="$dir"
-		else
-			AC_MSG_WARN([*** installation directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(user executable directory)
-	AC_MSG_RESULT($BINDIR)
-fi
 AC_SUBST(BINDIR)
 
 AC_ARG_WITH(includes,
@@ -143,6 +119,7 @@ if test "$INC_DIRS"; then
 	done
 	AC_MSG_CHECKING(additional include dirs)
 	AC_MSG_RESULT($INCLUDE_DIRS)
+	CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
 fi
 AC_SUBST(INCLUDE_DIRS)
 
@@ -167,9 +144,15 @@ if test "$LIB_DIRS"; then
 	done
 	AC_MSG_CHECKING(additional library dirs)
 	AC_MSG_RESULT($LIBRARY_DIRS)
+	LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
 fi
 AC_SUBST(LIBRARY_DIRS)
 
+# Some search directories to use as the base for other searches when not specified
+my_inc_dirs="/usr/include /usr/local/include /opt/include /usr/freeware/include"
+my_lib_dirs="/usr/lib /usr/local/lib /opt/lib /usr/freeware/lib"
+
+# TIFF includes and library checks....
 AC_ARG_WITH(tiff-includes,
     [  --with-tiff-includes=DIR
                           site header files for TIFF in DIR],
@@ -182,7 +165,7 @@ AC_ARG_WITH(tiff-includes,
 	tiff_inc_dirs="$withval"
     ])
 
-TIFF_INC_DIRS=
+TIFF_INCLUDE_DIRS=
 if test "$tiff_inc_dirs"; then
 	for dir in $tiff_inc_dirs; do
 		if test -d "$dir"; then
@@ -194,7 +177,19 @@ if test "$tiff_inc_dirs"; then
 	AC_MSG_CHECKING(TIFF include dirs)
 	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
 fi
-# NEEDS else check default places...
+
+if test -z "$TIFF_INCLUDE_DIRS"; then
+	AC_MSG_CHECKING(TIFF include dirs)
+	for dir in $my_inc_dirs; do
+		if test -z "$TIFF_INCLUDE_DIRS" && test -d "$dir" && test -f "$dir/tiffio.h"; then
+			TIFF_INCLUDE_DIRS="-I$dir"
+		fi
+	done
+	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
+fi
+if test -z "$TIFF_INCLUDE_DIRS"; then
+	AC_MSG_WARN([*** Couldn't find 'tiffio.h'.])
+fi
 AC_SUBST(TIFF_INCLUDE_DIRS)
 
 AC_ARG_WITH(tiff-libs,
@@ -220,9 +215,17 @@ if test "$tiff_lib_dirs"; then
 	AC_MSG_CHECKING(additional TIFF library dirs)
 	AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
 fi
-# NEEDS else check default places ...
+
+ldflags_save="$LDFLAGS"
+LDFLAGS="$LDFLAGS $TIFF_LIBRARY_DIRS"
+AC_CHECK_LIB(tiff, TIFFOpen, has_tiff_lib=1)
+LDFLAGS="$ldflags_save"
+if test -z "$has_tiff_lib"; then
+	AC_MSG_WARN([*** Failed to find TIFF library])
+fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
+# TCL/TK includes and library tests...
 AC_ARG_WITH(tcltk-includes,
     [  --with-tcltk-includes=DIR
                           site header files for TCL and TK in DIR],
@@ -248,7 +251,24 @@ if test "$tkincdir"; then
 	AC_MSG_CHECKING(TK include dirs)
 	AC_MSG_RESULT($TKINCDIR)
 fi
-# NEEDS else check known places ...
+if test -z "$TKINCDIR"; then
+	AC_MSG_CHECKING(TK include dirs)
+	for my_dir in $my_inc_dirs; do
+		if test -z "$TKINCDIR" && test -d $my_dir; then
+			tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
+			for dir in $tk_try; do
+				if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
+					TKINCDIR="-I$my_dir/$dir"
+				fi
+			done
+		fi
+	done
+	AC_MSG_RESULT($TKINCDIR)
+fi
+
+if test -z "$TKINCDIR"; then
+	AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
+fi
 AC_SUBST(TKINCDIR)
 
 TCLINCDIR=
@@ -264,6 +284,23 @@ if test "$tclincdir"; then
 	AC_MSG_RESULT($TCLINCDIR)
 fi
 # NEEDS else check known places ...
+if test -z "$TCLINCDIR"; then
+	AC_MSG_CHECKING(TCL include dirs)
+	for my_dir in $my_inc_dirs; do
+		if test -z "$TKINCDIR" && test -d $my_dir; then
+			tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
+			for dir in $tk_try; do
+				if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
+					TCLINCDIR="-I$my_dir/$dir"
+				fi
+			done
+		fi
+	done
+	AC_MSG_RESULT($TCLINCDIR)
+fi
+if test -z "$TCLINCDIR"; then
+	AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
+fi
 AC_SUBST(TCLINCDIR)
 
 AC_ARG_WITH(tcltk-libs,
@@ -289,9 +326,23 @@ if test "$tcltk_lib_dirs"; then
 	AC_MSG_CHECKING(additional TCL and TK library dirs)
 	AC_MSG_RESULT($TCLTKLIBS)
 fi
-# NEEDS else check known places ...
-AC_SUBST(TCLTKLIBS)
 
+ldflags_save="$LDFLAGS"
+LDFLAGS="$LDFLAGS $TCLTKLIBS"
+tk_try="8.3 8.2 8.1 8.0"
+for tk_ver in $tk_try; do
+	if test -z "$has_tk_lib"; then
+		AC_CHECK_LIB("tk$tk_ver", Tk_MainWindow, has_tk_lib=1)
+		if test "$has_tk_lib"; then
+			TCLTKLIBS="$TCLTKLIBS -ltk$tk_ver -ltcl$tk_ver"
+		fi
+	fi
+done
+if test -z "$has_tk_lib"; then
+	AC_MSG_WARN([*** Failed to find TCL/TK libraries])
+fi
+LDFLAGS="$ldflags_save"
+AC_SUBST(TCLTKLIBS)
 
 SYSV=
 AC_ARG_WITH(SYSV,
