@@ -192,8 +192,8 @@ int main(int argc, char **argv)
 	    }  
         }
     } 
-    fprintf ( stdout, "Number of centres: %d\n", ncentres );
-    if ( ncentres == 0 ) G_warning ("Not enough centres. nothing will be allocated.");
+    fprintf ( stdout, "Number of centres: %d (nfield: %d)\n", ncentres, nfield );
+    if ( ncentres == 0 ) G_warning ("Not enough centres for selected nfield. Nothing will be allocated.");
     
     /* alloc and reset space for all nodes */
     Nodes = (NODE *) G_calloc ( ( nnodes + 1 ), sizeof(NODE) );
