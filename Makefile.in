@@ -26,6 +26,7 @@ INSTALL_DATA_DIR=	mkdir -p -m 755
 ENV=			@ENV@
 MAKE=			make
 
+# these variables will be passed to the scripts below:
 MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 MAKE=${MAKE}
 
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
@@ -34,6 +35,7 @@ MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_V
 
 MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
+#our targets:
 all: pre-install
 
 install: pre-install do-install
@@ -42,7 +44,7 @@ pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	@if [ $? != 0 ]; then echo "An error occured. Stop." ; exit 1 ;	fi
+	@if [ $? != 0 ] ; then echo "An error occured. Stop." ; exit 1 ;	fi
 	${SHELL} ${IS64BIT}
 	echo "Now proceed with make install"
 
@@ -131,6 +133,7 @@ srcdist: veryclean
 # make a binary package for distribution:
 #  Bug: VER is not expanded properly (wrong directory):
 bindist:
+	cp GPL.TXT ${PREFIX}/COPYRIGHT
 	VER=${VERSION}
 	(cd ${PREFIX};  tar cvfz grass${VER}_${SYSTEM}_bin.tar.gz * )
-	echo "Distribution binary package: grass${VER}__${SYSTEM}_bin.tar.gz ready."
+	echo "Distribution binary package: grass${VER}_${SYSTEM}_bin.tar.gz ready."
