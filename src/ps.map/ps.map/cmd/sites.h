@@ -1,4 +1,4 @@
-#define MAXSITES 20
+#define MAXSITES 100
 
 struct site
 {
