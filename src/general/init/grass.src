@@ -35,6 +35,7 @@ CMD_LINE_ARGS=""
 
 # Get the command name
 CMD_NAME=`basename $0`
+export CMD_NAME
 
 # Go through the command line options
 for i in "$@" ; do
@@ -47,17 +48,22 @@ for i in "$@" ; do
 	    echo "Usage:"
 	    echo "    $CMD_NAME [-h | -help | --help] [-text | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
-	    echo "Flags:"
-	    echo "    -h or -help or --help => print this help message"
-	    echo "    -text => use text based interface"
-	    echo "    -tcltk => use Tcl/Tk based graphical interface"
-	    echo
-	    echo "Parameters:"
-	    echo "    GISDBASE => initial database"
-	    echo "    LOCATION_NAME => initial location"
-	    echo "    MAPSET => initial mapset"
-	    echo
-	    echo "    GISDBASE/LOCATION_NAME/MAPSET => fully qualified LOCATION directory"
+            echo "Flags:"
+            echo "    -h or -help or --help        print this help message"
+            echo "    -text                        use text based interface"
+            echo "    -tcltk                       use Tcl/Tk based graphical interface"
+            echo
+            echo "Parameters:"
+            echo "    GISDBASE                     initial database"
+            echo "    LOCATION_NAME                initial location"
+            echo "    MAPSET                       initial mapset"
+            echo
+            echo "    GISDBASE/LOCATION_NAME/MAPSET"
+            echo "                                 fully qualified initial LOCATION directory"
+            echo
+            echo "Environmental variables:"
+            echo "    GRASS_TCLSH                  set tclsh shell name to override 'tclsh'"
+            echo "    GRASS_WISH                   set wish shell name to override 'wish'"
 	    exit
 	    ;;
 	
