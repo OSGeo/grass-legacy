@@ -9,8 +9,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>r.neighbors</b></EM>  - Makes each cell category value a
-function of the category values assigned to the cells
+<EM><b>r.neighbors</b></EM>  - Makes each cell value a
+function of the values assigned to the cells
 around it, and stores new cell values in an output raster
 map layer.
 
@@ -36,13 +36,13 @@ map layer.
 <H2>DESCRIPTION</H2>
 
 <EM>r.neighbors</EM> looks at each cell in a raster input
-file, and examines the category values assigned to the
+file, and examines the values assigned to the
 cells in some user-defined "neighborhood" around it.  It
 outputs a new raster map layer in which each cell is
-assigned a category value that is some (user-specified)
+assigned a value that is some (user-specified)
 function of the values in that cell's neighborhood.  For
 example, each cell in the output layer might be assigned a
-category value equal to the average of the category values
+value equal to the average of the values
 appearing in its 3 x 3 cell "neighborhood" in the input
 layer.
 
@@ -60,7 +60,7 @@ flag settings and parameter values.
 
 The user must specify the names of the raster map layers to
 be used for <EM>input</EM> and <EM>output</EM>, the
-<EM>method</EM> used to analyze neighborhood category
+<EM>method</EM> used to analyze neighborhood
 values (i.e., the neighborhood function or operation to be
 performed), and the <EM>size</EM> of the neighborhood.
 Optionally, the user can also specify the <EM>TITLE</EM> to
@@ -75,8 +75,8 @@ These options are described further below.
 
 <EM>Neighborhood Operation Methods:</EM>
 The <EM>neighborhood</EM> operators determine what new 
-category value a center cell in a neighborhood will have after examining
-category values inside its neighboring cells.
+value a center cell in a neighborhood will have after examining
+values inside its neighboring cells.
 Each cell in a raster map layer becomes the center cell of a neighborhood 
 as the neighborhood window moves from cell to cell throughout the map layer.
 <EM>r.neighbors</EM>
@@ -88,7 +88,7 @@ can perform the following operations:
 
 <DT><B>average</B> 
 
-<DD>The average category value within the neighborhood.
+<DD>The average value within the neighborhood.
 In the following example, the result would be:
 
 <BR>
@@ -101,21 +101,21 @@ The result is rounded to the nearest integer (in this case 6).
 
 <DT><B>median</B> 
 
-<DD>The category value found half-way through a list of the
-neighborhood's category values,
+<DD>The value found half-way through a list of the
+neighborhood's values,
 when these are ranged in numerical order.
 
 <DT><B>mode</B> 
 
-<DD>The most frequently occurring category value in the neighborhood.
+<DD>The most frequently occurring value in the neighborhood.
 
 <DT><B>minimum</B> 
 
-<DD>The minimum category value within the neighborhood.
+<DD>The minimum value within the neighborhood.
 
 <DT><B>maximum</B> 
 
-<DD>The maximum category value within the neighborhood.
+<DD>The maximum value within the neighborhood.
 <PRE>
        Raw Data     Operation     New Data
    ----------------          ----------------
@@ -129,22 +129,22 @@ when these are ranged in numerical order.
 
 <DT><B>stddev</B> 
 
-<DD>The statistical standard deviation of category values
+<DD>The statistical standard deviation of values
 within the neighborhood (rounded to the nearest integer).
 
 <DT><B>variance</B> 
 
-<DD>The statistical variance of category values
+<DD>The statistical variance of values
 within the neighborhood (rounded to the nearest integer).
 
 <DT><B>diversity</B> 
 
-<DD>The number of different category values within the neighborhood.
+<DD>The number of different values within the neighborhood.
 In the above example, the diversity is 4.
 
 <DT><B>interspersion</B> 
 
-<DD>The percentage of cells containing categories which differ from the category
+<DD>The percentage of cells containing values which differ from the values
 assigned to the center cell in the neighborhood, plus 1.
 In the above example, the interspersion is:
 
@@ -208,7 +208,7 @@ this (e.g., using the <EM>-a</EM> option).
 the input raster map layer for those output map layers that are based
 on the neighborhood average, median, mode, minimum, and maximum.
 Because standard deviation, variance, diversity, and interspersion are indices,
-rather than direct correspondents to input category values,
+rather than direct correspondents to input values,
 no <EM>color</EM> files are copied for these map layers.
 (The user should note that although the <EM>color</EM> file is copied
 for <EM>average</EM>d neighborhood function output,
