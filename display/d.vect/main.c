@@ -5,6 +5,7 @@
  *   the user wants displayed on top of the current image.
  */
 
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "raster.h"
@@ -38,7 +39,6 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Flag   *_quiet;
-	struct line_pnts *Points;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -52,22 +52,8 @@ main (int argc, char **argv)
 		"Displays GRASS vector data in the active frame on the "
 		"graphics monitor.";
 
-	map_opt = G_define_option() ;
-	map_opt->key        = "map" ;
-	map_opt->type       = TYPE_STRING ;
-	map_opt->required   = YES ;
-	map_opt->multiple   = NO ;
-	map_opt->gisprompt  = "old,vector,vector" ;
-	map_opt->description= "Vector name" ;
-
-	type_opt = G_define_option() ;
-	type_opt->key        = "type" ;
-	type_opt->type       = TYPE_STRING ;
-	type_opt->required   = NO ;
-	type_opt->multiple   = YES ;
-	type_opt->answer     = "point,line,boundary,centroid" ;
-	type_opt->options    = "point,line,boundary,centroid,area";
-	type_opt->description= "Type" ;
+	map_opt = G_define_standard_option(G_OPT_V_MAP); 
+	type_opt =  G_define_standard_option(G_OPT_V_TYPE);
 	
 	display_opt = G_define_option() ;
 	display_opt->key        = "display" ;
@@ -93,22 +79,9 @@ main (int argc, char **argv)
 	size_opt->answer     = "8" ;
 	size_opt->description= "Icon size" ;
 	
-	field_opt = G_define_option() ;
-	field_opt->key        = "field" ;
-	field_opt->type       = TYPE_INTEGER ;
-	field_opt->answer     = "1" ;
-	field_opt->description= "Category field" ;
-	
-	cat_opt = G_define_option() ;
-	cat_opt->key        = "cat" ;
-	cat_opt->type       = TYPE_STRING ;
-	cat_opt->description= "Categories (example: 3,7,15-21,45)" ;
-	
-	where_opt = G_define_option() ;
-	where_opt->key        = "where" ;
-	where_opt->type       = TYPE_STRING ;
-	where_opt->description= "WHERE conditions of SQL statement without 'where' keyword. "
-                                "(example: income < 1000 and inhab >= 10000)" ;
+	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
+	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
+	where_opt = G_define_standard_option(G_OPT_WHERE) ;
 	
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
@@ -122,11 +95,9 @@ main (int argc, char **argv)
 	fcolor_opt->answer     = "white" ;
 	fcolor_opt->description= "Area fill color" ;
 
-	lfield_opt = G_define_option() ;
+	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	lfield_opt->key        = "lfield" ;
-	lfield_opt->type       = TYPE_INTEGER ;
-	lfield_opt->answer     = "1" ;
-	lfield_opt->description= "Category label field" ;
+	lfield_opt->description= "Category field for labels" ;
 	
 	lcolor_opt = G_define_option() ;
 	lcolor_opt->key        = "lcolor" ;
@@ -368,7 +339,8 @@ main (int argc, char **argv)
         if ( level < 1 )
 	    G_fatal_error ("Failed opening vector file"); 
 	
-	R_open_driver();
+	if (R_open_driver() != 0)
+            G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

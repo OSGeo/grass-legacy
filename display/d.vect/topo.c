@@ -24,7 +24,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	
     Vect_rewind ( Map );
 
-    num = V2_num_lines(Map);
+    num = Vect_get_num_lines(Map);
     G_debug (1, "n_lines = %d", num);
     
     /* Lines */
@@ -108,7 +108,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	R_text(text);
     }
 
-    num = V2_num_nodes(Map);
+    num = Vect_get_num_nodes(Map);
     G_debug (1, "n_nodes = %d", num);
     
     /* Nodes */
