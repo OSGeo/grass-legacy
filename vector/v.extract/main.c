@@ -78,19 +78,9 @@ int main (int argc, char **argv)
     d_flag->description      = "Dissolve common boundaries (default is no) ";
     */
     
-    inopt = G_define_option();
-    inopt->key             = "input";
-    inopt->type            = TYPE_STRING;
-    inopt->required        = YES;
-    inopt->gisprompt       = "old,dig,vect";
-    inopt->description     = "vector input map name ";
+    inopt = G_define_standard_option(G_OPT_V_MAP);
 
-    outopt = G_define_option();
-    outopt->key             = "output";
-    outopt->type            =  TYPE_STRING;
-    outopt->required        =  YES;
-    outopt->gisprompt       = "any,dig,vect";
-    outopt->description     = "vector output map name ";
+    outopt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     typopt = G_define_standard_option(G_OPT_V_TYPE);
 
