@@ -1,0 +1,32 @@
+OBJ = \
+    cats_struct.o \
+    close.o \
+    constraint.o \
+    get_area.o \
+    header.o \
+    init_head.o \
+    level.o \
+    level_two.o \
+    line_struct.o \
+    open.o \
+    open1.o \
+    open2.o \
+    portable_io.o \
+    poly.o \
+    read.o \
+    read1.o \
+    read2.o \
+    support.o \
+    rewind.o \
+    window.o \
+    write.o \
+    x_point_io.o
+
+
+all:  $(VECTLIB_REAL)
+
+$(VECTLIB_REAL): $(OBJ)
+	$(AR)
+
+
+
