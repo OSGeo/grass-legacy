@@ -22,18 +22,6 @@ DELIM=$GRASS5
 OPTS=""
 
 
-#### echo some info
-echo $VERSION 1>&2
-echo "Use at your own risk. This software comes with absolutely no warranty. " 1>&2
-echo " " 1>&2
-echo "No checks are performed for datum, projection and format of data." 1>&2
-echo "You must check by yourself that your receiver, gpstrans and GRASS" 1>&2
-echo "use the same map datum and projection (this means as it is now that" 1>&2
-echo "you can only use a GRASS database in lat/lon projection and in wgs84" 1>&2
-echo "datum). " 1>&2
-echo " " 1>&2
-
-
 #### test if GRASS is running
 if [ "$GISRC" = "" ] ; then
     echo "$PROG: You must be running GRASS to execute $PROG" 1>&2
@@ -83,7 +71,9 @@ while [ $# -ge 1 ] ; do
 
     case "$1" in
     -h) OK=0
-       ;;    
+       ;; 
+    h*) OK=0
+       ;;
     n*) NAME=`echo "$1" | sed 's/.*=//g'` 1>&2 > /dev/null
 	echo "vect=$NAME" 1>&2
        ;;
@@ -113,21 +103,29 @@ done
 
 #### print usage and exit
 if [ $OK -ne 1 ] ; then
-    echo "Usage:" 1>&2
-    echo " $PROG options" 1>&2
-    echo "   options: " 1>&2
-    echo "     name=vect     -- name for new binary vector file" 1>&2
-    echo "     port=/dev/gps -- port garmin receiver is connected to" 1>&2
-    echo "     -v            -- verbose output" 1>&2
-    echo "     -w            -- upload Waypoints" 1>&2
-    echo "     -r            -- upload Routes" 1>&2
-    echo "     -t            -- upload Track" 1>&2
-#   echo "     -s            -- swap easting/northing (for tmerc projection)" 1>&2
-    echo "     -u            -- run v.support on new binary vector file" 1>&2
-    echo "     -h            -- print this message" 1>&2
+    echo "Description: " 1>&2
+    echo " Upload Waypoints, Routes and Tracks from a garmin gps reciever into" 1>&2
+    echo " GRASS binary vector file." 1>&2
+    echo " " 1>&2
+    echo "Usage: " 1>&2
+    echo " $PROG name=vect port=/dev/gps [-v] [-w] [-r] [-t] [-u] [-h]" 1>&2
+    echo " " 1>&2
+    echo "Flags: " 1>&2
+    echo "     -v        verbose output" 1>&2
+    echo "     -w        upload Waypoints" 1>&2
+    echo "     -r        upload Routes" 1>&2
+    echo "     -t        upload Track" 1>&2
+#   echo "     -s        swap easting/northing (for tmerc projection)" 1>&2
+    echo "     -u        run v.support on new binary vector file" 1>&2
+    echo "     -h        print this message" 1>&2
+    echo " " 1>&2
+    echo "Parameters: " 1>&2
+    echo " name=vect     name for new binary vector file" 1>&2
+    echo " port=/dev/gps port garmin receiver is connected to" 1>&2
+    echo " " 1>&2
     echo $VERSION 1>&2
     rm -f ${TMP}*
-    exit 0
+    exit 1
 fi
 
 
