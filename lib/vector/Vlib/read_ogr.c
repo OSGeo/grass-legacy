@@ -16,6 +16,9 @@
 #include "gis.h"
 #include "Vect.h"
 
+#ifdef HAVE_OGR
+#include "ogr_api.h"
+
 /*
 *  Recursively read feature and add all elements to points_cache and types_cache.
 *  ftype : if > 0 use this type (because parts of Polygon are read as wkbLineString)
@@ -338,3 +341,4 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
     return -2; /* not reached */
 }
 
+#endif

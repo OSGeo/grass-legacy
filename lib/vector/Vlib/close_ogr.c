@@ -17,6 +17,7 @@
 #include <stdlib.h>
 
 #ifdef HAVE_OGR
+#include "ogr_api.h"
 
 /* 
 ** return 0 on success
