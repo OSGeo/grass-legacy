@@ -1,0 +1,21 @@
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+HOME=$(ETC)/paint
+
+LIST  = main.o\
+	color.o\
+	header.o\
+	nextword.o\
+	readcolors.o\
+	paint.o\
+	xalloc.o
+
+PGM   = paint.ppm
+
+all:: $(BIN)/$(PGM) $(HOME)/$(PGM)
+$(HOME)/$(PGM): $(LIST) $(INTERFACE)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE)
+$(BIN)/$(PGM): shell
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@
+$(INTERFACE): #
