@@ -1,6 +1,5 @@
 #include "gis.h"
 #include "Vect.h"
-#include "proto.h"
 
 #ifndef global
 #define global extern
