@@ -1,0 +1,10 @@
+40c40
+<     int zone, len;
+---
+>     int zone;
+53d52
+<     G_zero (buf, len);
+189c188
+< fprintf(stderr, "ROWS * COLS = %d,  LSEEK = %d\m", nr, n);
+---
+> fprintf(stderr, "ROWS * COLS = %d,  LSEEK = %d\n", nr, n);
