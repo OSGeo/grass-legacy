@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 3rd. Feb. 2000
- * Last updated 5th. Mar. 2000
+ * Last updated 11th. May. 2000
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -27,8 +27,6 @@
 #include <string.h>
 #include <assert.h>
 #include "shp2dig.h"
-#include "shapefil.h"
-/* #include "gis.h" */
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function carries out the transfer of data from the         */
@@ -41,14 +39,15 @@
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
-		  fieldDescript *cat1, int *fcount ) {                        
+		   fieldDescript *cat1, BTREE *hBank, int *fcount ) {                        
 
   /* Local */
   int numFields, numPolygons, numRecs0;
   int nums0, newRecsCount;
   int ltype;
 
-  int i0, j0, k0, k1;
+  int i0, j0, j1, k0, k1;
+  int i2, j2, k2;
 
   int recCount; /* Keep a running index when assembling records */
 
@@ -60,6 +59,11 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
   int dfield; /* Is a particular field defined - loop-check variable */
 
+  int nolinks; /* Count how many vertex links we fail to register */
+  int badring; /* Record if current shape part is to be rejected */
+
+  int pnts_diff; /* Flag points that differ in comparing two lines */
+
   double topIsect;   /* Store maximum intersect value of island ring */
 
   dbfRecElement *reclist;
@@ -70,11 +74,9 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   char fname[12];
   int fsize, fdec;
 
-
-  /* Begin the process of as/home/ddgray/Projects/v.in.shape/.sembling the line descriptor from shape
+  /* Begin the process of assembling the line descriptor from shape
      file
   */
-
 
   l1->numLines = s1->nRecords;
   l1->lines = (lineDescript *)malloc( l1->numLines * sizeof( lineDescript ));
@@ -91,47 +93,73 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     l1->lines[i0].parts = (partDescript *)malloc( l1->lines[i0].numParts * 
 						  sizeof( partDescript ));
     
+    j1 = 0;
     for( j0 = 0; j0 < l1->lines[i0].numParts; ++j0 ) {
       int partStart, partEnd, currVertex;
 
+      badring = 0; /* Assume ring is good */
+
+      l1->lines[i0].parts[j0].intersects = NULL;    
+      l1->lines[i0].parts[j0].linepnts = NULL;    
+      l1->lines[i0].parts[j0].centroid = NULL;    
+      
       l1->lines[i0].parts[j0].duff = 0;    
 
-      partStart = tmpShp->panPartStart[j0];
+      partStart = tmpShp->panPartStart[j1];
 
       if( j0 == l1->lines[i0].numParts - 1 ) partEnd = tmpShp->nVertices - 1;
-      else partEnd = tmpShp->panPartStart[j0+1] - 1;
+      else partEnd = tmpShp->panPartStart[j1+1] - 1;
+
+      j1++;
 
       /* Create the vertex list for the part and loop through the list */
       l1->lines[i0].parts[j0].numPoints = partEnd - partStart + 1;
       l1->lines[i0].parts[j0].linepnts =
 	(pntDescript *)malloc( l1->lines[i0].parts[j0].numPoints * sizeof( pntDescript ));
-
+      
+      nolinks = 0;
       currVertex = 0;
       for( k0 = partStart; k0 <= partEnd; ++k0 ) {
 
 	/* Declare local variables */
 
+	int k1;
+	int n1;
+
 	/* Assemble rings from shape parts */
+
+	/* Force-close the ring */
+	if( k0 == partEnd && ( ltype == SHPT_POLYGON || ltype == SHPT_POLYGONZ
+			       || ltype == SHPT_POLYGONM )) k1 = partStart;
+	else k1 = k0;
+
 	l1->lines[i0].parts[j0].linepnts[currVertex].duff = 0;
 	l1->lines[i0].parts[j0].linepnts[currVertex].isnode = 0;
-	l1->lines[i0].parts[j0].linepnts[currVertex].xPosn = tmpShp->padfX[k0];
-	l1->lines[i0].parts[j0].linepnts[currVertex].yPosn = tmpShp->padfY[k0];
+	l1->lines[i0].parts[j0].linepnts[currVertex].xPosn = tmpShp->padfX[k1];
+	l1->lines[i0].parts[j0].linepnts[currVertex].yPosn = tmpShp->padfY[k1];
 	if( ltype == SHPT_POLYGONZ || ltype == SHPT_ARCZ || ltype == SHPT_MULTIPATCH )
-	  l1->lines[i0].parts[j0].linepnts[currVertex].zVal = tmpShp->padfZ[k0];
+	  l1->lines[i0].parts[j0].linepnts[currVertex].zVal = tmpShp->padfZ[k1];
 	if( ltype == SHPT_POLYGONZ || ltype == SHPT_ARCZ || ltype == SHPT_MULTIPATCH 
 	    || ltype == SHPT_ARCM || ltype == SHPT_POLYGONM )
-	  l1->lines[i0].parts[j0].linepnts[currVertex].mVal = tmpShp->padfM[k0];
+	  l1->lines[i0].parts[j0].linepnts[currVertex].mVal = tmpShp->padfM[k1];
+	l1->lines[i0].parts[j0].linepnts[currVertex].linkverts = NULL;
+	l1->lines[i0].parts[j0].linepnts[currVertex].linkdirect = NULL;
+	l1->lines[i0].parts[j0].linepnts[currVertex].linknum = 0;
 
 	/* Do the addition to internal database ( point bank ) here */
 	/* This is an integral part of the process of dissecting lines
 	 to obtain arc segments from shape polygon arcs.
 	 
         */
-	/* TO BE DONE */
+	
+	
+	if( !vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
+	  nolinks++;
 
 	/* Increment block's internal counter */
 	currVertex++;
       }
+
 
       /* Fill in the calculated fields of the part descriptor */
       /* This gets everything except the area point, which requires
@@ -144,6 +172,71 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	partCalcFieldsArc ( &l1->lines[i0].parts[j0] );
       else if( ltype == SHPT_POLYGON || ltype == SHPT_POLYGONZ || ltype == SHPT_POLYGONM )
 	partCalcFieldsPolygon ( &l1->lines[i0].parts[j0] );
+
+      /* Check for duplicates. Reject this ring if it is already registered, and
+	 moreover is an exterior ring
+      */
+      if( nolinks == l1->lines[i0].parts[j0].numPoints && 
+	l1->lines[i0].parts[j0].indic < 0  ) {
+	
+	/* Run thru previous listings if this is the case to
+	   find the already recorded rings or lines, and
+	   determine circulation
+	*/
+	for( i2 = 0; i2 <= i0; ++i2 ) {
+	  for( j2 = 0; j2 < l1->lines[i2].numParts; ++j2 ) {
+
+	    /* Finish  if this is not registered yet */
+	    if( i2 == i0 && j2 >= j0 ) break;
+
+	    /* Go on if this is a hole */
+	    if( (ltype == SHPT_POLYGON || ltype == SHPT_POLYGONZ || ltype == SHPT_POLYGONM)
+		&& l1->lines[i2].parts[j2].indic > 0 )
+	      continue;
+
+	    /* Go on if the number of points do not match */
+	    if( l1->lines[i0].parts[j0].numPoints != l1->lines[i2].parts[j2].numPoints )
+	      continue;
+
+	    /* Go on if bounding box is different */
+	    if( fabs(l1->lines[i0].parts[j0].west - l1->lines[i2].parts[j2].west)
+		> SNAP_RADIUS 
+		&& fabs(l1->lines[i0].parts[j0].east - l1->lines[i2].parts[j2].east)
+		> SNAP_RADIUS 
+		&& fabs(l1->lines[i0].parts[j0].south - l1->lines[i2].parts[j2].south)
+		> SNAP_RADIUS 
+		&& fabs(l1->lines[i0].parts[j0].north - l1->lines[i2].parts[j2].north)
+		> SNAP_RADIUS 
+		) continue;
+	    
+	    /* Go in if a point is found to be different */
+	    pnts_diff = 0;
+	    for( k2 = 0; k2 < l1->lines[i0].parts[j0].numPoints; ++k2 ) {
+	      if( fabs( l1->lines[i0].parts[j0].linepnts[k2].xPosn -
+			l1->lines[i2].parts[j2].linepnts[k2].xPosn ) 
+		  > SNAP_RADIUS  &&
+		  fabs( l1->lines[i0].parts[j0].linepnts[k2].yPosn -
+			l1->lines[i2].parts[j2].linepnts[k2].yPosn ) 
+		  > SNAP_RADIUS
+		  ) pnts_diff = 1;;
+	    }
+	    if( pnts_diff ) continue;
+
+	    /* Still here? We have already registered this ring.
+	       Rubber it.
+	    */
+	    
+	    badring = 1;
+	    break;
+	  }
+	}
+      } /* nolinks */
+
+      if( badring ) {
+	l1->lines[i0].numParts--;
+	j0--;
+	continue;	
+      }
     }
     /* Dismiss Shape Object */
     SHPDestroyObject( tmpShp );
@@ -387,12 +480,10 @@ void linedDispose( lineList *l1, fieldDescript *cat1, int fieldCount ) {
   for( i0 = 0; i0 < l1->numLines; ++i0 ) {
     for( j0 = 0; j0 < l1->lines[i0].numParts; ++j0 ) {
       for( k0 = 0; k0 < l1->lines[i0].parts[j0].numPoints; ++k0 ) {
-	/* NOT IMPLEMENTED YET */
-	/* if( l1->lines[i0].parts[j0].linepnts[k0].fnodes)
-	   free( l1->lines[i0].parts[j0].linepnts[k0].fnodes );
-	   if( l1->lines[i0].parts[j0].linepnts[k0].bnodes)
-	   free( l1->lines[i0].parts[j0].linepnts[k0].bnodes );
-	*/
+	if( l1->lines[i0].parts[j0].linepnts[k0].linkverts)
+	  free( l1->lines[i0].parts[j0].linepnts[k0].linkverts );
+	if( l1->lines[i0].parts[j0].linepnts[k0].linkdirect)
+	  free( l1->lines[i0].parts[j0].linepnts[k0].linkdirect );
       }
 
       if( l1->lines[i0].parts[j0].intersects )
@@ -518,8 +609,11 @@ void partCalcFieldsPolygon( partDescript *partd ) {
   partd->north = Ymax;
   partd->south = Ymin;
 
-  tmpCentroidx = ( Xmin + Xmax ) / 2.0;
-  tmpCentroidy = ( Ymin + Ymax ) / 2.0;
+  /* Move the centroid a little bit to avoid indeterminacies caused in
+     saw-tooth boundary maps
+  */
+  tmpCentroidx = (( Xmin + Xmax ) / 2.0) - (0.002 * ( Xmax - Xmin ));
+  tmpCentroidy = (( Ymin + Ymax ) / 2.0) - (0.002 * ( Ymax - Ymin ));
   
   /* We must create an array of point descriptors to hold the position
      of East-West intersects. These points are eventually located on
@@ -531,6 +625,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
      really only N-1 points.
   */
 
+  pd0 = NULL;
   pd0 = (pntDescript *)malloc( (partd->numPoints - 1) * sizeof( pntDescript ) );
 
   /* Also a pointer to an area descriptor for the parameters associated
@@ -561,67 +656,17 @@ void partCalcFieldsPolygon( partDescript *partd ) {
       posvecx = partd->linepnts[i0+1].xPosn - tmpCentroidx;
       posvecy = partd->linepnts[i0+1].yPosn - tmpCentroidy;
 
-      if( (i0 == 0 && fabs( posvecy_old ) < HORIZON_WIDTH)  ||
-	  fabs( posvecy ) < HORIZON_WIDTH ) {
+
+      if( fabs(posvecy_old) < HORIZON_WIDTH ||
+	  fabs(posvecy) < HORIZON_WIDTH ) {
+	/* One of the vertices too close to call. Start again! */
 	tryAgain = 1;
-	tmpCentroidy -= 0.02 * ( Ymax - Ymin );
-	break;	
+	tmpCentroidy -= 0.002 * (Ymax - Ymin);
+	break;
       }
-
-      if( i0 == 0 && fabs( posvecy_old ) < HORIZON_WIDTH ) {
-	if( posvecy > 0 ) remindEnd = 1; /* heading North */
-	else remindEnd = -1;             /* heading South */
-      }
-      else if( i0 == partd->numPoints - 2 && remindEnd == 1 ) {
-	if( remindDirect == 1 || posvecy_old < 0 ) {
-	  /* Got an intersect. It is the first (last) point */
-	  pd0[nIntersects].duff = 0;
-	  pd0[nIntersects].isnode = 0;
-	  pd0[nIntersects].xPosn = partd->linepnts[0].xPosn;
-	  pd0[nIntersects].yPosn = partd->linepnts[0].yPosn;
-	  nIntersects++;
-	}
-      }
-      else if( i0 == partd->numPoints - 2 && remindEnd == -1 ) {
-	if( remindDirect == -1 || posvecy_old > 0 ) {
-	  /* Got an intersect. It is the first (last) point */
-	  pd0[nIntersects].duff = 0;
-	  pd0[nIntersects].isnode = 0;
-	  pd0[nIntersects].xPosn = partd->linepnts[0].xPosn;
-	  pd0[nIntersects].yPosn = partd->linepnts[0].yPosn;
-	  nIntersects++;
-	}
-      }
-      else if( !remindDirect && fabs( posvecy ) < HORIZON_WIDTH ) {
-	if( posvecy > 0 ) remindDirect = 1; /* heading North */
-	else remindDirect = -1;             /* heading South */
-      }
-      else if( remindDirect && fabs( posvecy ) < HORIZON_WIDTH ) {
-	/* Do nothing */
-      }
-      else if( (remindDirect == -1 && posvecy < 0) 
-	       || (remindDirect == 1 && posvecy > 0) ) { 
-	/* Found an intersect. It's equal to the current base point */
-
-	/* Unset flag */
-	remindDirect = 0;
-
-	/* Register intersect */
-	pd0[nIntersects].duff = 0;
-	pd0[nIntersects].isnode = 0;
-	pd0[nIntersects].xPosn = partd->linepnts[i0].xPosn;
-	pd0[nIntersects].yPosn = partd->linepnts[i0].yPosn;
-	/* Don't bother about M and Z */
-
-	nIntersects++;
-      }
-      else if( (remindDirect == 1 && posvecy < 0) 
-	       || (remindDirect == -1 && posvecy > 0) ) {
-	/* It's reflected. Not an intersect, but unset flag */
-	remindDirect = 0;
-      }
-      else if( (posvecy_old < 0 && posvecy > 0) || (posvecy_old > 0 && posvecy < 0) ) {
-	/* Again got an intersect. It's between two points so have to calculate it */
+      else if( (posvecy_old < 0 && posvecy > 0) ||
+	       (posvecy_old > 0 && posvecy < 0)) {
+	/* Got an intersect. Calculate it. */
 
 	/* Calculate beta, the y/x slope */
 	if( fabs( posvecx - posvecx_old ) < HORIZON_WIDTH ) {
@@ -643,8 +688,9 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
 	  nIntersects++;
 	}
+
       }
-    
+
       /* Now calculate partial circulation of sector */
       /* THIS WON'T WORK. */
       /* lenvec = sqrt( (posvecx * posvecx) + (posvecy * posvecy) );
@@ -655,18 +701,18 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
       theta_old = getTheta( posvecx_old, posvecy_old );
       theta = getTheta( posvecx, posvecy );
-      if( (i0 == 1 && theta_old < -1.0) || theta < -1.0 )  {
+      /*if( (i0 == 1 && theta_old < -1.0) || theta < -1.0 )  {
 	tryAgain = 1;
-	tmpCentroidy -= 0.05 * ( Ymax - Ymin );
+	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
 	break;
-      }
+	} */ /* ? */
 	
       delta = theta - theta_old;
 
       /* Deal with the case of indeterminacy (it's on an edge) */
-      if( fabs( fabs( delta ) - PI ) < SNAP_RADIUS ) {
+      if( fabs( fabs( delta ) - PI ) < HORIZON_WIDTH ) {
 	tryAgain = 1;
-	tmpCentroidy -= 0.05 * ( Ymax - Ymin );
+	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
 	break;
       }
 
@@ -735,8 +781,15 @@ void partCalcFieldsPolygon( partDescript *partd ) {
       totalCirc += delta;
     }
 
-    /* This should now be positive or negative (non-zero) in value. */
-    assert( totalCirc > 1.0 || totalCirc < -1.0 );
+    /* This should now be positive or negative (non-zero) in value. 
+       though some situations seem to arise where it can `escape'.
+       We will deal with this eventually for now - flag the parent
+       procedure to drop the label
+     */
+    /* assert( totalCirc > 1.0 || totalCirc < -1.0 ); */
+    if(totalCirc < 1.0 && totalCirc > -1.0 ) {
+      totalCirc = 0;
+    }
   }
 
   /* Next, dispose situation where circulation is positive ( ie. anti-clockwise, an island
@@ -749,13 +802,22 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     partd->centroid->ycentroid = newy;
   }
 
-  /* Finally, if circulation is negative, we have an exterior ring
+  /* If circulation is negative, we have an exterior ring
   */
-  if( totalCirc < -1.0 ) {
+  else if( totalCirc < -1.0 ) {
     partd->duff = 0;
     partd->indic = -1.0;
     partd->centroid->xcentroid = newx;
     partd->centroid->ycentroid = newy;
+  }
+
+  /* Otherwise we have a dud ring for some reason. Blank it 
+   */
+  else {
+    partd->duff = 1;
+    partd->indic = 0.0;
+    partd->centroid->xcentroid = 0.0;
+    partd->centroid->ycentroid = 0.0;    
   }
 
   /* THE END */
@@ -1231,3 +1293,17 @@ void recalcCentroid( partDescript *part1, double intsect ) {
 }
 
 
+int procMapType( int iswitch, int *mtype ) {
+  
+  static int mt = 0;
+
+  if( iswitch == GET_MT ) {
+    *mtype = mt;
+    return 0;
+  }
+  else if( iswitch == SET_MT ) {
+    mt = *mtype;
+    return 0;
+  }
+  else return 1;
+}

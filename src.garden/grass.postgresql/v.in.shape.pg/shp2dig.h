@@ -26,6 +26,7 @@
 #define SHP2DIG_INCLUDE
 
 #include "shapefil.h"
+#include "gbtree.h"
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
@@ -42,7 +43,8 @@
 #define SNAP_RADIUS 0.01
 #define HORIZON_WIDTH 0.0000000000000001
 
-
+#define GET_MT 0
+#define SET_MT 1
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
@@ -161,10 +163,9 @@ struct _pntDescript {
   double yPosn;
   double zVal;     
   double mVal;
-  pntDescript *fnodes;  /* Only initialise and use if required        */
-  pntDescript *bnodes;  /* pointers to linking nodes, linked _to_ and */
-  int fnum;		/* linked _from_ respectively, and the        */
-  int bnum;             /* number of links in each case               */
+  pntDescript **linkverts;  /* Only initialise and use if required        */
+  int linknum;		/* links outwards        */
+  double *linkdirect;      /* directions of links (math format)          */
 };
 
 
@@ -179,7 +180,7 @@ struct _segmentList {
   int origID;   /* The original ID from the shapefile. Recommend
 		   0 if not required */
   int numSegments;
-  segmentDescript *segList;
+  segmentDescript *segments;
 };
 
 
@@ -193,7 +194,7 @@ struct _segmentDescript {
   int catID;      /* Principle category (line file) */
   int duff;       /* Currently invalid? */
   int numVertices;
-  pntDescript *vertices;
+  pntDescript **vertices;
   nodeDescript *startnode; /* ie. at index 0 */
   nodeDescript *endnode;   /* at index N-1   */
 };
@@ -247,8 +248,8 @@ struct _fieldDescript {
    defined in shape API, and build line descriptor structure
 */
 
-void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
-		  fieldDescript *cat1, int *fcount );
+void linedCreate( lineList *l1, SHPHandle s1, DBFHandle d1,
+		  fieldDescript *cat1, BTREE *hBank, int *fcount );
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function disposes of all the structures built              */
@@ -364,6 +365,10 @@ int pntInside( partDescript *part1, partDescript *part2, double *maxIsect );
 */
 
 void recalcCentroid( partDescript *part1, double intsect );
+
+/* Set or retrieve the value of map-type required by various functions remotely */
+
+int procMapType( int iswitch, int *mtype );
 
 
 #endif /* SHP2DIG_INCLUDE */
