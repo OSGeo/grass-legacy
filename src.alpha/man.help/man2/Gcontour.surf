@@ -1,0 +1,65 @@
+.TH Gcontour.surf 2G G-language
+.SH NAME
+Gcontour.surf \- Program to generate a surface from contour lines
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.IP "\fBGcontour.surf\fR [-f] input\*=\fIcontour_cell_map\fR output\*=\fIelevation_map\fR"
+.SH DESCRIPTION
+\fIGcontour.surf\fR generates an elevation map from a cell map 
+showing rasterized contour lines.
+The input to the program is as follows:
+.IP \fI-f\fR
+Single-user, "fast" version
+.IP \fIinput\fR
+Grid cell map of contour lines
+.IP \fIoutput\fR
+Output cell map of elevation values
+.SH NOTES
+\fIGcontour.surf\fR expects a cell map of contour lines as input.
+Before using \fIGcontour.surf\fR, run \fIvect.to.cell\fR on a vector map
+of contour lines, where the value of each contour line is its elevation.
+Make sure the resolution of the contour line cell map is the same
+as the desired resolution of the output elevation map.
+
+Any zero (0) values in the input contour cell map
+(i.e., cells in which contour lines do not appear in the input)
+will be treated as NO DATA,
+and indicate the locations for which \fIGcontour.surf\fR will determine
+new elevation values in the output map.
+Therefore, the user should make sure that no \fIreal\fR zero-elevation contour
+lines exist in the input map;
+if they do, the user should adjust input contour values before running
+\fIGcontour.surf\fR, to allow the data's real meaning to be retained in
+the output.
+
+\fIGcontour.surf\fR will give poor results if there are any breaks in the
+contour lines.  Make sure that contour lines are continous (i.e., they continue
+until they meet themselves or go off the edge of the map).
+Do not include partial contour lines.
+
+\fIGcontour.surf\fR determines elevation values by performing a
+linear interpolation between the two closest, unique, bounding lines
+to the cell.
+It uses a flood-fill style algorithm to determine which contour lines
+will be used for interpolating the elevation value of a given cell.
+The time it takes to run \fIGcontour.surf\fR is dependent
+on the amount of open space in the contour cell map.  A contour map
+with lines about five cells apart will run in roughly one fourth the time
+as a contour map with lines about ten cells apart.
+
+The single-user "fast" version of \fIGcontour.surf\fR (invoked with the
+-f option) will run about three times faster than the
+multi-user, friendly version.  The single-user version is a memory hog,
+and will probably not allow any other programs to run well or at all.
+The single-user version will also start "disk-thrashing," slowing down
+the program, if the total number of rows times the total number of columns,
+divided by eight, is greater than the total RAM of the computer.  If the
+size of the map window will cause disk thrashing, or multiple users are on
+the system, the multi-user (default) version of \fIGcontour.surf\fR should
+be used.
+.SH SEE ALSO
+\fIvect.to.cell\fR
+.SH "AUTHOR"
+Charles Ehlschlaeger, U.S. Army Construction Engineering Research
+Laboratory
