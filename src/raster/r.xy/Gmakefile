@@ -1,0 +1,12 @@
+PROG = $(BIN_CONTRIB_CMD)/r.xy
+
+LIBES = $(GISLIB) $(VASK) 
+
+OBJ =\
+	main.o\
+	createxy.o
+
+$(PROG): ${OBJ} ${LIBES}
+	 ${CC} ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+
+$(LIBES): #
