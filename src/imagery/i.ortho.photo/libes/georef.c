@@ -183,11 +183,3 @@ static  void catch (int n)
     signal (n, catch);
 }
 
-int I_georef (double e1, double n1,
-    double *e2, double *n2, double E[3], double N[3])
-{
-    *e2 = E[0] + E[1] * e1 + E[2] * n1;
-    *n2 = N[0] + N[1] * e1 + N[2] * n1;
-
-    return 0;
-}
