@@ -9,7 +9,7 @@ EXTRA_CFLAGS= -I${PANEL_INCDIR} $(GLINC) -DVERSION_NUMBER="\"$(VERSION_NUMBER)\"
 # one for pre-IRIX 5.0, other for IRIX 5.0+, in architecture-specific
 # directories
 # Also use this line if you have comiled libpanel using gmake5
-PANELLIB= ${PANEL_LIBDIR}/libpanel.a
+PANELLIB= ../../CERL/SGI/panel/9.6/src/libpanel.a
 
 # otherwise, use this line (if you have compiled it with make)
 #PANELLIB= ${PANEL_LIBDIR}/libpanel.\a

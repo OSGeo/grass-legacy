@@ -4,7 +4,11 @@ include @DSTDIR@/mk/vars.mk
 INST_DIR	= ${prefix}/grass${NAME_VER}
 ERROR_LOG	= error.log
 
-all: dirs gmake binaries links documents
+SERVERNAME=		`uname -n`
+ARCH=			@ARCH@
+MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
+
+all: dirs gmake documents binaries links
 
 makefiles:
 	@echo "making makefiles ..."
@@ -54,6 +58,9 @@ binaries:
 		done
 	echo "End of compilation:   "`date` >> ${ERROR_LOG}
 
+strip:
+	${SHELL} -c "cd ${GISBASE} ; find . -type f -perm +111 -exec strip {} \; ; true"
+
 links:
 	@echo "making links ..."
 	@( cd ${GISBASE}/etc/bin/cmd;   ls; \
@@ -63,13 +70,19 @@ links:
 			rm -f ${GISBASE}/bin/$$file ; \
 			ln ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
 		done
+ifeq ($(GRASS_LIBRARY_TYPE),shlib)
+	cp -af ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib	
+endif	
+	@cp -f error.log ${SRCDIR}/error.log
+	@( cd ${SRCDIR}; \
+	   ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}; )
 
 documents:
 	${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -f ${SRCDIR}/mk/Makefile.docs documents
 
 install:
 	-mkdir -p ${INST_DIR}
-	-tar cfC - ${GISBASE} . | tar xBfC - ${INST_DIR}
+	-(cd ${GISBASE}; tar cf - .) | (cd ${INST_DIR}; tar xBf -)
 	-mkdir -p ${UNIX_BIN}
 	-sed -e 's#^GISBASE.*#GISBASE=${INST_DIR}#' ${GRASS_BIN}/grass${NAME_VER} > ${UNIX_BIN}/grass${NAME_VER}
 	-chmod a+x ${UNIX_BIN}/grass${NAME_VER}

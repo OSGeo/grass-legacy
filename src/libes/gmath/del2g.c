@@ -14,6 +14,10 @@ Details:        This routine does a convolution of the Marr-Hildreth operator
 
 Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 */
+#include "config.h"
+
+#if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H)
+
 #include <stdio.h>
 #include "gmath.h"
 #include "numerical.h"
@@ -46,3 +50,5 @@ del2g (double *img[2], int size, double w)
 
   return 0;
 }
+
+#endif

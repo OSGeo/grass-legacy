@@ -21,10 +21,18 @@ LOCALE          = $(GISBASE)/locale
 CFLAGS      = -I$(OBJARCH) -I$(CURDIR) -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
 CXXFLAGS    = -I$(OBJARCH) -I$(CURDIR) -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS_CXX) $(EXTRA_CXXFLAGS) $(USE_TERMIO)
 LDFLAGS     = -L$(LIBDIR) $(LINK_FLAGS)
-MANROFF     = # 
-LIBRULE_ST  = ar ruv $@ $?; $(RANLIB) $@
+MANROFF     = #
+LIBRULE_ST  = $(STLIB_LD) $@ $?; $(RANLIB) $@
 LIBRULE     = $(LIBRULE_ST)
+ifeq ($(GRASS_LIBRARY_TYPE),shlib)
+LIB_RUNTIME_DIR = ${LIBDIR}
+LDFLAGS    += $(GRASS_SHLIB_LD_EXTRAS) $(LD_SEARCH_FLAGS)
+LIBRULE_SH  = $(SHLIB_LD) -o $@ ${LDFLAGS} $^ $(SLIBDEPS)
+SLIBRULE    = $(LIBRULE_SH)
+CFLAGS     += $(SHLIB_CFLAGS)
+else
 SLIBRULE    = $(LIBRULE_ST)
+endif
 
 # various source directories and libraries
 LIBDIR      = $(DSTDIR)/src/libes
@@ -32,111 +40,112 @@ INCLUDE_DIR = $(SRC)/include
 CONFIG_DIR  = $(DSTDIR)/src/include
 
 # libraries
-DEPGISLIB      = $(LIBDIR)/libgis.a
-GISLIB         = -lgis $(SOCKLIB) $(INTLLIB)
+DEPGISLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_gis$(LIB_SUFFIX)
+GISLIB         = -lgrass_gis $(SOCKLIB) $(INTLLIB)
 
-DEPVASKLIB     = $(LIBDIR)/libvask.a
-VASKLIB        = -lvask
+DEPVASKLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_vask$(LIB_SUFFIX)
+VASKLIB        = -lgrass_vask
 
-DEPEDITLIB     = $(LIBDIR)/libgedit.a
-EDITLIB        = -lgedit
+DEPEDITLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_gedit$(LIB_SUFFIX)
+EDITLIB        = -lgrass_gedit
 
-DEPG3DLIB      = $(LIBDIR)/libg3d.a
-G3DLIB         = -lg3d
+DEPG3DLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_g3d$(LIB_SUFFIX)
+G3DLIB         = -lgrass_g3d
 
-DEPICONLIB     = $(LIBDIR)/libicon.a
-ICONLIB        = -licon
+DEPICONLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_icon$(LIB_SUFFIX)
+ICONLIB        = -lgrass_icon
 
-DEPLOCKLIB     = $(LIBDIR)/liblock.a
-LOCKLIB        = -llock
+DEPLOCKLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_lock$(LIB_SUFFIX)
+LOCKLIB        = -lgrass_lock
 
-DEPIMAGERYLIB  = $(LIBDIR)/libI.a
-IMAGERYLIB     = -lI
+DEPIMAGERYLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_I$(LIB_SUFFIX)
+IMAGERYLIB     = -lgrass_I
 
-DEPROWIOLIB    = $(LIBDIR)/librowio.a
-ROWIOLIB       = -lrowio
+DEPROWIOLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_rowio$(LIB_SUFFIX)
+ROWIOLIB       = -lgrass_rowio
 
-DEPCOORCNVLIB  = $(LIBDIR)/libcoorcnv.a
-COORCNVLIB     = -lcoorcnv
+DEPCOORCNVLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_coorcnv$(LIB_SUFFIX)
+COORCNVLIB     = -lgrass_coorcnv
 
-DEPSEGMENTLIB  = $(LIBDIR)/libsegment.a
-SEGMENTLIB     = -lsegment
+DEPSEGMENTLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_segment$(LIB_SUFFIX)
+SEGMENTLIB     = -lgrass_segment
 
-DEPGPROJLIB    = $(LIBDIR)/libgproj.a
-GPROJLIB       = -lgproj $(PROJLIB)
+DEPGPROJLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_gproj$(LIB_SUFFIX)
+GPROJLIB       = -lgrass_gproj $(PROJLIB)
 
-DEPBTREELIB    = $(LIBDIR)/libbtree.a
-BTREELIB       = -lbtree
+DEPBTREELIB    = $(LIBDIR)/$(LIB_PREFIX)grass_btree$(LIB_SUFFIX)
+BTREELIB       = -lgrass_btree
 
-DEPIBTREELIB   = $(LIBDIR)/libibtree.a
-IBTREELIB      = -libtree
+DEPIBTREELIB   = $(LIBDIR)/$(LIB_PREFIX)grass_ibtree$(LIB_SUFFIX)
+IBTREELIB      = -lgrass_ibtree
 
-DEPGMATHLIB    = $(LIBDIR)/libgmath.a
-GMATHLIB       = -lgmath
+DEPGMATHLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_gmath$(LIB_SUFFIX)
+GMATHLIB       = -lgrass_gmath
 
-DEPDLGLIB      = $(LIBDIR)/libdlg.a
-DLGLIB         = -ldlg
+DEPDLGLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_dlg$(LIB_SUFFIX)
+DLGLIB         = -lgrass_dlg
 
-DEPRASTERLIB   = $(LIBDIR)/libraster.a
-RASTERLIB      = -lraster
+DEPRASTERLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_raster$(LIB_SUFFIX)
+RASTERLIB      = -lgrass_raster
 
-DEPDISPLAYLIB  = $(LIBDIR)/libdisplay.a
-DISPLAYLIB     = -ldisplay
+DEPDISPLAYLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_display$(LIB_SUFFIX)
+DISPLAYLIB     = -lgrass_display
 
-DEPD_LIB       = $(LIBDIR)/libD.a
-D_LIB          = -lD
+DEPD_LIB       = $(LIBDIR)/$(LIB_PREFIX)grass_D$(LIB_SUFFIX)
+D_LIB          = -lgrass_D
 
-DEPDATETIMELIB = $(LIBDIR)/libdatetime.a
-DATETIMELIB    = -ldatetime
+DEPDATETIMELIB = $(LIBDIR)/$(LIB_PREFIX)grass_datetime$(LIB_SUFFIX)
+DATETIMELIB    = -lgrass_datetime
 
-DEPDRIVERLIB   = $(LIBDIR)/libdriver.a
-DRIVERLIB      = -ldriver
+DEPDRIVERLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_driver$(LIB_SUFFIX)
+DRIVERLIB      = -lgrass_driver
 
-DEPLINKMLIB    = $(LIBDIR)/liblinkm.a
-LINKMLIB       = -llinkm
+DEPLINKMLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_linkm$(LIB_SUFFIX)
+LINKMLIB       = -lgrass_linkm
 
-DEPBITMAPLIB   = $(LIBDIR)/libbitmap.a
-BITMAPLIB      = -lbitmap
+DEPBITMAPLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_bitmap$(LIB_SUFFIX)
+BITMAPLIB      = -lgrass_bitmap
 
-DEPDIGLIB      = $(LIBDIR)/libdig.a
-DIGLIB         = -ldig
+DEPDIGLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_dig$(LIB_SUFFIX)
+DIGLIB         = -lgrass_dig
 
-DEPDIG2LIB     = $(LIBDIR)/libdig2.a
-DIG2LIB        = -ldig2
+DEPDIG2LIB     = $(LIBDIR)/$(LIB_PREFIX)grass_dig2$(LIB_SUFFIX)
+DIG2LIB        = -lgrass_dig2
 
-DEPVECTLIB_REAL= $(LIBDIR)/libvect.a
-VECTLIB_REAL   = -lvect
+DEPVECTLIB_REAL= $(LIBDIR)/$(LIB_PREFIX)grass_vect$(LIB_SUFFIX)
+VECTLIB_REAL   = -lgrass_vect
 
-DEPDIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
-DIG_ATTLIB     = -ldig_atts
+DEPDIG_ATTLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_dig_atts$(LIB_SUFFIX)
+DIG_ATTLIB     = -lgrass_dig_atts
 
 DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
 VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
 
-DEPDBMILIB     = $(LIBDIR)/libdbmi.a
+# Cannot be made shared
+DEPDBMILIB     = $(LIBDIR)/$(STLIB_PREFIX)dbmi$(STLIB_SUFFIX)
 DBMILIB        = -ldbmi
 
-DEPIMAGESUPLIB = $(LIBDIR)/libimage_sup.a
-IMAGESUPLIB    = -limage_sup
+DEPIMAGESUPLIB = $(LIBDIR)/$(LIB_PREFIX)grass_image_sup$(LIB_SUFFIX)
+IMAGESUPLIB    = -lgrass_image_sup
 
 # triangulation libraries
 
-DEPSOSLIB      = $(LIBDIR)/libsos.a
-SOSLIB         = -lsos
+DEPSOSLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_sos$(LIB_SUFFIX)
+SOSLIB         = -lgrass_sos
 
-DEPLIALIB      = $(LIBDIR)/liblia.a
-LIALIB         = -llia
+DEPLIALIB      = $(LIBDIR)/$(LIB_PREFIX)grass_lia$(LIB_SUFFIX)
+LIALIB         = -lgrass_lia
 
-DEPOPTRILIB    = $(LIBDIR)/liboptri.a
-OPTRILIB       = -loptri
+DEPOPTRILIB    = $(LIBDIR)/$(LIB_PREFIX)grass_optri$(LIB_SUFFIX)
+OPTRILIB       = -lgrass_optri
 
-DEPBASICLIB    = $(LIBDIR)/libbasic.a
-BASICLIB       = -lbasic
+DEPBASICLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_basic$(LIB_SUFFIX)
+BASICLIB       = -lgrass_basic
 
 DEPGEOMLIB     = $(DEPOPTRILIB) $(DEPSOSLIB) $(DEPLIALIB) $(DEPBASICLIB)
 GEOMLIB        = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)
 
-DEPXDISPLAYLIB = $(LIBDIR)/libXdisplay.a
-XDISPLAYLIB    = -lXdisplay
+DEPXDISPLAYLIB = $(LIBDIR)/$(LIB_PREFIX)grass_Xdisplay$(LIB_SUFFIX)
+XDISPLAYLIB    = -lgrass_Xdisplay
 
 #########################################################################
