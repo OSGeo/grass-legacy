@@ -10,6 +10,7 @@
 #include "colors.h"
 #include "pad.h"
 #include "gis.h"
+#include "glocale.h"
 
 static void spawnRedrawProcess(void);
 static void checkRedrawProcess(void);
@@ -123,7 +124,7 @@ static void checkRedrawProcess(void)
 
     if (pid != redraw_pid)
     {
-	fprintf(stderr, "Monitor: waitpid: expected %d but got %d\n",
+	fprintf(stderr, _("Monitor: waitpid: expected %d but got %d\n"),
 		redraw_pid, pid);
 	return;
     }
@@ -334,13 +335,13 @@ static void setTitleBusy(int busy)
 
     if (!XGetWMName(dpy, grwin, &prop))
     {
-	fprintf(stderr, "Monitor: XGetWMName failed\n");
+	fprintf(stderr, _("Monitor: XGetWMName failed\n"));
 	return;
     }
 
     if (!prop.value || !prop.nitems || prop.format != 8)
     {
-	fprintf(stderr, "Monitor: XGetWMName: bad result\n");
+	fprintf(stderr, _("Monitor: XGetWMName: bad result\n"));
 	return;
     }
 

@@ -6,6 +6,7 @@
 #include "raster.h"
 #include "plot.h"
 #include "symbol.h"
+#include "glocale.h"
 
 int plot1 (
     struct Map_info *Map, int type, int area, 
@@ -47,7 +48,7 @@ int plot1 (
 	    switch ( ltype )
 	    {
 	    case -1:
-		fprintf (stderr, "\nERROR: vector file - can't read\n" );
+		fprintf (stderr, _("\nERROR: vector file - can't read\n" ));
 		return -1;
 	    case -2: /* EOF */
 		return  0;

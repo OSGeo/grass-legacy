@@ -12,6 +12,7 @@
 #include "Vect.h"
 #define	MAIN
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 main (int argc, char **argv)
@@ -144,8 +145,8 @@ main (int argc, char **argv)
 	R_close_driver();
 	if (stat || !nlists)
 	{
-	    fprintf(stderr, "ERROR: can not get \"list\" items\n");
-	    fprintf(stderr, "-j flag forced\n");
+	    fprintf(stderr, _("ERROR: can not get \"list\" items\n"));
+	    fprintf(stderr, _("-j flag forced\n"));
 	    just->answer = 1;
 	}
 	else
@@ -182,7 +183,7 @@ main (int argc, char **argv)
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
     {
-	fprintf(stderr, "ERROR: No map is displayed in GRASS monitor\n");
+	fprintf(stderr, _("ERROR: No map is displayed in GRASS monitor\n"));
 	exit(1);
     }
 
@@ -306,7 +307,7 @@ main (int argc, char **argv)
     D_setup(0);
 
     if ( !hand->answer ) { 
-        fprintf(stderr, "%d raster%s, %d vector%s\n",
+        fprintf(stderr, _("%d raster%s, %d vector%s\n"),
 		    nrasts, (nrasts > 1 ? "s":""),
 		    nvects, (nvects > 1 ? "s":""));
     }
@@ -332,7 +333,7 @@ main (int argc, char **argv)
     if (vect)
       R_pad_freelist(vect, nvects);
 
-    fprintf(stdout,"Zooming finished.\n");
+    fprintf(stdout,_("Zooming finished.\n"));
     exit(stat);
 }
 

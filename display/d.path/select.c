@@ -8,6 +8,7 @@
 #include "Vect.h"
 #include "colors.h"
 #include "proto.h"
+#include "glocale.h"
 
 #define WDTH 5
 
@@ -28,7 +29,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
     msize = 10 * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */ 
     G_debug (1, "msize = %f\n", msize);
     
-    fprintf (stderr, "L: from  M: to R: quit\n");
+    fprintf (stderr, _("L: from  M: to R: quit\n"));
     
     while ( 1 ) {
 	R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
@@ -53,7 +54,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 
 	if ( node > 0 ) {
 	    Vect_get_node_coor ( Map, node, &nx, &ny, NULL); 
-    	    fprintf (stderr, "Node %d: %f %f\n", node, nx, ny);
+    	    fprintf (stderr, _("Node %d: %f %f\n"), node, nx, ny);
 	}
 
 	if ( sp_disp ) { /* erase old */
@@ -129,11 +130,11 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 	    ret = Vect_net_shortest_path_coor ( Map, fx, fy, 0.0, tx, ty, 0.0, 5*maxdist, 5*maxdist,
 				                &cost, Points, NULL, NULL, NULL, &fdist, &tdist );
 	    if ( ret == 0 ) {
-		fprintf (stdout, "Destination unreachable\n" );
+		fprintf (stdout, _("Destination unreachable\n") );
 		sp_disp = 0;
 	    } else { 
-		fprintf (stdout, "Costs on the network = %f\n", cost);
-		fprintf (stdout, "  Distance to the network = %f, distance from the network = %f\n",  
+		fprintf (stdout, _("Costs on the network = %f\n"), cost);
+		fprintf (stdout, _("  Distance to the network = %f, distance from the network = %f\n"),  
 			          fdist, tdist);
 		
 	        display ( Map, Points, hcolor, 1, 1 );

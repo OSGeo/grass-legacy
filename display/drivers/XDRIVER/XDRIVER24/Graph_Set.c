@@ -21,6 +21,7 @@
 #include "colors.h"
 #include "icon.bit"
 #include "winname.h"
+#include "glocale.h"
 
 /* This program is a rewrite of the original Grah_Set from the GRASS
  * 3.0 version. All suncore and sunview related stuff (which was the
@@ -112,9 +113,9 @@ find_truecolor_visual(void)
 
     mvisual_info = XGetVisualInfo(dpy, search_mask, &search_template, &num_visuals);
 
-    fprintf (stderr,"found %d visuals of type TrueColor\n", num_visuals);
+    fprintf (stderr,_("found %d visuals of type TrueColor\n"), num_visuals);
 
-    fprintf(stderr,"searching for highest bit depth\n");
+    fprintf(stderr,_("searching for highest bit depth\n"));
 
     for (vis_num = 0; vis_num < num_visuals; vis_num++)
     {
@@ -131,7 +132,7 @@ find_truecolor_visual(void)
     if (highest_bit_depth == 0)
         G_warning("unable to find a TrueColor visual\n");
     else
-	fprintf(stderr, "selected %d bit depth\n", use_bit_depth);
+	fprintf(stderr, _("selected %d bit depth\n"), use_bit_depth);
 }
 
 static void
@@ -193,7 +194,7 @@ create_window(int argc, char **argv)
     {
 	use_visual = DefaultVisual(dpy, scrn);
 	use_bit_depth = DefaultDepth(dpy, scrn);
-	fprintf(stderr, "using default visual which is %s\n",
+	fprintf(stderr, _("using default visual which is %s\n"),
 		classname[use_visual->class]);
     }
 

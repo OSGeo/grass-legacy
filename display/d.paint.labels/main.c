@@ -4,6 +4,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char **argv)
 {
@@ -71,7 +72,7 @@ int main (int argc, char **argv)
     if ( minreg_opt->answer ) {
         minreg = atof ( minreg_opt->answer );
         if ( reg < minreg ) {
-            fprintf ( stdout, "Region size is lower than minreg, nothing displayed.\n");
+            fprintf ( stdout, _("Region size is lower than minreg, nothing displayed.\n"));
 	    D_add_to_list(G_recreate_command()) ;
             R_close_driver();
 	    exit (0);
@@ -80,7 +81,7 @@ int main (int argc, char **argv)
     if ( maxreg_opt->answer ) {
         maxreg = atof ( maxreg_opt->answer );
 	if ( reg > maxreg ) {
-	    fprintf ( stdout, "Region size is greater than maxreg, nothing displayed.\n");
+	    fprintf ( stdout, _("Region size is greater than maxreg, nothing displayed.\n"));
 	    D_add_to_list(G_recreate_command()) ;
             R_close_driver();
 	    exit (0);

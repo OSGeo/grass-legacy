@@ -4,6 +4,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define NL	012
 #define TAB	011
@@ -139,7 +140,7 @@ do_labels (FILE *infile)
 	else
 	{
 		if (sscanf (text, "%1s", buff) == 1)
-		    fprintf(stderr,"Error: %s\n", text) ;
+		    fprintf(stderr,_("Error: %s\n"), text) ;
 	}
     }
 

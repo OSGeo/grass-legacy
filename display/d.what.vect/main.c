@@ -15,6 +15,7 @@
 #include "raster.h"
 #include "what.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 /* Vector map grabbing taken from d.zoom */
 
@@ -147,7 +148,7 @@ int main(int argc, char **argv)
   R_close_driver();
   R_pad_freelist(vect, nvects);
 
-  fprintf(stderr, "Done.\n");
+  fprintf(stderr, _("Done.\n"));
   exit(0);
 }
 

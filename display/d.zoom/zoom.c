@@ -2,6 +2,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 {
@@ -11,10 +12,10 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 
     while( !end ) {
 	if (printmenu){
-	    fprintf(stderr, "\n\nButtons:\n") ;
-	    fprintf(stderr, "%s Zoom menu\n", LEFTS);
-	    fprintf(stderr, "%s Pan\n", MIDDLES);
-	    fprintf(stderr, "%s Quit\n", RIGHTS);
+	    fprintf(stderr, _("\n\nButtons:\n")) ;
+	    fprintf(stderr, _("%s Zoom menu\n"), LEFTS);
+	    fprintf(stderr, _("%s Pan\n"), MIDDLES);
+	    fprintf(stderr, _("%s Quit\n"), RIGHTS);
 	    printmenu = 0;
 	}
 
@@ -37,8 +38,8 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 #ifdef QUIET
     if(!quiet)
     {
-	fprintf(stderr, "This region now saved as current region.\n\n") ;
-	fprintf(stderr, "Note: run 'd.erase' for the new region to affect the graphics.\n");
+	fprintf(stderr, _("This region now saved as current region.\n\n")) ;
+	fprintf(stderr, _("Note: run 'd.erase' for the new region to affect the graphics.\n"));
     }
 #endif
     return(0) ;

@@ -3,6 +3,7 @@
 #include "display.h"
 #include "raster.h"
 #include "plot.h"
+#include "glocale.h"
 
 
 int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
@@ -34,7 +35,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
         switch ( ltype )
 	{
 	case -1:
-	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
+	    fprintf (stderr, _("\nERROR: vector file - can't read\n" ));
 	    return -1;
 	case -2: /* EOF */
 	    return  0;

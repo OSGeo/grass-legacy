@@ -5,6 +5,7 @@
 #include "display.h"
 #include "raster.h"
 #include "plot.h"
+#include "glocale.h"
 
 
 int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
@@ -30,7 +31,7 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
         switch ( ltype )
 	{
 	case -1:
-	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
+	    fprintf (stderr, _("\nERROR: vector file - can't read\n" ));
 	    return -1;
 	case -2: /* EOF */
 	    return  0;

@@ -16,6 +16,7 @@
 #include "symbol.h"
 #include "dbmi.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int quiet = 1;
 
@@ -207,7 +208,7 @@ main (int argc, char **argv)
 	    minreg = atof ( minreg_opt->answer );
              
 	    if ( reg < minreg ) {
-		fprintf ( stdout, "Region size is lower than minreg, nothing displayed.\n");
+		fprintf ( stdout, _("Region size is lower than minreg, nothing displayed.\n"));
 	        D_add_to_list(G_recreate_command()) ;
 		exit (0);
 	    }
@@ -216,7 +217,7 @@ main (int argc, char **argv)
 	    maxreg = atof ( maxreg_opt->answer );
              
 	    if ( reg > maxreg ) {
-		fprintf ( stdout, "Region size is greater than maxreg, nothing displayed.\n");
+		fprintf ( stdout, _("Region size is greater than maxreg, nothing displayed.\n"));
 	        D_add_to_list(G_recreate_command()) ;
 		exit (0);
 	    }
@@ -413,7 +414,7 @@ main (int argc, char **argv)
                       D_move_abs, D_cont_abs);
 
 	if (!quiet)
-	     fprintf (stdout,"Plotting ... "); fflush (stdout);
+	     fprintf (stdout,_("Plotting ... ")); fflush (stdout);
 
 	if ( level >= 2 )
 	    Vect_get_map_box ( &Map, &box );
@@ -422,7 +423,7 @@ main (int argc, char **argv)
 		             window.east < box.W ||
 			     window.west > G_adjust_easting(box.E, &window) ) )
 	{
-	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.\n");
+	    fprintf (stdout,_("The bounding box of the map outside current region, nothing displayed.\n"));
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
 	    G_debug ( 1, "overlap = %f \n", overlap );
@@ -476,7 +477,7 @@ main (int argc, char **argv)
 	R_close_driver();
 
         if (!quiet)
-	    fprintf (stdout,"Done\n");
+	    fprintf (stdout,_("Done\n"));
 	
 	Vect_close (&Map);
 	Vect_destroy_cat_list (Clist);
