@@ -57,6 +57,10 @@ Somewhat similar program functions to those performed by \fIr.mask\fR can be don
 using \fIr.mapcalc\fR, \fIg.region\fR, and other programs.
 .LP
 This program can only be run interactively.
+.LP
+Note that some programs, like \fIr.stats\fR, have options that allow the
+user to see the effects of the current mask without removing the current
+mask.  See, for example, use of the -m option for \fIr.stats\fR.
 .SH SEE ALSO
 .I g.copy,
 .I g.region,
@@ -65,8 +69,8 @@ This program can only be run interactively.
 .I r.combine,
 .I r.infer,
 .I r.mapcalc,
-.I r.mapmask,
 .I r.reclass,
+.I r.stats,
 .I r.weight
 .SH "AUTHOR"
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
