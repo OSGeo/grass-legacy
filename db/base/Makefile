@@ -20,13 +20,11 @@ default: \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
-	$(HOME)/db.connect \
-	allhtml
+	$(HOME)/db.connect
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.columns || ln $(ETC)/front.end $(BIN)/db.columns
-	PGM=$(HOME)/db.columns html
 
 $(HOME)/db.copy: $(OBJDIR)/copy.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -74,7 +72,7 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o
 
 PROGRAMS = db.columns db.copy db.createdb db.dropdb db.droptable db.databases db.describe db.drivers db.execute db.select db.tables db.connect
 
-allhtml: *.html
+html:
 	for prog in $(PROGRAMS) ; do \
 		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
