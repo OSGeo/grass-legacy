@@ -1,0 +1,2 @@
+Mmain	main.c	/^main(argc, argv)$/
+infxQry	infxQry.c	/^infxQry(selectFile,key,raster,rastout,label)$/
