@@ -3,7 +3,6 @@
 #include "Vect.h"
 #include "gis.h"
 
-char *Id="@(#) 1.20 4/23/91 /usr/grass4.0/src.contrib/SCS/psu/s.vtoc.c";
 extern int cur_category;
 char * G_malloc ();
 char * G_calloc ();
