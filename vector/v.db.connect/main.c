@@ -121,7 +121,7 @@ int main (int argc, char **argv)
     G_debug ( 3, "Mapset = %s", mapset);
 
     if (print->answer || columns->answer)
-      Vect_open_old ( &Map, inopt->answer, G_mapset());
+      Vect_open_old ( &Map, inopt->answer, mapset);
     else
     {
       Vect_open_update ( &Map, inopt->answer, G_mapset());
