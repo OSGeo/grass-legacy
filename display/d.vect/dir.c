@@ -9,8 +9,8 @@
 
 int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
 {
-    int    i, ltype, dsize, msize;
-    double len, x, y, angle;
+    int    i, ltype, dsize;
+    double len, x, y, angle, msize;
     struct line_pnts *Points;
     struct line_cats *Cats;
     int cat;

@@ -57,12 +57,12 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    Vect_append_point ( Points, xl, yl ); /* ??? */
 	}
 	
-        R_standard_color(fcolor) ;
+        R_color(fcolor) ;
 	G_plot_polygon ( Points->x, Points->y, Points->n_points);
 	
 	/* boundary */
 	Vect_get_area_points ( Map, area, Points );   
-        R_standard_color(bcolor) ;
+        R_color(bcolor) ;
 	for ( i = 0; i < Points->n_points - 1; i++) { 
             G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
 	}

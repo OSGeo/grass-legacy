@@ -18,7 +18,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
-    R_standard_color(lattr->color) ;
+    R_color(lattr->color) ;
     R_text_size(lattr->size, lattr->size) ;
     R_font(lattr->font) ;
 	
@@ -92,16 +92,16 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	    
 	    if( lattr->bgcolor)
 	      {
-		R_standard_color( lattr->bgcolor) ;
+		R_color( lattr->bgcolor) ;
 		R_polygon_abs(xarr, yarr, 5) ;
 	      }
 	    
 	    if( lattr->bcolor)
 	      {
-		 R_standard_color( lattr->bcolor) ;
+		 R_color( lattr->bcolor) ;
 		 R_polyline_abs(xarr, yarr, 5) ;
 	      }
-	    R_standard_color(lattr->color) ;
+	    R_color(lattr->color) ;
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
@@ -153,16 +153,16 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	    
 	    if( lattr->bgcolor)
 	      {
-		R_standard_color( lattr->bgcolor) ;
+		R_color( lattr->bgcolor) ;
 		R_polygon_abs(xarr, yarr, 5) ;
 	      }
 	    
 	    if( lattr->bcolor)
 	      {
-		 R_standard_color( lattr->bcolor) ;
+		 R_color( lattr->bcolor) ;
 		 R_polyline_abs(xarr, yarr, 5) ;
 	      }
-	    R_standard_color(lattr->color) ;
+	    R_color(lattr->color) ;
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
