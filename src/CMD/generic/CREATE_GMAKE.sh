@@ -33,3 +33,5 @@ echo ":"                                      > $UNIX_BIN/gmakelinks$NAME_VER
 echo "GMAKE=$UNIX_BIN/gmake$NAME_VER"        >> $UNIX_BIN/gmakelinks$NAME_VER
 echo ". $SRC/src/CMD/generic/MAKELINKS.sh"   >> $UNIX_BIN/gmakelinks$NAME_VER
 chmod ugo+x $UNIX_BIN/gmakelinks$NAME_VER
+
+exit 0
