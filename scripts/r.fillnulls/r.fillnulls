@@ -5,10 +5,11 @@
 # MODULE:	r.fillnulls
 # AUTHOR(S):	Markus Neteler <neteler itc it>
 #               Updated to GRASS 5.7 by Michael Barton
+#               Updated to GRASS 6.0 by Markus Neteler
 # PURPOSE:	fills NULL (no data areas) in raster maps
 #               The script respects a user mask (MASK) if present.
 #
-# COPYRIGHT:	(C) 2001,2004 by the GRASS Development Team
+# COPYRIGHT:	(C) 2001,2004,2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -110,10 +111,17 @@ echo Using tmp file $TMP1
 # interpolate from these surrounding one pixel area
 
 echo "Locating and isolating NULL areas..."
-r.mapcalc $TMP1="if(isnull($GIS_OPT_input))"
-r.grow input=$TMP1 output=MASK
+#creating 0/1 map:
+r.mapcalc $TMP1="if(isnull($GIS_OPT_input),1,null())"
 
-# now we would see only the outlines of the NULL areas if looking at INPUT.
+#generate a ring:
+nsres=`g.region -g | grep 'nsres=' | sed s/nsres=//`
+ewres=`g.region -g | grep 'ewres=' | sed s/ewres=//`
+RES=`echo $nsres $ewres | awk '{printf "%.2f", ($1 + $2)/2.}'`
+r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
+r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
+
+# now we only see the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
 echo "Creating interpolation points..."
 r.to.vect input=$GIS_OPT_input output=vecttmp_fillnulls_$$ feature=point
@@ -128,28 +136,47 @@ echo ""
 echo "Interpolating $POINTSNUMBER points"
 echo ""
 
-# don't set a mask for interpolation to avoid problem:
+if [ $POINTSNUMBER -lt 2 ] ; then
+  echo "Not sufficient points to interpolate. Maybe no hole(s) to fill in the map?"
+  #remove internal MASK first
+  g.remove MASK > /dev/null
+
+  #restoring user's mask, if present:
+  if test -f $LOCATION/cell/mask.$$
+  then
+   echo "Restoring user mask (MASK)..."
+   g.rename mask.$$,MASK > /dev/null
+  fi
+  
+  #cleanup
+  g.remove rast=$TMP1,$TMP1.buf,rfillnulls_$TMP1 > /dev/null
+
+  exit 1
+fi
+
 echo ""
 echo "Note: Below warnings may be ignored."
 echo ""
 
+#remove internal MASK first
+g.remove MASK > /dev/null
+
 RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_tension smooth=$GIS_OPT_smooth"
 
-if [ $POINTSNUMBER  -ge 800 ] ; then
+SEGMAX=400
+if [ $POINTSNUMBER  -ge $SEGMAX ] ; then
   echo "Using segmentation for interpolation..."
   $RST_CMD input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 #2> /dev/null
 else
-  #if less than 800 points, use no segmentation for speedup:
+  #if less than $SEGMAX points, use no segmentation for speedup:
   echo "Using no segmentation for interpolation as not needed..."
-  $RST_CMD input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=700 #2> /dev/null
+  $RST_CMD input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=$SEGMAX #2> /dev/null
 fi
 
-echo ""
+echo "------------------------------------"
 echo "Note: Above warnings may be ignored."
 echo ""
 
-#remove internal MASK first
-g.remove MASK > /dev/null
 
 #restoring user's mask, if present:
 if test -f $LOCATION/cell/mask.$$
@@ -160,10 +187,11 @@ fi
 
 #patch orig and fill map
 echo "Patching fill data into NULL areas..."
-r.patch in=$GIS_OPT_input,rfillnulls_$TMP1 out=$GIS_OPT_output
+# we can use --o here as g.parser already checks on startup
+r.patch in=$GIS_OPT_input,rfillnulls_$TMP1 out=$GIS_OPT_output --o
 
 #cleanup
-g.remove rast=$TMP1,rfillnulls_$TMP1 > /dev/null
+g.remove rast=$TMP1,$TMP1.buf,rfillnulls_$TMP1 > /dev/null
 g.remove vect=vecttmp_fillnulls_$$ > /dev/null
 rm -f TMP2
 
