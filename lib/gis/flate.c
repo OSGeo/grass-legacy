@@ -22,17 +22,18 @@
 
 /********************************************************************
  * int                                                              *
- * G_zlib_read (fd, dst, nbytes)                                    *
- *     int fd, nbytes;                                              *
+ * G_zlib_read (fd, rbytes, dst, nbytes)                            *
+ *     int fd, rbytes, nbytes;                                      *
  *     unsigned char *dst;                                          *
  * ---------------------------------------------------------------- *
  * This is the basic function for reading a compressed chunk of a   *
  * data file.  The file descriptor should be in the proper location *
  * and the 'dst' array should have enough space for the data.       *
- * 'nbytes' is the size of 'dst'.  For best results, 'nbytes'       *
- * should be the exact amount of space needed for the expansion.    *
- * Too large a value of nbytes may cause more data to be expanded   *
- * than is desired.                                                 *
+ * 'nbytes' is the size of 'dst'.  The 'rbytes' parameter is the    *
+ * number of bytes to read (knowable from the offsets index). For   *
+ * best results, 'nbytes' should be the exact amount of space       *
+ * needed for the expansion.  Too large a value of nbytes may cause *
+ * more data to be expanded than is desired.                        *
  * Returns: The number of bytes decompressed into dst, or an error. *
  *                                                                  *
  * Errors include:                                                  *
@@ -127,8 +128,8 @@ _init_zstruct (z)
 }
 
 int
-G_zlib_read (fd, dst, nbytes)
-    int fd, nbytes;
+G_zlib_read (fd, rbytes, dst, nbytes)
+    int fd, rbytes, nbytes;
     unsigned char *dst;
 {
     int bsize, nread, err;
@@ -137,21 +138,23 @@ G_zlib_read (fd, dst, nbytes)
     if (dst == NULL || nbytes < 0)
         return -2;
     
+    bsize = rbytes;
+
     /* Our temporary input buffer for read */
     if (NULL == (b = (unsigned char *) 
-                G_calloc (nbytes, sizeof(unsigned char))))
+                G_calloc (bsize, sizeof(unsigned char))))
         return -1;
 
-    /* Read from the file until we get our nbytes or an error */
-    bsize = 0;
+    /* Read from the file until we get our bsize or an error */
+    nread = 0;
     do {
-        nread = read (fd, b + bsize, nbytes - bsize);
-        if (nread >= 0)
-            bsize += nread;
-    } while (nread > 0 && bsize < nbytes);
+        err = read (fd, b + nread, bsize - nread);
+        if (err >= 0)
+            nread += err;
+    } while (err > 0 && nread < bsize);
 
-    /* If the bsize if less than nbytes and we didn't get an error.. */
-    if (bsize < nbytes && nread > 0)
+    /* If the bsize if less than rbytes and we didn't get an error.. */
+    if (nread < rbytes && err > 0)
     {
         G_free (b);
         return -1;
@@ -181,8 +184,9 @@ G_zlib_write (fd, src, nbytes)
     if (src == NULL || nbytes < 0)
         return -1;
     
-    /* set dst_sz equal to input size */
-    dst_sz = nbytes;
+    /* set dst_sz equal to 1.01 * input size + 12 bytes in case
+     * compression actually makes the data larger !! */
+    dst_sz = (int) ((double)nbytes * (double)1.01 + (double)12);
     if (NULL == (dst = (unsigned char *) 
                 G_calloc (dst_sz, sizeof (unsigned char))))
         return -1;
@@ -236,24 +240,20 @@ G_zlib_compress (src, src_sz, dst, dst_sz)
     if (src_sz <= 0 || dst_sz <= 0)
         return 0;
 
-    /* Input buffer has to be 1% + 12 bytes bigger for single pass deflate */
-    buf_sz = (int) ( (double) src_sz * 1.01 + (double) 12 );
+    /* Output buffer has to be 1% + 12 bytes bigger for single pass deflate */
+    buf_sz = (int) ( (double) dst_sz * 1.01 + (double) 12 );
     if (NULL == (buf = (unsigned char *)
                         G_calloc (buf_sz, sizeof(unsigned char))))
         return -1;
 
-    /* Copy src_sz bytes from src into buf */
-    for (nbytes = 0; nbytes < src_sz; nbytes++)
-        buf[nbytes] = src[nbytes];
-    
     /* Set-up for default zlib memory handling */
     _init_zstruct (&c_stream);
 
     /* Set-up the stream */
-    c_stream.avail_in  = buf_sz;
-    c_stream.next_in   = buf;
-    c_stream.avail_out = dst_sz;
-    c_stream.next_out  = dst;
+    c_stream.avail_in  = src_sz;
+    c_stream.next_in   = src;
+    c_stream.avail_out = buf_sz;
+    c_stream.next_out  = buf;
 
     /* Initialize using default compression (usually 6) */
     err = deflateInit (&c_stream, Z_DEFAULT_COMPRESSION);
@@ -284,10 +284,19 @@ G_zlib_compress (src, src_sz, dst, dst_sz)
         }
     }
 
-    /* avail_out is updated to bytes remaining in dst, so bytes of compressed
+    /* avail_out is updated to bytes remaining in buf, so bytes of compressed
      * data is the original size minus that
      */
-    nbytes = dst_sz - c_stream.avail_out;
+    nbytes = buf_sz - c_stream.avail_out;
+    if (nbytes > dst_sz) /* Not enough room to copy output */
+    {
+        G_free (buf);
+        return -2;
+    }
+    /* Copy the data from buf to dst */
+    for (err = 0; err < nbytes; err++)
+        dst[err] = buf[err];
+    
     G_free (buf);
     deflateEnd (&c_stream);
 
@@ -328,27 +337,33 @@ G_zlib_expand (src, src_sz, dst, dst_sz)
 
     /* Do single pass inflate */
     err = inflate (&c_stream, Z_FINISH);
-   
+
+     /* Number of bytes inflated to output stream is
+     * original bytes available minus what avail_out now says
+     */
+    nbytes = dst_sz - c_stream.avail_out;
+  
     /* Z_STREAM_END means all input was consumed, 
      * Z_OK means only some was processed (not enough room in dst)
      */
     if (!(err == Z_STREAM_END || err == Z_OK))
     {
-        inflateEnd (&c_stream);
-        return -1;
+        if (!(err == Z_BUF_ERROR && nbytes == dst_sz))
+        {
+            inflateEnd (&c_stream);
+            return -1;
+        } 
+        /* Else, there was extra input, but requested output size was
+         * decompressed successfully.
+         */
     }
 
-    /* Number of bytes inflated to output stream is
-     * original bytes available minus what avail_out now says
-     */
-    nbytes = dst_sz - c_stream.avail_out;
     inflateEnd (&c_stream);
 
     return nbytes;
 } /* G_zlib_expand() */
 
 #endif /* HAVE_ZLIB_H */
-
 
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab: */
