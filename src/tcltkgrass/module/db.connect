@@ -5,5 +5,4 @@ interface_build {
     {entry user {User:} 0 ""}
     {entry password {Password:} 0 ""}
     {entry key {Key column:} 0 ""}
-    {checkbox -p {Print only current settings.} "" -p}
 }
