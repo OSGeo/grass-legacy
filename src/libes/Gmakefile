@@ -5,7 +5,7 @@ all:
 	$(GMAKE) datetime
 	$(GMAKE) dbmi
 	$(GMAKE) dig_atts
-	$(GMAKE) digitizer
+#	$(GMAKE) digitizer
 	$(GMAKE) display
 	$(GMAKE) dlg
 #	$(GMAKE) dspf
