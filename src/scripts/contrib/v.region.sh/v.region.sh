@@ -87,7 +87,7 @@ DIG="$LOCATION/dig_ascii/DIG_$$"
 
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f $DIG' 2 3 9
+trap 'rm -f $DIG' 2 3 15
 
 
 #### read current region 

@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-trap "echo 'User break!' ; exit" 2 3 9 15
+trap "echo 'User break!' ; exit" 2 3
 
 # Set the GRASS_PERL variable
 GRASS_PERL=PERL_COMMAND
