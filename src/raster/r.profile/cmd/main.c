@@ -28,19 +28,13 @@ main (int argc, char *argv[])
 { 
     char *name, *outfile, *mapset, msg[256] ;
     int fd, projection;
-    char buf[50], hed[256];
     FILE *fp;
-    int screen_x, screen_y, screen_x1, screen_y1, button;
+    int screen_x, screen_y, button;
     double res;
     char errbuf[256];
-    int coords=0, p, i, k;
-    int cnt=1;
+    int coords=0, i, k=-1;
     double e1, e2, n1, n2;
-    double A, E;
     RASTER_MAP_TYPE data_type;
-    CELL *cell;
-    FCELL *fcell;
-    DCELL *dcell;
     struct Cell_head window;
     struct {
 	struct Option *opt1, *profile, *res, *output;
@@ -235,15 +229,13 @@ sscanf(parm.profile->answers[i+3], "%lf",&n2) ;
 /* Get profile info */
 do_profile(e1,e2,n1,n2,name,coords,res,fd,data_type,fp);
 
-/* Ge last coord */
-if (i == k-2)
-do_profile(e2,e2,n2,n2,name,coords,res,fd,data_type,fp);
 } }
 }
 
 G_close_cell(fd);
 fclose(fp);
 
+	return 0;
 } /* Done with main */
 
 /* Claculate the Profile Now */
@@ -350,6 +342,7 @@ dist+=G_distance(e+X, n-Y, e, n);
 /*
 return dist;
 */
+	return 0;
 } /* done with do_profile */
 
 static int move(int x,int y)

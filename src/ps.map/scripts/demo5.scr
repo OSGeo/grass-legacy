@@ -8,14 +8,7 @@ vector roads
   width 1
   color black
   end
-vector streams.dead
-  width 1
-  color black
-  style 111100
-  hcolor white
-  hwidth 1
-  end
-vector streams.spear
+vector streams
   width 1
   color black
   style 111100

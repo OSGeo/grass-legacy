@@ -46,15 +46,15 @@ int ps_fcolortable (void)
 	 return 1;
     }
     G_get_fp_range_min_max(&range, &dmin, &dmax);
-    
+
+    if(dmin == dmax)  /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
+        G_fatal_error("A floating point colortable must contain a range of values.");
+
     /* set font */
     fontsize = (double)ct.fontsize;
     fprintf(PS.fp, "(%s) FN %.1f SF\n", ct.font, fontsize);
 
     /* set colortable location,  */
-    printf("pwidth = %f pheight = %f\n", PS.page_width, PS.page_height);
-    printf("width = %f height = %f\n", ct.width, ct.height);
-    
     dy = 1.5 * fontsize;
     if (ct.y <= 0.0) t = PS.min_y;
     else t = 72.0 * ( PS.page_height - ct.y);

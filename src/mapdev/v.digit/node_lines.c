@@ -64,14 +64,14 @@ node_lines (struct Map_info *map)
 	do {
 	    prev_line = next_line;
 	    switch (Next) {
-		case 1:		/* prev */
+		case LEFTB:		/* prev */
 		    next_line = (next_line == 0 ? 
 				map->Node[node_num].n_lines -1 : next_line-1);
 		    break;
-		case 2:		/* end */
+		case RIGHTB:		/* end */
 		    /* shouldn't get here */
 		    break;
-		case 3:		/* next */
+		case MIDDLEB:		/* next */
 		    next_line = (next_line == map->Node[node_num].n_lines -1 ?
 				    0 : next_line+1);
 		    break;
@@ -104,7 +104,7 @@ node_lines (struct Map_info *map)
 	        map->Node[node_num].angles[next_line], angle);
 	    Write_info (2, buf);
 
-	} while (2 != (Next = mouse_next_prev (_("Select Next line:"))));
+	} while (RIGHTB != (Next = mouse_next_prev (_("Select Next line:"))));
 	display_line(map->Line[line_num].type, &Gpoints, line_num, map);
     }
 }
