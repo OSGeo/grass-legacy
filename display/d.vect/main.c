@@ -7,6 +7,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
@@ -19,6 +21,106 @@
 #include "glocale.h"
 
 int quiet = 1;
+
+/* next functions taken from r.colors */
+static char *icon_files(void)
+{
+	char path[4096];
+	char *list = NULL;
+	int size = 0;
+	int len = 0;
+	DIR *dir;
+
+	sprintf(path, "%s/etc/symbol/basic", G_gisbase());
+
+	dir = opendir(path);
+	if (!dir)
+		return NULL;
+
+	for (;;)
+	{
+		struct dirent *d = readdir(dir);
+		int n;
+
+		if (!d)
+			break;
+
+		if (d->d_name[0] == '.')
+			continue;
+
+		n = strlen(d->d_name);
+
+		if (size < len + n + 2)
+		{
+			size = len + n + 200;
+			list = G_realloc(list, size);
+		}
+
+		if (len > 0)
+			list[len++] = ',';
+
+		memcpy(&list[len], d->d_name, n + 1);
+		len += n;
+	}
+
+	closedir(dir);
+
+	return list;
+}
+
+static int cmp_names(const void *aa, const void *bb)
+{
+	char * const *a = aa;
+	char * const *b = bb;
+	return strcmp(*a, *b);
+}
+
+static void list_icon_files(void)
+{
+	static char **names;
+	static int names_size;
+	char path[4096];
+	DIR *dir;
+	int names_len = 0;
+	int i;
+
+	sprintf(path, "%s/etc/symbol/basic", G_gisbase());
+
+	dir = opendir(path);
+	if (!dir)
+		G_fatal_error("Symbol directory doesn't exist");
+
+	for (;;)
+	{
+		struct dirent *d = readdir(dir);
+		int n;
+
+		if (!d)
+			break;
+
+		if (d->d_name[0] == '.')
+			continue;
+
+		if (names_len >= names_size)
+		{
+			names_size = names_len + 20;
+			names = G_realloc(names, names_size * sizeof(char *));
+		}
+
+		names[names_len++] = G_store(d->d_name);
+	}
+
+	closedir(dir);
+
+	qsort(names, names_len, sizeof(char *), cmp_names);
+
+	for (i = 0; i < names_len; i++)
+	{
+		printf("%s\n", names[i]);
+		G_free(names[i]);
+		names[i] = NULL;
+	}
+}
 
 int 
 main (int argc, char **argv)
@@ -87,7 +189,8 @@ main (int argc, char **argv)
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/cross" ;
 	icon_opt->description= "Point and centroid symbol" ;
-	
+	icon_opt->options     = icon_files();
+
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
 	size_opt->type       = TYPE_INTEGER ;
