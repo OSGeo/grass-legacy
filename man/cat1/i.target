@@ -1,7 +1,7 @@
 
 
 
-i.target             GRASS Reference Manual              i.target
+i.target <main>      GRASS Reference Manual       <main> i.target
 
 
 
@@ -60,14 +60,14 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-i.target             GRASS Reference Manual              i.target
+i.target <main>      GRASS Reference Manual       <main> i.target
 
 
 
@@ -126,7 +126,7 @@ i.target             GRASS Reference Manual              i.target
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
