@@ -82,6 +82,7 @@ get_zone()
 	    return(0);
 	    }
 	 get_num(answer,2);
+fprintf(stderr,"ZONE= %d\n",ZONE);
 	 if (ier) return(0);
          return(1);
 }
@@ -110,7 +111,7 @@ get_ll()
 	    fprintf(stderr,"\n    Enter Zone <CR for default> : "); 
   	    if (!get_zone()) 
 	       {
-	       ZONE = (int)((186.0 - fabs(LON))/6.0);
+	       ZONE = (int)((186.0 + LON)/6.0);
 	       return(1);
 	       }
             }
