@@ -10,13 +10,13 @@ v.out.shape \- export GRASS vector files to SHAPE
 will export GRASS vectors files to SHAPE Generate format.
 .SH USAGE
 
- v.out.shape type=name vect=name arc_prefix=name
+ v.out.shape type=name vect=name shape_prefix=name
 
 Parameters:
         type   coverage type
                options: polygon,line
         vect   input vector file for SHAPE conversion
-  arc_prefix   prefix for SHAPE output filenames
+  shape_prefix   prefix for SHAPE output filenames
 
 
 .SH INTERACTIVE MODE: USER PROMPTS
