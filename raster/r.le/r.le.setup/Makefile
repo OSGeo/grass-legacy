@@ -1,0 +1,10 @@
+MODULE_TOPDIR = ../../..
+
+PGM = r.le.setup
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB) $(CURSES)
+DEPENDENCIES = $(RASTERDEP) $(DISPLAYDEP) $(DATETIMEDEP) $(GISDEP) $(VASKDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: inter
