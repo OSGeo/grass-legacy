@@ -40,7 +40,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <malloc.h>
 #include "gis.h"
 #include "Vect.h"
 #include "dig_atts.h"
@@ -223,13 +222,13 @@ INPUT()
     if (barierin != NULL)
     cell3=G_allocate_f_raster_buf();
  
-    z = (float **)malloc(sizeof(float*)*(m));
-    o = (float **)malloc(sizeof(float*)*(m));
+    z = (float **)G_malloc(sizeof(float*)*(m));
+    o = (float **)G_malloc(sizeof(float*)*(m));
 
   for(l=0;l<m;l++) 
    {
-    z[l]   = (float*)malloc(sizeof(float)*(n));
-    o[l]   = (float*)malloc(sizeof(float)*(n));
+    z[l]   = (float*)G_malloc(sizeof(float)*(n));
+    o[l]   = (float*)G_malloc(sizeof(float)*(n));
     }
 
   if((mapset=G_find_cell(elevin,""))==NULL)
@@ -1432,24 +1431,24 @@ void calculate()
 	w = 3.*sqrt((double)(n * n + m * m));
 	k = (int) w;
 	fprintf(stderr, "\n\nWorking...");
-        px = (double *)malloc(k * sizeof(double)); 
-	py = (double *)malloc(k * sizeof(double));
+        px = (double *)G_malloc(k * sizeof(double)); 
+	py = (double *)G_malloc(k * sizeof(double));
 
         if (lgout != NULL)
         {
-            lg = (float **)malloc(sizeof(float)*(m));
+            lg = (float **)G_malloc(sizeof(float)*(m));
             for(l=0;l<m;l++) 
             {
-                 lg[l]   = (float*)malloc(sizeof(float)*(n));
+                 lg[l]   = (float*)G_malloc(sizeof(float)*(n));
             }
          }
 
         if (dsout != NULL)
         {
-            density = (float **)malloc(sizeof(float)*(m));
+            density = (float **)G_malloc(sizeof(float)*(m));
             for( l=0; l<m; l++) 
             {
-              density[l] = (float*)malloc(sizeof(float)*(n));
+              density[l] = (float*)G_malloc(sizeof(float)*(n));
             }
 
             for (j = 0; j < m; j++)
