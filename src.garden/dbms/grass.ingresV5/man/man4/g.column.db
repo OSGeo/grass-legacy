@@ -1,0 +1,34 @@
+.TH g.column.db
+.SH NAME
+\fIg.column.db\fR \- Generate a list of the columns in the specified table of the current;y selected database.
+.br
+.I "(GRASS  Relational Database Management Interface Program)"
+.SH SYNOPSIS
+\fBg.column.db\fR
+.br
+\fBg.column.db help\fR
+.br
+\fBg.column.db\fR [\fB\-v\fR] \fBtable=\fIname\fR
+.SH DESCRIPTION
+g.column.db is used to generate a list of the columns in the specified table [table] of the currenty selected database. If the [-v] option is used the column  data type and length are reported as well.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Flags
+.IP \fI-v\fR
+Use v for a verbose listing of columns.
+.LP
+Parameters
+.IP \fItable\fR
+Name of table in the currently selected  database.
+
+.SH BUGS
+None
+
+.SH "SEE ALSO"
+g.select.db, g.stats.db, g.table.db, d.rast.db, d.site.db, d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db, r.reclass.db, r.rescale.db, v.reclass.db
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
