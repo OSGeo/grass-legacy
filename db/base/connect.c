@@ -17,6 +17,7 @@ main(int argc, char *argv[])
 /*    struct Option *driver, *database, *user, *password, *keycol;*/
     struct Option *driver, *database;
     struct GModule *module;
+    char *drv, *db;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -32,6 +33,8 @@ main(int argc, char *argv[])
     driver->required   = NO  ;
     driver->multiple   = NO ;
     driver->description= "driver name:" ;
+    if ( (drv=db_get_default_driver_name()) )
+        driver->answer = drv;
 
     database = G_define_option() ;
     database->key        = "database" ;
@@ -39,6 +42,8 @@ main(int argc, char *argv[])
     database->required   = NO  ;
     database->multiple   = NO ;
     database->description= "Database name:" ;
+    if ( (db=db_get_default_database_name()) )
+        database->answer = db;
 
 /* commented due to new mechanism:
     user = G_define_option() ;

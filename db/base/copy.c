@@ -18,10 +18,14 @@ main(int argc, char *argv[])
     struct Option *from_driver, *from_database, *from_table;
     struct Option *to_driver, *to_database, *to_table;
     struct GModule *module;
+    char   *drv, *db;
 
     /* Set description */
     module              = G_define_module();
     module->description = "Copy a table.";
+
+    drv=db_get_default_driver_name();
+    db=db_get_default_database_name();
 
     from_driver		     = G_define_option();
     from_driver->key 	     = "from_driver";
@@ -29,12 +33,16 @@ main(int argc, char *argv[])
     from_driver->options     = db_list_drivers();
     from_driver->required    = YES;
     from_driver->description = "Input driver name";
+    if ( drv )
+         from_driver->answer = drv;
 
     from_database 	       = G_define_option();
     from_database->key 	       = "from_database";
     from_database->type        = TYPE_STRING;
     from_database->required    = YES;
     from_database->description = "Input database name";
+    if ( db )
+	from_database->answer = db;
 
     from_table 		    = G_define_option();
     from_table->key 	    = "from_table";
@@ -48,12 +56,16 @@ main(int argc, char *argv[])
     to_driver->options     = db_list_drivers();
     to_driver->required    = YES;
     to_driver->description = "Output driver name";
+    if ( drv )
+         to_driver->answer = drv;
 
     to_database 	     = G_define_option();
     to_database->key 	     = "to_database";
     to_database->type        = TYPE_STRING;
     to_database->required    = YES;
     to_database->description = "Output database name";
+    if ( db )
+	to_database->answer = db;
 
     to_table 		  = G_define_option();
     to_table->key 	  = "to_table";
