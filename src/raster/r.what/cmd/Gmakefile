@@ -1,0 +1,8 @@
+LIBES  = $(GISLIB)
+
+LIST   = main.o die.o
+
+$(BIN_MAIN_CMD)/r.what: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
