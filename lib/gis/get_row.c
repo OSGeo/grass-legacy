@@ -824,7 +824,7 @@ G_get_map_row (int fd, CELL *cell, int row)
   stat = get_map_row_nomask (fd, (void *) cell, row, CELL_TYPE);
   if(stat >= 0)
   {
-      stat = embed_nulls_nomask(fd, (void *) cell, row, CELL_TYPE, 1);
+      stat = embed_nulls(fd, (void *) cell, row, CELL_TYPE, 1);
       if (FCB.reclass_flag) do_reclass_int(fd, cell, 1);
   }
   return stat;
