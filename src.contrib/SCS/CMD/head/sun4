@@ -1,0 +1,21 @@
+ARCH                = sun4
+
+GISBASE             = /usr/grass4.0/sun4
+UNIX_BIN            = /usr/grass4.0/sun4/local/bin
+
+DEFAULT_DATABASE    = /usr/grass4.0/data
+DEFAULT_LOCATION    = spearfish
+
+COMPILE_FLAGS       = -O -DSCS_MODS
+LDFLAGS             = -s
+
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+RANLIB              = ranlib
+LIBRULE             = ar ruv $@ $?; $(RANLIB) $@
+
+USE_TERMIO          =
+USE_MTIO            = -DUSE_MTIO
+DIGITFLAGS          = -DUSE_SETREUID -DUSE_SETEUID -DUSE_SETPRIORITY
+CAN_CLEAR           = -DCAN_CLEAR
