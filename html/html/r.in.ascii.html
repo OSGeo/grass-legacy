@@ -59,7 +59,7 @@ from an ASCII raster input file with (optional) TITLE.
 <DD>Name to be assigned to resultant binary raster map layer. 
 <DT><B>TITLE=</B>"<EM>phrase</EM>"
 <DD>Title to be assigned to resultant raster map layer. 
-<DT><B>mult=</B><EM>multiplier</B>
+<DT><B>mult=</B><EM>multiplier</EM>
 <DD>Multiply all raster cell values by <EM>multiplier</EM>. 
 <EM>multiplier</EM> is a floating point value, and has a default value of 1.0. 
 </DL>
@@ -72,14 +72,14 @@ The header has 6 lines:
 
 <BR>
 
-<BR>
+<BR><tt>
 north:   xxxxxx.xx<BR>
 south:   xxxxxx.xx <BR>
 east:    xxxxxx.xx <BR>
 west:    xxxxxx.xx <BR>
 rows:    r <BR>
 cols:    c <BR>
-<BR>
+</tt><BR>
 
 The north, south, east, and west field values entered 
 are the coordinates of the edges of the geographic region. 
@@ -88,10 +88,10 @@ of the matrix of data to follow.
 The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
 <p>
 Optionally the following parameters can be defined in the header section:
-<p>
+<p><tt>
 null: nn<BR>
 type: float<BR>
-multiplier: 2.<BR>
+multiplier: 2.<BR></tt>
 <p>
 "null" defines a string or number to be converted to NULL value (no
 data).<br>
@@ -100,9 +100,9 @@ data).<br>
 
 <H2>EXAMPLE</H2>
 
-The following is a sample <EM>input</EM> file to <EM>r.in.ascii</B>:</EM> 
+The following is a sample <b>input</b> file to <EM>r.in.ascii</EM>: 
 
-<BR><BR>
+<BR><BR><tt>
 north:                   4299000.00<BR>
 south:                   4247000.00<BR>
 east:                     528000.00<BR>
@@ -120,7 +120,7 @@ null:                      -9999   <BR>
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR></tt>
 
 <H2>NOTES</H2>
 
@@ -131,10 +131,10 @@ geographic region and <EM>not</EM> through the center of the cells
 at the edges.
 
 <P>
-
-The data (which follows the header section) must contain r x c values, 
-but it is not necessary that all the data for a row be on one line. 
-A row may be split over many lines. 
+The data (which follows the header section) must contain
+<tt>r</tt> <em>x</em> <tt>c</tt> values, but it is not necessary 
+that all the data for a row be on one line. A row may be 
+split over many lines. 
 
 <P>
 
@@ -143,7 +143,7 @@ A row may be split over many lines.
 <P>
 The header information in ESRI Raster ASCII files differs from GRASS.  
 To convert an Arc/Info (ArcView) ASCII grid file into GRASS, click 
-<A HREF="../../../faq/arcgrid.header.html">here</A>.  
+<A HREF="http://grass.itc.it/faq/arcgrid.header.html"">here</A>.  
 Also, see <EM><A HREF="r.in.arc.html">r.in.arc</A></EM> to import 
 ESRI Raster ASCII files.
 
