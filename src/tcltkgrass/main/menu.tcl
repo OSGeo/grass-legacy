@@ -700,9 +700,6 @@ menu_build 1 .main_menu {
             "source $env(TCLTKGRASSBASE)/module/d.what.sites"
         }
         Interpolation "" {
- #           "Kriging" "" {
- #               "source $env(TCLTKGRASSBASE)/module/s.surf.krig"
- #           }
             "Inverse distance weighted" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.surf.idw"
             }
@@ -710,12 +707,6 @@ menu_build 1 .main_menu {
                  "source $env(TCLTKGRASSBASE)/module/s.surf.rst"
             }
         }
-#        Triangulation "" {
-#            "source $env(TCLTKGRASSBASE)/module/s.geom"
-#        }
-#        "Miscellanous (s.menu)" "" {
-#            "run s.menu &"
-#        }
     }
     Image "Image processing" $image_processing
     Import "Import maps into GRASS" {
