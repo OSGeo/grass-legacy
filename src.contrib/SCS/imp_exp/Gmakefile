@@ -3,4 +3,5 @@ all:
 	$(GMAKE) dig_gef
 	$(GMAKE) dlg_dig
 	$(GMAKE) gef_dig
-	$(GMAKE) xport
+	$(GMAKE) v.import
+	$(GMAKE) v.export
