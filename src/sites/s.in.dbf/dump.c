@@ -417,15 +417,15 @@ static void * SfRealloc( void * pMem, int nNewSize )
         if (ftype != 0) /* no text */
         {
 	   if (!iField)
-		snprintf(tmp_buf,1024,"%s",pszStringField);
+		sprintf(tmp_buf,"%s",pszStringField);
 	   else if (iField == psDBF->nFields-1)
-       		snprintf(tmp_buf,1024," %s\n",pszStringField);
+       		sprintf(tmp_buf," %s\n",pszStringField);
 	   else
 	   {
 	     if (iField > dimension) /* coordinates */
-    		snprintf(tmp_buf,1024," %s",pszStringField);
+    		sprintf(tmp_buf," %s",pszStringField);
      	     else             /* something else */
-    		snprintf(tmp_buf,1024,"|%s",pszStringField);
+    		sprintf(tmp_buf,"|%s",pszStringField);
 	   }
 	
 	   /* construct single line, ignore text : */
@@ -512,15 +512,15 @@ static void * SfRealloc( void * pMem, int nNewSize )
         if (ftype == 0) /* do only text */
         {
 	  if (!iField)
-		snprintf(tmp_buf,1024,"%s",pszStringField);
+		sprintf(tmp_buf,"%s",pszStringField);
 	  else if (iField == psDBF->nFields-1)
-       		snprintf(tmp_buf,1024," %s\n",pszStringField);
+       		sprintf(tmp_buf," %s\n",pszStringField);
 	  else
 	  {
 	   if (iField > dimension) /* coordinates */
-    		snprintf(tmp_buf,1024," %s",pszStringField);
+    		sprintf(tmp_buf," %s",pszStringField);
     	   else             /* something else */
-    		snprintf(tmp_buf,1024,"|%s",pszStringField);
+    		sprintf(tmp_buf,"|%s",pszStringField);
 	  }
 	
 	  /* construct single line : */

@@ -32,7 +32,7 @@ update (void)
     if (db_open_database(driver, &handle) != DB_OK) exit(-1);  
     
     /* select count of existing categories */
-    snprintf (buf1,1023, "select count(*) from %s", options.table);    
+    sprintf (buf1, "select count(*) from %s", options.table);    
     db_set_string (&stmt, buf1);
     if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
         return (ERROR);
@@ -56,7 +56,7 @@ update (void)
     catexst = (int *) G_malloc (vstat.select * sizeof(int));
     
     /* select existing categories */
-    snprintf (buf1,1023, "select %s from %s order by %s", options.key, options.table, options.key);
+    sprintf (buf1, "select %s from %s order by %s", options.key, options.table, options.key);
 
     db_set_string (&stmt, buf1);
     if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
@@ -77,18 +77,18 @@ update (void)
     /* create beginning of stmt */
     switch (options.option) {
         case O_CAT:	 
-	    snprintf (buf1,1023, "insert into %s ( %s ) values ", options.table, options.key);
+	    sprintf (buf1, "insert into %s ( %s ) values ", options.table, options.key);
             break;	
 
         case O_COUNT:
         case O_LENGTH:
 	case O_AREA:
         case O_LABEL:		
-	    snprintf (buf1,1023, "update %s set %s =", options.table, options.col1);
+	    sprintf (buf1, "update %s set %s =", options.table, options.col1);
             break;
 
         case O_COOR:
-	    snprintf (buf1,1023, "update %s set ", options.table);	
+	    sprintf (buf1, "update %s set ", options.table);	
             break;
     } 
 
@@ -96,23 +96,23 @@ update (void)
     for ( i = 0; i < vstat.rcat; i++ ) {
 	switch (options.option) {
     	    case O_CAT:	 
-	        snprintf (buf2,1023, "%s ( %d )", buf1, list_ci[i].cat);
+	        sprintf (buf2, "%s ( %d )", buf1, list_ci[i].cat);
 		fcat = list_ci[i].cat;
         	break;	
 
     	    case O_COUNT:
-	        snprintf (buf2,1023, "%s %d where %s = %d", buf1, list_ci[i].i1, options.key,  list_ci[i].cat);
+	        sprintf (buf2, "%s %d where %s = %d", buf1, list_ci[i].i1, options.key,  list_ci[i].cat);
         	fcat = list_ci[i].cat;
 		break;
 
     	    case O_LABEL:
-    		snprintf (buf2,1023, "%s '%s' where %s = %d", buf1, list_cc[i].c1, options.key,  list_cc[i].cat);
+    		sprintf (buf2, "%s '%s' where %s = %d", buf1, list_cc[i].c1, options.key,  list_cc[i].cat);
 		fcat = list_cc[i].cat;
         	break;
 	
     	    case O_LENGTH:
 	    case O_AREA:
-    		snprintf (buf2,1023, "%s %f where %s = %d", buf1, list_cd[i].d1, options.key,  list_cd[i].cat);
+    		sprintf (buf2, "%s %f where %s = %d", buf1, list_cd[i].d1, options.key,  list_cd[i].cat);
 		fcat = list_cd[i].cat;
         	break;
 
@@ -122,7 +122,7 @@ update (void)
 		    vstat.dupl++;
 		    continue;
 		}		
-    		snprintf (buf2,1023, "%s %s = %f, %s = %f  where %s = %d", buf1, options.col1, list_ci2d[i].d1, options.col2, list_ci2d[i].d2, options.key,  list_ci2d[i].cat);    		
+    		sprintf (buf2, "%s %s = %f, %s = %f  where %s = %d", buf1, options.col1, list_ci2d[i].d1, options.col2, list_ci2d[i].d2, options.key,  list_ci2d[i].cat);    		
 		fcat = list_ci2d[i].cat;
 		break;
 	} 

@@ -320,7 +320,7 @@ int main( int   argc, char *argv[])
     if( hDBF != NULL )  DBFClose( hDBF );
 
     /* run r.in.poly */
-    snprintf(buf,1024,"r.in.poly input=%s output=%s", tmpfile, outfile);
+    sprintf(buf,"r.in.poly input=%s output=%s", tmpfile, outfile);
     fprintf (stdout, "Running %s\n", buf); 
     fflush (stdout);
     system(buf);  
