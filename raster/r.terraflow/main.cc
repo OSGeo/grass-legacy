@@ -337,13 +337,13 @@ void record_args(int argc, char **argv) {
   }
   *stats << endl;
   
-  *stats << form("input elevation grid: %s\n", opt->elev_grid);
-  *stats << form("output (flooded) elevations grid: %s\n", opt->filled_grid);
-  *stats << form("output directions grid: %s\n", opt->dir_grid);
-  *stats << form("output sinkwatershed grid: %s\n", opt->watershed_grid);
-  *stats << form("output accumulation grid: %s\n", opt->flowaccu_grid);
+  *stats << "input elevation grid: " << opt->elev_grid << "\n";
+  *stats << "output (flooded) elevations grid: " << opt->filled_grid << "\n";
+  *stats << "output directions grid: " << opt->dir_grid << "\n";
+  *stats << "output sinkwatershed grid: " << opt->watershed_grid << "\n";
+  *stats << "output accumulation grid: " << opt->flowaccu_grid << "\n";
 #ifdef OUTPUT_TCI
-  *stats <<  form("output tci grid: %s\n", opt->tci_grid);
+  *stats <<  "output tci grid: " << opt->tci_grid << "\n";
 #endif
   if (opt->d8) {
     stats ->comment("SFD (D8) flow direction");
@@ -450,7 +450,7 @@ main(int argc, char *argv[]) {
   Rtimer rtTotal;    
   char buf[BUFSIZ];
 
-  fprintf(stderr, "r.terraflow version 1.4, January 2003\n");
+  fprintf(stderr, "r.terraflow version 1.5, April 2003\n");
   fflush(stderr);
 
   /* initialize GIS library */
@@ -507,8 +507,9 @@ main(int argc, char *argv[]) {
   {
     char buf[BUFSIZ];
     long grid_size = nrows * ncols;
-    *stats << form("region size = %s elts (%d rows x %d cols)\n", 
-		   formatNumber(buf, grid_size), nrows, ncols);
+    *stats << "region size = " <<  formatNumber(buf, grid_size) << " elts "
+	   << "(" << nrows << " rows x " << ncols << " cols)\n";
+
     stats->flush();
   }
 
