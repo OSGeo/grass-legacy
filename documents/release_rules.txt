@@ -175,7 +175,7 @@ BINARIES
      ../REQUIREMENTS.html where to find it)
 
    o compile everything, incl NVIZ without PG (note, no ";" to be used):
-       CFLAGS=-O2 LDFLAGS="-s" ./configure --without-postgres
+       CFLAGS=-O2 ./configure --without-postgres
        make
      
 #   o compile G3D tools
@@ -183,7 +183,7 @@ BINARIES
 #                                     GRASS 5.0.0!
 
    o compile PostgreSQL modules:
-       CFLAGS=-O2 LDFLAGS="-s" ./configure --with-postgres=yes
+       CFLAGS=-O2 ./configure --with-postgres=yes
        make pre-compile
        gmake5 src.garden/grass.postgresql
 
@@ -199,7 +199,10 @@ BINARIES
      Should be > 350 modules now.
 
    o To install into /usr/local/bin (or whereever you directed it) run
-       make install
+       make install-strip
+
+     This will also strip symbols from the executable binaries to reduce the
+     binaries size.
 
    o For r.in.gdal we need "libgdal" which has to be included into the GRASS
      binary package. Finally store "libgdal.1.1.so" in $GISBASE/lib/
