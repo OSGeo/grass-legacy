@@ -41,12 +41,14 @@ PQINCPATH           = -I/usr/local/pgsql/include -I/usr/lib/pgsql/include -I/usr
 PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
 PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 
-
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 
 JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
 JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+OGLINCPATH          = -I/usr/include -I/usr/include/GL -I/usr/include/X11/GLw -I/usr/X11R6/include/GL -I/usr/local/include/GL
+OGLLIBPATH          =
 
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
 USE_TERMIO          = @USE_TERMIO@
