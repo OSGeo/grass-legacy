@@ -9,7 +9,7 @@
 char *
 db_whoami()
 {
-    char *cuserid();
+    char *userid = G_store( getenv("LOGNAME") );
 
-    return cuserid((char *) 0);
+    return userid;
 }
