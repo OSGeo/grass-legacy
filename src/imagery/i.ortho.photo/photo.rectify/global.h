@@ -9,6 +9,11 @@
 #include "ortholib.h"
 #include "defs.h"
 
+/* the large, the worse the results in mountaneous regions!! 128 is MAX! 
+ * but: the large, the slower - wants a dynamic implementation - TODO
+ * possible solution: ratio local elevation range/camera height = 0.003
+ */
+ 
 #define TIE_ROW_DIST 128
 #define TIE_COL_DIST 128
 

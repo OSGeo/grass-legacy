@@ -19,11 +19,11 @@ int rectify (char *name, char *mapset, char *result)
     int x_ties, y_ties;
     int tie_row, tie_col;
     int i;
-    double n2,e2,z2, zz2;
+    double n2,e2,z2;
+    DCELL zz2, aver_z;
     double nx,ex,zx;
     int r2, c2;
     double row2, col2;
-    double aver_z;
     char buf[64]="";
     RASTER_MAP_TYPE data_type;
 
@@ -41,11 +41,14 @@ int rectify (char *name, char *mapset, char *result)
     /*  open temporary elevation cell layer */
     select_target_env();
     /**G_set_window (&elevhd);**/
+#ifdef DEBUG3
+    fprintf (Bugsr,"target window: rs=%d cs=%d n=%f s=%f w=%f e=%f\n",target_window.rows,target_window.cols,target_window.north,target_window.south,target_window.west,target_window.east);
+#endif
     G_set_window (&target_window);  
     elevfd = G_open_cell_old (elev_layer, mapset_elev);
     /**G_get_cellhd (elev_layer, mapset_elev, &elevhd);**/ 
     data_type = G_raster_map_type(elev_layer, mapset);
-    elevbuf = G_allocate_raster_buf(data_type);
+    elevbuf = G_allocate_d_raster_buf(); /* enforce DCELL */
 
     /* get an average elevation of the control points */
     /* this is used only if TIE points are outside of the elev_layer boundary */
@@ -88,7 +91,7 @@ int rectify (char *name, char *mapset, char *result)
         row2 = northing_to_row(&target_window, n2);
         r2 = (int) row2;
 
-        if ( (G_get_raster_row (elevfd, elevbuf, r2, data_type)) < 0)  
+        if ( (G_get_d_raster_row (elevfd, elevbuf, r2)) < 0)  
         {
 #ifdef DEBUG3
            fprintf (Bugsr, "ERROR reading elevation layer %s fd = %d : row %d \n", elev_layer, elevfd, r2);
@@ -110,10 +113,12 @@ int rectify (char *name, char *mapset, char *result)
  
 #ifdef DEBUG3
            fprintf (Bugsr,"\t\t row2 = %f \t col2 =  %f \n",row2,col2);
+           fprintf (Bugsr,"\t\t   r2 = %d \t   c2 =  %d \n",r2,c2);
+           fprintf (Bugsr,"\t\t elevbuf[c2] = %f        \n",(DCELL) elevbuf[c2]);
 #endif
-           zz2 = (double) elevbuf[c2];
+           zz2 = (DCELL) elevbuf[c2];
            /* if target TIE point has no elevation, set to aver_z */
-           if (zz2 == 0) zz2 =  aver_z; 
+           if ( G_is_d_null_value(&zz2) ) zz2 =  aver_z; 
            z2 = zz2;
 
 #ifdef DEBUG3
