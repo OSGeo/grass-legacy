@@ -12,6 +12,9 @@ make_procs (void)
 {
     int level;
 
+    /* begin procs */
+    fprintf(PS.fp, "\n%%%%BeginProlog\n");
+
     /* level 2 is default PostScript level */
     level = (PS.level != 1) ? 2 : 1;
     fprintf(PS.fp, "/level %d def\n", level);
@@ -130,8 +133,33 @@ make_procs (void)
     /* proc used for highlight color */
     fprintf(PS.fp, "/HC {0 0 NM dup false charpath stroke} BD\n");
 
+    /* proc used before included EPS file */
+    fprintf(PS.fp, "/BeginEPSF {\n");
+    fprintf(PS.fp, "  /inc_state save def\n");
+    fprintf(PS.fp, "  /dict_count countdictstack def\n");
+    fprintf(PS.fp, "  /op_count count 1 sub def\n");
+    fprintf(PS.fp, "  userdict begin\n");
+    fprintf(PS.fp, "  /showpage { } def\n");
+    fprintf(PS.fp, "  0 setgray 0 setlinecap\n");
+    fprintf(PS.fp, "  1 setlinewidth 0 setlinejoin\n");    
+    fprintf(PS.fp, "  10 setmiterlimit [ ] 0 setdash newpath\n");
+    fprintf(PS.fp, "  /language level where\n");
+    fprintf(PS.fp, "  {pop languagelevel\n");
+    fprintf(PS.fp, "  1 ne\n");
+    fprintf(PS.fp, "    {false setstrokeadjust false setoverprint\n");
+    fprintf(PS.fp, "    } if\n");
+    fprintf(PS.fp, "  } if\n");
+    fprintf(PS.fp, "} bind def\n");
+
+    /* proc used to restore PS state after included EPS file */
+    fprintf(PS.fp, "/EndEPSF {\n");
+    fprintf(PS.fp, "  count op_count sub {pop} repeat\n");
+    fprintf(PS.fp, "  countdictstack dict_count sub {end} repeat\n");
+    fprintf(PS.fp, "  inc_state restore\n");
+    fprintf(PS.fp, "} bind def\n");
+
     /* all procs should be defined above this line */
-    fprintf(PS.fp, "%%%%EndProlog\n");
+    fprintf(PS.fp, "%%%%EndProlog\n\n");
 
     return 0;
 }
