@@ -43,7 +43,7 @@ do
 
   # polish map names to be SQL compliant
   INPUT=$i
-  OUTPUT=`echo $INPUT | sed 's+i\.+_+g'`
+  OUTPUT=`echo $INPUT | sed 's+\.+_+g'`
 
   #do it:
   v.in.sites in=$INPUT out=$OUTPUT
