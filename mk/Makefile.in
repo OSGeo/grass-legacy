@@ -75,7 +75,7 @@ links:
 
 post-compile:
 ifeq ($(GRASS_LIBRARY_TYPE),shlib)
-	cp -af ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib
+	cp -f ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib
 endif	
 	@${MAKE_POST_ENV} ${SHELL} ${SRCDIR}/src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
