@@ -6,6 +6,7 @@ SUBDIRS = \
 	g.mapsets \
 	g.parser \
 	g.region \
+	g.tempfile \
 	manage
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
