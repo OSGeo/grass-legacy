@@ -2,7 +2,7 @@
 # configure script for nviz
 
 # Revisions:
-#  $Id: configure,v 1.13 2000-10-10 07:23:58 markus Exp $
+#  $Id: configure,v 1.14 2000-10-11 05:27:29 cho Exp $
 
 set NV_VER=nviz2.2
 set NVWISH_VER=NVWISH2.2
@@ -60,7 +60,7 @@ if ("$found" != "y") then
   set PQ_OBJS=''
   set PQLIB=''
   'rm' -rf src/query_postgr.c
-  'rm' -rf src/scripts/panel_query.tcl
+  'rm' -rf scripts/panel_query.tcl
   'cp' src/query_postgr_dummy.c src/query_postgr.c
   'cp' scripts/panel_query_orig.tcl scripts/panel_query.tcl
 endif
