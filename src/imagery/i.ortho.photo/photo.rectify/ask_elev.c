@@ -75,7 +75,7 @@ int ask_elev_data (void)
     if (ok)
     { 
                  /** Set LOCATION to target location **/
-       G_setenv("LOCATION",tl);
+       G_setenv("LOCATION_NAME",tl);
 
                  /** system GMAPCALC **/
        G_system (buf2); 
@@ -86,7 +86,7 @@ int ask_elev_data (void)
        select_current_env();
 
                  /** reset LOCATION to current location **/
-       G_setenv("LOCATION", G_location() );
+       G_setenv("LOCATION_NAME", G_location() );
 
     }
  }
