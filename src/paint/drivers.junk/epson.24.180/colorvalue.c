@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* this is for a 125 color system */
 Pcolorvalue (n, red, grn, blu)
     float *red, *grn, *blu;
