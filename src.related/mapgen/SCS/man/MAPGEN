@@ -1,0 +1,48 @@
+
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            MAPGEN                                       MAPGEN
+
+            
+            
+            NAME 
+            MAPGEN - Is a shell script that sets up the users environment
+			to be able to run USGS MAPGEN and the GRASS MAPGEN interface.
+            
+            SYNOPSIS
+            MAPGEN
+            
+            DESCRIPTION 
+            MAPGEN
+            
+            The user is required to provide the following:
+
+				- Wether a new map is to be created or an old map is
+				  to be edited.
+				- The name of the map.
+
+			MAPGEN then sets the environment variables:
+
+				- GRAPH GRAPHB used by USGS MAPGEN
+				- MNAME name of the map being edited
+				- PATH revises the users path to include the MAPGEN directories.			
+			NOTE
+				To see the manual for the MAPGEN commands use the command
+				g.mapman.
+            
+            
+            EXAMPLES
+            
+                 MAPGEN
+            
+            SEE ALSO
+				use g.mapman to read overview.
+
+                 overview   User Manual for MAPGEN, (UNIX Version),
+                                USGS, APPENDIX III.
+            
+            AUTHOR
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
