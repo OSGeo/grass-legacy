@@ -51,7 +51,8 @@ main (int argc, char *argv[])
     double total_size = 0.0;     /* total size: length/area */
     
     module = G_define_module();
-    module->description = "Calculates univariate statistics for attribute.";
+    module->description = "Calculates univariate statistics for attribute. Variance and standard "
+	                  "deviation is calculated only for points.";
 
     map_opt = G_define_standard_option(G_OPT_V_INPUT);
     map_opt->key = "map";
@@ -256,9 +257,11 @@ main (int argc, char *argv[])
     if ( compatible ) {
 	if ( (otype & GV_LINES) || (otype & GV_AREA) ) {
 	    mean = sum / total_size;
-	    /* ??? Does it make sense for lines and areas ??? */
+	    /* Roger Bivand says it is wrong see GRASS devel list 7/2004 */
+	    /*
 	    pop_variance = (sumsq - sum*sum/total_size)/total_size;
 	    pop_stdev = sqrt(pop_variance);
+	    */
 	} else {
 	    mean = sum / count;
 	    pop_variance = (sumsq - sum*sum/count)/count;
@@ -275,7 +278,7 @@ main (int argc, char *argv[])
 	fprintf(stdout, "min=%g\n", min);
 	fprintf(stdout, "max=%g\n", max);
 	fprintf(stdout, "range=%g\n", max - min);
-	if ( compatible ) {
+	if ( compatible && (otype & GV_POINTS) ) {
 	    fprintf(stdout, "mean=%g\n", mean);
 	    fprintf(stdout, "population_stddev=%g\n", pop_stdev);
 	    fprintf(stdout, "population_variance=%g\n", pop_variance);
@@ -291,7 +294,7 @@ main (int argc, char *argv[])
 	fprintf(stdout, "minimum: %g\n", min);
 	fprintf(stdout, "maximum: %g\n", max);
 	fprintf(stdout, "range: %g\n", max - min);
-	if ( compatible ) {
+	if ( compatible && (otype & GV_POINTS) ) {
 	    fprintf(stdout, "mean: %g\n", mean);
 	    fprintf(stdout, "population standard deviation: %g\n", pop_stdev);
 	    fprintf(stdout, "population variance: %g\n", pop_variance);
