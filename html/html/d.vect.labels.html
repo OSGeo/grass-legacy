@@ -1,0 +1,115 @@
+<HTML>
+
+<TITLE>d.vect.labels</TITLE>
+
+<BODY bgcolor="white">
+
+<IMG src="grass.smlogo.gif">
+
+<HR width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><B>d.vect.labels</B></EM> - Labels vectors using the attribute value or
+the category value.
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.vect.labels</B><BR>
+<B>d.vect.labels [-smv]
+        map=</B><EM>name</EM>
+	[<B>attr=</B>string|cat|coords]
+	[<B>size=</B><EM>number</EM>]
+	[<B>color=</B><EM>colorname</EM>]
+	[<B>backgr=</B><EM>colorname</EM>]
+	[<B>border=</B><EM>colorname</EM>]
+	[<B>font=</B><EM>fontname</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<P>
+
+<EM>d.vect.labels</EM> performs automated placement of labels for a GRASS
+<EM>vector map</EM> on the current graphics monitor.  Labels can be chosen
+from the category value (numerical), a string attribute, or the labels
+positions coordinates.  The default uses the first string attribute. The
+user may select the color and sizing of the labels. Labels are only drawn
+within the current region.
+
+ 
+<P>
+This program can be run non-interactively or interactively.  If the user
+gives the name of a GRASS <EM>vector map</EM> and (optionally) any other
+parameters, the command will be run non-interactively.  Any parameter
+left unspecified will be set to its default value (see below). Alternatively,
+the user can type <EM>d.vect.labels</EM> at the command line and be prompted
+for the parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>save support sites file<br>
+<DT><B>-m</B>
+<DD>mark labels on the map
+<DT><B>-v</B>
+<DD>Verbose output
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of a GRASS <EM>vector map</EM> map in the user's current mapset
+	search path.
+<DT><B>attr=</B>string|cat|double|coords|dim
+<DD>Type of attribute to use for the label.<BR>
+Default: <EM>string</EM>
+<EM>attr</EM> option is set to <EM>string</EM>, <EM>cat</EM> or <EM>coords</EM>.<BR>
+Default: <EM>string</EM>
+<DT><B>size=</B><EM>number</EM>
+<DD>The size of letters in pixels.<BR>
+Default: <EM>10</EM>
+<DT><B>color=</B><EM>colorname</EM>
+<DD>The GRASS <EM>colorname</EM> to use for the label text.<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+	gray, white or black<BR>
+Default: <EM>white</EM>
+<DT><B>backgr=</B><EM>colorname</EM>
+<DD>Color to use for text box background.<BR>
+Options: grey, red, white, magenta, brown, blue, indigo, yellow, black, orange, 
+	green, violet, none<BR>
+Default: none
+<DT><B>border=</B><EM>colorname</EM>
+<DD>Color to use for text box border.<BR>
+Options: grey, red, white, magenta, brown, blue, indigo, yellow, black, orange, 
+	green, violet, none<BR>
+Default: none
+<DT><B>font=</B><EM>fontname</EM>
+<DD>The GRASS <EM>fontname</EM> to use for the label.<BR>
+Options: cyrilc, gothgbt, gothgrt, gothitt, greekc, greekcs, greekp,
+	greeks, italicc, italiccs, italict, romanc, romancs, romand, 
+	romans, romant, scriptc or scripts<BR>
+Default: <EM>romans</EM>
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A></EM><BR>
+<EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR>
+<EM><A HREF="d.site.labels.html">d.site.labels</A></EM><BR>
+<EM><A HREF="d.vect.html">d.vect</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+
+<H2>AUTHOR</H2>
+<P>
+<a href=mailto:merler@itc.it>Stefano Merler</a>, ITC-Irst, based on d.site.labels
+<P>
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

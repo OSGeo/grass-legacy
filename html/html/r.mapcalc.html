@@ -1,4 +1,7 @@
+<html>
+<head>
 <TITLE>r.mapcalc</TITLE>
+</head>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
@@ -74,25 +77,25 @@ The following operators are supported:
 
 
 <PRE>
-     Operator   Meaning                            Type        Precedence
-     -----------------------------------------------------------------------
-     %          modulus (remainder upon division)   Arithmetic  4
-     /          division                            Arithmetic  4
-     *          multiplication                      Arithmetic  4
-     +          addition                            Arithmetic  3
-     -          subtraction                         Arithmetic  3
-     ==         equal                               Logical     2
-     !=         not equal                           Logical     2
-     &gt;          greater than                        Logical     2
-     &gt;=         greater than or equal               Logical     2
-     &lt;          less than                           Logical     2
-     &lt;=         less than or equal                  Logical     2
-     &amp;&amp;         and                                 Logical     1
-     ||         or                                  Logical     1
-     #          color separator operator            Arithmetic
+     Operator   Meaning                    Type        Precedence
+     --------------------------------------------------------------
+     %          modulus                    Arithmetic  4
+     /          division                   Arithmetic  4
+     *          multiplication             Arithmetic  4
+     +          addition                   Arithmetic  3
+     -          subtraction                Arithmetic  3
+     ==         equal                      Logical     2
+     !=         not equal                  Logical     2
+     &gt;          greater than               Logical     2
+     &gt;=         greater than or equal      Logical     2
+     &lt;          less than                  Logical     2
+     &lt;=         less than or equal         Logical     2
+     &amp;&amp;         and                        Logical     1
+     ||         or                         Logical     1
+     #          color separator operator   Arithmetic   
 </PRE>
 
-
+(modulus is the remainder upon division)
 <P>
 
 The operators are applied from left to right, with those of higher precedence
@@ -477,6 +480,8 @@ Internal variables:
  null()                 NULL value
 </PRE>
 
+Note, that the row() and col() indexing starts with 1.
+
 <H2>FLOATING POINT VALUES IN THE EXPRESSION</H2>
 
 Floating point numbers are allowed in the expression. A floating point
@@ -727,15 +732,19 @@ by Anil K. Jain (Prentice Hall, NJ, 1989; p 67).
 
 <P>
 
-<EM><A HREF="blend.sh.html">blend.sh</A></EM><BR>
-<EM><A HREF="g.region.html">g.region</A></EM><BR>
-<EM><A HREF="r.colors.html">r.colors</A></EM><BR>
-<EM><A HREF="r.combine.html">r.combine</A></EM><BR>
-<EM><A HREF="r.infer.html">r.infer</A></EM><BR>
-<EM><A HREF="r.mask.html">r.mask</A></EM><BR>
-<EM><A HREF="r.weight.html">r.weight</A></EM><BR>
+<EM><A HREF="blend.sh.html">blend.sh</A>,
+<A HREF="g.region.html">g.region</A>,
+<A HREF="r.colors.html">r.colors</A>,
+<A HREF="r.combine.html">r.combine</A>,
+<A HREF="r.fillnulls.html">r.fillnulls</A>,
+<A HREF="r.infer.html">r.infer</A>,
+<A HREF="r.mask.html">r.mask</A>,
+<A HREF="r.weight.html">r.weight</A></EM>
 
 <H2>AUTHOR</H2>
 
 Michael Shapiro, U.S.Army Construction Engineering 
 Research Laboratory
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -344,7 +344,7 @@ proc load_file {{d "."} {w .brl}} {
     pack $w.top.scroll -side right -fill y -padx 10 -pady 5
 
     listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
-			-geometry 20x20 -setgrid yes
+			-width 20 -height 20 -setgrid yes
     pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
 
     entry $w.bot.entry -relief sunken 
@@ -568,7 +568,7 @@ proc browse_file {{d "."} {w .brl}} {
     pack $w.top.scroll -side right -fill y -padx 10 -pady 5
 
     listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
-			-geometry 20x20 -setgrid yes
+			-width 20 -height 20 -setgrid yes
     pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
 
     button $w.bot.b2 -text "Cancel" -command "destroy $w" -relief raised
@@ -702,25 +702,32 @@ proc load_meta2 { fname } {
 	 set s [string range $line 10 end]
 	 .meta.xref.hdat_e delete 0 end
 	 if {$s == "NAS"} {
-	   .meta.xref.hdat_t select from 0
+	   # .meta.xref.hdat_t select from 0
+           .meta.xref.hdat_t select set 0 0 
 	   .meta.xref.hdat_e insert end NAS
 	 } elseif {$s == "NAX"} {
-	   .meta.xref.hdat_t select from 1
+	   # .meta.xref.hdat_t select from 1
+           .meta.xref.hdat_t select set 1 1
 	   .meta.xref.hdat_e insert end NAX
          } elseif {$s == "WGA"} {
-	   .meta.xref.hdat_t select from 2
+	   # .meta.xref.hdat_t select from 2 
+           .meta.xref.hdat_t select set 2 2
 	   .meta.xref.hdat_e insert end WGA
          } elseif {$s == "WGB"} {
-	   .meta.xref.hdat_t select from 3
+	   # .meta.xref.hdat_t select from 3 3
+           .meta.xref.hdat_t select set 3
 	   .meta.xref.hdat_e insert end WGB
          } elseif {$s == "WGC"} {
-	   .meta.xref.hdat_t select from 4
+	   # .meta.xref.hdat_t select from 4
+           .meta.xref.hdat_t select set 4 4
 	   .meta.xref.hdat_e insert end WGC
          } elseif {$s == "WGE"} {
-	   .meta.xref.hdat_t select from 5
+	   # .meta.xref.hdat_t select from 5
+           .meta.xref.hdat_t select set 5 5
 	   .meta.xref.hdat_e insert end WGE
          } else {
-	   .meta.xref.hdat_t select from 6
+	   # .meta.xref.hdat_t select from 6
+           .meta.xref.hdat_t select set 6 6
 	   .meta.xref.hdat_e insert end $s
          }
 	  
@@ -860,7 +867,8 @@ proc clear_meta {} {
 #   .meta.iden.mpdt.day_e insert end [exec date "+%d"]
    .meta.iden.titl_e delete 0 end
    .meta.iden.comt_t delete 1.0 end
-   .meta.xref.hdat_t select from 0
+#   .meta.xref.hdat_t select from 0
+   .meta.xref.hdat_t select clear 0 end
    .meta.xref.hdat_e delete 0 end
 #   .meta.xref.hdat_e insert end NAS
    .meta.dddf.f1.ent_t delete 1.0 end
@@ -897,7 +905,7 @@ proc load_meta {{d "."} {w .brl}} {
     pack $w.top.scroll -side right -fill y -padx 10 -pady 5
 
     listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
-			-geometry 20x20 -setgrid yes
+			-width 20 -height 20 -setgrid yes
     pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
 
     entry $w.bot.entry -relief sunken
@@ -1045,7 +1053,7 @@ proc valid_year { {y ""}} {
 
     if { $y == "" } { return 0 }
     if {[string length $y] == 4 && [regexp {^[0-9]+$} $y]} {
-       if { $y > 1000 && $y <= [exec date "+19%y"]} { 
+       if { ($y > 1000) && ($y <= [exec date "+%Y"])} { 
 	   return 1 
        } else {
 	   invalid "Year '$y'";
@@ -1467,7 +1475,7 @@ the ATTR_LABEL field in the AP01 attribute module.)
     label $w.xref.hdat_l -text "Horizontal Datum"
     entry $w.xref.hdat_e -relief sunken 
     scrollbar $w.xref.hdat_s -relief flat -command "$w.xref.hdat_t yview"
-    listbox $w.xref.hdat_t -yscroll "$w.xref.hdat_s set" -relief sunken -setgrid 1 -geometry 80x3 
+    listbox $w.xref.hdat_t -yscroll "$w.xref.hdat_s set" -relief sunken -setgrid 1 -width 80 -height 3 
     bind $w.xref.hdat_e <KeyRelease> { set mod_meta 1 }
     bind $w.xref.hdat_e <Return> {
 	  if {[valid_hdat [$meta_w.xref.hdat_e get]]} {

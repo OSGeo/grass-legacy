@@ -1,13 +1,21 @@
-/* 1998-SEP-30 added -n flag to suppress text boxes 
- *	Benjamin Horner-Johnson <ben@earth.nwu.edu> */
-/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 /*
-**  Original written by Chuck Ehlshlaeger  6/89
-**  Revised by Dave Gerdes  12/89
-**  US Army Construction Engineering Research Lab
+ * $Id$
+ *
+ * 2001-APR-19 change from Michel Wurtz <michel.wurtz@teledetection.fr>
+ *             Cleaning and merge diffs from v.in.dxf2
+ * 
+ * 1998-SEP-30 added -n flag to suppress text boxes 
+ *	Benjamin Horner-Johnson <ben@earth.nwu.edu>
+ *
+ * 1/28/98 change from Jacques Bouchard <bouchard@onera.fr>
+ *
+ *  Original written by Chuck Ehlshlaeger  6/89
+ *  Revised by Dave Gerdes  12/89
+ *  US Army Construction Engineering Research Lab
 */
 
 #define MAIN
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include "dxf2vect.h"
@@ -34,6 +42,7 @@ main (int argc, char *argv[])
     FILE *dxf_fp;
     char *p;
     int i;
+    int count, list;
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
     struct GModule *module;
 
@@ -185,6 +194,17 @@ main (int argc, char *argv[])
     /*NOTE:  examples of dxf files with inaccurate information
     **have led us not to use the EXTMIN and EXTMAX information
     **found in the HEAD SECTION of a dxf file */
+    
+    list=1; /* make a flag similar to v.in.shape after improving the code */
+    if (list)
+    {
+       fprintf(stderr,"Following DXF layers found:\n");
+       for (count = 0; count < num_open_layers; count++)
+       {
+         fprintf(stderr,"Layer %d %s\n",count +1 ,layers[count].name);
+       }
+    }
+
     /*
     if (BOUNDARIES == 4)
 	dxf_add_boundaries ();

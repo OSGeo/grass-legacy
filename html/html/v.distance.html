@@ -1,0 +1,80 @@
+<TITLE>v.distance</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.distance</b></EM>  - Calculates distance from a point to nearest line or point in vector layer.
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.distance</B>
+
+<BR>
+
+<B>v.distance help</B>
+
+<BR>
+
+<B>v.distance </B> <B>map=</B><EM>name</EM>
+[<B>east_north=</B><EM>east,north</EM>[,<EM>east,north</EM>,...] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.distance</EM>
+uses a binary vector file (map=<EM>name</EM>) and user specified
+coordinates to calculate the distance from the given point(s) to 
+the nearest line or point in vector layer.
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM> 
+<DD>Name of a binary vector file.
+
+<DT><B>east_north=</B>
+<DD>One or multiple coordinate pairs for query
+</DL>
+
+<P>
+
+<EM>v.distance</EM> can be run either non-interactively or interactively
+but interactive user input is required to define the points to calculate
+the distance from.
+
+<h2>EXAMPLE</H2>
+
+To calculate the distance of given sites to the next road, run:
+<br>
+<tt>s.out.ascii -d archsites | v.distance roads</tt>
+
+<p>
+To calculate the distance of given sites to the next road and store the list
+as new sites map with distance attribute, run:
+<br>
+<tt>s.out.ascii -d archsites | v.distance roads | s.in.ascii fs='|' sites=dist</tt>
+
+
+
+<H2>SEE ALSO</H2>
+
+<EM><a href="r.distance.html">r.distance</a></EM>
+
+
+<H2>AUTHOR</H2>
+
+Janne Soimasuo 1994, Finland<br>
+University of Joensuu, Faculty of Forestry, Finland<p>
+
+Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

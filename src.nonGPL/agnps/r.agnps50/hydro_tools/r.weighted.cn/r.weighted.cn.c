@@ -8,6 +8,7 @@
 	distributed curve number map.
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include "gis.h"
@@ -18,6 +19,7 @@
 #define KILOMETERS(C,R) R*C/1000000.0
 #define ACRES(C,R)      KILOMETERS(C,R) * 247.1000
 
+int
 main(argc,argv)
 int	argc;
 char	*argv[];
@@ -37,7 +39,13 @@ char	*argv[];
 	long		count;
 	char		*G_get_cat();
 	struct Option *parm1, *parm2;
-	
+	struct GModule *module;
+
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+	"Generates a weighted SCS curve number map layer";
+        
         parm1 = G_define_option() ;
         parm1->key        = "input" ;
         parm1->type       = TYPE_STRING ;
@@ -147,7 +155,7 @@ char	*argv[];
 	      if(cn_cell[i] > 0)
 		  weighted_cn_cell[i] = (int) weighted_cn;
 	   }
-	   G_put_map_row(weighted_cn_id,weighted_cn_cell);
+	   G_put_raster_row(weighted_cn_id,weighted_cn_cell, CELL_TYPE);
 	}
 	G_close_cell(weighted_cn_id);
 
@@ -155,5 +163,5 @@ char	*argv[];
 
 	G_put_cell_title(weighted_cn_name,title);
 
-
+        return 0;
 }

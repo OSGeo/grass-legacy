@@ -69,7 +69,7 @@ check_table (struct symtab *ptr, int verbose)
 	  prior_check += temp2->element.val->desc.infr->prior_prob;
 	}
 	if ( ( prior_check < 0.995 ) || ( prior_check > 1.005 ) ) {
-	  fprintf(stderr,"Error:Prior probabilities don't sum to 1.0\n");
+	  fprintf(stderr,"Error: Prior probabilities don't sum to 1.0 (found sum of %f)\n", prior_check);
 	  exit(0);
 	}
 

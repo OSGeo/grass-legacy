@@ -3,10 +3,9 @@
 ** Programmer: Tom Howard   National Park Service GIS division		    
 */
 
+#include <stdlib.h>
 #include <math.h>
 #include "dxf2vect.h"
-
-double atof();
 
 int 
 dxf_add_circle (FILE *dxf_file)

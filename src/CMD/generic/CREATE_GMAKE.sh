@@ -27,14 +27,15 @@ exit 1
 fi
 
 # create gmake5 script to be used for local compiling
-echo "#!/bin/sh"                          > $GRASS_BIN/gmake$NAME_VER
-echo "SRC=$SRC/src"                       >> $GRASS_BIN/gmake$NAME_VER
-echo "CMD=$SRC/src/CMD"                   >> $GRASS_BIN/gmake$NAME_VER
-echo "HEADER=head.$ARCH"                  >> $GRASS_BIN/gmake$NAME_VER
-echo "HASX=yes"                           >> $GRASS_BIN/gmake$NAME_VER
-echo "HASMotif=no"                        >> $GRASS_BIN/gmake$NAME_VER
-echo "MAKE=$MAKE"                         >> $GRASS_BIN/gmake$NAME_VER
-echo ". $SRC/src/CMD/generic/gmake.sh"    >> $GRASS_BIN/gmake$NAME_VER
+echo "#!/bin/sh"                            > $GRASS_BIN/gmake$NAME_VER
+echo "SRC=$SRC/src"                        >> $GRASS_BIN/gmake$NAME_VER
+echo "CMD=$SRC/src/CMD"                    >> $GRASS_BIN/gmake$NAME_VER
+echo "UNUSED=$SRC/unused"                  >> $GRASS_BIN/gmake$NAME_VER
+echo "HEADER=head.$ARCH"                   >> $GRASS_BIN/gmake$NAME_VER
+echo "HASX=yes"                            >> $GRASS_BIN/gmake$NAME_VER
+echo "HASMotif=no"                         >> $GRASS_BIN/gmake$NAME_VER
+echo "MAKE=$MAKE"                          >> $GRASS_BIN/gmake$NAME_VER
+echo ". $SRC/src/CMD/generic/gmake.sh"     >> $GRASS_BIN/gmake$NAME_VER
 
 if [ $? != 0 ]; then
  echo "An error occured. Stop."
@@ -45,9 +46,9 @@ chmod ugo+x $GRASS_BIN/gmake$NAME_VER
 
 # create gmakelinks script to be used for linking after
 # local compiling
-echo ":"                                      > $GRASS_BIN/gmakelinks$NAME_VER
-echo "GMAKE=$GRASS_BIN/gmake$NAME_VER"        >> $GRASS_BIN/gmakelinks$NAME_VER
-echo ". $SRC/src/CMD/generic/MAKELINKS.sh"   >> $GRASS_BIN/gmakelinks$NAME_VER
+echo ":"                                    > $GRASS_BIN/gmakelinks$NAME_VER
+echo "GMAKE=$GRASS_BIN/gmake$NAME_VER"     >> $GRASS_BIN/gmakelinks$NAME_VER
+echo ". $SRC/src/CMD/generic/MAKELINKS.sh" >> $GRASS_BIN/gmakelinks$NAME_VER
 chmod ugo+x $GRASS_BIN/gmakelinks$NAME_VER
 
 exit 0

@@ -30,7 +30,7 @@ stable release based on GRASS 5.1.x may become version GRASS 6.0.0.
 
 <br>Two "phases" are planned with individual "milestones". This proposal
 is not going into details, but tries to describe the general route to follow.
-<p>Please send your opinion/suggestions to the <a href="http://www.geog.uni-hannover.de/grass/grassdevel.html">GRASS
+<p>Please send your opinion/suggestions to the <a href="http://grass.itc.it/grassdevel.html">GRASS
 5 developers list</a>.
 <p>Note:
 <br>PHASE 1 differs from PHASE 2 as the new directory layout and other
@@ -45,7 +45,6 @@ to avoid conflicts and to achieve stable 5.1 environment quickly</i>
 improvements</i>
 </ul>
 <p>
-
 
 <center><table BORDER COLS=1 WIDTH="100%" BGCOLOR="#66FFFF" NOSAVE >
 <tr>
@@ -69,11 +68,38 @@ build shared libraries</li>
 implement new environment variables management</li>
 
 <li>
+raster format: improve NULL support without external NULL file
+
+<li>
+raster format: write files in a directory structure similar to G3D. Means:
+one directory only for an individual raster map with all related files stored
+in.
+
+<li>
+change single-session to multi-session model 
+<li>
 separate GRASS database I/O routines from GISLIB and add Frank Warmerdam's&nbsp;<br>
 <a href=http://gdal.velocet.ca/projects/grass/>libgrassio</a> into separate
 directory, release libgrassio under <a href=http://www.gnu.org/copyleft/lesser.html>LGPL</a> 
 to allow implementation of I/O routines (but nothing else) into proprietary software 
 </li>
+<li> Improve coding (unsorted):
+<pre>
+         + use one color list only, currently several (local) are implemented
+         + Convert pre-ANSI code to use ANSI prototypes.
+         + Implement a uniform coding style.
+         + Remove unused code and variables.
+         + Use "const" where appropriate.
+         + Guard headers against repeated inclusion.
+         + Move variable definitions from headers to source files.
+         + Consistent use (or not) of "cmd" subdirectory.
+         + Remove warnings (enable "-Wall" by default for gcc).
+         + Consistent use of G_{warning,fatal_error,malloc,free} etc.
+         + checks if certain code which is repeated everywhere which can be moved to the 
+           GRASS libraries (clone detection)
+         + fix the precision/string problems (r.stats, r.to.sites etc)
+         + clean up usage of stdout/stderr, add fflush() where needed
+</pre>
 </ul>
 
 <br><b><font color="#FF0000">Milestone 2 - Status: restricted</font></b>
@@ -216,7 +242,7 @@ implement <a href=http://www.python.org>Python</a> interface/wrapper (ongoing wi
 
 <li>
 write a nice auto-generated GUI (see <a
-href=http://www.geog.uni-hannover.de/grass/demos/mac_grass_mockup_1.jpg>Mac OSX example</a>)</li>
+href=http://grass.itc.it/demos/mac_grass_mockup_1.jpg>Mac OSX example</a>)</li>
 
 <li>
 add v.[in|out].ogr module supporting <a
@@ -249,7 +275,7 @@ implement spatial web engine for "webGRASS" (JAVA ?)</li>
 
 This proposal is open to ideas/corrections/suggestions.
 <address>
-<p><a href="mailto:neteler@geog.uni-hannover.de">Markus Neteler</a>
+<p><a href="mailto:neteler@itc.it">Markus Neteler</a>
 <br>GRASS Development Team
 <hr>
 $Id$

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 
@@ -58,10 +59,10 @@ main (argc, argv)
     Nosup->key 		= 'n';
     Nosup->description 	= "Do NOT run v.support after labelling";
 
-    Points = Vect_new_line_struct ();
-
     if (G_parser (argc, argv))
 	exit(-1);
+
+    Points = Vect_new_line_struct ();
 
     otype = 0;
     if (typopt->answer[0] == 'p')

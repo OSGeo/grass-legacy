@@ -77,11 +77,16 @@ int main (int argc, char **argv)
 	{
 	struct Flag *g, *support, *a;
 	} flag;
-	
+	struct GModule *module;
 
         progname = argv[0];
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Imports Global Self-consistant Hierarchical High-resolution Shoreline (GSHHS) vector data";
 
     parm.input = G_define_option() ;
     parm.input->key        = "input";

@@ -30,7 +30,19 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.3  2001-08-08 21:10:17  frankw
+ * Revision 1.4  2002-01-22 04:51:23  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.2.4.3  2001/09/06 14:06:11  frankw
+ * upgraded bridge error reporting
+ *
+ * Revision 1.2.4.2  2001/09/06 01:57:11  frankw
+ * added GCP (POINTS) support, and complex bands in image groups
+ *
+ * Revision 1.2.4.1  2001/08/09 13:21:01  frankw
+ * applied nodata support, and static build support to 5.0 stable branch
+ *
+ * Revision 1.3  2001/08/08 21:10:17  frankw
  * updated
  *
  * Revision 1.10  2000/09/26 15:20:32  warmerda
@@ -68,6 +80,7 @@
 #include "gdalbridge.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef _WIN32
 #define PATH_SEP '\\'
@@ -85,18 +98,61 @@ static const char *papszSOFilenames[] = {
 	, NULL };
 #endif
 
+#define MAX_SYMBOL	1024
+
+/************************************************************************/
+/*                          GBGetSymbolCheck()                          */
+/*                                                                      */
+/*      Get a symbol, and on error add the missing entry point to a     */
+/*      list of missing entry points.                                   */
+/************************************************************************/
+
+static void *GBGetSymbolCheck( const char *pszLibrary, 
+                               const char *pszSymbolName,
+                               char **papszErrorList )
+
+{
+    void	*pReturn;
+    
+    pReturn = GBGetSymbol( pszLibrary, pszSymbolName );
+
+    if( pReturn == NULL && papszErrorList != NULL )
+    {
+        int	i;
+
+        for( i = 0; papszErrorList[i] != NULL; i++ ) {}
+
+        if( i < MAX_SYMBOL-1 )
+        {
+            papszErrorList[i] = strdup( pszSymbolName );
+            papszErrorList[i+1] = NULL;
+        }
+    }
+
+    return pReturn;
+}
 
 /************************************************************************/
 /*                        GDALBridgeInitialize()                        */
 /************************************************************************/
 
-int GDALBridgeInitialize( const char * pszTargetDir )
+int GDALBridgeInitialize( const char * pszTargetDir, FILE *fpReportFailure )
 
 {
     char	szPath[2048];
     void	*pfnTest = NULL;
     int		iSOFile;
+    char        *apszFailed[MAX_SYMBOL];
     
+/* -------------------------------------------------------------------- */
+/*      Do we want to force reporting on?                               */
+/* -------------------------------------------------------------------- */
+    if( fpReportFailure == NULL
+        && (getenv("CPL_DEBUG") != NULL || getenv("GB_DEBUG") != NULL) )
+    {
+        fpReportFailure = stderr;
+    }
+
 /* -------------------------------------------------------------------- */
 /*      The first phase is to try and find the shared library.          */
 /* -------------------------------------------------------------------- */
@@ -126,202 +182,261 @@ int GDALBridgeInitialize( const char * pszTargetDir )
         }
     }
 
+/* -------------------------------------------------------------------- */
+/*      Did we fail to even find the DLL/.so?                           */
+/* -------------------------------------------------------------------- */
     if( pfnTest == NULL )
+    {
+
+        if( fpReportFailure == NULL )
+            return FALSE;
+        
+
+        fprintf( fpReportFailure, 
+                 "GBBridgeInitialize() failed to find an suitable GDAL .DLL/.so file.\n" );
+        fprintf( fpReportFailure, 
+                 "The following filenames were searched for:\n" );
+        
+        for( iSOFile = 0; papszSOFilenames[iSOFile] != NULL; iSOFile++ )
+            fprintf( fpReportFailure, "  o %s\n", papszSOFilenames[iSOFile] );
+
+        fprintf( fpReportFailure, "\n" );
+        fprintf( fpReportFailure, "The following locations were searched:\n" );
+        
+        if( pszTargetDir != NULL )
+            fprintf( fpReportFailure, "  o %s\n", pszTargetDir );
+        
+        if( getenv( "GDAL_HOME" ) != NULL )
+            fprintf( fpReportFailure, "  o %s\n", getenv( "GDAL_HOME" ) );
+        
+        fprintf( fpReportFailure, "  o System default locations.\n" );
+        fprintf( fpReportFailure, "\n" );
+
+        fprintf( fpReportFailure, "\n" );
+#ifdef __unix__        
+        if( getenv("LD_LIBRARY_PATH") != NULL )
+        {
+            fprintf( fpReportFailure, 
+                     "System default locations may be influenced by:\n" );
+            fprintf( fpReportFailure, 
+                     "LD_LIBRARY_PATH = %s\n", getenv("LD_LIBRARY_PATH") );
+        }
+#else
+        if( getenv("PATH") != NULL )
+        {
+            fprintf( fpReportFailure, 
+                     "System default locations may be influenced by:\n" );
+            fprintf( fpReportFailure, 
+                     "PATH = %s\n", getenv("PATH") );
+        }
+#endif        
+        
         return FALSE;
+    }
     
 /* -------------------------------------------------------------------- */
 /*      Start loading functions.                                        */
 /* -------------------------------------------------------------------- */
-
+    apszFailed[0] = NULL;
+    
     GDALGetDataTypeSize = (int (*)(GDALDataType))
-        GBGetSymbol( szPath, "GDALGetDataTypeSize" );
+        GBGetSymbolCheck( szPath, "GDALGetDataTypeSize", apszFailed );
 
     GDALAllRegister = (void (*)(void)) 
-        GBGetSymbol( szPath, "GDALAllRegister" );
+        GBGetSymbolCheck( szPath, "GDALAllRegister", apszFailed );
 
     GDALCreate = (GDALDatasetH (*)(GDALDriverH, const char *, int, int, int,
                                    GDALDataType, char ** ))
-        GBGetSymbol( szPath, "GDALCreate" );
+        GBGetSymbolCheck( szPath, "GDALCreate", apszFailed );
 
     GDALOpen = (GDALDatasetH (*)(const char *, GDALAccess))
-        GBGetSymbol( szPath, "GDALOpen" );
+        GBGetSymbolCheck( szPath, "GDALOpen", apszFailed );
 
     GDALGetDriverByName = (GDALDriverH (*)(const char *))
-        GBGetSymbol( szPath, "GDALGetDriverByName" );
+        GBGetSymbolCheck( szPath, "GDALGetDriverByName", apszFailed );
 
     GDALClose = (void (*)(GDALDatasetH))
-        GBGetSymbol( szPath, "GDALClose" );
+        GBGetSymbolCheck( szPath, "GDALClose", apszFailed );
 
     GDALGetRasterXSize = (int (*)(GDALDatasetH))
-        GBGetSymbol( szPath, "GDALGetRasterXSize" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterXSize", apszFailed );
 
     GDALGetRasterYSize = (int (*)(GDALDatasetH))
-        GBGetSymbol( szPath, "GDALGetRasterYSize" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterYSize", apszFailed );
 
     GDALGetRasterCount = (int (*)(GDALDatasetH))
-        GBGetSymbol( szPath, "GDALGetRasterCount" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterCount", apszFailed );
 
     GDALGetRasterBand = (GDALRasterBandH (*)(GDALDatasetH, int))
-        GBGetSymbol( szPath, "GDALGetRasterBand" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterBand", apszFailed );
 
     GDALGetProjectionRef = (const char *(*)(GDALDatasetH))
-        GBGetSymbol( szPath, "GDALGetProjectionRef" );
+        GBGetSymbolCheck( szPath, "GDALGetProjectionRef", apszFailed );
 
     GDALSetProjection = (CPLErr (*)(GDALDatasetH, const char *))
-        GBGetSymbol( szPath, "GDALSetProjection" );
+        GBGetSymbolCheck( szPath, "GDALSetProjection", apszFailed );
 
     GDALGetGeoTransform = (CPLErr (*)(GDALDatasetH, double *))
-        GBGetSymbol( szPath, "GDALGetGeoTransform" );
+        GBGetSymbolCheck( szPath, "GDALGetGeoTransform", apszFailed );
 
     GDALSetGeoTransform = (CPLErr (*)(GDALDatasetH, double *))
-        GBGetSymbol( szPath, "GDALSetGeoTransform" );
+        GBGetSymbolCheck( szPath, "GDALSetGeoTransform", apszFailed );
 
     GDALGetInternalHandle = (void *(*)(GDALDatasetH, const char *))
-        GBGetSymbol( szPath, "GDALGetInternalHandle" );
+        GBGetSymbolCheck( szPath, "GDALGetInternalHandle", apszFailed );
+
+    GDALGetGCPCount = (int (*)(GDALDatasetH))
+        GBGetSymbolCheck( szPath, "GDALGetGCPCount", apszFailed );
+
+    GDALGetGCPProjection = (const char *(*)(GDALDatasetH))
+        GBGetSymbolCheck( szPath, "GDALGetGCPProjection", apszFailed );
+
+    GDALGetGCPs = (const GDAL_GCP *(*)(GDALDatasetH))
+        GBGetSymbolCheck( szPath, "GDALGetGCPs", apszFailed );
 
     GDALGetRasterDataType = (GDALDataType (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetRasterDataType" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterDataType", apszFailed );
 
     GDALGetRasterBandXSize = (int (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetRasterBandXSize" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterBandXSize", apszFailed );
 
     GDALGetRasterBandYSize = (int (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetRasterBandYSize" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterBandYSize", apszFailed );
 
     GDALGetBlockSize = (void (*)(GDALRasterBandH, int *, int *))
-        GBGetSymbol( szPath, "GDALGetBlockSize" );
+        GBGetSymbolCheck( szPath, "GDALGetBlockSize", apszFailed );
 
     GDALRasterIO = (CPLErr (*)(GDALRasterBandH, GDALRWFlag, int, int, int, int,
                                void *, int, int, GDALDataType, int, int ))
-        GBGetSymbol( szPath, "GDALRasterIO" );
+        GBGetSymbolCheck( szPath, "GDALRasterIO", apszFailed );
 
     GDALReadBlock = (CPLErr (*)(GDALRasterBandH, int, int, void *))
-        GBGetSymbol( szPath, "GDALReadBlock" );
+        GBGetSymbolCheck( szPath, "GDALReadBlock", apszFailed );
     
     GDALWriteBlock = (CPLErr (*)(GDALRasterBandH, int, int, void *))
-        GBGetSymbol( szPath, "GDALWriteBlock" );
+        GBGetSymbolCheck( szPath, "GDALWriteBlock", apszFailed );
 
     GDALGetOverviewCount = (int (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetOverviewCount" );
+        GBGetSymbolCheck( szPath, "GDALGetOverviewCount", apszFailed );
 
     GDALGetOverview = (GDALRasterBandH (*)(GDALRasterBandH, int))
-        GBGetSymbol( szPath, "GDALGetOverview" );
+        GBGetSymbolCheck( szPath, "GDALGetOverview", apszFailed );
 
     GDALGetRasterNoDataValue = (double (*)(GDALRasterBandH, int*))
-        GBGetSymbol( szPath, "GDALGetRasterNoDataValue" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterNoDataValue", apszFailed );
 
     GDALSetRasterNoDataValue = (CPLErr (*)(GDALRasterBandH, double))
-        GBGetSymbol( szPath, "GDALSetRasterNoDataValue" );
+        GBGetSymbolCheck( szPath, "GDALSetRasterNoDataValue", apszFailed );
 
     GDALGetRasterColorInterpretation = (GDALColorInterp (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetRasterColorInterpretation" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterColorInterpretation", apszFailed );
 
     GDALGetColorInterpretationName = (const char *(*)(GDALColorInterp))
-        GBGetSymbol( szPath, "GDALGetColorInterpretationName" );
+        GBGetSymbolCheck( szPath, "GDALGetColorInterpretationName", apszFailed );
 
     GDALGetRasterColorTable = (GDALColorTableH (*)(GDALRasterBandH))
-        GBGetSymbol( szPath, "GDALGetRasterColorTable" );
+        GBGetSymbolCheck( szPath, "GDALGetRasterColorTable", apszFailed );
 
     GDALCreateProjDef = (GDALProjDefH (*)(const char *))
-        GBGetSymbol( szPath, "GDALCreateProjDef" );
+        GBGetSymbolCheck( szPath, "GDALCreateProjDef", apszFailed );
 
     GDALReprojectToLongLat = (CPLErr (*)(GDALProjDefH, double *, double *))
-        GBGetSymbol( szPath, "GDALReprojectToLongLat" );
+        GBGetSymbolCheck( szPath, "GDALReprojectToLongLat", apszFailed );
     
     GDALReprojectFromLongLat = (CPLErr (*)(GDALProjDefH, double *, double *))
-        GBGetSymbol( szPath, "GDALReprojectFromLongLat" );
+        GBGetSymbolCheck( szPath, "GDALReprojectFromLongLat", apszFailed );
 
     GDALDestroyProjDef = (void (*)(GDALProjDefH))
-        GBGetSymbol( szPath, "GDALDestroyProjDef" );
+        GBGetSymbolCheck( szPath, "GDALDestroyProjDef", apszFailed );
 
     GDALDecToDMS = (const char *(*)(double, const char *, int ))
-        GBGetSymbol( szPath, "GDALDecToDMS" );
+        GBGetSymbolCheck( szPath, "GDALDecToDMS", apszFailed );
 
     GDALGetPaletteInterpretation = (GDALPaletteInterp (*)(GDALColorTableH))
-        GBGetSymbol( szPath, "GDALGetPaletteInterpretation" );
+        GBGetSymbolCheck( szPath, "GDALGetPaletteInterpretation", apszFailed );
 
     GDALGetPaletteInterpretationName = (const char *(*)(GDALPaletteInterp))
-        GBGetSymbol( szPath, "GDALGetPaletteInterpretationName" );
+        GBGetSymbolCheck( szPath, "GDALGetPaletteInterpretationName", apszFailed );
 
     GDALGetColorEntryCount = (int (*)(GDALColorTableH))
-        GBGetSymbol( szPath, "GDALGetColorEntryCount" );
+        GBGetSymbolCheck( szPath, "GDALGetColorEntryCount", apszFailed );
 
     GDALGetColorEntry = (const GDALColorEntry *(*)(GDALColorTableH,int))
-        GBGetSymbol( szPath, "GDALGetColorEntry" );
+        GBGetSymbolCheck( szPath, "GDALGetColorEntry", apszFailed );
 
     GDALGetColorEntryAsRGB = (int (*)(GDALColorTableH,int,
                                       GDALColorEntry*))
-        GBGetSymbol( szPath, "GDALGetColorEntryAsRGB" );
+        GBGetSymbolCheck( szPath, "GDALGetColorEntryAsRGB", apszFailed );
     
     GDALSetColorEntry = (void (*)(GDALColorTableH, int, const GDALColorEntry*))
-        GBGetSymbol( szPath, "GDALSetColorEntry" );
+        GBGetSymbolCheck( szPath, "GDALSetColorEntry", apszFailed );
 
 /* -------------------------------------------------------------------- */
 /*      OSR API                                                         */
 /* -------------------------------------------------------------------- */
     OSRNewSpatialReference = (OGRSpatialReferenceH (*)( const char * ))
-        GBGetSymbol( szPath, "OSRNewSpatialReference" );
+        GBGetSymbolCheck( szPath, "OSRNewSpatialReference", apszFailed );
 
     OSRCloneGeogCS = (OGRSpatialReferenceH (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRCloneGeogCS" );
+        GBGetSymbolCheck( szPath, "OSRCloneGeogCS", apszFailed );
 
     OSRDestroySpatialReference = (void (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRDestroySpatialReference" );
+        GBGetSymbolCheck( szPath, "OSRDestroySpatialReference", apszFailed );
 
     OSRReference = (int (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRReference" );
+        GBGetSymbolCheck( szPath, "OSRReference", apszFailed );
 
     OSRDereference = (int (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRDereference" );
+        GBGetSymbolCheck( szPath, "OSRDereference", apszFailed );
 
     OSRImportFromEPSG = (OGRErr (*)(OGRSpatialReferenceH,int))
-        GBGetSymbol( szPath, "OSRImportFromEPSG" );
+        GBGetSymbolCheck( szPath, "OSRImportFromEPSG", apszFailed );
 
     OSRImportFromWkt = (OGRErr (*)(OGRSpatialReferenceH,char **))
-        GBGetSymbol( szPath, "OSRImportFromWkt" );
+        GBGetSymbolCheck( szPath, "OSRImportFromWkt", apszFailed );
 
     OSRImportFromProj4 = (OGRErr (*)(OGRSpatialReferenceH,const char *))
-        GBGetSymbol( szPath, "OSRImportFromProj4" );
+        GBGetSymbolCheck( szPath, "OSRImportFromProj4", apszFailed );
 
     OSRExportToWkt = (OGRErr (*)(OGRSpatialReferenceH, char **))
-        GBGetSymbol( szPath, "OSRExportToWkt" );
+        GBGetSymbolCheck( szPath, "OSRExportToWkt", apszFailed );
     
     OSRExportToPrettyWkt = (OGRErr (*)(OGRSpatialReferenceH, char **, int))
-        GBGetSymbol( szPath, "OSRExportToPrettyWkt" );
+        GBGetSymbolCheck( szPath, "OSRExportToPrettyWkt", apszFailed );
     
     OSRExportToProj4 = (OGRErr (*)(OGRSpatialReferenceH, char **))
-        GBGetSymbol( szPath, "OSRExportToProj4" );
+        GBGetSymbolCheck( szPath, "OSRExportToProj4", apszFailed );
     
     OSRSetAttrValue = (OGRErr (*)(OGRSpatialReferenceH, const char *, 
                                   const char *))
-        GBGetSymbol( szPath, "OSRSetAttrValue" );
+        GBGetSymbolCheck( szPath, "OSRSetAttrValue", apszFailed );
     
     OSRGetAttrValue = (const char *(*)(OGRSpatialReferenceH, const char *,int))
-        GBGetSymbol( szPath, "OSRGetAttrValue" );
+        GBGetSymbolCheck( szPath, "OSRGetAttrValue", apszFailed );
     
     OSRSetLinearUnits = (OGRErr (*)(OGRSpatialReferenceH, const char *,double))
-        GBGetSymbol( szPath, "OSRSetLinearUnits" );
+        GBGetSymbolCheck( szPath, "OSRSetLinearUnits", apszFailed );
     
     OSRGetLinearUnits = (double (*)(OGRSpatialReferenceH, char **))
-        GBGetSymbol( szPath, "OSRGetLinearUnits" );
+        GBGetSymbolCheck( szPath, "OSRGetLinearUnits", apszFailed );
     
     OSRIsGeographic = (int (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRIsGeographic" );
+        GBGetSymbolCheck( szPath, "OSRIsGeographic", apszFailed );
     
     OSRIsProjected = (int (*)(OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRIsProjected" );
+        GBGetSymbolCheck( szPath, "OSRIsProjected", apszFailed );
     
     OSRIsSameGeogCS = (int (*)(OGRSpatialReferenceH,OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRIsSameGeogCS" );
+        GBGetSymbolCheck( szPath, "OSRIsSameGeogCS", apszFailed );
     
     OSRIsSame = (int (*)(OGRSpatialReferenceH,OGRSpatialReferenceH))
-        GBGetSymbol( szPath, "OSRIsSame" );
+        GBGetSymbolCheck( szPath, "OSRIsSame", apszFailed );
     
     OSRSetProjCS = (OGRErr (*)(OGRSpatialReferenceH,const char*))
-        GBGetSymbol( szPath, "OSRSetProjCS" );
+        GBGetSymbolCheck( szPath, "OSRSetProjCS", apszFailed );
 
     OSRSetWellKnownGeogCS = (OGRErr (*)(OGRSpatialReferenceH, const char *))
-        GBGetSymbol( szPath, "OSRSetWellKnownGeogCS" );
+        GBGetSymbolCheck( szPath, "OSRSetWellKnownGeogCS", apszFailed );
 
     OSRSetGeogCS = (OGRErr (*)( OGRSpatialReferenceH hSRS,
                                 const char * pszGeogName,
@@ -332,34 +447,55 @@ int GDALBridgeInitialize( const char * pszTargetDir )
                                 double dfPMOffset /* = 0.0 */,
                                 const char * pszUnits /* = NULL */,
                                 double dfConvertToRadians /* = 0.0 */ ))
-        GBGetSymbol( szPath, "OSRSetGeogCS" );
+        GBGetSymbolCheck( szPath, "OSRSetGeogCS", apszFailed );
         
     OSRGetSemiMajor = (double (*)(OGRSpatialReferenceH, OGRErr *))
-        GBGetSymbol( szPath, "OSRGetSemiMajor" );
+        GBGetSymbolCheck( szPath, "OSRGetSemiMajor", apszFailed );
 
     OSRGetSemiMinor = (double (*)(OGRSpatialReferenceH, OGRErr *))
-        GBGetSymbol( szPath, "OSRGetSemiMinor" );
+        GBGetSymbolCheck( szPath, "OSRGetSemiMinor", apszFailed );
 
     OSRGetInvFlattening = (double (*)(OGRSpatialReferenceH, OGRErr *))
-        GBGetSymbol( szPath, "OSRGetInvFlattening" );
+        GBGetSymbolCheck( szPath, "OSRGetInvFlattening", apszFailed );
 
     OSRSetAuthority = (OGRErr (*)(OGRSpatialReferenceH, const char *, 
                                   const char *, int))
-        GBGetSymbol( szPath, "OSRSetAuthority" );
+        GBGetSymbolCheck( szPath, "OSRSetAuthority", apszFailed );
 
     OSRSetProjParm = (OGRErr (*)(OGRSpatialReferenceH, const char *, double))
-        GBGetSymbol( szPath, "OSRSetProjParm" );
+        GBGetSymbolCheck( szPath, "OSRSetProjParm", apszFailed );
 
     OSRGetProjParm = (double (*)(OGRSpatialReferenceH, const char *, 
                                  double, OGRErr *))
-        GBGetSymbol( szPath, "OSRGetProjParm" );
+        GBGetSymbolCheck( szPath, "OSRGetProjParm", apszFailed );
 
     OSRSetUTM = (OGRErr (*)(OGRSpatialReferenceH, int, int))
-        GBGetSymbol( szPath, "OSRSetUTM" );
+        GBGetSymbolCheck( szPath, "OSRSetUTM", apszFailed );
 
     OSRGetUTMZone = (int (*)(OGRSpatialReferenceH, int *))
-        GBGetSymbol( szPath, "OSRGetUTMZone" );
+        GBGetSymbolCheck( szPath, "OSRGetUTMZone", apszFailed );
 
-    return TRUE;
+/* -------------------------------------------------------------------- */
+/*      Did we fail to find any entry points?                           */
+/* -------------------------------------------------------------------- */
+    if( apszFailed[0] != NULL && fpReportFailure != NULL )
+    {
+        int	iError;
+        
+        fprintf( fpReportFailure, 
+                 "While a GDAL .DLL/.so was found at `%s'\n"
+                 "it appears to be missing the following entry points.\n"
+                 "Consider upgrading to a more recent GDAL library.\n",
+                 szPath );
+        
+        for( iError = 0; apszFailed[iError] != NULL; iError++ )
+        {
+            fprintf( fpReportFailure, "  o %s\n", apszFailed[iError] );
+            free( apszFailed[iError] );
+        }
+    }
+
+    return apszFailed[0] == NULL;
 }
+
 

@@ -14,7 +14,10 @@
  * Author: Jianping Xu, Rutgers University
  * Date: 06/11/1994
  ******************************************************************************/
+
 #include <limits.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <sys/types.h>
 

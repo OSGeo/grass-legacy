@@ -12,17 +12,16 @@
 #include "includes.h"
 #include "local_proto.h"
 
-extern Display *dpy;
-extern Window grwin;
-extern Cursor grcurse;
-
-/* static u_long mask; */
-
 int Get_location_with_pointer (int *wx, int *wy, int *button)
 {
+    if (redraw_pid)
+    {
+	fprintf(stderr, "Monitor: interactive command in redraw\n");
+	return -1;
+    }
 
     /* set the grass cursor on (defined in Graph_Set.c) */
-    XDefineCursor(dpy, grwin, grcurse);
+    XDefineCursor(dpy, grwin, cur_xh);
 
     /* wait for a button-push event in the grass window, and return the
      * x,y coord and button number */
@@ -45,23 +44,22 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
     }else{
         XEvent bpevent;
 
-	/**************
-	while (XCheckWindowEvent(dpy, grwin, 
-		ButtonPressMask, &bpevent) == False)
-	***************/
+	XSelectInput(dpy, grwin, ButtonPressMask);
+
 	do 
 	{
-		XWindowEvent(dpy, grwin, 
-				ButtonPressMask | ExposureMask, &bpevent);
-
-		if (bpevent.type == Expose)
-			if (handleExposeEvent() != 0)
-				return -1;
+	    if (!Get_Xevent(ButtonPressMask, &bpevent))
+		break;
 	} while (bpevent.type != ButtonPress);
+
+	XSelectInput(dpy, grwin, gemask);
+
 	*wx = bpevent.xbutton.x;
 	*wy = bpevent.xbutton.y;
 	*button = bpevent.xbutton.button;
     }
+
+    XUndefineCursor(dpy, grwin);
 
     return 0;
 }

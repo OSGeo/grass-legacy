@@ -5,10 +5,11 @@
 */
 
 #include <stdlib.h>
-#include "gis.h"
 #include <stdio.h>
+#include "gis.h"
+#include "dbvect.h"
 
-buildInfxQry(key,col,table,where,input,output, vtype, disolve)
+int buildInfxQry(key,col,table,where,input,output, vtype, disolve)
   char *key;
   char *col;
   char *table;

@@ -1,35 +1,52 @@
-<TITLE>r.agnps_input</TITLE>
+<TITLE>r.agnps50.run</TITLE>
 
 <body bgcolor="white">
 
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
 
-<h2>Guidelines for AGNPS-GRASS Interface</h2>
-<p>
+<H2>NAME</H2>
 
-r.agnps50.run
-<p>
+<EM><b>r.agnps50.run</b></EM> - Assess nonpoint source pollution
+origination and movement in a watershed (AGNPS erosion modelling).
+<BR>
+<EM>(GRASS Raster Program)</EM>
 
-AGNPS SCS version 5.00
-<p>
+<H2>SYNOPSIS</H2>
 
-Supply the following command line arguments:
-<p>
+<B>r.agnps50.run help</B> 
+<BR>
+<B>r.agnps50.run</B> [<B>-gasnhd</B>] <B>input=</B><EM>name</EM>
 
-     r.agnps50.run wshed.dat 0 1 1
-<p>
 
-Where 'wshed.dat' is the name of the data file to be analyzed.
-and the 0 or 1 determines whether or not AGNPS should produce.
-a GIS formatted output file.  The second 0 or 1 flag is an 
-indicator to turn on the creation of the binary files.  The third
-0 or 1 flag is to turn on the file creation for the source acct
+<H3>Flags:</H3> 
+
+<DL>
+
+<DT><B>-g</B>
+<DD>Create GIS formatted output file.
+
+<DT><B>-a</B>
+<DD>Enable source accounting.
+
+<DT><B>-s</B>
+<DD>Output sediment information.
+
+<DT><B>-n</B>
+<DD>Output nutrient information.
+
+<DT><B>-h</B>
+<DD>Output hydro information.
+
+<DT><B>-d</B>
+<DD>Output debug information.
+
+</DL>
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="r.agnps50.run.html">r.agnps50.run</A></EM><BR>
 <EM><A HREF="r.agnps50.view.html">r.agnps50.view</A></EM><BR>
 <p>
 <a href=http://www.geog.uni-hannover.de/phygeo/grass/agnps.html>AGNPS Page</a>
-</BODY>
+<p><i>Last changed: $Date$</i>
+</body>
 </html>

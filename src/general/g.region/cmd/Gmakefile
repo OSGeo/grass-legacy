@@ -1,10 +1,11 @@
 PGM    = g.region
 
-LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(GPROJLIB)
 
-LIST   = main.o\
-	 adjust.o\
-	 zoom.o
+LIST   = printwindow.o\
+	adjust.o\
+	main.o\
+	zoom.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

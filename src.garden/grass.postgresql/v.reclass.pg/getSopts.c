@@ -1,9 +1,12 @@
 /*		alex shevlakov, jan'00, libpq update
 */
 
+#include <string.h>
+#include <stdlib.h>
 #include "gis.h"
+#include "dbvect.h"
 
-
+int
 getSelectOpts (argc, argv)
     int argc;
     char **argv;
@@ -11,12 +14,10 @@ getSelectOpts (argc, argv)
 
 {
 
-        char *mapset;
-        int  i, j, stat,k;
+        int  i, stat,k;
 
         struct Option *sql, *input,*output, *vtype;
         struct Flag *select, *disolve;
-	char *key, *col;
 	char buf[1024] = "";
 	char SQL_stmt[1024] = "";
 	char tmpstr[8] = "";
@@ -36,13 +37,6 @@ getSelectOpts (argc, argv)
         disolve->key     = 'd';
         disolve->description = "Dissolve common boundaries (default is no)." ;
 
-        sql = G_define_option() ;
-        sql->key        = "sql" ;
-	sql->key_desc   = "file";
-        sql->type       = TYPE_STRING ;
-        sql->required   = YES  ;
-        sql->multiple   = NO ;
-        sql->description= "File with SQL command.";
 
         input = G_define_option() ;
         input->key        = "input" ;
@@ -51,6 +45,14 @@ getSelectOpts (argc, argv)
         input->required   = YES  ;
         input->multiple   = NO ;
         input->description= "Name of existing vector file.";
+
+	sql = G_define_option() ;
+        sql->key        = "sql" ;
+	sql->key_desc   = "file";
+        sql->type       = TYPE_STRING ;
+        sql->required   = YES  ;
+        sql->multiple   = NO ;
+        sql->description= "File with SQL command.";
 
         output = G_define_option() ;
         output->key        = "output" ;
@@ -74,7 +76,7 @@ getSelectOpts (argc, argv)
                         argv[1] = "help";
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

@@ -14,7 +14,8 @@ struct semivar_list
 };
 typedef struct semivar_list HGN;
 
-#define PLOTPROG "g.gnuplot"
+extern const char *plot_program;
+
 #define POINTSSTYLE "1 8"
 #define LINESTYLE "2 8"
 

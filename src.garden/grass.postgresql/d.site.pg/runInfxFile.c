@@ -1,23 +1,24 @@
 /*-----------changed to Site API, Dec.99. A.Sh.*/
 
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "raster.h"
+#include "display.h"
 #include "site.h"
-
 #include <stdio.h>
 #include <libpq-fe.h>
 #include "dbsite.h"
 
-runInfxFile(SQL_stmt, map,  plotargs )
+int runInfxFile(SQL_stmt, map,  plotargs )
   char *SQL_stmt, *map, *plotargs[];
   {
-    FILE *fp, *fpin, *fpout;
+    FILE *fpout = NULL;
     int i,nflds,err;
     int retval;
     int color;
     int size;
     char *icon;
-    char sysbuf[1024];
     char buf1[1024] = "";
     char buf2[1024] = "";
     char *buf3;
@@ -27,7 +28,6 @@ runInfxFile(SQL_stmt, map,  plotargs )
     PGresult *res;
     char    *pghost;
     Site *site;
-    int c = 0;
     
     i = 1;
     retval  = 0 ;
@@ -44,8 +44,18 @@ runInfxFile(SQL_stmt, map,  plotargs )
     D_setup(0) ;
     R_standard_color(color);
 
-    if (map)	fpout=G_fopen_sites_new(map);
+    if (map){
+         
+     if ((fpout = G_fopen_sites_new (map)) == NULL)
+    	
+	{
+      		sprintf (buf1, "Cannot open %s", map);
+      		G_fatal_error (buf1);
+    	}
 
+    }	
+	
+		
 #ifdef VERBOSE
     printf ("\n\nExecuting\n%s;\n\n",SQL_stmt);
 #endif

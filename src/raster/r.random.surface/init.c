@@ -5,6 +5,9 @@
 #define DEBUG
 #undef DEBUG
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #undef MAIN
 #include "ransurf.h"
 
@@ -141,7 +144,7 @@ Init (argc, argv)
         for( j = i - 1; j >= 0; j--) {
                 if( strcmp(OutNames[j], Name) == 0) {
                     sprintf( Buf,
-                        "%s: Random map [%] repeated, maps must be unique",
+                        "%s: Random map [%s] repeated, maps must be unique",
                         G_program_name(), Name);
                     G_fatal_error( Buf);
                 }

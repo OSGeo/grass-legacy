@@ -17,19 +17,37 @@ one location to the current location.
 
 <H2>SYNOPSIS</H2>
 
-<b> r.proj input=name location=name [output=name] [mapset=name]
+<b> r.proj [-l] input=name location=name [output=name] [mapset=name]
    [dbase=name] [method=name] [resolution=value]</b>
 <p>
-Parameters:<p>
-<em>       input</em>   input raster map from source location<p>
-<em>    location</em>   source location of input map<p>
-<em>      output</em>   output raster map for current location<p>
-<em>      mapset</em>   mapset of input map<p>
-<em>       dbase</em>   path to GRASS database of input location<p>
-<em>      method</em>   interpolation method to use<br>
+
+<H3>Flags:</H3>  
+
+<DL>
+<DT><B>-l</B>
+<DD> List raster files in input location and exit
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>input raster map from source location
+<DT><B>location</B>
+<DD>source location of input map
+<DT><B>output</B>
+<DD>output raster map for current location
+<DT><B>mapset</B>
+<DD>mapset of input map
+<DT><B>dbase</B>
+<DD>path to GRASS database of input location
+<DT><B>method</B>
+<DD>interpolation method to use<br>
 &nbsp;&nbsp;&nbsp;               options: nearest,bilinear,cubic<br>
-&nbsp;&nbsp;&nbsp;               default: nearest<p>
-<em>  resolution</em>   resolution of output map
+&nbsp;&nbsp;&nbsp;               default: nearest
+<DT><B>resolution</B>
+<DD>resolution of output map
+</DL>
+
 
 <H2>NOTES</H2>
 
@@ -158,9 +176,13 @@ being represented.  This will be very different for categorical versus
 numerical data.  Note that three methods for the local interpolation step
 are provided.
 
-<h2>BUGS</h2>
-The entire input map is read into memory. This requires a large amount of
-memory if large raster layers where projected. 
+<h2>BUGS</h2> 
+
+Datum transformations are not yet supported.
+<p>
+The entire input map is read into memory even if portions only are
+transformed. This requires a large amount of memory if large raster layers
+where projected.
 
 <h2>References:</h2>
 [1]Evenden, G.I.  (1990) Cartographic projection procedures for
@@ -178,7 +200,6 @@ Springer-Verlag, Berlin, 2nd edition.
 <A HREF="v.proj.html">v.proj</A>,
 <A HREF="g.setproj.html">g.setproj</A>,
 <A HREF="i.rectify.html">i.rectify</A>,
-<A HREF="i.rectify2.html">i.rectify2</A>,
 <A HREF="i.rectify3.html">i.rectify3</A>,
 <A HREF="r.support.html">r.support</A>, 
 <A HREF="r.stats.html">r.stats</A>, 
@@ -194,4 +215,6 @@ Man page text from S.J.D. Cox, AGCRC, CSIRO Exploration &amp; Mining, Nedlands, 
 <p>
 Updated by <a href=mailto:morten@ngb.se>Morten Hulden</a>
 
+<p><i>Last changed: $Date$</i>
+</body>
 </html>

@@ -1,12 +1,16 @@
 This text is an update from documentation/agnps2.html  
 
   $Log$
-  Revision 1.1  2000-01-14 17:15:05  markus
+  Revision 1.2  2002-01-22 04:51:18  glynn
+  Merge releasebranch_11_april_2001_5_0_0 with HEAD
+
+  Revision 1.1.4.1  2001/10/10 13:10:30  markus
+  added source descriptions
+
+  Revision 1.1  2000/01/14 17:15:05  markus
   needs updating to GRASS 5
 
-
-3. March 1998 Markus Neteler
-              neteler@geog.uni-hannover.de
+Markus Neteler  <neteler@itc.it>
 
 Update for WATERSHEDDS-NCSU-GRASS-AGNPS.
 ------------------------------------------------------
@@ -30,9 +34,10 @@ This
  - compiles and installs the executable agnps_views
  - compiles and installs the GRASS hydrologic functions      
       r.cn2, r.weighted.cn
- - copies scripts into grass5/etc/agnsp/ and grass5/scripts subdirectory 
+ - copies scripts into grass5/etc/agnps/ and grass5/scripts subdirectory 
 
-4. You must have a .cshrc in your directory with the following statement
+4. cshrc:
+   You must have a .cshrc in your directory with the following statement
    in the PATH-command: $GISBASE
 
    for example:
@@ -41,8 +46,7 @@ This
    (optimize this for your machine)
 
    Otherwise the csh-scripts of AGNPS won't work.
- 
-  
+
 That's all...
 
 
@@ -68,3 +72,13 @@ For short:
   3. r.agnps50.view
    
 Good luck!
+
+Source home:
+ scripts/            scripts for GISBASE/etc/agnps
+ src_agnps_input_1/  contains $(GISBASE)/etc/agnps50/agnps_input_1, called
+                     by scripts/r.agnps50.input
+ src_agnps_input_2a/ contains $(GISBASE)/etc/agnps50/agnps_input_2a, called
+                     by scripts/r.agnps50.input
+ agnps-source/       r.agnps50.run
+ agview/             r.agnps50.view
+ hydro_tools/        r.cn* etc.

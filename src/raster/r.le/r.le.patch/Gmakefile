@@ -1,0 +1,10 @@
+PGM = r.le.patch
+
+OFILES = main.o input.o driver.o patch.o trace.o
+
+LIBES = $(GISLIB) $(VECTLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -53,11 +53,8 @@ IL_resample_output_2d (
   FCELL *cell1;			/* cell buffer */
   int cf1, cf2, cf3, cf4, cf5, cf6;	/* cell file descriptors */
   int nrows, ncols;		/* current region rows and columns */
-  char msg[1024];
-  int i, ii;			/* loop counter */
-  int zstep;
+  int i;			/* loop counter */
   char *mapset;
-  CELL data1, data2;
   float dat1, dat2;
   struct Colors colors, colors2;
   double value1, value2;

@@ -21,11 +21,6 @@ the user's shell to re-activate interrupts in shell-ese.
 
 int main (int argc, char *argv[])
 {
-    char *PATH;
-    char path[1024];
-    char *a,*b,*c;
-    int more;
-
     signal (SIGINT, SIG_DFL);
     signal (SIGQUIT, SIG_DFL);
 

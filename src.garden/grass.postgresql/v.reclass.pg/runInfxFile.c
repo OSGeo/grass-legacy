@@ -1,11 +1,14 @@
 /*	A.Sh. jan'00
 */
 #include <stdlib.h>
-#include "gis.h"
+#include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <libpq-fe.h>
+#include "gis.h"
 
-runInfxFile(SQL_stmt, input,output, vtype, disolve )
+
+int runInfxFile(SQL_stmt, input,output, vtype, disolve )
   char *SQL_stmt, *input, *output, *vtype;
   int disolve;
   {

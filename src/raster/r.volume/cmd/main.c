@@ -42,6 +42,9 @@ int main (
   struct Option *opt1, *opt2, *opt3;
   struct Flag *flag1, *flag2;
 
+  /* Initialize GIS */
+  G_gisinit (argv[0]);
+
   module = G_define_module();
   module->description =
 	"Calculates the volume of data \"clumps\", "
@@ -75,9 +78,6 @@ int main (
   flag2 = G_define_flag ();
   flag2->key = 'q';
   flag2->description = "Run quietly";
-
-  /* Initialize GIS */
-  G_gisinit (argv[0]);
 
   if (G_parser (argc, argv))
     exit (-1);

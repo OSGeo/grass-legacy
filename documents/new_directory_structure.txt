@@ -20,7 +20,7 @@ New concepts:
    structure: all files related to a raster map should go into one
    directory. Currently many files are spreaded in many directories.
    An example for the G3D data structure can be found here:
-   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
+   http://grass.itc.it/grid3d/index.html (sample dataset)
 
 
 As grass5.1 shall take off as soon as possible, we should start the
@@ -212,5 +212,5 @@ Proposal:
    structure: all files related to a raster map should go into one
    directory. Currently many files are spreaded in many directories.
    An example for the G3D data structure can be found here:
-   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
+   http://grass.itc.it/grid3d/index.html (sample dataset)
    

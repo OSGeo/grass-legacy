@@ -1,4 +1,4 @@
-#define CHKTYP "SELECT coltype FROM syscolumns WHERE colname="
-#define SQL ".dbrast.sql"
-#define SQLOUT ".rast.out"
-#define RULES ".reclass.out"
+int getAllOpts (int, char **);
+int getSelectOpts (int, char **);
+int buildInfxQry(char *,char *,char *,char *,char *,char *,char *);
+int runInfxFile(char *, char *,char *, int);

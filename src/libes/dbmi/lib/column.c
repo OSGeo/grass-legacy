@@ -197,6 +197,7 @@ db_set_column_select_priv_not_granted (column)
     column->select = DB_NOT_GRANTED;
 }
 
+int
 db_get_column_select_priv (column)
     dbColumn *column;
 {
@@ -217,6 +218,7 @@ db_set_column_update_priv_not_granted (column)
     column->update = DB_NOT_GRANTED;
 }
 
+int
 db_get_column_update_priv (column)
     dbColumn *column;
 {

@@ -6,6 +6,7 @@
 ** Modified by: Janne Soimasuo August 1994 line_cat added
 ** Modified by: Radim Blazek Jan 2000 acolor, label added
 */
+#include <string.h>
 #include "vector.h"
 #include "Vect.h"
 #include "ps_info.h"

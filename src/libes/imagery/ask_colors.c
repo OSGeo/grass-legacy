@@ -41,9 +41,9 @@ int I_ask_ref_colors (
 "----------------------------------------------------------------------------";
 
     nfiles = ref->nfiles;
-/* only use first NFILES files */
+/* only run with NFILES in group */
     if (nfiles > NFILES)
-	nfiles = NFILES ;
+       G_fatal_error("More than %i images in group. Please reduce number. Can't continue", NFILES);
 
 /**************************************************************
  * step 1 - setup

@@ -6,6 +6,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
+#include "raster.h"
 
 extern double D_get_d_north();
 extern double D_get_d_south();
@@ -18,7 +19,7 @@ extern int D_cont_abs();
 
 
 
-plotCat (name, mapset, Points, vect_cat, P_map, fillcolr)
+int plotCat (name, mapset, Points, vect_cat, P_map, fillcolr)
     char *name, *mapset;
     struct line_pnts *Points;
     int vect_cat,
@@ -47,7 +48,7 @@ plotCat (name, mapset, Points, vect_cat, P_map, fillcolr)
   
 
 
-   if (list = find_area (vect_cat, &count, P_map))
+   if ((list = find_area (vect_cat, &count, P_map)))
    {
 	for (n = 0; n < count; n++)
 	{
@@ -89,7 +90,7 @@ If we don't return now, we may draw lines which are not ours: A.Sh.
 	
       } /* end if nareas > 0  */
 
-if (list = find_line (vect_cat, &count, P_map))
+if ((list = find_line (vect_cat, &count, P_map)))
   {
 	for (n = 0; n < count; n++)
 	{

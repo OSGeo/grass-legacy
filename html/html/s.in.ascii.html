@@ -22,6 +22,7 @@ their descriptions into a GRASS site list file.
 [<B>input=</B><EM>name</EM>] 
 [<B>d=</B><EM>value</EM>]
 [<B>fs=</B>character|space|tab] 
+[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
 
 <H2>DESCRIPTION</H2>
 
@@ -67,6 +68,8 @@ locations.
     The field separator can be a character, a space, or a tab. 
 <BR>
     Default: space 
+<DT><b>date=</b><EM>timstamp[,timstamp]
+<DD>date/time stamp or date1,date2 range
 </DL>
 
 <P>
@@ -86,6 +89,7 @@ using the form:
 <B>sites=</B><EM>name</EM> 
 [<B>input=</B><EM>name</EM>] 
 [<B>fs=</B>character|space|tab] 
+[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
 </DL>
 
 <P>
@@ -106,6 +110,17 @@ the third (or further) column in input file is treated as attribute.
 
 If the user wants to directly generate site files, the following information
 can be used:<br>
+Header:<br>
+<pre>
+    #any comment, can be inserted anywhere
+    name|mysoils.site
+    desc|3D soils data for location A
+    time|15 Jan 1999
+    labels|east north elevation ID pH Corg color
+    form||||#%%@
+</pre>
+<p>
+Data:<br>
 Each line of the ascii input file should contain either two or three
 coordinates (x,y and optionally z) separated by a user-selectable
 field-delimiting character.  After the coordinates there are optional
@@ -145,20 +160,39 @@ separator used in the input, since <EM>d.where</EM> output
 separates the easting and northing values with spaces, and
 spaces are the default field separator assumed by
 <EM>s.in.ascii</EM>.
-
 <P>
 <DL>
 <DD><B>d.where</B> | <B>s.in.ascii sites=</B>my.sites
 </DL>
+<p>
+<b>Importing latitude/longitude data</b>
+<p>
+Latitude/longitude data may be imported either in decimal degree format:<br>
+
+<pre>
+    8.314824 54.921730 site1
+    8.897605 54.872353 site2
+    9.549371 54.834080 site3
+</pre>
+
+or in DMS (degree, minutes, seconds) format:<br>
+
+<pre>
+    8:18:53.3664E 54:55:18.228N site1
+    8:53:51.378E  54:52:20.4708N site2
+    9:32:57.7356E 54:50:02.688N site3
+</pre>
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="d.points.html">d.points</A></EM><br>
-<EM><A HREF="d.sites.html">d.sites</A></EM><br>
-<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
-<EM><A HREF="d.where.html">d.where</A></EM><br>
-<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
-<EM><A HREF="parser.html">parser</A></EM>
+<EM><A HREF="d.points.html">d.points</A></EM>,
+<EM><A HREF="d.sites.html">d.sites</A></EM>,
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM>,
+<EM><A HREF="d.where.html">d.where</A></EM>,
+<EM><A HREF="r.timestamp.html">r.timestamp</A></EM>,
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM>,
+<EM><A HREF="parser.html">parser</A></EM>,
+<EM><A HREF="../ascii_formats.html">GRASS ASCII formats</A></EM>
 
 <H2>AUTHOR</H2>
 
@@ -166,3 +200,6 @@ Michael Shapiro,
 U.S. Army Construction Engineering 
 Research Laboratory
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -24,7 +24,7 @@ int write_img (
 		files->cellbuf[col] = (CELL)S->ClassSig[class].classnum;
            }
 	}
-	G_put_c_raster_row (files->output_fd, files->cellbuf);
+	G_put_raster_row (files->output_fd, files->cellbuf, CELL_TYPE);
     }
     if (!parms->quiet) G_percent (row, nrows, 2);
 

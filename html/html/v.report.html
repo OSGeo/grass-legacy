@@ -10,7 +10,7 @@
 
 <BR>
 
-<EM>(SCS GRASS Vector Program)</EM>
+<EM>(GRASS Vector Program)</EM>
 
 <H2>SYNOPSIS</H2>
 
@@ -22,7 +22,7 @@
 
 <BR>
 
-<B>v.report</B> [<B> -hfq</B>] <B>map=</B><EM>name </EM><B>type=</B><EM>name [</EM><B>units=</B><EM>name</EM>[,<EM>name</EM>,...]] [<B>pl=</B><EM>value</EM>] 
+<B>v.report</B> [<B> -ehfq</B>] <B>map=</B><EM>name </EM><B>type=</B><EM>name [</EM><B>units=</B><EM>name</EM>[,<EM>name</EM>,...]] [<B>pl=</B><EM>value</EM>] 
    [<B>pw=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -34,16 +34,11 @@ square feet, and square miles.  <EM>v.report</EM> works on the map data;
 therefore, the current region and mask are ignored.
 
 
-<P>
-
-
-
-<P>
-
-
 <H3>Flags:</H3>
 
 <DL>
+<DT><B>-e</B> <DD>Use scientific format for the numbers that are too long to
+fit in the tab table field if their decimal form is used.
 
 
 <DT><B>-h</B> 
@@ -85,7 +80,7 @@ therefore, the current region and mask are ignored.
 
 Options:  area, line, site
 
-<DT>"<B>units=</B><EM>name,name,...</EM>" 
+<DT><B>units=</B><EM>name,name,...</EM>
 
 <DD>mi(les), f(eet), me(ters), k(ilometers), a(cres), h(ectacres), c(ounts).
 
@@ -247,3 +242,6 @@ R.L. Glenn , USDA, SCS, NHQ-CGIS
 
 <P>
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

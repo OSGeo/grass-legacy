@@ -21,41 +21,51 @@ int main (int argc, char **argv)
 #endif
     struct Flag *just;
     struct Option *rmap, *vmap, *smap, *zoom;
+    struct GModule *module;
     double magnify;
     char *mapset;
     int i, first=1;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    if (R_open_driver() != 0)
-	    G_fatal_error ("No graphics device selected");
 
-    if(D_get_cell_list (&rast, &nrasts) < 0)
-	rast = NULL;
-    else
+    module = G_define_module();
+    module->description = "Allows the user to interactively adjust "\
+	    "the settings (zoom  and  pan) of the current geographic "\
+	    "region using a pointing device such as a mouse.";
+
+    /* Don't let R_open_driver() cause us to exit */
+    R__open_quiet();
+    /* Don't fail immediately if driver isn't available */
+    if (R_open_driver() == 0)
     {
-	rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
-	rast[nrasts] = NULL;
-    }
+        if(D_get_cell_list (&rast, &nrasts) < 0)
+            rast = NULL;
+        else
+        {
+            rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
+            rast[nrasts] = NULL;
+        }
 
-    if(D_get_dig_list (&vect, &nvects) < 0)
-	vect = NULL;
-    else
-    {
-	vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-	vect[nvects] = NULL;
-    }
+        if(D_get_dig_list (&vect, &nvects) < 0)
+            vect = NULL;
+        else
+        {
+            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+            vect[nvects] = NULL;
+        }
 
-    if(D_get_site_list (&site, &nsites) < 0)
-	site = NULL;
-    else
-    {
-	site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
-	site[nsites] = NULL;
-    }
+        if(D_get_site_list (&site, &nsites) < 0)
+            site = NULL;
+        else
+        {
+            site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+            site[nsites] = NULL;
+        }
 
-    R_close_driver();
-                    
+        R_close_driver();
+    }
+    
     rmap = G_define_option();
     rmap->key = "rast";
     rmap->type = TYPE_STRING;

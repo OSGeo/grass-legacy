@@ -21,6 +21,7 @@ dxf_make_header (DXF_DIG *Layer)
 {
     char *date; 
     char *name;
+    char *organization;
 
 	/* either print ascii(will do piecemeal to permit use of ftell or will print
 	** binary file using the dig_head structure and the write_head_binary func*/
@@ -31,11 +32,16 @@ dxf_make_header (DXF_DIG *Layer)
     /* DETERMINE USER'S NAME */
     name = G_whoami();
 
-	
-    /* ORGANIZATION NAME DEFAULT IS USED */
 	if(!ascii_flag->answer) /* FOR USE  IN BINARY FILE */
 	{
-		strcpy(dxf_head.organization," US Army Const. Eng. Rsch. Lab\n"); 
+
+		if (getenv("GRASS_ORGANIZATION"))  /* added MN 5/2001 */
+		{
+		  organization=(char *)getenv("GRASS_ORGANIZATION");
+		  sprintf(dxf_head.organization, "%s", organization);
+		}
+		else
+		  strcpy(dxf_head.organization, "GRASS Development Team\n") ;
 		strcpy(dxf_head.date,date);
 		strcpy(dxf_head.your_name,name);
 		strcpy(dxf_head.map_name,dxf_file);
@@ -57,7 +63,13 @@ dxf_make_header (DXF_DIG *Layer)
 	}
 	else /* FOR USE IN ASCII FILE */
 	{
-		fprintf (Layer->fd, "ORGANIZATION: US Army Const. Eng. Rsch. Lab\n");
+		if (getenv("GRASS_ORGANIZATION"))  /* added MN 5/2001 */
+		{
+		  organization=(char *)getenv("GRASS_ORGANIZATION");
+		  fprintf(Layer->fd, "ORGANIZATION: %s", organization);
+		}
+		else
+		  fprintf(Layer->fd, "ORGANIZATION: GRASS Development Team\n") ;
 		if (date !=NULL)
 			fprintf (Layer->fd, "DIGIT DATE:   %s\n",date);
 /* IF G_date RETURNS A NULL */

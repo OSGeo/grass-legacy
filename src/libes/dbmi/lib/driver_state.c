@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 static dbDriverState state;
 
@@ -14,6 +15,7 @@ db__get_driver_state()
     return &state;
 }
 
+int
 db__test_database_open ()
 {
     return state.open ? 1 : 0 ;

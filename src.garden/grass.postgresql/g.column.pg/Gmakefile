@@ -1,14 +1,13 @@
 PGM       = $(BIN_CMD)/g.column.pg
-LIBES     = $(GISLIB) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(GISLIB) 
 EXTRA_CFLAGS = $(PQINCPATH)
 
 OBJS = \
 	main.o \
-	infxColumn.o \
-	delcr.o
+	infxColumn.o
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

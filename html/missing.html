@@ -9,17 +9,34 @@
 GRASS still lacks of a set of man-pages. We need your support,
 please send us (draft) input for the following missing man pages:
 <p>
-<h2>Currently missing man-pages</h2>
-d.dm, d.fix.ortho, i.shape, m.futil, r.in.dem, r.in.doq,
-r.in.tang,  r.in.utm, r.out.tga, r.out.xyz, r.plane, r.recode,
-s.territory, s.voroni, v.distance, v.dump, v.in.atlas, 
-v.in.dlg_atr, v.out.atlas
+<h2>Currently missing man-pages ($Date$)</h2>
+<pre>
+The following module commands do NOT have MAN/HTML entries:
+d.colorlist     r.in.doq       r.out.png         v.dump         v.out.mif
+d.fix.ortho     r.in.dted      r.out.tga         v.in.arc.pg    v.patch.scs
+m.futil         r.in.gridatb   r.rvi.prediction  v.in.atlas     v.rm.dangles
+m.strip99s      r.in.png       r.weight.new      v.in.shape.pg
+r.colors.paint  r.in.tang      s.territory       v.mk_stats
+r.composite     r.in.utm       tcltkgrass        v.out.atlas
+r.his           r.out.gridatb  v.distance        v.out.mapinfo
 
+The following scripts do NOT have MAN/HTML entries:
+                 g.mremove       intens.sh          s.reclass
+d.monsize        g3.createwind   ps.add.pagesize    shade.clr.sh
+d.rast.leg       g3.list         ps.map.barscale    v.area2line
+d.rast.leg2      g3.remove       r.avgstats         v.cutregion.sh
+d.rast.rescale   g3.rename       r.edge.dig         v.cutter.attr
+d.redraw         grass2fig       r.in.globedem      v.in.mapgen.sh
+demo.scripts     i.image.mosaic  r.mpatch           v.line2area
+demo.sh          i.spectral      r.out.bil          v.out.xfig
+fig2grass        i.tasscap.tm4   r.reclass.area     v.region.sh
+g.html2man       i.tasscap.tm5   r.regression.line
+g.mlist          i.tm.dehaze     r.to.pg
+</pre>
 
 <h2>Structure of a man-page:</h2>
 The manual shall explain the capabilities, syntax, and use of current GRASS
-5.x
-modules. Sections contain entries which are ordered alphabetically
+5.x modules. Sections contain entries which are ordered alphabetically
 by module name. Each entry contains:
 <p>
 <ul>
@@ -46,11 +63,11 @@ terminal screen.<p>
 <IMG SRC="grassbutton.gif" ALT="GRASS LOGO">
 <br>
 Official GRASS Site</A> - 
-<A HREF="http://www.geog.uni-hannover.de/grass/">GRASS GIS Europe Pages</A><br>
+<A HREF="http://grass.itc.it">GRASS GIS Europe Pages</A><br>
 Email the GRASS Research
 Group at:  <a href="mailto:grass@baylor.edu"><em>grass@baylor.edu</em></a>
 <br>
-Updated by <a href="mailto:neteler@geog.uni-hannover.de"><em>Markus Neteler</em></a>
+Updated by <a href="mailto:neteler@itc.it"><em>Markus Neteler</em></a>
 </CENTER>
 
 </body>

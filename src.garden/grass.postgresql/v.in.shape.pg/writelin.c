@@ -34,18 +34,18 @@
 /* Create a repository of segments for inclusion into GRASS
    database */
 
-int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
+void vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 
   /* local variables */
-  int i0, j0, k0, k1, l0;
+  int i0, j0, k0;
   int segsize0 = 50;
   int segincr = 20;
   int segID = 0;
   int maptype;
   float minangle;
   int deferred = 0;
-  double deferval;
-  int bindx;
+  double deferval=0;
+  int bindx=0;
 
   int chainLength = 100;
   int chainIncr = 50;
@@ -65,7 +65,8 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
   double len0, len1;
 
   pntDescript *pinit, *pcurr, *pnext = NULL, *pprev, *pstart, *pnew;
-  pntDescript *pdfr0, *pdfr1, *pdfr2, *pmidd, *poffs;
+  /*pntDescript *pdfr0, *pdfr1, *pdfr2, *pmidd, *poffs;*/
+  pntDescript *pmidd, *poffs;
 
   /* Initialise data holders */
   tmpKey = (char *)malloc( 33 );
@@ -415,7 +416,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 int segLDispose( segmentList *seg0 ) {
   
   /* Local vars */
-  int i0, j0, k0;
+  int i0, j0;
 
   for( i0 = 0; i0 < seg0->numSegments; ++i0 ) {
     for( j0 = 0; j0 < seg0->segments[i0].numVertices; ++j0 ) {
@@ -454,7 +455,7 @@ int check_terminal_snapback( pntDescript *ppnt1, pntDescript *ppnt2, pntDescript
 
   /* local variables */
   int nvert, midvert;
-  int indx;
+  int indx=0;
   int is_snapback = 0;
 
   float minphi;
@@ -551,7 +552,7 @@ void build_half_lines( pntDescript *ppntx, segmentList *segl ) {
   
   /* local */
 
-  int i0, j0, k0;
+  int i0, j0;
   int segnum;
   pntDescript *ppnt0, *ppnt1, *ppnt2, *ppnts, *pnew0;
   float ma;
@@ -562,12 +563,11 @@ void build_half_lines( pntDescript *ppntx, segmentList *segl ) {
   int arcsize1 = 50;
 
   double ydelta0, ydelta1, xdelta0, xdelta1;
-  double track_length0, track_length1;
-  int sec_index;
+  double track_length0, track_length1=0;
+  int sec_index=0;
   int iseg;
 
-  int out[2];
-
+ 
   /* What is the snapback-angle at nodes? */
   if( procMinSubtend( GET_VAL, &ma ) != 0 ) {
     fprintf( stderr, "Could not retrieve snap angle at nodes\n" );
@@ -617,7 +617,7 @@ void build_half_lines( pntDescript *ppntx, segmentList *segl ) {
       /* Get back-index of starting point */
       sec_index = -1;
       for( j0 = 0; j0 < ppnt1->linknum; ++j0 ) {
-	if( ppnt1->linkverts[j0] = ppnt0 ) {
+	if( (ppnt1->linkverts[j0] = ppnt0) ) {
 	  sec_index = j0;
 	  break;
 	}
@@ -738,7 +738,7 @@ void build_half_lines( pntDescript *ppntx, segmentList *segl ) {
 	/* Find length of secondary track */
 	/* Get back-index of starting point */
 	for( j0 = 0; j0 < ppnt1->linknum; ++j0 ) {
-	  if( ppnt1->linkverts[j0] = ppnt0 ) {
+	  if(( ppnt1->linkverts[j0] = ppnt0) ) {
 	    sec_index = j0;
 	    break;
 	  }

@@ -195,7 +195,7 @@ loop1.c
     fprintf (stderr,"INPUTS: overland mannings %f  slope length %d(feet)\n",
 	  columndata[col_num]->overland_mannings,columndata[col_num]->
 	  slope->slope_length);
-    fprintf (stderr,"        storm rainfall %f(inches) land slope %f(%) area %f(acres)\n",
+    fprintf (stderr,"        storm rainfall %f(inches) land slope %f(%%) area %f(acres)\n",
 	   initialptr->storm_rainfall,columndata[col_num]->slope->
 	   average_land_slope,columndata[col_num]->area);
     fprintf (stderr,"INTER:  shallow velocity %f(ft/sec) shallow length %d(feet) cell width %f(feet)\n",

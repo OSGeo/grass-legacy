@@ -9,6 +9,7 @@ OBJ =\
 	popup.o\
 	raster.o\
 	raster2.o\
+	raster_rgb.o\
 	scan_dbl.o\
 	scan_float.o\
 	scan_int.o\

@@ -1,8 +1,9 @@
 PGM=r.colors
 
 LIST=main.o\
-     eq.o\
-     rules.o
+	eq.o\
+	log.o\
+	rules.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)

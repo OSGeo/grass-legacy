@@ -3,7 +3,7 @@ PGM = r.random.cells
 OBJS =  main.o init.o indep.o flag.o gasdev.o random.o
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(DLLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): ransurf.h
 $(OBJS): flag.h

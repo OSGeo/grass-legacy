@@ -29,7 +29,6 @@ struct Slink {
     struct Slink *next;
 };
 	
-static int comp_double ( double *,double *);
 static int V__within (double,double,double);
 int Vect__intersect_line_with_poly ();
 static void destroy_links ( struct Slink *);
@@ -75,8 +74,9 @@ int Vect_get_point_in_area (
 
 }
 
-static int comp_double ( double *i,double *j)
+static int comp_double (const void *ii, const void *jj)
 {
+    const double *i = ii, *j = jj;
     if (*i < *j)
 	return  -1;
 

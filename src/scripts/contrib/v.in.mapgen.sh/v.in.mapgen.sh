@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # mapgen2grass.sh -- convert mapgen/MATLAB files 
 #                    to grass ascii/binary vector files

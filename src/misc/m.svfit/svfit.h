@@ -2,7 +2,7 @@
 static char *version= "0.4B <20 Oct 1994>";
 #endif
 
-#define PLOTPROG "g.gnuplot"
+extern const char *plot_program;
 
 #define PMAX 3 /* maximum number of parameters to models */
 

@@ -106,7 +106,7 @@ int btree_next (BTREE *B,char **key,void **data)
     if (B->cur < 0)           /* thread. stop here */
 	B->cur = -(B->cur) ;
     else                       /* go all the way left */
-	while (q = B->node[B->cur].left)
+	while ((q = B->node[B->cur].left))
 	    B->cur = q;
 
     *key  = B->node[B->cur].key ;
@@ -169,7 +169,7 @@ int btree_update (BTREE *B,
 	if (dir == 0)
 	{
 	    free (B->node[q].data);
-	    if(B->node[q].data = store (data, datalen))
+	    if((B->node[q].data = store (data, datalen)))
 		return 1;
 	    else
 		return 0;

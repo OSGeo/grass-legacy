@@ -88,7 +88,6 @@ int main (int argc, char *argv[])
 	G_gisinit(argv[0]) ;
 	/* commented by Andreas Lange, 11/2000 */
 	/* system("clear") ; */
-	setbuf(stdout, NULL) ;
 
 	module = G_define_module();
 	module->description = 
@@ -134,6 +133,8 @@ int main (int argc, char *argv[])
 	
 	if (G_parser (argc, argv))
 	    exit(-1);
+
+	setbuf(stdout, NULL) ;
 
 	file_name = map->answer;
 	if (strcmp(type->answer, "full") == 0){

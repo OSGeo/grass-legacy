@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
 # This file contains the following script tools:
 #
 #    1. Vanilla looping construct - Allows the user to specify a bracket of
@@ -50,15 +50,18 @@ pack .quit -side top -fill both -expand 1
 # File Sequence Tools open function
 proc fopen_tools {} {
     global src_boot
+    global env
+
+    source $src_boot/etc/nviz2.2/scripts/config.tcl
 
     # Just start the external tools process
-    exec NVWISH2.2 -f script_file_tools -q &
+    exec NVWISH2.2 -f $default_panel_path/script_file_tools -q &
     exit
 }
 
 # File Seq. Loop functions
 proc fopen_loop {} {
-    global floop_stack floop_flag floop_names
+    global floop_stack floop_flag floop_names ProcessName
 
     # Determine the list of files to iterate through
     set file_list [create_multimap_browser .browse_new_file all 1]
@@ -71,21 +74,21 @@ proc fopen_loop {} {
     lappend floop_names $new_name2
 
     # Send nviz necessary commands to add the for loop to the script
-    send nviz "Nv_script_add_string \"set $new_name2 \\\$Nv_mapLoopFile\""
-    send nviz "Nv_script_add_string \"foreach $new_name \{$file_list\} \{\""
-    send nviz "Nv_script_add_string \"set Nv_mapLoopMode 1\""
-    send nviz "Nv_script_add_string \"set Nv_mapLoopFile \\\$$new_name\""
+    send $ProcessName "Nv_script_add_string \"set $new_name2 \\\$Nv_mapLoopFile\""
+    send $ProcessName "Nv_script_add_string \"foreach $new_name \{$file_list\} \{\""
+    send $ProcessName "Nv_script_add_string \"set Nv_mapLoopMode 1\""
+    send $ProcessName "Nv_script_add_string \"set Nv_mapLoopFile \\\$$new_name\""
 }
 
 proc fclose_loop {} {
-    global floop_stack floop_names
+    global floop_stack floop_names ProcessName
 
     if $floop_stack then {
-	send nviz "Nv_script_add_string \"\}\""
-	send nviz "Nv_script_add_string \"set Nv_mapLoopMode 0\""
+	send $ProcessName "Nv_script_add_string \"\}\""
+	send $ProcessName "Nv_script_add_string \"set Nv_mapLoopMode 0\""
 	incr floop_stack -1
 	set old_name [lindex $floop_names $floop_stack]
-	send nviz "Nv_script_add_string \"set Nv_mapLoopFile \\\$$old_name\""
+	send $ProcessName "Nv_script_add_string \"set Nv_mapLoopFile \\\$$old_name\""
     } else {
 	tkerror "No corresponding Open File Seq. Loop"
     }
@@ -93,7 +96,7 @@ proc fclose_loop {} {
 
 # Vanilla Loop functions
 proc open_loop {} {
-    global loop_stack loop_flag
+    global loop_stack loop_flag ProcessName
 
     # Determine how many iterations the loop should go through
     set loop_flag 0
@@ -129,15 +132,15 @@ proc open_loop {} {
     incr loop_stack
     
     # Send nviz necessary commands to add the for loop to the script
-    send nviz "Nv_script_add_string \"for \{set $new_name $loop_start\} \{\\\$$new_name != $loop_end\} \{incr $new_name $loop_incr\} \{\""
+    send $ProcessName "Nv_script_add_string \"for \{set $new_name $loop_start\} \{\\\$$new_name != $loop_end\} \{incr $new_name $loop_incr\} \{\""
 
 }
 
 proc close_loop {} {
-    global loop_stack
+    global loop_stack ProcessName
 
     if $loop_stack then {
-	send nviz "Nv_script_add_string \"\}\""
+	send $ProcessName "Nv_script_add_string \"\}\""
 	incr loop_stack -1
     } else {
 	tkerror "No corresponding Open Loop"

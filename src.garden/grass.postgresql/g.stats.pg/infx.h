@@ -32,3 +32,5 @@ struct Stats
 	float freq	;  /* freq not used currently		*/
 	float mode	;  /* mode for column value		*/
 };
+
+int infxStats(char *, char *, char, char *, char);

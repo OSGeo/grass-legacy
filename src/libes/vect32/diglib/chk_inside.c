@@ -1,10 +1,10 @@
-/*  @(#)chk_inside.c    2.1  6/26/87  */
 /* check_inside()  determines if a point (X,Y) is inside an area
  *   described by the "num_lines" in the list "line_list".  If it is
  *   a positive floating point number is returned giving the distance
  *   to the area.  If not, "0.0" is returned.
  */
 #include <math.h>
+#include <stdlib.h>
 #include "Vect.h"
 
 #ifndef HUGE_VAL

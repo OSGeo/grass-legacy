@@ -2,7 +2,7 @@ PGM=s.probplt
 
 LIST=probplot.o cdpath.o zstats.o pltsqq.o save.o
 
-LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB) 
+LIBES=$(GISLIB) $(DATETIMELIB) 
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)

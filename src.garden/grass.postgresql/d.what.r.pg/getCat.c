@@ -1,11 +1,12 @@
 #include "what.h"
+#include <string.h>
+#include <stdlib.h>
+#include "raster.h"
 
-getCat (mapname)
+int getCat (mapname)
   char *mapname;
 
 {
-    int width, mwidth;
-    int i;
     int row, col;
     int nrows, ncols;
     CELL *buf;

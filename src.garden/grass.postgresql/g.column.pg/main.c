@@ -1,7 +1,7 @@
 /*
- *   g.column.inf
+ *   g.column.pg
  *
- *#----------------------- A.Sh. -12.99
+ *   A.Sh. -12.99
  *   Generate list of database columns for a specified table
  *   in the currently selected SQL database identified
  *   by the environment variable DATABASE.
@@ -16,10 +16,12 @@
 */
 
 #include "gis.h"
+#include "infx.h"
 #include <stdio.h>
+#include <stdlib.h>
 #define MAIN
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 { 
@@ -85,7 +87,7 @@ char **argv ;
 		  and a.attrelid = c.oid
 		  and a.atttypid = t.oid
 		  order by attnum", tbl->answer );	
-/*		  and a.oid = d.oid     OUTER JOINS Not Supported yet   */
+
 	}
 	else {
 	/* no column descriptions */
@@ -97,7 +99,7 @@ char **argv ;
 		  order by attnum", tbl->answer );		
 	}
 
-/*************** INFX driver code begins ***************/
+
         
 	stat = infxColumn(SQL);
 

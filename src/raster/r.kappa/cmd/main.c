@@ -17,7 +17,6 @@ main (argc, argv)
  } flags;
 
  G_gisinit(argv[0]);
- G_get_window (&window);
 
  module = G_define_module();
  module->description =
@@ -64,6 +63,8 @@ main (argc, argv)
 
  if (G_parser(argc, argv))
    exit (-1);
+
+ G_get_window (&window);
 
  maps[0] = parms.ref->answer;
  maps[1] = parms.map->answer;

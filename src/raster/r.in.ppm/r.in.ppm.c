@@ -273,14 +273,14 @@ main (int argc, char *argv[])
 			  cellb[col] = (CELL)blu;
 			}
 		}
-		if (G_put_map_row(outfp, cell) < 0 )
+		if (G_put_raster_row(outfp, cell, CELL_TYPE) < 0 )
 			G_fatal_error("Can't write new raster row!!");
 		if(Bands){
-		  if (G_put_map_row(outred, cellr) < 0 )
+		  if (G_put_raster_row(outred, cellr, CELL_TYPE) < 0 )
 		    G_fatal_error("Can't write new raster row!!");
-		  if (G_put_map_row(outgrn, cellg) < 0 )
+		  if (G_put_raster_row(outgrn, cellg, CELL_TYPE) < 0 )
 		    G_fatal_error("Can't write new raster row!!");
-		  if (G_put_map_row(outblu, cellb) < 0 )
+		  if (G_put_raster_row(outblu, cellb, CELL_TYPE) < 0 )
 		    G_fatal_error("Can't write new raster row!!");
 		}
 	}

@@ -1,14 +1,17 @@
-/* plot1() - Level One vector reading */
-/* --------------------------------------------------------------
+/* plot1() - Level One vector reading
+ * --------------------------------------------------------------
+ * 20001/10/19: Markus Neteler: added optional color cycling for area fill
+ *
  * 2000-02-25: Eric G. Miller <egm2@jps.net>
  * Added ScreenPoly code to handle islands.  We don't want outer
  * boundary filling islands that are really holes.  Basically, the
  * code connects the outer ring with the inner ring(s) via two
  * colinear line segments.
+ *
+ * 12-30-1999 Bill Hughes
+ *   Changed to dynamic allocation of x_screen, y_screen to remove the
+ *   4096 vector line limit. 
  */
-/* 12-30-1999 Bill Hughes
-     Changed to dynamic allocation of x_screen, y_screen to remove the
-     4096 vector line limit. */
 
 #include "gis.h"
 #include "raster.h"
@@ -16,13 +19,33 @@
 #include "Vect.h"
 #include "local_proto.h"
 #include "screenpoly.h"
+#include "colors.h"
 
 extern int fillcolor;
 extern int linecolor;
+extern int *mycatlist;
 extern struct Cell_head window;
 
+static int
+in_catlist (int cat)
+{
+    int *list;
 
-int plot1 (char *name, char *mapset, struct line_pnts *Points)
+    if (mycatlist == NULL)
+        return 1;
+
+    for (list = mycatlist; *list > 0 ; list++)
+    {
+        if (cat == *list)
+            return 1;
+    }
+
+    return 0;
+}
+
+
+int plot1 (char *name, char *mapset, struct line_pnts *Points,\
+	int colorcycle, int backgroundcolor)
 {
     int i, j, dofill;
     struct Map_info Map;
@@ -34,11 +57,12 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
     struct line_pnts *Isle;
     P_AREA *pa;
     SCREENPOLY *spArea, *spLine, *spIsle, *spClip, *spTmp;
+    int color_number=1;
 
     i = Vect_open_old (&Map, name, mapset);
 
     if (2 > i)
-	G_fatal_error ("Failed opening vector file");
+	G_fatal_error ("Failed opening vector file. Run v.support first on this map");
 
     t = D_get_d_north();
     b = D_get_d_south();
@@ -64,6 +88,9 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
         dofill = V2_area_att (&Map, line); /* Returns 0 if area is unlabelled */
         /* Skip areas that we wont fill or draw outlines for */
         if (!dofill && linecolor <= 0)
+            continue;
+
+        if (!in_catlist (dofill))
             continue;
         
 	switch (Vect_get_area_points(&Map, line, Points))
@@ -161,7 +188,22 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
                 G_fatal_error ("Converting ScreenPoly to Arrays");
             else
             {
-                R_standard_color(fillcolor);
+                if (colorcycle)
+                {
+                  /* cycle through colors, but avoid monitor bgcolor */
+                  color_number=color_number + 1;    /* next color */
+                  if (color_number == backgroundcolor)
+                     color_number=color_number + 1; /* increase again */
+                  if (color_number > MAXCOLORS)     /* end of color list ? */
+                     color_number=1;                /* then reset */
+                  if (color_number == backgroundcolor) /* so increase again */
+                     color_number=color_number + 1;
+                     
+                  R_standard_color(color_number);
+                }
+                else
+                  R_color(fillcolor);
+
                 R_polygon_abs(x_screen, y_screen, i);
             }
             G_free (x_screen);
@@ -175,7 +217,7 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
             i = ScreenPolyToArrays (spLine, &x_screen, &y_screen);   
             if (i > 0)
             {
-                R_standard_color(linecolor);
+                R_color(linecolor);
                 R_polyline_abs(x_screen,y_screen, i);
                 G_free(x_screen);
                 G_free(y_screen);

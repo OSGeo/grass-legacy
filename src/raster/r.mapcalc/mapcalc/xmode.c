@@ -8,14 +8,16 @@
 #include "glob.h"
 
 static int 
-icmp (CELL *i, CELL *j)
+icmp (const void *ii, const void *jj)
 {
+    const CELL *i = ii, *j = jj;
     return(*i - *j);
 }
 
 static int 
-dcmp (double *i, double *j)
+dcmp (const void *ii, const void *jj)
 {
+    const double *i = ii, *j = jj;
     if (*i < *j) return -1;
     if (*i > *j) return 1;
     return 0;

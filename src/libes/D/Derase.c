@@ -5,7 +5,6 @@
 int Derase(char *color)
 {
 	int t, b, l, r ;
-	int line ;
 
 	if (D_get_screen_window(&t, &b, &l, &r))
 		G_fatal_error("getting graphics window") ;

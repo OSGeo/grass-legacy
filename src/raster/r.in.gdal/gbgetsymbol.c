@@ -30,7 +30,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-09-26 13:04:32  frankw
+ * Revision 1.2  2002-01-22 04:51:23  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.1.4.1  2001/09/06 14:06:11  frankw
+ * upgraded bridge error reporting
+ *
+ * Revision 1.1  2000/09/26 13:04:32  frankw
  * New
  *
  * Revision 1.1  1999/04/21 23:01:31  warmerda
@@ -77,7 +83,7 @@ void *GBGetSymbol( const char * pszLibrary, const char * pszSymbolName )
 
     if( pSymbol == NULL )
     {
-        fprintf( stderr, "GBGetSymbol(): %s", dlerror() );
+        fprintf( stderr, "GBGetSymbol(): %s\n", dlerror() );
         return NULL;
     }
     

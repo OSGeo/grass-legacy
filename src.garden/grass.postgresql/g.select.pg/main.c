@@ -5,7 +5,8 @@
  *   Select an SQL database to use in conjunction with
  *   subsequent GRASS applications.
  *   jaf 12/28/91
- #--------------------A.Sh -12.99
+     
+     A.Sh -12.99
 
  * g.select.pg  
  *
@@ -14,20 +15,22 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #define MAIN
 #define RS ":"
 
+void listdb(char *);
+int getdbname(char *);
 
-
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
   char  *getenv(), *strtok(), *strcat() ;
-	int i, rsCnt, hit, dblen ;
-        char *dbpath, *p;  
-        char dbstring[1024];
+  
+
+	int hit;  
 	struct Option *opt1;
         struct Option* pghost;
         struct Flag *list ;
@@ -92,6 +95,7 @@ char **argv ;
 	listdb(pghost->answer);
 	exit(-1) ;
     }
-   
+
+exit(0) ;   
 }
 

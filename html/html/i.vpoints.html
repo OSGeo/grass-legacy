@@ -24,22 +24,15 @@ vector map or keyboard entry and corresponding points in an image.
 
 <H2>DESCRIPTION</H2>
 
-This program enables the user to identify coordinate 
-pairs of points from a vector map or keyboard entry and
-corresponding points in an  image to be rectified. The map
-coordinate values of each point are used to calculate a
-transformation matrix.  The operator may then use the <EM>
-<A HREF="i.rectify.html">i.rectify</A></EM> or
-<EM><A HREF="i.rectify2.html">i.rectify2</A></EM> 
-program to rectify the image using the transformation
-matrix coefficients calculated from the control point file created
-in <EM>i.vpoints</EM>.  The <EM>
-<A HREF="i.rectify.html">i.rectify</A></EM> 
-program performs only a first order
-transformation of the image whereas <EM>
-<A HREF="i.rectify2.html">i.rectify2</A></EM> 
-can rectify an image
-using either a first, second, or third order polynomial equation.
+This program enables the user to identify coordinate pairs of points from a
+vector map or keyboard entry and corresponding points in an image to be
+rectified. The map coordinate values of each point are used to calculate a
+transformation matrix.  The operator may then use the <EM> <A
+HREF="i.rectify.html">i.rectify</A></EM> program to rectify the image using
+the transformation matrix coefficients calculated from the control point
+file created in <EM>i.vpoints</EM>.  The <EM> <A
+HREF="i.rectify.html">i.rectify</A></EM> program performs a first, second or
+third order transformation of the image.
 
 <P>
 
@@ -156,9 +149,8 @@ points, and points can be marked on more than one file in the
 imagery group to accumulate the suggested minimum number of points
 (3 for a 1st order transformation, 6 for a 2nd order, and 10 for a
 3rd order).  Any file in the imagery group can be subsequently
-rectified (using <EM><A HREF="i.rectify2.html">i.rectify2</A></EM>)
-based on the transformation matrix
-computed from these points.
+rectified (using <EM><A HREF="i.rectify.html">i.rectify</A></EM>)
+based on the transformation matrix computed from these points.
 
 <P>
 
@@ -382,4 +374,6 @@ points (including coordinates) will be saved.
 <H2>AUTHOR</H2>
 
 William R. Enslin, Michigan State University Center for Remote Sensing
-</BODY>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -23,6 +23,9 @@ PARMS:		prompt: prompt to print
 ******************************************************/
 #include "imagery.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 int I_ask ( char *prompt, char *answer, int nullok)
 {
     char *a;

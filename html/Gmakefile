@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.29 2001-04-04 14:35:36 markus Exp $
+# $Id: Gmakefile,v 1.30 2002-01-22 04:50:48 glynn Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -53,7 +53,7 @@ htmlpages:
 	  do \
 	  	test -d $(GRASS_HTMLDIR)/$$i || mkdir $(GRASS_HTMLDIR)/$$i; \
 	  done)
-	@echo Copying html pages
+	@echo Copying html module pages
 	@(for h in `find $(HTML_DIR) nviz *.html *.gif | grep -v /CVS`; \
 	  do \
 	  	test -d $$h && continue; \
@@ -62,6 +62,16 @@ htmlpages:
 	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
 		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
 	  done)
+	@echo Copying overview pages
+	@(for h in `ls -1 *.html`; \
+	  do \
+	  	test -d $$h && continue; \
+		f=$(GRASS_HTMLDIR)/html/$$h; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then echo Generating: $$f; cat $$h|sed 's@html/@@' > $$f; fi; \
+	  done)
+	@(cp grassbutton.gif bullet_blue.gif $(GRASS_HTMLDIR)/html)
 
 # generate the g.help compatible man pages
 g.help-manpages:
@@ -80,6 +90,17 @@ g.help-manpages:
 	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
 		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
 	  done)
+	@(for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@\.html@@'`; \
+		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+		tmpf="$${tmp}_.$(SECT)"; \
+		tmpm="$${m}_"; \
+		f="$$tmp.$(SECT)"; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+	  done)
 
 # generate the man pages
 manpages:
@@ -87,6 +108,13 @@ manpages:
 	@echo Creating man pages
 	@(cd $(HTML_DIR); \
 	  for h in *.html; \
+	  do \
+		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
+	  done)
+	@(for h in *.html; \
 	  do \
 		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
 	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \

@@ -14,14 +14,17 @@
                   jaf 2/19/92
 */
 /*------------------A.Sh. dec.99
-			io with fewer pointers
 */
+
 #include "what.h"
 #include "gis.h"
 #include "display.h"
+#include "raster.h"
 #include "Vect.h"
+#include <string.h>
+#include <stdlib.h>
 
-
+int
 getSelectOpts(argc, argv)
         int argc;
         char **argv;
@@ -34,7 +37,7 @@ getSelectOpts(argc, argv)
     int stat = 0 ;
     struct Map_info P_map;
     struct Categories Cats;
-    FILE *fp, *fpout;
+    FILE *fp;
     char ch;
     char buf[1024] = "";
     char tmpstr[1024] = "";
@@ -54,15 +57,6 @@ getSelectOpts(argc, argv)
         select->key     = 's';
         select->description     = "Use [-s] for SQL command file input." ;
 
-
-        sql = G_define_option() ;
-        sql->key        = "sql" ;
-	sql->key_desc	= "file" ;
-        sql->type       = TYPE_STRING ;
-        sql->required   = YES  ;
-        sql->multiple   = NO ;
-        sql->description= "Name of the SQL command file: ";
-
         map = G_define_option() ;
         map->key        = "map" ;
 	map->gisprompt  = "old,dig,vector" ;
@@ -70,7 +64,14 @@ getSelectOpts(argc, argv)
         map->required   = YES  ;
         map->multiple   = NO ;
         map->description= "Vector map to run query on:";
-	
+
+        sql = G_define_option() ;
+        sql->key        = "sql" ;
+	sql->key_desc	= "file" ;
+        sql->type       = TYPE_STRING ;
+        sql->required   = YES  ;
+        sql->multiple   = NO ;
+        sql->description= "Name of the SQL command file: ";	
 	
 	color = G_define_option() ;
         color->key        = "color" ;
@@ -105,7 +106,7 @@ getSelectOpts(argc, argv)
 
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

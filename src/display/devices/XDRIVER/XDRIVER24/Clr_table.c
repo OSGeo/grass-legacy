@@ -1,77 +1,63 @@
-
-/* Changed for truecolor 24bit support by 
- * Roberto Flor/ITC-Irst, Trento, Italy
- * August 1999
- *
- * added new parameter "nlev" to specify number of colors per color channel
- * example; nlev=8 means 8bit for each R, G, B equal to 24bit truecolor
-*/
      
 #include "gis.h"     
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
-#include "../lib/colors.h"
+#include "colors.h"
 
-extern int truecolor;
+static int table_type = FIXED;
 
-/* The systems color represented by "number" is set using the color
- * component intensities found in the "red", "grn", and "blu"
- * variables.  A value of 0 represents 0 intensity; a value of 255
- * represents 100% intensity. */
-
-#ifndef ORIG
-extern Visual *theVisual;
-#endif /* ORIG */
-extern int scrn, NCOLORS;
-extern Display *dpy;
-extern Colormap floatcmap, fixedcmap;
-Window grwin;
-u_long *xpixels;
-int table_type = FIXED;
 static int Red[256], Grn[256], Blu[256];
+static int Gray[256];
 
-int reset_color (int number, int red, int grn, int blu)
+static int r_pos, g_pos, b_pos;
+static int r_size, g_size, b_size;
+static int r_scale, g_scale, b_scale;
+
+int
+reset_color(int number, int red, int grn, int blu)
 {
-    if (truecolor) {
-      /*the color table in truecolor is fixed. */
-    } else {
-      XColor color;
+    XColor xcolor;
 
-      if ((number >= NCOLORS) || (number < 0)) {  /* ignore out-of-range */
-        fprintf(stderr, "reset_color: can't set color %d\n", number);
+    if (table_type != FLOAT)
+    {
+        G_warning("reset_color: called in FIXED color mode\n");
         return 1;
-      }
-
-    /* convert to the 0-65535 range for X, put into XColor struct, and
-     * set. */
-    color.pixel = (u_long) number;
-    color.red = (u_short) (red * 257);
-    color.green = (u_short) (grn * 257);
-    color.blue = (u_short) (blu * 257);
-    color.flags = DoRed | DoGreen | DoBlue;
-    XStoreColor(dpy, floatcmap, &color);
-
     }
+
+    /* out-of-range check */
+    if (number >= NCOLORS || number < 0)
+    {
+        G_warning("reset_color: can't set color %d\n", number);
+        return 1;
+    }
+
+    xcolor.pixel  = (unsigned long) number;
+    xcolor.red    = (unsigned short) (red * 0xFFFF / 0xFF);
+    xcolor.green  = (unsigned short) (grn * 0xFFFF / 0xFF);
+    xcolor.blue   = (unsigned short) (blu * 0xFFFF / 0xFF);
+    xcolor.flags  = DoRed | DoGreen | DoBlue;
+
+    XStoreColor(dpy, floatcmap, &xcolor);
 
     return 0;
 }
 
-int Color_table_float (void)
+int
+Color_table_float(void)
 {
-  if (truecolor) {
-    return -1;
-  } else {
-    Colormap cmap;
-
     if (!can_do_float())
-        return (-1);
-    XSetWindowColormap(dpy, grwin, floatcmap);
-
-    cmap = DefaultColormap(dpy, scrn);
+    {
+	G_warning("Color_table_float: not available on this device\n");
+	return -1;
+    }
 
     table_type = FLOAT;
+
+    XSetWindowColormap(dpy, grwin, floatcmap);
+
     Color_offset(0);
+
     reset_color(RED, 255, 0, 0);
     reset_color(ORANGE, 255, 127, 0);
     reset_color(YELLOW, 255, 255, 0);
@@ -86,241 +72,374 @@ int Color_table_float (void)
     reset_color(MAGENTA, 255, 0, 127);
     reset_color(AQUA, 100, 127, 255);
 
-/*
-	cmap = DefaultColormap(dpy, scrn);
-	for (i=0; i<17; i++) {
-		 get_clr.pixel = i;
-		 XQueryColor(dpy, cmap, &get_clr);
-		 reset_color(i, get_clr.red/257, get_clr.green/257, get_clr.blue/257);
-		 }
+    return 0;
+}
 
-		
-    i = 17;
-    if (n_levels == 0) {
-        for (n_levels = 0; n_levels * n_levels * n_levels <= NCOLORS;
-                n_levels++) ;
-        n_levels--;
+static void
+get_shifts(unsigned mask, int *pos, int *size, int *scale)
+{
+    int i, j;
+
+    for (i = 0; (mask & 1) == 0; i++)
+	mask >>= 1;
+    if (pos)
+	*pos = i;
+
+    for (j = i; (mask & 1) != 0; j++)
+	mask >>= 1;
+    if (size)
+	*size = j - i;
+    if (scale)
+	*scale = 8 - (j - i);
+}
+
+static int
+get_rgb_shifts(void)
+{
+    get_shifts(use_visual->red_mask,   &r_pos, &r_size, &r_scale);
+    get_shifts(use_visual->green_mask, &g_pos, &g_size, &g_scale);
+    get_shifts(use_visual->blue_mask,  &b_pos, &b_size, &b_scale);
+
+    return (1 << r_size) * (1 << g_size) * (1 << b_size);
+}
+
+static unsigned long
+find_color_gray(unsigned int r, unsigned int g, unsigned int b)
+{
+    unsigned int y = (r + g + b) / 3;
+
+    return xpixels[Gray[y]];
+}
+
+static unsigned long
+find_color_indexed(unsigned int r, unsigned int g, unsigned int b)
+{
+    return xpixels[Red[r] + Grn[g] + Blu[b]];
+}
+
+static unsigned long
+find_color_rgb(unsigned int r, unsigned int g, unsigned int b)
+{
+    unsigned int rr = r >> r_scale;
+    unsigned int gg = g >> g_scale;
+    unsigned int bb = b >> b_scale;
+
+    return (rr << r_pos) + (gg << g_pos) + (bb << b_pos);
+}
+
+unsigned long
+find_color(unsigned int r, unsigned int g, unsigned int b)
+{
+
+    switch (use_visual->class)
+    {
+    case StaticGray:
+    case GrayScale:
+	return find_color_gray(r, g, b);
+    case StaticColor:
+    case PseudoColor:
+	return find_color_indexed(r, g, b);
+    case TrueColor:
+    case DirectColor:
+	return find_color_rgb(r, g, b);
+    default:
+	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	return 0;
     }
-    span = 255.0 / (float) n_levels;
-    for (r = 0; r < n_levels; r++) {
-        R = (int) (r * span + span);
-        for (g = 0; g < n_levels; g++) {
-            G = (int) (g * span + span);
-            for (b = 0; b < n_levels; b++) {
-                B = (int) (b * span + span);
-				reset_color(i, R, G, B);
-				i++;
-				}
-			}
-		}
-*/
-    return 0;
-  }
 }
 
-#ifndef ORIG
-static int highbit(ul)
-unsigned long ul;
+static void
+get_max_levels(int n_colors, int *rr, int *gg, int *bb)
 {
-  /* returns position of highest set bit in 'ul' as an integer (0-31),
-   or -1 if none */
-
-  int i;  unsigned long hb;
-
-  hb = 0x80;  hb = hb << 24;   /* hb = 0x80000000UL */
-  for (i=31; ((ul & hb) == 0) && i>=0;  i--, ul<<=1);
-  return i;
-}
-
-int trueAllocColor(
-     Display *dp,
-     Colormap cm,
-     XColor *cdef)
-{
-    unsigned long r, g, b, rmask, gmask, bmask, origr, origg, origb;
-    int rshift, gshift, bshift;
-    
-    /* shift r,g,b so that high bit of 16-bit color specification is 
-     * aligned with high bit of r,g,b-mask in visual, 
-     * AND each component with its mask,
-     * and OR the three components together
-     */
-
-    origr = r = cdef->red;  origg = g = cdef->green;  origb = b = cdef->blue;
-
-    rmask = theVisual->red_mask;
-    gmask = theVisual->green_mask;
-    bmask = theVisual->blue_mask;
-
-    rshift = 15 - highbit(rmask);
-    gshift = 15 - highbit(gmask);
-    bshift = 15 - highbit(bmask);
-
-    /* shift the bits around */
-    if (rshift<0) r = r << (-rshift);
-             else r = r >> rshift;
-
-    if (gshift<0) g = g << (-gshift);
-             else g = g >> gshift;
-
-    if (bshift<0) b = b << (-bshift);
-             else b = b >> bshift;
-
-
-    r = r & rmask;
-    g = g & gmask;
-    b = b & bmask;
-
-
-    cdef->pixel = r | g | b;
-
-
-    /* put 'exact' colors into red,green,blue fields */
-    /* shift the bits BACK to where they were, now that they've been masked */
-    if (rshift<0) r = r >> (-rshift);
-             else r = r << rshift;
-
-    if (gshift<0) g = g >> (-gshift);
-             else g = g << gshift;
-
-    if (bshift<0) b = b >> (-bshift);
-             else b = b << bshift;
-
-    cdef->red = r;  cdef->green = g;  cdef->blue = b;
-
-    return 0;
-}
-
-#endif /* ORIG */
-
-Colormap InitColorTableFixed (Colormap cmap)
-{
-    float span;
     int r, g, b, i;
-    unsigned char R, G, B;
-    static int n_levels = 0;
+
+    for (i = 0; i * i * i < n_colors; i++)
+	;
+
+    for (r = g = b = i; ; )
+    {
+	if (r * g * b <= n_colors) break;
+	b--;
+	if (r * g * b <= n_colors) break;
+	r--;
+	if (r * g * b <= n_colors) break;
+	g--;
+    }
+
+    *rr = r;
+    *gg = g;
+    *bb = b;
+}
+
+static int
+get_fewer_levels(int *rr, int *gg, int *bb)
+{
+    int r = *rr;
+    int g = *gg;
+    int b = *bb;
+
+    /* 888 -> 887 -> 787 -> 777 -> ... */
+
+    if (r > b)		/* 887 -> 787 */
+	r--;
+    else
+	if (g > b)	/* 787 -> 777 */
+	    g--;
+	else		/* 888 -> 888 */
+	    b--;
+
+    *rr = r;
+    *gg = g;
+    *bb = b;
+
+    return r >= 2 && g >= 2 && b >= 2;
+}
+
+static int
+try_get_colors(Colormap cmap, int nr, int ng, int nb)
+{
     XColor xcolor;
-/*    Colormap cmap;  */
+    int n_pixels;
+    int r, g, b;
 
-    table_type = FIXED;
-    /* figure out how many equal levels of r, g, and b are possible
-     * with the available colors */
-    if (n_levels == 0) {
-        for (n_levels = 0; n_levels * n_levels * n_levels <= NCOLORS;
-                n_levels++) ;
-        n_levels--;
-        /* Create easy lookup tables for _get_look_for_color() */
-        for (i = 0; i < 256; i++) {
-            Red[i] = (int) ((i / 256.0) * n_levels) * n_levels * n_levels;
-            Grn[i] = (int) ((i / 256.0) * n_levels) * n_levels;
-            Blu[i] = (int) ((i / 256.0) * n_levels);
-        }
-	/* allocate xpixels array */
-	xpixels = (u_long *) G_calloc((size_t) (n_levels*n_levels*n_levels), (size_t)sizeof(u_long));
-    }
-/*    cmap = DefaultColormap(dpy, scrn);  */
+    xpixels = (unsigned long *) G_realloc(xpixels,
+					  nr * ng * nb * sizeof(unsigned long));
+    n_pixels = 0;
 
-    /* Generate "fixed" color table */
-    span = 255.0 / (float) (n_levels - 1);
-    i = 0;
     xcolor.flags = DoRed | DoGreen | DoBlue;
-    for (r = 0; r < n_levels; r++) {
-        R = (int) (r * span);
-        for (g = 0; g < n_levels; g++) {
-            G = (int) (g * span);
-            for (b = 0; b < n_levels; b++) {
-                B = (int) (b * span);
-                xcolor.red = (u_short) (R * 257);
-                xcolor.green = (u_short) (G * 257);
-                xcolor.blue = (u_short) (B * 257);
-#ifndef ORIG
-		if ( truecolor ) {
-		  trueAllocColor(dpy,cmap,&xcolor);
-		} else {
-                if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-		  
-		  if (!truecolor) {
-		    cmap = XCopyColormapAndFree(dpy, cmap);
-		  }
-		  if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-		    fprintf(stderr, "Can't xalloc color %d.\n", i);
+
+    for (r = 0; r < nr; r++)
+    {
+	for (g = 0; g < ng; g++)
+	{
+	    for (b = 0; b < nb; b++)
+	    {
+		xcolor.red   = (unsigned short) (r * 0xFFFF / (nr - 1));
+		xcolor.green = (unsigned short) (g * 0xFFFF / (ng - 1));
+		xcolor.blue  = (unsigned short) (b * 0xFFFF / (nb - 1));
+		if (!XAllocColor(dpy, cmap, &xcolor))
+		{
+		    XFreeColors(dpy, cmap, xpixels, n_pixels, 0);
 		    return 0;
-		  }
-                }
 		}
-#else /* ORIG */
-                if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-		  
-		  if (!truecolor) {
-		    cmap = XCopyColormapAndFree(dpy, cmap);
-		  }
-		  if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-		    fprintf(stderr, "Can't xalloc color %d.\n", i);
-		    return 0;
-		  }
-                }
-#endif /* ORIG */
-                xpixels[i++] = xcolor.pixel;
-            }
-        }
+
+		xpixels[n_pixels++] = xcolor.pixel;
+	    }
+	}
     }
 
-/*  for (r = 0; r < n_levels; r++) {
-        R = (int) (r *  255.0 / (n_levels - 1));
-        for (g = 0; g < n_levels; g++) {
-            G = (int) (g *  255.0 / (n_levels - 1));
-            for (b = 0; b < n_levels; b++) {
-                B = (int) (b * 255.0 / (n_levels - 1));
-		if (!truecolor) {
-		  xcolor.red = (u_short) (R * 257);
-		  xcolor.green = (u_short) (G * 257);
-		  xcolor.blue = (u_short) (B * 257);
-		  if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-                    cmap = XCopyColormapAndFree(dpy, cmap);
-                    if (XAllocColor(dpy, cmap, &xcolor) == 0) {
-		      fprintf(stderr, "Can't xalloc color %d.\n", i);
-		      return 0;
-                    }
-		  }
-		}
-                xpixels[i++] = R * 256L * 256L + G * 256L + B;
-            }
-        }
+    return 1;
+}
+
+static int
+try_get_grays(Colormap cmap, int ny)
+{
+    XColor xcolor;
+    int n_pixels;
+    int y;
+
+    xpixels = (unsigned long *) G_realloc(xpixels, ny * sizeof(unsigned long));
+    n_pixels = 0;
+
+    xcolor.flags = DoRed | DoGreen | DoBlue;
+
+    for (y = 0; y < ny; y++)
+    {
+	unsigned short v = (unsigned short) (y * 0xFFFF / (ny - 1));
+	xcolor.red   = v;
+	xcolor.green = v;
+	xcolor.blue  = v;
+	if (!XAllocColor(dpy, cmap, &xcolor))
+	{
+	    XFreeColors(dpy, cmap, xpixels, n_pixels, 0);
+	    return y;
+	}
+
+	xpixels[n_pixels++] = xcolor.pixel;
     }
-*/
-    /* Generate lookup for "standard" colors */
-    assign_standard_color(RED, _get_lookup_for_color(255, 0, 0));
-    assign_standard_color(ORANGE, _get_lookup_for_color(255, 128, 0));
-    assign_standard_color(YELLOW, _get_lookup_for_color(255, 255, 0));
-    assign_standard_color(GREEN, _get_lookup_for_color(0, 255, 0));
-    assign_standard_color(BLUE, _get_lookup_for_color(0, 0, 255));
-    assign_standard_color(INDIGO, _get_lookup_for_color(0, 128, 255));
-    assign_standard_color(VIOLET, _get_lookup_for_color(255, 0, 255));
-    assign_standard_color(BLACK, _get_lookup_for_color(0, 0, 0));
-    assign_standard_color(WHITE, _get_lookup_for_color(255, 255, 255));
-    assign_standard_color(GRAY, _get_lookup_for_color(175, 175, 175));
-    assign_standard_color(BROWN, _get_lookup_for_color(180, 77, 25));
-    assign_standard_color(MAGENTA, _get_lookup_for_color(255, 0, 128));
-    assign_standard_color(AQUA, _get_lookup_for_color(100, 128, 255));
+
+    return ny;
+}
+
+static Colormap
+ramp_colormap(void)
+{
+    int n_colors = use_visual->map_entries;
+    Colormap cmap = XCreateColormap(dpy, RootWindow(dpy, scrn),
+				    use_visual, AllocAll);
+    int i;
+
+    for (i = 0; i < n_colors; i++)
+    {
+	int k = i * 65535 / (n_colors - 1);
+	int l = i * 255 / (n_colors - 1);
+	XColor xcolor;
+
+	xcolor.flags = DoRed | DoGreen | DoBlue;
+	xcolor.blue  = k;
+	xcolor.green = k;
+	xcolor.red   = k;
+	xcolor.pixel = find_color_rgb(l, l, l);
+
+	XStoreColor(dpy, cmap, &xcolor);
+    }
+
     return cmap;
 }
 
+Colormap
+InitColorTableFixed(Colormap cmap)
+{
+    int n_colors = use_visual->map_entries;
+    int r, g, b, y, i;
+
+    /* "truecolor" really indicates that we can't do "float" color mode */
+    switch (use_visual->class)
+    {
+    case GrayScale:
+    case PseudoColor:
+	truecolor = 0;
+	break;
+    case StaticGray:
+    case StaticColor:
+    case TrueColor:
+    case DirectColor:
+	truecolor = 1;
+	break;
+    }
+
+    switch (use_visual->class)
+    {
+    case StaticGray:
+    case GrayScale:
+	/* determine how many levels of gray we can actually get */
+	y = try_get_grays(cmap, n_colors);
+	if (y > 2 && y < n_colors)
+	    y = try_get_grays(cmap, y);
+	if (y < 2)
+	    G_fatal_error("Unable to get sufficient gray shades\n");
+
+	NCOLORS = y;
+
+        for (i = 0; i < 256; i++)
+            Gray[i] = i * y / 256;
+
+	break;
+
+    case StaticColor:
+    case PseudoColor:
+	/* determine how many levels of r, g, and b are possible */
+	get_max_levels(n_colors, &r, &g, &b);
+
+	/* now see how many we can actually get */
+	while (!try_get_colors(cmap, r, g, b))
+	    if (!get_fewer_levels(&r, &g, &b))
+		G_fatal_error("Unable to get sufficient colors\n");
+
+	NCOLORS = r * g * b;
+
+        for (i = 0; i < 256; i++)
+	{
+            Red[i] = (i * r / 256) * g * b;
+            Grn[i] = (i * g / 256) * b;
+            Blu[i] = (i * b / 256);
+        }
+
+	break;
+
+    case DirectColor:
+	G_warning("Using private colormap for DirectColor visual\n");
+
+	/* free any previously-allocated Colormap */
+	if (cmap != DefaultColormap(dpy, scrn))
+	    XFreeColormap(dpy, cmap);
+
+	/* get shift factors for R,G,B masks */
+	NCOLORS = get_rgb_shifts();
+
+	/* create colormap (emulates TrueColor visual) */
+	cmap = ramp_colormap();
+	break;
+
+    case TrueColor:
+	/* get shift factors for R,G,B masks */
+	NCOLORS = get_rgb_shifts();
+	break;
+
+    default:
+	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	break;
+    }
+
+    /* Generate lookup for "standard" colors */
+    assign_standard_color(RED,     _get_lookup_for_color(255,   0,   0));
+    assign_standard_color(ORANGE,  _get_lookup_for_color(255, 128,   0));
+    assign_standard_color(YELLOW,  _get_lookup_for_color(255, 255,   0));
+    assign_standard_color(GREEN,   _get_lookup_for_color(  0, 255,   0));
+    assign_standard_color(BLUE,    _get_lookup_for_color(  0,   0, 255));
+    assign_standard_color(INDIGO,  _get_lookup_for_color(  0, 128, 255));
+    assign_standard_color(VIOLET,  _get_lookup_for_color(255,   0, 255));
+    assign_standard_color(BLACK,   _get_lookup_for_color(  0,   0,   0));
+    assign_standard_color(WHITE,   _get_lookup_for_color(255, 255, 255));
+    assign_standard_color(GRAY,    _get_lookup_for_color(175, 175, 175));
+    assign_standard_color(BROWN,   _get_lookup_for_color(180,  77,  25));
+    assign_standard_color(MAGENTA, _get_lookup_for_color(255,   0, 128));
+    assign_standard_color(AQUA,    _get_lookup_for_color(100, 128, 255));
+
+    return cmap;
+}
 
 int Color_table_fixed (void)
 {
     table_type = FIXED;
-    if (truecolor) {
-      XSetWindowColormap(dpy, grwin, fixedcmap);
-    }
+
+    /* by cho; 2001/08/08 */
+    /* Generate lookup for "fixed" colors */
+    assign_fixed_color(RED,     _get_lookup_for_color(255,   0,   0));
+    assign_fixed_color(ORANGE,  _get_lookup_for_color(255, 128,   0));
+    assign_fixed_color(YELLOW,  _get_lookup_for_color(255, 255,   0));
+    assign_fixed_color(GREEN,   _get_lookup_for_color(  0, 255,   0));
+    assign_fixed_color(BLUE,    _get_lookup_for_color(  0,   0, 255));
+    assign_fixed_color(INDIGO,  _get_lookup_for_color(  0, 128, 255));
+    assign_fixed_color(VIOLET,  _get_lookup_for_color(255,   0, 255));
+    assign_fixed_color(BLACK,   _get_lookup_for_color(  0,   0,   0));
+    assign_fixed_color(WHITE,   _get_lookup_for_color(255, 255, 255));
+    assign_fixed_color(GRAY,    _get_lookup_for_color(175, 175, 175));
+    assign_fixed_color(BROWN,   _get_lookup_for_color(180,  77,  25));
+    assign_fixed_color(MAGENTA, _get_lookup_for_color(255,   0, 128));
+    assign_fixed_color(AQUA,    _get_lookup_for_color(100, 128, 255));
+    /**/
+
+    XSetWindowColormap(dpy, grwin, fixedcmap);
     return 0;
 }
 
-int _get_lookup_for_color (int red, int grn, int blu)
+int _get_lookup_for_color(int r, int g, int b)
 {
-    return (Red[red] + Grn[grn] + Blu[blu]);
+    switch (use_visual->class)
+    {
+    case StaticGray:
+    case GrayScale:
+	return Gray[(r + g + b) / 3];
+	break;
+
+    case StaticColor:
+    case PseudoColor:
+	return Red[r] + Grn[g] + Blu[b];
+	break;
+
+    case DirectColor:
+    case TrueColor:
+	return find_color_rgb(r, g, b);
+	break;
+
+    default:
+	G_fatal_error("Unknown visual class %d\n", use_visual->class);
+	break;
+    }
 }
 
-int get_table_type (void)
+int get_table_type(void)
 {
     return table_type;
 }

@@ -51,6 +51,7 @@ OBJ = \
     dalloc.o\
     date.o\
     def_window.o\
+    dig_title.o\
     distance.o\
     done_msg.o\
     edit_cats.o\
@@ -79,6 +80,7 @@ OBJ = \
     get_projname.o\
     get_projinfo.o\
     get_row.o\
+    get_row_colr.o\
     get_window.o\
     getl.o\
     gets.o\
@@ -153,6 +155,7 @@ OBJ = \
     set_window.o\
     short_way.o\
     sites.o\
+    sites_title.o\
     sleep.o\
     squeeze.o\
     store.o\

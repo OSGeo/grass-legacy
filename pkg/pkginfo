@@ -1,0 +1,12 @@
+PKG="GNUgrass"
+NAME="Geographic Resources Analysis Support System (GRASS) Geographic Information System (GIS) Version 5.0.0"
+CLASSES="none"
+CATEGORY="application"
+BASEDIR=/opt/GNUgrass
+VERSION="5.0.0pre2-CVS"
+DESC="GRASS GIS (Geographic Resources Analysis Support System) is an open source, free Geographical Information System (GIS) with raster, topological vector, image processing, and graphics production functionality that operates on various platforms through a graphical user interface and shell in X-Windows. It is released under GNU General Public License (GPL)."
+VENDOR="GRASS Development Team and Andreas Lange"
+EMAIL="grass5@grass.itc.it"
+PSTAMP="Andreas Lange 12/2001"
+# ARCH=sparc
+ARCH=i386

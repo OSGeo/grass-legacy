@@ -13,7 +13,13 @@
 
 /*-
  * $Log$
- * Revision 1.11  2001-02-06 16:05:59  cho
+ * Revision 1.12  2002-01-22 04:51:10  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.11.4.1  2001/04/29 04:01:22  glynn
+ * Eliminate qsort() warnings.
+ *
+ * Revision 1.11  2001/02/06 16:05:59  cho
  * fixed to print out sites data correctly using s.out.ascii
  *
  * Revision 1.10  2001/02/06 15:53:29  cho
@@ -930,7 +936,7 @@ char *next_att (char *buf)
   return buf;
 }
 
-int G_site_c_cmp (void *a,void *b)
+int G_site_c_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
    site structures by category. */
 {
@@ -956,7 +962,7 @@ int G_site_c_cmp (void *a,void *b)
   return result;
 }
 
-int G_site_d_cmp (void *a,void *b)
+int G_site_d_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
    site structures by first decimal attribute. */
 {
@@ -971,7 +977,7 @@ int G_site_d_cmp (void *a,void *b)
   return result;
 }
 
-int G_site_s_cmp (void *a,void *b)
+int G_site_s_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
    site structures by first decimal attribute. */
 {

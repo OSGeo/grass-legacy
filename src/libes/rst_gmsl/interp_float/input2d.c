@@ -37,14 +37,10 @@ int IL_input_data_2d (
 
 {
   struct triple *point;
-  double east, north, value, x, y, z, sm;   /* sm added Mit. 96)*/
-  char *desc;
+  double x, y, z, sm;   /* sm added Mit. 96)*/
   double c1, c2, c3, c4;
   int k = 0;
-  double deltx, delty;
   int a;
-  char *buf[1024];
-  int i, j;
   int first_time = 1;
   double ns_res, ew_res;
   int npoint, OUTRANGE;
@@ -181,10 +177,11 @@ int IL_input_data_2d (
 
   fclose (params->fdinp);
 
-  fprintf (stderr, "\n");
-  fprintf (stderr, "The number of points in sites file is %d\n", k);
-  fprintf (stderr, "The number of points outside of region %d\n", OUTRANGE);
-  fprintf (stderr, "The number of points being used (after reduction) is %d\n", npoint);
+  fprintf (stdout, "\n");
+  fprintf (stdout, "The number of points in sites file is %d\n", k);
+  fprintf (stdout, "The number of points outside of region %d\n", OUTRANGE);
+  fprintf (stdout, "The number of points being used (after reduction) is %d\n", npoint);
+  fflush(stdout);
   *n_points = npoint;
   return (totsegm);
 }
@@ -198,7 +195,6 @@ IL_create_bitmask (struct interp_params *params, struct BM *bitmask)
   int i, j, cfmask, irev;
   char *mapsetm;
   CELL *cellmask;
-  char buf[1024];
 
   if (params->maskmap != NULL)
   {
@@ -225,7 +221,8 @@ IL_create_bitmask (struct interp_params *params, struct BM *bitmask)
 	  BM_set (bitmask, j, irev, 1);
       }
     }
-    fprintf (stderr, "bitmap mask created\n");
+    fprintf (stdout, "bitmap mask created\n");
+    fflush(stdout);
   }
   else
     bitmask = NULL;
@@ -240,7 +237,6 @@ int translate_quad (
   int n_leafs)
 {
   int total = 0, i, ii;
-  struct triple *point;
 
   if (tree == NULL)
     return 0;

@@ -246,7 +246,7 @@ if(!examine_only)
           for(nrow = 0; nrow < cellhd.rows; nrow++)
           {
               read(fd,profile_buf,cellhd.cols * sizeof(CELL));
-              if(G_put_c_raster_row(new,profile_buf) < 0)
+              if(G_put_raster_row(new, profile_buf, CELL_TYPE) < 0)
               {
                  G_fatal_error("error while writing to raster file");
 		 unlink(inf);

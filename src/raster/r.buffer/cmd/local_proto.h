@@ -6,7 +6,7 @@ int find_distances(int);
 int reset_distances(void);
 int find_ll_distance_ncols(int);
 /* init.c */
-int init_grass(char *);
+int init_grass(void);
 /* parse_dist.c */
 int parse_distances(char **, double);
 /* process_at.c */

@@ -1,7 +1,7 @@
 PGM=i.pca
-OBJS = main.o eigen.o
+OBJS = main.o
 
-LIBES= $(GISLIB) 
+LIBES=$(GMATHLIB) $(GISLIB)
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -16,19 +16,19 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "dbrast.h"
 #define MAIN
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
-    FILE *fp;
+
     char *dbname;
-    char *colname;  
-    char buf[1024];
 
     int i, stat;
     int selPassed;      /* User specified select inputfile */
@@ -51,7 +51,7 @@ char **argv ;
 
         /* Check for -s flag indicating selectfile input */
         for (i=1; i<argc; i++)
-		if(argv[i][0]=='-' && index(argv[i],'s') )
+		if(argv[i][0]=='-' && strchr(argv[i],'s') )
                         selPassed = 1;
 
 

@@ -1,4 +1,5 @@
 #define MAIN
+#include <stdlib.h>
 #include <string.h>
 #include "local_proto.h"
 #include <unistd.h>
@@ -52,7 +53,7 @@ main (int argc, char *argv[])
 
 	full = G_define_flag();
 	full->key = 'f';
-	full->description = "verbose listing";
+	full->description = "verbose listing (also list map titles)";
 #define FULL full->answer
 
 	n = parse(argc, argv);

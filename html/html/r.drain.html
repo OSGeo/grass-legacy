@@ -25,9 +25,8 @@ Traces a flow through an elevation model on a raster map layer.
 [<B>-n</B>]
 <B>input=</B><EM>name</EM>
 <B>output=</B><EM>name</EM>
-[<B>site=</B><EM>name</EM>]
 [<B>coordinate=</B><EM>x,y</EM>[,<EM>x,y</EM>,...]]
-<B>null_value=</B><EM>value</EM>
+
 <H2>DESCRIPTION</H2>
 
 <EM>r.drain</EM> traces a flow through a least-cost path in an 
@@ -69,18 +68,13 @@ command line, using the form
 [<B>-n</B>]
 <B>input=</B><EM>name</EM>
 <B>output=</B><EM>name</EM>
-[<B>site=</B><EM>name</EM>]
 [<B>coordinate=</B><EM>x,y</EM>[,<EM>x,y</EM>,...]]
-<B>null_value=</B><EM>value</EM>
 </DL>
 where the input <EM>name</EM> is the name of a raster map layer to 
 be used in calculating drainage, 
 the output <EM>name</EM> is the name of the raster map layer to contain output, 
 and each <EM>x,y</EM> coordinate pair is the geographic location of a point 
-from which drainage is to be calculated. If <EM>site</EM> is given, this site file
-will be read for starting points coordinates. By default, null cells in the input map
-are excluded from the path evaluation. Alternately, a floating point value
-can be assigned to null cells with <EM>null_value</EM>.
+from which drainage is to be calculated.
 <P>
 Alternately, the user can simply type <B>r.drain</B> on the command line, 
 without program arguments. In this case, the user will be prompted for 
@@ -109,16 +103,11 @@ written on output.
 <DD>Name of raster map layer containing cell cost information.
 <DT><B>output=</B><EM>name</EM>
 <DD>Name of raster map layer to contain program output. 
-<DT><B>site=</B><EM>name</EM>
-<DD>Name of site file containing starting points coordinates.
 <DT><B>coordinate=</B><EM>x,y</EM>[,<EM>x,y</EM>,...]
 <DD>Each x,y pair is the easting and northing (respectively) of 
 a starting point from which a least-cost corridor will be developed. 
 As many points as desired can be input. 
 (But, see BUGS below.) 
-<DT><B>null_value=</B><EM>value</EM>
-<DD>Floating point value assign to null cells. By defaults, null cells
-are excluded from the path evaluation.
 </DL>
 
 
@@ -256,7 +245,8 @@ HREF="g.region.html">g.region</A></EM>.
 
 <H2>AUTHOR</H2>
 
-Kewan Q. Khawaja, Intelligent Engineering
-Systems Laboratory, M.I.T.
-<P>Update to Grass 5.0 format:
-Pierre de Mouveaux  (pmx@audiovu.com)
+Completely rewritten by Roger S. Miller
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "function.h"
 #include "mapcalc.h"
 
@@ -31,7 +33,9 @@ main (int argc, char *argv[])
 	argc--;
     }
 
-    if (argc > 1 && ( strstr(argv[1], "-help") || strstr(argv[1], "-h")) ) {
+       if ( argc > 1 && ( (strcmp(argv[1], "help") == 0) ||
+                          (strcmp(argv[1], "-help") == 0) ||
+                          (strcmp(argv[1], "-h") == 0) ) ) {
 	fprintf(stderr, "r.mapcalc - Raster map layer data calculator\n\n");
 	fprintf(stderr, "r.mapcalc performs arithmetic on raster map layers.\n");
 	fprintf(stderr, "New raster map layers can be created which are arithmetic expressions involving existing raster map layers, integer or floating point constants, and functions.\n\n");
@@ -132,6 +136,27 @@ system (buf);
 		print_range (result);
 	    }
 	    free_execute_stack();
+
+	    /* cp the cats file when appropriate 11/2001 Huidae Cho */
+	    if(!allok && cp_cats){
+		    char *mapset;
+
+		    if((mapset=strchr(catmap, '@'))){
+		        *mapset = 0;
+			mapset++;
+		    }else
+		    if(G_find_file("cats", catmap, G_mapset()))
+			mapset = G_mapset();
+		    else
+			mapset = "PERMANENT";
+
+		    if(G_find_file("cats", catmap, mapset)){
+		    	fprintf(stdout, "Copying category labels from <%s@%s> to <%s@%s>\n", catmap, mapset, result, G_mapset());
+		    	sprintf(buf, "/bin/cp %s/%s/cats/%s %s/%s/cats/%s", G_location_path(), mapset, catmap, G_location_path(), G_mapset(), result);
+		    	system(buf);
+		    }else
+			fprintf(stderr, "NOTE: cannot copy category labels for <%s@%s>\n      as not present in <%s@%s>\n", result, G_mapset(), catmap, mapset);
+	    }
         } else {
 	  allok = 1; /* added 11/00 Andreas Lange */
 	}

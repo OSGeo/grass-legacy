@@ -36,7 +36,6 @@ LIST=main.o\
 	sigint.o\
 	signature.o\
 	title.o\
-	tty.o\
 	view.o\
 	zoom_box.o
 

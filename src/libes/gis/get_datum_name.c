@@ -1,12 +1,18 @@
-/***********************************************************************
- * GRASS 5.0 gis library
- * get_datum_name.c, get datum name for new location database
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jul 13 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:       GRASS 5.0 gis library, get_datum_name.c
+ * AUTHOR(S):    unknown, updated by Andreas Lange, andreas.lange@rhein-main.de
+ * PURPOSE:      Get datum name for new location database
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 #include <string.h>
 #include <unistd.h>
@@ -52,7 +58,7 @@ G_ask_datum_name(char *datum)
           if(strlen(answer)==0) return -1;
           if (strcmp(answer,"list") == 0) {
             if (isatty(1)) {
-	      sprintf(buff,"more %s",Tmp_file);
+	      sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
             }
             else
 	      sprintf(buff,"cat %s",Tmp_file);

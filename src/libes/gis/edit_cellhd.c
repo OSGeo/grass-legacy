@@ -26,6 +26,7 @@
  *
  **********************************************************************/
 #include <string.h>
+#include <stdlib.h>
 #include "vask.h"
 #include "gis.h"
 

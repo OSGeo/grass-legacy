@@ -14,6 +14,8 @@ int main(int   argc, char *argv[])
     struct Option *opt4 ;
     struct Option *opt5 ;			
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Prompts the user for the names of GRASS data base files.";
@@ -52,9 +54,6 @@ int main(int   argc, char *argv[])
     opt5->type       = TYPE_STRING;
     opt5->required   = YES;
     opt5->description="The name of a unix file to store the user's response" ;
-
-
-    G_gisinit (argv[0]);
 
     if (argc < 2) /* no interactive version allowed */
     {

@@ -18,6 +18,10 @@
 /* 08 april 2000 - Pierre de Mouveaux. pmx@audiovu.com
    Updated to use the Grass 5.0 floating point raster cell format.
    TODO: convert floats to double. Done ;)
+
+   12 dec 2001 - Eric G. Miller <egm2@jps.net>
+   Try to fix some file searching bugs, and give better error
+   if "output" doesn't exist, but is expected (this is bad design).
 */
 
 #define MAIN
@@ -38,7 +42,6 @@
 #include "stash.h"
 #include "local_proto.h"
 
-
 struct Cell_head window;
 
 int main (int argc, char *argv[])
@@ -47,7 +50,6 @@ int main (int argc, char *argv[])
 	SEGMENT in_seg, out_seg;
 	char *cost_mapset ;
 	char *cum_cost_mapset ;
-	char *current_mapset ;
 	char *in_file, *out_file ;
 	char *search_mapset ;
 	double* value;
@@ -63,7 +65,6 @@ int main (int argc, char *argv[])
 	int maxcost ;
 	double cost ;
 	int cost_fd, cum_fd ;
-	int have_start_points ;
 	int have_stop_points ;
 	int in_fd, out_fd ;
 	double my_cost ;
@@ -79,14 +80,17 @@ int main (int argc, char *argv[])
 	struct GModule *module;
 	struct Flag *flag1, *flag2, *flag3;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
+	struct Option *opt9;
 	struct cost *pres_cell, *new_cell;
 	struct start_pt *pres_start_pt = NULL ;
 	struct start_pt *pres_stop_pt = NULL;
 
 	void* ptr2;
-	RASTER_MAP_TYPE data_type, data_type2;
+	RASTER_MAP_TYPE data_type;
 	double peak = 0.0;
 	int dsize;
+	
+	G_gisinit (argv[0]);
 
 	module = G_define_module();
 	module->description =
@@ -106,7 +110,7 @@ int main (int argc, char *argv[])
 	opt1->key        = "output" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
-	opt1->gisprompt  = "any,cell,raster" ;
+	opt1->gisprompt  = "new,cell,raster" ;
 	opt1->description= "Name of raster map to contain results" ;
 
 	opt7 = G_define_option() ;
@@ -122,6 +126,13 @@ int main (int argc, char *argv[])
 	opt8->gisprompt  = "old,site_lists,sites";
 	opt8->required   = NO;
 	opt8->description= "Stop points site file";
+
+	opt9 = G_define_option() ;
+	opt9->key        = "start_rast" ;
+	opt9->type       = TYPE_STRING;
+	opt9->gisprompt  = "old,cell,raster";
+	opt9->required   = NO;
+	opt9->description= "Starting points raster file";
 
 	opt3 = G_define_option() ;
 	opt3->key        = "coordinate" ;
@@ -169,8 +180,6 @@ int main (int argc, char *argv[])
 
 	/* initalize access to database and create temporary files */
 
-	G_gisinit (argv[0]);
-
 	in_file = G_tempfile();
 	out_file = G_tempfile();
 
@@ -210,10 +219,23 @@ int main (int argc, char *argv[])
 
 	keep_nulls = flag3->answer;
 
+	{
+		int count = 0;
 
-	have_start_points = process_answers(opt3->answers, &head_start_pt, &pres_start_pt) ;
+		if (opt3->answers) count++;
+		if (opt7->answers) count++;
+		if (opt9->answers) count++;
 
-	have_stop_points  = process_answers(opt4->answers, &head_end_pt, &pres_stop_pt) ;
+		if (count != 1)
+			G_fatal_error("Must specify exactly one of start_sites, start_rast or coordinate");
+	}
+
+	if (opt3->answers)
+		if (!process_answers(opt3->answers, &head_start_pt, &pres_start_pt))
+			G_fatal_error("No start points");
+
+	if (opt4->answers)
+		have_stop_points  = process_answers(opt4->answers, &head_end_pt, &pres_stop_pt) ;
 
 	if (sscanf(opt5->answer, "%d", &maxcost) != 1 || maxcost < 0)
 	{
@@ -243,34 +265,19 @@ int main (int argc, char *argv[])
 	}
 
 	strcpy (cum_cost_layer, opt1->answer);
-	current_mapset = G_mapset();
-
-	/*  Search for output layer (cum_cost_layer) in all mapsets */
-
-	search_mapset = "";
-	cum_cost_mapset = G_find_cell2 (cum_cost_layer, search_mapset);
-	
 
 	/*  Check if cost layer exists in data base  */
 
 	strcpy(cost_layer, opt2->answer);
-	cost_mapset = G_find_cell2 (cost_layer, search_mapset);
+	cost_mapset = G_find_cell2 (cost_layer, "");
 
 	if (cost_mapset == NULL)
-	{
-		sprintf(buf, "%s - not found", cost_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("%s - not found", cost_layer);
 
 	/*  Check if specified output layer name is legal   */
 
 	if (G_legal_filename (cum_cost_layer) < 0)
-	{
-		sprintf(buf, "%s - illegal name", cum_cost_layer);
-		G_fatal_error (buf);
-		exit(1);
-	}
+		G_fatal_error("%s - illegal name", cum_cost_layer);
 
 	/*  find number of rows and columns in window    */
 
@@ -290,9 +297,8 @@ int main (int argc, char *argv[])
 	}
 
 	data_type = G_raster_map_type(cost_layer,cost_mapset);
-/*  	printf("Map type: %d\n",data_type); */
-/*    	cell = G_malloc(ncols* G_raster_size(data_type));  */
 	cell = G_allocate_raster_buf(data_type); 
+
 	/*   Parameters for map submatrices   */
 
 	if (verbose) {
@@ -325,11 +331,11 @@ int main (int argc, char *argv[])
 		fflush (stderr);
 	}
 
-	in_fd = creat(in_file,0666);
+	in_fd = creat(in_file,0600);
 	segment_format(in_fd, nrows, ncols, srows, scols, sizeof(double));
 	close(in_fd);
 
-	out_fd = creat(out_file,0666);
+	out_fd = creat(out_file,0600);
 	segment_format(out_fd, nrows, ncols, srows, scols, sizeof(double));
 	close(out_fd);
 
@@ -404,8 +410,6 @@ int main (int argc, char *argv[])
 					break;
 			}				
 /*    			segment_get(&in_seg,&p,row,20);  */
-/*            	printf("<%d %d>\n",((int*)cell)[20],(int)p); */
-
 		}
 	}
 	segment_flush(&in_seg);
@@ -446,7 +450,6 @@ int main (int argc, char *argv[])
 			}
 			
 /*  			segment_get(&out_seg,p,row,0); */
-/*          	printf("<%lf %lf>\n",fbuff[0],returnval); */
 		}
 		segment_flush(&out_seg);
 		if (verbose)
@@ -454,7 +457,7 @@ int main (int argc, char *argv[])
 		G_free(fbuff) ;
 	}
 
-/*   Scan the existing cum_cost_layer searching for starting points.
+/*   Scan the start_sites layer searching for starting points.
  *   Create a btree of starting points ordered by increasing costs.
  */
 	if (opt7->answer) 
@@ -463,6 +466,8 @@ int main (int argc, char *argv[])
 		FILE* fp;
 		struct start_pt  *new_start_pt;
 		Site *site = NULL;               /* pointer to Site */
+		int got_one = 0;
+
 		search_mapset = "";
  
 		search_mapset = G_find_file ("site_lists", opt7->answer, "");
@@ -471,10 +476,10 @@ int main (int argc, char *argv[])
 
 		site = G_site_new_struct (-1, 2, 0, 0);
 
-	    for (; (G_site_get(fp,site) != EOF);) {
+		for (; (G_site_get(fp,site) != EOF);) {
 			if (!G_site_in_region (site, &window))
 				continue;
-			have_start_points = 1;
+			got_one = 1;
 
 			col = (int)G_easting_to_col(site->east, &window);
 			row = (int)G_northing_to_row(site->north, &window );
@@ -500,6 +505,9 @@ int main (int argc, char *argv[])
 
 		G_site_free_struct(site);	
 		fclose(fp);
+
+		if (!got_one)
+			G_fatal_error("No start points");
 #endif
 	}
 
@@ -509,6 +517,7 @@ int main (int argc, char *argv[])
 		FILE* fp;
 		struct start_pt  *new_start_pt;
 		Site *site = NULL;               /* pointer to Site */
+
 		search_mapset = "";
  
 		search_mapset = G_find_file ("site_lists", opt8->answer, "");
@@ -517,7 +526,7 @@ int main (int argc, char *argv[])
 
 		site = G_site_new_struct (-1, 2, 0, 0);
 
-	    for (; (G_site_get(fp,site) != EOF);) {
+		for (; (G_site_get(fp,site) != EOF);) {
 			if (!G_site_in_region (site, &window))
 				continue;
 			have_stop_points = 1;
@@ -549,36 +558,41 @@ int main (int argc, char *argv[])
 #endif
 	}
 
-	if (! have_start_points)
+	if (opt9->answer)
 	{
 		int dsize2;
-		cum_fd = G_open_cell_old (cum_cost_layer, cum_cost_mapset);
-		if (cum_fd < 0)
-		{
-			sprintf (buf, "%s -can't open raster file", cum_cost_layer);
-			G_fatal_error (buf);
-			exit(1);
-		}
+		int fd;
+		RASTER_MAP_TYPE data_type2;
+		int got_one = 0;
 
-		data_type2 = G_raster_map_type(cum_cost_layer,cum_cost_mapset);
+		search_mapset = "";
+ 
+		search_mapset = G_find_file ("cell", opt9->answer, "");
+
+		fd = G_open_cell_old (opt9->answer, search_mapset);
+		if (fd < 0)
+			G_fatal_error(
+				"can't open raster file [%s] needed for input coordinates", 
+				opt9->answer);
+
+		data_type2 = G_raster_map_type(opt9->answer, search_mapset);
 
 		dsize2 = G_raster_size(data_type2);
 
 		cell2 = G_allocate_raster_buf(data_type2);
-/*  		cell2 = G_malloc(ncols*dsize); */
 
-		if (cell2 == NULL) {
-			fprintf(stderr,"Memory error\n");
-			exit(1);
-		} 
+		if (!cell2)
+			G_fatal_error("Unable to allocate memory");
+
 		if (verbose)
-			fprintf (stderr, "Reading %s ... ", cum_cost_layer);
+			fprintf (stderr, "Reading %s ... ", opt9->answer);
 		for ( row=0 ; row<nrows ; row++ )
 		{
 			if (verbose)
 				G_percent (row, nrows, 2);
-			if ( G_get_raster_row (cum_fd, cell2, row, data_type2) < 0)
-				exit(1);
+			if ( G_get_raster_row (fd, cell2, row, data_type2) < 0)
+				G_fatal_error("Error reading map %s",
+					      opt9->answer);
 			ptr2 = cell2;
 			for ( col=0 ; col<ncols ; col++ )
 			{
@@ -588,6 +602,7 @@ int main (int argc, char *argv[])
 					value= &zero;
 					new_cell = insert(zero, row, col);
 					segment_put(&out_seg, value, row, col);
+					got_one = 1;
 				}
 				ptr2 = G_incr_void_ptr(ptr2, dsize2);
 			}
@@ -595,15 +610,18 @@ int main (int argc, char *argv[])
 		if (verbose)
 			G_percent (row, nrows, 2);
 
-		G_close_cell(cum_fd);
+		G_close_cell(fd);
 		G_free(cell2);
+
+		if (!got_one)
+			G_fatal_error("No start points");
 	}
 
 
 /*  If the starting points are given on the command line start a linked
  *  list of cells ordered by increasing costs
  */
-	else
+	if (head_start_pt)
 	{
 		struct start_pt *top_start_pt = NULL ;
 		top_start_pt = head_start_pt;

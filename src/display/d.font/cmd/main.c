@@ -13,6 +13,8 @@ int main( int argc , char **argv )
         struct Option *opt1;
         int i;
 
+	G_gisinit(argv[0]);
+
 		module = G_define_module();
 		module->description =
 			"Selects the font in which text will be displayed "

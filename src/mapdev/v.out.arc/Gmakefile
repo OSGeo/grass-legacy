@@ -1,6 +1,6 @@
 PGM =	v.out.arc
 
-OBJ =	Vexport_arc.o\
+OBJ =	main.o\
 	write_areas.o\
 	write_lines.o\
 	write.o\

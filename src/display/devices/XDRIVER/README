@@ -1,3 +1,13 @@
+
+4/2001: major code cleanup for all drivers
+        Glynn Clements  <glynn.clements@virgin.net>
+
+-----------------------------------------------------
+
+2/2001: added sockets support
+        Eric G. Miller  <egm2@jps.net>
+-----------------------------------------------------
+
 Updated to better color table management
 Date: Wed, 12 Apr 2000 23:00:28 -0400                                           
 From: Carl Anderson <candrsn@mindspring.com>

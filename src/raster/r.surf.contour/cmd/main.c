@@ -23,6 +23,8 @@ main (int argc, char *argv[])
 	struct Flag *flag1;
 	struct Option *opt1, *opt2;
 
+	G_gisinit(argv[0]);
+
     module = G_define_module();
     module->description =
 		"Surface generation program from rasterized contours.";
@@ -45,7 +47,6 @@ main (int argc, char *argv[])
 	flag1->key         = 'f' ;
 	flag1->description = "Invoke fast, but memory intensive operation" ;
 
-	G_gisinit(argv[0]);
 	s_f = 0;
 	on = 1;
 	off = 0;
@@ -127,7 +128,7 @@ main (int argc, char *argv[])
 				    d1 * con2 / (d1 + d2) + 0.5);
 			else alt_row[c] = con1;
 		}
-		G_put_map_row(file_fd, alt_row);
+		G_put_raster_row(file_fd, alt_row, CELL_TYPE);
 	}
 	G_percent (r, nrows, 1);
 	cseg_close (&con);

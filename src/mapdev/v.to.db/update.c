@@ -1,6 +1,7 @@
 #include "global.h"
 #include "dbmi.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static int srch(); 
 
@@ -46,7 +47,8 @@ update (void)
     catexst = (int *) G_malloc (vstat.select * sizeof(int));
     
     /* select existing categories */
-    snprintf (buf1,1023, "select %s from %s order by %s", options.key, options.table, options.key);    
+    snprintf (buf1,1023, "select %s from %s order by %s", options.key, options.table, options.key);
+
     db_set_string (&stmt, buf1);
     if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
         return (ERROR);

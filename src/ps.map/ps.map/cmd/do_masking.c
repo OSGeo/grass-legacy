@@ -3,6 +3,7 @@
 ** Author: Paul W. Carlson	May 1992
 */
 
+#include <stdlib.h>
 #include "ps_info.h"
 #include <unistd.h>
 extern char *ps_mask_file;

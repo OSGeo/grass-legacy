@@ -1,6 +1,6 @@
 #include <stdio.h>
 /* binary search. taken from Knuth: Sorting ans Searching, p 407 */
-bin_search (key, n, start, cmp)
+int bin_search (key, n, start, cmp)
 	int *key;           /* key to search for. Passed to cmp() */
 	int n;               /* number of entries in table */
 	int *start;          /* current starting point in table */
@@ -15,10 +15,12 @@ bin_search (key, n, start, cmp)
 	cur = *start;
 	if (cur < 0 || cur >= n)
 		cur = n/2;
-B1:
+
+/*B1:*/
 	low=0;
 	high=n-1;
 	goto B3;
+
 
 B2:
 	if (high < low) return 0; /* no match */
@@ -53,6 +55,7 @@ B4:
 B5:
 	low = cur + 1;
 	goto B2;
+
 }
 
 	

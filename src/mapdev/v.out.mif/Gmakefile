@@ -1,5 +1,5 @@
 PGM       = v.out.mif
-LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+LIBES     = $(VECTLIB) $(GISLIB)
 
 
 OBJS = \

@@ -5,6 +5,7 @@ LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 OBJS = \
 	main.o \
 	plot.o\
+	color_parse.o\
         screenpoly.o
 
 CFILES = \
@@ -12,7 +13,12 @@ CFILES = \
 	plot.c \
         screenpoly.c
 
+all: $(BIN_CMD)/$(PGM) $(ETC)/rgb.txt
+
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/rgb.txt: rgb.txt
+	cp -f $? $@
 
 $(LIBES): #

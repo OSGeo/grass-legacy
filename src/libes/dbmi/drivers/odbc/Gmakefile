@@ -14,7 +14,7 @@ EXTRA_CFLAGS = -I$(ODBCBASE) $(ODBCINC) -I$(INCLUDE_DIR)
 
 OBJ 	=  \
 	driver.o \
-	error.c \
+	error.o \
 	listdb.o \
 	db.o \
 	listtab.o \

@@ -27,7 +27,7 @@ CFILES = \
         mean.c \
         att2cat.c
 
-LIBES= $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+LIBES= $(VECTLIB) $(COORCNVLIB) $(GISLIB)
 $(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 

@@ -24,6 +24,7 @@
 <B>r.in.gdal [-o] [-e] input=</B><EM>name</EM>
 [<B>band=</B><EM>number</EM>]
 <B>output=</B><EM>name</EM> 
+[<B>target=</B><EM>name</EM>] 
 [<B>TITLE=</B>"<EM>phrase</EM>"] 
 [<B>location=</B><EM>name</EM>] 
 
@@ -60,6 +61,8 @@ and number of bands.<BR>
 <DT><B>output=</B><EM>name</EM>
 <DD>Name to be assigned to resultant binary raster map layer or imagery group.
 An imagery group is generated if more than one band is imported.<BR>
+<DT><B>target=</B><EM>name</EM>
+<DD>Name of location to read projection info from for GCPs transformation<BR>
 <DT><B>TITLE=</B>"<EM>phrase</EM>"
 <DD>Title to be assigned to resultant raster map layer(s). <BR>
 <DT><B>location=</B><EM>name</B>
@@ -73,6 +76,8 @@ Full details on GDAL supported formats are available at:<p>
 <a href="http://www.remotesensing.org/gdal/formats_list.html">http://www.remotesensing.org/gdal/formats_list.html</a><P>
 
 <pre>
+Selected formats:
+
 Format Name					Georeferencing<BR>
 <BR>
 Arc/Info Binary Grid                                 Yes<BR>
@@ -97,12 +102,17 @@ message like <tt>ERROR 4: `abc.e00' not recognised as a supported file format
 by GDAL, or that the format wasn't built into the version of libgdal.1.1.so
 being used.<P>
 
-<B>r.in.gdal</B> will only operate correctly if the GDAL shared library
-is installed on the system and accessable (normally via LD_LIBRARY_PATH).  
-If not, r.in.gdal will report <TT>Unable to initialize GDAL bridge</TT>. 
-If this occurs it means that you either don't have GDAL installed (ie.
-libgdal.1.1.so), it isn't in the LD_LIBRARY_PATH, or it is the wrong version.
-<P>
+<B>r.in.gdal</B> will only operate correctly if the GDAL shared library is
+installed on the system and accessable (normally via LD_LIBRARY_PATH).  If
+not, r.in.gdal will report <TT>Unable to initialize GDAL bridge</TT>.  If
+this occurs it means that you either don't have GDAL installed (ie.
+libgdal.1.1.so), it isn't in the LD_LIBRARY_PATH, or it is the wrong
+version. 
+
+<P> r.in.gdal uses a number of strategies to find the GDAL shared
+library.  It first looks in $GISBASE/lib/.  Then it looks for $GDAL_HOME and
+finally it searches without a path letting all the standard Unix dlopen()
+search rules apply (which normally includes LD_LIBRARY_PATH).
 
 <H2>Location Creation</H2>
 
@@ -126,11 +136,18 @@ parameter.  Upon completion of the command, a new location will have been
 created (with only a PERMANENT mapset), and the raster will have been
 imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
 
+Support for GCPs: In case the image contains GCPs they are written to a
+POINTS file within an imagery group. They can directly be used for <a
+href=i.rectify.html>i.rectify</a>. The <em>target</em> option allows to
+automatically re-project the GCPs from their own projection into another
+projection read from the PROJ_INFO file of the location name
+<em>target</em>.
+
 <H2>NOTES</H2>
 
 I plan to make a variety of improvements to <b>r.in.gdal</b> in the future
 including support for reporting everything known about a dataset if the 
-<b>output</b> parameter is not set and support for GCPs.<P>
+<b>output</b> parameter is not set.<P>
 
 The <B>r.in.gdal</B> comand does support the following features, as long as 
 the underlying format driver supports it:<p>
@@ -171,14 +188,24 @@ generic formats (and formats poorly supported by GDAL) do not have a way
 of recognising null pixels in which case r.null should be used after the
 import.<BR>
 
+<DT> GCPs
+<DD> Datasets that have Ground Control Points will have them imported as
+a POINTS file associated with the imagery group.  Datasets with only one
+band that would otherwise have been translated as a simple raster map
+will also have an associated imagery group if there are ground control points.
+The coordinate system of the ground control points is reported by r.in.gdal
+but not preserved.  It is up to the user to ensure that the location 
+established with i.target has a compatible coordinate system before using
+the points with i.rectify.<BR>
+
 </DL>
 
 <H2>SEE ALSO</H2>
 <EM>
 <A HREF="r.in.ascii.html">r.in.ascii</A>,
 <A HREF="r.in.arc.html">r.in.arc</A>,
-<A HREF="r.in.bin.html">r.null</A>,
-<A HREF="r.in.bin.html">r.in.bin</A>
+<A HREF="r.in.bin.html">r.in.bin</A>,
+<A HREF="r.null.html">r.null</A>
 </EM>
 
 <H2>REFERENCES</H2>
@@ -192,4 +219,6 @@ store in $GISBASE/lib/)
 
 Frank Warmerdam (<a href="mailto:warmerdam@pobox.com">warmerdam@pobox.com</a>).
 
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -3,6 +3,9 @@
 */
 
 #include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
+
 #include	"gis.h"
 #include        "Vect.h"
 #include        "dig_atts.h"

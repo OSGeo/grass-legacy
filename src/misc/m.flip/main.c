@@ -27,6 +27,8 @@ int main (int argc, char *argv[])
 	struct Flag *q;
     } flag;
 
+    G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Flips elevation data extracted from systems that retrieve "

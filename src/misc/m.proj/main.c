@@ -1,6 +1,8 @@
 /* created by: Irina Kosinovsky 
    changed by: Morten Hulden <morten@ngb.se> October 1999, support for additional projections 
 */
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "geo.h"

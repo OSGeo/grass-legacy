@@ -1,0 +1,9 @@
+PGM=r.his
+OFILES =  main.o his.o
+
+LIBES=$(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

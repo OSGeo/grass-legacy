@@ -55,6 +55,13 @@ Graphs are saved in the current working directory with
 the extensions <EM>.gp</EM> and <EM>.dat</EM>
 </DL>
 
+<H2>NOTES</H2>
+
+<P>
+The plotting program can be selected by setting the environment
+variable <B>GRASS_GNUPLOT </B>.
+</P>
+
 <H2>EXAMPLE</H2>
 
 Given a sites file named <EM>example</EM> in the following format:
@@ -86,11 +93,10 @@ max=3.9419
 ...
 </PRE>
 
-along with other useful statistics. For this range and number of 
-observations, we randomly select 0.1 as the histogram bin width.
-Then, the following command graphs a probability plot in the
-GRASS graphics window and saves it in the current working
-directory with a basename of <EM>myplot</EM>:
+along with other useful statistics. For this range and number of
+observations, we randomly select 0.1 as the histogram bin width. Then,
+the following command graphs a probability plot and saves it in the
+current working directory with a basename of <EM>myplot</EM>:
 
 <DL>
 <DD>
@@ -101,17 +107,17 @@ To view the graph again, try
 
 <DL>
 <DD>
-<B>g.gnuplot </B>myplot.gp
+<B>gnuplot </B>myplot.gp
 </DL>
 
-Using <EM>g.gnuplot</EM>, the graphs may be output as 
+Using <EM>gnuplot</EM>, the graphs may be output as 
 PostScript, LaTeX, FrameMaker MIF, or many other formats.
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="s.univar.html">s.univar</A></EM><br>
 <EM><A HREF="s.univar.html">s.normal</A></EM><br>
-<EM><A HREF="http://www.gnuplot.org">gnuplot_info</A></EM>
+<EM><A HREF="http://www.gnuplot.org">gnuplot</A></EM>
 
 <H2>BUGS</H2>
 Please send all bug fixes and comments to the author
@@ -126,5 +132,7 @@ or the grass development team. <br>
 <A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
 Engineering</A>
 <A HREF="http://www.purdue.edu/">Purdue University</A>
-</HTML>
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     struct Option *opt1, *opt2;
     struct Flag *flagq, *flagb ;
 
+    G_gisinit (argv[0]);
 
 	module = G_define_module();
 	module->description =
@@ -50,8 +51,6 @@ int main(int argc, char *argv[])
     flagq = G_define_flag() ;
     flagq->key         = 'q' ;
     flagq->description = "Quiet" ;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);
@@ -162,7 +161,7 @@ int main(int argc, char *argv[])
             *c4 = 1;
     }
 
-    G_put_map_row(of_fd, of_cell);
+    G_put_raster_row(of_fd, of_cell, CELL_TYPE);
 
     if (verbose) fprintf (stderr, "percent complete: ");
     for (row = 2; row < nrows; row++)
@@ -220,7 +219,7 @@ int main(int argc, char *argv[])
                 *c4 = 1;
         }
 
-        G_put_map_row(of_fd, of_cell);
+        G_put_raster_row(of_fd, of_cell, CELL_TYPE);
 
     }
     c2 = if_cell[1];
@@ -268,7 +267,7 @@ int main(int argc, char *argv[])
 
     if (verbose) G_percent (row, nrows, 10);
 
-    G_put_map_row(of_fd, of_cell);
+    G_put_raster_row(of_fd, of_cell, CELL_TYPE);
 
     G_close_cell (if_fd);
     G_close_cell (of_fd);

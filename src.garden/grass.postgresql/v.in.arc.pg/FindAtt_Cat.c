@@ -22,8 +22,6 @@ int FindAttAndCat (
 char txtbuf[512];
 char colbuf[512];
 char errmsg[200];
-int  done=0;
-int  RowCount=0;
 
 rewind(fp);
 if (fgets(colbuf,512,fp)==NULL) return(-1); /* skip first record */

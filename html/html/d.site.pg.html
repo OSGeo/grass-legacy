@@ -32,8 +32,8 @@ sites_list "map".
 <p><i>d.site.pg</i> displays select point location information returned
 from a database query. The site locations returned from the database query
 are displayed as icons in the active frame. The user controls the color,
-size and icon used in the graphic output. At the users option a site list
-of the database output is generated and placed in the current mapset/location.
+size and icon used in the graphic output. As option, a site list of the
+database output is generated and placed in the current mapset/location.
 <h2>
 COMMAND LINE OPTIONS</h2>
 
@@ -48,25 +48,16 @@ Parameters:</h3>
 Table containing X, Y coordinate values.</dd>
 
 <dt>
-<b></b></dt>
-
-<dt>
 <b>coordx=database_x_columnname</b></dt>
 
 <dd>
 Column containing x coordinate values.</dd>
 
 <dt>
-<b></b></dt>
-
-<dt>
 <b>coordy=database_y_columnname</b></dt>
 
 <dd>
 Column containing y coordinate values.</dd>
-
-<dt>
-<b></b></dt>
 
 <dt>
 <b>where=SQLwhereclause</b></dt>
@@ -82,15 +73,22 @@ where the value for depth is either 58 or 75 the following could be entered:
 <dd>
 <i>well.depth = 58 or well.depth = 75</i></dd>
 
-<p><br>To select all wells in an area where the value for well is between
-50 and 120:
+<br>&nbsp;
+<p>&nbsp;
+<p>To select all wells in an area where the value for well is between 50
+and 120:
 <dd>
 <i>well.depth > 50 and well.depth &lt; 120</i></dd>
 
-<p><br>To select all wells of depth greater than 75 where the value for
-owner is not equal to SMITH:
+<br>&nbsp;
+<p>&nbsp;
+<p>To select all wells of depth greater than 75 where the value for owner
+is not equal to SMITH:
 <dd>
 <i>well.depth > 75 and well.owner != 'SMITH'</i></dd>
+
+<dd>
+<i></i></dd>
 
 <br>If the database column used as the selection criteria is a character
 field then the associated value must be placed in quotes. To determine
@@ -105,15 +103,10 @@ of relational operators including and, or, etc. are supported.
 
 <dd>
 Name of sites list to output</dd>
-
-<br>&nbsp;
-<p>&nbsp;
-<p><b>cats=name</b>
+<b></b>
+<p><br><b>cats=name</b>
 <dd>
 Name of the category field to be assigned in the new site list</dd>
-
-<dt>
-<b></b></dt>
 
 <dt>
 <b>plot=color,icon,size</b></dt>
@@ -171,9 +164,6 @@ Parameters:</h3>
 Name of sites list to output</dd>
 
 <dt>
-<b></b></dt>
-
-<dt>
 <b>plot=color,icon,size</b></dt>
 
 <dd>
@@ -205,12 +195,12 @@ plot=white,diamond,9</i>
 9
 <p>2. <i>d.site.pg -s sql=izb3.sql map=huts_good</i>
 <p>izb3.sql is:
-<br><i>select xcoor,ycoor,owner from izb where how_good ~ 'good' and census_info.type=type
-and census_info.rec_id=num</i>
-<p><b>Result:</b> displays only 'good' huts (and from those only huts which
-have 'type' coinciding with that taken from a linked table census_info)
-and creates site map called huts_good with categories taken from the database
-field 'owner'</dl>
+<br><i>select xcoor,ycoor,owner from izb where how_good ~ 'good' and izb_info.name=name
+and izb_info.rec_id=num</i>
+<p><b>Result:</b> displays only 'good' huts (and only huts which have 'name'
+coinciding with that taken from a table <i>izb_info</i>, linked on the
+hut number) and creates site map called <i>huts_good</i> with categories
+taken from the database field 'owner'</dl>
 
 <h2>
 BUGS</h2>

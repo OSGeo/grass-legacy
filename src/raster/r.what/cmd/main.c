@@ -18,15 +18,15 @@ struct order {
     DCELL dvalue[NFILES];
 };
 
-static int by_row(struct order *, struct order *);
-static int by_point(struct order *, struct order *);
+static int by_row(const void *, const void *);
+static int by_point(const void *, const void *);
 
 static int tty;
 
 int main(int argc,char *argv[])
 {
   char *mapset;
-  int i;
+  int i, j;
   int nfiles;
   int withcats;
   int fd[NFILES];
@@ -42,7 +42,7 @@ int main(int argc,char *argv[])
   int line;
   char buffer[1024];
   char **ptr;
-  struct Option *opt1, *opt2, *opt3;
+  struct Option *opt1, *opt2, *opt3, *opt4;
   struct Flag *flag1, *flag2, *flag3;
   int Cache_size;
   int done = 0;
@@ -55,8 +55,15 @@ int main(int argc,char *argv[])
   int pass = 0;
   int debug;
   char tmp_buf[500], *null_str;
+  struct GModule *module;
+  
 
-  tty = isatty (0);
+  G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Queries raster map layers on their category values and category labels.";
 
   opt1 = G_define_option() ;
   opt1->key        = "input" ;
@@ -81,6 +88,14 @@ int main(int argc,char *argv[])
   opt3->answer     = "*";
   opt3->description= "Char string to represent no data cell" ;
 
+  opt4 = G_define_option() ;
+  opt4->key        = "east_north";
+  opt4->type       = TYPE_DOUBLE;
+  opt4->key_desc   = "east,north";
+  opt4->required   = NO;
+  opt4->multiple   = YES;
+  opt4->description= "Coordinates for query";
+
   flag1 = G_define_flag() ;
   flag1->key         = 'f' ;
   flag1->description = "Show the category label in the grid cell(s)" ;
@@ -93,16 +108,15 @@ int main(int argc,char *argv[])
   flag3->key = 'i';
   flag3->description = "Output integer category values, not cell values";
 
-  G_gisinit (argv[0]);
+  if (G_parser(argc, argv))
+      exit(-1);
+
+  tty = isatty (0);
 
   projection = G_projection();
 
   withcats = 0;
   nfiles = 0;
-
-  if (G_parser(argc, argv))
-      exit(-1);
-
 
   if (tty)
       Cache_size = 1;
@@ -159,9 +173,10 @@ int main(int argc,char *argv[])
   G_get_window (&window);
 
   line = 0;
-  if (tty)
+  if (!opt4->answers && tty)
       fprintf (stderr, "enter points, \"end\" to quit\n");
 
+  j = 0;
   done = 0;
   while (!done)
   {
@@ -170,7 +185,7 @@ int main(int argc,char *argv[])
 	fprintf (stderr, "Pass %3d  Line %6d   - ", pass, line);
 
     cache_hit = cache_miss = 0;
-    if (tty)
+    if (!opt4->answers && tty)
     {
       fprintf (stderr, "\neast north [label] >  ");
       Cache_size = 1;
@@ -179,18 +194,26 @@ int main(int argc,char *argv[])
       point_cnt = 0;
       for (i = 0 ; i < Cache_size ; i++)
       {
-	if (fgets(buffer,1000,stdin) == NULL)
+	if (!opt4->answers && fgets(buffer,1000,stdin) == NULL)
 	  done = 1;
 	else
 	{
 	  line++;
-	  if (strncmp (buffer, "end\n",  4) == 0 ||
-	      strncmp (buffer, "exit\n", 5) == 0)
+	  if ((!opt4->answers &&
+	      (strncmp (buffer, "end\n",  4) == 0 ||
+	       strncmp (buffer, "exit\n", 5) == 0)) ||
+	      (opt4->answers && !opt4->answers[j]))
 	    done = 1;
 	  else
 	  {
 	    *(cache[point_cnt].lab_buf) = *(cache[point_cnt].east_buf) = *(cache[point_cnt].north_buf) = 0;
-	    sscanf (buffer, "%s %s %[^\n]", cache[point_cnt].east_buf, cache[point_cnt].north_buf, cache[point_cnt].lab_buf);
+	    if(!opt4->answers)
+	        sscanf (buffer, "%s %s %[^\n]", cache[point_cnt].east_buf, cache[point_cnt].north_buf, cache[point_cnt].lab_buf);
+	    else
+	    {
+		strcpy(cache[point_cnt].east_buf, opt4->answers[j++]);
+		strcpy(cache[point_cnt].north_buf, opt4->answers[j++]);
+	    }
 	    if (*(cache[point_cnt].east_buf) == 0)
 	      continue;        /* skip blank lines */
 
@@ -368,14 +391,16 @@ oops (int line, char *buf, char *msg)
 
 
 /* for qsort,  order list by row */
-static int by_row (struct order *i, struct order *j)
+static int by_row (const void *ii, const void *jj)
 {
+  const struct order *i = ii, *j = jj;
   return i->row - j->row;
 }
 
 
 /* for qsort,  order list by point */
-static int by_point (struct order *i, struct order *j)
+static int by_point (const void *ii, const void *jj)
 {
+  const struct order *i = ii, *j = jj;
   return i->point - j->point;
 }

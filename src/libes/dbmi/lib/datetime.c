@@ -3,7 +3,7 @@
 static char ds = '-';
 static char ts = ':';
 
-db_convert_value_datetime_into_string (value, sqltype, string)
+int db_convert_value_datetime_into_string (value, sqltype, string)
     dbValue *value;
     int sqltype;
     dbString *string;
@@ -173,7 +173,7 @@ db_convert_value_datetime_into_string (value, sqltype, string)
  *  otherwise the to and from markings in sqltype are used.
  *  where "*" represents any non-whitespace character
  */
-db_convert_Cstring_to_value_datetime (buf, sqltype, value)
+int db_convert_Cstring_to_value_datetime (buf, sqltype, value)
     char *buf;
     int sqltype;
     dbValue *value;

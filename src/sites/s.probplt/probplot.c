@@ -40,6 +40,7 @@
 int nsites;
 char *plot_file, *data_file;
 struct Cell_head window;
+const char *plot_program;
 
 int main ( int argc, char **argv)
 {
@@ -108,9 +109,7 @@ int main ( int argc, char **argv)
   if (G_parser (argc, argv))
     exit (1);
 
-  /* need graphics. program will exit here if driver is not available */
-  R_open_driver ();
-  R_close_driver ();
+  plot_program = getenv("GRASS_GNUPLOT");
 
   all = flag.all->answer;
   if (!all)

@@ -57,7 +57,7 @@ int D_draw_d_raster(
 
 int D_draw_f_raster(
     int A_row,
-    DCELL *farray,
+    FCELL *farray,
     struct Colors *colors)
 {
     return draw_cell(A_row, (void *) farray, colors, FCELL_TYPE);
@@ -65,7 +65,7 @@ int D_draw_f_raster(
 
 int D_draw_c_raster(
     int A_row,
-    DCELL *carray,
+    CELL *carray,
     struct Colors *colors)
 {
     return draw_cell(A_row, (void *) carray, colors, CELL_TYPE);
@@ -169,14 +169,9 @@ static int draw_cell(
 	/* color with the color for first raster value */
 	D_color_of_type(raster, colors, data_type);
 	draw = !D__overlay_mode || !G_is_null_value(raster, data_type);
-        while(repeat--)
-        {
-            R_move_abs(D_x_beg, D_row++) ;
-            if (draw)
-                R_cont_rel(D_x_end-D_x_beg-1, 0) ;
-            else
-                R_move_rel(D_x_end-D_x_beg-1, 0) ;
-        }
+	R_move_abs(D_x_beg, D_row) ;
+	if (draw)
+	    R_box_rel(D_x_end-D_x_beg, repeat);
     }
 
 /* If picture is done, return -1 */

@@ -7,8 +7,8 @@ into GRASS GIS under GNU GPL license.
 
 
 Please contact us if you can help!
- neteler@geog.uni-hannover.de or, better:
- http://www.geog.uni-hannover.de/grass/grassdevel.html
+ neteler@itc.it or, better:
+ http://grass.itc.it/grassdevel.html
 
 
 Image processing:
@@ -41,4 +41,4 @@ JAVA:
 GRASS Development Team
 
 Markus Neteler
-neteler@geog.uni-hannover.de
+neteler@itc.it

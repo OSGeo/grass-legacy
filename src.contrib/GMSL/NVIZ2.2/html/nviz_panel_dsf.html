@@ -1,0 +1,62 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<H3>NVIZ - Mkdspf Panel</H3>
+</A> <P>
+
+The <A HREF="#MkdspfP">Mkdspf</A> panel provides facilities for
+creating display files (dspf) of isosurfaces from volume data (grid3
+files).  <p>
+
+<H3>
+<IMG SRC="nvimg/panel/mkdspf.gif"> <A NAME="MkdspfP">Mkdspf Panel</A>
+</H3> <P>
+
+<strong>Input File:</em></strong> Enter name of grid3 file from which
+to create isosurfaces.  <p>
+
+<strong>Output File:</em></strong> Name of display file
+produced. Should have .dspf extension.  <p>
+
+<strong>Color File:</em></strong> Another grid3 file from which to
+find color values for isosurfaces.  <p>
+
+<strong>Lighting Model:</em></strong> Choose one of <em>flat
+</em></strong> or <em>gradient </em></strong>. Flat shading is
+somewhat faster in computation and display, but gradient allows
+gouraud shading for isosurfaces with nicer display results.  <p>
+
+<strong>Threshold type:</em></strong> Current must be one of
+<em>Complete, Range, or Individual</em></strong>. Click on name of
+current selection to pop up list from which new threshold type can be
+selected. Panel changes depending on Threshold type selected.  <p>
+
+<strong>Individual:</em></strong>Type in individual threshold
+values. List of selected values will appear in <strong> Iso Levels
+</em></strong> box. Use <strong>add </em></strong>and <strong>delete
+</em></strong>buttons to add or delete current value from list.  <p>
+
+<strong>Complete:</em></strong> Type in <strong>Interval Size
+</em></strong>.  Isosurfaces will be computed at Interval-size steps
+from minimum to maximum data values.  <p>
+
+<strong>Range:</em></strong> Type in values for
+<strong>Min</em></strong>, <strong>Max</em></strong> and <strong>Num
+Levels</em></strong> and select one of the <strong>Interpolation
+</em></strong> toggles: <em>linear</em></strong>
+<em>logarithmic</em></strong> <em>Quadratic</em></strong>
+<em>Arbitrary</em></strong>. The number of levels specified will be
+computed within the range Min to Max, with interval computed according
+to Interpolation method chosen.  <p>
+
+</BODY>
+</HTML>

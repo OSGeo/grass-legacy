@@ -9,7 +9,7 @@ $(ETC)/$(PGM): main.o y.tab.o
 	rm *.o
 
 y.tab.c: pol.y lex.yy.c
-	$(YACC) -v pol.y
+	$(YACC) pol.y
 
 lex.yy.c: pol.l
 	$(LEX) pol.l

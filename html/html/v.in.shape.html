@@ -32,7 +32,7 @@ input=</b><EM>name</EM>
 [<b>snapdist=</b><EM>snap distance</EM>]
 [<b>sliver=</b><EM>min. angle</EM>] 
 [<b>scale=</b><EM>orig. scale</EM>] 
-[<b>attribute=</b><EM>attribute category</EM>]
+[<b>attribute=</b><EM>category number</EM>]
 [<b>label=</b><EM>category label</EM>]
 [<b>select=</b><EM>field to use</EM>]
 [<b>maxshapes=</b><EM>maximum number</EM>]
@@ -186,7 +186,9 @@ the first `value' shapes. The shapes counted include those filtered out by the
 
 <h2>BUGS AND CAVEAT</h2>
 
-There is no support for projection.
+There is no support for projection since the projection information is not
+stored in SHAPE files.
+
 <BR><BR>
 Multipatch data is not yet supported. Point data (sites)
 also is not handled by this module. New module <EM>s.in.shape</EM> imports
@@ -200,7 +202,18 @@ to 4000 polygons are typically imported easily.
 <BR><BR>
 Area and perimeter fields in input data may no longer
 be quite correct if the lines have been adjusted to correct topology problems.
-<br><BR>
+
+<h2>EXAMPLE</h2>
+
+Example: <br>
+<tt>v.in.shape in=map.shp out=map attribute=OBJART label=ALIASFOLIE scale=25000</tt>
+<br>
+This command imports the shape file "map" into GRASS at scale of 1:25000
+(since the scale is not stored in the shape file). "attribute" is the field
+name containing the record ID (if not set, internal numbering will be done).
+"label" is the field containing the associated text labels. Use the "-l"
+flag to get the list of fields from the "map.dbf" file.
+
 
 <h2>SEE ALSO</h2>
 
@@ -230,5 +243,6 @@ David Gray
 <br>preprocessing to provide correct handling of polygon
 edges, labels and correction of some topological errors. Also some new
 options q.v.<BR>
+<p><i>Last changed: $Date$</i>
 </body>
 </html>

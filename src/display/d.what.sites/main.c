@@ -13,28 +13,42 @@ int main(int argc, char **argv)
 	struct Flag *shh, *once, *terse;
 	struct GModule *module;
 
+	/* Initialize **site */
+	site = NULL;
+	
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
-	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
 
-	if(D_get_site_list (&site, &nsites) < 0)
-		site = NULL;
-	else
+	/* Don't fail initially if driver open fails, and don't let call kill
+	 * us -- set quiet mode
+	 */
+	R__open_quiet();
+	if (R_open_driver() == 0)
 	{
-		site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
-		site[nsites] = NULL;
+		if(D_get_site_list (&site, &nsites) < 0)
+			site = NULL;
+		else
+		{
+			site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+			site[nsites] = NULL;
+		}
+		R_close_driver();
 	}
-
-	R_close_driver();
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->multiple   = YES ;
 	if (site)
+	{
 		opt1->answers = site;
-	opt1->required   = NO ;
+		opt1->required   = NO ;
+	}
+	else
+	{
+		opt1->required = YES;
+	}
+
 	opt1->gisprompt  = "old,site_lists,sites" ;
 	opt1->description= "Name of existing sites file"; 
 
@@ -53,9 +67,6 @@ int main(int argc, char **argv)
 	module = G_define_module();
 	module->description = 
 	  "Allows the user to interactively query site list descriptions. ";
-
-	if(!site)
-		opt1->required = YES;
 
 	if ((argc > 1 || !site) && G_parser(argc, argv))
 	    exit(-1);

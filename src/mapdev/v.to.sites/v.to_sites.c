@@ -8,12 +8,15 @@
 **
 **  US Army Construction Engineering Research Lab
 **
+**
 */
 #include    <stdio.h>
+#include    <stdlib.h>
 #include    "gis.h"
 #include    "site.h"
 #include    "Vect.h"
 #include    <math.h>
+#include    <string.h>
 
 #define MAIN
 #define  USAGE  "v.to.sites [-a][-c][-i][-d] input=dig file input output=site file output [dmax=value]\n"
@@ -29,6 +32,8 @@ int debugf(char *, int, int, int, int, int, int, int, int, int, int, int, int);
 int export(char *, char *, char *, struct Categories *, int, int);
 int doit(struct Map_info *, FILE *, struct Categories *, int, int);
 int bin_to_asc(struct Map_info *, FILE *, struct Categories *, double, int, int);
+void exportLabelToSite(FILE*, struct Categories*, FILE*);
+void copyHeader(char *, char *, FILE *);
 
 int main (int argc, char **argv)
 {
@@ -38,12 +43,12 @@ int main (int argc, char **argv)
   struct Map_info Map;
   struct Categories cats;
   double dist;
-  FILE *out;
+  FILE *out, *f_att;
 
   struct Cell_head cellhd;
   struct GModule *module;
   struct Option *old, *new, *dmax;
-  struct Flag *cat, *Cat, *all, *interp, *dubl;
+  struct Flag *lab, *cat, *Cat, *all, *interp, *dubl;
 
   G_gisinit (argv[0]);
 
@@ -83,6 +88,10 @@ int main (int argc, char **argv)
   all->key = 'a';
   all->description = "Output all verticies to site file";
 
+  lab = G_define_flag ();
+  lab->key = 'l';
+  lab->description = "Output area's label points (other flags will be ignored)";
+
   cat = G_define_flag ();
   cat->key = 'c';
   cat->description = "Use Category NUMERIC data instead of attribute";
@@ -93,7 +102,7 @@ int main (int argc, char **argv)
 
   interp = G_define_flag ();
   interp->key = 'i';
-  interp->description = "Interpolate points along lies (for -a only)";
+  interp->description = "Interpolate points along lines (for -a only)";
 
   dubl = G_define_flag ();
   dubl->key = 'd';
@@ -105,8 +114,6 @@ int main (int argc, char **argv)
   dmax->required = NO;
   dmax->answer = dmaxchar;
   dmax->description = "Maximum distance between points (for -a -i only) ";
-
-
 
   if (G_parser (argc, argv))
     exit (-1);
@@ -148,22 +155,45 @@ int main (int argc, char **argv)
     }
   }
 
-  if (all->answer)
+  if (lab->answer)
   {
-    if ((Vect_open_old (&Map, old->answer, mapset)) < 2)
-    {
-      sprintf (errmsg, "Could not open vector file <%s> (run v.support to build topology)\n", dig_name);
+    f_att = G_fopen_old ("dig_att", old->answer, mapset);
+    if(f_att == NULL) {
+      sprintf (errmsg, "Can't open attribute file for read: %s\n", old->answer);
       G_fatal_error (errmsg);
     }
-    out = G_fopen_sites_new (site_name);
-    bin_to_asc (&Map, out, (cat->answer || Cat->answer) ? &cats : NULL, 
-	    interp->answer ? dist : 0., (cat->answer != '\0'), dubl->answer);
-    Vect_close (&Map);
+
+    out = G_sites_open_new (site_name);
+    if(out == NULL)
+    {
+      sprintf (errmsg, "Could not create site file %s\n", site_name);
+      G_fatal_error (errmsg);
+    }
+
+    copyHeader(dig_name, site_name, out);
+    exportLabelToSite(f_att, &cats, out);
   }
   else
   {
-    export (dig_name, mapset, site_name, (cat->answer || Cat->answer) ? &cats : NULL, (cat->answer != '\0'), dubl->answer);
+
+    if (all->answer)
+    {
+      if ((Vect_open_old (&Map, old->answer, mapset)) < 2)
+      {
+        sprintf (errmsg, "Could not open vector file <%s> (run v.support to build topology)\n", dig_name);
+        G_fatal_error (errmsg);
+      }
+      out = G_fopen_sites_new (site_name);
+      bin_to_asc (&Map, out, (cat->answer || Cat->answer) ? &cats : NULL,
+  	    interp->answer ? dist : 0., (cat->answer != '\0'), dubl->answer);
+      Vect_close (&Map);
+    }
+    else
+    {
+      export (dig_name, mapset, site_name, (cat->answer || Cat->answer) ? &cats : NULL, (cat->answer != '\0'), dubl->answer);
+    }
   }
+
   exit (0);
 }
 
@@ -358,7 +388,8 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
   int prev = 0;
   int isnode = 0;
   Site *site;
-
+  int sitesnum = 0;
+  
   site = G_site_new_struct (CELL_TYPE,2, 1, 1);	/* init site struct */
   Points = Vect_new_line_struct ();	/* init line_pnts struct */
   Vect_set_constraint_type (Map, LINE | DOT);
@@ -423,6 +454,7 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
 	    site->east = *xptr++;
 	    site->north = *yptr++;
 	    G_site_put (ascii, site);
+	    sitesnum++;
 	    /*  use same
        	    site->cattype=-1;
             site->dbl_att[0] = 0;
@@ -452,6 +484,7 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
 		site->north = yt;
                 /* site->cattype=CELL_TYPE; */
 		G_site_put (ascii, site);
+	 	sitesnum++;
 		/*  use same
 	        site->cattype = -1;
                 site->dbl_att[0] = 0;
@@ -474,6 +507,7 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
 	      site->north = *yptr++;
               /* site->cattype=CELL_TYPE; */
 	      G_site_put (ascii, site);
+	      sitesnum++;
 	      /*  use same
 	      site->cattype = -1;
               site->dbl_att[0] = 0;
@@ -490,7 +524,7 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
     }
   }
 
-  fprintf (stderr, "\nNumber of nodes = %d\n", Map->n_nodes);
+  fprintf (stderr, "\nNumber of vector nodes = %d\n", Map->n_nodes);
   for (k = 1; k <= Map->n_nodes; k++)
   {
     x = Map->Node[k].x;
@@ -533,6 +567,7 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
       site->east = x;
       site->north = y;
       G_site_put (ascii, site);
+      sitesnum++;
       site->cattype = -1;
       site->dbl_att[0] = 0;
       site->dbl_alloc = 1;
@@ -541,5 +576,54 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
   }
 
   fclose (ascii);
+  fprintf (stderr, "\nNumber of sites generated = %i\n", sitesnum);
   return (0);
+}
+
+
+#define BUFSIZ 512
+void exportLabelToSite(FILE* f_att, struct Categories *cats, FILE* out)
+{
+	char type;
+	double x, y;
+	int cat, numMatch;
+	Site *s;
+	char buffer[BUFSIZ];
+	char *ret;
+
+	s = G_site_new_struct(CELL_TYPE, 2, 1, 0);
+	for(;;)	/* skip heading. */
+	{
+		ret = fgets(buffer, BUFSIZ, f_att);
+		if(ret == NULL) return;
+		if(buffer[0] == 'A') break;
+	}
+
+	for(;;) /* read the file */
+   {
+		numMatch = sscanf(buffer, "%c %lf %lf %d", &type, &x, &y, &cat);
+		 /* ensure the line contains all necessary items */
+		if(type == 'A' && (numMatch == 4))
+		{
+			s->east = x;
+			s->north = y;
+			s->ccat = cat;
+			s->str_att[0] = G_get_cat(cat, cats);
+			G_site_put(out, s);
+		}
+		ret = fgets(buffer, BUFSIZ, f_att);
+		if(ret == NULL) break;
+   }
+	G_site_free_struct(s);
+}
+
+void copyHeader(char *vector, char *site, FILE *fsite)
+{
+	Site_head sh;
+
+    sh.name = G_malloc(128 * sizeof(char));
+	strcpy(sh.name, site);
+	sh.desc = G_malloc(128 * sizeof(char));
+	sprintf(sh.desc, "Sites generated from %s label points.", vector);
+	G_site_put_head(fsite, &sh);
 }

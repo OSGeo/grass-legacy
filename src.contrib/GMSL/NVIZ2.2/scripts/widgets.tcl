@@ -54,8 +54,8 @@ proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 
     set y2 [expr $y + 5]
     if {[string compare $type puck] == 0} {
     #Draw North Arrow
-        $C create text [expr $width - 2] [expr $height/2] -text W -fill black
-	$C create text 3 [expr $height/2] -text E -fill black -anchor w
+        $C create text [expr $width - 2] [expr $height/2] -text E -fill black
+	$C create text 3 [expr $height/2] -text W -fill black -anchor w
 	$C create text [expr $width/2] 2 -text N -fill black -anchor n
 	$C create text [expr $width/2] $height -text S -fill black -anchor s
 	$C create line $x $y [expr $width/2] [expr $height/2] -tags line \
@@ -127,21 +127,26 @@ proc Nv_scaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 }
 
 proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
+#Scale
     if {$who == "s"} {
 	set num [llength [split [expr int($val * 1)] ""]]
 	if {$num == 1} {
+        if {$val < 0.05} {
+#less than 0.05
+        set num [expr int($num + 2)]
+        set val [format %.5f $val]
+        } else {
+#less than 10
         set num [expr int($num + 4)]
         set val [format %.3f $val]
-	if {$val < 0.05} {
-	set num [expr int($num + 1)]
-	set val [format %.4f $val]
-	}
-        } else {
+        }} else {
+#greater than 10
         set num [expr int($num + 3)]
         set val [format %.2f $val]
         }
 	$S.scale configure -digits $num
 	Nv_setEntry $S.f.entry $val
+#Entry
     } elseif {$who == "e"} {
 	set min [lindex [$S.scale configure -to] 4]
 	set max [lindex [$S.scale configure -from] 4]
@@ -151,7 +156,7 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	if {$num == 1} {
         set num [expr int($num + 4)]
 	if {$val < 0.05} {
-        set num [expr int($num + 1)]
+        set num [expr int($num + 2)]
         }
         } else {
         set num [expr int($num + 3)]
@@ -182,8 +187,8 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
         set num [expr int($num + 4)]
         set val [format %.3f $val]
 	if {$val < 0.05} {
-        set num [expr int($num + 1)]
-        set val [format %.4f $val]
+        set num [expr int($num + 2)]
+        set val [format %.5f $val]
         }
         } else {
         set num [expr int($num + 3)]
@@ -207,7 +212,6 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	Nv_changeScale  $S.scale $val
 	Nv_setEntry $S.f.entry $val
     }
-    
     $cmd $val
     
 }
@@ -274,11 +278,12 @@ set num [llength [split [expr int($curr * 1)] ""]]
 if {$num == 1} {
 set num [expr int($num + 4)]
 if {$curr < 0.05} {
-set num [expr int($num + 1)]
+set num [expr int($num + 2)]
 }
 } else {
 set num [expr int($num + 3)]
 }    
+
     scale $S.scale -from $from -length 140 -showvalue 0 -orient $orient \
 	-digits $num -resolution [expr -1.0 * (($to - $from)/140.0)] \
 	-tickinterval 0 -to $to -width 13 \
@@ -300,7 +305,7 @@ if {[Nauto_draw] == 1} {Ndraw_all} }
 
 bind $S.f.entry <Return> "+ Nv_floatscaleCallback $S e 0 $cmd"
 bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
-    
+
     Nv_floatscaleCallback $S b 0 $cmd $curr
     
     return $S

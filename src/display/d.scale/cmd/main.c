@@ -22,8 +22,7 @@
 #define MAIN
 #include "options.h"
 
-int draw_scale(int);
-int screenscale(void);
+extern int draw_scale(int);
 
 int main (int argc, char **argv)
 {
@@ -32,7 +31,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse, *screenscale;
+	struct Flag *mouse;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
@@ -73,10 +72,6 @@ int main (int argc, char **argv)
 	mouse->key        = 'm';
 	mouse->description= "Use mouse to interactively place scale" ;
 
-	screenscale = G_define_flag() ;
-	screenscale->key        = 'i';
-	screenscale->description= "Display map scale in GRASS monitor and exit" ;
-
 	coord_inp = 0;
 
 	if (G_parser(argc, argv) < 0)
@@ -98,15 +93,6 @@ int main (int argc, char **argv)
 
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
-	else
-	{
-	  if (screenscale->answer)  /* display map scale, added MN */
-	  {
-	  	screeninfo();
-  	        R_close_driver();
-	  	exit(0);
-	  }
-	}
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

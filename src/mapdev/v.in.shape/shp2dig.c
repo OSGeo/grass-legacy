@@ -22,6 +22,7 @@
  ******************************************************************************/
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <string.h>
 #include <assert.h>
@@ -83,7 +84,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   DBFFieldType ftype;
   char fname[12];
   int fsize, fdec;
-
 
   /* For hd1 */
   DBFFieldType type_f;

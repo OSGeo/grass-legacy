@@ -1,6 +1,7 @@
 <html>
-<A NAME="r.recode">
+<head>
 <TITLE>r.recode</TITLE>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 
 <img src="grass.smlogo.gif">
@@ -12,7 +13,7 @@
 <EM>(GRASS Raster Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>r.recode</B> [<B>-a</B>] <B>input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>title</B><EM>=name</EM>]
+<B>r.recode</B> [<B>-ad</B>] <B>input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>title</B><EM>=name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -33,6 +34,8 @@ hold recoded map, and (optionally) the name of a title for the output map.
 <DL>
 <DT><B>-a</B>
 <DD>Align the current region to the input map
+<DT><B>-d</B>
+<DD>Force output to double map type (DCELL)
 </DL>
 
 <H3>Parameters:</H3>
@@ -58,6 +61,8 @@ Enter a rule in one of these formats:
 <em>r.recode</em> is loosely based on r.reclass and uses the GRASS reclass
 library to convert the rasters. It has routines for converting to every
 possible combination of raster (eg. int to double, double to float, etc).
+Standard floating point raster precision is float, with <em>-d</em> double
+precision will be written.<br>
 There are four basic routines that it accepts:
 
 <ol>
@@ -109,5 +114,6 @@ formatting is as described above. In following example the values 1, 2 and
 <H2>AUTHOR</H2>
 CERL
 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

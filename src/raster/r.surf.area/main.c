@@ -56,8 +56,9 @@
  * 2000-10-17
  */
 
+#include <stdlib.h>
+#include <math.h>
 #include "gis.h"
-#include "math.h"
 
 #define X 0
 #define Y 1
@@ -83,7 +84,7 @@ main(argc, argv)
     struct Cell_head	w;
     int			cellfile = -1;
     double 		minarea, maxarea, sz, nullarea;
-
+    
     G_gisinit (argv[0]);
 
     module = G_define_module();

@@ -16,12 +16,12 @@ proc SetScriptFile {} {
 
 # Allow the user to add a single line to the current script file
 proc AddScriptLine {} {
-    global ScriptPlaying src_boot
+    global ScriptPlaying src_boot env
 
     if $ScriptPlaying return
 
     # Create a simple entry popup
-    set line [exec NVWISH2.2 -f script_get_line -q]
+    set line [exec NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
     if {"$line" == "-1"} return
     Nv_script_add_string "$line"
 }
@@ -30,12 +30,12 @@ proc AddScriptLine {} {
 # The difference between this routine and the previous is that the
 # command entered here is sent to the nviz process and executed there
 proc AddScriptCmd {} {
-    global ScriptPlaying src_boot
+    global ScriptPlaying src_boot env
 
     if $ScriptPlaying return
 
     # Create a simple entry popup
-    set line [exec NVWISH2.2 -f script_get_line -q]
+    set line [exec NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
     if {"$line" == "-1"} return
     Nv_script_add_string "catch \{send \$ProcessName \{$line\}\}"
 }

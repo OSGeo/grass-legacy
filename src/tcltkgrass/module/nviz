@@ -1,5 +1,5 @@
 interface_build {
-    {nviz2.2} 1
+    {nviz} 1
     {Visualization tool.}
     {entry el {Name of existing raster map:} 0 raster}
     {entry ve {Name of existing vector map:} 0 vector}

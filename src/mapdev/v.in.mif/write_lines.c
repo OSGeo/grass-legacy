@@ -410,9 +410,11 @@ int line_data_write(site_array *s0, line_array *l0, line_array *a0, ring_offsets
   if(tmp_rings) free(tmp_rings);
 
 
-  /* Remove duplicate line tracks */
+  /* Remove duplicate line tracks 
+     (not working yet)
+  */
 
-  strip_duplicate_tracks(hVB);
+  /* strip_duplicate_tracks(hVB); */
 
 
   /* Extract the lines to the vector map */
@@ -868,6 +870,8 @@ int strip_duplicate_tracks( BTREE *btr ) {
   int i, j;   /* loop */
   int pass_num = 0;
   double tol;
+  int res;
+  int ntracks, del_failed;
 
   char *key0;
   void *data0;
@@ -891,6 +895,9 @@ int strip_duplicate_tracks( BTREE *btr ) {
 
     btree_rewind(btr);
     passing = 0;
+
+    ntracks = 0;
+    del_failed = 0;
   
     while(btree_next(btr, &key0, &data0)) {
 
@@ -932,7 +939,17 @@ int strip_duplicate_tracks( BTREE *btr ) {
 	    */
 
 	    if( pt1 == pt2 ) {
-	      delete_track(pc, pt1, j);
+	      res = delete_track(pc, pt1, j);
+
+	      ntracks++;
+
+	      if(res < 0) {
+		return -1;
+	      }
+
+	      else if(res > 0) {
+		del_failed++;
+	      }
 	    }
 
 	    /* If the track deviates at a certain point we have a snap-back line. 
@@ -958,9 +975,15 @@ int strip_duplicate_tracks( BTREE *btr ) {
 	}
       }
     }
+
+    if(ntracks == del_failed) {
+      passing = 0;
+    }
   }
 
   fprintf(stderr, "\nFinished cleaning.\n");
+
+  return 0;
 }
 
 

@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.19 2001-04-10 06:56:52 markus Exp $
+$Id: SUBMITTING,v 1.20 2002-01-22 04:50:47 glynn Exp $
 
 NOTE: Please improve this list!
 
@@ -8,7 +8,7 @@ When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
 1.  Get the latest GRASS 5 Programmer's Manual here:
-    http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
+    http://grass.itc.it/grassdevel.html#prog
 
     or (better) grab it from GRASS CVS server (Latex):
     	cvs -z3 co progmangrass50
@@ -103,7 +103,17 @@ care of following rules:
 	return(0);
     }
     
-7.  Use fprintf instead of printf
+7.  Use fprintf instead of printf.
+    
+    For errors and warnings please use the G_fatal_error() function and
+    G_warning() function. For other output, please use fprintf() and specify
+    the stdout stream as follows:
+
+      fprintf(stdout, ...);
+      fflush(stdout);
+
+    fflush(stdout) always required when using fprintf(stdout, ...).
+
 
 8.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
@@ -237,13 +247,18 @@ care of following rules:
 19. For consistency, use README rather than README.txt for any README files.
 
 20. Tell the other developers about the new code using the following e-mail:
-    grass5@geog.uni-hannover.de
+    grass5@grass.itc.it
  
     To subscribe to this mailing list, see
-    http://www.geog.uni-hannover.de/grass/grassdevel.html
+    http://grass.itc.it/grassdevel.html
 
 21. In case of questions feel free to contact the developers at the above
     mailing list.
 
+22. (GRASS) Environment variables:
+    If you add a new variable, please follow the naming convention.
+    All variables are described in
+    html/env_vars.html
+     
 ...
 [please add further hints]

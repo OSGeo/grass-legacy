@@ -1,4 +1,4 @@
-PGM=d.leg.thin
+PGM=d.legend
 OFILES = \
 	box.o\
 	main.o

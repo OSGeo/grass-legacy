@@ -1,10 +1,10 @@
-<TITLE>d.legend</TITLE>
-
-<body bgcolor="white">
-
+<html>
+<head>
+<title>d.legend</title>              
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 <img src="grass.smlogo.gif">
-
-<hr width=100% align=center size=6 noshade>
+<hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
 
@@ -14,15 +14,12 @@ active frame on the graphics monitor.
 <EM>(GRASS Display Program)</EM>
 
 <H2>SYNOPSIS</H2>
-
 <B>d.legend</B> 
 <BR>
 <B>d.legend help</B> 
 <BR>
-<B>d.legend [<B>-n</B>] map=</B><EM>name</EM> 
-[<B>color=</B><EM>name</EM>] 
-[<B>lines=</B><EM>value</EM>] 
-[<B>show=</B><EM>name</EM>]
+<B>d.legend</B> [<B>-vcsm</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+[<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>] 
 
 <H2>DESCRIPTION</H2>
 
@@ -53,90 +50,81 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 
 <P>
 
-<H3>Flag:</H3>
-   
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+
 <DL>
-<DT><B>-n</B>
-<DD>Do not display no data (NULL) values in legend.
+<DT><B>-v</B>
+<DD>Do not show category labels
+<DT><B>-c</B>
+<DD>Do not show category numbers
+<DT><B>-s</B>
+<DD>Draw smooth gradient (for floating point rasters forced automatically)
+<DT><B>-m</B>
+<DD>Use mouse to size &amp; place legend
 </DL>
-
-
+<P>
 <H3>Parameters:</H3>
+<DT><B>map</B>
+<DD>Name of raster map.
+<DT><B>color</B>
+<DD>Sets the legend's text color.
+<BR>
+<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
+<BR>
+<DD>Default: white
 
-<DL>
-<DT><B>map=</B><EM>name</EM>
-<DD>Name of a raster map layer whose legend is to be displayed in the active 
-display frame. 
-<DT><B>color=</B><EM>name</EM>
-<DD>Sets the legend text color to the <EM>name</EM> stated. 
+<DT><B>lines</B>
+<DD>Number of text lines (useful for truncating long legends)
 <BR>
-Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown, 
-gray, white, and black. 
+<DD>Options: 0-1000
 <BR>
-Default: <EM>white</EM> 
-<DT><B>lines=</B><EM>value</EM>
-<DD>Number of lines to appear in the map legend. 
+<DD>Default: 0
+
+<DT><B>thin</B>
+<DD>Thinning factor (thin=10 gives cats 0,10,20...)
 <BR>
-The number of lines refers to the maximum number of lines
-of type that can be displayed given the height of the
-active display frame. If unspecified by the user, the
-program will divide the display frame into the number of
-lines required to display all of the category labels and
-colors associated with the named <EM>map</EM>.  To decrease
-the size of the displayed text, increase the number of
-lines.
+<DD>Options: 0-1000
 <BR>
-Options: 1 - 1000 
+<DD>Default: 1
+
+<DT><B>labelnum</B>
+<DD>Number of labels for legend description
 <BR>
-Default: Set <EM>lines</EM> value equal to the number of
-<EM>map</EM> categories
-<DT><B>show=</B><EM>name</EM>
-<DD> Show either values or categories. Or both
-<BR>      options: val,cat
-<BR>      default: val,cat
+<DD>Options: 2-100
+<BR>
+<DD>Default: 5
+
 </DL>
 
-<H2>NOTES</H2>
+<H2>NOTE</H2>
 
-The legend text size is based on the number of <EM>lines</EM> requested 
-(or, by default, on the number of lines needed to display the legend). 
+Note that when using the mouse to size &amp; place the legend, if you
+make a horizontal box the values run from left to right and no category
+values are printed (you may want to use <EM>d.label</EM> for that). 
 If the user attempts to display a very long legend in a relatively short 
 display frame, the legend may appear in unreadably small text. 
 
 <H2>SEE ALSO</H2>
 
-<table width=550>
-<tr>
-	<td><em><a href="d.colormode.html">d.colormode</a></em></td>
-	<td><em><a href="d.colors.html">d.colors</a></em></td>
-	<td><em><a href="d.colortable.html">d.colortable</a></em></td>
-	<td><em><a href="d.display.html">d.display</a></em></td>
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
+<EM><A HREF="d.colors.html">d.colors</A></EM><br>
+<EM><A HREF="d.colortable.html">d.colortable</A></EM><BR>
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.grid.html">d.grid</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM>
+<BR>
+<EM><A HREF="parser.html">parser</A></EM>
 
-</tr>
-<tr>
-	<td><em><a href="d.erase.html">d.erase</a></em></td>
-	<td><em><a href="d.font.html">d.font</a></em></td>
-	<td><em><a href="d.frame.html">d.frame</a></em></td>
-	<td><em><a href="d.grid.html">d.grid</a></em></td>
+<H2>AUTHORS</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratories
+<br> Improvements from various authors
 
-</tr>
-<tr>
-	<td><em><a href="d.label.html">d.label</a></em></td>
-               <td><em><a href="d.labels.html">d.labels</a></em></td>
-	<td><em><a href="d.rast.html">d.rast</a></em></td>
-	<td><em><a href="d.scale.html">d.scale</a></em></td>
-</tr>
-<tr>
-	<td><em><a href="parser.html">parser</a></em></td>
-	
-
-</tr>
-</table>
-
-
-
-
-<H2>AUTHOR</H2>
-
-James Westervelt, U.S. Army Construction Engineering Research Laboratory
-
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

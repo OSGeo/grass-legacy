@@ -1,7 +1,10 @@
 #include "gis.h"
 #include "local_proto.h"
 
+/*
 int zoomwindow (int quiet, int rotate, double magnify, char pan)
+*/
+int zoomwindow (int quiet, double magnify, char pan)
 {
     struct Cell_head window, oldwindow ;
     char *err;
@@ -10,30 +13,32 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
     G_get_set_window(&window);
     G_copy((char *) &oldwindow, (char *) &window, sizeof(window));
 
+/*
     if (window.proj != PROJECTION_LL)
 	rotate = 0;
+*/
 
     while(1)
     {
+/*
 	if (rotate)
 	    quitonly=make_window_center (&window, magnify, -1.0, -1.0);
 	else
+*/
 	    quitonly=make_window_box (&window, magnify, pan);
 
 	/* quitonly = 0: Zoom
 	 * quitonly = 1: Quit
 	 * quitonly = 2: Unzoom
 	 */
+
 	if (quitonly == 1) 
 	  break; /* no action was taken */
 	else	  
 	{
-	  if(quitonly == 2 &&
-	     U_east <= oldwindow.east && U_west >= oldwindow.west &&
-	     U_south >= oldwindow.south && U_north <= oldwindow.north)
-	  {
-		break;
-	  }
+
+/* Comment out to take window as selected 
+** Not max size from map objects 
 	  
 	  if(window.east > U_east)
 		  window.east = U_east;
@@ -43,6 +48,7 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 		  window.south = U_south;
 	  if(window.north > U_north)
 		  window.north = U_north;
+*/
 
 	  if (err = G_adjust_Cell_head (&window, 0, 0))
 	  {
@@ -56,16 +62,32 @@ int zoomwindow (int quiet, int rotate, double magnify, char pan)
 	  
 	  if (!quitonly)
 	  {
-	    if (yes("Accept new region?"))
-	      break;
+	    int x, y, b;
 
-    	    G_copy((char *) &window, (char *) &oldwindow, sizeof(window));
-            G_put_window(&window);
-	    G_set_window(&window);
-	    redraw();
+	    fprintf(stderr, "Accept new region?\n");
+	    fprintf(stderr, "Left:   Accept and quit\n");
+#ifdef ANOTHER_BUTTON
+	    fprintf(stderr, "Middle: No\n");
+	    fprintf(stderr, "Right:  Accept and continue\n\n");
+#else
+	    fprintf(stderr, "Middle: Accept and continue\n");
+	    fprintf(stderr, "Right:  No\n\n");
+#endif
 
-	    if (!yes("Try again?"))
-	      return 1;
+	    R_get_location_with_pointer(&x, &y, &b);
+
+	    if(b == LEFTB)
+		break;
+	    else
+	    if(b == RIGHTB){
+    	    	G_copy((char *) &window, (char *) &oldwindow, sizeof(window));
+            	G_put_window(&window);
+	    	G_set_window(&window);
+	    	redraw();
+
+	    	if (!yes("Try again?"))
+	      		return 1;
+	    }
 	  }
 	  else
 	    break;

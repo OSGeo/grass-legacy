@@ -3,6 +3,8 @@
  * Markus Neteler January 20 2001
  * write DBF table to GRASS sites file
  *
+ * TODO: change fprintf(fp..) to G_sites routines
+ *
  ******************************************************************************
  * Copyright (c) 1998, Frank Warmerdam
  *
@@ -25,6 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************
  *
+ * 1/2002 added timestamp, updated header write routines  Markus Neteler
  * 1/2001 Removed PG stuff to make s.in.dbf from it  Markus Neteler
  * 12/2000 Federico Ponchio ponhio@dm.unipi.it (minor changes to memory 
  *  allocation for inserting in normal mode)
@@ -38,9 +41,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h> 
 #include "gis.h"
 #include "site.h"
 #include "shapefil.h"
+#include "local_proto.h"
 
 typedef unsigned char uchar;
 
@@ -50,7 +55,7 @@ struct my_string {
   int totlen;
 };
 
-int init(struct my_string *str) {
+void init(struct my_string *str) {
   str->data = (char *)malloc(1024 *sizeof(char));
   if(str->data == NULL) {
     fprintf(stderr, "Failed to allocate new memory.\n");
@@ -60,7 +65,7 @@ int init(struct my_string *str) {
   str->totlen = 128;
 }
 
-int append(struct my_string *str, const char *s) {
+void append(struct my_string *str, const char *s) {
   int newlen;
   newlen = strlen(s);
   str->len += newlen;
@@ -75,38 +80,38 @@ int append(struct my_string *str, const char *s) {
   strcat(str->data, s);
 }
 
-int clear(struct my_string *str) {
+void clear(struct my_string *str) {
   strcpy(str->data, "");
   str->len = 1;
 }
 
-int delete(struct my_string *str) {
+void delete(struct my_string *str) {
   if(str->data != NULL) 
-    free(str->data);
+    G_free(str->data);
 }
 
 
-int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
+int DumpFromDBF (char *infile, char *outfile, struct TimeStamp timestamp, int third) {
 	
 	DBFHandle   hDBF;
 	char buf[256]="";
 	
-	int i, m;
+	int i;
 	char *pp;
 	int dummy;
 	
 	struct my_string SQL_create;
 	struct my_string SQL_insert;
 	struct my_string chunks;
-	struct my_string headerN, headerD, headerT;
 	struct my_string fldstrng;
 
 	static char name[128]="";
+	char headerD[255]="";
 	char  fname[15];
 	int k, dimension;
 
 	FILE *sites;
-    	char *sitesname;
+	Site_head shead;
 
 	sites = G_fopen_sites_new (outfile);
 	if (sites == NULL)
@@ -125,14 +130,7 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	init(&SQL_create);
 	init(&SQL_insert);
 	init(&chunks);
-	init(&headerN); /*name*/
-	init(&headerD); /*desc*/
-	init(&headerT); /*time*/
 	init(&fldstrng);
-
-	append(&headerN, "name|");
-	append(&headerD, "desc|");
-	append(&headerT, "time|");
 
 /* -------------------------------------------------------------------- */
 /*      Extract basename of dbf file.                                   */
@@ -159,9 +157,9 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 		
 	for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
-	    char	field_name[128];
-	    int		field_width;
-	    char *fld;
+	    char field_name[128];
+	    int	 field_width;
+	    char *fld=NULL;
 	    
 
 	    DBFFieldType ftype;
@@ -208,9 +206,6 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	
 	
 	fprintf(stdout, "Writing to sites map %s...\n", outfile);
-	append(&headerN, outfile);
-	
-	append(&headerT, timestamp);
 	
 	/* reorder header: first int and float as it comes */
 	dummy=1-dimension; /* don't count the dimension fields */
@@ -223,10 +218,10 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	    if (dummy > 0) /* don't number coordinate fields */
 	    {
 	    	sprintf(buf, "%i:", dummy); /*enumber the fields */
-	    	append(&headerD, buf);
+	    	strcat(headerD, buf);
 	    }
-	    append(&headerD, fname );
-	    append(&headerD, " " );
+	    strcat(headerD, fname );
+	    strcat(headerD, " " );
 	    dummy=dummy + 1;
 	  }
         }
@@ -241,18 +236,19 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	    if (dummy > 0) /* don't number coordinate fields */
 	    {
 	    	sprintf(buf, "%i:", dummy); /*enumber the fields */
-	    	append(&headerD, buf);
+	    	strcat(headerD, buf);
 	    }
-	    append(&headerD, fname );
-	    append(&headerD, " " );
+	    strcat(headerD, fname );
+	    strcat(headerD, " " );
 	    dummy=dummy + 1;
 	  }
         }
 
-        /* Write Header to sites list - should be G_sites routines*/
-        fprintf(sites, "%s\n", headerN);
-        fprintf(sites, "%s\n", headerD);
-        /* fprintf(sites, "%s\n", headerT); */ /* not yet implemented */
+        shead.name = G_store(outfile);
+        shead.desc = G_store(headerD);
+        shead.form = shead.labels = shead.stime = (char *)NULL;
+        shead.time = &timestamp;
+        G_site_put_head (sites, &shead);
 
         /* dump the fields */
 
@@ -294,7 +290,6 @@ static void * SfRealloc( void * pMem, int nNewSize )
 {
     int	       	nRecordOffset;
     uchar	*pabyRec;
-    void	*pReturnField = NULL;
     int 	hEntity=0, iField=0;
     double      atof();
     int         atoi();
@@ -307,7 +302,6 @@ static void * SfRealloc( void * pMem, int nNewSize )
     char buf[MAX_SITE_LEN], fbuf[MAX_SITE_STRING];
     int field_width;
     DBFFieldType ftype;
-    int done_fields; /*count fields already done */
 
 
   /* To achive the special sites column order wanted by GRASS we have
@@ -469,7 +463,8 @@ static void * SfRealloc( void * pMem, int nNewSize )
     ftype=DBFGetFieldInfo( psDBF, iField, buf, &field_width, NULL );
     switch (ftype) {
 	case 0: /*text*/
-		sprintf(fbuf,"@\"%s\"", G_squeeze((char *)G_chop(pszStringField)));
+	        /* replace " with ' to avoid GRASS crash, replace trailing space */
+		sprintf(fbuf,"@\"%s\"", G_squeeze((char *)G_chop(G_strchg(pszStringField,'\"','\''))));
 		sprintf(pszStringField, "%s", fbuf);
 		if (strlen(pszStringField) < 4 )
 		{

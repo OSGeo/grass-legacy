@@ -23,6 +23,7 @@
 /* Includes macros etc */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
@@ -83,16 +84,18 @@ extern int yylex();
 
 static char *extract_base_name( char *, const char * );
 
-int main(int argc, char *argv[] ) {
+int main(int argc, char *argv[] )
+{
 
   /* Body of main function called from the `real' main() in the scanner source */
 
   /* Local */
 
   FILE *logfp = NULL;
-  char basename[128], mif_input[128], mid_input[128];
+  char basename[512], mif_input[512], mid_input[512], pathname[512];
   char attname[128], outfile[128];
   char digits_buf[512];
+  char *ext_pos;
 
   int scale0;
   double snap_default = 0.000001;
@@ -102,7 +105,6 @@ int main(int argc, char *argv[] ) {
   double false_easting, false_northing;
   int idigits;
 
-
   /* Main structures */
 
   struct {
@@ -111,10 +113,16 @@ int main(int argc, char *argv[] ) {
   } parm;
 
   struct Flag *listflag, *rejflag;
+  struct GModule *module;
+  
 
   /* Are we running in Grass environment ? */
-
   G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Import of MapInfo vector files";
 
   /* define the different options */
 
@@ -199,12 +207,19 @@ int main(int argc, char *argv[] ) {
      .mif only
   */
 
-  extract_base_name( basename, parm.input->answer );
+  strncpy(pathname, parm.input->answer, 511);
+  ext_pos = strrchr(pathname, '.');
+  if(strcmp(ext_pos, ".mif") == 0 ||
+     strcmp(ext_pos, ".mid") == 0 ||
+     strcmp(ext_pos, ".MIF") == 0 ||
+     strcmp(ext_pos, ".MID") == 0 ) {
+    *ext_pos = '\0';
+  }
 
-  strcpy(mif_input, basename);
+  strcpy(mif_input, pathname);
   strcat(mif_input, ".mif");
 
-  strcpy(mid_input, basename);
+  strcpy(mid_input, pathname);
   strcat(mid_input, ".mid");
 
 

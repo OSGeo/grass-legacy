@@ -72,10 +72,9 @@ int Nchange_position_cmd (
   float xpos, ypos, from[3];
   float tempx, tempy;
 
-
-  xpos = atof (argv[1]);
+  xpos = (float)atof (argv[1]);
   xpos = (xpos < 0) ? 0 : (xpos > 1.0) ? 1.0 : xpos;
-  ypos = 1.0 - atof (argv[2]);
+  ypos = 1.0 - (float)atof (argv[2]);
   ypos = (ypos < 0) ? 0 : (ypos > 1.0) ? 1.0 : ypos;
 
 
@@ -118,6 +117,7 @@ Nchange_height_cmd (
 {
   float temp;
   float from[3];
+  double atof();
 
   if (argc < 2)
     return (TCL_ERROR);
@@ -207,10 +207,11 @@ Nchange_exag_cmd (
   float val;
   float temp;
 /*  float from[3];*/
+  double atof();
   
   if (argc != 2)
     return (TCL_ERROR);
-  val = atof (argv[1]);
+  val = (float)atof (argv[1]);
   
   temp = GS_global_exag();
   if (val != temp) {

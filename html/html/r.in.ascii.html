@@ -21,7 +21,7 @@
 <BR>
 <B>r.in.ascii help</B> 
 <BR>
-<B>r.in.ascii input=</B><EM>name</EM> 
+<B>r.in.ascii </B>[<B>-ifds</B>] <B>input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
 [<B>TITLE=</B>"<EM>phrase</EM>"] 
 [<B>mult=</B><EM>multiplier</EM>] 
@@ -32,6 +32,22 @@
 from an ASCII raster input file with (optional) TITLE. 
 
 <H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-i</B> 
+<DD>integer values are imported
+
+<DT><B>-f</B>
+<DD>floating point values are imported
+
+<DT><B>-d</B>
+<DD>double floating point values are imported
+
+<DT><B>-s</B>
+<DD>SURFER (Golden Software) ascii grid file will be imported
+</DL>
+
 
 <H3>Parameters:</H3>
 
@@ -137,12 +153,16 @@ ESRI Raster ASCII files.
 <A HREF="r.out.ascii.html">r.out.ascii</A>,
 <A HREF="r.in.arc.html">r.in.arc</A>, 
 <A HREF="r.out.arc.html">r.out.arc</A>,
-<A HREF="r.in.bin.html">r.in.bin</A>
+<A HREF="r.in.bin.html">r.in.bin</A>,
+<A HREF="../ascii_formats.html">GRASS ASCII formats</A>
 </EM>
 
 <H2>AUTHOR</H2>
 
 Michael Shapiro, U.S. Army Construction Engineering 
-Research Laboratory
+Research Laboratory<br>
+Surfer support by Roger Miller
 
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

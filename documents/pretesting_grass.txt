@@ -1,25 +1,105 @@
-From: Justin Hickey <jhickey@hpcc.nectec.or.th>
-
 $Id$
 
 
-Step by step procedure for our pre-testers:
+Step by step procedures for our pre-testers:
 
-For testing the source code
-o Download and unpack new distribution in a new directory
-o Run configure
-o Run make
-o Run make install
-o Check if Grass runs (does "make check" work?) - maybe better to have
-  this before "Run make install"
-o Run make uninstall
-o Run make distclean
+For Testing the Source Code
 
-For testing the binary distributions
-o Download and unpack new distribution in a new directory
-o Run grass5install.sh
-o Check if Grass runs (maybe use testgrass.sh or some script created 
-  from the testsuite directory)
-o check if maps can be displayed properly
-o Run grass5uninstall (new feature in CVS tree, not in beta 11)
+1.  Download and unpack the new distribution into a new directory
 
+2.  Run configure with a prefix set for a directory where grass was never
+    installed before (see the INSTALL file for providing options to
+    configure)
+   
+3.  Run make and capture the output to a file (see the INSTALL file for
+    instructions on how to capture the output to a file)
+
+4.  Check the output of the file "error.log" for any modules that failed to 
+    compile. If errors were found, use the search function in your editor to
+    find the error message in the log file generated during the Make from
+    step 3. Please submit the errors to our bug report web page 
+    (http://grass.itc.it/bugtracking/bugreport.html). Please
+    ensure that you check if a bug has already been reported. Note that if a
+    library failed to compile (a module with the path src/libes/ in it) then
+    it most likely will cause several other modules to fail. Thus, you may
+    want to take this into account when making your report. That is, it is
+    probably not necessary to report modules that did not compile if a library
+    failed to compile.
+   
+5.  Try to compile the optional software listed at the end of the output from
+    the make command. Note that the absolute paths that are listed are
+    necessary. Again, please submit any errors to our bug report web page 
+    (http://grass.itc.it/bugtracking/bugreport.html). Please
+    ensure that you check if a bug has already been reported.
+    
+6.  If errors were minimal, check if GRASS runs. Unfortunately, a test script
+    does not exist yet, however, you should at least check the following
+    programs:
+       
+        d.mon
+        d.rast
+        d.vect
+        d.site
+        d.zoom
+        g.region
+        tcltkgrass
+        nviz
+    
+    and any other programs you typically use in your daily work with GRASS.
+    To perform this test, start GRASS within the source directory (replace
+    $ARCH with your architecture):
+        
+	bin.$ARCH/grass5
+
+    For example:
+       
+        bin.i686-pc-linux-gnu/grass5
+
+    This will allow you to test the above modules without having to install
+    GRASS. Again, please submit any errors to our bug report web page 
+    (http://grass.itc.it/bugtracking/bugreport.html). Please
+    ensure that you check if a bug has already been reported.
+    
+7.  Check that the different start modes of GRASS work. That is, run the
+    commands:
+        
+	bin.$ARCH/grass5 -text
+	bin.$ARCH/grass5 -tcltk
+	
+8.  Run the "make install" command to install GRASS into the final
+    destination
+
+9.  Check if the installation of GRASS runs by running the command
+    $prefix/bin/grass5 where $prefix is the path specified on the configure
+    command line in step 2, or /usr/local if the prefix was not set in step 2.
+    Perform the same tests as in steps 6 and 7.
+    
+10. Run the "make uninstall" command and check that GRASS was uninstalled
+    from the destination directory
+
+11. Run the "make distclean" command to clean off the object and configuration
+    files generated during the compilation process
+
+12. Please submit any errors to our bug report web page 
+    (http://grass.itc.it/bugtracking/bugreport.html). Please
+    ensure that you check if a bug has already been reported.
+
+13. If no problems occured then please email the grass developers mailing list
+    (if you are a member) or Markus Neteler (neteler@itc.it) and
+    indicate that GRASS was successfully installed. Please include your
+    platform as well as the compiler you used.
+
+
+For Testing the Binary Distributions
+
+1.  Download the distribution and the grass5install.sh script in a new
+    directory
+
+2.  Run the grass5install.sh script. Use "grass5install.sh -help" for a usage
+    message. Please note the instructions printed when the script is finished
+    that indicate how to uninstall GRASS. You will need these in step 4 below.
+    
+3.  Perform steps 6 and 7 in the above procedure for testing source code
+    distributions
+    
+4.  Run grass5uninstall.sh to uninstall the binary package.

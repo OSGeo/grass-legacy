@@ -1,5 +1,7 @@
+<html>
+<head>
 <TITLE>r.out.arc</TITLE>
-
+</head>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
@@ -7,7 +9,7 @@
 <H2>NAME</H2>
 
 <EM><b>r.out.arc</b></EM>  - Converts a raster map layer 
-into an ESRI ARCGRID file.
+into an ESRI ARC-GRID file.
 
 <BR>
 
@@ -23,22 +25,20 @@ into an ESRI ARCGRID file.
 
 <BR>
 
-<B>r.out.arc </B>[<B>-h</B>]  </B>[<B>-1</B>] <B>map=</B><EM>name</EM>
- [<B>dp=</B><EM>value</EM>]
+<B>r.out.arc </B>[<B>-h</B>]  </B>[<B>-1</B>] <B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> [<B>dp=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
-<EM>r.out.arc</EM> converts a user-specified raster map
-layer (<B>map=</B><EM>name</EM>) into an ESRI ARCGRID ascii file
-suitable for export to other computer systems.  The
-dg=<EM>value</EM> option (where <EM>value</EM> is a
-number of the user's choice) can be used to request that
-numbers after decimal points are limited.   However, to
-use this, the user should know the maximum number of digits
-that will occur in the output file.  The user
-can find the maximum number of digits occurring in the
-output file by running <EM>r.out.arc</EM> without the
-<B>dg=</B><EM>value</EM> option.
+<EM>r.out.arc</EM> converts a user-specified raster map layer
+(<B>input=</B><EM>name</EM>) into an ESRI ARC-GRID ascii file
+(<B>output=</B><EM>name</EM>) suitable for export to other computer systems. 
+The dp=<EM>value</EM> option (where <EM>value</EM> is a number of the user's
+choice) can be used to request that numbers after decimal points are
+limited.  However, to use this, the user should know the maximum number of
+digits that will occur in the output file.  The user can find the maximum
+number of digits occurring in the output file by running <EM>r.out.arc</EM>
+without the <B>dp=</B><EM>value</EM> option.
 
 
 <P>
@@ -69,28 +69,31 @@ upper right (reverse to GRASS).
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>map=</B><EM>name</EM> 
+<DT><B>input=</B><EM>name</EM> 
 <DD>Name of an existing raster map layer.
 
-<DT><B>dg=</B><EM>value</EM> 
+<DT><B>output</B>
+<DD>Name of an output binary file (use output=- for stdout)
+
+<DT><B>dp=</B><EM>value</EM> 
 <DD>The minimum number of decimals (per cell) to be printed.
 </DL>
 
 <EM>r.out.arc</EM> can be run either non-interactively or
 interactively.  The program will be run non-interactively
 if the user specifies the name of a raster map layer and
-(optionally) a value for <EM>dg</EM>, using the form
+(optionally) a value for <EM>dp</EM>, using the form
 
 
 <DL>
 <DD>
-<B>r.out.arc map=</B><EM>name </EM>[<B>dg=</B><EM>value</EM>]
+<B>r.out.arc input=</B><EM>inname</EM> <B>output=</B><EM>outname</EM> [<B>dp=</B><EM>value</EM>]
 </DL>
 
-where <EM>name</EM> is the name of a raster map layer to be
-converted to ARCGRID format, and <EM>value</EM> is the
-minimum number of digits (per cell) to be printed to
-output.  The user can also the <B>-h</B> option to suppress
+where <EM>inname</EM> is the name of a raster map layer to be converted to
+ARC-GRID format, <EM>outname</EM> is the name of a raster map layer to be
+exported, and <EM>value</EM> is the minimum number of digits (per cell) to
+be printed to output.  The user can also the <B>-h</B> option to suppress
 the output of file header information.
 
 <P>
@@ -107,11 +110,11 @@ by using the UNIX redirection mechanism;  e.g.:
 
 <DL>
 <DD>
-<B>r.out.arc map=</B>soils &gt; out.grd
+<B>r.out.arc input=</B>soils <B>output=-</B> &gt; out.grd
 </DL>
 
 The output file <EM>out.grd</EM> can then be copied
-onto a magnetic tape or floppy disk for export purposes.
+onto a CDROM or floppy disk for export purposes.
 
 <H2>SEE ALSO</H2>
 
@@ -121,7 +124,11 @@ onto a magnetic tape or floppy disk for export purposes.
 
 <H2>AUTHOR</H2>
 
-Markus Neteler, University of Hannover, Germany, based on r.out.ascii from <br>
+Markus Neteler, University of Hannover, Germany, <br>
+based on r.out.ascii from <br>
 Michael Shapiro,
 U.S.Army Construction Engineering 
 Research Laboratory
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

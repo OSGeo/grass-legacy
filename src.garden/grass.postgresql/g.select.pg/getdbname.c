@@ -1,23 +1,23 @@
-//-----------------A.Sh -12.99
+/*A.Sh -12.99*/
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <dirent.h>
 #include <libpq-fe.h>
+#include "gis.h"
 
 int getdbname(dbtemp)
 char *dbtemp;
 
 {
-char *temp_file;
-char dbname[18];
-char sysbuf[600];
-FILE *fpin;
+
 PGconn     *pg_conn;
 PGresult   *res;
 
 char       *pghost;
 
 int        i;
-int  	   ok;
+int  	   ok=1;
 int	   rec_num;
 
 pghost = (char*) G__getenv("PG_HOST");

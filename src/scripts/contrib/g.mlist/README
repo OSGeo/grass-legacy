@@ -5,11 +5,19 @@ outputs. In addition, map search is also available.
 		[sep=separator]
 
 
-ex)
-	g.mlist map='^tmp$'
+examples)
+wildcards:
+	g.mlist type=vect "r*"
+		lists all vector maps starting with letter "r"
+
+regular expressions:
+	g.mlist -r type=rast '^soils'
+		prints out all soils map with "soils" in their name
+
+	g.mlist -r map='^tmp$'
 		prints out "tmp" if "tmp" raster map exists.
 
-	g.mlist map='^tmp[0-9]$' type=vect
+	g.mlist -r map='^tmp[0-9]$' type=vect
 
 		tmp0
 		tmp5
@@ -17,7 +25,7 @@ ex)
 
 		prints out "tmp0" ~ "tmp9" if corresponding vector map exists.
 
-	g.mlist map='^tmp[0-9]$' type=vect sep=,
+	g.mlist -r map='^tmp[0-9]$' type=vect sep=,
 
 		tmp0,tmp5,tmp6
 

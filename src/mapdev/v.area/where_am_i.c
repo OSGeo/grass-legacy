@@ -82,8 +82,8 @@ int where_am_i (char *name, char *mapset, char *color,
            }
           else
            {
-            fprintf(stderr,"Point at cross hairs:  %13.2f (N) %13.2f (E)\n",
-            north,east);
+            fprintf(stderr,"Point at cross hairs:  %13.2f (E) %13.2f (N)\n",
+            east,north);
             number = area_perim(north,east,&map,Points,mapset,name,color,fill,Dvect_color,&cats);
             if (number == -1)
              {

@@ -23,30 +23,33 @@ how to create batch jobs.</font>
 <br><font face="Arial, Helvetica"><a href="html/grass.logo.sh.html">grass.logo.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/hsv.rgb.sh.html">hsv.rgb.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/i.oif.html">i.oif</a></font>
-<br><font face="Arial, Helvetica"><a href="html/old.cmd.sh.html">old.cmd.sh</a></font></td>
 
 <td VALIGN=TOP WIDTH="150"><font face="Arial, Helvetica"><a href="html/rgb.hsv.sh.html">rgb.hsv.sh</a></font>
+<br><font face="Arial, Helvetica"><a href="html/shade.clr.sh.html">shade.clr.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/shade.rel.sh.html">shade.rel.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/show.color.sh.html">show.color.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/show.fonts.sh.html">show.fonts.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/slide.show.sh.html">slide.show.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/split.sh.html">split.sh</a></font>
-<br><font face="Arial, Helvetica"><a href="html/start.man.sh.html">start.man.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/tig.rim.sh.html">tig.rim.sh</a></font>
 <br><font face="Arial, Helvetica"><a href="html/tiger.info.sh.html">tiger.info.sh</a></font></td>
 </tr>
 </table></center>
 
-<pre><font face="Arial, Helvetica">i.spectral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r.out.arctiff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s.out.gps
-d.rast.leg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i.tasscap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r.out.bil&nbsp;&nbsp;&nbsp; tiger.info
-d.rast.rescale&nbsp;&nbsp; m.statistics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r.out.geotiff&nbsp; v.cutter.attr
-g.html2man&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ps.add.pagesize&nbsp; r.reclass.area&nbsp;&nbsp; v.in.gps
-i.image.mosaic r.edge.dig&nbsp;&nbsp;&nbsp;&nbsp; r.regression.line&nbsp; v.line2area
-i.oif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r.in.arctiff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s.in.gps&nbsp;&nbsp;&nbsp;&nbsp; v.xfig</font></pre>
+<pre>
+d.rast.leg d.rast.rescale g.html2man i.image.mosaic
+i.oif i.spectral i.tasscap  m.statistics ps.add.pagesize
+r.edge.dig r.out.bil r.out.geotiff r.reclass.area
+r.regression.line s.in.gps s.out.gps tiger.info
+v.cutter.attr v.in.gps v.line2area v.xfig
+</pre>
+
 
 <h3>
 <font face="Arial, Helvetica">Other Commands</font></h3>
-<font face="Arial, Helvetica"><a href="database.html">database</a>,
+<font face="Arial, Helvetica">
+<a href="index.html">help home</a>,
+<a href="database.html">database</a>,
 <a href="display.html">display</a>,
 <a href="drivers.html">drivers</a>, <a href="general.html">general</a>,
 <a href="grid3d.html">grid3d</a>, <a href="imagery.html">imagery</a>, 

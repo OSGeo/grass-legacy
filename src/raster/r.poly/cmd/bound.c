@@ -100,9 +100,13 @@ static int update_width(struct area_table *,int);
 
 int extract_areas (void)
 {
-  row = col = top = 0;			/* get started for read of first */
-  bottom = 1;				/*   line from cell file */
-  area_num = 0; tl_area = 0;
+  int nullVal;
+  row = col = top = 0;  /* get started for read of first */
+  bottom = 1;  /* line from cell file */
+  area_num = 0;
+  tl_area = 0;
+  G_set_c_null_value(&nullVal, 1);
+  assign_area(nullVal,0);  /* represents the "outside", the external null values */
   scan_length = read_next();
   while (read_next())			/* read rest of file, one row at */
   {					/*   a time */
@@ -119,6 +123,7 @@ int extract_areas (void)
     row++;
   }
   write_area(a_list,e_list,area_num,n_equiv);
+
   G_free(a_list);
   G_free(e_list);
 
@@ -140,7 +145,7 @@ static int update_list (int i)
   {
     case 0:
       /* Vertical line - Just update width information */
-      update_width(a_list + v_list[col]->left,0);
+      /* update_width(a_list + v_list[col]->left,0);*/
       tl_area = v_list[col]->left;
       break;
     case 1:
@@ -178,7 +183,7 @@ static int update_list (int i)
       new_ptr->bptr = h_ptr;
       new_ptr->left = h_ptr->left;
       new_ptr->right = h_ptr->right;
-      update_width(a_list + new_ptr->left,3);
+      /* update_width(a_list + new_ptr->left,3); */
       v_list[col] = new_ptr;
       h_ptr = NULPTR;
       break;
@@ -242,7 +247,7 @@ static int update_list (int i)
     case 8:
       /* T left - End one vertical and one horizontal line */
       /*          Start one vertical line */
-			tl_area = v_list[col]->left;
+      tl_area = v_list[col]->left;
       h_ptr->node = v_list[col]->node = 1;
       right = h_ptr->right;
       left = v_list[col]->left;
@@ -252,7 +257,7 @@ static int update_list (int i)
       v_list[col]->bptr->node = 1;	/* where we came from is a node */
       v_list[col]->left = v_list[col]->bptr->left = left;
       v_list[col]->right = v_list[col]->bptr->right = right;
-      update_width(a_list + v_list[col]->left,8);
+      /* update_width(a_list + v_list[col]->left,8); */
       break;
     case 9:
       /* T right - End one vertical line */
@@ -500,6 +505,8 @@ static int equiv_areas (int a1, int a2)
 {
   int small, large, small_obj, large_obj;
 
+  if(a1 == -1 || a2 == -2) return 0;
+
   if (a1 == a2)
     return(0);
   if (a1 < a2)
@@ -684,6 +691,10 @@ static int update_width (struct area_table *ptr, int kase)
   a = (ptr - a_list);
   for (j = col + 1, w = 0; j < scan_length && *(buffer[bottom] + j) == br; j++, w++)
   { }
+
+  if(a == 0)
+    fprintf(stderr,"Area 0, %d \t%d \t%d \t%d \t%d\n", kase, row, col, ptr->width, w);
+
   if (a < n_equiv)
   {
     ep = e_list + a;

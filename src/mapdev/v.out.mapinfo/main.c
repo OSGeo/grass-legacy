@@ -8,6 +8,8 @@
 *  R.L. Glenn, USDA, NRCS, 9/19/95
 */
 
+#include  <stdio.h>
+#include  <stdlib.h>
 #include  "Vect.h"
 #include  "gis.h"
 
@@ -33,7 +35,7 @@ int main(argc, argv)
     struct Map_info map;      /* SPATIAL INFO FOR DIGIT FILE */
 
     /* INITIALIZE GIS LIBRARY */
-    G_gisinit ("vect.to.mpinfo");
+    G_gisinit (argv[0]);
 
     if (argc == 2 && !strcmp (argv[1], "help"))
     {

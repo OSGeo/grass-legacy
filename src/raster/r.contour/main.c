@@ -324,9 +324,7 @@ double *getlevels(
 	}
  	else
 	{
-	    fprintf (stderr,"ERROR: Minimum parameters not set.\n");
-	    fprintf (stderr,"Either a step or a list of levels must be specified\n");
-		G_fatal_error("");
+	    G_fatal_error("ERROR: neither \"levels\" nor \"step\" parameter specified.\n");
 	}
 	*num=nlevels;
 	return lev;

@@ -299,27 +299,27 @@ int gs_update_curmask(geosurf *surf)
 
 	    if (b_topo)
 	    {
-    	    	fprintf(stderr,"update topo mask\n");
+    	    	fprintf(stderr,"Update topo mask\n");
 		gsbm_or_masks(surf->curmask, b_topo);
 		BM_destroy(b_topo);
 	    }
 	    
 	    if (b_color)
 	    {
-    	    	fprintf(stderr,"update color mask\n");
+    	    	fprintf(stderr,"Update color mask\n");
 		gsbm_or_masks(surf->curmask, b_color);
 		BM_destroy(b_color);
 	    }
 	    
 	    if (t_topo->nm)
 	    {
-    	    	fprintf(stderr,"update elev null mask\n");
+    	    	fprintf(stderr,"Update elev null mask\n");
 		gsbm_or_masks(surf->curmask, t_topo->nm);
 	    }
 	    
 	    if (b_mask)
 	    {
-    	    	fprintf(stderr,"update mask mask\n");
+    	    	fprintf(stderr,"Update mask mask\n");
 		
 		if (t_mask->bm)
 		{
@@ -353,6 +353,8 @@ int gs_update_curmask(geosurf *surf)
 	    surf->curmask = NULL;
 	    surf->zminmasked = surf->zmin;
 	}
+
+	fprintf(stderr, "BOB Done\n");
     }
     
     return(0);

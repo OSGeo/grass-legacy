@@ -104,6 +104,11 @@ There is an order of precedence in the way <EM>grass5</EM> determines the user
 interface to use. The following is the hierarchy from highest precedence to
 lowest.
 
+<P>
+The user may add own environment variable settings to $HOME/.grassrc5 file
+which are used during next startup of GRASS (list of <a
+href=../env_vars.html>implemented environment variables</a>). 
+
 <DL>
 
 <DT><B>Interface precedence</B>
@@ -142,6 +147,20 @@ above variables to have GRASS use the Tcl/Tk 8.3 binaries instead.
 <P>
 GRASS_TCLSH = $HOME/bin/tclsh8.3<BR>
 GRASS_WISH  = $HOME/bin/wish8.3
+
+<H3>Addon path to extra local GRASS modules</H3>
+
+This environment variables allows to extend the GRASS paths to locally
+developed/installed modules which are not distributes through the standard
+release of GRASS.
+<P>
+GRASS_ADDON_PATH=/usr/mytools<BR>
+GRASS_ADDON_PATH=/usr/mytools:/usr/local/othertools
+
+<P>
+In this example above path(s) would be added to the standard GRASS path
+environment.
+
 
 <H3>Location Environment Variables</H3>
 
@@ -319,11 +338,17 @@ first version of <EM>wish</EM>.
 <EM>$GISBASE/tcltkgrass/script/gis_set.tcl</EM> - Tcl/Tk script to set the
     location and mapset to use. Called by <EM>Init.sh</EM><BR><BR>
 
+<H2>SEE ALSO</H2>
+
+List of <a href=../env_vars.html>implemented GRASS environment
+variables</a>.
+
 <H2>AUTHOR</H2>
 
 Justin Hickey 
 (<A HREF=mailto:jhickey@hpcc.nectec.or.th>jhickey@hpcc.nectec.or.th</A>)
 <BR>
 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -62,7 +62,7 @@ label (int T, int B, int L, int R, int backcolor, int textcolor, int dots_per_li
 				R_move_abs(SCREEN_X, SCREEN_Y) ;
 				R_standard_color(textcolor) ;
 				R_text(answer) ;
-				R_flush() ;
+				R_stabilize() ;
 
 				if (is_not_ok())
 				{

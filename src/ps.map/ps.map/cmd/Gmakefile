@@ -2,64 +2,64 @@ PGM = ps.map
 
 LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB) $(LINKMLIB)
 
-
-OBJ =	main.o \
-	read_cfg.o \
-	scale.o \
-	map_info.o \
-	infofile.o \
-	get_font.o \
-	distance.o \
-	ps_header.o \
-	hdrfile.o \
-	do_header.o \
+OBJ =	box_stuff.o \
 	cellfile.o \
-	map_setup.o \
-	rast_plot.o \
-	ctablfile.o \
-	ps_clrtbl.o \
-	ps_vector.o \
-	ps_area.o \
-	box_stuff.o \
-	gprims.o \
-	makeprocs.o \
-	textbox.o \
-	scan_ref.o \
-	do_labels.o \
-	outl_io.o \
-	ps_outline.o \
-	ps_colors.o \
-	do_vectors.o \
-	vectfile.o \
-	label.o \
-	plfile.o \
-	do_plfile.o \
-	scan_misc.o \
-	lblfile.o \
-	input.o \
-	scan_gis.o \
-	key_data.o \
-	error.o \
 	chk_scale.o \
-	yesno.o \
-	session.o \
-	ps_map.o \
-	vlegfile.o \
-	vlegend.o \
-	getgrid.o \
-	do_grid.o \
 	comment.o \
-	sitefile.o \
-	do_sites.o \
-	fit_map.o \
-	windfile.o \
-	parse_list.o \
+	ctablfile.o \
+	distance.o \
+	do_grid.o \
+	do_header.o \
+	do_labels.o \
 	do_masking.o \
+	do_plfile.o \
 	do_psfiles.o \
-	mtextbox.o \
+	do_sites.o \
+	do_vectors.o \
+	eps.o \
+	error.o \
+	fit_map.o \
+	get_font.o \
+	getgrid.o \
+	gprims.o \
 	groupfile.o \
+	hdrfile.o \
+	infofile.o \
+	input.o \
+	key_data.o \
+	label.o \
+	lblfile.o \
+	main.o \
+	makeprocs.o \
+	map_info.o \
+	map_setup.o \
+	mtextbox.o \
+	outl_io.o \
+	parse_list.o \
+	plfile.o \
+	ps_area.o \
+	ps_clrtbl.o \
+	ps_colors.o \
+	ps_header.o \
+	ps_map.o \
+	ps_outline.o \
+	ps_vector.o \
+	rast_plot.o \
+	read_cfg.o \
+	rgbfile.o \
+	scale.o \
+	scan_gis.o \
+	scan_misc.o \
+	scan_ref.o \
+	session.o \
+	sitefile.o \
+	textbox.o \
+	vectfile.o \
 	vect.o \
-	eps.o
+	vlegend.o \
+	vlegfile.o \
+	windfile.o \
+	yesno.o
 
 $(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)

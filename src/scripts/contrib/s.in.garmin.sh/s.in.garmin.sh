@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # s.in.garmin.sh -- import gps data from garmin receiver 
 #                   into GRASS sites file
@@ -10,8 +10,8 @@
 #               gpstrans from Carsten Tschach et al. 
 #                 get gpstrans from: ftp://www.mayko.com/pub/gpstrans or from
 #                 http://www.metalab.unc.edu/pub/Linux/science/cartography/
-#               GNU bourne again shell
-#   unix tools: grep, cat, cut, paste, sed
+#               bourne shell
+#               unix tools: grep, cat, cut, paste, sed
 #
 
 PROG=`basename $0`

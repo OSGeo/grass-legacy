@@ -19,7 +19,7 @@ int Raster_int_def (int num, int nrows, int *array, int withzeros, int color_typ
 	arr = array ;
 	(*assign_color)(cur_color = *array) ;
 
-	npixles = 0 ;
+	npixles = 1 ;
 
 	our_x = cur_x ;
 	our_y = cur_y ;
@@ -28,27 +28,15 @@ int Raster_int_def (int num, int nrows, int *array, int withzeros, int color_typ
 	{
 		if (*(++arr) != cur_color)
 		{
-			if (nrows == 1)
-			{
-				if(withzeros || cur_color)
-					Cont_rel(npixles,0) ;
-				else
-					Move_rel(npixles,0) ;
-				cur_x++ ;
-			}
-			else
-			{
-				if(withzeros || cur_color)
-					Box_abs(our_x,
-					   our_y + nrows,
-					   our_x + npixles,
-					   our_y) ;
-				our_x += npixles ;
-			}
-			our_x++ ;
+			if(withzeros || cur_color)
+				Box_abs(our_x,
+					our_y + nrows,
+					our_x + npixles,
+					our_y) ;
+			our_x += npixles ;
 
 			(*assign_color)(cur_color = *arr) ;
-			npixles = 0 ;
+			npixles = 1 ;
 		}
 		else
 		{
@@ -56,24 +44,11 @@ int Raster_int_def (int num, int nrows, int *array, int withzeros, int color_typ
 		}
 	}
 
-	if (nrows == 1)
-	{
-		if(withzeros || cur_color)
-			Cont_rel(npixles,0) ;
-		else
-			Move_rel(npixles,0) ;
-		cur_x++ ;
-	}
-	else
-	{
-		if(withzeros || cur_color)
-			Box_abs(our_x,
-			   our_y + nrows,
-			   our_x + npixles,
-			   our_y) ;
-		cur_y = our_y + nrows ;
-		cur_x = our_y + npixles ;
-	}
+	if(withzeros || cur_color)
+		Box_abs(our_x,
+			our_y + nrows,
+			our_x + npixles,
+			our_y) ;
 
 	return 0;
 }

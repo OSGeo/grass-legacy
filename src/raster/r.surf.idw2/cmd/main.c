@@ -35,6 +35,8 @@ main (int argc, char *argv[])
 	struct Option *input, *npoints, *output;
     } parm;
 
+    G_gisinit(argv[0]);
+
     module = G_define_module();
     module->description =
 		"Surface generation program.";
@@ -60,9 +62,6 @@ main (int argc, char *argv[])
     parm.npoints->required   = NO ;
     parm.npoints->description="Number of interpolation points";
     parm.npoints->answer = "12";
-
-
-    G_gisinit(argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);
@@ -199,7 +198,7 @@ main (int argc, char *argv[])
 	    }
 	    cell[col] = (CELL) (sum1/sum2 + 0.5);
 	}
-	G_put_map_row (fd, cell);
+	G_put_raster_row (fd, cell, CELL_TYPE);
     }
     G_free(points);
     G_free(cell);

@@ -6,7 +6,7 @@
 NVWISH_VER=sed
 PQ_OBJS=sed
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
+OGL_LIBS = $(OPENGLULIB) $(OPENGLLIB) $(OPENGL32) $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
@@ -40,7 +40,7 @@ gsf:
 	touch nviz_init.c
 
 nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
-	$(CC) -g -o $@ $(OBJS) $(LDFLAGS) $(SURFLIB) $(IMGLIB) \
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
-	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff
+	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff $(XLIB)

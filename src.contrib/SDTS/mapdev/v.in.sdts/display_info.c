@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "sdts_in.h"
 #include "sdts_globals.h"

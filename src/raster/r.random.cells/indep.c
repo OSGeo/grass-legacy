@@ -126,7 +126,7 @@ Indep( )
                 for (C = 0; C < Cs; C++) {
 			CellBuffer[C] = Out[ R][ C];
                 }
-		G_put_c_raster_row( OutFD, CellBuffer);
+		G_put_raster_row( OutFD, CellBuffer, CELL_TYPE);
         }
 	G_close_cell( OutFD);
 }

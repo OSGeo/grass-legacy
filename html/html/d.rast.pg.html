@@ -1,123 +1,174 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<A NAME="d.rast.pg">
-<TITLE>d.rast.pg</TITLE>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>d.rast.pg</title>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
-
-<img src="grass.smlogo.gif">
-
+<a NAME="d.rast.pg"></a><img SRC="grass.smlogo.gif" >
 <hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.rast.pg</i></b> - Generate or display a reclass map based on the
+unique values in a database column. (GRASS-RDBMS Interface Display Program)
+<h2>
+SYNOPSIS</h2>
+<b>d.rast.pg</b>
+<br><b>d.rast.pg help</b>
+<br><b>d.rast.pg</b> <b>key</b>=name <b>tab</b>=name <b>col</b>=name [<b>lab</b>=name]
+[<b>where</b>=name] <b>input</b>=name [<b>output</b>=name]
+<h2>
+ALTERNATE</h2>
+<b>d.rast.pg -s help</b>
+<br><b>d.rast.pg -s sql</b><i>=filename</i> <b>input</b><i>=name</i> [<b>output</b><i>=name</i>]
+<h2>
+DESCRIPTION</h2>
+<i>d.rast.pg</i> displays a raster image in which each category represents
+a unique value in a database column. Values are retrieved from the current
+database based on a user defined SQL SELECT statement. The current database
+is identified by the GRASS environment variable $PG_DBASE which is set
+using the <i>g.select.pg</i> GRASS-RDBMS interface tool. The output from
+this program is a set of GRASS reclass rules which are used to create or
+display a reclassed raster surface based on the attributes returned from
+the database and the raster data layer specified as the input map.
+<h2>
+COMMAND LINE OPTIONS</h2>
 
-<H2>NAME</H2>
-<EM><B>d.rast.pg</B></EM> - Generate and display a reclass map based on the unique values in a database column. (GRASS-RDBMS Interface Display Program)
+<h3>
+Parameters:</h3>
 
-<H2>SYNOPSIS</H2>
-<B>d.rast.pg</B><BR>
-<B>d.rast.pg help</B><BR>
-<B>d.rast.pg key</B><EM>=name</EM> <B>tab</B><EM>=name</EM> <B>col</B><EM>=name</EM> <B>input</B><EM>=name</EM> [<B>output</B><EM>=name</EM>] [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+<dl>
+<dt>
+<b>key=databasecolumnname</b></dt>
 
-<H2>ALTERNATE</H2>
-<B>d.rast.pg -s help</B><BR>
-<B>d.rast.pg -s sql</B><EM>=filename</EM> <B>input</B><EM>=name</EM> [<B>output</B><EM>=name</EM>]
+<dd>
+Column corresponding to category values in raster map [input]</dd>
 
-<H2>DESCRIPTION</H2>
-<EM>d.rast.pg</EM> displays a raster image in which each category represents a uniques value in a database column.  Values are retrieved from the current database based on a user defined
-SQL retrieve statement. The current database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If no join parameters are specified by the user a column in the database table directly linked to the GRASS raster structure via the category value must be used.  The output from this program is a set of GRASS reclass rules which are used to create and display a reclassed raster surface based on the attributes returned from the database and the raster data layer specified as the input map.
+<dt>
+<b>tab=databasetablename</b></dt>
 
-<H2>COMMAND LINE OPTIONS</H2>
+<dd>
+Table containing [col]</dd>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>key=databasecolumnname</B>
-<DD>Column corresponding to category values in raster map [input]
-<P>
+<dt>
+<b>col=databasecolumnname</b></dt>
 
-<DT><B>tab=databasetablename</B>
-<DD>Table containing [col]
-<P>
+<dd>
+Column to base reclass on</dd>
 
-<DT><B>col=databasecolumnname</B>
-<DD>Column to base reclass on
-<P>
+<br><b>where=clause</b>
+<dd>
+Where clause for query (ie. where col='paved')</dd>
 
-<DT><B>input=map</B>
-<DD>Name of existing raster file
-<P>
+<br><b>lab=name</b>
+<dd>
+Column to use as labels (optional)</dd>
 
-<DT><B>output=map</B>
-<DD>Name of new reclass map
-<P>
+<dt>
+<b>input=map</b></dt>
 
-<DT><B>join=tab,tabkey,pkey</B>
-<DD>Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
-</DL>
-<P>
-For instance, assume that secosoilcats is a table containing column values associated with category values in a the GRASS raster file soils.  In addition, assume that compyld is a table containing attribute data on the crop production capacity in the same area  (cropname).  In this example secosoilcats is the table associated with the GRASS raster map and grasscats is the column linking secosoilcats to the GRASS category file, the table compyld contains the attribute information to base the query/reclass on and it is linked to secosoilcats via the common column muid. To specify a query based on attribute values in the table compyld:
-<P>
+<dd>
+Name of existing raster file</dd>
 
-<DD><EM>d.rast.pg key=grasscat tab=secosoilcats col=cropname input=soils join=compyld,compyld.muid,secosoilcats.muid</EM>
-<P>
+<dt>
+<b>output=map</b></dt>
 
-Specifying these conditions would insure that all rows from table compyld which satisfy the query criteria would be matched with the corresponding rows in table secosoilcats, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
-<P>
+<dd>
+Name of new reclass map</dd>
+</dl>
 
-This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+<h2>
+ALTERNATE COMMAND LINE USAGE</h2>
+The alternate command line structure is selected using the the <i>[-s]</i>
+flag on the command line. When using this flag the user must include the
+name of a text file on the command line as well. This file must include
+a complete, well formed SQL SELECT statement.
+<br>&nbsp;
+<h3>
+Flag:</h3>
 
-<H2>ALTERNATE COMMAND LINE USAGE</H2>
-The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
-SQL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
-<P>
+<dl>
+<dt>
+<b>-s</b></dt>
 
-The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
-<P>
+<dd>
+SQL&nbsp; statement is input from a prepared file</dd>
+</dl>
 
-<DD><EM>retrieve unique (cfccatts.tlid,main.cfcode)
-<DD>where cfcc.majfea="roads" and cfcc.minfea="county roads" and cfcc.cfcode=main.cfcode and main.cfcode NOTNULL sort by main.cfcode using</EM>
+<h3>
+Parameters:</h3>
 
-<H3>Flag:</H3>
-<DL>
-<DT><B>-s</B>
-<DD>SQL retrieve statements are input from a prepared file
-</DL>
+<dl>
+<dt>
+<b>sql=filename</b></dt>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>sql=filename</B>
-<DD>SQL statements specifying well formed selection criteria.
+<dd>
+SQL statement specifying well formed selection criteria.</dd>
 
-<DT><B>input=map</B>
-<DD>Name of an existing raster map
+<dt>
+<b>input=map</b></dt>
 
-<DT><B>output=map</B>
-<DD>Name of a new reclass file
-</DL>
+<dd>
+Name of an existing raster map</dd>
 
-<B>EXAMPLE (two table join)</B><P>
-<EM>d.rast.pg -s sql=statsgo.sql input=secosoils</EM>
-<P>
-statsgo.sql:<BR>
-<EM>retrieve unique secosoilcats.grasscat,compyld.cropname)<BR>
-where compyld.muid = secosoilcats.muid and cropname NOTNULL sort by cropname</EM>
-<P>
+<dt>
+<b>output=map</b></dt>
 
-<B>RESULT:</B><BR>
-This example will display a raster surface with a category for each unique value of the column "cropname" from the table compyld. The raster surface will be a reclassed data layer based on the input raster map secosoils.
-
-<H2>BUGS</H2>
+<dd>
+Name of a new reclass file</dd>
+</dl>
+<b>EXAMPLE 1:</b>
+<p><i>d.rast.pg input=kur_rast_id output=soils2 tab=info_kuruma key=rec_id
+col=soils_id lab=soils_info.name where="soils_info.type_id = soils_id"</i>
+<p><b>RESULT:</b>
+<br>This example will create a raster map <i>soils2</i> with a category
+for each unique value taken from the field "soils_id" from table <i>info_kuruma</i>,
+with label of value of the column "name" from the table <i>soils_info</i>.
+The raster map will be a reclassed data layer based on the input raster
+map <i>kur_rast_id</i>.
+<p><b>EXAMPLE 2:</b>
+<p><i>d.rast.pg -s sql=raster.sql input=kur_rast_id output=soils3</i>
+<p>raster.sql:
+<p><i>select rec_id, soils_info.type_id from info_kuruma where soils_info.name
+~ 'barren' and soils_info.type_id = soils_id</i>
+<p><b>RESULT:</b>
+<br>This example will create a raster map <i>soils3</i> with a category
+for each unique value taken from the column "type_id" from the table <i>soils_info,
+</i>with only '<i>barren</i>' type<i>.</i> The raster map will be a reclassed
+data layer based on the input raster map <i>kur_rast_id</i>. Note that
+there must be two fields in the SELECT statement (these for the old and
+new values).
+<p>In this example, the input map <i>kur_rast_id</i> was prepared by <b>v.to.rast</b>
+from the vector are map <i>kuruma_id</i>, which is approximately 7,000
+polygons with unique ids (corresponding to <i>rec_id</i> field in the table
+<i>info_kuruma</i>).
+<h2>
+BUGS</h2>
 None known.
-
-<H2>NOTE</H2>
-This program requires the Postgres database software.
-
-<H2>SEE ALSO</H2>
-<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
-
-<H2>AUTHOR</H2>
-Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
-<P>
-Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
-<P>
-Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
-
-</BODY>
-</HTML>
-
+<h2>
+NOTE</h2>
+This program requires the Postgres database software. It uses the GRASS
+module r.reclass started from inside it.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

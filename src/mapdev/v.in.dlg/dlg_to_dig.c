@@ -477,7 +477,6 @@ static int scan_node_record (
     char  char_atts[7] ;
 
 
-
     sscanf(str, "%*1c%5c%12c%12c%*6c%6c%*6c%6c",
 		    char_num, char_x, char_y, char_lines, char_atts) ;
 

@@ -4,6 +4,8 @@
  *   Get region through graphics
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "site.h"
 #include "display.h"
@@ -16,47 +18,61 @@ int
 main (int argc, char **argv)
 {
     int stat;
+/* rotate?
     int rotate;
+*/
 #ifdef QUIET
     struct Flag *quiet;
 #endif
     struct Flag *just, *pan;
-    struct Option *action;
     struct Option *rmap, *vmap, *smap, *zoom;
+    struct GModule *module;
     double magnify;
     int i, first=1;
     char *mapset;
-                        
+    
+    /* Initialize globals */
+    rast = vect = site = NULL;
+    nrasts = nvects = nsites = 0;
+    
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
 
-    if(D_get_cell_list (&rast, &nrasts) < 0)
-	rast = NULL;
-    else
+    module = G_define_module();
+    module->description = 
+	    "Allows the user to change the current geographic "\
+             "region settings interactively, with a mouse.";
+
+    /* Conditionalize R_open_driver() so "help" works, open quiet as well */
+    R__open_quiet();
+    if (R_open_driver() == 0)
     {
-	rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
-	rast[nrasts] = NULL;
-    }
+        if(D_get_cell_list (&rast, &nrasts) < 0)
+            rast = NULL;
+        else
+        {
+            rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
+            rast[nrasts] = NULL;
+        }
 
-    if(D_get_dig_list (&vect, &nvects) < 0)
-	vect = NULL;
-    else
-    {
-	vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-	vect[nvects] = NULL;
-    }
+        if(D_get_dig_list (&vect, &nvects) < 0)
+            vect = NULL;
+        else
+        {
+            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+            vect[nvects] = NULL;
+        }
 
-    if(D_get_site_list (&site, &nsites) < 0)
-	site = NULL;
-    else
-    {
-	site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
-	site[nsites] = NULL;
-    }
+        if(D_get_site_list (&site, &nsites) < 0)
+            site = NULL;
+        else
+        {
+            site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+            site[nsites] = NULL;
+        }
 
-    R_close_driver();
+        R_close_driver();
+    }
                     
     rmap = G_define_option();
     rmap->key = "rast";
@@ -87,14 +103,6 @@ main (int argc, char **argv)
     smap->required = NO;
     smap->gisprompt = "old,site_lists,sites" ;
     smap->description = "Name of site file";
-
-    action = G_define_option();
-    action->key = "action";
-    action->type = TYPE_STRING;
-    action->description = "Type of zoom (for lat/lon databases only)";
-    action->options = "zoom,rotate";
-    action->required = NO;
-    action->answer = NULL; /* do NOT set a default, please */
 
     zoom = G_define_option() ;
     zoom->key        = "zoom" ;
@@ -382,17 +390,6 @@ main (int argc, char **argv)
     
     D_setup(0);
 
-/* find out for lat/lon if zoom or rotate option */
-    rotate = 0;
-    if (G_projection() == PROJECTION_LL)
-    {
-	if (action->answer)
-	    rotate = strcmp (action->answer,"rotate") == 0;
-	else
-	    rotate = ask_rotate();
-    }
-
-
     do
     {
 
@@ -402,9 +399,15 @@ main (int argc, char **argv)
 		    nsites, (nsites > 1 ? "s":""));
     /* Do the zoom */
 #ifndef QUIET
+/*
         stat = zoomwindow(1, rotate, magnify, pan->answer);
+*/
+        stat = zoomwindow(1, magnify, pan->answer);
 #else
+/*
         stat = zoomwindow(quiet->answer, rotate, magnify, pan->answer);
+*/
+        stat = zoomwindow(quiet->answer, magnify, pan->answer);
 #endif
     
     } while(stat == 2);

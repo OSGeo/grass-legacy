@@ -1,4 +1,4 @@
-README for GRASS on cygwin under MS Windows
+README for GRASS on cygwin (http://www.cygwin.com) under MS Windows
 
 The cygwin port to Win32 is still experimental.
 
@@ -15,5 +15,14 @@ Win32.
 The file cygwin_grass50bininstall.html contains a description for the
 installation of the binary distribution under cygwin. 
 
+If you have problems or questions regarding the cygwin port of GRASS, please
+contact the cygwin windows GRASS mailing list:
+
+winGRASS@grass.itc.it, see at 
+
+http://grass.itc.it/mailman/listinfo/wingrass/
+for subscription information. 
+
 -- 
+$Id$
 Andreas Lange, Andreas.Lange@Rhein-Main.de

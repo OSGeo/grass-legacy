@@ -6,16 +6,18 @@
    
 #include "gis.h"
 #include "infx.h"
+#include "display.h"
+#include "raster.h"
 #include <libpq-fe.h>
+#include <string.h>
+#include <stdlib.h>
 
-
-runqry(SQL_stmt, pts, print_out)
+int runqry(SQL_stmt, pts, print_out)
 	char *SQL_stmt;
         struct Sql *pts;
 	char *print_out;
 {
 	char buf[1024];
-	char ch ;
 	char sqlcmd[1024] ;
 	int i,j,nrows,nfields;
     	PGconn *pg_conn;
@@ -30,7 +32,7 @@ runqry(SQL_stmt, pts, print_out)
 	     @ operator test point in box 
 	  cfa 11/98   */
     
-    fprintf (stderr,"\n\nExecuting\n%s;\n clause  @ '( )'::box addded autonmatically.\n\n",sqlcmd);
+    fprintf (stderr,"\n\nExecuting\n%s;\n clause  @ '( )'::box addded automatically.\n\n",sqlcmd);
     pghost = G__getenv("PG_HOST");
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
@@ -81,7 +83,7 @@ runqry(SQL_stmt, pts, print_out)
 }
 
 
-getVal(curval, pts)
+int getVal(curval, pts)
 	int curval;
         struct Sql *pts;
 {
@@ -102,15 +104,15 @@ getVal(curval, pts)
                         return (pts->rad2);
 			break;
 	}
-
+return (-1);
 }
 
-runInfxFile(SQL_stmt, str_dist, print_out)
+int runInfxFile(SQL_stmt, str_dist, print_out)
 	char *SQL_stmt;
  	char *str_dist;
 	char *print_out;
 {
-        int    stat,button;
+        int    stat=0,button;
         double searchdist = 0.0 ;
         struct Sql *pts;
         double atof () ;

@@ -37,6 +37,8 @@
 
 #pragma ident "s.sample v 0.8B <15 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "gis.h"

@@ -7,6 +7,8 @@
 /**********************************************************************/
 
 
+#include <stdlib.h>
+#include <fcntl.h>
 #include "segment.h"
 #include "gis.h"
 #define MAIN
@@ -18,7 +20,7 @@ double east, north, west;
 int nrows, ncols;
 SEGMENT in_row_seg, in_col_seg, out_seg;
 
-main(argc,argv)
+int main(argc,argv)
 int argc;
 char *argv[];
 {
@@ -41,6 +43,15 @@ char *argv[];
 	POINT *PRES_PT, *make_point(), *NEW_START_PT, *PRESENT_PT, *OLD_PT;
 	struct Option *opt1, *opt2, *opt3, *opt4;
 	struct Flag *flag1;
+	struct GModule *module;
+
+	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Recursively traces the least cost path backwards to "
+	"cells from which the cumulative cost was determined.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "x_input" ;
@@ -74,8 +85,10 @@ char *argv[];
     	flag1->key = 'v';
      	flag1->description = "Run verbosly";
 
+	/*   Do command line parsing	*/
 
-	G_gisinit (argv[0]);
+	if (G_parser(argc, argv))
+		exit(-1);
 
 	current_mapset = G_mapset();
 	in_row_file = G_tempfile();
@@ -89,11 +102,6 @@ char *argv[];
 		G_fatal_error (buf);
 		exit(1);
 	}
-
-	/*   Do command line parsing	*/
-
-	if (G_parser(argc, argv))
-		exit(-1);
 	
         verbose = flag1->answer;
 
@@ -216,7 +224,7 @@ char *argv[];
           		if(east < window.west || east > window.east ||
              			north < window.south || north > window.north) {
                			fprintf(stderr,"Warning, ignoring point outside window: \n") ;
-               			fprintf(stderr,"   %.4lf,%.4lf\n", east, north) ;
+               			fprintf(stderr,"   %.4f,%.4f\n", east, north) ;
                			continue ;
           		}
 
@@ -225,7 +233,7 @@ char *argv[];
 			/* ignore pt in no-data area */
          		if(backrow < 0) {
                			fprintf(stderr,"Warning, ignoring point in NO-DATA area : \n") ;
-               			fprintf(stderr,"   %.4lf,%.4lf\n", east, north) ;
+               			fprintf(stderr,"   %.4f,%.4f\n", east, north) ;
                			continue ;
           		}
 			value = (char *)&backcol;
@@ -287,7 +295,7 @@ char *argv[];
 					/* ignore pt in no-data area */
          				if(backrow < 0) {
                					fprintf(stderr,"Warning, ignoring point in NO-DATA area : \n") ;
-               				fprintf(stderr,"   %.4lf,%.4lf\n", window.west + window.ew_res*(col + 0.5), window.north - window.ns_res*(row + 0.5)) ;
+               				fprintf(stderr,"   %.4f,%.4f\n", window.west + window.ew_res*(col + 0.5), window.north - window.ns_res*(row + 0.5)) ;
                			continue ;
           		}
 					value = (char *)&backcol;
@@ -331,7 +339,7 @@ char *argv[];
 	for ( row=0 ; row<nrows; row++ )
 	{
 		segment_get_row(&out_seg,cell,row);
-		if (G_put_map_row(path_fd,cell)<0)
+		if (G_put_raster_row(path_fd,cell, CELL_TYPE) < 0)
 			exit(1);
 	}
 	if (verbose) printf("finished.\n");

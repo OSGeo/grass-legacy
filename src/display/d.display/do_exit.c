@@ -1,9 +1,29 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.display
+*
+* AUTHOR(S):    
+*
+* PURPOSE:      exit d.display
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 #include "popup.h"
 #include "lproto.h"
 #include "display.h"
 #include "raster.h"
 #include "gis.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int do_exit()
 {
@@ -36,8 +56,14 @@ int do_exit()
 	G_clear_screen() ;
 	R_close_driver();
 
-	if (answer == 1)
+	if (answer == 1) {
+		if (R_open_driver() != 0)
+			G_fatal_error ("No graphics device selected");
+		if (D_set_cur_wind("full_screen"))
+			G_fatal_error("Could not establish full screen");
+		R_close_driver();
 		exit(0) ;
+	}
 
 	return 0;
 }

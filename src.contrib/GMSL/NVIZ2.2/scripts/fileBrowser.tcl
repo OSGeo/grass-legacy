@@ -79,9 +79,14 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
     frame     $w.main.directories.f
     listbox   $w.main.directories.f.list -bd 2 -relief sunken \
 	-exportselection no -selectbackground LightYellow1 \
-	-yscroll "$w.main.directories.f.scroll set" -selectmode single
+	-yscroll "$w.main.directories.f.scroll set" \
+	-xscroll "$w.main.directories.f.scrollx set" \
+	-selectmode single
     scrollbar $w.main.directories.f.scroll -command \
 	"$w.main.directories.f.list yview"
+    scrollbar $w.main.directories.f.scrollx \
+        -command "$w.main.directories.f.list xview" \
+        -orient horizontal
     
     bind $w.main.directories.f.list <ButtonRelease-1> \
 	"file_browser_select_directories  %W %y $w"
@@ -90,9 +95,14 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
     label     $w.main.files.label -text FILES
     frame     $w.main.files.f
     listbox   $w.main.files.f.list -bd 2 -relief sunken -exportselection no \
-	-selectbackground LightYellow1  -yscroll "$w.main.files.f.scroll set" \
+	-selectbackground LightYellow1 \
+	-yscroll "$w.main.files.f.scroll set" \
+	-xscroll "$w.main.files.f.scrollx set" \
 	-selectmode single
     scrollbar $w.main.files.f.scroll -command "$w.main.files.f.list yview"
+    scrollbar $w.main.files.f.scrollx \
+        -command "$w.main.files.f.list xview" \
+        -orient horizontal
 
     bind $w.main.files.f.list <ButtonRelease-1> "file_browser_select_file %W %y $w"
     
@@ -104,22 +114,26 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
     label $w.cur_directory.entry -relief sunken -textvariable file_browser($w,cur_dir) 
     
     pack $w.filename -side top -expand yes -fill x
-    pack $w.main     -side top
+    pack $w.main     -side top -expand yes -fill both
     
-    pack $w.main.directories -side left
+    pack $w.main.directories -side left -expand yes -fill both
     pack $w.main.directories.label -side top
-    pack $w.main.directories.f -side top
-    pack $w.main.directories.f.list -side left
-    pack $w.main.directories.f.scroll -side left -expand yes -fill y
-    
-    pack $w.main.files -side left
-    pack $w.main.files.label -side top
-    pack $w.main.files.f -side top
-    pack $w.main.files.f.list -side left
-    pack $w.main.files.f.scroll -side left -expand yes -fill y
+    pack $w.main.directories.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.directories.f -side top -expand yes -fill both
+    pack $w.main.directories.f.list -side left -expand yes -fill both
+    pack $w.main.directories.f.scroll -side left -expand no -fill y
 
-    pack $w.cur_directory.label $w.cur_directory.entry -side left -expand yes
-    pack $w.cur_directory
+    
+    pack $w.main.files -side left -expand yes -fill both
+    pack $w.main.files.label -side top
+    pack $w.main.files.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.files.f -side top -expand yes -fill both
+    pack $w.main.files.f.list -side left -expand yes -fill both
+    pack $w.main.files.f.scroll -side left -expand no -fill y
+
+    pack $w.cur_directory.label -side left -expand no
+    pack $w.cur_directory.entry -side left -expand yes -fill x
+    pack $w.cur_directory -expand yes  -fill x
     pack $w.accept $w.cancel -side left -expand 1
     
     refresh_file_browser $w

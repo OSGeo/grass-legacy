@@ -1,6 +1,7 @@
 #include "sdts_in.h"
 /*#include <dig_atts.h>*/
 #include <stdio.h>
+#include <stdlib.h>
 #include "sdts_globals.h"
 #include "stc123.h"
 #include "gis.h"

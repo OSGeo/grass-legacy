@@ -30,7 +30,19 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.3  2001-08-08 21:10:17  frankw
+ * Revision 1.4  2002-01-22 04:51:23  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.2.4.3  2001/09/06 14:06:11  frankw
+ * upgraded bridge error reporting
+ *
+ * Revision 1.2.4.2  2001/09/06 01:57:11  frankw
+ * added GCP (POINTS) support, and complex bands in image groups
+ *
+ * Revision 1.2.4.1  2001/08/09 13:21:01  frankw
+ * applied nodata support, and static build support to 5.0 stable branch
+ *
+ * Revision 1.3  2001/08/08 21:10:17  frankw
  * updated
  *
  * Revision 1.8  2000/11/09 16:25:30  warmerda
@@ -62,6 +74,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdio.h>
     
 /* ==================================================================== */
 /*      Standard types and defines normally supplied by cpl_port.h.     */
@@ -205,6 +219,34 @@ typedef void *GDALColorTableH;
 typedef void *OGRSpatialReferenceH;
 
 /* ==================================================================== */
+/*      GDAL_GCP                                                        */
+/* ==================================================================== */
+
+/** Ground Control Point */
+typedef struct
+{
+    /** Unique identifier, often numeric */
+    char	*pszId; 
+
+    /** Informational message or "" */
+    char	*pszInfo;
+
+    /** Pixel (x) location of GCP on raster */
+    double 	dfGCPPixel;
+    /** Line (y) location of GCP on raster */
+    double	dfGCPLine;
+
+    /** X position of GCP in georeferenced space */
+    double	dfGCPX;
+
+    /** Y position of GCP in georeferenced space */
+    double	dfGCPY;
+
+    /** Elevation of GCP, or zero if not known */
+    double	dfGCPZ;
+} GDAL_GCP;
+
+/* ==================================================================== */
 /*      Registration/driver related.                                    */
 /* ==================================================================== */
 
@@ -259,6 +301,15 @@ GDAL_ENTRY CPLErr (*pfnGDALSetGeoTransform)( GDALDatasetH, double* ) GDAL_NULL;
 GDAL_ENTRY void *(*pfnGDALGetInternalHandle)( GDALDatasetH,
                                               const char * ) GDAL_NULL;
 #define GDALGetInternalHandle pfnGDALGetInternalHandle
+
+GDAL_ENTRY int (*pfnGDALGetGCPCount)( GDALDatasetH ) GDAL_NULL;
+#define GDALGetGCPCount pfnGDALGetGCPCount
+
+GDAL_ENTRY const char *(*pfnGDALGetGCPProjection)( GDALDatasetH ) GDAL_NULL;
+#define GDALGetGCPProjection pfnGDALGetGCPProjection
+
+GDAL_ENTRY const GDAL_GCP *(*pfnGDALGetGCPs)( GDALDatasetH ) GDAL_NULL;
+#define GDALGetGCPs pfnGDALGetGCPs
 
 /* ==================================================================== */
 /*      GDALRasterBand ... one band/channel in a dataset.               */
@@ -622,7 +673,7 @@ GDAL_ENTRY int (*pOSRGetUTMZone)( OGRSpatialReferenceH hSRS,
 /*      libraries (given a hint of a directory it might be in).  It     */
 /*      returns TRUE if it succeeds, or FALSE otherwise.                */
 /* -------------------------------------------------------------------- */
-int	GDALBridgeInitialize( const char * );
+int	GDALBridgeInitialize( const char *, FILE * );
 void	*GBGetSymbol( const char *, const char * );
 
 /* -------------------------------------------------------------------- */

@@ -7,8 +7,11 @@
                   jaf 2/19/92
 */
 
+#include <stdlib.h>
 #include "gis.h"
-getAllOpts(argc, argv)
+#include "dbsite.h"
+
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
@@ -16,7 +19,7 @@ getAllOpts(argc, argv)
 
     int retval ;
 
-    struct Option  *tab, *coordx, *coordy, *cats,*where, *plot, *map ;
+    struct Option  *tab, *coordx, *coordy, *cats, *where, *plot, *map ;
 
 	retval = 0; 
 
@@ -88,7 +91,6 @@ plot->description="Colors:red,orange,yellow,green,blue,indigo,violet,magenta,bro
             exit(-1);
 	}
 
-/*************** INFX driver code begins ***************/
         retval = buildInfxQry(tab->answer,coordx->answer,coordy->answer,
                 cats->answer,where->answer,
                 map->answer, plot->answers);

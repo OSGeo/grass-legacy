@@ -27,6 +27,7 @@ char *Vect__P_init ( struct Map_info *, char *, char *) ;
 char *Vect__P_init_new_plus ( struct Map_info *, char *);
 int V2_num_lines ( struct Map_info *);
 int V2_num_areas ( struct Map_info *);
+int V2_num_islands ( struct Map_info *);
 int V2_line_att ( struct Map_info *, int );
 int V2_area_att ( struct Map_info *, int );
 int V2_get_area ( struct Map_info *, int , P_AREA **);

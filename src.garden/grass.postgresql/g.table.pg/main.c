@@ -11,7 +11,8 @@
  *   jaf 12/19/91
  */
 /*
-#----------------------A.Sh -12.99
+	A.Sh -12.99
+	
 **	Name : g.table.pg
 **
 **      Author : J.Soimasuo
@@ -21,20 +22,25 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #define MAIN
-#define TABLEN 20
-/*#define SELECT "SELECT ( pg.relname ) from pg in pg_class where pg.relname !~ \"pg_\" sort by relname";*/
-#define SELECT "select relname from pg_class where relname !~ \"pg_\" order by relname";   
 
-main(argc, argv)
+int infxTables(void);
+
+/*#define TABLEN 20
+#define SELECT "SELECT ( pg.relname ) from pg in pg_class where pg.relname !~ \"pg_\" sort by relname";
+#define SELECT "select relname from pg_class where relname !~ \"pg_\" order by
+relname";*/   
+
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
-    FILE *fp;
+
     char *dbname;
-    char *select;  
-    char sqlFile[100];
+    int res= 99;
 
 
 	/* Initialize the GIS calls */
@@ -53,9 +59,9 @@ char **argv ;
 	    exit(-1);
            }
 
-/*************** INFX driver code begins ***************/
-	infxTables();
 
-	exit(0);
+	res = infxTables();
+
+	exit(res);
 }
 

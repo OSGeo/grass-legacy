@@ -79,6 +79,13 @@ int main (int argc, char *argv[])
   module->description =        
                   "Randomly generate a GRASS sites list.";
                   
+  parm.output = G_define_option ();
+  parm.output->key = "sites";
+  parm.output->type = TYPE_STRING;
+  parm.output->required = YES;
+  parm.output->description = "sites file to be created";
+  parm.output->gisprompt = "any,site_lists,sites";
+
   parm.nsites = G_define_option ();
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;
@@ -86,12 +93,6 @@ int main (int argc, char *argv[])
   parm.nsites->description = "number of sites to be created";
   parm.nsites->options = "1-32767";
 
-  parm.output = G_define_option ();
-  parm.output->key = "sites";
-  parm.output->type = TYPE_STRING;
-  parm.output->required = YES;
-  parm.output->description = "sites file to be created";
-  parm.output->gisprompt = "any,site_lists,sites";
 
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';

@@ -33,6 +33,10 @@ echo " HEADER  = $HEADER"
 
 
 list=lists/GRASS
+if test -r $CMD/lists/optional
+then
+    list="$list lists/optional"
+fi
 if test -r $CMD/lists/local
 then
     list="$list lists/local"

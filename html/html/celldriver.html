@@ -66,16 +66,24 @@ time.
 
 Note that the <i>D_cell</i> raster map is in xy-projection with simple
 xy-coordinates.<p>
+
 The resolution of the <i>D_cell</i> raster map is defined by the map
-extents. Use the environment variables to set.
+extents. Use <em>g.region -p</em> to get the number of rows and cols and
+use the environment variables to set the D_cell size.<p>
+
+Note that the CELL driver is limited to 8bit colors.
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="g.region.html">g.region</A>,
+<EM>
+<A href=d.mon.html>d.mon</A>,                                                  
+<A HREF="g.region.html">g.region</A>,
 <A HREF="htmlmapdriver.html">htmlmapdriver</A>,
+<A HREF="pngdriver.html">pngdriver</A>,
 <A HREF="xdriver.html">XDRIVER</A>,
 <A HREF="cell.out.tiff.html">tcltkgrass cell-tiff script</A></EM>
 
 <H2>AUTHOR</H2>
 CERL 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -34,7 +34,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.5  2000-07-24 21:40:17  david
+ * Revision 1.6  2002-01-22 04:51:46  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.5.4.1  2001/12/28 08:13:57  alex
+ * Compiler warning fix
+ *
+ * Revision 1.5  2000/07/24 21:40:17  david
  *
  * Update: now synced with v.in.shape
  *
@@ -129,6 +135,7 @@ static char rcsid[] =
 
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef unsigned char uchar;
 

@@ -1,7 +1,10 @@
+#include <string.h>
 #include "gis.h"
 #include <stdio.h>
+#include <stdlib.h>
+
 /******************************************
- * $GISABSE/etc/echo [-n] args
+ * $GISBASE/etc/echo [-n] args
  *
  * echos its args to stdout
  * suppressing the newline if -n specified
@@ -9,6 +12,7 @@
  * replaces the standard UNIX echo which
  * varies from machine to machine
  *******************************************/
+
 int 
 main (int argc, char *argv[])
 {

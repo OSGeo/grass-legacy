@@ -19,7 +19,7 @@ modified multiple directions  algorithm. <P>
 <B>r.flowmd</B>  <BR>
 <B>r.flowmd help </B>  <BR>
 <B>r.flowmd </B> [<B>-d </B>] <B>elevin=name </B> <B>aspin=name 
-</B> <B>barrierin=name </B> [<B>skip=val </B>] [<B>flout=name </B> [<B>lgout=name </B>] [<B>dsout=name </B>] 
+</B> [<B>barrierin=name </B>] [<B>skip=val </B>] [<B>flout=name </B> [<B>lgout=name </B>] [<B>dsout=name </B>] 
 <P>
   
 <H2>DESCRIPTION</H2>
@@ -168,6 +168,27 @@ DEM without pits or flat areas is available. <P>
 
 <P> To label the vector flowlines automatically, the user can use
 <a href=v.llabel.html>v.llabel</a>.
+
+<H2>FURTHER NOTES</H2>
+
+Differences between <em>r.flow</em> and <em>r.flowmd</em>
+<p>
+
+<ol>
+
+<li> r.flow has an option to compute slope and aspect internally thus making
+the program capable to process much larger data sets than r.flowmd. It has
+also 2 additional options for handling of large data sets but it is not
+known that they work properly.
+<li> the programs handle the special cases when the flowline passes exactly
+(or very close) through the grid vertices differently.
+<li> r.flowmd has the simplified multiple flow addition so the results are
+smoother.
+</ol>
+
+In conclusion, <em>r.flowmd</em> produces nicer results but is slower and it
+do support as large data sets as <em>r.flow</em>.
+
  
 <H2>SEE ALSO</H2>
 <I>
@@ -213,5 +234,6 @@ Geographical Information Science, 10(5), 629-641. (reply to a comment to
 this paper appears in 1997 in Int. Journal of Geographical Information
 Science, Vol. 11, No. 6)
 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

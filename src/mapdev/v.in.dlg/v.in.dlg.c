@@ -83,15 +83,14 @@ main (int argc, char *argv[])
     offset->answer		= OFFSET_ATT;
     offset->description		= "Base for matt file";
 
+    if (G_parser (argc, argv))
+	exit (-1);
+
     /*initialize defaults*/
     force_lines = 0;
     
     gbase = G_gisbase();
     current_mapset = G_mapset();
-
-    if (G_parser (argc, argv))
-	exit (-1);
-
 
     if (l_flag->answer)
 	force_lines = 1;

@@ -22,6 +22,8 @@ char **argv)
 	struct Option *option;
 	int mode, stat ;
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Allows the user to establish whether a map will be "

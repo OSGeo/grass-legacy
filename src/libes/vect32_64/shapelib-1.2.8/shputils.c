@@ -49,7 +49,14 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-05-22 14:45:30  markus
+ * Revision 1.2  2002-01-22 04:51:12  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.1.4.1  2001/11/25 14:27:34  glynn
+ * Include stdlib.h for definition of atoi()
+ * Fix bug in r.in.doq, calling exit() without arguments
+ *
+ * Revision 1.1  2000/05/22 14:45:30  markus
  * Frank Warmerdam: added shapelib
  *
  * Revision 1.4  1999/11/05 14:12:05  warmerda
@@ -69,7 +76,10 @@ static char rcsid[] =
   "$Id$";
 
 #include "shapefil.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #ifndef FALSE
 #  define FALSE		0
 #  define TRUE		1

@@ -9,11 +9,10 @@ int main (int argc, char **argv)
 {
 	struct GModule *module;
     struct Option *spheroid;
-    struct Flag *once;
+    struct Flag *once, *decimal;
     char s_names[2048];
     char *name;
     int have_spheroid;
-    int with_info;
     double a,e;
     int i;
 
@@ -28,6 +27,10 @@ int main (int argc, char **argv)
     once = G_define_flag() ;
     once->key        = '1' ;
     once->description= "one mouse click only";
+
+    decimal = G_define_flag() ;
+    decimal->key        = 'd' ;
+    decimal->description= "Output lat/long in decimal degree";
 
     spheroid = G_define_option() ;
     spheroid->key        = "spheroid" ;
@@ -47,10 +50,13 @@ int main (int argc, char **argv)
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
 
+    if ( (G_projection() != PROJECTION_LL) )
+       decimal->answer=0;  /* -d only makes sense in LL projection */
+
     have_spheroid = 0;
     if(name = spheroid->answer)
     {
-	if (G_projection() != PROJECTION_UTM)
+	if ( (G_projection() != PROJECTION_UTM) )
 	{
 	    fprintf (stderr,"WARNING: %s=%s: only valid for UTM databses. Ignored\n",
 		spheroid->key, spheroid->answer);    
@@ -72,7 +78,7 @@ int main (int argc, char **argv)
     if (R_open_driver() != 0)
 	G_fatal_error ("No graphics device selected");
     D_setup(0);
-    where_am_i(once->answer, have_spheroid) ;
+    where_am_i(once->answer, have_spheroid, decimal->answer) ;
     R_close_driver();
 
     exit(0);

@@ -17,8 +17,9 @@ Interface Program)
 SYNOPSIS</h2>
 <b>v.reclass.pg</b>
 <br><b>v.reclass.pg help</b>
-<br><b>v.reclass.pg</b> [<b>-d]</b> <b>key</b>=name <b>tab</b>=name <b>col</b>=name
-[<b>where</b>=name] <b>input</b>=name [<b>output</b>=name] <b>type</b>=name
+<br><b>v.reclass.pg</b> [<b>-d]</b>&nbsp; <b>input</b>=name <b>key</b>=name
+<b>tab</b>=name <b>col</b>=name [<b>where</b>=name] [<b>output</b>=name]
+<b>type</b>=name
 <br><b>v.reclass.pg</b> <b>[-sd]</b> <b>sql</b>=file <b>input</b>=name
 [<b>output</b>=name] <b>type</b>=name
 <h2>
@@ -27,15 +28,15 @@ DESCRIPTION</h2>
 query. The input map may be of vector area, line or vector site type, resulting
 in the reclass map of the same type.
 <br>The sql file if chosen to input contains a single line like: 'select
-key_col, reclass_col from info_tab [where <i>clause</i>]'.<b><i></i></b>
+key_col, reclass_col from info_tab [where <i>clause</i>]'.
 <br>The users needs to either input two names of the columns interactively
 or feed them from the input sql file. The first name is the old map key
 column, the second one is the key for the new map. Additionally, a clause
-to choose only some vectors to be reclassed from the input map may be imposed,
-either interactively or from the input file. Both columns used for creating
-the reclass rules must be of numeric (integer) type.
+to choose only some vectors to be reclassed from the input map can be imposed
+by user, either interactively or from the input file. Both columns used
+for creating the reclass rules must be of numeric (integer) type.
 <br>If the user omitted the output map name, the reclass map would only
-be displayed on monitor without being actually created.
+be displayed on monitor and not created.
 <h2>
 COMMAND LINE OPTIONS</h2>
 
@@ -103,16 +104,16 @@ Name of existing vector file to be reclassed using query output.</dd>
 Name of new raster (reclass) file</dd>
 </dl>
 <b>EXAMPLE:</b>
-<p>1. Reclass to vector map of quartiles from map of parcels.
-<p><b><i>v.reclass.pg sql=reclass.sql input=kuruma_id output=kuruma_quart
-type=area</i></b><b><i></i></b>
+<p>1. Reclass to vector map of quartiles from forest stands map (<i>kuruma_id</i>).
+<p><b><i>v.reclass.pg -s -d sql=reclass.sql input=kuruma_id output=kuruma_quart
+type=area</i></b>
 <p>and reclass.sql is:
-<p><b><i>select rec_id, quartnum from info_kuruma</i></b><b></b>
-<p>2. Reclass to vector map of forest types from map of forest plots taking
-only oak (types 32-37).
-<p><b><i>v.reclass.pg -d key=rec_id col=type_id tab=info_kuruma where='type_id
-> 31 and type_id &lt; 38' input=kuruma_id output=kuruma_oak type=area</i></b>
-<br><b><i></i></b>&nbsp;
+<p><b><i>select rec_id, quartnum from info_kuruma</i></b>
+<p>2. Reclass to vector map of forest types (<i>kuruma_oak</i>) from map
+of forest plots (<i>kuruma_id</i>) taking only oak (types 32-37).
+<p><b><i>v.reclass.pg -d kuruma_id key=rec_id col=type_id tab=info_kuruma
+where='type_id > 31 and type_id &lt; 38' output=kuruma_oak type=area</i></b>
+<br>&nbsp;
 <br>&nbsp;
 <h2>
 BUGS</h2>
@@ -121,15 +122,21 @@ None known.
 NOTE</h2>
 This program requires the <a href="www.postgresql.org">PostgreSQL</a> database
 software.&nbsp; It uses other GRASS modules <b><i>v.reclass</i></b> and
-<b><i>d.vect</i></b> launched from inside.
+<b><i>d.vect</i></b>
+launched from inside.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
-<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
-<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
-<a href="d.vect.pg.html">d.vect.pg</a>, <a href="d.what.r.pg.html">d.what.r.pg</a>,
-<a href="d.what.s.pg.html">d.what.s.pg</a>, <a href="d.what.v.pg.html">d.what.v.pg</a>,
-<a href="r.reclass.pg.html">r.reclass.pg</a>, <a href="r.rescale.pg.html">r.rescale.pg</a></i>
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a></i>
 <h2>
 AUTHOR</h2>
 Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick

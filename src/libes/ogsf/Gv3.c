@@ -87,6 +87,7 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
 	    
 	    for (i=0; i < np; i++)
 	    {
+		G_percent(i, np, 2);
 		gln->p2[i][X] = points->x[i];
 		gln->p2[i][Y] = points->y[i];
 	    }

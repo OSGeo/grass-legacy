@@ -6,13 +6,13 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 
-#define PLOTPROG "g.gnuplot"
+extern const char *plot_program;
+
 #define GREATER_THAN 1
 #define LESS_THAN -1
 
 #define NOTRIM -999
 
-int atoi ();
 char **cdpath ();
 int dblcompare ();
 void save_plot ();

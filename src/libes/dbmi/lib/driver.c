@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "procs.h"
-
-extern char *getenv();
+#include <stdlib.h>
+#include <sys/stat.h>
 
 int
 db_driver(argc, argv)

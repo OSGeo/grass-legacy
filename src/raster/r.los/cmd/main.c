@@ -12,6 +12,7 @@
  *
  ****************************************************************/
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include <fcntl.h>
@@ -51,6 +52,8 @@ main (int argc, char *argv[])
 	struct point *heads[16],*SEARCH_PT;
 	struct GModule *module;
 	struct Option *opt1,*opt2,*opt3,*opt5,*opt6,*opt7;
+
+	G_gisinit (argv[0]);
 
 	module = G_define_module();
 	module->description =
@@ -97,11 +100,9 @@ main (int argc, char *argv[])
 	opt6->key        = "max_dist";
 	opt6->type       = TYPE_DOUBLE;
 	opt6->required   = NO;
-	opt6->answer     = "100";
+	opt6->answer     = "1000";
 	opt6->options    = "0-99999" ;
 	opt6->description= "Max distance from the viewing point (meters)" ;
-
-	G_gisinit (argv[0]);
 
 	if (G_parser(argc, argv))
 		exit (-1);
@@ -297,6 +298,7 @@ main (int argc, char *argv[])
 	viewpt_elev += obs_elev;
 	/*	DO LOS ANALYSIS FOR SIXTEEN SEGMENTS		*/
 	for(segment_no=1;segment_no<=16;segment_no++){
+		G_percent(segment_no, 16, 5);
 		sign_on_y= 1- (segment_no-1)/8 * 2;
 		if(segment_no>4 && segment_no<13)
 			sign_on_x= -1; 
@@ -370,13 +372,9 @@ main (int argc, char *argv[])
 		int col ;
 		segment_get_row(&seg_out,cell,row);
 		for (col=0; col < ncols; col++)
-		{
-			if (cell[col] == 1) cell[col] = 0;
-		}
-		if(G_put_map_row(new,cell) < 0)
-		{
+		    if (cell[col] == 1) G_set_null_value(&cell[col], 1, CELL_TYPE);
+		if(G_put_raster_row(new, cell, CELL_TYPE) < 0)
 			exit(1);
-		}
 	}
 	segment_release(&seg_in);	/* release memory	*/
 	segment_release(&seg_out);

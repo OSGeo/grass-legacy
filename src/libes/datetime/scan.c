@@ -5,6 +5,7 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 #include <stdio.h>
+#include <string.h>
 #include "datetime.h"
   
 static int scan_absolute (DateTime *,char *);

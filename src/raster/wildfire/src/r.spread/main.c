@@ -73,9 +73,8 @@ struct Range 	range;
 struct costHa 	*heap;
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int
+main (int argc, char *argv[])
 {
 	int col, row, srows, scols;
          
@@ -106,7 +105,21 @@ char *argv[];
         struct {
 		struct Flag 	*display, *spotting, *verbose;
 	} flag;
+	struct GModule *module;
 
+	/* initialize access to database and create temporary files */
+
+	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Simulates elliptically anisotropic spread on a graphics window and "
+	"generates a raster map of the cumulative time of spread, "
+	"given raster maps containing the rates of spread (ROS), the ROS "
+	"directions and the spread origins. It optionally produces raster maps "
+	"to contain backlink UTM coordinates for tracing spread paths. (GRASS "
+	"Raster/Display Program)";
 
 	parm.max = G_define_option() ;        
 	parm.max->key        = "max" ;        
@@ -216,16 +229,11 @@ char *argv[];
 	flag.spotting->key = 's';
 	flag.spotting->description = "For wildfires: consider SPOTTING effect";
 
-
-	/* initialize access to database and create temporary files */
-
-	G_gisinit (argv[0]);
-
-	srand(getpid()); 
-
 	/*   Parse command line */
 	if (G_parser(argc, argv))
 		exit(-1);
+
+	srand(getpid()); 
 
 	verbose = flag.verbose->answer;
 	display = flag.display->answer;

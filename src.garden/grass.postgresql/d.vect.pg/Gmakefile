@@ -1,6 +1,5 @@
 PGM       = $(BIN_CMD)/d.vect.pg
-LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) \
-		$(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB)		
 EXTRA_CFLAGS = $(PQINCPATH) 
 # -Dunlink=puts
 
@@ -15,6 +14,6 @@ OBJS = \
 	plotCat.o 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

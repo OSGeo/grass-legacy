@@ -6,8 +6,8 @@
  * The external variables define the pixle limits of the graphics surface.  The
  * coordinate system used by the applications programs has the (0,0) origin
  * in the upper left-hand corner.  Hence,
- *    SCREEN_LEFT < SCREEN_RIGHT
- *    SCREEN_TOP  < SCREEN_BOTTOM 
+ *    screen_left < screen_right
+ *    screen_top  < screen_bottom 
  *
  */
 
@@ -20,17 +20,18 @@
 #define MAIN
 #include "htmlmap.h"
 
-int SCREEN_LEFT	  = 1;
-int SCREEN_TOP    = 1;
+int screen_left;
+int screen_top;
+int screen_right;
+int screen_bottom;
 
-int SCREEN_RIGHT;
-int SCREEN_BOTTOM;
+int NCOLORS       = 256 ;
 
 int BBOX_MINIMUM;
 int MAX_POINTS;
 int MINIMUM_DIST;
 
-int Graph_Set (void) 
+int Graph_Set (int argc, char **argv, int nlev) 
 {
     char *p;
 
@@ -46,21 +47,21 @@ int Graph_Set (void)
      */
 
     if (NULL != (p = getenv ("GRASS_WIDTH"))) {
-	SCREEN_RIGHT = atoi (p);
-        if (SCREEN_RIGHT <= 1) {
-	    SCREEN_RIGHT = DEF_WIDTH;
+	screen_right = atoi (p);
+        if (screen_right <= 0) {
+	    screen_right = DEF_WIDTH;
         }
     } else {
-	SCREEN_RIGHT = DEF_WIDTH;
+	screen_right = DEF_WIDTH;
     }
 
     if (NULL != (p = getenv ("GRASS_HEIGHT"))) {
-	SCREEN_BOTTOM = atoi (p);
-        if (SCREEN_BOTTOM <= 0) {
-            SCREEN_BOTTOM = DEF_HEIGHT;
+	screen_bottom = atoi (p);
+        if (screen_bottom <= 0) {
+            screen_bottom = DEF_HEIGHT;
         }
     } else {
-	SCREEN_BOTTOM = DEF_HEIGHT;
+	screen_bottom = DEF_HEIGHT;
     }
 
     /*
@@ -124,7 +125,7 @@ int Graph_Set (void)
 
 
     printf("HTMLMAP: collecting to file: %s\n width = %d, height = %d, ",
-		file_name, SCREEN_RIGHT, SCREEN_BOTTOM);
+		file_name, screen_right, screen_bottom);
 
     /*
      * check type of map wanted

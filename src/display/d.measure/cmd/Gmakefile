@@ -5,6 +5,6 @@ LIST = main.o msurements.o draw_line.o
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(IMAGERYLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

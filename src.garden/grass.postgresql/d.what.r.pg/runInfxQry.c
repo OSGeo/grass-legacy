@@ -1,8 +1,10 @@
 #include "gis.h"
 #include <libpq-fe.h>
-#include <stdio.h> 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-runInfxQry(SQL_stmt,print_out)
+int runInfxQry(SQL_stmt,print_out)
 	char *SQL_stmt;
 	char *print_out;
 	
@@ -16,6 +18,7 @@ runInfxQry(SQL_stmt,print_out)
    	PGresult *res;
     	char    *pghost;
 	int vrbs=0;
+	int upd = 0;
 	
 	snprintf(sqlcmd,1024, 
           "%s",SQL_stmt);
@@ -34,11 +37,15 @@ runInfxQry(SQL_stmt,print_out)
     }
  
     res = PQexec (pg_conn, sqlcmd);
+if ( strncmp(sqlcmd,"update",6) && strncmp(sqlcmd,"UPDATE",6) ){
+
+upd=1;
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
       printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
+}
 
     nfields = PQnfields(res);
     nrows = PQntuples(res);  
@@ -63,7 +70,7 @@ runInfxQry(SQL_stmt,print_out)
       			fprintf (stderr,"\n");
     	} 
 	
- 	if(vrbs)
+ 	if(vrbs && upd)
     	fprintf(stderr,"\n%d rows selected\n\n",nrows);
     
 

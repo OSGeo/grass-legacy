@@ -14,6 +14,7 @@
          *   combinations thereof, now known or later developed.   *
          *---------------------------------------------------------*/
 
+#include <stdlib.h>
 #include "agnps_input.h"
 
 
@@ -939,7 +940,7 @@ slope length exceeds */
                  else
                   { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
                     fprintf (stderr,"       Your current set is %i \n",grid_res);
-                    exit(0);
+                    exit(1);
                   }
                  fprintf(stderr,"Please resize the GRASS monitor\n");
                  fprintf(stderr,"so that each cell can be clearly identified\n");
@@ -993,7 +994,7 @@ slope length exceeds */
                     else
                      { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
                        fprintf (stderr,"       Your current set is %i \n",grid_res);
-                       exit(0);
+                       exit(1);
                      }
                     fprintf(stderr,"Please resize the GRASS monitor\n");
                     fprintf(stderr,"so that each cell can be clearly identified\n");
@@ -1037,7 +1038,7 @@ slope length exceeds */
                     else
                      { fprintf (stderr,"ERROR: The map resolution must be greater than 0\n");
                        fprintf (stderr,"       Your current set is %i \n",grid_res);
-                       exit(0);
+                       exit(1);
                      }
                     fprintf(stderr,"Please resize the Grass monitor\n");
                     fprintf(stderr,"so that each cell can be clearly identified\n");
@@ -1234,7 +1235,7 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
    if ((fs = fopen (in_fl_name,"w")) == NULL)
     { fprintf (stderr,"Input file for AGNPS model can't open\n");
       clean_up();
-      exit();
+      exit(1);
     }
 
 /* write project description and other wshd parameters in the data file */	
@@ -1338,13 +1339,13 @@ void create_output_file(int user_fert_lvl, pest_scenario *pest_scenario_array,
          if((fdlot = fopen("fdlot.dat","r")) == NULL)
           { fprintf(stderr,"Cannot open feedlot data file\n");
             fprintf(stderr,"for read in preparing cell input\n");
-            exit(0);
+            exit(1);
           }
 
          if((nfdlot = fopen("nfdlot.dat","r")) == NULL)
           { fprintf(stderr,"Cannot open nfeedlot data file\n");
             fprintf(stderr,"for read in preparing cell input\n");
-            exit(0);
+            exit(1);
           }
 
          /*  For nonfeedlot point source         */

@@ -1,16 +1,18 @@
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
 
-int main(argc, argv)
-int argc ;
-char **argv ;
+int
+main (int argc, char *argv[])
 {
     dbConnection conn;
     struct Flag *print;
     struct Option *driver, *database, *location, *user, *password, *keycol;
-    
+    struct GModule *module;
+        
     print = G_define_flag();
     print->key               = 'p';
     print->description       = "Use -p flag to print only current connection parameters";    
@@ -60,6 +62,11 @@ char **argv ;
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Connect to the database through DBMI.";
+    
     /* Check command line */
     if (G_parser(argc, argv))
 	exit(-1);

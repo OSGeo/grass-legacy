@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/bin/sh
+
+#uncomment for DEBUG
+#set -x
 
 ##############################################################################
 #
@@ -21,6 +24,7 @@
 #  creates and deletes raster file D_cell 
 #  resets region to default
 #
+# 10/2001: modified to paint mirrors in different colors Markus Neteler
 #############################################################################
 
 # check GISBASE for running under GRASS
@@ -30,9 +34,13 @@ if test "$GISBASE" = "" ; then
     exit 1
 fi
 
+#don't mail errors
+export GRASS_STDERR=1
+
 # set output for grass commands, normally /dev/null, change to /dev/tty
 # (or /dev/stdout or /dev/fd/1 if supported on your system) for debugging
 out=/dev/null
+out2=/dev/stdout # needed for HTMLMAP, seems to be a bug?!
 
 # get current grass env
 eval `g.gisenv`
@@ -53,10 +61,22 @@ eval `g.gisenv`
 grass_sites="grass.sites.main grass.sites.mirror"
 
 # must be one map color for each map file (see coastline labels & colors below)
-map_colors="green orange"
+#red,orange,yellow,green,blue,indigo,white,black,brown,magenta,gray,grey
+#     bug: aqua, indigo don't seem to work
+#first two colors and ble are reserved:
+map_mirror_colors="green orange white yellow magenta red white yellow magenta red white yellow magenta red"
+
+#write this variable to array:
+set $map_mirror_colors
 
 # world vector map
 world_vec=wdbtemp4
+eval `g.findfile element=dig file=$world_vec`
+testonly="${fullname}"
+if [ "$testonly" = "" ] ; then
+      echo "ERROR: vector map [$world_vec] does not exist."
+      exit 1
+fi 
 
 GRASS_HEIGHT=320
 GRASS_WIDTH=640
@@ -99,18 +119,18 @@ g.remove vect=temp__coast    >$out 2>&1
 # label the image, be sure to change colors & names to reflect site categories
 echo "labeling map..."
 d.font font=romans  >$out 2>&1
-echo " GRASS Main Sites" | d.text size=5 color=green  line=17
-echo " Mirror Sites"     | d.text size=5 color=orange line=18
+echo " GRASS GIS main and" | d.text size=5 color=white line=16
+echo " mirror web sites"   | d.text size=5 color=white line=17
 
 # now extract and draw the site areas
 color=1
 g.remove vect=temp__vec >$out 2>&1
 
+counter=1
 for site in $grass_sites
 do
   echo ""
   echo "drawing areas for file: $site"
-  areacolor=`echo "$map_colors" | awk "{print \\$$color ;}"`
   cat $site | while read line
   do
     IFSSAVE=$IFS
@@ -119,9 +139,20 @@ do
     IFS=$IFSSAVE
     countries="$1"
     url=`echo $2 | tr -d "\012"`
+    
+    set $map_mirror_colors  # reset colors
+    dummy=1
+    while [ $dummy -lt $counter ] ; do
+         # fast forward to new color
+         shift # shift the map_mirror_colors order to get next element 
+         dummy=`expr $dummy + 1`
+    done
+    areacolor=$1
+    counter=`expr $counter + 1` # needed to select colors
 
     echo ""
     echo "  url: $url"
+    echo "  areacolor: $areacolor" 
     echo "  extracting and drawing: $countries"
     vec_list=`egrep -i "$countries" $LOCATION/dig_cats/$world_vec | \
 	cut -f1 -d: | tr "\012" "," | sed -e 's/,$//'`
@@ -136,11 +167,11 @@ do
 
     # draw the htmlmap areas
     d.mon select=HTMLMAP     >$out 2>&1
-    sleep 2
+    sleep 4
     echo $url | tr -d "\012" | d.text  >$out 2>&1
     d.area map=temp__vec     >$out 2>&1
     g.remove vect=temp__vec  >$out 2>&1
-
+ 
   done
   color=`expr $color + 1`
 
@@ -151,7 +182,7 @@ echo ""
 echo "stopping drivers..."
 d.mon stop=CELL         >$out 2>&1
 sleep 5
-d.mon stop=HTMLMAP      >$out 2>&1
+d.mon stop=HTMLMAP      >$out2 2>&1
 sleep 5
 
 # convert the CELL into a graphic format

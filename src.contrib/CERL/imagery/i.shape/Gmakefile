@@ -2,19 +2,15 @@ PGM = i.shape
 
 LIST =main.o\
 	zc_curve.o\
-	fft.o\
 	polint.o\
 	ratint.o\
 	splint.o\
-	max_pow2.o\
 	fft_curve.o\
 	class.o\
-	del2g.o\
-	getg.o\
-	mult.o\
 	findzc.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(GISLIB) $(GMATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 
-$(GISLIB): #
+$(LIBES): #

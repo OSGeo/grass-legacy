@@ -1,11 +1,13 @@
-/* Updated for GRASS 5 9/99 Bill Hughes */
 /*
- *   d.vect.cat
+ *   d.vect (was: d.vect.cats)
  *
+ *   - merged d.vect code into 1/2002 Markus Neteler
+ *   - updated for GRASS 5 9/99 Bill Hughes
  *
  *   Draw the category in the binary vector (dig) file that
  *   the user wants displayed on top of the current image.
  *   jaf 12/1/91
+ *
  */
 #include <stdlib.h>
 #include <string.h>
@@ -13,27 +15,31 @@
 #include "Vect.h"
 #include "display.h"
 #include "raster.h"
-
+#include "colors.h"
 #define MAIN
-int plotCat(char *, char *, struct line_pnts *, int, int);
+#include "local_proto.h"
+int quiet = 1;
 
 int main( int argc , char **argv )
 {
 	char *mapset ;
         char **ptr;
 	char buf[1024] ;
-	int stat ;
+	int stat=0;
 	int color,fill;
         int line_cat;
 	char map_name[128] ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3;
-	struct Flag *flag1;
+	struct Flag *flag1, *flag2;
 	struct line_pnts *Points;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"Tool for viewing vector maps with labels.";
+		"displays vector maps, optionally only selected categories in current monitor window.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -47,23 +53,23 @@ int main( int argc , char **argv )
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+	opt2->options    = D_COLOR_LIST ;
 	opt2->description= "Color desired for drawing map" ;
 
         opt3 = G_define_option();
-        opt3->key	= "cat" ;
+        opt3->key	= "catnum" ;
         opt3->type	= TYPE_INTEGER ;
-	opt3->required	= YES ;
+	opt3->required	= NO ;
 	opt3->multiple	= YES ;
-	opt3->description= "Vector category type to be displayed" ;
+	opt3->description= "Vector category number(s) to be displayed" ;
 
 	flag1 = G_define_flag();
 	flag1->key 	= 'f';
-	flag1->description= "Fill areas";
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
+	flag1->description= "Fill areas of selected polygons";
+	
+	flag2 = G_define_flag ();
+	flag2->key             = 'v';
+	flag2->description     = "Run verbosely";
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -71,6 +77,7 @@ int main( int argc , char **argv )
 
 	fill=0;
 	fill=flag1->answer;
+	quiet = !flag2->answer;
 
 	strcpy(map_name, opt1->answer);
 
@@ -89,29 +96,43 @@ int main( int argc , char **argv )
 		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
-
 	R_standard_color(color) ;
-
-
+	
+        /********** First try level 2 vector read ***********/
         Points = Vect_new_line_struct ();
-        
-/********** Force use of level 2 vector read ***********/
 
-       if((ptr = opt3->answers) != NULL)   /* Use opt#->answers for multiple */
+        if((ptr = opt3->answers) != NULL)   /* Use opt#->answers for multiple */
+        {
           for (; *ptr != NULL; ptr++)
             {
                line_cat = atoi(*ptr);
-               printf("\nCategory = %d\n",line_cat);
-	       stat = plotCat (map_name, mapset, Points, line_cat,fill);
-/*
-	       stat = plotCat (map_name, mapset, Points, line_cat);
-*/
-	       D_add_to_list(G_recreate_command()) ;
+               fprintf(stdout, "Selected category number = %d\n",line_cat);
+	       stat = plotCat (map_name, mapset, Points, line_cat, fill);
+	       D_add_to_list(G_recreate_command());
              }
+        }
+        else /* we want to see all vectors, no opt3 */
+        {
+          /* Vlevel 2 plotting, area filling not supported (yet?) */
+          if (fill)
+             fprintf(stderr, "-f ignored as only supported for vector selections with 'catnum' parameter\n");
+          stat = plot2 (map_name, mapset, Points);
+          D_add_to_list(G_recreate_command());
+        }
 
+        if (stat < 0 ) /* no topology found, try again */
+        {
+          /* Vlevel 1 plotting, area filling not supported (yet?) */
+          if (fill)
+             fprintf(stderr, "-f ignored as only supported for vector selections with 'catnum' parameter\n");
+          if (opt3->answer)
+             fprintf(stderr, "WARNING: Cannot select vectors as topology not present. Run v.support first\n");
+          if (use_plot1(map_name, mapset))
+             stat = plot1 (map_name, mapset, Points);
+          D_add_to_list(G_recreate_command());
+        }
+        
     Vect_destroy_line_struct (Points);
-
-	R_close_driver();
-	exit(stat);
+    R_close_driver();
+    exit(stat);
 }
-

@@ -9,8 +9,10 @@ static int nlines = 50;
 
 #define WDTH 2
 
-int what(int once, int terse, int width, int mwidth,
-	 int dodbmi, char *table, char *key)
+int what(int once,
+	 int terse,
+	 int width,
+	 int mwidth)
 {
   int lcat, acat ;
   int row, col;
@@ -120,25 +122,17 @@ int what(int once, int terse, int width, int mwidth,
                   lcat = Map[i].Att[Line->att].cat ;
                   if (Cats[i].num > 0) 
             	{
-		  if(dodbmi){
-		    disp_attr( table, key, lcat );
-		  } else {
-            	    fprintf (stdout,"Line - Category %d %s\n", lcat,
+            	  fprintf (stdout,"Line - Category %d %s\n", lcat,
             		   G_get_cat(lcat, &Cats[i]));
-            	    if (notty)
-            	      fprintf (stderr,"Line - Category %d %s\n", lcat,
+            	  if (notty)
+            	    fprintf (stderr,"Line - Category %d %s\n", lcat,
             		     G_get_cat(lcat, &Cats[i]));
-		  }
             	}
                   else 
             	{
-		  if(dodbmi){
-		    disp_attr( table, key, lcat );
-		  } else {
-            	    fprintf (stdout,"Line - Category %d <not labeled>\n", lcat);
-            	    if (notty)
-            	      fprintf (stderr,"Line - Category %d <not labeled>\n", lcat);
-		  }
+            	  fprintf (stdout,"Line - Category %d <not labeled>\n", lcat);
+            	  if (notty)
+            	    fprintf (stderr,"Line - Category %d <not labeled>\n", lcat);
             	}
                 }
               else 
@@ -163,25 +157,17 @@ int what(int once, int terse, int width, int mwidth,
                   acat = Map[i].Att[Area->att].cat ;
                   if (Cats[i].num > 0) 
             	{
-		  if(dodbmi){
-		    disp_attr( table, key, acat );
-		  } else {
-            	    fprintf (stdout,"Area - Category %d %s\n", acat,
+            	  fprintf (stdout,"Area - Category %d %s\n", acat,
             		   G_get_cat(acat, &Cats[i]));
-            	    if (notty)
-            	      fprintf (stderr,"Area - Category %d %s\n", acat,
+            	  if (notty)
+            	    fprintf (stderr,"Area - Category %d %s\n", acat,
             		     G_get_cat(acat, &Cats[i]));
-		  }
             	}
                   else 
             	{
-		  if(dodbmi){
-		    disp_attr( table, key, acat );
-		  } else {
-            	    fprintf (stdout,"Area - Category %d <not labeled>\n", acat);
-            	    if (notty)
-            	      fprintf (stderr,"Area - Category %d <not labeled>\n", acat);
-		  }
+            	  fprintf (stdout,"Area - Category %d <not labeled>\n", acat);
+            	  if (notty)
+            	    fprintf (stderr,"Area - Category %d <not labeled>\n", acat);
             	}
                 }
               else 

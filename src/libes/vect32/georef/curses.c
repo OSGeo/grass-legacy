@@ -4,6 +4,7 @@
 
 
 #include <curses.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
 #include "georef.h"
@@ -17,14 +18,11 @@ static int _curses_state = 0 ;
 int 
 Init_curses (void)
 {
-    Get_old_tty ();
     initscr ();
     raw();
     crmode();
     noecho();
     nonl()  ;
-
-    Get_new_tty ();
 
 
 setbuf(stderr, NULL);
@@ -270,14 +268,15 @@ int mysuspend (void)
 {
     move (LINES-1, 0);
     refresh ();
-    Old_tty ();
+    endwin ();
+    _Curses_off();
 
     return 0;
 }
 
 int myrespend (void)
 {
-    New_tty();
+    _Curses_on();
     move (0, 0);
     clear ();
     touchwin (curscr);

@@ -3,7 +3,7 @@
 
 /*------------ A.Sh. 29.12.99 */
 
-buildInfxQry(ktab,keycat,curcat)
+int buildInfxQry(ktab,keycat,curcat)
 	struct Option *ktab, *keycat; 
 	int curcat;
 {

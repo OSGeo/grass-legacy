@@ -1,0 +1,27 @@
+OFILES = \
+	do_dots.o\
+	do_line.o\
+	find_area.o\
+	ply_t_bmif.o\
+	save_area.o\
+	wrte_recrd.o\
+	yadjust.o
+	
+LIBES = $(GISLIB)
+
+all: $(BIN_CMD)/bmif_to_cell $(BIN_CMD)/poly_to_bmif
+
+$(BIN_CMD)/bmif_to_cell: bmf_to_cll.o $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ bmf_to_cll.o $(LIBES) $(XDRLIB)
+
+$(BIN_CMD)/poly_to_bmif: $(OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES)
+
+bmf_to_cll.o:   ply_to_cll.h
+do_dots.o:      ply_to_cll.h
+do_line.o:      ply_to_cll.h
+find_area.o:    ply_to_cll.h
+ply_t_bmif.o:   ply_to_cll.h
+save_area.o:    ply_to_cll.h
+wrte_recrd.o:	ply_to_cll.h
+yadjust.o:	ply_to_cll.h

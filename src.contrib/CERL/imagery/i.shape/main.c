@@ -1,5 +1,5 @@
 /*
-This software package is for spacial shape identification and classification
+This software package is for spatial shape identification and classification
 Hong Chun Zhuang
 Sep.21,1992 at EC, CERL
 
@@ -39,6 +39,7 @@ int main (int argc, char *argv[])
         int save_args(); /* function to stash the command line arguments */
         struct Option *input_map, *output_map, *width, *threshold, 
 		*orientations ;
+	struct GModule *module;
         char *me, fileout[40];
 	double totals, ds[POINTS],length[1024],curvature[1024],dy;
 	double ext_ds[3*POINTS];
@@ -48,6 +49,11 @@ int main (int argc, char *argv[])
 
         G_gisinit(argv[0]);
         me = G_program_name();
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Performs spatial shape identification and classification";
 
         /* define options */
         input_map = G_define_option();

@@ -16,6 +16,7 @@
  *
  *************************************************************************/
 
+#include <string.h>
 #include "gis.h"
 
 static char **mapset_name ;

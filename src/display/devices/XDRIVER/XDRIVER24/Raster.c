@@ -1,26 +1,14 @@
+
 #include "gis.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
-#include "../lib/colors.h"
-#include "../lib/driver.h"
+#include "colors.h"
+#include "driver.h"
 
-extern Display *dpy;
-extern Window grwin;
-extern GC gc;
-extern Pixmap bkupmap;
-extern int backing_store;
-extern u_long *xpixels;
-extern Colormap fixedcmap;
-
-static int do_nothing(int);
-
-XImage *grimage;
-static short alloc = 0, gotimage = 0;
-typedef unsigned char byte;
-XColor defs;
-int tmp = 0;
-
+static XImage *grimage;
+static int alloc;
+static int gotimage;
 
 /* Write 'nrows' lines of 'num' pixels contained as ints in 'array' to
  * the screen starting at the current position. 'withzeros' indicates
@@ -30,7 +18,7 @@ int tmp = 0;
  * color look-up table. */
 
 int 
-Raster_int (int num, int nrows, int *array, int withzeros, int color_type)
+Raster_int(int num, int nrows, int *array, int withzeros, int color_type)
 {
     int i, j;
     int *arr ;
@@ -42,8 +30,8 @@ Raster_int (int num, int nrows, int *array, int withzeros, int color_type)
 
 
     /* Unless this is 1st time thru or if raster line length has
-         * changed we don't need to reallocate space or re-create the
-         * Ximage. */
+     * changed we don't need to reallocate space or re-create the
+     * Ximage. */
     if (alloc < num) {
 	int pad;
         if (gotimage) {
@@ -55,39 +43,41 @@ Raster_int (int num, int nrows, int *array, int withzeros, int color_type)
 	if (xwa.depth > 8 ) pad = 32;
 	else pad = 8;
         grimage = XCreateImage(dpy, xwa.visual, xwa.depth, ZPixmap,
-            0, None, num, 1, pad, 0);
+			       0, None, num, 1, pad, 0);
         gotimage = 1;
+
 #ifdef DEBUG
-{
-static int first = 1;
-if (first) {
-fprintf (stdout,"visual = %d, depth = %d\n",xwa.visual->class,xwa.depth);
-fprintf (stdout,"ximage->width = %d\n",grimage->width);
-fprintf (stdout,"ximage->height = %d\n",grimage->height);
-fprintf (stdout,"ximage->xoffset = %d\n",grimage->xoffset);
-fprintf (stdout,"ximage->format = %d\n",grimage->format);
-fprintf (stdout,"ximage->byte_order %d\n",grimage->byte_order);
-fprintf (stdout,"ximage->bitmap_unit = %d\n",grimage->bitmap_unit);
-fprintf (stdout,"ximage->bitmap_bit_order = %d\n",grimage->bitmap_bit_order);
-fprintf (stdout,"ximage->bitmap_pad = %d\n",grimage->bitmap_pad);
-fprintf (stdout,"ximage->depth = %d\n",grimage->depth);
-fprintf (stdout,"ximage->bytes_per_line = %d\n",grimage->bytes_per_line);
-fprintf (stdout,"ximage->bits_per_pixel = %d\n",grimage->bits_per_pixel);
-fprintf (stdout,"ximage->red_mask = %d\n",grimage->red_mask);
-fprintf (stdout,"ximage->green_mask = %d\n",grimage->green_mask);
-fprintf (stdout,"ximage->blue_mask = %d\n",grimage->blue_mask);
-first = 0;
-}}
+	{
+	    static int first = 1;
+	    if (first) {
+		fprintf (stdout,"visual = %d, depth = %d\n",xwa.visual->class,xwa.depth);
+		fprintf (stdout,"ximage->width = %d\n",grimage->width);
+		fprintf (stdout,"ximage->height = %d\n",grimage->height);
+		fprintf (stdout,"ximage->xoffset = %d\n",grimage->xoffset);
+		fprintf (stdout,"ximage->format = %d\n",grimage->format);
+		fprintf (stdout,"ximage->byte_order %d\n",grimage->byte_order);
+		fprintf (stdout,"ximage->bitmap_unit = %d\n",grimage->bitmap_unit);
+		fprintf (stdout,"ximage->bitmap_bit_order = %d\n",grimage->bitmap_bit_order);
+		fprintf (stdout,"ximage->bitmap_pad = %d\n",grimage->bitmap_pad);
+		fprintf (stdout,"ximage->depth = %d\n",grimage->depth);
+		fprintf (stdout,"ximage->bytes_per_line = %d\n",grimage->bytes_per_line);
+		fprintf (stdout,"ximage->bits_per_pixel = %d\n",grimage->bits_per_pixel);
+		fprintf (stdout,"ximage->red_mask = %d\n",grimage->red_mask);
+		fprintf (stdout,"ximage->green_mask = %d\n",grimage->green_mask);
+		fprintf (stdout,"ximage->blue_mask = %d\n",grimage->blue_mask);
+		first = 0;
+	    }
+	}
 #endif
         bytes_per_pixel = (grimage->bits_per_pixel + 7)/8;
         if (alloc == 0)
-            grimage->data =  (char *) G_malloc((size_t) (num * bytes_per_pixel));
+            grimage->data =  G_malloc(num * bytes_per_pixel);
         else
-            grimage->data =  (char *) G_realloc((void *)grimage->data, (size_t) (num * bytes_per_pixel));
+            grimage->data =  G_realloc(grimage->data, num * bytes_per_pixel);
         if (grimage->data == NULL)
             return (-1);        /* not enough space left */
     }
-/* If zeros are to be included, an entire raster row can be constructed */
+    /* If zeros are to be included, an entire raster row can be constructed */
     if (withzeros) {
         char *pix;
 
@@ -100,23 +90,22 @@ first = 0;
 	    for (i = 0; i < num; i++)
 		XPutPixel(grimage, i, 0, (u_long) *arr++);
         }
+        else if (use_visual->class >= TrueColor) {
+	    for (i = 0; i < num; i++)
+		XPutPixel(grimage, i, 0, (u_long) *arr++);
+        }
         else {
 	    for (i = 0; i < num; i++)
 		XPutPixel(grimage, i, 0, (u_long) xpixels[*arr++]);
         }
 
-        for (i = 0; i < nrows; i++) {
-            XPutImage(dpy, grwin, gc, grimage, 0, 0, cur_x, cur_y + i, num, 1);
-            if (!backing_store) {
-                XPutImage(dpy, bkupmap, gc, grimage, 0, 0, cur_x, cur_y + i,
-                    num, 1);
-            }
-        }
+        for (i = 0; i < nrows; i++)
+	    XPutImage(dpy, bkupmap, gc, grimage, 0, 0, cur_x, cur_y + i, num, 1);
     }
     /* If zeros are not included may need to draw many shorter rasters.
-         * If the pixel value in array is zero we don't disturb the
-         * existing pixel of the drawable. If the pixel is non-zero we
-         * re-write it. */
+     * If the pixel value in array is zero we don't disturb the
+     * existing pixel of the drawable. If the pixel is non-zero we
+     * re-write it. */
     else {
         int start_col, width;
 
@@ -127,11 +116,8 @@ first = 0;
             if (*arr == 0) {
                 if (width > 0) {
                     for (i = 0; i < nrows; i++) {
-                        XPutImage(dpy, grwin, gc, grimage, 0, 0,
-                            cur_x + start_col, cur_y + i, width, 1);
-                        if (!backing_store)
-                            XPutImage(dpy, bkupmap, gc, grimage, 0, 0,
-                                cur_x + start_col, cur_y + i, width, 1);
+			XPutImage(dpy, bkupmap, gc, grimage, 0, 0,
+				  cur_x + start_col, cur_y + i, width, 1);
                     }
                     width = 0;
                     start_col = j + 1;
@@ -142,17 +128,24 @@ first = 0;
                 if (get_table_type() == FLOAT) {
                     if ( color_type )
                         XPutPixel(grimage, width++, 0,
-                            (u_long) _get_color_index(*arr));
+				  (u_long) _get_color_index(*arr));
                     else 
                         XPutPixel(grimage, width++, 0,
-                            (u_long) *arr);
+				  (u_long) *arr);
+                } else if (use_visual->class >= TrueColor) {
+                    if ( color_type )
+                        XPutPixel(grimage, width++, 0,
+				  (u_long) _get_color_index(*arr));
+		    else
+                        XPutPixel(grimage, width++, 0,
+				  (u_long) *arr);
                 } else {
                     if ( color_type )
                         XPutPixel(grimage, width++, 0,
-                            (u_long) xpixels[_get_color_index(*arr)]);
-                        else
+				  (u_long) xpixels[_get_color_index(*arr)]);
+		    else
                         XPutPixel(grimage, width++, 0,
-                            (u_long) xpixels[_get_color_index(*arr)]);
+				  (u_long) xpixels[*arr]);
                 }
             }
             arr++;
@@ -160,18 +153,11 @@ first = 0;
         /* Flush out any remaining data */
         if (width > 0) {
             for (i = 0; i < nrows; i++) {
-                XPutImage(dpy, grwin, gc, grimage, 0, 0,
-                    cur_x + start_col, cur_y + i, width, 1);
-                if (!backing_store)
-                    XPutImage(dpy, bkupmap, gc, grimage, 0, 0,
-                        cur_x + start_col, cur_y + i, width, 1);
+		XPutImage(dpy, bkupmap, gc, grimage, 0, 0,
+			  cur_x + start_col, cur_y + i, width, 1);
             }
         }
     }
+    needs_flush = 1;
     return 1;
-}
-
-static int do_nothing(int n)
-{
-    return (n);
 }

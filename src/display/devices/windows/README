@@ -1,0 +1,4 @@
+This directory contains code for a generic Windows
+GRASS display driver.
+
+Note, that the library name is libG11.dll

@@ -8,8 +8,7 @@
 <H2>NAME</H2>
 
 <EM><b>bug.report.sh</b></EM>  - A mechanism for writing, storing,
-and e-mailing to USACERL users' bug reports on GRASS 4.1
-commands.
+and e-mailing bug reports on GRASS 5 commands.
 
 <BR>
 
@@ -17,34 +16,36 @@ commands.
 
 <H2>SYNOPSIS</H2>
 
-<B>bug.report.sh </B><EM>4.1_program.name</EM> [<EM>program_arguments</EM>]
+<B>bug.report.sh </B><EM>module_name</EM> [<EM>module_arguments</EM>]
 
 <H2>DESCRIPTION</H2>
 
 <EM>bug.report.sh</EM>
-is a Bourne shell (sh(1)) script which, when given a GRASS 4.1 program name,
+is a Bourne shell (sh(1)) script which, when given a GRASS 5 module name,
 allows the user to complete a bug report for that program.
-Completed bug reports can be e-mailed to the GRASS development group
-at USACERL, saved to a file in the user's home directory, or discarded.
+Completed bug reports can be e-mailed to the GRASS development Team
+(<a href=http://intevation.de/rt/webrt?q_queue=grass>GRASS Bug report
+system</a>), saved to a file in the user's home directory, 
+or discarded.
 
 <H2>OPTIONS</H2>
 
 This program is not interactive;  the user must specify the name of a
-4.1 program on the command line.  Program arguments can optionally be
+5.x module on the command line.  Program arguments can optionally be
 entered by the user.
 
 <H3>Parameters:</H3>
 
 <DL>
 
-<DT><EM>4.1_program.name</EM> 
+<DT><EM>module_name</EM> 
 
-<DD>The name of an existing GRASS version 4.1 program tested by the user.
+<DD>The name of an existing GRASS version 5 program tested by the user.
 
-<DT><EM>program_argument(s)</EM> 
+<DT><EM>module_argument(s)</EM> 
 
 <DD>Program arguments (parameters and/or flags) for the
-<EM>4.1_program.name</EM> tested by the user.  The user
+<EM>module_name</EM> tested by the user.  The user
 should enter whatever command arguments were actually run
 when the program bug occurred.
 
@@ -77,7 +78,7 @@ found or the results of program testing.
 The user is then asked whether the completed bug report is to be:
 <DL>
 <DD>
-1 - mailed to westerve@zorro.cecer.army.mil
+1 - mailed to grass-bugs@intevation.de
 <BR>
 2 - added to the file <KBD>grass.bugs</KBD> in the user's home directory
 <BR>
@@ -94,17 +95,21 @@ base, location, and mapset are current when the user runs
 run <EM>bug.report.sh</EM> immediately after experiencing a
 program bug, to ensure that the settings current when the
 bug occurred are reported on the bug report form.
+<p>
+Note, that the $EDITOR environment variable is used to define the
+editor. The "vi" editor is the default editor.
 
 <H2>FILES</H2>
 
 This shell script is stored under the <KBD>$GISBASE/scripts</KBD>
 directory on the user's system.  The user is encouraged to
 examine the shell script commands stored in this directory
-and to produce similar scripts for their own use.  Users
-might modify this shell script to e-mail reports of program
-bugs to a local systems' administrator in addition to
-someone at USACERL.
+and to produce similar scripts for their own use.
 
 <H2>AUTHOR</H2>
 
 James Westervelt, U.S.Army Construction Engineering Research Laboratory
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

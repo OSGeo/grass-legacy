@@ -6,8 +6,9 @@
 
 char element[64] ="r.water.fea/";
 int 
-compare (int *a, int *b)
+compare (const void *aa, const void *bb)
 {
+	const int *a = aa, *b = bb;
 	return *a - *b;
 }
 

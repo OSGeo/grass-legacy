@@ -29,7 +29,7 @@ DESCRIPTION</h2>
 <i>d.what.r.pg</i> reports database attributes from the currently selected
 database associated with a raster category at a specific location on a
 raster map. The currently selected database is identified by the GRASS
-environment variable $PGDBASE which is set using the <i>g.select.pg</i>
+environment variable $PG_DBASE which is set using the <i>g.select.pg</i>
 GRASS-RDBMS interface tool. If this environment variable is not set the
 program terminates with a message to the user. The current raster location
 is selected by the user with the mouse. If the alternate form of this command
@@ -83,24 +83,32 @@ a complete, well formed SQL SELECT statement specifying the query criteria&nbsp;
 needed to retrieve values which correspond to category values in a GRASS
 data layer.
 <p>The user must also specify the name of the GRASS data layer containing
-these category values on the command line. The following example illustrates
+these category values on the command line. The following examples illustrate
 the syntax which must be used in constructing a SELECT statement for use
 with the <i>-s</i> flag.
 <p><b>EXAMPLE:</b>
 <p><b>1.</b><i> d.what.r.pg -s sql=raster.sql map=blag_forest_kur</i>
 <p>and raster.sql is:
-<p><i>select rec_id, type_id from info_kuruma where type_id = ?</i><b></b>
-<p><b>Results:</b>
+<p><i>select rec_id, type_id from info_kuruma where type_id = ?</i>
+<p><b>Result:</b>
 <br>Reports two fields from the table info_kuruma associated with the raster
 category value at the current mouse location the raster map.
 <p><b>2.</b><i> d.what.r.pg -s sql=raster2.sql map=blag_forest_kur</i>
 <p>and raster2.sql is:
 <p><i>select rec_id, type_id, census_info.type_good from info_kuruma where
-type_id = ? and rec_id = census_info.rec_id</i><b></b>
-<p><b>Results:</b>
+type_id = ? and rec_id = census_info.rec_id</i>
+<p><b>Result:</b>
 <br>Reports fields from two tables info_kuruma and census_info associated
 with the raster category value at the current mouse location the raster
 map.
+<p><b>3.</b> <i>d.what.r.pg -s kur_rast_id sql=process.sql</i>
+<p>process.sql is:
+<p><i>update census_info set type_good = '1' where rec_id = ? and info_kuruma.type_id
+= 35 and info_kuruma.rec_id = rec_id;</i>
+<p><b>Result: </b>this would only change field of the census_info table
+for the clicked polygon or line,
+<br>if the corresponding type taken from <i>info_kuruma</i> table is equal
+to 35.
 <br>&nbsp;
 <h3>
 Flag:</h3>
@@ -149,11 +157,16 @@ This program requires the Postgres database software.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
-<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
-<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
-<a href="d.vect.pg.html">d.vect.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
-<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
-<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
 <h2>
 AUTHOR</h2>
 Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick

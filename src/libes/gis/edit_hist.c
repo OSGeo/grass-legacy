@@ -42,6 +42,7 @@ int G_edit_history ( struct History *phist )
     V_line (10, "Maptype .." ) ;
     V_line (12, "Data source" ) ;
     V_line (16, "Data Description" ) ;
+    V_line (19, "For history comments see next page" ) ;
 
     len = RECORD_LEN - 1;
     if (len > 65) len = 65;

@@ -90,10 +90,9 @@
 
 #define LIST struct Histogram_list
 
-static int cmp_count(LIST *,LIST *);
 static FILE *fopen_histogram_new(char *);
-static int cmp(LIST *,LIST *);
-static int cmp_count ( LIST *,LIST *);
+static int cmp(const void *, const void *);
+static int cmp_count (const void *, const void *);
 
 int G_init_histogram (
     struct Histogram *histogram)
@@ -279,8 +278,9 @@ int G_sort_histogram ( struct Histogram *histogram)
     return 0;
 }
 
-static int cmp(LIST *a,LIST *b)
+static int cmp(const void *aa, const void *bb)
 {
+    const LIST *a = aa, *b = bb;
     if (a->cat < b->cat)
 	return -1;
     if (a->cat > b->cat)
@@ -304,8 +304,9 @@ int G_sort_histogram_by_count ( struct Histogram *histogram)
     return 0;
 }
 
-static int cmp_count ( LIST *a,LIST *b)
+static int cmp_count(const void *aa, const void *bb)
 {
+    const LIST *a = aa, *b = bb;
     if(a->count < b->count)
 	return -1;
     if(a->count > b->count)

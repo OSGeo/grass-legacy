@@ -126,6 +126,27 @@ interface.
 
 <H2>NOTES</H2>
 
+To output GRASS data in x,y,z ASCII style, the s.out.ascii may be used:
+<p>
+<DL>
+<DD>
+<B>s.out.ascii -d sites=</B>sitesmap
+</DL>
+Resulting to:
+
+<pre>
+     3566393.75 5773293.75 168.3
+     3566818.75 5773293.75 158.8
+     3568843.75 5773293.75 114.3
+     3568981.25 5773293.75 117.5
+     [...]
+</pre>
+
+To export raster maps into this x,y,z format, the raster map can be
+converted to sites format using <em>r.to.sites</em> and <em>s.out.ascii</em>
+subsequently as described above.
+
+<p>
 The output from <EM>s.out.ascii</EM> may be placed into a
 file by using the UNIX redirection mechanism; e.g.:
 
@@ -151,6 +172,7 @@ other programs; e.g.:
 <EM><A HREF="m.ll2u.html">m.ll2u</A></EM><br>
 <EM><A HREF="m.u2ll.html">m.u2ll</A></EM><br>
 <EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
+<EM><A HREF="r.to.sites.html">r.to.sites</A></EM><br>
 <EM><A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHOR</H2>
@@ -159,3 +181,6 @@ Michael Shapiro,
 U.S. Army Construction Engineering 
 Research Laboratory
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

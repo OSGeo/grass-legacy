@@ -54,6 +54,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>   /* for sleep() */
+#include <string.h>
 #include "gis.h"
 
 #define ENV struct env

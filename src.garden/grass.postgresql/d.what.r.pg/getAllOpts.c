@@ -6,12 +6,15 @@
 
                   jaf 2/19/92
 */
-//---------------A.Sh. 06 Jan.00
+/*---------------A.Sh. 06 Jan.00*/
 #define GLOBAL
 #include "what.h"
+#include <stdlib.h>
+#include <string.h>
+#include "display.h"
+#include "raster.h"
 
-
-getAllOpts(argc, argv)
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
@@ -44,15 +47,6 @@ getAllOpts(argc, argv)
 	col->multiple   = NO ;
 	col->description= "Column with categories:" ;
 
-/*
-	join = G_define_option() ;
-	join->key        = "join" ;
-	join->type       = TYPE_STRING ;
-	join->required   = NO  ;
-	join->multiple   = NO ;
-	join->key_desc	 = "tab,key,pkey";
-	join->description= "JOIN rules (eg. table,key,primekey). ";
-*/
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;

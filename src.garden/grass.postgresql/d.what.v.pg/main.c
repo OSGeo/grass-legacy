@@ -23,8 +23,11 @@
 			clicked lines/areas coloring
 			more control of database output
 */
+
 #include "what.h"
 #include "Vect.h"
+#include <stdlib.h>
+#include <string.h>
 
 int fd;
 int dbCat;

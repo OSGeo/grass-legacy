@@ -8,6 +8,7 @@
 *            DBF-routines: Frank Warmerdam
 *            Import concept: Alex Shevlakov (pg.in.dbf)
 *            -l flag: David Gray (v.in.shape)
+*            date parm, cleanup: Markus Neteler (1/2002)
 * PURPOSE:  module to import DBF-tables as sites list
 * COPYRIGHT:    (C) 2001 by the GRASS Development Team
 *
@@ -18,22 +19,31 @@
 *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "shapefil.h"
+#include "local_proto.h"
+#include <ctype.h> 
+
+static char *G_extract_base_name(char *, const char * );
+
 
 int main( int   argc, char *argv[])
 {
-    char *infile, *outfile;
+    char *infile;
+    char name[512], outfile[512];
 
     struct {
-	struct Option *input, *output;
+	struct Option *input, *output, *date;
 	/*struct Option *date, *order;*/
     } parm;
     struct GModule *module;
     struct Flag *listflag, *third;
     struct TimeStamp ts;
     DBFHandle   hDBF;
-    char *buf;
+    char *buf=NULL;
      
     /* Are we running in Grass environment ? */
 
@@ -60,14 +70,12 @@ int main( int   argc, char *argv[])
     parm.output->description = "sites file to be created";
     parm.output->gisprompt = "any,site_lists,sites";
 
-/* not yet implemented. See dump.c as well.
     parm.date = G_define_option();
     parm.date->key = "date";
     parm.date->key_desc = "timestamp";
     parm.date->required = NO;
     parm.date->type = TYPE_STRING;
     parm.date->description = "datetime or none (default: none)";
-*/
 
 /* not yet implemented. See dump.c DBFDumpASCII as well.
     parm.order = G_define_option() ;
@@ -97,11 +105,18 @@ int main( int   argc, char *argv[])
     
     infile = parm.input->answer;
     if(!parm.output->answer)
-    	outfile = parm.input->answer;
+    {
+        /* to avoid crash with absol. paths */
+        strcpy(name, parm.input->answer);
+        G_extract_base_name(outfile, name);
+    }
     else
-	outfile = parm.output->answer;
+	strcpy(outfile, parm.output->answer);
 
-    /* G_scan_timestamp (&ts, parm.date->answer);*/ 
+    if (parm.date->answer)
+       G_scan_timestamp (&ts, parm.date->answer);
+    else
+       G_init_timestamp(&ts);
     
     /* Examine the `-l' flag: Borrowed from David Gray's v.in.shape */
     if(listflag->answer) {
@@ -118,18 +133,65 @@ int main( int   argc, char *argv[])
       for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
 	  char	field_name[15];
+	  int   field_width; 
+	  char  *fld=NULL; 
+          DBFFieldType ftype;
+
+          ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
+
+	  switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
 
 	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-	  fprintf (stdout, "%i: %s\n", (i+1), field_name );
+	  fprintf (stdout, "%i: %s [%s:%i]\n", (i+1), field_name, fld , field_width);
         }
         
       DBFClose( hDBF );
 
     }
     else
-	/* timestamp not yet implemented */    
-	DumpFromDBF(infile, outfile, "none",  third->answer);
+       DumpFromDBF(infile, outfile, ts, third->answer);
 
     exit(0);
 }
 
+
+/* from v.in.shape (David D Gray, should go into gis/strings.h */
+
+static char *G_extract_base_name(char *base_name, const char *in_name ) {
+  
+  /* Extract the basename of a fullname of the input file. ie. the answer to
+     the option `in'
+  */
+
+  char *name;
+  char *p;
+
+  name = (char *)malloc(strlen(in_name)+1);
+  strcpy( name, in_name );
+
+  for( p = name+strlen(name)-1;
+       p != name-1 && (isalnum(*p) || *p == '_' || *p == '.' );
+       p-- ) {}
+  strcpy( base_name, p+1);
+  free(name);
+    
+  p = strrchr( base_name, '.');
+  if (p != NULL)
+    *p = '\0';
+  base_name = p;
+  return base_name;
+}

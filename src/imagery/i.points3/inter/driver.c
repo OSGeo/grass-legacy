@@ -303,7 +303,7 @@ static int transform()
 
 
       /* do an initial calculation of the transformation parameters */
-       if (status = group.calculate_trans (&group) < 0 ) {
+       if ((status = group.calculate_trans (&group)) < 0 ) {
            sprintf (msg, "Problem running %s transformation, select another\n",
 		trans_text[group.trans_type]);
            G_warning (msg);

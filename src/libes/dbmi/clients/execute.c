@@ -7,6 +7,7 @@
  *   successful execution results in exit(0)
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
@@ -17,7 +18,8 @@ struct {
 
 void parse_command_line();
 
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbString stmt;
     dbDriver *driver;
@@ -65,6 +67,8 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *input;
+    struct GModule *module;
+    
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -93,6 +97,11 @@ parse_command_line(argc, argv) char *argv[];
 
     G_disable_interactive();
     
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Execute any SQL statement.";
+    
     if (argc > 1) {
 	if(G_parser(argc, argv)) exit(ERROR);
     }
@@ -103,6 +112,7 @@ parse_command_line(argc, argv) char *argv[];
     parms.input		= input->answer;
 }
 
+int
 execute_immediate (driver, stmt)
     dbDriver *driver;
     dbString *stmt;
@@ -110,6 +120,7 @@ execute_immediate (driver, stmt)
     return db_execute_immediate (driver, stmt) == DB_OK ? OK : ERROR;
 }
 
+int
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
@@ -133,6 +144,7 @@ get_stmt(fd, stmt)
     return 1;
 }
 
+int
 stmt_is_empty(stmt)
     dbString *stmt;
 {

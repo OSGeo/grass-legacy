@@ -8,8 +8,8 @@
 *               (srin@ecn.purdue.edu) Agricultural Engineering, 
 *               Purdue University
 *               Markus Neteler: update to FP (C-code)
-*               Roger S. Miller: update to FP (Fortran)
-*               Huidae Cho: converted to C
+*                             : update to FP (Fortran)
+*               Roger Miller: rewrite all code in C, complient with GRASS 5
 * PURPOSE:      fills a DEM to become a depression-less DEM
 *               This creates two layers from a user specified elevation map.
 *               The output maps are filled elevation or rectified elevation
@@ -21,6 +21,12 @@
 *               delineating watershed using r.watershed module. However, the
 *               boundaries may have problem and could be resolved using
 *               the cell editor d.rast.edit
+*               Options have been added to produce a map of undrained areas
+*               and to run without filling undrained areas except single-cell
+*               pits.  Not all problems can be solved in a single pass.  The
+*               program can be run repeatedly, using the output elevations from
+*               one run as input to the next run until all problems are 
+*               resolved.
 * COPYRIGHT:    (C) 2001 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
@@ -29,417 +35,273 @@
 *
 *****************************************************************************/
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
-#include <stdio.h>
 #include <math.h>
-#include "mp.h"
+
+/* for using the "open" statement */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/fcntl.h>
+
+/* for using the close statement */
+#include <unistd.h>
+
 #include "gis.h"
 
-/* #define DEBUG */
+#define DEBUG
+#include "tinf.h"
+#include "local.h"
 
 int
-main(argc,argv)
-int argc;
-char **argv;
+main(int argc, char **argv)
 {
 
-	FILE    *fd, *ft;
-	int     short_int;
-	float   fvalue;
-	double  dvalue;
-	int	input_type, output_type;
-	int	i, j, k, type, dir_type();
-	int	new_id, elev_dat;
-	int	nrows, ncols;
-	int	ss, sl, ns, nl, count;
-	int	output_option;
-	int     cell_open(), cell_open_new();
-	int	map_id, dir_id;
-	char    map_name[40], *map_mapset, *mapset, *label, new_map_name[40];
-	char    buf[200], *tempfile1, *tempfile2, *tempfile3;
-	char    *tempfile4, *tempfile5, *tempfile6;
-	char    *tempfile7, *tempfile8, *tempfile9;
-	char    *tempfile10, *tempfile11, *tempfile12;
-	char	dir_name[40], *dir_mapset;
-	union RASTER_PTR {
-		void  *v; 
-		CELL  *c; 
-		FCELL *f; 
-		DCELL *d; 
-	};
-	struct RASTER_MAP_PTR {
-		RASTER_MAP_TYPE  type;
-		union RASTER_PTR buf;
-	};
-	struct RASTER_MAP_PTR map_rbuf, new_rbuf, dir_rbuf;
-	struct Cell_head window;
-	struct Option *opt1, *opt2, *opt3, *opt4;
+   int fe,fd,fm;
+   int i,j,type, dir_type();
+   int new_id;
+   int nrows, ncols, nbasins;
+   int cell_open(), cell_open_new();
+   int map_id, dir_id, bas_id;
+   char map_name[40], *map_mapset, new_map_name[40];
+   char buf[200], *tempfile1, *tempfile2, *tempfile3;
+   char dir_name[40];
+   char bas_name[40];
 
-	struct Categories       map_cats;
+   struct Cell_head window;
+   struct GModule *module;
+   struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
+   struct Flag *flag1;
+   int in_type,bufsz;
+   void *in_buf;
+   CELL *out_buf;
+   struct band3 bnd,bndC;
 
 /*  Initialize the GRASS environment variables */
-	G_gisinit ("test");
+   G_gisinit (argv[0]);
 
-	opt1 = G_define_option();
-	opt1->key = "input" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of existing raster map containing elevation surface" ;
-	
-	opt2 = G_define_option() ;
-	opt2->key        = "elevation" ;
-	opt2->type       = TYPE_STRING ;
-	opt2->required   = YES ;
-	opt2->gisprompt  = "new,cell,raster" ;
-	opt2->description= "Output elevation raster map after filling" ;
+   module = G_define_module();
+   module->description = 
+       "Filters and generates a depressionless elevation map and a flow "
+       "direction map from a given elevation layer";
 
-	opt4 = G_define_option() ;
-	opt4->key        = "direction" ;
-	opt4->type       = TYPE_STRING ;
-	opt4->required   = YES ;
-	opt4->gisprompt  = "new,cell,raster" ;
-	opt4->description= "Output direction raster map" ;
+   opt1 = G_define_option();
+   opt1->key        = "input" ;
+   opt1->type       = TYPE_STRING ;
+   opt1->required   = YES ;
+   opt1->gisprompt  = "old,cell,raster" ;
+   opt1->description= "Name of existing raster map containing elevation surface\n" ;
+   
+   opt2 = G_define_option() ;
+   opt2->key        = "elevation" ;
+   opt2->type       = TYPE_STRING ;
+   opt2->required   = YES ;
+   opt2->gisprompt  = "new,cell,raster" ;
+   opt2->description= "Output elevation raster map after filling\n" ;
 
-	opt3 = G_define_option() ;
-	opt3->key        = "type" ;
-	opt3->type       = TYPE_STRING ;
-	opt3->required   = NO;
-	opt3->description= "Output direction type AGNPS, ANSWERS or GRASS aspect\n              default: GRASS" ;
-	
-	if (G_parser(argc, argv))
-		exit(-1);
+   opt4 = G_define_option() ;
+   opt4->key        = "direction" ;
+   opt4->type       = TYPE_STRING ;
+   opt4->required   = YES ;
+   opt4->gisprompt  = "new,cell,raster" ;
+   opt4->description= "Output direction raster map\n" ;
 
-	type = 0;
-	strcpy(map_name, opt1->answer);
-	strcpy(new_map_name, opt2->answer);
-	strcpy(dir_name, opt4->answer);
-	if(!opt3->answer)
-		type = 3;
-	else {
-	 if(strcmp(opt3->answer,"AGNPS") == 0) type = 1;
-	 else if(strcmp(opt3->answer,"agnps") == 0) type = 1;
-	 else if(strcmp(opt3->answer,"ANSWERS") == 0) type = 2;
-	 else if(strcmp(opt3->answer,"answers") == 0) type = 2;
-	 else if(strcmp(opt3->answer,"grass") == 0) type = 3;
-	 else if(strcmp(opt3->answer,"GRASS") == 0) type = 3;
-	}
+   opt5 = G_define_option() ;
+   opt5->key        ="areas" ;
+   opt5->type       =TYPE_STRING ;
+   opt5->required   = NO ;
+   opt5->gisprompt  = "new,cell,raster" ;
+   opt5->description="Output raster map of problem areas\n" ;
+
+   opt3 = G_define_option() ;
+   opt3->key        = "type" ;
+   opt3->type       = TYPE_STRING ;
+   opt3->required   = NO;
+   opt3->description= "Output direction type AGNPS, ANSWERS or GRASS aspect\n              default: GRASS\n" ;
+   
+   flag1 = G_define_flag() ;
+   flag1->key        = 'f' ;
+   flag1->description= "find unresolved areas only" ;
+   flag1->answer     = '0' ;
+
+
+   if (G_parser(argc, argv))
+   	exit(-1);
+
+   if(flag1->answer!='0' && opt5->answer==NULL)
+   {
+      fprintf(stdout,"\nThe \"f\" flag requires that you name a file for the output area map\n");
+      fprintf(stdout,"\tEnter the file name, or <Enter> to quit:  ");
+      scanf("%s",opt5->answer);
+   }
+
+   type = 0;
+   strcpy(map_name, opt1->answer);
+   strcpy(new_map_name, opt2->answer);
+   strcpy(dir_name, opt4->answer);
+   if(opt5->answer!=NULL)strcpy(bas_name, opt5->answer);
+
+   if(!opt3->answer)
+   	type = 3;
+   else {
+      if(strcmp(opt3->answer,"AGNPS") == 0) type = 1;
+      else if(strcmp(opt3->answer,"agnps") == 0) type = 1;
+      else if(strcmp(opt3->answer,"ANSWERS") == 0) type = 2;
+      else if(strcmp(opt3->answer,"answers") == 0) type = 2;
+      else if(strcmp(opt3->answer,"grass") == 0) type = 3;
+      else if(strcmp(opt3->answer,"GRASS") == 0) type = 3;
+   }
 
 /*      get the name of the elevation map layer for filling */
 
-	map_mapset = G_find_cell(map_name,"");
-	if (!map_mapset) {
-		sprintf(buf,"Could not access %s layer.", map_name);
-		G_fatal_error (buf);
-		exit(0);
-		}
+   map_mapset = G_find_cell(map_name,"");
+   if (!map_mapset) {
+      sprintf(buf,"Could not access %s layer.", map_name);
+      G_fatal_error (buf);
+      exit(0);
+   }
 
-	if(type == 0){
-	for(;;){
-		fprintf (stdout,"\n\nSelect the type for the direction output map\n");
-		fprintf (stdout,"\n\n\t1. AGNPS type\n");
-		fprintf (stdout,"\t2. ANSWERS type\n");
-		fprintf (stdout,"\t3. Standard aspect map (GRASS) type\n");
-		fprintf (stdout,"\tEnter the type -->");
-		scanf("%d",&type);
+   if(type == 0)
+   {
+      for(;;)
+      {
+         fprintf (stdout,"\n\nSelect the type for the direction output map\n");
+         fprintf (stdout,"\n\n\t1. AGNPS type\n");
+         fprintf (stdout,"\t2. ANSWERS type\n");
+         fprintf (stdout,"\t3. Standard aspect map (GRASS) type\n");
+         fprintf (stdout,"\tEnter the type -->");
+         scanf("%d",&type);
+      
+         if(type >= 1 && type <=3) break;
+      }
+   }
 
-		if(type >= 1 && type <=3) break;
-		}
-	}
+/*      allocate cell buf for the map layer */
+   in_type = G_raster_map_type (map_name, map_mapset);
 
-	ns = 0;
-	nl = 0;
-	count = 0;
-
-
-
-/*      allocate cell buf the map layer */
-        map_rbuf.type = G_raster_map_type (map_name, map_mapset);
-        new_rbuf.type = map_rbuf.type;
-        dir_rbuf.type = map_rbuf.type;
-/*
-        new_rbuf.type = G_raster_map_type (new_map_name, map_mapset);
-        dir_rbuf.type = G_raster_map_type (dir_name, map_mapset);
-*/
-
-	map_rbuf.buf.v = G_allocate_raster_buf (map_rbuf.type);
-        new_rbuf.buf.v = G_allocate_raster_buf (new_rbuf.type);   
-        dir_rbuf.type = CELL_TYPE;
-        dir_rbuf.buf.v = G_allocate_raster_buf (dir_rbuf.type); /* should be always CELL,needs another update */
-
-/*      open the map and get their file id  */
-    
-	map_id = G_open_cell_old(map_name, map_mapset);
-	new_id = G_open_raster_new(new_map_name, new_rbuf.type);
-	dir_id = G_open_raster_new(dir_name, dir_rbuf.type);
-
-	tempfile1 = G_tempfile();
-	tempfile2 = G_tempfile();
-	tempfile3 = G_tempfile();
-	tempfile4 = G_tempfile();
-	tempfile5 = G_tempfile();
-	tempfile6 = G_tempfile();
-	tempfile7 = G_tempfile();
-	tempfile8 = G_tempfile();
-	tempfile9 = G_tempfile();
-	tempfile10 = G_tempfile();
-	tempfile11 = G_tempfile();
-	tempfile12 = G_tempfile();
-	
-	fd = fopen(tempfile1,"w");
-	ft = fopen(tempfile2,"w");
+/* set the pointers for multi-typed functions */
+   set_func_pointers(in_type);
 
 /*      get the window information  */
-	G_get_window (&window);
-	nrows = G_window_rows();
-	ncols = G_window_cols();
+   G_get_window (&window);
+   nrows = G_window_rows();
+   ncols = G_window_cols();
 
+/* buffers for internal use */
+   bndC.ns=ncols;
+   bndC.sz=sizeof(CELL)*ncols;
+   bndC.b[0]=calloc(ncols,sizeof(CELL));
+   bndC.b[1]=calloc(ncols,sizeof(CELL));
+   bndC.b[2]=calloc(ncols,sizeof(CELL));
 
-	for(sl = 0; sl < nrows ; sl++){
-		switch (map_rbuf.type) {
-		  case CELL_TYPE:
-		  	G_get_c_raster_row(map_id, map_rbuf.buf.v, sl);
-		  	for(ss = 0; ss < ncols; ss++){
-			         if(!G_is_c_null_value(&map_rbuf.buf.c[ss])){
-				  count = count + 1;
-				  short_int = map_rbuf.buf.c[ss];
-				  fprintf(fd,"%d\n",short_int);
-				}
-			}
-	  		break;
-		  case FCELL_TYPE:
-		  	G_get_f_raster_row(map_id, map_rbuf.buf.v, sl);
-		  	for(ss = 0; ss < ncols; ss++){
-			         if(!G_is_f_null_value(&map_rbuf.buf.f[ss])){
-				  count = count + 1;
-#ifdef DEBUGG
-fprintf(stderr,"%g\n", fvalue);
-#endif
-				  fvalue = map_rbuf.buf.f[ss];
-				  fprintf(fd,"%g\n", fvalue);
-				}
-			}
-	  		break;
-		  case DCELL_TYPE:
-		  	G_get_d_raster_row(map_id, map_rbuf.buf.v, sl);
-		  	for(ss = 0; ss < ncols; ss++){
-			         if(!G_is_d_null_value(&map_rbuf.buf.d[ss])){
-				  count = count + 1;
-				  dvalue = map_rbuf.buf.d[ss];
-				  fprintf(fd,"%g\n", dvalue);
-				}
-			}
-	        	break;
-		}
+/* buffers for external use */
+   bnd.ns=ncols;
+   bnd.sz=ncols*bpe();
+   bnd.b[0]=calloc(ncols,bpe());
+   bnd.b[1]=calloc(ncols,bpe());
+   bnd.b[2]=calloc(ncols,bpe());
 
-		if (count > 0){
-			nl = nl + 1;
-			ns = count;
-		}
-		count = 0;
-	}
+   in_buf = get_buf();
 
-	fclose(fd);
+/*  open the maps and get their file id  */
+ 
+   map_id=G_open_cell_old(map_name, map_mapset);
 
-	fprintf(ft,"%d %d\n%s\n%s\n",nl,ns,tempfile3,"unix");
-	fclose(ft);
+   tempfile1 = G_tempfile();
+   tempfile2 = G_tempfile();
+   tempfile3 = G_tempfile();
 
-	ft = fopen(tempfile4,"w");
-	fprintf(ft,"%s\n%s\n%s\n",tempfile2,tempfile1,tempfile3);
-	fclose(ft);
+   fe=open(tempfile1,O_RDWR|O_CREAT);
+   fd=open(tempfile2,O_RDWR|O_CREAT);
+   fm=open(tempfile3,O_RDWR|O_CREAT);
 
-	ft = fopen(tempfile5,"w");
-	fprintf(ft,"%s\n",tempfile4);
-	fclose(ft);
+   fprintf(stderr, "Reading map...");
+   for(i=0;i<nrows;i++)
+   {
+      get_row(map_id,in_buf,i);
+      write(fe,in_buf,bnd.sz);
+   }
+   G_close_cell(map_id);
 
-#ifdef DEBUG
-fprintf(stderr, "fmt_un...");
-#endif
-	sprintf(buf,"%s/etc/fill/fmt_un < %s", G_gisbase(), tempfile5);
-	G_system(buf);
+/* fill single-cell holes and take a first stab at flow directions */
+   fprintf(stderr, "\nFilling sinks...");
+   filldir(fe,fd,nrows,&bnd);
 
-	ft = fopen(tempfile6,"w");
-	fprintf(ft,"%s\n",tempfile2);
-	fclose(ft);
+/* determine flow directions for ambiguous cases */
+   fprintf(stderr, "\nDetermining flow directions for ambiguous cases...");
+   resolve(fd,nrows,&bndC); 
 
-#ifdef DEBUG
-fprintf(stderr, "fillsngl...");
-#endif
-	sprintf(buf,"%s/etc/fill/fillsngl < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+/* mark and count the sinks in each internally drained basin */
+   nbasins=dopolys(fd,fm,nrows,ncols);
+   if(flag1->answer=='0')
+   {
+/* determine the watershed for each sink */
+      wtrshed(fm,fd,nrows,ncols,4);
 
-	sprintf(buf,"/bin/rm -f %s",tempfile2);
-	G_system(buf);
+/* fill all of the watersheds up to the elevation necessary for drainage */
+      ppupdate(fe, fm, nrows, nbasins, &bnd, &bndC);
 
-	ft = fopen(tempfile2,"w");
-	fprintf(ft,"%d %d %d\n%s\n%s\n%s\n",nl,ns,0,tempfile3,tempfile7,"unix");
-	fclose(ft);
+/* repeat the first three steps to get the final directions */
+      fprintf(stderr, "\nRepeat to get the final directions...");
+      filldir(fe,fd,nrows,&bnd);
+      resolve(fd,nrows,&bndC);
+      nbasins=dopolys(fd,fm,nrows,ncols);  
+   }
+  
+   free(bndC.b[0]);
+   free(bndC.b[1]);
+   free(bndC.b[2]);
 
-#ifdef DEBUG
-fprintf(stderr, "direct...");
-#endif
-	sprintf(buf,"%s/etc/fill/direct < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+   free(bnd.b[0]);
+   free(bnd.b[1]);
+   free(bnd.b[2]);
 
-	sprintf(buf,"/bin/rm -f %s",tempfile2);
-	G_system(buf);
-	ft = fopen(tempfile2,"w");
-	fprintf(ft,"%d %d\n%s\n%s\n%s\n",nl,ns,tempfile7,tempfile8,"unix");
-	fclose(ft);
+   out_buf=G_allocate_c_raster_buf();
+   bufsz=ncols*sizeof(CELL);
 
-#ifdef DEBUG
-fprintf(stderr, "dopolys...");
-#endif
-	sprintf(buf,"%s/etc/fill/dopolys < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+   lseek(fe,0,SEEK_SET);
+   new_id=G_open_raster_new(new_map_name,in_type);
 
-#ifdef DEBUG
-fprintf(stderr, "wtrshed...");
-#endif
-	sprintf(buf,"%s/etc/fill/wtrshed < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+   lseek(fd,0,SEEK_SET);
+   dir_id=G_open_raster_new(dir_name,CELL_TYPE);
 
-	sprintf(buf,"/bin/rm -f %s",tempfile2);
-	G_system(buf);
-	ft = fopen(tempfile2,"w");
-	fprintf(ft,"%d %d\n%s\n%s\n%s\n",nl,ns,tempfile8,tempfile3,"unix");
-	fclose(ft);
+   if(opt5->answer!=NULL)
+   {
+      lseek(fm,0,SEEK_SET);
+      bas_id=G_open_raster_new(bas_name,CELL_TYPE);
+   
+      for(i=0;i<nrows;i++)
+      {
+         read(fm,out_buf,bufsz);
+         G_put_raster_row(bas_id,out_buf, CELL_TYPE);
+      }   
+     
+      G_close_cell(bas_id);
+      close(fm);
+   }
 
-#ifdef DEBUG
-fprintf(stderr, "ppupdate...");
-#endif
-	sprintf(buf,"%s/etc/fill/ppupdate < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+   for(i=0;i<nrows;i++)
+   {
+      read(fe,in_buf,bnd.sz);
+      put_row(new_id,in_buf);
 
-	sprintf(buf,"/bin/rm -f %s",tempfile2);
-	G_system(buf);
-	ft = fopen(tempfile2,"w");
-	fprintf(ft,"%d %d %d\n%s\n%s\n%s\n",nl,ns,0,tempfile3,tempfile9,"unix");
-	fclose(ft);
+      read(fd,out_buf,bufsz);
+      if(type)for(j=0;j<ncols;j+=1)out_buf[j]=dir_type(type,out_buf[j]);
+      G_put_raster_row(dir_id,out_buf, CELL_TYPE);
 
-#ifdef DEBUG
-fprintf(stderr, "direct...");
-#endif
-	sprintf(buf,"%s/etc/fill/direct < %s", G_gisbase(), tempfile6);
-	G_system(buf);
+   }
 
-	sprintf(buf,"/bin/rm -f %s",tempfile4);
-	G_system(buf);
+   G_close_cell(new_id);
+   close(fe);
 
-/* First pass, write the elevations */
-        output_type=map_rbuf.type;
-        input_type=2;  /* input type 2 is an 8-byte floating-point type */
-	ft = fopen(tempfile4,"w");
-	fprintf(ft,"%d %d\n%s\n%s\n%s\n",
-		input_type,output_type,tempfile2,tempfile3,tempfile10);
-	fclose(ft);
+   G_close_cell(dir_id);
+   close(fd);
 
-#ifdef DEBUG
-fprintf(stderr, "un_fmt_fill...");
-#endif
-	sprintf(buf,"%s/etc/fill/un_fmt_fill < %s", G_gisbase(), tempfile5);
-	G_system(buf);
+   G_free (in_buf);
+   G_free (out_buf);
 
-	sprintf(buf,"/bin/rm -f %s",tempfile4);
-	G_system(buf);
-
-/* Second pass, write the directions */
-        output_type=CELL_TYPE;
-        input_type=0; /* input type 0 is a 2-byte integer type */
-	ft = fopen(tempfile4,"w");
-	fprintf(ft,"%d %d\n%s\n%s\n%s\n",
-	   	input_type,output_type,tempfile2,tempfile9,tempfile11);
-	fclose(ft);
-
-#ifdef DEBUG
-fprintf(stderr, "un_fmt_fill...");
-#endif
-	sprintf(buf,"%s/etc/fill/un_fmt_fill < %s", G_gisbase(), tempfile5);
-	G_system(buf);
-
-	fd = fopen(tempfile10,"r");
-	ft = fopen(tempfile11,"r");
-
-#ifdef DEBUG
-fprintf(stderr, "Saving...");
-#endif
-	i = 0;
-	for(sl = 0; sl < nrows ; sl++){
-
-	    G_get_raster_row(map_id, map_rbuf.buf.v, sl, map_rbuf.type);
-	    G_set_null_value(new_rbuf.buf.v, window.cols, new_rbuf.type);
-	    G_set_null_value(dir_rbuf.buf.v, window.cols, dir_rbuf.type);
-	    
-	    for(ss = 0; ss < ncols; ss++){
-	    	switch (map_rbuf.type) {
-		  case CELL_TYPE:
-			if(!G_is_c_null_value(&map_rbuf.buf.c[ss])){
-				fscanf(fd,"%d",&elev_dat);
-				new_rbuf.buf.c[ss] = elev_dat;
-				fscanf(ft,"%d",&short_int);
-				dir_rbuf.buf.c[ss] = dir_type(type,short_int);
-		 	}
-	  		break;
-		  case FCELL_TYPE:
-			if(!G_is_f_null_value(&map_rbuf.buf.f[ss])){
-				fscanf(fd,"%g",&elev_dat);
-				new_rbuf.buf.f[ss] = elev_dat;
-				fscanf(ft,"%g",&fvalue);
-				dir_rbuf.buf.f[ss] = dir_type(type,fvalue);
-		 	}	  		
-		 	break;
-		  case DCELL_TYPE:
-			if(!G_is_d_null_value(&map_rbuf.buf.d[ss])){
-				fscanf(fd,"%g",&elev_dat);
-				new_rbuf.buf.d[ss] = elev_dat;
-				fscanf(ft,"%g",&dvalue);
-				dir_rbuf.buf.d[ss] = dir_type(type, dvalue);
-		 	}
-		 	break;
-		}
-	     }
-	     switch (new_rbuf.type) {
-		case CELL_TYPE:
-			G_put_c_raster_row(new_id, new_rbuf.buf.c);
-			break;
-                case FCELL_TYPE:                  
-                	G_put_f_raster_row(new_id, new_rbuf.buf.f);
-                	break;
-                case DCELL_TYPE:
-                	G_put_d_raster_row(new_id, new_rbuf.buf.d);
-                	break;
-             }
-             switch (dir_rbuf.type) {
-		case CELL_TYPE:
-			G_put_c_raster_row(dir_id, dir_rbuf.buf.c);
-			break;
-                case FCELL_TYPE:                  
-                	G_put_f_raster_row(dir_id, dir_rbuf.buf.f);
-                	break;
-                case DCELL_TYPE:
-                	G_put_d_raster_row(dir_id, dir_rbuf.buf.d);
-                	break;
-            }
-	}
-			
-	G_close_cell(map_id);
-	G_close_cell(new_id);
-	G_close_cell(dir_id);
-	G_free (map_rbuf.buf.v);
-        G_free (new_rbuf.buf.v);
-        G_free (dir_rbuf.buf.v);
-        fclose(fd);
-	fclose(ft);
-	
-	sprintf(buf,"/bin/rm -f %s %s %s %s", tempfile1, tempfile2, tempfile3, tempfile4);
-	G_system(buf);
-	sprintf(buf,"/bin/rm -f %s %s %s %s", tempfile5, tempfile6, tempfile7, tempfile8);
-	G_system(buf);
-	sprintf(buf,"/bin/rm -f %s %s %s %s", tempfile9, tempfile10, tempfile11, tempfile12);
-	G_system(buf);
-	
-	exit (0);
+   exit (0);
 }
 
 int dir_type(type,dir)

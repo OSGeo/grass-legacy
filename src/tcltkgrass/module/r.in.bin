@@ -10,7 +10,7 @@ interface_build {
     {entry west {Western limit of geographic region:} 0 ""}
     {entry r {Number of rows:} 0 ""}
     {entry c {Number of columns:} 0 ""}
-    {entry subst { Replace 1st value by 2nd one (default: 0,0):} 0 ""}
+    {entry anull { Replace 1st value by 2nd one (default: 0,0):} 0 ""}
     {checkbox bytes {1 byte  per cell (default).} "" 1}
     {checkbox bytes {2 bytes per cell.} "" 2}
     {checkbox bytes {4 bytes per cell.} "" 4}

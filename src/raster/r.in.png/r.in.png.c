@@ -401,6 +401,8 @@ int main(int argc, char *argv[])
         alpha_string = "+alpha";
         break;
     }
+   }
+
    if (info_ptr->color_type == PNG_COLOR_TYPE_RGB) {
    
     fprintf (stdout,"\n MAXCOLOR value:\n");
@@ -449,24 +451,25 @@ int main(int argc, char *argv[])
   	}
     }
     
-    if (info_ptr->valid & PNG_INFO_tRNS) {
-      alpha_string = "+transparency";
-    }
-
-    if (info_ptr->valid & PNG_INFO_gAMA) {
-      sprintf (gamma_string, ", image gamma = %4.2f", info_ptr->gamma);
-    } else {
-      strcpy (gamma_string, "");
-    }
-
     if (Verbose)
-      fprintf(stderr,"\nreading a %d x %d image, %d bit%s %s%s%s%s",
-		  info_ptr->width, info_ptr->height,
-		  info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
-		  type_string, alpha_string, gamma_string,
-		  info_ptr->interlace_type ? ", Adam7 interlaced" : "");
+    {
+      if (info_ptr->valid & PNG_INFO_tRNS) {
+	alpha_string = "+transparency";
+      }
 
-  }
+      if (info_ptr->valid & PNG_INFO_gAMA) {
+	sprintf (gamma_string, ", image gamma = %4.2f", info_ptr->gamma);
+      } else {
+	strcpy (gamma_string, "");
+      }
+
+      fprintf(stderr,"\nreading a %d x %d image, %d bit%s %s%s%s%s",
+	      info_ptr->width, info_ptr->height,
+	      info_ptr->bit_depth, info_ptr->bit_depth > 1 ? "s" : "",
+	      type_string, alpha_string, gamma_string,
+	      info_ptr->interlace_type ? ", Adam7 interlaced" : "");
+    }
+
 
   png_image = (png_byte **)malloc (info_ptr->height * sizeof (png_byte*));
   if (png_image == NULL) {
@@ -922,7 +925,7 @@ unsigned char	PNG_pixel ;
 	cell[icol] = (CELL)PNG_pixel;
 	if (icol == ncols){
 		icol = 0;
-		G_put_c_raster_row(cf, cell);
+		G_put_raster_row(cf, cell, CELL_TYPE);
 		irow ++;
 	}
 	icol++;
@@ -935,7 +938,7 @@ int	PNG_pixel ;
 	cell[icol] = (CELL)PNG_pixel;
 	if (icol == ncols){
 		icol = 0;
-		G_put_c_raster_row(cf, cell);
+		G_put_raster_row(cf, cell, CELL_TYPE);
 		irow ++;
 	}
 	icol++;

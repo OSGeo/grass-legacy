@@ -1,10 +1,13 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "local_proto.h"
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
+
+const float GS_BLANK=1.70141E+038;
 
 int 
 main (int argc, char *argv[])
@@ -12,10 +15,11 @@ main (int argc, char *argv[])
 	char *input;
 	char *output;
 	char *title;
+	char *temp;
 	char err[64];
 	char tmp[1024];
-	FILE *fd;
-	int cf;
+	FILE *fd, *ft;
+	int cf,direction,sz;
 	struct Cell_head cellhd;
 	void *rast, *rast_ptr;
 	int row, col;
@@ -29,7 +33,7 @@ main (int argc, char *argv[])
 	} parm;
 	struct
 	{
-		struct Flag *i, *f, *d;
+		struct Flag *i, *f, *d, *s;
 	} flag;
 	char *null_val_str;
 	DCELL mult;
@@ -92,10 +96,25 @@ main (int argc, char *argv[])
 	flag.d->description = 
 	     "double floating point values are imported";
 
+
+	flag.s = G_define_flag();
+	flag.s->key = 's';
+	flag.s->description =
+		"SURFER (Golden Software) ascii grid file will be imported";
+
 	if (G_parser(argc,argv))
 		exit(1);
 	input = parm.input->answer;
 	output = parm.output->answer;
+
+	temp = G_tempfile();
+	ft=fopen(temp,"w+");
+	if(ft==NULL)
+	{
+		perror("temporary file");
+		exit(-1);
+	}
+
 	if(title = parm.title->answer)
 		G_strip (title);
         if(strcmp(parm.mult->answer, "1.0 or read from header")==0)
@@ -143,7 +162,23 @@ main (int argc, char *argv[])
 		exit(-1) ;
 	}
 
-	if(!gethead(fd, &cellhd, &data_type, &mult, &null_val_str))
+	direction=1;
+        sz=0;
+	if(flag.s->answer)
+        {
+		sz=getgrdhead(fd, &cellhd);
+                /* for Surfer files, the data type is always FCELL_TYPE,
+                   the multiplier and the null_val_str are never used */
+		data_type=FCELL_TYPE;
+		mult=1.;
+		null_val_str="";
+		/* rows in surfer files are ordered from bottom to top,
+		   opposite of normal GRASS ordering */
+		direction=-1;
+        }
+	else sz=gethead(fd, &cellhd, &data_type, &mult, &null_val_str);
+
+	if(!sz)
 	{
 		fprintf (stderr, "Can't proceed\n");
 		exit(1);
@@ -167,7 +202,8 @@ main (int argc, char *argv[])
 		exit(1);
 	}
 
-	rast_ptr = G_allocate_raster_buf(data_type);
+
+	rast_ptr=G_allocate_raster_buf(data_type);
 	rast = rast_ptr;
 	if (G_legal_filename(output) < 0) {
 	  sprintf(err, "%s -- illegal output file name", output);
@@ -184,6 +220,7 @@ main (int argc, char *argv[])
 	}
 	for (row = 0; row < nrows; row++)
 	{
+		G_percent(row, nrows, 2);
 		for (col = 0; col < ncols; col++)
 		{
 			if (fscanf (fd, "%s", y) != 1)
@@ -198,8 +235,15 @@ main (int argc, char *argv[])
 			}
 			if (strcmp(y, null_val_str)) {
 			  x = atof(y);
-			  G_set_raster_value_d(rast_ptr,
+			  if((float)x==GS_BLANK)
+			  {
+			    G_set_null_value(rast_ptr, 1, data_type);
+			  }
+			  else
+			  {
+			    G_set_raster_value_d(rast_ptr,
 				(DCELL)(x * mult), data_type);
+			  }
 			}
 			else {
 			   G_set_null_value(rast_ptr, 1, data_type);
@@ -207,10 +251,32 @@ main (int argc, char *argv[])
 			rast_ptr = G_incr_void_ptr(rast_ptr,
 					G_raster_size(data_type));
 		}
-		G_put_raster_row (cf, rast, data_type);
+		fwrite(rast,G_raster_size(data_type),ncols,ft);
 		rast_ptr = rast;
 	}
+	G_percent(nrows, nrows, 2);
 	fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+
+	sz=0;
+	if(direction<0)
+	{
+		sz=-ncols*G_raster_size(data_type);
+		fseek(ft,sz,SEEK_END);
+		sz*=2;	
+	}
+	else
+	{
+		fseek(ft,0,SEEK_SET);
+	}
+	for (row=0; row< nrows; row+=1)
+	{
+		fread(rast, G_raster_size(data_type),ncols,ft);
+		G_put_raster_row (cf, rast, data_type);
+		fseek(ft,sz,SEEK_CUR);
+        }
+	fclose(ft);
+	unlink(temp);
+
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);

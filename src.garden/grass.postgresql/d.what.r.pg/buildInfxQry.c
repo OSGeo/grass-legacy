@@ -3,12 +3,11 @@
 
 /*------------ A.Sh. 29.12.99 */
 
-buildInfxQry(ktab,keycat,curcat)
+int buildInfxQry(ktab,keycat,curcat)
 	struct Option *ktab, *keycat; 
 	int curcat;
 {
 
-	int c_cat;
 	static char SQL_stmt[1024]="";
 
 	snprintf(SQL_stmt, 1024,

@@ -1,18 +1,6 @@
 /*
  * $Id$
- */
-
-#include     <stdio.h>
-#include     <signal.h>
-#include     "gis.h"
-#include     "Vect.h"
-#include     <stc123.h>
-
-#define MAIN
-#include     "sdts_in.h"
-#include  "sdts_globals.h"
-
-/*
+ *
 ** v.in.sdts:
 ** 
 ** Usage:
@@ -34,6 +22,16 @@
 **  
 */
 
+#include     <stdio.h>
+#include     <stdlib.h>
+#include     <signal.h>
+#include     "gis.h"
+#include     "Vect.h"
+#include     <stc123.h>
+
+#define MAIN
+#include     "sdts_in.h"
+#include  "sdts_globals.h"
 
 #define         SDTS            "sdts"
 #define         ATT             "dig_att"
@@ -49,9 +47,8 @@ static char  *gbase ;
 
 char *get_err_mess();
 
-main (argc, argv)
-        int  argc ;
-        char  *argv[] ;
+int
+main (int argc, char *argv[])
 {
     char *catd_fname;
     char sdts_prefix[5];
@@ -60,8 +57,16 @@ main (argc, argv)
     struct Option *domain_opt, *map_opt, *theme_opt, *agob_opt;
     struct Flag *i_flag, *l_flag;
     short set_flag = 0;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Imports SDTS vector data, conforming to the Topological Vector Profile, "
+    "into GRASS, creating GRASS vector map(s) and associated attribute files "
+    "ready to be installed in a relational database.";
 
     old = G_define_option();
     old->key            = "catd";
@@ -782,7 +787,6 @@ do_IREF_module (cur_mfold, S_globals)
    char frmts[5000];
    char tag[10];
    char leadid;
-   
 
    strcpy (filename, cur_mfold->file_name[IREf]);
 

@@ -12,7 +12,7 @@
 #include "dig_curses.h"
 #include "local_proto.h"
 
-static int swap (register int *a,register int *b)
+static int swap (int *a, int *b)
 {
     register int tmp;
     tmp = *a;
@@ -22,8 +22,9 @@ static int swap (register int *a,register int *b)
     return 0;
 }
 
-static int order_cmp(int *a,int *b)
+static int order_cmp(const void *aa, const void *bb)
 {
+    const int *a = aa, *b = bb;
     if (bx[*a] < bx[*b])
 	return (-1);
     if (bx[*a] > bx[*b])

@@ -26,20 +26,20 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "infx.h"
 #define MAIN
 
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
-    FILE *fp;
     char *dbname;
-    char buf[1024];
-    int i, button, selPassed;
+    int i,selPassed;
     int stat = 0 ;
 
 	selPassed = 0;

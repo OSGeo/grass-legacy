@@ -5,6 +5,7 @@
  *  list all tables in a database
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
@@ -16,8 +17,8 @@ struct {
 
 void parse_command_line();
 
-
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -53,6 +54,8 @@ parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location;
     struct Flag *s;
+    struct GModule *module;
+    
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -77,6 +80,11 @@ parse_command_line(argc, argv) char *argv[];
     s->description	= "system tables instead of user tables";
 
     G_disable_interactive();
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all tables for a given database.";
     
     if (argc > 1) {
 	if(G_parser(argc, argv)) exit(ERROR);

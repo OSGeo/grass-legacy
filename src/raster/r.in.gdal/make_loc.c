@@ -26,7 +26,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-09-26 13:04:33  frankw
+ * Revision 1.2  2002-01-22 04:51:23  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.1.4.1  2001/11/06 13:15:30  markus
+ * fixed compiler warning
+ *
+ * Revision 1.1  2000/09/26 13:04:33  frankw
  * New
  *
  */
@@ -35,6 +41,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 /*
  * Returns 0 on success.

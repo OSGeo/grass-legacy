@@ -127,7 +127,6 @@ int unset_priority ()
 
 static int swap_re_uids (void)
 {
-    uid_t hold;
     static int flipflop = 0;
 
 #ifdef HAVE_SETREUID

@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <string.h>
 
 extern char *malloc();
 extern char *calloc();

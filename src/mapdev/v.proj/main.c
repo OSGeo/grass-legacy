@@ -48,7 +48,8 @@ int main (int argc, char *argv[])
         struct Map_info Map;
         struct Map_info Out_Map;
         struct {
-        struct Flag *support;
+        struct Flag *support,
+                    *list;               /* list files in source location */
             } flag;
         char buf[1024];
 
@@ -56,7 +57,7 @@ int main (int argc, char *argv[])
      
 		module = G_define_module();
 		module->description =
-			"Allows projection conversion of vector files.";
+			"Allows projection conversion of vector files (no datum transformation yet).";
 
 		 /* set up the options and flags for the command line parser */
 
@@ -101,6 +102,10 @@ int main (int argc, char *argv[])
         flag.support = G_define_flag();
         flag.support->key = 's';
         flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
+        flag.list = G_define_flag();
+        flag.list->key = 'l';
+        flag.list->description = "List vector files in input location and exit"; 
 
  
 	   /* heeeerrrrrre's the   PARSER */
@@ -197,14 +202,29 @@ int main (int argc, char *argv[])
 */
 
 }
-           if (stat >= 0)
+
+
+         if (stat >= 0)  /* yes, we can access the mapset */
            {
+	     
+	     /* if requested, list the vector files in source location - MN 5/2001*/
+		if (flag.list->answer)
+		{
+		 if(isatty(0))  /* check if on command line */
+		  {
+		   fprintf(stderr, "Checking location %s, mapset %s:\n", iloc_name, iset_name);
+		   G_list_element ("dig", "vector", iset_name, 0);
+		   exit(0); /* leave v.proj after listing*/
+		  }
+		}
+
         	G__setenv ("MAPSET", iset_name);
                 /* Make sure map is available */
 	        mapset = G_find_vector (map_name, iset_name) ;
         	if (mapset == NULL)
         	{
-		    sprintf(buffb,"Vector file [%s] not available",map_name);
+		    sprintf(buffb,"Vector file [%s] in location [%s] in mapset [%s] not available",
+				    map_name, iloc_name, iset_name);
 	            G_fatal_error(buffb) ;
 	         }
            /*** Get projection info for input mapset ***/

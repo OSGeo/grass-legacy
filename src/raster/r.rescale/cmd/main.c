@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -60,9 +61,8 @@ int main (int argc, char *argv[])
 	parm.to->key        = "to";
 	parm.to->key_desc   = "min,max";
 	parm.to->type       = TYPE_INTEGER;
-	parm.to->required   = NO;
+	parm.to->required   = YES;
 	parm.to->description= "The output data range";
-	parm.to->answer     = "1,255";
 
 	parm.title = G_define_option() ;
 	parm.title->key        = "title";

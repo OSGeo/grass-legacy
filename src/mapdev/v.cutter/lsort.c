@@ -24,8 +24,9 @@ static int Code;		/* Active code */
 **       - increasing distance from beginning of line segment
 **
 */
-static int inter_compare (struct t_data **a, struct t_data **b)
+static int inter_compare (const void *aa, const void *bb)
 {
+  struct t_data * const *a = aa, * const *b = bb;
   double x1dist, y1dist;
   double x2dist, y2dist;
   double adist, bdist;

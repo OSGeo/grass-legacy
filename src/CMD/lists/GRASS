@@ -32,11 +32,13 @@ src/libes/vect32/diglib
 src/libes/vect32/georef
 src/libes/image3
 src/libes/bwidget
+src/libes/gmath
 src/general/init
 src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
-src/display/devices/XDRIVER
+### XDRIVER requires X11
+#src/display/devices/XDRIVER
 src/display/devices/HTMLMAP
 #requires Gd lib from Boutell:
 #src/display/devices/PNGdriver
@@ -63,8 +65,8 @@ src/display/d.area
 src/display/d.ask
 src/display/d.barscale
 src/display/d.colormode
-src/display/d.colors
 src/display/d.colorlist
+src/display/d.colors
 src/display/d.colortable
 src/display/d.db
 src/display/d.display
@@ -83,8 +85,8 @@ src/display/d.label
 src/display/d.labels
 ##from Pierre: for new layered XDRIVER2, currently in src.unused/:
 #src/display/d.layers
+#next is d.legend:
 src/display/d.leg.thin
-src/display/d.legend
 src/display/d.mapgraph
 src/display/d.measure
 src/display/d.menu
@@ -97,7 +99,7 @@ src/display/d.rast
 src/display/d.rast.arrow
 src/display/d.rast.edit
 src/display/d.rast.num
-#src/display/d.rgb
+src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
@@ -109,6 +111,7 @@ src/display/d.text
 src/display/d.title
 src/display/d.vect
 src/display/d.vect.cats
+src/display/d.vect.labels
 src/display/d.what.db
 src/display/d.what.rast
 src/display/d.what.sites
@@ -134,11 +137,11 @@ src/imagery/i.class
 src/imagery/i.cluster
 src/imagery/i.colors
 src/imagery/i.composite
-src/imagery/i.fft
+# requires FFTW
+#src/imagery/i.fft
 src/imagery/i.find
 src/imagery/i.gensig
 src/imagery/i.gensigset
-src/imagery/i.grey.scale
 src/imagery/i.group
 src/imagery/i.in.erdas
 #don't work, r.in.gdal can be used:
@@ -151,7 +154,6 @@ src/imagery/i.pca
 src/imagery/i.points
 src/imagery/i.points3
 src/imagery/i.quantize
-src/imagery/i.rectify
 src/imagery/i.rectify2
 #src/imagery/i.rectify3
 src/imagery/i.rgb.his
@@ -167,7 +169,8 @@ src/imagery/i.tape.tm
 src/imagery/i.tape.tm.fast
 src/imagery/i.target
 src/imagery/i.vpoints
-src/imagery/i.zc
+# requires FFTW
+#src/imagery/i.zc
 src/mapdev/v.alabel
 src/mapdev/v.apply.census
 src/mapdev/v.area
@@ -192,9 +195,7 @@ src/mapdev/v.in.atlas
 # which one to keep??:
 src/mapdev/v.in.dlg
 src/mapdev/v.in.dlg2
-# which one to keep??:
 src/mapdev/v.in.dxf
-src/mapdev/v.in.dxf2
 src/mapdev/v.in.dxf3d
 src/mapdev/v.in.gshhs
 src/mapdev/v.in.mif
@@ -204,7 +205,7 @@ src/mapdev/v.in.tig.lndmk
 src/mapdev/v.in.transects
 src/mapdev/v.info
 src/mapdev/v.llabel
-src/mapdev/v.merge
+#src/mapdev/v.merge # needs v.make.subj
 src/mapdev/v.mkgrid
 src/mapdev/v.mkquads
 src/mapdev/v.out.arc
@@ -256,6 +257,7 @@ src/misc/m.ll2u
 src/misc/m.lulc.USGS
 src/misc/m.lulc.read
 src/misc/m.proj
+src/misc/m.proj2
 src/misc/m.region.ll
 src/misc/m.rot90
 src/misc/m.svfit
@@ -284,6 +286,7 @@ src/raster/r.coin
 src/raster/r.colors
 src/raster/r.colors.paint
 src/raster/r.combine
+src/raster/r.composite
 src/raster/r.compress
 src/raster/r.contour
 src/raster/r.cost
@@ -296,6 +299,7 @@ src/raster/r.fill.dir
 src/raster/r.flow
 src/raster/r.flowmd
 src/raster/r.grow
+src/raster/r.his
 src/raster/r.in.arc
 src/raster/r.in.ascii
 src/raster/r.in.bin
@@ -314,6 +318,7 @@ src/raster/r.in.sunrast
 src/raster/r.infer
 src/raster/r.info
 src/raster/r.kappa
+src/raster/r.le
 src/raster/r.line
 src/raster/r.los
 src/raster/r.mapcalc
@@ -333,6 +338,7 @@ src/raster/r.out.pov
 src/raster/r.out.ppm
 src/raster/r.out.tga
 src/raster/r.out.xyz
+src/raster/r.param.scale
 src/raster/r.patch
 src/raster/r.poly
 src/raster/r.profile
@@ -345,7 +351,7 @@ src/raster/r.reclass
 src/raster/r.recode
 src/raster/r.report
 src/raster/r.resample
-src/raster/r.resamp.rst
+#src/raster/r.resamp.rst # contains bug due to author
 src/raster/r.rescale
 src/raster/r.rescale.eq
 src/raster/r.slope.aspect
@@ -357,7 +363,8 @@ src/raster/r.sunmask
 src/raster/r.support
 src/raster/r.surf.area
 src/raster/r.surf.contour
-src/raster/r.surf.fractal
+# requires FFTW
+#src/raster/r.surf.fractal
 src/raster/r.surf.gauss
 #should be merged:
 src/raster/r.surf.idw
@@ -371,7 +378,8 @@ src/raster/r.topidx
 src/raster/r.topmodel
 src/raster/r.transect
 src/raster/r.volume
-src/raster/r.water.outlet
+#doesn't work properly:
+#src/raster/r.water.outlet
 src/raster/r.watershed
 #should be merged:
 src/raster/r.weight
@@ -379,6 +387,7 @@ src/raster/r.weight2
 src/raster/r.what
 src/raster/wildfire
 src/scripts
+src/sites/s.hull
 src/sites/s.in.ascii
 src/sites/s.in.dbf
 src/sites/s.in.shape
@@ -401,6 +410,8 @@ src/sites/s.territory
 src/sites/s.to.rast
 src/sites/s.to.vect
 src/sites/s.univar
+src/sites/s.voronoi
+src/sites/s.what
 src/sites/s.windavg
 src/sites/sroff
 src/tcltkgrass
@@ -412,7 +423,8 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 #src.contrib/GMSL/xganim
 # src.contrib/GMSL/ogl3d_linux
 #
-src.contrib/GMSL/NVIZ2.2
+# requires OpenGL and Tcl/Tk
+#src.contrib/GMSL/NVIZ2.2
 #
 # only on SGI:
 #src.contrib/GMSL/SG3d
@@ -420,6 +432,8 @@ src.contrib/GMSL/NVIZ2.2
 #
 # grid3d (raster voxel), still buggy:
 #src.contrib/GMSL/g3d
+# 2D-case working:
+src.contrib/GMSL/g3d/src3d/sites/s.vol.rst
 #
 #######################################
 # PostgreSQL support: (working!)
@@ -429,7 +443,8 @@ src.contrib/GMSL/NVIZ2.2
 # from here onwards it becomes experimental!!
 #
 src.contrib/CERL/imagery/i.rvi.prediction2
-src.contrib/CERL/imagery/i.shape
+# requires FFTW
+#src.contrib/CERL/imagery/i.shape
 # src.contrib/CERL/misc/m.regression
 src.contrib/CERL/raster/r.linear.regression
 # src.contrib/CERL/raster/r.ndvi.model
@@ -455,9 +470,7 @@ src.contrib/OTHER/v.in.poly
 src.contrib/PURDUE/d.linegraph
 src.contrib/PURDUE/i.texture
 src.contrib/PURDUE/s.medp
-src.contrib/PURDUE/s.voronoi
 src.contrib/SCS/display/d.fix.ortho
-src.contrib/SCS/display/d.text
 # src.contrib/SCS/imp_exp # broken dependencies into src.related/mapgen
 # src.contrib/SCS/imp_exp/dig_dlg
 # src.contrib/SCS/imp_exp/dig_gef
@@ -473,7 +486,8 @@ src.contrib/SCS/mapdev/v.patch.scs
 # src.contrib/SCS/misc/FIPS_proj/inter
 # src.contrib/SCS/misc/FIPS_proj/lib
 src.contrib/SCS/misc/dotmaps/v.scale.random
-src.contrib/SCS/misc/m.bsplit
+#do we really need the next???
+#src.contrib/SCS/misc/m.bsplit
 src.contrib/SCS/misc/m.futil
 src.contrib/SCS/misc/m.qcalc
 src.contrib/SCS/misc/m.strip99s
@@ -512,7 +526,7 @@ src.contrib/SCS/raster/r.tangent
 # src.contrib/SCS/sites/s.dotmap.new       # needs new sites API?
 # src.contrib/SCS/sites/s.dotmap.new/v.random # obsolete, already in src/mapdev/
 src.contrib/SCS/vector/v.dump
-src.contrib/SCS/vector/v.make.subj
+#src.contrib/SCS/vector/v.make.subj   # not working
 # weird name not meeting convention:
 src.contrib/SCS/vector/v.mk_stats
 # src.contrib/SCS/vector/v.mkquads  # src/mapdev/v.mkquads also there

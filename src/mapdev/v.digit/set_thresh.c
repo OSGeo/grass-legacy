@@ -1,6 +1,6 @@
-/*  @(#)set_thresh.c    2.1  6/26/87  */
 /*
-**  Last modified by Dave Gerdes  5/1988
+** - always output threshold recommendation Markus Neteler 11/201
+** - Last modified by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab
 */
 
@@ -128,12 +128,9 @@ reset_snap_thresh (struct Map_info *map)
             sprintf ( buf, "    %f  is not a reasonable threshold.", cur_digit);
             Write_info ( 3, buf);
 
-	    if (Dig_Enabled)
-	    {
             sprintf ( buf, " Threshold should be between   %f  and  %f.", 
             Lower, Scale);
             Write_info ( 4, buf);
-	    }
 
             sleep (5);
 
@@ -209,12 +206,9 @@ reset_thresh (struct Map_info *map)
 		sprintf ( buf, "    %f  is not a reasonable threshold.", cur_digit);
 		Write_info ( 3, buf);
 
-		if (Dig_Enabled)
-		{
 		sprintf ( buf, " Threshold should be between   %f  and  %f.", 
 		Lower, Scale);
 		Write_info ( 4, buf);
-		}
 
 		sleep (5);
 

@@ -1,6 +1,6 @@
 This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.11 2001-02-07 10:48:22 markus Exp $
+$Id: ONGOING,v 1.12 2002-01-22 04:50:47 glynn Exp $
 
 
 GRASS 5.0 (stable) is scheduled for spring 2001.
@@ -43,10 +43,6 @@ Libraries:
    <Radim.Blazek@dhv.cz>
   -> will go into GRASS 5.1
 
-XDRIVER
-- remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
-  (Being worked on by Eric Miller)
-
 
 Modules:
 - display modules:
@@ -61,7 +57,7 @@ Modules:
   (Being worked on by Michel Wurtz)
 
 - vector network analysis
-  (Being worked on by Roberto Micarelli <mi.ro@iol.it>)
+  (Being worked on by Roberto Micarelli <mi.ro@iol.it> ????)
  
 - v.out.e00: add datum/projection info
   (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
@@ -76,12 +72,21 @@ Modules:
   -> will go into GRASS 5.1
 
 - Stereo Visualization/Analysis (aerial photos)
-  (Being worked on by Buciu Claudiu <claudiub@rol.ro>)
+  (Being worked on by Buciu Claudiu <claudiub@rol.ro> ??)
   -> will go into GRASS 5.1
 
 - testsuite
    (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
   -> initial testsuite done.
+
+- fuzzy logic modules:
+  ftp://ftp.mpl.ird.fr/pub/delclaux/fuzzy
+  -> need 5.0 updating
+  (Being worked on by Francois Delclaux <Francois.Delclaux@mpl.ird.fr>
+
+- XML support:
+  http://pweb.jps.net/~egm2/grass/xml/
+  (Being worked on by Eric G. Miller)
 
 
 External projects:

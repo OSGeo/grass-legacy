@@ -1,4 +1,6 @@
-/* improved from v.bubble code 6/2000 MN*/
+/* 
+ * $Id$
+ * improved from v.bubble code 6/2000 MN*/
 
 /* Function: "main.c" for GRASS Program "v.circle".               */
 /* "v.circle" creates vector "circle" polygons using points from  */
@@ -7,6 +9,8 @@
 
 /* Exit status of 0 indicates program was successful.     */
 /* Exit status of 1 indicates program was not successful. */
+
+/* AUTHOR: Bruce Powell, National Park Service */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +43,7 @@ int main( int argc, char **argv )
   struct Map_info map;
   struct dig_head *local_head;
   struct line_pnts *pnts;
+  struct GModule *module;
   double x[361], y[361];
   double max_x, max_y;
   double min_x, min_y;
@@ -56,13 +61,23 @@ int main( int argc, char **argv )
       
 /* Initialize the GIS calls */
   G_gisinit(argv[0]) ;
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+	"Creates a vector file which consists of circle(s) which uses each point "
+	"in a 'site_lists' file as the center of those circle(s).";
 
-  /* Request a pointer to memory for each flag. */
-  flag = G_define_flag();
-  flag->key = 's';
-  flag->description = "Automatically run \"v.support\" on newly created \
-vector file."; 
-  flag->answer = 0x00;
+
+/* Request a pointer to memory for each option. */
+  opt_input = G_define_option();
+  opt_input->key = "sitefile";
+  opt_input->type = TYPE_STRING;
+  opt_input->required = YES;
+  opt_input->gisprompt = "old,site_lists,site_lists";
+  opt_input->description = "GRASS site_lists file (input).";
+  opt_input->answer = "";
+
 
 /* Request a pointer to memory for each option. */
   opt_radius = G_define_option();
@@ -102,14 +117,6 @@ center(s).  If area selected then radius values are not used for computations.";
 ac(acres), sqmi(square miles), hec(hectares).";
   opt_area_uom->answer = "sqm";
 
-/* Request a pointer to memory for each option. */
-  opt_input = G_define_option();
-  opt_input->key = "sitefile";
-  opt_input->type = TYPE_STRING;
-  opt_input->required = YES;
-  opt_input->gisprompt = "old,site_lists,site_lists";
-  opt_input->description = "GRASS site_lists file (input).";
-  opt_input->answer = "";
 
 /* Request a pointer to memory for each option. */
   opt_output = G_define_option();
@@ -119,6 +126,13 @@ ac(acres), sqmi(square miles), hec(hectares).";
   opt_output->gisprompt = "any,dig,vector";
   opt_output->description = "Vector file to be created (output).";
   opt_output->answer = "";
+
+  /* Request a pointer to memory for each flag. */
+  flag = G_define_flag();
+  flag->key = 's';
+  flag->description = "Automatically run \"v.support\" on newly created \
+vector file."; 
+  flag->answer = 0x00;
 
   /* Using GRASS parsing to obtain arguments... */
   if (G_parser(argc, argv) != 0)
@@ -486,9 +500,8 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
       sprintf(catbuffer, "%g", bsite[i1].z); /* use sites z-value as cat */
 
       /* write att file */
-      fprintf( f_att, "A  %-12f  %-12f  %s \n",
-      		   bsite[i1].x, bsite[i1].y, catbuffer);
-      		   
+      fprintf( f_att, "A %-12f %-12f          %i\n",
+                         bsite[i1].x, bsite[i1].y, i1+1);      		   
       /* copy z value from sites as vector cat */
       if (G_set_cat(i1+1, catbuffer, &cats) != 1)
          G_fatal_error("Error setting category in dig_cats");
@@ -527,6 +540,7 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
   /* "Vect_close" will write the header for the vector file. */
   Vect_close(&map);
   fclose(fd_site);
+  fclose (f_att);
   
   /* Provide warning message if no site points were retrieved. */
   if ( count == 0 )
@@ -560,7 +574,7 @@ Vector file <%s> has no circles in it.\n",
   if (flag->answer == 0x01)
    {
     fprintf(stderr, "Creating support file...");
-    sleep(8); /* sleep to avoid timing problems */
+    /* sleep(2); */ /* sleep to avoid timing problems */
     sprintf(command,"%s/bin/v.support map=%s",G_gisbase(), output );
     system(command);
    }

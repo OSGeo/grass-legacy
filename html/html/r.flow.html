@@ -190,6 +190,27 @@ so the dispersal flow is not accurately described, but still better than D8.
 <P>2. Computation of contributing areas: r.flow uses a single flow
 algorithm, i.e. all flow is transported to a single cell downslope.
 
+<H2>FURTHER NOTES</H2>
+
+Differences between <em>r.flow</em> and <em>r.flowmd</em>
+<p>
+
+<ol>
+
+<li> r.flow has an option to compute slope and aspect internally thus making
+the program capable to process much larger data sets than r.flowmd. It has
+also 2 additional options for handling of large data sets but it is not
+known that they work properly.
+<li> the programs handle the special cases when the flowline passes exactly
+(or very close) through the grid vertices differently.
+<li> r.flowmd has the simplified multiple flow addition so the results are
+smoother.
+</ol>
+
+In conclusion, <em>r.flowmd</em> produces nicer results but is slower and it does not
+support as large data sets as <em>r.flow</em>.
+
+
 <H2>DIAGNOSTICS</H2>
 ERROR: GISRC - variable not set
 
@@ -270,5 +291,6 @@ Science, Vol. 11, No. 6)
 
 <P>Mitasova, H.(1993): Surfaces and modeling. Grassclippings (winter and
 spring) p.18-19.
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

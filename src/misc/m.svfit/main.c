@@ -23,11 +23,13 @@
 **/
 
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
 #include "gis.h"
 #include "svfit.h"
 
 char *plot_file, *data_file;
+const char *plot_program;
 
 int main (argc, argv)
   char **argv;
@@ -108,6 +110,8 @@ int main (argc, argv)
     exit (1);
   G_sleep_on_error (0);
 
+  plot_program = getenv("GRASS_GNUPLOT");
+
   /* Process arguments */
   verbose = (!flag.q->answer);
   weighted = flag.w->answer;
@@ -133,13 +137,9 @@ int main (argc, argv)
 
   plot = (flag.p->answer);
   graphfile = parm.save->answer;
-  /* need graphics. program will exit here if driver is not available */
+
   if (parm.save->answer)
-  {
     plot = 1;
-    R_open_driver ();
-    R_close_driver ();
-  }
 
   nh = 100;
   in_range = nwork = 0;

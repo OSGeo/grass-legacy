@@ -24,7 +24,8 @@ int pj_do_proj(x,y,info_in,info_out)
         METERS_out = info_out->meters;
 
         if (strncmp(info_in->proj,"ll",2) == 0 ) {
-          if (strncmp(info_out->proj,"ll",2) == 0 ) return -1;
+          if (strncmp(info_out->proj,"ll",2) == 0 )
+	    /* LL->LL is a no-op */ ;
           else  {
             data.u = (*x) / RAD_TO_DEG;
             data.v = (*y) / RAD_TO_DEG;

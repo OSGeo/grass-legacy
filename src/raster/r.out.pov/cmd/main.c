@@ -99,6 +99,8 @@ int main(int argc, char *argv[])
         struct Option *scaleFactor ;
     } parm;
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
     module->description =
 		"Converts a raster map layer into a height-field file for POVRAY.";
@@ -135,9 +137,6 @@ int main(int argc, char *argv[])
     parm.scaleFactor->type       = TYPE_DOUBLE;
     parm.scaleFactor->required   = NO;
     parm.scaleFactor->description= "Vertical scaling factor";
-
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
        	exit (-1);

@@ -71,7 +71,7 @@ main (int argc, char *argv[])
 	char	*mapset ;
 	char  command[256] ;
 
-	G_gisinit("EXPORT_FROM_DIGIT") ;
+	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =

@@ -12,9 +12,9 @@ main (int argc, char *argv[])
 	module->description =
 		"Reports statistics for raster map layers.";
 
-    G_get_window (&window);
-
     parse_command_line (argc, argv);
+
+    G_get_window (&window);
 
     get_stats();
 

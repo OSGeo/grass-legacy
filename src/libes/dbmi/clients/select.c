@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  **************************************************************
  * db.select -cdh driver=name database=name [location=name] \
  *	      [fs=|] [vs=] [nv=null-indicator] [input=filename]
@@ -29,7 +27,8 @@ struct {
 
 void parse_command_line();
 
-main(argc, argv) char *argv[];
+int
+main(int argc, char *argv[])
 {
     dbString stmt;
     dbDriver *driver;
@@ -74,7 +73,7 @@ main(argc, argv) char *argv[];
     exit(stat);
 }
 
-select (driver, stmt)
+int select (driver, stmt)
     dbDriver *driver;
     dbString *stmt;
 {
@@ -152,6 +151,8 @@ parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*h;
+    struct GModule *module;
+    
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -210,7 +211,12 @@ parse_command_line(argc, argv) char *argv[];
     h->description	= "horizontal output (instead of vertical)";
 
     G_disable_interactive();
-
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Select data from database.";
+    
     if (argc > 1) {
 	if(G_parser(argc, argv)) exit(ERROR);
     }
@@ -234,6 +240,7 @@ parse_command_line(argc, argv) char *argv[];
     }
 }
 
+int
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
@@ -258,6 +265,7 @@ get_stmt(fd, stmt)
     return 1;
 }
 
+int
 stmt_is_empty(stmt)
     dbString *stmt;
 {
@@ -266,6 +274,7 @@ stmt_is_empty(stmt)
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
 
+int
 print_column_definition(column)
     dbColumn *column;
 {

@@ -50,14 +50,14 @@ v.support -r $name.2 op=build
 rm $LOCATION/dig_ascii/$name $LOCATION/dig_ascii/$name.2
 
 echo ''
-$ECHON "Want to rename $name.2 to $name? (n) "
+$ECHON "Want to rename $name.2 to $name (overwriting the original map)? (n) "
 read ans
 if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
   g.rename vect=$name.2,$name
   echo ''
-  echo "$name now contains areas."
+  echo "$name now contains area vector instead of line vectors."
 else
   clear
   echo ''
-  echo "$name.2 now contains areas."
+  echo "$name.2 now contains area vector instead of line vectors."
 fi

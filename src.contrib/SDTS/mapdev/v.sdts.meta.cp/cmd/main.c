@@ -5,15 +5,20 @@
 
 char mapname[MAX_FILENAME + 1];
 
-main (argc, argv)
-int argc;
-char *argv[];
+int
+main (int argc, char *argv[])
 {
   struct Option *map_opt, *meta_opt;
   struct Flag *flag;
   char path[500], buf[1000];
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Installs supplementary metadata file preparatory to creation of an SDTS export dataset.";
 
   meta_opt = G_define_option ();
   meta_opt->key = "metafile";

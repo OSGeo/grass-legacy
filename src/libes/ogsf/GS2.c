@@ -40,8 +40,6 @@ static int SDref_surf = 0;
 static float Default_const[MAX_ATTS];
 static float Default_nulls[MAX_ATTS];
 static float Longdim;
-static float E1_DIST, E2_DIST, E_DIST;
-static float N1_DIST, N2_DIST, N_DIST;
 static float Region[4]; /* N, S, W, E */
 static geoview Gv;
 static geodisplay Gd;
@@ -69,27 +67,6 @@ void GS_libinit(void)
     Region[2] = wind.west;
     Region[3] = wind.east;
 
-if (wind.proj == 10) {
-G_begin_distance_calculations();
-E1_DIST = G_distance( wind.east,wind.north,wind.west,wind.north);
-E2_DIST = G_distance( wind.east,wind.south,wind.west,wind.south);
-if (E1_DIST > E2_DIST) E_DIST = E1_DIST;
-else
-E_DIST = E2_DIST;
-wind.ew_res = E_DIST / wind.cols;
-
-N1_DIST = G_distance( wind.east,wind.north,wind.east,wind.south);
-N2_DIST = G_distance(wind.west,wind.north,wind.west,wind.south);
-if (N1_DIST > N2_DIST) N_DIST = N1_DIST;
-else
-N_DIST = N2_DIST;
-wind.ns_res = N_DIST / wind.rows;
-if (E_DIST > N_DIST) Longdim = E_DIST;
-else
-Longdim = N_DIST;
-} else {
-
-
     /* scale largest dimension to GS_UNIT_SIZE */
     if((wind.east - wind.west) > (wind.north - wind.south))
     {
@@ -99,7 +76,6 @@ Longdim = N_DIST;
     {
 	Longdim = (wind.north - wind.south);
     }
-}
     
     Gv.scale = GS_UNIT_SIZE / Longdim;
     
@@ -1337,8 +1313,8 @@ int GS_load_att_map(int id, char *filename, int att)
 
 	if (0 > gs_malloc_att_buff(gs, att, ATTY_NULL))
 	{
-	    Gs_status("Unable to load map");
-	    ret = -1;
+	    Gs_status("Out of memory - Unable to load map");
+	    exit(0);
 	}
 	
 	switch (atty)
@@ -1346,8 +1322,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    case ATTY_MASK:
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_MASK))
 		{
-		    Gs_status("Unable to load map");
-		    ret = -1;
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		ret = Gs_loadmap_as_bitmap(&wind, filename, tbuff->bm);
@@ -1356,8 +1332,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    case ATTY_CHAR:
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_CHAR))
 		{
-		    Gs_status("Unable to load map");
-		    ret = -1;
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		ret = Gs_loadmap_as_char(&wind, filename, tbuff->cb,
@@ -1367,8 +1343,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    case ATTY_SHORT:
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_SHORT))
 		{
-		    Gs_status("Unable to load map");
-		    ret = -1;
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		ret = Gs_loadmap_as_short(&wind, filename, tbuff->sb,
@@ -1378,8 +1354,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    case ATTY_FLOAT:
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_FLOAT))
 		{
-		    Gs_status("Unable to load map");
-		    ret = -1;
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		ret = Gs_loadmap_as_float(&wind, filename, tbuff->fb, 
@@ -1395,8 +1371,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    default:
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_INT))
 		{
-		    Gs_status("Unable to load map");
-		    ret = -1;
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		ret = Gs_loadmap_as_int(&wind, filename, tbuff->ib,
@@ -1460,8 +1436,8 @@ int GS_load_att_map(int id, char *filename, int att)
 	    {
 		if (0 > gs_malloc_att_buff(gs, att, ATTY_INT))
 		{
-		    Gs_status("Unable to load map");
-		    return(-1);
+		    Gs_status("Out of memory - Unable to load map");
+		    exit(0);
 		}
 		
 		Gs_pack_colors_float(filename, tbuff->fb, tbuff->ib, 
@@ -2772,7 +2748,7 @@ void GS_init_view(void)
     GS_v3normalize(Gv.from_to[FROM], Gv.from_to[TO]);
 
     Gd.nearclip = 50.;
-    Gd.farclip = 10000.;
+    Gd.farclip = 100000.;      /* deletes map at given height (?) */
     Gd.aspect = (float) GS_get_aspect(); 
 
     GS_set_focus(Gv.real_to);

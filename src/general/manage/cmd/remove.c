@@ -1,3 +1,5 @@
+
+#include <string.h>
 #define MAIN
 #include "list.h"
 #include "local_proto.h"
@@ -14,12 +16,13 @@ main (int argc, char *argv[])
     char **rmaps, *location_path, *str, buf1[256], buf2[256];
     FILE *fp;
 
+    init (argv[0]);
+
     module = G_define_module();
     module->description =
 		"Removes data base element files from "
 		"the user's current mapset.";
 
-    init (argv[0]);
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
     for (n = 0; n < nlist; n++)
@@ -47,7 +50,7 @@ main (int argc, char *argv[])
 		if(G_is_reclassed_to(name, mapset, &nrmaps, &rmaps) > 0)
 		{
 		    fprintf(stderr,
-			"[%s@%s] is base map. Remove reclassed map%s first:\n",
+		       "[%s@%s] is a base map. Remove reclassed map%s first:\n",
 					name, mapset, (nrmaps > 1 ? "s" : ""));
 
 		    fprintf(stderr, " %s", *rmaps);
@@ -59,6 +62,9 @@ main (int argc, char *argv[])
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
 		   G_is_reclassed_to(rname, rmapset, &nrmaps, &rmaps) > 0)
 		{
+		    char *p = strchr(rname, '@');
+		    if (p)
+			*p = '\0';
 		    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
 				    location_path, rmapset, rname);
 		    sprintf(buf2, "%s@%s", name, mapset);

@@ -43,50 +43,9 @@ help
 exit
 }
 
-#Set Real Argument List
-set ARGS {"-q" "-h" "-help" "elevation" "vector" "sites" "path"}
-
-#initilaize string 
-set CMD ""
-
-#CASE unknown ARGS
-foreach a $argv {
-#strip out args with "="
-if {[string first = $a] > 0} {
-set A [lindex [split $a =] 0]
-set b [lindex [split $a =] 1]
-set a $A 
-#Check args to see if short version used
-if {[string match elevation $a] ||[string match elev $a] || [string match el $a]} {
-set a "elevation=$b"
-} elseif {
-[string match vector $a] || [string match vect $a] || [string match ve $a] } {
-set a "vector=$b"
-} elseif {
-[string match sites $a] || [string match si $a] } {
-set a "sites=$b"
-} elseif {
-[string match path $a] || [string match pa $a] } {
-set a "path=$b"
-}
-}
-#Look for unknown commands
-if {[string first = $a] > 0} {
-set str [lindex [split $a =] 0]
-} else {
-set str $a
-}
-if {[lsearch -exact $ARGS $str] < 0} {
-puts "Unknown Argument $str"
-usage
-exit
-}
-lappend CMD $a
-}
-
 #set ENV for script
 set NVIZ_SCRIPTS $env(GISBASE)/etc/nviz2.2/scripts
 
 
 #Execute Command
-eval exec $env(GISBASE)/etc/nviz2.2/NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/nviz2.2_script $CMD -name NVIZ >&@stdout
+eval exec $env(GISBASE)/etc/nviz2.2/NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/nviz2.2_script $argv -name NVIZ >&@stdout

@@ -61,7 +61,6 @@ int main (int argc, char **argv)
    struct Option *map, *s_val;
    struct Flag *ident, *s_flag, *p_flag;
 
-
     setbuf(stdout, 0) ;
 
 /* Show advertising */

@@ -1,5 +1,7 @@
+<html>
+<head>
 <TITLE>v.in.arc</TITLE>
-
+</head>
 <body bgcolor="white">
 
 <img src="grass.smlogo.gif">
@@ -8,8 +10,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>v.in.arc</b></EM>  - Converts data in ARC/INFO format to GRASS's vector format,
-and stores output in the user's current GRASS mapset.
+<EM><b>v.in.arc</b></EM>  - Imports vector data in ARC/INFO ungenerate
+format into GRASS.
 
 <BR>
 
@@ -52,32 +54,14 @@ detailing the use of the <EM>Ungenerate</EM> command.
 
 <P>
 
-<B>Note:</B>  The ARC coverage must be set to single precision before
+<B>Note 1:</B>  The ARC coverage must be set to single precision before
 running <EM>Ungenerate</EM>.  If it is not, first
 copy it to another coverage that is set to single precision, then
 run <EM>Ungenerate</EM>.
 
-
 <P>
 
-Once converted with the ARC/INFO <EM>Ungenerate</EM> command, the files to be
-imported into GRASS must be placed in a directory named <EM>arc</EM> in the
-user's current mapset. If the <EM>arc</EM> directory does not exist, it must be
-created (e.g., with the command <EM>mkdir $LOCATION/arc</EM>) before copying the 
-ARC-INFO files to be converted into it.
-
-
-<P>
-
-(<EM>v.in.arc</EM> can be used to convert ARC-INFO data from other mapsets as
-well, since the program searches for the specified input file names in the 
-<EM>arc</EM> directories, if any exist, in the mapsets in the user's current 
-mapset search path.)
-
-
-<P>
-
-<B>Note:</B>  To use for text attributes, numeric fields with
+<B>Note 2:</B>  To use for text attributes, numeric fields with
 values &gt;999 may contain no commas or TABs.  Also, the first record
 must have all fields filled.
 
@@ -448,13 +432,16 @@ are missing;  however, the lines and/or areas imported will not be labeled.
 <P>
 <EM>v.in.arc </EM>
 can handle label-text files both with and without header lines.
+<P>
+Import files are read from any directory, v.in.arc can handle relative or
+absolute file names with path.
 
 <H2>SEE ALSO</H2>
 
 <EM>
-<A HREF="v.out.arc.html">v.out.arc</A>
-</EM><br>
-<EM>
+<A HREF="v.in.shape.html">v.in.shape</A>, 
+<A HREF="v.in.dxf.html">v.in.dxf</A>,
+<A HREF="v.out.arc.html">v.out.arc</A>, 
 <A HREF="v.support.html">v.support</A>
 </EM>
 
@@ -464,3 +451,6 @@ Dave Johnson
 <BR>DBA Systems, Inc.
 <BR>10560 Arrowhead Drive
 <BR>Fairfax, Virginia 22030
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

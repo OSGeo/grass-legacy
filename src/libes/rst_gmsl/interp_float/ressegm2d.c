@@ -63,7 +63,6 @@ int IL_resample_interp_segments_2d (
   int n_rows, n_cols, inp_r, inp_c;
   double x_or, y_or, xm, ym;
   static int first = 1, new_first = 1;
-  char msg[1024];
   double **matrix, **new_matrix, *b = NULL;
   int *indx, *new_indx;
   static struct fcell_triple *in_points = NULL;	/* input points */
@@ -73,8 +72,7 @@ int IL_resample_interp_segments_2d (
   int first_col, last_col;	/* first and last input col of segment */
   int num, prev;
   int div;			/* number of divides */
-  int rem_inp_row, rem_inp_col,	/* input rows/cols remainders */
-   rem_out_row, rem_out_col;	/* output rows/cols remainders */
+  int rem_out_row, rem_out_col;	/* output rows/cols remainders */
   int inp_seg_r, inp_seg_c,	/* # of input rows/cols in segment */
    out_seg_r, out_seg_c;	/* # of output rows/cols in segment */
   int ngstc, nszc		/* first and last output col of the
@@ -530,8 +528,6 @@ static int input_data (
   double inp_ns_res,double inp_ew_res)
 {
   double x, y, sm;		/* input data and smoothing */
-  FCELL z;
-  int ddisk = 0, sddisk = 0;	/* amount of disk space needed */
   int m1, m2;			/* loop counters */
   int ret_val, ret_val1;	/* return values of G_get_map_row */
   static FCELL *cellinp = NULL;	/* cell buffer for input data */
@@ -607,10 +603,8 @@ static int write_zeros (
   int n_rows = data->n_rows;
   int n_cols = data->n_cols;
   int cond1, cond2;
-  double dx, dy, dxx, dyy, dxy;
-  int n1, k1, k2, k, i1, l, m, i;
+  int k, l;
   int ngstc, nszc, ngstr, nszr;
-  double zz;
   int offset, offset2;
   double ns_res, ew_res;
 

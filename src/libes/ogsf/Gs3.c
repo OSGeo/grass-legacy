@@ -125,16 +125,15 @@ int Gs_loadmap_as_float(struct Cell_head *wind, char *map_name, float *buff,
     {
         sprintf(err_buff,"Not able to allocate null buffer for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+
+	exit(0);	
     }
 
     if ((cellfile = G_open_cell_old(map_name, map_set)) == -1)
     {
         sprintf(err_buff,"Not able to open cellfile for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     Gs_status("Loading Data");
@@ -144,6 +143,8 @@ int Gs_loadmap_as_float(struct Cell_head *wind, char *map_name, float *buff,
 	offset = row * wind->cols;
 	G_get_f_raster_row (cellfile, &(buff[offset]), row);
 	G_get_null_value_row (cellfile, nullflags, row);
+
+	G_percent(row, wind->rows, 2);
 
 	for (col = 0; col < wind->cols ; col++)
 	{
@@ -198,16 +199,14 @@ int Gs_loadmap_as_int(struct Cell_head *wind, char *map_name, int *buff,
     if (NULL == (nullflags = G_allocate_null_buf()))
     {
         sprintf(err_buff,"Not able to allocate null buffer for [%s]", map_name);        Gs_warning(err_buff);
-        
-	return(-1);
+       	exit(0); 
     }
 
     if ((cellfile = G_open_cell_old(map_name, map_set)) == -1)
     {
         sprintf(err_buff,"Not able to open cellfile for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     Gs_status("Loading Data");
@@ -217,6 +216,8 @@ int Gs_loadmap_as_int(struct Cell_head *wind, char *map_name, int *buff,
 	offset = row * wind->cols;
 	G_get_c_raster_row(cellfile, &(buff[offset]), row);
 	G_get_null_value_row (cellfile, nullflags, row);
+
+	G_percent(row, wind->rows, 2);
 
 	for (col = 0; col < wind->cols ; col++)
 	{
@@ -352,24 +353,21 @@ int Gs_loadmap_as_short(struct Cell_head *wind, char *map_name, short *buff,
     if (NULL == (nullflags = G_allocate_null_buf()))
     {
         sprintf(err_buff,"Not able to allocate null buffer for [%s]", map_name);        Gs_warning(err_buff);
-        
-	return(-1);
+       	exit(0); 
     }
 
     if ((cellfile = G_open_cell_old(map_name, map_set)) == -1)
     {
         sprintf(err_buff,"Not able to open cellfile for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     if (NULL == (tmp_buf = (int *)G_malloc (wind->cols * sizeof(int))))
     {
 	sprintf(err_buff,"out of memory");
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     Gs_status("Loading Data");
@@ -379,6 +377,8 @@ int Gs_loadmap_as_short(struct Cell_head *wind, char *map_name, short *buff,
 	offset = row * wind->cols;
 	G_get_c_raster_row(cellfile, tmp_buf, row);
 	G_get_null_value_row (cellfile, nullflags, row);
+
+	G_percent(row, wind->rows, 2);
 
 	ts = &(buff[offset]);
 	ti = tmp_buf;
@@ -464,8 +464,7 @@ int Gs_loadmap_as_char(struct Cell_head *wind, char *map_name,
     if (NULL == (nullflags = G_allocate_null_buf()))
     {
         sprintf(err_buff,"Not able to allocate null buffer for [%s]", map_name);        Gs_warning(err_buff);
-        
-	return(-1);
+       	exit(0); 
     }
 
 
@@ -473,16 +472,14 @@ int Gs_loadmap_as_char(struct Cell_head *wind, char *map_name,
     {
         sprintf(err_buff,"Not able to open cellfile for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     if (NULL == (tmp_buf = (int *)G_malloc (wind->cols * sizeof(int))))
     {
 	sprintf(err_buff,"out of memory");
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     Gs_status("Loading Data");
@@ -494,6 +491,8 @@ int Gs_loadmap_as_char(struct Cell_head *wind, char *map_name,
 	G_get_null_value_row (cellfile, nullflags, row);
 	tc = (unsigned char *) &(buff[offset]);
 	ti = tmp_buf;
+
+	G_percent(row, wind->rows, 2);
 	
 	for (col = 0; col < wind->cols; col++)
 	{
@@ -563,24 +562,21 @@ int Gs_loadmap_as_bitmap(struct Cell_head *wind, char *map_name,
     {
         sprintf(err_buff,"Not able to open cellfile for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     if (NULL == (tmp_buf = (int *)G_malloc (wind->cols * sizeof(int))))
     {
 	sprintf(err_buff,"out of memory");
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     if (NULL == (nullflags = G_allocate_null_buf()))
     {
         sprintf(err_buff,"Not able to allocate null buffer for [%s]", map_name);
         Gs_warning(err_buff);
-	
-	return(-1);
+	exit(0);	
     }
 
     Gs_status("Loading Data");
@@ -686,6 +682,7 @@ void Gs_pack_colors(char *filename, int *buff, int rows, int cols)
     for (i=0; i<rows; i++)
     {
 	G_lookup_colors (cur, r, g, b, set, cols, &colrules);
+	G_percent(i, rows, 2);
 	
 	for (j=0; j<cols; j++)
 	{
@@ -741,7 +738,8 @@ void Gs_pack_colors_float(char *filename, float *fbuf, int *ibuf, int rows,
     for (i=0; i<rows; i++)
     {
 	G_lookup_f_raster_colors ((DCELL *)fcur, r, g, b, set, cols, &colrules);
-	
+	G_percent(i, rows, 2);
+
 	for(j=0; j<cols; j++)
 	{
 	    if (set[j])
@@ -785,8 +783,7 @@ int Gs_get_cat_label(char *filename, int drow, int dcol, char *catstr)
     if ((mapset = G_find_cell(filename,"")) == NULL)
     {
 	sprintf(catstr,"error");
-	
-	return(-1);
+	exit(0);	
     }
     
     if (-1 != G_read_cats (filename, mapset, &cats))

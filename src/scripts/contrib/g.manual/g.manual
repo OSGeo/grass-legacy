@@ -104,11 +104,11 @@ done
 
 if [ "$opt1" ]
 then
-  /bin/ls $GISBASE/man/man1 | $PAGER
+  /bin/ls $GISBASE/man/man1 | $GRASS_PAGER
   exit 0
 elif [ "$opta" ]
 then
-  /bin/ls -C $GISBASE/man/man1 | $PAGER
+  /bin/ls -C $GISBASE/man/man1 | $GRASS_PAGER
   exit 0
 fi
 
@@ -119,10 +119,10 @@ for i
 do
   case $i in
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
-      GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
+      GRASS_TEXT_BROWSER=`echo $1 | awk -F'=' '{print $2}'` ;;
 
     e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
-      tentries="$tentries `echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'`" ;;
+      tentries="$tentries `echo $1 | awk -F'=' '{print $2}' | sed 's|, *| |g'`" ;;
 
     *) tentries="$tentries $1" ;;
   esac
@@ -168,14 +168,14 @@ do
   html=$GISBASE/documents/html/$i.html
   man=$GISBASE/man/man1/$i.1
   
-  if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
+  if [ "-e $html" -a "$GRASS_TEXT_BROWSER" ]
   then
     if [ "$opts" ]
     then
       exit 0
     fi
     entries="$entries $html"
-  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
+  elif [ "-e $man" -a ! "$GRASS_TEXT_BROWSER" ]
   then
     if [ "$opts" ]
     then
@@ -222,7 +222,7 @@ else
   else
     if [ ! "$optq" ]
     then
-      man -M $GISBASE/man 1 $entries
+      man -M $GISBASE/man $entries
     else
       n=`echo $entries | awk '{print NF}'`
       ni=0

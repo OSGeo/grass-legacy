@@ -31,11 +31,10 @@
 
 <H2>DESCRIPTION</H2>
 
-<EM>i.fft</EM> is an image processing program based on the
-algorithm given by Press (1988), with enhancements by Vali
-(1990), that processes a single input raster map layer
-(<B>input_image</B>) and constructs the real and
-imaginary Fourier components in frequency space.
+<EM>i.fft</EM> is an image processing program based on the FFT algorithm
+given by Frigo et al. (1998), that processes a single input raster map layer
+(<B>input_image</B>) and constructs the real and imaginary Fourier
+components in frequency space.
 
 
 <H2>OPTIONS</H2>
@@ -96,9 +95,10 @@ transform invalid, or at least difficult to interpret.
 
 <H2>SEE ALSO</H2>
 
-<B>Numerical Recipes in C</B>,
-by William H. Press,
-Cambridge University Press, 1988.
+M. Frigo and S. G. Johnson (1998): "FFTW: An Adaptive Software Architecture
+for the FFT". See <a href=>www.FFTW.org</a>: FFTW is a C subroutine library
+for computing the Discrete Fourier Transform (DFT) in one or more
+dimensions, of both real and complex data, and of arbitrary input size.
 
 <P>
 
@@ -125,7 +125,9 @@ Space Research Center,
 
 David Satnik, GIS Laboratory, 
 Central Washington University
+<br>
+Glynn Clements (FFTW support)
 
+<p><i>Last changed: $Date$</i>
 </body>
 </html>
-

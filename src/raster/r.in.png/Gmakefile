@@ -4,7 +4,6 @@ EXTRA_CFLAGS= $(PNGINC)
 LIST= r.in.png.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) \
-        $(PNGLIB) -lpng $(ZLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(PNGLIB)
 
 $(GISLIB): #

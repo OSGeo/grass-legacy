@@ -12,88 +12,76 @@
  * *button. */
 
 #include "includes.h"
-#include "local_proto.h"
-#include "../lib/colors.h"
-
-
-extern Display *dpy;
-extern int scrn;
-extern Window grwin;
-extern Cursor grcurse;
-extern GC gc;
-extern u_long gemask;
-
-static u_long event_mask;
-static int drawn = 0;
-static unsigned oldwidth, oldheight;
-
-GC xor_gc;
-
-/* Erase the current line */
-
-static int EraseRubberLine (int x1, int y1, unsigned x2, unsigned y2)
-{
-	XDrawLine(dpy, grwin, xor_gc, x1, y1, x2, y2);
-
-	return 0;
-}
-
 
 int Get_location_with_line (
-    int cx,
-    int cy,                     /* current x and y */
-    int *nx,
-    int *ny,                   /* new x and y */
+    int cx, int cy,                     /* current x and y */
+    int *nx, int *ny,                   /* new x and y */
     int *button
 )
 {
-	XEvent event;
-	XGCValues gcValues;
-	unsigned gcMask;
+    int drawn = 0;
+    long event_mask;
+    int oldx, oldy;
+    XEvent event;
+    GC xor_gc;
+    XGCValues gcValues;
+    unsigned gcMask;
+    int done;
 
-	event_mask = PointerMotionMask | ButtonPressMask | ExposureMask;
-	XSelectInput(dpy, grwin, event_mask);
-	    /* XOR, so double drawing returns pixels to original state */
-   gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth ;
-   gcValues.function = GXxor;
-   gcValues.line_width = 3;
-   gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
-   gcValues.foreground = 0xffffffff;
-   xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
+    if (redraw_pid)
+    {
+	fprintf(stderr, "Monitor: interactive command in redraw\n");
+	return -1;
+    }
 
-/*   event_mask |= ExposureMask; */
+    /* Get events that track the pointer to resize the RubberBox until
+     * ButtonReleased */
+    event_mask = ButtonPressMask | PointerMotionMask;
+    XSelectInput(dpy, grwin, event_mask);
 
-	while (1) {
-		XWindowEvent(dpy, grwin, event_mask, &event);
-		/****************
-	        while (XCheckWindowEvent(dpy, grwin, event_mask, &event) == False)
-	        {
-		    Service_Xevent();
-		    sleep(1); 
-		}
-	        ****************/
-		switch (event.type) {
-		case Expose:
-			handleExposeEvent();
-			break;
-		case MotionNotify:
-			*nx = event.xbutton.x;
-			*ny = event.xbutton.y;
-			if (drawn)
-				EraseRubberLine(cx, cy, (int) oldwidth, (int) oldheight);
-			XDrawLine(dpy, grwin, xor_gc, cx, cy, *nx, *ny);
-			oldwidth = *nx;
-			oldheight = *ny;
-			drawn = 1;
-			break;
-		case ButtonPress:
-			*nx = event.xbutton.x;
-			*ny = event.xbutton.y;
-			*button = event.xbutton.button;
-			EraseRubberLine(cx, cy, oldwidth, oldheight);
-			drawn = 0;
-			XSelectInput(dpy, grwin, gemask);
-			return 0;
-		}
-	}
+    /* XOR, so double drawing returns pixels to original state */
+    gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth;
+    gcValues.function = GXxor;
+    gcValues.line_width = 3;
+    gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
+    gcValues.foreground = 0xffffffff;
+    xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
+
+    /* Set the crosshair cursor */
+    XDefineCursor(dpy, grwin, cur_xh);
+
+    for (done = 0; !done; ) {
+        if (!Get_Xevent(event_mask, &event))
+            break;
+
+        switch (event.type) {
+        case ButtonPress:
+            *button = event.xbutton.button;
+            *nx = event.xbutton.x;
+            *ny = event.xbutton.y;
+            done = 1;
+            break;
+
+        case MotionNotify:
+            *nx = event.xbutton.x;
+            *ny = event.xbutton.y;
+            /* do a double draw to 'erase' previous rectangle */
+            if (drawn)
+                XDrawLine(dpy, grwin, xor_gc, cx, cy, oldx, oldy);
+            XDrawLine(dpy, grwin, xor_gc, cx, cy, *nx, *ny);
+            oldx = *nx;
+            oldy = *ny;
+            drawn = 1;
+            break;
+        }
+    }
+
+    if (drawn) 
+        XDrawLine(dpy, grwin, xor_gc, cx, cy, oldx, oldy);
+    drawn = 0;
+    XUndefineCursor(dpy, grwin);        /* reset cursor */
+    XSelectInput(dpy, grwin, gemask);   /* restore normal events */
+    XFreeGC(dpy, xor_gc);
+
+    return 0;
 }

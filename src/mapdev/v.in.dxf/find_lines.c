@@ -23,6 +23,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "dxf2vect.h"
 
 int dxf_find_lines (FILE *dxf_file)

@@ -44,8 +44,6 @@ typedef unsigned char uchar;
 
 int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields, 
 		      const char *table_name, const unsigned char dump_flags ) {
-
-	char buf[256]="";
 	
 	int i,j;
 	char *dbname, *pp;
@@ -60,9 +58,6 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
     	PGresult*	res;
 	char	*pghost;
 	
-	FILE *fp;
-    	char *tmpfile_nm; 
-
 	int dump_coords, dump_orig, dump_id;
 
 	/* Do we include special fields? */
@@ -84,9 +79,9 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 	for( i = 0; i < nfields + 4; i++ )
         {
             char	field_name[15];
-	    int		field_width, k;
+	    int		field_width;
 	    char 	c_tmpbuf[128];
-	    char *fld;
+	    char *fld="";
 	    
 	    
 	    DBFFieldType ftype;
@@ -169,7 +164,6 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 		
 	for( j = 0; j < nfields + 4; j++ ) {
 	
-            char	field_name[15];
 	    char 	c_tmpbuf[128];
 	    char fld[128];
 	    
@@ -227,20 +221,3 @@ int PgDumpFromFieldD( const fieldDescript *fd1, const int nfields,
 	
 	return 0;
 }
-
-/************************************************************************/
-/*                             SfRealloc()                              */
-/*                                                                      */
-/*      A realloc cover function that will access a NULL pointer as     */
-/*      a valid input.                                                  */
-/************************************************************************/
-
-static void * SfRealloc( void * pMem, int nNewSize )
-
-{
-    if( pMem == NULL )
-        return( (void *) malloc(nNewSize) );
-    else
-        return( (void *) realloc(pMem,nNewSize) );
-}
-

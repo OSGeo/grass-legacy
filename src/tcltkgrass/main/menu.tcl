@@ -109,11 +109,8 @@ set image_processing {
          "Setting ground control points (GCPs)" "" {
              "run i.points &"
          }
-         "Affine transformation" "" {
+         "Affine and Polynomial transformation" "" {
              "run i.rectify &"
-         }
-         "Polynomial (Helmert) transformation" "" {
-             "run i.rectify2 &"
          }
          "Ortho photo rectification" "" {
              "run i.ortho.photo &"
@@ -346,6 +343,9 @@ menu_build 1 .main_menu {
             "run r.mask &"
         }
         -separator
+        "Map scale in Monitor" "" {
+            "source $env(TCLTKGRASSBASE)/main/monscale.tcl"
+        }
         "Display region settings" "" {
             "run g.region -p &"
         }
@@ -358,13 +358,16 @@ menu_build 1 .main_menu {
     }
     Display "Display maps" {
         Monitors "" $monitors_menu
+        "Map scale in Monitor" "" {
+            "source $env(TCLTKGRASSBASE)/main/monscale.tcl"
+        }
         -separator
         Raster "" $display_raster
         Vector "" $display_vector
         Sites  "" $display_sites
         Text "" {
             "Display map title" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.title"
+                "source $env(TCLTKGRASSBASE)/module/d.title.sh"
             }
             "Display legend" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.legend"
@@ -436,6 +439,9 @@ menu_build 1 .main_menu {
             }
             "Display profile" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.profile"
+            }
+            "Measure lengths and areas" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.measure"
             }
             "Overlay maps" "" {
                 "Specify mask" "" {
@@ -573,7 +579,7 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/r.surf.contour"
             }
             "Interpolate from vectorized contours" "" {
-                "source $env(TCLTKGRASSBASE)/module/v.surf.spline"
+                "source $env(TCLTKGRASSBASE)/module/v.surf.rst"
             }
             -separator
             "Compress/decompress raster file" "" {
@@ -626,6 +632,9 @@ menu_build 1 .main_menu {
                 "Query with definition file" "" {
                        "source $env(TCLTKGRASSBASE)/module/v.what"
                 }
+                "Measure lengths and areas" "" {
+                       "source $env(TCLTKGRASSBASE)/module/d.measure"
+                }
         }
         "Convert map" "" {
             "To raster format" "" {
@@ -637,10 +646,10 @@ menu_build 1 .main_menu {
         }
         "Develop map" "" {
             "Create/rebuild topology" "" {
-                "source $env(TCLTKGRASSBASE)/module/v.support_option=build"
+                "source $env(TCLTKGRASSBASE)/module/v.support_option_build"
             }
             "Edit vector categories" "" {
-                "source $env(TCLTKGRASSBASE)/module/v.support_option=edit"
+                "source $env(TCLTKGRASSBASE)/module/v.support_option_edit"
             }
             "Prune" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.prune"
@@ -688,6 +697,9 @@ menu_build 1 .main_menu {
             }
             "Geometrical calculations" "" {
                  "source $env(TCLTKGRASSBASE)/module/v.geom"
+            }
+            "Interpolate raster map from contours" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.surf.rst"
             }
         }
         "Report map" "" {
@@ -752,6 +764,9 @@ menu_build 1 .main_menu {
             "ERDAS LAN" "" {
                 "source $env(TCLTKGRASSBASE)/module/i.in.erdas"
             }
+            "Various formats (GDAL supported)" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.gdal"
+            }
             -separator
             "Binary file (GTOPO30 format) in a lat-lon region" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.bin"
@@ -769,6 +784,9 @@ menu_build 1 .main_menu {
             }
             "ESRI shapefile" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.in.shape"
+            }
+            "AUTOCAD DXF file" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.in.dxf"
             }
             "Various formats" "" {
                 "run v.import &"
@@ -788,8 +806,8 @@ menu_build 1 .main_menu {
     }
     Export "Export maps from GRASS" {
         "Raster map" "" {
-            "GRASS CELL file as TIFF" "" {
-                "source $env(TCLTKGRASSBASE)/module/cell.out.tiff"
+            "TIFF (8/24bit)" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.tiff"
             }
             "Binary file" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.bin"
@@ -797,17 +815,20 @@ menu_build 1 .main_menu {
             "ESRI ARC/INFO ASCII-GRID" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.arc"
             }
-            "TIFF (8/24bit)" "" {
-                "source $env(TCLTKGRASSBASE)/module/r.out.tiff"
-            }
             "PPM (24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.ppm"
             }
             "HDF" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.hdf"
             }
+            "GRASS ASCII" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.ascii"
+            }
             "ERDAS/LAN" "" {
                 "source $env(TCLTKGRASSBASE)/module/i.out.erdas"
+            }
+            "GRASS CELL file as TIFF" "" {
+                "source $env(TCLTKGRASSBASE)/module/cell.out.tiff"
             }
         }
         "Vector map" "" {

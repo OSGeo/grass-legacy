@@ -8,7 +8,7 @@
 <HR align=center width="100%" SIZE=6 no shade>
 
 <H2>NAME</H2>
-<EM><B> PNGdriver</B></EM>  - driver to create PNG images 
+<EM><B> PNG driver</B></EM>  - driver to create PNG images 
 <BR><EM>(drivers)</EM> 
 
 <H2>DESCRIPTION</H2>
@@ -24,8 +24,10 @@ of the PNG driver.
   <LI><B>GRASS_PNGFILE=filename</B><BR>the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
   <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>specifies the background color to use in RGB
   notation (hex values). Default is <b>FFFFFF</b> (white).<br><br>
-  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE, 
-  default).</LI>        
+  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE,
+  default).</LI>
+  <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>sets true-color support if
+  built with GD-2.0
 </UL>
 
 <H3>Example</H3>
@@ -34,13 +36,13 @@ of the PNG driver.
          d.mon start=PNG
          d.mon select=PNG
 </PRE>
-<LI>Display text strings (HREF's) and polygons<BR>
+<LI>Display raster map and vector polygons<BR>
 <PRE>
-         d.area map=<i>someareamap</i> fillcolor=green linecolor=black
+         d.rast <i>somerastermap</i>
          d.vect map=<i>somevectormap</i> color=red
 </PRE>
-<LI> Stop the driver when all polygon have been displayed. This will cause a 
-file named <i>map.png</i> to be created in your current directory.
+<LI> Stop the driver subsequently. This will write a 
+file named <i>map.png</i> to be created in your current directory:
 <PRE>
          d.mon stop=PNG
 </PRE></LI>
@@ -55,22 +57,29 @@ in turn relies on libpng (see the <a
 href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib (see
 the <a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home
 page), all which needs to be installed for the PNG driver to work (it's
-worth it)..
+worth it).
+<p>
+Note that the PNG driver is limited to 8bit colors when compiled against libgd1.x.
+From libgd2.x onwards true color support is optionally provided.
+<p>
+The resolution of the <i>PNG</i> raster map is defined by the map
+extents. Use <em>g.region -p</em> to get the number of rows and cols and
+use the environment variables to set the PNG size.<p>
 
 <h2>SEE ALSO</h2>
-<a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/htmlmapdriver.html">HTMLMAP driver</a></EM>, 
-<EM><A 
-href ="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/celldriver.html"<a>celldriver</A></EM>, 
-<EM><A 
-href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/xdriver.html">XDRIVER</A></EM>, 
-<EM><A 
-href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/d.vect.html">d.vect</A></EM>, 
-<EM><A 
-href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/d.area.html">d.area</A></EM> 
+<EM>
+<a href=htmlmapdriver.html>HTMLMAP driver</a>,
+<A href=celldriver.html>celldriver</A>, 
+<A href=xdriver.html>XDRIVER</A>, 
+<A href=d.area.html>d.area</A>,                                                
+<A href=d.mon.html>d.mon</A>,                                                
+<A href=d.vect.html>d.vect</A>
+</EM>
 
 <H2>AUTHOR</H2>
 Per Henrik Johansen<BR>
 <I>phj@norgit.no</I><BR> 
 <I><a href="http://www.norgit.no">NORGIT AS</a></I>
-</BODY></HTML>
-
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

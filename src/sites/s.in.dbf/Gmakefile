@@ -4,8 +4,8 @@ LIST = 	main.o \
 	dbfopen.o \
 	dump.o
 
-LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB) $(VASKLIB)
+LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB)
 $(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # 

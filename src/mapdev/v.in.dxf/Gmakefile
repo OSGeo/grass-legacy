@@ -46,6 +46,6 @@ OBJ =	\
 
 
 $(BIN_CMD)/$(PGM): $(OBJ)  $(GISLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #

@@ -18,6 +18,8 @@ int main (int argc, char *argv[])
 	struct Cell_head window;
 	struct Option *opt1;
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Extracts Landuse/Landcover data in the ASCII "

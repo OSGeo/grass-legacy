@@ -21,10 +21,16 @@ main (int argc, char **argv)
     char window_name[64], buf[8];
     int t, b, l, r;
     struct Option *input_file;
+    struct GModule *module;
     char *infile;
     
     /* initialize the GIS calls */
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Creates and modifies icons for use with ps.map.";
 
     input_file = G_define_option();
     input_file->key = "input";

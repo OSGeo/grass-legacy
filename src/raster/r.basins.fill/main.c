@@ -26,6 +26,8 @@ int main (int argc, char *argv[])
 	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4 ;
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Generates a raster map layer showing "
@@ -58,8 +60,6 @@ int main (int argc, char *argv[])
     opt4->required   = YES ;
     opt4->description= "Name for the resultant watershed partition file" ;
 	opt4->gisprompt  = "new,cell,raster" ;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv) < 0)
         exit(-1);
@@ -157,7 +157,7 @@ int main (int argc, char *argv[])
 
 /* write out partitioned watershed map */
 for (row = 0; row<nrows; row++)
- G_put_map_row (partfd, drain+(row*ncols));
+ G_put_raster_row (partfd, drain+(row*ncols), CELL_TYPE);
       
     fprintf (stdout,"creating support files for %s\n", part_name);
     G_close_cell (partfd);

@@ -22,11 +22,14 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "dbvect.h"
 #define MAIN
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
@@ -53,7 +56,7 @@ char **argv ;
 
         /* Check for -s flag indicating selectfile input */
         for (i=1; i<argc; i++)
-		if(argv[i][0]=='-' && index(argv[i],'s') )
+		if(argv[i][0]=='-' && strchr(argv[i],'s') )
                         selPassed = 1;
 
 

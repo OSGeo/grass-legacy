@@ -12,11 +12,16 @@
 
                   jaf 2/19/92
 */
-//-------------- A.Sh. 06 Jan. 00
+/*-------------- A.Sh. 06 Jan. 00 */
 #define GLOBAL
 #include "what.h"
+#include <string.h>
+#include <stdlib.h>
+#include "display.h"
+#include "raster.h"
 
 
+int
 getSelectOpts (argc, argv)
     int argc;
     char **argv;
@@ -41,14 +46,6 @@ getSelectOpts (argc, argv)
         select->key     = 's';
         select->description     = "Use [s] for input from SQL-file." ;
 
-        sql = G_define_option() ;
-        sql->key        = "sql" ;
-	sql->key_desc	= "file" ;
-        sql->type       = TYPE_STRING ;
-        sql->required   = YES  ;
-        sql->multiple   = NO ;
-        sql->description= "SQL command file:";
-
         map = G_define_option() ;
         map->key        = "map" ;
 	map->gisprompt   ="old,cell,raster" ;
@@ -56,6 +53,14 @@ getSelectOpts (argc, argv)
         map->required   = YES  ;
         map->multiple   = NO ;
         map->description= "Raster map to query:";
+
+	sql = G_define_option() ;
+        sql->key        = "sql" ;
+	sql->key_desc	= "file" ;
+        sql->type       = TYPE_STRING ;
+        sql->required   = YES  ;
+        sql->multiple   = NO ;
+        sql->description= "SQL command file:";
 	
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
@@ -70,7 +75,7 @@ getSelectOpts (argc, argv)
 
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

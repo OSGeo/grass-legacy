@@ -30,7 +30,6 @@ int main (int argc, char *argv[])
     struct Flag *quiet, *noadjust;
 
     G_gisinit (argv[0]);
-    G_get_window (&window);
 
 	module = G_define_module();
 	module->description =
@@ -59,6 +58,8 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc,argv))
 	exit(1);
+
+    G_get_window (&window);
 
     cats_used = (unsigned char *)G_calloc (CUR_MAX_CLR,1);	/*dpg*/
 
@@ -243,7 +244,7 @@ int rasttocell (int rast_fd, int cell_fd, int nrows, int ncols, int depth)
 	    cell[col] = (CELL) tmp;
 	}
 
-	if (G_put_map_row (cell_fd, cell) < 0)
+	if (G_put_raster_row (cell_fd, cell, CELL_TYPE) < 0)
 	    exit(1);
     }
     if (verbose)

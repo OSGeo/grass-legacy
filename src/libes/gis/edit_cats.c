@@ -135,9 +135,9 @@ int G_edit_cats (
 	    strcpy (next, "end");
 	else
 	    sprintf (next, "%ld", endcat);
-	sprintf (next_line, "%*s%*s  (of %ld)", 26, "Next category: ",5,"",last_cat);
+	sprintf (next_line, "%*s%*s  (of %ld)", 41, "Next category ('end' to end): ",5,"",last_cat);
 	V_line (line, next_line);
-	V_ques (next, 's', line, 26, 5);
+	V_ques (next, 's', line, 41, 5);
 
 	V_intrpt_ok();
 	if(!V_call())
@@ -208,7 +208,6 @@ int G_edit_fp_cats (
     long atnum ;
     long startcat ;
     long endcat ;
-    long nCATS;
     char buff[NLINES][60] ;
     char next[20];
     char next_line[80];
@@ -302,9 +301,9 @@ int G_edit_fp_cats (
 	    strcpy (next, "end");
 	else
 	    sprintf (next, "%ld", endcat);
-	sprintf (next_line, "%*s%*s  (of %d)", 26, "Next range number: ",5,"",ncats);
+	sprintf (next_line, "%*s%*s  (of %d)", 41, "Next range number ('end' to end): ",5,"",ncats);
 	V_line (line, next_line);
-	V_ques (next, 's', line, 26, 5);
+	V_ques (next, 's', line, 41, 5);
 
 	V_intrpt_ok();
 	if(!V_call())

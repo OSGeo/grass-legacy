@@ -1,6 +1,7 @@
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
 
 LIST = \
+	b_w_line.o \
 	main.o \
 	get_shift.o
 

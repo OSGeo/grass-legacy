@@ -27,9 +27,10 @@ int main (int argc, char *argv[])
     int lrow, lcol;
 
     G_gisinit (argv[0]);
-    G_get_window (&utm);
 
     getargs (argc, argv, &geo, &infile, &outfile);
+
+    G_get_window (&utm);
 
     if (G_projection() != PROJECTION_UTM)
 	G_fatal_error("This program only works within a UTM database");
@@ -112,7 +113,7 @@ int main (int argc, char *argv[])
 	    *uptr++ = geo_value (lat, lon, &geo, &geo_data);
 	    east += utm.ew_res;
 	}
-	G_put_map_row (cell_fd, utm_data);
+	G_put_raster_row (cell_fd, utm_data, CELL_TYPE);
 	north -= utm.ns_res ;
     }
     G_close_cell (cell_fd);

@@ -11,5 +11,5 @@ IFILES = \
 all:  $(BIN_CMD)/v.rmedge
 
 $(BIN_CMD)/v.rmedge: $(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 

@@ -23,3 +23,12 @@ struct Stats
 	float freq	;  /* freq not used currently		*/
 	float mode	;  /* mode for column value		*/
 };
+
+int getAllOpts (int, char **);
+int getSelectOpts (int, char **);
+int runInfxFile(char *, char *, char *);
+int runqry(char *, struct Sql *, char *);
+char* buildInfxQry(struct Option *,struct Option *, struct Option *, struct Option *);
+int getVal(int, struct Sql *);
+int getArea (struct Sql *);
+extern void getem(void);

@@ -1,6 +1,7 @@
 #define MAIN
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -201,8 +202,9 @@ askagain:
         }
 
 /* Panning threshold from window boundary */
+/* Set pan threshold to zero if not specified -- Eric Miller 20010920 */
 	pan_threshold = ((p = getenv("GRASS_PAN_THRESHOLD")) ?
-				atof(p) / 100 : 0.05);
+				atof(p) / 100 : 0.0);
 
 	pan_threshold = (pan_threshold >= 0.0 && pan_threshold <= 0.25 ?
 				pan_threshold : 0.05);

@@ -29,6 +29,9 @@ main (int argc, char **argv)
 	struct Flag   *levone,  *_quiet;
 	struct line_pnts *Points;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays GRASS vector data in the active frame on the "
@@ -56,9 +59,6 @@ main (int argc, char **argv)
 	_quiet = G_define_flag ();
 	_quiet->key		= 'v';
 	_quiet->description	= "Run verbosely";
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))

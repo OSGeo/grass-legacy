@@ -1,6 +1,8 @@
-<TITLE>r.reclass</TITLE>
-
-<body bgcolor="white">
+<html>
+<head>
+<title>r.reclass</title>              
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
 
@@ -218,12 +220,14 @@ input.
 The following examples may help clarify the reclass rules.
 <P>
 <DT> 
-<DD>1. This example reclassifies categories 1, 3 and 5 in the input raster map layer to category 1 with category label "poor quality" in the output map layer,
-and reclassifies input raster map layer categories 2, 4, and 6
-to category 2 with the label "good quality" in the output map layer.
+<DD>1. This example reclassifies categories 1, 2 and 3 in the input raster
+map layer "roads" to category 1 with category label "good quality" in the output map
+layer, and reclassifies input raster map layer categories 4 and 5 to
+category 2 with the label "poor quality" in the output map layer.
+
 <PRE>
-    1 3 5   = 1    poor quality
-    2 4 6   = 2    good quality
+    1 2 3   = 1    good quality
+    4 5     = 2    poor quality
 </PRE>
 <P>
 <DD>2. This example reclassifies input raster map layer categories 1 thru 10 to output 
@@ -366,3 +370,6 @@ James Westervelt,
 Michael Shapiro, 
 <br>
 U.S.Army Construction Engineering Research Laboratory
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

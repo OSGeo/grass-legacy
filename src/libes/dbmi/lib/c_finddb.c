@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_find_database (driver, handle, found)
+int db_find_database (driver, handle, found)
     dbDriver *driver;
     dbHandle *handle;
     int *found;

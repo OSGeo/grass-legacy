@@ -1,2 +1,15 @@
-all:
-	$(MAKEALL)
+PGM = r.drain
+
+LIST =  filldir.o\
+	main.o\
+	resolve.o\
+	tinf.o
+ 
+LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+ 
+$(LIST): local.h tinf.h
+ 
+$(LIBES): #
+

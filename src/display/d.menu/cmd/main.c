@@ -42,6 +42,9 @@ int main(int argc, char **argv )
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Creates and displays a menu within the active "
@@ -78,9 +81,6 @@ int main(int argc, char **argv )
 	opt4->required   = NO ;
 	opt4->options    = "1-100" ;
 	opt4->description= "Sets the menu text size" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 

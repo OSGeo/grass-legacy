@@ -14,14 +14,17 @@
                   jaf 2/19/92
 */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "dbsite.h"
 
-getSelectOpts (argc, argv)
+int getSelectOpts (argc, argv)
     int argc;
     char **argv;
 {
         static char   SQL_stmt [1024];
-	int colr, i;
+	int i;
 
         struct Option *sql, *map, *plot ;
         struct Flag *select;
@@ -66,7 +69,7 @@ getSelectOpts (argc, argv)
                         argv[1] = "help";
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

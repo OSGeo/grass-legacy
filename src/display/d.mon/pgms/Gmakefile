@@ -8,8 +8,8 @@ all:	$(ETC)/mon.list \
 
 $(ETC)/mon.list:	list.o $(RASTERLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ list.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.start:	start.o ttyname.o $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ start.o ttyname.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(ETC)/mon.start:	start.o $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ start.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 $(ETC)/mon.status:	status.o $(RASTERLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ status.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 $(ETC)/mon.stop:	stop.o $(RASTERLIB) $(GISLIB) 

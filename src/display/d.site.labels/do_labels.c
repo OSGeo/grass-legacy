@@ -276,26 +276,21 @@ int show_it (int mouse)
         if (scrT < (int)D_get_d_north())  scrT = (int)D_get_d_north()  ;
         if (scrB > (int)D_get_d_south())  scrB = (int)D_get_d_south()  ;
 
-        xarr[0] = scrL ;
-        xarr[1] = scrL ;
-        xarr[2] = scrR ;
-        xarr[3] = scrR ;
-        xarr[4] = scrL ;
-        yarr[0] = scrB ;
-        yarr[1] = scrT ;
-        yarr[2] = scrT ;
-        yarr[3] = scrB ;
-        yarr[4] = scrB ;
         if (mouse) R_panel_save(tmp_fname,scrT,scrB,scrL,scrR);
         if(background)
         {
             R_standard_color(background) ;
-            R_polygon_abs(xarr, yarr, 5) ;
+            R_box_abs(scrL, scrT, scrR, scrB) ;
         }
 
 /* Draw border */
         if(border)
         {
+	    xarr[0] = scrL + 0 ; yarr[0] = scrB - 1 ;
+	    xarr[1] = scrL + 0 ; yarr[1] = scrT + 0 ;
+	    xarr[2] = scrR - 1 ; yarr[2] = scrT + 0 ;
+	    xarr[3] = scrR - 1 ; yarr[3] = scrB - 1 ;
+	    xarr[4] = scrL + 0 ; yarr[4] = scrB - 1 ;
             R_standard_color(border) ;
             R_polyline_abs(xarr, yarr, 5) ;
         }
@@ -306,6 +301,9 @@ int show_it (int mouse)
         R_set_window(scrT, scrB, scrL, scrR) ;
         R_move_abs(X + Xoffset, Y + Yoffset) ;
         R_text(line) ;
+
+	R_stabilize();
+
         if (mouse)
         {
             fprintf(stderr,"\n\nMouse:\n");
@@ -316,6 +314,7 @@ int show_it (int mouse)
             if (button <  3)
             {
                 R_panel_restore(tmp_fname);
+		R_stabilize();
                 if (button == 2)
                     break;
             }

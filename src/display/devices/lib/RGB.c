@@ -61,7 +61,6 @@ RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char 
 {
 	static int *array = NULL ;
 	static int array_alloc = 0 ;
-	int to_alloc ;
 
 	if (n > array_alloc)
 	{
@@ -83,7 +82,6 @@ RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char 
 
 /* Convert RGB to color number */
 	{
-char buff[128] ;
 		register int i ;
 		register int *a ;
 

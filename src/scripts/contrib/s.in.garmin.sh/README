@@ -7,5 +7,5 @@ s.in.garmin.sh -- import gps data from garmin receiver
                gpstrans from Carsten Tschach et al. 
                  get gpstrans from: ftp://www.mayko.com/pub/gpstrans or from
                  http://www.metalab.unc.edu/pub/Linux/science/cartography/
-               GNU bourne again shell
-   unix tools: grep, cat, cut, paste, sed
+               bourne shell
+               unix tools: grep, cat, cut, paste, sed

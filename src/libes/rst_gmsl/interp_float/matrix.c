@@ -41,7 +41,7 @@ and interpolating function interp()
     double          xx, yy;
     double          rfsta2,r;
     double          d;
-    int             n1, k1, k2, k, i1, l, l1, n4, n5, m, i, j;
+    int             n1, k1, k2, k, i1, l, m, i, j;
     double          fstar2 = params->fi * params->fi / 4.;
     static double   *A = NULL;
     double          RO,amaxa;

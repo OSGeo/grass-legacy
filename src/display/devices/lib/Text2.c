@@ -1,3 +1,4 @@
+#include <math.h>
 #include "driverlib.h"
 # define STOP  -1
 
@@ -18,10 +19,9 @@ int drawchar (double _text_size_x,double _text_size_y,
 	unsigned char *Y ;
 	int n_vects ;
 	int i ;
-	int skip ;
 	register int ax, ay ;
 	double x, y ;
-	int (*Do)(), (*NextDo)();
+	int (*Do)();
 	int ix, iy ;
 
 	x = basex ;  y = basey ;
@@ -163,20 +163,15 @@ int get_text_ext (int *top,int *bot,int *left,int *rite)
 	return 0;
 }
 
-# define RpD ((2 * 3.141593) / 360.)	/* radians/degree */
+# define RpD ((2 * 3.14159265358979323846) / 360.)	/* radians/degree */
 # define D2R(d) (double)(d * RpD)	/* degrees->radians */
 
 int soft_text(int x,int y,
 	double _text_size_x,double _text_size_y,double _text_rotation,
 	char *string)
 {
-	double sin(), cos() ;
-	/*
 	double sinrot = sin (D2R (_text_rotation)) ;
 	double cosrot = cos (D2R (_text_rotation)) ;
-	*/
-	double sinrot = 0.0 ;
-	double cosrot = 1.0 ;
 
 	am_inside = 0 ;
 	curx = basex = (double)x ;
@@ -194,12 +189,9 @@ int onechar(int x,int y,
 	double _text_size_x,double _text_size_y,double _text_rotation,
 	register unsigned char achar)
 {
-	/*
 	double sinrot = sin (D2R (_text_rotation)) ;
 	double cosrot = cos (D2R (_text_rotation)) ;
-	*/
-	double sinrot = 0. ;
-	double cosrot = 1. ;
+
 	am_inside = 0 ;
 	curx = basex = (double)x ;
 	cury = basey = (double)y ;

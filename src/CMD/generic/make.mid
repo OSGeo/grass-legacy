@@ -16,9 +16,10 @@ MAN5            = $(GISBASE)/man/5
 MAN6            = $(GISBASE)/man/6
 HELP            = $(GISBASE)/man/help
 HTML            = $(GISBASE)/documents
+SCRIPTS         = $(GISBASE)/scripts
 
 # other
-CFLAGS      =  $(COMPILE_FLAGS) -I$(INCLUDE_DIR) $(EXTRA_CFLAGS) $(USE_TERMIO)
+CFLAGS      = -I$(INCLUDE_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
 AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
 MANROFF     = # 
 MAKEALL     = $(GMAKE) -all

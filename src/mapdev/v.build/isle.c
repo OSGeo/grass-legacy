@@ -1,6 +1,8 @@
 /*ISLE*/
 #include "Vect.h"
 #include "vbuildlib.h"
+#include "gis.h"
+#include <stdlib.h>
 
 int 
 matchup_isles (struct Map_info *map)
@@ -9,9 +11,13 @@ matchup_isles (struct Map_info *map)
 
     for (i = 1 ; i <= map->n_isles ; i++)
     {
+        G_percent(i, map->n_isles, 2);
 	if (0 > matchup_isle (map, i))
 	    return (-1);
     }
+    if (i==1) /* we did nothing */
+       fprintf (stdout," (no islands present)\n");
+
     return 0;
 }
 

@@ -343,6 +343,7 @@ int G__open_cell_old (
     G__reallocate_work_buf(INTERN_SIZE);
     G__reallocate_mask_buf();
     G__reallocate_null_buf();
+    G__reallocate_temp_buf();
     /* work_buf is used as intermediate buf for conversions */
 /*
  * allocate/enlarge the compressed data buffer needed by get_map_row()
@@ -503,17 +504,60 @@ G_open_fp_cell_new_uncompressed (char *name)
     return G__open_raster_new (name, OPEN_NEW_UNCOMPRESSED);
 }	
 
+static int
+clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
+{
+	/* Remove mapset part of name if exists.  Also, if mapset
+	 * part exists, make sure it matches current mapset.
+	 */
+	int status = 0;
+	char *ptr;
+	char *buf;
+
+	buf = G_store (inmap);
+	if ((ptr = strpbrk (buf, "@")) != NULL)
+	{
+		*ptr = '\0';
+		ptr++;
+		*outmapset = G_store(G_mapset());
+		if ((status = strcmp(ptr, *outmapset)))
+		{
+			G_free (buf);
+			G_free (*outmapset);
+		}
+		else
+		{
+			*outmap = G_store (buf);
+			G_free (buf);
+		}
+	}
+	else
+	{
+		*outmap = buf;
+		*outmapset = G_store(G_mapset());
+	}
+	return status;
+}
+	
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
 int G__open_raster_new (char *name, int open_mode)
 {
     int i, null_fd, fd;
     char *tempname;
-
+    char *map;
+    char *mapset;
+    
 /* check for legal grass name */
     if (G_legal_filename (name) < 0)
     {
 	G_warning ("opencell: %s - illegal file name", name);
 	return -1;
+    }
+    
+    if(clean_check_raster_name (name, &map, &mapset) != 0)
+    {
+	    G_warning ("opencell: %s - bad mapset", name);
+	    return -1;
     }
 
 /* make sure window is set */
@@ -525,13 +569,17 @@ int G__open_raster_new (char *name, int open_mode)
     if (fd < 0)
     {   
         G_warning ("G__open_raster_new: no temp files available");
-        free (tempname);
+        G_free (tempname);
+	G_free (map);
+	G_free (mapset);
         return -1;
     }
 
     if (fd >= MAXFILES)
     {
-        free (tempname);
+        G_free (tempname);
+	G_free (map);
+	G_free (mapset);
         close (fd);
         G_warning("G__open_raster_new: too many open files");
         return -1;
@@ -575,6 +623,7 @@ int G__open_raster_new (char *name, int open_mode)
 	FCB.nbytes = 1;		/* to the minimum */
         G__reallocate_work_buf(sizeof(CELL));
         G__reallocate_mask_buf();
+        G__reallocate_temp_buf();
     }
     else
     {
@@ -590,6 +639,7 @@ int G__open_raster_new (char *name, int open_mode)
 	      FCB.cellhd.compressed = 0;
         G__reallocate_work_buf(FCB.nbytes);
         G__reallocate_mask_buf();
+        G__reallocate_temp_buf();
 
         if(FCB.map_type != CELL_TYPE)
         {
@@ -615,8 +665,8 @@ int G__open_raster_new (char *name, int open_mode)
     }
 
 /* save name and mapset, and tempfile name */
-    FCB.name      = G_store (name);
-    FCB.mapset    = G_store (G_mapset());
+    FCB.name      = map;
+    FCB.mapset    = mapset;
     FCB.temp_name = tempname;
 
 /* next row to be written (in order) is zero */
@@ -628,14 +678,22 @@ int G__open_raster_new (char *name, int open_mode)
     if (null_fd < 0)
     {   
         G_warning ("opencell opening temp null file: no temp files available");
-        free (tempname);
+        G_free (tempname);
+	G_free (FCB.name);
+	G_free (FCB.mapset);
+	G_free (FCB.temp_name);
+	close (fd);
         return -1;
     }
 
     if (null_fd >= MAXFILES)
     {
-        free (tempname);
+        G_free (tempname);
         close (null_fd);
+	G_free (FCB.name);
+	G_free (FCB.mapset);
+	G_free (FCB.temp_name);
+	close (fd);
         G_warning("opencell: too many open files");
         return -1;
     }
@@ -745,6 +803,25 @@ int G__reallocate_mask_buf (void)
         else
             G__.mask_buf = (CELL *) G_realloc((char *) G__.mask_buf,n);
         G__.mask_buf_size  = n;
+    }
+
+    return 0;
+}
+
+/*
+ * allocate/enlarge the temporary buffer needed by G_get_raster_row[_nomask]
+ */
+int G__reallocate_temp_buf (void)
+{
+    int n;
+    n = (WINDOW.cols + 1) * sizeof(CELL);
+    if (n > G__.temp_buf_size)
+    {
+        if (G__.temp_buf_size <= 0)
+            G__.temp_buf = (CELL *) G_malloc (n);
+        else
+            G__.temp_buf = (CELL *) G_realloc((char *) G__.temp_buf,n);
+        G__.temp_buf_size  = n;
     }
 
     return 0;

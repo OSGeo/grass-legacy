@@ -2,8 +2,12 @@
 #include "what.h"
 #include <libpq-fe.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "display.h"
+#include "raster.h"
 
-runInfxQry(SQL_stmt,print_out)
+int runInfxQry(SQL_stmt,print_out)
 	char *SQL_stmt;
 	char *print_out;
 	

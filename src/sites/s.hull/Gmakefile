@@ -1,0 +1,12 @@
+PGM = s.hull
+
+LIST =  hull.o
+
+LIBES= $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB)
+
+all: $(BIN_CMD)/$(PGM)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

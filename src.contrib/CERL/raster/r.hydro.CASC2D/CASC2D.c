@@ -290,12 +290,20 @@ int main (int argc, char *argv[])
      struct
      {
 	  struct Flag  *s,*m,*o,*t,*e,*i,*p,*u,*q,*d,*b;
-       }  flag;
+     }  flag;
+     struct GModule *module;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   DEFINING GRASS COMMAND LINE PARAMETERS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
+     G_gisinit (argv[0]);
+     
+     /* Set description */
+     module              = G_define_module();
+     module->description = ""\
+     "Fully integrated distributed cascaded 2D hydrologic modeling.";
+     
      parm.mask_wat=G_define_option();
      parm.mask_wat-> key       ="watershed_mask";
      parm.mask_wat-> type      = TYPE_STRING;
@@ -626,7 +634,6 @@ int main (int argc, char *argv[])
      flag.q->key         = 'q';
      flag.q->description ="skips printing iteration, time, and discharge values to the screen";
 
-     G_gisinit (argv[0]);
      if(G_parser(argc,argv)) exit(1);
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

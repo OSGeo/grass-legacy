@@ -13,7 +13,7 @@ main (int argc, char *argv[])
     struct
     {
 	struct Option *input, *output, *title;
-	struct Flag *a;
+	struct Flag *a, *d;
     } parm;
 
     G_gisinit (argv[0]);
@@ -46,12 +46,17 @@ main (int argc, char *argv[])
     parm.a->key         = 'a' ;
     parm.a->description = "Align the current region to the input map";
 
+    parm.d = G_define_flag() ;
+    parm.d->key         = 'd' ;
+    parm.d->description = "Force output to double map type (DCELL)";
+
     if (G_parser(argc, argv))
 	exit(1);
     name = parm.input->answer;
     result     = parm.output->answer;
     title      = parm.title->answer;
     align_wind = (parm.a->answer);
+    make_dcell = (parm.d->answer);
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)

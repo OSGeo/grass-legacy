@@ -154,7 +154,7 @@ SaveMap( NumMap, MapSeed)
 		for( Col = 0; Col < Cs; Col++) {
 			CellBuffer[ Col] = (CELL) Surface[ Row][ Col];
 		}
-		G_put_c_raster_row( OutFD, CellBuffer);
+		G_put_raster_row( OutFD, CellBuffer, CELL_TYPE);
         	if(! Verbose->answer)
 			G_percent( Row + 1, Rs, 1);
 	}

@@ -35,7 +35,7 @@ sub GetTitle {
 }
 
 sub PrintHeader {
-      print OUT ".TH $_[0] $_[1] \"\" \"Grass-5.0beta\" \"Grass User's Manual\"\n";
+      print OUT ".TH $_[0] $_[1] \"\" \"GRASS 5.0\" \"Grass User's Manual\"\n";
 ##      print OUT ".so /usr/share/lib/tmac/sml\n";
 ##      print OUT ".so /usr/share/lib/tmac/rsml\n";
 }
@@ -92,6 +92,7 @@ sub DoLine {
 sub DoEscape {
   s#&gt;#>#i;
   s#&lt;#<#i;
+  s#&amp;#&#i;
 }
 
 sub DoSection {

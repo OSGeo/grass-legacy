@@ -98,7 +98,7 @@ int zc_curve (int inputfd, int zcfd, double Width,
                 for (j=0; j<oc; j++) {
                         *(cell_row+j) = (CELL) (*(data[1]+i*cols+j));
                 }
-                G_put_map_row(zcfd, cell_row);
+                G_put_raster_row(zcfd, cell_row, CELL_TYPE);
         }
         G_close_cell(zcfd);
 

@@ -1,6 +1,6 @@
 Date: Sun, 17 Sep 2000 09:26:45 -0700
 From: "Eric G . Miller" <egm2@jps.net>
-To: grass5@geog.uni-hannover.de
+To: grass5@grass.itc.it
 
 [...]
 

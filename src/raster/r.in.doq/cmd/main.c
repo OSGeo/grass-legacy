@@ -5,8 +5,8 @@
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
 
-int main (argc, argv)
-char *argv[];
+int
+main (int argc, char *argv[])
 {
 	char *input;
 	char *output;
@@ -28,9 +28,14 @@ char *argv[];
 	struct Flag *s2nd;
 	struct Flag *keephead;
 	struct Categories cats;
-
+	struct GModule *module;
 
 	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Import digitial orthophotographs into GRASS raster map";
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
@@ -139,7 +144,7 @@ if (!keephead->answer){
 			cell[i] = (CELL)bcell[i];
 			if (max < cell[i]) max = cell[i];
 			}
-		G_put_map_row (cf, cell);
+		G_put_raster_row (cf, cell, CELL_TYPE);
 	}
 	G_close_cell (cf);
 }

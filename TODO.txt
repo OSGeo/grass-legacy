@@ -9,6 +9,7 @@ Wishlist for GRASS 5
 ---------------------------------------------------------------------
 
 - Fix the bugs described in BUGS
+  http://intevation.de/rt/webrt
 
 ---------------------------------------------------------------------
 
@@ -18,7 +19,7 @@ Modules which need to be updated to FP (raster floating point):
  G_get_map_row() function which is deprecated!
 
  Probably no updated is required, but G_get_c_raster_row() should
- be used instead.
+ be used instead to avoid color and other problems.
 
  -> question: shall all CELL, FCELL and DCELL be supported?
     The prog.man states that DCELL is better than FCELL.
@@ -133,12 +134,6 @@ Further modules:
 - r.water.outlet
   - needs FP update
 
-r.fill.dir:
- - stops working somewhere in the map if DEM contains NULL holes
-   (reported by Markus Neteler)
- - requires FP update
-   (being worked on by Roger S. Miller <rgrmill@rt66.com>)
-
 - r.random.surface
   needs to be updated to GRASS 5 FP/NULL
   (being worked on by ?)
@@ -162,21 +157,10 @@ r.fill.dir:
 TODO cont'ed...
 
 Configure:
-- update missing features in "configure" (see src/CMD/head/head.in)
-     - libg2c is required to make r.fill.dir, but configure doesn't check 
-       for it's availability
-     - search for "yacc" and "(f)lex"
-  (Being worked on by Eric Miller)
-  
 - clean up make variables in head.in etc. Things like
     XDRLIB    = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
   are confusing. Probably requires modification of all Gmakefiles (600+ ?)
   A good time to do this is with the new Makefile system.
-
---------------------------------------------------------------------
-Removal of absolute path codings:
- - etc/monitorcap:
-   Here the paths should be replaced by $GISBASE environment
 
 --------------------------------------------------------------------
 Regression test suite:
@@ -211,7 +195,7 @@ Libraries:
 
 - TIN support: Probably use this library:
     http://www.cs.cmu.edu/~quake/triangle.html
-  (Being worked on by ?)
+  (Being worked on by David D. Gray)
 
 - Metadata: improved support, probably write a GRASS daemon serving
   the metadata for external applications like "R" statistics interface
@@ -220,83 +204,9 @@ Libraries:
 - Parallel CPU support
   (Being worked on by ?) 
 
-- remove LZW compression from rasterlib/g3dlib and use libz:
-  -> 1/2001: done!
-  src/libes/gis > grep -l lzw *                                                 
-   G.h          - just compression_bits from header
-   G_dump.c     - same
-   closecell.c  - same
-   get_row.c    - see grep below
-   lzw.c        - to be replaced
-   put_row.c    - see grep below 
-
-    Occurrences of files other than lzw.c using the following G_lzw_*
-    routines:
-
-    G_lzw_nof_read_bytes 
-    G_lzw_max_used_bits
-    G_lzw_set_bits 
-    G_lzw_compress
-    G_lzw_expand 
-    G_lzw_compress_count_only_array
-    G_lzw_compress_count_only_file
-    G_lzw_write
-    G_lzw_write_noCompress
-    G_lzw_test_status 
-    G_lzw_read2 
-    G_lzw_read 
-    G_lzw_transfer_compress
-    G_lzw_transfer_expand 
-
-    Functions in lzw.c other than those above were not grep'ed for because
-    they were not part of the defined API.
-
-    grass/src/libes/g3d/fpcompress.c:
-	    G_lzw_set_bits (9);
-    grass/src/libes/g3d/fpcompress.c:
-	    status = G_lzw_write (fd, 
-	    		compressBuf + offsetMantissa - rleLength,
-    grass/src/libes/g3d/fpcompress.c:
-	    G_lzw_write_noCompress (fd, 
-	     		compressBuf + offsetMantissa - rleLength,
-    grass/src/libes/g3d/fpcompress.c:
-	    status = G_lzw_write (fd, compressBuf, nBytes + 1);
-    grass/src/libes/g3d/fpcompress.c:
-	    status = G_lzw_write_noCompress (fd, compressBuf, nBytes + 1);
-    grass/src/libes/g3d/fpcompress.c:
-	    status = G_lzw_read2 (fd, compressBuf, nofNum * nBytes + 1, 
-	    		fileBytes);
-    grass/src/libes/gis/get_row.c: 
-	    if (G_lzw_read (fd, data_buf, DATA_NCOLS * FCB.nbytes) != 
-    grass/src/libes/gis/put_row.c:
-	    G_lzw_set_bits (l);
-    grass/src/libes/gis/put_row.c:
-	    if ((nwrite = G_lzw_write (fd, G__.work_buf, nwrite)) < 0) {
-    grass/src/libes/gis/put_row.c: 
-	    if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
-    grass/src/libes/gis/put_row.c:    
-	    FCB.compression_bits = G_lzw_max_used_bits ();
-
-    -> Finished.
-
  - data entry field for location and mapset    
    are 14 characters long. should be more.
   (Being worked on by ?)
-
----------------------------------------------------------------------
-XDriver
-- replace fifos by sockets
-  (Being worked on by Eric G. Miller)
-  -> there is a new concept based on IPC available (see README.xdriver)
-
-- Auto-redraw after resizing the monitor:
-  Andreas Lange wrote:
-  I had the idea of implementing some sort of "auto-redraw" after resizing
-  the grass monitor, but this is not possible because the driver can not  
-  be opended from the XDRIVER process with R_open_driver(); to read out   
-  the pad contents (because of locking/different owners of process). Again
-  my problem is getting the overall picture of the design without
-  documentation.
 
 ---------------------------------------------------------------------
 Package concept:
@@ -333,8 +243,7 @@ So two ways from there to improve the situation:
   (Being worked on by ?)
 ---------------------------------------------------------------------
 Code merge:
- - v.in.dxf/v.in.dxf2
- - r.info: integrate functionality of r.univar
+ - r.univar: write C implementation
  - reduce the number of import/export modules. Add a parameter for the file
    format (or auto-detection) instead of having tons of modules. r.in.gdal
    is on the right way
@@ -342,14 +251,12 @@ Code merge:
  - r.reclass/r.reclass.scs
  - ...
  It is important to reduce the number of modules (not to overwhelm the
- users like now)
+ users as done now)
 
 ---------------------------------------------------------------------
-Monitor:
+Monitor/Xdriver:
  - Display current map scale in monitor window top line (set by 
-   xwindows name?)
- - allow to close by click: done for sockets
- - auto-redraw when resizing
+   xwindows name?) - use d.scale -i implementation
 
 ---------------------------------------------------------------------
 Modules:
@@ -407,16 +314,12 @@ Modules:
   network usage of GRASS.
   (Being worked on by ?)
 
-- g.list, g.remove should accept wildcards (*, ?) for convenience
-  (Being worked on by ?)
-  -> g.mremove is there
-
 - g.manual: change list of manual pages in g.manual
   organized according to objects (vector files, raster files, ...)
   not to "status" of module (which is even confused at time)
   (Being worked on by ?)
 
-- i.rectify/2
+- i.rectify
    - option 1 to transform the data should be extended: GRASS should
      calculate from the original rows/cols and the target coordinates
      the optimal resolution for the image to be rectified (round to nearest
@@ -427,32 +330,17 @@ Modules:
 - nviz2.2
   - Z axis scalable when displaying 3D sites
     (Being worked on by ?)
-
-  - eventually color problem in lat/long locations
-    (Being worked on by ?)
-
-  - high resolution output (definable extent like CELL driver)
-    (Being worked on by 
-     probably Bob Covill <bcovill@tekmap.ns.ca>)
-
   - fix legend, scale and box drawings
     (Being worked on by Bill Brown, Helena Mitasova)
-
-  - have immediate refresh of surface/vectors etc. instead of manual
-    redrawing
-
   - see:
     ./src.contrib/GMSL/NVIZ2.2/src/TODO
     ./src.contrib/GMSL/NVIZ2.2/TODO.linux
     ./src.contrib/GMSL/NVIZ2.2/TODO
 
-- r.buffer: should save info about used buffers into map history
-  (Being worked on by ?)
-
 - r.in.hdf/r.out.hdf
   - update to HDF 5
+  -> eventuall r.in.gdal?
   (Being worked on by ?)
-
 
 - r.info 
   should also report statistics (min, max, mean, stddev, 1st            
@@ -505,7 +393,7 @@ Modules:
 
 - r.proj/v.proj/s.proj:
    add -l flag to list relevant files in source location (source of
-   projection)
+   projection), r.proj done.
 
 - r.reclass.pg
   write it
@@ -537,7 +425,8 @@ Modules:
   improve it, add category "transport" to new file
 
 - v.digit:
-  add an optional circle with radius of snapping threshold
+  add an optional circle our mouse cursor with radius of snapping threshold
+  for digitizing
   (Being worked on by ?)
 
 - v.slabel: write it:
@@ -559,7 +448,7 @@ Modules:
    raster files appear automatically when we call the d.rast
    module from the menu (edit gui.tcl)
    (Being worked on by ?)
- - added nice icons for mostly used commands
+ - add nice icons for mostly used commands
  - generate module windows by parser.c/XML
  - integrate src/tcltkgrass/todo/r_mapcalc.tcl (map calculator)
 
@@ -573,28 +462,31 @@ PostgreSQL/ODBC support:
    read/writeable *only* by the user that owns it).  The ~/.grass5rc file
    must be readable by others if you allow access to a dataset.
 
+---------------------------------------------------------------------
+Parser support: A few programs could use G_parser but don't.
+
+       g.version 
+       m.in.stf1.tape                                        
+       p.chart                                                       
+       p.labels                                                   
+       r.agnps50.run                                                 
+       r.agnps50.view                                   
+       v.in.tig.lndmk
+       i.rectify
 
 ---------------------------------------------------------------------
 Numerical Recipes: removal of code:
 From ddgray@armadce.demon.co.uk Tue Sep 26 22:31:31 2000
 
 The following references to Numerical Recipes was found.
+Change 6/2001: NR functions moved src/libes/gmath/
 
 Shortlist.
 
-*r.proj
-*r.surf.fractal
-*r.surf.gauss
-*r.surf.random
-*i.cca
-*i.pca
-*i.zc
-*i.fft
-i.shape
-*r.param.scale
-*d.param.scale
+*r.proj         -> r.bilinear also provides bilinear interpolation
+*r.param.scale -> unused
+*d.param.scale -> unused
 
-* currently in `main' !!
 
 Details.
 
@@ -693,11 +585,6 @@ structure of the help system from roff to html.
 So my conclusion is: Keep it for grass5.0stable as it is.                       
 For grass5.1 we should discuss how this can be improved. 
 ---------------------------------------------------------------------
-PDF documentation (all HTML in one file)
-
--> see html/Gmakefile
- 
----------------------------------------------------------------------
 New GRASS Startup concept:
 
 Markus Neteler wrote:
@@ -734,9 +621,12 @@ Frank Warmerdam wrote:
 Datum support:
 
 - upgrade r.proj, s.proj, v.proj
-- ?
+  - first implement latest PROJ4 as shared library
+  (Being worked on by Frank Warmerdam)
+
 
 ---------------------------------------------------------------------
 Implement gdchart for nice charts:
 
   http://www.fred.net/brv/chart/
+

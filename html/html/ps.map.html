@@ -321,6 +321,17 @@ EXAMPLE:
 </PRE>
 <P>
 
+<H2>group</H2>
+
+Selects an RGB imagery group for output.
+<PRE>
+USAGE:	<B>group</B> <EM>groupname</EM>
+</PRE>
+This is similar to <EM>raster</EM>, except that it uses an imagery group
+instead of a raster map layer. The group must contain three raster map
+layers, comprising the red, green and blue bands of the image.
+<P>
+
 <H2>header</H2>
 
 Prints the map header above the map.
@@ -593,13 +604,16 @@ Selects a raster map layer for output.
 <PRE>
 USAGE:	<B>raster</B> mapname|<EM>list</EM>
 </PRE>
-For each 
-<EM>ps.map</EM>
-run, only one raster map layer can be requested.  If no raster map layer
-is requested, a completely white map will be produced.
-It can be useful to select no raster map layer in order to
-provide a white background for vector images.
-
+For each <EM>ps.map</EM> run, only one raster map layer (or set
+of layers or imagery group; see below) can be requested. If no
+raster map layer is requested, a completely white map will be
+produced. It can be useful to select no raster map layer in
+order to provide a white background for vector images.
+<P>
+Note that an imagery group selected with the <EM>group</EM>
+option, or a set of three raster layers selected with the
+<EM>rgb</EM> option, count as a raster map layer for the
+purposes of the preceding paragraph.
 <P>
 
 This example would paint a map of the raster map layer <EM>soils</EM>.
@@ -727,6 +741,24 @@ EXAMPLE:
 </PRE>
 <P>
 
+
+<H2>rgb</H2>
+
+Selects three raster map layers for output as an RGB color image.
+<PRE>
+USAGE:	<B>rgb</B> <EM>red</EM> <EM>green</EM> <EM>blue</EM>
+</PRE>
+This is similar to <EM>raster</EM>, except that it uses three
+raster map layers instead of a single layer. The three layers
+are composed to form a color image, similar to <EM>d.rgb</EM>.
+<P>
+
+For each layer, only one of the components of the layer's color
+table is used: the red component for the red layer, and so on. 
+This will give the desired result if all of the layers have a
+grey-scale color table, or if each layer's color table uses the
+hue appropriate to the layer.
+<P>
 
 <H2>scale</H2>
 
@@ -873,8 +905,8 @@ The text follows these coordinates
 on the same instruction line.
 More than one line of text can be
 specified by notating the end of a line with
-<B>\en</B>
-(e.g. USA\|\enCERL).
+<B>\n</B>
+(e.g. USA\|\nCERL).
 
 <P>
 
@@ -1252,4 +1284,8 @@ legend entries).
 
 <H2>AUTHOR</H2>
 
-Paul Carlson, USDA, SCS, NHQ-CGIS<BR>Modifications: Radim Blazek
+Paul Carlson, USDA, SCS, NHQ-CGIS<BR>
+Modifications: Radim Blazek, Glynn Clements
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

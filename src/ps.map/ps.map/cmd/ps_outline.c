@@ -5,6 +5,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include "gis.h"
 #include "ps_info.h"
 #include "local_proto.h"

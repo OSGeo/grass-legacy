@@ -1,14 +1,37 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.display
+*
+* AUTHOR(S):    
+*
+* PURPOSE:      d.display setup
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 #include "windows.h"
 #include "lproto.h"
 #include "gis.h"
 #include "raster.h"
+#include "display.h"
 #include "D.h"
 #include <stdio.h>
+#include <string.h>
 
 int setup()
 {
 	FILE *popen() ;
 	FILE *fptr ;
+	int T, B, L, R;
+	char name[128];
 
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
@@ -18,6 +41,18 @@ int setup()
 
 /* Make sure screen is clear */
 	Dclearscreen() ;
+	D_clear_window();
+	
+	T=R_screen_top();
+	B=R_screen_bot();
+	L=R_screen_left();
+	R=R_screen_rite();
+	strcpy(name,"full_screen");
+	D_new_window(name, T, B, L, R);
+	if (D_set_cur_wind(name)) 
+		G_fatal_error("Current graphics frame not available");
+		
+	Derase("black");
 
 /* Establish windows on screen */
 	Dnew(LOC.name, LOC.bot, LOC.top, LOC.left, LOC.right) ;

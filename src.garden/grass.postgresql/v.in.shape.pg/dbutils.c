@@ -34,10 +34,10 @@
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
   static void *ptr_old = NULL;
-  static int currerror = 0;
+/*  static int currerror = 0;*/
 
   static int num_registered = 0;
-  static int db_allocated = 0;
+/*  static int db_allocated = 0;*/
 
   /* local */
   int i;
@@ -50,7 +50,8 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   double angle0, angle1;
   int linked, lnum;
 
-  pntDescript *pf, *pb, *pc; /* Holders for current and flanking vertices */
+pntDescript *pb, *pc;
+/*  pntDescript *pf, *pb, *pc; *//* Holders for current and flanking vertices */
   pntDescript *pbl;
 
   char *keyHolder;
@@ -91,8 +92,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   strncpy(keyHolder, pkey, 33 );
   dataHolder = pntPtrPtr;
 
-  /* CHECK ARG 3; IT SHOULD BE "void **" */
-  res = btree_find( hDB, keyHolder, &dataHolder );
+  res = btree_find( hDB, keyHolder, (void **) &dataHolder );
   if( res == 0 ) btree_update( hDB, keyHolder, 33, dataHolder, 4 );
 
   if ( res == 1 ) {
@@ -245,7 +245,7 @@ char *calcKeyValue( pntDescript *pnt1, float sr ) {
   double xtmp, ytmp;
   char xbuf[40], ybuf[40];
   char *retbuf;
-  int indx;
+/*  int indx;*/
   char *indx_ptr;
 
   xtmp = ((int)( pnt1->xPosn / sr )) * sr;

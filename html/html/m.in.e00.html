@@ -38,7 +38,8 @@ FEATURES</h2>
 m.in.e00 attemps to retrieve all information in an Arc/Info export file
 (.e00): points, line, polygon, and grid coverage. The attribute of each
 "vector" object (points, line, and polygon) is the Arc/Info coverage-ID
-(and not the coverage-#).
+(and not the coverage-#). Both single and double precision are supported.
+
 <p>GRASS files created have the name extracted from the first line of the
 e00 file, i.e. the name of the coverage. The file is read from the current
 directory unless specified differently.
@@ -51,9 +52,22 @@ or doesn't exist, in which case a site file is created.
 have more attributes than the standard one. If there is one extra attribute,
 the dig_cats file has the name of the vector (dig) file created. If there
 is more than one extra attribute, the dig_cats files have names of the
-form cover_name.attribute_name. If you want to use one of them, you must
-rename it so it matches the name of the vector file. Doing this, v.to.rast
-will use it for the raster file created.
+form <tt>cover_name.attribute_name</tt>. If you want to use one of them, you must
+rename it so it matches the name of the vector file. Doing this, the vector
+modules will use it for the raster file created.<p>
+To "activate" a category label file for the vector map "cover_name", change to:<br>
+
+<pre>
+    cd $LOCATION/dig_cats/
+    ls cover_name.*
+    cp cover_name.attribute_name cover_name
+    cd $HOME
+    v.support cover_name
+</pre>
+
+If you want to use another table entry, you have to run above procedure
+accordingly with <tt>cover_name.other_attribute_name</tt>.
+
 <h2>
 OPTIONS</h2>
 <i>m.in.e00</i> requires the user to enter the following information:
@@ -136,8 +150,10 @@ PROJ file yourself.
 and zone are not the same, g.region complains and d.vect or d.rast refuse
 to display your data. The only thing to do is to import in the current
 mapset.
-<h2>
-NOTES</h2>
+
+<h2>REFERENCES</h2>
+
+<a href=http://pages.infinit.net/danmo/e00/docs/v7_e00_cover.html> E00 format</a>
 
 <h2>
 SEE ALSO</h2>
@@ -153,5 +169,6 @@ SEE ALSO</h2>
 AUTHOR</h2>
 Michel J. Wurtz, DIG/cemagref
 <br>mw@teledetection.fr
+<p><i>Last changed: $Date$</i>
 </body>
 </html>

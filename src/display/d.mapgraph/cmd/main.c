@@ -15,6 +15,9 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Generates and displays simple graphics on map "
@@ -48,9 +51,6 @@ main (int argc, char **argv)
 	opt4->options    = "0-100" ;
 	opt4->description= "Horizontal text width as % of display frame width" ;
 */
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))

@@ -62,8 +62,9 @@ int cell_stats (int fd[], int verbose, int with_percents, int with_counts,
 
 	update_cell_stats (cell, ncols, unit_area);
     }
+
     if (verbose)
-	G_percent (nrows, nrows, 2);
+	G_percent (row, nrows, 2);
 
     sort_cell_stats();
     print_cell_stats (fmt, with_percents, with_counts, with_areas, with_labels, fs);

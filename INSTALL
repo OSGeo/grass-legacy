@@ -1,17 +1,19 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.19 2001-04-04 13:15:21 markus Exp $)
+($Id: INSTALL,v 1.20 2002-01-22 04:50:47 glynn Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
     
     INSTALLATION
+    CODE OPTIMIZATION
     CONFIGURE OPTIONS
     FILES TO CHECK
     KNOWN EXCEPTIONS
     CLEANING UP
-    COMPILING MODULES NOT COMPILED BY DEFAULT
+    COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
     THINGS TO DO
+    UNINSTALLING GRASS
 
 Please read through these sections before installing GRASS.
 
@@ -32,16 +34,17 @@ Unfortunately, any LZW compressed G3D files must be dumped with
 r3.out.ascii, and then reimported.
 
 The GRASS 5.0 team apologizes for this inconvenience. See also:
-http://www.geog.uni-hannover.de/grass/announces/announce_lzw_removal.html
+http://grass.itc.it/announces/announce_lzw_removal.html
 *******************************************************************
 
 INSTALLATION
 
-Before you compile GRASS, please read the file REQUIREMENTS. Note: If your
-system does not fullfil all requirements, some modules won't be
-compiled.
+Before you compile GRASS, please read the file "REQUIREMENTS.html". 
+Note: If your system does not fullfil all requirements, some modules
+won't be compiled. However, for the general usability of GRASS this
+is no problem.
 
-The intent of the new install method is to have the following sequence
+The intent of the install method is to have the following sequence
 of commands work to install GRASS on any platform.
 
 	./configure
@@ -52,21 +55,22 @@ The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
 (see below) containing dependency information. The `make' command
 will compile the sources in the current directory. Note that you do not 
-need root access to run `make'. At this point you should be able to
-run grass by typing 
+need root access to run `make', and in fact it is HIGHLY recommended that
+you do not compile GRASS as the root user. At this point you should be able
+to run grass by typing 
 
 	bin.$ARCH/grass5
 
 where $ARCH is a reference to your machine (eg mips-sgi-irix6.5 - is an
 SGI machine running IRIX 6.5). Running `ls' will show you the appropriate
-name for your system. The `make install' command should install GRASS in
-the main filesystem.
+name for your system.
 
-By default, the majority of the GRASS files are stored under
-/usr/local/grass5, while a few user executable files (eg. the GRASS
-executable) are stored under /usr/local/bin. These directories are typically
-only writable by user 'root'. Thus, you will probably need to have root
-access if you use the default locations.
+The `make install' command should install GRASS in the main filesystem. By
+default, the majority of the GRASS files are stored under /usr/local/grass5,
+while a few user executable files (eg. the GRASS executable) are stored
+under /usr/local/bin. These directories are typically only writable by user
+'root'. Thus, you will probably need to have root access if you use the
+default locations.
 
 If you want to change the default locations, use a sequence like this:
 
@@ -85,28 +89,55 @@ grass5, with a few known exceptions (see below).  If you identify problems
 pass along the relevant information (e.g., operating system, dependency
 information, and ideally a fix) so the configuration system can be
 fixed. Please see information about our bug report page at
-http://www.geog.uni-hannover.de/grass/grass5/index.html
+http://grass.itc.it/grass5/index.html
+
+If you want to catch the compiler output into a file, modify the above
+"make" call. For sh or bash shells
+
+	make 2>&1 | tee compileOutput.log
+	
+For csh or tcsh shells
+
+	make | & tee compileOutput.log
+
+The tee command sends output to both the terminal and the specified file
+so you will still be able to see that GRASS is compiling.
+
+The modules not being compiled due to errors will be listed in the file
+error.log.
 
 Note for Alpha64 users: Please read the ALPHA64/README.alpha64
 and apply the 64bit patches.
 
-If you would like to set compiler optimisations, for a smaller binary, type,
+
+CODE OPTIMIZATION
+
+If you would like to set compiler optimisations, for a possibly faster
+binary, type (don't enter a ";" anywhere):
 
 	CFLAGS=-O ./configure
 or,
 	setenv CFLAGS -O
 	./configure
 
-whichever works on your shell. (Use -O2 instead of -O if your compiler
-supports this.)
+whichever works on your shell. Use -O2 instead of -O if your compiler
+supports this (note: O is the letter, not zero). Using "gcc" compiler, you
+can also specify processor specific flags (examples):
 
-If you want to catch the compiler warnings into a file, modify above "make"
-call to
+  CFLAGS="-mcpu=k6 -O2"     # AMD K6 processor
+  CFLAGS="-mcpu=pentium"    # Intel Pentium processor
+  CFLAGS="-mcpu=pentiumpro" # Intel PentiumPro processor
 
-	make 2>compile_warnings.log
+To find out optional CFLAGS for your platform, enter:
+  gcc -dumpspecs
 
-The modules not being compiled due to errors will be listed in
-error.log.
+See also: http://gcc.gnu.org/
+
+A real fast GRASS version (and small binaries) will be created with
+LDFLAGS set to "stripping":
+
+CFLAGS="-O3 -mcpu=pentiumpro -Wall" LDFLAGS="-s" ./configure
+
 
 
 CONFIGURE OPTIONS
@@ -132,20 +163,46 @@ normal options.  The following lists a few that are relevant to GRASS.
 					(-L) for locating Tcl/Tk libraries
         --without-PACKAGE               do not use PACKAGE (same as
                                         --with-PACKAGE=no)
-	--with-SYSV			define the SYSV macro
-	--with-USE_TERMIO		define the USE_TERMIO macro
+	--enable-sysv			define the SYSV macro
+	--enable-termio			define the USE_TERMIO macro
 
-Note that DIRS can be a space separated list of directories.  Note
-also that the last two options are needed only on a few systems to
-account for system dependencies that are not yet included within the
-`configure' script (see below).  They will be removed in future
+Note that DIRS can be a space separated list of directories enclosed in
+double quotes.  Note also that the last two options are needed only on a
+few systems to account for system dependencies that are not yet included
+within the `configure' script (see below).  They will be removed in future
 versions.
 
-To disable the support of a specific package you can use the
-        --without-PACKAGE
-option.
-Example: To disable PostgreSQL support you will specify
-        configure --without-postgresql
+In general the configure options are organized as:
+	--with[out] controls the use of external features/libraries, while 
+	--{en,dis}able controls the use of features provided by the package.
+ 
+  So, the following are controlled by --{en,dis}able:
+ 
+	--enable-sysv           define the compiler macro SYSV
+	--enable-another-button use two-button mouse conveniently
+	--enable-socket         use socket XDriver (default)
+	--enable-fifo           use FIFO XDriver instead of sockets
+	--enable-w11            use W11 library for Windows X11 emulation
+ 
+  Everything else (i.e. library dependencies) uses 
+	--with[out]-PACKAGE
+
+  Example: To disable PostgreSQL support you will specify
+	configure --without-postgres
+
+GDAL note: If an argument is passed to --with-gdal, it should be the path
+to the "gdal-config" script, e.g. "--with-gdal=/sw/bin/gdal-config".
+
+Some packages may have identically named header files (config.h is
+one common example).  In such cases, you can ensure that the compiler
+finds the right file by using a configuration option specific to that
+package. Using 
+	--with-postgres-includes=/usr/local/pgsql
+would guarantee that the compiler uses postgresql's config.h in
+/usr/local/pgsql, for example.
+
+You can always see a full list of options to configure with 
+	./configure --help
 
 
 FILES TO CHECK
@@ -177,7 +234,7 @@ macro in src/CMD/head/head.$ARCH:
 
 	XLDFLAGS = -DSYSV
 
-This is accomplished by the --with-SYSV option to `configure'.
+This is accomplished by the --enable-sysv option to `configure'.
 
 
 CLEANING UP
@@ -188,7 +245,8 @@ options are based on the GNU guidelines at:
 http://www.gnu.org/manual/make-3.77/html_node/make_118.html
 
 A fifth option is specific to the GRASS development project and does not
-conform to the GNU standard. Each option performs the following operations:
+conform to the GNU standard. The sixth option allows you to uninstall the
+installation files. Each option performs the following operations:
 
 make mostlyclean  	- delete all object files, the next step file, and the
    	    	    	  binary install script if it exists, keep the compiled
@@ -217,7 +275,8 @@ make uninstall		- deletes the installation files, by default
 			  installation files. You may need root access for
 			  this option.
 
-COMPILING MODULES NOT COMPILED BY DEFAULT
+
+COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
 
 As part of the installation a general "gmake5" script is created in
 /usr/local/bin (default) which allows you to compile modules separately.
@@ -231,27 +290,61 @@ Then the module has to be linked to the GRASS front.end by:
    gmakelinks5
 
 Finally you have to install it:
+
+a) either with a full installation:
    cd root_of_grass_sources
    make install
 
+b) simplified you can also install just this module:
+   gmake5 -i
+   gmakelinks5 -i
+
 Then you should be able to use the module. Note that gmakelinks5 only needs
 to be run once after the module is compiled, but you always need to run the
-make install procedure (full installation). This will be improved in GRASS
-5.1.
+make install procedure (full installation or using the "-i" flag). 
+This will be finally improved in GRASS 5.1.
 
-If you did not run "make install" then gmake5 and gmakelinks5 will be located
+If you never run "make install" then gmake5 and gmakelinks5 will be located
 in the bin.$ARCH/ directory. Note that you will have to specify the absolute 
 path to these executables in order to run them. For example
     
     /home/grass/bin.i686-pc-linux-gnu/gmake5
     /home/grass/bin.i686-pc-linux-gnu/gmakelinks5
 
-If you want to compile your own modules then please see the SUBMITTING file
+If you want to compile your own modules then please see the "SUBMITTING" file
 for instructions regarding programming and submitting GRASS modules.
+
+To save the gmake5/compiler related messages into a file, use the following
+call for sh or bash shells:
+
+	gmake5 2>&1 | tee gmake5.log
+	
+or for csh or tcsh shells:
+
+	gmake5 | & tee gmake5.log
+
+The tee command sends output to both the terminal and the specified file
+so you will still be able to see the output of gmake5.
 
 
 THINGS TO DO
 
 A major task remaining is to replace the GISGEN system with a
 proper set of Makefiles, all of which include a common one containing
-the system dependencies (scheduled for GRASS 5.1).
+the system dependencies (scheduled and started for GRASS 5.1).
+GRASS 5.1 is in /grass51 in CVS.
+
+
+UNINSTALLING GRASS
+
+Uninstallation of GRASS binaries is pretty simple (example for installation
+in /usr/local/grass5):
+
+	rm -rf /usr/local/grass5
+	rm -f /usr/local/bin/{grass5,gmake5,gmakelinks5}
+
+should suffice.
+
+
+GRASS Development Team
+$Date: 2002-01-22 04:50:47 $

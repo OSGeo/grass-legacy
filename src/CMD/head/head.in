@@ -43,21 +43,18 @@ DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
 COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
-LDFLAGS             = @STRIPFLAG@ @LDFLAGS@
+LDFLAGS             = @LDFLAGS@
 
 DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
 # XXX - replace SYSV in code with configure results in config.h
 # XXX - need SYSV defined for hpux10
 XLDFLAGS            = @SYSV@
-XINCPATH            = 
-XMINCPATH           = 
+XMINC               = @XMINC@
 XLIBPATH            = @X_LIBS@
-XTLIBPATH           = 
-XMLIBPATH           = 
-XLIB                = @X_PRE_LIBS@ -lX11
-XTLIB               = -lXt
-XMLIB               = -lXm
+XLIB                = @X_PRE_LIBS@ @XLIB@
+XTLIB               = @XTLIB@
+XMLIB               = @XMLIB@
 XEXTRALIBS          = @X_EXTRA_LIBS@
 
 COMPATLIB           = @COMPATLIB@
@@ -65,9 +62,17 @@ TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
+ICONVLIB            = @ICONVLIB@
+
+#ZLIB:
 ZLIB                = @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
 ZLIBINCPATH         = @ZLIBINCPATH@
 ZLIBLIBPATH         = @ZLIBLIBPATH@
+
+#DBM:
+DBMINCPATH          = @DBMINCPATH@
+DBMLIBPATH          = @DBMLIBPATH@
+DBMLIB              = @DBMLIB@
 
 #PostgreSQL:
 PQINCPATH           = @PQINCPATH@
@@ -79,17 +84,20 @@ ODBCINC             = @ODBCINC@
 ODBCLIB             = @ODBCLIB@
 
 #Image formats:
-PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
-PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+PNGINC              = @PNGINC@
+PNGLIB              = @PNGLIB@
 
-#JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
-#JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 JPEGINCPATH         = @JPEGINCPATH@
 JPEGLIBPATH         = @JPEGLIBPATH@
 JPEGLIB             = @JPEGLIB@
 
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
+TIFFLIB             = @TIFFLIB@
+
+#GD library (for PNGdriver):
+GDINC               = @GDINC@
+GDLIB               = @GDLIB@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
@@ -104,13 +112,20 @@ TKINCDIR            = @TKINCDIR@
 TCLTKLIBPATH        = @TCLTKLIBPATH@
 TCLTKLIBS           = @TCLTKLIBS@
 
+#FFTW:
+FFTWINC             = @FFTWINC@
+FFTWLIB             = @FFTWLIB@
+
+#LAPACK/BLAS stuff for gmath lib:
+BLASLIB             = @BLASLIB@
+LAPACKLIB           = @LAPACKLIB@
+
+#GDAL:
+GDAL_LIBS           = @GDAL_LIBS@
+GDAL_CFLAGS         = @GDAL_CFLAGS@
+
+#FreeType:
+FTINC               = @FTINC@
+FTLIB               = @FTLIB@
+
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
-USE_TERMIO          = @USE_TERMIO@
-
-# Uncomment below to input Korean(Asian?) characters in v.digit or etc.
-#DASIAN_CHARS        = -DASIAN_CHARS
-
-# It's hard to click two buttons simultaneously with two button mouse.
-# Situation is worse, if it requires continuous clicking.
-# In this case uncomment below.
-#DANOTHER_BUTTON     = -DANOTHER_BUTTON

@@ -1,18 +1,14 @@
 #include "gis.h"
 #include "infx.h"
+#include "display.h"
+#include "raster.h"
 
 int getArea(tp)
   struct Sql *tp;
 {
-	char buffer[200] ;
-	char buf1[1024], buf2[1024];
-	char temp[1024];
-	double lat, lon ;
+
 	int screen_x, screen_y ;
-	int curx, cury ;
 	double east, north ;
-	double east1, north1 ;
-	double east2, north2 ;
 	int button ;
 	double D_get_d_north(), D_get_d_south() ;
 	double D_get_d_east(), D_get_d_west() ;
@@ -50,7 +46,7 @@ int getArea(tp)
 
 }
 
-static
+/*static void
 show (buf) char *buf;
 {
 	char *b;
@@ -62,3 +58,4 @@ show (buf) char *buf;
 	for (b = buf; *b; b++)
 		fprintf (stderr, "\b");
 }
+*/
