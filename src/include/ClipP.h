@@ -34,6 +34,7 @@
  */
 
 #include <Xm/XmP.h>
+#include <Xm/PrimitiveP.h>
 #include <Clip.h>
 
 /*
