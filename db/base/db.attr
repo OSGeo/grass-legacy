@@ -23,7 +23,7 @@ while { [gets stdin in] > -1 } {
 set ncols $i
 
 set sw [ScrolledWindow .sw -relief sunken -borderwidth 2]
-set sf [ScrollableFrame $sw.sf -width 300 -height 400]
+set sf [ScrollableFrame $sw.sf -width 200 -height 200]
 $sw setwidget $sf
 set suf [$sf getframe]
 
