@@ -1,10 +1,11 @@
 #include "gis.h"
 #include "local_proto.h"
 
-int zoom (int quiet, int rotate)
+int zoomwindow (int quiet, int rotate, double magnify)
 {
     struct Cell_head window ;
     char *err;
+    int quitonly;
 
     G_get_window(&window) ;
     if (window.proj != PROJECTION_LL)
@@ -13,21 +14,29 @@ int zoom (int quiet, int rotate)
     while(1)
     {
 	if (rotate)
-	    make_window_center (&window);
+	    quitonly=make_window_center (&window, magnify);
 	else
-	    make_window_box (&window);
-	if (err = G_adjust_Cell_head (&window, 0, 0))
+	    quitonly=make_window_box (&window, magnify);
+
+	if (quitonly) 
+	  break; /* no action was taken */
+	else	  
 	{
-	    just_click(err);
-	    continue;
-	}
-	if (yes("Accept new region?"))
+	  if (err = G_adjust_Cell_head (&window, 0, 0))
+	  {
+	    	just_click(err);
+	    	continue;
+	  }
+	  if (yes("Accept new region?"))
 	    break;
-	if (!yes("Try again?"))
+	  if (!yes("Try again?"))
 	    return 1;
+	}
     }
 
-    G_put_window(&window) ;
+    if (!quitonly)
+       G_put_window(&window) ;
+
     if(!quiet)
     {
 	fprintf(stderr, "This region now saved as current region.\n\n") ;
