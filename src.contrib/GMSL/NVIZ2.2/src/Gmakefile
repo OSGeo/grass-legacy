@@ -1,8 +1,8 @@
-# $Id: Gmakefile,v 1.22 2002-04-17 11:41:02 glynn Exp $
+# $Id: Gmakefile,v 1.23 2002-11-30 12:51:23 alex Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
-PQ_OBJS = openvect.o getCat.o buildInfxQry.o runInfxQry.o
+PQ_OBJS = openvect.o getCat.o buildPg.o runPg.o
 
 OGL_LIBS = $(OPENGLULIB) $(OPENGLLIB) $(OPENGL32) $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
