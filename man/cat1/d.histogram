@@ -1,7 +1,7 @@
 
 
 
-d.histogram          GRASS Reference Manual           d.histogram
+d.histogram <main>   GRASS Reference Manual    <main> d.histogram
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.histogram          GRASS Reference Manual           d.histogram
+d.histogram <main>   GRASS Reference Manual    <main> d.histogram
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
