@@ -1,0 +1,62 @@
+.\" $Header: /usr/people/sam/tiff/man/man3/RCS/rdestrip.3t,v 1.5 90/11/25 11:38:59 sam Exp $
+.\"
+.\" Copyright (c) 1990 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFReadEncodedStrip 3T "May 2, 1990"
+.SH NAME
+TIFFReadEncodedStrip \- read and decode a strip from an open
+.SM TIFF
+file
+.SH SYNOPSIS
+.B "#include <tiffio.h>"
+.br
+.B "int TIFFReadEncodedStrip(TIFF* tif, u_int strip, u_char* buf, u_int size)"
+.SH DESCRIPTION
+Read the specified strip of data and place
+.I size
+bytes of decompressed information in the (user supplied) data buffer.
+The actual number of bytes of data that were placed in
+.I buf
+is returned;
+.IR TIFFReadEncodedStrip ()
+returns \-1 if an error was encountered.
+.SH NOTES
+The value of
+.I strip
+is a ``raw strip number.''
+That is, the caller must take into account whether or not the
+data are organized in separate planes (\c
+.IR PlanarConfiguration =2).
+To read a full strip of data the data buffer should typically be
+at least
+.I RowsPerStrip
+times the number returned by
+.IR TIFFScanlineSize ().
+.PP
+The library attempts to hide bit- and byte-ordering differences
+between the image and the native machine by converting data
+to the native machine order.
+Bit reversal is always done if the
+.I FillOrder
+tag is opposite to the native machine bit order.
+Byte swapping of 16- and 32-bit samples is automatically
+done when
+.IR Compression =1
+(``no compression''), but otherwise is left to the
+decompression algorithms (which should generate decompressed
+data in the native byte ordering of the machine).
+.SH DIAGNOSTICS
+All error messages are directed to the
+.IR TIFFError (3T)
+routine.
+.SH "SEE ALSO"
+.IR intro (3T),
+.IR TIFFOpen (3T),
+.IR TIFFReadEncodedStrip (3T),
+.IR TIFFReadRawStrip (3T)
