@@ -1,0 +1,13 @@
+MVexport_arc	Vexport_arc.c	/^main(argc, argv)$/
+Mmain	main.c	/^main()$/
+albrll	albrll.c	/^albrll(lat,lon,NOR,EAS)$/
+end_coords	write.c	/^end_coords (fp)$/
+if	main.c	/^if (strcmp(cov_type,"polygon")==0)$/
+load_args	Vexport_arc.c	/^load_args (position, str)$/
+start_coords	write.c	/^start_coords ()$/
+utmll	utmll.c	/^utmll(lat,lon,NOR,EAS,ZON) $/
+while	main.c	/^while (strcmp(cov_type,"polygon")!=0 && strcmp(cov/
+write_area_lines	writ_a_lines.c	/^write_area_lines(binary, ascii)$/
+write_areas	write_areas.c	/^write_areas(name,mapset,map,lines_file,points_file/
+write_coords	write.c	/^write_coords (fp, num, Xptr, Yptr)$/
+write_lines	write_lines.c	/^write_lines (name,mapset,map,lines_file,text_file)/
