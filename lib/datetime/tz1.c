@@ -11,6 +11,15 @@ static int have(int x, DateTime *dt)
     return datetime_is_between(x, dt->from, dt->to);
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minutes
+ *  \return int
+ */
+
 int datetime_check_timezone (
     DateTime *dt,
     int minutes)
@@ -24,6 +33,15 @@ int datetime_check_timezone (
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minutes
+ *  \return int
+ */
+
 int 
 datetime_get_timezone (DateTime *dt, int *minutes)
 {
@@ -33,6 +51,15 @@ datetime_get_timezone (DateTime *dt, int *minutes)
 	*minutes = dt->tz;
     return stat;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  \param dt
+ *  \param minutes
+ *  \return int
+ */
 
 int 
 datetime_set_timezone (DateTime *dt, int minutes)
@@ -51,6 +78,18 @@ datetime_unset_timezone (DateTime *dt)
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 1 OK: -720 <= minutes <= 780 (720 = 12 hours; 780 = 13 hours)  
+ * 0 NOT OK 
+ *
+ *  \param minutes
+ *  \return int
+ */
 
 int 
 datetime_is_valid_timezone (int minutes)

@@ -6,7 +6,22 @@
  */
 #include "datetime.h"
 
-int datetime_change_timezone (
+
+/*!
+ * \brief 
+ *
+ * if dt has a timezone, increment dt by minutes-dt.tz MINUTES and set dt.tz = minutes
+ * Returns:  
+ * 0 OK   
+ * <b>datetime_check_timezone</b> (dt) if not  
+ * -4 if minutes invalid  
+ *
+ *  \param minutes
+ *  \return int
+ */
+
+int
+datetime_change_timezone (
     DateTime *dt,
     int minutes) /* new timezone in minutes */
 {
@@ -36,12 +51,43 @@ int datetime_change_timezone (
     return datetime_increment (dt, &incr);
 }
 
-int datetime_change_to_utc (DateTime *dt)
+
+/*!
+ * \brief 
+ *
+ * Return <b>datetime_change_timezone</b> (dt, 0);
+ *
+ *  \param dt
+ *  \return int
+ */
+
+int
+datetime_change_to_utc (DateTime *dt)
 {
     return datetime_change_timezone (dt, 0);
 }
 
-void datetime_decompose_timezone (int tz, int *hours,int *minutes)
+
+/*!
+ * \brief 
+ *
+ * tz = abs(tz)  
+ * *hour = tz/60  
+ * *minute = tz%60 
+ * Note: hour,minute are non-negative. Must look at sign of tz itself to see if
+ * the tz is negative offset or not. This routine would be used to format tz for
+ * output. For example if tz=-350 this would be hour=5 minute=50, but negative.
+ * Output might encode this as -0550: printf ("%s%02d%02d", tz<0?"-":"",
+ * hour, minute)
+ *
+ *  \param tz
+ *  \param hour
+ *  \param minute
+ *  \return void
+ */
+
+void
+datetime_decompose_timezone (int tz, int *hours,int *minutes)
 {
     if (tz < 0)
 	tz = -tz;
