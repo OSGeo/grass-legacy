@@ -47,12 +47,12 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
             echo "  -text                          use text based interface"
-            echo "  -tcltk                         use Tcl/Tk based graphical interface"
+            echo "  -tcltk or -gui                 use Tcl/Tk based graphical user interface"
             echo
             echo "Parameters:"
             echo "  GISDBASE                       initial database"
@@ -76,7 +76,7 @@ for i in "$@" ; do
 	    ;;
 	
 	# Check if the -tcltk flag was given
-	-tcltk)
+	-tcltk|-gui)
 	    GRASS_GUI="tcltk"
 	    shift
 	    ;;
