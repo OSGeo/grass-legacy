@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc, argv)$/
+ingresGetKey	ingresUtils.c	/^void ingresGetKey(buf)$/
+ingresUnTable	ingresUtils.c	/^void ingresUnTable(buf)$/
+sqlQry	sqlQry.c	/^sqlQry(tab,key,col, cats, raster,rastout,joinargs,/
