@@ -148,9 +148,6 @@
 /* define if LAPACK exists */
 #undef HAVE_LIBLAPACK
 
-/* define if dbm.h exists */
-#undef HAVE_DBM_H
-
 /* define if readline exists */
 #undef HAVE_READLINE_READLINE_H
 
