@@ -1,0 +1,66 @@
+
+
+
+show.display(1)  	     GRASS Reference Manual	      show.display(1)
+
+
+
+NAME
+     show.display - reads screen images stored on the PC6386 hard 
+     disk by save.display.
+     (Available for PC6386 workstations, only)
+
+SYNOPSIS
+     show.display 
+
+DESCRIPTION
+     show.display allows a user to :
+     interactively view PC6386 screen images produced by "display",
+     "Dcell", etc. and saved to the PC6386 hard disk by save.display.
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
