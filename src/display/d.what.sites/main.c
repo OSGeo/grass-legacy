@@ -1,9 +1,8 @@
 #define GLOBAL
 #include "what.h"
+#include "local_proto.h"
 
-int main(
-int argc ,
-char **argv )
+int main(int argc, char **argv)
 {
 	struct Cell_head window ;
 	char temp[128] ;
@@ -14,20 +13,34 @@ char **argv )
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
+	R_open_driver();
 
+	if(D_get_site_list (&site, &nsites) < 0)
+		site = NULL;
+	else
+	{
+		site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+		site[nsites] = NULL;
+	}
+
+	R_close_driver();
 
 	opt1 = G_define_option() ;
 	opt1->key        = "sites" ;
 	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->multiple   = NO ;
+	opt1->multiple   = YES ;
+	if (site)
+		opt1->answers = site;
+	opt1->required   = NO ;
 	opt1->gisprompt  = "old,site_lists,Sites" ;
 	opt1->description= "Name of existing sites file"; 
 
 	shh = G_define_flag ();
 	shh->key = 'q';
 	shh->description = "Load quietly";
-
+	
+	if(!!site)
+		opt1->required = YES;
 
 	if (G_parser(argc, argv))
 	    exit(-1);
