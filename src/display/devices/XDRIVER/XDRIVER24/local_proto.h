@@ -17,7 +17,7 @@ int Get_location_with_pointer(int *, int *, int *);
 /* Graph_Clse.c */
 int Graph_Close(void);
 /* Graph_Set.c */
-int Graph_Set(int, char **, int);
+int Graph_Set(int, char **);
 /* Panel.c */
 int Panel_save(char *, int, int, int, int);
 int Panel_restore(char *);

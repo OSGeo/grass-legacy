@@ -4,7 +4,6 @@
  * August 1999
  *
  * Heavily modified by Glynn Clements, May 2001
- * "nlev" is now unused except to force use of a TrueColor visual (nlev == -1)
 */
 
 #include "config.h"
@@ -157,7 +156,7 @@ use_window(int win_id)
 }
 
 static void
-create_window(int argc, char **argv, int nlev)
+create_window(int argc, char **argv)
 {
     static const char * const classname[6] = {
 	"StaticGray",	"GrayScale",
@@ -173,6 +172,7 @@ create_window(int argc, char **argv, int nlev)
     XClassHint *clshints;
     XWMHints *wmhints;
     char title[1024];
+    char *p;
 
     external_window = 0;
 
@@ -184,7 +184,8 @@ create_window(int argc, char **argv, int nlev)
     use_visual = NULL;
 
     /* special flag to indicate a search for a True Color Display */
-    if (nlev == -1)
+    p = getenv("XDRIVER_TRUECOLOR");
+    if (p && strcmp(p, "TRUE") == 0)
 	find_truecolor_visual();
 
     /*  If we can't find a TrueColor visual then use the default visual	*/
@@ -289,7 +290,7 @@ create_cross_cursor(void)
 }
 
 int
-Graph_Set(int argc, char **argv, int nlev)
+Graph_Set(int argc, char **argv)
 {
     XWindowAttributes xwa;      /* Get Window Attribute struct */
     const char *privcmap;
@@ -309,7 +310,7 @@ Graph_Set(int argc, char **argv, int nlev)
     if ((p = getenv("XDRIVER_WINDOW")) && sscanf (p, "%i", &win_id) == 1)
 	use_window(win_id);
     else
-	create_window(argc, argv, nlev);
+	create_window(argc, argv);
 
     /* this next bit forces the use of a private colormap                */
     /* a must have for read only visuals                                 */

@@ -23,7 +23,7 @@
  * names are the second.  When the monitor runs in background, the
  * fork is actually done in the monitor itself.  This prevents the
  * monitor startup message from appearing after the user gets his
- * prompt back.  For more information, see the comments in SWITCHER.c.
+ * prompt back.
  ****************************************************************/
 
 #include "config.h"
@@ -37,9 +37,9 @@
 
 #include <process.h>
 
-#define execl(fullpath,path,name,bg,link,par,nul)		\
+#define execl(fullpath,path,name,bg,link,nul)			\
 do {								\
-	spawnl(_P_DETACH,fullpath,path,name,"-",link,par,nul);	\
+	spawnl(_P_DETACH,fullpath,path,name,"-",link,nul);	\
 	return 0;						\
 } while (0)
 
@@ -47,16 +47,16 @@ do {								\
 
 int main (int argc, char *argv[])
 {
-	if (argc < 2 || argc > 3)
+	if (argc != 2)
 	{
-		fprintf(stderr,"Usage:  %s monitor_name [par]\n", argv[0]);
+		fprintf(stderr,"Usage:  %s monitor_name\n", argv[0]);
 		return 1;
 	}
 
-	return start_mon(argv[1], (argc == 3) ? argv[2] : "");
+	return start_mon(argv[1]);
 }
 
-int start_mon (char *name, char *par)
+int start_mon (char *name)
 {
 	struct MON_CAP *mon;
 	int pid;
@@ -79,7 +79,6 @@ int start_mon (char *name, char *par)
 		name,
 		*mon->tty == '\0' ? "" : "-",
 		mon->link,
-		par,
 		(char *) 0);
 
 	perror("Could not execute monitor");

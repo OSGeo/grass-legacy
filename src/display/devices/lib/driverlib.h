@@ -1,6 +1,6 @@
 /* dummies for the driver functions */
 int Graph_Close(void);
-int Graph_Set(int, char **, int);
+int Graph_Set(int, char **);
 /* Can_do.c */
 int can_do_float(void);
 /* Clr_table.c */

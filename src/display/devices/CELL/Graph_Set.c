@@ -33,7 +33,7 @@ FILE *Temp_fp;
 unsigned char Color_table[256][3];
 unsigned char *Row_buf;
 
-int Graph_Set (int argc, char **argv, int nlev) 
+int Graph_Set (int argc, char **argv) 
 {
     char *p;
     char buf[1024];

@@ -10,7 +10,6 @@
 */
  
 int run(char *, char *);
-int run2( char *,char *,char *);
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +19,6 @@ int main(int argc, char *argv[])
 
 	struct GModule *module;
     struct Option *start, *stop, *select, *unlock;
-    struct Option *nlev;
     struct Flag *list, *status, *print, *release, *no_auto_select;
 
     G_gisinit(argv[0]);
@@ -52,12 +50,6 @@ int main(int argc, char *argv[])
     unlock->type=TYPE_STRING;
     unlock->required=NO;
     unlock->description="Name of graphics monitor to unlock";
-
-    nlev = G_define_option();
-    nlev->key="nlev";
-    nlev->type=TYPE_INTEGER;
-    nlev->required=NO;
-    nlev->description="Number of color levels for each R/G/B";
 
     list = G_define_flag();
     list->key='l';
@@ -102,20 +94,17 @@ int main(int argc, char *argv[])
 	error += run("stop",stop->answer);
     if (start->answer)
     {
-      if (nlev->answer )
-	error += run2("start",start->answer,nlev->answer);
-      else 
 	error += run("start",start->answer);
         if(error) /* needed procedure failed */
-          {
+	{
             if(mon_name != NULL)
-              {
-		 /* restore the previous environ. */
-                 G__setenv("MONITOR", mon_name); 
-                 /* write the name to the .gisrc file */
-                 G__write_env();
-	       }
-           }
+	    {
+		/* restore the previous environ. */
+		G__setenv("MONITOR", mon_name); 
+		/* write the name to the .gisrc file */
+		G__write_env();
+	    }
+	}
     }
     if (select->answer)
     {
@@ -147,16 +136,5 @@ int run (char *pgm, char *name)
     char command[1024];
 
     sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
-    return system(command);
-}
-
-int run2( char *pgm,char *name,char *par)
-{
-    char command[1024];
-
- if ( par[0] == '\0' ) 
-    sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
- else 
-    sprintf (command, "%s/etc/mon.%s %s %s", G_gisbase(), pgm, name, par);
     return system(command);
 }
