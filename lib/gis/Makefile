@@ -112,6 +112,7 @@ LIB_OBJS = \
 	line_dist.o\
 	ll_format.o\
 	ll_scan.o\
+	locale.o\
 	location.o\
 	mach_name.o\
 	make_colr.o\
