@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "icon.h"
 
 release_icon (icon)
