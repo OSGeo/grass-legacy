@@ -17,6 +17,7 @@ make_support (input, mapset, raster, npoints, percent, cat_zero)
 	G_write_cats (raster, &cats);
     }
 
+
     if (G_read_history (raster, G_mapset(), &hist) >= 0)
     {
 	sprintf (hist.datsrc_1, "Based on map [%s in %s]", input, mapset);
@@ -28,3 +29,7 @@ make_support (input, mapset, raster, npoints, percent, cat_zero)
 	G_write_history (raster, &hist);
     }
 }
+
+contrast(color) {
+    return ((color > 127) ? (color - 127) : (color  + 127));
+    }
