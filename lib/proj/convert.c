@@ -496,7 +496,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         /* We assume degrees ... someday we will be wrong! */
         G_set_key_value( "unit", "degree", *projunits );
         G_set_key_value( "units", "degrees", *projunits );
-        G_set_key_value( "meter", "1.0", *projunits );
+        G_set_key_value( "meters", "1.0", *projunits );
     }
     else 
     {
@@ -514,7 +514,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         sprintf( szFormatBuf, "%ss", pszUnitsName );
         G_set_key_value( "units", szFormatBuf, *projunits );
         sprintf( szFormatBuf, "%.16g", dfToMeters );
-        G_set_key_value( "meter", szFormatBuf, *projunits );
+        G_set_key_value( "meters", szFormatBuf, *projunits );
 
     }
 
