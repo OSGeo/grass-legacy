@@ -20,7 +20,7 @@
 #
 #############################################################################
 
-trap "echo 'User break!' ; exit" 2 3
+trap "echo 'User break!' ; exit" 2 3 15
 
 # Set the GISBASE variable
 GISBASE=GISBASE_VALUE
