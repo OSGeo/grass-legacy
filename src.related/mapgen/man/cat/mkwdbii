@@ -1,0 +1,66 @@
+
+
+
+
+
+
+_m_k_w_d_b_i_i - _c_r_e_a_t_e _c_o_m_p_a_c_t _c_o_a_s_t_l_i_n_e _f_i_l_e _f_r_o_m _W_D_B-_I_I
+
+
+_m_k_w_d_b_i_i [ -frhdHDx [args]] [ files ]
+
+_M_k_w_d_b_i_i is required to create the data  files  employed
+by  the  program  _C_o_a_s_t.  This involves reading a World
+Data Bank II source file containing  control  data  and
+the  longitude  an  latitude  defining the nodes of the
+line.  The above data is compressed and placed into two
+files: the *.cdr file contains the lon-lat range of the
+line data segments as well as  pointer  information  to
+the  *.cdt  file  which  contains the definition of the
+line in incremental form.  The  following  options  can
+appear  in  any  order: This optional value of _n estab-
+lishes the resolution of the data set in "meters on the
+ground".   _F_i_l_e  is  required and specifies the name of
+the compressed data set "file.cdt" and  its  associated
+directory "file.cdr".  One or more _f_i_l_e_s of source data
+may be specified.  If a _f_i_l_e is not specified _s_t_d_i_n  is
+assumed.
+
+_A _W_o_r_l_d _D_a_t_a _B_a_n_k _I_I _m_a_g_n_i_t_i_c _t_a_p_e _d_a_t_a _f_i_l_e _i_s  _t_o  _b_e
+_p_r_o_c_e_s_s_e_d  _i_n_t_o  _a  _2_5  _m_e_t_e_r _r_e_s_o_l_u_t_i_o_n _A_n _a_p_p_r_o_p_r_i_a_t_e
+_m_k_w_d_b_i_i execution might be:
+
+      dd if=/dev/rmt8 bs=8000 conv=swab | \
+          dd ibs=8000 cbs=20 conv=ascii | \
+          mkwdbii -f NA_cil_25 -r 25
+
+
+ ._c_d_r _a_n_d ._c_d_t _c_o_m_p_r_e_s_s_e_d _o_u_t_p_u_t _f_i_l_e_s.
+
+ _P_r_o_g_r_a_m _c_o_a_s_t.
+ _W_o_r_l_d _D_a_t_a _B_a_n_k _I_I _d_o_c_u_m_e_n_t_a_t_i_o_n.
+
+ _E_r_r_o_r _m_o_n_i_t_o_r_i_n_g _o_n_l_y.
+
+_T_o_o _e_a_r_l_y _t_o _t_e_l_l (_p_r_o_b_a_b_l_y).
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
