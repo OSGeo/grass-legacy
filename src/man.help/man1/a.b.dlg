@@ -1,0 +1,33 @@
+.\" %W% %G%
+.TH a.b.dlg 1
+.SH NAME
+a.b.dlg \- converts ascii dlg-3 files to binary dlg-3 files
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B a.b.dlg
+.SH DESCRIPTION
+The GRASS program \fIa.b.dlg\fR
+converts an ascii dlg-3 file into a binary
+.I dlg-3
+file.  Alternately, the GRASS program \fIb.a.dlg[1]\fR converts binary
+.I dlg-3
+files into a readable ascii file.
+.sp
+.br
+Both
+.I a.b.dlg
+and
+.I b.a.dlg[1]
+are 
+.CT "non-interactive" interactive
+programs.  They are useful for transferring dlg-3
+digital data from one computer to another.  Data transferred between
+machines generally must be in ascii form so that a compatible transfer
+may occur.
+.SH "SEE ALSO"
+\fIb.a.dlg[1], import.to.vect[1]\fR
+.SH "AUTHOR"
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
