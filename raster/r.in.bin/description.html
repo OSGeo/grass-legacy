@@ -73,6 +73,16 @@ run along the edges of the cells at the edge of the
 geographic region and <EM>not</EM> through the center of the cells
 at the edges.
 <P>
+Eastern limit of geographic region (in projected coordinates must be east
+of the west parameter value, but in geographical coordinates will wrap
+around the globe; user errors can be detected by comparing the <EM>ewres</EM> and
+<EM>nsres</EM> values of the imported map layer carefully).
+<br>
+Western limit of geographic region (in projected coordinates must be west
+of the east parameter value, but in geographical coordinates will wrap
+around the globe; user errors can be detected by comparing the <EM>ewres</EM> and
+<EM>nsres</EM> values of the imported map layer carefully).
+<P>
 Notes on (non)signed data:<P>
 If you use the -s flag the highest bit is the sign bit. If this is 1 the
 data is negative, and the data interval is half of the unsigned (not
