@@ -1737,23 +1737,8 @@ array set featuredir {
 	region		windows
 }
 
-# colors defined in src/libes/gis/named_colr.c
-# and in src/include/colors.h: D_COLOR_LIST
-set colors {
-	red
-	magenta
-	orange
-	yellow
-	green
-	blue
-	aqua
-	indigo
-	white
-	gray
-	grey
-	black
-	brown
-}
+# new: colors read via call to d.colorlist ":":
+set colors [split [exec d.colorlist ":"] ":"]
 
 set types {
 	x

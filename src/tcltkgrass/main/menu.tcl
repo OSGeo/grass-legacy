@@ -958,6 +958,10 @@ menu_build 1 .main_menu {
            "source $env(TCLTKGRASSBASE)/main/grassabout.tcl"
         }
 	-separator
+	"About this System" "" {
+	   "exec $env(TCLTKGRASSBASE)/main/tksys.tcl --tcltk"
+	}
+	-separator
 	"Help on scripting" "" {
 	    "source $env(TCLTKGRASSBASE)/main/help-scripting.tcl"
 	}
