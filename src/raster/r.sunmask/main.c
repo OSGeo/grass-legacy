@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
     parm.minutes->description = "minutes (0..60)";
 
     parm.seconds = G_define_option();
-    parm.seconds->key = "seconds";
+    parm.seconds->key = "second";
     parm.seconds->type = TYPE_INTEGER;
     parm.seconds->required = NO;
     parm.seconds->description = "seconds (0..60)";
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
     parm.timezone->key = "timezone";
     parm.timezone->type = TYPE_INTEGER;
     parm.timezone->required = NO;
-    parm.timezone->description = "timezone (east positive)";
+    parm.timezone->description = "timezone (east positive, counted from Greenwich)";
 
     parm.east = G_define_option();
     parm.east->key = "east";
