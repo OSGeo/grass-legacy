@@ -1,0 +1,21 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123doc/
+
+This subdirectory contains documentation for the FIP PUB 123 Function Library.
+Documentation includes introductory documentation, the FIPS PUB 123 Programmers 
+Reference Manual, and software release notices.  The documentation is in
+WordPerfect 5.1 format.
+
+
+File            Description
+------------    -----------
+fipsprm.toc     Table of contents of Programmers Reference Manual
+fipsprm.txt     Main text of Programmers Reference Manual
+fipsprm.apa     Appendix A of Programmers Reference Manual
+fipsprm.apb     Appendix B of Programmers Reference Manual
+fipsprm.apc     Appendix C of Programmers Reference Manual
+fipsprm.apd     Appendix D of Programmers Reference Manual
+fipsprm.ape     Appendix E of Programmers Reference Manual
+readme.123      Directory information file
+release.123     Release Notes for FIPS PUB 123 Function Library ver. 1.0.3
