@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "vask.h"
 
 V_float_accuracy (n)
