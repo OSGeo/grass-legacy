@@ -35,7 +35,9 @@ GRASS Image Processing Program <EM>
 file. For ortho-photo rectification, a camera reference file is required for
 computation of scanned image to photo-coordinate transformation parameters.
 There are two coordinate systems: The image coordinate system (in pixels)
-and the photo coordinate system (in milli-meters).
+and the photo coordinate system (in milli-meters). The inner orientation
+establishes a relation between the pixels and the image coordinates with
+help of fiducial marks.
 
 <P>
 
@@ -44,9 +46,7 @@ the camera reference file to be created or modified.  You may
 create a new camera reference file by entering a new name, or modify an
 existing camera reference file by entering the name of an existing camera file.
 
-
 <P>
-
 After entering the camera file name, following menu is displayed:
 <P>
 Please provide the following information
@@ -70,17 +70,25 @@ The camera name and identification describe the camera reference file.
 The calibrated focal length and the point of symmetry are used in computing 
 the photo-to-target transformation parameters.  These values should be entered
 from the camera calibration report (usually available from the photograph 
-supplier). 
+supplier).
+
+<p>
+<img src="photo.camera.png" alt="Sketch of aerial photo"><br>
+<i>This example is the camera Zeiss LMK9 265-002A belonging to the Hellenic
+Military Geographical Survey (HMGS) and calibrated in December 1985</i>
+<p>
 
 The photo coordinate system origin is the so-called calibrated principal
-point (Principal Point of Symmetry) which is in the center of the image.
-The center is the origin, in case of no deviation in the camera (see camera
-calibration certificate), the values are 0 for both X and Y of Point of
-Symmetry.
-<P>
+point (PP, Principal Point of Symmetry) which is in the center of the image. 
+The origin of the axes is at the intersection of the radii traced from the
+fiducial marks. In the ideal case of no deviations in the camera (see camera
+calibration certificate) the center is the origin and the values are 0 for
+both X and Y of Point of Symmetry. But usually the principal point does not
+fall on the intersection of the radii at the center of the picture. This
+excentricity is usually of the order of a few micrometers. <P>
 
-You are then asked to enter the X and Y photo coordinates
-of each fiducial as follows.
+You are then asked to enter the X and Y photo coordinates of each fiducial
+as follows.
 These fiducials (or reseau) marks are index marks imaged on film which serve
 as reference photo coordinate system. The maximum number of fiducials will
 determine the number of fiducial or reseau coordinate pairs to be entered
