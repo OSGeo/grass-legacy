@@ -1,0 +1,14 @@
+Mmain	main.c	/^main(argc, argv)$/
+bin_search	bsearch.c	/^bin_search (key, n, start, cmp)$/
+buildInfxQry	buildInfxQry.c	/^buildInfxQry(key, where, table, map, joinargs, map/
+build_lookup_tables	find.c	/^build_lookup_tables (M)$/
+cmp_areas1	find.c	/^static int cmp_areas1(a,b)$/
+cmp_areas2	find.c	/^static int cmp_areas2(a,n)$/
+cmp_lines1	find.c	/^static int cmp_lines1(a,b)$/
+cmp_lines2	find.c	/^static int cmp_lines2(a,n)$/
+find_area	find.c	/^find_area (cat, count, M)$/
+find_line	find.c	/^find_line (cat, count, M)$/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+plotCat	plotCat.c	/^plotCat (name, mapset, Points, vect_cat, P_map)$/
+runInfxFile	runInfxFile.c	/^runInfxFile(sqlin, map, mapset, color )$/
