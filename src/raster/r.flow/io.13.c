@@ -90,7 +90,10 @@ parse_command_line(argc, argv)
 {
     struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, *poffset,
               *pflout, *plgout, *pdsout;
-    struct Flag *fup, *flg, *fmem, *fseg, *fquiet, *fcprght;
+
+/* Helena: fseg commented due to problems: */
+/*    struct Flag *fup, *flg, *fmem, *fseg, *fquiet, *fcprght;*/
+    struct Flag *fup, *flg, *fmem, *fquiet, *fcprght;
     int default_skip, larger, default_bound;
     double default_offset;
     char *default_skip_ans, *default_bound_ans, *skip_opt;
@@ -146,7 +149,7 @@ parse_command_line(argc, argv)
     fup	  = flag('u', "Compute upslope flowlines");
     flg	  = flag('3', "3-D lengths instead of 2-D");
     fmem  = flag('m', "Use less memory, at a performance penalty");
-    fseg  = flag('M', "Use much less memory, at a severe performance penalty");
+/*    fseg  = flag('M', "Use much less memory, at a severe performance penalty");*/
     fquiet= flag('q', "Quiet operation");
     fcprght = flag('h', "Display Reference Information");
 
@@ -165,7 +168,7 @@ parse_command_line(argc, argv)
     parm.up	= fup->answer;
     parm.l3d	= flg->answer;
     parm.mem	= fmem->answer;
-    parm.seg	= fseg->answer;
+/*    parm.seg	= fseg->answer;*/
     parm.quiet	= fquiet->answer;
 
 /*    if (fcprght->answer) { */
