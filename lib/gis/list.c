@@ -107,7 +107,7 @@ int G_list_element (
     if (!broken_pipe)
     {
 	if (count == 0)
-	    fprintf (more,_("no %s files available\n"), desc);
+	    fprintf (more,_("no %s files available in mapset %s\n"), desc, mapset);
 
 	fprintf (more,"----------------------------------------------\n");
     }
