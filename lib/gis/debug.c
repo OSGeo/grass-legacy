@@ -20,6 +20,7 @@ static grass_debug_level = -1;
 
 int G_debug (int level, char *msg,...)
 {
+#ifdef GDEBUG
     char buffer[1000], *lstr;
     va_list ap;
    
@@ -36,9 +37,10 @@ int G_debug (int level, char *msg,...)
         va_start(ap,msg);
         vsprintf(buffer,msg,ap);
         va_end(ap);
-        fprintf (stderr, "D%d: %s\n", grass_debug_level, buffer);
+        fprintf (stderr, "D%d/%d: %s\n", level, grass_debug_level, buffer);
     }
-	
+#endif
+
     return 0;
 }
 
