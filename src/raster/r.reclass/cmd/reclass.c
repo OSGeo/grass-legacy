@@ -5,6 +5,206 @@ extern CELL DEFAULT;
 extern int default_rule, default_to_itself;
 extern char *default_label;
 
+static void compose(struct Reclass *new, const struct Reclass *mid, const struct Reclass *old)
+{
+    int first;
+    CELL i, j, k;
+    long num;
+
+    first = 1;
+
+    for (i = old->min; i <= old->max; i++)
+    {
+
+	j = old->table[i - old->min];
+	if (G_is_c_null_value(&j) || j < mid->min || j > mid->max)
+	    continue;
+
+	k = mid->table[j - mid->min];
+	if (G_is_c_null_value(&k))
+	    continue;
+
+	if (first)
+	{
+	    new->min = new->max = i;
+	    first = 0;
+	}
+	else
+	{
+	    if (i < new->min)
+		new->min = i;
+	    if (i > new->max)
+		new->max = i;
+	}
+    }
+
+    if (first)
+	new->min = new->max = 0;
+
+    new->type = RECLASS_TABLE;
+    num = new->max - new->min + 1;
+    /* make sure don't overflow int */
+    if (num != (int) num)
+	G_fatal_error ("Too many categories");
+
+    new->num = num;
+    new->table = (CELL *) G_calloc (new->num, sizeof(CELL));
+
+    for (i = new->min; i <= new->max; i++)
+    {
+	j = old->table[i - old->min];
+	if (G_is_c_null_value(&j) || j < mid->min || j > mid->max)
+	{
+	    G_set_c_null_value(&new->table[i], 1);
+	    continue;
+	}
+
+	k = mid->table[j - mid->min];
+
+	new->table[i] = k;
+    }
+}
+
+static void init_reclass(struct Reclass *rec, const RULE *rules)
+{
+    int first;
+    const RULE *r;
+    long num;
+
+    first = 1;
+
+    if (default_rule && !G_is_c_null_value(&DEFAULT))
+    {
+	struct Range range;
+	G_read_range(rec->name, rec->mapset, &range);
+	G_get_range_min_max(&range, &rec->min, &rec->max);
+	if (!G_is_c_null_value(&rec->min) && !G_is_c_null_value(&rec->max))
+	    first = 0;
+    }
+
+    /* first find the min,max cats */
+    for (r = rules; r; r = r->next)
+    {
+	if (first)
+	{
+	    rec->min = r->lo;
+	    rec->max = r->hi;
+	    first = 0;
+	}
+	else
+	{
+	    if (r->lo < rec->min)
+		rec->min = r->lo;
+	    if (r->hi > rec->max)
+		rec->max = r->hi;
+	}
+    }
+
+    /* make sure we have at least one entry */
+    if (first)
+	rec->min = rec->max = 0;
+
+    /* allocate reclass table */
+    rec->type = RECLASS_TABLE;
+    num = rec->max - rec->min + 1;
+
+    /* make sure don't overflow int */
+    if (num != (int) num)
+	G_fatal_error ("Too many categories");
+
+    rec->num = num;
+    rec->table = G_calloc(rec->num, sizeof(CELL));
+}
+
+static void init_table(struct Reclass *rec, int *is_default)
+{
+    int i;
+
+    for (i = 0; i < rec->num; i++)
+    {
+	if (default_rule)
+	{
+	    if(default_to_itself)
+		rec->table[i] = i + rec->min;
+	    else
+		rec->table[i] = DEFAULT;
+	    is_default[i] = 1;
+	}
+	else
+	{
+	    G_set_c_null_value(&rec->table[i], 1);
+	    is_default[i] = 0;
+	}
+    }
+}
+
+static void fill_table(struct Reclass *rec, int *is_default, const RULE *rules)
+{
+    const RULE *r;
+    int i;
+
+    for (r = rules; r; r = r->next)
+	for (i = r->lo; i <= r->hi; i++)
+	{
+	    rec->table[i - rec->min] = r->new;
+	    if (r->new >= rec->min && r->new <= rec->max)
+		is_default[r->new - rec->min] = 0;
+	}
+}
+
+static void set_cats(struct Categories *cats, /* const */ int *is_default, /* const */ struct Reclass *rec)
+{
+    struct Categories old_cats;
+    int cats_read = 0;
+
+    if (default_rule && default_to_itself)
+	cats_read = (G_read_cats(rec->name, rec->mapset, &old_cats) >= 0);
+
+    if (cats_read)
+    {
+	int i;
+
+	for (i = 0; i < rec->num; i++)
+	    if (is_default[i])
+	    {
+		int x = i + rec->min;
+		char *label = G_get_cat(x, &old_cats);
+		G_set_cat(x, label, cats);
+	    }
+    }
+    else if (default_rule)
+        G_set_cat(DEFAULT, default_label, cats);
+}
+
+static int _reclass(/* const */ RULE *rules, struct Categories *cats, struct Reclass *new)
+{
+    int *is_default;
+
+    init_reclass(new, rules);
+    is_default = G_calloc (new->num, sizeof(int));
+    init_table(new, is_default);
+    fill_table(new, is_default, rules);
+    set_cats(cats, is_default, new);
+
+    return 0;
+}
+
+static int re_reclass(/* const */ RULE *rules, struct Categories *cats,
+	/* const */ struct Reclass *old, struct Reclass *new,
+	char *input_name, char *input_mapset)
+{
+    struct Reclass mid;
+
+    strcpy(mid.name, input_name);
+    strcpy(mid.mapset, input_mapset);
+
+    _reclass(rules, cats, &mid);
+
+    compose(new, &mid, old);
+
+    return 0;
+}
+
 int reclass (char *old_name, char *old_mapset,
     char *new_name, RULE *rules, struct Categories *cats, char *title)
 {
@@ -74,235 +274,3 @@ int reclass (char *old_name, char *old_mapset,
     return 0;
 }
 
-int _reclass (RULE *rules, struct Categories *cats, struct Reclass *new)
-{
-    RULE *r;
-    register CELL i;
-    register CELL n;
-    int first, cats_read=0;
-    int *is_default;
-    /* wether or not the rule for this category is explicitly specified */
-    long num;
-    struct Range range;
-    struct Categories old_cats;
-
-    first = 1;
-
-    if(default_rule && !G_is_c_null_value(&DEFAULT))
-    {
-	first = 0;
-	G_read_range(new->name, new->mapset, &range);
-	G_get_range_min_max(&range, &new->min, &new->max);
-	if(G_is_c_null_value(&new->min) || 
-	   G_is_c_null_value(&new->max))
-            G_fatal_error("input range is empty!");
-	if(default_to_itself)
-	{
-            if(G_read_cats (new->name, new->mapset, &old_cats)< 0)
-		cats_read = 0;
-            else cats_read = 1;;
-	}
-    }
-
-    /* first find the min,max cats */
-    for (r = rules; r; r = r->next)
-    {
-	if (first)
-	{
-	    new->min = r->lo;
-	    new->max = r->hi;
-	    first = 0;
-	}
-	else
-	{
-	    if (r->lo < new->min)
-		new->min = r->lo;
-	    if (r->hi > new->max)
-		new->max = r->hi;
-	}
-    }
-
- /* make sure we have at least one entry */
-    if (first) new->min = new->max = 0;
-
- /* allocate reclass table */
-    new->type = RECLASS_TABLE;
-    num = new->max - new->min + 1;
-    if (num != (int) num)		/* make sure don't overflow int */
-	G_fatal_error ("Too many categories");
-
-    new->num = num;
-    new->table = (CELL *) G_calloc (new->num, sizeof(CELL));
-    is_default = (int *) G_calloc (new->num, sizeof(int));
-    for (i = 0; i < new->num; i++)
-    {
-       if(default_rule)
-       {
-           if(default_to_itself)
-                  new->table[i] = i + new->min;
-             else
-                  new->table[i] = DEFAULT;
-           is_default[i] = 1;
-           if(G_is_c_null_value(&new->table[i])) continue;
-           if (cats->num < new->table[i])
-                  cats->num = new->table[i];
-       }
-       else
-       {
-           G_set_c_null_value(&new->table[i], 1);
-           is_default[i] = 0;
-       }
-   }
-
-/* generate the new reclass lookup table */
-     for (r = rules; r; r = r->next)
-	for (i = r->lo; i <= r->hi; i++)
-	{
-	    n = i;
-	    new->table[n-new->min] = r->new;
-	    is_default[n-new->min] = 0;
-	    if(G_is_c_null_value(&r->new)) continue;
-	    if (cats->num < r->new)
-		cats->num = r->new;
-	}
- 
-     /* now set the default categories */
-     /* the new cats set in rules should already be set in parse.c */
-     if(default_to_itself && cats_read)
-     {
-         for (i = 0; i < new->num; i++)
-         {
-             if(is_default[i])
-             {
-               G_set_cat(i + new->min, 
-                  G_get_cat (i + new->min, &old_cats), cats);
-             }
-         }
-     }
-     else if(default_rule)
-        G_set_cat(DEFAULT, default_label, cats);
-
-     return 0;
-}
-
-int 
-re_reclass (RULE *rules, struct Categories *cats, struct Reclass *old, struct Reclass *new, char *input_name, char *input_mapset)
-{
-    RULE *r;
-    register CELL i;
-    register CELL n;
-    long num;
-    int *is_default;
-     /* wether or not the rule for this category is explicitly specified */
-    int cats_read=0;
-    CELL old_min_cat, old_max_cat;
-    struct Categories old_cats;
-
-    /* we will build a new table first from the old table, then
-     * modify it as neccessary to shrink it 
-     */
-
-    if(default_to_itself)
-    {
-       if(G_read_cats (input_name, input_mapset, &old_cats)< 0)
-               cats_read = 0;
-       else cats_read = 1;
-    }
-
-    /* first make a copy of old table */
-    new->table = (CELL *) G_calloc (old->num, sizeof(CELL));
-
-    cats->num = 0;
-    cats->num = 0;
-    old_min_cat = old_max_cat = old->table[old->min];;
-    for (i = 0; i < old->num; i++)
-    {
-	if(G_is_c_null_value(&(old->table[i - old->min]))) continue;
-        if(old_min_cat > old->table[i - old->min]) 
-                old_min_cat = old->table[i - old->min];
-        if(old_max_cat < old->table[i - old->min]) 
-                old_max_cat = old->table[i - old->min];
-    }
-    /* list of flags for all old category values */
-    if(old_max_cat -old_min_cat +1 > old->num)
-          is_default = (int *) G_calloc (old_max_cat -old_min_cat +1, sizeof(int));
-    else
-	  is_default = (int *) G_calloc (old->num, sizeof(int));
-    for (i = old_min_cat; i <= old_max_cat; i++)
-       is_default[i - old_min_cat] = 1;
-
-    /* initialize the new table */
-    for (i = 0; i < old->num; i++)
-    {
-      if(default_rule)
-      {
-          if(default_to_itself)
-                 new->table[i] = old->table[i];
-          else
-                 new->table[i] = DEFAULT;
-          if(G_is_c_null_value(&new->table[i])) continue;
-          if (cats->num < new->table[i])
-              cats->num = new->table[i];
-      }
-      else
-      {
-          G_set_c_null_value(&new->table[i], 1);
-          is_default[i] = 0;
-      }
-    }
-
-/* generate the new reclass lookup table */
-    for (r = rules; r; r = r->next)
-	for (i = r->lo; i <= r->hi; i++)
-	{
-	    for (n = old->min ; n <= old->max ; n++)
-	    {
-		if (old->table[n-old->min] == i)
-		{
-		    new->table[n-old->min] = r->new;
-                    is_default[i-old_min_cat] = 0;
-                    if(G_is_c_null_value(&r->new)) continue;
-		    if (cats->num < r->new)
-			cats->num = r->new;
-		}
-	    }
-	}
-
-    /* now go thru and clean up new reclass table */
-
-    for (i = old->min ; G_is_c_null_value(&new->table[i - old->min]) && i <= old->max ; i++);
-
-    if (i > old->max)	/* is entire table zero ? */
-	new->min = new->max = 0;
-    else
-    {
-	new->min = i;
-        for (i = old->max ; G_is_c_null_value(&new->table[i - old->min]) && i >= old->min ; i--);
-	    ;
-	new->max = i;
-    }
-    if (new->min || new->max)
-	new->table = &(new->table[new->min - old->min]);
-
- /* allocate reclass table */
-    new->type = RECLASS_TABLE;
-    num = new->max - new->min + 1;
-    if (num != (int) num)		/* make sure don't overflow int */
-	G_fatal_error ("Too many categories");
-    new->num = num;
-
-    /* now set the default categories */
-    /* the new cats set in rules should already be set in parse.c */
-    if(default_to_itself && cats_read)
-    {
-        for (i = old_min_cat; i <= old_max_cat; i++)
-        {
-           if(is_default[i])
-               G_set_cat(i , G_get_cat (i, &old_cats), cats);
-        }
-    }
-    else if(default_rule)
-      G_set_cat(DEFAULT, default_label, cats);
-
-    return 0;
-}
