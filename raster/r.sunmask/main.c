@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     double east, east1, north, north1;
     int row1, col1;
     char OK;
-    double longitude, latitude, timezone;
+    double timezone;
     int year, month, day, hour, minutes, seconds;
     long retval;
     int solparms, locparms, use_solpos;
@@ -254,25 +254,9 @@ int main(int argc, char *argv[])
      sscanf(parm.hour->answer, "%i", &hour);
      sscanf(parm.minutes->answer, "%i", &minutes);
      sscanf(parm.seconds->answer, "%i", &seconds);
-     sscanf(parm.timezone->answer,"%i", &timezone);
+     sscanf(parm.timezone->answer,"%lf", &timezone);
     }
 
-    /* primitive checks */
-    if (use_solpos)
-    {
-      if (day > 31)
-      {
-        fprintf(stderr,"Invalid day [%i]!\n", &day);
-        exit(1);
-      }
-      if (month > 12)
-      {
-        fprintf(stderr,"Invalid month [%i]!\n", month);
-        exit(1);
-      }
-    }
-    
-  
   /* NOTES: G_calc_solar_position ()
    - the algorithm will compensate for leap year.
    - longitude, latitude: decimal degree
