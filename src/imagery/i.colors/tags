@@ -1,0 +1,60 @@
+Beep	main.c	/^Beep()$/
+Downarrow	graphics.c	/^Downarrow (top, bottom, left, right)$/
+Erase_view	graphics.c	/^Erase_view (view)$/
+Get_mouse_xy	mouse.c	/^Get_mouse_xy(x,y)$/
+INFO	defs.h	/^#define INFO(label,status) \\$/
+INIT	globals.h	/^#  define INIT(x)$/
+Init_graphics	graphics.c	/^Init_graphics()$/
+Input_box	input.c	/^Input_box (objects,ax,ay)$/
+Input_keyboard	input.c	/^Input_keyboard (keyboard)$/
+Input_pointer	input.c	/^Input_pointer (objects)$/
+MENU	defs.h	/^#define MENU(label,handler,status) \\$/
+Menu_msg	input.c	/^Menu_msg(msg)$/
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+Mouse_box_anchored	mouse.c	/^Mouse_box_anchored (x1, y1, x2, y2, button)$/
+Mouse_pointer	mouse.c	/^Mouse_pointer (x, y, button)$/
+OPTION	defs.h	/^#define OPTION(label,binding,status) \\$/
+OTHER	defs.h	/^#define OTHER(handler,status) \\$/
+Outline_box	graphics.c	/^Outline_box (top, bottom, left, right)$/
+Set_mouse_xy	mouse.c	/^Set_mouse_xy(x,y)$/
+Solid_box	graphics.c	/^Solid_box (top, bottom, left, right)$/
+Start_mouse_in_menu	input.c	/^Start_mouse_in_menu()$/
+Text	graphics.c	/^Text (text, top, bottom, left, right, border, cent/
+Text_width	graphics.c	/^Text_width (text)$/
+Uparrow	graphics.c	/^Uparrow (top, bottom, left, right)$/
+allocate_color_bars	bars.c	/^allocate_color_bars()$/
+change_color_assignment	colors.c	/^change_color_assignment (x,y)$/
+determine_size	driver.c	/^determine_size()$/
+display	info.c	/^display (view, color)$/
+display_blu_color_info	info.c	/^display_blu_color_info()$/
+display_color_assignment	colors.c	/^display_color_assignment()$/
+display_color_bar	bars.c	/^display_color_bar(view)$/
+display_grn_color_info	info.c	/^display_grn_color_info()$/
+display_red_color_info	info.c	/^display_red_color_info()$/
+display_title	title.c	/^display_title()$/
+dont_stop	driver.c	/^static dont_stop()$/
+draw_blu_band	image.c	/^draw_blu_band()$/
+draw_grn_band	image.c	/^draw_grn_band()$/
+draw_image	image.c	/^draw_image (view, color)$/
+draw_objects	input.c	/^draw_objects (objects)$/
+draw_option_boxes	input.c	/^draw_option_boxes (objects)$/
+draw_red_band	image.c	/^draw_red_band()$/
+driver	driver.c	/^driver()$/
+error	main.c	/^error (msg, fatal)$/
+fill	bars.c	/^fill (cell, buf, ncols, color, min, max, index)$/
+fill_color_bar	bars.c	/^fill_color_bar (color)$/
+find	input.c	/^find (objects, x, y)$/
+load_colors	colors.c	/^load_colors()$/
+make_line	colors.c	/^make_line (top, text, r, g, b, indent)$/
+makeview	graphics.c	/^makeview (bottom, top, left, right, outline)$/
+mouse	input.c	/^mouse (objects,ax,ay,box)$/
+newsize	driver.c	/^newsize()$/
+pick	driver.c	/^pick(x,y)$/
+quit	main.c	/^quit(n)$/
+really_quit	driver.c	/^really_quit()$/
+redo	colors.c	/^static redo (left, right, n, file, color)$/
+replot	driver.c	/^replot()$/
+select_option	input.c	/^select_option (objects, obj)$/
+stop	driver.c	/^static stop()$/
+use_mouse_msg	input.c	/^use_mouse_msg()$/
+visible	input.c	/^visible(object)$/
