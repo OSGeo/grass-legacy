@@ -1,3 +1,12 @@
+/* Changed for truecolor 24bit support by 
+ * Roberto Flor/ITC-Irst, Trento, Italy
+ * August 1999
+ *
+ * added new parameter "nlev" to specify number of colors per color channel
+ * example; nlev=8 means 8bit for each R, G, B 
+ *          nlev=256 equal to 24bit truecolor
+*/
+      
 #include "gis.h"
 main(argc,argv) char *argv[];
 {
@@ -6,6 +15,9 @@ main(argc,argv) char *argv[];
     char *mon_name, *G__getenv();
 
     struct Option *start, *stop, *select, *unlock;
+#ifndef ORIG
+    struct Option *nlev;
+#endif /* ORIG */
     struct Flag *list, *status, *print, *release, *no_auto_select;
 
     G_gisinit(argv[0]);
@@ -33,6 +45,14 @@ main(argc,argv) char *argv[];
     unlock->type=TYPE_STRING;
     unlock->required=NO;
     unlock->description="Name of graphics monitor to unlock";
+
+#ifndef ORIG
+    nlev = G_define_option();
+    nlev->key="nlev";
+    nlev->type=TYPE_STRING;
+    nlev->required=NO;
+    nlev->description="Number of color levels for each R/G/B";
+#endif /* ORIG */
 
     list = G_define_flag();
     list->key='l';
@@ -77,7 +97,14 @@ main(argc,argv) char *argv[];
 	error += run("stop",stop->answer);
     if (start->answer)
     {
+#ifdef ORIG
 	error += run("start",start->answer);
+#else /* ORIG */
+      if (nlev->answer )
+	error += run2("start",start->answer,nlev->answer);
+      else 
+	error += run("start",start->answer);
+#endif /* ORIG */
         if(error) /* needed procedure failed */
           {
             if(mon_name != NULL)
@@ -97,7 +124,7 @@ main(argc,argv) char *argv[];
 	    fprintf (stderr, "Problem selecting %s. Will try once more\n", select->answer);
 	    oops = run("select", select->answer); /* couldn't select */
 	}
-        if(oops) /* needed procedure failed */
+        if (oops) /* needed procedure failed */
           {
             if(mon_name != NULL)
               {
@@ -123,3 +150,18 @@ run(pgm,name)
     sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
     return system(command);
 }
+
+#ifndef ORIG
+run2(pgm,name,par)
+    char *pgm,*name,*par;
+{
+    char command[1024];
+    char *getenv();
+
+ if ( par[0] == '\0' ) 
+    sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
+ else 
+    sprintf (command, "%s/etc/mon.%s %s %s", G_gisbase(), pgm, name, par);
+    return system(command);
+}
+#endif /* ORIG */
