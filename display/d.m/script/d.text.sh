@@ -73,7 +73,7 @@ if [ -n "$GIS_OPT_line" ] ; then
 fi
 
 if [ -n "$GIS_OPT_at" ] ; then
-    cmd="$cmd at="$GIS_OPT_at"
+    cmd="$cmd at=$GIS_OPT_at"
 fi
 
 if [ $GIS_FLAG_b -eq 1 ] ; then
