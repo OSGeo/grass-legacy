@@ -80,17 +80,17 @@ main (int argc, char *argv[])
 	    new = parm[n]->answers[i++];
 	    if(!find (n, old, mapset))
 	    {
-		fprintf (stderr, "<%s> not found\n", old);
+		fprintf (stderr, "ERROR: <%s> not found\n", old);
 		continue;
 	    }
 	    if (!overwr->answer && find (n, new, ""))
 	    {
-		fprintf (stderr, "<%s> already exists in mapset <%s>\n", new, find (n, new, ""));
+		fprintf (stderr, "ERROR: <%s> already exists in mapset <%s>\n", new, find (n, new, ""));
 		continue;
 	    }
 	    if (G_legal_filename (new) < 0)
 	    {
-		fprintf (stderr, "<%s> illegal name\n", new);
+		fprintf (stderr, "ERROR: <%s> illegal name\n", new);
 		continue;
 	    }
 	    if (strcmp (old, new) == 0)

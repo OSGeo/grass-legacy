@@ -85,12 +85,12 @@ int main (int argc, char *argv[])
             }
 	    if (!overwr->answer && find (n, to, ""))
 	    {
-		fprintf (stderr, "<%s> already exists in mapset <%s>\n", to, mapset);
+		fprintf (stderr, "ERROR: <%s> already exists in mapset <%s>\n", to, mapset);
 		continue;
 	    }
             if (G_legal_filename (to) < 0)
             {
-                fprintf (stderr, "<%s> illegal name\n", to);
+                fprintf (stderr, "ERROR: <%s> illegal name\n", to);
                 continue;
             }
             if (strcmp (mapset, G_mapset()) == 0 && strcmp (from, to) == 0)
