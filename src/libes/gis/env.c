@@ -59,12 +59,12 @@ ENV
     char *value;
 } ;
 
-static ENV *env = 0;
-static ENV *env2 = 0;
+static ENV *env = NULL;
+static ENV *env2 = NULL;
 static count = 0;
 static count2 = 0;
 static int init = 0;
-static char *gisrc = 0;
+static char *gisrc = NULL;
 
 FILE *open_env();
 char *getenv();
@@ -186,7 +186,7 @@ get_env(name)
 	if (env[n].name && (strcmp(env[n].name, name)==0))
 	    return env[n].value;
 
-    return 0;
+    return NULL;
 }
 
 static
@@ -291,7 +291,7 @@ G__env_name (n)
 	for (i = 0; i < count; i++)
 	    if (env[i].name && *env[i].name && (n-- == 0))
 		return env[i].name;
-    return 0;
+    return NULL;
 }
 
 G__read_env()
@@ -302,7 +302,7 @@ G__read_env()
 G__set_gisrc_file(name)
     char *name;
 {
-    gisrc = 0;
+    gisrc = NULL;
     if (name && *name)
 	gisrc = G_store(name);
 }
@@ -320,7 +320,7 @@ G__create_alt_env()
 /* copy env to env2 */
     env2 = env;
     count2 = count;
-    env = 0;
+    env = NULL;
     count = 0;
 
     for (i=0; i < count2; i++)
