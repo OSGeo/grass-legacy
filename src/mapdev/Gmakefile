@@ -1,69 +1,32 @@
-all: dev transform.lib mk.lib mk.dlg_to_dig mk.vect_to_cell mk.build mk.support mk.dlg_to_bdlg mk.georef mk.digit mk.dig_front  mk.patch mk.site mk.prune export.dlg mk.grid mk.quads mk.dxf2dig mk.cadlabel mk.transform
 
-#  Not all the sub-directories are being made.
 
-dev:
-	$(GMAKE) libes/dev
-
-transform.lib:
-	$(GMAKE) libes/transform
-
-mk.lib:
-	$(GMAKE) lib
-
-mk.dlg_to_dig:
-	$(GMAKE) dlg_to_dig
-
-mk.vect_to_cell:
-	$(GMAKE) vect_to_cell
-
-mk.build:
-	$(GMAKE) build
-
-mk.support:
-	$(GMAKE) support
-
-mk.dlg_to_bdlg:
+all:
+	$(GMAKE) libes
+	$(GMAKE) Vlib
+	$(GMAKE) diglib
+	$(GMAKE) bin_digit
+	$(GMAKE) v.area
+	$(GMAKE) v.build
+	$(GMAKE) v.cadlabel
+	$(GMAKE) v.clean
+	$(GMAKE) v.digit
+	$(GMAKE) v.from.3
+	$(GMAKE) v.import
+	$(GMAKE) v.in.ascii
+	$(GMAKE) v.in.dlg
+	$(GMAKE) v.in.dxf
+	$(GMAKE) v.mkgrid
+	$(GMAKE) v.mkquads
+	$(GMAKE) v.out.dlg
+	$(GMAKE) v.out.dxf
+	$(GMAKE) v.patch
+	$(GMAKE) v.prune
+	$(GMAKE) v.stats
+	$(GMAKE) v.support
+	$(GMAKE) v.to.rast
+	$(GMAKE) v.to.sites
+	$(GMAKE) v.transform
+	$(GMAKE) v.trim
 	$(GMAKE) dlg_to_bdlg
-
-
-mk.digit:
-	$(GMAKE) digit
-
-
-mk.dig_front:
-	$(GMAKE) dig_front
-
-mk.georef:
+	$(GMAKE) dlg_to_dig
 	$(GMAKE) georef
-
-
-mk.patch:
-	$(GMAKE) patch
-
-mk.site:
-	$(GMAKE) make_sites
-
-mk.prune:
-	$(GMAKE) prune
-
-export.dlg:
-	$(GMAKE) export_dlg
-mk.grid:
-	$(GMAKE) mkgrid
-
-mk.quads:
-	$(GMAKE) mkquads
-
-mk.dxf2dig:
-	$(GMAKE) dxf2dig
-
-mk.cadlabel:
-	$(GMAKE) cadlabel
-
-mk.moss:
-	$(GMAKE) vect_to_moss
-
-mk.transform:
-	$(GMAKE) transform
-
