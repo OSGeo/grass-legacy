@@ -302,7 +302,7 @@ proc interface_build {description} {
 
 proc create_entry {path num variable description scroll button} {
     upvar $num n
-    global balloonHelp terminal_input g_manual
+    global balloonHelp terminal_input
 
     if {[string length $description] > 0} {
         label $path.label$n -anchor w -padx 2 -text $description
