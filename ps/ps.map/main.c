@@ -30,12 +30,14 @@ char *ps_mask_file;
 
 static char *help[]=
 {
-    "rast       rasterfile            setcolor   val_range(s) color",
-    "vect       vectorfile            maploc     x y [width height]",
+    "rast       rastermap             setcolor   val_range(s) color",
+    "vpoints    vector points map     scalebar   [f|s]",
+    "vlines     vector lines map      paper      [a4|a3|us-letter|...]",
+    "vareas     vector areas map      maploc     x y [width height]",
     "labels     labelfile             text       east north text",
     "region     regionfile            line       east north east north",
     "grid       spacing               point      east north",
-    "geogrid	spacing               point      east north",
+    "geogrid    spacing               header",
     "outline                          mapinfo",
     "colortable [y|n]                 vlegend",
     "comments   [unix-file]           psfile     PostScript include file",
