@@ -18,7 +18,10 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  * $Log$
- * Revision 1.1  2000-03-22 20:02:28  markus
+ * Revision 1.2  2000-03-22 20:05:34  markus
+ * updated oon shapelib path
+ *
+ * Revision 1.1  2000/03/22 20:02:28  markus
  * contribution by Jan Wagner
  *
  * Revision 1.7  2000/03/13  13:59:40  jwagner
@@ -49,7 +52,7 @@
 
 #include <string.h>
 
-#include <shapefil.h>	/* from shapelib */
+#include "../shapelib-1.2.7/shapefil.h"	/* from shapelib */
 
 #include "utils.h"
 
