@@ -48,8 +48,10 @@ main (int argc, char *argv[])
 		{
 		    fprintf(stderr, "[%s in %s] is reclassed by(remove these first):\n",
 					name, mapset);
-		    for(; *rmaps; rmaps++)
-		        fprintf(stderr, "\t%s\n", *rmaps);
+		    fprintf(stderr, "   %s", *rmaps);
+		    for(rmaps++; *rmaps; rmaps++)
+		        fprintf(stderr, ",%s", *rmaps);
+		    fprintf(stderr, "\n");
 		    continue;
 		}
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
