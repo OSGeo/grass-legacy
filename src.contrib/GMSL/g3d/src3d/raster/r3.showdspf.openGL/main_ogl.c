@@ -12,7 +12,10 @@
 #include "kns_globals.h"
 
 #include <math.h>
+#include <unistd.h>
 #include <sys/types.h>
+#include <sys/time.h>
+#include <sys/wait.h>
 #include <ctype.h>
 void set_threshold_button(int i);
 char *check_get_any_dspname();
@@ -43,7 +46,7 @@ void do_draw_multiple_thresholds (file_info *Headp, file_info *G3p, struct dspec
 int dumpgif (char *name);
 void do_draw_with_display_list (struct dspec *D_spec);
 
-
+	
 #define DEBUG 1
 int main(int argc,char **argv)
 {
@@ -51,12 +54,14 @@ int main(int argc,char **argv)
     long       Window[3];
     char       *dsp;
    XEvent event;
-    int i;
+    int i, fdes[2];
     void       *g3map;
     G3D_Region g3reg;
     char       *p, *mapset;
     double dmin, dmax;
-
+    fd_set set;
+    struct timeval timeout;
+    pid_t pid;
     struct Option *g3, *dspf, *colr;
     G_gisinit (argv[0]);
     
@@ -81,6 +86,14 @@ int main(int argc,char **argv)
 
     if (G_parser(argc, argv))
     exit (-1);
+
+  /* set-up for select() */
+  if (pipe (fdes))
+      G_fatal_error ("Couldn't open pipe");
+  pid = fork();
+  if (pid == (pid_t) 0) /* child */
+  { 
+    close (fdes[1]);
 
     /* use this to name graphics window */
     strcpy(wname,g3->answer);
@@ -179,30 +192,83 @@ int main(int argc,char **argv)
     Toggle_swapbuffers (&D_spec);	/* make sure they sync up */
     Toggle_swapbuffers (&D_spec);
 
-    options();
-
-    while (1)   /* looking for input from the keyboard */
+    for (;;)
     {
-	int foo;
-	short val;
+       int nbytes, fdstatus;
 
-	
-	/* get input from the keyboard */
-	fprintf(stderr,"enter desired manipulations then press return\n\n");
-	fprintf(stderr,"Q ? + - r d l L (xyz)# (XYZ)# S B(xyz)# E(xyz)# R g C c w W i h t T# \n");
-	fprintf (stderr, " > ");
-	
-	if (NULL == fgets (buff, 80, stdin))
-	    break;	
-	p = buff;	
-      while(XtAppPending(App_context))
-      {
+       timeout.tv_sec  = 0;
+       timeout.tv_usec = 10000;
+       FD_ZERO (&set);
+       FD_SET (fdes[0], &set);
+       
+       if ((fdstatus = select (FD_SETSIZE, &set, NULL, NULL, &timeout)) == 1)
+       {
+         if (FD_ISSET (fdes[0], &set) && (nbytes = read (fdes[0], buff, 299)) > 0)
+         {
+            p = buff;
+	    p[nbytes] = '\0';
+            dispatch_cmd (p);
+         }
+       }
+       else if (fdstatus == -1)
+       {
+         G_fatal_error ("File Descriptor error");
+       }
+      
+       while(XtAppPending(App_context))
+       {
          XtAppNextEvent(App_context,&event);
          XtDispatchEvent(&event);
-      }
-	dispatch_cmd (p);
+       }
 
-    }
+     }
+   }
+   else if (pid < (pid_t) 0)
+   {
+      G_fatal_error ("Fork failed!");
+   }
+   else /* parent */
+   {
+     close (fdes[0]);
+     
+     options();
+     /* get input from the keyboard */
+     fprintf(stderr,"enter desired manipulations then press return\n\n");
+     fprintf(stderr,"Q ? + - r d l L (xyz)# (XYZ)# S B(xyz)# "\
+                "E(xyz)# R g C c w W i h t T# \n");
+     fprintf (stderr, " > ");
+     fflush (stderr);
+
+     for (;;)
+     {
+        int linelen;
+
+        if (waitpid (WAIT_ANY, NULL, WNOHANG) != 0)
+          break;  /* Child exited */
+        
+        if (NULL == fgets (buff, 300, stdin))
+           break;
+        linelen = strlen (buff);
+
+        if (write (fdes[1], &buff, linelen) != linelen)
+           G_fatal_error ("Unable to write to child process.");
+
+        if (waitpid (WAIT_ANY, NULL, WNOHANG) != 0)
+          break;  /* Child exited */
+	
+        /* get input from the keyboard */
+        fprintf(stderr,"enter desired manipulations then press return\n\n");
+        fprintf(stderr,"Q ? + - r d l L (xyz)# (XYZ)# S B(xyz)# "\
+                "E(xyz)# R g C c w W i h t T# \n");
+        fprintf (stderr, " > ");
+        fflush (stderr);
+      }
+
+      fprintf (stderr, "Goodbye!\n\n");
+       
+   }
+	
+  return 0;    
 }
 
 
@@ -1035,8 +1101,9 @@ do__draw (file_info *Headp, struct dspec *D_spec)
     else
 	reset_reads (&Headfax);
 
-    fprintf (stderr, "Threshold %d = %f\n", 
+/*    fprintf (stderr, "Threshold %d = %f\n", 
 	D_spec->Thresh + 1, Headp->linefax.tvalue[D_spec->Thresh]);
+    fflush(stderr); */
     switch (Headp->linefax.litmodel)
     {
 	case 1:
