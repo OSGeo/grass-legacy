@@ -33,8 +33,7 @@ make_location (char *gisdbase, char *location_name)
     fprintf (stderr, "4. A short, one-line description or title for the location\n");
     fprintf (stderr, "\n");
 
-    fprintf (stderr, "Do you have all this information for location <%s> ? ", location_name);
-    if (!yes_no())
+    if(!G_yes("Do you have all this information? ", 1))
 	return 0;
 
     G_zero (&window, sizeof(window));

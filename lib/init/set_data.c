@@ -165,8 +165,9 @@ int main (int argc, char *argv[])
 	    list_locations (gisdbase);
 	    if (!can_make_location (gisdbase, location_name))
 		continue;
+
 	    fprintf (stderr, "\nWould you like to create location <%s> ? ", location_name);
-	    if (yes_no())
+	    if (G_yes("", 1))
 	    {
 		if(make_location (gisdbase, location_name))
                 {
@@ -229,7 +230,7 @@ int main (int argc, char *argv[])
 		    list_mapsets (location_name, location);
 		    fprintf(stderr, "\nWould you like to create < %s > as a new mapset? ",
 				mapset ) ;
-		    yes = yes_no();
+		    yes = G_yes("", 1);
 		}
 
 		if (yes && (make_mapset(location, mapset) == 0))
@@ -333,23 +334,3 @@ hit_return (void)
     return 0;
 }
 
-int
-yes_no (void)
-{
-    char buf[80];
-    for(;;)
-    {
-	do
-	{
-	    fprintf (stderr, "(y/n) ");
-	} while (!G_gets(buf));
-	G_strip (buf);
-	switch (*buf)
-	{
-	case 'y': 
-	case 'Y': return 1;
-	case 'n': 
-	case 'N': return 0;
-	}
-    }
-}

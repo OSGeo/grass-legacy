@@ -7,7 +7,6 @@ int list_locations(char *);
 int list_mapsets(char *, char *);
 int first_word(char *);
 int hit_return(void);
-int yes_no(void);
 /* lock.c */
 int find_process(int);
 /* mke_loc.c */
