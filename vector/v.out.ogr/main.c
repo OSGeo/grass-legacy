@@ -348,7 +348,6 @@ main (int argc, char *argv[])
 	fprintf(stderr,"GRASS Topology -> Simple Features conversion (may take some time)...\n" );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bProcessing area %i...", i );
-	    int j;
 	    
 	    G_percent(i,Vect_get_num_areas(&In),2);
 	    centroid = Vect_get_area_centroid ( &In, i );
