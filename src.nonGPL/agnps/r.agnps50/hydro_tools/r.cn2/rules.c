@@ -9,7 +9,8 @@
 	was from SWABB manual.
 */
 
-/*  corrected "fallow" for agnps5.0   MN  12/96  
+/*  6/2000 added G_chop
+    corrected "fallow" for agnps5.0   MN  12/96  
     added landuse "water"                   */
 
 #include "CN.h"
@@ -23,9 +24,12 @@ CELL	veg_cover,land_use, hy_cond;
 
 
 	veg_cover_label = G_get_cat(veg_cover, &veg_cover_cats);
-	land_use_label = G_get_cat(land_use, &land_use_cats);
-	hy_cond_label = G_get_cat(hy_cond, &hy_cond_cats);
-
+	land_use_label  = G_get_cat(land_use, &land_use_cats);
+	hy_cond_label   = G_get_cat(hy_cond, &hy_cond_cats);
+        G_chop(veg_cover_label);
+        G_chop(land_use_label);
+        G_chop(hy_cond_label);
+        
 	if ((strcmp("fallow",land_use_label) == 0) && 
 	    (strcmp("straight row",veg_cover_label) == 0) &&
 		  (strcmp("good",hy_cond_label) == 0))  /* added 12/96 MN*/
