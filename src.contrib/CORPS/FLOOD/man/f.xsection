@@ -1,0 +1,36 @@
+f.xsection
+
+This tool provides an interactive means for digitizing new cross sections to be used as
+input to HEC-2 modeling.  Digitized cross sections are described in an ASCII output file
+in an format suitable as input to the HEC-2 Water Surface Profile model.
+
+f.xsection uses a vector cross section map and raster elevation map as the basis for
+cross section modifications.  Cross sections can be added to a new or existing vector
+map.  If added to an existing cross section map, the modified cross sections (original
+plus newly digitized) are output into a vector map with the suffix ".mod" appended to the
+original cross section map name.
+
+This is a fully interactive tool, i.e., no control file is processed and cross section
+are digitized by mouse interaction.
+
+As new cross sections are added, reach lengths for existing cross section must be
+adjusted.  Adjusted lengths are calculated and included in the ASCII output file.  Reach
+lengths may be corrected multiple times, as more and more new cross sections are added. 
+Thus, the last reach length correction for a given cross section represents the
+adjustment which should be used as input to subsequent HEC-2 modeling.
+
+Prior to digitizing each new cross section, f.xsection prompts the user for the section
+number id.  This id may be entered as a real value.  In the ASCII output file, the id
+will be represented as entered by the user up to a field width of six.  However, since
+GRASS only supports integer values, the cross section id will be truncated to its integer
+portion for the modified cross section vector map.  For this reason, the user is
+recommended to use only integer cross section id's.
+
+f.xsection, like HEC-2, operates in a backwater fashion.  This assumption dictates that
+the order in which the original cross sections are digitized must be downstream-to-
+upstream, and that HEC-2 is used to model a subcritical flow.  (Enhancements are
+necessary for f.xsection to handle supercritical flow regimes.)  New cross sections can
+be digitized in any order and f.xsection will maintain the upstream-to-downstream
+ordering for the modified cross section vector map.  HEC-2 descriptions of the newly
+digitized cross sections will occur in the ASCII output file in the order in which they
+were digitized.
