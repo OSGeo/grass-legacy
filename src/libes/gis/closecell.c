@@ -111,51 +111,46 @@ case OPEN_NEW_RANDOM: printf ("close %s random\n",FCB.name); break;
 
 /* if the cell file was written to a temporary file
  * move this temporary file into the cell file
+ * if the move fails, tell the user, but go ahead and create
+ * the support files
  */
     stat = 1;
     if (ok && (FCB.temp_name != NULL))
     {
-	sprintf (buf,"mv %s %s", FCB.temp_name,
-	    G__file_name (path, "cell", FCB.name, FCB.mapset));
-	system (buf);
-	if (access (path,0) != 0)
+	G__file_name (path, "cell", FCB.name, FCB.mapset);
+	unlink (path);	/* make sure cell file is gone */
+	if(link (FCB.temp_name, path) < 0)
 	{
-	    sprintf(buf,"closecell: can't move %s to cell file %s",
-		FCB.temp_name, FCB.name);
+	    sprintf(buf,"closecell: can't move %s\nto cell file %s in mapset %s",
+		FCB.temp_name, FCB.name, FCB.mapset);
 	    G_warning (buf);
 	    stat = -1;
+	}
+	else
+	{
+	    unlink (FCB.temp_name);
 	}
     }
     if (FCB.temp_name != NULL)
     {
-	unlink (FCB.temp_name);
 	free (FCB.temp_name);
     }
 
-    if (ok && stat >= 0)
-        stat = G_put_cellhd (FCB.name, &FCB.cellhd);
-    if (ok && stat >= 0)
+    if (ok)
+        G_put_cellhd (FCB.name, &FCB.cellhd);
+    if (ok)
     {
-	/*
-	long count;
-
-	G_init_range (&FCB.range);
-	G_rewind_cell_stats (&FCB.statf);
-	while (G_next_cell_stat (&cat, &count, &FCB.statf))
-	    G_update_range (cat, &FCB.range);
-	*/
-
 /* create empty cats file */
 	G_init_cats ((CELL)FCB.range.pmax, (char *)NULL, &cats);
 	G_set_cat ((CELL)0, "no data", &cats);
-        stat = G_write_cats (FCB.name, &cats);
+        G_write_cats (FCB.name, &cats);
 	G_free_cats (&cats);
 
 /* remove color table */
 	G_remove_colr (FCB.name);
 
 /* create a history file */
-        G_short_history (FCB.name, "cell", &hist);
+        G_short_history (FCB.name, "raster", &hist);
 	G_write_history (FCB.name, &hist);
 
 /* write the range */
