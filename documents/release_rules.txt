@@ -1,6 +1,7 @@
 How to release GRASS 5 binaries
 
-Note: This text contains some rules only applicable by Markus.
+Note: This text contains some rules only applicable to development
+      coordinator (currently Markus Neteler).
 
 Generally the binaries shall be produced from a published
 source code tarball:
