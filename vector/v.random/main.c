@@ -110,6 +110,8 @@ int main (int argc, char *argv[])
   }
 
   Vect_open_new (&Out, output, 0);
+
+  Vect_hist_command ( &Out );
   
   if (b)
   {

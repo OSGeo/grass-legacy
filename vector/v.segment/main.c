@@ -79,6 +79,8 @@ int main(int argc, char **argv)
     
     /* Open output segments */
     Vect_open_new ( &Out, out_opt->answer, Vect_is_3d (&In) );
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
     
     points_read = 0; lines_read = 0;
     points_written = 0; lines_written = 0;

@@ -150,6 +150,9 @@ main (int argc, char **argv)
   /* Open output */
   Vect_open_new (&Out, parm.out->answer, 0);
 
+  Vect_hist_copy (&In, &Out);
+  Vect_hist_command ( &Out );
+
   /* Generate a bunch of random numbers */
   zufalli(&seed);
   myrng(numbers,1000,rng,p1,p2);

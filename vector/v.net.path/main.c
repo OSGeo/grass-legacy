@@ -125,6 +125,7 @@ int main(int argc, char **argv)
         Vect_close (&In);
 	G_fatal_error ("Failed opening output vector file");
     }
+    Vect_hist_command ( &Out );
 
     Vect_net_build_graph ( &In, type, afield, nfield, afcol->answer, abcol->answer, 
 	                   ncol->answer, geo, 0 );

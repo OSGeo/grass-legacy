@@ -79,6 +79,9 @@ main (int argc, char **argv)
     G_fatal_error ( "Not able to open vector file <%s>\n", out_opt->answer);
   }
 
+  Vect_hist_copy (&In, &Out);
+  Vect_hist_command ( &Out );
+
   Vect_build_partial ( &Out, GV_BUILD_BASE, NULL );
 
   /* initialize working region */

@@ -148,6 +148,7 @@ int main ( int argc, char **argv)
     Cats = Vect_new_cats_struct ();
 
     Vect_open_new (&Out, parm.output->answer, 0);
+    Vect_hist_command ( &Out );
 
     for (i = 0; i < nquads; i++) {
       Vect_reset_line ( Points );
