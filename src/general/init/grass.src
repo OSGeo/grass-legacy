@@ -29,7 +29,6 @@ CMD_LINE_ARGS=""
 
 # Get the command name
 CMD_NAME=`basename $0`
-export CMD_NAME
 
 # Go through the command line options
 for i in "$@" ; do

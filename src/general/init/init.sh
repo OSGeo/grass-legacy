@@ -108,7 +108,7 @@ if [ "$DISPLAY" ] ; then
 	    echo 
     	    echo "WARNING: The wish command ($GRASS_WISH) was not found!"
 	    echo "Please check your GRASS_WISH environment variable."
-	    echo "See $CMD_NAME -h for details."
+	    echo "Use the -help option for details."
 	    echo "Switching to text based interface mode."
 	    echo
 	    echo "Hit RETURN to continue."
