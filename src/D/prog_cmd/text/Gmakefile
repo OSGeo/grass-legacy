@@ -1,0 +1,17 @@
+# @(#)Gmakefile	2.1   6/26/87
+
+OFILES = \
+	command.o \
+	main.o
+
+Dtext: $(BIN)/Dtext
+
+$(BIN)/Dtext: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
