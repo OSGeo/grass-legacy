@@ -4,4 +4,5 @@ interface_build {
     {entry input {Input raster map(s) (name[,name,...]):} 0 +raster}
     {entry output {Output raster map:} 0 raster}
     {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Use zero (0) for transparency instead of NULL.} "" -z}
 }
