@@ -43,7 +43,7 @@ int main( int argc, char *argv[])
     FILEDESC            cellfile = 0;
     FILE                *fp;
 
-/* now goes from pnmtopng.c* -A.Sh/
+/* now goes from pnmtopng.c* -A.Sh*/
 /*
 ** pnmtopng.c -
 ** read a portable anymap and produce a Portable Network Graphics file
@@ -185,20 +185,23 @@ int main( int argc, char *argv[])
     &pnmtopng_jmpbuf_struct, pnmtopng_error_handler, NULL);
   if (png_ptr == NULL) {
     fclose (fp);
-    pm_error ("cannot allocate LIBPNG structure");
+    fprintf(stderr,"cannot allocate LIBPNG structure\n");
+
   }
 
   info_ptr = png_create_info_struct (png_ptr);
   if (info_ptr == NULL) {
     png_destroy_write_struct (&png_ptr, (png_infopp)NULL);
     fclose (fp);
-    pm_error ("cannot allocate LIBPNG structures");
+    fprintf(stderr,"cannot allocate LIBPNG structure\n");
+
   }
 
   if (setjmp (pnmtopng_jmpbuf_struct.jmpbuf)) {
     png_destroy_write_struct (&png_ptr, &info_ptr);
     fclose (fp);
-    pm_error ("setjmp returns error condition (1)");
+    fprintf(stderr,"setjmp returns error condition (1)\n");
+
   }
 
 		depth=8; /*really???*/
@@ -268,7 +271,7 @@ if(1){
     G_free(oblu);
     G_free(set);
     G_close_cell(cellfile);
-    pm_error ("out of memory allocating PNG row buffer");
+    fprintf(stderr, "out of memory allocating PNG row buffer\n");
   }
     
   for (row = 0; row < w.rows; row++) {
