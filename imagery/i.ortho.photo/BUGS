@@ -1,5 +1,5 @@
 Known BUGS
-$Date: 2003-09-09 10:02:13 $
+$Date: 2003-09-09 14:06:16 $
 
 - menu 6: photo.init
           it's unclear at time if these values are used in case the user
@@ -17,3 +17,10 @@ $Date: 2003-09-09 10:02:13 $
           Option 2: seems that the calculation of the minimal region is
                     to small - sometimes part of the image borders is cut
                     off
+
+---------------------
+TODOs
+
+- menu 8: photo.rectify
+          should work without (7) photo.2target if (6) photo.init is used.
+          (see ERDAS)
