@@ -85,6 +85,7 @@ int rectify (char *name, char *mapset, char *result)
     num_blocks = (((win.cols / NCOLS)+1) * ((win.rows / NROWS)+1));
     block_count = 0;
 
+    temp_fd=0;
     while (ncols > 0)
     {
 	if ((win.cols = ncols) > NCOLS)
