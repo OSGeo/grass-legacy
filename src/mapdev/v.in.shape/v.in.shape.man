@@ -4,7 +4,7 @@
 .br
 .SH SYNOPSIS
 .nf
-\fBv.in.shape \fR[\fB -l \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR]  [\fB -n \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
 .br
 [\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
 .br
@@ -22,7 +22,7 @@ The \fIv.in.shape\fR program is designed to import ArcView Shapefiles.
 .br
 .br
 .nf
-\fBv.in.shape \fR[\fB -l \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
+\fBv.in.shape \fR[\fB -l \fR]  [\fB -r \fR]  [\fB -p \fR]  [\fB -n \fR] \fBin=\fIname \fR[\fBmapset=\fIname\fR] \fR
 .br
 [\fBverbose=\fIdebug level\fR] \fR[\fBlogfile=\fIname\fR] \fR[\fBsnapdist=\fIsnap distance\fR] \fR
 .br
@@ -52,6 +52,16 @@ met with in shapefiles.
 .IP "\fB-l\fR"
 List the fields contained in the DBF file associated with the input shapefile,
 then exit.
+.IP "\fB-r\fR"
+Create a reject lines file. During import some lines are not imported for a
+variety of reasons. This option creates a new Level 1 vector map (ie. without
+topology), which can be used to display these lines.
+.IP "\fB-p\fR"
+Dump the fields of the shapefile from DBF to a postgres table.
+.IP "\fB-n\fR"
+Access postgres as a normal user (the default is as postgres superuser).
+Most users will want to select this option. If postgres cannot be accessed
+as postgres superuser, an ASCII database is dumped.
 .SH OPTIONS
 .LP
 .IP "\fBin=\fIname\fR"

@@ -110,10 +110,10 @@ int main( int   argc, char *argv[])
 
     struct {
 	struct Option *input, *logfile, *verbose, *attribute, *snapd, *minangle;
-	struct Option *scale, *pgdump, *dumpmode, *catlabel;
+	struct Option *scale, *catlabel;
     } parm;
 
-    struct Flag *listflag, *rejflag;
+    struct Flag *listflag, *rejflag, *pgflag, *dmflag;
 
     /* Are we running in Grass environment ? */
 
@@ -175,6 +175,7 @@ int main( int   argc, char *argv[])
     parm.catlabel->description= "Name of attribute to use as category label";
     parm.catlabel->answer     = "";
     
+    
 
     /* Set flag for listing fields of database */
 
@@ -188,6 +189,18 @@ int main( int   argc, char *argv[])
     rejflag->key     = 'r';
     rejflag->description = "Create reject lines file";
 
+    /* Set flag for dumping to postgres */
+
+    pgflag = G_define_flag();
+    pgflag->key     = 'p';
+    pgflag->description = "Create postgres table";
+
+    /* Set flag for dumping to postgres */
+
+    dmflag = G_define_flag();
+    dmflag->key     = 'n';
+    dmflag->description = "Connection by normal user (default no)";
+
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
@@ -200,6 +213,11 @@ int main( int   argc, char *argv[])
     strcpy( rejname, name );
     strcat( rejname, "_rej" );
 
+    /* Are we dumping to postgres? */
+
+    pgdmp =(int)pgflag->answer;
+    no_rattle = (int)dmflag->answer;
+    
 
     /* Examine the flag `-l' first */
 
@@ -470,6 +488,9 @@ int main( int   argc, char *argv[])
 
     /* Read shape into line list and fill out V-base */
     linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
+
+    if (pgdmp)
+      PgDumpFromFieldD( fd0, no_rattle, fc1, name);
 
     /* Extract arcs from V-base into segment list */
     vbase2segd( segl, hVB );
