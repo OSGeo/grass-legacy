@@ -1856,10 +1856,14 @@ static int gis_prompt (struct Option *opt, char *buff)
 		ptr1 = G_ask_in_mapset("", buff, element, desc) ;
 	else if (! strcmp("any",age))
 		ptr1 = G_ask_any("", buff, element, desc, 1) ;
+	else if (! strcmp("old_file",age))
+		ptr1 = G_ask_old_file("", buff, element, desc) ;
+	else if (! strcmp("new_file",age))
+		ptr1 = G_ask_new_file("", buff, element, desc) ;
 	else
 	{
 		fprintf(stderr,"\nPROGRAMMER ERROR: first item in gisprompt is <%s>\n", age) ;
-		fprintf(stderr,"        Must be either new, old, mapset, or any\n") ;
+		fprintf(stderr,"        Must be either new, old, mapset, any, old_file, or new_file\n") ;
 		return -1;
 	}
 	if (ptr1 == '\0')
