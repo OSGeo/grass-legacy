@@ -3,7 +3,7 @@ PGM      = m.dem.examine
 LIST	= main.o usgs_buf.o usgs_hdr.o usgs_num.o \
           profile.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        usgs.h

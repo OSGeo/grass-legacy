@@ -17,7 +17,7 @@ LIST = 	main.c add_in.c addpts.c find_con.c \
 
 LIBES=$(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB): #

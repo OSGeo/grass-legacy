@@ -6,6 +6,6 @@ SOURCES = \
 OBJ = \
 	main.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
 

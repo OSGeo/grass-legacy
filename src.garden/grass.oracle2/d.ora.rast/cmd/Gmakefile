@@ -42,7 +42,7 @@ OB5=/u/app/oracle/product/8.0.5/lib/naect.o
 OB6=/u/app/oracle/product/8.0.5/lib/mcrt1.o
 
 
-$(BIN_MAIN_CMD)/d.ora.rast: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GISLIB)
+$(BIN_CMD)/d.ora.rast: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GISLIB)
 	$(CC) $(OFILES) $(OB1) $(OB2) $(OB3) $(OB4) $(OB5) -I$(INC1) -I$(INC2) -I$(INC3) -I$(INC4) $(LDFLAGS) -o $@ -L$(LB1) -L$(LB2) $(OL1) $(OL2) $(OL3) $(OL4) $(OL5) $(OL6) $(OL7) $(CAT1) $(AL1) $(AL2) $(AL3) $(AL4) $(AL5) $(AL6) $(AL7) $(CAT2) $(TIMELIB) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB): #

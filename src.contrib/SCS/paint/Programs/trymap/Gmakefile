@@ -7,13 +7,13 @@ PAINT = $(ETC)/paint
 ####################################################################
 
 
-all: $(BIN_CONTRIB_CMD)/$(PGM)
+all: $(BIN_CMD)/$(PGM)
 
 # Gmakefile to create the program "trymap" in the current directory using
 #   "gmake4.0".
 #   The file "G.h" must exist in the $(SRC)/libes directory (it may need to
 #   be copied from $(SRC)/libes/gis).
 
-$(BIN_CONTRIB_CMD)/$(PGM): trymap.o $(GISLIB)
+$(BIN_CMD)/$(PGM): trymap.o $(GISLIB)
 	$(CC) $(LDFLAGS) trymap.o $(GISLIB) -o $@
 

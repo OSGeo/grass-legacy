@@ -4,9 +4,9 @@ OBJS = main.o texture.o
 
 LIBES= $(GISLIB)
 
-all: $(BIN_CONTRIB_CMD)/$(PGM) 
+all: $(BIN_CMD)/$(PGM) 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

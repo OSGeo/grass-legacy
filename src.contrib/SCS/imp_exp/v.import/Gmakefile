@@ -1,11 +1,11 @@
 EXTRA_CFLAGS	=-I../lib
 
 
-all:  $(BIN_CONTRIB_INTER)/v.import
+all:  $(BIN_INTER)/v.import
 	
 
 #  interactive version
 
-$(BIN_CONTRIB_INTER)/v.import: imp_vect.o
+$(BIN_INTER)/v.import: imp_vect.o
 	$(CC) $(LDFLAGS) -o $@ imp_vect.o $(GISLIB)
 	rm -f $@ ; cp $? $@ ; chmod +r $@

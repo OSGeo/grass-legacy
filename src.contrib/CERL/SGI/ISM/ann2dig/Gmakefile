@@ -7,5 +7,5 @@ OBJS =  \
 	ann2dig.o \
 	line_cent.o
 
-$(BIN_CONTRIB_CMD)/$(PROG): $(OBJS)
+$(BIN_CMD)/$(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(VECTLIB) $(GISLIB) $(MATHLIB) 

@@ -44,7 +44,7 @@ OBJ =	\
 	label_box.o \
 	main.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #

@@ -141,10 +141,10 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(BIN_CONTRIB_CMD)/$(PGM) \
+all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header
 
-$(BIN_CONTRIB_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
+$(BIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
 	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) -o $@
 saber:
 	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(MATHLIB)

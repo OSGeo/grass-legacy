@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/d.site.pg
+PGM       = $(BIN_CMD)/d.site.pg
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(DATETIMELIB) $(XEXTRALIBS)
 EXTRA_CFLAGS    = $(PQINCPATH)
 # EXTRA_CFLAGS = -Dunlink=puts

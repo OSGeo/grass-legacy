@@ -20,7 +20,7 @@ LIST = main.o\
 	find_row.o\
 	mnt_vol.o
 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h

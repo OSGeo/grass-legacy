@@ -3,7 +3,7 @@ OBJS = main.o eigen.o
 
 LIBES= $(GISLIB) 
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h

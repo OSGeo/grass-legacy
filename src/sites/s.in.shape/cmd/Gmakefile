@@ -5,7 +5,7 @@ OBJFILES=	main.o\
 		dbfopen.o\
 		shpopen.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJFILES) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -8,10 +8,10 @@ LIST =  main.o \
 	perimeter.o \
 	head_info.o
 
-all: $(BIN_CONTRIB_CMD)/$(PGM)
+all: $(BIN_CMD)/$(PGM)
 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) 
+$(BIN_CMD)/$(PGM): $(LIST) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(VASKLIB) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 main.o: dump.h

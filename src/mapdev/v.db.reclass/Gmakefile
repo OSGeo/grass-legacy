@@ -12,7 +12,7 @@ LIST = main.o\
 	key_data.o\
 	reclass.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/d.rast.pg
+PGM       = $(BIN_CMD)/d.rast.pg
 # EXTRA_CFLAGS = -Dunlink=puts
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(DATETIMELIB) $(XEXTRALIBS)
 EXTRA_CFLAGS    = $(PQINCPATH)

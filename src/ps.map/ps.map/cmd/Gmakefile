@@ -61,7 +61,7 @@ OBJ =	main.o \
 	vect.o \
 	eps.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJ):		ps_info.h

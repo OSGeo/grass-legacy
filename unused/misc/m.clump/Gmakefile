@@ -25,7 +25,7 @@ OBJ =   \
 
 
 PROG = m.clump
-HOME = $(BIN_ALPHA_CMD)
+HOME = $(BIN_CMD)
 
 
 $(HOME)/$(PROG): $(OBJ) $(LIBES)

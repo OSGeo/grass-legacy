@@ -2,7 +2,7 @@ PGM=s.to.rast3
 
 LIST=main.o read_sites.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB) $(LINKMLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB) $(LINKMLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(LINKMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

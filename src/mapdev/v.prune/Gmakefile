@@ -1,5 +1,5 @@
-PROG_CMD = $(BIN_MAIN_CMD)/v.prune 
-PROG_INT = $(BIN_MAIN_INTER)/v.prune
+PROG_CMD = $(BIN_CMD)/v.prune 
+PROG_INT = $(BIN_INTER)/v.prune
 
 all:  $(PROG_CMD) $(PROG_INT)
 	

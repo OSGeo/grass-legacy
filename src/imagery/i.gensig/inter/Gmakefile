@@ -1,7 +1,7 @@
 PGM=i.gensig
 LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
-$(BIN_ALPHA_INTER)/$(PGM): main.o $(LIBES)
+$(BIN_INTER)/$(PGM): main.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -6,7 +6,7 @@ OFILES = \
 	xtract_line.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -21,7 +21,7 @@ MACH_TYPE = SUN
 
 EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
 
-PGM = $(BIN_CONTRIB_CMD)/r.out.hdf
+PGM = $(BIN_CMD)/r.out.hdf
 
 OFILES = r.out.hdf.o
 

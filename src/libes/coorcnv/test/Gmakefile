@@ -2,7 +2,7 @@ EXTRA_CFLAGS =
 OFILES = main.o
 PGM = test
 
-# all:	$(BIN_CONTRIB_CMD)/$(PGM)
+# all:	$(BIN_CMD)/$(PGM)
 all: $(PGM)
 
 $(PGM): $(OFILES)

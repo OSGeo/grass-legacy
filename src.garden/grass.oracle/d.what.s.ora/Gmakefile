@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.what.s.ora
+PGM       = $(BIN_CMD)/d.what.s.ora
 LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) 
 
 # EXTRA_CFLAGS 	= -Dunlink=puts

@@ -29,10 +29,10 @@ INTER_OBJ = Build_inter.o\
 	pgdump.o
 
 PGM = v.in.arc.pg
-HOME = $(BIN_CONTRIB_CMD)
+HOME = $(BIN_CMD)
 EXTRA_CFLAGS = $(PQINCPATH)
 
-all:  $(BIN_CONTRIB_CMD)/$(PGM)
+all:  $(BIN_CMD)/$(PGM)
 
 $(HOME)/$(PGM): $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(XEXTRALIBS)
 	$(CC) -o $@  $(LDFLAGS) $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB) $(PQLIB)

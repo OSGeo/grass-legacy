@@ -10,13 +10,13 @@ OBJFILES = s.db.rim.o dbio.o parser.o toplevel.o misc.o make_init.o \
 	my_G_yes.o find_query.o fill_value.o val_to_str.o print.o \
 	read_sites.o strip_fields.o get_max_site.o
 
-all: $(BIN_MAIN_CMD)/s.db.rim $(ETC)/rim/s.db.rim.cmd
+all: $(BIN_CMD)/s.db.rim $(ETC)/rim/s.db.rim.cmd
 
 $(ETC)/rim/s.db.rim.cmd: $(OBJFILES)
 	-mkdir $(ETC)/rim
 	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
-$(BIN_MAIN_CMD)/s.db.rim: highlevel.o
+$(BIN_CMD)/s.db.rim: highlevel.o
 	$(CC) $(LDFLAGS) -o $@ highlevel.o $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
 dbio.o: globals.h parse.h rim.h

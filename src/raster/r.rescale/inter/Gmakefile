@@ -1,5 +1,5 @@
 PGM = r.rescale
-HOME = $(BIN_MAIN_INTER)
+HOME = $(BIN_INTER)
 
 LIST = main.o ask.o get_range.o
 

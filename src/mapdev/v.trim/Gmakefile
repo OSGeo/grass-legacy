@@ -2,7 +2,7 @@ OFILES = main.o
 
 PGM = v.trim
 
-$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #in case of library changes

@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.rast.ora
+PGM       = $(BIN_CMD)/d.rast.ora
 LIBES     = $(GISLIB) 
 # EXTRA_CFLAGS = -Dunlink=puts
 

@@ -11,10 +11,10 @@ IMP_OFILES = \
 	stpll.o \
 	albrll.o 
 
-all:	$(BIN_CONTRIB_CMD)/v.in.gef
+all:	$(BIN_CMD)/v.in.gef
 
 
-$(BIN_CONTRIB_CMD)/v.in.gef:	$(IMP_OFILES)
+$(BIN_CMD)/v.in.gef:	$(IMP_OFILES)
 	cc $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
 
 

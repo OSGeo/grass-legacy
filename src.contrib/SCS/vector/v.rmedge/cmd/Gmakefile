@@ -8,8 +8,8 @@ IFILES = \
 	do_select.o
 
 
-all:  $(BIN_CONTRIB_CMD)/v.rmedge
+all:  $(BIN_CMD)/v.rmedge
 
-$(BIN_CONTRIB_CMD)/v.rmedge: $(OFILES)
+$(BIN_CMD)/v.rmedge: $(OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 

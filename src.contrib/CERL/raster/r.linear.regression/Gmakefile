@@ -20,7 +20,7 @@ LIST = 	main.o\
 	errfun.o \
 	tscore.c
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # 

@@ -4,7 +4,7 @@ OFILES = \
 	do_color.o\
 	main.o 
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

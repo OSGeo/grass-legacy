@@ -1,7 +1,7 @@
 PGM=v.in.tig.basic
 LIBES = $(LIBDIR)/libcoorcnv.a $(GISLIB) $(DIG_ATTLIB) $(VECTLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): v.in.tig.bas.o $(GISLIB) $(LIBES)
+$(BIN_CMD)/$(PGM): v.in.tig.bas.o $(GISLIB) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ v.in.tig.bas.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): # in case LIB changes

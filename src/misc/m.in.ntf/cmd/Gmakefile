@@ -73,7 +73,7 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(BIN_CONTRIB_CMD)/$(PGM): ${OBJ} ${LIBES}
+$(BIN_CMD)/$(PGM): ${OBJ} ${LIBES}
 	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} $(CURSES) $(MATHLIB) ${XDRLIB}
 #
 #-----^ This compiles the whole program bringing all labels together.

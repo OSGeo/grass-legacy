@@ -16,9 +16,9 @@ OBJFILES = s.db.rim.o layout.o main_menu.o mgmt_menu.o fnd_qry.o add_chng_del.o 
 	rim_type.o save_finfo.o res_split_f.o field_offset.o delete.o \
 	print.o my_G_yes.o val_to_str.o site_list.o read_sites.o strip_fields.o
 
-all: $(BIN_MAIN_INTER)/s.db.rim
+all: $(BIN_INTER)/s.db.rim
 
-$(BIN_MAIN_INTER)/s.db.rim: $(OBJFILES)
+$(BIN_INTER)/s.db.rim: $(OBJFILES)
 	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) \
 	$(MYLIBS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) \
 	$(DATETIMELIB)

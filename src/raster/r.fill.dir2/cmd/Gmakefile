@@ -1,4 +1,4 @@
-PGM = $(BIN_ALPHA_CMD)/r.fill.dir2
+PGM = $(BIN_CMD)/r.fill.dir2
 
 FILL = $(ETC)/fill
 

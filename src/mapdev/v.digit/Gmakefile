@@ -199,9 +199,9 @@ LIBES = $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERL
 DIGITIZERS = $(ETC)/digitizers
 HELP_FILES = $(TXT)/DIGIT
 
-all:  $(BIN_MAIN_INTER)/$(PGM) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
+all:  $(BIN_INTER)/$(PGM) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
 
-$(BIN_MAIN_INTER)/$(PGM):  $(OBJ) $(LIBES)
+$(BIN_INTER)/$(PGM):  $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

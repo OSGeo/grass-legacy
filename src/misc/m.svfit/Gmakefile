@@ -5,7 +5,7 @@ LIST=main.o premodel.o cdpath.o dparam.o updparam.o solve.o hgnio.o save.o\
 
 LIBES=$(RASTERLIB) $(GISLIB)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 #

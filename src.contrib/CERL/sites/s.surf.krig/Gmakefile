@@ -34,5 +34,5 @@ SOURCE= \
 	krigzest.c \
 	variogrm.c 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)

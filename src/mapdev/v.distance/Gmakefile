@@ -1,7 +1,7 @@
 PGM=v.distance
 OFILES = main.o  distance.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #in case of library changes

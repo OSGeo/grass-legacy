@@ -23,13 +23,13 @@ OFILES  =\
 
 
 all: clean pgm shell help
-shell: $(BIN_MAIN_INTER)/r.weight
+shell: $(BIN_INTER)/r.weight
 pgm: $(ETC)/r.weight
 
 $(ETC)/r.weight: $(OFILES) $(LIBES) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
-$(BIN_MAIN_INTER)/r.weight: weight.sh
+$(BIN_INTER)/r.weight: weight.sh
 	rm -f $@ ; cp $? $@ ; chmod 0755 $@
 
 help:

@@ -4,7 +4,7 @@
 ##		 libraries.				    ##
 ##############################################################
 
-PROG = $(BIN_CONTRIB_CMD)/r.param.scale
+PROG = $(BIN_CMD)/r.param.scale
 #--------------------------^ Name of the GRASS module here.
 
 

@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.what.v.ora
+PGM       = $(BIN_CMD)/d.what.v.ora
 LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 
 

@@ -6,7 +6,7 @@ LIST   = main.o \
 	 show.o \
 	 attr.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

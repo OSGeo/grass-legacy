@@ -42,7 +42,7 @@ OBJ	=	\
 		r3_find.o \
 		main.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(OBJ) $(LDFLAGS) -o $@ $(SGILIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 

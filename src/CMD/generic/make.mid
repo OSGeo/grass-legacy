@@ -5,12 +5,8 @@ SHELL           = /bin/sh
 # or files used by GRASS programs
 BIN             = $(GISBASE)/bin
 ETC             = $(GISBASE)/etc
-BIN_MAIN_INTER  = $(ETC)/bin/main/inter
-BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
-BIN_ALPHA_INTER = $(ETC)/bin/main/inter
-BIN_ALPHA_CMD   = $(ETC)/bin/main/cmd
-BIN_CONTRIB_INTER = $(ETC)/bin/contrib/inter
-BIN_CONTRIB_CMD   = $(ETC)/bin/contrib/cmd
+BIN_INTER       = $(ETC)/bin/inter
+BIN_CMD         = $(ETC)/bin/cmd
 TXT             = $(GISBASE)/txt
 MAN1            = $(GISBASE)/man/1
 MAN2            = $(GISBASE)/man/2

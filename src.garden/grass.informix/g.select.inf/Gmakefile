@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/g.select.inf
+PGM       = $(BIN_CMD)/g.select.inf
 LIBES     = $(GISLIB) 
 
 

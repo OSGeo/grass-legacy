@@ -26,7 +26,7 @@ OFILES = \
 
 LIBES=$(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
 
-$(BIN_MAIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 cell3d.o: windows.h

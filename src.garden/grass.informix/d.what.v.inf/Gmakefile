@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.what.v.inf
+PGM       = $(BIN_CMD)/d.what.v.inf
 LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 
 OBJS = \

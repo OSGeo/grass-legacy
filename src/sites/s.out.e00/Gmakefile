@@ -2,5 +2,5 @@ PGM = s.out.e00
 LIST = 	s.out.e00.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)

@@ -1,7 +1,7 @@
 PGM=r.distance
 LIST = main.o parse.o edges.o report.o distance.o labels.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): defs.h

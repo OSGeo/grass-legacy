@@ -7,7 +7,7 @@ OBJ = \
 
 PGM =   v.make.subj
 
-PROG =   $(BIN_CONTRIB_CMD)/$(PGM)
+PROG =   $(BIN_CMD)/$(PGM)
 
 all:  $(PROG)
 

@@ -2,7 +2,7 @@ PGM=v.apply.census
 LIBES = $(LIBDIR)/libcoorcnv.a $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
 DOCS = $(ETC)/census.docs 
 
-$(BIN_ALPHA_CMD)/$(PGM): v.apply.cen.o $(LIBES)
+$(BIN_CMD)/$(PGM): v.apply.cen.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ v.apply.cen.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	-mkdir $(DOCS)
 	cp stf1_matrix $(DOCS)

@@ -1,6 +1,6 @@
 # Note: when this program is installed as src, the program name
 # will be p.map, not p.map.new and the directory it will be installed
-# in is $(BINA_MAIN_CMD) not $(BIN_ALPHA_CMD)
+# in is $(BINA_MAIN_CMD) not $(BIN_CMD)
 # This code has known bugs in it, and it is NOT know if
 # (1) previous scripts for p.map can be handled by this new code
 # (2) if the interactive p.map will generate correct scripts for version
@@ -172,11 +172,11 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(BIN_ALPHA_CMD)/$(PGM) \
+all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(INTERFACE) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc

@@ -5,7 +5,7 @@
 # FC = /usr/lang/f77
 
 FILL = $(ETC)/fill
-PGM = $(BIN_ALPHA_CMD)/r.direct
+PGM = $(BIN_CMD)/r.direct
 
 # this program uses a number of sub-programs.
 # these we will put in $GIS/etc/fill

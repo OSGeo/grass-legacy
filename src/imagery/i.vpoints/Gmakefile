@@ -77,7 +77,7 @@ CFILES =main.c\
 
 LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) 
 
-$(BIN_ALPHA_INTER)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h defs.h

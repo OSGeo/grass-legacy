@@ -31,10 +31,10 @@ CFILES = \
 	SetProj.c
 
 
-all:  START $(BIN_CONTRIB_CMD)/v.out.dlg.scs
+all:  START $(BIN_CMD)/v.out.dlg.scs
 	
 
-$(BIN_CONTRIB_CMD)/v.out.dlg.scs: $(OFILES) v.exp_dlg.o
+$(BIN_CMD)/v.out.dlg.scs: $(OFILES) v.exp_dlg.o
 	$(CC) $(LDFLAGS) -o $@ v.exp_dlg.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 START:

@@ -48,7 +48,7 @@ LIBES=$(VECTLIB) $(VECTLIB_REAL) $(DIG2LIB) $(GISLIB)
 $(BUILD_LIB): $(OBJ)
 	$(AR)
 
-$(BIN_MAIN_INTER)/v.build: front_end.o $(GISLIB)
+$(BIN_INTER)/v.build: front_end.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ front_end.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(PROG): main.o $(BUILD_LIB) $(LIBES) $(DIG_ATTLIB)

@@ -12,7 +12,7 @@ OFILES = \
         get_isle_xy.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB)
-$(BIN_CONTRIB_INTER)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 #$(OFILES):	$(LIBDIG)/digit.h $(LIBDIR)/gis.h

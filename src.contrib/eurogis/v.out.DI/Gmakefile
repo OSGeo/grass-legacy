@@ -7,9 +7,9 @@ CFILES = \
          clock.c \
          main.c
 
-all: $(BIN_CONTRIB_CMD)/v.out.DI
+all: $(BIN_CMD)/v.out.DI
 
-$(BIN_CONTRIB_CMD)/v.out.DI: $(OFILES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/v.out.DI: $(OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 

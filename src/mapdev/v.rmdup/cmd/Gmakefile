@@ -1,4 +1,4 @@
 PGM=v.rmdup
 
-$(BIN_CONTRIB_CMD)/$(PGM): rmdup.o $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): rmdup.o $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ rmdup.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)

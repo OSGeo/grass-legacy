@@ -32,5 +32,5 @@ LA = -lblas -llapack
 
 LIBES=$(GISLIB) $(GMATHLIB) $(DATETIMELIB) $(LA) $(G2C)
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

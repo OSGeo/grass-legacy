@@ -2,7 +2,7 @@ PGM=r.slope.aspect
 
 LIST = main.o opennew.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

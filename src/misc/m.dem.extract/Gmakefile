@@ -3,7 +3,7 @@ PGM      = m.dem.extract
 LIST	= usgs_init.o usgs_buf.o usgs_hdr.o usgs_num.o \
           main.o getgrid.o get_prof.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        usgs.h

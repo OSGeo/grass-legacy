@@ -7,7 +7,7 @@
 # ANSWERS on GRASS Project
 ###############################################################
 
-BIN = $(BIN_ALPHA_INTER)
+BIN = $(BIN_INTER)
 PGM = r.answers
 
 # object files

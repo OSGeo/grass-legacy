@@ -4,8 +4,8 @@ PGM      = v.export
 
 LIST =  exp_vect.o
 
-all: $(BIN_CONTRIB_INTER)/$(PGM)
+all: $(BIN_INTER)/$(PGM)
 
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(GISLIB) 
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)

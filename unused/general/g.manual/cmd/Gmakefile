@@ -1,5 +1,5 @@
 PGM    = g.manual
-HOME   = $(BIN_MAIN_CMD)
+HOME   = $(BIN_CMD)
 
 OBJECTS   = main.o
 

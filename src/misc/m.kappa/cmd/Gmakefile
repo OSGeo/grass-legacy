@@ -7,7 +7,7 @@ OBJS = main.o\
 	prt_hdr.o\
 	readin_data.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

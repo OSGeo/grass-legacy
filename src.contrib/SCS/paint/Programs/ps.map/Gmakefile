@@ -42,7 +42,7 @@ OBJ =	main.o \
 	vlegfile.o \
 	vlegend.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(EXTRALIB) -o $@
 
 $(OBJ):		ps_info.h

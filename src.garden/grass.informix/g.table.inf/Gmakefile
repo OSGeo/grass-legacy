@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/g.table.inf
+PGM       = $(BIN_CMD)/g.table.inf
 LIBES     = $(GISLIB)
 
 

@@ -4,5 +4,5 @@ PGM = r.out.ppm
 
 OFILES = main.o 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBRARIES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)

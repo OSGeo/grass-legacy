@@ -2,7 +2,7 @@ PGM=m.rot90
 
 LIST = main.o rotate.o fill.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -2,7 +2,7 @@ PGM = r.in.sunrast
 
 OBJ = main.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(OBJ): rast.h

@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/r.rescale.ora
+PGM       = $(BIN_CMD)/r.rescale.ora
 LIBES     = $(GISLIB)
 
 # EXTRA_CFLAGS	= -Dunlink=puts

@@ -5,7 +5,7 @@ LIST = \
 	get_shift.o
 
 
-$(BIN_CONTRIB_CMD)/d.fix.ortho: $(LIST) $(LIBES)
+$(BIN_CMD)/d.fix.ortho: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@  $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 

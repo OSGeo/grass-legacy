@@ -5,7 +5,7 @@ PGM=r.flowmd
 
 LIBES=$(VECTLIB) $(GISLIB) $(BITMAPLIB) $(LINKMLIB) $(DIG_ATTLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $GISLIB:#

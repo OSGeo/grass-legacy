@@ -20,7 +20,7 @@ LIST = main.o\
 
 PGM = i.tape.tm.fast
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h

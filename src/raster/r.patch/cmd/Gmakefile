@@ -2,7 +2,7 @@ PGM=r.patch
 GPATCH = main.o do_patch.o support.o
 PATCH  = patch.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(GPATCH) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(GPATCH) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(GPATCH) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 main.o: nfiles.h

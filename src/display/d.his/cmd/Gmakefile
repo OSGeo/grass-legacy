@@ -3,7 +3,7 @@ OFILES =  main.o his.o init_his.o
 
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 his_color: his_color.o his.o

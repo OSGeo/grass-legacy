@@ -24,9 +24,9 @@ OBJFILES = v.db.rim.o layout.o main_menu.o mgmt_menu.o add_chng_del.o \
 	type_to_char.o vect_map.o vect_seq_map.o
 
 
-all: $(BIN_MAIN_INTER)/v.db.rim
+all: $(BIN_INTER)/v.db.rim
 
-$(BIN_MAIN_INTER)/v.db.rim:  $(OBJFILES)
+$(BIN_INTER)/v.db.rim:  $(OBJFILES)
 	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) \
 	$(VECTLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) \
 	$(DATETIMELIB)

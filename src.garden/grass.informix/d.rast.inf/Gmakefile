@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.rast.inf
+PGM       = $(BIN_CMD)/d.rast.inf
 LIBES     = $(GISLIB) 
 # EXTRA_CFLAGS = -Dunlink=puts
 

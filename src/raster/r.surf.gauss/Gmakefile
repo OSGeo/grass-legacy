@@ -8,7 +8,7 @@ OBJ =\
 	rand1.o		\
 	gauss.o 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

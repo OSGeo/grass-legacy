@@ -3,7 +3,7 @@ PGM=v.stats
 # include VECTLIBFLAGS for the PORTABLE_3 flag
 EXTRA_CFLAGS	= $(VECTLIBFLAGS)
 
-$(BIN_MAIN_CMD)/$(PGM): v.stats.o  $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): v.stats.o  $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ v.stats.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #

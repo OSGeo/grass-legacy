@@ -1,6 +1,6 @@
 PGM=d.save
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-$(BIN_MAIN_CMD)/$(PGM): main.o $(LIBES)
+$(BIN_CMD)/$(PGM): main.o $(LIBES)
 	$(CC) $(LDFLAGS) main.o -o $@ $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DISPLAYLIB): #

@@ -1,5 +1,5 @@
-PGM       = $(BIN_MAIN_CMD)/v.reclass.inf
-#PGM       = $(BIN_MAIN_CMD)/v.r.inf.new
+PGM       = $(BIN_CMD)/v.reclass.inf
+#PGM       = $(BIN_CMD)/v.r.inf.new
 LIBES     = $(GISLIB) 
 
 

@@ -9,5 +9,5 @@ OBJ = main.o\
     hqr2.o \
     rg.o
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(OBJ)
+$(BIN_INTER)/$(PGM): $(OBJ)
 	$(FC) -o $@ $(OBJ)

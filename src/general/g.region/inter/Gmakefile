@@ -19,7 +19,7 @@ LIST     = main.o\
 
 LIBES=$(GISLIB) $(VASKLIB) $(VECTLIB) $(DATETIMELIB)
 
-$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): glob.h

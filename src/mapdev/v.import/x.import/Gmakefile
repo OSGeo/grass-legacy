@@ -1,4 +1,4 @@
 PGM = v.import
 
-$(BIN_MAIN_INTER)/$(PGM): import_vect.o $(GISLIB)
+$(BIN_INTER)/$(PGM): import_vect.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ import_vect.o $(GISLIB)

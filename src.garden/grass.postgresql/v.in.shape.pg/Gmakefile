@@ -1,7 +1,7 @@
 PGM = v.in.shape.pg
 # SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
 
-HOME = $(BIN_CONTRIB_CMD)
+HOME = $(BIN_CMD)
 EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
 # EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
 LIST = 	main.o \

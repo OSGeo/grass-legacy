@@ -6,8 +6,8 @@ OFILES = \
 	main.o\
 	sfactor.o
 
-all:  $(BIN_CONTRIB_INTER)/$(PGM)
+all:  $(BIN_INTER)/$(PGM)
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(OFILES) 
+$(BIN_INTER)/$(PGM): $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDRLIB) $(MATHLIB)
 

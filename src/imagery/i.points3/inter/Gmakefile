@@ -76,6 +76,6 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 

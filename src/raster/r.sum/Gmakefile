@@ -4,6 +4,6 @@ OFILES = main.o
 
 LIBES = $(GISLIB) $(DATETIMELIB)    
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 

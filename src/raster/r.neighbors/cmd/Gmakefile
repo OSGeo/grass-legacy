@@ -25,7 +25,7 @@ OTHERS = main.o \
 
 LIST = $(OTHERS) $(METHODS) $(CAT_NAMES)
 
-$(BIN_MAIN_CMD)/$(PGM):  $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM):  $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        ncb.h

@@ -1,6 +1,6 @@
 PGM=v.to.sites
 
-$(BIN_ALPHA_CMD)/$(PGM): v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #

@@ -3,7 +3,7 @@ RECLASS = reclass.o set_cats.o $(COMMON)
 
 PGM=v.reclass 
 
-$(BIN_ALPHA_INTER)/$(PGM): $(RECLASS) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(RECLASS) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(VASKLIB) $(EXTRALIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

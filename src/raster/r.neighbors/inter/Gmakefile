@@ -8,7 +8,7 @@ LIST =  main.o\
 	new_screen.o\
 	scan_int.o
 
-$(BIN_MAIN_INTER)/$(PGM):  $(LIST) $(GISLIB)
+$(BIN_INTER)/$(PGM):  $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB):      # in case this changes

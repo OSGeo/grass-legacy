@@ -3,7 +3,7 @@ PGM = v.support
 OFILES = \
 	support.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -9,7 +9,7 @@ OBJ =\
 	gen_colors.o \
 	median.o
 
-$(BIN_ALPHA_INTER)/$(PGM): ${OBJ}
+$(BIN_INTER)/$(PGM): ${OBJ}
 	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(IMAGERYLIB) $(GISLIB) $(VASK): #

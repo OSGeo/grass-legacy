@@ -3,7 +3,7 @@ LIBES  = $(GISLIB) $(DATETIMELIB)
 
 LIST   = main.o die.o get_range.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	$(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,7 +1,7 @@
 PGM=m.tiger.region
 LIB = $(LIBDIR)/libcoorcnv.a
 
-$(BIN_ALPHA_CMD)/$(PGM): main.o $(GISLIB)
+$(BIN_CMD)/$(PGM): main.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIB): # in case LIB changes

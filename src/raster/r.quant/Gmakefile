@@ -1,5 +1,5 @@
 PGM=r.quant
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 
 LIST =  main.o\
 	read_rules.o

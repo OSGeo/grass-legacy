@@ -1,4 +1,4 @@
-HOME=$(GISBASE)/etc/bin/main/cmd
+HOME=$(BIN_CMD)
 
 INCLUDE = ../include
 DBMILIB = $(LIBDIR)/libdbmi.a

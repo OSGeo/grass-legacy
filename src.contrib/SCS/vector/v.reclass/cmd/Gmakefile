@@ -9,9 +9,9 @@ OFILES = \
 	rclas_lines.o
 
 
-all:  $(BIN_CONTRIB_CMD)/v.reclass
+all:  $(BIN_CMD)/v.reclass
 
-$(BIN_CONTRIB_CMD)/v.reclass: $(OFILES) 
+$(BIN_CMD)/v.reclass: $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(XDRLIB) $(MATHLIB)
 
 $(GISLIB): #

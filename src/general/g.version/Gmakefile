@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.11 2000-12-18 11:49:18 justin Exp $
+# $Id: Gmakefile,v 1.12 2001-01-10 12:40:50 markus Exp $
 # cat the COPYING file, add a c line-break \n at each line end
 # and remove the unix newline. 
 COPYING=`cat ./../../../COPYING | sed -f sed.script | tr -d '\012'`
@@ -7,7 +7,7 @@ PGM=g.version
 EXTRA_CFLAGS=-DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\" -DVERSION_DATE=\"'$(VERSION_DATE)'\" -DVERSION_UPDATE_PKG=\"'$(VERSION_UPDATE_PKG)'\" -DCOPYING="\"$(COPYING)\""
 #EXTRA_CFLAGS=-DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\" -DVERSION_DATE=\"'$(VERSION_DATE)'\" -DVERSION_UPDATE_PKG=\"'$(VERSION_UPDATE_PKG)'\"
 
-$(BIN_MAIN_CMD)/$(PGM): main.o
+$(BIN_CMD)/$(PGM): main.o
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ main.o
 
 main.o: $(VERSION_FILE)

@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/g.table.pg
+PGM       = $(BIN_CMD)/g.table.pg
 EXTRA_CFLAGS = $(PQINCPATH)
 LIBES     = $(GISLIB) $(PQLIB) $(XEXTRALIBS)
 

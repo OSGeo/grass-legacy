@@ -5,7 +5,7 @@ SOURCE  = \
 LIST  = \
 	main.o 
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 

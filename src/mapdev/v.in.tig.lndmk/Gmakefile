@@ -8,7 +8,7 @@ OFILES = main.o parse_input.o cats_stuff.o tig_control.o tig_record.o \
 	info_type.o points.o areas.o lines.o coords.o cmd_parse.o \
 	match_text.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(OFILES): globals.h

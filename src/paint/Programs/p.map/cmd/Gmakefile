@@ -142,11 +142,11 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(BIN_MAIN_CMD)/$(PGM) \
+all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(BIN_MAIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
+$(BIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc

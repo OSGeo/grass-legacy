@@ -6,7 +6,7 @@ OFILES = \
 	put_dots.o \
 	find_area.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
+$(BIN_CMD)/$(PGM): $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 do_dots.o: dots.h

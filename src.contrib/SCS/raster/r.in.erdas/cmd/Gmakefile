@@ -8,9 +8,9 @@ OFILES = \
 	do_color.o\
 	main.o 
 
-all:  $(BIN_CONTRIB_CMD)/$(PGM)
+all:  $(BIN_CMD)/$(PGM)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
+$(BIN_CMD)/$(PGM): $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 $(GISLIB): #

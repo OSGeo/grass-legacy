@@ -1,4 +1,4 @@
-HOME=$(BIN_MAIN_INTER)
+HOME=$(BIN_INTER)
 all: $(ETC)/modcolr \
      $(ETC)/modcats \
      $(ETC)/modhist \

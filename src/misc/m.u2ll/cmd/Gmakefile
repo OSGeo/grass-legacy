@@ -2,7 +2,7 @@ PGM=m.u2ll
 
 LIST = main.o input.o output.o warning.o isnumber.o sph.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(COORCNVLIB): # in case LIB changes

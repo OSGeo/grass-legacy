@@ -14,8 +14,8 @@ CMDFILES = \
 	rotate.o \
 	grid_atts.o
 
-PROG_CMD = $(BIN_MAIN_CMD)/v.mkgrid 
-PROG_INT = $(BIN_MAIN_INTER)/v.mkgrid 
+PROG_CMD = $(BIN_CMD)/v.mkgrid 
+PROG_INT = $(BIN_INTER)/v.mkgrid 
 
 all:  $(PROG_CMD) $(PROG_INT)
 

@@ -1,5 +1,5 @@
 PGM=r.in.utm
-HOME=$(BIN_CONTRIB_CMD)
+HOME=$(BIN_CMD)
 
 LIST = main.o isnumber.o sph.o row_col.o utm_value.o value.o
 
