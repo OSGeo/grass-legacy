@@ -47,6 +47,7 @@
 #include "dbutils.h"
 #include "writelin.h"
 #include "cleanup.h"
+#include "bounds.h"
 
 
 #define	round(x)	(int)((x) + 0.5)
@@ -277,6 +278,11 @@ int main( int   argc, char *argv[])
 	fprintf( fdlog, "\"%s\" successfully opened\n", infile);
 
     	
+    /* Find the overall bounding box and set parameters for key values */
+
+    if(set_bounds(hShapeDB) < 0)
+      G_fatal_error("Could not determine limits of region");
+
     /* Establish the shape types and corresponding GRASS type */
     
     SHPGetInfo( hShapeDB, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
