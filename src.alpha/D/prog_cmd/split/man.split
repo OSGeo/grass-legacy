@@ -1,0 +1,56 @@
+
+.\" %W% %G%
+.TH Dsplit 2D D-language
+.SH NAME
+Dsplit \- Divides the monitor into two windows and then displays two maps
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B "Dsplit"
+mapname1 mapname2 [cmd=GRASS command][cmd2=GRASS command] [view=horiz]
+.SH DESCRIPTION
+.I Dsplit
+is a UNIX Bourne shell macro which
+clears the entire screen and divides it into two windows.
+Maps are then displayed in each of the two windows.
+This command is very useful for visually comparing maps
+(cell, vector, 3D views) and can be used by other GRASS shell macros.
+It is also useful for creating demos.
+.SH Options:
+.IP \fIcmd=\fR 12
+The default command that displays the map is \fIDcell\fR, but it can be changed
+to any GRASS command \fI(D3d, Dvect, etc...)\fR.
+.IP \fIcmd2=\fR 12
+This command will be executed for the second window only.
+.sp
+The way the commands \fI(cmd=, cmd2=)\fR work are if no commands are
+given on the command line then the default command \fI(Dcell)\fR is executed
+for both windows.
+If only \fIcmd=\fR is listed on the command line then that command will be
+executed for both windows.  If both \fIcmd=\fR and \fIcmd2=\fR are on the 
+command line then the \fI(cmd=)\fR command is executed in window 1 and the
+\fI(cmd2=)\fR command is executed in window 2.
+.IP \fIview=horiz\fR 12
+The screen can be split either horizontally or vertically.
+The default view splits the screen into two screens, one on the left
+and one on the right (vertical split).  Some maps ( 3D views) are better
+represented with more width then height (horizontal split).  The first map
+name listed on the command line will be displayed in the top or left window,
+depending on whether the screen was split, horizontally or vertically.
+The second map will be displayed in the bottom or right window.
+.IP
+\fIExample: Dsplit soils vegcover\fR
+.IP
+\fIExample: Dsplit soils cmd2=Dlegend "soils red"\fR
+.IP
+\fIExample: Dsplit cmd=D3d elevation vegcover view=horiz\fR
+.SH Notes
+.IP
+\fIDsplit\fR leaves the window that the last map was drawn in as the active
+window.
+.SH "SEE ALSO"
+\fIDINTRO[2D], Dcell[2D], Dvect[2D], D3d[2D]\fR
+.SH "COMMANDS USED IN THE MACRO"
+\fIDclear.screen[2D], Dnew[2D], Dchoose[2D]\fR
+.SH "AUTHOR"
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
