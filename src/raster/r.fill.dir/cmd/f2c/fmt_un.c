@@ -48,12 +48,14 @@ main(int argc, char **argv)
 		fprintf(stderr, "%s: Open failed\n", t3);
 		exit(1);
 	}
+
 	for(m=0; m<nl; m++){
 		for(m2=0; m2<ns; m2++)
 			fscanf(fp, "%lf", &i[m2]);
 		for(m2=0; m2<ns; m2++)
 			fwrite(&i[m2], DBYTES, 1, fp2);
 	}
+
 	fclose(fp);
 	fclose(fp2);
 
