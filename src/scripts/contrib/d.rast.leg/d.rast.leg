@@ -28,14 +28,21 @@
 #
 # See also:	d.rast, d.legend.
 #
-# Jianping Xu and Scott Madry, Rutgers University.
-# October 19, 1993
+# Markus Neteler 8/2002: added simple d.legend logic
+# Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
 ##############################################################################
 
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi   
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+#for -o flag of d.legend
+HISTFILEDIR=$LOCATION/cell_misc/
 
 if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
 then
@@ -64,13 +71,23 @@ else
 	d.frame -s at=0,100,0,65
     	d.rast $1
     	d.frame -s at=0,100,65,100
-    	d.legend $1
+        if test -f $HISTFILEDIR/$1/histogram
+          then
+    	     d.legend -o $1
+          else
+             d.legend $1
+          fi
     	d.frame -s at=0,100,0,65
     else
 	d.frame -s at=0,100,0,65
     	d.rast $1
     	d.frame -s at=0,100,65,100
-    	d.legend $1 lines=$2
+        if test -f $HISTFILEDIR/$1/histogram
+          then
+             d.legend -o $1 lines=$2
+          else
+             d.legend $1
+          fi
     	d.frame -s at=0,100,0,65
     fi
 fi
