@@ -31,6 +31,7 @@ int execute(char *sql, cursor * c)
 {
     int tab;
     SQLPSTMT *st;
+    char buf[2000];
 
     char tb[SQLP_MAX_TABLE];
     char *fstr;
@@ -81,9 +82,11 @@ int execute(char *sql, cursor * c)
 
 	if (tab < 0) {
 #ifdef UGLYHACK
-	    sprintf(errMsg, "Table '%s' doesn't exist. \n(FROM/from keyword?) \n", st->table);
+	    sprintf(buf, "Table '%s' doesn't exist. \n(FROM/from keyword?)\n", st->table);
+	    db_append_string (&errMsg, buf);
 #else
-	    sprintf(errMsg, "Table '%s' doesn't exist. \n", st->table);
+	    sprintf(buf, "Table '%s' doesn't exist. \n", st->table);
+	    db_append_string (&errMsg, buf);
 #endif
 	    return DB_FAILED;
 	}
@@ -96,7 +99,7 @@ int execute(char *sql, cursor * c)
  */
 	c->nrows = sel(st, tab, &(c->set), &(c->ncols), &(c->cols));
 	if (c->nrows < 0) {
-	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
+	    db_append_string (&errMsg, "Error in selecting rows\n" );
 	    sqpFreeStmt(st);
 	    return DB_FAILED;
 	}
@@ -120,15 +123,15 @@ int execute(char *sql, cursor * c)
 
 int fire_pg_cmd(char *stmt)
 {
-
+    char buf[2000];
     PGresult *res;
 
     res = PQexec(pg_conn, stmt);
 
     if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	snprintf(errMsg, sizeof(errMsg),
-		 "Error while executing Postgres command: %s",
-		 PQerrorMessage(pg_conn));
+	sprintf(buf, "Error while executing Postgres command: %s", PQerrorMessage(pg_conn));
+	db_append_string (&errMsg, buf);
+
 	PQclear(res);
 	PQfinish(pg_conn);	
 	return DB_FAILED;
@@ -149,8 +152,10 @@ int sel(SQLPSTMT * st, int tab, int **selset, int *n_cols, int **colset)
 
     make_table_brand_new(tab);
     
-    if (load_table(tab, st->stmt) == DB_FAILED)
+    if (load_table(tab, st->stmt) == DB_FAILED) {
+	G_debug (3, "load_table() failed");
 	return -1;
+    }
 
     nflds = db.tables[tab].ncols;
 

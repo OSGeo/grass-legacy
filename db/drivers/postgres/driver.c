@@ -20,6 +20,7 @@
 int db_driver_init(argc, argv)
      char *argv[];
 {
+    db_init_string (&errMsg);
     return DB_OK;
 }
 

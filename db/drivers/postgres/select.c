@@ -40,9 +40,11 @@ int db_driver_open_select_cursor(sel, dbc, mode)
 
     ret = execute(sql, c);
 
+    G_debug (3, "execute() -> %d", ret ); 
+
     if (ret == DB_FAILED) {
-	sprintf(errMsg, "%sError in db_open_select_cursor()", errMsg);
-	report_error(errMsg);
+	db_append_string ( &errMsg, "Error in db_open_select_cursor()\n");
+	report_error( db_get_string (&errMsg) );
 	return DB_FAILED;
     }
 
