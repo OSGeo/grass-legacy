@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     }
     if (print->answer)
 	error += run("which","");
-    exit(error);
+    exit(error ? 1 : 0);
 }
 
 int run (char *pgm, char *name)
