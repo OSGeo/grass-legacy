@@ -138,6 +138,7 @@ OBJ = \
     range.o\
     raster.o\
     rd_cellhd.o\
+    readsites.o\
     reclass.o\
     remove.o\
     rename.o\
@@ -175,13 +176,15 @@ OBJ = \
     zone.o\
     G_dump.o
 
- all: version.h \
-      $(GISLIB) \
-      $(ETC)/ellipse.table \
-      $(ETC)/projections \
-      $(ETC)/FIPS.code \
-      $(ETC)/state27 \
-      $(ETC)/state83
+all: version.h \
+	$(GISLIB) \
+	$(ETC)/ellipse.table \
+	$(ETC)/projections \
+	$(ETC)/FIPS.code \
+	$(ETC)/state27 \
+	$(ETC)/state83
+	cp $(LIBDIR)/libgis.a $(GISBASE)/lib
+	cp $(SRC)/include/gis.h $(GISBASE)/include
 
 $(GISLIB): $(OBJ)
 	$(AR)
