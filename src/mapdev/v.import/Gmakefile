@@ -12,3 +12,4 @@ $(PROG): import_vect.o $(GISLIB)
 	$(CC) $(LDFLAGS) import_vect.o $(GISLIB) $(MATHLIB)
 	mv a.out $@
 
+$(GISLIB): #
