@@ -78,7 +78,7 @@ PERM="$GISDBASE/$LOCATION_NAME/$MAPSET"
 # set the environment:
 GISRC=$GISDBASE/.grassrc5.$$
 ETC=$GISBASE/etc;
-PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:/usr/bin
+PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:/usr/bin:$GISBASE/etc/bin/main/cmd:$PATH/etc/bin/main/inter
 cat << EOF > $GISRC
 GISDBASE: $GISDBASE
 LOCATION_NAME: $RANDOMNAME
