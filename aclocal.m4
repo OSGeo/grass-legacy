@@ -758,7 +758,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    if test "$have_dl" = yes; then
 		SHLIB_LD="${CC} -shared"
 		LDFLAGS="-Wl,--export-dynamic"
-		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
+		CC_SEARCH_FLAGS='-Wl,-rpath-link,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
 		AC_CHECK_HEADER(dld.h, [
