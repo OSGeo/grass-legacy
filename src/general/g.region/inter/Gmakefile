@@ -16,6 +16,7 @@ LIST     = main.o\
 	   modify_db.o\
 	   new_db.o\
 	   set.o\
+	   from_view.o\
 	   yes.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB) $(VECTLIB)
@@ -25,3 +26,4 @@ $(LIST): glob.h
 
 $(GISLIB):   #
 $(VASKLIB): #
+$(VECTLIB): #
