@@ -13,10 +13,14 @@
 
 #include <string.h>
 #include <stdlib.h>
+
+#ifndef _MYINCLUDE_H
+#define _MYINCLUDE_H
 #include <png.h>
 #include "pngfunc.h"
+#include <pnm.h>
+#endif /* _MYINCLUDE_H */
 
-#include "pnm.h"
 #include "version.h"	/* VERSION macro */
 
 #include "gis.h"
