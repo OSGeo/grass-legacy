@@ -181,9 +181,9 @@ header.z_add_offset = (double)0.0;
 /* Swap Header if Required */
 if (flag.swap->answer) {
 fprintf(stderr, "Swapping Header Data\n");
-TIFFSwabLong((long *)&header.nx);
-TIFFSwabLong((long *)&header.ny);
-TIFFSwabLong((long *)&header.node_offset);
+TIFFSwabLong((uint32 *)&header.nx);
+TIFFSwabLong((uint32 *)&header.ny);
+TIFFSwabLong((uint32 *)&header.node_offset);
 
 TIFFSwabDouble((double *)&header.x_min);
 TIFFSwabDouble((double *)&header.x_max);
@@ -211,7 +211,7 @@ strcat(header.command, name);
 strcat(header.command, " output=");
 strcat(header.command, outfile);
 if(flag.swap->answer)
-TIFFSwabLong((long *)&null_str);
+TIFFSwabLong((uint32 *)&null_str);
 sprintf(buf, "%d", null_str);
 strcpy(header.remark, buf);
 strcat(header.remark, " used for NULL");
@@ -360,7 +360,7 @@ fprintf(stderr, "Percent complete: ");
 	       {
 		number_f = *((FCELL *) ptr);
 		if(flag.swap->answer)
-		TIFFSwabLong((long *)&number_f);
+		TIFFSwabLong((uint32 *)&number_f);
 		fwrite (&number_f,sizeof(float), 1, fp);
 	       }
                else if(out_type == DCELL_TYPE)
@@ -381,7 +381,7 @@ fprintf(stderr, "Percent complete: ");
 	if( out_type == FCELL_TYPE ) {
 		null_val_f = (float)null_str;
 		if(flag.swap->answer)
-		TIFFSwabLong((long *)&null_val_f);
+		TIFFSwabLong((uint32 *)&null_val_f);
 		fwrite(&null_val_f, sizeof(float), 1, fp);
 		}
 	if( out_type == DCELL_TYPE ) {
