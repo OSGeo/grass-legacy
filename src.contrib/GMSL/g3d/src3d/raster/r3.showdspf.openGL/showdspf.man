@@ -1,0 +1,39 @@
+
+?         lists available thresholds
+t index#  add threshold to display list 
+T index#  reset so only this threshold is displayed
++(+++)    display thresholds with consecutively increasing index#
+-(---)    display thresholds with consecutively decreasing index#
+
+x int#    absolute rotation around x-axis in degrees(int) 
+y int#    absolute rotation around y-axis in degrees(int) 
+z int#    absolute rotation around z-axis in degrees(int) 
+r  rotate_model
+X int#   scale model in x
+Y int#   scale model in y
+Z int#   scale model in z
+
+S int#    specular highlight control
+B(x,y,z)int#  begin display along (x,y,z) axis at #
+E(x,y,z)int#  end display along (x,y,z)axis #
+R   resets display along axis to show all data
+
+C   toggles the c_flag
+c   clears the display (no thresholds)
+s   swap buffers
+
+w   dump image to a file
+d   draw (implement the option)
+D   draw a solid defined by T(isosurface + parts of walls)
+Q   QUIT
+h   help
+
+p   draw all walls
+p#  draw a wall: 1-top, 2-bottom, 3-east, 4-west, 5-north, 6-south
+
+b   toggles draw a box
+
+F   (standa?) *.grid3 *.clr  drape color defined by grid3 and clr
+              over isosurface
+
+
