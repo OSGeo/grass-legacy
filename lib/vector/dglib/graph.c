@@ -1243,11 +1243,13 @@ int dglNode_T_Initialize( dglNodeTraverser_s * pT , dglGraph_s * pGraph ) {
 void dglNode_T_Release( dglNodeTraverser_s * pT ) {
 	switch( pT->pGraph->Version ) {
 	case 1:
-		return dgl_node_t_release_V1( pT );
+		dgl_node_t_release_V1( pT );
+		return;
 #ifdef DGL_V2
 	case 2:
 	case 3:
-		return dgl_node_t_release_V2( pT );
+		dgl_node_t_release_V2( pT );
+		return;
 #endif
 	}
 	pT->pGraph->iErrno = DGL_ERR_BadVersion;
@@ -1320,11 +1322,13 @@ void dglEdge_T_Release( dglEdgeTraverser_s * pT )
 {
 	switch( pT->pGraph->Version ) {
 	case 1:
-		return dgl_edge_t_release_V1( pT );
+		dgl_edge_t_release_V1( pT );
+		return;
 #ifdef DGL_V2
 	case 2:
 	case 3:
-		return dgl_edge_t_release_V2( pT );
+		dgl_edge_t_release_V2( pT );
+		return;
 #endif
 	}
 	pT->pGraph->iErrno = DGL_ERR_BadVersion;
