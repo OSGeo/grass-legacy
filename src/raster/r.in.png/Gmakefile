@@ -1,8 +1,9 @@
 PGM=r.in.png
 
-LIST=r.in.png.o
+LIST= r.in.png.o
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) \
+	$(XDRLIB) -lpng -lppm -lpgm -lpbm -lpnm
 
 $(GISLIB): #
