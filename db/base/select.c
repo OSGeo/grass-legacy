@@ -27,8 +27,7 @@ struct {
 
 void parse_command_line();
 
-int
-main(int argc, char *argv[])
+main(argc, argv) char *argv[];
 {
     dbString stmt;
     dbDriver *driver;
@@ -73,10 +72,9 @@ main(int argc, char *argv[])
     exit(stat);
 }
 
-int
-select (
+select (driver, stmt)
     dbDriver *driver;
-    dbString *stmt);
+    dbString *stmt;
 {
     dbCursor cursor;
     dbTable *table;
@@ -148,7 +146,7 @@ select (
 }
 
 void
-parse_command_line(int argc, char *argv[])
+parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*h;
@@ -156,7 +154,7 @@ parse_command_line(int argc, char *argv[])
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->options     = db_driver_list();
+    driver->options     = db_list_drivers();
     driver->required 	= NO;           /* changed to NO, RB 4/2000 */
     driver->description = "driver name";
 
@@ -235,10 +233,9 @@ parse_command_line(int argc, char *argv[])
     }
 }
 
-int
-get_stmt(
+get_stmt(fd, stmt)
     FILE *fd;
-    dbString *stmt);
+    dbString *stmt;
 {
     char buf[1024];
     int n;
@@ -260,18 +257,16 @@ get_stmt(
     return 1;
 }
 
-int
-stmt_is_empty(
-    dbString *stmt);
+stmt_is_empty(stmt)
+    dbString *stmt;
 {
     char dummy[2];
 
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
 
-int
-print_column_definition(
-    dbColumn *column);
+print_column_definition(column)
+    dbColumn *column;
 {
     fprintf (stdout,"column%s%s\n", parms.fs, db_get_column_name(column));
     fprintf (stdout,"type%s%s\n", parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
