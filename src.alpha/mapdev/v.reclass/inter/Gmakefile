@@ -1,0 +1,13 @@
+#HOME=$(BIN_CONTRIB_INTER)
+HOME=$(BIN_ALPHA_INTER)
+
+COMMON  = maketable.o dots.o do_reclass.o
+RECLASS = reclass.o set_cats.o $(COMMON)
+
+all: $(HOME)/v.reclass 
+
+$(HOME)/v.reclass: $(RECLASS) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(VASK) $(EXTRALIB)
+
+$(GISLIB): #
+$(VASKLIB): #
