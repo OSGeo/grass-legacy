@@ -1,0 +1,7 @@
+interface_build {
+    {r.infer} 0
+    {Outputs a raster map layer whose category values represent the application of user-specified criteria (rules statements) to other raster map layers' category values.}
+    {entry file {File containing inference instructions:} 0 file}
+    {checkbox -t {Test mode.} "" -t}
+    {checkbox -v {Run verbosely.} "" -v}
+}
