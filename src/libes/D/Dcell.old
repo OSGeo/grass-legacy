@@ -1,5 +1,3 @@
-/*  %W%  %G%  */
-
 #include "gis.h"
 
 Dcell(name, mapset, overlay)
