@@ -23,6 +23,7 @@
 
 int rmdac ( struct Map_info *Out );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
+int prune ( struct Map_info *, int, double );
 
 int 
 main (int argc, char *argv[])
@@ -56,7 +57,7 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol";
+	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
@@ -71,7 +72,8 @@ main (int argc, char *argv[])
 			        "\t\tbpol - break (topologicaly clean) polygons (imported from "
 				"non topological format (like shapefile). Boundaries are broken on each "
 				"point shared between 2 and more polygons where angles of segments "
-			        "are different";
+			        "are different\n"
+			        "\t\tprune - remove vertices in threshold from lines and boundaries";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
@@ -121,6 +123,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_RMDAC;
 	    else if ( strcmp ( tool_opt->answers[i], "bpol" ) == 0 )
 		tools[ntools] = TOOL_BPOL;
+	    else if ( strcmp ( tool_opt->answers[i], "prune" ) == 0 )
+		tools[ntools] = TOOL_PRUNE;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -137,7 +141,8 @@ main (int argc, char *argv[])
 	    threshs[i] = atof ( thresh_opt->answers[i] ) ;
 	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
 	    
-	    if (  tools[i] != TOOL_SNAP && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE ) {
+	    if (  tools[i] != TOOL_SNAP && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE
+	          && tools[i] != TOOL_PRUNE ) {
 		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
 		threshs[i] = 0.0;
 	    }
@@ -176,6 +181,9 @@ main (int argc, char *argv[])
 		    break;
 		case ( TOOL_BPOL ) :
 	            fprintf (stderr, "| Break polygons                   |" );	    
+		    break;
+		case ( TOOL_PRUNE ) :
+	            fprintf (stderr, "| Prune                            |" );	    
 		    break;
 	    }
 	    fprintf (stderr, " %e |\n", threshs[i] );	    
@@ -291,6 +299,11 @@ main (int argc, char *argv[])
 		    fprintf (stderr, "Tool: Break polygons\n" );
 		    fflush ( stderr );
                     Vect_break_polygons ( &Out, otype, pErr, stderr );
+		    break;
+		case TOOL_PRUNE:
+		    fprintf (stderr, "Tool: Prune lines/boundaries\n" );
+		    fflush ( stderr );
+                    prune ( &Out, otype, threshs[i] );
 		    break;
 	    }
 	    fprintf (stderr,         "--------------------------------------------------\n" );
