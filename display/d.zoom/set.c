@@ -42,9 +42,8 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     G_limit_east  (&east, window->proj);
     G_limit_west  (&west, window->proj);
     if (  window->proj == PROJECTION_LL ) {
-        
-	
 	if ( (east - west) > 360 ) {
+	    fprintf(stderr, "> 360 -> reset\n") ;
 	    td = (east + west) / 2;
 	    east = td + 180;
 	    west = td - 180;
@@ -60,9 +59,9 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	tnorth = td * nsr;
 	td = floor (south / nsr);
 	tsouth = td * nsr;
-	td = ceil (east / ewr);
+	td = rint (east / ewr);
 	teast = td * ewr;
-	td = floor (west / ewr);
+	td = rint (west / ewr);
 	twest = td * ewr;
 
 	ns = tnorth - tsouth;
@@ -132,10 +131,10 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	 }	
     }
     
-    
     if ( tnorth == tsouth ) tnorth += window->ns_res;
-    if ( teast == twest ) teast += window->ew_res;
-
+    if (  window->proj != PROJECTION_LL ) 
+        if ( teast == twest ) teast += window->ew_res;
+    
     if ( resetwin ) {
 	window->north = tnorth;
 	window->south = tsouth;
