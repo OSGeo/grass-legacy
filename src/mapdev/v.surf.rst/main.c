@@ -664,7 +664,7 @@ int main ( int argc, char *argv[])
   ertot = 0.;
   if (per)
     fprintf (stderr, "Percent complete: ");
-  if (IL_interp_segments_new_2d (&params, info, info->root, bitmask,
+  if (IL_interp_segments_2d (&params, info, info->root, bitmask,
 		      zmin, zmax, &zminac, &zmaxac, &gmin, &gmax, &c1min,
 	     &c1max, &c2min, &c2max, &ertot, totsegm, n_cols, dnorm) < 0)
 
