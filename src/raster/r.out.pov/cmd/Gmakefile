@@ -1,0 +1,13 @@
+OFILES = main.o
+PGM = r.out.pov
+
+all:	$(BIN_CONTRIB_CMD)/$(PGM)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) \
+		$(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+
+$(GISLIB): # in case LIB changes
