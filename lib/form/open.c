@@ -81,6 +81,15 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     db_init_string (&sql);
     db_init_string(&table_name);
     
+    /* Check if all internal values are set */
+    if ( Drvname == NULL || Dbname == NULL || Tblname == NULL || Key == NULL ) {
+	G_warning ("Internal field (db connection) was not set by form\n");
+        sprintf ( buf, "set submit_msg \"Internal field (db connection) was not set by form.\"" );
+        Tcl_Eval(interp, buf);
+        Tcl_Eval(interp, "set submit_result 0" );
+	return TCL_OK; 
+    }
+    
     /* Get column types */
     G_debug ( 2, "Open driver" );
     driver = db_start_driver(Drvname);
