@@ -14,6 +14,10 @@ to migrate a 5.0 module into the 5.1 environment.
 2. Programming details:
    o String buffer length:
      - to be identical for all modules
+   o consistent return types. Situation in 5.0:
+     The majority of functions return 0 on error and 1 on success, but there
+     are many which return 0 on success and a negative value on failure.
+     Proposal for 5.1?
 
 
 ... to be extended...
