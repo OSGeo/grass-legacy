@@ -111,7 +111,7 @@ r.in.ppm
   Memory bug fixed by Alex Shevlakov
 
 r.in.tiff/r.out.tiff
- - segm. fault on Pentium CPU (same thing with r.binfer)
+ - segm. fault (same thing with r.binfer)
 
 r.info
  - suggestion: raster type should be printed: CELL, FCELL, DCELL
@@ -290,7 +290,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.6  2000-07-26 12:35:52  markus
+ Revision 1.7  2000-07-26 12:48:56  markus
+ added r.in.tiff seg.fault
+
+ Revision 1.6  2000/07/26 12:35:52  markus
  added i.ortho.photo bug comment
 
  Revision 1.5  2000/07/26 09:38:21  markus
