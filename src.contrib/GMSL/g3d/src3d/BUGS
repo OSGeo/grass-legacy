@@ -1,10 +1,10 @@
-$Id: BUGS,v 1.4 2001-02-12 21:41:02 markus Exp $
+$Id: BUGS,v 1.5 2001-02-12 21:55:24 markus Exp $
 
                            G3D bugs list
                   ---> Call for assistance <------
 
 History:
- - There has been a former grid3d library written by Roman Waupotitch,
+ - There has been a former grid3d library written by Roman Waupotitsch,
    with input from Mike Shapiro, Helena Mitasova, Bill Brown 
    et al. 
  - Later Mark Astley ported grid3d to g3d library which is now widely used
@@ -127,3 +127,12 @@ Regards
 
  Markus Neteler
  neteler@geog.uni-hannover.de
+
+------------------------------------------------
+Contact addresses of (former) G3D Developers:
+
+ Roman Waupotitsch: http://www.geometrixinc.com/aboutus_management.htm
+ Bill Brown: brown@gis.uiuc.edu
+ Helena Mitasova: helena@gis.uiuc.edu
+ Jaro Hofierka: hofierka@geomodel.sk
+ Peter Paudits: paudits@gssr.sk
