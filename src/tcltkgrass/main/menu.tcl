@@ -759,11 +759,17 @@ menu_build 1 .main_menu {
             "Various formats" "" {
                 "run v.import &"
             }
+	    "Garmin GPS Waypoints/Routes/Tracks" "" {
+		"source $env(TCLTKGRASSBASE)/module/v.in.garmin"
+	    }
         }
         "Site data" "" {
             "ASCII file/spot heights" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.in.ascii"
             }
+	    "Garmin GPS Waypoints/Routes/Tracks" "" {
+		"source $env(TCLTKGRASSBASE)/module/s.in.garmin"
+	    }
         }
     }
     Export "Export maps from GRASS" {
