@@ -1,0 +1,14 @@
+EXTRA_CFLAGS	= -I$(SRC)/mapdev/lib
+
+
+#TSTBIN =  /home/zorro/stigberg/tstbin
+
+all:  $(BIN_ALPHA_CMD)/s.to.vect
+	
+
+$(BIN_ALPHA_CMD)/s.to.vect: s.to.vect.o
+	$(CC) $(LDFLAGS) -o $@ s.to.vect.o $(DIGLIB) $(GISLIB) $(MATHLIB) 
+
+#saber_src:
+	#load s.to.vect.c $(CFLAGS) $(DIGLIB) $(LIBTRANS) $(LIBATTS) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
+
