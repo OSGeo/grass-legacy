@@ -82,10 +82,15 @@ HTMLDIR="../dist.$ARCH/docs/html"
 
 FULLINDEX=full_index.html
 
-cd $HTMLDIR
-
 #hardcoded list of notes etc:
 NOTESLIST="sql"
+
+#hardcoded list of drivers etc:
+DRIVERLIST="displaydrivers"
+
+################
+
+cd $HTMLDIR
 
 #get list of available GRASS modules:
 CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v '$EXCLUDEHTML' | cut -d'.' -f1 | sort -u`
@@ -181,10 +186,22 @@ done
 echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
+#############
+#drivers:
+
+echo "<b>Drivers sections:</b>" >> $FILENAME
+echo "<ul>" >> $FILENAME
+#for all drivers:
+for k in $DRIVERLIST
+do 
+  echo "<li><a href=\"$k.html\">$k notes</a>" >> $FILENAME
+done
+echo "</ul>" >> $FILENAME
+echo "<p>"   >> $FILENAME
+
 write_html_footer $FILENAME index.html
 
-
-
+#############
 echo "Generated HTML docs in $HTMLDIR/index.html"
 echo "----------------------------------------------------------------------"
 echo "Following modules are missing the 'description.html' file in src code:"
