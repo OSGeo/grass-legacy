@@ -1,4 +1,4 @@
-$Id: TODO,v 1.6 2000-07-07 10:48:12 markus Exp $
+$Id: TODO,v 1.7 2000-07-10 05:27:47 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -10,17 +10,24 @@ Wishlist for GRASS 5
 
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
+     - search for PQLIB, PQINCPATH: PostgreSQL stuff
+     - search for PNGINC, PNGLIB: PNG graphics library
+     - search for TIFFINCPATH, TIFFLIBPATH
+     - search for JPEGINCPATH, JPEGLIBPATH
+     - search for MESA (usr/include or usr/include/GL ?)
   (Being worked on by )
 
 - extended "autoconf" for entire package
   (Being worked on by )
+
+- is "-fwritable-strings" o.k. for all platforms?
 
 Libraries:
 - src/libes/gis/readsites.c: Required is a new function which allows
   to read an attribute/dimension selectable by user. Useful 
   in order to select which attribute to be converted 
   (assuming multi-attribute sites lists).
-  (Being worked on by Markus)
+  (Being worked on by Markus, assistance wanted)
 
 - projection datum support for maps
   (Being worked on by Andreas Lange)
