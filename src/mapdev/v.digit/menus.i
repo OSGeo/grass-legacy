@@ -123,6 +123,7 @@ struct Menu_item Custom_items[] = {
     { "B - Select A Backdrop CELL Map",		'B', 1 },
 /*  { "L - Select A Label Map",			'L', 0 }, */
 /*  { "",					 0,  0 }, */
+    { "r - Toggle Remove Block display",	'r', 1 },
     { "D - Enter Display Options Menu",   	'D', 1 },
     { "C - Enter Color Options Menu",   	'C', 1 },
     { "q - Return from whence we came",     	'q', 1 },
