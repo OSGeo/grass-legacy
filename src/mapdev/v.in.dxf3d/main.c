@@ -15,6 +15,12 @@ v.in.dxf. Este programa es una reconversion a C de un programa creado en
 #define NUMLINES 256
 
 
+char *fgets_(char *buf, int size, FILE *fp);
+
+
+unsigned long file_size;
+
+
 int main(int argc, char *argv[])
 {
 	char nfout[MAXFILE]; 
@@ -71,6 +77,9 @@ int main(int argc, char *argv[])
 	}
 	      
 	      	      
+	fseek(dxf_fp, 0L, 2);
+	file_size = ftell(dxf_fp);
+	rewind(dxf_fp);
 	                                                                    
 /* Coger como prefijo el nombre del fichero DXF */
 
@@ -103,44 +112,44 @@ int main(int argc, char *argv[])
 
 /* Parte principal del programa */
 
-	while (fgets(linein, MAXLINE, dxf_fp)) {
-		if (strcmp(linein,"ENTITIES\n")==0) {   		/* Buscando la seccion ENTITIES */
-			while (fgets(linein,MAXLINE,dxf_fp)) {
-				if (strcmp(linein,"POLYLINE\n")==0) {     	/* Buscando la seccion POLYLINE */
-					while (strcmp(linein,"VERTEX\n")!=0) {
-						fgets(linein,MAXLINE,dxf_fp);
-						if (strcmp(linein,"  8\n")==0) {
-							fgets(linein,MAXLINE,dxf_fp);
+	while (fgets_(linein, MAXLINE, dxf_fp)) {
+		if (strcmp(linein,"ENTITIES")==0) {   		/* Buscando la seccion ENTITIES */
+			while (fgets_(linein,MAXLINE,dxf_fp)) {
+				if (strcmp(linein,"POLYLINE")==0) {     	/* Buscando la seccion POLYLINE */
+					while (strcmp(linein,"VERTEX")!=0) {
+						fgets_(linein,MAXLINE,dxf_fp);
+						if (strcmp(linein,"  8")==0) {
+							fgets_(linein,MAXLINE,dxf_fp);
 							strcpy(layer,linein);
 						}
 					}
 					nvert = 1;
-					while (strcmp(linein,"SEQEND\n")!=0) {
-						fgets(linein,MAXLINE,dxf_fp);
-						if (strcmp(linein,"VERTEX\n")==0) nvert = nvert + 1;
+					while (strcmp(linein,"SEQEND")!=0) {
+						fgets_(linein,MAXLINE,dxf_fp);
+						if (strcmp(linein,"VERTEX")==0) nvert = nvert + 1;
 						if (nvert == 2) {			/* Utilizando el segundo VERTICE para tomar las coordenadas */
-							fgets(linein,MAXLINE,dxf_fp);
-							while (strcmp(linein,"  0\n")!=0) {          /* Captura de las coordenadas X, Y y Z */
-								if (strcmp(linein," 10\n")==0) {
-									fgets(linein,MAXLINE,dxf_fp);
+							fgets_(linein,MAXLINE,dxf_fp);
+							while (strcmp(linein,"  0")!=0) {          /* Captura de las coordenadas X, Y y Z */
+								if (strcmp(linein," 10")==0) {
+									fgets_(linein,MAXLINE,dxf_fp);
 									xcoord = atof(linein);
 								}
-								if (strcmp(linein," 20\n")==0) {
-									fgets(linein,MAXLINE,dxf_fp);
+								if (strcmp(linein," 20")==0) {
+									fgets_(linein,MAXLINE,dxf_fp);
 									ycoord = atof(linein);
 								}
-								if (strcmp(linein," 30\n")==0) {
-									fgets(linein,MAXLINE,dxf_fp);
+								if (strcmp(linein," 30")==0) {
+									fgets_(linein,MAXLINE,dxf_fp);
 									zcoord = atoi(linein);
 								}
-								fgets(linein,MAXLINE,dxf_fp);
+								fgets_(linein,MAXLINE,dxf_fp);
 							}		
 							
 						/*  Impresion de las coordenadas la fichero dig_att */
 							if (line_opt->answers != NULL) {
 								i = -1 ;
 								while (line_opt->answers[++i]) {
-									sprintf(linelayer,"%s\n",line_opt->answers[i]);						
+									sprintf(linelayer,"%s",line_opt->answers[i]);						
 									if (strcmp(layer,linelayer)==0) fprintf(fout[i],"L %f %f %d \n", xcoord, ycoord, zcoord);
 							  	}
 							}
@@ -164,3 +173,23 @@ int main(int argc, char *argv[])
 	}
 	return 0;	
 }
+
+char *fgets_(char *buf, int size, FILE *fp)
+{
+	char *nl, *p;
+	static unsigned long current_size = 0;
+
+
+	if((p = fgets(buf, size, fp)) != NULL){
+		current_size += strlen(p);
+		G_percent(current_size, file_size, 2);
+		if((nl = (char *)strchr(buf, '\r')))
+			*nl = 0;
+		if((nl = (char *)strchr(buf, '\n')))
+			*nl = 0;
+	}
+
+
+	return(p);
+}
+
