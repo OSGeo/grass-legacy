@@ -266,4 +266,16 @@ G_sock_connect (char *name)
 }
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab : */
+
+int
+G_sock_socketpair(int family, int type, int protocol, int *fd)
+{
+	int		n;
+
+	if ( (n = socketpair(family, type, protocol, fd)) < 0)
+		return -1;
+	else 
+		return 0;
+}
+
 #endif
