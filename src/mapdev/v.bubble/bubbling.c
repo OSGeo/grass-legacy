@@ -39,7 +39,7 @@ int  bubbling(bubblesite bsite[], int nsites, struct Map_info *map, double units
     while (i1<nsites) {
        	for (i2=0;i2<=360;i2++) {
        	    
-	    radius=((double)radfrac*bsite[i1].z);
+	    radius=((double)radfrac*(bsite[i1].z-min));
 	    e =  radius * cos( (double)(i2) * theta );
             n =  radius * sin( (double)(i2) * theta );
             
