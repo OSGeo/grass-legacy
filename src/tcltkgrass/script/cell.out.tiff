@@ -1,0 +1,399 @@
+#!/bin/bash --
+
+# Script to create a tiff output file with the cell driver
+# Reinhard Brunzema r.brunzema@web.de
+# V 1: 29.1.2001
+
+# Clean CELL
+g.remove rast=D_cell > /dev/null
+
+function show_help  {
+echo "This program collects several display functions to create a map that can"
+echo "be exported using the cell driver. It first creates a preview on the"
+echo "selected monitor, so you can (nearly) see, what you are creating."
+echo "The maps are displayed in this order: "
+echo "1. Baserastermap"
+echo "2. Additonal rastermaps (can be displayed as overlays)"
+echo "3. Vector polygons" 
+echo "4. Vector maps"
+echo "5. Sites"
+echo "6. Legend"
+echo "(7.) Additonal commmands"
+echo
+echo "Maps that can take an selectable argument (e.g. color, size) take it form the argument"
+echo "line at the same position. (First map, first argument, second map secon argument...)."
+echo "If there are more maps than arguemnts, the defaults are used to display the remaining"
+echo "maps. Unnecassary arguments are ingnored."
+echo
+echo "You have the opportunity to use additonal display commands on your export file,"
+echo "if you use the option 'Pause before exporting'."
+return
+}
+
+function display_all {
+# This function is used for test output on the selected
+# monitor and for final output in the cell driver
+IFS=" "
+d.erase "$erasecolor"
+
+if [ -n "$baseraster" ]; then
+	d.rast map="$baseraster"
+	echo d.rast map="$baseraster"
+fi	
+sleep 1s
+if [ -n "$rastercount" ]; then
+		count=0
+		while [ $count -lt $rastercount ]
+		do
+			if [ -n "$o" ]; then
+				rastermp[$count]="${rastermp[count]}"
+				echo d.rast "${rastermp[$count]}" -o
+				d.rast "${rastermp[$count]}" -o
+			else
+				echo d.rast "${rastermp[$count]}"
+				d.rast "${rastermp[$count]}"
+			fi
+			let count=count+1
+			sleep 1s
+	done
+fi
+
+if [ -n "$vectorpolcount" ]; then
+	count=0
+	while [ $count -lt $vectorpolcount ]
+	do
+		if [ -z "${fillcol[$count]}" ]; then
+			fillcol[$count]="fillcolor=white"
+		fi
+		if [ -z "${linecol[$count]}"  ]; then
+			lc="${fillcol[$count]#*=}"
+			linecol[$count]="linecolor=$lc"
+		fi
+		echo d.area "${vectorpolmp[$count]}" "${fillcol[$count]}" "${linecol[$count]}"
+		d.area "${vectorpolmp[$count]}" "${fillcol[$count]}" "${linecol[$count]}"
+		let count=count+1
+		sleep 1s
+	done
+fi
+
+if [ -n "$vectorcount" ]; then
+	count=0
+	while [ $count -lt $vectorcount ]
+	do
+		if [ -n "${vectorcl[$count]}" ]; then
+			echo d.vect "${vectormp[$count]}" "${vectorcl[$count]}"
+			d.vect "${vectormp[$count]}" "${vectorcl[$count]}"
+		else
+			echo d.vect "${vectormp[$count]}"
+			d.vect "${vectormp[$count]}"
+		fi
+		let count=count+1
+		sleep 1s
+	done
+fi
+
+
+if [ -n "$sitecount" ]; then
+	count=0
+	while [ $count -lt $sitecount ]
+	do
+		if [ -z "${sitesz[$count]}" ]; then
+		sitesz[$count]="size=5"
+		fi
+		if [ -z "${sitecls[$count]}" ]; then
+			sitecls[$count]="color=gray"
+		fi
+		echo d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}"
+		d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}"
+		let count=count+1
+		sleep 1s
+	done
+fi
+
+if [ -n "$legendmap" ]; then
+	if [ -z "$leg_text_color" ]; then
+		leg_text_color="black"
+	fi
+	if [ -z "$leg_lines" ]; then
+		leg_lines="0"
+	fi
+	echo d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+	d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+fi
+
+return
+}
+
+if test "$GISBASE" = ""; then
+	echo "You must be in GRASS to run this program."
+	exit
+fi
+
+argnum=$#
+if test $argnum -eq 0
+then
+	show_help
+	exit
+fi
+
+# Set new default for d.erase (more usefull for export)
+erasecolor="color=white"
+
+# Read the arguments and store them in variables
+for par 
+do
+	case $par in
+		erasecolor=*)
+			erasecolor="color=${par#*=}"
+	esac
+	
+	case $par in
+		baseraster=*)
+			baseraster="${par#*=}"		
+	esac
+	
+	case $par in
+		addraster=*)
+			rastermaps="${par#*=}"
+	esac
+	
+	case $par in
+		-o)
+			o=-o
+		;;
+		-p)
+			p="pause"
+		;;
+	esac
+	
+	case $par in
+		vectormaps=*)
+			vectormaps="${par#*=}"
+		;;
+		veccols=*)
+			veccols="${par#*=}"
+		;;
+		vecpols=*)
+			vecpols="${par#*=}"
+		;;
+		linecolor=*)
+			linecolor="${par#*=}"
+		;;
+		fillcolor=*)
+			fillcolor="${par#*=}"
+		;;
+	esac
+	
+	case $par in
+		sites=*)
+			sites="${par#*=}"
+		;;
+		sizes=*)
+			sizes="${par#*=}"
+		;;
+		sitecols*)
+			sitecols="${par#*=}"
+	esac
+	
+	case $par in
+		cellxy=*)
+			cellxy="${par#*=}"
+			cellx="${cellxy%,*}"
+			celly="${cellxy#*,}"
+	esac
+	
+	case $par in
+		outfile=*)
+			outfile="${par#*=}"
+	esac
+	
+	case $par in
+		legendmap=*)
+			legendmap="${par#*=}"
+	esac
+	
+	case $par in
+		leg_text_color=*)
+			leg_text_color="${par#*=}"
+	esac
+	
+	case $par in
+		leg_lines=*)
+			leg_lines="${par#*=}"
+	esac
+	
+
+	
+done
+
+# Check for rquired parameters
+if [ -z "$cellx" -o -z "$celly" ]; then
+	echo "Error: Size of cell driver is required"
+	exit 1
+fi
+
+if [ -z "$outfile" ]; then
+	echo "Error: Name of output file is required"
+	exit 1
+fi
+
+# Get the filenames
+
+IFS=",$IFS"
+
+if [ -n "$rastermaps" ]; then
+	set -- $rastermaps
+	rastercount=$#
+	count=0
+	for rasts
+		do
+			rastermp[$count]="map=$rasts"
+			let count=count+1
+		done
+fi
+
+if [ -n "$vectormaps" ]; then
+	set -- $vectormaps
+	vectorcount=$#
+	count=0
+	for vects
+		do
+			vectormp[$count]="map=$vects"
+			let count=count+1
+		done
+fi
+
+if [ -n "$veccols" ]; then
+	set -- $veccols
+	count=0
+	for vectcols
+		do
+			vectorcl[$count]="color=$vectcols"
+			let count=count+1
+		done
+fi
+
+if [ -n "$vecpols" ]; then
+	set -- $vecpols
+	vectorpolcount=$#
+	count=0
+	for vectpols
+		do
+			vectorpolmp[$count]="map=$vectpols"
+			let count=count+1
+		done
+fi
+
+if [ -n "$linecolor" ]; then
+	set -- $linecolor
+	count=0
+	for lines
+		do
+			linecol[$count]="linecolor=$lines"
+			let count=count+1
+		done
+fi
+
+if [ -n "$fillcolor" ]; then
+	set -- $fillcolor
+	count=0
+	for fills
+		do
+			fillcol[$count]="fillcolor=$fills"
+			let count=count+1
+		done
+fi
+
+if [ -n "$sites" ]; then
+	set -- $sites
+	sitecount=$#
+	count=0
+	for sitefile
+		do
+			sitemp[$count]="sitefile=$sitefile"
+			let count=count+1
+		done
+fi
+
+if [ -n "$sizes" ]; then
+	set -- $sizes
+	count=0
+	for sizenum
+		do
+			sitesz[$count]="size=$sizenum"
+			let count=count+1
+		done
+fi
+
+if [ -n "$sitecols" ]; then
+	set -- $sitecols
+	count=0
+	for stcols
+		do
+			sitecls[$count]="color=$stcols"
+			let count=count+1
+		done
+fi
+
+
+# test output
+monitor=`d.mon -p`
+monitor="x${monitor#*x}"
+if [ -z "$monitor" ]; then
+	echo "No monitor for preview selected."
+else
+	echo "Creating preview..."
+	display_all
+fi
+
+# Prepare Cell driver
+unset GRASS_WIDTH
+unset GRASS_HEIGHT
+
+#let cellx=cellx+1
+#let celly=celly+1
+
+export GRASS_WIDTH="$cellx"
+export GRASS_HEIGHT="$celly"
+
+sleep 2s
+
+# Write to D_Cell
+echo "Starting cell driver..."
+d.mon start=CELL
+d.mon select=CELL
+echo "Plotting in D_cell..."
+sleep 1s
+display_all
+
+sleep 1s
+# Wait for additonal plot commands
+if [ -n "$p" ]; then
+	xterm -bg magenta -e wait.sh
+fi
+
+d.mon stop=CELL
+
+sleep 2s
+# Export as tiff
+echo
+echo "Saving current region settings as 'before_cell_out_tiff.'"
+echo "Use 'g.region region=before_cell_out_tiff', if the"
+echo "program aborts abnormally to return to your old region"
+echo "settings."
+echo
+g.region save=before_cell_out_tiff
+
+echo "Changing to xy-projection."
+g.region raster=D_cell
+
+echo "Exporting $outfile..."
+r.out.tiff input=D_cell output="$outfile"
+sleep 1s
+
+echo "Returning to old settings..."
+g.region region=before_cell_out_tiff
+d.mon select="$monitor"
+
+echo "Done";
+exit 0;

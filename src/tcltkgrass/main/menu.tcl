@@ -788,6 +788,9 @@ menu_build 1 .main_menu {
     }
     Export "Export maps from GRASS" {
         "Raster map" "" {
+            "GRASS CELL file as TIFF" "" {
+                "source $env(TCLTKGRASSBASE)/module/cell.out.tiff"
+            }
             "Binary file" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.bin"
             }
