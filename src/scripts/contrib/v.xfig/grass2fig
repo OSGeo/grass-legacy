@@ -10,7 +10,7 @@
 #
 # Usage      : grass2fig [inputfile ...] [> outputfile]
 
-awk --source='
+gawk --source='
 BEGIN {
     dpi=1200
 
