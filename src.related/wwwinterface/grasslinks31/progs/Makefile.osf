@@ -1,0 +1,6 @@
+# you will need to change -I and -L directories to those on 
+# your system where grass source code is
+
+lookup: lookup.c
+	cc -o lookup -g lookup.c -I/grass/osf/src/include -L/grass/osf/src/libes/LIB.axp -lgis -lm
+
