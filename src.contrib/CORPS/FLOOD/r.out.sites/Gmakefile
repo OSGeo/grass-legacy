@@ -1,0 +1,18 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+OBJ = \
+	r.out.sites.o
+
+PROG =	r.out.sites
+
+all:  $(BIN_CONTRIB_CMD)/$(PROG)
+
+
+
+#   compile the interactive versions
+
+$(BIN_CONTRIB_CMD)/$(PROG):  $(OBJ)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB)  $(MATHLIB)
+	mv a.out $@
