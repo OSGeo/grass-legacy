@@ -1,2 +1,2 @@
 all:
-	$(GMAKE) s.vol.idw
+	$(MAKEALL)
