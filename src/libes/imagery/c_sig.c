@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 I_cluster_signatures (C)
     struct Cluster *C;
