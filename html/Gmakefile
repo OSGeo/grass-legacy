@@ -8,8 +8,11 @@
 #
 
 # default manual section number is 1
-SECT = man1
-GRASS_MANDIR=$(GISBASE)/man/$(SECT)
+# SECT should be "1" not "man1". Otherwise $(HTML2MAN) and g.manual won't work.
+# "man1" is used only in GRASS_MANDIR.
+# TAKE CARE !!
+SECT = 1
+GRASS_MANDIR=$(GISBASE)/man/man$(SECT)
 GRASS_HTMLDIR=$(GISBASE)/documents
 GRASS_PSDIR=$(GISBASE)/documents/postscript
 HTML_DIR = html
