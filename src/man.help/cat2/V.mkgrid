@@ -1,0 +1,66 @@
+
+
+
+V.mkgrid(2)          GRASS Reference Manual           V.mkgrid(2)
+
+
+
+NAME
+     V.mkgrid - Creates a map of a user-defined grid
+     (Map Development Tool)
+
+SYNOPSIS
+     V.mkgrid
+
+DESCRIPTION
+     V.mkgrid will create a vector map representation of a
+     coordinate grid.  The user will be prompted for the
+     following information:
+
+     (1)  the NAME of the vector map
+
+     (2)  the number of ROWS of the grid
+
+     (3)  the number of COLUMNS of the grid
+
+     (4)  the lower left EASTING of the grid
+
+     (5)  the lower left NORTHING of the grid
+
+     (6)  the LENGTH (east-west) of the boxes in the grid
+
+     (7)  the WIDTH (north-south) of the boxes in the grid
+
+     The program ignores the current GRASS window.  It will
+     create the complete grid even if part of the grid falls
+     outside the
+
+GENERAL INFORMATION
+     The vector map is placed in the dig directory and can be
+     used like any vector map.  Run support.vect  to build the
+     topology of the vector map before using it in the digit
+     program.  Since the grid is computer-generated, the corner
+     coordinates will be exact and can be used to patch with
+     other grids.  There is no command-line driven version of
+     this program, because of the large amount of information
+     needed to drive it.
+
+NOTE
+     This is NOT to be used to generate a because quads are not
+     exact rectangles.  To generate a quads map use the program
+     V.mkquads.
+
+SEE ALSO
+     support.vect[1], digit[1], Vpatch[2], V.mkquads[2]
+
+AUTHOR
+     Michael Higgins, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
