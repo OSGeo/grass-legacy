@@ -14,7 +14,7 @@ read_doubles	read_write.c	/^read_doubles(file, num, buf)$/
 read_int	read_write.c	/^read_int(file, num, buf)$/
 scan_area_record	a_b_dlg.c	/^static  scan_area_record( str, num, x, y, n_lines,/
 scan_doubles	read_write.c	/^static scan_doubles( todo, coor_str, tmp )$/
-scan_node_record	a_b_dlg.c	/^static  $/
+scan_node_record	a_b_dlg.c	/^scan_node_record( str, num, x, y, n_lines, n_atts)/
 write_bdlg_head	w_bdlg_hd.c	/^write_bdlg_head(bin, cnum)$/
 write_double	read_write.c	/^write_double(file, num, buf)$/
 write_doubles	read_write.c	/^write_doubles (file, num, x_coors, y_coors)$/
