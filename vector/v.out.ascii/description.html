@@ -1,0 +1,46 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.out.ascii</em> 
+converts a GRASS vector map in binary format to a GRASS vector map in ASCII 
+format. Using flag <b>-o</b> <em>v.out.ascii</em> output will be in old 
+(version 4) ascii format.
+
+<h2>NOTES</h2>
+
+The GRASS program  <em><a HREF="v.in.ascii.html">v.in.ascii</a></em> 
+performs the function of <em>v.out.ascii</em> in reverse; i.e., it
+converts vector files in ASCII format to their binary format. 
+These two companion programs are useful both for importing and exporting 
+vector files between GRASS and other software, and for transferring data 
+between machines.
+
+<p>
+
+The output from <em>v.out.ascii</em> will be placed in the user's current 
+mapset under the <em>$LOCATION/dig_ascii</em> directory.
+
+<p>
+
+<em>v.out.ascii</em> does not copy the <em>dig_cats</em>
+file associated with the binary vector <em>input</em> map
+to the new <em>output</em> file name.  The user must copy
+the <em>dig_cats</em> file to the new <em>output</em> name
+if this is desired (e.g., using the UNIX <em>cp</em>
+
+command).
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.in.ascii.html">v.in.ascii</a></em>
+
+<h2>AUTHORS</h2>
+
+Michael Higgins, 
+U.S. Army Construction Engineering 
+Research Laboratory
+<br>
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+<br>
+Radim Blazek, ITC-Irst, Trento, Italy
