@@ -13,7 +13,7 @@ eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
 
-# exit session. remove unwanted cell files
+# exit session. remove unwanted files
 
 clear
 echo ""
@@ -118,7 +118,7 @@ case $ans in
 	    $GISBASE/etc/echo -n "Do you wish to selectively remove data files? y/n [n]"
 	    read ans
 	    case $ans in
-		y|yes|Y|YES|Yes)
+		y|yes|Y|YES|Yes) 
 		    $GISBASE/bin/g.remove  ;;
 		*) ;;
 	    esac
