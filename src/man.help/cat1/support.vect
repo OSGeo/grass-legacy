@@ -1,0 +1,66 @@
+
+
+
+support.vect(1)      GRASS Reference Manual       support.vect(1)
+
+
+
+NAME
+     support.vect - Creates support files for vector
+     (Map Development Tool)
+
+SYNOPSIS
+     support.vect
+
+DESCRIPTION
+     The user is given two options in the support.vect program.
+
+     The first option analyzes existing vector creating a file
+     describing the topology of the vector This file is stored in
+     the dig_plus directory.  This same process can be performed
+     by choosing option 4 in the import.to.vect[1] program. A
+     dig_plus file must be created for each imported vector
+     before it can be used in the GRASS 3,0 version of digit[1].
+
+     The user will be asked for the name of the binary vector to
+     convert, and whether nodes should be snapped to other nodes
+     within a threshold.  The user may either use the calculated
+     default threshold (calculated using the scale of the vector
+     or choose a new threshold.
+
+     The second option allows the user to enter category labels
+     for vector These labels, if created, will be used for cell
+     derived from their vector counterpart.  These labels are
+     placed in the dig_cats directory.
+
+SEE ALSO
+     digit[1], import.to.vect[1]
+
+AUTHOR
+     Dave Gerdes, U.S. Army Construction Engineering Research
+     Laboratory
+     Michael Higgins, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
