@@ -1,0 +1,23 @@
+This directory contains the source code of the latest release of
+HDF library, the makefiles for various platforms and an INSTALL
+file.
+
+If you use the top level makefile to compile and install the 
+library, you don't need to use the makefiles in this directory.
+
+The file Mac-Makefile.hqx contains the makefile for the Macs,
+the file  makepc.msc is for IBM-PC, and the file Makefile is for
+UNIX machines. You need to modify the lines marked "# ==>" in
+Makefile for the platform you are using. 
+
+VAX/VMS users should use MAKENOF.COM to compile the C interface 
+and MAKEFS.COM to compile the Fortran interface. 
+
+The file INSTALL explains how to compile different parts of the
+library using the Makefile.
+
+If you need more information, please contact Shiming Xu at
+
+sxu@ncsa.uiuc.edu
+(217)244-3830
+
