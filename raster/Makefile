@@ -14,7 +14,7 @@ SUBDIRS1 = \
 	r.neighbors \
 	r.stats
 
-GDALBASED = r.gdal
+GDALBASED = r.in.gdal
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
