@@ -1,8 +1,9 @@
 /*
-**  Written by Dave Gerdes  6/89
-**  US Army Construction Engineering Research Lab
-**
-**  New parser installed, 12/90 David Stigberg
+**  - Written by Dave Gerdes  6/89
+**    US Army Construction Engineering Research Lab
+**  - New parser installed, 12/90 David Stigberg
+**  - corrected line 115 (and rewritten ../diglib/prune.c) 2/98 Michel Wurtz
+**  - added v.support check line 233 Markus Neteler 7/98
 */
 #include    <stdio.h>
 #include    "gis.h"
@@ -111,7 +112,8 @@ char **argv;
 		exit (-1);
 	}
 
-	if (threshold == 0.0)
+/*	if (threshold == 0.0)  Changed 25.2.98*/
+	if (threshold < 0.0)
 	{
 		fprintf (stderr, "%s: Command line error: missing or improper threshold value.\n\n", argv[0]);
 		G_usage();
@@ -225,6 +227,12 @@ char *dig_name, *mapset, *out_name;
 	if (0 > Vect_open_old (&InMap, dig_name, mapset))
 	{
 		sprintf(errmsg, "Not able to open vector file <%s>\n", dig_name) ;
+		G_fatal_error (errmsg);
+	}
+        /* added v.support check 6.7.98 */
+        if (2 > Vect_open_old (&InMap, dig_name, mapset))
+	{
+		sprintf(errmsg, "Must first run v.support on vector file <%s>\n", dig_name) ;
 		G_fatal_error (errmsg);
 	}
 
