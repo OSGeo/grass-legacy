@@ -47,7 +47,10 @@
 
 #define	DEFAULT_ALIGN		"ll"
 #define	DEFAULT_ROTATION	"0"
+#define	DEFAULT_LINESPACING	"1.1"
 
+/* font size conversion */
+#define	CNV			(0.8*64)
 
 #define	deinit()		{if(face)				\
 					FT_Done_Face(face);		\
@@ -103,10 +106,12 @@ main(int argc, char **argv)
 		struct	Option	*size;
 		struct	Option	*align;
 		struct	Option	*rotation;
+		struct	Option	*linespacing;
 	} param;
 
 	struct
 	{
+		struct	Flag	*b;
 		struct	Flag	*r;
 		struct	Flag	*p;
 		struct	Flag	*n;
@@ -122,14 +127,14 @@ main(int argc, char **argv)
 
 	FT_Library	library = NULL;
 	FT_Face		face = NULL;
-	FT_Vector	dim, pen;
+	FT_Vector	dim, pen, pen2;
 
 	int	driver = 0;
 	char	win_name[64];
 	rectinfo	win;
 	char	*text, *path, *charset, *tcolor;
-	int	color;
-	double	east, north, size, rotation;
+	int	bold, color;
+	double	east, north, size, rotation, linespacing;
 	int	i, l, ol, x, y;
 	unsigned char	*out;
 
@@ -211,6 +216,16 @@ main(int argc, char **argv)
 	param.rotation->answer      = DEFAULT_ROTATION;
 	param.rotation->description = "Rotation angle in degrees (counterclockwise)";
 
+	param.linespacing = G_define_option();
+	param.linespacing->key         = "linespacing";
+	param.linespacing->type        = TYPE_DOUBLE;
+	param.linespacing->required    = NO;
+	param.linespacing->answer      = DEFAULT_LINESPACING;
+	param.linespacing->description = "Line spacing";
+
+	flag.b = G_define_flag();
+	flag.b->key         = 'b';
+	flag.b->description = "Use bold text";
 
 	flag.r = G_define_flag();
 	flag.r->key         = 'r';
@@ -283,6 +298,7 @@ main(int argc, char **argv)
 	if(size == 0.0)
 		size = atof(DEFAULT_SIZE);
 
+	bold = flag.b->answer;
 	if(!flag.c->answer)
 		fprintf(stderr, "Font=<%s:%s:%s:%.2f>\n\n",
 				path, charset, tcolor, size);
@@ -294,6 +310,8 @@ main(int argc, char **argv)
 	rotation = fmod(rotation, 2 * M_PI);
 	if(rotation < 0.0)
 		rotation += 2 * M_PI;
+
+	linespacing = atof(param.linespacing->answer);
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
@@ -309,9 +327,8 @@ main(int argc, char **argv)
 	D_get_screen_window(&win.t, &win.b, &win.l, &win.r);
 	R_set_window(win.t, win.b, win.l, win.r);
 
-	size *= 0.8;
 	if(!flag.s->answer)
-		size = size/100.0*(double)(win.b-win.t);
+		size *= (double)(win.b-win.t)/100.0;
 
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
@@ -321,7 +338,7 @@ main(int argc, char **argv)
 		if(set_font(library, &face, path))
 			error("Unable to create face");
 
-		if(FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
+		if(FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
 			error("Unable to set size");
 	}
 
@@ -347,10 +364,21 @@ main(int argc, char **argv)
 
 		pen.x = x;
 		pen.y = y;
-
 		get_ll_coordinates(face, out, ol,
 				param.align->answer, rotation, &pen);
+		pen2 = pen;
 		draw_text(win, face, &pen, out, ol, color, rotation);
+
+		if(bold){
+			pen.x = pen2.x + 64 * cos(rotation);
+			pen.y = pen2.y - 64 * sin(rotation);
+			pen2 = pen;
+			draw_text(win, face, &pen, out, ol, color, rotation);
+
+			pen.x = pen2.x - 64 * sin(rotation);
+			pen.y = pen2.y - 64 * cos(rotation);
+			draw_text(win, face, &pen, out, ol, color, rotation);
+		}
 
 		if(param.east_north->answer)
 			D_add_to_list(G_recreate_command());
@@ -392,7 +420,7 @@ main(int argc, char **argv)
 		y = py = sy;
 
 		if(isatty(0))
-			fprintf(stdout, "\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n\n");
+			fprintf(stdout, "\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n");
 
 		tmpfile = G_tempfile();
 		if(!(fp = fopen(tmpfile, "w")))
@@ -446,7 +474,7 @@ main(int argc, char **argv)
 							charset = transform_string(c+1, toupper);
 						if(set_font(library, &face, path))
 							error("Unable to create face");
-						if(FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
+						if(FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
 							error("Unable to set size");
 						break;
 					case 'C':
@@ -457,12 +485,15 @@ main(int argc, char **argv)
 						i = 0;
 						if(strchr("+-", p[0]))
 							i = 1;
-						d = 0.8 * atof(p);
+						d = atof(p);
 						if(p[l-1] != 'p')
-							d = d/100.0*(double)(win.b-win.t);
+							d *= (double)(win.b-win.t)/100.0;
 						size = d + (i ? size : 0);
-						if(face && FT_Set_Char_Size(face, 64*size, 64*size, 100, 100))
+						if(face && FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
 							error("Unable to set size");
+						break;
+					case 'B':
+						bold = (atoi(p) ? 1 : 0);
 						break;
 					case 'A':
 						strncpy(align, p, 2);
@@ -478,6 +509,9 @@ main(int argc, char **argv)
 						rotation = fmod(dd, 2 * M_PI);
 						if(rotation < 0.0)
 							rotation += 2 * M_PI;
+						break;
+					case 'I':
+						linespacing = atof(p);
 						break;
 					case 'X':
 						setx = 1;
@@ -504,7 +538,7 @@ main(int argc, char **argv)
 							i = 1;
 						d = atof(p);
 						if(p[l-1] == '%')
-							d = d/100.0*(double)(win.b-win.t);
+							d *= (double)(win.b-win.t)/100.0;
 						else
 						if(p[l-1] != 'p')
 						{
@@ -525,7 +559,7 @@ main(int argc, char **argv)
 							i = 1;
 						dd = atof(p);
 						if(p[l-1] == '%')
-							dd = dd/100.0 * (double)(win.r-win.l);
+							dd *= dd/100.0 * (double)(win.r-win.l);
 						else
 						if(p[l-1] != 'p')
 							dd = D_u_to_d_col(dd);
@@ -537,7 +571,7 @@ main(int argc, char **argv)
 							i = 1;
 						dd = atof(p);
 						if(p[l-1] == '%')
-							dd = dd/100.0 * (double)(win.b-win.t);
+							dd *= (double)(win.b-win.t)/100.0;
 						else
 						if(p[l-1] != 'p')
 							dd = D_u_to_d_row(dd);
@@ -561,20 +595,31 @@ main(int argc, char **argv)
 				if(linefeed || setl)
 				{
 					if(!setx)
-						x = px + size / 0.8 * sin(rotation);
+						x = px + size * linespacing * sin(rotation);
 					if(!sety)
-						y = py + size / 0.8 * cos(rotation);
+						y = py + size * linespacing * cos(rotation);
 					px = x;
 					py = y;
 				}
 
 				pen.x = x;
 				pen.y = y;
-
 				get_ll_coordinates(face, out, ol,
 						align, rotation, &pen);
+				pen2 = pen;
 				draw_text(win, face, &pen, out, ol,
 						color, rotation);
+
+				if(bold){
+					pen.x = pen2.x + 64 * cos(rotation);
+					pen.y = pen2.y - 64 * sin(rotation);
+					pen2 = pen;
+					draw_text(win, face, &pen, out, ol, color, rotation);
+
+					pen.x = pen2.x - 64 * sin(rotation);
+					pen.y = pen2.y - 64 * cos(rotation);
+					draw_text(win, face, &pen, out, ol, color, rotation);
+				}
 
 				if(!linefeed)
 				{

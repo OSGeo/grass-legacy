@@ -4,8 +4,10 @@
 . .F {font|path}[:charset]		font
 . .C {color_name|0xRRGGBB}		color
 . .S [+|-]size[p]			size		p means pixel size
+. .B {0|1}				bold
 . .A {ll|lc|lr|cl|cc|cr|ul|uc|ur}	align
 . .R [+|-]rotation[r]			rotation	r means radian rotation
+. .I linespacing			linespacing
 . .X [+|-]x[%|p]			x-coord		+|- means relative dx
 . .Y [+|-]y[%|p]			y-coord		% means percentage
 . .L {0|1}				linefeed
