@@ -81,7 +81,6 @@ set display_vector {
         ""
     }
 }
-
 set display_sites {
     "Display site markers (symbols)" "" {
         "source $env(TCLTKGRASSBASE)/module/d.sites"
@@ -95,62 +94,6 @@ set display_sites {
     }
     "Display point markers (icons)" "" {
         "source $env(TCLTKGRASSBASE)/module/d.icons"
-    }
-}
-
-set misc {
-    "Coordinate Conversions" "" {
-	"Projection/Coordinate conversion" "" {
-	    "run m.proj &"
-	}
-	"Datum Shift" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.datum.shift"
-	}
-	"geocentric to lat/lon" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.gc2ll"
-	}
-	"lat/lon to geocentric" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.ll2gc"
-	}
-	"UTM to lat/lon" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.u2ll"
-	}
-	"lat/lon to UTM" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.ll2u"
-	}
-    }
-    -separator
-    "DEM/DTED" "" {
-	"DEM examination" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.dem.examine"
-	}
-	"DEM extraction" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.dem.extract"
-	}
-	"DTED examination" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.dted.examine"
-	}
-	"DTED extraction" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.dted.extract"
-	}
-    }
-    -separator
-    "Other" "" {
-	"Rotate elevation data 90 degree" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.rot90"
-	}
-	"Flip elevation data" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.flip"
-	}
-	"CTG data from USGS lulc file" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.lulc.USGS"
-	}
-	"Information on Tiger Region" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.tiger.region"
-	}
-	"UTM Region to lat/lon Region" "" {
-	    "source $env(TCLTKGRASSBASE)/module/m.region.ll"
-	}
     }
 }
 
@@ -227,6 +170,62 @@ set image_processing {
     }
 }
 
+set misc {
+    "Coordinate Conversions" "" {
+	"Projection/Coordinate conversion" "" {
+	    "run m.proj &"
+	}
+	"Datum Shift" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.datum.shift"
+	}
+	"geocentric to lat/lon" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.gc2ll"
+	}
+	"lat/lon to geocentric" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.ll2gc"
+	}
+	"UTM to lat/lon" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.u2ll"
+	}
+	"lat/lon to UTM" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.ll2u"
+	}
+    }
+    -separator
+    "DEM/DTED" "" {
+	"DEM examination" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dem.examine"
+	}
+	"DEM extraction" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dem.extract"
+	}
+	"DTED examination" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dted.examine"
+	}
+	"DTED extraction" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dted.extract"
+	}
+    }
+    -separator
+    "Other" "" {
+	"Rotate elevation data 90 degree" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.rot90"
+	}
+	"Flip elevation data" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.flip"
+	}
+	"CTG data from USGS lulc file" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.lulc.USGS"
+	}
+	"Information on Tiger Region" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.tiger.region"
+	}
+	"UTM Region to lat/lon Region" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.region.ll"
+	}
+    }
+}
+
 # main menu
 
 menu_build 1 .main_menu {
@@ -291,9 +290,6 @@ menu_build 1 .main_menu {
             "Dialog font" "" {
                 "fontsel {Dialog font} dialog_font"
             }
-	    "Help font" "" {
-		"fontsel {Help font} help_font"
-	    }
             -separator
             "Display dimensions" "" {
                 setdisplay
@@ -783,6 +779,9 @@ menu_build 1 .main_menu {
             "ASCII GRASS vector file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.ascii"
             }
+            "ARC/INFO E00 file" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.out.e00"
+            }
             "ARC/INFO ungenerate file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.arc"
             }
@@ -831,44 +830,82 @@ menu_build 1 .main_menu {
     }
     Misc "Miscellanous Conversions" $misc
     Databases "Databases" {
-        "General" "" {
-            "Select DB" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.select.pg"
-            }
-	    "List tables" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.table.pg"
-            }
-	    "List columns" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.column.pg"
-            }
+        "PostgreSQL" "" {
+            "General" "" {
+                "Select DB" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.select.pg"
+                }
+    	    "List tables" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.table.pg"
+                }
+            "List columns" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.column.pg"
+                }
 	    "Column stats" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+                    "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+                }
+            }
+            "Query" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+                }
+            }
+	    "Display" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+                }
+            "Reclass vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+                }
             }
         }
-	"Query" "" {
-            "Vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+	-separator
+	"DBMI" "" {
+            "Select driver" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect.driver"
             }
-	    "Sites" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+            "Connect" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect"
             }
-	    "Raster" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+            -separator
+	    "List tables" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.tables"
+            }	    	    
+            "List columns" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.columns"
             }
-        }
-	"Display" "" {
-            "Vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+            "Describe table" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.describe"
             }
-	    "Sites" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+            -separator
+            "Select all" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select.all"
+            }	    
+            "Select" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select"
+            } 
+            "Execute" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.execute"
             }
-	    "Raster" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+	    -separator
+            "Reclass vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.db.reclass"
             }
-	    "Reclass vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
-            }
+            "Load vector to DB" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.to.db"
+            }	    	    
         }
     }
     Help Help {
