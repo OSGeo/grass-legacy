@@ -1,0 +1,13 @@
+interface_build {
+    {r.buffer} 0
+    {Creates a raster map layer showing buffer zones surrounding cells that contain non-zero category values.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry distances {Distance zone(s) (value[,value,...]):} 0 ""}
+    {checkbox units {Meters (default).} "" meters}
+    {checkbox units {Kilometers.} "" kilometers}
+    {checkbox units {Feet.} "" feet}
+    {checkbox units {Miles.} "" miles}
+    {separator grey 1}
+    {checkbox -q {Run quietly.} "" -q}
+}
