@@ -1,14 +1,13 @@
 
 
 
-s.to.vect <contrib>  GRASS Reference Manual   <contrib>	s.to.vect
+s.to.vect <contrib>   GRASS Reference Manual  <contrib> s.to.vect
 
 
 
 NAME
-     s.to.vect - Converts a GRASS site_lists file into a vector
-     file.
-     (SCS GRASS	Sites Program)
+     s.to.vect - convert a site_list into a vector (digit) file
+     (GRASS Sites Program)
 
 SYNOPSIS
      s.to.vect
@@ -16,29 +15,39 @@ SYNOPSIS
      s.to.vect input=name output=name
 
 DESCRIPTION
-     s.to.vect converts	GRASS site_lists file into vector files.
-     The resulting vector file can be treated as any other vector
-     file.  The	requirements of	the site_lists file are	standard
-     (i.e., a regular site_lists file format is	required).
-     Site_lists	file values are	used as	dig_cats category values.
+	       s.to.vect works in a similar manner as converting
+	  site_lists into raster files, only creates vector
+	  files. The resulting vector file can be treated as any
+	  other vector file. The requirements of the site_list
+	  file are standard, meaning a regular site_list format
+	  is required. Site_list values are used as dig_cats
+	  category values.
 
-COMMAND	LINE OPTIONS
-     Parameters:
 
-     input=name	       Name of input GRASS site_lists file to be
-		       converted.
+COMMAND LINE OPTIONS
+     Usage.
 
-     output=name       Name to be assigned to the vector output
-		       file.
+     s.to.vect
+	  input=name output=name.
 
+     Parameters.
+
+     input
+	  Name of site input file.
+
+     output
+	  Name of vector output file.
+
+BUGS
+SEE ALSO
 AUTHOR
-     R.L. Glenn, USDA, SCS, NHQ-CGIS
+     R.L.Glenn, USDA, SCS, NHQ-CGIS
 
 
 NOTICE
-     This program is part of the contrib section of the	GRASS
-     distribution.  As such, it	is externally contributed code
-     that has not been examined	or tested by the Office	of GRASS
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
      Integration.
 
 
@@ -51,16 +60,7 @@ NOTICE
 
 
 
-
-
-
-
-
-
-
-
-
-GRASS 4.2		Baylor University			1
+GRASS 4.2.1		Baylor University			1
 
 
 
