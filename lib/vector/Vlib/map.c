@@ -100,6 +100,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     struct field_info *Fi, *Fin;
     char   old_path[1000], new_path[1000], cmd[2000]; 
     struct stat info;
+    dbDriver *driver;
 
     G_debug (3, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
 
@@ -169,6 +170,16 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 	    Vect_close ( &Out );
 	    return -1;
 	}
+
+	driver = db_start_driver_open_database ( Fin->driver, Vect_subst_var(Fin->database,&Out) );
+	if ( driver == NULL ) {
+	    G_warning ( "Cannot open database -> create index" );
+	} else {
+	    if ( db_create_index2(driver, Fin->table, Fi->key ) != DB_OK )
+		G_warning ( "Cannot create index" );
+
+	    db_close_database_shutdown_driver ( driver );
+	}
     }
     
     Vect_close ( &In );
@@ -194,6 +205,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
     struct Map_info Map;
     struct field_info *Fin, *Fout;
     int *fields;
+    dbDriver *driver;
 
     G_debug (2, "Rename vector '%s' to '%s'", in, out );
 
@@ -273,6 +285,16 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	    G_warning ( "Cannot delete table" );
 	    Vect_close ( &Map );
 	    return -1;
+	}
+
+	driver = db_start_driver_open_database ( Fout->driver, Vect_subst_var(Fout->database, &Map) );
+	if ( driver == NULL ) {
+	    G_warning ( "Cannot open database -> create index" );
+	} else {
+	    if ( db_create_index2(driver, Fout->table, Fout->key ) != DB_OK )
+		G_warning ( "Cannot create index" );
+
+	    db_close_database_shutdown_driver ( driver );
 	}
     }
     
@@ -394,6 +416,7 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 {
     int i, n, ret, type;
     struct field_info *Fi, *Fin;
+    dbDriver *driver;
 
     G_debug (2, "Vect_copy_tables()");
 
@@ -424,6 +447,16 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 	if ( ret == DB_FAILED ) {
 	    G_warning ( "Cannot copy table" );
 	    return -1;
+	}
+
+	driver = db_start_driver_open_database ( Fin->driver, Vect_subst_var(Fin->database,Out) );
+	if ( driver == NULL ) {
+	    G_warning ( "Cannot open database -> create index" );
+	} else {
+	    if ( db_create_index2(driver, Fin->table, Fi->key ) != DB_OK )
+		G_warning ( "Cannot create index" );
+
+	    db_close_database_shutdown_driver ( driver );
 	}
     }
 
