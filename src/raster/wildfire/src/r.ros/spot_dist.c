@@ -119,8 +119,8 @@ int	row0, col0; /* the current cell */
 
 		if (DATA(map_elev,row,col) > z) {
 #ifdef DEBUG
-printf ("\nA return: m%d U=%d(m/h) h0=%d(m) e0(%d,%d)=%d z=%d(m) e(%d,%d)=%d 
-s=%d(m)", (int)fuel, (int)U, (int)h0, row0,col0,DATA(map_elev,row0,col0), 
+printf ("\nA return: m%d U=%d(m/h) h0=%d(m) e0(%d,%d)=%d z=%d(m) e(%d,%d)=%d s=%d(m)",
+(int)fuel, (int)U, (int)h0, row0,col0,DATA(map_elev,row0,col0), 
 (int)z, row,col,DATA(map_elev,row,col), S);
 #endif
 			return (S);
