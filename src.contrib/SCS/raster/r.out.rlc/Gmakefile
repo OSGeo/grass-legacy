@@ -1,4 +1,4 @@
-LIST = main.o percent.o
+LIST = main.o
 
 $(BIN_CMD)/r.out.rlc: $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(SHAREDLIB) $(MATHLIB) $(XDRLIB)

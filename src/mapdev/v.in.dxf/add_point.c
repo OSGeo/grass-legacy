@@ -4,6 +4,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "dxf2vect.h"
 #include "Vect.h"
 

@@ -56,8 +56,8 @@ int I_list_cameras (int full)
 	fprintf (temp, "no camera files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "$PAGER %s", tempfile);
-    system(buf);
+    sprintf (buf, "$GRASS_PAGER %s", tempfile);
+    G_system(buf);
     unlink (tempfile);
     fprintf (stderr, "hit RETURN to continue -->");
     G_gets(buf);

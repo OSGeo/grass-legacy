@@ -1,3 +1,20 @@
+NVIZ TODOs:
+
+  - The second issue is with the error you report above when entering a
+    vertical exag. manually.  The error that you are getting is a TCL error. 
+    To try and get a decent vertical exaggeration you should try manually
+    setting is as you were doing above above. Because you are dealing with
+    such small numbers you may have to enter the value a couple of times
+    before it is accepted. The reason for this is that TCL want to use a
+    value that is a multiple of the scale-bar resolution.  The resolution
+    should be reset to match the value you have entered -- it is this
+    calculation that is generating the error (I think) that you describe
+    above.
+
+  - nviz does not work well with latitude-longitude projections because it
+    uses decimal degrees instead of metres for the resolution. Thus is why
+    the vertical exaggeration is such a small number.
+
   - Z axis scalable when displaying 3D sites
     (Being worked on by ?)
 

@@ -1,5 +1,7 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
+#include "dbvect.h"
 
 static int *area_list, nareas;;
 static int *line_list, nlines;
@@ -30,7 +32,7 @@ static int cmp_lines2(a,n)
 	return *a - V2_line_att(Map, line_list[n]);
 }
 
-build_lookup_tables (M)
+void build_lookup_tables (M)
 	struct Map_info *M;
 {
 	int i;
@@ -68,7 +70,7 @@ find_area (cat, count, M)
 		*count = 0;
 		return NULL;
 	}
-	*count = bin_search (&cat, nareas, &start, cmp_areas2);
+	*count = bin_search (&cat, nareas, &start, (int*) cmp_areas2);
 	if (*count) return area_list + start;
 	else return NULL;
 }
@@ -84,7 +86,7 @@ find_line (cat, count, M)
 		*count = 0;
 		return NULL;
 	}
-	*count = bin_search (&cat, nlines, &start, cmp_lines2);
+	*count = bin_search (&cat, nlines, &start, (int*) cmp_lines2);
 	if (*count) return line_list + start;
 	else return NULL;
 }

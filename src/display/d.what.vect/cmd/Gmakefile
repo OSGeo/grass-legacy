@@ -1,6 +1,5 @@
 PGM = d.what.vect
 OFILES = \
-	attr.o \
 	main.o \
 	openvect.o\
 	what.o
@@ -8,8 +7,7 @@ OFILES = \
 
 all: $(BIN_CMD)/$(PGM)
 
-DBMILIB = $(LIBDIR)/libdbmi.a
-LIBES=$(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DBMILIB)
+LIBES=$(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
 $(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -117,14 +117,6 @@ char *argv[];
 		"and flowline  densities from a raster digital elevation "
 		"model using a modified multiple directions algorithm.";
 
-        if(G_get_set_window(&cellhd)==-1) exit(0);
-        stepx = cellhd.ew_res/cellhd.ew_res;
-        stepy = cellhd.ns_res/cellhd.ew_res;
-        n/*n_cols*/ = cellhd.cols;
-        m/*n_rows*/ = cellhd.rows; 
-        xmin = 0.;
-        ymin = 0.;
-
 	parm.elevin = G_define_option();
 	parm.elevin->key = "elevin";
 	parm.elevin->type = TYPE_STRING;
@@ -190,6 +182,14 @@ char *argv[];
 	if (G_parser(argc,argv))
 		exit(1);
 
+        if(G_get_set_window(&cellhd)==-1) exit(0);
+        stepx = cellhd.ew_res/cellhd.ew_res;
+        stepy = cellhd.ns_res/cellhd.ew_res;
+        n/*n_cols*/ = cellhd.cols;
+        m/*n_rows*/ = cellhd.rows; 
+        xmin = 0.;
+        ymin = 0.;
+
         ori=flag.down->answer;      
 
 /*       fprintf(stdout, "ori= %d \n", ori);*/
@@ -203,15 +203,16 @@ char *argv[];
 
 	sscanf(parm.skip->answer,"%d",&skip) ;
 
-        
+	if (!parm.flout->answer && !parm.lgout->answer && !parm.dsout->answer)
+		G_fatal_error("You must select one or more output maps (flout, lgout, dsout).");
+
 /**********end of parser - ******************************/
 
        INPUT();
        calculate();
        OUTGR(); 
-       fprintf(stderr,"\n");
-       
-   return 1;
+    
+       return 1;
 }
 
 
@@ -1437,7 +1438,6 @@ void calculate()
 
 	w = 3.*sqrt((double)(n * n + m * m));
 	k = (int) w;
-	fprintf(stderr, "\n\nWorking...");
         px = (double *)G_malloc(k * sizeof(double)); 
 	py = (double *)G_malloc(k * sizeof(double));
 
@@ -1490,7 +1490,6 @@ void calculate()
 
     for (j = 0; j < m; j++) 
     {
-        G_percent(j,m,5);
 	for (i = 0; i < n; i++) 
         {
 	imin0 = i - 1;
@@ -1567,8 +1566,10 @@ void calculate()
 	       }
              }
          }
+    G_percent(j, m, 2);
     }
 
+ G_percent(m, m, 2); /* to reach 100% */
  free(px); free(py);  
  if ( flout != NULL)
  {

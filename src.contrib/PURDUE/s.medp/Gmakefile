@@ -4,12 +4,12 @@ LIST =handle.o readsites.o main.o medpolish.o examine.o cats_att.o \
 	init_head.o  points.o myprint.o length.o longest.o \
 	wind_overlap.o georesid.o report.o iteration.o
 
-LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASKLIB) $(DIG_ATTLIB) $(DATETIMELIB)
+LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(DIG_ATTLIB) $(DATETIMELIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
 $(LIST): polish.h 
- 
+
 $(LIBES): #
 
 

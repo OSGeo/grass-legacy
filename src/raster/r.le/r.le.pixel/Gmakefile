@@ -1,0 +1,10 @@
+PGM = r.le.pixel
+
+OFILES =  main.o input.o driver.o cellclip.o texture.o
+
+LIBES = $(GISLIB) $(VECTLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,5 +1,5 @@
-#include "raster.h"
 #include <stdio.h>
+#include "raster.h"
 #include "gis.h"
 #include "monitors.h"
 #include "open.h"
@@ -8,9 +8,11 @@ int
 main (int argc, char *argv[])
 {
     struct MON_CAP *cap;
-    struct MON_CAP *R_parse_monitorcap();
     char *status;
     char *fmt = "%-15s %-30s %s\n";
+    char *mon_name;
+
+    mon_name = G__getenv("MONITOR");
 
     fprintf (stdout,fmt, "name","description","status");
     fprintf (stdout,fmt, "----","-----------","------");
@@ -21,7 +23,9 @@ main (int argc, char *argv[])
         switch(R_open_driver())
         {
         case OK:
-            status = "running";
+	    status = mon_name && (strcmp(cap->name, mon_name) == 0)
+		? "running (selected)"
+		: "running";
             R_close_driver();
             R_release_driver();
             break;

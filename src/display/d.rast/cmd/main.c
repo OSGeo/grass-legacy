@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "raster.h"
 #define MAIN
@@ -45,7 +46,7 @@ int main(
     catlist->type        = TYPE_STRING;
     catlist->required    = NO;
     catlist->multiple    = YES;
-    catlist->description = "List of categories to be displayed";
+    catlist->description = "List of categories to be displayed (INT maps)";
 
     vallist              = G_define_option();
     vallist->key         = "vallist";
@@ -53,7 +54,7 @@ int main(
     vallist->type        = TYPE_STRING;
     vallist->required    = NO;
     vallist->multiple    = YES;
-    vallist->description = "List of values to be displayed";
+    vallist->description = "List of values to be displayed (FP maps)";
 
     bg              = G_define_option();
     bg->key         = "bg";

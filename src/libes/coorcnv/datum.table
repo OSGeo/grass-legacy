@@ -49,7 +49,6 @@ agd84	"Australian Geodetic 1984"	  australian    dx=-134     dy=-48      dz=149
 grs80	"Geographic Reference System 1980" wgs84        dx=0.0      dy=0.0      dz=0.0
 # Rome 1940
 rome40	"Rome 1940"			  international	dx=-225     dy=-65      dz=9
-
 # from Geodetic Datum List, Peter H. Dana, 07/12/97, dlist.html
 # South Asia
 Sasia	"South Asia"			  fschr60m	dx=7.0 	    dy=-10.0    dz=-26.0
@@ -57,3 +56,5 @@ Sasia	"South Asia"			  fschr60m	dx=7.0 	    dy=-10.0    dz=-26.0
 S-42	"S-42"				  krassovsky	dx=28.0     dy=-121.0   dz=-77.0
 # Potsdam Rauenberg 1950 DHDN
 potsdam "Potsdam Rauenberg 1950 DHDN"	  bessel	dx=606.0    dy=23.0     dz=413.0
+# Carthage 1934 Tunisia
+carthage "Carthage 1934 Tunisia"	  	  clark80	dx=-263.0	dy=6.0	dz=431.0

@@ -157,7 +157,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 		}
 		if (strncmp(answer, "list", 4) == 0) {
 			if (isatty(1))
-				sprintf(buff, "more %s", Tmp_file1);
+				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
 			system(buff);
@@ -259,7 +259,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 		}
 		if (strncmp(answer, "list", 4) == 0) {
 			if (isatty(1))
-				sprintf(buff, "more %s", Tmp_file1);
+				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
 			system(buff);

@@ -5,7 +5,10 @@
  *
  * MODULE:       s.in.ascii
  * AUTHOR(S):    Michael Shapiro - US Army CERL
- *               Markus Neteler - neteler@geog.uni-hannover.de
+ *               Improvements:
+ *                     Markus Neteler - neteler@geog.uni-hannover.de
+ *                     Eric Miller
+ *                     added timestamp 1/2002 MN
  * PURPOSE:      Import ASCII sites lists and their descriptions into
  *               a GRASS sites list file. 
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
@@ -21,6 +24,7 @@
 #include "gis.h"
 #include "site.h"
 #include "local_proto.h"
+#include <stdlib.h>
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
                   * required for s.to.vect and s.to.rast */
@@ -35,11 +39,12 @@ main (int argc, char *argv[])
     struct GModule *module;
     FILE *in_fd, *out_fd;
     Site *site;
+    Site_head shead;
+    struct TimeStamp ts;
     struct
     {
-	struct Option *input, *output, *dims, *fs;
+	struct Option *input, *output, *dims, *fs, *date;
     } parm;
-    struct Flag *elev;
 
     G_gisinit (me = argv[0]);
 
@@ -75,6 +80,13 @@ main (int argc, char *argv[])
     parm.fs->description = "input field separator";
     parm.fs->answer = "space";
 
+    parm.date = G_define_option();
+    parm.date->key = "date";
+    parm.date->key_desc = "timestamp";
+    parm.date->required = NO;
+    parm.date->type = TYPE_STRING;
+    parm.date->description = "datetime, datetime1/datetime2, or none";
+
     if (G_parser(argc,argv))
 	exit(-1);
 	
@@ -92,6 +104,18 @@ main (int argc, char *argv[])
 	in_fd = stdin;
 
     output = parm.output->answer;
+    shead.name = G_store(parm.output->answer);
+    shead.desc = G_store(G_recreate_command());
+    shead.form = shead.labels = shead.stime = (char *)NULL;
+      
+    /* add here time parameter */
+    if (parm.date->answer)
+    {
+      G_scan_timestamp (&ts, parm.date->answer);
+      shead.time = &ts;
+    }
+    else 
+      shead.time = (struct TimeStamp*)NULL; 
 
     dims=2;
     loop=1; /* added 11/99 MNeteler*/
@@ -119,6 +143,12 @@ main (int argc, char *argv[])
 	exit(1);
     }
 
+    G_site_put_head (out_fd, &shead);
+/*    G_free(shead.name);
+    G_free(shead.desc);
+    G_free(shead.form);
+    G_free(shead.labels);
+ */   
     while ((site = get_site (in_fd, dims, fs, &has_cat)))
       G_site_put_new (out_fd, site, has_cat);
     fclose (out_fd);

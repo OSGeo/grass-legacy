@@ -148,9 +148,13 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	-exportselection no                     \
 	-selectbackground LightYellow1           \
 	-yscroll "$w.main.mapsets.f.scroll set" \
+        -xscroll "$w.main.mapsets.f.scrollx set" \
 	-selectmode single
     scrollbar $w.main.mapsets.f.scroll \
 	-command "$w.main.mapsets.f.list yview"
+    scrollbar $w.main.mapsets.f.scrollx \
+        -command "$w.main.mapsets.f.list xview" \
+        -orient horizontal
 
     bind $w.main.mapsets.f.list <ButtonRelease-1> \
 	"map_browser_select_mapset  %W %y $w"
@@ -162,9 +166,13 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	-exportselection no                   \
 	-selectbackground LightYellow1         \
 	-yscroll "$w.main.files.f.scroll set" \
+        -xscroll "$w.main.files.f.scrollx set" \
 	-selectmode single
     scrollbar $w.main.files.f.scroll \
 	-command "$w.main.files.f.list yview"
+    scrollbar $w.main.files.f.scrollx \
+        -command "$w.main.files.f.list xview" \
+        -orient horizontal
 
     bind $w.main.files.f.list <ButtonRelease-1> \
 	"map_browser_select_file %W %y $w"
@@ -213,19 +221,21 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w"
     
     pack $w.filename -side top -expand yes -fill x
-    pack $w.main     -side top
+    pack $w.main     -side top -expand yes -fill both
     
-    pack $w.main.mapsets -side left
+    pack $w.main.mapsets -side left -expand yes -fill both
     pack $w.main.mapsets.label -side top
-    pack $w.main.mapsets.f -side top
-    pack $w.main.mapsets.f.list -side left
-    pack $w.main.mapsets.f.scroll -side left -expand yes -fill y
+    pack $w.main.mapsets.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.mapsets.f -side top -expand yes -fill both
+    pack $w.main.mapsets.f.list -side left -expand yes -fill both
+    pack $w.main.mapsets.f.scroll -side left -expand no -fill y
     
-    pack $w.main.files -side left
+    pack $w.main.files -side left -expand yes -fill both
     pack $w.main.files.label -side top
-    pack $w.main.files.f -side top
-    pack $w.main.files.f.list -side left
-    pack $w.main.files.f.scroll -side left -expand yes -fill y
+    pack $w.main.files.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.files.f -side top -expand yes -fill both
+    pack $w.main.files.f.list -side left -expand yes -fill both
+    pack $w.main.files.f.scroll -side left -expand no -fill y
     
     pack $w.element  -side top -expand yes -fill x
     pack $w.element.menu  -side left

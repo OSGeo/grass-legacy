@@ -100,7 +100,7 @@ void getraster( char *name, int flag, int prec)
 		sscanf( line, "%ld%ld%ld%ld%ld", p, p+1, p+2, p+3, p+4);
 		p += 5;
 	    }
-	    G_put_c_raster_row( raster, buf);
+	    G_put_raster_row(raster, buf, CELL_TYPE);
 	    G_percent( i, rows, 10);
 	}
 	G_percent( i, rows, 10);

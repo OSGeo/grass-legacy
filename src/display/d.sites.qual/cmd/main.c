@@ -24,6 +24,9 @@ int main( int argc , char **argv )
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
 	struct Flag *do_num;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays a subset of a sites list based on "
@@ -77,10 +80,6 @@ int main( int argc , char **argv )
 	do_num = G_define_flag ();
 	do_num->key = 'n';
 	do_num->description = "Output number of sites displayed";
-
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 

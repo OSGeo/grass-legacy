@@ -13,6 +13,9 @@
  *     Adds string to growing list of screen contents.
  *     "string" is, by convention, a command string.
  *
+ * D_get_list(list,count)
+ *     returns the list of the commands for the maps currently displayed
+ *
  * D_set_cell_name(name)
  *     sets the name of the cell file currently displayed
  *
@@ -130,7 +133,7 @@ int D_get_site_name(char *name )
 
 int D_add_to_cell_list( char *name )
 {
-	return(R_pad_append_item ("cell_list", name)) ;
+	return(R_pad_append_item ("cell_list", name, 1)) ;
 }
 
 int D_get_cell_list(char ***list, int *count )
@@ -145,7 +148,7 @@ int D_get_cell_list(char ***list, int *count )
 
 int D_add_to_dig_list( char *name )
 {
-	return(R_pad_append_item ("dig_list", name)) ;
+	return(R_pad_append_item ("dig_list", name, 1)) ;
 }
 
 int D_get_dig_list(char ***list, int *count )
@@ -160,7 +163,7 @@ int D_get_dig_list(char ***list, int *count )
 
 int D_add_to_site_list( char *name )
 {
-	return(R_pad_append_item ("site_list", name)) ;
+	return(R_pad_append_item ("site_list", name, 1)) ;
 }
 
 int D_get_site_list(char ***list, int *count )
@@ -175,7 +178,17 @@ int D_get_site_list(char ***list, int *count )
 
 int D_add_to_list( char *string)
 {
-	return(R_pad_append_item("list", string)) ;
+	return(R_pad_append_item("list", string, 0)) ;
+}
+
+int D_get_list(char ***list, int *count )
+{
+	int stat ;
+
+	if(stat = R_pad_get_item ("list", list, count))
+		return(-1) ;
+
+	return(0) ;
 }
 
 int D_clear_window()

@@ -15,6 +15,9 @@
  *
  *****************************************************************************/
 
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h> /* for tolower() */
 #include "CC.h"
 #include "gis.h"
 

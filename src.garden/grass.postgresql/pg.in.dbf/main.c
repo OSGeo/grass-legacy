@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "shapefil.h"
 
@@ -6,7 +7,7 @@
  /*02/2000 dbf dump to Postgres
  *	Alex Shevlakov sixote@yahoo.com
  ******************************************************************/
-
+int PgDumpFromDBF (char *, int);
 
 int main( int   argc, char *argv[])
 {

@@ -27,6 +27,7 @@
 *****************************************************************************/
 
 #include "gis.h"
+#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -47,55 +48,85 @@
 #define PF_LOCAL PF_UNIX
 #endif
 
-/* For switching between putting socket file in <mapset>/.tmp/<host>/
- * and $HOME/.grass (see user_config.c)
- */
-#define USE_TEMP_ELEMENT
 
-/* ----------------------------------------------------------------------
- * G_sock_get_fname(), builds the full path for a UNIX socket using the
- * G__temp_element() routine (tempfile.c).  Caller should free() the
- * return value when it is no longer needed.
- *
- * Notes:
- *     Local socket pathnames are limited to 104 or 108 bytes.  Since
- *     this implementation uses the mapset temp directory, deeply nested
- *     mapsets may cause a failure.  In the future, there should be a
- *     $HOME/.grass directory, with a "com" or "dev" directory where we
- *     can set up these communication channels.  Alternatively, we could
- *     use a /tmp/grass/$USER/ directory, where $USER is mode 0700 (for
- *     some security -- it wouldn't offer much, since sockets may be
- *     create with world rw permissions anyway [depends on the system]).
+/* ---------------------------------------------------------------------
+ * _get_make_sock_path(), builds and tests the path for the socket
+ * directory.  Returns NULL on any failure, otherwise it returns the
+ * directory path. The path will be like "/tmp/grass-$USER".
  * ---------------------------------------------------------------------*/
+static char *
+_get_make_sock_path (void)
+{
+    char *path, *user;
+    const char *prefix = "/tmp/grass-";
+    int len, status;
+    struct stat theStat;
+    
+    user = G_whoami(); /* Don't free() return value ever! */
+    if (user == NULL)
+        return NULL;
+    else if (user[0] == '?') /* why's it do that? */
+    {
+        return NULL;
+    }
 
-#ifdef USE_TEMP_ELEMENT
+    len = strlen(prefix) + strlen(user) + 1;
+    path = G_malloc (len);
+    sprintf (path, "%s%s", prefix, user);
+
+    if ((status = lstat (path, &theStat)) != 0)
+    {
+        status = mkdir (path, S_IRWXU);
+    }
+    else 
+    {
+        if (!S_ISDIR (theStat.st_mode))
+        {
+            status = -1;  /* not a directory ?? */
+        }
+        else
+        {
+            status = chmod (path, S_IRWXU); /* fails if we don't own it */
+        }
+    }
+
+    if (status) /* something's wrong if non-zero */
+    {
+        G_free (path);
+        path = NULL;
+    }
+
+    return path;
+}
+
+        
+ /* ----------------------------------------------------------------------
+ * G_sock_get_fname(), builds the full path for a UNIX socket.  Caller 
+ * should free() the return value when it is no longer needed.  Returns
+ * NULL on failure.
+ * ---------------------------------------------------------------------*/
 char *
 G_sock_get_fname (char *name)
 {
-    char element[100], path[1024];
+    char *path, *dirpath;
+    int len;
 
     if (name == NULL)
         return NULL;
     
-    G__temp_element (element);
+    dirpath = _get_make_sock_path();
     
-    G__file_name (path, element, name, G_mapset());
-
-    return G_store (path);
-}
-#else
-char *
-G_sock_get_fname (char *name)
-{
-    if (name == NULL)
+    if (dirpath == NULL)
         return NULL;
-    
-    /* G_rc_path will make the whole path, and make sure the directories
-     * exist with good permissions.
-     */
-    return G_rc_path ("com", name);
+
+    len = strlen (dirpath) + strlen(name) + 2;
+    path = G_malloc (len);
+    sprintf (path, "%s/%s", dirpath, name);
+    G_free (dirpath);
+
+    return path;
 }
-#endif
+
 
 /* -------------------------------------------------------------------
  * G_sock_exists(char *): Returns 1 if path is to a UNIX socket that
@@ -189,8 +220,10 @@ G_sock_listen (int sockfd, unsigned int queue_len)
 
 int
 G_sock_accept (int sockfd)
-{   
-    return accept (sockfd, (struct sockaddr *) NULL, NULL);
+{
+    struct sockaddr_un addr;
+    int len = sizeof(addr);
+    return accept (sockfd, (struct sockaddr *) &addr, &len);
 }
  
 

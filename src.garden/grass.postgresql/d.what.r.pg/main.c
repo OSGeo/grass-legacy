@@ -26,9 +26,11 @@
 
 #define GLOBAL
 #include "what.h"
+#include <string.h>
+#include <stdlib.h>
 #define MAIN
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {

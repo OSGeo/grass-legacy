@@ -1,5 +1,5 @@
 PGM=g.help
-OFILES	= main.o do_leave.o tty.o menu.o 
+OFILES	= main.o do_leave.o menu.o 
 
 all: $(BIN_INTER)/$(PGM)  the_help
 

@@ -69,7 +69,7 @@ int G_lookup_raster_colors (
 }
 
 int G_lookup_f_raster_colors (fcell, red, grn, blu, set, n, colors)
-    DCELL *fcell;
+    FCELL *fcell;
     unsigned char *red, *grn, *blu, *set;
     int n;
     struct Colors *colors;

@@ -9,9 +9,9 @@ LIST = 	main.o \
 
 LIBES=$(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 tstinfo: info.o
-	$(CC) $(LDFLAGS) -o $@ info.o $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ info.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # 

@@ -3,6 +3,9 @@
 #define VERSION_MAJOR	4
 #define VERSION_MINOR	10
 
+#include "colors.h"
+
+
 /* 
 **  the earliest version that can read this current format
 */
@@ -19,9 +22,11 @@
 **  3.0  which had 0.04   -dpg
 */
 #define THRESH_FUDGE   0.03
+#define MAX_OPEN_FILES 20
+
+#ifdef BRAIN_DAMAGED  /* See colors.h egm - 11/2001 */
 
 #define MAXCOLORS	13
-#define MAX_OPEN_FILES 20
 
 #define WHITE	1
 #define BLACK	2
@@ -36,6 +41,8 @@
 #define INDIGO	11
 #define VIOLET	12
 #define BROWN	13
+
+#endif /* BRAIN_DAMAGED */
 
 #define RIGHT	1
 #define LEFT	2

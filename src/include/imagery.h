@@ -116,6 +116,22 @@ struct SigSet
 
 #define SIGNATURE_TYPE_MIXED 1
 
+/* added by al to fix the problem under cygwin that
+ * GROUP (file for current group name) and group (dir for 
+ * groups) are identical on cygwin/win32.
+ */
+#ifdef __CYGWIN__
+#define GROUPFILE "CURGROUP"
+#else
+#define GROUPFILE "GROUP"
+#endif
+
+#ifdef __CYGWIN__
+#define SUBGROUPFILE "CURSUBGROUP"
+#else
+#define SUBGROUPFILE "SUBGROUP"
+#endif
+
 #include "imagedefs.h"
 
 #endif

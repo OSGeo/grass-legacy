@@ -32,7 +32,6 @@ static int HELPWINHITE ;
 
 #define NULLSTR "\0\n"   
 #define	LF	'\n'
-#define	CR	'\012'
 #define	ESC	'\033'
 #define	VERTCHAR	' '
 #define	HORZCHAR	'-'
@@ -43,15 +42,17 @@ static int HELPWINHITE ;
 #define BOTPAG   '\005'			/*      e */
 #define BAKPAG   '\002'			/*      b */
 #define FORPAG   '\006'			/*      f */
-#define BAKLIN   '\004'			/*      d */
-#define FORLIN   '\025'			/*      u */
+#define BAKLIN   '\025'			/*      u */
+#define FORLIN   '\004'			/*      d */
 #define REFRESH  'r'
 #define PRINTOUT '\001' 		/* Ctrl a */ 
 #define HELP   	 '?'  
-#define PAGEUP       '\065'
-#define PAGEDOWN     '\066'
-#define ARROWUP       'u' /*u bug: what's correct number? */
-#define ARROWDOWN     'd' /* bug: what's correct number? */
+#define PAGETOP       't'
+#define PAGEBOT       'e'
+#define PAGEUP        'b'
+#define PAGEDOWN      'f'
+#define LINEUP        'u'
+#define LINEDOWN      'd'
 
 #define MICRORESP	1
 #define MICROMESG	"Immediate response"
@@ -79,7 +80,6 @@ WINDOW	*StatehelpW, *CommandhelpW, *ErrorW;
 int F_menu(char *, char *, int *, char *, int *, int *, int *);
 int P_writowin(WINDOW *, char *, int, int, int);
 int P_writo_Menu_win(WINDOW *, char *, int, int, int, int *, char *);
-void P_termexit(int);
 int F_linecnt(FILE *);
 int P_menuinit(void);
 int P_menuexit(void);

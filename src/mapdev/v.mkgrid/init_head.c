@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 
@@ -8,6 +9,7 @@ int
 init_header (struct Cell_head *window, struct dig_head *d_head)
 {
   char *date;
+  char *organization;
 
   /* CALCULATE TODAY'S DATE */
   date = G_date ();
@@ -15,7 +17,13 @@ init_header (struct Cell_head *window, struct dig_head *d_head)
   /* DETERMINE USER'S NAME */
   /* name = G_whoami (); */
 
-  strcpy (d_head->organization, "US Army Const. Eng. Rsch. Lab");
+  if (getenv("GRASS_ORGANIZATION"))  /* added MN 5/2001 */
+  {
+    organization=(char *)getenv("GRASS_ORGANIZATION");
+    sprintf(d_head->organization, "%s", organization);
+  }
+  else
+    strcpy(d_head->organization, "GRASS Development Team");
   strcpy (d_head->date, date);
   strcpy (d_head->your_name, "v.mkgrid");
   strcpy (d_head->map_name, "");

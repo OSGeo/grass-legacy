@@ -285,16 +285,16 @@ write_maprow (struct symtab *ptr)
     while((local = index_to_val(local,init)) != NULL ) {
         init = 1;
         if ( probabilitymaps ) {
-            G_put_map_row(local->element.val->desc.infr->fildes,
-                local->element.val->desc.infr->cellbuf);
+            G_put_raster_row(local->element.val->desc.infr->fildes,
+                local->element.val->desc.infr->cellbuf, CELL_TYPE);
         }
         local->element.val->desc.infr->cellptr = 
             local->element.val->desc.infr->cellbuf;
         local = local->next;
     }
     if ( combinedmap ) {
-        G_put_map_row(inferred_att->element.att->fildes,
-            inferred_att->element.att->cellbuf);
+        G_put_raster_row(inferred_att->element.att->fildes,
+            inferred_att->element.att->cellbuf, CELL_TYPE);
     }
     inferred_att->element.att->cellptr = 
         inferred_att->element.att->cellbuf;

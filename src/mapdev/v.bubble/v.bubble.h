@@ -18,6 +18,6 @@
 int Date(char *);
 
 /*bubbling.c*/
-int bubbling (SITE_XYZ *, int, struct Map_info*, double );
+int bubbling (SITE_XYZ *, int, struct Map_info*, double, int, char *);
 
 #endif /*V_BUBBLE_H*/

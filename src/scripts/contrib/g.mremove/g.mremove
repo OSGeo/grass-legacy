@@ -41,6 +41,8 @@ then
 	exit 1
 fi
 
+echo "Collecting map names for current mapset <$MAPSET>..."
+
 force=
 for i
 do
@@ -58,21 +60,21 @@ do
 	wildcard=`echo $i | awk -F '=' '{print $2}'`
 	case $i in
 		ra=*|ras=*|rast=*)
-			rast=`g.mlist -w type=rast sep=, "$wildcard"`;;
+			rast=`g.mlist type=rast sep=, mapset=$MAPSET "$wildcard"`;;
 		v=*|ve=*|vec=*|vect=*)
-			vect=`g.mlist -w type=vect sep=, "$wildcard"`;;
+			vect=`g.mlist type=vect sep=, mapset=$MAPSET "$wildcard"`;;
 		i=*|ic=*|ico=*|icon=*)
-			icon=`g.mlist -w type=icon sep=, "$wildcard"`;;
+			icon=`g.mlist type=icon sep=, mapset=$MAPSET "$wildcard"`;;
 		l=*|la=*|lab=*|labe=*|label=*|labels=*)
-			labels=`g.mlist -w type=labels sep=, "$wildcard"`;;
+			labels=`g.mlist type=labels sep=, mapset=$MAPSET "$wildcard"`;;
 		s=*|si=*|sit=*|site=*|sites=*)
-			sites=`g.mlist -w type=sites sep=, "$wildcard"`;;
+			sites=`g.mlist type=sites sep=, mapset=$MAPSET "$wildcard"`;;
 		re=*|reg=*|regi=*|regio=*|region=*)
-			region=`g.mlist -w type=region sep=, "$wildcard"`;;
+			region=`g.mlist type=region sep=, mapset=$MAPSET "$wildcard"`;;
 		g=*|gr=*|gro=*|grou=*|group=*)
-			group=`g.mlist -w type=group sep=, "$wildcard"`;;
+			group=`g.mlist type=group sep=, mapset=$MAPSET "$wildcard"`;;
 		3=*|3d=*|3dv=*|3dvi=*|3dvie=*|3dview=*)
-			dview=`g.mlist -w type=3dview sep=, "$wildcard"`;;
+			dview=`g.mlist type=3dview sep=, mapset=$MAPSET "$wildcard"`;;
 	esac
 done
 

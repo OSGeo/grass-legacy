@@ -30,7 +30,8 @@ proc mkAttPopup {w att {mode 0}} {
     wm sizefrom $w program
     wm title $w "Change Attribute"
     wm iconname $w "Attribute"
-    wm geometry $w 200x300
+    wm geometry $w ""
+    wm maxsize $w 400 400
     wm minsize $w 50 100
     
     # Callbacks depend on the attribute
@@ -68,7 +69,7 @@ proc mkAttPopup {w att {mode 0}} {
     pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
     
     label $w.f1.name -text "Change Attribute: $att" 
-    pack $w.f1.name -side top -fill x -expand yes 
+    pack $w.f1.name -side top -fill both -expand yes 
     button $w.f2.map -text "New Map" -command "$cb1"
     
     if {"$att" == "mask"} then {
@@ -86,24 +87,24 @@ proc mkAttPopup {w att {mode 0}} {
 	button $w.f2.const -text "New Constant"	-command "$cb2"
     }
     
-    pack $w.f2.map $w.f2.const -side left -expand yes
+    pack $w.f2.map $w.f2.const -side left -fill both -expand yes
     
     if {"$att" == "mask"} then {
-	pack $w.f2.invert -side bottom -expand yes -before $w.f2.map
+	pack $w.f2.invert -side bottom -expand yes -fill both -before $w.f2.map
     } elseif {"$att" == "topography"} then {
-	pack $w.f2.use_color -side bottom -expand yes -before $w.f2.map
+	pack $w.f2.use_color -side bottom -expand yes -fill both -before $w.f2.map
     }
     
     label $w.f3.status -text "Status: "
     set attPopup_Status [get_curr_status $att]
     label $w.f3.info -textvariable attPopup_Status
-    pack $w.f3.status $w.f3.info -side top -fill x -expand yes
+    pack $w.f3.status $w.f3.info -side top -fill both  -expand yes
     
     button $w.f4.accept -text "Accept" \
 	-command "ap_check_invert $att ; destroy $w"
     button $w.f4.cancel -text "Cancel" \
 	-command "set attPopup_Status \"no_change\" ; destroy $w"
-    pack $w.f4.accept $w.f4.cancel -side left -expand yes
+    pack $w.f4.accept $w.f4.cancel -side left -fill both -expand yes
     
     bind $w <Any-Enter> [list focus $w]
     focus $w

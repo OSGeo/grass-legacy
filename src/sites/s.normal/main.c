@@ -33,6 +33,7 @@
 
 #pragma ident "s.normal v 0.4B <21 Jun 1995>; Copyright (C) 1994-1995. James Darrell McCauley"
 
+#include <stdlib.h>
 #include <math.h>
 #include "gis.h"
 #include "cdhc.h"
@@ -64,7 +65,7 @@ int main (int argc, char **argv)
   module->description =        
                   "tests for normality for sites.";
   parm.input = G_define_option ();
-  parm.input->key = "input";
+  parm.input->key = "sites";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->description = "sites list defining sample points";

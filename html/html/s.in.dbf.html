@@ -20,6 +20,7 @@ their descriptions into a GRASS site list file.
 <B>s.in.dbf</B> [-lz]
 <B>input=</B><EM>name</EM>
 [<B>sites=</B><EM>name</EM>]
+[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
 
 <H2>DESCRIPTION</H2>
 
@@ -40,7 +41,7 @@ the site_lists directory under the user's current mapset.
 
 <DL>
 <DT><B>-l</B>
-<DD> List fields of DBF file, then exit.
+<DD> List fields (including the field types and field widths) of DBF file, then exit.
 <DT><B>-z</B>
 <DD>treat third column as third dimension (z)
 </DL>
@@ -53,6 +54,8 @@ the site_lists directory under the user's current mapset.
 <DD>Name of an existing ASCII file containing site locations and labels.
 <DT><B>sites=</B><EM>name</EM>
 <DD>Name of the new GRASS site list file to be output. 
+<DT><b>date=</b><EM>timstamp[,timstamp]
+<DD>date/time stamp or date1,date2 range
 </DL>
 
 <P>
@@ -93,3 +96,6 @@ Markus Neteler, University of Hannover<br>
 Alex Shevlakov (pg.in.dbf)<br>
 Frank Warmerdam (DBF Routines in pg.in.dbf)<br>
 David D. Gray (-l flag in v.in.shape)
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

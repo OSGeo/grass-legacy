@@ -4,7 +4,7 @@ LIST = main.o readfile.o range.o assign_color.o
 
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 
-LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(INTERFACE)
+LIBES= $(GISLIB) $(INTERFACE)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

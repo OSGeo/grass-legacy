@@ -9,7 +9,7 @@
 
 # improvement wanted! Please update directly in CVS.
 # Please add further tests.
-# Markus Neteler <neteler@geog.uni-hannover.de>
+# Markus Neteler <neteler@itc.it>
 #
 # based on "batch-grass.sh" by
 #        Andrew E Long 
@@ -107,7 +107,7 @@ cp $PERM/DEFAULT_WIND $PERM/WIND
 
 printerror()
 {
- echo "Failed! Please report to GRASS 5 developers <neteler@geog.uni-hannover.de>"
+ echo "Failed! Please report to GRASS 5 developers <neteler@itc.it>"
  echo "Your platform:"
  echo "   `uname -a`"
  true

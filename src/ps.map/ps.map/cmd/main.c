@@ -62,6 +62,7 @@ int main(int argc,char *argv[])
     struct Option *output_file;
     struct Option *copies;
     struct Flag *rflag;
+    struct GModule *module;
     static char *def_font = "Helvetica";
 
     /**************** begin ******************************/
@@ -71,7 +72,13 @@ int main(int argc,char *argv[])
     signal (SIGTERM, exit);
 
     setbuf (stderr, NULL);
+
     G_gisinit(argv[0]) ;
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Hardcopy PostScript map output utility.";
 
     rflag = G_define_flag();
     rflag->key = 'r';
@@ -107,9 +114,12 @@ int main(int argc,char *argv[])
     rotate_plot = rflag->answer;
     read_cfg();
 
-    BLACK = get_color_number("black");
-    WHITE = get_color_number("white");
-    GREY  = get_color_number("grey");
+    strcpy(buf,"black");
+    BLACK = get_color_number(buf);
+    strcpy(buf, "white");
+    WHITE = get_color_number(buf);
+    strcpy(buf, "grey"); 
+    GREY  = get_color_number(buf);
 
     /* initialize */
     copies_set = 0;
@@ -606,6 +616,14 @@ int main(int argc,char *argv[])
 	 	groupfile();
 	    }
 	    else error(key, data, "group not found");
+	    continue;
+	}
+
+	if (KEY("rgb"))
+	{
+	    G_strip(data);
+	    grp.do_group = 1;
+	    rgbfile(key, data);
 	    continue;
 	}
 

@@ -1,8 +1,7 @@
 /*
-* $Id$
-*/
+    $Id$
 
-/*  gsd_prim.c
+    gsd_prim.c
     Bill Brown, USACERL  
     January 1993
     Primitive drawing functions
@@ -10,7 +9,7 @@
 
 /* DEBUG */
 #include <stdio.h>
-
+#include <string.h>
 #include "gis.h"
 #include "gstypes.h"
 

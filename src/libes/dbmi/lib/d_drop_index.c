@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_d_drop_index ()
+int db_d_drop_index ()
 {
     dbString name;
     int stat;

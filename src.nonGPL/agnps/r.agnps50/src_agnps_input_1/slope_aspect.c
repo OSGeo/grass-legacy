@@ -65,7 +65,7 @@ slope_aspect()
 
 	temp_slope_map->rbuf = G_allocate_cell_buf();
 
-	G_put_map_row(temp_slope_map->fd,temp_slope_map->rbuf);
+	G_put_raster_row(temp_slope_map->fd,temp_slope_map->rbuf, CELL_TYPE);
 
 	   G_get_map_row_nomask (elev->fd, elev_cell[1], 0);
 	   G_get_map_row_nomask (elev->fd, elev_cell[2], 1);
@@ -96,7 +96,7 @@ slope_aspect()
 		temp_slope_map->rbuf[j] = (int) (key*1000);
 	   }
 
-	   G_put_map_row(temp_slope_map->fd,temp_slope_map->rbuf);
+	   G_put_raster_row(temp_slope_map->fd,temp_slope_map->rbuf, CELL_TYPE);
 	}
 
 

@@ -21,6 +21,7 @@ rewerts@zorro.cecer.army.mil
 May 20, 1993
 */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -226,6 +227,12 @@ int main (int argc, char *argv[])
     }
     real_map_type = map_type;
 
+    if ((dbls == 0) && zero_one)
+    {
+    	num_type = SITE_COL_NUL;
+    	fprintf(stderr,"Double field(s) not present, Using category number instead.\n");
+    }
+    
     switch(num_type) {
         case SITE_COL_DBL:
             if(num_index >= dbls){
@@ -291,7 +298,7 @@ int main (int argc, char *argv[])
     for(row = 0; row < rows; row++)
         if(write(temp_fd, rast, cols * G_raster_size(map_type))!=
 					      cols * G_raster_size(map_type))
-            G_fatal_error("error while writing to temp file");
+            G_fatal_error("error while writing to temp file (file system full?)");
 
     if (!quiet)
         fprintf (stderr, "output raster map: <%s> in <%s>\n", layer, G_mapset());

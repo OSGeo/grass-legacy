@@ -16,6 +16,9 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays site markers in the active display frame "
@@ -51,9 +54,6 @@ int main (int argc, char **argv)
 	opt3->answer     = "x" ;
 	opt3->options    = "x,diamond,box,+" ;
 	opt3->description= "Specify the type of the icon" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 

@@ -427,7 +427,7 @@ loop1.c
     if (rflags.length)
        {
         fprintf (stderr,"LENGTH routine: \n");
-        fprintf (stderr,"   Input:  %d...column_number\n");
+        fprintf (stderr,"   Input:  %d...column_number\n",column_number);
         fprintf (stderr,"   Output: %f...chan_length    %f...chan_width \n",chanpath->channel_length,chanpath->width);
         fprintf (stderr,"           %f...chan_depth     %f...chan_slope \n",chanpath->depth,chanpath->channel_slope);
         fprintf (stderr,"           %f...chan_side_slope \n",chanpath->channel_side_slope);

@@ -60,6 +60,11 @@ long G_calc_solar_position (double longitude, double latitude, double timezone,
     struct pj_info oproj;    /* output map proj parameters  */
     extern struct Cell_head window;
     int inside;
+
+
+   /* we don't like to run G_calc_solar_position in xy locations */
+    if ( window.proj == 0 )
+         G_fatal_error("Can't calculate sun position in xy locations. Specify sunposition directly.");
         
     pdat = &pd;   /* point to the structure for convenience */
 
@@ -82,7 +87,7 @@ fprintf(stderr, "window.west:  %f, window.east : %f\n", window.west, window.east
        G_warning("Specified point %f, %f outside of current window, is that intended? Anyway, it will be used.\n", longitude, latitude);
 
     /* if coordinates are not in lat/long format, transform them: */
-    if ((G_projection() != PROJECTION_LL))
+    if ((G_projection() != PROJECTION_LL) && window.proj != 0)
     {
 #ifdef DEBUG
 fprintf(stderr, "Transforming input coordinates to lat/long (req. for solar position)\n");

@@ -49,6 +49,8 @@ int main (argc, argv)
   struct Option *output;
   struct Option *threshold;
 
+  G_gisinit (argv[0]);
+
   module = G_define_module();
   module->description =
 	"Remove duplicate items GRASS vector file.";
@@ -86,8 +88,6 @@ int main (argc, argv)
 
   thresh=-1.;
   if(threshold->answer != NULL)thresh=strtod(threshold->answer,NULL);
-
-  G_gisinit (argv[0]);
 
   if ((mapset = G_find_file2 ("dig", digin_name, "")) == NULL)
   {

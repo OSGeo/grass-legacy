@@ -1,4 +1,7 @@
+#include <string.h>
 #include "gis.h"
+#include "display.h"
+#include "raster.h"
 
 extern double D_get_d_north();
 extern double D_get_d_south();
@@ -8,16 +11,13 @@ extern double D_get_d_east();
 extern int D_move_abs();
 extern int D_cont_abs();
 
-plotsite (x,y, icon, size )
+int plotsite (x,y, icon, size )
     double x, y;
     char *icon;
     int size;
 {
-    double N,S,E,W;
     struct Cell_head window;
     int D_X, D_Y ;
-    double D_u_to_d_col() ;
-    double D_u_to_d_row() ;
 
     D_X=D_Y=0;
 

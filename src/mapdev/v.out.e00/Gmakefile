@@ -2,4 +2,4 @@ PGM = v.out.e00
 LIST = 	v.out.e00.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)

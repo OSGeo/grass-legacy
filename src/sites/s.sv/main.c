@@ -16,7 +16,7 @@
 **
 **/
 
-#pragma ident "s.sv v 0.6B <25 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
+/* "s.sv v 0.6B <25 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley" */
 
 #include <stdlib.h>
 #include <string.h>
@@ -26,18 +26,19 @@
 #include "sv.h"
 
 char *plot_file, *data_file;
+const char *plot_program;
 
 struct Cell_head window;
 
 int 
 main (int argc, char **argv)
 {
-  char *mapset, *sitefile, *graphfile, errmsg[200], sep;
-  int i, j, k, nh, nsites, once=0, tick;
+  char *mapset, *sitefile, *graphfile, errmsg[200];
+  int i, j, k, nh, nsites, once=0;
   int verbose, plot, field;
   double h, htol, a, atol;
   int omnidirectional;
-  double distance, direction, diffsq;
+  double distance, direction;
   Z *z;
   HGN *list;
   FILE *fdsite;
@@ -114,6 +115,8 @@ main (int argc, char **argv)
     exit (1);
   G_sleep_on_error (0);
 
+  plot_program = getenv("GRASS_GNUPLOT");
+
   /* Process arguments */
   verbose = (!flag.q->answer);
   sscanf(parm.dfield->answer,"%d", &field);
@@ -157,15 +160,8 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  /* need graphics. program will exit here if driver is not available */
-  if (plot)
-  { 
-    R_open_driver ();
-    R_close_driver ();
-  }
-
   /* Find sites file and read it */
-  if (sitefile = parm.input->answer)
+  if ((sitefile = parm.input->answer))
   {
 
   mapset = G_find_file ("site_lists", sitefile, "");

@@ -14,7 +14,9 @@ NAME</H2>
 SYNOPSIS</H2>
 <B>v.out.e00</B>
 <BR><B>v.out.e00 help</B>
-<BR><B>v.out.e00</B> <B>input=</B><I>name</I> [<B>output=</B><I>name</I>]
+<BR><B>v.out.e00</B> <B>input=</B><I>name</I> 
+[<B>mapset=</B><I>name</I>]
+[<B>output=</B><I>name</I>]
 <H2>
 DESCRIPTION</H2>
 The <I>v.out.e00</I> program is designed to create an ESRI Arc/Info e00 ascii
@@ -41,6 +43,10 @@ OPTIONS</H2>
 Parameters:</H3>
 <DL>
 <DT>
+<B>mapset=</B><I>name</I></DT>
+<DD>
+Mapset holding vector map to be exported (Default = current)
+<DT>
 <B>output=</B><I>name</I></DT>
 <DD>
 Name of output file.  If no name is given, <I>v.out.e00</I> will write on
@@ -62,5 +68,6 @@ AUTHOR</H2>
 Michel J. Wurtz, CEREG,
 <P>Ecole Nationale du Genie de l'Eau et de l'Environnement.
 <P>mw@engees.u-strasbg.fr
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

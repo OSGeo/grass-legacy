@@ -16,7 +16,7 @@
 
 <B>s.proj</B><BR>
 <B>s.proj help</B><BR>
-<B>s.proj input=</B><EM>name</EM>
+<B>s.proj [-l] input=</B><EM>name</EM>
  location=</B><EM>name</EM><B>
 [mapset=</B><EM>name</EM><B>]
 [dbase=</B><EM>name</EM><B>]   
@@ -30,12 +30,17 @@ and string attributes.  The header information is copied and an additional
 header comment is written containing the <EM>s.proj</EM> command line used
 to create the new file.
 
+<H3>Flags:</H3>
+<DL>
+<DT><B>-l</B>
+<DD>List sites files in input location and exit
+</DL>
+
 <H3>Parameters:</H3>
 
 <DL>
 <DT><B>input</B>
 <DD>Name of the input sites list.
-
 
 <DT><B>mapset</B>
 <DD>Mapset of input sites list.
@@ -50,14 +55,17 @@ to create the new file.
 <DD>Name of the output sites list.
 </DL>
 
+<H2>BUGS</H2>
+
+Datum transformations are not yet supported.
+
 <H2>SEE ALSO</H2> 
 <EM>
 <A HREF="m.proj.html">m.proj</A>,
-<A HREF="r.proj.html">s.proj</A>,
+<A HREF="r.proj.html">r.proj</A>,
 <A HREF="v.proj.html">v.proj</A>,
 <A HREF="g.setproj.html">g.setproj</A>,
 <A HREF="i.rectify.html">i.rectify</A>,  
-<A HREF="i.rectify2.html">i.rectify2</A>,
 <A HREF="i.rectify3.html">i.rectify3</A>,
 <A HREF="r.support.html">r.support</A>,
 <A HREF="r.stats.html">r.stats</A>,  
@@ -69,5 +77,6 @@ to create the new file.
 <H2>AUTHOR</H2>
 Bill Brown
 
+<p><i>Last changed: $Date$</i>
 </body>
-</HTML>
+</html>

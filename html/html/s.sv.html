@@ -26,7 +26,7 @@
 <H2>DESCRIPTION</H2>
 
 <EM>s.sv</EM> calculates a sample semivariogram and either plots
-it or writes it to standard output.
+it using <EM>gnuplot</EM> or writes it to standard output.
 
 
 <P>
@@ -44,8 +44,7 @@ the example below.
 <DD>Quiet. Cut out the chatter.
 
 <DT><B>-p</B> 
-<DD>Plot the sample semivariogram in the GRASS graphics window
-(requires <EM>g.gnuplot</EM>).
+<DD>Plot the sample semivariogram (requires <EM>gnuplot</EM>).
 
 <DT><B>field</B>
 <DD>Number of z-field attribute to use for calculation
@@ -82,6 +81,11 @@ written to standard output.
 
 <H2>NOTES</H2>
 
+<P>
+The plotting program can be selected by setting the environment
+variable <B>GRASS_GNUPLOT </B>.
+</P>
+
 Without the <B>-p</B> flag, three columns of
 data are written to standard output: lag distance (<EM>h</EM>),
 semivariogram value (<EM>gamma</EM>), and the number of data pairs
@@ -91,7 +95,7 @@ written to <EM>name</EM>.dat. Therefore, to replot
 a sample semivariogram, use:
 
 <DL>
-<DD><B>g.gnuplot </B><EM>name</EM>.gp
+<DD><B>gnuplot </B><EM>name</EM>.gp
 </DL>
 
 To plot a histogram of <EM>N(h)</EM>, simply edit <EM>name</EM>.gp
@@ -105,8 +109,8 @@ For more information, refer to the
 <EM><A HREF="s.univar.html">s.univar</A></EM><br>
 <EM><A HREF="s.surf.krig.html">s.surf.krig</A></EM><br>
 <EM><A HREF="s.normal.html">s.normal</A></EM><br>
-<EM><a HREF="g.gnuplot.html">g.gnuplot</A></EM><br>
 <EM><A HREF="m.svfit.html">m.svfit</A></EM><br>
+<EM><A HREF="http://www.gnuplot.org">gnuplot</A></EM>
 <BR>
 
 <EM>Semivariogram Modeling</EM>  - A GRASS Tutorial on
@@ -129,3 +133,6 @@ Others may be added in the future.
 
 James Darrell McCauley, Agricultural
 Engineering, Purdue University
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

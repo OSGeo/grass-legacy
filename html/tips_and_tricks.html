@@ -1,0 +1,95 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>GRASS Tips and Tricks</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<h3>
+<font face="Arial, Helvetica">GRASS GIS Tips and Tricks</font></h3>
+<font face="Arial, Helvetica">[more to be added]</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">Error messages: To avoid sending error messages
+by email, generate an empty file called GIS_ERROR_LOG in your home directory:</font></li>
+
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;cd $HOME</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;touch GIS_ERROR_LOG</font>
+<br><font face="Arial,Helvetica">Then set the environment variable GRASS_STDERR to 1 (or any other value),
+now errors will be printed into $HOME/GIS_ERROR_LOG:</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;export GRASS_STDERR=1</font>
+<br><font face="Arial,Helvetica">or, depending on your shell</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;setenv GRASS_STDERR 1</font>
+
+<li>
+<font face="Arial,Helvetica">Save GRASS commands: To store the commands
+of a GRASS session, use the UN*X command "script".</font></li>
+
+<li>
+<font face="Arial,Helvetica">To get personal BASH shell definitions
+(aliases, color listing option, ...) into GRASS, store them in
+<tt>~/.grass.bashrc</tt></font></li>
+
+<li>
+<font face="Arial,Helvetica">Monitor and print-to-file <a
+href="drivers.html">driver information</a></font></li>
+
+<li>
+<font face="Arial,Helvetica">GRASS 5 <a href="env_vars.html">Environment
+variables</a></font></li>
+
+<li>
+<font face="Arial,Helvetica">Piping commands to a GRASS module:<br>
+<br>
+<i>For usage in a script (will generate two maps):</i></font></li>
+<font face="Arial,Helvetica"></font>
+<p><br><font face="Arial,Helvetica">&nbsp;&nbsp; r.mapcalc &lt;&lt; EOF</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; foo = 3.14159</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; baz = sqrt(foo)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; EOF</font><font face="Arial,Helvetica"></font>
+<p><i><font face="Arial,Helvetica">For usage from a text file:</font></i><font face="Arial,Helvetica"></font>
+<p><font face="Arial,Helvetica">&nbsp;&nbsp; cat > /tmp/textfile.asc &lt;&lt;EOF</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; foo = 3.14159</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; baz = sqrt(foo)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp; EOF</font><font face="Arial,Helvetica"></font>
+<p><font face="Arial,Helvetica">&nbsp;&nbsp; r.mapcalc &lt; /tmp/textfile.asc</font><br>
+<BR>
+<li>
+<font face="Arial,Helvetica">Data <a href="import.html">Import</a> into
+GRASS</font></li>
+
+<li>
+<font face="Arial,Helvetica">Data <a href="export.html">Export</a> from
+GRASS</font></li>
+
+<br><font face="Arial,Helvetica"></font>&nbsp;
+<p>&nbsp;<font face="Arial,Helvetica"></font></ul>
+
+<hr WIDTH="100%">
+
+<h3>
+<font face="Arial, Helvetica">Other Commands</font></h3>
+<font face="Arial, Helvetica">
+<a href="index.html">help home</a>,
+<a href="database.html">database</a>,
+<a href="display.html">display</a>,
+<a href="drivers.html">drivers</a>,
+<a href="general.html">general</a>,
+<a href="grid3d.html">grid3d</a>,
+<a href="imagery.html">imagery</a>,
+<a href="import.html">import</a>, <a href="misc.html">misc</a>,
+<a href="models.html">models</a>,
+<a href="paint.html">paint</a>,
+<a href="photo.html">photo</a>,
+<a href="ps.html">postscript</a>,
+<a href="raster.html">raster</a>,
+<a href="scripts.html">scripts</a>,
+<a href="sites.html">sites</a>,
+<a href="vector.html">vector</a></font>
+<hr>
+<center><a href="index.html"><img SRC="grassbutton.gif" ALT="GRASS LOGO" BORDER=0 height=91 width=76></a></center>
+
+</body>
+</html>

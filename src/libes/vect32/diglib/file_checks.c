@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "Vect.h"
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -7,6 +7,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #define UTM 1
 #define STP 2
 #define LATLONG 3

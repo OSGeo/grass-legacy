@@ -72,12 +72,12 @@ void vector_map_cleanup( char *mapname ) {
   */
 
   /* res = execvp( progname, par_string ); */
-  system(progname);
+  res=system(progname);
   err0 = errno;
 
   if( res == -1 ) {
 
-    switch(res) {
+    switch(err0) {
     case ENOEXEC: {
       sprintf( err_buf, "Insufficient environment space to run v.spag.\n" );
       G_fatal_error(err_buf);

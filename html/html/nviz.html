@@ -8,22 +8,22 @@
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
-<EM><B>nviz2.2</B></EM> - Visualization and animation tool for GRASS data
+<EM><B>nviz</B></EM> - Visualization and animation tool for GRASS data
 
 <H2>SYNOPSIS</H2>
-<B>nviz2.2</B><BR>
-<B>nviz2.2 [-q] [path</B><EM>=dir</EM>] [<B>elevation</B><EM>=name [ ,name,... ]</EM>] [<B>vector</B><EM>=name [ ,name,... ]</EM>] [<B>sites</B><EM>=name [ ,name,... ]</EM>]
+<B>nviz</B><BR>
+<B>nviz [-q] [path</B><EM>=dir</EM>] [<B>elevation</B><EM>=name [ ,name,... ]</EM>] [<B>vector</B><EM>=name [ ,name,... ]</EM>] [<B>sites</B><EM>=name [ ,name,... ]</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>nviz2.2</EM> organizes several useful tools for combining and visualizing GRASS raster, vector and site files.  In particular, <EM>nviz2.2</EM> provides a detailed user interface with several panels used for specifying various options.  The user may specify arbitrary combinations of raster maps, vector maps, and site maps.  The attributes associated with each map (such as color, masking, line width, etc.) may be modified independently.  Also, cut-planes may be used to display an interpolated cross section of a set of raster maps.  <EM>nviz2.2</EM> emphasizes a flexible and natural viewing mechanism allowing the user to modify view parameters such as camera position, surface exaggeration, display resolution, lighting models, and light position.  Lastly, <EM>nviz2.2</EM> supports an animation and scripting mechanism for building visualizations of sequences of GRASS data.  The scripting mechanism may be used to record and playback any user session.  Other miscellaneous features include: a facility for querying map displays for information, and image processing tools which allow the placement of labels and scales on the display.
+<EM>nviz</EM> organizes several useful tools for combining and visualizing GRASS raster, vector and site files.  In particular, <EM>nviz</EM> provides a detailed user interface with several panels used for specifying various options.  The user may specify arbitrary combinations of raster maps, vector maps, and site maps.  The attributes associated with each map (such as color, masking, line width, etc.) may be modified independently.  Also, cut-planes may be used to display an interpolated cross section of a set of raster maps.  <EM>nviz</EM> emphasizes a flexible and natural viewing mechanism allowing the user to modify view parameters such as camera position, surface exaggeration, display resolution, lighting models, and light position.  Lastly, <EM>nviz</EM> supports an animation and scripting mechanism for building visualizations of sequences of GRASS data.  The scripting mechanism may be used to record and playback any user session.  Other miscellaneous features include: a facility for querying map displays for information, and image processing tools which allow the placement of labels and scales on the display.
 
 <H2>OPTIONS</H2>
-The initial set of files used by <EM>nviz2.2</EM> may be specified by providing file arguments for elevation, vector and sites.  If the user specifies program arguments on the command line, the program will start with the given set of files.  Alternatively, the user can simply type <EM>nviz2.2</EM> on the command line and the program will ask for parameter values and flag settings interactively, using the standard GRASS parser interface.
+The initial set of files used by <EM>nviz</EM> may be specified by providing file arguments for elevation, vector and sites.  If the user specifies program arguments on the command line, the program will start with the given set of files.  Alternatively, the user can simply type <EM>nviz</EM> on the command line and the program will ask for parameter values and flag settings interactively, using the standard GRASS parser interface.
 
 <H3>Flag:</H3>
 <DL>
 <DT><B>-q</B>
-<DD>Quickstart.  Skip over the usual GRASS parser interface and start <EM>nviz2.2</EM>.  Ignores any file parameters which may have been specified on the command line.
+<DD>Quickstart.  Skip over the usual GRASS parser interface and start <EM>nviz</EM>.  Ignores any file parameters which may have been specified on the command line.
 </DL>
 
 <H3>Parameters:</H3>
@@ -42,10 +42,10 @@ The initial set of files used by <EM>nviz2.2</EM> may be specified by providing 
 </DL>
 
 <H2>PANELS</H2>
-<EM>nviz2.2</EM> features are presented to the user using "panels".  A panel encapsulates some functionality and provides an interface for users to access this functionality.  For example, <EM>nviz2.2</EM> is distributed with panels for manipulating surfaces, vector files, light sources, and so on.  In addition to these default panels, <EM>nviz2.2</EM> may also be configured to load application specific panels.
+<EM>nviz</EM> features are presented to the user using "panels".  A panel encapsulates some functionality and provides an interface for users to access this functionality.  For example, <EM>nviz</EM> is distributed with panels for manipulating surfaces, vector files, light sources, and so on.  In addition to these default panels, <EM>nviz</EM> may also be configured to load application specific panels.
 <P>
 
-In addition to the default panels, <EM>nviz2.2</EM> can be instructed to load additional panels by either using the path option (see above) or by setting the GRASS resource NvizPanelPath to the appropriate list of directories.  Any directory specified as a path directory must contain a panelIndex file which names the panels stored in that directory. Panel creation and panelIndex files are described elsewhere.
+In addition to the default panels, <EM>nviz</EM> can be instructed to load additional panels by either using the path option (see above) or by setting the GRASS resource NvizPanelPath to the appropriate list of directories.  Any directory specified as a path directory must contain a panelIndex file which names the panels stored in that directory. Panel creation and panelIndex files are described elsewhere.
 
 <H2>GRASS RESOURCE SETTINGS</H2>
 <DL>
@@ -57,10 +57,10 @@ In addition to the default panels, <EM>nviz2.2</EM> can be instructed to load ad
 </DL>
 
 <H2>NOTES</H2>
-Currently, <EM>nviz2.2</EM> must be invoked from within GRASS (preferably version 5.x).  That is, start GRASS then invoke <EM>nviz2.2</EM> from the GRASS shell.
+Currently, <EM>nviz</EM> must be invoked from within GRASS (preferably version 5.x).  That is, start GRASS then invoke <EM>nviz</EM> from the GRASS shell.
 <P>
 
-<EM>nviz2.2</EM> is built on top of the Tcl/Tk environment.  Be sure you have at least Tcl
+<EM>nviz</EM> is built on top of the Tcl/Tk environment.  Be sure you have at least Tcl
 8.0 or later and Tk 8.0 or later and that appropriate environment variables are set correctly.
 
 <H2>DIAGNOSTICS</H2>
@@ -91,5 +91,6 @@ Current version (Tcl/Tk version):<BR>
 Bill Brown, David Gerdes, Helena Mitasova, Terry Baker, and Mark Astley, U.S. Army CERL.<BR>
 Various members of the GRASS community have provided suggestions throughout the duration of the project.
 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

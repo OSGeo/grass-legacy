@@ -10,15 +10,14 @@
 struct Cell_head window;
 int linecolor;
 
-int main(argc, argv)
-int argc ;
-char **argv ;
+int
+main (int argc, char *argv[])
 {
 	char *mapset ;
 	char *color_mapset;
 	char buf[128] ;
 	char window_name[64];
-	int i, stat ;
+	int i ;
 	int catval = 0;
 	int t,b,l,r;
 	char map_name[128],filename[128], color_name[128];
@@ -27,6 +26,14 @@ char **argv ;
 	struct line_pnts *Points;
 	struct Colors colors;
 	struct Categories Mapcats;
+	struct GModule *module;
+
+	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Exports GRASS vector map to MapInfo vector file";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -48,9 +55,6 @@ char **argv ;
 	opt3->required   = NO ;
 	opt3->multiple   = NO ;
 	opt3->description= "Name of colortable" ;
-
-
-	G_gisinit(argv[0]);
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -89,13 +93,11 @@ char **argv ;
 	G_get_window(&window) ;
 	Points = Vect_new_line_struct ();
 
-	stat = plot (map_name, mapset, Points, filename, &colors, &Mapcats);
-	if(stat == 0)
-		D_add_to_list(G_recreate_command()) ;
+	plot (map_name, mapset, Points, filename, &colors, &Mapcats);
 
 	Vect_destroy_line_struct (Points);
 
-	exit(stat);
+	return 0;
 }
 
 /* NULL function to bypass debugf() in dig library */

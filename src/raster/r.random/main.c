@@ -79,7 +79,7 @@ main (int argc, char *argv[])
     
 
     if (G_parser(argc, argv) != 0)
-        exit(0);
+        exit(1);
     
     /* Set some state variables */
     myState.verbose   = (flag.quiet->answer) ? 0 : 1;

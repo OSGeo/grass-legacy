@@ -1,3 +1,19 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       GRASS 5 gis library, list.c
+ * AUTHOR(S):    unknown
+ * PURPOSE:      list elements
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 /**********************************************************************
  *  G_list_element (element, desc, mapset, lister)
  *
@@ -28,8 +44,9 @@
 
 #include "gis.h"
 #include <unistd.h>
-
 #include <signal.h>
+#include <string.h>
+
 static int broken_pipe;
 static int hit_return = 0;
 static int list_element(FILE *,char *,char *,char *,int (*)());
@@ -64,7 +81,7 @@ int G_list_element (
  */
     if (isatty(1))
     {
-	more = G_popen ("more","w");
+	more = G_popen ("$GRASS_PAGER","w");
 	if (!more) more = stdout;
     }
     else

@@ -122,7 +122,7 @@ CELL *ibuf;
 		ibuf[col] = *rowbuf;
 	}
 	G_percent(row, w->rows - 1, 10);
-	G_put_c_raster_row (fd, ibuf);
+	G_put_raster_row (fd, ibuf, CELL_TYPE);
     }
     fprintf(stderr,"\n");
 

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "codes.h"
 #include "dbmi.h"
 #include "gis.h"
@@ -8,7 +9,8 @@ struct {
 	int f;
 } parms;
 
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDbmscap *list, *p;
 
@@ -32,12 +34,19 @@ void parse_command_line (argc, argv)
     char *argv[];
 {
     struct Flag *full;
+    struct GModule *module;
+    
 
     full = G_define_flag();
     full->key = 'f';
     full->description = "Full output";
 
     G_disable_interactive();
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all installed DBMI drivers.";
 
     if (argc > 1) {
       if(G_parser(argc, argv)) exit(ERROR);

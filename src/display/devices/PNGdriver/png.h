@@ -4,22 +4,23 @@
 #include <stdio.h>
 #endif
 
-#ifdef MAIN
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
+#include "config.h"
 
 #define DEF_WIDTH  640
 #define DEF_HEIGHT 480
-#define FILE_NAME  "map.png"
 
-GLOBAL char *file_name;
-GLOBAL FILE *output;
-GLOBAL gdImagePtr im;
-GLOBAL int currentColor;
+#if defined(HAVE_GDIMAGEPNG)
+# define FILE_NAME  "map.png"
+#elif defined(HAVE_GDIMAGEGIF)
+# define FILE_NAME  "map.gif"
+#else
+# error Neither PNG nor GIF supported
+#endif
 
-/* connect.c */
-int get_connection(char *, int *, int *);
-int prepare_connection(void);
-int check_connection(char *, char *);
+extern char *file_name;
+extern FILE *output;
+extern gdImagePtr im;
+extern int currentColor;
+extern unsigned long *xpixels;
+extern int true_color;
+extern int NCOLORS;

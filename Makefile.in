@@ -5,7 +5,7 @@
 # MODULE:   	Grass Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#		Markus Neteler - Germany - neteler@itc.it
 #		Andreas Lange - Germany - Andreas.Lange@Rhein-Main.de
 # PURPOSE:  	The source file for this Makefile is in Makefile.in. It 
 #		provides the commands necessary to compile, install, clean,
@@ -36,7 +36,6 @@ GRASS_BIN=		@GRASS_BIN@
 
 # Machine type variables
 SERVERNAME=		`uname -n`
-SYSTEM=			`uname -s`
 ARCH=			@ARCH@
 
 # Version - NAME_VER is the major number - eg VERSION = 5.0beta8 NAME_VER = 5
@@ -51,6 +50,7 @@ INSTALL=    	    	cp
 # Miscellaneous variables
 ENV=			@ENV@
 USE_OPENGL=             @USE_OPENGL@
+XDRIVER=		@XDRIVER@
 # The cutline command is needed to shorten the ChangeLog:
 CUTLINE=		`grep -n '1999-12-29 16:13' ChangeLog |cut -d':' -f1 | head -1`
 
@@ -60,9 +60,6 @@ MAKE_GMAKE_ENV=		GRASS_BIN=${GRASS_BIN} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NA
 MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
-XDRIVER=		@XDRIVER@
-
-
 # Variables for the DejaGNU testing suite:
 EXPECT=`which expect`
 RUNTEST=`which runtest`
@@ -70,26 +67,26 @@ RUNTESTFLAGS=-v
 
 # Files to include in a binary distribution
 BIN_DIST_FILES =    	AUTHORS \
-    	    	    	BUGS \
-    	    	    	COPYING \
+	    	    	BUGS \
+	    	    	COPYING \
 			NEWS.html \
 			README \
-			REQUIREMENTS \
+			REQUIREMENTS.html \
 			TODO.txt \
 			grass${NAME_VER} \
-    	    	    	bin/ \
-			bwidget/ \
-			dev/ \
-			driver/ \
-			etc/ \
-			fonts/ \
-			documents/ \
-			include/ \
-			lib/ \
-			man/ \
-			scripts/ \
-			tcltkgrass/ \
-			txt/
+	    	    	bin \
+			bwidget \
+			dev \
+			driver \
+			etc \
+			fonts \
+			documents \
+			include \
+			lib \
+			man \
+			scripts \
+			tcltkgrass \
+			txt
 
 ############################## Make Targets #################################
 
@@ -97,29 +94,9 @@ BIN_DIST_FILES =    	AUTHORS \
 
 all: binaries
 
-binaries: FORCE
-	@ # The following action MUST be a single action. That is, all lines
-	@ # except the last line must have a backslash (\) at the end to
-	@ # continue the statement. The reason for this is that Make does not
-	@ # have an exit command thus, exit terminates the shell. However, 
-	@ # Make creates a new shell for each action listed for a target.
-	@ # Therefore, the only way exit will quit Make is if there is only
-	@ # a single action for the target.
-	@ # Warn the user if they are trying to compile as root
-	@ if [ `whoami` = "root" ] ; then \
-		echo "WARNING: You are attempting to compile GRASS as user root."; \
-		echo "  This is potentially a dangerous operation and is NOT recommended."; \
-		echo "  Do you want to continue? [y/n]"; \
-		read ans; \
-		ans=`echo "$$ans" | tr A-Z a-z`; \
-		if [ "$$ans" != "y" ] ; then \
-			echo "Compilation aborted, exiting Make."; \
-			exit; \
-		fi; \
-	fi; \
-	${MAKE} real-binaries
-
-real-binaries: FORCE pre-compile do-compile
+binaries: FORCE pre-compile do-compile
+	@ # Nothing to do - compilation is performed by the targets
+	@ # pre-compile and do-compile
 
 pre-compile: FORCE
 	test -d ${GISBASE} || ${MAKE_DIR_CMD} ${GISBASE}
@@ -172,21 +149,21 @@ install: FORCE
 		exit; \
 	fi; \
 	result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
-    	if [ "$$result" = "" ] ; then \
-    		echo "WARNING: Your install directory ${INST_DIR}"; \
+	if [ "$$result" = "" ] ; then \
+		echo "WARNING: Your install directory ${INST_DIR}"; \
 		echo "  does not contain the word 'grass'."; \
 		echo "  It is highly recommended that the word 'grass' be part"; \
 		echo "  of your install directory to avoid conflicts."; \
-        	echo "  Do you want to continue? [y/n]"; \
-        	read ans; \
+		echo "  Do you want to continue? [y/n]"; \
+		read ans; \
 		ans=`echo "$$ans" | tr A-Z a-z`; \
 		if [ "$$ans" != "y" ] ; then \
-            		echo "Installation aborted, exiting Make."; \
+			echo "Installation aborted, exiting Make."; \
 			exit; \
-        	fi; \
+		fi; \
 	fi; \
 	${MAKE} real-install
-	
+
 real-install: FORCE
 	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
 	test -d ${INST_DIR}/dev || ${MAKE_DIR_CMD} ${INST_DIR}/dev
@@ -195,28 +172,27 @@ real-install: FORCE
 	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmake${NAME_VER} ${BINDIR} ; true"
 	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmakelinks${NAME_VER} ${BINDIR} ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - documents/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - locks/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - txt/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - documents | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - locks | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - txt | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
 	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
 	@ # high risk of deleteing system files since PREFIX is defined by
 	@ # default to be /usr/local
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - man/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
-	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_ipcs.sh ${INST_DIR}/dev ; true"
-	if [ ${XDRIVER} != socket ] ; then \
-		${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"; \
+	if [ ${XDRIVER} = fifo ] ; then \
+		${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_fifos.sh ${INST_DIR} 2>/dev/null ; true"; \
 	fi
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
@@ -233,8 +209,8 @@ uninstall: FORCE
 	@ # a single action for the target.
 	@ # Check if grass is part of INST_DIR
 	@ result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
-    	if [ "$$result" = "" ] ; then \
-    		echo "WARNING: Your install directory ${INST_DIR}"; \
+	if [ "$$result" = "" ] ; then \
+		echo "WARNING: Your install directory ${INST_DIR}"; \
 		echo "  does not contain the word 'grass'."; \
 		echo "  There is a possibility that this directory conflicts"; \
 		echo "  with a system directory. If you proceed the following"; \
@@ -246,27 +222,27 @@ uninstall: FORCE
 		echo "  ${INST_DIR}/tcltkgrass, ${INST_DIR}/txt"; \
 		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
 		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
-        	echo "  Do you want to continue? [y/n]"; \
-        	read ans; \
+		echo "  Do you want to continue? [y/n]"; \
+		read ans; \
 		ans=`echo "$$ans" | tr A-Z a-z`; \
 		if [ "$$ans" != "y" ] ; then \
-            		echo "Uninstall aborted, exiting Make."; \
+			echo "Uninstall aborted, exiting Make."; \
 			exit; \
-        	fi; \
+		fi; \
 	else \
 		echo "WARNING: You are about to delete all files in ${INST_DIR}"; \
 		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
 		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
-        	echo "  Do you want to continue? [y/n]"; \
-        	read ans; \
+		echo "  Do you want to continue? [y/n]"; \
+		read ans; \
 		ans=`echo "$$ans" | tr A-Z a-z`; \
 		if [ "$$ans" != "y" ] ; then \
-            		echo "Uninstall aborted, exiting Make."; \
+			echo "Uninstall aborted, exiting Make."; \
 			exit; \
-        	fi; \
+		fi; \
 	fi; \
 	${MAKE} real-uninstall
-	
+
 real-uninstall: FORCE
 	@ # NOTE: if anything is changed for real-uninstall then the same change
 	@ # needs to be made in the file binaryInstall.src
@@ -295,9 +271,21 @@ real-uninstall: FORCE
 	${SHELL} -c "rm -rf ${INST_DIR}/lib ; true"
 	${SHELL} -c "rmdir ${INST_DIR} ; true"
 
+strip: FORCE
+	@ if [ ! -f ${GRASS_BIN}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
+		echo "  Strip aborted, exiting Make."; \
+		exit; \
+	fi; \
+	${SHELL} -c "cd ${GISBASE} ; find . -type f -exec strip {} \; ; true"	
+
+install-strip: FORCE
+	${MAKE} strip
+	${MAKE} install
+
 # make a source package for distribution:
 srcdist: FORCE distclean
-	@ echo "create Changelog file without initial messages..."
+	@ echo "create ChangeLog file without initial messages..."
 	@ # cvs2cl.pl creates a GNU style ChangeLog file:
 	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
 	cvs2cl.pl
@@ -310,7 +298,6 @@ srcdist: FORCE distclean
 	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
 
 # make a binary package for distribution:
-#  Bug: VER is not expanded properly (wrong directory):
 bindist: FORCE
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
@@ -355,33 +342,46 @@ bindist: FORCE
 	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
 		echo "WARNING: The GRASS installation is not up to date."; \
 		echo "  Do you want to exit and run 'make install'? [y/n]"; \
-        	read ans; \
+		read ans; \
 		ans=`echo "$$ans" | tr A-Z a-z`; \
 		if [ "$$ans" != "n" ] ; then \
-            		echo "Creation of binary distribution aborted, exiting Make."; \
+			echo "Creation of binary distribution aborted, exiting Make."; \
 			exit; \
-        	fi; \
+		fi; \
 	fi; \
 	${MAKE} real-bindist
 
 real-bindist: FORCE
-	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO.txt ${INST_DIR}/  ; true"
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS.html TODO.txt ${INST_DIR}/  ; true"
 	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
-	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
-	@ name=${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz; \
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${ARCH}_bin.tar.gz )
+	@ name=${SRCDIR}/grass${VERSION}_${ARCH}_bin.tar.gz; \
 	    size=`ls -l $$name | awk '{print $$5}'`; \
 	    sed -e "s/BIN_DIST_VERSION/${NAME_VER}/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
 	    -e "s/TEST_STR=/TEST_STR=executable/" \
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
-	    binaryInstall.src > grass${NAME_VER}install.sh  ; true
-	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
-	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO.txt ; true"
+	    binaryInstall.src > grass${NAME_VER}_${ARCH}_install.sh  ; true
+	${SHELL} -c "chmod a+x grass${NAME_VER}_${ARCH}_install.sh  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS.html ${INST_DIR}/TODO.txt ; true"
 	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
-	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
-	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
+	@ echo "Distribution binary package: grass${VERSION}_${ARCH}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload BOTH grass${VERSION}_${ARCH}_bin.tar.gz and grass${NAME_VER}_${ARCH}_install.sh to the GRASS ftp server."
+	@ echo "Both files are required!!."
 	@ echo "The binary package is stored at ${SRCDIR}."
+
+# generate ChangeLog file
+changelog: FORCE
+	@ echo "create ChangeLog file without initial messages..."
+	@ # cvs2cl.pl creates a GNU style ChangeLog file:
+	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	cvs2cl.pl
+	@ echo "reduce Changelog file... Dont want the initial upload included."
+	head -${CUTLINE} ChangeLog    > ChangeLog.cut
+	echo "   initial CVS import" >> ChangeLog.cut
+	${SHELL} -c "mv ChangeLog.cut ChangeLog"
+	${SHELL} -c "rm -f ChangeLog.bak"
 
 # automatically run DejaGNU tests:
 # added 10/2000 by Andreas Lange
@@ -389,7 +389,7 @@ check: FORCE binaries
 	@ echo "running tests on GRASS ${VERSION}"
 	@ echo "logfile for all tests is in ./testsuite/grass.log,"
 	@ echo "a summary of all test results is in ./testsuite/grass.sum"
-	@ echo "please report all bugs and problems to neteler@geog.uni-hannover.de "
+	@ echo "please report all bugs and problems to neteler@itc.it "
 	EXPECT=${EXPECT} ; export EXPECT; \
 	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
 	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
@@ -440,6 +440,8 @@ clean: FORCE mostlyclean
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h     2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/display/devices/XDRIVER/XDRIVER24/winname.h 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/NVIZ2.2/src/Gmakefile          2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmake${NAME_VER}       2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmakelinks${NAME_VER}  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/grass${NAME_VER}       2>/dev/null ; true"
@@ -466,9 +468,11 @@ distclean: FORCE clean
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/lists/optional                2>/dev/null ; true"
 
 maintainer-clean: FORCE distclean
 	@ echo "Performing maintainer-clean step..."
+	${SHELL} -c "rm -f ${SRCDIR}/src/mapdev/v.in.mif/lex.yy.c    	    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_lxcl.c    2>/dev/null ; true"

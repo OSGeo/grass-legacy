@@ -5,7 +5,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>slide.show.sh</b> </EM> - Displays a series of raster map
+<EM><b>slide.show.sh</b> </EM> - Displays a series of raster/vector map
 layers existing in the user's current mapset search path on
 the graphics monitor.
 
@@ -18,6 +18,7 @@ the graphics monitor.
 <B>slide.show.sh</B> 
 [<B>across=</B><EM>value</EM>] 
 [<B>down=</B><EM>value</EM>] 
+[<B>prefix=</B><EM>name</EM>] 
 [<B>mapsets=</B><EM>list</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -25,7 +26,7 @@ the graphics monitor.
 <EM>slide.show.sh</EM> is a UNIX Bourne shell macro which
 clears the entire screen, creates a series of display
 frames on the graphics monitor, and displays in slideshow
-format each of the raster map layers listed in the
+format each of the raster/vector map layers listed in the
 user-specified <EM>mapsets</EM>.  This is a shell script
 example which makes extensive use of GRASS and UNIX
 commands.  Users are encouraged to examine this macro and
@@ -39,31 +40,23 @@ develop similar on-line demos using their own data files.
 <DL>
 
 <DT><B>across=</B><EM>value</EM>
-
 <DD>The number of display frames across the graphics monitor screen
 to be used for map display.
-
-<BR>
-
-Default:  4
+<BR>Default:  4
 
 <DT><B>down=</B><EM>value</EM>
-
 <DD>The number of display frames down the graphics monitor screen
 to be used for map display.
+<BR>Default:  3
 
-<BR>
-
-Default:  3
+<DT><B>prefix=</B><EM>name</EM>
+<DD>Specify character(s) to view selected maps only.<br>
+    default: * (show all maps)
 
 <DT><B>mapsets=</B><EM>list</EM>
-
 <DD>The names of the mapsets under the user's current location
 whose raster map layers are to be displayed, separated by commas.
-
-<BR>
-
-Default:  All mapsets listed in the user's current mapset search path.
+<BR>Default:  All mapsets listed in the user's current mapset search path.
 </DL>
 
 <H2>FILES</H2>
@@ -84,3 +77,8 @@ See the file <KBD>$GISBASE/scripts/slide.show.sh</KBD>.
 
 James Westervelt, U.S.Army Construction Engineering 
 Research Laboratory
+<br>
+Vector update, fixes: Markus Neteler
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

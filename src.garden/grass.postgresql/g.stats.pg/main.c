@@ -27,19 +27,16 @@
 #include "gis.h"
 #include "infx.h"
 #include "stats.h"
+#include <stdlib.h>
 #define MAIN
 
-main(argc, argv)
+int main(argc, argv)
 int argc ;
 char **argv ;
 {
-    char *dbname;
-    char *tabname, *colname;  
-    char buf[1024];
-    char sqlFile[100];
-    int stat;
+    char *dbname;  
 
-    struct Query *query1;
+    int stat;
     struct Option *opt1, *opt2, *cond;
     struct Flag *flag, *verb;
 
@@ -89,8 +86,6 @@ char **argv ;
 	if (G_parser(argc, argv))
 	    exit(-1);
 
-
-/*************** INFX driver code begins ***************/
         
 	stat = infxStats(opt1->answer,opt2->answer,flag->answer,cond->answer,verb->answer);
 	exit(stat);

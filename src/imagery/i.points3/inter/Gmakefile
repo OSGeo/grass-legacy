@@ -40,7 +40,6 @@ LIST	=\
 	plot_vect.o\
 	read_elev.o\
 	target.o\
-	text_tty.o\
 	transform.o\
 	view_config.o\
 	view_clear.o\

@@ -1,0 +1,14 @@
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+
+PGM    = s.what
+
+LIST   = main.o \
+	 loadsites.o\
+	 what.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): #
+
+$(LIBES): #

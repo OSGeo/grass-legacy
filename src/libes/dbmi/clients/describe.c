@@ -5,6 +5,7 @@
  *   describe a table
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
@@ -15,8 +16,8 @@ struct {
 
 void parse_command_line();
 
-
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -50,6 +51,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *table;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -76,6 +78,12 @@ parse_command_line(argc, argv) char *argv[];
     table->description 	= "table name";
 
     G_disable_interactive();
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Describe a table (in detail).";
+    
     if(G_parser(argc, argv))
 	exit(ERROR);
 

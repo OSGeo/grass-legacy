@@ -6,9 +6,13 @@
 
                   jaf 2/19/92
 */
-//------------------------A.Sh 13.09.2000
+/*------------------------A.Sh 13.09.2000*/
+
+#include <stdlib.h>
 #include "gis.h"
-getAllOpts(argc, argv)
+#include "dbrast.h"
+
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
@@ -20,7 +24,15 @@ getAllOpts(argc, argv)
 
 	retval = 0 ;
 
-        key = G_define_option() ;
+        input = G_define_option() ;
+	input->gisprompt  = "old,cell,raster" ;
+        input->key        = "input" ;
+        input->type       = TYPE_STRING ;
+        input->required   = YES  ;
+        input->multiple   = NO ;
+        input->description= "Name of existing raster file.";
+
+	key = G_define_option() ;
         key->key        = "key" ;
         key->type       = TYPE_STRING ;
         key->required   = YES  ;
@@ -55,15 +67,6 @@ getAllOpts(argc, argv)
         where->required   = NO  ;
         where->multiple   = NO ;
         where->description= "Where clause for query (ie. where col='paved'). " ;
-
- 
-        input = G_define_option() ;
-	input->gisprompt  = "old,cell,raster" ;
-        input->key        = "input" ;
-        input->type       = TYPE_STRING ;
-        input->required   = YES  ;
-        input->multiple   = NO ;
-        input->description= "Name of existing raster file.";
 
         output = G_define_option() ;
 	output->gisprompt  = "new,cell,raster" ;

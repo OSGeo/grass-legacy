@@ -59,30 +59,33 @@ FILE *fde00, *fdlog;		/* input and log file descriptors */
 
 double scale = 1.0;
 
+int PgDumpFromFieldD( const fieldDescript *, const int, 
+		      const char *, const unsigned char );
+		      
 int main( int   argc, char *argv[])
 {
     SHPHandle	hShapeDB;
     DBFHandle   hDBF;
     double	adfMinBound[4], adfMaxBound[4];
     int		nShapeType, nShapes, iShape, iPart, iArc;
-    int         iPoint, iRec, iField;
+    int         iPoint, iRec;
     int         pntCount;
     int		cat_field;
-    int 	pgdmp, no_rattle;
+    int 	pgdmp;
 
-    char name[512], rejname[512], *p;	/* name of output files */
+    char name[512], rejname[512];	/* name of output files */
 
-    char infile[512], *newmapset;
+    char infile[512];
     int cover_type;		/* type of coverage (line, point, area) */
 
     FILE *f_att = NULL;
-    FILE *f_cats = NULL;
+
     struct Map_info map, rej;
     struct line_pnts *points;
 
     struct Categories cats;  /* added MN 10/99 */
     char    AttText[512];    /* added MN 10/99 */
-    int attval;
+    int attval=0;
     int lab_field = -1;
 
     unsigned char dump_flags;
@@ -169,14 +172,14 @@ int main( int   argc, char *argv[])
     parm.attribute->key        = "attribute";
     parm.attribute->type       = TYPE_STRING;
     parm.attribute->required   = NO;
-    parm.attribute->description= "Name of attribute to use as category";
+    parm.attribute->description= "Name of attribute column to use as category number";
     parm.attribute->answer     = "";
     
     parm.catlabel = G_define_option() ;
     parm.catlabel->key        = "label";
     parm.catlabel->type       = TYPE_STRING;
     parm.catlabel->required   = NO;
-    parm.catlabel->description= "Name of attribute to use as category label";
+    parm.catlabel->description= "Name of attribute column to use as category label";
     parm.catlabel->answer     = "";
     
     parm.special = G_define_option();
@@ -436,7 +439,6 @@ int main( int   argc, char *argv[])
         
     } 
     else {
-      int	i;
         
       hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
@@ -643,10 +645,10 @@ int main( int   argc, char *argv[])
       free( ylab );
     }
 
-    if( lab_field >= 0 ) {
+/*    if( lab_field >= 0 ) {
       G_write_vector_cats(name, &cats) != 0;
     }
-
+*/
 
 	
 

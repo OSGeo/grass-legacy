@@ -203,14 +203,14 @@ int main( int   argc, char *argv[])
     parm.attribute->key        = "attribute";
     parm.attribute->type       = TYPE_STRING;
     parm.attribute->required   = NO;
-    parm.attribute->description= "Name of attribute to use as category";
+    parm.attribute->description= "Name of attribute column to use as category number";
     parm.attribute->answer     = "";
     
     parm.catlabel = G_define_option() ;
     parm.catlabel->key        = "label";
     parm.catlabel->type       = TYPE_STRING;
     parm.catlabel->required   = NO;
-    parm.catlabel->description= "Name of attribute to use as category label";
+    parm.catlabel->description= "Name of attribute column to use as category label";
     parm.catlabel->answer     = "";
     
     parm.selfield = G_define_option() ;
@@ -295,9 +295,31 @@ int main( int   argc, char *argv[])
       for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
 	  char	field_name[15];
+	  int   field_width;
+	  char  *fld;
+	  DBFFieldType ftype=0;
+	  
+	  ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
+
+	  switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
 
 	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-	  fprintf (stdout, "%s\n", field_name );
+	  fprintf (stdout, "%i: %s [%s:%i]\n", (i+1), field_name, fld , field_width);
+
         }
         
       DBFClose( hDBF );

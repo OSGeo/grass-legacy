@@ -48,6 +48,14 @@ main (int argc, char *argv[])
   struct Map_info Map;
   struct Option *vectname, *grid, *coord, *box, *angle, *type, *attval;
   struct Flag *q;
+  struct GModule *module;
+
+  G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Creates a (binary) GRASS vector map of a user-defined grid.";
 
   vectname = G_define_option ();
   vectname->key = "map";
@@ -107,15 +115,14 @@ main (int argc, char *argv[])
   q->description = "Quiet; No chatter";
   q->answer = 0;
 
+  if (G_parser (argc, argv))
+    exit (-1);
+
   PROG = argv[0];
-  G_gisinit (argv[0]);
   setbuf (stdout, NULL);
 
   /* get the current window  */
   G_get_window (&window);
-
-  if (G_parser (argc, argv))
-    exit (-1);
 
   /* make sure dig directory is there  */
   G__make_mapset_element (B_DIG);

@@ -1,18 +1,28 @@
+#include "config.h"
 #include "gis.h"
 #include "column.h"
 #include <libpq-fe.h>
+
+#ifdef HAVE_POSTGRES_H
+#include <postgres.h>
+#else
+#ifdef HAVE_POSTGRES_FE_H
 #include <postgres_fe.h>
+#else
+#error Neither <postgres.h> nor <postgres_fe.h> available
+#endif
+#endif
 
 #define LEN 20
 #define LINE 80
 #define HEADER "colname"
 
-infxColumn(SQL_stmt)
+int infxColumn(SQL_stmt)
   char *SQL_stmt;
   {
-    FILE *fp;
-    int i, j, nflds;
-    char cname[100];
+
+    int i, nflds;
+
     int attlen,atttyp ;
     PGconn *pg_conn;
     PGresult *res;
@@ -69,40 +79,4 @@ infxColumn(SQL_stmt)
     /* close connection to database */
 
   return (0);
-}
-
-parseType(cname, ctype, clength)
-  char *cname;
-  int ctype, clength;
-
-{
-	char *vtype;
-
-
-	switch(ctype) {
-		case 0: vtype  = "char"; break;
-		case 1: vtype  = "smallint"; break;
-		case 2: vtype  = "integer"; break;
-		case 3: vtype  = "unknown"; break;
-		case 4: vtype  = "unknown"; break;
-		case 5: vtype  = "decimal"; break;
-		case 6: vtype  = "unknown"; break;
-		case 7: vtype  = "date"; break;
-		case 256: vtype = "char (no nulls)"; break;
-		case 257: vtype = "smallint (no nulls)"; break;
-		case 258: vtype = "integer (no nulls)"; break;
-		case 259: vtype = "unknown (no nulls)"; break;
-		case 260: vtype = "unknown (no nulls)"; break;
-		case 261: vtype = "decimal (no nulls)"; break;
-		case 262: vtype = "serial (no nulls)"; break;
-		default: return; break;
-	}
-
-	/* Informix identifies decimal data types using 2**8x signif digits + precision
-	   therefore decimal(5,2)=1282=2**8x5+2
-	*/
-	if(ctype == 5 || ctype  == 261) 
-		fprintf(stdout,"%20s	%20s	%d,%d\n",cname, vtype, clength/256, clength%256);
-	 else
-		fprintf(stdout,"%20s	%20s	%d\n",cname, vtype, clength);
 }

@@ -1,11 +1,8 @@
-/*
- * $Id$
- */
-
 #include <stdlib.h>
 #include "gis.h"
 #include <dbmi.h>
 #include <stdio.h>
+#include <string.h>
 
 static int cmp();
 static int srch();
@@ -14,7 +11,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 {
     char buf[256];
     char *key;
-    int i, j, nalloc=0, nused=0, nmax=0;
+    int i, j, nused=0, nmax=0;
     char sel[1024];
     int more;
     int oldcat, found;

@@ -1,7 +1,13 @@
 #include "gis.h"
 
-#define DELTA_Y	0.05
-#define MAX_PSFILES	20
+/* Font sizes */
+#define PS_FONT_MAX_SIZE      50
+#define PS_FONT_MIN_SIZE       1
+#define PS_FONT_DEFAULT_SIZE   8
+
+#define DELTA_Y                0.05
+#define MAX_PSFILES       20
+
 /* Following XCONV, YCONV were commented because of using G_plot_where_xy()
  * and uncommented again because G_adjust_easting 
  * in it is not best for each case,  RB Jan 2000 

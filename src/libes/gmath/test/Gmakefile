@@ -6,7 +6,7 @@ OFILES = \
 
 PROGS = add_test dgesv
 G2C = -lg2c
-LA = -lblas -llapack
+LA = $(BLASLIB) $(LAPACKLIB) -lblas -llapack
 
 all: $(PROGS)
 

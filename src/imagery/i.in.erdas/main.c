@@ -268,7 +268,7 @@ fprintf(stderr," %d ",*c++);
 fprintf(stderr,"\n");
 ******************************************/
 
-	if (G_put_map_row (fd, cellbuf) < 0) return (-1);
+	if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
 	free(cellbuf);
 	return (0);
 }

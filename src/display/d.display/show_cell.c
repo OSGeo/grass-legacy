@@ -9,7 +9,6 @@ int show_cell()
 {
 	FILE *fptr ;
 	struct Cell_head wind ;
-	char buff[256] ;
 
 /* Show the map name in name window */
 	if (R_open_driver() != 0)

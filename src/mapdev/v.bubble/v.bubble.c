@@ -7,21 +7,20 @@
 /* The code of this program is partially taken from v.circle and  */
 /* s.univar                                                       */
 
-
 /* Exit status of 0 indicates program was successful.     */
 /* Exit status of 1 indicates program was not successful. */
 
 /* --==<< CHANGES >>==--
 
   $Id$
-  
-  1 feb 20000 : Job Spijker spijker@geo.uu.nl
+
+  18 Nov 2001: Markus Neteler: fixed, if radius parameter not used
+  1 feb 2000 : Job Spijker spijker@geo.uu.nl
   initial program
  */
 
 
 #include "v.bubble.h"
-
 
 int main( int argc, char **argv )
  {
@@ -44,18 +43,16 @@ int main( int argc, char **argv )
   struct Flag *flag;
   SITE_XYZ *bsite;
   int nsites; /*number of sites*/
-  int i1,i2,i3;
+  int i1;
   struct Map_info map;
   
-  
-
 /* Initialize the GIS calls */
   G_gisinit(argv[0]) ;
 
   module = G_define_module();
   module->description =
 	"Creates a vector file which consists of "
-	"bubble(s)  for each point in a site-file and with a "
+	"bubble(s) for each point in a site-file and with a "
 	"size relative to the z value of that point.";
 
 /* Request a pointer to memory for each option. */
@@ -81,8 +78,8 @@ int main( int argc, char **argv )
   opt_radius->key = "radius";
   opt_radius->type = TYPE_DOUBLE;
   opt_radius->required = NO;
-  opt_radius->description = "Maximum radius corresponding with maximum z value in the sitemap, unit is units of map\n";
-  opt_radius->answer = "1.0";
+  opt_radius->description = "Maximum radius corresponding with maximum z value in the sitemap, unit is units of map";
+  opt_radius->answer = ""; /* nothing: default is z_max */
 
 /* Request a pointer to memory for each option. */
   opt_field = G_define_option();
@@ -102,12 +99,12 @@ vector file.";
 
   /* Using GRASS parsing to obtain arguments... */
   if (G_parser(argc, argv) != 0)
-   {
-    exit(1);
-   }
+     exit(1);
 
-  scan_int=sscanf(opt_radius->answer,"%lf",&radius);
-  if (scan_int <= 0)
+  if(*(opt_radius->answer))
+  {
+   scan_int=sscanf(opt_radius->answer,"%lf",&radius);
+   if (scan_int <= 0)
    {
     char msg[256];      
     sprintf(msg,"%s: \"%s\" is an incorrect value for radius.\n",
@@ -115,16 +112,17 @@ vector file.";
     G_fatal_error (msg);
     exit(1);
    }
+  }
 
   scan_int=sscanf(opt_field->answer,"%d",&dec_field);
   if ((scan_int <= 0) || dec_field < 1)
-   {
+  {
     char msg[256];      
     sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
             G_program_name(),opt_field->answer );
     G_fatal_error (msg);
     exit(1);
-   }
+  }
 
 /* Make sure that the current projection is UTM or defined-99 or  */
 /* unreferenced XY projection.                       */
@@ -139,8 +137,10 @@ UTM (value 1).  Change the value \"proj\" in file \"WIND\" to either \
     exit(1);
    }
 
-      /* Make sure that radius is not less than 0.0 . */
-      if (radius < 0.0)
+  /* Make sure that radius is not less than 0.0 . */
+  if(opt_radius->answer)
+  {
+    if (radius < 0.0)
        {
         char msg[256];      
         sprintf(msg,"%s: \"%s\" is an incorrect value for radius.\n",
@@ -148,6 +148,7 @@ UTM (value 1).  Change the value \"proj\" in file \"WIND\" to either \
         G_fatal_error (msg);
         exit(1);
        }
+  }
 
   /* input file name */
   strcpy(input,opt_input->answer);
@@ -169,7 +170,7 @@ UTM (value 1).  Change the value \"proj\" in file \"WIND\" to either \
   vect_mapset = G_mapset();
 
 /* Make sure that vector file "output" does not already exist in "vect_mapset". */
-  if ( (vect_mapset = G_find_vector2(output,vect_mapset)) != NULL )
+  if ( (G_find_vector2(output,vect_mapset)) != NULL )
    {
     char msg[256];
     sprintf(msg,"%s: Vector file name: <%s> already exists in mapset \"%s\".  \
@@ -236,7 +237,7 @@ Please choose a different vector file name.\n",
         
     }
    
-   i1=bubbling(bsite,nsites,&map,radius);
+   i1=bubbling(bsite,nsites,&map,radius, *(opt_radius->answer), output);
   
    G_free_site_xyz(bsite);
    
@@ -246,12 +247,10 @@ Please choose a different vector file name.\n",
   /* newly created vector file (output).                        */
   if (flag->answer == 0x01)
    {
-    sleep(8);
-    sprintf(command,"%s/bin/v.support map=%s",G_gisbase(), output );
+    /* sleep(8); */ /* why ?? */
+    sprintf(command,"%s/bin/v.support map=%s", G_gisbase(), output );
     system(command);
    }
-  printf("Done ...\n\n");
+  fprintf(stderr, "Done ...\n");
   exit(0);
  }
-
-

@@ -26,30 +26,34 @@ for a raster map layer. The map layer (specified on the command line by
 <b>map=</b><i>name</i>) must exist in the user's current mapset search
 path. The color table specified by <b>color=</b><i>type</i> must be one
 of the following:
-<pre>color type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; description&nbsp;
-aspect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (aspect oriented grey colors)&nbsp;
-grey&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (grey scale)&nbsp;
-grey.eq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (histogram-equalized grey scale)&nbsp;
-gyr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (green through yellow to red colors)&nbsp;
-rainbow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (rainbow color table)&nbsp;
-ramp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (color ramp)&nbsp;
-random&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (random color table)&nbsp;
-ryg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (red through yellow to green colors)&nbsp;
-wave&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (color wave)&nbsp;
-rules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (create new color table based on&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user-specified rules)</pre>
-If the user specifies the <b>-w</b> flag, the current color table file
-for the input map will not be overwritten. This means that the color table
-is created only if the
-<i>map</i> does not already have a color table.
-If this option is not specified, the color table will be created if one
-does not exist, or modified if it does.
+<pre>
+     color type    description   
+     aspect        (aspect oriented grey colors)   
+     grey          (grey scale)
+     grey.eq       (histogram-equalized grey scale)
+     grey.log      (histogram logarithmic transformed grey scale)
+     gyr           (green through yellow to red colors)   
+     rainbow       (rainbow color table)   
+     ramp          (color ramp)   
+     random        (random color table)   
+     ryg           (red through yellow to green colors)   
+     wave          (color wave)   
+     rules         (create new color table based on user-specified rules)
+</pre>
+
+If the user specifies the <b>-w</b> flag, the current color table file for
+the input map will not be overwritten. This means that the color table is
+created only if the <i>map</i> does not already have a color table. If this
+option is not specified, the color table will be created if one does not
+exist, or modified if it does.
+
 <p>If the user sets the <b>-q</b> flag, <i>r.colors</i> will run quietly,
 Without printing numerous messages on its progress to standard output.
-<p>Color table types <i>aspect, grey, grey.eq</i> (histogram-equalized
-grey scale), <i>gyr</i> (green-yellow-red), <i>rainbow, ramp, ryg</i> (red-yellow-green),
-<i>random</i>, and <i>wave</i> are pre-defined color tables that <i>r.colors</i>
-knows how to create without any further input.
+<p>Color table types <i>aspect, grey, grey.eq</i> (histogram-equalized grey
+scale), <i>gyr</i> (green-yellow-red), <i>rainbow, ramp, ryg</i>
+(red-yellow-green), <i>random</i>, and <i>wave</i> are pre-defined color
+tables that <i>r.colors</i> knows how to create without any further input.
+
 <p>The <i>rules</i> color table type will cause <i>r.colors</i> to read
 color table specifications from standard input (stdin) and will build the
 color table accordingly.
@@ -179,8 +183,9 @@ SEE ALSO</h2>
 <br><i><a href="d.legend.html">d.legend</a></i>
 <br><i><a href="p.colors.html">p.colors</a></i>
 <br><i><a href="r.support.html">r.support</a></i>
-<h2>
-AUTHORS</h2>
+
+<h2>AUTHORS</h2>
 Michael Shapiro and David Johnson
+<p><i>Last changed: $Date$</i>
 </body>
 </html>

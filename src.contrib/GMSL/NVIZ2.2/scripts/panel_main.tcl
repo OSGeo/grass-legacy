@@ -89,7 +89,7 @@ proc mkmainPanel { BASE } {
     pack [frame $BASE.midf ] -side left -expand 1
 
     # make  position "widget"
-    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 20 20 update_position]
+    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_position]
     set H [mk_hgt_slider $BASE.midf]
     set E [mk_exag_slider $BASE.midf]
     pack $XY $H $E -side left -expand y
@@ -109,9 +109,14 @@ proc mkmainPanel { BASE } {
 
     button $BASE.midf.lookat.center -text center -command { look_center
 	if {[Nauto_draw] == 1} {Ndraw_all} }
+    button $BASE.midf.lookat.top -text top -command { Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
+# note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
+	update_position 0.496802 0.50100
+	update
+        if {[Nauto_draw] == 1} {Ndraw_all} }
     button $BASE.midf.lookat.cancel -text cancel -command no_focus
     pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
-	$BASE.midf.lookat.center $BASE.midf.lookat.cancel \
+	$BASE.midf.lookat.center $BASE.midf.lookat.top $BASE.midf.lookat.cancel \
 	-side top -fill x -expand 1
 
     pack $BASE.midf.lookat -side left -expand 1
@@ -235,8 +240,8 @@ proc do_reset {XY H E P} {
     appBusy
 
     Nset_focus_map
-    Nv_itemDrag $XY $Nv_(XY_POS) 20 20
-    Nv_xyCallback Nchange_position 125 125 20 20
+    Nv_itemDrag $XY $Nv_(XY_POS) 105 105
+    Nv_xyCallback Nchange_position 125 125 105 105
     
     set exag [Nget_first_exag] 
     set val $exag
@@ -294,8 +299,9 @@ proc update_exag {exag} {
 }
 
 proc update_position {x y} {
-    global Nv_
+    global Nv_ 
     Nchange_position $x $y 
+
     if {$Nv_(FollowView)} {
 	set_lgt_position $x $y
 	set x [expr int($x*125)]

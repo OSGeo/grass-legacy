@@ -1231,10 +1231,8 @@ proc start_monitors {} {
 # modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc stop_monitor {monitor} {
-    foreach monitor [search_xdrivers] {
-        exec d.mon stop=$monitor >& /dev/null
-	script_add "d.mon stop=$monitor >& /dev/null" "cmd"
-    }
+        catch {exec d.mon stop=$monitor >& /dev/null}
+	catch {script_add "d.mon stop=$monitor >& /dev/null" "cmd"}
 }
 
 ###############################################################################
@@ -1871,7 +1869,7 @@ if ![catch {open ~/.tcltkgrass r} stream] {
     close $stream
 }
 
-wm title . "TCLTKGRASS 3.1 (2000) - Location: $env(LOCATION_NAME) "
+wm title . "TCLTKGRASS 3.2 (2001) - Location: $env(LOCATION_NAME) "
 
 wm geometry . $main_menu(window_geometry)
 catch {

@@ -1,6 +1,6 @@
 PGM       = $(BIN_CMD)/d.site.pg
-LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIBPATH) $(PQLIB) \
-		$(DATETIMELIB) $(XEXTRALIBS)
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) \
+		$(DATETIMELIB)
 EXTRA_CFLAGS    = $(PQINCPATH)
 # EXTRA_CFLAGS = -Dunlink=puts
 
@@ -13,7 +13,7 @@ OBJS = \
 	plotsite.o
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 
 $(LIBES): #

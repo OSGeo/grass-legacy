@@ -426,18 +426,14 @@ int Replot_screen (void)
 
 int Get_curses_char (char *answer)
 {
-#ifdef ASIAN_CHARS
     *answer = wgetch(INFO_WIN);
-#else
-    *answer = wgetch(INFO_WIN) & 0177;
-#endif
 
     return 0;
 }
 
 int Get_curses_text (char answer[])
 {
-    char newchar;
+    int newchar;
     char *pointer;
     int curx, cury;
     int size;
@@ -447,22 +443,16 @@ int Get_curses_text (char answer[])
     *answer = 0;
     for(;;)
     {
-#ifdef ASIAN_CHARS
 	newchar = wgetch(INFO_WIN);
 
-	if (((newchar > 037) && (newchar < 0177)) || newchar < 0)
-#else
-	newchar = wgetch(INFO_WIN) & 0177;
-
-	if ((newchar > 037) && (newchar < 0177))
-#endif
+	if (newchar >= 040 && newchar <= 0377 && newchar != 0177)
 	{
 	    *(pointer++) = newchar;
 	    *pointer = 000;
 	    waddch(INFO_WIN,newchar);
 	    wrefresh(INFO_WIN);
 	}
-	else if (newchar == 010 || pointer >= answer + 70)
+	else if (newchar == '\n' || pointer >= answer + 70)
 	{
 	    if (pointer > answer)
 	    {
@@ -795,13 +785,7 @@ int Curses_state (void)
 
 int curses_getchar (void)
 {
-    /* TESTING 1/91  dpg */
-    /* return ((getch ()) & 0177); */
-#ifdef ASIAN_CHARS
     return (wgetch (BASE_WIN));
-#else
-    return ((wgetch (BASE_WIN)) & 0177);
-#endif
 }
 
 int _Write_covr (int line, char *message)

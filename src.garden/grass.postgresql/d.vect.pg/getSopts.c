@@ -15,10 +15,13 @@
 */
 
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "dbvect.h"
+#include "display.h"
 
-
-getSelectOpts (argc, argv)
+int getSelectOpts (argc, argv)
     int argc;
     char **argv;
 
@@ -26,11 +29,11 @@ getSelectOpts (argc, argv)
 {
 
 	char *mapset;
-    	int colr, fillcolr, i, j, retval;
+    	int colr, fillcolr, i, retval;
     	FILE *fp;
     	static char SQL_stmt[1024];
 
-	struct Option *key, *where, *tab, *map,*color, *sql;
+	struct Option *map,*color, *sql;
 	struct Flag *select, *flag1;
 
 	retval = 0;
@@ -38,14 +41,6 @@ getSelectOpts (argc, argv)
 	select = G_define_flag();
 	select->key	= 's';
 	select->description	= "Use [s] flag to select db records using an input file." ;
-
-        sql = G_define_option() ;
-        sql->key        = "sql" ;
-        sql->key_desc  = "file" ;
-        sql->type       = TYPE_STRING ;
-        sql->required   = YES  ;
-        sql->multiple   = NO ;
-        sql->description= "SQL statements specifying selection criteria. ";
 
         map = G_define_option() ;
         map->key        = "map" ;
@@ -55,6 +50,13 @@ getSelectOpts (argc, argv)
         map->multiple   = NO ;
         map->description= "Name of existing vector file.";
 
+	sql = G_define_option() ;
+        sql->key        = "sql" ;
+        sql->key_desc  = "file" ;
+        sql->type       = TYPE_STRING ;
+        sql->required   = YES  ;
+        sql->multiple   = NO ;
+        sql->description= "SQL statements specifying selection criteria. ";
 
         color = G_define_option() ;
         color->key        = "color" ;
@@ -74,7 +76,7 @@ getSelectOpts (argc, argv)
 			argv[1] = "help";
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

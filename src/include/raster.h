@@ -68,7 +68,7 @@ int R_kill_driver(void);
 int R_close_driver(void);
 int R_release_driver(void);
 int R_stabilize(void);
-int R_pad_append_item ( char *, char *);
+int R_pad_append_item ( char *, char *, int);
 int R_pad_delete_item ( char *);
 int R_pad_get_item ( char *, char ***, int *);
 int R_pad_list_items ( char ***, int *);

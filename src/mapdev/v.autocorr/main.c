@@ -59,6 +59,9 @@ int main (int argc, char **argv)
   } parm;
 
 
+  /* Initialize the GIS calls */
+  G_gisinit (argv[0]);
+
   module = G_define_module();
   module->description =
 	"Calculate spatial autocorrelation statistics for GRASS vector file.";
@@ -103,9 +106,6 @@ int main (int argc, char **argv)
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
-
-  /* Initialize the GIS calls */
-  G_gisinit (argv[0]);
 
   if (G_parser (argc, argv) < 0)
     exit (-1);

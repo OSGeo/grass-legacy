@@ -1,8 +1,8 @@
-<HEAD>
-<TITLE>r.patch</TITLE>
-</HEAD>
-
-<body bgcolor="white">
+<html>
+<head>
+<title>r.patch</title>              
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
 
@@ -26,16 +26,15 @@ to fill in areas of "no data" in another map layer.
 
 <H2>DESCRIPTION</H2>
 
-The GRASS program 
-<EM>r.patch</EM>
-allows the user to assign known data values from other raster map layers 
-to the <EM>"no data"</EM> areas (those assigned category value NULL/0) 
-in another raster map layer. 
-This program is useful for making a composite raster map layer 
-from two or more adjacent map layers, 
-for filling in "holes" in a raster map layer's data 
-(e.g., in digital elevation data), 
-or for updating an older map layer with more recent data. 
+The GRASS program <EM>r.patch</EM> allows the user to assign known data
+values from other raster map layers to the <EM>"no data"</EM> areas (those
+assigned category value NULL/0) in another raster map layer.  This program
+is useful for making a composite raster map layer from two or more adjacent
+map layers, for filling in "holes" in a raster map layer's data (e.g., in
+digital elevation data), or for updating an older map layer with more recent
+data. The current geographic region definition and mask settings are
+respected.
+
 
 <P>
 
@@ -47,22 +46,21 @@ program arguments on the command line, using the form:
 [<B>-qz</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
 <B>output=</B><EM>name</EM> 
 </DL>
-where each input <EM>name</EM> is the name of a raster map layer to be patched, 
-the output <EM>name</EM> is the name assigned to the new composite raster map 
-layer containing the patched result, 
-and the (optional) <B>-q</B> flag directs <EM>r.patch</EM> to run quietly. 
+
+where each input <EM>name</EM> is the name of a raster map layer to be
+patched, the output <EM>name</EM> is the name assigned to the new composite
+raster map layer containing the patched result, and the (optional) <B>-q</B>
+flag directs <EM>r.patch</EM> to run quietly.
 
 <P>
 
-The first <EM>name</EM> listed in the string 
-<B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ...
-is the name of the base map whose zero data values will be attempted 
-to be filled by non-zero data values in the second through tenth 
-input <EM>name</EM> maps listed. 
-The second through tenth input <EM>name</EM> maps 
-will be used to supply remaining missing (zero) data values for the 
-first input map <EM>name</EM>,
-based on the order in which they are listed in the string 
+The first <EM>name</EM> listed in the string
+<B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ... is the name of
+the base map whose zero data values will be attempted to be filled by
+non-zero data values in the second through tenth input <EM>name</EM> maps
+listed.  The second through tenth input <EM>name</EM> maps will be used to
+supply remaining missing (zero) data values for the first input map
+<EM>name</EM>, based on the order in which they are listed in the string
 <B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ...
 
 <P>
@@ -173,3 +171,6 @@ U.S. Army Construction Engineering
 Research Laboratory
 <br>
 -z flag by Huidae Cho
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -116,7 +116,7 @@ drain_num()
 	          }
 	   }
 
-	   G_put_map_row(temp_drain_map->fd,temp_drain_map->rbuf);
+	   G_put_raster_row(temp_drain_map->fd,temp_drain_map->rbuf, CELL_TYPE);
 	}
 
 

@@ -7,9 +7,11 @@
                   jaf 2/19/92
 */
 
+#include <stdlib.h>
 #include "what.h"
 #include "gis.h"
 #include "display.h"
+#include "raster.h"
 #include "Vect.h"
 
 

@@ -6,7 +6,7 @@ LIST =  main.o \
 	local_dig.o \
 	walk.o
 
-LIBES=$(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB)
+LIBES=$(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(GISLIB)
 $(BIN_CMD)/$(PGM): $(LIST)  $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 

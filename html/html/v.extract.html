@@ -35,7 +35,7 @@ User provides the program with category numbers or option (n) names,
 input vector file name, an output vector name, and the
 type of input map.  There is an option (d) to dissolve common boundaries
 between adjoining map areas in the same category list.  The user may
-specify a file containing category values or names.
+specify a file containing category numbers or labels.
 
 
 <P>
@@ -61,7 +61,7 @@ to the resultant map.
 
 <DT><B>-n</B> 
 
-<DD>Use category names NOT category values.
+<DD>Use category labels NOT category numbers.
 </DT>
 
 
@@ -89,7 +89,7 @@ Options:  area, line, site
 
 <DT><B>new=</B><EM>value</EM> 
 
-<DD>Enter 0 or a desired NEW category value.
+<DD>Enter 0 (keep original category) or a desired NEW category number.
 
 <DT><B>list=</B><EM>range</EM> 
 
@@ -122,19 +122,19 @@ For example:  Abc, Def2, XyZ
 
 <P>
 Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
-boundaries from <EM>soils</EM> with area category values of 1 thru 4;  any
+boundaries from <EM>soils</EM> with area category numbers of 1 thru 4;  any
 common boundaries are dissolved, and all areas of the new map will be
-assigned category value 1.
+assigned category number 1.
 <P>
 <DT> 
 <DD><B>v.extract -dn list=</B>Abc,Def1,12A,WWd 
 <B>input=</B>soils <B>output=</B>soil_groupa <B>type=</B>area <B>new=</B>0  </B>
 <P>
 Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
-boundaries from <EM>soils</EM> with area category names of Abc,Def1, 12A,WWd;
-these names correspond to values 1 thru 4 of <EM>soils</EM>.  Any common
+boundaries from <EM>soils</EM> with area category labels of Abc,Def1, 12A,WWd;
+these labels correspond to numbers 1 thru 4 of <EM>soils</EM>.  Any common
 boundaries are dissolved, all areas of the new map will be retain their
-original category values 1 thru 4, in this case, since new was set to
+original category numbers 1 thru 4, in this case, since new was set to
 0.
 <P>
 <DT> 
@@ -144,7 +144,7 @@ original category values 1 thru 4, in this case, since new was set to
 
 Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
 boundaries from <EM>soils</EM>.  No common boundaries are dissolved, all areas
-of the new map will be assigned category value 1.  The "names" (-n option)
+of the new map will be assigned category number 1.  The "labels" (-n option)
 can be found in the file sample of the current directory.
 
 <DT> 
@@ -152,17 +152,11 @@ can be found in the file sample of the current directory.
 <DD>The format for "sample" is:
 <P>
 Abc
-
 <BR>
-
 Def1
-
 <BR>
-
 12A
-
 <BR>
-
 WWd
 </DL>
 
@@ -173,3 +167,6 @@ R.L. Glenn, USDA, SCS, NHQ-CGIS
 
 <P>
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

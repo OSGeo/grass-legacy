@@ -2,7 +2,7 @@ LIST = main.o sph.o
 
 PGM      = m.region.ll
 
-LIBES	= $(GISLIB) $(COORCNVLIB) $(TERMLIB) 
+LIBES	= $(GISLIB) $(COORCNVLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(COORCNVLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -31,8 +31,6 @@ static  int   RAM_OK = 0 ;
 static	int   snap_ok = 0 ;
 static	double   snap_val = 0.0 ;
 static	int   thresh_flag = 0 ;
-static	char  *mapset = NULL ;
-static	char  *name = NULL ;
 static  int do_islands = 1; /*ISLE*/
 
 
@@ -51,7 +49,6 @@ int main (int argc, char **argv)
     struct Plus_head Plus ;
     char *file_name;
 
-
    struct Flag  *s_flag, *p_flag, *r_flag;
 #ifdef RAM
     struct Flag *ram_flag;
@@ -63,7 +60,7 @@ int main (int argc, char **argv)
 
 /* Show advertising */
     G_gisinit(argv[0]) ;
-    fprintf (stdout,"\n\n   V.SUPPORT:\n\n") ;
+    fprintf (stdout,"\nV.SUPPORT:\n") ;
 
 /*****************************COMMAND PARSER******************************/
     map = G_define_option();
@@ -183,7 +180,7 @@ debugf ("MAIN:  snap_thresh %f\n", Map.snap_thresh);
 	fprintf (stdout," Snapping threshold %7.2f\n\n", Map.snap_thresh) ;
 
     fprintf (stdout, "\n");
-    fprintf (stdout, "    Reading Vector file.\n");
+    fprintf (stdout, "    Reading Vector file");
 
 /****************************************/
     /* attempt to load dig file into memory for next step */
@@ -219,12 +216,12 @@ debugf ("MAIN:  snap_thresh %f\n", Map.snap_thresh);
     if (snapped < 0)
 	fprintf (stderr, "Could not build support (dig_plus) file.\n"), exit (-1);
 
-    fprintf (stdout,"    Building areas\n");
+    fprintf (stdout,"    Building areas");
     build_all_areas (&Map);
 
     if (do_islands) /*ISLE*/
     {
-	fprintf (stdout,"    Building islands\n");
+	fprintf (stdout,"    Building islands");
 	matchup_isles (&Map); /*ISLE*/
     }
 

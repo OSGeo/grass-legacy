@@ -20,7 +20,7 @@ See several parameter concept below:
 Date: Sun, 26 Nov 2000 20:34:55 -0800
 From: "Eric G . Miller" <egm2@jps.net>
 Subject: [GRASSLIST:1195] Re: [GRASS5] Re: notation standardisation
-To: grass5@geog.uni-hannover.de, GRASSLIST@baylor.edu
+To: grass5@grass.itc.it, GRASSLIST@baylor.edu
 
 As follow-up, I also think we should use the same parameter names used
 by g.list, g.copy, g.remove, etc. when input/output aren't appropriate.

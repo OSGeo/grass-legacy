@@ -1,5 +1,5 @@
 From: "Eric G . Miller" <egm2@jps.net>
-To: grass5 developers list <grass5@geog.uni-hannover.de>
+To: grass5 developers list <grass5@grass.itc.it>
 Subject: Re: [GRASS5] Severe (simple to fix?) problem with current GRASS
 
 On Wed, Jan 10, 2001 at 06:21:07PM +0000, Markus Neteler wrote:

@@ -20,7 +20,7 @@ data to GRASS vector format.
 <BR>
 <B>r.poly help</B> 
 <BR>
-<B>r.poly</B> [<B>-l</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+<B>r.poly</B> [<B>-lcb</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
 
 <H2>DESCRIPTION</H2>
 
@@ -62,19 +62,26 @@ if the user specifies program arguments and flag settings
 on the command line using the form:
 <DL>
 <DD>
-<B>r.poly</B> [<B>-l</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+<B>r.poly</B> [<B>-lcb</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
 </DL>
 Alternately, the user can simply type <B>r.poly</B> on the command line 
 without program arguments. In this case, the user will be prompted for 
 parameter values and flag settings using the standard GRASS 
 <EM><A HREF="parser.html">parser</A></EM> interface.
 
-<H3>Flag:</H3> 
+<H3>Flags:</H3>
 
 <DL>
 <DT><B>-l</B>
-<DD>Smooth corners. 
+<DD>Smooth corners.
+
+<DT><B>-c</B>
+<DD>Output values as category labels
+
+<DT><B>-b</B>
+<DD>Output only area borders as vector lines
 </DL>
+
 
 <H3>Parameters:</H3>
 
@@ -87,10 +94,11 @@ parameter values and flag settings using the standard GRASS
 
 <H2>NOTES</H2>
 
-<EM>r.poly</EM>
-extracts only area edges from the named raster input file. 
-If the raster file contains other data (i.e., line edges, or point data) 
-the output may be wrong. 
+<EM>r.poly</EM> extracts only area edges from the named raster input file. 
+If the raster file contains other data (i.e., line edges, or point data) the
+output may be wrong. Using <em>-b</em> the area borders (vector line type)
+are written instead of the areas (vector area type). This may be useful for
+buffering of area borders and other analysis.
 
 <P>
 
@@ -120,5 +128,6 @@ David Satnik,
 Central Washington University
 <br>
 Updated 2001 by Andrea Aime, Modena, Italy
+<p><i>Last changed: $Date$</i>
 </body>
 </html>

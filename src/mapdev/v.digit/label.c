@@ -897,14 +897,14 @@ int ask_for_name (int Type, struct Categories *pcats)
 	Clear_info ();
 	if (Type == 1)         /* LINE */
 	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter line names? ", 1);
+	    " Do you wish to enter line labels? ", 1);
 	else if (Type == 2)    /* AREA */
 	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter area names? ", 1);
+	    " Do you wish to enter area labels? ", 1);
 	else if (Type == 4)     /* DOT */
 	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter site names? ", 1);
-	else                   /* PSU  always enter names */
+	    " Do you wish to enter site labels? ", 1);
+	else                   /* PSU  always enter labels */
 	    ans = 1;
 
 	if (ans)
@@ -1031,13 +1031,13 @@ int ask_name (int cat_number, struct Categories *pcats)
 	   return(icode);
 	   }
 	} 
-	/* end of category search, NO category names match */
+	/* end of category search, NO category labels match */
 #else
       recd = cat_number;
 #endif
 
       Clear_info ();
-      sprintf(buffr," Add new category <%d>, named <%s> ? ",recd,nptr);
+      sprintf(buffr," Add new category <%d>, labeled <%s> ? ",recd,nptr);
       if (curses_yes_no_default (2, buffr, 1)) 
 	 {                                      /* user said YES */
 #ifdef SCS_MODS

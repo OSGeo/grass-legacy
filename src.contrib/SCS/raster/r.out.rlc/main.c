@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
-#include "local_proto.h"
 
 int main (int argc, char *argv[])
 {
@@ -22,11 +21,18 @@ int main (int argc, char *argv[])
 	char *me;
 	struct Option *parm1, *parm2;
 	struct Flag *flag;
-	
+	struct GModule *module;
 	short start[1000], stop[1000], buf1, buf2;
 	int runcnt, runpos;
 	int onrun, runstart, runstop, x;
 
+        G_gisinit (me = argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Exports a GRASS raster to a RLC encoded binary file.";
+        
         parm1 = G_define_option() ;
         parm1->key        = "input" ;
         parm1->type       = TYPE_STRING ;
@@ -44,8 +50,6 @@ int main (int argc, char *argv[])
 	flag = G_define_flag();
 	flag->key = 'v';
 	flag->description = "run verbose";
-
-	G_gisinit (me = argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -97,7 +101,7 @@ int main (int argc, char *argv[])
 	for (row = 0; row < nrows; row++)
 	{
 		if (verbose)
-			percent (row, nrows, 10);
+			G_percent (row, nrows, 10);
 		if (G_get_map_row (infd, cell, row) < 0)
 			exit(1);
 		runcnt = 0; /* set run count back to 0 */
@@ -132,12 +136,12 @@ int main (int argc, char *argv[])
 			}
 		}
 
-		/*	if (G_put_map_row (outfd, cell) < 0)
+/*	if (G_put_raster_row (outfd, cell, CELL_TYPE) < 0)
 	    exit(1);
 */
 	}
 	if (verbose)
-		percent (row, nrows, 10);
+		G_percent (row, nrows, 10);
 
 	G_close_cell (infd);
 	exit(0);

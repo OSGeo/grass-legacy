@@ -49,10 +49,8 @@ int main (int argc, char *argv[])
 {
     char *sname, *mapset, *cptr;
     char path[512], *map_name, buf[1024], command[512];
-    char *ptr;
     int type, vect_read, ier, count, index, field;
     int alloc_points, n_points, dims, dbls, strs ;
-    double east, north;
     double *xarray, *yarray;
     FILE   *attr, *site, *cats, *tmp ;
     struct Option *sitein, *outvect, *opt_desc;
@@ -229,14 +227,23 @@ int main (int argc, char *argv[])
     {
         G_warning ("Sites list has floating point category values\n"\
                 "Using sequential integer instead\n");
-        map_type == -1;
+        map_type = -1;
     }
     else if (map_type != CELL_TYPE)
     {
         G_warning ("Site list does not have category values\n"\
                 "Using sequential integer instead\n");
     }
-
+    
+    G__make_mapset_element ("dig");
+    G__make_mapset_element ("dig_att");
+    G__make_mapset_element ("dig_cats");
+                     /* Create new digit file */
+    if ((vect_read = Vect_open_new (&Map, map_name)) < 0)
+    {
+	G_fatal_error("Creating new vector file.\n") ;
+	exit(-1) ;
+    }
 
     if ( (attr = fopen(N_att_file, "w+") ) == NULL )
     {
@@ -253,13 +260,6 @@ int main (int argc, char *argv[])
        G_fatal_error (buf);
     }
 
-                    /* Create new digit file */
-    if ((vect_read = Vect_open_new (&Map, map_name)) < 0)
-    {
-	G_fatal_error("Creating new vector file.\n") ;
-	exit(-1) ;
-    }
-
     G_get_window (&window);
 
     /* Get map info from user, unless they specified no prompt */
@@ -270,7 +270,13 @@ int main (int argc, char *argv[])
     else
     {
         new_screen();
-        get_head_info(&(Map.head));
+        if (get_head_info(&(Map.head)) < 0)
+        {
+            /* user break, but maybe ugly exit:*/
+            sprintf(buf, "g.remove vect=%s > /dev/null ", map_name);
+            system(buf);
+            exit(-1);
+        }
     }
 
     fprintf (stderr,"\n\ntransfering sites to vect file      \n");

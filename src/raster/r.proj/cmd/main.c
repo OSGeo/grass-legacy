@@ -102,6 +102,8 @@ int main (int argc, char **argv)
 
 	struct GModule *module;
 
+	struct Flag *list;		 /* list files in source location */
+
 	struct Option *imapset,		 /* name of input mapset	 */
 	         *inmap,		 /* name of input layer		 */
                  *inlocation,            /* name of input location       */
@@ -114,13 +116,12 @@ int main (int argc, char **argv)
 	          outcellhd;		 /* and output map		 */
 
 
-
-
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
 	module->description =
-		"re-project a raster map from one location to the current location";
+		"re-project a raster map from one location to the current location (no datum transformation yet)";
+
 
 	inmap = G_define_option();
 	inmap->key = "input";
@@ -168,14 +169,15 @@ int main (int argc, char **argv)
 	}
 	interpol->description = "interpolation method to use";
 
-
 	res = G_define_option();
 	res->key = "resolution";
 	res->type = TYPE_DOUBLE;
 	res->required = NO;
 	res->description = "resolution of output map";
 
-
+	list = G_define_flag();
+	list->key = 'l';
+	list->description = "List raster files in input location and exit";
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -231,9 +233,20 @@ int main (int argc, char **argv)
 
 	if (permissions >= 0) {
 
+	/* if requested, list the raster files in source location - MN 5/2001*/
+		if (list->answer)
+		{
+		  if(isatty(0))  /* check if on command line */
+		  {
+		    fprintf(stderr, "Checking location %s, mapset %s:\n", inlocation->answer, setname);
+		    G_list_element ("cell", "raster", setname, 0);
+		    exit(0); /* leave r.proj after listing*/
+		  }
+		}
+
 		if (!G_find_cell(inmap->answer, setname)) {
-			sprintf(errbuf, "Input map [%s] in mapset [%s] not found.",
-				inmap->answer, setname);
+			sprintf(errbuf, "Input map [%s] in location [%s] in mapset [%s] not found.",
+				inmap->answer, inlocation->answer, setname);
 			G_fatal_error(errbuf);
 		}
    /* Get projection info for input mapset */
@@ -282,6 +295,7 @@ int main (int argc, char **argv)
 	orows = outcellhd.rows;
 	ocols = outcellhd.cols;
 
+              
     /* Cut non-overlapping parts of input map */
 
 	if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)

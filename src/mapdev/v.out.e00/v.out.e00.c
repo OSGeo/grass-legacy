@@ -46,7 +46,7 @@ int main( int argc, char *argv[])
 {
     char *infile, *outfile;	/* name of output files */
     char msg[128];		/* for error messages */
-    char name[32], nm[32], *p;	/* name of cover */
+    char name[32], mapsetname[128], nm[32], *p;	/* name of cover */
     char nnu[32], nid[32];
     int i, j, k, l, n, m;
     int level;			/* level of vector file (should be at least 2 */
@@ -66,7 +66,7 @@ int main( int argc, char *argv[])
     
 	struct GModule *module;
     struct {
-	struct Option *input, *output;
+	struct Option *input, *output, *mapset;
     } parm;
 
     /* Are we running in Grass environment ? */
@@ -85,11 +85,18 @@ int main( int argc, char *argv[])
     parm.input->required   = YES;
     parm.input->description= "Name of vector file to be exported";
 
+    parm.mapset = G_define_option();
+    parm.mapset->key = "mapset";
+    parm.mapset->type = TYPE_STRING;
+    parm.mapset->required = NO;
+    parm.mapset->description = "Mapset holding vector map to be exported (Default = current)";
+    parm.mapset->answer = "";
+
     parm.output = G_define_option() ;
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = NO;
-    parm.output->description= "Name of .e00 output file";
+    parm.output->description= "Name of .e00 output file (Default: stdout)";
 
 
     /* get options and test their validity */
@@ -99,20 +106,28 @@ int main( int argc, char *argv[])
     
     infile = parm.input->answer;
     outfile = parm.output->answer;
+    strcpy( mapsetname,  parm.mapset->answer);
+
+    if( strcmp( mapsetname, "" ) == 0 )
+      strcpy( mapsetname, G_mapset() );
+
     strncpy( name, infile, 27);
     for (p=name; *p; p++) {
 	if (!isalnum( *p))
+	{
 	    if (p == name)
 		*p = 'X';
 	    else
 		*p = 0;
+	}
     }
     G_toucase( name);
 
     /* Open input file */
 
-    if ((level = Vect_open_old( &map, infile, G_mapset())) < 0)
-	G_fatal_error( "Vector file not found\n");
+    if ((level = Vect_open_old( &map, infile, mapsetname)) < 0)
+	G_fatal_error( "Vector map <%s> in mapset <%s> not found.\n", infile, mapsetname );
+	
     if (level == 1)
 	G_fatal_error( "Need to run v.support to build topology\n");
     points = Vect_new_line_struct();
@@ -135,7 +150,10 @@ int main( int argc, char *argv[])
     ymin = region.south;
     ymax = region.north;
 
-    /* change left/right area number accordingly to Arc/info usage */
+    /* change left/right area number accordingly to Arc/info usage  */
+    /* "external" world is numbered 0, while grass uses a negative  */
+    /* number. The Isles in Arc/Info are traversed counterclockwise */
+    /* so we need to renumber left and right areas of isles         */
 
     if ((nareas = V2_num_areas( &map)) != 0) {
 	for (i=1; i<=nareas; i++) {
@@ -159,6 +177,9 @@ int main( int argc, char *argv[])
     }
 
     /* ARC SECTION */
+    /* While we print the line's coordinates, we create the "universe" */
+    /* polygon, which contains all others. We compute alse the extent  */
+    /* of the resulting coverage if the current region is too small    */
 
     fprintf( fde00, "ARC  3\n");
     nlines = V2_num_lines( &map);
@@ -169,6 +190,8 @@ int main( int argc, char *argv[])
     for (i=1; i <= nlines; i++) {
 	V2_read_line( &map, points, i);
 
+	/* update extent of coverage */
+	
 	if (map.Line[i].W < xmin)
 	    xmin = map.Line[i].W;
 	if (map.Line[i].E > xmax)
@@ -183,31 +206,38 @@ int main( int argc, char *argv[])
 	if (map.Line[i].type == LINE)
 	    map.Line[i].left = map.Line[i].right = 0;
 
-	if (map.Line[i].left < 0)
-	    map.Line[i].left = 1;
-	else
-	    map.Line[i].left += 1;
+	/* nothing to do for line or point coverage */
+	
+	if (map.Line[i].type == AREA) {
+	    if (map.Line[i].left < 0)
+		map.Line[i].left = 1;
+	    else
+		map.Line[i].left += 1;
 
-	if (map.Line[i].right < 0)
-	    map.Line[i].right = 1;
-	else
-	    map.Line[i].right += 1;
+	    if (map.Line[i].right < 0)
+		map.Line[i].right = 1;
+	    else
+		map.Line[i].right += 1;
 
-	if (map.Line[i].left == 1)
-	    add_line_universe( -i, map.Line[i]);
-	if (map.Line[i].right == 1)
-	    add_line_universe( i, map.Line[i]);
+	    /* add line to the linked list */
+	    
+	    if (map.Line[i].left == 1)
+		add_line_universe( -i, map.Line[i]);
+	    if (map.Line[i].right == 1)
+		add_line_universe( i, map.Line[i]);
+	}
 
 	/* print header for each line */
 	fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
 		i, map.Att[map.Line[i].att].cat, map.Line[i].N1,
 		map.Line[i].N2, map.Line[i].left,
 		map.Line[i].right, points->n_points);
+	
+	/* Compute length of lines for AAT and PAT tables (perimeter) */
 	px = points->x; py = points->y;
 	length[i] = lareas[i] = 0.0;
 	ybase = (region.south + region.north)/2.0;
 	for (j=0; j < points->n_points; j++) {
-	    /* Compute length of lines for AAT and PAT tables (perimeter) */
 	    if (j > 0) {
 		length[i] += sqrt( ((*px - *(px-1)) * (*px - *(px-1)))
 			      +((*py - *(py-1)) * (*py - *(py-1))));
@@ -217,19 +247,24 @@ int main( int argc, char *argv[])
 	    fprintf( fde00, "%21.14lE%21.14lE\n", *px++, *py++);
 	}
     }
+    
+    /* mark end of ARC section */
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
 	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
 
-    if (nareas == 0)
-	goto no_area;
+    if (nareas == 0)	/* should we also test if dig_att file is empty ? */
+	goto no_area;	/* We could the go to the PAL section...          */
 
     /* CNT SECTION */
+    /* if there is no dig_att file, just one line is printed with x,y = 0 */
+    /* this is probably false and should be corrected... Same for LAB...  */
 
     fprintf( fde00, "CNT  3\n");
     
     i=1;
     while (map.Area[i].alive == 0 || (j=map.Area[i].att) <= 0)
 	i++;
+    j=map.Area[--i].att;
     x = map.Att[j].x;
     y = map.Att[j].y;
     fprintf( fde00, "%10d%21.14lE%21.14lE\n", 0, x, y);
@@ -240,15 +275,13 @@ int main( int argc, char *argv[])
 	x = map.Att[j].x;
 	y = map.Att[j].y;
 	fprintf( fde00, "%10d%21.14lE%21.14lE\n", 1, x, y);
-/*************
-	fprintf( fde00, "%10d\n", map.Att[j].cat);
-*************/
 	fprintf( fde00, "%10d\n", i);
     }
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
 	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
 
     /* LAB SECTION */
+    /* use the same values than in CNT section for labels' position */
 
     fprintf( fde00, "LAB  3\n");
 
@@ -264,6 +297,8 @@ int main( int argc, char *argv[])
     fprintf( fde00, "%10d%10d%21.14lE%21.14lE\n", -1, 0, 0.0, 0.0);
 
     /* PAL SECTION */
+    /* Topology of polygons : for each line, we have to list the lines */
+    /* and for each line, the next node, and the neighboor polygon     */
 
     fprintf( fde00, "PAL  3\n");
     perim = (double*)G_malloc( (nareas+1)*sizeof(double));
@@ -271,10 +306,15 @@ int main( int argc, char *argv[])
 
     perim[0] = area[0] = 0.0;
 
-    /* compute and write universe polygon... */
+    /* compute universe polygon first... */
 
     npts = 2;
+    /* find first line segment (pointed by universe) */
     segment = current = universe->next;
+    
+    /* Chain the line segments until we close the line. */
+    /* Chained segments are removed from stack.         */
+    /* If stack is not empty, there are isles left      */
     while (stack != (struct Univ *)NULL) {
 	while (current->N2 != segment->N1) {
 	    np_old = npts;
@@ -295,13 +335,13 @@ int main( int argc, char *argv[])
 		    break;
 		}
 	    }
-	    if (npts == np_old) {	/* oops, a loop! should never happen */
+	    if (npts == np_old) { /* A loop should never happen ! */
 		fprintf( stderr,
 			"Oops ! loop while creating universe polygon\n");
 		break;
 	    }
 	}
-	/* new segment, put 0 0 0 here */
+	/* new segment (isle), put 0 0 0 here as a separator */
 	if (stack == (struct Univ *)NULL)
 	    break;
 	pu = (struct Univ *)G_malloc( sizeof(struct Univ));
@@ -310,33 +350,42 @@ int main( int argc, char *argv[])
 	pu->N1 = 0;
 	pu->area = 0;
 	pu->next = segment = current = stack;
-	stack = stack->next;
-	stack->prev = (struct Univ *)NULL;
-	current->next = (struct Univ *)NULL;
+	/* verify if the stack contains only one line (must be closed) */
+	if ((stack = stack->next) != (struct Univ *)NULL) {
+	    stack->prev = (struct Univ *)NULL;
+	    current->next = (struct Univ *)NULL;
+	}
 	npts += 2;
     }
 
+    /* write universe polygon */
+    /* first print bounding box : here the coverage's extent */
+    
     fprintf( fde00, "%10d%21.14lE%21.14lE\n", npts, xmin, ymin);
     fprintf( fde00, "%21.14lE%21.14lE\n", xmax, ymax);
 
     current = universe; l=1;
+    /* write description of each line segments : */
+    /* arc number, next node and left polygon    */
+    
     while (current != (struct Univ*)NULL) {
 	fprintf( fde00, "%10d%10d%10d", current->line, current->N1, current->area);
 	if (current->line > 0) {
 	    perim[0] += length[current->line];
 	    area[0] += lareas[current->line];
-	} else {
+	} else { /* isles : we must substract their surfaces */
 	    perim[0] += length[-current->line];
 	    area[0] -= lareas[-current->line];
 	}
 
-	if (l=1-l)
+	if (l=1-l)	/* two arc's descriptions by file's line */
 	    fputc( '\n', fde00);
 	current = current->next;
     }
     if (l==0)
 	fputc( '\n', fde00);
 
+    /* print now topology for each active area */
     for (i=1; i <= nareas; i++) {
 	if (map.Area[i].alive == 0)
 	    continue;
@@ -348,10 +397,12 @@ int main( int argc, char *argv[])
 		if (map.Isle[k].alive != 0)
 		    n += (1+map.Isle[k].n_lines);
 	    }
+	/* print bounding box */
 	fprintf( fde00, "%10d%21.14lE%21.14lE\n", n,
 		 map.Area[i].W, map.Area[i].S);
 	fprintf( fde00, "%21.14lE%21.14lE\n", map.Area[i].E, map.Area[i].N);
 	l = 1;
+	/* print segment description and compute total area and perimeters */
 	for (j=0; j<map.Area[i].n_lines; j++) {
 	    k = map.Area[i].lines[j];
 	    if (k > 0)
@@ -371,6 +422,7 @@ int main( int argc, char *argv[])
 	    if (l=1-l)
 		fputc( '\n', fde00);
 	}
+	/* isles follow main perimeter description */
 	if (map.Area[i].n_isles > 0)
 	    for (j=0; j<map.Area[i].n_isles; j++) {
 		k = map.Area[i].isles[j];
@@ -403,6 +455,7 @@ int main( int argc, char *argv[])
 	    fputc( '\n', fde00);
     }
 
+    /* mark end of PAL section */
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
 	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
     fprintf( fde00, "%21.14lE%21.14lE\n", 0.0, 0.0);
@@ -422,7 +475,7 @@ no_area:
     /* must put e00write_prj() here */
 
     /* INFO SECTION */
-    /* BND table */
+    /* BND table : boudaries = extent (like above) */
 
     fprintf( fde00, "IFO  2\n");
     strcpy( nm, name);
@@ -437,7 +490,7 @@ no_area:
       "YMAX              4-1  134-1  12 3 60-1  -1  -1-1                   4-");
     fprintf( fde00, "%14.7lE%14.7lE%14.7lE%14.7lE\n", xmin, ymin, xmax, ymax);
 
-    /* AAT table */
+    /* AAT table : Arc attribute table */
 
     strcpy( nm, name);
     strncat( nm, ".AAT", 31);
@@ -446,6 +499,7 @@ no_area:
     strncat( nnu, "#", 31);
     strncat( nid, "-ID", 31);
 
+    /* description of format */
     fprintf( fde00, "%-32.32sXX   7   7  28%10ld\n", nm, nlines);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
 	"FNODE#", "  4-1   14-1   5-1 50-1  -1  -1-1                   1-",
@@ -457,6 +511,9 @@ no_area:
 	nnu, "  4-1  214-1   5-1 50-1  -1  -1-1                   6-",
 	nid, "  4-1  254-1   5-1 50-1  -1  -1-1                   7-");
 
+    /* print values for each line */
+    /* line# is the att number, line-ID is the cat value */
+    
     for (i=1; i <= nlines; i++) {
 	V2_read_line( &map, points, i);
 	fprintf( fde00, "%11d%11d%11d%11d%14.7lE%11d%11d\n",
@@ -464,14 +521,15 @@ no_area:
 	  map.Line[i].right, length[i], i, map.Att[map.Line[i].att].cat);
     }
 
-    /* PAT table */
+    /* PAT table : Polygon attribute table */
 
     if (nareas == 0)
 	goto finish;
     strcpy( nm, name);
     strncat( nm, ".PAT", 31);
 
-    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, nareas);
+    /* don't forget we add one area : the unnverse polygon */
+    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, nareas+1);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
 	"AREA", "  4-1   14-1  12 3 60-1  -1  -1-1                   1-",
 	"PERIMETER", "  4-1   54-1  12 3 60-1  -1  -1-1                   2-",
@@ -482,6 +540,8 @@ no_area:
 
     fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n",
 	  area[0], perim[0], 1, 0);
+    
+    /* write other polygons */
     for (i=1; i<=nareas; i++) {
 	fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n",
 	  area[i], perim[i], i+1, map.Att[map.Area[i].att].cat);
@@ -494,6 +554,9 @@ finish:
     Vect_close( &map);
 }
 
+/* function to add a line to the perimeter of the universe polygon */
+/* stack allways points to the last malloced line                  */
+/* universe store the first values for PAL table, 0 0 0            */
 void add_line_universe( int l, struct P_line p_line) {
     struct Univ *new;
     
@@ -509,6 +572,9 @@ void add_line_universe( int l, struct P_line p_line) {
 	new->area = p_line.left;
     }
     new->prev = new->next = (struct Univ *)NULL;
+
+    /* we call this function for the first time */
+    
     if (universe == (struct Univ *)NULL) {
 	universe = (struct Univ *)G_malloc( sizeof(struct Univ));
 	universe->line = 0;

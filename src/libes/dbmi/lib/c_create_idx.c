@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_create_index (driver, index)
+int db_create_index (driver, index)
     dbDriver *driver;
     dbIndex *index;
 {

@@ -1,214 +1,215 @@
-#include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include "gis.h"
 
-
-#define	SBYTES		2
-#define	DBYTES		8
-#define	BUFFER_SIZE	256
-
-#define	TRUE		1
-#define	FALSE		0
-
-
-int
-main(int argc, char **argv)
+struct whereandwhat
 {
-	char	difile[BUFFER_SIZE], mafile[BUFFER_SIZE], tfile[BUFFER_SIZE],
-		system[BUFFER_SIZE],
-		done, activity;
-	short	nl, ns, updown, pass, i, i1, i2, i3, ii, index2,
-		index, index1, j, dirx, itemp,
-		**dir, **mask;
-	FILE	*dfile, *mfile, *tmpfp;
+   int offset;
+   CELL *p;
+};
 
-#if 0
-	printf("ENTER NL,NS,DIR FILE,MASK FILE,SYSTEM(UNIX,VMS,PRIME)\n");
-#endif
-	scanf("%s", tfile);
-	if(!(tmpfp = fopen(tfile, "r"))){
-		fprintf(stderr, "%s: No such file or open failed\n", tfile);
-		exit(1);
-	}
+int recurse_cell(CELL flag, int i, int j, int nl, int ns, struct whereandwhat bas[], struct whereandwhat dir[])
+{
+   CELL edge;
+   int rc=0;
 
-	fscanf(tmpfp, "%hd %hd", &nl, &ns);
-	fscanf(tmpfp, "%s", difile);
-	fscanf(tmpfp, "%s", mafile);
-	fscanf(tmpfp, "%s", system);
-	fclose(tmpfp);
+   if(j==0 && j>=ns-1)return rc;
 
-	if(!(dfile = fopen(difile, "r"))){
-		fprintf(stderr, "%s: No such file or open failed\n", difile);
-		exit(1);
-	}
-	if(!(mfile = fopen(mafile, "r+"))){
-		fprintf(stderr, "%s: No such file or open failed\n", mafile);
-		exit(1);
-	}
+   if(bas[i].p[j]!=flag)
+   {
+      rc=1;
+      bas[i].p[j]=flag;
+   }
 
-	mask = (short **)malloc((ns+2)*sizeof(short *)) - 1;
-	for(i=1; i<=ns+2; i++)
-		mask[i] = (short *)malloc(3*sizeof(short)) - 1;
+   if(i>0)
+   {
+      edge=dir[i-1].p[j-1];
+      if(bas[i-1].p[j-1]==-1 && !G_is_c_null_value(&edge) && edge==4)
+         rc+=recurse_cell(flag, i-1, j-1, nl, ns, bas, dir);
+      edge=dir[i-1].p[j];
+      if(bas[i-1].p[j]==-1 && !G_is_c_null_value(&edge) && edge==8)
+         rc+=recurse_cell(flag, i-1, j, nl, ns, bas, dir);
+      edge=dir[i-1].p[j+1];
+      if(bas[i-1].p[j+1]==-1 && !G_is_c_null_value(&edge) && edge==16)
+         rc+=recurse_cell(flag, i-1, j+1, nl, ns, bas, dir);
 
-	dir = (short **)malloc((ns+2)*sizeof(short *)) - 1;
-	for(i=1; i<=ns+2; i++)
-		dir[i] = (short *)malloc(3*sizeof(short)) - 1;
+   }
 
-	updown = -1;
-	pass = 0;
+   edge=dir[i].p[j-1];
+   if(bas[i].p[j-1]==-1 && !G_is_c_null_value(&edge) && edge==2)
+      rc+=recurse_cell(flag, i, j-1, nl, ns, bas, dir);
 
-	do{
-		i1 = 1;
-		i2 = 2;
-		i3 = 3;
-		updown *= -1;
-		done = TRUE;
-		pass++;
-		printf("PASS %2d\n", pass);
-		for(ii=1; ii<=ns+2; ii++){
-			index = 1;
-			if(updown == -1)
-				index = 3;
-			mask[ii][index] = 0;
-		}
-		for(i=1; i<=3; i++){
-			mask[1][i] = 0;
-			mask[ns+2][i] = 0;
-		}
-		index2 = 0;
-		if(updown == -1)
-			index2 = nl - 2;
-		index1 = 1;
-		if(updown == -1)
-			index1 = 0;
-		fseek(dfile, index2*ns*SBYTES, SEEK_SET);
-		fseek(mfile, index2*ns*SBYTES, SEEK_SET);
-		for(i=1; i<=2; i++){
-			for(ii=2; ii<=ns+1; ii++)
-				fread(&dir[ii][i+index1], SBYTES, 1, dfile);
-			for(ii=2; ii<=ns+1; ii++)
-				fread(&mask[ii][i+index1], SBYTES, 1, mfile);
-		}
-		for(i=1; i<=nl; i++){
-			do{
-				activity = FALSE;
-				for(j=2; j<=ns+1; j++){
-					if(mask[j][i2] == -1){
-						dirx = dir[j][i2];
-						if(dirx == 0){
-							mask[j][i2] = 0;
-							activity = TRUE;
-						}else
-						if(!(mask[j+1][i1] < 0 ||
-							dirx != (1 << 0))){
-							mask[j][i2] =
-								mask[j+1][i1];
-							activity = TRUE;
-						}else
-						if(!(mask[j+1][i2] < 0 ||
-							dirx != (1 << 1))){
-							mask[j][i2] =
-								mask[j+1][i2];
-							activity = TRUE;
-						}else
-						if(!(mask[j+1][i3] < 0 ||
-							dirx != (1 << 2))){
-							mask[j][i2] =
-								mask[j+1][i3];
-							activity = TRUE;
-						}else
-						if(!(mask[j][i3] < 0 ||
-							dirx != (1 << 3))){
-							mask[j][i2] =
-								mask[j][i3];
-							activity = TRUE;
-						}else
-						if(!(mask[j-1][i3] < 0 ||
-							dirx != (1 << 4))){
-							mask[j][i2] =
-								mask[j-1][i3];
-							activity = TRUE;
-						}else
-						if(!(mask[j-1][i2] < 0 ||
-							dirx != (1 << 5))){
-							mask[j][i2] =
-								mask[j-1][i2];
-							activity = TRUE;
-						}else
-						if(!(mask[j-1][i1] < 0 ||
-							dirx != (1 << 6))){
-							mask[j][i2] =
-								mask[j-1][i1];
-							activity = TRUE;
-						}else
-						if(!(mask[j][i1] < 0 ||
-							dirx != (1 << 7))){
-							mask[j][i2] =
-								mask[j][i1];
-							activity = TRUE;
-						}
-					}
-					if(activity == TRUE)
-						done = FALSE;
-				}
-			}while(activity == TRUE);
-			index = i;
-			if(updown == -1)
-				index = nl - i + 1;
-			fseek(mfile, (index-1)*ns*SBYTES, SEEK_SET);
-			for(ii=2; ii<=ns+1; ii++)
-				fwrite(&mask[ii][i2], SBYTES, 1, mfile);
-			if(i == nl)
-				continue;
-			if(updown != -1){
-				itemp = i1;
-				i1 = i2;
-				i2 = i3;
-				i3 = itemp;
-				if(i == nl-1){
-					for(ii=1; ii<=ns+2; ii++)
-						mask[ii][i3] = 0;
-				}else{
-					fseek(mfile, (i+1)*ns*SBYTES, SEEK_SET);
-					for(ii=2; ii<=ns+1; ii++)
-						fread(&mask[ii][i3], SBYTES, 1,
-								mfile);
-					fseek(dfile, (i+1)*ns*SBYTES, SEEK_SET);
-					for(ii=2; ii<=ns+1; ii++)
-						fread(&dir[ii][i3], SBYTES, 1,
-								dfile);
-				}
-			}else{
-				itemp = i3;
-				i3 = i2;
-				i2 = i1;
-				i1 = itemp;
-				if(i == nl-1){
-					for(ii=1; ii<=ns+2; ii++)
-						mask[ii][i1] = 0;
-				}else{
-					fseek(mfile, (nl-i-2)*ns*SBYTES,
-							SEEK_SET);
-					for(ii=2; ii<=ns+1; ii++)
-						fread(&mask[ii][i1], SBYTES, 1,
-								mfile);
-					fseek(dfile, (nl-i-2)*ns*SBYTES,
-							SEEK_SET);
-					for(ii=2; ii<=ns+1; ii++)
-						fread(&dir[ii][i1], SBYTES, 1,
-								dfile);
-				}
-			}
-		}
-	}while(done == FALSE);
+   edge=dir[i].p[j+1];
+   if(bas[i].p[j+1]==-1 && !G_is_c_null_value(&edge) && edge==32)
+      rc+=recurse_cell(flag, i, j+1, nl, ns, bas, dir);
 
-	for(i=1; i<=ns+2; i++)
-		free(mask[i] + 1);
-	free(mask + 1);
-
-	for(i=1; i<=ns+2; i++)
-		free(dir[i] + 1);
-	free(dir + 1);
-
-	exit(0);
+   if(i<nl-1)
+   {
+      edge=dir[i+1].p[j-1];
+      if(bas[i+1].p[j-1]==-1 && !G_is_c_null_value(&edge) && edge==1)
+         rc+=recurse_cell(flag, i+1,j-1, nl, ns, bas, dir);
+      edge=dir[i+1].p[j];
+      if(bas[i+1].p[j]==-1 && !G_is_c_null_value(&edge) && edge==128)
+         rc+=recurse_cell(flag, i+1,j, nl, ns, bas, dir);
+      edge=dir[i+1].p[j+1];
+      if(bas[i+1].p[j+1]==-1 && !G_is_c_null_value(&edge) && edge==64)
+         rc+=recurse_cell(flag, i+1, j+1, nl, ns, bas, dir);
+   }
+   return rc;
 }
 
+void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
+{
+   int pass,repeat,flag,i,j,half,bufsz;
+   int sline, nline, rdline;
+
+   struct whereandwhat hold;
+   struct whereandwhat dir[mxbuf];
+   struct whereandwhat bas[mxbuf];
+
+   bufsz=ns*sizeof(CELL);
+
+/* adjust maxbuf to an even number */
+   half=mxbuf/2;
+   mxbuf=2*half;
+
+/* allocate buffers for drainage directions and basin areas */
+   for(i=0;i<mxbuf;i+=1)bas[i].p=(CELL *)calloc(ns,sizeof(CELL));
+   for(i=0;i<mxbuf;i+=1)dir[i].p=(CELL *)calloc(ns,sizeof(CELL));
+
+   pass=0;
+
+/* complete a downward pass */
+   do
+   {
+      fprintf(stderr, "wtrshed pass %d\n",++pass);
+      repeat=0;
+
+/* fill the buffer */ 
+      nline=mxbuf;
+      sline=0;
+      rdline=1;
+      for(i=0;i<mxbuf;i++)
+      {
+         bas[i].offset=dir[i].offset=rdline*bufsz;
+
+         lseek(fm,bas[i].offset,SEEK_SET);
+         read(fm,bas[i].p,bufsz);
+
+         lseek(fd,dir[i].offset,SEEK_SET);
+         read(fd,dir[i].p,bufsz);
+
+         rdline++;
+      }
+
+/* repeat for all subsequent rows except the first and last */
+      for(i=1;i<nl-1;i+=1)
+      {
+/* analyse one line */
+         for(j=1;j<ns-1;j+=1)
+         {
+            flag=bas[sline].p[j];
+            if(flag>0)if(recurse_cell(flag,sline,j,nline,ns,bas,dir)>0)repeat=1;
+         }
+
+/* write one line */
+         lseek(fm,bas[sline].offset,SEEK_SET);
+         write(fm,bas[sline].p,bufsz);
+
+/* If the bottom end of the buffers reach the bottom of the file, 
+ * rotate the buffers and read new lines */
+         if(rdline<nl-1)
+         {
+            hold=bas[0];
+            for(j=1;j<mxbuf;j+=1)bas[j-1]=bas[j];
+            bas[mxbuf-1]=hold;
+
+            hold=dir[0];
+            for(j=1;j<mxbuf;j+=1)dir[j-1]=dir[j];
+            dir[mxbuf-1]=hold;
+          
+            bas[mxbuf-1].offset=dir[mxbuf-1].offset=rdline*bufsz;
+
+            lseek(fm,bas[mxbuf-1].offset,SEEK_SET);
+            read(fm,bas[mxbuf-1].p,bufsz);
+
+            lseek(fd,dir[mxbuf-1].offset,SEEK_SET);
+            read(fd,dir[mxbuf-1].p,bufsz);
+
+            rdline++;
+         }
+/* After the buffer reaches the bottom of the file, stop reading file,
+ * just advance the pointers */         
+         else 
+         {
+            nline-=1;
+            sline+=1;
+         }
+        
+      }
+
+/* fill the buffer */ 
+      nline=mxbuf;
+      rdline=nl-2;
+      for(i=mxbuf-1;i>=0;i-=1)
+      {
+         bas[i].offset=dir[i].offset=rdline*bufsz;
+
+         lseek(fm,bas[i].offset,SEEK_SET);
+         read(fm,bas[i].p,bufsz);
+
+         lseek(fd,dir[i].offset,SEEK_SET);
+         read(fd,dir[i].p,bufsz);
+
+         rdline--;
+      }
+
+/* repeat */
+      for(i=nl-2;i>=1;i-=1)
+      {
+/* analyse one line */
+         for(j=1;j<ns-1;j+=1)
+         {
+            flag=bas[nline-1].p[j];
+            if(flag>0)if(recurse_cell(flag,nline-1,j,nline,ns,bas,dir)>0)repeat=1;
+         }
+
+/* write one line */
+         lseek(fm,bas[nline-1].offset,SEEK_SET);
+         write(fm,bas[nline-1].p,bufsz);
+
+/* Until the top of the buffers reach the top of the file, 
+ * rotate the buffers and read new lines */
+         if(rdline>=1)
+         {
+            hold=bas[nline-1];
+            for(j=nline-1;j>0;j-=1)bas[j]=bas[j-1];
+            bas[0]=hold;
+            
+            hold=dir[nline-1];
+            for(j=nline-1;j>0;j-=1)dir[j]=dir[j-1];
+            dir[0]=hold;
+          
+            bas[0].offset=dir[0].offset=rdline*bufsz;
+            
+            lseek(fm,bas[0].offset,SEEK_SET);
+            read(fm,bas[0].p,bufsz);
+
+            lseek(fd,dir[0].offset,SEEK_SET);
+            read(fd,dir[0].p,bufsz);
+
+            rdline--;
+         }
+/* after the buffer reaches the top of the file, just decrease the
+ * line count */
+         else nline-=1;
+        
+      }
+
+   }while(repeat);
+
+/* allocate buffers for drainage directions and basin areas */
+   for(i=0;i<mxbuf;i+=1)free(bas[i].p);
+   for(i=0;i<mxbuf;i+=1)free(dir[i].p);
+
+}

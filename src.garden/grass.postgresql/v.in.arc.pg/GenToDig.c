@@ -90,10 +90,10 @@ GenToDig (int type, FILE *ascii, struct Map_info *VectMap, int neatline, char *f
 	int    day, yr;
 	char   date[25], mon[4];
 	double xtmp, ytmp;
-	double xmin, 
-	xmax;
-	double ymin, 
-	ymax;
+	double xmin=0, 
+	xmax=0;
+	double ymin=0, 
+	ymax=0;
 	int    first=1;
 	double *xarray,
 	*yarray,

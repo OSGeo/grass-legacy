@@ -16,15 +16,19 @@
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "colors.h"
 #include "linegraph.h"
 #include <math.h>
 
-#define MAX(x,y)             (( x>y ) ? x : y)
-#define MIN(x,y)             (( x<y ) ? x : y)
+#define MAX(x,y) ((x) > (y) ? (x) : (y))
+#define MIN(x,y) ((x) < (y) ? (x) : (y))
 
 /* the default order of precedence of colors to use for Y lines */
-char *default_y_colors[] = {"yellow", "red", "green", "violet", "blue",
-"orange", "gray", "brown", "magenta", "white", "indigo", "NULL"};
+int default_y_colors[] = {
+    0,
+    RED, GREEN, VIOLET, BLUE, ORANGE,
+    GRAY, BROWN, MAGENTA, WHITE, INDIGO
+};
 
 int 
 main (int argc, char **argv)
@@ -63,6 +67,7 @@ main (int argc, char **argv)
     };
     
     struct in_file in[12];
+    struct GModule *module;
     
     float max_y;
     float min_y;
@@ -87,6 +92,11 @@ main (int argc, char **argv)
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Generates and displays simple line graphs in the active graphics monitor display frame.";
+    
     x_opt             = G_define_option() ;
     x_opt->key        = "x_file" ;
     x_opt->description= "Name of data file for X axis of graph" ;
@@ -113,8 +123,8 @@ main (int argc, char **argv)
     y_color_opt->type       = TYPE_STRING ;
     y_color_opt->required   = NO ;
     y_color_opt->multiple   = YES;
-    y_color_opt->answers = NULL;
-    y_color_opt->options = "white,red,orange,yellow,green,blue,indigo,magenta,violet,brown,gray,black";
+    y_color_opt->answers    = NULL;
+    y_color_opt->options    = D_COLOR_LIST;
     
     t_color_opt             = G_define_option() ;
     t_color_opt->key        = "title_color" ;
@@ -122,7 +132,7 @@ main (int argc, char **argv)
     t_color_opt->type       = TYPE_STRING ;
     t_color_opt->required   = NO ;
     t_color_opt->answer     = "white" ;
-    t_color_opt->options = "white,red,orange,yellow,green,blue,indigo,magenta,violet,brown,gray,black";
+    t_color_opt->options    = D_COLOR_LIST;
 
     title[0]             = G_define_option() ;
     title[0]->key        = "x_title" ;
@@ -237,7 +247,7 @@ main (int argc, char **argv)
      {
          for (i = 1; i <= num_y_files; i++)
          {
-             in[i].color = D_translate_color(default_y_colors[i]);
+             in[i].color = default_y_colors[i];
          }
      }
      

@@ -6,8 +6,14 @@ int main (int argc, char *argv[])
     int stat;
     struct Option *painter;
     struct Flag *print, *list, *quiet;
+    struct GModule *module;
 
     G_gisinit(argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Selects a PostScript device for GRASS hardcopy output.";
 
     painter = G_define_option();
     painter->key = "painter";

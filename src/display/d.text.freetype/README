@@ -1,0 +1,21 @@
+Displays text using TrueType fonts.
+===================================
+
+To use this module, install FreeType2 first.
+
+
+configure tries to find ft2build.h and this file includes
+.../freetype2/freetype/config/ftheader.h.  In my case, ft2build.h is located
+in /usr/local/include and other freetype header files are in
+/usr/local/include/freetype2.
+  
+
+BUGS
+====
+With some PCF files, it cannot handle bitmap images correctly.
+Could anyone fix this?
+
+
+Huidae Cho
+2001/08/08
+

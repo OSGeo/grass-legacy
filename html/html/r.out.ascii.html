@@ -14,12 +14,13 @@
 <BR>
 <B>r.out.ascii help</B>
 <BR>
-<B>r.out.ascii </B>[<B>-hi</B>] <B>map=</B><EM>name 
+<B>r.out.ascii </B>[<B>-hsi</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
 [<B>dp=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
 
 <H2>DESCRIPTION</H2>
 <EM>r.out.ascii</EM> converts a user-specified raster map layer
-(<B>map=</B><EM>name</EM>) into an ASCII text file suitable for export to
+(<B>input=</B><EM>name</EM>) into an ASCII text file
+(<B>output=</B><EM>name</EM>) suitable for export to
 other computer systems.
 
 <P>
@@ -34,14 +35,21 @@ format to GRASS raster file format.
 <DT><B>-h</B> 
 <DD>Suppress printing of header information.
 
+<DT><B>-s</B>
+<DD>Write SURFER .grd ASCII GRID instead of GRASS ASCII GRID<br>
+    (with reverted row order, different header)
+
 <DT><B>-i</B>
 <DD>Output integer category values, nit cell values.
 </DL>
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>map=name</B> 
+<DT><B>input=name</B> 
 <DD>Name of an existing raster map layer.
+
+<DT><B>output</B>
+<DD>Name of an output binary file (use output=- for stdout)
 
 <DT><B>dp=value</B>
 <DD>Number of decimal places.
@@ -57,15 +65,28 @@ form
 
 <DL>
 <DD>
-<B>r.out.ascii map=</B><EM>name </EM>[<B>dp=</B><EM>value</EM>]
+<B>r.out.ascii input=</B><EM>inname</EM> <b>output=</b><em>outname</em> [<B>dp=</B><EM>value</EM>]
 </DL>
 
-where <EM>name</EM> is the name of a raster map layer to be converted to
-ASCII format, and <EM>value</EM> is the number of digits (per cell)
-to be printed to output.  The user can also the <EM>-h</EM> option to
-suppress the output of file header information.
+where <EM>inname</EM> is the name of a raster map layer to be converted to
+ASCII format, <EM>outname</EM> is the name of the exported file, and
+<EM>value</EM> is the number of digits (per cell) to be printed to output. 
+The user can also the <EM>-h</EM> option to suppress the output of file
+header information.
 
 <P>
+To write a SURFER .grd ASCII GRID file (with reverted row order and different
+header) use the <em>-s</em> flag:
+
+<DL>
+<DD>
+<B>r.out.ascii -s input=</B><EM>inname</EM> <b>output=</b><em>outname.grd</em> [<B>dp=</B><EM>value</EM>]
+</DL>
+
+NULL data are coded to "1.70141e+038" for SURFER ASCII GRID files (ignoring
+the <em>null=</em> parameter).
+
+<p>
 
 Alternately, the user can simply type <B>r.out.ascii</B> on the command
 line, without program arguments.  In this case, the user will be prompted
@@ -79,10 +100,10 @@ UNIX redirection mechanism; e.g.:
 
 <DL>
 <DD>
-<B>r.out.ascii map=</B>soils &gt; out.file
+<B>r.out.ascii inout=</B>soils <b>output=-</b> &gt; out.file
 </DL>
 
-The output file out.file can then be printed or copied onto a magnetic tape
+The output file out.file can then be printed or copied onto a CDROM
 or floppy disk for export purposes.
 
 <H2>SEE ALSO</H2>
@@ -92,3 +113,8 @@ or floppy disk for export purposes.
 
 <H2>AUTHOR</H2>
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+<p>
+Surfer support by Markus Neteler
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -16,6 +16,11 @@ then
     echo `basename $me` - CMD variable NULL or not set
     exit 1
 fi
+#if test "$UNUSED" = ""
+#then
+#    echo `basename $me` - UNUSED variable NULL or not set
+#    exit 1
+#fi
 if test "$HEADER" = ""
 then
     echo `basename $me` - HEADER variable NULL or not set
@@ -119,6 +124,7 @@ then
     echo GISBASE=$GISBASE
     echo SRC=$SRC
     echo CMD=$CMD
+    echo UNUSED=$UNUSED
     echo HEADER=$HEADER
     echo ARCH=$ARCH
     exit 0
@@ -133,6 +139,7 @@ then
     echo set GISBASE=$GISBASE
     echo set SRC=$SRC
     echo set CMD=$CMD
+    echo set UNUSED=$UNUSED
     echo set HEADER=$HEADER
     echo set ARCH=$ARCH
     exit 0
@@ -162,6 +169,7 @@ if test ! "$GMAKE_VERBOSE" = no
 then
     echo "  SRC     = $SRC"
     echo "  CMD     = $CMD"
+    echo "  UNUSED  = $UNUSED"
     echo "  HEADER  = $HEADER"
     echo "  ARCH    = $ARCH"
     echo "  GISBASE = $GISBASE"
@@ -239,12 +247,13 @@ fi
 (
 # build the make.rules file
 # 
-# define VERSION, SRC, OBJARCH for .o files, LIBARCH for .a files
+# define VERSION, SRC, UNUSED, OBJARCH for .o files, LIBARCH for .a files
 echo VERSION_NUMBER="$VERSION_NUMBER"
 echo VERSION_DATE="$VERSION_DATE"
 echo VERSION_UPDATE_PKG="$VERSION_UPDATE_PKG"
 echo VERSION_FILE="$VERSION_FILE"
 echo SRC=$SRC
+echo UNUSED=$UNUSED
 echo OBJARCH=$OBJARCH
 echo LIBARCH=$LIBARCH
 echo ""

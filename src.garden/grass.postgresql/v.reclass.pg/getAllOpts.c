@@ -10,7 +10,10 @@
 */
 
 #include "gis.h"
-getAllOpts(argc, argv)
+#include "dbvect.h"
+#include <stdlib.h>
+
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
@@ -26,7 +29,15 @@ getAllOpts(argc, argv)
         disolve->key     = 'd';
         disolve->description = "Dissolve common boundaries (default is no)." ;
 	
-        key = G_define_option() ;
+        input = G_define_option() ;
+	input->gisprompt  = "old,dig,vector" ;
+        input->key        = "input" ;
+        input->type       = TYPE_STRING ;
+        input->required   = YES  ;
+        input->multiple   = NO ;
+        input->description= "Name of existing vector file.";
+
+	key = G_define_option() ;
         key->key        = "key" ;
         key->type       = TYPE_STRING ;
         key->required   = YES  ;
@@ -55,15 +66,6 @@ getAllOpts(argc, argv)
         where->required   = NO  ;
         where->multiple   = NO ;
         where->description= "Where clause for query (ie. where col='paved'). " ;
-
- 
-        input = G_define_option() ;
-	input->gisprompt  = "old,dig,vector" ;
-        input->key        = "input" ;
-        input->type       = TYPE_STRING ;
-        input->required   = YES  ;
-        input->multiple   = NO ;
-        input->description= "Name of existing vector file.";
 
         output = G_define_option() ;
 	output->gisprompt  = "new,dig,vector" ;

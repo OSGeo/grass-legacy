@@ -163,11 +163,11 @@ int main(int argc ,char **argv )
         } 
         db_close_cursor(&cursor);	 																						    				
         fprintf ( stderr, "%d sites read from DB\n", nsites); 
-	
-	/* maximum acceptable distance from site */
-	maxdsq = D_d_to_u_col(11) - D_d_to_u_col(1); 
-	maxdsq = maxdsq * maxdsq;
 
+	/* maximum acceptable distance from site */
+	maxdsq = D_d_to_u_col(11) - D_d_to_u_col(1);
+	maxdsq = maxdsq * maxdsq;
+	
 	/* read selected point and find site */
 	do {
     	    show_buttons(once);

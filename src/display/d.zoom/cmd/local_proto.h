@@ -1,10 +1,22 @@
 #include "gis.h"
+#include "config.h"
+
+
+#define	LEFTB	1
+
+#ifndef	ANOTHER_BUTTON
+#	define	MIDDLEB	2
+#	define	RIGHTB	3
+#else
+#	define	MIDDLEB	3
+#	define	RIGHTB	2
+#endif
+
 
 /* ask.c */
 int yes(char *);
 int just_click(char *);
 int ask(char *[]);
-int ask_rotate(void);
 /* box.c */
 int make_window_box(struct Cell_head *, double, char);
 /* center.c */
@@ -21,7 +33,10 @@ int get_map_rite(void);
 int get_wind_y_pos(float);
 int get_wind_x_pos(float);
 /* zoom.c */
+/*
 int zoomwindow(int, int, double, char);
+*/
+int zoomwindow(int, double, char);
 /* redraw.c */
 int redraw(void);
 

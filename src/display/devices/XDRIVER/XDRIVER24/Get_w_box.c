@@ -12,90 +12,64 @@
  * returned in button. */
 
 #include "includes.h"
-#include <X11/cursorfont.h>
-#include "../lib/colors.h"
-
-extern Display *dpy;
-extern int scrn;
-extern Window grwin;
-extern Cursor grcurse, grxh;
-extern GC gc;
-extern u_long gemask;           /* normal event mask */
-
-static int drawn = 0;
-static u_long event_mask;
-static unsigned width, height, oldwidth, oldheight;
-static int oldx, oldy;
-GC xor_gc;
-
-/* Erases the current RubberBox */
-static int EraseRubberBox (int x1, int y1, unsigned x2, unsigned y2)
-{
-    XDrawRectangle(dpy, grwin, xor_gc, x1, y1, x2, y2);
-
-    return 0;
-}
 
 int Get_location_with_box (
-    int cx,
-    int cy,                     /* current x and y */
-    int *nx,
-    int *ny,                   /* new x and y */
+    int cx, int cy,                     /* current x and y */
+    int *nx, int *ny,                   /* new x and y */
     int *button
 )
 {
+    int drawn = 0;
+    long event_mask;
+    unsigned width, height, oldwidth, oldheight;
+    int oldx, oldy;
     XEvent event;
     int leftx, topy;
+    GC xor_gc;
     XGCValues gcValues;
     unsigned gcMask;
+    int done;
+
+    if (redraw_pid)
+    {
+	fprintf(stderr, "Monitor: interactive command in redraw\n");
+	return -1;
+    }
 
     /* Get events that track the pointer to resize the RubberBox until
      * ButtonReleased */
-    event_mask = ButtonPressMask | PointerMotionMask | ExposureMask; 
+    event_mask = ButtonPressMask | PointerMotionMask;
     XSelectInput(dpy, grwin, event_mask);
 
     /* XOR, so double drawing returns pixels to original state */
     gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth;
-   gcValues.function = GXxor;
-   gcValues.line_width = 0;
-   gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
-   gcValues.foreground = 0xffffffff;
-   xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
-
+    gcValues.function = GXxor;
+    gcValues.line_width = 0;
+    gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
+    gcValues.foreground = 0xffffffff;
+    xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
 
     /* Set the crosshair cursor */
-    XDefineCursor(dpy, grwin, grxh);
+    XDefineCursor(dpy, grwin, cur_xh);
 
-    while (1) {
-        XWindowEvent(dpy, grwin, event_mask, &event);
-	/*********************
-	while (XCheckWindowEvent(dpy, grwin, event_mask, &event) == False)
-	{
-	    Service_Xevent();
-	    sleep(1); 
-	}
-	**********************/
+    for (done = 0; !done; ) {
+        if (!Get_Xevent(event_mask, &event))
+            break;
+
         switch (event.type) {
-	case Expose:
-	    handleExposeEvent();
-	    break;
         case ButtonPress:
             *button = event.xbutton.button;
             *nx = event.xbutton.x;
             *ny = event.xbutton.y;
-            if ( drawn ) 
-				EraseRubberBox(oldx, oldy, oldwidth, oldheight);
-            XDefineCursor(dpy, grwin, grcurse); /* reset cursor */
-            drawn = 0;
-            XSelectInput(dpy, grwin, gemask);   /* restore normal events */
-            return 0;
+            done = 1;
+            break;
 
         case MotionNotify:
             *nx = event.xbutton.x;
             *ny = event.xbutton.y;
             /* do a double draw to 'erase' previous rectangle */
             if (drawn)
-                EraseRubberBox(oldx, oldy, oldwidth, oldheight);
+                XDrawRectangle(dpy, grwin, xor_gc, oldx, oldy, oldwidth, oldheight);
             /* need to draw a rectangle with (cx,cy) as one corner and
              * (*nx,*ny) as opposite corner. Figure the top left coords
              * of such a rectangle */
@@ -113,7 +87,7 @@ int Get_location_with_box (
                 topy = *ny;
                 height = cy - *ny;
             }
-            /* don't draw a zero volumn rectangle */
+            /* don't draw a zero volume rectangle */
             if (width && height) {
                 XDrawRectangle(dpy, grwin, xor_gc, leftx, topy, width, height);
                 oldwidth = width;
@@ -124,9 +98,15 @@ int Get_location_with_box (
             } else
                 drawn = 0;
             break;
-
         }
     }
+
+    if (drawn) 
+        XDrawRectangle(dpy, grwin, xor_gc, oldx, oldy, oldwidth, oldheight);
+    drawn = 0;
+    XUndefineCursor(dpy, grwin);        /* reset cursor */
+    XSelectInput(dpy, grwin, gemask);   /* restore normal events */
+    XFreeGC(dpy, xor_gc);
 
     return 0;
 }

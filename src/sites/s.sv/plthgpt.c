@@ -51,7 +51,7 @@ plot_hg_points (HGN *list, int nh, int verbose, char *save)
   fclose (tfp);		/* very important */
 
   strcat (buf, sbuf);
-  sprintf (buf, "%s %s ", PLOTPROG, plot_file);
+  sprintf (buf, "%s %s ", plot_program, plot_file);
   G_system (buf);
 
   /* save plot if requested */

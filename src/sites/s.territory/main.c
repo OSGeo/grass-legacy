@@ -1,4 +1,6 @@
 /* Written by Bill Brown, UIUC GIS Laboratory
+ *
+ * Calculates territory consumption for animal based on distributed positions
  */
 
 #include <stdlib.h>
@@ -21,9 +23,15 @@ int main (int argc, char *argv[])
     char 		errbuf[100];
     int			row, col, Thresh_fld=1, Icr_fld=0, shh=0; 
     struct Cell_head    w;
-
+    struct GModule *module;
+    
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Calculates territory consumption for animal based on distributed positions";
 
     rast = G_define_option();
     rast->key            	   = "rast";

@@ -45,12 +45,13 @@
 		Bill Hughes
 */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <time.h>
 #include "gis.h"
 
-#include <stdarg.h>
 
 /* static int (*error)() = 0; */
 static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */

@@ -3,7 +3,7 @@
 # 
 
 help {About} {-width 50} {-justify center} \
-{TCLTKGRASS 3.1 (November 2000)
+{TCLTKGRASS 3.2 (April 2001)
 An open graphical user interface for GRASS GIS
 
 written by Jacques Bouchard for

@@ -9,10 +9,13 @@
 /*		 alex shevlakov -Jan 00 Coloring functions added
 */
 
+#include <stdlib.h>
 #include "gis.h"
+#include "dbvect.h"
+#include "display.h"
 
 
-getAllOpts(argc, argv)
+int getAllOpts(argc, argv)
 	int argc;
 	char **argv;
 	
@@ -23,6 +26,14 @@ getAllOpts(argc, argv)
 	char *mapset;
 	int colr, fillcolr, retval;
 
+
+	map = G_define_option() ;
+        map->key        = "map" ;
+	map->gisprompt	= "old,dig,vector";
+        map->type       = TYPE_STRING ;
+        map->required   = YES  ;
+        map->multiple   = NO ;
+        map->description= "Vector map:";
 
 	key = G_define_option() ;
         key->key        = "key" ;
@@ -45,15 +56,6 @@ getAllOpts(argc, argv)
         where->required   = NO  ;
         where->multiple   = NO ;
         where->description= "Query clause (e.g. obj='paved'):" ;
-
-        map = G_define_option() ;
-        map->key        = "map" ;
-	map->gisprompt	= "old,dig,vector";
-        map->type       = TYPE_STRING ;
-        map->required   = YES  ;
-        map->multiple   = NO ;
-        map->description= "Vector map:";
-
 
         color = G_define_option() ;
         color->key        = "color" ;

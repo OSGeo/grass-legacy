@@ -1,82 +1,100 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<A NAME="g.column.pg">
-<TITLE>g.column.pg</TITLE>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>g.column.pg</title>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
-
-<img src="grass.smlogo.gif">
-
+<a NAME="g.column.pg"></a><img SRC="grass.smlogo.gif" >
 <hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>g.column.pg</i></b> - Generate a list of database columns for a specified
+table in the currently selected database. (GRASS-RDBMS General Interface
+Program)
+<h2>
+SYNOPSIS</h2>
+<b>g.column.pg</b>
+<br><b>g.column.pg help</b>
+<br><b>g.column.pg [-v] table</b><i>=name</i>
+<h2>
+DESCRIPTION</h2>
+<i>g.column.pg</i> is used to generate a list of the columns in the specified
+table [table] of the currenty selected database. If the <i>[-v]</i> option
+is used the data type and length of the column are reported as well. The
+currently selected database is identified by the GRASS environment variable
+$PG_DBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS interface
+tool. If this environment variable is not set the program terminates with
+a message to the user. To generate a list of the available tables in the
+currently selected database use the command <i>g.table.pg</i>. The information
+provided by <i>g.column.pg</i> will be used in subsequent GRASS-RDBMS applications
+to formulate and construct well formed database queries.
+<h2>
+COMMAND LINE OPTIONS</h2>
 
-<H2>NAME</H2>
-<EM><B>g.column.pg</B></EM> - Generate a list of database columns for a specified table in the currently selected database. (GRASS-RDBMS General Interface Program)
+<h3>
+Flag:</h3>
 
-<H2>SYNOPSIS</H2>
-<B>g.column.pg</B><BR>
-<B>g.column.pg help</B><BR>
-<B>g.column.pg [-v] table</B><EM>=name</EM>
+<dl>
+<dt>
+<b>-v</b></dt>
 
-<H2>DESCRIPTION</H2>
-<EM>g.column.pg</EM> is used to generate a list of the columns in the specified table [table] of the currenty selected database.  If the <EM>[-v]</EM> option is used the data type and length of the column are reported as well.  The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user. To generate a list of the available tables in the currently selected database use the command <EM>g.table.pg</EM>.  The information provided by <EM>g.column.pg</EM> will be used in subsequent GRASS-RDBMS applications to formulate and construct well formed database queries.
+<dd>
+Use v for a verbose listing of columns</dd>
+</dl>
 
-<H2>COMMAND LINE OPTIONS</H2>
-<H3>Flag:</H3>
+<h3>
+Parameter:</h3>
 
-<DL>
-<DT><B>-v</B>
-<DD>Use v for a verbose listing of columns
-</DL>
+<dl>
+<dt>
+<b>table=databasetablename</b></dt>
 
-<H3>Parameter:</H3>
-<DL>
-<DT><B>table=databasetablename</B>
-<DD>Name of table in the currently selected database.
-</DL>
+<dd>
+Name of table in the currently selected database.</dd>
+</dl>
+<b>EXAMPLE OUTPUT (terse)</b>
+<p><i>g.column.pg table=nri</i>
+<p>The following columns are defined in table: utm
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fips&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flood&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hydunit
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl82&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl87&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mlra
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nriptr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; slope
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; soil5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; textmod&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; texture
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tfact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ukfact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utme
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utmn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xfact</pre>
+<b>EXAMPLE OUTPUT (verbose)</b>
+<p><i>g.column.pg table=nri -v</i>
+<p>The following columns are defined in table: utm
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flood&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hydunit&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl82&nbsp; char
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl87&nbsp; char
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mlra&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nriptr&nbsp; int4
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other&nbsp; text</pre>
 
-<B>EXAMPLE OUTPUT (terse)</B><P>
-<EM>g.column.pg table=nri</EM>
-<P>
-
-The following columns are defined in table: utm
-<PRE>
-       fips             flood             hydunit
-       landcl82         landcl87          mlra
-       nriptr           other             point
-       psu              refname           slope
-       soil5            textmod           texture
-       tfact            ukfact            utme
-       utmn           	xfact
-</PRE>
-
-<B>EXAMPLE OUTPUT (verbose)</B><P>
-<EM>g.column.pg table=nri -v</EM>
-
-<P>
-The following columns are defined in table: utm
-<PRE>
-                      flood  char16
-                    hydunit  char16
-                   landcl82  char
-                   landcl87  char
-                       mlra  char16
-                     nriptr  int4
-                      other  text
-</PRE>
-
-<H2>BUGS</H2>
+<h2>
+BUGS</h2>
 None known.
-
-<H2>NOTE</H2>
-This program requires the Informix database software.
-
-<H2>SEE ALSO</H2>
-<EM><A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
-
-<H2>AUTHOR</H2>
-Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
-<P>
-Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
-<P>
-Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
-</BODY>
-</HTML>
-
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.select.pg.html">g.select.pg</a>, <a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>, <a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>, <a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

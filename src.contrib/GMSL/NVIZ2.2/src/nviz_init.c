@@ -32,6 +32,7 @@ parse_command (
   struct Option *elev, *colr, *tricolr, *vct, *site, *view;
   struct Option *panel_path, *script;
   struct Flag *no_args, *script_kill, *demo;
+  struct GModule *module;
   char *arglist[3], *autoload;
   int i, c, aload=1;
 
@@ -50,7 +51,11 @@ parse_command (
    *
    * -x : demo mode, the usual "please wait" messages are nuked.
    */	
-  
+
+module = G_define_module();
+	module->description =
+	"nviz - Visualization and animation tool for GRASS data" ;
+
   elev = G_define_option();
   elev->key                    = "elevation";
   elev->type                   = TYPE_STRING;
@@ -76,8 +81,8 @@ parse_command (
   site->description            = "Sites overlay file(s)";
 
   no_args = G_define_flag();
-  no_args->key		       = 'q';
-  no_args->description         = "No args option";
+  no_args->key                 = 'q';
+  no_args->description         = "Quickstart - Do not load any data";
 
   script_kill = G_define_flag();
   script_kill->key	       = 'k';
@@ -85,22 +90,24 @@ parse_command (
 
   demo = G_define_flag();
   demo->key	               = 'x';
-  demo->description            = "Demo mode";
+  demo->description            = "Start in Demo mode";
 
   panel_path = G_define_option();
   panel_path->key              = "path";
   panel_path->type             = TYPE_STRING;
   panel_path->required         = NO;
-  panel_path->description      = "Alternative panel path";
+  panel_path->description      = "Set alternative panel path";
 
   script = G_define_option();
   script->key              = "script";
   script->type             = TYPE_STRING;
   script->required         = NO;
-  script->description      = "Startup script file";
+  script->description      = "Execute script file at startup";
+
 
   if (G_parser (argc, argv))
-    exit (-1);
+    exit (0);
+/* Exit status is zero to avoid TCL complaints */
   
   {
     float defs[MAX_ATTS];
@@ -128,7 +135,7 @@ parse_command (
     fprintf (stderr, "Version: %s\n", VERSION_STRING);
     fprintf (stderr, "\n");
     fprintf (stderr, "Authors: Bill Brown, Terry Baker, Mark Astley, David Gerdes\n");
-    fprintf (stderr, "\tmodifications: Jaro Hofierka\n");
+    fprintf (stderr, "\tmodifications: Jaro Hofierka, Bob Covill\n");
     fprintf (stderr, "\n");
     fprintf (stderr, "\n");
     fprintf (stderr, "Please cite one or more of the following references in publications\n");
@@ -151,8 +158,10 @@ parse_command (
   
 
   /* Look for quickstart flag */
-  if (no_args->answer) 
+   if (no_args->answer) {
     elev->answers=vct->answers=site->answers=NULL;
+	}
+
 
   /* Look for scriptkill flag */
   if (script_kill->answer) {
@@ -240,7 +249,7 @@ parse_command (
       Nnew_map_obj_cmd (data, interp, 3, arglist);
     }
   }
-  
+
 }
 
 
@@ -259,16 +268,16 @@ Ngetargs (
 {
   int i, n;
   char *tmp, *tmp2, *argv0;
-  int argc;
+  int argc, argc2;
   
   argv0 = Tcl_GetVar (interp, "argv0", TCL_LEAVE_ERR_MSG);
   tmp = Tcl_GetVar (interp, "argv", TCL_LEAVE_ERR_MSG);
   tmp2  = (char *) malloc ((strlen(argv0) + strlen(tmp) +2)*(sizeof (char)));
   sprintf (tmp2, "%s %s", argv0, tmp);
-  
-  if (TCL_ERROR == Tcl_SplitList (interp, tmp2, &argc, args))
+
+  if (TCL_ERROR == Tcl_SplitList (interp, tmp2, &argc, args)) 
     exit(-1);
-    
+
   return (argc);
 }
 
@@ -356,12 +365,13 @@ int Ninit(Tcl_Interp *interp, Tk_Window w)
 {
   static Nv_data data;
 
-  
   init_commands(interp, &data);
+
   Ninitdata(interp, &data);
 
   /* compile in the home directory */
-  Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);
+Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY); 
+
 }  
 
 void swap_togl();
@@ -373,14 +383,14 @@ int Ninitdata(
   char rescmd[120], *string, **argv;
   int argc;
   int i;
-  
+
   argc = Ngetargs(interp, &argv);
-  
+
   G_gisinit (argv[0]);
+
   GS_libinit();
   GS_set_swap_func(swap_togl);
   data->NumCplanes = 0;
   data->CurCplane = 0;
   parse_command(data, interp, argc, argv);
-
 }

@@ -33,13 +33,13 @@
 	set to non_NULL to use the original code)*/
 
 #include "stdio.h"
+#include "string.h"
 #include "Vect.h"
 #include "v_in_arc.inter.h"
 
 int 
 BuildDig (char *cov_type, int neatline, FILE *lines_file, FILE *pts_file, FILE *txt_file, FILE *atts_file, struct Map_info *VectMap, char *cats_filename)
 {
-int flag=0;
 
 #ifdef DEBUG 
 fprintf (stdout,"BuildDig\n");

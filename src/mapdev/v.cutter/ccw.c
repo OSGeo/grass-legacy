@@ -6,8 +6,9 @@
 */
 
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "cutter.h"
-#include "math.h"
 
 main (int argc, char *argv[])
 {

@@ -57,8 +57,9 @@ else:
 from os import system
 
 ID_RUN    = 10
-ID_CANCEL= 11
-ID_PARAM_START = 900
+ID_CANCEL = 11
+ID_PARAM_START = 800
+ID_FLAG_START  = 900
 
 ID_ABOUT = 101
 ID_ABOUT_COMMAND = 102
@@ -73,8 +74,9 @@ STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
 
-grass_task = { 'name' : 'unknown', 'description' : 'No description available.',
-    'lines' : 0, 'params' : [] }
+grass_task = { 'name' : 'unknown',
+    'description' : 'No description available.',
+    'lines' : 0, 'params' : [], 'flags' : [] }
 
 def normalize_whitespace(text):
     "Remove redundant whitespace from a string"
@@ -105,6 +107,7 @@ class processTask(HandlerBase):
         self.inDefaultContent = 0
         self.inValueContent = 0
         self.inParameter = 0
+        self.inFlag = 0
 
     def startElement(self, name, attrs):
         if name == 'task':
@@ -124,6 +127,16 @@ class processTask(HandlerBase):
                 grass_task['lines'] = grass_task['lines'] + 2
             self.param_required = attrs.get('required', None)
             self.param_multiple = attrs.get('multiple', None)
+
+        if name == 'flag':
+            self.inFlag = 1;
+            self.flag_description = ''
+            self.flag_default = ''
+            self.flag_values = []
+            # Look for the flag name
+            self.flag_name = attrs.get('name', None)
+            grass_task['lines'] = grass_task['lines'] + 1
+
         if name == 'description':
             self.inDescriptionContent = 1
             self.description = ''
@@ -155,17 +168,31 @@ class processTask(HandlerBase):
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = 0;
-            grass_task['params'].append({ "name" : self.param_name,
-                "type" : self.param_type, "required" : self.param_required,
-                "multiple" : self.param_multiple, "description" : self.param_description,
-                "default" : self.param_default, "values" : self.param_values, "value" : '' })
+            grass_task['params'].append({
+                "name" : self.param_name,
+                "type" : self.param_type,
+                "required" : self.param_required,
+                "multiple" : self.param_multiple,
+                "description" : self.param_description,
+                "default" : self.param_default,
+                "values" : self.param_values,
+                "value" : '' })
+
+        if name == 'flag':
+            self.inFlag = 0;
+            grass_task['flags'].append({
+                "name" : self.param_name,
+                "description" : self.flag_description } )
 
         if name == 'description':
             if self.inParameter:
                 self.param_description = normalize_whitespace(self.description)
+            elif self.inFlag:
+                self.flag_description = normalize_whitespace(self.description)
             else:
                 grass_task['description'] = normalize_whitespace(self.description)
             self.inDescriptionContent = 0
+
         if name == 'default':
             self.param_default = normalize_whitespace(self.param_default)
             self.inDefaultContent = 0
@@ -231,15 +258,21 @@ class mainFrame(wxFrame):
                     wxSize(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                 EVT_TEXT(self, ID_PARAM_START + p_count, self.EvtText)
 
-            if (grass_task['params'][p_count]['type'] == 'flag'):
-                wxCheckBox(self.panel,ID_PARAM_START + p_count, title,
-                    wxPoint(HSPACE, l_count * ENTRY_HEIGHT + VSPACE + p_count * VSPACE),
-                    wxSize(-1, -1), wxNO_BORDER)
-                EVT_CHECKBOX(self, ID_PARAM_START + p_count, self.EvtCheckBox)
-
             p_count = p_count + 1
             l_count = l_count + 1
 
+        f_count = 0
+        while f_count < len(grass_task['flags']):
+            title = str(escape_ampersand(grass_task['flags'][f_count]['description']))
+            wxCheckBox(self.panel,ID_FLAG_START + f_count, title,
+                wxPoint(HSPACE, l_count * ENTRY_HEIGHT + VSPACE + (p_count + f_count) * VSPACE),
+                wxSize(-1, -1), wxNO_BORDER)
+            EVT_CHECKBOX(self, ID_FLAG_START + f_count, self.EvtCheckBox)
+
+            f_count = f_count + 1
+            l_count = l_count + 1
+
+        p_count = p_count + f_count
         wxButton(self.panel, ID_CANCEL, "Cancel",
             wxPoint(2 * HSPACE, VSPACE + l_count * ENTRY_HEIGHT + p_count * VSPACE + 3 * VSPACE))
         wxButton(self.panel, ID_RUN, "Run",
@@ -256,9 +289,9 @@ class mainFrame(wxFrame):
 
     def EvtCheckBox(self, event):
         if (event.Checked()):
-            grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = 'checked'
+            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'checked'
         else:
-            grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = 'not checked'
+            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'not checked'
 
     def EvtComboBox(self, event):
         grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()

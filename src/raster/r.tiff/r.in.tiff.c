@@ -103,21 +103,16 @@ static	char  *outf = NULL ;
 
 int main (int argc, char *argv[])
 {
-  int         depth=0,
-    numcolors;
+  int         depth=0, numcolors;
   register TIFF *tif;
   register u_char *inp, *outp='\0';
-  register int col,
-    row,
-    i;
+  register int col, row, i;
   u_char     *Map = NULL;
   u_char     *buf, *tilebuf;
   uint16 *redcmap, *greencmap, *bluecmap;
 
   colormap_t  Colormap;	/* The Pixrect Colormap */
-  u_char      red[256],
-    green[256],
-    blue[256];
+  u_char      red[256], green[256], blue[256];
   
   int readmode;
 
@@ -129,6 +124,7 @@ int main (int argc, char *argv[])
   int cellcol, cellnrows, cellncols;
   struct Option *inopt, *outopt, *nlevopt;
   struct Flag *vflag, *bflag;
+  struct GModule *module;
 
   u_short	bitspersample,
     samplesperpixel,
@@ -149,6 +145,11 @@ int main (int argc, char *argv[])
   CELL *cellr, *cellg, *cellb;
   
   G_gisinit(argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s)";
 
   pbwcolr=&bwcolors;
 
@@ -203,7 +204,7 @@ int main (int argc, char *argv[])
   if (Verbose)
     TIFFPrintDirectory(tif, stderr, 0l);
   if (bitspersample > 8)
-    G_fatal_error("Can't handle more than 8-bits per sample. Try -f switch.");
+    G_fatal_error("Can't handle more than 8-bits per sample.");
 
   switch (samplesperpixel) {
   case 1:
@@ -217,7 +218,7 @@ int main (int argc, char *argv[])
     depth = 24;
     break;
   default:
-    G_fatal_error("Only handle 1-channel gray scale or 3-channel color. Try -f switch.");
+    G_fatal_error("Only handle 1-channel gray scale or 3-channel color.");
   }
 
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH,&width);
@@ -414,13 +415,13 @@ int main (int argc, char *argv[])
 	  cellb[col] = (CELL)Blu;
 	}
       }
-      G_put_c_raster_row(cellfp, cellptr);
+      G_put_raster_row(cellfp, cellptr, CELL_TYPE);
       if(Bands){
-	if (G_put_c_raster_row(outred, cellr) < 0 )
+	if (G_put_raster_row(outred, cellr, CELL_TYPE) < 0 )
 	  G_fatal_error("Can't write new raster row!!");
-	if (G_put_c_raster_row(outgrn, cellg) < 0 )
+	if (G_put_raster_row(outgrn, cellg, CELL_TYPE) < 0 )
 	  G_fatal_error("Can't write new raster row!!");
-	if (G_put_c_raster_row(outblu, cellb) < 0 )
+	if (G_put_raster_row(outblu, cellb, CELL_TYPE) < 0 )
 	  G_fatal_error("Can't write new raster row!!");
       }
       break;
@@ -457,7 +458,7 @@ int main (int argc, char *argv[])
 	    }
 	  }
 	}
-	G_put_c_raster_row(cellfp, cell);
+	G_put_raster_row(cellfp, cell, CELL_TYPE);
 	/* *outp++ = *inp++;*/
 	break;
       }
@@ -477,12 +478,12 @@ int main (int argc, char *argv[])
 	  cell[cellcol++] = (CELL) (*inp >> 4);
 	  cell[cellcol++] = (CELL) (*inp++ & 0xf);
 	}
-	G_put_c_raster_row(cellfp, cell);
+	G_put_raster_row(cellfp, cell, CELL_TYPE);
 	break;
       case 8:
 	for (col = 0; col < width; col++)
 	  cell[col] = (CELL) *inp++;
-	G_put_c_raster_row(cellfp, cell);
+	G_put_raster_row(cellfp, cell, CELL_TYPE);
 	break;
       default:
 	fprintf(stderr, "%s: bad bits/sample: %d\n",
@@ -493,7 +494,7 @@ int main (int argc, char *argv[])
     case PHOTOMETRIC_PALETTE:
       for (col = 0; col < width; col++)
 	cell[col] = (CELL) *inp++;
-      G_put_c_raster_row(cellfp, cell);
+      G_put_raster_row(cellfp, cell, CELL_TYPE);
       break;
     default:
       fprintf(stderr, "%s: unknown photometric (write): %d\n",

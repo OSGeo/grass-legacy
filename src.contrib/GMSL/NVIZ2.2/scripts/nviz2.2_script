@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
 # Please log changes in the ChangeLog file in this directory
 # (Use "C-x 4 a" from emacs to add an entry)
 
@@ -10,6 +10,10 @@
 # exec chmod ugo+rw tclIndex
 
 global src_boot
+global env
+
+#Initialize ProcessName variable
+set env(NV_processname) NVIZ
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
 
@@ -115,7 +119,7 @@ proc Nv_force_panel { name } {
 ###########################################################################
 
 proc Nv_makeGUI {{BASE .top}} {
-    global Nv_ ScriptState src_boot
+    global Nv_ ScriptState src_boot env
     
     set Nv_(First) 1
     wm geometry . 585x720
@@ -146,6 +150,9 @@ puts "toplevel made"
 ##  bind $BASE.canvas <Configure> {if [%W islinked] {glx_viewport %w %h; \
 							 set Nv_(height) %h}}
     update
+
+#With widget made reset ProcessName variable
+set env(NV_processname) [winfo name .]
     
 # DEBUG
 puts "info widget made"
@@ -183,6 +190,14 @@ puts "panel area made"
 # DEBUG
 puts "file menu made"
 
+pack [Nv_mkMenu $Nv_(AREA).menu.help Help \
+	{"NVIZ Help" "About NVIZ" } \
+	{0 0 0} \
+	{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html"} ] \
+	-side right
+
+# DEBUG
+puts "Help menu made"
 
     # Take these out later when these features are more reliable
     $Nv_(AREA).menu.file.m entryconfigure 3 -state disabled
@@ -216,7 +231,7 @@ puts "scripting menu 2 made"
 puts "scripting menu 3 made"
 
     $Nv_(AREA).menu.scripting.m add command -label "Script Tools" \
-	-underline 1 -command {exec NVWISH2.2 -f script_tools -q &}
+	-underline 1 -command {exec NVWISH2.2 -f $default_panel_path/script_tools -q &}
 # DEBUG
 puts "scripting menu 4 made"
 
@@ -231,7 +246,7 @@ puts "scripting menu 5 made"
 puts "scripting menu 6 made"
 
     $Nv_(AREA).menu.scripting.m add command -label "Play Script" \
-	-underline 0 -command {set ScriptPlaying 1 ; exec NVWISH2.2 -f script_play -q &}
+	-underline 0 -command {set ScriptPlaying 1 ; exec NVWISH2.2 -f $default_panel_path/script_play -q &}
 # DEBUG
 puts "scripting menu 7 made"
 
@@ -481,6 +496,14 @@ proc load_state { dummy  } {
     appNotBusy
 }
 
+#Procedure to load NVIZ HTML pages
+proc nviz_browse { URL dummy } {
+global env
+
+exec  $env(GISBASE)/documents/nviz/help_frame.tcl $env(GISBASE)/documents/nviz/$URL &
+
+}
+
 proc load_state_aux { new_file} {
     global Nv_
 
@@ -669,7 +692,7 @@ if {[catch {set NvizPlayScript}] == 0} then {
     global NvizScriptKill
 
     set ScriptPlaying 1
-    set NvizPlayScriptProcess [exec NVWISH2.2 -f script_play -q script="$NvizPlayScript" &]
+    set NvizPlayScriptProcess [exec NVWISH2.2 -f $default_panel_path/script_play -q script="$NvizPlayScript" &]
 
     if {[catch {set NvizScriptKill}] == 0} then {
 	after 5000 CheckScriptDone

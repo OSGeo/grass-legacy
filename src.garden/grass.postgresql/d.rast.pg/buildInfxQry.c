@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "dbrast.h"
 
-buildInfxQry(key,col,lab,table,where,input,output)
+int buildInfxQry(key,col,lab,table,where,input,output)
   char *key;
   char *col;
   char *lab;

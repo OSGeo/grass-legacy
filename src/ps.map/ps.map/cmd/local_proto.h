@@ -182,3 +182,5 @@ int eps_save (FILE*,char*,char*);
 int eps_draw_saved (FILE *, char *, double, double, double, double);
 int eps_draw (FILE *, char *, double, double, double, double);
 #endif
+/* rgbfile.c */
+int rgbfile(char *key, char *data);

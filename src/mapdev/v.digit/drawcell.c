@@ -20,10 +20,6 @@ int drawcell(void)
     int ret = 0;
 
 
-    /*  Do I want this?
-    D_clear_screen ();
-    */
-
     G_get_set_window (&cellhd);  /* read WINDOW Information from window_rout () */
 
     if (Disp_flex)    G_put_window (&cellhd) ; /*OHLER*/
@@ -38,23 +34,15 @@ int drawcell(void)
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    /*
-    top =   0;
-    left = 0;
-    */
     top =   1;  /* make it sit inside the outline box in digit */
     left = 1;
 
     R_standard_color (WHITE);
-    /*
-    Outline_box (top, top+nrows-1, left, left+ncols-1);
-    */
 
     fd = G_open_cell_old (N_backdrop, N_backdrop_mapset);
     if (fd < 0)
 	return 0;
     cell = G_allocate_cell_buf();
-
 
     set_keyboard ();
     for (row = 0; row < nrows; row += repeat)

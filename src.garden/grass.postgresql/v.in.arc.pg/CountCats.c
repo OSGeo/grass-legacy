@@ -22,7 +22,7 @@ char txtbuf[512];
 char buf[512];
 int  flag=0;
 int  num;
-int  max,min; 
+int  max=0,min=0; 
 int  count=0;
 
 rewind(fp);

@@ -1,9 +1,20 @@
+/*
+ * r.in.gdal imports many GIS/image formats into GRASS utilizing the GDAL
+ * library
+ *
+ * copyright of this file
+ * Author: Frank Warmerdam
+ *
+ * Added optional GCP transformation: Markus Neteler 10/2001
+ */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include <string.h>
 #include "gis.h"
 #include "imagery.h"
+#include "projects.h"
 
 #ifdef USE_GDAL_H
 #  include "gdal.h"
@@ -24,12 +35,17 @@ wkt_to_grass( const char * wkt,
               struct Key_Value **proj_units );
 
 static int 
-G_compare_projections( struct Key_Value *proj_info1, 
+G_compare_projections( struct Key_Value *proj_info, 
                        struct Key_Value *proj_units1, 
                        struct Key_Value *proj_info2, 
                        struct Key_Value *proj_units2 );
 
-static void ImportBand( GDALRasterBandH hBand, const char *output );
+static void ImportBand( GDALRasterBandH hBand, const char *output,
+                        struct Ref *group_ref );
+static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
+                              struct pj_info *iproj, 
+                              struct pj_info *oproj );
+
 
 /************************************************************************/
 /*                                main()                                */
@@ -41,20 +57,18 @@ int main (int argc, char *argv[])
     char *output;
     char *title;
     struct Cell_head cellhd, loc_wind, def_wind;
-    struct Key_Value *proj_info, *proj_units;
+    struct Key_Value *proj_info=NULL, *proj_units=NULL;
     struct Key_Value *loc_proj_info, *loc_proj_units;
-    unsigned char *x, *y;
-    char *err;
-    char dummy[2];
     GDALDatasetH  hDS;
     GDALRasterBandH hBand;
     double          adfGeoTransform[6];
+    int         force_imagery = FALSE;
     char	error_msg[8096];
 
 	struct GModule *module;
     struct
     {
-        struct Option *input, *output, *title, *outloc, *band;
+        struct Option *input, *output, *target, *title, *outloc, *band;
     } parm;
     struct Flag *flag_o, *flag_e;
 
@@ -89,6 +103,13 @@ int main (int argc, char *argv[])
     parm.output->description = "Name for resultant raster map";
     parm.output->gisprompt = "any,cell,raster";
 
+    parm.target = G_define_option();
+    parm.target->key = "target";
+    parm.target->type = TYPE_STRING;
+    parm.target->required = NO;
+    parm.target->description = "Name of location to read projection from for GCPs transformation";
+    parm.target->gisprompt = "";
+
     parm.title = G_define_option();
     parm.title->key = "title";
     parm.title->key_desc = "\"phrase\"";
@@ -120,13 +141,22 @@ int main (int argc, char *argv[])
         G_strip (title);
 
 /* -------------------------------------------------------------------- */
+/*      Do some additional parameter validation.                        */
+/* -------------------------------------------------------------------- */
+    if( parm.target->answer && parm.outloc->answer
+        && strcmp(parm.target->answer, parm.outloc->answer) == 0 )
+    {
+        G_fatal_error("You have to specify a target location different from output location");
+    }
+
+/* -------------------------------------------------------------------- */
 /*      Initialize GDAL Bridge, and open the file.                      */
 /* -------------------------------------------------------------------- */
 #ifndef USE_GDAL_H
     sprintf( error_msg, "%s/lib", getenv( "GISBASE" ) );                  
-    if( !GDALBridgeInitialize( error_msg ) )
+    if( !GDALBridgeInitialize( error_msg, stderr ) )
     {
-        G_fatal_error( "Unable to initialize GDAL bridge (check libgdal installation).\n" );
+        G_fatal_error( "Unable to initialize GDAL bridge (check libgdal installation/LD_LIBRARY_PATH variable).\n" );
         exit( 10 );
     }
 #endif
@@ -161,11 +191,12 @@ int main (int argc, char *argv[])
     }
     else
     {
-        cellhd.north = cellhd.rows;
-        cellhd.south = 0.0;
+        /* define negative xy coordinate system to avoid GCPs confusion */
+        cellhd.north  = 0.0;
+        cellhd.south  = (-1) * cellhd.rows;
         cellhd.ns_res = 1.0;
-        cellhd.west = 0.0;
-        cellhd.east = cellhd.cols;
+        cellhd.west   = (-1) * cellhd.cols;
+        cellhd.east   = 0.0;
         cellhd.ew_res = 1.0;
     }
 
@@ -246,9 +277,16 @@ int main (int argc, char *argv[])
         exit(3);
 
 /* -------------------------------------------------------------------- */
+/*      Do we want to generate a simple raster, or an imagery group?    */
+/* -------------------------------------------------------------------- */
+    if( (GDALGetRasterCount(hDS) > 1 && parm.band->answer != NULL)
+        || GDALGetGCPCount( hDS ) > 0 )
+        force_imagery = TRUE;
+
+/* -------------------------------------------------------------------- */
 /*      Simple case.  Import a single band as a raster cell.            */
 /* -------------------------------------------------------------------- */
-    if( parm.band->answer != NULL || GDALGetRasterCount(hDS) == 1 )
+    if( !force_imagery )
     {
         int	nBand = 1;
         
@@ -263,7 +301,7 @@ int main (int argc, char *argv[])
             G_fatal_error( error_msg );
         }
         
-        ImportBand( hBand, output );
+        ImportBand( hBand, output, NULL );
 
         if (title)
             G_put_cell_title (output, title);
@@ -286,8 +324,7 @@ int main (int argc, char *argv[])
             hBand = GDALGetRasterBand(hDS,nBand);
 
             sprintf( szBandName, "%s.%d", output, nBand );
-            ImportBand( hBand, szBandName );
-            I_add_file_to_group_ref (szBandName, G_mapset(), &ref);
+            ImportBand( hBand, szBandName, &ref );
 
             if (title)
                 G_put_cell_title (szBandName, title);
@@ -298,6 +335,80 @@ int main (int argc, char *argv[])
 
         /* make this group the current group */
         I_put_group( output );
+
+/* -------------------------------------------------------------------- */
+/*      Output GCPs if present, we can only do this when writing an     */
+/*      imagery group.                                                  */
+/* -------------------------------------------------------------------- */
+        if( GDALGetGCPCount( hDS ) > 0 )
+        {
+            struct Control_Points sPoints;
+            const GDAL_GCP *pasGCPs = GDALGetGCPs( hDS );
+            int iGCP;
+            struct pj_info iproj,            /* input map proj parameters    */
+                      oproj;                 /* output map proj parameters   */
+            struct Key_Value *out_proj_info,  /* projection information of    */
+                     *out_unit_info;          /* input and output mapsets     */
+            char errbuf[256];
+            int permissions;
+            char target_mapset[80], path[1024];
+
+            sPoints.count = GDALGetGCPCount( hDS );
+            sPoints.e1 = (double *) malloc(sizeof(double) * sPoints.count * 4);
+            sPoints.n1 = sPoints.e1 + sPoints.count;
+            sPoints.e2 = sPoints.e1 + 2 * sPoints.count;
+            sPoints.n2 = sPoints.e1 + 3 * sPoints.count;
+            sPoints.status = (int *) malloc(sizeof(int) * sPoints.count);
+            
+            fprintf (stderr, "COPYING %d GCPS IN POINTS FILE FOR %s\n", 
+                     sPoints.count, output );
+            if( GDALGetGCPProjection(hDS) != NULL 
+                && strlen(GDALGetGCPProjection(hDS)) > 0 )
+            {
+                fprintf(stderr, 
+                    "\n"
+                    "GCPs have the following OpenGIS WKT Coordinate System:\n"
+                    "%s\n", 
+                    GDALGetGCPProjection( hDS ) );
+            }
+
+            if (parm.target->answer)
+            {
+                SetupReprojector( GDALGetGCPProjection(hDS), 
+                                  parm.target->answer, 
+                                  &iproj, &oproj );
+                fprintf(stderr, "Re-projecting GCPs table:\n");
+                fprintf(stderr, " Input projection for GCP table:  %s\n", 
+                        iproj.proj);
+                fprintf(stderr, " Output projection for GCP table: %s\n", 
+                        oproj.proj);
+            }
+
+            for( iGCP = 0; iGCP < sPoints.count; iGCP++ )
+            {
+                sPoints.e1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPPixel; /* xy */
+                sPoints.n1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPLine;
+                sPoints.e2[iGCP] = pasGCPs[iGCP].dfGCPX;          /* target */
+                sPoints.n2[iGCP] = pasGCPs[iGCP].dfGCPY;
+                sPoints.status[iGCP] = 1;
+
+                /* If desired, do GCPs transformation to other projection */
+                if (parm.target->answer)
+                {
+                    /* re-project target GCPs */
+                    if(pj_do_proj( &(sPoints.e2[iGCP]), &(sPoints.n2[iGCP]),
+                                   &iproj, &oproj) < 0)
+                        G_fatal_error("Error in pj_do_proj (can't "
+                                      "re-projection GCP %i)\n", 
+                                      iGCP);
+                }
+            } /* for all GCPs*/
+
+            I_put_control_points( output, &sPoints );
+
+            free( sPoints.e1 );
+            free( sPoints.status );
+        }
     }
 
 /* -------------------------------------------------------------------- */
@@ -327,10 +438,71 @@ int main (int argc, char *argv[])
 }
 
 /************************************************************************/
+/*                          SetupReprojector()                          */
+/************************************************************************/
+
+static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
+                              struct pj_info *iproj, 
+                              struct pj_info *oproj )
+
+{
+    struct Cell_head cellhd;
+    struct Key_Value *proj_info=NULL, *proj_units=NULL;
+    char errbuf[256];
+    int permissions;
+    char target_mapset[80], path[1024];
+    struct Key_Value *out_proj_info,  /* projection information of    */
+                     *out_unit_info;  /* input and output mapsets     */
+
+/* -------------------------------------------------------------------- */
+/*      Translate GCP WKT coordinate system into GRASS format.          */
+/* -------------------------------------------------------------------- */
+    wkt_to_grass( pszSrcWKT, &cellhd, &proj_info, &proj_units );
+
+    if (pj_get_kv(iproj, proj_info, proj_units) < 0)
+        G_fatal_error("Can't translate projection key values of input GCPs.");
+
+/* -------------------------------------------------------------------- */
+/*      Get the projection of the target location.                      */
+/* -------------------------------------------------------------------- */
+
+    /* Change to user defined target location for GCPs transformation */
+    G__create_alt_env();
+    G__setenv("LOCATION_NAME", (char *) pszDstLoc);
+    sprintf(target_mapset, "PERMANENT"); /* to find PROJ_INFO */
+
+    permissions = G__mapset_permissions(target_mapset);
+    if (permissions >= 0) {
+
+        /* Get projection info from target location */
+        if ((out_proj_info = G_get_projinfo()) == NULL)
+            G_fatal_error("Can't get projection info of target location");
+        if ((out_unit_info = G_get_projunits()) == NULL)
+            G_fatal_error("Can't get projection units of target location");
+        if (pj_get_kv(oproj, out_proj_info, out_unit_info) < 0)
+           G_fatal_error("Can't get projection key values of target location");
+    }
+    else
+    { /* can't access target mapset */
+        sprintf(errbuf, "Mapset [%s] in target location [%s] - ",
+                target_mapset, pszDstLoc);
+        strcat(errbuf, permissions == 0
+               ? "permission denied\n"
+               : "not found\n");
+        G_fatal_error(errbuf);
+    } /* permission check */
+                
+    /* And switch back to original location */
+    G__switch_env();
+}
+
+
+/************************************************************************/
 /*                             ImportBand()                             */
 /************************************************************************/
 
-static void ImportBand( GDALRasterBandH hBand, const char *output )
+static void ImportBand( GDALRasterBandH hBand, const char *output,
+                        struct Ref *group_ref )
 
 {
     RASTER_MAP_TYPE data_type;
@@ -403,6 +575,12 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
         cellReal = G_allocate_raster_buf(data_type);
         cellImg = G_allocate_raster_buf(data_type);
         bufComplex = (float *) G_malloc(sizeof(float) * ncols * 2);
+
+        if( group_ref != NULL )
+        {
+            I_add_file_to_group_ref (outputReal, G_mapset(), group_ref);
+            I_add_file_to_group_ref (outputImg, G_mapset(), group_ref);
+        }
     }
     else
     {
@@ -413,6 +591,9 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
             G_fatal_error (msg);
             exit(1);
 	}
+
+        if( group_ref != NULL )
+            I_add_file_to_group_ref ((char *) output, G_mapset(), group_ref);
 
         cell = G_allocate_raster_buf(data_type);
     }
@@ -432,15 +613,25 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
 /* -------------------------------------------------------------------- */
     for (row = 1; row <= nrows; row++)
     {
-        if( complex ) 
+        if( complex )  /* CEOS SAR et al.: import reverse to match GRASS conventions */
         {
             GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
                           bufComplex, ncols, 1, eGDT, 0, 0 );
             
-            for( indx=0; indx < ncols; indx++ ) 
+            for( indx=ncols-1; indx >= 0; indx-- ) /* CEOS: flip east-west during import - MN */
             {
-                ((float *) cellReal)[indx] = bufComplex[indx*2];
-                ((float *) cellImg)[indx]  = bufComplex[indx*2+1];
+                if( eGDT == GDT_Int32 )
+                {
+                    ((GInt32 *) cellReal)[ncols-indx] = 
+                        ((GInt32 *) bufComplex)[indx*2];
+                    ((GInt32 *) cellImg)[ncols-indx]  = 
+                        ((GInt32 *) bufComplex)[indx*2+1];
+                }
+                else
+                {
+                    ((float *) cellReal)[ncols-indx] = bufComplex[indx*2];
+                    ((float *) cellImg)[ncols-indx]  = bufComplex[indx*2+1];
+                }
             }
             G_put_raster_row (cfR, cellReal, data_type);
             G_put_raster_row (cfI, cellImg, data_type);
@@ -515,6 +706,8 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
         struct Colors    colors;
         int              iColor;
 
+        fprintf (stderr, "COPYING COLOR TABLE FOR %s\n", output );
+
         hCT = GDALGetRasterColorTable( hBand );
         
         G_init_colors (&colors);
@@ -546,6 +739,7 @@ wkt_to_grass( const char * wkt,
 {
     OGRSpatialReferenceH  hSRS = NULL;
     char *pszProj4 = NULL, *pszRemaining;
+    char *pszProj = NULL;
 
     hSRS = OSRNewSpatialReference(NULL);
     
@@ -625,12 +819,53 @@ wkt_to_grass( const char * wkt,
             && G_strcasecmp(pszValue,"longlat") == 0 )
             pszValue = "ll";
 
+        if( G_strcasecmp(pszToken,"proj") == 0 )
+            pszProj = pszValue;
+
         /* We will handle units separately */
         if( G_strcasecmp(pszToken,"to_meter") == 0 
             || G_strcasecmp(pszToken,"units") == 0 )
             continue;
 
         G_set_key_value( pszToken, pszValue, *proj_info );
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Derive the user name for the projection.                        */
+/* -------------------------------------------------------------------- */
+    {
+        char	path[4095];
+        char    name[80];
+
+        sprintf(path,"%s/etc/projections",G_gisbase());
+        if( G_lookup_key_value_from_file(path,pszProj,name,sizeof(name)) > 0 )
+            G_set_key_value( "name", name, *proj_info );
+        else
+            G_set_key_value( "name", pszProj, *proj_info );
+    }
+
+/* -------------------------------------------------------------------- */
+/*	Despite having the +ellps set, GRASS still requires +a and +es	*/
+/* -------------------------------------------------------------------- */
+    {
+        const char *pszSemiMajor = OSRGetAttrValue( hSRS, "SPHEROID", 1 );
+        const char *pszInvFlat = OSRGetAttrValue( hSRS, "SPHEROID", 2 );
+
+        if( strstr(pszProj4,"+a") == NULL && pszSemiMajor != NULL )
+            G_set_key_value( "a", (char *) pszSemiMajor, *proj_info );
+
+        if( pszInvFlat != NULL )
+        {
+            double	es, flat;
+            char	es_str[100];
+
+            flat = 1 / atof(pszInvFlat);
+            
+            es = flat * (2.0 - flat);
+
+            sprintf( es_str, "%.10f", es );
+            G_set_key_value( "es", es_str, *proj_info );
+        }
     }
 
     free( pszProj4 ); /* hopefully the same as CPLFree()! */

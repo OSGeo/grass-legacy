@@ -16,25 +16,25 @@
 
 /*-----------------A.Sh. Print_out switch added Jan.00*/
 
+#include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "infx.h"
 
-
+int
 getSelectOpts (argc, argv)
     int argc;
     char **argv;
 
 {
 
-        char *mapset;
-        int button, i, j;
+        int i;
         static char SQL_stmt[1024];
         /* arbitrary limit of query size */
         /* cfa 11/098  */
         FILE	*fp;
-        struct Flag *select, *qtype;
+        struct Flag *select;
         struct Option *sql, *distance, *hv;
-	struct Sql *pts;
 	int stat = 0 ;
 	char *print_out="";
 
@@ -60,6 +60,7 @@ getSelectOpts (argc, argv)
         distance->required   = YES  ;
         distance->multiple   = NO ;
         distance->description= "Cursor radius." ;
+
 /* add interactive distance g.select.dist
    and mouse choosing  into this routine
    cfa 11/98  */
@@ -78,7 +79,7 @@ getSelectOpts (argc, argv)
 
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                /*argv[1] == NULL ;*/
                 argc = 1;
            }
 

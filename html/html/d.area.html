@@ -8,28 +8,96 @@
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
-<B><EM>d.area</EM></B> - Obtains area/perimeter information on vector polygons<BR>
+<B><EM>d.area</EM></B> - Draws selected polygons to the GRASS display<BR>
 <EM>(GRASS Display/Vector Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>d.area map</B><EM>=name</EM> [<B>fillcolor</B><EM>=name</EM>] [<B>linecolor</B><EM>=name</EM>]
+<B>d.area 
+[<B>-f</B>] 
+<B>map</B><EM>=name</EM> 
+[<B>fillcolor</B><EM>=name</EM>]
+[<B>linecolor</B><EM>=name</EM>]
+[<B>catnum</B><EM>=value[,value,...]</EM>]
+
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-f</B> 
+<DD>Fill all areas with color (cycle through standard GRASS colors)
+</DL>
 
 <H3>Parameters:</H3>
+
 <DL>
 <DT><B>map</B>
 <DD>Name of existing vector map to be displayed
 
 <DT><B>fillcolor</B>
-<DD>Color desired for filling polys
-<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
+<DD>Color desired for filling polygons
 <DD>Default: white
 
 <DT><B>linecolor</B>
-<DD>Color desired for drawing map
+<DD>Color desired for polygons borders
 <DD>Default: none
+
+<DT><B>catnum</B>
+<DD>List of area category number(s) to display
 </DL>
 
-<H2>AUTHOR</H2>
+<H2>DESCRIPTION</H2>
 
-</BODY>
-</HTML>
+Use <EM>d.area</EM> to draw filled polygons from a vector map to the GRASS
+display.  Using, the "<EM>-f</EM>" flag, the program will cycle through the
+standard GRASS named colors, overriding any <EM>fillcolor</EM> argument.
+Otherwise, the color used for filling polygons is as specified.
+
+<P>
+
+The arguments for <EM>fillcolor</EM> and <EM>linecolor</EM> can be any
+named X11 color (as found in grass5/etc/rgb.txt), a hexidecimal color string
+(like "AFDF00"), or an RGB triplet specified as 
+"rgb(<EM>red</EM> <EM>green</EM> <EM>blue</EM>)".  Hexidecimal color
+strings must be six characters where each pair represents the red, green
+and blue colors, respectively.  RGB values must be between 0 and 255
+for each component.  Do not use any separator besides a space between
+the RGB numbers.
+
+<P>
+
+The user can optionally choose to restrict drawing operations to selected
+polygons by
+specifying one or more area category numbers using the <EM>catnum</EM>
+argument.
+
+<H2>NOTES</H2>
+
+When run on the command line, any X11 color name containing spaces or
+any rgb(...) specification must be quoted to prevent the shell from
+splitting it into separate arguments.
+
+<P>
+
+The routine for handling holes in polygons is relatively slow.  Therefore,
+large maps containing a large number of holes will suffer a significant
+performance penalty.
+
+<P>It is the intention of GRASS developers to create a better mechanism
+for persistent storage of vector drawing instructions in the future.
+
+<H2>BUGS</H2>
+
+The program does not properly clip areas to match the current display
+extent (<B>HELP WANTED</B>).
+
+<P>There is a slight disagreement between the output of 
+<A HREF="d.vect.html">d.vect</A> and <EM>d.area</EM> regarding the map
+coordinate to screen coordinate conversion.  This leads to undesirable
+results when both are used.  
+
+<H2>AUTHOR</H2>
+CERL<br>
+Modified by Eric G. Miller
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

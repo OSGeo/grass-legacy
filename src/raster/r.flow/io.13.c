@@ -124,7 +124,7 @@ parse_command_line(argc, argv)
 					  sizeof (char));
     sprintf (default_bound_ans, "0-%d", default_bound);
 
-    default_offset = 0.1;
+    default_offset = 0.0; /* fixed 20. May 2001 Helena */
     default_offset_ans = (char *) G_calloc((int) log10( default_offset) + 2,
 					   sizeof (char));
     sprintf (default_offset_ans, "%f", default_offset);
@@ -177,6 +177,9 @@ parse_command_line(argc, argv)
     parm.mem	= fmem->answer;
 /*    parm.seg	= fseg->answer;*/
     parm.quiet	= fquiet->answer;
+
+    if(!pflout->answer && !plgout->answer && !pdsout->answer)
+	G_fatal_error("You must select one or more output maps (flout, lgout, dsout)."); 
 
 /*    if (fcprght->answer) { */
       fprintf(stderr, "\n");
@@ -430,8 +433,7 @@ write_density_file()
     }
     for (row = 0; row < region.rows; row++)
     {
-	/* G_put_c_raster_row(dsfd, get_row(ds, row));  */
-	G_put_d_raster_row(dsfd, get_row(ds, row));
+	G_put_raster_row(dsfd, get_row(ds, row), DCELL_TYPE);
 	for (col = 0; col < region.cols; col++)
 	    if (ds.buf[row][col] > dsmax)
 		dsmax = ds.buf[row][col];	

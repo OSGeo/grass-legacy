@@ -1,6 +1,7 @@
+#include <string.h>
 #include "what.h"
 
-opencell (name, mapset)
+int opencell (name, mapset)
 char *name;
 char *mapset;
 {

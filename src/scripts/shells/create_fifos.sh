@@ -18,7 +18,7 @@
 # Get the command name
 CMD_NAME=`basename $0`
 
-# Check if ther is only one argument
+# Check if there is only one argument
 if [ $# -eq 1 ] ; then
 
     # Check if the argument is a directory

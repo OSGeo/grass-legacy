@@ -3,15 +3,22 @@
 /* major modifications 11/1998 Carl Anderson */
 
 
-#include "gis.h"
-#include "Vect.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <libpq-fe.h>
+#include "gis.h"
+#include "display.h"
+#include "raster.h"
+#include "Vect.h"
+#include "dbvect.h"
 
-runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
+
+int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
   char *SQL_stmt, *map, *mapset;
   int color, fillcolor ;
   {
-    FILE *fp, *fpin, *fpout;
+
     int i;
     int line_cat;		/* vector cat values from db 	*/ 
     int stat;			/* return value from plot2 	*/
@@ -19,11 +26,11 @@ runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
     char buf1[1024];		/* value in key column		*/
     struct line_pnts *Points ;
     struct Map_info P_map;
-    char *tmpfile_out;
+
     PGconn*	pg_conn;
     PGresult*	res;
     char	*pghost;
-    int		num,ok;   
+   
 
     stat = 1 ;
     i = 1;

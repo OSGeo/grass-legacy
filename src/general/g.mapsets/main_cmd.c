@@ -27,6 +27,8 @@ main (int argc, char *argv[])
     struct Flag *print;
     struct Flag *list;
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Modifies the user's current mapset "
@@ -50,8 +52,6 @@ main (int argc, char *argv[])
 
     Path[0] = '\0';
     nchoices = 0;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);

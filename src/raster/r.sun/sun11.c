@@ -123,23 +123,6 @@ main (int argc, char *argv[])
 		"for specified local time. The shadowing effect of the "
 		"topography is optionally incorporated.";
 
-		if(G_get_set_window(&cellhd)==-1) exit(0);
-		/*ew_res = cellhd.ew_res;*/
-/*		stepx = cellhd.ew_res/cellhd.ew_res;*/
-		stepx = cellhd.ew_res;
-		/*ns_res = cellhd.ns_res;*/
-/*		stepy = cellhd.ns_res/cellhd.ew_res;*/
-		stepy = cellhd.ns_res;
-		n/*n_cols*/ = cellhd.cols;
-		m/*n_rows*/ = cellhd.rows;
-		/*x_orig = cellhd.west;*/
-	/*	xmin = 0.;*/
-		xmin = cellhd.west;
-		/*y_orig = cellhd.south;*/
-/*		ymin = 0.;*/
-		ymin = cellhd.south;
-		xmax = cellhd.east;
-		ymax = cellhd.north;
 	  parm.elevin = G_define_option();
 	  parm.elevin->key = "elevin";
 	  parm.elevin->type = TYPE_STRING;
@@ -209,6 +192,24 @@ main (int argc, char *argv[])
 		
 	if(G_parser(argc,argv))
 		exit(1);
+
+		if(G_get_set_window(&cellhd)==-1) exit(0);
+		/*ew_res = cellhd.ew_res;*/
+/*		stepx = cellhd.ew_res/cellhd.ew_res;*/
+		stepx = cellhd.ew_res;
+		/*ns_res = cellhd.ns_res;*/
+/*		stepy = cellhd.ns_res/cellhd.ew_res;*/
+		stepy = cellhd.ns_res;
+		n/*n_cols*/ = cellhd.cols;
+		m/*n_rows*/ = cellhd.rows;
+		/*x_orig = cellhd.west;*/
+	/*	xmin = 0.;*/
+		xmin = cellhd.west;
+		/*y_orig = cellhd.south;*/
+/*		ymin = 0.;*/
+		ymin = cellhd.south;
+		xmax = cellhd.east;
+		ymax = cellhd.north;
 
 	  shd=flag.shade->answer;
           elevin = parm.elevin->answer;
@@ -1509,7 +1510,7 @@ calculate (void)
 		}
 
 			for (j = 0; j < m; j++) {
-				  G_percent(j,m,10);
+				  G_percent(j,m,2);
 			  for (i = 0; i < n; i++) {
 				in1 = imin0 = i - 1; ix1 = imax0 = i + 1;
 				jn1 = jmin0 = j - 1; jx1 = jmax0 = j + 1;

@@ -1,22 +1,16 @@
 /************************************************************
 * name
-*    r.out.ll
+*    r.in.utm
 *
 * function
-*    convert from utm raster files to latitude/longitude raster files
+*     r.in.utm [-swo] spheroid=name zone=value input=name output=name
+*        rows=value columns=value bpc=value res_ns=value res_ew=value
+*        north=value east=value
 *
-* usage
-*    r.out.ll spheroid=name [zone=value] [input=file] [output=file]
-*               rows=# columns=# bpc=# res_ns=# res_ew=# north=# east=#
+* Imports an utm raster map into a GRASS raster map layer. 
 *
-* r.out.ll spheroid=clark66 zone=7 input=cell/boundaries output=xyz
-*          rows=4833 columns=5016 bpc=1 res_ns=30.0 res_ew=30.0
-*          north=7290000.0 easting=500500.0
+* Contributed by Pat McClanahan, NPS, Alaska
 *
-*
-* Note:
-*   This program attempt to preserve as much of the input
-*   in its orginal form as possible, replacing east north with lon lat.
 ****************************************************************/
 
 #include <stdlib.h>
@@ -55,11 +49,18 @@ main (int argc, char *argv[])
     {
 	struct Flag *southern, *o, *w, *r;
     } flag;
+    struct GModule *module;
+    
     int getrow();
     char *spheroid_list();
     G_zero (buf, len);
 
     G_gisinit(argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Imports an utm raster map into a GRASS raster map layer.";
 
     parm.spheroid = G_define_option();
     parm.spheroid->key = "spheroid";
@@ -78,13 +79,13 @@ main (int argc, char *argv[])
 
     parm.input = G_define_option();
     parm.input->key = "input";
-    parm.input->description = "input file";
+    parm.input->description = "input UTM map";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
 
     parm.output = G_define_option();
     parm.output->key = "output";
-    parm.output->description = "output file";
+    parm.output->description = "output GRASS raster map";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
 
@@ -289,7 +290,7 @@ fprintf(stderr, "East = %f   Lon = %f  Z = %d\n", east, lon, zone);
 	    *lptr++ = utm_value (north, east, &utm, &utm_data);
 	    lon += ll_head.ew_res*3600.0;
         }
-	G_put_map_row (ll_fd, ll_data);
+	G_put_raster_row (ll_fd, ll_data, CELL_TYPE);
         lat -= ll_head.ns_res*3600.0;
     }
    G_close_cell(ll_fd);

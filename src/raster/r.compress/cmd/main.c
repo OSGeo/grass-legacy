@@ -9,7 +9,7 @@
  *        Next byte(s): category number. The number of bytes is determined
  *                      by the number of bytes in a cell 
  *
- * The normal G_open_cell(), and G_put_map_row() do the compression
+ * The normal G_open_cell(), and G_put_raster_row() do the compression
  * This program must only check that the file is not a reclass file and
  * is not already compressed.
  *
@@ -17,6 +17,7 @@
  *
  *****************************************************************************/
 
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "gis.h"
@@ -89,7 +90,7 @@ process (char *name, int uncompress, int quiet)
     }
     if (G_is_reclass (name, G_mapset(), rname, rmapset) > 0)
     {
-	fprintf (stdout,"[%s] is a reclass file - can't %scompress\n", name, uncompress?"un":"");
+	fprintf (stdout,"[%s] is a reclass file of map <%s> in mapset <%s> - can't %scompress\n", name, rname, rmapset, uncompress?"un":"");
 	return 1;
     }
 

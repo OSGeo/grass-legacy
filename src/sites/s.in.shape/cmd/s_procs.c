@@ -140,7 +140,7 @@ int load_mpshape_data( SHPHandle shp0, aggregateList *ag0,
 
     for( j0 = 0; j0 < shpobj0->nVertices; ++j0 ) {
 
-      if( pntCount > recs_count ) {
+      if( pntCount >= recs_count ) {
 	do_incr = 1;
 	recs_count += recs_incr;
       }

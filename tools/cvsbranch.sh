@@ -49,7 +49,7 @@ MODULE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
 #list of extra files not in compile list:
 FURTHER_FILES="config.guess \
 	config.sub GPL.TXT testgrass.sh COPYING README SUBMITTING INSTALL \
-	WARNING.html install-sh ONGOING REQUIREMENTS README.xdriver \
+	WARNING.html install-sh ONGOING REQUIREMENTS \
 	binaryInstall.src README.cygwin Makefile.in AUTHORS BUGS TODO.txt \
 	configure.in configure NEWS.html \
 	src/libes/README src/imagery/README src/general/README\

@@ -119,6 +119,7 @@ FILE *fpout;             /* output report file pointer */
 int order;         /* byte order returned by g123order */
 int have_outfile;  /*TRUE if user specifies output file*/
 
+int
 main(argc,argv)
   int argc;
   char *argv[];
@@ -126,9 +127,14 @@ main(argc,argv)
 
 	 struct Option *in, *out;
 	 struct Flag *s_flag;
-
+	 struct GModule *module;
      
      G_gisinit (argv[0]);
+     
+     /* Set description */
+     module              = G_define_module();
+     module->description = ""\
+     "Reads files in ISO 8211 (FIPS 123) format and dumps contents to screen and/or file.";
 
 	 in = G_define_option();
 	 in->key		= "input";

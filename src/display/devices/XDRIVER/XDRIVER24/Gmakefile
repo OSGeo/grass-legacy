@@ -1,7 +1,6 @@
 PGM=XDRIVER
-SWITCHER = SWITCHER.o
 
-LIBES = ../lib/driverlib.a $(D_LIB) $(GISLIB)
+LIBES = ../../lib/driverlib.a $(D_LIB) $(GISLIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -9,9 +8,7 @@ LIBES = ../lib/driverlib.a $(D_LIB) $(GISLIB)
 R3DEFINE=
 
 # For those compiling on Intergraph machines, uncomment the following 2 lines:
-#XINCPATH=-I/usr/ip32/xwinprog
 #XCFLAGS=-DINTERGRAPH -DX11R3
-#XLDFLAGS=-L/usr/ip32/xwinprog/lib
 
 # these are for the CDC mips machine
 #XCFLAGS=-systype bsd43
@@ -28,15 +25,14 @@ R3DEFINE=
 # library resolves this problem
 #XEXTRALIBS=-lsun
 
-EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) $(XINCPATH) -I../../lib
+EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) -I../../lib
 
 OFILES =  \
-	$(SWITCHER)\
 	Box_abs.o\
 	Can_do.o\
-	Color.o\
-	Cont_abs.o\
+	Client.o\
 	Clr_table.o\
+	Color.o\
 	Draw_line.o\
 	Get_w_box.o\
 	Get_w_line.o\
@@ -46,11 +42,12 @@ OFILES =  \
 	Panel.o\
 	Plylne_abs.o\
 	Polygn_abs.o\
-	Returns.o\
+	Raster.o\
+	Raster_RGB.o\
+	Respond.o\
 	Serve_Xevent.o\
-	alloc.o\
-	command_pend.o\
-	Raster.o
+	Work.o\
+	alloc.o
 
 all: winname.h $(GISBASE)/driver/$(PGM)
 

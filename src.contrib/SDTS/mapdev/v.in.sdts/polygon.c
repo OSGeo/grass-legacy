@@ -1,5 +1,6 @@
 /*#include <dig_atts.h>*/
 #include     <stdio.h>
+#include     <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 #include "sdts_in.h"

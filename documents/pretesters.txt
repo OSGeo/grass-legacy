@@ -33,9 +33,14 @@ Solaris 2.7:
 * Richard Christofferson 
   <richc@eng.utah.edu>
 
+Solaris 2.8
+* Hal Mueller <hal@mobilegeographics.com>
+
 --------------------
 SGI:
-?
+* Monsak
+  monsak@hpcc.nectec.or.th
+  HPCC, Nectec, Bangkok, Thailand
 
 --------------------
 FreeBSD:

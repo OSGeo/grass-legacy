@@ -83,6 +83,8 @@ main (argc, argv)
     new->gisprompt		= "new,dig,vector";
     new->description		= "vector output file";
 
+    if (G_parser (argc, argv))
+	exit (-1);
 
     /*initialize defaults*/
     force_areas = 1;
@@ -90,9 +92,6 @@ main (argc, argv)
     
     gbase = G_gisbase();
     current_mapset = G_mapset();
-
-    if (G_parser (argc, argv))
-	exit (-1);
 
     if (!*old->answer  || !*new->answer )
     {

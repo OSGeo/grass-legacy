@@ -40,7 +40,7 @@ int check_uncompressed (struct Cell_head *cellhd, long filesize)
 	factors (fd, filesize,i);
     }
     fclose (fd);
-    sprintf (command, "more %s", tempfile);
+    sprintf (command, "$GRASS_PAGER %s", tempfile);
     system (command);
     unlink (tempfile);
     return 0;

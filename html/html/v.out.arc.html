@@ -1,11 +1,14 @@
+<html>
+<head>
 <TITLE>v.out.arc</TITLE>
+</head>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
 
-<EM><b>v.out.arc</b></EM>  - Converts GRASS vector files to ARC/INFO's "Generate" file format.
+<EM><b>v.out.arc</b></EM>  - Exports GRASS vector files to ARC/INFO's "ungenerate" file format.
 
 <BR>
 
@@ -133,7 +136,9 @@ When line coverage data are exported, two such files will be created:
 a <EM>lines file</EM> with the suffix .lin, and a <EM>label-text file</EM>
 with the suffix .txt.
 Export of unlabeled polygon or line coverage data will result in creation
-of a <EM>lines file</EM> (.lin suffix) only.
+of a <EM>lines file</EM> (.lin suffix) only. All exported files are stored
+in the current directory.<br>
+
 See the DATA FILE FORMATS section for more information on these files.
 <P>
 <P>
@@ -212,9 +217,9 @@ LABEL-POINTS FILE, also known as <EM>prefix.lab</EM> file:
 
 <BR>
 
-This text file will be created by
-<EM>v.out.arc</EM>
-if the vector file being exported represents a polygon coverage.
+This text file will be created by <EM>v.out.arc</EM> if the vector file
+being exported represents a polygon coverage.
+
 <EM>prefix.lab</EM> consists of a list of label-point (x,y) coordinates,
 each with a unique label-point ID number.  
 <PRE>
@@ -261,3 +266,6 @@ Dave Johnson
 <BR>DBA Systems, Inc.
 <BR>10560 Arrowhead Drive
 <BR>Fairfax, Virginia 22030
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

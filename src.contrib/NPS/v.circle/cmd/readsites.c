@@ -6,7 +6,7 @@ int readsites (FILE *fdsite, int all, int verbose, int field, circlesite **xyz)
 {
   char *dum;
   int i, n,c,d,allocated=1000;
-  double east, north, ndesc, atof ();
+  double east, north, ndesc;
   char desc[80];
   Site *s;
   

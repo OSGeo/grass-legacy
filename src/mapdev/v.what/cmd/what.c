@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -7,8 +10,9 @@
 static int nlines = 50;
 
 int 
-what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
+what (char **coords, int interactive, int once, struct Map_info *Map, struct Categories *Cats)
 {
+  int i;
   int lcat, acat;
   int row, col;
   int nrows, ncols;
@@ -31,6 +35,13 @@ what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
   screen_x = ((int) D_get_d_west () + (int) D_get_d_east ()) / 2;
   screen_y = ((int) D_get_d_north () + (int) D_get_d_south ()) / 2;
 
+  if(coords)
+  {
+      interactive = 0;
+      once = 0;
+  }
+
+  i = 0;
   do
   {
     if (interactive)
@@ -44,18 +55,34 @@ what (int interactive, int once, struct Map_info *Map, struct Categories *Cats)
     }
     else
     {
-      while(buf[0] = 0, fgets(buf, 1024, stdin),
-	    sscanf(buf, "%f %f", &tmp_east, &tmp_north) != 2)
-	if(!strncmp(buf, "end\n", 4) || !strncmp(buf, "exit\n", 5) || !buf[0]){
-	  buf[0] = 0;
-          break;
-	}
+      if(!coords && isatty(0))
+      {
+        fprintf(stdout,"Enter E N coordinates, Ctrl-D to stop:\n");
+        fflush(stdout);
+      }
+      if(!coords)
+      {
+          while(buf[0] = 0, fgets(buf, 1024, stdin),
+	        sscanf(buf, "%f %f", &tmp_east, &tmp_north) != 2)
+	  if(!strncmp(buf, "end\n", 4) || !strncmp(buf, "exit\n", 5) || !buf[0]){
+	      buf[0] = 0;
+              break;
+	  }
 
-      if(!buf[0])
-	  break;
+          if(!buf[0])
+	      break;
 
-      east = (double) tmp_east;
-      north = (double) tmp_north;
+          east = (double) tmp_east;
+          north = (double) tmp_north;
+      }
+      else
+      {
+	  if(!coords[i])
+	      break;
+
+	  east = atof(coords[i++]);
+	  north = atof(coords[i++]);
+      }
     }
     row = (window.north - north) / window.ns_res;
     col = (east - window.west) / window.ew_res;

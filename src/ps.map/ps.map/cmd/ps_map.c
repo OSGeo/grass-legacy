@@ -109,10 +109,14 @@ int ps_map (void)
     /* do any PostScript include files */
     if (PS.num_psfiles) do_psfiles();
 
+    /* The bounding box code is wrong; it only allows for the size of the
+       map itself, not any legends, etc. */
+#if 0
     /* write the bounding box */
     current_offset = ftell(PS.fp);
     write_bounding_box();
     fseek(PS.fp, current_offset, SEEK_SET);
+#endif
 
     fprintf(PS.fp, "showpage\n");
     fprintf(PS.fp, "%%%%Trailer\n");

@@ -49,17 +49,17 @@ struct dig_head Head;
 
 int main (int argc, char **argv)
 {
-	int i, ier, cat_index, new_cat, max_att;
-	int cat_count, morecats;
+	int i, cat_index, new_cat, max_att;
+	int cat_count;
 	int result;
-	int dissolve=0, cnt, x, y;
+	int dissolve=0, x, y;
         char buffr[80], file_name[80], text[80];
         char *input, *output, *mapset;
         struct Categories cats, temp_cats;
 		struct GModule *module;
         struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
         struct Flag *d_flag, *n_flag;
-        FILE *in, *catf;
+        FILE *in;
 
 
             /* set up the options and flags for the command line parser */
@@ -377,7 +377,7 @@ scan_cats (char *s, int *x, int *y)
 int scan_names (struct Categories *pcats, char *s, int *x)
 {
     int i, icode, recd;
-    char area_name[40], cat_name[40], buff[128]="";
+    char cat_name[40], buff[128]="";
     char *nptr, *cptr, *pntr1;
     char dummy[2];
 

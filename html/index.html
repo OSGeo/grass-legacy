@@ -1,7 +1,7 @@
 <TITLE>GRASS GIS 5.x Reference Manual</TITLE>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 <FONT FACE="Arial, Helvetica">
-<A HREF="http://www.geog.uni-hannover.de/grass/">
+<A HREF="http://grass.itc.it">
 <IMG SRC="grassbutton.gif" ALT="GRASS LOGO"></A>
 <FONT SIZE="+2"><b>GRASS 5.x Reference Manual</b></FONT>
 <p>
@@ -10,17 +10,15 @@ Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS)
 <p>
 NOTE: Some modules listed here are not yet available in GRASS 5.x.
-<p>
-GRASS development has been conducted since 1995 at USACERL, the 
-GRASS Development Team at <A HREF="http://grass.baylor.edu/">Baylor
-University, Texas</a> 
-and <A HREF=http://www.geog.uni-hannover.de/grass/>University of Hannover, Germany</A>
-are now the official sites for all new research, development,
-testing, distribution, training, and support.  
+
+<p>GRASS development has been conducted since 1995 at USACERL, the worldwide
+GRASS Development Team headquartered at <A HREF=http://grass.itc.it>ITC-Irst
+(SSI/MPA), Trento, Italy</A> and <A HREF="http://grass.baylor.edu/">Baylor
+University, Texas</a> are the official sites for all new research,
+development, testing, distribution, training, and support.
 
 <p>
 <A HREF="grass_commandlist.html">One line command reference - overview</A>
-(outdated, will be re-newed soon)
 <p>
 <hr>
 <form method="post" action="http://www.geog.uni-hannover.de/cgi-bin/htsearch">
@@ -52,15 +50,25 @@ Search:
 </form>
 <p>
 <hr>
-<H3>Reference Manual Sections</H3>
-<i>(last update: March 2001)</i>
-<p>
-<img src="bullet_blue.gif"> <A HREF="html/grass5.html">GRASS startup</a><br>
-<img src="bullet_blue.gif"> <A HREF="drivers.html">Drivers</a> (CELL, HTMLMAP, XDRIVER)<br>
-<img src="bullet_blue.gif"> <A HREF="import.html">Import modules overview</a><br>
 
-<p>
-<b>Modules section:</b><br>
+<table VALIGN=TOP COLS=3 WIDTH="100%">
+<tr>
+<td VALIGN=TOP>
+<b>Reference Manual Sections</b>
+<p><FONT FACE="Arial, Helvetica">
+<img src="bullet_blue.gif"> <A HREF="html/grass5.html">GRASS startup</a><br>
+<img src="bullet_blue.gif"> <A HREF="drivers.html">Drivers</a><br> (CELL, PNG, HTMLMAP, XDRIVER)<br>
+<img src="bullet_blue.gif"> <A HREF="import.html">Data Import into GRASS</a><br>
+<img src="bullet_blue.gif"> <A HREF="export.html">Data Export from GRASS</a><br>
+<img src="bullet_blue.gif"> <A HREF="projections.html">Supported projections in GRASS 5.0</a><br>
+<img src="bullet_blue.gif"> <A HREF="env_vars.html">GRASS 5 Environment variables</a><br>
+<img src="bullet_blue.gif"> <A HREF="tips_and_tricks.html">GRASS tips 'n tricks</a><br>
+<img src="bullet_blue.gif"> <A HREF="terminology.html">GRASS terminology</a>
+<br>
+</td>
+ 
+<td VALIGN=TOP><b>Modules section</b>
+<p><FONT FACE="Arial, Helvetica">
 <img src="bullet_blue.gif"> <A HREF="database.html">Database Commands</a><br>
 <img src="bullet_blue.gif"> <A HREF="display.html">Display Commands</a><br>
 <img src="bullet_blue.gif"> <A HREF="general.html">General Commands</a><br>
@@ -74,31 +82,39 @@ Search:
 <img src="bullet_blue.gif"> <A HREF="raster.html">Raster Commands</a><br>
 <img src="bullet_blue.gif"> <A HREF="scripts.html">Shell Scripts</a><br>
 <img src="bullet_blue.gif"> <A HREF="sites.html">Sites Commands</a><br>
-<img src="bullet_blue.gif"> <A HREF="vector.html">Vector Commands</a><p>
-<img src="bullet_blue.gif"> <a href="nviz/index.html">NVIZ2.2 visualization tool tutorial</A><p>
+<img src="bullet_blue.gif"> <A HREF="vector.html">Vector Commands</a>
+<p>
+</td>
+ 
+<td VALIGN=TOP><b>Misc</b>
+<p><FONT FACE="Arial, Helvetica">
+<img src="bullet_blue.gif"> <a href="nviz/index.html">nviz visualization tool tutorial</A><p>
+<p>
+<img src="bullet_blue.gif"> <a href="ascii_formats.html">GRASS ASCII formats</A><p>
 <p>
 <img src="bullet_blue.gif"> <A HREF="missing.html">Commands Missing a Manual Page</a>
 <p>
-
-</b>
+<img src="bullet_blue.gif"> <a href=../../grassdevel.html#prog>Draft GRASS 5 programming instructions</a>
+</td>
+</tr>
+</table>
 
 <hr>
-<a href=../../grassdevel.html#prog>Draft GRASS 5 programming instructions</a>
-<hr>
-The manual explains the capabilities, syntax, and use of current GRASS 5.x
-modules. Sections contain entries which are ordered alphabetically
+The manual pages explain the capabilities, syntax, and use of current
+GRASS 5.x modules. Sections contain entries which are ordered alphabetically
 by module name. Each entry contains:
 <p>
 <ul>
-<li>the module name<p>
-<li>a brief description<p>
-<li>a synopsis of files associated with the module<p>
-<li>a full description of the module's capabilities and uses<p>
-<li>a summary of the command-line operations associated with the module<p>
-<li>a list of associated or related module(s)<p>
-<li>a list of references concerning the method (if required)<p>
-<li>a list of module's authors<p>
+<li>the module name
+<li>a brief description
+<li>a synopsis of files associated with the module
+<li>a full description of the module's capabilities and uses
+<li>a summary of the command-line operations associated with the module
+<li>a list of associated or related module(s)
+<li>a list of references concerning the method (if required)
+<li>a list of module's authors
 </ul>
+
 Each entry may optionally include a description of the module's operation in
 interactive mode, and a discussion of "bugs," limitations, or special
 notes of interest.<p>
@@ -108,24 +124,23 @@ printed in bold text. User-specified input (i.e., variables set by the user)
 is set in italic type. Boxed text shows information output to the user's
 terminal screen.<p>
 <hr>
-<a href="html_grass5.tar.gz">Get all manual/programming pages in a
-package</a> (local server, 3.2 MB tar.gz)
-[from <a href=http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html_grass5.tar.gz>Hannover site</a>]
-[from <a href=http://www.baylor.edu/~grass/gdp/html_grass5/html_grass5.tar.gz> Baylor site</a>]
+<a href="html_grass5.tar.gz">Get all manual pages in a
+package</a> (from current server, 3.2 MB tar.gz, package updated weekly)
 <hr>
 <CENTER>
 <A HREF="../../index2.html">
 <IMG SRC="grassbutton.gif" ALT="GRASS LOGO">
 <br>
 GRASS U.S.A. Site</A> - 
-<A HREF="http://www.geog.uni-hannover.de/grass/">GRASS Europe Site</A><br>
+<A HREF="http://grass.itc.it">GRASS Europe Site</A><br>
 Email the GRASS Research
 Group at:  <a href="mailto:grass@baylor.edu"><em>grass@baylor.edu</em></a>
 <br>
 WWW Pages maintained by
-<a href="mailto:lisa_zygo@baylor.edu"><em>Lisa Zygo</em></a><br> with
-updates from <a href="mailto:neteler@geog.uni-hannover.de"><em>Markus Neteler</em></a>
-and <a href="mailto:helena@gomez.gis.uiuc.edu"><em>Helena Mitasova</em></a>
+<a href="mailto:lisa_zygo@baylor.edu"><em>Lisa Zygo</em></a> and 
+<a href="mailto:neteler@itc.it"><em>Markus Neteler</em></a><br> with updates
+from <a href="mailto:hmitaso@unity.ncsu.edu"><em>Helena Mitasova</em></a> and
+various contributors
 </CENTER>
 
 </body>

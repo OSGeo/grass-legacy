@@ -26,10 +26,17 @@ int main(int argc,char **argv)
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 	struct Flag *flag3 ;
+	struct GModule *module;
 	char to_str[128] ;
 	char from_str[128] ;
 
 	G_gisinit(argv[0]) ;
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Displays three-dimensional images based on raster map layers";
+	
 
 	G_get_window(&window) ;
 

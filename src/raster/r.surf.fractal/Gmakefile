@@ -15,10 +15,9 @@ PGM = r.surf.fractal
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(GISLIB) $(VASKLIB)
+LIBES = $(GISLIB) $(GMATHLIB)
 #-----------^ Library necessary for all GRASS programs.
-#---------------------^ Parses keyboard input.
-
+#---------------------^ Numerical function fft
 
 INCLUDES =\
 		frac.h
@@ -29,10 +28,7 @@ OBJ =\
 	interface.o	\
 	process.o	\
 	max_pow.o	\
-	fft.o		\
 	spec_syn.o	\
-	gauss.o		\
-	rand1.o		\
 	write_rast.o
 #----------^ These are the names of all seperate files that
 #	     the programmer creates. Must have ONE tab in
@@ -41,7 +37,7 @@ OBJ =\
 ######### DEPENDENCIES #########
 
 $(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
-	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
 

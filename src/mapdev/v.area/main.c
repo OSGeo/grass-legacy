@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
 	struct Option *opt1 ;
 	struct Option *opt2 ;
 
+/* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Display GRASS area and perimeter information for GRASS vector map.";
@@ -71,9 +74,6 @@ int main(int argc, char *argv[])
 	flag2 = G_define_flag();
 	flag2->key  = 'i';
 	flag2->description = "subtract area of islands";
-
-/* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
 	fill = 0;
 

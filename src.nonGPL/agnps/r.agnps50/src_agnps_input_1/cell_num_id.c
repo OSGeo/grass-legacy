@@ -109,7 +109,7 @@ cell_num_id()
 		}
 	   }
 
-	   G_put_map_row(cell_num_map->fd,cell_num_map->rbuf);
+	   G_put_raster_row(cell_num_map->fd,cell_num_map->rbuf, CELL_TYPE);
 	}
 
 	tot_cells = ct - 1;

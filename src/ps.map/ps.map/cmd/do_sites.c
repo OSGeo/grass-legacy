@@ -128,7 +128,7 @@ int do_sites (void)
 	    else if (site.epstype[i] == 2)  /* draw epses */ 
 	    {
 	        sprintf (epsfile, "%s%d%s", site.epspre[i], mysite->ccat, site.epssuf[i]);
-		if ( eps_exist = eps_bbox( epsfile, &llx, &lly, &urx, &ury) )
+		if ( (eps_exist = eps_bbox( epsfile, &llx, &lly, &urx, &ury)) )
 		{
 		    eps_trans (llx, lly, urx, ury, x, y, s/10, site.rotate[i], &xt, &yt);
 

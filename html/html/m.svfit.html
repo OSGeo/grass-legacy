@@ -28,7 +28,7 @@
 <H2>DESCRIPTION</H2>
 
 <EM>m.svfit</EM> calculates a sample semivariogram and
-either plots it in the GRASS graphics window or writes the
+either plots it using <EM>gnuplot</EM> or writes the
 estimated parameters to standard output, or both.
 
 <P>
@@ -49,8 +49,7 @@ the <A HREF="#example">example</A> below.
 <DD>Quiet. Cut out the chatter.
 
 <DT><B>-p</EM> 
-<DD>Plot model and sample semivariogram (requires 
-    <EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>).
+<DD>Plot model and sample semivariogram (requires <EM>gnuplot</EM>).
 
 <DT><B>-w</EM> 
 <DD>Use weighted least squares (default is general least squares)
@@ -95,6 +94,11 @@ This may either be from a UNIX file, entered from the
 command line (terminated by control-d), or via a pipe or
 redirection.
 
+<P>
+The plotting program can be selected by setting the environment
+variable <B>GRASS_GNUPLOT </B>.
+</P>
+
 <A NAME="example"><H2>EXAMPLE</H2></A>
 
 <EM>m.svfit</EM> was designed to be used in conjunction
@@ -107,7 +111,7 @@ semivariograms. The following example calculates a sample
 semivariogram of the sites list <EM>wells</EM> with a
 nominal lag distance of 5 and then fits a linear model with
 a range of 100.  The sample semivariogram and model are
-plotted in the GRASS graphics monitor and the graphing
+plotted using <EM>gnuplot</EM> and the graphing
 instructions and data are saved to files with the basename
 <EM>svwells</EM> in the current working directory:
 
@@ -120,15 +124,15 @@ semivariogram may be plotted again later by the following
 command:
 
 <DL>
-<DD><B>g.gnuplot </B><EM>svwells.gp</EM>
+<DD><B>gnuplot </B><EM>svwells.gp</EM>
 </DL>
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="s.univar.html">s.univar</A></EM>,
 <EM><A HREF="s.normal.html">s.normal</A></EM>,
-<EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>,
 <EM><A HREF="s.sv.html">s.sv</A></EM>
+<EM><A HREF="http://www.gnuplot.org">gnuplot</A></EM>
 and
 
 <P>
@@ -147,3 +151,6 @@ Please send all bug fixes and comments to the author.
 <A HREF="http://pasture.ecn.purdue.edu/~agenhtml/">Agricultural
 Engineering</A>,
 <A HREF="http://www.purdue.edu">Purdue University</A>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -11,7 +11,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>r.in.tiff</b></EM>  - Converts a TIFF (8 or 24 bit) raster file to GRASS raster file(s).
+<EM><b>r.in.tiff</b></EM>  - Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s).
 
 <BR>
 
@@ -66,13 +66,38 @@ compression schemes may not be read correctly.
 LZW compression is not supported due to UNISYS patent.
 
 <P>
-If a TIFF World file exists with an extension of "tfw", "tifw", "TFW", or
-"TIFW", it will be used to set the boundary coordinates and cell size. 
+If a TIFF World file exists with an extension of "tfw", "tifw", "TFW",
+or "TIFW", it will be used to set the boundary coordinates and cell size. 
 Rotation in the TIFF World file is not supported (second and third numbers).
-If no TIFF World file exists, the user should adjust boundary 
-coordinates stored in the cell header after 
-import using <EM> <A HREF="r.support.html">r.support</A>
-</EM>.
+If no TIFF World file exists, the user should adjust boundary coordinates
+stored in the cell header after import using <EM> <A
+HREF="r.support.html">r.support</A> </EM>.
+<p>
+
+A sample TFW file opened up would look like: 
+
+<pre> 
+                       6.00 
+                       0.00 
+                       0.00 
+                      -6.00 
+                 1709053.00 
+                  807714.00 
+
+         Line 1 - Cell size in the "X" direction 
+         Line 2 - Rotation term for the row 
+         Line 3 - Rotation term for the column
+         Line 4 - Cell size in the "Y" direction 
+         Line 5 - Easting value of insertion point "X" 
+         Line 6 - Northing value of insertion point "Y" 
+</pre>
+
+Note: The y-scale (E) is negative because the origins of an image and a
+geographic coordinates system are different. The origin of an image is
+located in the upper-left corner, whereas the origin of the map coordinate
+system is located in the lower-left corner. Row values in the image increase
+from the origin downward, while y-coordinate values in the map increase from
+the origin upward.
 
 
 <H2>NOTE</H2>
@@ -105,5 +130,6 @@ Research Laboratory
 <P>
 GRASS 5.0 team
 
-</BODY>
-</HTML>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

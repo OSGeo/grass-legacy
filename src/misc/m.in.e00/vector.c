@@ -104,6 +104,8 @@ int getarcs( char *name, int cover_type, int prec)
 		    ymin = y[i];
 		if (ymax < y[i])
 		    ymax = y[i];
+		if (i == npts-1)
+		    continue;
 		if (xmin > x[i+1])
 		    xmin = x[i+1];
 		if (xmax < x[i+1])

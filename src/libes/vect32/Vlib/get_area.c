@@ -14,6 +14,7 @@
 **  7/2000
 */
 
+#include <stdlib.h>
 #include "V_.h"
 #include "Vect.h"
 
@@ -25,7 +26,6 @@
 static int first_time = 1;	/* zero at startup */
 static struct line_pnts Points;
 
-
 int Vect_get_area_points (
     struct Map_info *Map,
     int area,
@@ -36,9 +36,8 @@ int Vect_get_area_points (
   P_AREA *Area;
   int done_yet;
 
-
   BPoints->n_points = 0;
-  BPoints->alloc_points = 0;
+  /* memory leak -> BPoints->alloc_points = 0; */ 
   Area =  &(Map->Area[area]) ;
 
   if (first_time == 1)
@@ -104,9 +103,8 @@ int Vect_get_isle_points (
   int done_yet;
 
 
-
   BPoints->n_points = 0;
-  BPoints->alloc_points = 0;
+  /* memory leak -> BPoints->alloc_points = 0; */ 
   Isle =  &(Map->Isle[isle]) ;
 
   if (first_time == 1)

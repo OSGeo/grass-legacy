@@ -23,6 +23,8 @@ int main (int argc, char *argv[])
         struct Option *opt1, *opt2, *opt3, *opt4;
 	char buf[400];
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Watershed basin creation program.";
@@ -31,14 +33,14 @@ int main (int argc, char *argv[])
 	opt1->key        = "drainage" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
-	opt1->gisprompt  = "any,cell,raster" ;
+	opt1->gisprompt  = "old,cell,raster" ;
 	opt1->description= "Name of input raster map" ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "basin" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
-	opt2->gisprompt  = "any,cell,raster" ;
+	opt2->gisprompt  = "new,cell,raster" ;
 	opt2->description= "Name of raster map to contain results" ;
 
 	opt3 = G_define_option() ;
@@ -57,18 +59,16 @@ int main (int argc, char *argv[])
 	opt4->required   = YES ;
 	opt4->description= "The map N grid coordinates" ;
 
+	/*   Parse command line */
+	if (G_parser(argc, argv))
+		exit(-1);
 
-	G_gisinit(argv[0]);
 	if (G_get_window(&window) < 0)
 	{
 		sprintf (buf,"can't read current window parameters");
 		G_fatal_error (buf);
 		exit(1);
 	}
-
-	/*   Parse command line */
-	if (G_parser(argc, argv))
-		exit(-1);
 
                     strcpy (drain_name, opt1->answer);
                     strcpy (basin_name, opt2->answer);
@@ -130,7 +130,7 @@ int main (int argc, char *argv[])
 		for (col = 0; col < ncols; col++) {
 		    cell_buf[col] = bas[SEG_INDEX(ba_seg, row, col)];
 		}
-		G_put_map_row (basin_fd, cell_buf);
+		G_put_raster_row (basin_fd, cell_buf, CELL_TYPE);
 	}
 	G_free (bas);
 	G_free (cell_buf);

@@ -28,7 +28,6 @@ int Screen_rite(int *);
 int Screen_bot(int *);
 int Screen_top(int *);
 int Get_num_colors(int *);
-int get_num_colors(void);
 /* Text.c */
 int Text(char *);
 /* connect.c */

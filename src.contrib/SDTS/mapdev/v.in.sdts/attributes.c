@@ -15,6 +15,7 @@ for each call (new obj-attr combo):
 *******/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "sdts_globals.h"
 #include "sdts_in.h"
 #include "gis.h"

@@ -32,17 +32,18 @@ export GIS_LOCK
 
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC=$GISBASE/etc
-PATH=$GISBASE/bin:$GISBASE/scripts:$PATH
+PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
 # Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
+# first search local libs, then in GRASS lib/
 if [ ! "$LD_LIBRARY_PATH" ] ; then
   LD_LIBRARY_PATH=$GISBASE/lib
   export LD_LIBRARY_PATH
 else
-  LD_LIBRARY_PATH=$GISBASE/lib:$LD_LIBRARY_PATH
+  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
 fi
 
 # Check for concurrent use
@@ -58,14 +59,20 @@ case $? in
     	exit ;;
 esac
 
-# Set some environment variables if they are not set
-if [ ! "$PAGER" ] ; then
-    if [ -x /bin/more ] ; then
-        PAGER=more
-    else 
-        PAGER=less
-    fi
+# Once the new environment system is committed we can delete these lines
+# Export the PAGER environment variable for those who have it set
+if [ "$PAGER" ] ; then
     export PAGER
+fi
+
+# Set some environment variables if they are not set
+if [ ! "$GRASS_PAGER" ] ; then
+    if [ -x /bin/more ] ; then
+        GRASS_PAGER=more
+    else 
+        GRASS_PAGER=less
+    fi
+    export GRASS_PAGER
 fi
 
 if [ ! "$GRASS_TCLSH" ] ; then
@@ -76,6 +83,11 @@ fi
 if [ ! "$GRASS_WISH" ] ; then
     GRASS_WISH=wish
     export GRASS_WISH
+fi
+
+if [ ! "$GRASS_GNUPLOT" ] ; then
+    GRASS_GNUPLOT="gnuplot -persist"
+    export GRASS_GNUPLOT
 fi
 
 # First time user - GISRC is defined in the grass script
@@ -378,13 +390,13 @@ tput clear
 echo "Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG"
 echo
 echo "Geographic Resources Analysis Support System (GRASS) is Copyright,"
-echo "1999-2001 by the GRASS Development Team, and licensed under terms of the"
+echo "1999-2002 by the GRASS Development Team, and licensed under terms of the"
 echo "GNU General Public License (GPL)."
 echo 
 echo "This GRASS VERSION_NUMBER release is coordinated and produced by the"
-echo "GRASS Development Team headquartered at University of Hannover with"
+echo "GRASS Development Team headquartered at ITC-irst (Trento, Italy) with"
 echo "worldwide support and further development sites located at Baylor"
-echo "University and the University of Illinois."
+echo "University and the University of Illinois (U.S.A.)."
 echo 
 echo "This program is distributed in the hope that it will be useful, but"
 echo "WITHOUT ANY WARRANTY; without even the implied warranty of"
@@ -413,7 +425,7 @@ csh|tcsh)
     tcshrc=$HOME/.tcshrc
     rm -f $cshrc $tcshrc
     echo "set home = $USERHOME" > $cshrc
-    echo "set history = 30 noclobber ignoreeof" >> $cshrc
+    echo "set history = 500 noclobber ignoreeof" >> $cshrc
 
     echo "set prompt = '\\" >> $cshrc
     echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> $cshrc
@@ -465,8 +477,8 @@ bash)
         cat $USERHOME/.grass.bashrc >> $bashrc
     fi
 
-    echo "export PATH=$PATH" >> $bashrc
-    echo "export HOME=$USERHOME" >> $bashrc # restore user home path
+    echo "export PATH=\"$PATH\"" >> $bashrc
+    echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
 
     $ETC/run $SHELL
     HOME=$USERHOME
@@ -490,8 +502,8 @@ cygwin)
         cat $USERHOME/.grass.bashrc >> $bashrc
     fi
 
-    echo "export PATH=$PATH" >> $bashrc
-    echo "export HOME=$USERHOME" >> $bashrc # restore user home path
+    echo "export PATH=\"$PATH\"" >> $bashrc
+    echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
 
     $ETC/run $SHELL
     HOME=$USERHOME

@@ -13,6 +13,9 @@ NAME</h2>
 <b><i>d.vect.pg</i></b> - Display select vectors from an existing vector
 map. (GRASS-RDBMS Interface Display Program)
 <h2>
+</h2>
+
+<h2>
 SYNOPSIS</h2>
 <b>d.vect.pg</b>
 <br><b>d.vect.pg help</b>
@@ -23,6 +26,9 @@ ALTERNATE</h2>
 <b>d.vect.pg -s help</b>
 <br><b>d.vect.pg -s sql</b><i>=filename</i> <b>map</b><i>=name</i> [<b>color</b><i>=name</i>]
 <h2>
+</h2>
+
+<h2>
 DESCRIPTION</h2>
 <i>d.vect.pg</i> displays select vectors from an existing vector map based
 on the unique values in a database column. Each row returned by a user
@@ -30,6 +36,9 @@ constructed database query will be associated with a vector feature which
 is subsequently drawn on the graphics display in the active frame. The
 user can control the color of the vector draw by specifying a color on
 the command line.
+<h2>
+</h2>
+
 <h2>
 COMMAND LINE OPTIONS</h2>
 
@@ -98,17 +107,7 @@ Color to draw vectors in</dd>
 <dd>
 Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
 gray, white, black</dd>
-
-<br><b>EXAMPLE:</b>
-<p><b>1.</b><i> d.vect.pg -f key=rec_id map=kuruma_id tab=info_kuruma where='type_id
->32 and type_id &lt; 38'&nbsp; color=red</i>
-<br>&nbsp;
-<p><b>Result:</b> only polygons with type in 33-37 range would be displayed
-in red color..
-<p><b>2.</b> <i>d.vect.pg -f -s sql=oak.sql map=kuruma_id</i>
-<p>oak.sql is:
-<p><i>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</i>
-<p><b>Result: </b>this would the same as in the first example.</dl>
+</dl>
 
 <h2>
 ALTERNATE COMMAND LINE USAGE</h2>
@@ -163,6 +162,19 @@ Color to draw vectors in</dd>
 Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
 gray, white, black</dd>
 </dl>
+<b></b>
+<p><br><b>EXAMPLE:</b>
+<p><b>1.</b><i> d.vect.pg -f key=rec_id map=kuruma_id tab=info_kuruma where='type_id
+>32 and type_id &lt; 38'&nbsp; color=red</i>
+<br>&nbsp;
+<p><b>Result:</b> only polygons with type in 33-37 range would be displayed
+in red color..
+<p><b>2.</b> <i>d.vect.pg -f -s sql=oak.sql map=kuruma_id</i>
+<p>oak.sql is:
+<p><i>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</i>
+<p><b>Result: </b>this would the same as in the first example.
+<h2>
+</h2>
 
 <h2>
 BUGS</h2>

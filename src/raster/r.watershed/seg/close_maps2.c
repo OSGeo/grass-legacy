@@ -64,7 +64,7 @@ close_array_seg (void)
 		    cseg_get (&bas, &(cellrow[c]), r, c);
 		else cellrow[c] = 0;
 	    }
-            G_put_map_row(map_fd, cellrow);
+            G_put_raster_row(map_fd, cellrow, CELL_TYPE);
         }
 	G_free(cellrow);
         G_close_cell(map_fd);

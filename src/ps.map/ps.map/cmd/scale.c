@@ -5,6 +5,7 @@
 **
 ** Author: Paul W. Carlson	April 1992
 */
+#include <stdlib.h>
 #include <string.h>
 #include "local_proto.h"
 #include "ps_info.h"

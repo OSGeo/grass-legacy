@@ -10,7 +10,7 @@
 # platform independent
 #
 # $Id$
-# 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
+# 1999-2000 by Markus Neteler, neteler@itc.it
 #
 ##########################################################################
 
@@ -74,6 +74,97 @@ echo ""
 echo "GRASS GIS $NAME_VER binary package installation tool"
 echo ""
 
+# Check for correct package name:
+if [ ! -f $1 ] ; then 
+    echo "ERROR: Wrong package name $1. File does not exists."
+    echo ""
+    exit
+fi
+
+# Obtain the package name and path
+CURR_DIR=`pwd`
+PACKAGE_NAME=`basename $1`
+PACKAGE_DIR=`dirname $1`
+
+# the dirname command uses . and .. if found so we need the absolute path
+cd $PACKAGE_DIR
+PACKAGE_DIR=`pwd`
+
+# Check if package is first parameter and in gz or bz2 compression:
+# is package in .tar.gz format?
+echo $PACKAGE_NAME | grep "\.tar\.gz" > /dev/null
+if [ $? -eq 0 ] ; then
+    UNPACK=gunzip
+    	
+    # Is gunzip there?
+    IFSSAVE="$IFS"
+    IFS=":"
+    GUNZIP=""
+    for TEST in $PATH ; do
+        if [ -x $TEST/gunzip ] ; then
+	    GUNZIP="$TEST/gunzip"
+	fi
+    done
+    # which gunzip | grep -v no > /dev/null
+    IFS="$IFSSAVE"
+    if [ ! "$GUNZIP" ] ; then
+        echo "No gunzip installed. Please get from:"
+        echo "   http://www.gnu.org/software/gzip/gzip.html"
+        exit
+    fi
+else
+    # not in .tar.gz format, perhaps in .tar.bz2 format?
+    echo $PACKAGE_NAME | grep "\.tar\.bz2" > /dev/null
+    if [ $? -eq 0 ] ; then
+        UNPACK=bunzip2
+    
+        # Is bunzip2 there?
+        IFSSAVE="$IFS"
+        IFS=":"
+        BUNZIP2=""
+        for TEST in $PATH ; do
+            if [ -x $TEST/bunzip2 ] ; then
+	        BUNZIP2="$TEST/bunzip2"
+	    fi
+        done
+        IFS="$IFSSAVE"
+        # which bunzip2 | grep -v no > /dev/null
+        if [ ! "$BUNZIP2" ] ; then
+    	    echo "No bunzip2 installed. Please get from:"
+    	    echo "   http://sources.redhat.com/bzip2/index.html"
+    	    exit
+        fi
+    else
+        # not in .tar.gz or .tar.bz2 format, completely wrong!
+        echo "ERROR: You need the GRASS binary package in .tar.gz compression "
+        echo "or .tar.bz2."
+        echo ""
+        exit
+    fi
+fi
+
+# Check if the size of the tar gzip file is the same as what was on the server
+SIZE=`ls -l $PACKAGE_NAME | tr -s " " | cut -d" " -f5`
+if [ $? -ne 0 ] ; then
+    echo "ERROR while installing binaries!"
+    echo "Exiting."
+    exit
+fi
+
+if [ $SIZE -ne $TAR_FILE_SIZE ] ; then
+    echo "ERROR: The size of the binary package is not correct."
+    echo "  Perhaps there was a transmission error. Please download"
+    echo "  the package again"
+    echo ""
+    exit
+fi
+
+echo "Using $UNPACK decompressor..."
+
+echo "The package $PACKAGE_NAME seems to be o.k."
+echo " Proceeding..."
+echo ""
+
 # Check if the paths for the binary and the destination are the same
 BIN_PATH1=$BINDIR/grass$NAME_VER
 BIN_PATH2=$BIN_PATH1/
@@ -101,7 +192,7 @@ if [ ! -d "$BINDIR" ] ; then
    
     mkdir -p $BINDIR
     
-    if [ $? -eq 1 ] ; then
+    if [ $? -ne 0 ] ; then
 	echo "An error occured trying to create $BINDIR ! Exiting."
 	exit
     fi
@@ -135,7 +226,7 @@ if [ ! -d "$DESTDIR" ] ; then
 
     mkdir -p $DESTDIR
     
-    if [ $? -eq 1 ] ; then
+    if [ $? -ne 0 ] ; then
     	echo "An error occured trying to create $DESTDIR! Exiting."
     	exit
     fi
@@ -146,7 +237,7 @@ else
         echo "Remove first!"
         exit
     else
-    
+
     	# Check if a word "grass" is in string $DESTDIR
         echo $DESTDIR | grep "grass" > /dev/null
         
@@ -159,94 +250,20 @@ else
             	exit
             fi
         fi
+
+	# Check if DESTDIR is writable
+	touch $DESTDIR/test$$ > /dev/null
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: Destination directory $DESTDIR is not"
+	    echo "writable, try installing as root!"
+	    echo "Exiting."    
+	    exit 1
+        fi
+	rm -f $DESTDIR/test$$ > /dev/null
+
     fi        
 fi
 
-# Check for correct package name:
-if [ ! -f $1 ] ; then 
-    echo "ERROR: Wrong package name $1. File does not exists."
-    echo ""
-    exit
-fi
-
-# Obtain the package name and path
-PWD=`pwd`
-PACKAGE_NAME=`basename $1`
-PACKAGE_DIR=`dirname $1`
-
-# the dirname command uses . and .. if found so we need the absolute path
-cd $PACKAGE_DIR
-PACKAGE_DIR=`pwd`
-
-# Check if package is first parameter and in tar.gz compression:
-echo $PACKAGE_NAME | grep bz2 > /dev/null
-
-if [ $? -eq 1 ] ; then
-    PACKAGETYPE=`file $PACKAGE_NAME`
-    echo $PACKAGETYPE  | grep gzip > /dev/null
-    
-    if [ $? -eq 1 ] ; then
-    	echo "ERROR: You need the GRASS binary package in .tar.gz compression "
-    	echo "or bz2."
-	echo ""
-    	exit
-    else
-    	UNPACK=gunzip
-    	
-	# Is gunzip there?
-	IFSSAVE="$IFS"
-	IFS=":"
-	GUNZIP=""
-	for TEST in $PATH ; do
-	    if [ -x $TEST/gunzip ] ; then
-	        GUNZIP="$TEST/gunzip"
-	    fi
-	done
-    	# which gunzip | grep -v no > /dev/null
-    	IFS="$IFSSAVE"
-	if [ ! "$GUNZIP" ] ; then
-            echo "No gunzip installed. Please get from:"
-            echo "   http://www.gnu.org/software/gzip/gzip.html"
-            exit
-      	fi
-    fi
-else
-    UNPACK=bunzip2
-    
-    # Is bunzip2 there?
-
-    IFSSAVE="$IFS"
-    IFS=":"
-    BUNZIP2=""
-    for TEST in $PATH ; do
-        if [ -x $TEST/bunzip2 ] ; then
-	    BUNZIP2="$TEST/bunzip2"
-	fi
-    done
-    IFS="$IFSSAVE"
-    # which bunzip2 | grep -v no > /dev/null
-    if [ ! "$BUNZIP2" ] ; then
-    	echo "No bunzip2 installed. Please get from:"
-    	echo "   http://sources.redhat.com/bzip2/index.html"
-    	exit
-    fi
-fi
-
-# Check if the size of the tar gzip file is the same as what was on the server
-SIZE=`ls -l $PACKAGE_NAME | awk '{print $5}'`
-if [ $SIZE -ne $TAR_FILE_SIZE ] ; then
-    echo "ERROR: The size of the binary package is not correct."
-    echo "  Perhaps there was a transmission error. Please download"
-    echo "  the package again"
-    echo ""
-    exit
-fi
-
-echo "Using $UNPACK decompressor..."
-
-echo "The package $PACKAGE_NAME seems to be o.k."
-echo " Proceeding..."
-echo ""
 
 # Start the installation job...
 echo "Installing GRASS binaries into $DESTDIR"
@@ -255,7 +272,6 @@ echo ""
 echo "Uncompressing the package and extracting to target directory..."
 PACK_FILE=$PACKAGE_DIR/$PACKAGE_NAME
 cd $DESTDIR; $UNPACK -c $PACK_FILE | tar -xf -
-
 if [ $? -eq 1 ] ; then
     echo "An error occured or user break while installing binaries! Exiting."
     exit
@@ -263,17 +279,20 @@ fi
 
 # Get rid of any CVS directories
 find . -name CVS -exec rm -rf {} \; 2>/dev/null ; true
-cd $PWD
+cd $CURR_DIR
 
 # Creating start script
 echo "Creating start script: $BINDIR/grass$NAME_VER"
-awk '
-{
-    if ($1 ~ /^GISBASE/)
-    	print "GISBASE='$DESTDIR'"
-    else
-    	print
-}' $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER 
+#awk '
+#{
+#    if ($1 ~ /^GISBASE/)
+#    	print "GISBASE='$DESTDIR'"
+#    else
+#    	print
+#}' $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER 
+
+STRING="s|^GISBASE.*|GISBASE\=\'$DESTDIR\'|g"
+sed -e $STRING $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER
 
 if [ $? -eq 1 ] ; then
     echo "An error occured trying to create the grass start script! Exiting."
@@ -298,38 +317,7 @@ rm -rf $DESTDIR/locks/*
 mkdir $DESTDIR/locks/$SERVERNAME
 chmod -R 1777 $DESTDIR/locks
 
-# Update paths in etc/monitorcap:
-cp $DESTDIR/etc/monitorcap $DESTDIR/etc/monitorcap.orig
-if [ $? -eq 1 ] ; then
-    echo "An error occured while installing binaries (are you root user?)! Exiting."
-    exit
-fi
-
-NEWPATH=$DESTDIR
-sed 's#'$ORIG_BASE_DIR'#'$NEWPATH'#g' $DESTDIR/etc/monitorcap.orig > $DESTDIR/etc/monitorcap
-
 echo""
-
-# no need to create the fifos for sockets setup
-#echo "Creating the monitor fifos..."
-#rm -f $DESTDIR/dev/fifo.*
-#
-# Create the fifos
-#sh $DESTDIR/dev/create_fifos.sh $DESTDIR
-#
-#if [ $? -eq 1 ] ; then
-#  echo "An error occured or user break while installing binaries! Exiting."
-#  exit
-#fi
-
-CYGWIN=`uname|grep CYGWIN`
-
-# Need to link more to less for CYGWIN
-if [ "$CYGWIN" ] ; then
-   if [ ! -x /bin/less ] ; then
-      ln -s /bin/less /bin/more
-   fi
-fi
 
 # Create the binary uninstall script
 cd $BINDIR
@@ -383,7 +371,7 @@ echo "rm -f ${DESTDIR}/BUGS" >> $UNINSTALL
 echo "rm -f ${DESTDIR}/COPYING" >> $UNINSTALL
 echo "rm -f ${DESTDIR}/NEWS.html" >> $UNINSTALL
 echo "rm -f ${DESTDIR}/README" >> $UNINSTALL
-echo "rm -f ${DESTDIR}/REQUIREMENTS" >> $UNINSTALL
+echo "rm -f ${DESTDIR}/REQUIREMENTS.html" >> $UNINSTALL
 echo "rm -f ${DESTDIR}/TODO.txt" >> $UNINSTALL
 echo "rm -f ${BINDIR}/${UNINSTALL}" >> $UNINSTALL
 echo "rm -rf ${DESTDIR}/bin" >> $UNINSTALL
@@ -404,7 +392,7 @@ echo "rmdir ${DESTDIR}" >> $UNINSTALL
 echo "" >> $UNINSTALL
 
 chmod a+x $UNINSTALL
-cd $PWD
+cd $CURR_DIR
 
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"

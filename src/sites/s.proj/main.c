@@ -29,30 +29,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include <projects.h>
 #include <gis.h>
 #include "site.h"
 #include "local_proto.h"
-
+#include "projects.h"
 
 FILE *infile, *outfile;
 
 int
-main(int argc, char    **argv)
+main(int argc, char **argv)
 {
-	char     *outname,		 /* ptr to name of output layer	 */
-	         *setname,		 /* ptr to name of input mapset	 */
+	char      *setname,		 /* ptr to name of input mapset	 */
 	          errbuf[256];		 /* buffer for error messages	 */
 
 	int       permissions,		 /* mapset permissions		 */
-	          row, col, i,		 /* counters			 */
 		  oldproj, newproj;
 
 
 	double    xcoord,	 /* temporary x coordinates 	 */
-	          ycoord,	 /* temporary y coordinates	 */
-	          n, s, e, w,		 /* output coordinates		 */
-	          hn, hs, he, hw;	 /* input coordinates		 */
+	          ycoord;	 /* temporary y coordinates	 */
 
 	struct pj_info iproj,		 /* input map proj parameters	 */
 	          oproj;		 /* output map proj parameters	 */
@@ -69,6 +67,9 @@ main(int argc, char    **argv)
 	         *outmap,		 /* name of output layer	 */
 	         *inlocation,		 /* name of input location	 */
 	         *indbase;		 /* name of input database	 */
+	
+	struct Flag *list;               /* list files in source location */
+	
         struct GModule *module;
         
 
@@ -77,7 +78,7 @@ main(int argc, char    **argv)
         module = G_define_module();
         module->description =        
                         "Allows the user to re-project a sites file from one "
-                        "location to the current location.";
+                        "location to the current location (no datum transformation yet).";
                         
 	newproj = G_projection();
 
@@ -111,6 +112,10 @@ main(int argc, char    **argv)
 	outmap->required = NO;
 	outmap->description = "output sites list";
 
+	list = G_define_flag();
+	list->key = 'l';
+	list->description = "List sites files in input location and exit";
+                        
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -152,9 +157,20 @@ main(int argc, char    **argv)
 
 	if (permissions >= 0) {
 
+          /* if requested, list the raster files in source location - MN 5/2001*/
+		if (list->answer)
+		{
+		  if(isatty(0))  /* check if on command line */
+		  {
+		   fprintf(stderr, "Checking location %s, mapset %s:\n", inlocation->answer, setname);
+		   G_list_element ("site_lists", "sites", setname, 0);
+		   exit(0); /* leave s.proj after listing*/
+		  }
+		}
+
 		if (!G_find_file ("site_lists", inmap->answer, setname)) {
-			sprintf(errbuf, "Input list [%s] in mapset [%s] not found.",
-				inmap->answer, setname);
+			sprintf(errbuf, "Input list [%s] in location [%s] in mapset [%s] not found.",
+				inmap->answer, inlocation->answer, setname);
 			G_fatal_error(errbuf);
 		}
    /* Get projection info for input mapset */
@@ -205,11 +221,16 @@ main(int argc, char    **argv)
 
 	if(outfile){ /* also write G_recreate_command as comment */
 	    Site_head sh;
-	    char buf[80];
-
-            fprintf(outfile,"# %s\n", G_recreate_command());
+	    char buf0[512];
 
             G_site_get_head (infile, &sh);
+
+	/* mhhh, how to write this properly 9/2001 ? see s.in.shape */
+       /*   sprintf( buf0, "%s", G_recreate_command());
+            sh->desc = (char *)malloc( strlen(buf0) + 1 );
+            strcpy(sh->desc, buf0 );
+        */
+
             G_site_put_head (outfile, &sh);
         }
 

@@ -428,3 +428,4 @@ int set_type( char *str, RASTER_MAP_TYPE *out_type)
 
     return 0;
 }       
+

@@ -103,6 +103,7 @@ static int *equivs;
 /* static struct area_table *areas; */
 static int smooth_flag;
 static int value_flag;
+static int output_flag;
 static struct dig_head head;
 
 
@@ -168,12 +169,11 @@ static int write_ln( struct COOR *line_begin, struct COOR *line_end,	/* start an
     double x;
     double y;
     struct COOR *p, *last;
-    int i, type;
+    int i;
 
     Vect_reset_line(Points);
 
     n++;			/* %% 6.4.88 */
-    type = AREA;
 
     p = line_begin;
     y = cell_head.north - (double) p->row * cell_head.ns_res;
@@ -207,8 +207,8 @@ static int write_ln( struct COOR *line_begin, struct COOR *line_end,	/* start an
     p = line_begin;
 
     for (i = 1; i < n; i++) {
-	if (i < 10)
-	    fprintf(stdout, " row: %d col: %d\n", p->row, p->col);
+	/* if (i < 10)
+	    fprintf(stdout, " row: %d col: %d\n", p->row, p->col); */
 	last = p;
 	if ((p = move(p)) == NULPTR)
 	    break;
@@ -233,7 +233,7 @@ static int write_ln( struct COOR *line_begin, struct COOR *line_end,	/* start an
 	G_free(p);
 
     if (which_outputs & BINARY)
-	Vect_write_line(&Map, type, Points);
+	Vect_write_line(&Map, output_flag, Points);
 
     return 0;
 }
@@ -251,11 +251,10 @@ static int write_smooth_ln( struct COOR *line_begin, struct COOR *line_end,	/* s
     double dx, dy;
     int idx, idy;
     struct COOR *p, *last;
-    int i, total, type;
+    int i, total;
 
     Vect_reset_line(Points);
     n++;			/* %% 6.4.88 */
-    type = AREA;
 
     p = line_begin;
     /* allocate the arrays and get the first point */
@@ -340,7 +339,7 @@ static int write_smooth_ln( struct COOR *line_begin, struct COOR *line_end,	/* s
 
     /* write files */
     if (which_outputs & BINARY)
-	Vect_write_line(&Map, type, Points);
+	Vect_write_line(&Map, output_flag, Points);
 
     /* now free all thwe pointers */
     p = line_begin;
@@ -463,28 +462,32 @@ int write_area( struct area_table *a_list,	/* list of areas */
     int catNum;
     char lbl[255];
 
+    /* if have written only borders we don't need to write label */
+    /* points -> exit now */
+    if(output_flag == LINE) return 0;
+
     G_init_cell_stats(&stats);
     total_areas = 0;
     if (n_equiv < n_areas) {
-	equivs = (int *) G_malloc(n_areas * sizeof(int));
-	n = n_equiv;
+        equivs = (int *) G_malloc(n_areas * sizeof(int));
+        n = n_equiv;
     } else {
-	equivs = (int *) G_malloc(n_equiv * sizeof(int));
-	n = n_areas;
+        equivs = (int *) G_malloc(n_equiv * sizeof(int));
+        n = n_areas;
     }
     for (i = 0; i < n; i++) {
-	if ((e_list + i)->mapped)
-	    equivs[i] = (e_list + i)->where;
-	else {
-	    total_areas++;
-	    equivs[i] = i;
-	}
+        if ((e_list + i)->mapped)
+            equivs[i] = (e_list + i)->where;
+        else {
+            total_areas++;
+            equivs[i] = i;
+        }
     }
     if (n < n_areas) {
-	for (i = n; i < n_areas; i++) {
-	    total_areas++;
-	    equivs[i] = i;
-	}
+        for (i = n; i < n_areas; i++) {
+            total_areas++;
+            equivs[i] = i;
+        }
     }
     type = AREA;
     if (which_outputs & LABEL) {
@@ -493,7 +496,7 @@ int write_area( struct area_table *a_list,	/* list of areas */
             catNum = 1;
         }
         for (i = 0, p = a_list; i < n_areas; i++, p++) {
-            if (!(e_list + i)->mapped && p->width > 0 &&
+            if (equivs[i] == i && p->width > 0 &&
                 !G_is_c_null_value(&(p->cat))) {
                 /* note: write_att does not outputs labels with 0 category value,
                    but anyway v.support does not build area with that category value...
@@ -543,6 +546,7 @@ int syntax(int argc, char *argv[], char **input, char **output)
 {
     struct Flag *flag1;
     struct Flag *flag2;
+    struct Flag *flag3;
     struct Option *opt1;
     struct Option *opt2;
 
@@ -555,6 +559,10 @@ int syntax(int argc, char *argv[], char **input, char **output)
     flag2 = G_define_flag();
     flag2->key = 'c';
     flag2->description = "Output values as category labels";
+
+    flag3 = G_define_flag();
+    flag3->key = 'b';
+    flag3->description = "Output only area borders as vector lines";
 
     /* Define the different options */
     opt1 = G_define_option();
@@ -584,6 +592,7 @@ int syntax(int argc, char *argv[], char **input, char **output)
 
     smooth_flag = (flag1->answer) ? SMOOTH : NO_SMOOTH;
     value_flag = (flag2->answer) ?  CATLABEL : CATNUM;
+    output_flag = (flag3->answer) ? LINE : AREA;
 
     error_prefix = argv[0];
     return (0);

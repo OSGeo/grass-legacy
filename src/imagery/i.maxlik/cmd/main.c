@@ -93,9 +93,9 @@ int main(int argc,char *argv[])
 	    if (G_get_c_raster_row (cellfd[band], cell[band], row) < 0) /*fixed 11/99*/
 		exit(1);
 	classify(class_cell, reject_cell, ncols);
-	G_put_c_raster_row (class_fd, class_cell);
+	G_put_raster_row (class_fd, class_cell, CELL_TYPE);
 	if (reject_fd > 0)
-	    G_put_c_raster_row (reject_fd, reject_cell);
+	    G_put_raster_row (reject_fd, reject_cell, CELL_TYPE);
     }
     if (!flag.quiet->answer)
 	G_percent(row, nrows, 2);

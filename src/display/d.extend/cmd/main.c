@@ -12,7 +12,13 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.4  2001-02-13 02:22:03  eric
+ * Revision 1.5  2002-01-22 04:50:55  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.4.4.1  2002/01/13 14:39:29  andreas
+ * added check for no raster, vector or sites file displayed, as the region is not set correctly in that case
+ *
+ * Revision 1.4  2001/02/13 02:22:03  eric
  * Add check for the return value from R_open_driver().
  *
  * Revision 1.3  2001/01/12 08:16:06  justin
@@ -84,7 +90,10 @@ main (int argc, char **argv)
 	site = NULL;
 
     R_close_driver();
-                    
+
+    if (rast == NULL && vect == NULL && site == NULL)
+    	G_fatal_error("No raster, vector or sites file displayed");
+    	                    
 
     if (rast)
     {

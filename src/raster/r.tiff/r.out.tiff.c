@@ -60,12 +60,19 @@ main (int argc, char *argv[])
 	struct Flag *pflag, *vflag, *lflag, *tflag;
 	CELL *cell, *cellptr, *cells[MAX_TILE_LENGTH];
 	struct Cell_head cellhd;
+	struct GModule *module;
 	int col,verbose, tfw, palette, tiled;
 	char *mapset, *filename;
 	struct Colors colors;
 	int red, grn, blu, mapsize;
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Exports a GRASS raster file to a 8/24bit TIFF image file "
+	"at the pixel resolution of the currently defined region.";
 
 	inopt = G_define_option();
 	inopt->key             = "input";

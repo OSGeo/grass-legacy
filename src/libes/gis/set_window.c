@@ -26,9 +26,8 @@ int G_get_set_window (struct Cell_head *window)
 
 int G_set_window (struct Cell_head *window)
 {
-    int i, j;
+    int i;
     int maskfd;
-    char buf[400];
     char *err;
 
 /* adjust window, check for valid window */
@@ -126,6 +125,7 @@ int G_set_window (struct Cell_head *window)
 /* reallocate/enlarge the G__. buffers for reading raster maps */
     G__reallocate_null_buf();
     G__reallocate_mask_buf();
+    G__reallocate_temp_buf();
     G__reallocate_work_buf(sizeof(DCELL));
     G__reallocate_work_buf(XDR_DOUBLE_NBYTES);
     /* we want the number of bytes per cell to be maximum

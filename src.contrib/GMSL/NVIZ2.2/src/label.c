@@ -51,7 +51,7 @@ Nplace_label_cmd (
     return (TCL_ERROR);
   }
   
-  gs_set_font(font,bold,italic,atof(argv[5]));
+  gs_set_font(font,bold,italic,(float)atof(argv[5]));
   
   /* Print the label */
   gs_put_label(sx, sy, argv[3]);

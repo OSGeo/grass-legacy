@@ -226,7 +226,9 @@ int main( int argc, char *argv[])
     if (p == NULL) {		/* too bad to be stopped here */
 	p = strrchr( infile, '/');
 	if (p == (char *) NULL)
-	    p = infile;		/* we don't need complete path */
+	    p = infile;
+	else
+	    p++;		/* we don't need complete path */
 	strcpy( name, p);
 	p = strchr( name, '.');	/* strip .e00 at end of name */
 	if (p && p != name)

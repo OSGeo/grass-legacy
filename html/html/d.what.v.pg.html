@@ -27,7 +27,7 @@ DESCRIPTION</h2>
 <br>-s&nbsp;&nbsp; Use [-s] for SQL command file input.
 <br>-f&nbsp;&nbsp; Fill polygons?
 <p><b>Parameters:</b>
-<p><b>sql</b>&nbsp;
+<p><b>sql</b>
 <dd>
 Name of the SQL command file</dd>
 
@@ -67,14 +67,16 @@ Type of database output - [h/v]</dd>
 <dd>
 default: v</dd>
 
-<p><br><b>tab</b> is Postgres table containing column linked to vector
-attribute values, <b>col</b> - column associated with vector attribute
-values, <b>map</b> is name of an existing vector map with attribute values
-linked to the cur­ rently selected database.
+<br>&nbsp;
+<p>&nbsp;
+<p><b>tab</b> is Postgres table containing column linked to vector attribute
+values, <b>col</b> - column associated with vector attribute values, <b>map</b>
+is name of an existing vector map with attribute values linked to the cur­
+rently selected database.
 <p>Reports database attributes from the currently selected database which
 are associated with specific vector features identified using the mouse.
 The currently selected database is identified by the GRASS environment
-variable $PGDBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS
+variable $PG_DBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS
 interface tool. If this environment variable is not set the program terminates
 with a message to the user. If the alternate form of this command is selected
 with the <i>-s</i> flag the user has greater control over the manner in
@@ -84,11 +86,11 @@ it lists attributes and optionally fills queried areas (like v.area). It
 may be used for the UPDATE command in Postgres through the input SQL file
 (see Example 2). The idea is to prepare an arbitrary algorithm, code it
 in SQL, and then update DB with clicking on chosen polys/lines. You may
-consider this as piping anything you grabbed on screen through various
-filters.
+consider this as piping&nbsp; through various filters anything you select
+on screen.
 <p>The database information can be optionally output as comma-sepatated
-list (horizontal) which is convenient feeding it to other programs like
-table editors.
+list (horizontal) which is convenient for feeding it to other programs
+like table editors.
 <br>&nbsp;
 <p><b>EXAMPLE:</b>
 <p><b>1.</b><i> d.what.v.pg -s sql=census.sql map=census</i>
@@ -100,10 +102,11 @@ the mouse is clicked upon the vector object.
 <p>process.sql is:
 <p><i>update census_info set type_good = '1' where rec_id = ? and info_kuruma.type_id
 = 35 and info_kuruma.rec_id = rec_id;</i>
-<p><b>Result: </b>this would only change field of the census_info table
-for the clicked polygon or line,
-<br>if the corresponding type taken from info_kuruma table is equal to
-35.
+<p><b>Result: </b>this would only change field of the <i>census_info</i>
+table for the clicked polygon or line,
+<br>if the corresponding type taken from <i>info_kuruma</i> table is equal
+to 35 (the last limitation is a filter for any polygon/line picked from
+the map with mouse) .
 <p><b>Flags:</b> SQL select statements are input from a prepared file.
 <p><b>Parameters:</b> SQL statements specifying well formed selection criteria.
 Name of an existing vector map.

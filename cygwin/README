@@ -1,1 +1,41 @@
-winGRASS - Cygwin related stuff here.
+Batch files for winGRASS
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have a standard installation the files should work out of the box.
+Otherwise you will have to edit the paths in the file. 
+
+startxgrass.bat
+===============
+
+use this startup file for GRASS with Xfree86 for cygwin. 
+
+Please read the file for adaptions to your installation. 
+
+startxwingrass.bat
+==================
+
+use this startup file for GRASS with the StarNet XWin-32 Server. 
+
+Please read the file for adaptions to your installation. 
+
+
+Window Managers for XFree86/cywin:
+twm
+vtwm
+xfwm/xfce
+blackbox
+mwm (from lesstiff)
+
+
+what to configure:
+server to choose: XFree86/StarWin -> file
+window manager to choose
+screen resolution
+color depth
+cygwin paths
+localization
+os (NT/9x)
+xsetroot
+
+-- 
+$Id: README,v 1.2 2002-01-22 04:50:47 glynn Exp $

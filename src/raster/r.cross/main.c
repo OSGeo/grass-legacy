@@ -5,7 +5,7 @@
 #include "glob.h"
 #include "local_proto.h"
 
-static int cmp(RECLASS *,RECLASS *);
+static int cmp(const void *, const void *);
 
 int 
 main (int argc, char *argv[])
@@ -197,8 +197,9 @@ main (int argc, char *argv[])
     exit(0);
 }
 
-static int cmp(RECLASS *a,RECLASS *b)
+static int cmp(const void *aa, const void *bb)
 {
+    const RECLASS *a = aa, *b = bb;
     int i;
 
     for (i = 0; i < (nfiles + 2); i++)

@@ -1,0 +1,12 @@
+PGM=d.text.freetype
+OBJS = main.o
+EXTRA_CFLAGS=$(FTINC)
+
+LIBS=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(XDRLIB) $(FTLIB) $(ICONVLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #

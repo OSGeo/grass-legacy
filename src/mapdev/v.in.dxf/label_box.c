@@ -16,6 +16,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #include "dxf2vect.h"
@@ -202,10 +203,12 @@ dxf_readcode (FILE *dxf_file)
 	if (*p != ' ' && *p != '\t')
 	    ready = 1;
 	if (ready)
+	{
 	    if ('0' <= *p && *p <= '9')
 		return (atoi (buf));
 	    else
 		return (-1);	/* NOT NUMERIC */
+	}
     }
     return (-1);	/* NOT NUMERIC */
 }

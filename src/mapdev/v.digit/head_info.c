@@ -1,5 +1,6 @@
-/*  @(#)head_info.c	2.1  6/26/87  */
 /*
+** $Id$
+**
 **  Modified Dec 1990 Dave Gerdes
 **     to set up default window on new file 
 */
@@ -13,9 +14,18 @@
 int get_head_info(int have_old, struct dig_head *dhead)
 {
     struct Cell_head Window;
+    char *organization;
 
     if( ! have_old)
-	    strcpy(dhead->organization, "USDA Nat. Res. Cons. Serv.") ;
+    {
+	if (getenv("GRASS_ORGANIZATION"))    /* added MN 5/2001 */
+	{
+		organization=(char *)getenv("GRASS_ORGANIZATION");
+		sprintf(dhead->organization, "%s", organization);
+	}
+	else
+		strcpy(dhead->organization, "GRASS Development Team") ;
+    }
 
     V_clear() ;
     V_line(1,"Provide the following information:") ;
@@ -52,6 +62,7 @@ int get_head_info(int have_old, struct dig_head *dhead)
 	dhead->S = Window.south;
 	dhead->N = Window.north;
 	dhead->E = Window.east;
+	dhead->orig_scale = 1;  /* preset new map's scale */
 #ifdef NO_PORTABLE	/* added Aug 22, 1991  -dpg */
 	dhead->portable = 0;
 #else

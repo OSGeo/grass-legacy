@@ -130,8 +130,8 @@ Nis_masked_cmd (
     return (TCL_ERROR);
   id = get_idnum(argv[1]);
   type = get_type (argv[1]);
-  pt[0] = atof (argv[2]);
-  pt[1] = atof (argv[3]);
+  pt[0] = (float)atof (argv[2]);
+  pt[1] = (float)atof (argv[3]);
   
   GS_is_masked(id, pt)? sprintf (masked, "1"): sprintf (masked, "0");
   Tcl_SetResult (interp, masked, TCL_VOLATILE);
@@ -221,12 +221,13 @@ Ndraw_X_cmd (
 {
   int id;
   float pt[2];
+  double atof();
   
   if (argc != 4)
     return (TCL_ERROR);
   id = get_idnum(argv[1]);
-  pt[0] = atof(argv[2]);
-  pt[1] = atof(argv[3]);
+  pt[0] = (float)atof(argv[2]);
+  pt[1] = (float)atof(argv[3]);
   GS_draw_X(id, pt);
 
   return (TCL_OK);
@@ -243,15 +244,15 @@ Ndraw_line_on_surf_cmd (
 {
   int id;
   float x1, y1, x2, y2;
-  
+  double atof();
   
   if (argc != 6)
     return (TCL_ERROR);
   id = get_idnum(argv[1]);
-  x1 = atof(argv[2]);
-  y1 = atof(argv[3]);
-  x2 = atof(argv[4]);
-  y2 = atof(argv[5]);
+  x1 = (float)atof(argv[2]);
+  y1 = (float)atof(argv[3]);
+  x2 = (float)atof(argv[4]);
+  y2 = (float)atof(argv[5]);
   
   GS_draw_line_onsurf(id, x1, y1, x2, y2);
   
@@ -279,11 +280,26 @@ Nsurf_draw_one_cmd (
     char **argv                        /* Argument strings. */
 )
 {
+float x, y, z;
+int num, w;
+
+/* Get position for Light 1 */
+num = 1;
+x = data->light[num].x;
+y = data->light[num].y;
+z = data->light[num].z;
+w = data->light[num].z;
+
 
   if (argc != 2) {
     Tcl_SetResult(interp,"Usage: Nsurf_draw_one surf_id", TCL_VOLATILE);
     return (TCL_ERROR);
   }
+
+/* re-initialize lights */
+GS_setlight_position(num, x, y, z, w);
+num = 2;
+GS_setlight_position(num, 0., 0., 1., 0);
 
   if (atoi(argv[1])) {
     GS_set_cancel(0);
@@ -398,10 +414,18 @@ Ndraw_all_cmd (
     char **argv                        /* Argument strings. */
 )
 {
+char *buf_surf, *buf_vect, *buf_site;
+
+buf_surf = Tcl_GetVar (interp, "surface", TCL_GLOBAL_ONLY);
+buf_vect = Tcl_GetVar (interp, "vector", TCL_GLOBAL_ONLY);
+buf_site = Tcl_GetVar (interp, "sites", TCL_GLOBAL_ONLY);
 
 if(GS_check_cancel) { /* Probably irrelevant */
+if (atoi(buf_surf) == 1)
 Nsurf_draw_all_cmd(data, interp, argc, argv);
+if (atoi(buf_vect) == 1)
 Nvect_draw_all_cmd(data, interp, argc, argv);
+if (atoi(buf_site) == 1)
 Nsite_draw_all_cmd(data, interp, argc, argv);
 }
 return (TCL_OK);
@@ -461,6 +485,15 @@ surf_draw_all (Nv_data *dc, Tcl_Interp *interp)
   int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
   int doclear;
   int *surf_list;
+  float x, y, z;
+  int num, w;
+
+/* Get position for Light 1 */
+num = 1;
+x = dc->light[num].x;
+y = dc->light[num].y;
+z = dc->light[num].z;
+w = dc->light[num].z;
 
   doclear = atoi (Tcl_GetVar (interp, "autoc", TCL_LEAVE_ERR_MSG));
 #ifdef INDY
@@ -480,7 +513,12 @@ surf_draw_all (Nv_data *dc, Tcl_Interp *interp)
     GS_clear(dc->BGcolor);
   
   GS_ready_draw();
-  
+
+/* re-initialize lights */
+GS_setlight_position(num, x, y, z, w);
+num = 2;
+GS_setlight_position(num, 0., 0., 1., 0); 
+ 
   for(i=0; i<nsurfs; i++){
     if (check_blank(interp,sortSurfs[i]) == 0) {
       GS_draw_surf(sortSurfs[i]);

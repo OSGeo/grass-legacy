@@ -37,13 +37,17 @@
 /* functions.                                                      */
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
+int vertRegister( BTREE *, partDescript *, int);
+
 void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 		   fieldDescript *cat1, BTREE *hBank, int *fcount ) {                        
 
   /* Local */
-  int numFields, numPolygons, numRecs0;
-  int nums0, newRecsCount;
-  int ltype;
+
+  int numFields, numRecs0;
+/*  int numFields, numPolygons, numRecs0;
+  int nums0, newRecsCount;*/
+  int ltype=0;
 
   int i0, j0, j1, k0, k1;
   int i2, j2, k2;
@@ -123,7 +127,7 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	/* Declare local variables */
 
 	int k1;
-	int n1;
+/*	int n1;*/
 
 	/* Assemble rings from shape parts */
 
@@ -535,7 +539,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
   /* Local variables declared here */
   
-  int i0, j0;
+  int i0;
 
   /* Maximum, minimum an co-ordinate values */
   double Xmin, Xmax, Xnow, Ymin, Ymax, Ynow;
@@ -552,7 +556,8 @@ void partCalcFieldsPolygon( partDescript *partd ) {
   */
 
   /* Temp variables for calculation of partial or sector angles */
-  double theta, theta_old, phi, psi, delta;
+/*  double theta, theta_old, phi, psi, delta;*/
+double theta, theta_old, delta;
 
   /* This flags us to check if a partial intersect is actually
      comleted when the previous point was within SNAP_RADIUS
@@ -566,13 +571,13 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 		       centroid  */
 
   /* How many intersects? */
-  int nIntersects;
+  int nIntersects=0;
 
   /* Parameters of linear eqn for interpolating intersects */
   double alpha, beta;
 
   /* Loop variable to cumulate partial circulations */
-  double totalCirc;
+  double totalCirc=0;
 
   /* Temporary holding values for position of intersects of ring and 
      horizon.
@@ -847,7 +852,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 void partCalcFieldsArc( partDescript *partd ) {
   
   /* Local variables */
-  int i0, j0, indx;
+  int i0,indx;
 
   /* Maximum, minimum an co-ordinate values */
   double Xmin, Xmax, Xnow, Ymin, Ymax, Ynow;
@@ -1032,7 +1037,7 @@ void locateNewCentroid( double *xpos1, double *xpos2,
   double tmpIsect;
 
   /* Index in sorted array of a principal index */
-  int isectPosn;
+ /* int isectPosn;*/
   
   /* Create array of x-coordinates */
   double xIsects[nIsects];
@@ -1119,7 +1124,7 @@ int isIslandOf( partDescript *part1, partDescript *part2 ) {
 
   double pvx, pvx_old, pvy, pvy_old;
 
-  double circulation, theta, theta_old, delta;
+  double circulation=0, theta, theta_old, delta;
 
   int notSure = 1; /* Is the circulation as yet undetermined? */
 
@@ -1260,7 +1265,7 @@ int pntInside( partDescript *part1, partDescript *part2, double *maxIsect ) {
 void recalcCentroid( partDescript *part1, double intsect ) {
   
 
-  pntDescript *tmpPnt;
+  /*pntDescript *tmpPnt;*/
 
   int i0; /* loop variables */
 

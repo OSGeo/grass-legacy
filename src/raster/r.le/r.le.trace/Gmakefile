@@ -1,0 +1,10 @@
+PGM = r.le.trace
+
+OFILES = main.o user_input.o
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(VASKLIB) $(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

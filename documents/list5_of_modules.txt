@@ -34,7 +34,7 @@
 #
 # Please send updates and comments to
 # Markus Neteler
-# neteler@geog.uni-hannover.de
+# neteler@itc.it
 #
 +  d.3d
 +  d.area

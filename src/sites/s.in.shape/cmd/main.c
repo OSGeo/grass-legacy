@@ -194,9 +194,31 @@ int main( int argc, char *argv[] ) {
     for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
       {
 	char	field_name[15];
+	int   field_width;
+	char  *fld;
+	DBFFieldType ftype=0;
+	
+	ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
+		
+	switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
 
 	DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-	fprintf (stdout, "%s\n", field_name );
+	fprintf (stdout, "%i: %s [%s:%i]\n", (i+1), field_name, fld , field_width);
+
       }
         
     DBFClose( hDBF );
@@ -360,6 +382,15 @@ int main( int argc, char *argv[] ) {
 
   G_site_put_head( fSite, hHead );
 
+  /* Initialise a site structure */
+  if( isatt == 0 || isfp == 0 ) {
+    if( (hSite = G_site_new_struct( CELL_TYPE, hasz + 2, nString, nNumeric )) == NULL )
+    G_fatal_error( "Unable to create site structure - Aborting." );
+  }
+  else {
+    if( (hSite = G_site_new_struct( FCELL_TYPE, hasz + 2, nString, nNumeric )) == NULL )
+    G_fatal_error( "Unable to create site structure - Aborting." );
+  }
 
   /* Now loop through all these records and write a site record for each */
 
@@ -367,16 +398,6 @@ int main( int argc, char *argv[] ) {
 
     sFieldCount = 0;
     fFieldCount = 0;
-
-    /* Initialise a site structure */
-    if( isatt == 0 || isfp == 0 ) {
-      if( (hSite = G_site_new_struct( CELL_TYPE, hasz + 2, nString, nNumeric )) == NULL )
-	G_fatal_error( "Unable to create site structure - Aborting." );
-    }
-    else {
-      if( (hSite = G_site_new_struct( FCELL_TYPE, hasz + 2, nString, nNumeric )) == NULL )
-	G_fatal_error( "Unable to create site structure - Aborting." );
-    }
 
     /* Write easting and northing first */
     hSite->east = fdd[0].fldRecs[i].doubleField;
@@ -428,11 +449,12 @@ int main( int argc, char *argv[] ) {
     G_site_put( fSite, hSite );
 
 
-    /* Dispose site structure */
-
-    G_site_free_struct( hSite );
   }
 
+  /* Dispose site structure */
+
+  G_site_free_struct( hSite );
+  
   /* Close the sites list file */
 
   fclose(fSite);

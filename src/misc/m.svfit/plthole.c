@@ -69,7 +69,7 @@ int plot_hole_effect (list, parameters, nwork, verbose, save)
   fclose (tmp_file);		/* very important */
 
   strcat (buf, sbuf);
-  sprintf (buf, "%s %s ", PLOTPROG, tmp_file_name);
+  sprintf (buf, "%s %s ", plot_program, tmp_file_name);
   G_system (buf);
 
   /* get rid of the previous temporary files */

@@ -1,5 +1,9 @@
+
+#include <stdlib.h>
+
 #include "gis.h"
 #include "mapcalc.h"
+#include "config.h"
 
 /* Author: Michael Shapiro. 16 feb 1993 / update 12/99 on __CYGWIN__
  * NOTE:
@@ -9,10 +13,8 @@
  * g_randseed(): it does nothing at present
  */
 
-#if defined(__CYGWIN__) || defined(__APPLE__)
-#define drand48() rand()/32767.0
-#else
-extern double drand48();
+#if !defined(HAVE_DRAND48)
+#define drand48() ((double)rand()/RAND_MAX)
 #endif
 
 int 

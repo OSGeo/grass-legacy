@@ -972,9 +972,9 @@ int set_trans(Tcl_Interp *interp, int id, int type, int argc, char *argv[])
 {
   float x, y, z;
   
-  x = atof (argv[2]);
-  y = atof (argv[3]);
-  z = atof (argv[4]);
+  x = (float)atof (argv[2]);
+  y = (float)atof (argv[3]);
+  z = (float)atof (argv[4]);
   
   switch (type)
     {
@@ -1180,6 +1180,7 @@ int surf_is_selected (int id, int type, Tcl_Interp *interp, int argc, char *argv
 int set_exag_obj(int id, int type, int argc, char *argv[], Tcl_Interp *interp)
 {
   float exag;
+  double atof();
   
   if (type != SURF && type != VOL) {
     Tcl_SetResult(interp, 
@@ -1193,7 +1194,7 @@ int set_exag_obj(int id, int type, int argc, char *argv[], Tcl_Interp *interp)
     return (TCL_ERROR);
   }
 
-  exag = atof (argv[2]);
+  exag = (float)atof (argv[2]);
   if(type == SURF)
       GS_set_exag(id, exag);
   else
@@ -1401,6 +1402,7 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
   int index;
   float temp2, size;
   float temp;
+  double atof();
   int col;
   char	errStr[255];
 
@@ -1424,7 +1426,7 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
       /* Get the value for the constant
        * Note that we require the constant to be an integer
        */
-      temp=atof(argv[4]);
+      temp=(float)atof(argv[4]);
       
       /* Only special case is setting constant color.
        * In this case we have to decode the constant Tcl

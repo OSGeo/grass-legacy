@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_create_table (driver, table)
+int db_create_table (driver, table)
     dbDriver *driver;
     dbTable *table;
 {

@@ -19,10 +19,10 @@ Waco, Texas  76798-7351
 
 General Email:            grass@baylor.edu
 
-Contributions to GRASS 5: neteler@geog.uni-hannover.de
+Contributions to GRASS 5: neteler@itc.it
 
-Internet:  http://grass.baylor.edu/
-           http://www.geog.uni-hannover.de/grass/
+Internet:  http://www.baylor.edu/grass/
+           http://grass.itc.it
            http://www2.gis.uiuc.edu:2280/modviz/
 
 GRASS Development Team 2001
@@ -36,10 +36,10 @@ instructions.
 -------------------------------------------------------
 GRASS 5 Programmer's Manual:
 
-http://www.geog.uni-hannover.de/grass/contrib.html
+http://grass.itc.it/grassdevel.html
 
 Or LaTeX sources from CVS server
-(http://www.geog.uni-hannover.de/grass/grasscvs.html)
+(http://grass.itc.it/grasscvs.html)
 
 cvs -z3 co progmangrass50
 

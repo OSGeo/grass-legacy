@@ -44,26 +44,15 @@ int IL_vector_input_data_2d (
 
 {
   double  dmax2;	/* max distance between points squared*/
-  struct triple *point;
-  double east, north, value, x, y, z;
-  char *desc;
   double c1, c2, c3, c4;
   int k = 0;
-  double deltx, delty;
-  int a;
-  char *buf[1024];
-  int i, j;
-  int first_time = 1;
   double ns_res, ew_res;
-  int npoint, OUTRANGE, NPT;
+  int npoint, OUTRANGE;
   int totsegm;
   struct quaddata *data = (struct quaddata *) info->root->data;
-  struct TimeStamp ts;
-  int type;
-  register int i1, tmp;
+  register int i1;
   double *xptr, *yptr, xprev, yprev, x1, y1, d1, xt, yt;
   static struct line_pnts *Points;
-  char buf1[100], buf2[100];
   char *p;
   int att, n_points1, times, j1, k1, ind1, ind2;
   int prev = 0;
@@ -231,10 +220,11 @@ int IL_vector_input_data_2d (
   if (npoint < params->KMAX2 && params->kmax != params->KMAX2)
     fprintf (stderr, "Warning : there is less than %d points for interpolation, no segmentation is necessary, to run the program faster, set segmax=%d (see manual)\n", params->KMAX2, params->KMAX2);
 
-  fprintf (stderr, "\n");
-  fprintf (stderr, "The number of points from vector file is %d\n", k);
-  fprintf (stderr, "The number of points outside of region %d\n", OUTRANGE);
-  fprintf (stderr, "The number of points being used is %d\n", npoint);
+  fprintf (stdout, "\n");
+  fprintf (stdout, "The number of points from vector file is %d\n", k);
+  fprintf (stdout, "The number of points outside of region %d\n", OUTRANGE);
+  fprintf (stdout, "The number of points being used is %d\n", npoint);
+  fflush(stdout);
   *n_points = npoint;
   return (totsegm);
 }
@@ -259,15 +249,9 @@ int process_point (
 
 {
   struct triple *point;
-  double east, north, value;
   double c1, c2, c3, c4;
-  int k = 0;
-  double deltx, delty;
   int a;
-  char *buf[1024];
-  int i, j;
   static int first_time = 1;
-  double ns_res, ew_res;
   struct quaddata *data = (struct quaddata *) info->root->data;
 
 

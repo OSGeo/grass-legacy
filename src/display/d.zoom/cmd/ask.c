@@ -54,16 +54,3 @@ ask (char *text[])
 	0,0,3,text));
 }
 
-int 
-ask_rotate (void)
-{
-    char *text[4];
-
-    text[0] = "Select the type of \"zoom\"";
-    text[1] = "Zoom using a rubberband box";
-    text[2] = "Rotate the world by selecting center longitude";
-    text[3] = (char *) NULL;
-
-    return (2==ask(text));
-}
-

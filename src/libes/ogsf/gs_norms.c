@@ -46,7 +46,9 @@ static float c_z2, c_z2_sq;
 static typbuff *elbuf;
 static unsigned long *norm;
 
+/*
 #define USE_GL_NORMALIZE
+*/
 
 /* for optimization */
 void init_vars(geosurf *gs)

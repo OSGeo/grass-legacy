@@ -29,7 +29,6 @@ LIST=main.o\
 	points.o\
 	target.o\
 	title.o\
-	tty.o\
 	view.o\
 	where.o\
 	zoom.o\

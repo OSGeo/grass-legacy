@@ -757,10 +757,14 @@ G_get_raster_row_nomask (int fd, void *rast, int row, RASTER_MAP_TYPE data_type)
 
   if(FCB.reclass_flag) 
   {
-     stat = G_get_c_raster_row_nomask(fd, G__.mask_buf, row);
+     int size = G_raster_size(data_type);
+     stat = G_get_c_raster_row_nomask(fd, G__.temp_buf, row);
      if(stat<0) return stat;
      for(i=0; i<WINDOW.cols; i++)
-	G_set_raster_value_c(rast, G__.mask_buf[i], data_type);
+     {
+	G_set_raster_value_c(rast, G__.temp_buf[i], data_type);
+	rast = G_incr_void_ptr(rast, size);
+     }
      /* nulls are already embedded */
      return stat;
   }
@@ -841,10 +845,14 @@ G_get_raster_row (int fd, void *rast, int row, RASTER_MAP_TYPE data_type)
 
   if(FCB.reclass_flag) 
   {
-     stat = G_get_c_raster_row(fd, G__.mask_buf, row);
+     int size = G_raster_size(data_type);
+     stat = G_get_c_raster_row(fd, G__.temp_buf, row);
      if(stat<0) return stat;
      for(i=0; i<WINDOW.cols; i++)
-	G_set_raster_value_c(rast, G__.mask_buf[i], data_type);
+     {
+	G_set_raster_value_c(rast, G__.temp_buf[i], data_type);
+	rast = G_incr_void_ptr(rast, size);
+     }
      /* nulls are already embedded */
      return stat;
   }
@@ -1068,7 +1076,6 @@ G__read_null_bits (int null_fd, unsigned char *flags, int row, int cols, int fd)
 {
    long offset;
    int size, R;
-   char msg[200];
 
    if (compute_window_row (fd, row, &R) <= 0) 
    {

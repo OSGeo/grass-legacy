@@ -111,7 +111,7 @@
                  }
 	      }
 
-	   G_put_map_row(temp_grid_map->fd,temp_grid_map->rbuf);
+	   G_put_raster_row(temp_grid_map->fd,temp_grid_map->rbuf, CELL_TYPE);
 	   }
 
 

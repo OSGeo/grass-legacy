@@ -62,7 +62,6 @@ int main (int argc, char *argv[])
     flag.reverse->key = 'r';
     flag.reverse->description = "Coordinates are reversed: north east";
 
-    if (!isatty(0)) G_disable_interactive();
     if (G_parser(argc, argv))
 	    exit(1);
 

@@ -1,5 +1,6 @@
 
 #include     <stdio.h>
+#include     <stdlib.h>
 #include     <signal.h>
 #include     "sdts_in.h"
 #include     "gis.h"

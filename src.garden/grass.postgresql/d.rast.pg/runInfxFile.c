@@ -1,12 +1,14 @@
-//-----------A.Sh. - 22.12.99
+/*-----------A.Sh. - 22.12.99*/
 
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "gis.h"
 #include <stdio.h>
 #include <libpq-fe.h>
 #include "dbrast.h"
 
-runInfxFile(SQL_stmt, input,output, withlabel)
+int runInfxFile(SQL_stmt, input,output, withlabel)
   char *SQL_stmt, *input, *output;
   int withlabel;
   {

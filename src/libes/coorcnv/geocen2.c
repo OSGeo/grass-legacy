@@ -36,8 +36,10 @@
  **********************************************************************/
 
 #include <math.h>
+#include <string.h>
+#include <stdio.h>
 #include "CC.h"
-#include "cc.h"
+#include "cc.h" /* WOOO: this confuses WINDOWS !! */
 
 static double dabs(double);
 
@@ -88,7 +90,7 @@ CC_geo2lld(double a, double e2, double x, double y, double z, double *lat, doubl
 {
   if (CC_geo2ll(a, e2, x, y, z, lat, lon, h, 100, 1e-11) == 0)
     if (CC_geo2ll(a, e2, x, y, z, lat, lon, h, 500, 1e-11) == 0) {
-      printf("error in geo2ll\n");
+      fprintf(stderr, "error in geo2ll\n");
       return 0;
     }
   

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "Vect.h"
@@ -13,7 +14,7 @@ main (int argc, char *argv[])
     char *title;
     char buf[1024];
     RULE *rules, *tail;
-    int i,dissolve=0,max_att;
+    int dissolve=0,max_att;
     int any;
     char *old_name, *old_mapset;
     char *new_name;
@@ -96,6 +97,12 @@ main (int argc, char *argv[])
     G_set_cat(0, buf, &cats);
     rules = tail = NULL;
     any = 0;
+
+    if(isatty(0))
+    {
+	  fprintf (stdout,"\nEnter the rule or 'help' for the format description, 'end' to end:\n");
+    }
+
 
     while (input(buf))
     {

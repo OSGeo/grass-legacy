@@ -1,5 +1,6 @@
 /*  @(#)a_b_dlg.c	2.1  6/26/87  */
 #include <stdio.h>
+#include <stdlib.h>
 #define COOR_MAX		5000
 #define MAXLINE		90
 #define CHAR_NULL	'\0'
@@ -257,9 +258,6 @@ scan_node_record (str, num, x, y, n_lines, n_atts)
     char  char_y[13] ;
     char  char_lines[7] ;
     char  char_atts[7] ;
-
-    int  atoi() ;
-    double  atof() ;
 
 
     sscanf(str, "%*1c%5c%12c%12c%*6c%6c%*6c%6c",

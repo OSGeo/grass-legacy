@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "gis.h"
@@ -58,7 +59,7 @@ buf[i] = (char)NULL;
 if ( buf[8] != 'E' ){
 /*fprintf(stderr,"getres buf[8]!=E");
 	fprintf(stderr,"Unknown format %c %s\n",buf[20],buf);
-	exit();
+	exit(1);
 */
 	sscanf(buf,"%lf",x);
 	}
@@ -79,7 +80,7 @@ buf[i] = (char)NULL;
 if ( buf[8] != 'E' ){
 /*fprintf(stderr,"getres2 buf[8]!=E");
 	fprintf(stderr,"Unknown format %c %s\n",buf[20],buf);
-	exit();
+	exit(1);
 */
 	sscanf(buf,"%lf",y);
 	}
@@ -108,7 +109,7 @@ buf[i] = (char)NULL;
 if ( buf[20] != 'D' ){
 /*fprintf(stderr,"getcord buf[20]!=D");
 	fprintf(stderr,"Unknown format %c %s\n",buf[20],buf);
-	exit();
+	exit(1);
 */
 	sscanf(buf,"%lf",x);
 	}
@@ -129,7 +130,7 @@ buf[i] = (char)NULL;
 if ( buf[20] != 'D' ){
 /*fprintf(stderr,"getcord2");
 	fprintf(stderr,"Unknown format %c %s\n",buf[20],buf);
-	exit();
+	exit(1);
 */
 	sscanf(buf,"%lf",y);
 	}
@@ -178,7 +179,7 @@ head = G_malloc(HD_SIZE+10);
 bytecount = 4;
 if ((n=fread(head,1,HD_SIZE,fp)) != HD_SIZE) {
 	fprintf(stderr,"can't read data %d\n",n);
-	exit();
+	exit(1);
 	}
 
 cptr = head;
@@ -197,7 +198,7 @@ buf[i] = (char)NULL;
 order = atoi(buf);
 if (order != 2) {
 	fprintf(stderr,"Order is %s\n",buf);
-	exit();
+	exit(1);
 	}
 
 /********* Get rows and columns *************/
@@ -223,8 +224,9 @@ for (i=0;i<I3;i++) {
 buf[i] = (char)NULL;
 bands = atoi(buf);
 if (bands != 1){
-	fprintf(stderr,"There are %d bands in this image.\n This routine presently handles on one\n");
-	exit();
+	fprintf(stderr,"There are %d bands in this image.\n"
+		" This routine presently handles on one\n",bands);
+	exit(1);
 	}
 
 
@@ -276,13 +278,13 @@ getcord(cptr,&sep.x,&sep.y);
 i = cellhd->cols - HD_SIZE;
 if (fread(r_buf,1,i,fp) != i) {
 	fprintf(stderr,"can't read data2\n");
-	exit();
+	exit(1);
 	}
 
 /******************* Read secondary cordinate values ***********/
 if (fread(head,1,HD_SIZE,fp) != HD_SIZE){
 	fprintf(stderr,"can't read data4\n");
-	exit();
+	exit(1);
 	}
 cptr = head + 192;
 getcord(cptr,&sws.x,&sws.y);
@@ -298,7 +300,7 @@ getcord(cptr,&ses.x,&ses.y);
 i = cellhd->cols - HD_SIZE;
 if (fread(r_buf,1,i,fp) != i) {
 	fprintf(stderr,"can't read data2\n");
-	exit();
+	exit(1);
 	}
 
  
@@ -306,7 +308,7 @@ if (fread(r_buf,1,i,fp) != i) {
 /*********** Read header on third record ***************/
 if (fread(head,1,HD_SIZE,fp) != HD_SIZE){
 	fprintf(stderr,"can't read data4\n");
-	exit();
+	exit(1);
 	}
 /************* Get internal coord SW and NE *************/
  
@@ -347,13 +349,13 @@ getcord(cptr,&s.x,&s.y);
 i = cellhd->cols - HD_SIZE;
 if (fread(r_buf,1,i,fp) != i) {
 	fprintf(stderr,"can't read data2\n");
-	exit();
+	exit(1);
 	}
 
 /*********** Read header on fourth record ***************/
 if (fread(head,1,HD_SIZE,fp) != HD_SIZE){
 	fprintf(stderr,"can't read data4\n");
-	exit();
+	exit(1);
 	}
 
 
@@ -437,7 +439,7 @@ else {
 i = cellhd->cols - HD_SIZE;
 if (fread(r_buf,1,i,fp) != i) {
 	fprintf(stderr,"can't read data2\n");
-	exit();
+	exit(1);
 	}
 
 return(1);

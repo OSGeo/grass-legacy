@@ -1,20 +1,19 @@
 #include "what.h"
 #include "gis.h"
 #include "display.h"
+#include "raster.h"
 #include "Vect.h"
 
-getCat (Map, Cats,colr,fillcolr,fill)
+int getCat (Map, Cats,colr,fillcolr,fill)
 
   struct Map_info *Map;
   struct Categories *Cats;
   int colr,fillcolr, fill;
 
 {
-    int width, mwidth;
     int i;
     int row, col;
     int nrows, ncols;
-    CELL *buf;
     struct Cell_head window;
     int screen_x, screen_y ;
     double east, north ;
@@ -23,20 +22,16 @@ getCat (Map, Cats,colr,fillcolr,fill)
     double D_get_d_east(), D_get_d_west() ;
     double D_d_to_u_row(), D_d_to_u_col() ;
 
-    P_LINE *Line;
-    P_AREA *Area;
     plus_t line, area;
     
     struct line_pnts *Points;
     int np,ret;
     double *x,*y;
     
-    int a_line;
-    int nlines;
+
     int x_screen[4096], y_screen[4096];
 
     
-    double N, S, E, W;
     
     	
 
@@ -86,13 +81,13 @@ getCat (Map, Cats,colr,fillcolr,fill)
 
         if ( (line > 0 ) && (area == 0) && (button != 3)) { 
 	
-	  if(dbCat = V2_line_att(Map,line)){		
+	  if((dbCat = V2_line_att(Map,line))){		
 	 	Points = Vect_new_line_struct();	
 		if (0 > (ret = V2_read_line (Map, Points, line)))
 		{
 	    		if (ret == -2)
 				G_warning ("Read error\n");
-	    		return;
+	    		return(-1);
 		}
 		np = Points->n_points;
 	   	x  = Points->x;
@@ -112,7 +107,7 @@ getCat (Map, Cats,colr,fillcolr,fill)
 	} 
 	else if ( (area > 0) && (button != 3) ) {
        
-	 if(dbCat= V2_area_att(Map, area)) {
+	 if((dbCat= V2_area_att(Map, area))) {
 	
 		Points = Vect_new_line_struct();
 		Vect_get_area_points(Map, area, Points);		
@@ -136,13 +131,13 @@ getCat (Map, Cats,colr,fillcolr,fill)
 	  fprintf(stderr,"Area category not found\n");
 	  	
 		if ( (line > 0) && (button != 3) ) {
-			if(dbCat = V2_line_att(Map,line)){		
+			if ((dbCat = V2_line_att(Map,line))){		
 	 			Points = Vect_new_line_struct();	
 				if (0 > (ret = V2_read_line (Map, Points, line)))
 				{
 	    				if (ret == -2)
 						G_warning ("Read error\n");
-	    				return;
+	    				return(-1);
 				}
 				np = Points->n_points;
 	   			x  = Points->x;

@@ -1,7 +1,8 @@
+EXTRA_CFLAGS = -I../lib
+
 GRAPH = 
 
 OFILES =  \
-	connect.o\
 	bresline.o\
 	file_io.o\
 	polyfill.o\
@@ -15,8 +16,7 @@ OFILES =  \
 	Graph_Set.o\
 	Panel.o\
 	Polygn_abs.o\
-	Reset_clr.o \
-	Returns.o
+	Reset_clr.o
 
 LIBES=$(DRIVERLIB) $(GISLIB) $(GRAPH)
 

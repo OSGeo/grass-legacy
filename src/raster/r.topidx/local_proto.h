@@ -5,8 +5,8 @@
 #define	cv(i,j)		cell[i][j]
 #define	av(i,j)		a[i][j]
 #define	atbv(i,j)	atb[i][j]
-#define	IScvNULL(i,j)	G_is_f_null_value(&cv(i,j))
-#define	ISatbvNULL(i,j)	G_is_f_null_value(&atbv(i,j))
+#define	IScvNULL(i,j)	G_is_d_null_value(&cv(i,j))
+#define	ISatbvNULL(i,j)	G_is_d_null_value(&atbv(i,j))
 
 #define	ZERO		0.0000001
 
@@ -27,8 +27,6 @@ void	atanb(void);
 GLOBAL	char	*mapset,*iname,*oname;
 GLOBAL	char	overwr, verbose;
 GLOBAL	struct	Cell_head	cellhd;
-GLOBAL	CELL	*ccell;
-GLOBAL	FCELL	**cell;
-GLOBAL	FCELL	**atb,**a;
-GLOBAL	int	natb,nsink;
+GLOBAL	DCELL	**cell;
+GLOBAL	DCELL	**atb,**a;
 

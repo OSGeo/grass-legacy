@@ -9,9 +9,7 @@
  *  compiled with one size in libpng and another size here).  */
 
 #include "png.h"
-#include "pnm.h"
-#include "zlib.h"
-#include "setjmp.h"
+#include <setjmp.h>
 
 #ifndef TRUE
 #  define TRUE 1
@@ -23,8 +21,18 @@
 #  define NONE 0
 #endif
 
+typedef unsigned long pixel;
+typedef pixel xel;
+
+#define PBM_TYPE 1
+#define PGM_TYPE 2
+#define PPM_TYPE 3
+
+#define PGM_MAXMAXVAL 255
+#define PPM_MAXMAXVAL PGM_MAXMAXVAL
+
 /* function prototypes */
-#ifdef __STDC__
+
 static png_uint_16 _get_png_val (png_byte **pp, int bit_depth);
 static void store_pixel (xel *pix, png_uint_16 r, png_uint_16 g, png_uint_16 b,
                          png_uint_16 a);
@@ -33,7 +41,6 @@ static void save_text (png_info *info_ptr, FILE *tfp);
 static void show_time (png_info *info_ptr);
 static void pngtopnm_error_handler (png_structp png_ptr, png_const_charp msg);
 int main (int argc, char *argv[]);
-#endif
 
 typedef struct _jmpbuf_wrapper {
   jmp_buf jmpbuf;

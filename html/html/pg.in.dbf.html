@@ -1,64 +1,74 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<A NAME="pg.in.dbf">
-<TITLE>pg.in.dbf</TITLE>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>pg.in.dbf</title>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
-
-<img src="grass.smlogo.gif">
-
+<a NAME="pg.in.dbf"></a><img SRC="grass.smlogo.gif" >
 <hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>pg.in.dbf</i></b> - Imports a dBase table into PostgreSQL. (GRASS-RDBMS
+Interface import Program)
+<h2>
+SYNOPSIS</h2>
+<b>pg.in.dbf</b>
+<br><b>pg.in.dbf help</b>
+<br><b>pg.in.dbf input</b><i>=name</i> [<b>dumpmode</b><i>=name</i>]
+<h2>
+DESCRIPTION</h2>
+<i>pg.in.dbf</i> imports a dBase database table into PostgreSQL for later
+use with GRASS-RDBMS modules.
+<p>You can also choose to dump data from the dbf file into text format
+file for further use. In such case,
+<br>you should type in the full Unix path to the new text file location
+when prompted.
+<p>The program can run in two modes: 'admin' is when the GRASS user has
+a superuser account in Postgres,
+<br>'normal'&nbsp; - when the Postgres user is normal (not administrator).
+You should choose the mode adequately.
+<br>In the latter case, large files can take much time to import (as each
+line would be inserted separately).
+<h2>
+COMMAND LINE OPTIONS</h2>
 
-<H2>NAME</H2>
-<EM><B>pg.in.dbf</B></EM> - Imports a dBase table into PostgreSQL. (GRASS-RDBMS Interface import Program)
+<h3>
+Parameters:</h3>
 
-<H2>SYNOPSIS</H2>
-<B>pg.in.dbf</B><BR>
-<B>pg.in.dbf help</B><BR>
-<B>pg.in.dbf input</B><EM>=name</EM> [<B>dumpmode</B><EM>=name</EM>]
+<dl>
+<dt>
+<b>input=name</b></dt>
 
+<dd>
+Name of .dbf file to be imported (example: 'simple.dbf'</dd>
 
-<H2>DESCRIPTION</H2>
-<EM>pg.in.dbf</EM> imports a dBase database table into PostgreSQL for 
-later use with GRASS-RDBMS modules.
+<dt>
+<b>dumpmode=name</b></dt>
 
-<H2>COMMAND LINE OPTIONS</H2>
+<dd>
+Admin/normal user dump mode (Default = Postgres super-user)</dd>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>input=name</B>
-<DD>Name of .dbf file to be imported
-<P>
+<br>&nbsp;
+<p>&nbsp;</dl>
 
-<DT><B>dumpmode=name</B>
-<DD>Admin/normal user dump mode (Default = Postgres super-user)
-<P>
-</DL>
-<P>
-<P>
-
-<H2>BUGS</H2>
+<h2>
+BUGS</h2>
 None known.
-
-<H2>NOTE</H2>
+<h2>
+NOTE</h2>
 This program requires the Postgres database software.
-
-<H2>SEE ALSO</H2>
-<EM>
-<A HREF="g.column.pg.html">g.column.pg</A>, 
-<A HREF="g.select.pg.html">g.select.pg</A>, 
-<A HREF="g.stats.pg.html">g.stats.pg</A>, 
-<A HREF="g.table.pg.html">g.table.pg</A>, 
-<A HREF="d.site.pg.html">d.site.pg</A>, 
-<A HREF="d.vect.pg.html">d.vect.pg</A>, 
-<A HREF="d.what.r.pg.html">d.what.r.pg</A>, 
-<A HREF="d.what.s.pg.html">d.what.s.pg</A>, 
-<A HREF="d.what.v.pg.html">d.what.v.pg</A>, 
-<A HREF="r.reclass.pg.html">r.reclass.pg</A>, 
-<A HREF="r.rescale.pg.html">r.rescale.pg</A>, 
-<A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
-
-<H2>AUTHOR</H2>
- Alex Shevlakov (sixote@yahoo.com)
-
-</BODY>
-</HTML>
-
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>, <a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

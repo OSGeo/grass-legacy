@@ -20,9 +20,8 @@
 #include <string.h>
 
 
-int main(argc,argv)
-int argc;
-char	*argv[];
+int
+main (int argc, char *argv[])
 {
 	char    buf[100], title[100];
 
@@ -37,6 +36,15 @@ char	*argv[];
 	int     hy_cond_id,land_use_id;
 	int     amc;
 	struct Option *parm1, *parm2, *parm3, *parm4, *parm5, *parm6;
+	struct GModule *module;
+	
+	/*  Initialize the GRASS environment variables */
+        G_gisinit (argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Generates a SCS curve number map layer";
         
         parm1 = G_define_option() ;
         parm1->key        = "sg" ;
@@ -79,9 +87,6 @@ char	*argv[];
         parm6->required   = YES;
         parm6->gisprompt  = "any,cell,raster" ;
         parm6->description= "curve_number_map (output)" ;
-
-/*  Initialize the GRASS environment variables */
-	G_gisinit (argv[0]);
 
         if (G_parser(argc, argv))
                         exit(-1);
@@ -273,8 +278,7 @@ char	*argv[];
 		       cn_rbuf[j] = amc_conversion(hy_soil_cover[row_id][col_id],amc);
 		 }
 	    }
-	    /* G_put_map_row(cn_id,cn_rbuf); */ /* 6/2000 MN */
-	    G_put_c_raster_row(cn_id, cn_rbuf);
+	    G_put_raster_row(cn_id, cn_rbuf, CELL_TYPE);
 	 }
 
 	 G_close_cell(hy_soil_group_id);

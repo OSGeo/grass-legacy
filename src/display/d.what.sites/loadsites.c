@@ -139,7 +139,7 @@ Site *
 closest_site (int n, double pick_e, double pick_n)
 {
 int i;
-double dsq, mdsq, de, dn;
+double dsq, mdsq = 0.0, de, dn;
 int idx = -1;
 
 /* pick_e already "adjusted? */

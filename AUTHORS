@@ -1,7 +1,7 @@
 GRASS GIS 5.0 Author List
 
 Please check additionally the GRASS 1.x-5.x credits list at:
- http://www.geog.uni-hannover.de/grass/grasscredits.html
+ http://grass.itc.it/grasscredits.html
 
 
 While it is impossible for us to give credit to everyone (past 
@@ -10,9 +10,9 @@ incomplete official list for GRASS 5.0:
 
 Institutions:
  University of Hannover
-   Markus Neteler      <neteler@geog.uni-hannover.de> (GRASS 5 coordination)
+   Markus Neteler      <neteler@itc.it> (GRASS 5 coordination)
 
- University of Illinois at Urbana-Champaign/ now: NCSU
+ University of Illinois at Urbana-Champaign/
    Helena Mitasova <hmitaso@unity.ncsu.edu> (interpolation modules, NVIZ, G3D)
    William Brown   <brown@gis.uiuc.edu>     (libraries, interpolation modules, 
 					     NVIZ, G3D)
@@ -25,6 +25,7 @@ Institutions:
  Bangkok, Thailand
 
 GRASS 5 Core Team (most have CVS access):
+ Andrea Aime     <aaime@comune.modena.it>      (raster/vector modules)
  Roger Bivand    <Roger.Bivand@nhh.no>         ("R" statistical language support)
  Radim Blazek    <Radim.Blazek@dhv.cz>         (DBMS support, ps.map, d.dm)
  Malcolm Blue    <mblue@nb.sympatico.ca>       (Windows NT/Cygnus port)
@@ -40,16 +41,17 @@ GRASS 5 Core Team (most have CVS access):
  Bill Hughes     <bhughes@grasshoppernet.com>  (64bit compliance)
  Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
 						Proj/Datum support)
- Pierre de Mouveaux <pierre@polaris-technologies.com>  (NVIZ, d.layers)
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>        (multivariate spline
                                                 interpolation (RST) and erosion modeling)
  Helena Mitasova <hmitaso@unity.ncsu.edu>      (interpolation modules, NVIZ,
                                                 G3D, erosion modelling)
  Eric G. Miller  <egm2@jps.net>                (sites format, new autoconf system, bugfixes etc.)
+ Roger S. Miller <rgrmill@rt66.com>            (raster modules, r.drain etc.)
  Eric Mitchell   <emitchell@altaira.com>       (new Makefile system)
- Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 coordination, ...)
- Bernhard Reiter <bernhard@intevation.de>      (License, CVS, Bugfixes)
+ Markus Neteler  <neteler@itc.it>              (GRASS 5 coordination, ...)
+ Bernhard Reiter <bernhard@intevation.de>      (License, CVS, Bugfixes, RT)
  Alexander Shevlakov <sixote@yahoo.com>        (PostgreSQL/GRASS interface)
+ Mike Thomas <miketh@brisbane.paradigmgeo.com> (generic Windows driver)
  Jan-Oliver Wagner <jan@intevation.de>         (XML-support, Module descriptions)
  Frank Warmerdam <warmerdam@pobox.com>         (GDAL, SHAPE implementation, 
                                                 new GRASS I/O library)
@@ -57,8 +59,8 @@ GRASS 5 Core Team (most have CVS access):
 
 
 Significant contributions (very incomplete, please add):
- Andrea Aime     <aaime@comune.modena.it>    (r.contour, r.poly)
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
+ Pierre de Mouveaux <pierre@polaris-technologies.com>  (NVIZ, d.layers)
  Job Spijker     <spijker@geo.uu.nl>         (v.bubble)
  Philip Warner   <pjw@rhyme.com.au>          (NVIZ code cleanup)
 
@@ -75,7 +77,7 @@ GRASS 4.x development:
  GRASS 4 development (1984 to 1995):
    U.S. Army Construction Engineering Research Laboratories  (CERL)
    Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, ...
-   See: http://www.geog.uni-hannover.de/grass/grasscredits.html
+   See: http://grass.itc.it/grasscredits.html
 
 
 Former programmers (GRASS 5):
@@ -90,11 +92,11 @@ The Official home of GRASS is:
 
 European Headquarters 
  GRASS Development Team
- Institute of Physical Geography-Landscape Ecology
- University of Hannover 
- Schneiderberg 50 
- 30167 Hannover, Germany 
- email: neteler@geog.uni-hannover.de
+ ITC-irst
+ SSI/MPA
+ Via Sommarive, 18
+ 38050 Trento (Povo)
+ email: neteler@itc.it
 
 United States Headquarters 
  GRASS Development Team
@@ -104,7 +106,7 @@ United States Headquarters
  Waco, Texas  76798-7351
  Email:     grass@baylor.edu
 
-Internet:  http://www.baylor.edu/~grass
-           http://www.geog.uni-hannover.de/grass
+Internet:  http://www.baylor.edu/grass/
+           http://grass.itc.it
 
 with a worldwide distribution network.

@@ -6,9 +6,11 @@
 
 #include "gis.h"
 #include "Vect.h"
-#include <stdio.h> 
+#include <stdio.h>
+#include <string.h>
+#include "dbvect.h" 
 
-buildInfxQry(key, where, table, map, mapset, color, fillcolor)
+int buildInfxQry(key, where, table, map, mapset, color, fillcolor)
   char *key,*where, *table, *map, *mapset;
   int color, fillcolor;
   {

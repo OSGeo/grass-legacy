@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 void
 db_init_handle (handle)
@@ -8,6 +9,7 @@ db_init_handle (handle)
     db_init_string (&handle->dbPath);
 }
 
+int
 db_set_handle (handle, dbName, dbPath)
     dbHandle *handle;
     char *dbName;

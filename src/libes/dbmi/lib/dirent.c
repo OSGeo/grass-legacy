@@ -1,4 +1,7 @@
 #include "dbmi.h"
+#include <string.h>
+#include <stdlib.h>
+
 /* NOTE: these should come from <unistd.h> or from <sys/file.h> */
 #define R_OK 4
 #define W_OK 2

@@ -1,12 +1,13 @@
 PGM=xganim
 
-EXTRA_CFLAGS=$(XCFLAGS)
+EXTRA_CFLAGS=$(XCFLAGS) $(XMINC)
 
 OFILES = \
 	gui.o \
-	main.o
+	main.o \
+	Clr_table.o
 
 $(BIN_CMD)/$(PGM):  $(OFILES) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XLIBPATH) $(XMLIB) $(XTLIB) $(XLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XLIBPATH) $(XMLIB) $(XTLIB) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

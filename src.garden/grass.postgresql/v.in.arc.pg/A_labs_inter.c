@@ -57,6 +57,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "dig_atts.h"
 #include "Vect.h"
 #include "AtoG.h"
 #include "v_in_arc.inter.h"
@@ -68,18 +69,10 @@ int GenToDigAreaLabels (FILE *pts_file, FILE *txt_file, FILE *atts_file,
 	double  east, north;
 	int	id,
 	NumCats,
-	NumCols,
-	NumLines,
-	CatStat,
 	CatNum,
-	IDCol,
-	AttCol,
-	CatCol,
 	done;
-	char    txtbuf[512]="";
 	char    inbuf[512]="";
 	char    tmpbuf[512]="";
-	char    AttText[512]="";
 	int d_i; /*debug counter*/
 
     d_i = 0;

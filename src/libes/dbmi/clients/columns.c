@@ -5,6 +5,7 @@
  *   list the column names for a table
  ****************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
@@ -15,8 +16,8 @@ struct {
 
 void parse_command_line();
 
-
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -55,6 +56,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *table;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -84,6 +86,11 @@ parse_command_line(argc, argv) char *argv[];
     if(G_parser(argc, argv))
 	exit(ERROR);
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "list all columns for a given table.";
+    
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.location	= location->answer;

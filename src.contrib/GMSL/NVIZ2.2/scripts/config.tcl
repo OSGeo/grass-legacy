@@ -2,10 +2,15 @@
 # installation time
 
  global src_boot
+ global ProcessName
 
  set gisbase $env(GISBASE)
  set default_panel_path "$gisbase/etc/nviz2.2/scripts"
  set bit_map_path "$gisbase/etc/nviz2.2/bitmaps"
+ set nv_path "$gisbase/etc/nviz2.2"
+
+#Get ProcessName varaible set from nviz2.2_script
+ set ProcessName $env(NV_processname)
 
 # Set up auto_path directories
 if {[catch {set env(Nviz_PanelPath)} user_path]} then {
@@ -28,7 +33,7 @@ foreach i $user_path {
 }
 
 # add the execution directory to the path
-set env(PATH) "$default_panel_path:$env(PATH)"
+set env(PATH) "$default_panel_path:$nv_path:$env(PATH)"
 
 # Override bindings for tk widgets
 source $src_boot/etc/nviz2.2/scripts/extra_bindings.tcl

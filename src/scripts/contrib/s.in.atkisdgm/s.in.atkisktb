@@ -24,6 +24,18 @@
 # East North no. elev  
 #
 
+# what to do in case of user break:
+function exitprocedure()
+{
+ echo "User break!"
+ \rm -f $LOCATION/site_lists/$INFILE
+ \rm -f /tmp/mxy?
+ \rm -f /tmp/$INFILE
+ \rm -f /tmp/$INFILE.date
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 9 15
 
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program"
@@ -33,6 +45,8 @@ fi
 if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]; then
  echo "Script to import German ATKIS-DGM/KTB elevation data into sites map"
  echo "  usage: s.in.atkisktb ktbfile"
+ echo ""
+ echo "  Example:  s.in.atkisktb 395623.ktb"
  exit 1
 fi
 
@@ -45,6 +59,9 @@ INFILE=`echo $INFILE_RAW | tr  [:upper:] [:lower:]`
 if [ $# = "help" ]; then
  echo "Script to import German ATKIS-DGM/KTB elevation data into sites map"
  echo "  usage: s.in.atkisktb ktbfile"
+ echo ""
+ echo "  Example:  s.in.atkisktb 395623.ktb"
+
  ERROR=1
 fi
 
@@ -61,6 +78,8 @@ echo $INFILE | grep .ktb >/dev/null
 if [ $? != 0 ]; then
  echo "ERROR: $INFILE_RAW is not a ktbfile (no .ktb extension)"
  echo "  usage: s.in.atkisktb ktbfile"
+ echo ""
+ echo "  Example:  s.in.atkisktb 395623.ktb"
  ERROR=1
 fi
 

@@ -30,7 +30,7 @@ struct Line_List
 	double length     ;   /* length */
 	int line_cnt      ;   /* number of lines of this category number */
 } *vect               ;
-static int cmp ( char *,char *);
+static int cmp (const void *,const void *);
 static int ABS (int);
 
 int do_v_stats(int verbose, int lay_no, char *fd)
@@ -68,7 +68,7 @@ int do_v_stats(int verbose, int lay_no, char *fd)
 	tot_area = 0.0;
 verbose=1;
 	if(verbose)
-          fprintf(stderr,"\nLoading vector information.\n\n");
+          fprintf(stderr,"Loading vector information...\n");
 
 /*fprintf(stderr,"cat.count = %d,  cat.num= %d\n",cats.count,cats.num);*/
 
@@ -371,7 +371,7 @@ int codes ( char ctype)
 	}
 }
 
-static int cmp ( char *a,char *b)
+static int cmp (const void *a,const void *b)
 {
 	if(a < b)
 		return -1;

@@ -154,7 +154,13 @@ char buf[100];
       /*** TODO -- display lat/lons ***/ 
 
       /* add to control points file */
+
+fprintf(stderr, "BOB -- %f %f %f %f\n", e1, n1, e2, n2);
+/*
       I_new_con_point_ll  (&points->points_ll, e1, n1, e2, n2, 1);
+*/
+	I_new_con_point_ll  (&points->points_temp, e1, n1, e2, n2, 1);
+
 
       /* conver to ll */
       convert_to_ll (&points->points_ll, &points->points_temp);

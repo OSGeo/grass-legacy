@@ -12,7 +12,7 @@ main (int argc, char **argv)
 {
   struct GModule *module;
   struct Flag *once, *interactive;
-  struct Option *opt1;
+  struct Option *opt1, *opt2;
   char *name, *mapset;
   struct Map_info Map;
   struct Categories Cats;
@@ -41,6 +41,14 @@ main (int argc, char **argv)
   opt1->gisprompt = "old,dig,vector";
   opt1->description = "Name of existing vector map";
 
+  opt2 = G_define_option();
+  opt2->key = "east_north";
+  opt2->type = TYPE_DOUBLE;
+  opt2->key_desc = "east,north";
+  opt2->multiple = YES;
+  opt2->required = NO;
+  opt2->description = "Coordinates for query";
+
   if (G_parser (argc, argv))
     exit (1);
 
@@ -55,9 +63,11 @@ main (int argc, char **argv)
     exit (1);
   }
 
-
-  R_open_driver ();
-  D_setup (0);
+  if (interactive->answer)
+  {
+	R_open_driver ();
+	D_setup (0);
+  }
 
   level = Vect_open_old (&Map, name, mapset);
   if (level < 0)
@@ -69,8 +79,11 @@ main (int argc, char **argv)
   if (G_read_vector_cats (name, mapset, &Cats) < 0)
     Cats.num = -1;
 
-  what (interactive->answer, once->answer, &Map, &Cats);
-  R_close_driver ();
+  what (opt2->answers, interactive->answer, once->answer, &Map, &Cats);
+
+  if (interactive->answer)  
+      R_close_driver ();
+
   Vect_close (&Map);
 
   exit (0);

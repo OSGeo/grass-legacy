@@ -58,6 +58,7 @@ else
    else
       sprintf(txt_buf,"(%d) %s",buf[col],G_get_cat(buf[col],&cat));
    DrawText(22,4,1,txt_buf);
+   R_stabilize();
    }
 G_unopen_cell(fd);
 

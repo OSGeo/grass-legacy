@@ -17,9 +17,12 @@
 ------------libpq mods by A.Sh. dec'99
 */
 
+#include <string.h>
+#include <stdlib.h>
 #include "gis.h"
+#include "dbrast.h"
 
-
+int
 getSelectOpts (argc, argv)
     int argc;
     char **argv;
@@ -27,8 +30,8 @@ getSelectOpts (argc, argv)
 
 {
 
-        char *mapset;
-        int  i, j, stat,k;
+
+        int  i, stat,k;
 
         struct Option *sql, *input,*output  ;
         struct Flag *select;
@@ -43,18 +46,10 @@ getSelectOpts (argc, argv)
 
 
 	stat = 0 ;
-
-        select = G_define_flag();
+	
+	select = G_define_flag();
         select->key     = 's';
         select->description     = "Use [-s] flag for query input from file.";
-
-        sql = G_define_option() ;
-        sql->key        = "sql" ;
-	sql->key_desc   = "file";
-        sql->type       = TYPE_STRING ;
-        sql->required   = YES  ;
-        sql->multiple   = NO ;
-        sql->description= "SQL command file: ";
 
         input = G_define_option() ;
         input->key        = "input" ;
@@ -63,6 +58,14 @@ getSelectOpts (argc, argv)
         input->required   = YES  ;
         input->multiple   = NO ;
         input->description= "Raster map (must exist):";
+	
+	sql = G_define_option() ;
+        sql->key        = "sql" ;
+	sql->key_desc   = "file";
+        sql->type       = TYPE_STRING ;
+        sql->required   = YES  ;
+        sql->multiple   = NO ;
+        sql->description= "SQL command file: ";
 
         output = G_define_option() ;
         output->key        = "output" ;
@@ -79,7 +82,8 @@ getSelectOpts (argc, argv)
                         argv[1] = "help";
 
         if((argc == 2)&&(strcmp(argv[1],"-s")==0 )) {        /* Run interactive parser */
-                argv[1] == NULL ;
+                
+		/*argv[1] == NULL ;*/
                 argc = 1;
            }
 
@@ -115,6 +119,6 @@ getSelectOpts (argc, argv)
 /*			no, i ain't heard of fread() yet
 */
 	strncpy(SQL_stmt,buf,strlen(buf)-1);
-	stat = runInfxFile( SQL_stmt, input->answer, output->answer);
+	stat = runInfxFile( SQL_stmt, input->answer, output->answer,0);
   	return(stat) ; 	
 }

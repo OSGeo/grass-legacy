@@ -29,6 +29,8 @@ main (int argc, char **argv)
 
 	SP = NULL ;
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Outputs a raster map layer whose category values "
@@ -52,7 +54,6 @@ main (int argc, char **argv)
 	flag2 = G_define_flag() ;
 	flag2->key         = 't' ;
 	flag2->description = "test" ;
-	G_gisinit(argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

@@ -49,9 +49,8 @@ struct Option *opt[DQ_MODULES];
 struct Flag *flag;
 char map_fname [MAX_FILENAME + 1];
 
-main  (argc, argv)
-     int argc;
-     char **argv;
+int
+main (int argc, char *argv[])
 {
   register struct Option *p_opt, *map_opt;
   enum dq_module i;
@@ -59,8 +58,13 @@ main  (argc, argv)
   char errmsg[1000];
   char current_DQ_path[500];
   char *mapset;
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Installs SDTS data quality reports.";
 
   map_opt = G_define_option ();
   map_opt->key		= "map";

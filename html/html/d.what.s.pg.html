@@ -17,16 +17,16 @@ SYNOPSIS</h2>
 <b>d.what.s.pg</b>
 <br><b>d.what.s.pg help</b>
 <br><b>d.what.s.pg</b> <b>tab</b>=name <b>xcol</b>=name <b>ycol</b>=name
-[<b>xpos</b>=name] [<b>ypos</b>=name] <b>distance</b>=name [<b>hv</b>=name]
+[<b>xpos</b>=value] [<b>ypos</b>=value] <b>distance</b>=value [<b>hv</b>=name]
 <h2>
 ALTERNATE</h2>
 <b>d.what.s.pg -s help</b>
-<br><b>d.what.s.pg [-s]</b> [<b>sql</b>=file] <b>distance</b>=name [<b>hv</b>=name]
+<br><b>d.what.s.pg [-s]</b> [<b>sql</b>=file] <b>distance</b>=value [<b>hv</b>=name]
 <h2>
 DESCRIPTION</h2>
 <i>d.what.s.pg</i> reports database attributes in the currently selected
 database which are associated with a specific point location. The current
-database is identified by the GRASS environment variable $PGDBASE which
+database is identified by the GRASS environment variable $PG_DBASE which
 is set using the <i>g.select.pg</i> GRASS-RDBMS interface tool. The location
 to query is selected by the user with the mouse. The radius around this
 point to search is specified by the distance argument. Sites are selected
@@ -40,8 +40,8 @@ within the circle around the search center non-interactively.
 <h2>
 COMMAND LINE OPTIONS</h2>
 
-<h2>
-Parameters:</h2>
+<h3>
+Parameters:</h3>
 
 <dl>
 <dt>
@@ -93,12 +93,12 @@ these category values on the command line. The following example illustrates
 the syntax which must be used in constructing a SELECT statement for use
 with the <i>-s</i> flag.
 <p><b>EXAMPLE 1. </b>(single table)
-<p><b><i>d.what.s.pg -s sql=izb.sql distance=100</i></b>
-<p>izb.sql:
-<p>SELECT * from izb where point(xcoor,ycoor)<b></b>
-<p><b>EXAMPLE 2. </b>(two tables)
-<p><b><i>d.what.s.pg -s sql=izb2.sql distance=100</i></b>
-<p>izb2.sql:
+<p><i>d.what.s.pg -s sql=izb.sql distance=100</i>
+<p>here <i>izb.sql</i>:
+<p>SELECT * from izb where point(xcoor,ycoor)
+<p><b>EXAMPLE 2. </b>(two tables)<b></b>
+<p><i>d.what.s.pg -s sql=izb2.sql distance=100</i>
+<p>here <i>izb2.sql</i>:
 <p>SELECT *, huts_info.description from izb where huts_info.num=num and
 point(xcoor,ycoor)
 <h3>
@@ -126,12 +126,15 @@ the search distance. Additional criteria may be placed in the "where" clause
 to further subset information returned from the database.</dd>
 
 <dt>
-<b>input=map</b></dt>
+<b></b></dt>
+
+<dt>
+<b>distance=value</b></dt>
 
 <dd>
-Name of an existing raster map</dd>
-
-<br><b>hv=name</b>
+Radius distance from the current mouse location to conduct database search.</dd>
+<b></b>
+<p><br><b>hv=name</b>
 <dd>
 (h)Horizontal/(v)vertical output (default is v)</dd>
 </dl>
@@ -145,11 +148,16 @@ This program requires the Postgres database software.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
-<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
-<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
-<a href="d.vect.pg.html">d.vect.pg</a>, <a href="d.what.r.pg.html">d.what.r.pg</a>,
-<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
-<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
 <h2>
 AUTHOR</h2>
 Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick

@@ -1,10 +1,9 @@
 /* openvect.c */
 char *openvect(char *);
 /* what.c */
-int what(int, int, int, int, int, char *, char *);
+int what(int, int, int, int);
 int show_buttons(int);
-/* attr.c */
-int disp_attr(char *, char *, int);
+
 
 #ifdef MAIN
 #define GLOBAL

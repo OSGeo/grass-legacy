@@ -41,10 +41,13 @@
 
 #include  <stdio.h>
 #include  <string.h>
+#include  <stdlib.h>
 #include  "gis.h"
 #include  "Vect.h"
 #include "v_in_arc.inter.h"
 #include "shapefil.h"
+
+int PgDumpFromDBF (char *, int);
 
 int main (int argc, char **argv)
 {
@@ -57,23 +60,17 @@ int main (int argc, char **argv)
 	char 	errmsg[200]="";
 	char  cov_type[80]="";          /* coverage type */
 	char  lines_filename[80]="" ;   /* ungenerate format lines file */
-	FILE  *lines_file;
+	FILE  *lines_file=NULL;
 	char  pts_filename[80]="" ;     /* ungenerate format point-labels file */
 
-	FILE  *pts_file;
-	char  txt_filename[80]="" ;     /* label-text file */
+	FILE  *pts_file=NULL;
 
 	FILE  *txt_file;
 	char  dig_filename[80]="";     /* GRASS vector (dig) file */
 
-	char  dig_filepath[80]="" ;
-	FILE  *dig_file;
-	char  atts_filename[80]="" ;     /* GRASS vector (dig_atts) file */
 
 	char  atts_filepath[80]="" ;
 	FILE  *atts_file;
-	char  *tmp_name;
-	FILE  *tmp_file;
 
 	struct Map_info  VectMap;
 	

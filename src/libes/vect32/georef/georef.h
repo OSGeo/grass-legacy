@@ -87,8 +87,3 @@ int init_priority(void);
 int set_priority(void);
 int unset_priority(void);
 int set_uid_to_user(void);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);

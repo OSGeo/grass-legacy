@@ -1,6 +1,6 @@
-
 /* main_cmd.c
  *
+ * $Id$
  *
  *  main for grass 4.0 cmd version of v.in.arc
  *  adapted by David Stigberg 2/91
@@ -65,34 +65,27 @@ main (int argc, char **argv)
 	FILE  *dig_file;
 	FILE  *atts_file;
 
-    struct Map_info VectMap;
-	char full_txtname[200];
+	struct Map_info VectMap;
 	char  *tmp_name, *G_tempfile();
 	FILE  *tmp_file;
 
 
 	char  atts_filepath[80] ;
 
-	/*
-   struct Flag *p_flag, *n_flag, *l_flag;
-   */
-	struct GModule *module;
 	struct Flag *n_flag;
 	struct Option *covertype, *linesname, *ptsname ;
 	struct Option *txtname, *digname ;
 	struct Option *idcolopt, *catcolopt, *attcolopt;
-
+	struct GModule *module;
+	
+	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Imports vector data in ARC/INFO ungenerate format into GRASS.";
 
 	/* Define the different options */
-
-
-	G_gisinit(argv[0]);
-	progname = G_program_name();
-
-	module = G_define_module();
-	module->description =
-		"Converts data in ARC/INFO format to GRASS's vector format, "
-		"and stores output in the user's current GRASS mapset.";
 
 	/*
 	p_flag = G_define_flag();
@@ -159,9 +152,9 @@ main (int argc, char **argv)
 
 
 	if (G_parser (argc, argv))
-	{
 		exit (-1);
-	}
+
+	progname = G_program_name();
 
 	/*set coverage: polygon vs line*/
 
@@ -210,12 +203,7 @@ main (int argc, char **argv)
 
 	/*open input files*/
 
-	if ((mapset=G_find_file2 ("arc", lines_fname, "")) == NULL)
-	{
-		fprintf(stderr, "Cannot find ARC/INFO lines file <%s>\n", lines_fname);
-		exit (-1);
-	}
-	if ((lines_file=G_fopen_old ("arc", lines_fname, mapset)) == NULL)
+	if ((lines_file=fopen( lines_fname, "r")) == NULL)
 	{
 		fprintf(stderr, "Cannot open ARC/INFO lines file <%s>\n", lines_fname);
 		exit (-1);
@@ -224,7 +212,7 @@ main (int argc, char **argv)
 	if (cov_type == POLY_TYPE)
 	{
 		if (pts_fname != NULL && *pts_fname)
-			if ((pts_file = G_fopen_old("arc", pts_fname, mapset)) == NULL)
+			if ((pts_file = fopen( pts_fname, "r")) == NULL)
 			{
 				fprintf(stderr, "Cannot open ARC/INFO points file <%s>\n", lines_fname);
 				exit (-1);
@@ -236,20 +224,20 @@ main (int argc, char **argv)
 
 		need_colspecs = 1; /*set flag saying idcol and catcol need to be set*/ 
 
-		if (G__file_name(full_txtname,"arc",txt_fname, mapset) == NULL){
-			sprintf (errmsg,"Could not find ARC text file %s\n",full_txtname);
-			G_warning (errmsg);
-		}
 		/* remove the txt_file INFO header, save the column headings
                  * rewrite the txt_file */
 		tmp_name = G_tempfile();
-		if ((errflag = DO_txt_file(full_txtname, tmp_name)) == 0)
+		if ((errflag = DO_txt_file( txt_fname, tmp_name)) == 0)
 		{
 			txt_file=fopen(tmp_name,"r");
 		}
 		else
 		{
-			if (errflag == -1)
+			if (errflag == -3){
+				sprintf (errmsg,"Could not find ARC text file %s\n", txt_fname);
+				G_fatal_error (errmsg);
+			}
+			else if (errflag == -1)
 				G_fatal_error ("ARC-INFO text-label file header");
 			else
 				G_fatal_error ("Item name list in ARC-INFO text-label file header.");

@@ -29,7 +29,6 @@ OBJS =  main.o\
 	setup.o\
 	target.o\
 	title.o\
-	tty.o\
 	use_plot1.o\
 	view.o\
 	where.o\
@@ -67,7 +66,6 @@ CFILES =main.c\
 	setup.c\
 	target.c\
 	title.c\
-	tty.c\
 	use_plot1.c\
 	view.c\
 	where.c\

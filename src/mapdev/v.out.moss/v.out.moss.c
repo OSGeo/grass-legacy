@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
     struct Map_info map;      /* SPATIAL INFO FOR DIGIT FILE */
 
     /* INITIALIZE GIS LIBRARY */
-    G_gisinit ("vect.to.moss");
+    G_gisinit (argv[0]);
 
     if (argc == 2 && !strcmp (argv[1], "help"))
     {

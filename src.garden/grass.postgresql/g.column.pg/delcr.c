@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 
-delcr(str)   /* char *str   */
+void delcr(str)   /* char *str   */
    char str[80];
 {
 

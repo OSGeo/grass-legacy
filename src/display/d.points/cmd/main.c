@@ -11,6 +11,9 @@ main (int argc, char **argv)
 	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays point graphics in the "
@@ -46,9 +49,6 @@ main (int argc, char **argv)
     opt4->required   = NO ;
     opt4->answer     = NULL ;
     opt4->description= "Input is a UNIX file name" ;
-
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     /* Check command line */
 

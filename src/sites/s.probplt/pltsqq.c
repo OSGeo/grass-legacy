@@ -32,7 +32,7 @@ int pltsqq(z, width, log, save, verbose)
   extern int nsites;
   int i, k = 0 /* number of points plotted */ , n, freq;
   double cwidth = 0;		/* current class */
-  double tmp, p;
+  double tmp;
   FILE *tfp;
 
   /* open a data file */
@@ -48,6 +48,7 @@ int pltsqq(z, width, log, save, verbose)
   freq = i = 0;
   while (i < nsites)
   {
+    G_percent(i, nsites, 2);
     while (z[i] < cwidth && i < nsites)
     {
       i++;
@@ -119,7 +120,7 @@ int pltsqq(z, width, log, save, verbose)
 #endif				/* PAUSE */
   fclose (tfp);
 
-  sprintf (buf, "%s %s ", PLOTPROG, tmp_plot_file);
+  sprintf (buf, "%s %s ", plot_program, tmp_plot_file);
   G_system (buf);
 
   /* get rid of the previous temporary files */

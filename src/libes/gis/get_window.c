@@ -35,8 +35,8 @@ int G_get_window (struct Cell_head *window )
 
 	if(err = G__get_window (&dbwindow,"","WIND",G_mapset()))
 	{
-	    G_free (err);
 	    G_fatal_error ("region for current mapset %s\nrun \"g.region\"", err);
+	    G_free (err);
 	}
     }
 
@@ -58,8 +58,8 @@ int G_get_default_window ( struct Cell_head *window )
 
     if (err = G__get_window (window,"","DEFAULT_WIND","PERMANENT"))
     {
-	G_free (err);
 	G_fatal_error ("default region %s", err);
+	G_free (err);
     }
     return 1;
 }

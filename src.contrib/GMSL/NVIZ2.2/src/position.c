@@ -120,9 +120,9 @@ Nset_focus_cmd (
   float realto[3];
 
   if(argc == 4){
-      realto[0]=atof(argv[1]);
-      realto[1]=atof(argv[2]);
-      realto[2]=atof(argv[3]);
+      realto[0]=(float)atof(argv[1]);
+      realto[1]=(float)atof(argv[2]);
+      realto[2]=(float)atof(argv[3]);
       GS_set_focus(realto);
   }
 
@@ -180,11 +180,12 @@ int Nmove_to_cmd (
 {
   float	ftmp;
   int i;
+  double atof();
 
   if (argc != 4)
     return (TCL_ERROR);
   for(i=1;i<argc;i++) {
-    ftmp = atof(*(++argv));
+    ftmp = (float)atof(*(++argv));
     GS_moveto(&ftmp);
   }
   
@@ -405,16 +406,17 @@ Nget_dist_along_surf_cmd (
   float x, y, px, py, d;
   int id, exag;
   char dist[128];
+  double atof();
   
   if (argc != 7)
     return (TCL_ERROR);
   
   id = get_idnum(argv[1]);
-  x = atof(argv[2]);
-  y = atof(argv[3]);
-  px = atof(argv[4]);
-  py = atof(argv[5]);
-  exag = atoi(argv[6]);
+  x = (float)atof(argv[2]);
+  y = (float)atof(argv[3]);
+  px = (float)atof(argv[4]);
+  py = (float)atof(argv[5]);
+  exag = (float)atoi(argv[6]);
   
   if(!GS_get_distance_alongsurf(id, x, y, px, py, &d, exag))
     return (TCL_ERROR);
@@ -440,14 +442,15 @@ Nget_cat_at_xy_cmd (
   float x, y; 
   int id, att;
   char catstr[1024];
+  double atof();
   
   if (argc != 5)
     return (TCL_ERROR);
   
   id = get_idnum(argv[1]);
   att = att_atoi(argv[2]);
-  x = atof(argv[3]);
-  y = atof(argv[4]);
+  x = (float)atof(argv[3]);
+  y = (float)atof(argv[4]);
 
 #ifdef DO_TEST
 GS_set_draw(GSD_FRONT);
@@ -478,14 +481,15 @@ Nget_val_at_xy_cmd (
   float x, y; 
   int id, att;
   char valstr[1024];
+  double atof();
   
   if (argc != 5)
     return (TCL_ERROR);
   
   id = get_idnum(argv[1]);
   att = att_atoi(argv[2]);
-  x = atof(argv[3]);
-  y = atof(argv[4]);
+  x = (float)atof(argv[3]);
+  y = (float)atof(argv[4]);
   
   GS_get_val_at_xy(id, att, valstr, x, y);
 
@@ -655,9 +659,11 @@ Nset_exag_cmd (
     char **argv                        /* Argument strings. */
 )
 {
+  double atof();
+
   if (argc != 2)
     return (TCL_ERROR);
-  GS_set_global_exag(atof(argv[1]));
+  GS_set_global_exag((float)atof(argv[1]));
   return (TCL_OK);
 }
 

@@ -8,21 +8,20 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "infx.h"
 
 
 
-getAllOpts(argc, argv)
+int getAllOpts(argc, argv)
         int argc;
         char **argv;
 
 {
 
-    struct Option *keytable, *xcol, *ycol, *distance, *join, *xpos, *ypos, *hv;
-    struct Flag *qtype;
+    struct Option *keytable, *xcol, *ycol, *distance, *xpos, *ypos, *hv;
     struct Sql *pts;
-    int button ;
     int stat = 0;
     char  *SQL_stmt;
     double  atof ();
@@ -91,13 +90,13 @@ getAllOpts(argc, argv)
         /* Initialize screen graphics and get mouse input */
 
 
-        SQL_stmt = (char*) buildInfxQry(keytable,ycol,xcol,distance,pts);
+        SQL_stmt = (char*) buildInfxQry(keytable,ycol,xcol,distance);
 
         if ( (xpos->answer == NULL) || (ypos->answer == NULL)) 
            { stat = runInfxFile(SQL_stmt, distance->answer, print_out); }
         else
            {
-     /* I'm lazy this pts stuff should be handled in getArea *.      
+     /* I'm lazy this pts stuff should be handled in getArea. */
            
            /* Initialze SQL query structure 	*/
              pts = (struct Sql *)G_malloc(sizeof(struct Sql)) ;

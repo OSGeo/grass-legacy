@@ -15,10 +15,10 @@ static double *x,*y;
 char *mapset;
 
 double line_length();
+int dangles_out();
 
-int main (argc, argv)
-    int argc;
-    char *argv[];
+int
+main (int argc, char *argv[])
 {
     register int ret, error;
     char in_name[1024], out_name[1024];
@@ -26,6 +26,14 @@ int main (argc, argv)
     struct Map_info In, Out;
     int level;
     double maxl;
+    struct GModule *module;
+
+    G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Removes dangling vectors from vector map";
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;
@@ -47,7 +55,9 @@ int main (argc, argv)
     opt3->answer     = "-1";
     opt3->required   = NO ;
     opt3->description= "Maximum length of a dangle to be deleted" ;
-   
+
+    if (G_parser(argc, argv))
+        exit(-1);
 
     Points = Vect_new_line_struct ();
     OPoints = Vect_new_line_struct ();
@@ -56,10 +66,6 @@ int main (argc, argv)
     y = (double *) G_malloc (sizeof(double));
 
     setbuf (stdout, NULL);
-    G_gisinit (argv[0]);
-
-    if (G_parser(argc, argv))
-        exit(-1);
    
     error = 0; 
 
@@ -90,7 +96,7 @@ int main (argc, argv)
     ret = dangles_out(&In, &Out, maxl);
 
     if (ret < 0)
-       fprintf (stderr, "Error reading file '%s'.  Some data may not be correct\n");
+       fprintf (stderr, "Error reading file.  Some data may not be correct\n");
 
     Vect_close (&Out);
     Vect_close (&In);

@@ -61,7 +61,7 @@ of elevations given in feet to meters, so that the proper values of slopes
 and curvatures can be computed).
 <p>Regularized spline with tension and smoothing is used for&nbsp; interpolation
 and approximation. The <i>tension</i> parameter tunes the character of
-the resulting surface from thin plate to membrane. The flag <i>-t </i>can
+the resulting surface from thin plate to membrane. The experimental flag <i>-t </i>can
 be set to use "dnorm independent tension", (see notes for more details
 about the tension behavior). For noisy data, it is possible to define&nbsp;
 either a constant smoothing parameter <i>smooth</i> or a variable smoothing
@@ -109,7 +109,7 @@ for parameter values and flag settings using the standard GRASS parser
 interface described in the manual entry for<i> parser</i>.
 <p><b>Flags</b>
 <p><b>-d</b> Output partial derivatives instead of aspect, slope and curvatures.
-<br><b>-t</b>&nbsp; Use dnorm independent tension
+<br><b>-t</b>&nbsp; Use dnorm independent tension (experimental)
 <p><b>Parameters:</b>
 <p><b>input </b>= <i>name</i>
 <br>Use the existing site file name as input.
@@ -321,5 +321,6 @@ of Computational Physics</i>, 23, p.93-123.
 Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
 <br>&nbsp;
 <p>Updated November 14, 1999 by Helena Mitasova
+<p><i>Last changed: $Date$</i>
 </body>
 </html>

@@ -1,10 +1,14 @@
 PGM       = d.vect.cats
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
+#EXTRA_CFLAGS=-g
 
 OBJS = \
 	main.o \
-	plotCat.o
+	plotCat.o\
+	plot1.o\
+	plot2.o\
+	use_plot1.o
 
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)

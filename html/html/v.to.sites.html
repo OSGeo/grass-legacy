@@ -116,12 +116,21 @@ site data are to be extracted.
 
 </DL>
 
+<H2>NOTES</H2>
+
+Vector lines must be labeled.
+<p>
+If the flag <B>-i</B> is selected, a spline function is used to generate
+additional points along the line. To avoid the generating of lots of points
+along contours, <B>dmax=</B> should be really large so that <B>v.to.sites</B>
+does not add any addtional sites to the data. On the other hand, if
+additional sites data are desired, <B>dmax=</B> should be smaller than the
+distances between existing data points.
+
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="d.sites.html">d.sites</A></EM>,
-<EM><A HREF="s.db.rim.html">s.db.rim</A></EM>,
-<EM><A HREF="s.menu.html">s.menu</A></EM>,
-<EM><A HREF="v.db.rim.html">v.db.rim</A></EM>,
 <EM><A HREF="v.digit.html">v.digit</A></EM>
 and
 <EM><A HREF="parser.html">parser</A></EM>
@@ -135,3 +144,6 @@ Dave Gerdes,
 Irina Kosinovsky, <br>U.S.Army Construction Engineering 
 Research Laboratory
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -28,9 +28,8 @@ main (int argc, char *argv[])
     char command[1024];
     char list_name[40], name[40], cat_list[128], new_cat[30];
     char *mapset, *tmp_file, *G_tempfile();
-    int nfiles;
     char prompt[80];
-    int i, opt_d, opt_n, opt_t;
+    int i, opt_d=0, opt_n, opt_t;
     struct Categories cats;
 
     gbase = G_gisbase() ;
@@ -285,7 +284,7 @@ return(0);
 int 
 conv_file (int type, struct Categories *pcats, char *infile, char *outfile)
 {
-    int i, icode, recd, begin=0, pass=0;
+    int i, icode, recd;
     int  area_value;
     char area_name[40], cat_name[100], buffr[128], number[2];
     char *nptr, *cptr, *pntr1;

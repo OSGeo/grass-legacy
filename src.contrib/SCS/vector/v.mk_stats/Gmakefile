@@ -1,4 +1,4 @@
-PGM=v.mk_stats
+PGM=v.mkstats
 
 OFILES = \
 	main.o \

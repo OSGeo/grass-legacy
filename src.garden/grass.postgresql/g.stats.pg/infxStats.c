@@ -2,15 +2,17 @@
 #include "stats.h"
 #include "infx.h"
 #include <libpq-fe.h>
-//---------------A.Sh 12.99
+#include <stdlib.h>
+#include <string.h>
+/*A.Sh 12.99*/
 
 
-infxStats(tab, col, freq, where, verbose)
+int infxStats(tab, col, freq, where, verbose)
   char *tab;
   char *col;
-  char *freq;
+  char freq;
   char *where;
-  char *verbose;
+  char verbose;
   {
     int i, nflds, can_avg_col = 1;
     static char		SQL_stmt[1024];
@@ -37,7 +39,7 @@ infxStats(tab, col, freq, where, verbose)
          group by %s order by count(*)"
          ,col,tab,wherecl,col);  }
   else 
-  { sprintf (SQL_stmt, "select avg(%s) from %s where oid is null",col,tab,col);
+  { sprintf (SQL_stmt, "select avg(%s) from %s where oid is null",col,tab);
     res = PQexec (pg_conn, SQL_stmt );
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) 
        can_avg_col = 0; 

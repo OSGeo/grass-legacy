@@ -1,15 +1,12 @@
 PGM=d.scale
 OFILES = \
 	draw_scale.o \
-	screenscale.o \
 	main.o
-
-EXTRA_CFLAGS=$(XCFLAGS) $(XINCPATH)
 
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
 $(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
 $(HELP)/d.scale: scale2.help

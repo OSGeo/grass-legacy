@@ -1,18 +1,3 @@
-#define MAIN
-#include    <stdio.h>
-#include    <unistd.h>
-#include    <sys/stat.h>
-#include    "gis.h"
-#include    "Vect.h"
-
-#include    "stc123.h"
-#include    "defines.h"
-#include    "externs.h"
-#include    "globals.h"
-#include    "globals2.h"
-
-
-
 /* 
 **  Last modified by David Stigberg 11/14/1994
 **
@@ -31,6 +16,20 @@
 **
 */
 
+#define MAIN
+#include    <stdio.h>
+#include    <stdlib.h>
+#include    <unistd.h>
+#include    <sys/stat.h>
+#include    "gis.h"
+#include    "Vect.h"
+  
+#include    "stc123.h"
+#include    "defines.h"
+#include    "externs.h"
+#include    "globals.h"
+#include    "globals2.h"
+  
 /*
 #define DEBUG
 */
@@ -39,9 +38,8 @@ int legal_SDTS_file_prefix();
 char * get_err_mess();
 double dig_unit_conversion ();
 
-main(argc, argv)
-    int argc;
-    char **argv;
+int
+main (int argc, char *argv[])
 {
     char *dig_name, *sdts_prefix;
 	char full_dig_name [100];
@@ -56,11 +54,16 @@ main(argc, argv)
     char *spheroid_list();
     int zone;
 	int ll_input;
-
-
+    struct GModule *module;
+    
 
 /* Show advertising */
     G_gisinit(argv[0]) ;
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Creates an SDTS dataset conforming to the Topological Vector Profile from a GRASS vector map layer.";
 
     aline_flag = G_define_flag();
     aline_flag->key = 'a';
@@ -219,7 +222,7 @@ debugf (format, a, b, c, d, e, f, g, h, i, j, k, l)
 
 struct Map_info Map;
 
-export(dig_name, mapset, sdts_prefix, sdts_path, ll_input, zone, meta_flag )
+int export(dig_name, mapset, sdts_prefix, sdts_path, ll_input, zone, meta_flag )
     char *dig_name, *mapset, *sdts_prefix, *sdts_path;
 	int ll_input, zone, meta_flag;
 {

@@ -1,5 +1,5 @@
-/*  @(#)digitize.c    2.1  6/26/87  */
 /*
+**  - improved messages MN 11/2001
 **  Last modified by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab
 */
@@ -305,12 +305,16 @@ recollect:
 	    dig_check_nodes (map, &node, &Xpoints);
 /*DEBUG*/ debugf ( "Check_nodes returns  N1 = %d  N2 = %d\n", node.N1, node.N2);
 	}
-	if (node.cnt)
+	
+	/* reduce node.cnt by one for snapped lines test */
+	node.cnt=node.cnt-1;
+
+	if (node.cnt > 0)
 	{
 	    if (Beep_On)
 		BEEP;   /* Beep for at least one node */
 	    fflush(stdout);
-	    sprintf(buffer, "NOTE: %d new nodes needed", node.cnt);
+	    sprintf(buffer, "NOTE: Lines will not be snapped (%d new nodes needed)", node.cnt);
 	    Write_info(3, buffer);
 	    if(node.cnt == 2)     /* Beep for second node */
 	    {
@@ -321,7 +325,20 @@ recollect:
 	}
 	else
 	{
-	    Write_info (3, "NOTE: Zero new nodes needed");
+	 if (node.cnt == 0)
+	 {
+	    /* Zero new nodes needed */
+	    if (type != DOT)
+		Write_info (3, "NOTE: Lines will be snapped");
+	 }
+	 else
+	 {
+	  if (node.cnt < 0)   /* incomplete vector */
+	  { 
+	  	sprintf(buffer, "ERROR: this vector <%d> is damaged! Consider not to accept.", type);
+	  	Write_info (3, buffer);
+	  }
+	 }
 	}
 
 	if (do_graphics())

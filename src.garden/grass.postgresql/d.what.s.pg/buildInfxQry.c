@@ -2,12 +2,10 @@
 #include "infx.h"
 
 
-char* buildInfxQry(ktab,ycol, xcol, dist, pts)
-	struct Option *ktab, *ycol, *xcol, *dist; 
-	struct Sql *pts;
+char* buildInfxQry(ktab,ycol, xcol, dist)
+	struct Option *ktab, *ycol, *xcol, *dist;
 {
 	static char SQL_stmt[1024] ;
-	int stat;
 
 
            sprintf(SQL_stmt, 

@@ -26,9 +26,17 @@
 
 static void _set_default_head_info (struct dig_head *head)
 {
-	struct Cell_head wind ;
+	struct Cell_head wind;
+	char *organization;
 
-	strcpy(head->organization, "") ;
+	if (getenv("GRASS_ORGANIZATION"))    /* added MN 12/2001 */
+	{
+		organization=(char *)getenv("GRASS_ORGANIZATION");
+		sprintf(head->organization, "%s", organization);
+	}
+	else
+		strcpy(head->organization, "GRASS Development Team") ;
+
 	G_get_window (&wind) ;
         head->W = wind.west;
         head->E = wind.east;
@@ -37,6 +45,10 @@ static void _set_default_head_info (struct dig_head *head)
 	head->plani_zone = G_zone ();
 	snprintf (head->line_3, 59, "Projection: %s", 
 			G_database_projection_name());
+
+        /* avoid 1:0 scale */
+        head->orig_scale = 1;
+	                
 }
 
 void set_default_head_info (struct dig_head *head)
@@ -45,7 +57,7 @@ void set_default_head_info (struct dig_head *head)
 	struct tm *theTime = localtime (&ticks) ;
 
 	/* Date in ISO 8601 format YYYY-MM-DD */
-	strftime (head->date, 20, "%F", theTime) ;
+	strftime (head->date, 20, "%Y-%m-%d", theTime) ;
 	/* free (theTime) ; */
 
 	_set_default_head_info (head);
@@ -58,8 +70,6 @@ void set_default_head_info (struct dig_head *head)
 
 int get_head_info (struct dig_head *head)
 {
-	char value[6];
-
 	_set_default_head_info (head);
 	
 	V_clear() ;
@@ -92,8 +102,9 @@ int get_head_info (struct dig_head *head)
 	V_ques( &head->E,           'd', 13, 20, 14) ;
 	V_ques( &head->N,           'd', 14, 20, 14) ;
 	
-
-	V_call() ;
-
-	return 0;
+        V_intrpt_ok();
+        if(!V_call())
+          return -1;
+        else
+	  return 0;
 }

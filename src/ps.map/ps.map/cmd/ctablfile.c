@@ -4,6 +4,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include "colortable.h"
 #include "ps_info.h"
 #include "local_proto.h"

@@ -20,6 +20,7 @@ drawn by the user in the active display frame on the graphics monitor.
 <B>d.measure help</B> 
 <BR>
 <B>d.measure</B> 
+[<B>-skm</B>]
 [<B>c1=</B><EM>name</EM>] 
 [<B>c2=</B><EM>name</EM>] 
 
@@ -59,6 +60,20 @@ be drawn by setting the values of <EM>c1</EM> and
 <EM>c2</EM> on the command line.  Default line colors (see
 below) will be used if the user does not specify the values
 of <EM>c1</EM> and <EM>c2</EM> on the command line.
+
+<H3>Flags</H3>
+
+<DL>
+<DT><B>-s</B>
+<DD>Suppesses clear screen and writes messages to stderr instead of stdout. Usefull for work with the TCLTKGRASS gui.
+
+<DT><B>-m</B>
+<DD>Use metric units (Meters, Kilometers) only
+
+<DT><B>-k</B>
+<DD>Output results (additionally) in kilometers and square kilometers
+
+</DL>
 
 <H3>Parameters:</H3>
 

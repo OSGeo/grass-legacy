@@ -32,6 +32,8 @@ HEADER FILES:
 
 #endif
 
+#include "gis.h"
+
 
 /*
 FUNCTION PROTOTYPES:
@@ -243,6 +245,11 @@ int main(
  char   vt_2name[15];          /* Filename for verification output table 2. */
  char   vt_3name[15];          /* Filename for verification outpuf table 3. */
 
+ struct GModule *module;
+ struct Option *input;
+ struct Flag *gis, *source;
+ struct Flag *sediment, *nutrient, *debug, *hydro;
+
 
 /*
 
@@ -290,34 +297,54 @@ int main(
 
  /****** DEAL WITH COMMAND LINE ARGUMENTS *******/
 
+ G_gisinit(argv[0]);
 
+ module = G_define_module();
+ module->description =
+	 "Assess nonpoint source pollution origination and movement in a watershed (AGNPS erosion modelling).";
+
+ input = G_define_option();
+ input->key            = "input";
+ input->type           = TYPE_STRING;
+ input->required       = YES;
+ input->description    = "Data file to be analyzed";
+
+ gis = G_define_flag();
+ gis->key              = 'g';
+ gis->description      = "Create GIS formatted output file";
+
+ source = G_define_flag();
+ source->key           = 'a';
+ source->description   = "Enable source accounting";
+
+ sediment = G_define_flag();
+ sediment->key         = 's';
+ sediment->description = "Output sediment information";
+
+ nutrient = G_define_flag();
+ nutrient->key         = 'n';
+ nutrient->description = "Output nutrient information";
+
+ hydro = G_define_flag();
+ hydro->key            = 'h';
+ hydro->description    = "Output hydro information";
+
+ debug = G_define_flag();
+ debug->key            = 'd';
+ debug->description    = "Output debug information";
+
+
+ if (G_parser(argc, argv))
+  exit(1);
+
+  {
  /* Change C0004 */
 
- if (argc < 3) /* agrun didn't receive enough parameters to run */
+   strcpy(sDATANAME, input->answer);
+   namelength = strlen(input->answer);
 
-  {
-   puts("\nAGNPS SCS version 5.00\n");
-   puts("Supply the following command line arguments:\n");
-   puts("     r.agnps50.run wshed.dat 0 1 1\n");
-   puts("Where 'wshed.dat' is the name of the data file to be analyzed.");
-   puts("and the 0 or 1 determines whether or not AGNPS should produce.");
-   puts("a GIS formatted output file.  The second 0 or 1 flag is an ");
-   puts("indicator to turn on the creation of the binary files.  The third");
-   puts("0 or 1 flag is to turn on the file creation for the source acct");
-
-  }
-
- else /* Agrun has all the variables that it needs to run */
-
-  {
-
-
-   strcpy(sDATANAME, argv[1]);
-   strcpy(dataout,  argv[1]);
-   namelength = strlen(dataout);
-   dataout[namelength - 3] = 'n';
-   dataout[namelength - 2] = 'p';
-   dataout[namelength - 1] = 's';
+   strcpy(dataout,  input->answer);
+   strcpy(&dataout[namelength - 3], "nps");
    fp1 = fopen(sDATANAME,"r");  /* Open up the input file */
    nps = fopen(dataout, "w");  /* Open up the output file */
 
@@ -352,11 +379,8 @@ int main(
 
      if (tflags.hydro_table)           /* Hydrology verif output table. */
       {
-       strcpy(vt_1name,  argv[1]);
-       namelength = strlen(vt_1name);
-       vt_1name[namelength - 3] = 'v';
-       vt_1name[namelength - 2] = 't';
-       vt_1name[namelength - 1] = '1';
+       strcpy(vt_1name,  input->answer);
+       strcpy(&vt_1name[namelength - 3], "vt1");
 
        vfy1 = fopen(vt_1name,"w+");
        strcpy(htable.ht[0].name,sDATANAME);
@@ -367,11 +391,8 @@ int main(
 
      if (tflags.sed_table)           /* Sediment verif output table. */
       {
-       strcpy(vt_2name,  argv[1]);
-       namelength = strlen(vt_2name);
-       vt_2name[namelength - 3] = 'v';
-       vt_2name[namelength - 2] = 't';
-       vt_2name[namelength - 1] = '2';
+       strcpy(vt_2name,  input->answer);
+       strcpy(&vt_2name[namelength - 3], "vt2");
 /*     for (i = 1; i <= 9; ++i)
 	stable->st[i]->column_id = calloc(1,sizeof(int));
 */
@@ -386,11 +407,8 @@ int main(
       }
      if (tflags.chem_table)            /* Chemical verif output table.  */
       {
-       strcpy(vt_3name,  argv[1]);
-       namelength = strlen(vt_3name);
-       vt_3name[namelength - 3] = 'v';
-       vt_3name[namelength - 2] = 't';
-       vt_3name[namelength - 1] = '3';
+       strcpy(vt_3name,  input->answer);
+       strcpy(&vt_3name[namelength - 3], "vt3");
 
        vfy3 = fopen(vt_3name,"w+");
        strcpy(ctable.ct[0].name,sDATANAME);
@@ -402,96 +420,40 @@ int main(
      fclose(dbfp);
     }
 
-   if ( argv[2][0] == '1')             /* GIS file? */
+   if ( gis->answer)             /* GIS file? */
     {
      doGIS = TRUE;
-     strcpy(GISout, argv[1]);
-     GISout[namelength - 3] = 'g';
-     GISout[namelength - 2] = 'i';
-     GISout[namelength - 1] = 's';
+     strcpy(GISout, input->answer);
+     strcpy(&GISout[namelength - 3], "gis");
      GISfp = fopen(GISout, "w");
     }
 
-      strcpy(init_out, argv[1]);
-      namelength = strlen(init_out);
-      init_out[namelength-3] = 'i';
-      init_out[namelength-2] = 'n';
-      init_out[namelength-1] = 'i';
+      strcpy(init_out, input->answer);
+      strcpy(&init_out[namelength-3], "ini");
 
-
-      if (  argv[4][0] == '1')
+      if (source->answer)
 	sourceinfo=TRUE;
 
+      if (sediment->answer)
+       sedimentinfo = TRUE;
 
-   for(argument_check=2; argument_check<=(argc-1); argument_check++)
-    {
+      if (nutrient->answer)
+       nutrientinfo = TRUE;
 
-     switch(argv[argument_check][0])
-      {
+      if (debug->answer)
+       debuginfo = TRUE;
 
-       case 'S': sedimentinfo = TRUE;
-		 break;
-       case 's': sedimentinfo = TRUE;
-		 break;
-       case 'N': nutrientinfo = TRUE;
-		     break;
-       case 'n': nutrientinfo = TRUE;
-		     break;
-       case 'D': debuginfo = TRUE;
-		     break;
-       case 'd': debuginfo = TRUE;
-		     break;
-       case 'h': hydroinfo = TRUE;
-		    break;
-       default :
-		     break;
-      }
-    }
-
-
-   /* This part of the program checks to see what the user has input for flags
-      and sets the flags for the debug output. */
-
-   for(argument_check=2; argument_check<=(argc-1); argument_check++)
-    {
-     switch(argv[argument_check][0])
-      {
-       case 'S': sedimentinfo = TRUE;
-		 break;
-       case 's': sedimentinfo = TRUE;
-		 break;
-       case 'N': nutrientinfo = TRUE;
-		     break;
-       case 'n': nutrientinfo = TRUE;
-		     break;
-       case 'D': debuginfo = TRUE;
-		     break;
-       case 'd': debuginfo = TRUE;
-		     break;
-       case 'h':  hydroinfo = TRUE;
-		     break;
-       default :
-		     break;
-      }
-    }
-
+      if (hydro->answer)
+       hydroinfo = TRUE;
 
   if(hydroinfo)
    {
-    strcpy(sDATANAME, argv[1]);
-    strcpy(dataout,  argv[1]);
-    namelength = strlen(dataout);
-    dataout[namelength - 3] = 'i';
-    dataout[namelength - 2] = 'm';
-    dataout[namelength - 1] = 'p';
+    strcpy(dataout,  input->answer);
+    strcpy(&dataout[namelength-3], "imp");
     imp = fopen(dataout, "w");  /* Open up the output file */
 
-    strcpy(sDATANAME, argv[1]);
-    strcpy(dataout,  argv[1]);
-    namelength = strlen(dataout);
-    dataout[namelength - 3] = 'h';
-    dataout[namelength - 2] = 'y';
-    dataout[namelength - 1] = 'd';
+    strcpy(dataout,  input->answer);
+    strcpy(&dataout[namelength-3], "hyd");
     hyd = fopen(dataout, "w");  /* Open up the output file */
 
     fprintf(hyd,"Column  Increment	Top Flow	Bottom Flow	Duration\n");

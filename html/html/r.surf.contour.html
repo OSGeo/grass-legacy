@@ -45,16 +45,16 @@ the contour lines is made with the elevation of each line as its label
 </EM>).  When the program <EM>
 <A HREF="v.to.rast.html">v.to.rast</A>
 </EM>
-is run on the vector map, continuous "lines" of rasters containing the contour
-line values will be the input for <EM>r.surf.contour</EM>.
-For each cell in the input map, either the cell is a contour line cell (which
-is given that value), or a flood fill is generated from that spot until the
-fill comes to two unique values.
-The flood fill is not allowed to cross over the rasterized contour lines, thus
-ensuring that an uphill and downhill contour value will be the two values
-chosen.  
-<EM>r.surf.contour</EM> interpolates from the uphill and downhill values by the 
-true distance.
+
+is run on the vector map, continuous "lines" of rasters containing the
+contour line values will be the input for <EM>r.surf.contour</EM>. For each
+cell in the input map, either the cell is a contour line cell (which is
+given that value), or a flood fill is generated from that spot until the
+fill comes to two unique values. So the <EM>r.surf.contour</EM> linearly
+interpolates between contour lines. The flood fill is not allowed to cross over
+the rasterized contour lines, thus ensuring that an uphill and downhill
+contour value will be the two values chosen.  <EM>r.surf.contour</EM>
+interpolates from the uphill and downhill values by the true distance.
 
 
 <P>
@@ -173,3 +173,6 @@ Chuck Ehlschlaeger, U.S. Army Construction Engineering Research Laboratory
 
 <P>
 
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -18,6 +18,7 @@ and
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "gmath.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -33,7 +34,6 @@ main (int argc, char *argv[])
         CELL *cell_row, *maskbuf;
         char buffer[100];
 
-        long max_pow2(); /* Used to find the smallest power of 2 >= to a number */
         int i,j;         /* Loop control variables */
         int or,oc;      /* Original dimensions of image */
         int rows,cols;  /* Smallest powers of 2 >= number of rows & columns */
@@ -42,10 +42,16 @@ main (int argc, char *argv[])
         double *data[2]; /* Data structure containing real & complex values of FFT */
         int inv_save_args(); /* function to stash the command line arguments */
         struct Option *op1, *op2, *op3;
+        struct GModule *module;
         char *me;
 
         G_gisinit(argv[0]);
         me = G_program_name();
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Inverse Fast Fourier Transform (ifft) for image processing.";
 
         /* define options */
         op1=G_define_option();
@@ -222,7 +228,7 @@ main (int argc, char *argv[])
                 for (j=0; j<oc; j++) {
                         *(cell_row+j) = (CELL) (*(data[0]+i*cols+j) + 0.5);
                 }
-                G_put_map_row(outputfd, cell_row);
+                G_put_raster_row(outputfd, cell_row, CELL_TYPE);
         }
         G_close_cell(outputfd);
 
@@ -247,31 +253,3 @@ main (int argc, char *argv[])
 exit(0);
 }
 
-
-/*****************************************************************************/
-/* MAX_POW2 : finds least power of 2 greater than or equal to number         */
-/*                                                                           */
-/* Input arguments: n - unsigned integer, the number                         */
-/*                                                                           */
-/* Output is an integer power of 2                                           */
-/*                                                                           */
-/*****************************************************************************/
-
-long 
-max_pow2 (long n)
-
-{
-        long p2, n1;
-
-        n1 = n >> 1;
-        p2 = 1;
-        while (n1 > 0)
-        {
-                n1 >>= 1;
-                p2 <<= 1;
-        }
-        if (p2 < n) p2 <<=1;
-        return(p2);
-}   /* end max_pow2 */
-
-/*************************************************************************/

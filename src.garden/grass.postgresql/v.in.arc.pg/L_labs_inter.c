@@ -37,10 +37,10 @@ GenToLabelledDigLines (FILE *lin_file, FILE *txt_file, FILE *atts_file, struct M
 	int   i, id;
 	int   done=0;
 	int   almost_done=0;
-	double xtmp, ytmp, xtmp1, ytmp1;
+	double xtmp=0, ytmp=0, xtmp1=0, ytmp1=0;
 	int    first=1;
-	double xmin,xmax;
-	double ymin,ymax;
+	double xmin=0,xmax=0;
+	double ymin=0,ymax=0;
 	int   itmp;
 	struct Categories new_cats;
 	int   vertex_count=0;
@@ -54,14 +54,8 @@ GenToLabelledDigLines (FILE *lin_file, FILE *txt_file, FILE *atts_file, struct M
 	char  tmpbuf[1024], tmp[1024];
 	int   CatStat;
 	int   CatNum;
-	int   NumCats;
-	int   NumCols,
-	NumLines,
-	IDCol,
-	AttCol,
-	CatCol;
 	char  AttText[512];
-	char  txtbuf[512];
+
 	char  *G_whoami();
 
 	struct dig_head head;

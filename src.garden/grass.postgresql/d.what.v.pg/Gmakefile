@@ -1,6 +1,6 @@
 PGM       = $(BIN_CMD)/d.what.v.pg
-LIBES     = $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) \
-		$(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
 
 OBJS = \
 	main.o  \
@@ -15,6 +15,6 @@ EXTRA_CFLAGS =  $(PQINCPATH)
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,0 +1,26 @@
+#!/bin/sh
+echo "
+To give all users access to GRASS 5 put 
+/opt/GNUgrass/bin in the path for the users, e. g.:
+export PATH=\$PATH:/opt/GNUgrass/bin
+or add the path to the system wide or users .profile file. 
+
+Now you should be able to start grass with:
+grass5
+
+Alternatively you can create a link with:
+ln -s /opt/GNUgrass/bin/grass5 /usr/local/bin/grass5
+or similar. 
+
+If you have installed the libraries in a directory which is not in the
+default library search path (e. g. /opt/sfw/lib) you may: 
+
+1) create softlinks to /usr/lib 
+2) export LD_LIBRARY_PATH before starting grass, from a configuration file,
+like .profile
+3) add the directories system-wide to the search path, e. g. use crle -u -l
+/usr/local/lib to add the path to the configuration file /var/ld/ld.conf, see
+man ld.so.1 and man crle for more details."
+
+exit 0
+

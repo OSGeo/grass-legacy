@@ -69,3 +69,4 @@ else
     	d.frame -s at=0,100,0,65
     fi
 fi
+d.frame -s frame=full_screen
