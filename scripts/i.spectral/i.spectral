@@ -88,17 +88,20 @@ fi
 RASTERMAPS="$GIS_OPT_band1 $GIS_OPT_band2 $GIS_OPT_band3 $GIS_OPT_band4 $GIS_OPT_band5 $GIS_OPT_band6 $GIS_OPT_band7 $GIS_OPT_band8"
 RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
 
-d.where -1 |r.what input=$RASTERMAPS > /tmp/spectr.dum1
-cat /tmp/spectr.dum1 | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > /tmp/spectr.dum2
-COORD="`cat /tmp/spectr.dum1 | cut -d'|' -f1,2 | tr '|' ' '`"
-NUM="`cat /tmp/spectr.dum2 |wc -l`"
+TMP1="`g.tempfile pid=$$`"
+TMP2="`g.tempfile pid=$$`"
+
+d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
+cat "$TMP1" | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > "$TMP2"
+COORD="`cat "$TMP1" | cut -d'|' -f1,2 | tr '|' ' '`"
+NUM="`cat "$TMP2" | wc -l`"
 NUM2=`expr $NUM + 1`
 
 
 # build data file
 # the x-axis... depending on number of bands
 rm -f spectrum.data.dum
-file=/tmp/spectr.dum2
+
 i=1
 
 while [ $i != $NUM2 ]
@@ -107,8 +110,8 @@ do
  i=`expr $i + 1`
 done 
 # paste to data file
-paste -d' ' spectrum.data.dum /tmp/spectr.dum2 > spectrum.data
-rm -f /tmp/spectr.dum1 /tmp/spectr.dum2
+paste -d' ' spectrum.data.dum "$TMP2" > spectrum.data
+rm -f "$TMP1" "$TMP2"
 echo ""
 echo "Band - DN at $COORD"
 cat  spectrum.data
