@@ -161,7 +161,7 @@ c_table_definition ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[
 	    return TCL_OK;
 	}
 	db_init_handle (&handle);
-	db_set_handle (&handle, Vect_subst_var(Fi->database,Map.name,G_mapset()), NULL);
+	db_set_handle (&handle, Vect_subst_var(Fi->database,&Map), NULL);
 	if (db_open_database(driver, &handle) != DB_OK) {
 	    G_warning ( "Cannot open database %s", Fi->database );
 	    db_shutdown_driver(driver);
@@ -206,7 +206,7 @@ c_create_table ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     db_init_string (&err);
     field = atoi ( argv[1] );
 
-    Fi = Vect_default_field_info ( Map.name, field, NULL, GV_1TABLE );
+    Fi = Vect_default_field_info ( &Map, field, NULL, GV_1TABLE );
     G_debug (2, "driver = %s, database = %s",  Fi->driver, Fi->database );
 
     driver = db_start_driver( Fi->driver );
@@ -218,7 +218,7 @@ c_create_table ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	return TCL_OK;
     }
     db_init_handle (&handle);
-    db_set_handle (&handle, Vect_subst_var(Fi->database,Map.name,G_mapset()), NULL);
+    db_set_handle (&handle, Vect_subst_var(Fi->database, &Map), NULL);
     if (db_open_database(driver, &handle) != DB_OK) {
 	G_warning ( "Cannot open database %s", Fi->database );
 	db_set_string ( &err, "Cannot open database " );

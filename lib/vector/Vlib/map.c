@@ -106,13 +106,13 @@ Vect_copy ( char *in, char *mapset, char *out )
 	    Vect_close ( &Out );
 	    return -1;
 	}
-	Fin = Vect_default_field_info ( Out.name, Fi->number, Fi->name, type );
+	Fin = Vect_default_field_info ( &Out, Fi->number, Fi->name, type );
         G_debug (3, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
 	              Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
 	Vect_map_add_dblink ( &Out, Fi->number, Fi->name, Fin->table, Fi->key, Fin->database, Fin->driver);
         
 	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
-		    Fin->driver, Vect_subst_var(Fin->database,Out.name,G_mapset()), Fin->table );
+		    Fin->driver, Vect_subst_var(Fin->database,&Out), Fin->table );
 	if ( ret == DB_FAILED ) {
 	    G_warning ( "Cannot copy table" );
 	    Vect_close ( &In );
@@ -266,7 +266,7 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 	}
 	if ( field > 0 && Fi->number != field ) continue;
 
-	Fin = Vect_default_field_info ( Out->name, Fi->number, Fi->name, type );
+	Fin = Vect_default_field_info ( Out, Fi->number, Fi->name, type );
         G_debug (2, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
 	              Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
 	
@@ -277,7 +277,7 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 	}
         
 	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
-		    Fin->driver, Vect_subst_var(Fin->database,Out->name,G_mapset()), Fin->table );
+		    Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table );
 	if ( ret == DB_FAILED ) {
 	    G_warning ( "Cannot copy table" );
 	    return -1;
@@ -313,7 +313,7 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
     if ( field_name != NULL ) name = field_name;
     else name = Fi->name;
     
-    Fin = Vect_default_field_info ( Out->name, field_out, name, type );
+    Fin = Vect_default_field_info ( Out, field_out, name, type );
     G_debug (2, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
 		  Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
     
@@ -324,7 +324,7 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
     }
     
     ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
-		Fin->driver, Vect_subst_var(Fin->database,Out->name,G_mapset()), Fin->table );
+		Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table );
     if ( ret == DB_FAILED ) {
 	G_warning ( "Cannot copy table" );
 	return -1;
