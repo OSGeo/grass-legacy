@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.28 2000-10-13 17:24:35 markus Exp $
+$Id: BUGS,v 1.29 2000-10-14 16:45:50 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -213,6 +213,11 @@ r.mapcalc
   yacc pol.y
   yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
 
+r.neighbors 
+ seems doesn't work with a float number                   
+ when use median method. It fails in -0.001 value with 3x3 window. 
+ (report: Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
+
 r.null:
  does not work with reclassified maps
 
@@ -367,4 +372,4 @@ else within Grass, though.
 
 ---------------------------------------------------------------------
 
- $Id: BUGS,v 1.28 2000-10-13 17:24:35 markus Exp $
+ $Id: BUGS,v 1.29 2000-10-14 16:45:50 markus Exp $
