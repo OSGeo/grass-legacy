@@ -17,7 +17,7 @@ FNT = $(FONTDIR)/cyrilc
 
 default: $(OBJDIR)/font.bin $(FNT)
 
-$(FNT): $(OBJDIR)/splitfont font.bin
+$(FNT): $(OBJDIR)/splitfont $(OBJDIR)/font.bin
 	$(OBJDIR)/splitfont $(FONTDIR) < $(OBJDIR)/font.bin
 
 $(OBJDIR)/font.bin: $(OBJDIR)/font_2_bin $(RAWFONT)
