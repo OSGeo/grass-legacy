@@ -1,0 +1,40 @@
+# Location specific programs to be compiled.  Lines containing # as the
+# first character of a line are comments and ignored.
+#
+# Digitizer drivers : generally site specific - same across several machines
+#
+mapdev/digitizers/none
+# mapdev/digitizers/altek
+# mapdev/digitizers/altek2
+# mapdev/digitizers/calcomp
+# mapdev/digitizers/geograph
+# mapdev/digitizers/hitachi
+# mapdev/digitizers/kurta
+# mapdev/digitizers/kurta2
+# mapdev/digitizers/numonics
+#
+# Paint drivers : generally site specific - same across several machines
+#
+paint/Drivers/preview
+# paint/Drivers/ppm
+# paint/Drivers/act2
+# paint/Drivers/diablo.c150
+# paint/Drivers/epson.lq2500
+# paint/Drivers/genicom3310
+# paint/Drivers/shinko635
+# paint/Drivers/tek4695
+# paint/Drivers/tek4697
+# paint/Drivers/versatec
+#
+# Graphics drivers : generally machine specific
+#
+# CELL is a driver that creates images in a new raster map.  It is not
+# machine specific.
+display/devices/CELL
+# display/devices/XDRIVER
+# display/devices/4105
+# display/devices/GENERIC
+# display/devices/IGRAPH
+# display/devices/IRIS
+# display/devices/MASS
+# display/devices/SUNVIEW
