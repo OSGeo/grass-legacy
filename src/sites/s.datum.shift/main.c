@@ -1,10 +1,22 @@
-/* 
- * s.datum.shift:
- * testing program for coordinate conversion library
- * mainly stolen from s.proj
- * andreas.lange@rhein-main.de, 10/2000
- */
-
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:      s.datum.shift
+ * AUTHOR(S):   Andreas Lange - andreas.lange@rhein-main.de
+ *              mainly stolen from s.proj of Bill Brown 
+ * PURPOSE: 	testing program for coordinate conversion library,
+ *              datum shifting part. The program can be used to shift 
+ *              a site file from one datum to another. This function
+ *              should later go into s.proj. 
+ * COPYRIGHT:   (C) 2000 by the GRASS Development Team
+ *
+ *              This program is free software under the GNU General Public
+ *   	    	License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +31,10 @@ FILE *infile, *outfile;
 int
 main(int argc, char **argv)
 {
+
+  char *me;
+
+  struct GModule *module;
 
   char errbuf[256];          /* buffer for error messages */
 
@@ -44,16 +60,24 @@ main(int argc, char **argv)
 
 
   int (*funcp)();             /* define a pointer to a function 
-				 (which returns an interger) 
-				 for choosing formula */
+			       * (which returns an integer) 
+			       * for choosing formula */
   /* (int, double, double, double, double, int, double*, double*, double*); */
   /* pheew, that would the correct type be */
 
-  G_gisinit(argv[0]);
+  G_gisinit(me = argv[0]);
 
   datumlist = datum_list();
   proj = G_projection();
   /* mapset = G_store(G_mapset()); */
+
+  module = G_define_module();
+
+  module->description = 
+    "Shift the coordinates of a site file from one "
+    "map datum to another map datum. "
+    "This does a datum transformation within the "
+    "same mapset. ";
 
   in = G_define_option();
   in->key = "input";
@@ -142,7 +166,7 @@ main(int argc, char **argv)
 
       /* set up projection for lat/long reprojection */
       (void) pj_zero_proj(&pjll);
-      sprintf(pjll.proj,"ll");
+      sprintf(pjll.proj, "ll");
     }
   
   if (molod->answer) {
