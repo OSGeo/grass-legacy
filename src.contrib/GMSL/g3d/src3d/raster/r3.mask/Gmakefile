@@ -1,9 +1,19 @@
-PGM=r3.mask
+PGM1=r3.mask
+PGM2=r3.null
 
-LIST=main.o mask.o
+LIST1=mask_main.o mask.o
+LIST2=null_main.o mask.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(DEPG3DLIB) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+DEPLIBES=$(DEPG3DLIB) $(DEPGISLIB)
+
+all: $(BIN_CMD)/$(PGM1) $(BIN_CMD)/$(PGM2)
+
+$(BIN_CMD)/$(PGM1): $(LIST1) $(DEPLIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST1) $(LIBES)
+
+$(BIN_CMD)/$(PGM2): $(LIST2) $(DEPLIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(LIBES)
 
 $(DEPG3DLIB): #
 $(DEPGISLIB): #
