@@ -1,0 +1,6 @@
+#
+1
+1 Land_Suitability
+1 1 0 0.1 30 50 suitability_low
+1 0 30 50 70  suitability_medium
+1 1 50 70 100 100.5 suitability_high
