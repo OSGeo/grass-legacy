@@ -27,6 +27,13 @@
 #
 #############################################################################
 
+SOURCES="
+	src/display/devices/XDRIVER/XDRIVER24/SOCKET_NEW/SWITCHER.c
+	src/display/devices/XDRIVER/lib/SOCKET_NEW/connect.c
+	src/libes/raster/SOCKET_NEW/io.c
+"
+
+
 which gmake5 > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
@@ -64,9 +71,7 @@ fi
 go=0
 if [ "$1" = "new" ]
 then
-	for i in src/display/devices/XDRIVER/XDRIVER24/SOCKET_NEW/SWITCHER.c \
-		 src/display/devices/XDRIVER/lib/SOCKET_NEW/connect.c \
-		 src/libes/raster/SOCKET_NEW/io.c
+	for i in $SOURCES
 	do
 		orig=`echo $i | sed 's/SOCKET_NEW\///'`
 		new=`echo $i | sed 's/SOCKET_NEW\//socket.new\//'`
@@ -82,18 +87,18 @@ then
 		cp $new $orig
 	done
 else
-	for i in src/display/devices/XDRIVER/XDRIVER24/SWITCHER.c \
-		 src/display/devices/XDRIVER/lib/connect.c \
-		 src/libes/raster/io.c
+	for i in $SOURCES
 	do
-		if [ ! -f $i.orig ]
+		orig=`echo $i | sed 's/SOCKET_NEW\///'`
+		if [ ! -f $orig.orig ]
 		then
 			continue
 		fi
 		go=1
-		echo mv $i.orig $i
-		cp $i.orig $i
-		rm $i.orig
+		echo cp $orig.orig $orig
+		cp $orig.orig $orig
+		echo rm $orig.orig
+		rm $orig.orig
 	done
 fi
 
@@ -113,6 +118,8 @@ fi
 (cd src/display/devices/XDRIVER && gmake5)
 (cd src/libes/raster && gmake5)
 (cd src/display && gmake5)
+(cd src/raster && gmake5)
+(cd src/mapdev && gmake5)
 (cd src/paint/Drivers/preview && gmake5)
 (cd src/paint/Drivers/preview2 && gmake5)
 
@@ -120,3 +127,4 @@ echo
 echo "Thanks for your time."
 echo "If you have more time, you might want to recompile entire sources. :-)"
 echo
+
