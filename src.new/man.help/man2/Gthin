@@ -1,0 +1,52 @@
+.\" %M% %B%
+.TH Gthin 2G G-language
+.SH NAME
+Gthin \- Thin non-zero cells that denote linear features 
+in a cell file.
+.br
+.I "(G Language Tool)"
+.SH SYNOPSIS
+.B Gthin
+.I "input-cell-file thinned-cell-file"
+.SH DESCRIPTION
+.I Gthin
+scans the named \fIinput-cell-file\fR and thins non-zero cells that 
+denote linear features into linear features having a single cell width.
+
+.I Gthin
+will thin only the non-zero cells of the \fIinput-cell-file\fR 
+within the current window. 
+The cell width of the \fIthinned-cell-file\fR will be equal to 
+the resolution of the currently set window.  All of the thinned linear
+features will have the width of a single cell.  
+
+.I Gthin
+will create a new cell data file containing the thinned linear features.  
+.I Gthin 
+assumes 
+that linear features are encoded with positive values on a
+background on 0's in the 
+input cell file.  
+
+.SH NOTES
+.I Gthin 
+only creates cell files.
+You will need to run 
+.I Gline
+on the resultant cell file to create a vector (digit) file.
+
+.I Gthin 
+may create small spurs or "dangling lines" during the thinning process.
+These spurs may be removed (after creating a vector file) by  
+.I Gtrim.
+
+.SH "SEE ALSO"
+\fIGline[1]\fR, \fIGtrim[1]\fR, \fIsupport.vect[1]\fR
+
+.SH "AUTHOR"
+.nf
+Mike Baba
+DBA Systems, Inc.
+10560 Arrowhead Drive
+Fairfax, Virginia 22030
+
