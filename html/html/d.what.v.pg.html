@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
@@ -69,11 +69,12 @@ default: v</dd>
 
 <br>&nbsp;
 <p>&nbsp;
-
-<p><b>tab</b> is Postgres table containing column linked to vector
-attribute values, <b>col</b> - column associated with vector attribute
-values, <b>map</b> is name of an existing vector map with attribute
-values linked to the currently selected database.
+<br>&nbsp;
+<br>&nbsp;
+<p><b>tab</b> is Postgres table containing column linked to vector attribute
+values, <b>col</b> - column associated with vector attribute values, <b>map</b>
+is name of an existing vector map with attribute values linked to the currently
+selected database.
 <p>Reports database attributes from the currently selected database which
 are associated with specific vector features identified using the mouse.
 The currently selected database is identified by the GRASS environment
@@ -113,13 +114,8 @@ the map with mouse) .
 Name of an existing vector map.
 <h2>
 BUGS</h2>
-<font size=+0>1. As of now, d.vect.pg and d.what.v.pg both use R_polygon_abs()
-for</font>
-<br>filling polys, which seems to ignore islands. So you'd rather say to
-no fill the
-<br>areas.
-<p>2. Tcl-Tk modules require input "where" clause restricted to one rule
-typed without "whitespaces",
+<font size=+0>1.&nbsp;</font> Tcl-Tk modules require input "where" clause
+restricted to one rule typed without "whitespaces",
 <br>(unlike terminal input where number of subclause is not limited).
 <p>This program requires the Postgres database software.
 <h2>
