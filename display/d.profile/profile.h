@@ -81,7 +81,7 @@ struct windows profiles[] =
 #else
 extern struct windows windows[];
 extern struct windows profiles[];
-#endif MAIN
+#endif
 
 #define MOU     windows[0]
 #define STA     windows[1]
