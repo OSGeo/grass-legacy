@@ -1,4 +1,4 @@
-# @(#)Element_List	2.4  12/2/87
+# @(#)Element_List
 # this file specifies the database elements that 
 # are processed by RENAME, REMOVE, COPY, and LIST
 #
@@ -20,6 +20,8 @@ dig:vect:vector:binary vector files
   dig_cats:category
   dig_misc:misc
   reg:point registration
+dig_ascii:asciivect:asciivector:ascii vector files
+grid3:rast3d:raster3D:raster3D files
 icons:icon:icon:paint icon files
 paint/labels:labels:label:paint label files
 site_lists:sites:site list:site list files
