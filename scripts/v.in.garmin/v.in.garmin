@@ -300,11 +300,6 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    exit 1
 	fi
 
-	if [ $VERBOSE -eq 1 ] ; then
-	    echo
-	    echo "<$NAME> columns:"
-	    db.columns "$NAME"
-	fi
     fi
 
 #####################
@@ -437,6 +432,14 @@ EOF
     fi
 
 fi  # if CREATE_POINTS or CREATE_LINES
+
+
+# list column names
+if [ $VERBOSE -eq 1 ] ; then
+    echo
+    echo "<$NAME> columns:"
+    db.columns "$NAME"
+fi
 
 
 #### clean up the mess
