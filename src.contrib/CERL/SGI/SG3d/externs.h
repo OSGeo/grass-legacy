@@ -88,6 +88,7 @@ typedef struct key_node{
 
 
 /* Extern variables */
+#undef GLOBAL
 #ifdef MAIN
 #define GLOBAL
 #else
@@ -222,7 +223,9 @@ GLOBAL Panel *P_Path, *P_Keyframe, *P_Scale, *P_Label;
 
 /* Extern routines */
 char *getenv ();
+/*
 char *malloc ();
+*/
 
 #ifdef MAIN
     Matrix ID_matrix = {
