@@ -106,7 +106,7 @@ int main (int argc, char **argv)
 
 	opt2 = G_define_option();
 	opt2->key = "remove";
-	opt2->description = "List no's to be removed, which are displayed in the right-most comments.";
+	opt2->description = "List no's to be removed, which are displayed in the right-most comments.\n\t\tNote: 0 means the first drawing(equals 1), -1 means the last one.";
 	opt2->type = TYPE_INTEGER;
 	opt2->required = NO;
 	opt2->multiple = YES;
@@ -213,11 +213,16 @@ int main (int argc, char **argv)
 				{
 					for (i=0; i<total_rno; i++)
 					{
-						if (rno[i]<=nlists)
-						{
-							redraw = 1;
-							live[nlists-rno[i]] = -1;
-						}
+						if (rno[i]<-1 || rno[i]>nlists)
+							continue;
+
+						redraw = 1;
+
+						rno[i] = (rno[i]==-1 ?
+							  nlists:(rno[i]==0 ?
+							   1:rno[i]));
+
+						live[nlists-rno[i]] = -1;
 					}
 					G_free(rno);
 				}
@@ -226,13 +231,18 @@ int main (int argc, char **argv)
 				{
 					for (i=0; i<total_mno; i++)
 					{
-						from = mno[i][0];
-						to = mno[i][1];
-						to = (to<1 ? 1:(to>nlists ? nlists:to));
-						if (live[nlists-from]<0 ||
-						    from<1		||
+						from = (mno[i][0]==-1 ?
+							  nlists:(mno[i][0]==0 ?
+							   1:mno[i][0]));
+						to = (mno[i][1]==-1 ?
+							  nlists:(mno[i][1]==0 ?
+							   1:mno[i][1]));
+						if (from<1		||
 						    from>nlists		||
-						    from==to)
+						    to<1		||
+						    to>nlists		||
+						    from==to		||
+						    live[nlists-from]<0)
 						{
 							G_free(mno[i]);
 							continue;
