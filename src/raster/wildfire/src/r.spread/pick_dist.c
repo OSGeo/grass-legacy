@@ -14,7 +14,7 @@
  * Author: Jianping Xu, Rutgers University
  * Date: 06/11/1994
  ******************************************************************************/
-#include <values.h>
+#include <limits.h>
 #include <math.h>
 
 pick_dist (u)
@@ -22,7 +22,7 @@ int u;
 {
 	int v;
 
-	v = (int)((u   + 0.99999999999)*rand()/MAXINT);
-        u = (int)((v   + 0.99999999999)*rand()/MAXINT);
-	return ((int)((u+0.99999999999)*rand()/MAXINT)); /*4th for a test*/
+	v = (int)((u   + 0.99999999999)*rand()/INT_MAX);
+        u = (int)((v   + 0.99999999999)*rand()/INT_MAX);
+	return ((int)((u+0.99999999999)*rand()/INT_MAX)); /*4th for a test*/
 }

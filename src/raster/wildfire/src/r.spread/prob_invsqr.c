@@ -14,7 +14,7 @@
  * Author: Jianping Xu, Rutgers University
  * Date: 06/11/1994
  ******************************************************************************/
-#include <values.h>
+#include <limits.h>
 #include <math.h>
 #include <sys/types.h>
 
@@ -28,11 +28,11 @@ int argc; char **argv;
     num = atoi(argv[2]);
     i=0;
     while (i<num) {
-	A[i] = (int)((max+.999999999999)*(float)rand()/MAXINT); i++;
+	A[i] = (int)((max+.999999999999)*(float)rand()/INT_MAX); i++;
 	if (i==num) break;
-	A[i] = (int)((A[i-1]+0.99999999999)*(float)rand()/MAXINT); i++;
+	A[i] = (int)((A[i-1]+0.99999999999)*(float)rand()/INT_MAX); i++;
 	if (i==num) break; 
-	A[i] = (int)((A[i-1]+0.99999999999)*(float)rand()/MAXINT); i++;
+	A[i] = (int)((A[i-1]+0.99999999999)*(float)rand()/INT_MAX); i++;
     }
     for (i=0; i<num; i++) printf ("%d\n", A[i]); 
 }
