@@ -118,7 +118,7 @@ menu_build 1 .main_menu {
 		"r3.out.v5d" {
 	    "exec xwd -out map.xwd"}
 	    "PNG (save currently selected display to 24 bit PNG file)" "d.out.png" {
-	    "exec d.out.png"}
+	    "exec d.out.png &"}
 	}
 	"Postscript map creation" "ps.map" {"exec ps.map &"}
 	"Print (Use display manager)" "" {"do_nothing"}
@@ -298,9 +298,9 @@ menu_build 1 .main_menu {
 	    "exec show.color.sh &"}
 	    -separator
 	    "Overlay bar scale and north arrow" "" {
-	    "exec d.barscale *"}
+	    "exec d.barscale &"}
 	    "Overlay line scale and north arrow" "" {
-	    "exec d.scale *"}
+	    "exec d.scale &"}
 	    "Overlay grid" "" {
 	    "exec d.grid &"}
 	    "Overlay slope arrows on aspect raster map" "" {
@@ -663,7 +663,7 @@ menu_build 1 .main_menu {
 	    "Generate vector points from database x&y coordinates" "" {
 	    "exec v.in.db &"}
 	    "Generate area feature for extent of current region" "" {
-	    "exec v.in region &"}
+	    "exec v.in.region &"}
 	}
 	"Generate points" "" {
 	    "Generate random points" "" {
