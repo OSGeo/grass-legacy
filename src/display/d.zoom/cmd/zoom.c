@@ -34,7 +34,7 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	}
     }
 
-    if (!quitonly)
+    if (!quitonly || quitonly == 2)
        G_put_window(&window) ;
 
     if(!quiet)
