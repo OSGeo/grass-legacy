@@ -1,0 +1,39 @@
+.TH s.to.rast
+.SH NAME
+\fIs.to.rast\fR \- Converts a site file to a cell file
+.br
+.I "(CCRS Contrib Program)"
+.SH SYNOPSIS
+\fBs.to.rast\fR
+.br
+\fBs.to.rast help\fR
+.br
+\fBs.to.rast\fR \fB[-v]\fR \fBinput=\fIname\fR \fBoutput=\fIname\fR
+.SH DESCRIPTION
+.I s.to.rast converts a GRASS site file to a GRASS cell file. The program
+uses a subset of the functions in s.menu.
+
+The quad size (ie the number of cells used to represent one site) is
+fixed to 0 (ie one cell/site). If the output file already exists, the
+program exits gracefully.
+
+.LP
+\fBFlag:\fR
+.IP\fB-v\fR 18
+Run the program verbosely.
+
+.LP 
+\fBParameters:\fR
+.IP \fIinput\*=\fIname\fR 18
+Name of input site list (in GRASS db)
+.IP \fIoutput\*=\fIname\fR 18
+Name of output cell file
+
+.SH BUGS
+None
+
+.SH "SEE ALSO"
+s.menu
+
+.SH AUTHOR
+Katarina Johnsson, CCRS
