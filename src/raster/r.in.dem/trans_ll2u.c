@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <values.h>
+#include <limits.h>
+
 #include "gis.h"
 #include "bintree.h"
 #include "dem.h"
@@ -25,8 +26,8 @@ int conv_head_ll2u(struct dem_head *dem_head, struct Cell_head *cell_head){
   if (VERBOSE) fprintf(stdout, "Converting DEM head from LL to UTM\n");
   east = (double *)G_calloc((int)dem_head->num_sides, (int)sizeof(*east));
   north = (double *)G_calloc((int)dem_head->num_sides, (int)sizeof(*north));
-  emin = nmin = MAXDOUBLE;
-  emax = nmax = MINDOUBLE;
+  emin = nmin = DBL_MIN;
+  emax = nmax = DBL_MAX;
   cell_head->zone = 0;
 
   for (i=0; i<dem_head->num_sides; i++){   /* Get extremeties on UTM grid */ 
