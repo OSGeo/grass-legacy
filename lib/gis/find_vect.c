@@ -21,7 +21,7 @@
  **********************************************************************/
 
 #include "gis.h"
-#include "Vect.h"
+#include "vect/dig_defines.h"
 
 char *
 G_find_vector (name, mapset)
