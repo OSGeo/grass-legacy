@@ -14,3 +14,5 @@ $(PROG): $(OFILES) $(GISLIB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB)
 	mv a.out $@
+
+$(GISLIB): #
