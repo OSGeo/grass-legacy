@@ -17,7 +17,13 @@ main (int argc, char **argv)
 	int color ;
 	double size ;
 	double east, north ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
+
+	module = G_define_module();
+	module->description =
+		"Overlays a user-specified grid "
+		"in the active display frame on the graphics monitor.";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "size" ;
