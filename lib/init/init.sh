@@ -136,7 +136,7 @@ export PATH
 # more GRASS related shared libraries in $GISBASE/lib.
 # first search local libs, then in GRASS lib/
 #
-# Of course MacOSX wants it's private solution:
+# MacOSX wants it's private solution:
 if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" ] ; then
   if [ ! "$DYLD_LIBRARY_PATH" ] ; then
     DYLD_LIBRARY_PATH=$GISBASE/lib
@@ -191,8 +191,14 @@ if [ ! "$GRASS_TCLSH" ] ; then
 fi
 
 if [ ! "$GRASS_WISH" ] ; then
-    GRASS_WISH=wish
-    export GRASS_WISH
+   if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" ] ; then
+      #force X11 tcl on Mac:
+      GRASS_WISH=/usr/bin/wish
+      export GRASS_WISH
+   else
+      GRASS_WISH=wish
+      export GRASS_WISH
+   fi
 fi
 
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
