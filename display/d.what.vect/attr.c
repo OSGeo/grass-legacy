@@ -1,8 +1,10 @@
 #include "gis.h"
 #include "dbmi.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-int disp_attr(char *driname, char *dbname, char *tabname, char *key, int *keyval )
+int disp_attr(char *driname, char *dbname, char *tabname, char *key, int keyval )
 {
 	int      col, ncols, ctype, sqltype, more; 
         char     buf[5001], *colname;
