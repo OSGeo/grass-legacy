@@ -1,0 +1,25 @@
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+Mrowcol	rowcol.c	/^main()$/
+ask_file_from_list	ask_files2.c	/^ask_file_from_list (name, mapset)$/
+ask_files	ask_files.c	/^ask_files (group)$/
+ask_window	ask_wind.c	/^ask_window (window)$/
+cmp	matrix.c	/^cmp (a, b)$/
+compress	compress.c	/^compress (name)$/
+compute_georef_matrix	matrix.c	/^compute_georef_matrix (win1, win2)$/
+do_cell	perform.c	/^do_cell (row, in, out)$/
+dots	ask_files.c	/^dots (buf, n)$/
+exec_rectify	exec.c	/^exec_rectify ()$/
+georef_window	get_wind.c	/^georef_window (w1, w2)$/
+get_control_points	cp.c	/^get_control_points (group)$/
+get_target	target.c	/^get_target (group)$/
+get_target_window	get_wind.c	/^get_target_window()$/
+mail	mail.c	/^mail (mailfile)$/
+perform_georef	perform.c	/^perform_georef (infd, outfd, cell)$/
+rectify	rectify.c	/^rectify (name, mapset, result, is_supercell)$/
+report	report.c	/^report (mailfile, name, mapset, result, rectify, c/
+round	ask_wind.c	/^round (x)$/
+select_current_env	env.c	/^select_current_env()$/
+select_target_env	env.c	/^select_target_env()$/
+show_env	env.c	/^show_env()$/
+visually_equal	ask_wind.c	/^visually_equal (x, y)$/
+write_matrix	write.c	/^write_matrix (outfd, row, col)$/
