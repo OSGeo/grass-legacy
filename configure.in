@@ -280,6 +280,7 @@ AC_SUBST(TIFF_LIBRARY_DIRS)
 
 # TCL/TK includes and library tests...
 # Check headers in default location first.
+HAVE_TK_H= 
 #AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
 #AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
 #tcltk_ver=
