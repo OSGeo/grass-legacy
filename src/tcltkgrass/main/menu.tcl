@@ -347,9 +347,6 @@ menu_build 1 .main_menu {
             "run r.mask &"
         }
         -separator
-        "Map scale in Monitor" "" {
-            "source $env(TCLTKGRASSBASE)/main/monscale.tcl"
-        }
         "Display region settings" "" {
             "run g.region -p &"
         }
@@ -362,9 +359,6 @@ menu_build 1 .main_menu {
     }
     Display "Display maps" {
         Monitors "" $monitors_menu
-        "Map scale in Monitor" "" {
-            "source $env(TCLTKGRASSBASE)/main/monscale.tcl"
-        }
         -separator
         Raster "" $display_raster
         Vector "" $display_vector
