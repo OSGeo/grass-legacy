@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include "includes.h"
-
 /* Using mouse device, get a new screen coordinate and button number.
  * Button numbers must be the following values which correspond to the
  * following software meanings: 1 - left button 2 - middle button 3 -
@@ -11,6 +8,9 @@
  * A "pointing hand" pointer is used. Upon button depression, the current
  * coordinate is returned in (*wx, *wy) and the button pressed in
  * returned in *button. */
+
+#include "includes.h"
+
 
 extern Display *dpy;
 extern Window grwin;
