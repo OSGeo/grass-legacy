@@ -1,4 +1,4 @@
-$Id: TODO,v 1.58 2000-12-03 21:47:05 markus Exp $
+$Id: TODO,v 1.59 2000-12-03 21:48:53 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -34,8 +34,9 @@ Regression test suite:
 --------------------------------------------------------------------
 Font selection:
 - add truetype support (replace old font system). This is urgently required
-  for internationalization. Suggestion: Use "FreeType"
-  http://freetype.sourceforge.net
+  for internationalization. 
+  Suggestion: Use "FreeType" http://freetype.sourceforge.net
+  or, better: VFlib: http://typehack.aial.hiroshima-u.ac.jp/VFlib/
   (Being worked on by ?)
 
 ---------------------------------------------------------------------
