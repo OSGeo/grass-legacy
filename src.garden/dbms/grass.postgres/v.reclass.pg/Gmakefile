@@ -1,0 +1,21 @@
+PGM       = $(BIN_CONTRIB_CMD)/v.reclass.pg
+#PGM       = v.reclass.pg
+#PGM       = $(GARDEN_BIN)/
+LIBES     = $(GISLIB) 
+
+
+
+OBJS = \
+	main.o  \
+	runSQL.o \
+	row_or_col.o \
+	readSQLout.o
+
+#EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
+#EXTRA_CFLAGS =  -Dunlink=puts
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) $(EXTRA_CFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
