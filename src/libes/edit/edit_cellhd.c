@@ -105,7 +105,7 @@ NULL};
 static double format_value(int (*func)(double, char *, int), double x, char *buf, int projection)
 {
 	int k = (projection == PROJECTION_LL) ? 3600 : 1;
-	int i = (int) (x * k + 0.5);
+	int i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
 	double y = (double) i / k;
 	(*func)(y, buf, projection);
 	buf[10] = '\0';
