@@ -22,7 +22,7 @@ both.
 .LP
 For more information, refer to the tutorial or see
 the example below.
-.SH OPTIONS
+.LP
 \fBFlags:\fR
 .IP \fB-q\fR 18
 Quiet. Cut out the chatter.
@@ -100,13 +100,13 @@ the following command:
 .I s.sv 
 and
 .br
-\fISemivariogram Modeling\fR \-
+.I Semivariogram Modeling \-
 A GRASS Tutorial on Exploratory
-Data Analysis and Semivariogram Modeling.
+Data Analysis and Semivariogram Modeling (in preparation).
 .SH BUGS
 .LP
 Please send all bug fixes and comments to the author.
 .SH AUTHOR
-James Darrell McCauley, Agricultural Engineering, Purdue University 
+James Darrell McCauley, Purdue University 
 .if n .br 
 (mccauley@ecn.purdue.edu)

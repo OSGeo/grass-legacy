@@ -4,10 +4,6 @@
 .br	
 .I (GRASS Data Import/Processing Program)
 .SH SYNOPSIS
-\fBm.ipf\fR
-.br
-\fBm.ipf help\fR
-.br
 \fBm.ipf \fR[\fB-emz\fR] [\fBinput\*=\fIname\fR] [\fBformat\*=\fIstring\fR]
 [\fBstop\*=\fIvalue\fR]
 .SH DESCRIPTION
@@ -18,7 +14,7 @@ or
 .I r.kappa,
 smooths zero counts, 
 and does iterative proportional fitting to normalize the matrix.
-.SH OPTIONS
+.LP
 \fBFlags:\fR
 .IP \fB-e\fR 18
 Indicate when the iterative algorithm finished.
@@ -86,7 +82,7 @@ nnnn.
   0.031:0.001:0.973 
 .TE
 .RE
-.SH NOTES
+.SH PROGRAM NOTES
 Iterative proportional curve fitting is useful when comparing
 the output of image classification algorithms (for example,
 \fIi.maxlik\fR and \fIi.smap\fR),
@@ -96,11 +92,8 @@ in a Tukey multiple comparison test.
 .SH SEE ALSO
 .I r.coin,
 .I r.kappa,
-.br
-\fIAssessing Multiple Classifications\fR \- GRASS Tutorial on \fIm.ipf\fR
-.br
+.I printf(3),
 and
-.br
 Zhuang, X., B.A. Engel, X. Xiong, and C. Johanssen. 1994.
 Analysis of Classification Results of Remotely
 Sensed Data and Evaluation of Classification Algorithms,
@@ -109,6 +102,6 @@ Sensed Data and Evaluation of Classification Algorithms,
 .SH BUGS
 Please send all bug fixes and comments to the author.
 .SH AUTHOR
-James Darrell McCauley, Agricultural Engineering, Purdue University 
+James Darrell McCauley, Purdue University 
 .if n .br 
 (mccauley@ecn.purdue.edu)
