@@ -1,3 +1,9 @@
+# tcltkgrass menu.tcl v 4.1 for GRASS 5.7 2004/09/01 Michael Barton & Glynn Clements
+# based on menu.tcl for GRASS 5.3 by Michael Barton, Jacques Bouchard, and Markus Neteler
+
+# main menu
+
+
 proc read_moncap {} {
 	global env moncap
 
@@ -39,10 +45,6 @@ proc monitor_menu {op} {
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
-# tcltkgrass menu.tcl v 4.1 for GRASS 5.7 2004/08/17 Michael Barton
-# based on menu.tcl for GRASS 5.3 by Michael Barton, Jacques Bouchard, and Markus Neteler
-
-# main menu
 
 read_moncap
 
@@ -144,19 +146,28 @@ menu_build 1 .main_menu [subst {
 		    {"execute r3.out.v5d"}
 	    }
 	}
+    -separator "" ""
 	"Save display to image file" "" {
 	    "XWD (Save display, selected with mouse, to map.xwd in home directory )" ""
 	        {"spawn xwd -out map.xwd"}
 	    "PNG (save currently selected display to 24 bit PNG file)" ""
 	        {"execute d.out.png"}
 	}
-	"Postscript map creation" "ps.map"
+	"Save map to Postscript file" ""
 	    {"execute ps.map"}
 	"Print (Use display manager)" "" {"do_nothing"}
+	-separator "" ""
+    "Configure menu" "" {
+	    "Reset menu size" ""
+	        {resize_menu}
+	    "Set menu font" ""
+	        {"set_menu_font"}
+    }
+	-separator "" ""
 	"Quit tcltkgrass" "" {"resize_menu;quit"}
 }
 "GIS" "Manage GRASS GIS files" {
-	"Maps & grid3D files" "Map management (map files operations)" {
+	"Manage maps & grid3D files" "" {
 	    "Copy maps" ""
 	        {"execute g.copy"}
 	    "List maps" ""
@@ -176,15 +187,8 @@ menu_build 1 .main_menu [subst {
 	        {"execute g3.rename"}
 	    "Remove Grid3D volumes" ""
 	        {"execute g3.remove"}
-	    -separator "" ""
-	    "Modify access to current mapset" ""
-	        {"execute g.access"}
-	    "Modify mapset search path" ""
-	        {"execute g.mapsets"}
-	    "Change current working session to new mapset, location, or GISDBASE" ""
-	    	{"execute g.mapset"}
-	}
-	"Region" "Region management" {
+    }
+	"Manage region" "" {
 	    "Display region settings" ""
 	        {"run g.region -p"}
 	    "Manage region" ""
@@ -197,7 +201,17 @@ menu_build 1 .main_menu [subst {
 	    "Manage 3D region" ""
 	        {"execute g3.setregion"}
 	}
-	"Map type conversions" "raster<->vector<->sites<->grid3D" {
+	"Manage GRASS working environment" "" {
+	    "Modify access by other users to current mapset" ""
+	        {"execute g.access"}
+	    "Modify mapset search path" ""
+	        {"execute g.mapsets"}
+	    "Change current working session to new mapset, location, or GISDBASE" ""
+	    	{"execute g.mapset"}
+        "Show current GRASS environment settings" "g.gisenv"
+            {"execute g.gisenv"}
+	}
+	"Map type conversions" "" {
 	    "Raster to vector map" "r.to.vect"
 	        {"execute r.to.vect"}
 	    "Vector to raster" "v.to.rast"
@@ -207,28 +221,33 @@ menu_build 1 .main_menu [subst {
 	    "Sites to vector" "v.in.sites"
 	        {"execute v.in.sites"}
 	}
-	"Projections & GRASS environment" "" {
+	"Manage projections" "" {
 	    "Create/edit projection information for current location" "g.setproj"
 	        {"term g.setproj"}
 	    "Show projection information & create projection files" "g.proj"
 	        {"execute g.proj"}
-	    "Show current GRASS environment settings" "g.gisenv"
-	        {"execute g.gisenv"}
-	    "Show current GRASS version" "g.version -c"
-	        {"run g.version -c"}
 	}
+    "Show current GRASS version" "g.version -c"
+        {"run g.version -c"}
 }
 "Display" "Display maps" {
 	"Start display manager" "d.m"
 	    {"execute d.m"}
+	-separator "" ""
 	"Start NVIZ (n-dimensional visualization module)" "nviz -q"
 	    {"spawn nviz -q"}
+	"Create fly-through animation path for NVIZ" ""
+		{"execute d.nviz"}
 	-separator "" ""
 	"Start displays" ""  {[monitor_menu start]}
 	"Stop displays" ""   {[monitor_menu stop]}
 	"Select displays" "" {[monitor_menu select]}
+	"Start/restart display at specified window size" ""
+		{"execute d.monsize"}
+	"Set active display to specified size" ""
+	    {"execute d.resize"}
 	-separator "" ""
-	"Raster" "Display raster maps" {
+	"Display raster maps" "" {
 	    "Display raster maps" ""
 	        {"execute d.rast"}
 	    "Display raster map, legend, & title in active display" ""
@@ -244,11 +263,11 @@ menu_build 1 .main_menu [subst {
 	    "Slide show of all raster maps in current mapset" ""
 	        {"execute d.slide.show"}
 	}
-	"Vector" "Display vector maps"
+	"Display vector maps" ""
 	    {"execute d.vect"}
-	"Grid3D" ""
+	"Display grid3D volumes" ""
 		{"execute r3.showdspf"}
-	"Text" "Display text on maps" {
+	"Display text on maps" "" {
 	    "Display legend for raster maps" ""
 	        {"execute d.legend"}
 	    "Display category values in raster map cells" ""
@@ -270,13 +289,19 @@ menu_build 1 .main_menu [subst {
 	    "Display standard GRASS fonts" ""
 	        {"execute show.fonts.sh"}
 	}
-	"Graphics" "Display graphics on maps" {
+	"Display graphics on maps" "" {
+	    "Overlay scale and north arrow" ""
+	        {"execute d.barscale"}
+        -separator "" ""
+	    "Display graphs at vector point localities" ""
+	        {"execute d.vect.chart"}
 	    "Display histogram" ""
 	        {"execute d.histogram"}
 	    "Display line graph" ""
 	        {"execute d.linegraph"}
-	    "Display graphs at vector point localities" ""
-	        {"execute d.vect.chart"}
+	    -separator "" ""
+	    "Overlay grid" ""
+	        {"execute d.grid"}
 	    "Display geodesic line" ""
 	        {"execute d.geodesic"}
 	    "Display rhumbline" ""
@@ -285,10 +310,6 @@ menu_build 1 .main_menu [subst {
 	    "Display color table" ""
 	        {"execute d.colortable"}
 	    -separator "" ""
-	    "Overlay scale and north arrow" ""
-	        {"execute d.barscale"}
-	    "Overlay grid" ""
-	        {"execute d.grid"}
 	    "Overlay slope arrows on aspect raster map" ""
 	        {"execute d.rast.arrow"}
 	    -separator "" ""
@@ -297,7 +318,6 @@ menu_build 1 .main_menu [subst {
 	    "Draw simple graphics in active display monitor (map coordinates)" ""
 	        {"execute d.mapgraph"}
 	}
-	-separator "" ""
 	"Split active display and show maps in each half" ""
 	    {"execute d.split"}
 	-separator "" ""
@@ -306,26 +326,26 @@ menu_build 1 .main_menu [subst {
 	"Manage display frames" ""
 	    {"execute d.frame"}
 	-separator "" ""
+	"Redraw active display (Note: some items may not be redrawn)" ""
+	    {"execute d.redraw"}
 	"Save file of commands to recreate active display" ""
 	    {"execute d.save"}
 	-separator "" ""
-	"Redraw active display (Note: some items may not be redrawn)" ""
-	    {"execute d.redraw"}
-	"Set active display to specified size" ""
-	    {"execute d.resize"}
-	-separator "" ""
-	"Create fly-through animation path for NVIZ" ""
-		{"execute d.nviz"}
-	"Pan and zoom in active display" ""
-	    {"term d.zoom -f"}
-	"Show geographical position" ""
-	    {"execute d.where"}
 	"Measure lengths and areas" ""
 	    {"execute d.measure"}
-	"Zoom/Unzoom in active display" ""
-	    {"term d.zoom"}
+	"Show geographical position" ""
+	    {"execute d.where"}
 	-separator "" ""
-	"Erase active display/frame" ""
+	"Pan in active display" ""
+		{"term d.zoom -p"}
+	"Zoom/Unzoom in active display" ""
+		{"term d.zoom"}
+	"Zoom/Unzoom with options" ""
+	   	{"execute d.zoom"}	
+	-separator "" ""
+	"Erase active display/frame to white" ""
+	    {"run d.erase color=white"}
+	"Erase active display/frame to selected color" ""
 	    {"execute d.erase"}
 }
 "Raster" "Raster map analysis" {
@@ -799,13 +819,6 @@ menu_build 1 .main_menu [subst {
 	}
 	"Manage PostGIS database" ""
 	    {"execute pg.postgisdb"}
-}
-"Config" "Configuration of TclTkGRASS" {
-	"Reset menu size" ""
-	    {resize_menu}
-	-separator "" ""
-	"Set menu font" ""
-	    {"set_menu_font"}
 }
 "Help" "Help" {
 	"Manual pages" ""
