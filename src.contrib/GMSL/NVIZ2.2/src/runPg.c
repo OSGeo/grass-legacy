@@ -1,5 +1,5 @@
 #include "config.h"
-#if defined(HAVE_POSTGRES_H) || defined(HAVE_POSTGRES_FE_H)
+#if defined(HAVE_POSTGRES) || defined(HAVE_POSTGRES_H) || defined(HAVE_POSTGRES_FE_H)
 #include "gis.h"
 #include "pg.h"
 #include <libpq-fe.h>
