@@ -96,6 +96,10 @@
   ALT="http://grass.hq.alert.sk/index2.html"
   COORDS="350,73, 353,72, 356,72, 359,72, 356,73, 353,74, 350,73">
 <AREA SHAPE="POLY"
+ HREF="http://grass.ru.ac.za/index2.html"
+  ALT="http://grass.ru.ac.za/index2.html"
+  COORDS="374,213, 371,211, 368,212, 371,213, 374,213, 372,216, 369,218, 366,219, 363,220, 360,220, 357,221, 354,221, 351,218, 351,215, 350,212, 350,209, 353,211, 355,208, 355,204, 356,207, 359,207, 361,204, 364,205, 367,203, 369,200, 372,199, 375,199, 376,202, 376,205, 375,208, 378,207, 377,210, 374,213">
+<AREA SHAPE="POLY"
  HREF="http://pinus.chinju.ac.kr/grass/index2.html"
   ALT="http://pinus.chinju.ac.kr/grass/index2.html"
   COORDS="545,92, 548,91, 550,94, 549,97, 546,97, 545,92">
