@@ -22,20 +22,66 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.3/CVS comparing to 5.0.2</font></h3>
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>all projection related modules support datum transformations now:
+    r.proj, s.proj, v.proj, m.proj2, g.region, ... (Paul Kelly)
+<li>d.barscale: added -t flag to optionally draw text
+	on top rather than to the right (Markus Neteler)
+<li>d.grid: added optional border marks plotting (Markus Neteler)
+<li>d.histogram: bugfix (Eric Miller)
+<li>d.sites: fix to handle a window spanning the date line (Eric Miller)
+<li>d.what.sites: fixed wrong distance bug (Paul Kelly)
+<li>g.parser: made usable (Glynn Clements)
+<li>NVIZ: various updates and add-ons in kanimator and main window (Bob
+    Covill)
+<li>r.in.gdal: color names written as names now instead of numbers (Markus Neteler)
+<li>r.mapcalc3: fix bug in #colour modifiers (Glynn Clements)
+<li>r.spread: several fixes (Eric Miller)
+<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
+<li>r.timestamp: timestamp writing fix (Hamish Bowman)
+<li>s.in.ascii: timestamp writing fix (Hamish Bowman)
+<li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
+<li>s.vol.rst: added deviation sites map (Jaro Hofierka)
+<li>v.digit: print map scale in snapping threshold menu (Markus Neteler)
+<li>v.label: added to compile list
+<li>v.out.e00: fix vector/mapset lookup (Eric Miller)
+<li>tcltkgrass: various menu entries fixed (Hamish Bowman)
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>added GIPs - GRASS Improvement Proposals in grass5/gip/
+<li>C++ compilation support added (Glynn Clements)
+<li>HTML pages: various bugfixes (Hamish Bowman)
+<li>proj: major overhaul, datum transformation cleaned and general support added (Paul Kelly)
+<li>proj: external PROJ.4 (libproj) support added (Paul Kelly)
+<li>parser: added G_html_usage() for g.parser and scripts convenience to
+    write new HTML pages (Markus Neteler)
+<li>gislib: fixed bug #1502 (Glynn Clements)
+<li>grass.src, init.sh: script cleanup (Markus Neteler, Glynn Clements)
+<li>added white space support for GRASS startup, basically for MS-Windows (Markus Neteler)
+</ul>
+
+
+<hr>
 <h3><font color="#00A000">What's new in GRASS 5.0.2/CVS comparing to 5.0.1</font></h3>
+[GRASS 5.0.2 released 10 April 2003]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
 <li>r3.*: various fixes (Alfonso Vitti, John Harrop)
+<li>d.legend: various fixes (Hamish Bowman)
 <li>d.what.sites: added flash when clicking on vector (Alex Shevlakov)
 <li>d.what.vect: added flash when clicking on vector (Alex Shevlakov)
 <li>g.mapsets: added addmapset= parameter (Alexander Soraruf, Markus Neteler)
 <li>g.setproj: UPS projection query mode fixed (Morten Hulden, Eric Miller)
 <li>NVIZ: various fixes for off-screen rendering (Bob Covill), tcl/tk 8.4 fixes
+<li>SG3d: various fixes, not compiled per default (Paul Kelly)
 <li>r.colors: added blue through yellow to green colors (Markus Neteler)
 <li>r.mapcalc3 (i.e new: r.mapcalc): errors fixed (Glynn Clements)
 <li>r.neighbors: added sum method (Markus Neteler)
-<li>r.proj: datum transformation added (Paul Kelly)
 <li>r.series: added for time series analysis (Glynn Clements)
 <li>r.simwe: added hydrologic and sediment transport simulation (Helena Mitasova, Jaro Hofierka, Lubos Mitas)
 <li>r.terraflow: added flow computation for massive grids (Laura I. Toma)
@@ -43,14 +89,15 @@ Many thanks to all contributors!
     compliant) (Markus Neteler)
 <li>s.cellstats: added, calculates stats of sites on a per cell basis (Eric Miller)
 <li>s.kernel: added for kernel density maps (Stefano Menegon)
-<li>s.proj: datum transformation added (Paul Kelly)
 <li>v.cutregion.sh: OTHER INFO bugs #1389 fixed (Markus Neteler)
 <li>v.in.dgn: added to read DNG files (Radim Blazek)
-<li>v.proj: datum transformation added (Paul Kelly, Eric Miller)
+<li>v.to.db: few fixes (Radim Blazek)
+<li>DEPRECATED: m.proj, v.in.arc.pg, v.in.shape.pg (use pg.in.dbf instead)
 </ul>
 
 <b>Source Code:</b><br>
 <ul>
+<li>dbmi driver: PostgreSQL fixes (Radim Blazek)
 <li>winGRASS: started support for native WIN MinGW32 changes (Mike Thomas)
 <li>various IRIX compatibility changes (Paul Kelly)
 <li>G3D: various fixes, most bugs are fixed now (Alfonso Vitti)
