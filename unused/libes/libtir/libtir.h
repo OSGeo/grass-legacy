@@ -83,7 +83,7 @@ static	double	(*G__get_r[])(RASTER_MAP_ROW buf, int col) =
 	G_get_c, G_get_f, G_get_d
 };
 
-static	double	*(*G__gets_r[])(RASTER_MAP_ROW buf, int col, int num,
+static	double	*(*G__get_rs[])(RASTER_MAP_ROW buf, int col, int num,
 		double *val, int idx) =
 {
 	G_get_cs, G_get_fs, G_get_ds
@@ -178,7 +178,7 @@ void	G_set_null_rs2(RASTER_ROW2 row2, int row, int col, int num);
 /**/
 
 #define	G_get_rs2(r2, r, c, n, v, i)					\
-		(G__get_rs[(r2).type])((r2).row[r], c, n, i, i)
+		(G__get_rs[(r2).type])((r2).row[r], c, n, v, i)
 #define	G_set_rs2(r2, r, c, v, n)					\
 		(G__set_r[(r2).type])((r2).row[r], c, v, n)
 #define	G_set_null_rs2(r2, r, c, n)					\
