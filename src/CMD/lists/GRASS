@@ -315,6 +315,7 @@ src/raster/r.neighbors
 src/raster/r.null
 src/raster/r.out.arc
 src/raster/r.out.ascii
+src/raster/r.out.bin
 src/raster/r.out.gridatb
 src/raster/r.out.mpeg
 src/raster/r.out.png
