@@ -1,0 +1,132 @@
+
+
+
+r.reclass.db         GRASS Reference Manual          r.reclass.db
+
+
+
+NAME
+     r.reclass.db - Generate a new raster reclass map based on
+     the results of multiple queries to the currently selected
+     database.
+     (GRASS-RDBMS Raster Interface Program)
+
+SYNOPSIS
+     r.reclass.db
+     r.reclass.db help
+     r.reclass.db sql=file input=name key=name output=name
+     [label=name]
+
+DESCRIPTION
+     r.reclass.db generates reclass rules for a new raster map
+     layer based on the results of multiple queries to the
+     currently selected database. The user constructs a series of
+     mutually exclusive SQL select statments designed to return
+     groups of records from the database. Each group of records
+     should be interanally consistent in terms of attribute
+     characteristics specified by the user in the SELECT clause.
+     These groups should also be mutually exclusive, thereby
+     insuring that a row returned by one SELECT clause is not
+     also returned by a subsequent SELECT clause. Each group of
+     records therefoe forms the basis for a single category in
+     the resulting GRASS raster reclass map. r.reclass.db
+     processes each SELECT statement in order generating the
+     GRASS reclass rules needed to create a new raster map. As
+     each SELECT statment is processed the group of records
+     returned receives a common category value. The category
+     value is incremented by one for each subsequent SELECT
+     statment which is processed. The resulting reclass map will
+     have one category for each of the original SELECT statements
+     and an additional category for no data areas. No data in
+     this case includes actual no data areas and areas for which
+     no rows were returned by the database queries.
+
+
+COMMAND LINE OPTIONS
+     Parameters:
+
+     sql=filename
+          Name of file containing SQL query statements.
+
+     input=map
+          Name of an existing raster map layer.
+
+     key=database_column_name
+          Name of the database column linked to GRASS via the
+          categories in the input map layer.
+
+     output=map
+          Name of new raster (reclass),  file.
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+r.reclass.db         GRASS Reference Manual          r.reclass.db
+
+
+
+     label=name
+          Label for new categories.
+
+
+EXAMPLE:
+     r.reclass.db sql=dbrr.sql key=grass_cat input=seco.soils
+     output=tfact.recl label="Tfact="
+
+     dbrr.sql:
+
+          SELECT grass_cat from seco_soil_cats,layer
+          WHERE layer.tfact >0 AND layer.tfact <=2 AND
+          layer.muid=seco_soil_cats.muid ;
+
+
+          SELECT grass_cat from seco_soil_cats,layer
+          WHERE layer.tfact >2 AND layer.tfact <=4 AND
+          layer.muid=seco_soil_cats.muid ;
+
+
+          SELECT grass_cat from seco_soil_cats,layer
+          WHERE layer.tfact = 5 AND
+          layer.muid=seco_soil_cats.muid
+
+BUGS
+     None known.
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.stats.db, g.table.db, d.rast.db,
+     d.site.db, d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db,
+     r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick Limp University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
