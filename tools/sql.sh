@@ -25,12 +25,19 @@ find . -type f -perm +111 \! -name '*.so.*' \
 	| fgrep -v 'not a dynamic executable' \
 	> "$tmpdir/ldd.lst"
 
-find . -type f -perm +111 \! -name '*.so.*' \
+find . -type f -perm +111 \! -name '*.so' \
 	| xargs nm -AD 2>/dev/null \
 	| egrep ': {8} U ' \
 	| sed -e 's/:/ /g' -e 's/\.\///' \
 	| awk -vOFS='\t' '{print $1,$3}' \
-	> "$tmpdir/programs.lst"
+	> "$tmpdir/prog_imp.lst"
+
+find . -type f -perm +111 \! -name '*.so' \
+	| xargs nm -AD 2>/dev/null \
+	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
+	| sed -e 's/:/ /g' -e 's/\.\///' \
+	| awk -vOFS='\t' '{print $1,$4}' \
+	> "$tmpdir/prog_exp.lst"
 
 )
 
@@ -231,12 +238,19 @@ CREATE TABLE obj_imp (
 
 COPY obj_imp FROM '$tmpdir/obj_imp.lst' ;
 
-CREATE TABLE programs (
+CREATE TABLE prog_imp (
 	program VARCHAR(80) NOT NULL,
 	symbol VARCHAR(80) NOT NULL
 	) ;
 
-COPY programs FROM '$tmpdir/programs.lst' ;
+COPY prog_imp FROM '$tmpdir/prog_imp.lst' ;
+
+CREATE TABLE prog_exp (
+	program VARCHAR(80) NOT NULL,
+	symbol VARCHAR(80) NOT NULL
+	) ;
+
+COPY prog_exp FROM '$tmpdir/prog_exp.lst' ;
 
 CREATE TABLE libs (
 	library VARCHAR(20) NOT NULL,
@@ -369,12 +383,12 @@ SELECT im_lib, ex_lib
 
 CREATE TABLE prog_libs AS
 SELECT DISTINCT a.program, b.library
-FROM programs a, lib_exp b
+FROM prog_imp a, lib_exp b
 WHERE a.symbol = b.symbol ;
 
 SELECT DISTINCT a.symbol
 INTO TABLE libc
-	FROM programs a, libs b
+	FROM prog_imp a, libs b
 	WHERE a.symbol = b.symbol
 	AND b.library = 'libc.so.6' 
 UNION
@@ -393,7 +407,7 @@ SELECT symbol
 
 CREATE TABLE nonansi_progs AS
 	SELECT a.symbol, COUNT(*)
-	FROM programs a, nonansi b
+	FROM prog_imp a, nonansi b
 	WHERE a.symbol = b.symbol
 	AND a.program NOT LIKE 'bin/%'
 	GROUP BY a.symbol ;
@@ -431,7 +445,7 @@ UPDATE nonansi_counts
 	WHERE nonansi_counts.symbol = c.symbol;
 
 -- SELECT a.symbol, a.program
--- 	FROM programs a, nonansi_progs b
+-- 	FROM prog_imp a, nonansi_progs b
 -- 	WHERE a.symbol = b.symbol
 -- 	AND a.program NOT LIKE 'bin/%'
 -- 	ORDER BY b.count DESC, b.symbol ;
