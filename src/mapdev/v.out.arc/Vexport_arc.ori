@@ -1,0 +1,186 @@
+/* @(#)Vexport_arc.c	1.0   04/90 */
+/*  Written by  Dave Johnson
+**  DBA Systems, Inc.
+**
+**  modified by R.L.Glenn
+**  USDA, Soil COnservation Service, CGIS Staff
+*/
+
+#define MAIN
+#include "gtoa.h"
+#include "gis.h"
+#include "digit.h"
+#include "dig_head.h"
+
+#define  USAGE  "Vexport.arc cover=line/edge dig=input arc=output\n"
+
+struct Map_info Map;
+
+/*  command line args */
+static	char  *cov_type = NULL ;
+static	char  *dig_name = NULL ;
+static	char  *arc_name = NULL ;
+
+static  int  load_args() ;
+
+struct Command_keys vars[] = {
+ { "cover_type", 1 },
+ { "dig_file", 2 },
+ { "arc_file", 3 },
+ { "cov", 1 },
+ { "dig", 2 },
+ { "arc", 3 },
+ { "c", 1 },
+ { "d", 2 },
+ { "a", 3 },
+ { "input", 2 },
+ { "output", 3 },
+ { NULL,     0 }
+};
+
+main(argc, argv)
+    int argc;
+    char **argv;
+{
+int	done=0, ret;
+char    prefix[1000],
+    	msg[1000],
+    	*mapset,
+    	name[1000],
+    	dig_filepath[1000],
+        dig_filename[1000],
+    	att_filename[1000],
+    	cat_filename[1000],
+    	lin_filename[1000],
+    	pol_filename[1000],
+    	lab_filename[1000],
+    	txt_filename[1000];
+FILE	*dig_fp,
+        *pol_file,
+	*lin_file,
+	*lab_file,
+	*txt_file;
+
+    pol_flg = 0;
+    lin_flg = 0;
+    lab_flg = 0;
+    txt_flg = 0;
+
+/*  check args and set flags  */
+	
+    ret = G_parse_command (argc, argv, vars, load_args) ;
+    if (ret > 0)	/* Help was requested */
+         exit (1);
+
+    if (ret < 0  ||  cov_type == NULL ||
+	dig_name == NULL  ||   arc_name == NULL)
+    {
+        fprintf (stderr, "%s: Command line error.\n\n Usage: %s\n",
+		argv[0], USAGE);
+        exit (-1);
+    }
+
+/* Show advertising */
+    G_gisinit("Export ARC/INFO");
+    printf("\n\n   Export.ARC/INFO:\n\n") ;
+
+    if ((mapset = G_find_file2 ("dig", dig_name, "")) == NULL)
+	G_fatal_error ("Could not find DIG file %s\n", dig_name);
+    
+    G__make_mapset_element("arc") ;
+    G__file_name(prefix, "arc", arc_name, G_mapset()) ;
+
+    dig_P_init(dig_name,mapset,&Map);
+    if (!Map.all_areas || !Map.all_isles)
+       {
+       G_fatal_error("You must first run Support.vect (option 1) on this data.\n");
+       exit(-1);
+       }
+
+    strcpy(pol_filename,prefix);
+    strcpy(lin_filename,prefix);
+    strcpy(lab_filename,prefix);
+    strcpy(txt_filename,prefix);
+    strcat(pol_filename,".pol");
+    strcat(lin_filename,".lin");
+    strcat(lab_filename,".lab");
+    strcat(txt_filename,".txt");
+
+    pol_file = fopen(pol_filename,"w");
+    lin_file = fopen(lin_filename,"w");
+    lab_file = fopen(lab_filename,"w");
+    txt_file = fopen(txt_filename,"w");
+
+    if (strcmp(cov_type,"polygon")==0)
+       {
+printf("ARC Area/Polygon data being created\n");
+       write_areas(dig_name,mapset,&Map,lin_file,lab_file,txt_file);
+       dig_P_fini(&Map);
+       G__file_name(dig_filepath,"dig",dig_name,mapset);
+       dig_fp = fopen(dig_filepath,"r");
+       dig_read_head_binary(dig_fp,&head);
+       write_area_lines(dig_fp,lin_file);
+       lin_flg=1;
+       } 
+    else
+       {
+printf("ARC Line data being created\n");
+       write_lines(dig_name,mapset,&Map,lin_file,txt_file);
+       dig_P_fini(&Map);
+       }
+ 
+/* delete empty files */
+    if (!pol_flg)
+       {
+       strcpy(msg,"rm -f ");
+       strcat(msg,pol_filename);
+       system(msg);
+       }
+    if (!lin_flg) 
+       {
+       strcpy(msg,"rm -f ");
+       strcat(msg,lin_filename);
+       system(msg);
+       }
+    if (!lab_flg) 
+       {
+       strcpy(msg,"rm -f ");
+       strcat(msg,lab_filename);
+       system(msg);
+       }
+    if (!txt_flg) 
+       {
+       strcpy(msg,"rm -f ");
+       strcat(msg,txt_filename);
+       system(msg);
+       }
+
+    exit(0);
+}
+
+static
+load_args (position, str)
+    int position;
+    char *str;
+{
+    double atof ();
+
+    switch(position)
+    {
+	case 1:
+                if (strcmp(str,"area")==0) cov_type = G_store("polygon") ;
+                if (strcmp(str,"line")==0) cov_type = G_store("line") ;
+		break ;
+	case 2:
+		dig_name = G_store(str) ;
+		break ;
+	case 3:
+		arc_name = G_store(str) ;
+		break ;
+	default:
+		break;
+    }	/*  switch  */
+
+    return (0);
+}
+
