@@ -235,3 +235,7 @@ ChangeLog:
 	-f ${DSTDIR}/ChangeLog \
 	-F ${BRANCH} --delta ${LASTRELEASE}:${RELEASE} )
 
+# generate Programmer's manual from source code via 'doxygen'
+progman:
+	(cd ../ ; doxygen )
+	@ echo "Programmer's Manual generated in ../doxygenhtml/index.html"
