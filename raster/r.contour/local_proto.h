@@ -5,4 +5,3 @@ int checkedge (DCELL,DCELL,double);
 DCELL **get_z_array (int, int,int, int);
 double *getlevels(struct Option *, struct Option *, struct Option *, struct Option *, struct FPRange *, int *, int);
 void displaceMatrix(DCELL**, int, int, double*, int, int);
-void writeCategorySupport(double* lev, int nlevels, char* vName, char* mName);
