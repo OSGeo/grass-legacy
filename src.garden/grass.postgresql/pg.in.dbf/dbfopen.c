@@ -21,7 +21,55 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-03-06 17:07:18  markus
+ * Revision 1.2  2003-10-23 16:05:05  paul
+ * pg.in.dbf fixes and improvements from Thierry Laronde:
+ * main.c:
+ *  	- Added option to set the DELIMITER to a user defined character
+ *  	value (only used for super-user when using COPY command);
+ *  	-> Now PgDumpFromDBF takes 3 arguments: filename, mode and delimiter
+ *  	- PgDumpFromDBF proto removed from main.c and added to
+ *  	pgdump.h;
+ *  	- include <string.h> for strlen
+ *  	- include "pgdump.h" for PgDumpFromDBF proto
+ *  	- Default delimiter now changed to '\t';
+ *  	- Suppressed bogus parm structure ;
+ *  	- no_rattle -> normal_user: more explicit, match PgDumpFromDBF and
+ *  	... well the way the assignement was made was queer: changed too!
+ *  	- Added comments
+ *
+ *  pgdump.h:
+ *  	- created for PgDumpFromDBF proto
+ *
+ *  pgdump.c:
+ *  	-XXX in the `init' function used to initialize the my_string struct
+ *  	the initial string pointed to by the data member was not initialized
+ *  	to NULL.
+ *  	Hence, the use of the function `append', not taking into account
+ *  	the length of the string and using `strcat' directly concatenated
+ *  	the random data found where my_string.data was pointing until it
+ *  	found some '\0'
+ *  	=> Now my_string.data points to a null string at initialization;
+ *  	- include "pgdump.h" for PgDumpFromDBF proto
+ *  	- modified PgDumpFromDBF: now takes 4 arguments:
+ *  		filename, normal_user, delimiter, null_string
+ *  	- modified DBFDumpASCII: now takes 3 arguments:
+ *  		DBFHandle, File pointer, delimiter
+ *
+ *  -dbfopen.c:
+ *  	- the filename of the DBF file supposed to be opened was
+ *  	subject of extension changes, `strcmp' being used as if it was a
+ *  	matching function returning 0 if failed or not zero on success.
+ *  	And indeed this is almost exactly the contrary.
+ *  	Furthermore, the combination of two conditions made the first
+ *  	test succeeds in all cases, transforming every extension in ".dbf".
+ *
+ *  	-Last but not least, _without renaming or copying the file that
+ *  	was read not written_ this was this modified version of the
+ *  	filename that was given to `fopen' resulting in a
+ *  	failure in every case except when the change to ".dbf" was a
+ *  	null one, that is when the filename was already ending with ".dbf".
+ *
+ * Revision 1.1  2000/03/06 17:07:18  markus
  * Alex Shevlakov: GRASS/PostgreSQL interface
  *
  * Revision 1.12  1999/03/06 02:54:46  warmerda
@@ -185,7 +233,6 @@ DBFHandle DBFOpen( const char * pszFilename, const char * pszAccess )
     DBFHandle		psDBF;
     uchar		*pabyBuf;
     int			nFields, nRecords, nHeadLen, nRecLen, iField;
-    char	        *pszDBFFilename;
 
 /* -------------------------------------------------------------------- */
 /*      We only allow the access strings "rb" and "r+".                  */
@@ -195,36 +242,16 @@ DBFHandle DBFOpen( const char * pszFilename, const char * pszAccess )
         return( NULL );
     
 /* -------------------------------------------------------------------- */
-/*	Ensure the extension is converted to dbf or DBF if it is 	*/
-/*	currently .shp or .shx.						*/    
-/* -------------------------------------------------------------------- */
-    pszDBFFilename = (char *) malloc(strlen(pszFilename)+1);
-    strcpy( pszDBFFilename, pszFilename );
-    
-    if( strcmp(pszFilename+strlen(pszFilename)-4,".shp")
-        || strcmp(pszFilename+strlen(pszFilename)-4,".shx") )
-    {
-        strcpy( pszDBFFilename+strlen(pszDBFFilename)-4, ".dbf");
-    }
-    else if( strcmp(pszFilename+strlen(pszFilename)-4,".SHP")
-             || strcmp(pszFilename+strlen(pszFilename)-4,".SHX") )
-    {
-        strcpy( pszDBFFilename+strlen(pszDBFFilename)-4, ".DBF");
-    }
-
-/* -------------------------------------------------------------------- */
 /*      Open the file.                                                  */
 /* -------------------------------------------------------------------- */
     psDBF = (DBFHandle) calloc( 1, sizeof(DBFInfo) );
-    psDBF->fp = fopen( pszDBFFilename, pszAccess );
+    psDBF->fp = fopen( pszFilename, pszAccess );
     if( psDBF->fp == NULL )
         return( NULL );
-
+	
     psDBF->bNoHeader = FALSE;
     psDBF->nCurrentRecord = -1;
     psDBF->bCurrentRecordModified = FALSE;
-
-    free( pszDBFFilename );
 
 /* -------------------------------------------------------------------- */
 /*  Read Table Header info                                              */

@@ -20,6 +20,18 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************
  *
+ * 10/2003 Thierry Laronde <tlaronde@polynum.org> 
+	- change PgDumpFromDBF in order to specify a custom DELIMITER
+	- change DBFDumpASCII to take a parameter for specifying the
+	delimiter
+	- include "pgdump.h" for PgDumpFromDBF proto
+	- change "float4" to "numeric" in order to not loose in precision
+	XXX The infos I have found tell that DBF numeric field can be up
+	to 20 digits long; numeric by default is (30,6) BUT can the numeric
+	field of the DBF have more than a 6 scale length? In this case a
+	safe way would be to define the conversion to numeric(40,20) but
+	isn't it a bit too much?
+ *
  * 12/2000 Federico Ponchio ponhio@dm.unipi.it (minor changes to memory 
  *  allocation for inserting in normal mode)
  * 02/2000 Alex Shevlakov sixote@yahoo.com	
@@ -35,6 +47,7 @@
 #include "shapefil.h"
 #include <libpq-fe.h>
 #include "glocale.h"
+#include "pgdump.h"
 
 typedef unsigned char uchar;
 
@@ -54,6 +67,11 @@ int init(struct my_string *str)
 	fprintf(stderr, _("Failed to allocate new memory.\n"));
 	exit(-1);
     }
+	/* Initialize to null string or `strcat' used in `append' will 
+	 * concatenate every random data available here till it
+	 * finds some '\0' !
+	 */
+	*str->data = '\0'; 
     str->len = 1;
     str->totlen = 128;
     return (0);
@@ -108,10 +126,10 @@ static void *SfRealloc(void *pMem, int nNewSize)
 /************************************************************************/
 /*                          DBFDumpASCII()                          	*/
 /*                                                                      */
-/*     		 Dumps DBF to comma-separated list. 			*/
+/*     		 Dumps DBF to DELIMITER-separated list. 			*/
 /************************************************************************/
 
-int DBFDumpASCII(DBFHandle psDBF, FILE * fp)
+int DBFDumpASCII(DBFHandle psDBF, FILE * fp, char delim)
 {
     int nRecordOffset;
     uchar *pabyRec;
@@ -123,6 +141,10 @@ int DBFDumpASCII(DBFHandle psDBF, FILE * fp)
     static int nStringFieldLen = 0;
     static char single_line[4096] = "";
 
+	/* transform the delim char in a string for insertion via %s */
+	char delim_string[2]; 
+	delim_string[0] = delim;
+	delim_string[1] = '\0';
 
     for (hEntity = 0; hEntity < psDBF->nRecords; hEntity++) {
 
@@ -177,9 +199,9 @@ int DBFDumpASCII(DBFHandle psDBF, FILE * fp)
 	    if (!iField)
 		snprintf(tmp_buf, 1024, "%s", pszStringField);
 	    else if (iField == psDBF->nFields - 1)
-		snprintf(tmp_buf, 1024, ",%s\n", pszStringField);
+		snprintf(tmp_buf, 1024, "%s%s\n", delim_string, pszStringField);
 	    else
-		snprintf(tmp_buf, 1024, ",%s", pszStringField);
+		snprintf(tmp_buf, 1024, "%s%s", delim_string, pszStringField);
 
 
 	    strncat(single_line, tmp_buf, strlen(tmp_buf));
@@ -200,7 +222,7 @@ int DBFDumpASCII(DBFHandle psDBF, FILE * fp)
     return 0;
 }
 
-int PgDumpFromDBF(char *infile, int normal_user)
+int PgDumpFromDBF(char *infile, int normal_user, char delim, const char *null_string)
 {
 
     DBFHandle hDBF;
@@ -208,6 +230,7 @@ int PgDumpFromDBF(char *infile, int normal_user)
 
     int i, j;
     char *dbname, *pp;
+					
 
     struct my_string SQL_create;
     struct my_string SQL_insert;
@@ -223,11 +246,15 @@ int PgDumpFromDBF(char *infile, int normal_user)
     FILE *fp;
     char *tmpfile_nm;
 
+	/* transform the delim char in a string for insertion via %s */
+	char delim_string[2]; 
+	delim_string[0] = delim;
+	delim_string[1] = '\0';
+
     init(&SQL_create);
     init(&SQL_insert);
     init(&chunks);
     init(&fldstrng);
-
 
     /* Check DATABASE env variable */
     if ((dbname = G__getenv("PG_DBASE")) == NULL) {
@@ -280,7 +307,7 @@ int PgDumpFromDBF(char *infile, int normal_user)
 		fld = "int8";
 	    break;
 	case 2:
-	    fld = "float4";
+	    fld = "numeric";
 	    break;
 	case 3:
 	    G_fatal_error(_("Invalid field type - bailing out"));
@@ -383,7 +410,7 @@ int PgDumpFromDBF(char *infile, int normal_user)
 	    exit(-1);
 	}
 
-	DBFDumpASCII(hDBF, fp);
+	DBFDumpASCII(hDBF, fp, delim);
 
 	fclose(fp);
 
@@ -392,7 +419,11 @@ int PgDumpFromDBF(char *infile, int normal_user)
 	append(&SQL_insert, name);
 	append(&SQL_insert, " from '");
 	append(&SQL_insert, tmpfile_nm);
-	append(&SQL_insert, "' using delimiters ','");
+	append(&SQL_insert, "' using delimiters '");
+	append(&SQL_insert, delim_string);
+	append(&SQL_insert, "' with null as '");
+	append(&SQL_insert, null_string);
+	append(&SQL_insert, "'");
 
 	fprintf(stdout, _("Executing %s\n"), SQL_insert.data);
 
