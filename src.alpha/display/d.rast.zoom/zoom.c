@@ -63,5 +63,5 @@ main(argc, argv)
 	exit(0);
 
     R_close_driver();
-    what (temp,window);
+    what (temp,&window);
 }
