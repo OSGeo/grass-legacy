@@ -1,16 +1,14 @@
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 
-
 PGM = v.build.polylines
 LIST =  main.o \
 	line_coords.o \
 	local_dig.o \
 	walk.o
 
-
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST)  $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(VECTLIB) $(GPROJLIB)  $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
+LIBES=$(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST)  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(VECTLIB): #
 

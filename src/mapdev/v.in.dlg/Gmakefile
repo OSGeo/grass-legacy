@@ -1,4 +1,4 @@
-
+PGM=v.in.dlg
 OFILES = \
 	v.in.dlg.o \
 	doit.o \
@@ -10,11 +10,9 @@ OFILES = \
         read_write.o
 
 
-all:  $(BIN_MAIN_CMD)/v.in.dlg
+LIBES = $(GISLIB) $(VECTLIB) $(IBTREELIB) $(DIG_ATTLIB)
 
-LIBS = $(GISLIB) $(VECTLIB) $(IBTREELIB) $(DIG_ATTLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_CMD)/v.in.dlg:	$(OFILES) $(LIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBS) $(MATHLIB) $(XDRLIB)
-
-$(LIBS): #
+$(LIBES): #

@@ -64,15 +64,3 @@ $(BIN_ALPHA_CMD)/$(PGM): $(CMD_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 $(VECTLIB): #
 $(GISLIB): #
 $(DIG_ATTLIB): #
-
-sabersrc_i:
-		#load $(EXTRA_CFLAGS) $(CFLAGS) $(INTER_CFILES) /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(VECTLIB)  $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
-
-sabersrc_c:
-		#load $(EXTRA_CFLAGS) $(CFLAGS) $(CMD_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-
-
-sabersrc_lib:
-		#load $(CFLAGS) /grass.src/4.0/src/mapdev/lib/*.c $(INTER_CFILES) $(GISLIB)  $(DIG_ATTLIB)
-
-

@@ -1,9 +1,9 @@
-PGM2=$(GISBASE)/etc/permut
+PGM=$(GISBASE)/etc/permut
 
-$(PGM2): permut.o  
+all:    $(PGM)
+
+$(PGM): permut.o  
 	$(CC) $(LDFLAGS) -o $@ permut.o    
-
-all:	$(PGM2)
 
 $(GISLIB): #
 $(VECTLIB): #

@@ -1,16 +1,6 @@
+PGM=v.clean
 
-
-PROG=$(BIN_MAIN_CMD)/v.clean
-
-
-all:  $(PROG)
-	
-
-$(PROG): Vclean.o $(VECTLIB) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PROG): Vclean.o $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ Vclean.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) Vclean.c ../Vlib/*.c ../diglib/*.c $(GISLIB)
-

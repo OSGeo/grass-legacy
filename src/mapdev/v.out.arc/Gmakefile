@@ -1,4 +1,3 @@
-
 PGM =	v.out.arc
 
 OBJ =	Vexport_arc.o\
@@ -7,9 +6,10 @@ OBJ =	Vexport_arc.o\
 	write.o\
 	writ_a_lines.o
 
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(DIG_ATTLIB): #

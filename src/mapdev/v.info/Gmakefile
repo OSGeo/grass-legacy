@@ -1,7 +1,4 @@
+PGM = v.info
 
-PROG =    $(BIN_ALPHA_CMD)/v.info
-all:    $(PROG)
-
-
-$(PROG): main.o $(VECTLIB) $(GISLIB)
+$(BIN_ALPHA_CMD)/$(PGM): main.o $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)

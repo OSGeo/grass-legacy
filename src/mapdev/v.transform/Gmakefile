@@ -1,8 +1,6 @@
+PGM=v.transform
 TRANSLIB        = $(SRC)/libes/vect32/libes/libtrans.a
 EXTRA_CFLAGS	= -I../libes -I$(SRC)/libes/vect32/libes
-
-PROG	= $(BIN_MAIN_CMD)/v.transform
-
 
 O_FILES = \
 	ask_trans.o \
@@ -16,12 +14,10 @@ O_FILES = \
 	trans_head.o \
 	trans_att.o
 
-all:    $(PROG)
-
-
-$(PROG): $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB)
-	$(CC) $(LDFLAGS) -o $@ $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)  $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASK)
+$(BIN_MAIN_CMD)/$(PGM): $(O_FILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(O_FILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(O_FILES):	trans.h
 
-$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB): #
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASK): #

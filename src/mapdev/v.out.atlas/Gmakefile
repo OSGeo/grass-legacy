@@ -1,9 +1,7 @@
-
+PGM=v.out.atlas
 VFILES = write.o main.o
 
-all:	$(BIN_CONTRIB_CMD)/v.out.atlas
-
-$(BIN_CONTRIB_CMD)/v.out.atlas: $(VFILES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(VFILES) $(GISLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

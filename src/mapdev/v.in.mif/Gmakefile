@@ -1,7 +1,5 @@
 PGM = v.in.mif
 
-HOME = $(BIN_CONTRIB_CMD)
-
 LIST = 	lex.yy.o \
 	main.o \
 	attval.o \
@@ -10,9 +8,10 @@ LIST = 	lex.yy.o \
 	fields.o \
 	static.o
 
+LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASK)
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
 	$(LEX) mif.l

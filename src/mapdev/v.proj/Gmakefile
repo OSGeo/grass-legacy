@@ -1,4 +1,4 @@
-
+PGM=v.proj
 
 OFILES = \
 	main.o setenv.o 
@@ -6,11 +6,8 @@ OFILES = \
 SRCS = \
 	main.c setenv.c 
 
-
-$(BIN_ALPHA_CMD)/v.proj: $(OFILES) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(LIBPROJSUPP) $(LIBPROJ) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(LIBPROJSUPP) $(LIBPROJ)
+$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB): # 
-
-saber_src:
-	#load $(SRCS) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)

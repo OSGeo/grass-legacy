@@ -1,15 +1,12 @@
 PGM = v.extract
 
-
 OFILES = \
 	main.o \
 	xtract_area.o \
 	xtract_line.o
 
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-all:  $(BIN_CONTRIB_CMD)/$(PGM)
-
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
-$(GISLIB): #
+$(LIBES): #

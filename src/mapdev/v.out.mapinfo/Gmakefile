@@ -1,6 +1,4 @@
-#LIBDIG = $(SRC)/mapdev/lib
-#  DIGLIB = $(LIBDIG)/libdig.a
-
+PGM=v.out.mapinfo
 
 OFILES = \
 	main.o \
@@ -13,9 +11,8 @@ OFILES = \
 	wr_mpinfo_coor.o \
         get_isle_xy.o
 
-all: $(BIN_CONTRIB_INTER)/v.out.mapinfo
-
-$(BIN_CONTRIB_INTER)/v.out.mapinfo: $(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(DATETIMELIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CONTRIB_INTER)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 #$(OFILES):	$(LIBDIG)/digit.h $(LIBDIR)/gis.h

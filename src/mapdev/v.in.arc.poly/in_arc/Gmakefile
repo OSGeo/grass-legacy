@@ -1,8 +1,6 @@
-PGM1=$(GISBASE)/etc/in_arc
+PGM=$(GISBASE)/etc/in_arc
 
-LIBES=
+all:    $(PGM)
 
-$(PGM1): in_arc.o
+$(PGM): in_arc.o
 	$(CC) $(LDFLAGS) -o $@ in_arc.o
-
-all:	$(PGM1)

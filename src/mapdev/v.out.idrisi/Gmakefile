@@ -1,7 +1,4 @@
+PGM = v.out.idrisi
 
-PROG =    $(BIN_ALPHA_CMD)/v.out.idrisi
-all:    $(PROG)
-
-
-$(PROG): main.o $(VECTLIB) $(GISLIB)
+$(BIN_ALPHA_CMD)/$(PGM): main.o $(VECTLIB) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
