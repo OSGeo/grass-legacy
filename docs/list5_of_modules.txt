@@ -146,7 +146,7 @@ neteler@geog.uni-hannover.de
 ? m.strip99s
 ? m.tiger.region
 ? m.u2ll
-+ nviz2.2
++- nviz2.2 (fails on selected platforms)
 + p.chart
 + p.colors
 + p.icons
@@ -200,7 +200,7 @@ neteler@geog.uni-hannover.de
 + r.in.ppm
 + r.in.sunrast
 ? r.in.tang
-+ r.in.tiff
++- r.in.tiff (fails on selected platforms)
 ? r.in.utm
 ? r.infer
 + r.info
