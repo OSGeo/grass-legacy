@@ -15,6 +15,7 @@ GLOBAL struct Cell_head window;
 GLOBAL char *title1, *title2;
 
 GLOBAL double window_cells;
+GLOBAL double window_area;
 
 GLOBAL struct stats_table *table;
 GLOBAL long     *catlist1, *catlist2;
