@@ -1,14 +1,19 @@
-This is "Cygwin README".
+README for GRASS on cygwin under MS Windows
 
-Basically Cygwin under MS-Windows does not support fifo concept. So we
-needed develop new screen drivers to support Windows users. As a result,
-ipc driver and socket driver were developed and these are somewhat incomplete
-and buggy to release. This test drivers are not default driver.
+The cygwin port to Win32 is still experimental.
 
-If you would like to be a beta tester, just ./configure with
---with-[ipc|socket] option.
+Please read the file README in this directory for general information about
+GRASS.
 
-	./configure --with-ipc	OR   ./configure --with-socket
-	make
-	make install
+More information about GRASS on cygwin is found in the file
+README_cygwin.html in the documents directory of this distribution.
 
+Please refer to the file cygwin_grass50compile.html in the documents
+directory for a full discription how to compile with the cygnus tools under
+win32.
+
+The file cygwin_grass50compile.html contains a description for the
+installation of the binary distribution under cygwin. 
+
+-- 
+Andreas Lange, Andreas.Lange@Rhein-Main.de
