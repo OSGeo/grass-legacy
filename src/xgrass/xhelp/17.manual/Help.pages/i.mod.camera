@@ -1,0 +1,5 @@
+
+@man("i.mod.camera") - An imagery function that creates or modifies
+entries in a camera reference file.
+
+(GRASS Imagery Program)
