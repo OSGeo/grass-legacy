@@ -1,0 +1,112 @@
+#	$Header: /usr/people/sam/tiff/libtiff/RCS/Makefile.tahoe,v 1.3 90/11/15 17:31:55 sam Exp $
+#
+# Tag Image File Format Library
+#
+# Copyright (c) 1988 by Sam Leffler.
+# All rights reserved.
+#
+# This file is provided for unrestricted use provided that this
+# legend is included on all tape media and as a part of the
+# software program in whole or part.  Users may copy, modify or
+# distribute this file at will.
+#
+DESTDIR=.
+#
+AR=	/bin/ar
+RANLIB=	/bin/ranlib
+
+IPATH=	-I.
+#
+# THUNDER_SUPPORT	add support for ThunderScan 4-bit RLE algorithm
+# PICIO_SUPPORT		add support for Pixar picio RLE algorithm
+# NEXT_SUPPORT		add support for NeXT 2-bit RLE algorithm
+# SGI_SUPPORT		add support for SGI RLE algorithm
+#
+# SUBFILE_COMPAT	include compat code for bad SubFileType tag
+#
+CONF=	-DTHUNDER_SUPPORT -DNEXT_SUPPORT -DPICIO_SUPPORT
+CFLAGS=	 -g ${IPATH} -DUSE_VARARGS=1 -DUSE_PROTOTYPES=0
+#
+INCS=	tiff.h tiffio.h
+SRCS=	tif_fax3.c \
+	tif_fax4.c \
+	tif_ccittrle.c \
+	tif_close.c \
+	tif_compat.c \
+	tif_compress.c \
+	tif_dir.c \
+	tif_dumpmode.c \
+	tif_error.c \
+	tif_flush.c \
+	tif_lzw.c \
+	tif_open.c \
+	tif_packbits.c \
+	tif_picio.c \
+	tif_print.c \
+	tif_read.c \
+	tif_swab.c \
+	tif_thunder.c \
+	tif_warning.c \
+	tif_write.c \
+	tif_next.c \
+	tif_sgi.c
+OBJS=	tif_fax3.o \
+	tif_fax4.o \
+	tif_ccittrle.o \
+	tif_close.o \
+	tif_compat.o \
+	tif_compress.o \
+	tif_dir.o \
+	tif_dumpmode.o \
+	tif_error.o \
+	tif_flush.o \
+	tif_lzw.o \
+	tif_open.o \
+	tif_packbits.o \
+	tif_picio.o \
+	tif_print.o \
+	tif_read.o \
+	tif_swab.o \
+	tif_thunder.o \
+	tif_warning.o \
+	tif_write.o \
+	tif_next.o \
+	tif_sgi.o
+ALL=	libtiff.a
+
+
+all:	 ${ALL}
+
+${ALL}:	${OBJS}
+	${AR} rc libtiff.a $?
+	${RANLIB} libtiff.a
+
+${OBJS}: tiffio.h tiff.h tiffcompat.h
+tif_compress.o: tif_compress.c Makefile
+	${CC} -c ${CFLAGS} ${CONF} tif_compress.c
+#tif_dir.o: tif_dir.c Makefile
+#	${CC} -c ${CFLAGS} -DSUBFILE_COMPAT tif_dir.c
+tif_fax3.o: tif_fax3.c g3codes.h t.4.h tif_fax3.h
+
+g3codes.h: mkg3tab.c t.4.h
+	${CC} -o mkg3tab mkg3tab.c
+	mkg3tab > g3codes.h
+
+install: all installh
+	-for i in ${ALL}; do \
+		${INSTALL} -c -m 644 $$i ${DESTDIR}/lib/$$i; \
+		${RANLIB} ${DESTDIR}/lib/$$i; \
+	done
+
+installh: ${INCS}
+	-for i in ${INCS}; do \
+	    h=`basename $$i`; \
+	    cmp -s $$i ${DESTDIR}/include/$$h || \
+	        ${INSTALL} -c -m 444 $$i ${DESTDIR}/include/$$h; \
+	done
+
+clean:
+	rm -f ${ALL} ${OBJS} core a.out mkg3tab g3codes.h
+ 
+tags:	${SRCS}
+	${CTAGS} ${SRCS}
