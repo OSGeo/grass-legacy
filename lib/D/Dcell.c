@@ -6,7 +6,22 @@
 
 static int cell_draw( char *, char *, struct Colors *, int);
  
-int Dcell(char *name, char *mapset, int overlay)
+
+/*!
+ * \brief 
+ *
+ * If the map is a floating-point map, read the map using
+ * <tt>G_get_d_raster_row()</tt> and plot using <tt>D_draw_d_cell()</tt>. If the
+ * map is an integer map, read the map using <tt>G_get_c_raster_row()</tt> and
+ * plot using <tt>D_draw_cell()</tt>.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param overlay
+ *  \return int
+ */
+
+ int Dcell(char *name, char *mapset, int overlay)
 {
 	struct Cell_head wind ;
 	struct Colors colors ;
