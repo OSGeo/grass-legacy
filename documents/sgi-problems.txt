@@ -1,27 +1,38 @@
-***********************************************
+***************************************************************************
 Note for SGI IRIX:
 
-You can get the GNU Tools and the egcs compiler
-in the IRIX tardist ready-to-install format 
-from: 
+You can get the GNU Tools and the egcs compiler in the IRIX tardist
+ready-to-install format from:
 
   http://freeware.sgi.com
 
-***********************************************
+***************************************************************************
 
-The newer GNU c-compiler (gcc 2.8.1 and up) do
-no longer support the old 32 bit ABI
-(o32 option), so that you must compile in 
-the new n32 format. 
+The newer GNU c-compilers (gcc 2.8.1 and up) do no longer support the old 32
+bit ABI (o32 option), so that you must compile in the new n32 format.
 
-The actual distribution (GRASS 5.0beta9) should
-compile without problems on IRIX 6.x with
-the GNU Compilers (gcc/egcs) and the native
-IRIX compiler from SGI.
+You need to install the SGI back end tools (dev.sw.lib, etc) from the
+Development Foundation CD and the Development Library CD from the IRIX 6.5
+distribution media set in order to use the GNU compiler gcc. With IRIX 6.2
+you need to install the SGI IDO.
 
-Compare the file "REQUIREMENTS" for the libraries
-that need to be installed in order to link
-to. 
+The actual distribution (GRASS 5.0beta10) should compile without problems on
+IRIX 6.x with the GNU compiler (gcc/egcs) and the native IRIX compiler from
+SGI (MIPS PRO compiler).
+
+Compare the file "REQUIREMENTS" for the libraries that need to be installed
+in order to link to.
+
+The resulting binaries get very huge, because the linker flag -s to ld for
+stripping the binaries does not work (you get a core dump). You can remove
+the symbol table with the IRIX strip command like this:
+
+cd /usr/local/grass5
+find . -type f -perm 0755 -exec strip {} \;
+
+This may require root permissions. strip will give many warnings, but i
+noticed no problems. All programs still work. Never use the -f flag to
+strip. Do not strip the binaries if you want to debug the programs later.
 
 -- 
 Andreas Lange, andreas.lange@rhein-main.de
