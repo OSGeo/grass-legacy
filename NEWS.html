@@ -41,6 +41,11 @@ Many thanks to all contributors!
 <li>db.table: fix to return correct number of tables (Radim Blazek)
 <li>g.mapsets: fixed problem of space required (Roger Miller)
 <li>g.manual: removed bashisms, should work on Solaris now (Andreas Lange)
+<li>i.* modules using 'groups': For portability reasons the name
+"GROUP/SUBGROUP" for file which stores the current imagery group have been
+renamed to CURGROUP and CURSUBGROUP. Users will need to rename (or
+re-create) any GROUP/SUBGROUP files after updating to th 5.0.0pre4 release
+within existing mapsets.
 <li>m.in.e00: raster null values added (Michel Wurtz)
 <li>nviz: fixed rotated TIFF output (Glynn Clements)
 <li>p.vrml: cleaned code (Glynn Clements)
