@@ -533,7 +533,7 @@ int main (int argc, char *argv[])
    /* newly created vector file (output).                        */
    if (flag.support->answer)
     {
-     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), omap_name);
+     sprintf(buf,"%s/bin/v.support -r map=%s", G_gisbase(), omap_name);
      G_system(buf);
      fprintf(stderr, "Done.\n");
     }
