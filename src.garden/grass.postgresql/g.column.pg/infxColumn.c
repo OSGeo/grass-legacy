@@ -1,7 +1,7 @@
 #include "gis.h"
 #include "column.h"
 #include <libpq-fe.h>
-#include <postgres.h>
+#include <postgres_fe.h>
 
 #define LEN 20
 #define LINE 80
