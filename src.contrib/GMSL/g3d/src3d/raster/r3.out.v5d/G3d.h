@@ -85,8 +85,7 @@ extern void *G3d_cache_hash_new (/* nofNames */);
 
 extern void G3d_skipError (/* msg */);
 extern void G3d_printError (/* msg */);
-/*extern void *G3d_maskFile ();
-*/
+/*extern void *G3d_maskFile ();*/
 
 extern void G3d_setWindow (/* window */);
 /*extern void G3d_getWindow ();*/
@@ -97,3 +96,4 @@ extern G3D_Region *G3d_windowPtr ();
 /*---------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*/
+
