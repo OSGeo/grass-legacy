@@ -1,7 +1,7 @@
 CC                  = gcc
 FC                  = g77
 LEX                 = flex
-YACC                = yacc
+YACC                = bison -y
 ARCH                = i686-pc-cygwin32
 
 GISBASE             = /usr/local/grass-5.0b
