@@ -1,0 +1,65 @@
+DLG-3 SDTS README FILE:
+
+This directory contains a Spatial Data Transfer Standard (SDTS), 
+Topological Vector Profile (TVP) compliant transfer, produced by the 
+National Mapping Division of the United States Geological Survey, created 
+from digital line graph 3 (DLG-3) data.
+
+STANDARD AUTHORITY:  
+        FIPS 173: The Spatial Data Transfer Standard 
+        Part 4: Topological Vector Profile, Version 1, December 20, 1993
+
+ISO 8211 CONFORMANCE:
+        All files with extension *.DDF are in the ISO 8211 file transfer
+        format. All SDTS spatial addresses are expressed in two 32 bit 
+        binary sub-fields defined by the ISO8211.  Leader and directory 
+        information are dropped whenever possible. Files are Level 2 of
+        ISO 8211.
+ 
+CATALOG DIRECTORY MODULE xxxxCATD.DDF:
+        Each transfer will contain this catalog directory module which
+        contains a listing of every SDTS ISO 8211 file included in the
+        transfer.  (xxxx indicates a four-character transfer base which 
+        is common to all files in a transfer.)
+
+IDENTIFICATION MODULE xxxxIDEN.DDF:
+        This module contains information that describes the overall
+        characteristics of the data in a transfer, including
+        it geographical domain.  
+
+PURPOSE OF TRANSFER:
+        This transfer's purpose is as a sample data set which demonstrates 
+        how DLG-3 data is encoded in SDTS.
+
+REFERENCES:
+        "DLG-3 SDTS Transfer Description" -- draft document which describes
+        SDTS transfers of DLG-3 data, including detailed information on
+        each module.  Located in files sdts/datasets/tvp/dlg3/dlg3.wp 
+        (Word Perfect) or sdts/datasets/tvp/dlg3/dlg3.ps (Post Script).
+
+POINT OF CONTACT:
+        SDTS Task Force               |  Information on SDTS is also
+        U.S. Geological Survey        |  available on FTP site
+        526 National Center           |  sdts.er.usgs.gov
+        Reston, VA 22092              |  (130.11.52.170)
+        FAX:  (703) 648-5542          |
+        E-MAIL: sdts@usgs.gov         |
+
+
+TRANSFER CREATION DATE:  
+     MAY 9, 1994
+
+THIS DIRECTORY CONTAINS THE FOLLOWING TRANSFER:  
+------------------------------------------------------------------------------
+Domain:                    WILMINGTON SOUTH, DE-NJ
+Theme:                     HYDROGRAPHY
+Scale:                     24000
+File name base:            HY01
+Identification module:     HY01IDEN.DDF
+Catalog/Directory module:  HY01CATD.DDF
+------------------------------------------------------------------------------
+
+This transfer requires an external data dictionary from the U.S. 
+Geological Survey, National Mapping Division, with a 4-character code 
+of DLG3, version number 1.00.  This data dictionary can be found in
+directory sdts/datasets/tvp/dlg3/masterdd.
