@@ -1,5 +1,6 @@
 <H2>DESCRIPTION</H2>
 
+
 <EM>d.where</EM> is an <EM>interactive</EM> program that
 allows the user, using the pointing device (mouse), to
 identify the geographic coordinates associated with point
@@ -8,8 +9,7 @@ active display frame on the graphics monitor.
 
 <P>
 
-If the user runs <EM>d.where</EM> without specifying the
-name of a spheroid on the command line, each mouse click
+Each mouse click
 will output the easting and northing of the point
 currently located beneath the mouse pointer.  A
 mouse-button menu is presented so the user knows which
@@ -30,14 +30,38 @@ The left mouse button prints the coordinates at the selected point,
 the middle mouse button allows to query two points (they are connected by a
 line for convenience). By using the right mouse button the module is left.
 
+
+<H3>Flags:</H3> 
+
+<DL>d.where -[1dlw]
+
+<DT><B>-1</B>
+<DD>Only one mouse click is executed. 
+<BR>
+This option is provided for shell scripts and programs which want to 
+obtain only one point from the user. The output is only written 
+to stdout, unless redirected into a file. The geographic location and 
+mouse button pressed are output. 
+<DT><B>-d</B>
+<DD>Output lat/long in decimal degree
+<DT><B>-l</B></DT>
+<DD>Output lat/long referenced to current ellipsoid</DD>
+<DT><B>-w</B></DT>
+<DD>Output lat/long referenced to WGS84 ellipsoid using datum
+transformation parameters defined in current location if available</DD>
+</DL>
+
+
 <H2>NOTES</H2>
 
 This program uses the current geographic region setting and active frame. 
 It is not necessary, although useful, to have displayed a map in the current 
 frame before running <EM>d.where</EM>. The <em>-d</em> flag allows to
 optionally output latitude/longitude coordinates pair(s) in decimal degree
-rather than DD:MM:SS format. In other projections the flag is silently
-ignored.
+rather than DD:MM:SS format. The <em>-w</em> flag will only produce
+meaningful output if a datum is defined for the current location. Otherwise
+the output will be the same as with the <em>-l</em> flag (i.e. referenced to
+the current ellipsoid).
 
 <H2>SEE ALSO</H2>
 
