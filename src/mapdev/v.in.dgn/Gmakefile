@@ -1,6 +1,6 @@
 PGM=v.in.dgn
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(GDAL_CFLAGS)
 
 OBJ = main.o
 
