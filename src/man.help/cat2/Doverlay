@@ -1,0 +1,70 @@
+
+
+
+Doverlay(2D)         GRASS Reference Manual          Doverlay(2D)
+
+
+
+NAME
+     Doverlay - Tool for viewing an overlay of grid cell maps
+     (D Language Tool)
+
+SYNOPSIS
+     Doverlay cell_file
+
+DESCRIPTION
+     Doverlay overlays the grid cell map cell_file over whatever
+     is already displayed in the current window.  cell_file is
+     the name of an available cell file in the user's mapset.
+     Only grid cells containing non-zero categories will be
+     displayed from the overlaid map.  All other areas (i.e.,
+     those containing category 0) will leave the underlying
+     display untouched.
+
+NOTES
+     Doverlay works best when the color look-up table for the
+     graphics monitor is set in Dcolormode fixed (see the GRASS
+     tool Dcolormode).
+
+SEE ALSO
+     DINTRO[2D]       Introduction to the GRASS D tools
+     Dchoose[2D]
+
+                      To choose a current window in which graphics can be
+                      displayed
+     Dcell[2D]        To display a cell file
+     Dcolormode[2D]   Tool for setting the monitor's color look-up table
+     Derase[2D]       To erase the contents of the current window
+     Dgrid[2D]        To overlay the contents of the current window with a grid
+     Dvect[2D]
+
+                      To overlay the contents of the current window with a
+                      vector file
+     reclass[1]       To reclassify map data into different categories
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
