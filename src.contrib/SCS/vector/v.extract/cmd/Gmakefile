@@ -1,3 +1,5 @@
+#  %W%  %G%
+#@(#) 
 PGM = v.extract
 
 EXTRA_CFLAGS	= $(VECT_INCLUDE)
@@ -11,6 +13,6 @@ OFILES = \
 all:  $(BIN_CONTRIB_CMD)/$(PGM)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): #
