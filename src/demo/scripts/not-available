@@ -1,0 +1,9 @@
+#!/bin/sh
+Dclear.screen
+Dnew a 47 53 30 70
+Dchoose a
+Derase red
+echo Not Available | Dtext size=95 color=yellow
+sleep 2
+Dclear.screen
+exit 1
