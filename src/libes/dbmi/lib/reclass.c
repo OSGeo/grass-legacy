@@ -25,6 +25,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     dbValue *value;
     dbTable *table;
     dbCatValI *lrcl, *cval;
+    int sqltype, ctype;
 
     /* allocate fcat */
     fcat = (int *) G_calloc ( rule->count+1, sizeof(int));
@@ -125,6 +126,11 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 	        break;  
 						
             column = db_get_table_column(table, 0); /* first column (key) */
+
+            sqltype = db_get_column_sqltype(column);
+            ctype   = db_sqltype_to_Ctype(sqltype);
+	    if ( ctype != DB_C_TYPE_INT ) G_fatal_error ("The column is not integer (4 bytes)");
+	    
 	    value  = db_get_column_value(column);
 	    oldcat = db_get_value_int(value);
 
