@@ -163,18 +163,15 @@ int main( int   argc, char *argv[])
 	G_fatal_error( buf );
       }
 
+      if( DBFGetFieldInfo( hDBF, cat_field, NULL, NULL, NULL ) != FTInteger){
+         cat_field = -1;
+         printf( "Named attribute field is not integer value. Using record ID.\n" );	
+      }    
 
       if(hDBF != NULL) DBFClose( hDBF );
     }
 
-    if(cat_field == -1){
-    	printf( "No attribute value field assigned. Using record ID.\n" );	
-    }else{
-	if( DBFGetFieldInfo( hDBF, cat_field, NULL, NULL, NULL ) != FTInteger){
-	    cat_field = -1;
-	    printf( "Named attribute field is not integer value. Using record ID.\n" );	
-	}    
-    }
+
 
     /*	------------ Identify the category label to be used (if any) ------------ */
     if( strcmp(parm.catlabel->answer,"") == 0 ) {
@@ -326,7 +323,7 @@ int main( int   argc, char *argv[])
 static void get_catlab ( DBFHandle hDBF, int rec, int cat_field, int lab_field, int *cat, char *lab ) {
     DBFFieldType ftype;
 
-    if ( cat_field > 0 )  *cat = DBFReadIntegerAttribute( hDBF, rec, cat_field ); 
+    if ( cat_field >= 0 )  *cat = DBFReadIntegerAttribute( hDBF, rec, cat_field ); 
     else *cat = rec;
     
     if( lab_field >= 0 ) {
