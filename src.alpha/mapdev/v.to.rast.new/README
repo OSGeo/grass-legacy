@@ -1,0 +1,28 @@
+This program, called v.to.rast.new, is a new version of v.to.rast.
+It has the following features:
+
+(1) It does not use a temproary file. Results go directly to the raster map.
+    It does this by making one or more passes thru the vector map,
+    rasterizing only a fixed number of rows (in memory, default 512),
+    writing these rows to the raster map, and then repeating for the
+    next set of rows, etc;
+
+(2) The line drawing algorithm is better. The original version of v.to.rast
+    moved each line to the nearest grid-cell center before rasterizing.
+    This version more nearly reflects the actual path of the vector lines 
+    through the grid cells; and
+
+(3) It works for lat/lon databases as well as planimetric databases.
+
+This version was not included as part of the 4.0 release due to
+timing.  It was developed and completed during the beta-test phase of
+grass 4.0.  Since v.to.rast is an essential part of the system, it was
+deemed prudent to let this module get testing for a while. If it
+survives, it will be part of GRASS 4.1.
+
+If you compile this program, it will be called v.to.rast.new, and you
+will be able to run both the original (v.to.rast) and the new (v.to.rast.new)
+and compare the results.
+
+Michael Shapiro
+Apr 23, 1991.
