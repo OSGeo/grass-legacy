@@ -52,6 +52,7 @@
 #include <math.h>
 #include "screenpoly.h"
 #include "vect/digit.h"
+#include "gis.h"
 
 /* for debugging stuff */
 /* #define MAIN */

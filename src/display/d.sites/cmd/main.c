@@ -63,17 +63,13 @@ int main (int argc, char **argv)
 	color = D_translate_color(opt1->answer) ;
 	if (color == 0)
 	{
-		fprintf (stdout,"Don't know the color %s\n", opt1->answer);
 		G_usage() ;
-		exit(-1);
+		G_fatal_error("Don't know the color %s", opt1->answer);
 	}
 
 	mapset = G_find_file ("site_lists", opt4->answer, "");
 	if (mapset == NULL)
-	{
-		sprintf (msg, "sites file [%s] not found", opt4->answer);
-		G_fatal_error (msg);
-	}
+		G_fatal_error ("sites file [%s] not found", opt4->answer);
 
 	infile = G_fopen_sites_old (opt4->answer, mapset);
 	if (infile == NULL)

@@ -73,20 +73,12 @@ main (int argc, char **argv)
 
 	backcolor = D_translate_color(opt2->answer) ;
 	if (backcolor == 0)
-	{
-		fprintf (stdout,"Don't know the color %s\n",opt2->answer);
-		exit(-1) ;
-	}
+		G_fatal_error ("Don't know the color %s",opt2->answer);
 
 	textcolor = D_translate_color(opt3->answer);
 	if (textcolor == 0)
-	{
-		fprintf (stdout,"Don't know the color %s\n",opt3->answer);
-		exit(-1);
-	}
+		G_fatal_error ("Don't know the color %s",opt3->answer);
 
-
-	/* */
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
 

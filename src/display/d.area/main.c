@@ -86,11 +86,7 @@ main (int argc, char **argv)
 	/* Make sure map is available */
 	mapset = G_find_file2 ("dig", map_name, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buf,"Vector file [%s] not available", map_name);
-		G_fatal_error(buf) ;
-		exit(-1);
-	}
+		G_fatal_error("Vector file [%s] not available", map_name) ;
 
 	/* See about category list */
 	if (opt4->answers != NULL && opt4->answers[0] != NULL)

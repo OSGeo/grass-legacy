@@ -11,41 +11,14 @@
  *	This program is free software under the GPL (>=v2)
  *	Read the file COPYING coming with GRASS for details.
  *
- * $Log$
- * Revision 1.5  2002-01-22 04:50:55  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.4.4.1  2002/01/13 14:39:29  andreas
- * added check for no raster, vector or sites file displayed, as the region is not set correctly in that case
- *
- * Revision 1.4  2001/02/13 02:22:03  eric
- * Add check for the return value from R_open_driver().
- *
- * Revision 1.3  2001/01/12 08:16:06  justin
- * Added site.h since it was removed from gis.h
- *
- * Revision 1.2  2000/12/01 14:18:48  jan
- * added module description
- *
- * Revision 1.1  2000/11/07 05:15:19  cho
- * renamed
- *
- * Revision 1.3  2000/11/05 15:47:53  cho
- * updated to use G_parser()
- *
- * Revision 1.2  2000/11/05 13:09:39  cho
- * added -v flag
- *
- * Revision 1.1  2000/11/05 12:56:11  cho
- * added, set window region from currently displayed maps.
- *
- *
  */
 
-
+#include <stdlib.h>
 #include "gis.h"
 #include "site.h"
 #include "Vect.h"
+#include "raster.h"
+#include "display.h"
 
 int 
 main (int argc, char **argv)
@@ -72,9 +45,7 @@ main (int argc, char **argv)
 
 
     if(argc > 1 && G_parser(argc, argv))
-    {
 	    exit(-1);
-    }
 
 
     if (R_open_driver() != 0)

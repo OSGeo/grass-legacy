@@ -211,9 +211,8 @@ parse_mask_rule (char *catlist, Mask *mask, char *where)
     {
 	if(where)
 	    fprintf (stderr, "%s: ", where);
-	fprintf (stderr, "%s: illegal category spec\n", catlist);
 	G_usage();
-	exit(1);
+	G_fatal_error("%s: illegal category spec", catlist);
     }
 
     return 0;
@@ -245,9 +244,8 @@ parse_d_mask_rule (char *vallist, d_Mask *d_mask, char *where)
     {
 	if(where)
 	    fprintf (stderr, "%s: ", where);
-	fprintf (stderr, "%s: illegal value spec\n", vallist);
 	G_usage();
-	exit(1);
+	G_fatal_error("%s: illegal value spec", vallist);
     }
 
     return 0;

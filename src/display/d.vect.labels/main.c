@@ -162,25 +162,19 @@ int main (int argc, char **argv)
 
   /* find input vector file */
   mapset=G_find_vector2(vect_opt->answer,"");
-  if (mapset == NULL){
-    fprintf (stderr, "warning: %s - vector file not found\n", 
+  if (mapset == NULL)
+    G_fatal_error ("warning: %s - vector file not found", 
 	     vect_opt->answer);
-    exit(-1);
-  }
 
   /* open vector file and  fill map info structure*/
   if (flag_v->answer)
   	fprintf(stderr, "Reading vector map...\n");
   level = Vect_open_old (&Map,vect_opt->answer , mapset);
-  if (level < 0){
-    sprintf(temp, "Vector file [%s] not available", vect_opt->answer);
-    G_fatal_error (temp);
-  }
-  if (level < 2) {
-    sprintf(temp, "%s: You must first run v.support on vector file", 
-	    vect_opt->answer);
-    G_fatal_error (temp);
-  }
+  if (level < 0)
+    G_fatal_error ("Vector file [%s] not available", vect_opt->answer);
+  if (level < 2)
+    G_fatal_error ("%s: You must first run v.support on vector file",
+                  vect_opt->answer);
 
   /* read cats file */
   if (G_read_vector_cats(vect_opt->answer, mapset, &Cats) < 0)

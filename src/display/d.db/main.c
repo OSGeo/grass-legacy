@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "display.h"
 #include "D.h"
@@ -5,11 +8,9 @@
 #include "raster.h"
 #define   GLOBAL
 #include "global.h"
-#include <stdio.h>
 
 int main (int argc, char **argv)
 {
-	char   msg[200];
 	char   window_name[64] ;
 	int    t, b, l, r, more, ctype[2], sqltype;
 	int    i, icon, size, color, nplot=0, cont;	 
@@ -90,9 +91,8 @@ int main (int argc, char **argv)
 
 	color = D_translate_color(par.color->answer) ;
 	if (color == 0)	{
-		fprintf (stdout,"Don't know the color %s\n", par.color->answer);
 		G_usage() ;
-		exit(-1);
+		G_fatal_error("Don't know the color %s", par.color->answer);
 	}
 
 	sscanf( par.size->answer,"%d", &size);
@@ -159,10 +159,8 @@ int main (int argc, char **argv)
 	    column = db_get_table_column(table, i);
 	    sqltype = db_get_column_sqltype (column);
 	    ctype[i] = db_sqltype_to_Ctype(sqltype);
-	    if ( ctype[i] != DB_C_TYPE_INT && ctype[i] != DB_C_TYPE_DOUBLE ) {
-		fprintf ( stderr, "Column %s is not number.\n", db_get_column_name ( column ) );
-		exit (-1);
-	    }
+	    if ( ctype[i] != DB_C_TYPE_INT && ctype[i] != DB_C_TYPE_DOUBLE )
+		G_fatal_error ("Column %s is not number.", db_get_column_name ( column ) );
 	}
 
         while(1) {

@@ -1,8 +1,7 @@
-
 #include <stdio.h>
-
 #include "gis.h"
 #include "raster.h"
+#include "display.h"
 #include "options.h"
 
 int mouse_query(void)

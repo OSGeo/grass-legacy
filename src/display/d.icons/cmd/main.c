@@ -17,7 +17,7 @@ int setup_plot(void);
 
 int main (int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *color, *icon, *size, *points;
@@ -91,17 +91,11 @@ int main (int argc, char *argv[])
     name = parm.icon->answer;
     mapset = G_find_file2("icons", name, "");
     if (mapset == NULL)
-    {
-	fprintf (stderr, "icon <%s> not found\n", name);
-	exit(1);
-    }
+        G_fatal_error ("icon <%s> not found", name);
     if (get_icon(name, mapset, &icon1) < 0)
-    {
-	fprintf (stderr, "ERROR reading icon <%s>\n", name);
-	exit(1);
-    }
-    scale_icon (&icon1, &icon2, size);
+        G_fatal_error ("ERROR reading icon <%s>", name);
 
+    scale_icon (&icon1, &icon2, size);
 
     if (parm.points->answer != NULL)
     {

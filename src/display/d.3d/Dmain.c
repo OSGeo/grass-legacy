@@ -1,4 +1,5 @@
 #define MAIN
+#include <stdlib.h>
 #include <string.h>
 #include "display.h"
 #include "raster.h"
@@ -10,7 +11,6 @@
 int main(int argc,char **argv)
 {
 	char *mapset         ;
-	char buffer[256]      ;
 	char nbuf[128], ebuf[128] ;
 	extern int stash_away() ;
 	char window_name[64] ;
@@ -181,19 +181,11 @@ int main(int argc,char **argv)
 /* Final check for existence of files */
 	mapset = G_find_cell2 (file, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buffer, "Map: [%s] not found", file) ;
-		G_fatal_error(buffer) ;
-		exit(-1) ;
-	}
+		G_fatal_error("Map: [%s] not found", file) ;
 	strcpy (file_mapset, mapset);
 	mapset = G_find_cell2 (elevfile, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buffer, "Map: [%s] not found", elevfile) ;
-		G_fatal_error(buffer) ;
-		exit(-1) ;
-	}
+		G_fatal_error("Map: [%s] not found", elevfile) ;
 	strcpy (elevfile_mapset, mapset);
 
 	if (check_options() )
