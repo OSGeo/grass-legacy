@@ -1,6 +1,8 @@
-EXTRA_CFLAGS = $(VECT_INCLUDE)
+GEN2SHP=gen2shp-0.2.2
+SHAPELIB=shapelib-1.2.7
 
 PGM =	v.out.shape
+EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJ =	Vexport_arc.o\
 	write_areas.o\
@@ -10,9 +12,11 @@ OBJ =	Vexport_arc.o\
 
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(GMAKE) gen2shp-0.2.2
-	$(GMAKE) shapelib-1.2.7
+	$(GMAKE) $(GEN2SHP)
+	$(GMAKE) $(SHAPELIB)
 	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+	(cd $(GEN2SHP); make clean)
+	(cd $(SHAPELIB); make clean)
 
 $(VECTLIB): #
 $(DIG_ATTLIB): #
