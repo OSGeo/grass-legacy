@@ -151,10 +151,11 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
     }
 
     if ( resetwin ) {
-	window->north = tnorth;
-	window->south = tsouth;
-	window->east  = teast ;
-	window->west  = twest ;
+	/* favour resolution over bounds; round inwards to protect lat/lon */
+	window->north = floor(tnorth/window->ns_res) * window->ns_res;
+	window->south = ceil (tsouth/window->ns_res) * window->ns_res;
+	window->east  = floor(teast/window->ew_res) * window->ew_res;
+	window->west  = ceil (twest/window->ew_res) * window->ew_res;
 
 	if ( !hand ) {
 	    fprintf(stderr, "\n") ;
