@@ -24,12 +24,6 @@
 GISBASE=GISBASE_VALUE
 export GISBASE
 
-# Set the default grass user interface - for now Tcl/Tk
-if [ "$GRASS_GUI" != "text" ]
-then
-    GRASS_GUI="tcltk"
-fi
-
 # Clear the variable that will hold the command line options
 CMD_LINE_ARGS=""
 
@@ -60,7 +54,7 @@ for i in "$@" ; do
             echo
             echo "    GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial LOCATION directory"
             echo
-            echo "Environmental variables:"
+            echo "Environment variables:"
             echo "    GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "    GRASS_WISH                     set wish shell name to override 'wish'"
 	    exit
@@ -88,6 +82,35 @@ for i in "$@" ; do
 	    ;;
     esac
 done
+
+# Set the GRASSRC file
+GISRC=$HOME/.grassrc5
+export GISRC
+
+# At this point the grass user interface variable has been set from the
+# command line, been set from an external environment variable, or is 
+# not set. So we check if it is not set
+if [ ! "$GRASS_GUI" ] ; then
+    
+    # Check for a reference to the grass user interface in the grassrc file
+    if [ -f $GISRC ] ; then
+    	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' $GISRC`
+    fi
+    
+    # Set the grass user interface to the default if needed - currently tcltk
+    if [ ! "$GRASS_GUI" ] ; then
+    	GRASS_GUI="tcltk"
+    fi
+fi
+
+# Save the user interface variable in the grassrc file - choose a temporary
+# file name that should not match another file
+if [ -f $GISRC ] ; then
+    TEMP_FILE=/tmp/__grass$$__.txt
+    awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $TEMP_FILE
+    echo "GRASS_GUI: $GRASS_GUI" >> $TEMP_FILE
+    mv $TEMP_FILE $GISRC
+fi
 
 # Export the user interface variable
 export GRASS_GUI
