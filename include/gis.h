@@ -33,7 +33,13 @@
 
 /*=========================== Constants/Defines ============================*/
 
-static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
+#if !defined __GNUC__ || __GNUC__ < 2
+#undef __attribute__
+#define __attribute__(x)
+#endif
+
+static const char *GRASS_copyright __attribute__((unused))
+	= "GRASS GNU GPL licensed Software" ;
 
 /* Define TRUE and FALSE for boolean comparisons */
 #ifndef TRUE
@@ -103,6 +109,10 @@ typedef enum {
 #define G_ICON_CROSS  0
 #define G_ICON_BOX    1
 #define G_ICON_ARROW  2
+
+/* default colors */
+#define DEFAULT_FG_COLOR "black"
+#define DEFAULT_BG_COLOR "white"
 
 /*=========================== Typedefs/Structures ==========================*/
 

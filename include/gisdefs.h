@@ -441,12 +441,8 @@ int G__create_alt_env(void);
 int G__switch_env(void);
 
 /* error.c */
-#ifdef __GNUC_MINOR__
-int G_fatal_error(char *,...) __attribute__ ((__noreturn__));
-#else
-int G_fatal_error(char *,...);
-#endif
-int G_warning(char *,...);
+int G_fatal_error(char *,...) __attribute__((format(printf,1,2),__noreturn__));
+int G_warning(char *,...) __attribute__((format(printf,1,2)));
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
 int G_set_error_routine(int (*)(char *, int));
