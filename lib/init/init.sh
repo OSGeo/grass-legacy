@@ -564,12 +564,15 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk)
+        GRASS_MESSAGE_FORMAT="gui"
+        export GRASS_MESSAGE_FORMAT
         "$GISBASE/scripts/d.m" &
-#        "$GISBASE/bin/tcltkgrass" &
 	;;
     
     # Ignore others
     *)
+        GRASS_MESSAGE_FORMAT="text"
+        export GRASS_MESSAGE_FORMAT
     	;;
 esac
 
