@@ -230,7 +230,7 @@ char *G_strchg(char* bug, char character, char new) {
  
   Code example:
   \verbatim
-      char name[1024];
+      char *name;
       name = G_str_replace ( inbuf, ".exe", "" );
       ... 
       free(name);
