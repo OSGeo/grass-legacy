@@ -1,7 +1,7 @@
 interface_build {
     {d.barscale} 0
     {Overlays a bar scale and north arrow for the current geographic region.}
-    {entry bcolor {Color used for the background [black]:} 0 color}
+    {entry bcolor {Color used for the background, or "none". [black]:} 0 color}
     {entry tcolor {Color used for the text [white]:} 0 color}
     {entry at {Screen coordinates for top-left corner of label (options: 0-100 [0.0,0.0]):} 0 ""}
     {checkbox -m {Use mouse to interactively place scale.} "" -m}
