@@ -1,12 +1,12 @@
 /*-
  * Written by H. Mitasova, I. Kosinovsky, D. Gerdes Summer 1993
  * University of Illinois
- * US Army Construction Engineering Research Lab  
+ * US Army Construction Engineering Research Lab
  * Copyright 1993, H. Mitasova (University of Illinois),
- * I. Kosinovsky, (USA-CERL), and D.Gerdes (USA-CERL)   
+ * I. Kosinovsky, (USA-CERL), and D.Gerdes (USA-CERL)
  *
  * modified by McCauley in August 1995
- * modified by Mitasova in August 1995  
+ * modified by Mitasova in August 1995
  *
  * bug fixes by Jaro Hofierka in February 1999:
  *  line: 175,348 (*dnorm)
@@ -14,9 +14,9 @@
  *         457,461 (})
  *
  * modified by Mitasova November 1999 (option for dnorm ind. tension)
- *  
+ *
  */
-  
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -87,7 +87,8 @@ int IL_resample_interp_segments_2d (
   double xmax, xmin, ymax, ymin;
   int totsegm;			/* total number of segments */
   int total_points = 0;
-
+  struct triple skip_point;
+  int m_skip, skip_index;
 
   xmin = params->x_orig;
   ymin = params->y_orig;
@@ -212,6 +213,28 @@ int IL_resample_interp_segments_2d (
       return -1;
     }
 
+        /* cv stuff */
+    if (params->cv)
+            m_skip = m1;
+    else
+            m_skip = 1;
+
+ for(skip_index=0;skip_index<m_skip;skip_index++) {
+      j = 0;
+      skip_point.x = in_points[skip_index].x / (*dnorm);
+      skip_point.y = in_points[skip_index].y / (*dnorm);
+      skip_point.z = in_points[skip_index].z;
+      for (k=0;k<m_skip;k++) {
+        if (k!=skip_index && params->cv) {
+          data->points[j].x = in_points[k].x / (*dnorm);
+          data->points[j].y = in_points[k].y / (*dnorm);
+          data->points[j].z = in_points[k].z;
+          j++;
+        }
+     }
+        if (params->cv && skip_index == 0) m1 = m_skip - 1;
+
+
     if (params->matrix_create (params, data->points, m1, matrix, indx) < 0)
       return -1;
     for (i = 0; i < m1; i++)
@@ -221,11 +244,11 @@ int IL_resample_interp_segments_2d (
     b[0] = 0.;
     G_lubksb (matrix, m1 + 1, indx, b);
 
-    params->check_points (params, data, b, ertot, zmin, *dnorm);
-
+    params->check_points (params, data, b, ertot, zmin, *dnorm, skip_point);
+    if (!params->cv)
     if (params->grid_calc (params, data, bitmask,
-			   zmin, zmax, zminac, zmaxac, gmin, gmax,
-	       c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
+                           zmin, zmax, zminac, zmaxac, gmin, gmax,
+               c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
     {
       fprintf (stderr, "interpolation failed\n");
       return -1;
@@ -234,7 +257,7 @@ int IL_resample_interp_segments_2d (
     {
       if (totsegm != 0)
       {
-	G_percent (cursegm, totsegm, 1);
+        G_percent (cursegm, totsegm, 1);
       }
       /*
        * if (b) G_free_vector(b); if (matrix) G_free_matrix(matrix); if
@@ -243,6 +266,8 @@ int IL_resample_interp_segments_2d (
       fprintf (stderr, "dnorm in ressegm after grid before out= %f \n", *dnorm);
       return total_points;
     }
+ } /* cv loop */
+
   }
 
   out_seg_r = params->nsizr / div;	/* output rows per segment */
@@ -370,10 +395,10 @@ int IL_resample_interp_segments_2d (
 	  }
 	  else
 	    new_comp = 1;
-	  
+
 /*	    fprintf(stderr,"%f,%f,%f
 	    zmin=%f\n",in_points[index].x,in_points[index].y,in_points[index].z,zmin);
-*/	   
+*/
 	}
       }
 /*	fprintf (stdout,"m,index:%di,%d\n",m,index);*/
@@ -424,28 +449,57 @@ int IL_resample_interp_segments_2d (
 	      return -1;
 	    }
 	  } /*new_first*/
-	  if (params->matrix_create (params, data->points, data->n_points,
-				     new_matrix, new_indx) < 0)
-	    return -1;
+	          /* cv stuff */
+  if (params->cv)
+          m_skip = m;
+  else
+          m_skip = 1;
 
-	  for (i1 = 0; i1 < m; i1++)
-	  {
-	    b[i1 + 1] = data->points[i1].z;
-	  }
-	  b[0] = 0.;
-	  G_lubksb (new_matrix, data->n_points + 1, new_indx, b);
+   for(skip_index=0;skip_index<m_skip;skip_index++) {
+       j = 0;
+       skip_point.x = in_points[skip_index].x / (*dnorm);
+       skip_point.y = in_points[skip_index].y / (*dnorm);
+       skip_point.z = in_points[skip_index].z;
+         for (k=0;k<m_skip;k++) {
+           if (k!=skip_index && params->cv) {
 
-	  params->check_points (params, data, b, ertot, zmin, *dnorm);
+          data->points[j].x = in_points[k].x / (*dnorm);
+          data->points[j].y = in_points[k].y / (*dnorm);
+          data->points[j].z = in_points[k].z;
 
-	  if (params->grid_calc (params, data, bitmask,
-				 zmin, zmax, zminac, zmaxac, gmin, gmax,
-	       c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
-	  {
+           j++;
+           }
+         }
 
-	    fprintf (stderr, "interpolate() failed\n");
-	    return -1;
-	  }
-	} /*new_comp*/
+        if (params->cv && skip_index == 0) {
+                data->n_points = m_skip - 1;
+                m = m_skip - 1;
+        }
+
+          if (params->matrix_create (params, data->points, data->n_points,
+                                     new_matrix, new_indx) < 0)
+            return -1;
+
+          for (i1 = 0; i1 < m; i1++)
+          {
+            b[i1 + 1] = data->points[i1].z;
+          }
+          b[0] = 0.;
+          G_lubksb (new_matrix, data->n_points + 1, new_indx, b);
+
+          params->check_points (params, data, b, ertot, zmin, *dnorm, skip_point);
+
+          if (!params->cv)
+          if (params->grid_calc (params, data, bitmask,
+                                 zmin, zmax, zminac, zmaxac, gmin, gmax,
+               c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
+          {
+
+            fprintf (stderr, "interpolate() failed\n");
+            return -1;
+          }
+   } /* cv loop */
+   	} /*new_comp*/
 	else
 	{
 	  if (first)
@@ -470,25 +524,56 @@ int IL_resample_interp_segments_2d (
 	      return -1;
 	    }
 	} /* first*/
-	    if (params->matrix_create (params, data->points, data->n_points,
-				       matrix, indx) < 0)
-	      return -1;
-/*	  } here it was bug*/ 
-	  for (i1 = 0; i1 < m; i1++)
-	    b[i1 + 1] = data->points[i1].z;
-	  b[0] = 0.;
-	  G_lubksb (matrix, data->n_points + 1, indx, b);
 
-	  params->check_points (params, data, b, ertot, zmin, *dnorm);
+        /* cv stuff */
+  if (params->cv)
+          m_skip = m;
+  else
+          m_skip = 1;
 
-	  if (params->grid_calc (params, data, bitmask,
-				 zmin, zmax, zminac, zmaxac, gmin, gmax,
-	       c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
-	  {
+   for(skip_index=0;skip_index<m_skip;skip_index++) {
+       j = 0;
+       skip_point.x = in_points[skip_index].x / (*dnorm);
+       skip_point.y = in_points[skip_index].y / (*dnorm);
+       skip_point.z = in_points[skip_index].z;
+         for (k=0;k<m_skip;k++) {
+           if (k!=skip_index && params->cv) {
 
-	    fprintf (stderr, "interpolate() failed\n");
-	    return -1;
-	  }
+          data->points[j].x = in_points[k].x / (*dnorm);
+          data->points[j].y = in_points[k].y / (*dnorm);
+          data->points[j].z = in_points[k].z;
+
+           j++;
+           }
+         }
+
+        if (params->cv && skip_index == 0) {
+                data->n_points = m_skip - 1;
+                m = m_skip - 1;
+        }
+
+
+            if (params->matrix_create (params, data->points, data->n_points,
+                                       matrix, indx) < 0)
+              return -1;
+/*        } here it was bug*/
+          for (i1 = 0; i1 < m; i1++)
+            b[i1 + 1] = data->points[i1].z;
+          b[0] = 0.;
+          G_lubksb (matrix, data->n_points + 1, indx, b);
+
+          params->check_points (params, data, b, ertot, zmin, *dnorm, skip_point);
+
+          if (!params->cv)
+          if (params->grid_calc (params, data, bitmask,
+                                 zmin, zmax, zminac, zmaxac, gmin, gmax,
+               c1min, c1max, c2min, c2max, ertot, b, offset1, *dnorm) < 0)
+          {
+
+            fprintf (stderr, "interpolate() failed\n");
+            return -1;
+          }
+        } /* cv loop*/
 	}
       }
       if (data)

@@ -58,6 +58,9 @@ Recursively processes each segment in a tree by
     static double smseg;
     int    MINPTS;
     double pr;
+    struct triple *point;
+    struct triple skip_point;
+    int m_skip, skip_index,j,k;
 
 /* find the size of the smallest segment once */
     if (first_time) {
@@ -194,26 +197,73 @@ Recursively processes each segment in a tree by
             return -1;
           }
         }
+	if (!(point = (struct triple *) G_malloc (sizeof (struct triple) * data->n_points)))
+	{
+		fprintf (stderr, "Cannot allocate memory for point\n");
+		return -1;
+	}
 /*normalize the data so that the side of average segment is about 1m */
         for (i = 0; i < data->n_points; i++)
         {
 	  data->points[i].x = (data->points[i].x-data->x_orig) / dnorm;
+	  point[i].x = data->points[i].x;/*cv stuff*/
 	  data->points[i].y = (data->points[i].y-data->y_orig) / dnorm;
+	  point[i].y = data->points[i].y;/*cv stuff*/
+	  point[i].z = data->points[i].z;/*cv stuff*/
+
 /* commented out by Helena january 1997 as this is not necessary
  	  data->points[i].z = data->points[i].z / dnorm;
           if (params->rsm < 0.) data->points[i].sm = data->points[i].sm / dnorm;
 */
         }
+	
+        /* cv stuff */
+    if (params->cv)
+            m_skip = data->n_points;
+    else
+            m_skip = 1;
+
+ for(skip_index=0;skip_index<m_skip;skip_index++) {
+      j = 0;
+      skip_point.x = point[skip_index].x;
+      skip_point.y = point[skip_index].y;
+      skip_point.z = point[skip_index].z;
+      for (k=0;k<m_skip;k++) {
+        if (k!=skip_index && params->cv) {
+          data->points[j].x = point[k].x;
+          data->points[j].y = point[k].y;
+          data->points[j].z = point[k].z;
+          j++;
+        }
+     }
+
+        if (!params->cv){
         if (params->matrix_create(params,data->points,data->n_points,
                                        matrix,indx) < 0)  return -1;
+        }
+        else {
+                if (params->matrix_create(params,data->points,data->n_points-1,
+                                        matrix,indx) < 0)  return -1;
+        }
 
+        if (!params->cv) {
         for (i = 0; i < data->n_points; i++)
           b[i+1] = data->points[i].z;
         b[0] = 0.;
         G_lubksb(matrix,data->n_points+1,indx,b);
+        params->check_points(params,data,b,ertot,zmin,dnorm,skip_point);
+        } else
+        {
+                for (i = 0; i < data->n_points-1; i++)
+                  b[i+1] = data->points[i].z;
+                  b[0] = 0.;
+                  G_lubksb(matrix,data->n_points,indx,b);
+                  params->check_points(params,data,b,ertot,zmin,dnorm,skip_point);
+        }
 
-        params->check_points(params,data,b,ertot,zmin,dnorm);
-
+        } /*cv loop */
+        
+	if(!params->cv)
         if ((params->Tmp_fd_z!=NULL)||(params->Tmp_fd_dx!=NULL)||
             (params->Tmp_fd_dy!=NULL)||(params->Tmp_fd_xx!=NULL)||
             (params->Tmp_fd_yy!=NULL)||(params->Tmp_fd_xy!=NULL)) {
@@ -223,7 +273,7 @@ Recursively processes each segment in a tree by
             c1min,c1max,c2min,c2max,ertot,b,offset1,dnorm)<0)
               return -1;
         }
- 
+
 	/* show after to catch 100% */
 	cursegm++;
 if (totsegm < cursegm) fprintf(stderr,"%d %d\n",totsegm,cursegm);
