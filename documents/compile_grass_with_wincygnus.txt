@@ -101,7 +101,12 @@ Install it, too.
 #define BITS(type)  (BITSPERBYTE * (int)sizeof(type))
 #define INTBITS     BITS(int)
 
-8. You'll need to read the REQUIREMENTS files, download
+8  Check the src/include/config.h file, if the #define CURSORS_MAXY
+   is NONE, change this to _maxy and define
+   #define HAVE_CURSORS in one of the lines
+   previous to this line.   
+ 
+9. You'll need to read the REQUIREMENTS files, download
    the public domain libraries, such as png, and build
    and install them.  You will need the pnm include and
    lib files.  
@@ -109,7 +114,7 @@ Install it, too.
 
 -----------------------------------------------------------------------------
 
-9. To start GRASS compilation proceed like this:
+10. To start GRASS compilation proceed like this:
 
     ./configure
     make
@@ -121,7 +126,7 @@ Install it, too.
    cd /grass/src/libes
    gmake5
 
-10.  The current build was made using Cygwin 1.1.3
+11.  The current build was made using Cygwin 1.1.3
 
 </pre>
 
