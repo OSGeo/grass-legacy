@@ -1,0 +1,13 @@
+# %W%  %G%
+PGM=watershed
+
+LIST = get_answer.o read_title.o write_title.o intro.o \
+	   filt_step.o pits_step.o riv_step.o thin_step.o code_step.o \
+	   basin_step.o remove_files.o
+
+$(BIN)/watershed: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(VASK) -o $@
+
+$(LIST):  water.h
+
+$(GISLIB): #
