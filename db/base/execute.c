@@ -1,5 +1,5 @@
 /**************************************************************
- * db.execute driver=name database=name [location=name] [input=filename]
+ * db.execute driver=name database=name [input=filename]
  *
  *
  *   process one non-select sql statement.
@@ -14,7 +14,7 @@
 #include "codes.h"
 
 struct {
-	char *driver, *database, *location, *input;
+	char *driver, *database, *input;
 } parms;
 
 void parse_command_line();
@@ -49,7 +49,7 @@ main( int argc, char *argv[] )
 	exit(ERROR);
 
     db_init_handle (&handle);
-    db_set_handle (&handle, parms.database, parms.location);
+    db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
 	exit(ERROR);
 
@@ -72,7 +72,7 @@ main( int argc, char *argv[] )
 void
 parse_command_line(argc, argv) char *argv[];
 {
-    struct Option *driver, *database, *location, *input;
+    struct Option *driver, *database, *input;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -90,12 +90,6 @@ parse_command_line(argc, argv) char *argv[];
     database->type 	= TYPE_STRING;
     database->required 	= NO;
     database->description = "database name";
-
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->description = "database location";
 
     input 		= G_define_option();
     input->key 		= "input";
@@ -115,7 +109,6 @@ parse_command_line(argc, argv) char *argv[];
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
-    parms.location	= location->answer;
     parms.input		= input->answer;
 }
 

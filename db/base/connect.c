@@ -10,7 +10,8 @@ main(int argc, char *argv[])
 {
     dbConnection conn;
     struct Flag *print;
-    struct Option *driver, *database, *user, *password, *keycol;
+/*    struct Option *driver, *database, *user, *password, *keycol;*/
+    struct Option *driver, *database;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -35,6 +36,7 @@ main(int argc, char *argv[])
     database->multiple   = NO ;
     database->description= "Database name:" ;
 
+/* commented due to new mechanism:
     user = G_define_option() ;
     user->key        = "user" ;
     user->type       = TYPE_STRING ;
@@ -48,13 +50,7 @@ main(int argc, char *argv[])
     password->required   = NO  ;
     password->multiple   = NO ;
     password->description= "Password:" ;
-
-    keycol = G_define_option() ;
-    keycol->key        = "key" ;
-    keycol->type       = TYPE_STRING ;
-    keycol->required   = NO  ;
-    keycol->multiple   = NO ;
-    keycol->description= "Key column:" ;
+*/
 
     /* Set description */
     module              = G_define_module();
@@ -76,14 +72,13 @@ main(int argc, char *argv[])
 	if ( database->answer )
 	    conn.databaseName = database->answer;
 
+/* commented due to new mechanism:
 	if ( user->answer )
 	    conn.user = user->answer;
 
 	if ( password->answer )
 	    conn.password = password->answer;
-
-	if ( keycol->answer )
-	    conn.keycol = keycol->answer;
+*/
 
 	db_set_connection( &conn );    
 	
@@ -97,10 +92,10 @@ main(int argc, char *argv[])
     
     fprintf(stdout, "driver:%s\n", conn.driverName);
     fprintf(stdout, "database:%s\n", conn.databaseName);    
+/* commented due to new mechanism:
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    
-    fprintf(stdout, "key:%s\n", conn.keycol);    
-
+ */
     exit(OK);
 }
 

@@ -4,12 +4,9 @@
 #include <stdlib.h>
 
 void parse_command_line();
-void get_locations();
 
 struct {
 	char *driver;
-	char **locations;
-	int l;
 } parms;
 
 
@@ -18,7 +15,6 @@ main(int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle *handles;
-    dbString *locations;
     int nlocs;
     int count, i;
 
@@ -30,16 +26,13 @@ main(int argc, char *argv[])
 	fprintf (stderr, "Can't run driver %s\n", parms.driver);
 	exit(ERROR);
     }
-    get_locations (&locations, &nlocs);
-    if(db_list_databases (driver, locations, nlocs, &handles, &count) != DB_OK)
+    if(db_list_databases (driver, NULL, nlocs, &handles, &count) != DB_OK)
 	exit(ERROR);
     db_shutdown_driver (driver);
 
     for (i = 0; i < count; i++)
     {
 	fprintf (stdout,"%s", db_get_handle_dbname(&handles[i]));
-	if(parms.l)
-	    fprintf (stdout," %s", db_get_handle_dbpath(&handles[i]));
 	fprintf (stdout,"\n");
     }
     exit(OK);
@@ -48,8 +41,7 @@ main(int argc, char *argv[])
 void
 parse_command_line(int argc, char *argv[])
 {
-    struct Option *driver, *location;
-    struct Flag *l;
+    struct Option *driver;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -62,81 +54,13 @@ parse_command_line(int argc, char *argv[])
     driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
     driver->description = "driver name";
 
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->multiple 	= YES;
-    location->description= "database location(s)";
-
-    l 			= G_define_flag();
-    l->key 		= 'l';
-    l->description	= "output database location also";
-    
     /* Set description */
     module              = G_define_module();
     module->description = ""\
     "List all databases for a given driver.";
 
-
     if(G_parser(argc, argv))
             exit(ERROR);
 
     parms.driver     = driver->answer;
-    parms.l          = l->answer;
-    parms.locations  = location->answers; /* NOTE THE PLURAL 'answers' HERE */
-}
-
-void
-get_locations (locations, nlocs)
-    dbString **locations;
-    int *nlocs;
-{
-    int i,j, count;
-    char *p, *colon;
-    dbString *list;
-
-
-/* count the locations. Note each 'locations' may itself be a ':' separated list */
-
-    *locations = NULL;
-    *nlocs = 0;
-    if (parms.locations == NULL)
-	return;
-
-    count = 0;
-    for (i = 0; p = parms.locations[i]; i++)
-    {
-	while (*p)
-	{
-	    if (*p != ':')
-		count++;
-	    if (colon = G_index (p, ':'))
-		p = colon + 1;
-	    else
-		break;
-	}
-    }
-    *locations = list = db_alloc_string_array (*nlocs = count);
-
-    for (j = 0, i = 0; p = parms.locations[i]; i++)
-    {
-	while (*p)
-	{
-	    if (colon = G_index(p, ':'))
-		*colon = 0;
-	    if (*p)
-	    {
-		if (j == count)
-		{
-		    db_error ("OOPS - programmer goofed");
-		    exit(ERROR);
-		}
-		db_set_string (&list[j++], p);
-	    }
-	    if (colon == NULL)
-		break;
-	    p = colon + 1;
-	}
-    }
 }

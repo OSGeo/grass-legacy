@@ -1,9 +1,10 @@
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
+#include <stdlib.h>
 
 struct {
-	char *driver, *database, *location, *table;
+	char *driver, *database, *table;
 } parms;
 
 void parse_command_line();
@@ -26,7 +27,7 @@ main(int argc, char *argv[])
 	exit(1);
     }
     db_init_handle (&handle);
-    db_set_handle (&handle, parms.database, parms.location);
+    db_set_handle (&handle, parms.database, NULL);
 
     db_init_string (&table);
     db_set_string (&table, parms.table);
@@ -41,7 +42,7 @@ main(int argc, char *argv[])
 void
 parse_command_line(int argc, char *argv[])
 {
-    struct Option *driver, *database, *location, *table;
+    struct Option *driver, *database, *table;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -66,12 +67,6 @@ parse_command_line(int argc, char *argv[])
     database->required 	= NO;
     database->description = "database name";
 
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->description = "database location";
-
     /* Set description */
     module              = G_define_module();
     module->description = ""\
@@ -83,6 +78,5 @@ parse_command_line(int argc, char *argv[])
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
-    parms.location	= location->answer;
     parms.table		= table->answer;
 }

@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 print_table_definition(table)
     dbTable *table;
 {
@@ -19,8 +20,11 @@ print_table_definition(table)
 	fprintf (stdout,"\n");
 	print_column_definition (column);
     }
+    
+    return 0;
 }
 
+int
 print_column_definition(column)
     dbColumn *column;
 {
@@ -43,8 +47,11 @@ print_column_definition(column)
     fprintf (stdout,"nullok:%s\n", db_test_column_null_allowed(column) ? "yes" : "no");
     print_priv ("select", db_get_column_select_priv(column));
     print_priv ("update", db_get_column_update_priv(column));
+    
+    return 0;
 }
 
+int
 print_priv (label, priv)
     char *label;
 {
@@ -56,4 +63,6 @@ print_priv (label, priv)
     default:             fprintf (stdout,"?"); break;
     }
     fprintf (stdout,"\n");
+    
+    return 0;
 }

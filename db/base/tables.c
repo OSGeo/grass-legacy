@@ -1,5 +1,5 @@
 /**************************************************************
- * db.tables driver=name database=name [location=name]
+ * db.tables driver=name database=name
  *
  *
  *  list all tables in a database
@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 struct {
-	char *driver, *database, *location;
+	char *driver, *database;
 	int s;
 } parms;
 
@@ -33,7 +33,7 @@ main(int argc, char *argv[])
 	exit(ERROR);
 
     db_init_handle (&handle);
-    db_set_handle (&handle, parms.database, parms.location);
+    db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
 	exit(ERROR);
 
@@ -52,7 +52,7 @@ main(int argc, char *argv[])
 void
 parse_command_line(int argc, char *argv[])
 {
-    struct Option *driver, *database, *location;
+    struct Option *driver, *database;
     struct Flag *p, *s;
     struct GModule *module;
 
@@ -71,12 +71,6 @@ parse_command_line(int argc, char *argv[])
     database->type 	= TYPE_STRING;
     database->required 	= NO;
     database->description = "database name";
-
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->description = "database location";
 
     p = G_define_flag();
     p->key               = 'p';
@@ -97,6 +91,5 @@ parse_command_line(int argc, char *argv[])
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
-    parms.location	= location->answer;
     parms.s		= s->answer;
 }
