@@ -6,5 +6,5 @@ interface_build {
     {entry col  {Key column name:} 0 ""}
     {entry hv  {Output - v(ert)/h(oriz):} 0 ""}
     {checkbox -s {SQL file input} "" -s}
-    {entry pql  {Name of SQL file:} 0 file}
+    {entry sql  {Name of SQL file:} 0 file}
 }
