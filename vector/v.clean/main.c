@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 			        "\t\tchdangle - change the type of boundary dangle to line, "
 				"threshold ignored if < 0, input line type is ignored\n"
 			        "\t\trmbridge - remove bridges connecting area and island or 2 islands\n"
-			        "\t\tchbridge - change the type of remove bridges connecting area and island "
+			        "\t\tchbridge - change the type of bridges connecting area and island "
 			        "or 2 islands from boundary to line\n"
 			        "\t\tsnap - snap lines to vertex in threshold\n"
 			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n"
