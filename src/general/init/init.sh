@@ -30,7 +30,7 @@ GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
 
 # Get the command name
-CMD_NAME=`basename "$0"`
+CMD_NAME=START_UP
 
 # Go through the command line options
 for i in "$@" ; do
@@ -51,9 +51,9 @@ for i in "$@" ; do
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
-            echo "  -text                          use text based interface"
+            echo "  -text                          use text based interface and set as default"
             echo "  -tcltk or -gui                 use Tcl/Tk based graphical user interface"
-            echo
+            echo "                                   and set as default"
             echo "Parameters:"
             echo "  GISDBASE                       initial database"
             echo "  LOCATION_NAME                  initial location"
