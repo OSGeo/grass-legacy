@@ -56,6 +56,7 @@ GLOBAL int execute_stack_depth_max;
 GLOBAL int floating_point_exception;
 GLOBAL int floating_point_exception_occurred;
 GLOBAL int overflow_occurred;
+GLOBAL int integer_division_occurred;
 GLOBAL int max_nargs;
 GLOBAL CELL **iargs;
 GLOBAL double **xargs;
