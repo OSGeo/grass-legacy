@@ -1,3 +1,7 @@
+PACKAGE ="grassmods"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
+
 PGM=r.colors
 
 LIST=main.o\
