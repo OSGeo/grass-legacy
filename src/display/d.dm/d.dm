@@ -112,7 +112,9 @@ proc set_display { dtype } {
         execute $cmd
         foreach mw [pack slaves $f] {
 	    regexp -- {.*\.([^.]*)$} $mw p m 
-            map_display $s $m
+            if { $map($s,$m,_disp) } {
+                map_display $s $m
+            }
         }
     }
     
@@ -203,21 +205,21 @@ proc map_create { type } {
     global map set sset s m
     set s $sset
     if { $s < 0 } { puts stdout "Set not selected."; return }
-    if {[lsearch -exact { r l a s pl} $type] < 0} {
+    if {[lsearch -exact { r l a s pl c} $type] < 0} {
 	puts stdout "I don't know map type '$type'."
 	return 
     }    
     set m $set($s,nmap)
     set f $set($s,frame)
     frame $f.$m
-    pack $f.$m -side top
-
- 
+    pack $f.$m -side top 
     pack configure $f.$m -anchor w
     set map($s,$m,_type) $type
     set map($s,$m,_widget) $f.$m    
     button $f.$m._sel -text $type -command "map_sel $m" -height 1 -width 2 -relief "raised"
-    pack $f.$m._sel -side left 
+    checkbutton $f.$m._disp -text "" -variable map($s,$m,_disp)
+    $f.$m._disp select 
+    pack $f.$m._sel $f.$m._disp -side left
     switch $type {
 	r {
 	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
@@ -236,7 +238,7 @@ proc map_create { type } {
 	    Label $f.$m.lab2 -text "thin" 
 	    Entry $f.$m._leg_thin -width 3 -text "" -textvariable map($s,$m,_leg_thin) \
 		-helptext "Thinning factor"
-	    pack $f.$m.map $f.$m.o $f.$m._leg_mon $f.$m._leg_color $f.$m.lab1 $f.$m._leg_lines \
+	    pack $f.$m._disp $f.$m.map  $f.$m.o $f.$m._leg_mon $f.$m._leg_color $f.$m.lab1 $f.$m._leg_lines \
 		 $f.$m.lab2 $f.$m._leg_thin -side left   
 	}    
 	l {
@@ -282,6 +284,11 @@ proc map_create { type } {
 	    bind $f.$m.file <ButtonPress-3> "map_par_set pl $s $m file"
 	    pack $f.$m.file -side left
 	}		
+	c {
+	    Entry $f.$m._cmd -width 50 -text "" -textvariable map($s,$m,_cmd) \
+		-helptext "any grass or shell command"
+	    pack $f.$m._cmd -side left
+	}		
     }
     incr set($s,nmap)
     return $m
@@ -290,7 +297,7 @@ proc map_create { type } {
 proc map_par_set { t s m par } {
     global map
     set n [map_par_get $t]
-    puts stdout "n= $n  set map($s,$m,$par)" 
+    #puts stdout "n= $n  set map($s,$m,$par)" 
     if { $n != "" } {  set map($s,$m,$par) $n }
 }
 
@@ -353,7 +360,7 @@ proc map_rm {  } {
 }
 
 proc map_type_get { } {
-     set list [list {r "raster"} {l "vector lines"} {a "vector areas"} {s "sites"} {pl "paint labels"}]
+     set list [list {r "raster"} {l "vector lines"} {a "vector areas"} {s "sites"} {pl "paint labels"} {c "command"} ]
      return [list_select $list]
 }  
 
@@ -410,6 +417,9 @@ proc map_display { s m } {
         pl {
             set cmd "d.paint.labels file=$map($s,$m,file)"
         }	
+        c {
+            set cmd "$map($s,$m,_cmd)"
+        }	
 	default {
 	    puts stdout "I don't know how to display map type $type."
 	    return
@@ -463,23 +473,27 @@ proc dm_save { } {
        		r {
 		    puts $file "_map_type=r\nmap=$map($s,$m,map)\n-o=$map($s,$m,-o)"
 		    puts $file "_leg_mon=$map($s,$m,_leg_mon)\n_leg_color=$map($s,$m,_leg_color)"
-		    puts $file "_leg_lines=$map($s,$m,_leg_lines)\n_leg_thin=$map($s,$m,_leg_thin)\n"		    
+		    puts $file "_leg_lines=$map($s,$m,_leg_lines)\n_leg_thin=$map($s,$m,_leg_thin)"		    
     		}    
     		l {
-		    puts $file "_map_type=l\nmap=$map($s,$m,map)\ncolor=$map($s,$m,color)\n"		
+		    puts $file "_map_type=l\nmap=$map($s,$m,map)\ncolor=$map($s,$m,color)"		
     		}
     		a {
 		    puts $file "_map_type=a\nmap=$map($s,$m,map)\nfillcolor=$map($s,$m,fillcolor)"
-		    puts $file "linecolor=$map($s,$m,linecolor)\n"		    
+		    puts $file "linecolor=$map($s,$m,linecolor)"		    
     		}		
     		s {
 		    puts $file "_map_type=s\nsitefile=$map($s,$m,sitefile)\ncolor=$map($s,$m,color)"
-		    puts $file "size=$map($s,$m,size)\ntype=$map($s,$m,type)\n"		    				
+		    puts $file "size=$map($s,$m,size)\ntype=$map($s,$m,type)"		    				
     		}
     		pl {
-		    puts $file "_map_type=pl\nfile=$map($s,$m,file)\n"
+		    puts $file "_map_type=pl\nfile=$map($s,$m,file)"
+    		}		
+    		c {
+		    puts $file "_map_type=c\n_cmd=$map($s,$m,_cmd)"
     		}		
 	    }    
+	    puts $file "_disp=$map($s,$m,_disp)\n"
 	}
     }
     close $file
@@ -518,6 +532,11 @@ proc dm_read { } {
 		    if { $s >= 0 } {
 			set mtype $d(val)
 			set m [map_create $mtype]
+		    }
+		}		
+       		_disp {
+		    if { $s >= 0  && $m >= 0 } {
+           		set map($s,$m,_disp) $d(val)
 		    }
 		}		
 		default {
@@ -559,6 +578,11 @@ proc dm_read { } {
            			    file { set map($s,$m,file) $d(val) }
     				}				
 			    }	
+           		    c {
+	    			switch -- $d(key) {
+           			    _cmd { set map($s,$m,_cmd) $d(val) }
+    				}				
+			    }	
 			}						
 		    }
 		}    
@@ -587,18 +611,14 @@ proc element_list { element } {
 		-type ok
 	    } 
 	} elseif {[catch {glob *} names]} {
-	} elseif {$inpath} {
-	    if {$dir == $env(MAPSET)} {
-    		eval lappend list [lsort $names]
-	    } else {
-    		foreach name [lsort $names] {
-		    lappend list "$name ($dir)"
-    		}
-	    }    
-	} else {
-    	    foreach name [lsort $names] {
-		lappend list $name@$dir
-	    }
+        } else {
+            if {$dir == $env(MAPSET)} {
+                eval lappend list [lsort $names]
+            } else {
+                foreach name [lsort $names] {
+                    lappend list "$name@$dir"
+                }
+            }
 	}
     }
     cd $pwd
@@ -637,7 +657,7 @@ proc list_select_item { item } {
     global list_select_item
     set list_select_item $item
     .list.sw.lb selection set $item
-    puts stdout "$item clicked" 
+    #puts stdout "$item clicked" 
     destroy .list
 }         
 
