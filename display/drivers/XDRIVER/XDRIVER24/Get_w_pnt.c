@@ -29,7 +29,13 @@ int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
     /* wait for a button-push event in the grass window, and return the
      * x,y coord and button number */
 
-    if(*button == -1){ /* How this is used? */
+    if(*button == -1){
+	/* How this is used?
+	 * When *button = -1 is given, this function immediately returns
+	 * without waiting for an event. This is mainly used to get
+	 * the location of the pointer with or without a button-push event.
+	 * If no button is pushed, *button = -1 is returned.
+	 */
         u_int  mask;
         Window root, child;
         int    rx, ry;
