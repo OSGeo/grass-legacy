@@ -97,7 +97,7 @@ F		[fF]
 \"[^"]+\"	|
 \'[^']+\'	{
 			yylval.sval = strdup(yytext + 1);
-			yylval.sval[yyleng - 1] = '\0';
+			yylval.sval[yyleng - 2] = '\0';
 			return STRING; 
 		}
 
