@@ -48,6 +48,12 @@ SUBDIRS = \
 	vector \
 	visualization
 
+ifneq ($(strip $(HAVE_NLS)),)
+	LOCALE=1
+else
+	LOCALE=0
+endif
+
 FILES = COPYING README REQUIREMENTS.html
 
 BIN_DIST_FILES = $(FILES) \
@@ -224,7 +230,7 @@ real-install: FORCE
 	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	@##### -cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
+	if [ ${LOCALE}=1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; fi
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
 	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
