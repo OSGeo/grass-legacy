@@ -522,7 +522,8 @@ Vector file <%s> has no circles in it.\n",
   /* newly created vector file (output).                        */
   if (flag->answer == 0x01)
    {
-    sleep(8);
+    fprintf(stderr, "Creating support file...");
+    sleep(8); /* sleep to avoid timing problems */
     sprintf(command,"%s/bin/v.support map=%s",G_gisbase(), output );
     system(command);
    }
