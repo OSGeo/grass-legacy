@@ -176,9 +176,12 @@ int Vect_line_distance ( struct line_pnts *, double, double, double *);
 
 int Vect_point_in_box (double, double, double, BOUND_BOX *);
 int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
+int Vect_box_copy (BOUND_BOX *, BOUND_BOX *);
+int Vect_box_extend (BOUND_BOX *, BOUND_BOX *);
 int Vect_get_line_box (struct Map_info *, int, BOUND_BOX *);
 int Vect_get_area_box (struct Map_info *, int, BOUND_BOX *);
 int Vect_get_isle_box (struct Map_info *, int, BOUND_BOX *);
+int Vect_get_map_box (struct Map_info *, BOUND_BOX *);
 
 int Vect_select_lines_by_box (struct Map_info *, BOUND_BOX *, int, struct ilist *);
 int Vect_select_areas_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);

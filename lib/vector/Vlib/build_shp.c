@@ -53,6 +53,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
     int     nShapes, nParts, shape, part;
     int     first, last;
     SHPObject *pShape;
+    BOUND_BOX box;
     
     plus = &(Map->plus);
     Msgout = msgout;
@@ -115,6 +116,13 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	    offset = ( ( shape << 11 ) | ( part & 0x7FF) );
 	    G_debug ( 3, "Register line: offset = %d", offset );
 	    line = dig_add_line ( plus, GV_BOUNDARY, Points[part], offset );
+	    dig_line_box ( Points[part], &box );
+	    dig_line_set_box (plus, line, &box);
+            if ( lineid == 1 )
+                Vect_box_copy (&(plus->box), &box);
+	    else
+	        Vect_box_extend (&(plus->box), &box);
+			    
 	    if ( part == 0 ) { lineid = line; }
 	
 	    /* Check part type: area or isle */
@@ -138,6 +146,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 		/* register area */
 		lines[0] = lineid + part; 
 	        area = dig_add_area (plus, 1, lines);
+		dig_line_box ( Points[part], &box );
+		dig_area_set_box (plus, area, &box);
 	        
                 /* create virtual centroid */
 		/* !! offset for virtual centroids is offset for part 0 */
@@ -146,6 +156,9 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	        Vect_reset_line ( CPoints );
 		Vect_append_point ( CPoints, Points[part]->x[0], Points[part]->y[0] );
 	        line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
+	        dig_line_box ( CPoints, &box );
+		dig_line_set_box (plus, line, &box);
+		
 		Line = plus->Line[line];
 		Line->left = area;
 
@@ -163,6 +176,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
                             /* register island */ 
 		            lines[0] = lineid + i; 
 	                    isle = dig_add_isle (plus, 1, lines);
+		            dig_line_box ( Points[i], &box );
+		            dig_area_set_box (plus, isle, &box);
 			    
 			    G_debug ( 3, " -> isle %d", isle );
 			    Isle = plus->Isle[isle];

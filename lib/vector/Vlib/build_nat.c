@@ -84,6 +84,11 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 	lineid = dig_add_line ( plus, type, Points, offset );
 	dig_line_box ( Points, &box );
         dig_line_set_box (plus, lineid, &box);  
+	if ( lineid == 1 ) 
+	    Vect_box_copy (&(plus->box), &box);
+        else
+	    Vect_box_extend (&(plus->box), &box);
+	
 	/* print progress */
 	if ( i == 10 ) {
             prnmsg ("%7d\b\b\b\b\b\b\b", j);
