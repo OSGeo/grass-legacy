@@ -1,0 +1,45 @@
+9/9/98 more patches from Jacques Bouchard
+
+diff common.h.orig common.h
+49a50
+> #ifndef sgi
+51a53,56
+> #else
+> #define UNIX_ATT         1
+> #define UNIX_BER         0
+> #endif
+
+
+27.1.98
+ Some more patches are there
+ from George Chou <gchou@gpz.com>
+
+ I have moved the already changed <files>.orig to <files>.orig2
+ and just replaced these specific files by the new from George:
+ 
+  mv define.c define.c.orig2
+  mv defs.h defs.h.orig2
+  mv draw.c draw.c.orig2
+  mv lump.c lump.c.orig2
+  mv mask.c mask.c.orig2
+  mv net.c net.c.orig2
+  mv netmain.c netmain.c.orig2
+  mv nntool.c nntool.c.orig2
+  mv quickprop.c quickprop.c.orig2
+
+  The new .c files are from George.
+
+ All right?
+
+  Markus Neteler
+
+----------------------------------------------------------------
+15.1.98
+
+ some patches had to be done for linux.
+ See r_nntool.diff for details.
+
+Michel Wurtz	ENGEES - Laboratoire Territoires & Environnement
+		1, quai Koch - BP 1039, F-67070 STRASBOURG cedex
+		Tel: +33 03.88.25.34.62  Fax: +33 03.88.37.04.97
+                mw@engees.u-strasbg.fr
