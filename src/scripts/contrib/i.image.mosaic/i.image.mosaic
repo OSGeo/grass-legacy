@@ -2,6 +2,9 @@
 # written by Markus Neteler 18. August 1998 / 20. Jan. 1999
 #            neteler@geog.uni-hannover.de
 # mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
+#
+# TODO: - implement g.findfile (currently only current mapset supported)
+#       - fix isnull() in r.mapcalc for 3 and 4 maps composites
 
 #--------------------------------------------------
 if test "$GISBASE" = ""; then
@@ -41,7 +44,9 @@ echo ""
 # two images to patch
 if [ "$#" -eq 2 ]; then
      echo "Mosaicing two images..."
-     r.mapcalc "$1.$2.mosaic = if($1,$1,$2+256)"
+     r.mapcalc "$1.$2.mosaic = if(isnull($1),\
+					$2+256,\
+					$1)"
      #modify the color table:
      echo '% 0 1024' > $LOCATION/colr/$1.$2.mosaic
      tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.mosaic
