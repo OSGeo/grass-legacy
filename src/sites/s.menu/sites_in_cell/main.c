@@ -12,10 +12,9 @@ main (argc, argv) 	char *argv[];
     char title[200];
     char layer[40];
     char *mapset;
-    int quad;
     int cellfd;
-    int north;
-    int east;
+    double north;
+    double east;
     int n;
 
     if (argc != 2)
@@ -29,8 +28,6 @@ main (argc, argv) 	char *argv[];
     initialize_site_list (&site_list);
     if (!get_site_list (&site_list, argv[1]))
 	exit (-1);
-
-    quad = 0;
 
     new_screen();
 
