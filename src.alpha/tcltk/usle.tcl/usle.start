@@ -1,0 +1,28 @@
+#!/bin/sh  
+
+# startup shell for the USLE tcl script.
+
+PWD=`pwd`
+
+WISH=/usr/local/bin/wish 
+if test ! -r "$WISH"; then
+	WISH=wish
+fi
+
+for arch in ./bin.*; do
+	if test -r $arch/wish; then
+		if expr "`file $arch/wish`" : ".*executable.*" >/dev/null
+		then
+			WISH=$arch/wish
+			#TCL_LIBRARY=$PWD/lib/tcl
+			#TK_LIBRARY=$PWD/lib/tk
+			#export TCL_LIBRARY TK_LIBRARY
+			break
+		fi
+	fi
+done
+
+    export WISH
+    $WISH -f ./usle.tcl 
+  
+exit
