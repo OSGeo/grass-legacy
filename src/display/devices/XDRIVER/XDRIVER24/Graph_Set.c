@@ -98,7 +98,11 @@ int Graph_Set (int argc, char **argv, int nlev)
     /* use_screen is a pointer to that screen structure */
     use_screen = ScreenOfDisplay(dpy, scrn);
     
-    backing_store = (DoesBackingStore(DefaultScreenOfDisplay(dpy)) == Always);
+    /* Slight change of semantics (could be Always or WhenMapped - both work)
+     * backing_store = (DoesBackingStore(DefaultScreenOfDisplay(dpy)) == Always);
+     */
+
+    backing_store = (DoesBackingStore(DefaultScreenOfDisplay(dpy)) != NotUseful);
 
     /* Load the font to use. GRASS doesn't at this point use fonts, but
      * may someday in the future. */
