@@ -1,6 +1,7 @@
 
 MODULE_TOPDIR = ..
 
+#order is relevant:
 SUBDIRS = \
 	bitmap \
 	btree \
@@ -16,16 +17,16 @@ SUBDIRS = \
 	gis \
 	image \
 	imagery \
-	init \
 	linkm \
-	ogsf \
 	proj \
 	raster \
 	rowio \
-	rst \
 	segment \
 	vask \
-	vector
+	vector \
+	rst \
+	ogsf \
+	init
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
