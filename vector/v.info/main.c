@@ -56,7 +56,7 @@ main (int argc, char *argv[])
 
   histf = G_define_flag ();
   histf->key             = 'h';
-  histf->description     = "Print vectory history instead of info";
+  histf->description     = "Print vector history instead of info";
 
   if (G_parser(argc,argv))
     exit(1);
