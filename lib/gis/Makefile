@@ -59,13 +59,11 @@ LIB_OBJS = \
 	color_write.o \
 	commas.o\
 	copy.o\
-	dalloc.o\
 	date.o\
 	datum.o\
 	debug.o\
 	distance.o\
 	done_msg.o\
-	eigen_tools.o\
 	endian.o\
 	env.o\
 	error.o\
@@ -100,7 +98,6 @@ LIB_OBJS = \
 	histogram.o\
 	history.o\
 	home.o\
-	ialloc.o\
 	icon.o\
 	index.o\
 	init_map.o\
@@ -116,7 +113,6 @@ LIB_OBJS = \
 	ll_format.o\
 	ll_scan.o\
 	location.o\
-	lu.o\
 	mach_name.o\
 	make_colr.o\
 	make_loc.o\
@@ -169,7 +165,6 @@ LIB_OBJS = \
 	store.o\
 	strings.o\
 	strip.o\
-	svd.o\
 	system.o\
 	tempfile.o\
 	timestamp.o\
