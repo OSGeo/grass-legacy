@@ -38,7 +38,7 @@ if [ -z "$TEST_STR" ] ; then
 fi
 
 # Check for first parameter:
-if [ $# -lt 1 -o "$1" == "-h" -o "$1" == "-help" -o "$1" == "--help"  ] ; then
+if [ $# -lt 1 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help"  ] ; then
     echo "
 
 GRASS GIS $NAME_VER binary package installation tool
@@ -271,7 +271,7 @@ echo "Installing GRASS binaries into $DESTDIR"
 echo ""
 
 echo "Uncompressing the package and extracting to target directory..."
-PACK_FILE=$PACKAGE_DIR/$PACKAGE_NAME
+PACK_FILE=`echo $PACKAGE_DIR/$PACKAGE_NAME | sed 's+^//+/+g'`
 cd $DESTDIR; $UNPACK -c $PACK_FILE | tar -xf -
 if [ $? -eq 1 ] ; then
     echo "An error occured or user break while installing binaries! Exiting."
