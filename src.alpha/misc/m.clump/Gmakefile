@@ -1,0 +1,42 @@
+LIBES = $(VECTLIB) $(GISLIB) $(GEOMLIB)
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+
+OBJ =   \
+    main.o \
+    attr.o \
+    barriers.o \
+    bbox.o \
+    break.o \
+    disconnect.o \
+    fields.o \
+    inci.o \
+    intersect.o \
+    list.o \
+    neighbors.o  \
+    parse.o \
+    read.o \
+    region.o \
+    readline.o \
+    report.o \
+    triangulate.o \
+    vect.o \
+    write.o
+
+
+
+PROG = m.clump
+HOME = $(BIN_ALPHA_CMD)
+
+
+$(HOME)/$(PROG): $(OBJ) $(LIBES)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB)
+	mv a.out $@
+
+$(LIBES): #
+
+$(OBJ): glob.h proto.h
+
+proto:
+	make.proto *.c > proto.h
