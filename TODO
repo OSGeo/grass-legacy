@@ -1,4 +1,4 @@
-$Id: TODO,v 1.32 2000-10-18 12:59:50 markus Exp $
+$Id: TODO,v 1.33 2000-10-18 13:33:58 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -17,7 +17,7 @@ Configure:
        for it's availability
      - search for "yacc" and "(f)lex"
   (Being worked on by )
- -> a new make system is on the way...
+ -> a new make system is on the way... (by Eric Mitchell)
 
 --------------------------------------------------------------------
 Removal of absolute path codings:
@@ -38,50 +38,44 @@ Font selection:
 - add truetype support (replace old font system). This is urgently required
   for internationalization. Suggestion: Use "FreeType"
   http://freetype.sourceforge.net
-  (Being worked on by )
+  (Being worked on by ?)
 
 ---------------------------------------------------------------------
 Multiple languages support:
 
 - depends on truetype support
 - learn from KDE/GNOME etc.
+  (Being worked on by ?)
 
 ---------------------------------------------------------------------
 
 Libraries:
-- src/libes/gis/readsites.c: Required is a new function which allows
-  to read an attribute/dimension selectable by user. Useful 
-  in order to select which attribute to be converted 
-  (assuming multi-attribute sites lists).
-  (Being worked on by Markus, assistance wanted)
-
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
-  (Being worked on by )
+  (Being worked on by David D Gray, Radim Blazek)
 
 - TIN support: Probably use this library:
     http://www.cs.cmu.edu/~quake/triangle.html
-  (Being worked on by )
+  (Being worked on by ?)
 
 - Metadata: improved support, probably write a GRASS daemon serving
   the metadata for external applications like "R" statistics interface
+  (Being worked on by ?) 
 
 - Parallel CPU support
+  (Being worked on by ?) 
 
 ---------------------------------------------------------------------
 XDriver
 - replace fifos by sockets
-
----------------------------------------------------------------------
-CELL driver
-- update to 24bit
-  (Being worked on by )                  
+  (Being worked on by ?) 
 
 ---------------------------------------------------------------------
 Package:
 - split into packages: GRASS-CORE, GRASS-Raster, ...
-  (Being worked on by )
+  (Being worked on by ?)
 
 - reorganize directory structure
+  (Being worked on by Markus et al.)
 
 ---------------------------------------------------------------------
 Lock system:
@@ -98,13 +92,10 @@ So two ways from there to improve the situation:
       Localise all global lockable resources.
       (Unlikely to work.)
  Bernhard
+  (Being worked on by ?)
 
-- this might be related to a daemnon serving a session key (see there).
-
----------------------------------------------------------------------
-
-- etc/monitorcap: use relative paths based on $GISBASE
-  (Being worked on by Justin)
+- this might be related to a daemon serving a session key (see there).
+  (Being worked on by ?)
 
 ---------------------------------------------------------------------
 Modules:
@@ -113,6 +104,7 @@ Modules:
   They should read/write from current directory instead of subdirectory
   in mapset.
   v.in.shape/v.out.shape and m.in.e00 already meet this convention.
+  (Being worked on by ?)
 
 - Implement new G_readsites_xyz function into
    src.contrib/CERL/sites/s.surf.krig/read_sites.c
@@ -141,37 +133,40 @@ Modules:
 
 
 - d.legend:
-  * there is no facility to place the legend     
+  - there is no facility to place the legend     
     exactly on the screen and also control the size of the text and boxes           
     d.frames is not adequate..finer control is needed
-  * For categorical maps with more than 10 classes, where user                   
+  - For categorical maps with more than 10 classes, where user                   
     discrimination among colors becomes difficult, there should be a flash 
     utility. Based on d.legend ... we should be able to click on any legend 
     box and have the corresponding class flash on the map (on-off sequence
     with user defined color).
+  (Being worked on by ?)
 
-- g.list, g.remove should accept wildcards (*, ?)
-  for convenience
+- g.list, g.remove should accept wildcards (*, ?) for convenience
+  (Being worked on by ?)
 
 - g.manual: change list of manual pages in g.manual
   organized according to objects (vector files, raster files, ...)
   not to "status" of module (which is even confused at time)
-  (Being worked on by )
+  (Being worked on by ?)
 
 - ps.map:
   set CC option "-fwritable-strings" on Linux or, better, update ps.map!
-  (Being worked on by )
+  (Being worked on by ?)
 
 - r.buffer: should save info about used buffers into map history
-  (Being worked on by )
+  (Being worked on by ?)
 
 - r.in.hdf/r.out.hdf
   - update to HDF 5
+  (Being worked on by ?)
 
 - r.info 
    should also report statistics (min, max, mean, stddev, 1st            
    quartile, median, 3rd quartile and sum)
    (merge function of r.univar into r.info)
+  (Being worked on by ?)
 
 - r.surf.distance: write it
   this module would generate a distance surface (improved version of
@@ -184,26 +179,24 @@ Modules:
   Add check for cols/rows settings *before* starting to export:
       Too many rows: 1200 (400 is maximum)
       Too many columns: 1900 (800 is maximum)
+  (Being worked on by ?)
  
 - v.buffer: write it
-  (Being worked on by)
-
-- v.digit:
-   Label: M- multiple un-label: it would be a good idea to first select
-          all lines/areas, then confirmation *once* only
+  (Being worked on by ?)
 
 - NVIZ:
-    - Z axis scalable when displaying 3D sites
-      (Being worked on by )
+  - Z axis scalable when displaying 3D sites
+    (Being worked on by ?)
 
-    - eventually color problem in lat/long locations
-      (Being worked on by )
+  - eventually color problem in lat/long locations
+    (Being worked on by ?)
 
-    - high resolution output (definable extent like CELL driver)
-      (Being worked on by 
-       probably Bob Covill <bcovill@tekmap.ns.ca>)
+  - high resolution output (definable extent like CELL driver)
+    (Being worked on by 
+     probably Bob Covill <bcovill@tekmap.ns.ca>)
 
-    - fix legend, scale and box drawings
+  - fix legend, scale and box drawings
+    (Being worked on by ?)
 
 
 - tcltkgrass:
@@ -213,7 +206,7 @@ Modules:
   button to get a list of raster files instead of having the
   raster files appear automatically when we call the d.rast
   module from the menu (edit gui.tcl)
-  (Being worked on by )
+  (Being worked on by ?)
 
 ---------------------------------------------------------------------
 Numerical Recipes:
