@@ -148,11 +148,11 @@ int main (argc, argv)
 
   /* Get the quadrats */
   quads = find_quadrats (nquads, radius, window,verbose);
-  
+ 
   /* Do the G_readsites_xyz and counts in a loop of LOOP_SIZE at a time */
   if (NULL == (xyz = G_alloc_site_xyz(LOOP_SIZE)))
       G_fatal_error("%s: Out of Memory", G_program_name());
-  
+ 
   counts = NULL;
   sites_read = 0;
   if (verbose)
@@ -164,12 +164,18 @@ int main (argc, argv)
     if (counts == NULL)
       G_fatal_error("Problem counting sites in quadrats");
     sites_read += nsites;
-    if (verbose) 
-      G_percent(sites_read, i, 1);
+    if (verbose) {
+      if (sites_read < i) {
+        G_percent(sites_read, i, 1);
+      }
+      else {
+        G_percent(1, 1, 1);
+      }
+    }
   }
   if (nsites < 0 && nsites != EOF)
     G_fatal_error ("Error reading sites_list");
-
+  
   G_free_site_xyz(xyz); 
 
   /* Site output if requested */
@@ -192,10 +198,9 @@ int main (argc, argv)
       G_fatal_error("Memory exhausted!");
     strncpy(ctmp, "123.456|987.654|#5 %17", 80);
     sHead.form = ctmp;
-    /* Mmm, problem with time/date stamp
+    /* date/time not being output ?? */
     date_str = G_date();
     sHead.stime = date_str;
-    */
     G_site_put_head(stdout, &sHead);
     if (NULL == (theSite = G_site_new_struct(CELL_TYPE, 2, 0, 1)))
       G_fatal_error("Unable to allocate memory for Site struct");

@@ -80,11 +80,11 @@ SITE_XYZ *find_quadrats (int n, double r, struct Cell_head window, int verbose)
       if (k==2*n*n) 
         G_fatal_error("Maximum number of iterations exceeded\nTry smaller radius or smaller number of quads");
     }
-    i++;
     if (verbose)
       G_percent (i, n, 1);
     quads[i].x = east;
     quads[i].y = north;
+    i++;
   }
   return quads;
 }
