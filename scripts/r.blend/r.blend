@@ -27,13 +27,6 @@
 #% required : yes
 #%end
 #%option
-#% key: perc
-#% type: integer
-#% answer: 2
-#% description: Percentage weighting of first file for color blending
-#% required : yes
-#%end
-#%option
 #% key: second
 #% type: string
 #% gisprompt: old,cell,raster
@@ -47,6 +40,13 @@
 #% description: Base name for 3 output red, green, & blue files of blended output
 #% required : yes
 #%end
+#%option
+#% key: perc
+#% type: integer
+#% answer: 2
+#% description: Percentage weighting of first file for color blending
+#% required : no
+#%end
 
 
 if  [ -z $GISBASE ] ; then
@@ -58,8 +58,11 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-r.mapcalc "$GIS_OPT_out.r = r#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * r#$GIS_OPT_second"
-r.mapcalc "$GIS_OPT_out.g = g#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * g#$GIS_OPT_second"
-r.mapcalc "$GIS_OPT_out.b = b#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$perc) * b#$GIS_OPT_second"
+r.mapcalc "$GIS_OPT_out.r = r#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * r#$GIS_OPT_second"
+r.mapcalc "$GIS_OPT_out.g = g#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * g#$GIS_OPT_second"
+r.mapcalc "$GIS_OPT_out.b = b#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * b#$GIS_OPT_second"
+
+echo "Now use following command to visualize the result:"
+echo "d.rgb b=$GIS_OPT_out.b g=$GIS_OPT_out.g r=$GIS_OPT_out.r"
 
 exit 0
