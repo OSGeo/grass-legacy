@@ -17,6 +17,7 @@ SUBDIRS1 = \
 	v.in.sites \
 	v.patch \
 	v.surf.rst \
+	v.transform \
 	v.to.rast
 
 OGRBASED = v.out.ogr v.in.ogr
