@@ -140,6 +140,9 @@ update (struct Map_info *Map)
 			case ( DB_C_TYPE_STRING ):
 			    sprintf (buf2, "%s '%s' where %s = %d", buf1, Values[i].str1, Fi->key, Values[i].cat);
 			    break;
+			case ( DB_C_TYPE_DATETIME ):
+			    sprintf (buf2, "%s '%s' where %s = %d", buf1, Values[i].str1, Fi->key, Values[i].cat);
+			    break;
 		    }
 		}
 	} 
