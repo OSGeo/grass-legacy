@@ -1,0 +1,55 @@
+.TH pbmpaste 1 "08 August 1989"
+.SH NAME
+pbmpaste - paste a rectangle into a portable bitmap
+.SH SYNOPSIS
+.B pbmpaste
+.RB [ -replace | -or | -and | -xor ]
+.I frompbmfile x y
+.RI [ intopbmfile ]
+.SH DESCRIPTION
+Reads two portable bitmaps as input.
+Inserts the first bitmap into the second at the specified location,
+and produces a portable bitmap the same size as the second as output.
+If the second bitmap is not specified, it is read from stdin.
+The
+.I x
+and
+.I y
+can be negative, in which case they are interpreted
+relative to the right and bottom of the bitmap, respectively.
+.PP
+This tool is useful in combination with
+.IR pnmcut .
+For instance, if you want to edit a small segment of a large
+bitmap, and your bitmap editor is TOO STUPID to edit the
+large bitmap, you can cut out the segment you are interested in,
+edit it, and then paste it back in.
+.PP
+Another useful companion tool is
+.IR pbmmask .
+.PP
+The
+.I pnmpaste
+tool is like this one, except that it doesn't implement
+the logical operation flags, since they don't have any useful meaning
+for grayscale and color images.
+.OPTIONS
+.PP
+The flags specify the operation to use when doing the paste.
+The default is
+.BR -replace .
+The other operations act as if white is 1 and black is 0.
+WARNING: this is the opposite of how the PBM file format stores bits.
+Ignore the file format.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+pnmcut(1), pbmmask(1), pnminvert(1), pnmarith(1), pnmpaste(1), pbm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
