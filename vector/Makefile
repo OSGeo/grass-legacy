@@ -8,6 +8,7 @@ SUBDIRS = \
 	v.clean \
 	v.convert \
 	v.digit \
+	v.extract \
 	v.mapcalc \
 	v.surf.rst
 
