@@ -39,12 +39,9 @@ int screen_bottom;
 
 int Graph_Set (int argc, char **argv, int nlev) 
 {
+    unsigned int bgcol;
     char *p;
-    int ret;
-    int red = 0;
-    int green = 0;
-    int blue = 0;
-    char colorBuffer[3];
+
     G_gisinit("PNG driver") ;
 
     if (NULL == (p = getenv ("LOCATION"))) {
@@ -109,6 +106,38 @@ int Graph_Set (int argc, char **argv, int nlev)
     im = gdImageCreate(screen_right - screen_left, screen_bottom - screen_top);
 
     InitColorTableFixed();
+
+    p = getenv("GRASS_BACKGROUNDCOLOR");
+    if (p && *p && sscanf(p, "%x", &bgcol) == 1) {
+	int r = bgcol >> 16;
+	int g = bgcol >> 8;
+	int b = bgcol >> 0;
+	int color = _get_lookup_for_color(r, g, b);
+
+	gdImageFilledRectangle(im, screen_left, screen_top,
+			       screen_right - screen_left,
+			       screen_bottom - screen_top,
+			       color);
+    }
+
+    p = getenv("GRASS_TRANSPARENT");
+    if (p && strcmp(p, "TRUE") == 0) {
+	int color;
+#ifdef HAVE_GDIMAGECREATETRUECOLOR
+	if (true_color)
+	    color = gdTrueColorAlpha(0, 0, 0, gdAlphaTransparent);
+	else 
+#endif
+	{
+	    color = 216; /* first unused colour */
+	    gdImageColorTransparent(im, color);
+	}
+
+	gdImageFilledRectangle(im, screen_left, screen_top,
+			       screen_right - screen_left,
+			       screen_bottom - screen_top,
+			       color);
+    }
 
     /*
      * Init finished
