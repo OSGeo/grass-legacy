@@ -1,4 +1,4 @@
-LIBES = $(IMAGERYLIB) $(GISLIB)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
 
 LIST = main.o\
 	ask_options.o\
@@ -8,13 +8,9 @@ LIST = main.o\
 
 PGM = i.tape.tm.fast
 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h
 
-$(LIBES) $(VASKLIB): #
-
-saber:
-	#load $(LIST) $(LIBES);
-	#swap $(LIST)
+$(LIBES): #

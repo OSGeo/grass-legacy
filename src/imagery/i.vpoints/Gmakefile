@@ -1,4 +1,4 @@
-PGM	= i.vpoints
+PGM= i.vpoints
 OBJS =  main.o\
 	ask.o\
 	ask_mag.o\
@@ -77,15 +77,9 @@ CFILES =main.c\
 
 LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) 
 
-
-#$(BIN_CONTRIB_INTER)/$(PGM): $(OBJS) $(LIBES)
 $(BIN_ALPHA_INTER)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h defs.h
 
 $(LIBES): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES) /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DISPLAYLIB) $(RASTERLIB) $(GISLAB)  $(MATHLIB) $(XDRLIB)
-

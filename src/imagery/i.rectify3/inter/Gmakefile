@@ -2,16 +2,11 @@
 ### 	i.rectify Gmakefile 
 ###
 
-PGR  	= i.rectify3
-
-HOME 	= $(BIN_MAIN_INTER)
+PGM  	= i.rectify3
 
 ####    required - suplimental imagery libary
 IMAGERY_SUBINC = $(SRC)/libes/image3
 IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
-
-### 	what to make
-all:	$(HOME)/$(PGR)
 
 
 ###	object files
@@ -44,7 +39,7 @@ $(LIST): global.h rowcol.h
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+	 $(GISLIB) $(VASK)
 
 
 ###	libarary dependencies
@@ -58,7 +53,7 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ###	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES) 
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 ###	tags

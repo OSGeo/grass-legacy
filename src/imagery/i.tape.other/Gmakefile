@@ -1,3 +1,4 @@
+PGM=i.tape.other
 SOURCES = main.c ask_format.c ask_window.c bil.c bsq1.c bsq2.c\
 	  mnt_tape.c number.c put_row.c readbil.c readbsq.c\
 	  tapename.c
@@ -14,16 +15,12 @@ LIST	= main.o\
 	  readbsq.o\
 	  tapename.o
 
-LIBES= $(IMAGERYLIB) $(GISLIB)
+LIBES= $(IMAGERYLIB) $(GISLIB) $(VASK)
 
-$(BIN_MAIN_INTER)/i.tape.other: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	tape.h
 
 $(LIBES):	# in case library changes
-$(VASKLIB):	# in case library changes
 
-saber_src:
-	#load $(EXTRA_FLAGS) $(CFLAGS) $(SOURCES) $(IMAGERYLIB) $(VECTLIB)\ 
-	$(GISLIB) $(VASKLIB) $(CURSES) $(TERMCAP) $(MATHLIB)

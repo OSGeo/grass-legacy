@@ -1,4 +1,4 @@
-PROG = $(BIN_ALPHA_INTER)/i.quantize
+PGM = i.quantize
 
 LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
 
@@ -9,7 +9,7 @@ OBJ =\
 	gen_colors.o \
 	median.o
 
-$(PROG): ${OBJ}
+$(BIN_ALPHA_INTER)/$(PGM): ${OBJ}
 	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} $(MATHLIB) $(XDRLIB)
 
-$(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
+$(IMAGERYLIB) $(GISLIB) $(VASK): #

@@ -17,10 +17,9 @@ LIST = main.o\
 	target.o\
 	write.o
 
-#$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(VASKLIB) $(GISLIB) 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(VASKLIB) $(GISLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB) $(VASK) $(GISLIB)
+$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 $(LIST): global.h rowcol.h crs.h
 
-
-$(IMAGERYLIB) $(GISLIB) $(VASKLIB): # in case libraries change
+$(LIBES): # in case libraries change

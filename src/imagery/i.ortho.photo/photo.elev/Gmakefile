@@ -1,17 +1,17 @@
 PROGRAM      = photo.elev
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
-
 
 EXTRA_CFLAGS = -I../libes
 IMAGERYLIB2  = ../libes/libortho.a
 
 LIST = main.o ask_elev.o mod_elev.o
 
-$(HOME)/$(PROGRAM): $(LIST) $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
 
-$(IMAGERYLIB) $(IMAGERYLIB2) $(GISLIB) $(VASKLIB): #
+$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(IMAGERYLIB2) $(LIBES): #
 
 main.o: elev.h
 ask_elev.o: elev.h
