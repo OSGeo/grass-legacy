@@ -1,0 +1,95 @@
+Dcell	Dcell.c	/^Dcell (elev, name1, name2, name3, vname)$/
+G_close_cell	port.c	/^G_close_cell (fd)$/
+G_fatal_error	port.c	/^G_fatal_error (str)$/
+G_get_map_row	port.c	/^G_get_map_row(fd, buf, row, size) \/* hack! *\/$/
+G_get_set_window	port.c	/^G_get_set_window (wind) $/
+G_malloc	port.c	/^G_malloc (size)$/
+G_open_cell_old	port.c	/^G_open_cell_old(name)$/
+G_store	port.c	/^G_store (str)$/
+MKACT	panel.c	/^#define MKACT(_a, _type,_label) \\$/
+Mj	j.c	/^main ()$/
+Mmain	main.c	/^main(argc, argv)$/
+P__transform	trans.c	/^P__transform (num_vert, in, out, c)$/
+P_display_matrix	trans.c	/^P_display_matrix (in, size)$/
+P_display_matrix_err	trans.c	/^P_display_matrix_err (in, size)$/
+P_matrix_copy	trans.c	/^P_matrix_copy (from, to, size)$/
+P_pnt	trans.c	/^P_pnt (x, y, z)$/
+P_popmatrix	trans.c	/^P_popmatrix ()$/
+P_pushmatrix	trans.c	/^P_pushmatrix ()$/
+P_rot_90z	trans.c	/^P_rot_90z ()$/
+P_rotate	trans.c	/^P_rotate (angle, axis)$/
+P_scale	trans.c	/^P_scale (x, y, z)$/
+P_transform	trans.c	/^P_transform (num_vert, in, out)$/
+P_translate	trans.c	/^P_translate (x, y, z)$/
+READ_COLORS	display.c	/^#define READ_COLORS()  							\\$/
+SET_COLOR	display.c	/^#define SET_COLOR(ROW1,COL1,ROW2,COL2)			 		    \\$/
+_newcell	newcell.c	/^_newcell (name1, name2, name3)$/
+_update_exag	panel.c	/^_update_exag ()$/
+_update_height	panel.c	/^_update_height ()$/
+_update_persp	panel.c	/^_update_persp ()$/
+_update_xy	panel.c	/^_update_xy ()$/
+_update_zbounds	panel.c	/^_update_zbounds ()$/
+buff_init	display.c	/^buff_init()$/
+change_zbuf	display.c	/^change_zbuf ()$/
+display_fringe	fringe.c	/^display_fringe (xmod, ymod)$/
+display_init	display.c	/^display_init ()$/
+display_line_polygons	display.c	/^display_line_polygons (xmod, ymod, shading)$/
+display_line_polygons2	display.c	/^display_line_polygons2 (xmod, ymod, shading)$/
+display_line_polygons3	display.c	/^display_line_polygons3 (xmod, ymod, xmod2, ymod2, /
+display_line_tmesh	display.c	/^display_line_tmesh (xmod, ymod, shading)$/
+display_lines	display.c	/^display_lines (xmod, ymod)$/
+display_lines2	display.c	/^display_lines2 (xmod, ymod, shading)$/
+display_lines3	display.c	/^display_lines3 (xmod, ymod, shading)$/
+display_lines4	display.c	/^display_lines4 (xmod, ymod, shading)$/
+display_lines_tst	display.c	/^display_lines_tst (xmod, ymod)$/
+display_point	display.c	/^display_point (X_Mod, Y_Mod)$/
+display_polygons	display.c	/^display_polygons (xmod, ymod, shading)$/
+display_tmesh	display.c	/^display_tmesh (xmod, ymod, shading)$/
+distance	Dcell.c	/^distance (from, to)$/
+do_clear	display.c	/^do_clear ()$/
+do_display	display.c	/^do_display (Display_type)$/
+do_fast_display	display.c	/^do_fast_display ()$/
+do_fast_vect_display	vector.c	/^do_fast_vect_display ()$/
+do_test_vect_display	vector.c	/^do_test_vect_display ()$/
+do_vect_display	vector.c	/^do_vect_display ()$/
+fringe_horiz_line	fringe.c	/^fringe_horiz_line (bottom, xmod, ymod, xres, yres,/
+fringe_horiz_poly	fringe.c	/^fringe_horiz_poly (bottom, xmod, ymod, xres, yres,/
+fringe_vert_line	fringe.c	/^fringe_vert_line (bottom, xmod, ymod, xres, yres, /
+fringe_vert_poly	fringe.c	/^fringe_vert_poly (bottom, xmod, ymod, xres, yres, /
+if	display.c	/^    if (shading) 						            \\$/
+initialize	Dcell.c	/^initialize ()$/
+initialize2	Dcell.c	/^initialize2 ()$/
+install_control_panel	panel.c	/^install_control_panel ()$/
+install_movement_panel	panel.c	/^install_movement_panel ()$/
+install_object_panel	panel.c	/^install_object_panel ()$/
+install_panels	panel.c	/^install_panels ()$/
+leave	Dcell.c	/^leave ()$/
+my_appendscript	script.c	/^my_appendscript()$/
+my_beginscript	script.c	/^my_beginscript()$/
+my_continuescript	script.c	/^my_continuescript()$/
+my_endscript	script.c	/^my_endscript()$/
+my_initscriptpanel	script.c	/^my_initscriptpanel()$/
+my_readscript	script.c	/^my_readscript()$/
+my_setdontdraw	script.c	/^my_setdontdraw(a)$/
+my_setignoredelay	script.c	/^my_setignoredelay(a)$/
+my_setreadbutton	script.c	/^my_setreadbutton(a)$/
+my_setwritebutton	script.c	/^my_setwritebutton(a)$/
+my_stopscript	script.c	/^my_stopscript()$/
+newcell	newcell.c	/^newcell ()$/
+redraw_event	Dcell.c	/^redraw_event ()$/
+serve_actuator	panel.c	/^serve_actuator (a)$/
+set_default_options	command.c	/^set_default_options()$/
+stash_away	command.c	/^stash_away(pos, option)$/
+toggle_script	panel.c	/^toggle_script ()$/
+transform_fromto	panel.c	/^transform_fromto ()$/
+update_exag	panel.c	/^update_exag ()$/
+update_fast_res	panel.c	/^update_fast_res ()$/
+update_height	panel.c	/^update_height ()$/
+update_incl	panel.c	/^update_incl ()$/
+update_persp	panel.c	/^update_persp ()$/
+update_projection	Dcell.c	/^update_projection ()$/
+update_range	panel.c	/^update_range ()$/
+update_slow_res	panel.c	/^update_slow_res ()$/
+update_vectz	panel.c	/^update_vectz ()$/
+update_view_dir	panel.c	/^update_view_dir ()$/
+update_xy	panel.c	/^update_xy ()$/
