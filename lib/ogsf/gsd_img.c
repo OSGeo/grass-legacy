@@ -25,27 +25,10 @@ int GS_write_rgb(char *name)
     unsigned int xsize, ysize;
     IMAGE *image;
     unsigned long *pixbuf;
-
-    /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
-    * Markus Neteler
-    */
-    union
-    {
-        int testWord;
-        char testByte[4];
-    } endianTest;
-    
     int swapFlag;
-
-    endianTest.testWord = 1;
-    if (endianTest.testByte[0] == 1)
-    {
-        swapFlag = 1; /*true: little endian */
-    }
-    else
-    {
-        swapFlag = 0;
-    }
+    
+    /* endian test */
+    swapFlag = G_is_little_endian();
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
