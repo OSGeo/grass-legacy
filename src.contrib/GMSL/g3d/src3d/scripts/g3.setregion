@@ -1,53 +1,92 @@
 #!/bin/sh
-
-# g3.setregion sets WIND3 file
-# a sort of g3.region with parser support.
-
-# written by Markus Neteler
-#            neteler@itc.it
 # $Id$
-
+############################################################################
+#
+# MODULE:		g3.setregion.sh for GRASS 5.7
+# AUTHOR(S):	Markus Neteler (neteler@itc.it)
+# PURPOSE:		sets WIND3 file; a sort of g3.region with parser support.
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
 #TODO:
 #
+
+#%Module
+#% description: g3.setregion modifies current 3D region
+#%End
+#%option
+#% key: n
+#% type: double
+#% description: North extent
+#% required : no
+#%end
+#%option
+#% key: s
+#% type: double
+#% description: South extent
+#% required : no
+#%end
+#%option
+#% key: w
+#% type: double
+#% description: West extent
+#% required : no
+#%end
+#%option
+#% key: e
+#% type: double
+#% description: East extent
+#% required : no
+#%end
+#%option
+#% key: b
+#% type: integer
+#% description: Bottom height
+#% required : no
+#%end
+#%option
+#% key: t
+#% type: integer
+#% description: Top height
+#% required : no
+#%end
+#%option
+#% key: res
+#% type: double
+#% description: Horizontal resolution (2D)
+#% required : no
+#%end
+#%option
+#% key: dres
+#% type: integer
+#% description: Depth resolution (3D)
+#% required : no
+#%end
+#%flag
+#% key: u
+#% description: update WIND3 from WIND/DEFAULT_WIND3
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 
-if test "$GISBASE" = ""; then
-echo "You must be in GRASS to run this program."
-exit
-fi
-
-usage()
-{
- echo ""
- echo "g3.setregion modifies current 3D region"
- echo ""
- echo "Usage: g3.setregion [-u] [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=]"
- echo ""
- echo "   -u update WIND3 from WIND/DEFAULT_WIND3"
- echo ""
- echo "   n=north"
- echo "   s=south"
- echo "   w=west"
- echo "   e=east"
- echo "   t=top_height"
- echo "   b=bottom_height"
- echo "   res=horizontal_resolution (2D)"
- echo "   dres=depth_resolution (3D)"
- echo ""
- echo "   t/b/dres: only int numbers allowed"
- echo ""
-}
-
 UPDATE=0
-if [ "$1" = "" -o "$1" = "help" -o "$1" = "-help" -o "$1" = "-h" ]
-then
- usage
- exit
-fi
 
 if test ! -f $LOCATION/WIND3
 then
@@ -65,26 +104,23 @@ top=`cat $LOCATION/WIND3 | awk ' /Top:/  { printf "%.0f", $2 }'`
 bottom=`cat $LOCATION/WIND3 | awk ' /Bottom:/ { printf "%.0f", $2 }'`
 dres=`cat $LOCATION/WIND3 | awk ' /t-b resol:/ { printf "%.0f", $3 }'`
 
-# add crash check here, then previoulsy run g3.createwind
+# add crash check here, then previously run g3.createwind
 
 
 echo "Previous settings:"
 echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
 
-for i
-do
-        case $i in
-            -u)  continue ;; # update WIND3 from WIND
-            n=*) north=`echo $i | awk -F '=' '{print $2}'` ;;
-            s=*) south=`echo $i | awk -F '=' '{print $2}'` ;;
-            e=*) east=`echo $i | awk -F '=' '{print $2}'` ;;
-            w=*) west=`echo $i | awk -F '=' '{print $2}'` ;;
-            t=*) top=`echo $i | awk -F '=' '{print $2}'` ;;
-            b=*) bottom=`echo $i | awk -F '=' '{print $2}'` ;;
-            res=*) res=`echo $i | awk -F '=' '{print $2}'` ;;
-            dres=*) dres=`echo $i | awk -F '=' '{print $2}'` ;;
-        esac
-done
+if [ $GIS_FLAG_u !-eq 1] ; then
+    north=$GIS_OPT_n
+    south=$GIS_OPT_s
+    east=$GIS_OPT_e
+    west=$GIS_OPT_w
+    top=$GIS_OPT_t
+    bottom=$GIS_OPT_b
+    res=$GIS_OPT_res
+    dres=$GIS_OPT_dres
+fi
+
 
 #reset 2D region:
 g.region n=$north s=$south w=$west e=$east res=$res
