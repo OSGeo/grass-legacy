@@ -28,12 +28,15 @@ To change a color, the SQL <em>update</em> function can be used:
 <PRE>
   echo "update testisola set GRASSRGB='123:45:237' where cat=139" | db.execute
 </PRE>
-
+<P>
+Much simpler is color coding with <em>-c</em> flag which is using the
+category numbers to fill area polygons.
 
 <h2>EXAMPLES</h2>
 
 <b>d.vect map=</b><em>vectmap</em> <b>display=</b><em>shape,cat</em> <b>lcolor=</b><em>green</em> <br>
-<b>d.vect map=</b><em>markveggy.vegtype</em> <b>where=</b><em>"VEGTYPE = 'IFA'"</em>
+<b>d.vect map=</b><em>markveggy.vegtype</em> <b>where=</b><em>"VEGTYPE = 'IFA'"</em><br>
+<b>d.vect -c map=</b><em>soils</em> <b>display=</b><em>shape,attr</em> <b>attrcol=</b><em>label</em>
 
 <h2>SEE ALSO</h2>
 

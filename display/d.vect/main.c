@@ -40,7 +40,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Flag   *_quiet, *id_flag, *table_acolors_flag;
+	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -179,6 +179,10 @@ main (int argc, char **argv)
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
 	table_acolors_flag->description	= "Get area fill colors from map table column 'GRASSRGB' (RR:GG:BB)";
+
+	cats_acolors_flag = G_define_flag ();
+	cats_acolors_flag->key		= 'c';
+	cats_acolors_flag->description	= "Fill area with random colors according to cateory number";
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
@@ -414,7 +418,7 @@ main (int argc, char **argv)
          
 	if ( area ) {
 	    if ( level >= 2 )
-	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer );
+	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer );
 	    else
 		G_warning ("Cannot display areas, topology not available");
         }
