@@ -1,4 +1,3 @@
-/* %W%  %G%  */
 #include "bmif.h"
 #define START_ROW	xy[incr].row
 #define STOP_ROW	xy[incr+1].row
