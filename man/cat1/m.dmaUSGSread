@@ -1,7 +1,7 @@
 
 
 
-m.dmaUSGSread        GRASS Reference Manual         m.dmaUSGSread
+m.dmaUSGSread <main> GRASS Reference Manual  <main> m.dmaUSGSread
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.dmaUSGSread        GRASS Reference Manual         m.dmaUSGSread
+m.dmaUSGSread <main> GRASS Reference Manual  <main> m.dmaUSGSread
 
 
 
@@ -126,7 +126,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
