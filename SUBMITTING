@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.21 2002-03-06 16:24:49 markus Exp $
+$Id: SUBMITTING,v 1.22 2002-05-13 18:42:34 bernhard Exp $
 
 NOTE: Please improve this list!
 
@@ -55,7 +55,7 @@ care of following rules:
     The copyright protects your rights according to GNU General Public
     License (www.gnu.org).
 
-4.  - deleted. We don't want the $ ID $ in source code any more as it
+4.  - deleted.(?) We don't want the $ ID $ in source code any more as it
     causes problems for the CVS branches.
 
 5.  To ensure that the software system continues to work, please include
