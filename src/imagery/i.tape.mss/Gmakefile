@@ -13,7 +13,7 @@ LIST = main.o \
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
-$(BIN)/i.tape.mss: $(LIST) $(LIBES) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.tape.mss: $(LIST) $(LIBES) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
 
 $(LIST): tape.h
