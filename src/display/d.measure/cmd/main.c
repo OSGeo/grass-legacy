@@ -11,7 +11,7 @@ main(argc, argv)
 	    struct Option *c2;
 	} parm;
 	int color1, color2;
-	char *color_list = "red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	char *D_color_list();
 
 /* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -21,7 +21,7 @@ main(argc, argv)
 	parm.c1->description = "line color 1";
 	parm.c1->type = TYPE_STRING;
 	parm.c1->required = NO;
-	parm.c1->options=color_list;
+	parm.c1->options=D_color_list();
 	parm.c1->answer = "black";
 
 	parm.c2 = G_define_option();
@@ -29,7 +29,7 @@ main(argc, argv)
 	parm.c2->description = "line color 2";
 	parm.c2->type = TYPE_STRING;
 	parm.c2->required = NO;
-	parm.c2->options=color_list;
+	parm.c2->options=D_color_list();
 	parm.c2->answer = "white";
 
 	if (G_parser(argc,argv))
