@@ -48,15 +48,6 @@ lister (name, mapset, text)
       strcat (text, "*");
 }
 
-static
-format_double (value, buf)
-    double value;
-    char *buf;
-{
-    sprintf (buf, "%.8lf", value);
-    G_trim_decimal (buf);
-}
-
 lister2d (name, mapset, text)
     char *name;
     char *mapset;
