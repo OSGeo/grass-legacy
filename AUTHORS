@@ -9,18 +9,18 @@ and present) who has contributed to GRASS, the following is the
 incomplete official list for GRASS 5.0:
 
 Institutions:
- University of Hannover
+ ITC-IRST, Trento, Italy
    Markus Neteler      <neteler@itc.it> (GRASS 5 coordination)
 
- University of Illinois at Urbana-Champaign/
+ University of Illinois at Urbana-Champaign, USA
    Helena Mitasova <hmitaso@unity.ncsu.edu> (interpolation modules, NVIZ, G3D)
    William Brown   <brown@gis.uiuc.edu>     (libraries, interpolation modules, 
 					     NVIZ, G3D)
 
- National Center for Supercomputing Applications
+ National Center for Supercomputing Applications, USA
    Lubos Mitas (multivariate spline interpolation (RST) and erosion modeling)
  
- High Performance Computing Center
+ High Performance Computing Center, Thailand
  National Electronics and Computer Technology Center
  Bangkok, Thailand
 
