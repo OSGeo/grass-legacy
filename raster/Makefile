@@ -20,7 +20,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 #compile if GDAL present:
 ifneq ($(strip $(GDALLIBS)),)
-    SUBDIRS2 = $(SUBDIRS1) $(GDALBASED)
+    SUBDIRS2 = $(GDALBASED)
 endif
 
 
