@@ -1,6 +1,22 @@
 #include "raster.h"
 #include "graph.h"
 
+
+/*!
+ * \brief get mouse location using a box
+ *
+ * Identical to
+ * <i>R_get_location_with_line</i> except a rubber-band box is used instead
+ * of a rubber-band line.
+ *
+ *  \param cx
+ *  \param cy
+ *  \param wx
+ *  \param wy
+ *  \param button
+ *  \return int
+ */
+
 int R_get_location_with_box(int cx,int cy,int *wx,int *wy,int *button)
 {
 	int z ;
