@@ -8,16 +8,31 @@
 ###################################################
 # it is intented to tag GRASS stable releases
 #
-# VERY ALPHA QUALITY!!
+#
+# There are three ways to include files: 
+# a) two variables 
+#       FURTHER_FILES=
+#       FURTHER_DIRECTORIES=
+#     which catch files and dirs not in
+#       src/CMD/lists/GRASS
+#
+#  b) the 
+#       MODULE_LIST= 
+#     which covers the uncommented contents of
+#      src/CMD/lists/GRASS
+#
+# Means: the src/CMD/lists/GRASS may only contain stable modules now!
 #
 ###################################################
 # Markus Neteler
 # $Id$
+###################################################
 
-#note: no $,. allowed:
+#enter branch tag here later:
+# (note: no $,. allowed)
 TAG="testbranch_5_0_0stable"
 
-#catch all modules from compile list:
+#catch all active modules from compile list:
 MODULE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
 
 #list of extra files not in compile list:
