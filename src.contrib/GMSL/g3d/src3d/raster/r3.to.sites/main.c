@@ -65,15 +65,15 @@ void fatalError(char *errorMsg) {
  */
 void setParams() {
   param.input = G_define_option();
-  param.input->key = "input";
+  param.input->key = "grid3";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
   param.input->multiple = NO;
-  param.input->description = "G3d raster map to be converted to sites map";
+  param.input->description = "3dcell map to be converted to sites map";
   
   param.output = G_define_option();
-  param.output->key = "output";
+  param.output->key = "sites";
   param.output->type = TYPE_STRING;
   param.output->required = YES;
   param.output->gisprompt = "new,site_lists,sites";
