@@ -692,9 +692,7 @@ else
 fi
 
 # FreeBSD and CygWin don't have a "dot" between major/minor version number
-if test `uname -s` = FreeBSD || test "$CYGWIN"; then
-    tcltk_ver=`echo $tcltk_ver | sed 's/\.//g'`
-fi
+tcltk_ver2=`echo $tcltk_ver | sed 's/\.//g'`
 
 # With Tcl/Tk library directory
 
@@ -704,11 +702,17 @@ TCLLIB=
 TKLIB=
 
 LOC_CHECK_LIBS(tcl,Tcl_Init,Tcl,$TCLTKLIBPATH,TCLLIB,,$MATHLIB,[
-LOC_CHECK_LIBS(tcl$tcltk_ver,Tcl_Init,Tcl,,TCLLIB,,$MATHLIB,,$DLLIB)
+LOC_CHECK_LIBS(tcl$tcltk_ver,Tcl_Init,Tcl,,TCLLIB,,$MATHLIB,[
+LOC_CHECK_LIBS(tcl$tcltk_ver2,Tcl_Init,Tcl,,TCLLIB,,$MATHLIB,[
+],$DLLIB)
+],$DLLIB)
 ],$DLLIB)
 
 LOC_CHECK_LIBS(tk,Tk_MainWindow,Tk,$TCLTKLIBPATH,TKLIB,$TCLLIB,$MATHLIB,[
-LOC_CHECK_LIBS(tk$tcltk_ver,Tk_MainWindow,Tk,,TKLIB,$TCLLIB,$MATHLIB,,$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
+LOC_CHECK_LIBS(tk$tcltk_ver,Tk_MainWindow,Tk,,TKLIB,$TCLLIB,$MATHLIB,[
+LOC_CHECK_LIBS(tk$tcltk_ver2,Tk_MainWindow,Tk,,TKLIB,$TCLLIB,$MATHLIB,[
+],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
+],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
 ],$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
 
 
