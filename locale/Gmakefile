@@ -12,7 +12,7 @@ LOC_DIR = $(GISBASE)/locale
 MSGFMT = msgfmt
 LOCALES = ru
 
-all: mofiles
+all: mofiles tcltkgrass
 
 mofiles:
 	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
@@ -28,3 +28,23 @@ mofiles:
 	        mv `basename $$h .po`.mo $$NLOC_DIR/LC_MESSAGES; \
 	    done); \
 	done
+
+tcltkgrass:
+	@test -d $(GISBASE)/tcltkgrass || echo "ERROR: TCLTKGRASS not found"
+	
+	for LCL in $(LOCALES) ; do \
+	    test -d $$LCL/tcltkgrass/main && (cd $$LCL/tcltkgrass/main; \
+	    for h in *.tcl; do \
+	        test -d $$h && continue; \
+		test -d $(GISBASE)/tcltkgrass/module && cp $$h $(GISBASE)/tcltkgrass/main; \
+	    done); \
+	    test -f $$LCL/tcltkgrass/main/gis_set.tcl \
+	    	&& test -d $(GISBASE)/tcltkgrass/script \
+	    	&& cp $$LCL/tcltkgrass/main/gis_set.tcl $(GISBASE)/tcltkgrass/script; \
+	    test -d $$LCL/tcltkgrass/module && (cd $$LCL/tcltkgrass/module; \
+	    for h in *; do \
+	        test -d $$h && continue; \
+	        test -d $(GISBASE)/tcltkgrass/module && cp $$h $(GISBASE)/tcltkgrass/module; \
+	    done); \
+	done
+
