@@ -1,0 +1,8 @@
+Mmain	main.c	/^main(argc, argv)$/
+bar	bar.c	/^bar(dist_stats)$/
+draw_slice	draw_slice.c	/^draw_slice(fill_flag,fill_color,txt_color,cx,cy,r,/
+draw_slice_filled	draw_slice.c	/^draw_slice_filled(fc,tc,cx,cy,r,a1,a2)$/
+draw_slice_unfilled	draw_slice.c	/^draw_slice_unfilled(tc,cx,cy,r,a1,a2)$/
+get_stats	get_stats.c	/^get_stats(mapname,dist_stats)$/
+pie	pie.c	/^pie(dist_stats)$/
+rem	bar.c	/^float rem(x,y)$/
