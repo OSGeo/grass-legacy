@@ -15,7 +15,6 @@ int redraw(void)
         {
           for(i=0; i<nrasts; i++)
           {
-		  printf(">>> %s\n",rast[i]);
           	sprintf(command, "d.rast -o map=%s", rast[i]);
           	system(command);
           }
