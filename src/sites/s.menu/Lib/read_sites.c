@@ -29,9 +29,8 @@ read_site_list (site_list, fd)
 	SITE_LIST *site_list;
 	FILE *fd;
 {
-	int id;
-	int north;
-	int east;
+	double north;
+	double east;
 	char buf[200];
 	char *desc;
 	char *items[NITEMS];
@@ -55,15 +54,11 @@ read_site_list (site_list, fd)
 		}
 		if ((strcmp(items[0],"point") == 0) && n >= 3)
 		{
-			double de, dn;
 
-			if (! scan_double (items[1], &de))
+			if (! scan_east (items[1], &east))
 				continue;
-			if (! scan_double (items[2], &dn))
+			if (! scan_north (items[2], &north))
 				continue;
-
-			north = dn + .5;
-			east  = de + .5;
 
 			if (n == 3)
 				desc = "";
@@ -76,15 +71,11 @@ read_site_list (site_list, fd)
 		/* allow "point" to be missing */
 		if (n >= 2)
 		{
-			double de, dn;
 
-			if (! scan_double (items[0], &de))
+			if (! scan_east (items[0], &east))
 				continue;
-			if (! scan_double (items[1], &dn))
+			if (! scan_north (items[1], &north))
 				continue;
-
-			north = dn + .5;
-			east  = de + .5;
 
 			if (n == 2)
 				desc = "";
