@@ -8,6 +8,13 @@ If parameters for database connection are already set with
 <a HREF="db.connect.html">db.connect</a>, they are taken as default values and
 do not need to be spcified each time.
 
+<p>
+
+<b>Attention:</b> Removing a vector map will also delete all tables linked to it! If
+you use v.db.connect to link further tables to your map, it is advisable to 
+make a copy from those tables first and connect the copied tables to 
+the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
+
 <h2>EXAMPLE</h2>
 
 <em>Print database connection</em>
@@ -53,6 +60,7 @@ do not need to be spcified each time.
 
 <em><a HREF="db.connect.html">db.connect</a></em><br>
 <em><a HREF="db.copy.html">db.copy</a></em><br>
+<em><a HREF="v.overlay.html">v.overlay</a></em><br>
 <em><a HREF="http://grass.itc.it/grass51/tutorial/ex_basic.html#convert">GRASS 5.1
 tutorial pages</a></em>
 
