@@ -70,6 +70,7 @@ then
 fi
 
 compile=1
+dmon=0
 sources=""
 cmd=""
 for i
@@ -81,6 +82,14 @@ do
 			;;
 		-f)
 			compile=2
+			sources=""
+			;;
+		-m)
+			dmon=1
+			if [ $compile -eq 0 ]
+			then
+				compile=1
+			fi
 			sources=""
 			;;
 		new|orig)
@@ -138,7 +147,7 @@ then
 	done
 fi
 
-if [ $changed -eq 0 -a $compile -ne 2 ]
+if [ $changed -eq 0 -a $compile -ne 2 -a "$cmd" != "" ]
 then
 	echo
 	if [ "$cmd" = "new" ]
@@ -160,11 +169,17 @@ fi
 
 (cd src/display/devices/XDRIVER && gmake5)
 (cd src/libes/raster && gmake5)
-(cd src/display && gmake5)
-(cd src/raster && gmake5)
-(cd src/mapdev && gmake5)
-(cd src/paint/Drivers/preview && gmake5)
-(cd src/paint/Drivers/preview2 && gmake5)
+
+if [ $dmon -eq 1 ]
+then
+	(cd src/display/d.mon && gmake5)
+else
+	(cd src/display && gmake5)
+	(cd src/raster && gmake5)
+	(cd src/mapdev && gmake5)
+	(cd src/paint/Drivers/preview && gmake5)
+	(cd src/paint/Drivers/preview2 && gmake5)
+fi
 
 echo
 echo "Thanks for your time."
