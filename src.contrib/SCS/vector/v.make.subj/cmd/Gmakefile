@@ -1,0 +1,20 @@
+EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
+
+SOURCES = \
+	main.c
+
+OBJ = \
+	main.o
+
+PGM =   v.make.subj
+
+PROG =   $(BIN_MAIN_CMD)/$(PGM)
+
+all:  $(PROG)
+
+
+$(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
