@@ -549,7 +549,7 @@ AC_SUBST(PQLIB)
 # OpenGL
 AC_ARG_WITH(opengl-includes,
   [  --with-opengl-includes=DIR
-                           Specify the directory for OpenGL (or Mesa) headers],
+                          Specify the directory for OpenGL (or Mesa) headers],
    [
    	case "$withval" in
 	"" | "y" | "ye" | "yes" | "n" | "no")
@@ -561,7 +561,7 @@ AC_ARG_WITH(opengl-includes,
 
 AC_ARG_WITH(opengl-libs,
   [  --with-opengl-libs=DIR
-                           Specify the directory for OpenGL (or Mesa) libraries],
+                          Specify the directory for OpenGL (or Mesa) libraries],
    [
    	case "$withval" in
 	"" | "y" | "ye" | "yes" | "n" | "no")
@@ -644,7 +644,7 @@ AC_SUBST(LGLWM)
 ODBCINC=
 AC_ARG_WITH(odbc-includes,
   [  --with-odbc-includes=DIR  
-                           Specify path for ODBC header files],
+                          Specify path for ODBC header files],
   [   
    	case "$withval" in
 	"" | "y" | "ye" | "yes" | "n" | "no")
@@ -675,5 +675,69 @@ AC_CHECK_HEADER(sql.h,HAVE_SQL_H=1 ,ODBCINC="")
 CPPFLAGS=${ac_save_cppflags}
 
 AC_SUBST(ODBCINC)
-		
+
+# JPEG library checking
+# Function to test for jpeg_start_compress
+JPEGLIB=
+JPEGLIBPATH=
+JPEGINCPATH=
+
+AC_ARG_WITH(jpeg-includes,
+  [  --with-jpeg-includes=DIR
+                          Specify directory for jpeg library headers],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** you must supply a directory to --with-jpeg-includes.])
+	;;
+	esac
+	jpeg_includes="$withval"
+   ])
+
+AC_ARG_WITH(jpeg-libs,
+  [  --with-jpeg-libs=DIR    Specify directory for jpeg library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-jpeg-lib.])
+	;;
+	esac
+	jpeg_libs="$withval"
+   ])
+
+if test "$jpeg_includes"; then
+	for dir in $jpeg_includes; do
+		if test -d "$dir"; then
+			JPEGINCPATH="$JPEGINCPATH -I$dir"
+		else
+			AC_MSG_WARN([*** Directory $dir does not exist])
+		fi
+	done
+fi
+
+if test "$jpeg_libs"; then
+	for dir in $jpeg_libs ; do
+		if test -d "$dir" ; then
+			JPEGLIBPATH="$JPEGLIBPATH -L$dir"
+		else
+			AC_MSG_WARN([*** Directory $dir does not exist])
+		fi
+	done
+fi                         
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $JPEGINCPATH"
+AC_CHECK_HEADERS(jpeglib.h)
+CPPFLAGS=${ac_save_cppflags}
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $JPEGLIBPATH"
+AC_CHECK_LIB(jpeg,jpeg_start_compress,JPEGLIB=-ljpeg)
+LDFLAGS=${ac_save_ldflags}
+
+AC_SUBST(JPEGLIB)
+AC_SUBST(JPEGLIBPATH)
+AC_SUBST(JPEGINCPATH)
+# Done with JPEG library
+
 AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
