@@ -45,13 +45,11 @@ int read();
 #define PNL_INIT(x) /* nothing */
 #endif
 
-#if 0
 #ifndef FILE
 #include <stdio.h>
 #endif
 #include <string.h>
 #include <sys/types.h>
-#endif
 
 #ifndef HZ
 #include <sys/param.h>

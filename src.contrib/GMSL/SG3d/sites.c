@@ -19,6 +19,7 @@
 #include "gis.h"
 #include "externs.h"
 #include "stdlib.h"
+#include "site.h"
 
 extern void update_sitefields();
 double fabs();
