@@ -66,7 +66,7 @@ digitizer_point (east, north)
 	return 0;
 
     sprintf (command, "%s/etc/geo.point %s %s",
-	G_gisbase(), digit_points, tempfile1);
+	G_gisbase(), digit_points, digit_results);
 
     Suspend_curses();
     if(system (command))
@@ -77,7 +77,7 @@ digitizer_point (east, north)
 	return 0;
     }
     Resume_curses();
-    fd = fopen (tempfile1, "r");
+    fd = fopen (digit_results, "r");
     if (fd == NULL)
     {
 	oops();
