@@ -29,14 +29,14 @@
 int 
 dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 {
-  char buff[1024], buf1[1024];
+  char buff[20001], buf1[1024];
   char *ptr;
   int  frmt = -1;
 
   G_debug ( 3, "dig_read_frmt_ascii()" );
 	  
   /* read first line which must be FORMAT: */
-  if ( NULL != fgets (buff, sizeof (buff), dascii) ) {
+  if ( G_getl2 (buff, 2000, dascii) ) {
       G_chop (buff);
       
       if (!(ptr = G_index (buff, ':'))) {
@@ -66,7 +66,7 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
   finfo->ogr.layer_name = NULL;
 #endif
 	  
-  while ( (NULL != fgets (buff, sizeof (buff), dascii) ) )
+  while ( G_getl2 (buff, 2000, dascii) )
   {
       G_chop (buff);
       
