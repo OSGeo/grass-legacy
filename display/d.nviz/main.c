@@ -257,7 +257,8 @@ int main(int argc, char *argv[])
 /* Select points interactively*/
     if (parm.i->answer) {
 	int count = 0;
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_setup(0);
 
 	G_setup_plot(D_get_d_north(),

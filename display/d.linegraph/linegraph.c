@@ -252,7 +252,8 @@ main (int argc, char **argv)
      }
      
 /* get coordinates of current screen window, in pixels */
-    R_open_driver ();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     D_get_screen_window (&t, &b, &l, &r);
     R_set_window (t, b, l, r);
 
