@@ -1047,7 +1047,6 @@ AC_SUBST(JPEGINCPATH)
 
 
 XDRIVER=socket
-AC_DEFINE(USE_G_SOCKS)
 
 AC_ARG_WITH(fifo,
     [  --with-fifo             use fifo XDriver instead of sockets],
@@ -1075,10 +1074,13 @@ AC_ARG_WITH(socket,
        case "$withval" in
        "" | y | ye | yes)
            XDRIVER=socket
-	   AC_DEFINE(USE_G_SOCKS)
 	 ;;
        esac
     ])
+
+if test "$XDRIVER" = "socket"; then
+	AC_DEFINE(USE_G_SOCKS)
+fi
 
 AC_MSG_CHECKING(for XDriver)
 AC_MSG_RESULT($XDRIVER)
