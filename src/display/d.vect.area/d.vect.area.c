@@ -70,6 +70,36 @@ static struct rgb_color palette[16] =  {
 	{  0, 139, 139}  /* 16: dark cyan */
 };
 
+/* Local PROTOS */
+static struct cat_color *new_cat_color(void);
+static struct rgb_color *new_rgb_color(void);
+static void destroy_cat_color(void *item, void *data);
+static void destroy_rgb_color(void *item, void *data);
+static int cat_comp(const void *a, const void *b, void *data);
+static int rgb_comp(const void *a, const void *b, void *data);
+static int legend_color_func(const int cat, enum line_or_area which);
+static int random_color_func(const int cat, enum line_or_area la);
+static int const_color_func(const int cat, enum line_or_area which);
+static struct rgb_color *
+add_color_to_table(unsigned char R, unsigned char G, unsigned char B);
+static void 
+add_cat_to_table(int cat, struct rgb_color *area, struct rgb_color *line);
+static void destroy_cat_tbl(void);
+static void destroy_rgb_tbl(void);
+static int rgb_ok(int red, int green, int blue);
+static int use_legend_file(const char *filename);
+static int rgb_parse(const char *clr_spec, 
+		unsigned char *red, unsigned char *green, unsigned char *blue);
+static int use_const_color(const char *area_clr, const char *line_clr);
+static int use_random_color(void);
+static int write_legend(const char *filename);
+static void adjust_point(double *x, double *y, 
+		double dx, double dy, unsigned char code);
+static int clip_segment(double *x0, double *y0, double *x1, double *y1);
+static void plot_line(struct line_pnts *points);
+
+
+
 static struct cat_color * new_cat_color (void)
 {
 	struct cat_color *self = G_malloc (sizeof (struct cat_color));
@@ -470,6 +500,58 @@ static int use_random_color (void)
 	select_color = random_color_func;
 	return 1;
 }
+
+static int write_legend (const char *filename)
+{
+	FILE *ofp;
+	const char *fmt4 = "%d %d %d %d\n";
+	const char *fmt7 = "%d %d %d %d %d %d %d\n";
+	struct avl_traverser trav;
+	struct rgb_color *area, *line;
+	struct cat_color *cat;
+	int status = 0;
+
+	if ((ofp = fopen (filename, "w"))) {
+		/* write default first, if any */
+		if (def_area_color) {
+			area = def_area_color;
+			if (def_line_color) {
+				line = def_line_color;
+				fprintf (ofp, fmt7, -1,
+					 area->R, area->G, area->B,
+					 line->R, line->G, line->B);
+			}
+			else {
+				fprintf (ofp, fmt4, -1,
+					 area->R, area->G, area->B);
+			}
+		}
+					
+		/* traverse cat tree */
+		avl_t_init (&trav, cat_tbl);
+		avl_t_first (&trav, cat_tbl);
+		while ((cat = avl_t_cur (&trav))) {
+			area = cat->area;
+			line = cat->line;
+
+			if (area && line) {
+				fprintf (ofp, fmt7, cat->cat,
+					 area->R, area->G, area->B,
+					 line->R, line->G, line->B);
+			}
+			else {
+				fprintf (ofp, fmt4, cat->cat,
+					 area->R, area->G, area->B);
+			}
+			avl_t_next (&trav);
+		}
+		fclose (ofp);
+		status = 1;
+	}
+
+	return status;
+}
+
 /* end of cat_color management */
 
 
@@ -564,6 +646,9 @@ int main (int argc, char **argv)
 	char wind_name[80];
 	int  color_number = 0, backgroundcolor = 0;
 	char colorname[30];
+	char *tmpfile;
+	char *cmd_buff;
+	int  len;
 	double N, S, E, W;
 	struct line_pnts *points;
 	char *mapset;
@@ -755,11 +840,33 @@ int main (int argc, char **argv)
 
 	putchar('\n');
 
-	D_add_to_list(G_recreate_command()) ;
+	if (leg_opt->answer && !strcmp(leg_opt->answer, "-")) {
+		/* use temporary legend file for future redraws */
+		tmpfile = G_tempfile();
+		if (write_legend (tmpfile)) {
+			len = strlen(argv[0]) + strlen(tmpfile)
+			      + strlen(mapset) + strlen(map->answer)
+			      + strlen(" map=@ legend= ");
+			cmd_buff = G_malloc (len);
+			sprintf (cmd_buff, "%s map=%s@%s legend=%s",
+					argv[0], map->answer, mapset,
+					tmpfile);
+			D_add_to_list (cmd_buff);
+			D_set_dig_name (G_fully_qualified_name (
+						map->answer, mapset));
+			D_add_to_dig_list (G_fully_qualified_name (
+						map->answer, mapset));
+		}
+	}
+	else {
+		D_add_to_list(G_recreate_command()) ;
 
-        D_set_dig_name(G_fully_qualified_name(map->answer, mapset));
-        D_add_to_dig_list(G_fully_qualified_name(map->answer, mapset));
-
+		D_set_dig_name(G_fully_qualified_name(
+				map->answer, mapset));
+		D_add_to_dig_list(G_fully_qualified_name(
+				map->answer, mapset));
+	}
+	
 	R_close_driver();
 
 	return 0;
