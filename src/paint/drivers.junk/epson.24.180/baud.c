@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include <stdio.h>
 #ifdef USE_TERMIO
 #include <termio.h>
