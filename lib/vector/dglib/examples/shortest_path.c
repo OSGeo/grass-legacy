@@ -41,15 +41,13 @@ extern int errno;
  * the traversing of the graph toward its direction is abandoned.
  * Try to change the return value to 1 and see that the program
  * will not find any more paths to destinations.
- * The clipper receives all data relating the node being examinated.
- * The pvarg is a user pointer given as 5th argument to GngDijkstra and
- * passed back to the callback.
- * This allows the program to share values with the clipper function
- * without defining them as global.
- * As a demo, the main uses the Clip_s structure to store a nodeid
+ * The clipper receives data relating the network segment being examinated.
+ * The pvarg is a user pointer registered to gnGrpShortestPath() and
+ * passed back to the clipper.
+ * As a demo, the main uses the ClipperContext_s structure to store a nodeid
  * that must be discarded during the search. The clipper receives
  * that pointer and checks every node against the one specified there.
- * Id the node matches return 1 (break), otherwise return 0.
+ * If the node matches return 1 , otherwise return 0.
  */
 
 typedef struct {

@@ -47,21 +47,18 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 	int		iAttr, cAttr;
 	int		role;
 	int		i;
-	char	ch;
 
 	role = 0;
-
 	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM )
 	{
 		role |= 1;
 	}
-
 	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_TO )
 	{
 		role |= 2;
 	}
 
-	fprintf( f , "NODE %-8ld - ROLE %-s - LINKAREA OFFSET %-8ld",
+	fprintf( f , "NODE %-8ld - %-s - LINKAREA OFFSET %-8ld",
 			GNGRP_NODE_ID(pnode),
 			(role>2)?"'from/to'":(role==2)?"'to'     ":"'from'   ",
 			GNGRP_NODE_LINKAREA_OFFSET(pnode) );
@@ -87,24 +84,38 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 			else						ptonode = gnGrpGetNode(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
 
 			if ( ptonode ) {
-				fprintf( f , "LINK #%-8d: TO NODE %-8ld - COST %-8ld - USER %-8ld",
+				role = 0;
+				if ( GNGRP_NODE_STATUS(ptonode) & GNGRP_NS_FROM )
+				{
+					role |= 1;
+				}
+				if ( GNGRP_NODE_STATUS(ptonode) & GNGRP_NS_TO )
+				{
+					role |= 2;
+				}
+
+				fprintf( f , "LINK #%-8d: TO NODE %-8ld - %-s - COST %-8ld - USER %-8ld",
 					 i++ ,
 					 GNGRP_NODE_ID(ptonode) ,
+					 (role>2)?"'from/to'":(role==2)?"'to'     ":"'from'   ",
 					 GNGRP_LINK_COST(plink) ,
 					 GNGRP_LINK_USER(plink)
 					 );
 
+				if ( (cAttr = gnGrpGet_NodeAttrSize(pgraph)) > 0 ) {
+					fprintf( f , " - NODE ATTR HEX DUMP [" );
+					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
+						if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
+						fprintf( f , "%02x" , ((unsigned char*)GNGRP_NODE_ATTR_PTR(ptonode))[iAttr] );
+					}
+					fprintf( f , "]" );
+				}
+
 				if ( (cAttr = gnGrpGet_LinkAttrSize(pgraph)) > 0 ) {
-					fprintf( f , " - ATTR HEX DUMP [" );
+					fprintf( f , " - LINK ATTR HEX DUMP [" );
 					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
 						if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
 						fprintf( f , "%02x" , ((unsigned char*)GNGRP_LINK_ATTR_PTR(plink))[iAttr] );
-					}
-					fprintf( f , "] " );
-					fprintf( f , " - PRINTABLE [" );
-					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
-						ch = ((char*)GNGRP_LINK_ATTR_PTR(plink))[iAttr];
-						fprintf( f , "%c" , (isprint(ch))?ch:' ' );
 					}
 					fprintf( f , "]\n" );
 				}
