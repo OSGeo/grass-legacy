@@ -1068,8 +1068,8 @@ proc keyanimAddKey { BASE } {
 		"DirX"  { set value [lindex [Nget_focus] 0] }
 		"DirY"  { set value [lindex [Nget_focus] 1] }
 		"DirZ"  { set value [lindex [Nget_focus] 2] }
-                "FOV"   { set value fov}
-                "TWIST" { set value twist}
+                "FOV"   { set value [lindex [Nget_fov] 0] }
+                "TWIST" { set value [lindex [Nget_twist] 0] }
                 }
 		set an_element [list [lindex $i 0] $value]
 	    }
@@ -1875,7 +1875,7 @@ proc keyanimLoadAnim { base } {
                         set value2 [lindex $name 1]
                         set name [lindex $k 2]
                         set value3 [lindex $name 1]
-                #Set Center of View
+                #Set Center of View -- FROM
                 Nmove_to $value1 $value2 $value3
                         set name [lindex $k 3]
                         set value1 [lindex $name 1]
@@ -1883,8 +1883,17 @@ proc keyanimLoadAnim { base } {
                         set value2 [lindex $name 1]
                         set name [lindex $k 5]
                         set value3 [lindex $name 1]
-		#Set Camera position
+		#Set Camera position -- TO
 		Nset_focus $value1 $value2 $value3
+                #Set FOV
+                        set name [lindex $k 6]
+                        set value1 [lindex $name 1]
+                if {$value1 != "fov"} {Nset_fov $value1}
+                #Set TWIST
+                        set name [lindex $k 7]
+                        set value1 [lindex $name 1]
+                if {$value1 != "twist"} {Nset_twist $value1}
+
 	
 	Nadd_key $time KF_ALL_MASK 1 0.0
 

@@ -666,7 +666,7 @@ proc animAddKey { BASE } {
     set new_pos [kfGetSliderPos $BASE]
     
     # Set the attributes for this new key frame
-    set new_key [list $new_pos [Nget_from] [Nget_to] fov twist]
+    set new_key [list $new_pos [Nget_from] [Nget_to] [Nget_fov] [Nget_twist]]
     
     # Check to see if the key already exists, if so then we don't
     # need a new tag
