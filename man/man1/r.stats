@@ -8,14 +8,14 @@
 .br
 \fBr.stats help\fR
 .br
-\fBr.stats \fR[\fB-1acmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
+\fBr.stats \fR[\fB-1aclmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
 [\fBoutput\*=\fIname\fR]
 .SH DESCRIPTION
 .I r.stats
 calculates the area present in each of the categories
 of user-selected raster map layer(s).
-Area statistics can be given in units of acres, hectares, square miles,
-and cell counts.
+Area statistics are given in units of square meters and/or
+cell counts.
 This analysis uses the current geographic region and mask settings.
 Output can be sent to a file in the user's current working directory.
 
@@ -23,7 +23,7 @@ The program will be run non-interactively if the user specifies
 the program arguments and desired options on the command line,
 using the form
 
-\fBr.stats \fR[\fB-1acmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
+\fBr.stats \fR[\fB-1aclmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
 [\fBoutput\*=\fIname\fR]
 
 where each input \fIname\fR is the name of a raster map layer on which
@@ -34,7 +34,7 @@ the fs \fIcharacter\fR or space is the field separator
 to be used to separate data fields in the output file
 (default is a space if unspecified),
 and the (optional) flags
-\fI-1\fR, \fI-a\fR, \fI-c\fR, \fI-m\fR, \fI-q\fR, \fI-z\fR, \fI-g\fR,
+\fI-1\fR, \fI-a\fR, \fI-c\fR, \fI-l\fR, \fI-m\fR, \fI-q\fR, \fI-z\fR, \fI-g\fR,
 and \fI-x\fR have the meanings described in the OPTIONS section.
 
 Alternately, the user can simply type \fBr.stats\fR on the command line,
@@ -46,29 +46,39 @@ described in the manual entry for \fIparser\fR.
 .IP \fB-1\fR 18
 The data for each cell in the current geographic region will be output,
 one cell per line, rather than the totals for each distinct combination.
-Also prints the geographic coordinates (eastings, and northings)
-associated with each cell.
 .IP \fB-a\fR 18
-Print area totals.
+Print area totals in square meters.
 .IP \fB-c\fR 18
 Print total cell counts.
 .IP \fB-m\fR 18
-Report zero values, because a mask is present and the user is interested
-in zero data values falling within the mask.
+Report all zero values present in the \fIinput\fR map layer(s), whether
+or not they fall inside or outside the current mask (see \fIr.mask\fR).
+When a mask is present, \fIr.stats\fR will only report zero values
+falling within the mask area unless the user runs \fIr.stats\fR with
+the -m option.  When the user runs \fIr.stats\fR with the -m option,
+\fIr.stats\fR will report zero values falling outside the mask area,
+in addition to those within the mask.
+.IP \fB-l\fR 18
+Prints the category label(s) as well as the category number(s).
 .IP \fB-q\fR 18
-Run quietly, and supress printing of percent complete messages
+Run quietly, and suppress printing of percent complete messages
 to standard output.
 .IP \fB-z\fR 18
 Report only non-zero data values.
-Zero data will not be output.  For multiple map layers this means that
-zero category values in every map layer will not be output;
-non-zero category values in any map layer will be output.
+Zero data will not be reported.  However, for multiple map layers 
+this means that
+if zero values occur in every map layer, they will not be reported; 
+if non-zero category values occur in any map layer (along with
+zeros in others), the non-zero values along with the zero values
+will be reported.
 .IP \fB-g\fR 18
 Print the grid coordinates (easting and northing), for each cell.
 This option works only if the -1 option is also specified.
 .IP \fB-x\fR 18
 Print the x and y (column and row) values, for each cell.
 This option works only if the -1 option is also specified.
+
+.LP
 \fBParameters:\fR
 .IP \fBinput\*=\fIname\fR 18
 The name(s) of one or more existing raster map layer(s)
@@ -115,17 +125,17 @@ If three raster map layers
 .nf
 .in +.5i
 0:0:0:8027500.00
-1:0:0:164227500.00
-2:0:0:31277500.00
-3:0:0:17140000.00
-1:0:1:2177500.00
-2:0:1:2490000.00
 0:1:0:1152500.00
+1:0:0:164227500.00
+1:0:1:2177500.00
 1:1:0:140092500.00
-2:1:0:24207500.00
-3:1:0:11270000.00
 1:1:1:3355000.00
+2:0:0:31277500.00
+2:0:1:2490000.00
+2:1:0:24207500.00
 2:1:1:1752500.00
+3:0:0:17140000.00
+3:1:0:11270000.00
 3:1:1:2500.00
 .fi
 .in
@@ -158,15 +168,10 @@ will create a three-column output
 2:1:3:410000.00         2:4:3:10000.00          3:1:5:3140000.00
 .FI
 
-Also, the output in the examples given happen to be in sorted order,
-but the output from
+The output from
 .I r.stats
 on more than one map layer
-is not guaranteed to be in any particular order.
-If the user desires sorted output, use the UNIX \fIsort\fR command.
-For example:
-
-    \fBr.stats input\*=a,b,c | sort -t: -0n\fR
+is sorted.
 
 Note that the user has only the option of printing out
 cell statistics in terms of cell counts and/or area totals.
@@ -176,10 +181,9 @@ should use the GRASS program \fIr.report\fR.
 .I g.region,
 .I r.coin,
 .I r.describe,
+.I r.mask,
 .I r.report,
 and
 .I parser
-.SH "AUTHORS"
-Michael O'Shea, U.S. Army Construction Engineering Research Laboratory
-.br
+.SH "AUTHOR"
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
