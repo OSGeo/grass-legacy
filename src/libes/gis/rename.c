@@ -18,17 +18,20 @@
 G_rename (element,oldname,newname)
     char *element;
     char *oldname;
+    char *newname;
 {
     char mv[1024];
     char *path;
     char *mapset;
-    char tname[256], tmap[256];
+    char xname[512], xmapset[512];
 
 /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
-    if (G__name_in_mapset (oldname, tname, tmap) && strcmp (mapset, tmap))
+    if (G__name_is_fully_qualified (oldname, xname, xmapset)
+    && strcmp (mapset, xmapset))
 	    return -1;
-    if (G__name_in_mapset (newname, tname, tmap) && strcmp (mapset, tmap))
+    if (G__name_is_fully_qualified (newname, xname, xmapset)
+    && strcmp (mapset, xmapset))
 	    return -1;
 
     strcpy (mv, "mv ");
