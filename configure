@@ -19,6 +19,10 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-x                use the X Window System"
 ac_help="$ac_help
+  --with-x-includes=DIR     X11 header files in DIR"
+ac_help="$ac_help
+  --with-x-libs=DIR         search for X11 libraries in DIR"
+ac_help="$ac_help
   --with-tiff-includes=DIR
                           site header files for TIFF in DIR"
 ac_help="$ac_help
@@ -81,8 +85,8 @@ site=
 srcdir=
 target=NONE
 verbose=
-x_includes=NONE
-x_libraries=NONE
+x_includes=/usr/X11R6.4/include
+x_libraries=/usr/X11R6.4/lib
 bindir='${exec_prefix}/bin'
 sbindir='${exec_prefix}/sbin'
 libexecdir='${exec_prefix}/libexec'
@@ -881,6 +885,17 @@ if test "${with_includes+set}" = set; then
 	INC_DIRS="$withval"
     
 fi
+if test "${with_x_includes+set}" = set; then
+  withval="$with_x_includes"
+  
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    { echo "configure: error: *** You must supply an argument to the --with-x-includes option." 1>&2; exit 1; }
+	  ;;
+	esac
+	INC_DIRS="$withval"
+    
+fi
 
 
 if test "$INC_DIRS"; then
@@ -905,6 +920,18 @@ if test "${with_libs+set}" = set; then
 	case "$withval" in
 	"" | y | ye | yes | n | no)
 	    { echo "configure: error: *** You must supply an argument to the --with-libs option." 1>&2; exit 1; }
+	  ;;
+	esac
+	LIB_DIRS="$withval"
+    
+fi
+# Check whether --with-x-libs or --without-libs was given.
+if test "${with_x_libs+set}" = set; then
+  withval="$with_x_libs"
+  
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    { echo "configure: error: *** You must supply an argument to the --with-x-libs option." 1>&2; exit 1; }
 	  ;;
 	esac
 	LIB_DIRS="$withval"
@@ -1410,6 +1437,7 @@ else
 for ac_dir in `echo "$ac_x_includes" | sed s/include/lib/` \
     /usr/X11/lib          \
     /usr/X11R6/lib        \
+    /usr/X11R6.4/lib      \
     /usr/X11R5/lib        \
     /usr/X11R4/lib        \
                           \
@@ -3460,10 +3488,9 @@ if test -z "$TCLTKLIBPATH"; then
 	echo "configure: warning: *** Could not find tcl/tk library." 1>&2
 fi
 
-
 if test "$tcltk_ver"; then
     ac_save_ldflags="$LDFLAGS"
-    LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -lXt -ltcl$tcltk_ver"
+    LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -lXt -ltk$tcltk_ver"
     echo $ac_n "checking for Tk_MainWindow in -l"tk$tcltk_ver"""... $ac_c" 1>&6
 echo "configure:3469: checking for Tk_MainWindow in -l"tk$tcltk_ver"" >&5
 ac_lib_var=`echo "tk$tcltk_ver"'_'Tk_MainWindow | sed 'y%./+-%__p_%'`
@@ -3474,7 +3501,7 @@ else
 LIBS="-l"tk$tcltk_ver"  $LIBS"
 cat > conftest.$ac_ext <<EOF
 #line 3477 "configure"
-#include "confdefs.h"
+/*#include "confdefs.h"*/
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
     builtin and then its argument prototype would still apply.  */
@@ -3514,7 +3541,6 @@ fi
 else
     echo "configure: warning: *** Unable to find Tcl/Tk libraries and headers" 1>&2
 fi
-
 
 SYSV=
 # Check whether --with-SYSV or --without-SYSV was given.
