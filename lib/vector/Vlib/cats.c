@@ -202,12 +202,12 @@ Vect_cat_del (struct line_cats *Cats, int field)
  \return 1 deleted, 0 field/category number does not exist
  \param Cats
  \param field
- \param cat
+ \param cat category to be deleted or -1 to delete all cats of given field
 */
 int 
 Vect_field_cat_del (struct line_cats *Cats, int field, int cat)
 {
-  register int n, found = 0;
+  register int n, m, found = 0;
 
   /* check input value */
   /*
@@ -217,10 +217,10 @@ Vect_field_cat_del (struct line_cats *Cats, int field, int cat)
     
   /* go through cats and find if field exist */
   for (n = 0; n < Cats->n_cats; n++) {
-      if (Cats->field[n] == field && Cats->cat[n] == cat) {
-	  for (n = n; n < Cats->n_cats - 1; n++) {
-	      Cats->field[n] = Cats->field[n + 1];
-	      Cats->cat[n] = Cats->cat[n + 1];
+      if (Cats->field[n] == field && ( Cats->cat[n] == cat || cat == -1) ) {
+	  for (m = n; m < Cats->n_cats - 1; m++) {
+	      Cats->field[m] = Cats->field[m + 1];
+	      Cats->cat[m] = Cats->cat[m + 1];
 	  }
 	  Cats->n_cats--;
 	  found = 1;
