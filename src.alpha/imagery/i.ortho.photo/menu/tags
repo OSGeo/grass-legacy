@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+menu	menu.c	/^menu (group, new)$/
+run	run.c	/^run (pgm, group)$/
