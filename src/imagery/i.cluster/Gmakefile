@@ -1,0 +1,20 @@
+LIST = main.o\
+	ask_files.o\
+	ask_parms.o\
+	checkpt.o\
+	print1.o\
+	print2.o\
+	print3.o\
+	print4.o\
+	print5.o\
+	print6.o
+
+$(BIN)/i.cluster: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	$(CC) -o $@ $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
+
+ask_files.o: global.h
+ask_parms.o: global.h
+checkpt.o: global.h
+main.o: global.h
+
+$(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
