@@ -19,29 +19,22 @@ active frame on the graphics monitor.
 <BR>
 <B>d.legend help</B> 
 <BR>
-<B>d.legend</B> [<B>-vcsom</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+<B>d.legend</B> [<B>-vcnsmf</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
 [<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>]
-[<B>maxfontsize=</B><EM>value</EM>]
+[<B>at=</B><EM>x1,y1,x2,y2</EM>] [<B>range=</B><EM>min,max</EM>]
 <H2>DESCRIPTION</H2>
 
 <EM>d.legend</EM> displays a legend for a user-specified
 raster map layer in the active frame on the graphics
-monitor.  The legend's size is based on the height of the
-active frame.  The user should therefore take care to
-create a display frame of suitable dimensions before
-running <EM>d.legend</EM>.  <EM>d.legend</EM> will only
-obscure those portions of the active frame that directly
-underlie the legend.
-
+monitor.  
 <P>
 
 The user can run <EM>d.legend</EM> either non-interactively
 or interactively.  If the user specifies the name of a
-raster <EM>map</EM> layer on the command line, the program
+raster <B>map</B> layer on the command line, the program
 will run non-interactively.  Default legend text
-<EM>color</EM> and number of <EM>lines</EM> will be used
-unless the user specifies other values on the command
-line.
+<B>color</B> and position will be used unless
+the user specifies other values on the command line.
 
 <P>
 
@@ -59,68 +52,137 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 <DD>Do not show category labels
 <DT><B>-c</B>
 <DD>Do not show category numbers
+<DT><B>-n</B>
+<DD>Skip categories with no label (ignored for floating point maps)
 <DT><B>-s</B>
-<DD>Draw smooth gradient (for floating point rasters forced automatically)
-<DT><B>-o</B>
-<DD>Draw entries only for existing categories (ignored for floating point maps)
+<DD>Draw smooth gradient (forced automatically for floating point rasters)
 <DT><B>-m</B>
 <DD>Use mouse to size &amp; place legend
+<DT><B>-f</B>
+<DD>Flip legend vertically or horizontally
 </DL>
 <P>
 <H3>Parameters:</H3>
-<DT><B>map</B>
+<DT><B>map=</B><EM>name</EM>
 <DD>Name of raster map.
-<DT><B>color</B>
+<DT><B>color=</B><EM>name</EM>
 <DD>Sets the legend's text color.
 <BR>
 <DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
 <BR>
 <DD>Default: white
 
-<DT><B>lines</B>
-<DD>Number of text lines (useful for truncating long legends)
+<DT><B>lines=</B><EM>value</EM>
+<DD>Number of lines in the legend (useful for truncating long legends)
 <BR>
 <DD>Options: 0-1000
 <BR>
-<DD>Default: 0
+<DD>Default: all
 
-<DT><B>thin</B>
+<DT><B>thin=</B><EM>value</EM>
 <DD>Thinning factor (thin=10 gives cats 0,10,20...)
 <BR>
 <DD>Options: 0-1000
 <BR>
 <DD>Default: 1
 
-<DT><B>labelnum</B>
-<DD>Number of labels for legend description
+<DT><B>labelnum=</B><EM>value</EM>
+<DD>Number of text labels for smooth gradient legend
 <BR>
 <DD>Options: 2-100
 <BR>
 <DD>Default: 5
 
-<DT><B>maxfontsize</B>
-<DD>Max font size for text labels
+<DT><B>at=</B><EM>x1,y1,x2,y2</EM>
+<DD>Placement coordinates, as 0-100% of graphics monitor width/height. 0,0 is upper left here.
 <BR>
-<DD>Options: 0-1000
+<DD>Options: 0-100
 <BR>
-<DD>Default: 20
+<DD>Default: automatically placed and scaled
 
-
+<DT><B>range=</B><EM>min,max</EM>
+<DD>Category range
+<BR>
+<DD>Default: all
 </DL>
 
-<H2>NOTE</H2>
+<H2>NOTES</H2>
 
-Note that when using the mouse to size &amp; place the legend, if you
-make a horizontal box the values run from left to right and no category
-values are printed (you may want to use <EM>d.label</EM> for that). 
-If the user attempts to display a very long legend in a relatively short 
-display frame, the legend may appear in unreadably small text. 
+The legend's default size is based on the dimensions of the
+active frame, specifically its height.  <EM>d.legend</EM> will only
+obscure those portions of the active frame that directly underlie the legend.
 <p>
-The flag <EM>-o</EM> is useful for categorial maps, it suppresses the
+When using the mouse or <B>at</B> to size &amp; place the legend, if the user
+makes a horizontal box the values run from left to right and no category
+values are printed (you may want to use <EM><A HREF ="d.label.html">d.label
+</A></EM> for that). A horizontal legend is created if the box is wider than
+it is tall.
+<p>
+Raster maps based on floating point values will display smoothed, from greatest
+to smallest value, while categorial raster maps will display in order, from
+top to bottom. If the box is defined with inverted y-values or an inverted
+<B>range</B>, the legend will automatically flip. If this is not the desired
+result, the <B>-f</B> flag may be used to flip it back.
+<p>
+If the user attempts to display a very long legend in a relatively short 
+display frame, the legend may appear in unreadably small text, or even revert
+to a smooth gradient legend. Use the <B>lines</B>, <B>thin</B>, <B>range</B>,
+and/or <B>-n</B> options to reduce the number of categories to be displayed,
+or the <B>-s</B> flag to force a smooth gradient legend.
+<p>
+The <B>lines</B> option will display the first number of categories, as defined
+by <EM>value</EM>, contained in the raster map. When used with the <B>-n</B> flag,
+it takes on a new meaning: "up to category #". When used with both
+<B>thin</B> and the <B>-n</B> flag, its meaning becomes more obscure. When
+using <B>lines</B>, text similar to "4 of 16 categories" will be placed at 
+the bottom of the legend, and is always auto-scaled to fit within the frame.
+<p>
+The <B>thin</B> option sets the thinning factor. For raster maps with a 0th
+category, <B>thin=</B><EM>10</EM> gives cats [0,10,20,...]. For raster maps 
+starting at category 1, <B>thin=</B><EM>10</EM> gives cats [1,11,21,...].
+<p>
+The <B>range</B> option lets the user define the minimum and maximum categories
+to be used in the legend. It may also be used to define the limits of a smooth
+gradient legend created from a raster containing floating point values. Note
+the color scale will remain faithful to the category values as defined with
+<EM><A HREF="r.colors.html">r.colors</A></EM>.
+<p>
+The flag <B>-n</B> is useful for categorial maps, as it suppresses the
 drawing of non-existing categories (otherwise the full range is shown).
 <p>
-Font size for text labels may be adjusted with <EM>maxfontsize</EM>
-parameter.
+Vertical legends produced with <EM>d.legend</EM> will produce text labels to the
+right of the legend box. This text will be auto-scaled to fit within the frame,
+reducing the size of the legend if necessary. Legends positioned with the mouse
+or with the <B>at</B> option will not auto-scale text, in order to provide more
+control to the user. Smaller text may be obtained in this case by reducing the
+height of the box. The <B>-c</B> and <B>-v</B> flags may be used to suppress the
+display of category numbers and labels respectively, or used together to 
+suppress all text of categorial raster maps.
+<p>
+The text produced from floating-point raster maps will create output with a
+meaningful number of significant digits automatically. For very small values,
+numbers will be expressed in scientific notation, e.g. "1.7e-9".
+<p>
+Note that old scripts which relied on setting <B>lines</B> greater than the
+number of categories to scale the legend may no longer produce the desired
+output, although the auto-scaling should still produce something that looks 
+good in this case.
+
+<H2>TODO</H2>
+
+- Add <B>use</B> option for legends of discrete category numbers/values only.<BR>
+- Text labels for horizontal legends.<BR>
+- <B>at</B> declaration format will change from <EM>x1,y1,x2,y2</EM>
+to <EM>bottom,top,left,right</EM> for consistency with
+<EM><A HREF="d.frame.html">d.frame</A></EM>.
+
+<H2>BUGS</H2>
+
+- Auto scaling text isn't quite right for legends within frames.<BR>
+- <B>at</B> positioning is relative to monitor, not frame.<BR>
+- <B>at</B> positioning currently uses the top left for 0,0 instead of the
+bottom left. This will be changed.<BR>
+
 
 <H2>SEE ALSO</H2>
 
@@ -132,6 +194,7 @@ parameter.
 <EM><A HREF="d.grid.html">d.grid</A></EM><br>
 <EM><A HREF="d.rast.html">d.rast</A></EM><BR>
 <EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR>
+<EM><A HREF="d.rast.leg.sh.html">d.rast.leg</A></EM><BR>
 <EM><A HREF="d.vect.html">d.vect</A></EM><br>
 <EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
 <EM><A HREF="r.reclass.html">r.reclass</A></EM>
@@ -140,7 +203,10 @@ parameter.
 
 <H2>AUTHORS</H2>
 Bill Brown, U.S. Army Construction Engineering Research Laboratories
-<br> Improvements from various authors
+<br>Late 2002: Rewrite of much of the code. Hamish Bowman,
+ Otago University, New Zealand
+<br>Additional improvements from various authors
+
 
 <p><i>Last changed: $Date$</i>
 </body>
