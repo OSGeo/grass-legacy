@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.101 2001-01-02 12:08:19 markus Exp $
+$Id: BUGS,v 1.102 2001-01-10 12:55:55 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -39,7 +39,23 @@ src/libes/geom: optri  -> used by s.geom, v.geom
 
 Vector:
  R_polygon_abs() seems to ignore islands. Correct?
-    (being worked on by ?)
+
+ Comment from Eric Miller:
+   While skimming through the BUG list, there's a report about
+   R_Polygon_abs() ignoring islands.  A little investigation would show this
+   to be correct.  However, each display driver must implement this
+   individually, and I only looked at the XDRIVER24 version.
+   Anyway,  the code is real simple and does not do anything other than draw
+   a filled polygon based on supplied display coordinates and the already
+   set fill color.  Presumably it is up to the caller to handle
+   islands/holes. However, this is probably not a simple task when drawing a
+   filled polygon cover over other layers.  Perhaps what is wanted is a high
+   level vector drawing command such as some of the commands in the
+   partially functional DISPLAYLIB???  I don't know X well enough to know if
+   it has a way to handle holes in it's polygon drawing routines.
+   A little more context for the BUG report seems in order since this really
+   doesn't seem to be a "bug", but a shortcoming.
+ (being worked on by ?)
 
 G3D libraries bug:
  Markus Neteler wrote:
