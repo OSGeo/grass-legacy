@@ -290,6 +290,7 @@ src/raster/r.cross
 src/raster/r.describe
 src/raster/r.digit
 src/raster/r.drain
+src/raster/r.fill.dir
 src/raster/r.flow
 src/raster/r.flowmd
 src/raster/r.grow
@@ -422,8 +423,6 @@ src.contrib/GMSL/NVIZ2.2
 # PostgreSQL support: (working!)
 #src.garden/grass.postgresql
 #######################################
-#src/raster/r.fill.dir # needs F77-> C finishing
-src.garden/answers/src.answers/raster/r.fill.dir
 #
 # from here onwards it becomes experimental!!
 #
