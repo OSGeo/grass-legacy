@@ -3105,7 +3105,7 @@ fi
 
 
 BINDIR=/usr/local/bin
-if test -z "${exec_prefix}"; then
+if test -z "${exec_prefix}" || test "${exec_prefix}" = "NONE"; then
 exec_prefix="/usr/local"
 fi
 if test "${bindir}"; then
