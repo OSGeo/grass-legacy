@@ -1,0 +1,132 @@
+
+
+
+s.sweep <contrib>     GRASS Reference Manual	<contrib> s.sweep
+
+
+
+NAME
+     s.sweep - compute Voronoi diagram or Delaunay triangulation
+     (GRASS ETC Program)
+
+SYNOPSIS
+     s.sweep [-dstp]
+
+DESCRIPTION
+     s.sweep reads the standard input for a set of points in the
+     plane and writes either the Voronoi diagram or the Delaunay
+     triangulation to the standard output.  Each input line
+     should consist of two real numbers, separated by white
+     space.
+
+     The program is used by s.voronoi and s.delaunay and is not
+     meant to be useful as a standalone program.
+
+     If option -t is present, the Delaunay triangulation is
+     produced.	Each output line is a triple i j k, which are the
+     indices of the three points in a Delaunay triangle. Points
+     are numbered starting at 0.
+
+     If option -t is not present, the Voronoi diagram is
+     produced.	There are four output record types.
+
+     s a b
+	  indicates that an input point at coordinates a b was
+	  seen.
+
+     l a b c
+	  indicates a line with equation ax + by = c.
+
+     v a b
+	  indicates a vertex at a b.
+
+     e l v1 v2
+	  indicates a Voronoi segment which is a subsegment of
+	  line number l with endpoints numbered v1 and v2.  If v1
+	  or v2 is -1, the line extends to infinity.
+
+     The other options are:
+
+     s	  The input is sorted by y coordinate (the second number
+	  in the pair).	 The first input line should be npoints
+	  xmin xmax ymin ymax.	This describes the number of
+	  points and the range of the points.  This line is used
+	  to determine internal hash table size; it need not be
+	  exact but performance suffers if it is grossly wrong.
+
+     p	  Produce output suitable for input to plot (1), rather
+	  than the forms described above.
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+s.sweep <contrib>     GRASS Reference Manual	<contrib> s.sweep
+
+
+
+     On unsorted data uniformly distributed in the unit square,
+     s.sweep uses about 20n+140\/n bytes of storage.  On sorted
+     data, s.sweep uses about 160\/n bytes.
+
+AUTHOR
+     Steve J. Fortune (1987) A Sweepline Algorithm for Voronoi
+     Diagrams, Algorithmica 2, 153-174.
+     Modified by:
+     James Darrell McCauley, Purdue University
+     (mccauley@ecn.purdue.edu) for use with GRASS.
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
