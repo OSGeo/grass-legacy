@@ -1,4 +1,4 @@
-static char rcsid[] = "@(#)XGRASS $Id: create.c,v 0.0.0.1 1992/05/05 14:58:25 kurt Exp kurt $";
+static char rcsid[] = "@(#)XGRASS $Id: create.c,v 0.0.0.1 1997/09/30 14:58:25 kurt Exp kurt $";
 /*
 * File: create.c
 *
@@ -8,7 +8,7 @@ static char rcsid[] = "@(#)XGRASS $Id: create.c,v 0.0.0.1 1992/05/05 14:58:25 ku
 *
 * Date: Thu Oct 17 12:20:10 CDT 1991
 *
-* Modification History:
+* Modification History:  BGRG 1997
 *
 *
 */
