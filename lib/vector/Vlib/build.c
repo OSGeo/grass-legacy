@@ -99,6 +99,7 @@ Vect_build ( struct Map_info *Map, FILE *msgout )
     prnmsg ("Number of kernels   :   %d\n", plus->n_klines) ;
     prnmsg ("Number of areas     :   %d\n", plus->n_areas) ;
     prnmsg ("Number of isles     :   %d\n", plus->n_isles) ;
+    prnmsg ("Map is 3D           :   %d\n", Vect_is_3d(Map));
 
     return 1;
 }
