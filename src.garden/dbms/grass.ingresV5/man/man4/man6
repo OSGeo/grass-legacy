@@ -1,0 +1,66 @@
+
+
+
+d.what.v.db()     MISC. REFERENCE MANUAL PAGES      d.what.v.db()
+
+
+
+NAME
+     _d._w_h_a_t._v._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     d.what.v.db
+     d.what.v.db help
+     d.what.v.db      map=_n_a_m_e       keytable=_n_a_m_e       col=_n_a_m_e
+     [join=_t_a_b,_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of d.what.v.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _m_a_p  Name of vector map associated with database.
+
+     _k_e_y_t_a_b_l_e
+          Name of table containing column with category values.
+
+     _c_o_l  Name of column with category values.
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
