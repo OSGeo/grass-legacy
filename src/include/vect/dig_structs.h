@@ -209,7 +209,8 @@ struct P_isle
     double  W;
     plus_t  n_lines;	/* Number of boundary lines */
     plus_t  alloc_lines;
-    plus_t  *lines;	/* Boundary Lines (Negative means N2 to N1 clockwise) */
+    plus_t  *lines;	/* Boundary Lines (Negative means N2 to N1
+    	                   counter-clockwise) */
     char   alive;	/* deleted or not   0 or !0  */
     /*********  Above this line is compatible with P_area **********/
 
