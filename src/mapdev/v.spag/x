@@ -1,0 +1,9 @@
+mv notused/compress.c .
+mv notused/remove.c .
+mv notused/break2.c .
+mv notused/intersect.c .
+mv notused/main2.c .
+mv notused/new_line.c .
+mv notused/linecros.c .
+mv notused/graphic.c .
+mv notused/spag2.c .
