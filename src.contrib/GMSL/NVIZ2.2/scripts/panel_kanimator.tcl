@@ -1610,7 +1610,6 @@ proc keyanimRunAndSave { BASE } {
     global keyanimKeyList keyanimPlayState keyanimFrameRate
     global keyanimWaitPress keyanimBaseName keyanimSaveRenderStyle
     global keyanimFrameNum
-    global env
     
     if {[llength $keyanimKeyList] < 2} then { return }
     
@@ -1628,17 +1627,7 @@ proc keyanimRunAndSave { BASE } {
     pack .ras_fname.title .ras_fname.enter .ras_fname.norm \
 	.ras_fname.fancy .ras_fname.ok -fill both
     tkwait variable keyanimWaitPress
-
-    set basedir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/rgb
-
-    if {![file isdirectory $basedir]} {
-        set basedir $env(HOME)
-	if {![file isdirectory $env(HOME)]} {
-            set basedir "."
-	}
-    }
-
-    set keyanimBaseName $basedir/[.ras_fname.enter get]
+    set keyanimBaseName [.ras_fname.enter get]
     destroy .ras_fname
     
     # Automatically start from the beginning
@@ -1674,10 +1663,12 @@ proc keyanimSaveFrame { fnum } {
     while {[string length $num] < 5} {
 	set num 0$num
     }
-    
-    append fname $num ".rgb"
-    
-    Nwrite_rgb $fname
+
+    append fname $num ".ppm"    
+#    append fname $num ".rgb"
+
+    Nwrite_ppm $fname    
+#    Nwrite_rgb $fname
 }
 
 ############################################################################

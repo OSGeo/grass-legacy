@@ -1,8 +1,17 @@
 # $Log: Gmakefile,v $
-# Revision 1.6  2000-07-14 10:10:52  bill
-# *** empty log message ***
+# Revision 1.7  2000-09-25 12:08:04  markus
+# Bob Covill: patched to write PPM format
 #
-# Revision 1.5  2000/03/06 17:17:22  markus
+# Revision 1.9  2000/09/25 12:02:07  markus
+# added missing lib path
+#
+# Revision 1.8  2000/09/05 09:14:20  markus
+# libpg disabled if PostgreSQL not wanted
+#
+# Revision 1.7  2000/06/12 14:09:32  cho
+# Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
+#
+# Revision 1.6  2000/03/06 17:17:22  markus
 # Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
 #
 # Revision 1.5  2000/03/06 09:04:07  markus
@@ -33,12 +42,14 @@
 # Requires Tk 8.0 and Tcl 8.0
 
 # These should be set by the configure script
-TK_LIB_PATH=-L/usr/X11R6/lib -L/usr/lib -L/usr/local/lib -ltk8.0 -ltcl8.0
+TK_LIB_PATH=-L/lib -L/usr/lib -ltk8.0 -ltcl8.0
 TK_INCLUDE_PATH=-I/usr/include/GL -I/usr/include/X11 -I/usr/local/include
 NVWISH_VER=NVWISH2.2
 PQ_OBJS=openvect.o getCat.o buildInfxQry.o runInfxQry.o
+PQLIB=-lpq
+DLLIB=-ldl
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB) $(XEXTRALIBS)
+OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
@@ -47,7 +58,7 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
-EXTRA_CFLAGS= -I${SURF_INCDIR} -D_NO_PROTO\
+EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
         -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
