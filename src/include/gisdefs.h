@@ -370,6 +370,8 @@ int G_datum_parameters(int, char *, double *, double *, double *);
 char *G_datum_name(int);
 char *G_datum_description(int);
 char *G_datum_ellipsoid(int);
+int G_get_datumparams_from_projinfo(struct Key_Value *projinfo, 
+				    char *datumname, char *params);
 
 /* dig_title.c */
 char *G_get_dig_title(char *, char *);
