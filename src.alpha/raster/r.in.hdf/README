@@ -1,0 +1,14 @@
+The doc directory contains a manual page for this program, which is 
+automatically copied to the proper GRASS location (for reference by
+g.manual) when this program is compiled.
+
+r.in.hdf uses the NCSA Hierarchical Data Format (HDF) library: BEFORE
+compiling this program, you must compile the library (see the README
+file in src.garden/grass.hdf for instructions on compiling the HDF
+library).
+
+Once the library is compilied:
+
+To compile r.in.hdf you must EDIT THE GMAKEFILE by un-commenting
+the line that describes the platform on which you are compiling.
+Then use the gmake4.1 command as usual.
