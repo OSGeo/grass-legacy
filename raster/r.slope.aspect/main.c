@@ -25,6 +25,8 @@
 /*  some changes made to code to retrieve correct distances when using
     lat/lon projection.  changes involve recalculating H and V. see
     comments within code.                                           */
+/*  added colortables for topographic parameters and fixed 
+ *  the sign bug for the second order derivatives (jh) */
 
 
 int main (int argc, char *argv[])
@@ -45,6 +47,7 @@ int main (int argc, char *argv[])
     DCELL *elev_cell[3], *temp;
     DCELL *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *c9;
     DCELL tmp1, tmp2;
+    FCELL dat1, dat2;
     void * asp_raster, *asp_ptr;
     void * slp_raster, *slp_ptr;
     void * pcurv_raster, *pcurv_ptr;
@@ -59,6 +62,7 @@ int main (int argc, char *argv[])
     int Wrap;  /* global wraparound */
     struct Cell_head window, cellhd;
     struct History  hist;
+    struct Colors colors;
     double ceil();
 
     char *elev_name;
@@ -85,16 +89,18 @@ int main (int argc, char *argv[])
     double degrees_to_radians;
     double sqrt(), tan(), atan2(), atan();
     double H,V;
-    double dx;              /* slope in ew direction */
-    double dy;              /* slope in ns direction */
+    double dx;              /* partial derivative in ew direction */
+    double dy;              /* partial derivative in ns direction */
     double dxx, dxy, dyy;
     double s3, s4, s5, s6;
     double pcurv, tcurv;
     double scik1 = 100000.;
     double zfactor;
+    double factor;
     double aspect, min_asp=360., max_asp=0.;
     double dnorm1, dx2, dy2, grad2, grad, dxy2;
     double gradmin = 0.001;
+    double c1min=0., c1max=0., c2min=0., c2max=0.;
 
     double answer[92];
     double degrees;
@@ -375,6 +381,13 @@ int main (int argc, char *argv[])
                                    times 4 for weighted difference */
     /* V = window.ns_res * 4 * 2/ zfactor;*/  /* vertical (north-south) run 
                                    times 4 for weighted difference */
+
+   /* give warning if location units are different from meters and zfactor=1*/
+    factor = G_database_units_to_meters_factor();
+    if (factor != 1.0)
+    {
+    fprintf (stderr, "WARNING: converting units to meters, factor=%.6f\n", factor);
+    }
 
     G_begin_distance_calculations();
     north = G_row_to_northing(0.5, &window);
@@ -874,9 +887,9 @@ int main (int argc, char *argv[])
              s6 = *c8 * 4. + *c2 * 4. - *c4 * 2. - *c6 * 2.;
              s3 = *c7 - *c9 + *c3 - *c1;
 
-             dxx = (s4 + s5) / ((3./32.)*H*H);
-             dyy = (s4 + s6) / ((3./32.)*V*V);
-             dxy = s3 / ((1./16.)*H*V);
+             dxx = - (s4 + s5) / ((3./32.)*H*H);
+             dyy = - (s4 + s6) / ((3./32.)*V*V);
+             dxy = - s3 / ((1./16.)*H*V);
 
 	     if(dxx_fd > 0)
 	     {
@@ -926,6 +939,11 @@ int main (int argc, char *argv[])
 		 (grad2 * dnorm1*dnorm1*dnorm1);
 	       tcurv = (dxx * dy2 - dxy2 + dyy * dx2) / 
 		 (grad2 * dnorm1);
+	       if(c1min > pcurv) c1min = pcurv;
+	       if(c1max < pcurv) c1max = pcurv;
+               if(c2min > tcurv) c2min = tcurv;
+               if(c2max < tcurv) c2max = tcurv;
+
 	     }
 
 	     if (pcurv_fd > 0)
@@ -987,10 +1005,23 @@ int main (int argc, char *argv[])
 
     if (aspect_fd >= 0)
     {
+
+        /* colortable for aspect  same as in s.surf.rst
+     G_init_colors (&colors);
+     G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
+     G_add_color_rule (1, 255, 255, 0, 90, 0, 255, 0, &colors);
+     G_add_color_rule (90, 0, 255, 0, 180, 0, 255, 255, &colors);
+     G_add_color_rule (180, 0, 255, 255, 270, 255, 0, 0, &colors);
+     G_add_color_rule (270, 255, 0, 0, 360, 255, 255, 0, &colors);
+       */
+
         G_set_null_value(asp_raster, G_window_cols(), data_type);
         G_put_raster_row (aspect_fd, asp_raster, data_type);
         G_close_cell (aspect_fd);
 
+       /* write colortable for aspect  same as in s.surf.rst
+	G_write_colors (aspect_name, G_mapset(), &colors);
+       */
         if(out_type != CELL_TYPE)
            G_quantize_fp_map_range(aspect_name, G_mapset(), 0., 360., 0, 360);
 
@@ -1052,6 +1083,16 @@ int main (int argc, char *argv[])
 
     if (slope_fd >= 0)
     {
+	      /* colortable for slopes */
+      G_init_colors (&colors);
+      G_add_color_rule (0, 255, 255, 255, 2, 255, 255, 0, &colors);
+      G_add_color_rule (2, 255, 255, 0, 5, 0, 255, 0, &colors);
+      G_add_color_rule (5, 0, 255, 0, 10, 0, 255, 255, &colors);
+      G_add_color_rule (10, 0, 255, 255, 15, 0, 0, 255, &colors);
+      G_add_color_rule (15, 0, 0, 255, 30, 255, 0, 255, &colors);
+      G_add_color_rule (30, 255, 0, 255, 50, 255, 0, 0, &colors);
+      G_add_color_rule (50, 255, 0, 0, 90, 0, 0, 0, &colors);
+	    
         G_set_null_value(slp_raster, G_window_cols(), data_type);
         G_put_raster_row (slope_fd, slp_raster, data_type);
         G_close_cell (slope_fd);
@@ -1065,6 +1106,7 @@ int main (int argc, char *argv[])
                G_quantize_fp_map_range(slope_name, G_mapset(), min_slp, max_slp, 
 				  (CELL) min_slp + 1, (CELL) ceil(max_slp) + 1);
         */
+           G_write_colors (slope_name, G_mapset(), &colors);
            if(deg)
                G_quantize_fp_map_range(slope_name, G_mapset(), 0., 90., 0, 90);
            else /* percent */
@@ -1129,11 +1171,57 @@ int main (int argc, char *argv[])
         fprintf (stdout, "SLOPE [%s] COMPLETE\n", slope_name);
     }
 
+    /* colortable for curvatures */
+        if (pcurv_fd >= 0 || tcurv_fd >= 0)
+	{
+      G_init_colors (&colors);
+      if (c1min < c2min) dat1 = (FCELL) c1min;
+      else dat1 = (FCELL) c2min;
+                                              
+      dat2 = (FCELL) - 0.01;
+      G_add_f_raster_color_rule (&dat1, 127, 0, 255,
+                                 &dat2, 0, 0, 255, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) - 0.001;
+      G_add_f_raster_color_rule (&dat1, 0, 0, 255,
+                                 &dat2, 0, 127, 255, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) - 0.00001;
+      G_add_f_raster_color_rule (&dat1, 0, 127, 255,
+                                 &dat2, 0, 255, 255, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) 0.0;
+      G_add_f_raster_color_rule (&dat1, 0, 255, 255,
+                                 &dat2, 200, 255, 200, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) 0.00001;
+      G_add_f_raster_color_rule (&dat1, 200, 255, 200,
+                                 &dat2, 255, 255, 0, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) 0.001;
+      G_add_f_raster_color_rule (&dat1, 255, 255, 0,
+                                 &dat2, 255, 127, 0, &colors);
+      dat1 = dat2;
+      dat2 = (FCELL) 0.01;
+      G_add_f_raster_color_rule (&dat1, 255, 127, 0,
+                                 &dat2, 255, 0, 0, &colors);
+      dat1 = dat2;
+      if(c1max > c2max) dat2 = (FCELL) c1max;
+      else dat2 = (FCELL) c2max;
+                                      
+      G_add_f_raster_color_rule (&dat1, 255, 0, 0,
+                                 &dat2, 255, 0, 200, &colors);
+	}
+
+
+    
     if (pcurv_fd >= 0)
     {
         G_set_null_value(pcurv_raster, G_window_cols(), data_type);
         G_put_raster_row (pcurv_fd, pcurv_raster, data_type);
         G_close_cell (pcurv_fd);
+
+        G_write_colors (pcurv_name, G_mapset(), &colors);
 
 	if (out_type != CELL_TYPE)
            G_round_fp_map(pcurv_name, G_mapset());
@@ -1160,6 +1248,8 @@ int main (int argc, char *argv[])
         G_put_raster_row (tcurv_fd, tcurv_raster, data_type);
         G_close_cell (tcurv_fd);
 
+        G_write_colors (tcurv_name, G_mapset(), &colors);
+	
 	if (out_type != CELL_TYPE)
            G_round_fp_map(tcurv_name, G_mapset());
 
