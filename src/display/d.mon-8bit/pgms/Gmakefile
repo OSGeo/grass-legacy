@@ -1,0 +1,48 @@
+all:	$(ETC)/mon.list \
+	$(ETC)/mon.release \
+	$(ETC)/mon.select \
+	$(ETC)/mon.start \
+	$(ETC)/mon.status \
+	$(ETC)/mon.stop \
+	$(ETC)/mon.which
+
+$(ETC)/mon.list:	list.o $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) list.o $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.start:	start.o ttyname.o $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) start.o ttyname.o $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.status:	status.o $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) status.o $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.stop:	stop.o $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) stop.o $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.which:	which.o $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) which.o $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.select:	select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+	rm -f a.out
+	$(CC) $(LDFLAGS) select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+$(ETC)/mon.release:	release.o $(RASTERLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) release.o $(RASTERLIB) $(GISLIB) 
+	mv a.out $@
+
+list.o: monitors.h
+release.o: monitors.h
+release.o: open.h
+select.o: monitors.h
+start.o: monitors.h
+status.o: monitors.h
+status.o: open.h
+stop.o: monitors.h
+stop.o: open.h
+
+$(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB): #
