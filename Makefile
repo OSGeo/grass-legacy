@@ -25,7 +25,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 # Install directories
 exec_prefix=            ${prefix}
 BINDIR=			${UNIX_BIN}
-INST_DIR=		${prefix}/grass${VERSION_MAJOR}${VERSION_MINOR}
+INST_DIR=		${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
