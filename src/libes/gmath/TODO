@@ -1,0 +1,9 @@
+TODO
+
+- G_matrix_norm_maxval()
+- G_vector_free()
+- find max of matrix A (find_max)
+- Subtract two vectors (v_sub)
+- Scalar-matrix multiplication (sm_mlt)
+- stdin read-function "m_input"
+- stdin read in vector from stdin (v_input)
