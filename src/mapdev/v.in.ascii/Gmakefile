@@ -1,0 +1,71 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+A_B_OFILES = \
+	v.a_b_dig.o\
+	asc_to_bin.o
+
+B_A_OFILES = \
+	v.b_a_dig.o\
+	bin_to_asc.o
+
+A_B_CFILES = \
+	v.a_b_dig.c\
+	asc_to_bin.c
+
+B_A_CFILES = \
+	v.b_a_dig.c\
+	bin_to_asc.c
+
+
+
+CMD_IN  = $(BIN_MAIN_CMD)/v.in.ascii 
+CMD_OUT = $(BIN_MAIN_CMD)/v.out.ascii 
+INT_IN  = $(BIN_MAIN_INTER)/v.in.ascii 
+INT_OUT = $(BIN_MAIN_INTER)/v.out.ascii
+
+
+#all: $(CMD_IN) $(CMD_OUT) $(INT_IN) $(INT_OUT)
+
+all: $(CMD_IN) $(CMD_OUT)
+
+
+
+#   compile the interactive versions
+
+$(INT_IN):  a_b_front.o $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) a_b_front.o $(GISLIB)
+	mv a.out $@
+
+$(INT_OUT):  b_a_front.o $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) b_a_front.o $(GISLIB)
+	mv a.out $@
+
+
+#   compile the command programs
+
+$(CMD_IN):  $(A_B_OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(A_B_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(CMD_OUT):  $(B_A_OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(B_A_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+
+
+saber_ab:
+	#load $(CFLAGS) $(A_B_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+
+saber_ba:
+	#load $(CFLAGS) $(B_A_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+
+saber_ba_lib:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(B_A_CFILES) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+
+saber_ab_lib:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(A_B_CFILES) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
