@@ -1,0 +1,24 @@
+# %W% %G%
+
+FFLAGS = -O 
+
+all:  $(ETC)/armsed1 $(ETC)/armsed2 $(ETC)/armsed3
+
+$(ETC)/armsed1: msed1.o $(GISLIB)
+	f77 msed1.o -o $@
+
+$(ETC)/armsed2: msed2.o $(GISLIB)
+	f77 msed2.o -o $@
+
+$(ETC)/armsed3: msed3.o $(GISLIB)
+	f77 msed3.o -o $@
+
+msed1.o:  msed1.f
+	f77 $(FFLAGS) -c msed1.f
+
+msed2.o:  msed2.f
+	f77 $(FFLAGS) -c msed2.f
+
+msed3.o:  msed3.f
+	f77 $(FFLAGS) -c msed3.f
+
