@@ -25,7 +25,7 @@ indices from a raster digital elevation model (DEM).
 <B>r.terraflow</B> help</br>
 <BR>
 <B>r.terraflow</b> <b>[ -sq ]</b>
-<b>elevin</b>=name
+<b>elev</b>=name
 <b>filled</b>=name
 <b>direction</b>=name
 <b>swatershed</b>=name
@@ -120,7 +120,7 @@ arguments and flag settings on the command line using the following
 form:
 
 <P><B>r.terraflow</b> <b>[ -sq ]</b>
-<b>elevin</b>=name
+<b>elev</b>=name
 <b>filled</b>=name
 <b>direction</b>=name
 <b>swatershed</b>=name
@@ -149,7 +149,7 @@ settings interactively, using the standard GRASS parser interface.
 
 <H3>Parameters:</H3>
 <dl>
- <dt><B>elevin</B>=<I>name</I>
+ <dt><B>elev</B>=<I>name</I>
  <dd>Input elevation raster. Required.</dd>
 
  <dt><b>filled</b>=<I>name</I>
@@ -198,10 +198,10 @@ directory). </dd>
 <H3>Examples</H3>
 
 <ul>
-  <li> <B>r.terraflow</b> elevin=spearfish filled=spearfish-filled
+  <li> <B>r.terraflow</b> elev=spearfish filled=spearfish-filled
        dir=spearfish-mfdir swatershed=spearfish-watershed
        accumulation=spearfish-accu tci=spearfish-tci
-  <li> <B>r.terraflow</b> elevin=spearfish filled=spearfish-filled
+  <li> <B>r.terraflow</b> elev=spearfish filled=spearfish-filled
        dir=spearfish-mfdir swatershed=spearfish-watershed
        accumulation=spearfish-accu tci=spearfish-tci d8cut=500 memory=800
        STREAM-DIR=/var/tmp/ stats=spearfish-stats.txt 
