@@ -274,7 +274,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 int
 Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List ) 
 {
-    int i, line, *pclip;
+    int i, line, *pclip, cArc;
     gnGrpSPReport_s * pSPReport;
 
     Vect_reset_list ( List);
@@ -288,7 +288,6 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
         else
                  fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
     }
-
     for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
 	line = GNGRP_LINK_USER(pSPReport->pArc[i].Link);
         G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
@@ -297,10 +296,12 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
                       GNGRP_LINK_COST(pSPReport->pArc[i].Link), /* this is the cost from clip() */
                       line,
                       pSPReport->pArc[i].Distance );
-
         Vect_list_append ( List, line );
     }
-	
-    return (pSPReport->cArc);
+
+	cArc = pSPReport->cArc;
+	gnGrpFreeSPReport( &(Map->graph), pSPReport );
+
+    return (cArc);
 }
 
