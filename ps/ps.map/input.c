@@ -13,6 +13,9 @@ int input (int level, char *buf, char *help[])
     char temp1[10], temp2[3];
     int i;
 
+    if (level && isatty(fileno(inputfd)))
+            fprintf (stdout,"enter 'help' for help, 'exit' to quit\n");
+
     do
     {
 	if (level && isatty(fileno(inputfd)))
