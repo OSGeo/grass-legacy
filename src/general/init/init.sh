@@ -135,6 +135,11 @@ else
 fi
 
 export GRASS_GUI
+if [ -f $GISRC ] ; then
+    awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
+    echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
+    mv -f $GISRC.$$ $GISRC
+fi
 
 # Parsing argument to get LOCATION
 if [ ! "$1" ] ; then
@@ -235,7 +240,14 @@ if [ ! "$LOCATION" ] ; then
 		    read ans
 		    
 		    GRASS_GUI="text"
+
 		    export GRASS_GUI
+                    if [ -f $GISRC ] ; then
+                        awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
+                        echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
+                        mv -f $GISRC.$$ $GISRC
+                    fi
+
 		    $ETC/set_data
 
 		    case $? in
