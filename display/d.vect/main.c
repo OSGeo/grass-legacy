@@ -421,7 +421,7 @@ main (int argc, char **argv)
 	     
 	    if ( area ) {
 		if ( level >= 2 )
-		    stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer );
+		    stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer, cats_acolors_flag->answer, &window );
 		else
 		    G_warning ("Cannot display areas, topology not available");
 	    }
