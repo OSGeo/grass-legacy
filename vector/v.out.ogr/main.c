@@ -36,7 +36,7 @@ char OGRdrivers[2000];
 int 
 main (int argc, char *argv[])
 {
-    int    i, j, k, centroid, otype, wkbtype=wkbUnknown, donocat;
+    int    i, k, centroid, otype, wkbtype=wkbUnknown, donocat;
     char   *mapset;
     int    field;
     struct GModule *module;
@@ -257,6 +257,8 @@ main (int argc, char *argv[])
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
+	    int j;
+
 	    type = Vect_read_line (&In, Points, Cats, i);
 	    G_debug (2, "line = %d type = %d", i, type );
 	    if ( !(otype & type ) ) {
@@ -271,7 +273,6 @@ main (int argc, char *argv[])
 		continue; 
 	    }
 
-	    mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
 
 	    /* Geometry */
 	    Ogr_geometry = OGR_G_CreateGeometry( wkbtype );
@@ -279,7 +280,19 @@ main (int argc, char *argv[])
 		OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
 	    }
 	    OGR_F_SetGeometry( Ogr_feature, Ogr_geometry ); 
-	    OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
+
+	    /* Output one feature for each category */
+	    for ( j = -1; j < Cats->n_cats; j++ ) {
+		if ( j == -1 && cat > 0 ) continue; /* cat(s) exists */
+
+		if ( Cats->field[j] == field )
+		    cat = Cats->cat[j];
+		else 
+		    continue;
+	        
+		mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
+	        OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
+	    }
 	    OGR_G_DestroyGeometry( Ogr_geometry );
 	}
     }
@@ -287,21 +300,21 @@ main (int argc, char *argv[])
     /* Areas (run always to count features of different type) */
     if ( otype & GV_AREA ) {
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
+	    int j;
+	    
 	    centroid = Vect_get_area_centroid ( &In, i );
 	    cat = 0;
 	    if ( centroid > 0 ) {
 		Vect_read_line (&In, NULL, Cats, centroid );
 		Vect_cat_get (Cats, field, &cat);
 	    }
-	    G_debug (2, "area = %d centroid = %d", i, centroid );
+	    G_debug (3, "area = %d centroid = %d ncats = %d", i, centroid, Cats->n_cats );
 	    if ( cat == 0 && !donocat ) { /* Do not export not labeled */ 
 		nocatskip++;
 		continue; 
 	    }
 
 	    Vect_get_area_points ( &In, i, Points );
-
-	    mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
 
 	    /* Geometry */
 	    /* TODO: Use something better than WKT */
@@ -334,7 +347,18 @@ main (int argc, char *argv[])
 	    OGR_G_CreateFromWkt ( &pbuf, NULL, &Ogr_geometry );
 	    OGR_F_SetGeometry( Ogr_feature, Ogr_geometry ); 
 
-	    OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
+	    /* Output one feature for each category */
+	    for ( j = -1; j < Cats->n_cats; j++ ) {
+		if ( j == -1 && cat > 0 ) continue; /* cat(s) exists */
+
+		if ( Cats->field[j] == field )
+		    cat = Cats->cat[j];
+		else 
+		    continue;
+	        
+		mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
+	        OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
+	    }
 	    OGR_G_DestroyGeometry( Ogr_geometry );
 	}
     }

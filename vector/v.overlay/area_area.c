@@ -18,7 +18,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	        dbDriver *driver, int operator  )
 {
     int    ret, input, line, nlines, area, nareas;
-    int    in_area, in_centr, in_cat;
+    int    in_area, in_centr, out_cat;
     struct line_pnts *Points;
     struct line_cats *Cats;
     CENTR  *Centr;
@@ -64,15 +64,21 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	fprintf (stderr, "Querying input '%s' ... ", Vect_get_full_name(&(In[input])) );
 
 	for ( area = 1; area <= nareas; area++ ) {
-	    Centr[area].cat[input] = 0;
+	    Centr[area].cat[input] = Vect_new_cats_struct();
 	    
 	    in_area = Vect_find_area ( &(In[input]), Centr[area].x, Centr[area].y );
 	    if ( in_area > 0 ) {
 		in_centr = Vect_get_area_centroid (  &(In[input]), in_area );
 		if ( in_centr > 0 ) {
+		    int i;
+		    
 	            Vect_read_line ( &(In[input]), NULL, Cats, in_centr);
-		    Vect_cat_get (Cats, field[input], &in_cat);
-		    Centr[area].cat[input] = in_cat;
+		    /* Add all cats with original field number */
+		    for ( i = 0 ; i < Cats->n_cats; i++ ) {
+			if ( Cats->field[i] == field[input] ) {
+			    Vect_cat_set ( Centr[area].cat[input], field[input], Cats->cat[i]);
+			}
+		    }
 		}
 	    }
 	    G_percent ( area, nareas, 1 );
@@ -82,21 +88,25 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     fprintf (stderr, SEP );
     fprintf (stderr, "Writing centroids ...\n" );
     
+    db_init_string (&stmt);
+    out_cat = 1;
     for ( area = 1; area <= nareas; area++ ) {
+	int i;
+
 	/* check the condition */
         switch (operator) {
 	    case OP_AND:
-		if ( !( Centr[area].cat[0] && Centr[area].cat[1] ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 && Centr[area].cat[1]->n_cats > 0 ) ) continue;
 		break;
 	    case OP_OR:
-		if ( !( Centr[area].cat[0] || Centr[area].cat[1] ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 || Centr[area].cat[1]->n_cats > 0 ) ) continue;
 		break;
 	    case OP_NOT:
-		if ( !( Centr[area].cat[0] && !(Centr[area].cat[1]) ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 && !(Centr[area].cat[1]->n_cats > 0) ) ) continue;
 		break;
 	    case OP_XOR:
-		if ( (Centr[area].cat[0] && Centr[area].cat[1]) ||
-		     ( !(Centr[area].cat[0]) && !(Centr[area].cat[1]) ) ) continue;
+		if ( (Centr[area].cat[0]->n_cats > 0 && Centr[area].cat[1]->n_cats > 0) ||
+		     ( !(Centr[area].cat[0]->n_cats > 0) && !(Centr[area].cat[1]->n_cats > 0) ) ) continue;
 		break;
 	}
 	
@@ -104,13 +114,56 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
         Vect_reset_cats ( Cats );
 
 	Vect_append_point ( Points, Centr[area].x, Centr[area].y, 0.0 );
-	Vect_cat_set (Cats, 1, area);
 	
-	if ( Centr[area].cat[0] > 0 )
-	    Vect_cat_set (Cats, 2, Centr[area].cat[0]);
+	/* Add new cats for all combinations of input cats (-1 in cycle for null) */
+	for ( i = -1; i < Centr[area].cat[0]->n_cats; i++ ) {
+	    int j;
+	    
+	    if ( i == -1 && Centr[area].cat[0]->n_cats > 0 ) continue; /* no need to make null */
+
+	    for ( j = -1; j < Centr[area].cat[1]->n_cats; j++ ) {
+		if ( j == -1 && Centr[area].cat[1]->n_cats > 0 ) continue; /* no need to make null */
+
+		Vect_cat_set (Cats, 1, out_cat);
+
+		/* attributes */
+		if ( driver ) {
+		    sprintf ( buf, "insert into %s values ( %d", Fi->table, out_cat ); 
+		    db_set_string ( &stmt, buf);
+
+		    /* cata */
+		    if ( i >= 0 )
+			 sprintf ( buf, ", %d", Centr[area].cat[0]->cat[i]);
+		    else
+			 sprintf ( buf, ", null");
+		    
+		    db_append_string ( &stmt, buf);
+
+		    /* catb */
+		    if ( j >= 0 )
+			 sprintf ( buf, ", %d )", Centr[area].cat[1]->cat[j] );
+		    else
+			 sprintf ( buf, ", null )");
+		    
+		    db_append_string ( &stmt, buf);
+
+		    G_debug ( 3, db_get_string ( &stmt ) );
+
+		    if (db_execute_immediate (driver, &stmt) != DB_OK )
+			G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+		}
+		out_cat++;
+	    }
+	}	
+    
+	/* Add all cats from imput vectors */
+        for ( i = 0 ; i < Centr[area].cat[0]->n_cats; i++ ) {
+	    Vect_cat_set ( Cats, 2, Centr[area].cat[0]->cat[i]);
+	}
 	
-	if ( Centr[area].cat[1] > 0 )
-	    Vect_cat_set (Cats, 3, Centr[area].cat[1]);
+        for ( i = 0 ; i < Centr[area].cat[1]->n_cats; i++ ) {
+	    Vect_cat_set ( Cats, 3, Centr[area].cat[1]->cat[i]);
+	}
 
 	Vect_write_line ( Out, GV_CENTROID, Points, Cats );
 	
@@ -165,58 +218,6 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     }
     G_free ( Del );
 
-    /* attributes */
-    if ( driver ) {
-	fprintf (stderr, SEP );
-	fprintf ( stderr, "Writing attributes ...\n" );
-
-	db_init_string (&stmt);
-	
-	for ( area = 1; area <= nareas; area++ ) {
-	    switch (operator) {
-		case OP_AND:
-		    if ( !( Centr[area].cat[0] && Centr[area].cat[1] ) ) continue;
-		    break;
-		case OP_OR:
-		    if ( !( Centr[area].cat[0] || Centr[area].cat[1] ) ) continue;
-		    break;
-		case OP_NOT:
-		    if ( !( Centr[area].cat[0] && !(Centr[area].cat[1]) ) ) continue;
-		    break;
-		case OP_XOR:
-		    if ( (Centr[area].cat[0] && Centr[area].cat[1]) ||
-			 ( !(Centr[area].cat[0]) && !(Centr[area].cat[1]) ) ) continue;
-		    break;
-	    }
-
-	    sprintf ( buf, "insert into %s values ( %d", Fi->table, area ); 
-	    db_set_string ( &stmt, buf);
-
-	    /* cata */
-	    if ( Centr[area].cat[0] > 0 )
-		 sprintf ( buf, ", %d", Centr[area].cat[0] );
-	    else
-		 sprintf ( buf, ", null");
-	    
-	    db_append_string ( &stmt, buf);
-
-	    /* catb */
-	    if ( Centr[area].cat[1] > 0 )
-		 sprintf ( buf, ", %d )", Centr[area].cat[1] );
-	    else
-		 sprintf ( buf, ", null )");
-	    
-	    db_append_string ( &stmt, buf);
-
-	    G_debug ( 3, db_get_string ( &stmt ) );
-
-	    if (db_execute_immediate (driver, &stmt) != DB_OK )
-		G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
-	
-	    G_percent ( area, nareas, 1 );
-	}	
-    }
-    
     return 0;
 }
 
