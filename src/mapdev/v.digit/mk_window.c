@@ -175,5 +175,5 @@ draw_default_window (N, S, E, W)
     R_standard_color (dcolors[RED]);
     R_polyline_abs (oldx, oldy, 5);
 
-    R_flush ();
+    V_flush ();
 }
