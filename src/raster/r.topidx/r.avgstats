@@ -9,7 +9,7 @@ then
 	exit
 fi
 
-if [ $# -eq 0 ]
+if [ $# -lt 1 -o "x$1" = "xhelp" ]
 then
 	echo
 	echo "Usage: $program map=name [nsteps=value]"
