@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
 "POT-Creation-Date: 2002-11-06 08:21+0300\n"
-"PO-Revision-Date: 2002-11-06 08:21+0300\n"
+"PO-Revision-Date: 2002-11-20 21:24+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1469,7 +1469,7 @@ msgstr "       Правая:  (назад на одну точку)           "
 
 #: mouse_coll.c:247
 msgid "       Middle: Backup one point                 "
-msgstr ""
+msgstr "       Средняя: назад на одну точку             "
 
 #: mouse_coll.c:249
 msgid "       Middle: (Backup one point)               "
@@ -2464,3 +2464,405 @@ msgstr " но лучше. Использует курсор управления, который\n"
 
 msgid " on the Customize menu.\n"
 msgstr " был задан в меню Customize.\n"
+
+msgid "   Label Menu\n"
+msgstr "   Меню Label\n"
+
+msgid "   This menu has several tools for labeling a\n"
+msgstr "   В этом меню есть несколько инстр-тов для\n"
+
+msgid " 'L' (shift-L) any time Label is shown in the\n"
+msgstr " нажмите 'L' (shift-L), когда Label в\n"
+
+msgid " global menu.  All options are available with\n"
+msgstr " глобальном меню.  Все опции работают \n"
+ 
+msgid " To label an object, you will be asked for\n"
+msgstr " Для метки объекта, нужно указать номер\n"
+
+msgid " a category number.  This number will later be\n"
+msgstr " категории. Этот номер м.б. впоследствии\n"
+
+msgid " used to create cell values in vect.to.cell.\n"
+msgstr " использован как величина растровой клетки.\n"
+
+msgid " LABEL AREAS   \n"
+msgstr " LABEL AREAS   \n"
+
+msgid "   Enter area label number.  Select point in area for label, and a line\n"
+msgstr "   Введите номер метки области. Выберите любую точку внутри области\n"
+
+msgid " on the edge of the area.   Use abort to quit.\n"
+msgstr " и линию границы области, или откажитесь.\n"
+
+msgid " UNLABEL AREAS\n"
+msgstr " UNLABEL AREAS\n"
+
+msgid "   Select an existing labeled area.  Screen will display the current label.\n"
+msgstr "   Выберите существ. область. Текущая метка отображается на экране.\n"
+
+msgid " Accept area to unlabel it.\n"
+msgstr " Принять выбор и удалить метку.\n"
+
+msgid " BULK LABEL LINES   Automatically label remaining unlabeled lines.\n"
+msgstr " BULK LABEL LINES  Автоматически прометить все непомеченные линии.\n"
+
+msgid "   This command allows you to label all remaining lines that have not yet \n"
+msgstr "   Эта команда позволяет прометить все оставшиеся линии, которые еще \n"
+
+msgid " been labeled.  Simply enter the label number and digit does the rest.\n"
+msgstr " без метки.  Просто введите номер нужной метки.\n"
+
+msgid " LABEL CONTOURS\n"
+msgstr " LABEL CONTOURS\n"
+
+msgid "    Use to label several contours.  Choose 2 outside contours and provide\n"
+msgstr "    Используется для прометки контуров.  Выб. 2 внешн. контура и введите\n"
+
+msgid " their values (unless already labelled) and will label all contours between\n"
+msgstr " их величины (если еще не промечены). Контуры внутри будут промечены\n"
+
+msgid " them based on contour interval <i>.  Will not work if values area incorrect.\n"
+msgstr " через интервал <i>.  Не будет работать с неверно заданной величиной.\n"
+
+msgid " DISPLAY AREAS OF CATEGORY #\n"
+msgstr " DISPLAY AREAS OF CATEGORY #\n"
+
+msgid "   Give category number, and all areas with that label in the working window\n"
+msgstr "   Задайте номер категории, и все области с данной меткой в рабочем окне\n"
+
+msgid " will be highlighted.\n"
+msgstr " будут подсвечены.\n"
+
+msgid " HIGHLIGHT LINES OF CATEGORY #\n"
+msgstr " HIGHLIGHT LINES OF CATEGORY #\n"
+
+msgid "   Give category number, and all lines with that label in the working window\n"
+msgstr "   Задайте номер категории, и все линии с данной меткой в раб. окне\n"
+
+msgid " CONTOUR INTERVAL    Specify interval between contour lines\n"
+msgstr " CONTOUR INTERVAL    Задайте интервал между контурами\n"
+
+msgid "    This modifies the action of <m> and <M>.  The number should be in\n"
+msgstr "    Эта опция влияет на поведение <m> и <M>.  Величина должны быть\n"
+
+msgid " the same units as the contour values.  Default is 5 units.\n"
+msgstr " в тех же единицах, что и у контуров.  По умолчанию, 5 ед.\n"
+    
+msgid " LABEL LINES   \n"
+msgstr " LABEL LINES   \n"
+
+msgid "   Enter line label number.  Select and accept each line to be labeled.\n"
+msgstr "   Введите номер метки линии. Выберите и подтв. каждую линию, \n"
+
+msgid " Use abort to quit.\n"
+msgstr " или откажитесь.\n"
+
+msgid " UNLABEL LINES\n"
+msgstr " UNLABEL LINES\n"
+
+msgid "   Select an existing labeled line.  Screen will display the current label.\n"
+msgstr "   Выберите существ. линию с меткой.  Текущая метка отображается на экране.\n"
+
+msgid " Accept line to unlabel it.\n"
+msgstr " Подтвердите удаление метки.\n"
+
+msgid " LABEL MULTIPLE LINES  Attempt to follow lines when labeling.\n"
+msgstr " LABEL MULTIPLE LINES  Попытка продолж. метку через узел.\n"
+
+msgid "    Will span multiple lines across nodes.  Will follow if only 2 lines meet \n"
+msgstr "    Возможность передать метку через узел, если две линии встречаются в узле;\n"
+
+msgid " at node, or the line that best matches the angle of the entering line.\n"
+msgstr " если более двух, то будет выбрана линия с наиболее подходящим углом.\n"
+
+msgid " UN-LABEL MULTIPLE LINES  Attempt to follow lines when un-labelling.\n"
+msgstr " UN-LABEL MULTIPLE LINES  Попытка продолж. снимать метку через узел.\n"
+
+msgid "    See  <m>  Labeling multiple lines.\n"
+msgstr "    См. <m>  - пометить множество линий.\n"
+ 
+msgid " LABEL SITES\n"
+msgstr " LABEL SITES\n"
+
+msgid "   Enter Site label number.  Select and accept each site to be labeled.\n"
+msgstr "   Введите номер метки объекта. Выб. кажд. из объектов для опр. метки,\n"
+
+msgid " UNLABEL SITES\n"
+msgstr " UNLABEL SITES\n"
+
+msgid "   Select an existing labeled site.  Screen will display the current label.\n"
+msgstr "   Выберите существ. объект с меткой. Текущая метка будет видна на экране.\n"
+
+msgid " Accept site to unlabel it.\n"
+msgstr " Подтвердите удаление метки.\n"
+
+msgid "   Main Menu\n"
+msgstr "   Главное меню\n"
+
+msgid "   From this screen, all global commands are \n"
+msgstr "   С этого экрана доступны все глобальные  \n"
+
+msgid " available.  Simply press the first letter of\n"
+msgstr " команды.  Достаточно нажать первую букву\n"
+
+msgid " the command you wish to execute.  This global\n"
+msgstr " команды, чтобы выполнить ее.  Это меню\n"
+
+msgid " menu is available from anywhere within digit.\n"
+msgstr " доступно из любого места программы v.digit.\n"
+
+msgid " You will note that the 'Quit' global command \n"
+msgstr " Обратите внимание, что команда 'Quit' м.б. \n"
+
+msgid " is only available while the Main Menu is \n"
+msgstr "  выполнена только из Главного меню. \n"
+
+msgid " displayed.  \n"
+msgstr " \n"
+
+msgid "   On each menu screen you will have available\n"
+msgstr "   В каждом меню м.б. выполнены как команды\n"
+
+msgid " both the commands from the global menu and\n"
+msgstr " Главного меню, так и команды специальных \n"
+
+msgid " the commands from the specific function menu\n"
+msgstr " функциональных меню, (напр., меню Label)\n"
+
+msgid " (e.g. Label Menu)\n"
+msgstr " и т.д.\n"
+
+msgid "   This menu contains several functions\n"
+msgstr "   Это меню содержит несколько функций,\n"
+
+msgid " helpful during the session and for\n"
+msgstr " полезных во время работы и при\n"
+
+msgid " debugging.  Some will work properly\n"
+msgstr " отладке.  Некоторые из них\n"
+
+msgid " only under certain conditions.\n"
+msgstr " работают только при опред. усл.\n"
+
+msgid "   Refer to the Digit Tutorial for\n"
+msgstr "   См. подробнее руководство к\n"
+
+msgid " more explanation.\n"
+msgstr " программе v.digit \n"
+
+msgid " DISPLAY DUPLICATE LINES  Highlight lines which are duplicated\n"
+msgstr " DISPLAY DUPLICATE LINES  Подсветить двойные линии\n"
+
+msgid "    This command will search out and highlight any line which has an\n"
+msgstr "    Эта команда произведет поиск и высветит те линии, которые имеют\n"
+
+msgid " exact duplicate in the same file.  This command is SLOW.\n"
+msgstr " точных двойников.  Это МЕДЛЕННАЯ команда.\n"
+
+msgid " DISPLAY ISLANDS     View all islands\n"
+msgstr " DISPLAY ISLANDS     Показать острова\n"
+
+msgid "   Islands are not created by digit, but by support.vect so, this command \n"
+msgstr "   Острова образует не digit, а команда v.support, поэтому эта команда \n"
+
+msgid " will work best after running support.vect.  Refer to Digit Tutorial \n"
+msgstr " будет лучше работать после v.support.  См. подробнее руководство \n"
+
+msgid " for more information.\n"
+msgstr " к v.digit.\n"
+
+msgid " DISPLAY NODE LINES     Display each line attached to a given node.\n"
+msgstr " DISPLAY NODE LINES     Показать каждую из линий данного узла.\n"
+
+msgid "   Select node with mouse.  Then right button shows lines counter-clockwise,\n"
+msgstr "   Выберите узел мышью.  Правая кнопка покажет линии против часовой стрелки,\n"
+
+msgid " left button clockwise.  This is useful for finding lines that have been\n"
+msgstr " левая по часовой.  Это полезно при нахождении линий, которые были\n"
+
+msgid " digitized twice.\n"
+msgstr " оцифрованы дважды.\n"
+
+msgid " Build Neat Line	Build a neat line from 1st four registration points\n"
+msgstr " Построить рамку    Исходя из 4-ех точек привязки, построить рамку.\n"
+
+msgid "   This function can be used to create an accurately defined line that will\n"
+msgstr "   Эта функция используется для создания точной линии, которая определяет\n"
+
+msgid " trace the border of the current map.  It builds the line using the 1st four\n"
+msgstr " границу текущей карты.  Линия будет построена, исходя из первых 4-ех\n"
+
+msgid " points you used to register the map.\n"
+msgstr " точек привязки карты.\n"
+
+msgid " DISPLAY OPEN AREA LINES  highlight all area that do NOT bound a known area\n"
+msgstr " DISPLAY OPEN AREA LINES  Подсветить все области, НЕ граничащие с заданной.\n"
+
+msgid "   This command works best after running support.vect.  Refer to Digit \n"
+msgstr "   Эта команда лучше работает после v.support. См. подробн. руководство \n"
+
+msgid " Tutorial for more information.\n"
+msgstr " к v.digit.\n"
+
+msgid " RE-REGISTER MAP    Register this or another map to the digitizer.\n"
+msgstr " RE-REGISTER MAP    Заново привязать нужную карту к дигитайзеру.\n"
+
+msgid "   This function can be used to register another map (e.g. quad sheet) to \n"
+msgstr "   Эта функция м.б. использована для привязки другой карты (напр., др. листа)\n"
+
+msgid " the digitizer without leaving digit.  This does not affect the digitizing\n"
+msgstr " к дигитайзеру без выхода из программы. Она не влияет на размер окна \n"
+
+msgid " window or allow you to edit a different file.\n"
+msgstr " и не приводит к образованию нового файла.\n"
+
+msgid " DISPLAY UNLABELED AREAS   highlight all 'known' areas that are not labeled.\n"
+msgstr " DISPLAY UNLABELED AREAS   Подсветить все 'известные' области без меток.\n"
+
+msgid " WRITE OUT SESSION   Write all changes from this session out to file.\n"
+msgstr " WRITE OUT SESSION   Записать все произведенные изменения в файл.\n"
+
+msgid "   It is good practice to occasionally write the changes out in case of \n"
+msgstr "   На всякий случай, лучше время от времени сохранять промежуточные\n"
+
+msgid " machine or program crash.\n"
+msgstr " результаты своей работы.\n"
+
+msgid " Window Menu \n"
+msgstr " Меню Window \n"
+
+msgid "   This menu allows you to directly affect \n"
+msgstr "   Это меню позволяет реально управлять  \n"
+
+msgid " what is displayed on the screen.  This \n"
+msgstr " выводом на экран.  При изменении окна\n"
+
+msgid " will be removed on rewindowing.  \n"
+msgstr " все заданные опции исчезнут.  \n"
+
+msgid " If you want it to remain each time you \n"
+msgstr " Если вы хотите сохранять эти опции,  \n"
+
+msgid " change the working window, you can use the\n"
+msgstr " используйте меню Display Options, которое\n"
+
+msgid " Display Options menu which is available as\n"
+msgstr " входит как пункт в меню Customize.\n"
+
+msgid " an option in the Customize menu.\n"
+msgstr " \n"
+
+msgid " DISPLAY AREA MARKERS\n"
+msgstr " DISPLAY AREA MARKERS\n"
+
+msgid "   Display a marker at the point where each area is labelled.\n"
+msgstr "   Показать маркер в той точке, где поставлена метка области.\n"
+
+msgid " DISPLAY AREA LABELS   \n"
+msgstr " DISPLAY AREA LABELS   \n"
+
+msgid "   Display the numeric category value for each labeled area.\n"
+msgstr "   Показать числовую величину категории каждой области.\n"
+
+msgid " DISPLAY CELL BACKDROP MAP\n"
+msgstr " DISPLAY CELL BACKDROP MAP\n"
+
+msgid "   If a backdrop map has been chosen (Customize menu) this command will \n"
+msgstr "   Если в меню Customize была задана фонов. растр. карта, команда \n"
+
+msgid " display that map in the working window.\n"
+msgstr " показывает эту карту в раб. окне.\n"
+
+msgid " DISPLAY SCALE\n"
+msgstr " DISPLAY SCALE\n"
+
+msgid "   Display a scale in the upper left corner of the window.\n"
+msgstr "   Показать масштаб в верхнем левом углу окна.\n"
+ 
+msgid " CLEAR WINDOW\n"
+msgstr " CLEAR WINDOW\n"
+
+msgid "   Erase the current working window.  This is useful if you wish to view \n"
+msgstr "   Очистить данное рабочее окно.  Это м.б. полезно, если вы хотите \n"
+
+msgid " only specific types of objects on the map.  Clear the screen and then use \n"
+msgstr " отобразить только некоторые объекты карты.  Необходимо очистить окно и \n"
+
+msgid " the other commands in the Window Menu to display the desired objects.\n"
+msgstr " нарисовать нужные объекты с помощью других команд меню Window.\n"
+
+msgid " DISPLAY LINES   \n"
+msgstr " DISPLAY LINES   \n"
+
+msgid "   Display all digitized lines.  Area Edges are displayed in gray by \n"
+msgstr "   Показать все оцифрованные линии.  Гран. областей по умолчанию \n"
+
+msgid " default, while Lines are displayed in blue by default.\n"
+msgstr " показаны серым, а линии - голубым цветом.\n"
+
+msgid " DISPLAY LABELED LINES\n"
+msgstr " DISPLAY LABELED LINES\n"
+
+msgid "   Display all lines that have been labeled.  They are displayed in magenta.\n"
+msgstr "   Показать все линии с метками.  Цвет этих линий - маджента.\n"
+
+msgid " Hint: to display all UNlabeled lines, use Display Lines (i) then change the\n"
+msgstr " Подсказка: чтобы показать линии БЕЗ меток, выб. Display Lines (i) и измен.\n"
+
+msgid " Labeled Line color to black (customize menu) and use Display Labeled Lines.\n"
+msgstr " Labeled Line цвет на черный (customize), и показать Display Labeled Lines.\n"
+
+msgid " DISPLAY LINE LABELS\n"
+msgstr " DISPLAY LINE LABELS\n"
+
+msgid "   Display the numeric category value for each labeled line in magenta.\n"
+msgstr "   Показать числ. величину категории для каждой линии с меткой (мадж.)\n"
+
+msgid " DISPLAY NODES\n"
+msgstr " DISPLAY NODES\n"
+
+msgid "   Display all nodes.  Nodes that have 2 or more lines attached are displayed\n"
+msgstr "   Показать все узлы.  Узлы с числом линий 2 или более по умол. показаны\n"
+
+msgid " in red by default.  Nodes that have only 1 line attached (unsnapped) are `\n"
+msgstr " красным. Узлы с 1 линией (незамкнутые) показаны\n"
+
+msgid " displayed in green.\n"
+msgstr " зеленым.\n"
+
+msgid " DISPLAY OVERLAY MAP\n"
+msgstr " DISPLAY OVERLAY MAP\n"
+
+msgid "   If an overlay map has been chosen (Customize menu) this command will \n"
+msgstr "   Если в меню Customize была выбрана карта для наложения, эта команда \n"
+
+msgid "  SHOW SITES\n"
+msgstr "  SHOW SITES\n"
+
+msgid "    Display all sites.  They are marked as small 'X's.\n"
+msgstr "    Показать все объекты.  Маркеры - маленькие 'X'.\n"
+
+msgid " SHOW SITE LABELS\n"
+msgstr " SHOW SITE LABELS\n"
+
+msgid "    Display the category number of all labeled sites.\n"
+msgstr "    Показать величины категорий объектов с меткой.\n"
+
+msgid " WHERE AM I\n"
+msgstr " WHERE AM I\n"
+
+msgid "    Click mouse in any position on screen to tell map coordinates of location.\n"
+msgstr "    Нажмите мышкой в любой точке экрана для вывода координат точки .\n"
+
+msgid " DEFINE NEW WINDOW    Create new working window\n"
+msgstr " DEFINE NEW WINDOW    Создать новое раб. окно\n"
+
+msgid "   Depending on option set in Customize, use digitizer or mouse to select\n"
+msgstr "   В зависимости от меню Customize, исп. дигитайзер или мышь для задания\n"
+
+msgid " a new working window.  'Widen view' will display a rectangle representing \n"
+msgstr " нов. раб. окна.  'Widen view' показывает прямоугольник, представляющий \n"
+
+msgid " the entire digitizing window.\n"
+msgstr " целое окно оцифровки.\n"
