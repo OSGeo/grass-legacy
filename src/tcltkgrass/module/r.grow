@@ -1,0 +1,8 @@
+interface_build {
+    {r.grow} 0
+    {Generates an output raster map layer with contiguous areas grown by one cell (pixel).}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -b {Binary (0/1) map output.} "" -b}
+    {checkbox -q {Run quietly.} "" -q}
+}
