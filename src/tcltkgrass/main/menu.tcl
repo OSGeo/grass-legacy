@@ -723,6 +723,9 @@ menu_build 1 .main_menu {
             "ASCII GRASS vector file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.ascii"
             }
+            "ARC/INFO E00 file" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.out.e00"
+            }
             "ARC/INFO ungenerate file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.arc"
             }
@@ -770,43 +773,45 @@ menu_build 1 .main_menu {
         }
     }
     Databases "Databases" {
-        "General" "" {
-            "Select DB" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.select.pg"
-            }
-	    "List tables" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.table.pg"
-            }
-	    "List columns" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.column.pg"
-            }
+        "PostgreSQL" "" {
+            "General" "" {
+                "Select DB" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.select.pg"
+                }
+    	    "List tables" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.table.pg"
+                }
+            "List columns" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.column.pg"
+                }
 	    "Column stats" "" {
-                "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+                    "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+                }
             }
-        }
-	"Query" "" {
-            "Vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+            "Query" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+                }
             }
-	    "Sites" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
-            }
-	    "Raster" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
-            }
-        }
-	"Display" "" {
-            "Vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
-            }
-	    "Sites" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.site.pg"
-            }
-	    "Raster" "" {
-                "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
-            }
-	    "Reclass vector" "" {
-                "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+	    "Display" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+                }
+            "Reclass vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+                }
             }
         }
 	-separator
