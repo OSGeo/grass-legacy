@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /***********************************************************
 * I_fopen_group_ref_new (group)
 * I_fopen_group_ref_old (group)
