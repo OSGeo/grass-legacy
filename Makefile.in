@@ -364,6 +364,8 @@ maintainer-clean: distclean
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/lex.yy.c 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/y.tab.c 2>/dev/null ; true"
 
 savebinclean: mostlyclean
 	@ echo "Performing savebinclean step..."
