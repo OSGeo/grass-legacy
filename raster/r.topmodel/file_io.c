@@ -88,18 +88,37 @@ read_inputs(void)
 	for(; !feof(fp); ){
 		get_line(fp, buf);
 
-		if(sscanf(buf, "%lf %d %lf %lf %lf %lf %lf %lf %lf %lf %c %lf "
-			       "%lf %lf",
-				&(params.A),	&(params.nch),
-				&(params.m),	&(params.td),
-				&(params.lnTe),	&(params.vch),
-				&(params.vr),	&(params.qs0),
-				&(params.Sr0),	&(params.Srmax),
+		if(sscanf(buf, "%lf", &(params.A)) == 1)
+			break;
+	}
+
+	for(; !feof(fp); ){
+		get_line(fp, buf);
+
+		if(sscanf(buf, "%lf %lf %lf %lf %lf %lf %lf %lf",
+				&(params.qs0),	&(params.lnTe),
+				&(params.m),	&(params.Sr0),
+				&(params.Srmax),&(params.td),
+				&(params.vch),	&(params.vr)) == 8)
+			break;
+	}
+
+	for(; !feof(fp); ){
+		get_line(fp, buf);
+
+		if(sscanf(buf, "%c %lf %lf %lf",
 				&(params.infex),&(params.K),
-				&(params.psi),	&(params.dtheta)) == 14)
+				&(params.psi),	&(params.dtheta)) == 4)
 			break;
 	}
 	params.infex -= '0';
+
+	for(; !feof(fp); ){
+		get_line(fp, buf);
+
+		if(sscanf(buf, "%d", &(params.nch)) == 1)
+			break;
+	}
 
 	params.d    = (double *) malloc(params.nch * sizeof(double));
 	params.Ad_r = (double *) malloc(params.nch * sizeof(double));
