@@ -242,6 +242,10 @@ AC_SUBST(TIFF_LIBRARY_DIRS)
 # Check headers in default location first.
 AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
 AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
+tcltk_ver=
+if test "$HAVE_TK_H"; then
+	tcltk_ver=$(grep '#define TK_VERSION' "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
+fi
 
 AC_ARG_WITH(tcltk-includes,
     [  --with-tcltk-includes=DIR
@@ -261,6 +265,9 @@ if test "$tkincdir" && test -z "$HAVE_TK_H"; then
 	for dir in $tkincdir; do
 		if test -d "$dir"; then
 			TKINCDIR="$TKINCDIR -I$dir"
+			if test -f "$dir/tk.h"; then
+				tcltk_ver=$(grep '#define TK_VERSION' "$dir/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
+			fi
 		else
 			AC_MSG_WARN([*** TK include directory $dir does not exist.])
 		fi
@@ -275,6 +282,7 @@ if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
 			tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
 			for dir in $tk_try; do
 				if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
+					tcltk_ver=$(grep '#define TK_VERSION' "$my_dir/$dir/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
 					TKINCDIR="-I$my_dir/$dir"
 				fi
 			done
@@ -293,6 +301,9 @@ if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
 	for dir in $tclincdir; do
 		if test -d "$dir"; then
 			TCLINCDIR="$TCLINCDIR -I$dir"
+			if test -f "$dir/tcl.h"; then
+				tcltk_ver=$(grep '#define TCL_VERSION' "$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
+			fi
 		else
 			AC_MSG_WARN([*** TCL include directory $dir does not exist.])
 		fi
@@ -309,6 +320,7 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
 			for dir in $tk_try; do
 				if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
 					TCLINCDIR="-I$my_dir/$dir"
+					tcltk_ver=$(grep '#define TCL_VERSION' "$my_dir/$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"/\2/' )
 				fi
 			done
 		fi
@@ -346,16 +358,10 @@ fi
 
 ldflags_save="$LDFLAGS"
 LDFLAGS="$LDFLAGS $TCLTKLIBS"
-tk_try="3 2 1 0"
-for tk_ver in $tk_try; do
-	if test -z "$has_tk_lib"; then
-		AC_CHECK_LIB("tk8.$tk_ver", Tk_MainWindow, has_tk_lib="1")
-		if test "$has_tk_lib"; then
-			TCLTKLIBS="$TCLTKLIBS -ltk8.$tk_ver -ltcl8.$tk_ver"
-		fi
-	fi
-done
-if test -z "$has_tk_lib"; then
+AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
+if test "$has_tk_lib"; then
+	TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
+else
 	AC_MSG_WARN([*** Failed to find TCL/TK libraries])
 fi
 LDFLAGS="$ldflags_save"
