@@ -1,0 +1,272 @@
+##: SCCSID: "@(#)state27	Cartography v.1.1"
+##: State plane setups for proj NAD27 datum
+# ALe: Alabama east
+ALe: +proj=tmerc +k=0.99996 +x_0=152400.3048 +lon_0=85d50'w +lat_0=30d30'n
+# ALw: Alabama west
+ALw: +proj=tmerc +k=0.999933333333 +x_0=152400.3048 +lon_0=87d30'w +lat_0=30n
+# AK10: Alaska zone no. 10
+AK10: +proj=lcc +lat_1=51d50'n +lat_2=53d50'n +lon_0=176w +lat_0=51n +x_0=914401.8288
+# AS: Samoa
+AS: +proj=lcc +lat_1=14d16's +lat_2=14d16's +lon_0=170w +lat_0=14d16's +x_0=152400.3048 +y_0=95169.3117
+# AZe: Arizona east
+AZe: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=110d10'w +lat_0=31n
+# AZc: Arizona central
+AZc: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=111d55'w +lat_0=31n
+# AZw: Arizona west
+AZw: +proj=tmerc +k=0.999933333333 +x_0=152400.3048 +lon_0=113d45'w +lat_0=31n
+# ARn: Arkansas north
+ARn: +proj=lcc +lat_1=34d56'n +lat_2=36d14'n +lon_0=92w +lat_0=34d20'n +x_0=609601.2192
+# ARs: Arkansas south
+ARs: +proj=lcc +lat_1=33d18'n +lat_2=34d46'n +lon_0=92w +lat_0=32d40'n +x_0=609601.2192
+# CA1: California i
+CA1: +proj=lcc +lat_1=40n +lat_2=41d40'n +lon_0=122w +lat_0=39d20'n +x_0=609601.2192
+# CA2: California ii
+CA2: +proj=lcc +lat_1=38d20'n +lat_2=39d50'n +lon_0=122w +lat_0=37d40'n +x_0=609601.2192
+# CA3: California iii
+CA3: +proj=lcc +lat_1=37d4'n +lat_2=38d26'n +lon_0=120d30'w +lat_0=36d30'n +x_0=609601.2192
+# CA4: California iv
+CA4: +proj=lcc +lat_1=36n +lat_2=37d15'n +lon_0=119w +lat_0=35d20'n +x_0=609601.2192
+# CA5: California v
+CA5: +proj=lcc +lat_1=34d2'n +lat_2=35d28'n +lon_0=118w +lat_0=33d30'n +x_0=609601.2192
+# CA6: California vi
+CA6: +proj=lcc +lat_1=32d47'n +lat_2=33d53'n +lon_0=116d15'w +lat_0=32d10'n +x_0=609601.2192
+# CA7: California vii
+CA7: +proj=lcc +lat_1=33d52'n +lat_2=34d25'n +lon_0=118d20'w +lat_0=34d8'n +x_0=1276106.4506 +y_0=1268253.0069
+# COn: Colorado north
+COn: +proj=lcc +lat_1=39d43'n +lat_2=40d47'n +lon_0=105d30'w +lat_0=39d20'n +x_0=609601.2192
+# COc: Colorado central
+COc: +proj=lcc +lat_1=38d27'n +lat_2=39d45'n +lon_0=105d30'w +lat_0=37d50'n +x_0=609601.2192
+# COs: Colorado south
+COs: +proj=lcc +lat_1=37d14'n +lat_2=38d26'n +lon_0=105d30'w +lat_0=36d40'n +x_0=609601.2192
+# CT: Connecticut 
+CT: +proj=lcc +lat_1=41d12'n +lat_2=41d52'n +lon_0=72d45'w +lat_0=40d50'n +x_0=182880.3658
+# DE: Delaware 
+DE: +proj=tmerc +k=0.999995 +x_0=152400.3048 +lon_0=75d25'w +lat_0=38n
+# FLe: Florida east
+FLe: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=81w +lat_0=24d20'n
+# FLw: Florida west
+FLw: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=82w +lat_0=24d20'n
+# FLn: Florida north
+FLn: +proj=lcc +lat_1=29d35'n +lat_2=30d45'n +lon_0=84d30'w +lat_0=29n +x_0=609601.2192
+# GAe: Georgia east
+GAe: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=82d10'w +lat_0=30n
+# GAw: Georgia west
+GAw: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=84d10'w +lat_0=30n
+# HI1: Hawaii 1
+HI1: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=155d30'w +lat_0=18d50'n
+# HI2: Hawaii 2
+HI2: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=156d40'w +lat_0=20d20'n
+# HI3: Hawaii 3
+HI3: +proj=tmerc +k=0.99999 +x_0=152400.3048 +lon_0=158w +lat_0=21d10'n
+# HI4: Hawaii 4
+HI4: +proj=tmerc +k=0.99999 +x_0=152400.3048 +lon_0=159d30'w +lat_0=21d50'n
+# HI5: Hawaii 5
+HI5: +proj=tmerc +k=1. +x_0=152400.3048 +lon_0=160d10'w +lat_0=21d40'n
+# IDe: Idaho east
+IDe: +proj=tmerc +k=0.999947368421 +x_0=152400.3048 +lon_0=112d10'w +lat_0=41d40'n
+# IDc: Idaho central
+IDc: +proj=tmerc +k=0.999947368421 +x_0=152400.3048 +lon_0=114w +lat_0=41d40'n
+# IDw: Idaho west
+IDw: +proj=tmerc +k=0.999933333333 +x_0=152400.3048 +lon_0=115d45'w +lat_0=41d40'n
+# ILe: Illinois east
+ILe: +proj=tmerc +k=0.999975 +x_0=152400.3048 +lon_0=88d20'w +lat_0=36d40'n
+# ILw: Illinois west
+ILw: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=90d10'w +lat_0=36d40'n
+# INe: Indiana east
+INe: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=85d40'w +lat_0=37d30'n
+# INw: Indiana west
+INw: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=87d5'w +lat_0=37d30'n
+# IAn: Iowa north
+IAn: +proj=lcc +lat_1=42d4'n +lat_2=43d16'n +lon_0=93d30'w +lat_0=41d30'n +x_0=609601.2192
+# IAs: Iowa south
+IAs: +proj=lcc +lat_1=40d37'n +lat_2=41d47'n +lon_0=93d30'w +lat_0=40n +x_0=609601.2192
+# KSn: Kansas north
+KSn: +proj=lcc +lat_1=38d43'n +lat_2=39d47'n +lon_0=98w +lat_0=38d20'n +x_0=609601.2192
+# KSs: Kansas south
+KSs: +proj=lcc +lat_1=37d16'n +lat_2=38d34'n +lon_0=98d30'w +lat_0=36d40'n +x_0=609601.2192
+# KYn: Kentucky north
+KYn: +proj=lcc +lat_1=37d58'n +lat_2=38d58'n +lon_0=84d15'w +lat_0=37d30'n +x_0=609601.2192
+# KYs: Kentucky south
+KYs: +proj=lcc +lat_1=36d44'n +lat_2=37d56'n +lon_0=85d45'w +lat_0=36d20'n +x_0=609601.2192
+# LAn: Louisiana north
+LAn: +proj=lcc +lat_1=31d10'n +lat_2=32d40'n +lon_0=92d30'w +lat_0=30d40'n +x_0=609601.2192
+# LAs: Louisiana south
+LAs: +proj=lcc +lat_1=29d18'n +lat_2=30d42'n +lon_0=91d20'w +lat_0=28d40'n +x_0=609601.2192
+# LAos: Louisiana offshore
+LAos: +proj=lcc +lat_1=26d10'n +lat_2=27d50'n +lon_0=91d20'w +lat_0=25d40'n +x_0=609601.2192
+# MEe: Maine east
+MEe: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=68d30'w +lat_0=43d50'n
+# MEw: Maine west
+MEw: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=70d10'w +lat_0=42d50'n
+# MD: Maryland 
+MD: +proj=lcc +lat_1=38d18'n +lat_2=39d27'n +lon_0=77w +lat_0=37d50'n +x_0=243840.4877
+# MAm: Massachusetts mainland
+MAm: +proj=lcc +lat_1=41d43'n +lat_2=42d41'n +lon_0=71d30'w +lat_0=41n +x_0=182880.3658
+# MAi: Massachusetts island
+MAi: +proj=lcc +lat_1=41d17'n +lat_2=41d29'n +lon_0=70d30'w +lat_0=41n +x_0=60960.1219
+# MIe: Michigan east
+MIe: +proj=tmerc +k=0.999942857143 +x_0=152400.3048 +lon_0=83d40'w +lat_0=41d30'n
+# MIcm: Michigan central/m
+MIcm: +proj=tmerc +k=0.999909090909 +x_0=152400.3048 +lon_0=85d45'w +lat_0=41d30'n
+# MIw: Michigan west
+MIw: +proj=tmerc +k=0.999909090909 +x_0=152400.3048 +lon_0=88d45'w +lat_0=41d30'n
+# MIn: Michigan north
+MIn: +proj=lcc +lat_1=45d29'n +lat_2=47d5'n +lon_0=88d45'w +lat_0=44d47'n +x_0=609601.2192
+# MIcl: Michigan central/l
+MIcl: +proj=lcc +lat_1=44d11'n +lat_2=45d42'n +lon_0=88d45'w +lat_0=43d19'n +x_0=609601.2192
+# MIs: Michigan south
+MIs: +proj=lcc +lat_1=42d6'n +lat_2=43d40'n +lon_0=88d45'w +lat_0=41d30'n +x_0=609601.2192
+# MNn: Minnesota north
+MNn: +proj=lcc +lat_1=47d2'n +lat_2=48d38'n +lon_0=93d6'w +lat_0=46d30'n +x_0=609601.2192
+# MNc: Minnesota central
+MNc: +proj=lcc +lat_1=45d37'n +lat_2=47d3'n +lon_0=94d15'w +lat_0=45n +x_0=609601.2192
+# MNs: Minnesota south
+MNs: +proj=lcc +lat_1=43d47'n +lat_2=45d13'n +lon_0=94w +lat_0=43n +x_0=609601.2192
+# MSe: Mississippi east
+MSe: +proj=tmerc +k=0.99996 +x_0=152400.3048 +lon_0=88d50'w +lat_0=29d40'n
+# MSw: Mississippi west
+MSw: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=90d20'w +lat_0=30d30'n
+# MOe: Missouri east
+MOe: +proj=tmerc +k=0.999933333333 +x_0=152400.3048 +lon_0=90d30'w +lat_0=35d50'n
+# MOc: Missouri central
+MOc: +proj=tmerc +k=0.999933333333 +x_0=152400.3048 +lon_0=92d30'w +lat_0=35d50'n
+# MOw: Missouri west
+MOw: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=94d30'w +lat_0=36d10'n
+# MTn: Montana north
+MTn: +proj=lcc +lat_1=47d51'n +lat_2=48d43'n +lon_0=109d30'w +lat_0=47n +x_0=609601.2192
+# MTc: Montana central
+MTc: +proj=lcc +lat_1=46d27'n +lat_2=47d53'n +lon_0=109d30'w +lat_0=45d50'n +x_0=609601.2192
+# MTs: Montana south
+MTs: +proj=lcc +lat_1=44d52'n +lat_2=46d24'n +lon_0=109d30'w +lat_0=44n +x_0=609601.2192
+# NEn: Nebraska north
+NEn: +proj=lcc +lat_1=41d51'n +lat_2=42d49'n +lon_0=100w +lat_0=41d20'n +x_0=609601.2192
+# NEs: Nebraska south
+NEs: +proj=lcc +lat_1=40d17'n +lat_2=41d43'n +lon_0=99d30'w +lat_0=39d40'n +x_0=609601.2192
+# NVe: Nevada east
+NVe: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=115d35'w +lat_0=34d45'n
+# NVc: Nevada central
+NVc: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=116d40'w +lat_0=34d45'n
+# NVw: Nevada west
+NVw: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=118d35'w +lat_0=34d45'n
+# NH: New Hampshire 
+NH: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=71d40'w +lat_0=42d30'n
+# NJ: New Jersey 
+NJ: +proj=tmerc +k=0.999975 +x_0=609601.2192 +lon_0=74d40'w +lat_0=38d50'n
+# NMe: New Mexico east
+NMe: +proj=tmerc +k=0.999909090909 +x_0=152400.3048 +lon_0=104d20'w +lat_0=31n
+# NMc: New Mexico central
+NMc: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=106d15'w +lat_0=31n
+# NMw: New Mexico west
+NMw: +proj=tmerc +k=0.999916666667 +x_0=152400.3048 +lon_0=107d50'w +lat_0=31n
+# NYe: New York east
+NYe: +proj=tmerc +k=0.999966666667 +x_0=152400.3048 +lon_0=74d20'w +lat_0=40n
+# NYc: New York central
+NYc: +proj=tmerc +k=0.9999375 +x_0=152400.3048 +lon_0=76d35'w +lat_0=40n
+# NYw: New York west
+NYw: +proj=tmerc +k=0.9999375 +x_0=152400.3048 +lon_0=78d35'w +lat_0=40n
+# NYli: New York Long Island
+NYli: +proj=lcc +lat_1=40d40'n +lat_2=41d2'n +lon_0=74w +lat_0=40d30'n +x_0=609601.2192 +y_0=30480.0610
+# NC: North Carolina 
+NC: +proj=lcc +lat_1=34d20'n +lat_2=36d10'n +lon_0=79w +lat_0=33d45'n +x_0=609601.2192
+# NDn: North Dakota north
+NDn: +proj=lcc +lat_1=47d26'n +lat_2=48d44'n +lon_0=100d30'w +lat_0=47n +x_0=609601.2192
+# NDs: North Dakota south
+NDs: +proj=lcc +lat_1=46d11'n +lat_2=47d29'n +lon_0=100d30'w +lat_0=45d40'n +x_0=609601.2192
+# OHn: Ohio north
+OHn: +proj=lcc +lat_1=40d26'n +lat_2=41d42'n +lon_0=82d30'w +lat_0=39d40'n +x_0=609601.2192
+# OHs: Ohio south
+OHs: +proj=lcc +lat_1=38d44'n +lat_2=40d2'n +lon_0=82d30'w +lat_0=38n +x_0=609601.2192
+# OKn: Oklahoma north
+OKn: +proj=lcc +lat_1=35d34'n +lat_2=36d46'n +lon_0=98w +lat_0=35n +x_0=609601.2192
+# OKs: Oklahoma south
+OKs: +proj=lcc +lat_1=33d56'n +lat_2=35d14'n +lon_0=98w +lat_0=33d20'n +x_0=609601.2192
+# ORn: Oregon north
+ORn: +proj=lcc +lat_1=44d20'n +lat_2=46n +lon_0=120d30'w +lat_0=43d40'n +x_0=609601.2192
+# ORs: Oregon south
+ORs: +proj=lcc +lat_1=42d20'n +lat_2=44n +lon_0=120d30'w +lat_0=41d40'n +x_0=609601.2192
+# PAn: Pennsylvania north
+PAn: +proj=lcc +lat_1=40d53'n +lat_2=41d57'n +lon_0=77d45'w +lat_0=40d10'n +x_0=609601.2192
+# PAs: Pennsylvania south
+PAs: +proj=lcc +lat_1=39d56'n +lat_2=40d58'n +lon_0=77d45'w +lat_0=39d20'n +x_0=609601.2192
+# RI: Rhode Island 
+RI: +proj=tmerc +k=0.99999375 +x_0=152400.3048 +lon_0=71d30'w +lat_0=41d5'n
+# SCn: South Carolina north
+SCn: +proj=lcc +lat_1=33d46'n +lat_2=34d58'n +lon_0=81w +lat_0=33n +x_0=609601.2192
+# SCs: South Carolina south
+SCs: +proj=lcc +lat_1=32d20'n +lat_2=33d40'n +lon_0=81w +lat_0=31d50'n +x_0=609601.2192
+# SDn: South Dakota north
+SDn: +proj=lcc +lat_1=44d25'n +lat_2=45d41'n +lon_0=100w +lat_0=43d50'n +x_0=609601.2192
+# SDs: South Dakota south
+SDs: +proj=lcc +lat_1=42d50'n +lat_2=44d24'n +lon_0=100d20'w +lat_0=42d20'n +x_0=609601.2192
+# TN: Tennessee 
+TN: +proj=lcc +lat_1=35d15'n +lat_2=36d25'n +lon_0=86w +lat_0=34d40'n +x_0=609601.2192 +y_0=30480.0610
+# TXn: Texas north
+TXn: +proj=lcc +lat_1=34d39'n +lat_2=36d11'n +lon_0=101d30'w +lat_0=34n +x_0=609601.2192
+# TXnc: Texas north central
+TXnc: +proj=lcc +lat_1=32d8'n +lat_2=33d58'n +lon_0=97d30'w +lat_0=31d40'n +x_0=609601.2192
+# TXc: Texas central
+TXc: +proj=lcc +lat_1=30d7'n +lat_2=31d53'n +lon_0=100d20'w +lat_0=29d40'n +x_0=609601.2192
+# TXsc: Texas south central
+TXsc: +proj=lcc +lat_1=28d23'n +lat_2=30d17'n +lon_0=99w +lat_0=27d50'n +x_0=609601.2192
+# TXs: Texas south
+TXs: +proj=lcc +lat_1=26d10'n +lat_2=27d50'n +lon_0=98d30'w +lat_0=25d40'n +x_0=609601.2192
+# UTn: Utah north
+UTn: +proj=lcc +lat_1=40d43'n +lat_2=41d47'n +lon_0=111d30'w +lat_0=40d20'n +x_0=609601.2192
+# UTc: Utah central
+UTc: +proj=lcc +lat_1=39d1'n +lat_2=40d39'n +lon_0=111d30'w +lat_0=38d20'n +x_0=609601.2192
+# UTs: Utah south
+UTs: +proj=lcc +lat_1=37d13'n +lat_2=38d21'n +lon_0=111d30'w +lat_0=36d40'n +x_0=609601.2192
+# VT: Vermont 
+VT: +proj=tmerc +k=0.999964285714 +x_0=152400.3048 +lon_0=72d30'w +lat_0=42d30'n
+# VAn: Virginia north
+VAn: +proj=lcc +lat_1=38d2'n +lat_2=39d12'n +lon_0=78d30'w +lat_0=37d40'n +x_0=609601.2192
+# VAs: Virginia south
+VAs: +proj=lcc +lat_1=36d46'n +lat_2=37d58'n +lon_0=78d30'w +lat_0=36d20'n +x_0=609601.2192
+# WAn: Washington north
+WAn: +proj=lcc +lat_1=47d30'n +lat_2=48d44'n +lon_0=120d50'w +lat_0=47n +x_0=609601.2192
+# WAs: Washington south
+WAs: +proj=lcc +lat_1=45d50'n +lat_2=47d20'n +lon_0=120d30'w +lat_0=45d20'n +x_0=609601.2192
+# WVn: West Virginia north
+WVn: +proj=lcc +lat_1=39n +lat_2=40d15'n +lon_0=79d30'w +lat_0=38d30'n +x_0=609601.2192
+# WVs: West Virginia south
+WVs: +proj=lcc +lat_1=37d29'n +lat_2=38d53'n +lon_0=81w +lat_0=37n +x_0=609601.2192
+# WIn: Wisconsin north
+WIn: +proj=lcc +lat_1=45d34'n +lat_2=46d46'n +lon_0=90w +lat_0=45d10'n +x_0=609601.2192
+# WIc: Wisconsin central
+WIc: +proj=lcc +lat_1=44d15'n +lat_2=45d30'n +lon_0=90w +lat_0=43d50'n +x_0=609601.2192
+# WIs: Wisconsin south
+WIs: +proj=lcc +lat_1=42d44'n +lat_2=44d4'n +lon_0=90w +lat_0=42n +x_0=609601.2192
+# WYe: Wyoming east
+WYe: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=105d10'w +lat_0=40d40'n
+# WYec: Wyoming east central
+WYec: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=107d20'w +lat_0=40d40'n
+# WYwc: Wyoming west central
+WYwc: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=108d45'w +lat_0=40d40'n
+# WYw: Wyoming west
+WYw: +proj=tmerc +k=0.999941176471 +x_0=152400.3048 +lon_0=110d5'w +lat_0=40d40'n
+# AK1: Alaska zone no. 1
+AK1:+proj=omerc +azi +k=.9999 +lonc=133d40'w +alpha=-36.869897645844 +lat_0=57dn +x_0=5000000 +y_0=-5000000
+# AK2: Alaska zone no. 2
+AK2: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=142w +lat_0=54n
+# AK3: Alaska zone no. 3
+AK3: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=146w +lat_0=54n
+# AK4: Alaska zone no. 4
+AK4: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=150w +lat_0=54n
+# AK5: Alaska zone no. 5
+AK5: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=154w +lat_0=54n
+# AK6: Alaska zone no. 6
+AK6: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=158w +lat_0=54n
+# AK7: Alaska zone no. 7
+AK7: +proj=tmerc +k=0.9999 +x_0=213360.4267 +lon_0=162w +lat_0=54n
+# AK8: Alaska zone no. 8
+AK8: +proj=tmerc +k=0.9999 +x_0=152400.3048 +lon_0=166w +lat_0=54n
+# AK9: Alaska zone no. 9
+AK9: +proj=tmerc +k=0.9999 +x_0=182880.3658 +lon_0=170w +lat_0=54n
+# PR: Puerto Rico
+PR: +proj=lcc +lat_1=18d2'n +lat_2=18d26'n +lon_0=66d26'w +lat_0=17d50'n +x_0=152400.3048
+# VI: Virgin Islands
+VI: +proj=lcc +lat_1=18d2'n +lat_2=18d26'n +lon_0=66d26'w +lat_0=17d50'n +x_0=152400.3048
+# VIsc: St. Croix
+VIsc: +proj=lcc +lat_1=18d2'n +lat_2=18d26'n +lon_0=66d26'w +lat_0=17d50'n +x_0=152400.3048 +y_0=30480.0610
+# GU: Guam
+GU:+proj=poly +lon_0=144d44'55.50254"e +lat_0=13d28'20.87887"n +x_0=500000 +y_0=500000
