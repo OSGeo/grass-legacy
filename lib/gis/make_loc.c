@@ -92,6 +92,41 @@ int G__make_location(
     return 0;
 }
 
+
+/*!
+ * \brief  create a new location
+ * 
+ * This function creates a new location in the current database,
+ * initializes the projection, default window and current window.  
+ *
+ * \param char * location_name
+ *                      The name of the new location.  Should not include
+ *                      the full path, the location will be created within
+ *                      the current database.
+ * \param struct Cell_head *wind
+ *                      Contains the default window setting for the
+ *                      new location.  All fields should be set in this
+ *                      structure, and care should be taken to ensure that
+ *                      the proj/zone fields match the definition in the
+ *                      proj_info parameter (see G_set_cellhd_from_projinfo()).
+ *
+ * \param struct Key_Value *proj_info
+ *                      Projection definition suitable to write to the
+ *                      PROJ_INFO file, or NULL for PROJECTION_XY.
+ *
+ * \param struct Key_Value *proj_units
+ *                      Projection units suitable to write to the PROJ_UNITS
+ *                      file, or NULL.
+ *
+ * \param FILE *report_file 
+ *                      File to which creation information should be written
+ *                      (can be stdout).  Currently not used.
+ *
+ * \return Returns 0 on success, or generates a fatal error on failure.  
+ *         The G__make_location() function operates the same, but returns a
+ *         non-zero error code on failure, instead of terminating. 
+*/
+
 int G_make_location( 
     char *location_name,
     struct Cell_head *wind, 
@@ -123,6 +158,19 @@ int G_make_location(
 /*                       G_compare_projections()                        */
 /************************************************************************/
 
+/*!
+ * \brief compare projections
+ *
+ *  \param proj_info1
+ *  \param proj_units1
+ *  \param proj_info2
+ *  \param proj_units2
+ *  \return -1 if not the same projection, -2 if linear unit translation to 
+ *          meters fails, -4 if not the same ellipsoid, -5 if UTM zone differs
+ *         else TRUE if projections match.
+ *          
+ */
+  
 int 
 G_compare_projections( struct Key_Value *proj_info1, 
                        struct Key_Value *proj_units1, 
@@ -130,7 +178,6 @@ G_compare_projections( struct Key_Value *proj_info1,
                        struct Key_Value *proj_units2 )
 
 {
-    char  buf1[512], buf2[512];
     
     if( proj_info1 == NULL && proj_info2 == NULL )
         return TRUE;
