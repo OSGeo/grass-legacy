@@ -127,6 +127,7 @@ int display_attributes (void)
 	}
     }
     F_clear ();
+    F_close ();
 
     driver_close();
     
