@@ -2,12 +2,13 @@ This is "Cygwin README".
 
 Basically Cygwin under MS-Windows does not support fifo concept. So we
 needed develop new screen drivers to support Windows users. As a result,
-ipc driver was developed and that is somewhat incomplete and buggy to
-release. This test driver is not default driver.
+ipc driver and socket driver were developed and these are somewhat incomplete
+and buggy to release. This test drivers are not default driver.
 
-If you would like to be a beta tester, just ./configure with --with-ipc option.
+If you would like to be a beta tester, just ./configure with
+--with-[ipc|socket] option.
 
-	./configure --with-ipc
+	./configure --with-ipc	OR   ./configure --with-socket
 	make
 	make install
 
