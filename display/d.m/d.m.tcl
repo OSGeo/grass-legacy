@@ -59,7 +59,8 @@ proc Dm::create { } {
         }
         "&Help" all options 0 {
             {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
-            {command "&About GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
+            {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
+            {command "About &System" {} "About System" {} -command { exec $env(SHELL) $env(GISBASE)/etc/dm/tksys.tcl --tcltk} }
         }
 
     }
