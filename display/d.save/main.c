@@ -15,7 +15,7 @@ int Sheight, Swidth;
 char Scurwin[100];
 
 int Wtop, Wbot, Wleft, Wright;
-char Wcell[100]="", Wcolor[25]="";
+char Wcell[100]="", Wdig[100], Wsite[100], Wcolor[25]="";
 
 int Mtype;
 int proj;
@@ -146,6 +146,12 @@ int main (int argc, char **argv)
 			if (Wcell[0]!='\0')
 				fprintf (stdout,"d.rast map=%s\n", Wcell);
 
+			if (Wdig[0]!='\0')
+				fprintf (stdout,"d.vect map=%s\n", Wdig);
+
+			if (Wsite[0]!='\0')
+				fprintf (stdout,"d.sites sitefile=%s\n", Wsite);
+
 			/* print out the list */
 			while (List!=NULL) {
 				fprintf (stdout,"%s\n", List->string);
@@ -184,6 +190,8 @@ init_globals (void)
 {
 	Wtop = Wbot = Wleft = Wright = 0;
 	Wcell[0] = '\0';
+	Wdig[0] = '\0';
+	Wsite[0] = '\0';
 	Wcolor[0] = '\0';
 
 	Mtype = Mwind->zone = -1;
@@ -196,16 +204,21 @@ init_globals (void)
 
 
 /* this array of strings defines the possible item types */
-#define ITEM_TYPES 7
-#define ITEM_SIZE 9
+#define ITEM_TYPES 12
+#define ITEM_SIZE 10
 char Known_items[ITEM_TYPES][ITEM_SIZE] = {
 	"cur_w",
 	"d_win",
 	"m_win",
 	"time",
-	"cell",
 	"list",
-	"erase"
+	"erase",
+	"cell",
+	"dig",
+	"site",
+	"cell_list",
+	"dig_list",
+	"site_list"
 };
 
 
@@ -253,11 +266,17 @@ set_item (char *item, char **list)
 			break;
 		case 3: /* time */
 			break;
-		case 4: /* cell */
+		case 5: /* d.erase color */
+			sscanf(list[0]," %s ", Wcolor);
+			break;
+		case 6: /* cell */
 			sscanf(list[0]," %s ", Wcell);
 			break;
-		case 6: /* d.erase color */
-			sscanf(list[0]," %s ", Wcolor);
+		case 7: /* dig */
+			sscanf(list[0]," %s ", Wdig);
+			break;
+		case 8: /* site */
+			sscanf(list[0]," %s ", Wsite);
 			break;
 		default:
 			sprintf(tempbuf,"Unkown item type in pad: %s", item);
@@ -278,7 +297,7 @@ process_list (char *item, char **list, int count)
 	struct list_struct *new_list;
 
 	switch (which_item(item)) {
-	case 5: /* list */
+	case 4: /* list */
 		for (n = 0; n < count; n++) {
 			new_list = (struct list_struct *) G_malloc(sizeof(struct list_struct));
 			new_list->ptr = NULL;
