@@ -1,0 +1,21 @@
+#!/bin/sh
+Dclear.screen
+Dnew text 90 99 1 99
+Dchoose text
+Dtext << EOF
+.F romans
+.S 20
+  Graphics come in many forms in GRASS.
+
+  The basic form is a two dimensional map displayed on the screen
+  Examples: 
+EOF
+Dnew a 10 50 10 50
+Dchoose a
+Dcell landuse
+Dcell roads overlay=1
+Dnew b 50 80 20 40
+Dchoose b
+Dcell vegcover
+
+exit 1
