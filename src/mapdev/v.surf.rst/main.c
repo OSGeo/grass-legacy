@@ -171,9 +171,9 @@ int main ( int argc, char *argv[])
   sprintf (dminchar, "%f", dmin);
 
     fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
+/*    fprintf (stderr, "\n");
     fprintf (stderr, "Version: GRASS5.0 beta,  update: Novemebr 1999\n");
-    fprintf (stderr, "\n");
+    fprintf (stderr, "\n"); */
     fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
     fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
     fprintf (stderr, "\n");
@@ -483,6 +483,12 @@ int main ( int argc, char *argv[])
       G_fatal_error (msg);
     }
   }
+
+  /* We can't read the input file's TimeStamp as we haven't loaded it. */
+  /*   As a TimeStamp structure is needed for IL_init_params_2d(),     */
+  /*   we just set it to NULL for now.                                 */
+  inhead.time = (struct TimeStamp*)NULL;
+  inhead.stime = NULL;
 
   if (devi != NULL)
   {
