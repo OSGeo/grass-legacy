@@ -71,7 +71,7 @@ int main(int argc,char *argv[])
   opt1->required   = YES ;
   opt1->multiple   = YES ;
   opt1->gisprompt  = "old,cell,raster" ;
-  opt1->description= "Name of existing raster map" ;
+  opt1->description= "Name of existing raster map(s) to query";
 
   opt2 = G_define_option() ;
   opt2->key        = "cache" ;
