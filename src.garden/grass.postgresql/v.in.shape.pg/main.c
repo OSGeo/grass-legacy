@@ -123,8 +123,6 @@ int main( int   argc, char *argv[])
 
     struct Flag *listflag, *rejflag, *pgflag;
 
-    G_init_locale(PACKAGE);
-
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);

@@ -34,8 +34,6 @@ char **argv ;
     static char SQL[1024] ;
     
 
-	G_init_locale(PACKAGE);
-
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 	   

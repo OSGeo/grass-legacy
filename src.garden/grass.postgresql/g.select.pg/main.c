@@ -34,8 +34,6 @@ char **argv ;
         struct Option* pghost;
         struct Flag *list ;
 
-	G_init_locale(PACKAGE);
-
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
