@@ -158,7 +158,7 @@ int main( int argc, char **argv )
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(1);
 
 	strcpy(map_name, opt1->answer) ;
 
@@ -269,8 +269,10 @@ int main( int argc, char **argv )
 	D_get_screen_window(&t, &b, &l, &r) ;
 	R_set_window(t, b, l, r) ;
 
-	if(use_mouse)
-		get_legend_box(&x0, &x1, &y0, &y1);
+	if(use_mouse) {
+	    if(!get_legend_box(&x0, &x1, &y0, &y1))
+		exit(0);
+	}
 	else {
 		if (opt7->answer != NULL) {	/* should this be answerS ? */
 			sscanf(opt7->answers[0], "%lf", &Y1) ;
