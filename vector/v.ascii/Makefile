@@ -29,11 +29,11 @@ default: $(BIN_CMD)/$(INPGM) $(BIN_CMD)/$(OUTPGM)
 
 $(BIN_CMD)/$(INPGM):  $(A_B_OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	@test -e $(BIN)/$(INPGM) || ln $(ETC)/front.end $(BIN)/$(INPGM)
+	@test -x $(BIN)/$(INPGM) || ln $(ETC)/front.end $(BIN)/$(INPGM)
 
 $(BIN_CMD)/$(OUTPGM):  $(B_A_OFILES) $(VECTLIB) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(VECTLIB) $(GISLIB)  $(MATHLIB) $(XDRLIB)
-	@test -e $(BIN)/$(OUTPGM) || ln $(ETC)/front.end $(BIN)/$(OUTPGM)
+	@test -x $(BIN)/$(OUTPGM) || ln $(ETC)/front.end $(BIN)/$(OUTPGM)
 
 
 
