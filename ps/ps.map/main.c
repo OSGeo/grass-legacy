@@ -44,6 +44,7 @@ static char *help[]=
 };
 int verbose;
 int rotate_plot;
+int eps_output;
 int ps_copies = 1;
 
 #include <signal.h>
@@ -59,7 +60,7 @@ int main(int argc,char *argv[])
     struct Option *input_file;
     struct Option *output_file;
     struct Option *copies;
-    struct Flag *rflag, *pflag;
+    struct Flag *rflag, *pflag, *eflag;
     struct GModule *module;
     static char *def_font = "Helvetica";
 
@@ -85,6 +86,10 @@ int main(int argc,char *argv[])
     pflag = G_define_flag();
     pflag->key = 'p';
     pflag->description = "print paper formats ( name width height left right tob bottom(margin) )";
+
+    eflag = G_define_flag();
+    eflag->key = 'e';
+    eflag->description = "create EPS (Encapsulated PostScript) instead of PostScript file";
 
     input_file = G_define_option();
     input_file->key = "input";
@@ -120,6 +125,7 @@ int main(int argc,char *argv[])
     }
     
     rotate_plot = rflag->answer;
+    eps_output = eflag->answer;
     /* set default paper */
     set_paper ("a4" );
 

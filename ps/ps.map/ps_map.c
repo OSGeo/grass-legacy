@@ -15,6 +15,7 @@
 extern int verbose;
 extern int do_mapinfo;
 extern int do_vlegend;
+extern int eps_output;
 extern int rotate_plot;
 extern int ps_copies;
 
@@ -22,6 +23,7 @@ int ps_map (void)
 {
     long current_offset;
     char *date;
+    int urx, ury;
 
     /* get date */
     date = G_date();
@@ -35,6 +37,18 @@ int ps_map (void)
     /* set number of copies */
     if (ps_copies > 1) fprintf(PS.fp, "/#copies %d def\n", ps_copies);
 
+    /* Set page size */
+    if ( !eps_output ) {
+	if(!rotate_plot) {
+	    urx = (int) 72.0 * PS.page_width;
+	    ury = (int) 72.0 * PS.page_height;
+	} else {
+	    urx = (int) 72.0 * PS.page_height;
+	    ury = (int) 72.0 * PS.page_width;
+	}
+	fprintf(PS.fp, "<< /PageSize [  %d %d ] >> setpagedevice\n", urx, ury);
+    }
+    
     /* rotate map? */
     if (rotate_plot)
     {
