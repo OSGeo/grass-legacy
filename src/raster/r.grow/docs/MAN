@@ -1,4 +1,3 @@
-.\" %W% %G%
 .TH grow 1
 .SH NAME
 grow \- generate output layer with areas grown by one pixel
