@@ -1,5 +1,7 @@
 # Automated functionality test of GRASS 5
 #
+# $Id$
+# 
 # Legend: 
 # Test, GRASS Test:
 #        +  working
