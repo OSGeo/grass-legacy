@@ -32,7 +32,7 @@ main (int argc, char *argv[])
     struct GModule *module;
     struct Option *dsn_opt, *out_opt, *layer_opt;
     char   buf[2000], namebuf[2000];
-    char   *namebuf2;
+    char   *namebuf2, *namebuf3;
 
     /* Vector */
     struct Map_info Map;
@@ -138,12 +138,13 @@ main (int argc, char *argv[])
 	Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 	Ogr_ftype = OGR_Fld_GetType( Ogr_field );
 	
-	/* auto-replace # and - characters in columns with underscore for DBMI
+	/* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
 	 * allowed are: [A-Za-z][A-Za-z0-9_]*
 	 */
 	sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
 	namebuf2      = G_strchg(namebuf , '#', '_');
-	Ogr_fieldname = G_strchg(namebuf2, '-', '_');
+	namebuf3      = G_strchg(namebuf2, '-', '_');
+	Ogr_fieldname = G_strchg(namebuf3, '.', '_');
 
 	if( Ogr_ftype == OFTInteger ) { 
 	    sprintf (buf, ", %s integer", Ogr_fieldname );
