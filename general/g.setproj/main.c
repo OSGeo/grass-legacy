@@ -196,16 +196,14 @@ int main(int argc, char *argv[])
 	}
 	G_set_key_value("name", proj_name, out_proj_keys);
 
-	/* ask for map datum, Andreas Lange, 7/2000 */
-   
     sph_check = 0;
-    if(G_yes("Do you want to specify a map datum for this location?", 1))
+    if(G_yes("Do you wish to specify a geodetic datum for this location?", 1))
     {
         char lbuf[100], lbufa[100];
         if (exist && (G_get_datumparams_from_projinfo(old_proj_keys, lbuf, lbufa) == 2))
 	{
 	    G_strip(lbuf);
-            if (i = G_get_datum_by_name(lbuf))
+            if ((i = G_get_datum_by_name(lbuf)) > 0)
             {
                 fprintf(stderr, "The current datum is %s\n", G_datum_name(i));
                 if (G_yes("Would you want to change the datum (or the datum transformation parameters)?", 0))
