@@ -1,0 +1,132 @@
+
+
+
+random(1)            GRASS Reference Manual             random(1)
+
+
+
+NAME
+     random - Create a and containing random locations
+
+SYNOPSIS
+     random
+
+DESCRIPTION
+     The GRASS tool random allows the user to create a and a
+     containing locations which have been determined randomly.
+     The general region in which to generate these random
+     locations is determined by the current GRASS window and
+     mask.  The locations will fall within non-zero areas on a
+     current specified by the user.  The user may specify the
+     quantity of random locations to be generated either as an
+     absolute number (e.g., 10), or as a percentage of the cell
+     map's total area (e.g., 10%, or 3.05%). If specified as a
+     percentage of total size, the number of random locations
+     will be set equal to the number of cells contained within
+     that percentage of the Percentages under one percent may be
+     specified using a decimal point.  (Note that choosing 1% of
+     a cell map's cells produces an abundance of random
+     locations.)
+
+     The new is created in the current mapset and contains
+     randomly located on a background of category zero.  The
+     categories on the original where random cells hit are copied
+     to the new The category names from the input are also copied
+     for the new A color table which will contrast with that of
+     the input is generated for the new
+
+     The coordinates that are put into the are the centers of the
+     randomly selected cells.
+
+     The user may choose to create both the cell map and the or,
+     the user may choose to create only the cell or only the
+
+NOTES
+     If it is desired to create random locations within some, but
+     not all non-zero categories of the input the user must first
+     create a reclass[1] of the original containing only the
+     desired categories, and use the reclassed as input to
+     random.
+
+     The random program does allow the user the option of
+     generating locations within category zero as well. In this
+     case, the locations which fall in areas of category zero
+     will be added as a new category to the output
+
+SEE ALSO
+     Grandom[2G], reclass[1]
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+random(1)            GRASS Reference Manual             random(1)
+
+
+
+AUTHOR
+     Dr. James Hinthorne, GIS Lab, Central Washington University
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
