@@ -23,8 +23,13 @@ G_percent (n,d,s)
 {
     register int x;
 
-    x = n*100/d ;
-    if (x % s) return;
+    if (d <= 0 || s <= 0)
+       x = 100;
+    else
+    {
+        x = n*100/d ;
+        if (x % s) return;
+    }
     if (n <= 0 || n >= d || x != prev)
     {
 	prev = x;
