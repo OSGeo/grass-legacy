@@ -190,30 +190,27 @@ int main (int argc, char *argv[])
        
     if(map_type < 0) /* no #cats found */
     {
-      if(!dbls == 1) /* no %decimal attributes found. Create binary map */
-      {
-         zero_one = 1;
-	 map_type = CELL_TYPE;
-         if (!quiet )
-         {
-	    fprintf (stderr, 
-            "\nNOTE: some site(s) did not have category values in the\n");
-            fprintf (stderr, 
-            "description field, so we can only create a no-data/1 raster file.\n");
-         }
+      if(dbls == 0) /* no %decimal attributes found. Create binary map */
+       {
+          /* no cats, no dbls */
+            G_fatal_error("No #cats, no dbls attributes found.");
        }
        else          /* no #cats found, but %decimal atts existing */
        {
-        fprintf (stderr, "No #cats, but decimal attribs found.\n");
-/*        fprintf (stderr, "Aborting due to improper sites format in file <%s>\n",
-                 name);
-        exit(1);         */
+        if (!quiet )
+          {
+            fprintf (stderr, "No #cats, but decimal attribs found.\n");
+            fprintf (stderr, " Creating FP map from doubles attributes\n");
+            fprintf (stderr, " Using attribute field no. %d\n", dec_field+1);
+          }
+         map_type = DCELL_TYPE;
+         zero_one = 0;
        }
     }
         
     if(map_type == 0) /* cats found */
     { 
-     if (!zero_one) /* if not binary map forced */
+     if (!zero_one) /* if binary map not forced */
      {
         zero_one = 0;
         if(dbls > 0)  /* dbls also found */
