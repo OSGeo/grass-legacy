@@ -1,7 +1,7 @@
 
 
 
-p.labels             GRASS Reference Manual              p.labels
+p.labels <main>      GRASS Reference Manual       <main> p.labels
 
 
 
@@ -60,14 +60,14 @@ SCREEN LAYOUT
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-p.labels             GRASS Reference Manual              p.labels
+p.labels <main>      GRASS Reference Manual       <main> p.labels
 
 
 
@@ -126,14 +126,14 @@ p.labels             GRASS Reference Manual              p.labels
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-p.labels             GRASS Reference Manual              p.labels
+p.labels <main>      GRASS Reference Manual       <main> p.labels
 
 
 
@@ -192,14 +192,14 @@ p.labels             GRASS Reference Manual              p.labels
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-p.labels             GRASS Reference Manual              p.labels
+p.labels <main>      GRASS Reference Manual       <main> p.labels
 
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
