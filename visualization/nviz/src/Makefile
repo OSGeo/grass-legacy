@@ -42,13 +42,15 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj)) 
 
-default: nviz
+PGM=nviz
+
+default: $(BIN)/$(PGM)
 
 #gsf: 
 #	cd $(SURF_INCDIR) ; $(GMAKE)
 #	touch nviz_init.c
 
-nviz: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
+$(BIN)/$(PGM): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
