@@ -61,7 +61,7 @@ grass_sites="grass.sites.main grass.sites.mirror"
 #red,orange,yellow,green,blue,indigo,white,black,brown,magenta,gray,grey
 #     bug: aqua, indigo don't seem to work
 #first two colors and blue are reserved:
-map_mirror_colors="green orange white brown red white magenta yellow white magenta red white yellow magenta red white yellow magenta red"
+map_mirror_colors="green orange white brown red white magenta yellow white magenta red white yellow magenta red white yellow magenta red white magenta red white yellow"
 
 #write this variable to array:
 set $map_mirror_colors
