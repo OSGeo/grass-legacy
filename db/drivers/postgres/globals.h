@@ -137,6 +137,6 @@ char errMsg[PG_MSG];
 PGconn *pg_conn;
 #else
 extern DATABASE db;
-extern char errMsg;
+extern char *errMsg;
 extern PGconn *pg_conn;
 #endif

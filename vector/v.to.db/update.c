@@ -32,6 +32,8 @@ update (struct Map_info *Map)
         G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
     }
     
+    db_begin_transaction ( driver );
+    
     /* select existing categories to array (array is sorted) */
     vstat.select = db_select_int( driver, Fi->table, Fi->key, NULL, &catexst);
     
@@ -119,6 +121,8 @@ update (struct Map_info *Map)
 	    }
         }
     }
+    
+    db_commit_transaction ( driver );
 
     free(catexst);	
     db_close_database_shutdown_driver ( driver );
