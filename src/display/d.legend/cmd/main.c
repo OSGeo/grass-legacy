@@ -163,9 +163,14 @@ int main(int argc,char **argv)
 	     G_fatal_error(buff) ;
 	   }
 	   G_get_range_min_max (&range, &min_ind, &max_ind);
+	   if(G_is_c_null_value(&min_ind) && G_is_c_null_value(&max_ind))
+	   {
+	     min_ind = 1;
+	     max_ind = 0;
+	   }
 	   cats_num = max_ind - min_ind + 1 ;
 	   /*min_ind++;*/
-	   max_ind++;
+	   /*max_ind++;*/
 	   /* to allow for null */
         }
 	else /* is fp */
@@ -225,10 +230,11 @@ int main(int argc,char **argv)
         else
 	   j = 0;
 	dot_rows_per_box = y_dots_per_line - 6;
-	for(i=min_ind-1; j<=do_cats && i<=max_ind-1; j++, i++)
+	for(i=min_ind-1; j<=do_cats && i<=max_ind; j++, i++)
 	{
+#ifdef COLOR_RAMP
 		/* if color ramp, draw one tall box */
-		if(i==1 && color_ramp)
+		if(i==max_ind && color_ramp)
 		{
 		    y_dots_per_line = b - t - 2*x_dots_per_line; 
 	            dot_rows_per_box = y_dots_per_line - 6;
@@ -255,10 +261,11 @@ int main(int argc,char **argv)
             	    py_box[3] = 1                 ;
 	            px_box[4] = (6-y_dots_per_line) ;
                 }
+#endif
 		cur_dot_row += y_dots_per_line;
 
 		/* White box */
-		if (i<0) /* check for null cat */
+		if (i==min_ind-1) /* check for null cat */
 		{
 		  if (!flag1->answer) /* do not draw when flag*/
 		  {
@@ -280,17 +287,20 @@ int main(int argc,char **argv)
 		    R_cont_rel((2-x_dots_per_line), 0) ;
 		  }
 		
-		/* Black box */
-		R_standard_color(black) ;
-		R_move_abs(l+3, (cur_dot_row-2)) ;
-		R_cont_rel(0, (4-y_dots_per_line)) ;
-		R_cont_rel((x_dots_per_line-4), 0) ;
-		R_cont_rel(0, (y_dots_per_line-4)) ;
-		R_cont_rel((4-x_dots_per_line), 0) ;
+		if ((i==min_ind-1 && !flag1->answer) || i!=min_ind-1)
+		  {
+		    /* Black box */
+		    R_standard_color(black) ;
+		    R_move_abs(l+3, (cur_dot_row-2)) ;
+		    R_cont_rel(0, (4-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-4), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-4)) ;
+		    R_cont_rel((4-x_dots_per_line), 0) ;
+		  }
 
 
 		/* Color solid box */
-		if(i<0) /* no data cell */
+		if(i==min_ind-1) /* no data cell */
 		{
 		  if (!flag1->answer)
 		  {
@@ -346,7 +356,7 @@ int main(int argc,char **argv)
 
 		/* Draw text */
 		R_standard_color(color) ;
-		if(i<0) /* no data cell */
+		if(i==min_ind-1) /* no data cell */
 		{
 		 if (!flag1->answer)
 		 {
