@@ -1,0 +1,29 @@
+#!/bin/sh
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+prgm=`basename $0`
+if test $# -eq 2; then
+if test $prgm = "ren.fill"; then
+	mv fills/$1 fills/$2 2> /dev/null
+	mv fills/cat/$1 fills/cat/$2 2> /dev/null
+	mv legend/$1 legend/$2 2> /dev/null
+	mv ovm/$1 ovm/$2 2> /dev/null
+elif test $prgm = "ren.legend"; then
+	mv ovm/$1 ovm/$2 2> /dev/null
+	mv legend/cmd/$1 legend/cmd/$2 2> /dev/null
+	mv legend/par/$1 legend/par/$2 2> /dev/null
+elif test $prgm = "ren.misc"; then
+	mv  misc/$1 misc/$2 2> /dev/null
+	mv ovm/$1 ovm/$2 2> /dev/null
+else
+	dir=`echo $prgm | awk -F. '{print $2}'`s
+	mv  $dir/$1 $dir/$2 2> /dev/null
+	mv ovm/$1 ovm/$2 2> /dev/null
+	mv legend/$1 legend/$2 2> /dev/null
+fi
+else
+echo Usage: $prgm old new
+fi
