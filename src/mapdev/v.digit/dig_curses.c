@@ -23,7 +23,7 @@ WINDOW *COVR_WIN;
 
 static int _curses_state = 0 ;
 
-#define G_CLEAR_WIN(WIN)    { werase(WIN);}
+#define G_CLEAR_WIN(WIN)    { werase(WIN); wrefresh(WIN);}
 /*
 #ifdef SYSV
 #define G_CLEAR_WIN(WIN)    { werase(WIN);}
