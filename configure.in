@@ -108,23 +108,27 @@ GRASS_BIN=${DSTDIR}/bin.${ARCH}
 AC_SUBST(GISBASE)
 AC_SUBST(GRASS_BIN)
 
-dnl # Set VERSION_*
-dnl 
-dnl VERSION_FILE=${SRCDIR}/src/CMD/VERSION
-dnl VERSION_NUMBER=`sed -n 1p ${VERSION_FILE}`
-dnl VERSION_DATE=`sed -n 2p ${VERSION_FILE}`
-dnl VERSION_UPDATE_PKG=`sed -n 3p ${VERSION_FILE}`
-dnl NAME_VER=`echo ${VERSION_NUMBER} | sed 's/\..*//'`
-dnl changequote(,)
-dnl LIB_VER=`echo ${VERSION_NUMBER} | sed 's/^\([0-9.]*\).*$/\1/'`
-dnl changequote([,])
-dnl 
-dnl AC_SUBST(VERSION_FILE)
-dnl AC_SUBST(VERSION_NUMBER)
-dnl AC_SUBST(VERSION_DATE)
-dnl AC_SUBST(VERSION_UPDATE_PKG)
-dnl AC_SUBST(NAME_VER)
-dnl AC_SUBST(LIB_VER)
+# Set VERSION_*
+
+VERSION_FILE=include/VERSION
+VERSION_MAJOR=`sed -n 1p ${VERSION_FILE}`
+VERSION_MINOR=`sed -n 2p ${VERSION_FILE}`
+VERSION_RELEASE=`sed -n 3p ${VERSION_FILE}`
+VERSION_DATE=`sed -n 4p ${VERSION_FILE}`
+VERSION_NUMBER=`echo ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}`
+NAME_VER=`echo ${VERSION_NUMBER} | sed 's/\..*//'`
+changequote(,)
+LIB_VER=`echo ${VERSION_NUMBER} | sed 's/^\([0-9.]*\).*$/\1/'`
+changequote([,])
+
+AC_SUBST(VERSION_FILE)
+AC_SUBST(VERSION_MAJOR)
+AC_SUBST(VERSION_MINOR)
+AC_SUBST(VERSION_RELEASE)
+AC_SUBST(VERSION_NUMBER)
+AC_SUBST(VERSION_DATE)
+AC_SUBST(NAME_VER)
+AC_SUBST(LIB_VER)
 
 # Enable options
 
@@ -1136,11 +1140,12 @@ AC_SUBST(STRIPFLAG)
 GRASS_HOME=${DSTDIR}
 AC_SUBST(GRASS_HOME)
 
-AC_OUTPUT(include/Make/Platform.make)
+AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make)
 
-dnl mkdir -p mk src/CMD/head src/CMD/lists src/include
-dnl AC_OUTPUT(Makefile src/CMD/head/head src/CMD/lists/optional
-dnl 	mk/Makefile src/include/version.h src/include/winname.h)
+#remove first to avoid link tool problems (5.0 links):
+
+\rm -f include/version.h include/winname.h
+AC_OUTPUT(include/version.h include/winname.h)
 
 # Generate files for conventional (non-gmake5) build
 

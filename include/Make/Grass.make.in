@@ -69,12 +69,12 @@ DBDRIVERDIR     = $(ARCH_DISTDIR)/driver/db
 
 FONTDIR         = $(ARCH_DISTDIR)/fonts
 
-VERSION_MAJOR   = 5
-VERSION_MINOR   = 1
-VERSION_RELEASE = 0
+VERSION_MAJOR   = @VERSION_MAJOR@
+VERSION_MINOR   = @VERSION_MINOR@
+VERSION_RELEASE = @VERSION_RELEASE@
 VERSION_NUMBER  = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_RELEASE)
-VERSION_DATE    = November 2002
-VERSION_NAME    = $(VERSION_MAJOR)$(VERSION_MINOR)
+VERSION_DATE    = @VERSION_DATE@
+VERSION_NAME    = $(VERSION_MAJOR)$(VERSION_MINOR)$(VERSION_RELEASE)
 
 ##################### other #############################################
 CFLAGS      =  $(COMPILE_FLAGS) $(INC) $(USE_TERMIO)
@@ -205,7 +205,7 @@ VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 	       $(GRASS_INCDIR)/vect/dig_defines.h \
                $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h \
-               $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
+               $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
 
 GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
                $(GRASS_INCDIR)/colors.h $(GRASS_INCDIR)/glocale.h \
