@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 struct {
-	char *driver, *database, *location, *table;
+	char *driver, *database, *location, *table, *printcolnames;
 } parms;
 
 void parse_command_line();
@@ -23,6 +23,8 @@ main(int argc, char *argv[])
     dbHandle handle;
     dbTable *table;
     dbString table_name;
+    int col, ncols;
+    dbColumn *column;
 
     parse_command_line (argc, argv);
     driver = db_start_driver(parms.driver);
@@ -36,12 +38,26 @@ main(int argc, char *argv[])
 
     db_init_string(&table_name);
     db_set_string(&table_name, parms.table);
+
     if(db_describe_table (driver, &table_name, &table) != DB_OK)
 	exit(ERROR);
+
+    if(!parms.printcolnames)
+        print_table_definition(table);
+    else
+    {
+        ncols = db_get_table_number_of_columns(table);
+        fprintf (stdout, "ncols:%d\n", ncols);
+        for (col = 0; col < ncols; col++)
+        {
+          column = db_get_table_column (table, col);
+          fprintf (stdout, "Column %d: %s\n", (col+1), db_get_column_name (column));
+        }
+        fflush (stdout);
+    }
+    
     db_close_database(driver);
     db_shutdown_driver(driver);
-
-    print_table_definition(table);
 
     exit(OK);
 }
@@ -50,10 +66,15 @@ void
 parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location, *table;
+    struct Flag *cols;
     struct GModule *module;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+    cols = G_define_flag();
+    cols->key               = 'c';
+    cols->description       = "print column names only instead of full column descriptions";
 
     table 		= G_define_option();
     table->key 		= "table";
@@ -94,4 +115,5 @@ parse_command_line(int argc, char *argv[])
     parms.database	= database->answer;
     parms.location	= location->answer;
     parms.table		= table->answer;
+    parms.printcolnames = cols->answer;
 }
