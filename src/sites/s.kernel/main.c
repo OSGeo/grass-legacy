@@ -4,7 +4,7 @@
 * MODULE:       s.kernel
 *
 * AUTHOR(S):    Stefano Menegon, ITC-irst, Trento, Italy
-* PURPOSE:      To generate raster density maps from sites data using a moving
+* PURPOSE:      Generates a raster density map from sites data using a moving
 *               2D isotropic Gaussian kernel
 * COPYRIGHT:    (C) 2002 by the GRASS Development Team
 *
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
         module = G_define_module();
 	module->description =
-        "Generate a raster density map from sites data using a moving 2D isotropic Gaussian kernel";
+        "Generates a raster density map from sites data using a moving 2D isotropic Gaussian kernel";
 
   opt1              = G_define_option();
   opt1->key         = "sitefile";
