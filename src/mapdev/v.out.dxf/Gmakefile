@@ -1,6 +1,6 @@
 PGM = v.out.dxf
 
-$(BIN_MAIN_CMD)/$(PROG): v.out.dxf.o $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): v.out.dxf.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
