@@ -47,6 +47,11 @@ static char sccsid[] = "@(#)Matrix.c	3.16 4/9/92";
 #define XrmPermStringToQuark XrmStringToQuark
 #endif
 
+#undef Min
+#undef Max
+#define Max(x, y)       (((x) > (y)) ? (x) : (y))
+#define Min(x, y)       (((x) < (y)) ? (x) : (y))
+
 /*
  * Translations for Matrix (these will also be used by the Clip child).
  */
