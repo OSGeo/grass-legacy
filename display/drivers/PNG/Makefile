@@ -10,6 +10,7 @@ EXTRA_CFLAGS = $(PNGINC) -I../lib
 
 OBJS =  \
 	Can_do.o\
+	Client.o\
 	Clr_table.o\
 	Color.o\
 	Draw_line.o\
@@ -19,7 +20,8 @@ OBJS =  \
 	Graph_Clse.o\
 	Graph_Set.o\
 	Panel.o\
-	Polygn_abs.o
+	Polygn_abs.o\
+	write.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
