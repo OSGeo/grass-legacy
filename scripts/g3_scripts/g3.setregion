@@ -1,0 +1,198 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:	g3.setregion.sh for GRASS 5.7
+# AUTHOR(S):	Markus Neteler (neteler itc it)
+# PURPOSE:	sets WIND3 file; a sort of g3.region with parser support.
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+#TODO:
+#
+
+#%Module
+#% description: g3.setregion modifies current 3D region
+#%End
+#%option
+#% key: n
+#% type: double
+#% description: North extent
+#% required : no
+#%end
+#%option
+#% key: s
+#% type: double
+#% description: South extent
+#% required : no
+#%end
+#%option
+#% key: w
+#% type: double
+#% description: West extent
+#% required : no
+#%end
+#%option
+#% key: e
+#% type: double
+#% description: East extent
+#% required : no
+#%end
+#%option
+#% key: b
+#% type: integer
+#% description: Bottom height
+#% required : no
+#%end
+#%option
+#% key: t
+#% type: integer
+#% description: Top height
+#% required : no
+#%end
+#%option
+#% key: res
+#% type: double
+#% description: Horizontal resolution (2D)
+#% required : no
+#%end
+#%option
+#% key: dres
+#% type: integer
+#% description: Depth resolution (3D)
+#% required : no
+#%end
+#%flag
+#% key: u
+#% description: update WIND3 from WIND/DEFAULT_WIND3
+#%end
+
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+
+UPDATE=0
+
+if test ! -f $LOCATION/WIND3
+then
+ echo "No 3D region settings present. Run g3.createwind first!"
+ exit
+fi
+
+north=`cat $LOCATION/WIND | awk ' /north:/ { print $2 }'`
+south=`cat $LOCATION/WIND | awk ' /south:/ { print $2 }'`
+east=`cat $LOCATION/WIND | awk ' /east:/  { print  $2 }'`
+west=`cat $LOCATION/WIND | awk ' /west:/  { print  $2 }'`
+res=`cat $LOCATION/WIND | awk ' /e-w resol:/  { print  $3 }'`
+#catch from default:
+top=`cat $LOCATION/WIND3 | awk ' /Top:/  { printf "%.0f", $2 }'`
+bottom=`cat $LOCATION/WIND3 | awk ' /Bottom:/ { printf "%.0f", $2 }'`
+dres=`cat $LOCATION/WIND3 | awk ' /t-b resol:/ { printf "%.0f", $3 }'`
+
+# add crash check here, then previously run g3.createwind
+
+
+echo "Previous settings:"
+echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
+
+if [ $GIS_FLAG_u !-eq 1] ; then
+    north=$GIS_OPT_n
+    south=$GIS_OPT_s
+    east=$GIS_OPT_e
+    west=$GIS_OPT_w
+    top=$GIS_OPT_t
+    bottom=$GIS_OPT_b
+    res=$GIS_OPT_res
+    dres=$GIS_OPT_dres
+fi
+
+
+#reset 2D region:
+g.region n=$north s=$south w=$west e=$east res=$res
+if [ $? -eq 1 ] ; then
+ echo "Check coordinate settings!"
+ exit
+fi
+
+#re-read new settings (don't want to calculate here):
+north=`cat $LOCATION/WIND | awk ' /north:/ { print $2 }'`
+south=`cat $LOCATION/WIND | awk ' /south:/ { print $2 }'`
+east=`cat $LOCATION/WIND | awk ' /east:/  { print  $2 }'`
+west=`cat $LOCATION/WIND | awk ' /west:/  { print  $2 }'`
+res=`cat $LOCATION/WIND | awk ' /e-w resol:/  { print  $3 }'`
+
+echo ""
+echo "Creating now WIND3 region with following parameters:"
+cat $LOCATION/WIND | awk ' /proj:/  { print "Proj: "$2 }'   > $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /zone:/  { print "Zone: "$2 }'  >> $LOCATION/WIND3
+
+echo "North: $north" >> $LOCATION/WIND3
+echo "South: $south" >> $LOCATION/WIND3
+echo "East: $east"   >> $LOCATION/WIND3
+echo "West: $west"   >> $LOCATION/WIND3
+
+layer_number=`echo $bottom $top $dres | awk '{print ($2-$1)/$3}'`
+
+echo "Top: $top"     >> $LOCATION/WIND3
+echo "Bottom: $bottom"  >> $LOCATION/WIND3
+
+echo " Top: $top"
+echo " Bottom: $bottom"
+
+# we need this later
+number_rows=`cat $LOCATION/WIND | awk ' /rows:/ { print $2 }'`
+echo "nofRows: $number_rows"  >> $LOCATION/WIND3
+
+number_cols=`cat $LOCATION/WIND | awk ' /cols:/ { print $2 }'`
+echo "nofCols: $number_cols"  >> $LOCATION/WIND3
+
+echo "nofDepths: $layer_number" >> $LOCATION/WIND3
+echo " nofDepths: $layer_number"
+
+cat $LOCATION/WIND | awk ' /e-w/ { print "e-w resol: "$3 }' >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /n-s/ { print "n-s resol: "$3 }' >> $LOCATION/WIND3
+
+echo "t-b resol: $dres" >> $LOCATION/WIND3
+echo " t-b resol: $dres"
+
+# check bottom_height > top_height:
+if [ $bottom -ge $top ]
+then
+ echo "----- ERROR: bottom_height must be less than top_height."
+ rm -f $LOCATION/WIND3
+ exit
+fi
+
+number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3)}'`
+echo "WIND3 file created/updated."
+echo "You have defined a volume of $number tiles (cubes)."
+
+# this needs to be improved!!:
+#do we need this? yes, g3.region reads DEFAULT_WIND3 only!!
+cp $LOCATION/WIND3 $LOCATION/../PERMANENT/DEFAULT_WIND3
+
+echo ""
+#echo "Please check the file:"
+#echo "$LOCATION/WIND3"
+#echo "Additionally check:"
+#echo "$LOCATION/../PERMANENT/DEFAULT_WIND3"
+echo "New settings:"
+echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
+
+echo "Now check with"
+echo "    g3.region"
+
