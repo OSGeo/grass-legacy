@@ -15,6 +15,26 @@
 #	define RIGHTB	2
 #endif
 
+typedef struct _ucat {
+	RASTER_MAP_TYPE type;
+	union {
+		CELL c;
+		FCELL f;
+		DCELL d;
+	} val;
+} UCAT;
+
+typedef union _raster_ptr {
+	void *v;
+	CELL *c;
+	FCELL *f;
+	DCELL *d;
+} RASTER_PTR;
+
+typedef struct _raster_map_ptr {
+	RASTER_MAP_TYPE type;
+	RASTER_PTR data;
+} RASTER_MAP_PTR;
 
 struct windows
 {
@@ -24,7 +44,7 @@ struct windows
 
 struct ProfileNode
    {
-   CELL   cat;
+   UCAT   cat;
    struct ProfileNode *next;
    };
 
@@ -37,7 +57,7 @@ struct Profile
           e2;
    struct ProfileNode *ptr;
    long int count;
-   CELL MinCat,
+   UCAT MinCat,
         MaxCat;
    }; 
 
@@ -89,3 +109,6 @@ int black_and_white_line(int, int, int, int);
 int show_cat(int, char *, int, char *);
 int show_utm(double, double);
 int show_mouse(void);
+/* utils.c */
+int is_null_value (RASTER_MAP_PTR *, int);
+

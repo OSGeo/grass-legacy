@@ -36,15 +36,19 @@
  */
 
 #include <limits.h>
+#include <float.h>
 #include "profile.h"
+
+void ucat_max (UCAT *, UCAT *);
+void ucat_min (UCAT *, UCAT *);
 
 int 
 ExtractProfile (struct Profile *profile, char *name, char *mapset)
 {
 int    fd;               /* cell-file desciptor */
 struct Cell_head window; /* current GIS window */
-CELL   *buf;             /* storage for one cell-file row */
-CELL   theCell;          /* storage of the current cell of interest - for NULL fix */
+RASTER_MAP_PTR   buf;    /* storage for one cell-file row */
+UCAT   theCell;          /* storage of the current cell of interest - for NULL fix */
 struct ProfileNode *ptr = NULL; 
 int    stop;
 int    row1, col1;    
@@ -89,7 +93,8 @@ if (fd < 0)
    fprintf(stderr,"warning: unable to open [%s] in [%s]\n",name,mapset);
    return(-2);
    }
-buf = G_allocate_cell_buf(); 
+theCell.type = buf.type = G_raster_map_type(name, mapset);
+buf.data.v = G_allocate_raster_buf(buf.type); 
 
 /*
  * this section loops through a line between (row1,col1) and (row2,col2)
@@ -126,30 +131,46 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
       profile->count++;
       col = (int)(slope*(float)(row-row1) + col1);
 
-      if (G_get_map_row(fd,buf,row) < 0)
+      if (G_get_raster_row(fd,buf.data.v,row,buf.type) < 0)
          return(-3);
 
-#     ifdef DEBUG
-      fprintf (stdout,"[(%d,%d):%d] ",row,col,buf[col]);
-#     endif
-      /* Test if NULL, if so set to the minimum integer value */
-      if (G_is_c_null_value(&(buf[col])))
-	      theCell = INT_MIN;
+      /* Test if NULL, if so set to the minimum value */
+      if (is_null_value(&buf, col))
+      {
+        switch (buf.type)
+	{
+	        case CELL_TYPE: 
+			theCell.val.c = INT_MIN; break;
+		case FCELL_TYPE:
+			theCell.val.f = FLT_MIN; break;
+		case DCELL_TYPE:
+			theCell.val.d = DBL_MIN; break;
+	}
+      }
       else
-	      theCell = buf[col];
+      {
+      	switch (buf.type)
+	{
+		case CELL_TYPE:
+			theCell.val.c = buf.data.c[col]; break;
+		case FCELL_TYPE:
+			theCell.val.f = buf.data.f[col]; break;
+		case DCELL_TYPE:
+			theCell.val.d = buf.data.d[col]; break;
+	}
+      }
+	    
 		      
       /* set mins and maxes */
       if (row==row1)
          {
          profile->MaxCat = theCell;
-         profile->MinCat = (theCell == INT_MIN) ? INT_MAX : theCell ;
+	 profile->MinCat = theCell;
          }
       else
          {
-         if (theCell > profile->MaxCat)
-            profile->MaxCat = theCell;
-         if (theCell < profile->MinCat && theCell != INT_MIN)
-            profile->MinCat = theCell;
+	 ucat_max(&profile->MaxCat, &theCell);
+	 ucat_min(&profile->MinCat, &theCell);
          }
 
       /* add to linked list */
@@ -198,30 +219,45 @@ else
       profile->count++;
       row = (int)(slope*(float)(col-col1)+row1);
 
-      if (G_get_map_row(fd,buf,row) < 0)
+      if (G_get_raster_row(fd,buf.data.v,row,buf.type) < 0)
          return(-3);
 
-#     ifdef DEBUG
-      fprintf (stdout,"[(%d,%d):%d] ",row,col,buf[col]);
-#     endif
       /* Test if NULL, if so set to the minimum integer value */
-      if (G_is_c_null_value(&(buf[col])))
-	      theCell = INT_MIN;
+      if (is_null_value(&buf, col))
+      {
+        switch (buf.type)
+	{
+	        case CELL_TYPE: 
+			theCell.val.c = INT_MIN; break;
+		case FCELL_TYPE:
+			theCell.val.f = FLT_MIN; break;
+		case DCELL_TYPE:
+			theCell.val.d = DBL_MIN; break;
+	}
+      }
       else
-	      theCell = buf[col];
-	
+      {
+      	switch (buf.type)
+	{
+		case CELL_TYPE:
+			theCell.val.c = buf.data.c[col]; break;
+		case FCELL_TYPE:
+			theCell.val.f = buf.data.f[col]; break;
+		case DCELL_TYPE:
+			theCell.val.d = buf.data.d[col]; break;
+	}
+      }
+
       /* set mins and maxes */
-      if (col==col1)
+      if (row==row1)
          {
          profile->MaxCat = theCell;
-         profile->MinCat = (theCell == INT_MIN) ? INT_MAX : theCell;
+	 profile->MinCat = theCell;
          }
       else
          {
-         if (theCell > profile->MaxCat)
-            profile->MaxCat = theCell;
-         if (theCell < profile->MinCat && theCell != INT_MIN)
-            profile->MinCat = theCell;
+	 ucat_max(&profile->MaxCat, &theCell);
+	 ucat_min(&profile->MinCat, &theCell);
          }
 
       /* add to linked list */
@@ -252,3 +288,46 @@ fprintf (stdout,"\n");
 G_unopen_cell(fd);
 return(0);
 }
+
+void ucat_max (UCAT *to, UCAT *from)
+{
+	switch (from->type)
+	{
+		case CELL_TYPE:
+			if (from->val.c > to->val.c)
+				to->val.c = from->val.c;
+			break;
+		case FCELL_TYPE:
+			if (from->val.f > to->val.f)
+				to->val.f = from->val.f;
+			break;
+		case DCELL_TYPE:
+			if (from->val.d > to->val.d)
+				to->val.d = from->val.d;
+			break;
+	}
+}
+
+				
+void ucat_min (UCAT *to, UCAT *from)
+{
+	switch (from->type)
+	{
+		case CELL_TYPE:
+			if (from->val.c != INT_MIN 
+			    && from->val.c < to->val.c)
+				to->val.c = from->val.c;
+			break;
+		case FCELL_TYPE:
+			if (from->val.f != FLT_MIN
+			    && from->val.f < to->val.f)
+				to->val.f = from->val.f;
+			break;
+		case DCELL_TYPE:
+			if (from->val.d != DBL_MIN
+			    && from->val.d < to->val.d)
+				to->val.d = from->val.d;
+			break;
+	}
+}
+
