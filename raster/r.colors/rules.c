@@ -19,7 +19,14 @@ struct colr {
     int set;
 };
 
-int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, int fp)
+static int read_rule(FILE *, double *, int *, int *, int *, int *, int *, int *, DCELL, DCELL);
+static int badrule(int, char *, int);
+static int lookup_color(int, char *, int *, int *, int *);
+static int show_colors(FILE *);
+
+int read_color_rules(
+	FILE *fp,
+	struct Colors *colors, int quiet, DCELL min, DCELL max, int is_fp)
 {
     struct rule *rule = NULL;
     struct colr df, null;
@@ -33,15 +40,15 @@ int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, in
     null.r = null.g = null.b = null.set = 0;
 
     G_init_colors (colors);
-    if (isatty(0))
+    if (isatty(fileno(fp)))
     {
 	fprintf (stdout, "Enter rules, \"end\" when done, \"help\" if you need it.\n");
-	if (fp)
+	if (is_fp)
 	  fprintf (stdout, "fp: Data range is %.25f to %.25f\n", (double)min, (double)max);
 	else
 	  fprintf (stdout, "Data range is %ld to %ld\n", (long)min, (long)max);
     }
-    while (read_rule (&val, &r, &g, &b, &set, &nv, &others, min, max))
+    while (read_rule(fp, &val, &r, &g, &b, &set, &nv, &others, min, max))
     {
 	n = nrules++;
 	rule = (struct rule *) G_realloc (rule, nrules*sizeof(struct rule));
@@ -79,7 +86,7 @@ int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, in
     }
     if (nrules == 1)
     {
-      if (fp)
+      if (is_fp)
 	G_set_d_color(rule[0].val, rule[0].r, rule[0].g, rule[0].b, colors);
       else
 	G_set_color((CELL)rule[0].val, rule[0].r, rule[0].g, rule[0].b, colors);
@@ -122,7 +129,7 @@ int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, in
 
 /* set the colors now */
     for (low=0,high=1; high < nrules; low++,high++) {
-	if (fp)
+	if (is_fp)
 	  G_add_d_raster_color_rule (
 	      &rule[low].val, rule[low].r, rule[low].g, rule[low].b,
 	      &rule[high].val, rule[high].r, rule[high].g, rule[high].b,
@@ -143,8 +150,10 @@ int read_color_rules (struct Colors *colors, int quiet, DCELL min, DCELL max, in
     return 1;
 }
 
-int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *others,
-               DCELL min, DCELL max)
+static int read_rule(
+	FILE *fp,
+	double *val, int *r, int *g, int *b, int *set, int *nvalue, int *others,
+	DCELL min, DCELL max)
 {
     char buf[1024];
     char color[256];
@@ -152,12 +161,14 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
     double n;
     int line;
     char tmpstr[16];
+    int tty = isatty(fileno(fp));
 
     *set = *nvalue = *others = 0;
     for (line=1;;line++)
     {
-	if (isatty(0)) fprintf (stdout,"> ");
-	if (!fgets(buf,1024,stdin)) return 0;
+	if (tty)
+	    fprintf (stdout,"> ");
+	if (!fgets(buf,1024,fp)) return 0;
 	for (i=0;buf[i];i++)
 	    if(buf[i] == ',')
 		buf[i] = ' ';
@@ -185,7 +196,7 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	    if (n<0 || n>100 || *r<0 || *r>255 || *g<0 || *g>255 ||
 		*b<0 || *b>255)
 	    {
-		badrule(buf,line);
+		badrule(tty,buf,line);
 		continue;
 	    }
 	    *val = min + ((double)max-(double)min)*n/100.0;
@@ -231,7 +242,7 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	if (sscanf (buf, "%d %d %d", r, g, b) == 3)
 	{
 	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255) {
-		badrule(buf, line);
+		badrule(tty,buf,line);
 		continue;
 	    }
 	    *val = 0;
@@ -240,9 +251,9 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	}
 	if (sscanf (buf, "%lf%% %s", &n, color) == 2)
 	{
-	    if (!lookup_color (color, r,g,b) || n < 0 || n > 100)
+	    if (!lookup_color(tty, color, r,g,b) || n < 0 || n > 100)
 	    {
-		badrule(buf,line);
+		badrule(tty,buf,line);
 		continue;
 	    }
 	    *val = min + ((double)max-(double)min)*n/100.0;
@@ -251,9 +262,9 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	}
 	if (sscanf (buf, "%lf %s", val, color) == 2)
 	{
-	    if (!lookup_color (color, r,g,b))
+	    if (!lookup_color(tty, color, r,g,b))
 	    {
-		badrule(buf,line);
+		badrule(tty,buf,line);
 		continue;
 	    }
 	    /* commented by olga because canb't cover whole fp range 
@@ -269,9 +280,9 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	}
         if (sscanf (buf, "%s %s", tmpstr, color) == 2)
         {
-            if (!lookup_color (color, r,g,b))
+            if (!lookup_color(tty, color, r,g,b))
             {
-                badrule(buf,line);
+                badrule(tty,buf,line);
                 continue;
             }
 	    if (!strcmp("nv", tmpstr)) {
@@ -289,33 +300,33 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
         }
 	if (sscanf (buf, "%s", color) == 1)
 	{
-	    if (!lookup_color (color, r,g,b))
+	    if (!lookup_color(tty, color, r,g,b))
 	    {
-		badrule(buf,line);
+		badrule(tty,buf,line);
 		continue;
 	    }
 	    *val = 0;
 	    *set = 0;
 	    return 1;
 	}
-	badrule(buf,line);
+	badrule(tty,buf,line);
     }
     return 0;
 }
 
-int badrule (char *s, int line)
+static int badrule(int tty, char *s, int line)
 {
-    if (!isatty(0))
+    if (!tty)
 	fprintf (stderr, "%s:line %d:%s\n", G_program_name(), line,  s);
     fprintf (stderr, "** bad color specification **\n");
     fprintf (stderr, "** rule is not added **\n");
-    if (!isatty(0))
+    if (!tty)
 	exit(1);
 
     return 0;
 }
 
-int lookup_color (char *color, int *r, int *g, int *b)
+static int lookup_color(int tty, char *color, int *r, int *g, int *b)
 {
     float fr, fg, fb;
 
@@ -326,7 +337,7 @@ int lookup_color (char *color, int *r, int *g, int *b)
 	*b = (int)(fb * 255);
 	return 1;
     }
-    if (isatty(0))
+    if (tty)
     {
 	fprintf (stderr, "%s - unknown color\n", color);
 	fprintf (stderr, "Valid colors are:\n");
@@ -335,12 +346,11 @@ int lookup_color (char *color, int *r, int *g, int *b)
     return 0;
 }
 
-int show_colors (FILE *fd)
+static int show_colors (FILE *fp)
 {
     int len;
     int i,n;
     char *color;
-    char *G_color_name();
 
     len = 0;
     for (i = 0; color = G_color_name(i); i++)
@@ -348,13 +358,13 @@ int show_colors (FILE *fd)
 	n = strlen (color) + 1;
 	if (len + n > 78)
 	{
-	    fprintf (fd, "\n");
+	    fprintf (fp, "\n");
 	    len = 0;
 	}
-	fprintf (fd, " %s", color);
+	fprintf (fp, " %s", color);
 	len += n;
     }
-    fprintf (fd, "\n");
+    fprintf (fp, "\n");
     
     return 0;
 }
