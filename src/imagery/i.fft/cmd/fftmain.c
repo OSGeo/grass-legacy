@@ -132,8 +132,7 @@ int main (int argc, char *argv[])
         cols = max_pow2(oc);
         totsize = rows * cols;
 
-        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); *
-   /
+        /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); */
 
         /* Allocate appropriate memory for the structure containing
      the real and complex components of the FFT.  DATA[0] will
