@@ -1,0 +1,24 @@
+X_PGM = X3d
+X_OFILES =  Dmain.o command.o threed.o transform.o check_opt.o sigint.o
+
+PGM = d.x3d
+OFILES =  main.o threed.o transform.o check_opt.o get_inputs.o sigint.o
+
+all: $(BIN)/$(X_PGM) $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB)
+	cc $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(GISLIB) $(XDISPLAYLIB) $(VASK) -lX11 $(MATHLIB)
+
+$(BIN)/$(X_PGM): $(X_OFILES) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(X_OFILES) $(GISLIB) $(XDISPLAYLIB) -lX11 $(MATHLIB)
+
+
+$(GISLIB):	#
+$(XDISPLAYLIB):	#
+
+Dmain.c:	options.h
+check_opt.c:	3d.h options.h
+command.c:	options.h
+get_inputs.c:	options.h
+main.c:	options.h
+threed.c:	3d.h options.h
