@@ -76,41 +76,41 @@ FILE	*dxf_file;
 
     if (xflag && yflag && rflag)
     {
-	arr_size = make_arc(centerx,centery,radius,360.0,0.0,0);
+	arr_size = make_arc(0,centerx,centery,radius,0.0,360.0,0);
 	write_polylines(layer_fd,arr_size);
     }
     return(1);
 }
 
-make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
+make_arc(offset, centerx,centery,radius,start_angle,finish_angle,flag)
     double 	centerx;
     double	centery;
     double	radius;
     float	start_angle;
     float	finish_angle;
     int		flag;
+    int         offset; /* offset into array of points */
 {
     float	theta; /* the angle used for calculating a given point */
     float	alpha; /* theta converted into radians for use in math */
     double	extcirclx[4], extcircly[4];/*to check_extents of circle */
     int	x; /* looping variable */
-    int arr_size = 0;
+    int arr_size;
 
-    /* this code is set up for clockwise, but DXF seems to 
-    ** specify arcs as going counter clockwise, so simply
-    ** reverse the end points
-    */
-
-    theta = start_angle;
+    arr_size = offset;
+    printf("making arc: offset %d  x %.1lf y %.1lf rad %.1lf a1 %.1f a2 %.1f  %d\n", offset, centerx,centery,radius,start_angle,finish_angle,flag);
+    if(start_angle > finish_angle) finish_angle = 360. + finish_angle;
 
     /* negative radius indicates that arc is to be drawn in a clockwise 
     ** direction from start_angle to finish_angle 
     */
     if (radius < 0) 
     {
-	while (theta < finish_angle)
+	start_angle = 360. + start_angle;
+        theta = start_angle;
+	radius = -radius;
+	while (theta > finish_angle)
 	{
-	    radius = -radius;
 	    alpha = 3.141592654*theta/180.0; /* converting to radians */
 	    xinfo[arr_size] = radius*cos(alpha) + centerx;
 	    yinfo[arr_size] = radius*sin(alpha) + centery;
@@ -119,14 +119,15 @@ make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
 	    if (arr_size == ARR_MAX)
 	    {
 		ARR_MAX+= ARR_INCR;
-		xinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
-		yinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
+	        xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
+	        yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
 	    }
 	    arr_size++;
 	}
     }
     else
     {
+        theta = start_angle;
 	while (theta < finish_angle)/*draw arc counterclockwise */
 	{
 	    alpha = 3.141592654*theta/180.0; /* converting to radians */
@@ -137,8 +138,8 @@ make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
 	    if (arr_size == ARR_MAX)
 	    {
 		ARR_MAX+= ARR_INCR;
-		xinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
-		yinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
+	        xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
+	        yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
 	    }
 	    arr_size++;
 	}
@@ -151,8 +152,8 @@ make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
     if (arr_size == ARR_MAX)
     {
 	ARR_MAX+= ARR_INCR;
-	xinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
-	yinfo = (double *) G_malloc (ARR_INCR * sizeof (double));
+	xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
+	yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
     }
     arr_size++;
 
@@ -160,7 +161,7 @@ make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
     {
 	/*need to check extent of plotted arcs and circles */
 	if (flag)  /*for an arc */
-	    for(x=0; x<arr_size; x++)
+	    for(x=offset; x<arr_size; x++)
 		dxf_check_ext(xinfo[x],yinfo[x]);
 
 	else /*for a circle*/
@@ -179,5 +180,5 @@ make_arc(centerx,centery,radius,start_angle,finish_angle,flag)
 		dxf_check_ext(extcirclx[x],extcircly[x]);
 	}
     }
-    return arr_size;
+    return arr_size - offset;
 }
