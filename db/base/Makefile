@@ -11,10 +11,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: \
 	$(HOME)/db.columns \
 	$(HOME)/db.copy \
-	$(HOME)/db.createdb \
-	$(HOME)/db.dropdb \
 	$(HOME)/db.droptable \
-	$(HOME)/db.databases \
 	$(HOME)/db.describe \
 	$(HOME)/db.drivers \
 	$(HOME)/db.execute \
