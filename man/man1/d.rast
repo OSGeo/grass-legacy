@@ -1,0 +1,70 @@
+.TH d.rast
+.SH NAME
+\fId.rast \fR\- Displays and overlays raster map layers
+in the active display frame on the graphics monitor.
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.rast\fR
+.br
+\fBd.rast help\fR
+.br
+\fBd.rast \fR[\fB-o\fR] \fBmap\*=\fIname\fR
+.SH DESCRIPTION
+.I d.rast
+displays the raster map layer \fIname\fR
+in the active display frame on the graphics monitor.
+.LP
+The program can be run either non-interactively or interactively.
+If the user specifies the name of a raster map layer (map\*=\fIname\fR)
+and (optionally) the -o option on the command line, the program
+will run non-interactively.
+Alternately, the user can type simply \fBd.rast\fR on the command line;
+in this case, the program will prompt the user for the flag setting and
+parameter value using the standard GRASS parser interface described
+in the manual entry for \fIparser\fR.
+.LP
+\fBFlag:\fR
+.IP \fB-o\fR 13
+Overlay the named raster map layer onto whatever is already displayed
+in the active graphics frame.  Any zero category value data areas in
+the named raster map will seem transparent, and reveal the underlying
+image previously displayed in the graphics frame.
+If the -o flag is set, only cells containing non-zero category
+values will be displayed from the \fIoverlaid\fR raster map.
+All other areas (i.e., the portions of the overlaid map that contain
+category value 0) will leave the underlying display untouched.
+If the -o flag is not set by the user, \fId.rast\fR will
+(by default) completely overwrite whatever appears in the active
+graphics display frame.
+
+.LP
+\fBParameter:\fR
+.IP \fBmap\*=\fIname\fR 13
+Name of the raster map to be displayed.
+If the active graphics frame already contains text or graphics,
+and the user does not wish to use the -o option,
+it is wise to first invoke \fId.erase\fR to clear the active graphics frame
+before running \fId.rast\fR.
+After running \fId.rast\fR, other \fId.\fR programs like
+\fId.vect\fR and \fId.grid\fR can be used to enhance the plot.
+.SH NOTES
+The \fId.rast\fR raster map overlay option (-o)
+only works when the color look-up table for the graphics monitor
+is set to \fBd.colormode fixed\fR.
+.SH "SEE ALSO"
+.I d.choose,
+.I d.colormode,
+.I d.colors,
+.I d.colortable,
+.I d.display,
+.I d.erase,
+.I d.grid,
+.I d.overlay,
+.I d.vect,
+.I d.what.rast,
+.I r.reclass
+and
+.I parser
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
