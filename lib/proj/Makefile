@@ -11,7 +11,7 @@ azimuthal = \
 conic = \
 	PJ_aea.o PJ_bipc.o PJ_bonne.o PJ_eqdc.o \
 	PJ_imw_p.o PJ_lcc.o PJ_mpoly.o PJ_poly.o \
-	PJ_rpoly.o PJ_sconics.o
+	PJ_rpoly.o PJ_sconics.o PJ_krovak.o PJ_krovakgis.o
 
 cylinder = \
 	PJ_cass.o PJ_cc.o PJ_cea.o PJ_eqc.o \
