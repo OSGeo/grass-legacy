@@ -1,0 +1,61 @@
+/* att2cat.c */
+double att2cat(struct Map_info *Map, int i);
+/* c_matrix.c */
+int c_matrix(struct Map_info *Map, struct Plus_head *Plus);
+/* geary_moran.c */
+int geary_moran(double catarray[], double *gr, double *mc, int n);
+/* init_plus_s.c */
+int init_plus_struct(struct Plus_head *Plus);
+int init_map_struct(struct Map_info *Map);
+/* linpack.c */
+float sdot(long n, float *sx, long incx, float *sy, long incy);
+void spofa(float *a, long lda, long n, long *info);
+/* main.c */
+int main(int argc, char **argv);
+/* mean.c */
+int mean(double catarray[], double *mgrr, double *mmcr, double *mgrn, double *mmcn, int n);
+float average(double array[], int n);
+int stats(double array[], int n, double *catmean, double *catstd);
+/* open_files.c */
+int open_dig_files(char *name, struct _iobuf **fp_plus, struct Map_info *Map, struct Plus_head *Plus);
+/* printmatrix.c */
+int printmatrix(struct _iobuf *str, int n);
+/* std_err.c */
+int std_err(double catarray[], double *siggrr, double *sigmcr, double *siggrn, double *sigmcn, int n);
+/********************************************************************/
+/* com.c */
+void advnst(long k);
+void getsd(long *iseed1, long *iseed2);
+long ignlgi(void);
+void initgn(long isdtyp);
+void inrgcm(void);
+void setall(long iseed1, long iseed2);
+void setant(long qvalue);
+void setsd(long iseed1, long iseed2);
+/* ranlib.c */
+float genbet(double aa, double bb);
+float genchi(double df);
+float genexp(double av);
+float genf(double dfn, double dfd);
+float gengam(double a, double r);
+void genmn(float *parm, float *x, float *work);
+float gennch(double df, double xnonc);
+float gennf(double dfn, double dfd, double xnonc);
+float gennor(double av, double sd);
+void genprm(long *iarray, int larray);
+float genunf(double low, double high);
+void gscgn(long getset, long *g);
+void gsrgs(long getset, long *qvalue);
+void gssst(long getset, long *qset);
+long ignbin(long n, double pp);
+long ignpoi(double mu);
+long ignuin(long low, long high);
+long lennob(char *str);
+long mltmod(long a, long s, long m);
+void phrtsd(char *phrase, long *seed1, long *seed2);
+float ranf(void);
+void setgmn(float *meanv, float *covm, long p, float *parm);
+float sexpo(void);
+float sgamma(double a);
+float snorm(void);
+float fsign(double num, double sign);
