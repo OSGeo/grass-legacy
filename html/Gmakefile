@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.32 2002-05-13 16:10:11 markus Exp $
+# $Id: Gmakefile,v 1.33 2002-06-17 09:50:20 markus Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -86,17 +86,19 @@ g.help-manpages:
 	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
 		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
 	  done)
-	@(for h in *.html; \
-	  do \
-		m=`echo $$h | sed 's@\.html@@'`; \
-		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
-		tmpf="$${tmp}_.$(SECT)"; \
-		tmpm="$${m}_"; \
-		f="$$tmp.$(SECT)"; \
-	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
-	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
-		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
-	  done)
+#
+# commented to avoid name conflict with imagemagick:
+#	@(for h in *.html; \
+#	  do \
+#		m=`echo $$h | sed 's@\.html@@'`; \
+#		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+#		tmpf="$${tmp}_.$(SECT)"; \
+#		tmpm="$${m}_"; \
+#		f="$$tmp.$(SECT)"; \
+#	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+#	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+#		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+#	  done)
 
 # generate the man pages
 manpages:
