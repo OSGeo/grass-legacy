@@ -47,10 +47,13 @@ int db_driver_open_database(handle)
     }
 
     strcpy(db.name, name);
-
-    pghost = G__getenv("DB_HOST");
+    
+    pghost = connection.hostName;
     pg_conn = PQsetdb(pghost, NULL, NULL, NULL, db.name);
-
+    
+    G_debug(3, "db_driver_open_database() - pghost is %s, driver is %s", 
+    		pghost, G__getenv("DB_DRIVER"));
+    
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
 	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n",
 		 PQerrorMessage(pg_conn));

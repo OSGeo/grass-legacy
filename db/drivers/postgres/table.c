@@ -229,6 +229,5 @@ int free_table(int tab)
     free(db.tables[tab].rows);
     free(db.tables[tab].cols);
 
-
     return DB_OK;
 }
