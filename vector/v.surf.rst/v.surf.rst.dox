@@ -62,10 +62,6 @@ of elevations given in feet to meters, so that the proper values of slopes
 and curvatures can be computed).
 </p>
 
-\f$
-x=x^6
-\f$
-
 <p>Regularized spline with tension and smoothing is used for  interpolation
 and approximation. The <i>tension</i> parameter tunes the character of
 the resulting surface from thin plate to membrane. The experimental flag <i>-t </i>can
