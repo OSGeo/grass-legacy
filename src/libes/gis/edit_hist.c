@@ -30,7 +30,7 @@ G_edit_history (phist)
     if (! *phist->creator)
 	sprintf(phist->creator, "%s", G_whoami() );
     if (! *phist->maptype)
-	sprintf(phist->maptype, "cell") ;
+	sprintf(phist->maptype, "raster") ;
 
     V_clear() ;
     V_line ( 0, "		 ENTER/CORRECT FILE HISTORY INFORMATION" ) ;
