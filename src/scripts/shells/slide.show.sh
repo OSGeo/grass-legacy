@@ -136,3 +136,4 @@ do
 		fi
 	done
 done
+d.frame -s full_screen
