@@ -1,4 +1,6 @@
 #define MAIN
+#include <stdlib.h>
+#include <string.h>
 #include "list.h"
 #include "local_proto.h"
 
@@ -74,7 +76,7 @@ int main (int argc, char *argv[])
             }
 	    if (!overwr->answer && find (n, to, ""))
 	    {
-		fprintf (stderr, "<%s> already exists\n", to);
+		fprintf (stderr, "<%s> already exists in mapset <%s>\n", to, mapset);
 		continue;
 	    }
             if (G_legal_filename (to) < 0)
