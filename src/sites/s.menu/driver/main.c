@@ -1,5 +1,5 @@
 #include "run.h"
-#include "dir.h"
+#include "site_dir.h"
 #include "site.h"
 #include "menu.h"
 #include "gis.h"
@@ -47,12 +47,16 @@ main(argc,argv) char *argv[];
 {
     SITE_LIST site_list, site_list_copy;
     struct Cell_head w;
-    char buf[1024];
+    char buf[1024], *N, *E, *S, *W;
+    char buff1[50], buff2[50], buff3[50];
+    char *format_north(), *format_east(), *format_res();
     int nsites0;
     int nsites1;
     int pause;
     int check;
+    int proj;
 
+    N = "(N)"; E = "(E)"; S = "(S)", W = "(W)";
     G_gisinit(argv[0]) ;
     G__make_mapset_element (SITE_DIR);
     initialize_site_list (&site_list);
@@ -74,10 +78,26 @@ main(argc,argv) char *argv[];
 			nsites0, nsites0 != 1 ? "s" : "" , nsites1);
 
 	G_get_window (&w);
-	sprintf(infobuf[0], "LOCATION: %-15s REGION %10.2lf(N)  %10.2lf(S) %7.2lf(RES)",
-		G_location(), w.north, w.south, w.ns_res);
-	sprintf(infobuf[1], "MAPSET:   %-15s        %10.2lf(E)  %10.2lf(W) %7.2lf(RES)",
-		G_mapset(), w.east, w.west, w.ew_res);
+        if(G_projection() == PROJECTION_LL)
+           {
+              N = "";
+              S = "";
+              E = "";
+              W = "";
+           }
+        proj = G_projection();
+	sprintf(infobuf[0], 
+                "LOCATION: %-15s REGION %10s%s  %10s%s %7s(RES)",
+		    G_location(),
+		    format_north(w.north ,buff1, proj), N,
+		    format_north(w.south, buff2, proj), S,
+		    format_res(w.ns_res,buff3, proj));
+	sprintf(infobuf[1], 
+                "MAPSET:   %-15s        %10s%s  %10s%s %7s(RES)",
+		    G_mapset(),
+		    format_east(w.east, buff1, proj), E,
+                    format_east(w.west, buff2, proj), W,
+		    format_res(w.ew_res,buff3, proj));
 	sprintf(infobuf[2], "MASK:     %-60.60s", G_mask_info());
 
 
