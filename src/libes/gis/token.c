@@ -20,7 +20,7 @@ G_tokenize (buf, delim)
 	char *delim;
 {
 	int i;
-	char *index();
+	char *G_index();
 	char **tokens;
 
 	i = 0;
@@ -40,7 +40,7 @@ G_tokenize (buf, delim)
 		tokens[i++] = buf;
 		tokens = (char **) G_realloc (tokens, (i+1) * sizeof (char *));
 
-		while (*buf && (index(delim,*buf) == NULL))
+		while (*buf && (G_index(delim,*buf) == NULL))
 			buf++;
 		if (*buf == 0)
 			break;
