@@ -29,8 +29,8 @@ parse_command (
     char **argv
 )
 {
-  struct Option *elev, *colr, *tricolr, *vct, *site, *view;
-  struct Option *panel_path, *script;
+  struct Option *elev, *colr, *tricolr, *vct, *view;
+  struct Option *panel_path, *script, *state;
   struct Flag *no_args, *script_kill, *demo;
   struct GModule *module;
   char *arglist[3], *autoload;
@@ -63,7 +63,15 @@ module = G_define_module();
   elev->multiple               = YES;
   elev->gisprompt              = "old,cell,Raster";
   elev->description            = "Raster file(s) for Elevation";
-  
+ 
+  colr = G_define_option();
+  colr->key                    = "color";
+  colr->type                   = TYPE_STRING;
+  colr->required               = NO;
+  colr->multiple               = YES;
+  colr->gisprompt              = "old,cell,Raster";
+  colr->description            = "Raster file(s) for Color";
+ 
   vct = G_define_option();
   vct->key                    = "vector";
   vct->type                   = TYPE_STRING;
@@ -72,14 +80,6 @@ module = G_define_module();
   vct->gisprompt              = "old,vector,Vector";
   vct->description            = "Vector overlay file(s)";
   
-  site = G_define_option();
-  site->key                    = "sites";
-  site->type                   = TYPE_STRING;
-  site->required               = NO;
-  site->multiple               = YES;
-  site->gisprompt              = "old,site_lists,Sites";
-  site->description            = "Sites overlay file(s)";
-
   no_args = G_define_flag();
   no_args->key                 = 'q';
   no_args->description         = "Quickstart - Do not load any data";
@@ -104,6 +104,11 @@ module = G_define_module();
   script->required         = NO;
   script->description      = "Execute script file at startup";
 
+  state= G_define_option();
+  state->key              = "state";
+  state->type             = TYPE_STRING;
+  state->required         = NO;
+  state->description      = "Load previosly saved state file";
 
   if (G_parser (argc, argv))
     exit (0);
@@ -124,10 +129,9 @@ module = G_define_module();
   /* Put in the "please wait..." message unless we are in demo mode */
   if ((strstr(argv[0],"nviz") != NULL) &&
       (!demo->answer)) {
-    if (Tcl_Eval(interp, startup_script) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_Eval(interp, startup_script) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+
   }
 
     fprintf (stderr, "\n");
@@ -159,16 +163,14 @@ module = G_define_module();
 
   /* Look for quickstart flag */
    if (no_args->answer) {
-    elev->answers=vct->answers=site->answers=NULL;
+    elev->answers=colr->answers=vct->answers=NULL;
 	}
 
 
   /* Look for scriptkill flag */
   if (script_kill->answer) {
-    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if an alternative panel path is specified */
@@ -176,20 +178,23 @@ module = G_define_module();
     /* If so then set the variable NvizAltPath to the alternative path
      */
     if (Tcl_VarEval(interp,"set NvizAltPath ", panel_path->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+  }
+
+ /* Get State file from command line */
+  if (state->answer) {
+    if (Tcl_VarEval(interp,"set NvizLoadState ", state->answer,
+                    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if a script file was specified */
   if (script->answer) {
     /* If so then set the variable NvizPlayScript to the file */
     if (Tcl_VarEval(interp,"set NvizPlayScript ", script->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
 
 #ifdef XSCRIPT
@@ -211,6 +216,19 @@ module = G_define_module();
     aload=0;
   
   /* Parse answeres from user */
+/* Run check to make sure elev == colr */
+	if(elev->answers && colr->answers) {
+	int ee, cc;
+		for (i = 0; elev->answers[i] ; i++){
+		ee = i;
+		}
+		for (i = 0; colr->answers[i] ; i++){
+		cc = i;
+		}
+	if ( ee != cc)
+		G_fatal_error("Number of elevation files does not match number of colors files");
+	}
+
   if(elev->answers){
     char tmp[30];
     
@@ -222,10 +240,14 @@ module = G_define_module();
       /* See if we should autoload the color file */
       if (aload) {
 	strncpy(tmp, interp->result, 29);
+	if (colr->answers) {
 	if (Tcl_VarEval(interp, tmp, " set_att color ",
-			elev->answers[i], NULL) != TCL_OK) {
-	  fprintf(stderr, "ERROR: %s\n", interp->result);
-	  exit(-1);
+		colr->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
+	} else {
+	if (Tcl_VarEval(interp, tmp, " set_att color ",
+			elev->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
 	}
       }
     }
@@ -238,14 +260,6 @@ module = G_define_module();
     for (i = 0 ; vct->answers[i] ; i++){
       arglist[1] = "vect";
       arglist[2] = vct->answers[i];
-      Nnew_map_obj_cmd (data, interp, 3, arglist);
-    }
-  }
-
-  if(site->answers){
-    for (i = 0 ; site->answers[i] ; i++){
-      arglist[1] = "site";
-      arglist[2] = site->answers[i];
       Nnew_map_obj_cmd (data, interp, 3, arglist);
     }
   }
