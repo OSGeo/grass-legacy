@@ -317,7 +317,7 @@ proc DmVector::display { node } {
     set fcolor [DmVector::color $opt($id,fcolor)]
     set lcolor [DmVector::color $opt($id,lcolor)]
     append cmd " color=$color"
-    if { $opt($id,display_attr) && $opt($id,attribute) != "" } { append cmd " lcolor=$lcolor" }
+    append cmd " lcolor=$lcolor" 
     if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
 
     # display
@@ -344,8 +344,9 @@ proc DmVector::display { node } {
         append cmd " field=$opt($id,field)" 
     } 
     if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
-        append cmd " {att=$opt($id,attribute)} lsize=$opt($id,lsize)" 
+        append cmd " {att=$opt($id,attribute)}" 
     } 
+    append cmd " lsize=$opt($id,lsize)" 
     
     append cmd " xref=$opt($id,xref) yref=$opt($id,yref)"
 
