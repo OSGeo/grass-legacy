@@ -1,4 +1,4 @@
-$Id: TODO,v 1.41 2000-10-23 17:20:32 markus Exp $
+$Id: TODO,v 1.42 2000-10-25 12:07:55 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -175,6 +175,28 @@ Modules:
   not to "status" of module (which is even confused at time)
   (Being worked on by ?)
 
+- nviz2.2
+  - Z axis scalable when displaying 3D sites
+    (Being worked on by ?)
+
+  - eventually color problem in lat/long locations
+    (Being worked on by ?)
+
+  - high resolution output (definable extent like CELL driver)
+    (Being worked on by 
+     probably Bob Covill <bcovill@tekmap.ns.ca>)
+
+  - fix legend, scale and box drawings
+    (Being worked on by Bill Brown, Helena Mitasova)
+
+  - have immediate refresh of surface/vectors etc. instead of manual
+    redrawing
+
+  - see:
+    ./src.contrib/GMSL/NVIZ2.2/src/TODO
+    ./src.contrib/GMSL/NVIZ2.2/TODO.linux
+    ./src.contrib/GMSL/NVIZ2.2/TODO
+
 - ps.map:
   set CC option "-fwritable-strings" on Linux or, better, update ps.map!
   (Being worked on by ?)
@@ -224,24 +246,6 @@ Modules:
 - v.buffer: write it
   (Being worked on by ?)
 
-- NVIZ:
-  - Z axis scalable when displaying 3D sites
-    (Being worked on by ?)
-
-  - eventually color problem in lat/long locations
-    (Being worked on by ?)
-
-  - high resolution output (definable extent like CELL driver)
-    (Being worked on by 
-     probably Bob Covill <bcovill@tekmap.ns.ca>)
-
-  - fix legend, scale and box drawings
-    (Being worked on by Bill Brown, Helena Mitasova)
-
-  - see:
-    ./src.contrib/GMSL/NVIZ2.2/src/TODO
-    ./src.contrib/GMSL/NVIZ2.2/TODO.linux
-    ./src.contrib/GMSL/NVIZ2.2/TODO
 
 
 - tcltkgrass:
