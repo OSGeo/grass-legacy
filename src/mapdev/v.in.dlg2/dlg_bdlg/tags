@@ -1,0 +1,21 @@
+Ma_b_front	a_b_front.c	/^main()$/
+Ma_b_main	a_b_main.c	/^main(argc, argv)$/
+Mb_a_front	b_a_front.c	/^main()$/
+Mb_a_main	b_a_main.c	/^main(argc, argv)$/
+_get_dtype	r_dlg_head.c	/^_get_dtype(buf, doub)$/
+_put_dtype	read_write.c	/^_put_dtype(buff, value, width, deci)$/
+a_b_dlg	a_b_dlg.c	/^a_b_dlg(dlg, bin)$/
+b_d_dlg	b_a_dlg.c	/^b_d_dlg(bin, dlg)$/
+b_d_head	b_a_head.c	/^b_d_head(bin, dlg)$/
+bound_box	bound_box.c	/^bound_box(coor_buff, n_coors, N, S, E, W)$/
+pad	pad.c	/^pad(s,n)$/
+read_dlg_head	r_dlg_head.c	/^read_dlg_head(dlg)$/
+read_doubles	read_write.c	/^read_doubles(file, num, buf)$/
+read_int	read_write.c	/^read_int(file, num, buf)$/
+scan_area_record	a_b_dlg.c	/^static  scan_area_record( str, num, x, y, n_lines,/
+scan_doubles	read_write.c	/^static scan_doubles( todo, coor_str, tmp )$/
+scan_node_record	a_b_dlg.c	/^scan_node_record( str, num, x, y, n_lines, n_atts)/
+write_bdlg_head	w_bdlg_hd.c	/^write_bdlg_head(bin, cnum)$/
+write_double	read_write.c	/^write_double(file, num, buf)$/
+write_doubles	read_write.c	/^write_doubles (file, num, x_coors, y_coors)$/
+write_int	read_write.c	/^write_int (file, num, buf)$/
