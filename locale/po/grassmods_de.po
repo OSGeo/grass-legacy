@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-15 17:15+0100\n"
-"PO-Revision-Date: 2005-01-29 13:51+0100\n"
+"PO-Revision-Date: 2005-01-30 16:06+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -2109,274 +2109,237 @@ msgid "Name of the output raster map"
 msgstr "Name der Ausgaberasterkarte."
 
 #: ../raster/r.random/main.c:65
-#, fuzzy
 msgid "Name of the output vector points map"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgabevektorkarte, die die Punkte enthalten sollen."
 
 #: ../raster/r.random/main.c:73
-#, fuzzy
 msgid "Generate sites for category zero also"
-msgstr "für"
+msgstr "Erzeugt auch Punkte (sites) für Kategegorie Zero (null)."
 
 #: ../raster/r.random/main.c:77
-#, fuzzy
 msgid "Report information about input raster and exit"
-msgstr "Report"
+msgstr "Gebe Informationen über die Eingaberasterkarte und beende das Modul."
 
 #: ../raster/r.random.cells/main.c:33
 msgid "Generates random cell values with spatial dependence."
-msgstr ""
+msgstr "Erzeugt zufällig Zellwerte mit räumlicher Abhängigkeit."
 
 #: ../raster/r.random.surface/main.c:30
 msgid "Generates random surface(s) with spatial dependence."
-msgstr ""
+msgstr "Erzeugt zufällige Oberfläche(n) mit räumlicher Abhängigkeit."
 
 #: ../raster/r.reclass/main.c:30
-#, fuzzy
 msgid ""
 "Creates a new map layer whose category values are based upon the user's "
 "reclassification of categories in an existing raster map layer."
-msgstr "a deren von."
+msgstr "Erzeugt eine neue Karte basierend auf nutzereigenen Reklassifizierungsregeln der Kategoriewerte von einer existierenden Rasterkarte."
 
 #: ../raster/r.reclass/main.c:39
-#, fuzzy
 msgid "Raster map to be reclassified"
-msgstr "Mindestens 2 Layer müssen angegeben werden."
+msgstr "Rasterkarte, die neu klassifiziert werden soll."
 
 #: ../raster/r.reclass/main.c:46 ../raster/r.recode/main.c:40
-#, fuzzy
 msgid "Name for the resulting raster map"
-msgstr "für"
+msgstr "Name der resultierenden Rasterkarte."
 
 #: ../raster/r.reclass/main.c:52 ../raster/r.recode/main.c:46
-#, fuzzy
 msgid "Title for the resulting raster map"
-msgstr "für"
+msgstr "Titel der resultierenden Rasterkarte."
 
 #: ../raster/r.recode/main.c:26
 msgid "Recode raster maps."
-msgstr ""
+msgstr "Schlüsselt Rasterkarten um."
 
 #: ../raster/r.recode/main.c:33
 msgid "Raster map to be recoded"
-msgstr ""
+msgstr "Rasterkarte, die umgesclüsselt werden soll."
 
 #: ../raster/r.recode/main.c:50
 msgid "Align the current region to the input map"
-msgstr ""
+msgstr "Gleiche die aktuelle Region an die Eingabekarte an."
 
 #: ../raster/r.recode/main.c:54
-#, fuzzy
 msgid "Force output to double map type (DCELL)"
-msgstr "Erzwingen Ausgabe"
+msgstr "Erzwingen die Ausgabe als Double-Integer Karte (DCELL)."
 
 #: ../raster/r.region/main.c:53
-#, fuzzy
 msgid "Sets the boundary definitions for a raster map."
-msgstr "für a."
+msgstr "Setzt die Begrenzungs-Definition (boundary) für eine Rasterkarte."
 
 #: ../raster/r.region/main.c:71
-#, fuzzy
 msgid "Set from current region"
-msgstr "Setzen von"
+msgstr "Übernehme von der aktuellen Region."
 
 #: ../raster/r.region/main.c:75
-#, fuzzy
 msgid "Set from default region"
-msgstr "Setzen von"
+msgstr "Übernehme von der Standard-Region."
 
 #: ../raster/r.region/main.c:86
 msgid "Raster map to change"
-msgstr ""
+msgstr "Rasterkarte, deren Region verändert werden soll."
 
 #: ../raster/r.region/main.c:94
-#, fuzzy
 msgid "Set current region from named region"
-msgstr "Setzen von"
+msgstr "Übernehme aktuelle Region von einer namentlich abgespeicherten Region."
 
 #: ../raster/r.region/main.c:102
-#, fuzzy
 msgid "Set region to match this raster map"
-msgstr "Setzen übereinstimmen mit"
+msgstr "Setze Region angepasst an diese Rasterkarte."
 
 #: ../raster/r.region/main.c:110
-#, fuzzy
 msgid "Set region to match this vector map"
-msgstr "Setzen übereinstimmen mit"
+msgstr "Setze Region angepasst an diese Vektorkarte."
 
 #: ../raster/r.region/main.c:118
-#, fuzzy
 msgid "Set region to match this 3dview file"
-msgstr "Setzen übereinstimmen mit"
+msgstr "Setze Region angepasst an diese 3dview-Datei."
 
 #: ../raster/r.region/main.c:126
-#, fuzzy
 msgid "Value for the northern edge"
-msgstr "für"
+msgstr "Wert für die nördliche Ecke."
 
 #: ../raster/r.region/main.c:134
-#, fuzzy
 msgid "Value for the southern edge"
-msgstr "für"
+msgstr "Wert für die südliche Ecke."
 
 #: ../raster/r.region/main.c:142
-#, fuzzy
 msgid "Value for the eastern edge"
-msgstr "für"
+msgstr "Wert für die östliche Ecke."
 
 #: ../raster/r.region/main.c:150
-#, fuzzy
 msgid "Value for the western edge"
-msgstr "für"
+msgstr "Wert für die westliche Ecke."
 
 #: ../raster/r.region/main.c:158
 msgid "Raster map to align to"
-msgstr ""
+msgstr "Rasterkarte, an die angepasst werden soll."
 
 #: ../raster/r.region/main.c:167 ../raster/r.region/main.c:224
 #: ../raster/r.region/main.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "raster map <%s> not found"
-msgstr "nicht"
+msgstr "Rasterkarte <%s> konnte nicht gefunden werden."
 
 #: ../raster/r.region/main.c:169 ../raster/r.region/main.c:226
 #: ../raster/r.region/main.c:361
 #, c-format
-#, fuzzy
 msgid "can't read header for <%s> in <%s>"
-msgstr "gelesen für"
+msgstr "Kann Header-Datei für <%s> in <%s> nicht lesen."
 
 #: ../raster/r.region/main.c:183
 #, c-format
-#, fuzzy
 msgid "region <%s> not found"
-msgstr "nicht"
+msgstr "Region <%s> nicht gefunden."
 
 #: ../raster/r.region/main.c:185
 #, c-format
-#, fuzzy
 msgid "can't read region <%s> in <%s>"
-msgstr "gelesen"
+msgstr "Kann Region <%s> in <%s> nicht lesen."
 
 #: ../raster/r.region/main.c:196
 #, c-format
-#, fuzzy
 msgid "3dview file <%s> not found"
-msgstr "nicht"
+msgstr "3dview-Datei <%s> nicht gefunden."
 
 #: ../raster/r.region/main.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "can't open 3dview file <%s> in <%s>"
-msgstr "Kann Range-Datei für Karte %s nicht öffnen."
+msgstr "Kann 3dview-Datei <%s> in <%s> nicht öffnen."
 
 #: ../raster/r.region/main.c:206
 #, c-format
-#, fuzzy
 msgid "can't read 3dview file <%s> in <%s>"
-msgstr "gelesen"
+msgstr "Kann 3dview-Datei <%s> ub <%s> nicht lesen."
 
 #: ../raster/r.region/main.c:208
 #, c-format
-#, fuzzy
 msgid "Old 3dview file. Region not found in <%s> in <%s>"
-msgstr "nicht"
+msgstr "Alte 3dview-Datei. Region <%s> in <%s> konnte nicht gefunden werden."
 
 #: ../raster/r.region/main.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "vector map <%s> not found"
-msgstr "nicht"
+msgstr "Vektorkarte <%s> nicht gefunden."
 
 #: ../raster/r.region/main.c:240
-#, fuzzy, c-format
+#, c-format
 msgid "can't open vector file <%s> in <%s>"
-msgstr "Kann Range-Datei für Karte %s nicht öffnen."
+msgstr "Kann Vektor-Datei <%s> in <%s> nicht öffnen."
 
 #: ../raster/r.region/main.c:370
 #, c-format
-#, fuzzy
 msgid "invalid region: %s"
-msgstr "ungültig"
+msgstr "Ungültige Region: %s"
 
 #: ../raster/r.region/main.c:378
 msgid "unable to update boundaries"
-msgstr ""
+msgstr "Kann die Begrenzung (boundary) nicht aktualisieren."
 
 #: ../raster/r.report/main.c:15
-#, fuzzy
 msgid "Reports statistics for raster map layers."
-msgstr "für."
+msgstr "Gibt statistisch Werte für eine Rasterkarte aus."
 
 #: ../raster/r.report/parse.c:44
-#, fuzzy
 msgid "Raster map(s) to report on"
-msgstr "ein"
+msgstr "Rasterkarte(n), für die ein Report erstellt werden soll."
 
 #: ../raster/r.report/parse.c:52
-#, fuzzy
 msgid ""
 "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
 "(ercent_cover)"
-msgstr "a Cover"
+msgstr ""
+"mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+"(ercent_cover)"
 
 #: ../raster/r.report/parse.c:60
-#, fuzzy
 msgid "Character representing no data cell value"
-msgstr "Zeichen Nein"
+msgstr "Zeichenkette, die NODATA-Werte repräsentiert."
 
 #: ../raster/r.report/parse.c:66
 #, c-format
-#, fuzzy
 msgid "Page length (default: %d lines)"
-msgstr "length Zeilen"
+msgstr "Seitenlänge (Standard: %d Zeilen)."
 
 #: ../raster/r.report/parse.c:73
 #, c-format
 msgid "Page width (default: %d characters)"
-msgstr ""
+msgstr "Seitenbreite (Standard: %d Zeichen)."
 
 #: ../raster/r.report/parse.c:80
-#, fuzzy
 msgid "Name of an output file to hold the report"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgabedatei zum Speichern des Reports."
 
 #: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
-#, fuzzy
 msgid "Number of fp subranges to collect stats from"
-msgstr "von von"
+msgstr "Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
 
 #: ../raster/r.report/parse.c:91
-#, fuzzy
 msgid "Suppress page headers"
-msgstr "Seite"
+msgstr "Unterdrücke Seitenkopf."
 
 #: ../raster/r.report/parse.c:95
-#, fuzzy
 msgid "Use formfeeds between pages"
-msgstr "zwischen Seiten"
+msgstr ""
 
 #: ../raster/r.report/parse.c:103
-#, fuzzy
 msgid "Scientific format"
-msgstr "Wissenschaftlich"
+msgstr "Wissenschaftliches Format."
 
 #: ../raster/r.report/parse.c:107
-#, fuzzy
 msgid "Filter out all no data cells"
-msgstr "Nein"
+msgstr "Alle NODATA-Werte herausfiltern."
 
 #: ../raster/r.report/parse.c:111
-#, fuzzy
 msgid "Filter out cells where all maps have no data"
-msgstr "Nein"
+msgstr "Filtere alle Zellen heraus, wo alle Karten NODATA-Werte haben."
 
 #: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
-#, fuzzy
 msgid "Report for cats fp ranges (fp maps only)"
-msgstr "Report für"
+msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr ""
+msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
 
 #: ../raster/r.resamp.rst/main.c:161
 #, fuzzy
@@ -2384,30 +2347,27 @@ msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
-msgstr "von a mit."
+msgstr "Reinterpoliert und berechnet topgraphische Analysen basierend auf einer Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized splines with tension und Glättung (RST)."
 
 #: ../raster/r.resamp.rst/main.c:175
 msgid "Do zeroes in input map represent elevation?"
-msgstr ""
+msgstr "Repräsentieren die 0-Werte der Eingabekarte Höheninformationen?"
 
 #: ../raster/r.resamp.rst/main.c:181
-#, fuzzy
 msgid "Desired east-west resolution"
-msgstr "Osten West"
+msgstr "Gewünschte Ost-West Auflösung."
 
 #: ../raster/r.resamp.rst/main.c:187
-#, fuzzy
 msgid "Desired north-south resolution"
-msgstr "Norden Süden"
+msgstr "Gewünschte Nord-Süd Auflösung."
 
 #: ../raster/r.resamp.rst/main.c:194
-#, fuzzy
 msgid "Output z-file (elevation)"
-msgstr "z"
+msgstr "Ausgabekarte derz-Werte (Höheninformationen)."
 
 #: ../raster/r.resamp.rst/main.c:201
 msgid "Slope"
-msgstr ""
+msgstr "Hangneigung"
 
 #: ../raster/r.resamp.rst/main.c:208
 msgid "Aspect"
@@ -2415,107 +2375,95 @@ msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:215
 msgid "Profile curvature"
-msgstr ""
+msgstr "Vertikal-Wölbung"
 
 #: ../raster/r.resamp.rst/main.c:222
 msgid "Tangential curvature"
-msgstr ""
+msgstr "Horizontal-Wölbung"
 
 #: ../raster/r.resamp.rst/main.c:229
-#, fuzzy
 msgid "Mean curvature"
-msgstr "Mittel"
+msgstr "Mittlere Wölbung"
 
 #: ../raster/r.resamp.rst/main.c:233
 msgid "Output partial derivatives instead"
-msgstr ""
+msgstr "Gebe stattdessen partielle Ableitung aus."
 
 #: ../raster/r.resamp.rst/main.c:240
-#, fuzzy
 msgid "Name of the cell file containing smoothing"
-msgstr "von"
+msgstr "Name der Datei, die die Glättung enthält."
 
 #: ../raster/r.resamp.rst/main.c:247
-#, fuzzy
 msgid "Name of the raster file used as mask"
-msgstr "von"
+msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
 
 #: ../raster/r.resamp.rst/main.c:254
-#, fuzzy
 msgid "Rows/columns overlap for segmentation"
-msgstr "für"
+msgstr "Reihen/Spalte Überlappung für Segmentierung."
 
 #: ../raster/r.resamp.rst/main.c:261
-#, fuzzy
 msgid "Conversion factor for z-values"
-msgstr "für z"
+msgstr "Konvertierungsfaktor ür z-Werte."
 
 #: ../raster/r.resamp.rst/main.c:268
+#, fuzzy
 msgid "Tension"
-msgstr ""
+msgstr "Spannung (Tension)"
 
 #: ../raster/r.resamp.rst/main.c:274
-#, fuzzy
 msgid "Anisotropy angle (in degrees)"
-msgstr "Winkel"
+msgstr "Anisotropie-Winkel (in Grad)"
 
 #: ../raster/r.resamp.rst/main.c:280
 msgid "Anisotropy scaling factor"
-msgstr ""
+msgstr "Anisotropie Skalierfaktor"
 
 #: ../raster/r.resamp.rst/main.c:284
+#, fuzzy
 msgid "Use dnorm independent tension"
-msgstr ""
+msgstr "Benutze dnorm unabhängige Spannung."
 
 #: ../raster/r.resample/main.c:35
 msgid "GRASS raster map layer data resampling capability."
-msgstr ""
+msgstr "GRASS Modul zum resamplen von Rasterkarten."
 
 #: ../raster/r.resample/main.c:44
-#, fuzzy
 msgid "Name of an input layer"
-msgstr "von"
+msgstr "Name der Eingabekarte."
 
 #: ../raster/r.resample/main.c:51
-#, fuzzy
 msgid "Name of an output layer"
-msgstr "von Ausgabe"
+msgstr "Name der Ausgabekarte"
 
 #: ../raster/r.rescale/main.c:35
-#, fuzzy
 msgid "Rescales the range of category values in a raster map layer."
-msgstr "von a."
+msgstr "Reskaliert die Spanne der Kategoriewerte einer Rasterkarte."
 
 #: ../raster/r.rescale/main.c:45 ../raster/r.rescale.eq/main.c:46
-#, fuzzy
 msgid "The name of the raster map to be rescaled"
-msgstr "von"
+msgstr "Name der Rasterkarte, die reskaliert werden soll."
 
 #: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
-#, fuzzy
 msgid "The input data range to be rescaled (default: full range of input map)"
-msgstr "von"
+msgstr "Wertespanne der Eingangsdaten, die reskaliert werden soll (Standard: volle Spanne der Eingabekarte)"
 
 #: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
 msgid "The resulting raster map name"
-msgstr ""
+msgstr "Name der resultierenden Rasterkarte."
 
 #: ../raster/r.rescale/main.c:66 ../raster/r.rescale.eq/main.c:67
-#, fuzzy
 msgid "The output data range"
-msgstr "Ausgabe"
+msgstr "Spanne der Ausgabedaten."
 
 #: ../raster/r.rescale/main.c:73 ../raster/r.rescale.eq/main.c:74
-#, fuzzy
 msgid "Title for new raster map"
-msgstr "für"
+msgstr "Titel für die neue Rasterkarte."
 
 #: ../raster/r.rescale.eq/main.c:36
-#, fuzzy
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr "von a."
+msgstr ""
 
 #: ../raster/r.series/main.c:84
 #, fuzzy
@@ -2525,201 +2473,171 @@ msgid ""
 msgstr "Ausgabe a von."
 
 #: ../raster/r.series/main.c:94
-#, fuzzy
 msgid "Names of existing raster files"
-msgstr "von"
+msgstr "Name einer existierenden Rasterkarte."
 
 #: ../raster/r.series/main.c:108
 msgid "Aggregate operation"
-msgstr ""
+msgstr "Durchzuführende Operation"
 
 #: ../raster/r.series/main.c:116
 msgid "Propagate NULLs"
-msgstr ""
+msgstr "Vermehre NULLs"
 
 #: ../raster/r.slope.aspect/main.c:134
-#, fuzzy
 msgid ""
 "Generates raster map layers of slope, aspect, curvatures and partial "
 "derivatives from a raster map layer of true elevation values. Aspect is "
 "calculated counterclockwise from east."
-msgstr "von Steigung von a von ist von Osten."
+msgstr ""
+"Erzeugt Hangneigungs-, Hangexpositions-, Wölbungs- und partielle Ableitungskarten von einer Rasterkarte mit Höheninformationen."
+"Hangexpositionen werden von Osten im Uhrzeigersinn berechnet."
 
 #: ../raster/r.slope.aspect/main.c:143
 msgid "Raster elevation file name"
-msgstr ""
+msgstr "Rasterkarte mit Höheninformationen."
 
 #: ../raster/r.slope.aspect/main.c:151
-#, fuzzy
 msgid "Output slope filename"
-msgstr "Steigung"
+msgstr "Ausgabekarte mit Hangneigung."
 
 #: ../raster/r.slope.aspect/main.c:159
-#, fuzzy
 msgid "Format for reporting the slope"
-msgstr "für Steigung"
+msgstr "Format für die Hangneigung."
 
 #: ../raster/r.slope.aspect/main.c:167
-#, fuzzy
 msgid "Type of output aspect and slope maps"
-msgstr "Typ von Ausgabe Steigung"
+msgstr "Typ für die Ausgabe von Hangneigung und -ausrichtung."
 
 #: ../raster/r.slope.aspect/main.c:175
-#, fuzzy
 msgid "Output aspect filename"
-msgstr "Ausgabe-Tabellenname"
+msgstr "Ausgabekarte mit Hangexposition."
 
 #: ../raster/r.slope.aspect/main.c:183
-#, fuzzy
 msgid "Output profile curvature filename"
-msgstr "Profile"
+msgstr "Ausgabekarte mit Vertikal-Wölbung."
 
 #: ../raster/r.slope.aspect/main.c:191
-#, fuzzy
 msgid "Output tangential curvature filename"
-msgstr "Ausgabe-Datenbankname"
+msgstr "Ausgabekarte mit Horizontal-Wölbung."
 
 #: ../raster/r.slope.aspect/main.c:199
-#, fuzzy
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "Steigung"
+msgstr "Ausgabekarte der ersten partiellen Ableitung dx (Ost-West Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:207
-#, fuzzy
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "Steigung"
+msgstr "Ausgabekarte der ersten partiellen Ableitung dy (Nord-Süd Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:215
-#, fuzzy
 msgid "Output second order partial derivative dxx filename"
-msgstr "Zweites"
+msgstr "Ausgabekarte der zweiten partiellen Ableitung dxx."
 
 #: ../raster/r.slope.aspect/main.c:223
-#, fuzzy
 msgid "Output second order partial derivative dyy filename"
-msgstr "Zweites"
+msgstr "Ausgabekarte der zweiten partiellen Ableitung dyy."
 
 #: ../raster/r.slope.aspect/main.c:231
-#, fuzzy
 msgid "Output second order partial derivative dxy filename"
-msgstr "Zweites"
+msgstr "Ausgabekarte der zweiten partiellen Ableitung dxy."
 
 #: ../raster/r.slope.aspect/main.c:235
-#, fuzzy
 msgid "Multiplicative factor to convert elevation units to meters"
-msgstr "Multiplikativ Meter"
+msgstr "Multiplikator, um Höheneinheiten in Meter umzurechnen."
 
 #: ../raster/r.slope.aspect/main.c:242
-#, fuzzy
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr "Steigung Prozent für ist"
+msgstr "Minimale Hangneigung (in Prozent), für die eine Hangexposition berechnet werden soll."
 
 #: ../raster/r.slope.aspect/main.c:249
-#, fuzzy
 msgid "Do not align the current region to the elevation layer"
-msgstr "nicht"
+msgstr "Die aktuelle Region nicht an die Rasterkarte mit den Höheninformationen anpassen."
 
 #: ../raster/r.statistics/main.c:43
 msgid "Category or object oriented statistics."
-msgstr ""
+msgstr "Kategorie- oder objektorientierte Statistik."
 
 #: ../raster/r.statistics/main.c:72
-#, fuzzy
 msgid "Method of object-based statistic"
-msgstr "von"
+msgstr "Methode der objektbasierten Statistik."
 
 #: ../raster/r.statistics/main.c:79
-#, fuzzy
 msgid "Resultant raster map (not used with 'distribution')"
-msgstr "nicht Distribution"
+msgstr "Resultierende Rasterkarte (wird nicht benutzt, wenn Methode 'Verteilung' gewählt wurde)."
 
 #: ../raster/r.statistics/main.c:84
-#, fuzzy
 msgid "Cover values extracted from the category labels of the cover map"
-msgstr "von von Cover"
+msgstr "Benutze die Kategorie-Werte, die von der Coverkarte bedeckt sind."
 
 #: ../raster/r.stats/main.c:70
-#, fuzzy
 msgid "Generates area statistics for raster map layers."
-msgstr "Bereich für."
+msgstr "Erzeugt Flächenstatistiken für Rasterkarten."
 
 #: ../raster/r.stats/main.c:80
 msgid "Raster input maps(s)"
-msgstr ""
+msgstr "Rastereingabekarte(n)"
 
 #: ../raster/r.stats/main.c:97
-#, fuzzy
 msgid "String representing no data cell value"
-msgstr "Nein"
+msgstr "Zeichenkette, die NODATA-Werte repräsentiert."
 
 #: ../raster/r.stats/main.c:104
-#, fuzzy
 msgid "Output file name"
-msgstr "Ausgabe-Tabellenname"
+msgstr "Ausgabedateiname"
 
 #: ../raster/r.stats/main.c:121
-#, fuzzy
 msgid "One cell (range) per line"
-msgstr "Linie"
+msgstr "Eine Zelle(nspanne) pro Linie."
 
 #: ../raster/r.stats/main.c:125
-#, fuzzy
 msgid "Print area totals"
-msgstr "Bereich"
+msgstr "Gebe Flächensummen aus."
 
 #: ../raster/r.stats/main.c:129
 msgid "Print cell counts"
-msgstr ""
+msgstr "Gebe Zellenanzahlen aus."
 
 #: ../raster/r.stats/main.c:133
-#, fuzzy
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-msgstr "Prozent nicht"
+msgstr "Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
 
 #: ../raster/r.stats/main.c:137
 msgid "Print category labels"
-msgstr ""
+msgstr "Gebe Kategorielabel aus."
 
 #: ../raster/r.stats/main.c:145
-#, fuzzy
 msgid "Suppress reporting of any NULLs"
-msgstr "von any"
+msgstr "Unterdrücke die Ausgabe von NULL-Werten."
 
 #: ../raster/r.stats/main.c:149
-#, fuzzy
 msgid "Suppress reporting of NULLs when all values are NULL"
-msgstr "von"
+msgstr "Unterdrücke die Ausgabe von NULL-Werten, wenn alle Werte NULL sind."
 
 #: ../raster/r.stats/main.c:153
-#, fuzzy
 msgid "Print grid coordinates (east and north)"
-msgstr "Osten Norden"
+msgstr "Gebe Rasterkoordinaten aus (Ost und Nord)."
 
 #: ../raster/r.stats/main.c:157
-#, fuzzy
 msgid "Print x and y (column and row)"
-msgstr "row"
+msgstr "Gebe x und y aus (Spalten und Reihen)."
 
 #: ../raster/r.stats/main.c:165
-#, fuzzy
 msgid "Print raw indexes of fp ranges (fp maps only)"
-msgstr "roh von"
+msgstr "Gebe rohe Indizes der Fließkomma-Spannen aus (nur Fließkommakarten)."
 
 #: ../raster/r.stats/main.c:169
 msgid "Read fp map as integer (use map's quant rules)"
-msgstr ""
+msgstr "Lese Fließkommakarte als Integerkarte (benutze Quantisierungsregeln der Karte)."
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
-msgstr ""
+msgstr "Summierert die Rasterzellenwerte auf."
 
 #: ../raster/r.sum/main.c:38
-#, fuzzy
 msgid "Name of incidence or density file."
-msgstr "von Dichte."
+msgstr "Name der Häufigkeits- oder Dichtedatei."
 
 #: ../raster/r.sun/main.c:156
-#, fuzzy
 msgid ""
 "Computes direct (beam), diffuse and reflected solar irradiation raster maps "
 "for given day, latitude, surface and atmospheric conditions. Solar "
@@ -2728,112 +2646,95 @@ msgid ""
 "a local time can be specified to compute solar incidence angle and/or "
 "irradiance raster maps. The shadowing effect of the topography is optionally "
 "incorporated."
-msgstr "für e g length a a Zeit Winkel von ist."
+msgstr "Berechnet die direkte, diffuse und reflektierte Sonneneinstrahlung für einen gegebenen Tag, Breitengrad, Oberfläche und atmosphärische Bedinungen. Solarparameter (z.B.: Sonnenaufgangs- und Sonnenuntergangszeiten, extraterrestrische Strahlung, Neigung, Tageslänge) werden in einer lokalen Textdatei gespeichert. Alternativ kann eine lokale Zeit zur Berechnung des Sonneneinstrahlwinkels und/oder der Sonneneinstrahlung angegeben werden. Die Abschattung der Topographie kann optional berücksichtigt werden."
 
 #: ../raster/r.sun/main.c:184
-#, fuzzy
 msgid "Name of the elevation raster file"
-msgstr "von"
+msgstr "Name der Datei mit Höheninformationen."
 
 #: ../raster/r.sun/main.c:191
-#, fuzzy
 msgid "Name of the aspect raster file"
-msgstr "von"
+msgstr "Name der Hangexpositionskarte."
 
 #: ../raster/r.sun/main.c:198
-#, fuzzy
 msgid "Name of the slope raster file"
-msgstr "von Steigung"
+msgstr "Name der Hangneigungskarte."
 
 #: ../raster/r.sun/main.c:206
-#, fuzzy
 msgid "Name of the Linke turbidity coefficient raster file"
-msgstr "von"
+msgstr "Name der Karte des Linke Trübungskoeffizienten."
 
 #: ../raster/r.sun/main.c:215
-#, fuzzy
 msgid "A single value of the Linke turbidity coefficient"
-msgstr "Single von"
+msgstr "Ein einfacher Wert des Linke Trübungskoeffizients."
 
 #: ../raster/r.sun/main.c:223
-#, fuzzy
 msgid "Name of the albedo coefficient raster file"
-msgstr "von"
+msgstr "Name der Albedokoeffizientkarte."
 
 #: ../raster/r.sun/main.c:231
-#, fuzzy
 msgid "A single value of the albedo coefficient"
-msgstr "Single von"
+msgstr "Ein einfacher Wert des Albedokoeffizients."
 
 #: ../raster/r.sun/main.c:239
-#, fuzzy
 msgid "Name of the latitude raster file"
-msgstr "von"
+msgstr "Name der Breitengradkarte."
 
 #: ../raster/r.sun/main.c:246
-#, fuzzy
 msgid "A single value of latitude"
-msgstr "Single von"
+msgstr "Ein einfacher Wert des Breitengrads."
 
 #: ../raster/r.sun/main.c:254
 msgid "The real-sky beam radiation coefficient file"
-msgstr ""
+msgstr "Die Karte mit dem Koeffizient der direkten Sonneneinstrahlung."
 
 #: ../raster/r.sun/main.c:262
 msgid "The real-sky diffuse radiation coefficient file"
-msgstr ""
+msgstr "Die Karte mit dem Koeffizient der diffusen Sonneneinstrahlung."
 
 #: ../raster/r.sun/main.c:269
-#, fuzzy
 msgid "Output incidence angle file (raster)"
-msgstr "Winkel"
+msgstr "Ausgabekarte des Einfallswinkels (Raster)."
 
 #: ../raster/r.sun/main.c:277
 msgid "Output direct (beam) irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "Ausgabekarte der direkten Sonneneinstrahlung (Raster)."
 
 #: ../raster/r.sun/main.c:284
-#, fuzzy
 msgid "Output insolation time file (raster)"
-msgstr "Zeit"
+msgstr "Ausgabekarte der Sonneneinstrahlungszeit (Raster)."
 
 #: ../raster/r.sun/main.c:292
 msgid "Output diffuse irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "Ausgabekarte der diffusen Sonneneinstrahlung (Raster)."
 
 #: ../raster/r.sun/main.c:300
 msgid "Output reflected irradiance/irradiation file (raster)"
-msgstr ""
+msgstr "Ausgabe der reflektierten Sonneneinstrahlung (Raster)."
 
 #: ../raster/r.sun/main.c:306
-#, fuzzy
 msgid "No. of day of the year (1-365)"
-msgstr "von von"
+msgstr "Nummer des Tages im Jahr (1-365)"
 
 #: ../raster/r.sun/main.c:313
-#, fuzzy
 msgid "Time step computing all-day radiation"
-msgstr "step"
+msgstr "Zeitschritt für die Berechnung der ganztägigen Strahlung."
 
 #: ../raster/r.sun/main.c:320
-#, fuzzy
 msgid "Required declination value (overriding the internal value)"
-msgstr "erforderlich"
+msgstr "Erforderlicher Deklinationswert (überschreibt den internen Wert)."
 
 #: ../raster/r.sun/main.c:327
-#, fuzzy
 msgid "Local (solar) time [decimal hours]"
-msgstr "Zeit"
+msgstr "Lokale (Sonnen-)Zeit [Dezimal-Stunden]"
 
 #: ../raster/r.sun/main.c:334
-#, fuzzy
 msgid "Sampling distance step coefficient (0.5-1.5)"
-msgstr "step"
+msgstr ""
 
 #: ../raster/r.sun/main.c:339
-#, fuzzy
 msgid "Incorporate the shadowing effect of terrain"
-msgstr "von"
+msgstr "Berücksichtige den Schatteneffekt der Oberfläche."
 
 #: ../raster/r.sunmask/main.c:109
 #, fuzzy
