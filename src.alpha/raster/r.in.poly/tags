@@ -1,0 +1,15 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+begin_rasterization	raster.c	/^begin_rasterization(nrows, f)$/
+cell_dot	raster.c	/^cell_dot (x, y)$/
+char_dot	raster.c	/^char_dot (x, y)$/
+configure_plot	raster.c	/^configure_plot()$/
+cont	raster.c	/^cont (x, y)$/
+get_item	get_item.c	/^get_item(fd, type, cat, x, y, count, labels)$/
+getformat	getformat.c	/^getformat (fd)$/
+move	raster.c	/^move (x, y)$/
+output_raster	raster.c	/^output_raster (fd)$/
+poly_to_rast	poly2rast.c	/^poly_to_rast (input_file, raster_map, nrows)$/
+raster_dot	raster.c	/^raster_dot(x,y)$/
+set_cat	raster.c	/^set_cat(x)$/
+short_dot	raster.c	/^short_dot (x, y)$/
+uchar_dot	raster.c	/^uchar_dot (x, y)$/
