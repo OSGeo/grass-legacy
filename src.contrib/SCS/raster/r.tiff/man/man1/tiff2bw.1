@@ -1,0 +1,55 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiff2bw.1,v 1.6 90/11/25 11:15:46 sam Exp $
+.\"
+.\" Copyright (c) 1989 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFF2BW 1 "May 2, 1990"
+.SH NAME
+tiff2bw \- convert a color
+.SM TIFF
+image to grayscale
+.SH SYNOPSIS
+.B tiff2bw
+[
+.B \-r
+.I red%
+] [
+.B \-g
+.I green%
+] [
+.B \-b
+.I blue%
+]
+.I "from-file to-file"
+.SH DESCRIPTION
+.I Tiff2bw
+converts a color
+.SM TIFF
+image to a grayscale image by
+combining percentages of the red, green, and blue channels.
+By default, output samples are created by taking
+28% of the red channel, 59% of the green channel, and 11% of
+the blue channel.
+To alter these percentages, the
+.BR \-r ,
+.BR \-g ,
+and
+.BR \-b
+options may be used.
+.PP
+This program is a (trivial) ripoff of Paul Haeberli's
+.I tobw
+program.
+.SH BUGS
+Only 8-bit RGB images are handled.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
