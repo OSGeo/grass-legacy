@@ -1,0 +1,11 @@
+#!/bin/sh
+# test for d.site.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: site plot display of religious institutions
+#	  from TIGER type7 data.  (4 sites)
+#
+#
+$INF/d.site.inf tab=type7 coords=utm_e,utm_n map=blckgrp.ids \
+plot=red,plus,2 where='cfcc matches "D44"' 
+
