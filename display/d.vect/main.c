@@ -21,7 +21,7 @@ main (int argc, char **argv)
 {
 	char *mapset ;
 	char buf[128] ;
-	int ret;
+	int ret, level;
 	int i, stat, type, area, display;
 	int color, fcolor;
 	char ncolist[200];
@@ -73,8 +73,8 @@ main (int argc, char **argv)
 	display_opt->required   = NO ;
 	display_opt->multiple   = YES ;
 	display_opt->answer     = "shape" ;
-	display_opt->options    = "shape,cat";
-	display_opt->description= "Select shape or cat(egory)" ;
+	display_opt->options    = "shape,cat,topo,dir";
+	display_opt->description= "Display shape, category, direction or topology" ;
 	
 	field_opt = G_define_option() ;
 	field_opt->key        = "field" ;
@@ -178,6 +178,7 @@ main (int argc, char **argv)
 	/* Read map options */
 	strcpy(map_name, map_opt->answer);
 	color = D_translate_color(color_opt->answer);
+	fcolor = D_translate_color(fcolor_opt->answer);
 	quiet = !_quiet->answer;
 
 	/* Make sure map is available */
@@ -271,6 +272,12 @@ main (int argc, char **argv)
 	        case 'c':
 	            display |= DISP_CAT;
 		    break;
+	        case 't':
+	            display |= DISP_TOPO;
+		    break;
+	        case 'd':
+	            display |= DISP_DIR;
+		    break;
 	      }
 	    i++;
 	  }
@@ -309,10 +316,9 @@ main (int argc, char **argv)
 	
 
         /* open vector */
-        Vect_set_open_level (1);
-        if (1 > Vect_open_old (&Map, map_name, mapset))
+        level = Vect_open_old (&Map, map_name, mapset);
+        if ( level < 1 )
 	    G_fatal_error ("Failed opening vector file"); 
-	
 	
 	R_open_driver();
 
@@ -332,12 +338,35 @@ main (int argc, char **argv)
 		stat = plot1 (map_name, mapset, &lattr);
 	}
         */
+	if ( area ) {
+	    if ( level >= 2 )
+	        stat = darea ( &Map, Clist, color, fcolor );
+	    else
+		G_warning ("Cannot display areas, topology not available");
+        }
 
-	if ( display & DISP_SHAPE )
-	    stat = plot1 ( &Map, type, area, Clist, color, fcolor);
+	if ( display & DISP_SHAPE ) {
+	    /*
+	    if (level >= 2 )
+	        stat = plot2 ( &Map, type, area, Clist, color, fcolor);
+	    else
+	    */
+	        stat = plot1 ( &Map, type, area, Clist, color, fcolor);
+	}
 
+	R_standard_color(color);
+	if ( display & DISP_DIR )
+	    stat = dir ( &Map, type, Clist );
+	
 	if ( display & DISP_CAT )
 	    stat = label ( &Map, type, area, Clist, &lattr);
+	
+	if ( display & DISP_TOPO ) {
+	    if (level >= 2 )
+	        stat = topo ( &Map, type, area, &lattr);
+	    else
+		G_warning ("Cannot display topology, not available");
+	}
 	
 	if(stat == 0)
 	    D_add_to_list(G_recreate_command()) ;
