@@ -1,0 +1,21 @@
+PGM       = $(GARDEN_BIN)/d.rast.inf
+LIBES     = $(GISLIB) 
+# EXTRA_CFLAGS = -Dunlink=puts
+
+
+
+
+OBJS = \
+	main.o \
+        getAllOpts.o \
+        getSopts.o \
+	buildSQL.o \
+	runSQL.o \
+	readSQLout.o \
+	row_or_col.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
