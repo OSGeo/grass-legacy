@@ -472,6 +472,7 @@ distclean: FORCE clean
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/lists/optional                2>/dev/null ; true"
+	${SHELL} -c "rm -f mk/Makefile mk/vars.mk                2>/dev/null ; true"
 
 maintainer-clean: FORCE distclean
 	@ echo "Performing maintainer-clean step..."
