@@ -159,7 +159,11 @@ const char *name;
 	strcpy (vs,vstring);
 	strcpy (dn,name);
 	d->ext_data=NULL;
-	d->fd=0;
+	d->fd = open ( "/dev/windows", O_RDONLY, 0 );
+	if ( -1 == d->fd ) {
+	  NT_log ( "XOpenDisplay: Unable to open "
+		   "/dev/windows with errno %d\n", errno );
+	}
 	d->proto_major_version=11;
 	d->proto_minor_version=4;
 	d->vendor=vs;
@@ -1727,6 +1731,7 @@ int format;
                          "bmBitsPixel %d, x %d, y %d, bmInfo %x, bm bytes pp %d\n",
                          bm.bmWidth, width, bm.bmHeight, height,
                          bm.bmBitsPixel, x, y, bmInfo, bitmap_bytes_per_pix );
+
                 if ( NULL != bmInfo ) {
                     char *bits;
 
@@ -1754,7 +1759,7 @@ int format;
                                               DIB_RGB_COLORS );
                         /* When bits is not NULL, the result is the number of scanlines */
                         if ( res != height ) {
-                            NT_debug ( "XGetImage: getDIBits failed with %d scanlines returned.\n", res );
+                            NT_log ( "XGetImage: getDIBits failed with %d scanlines returned.\n", res );
                         } else {
 
                             /* Extract the image segments from each row of the Device Context DIB. */
@@ -4048,16 +4053,12 @@ XChangeGC(
 int
 XConnectionNumber(Display* display)
 {
-	static int fd = 0;
 	NT_debug ( "XConnectionNumber\n" );
-	if ( 0 == fd ) {
-	    fd = open ( "/dev/windows", O_RDONLY, 0 );
-	    if ( -1 == fd ) {
-	        NT_log ( "XConnectionNumber: Unable to open "
-			 "/dev/windows with errno %d\n", errno );
-	    }
+	if ( -1 == display->fd ) {
+	      NT_log ( "XConnectionNumber: The display connection number "
+		       "is invalid (-1)\n", display->fd );
 	}
-	return ( fd );
+	return ( display->fd );
 }
 
 XFreeFont(Display* display,XFontStruct* font_struct)
