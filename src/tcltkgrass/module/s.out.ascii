@@ -1,0 +1,8 @@
+interface_build {
+    {s.out.ascii} 0
+    {Converts a GRASS sites file into an ASCII sites listing.}
+    {entry sites {GRASS sites file (input):} 0 sites}
+    {entry fs {Output field separator [space]:} 0 ""}
+    {checkbox -a {Output all sites (do not limit to current region).} "" -a}
+    {checkbox -d {Include site descriptions in the output.} "" -d}
+}
