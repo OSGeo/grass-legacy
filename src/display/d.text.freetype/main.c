@@ -391,7 +391,7 @@ main(int argc, char **argv)
 
 		tmpfile = G_tempfile();
 		if(!(fp = fopen(tmpfile, "w")))
-			G_fatal_error("Unable to write the temporary file");
+			error("Unable to write the temporary file");
 
 		while(fgets(buf, 512, stdin))
 		{
