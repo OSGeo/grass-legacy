@@ -2,18 +2,22 @@
 * $Id$
 *
 ****************************************************************************
-* 	      NECTEC -- High Performance Computing Center --
+* 	               -- GRASS Development Team --
 *
 * MODULE: 	GRASS ogsf library
-* FILENAME:	local_proto.h
 * AUTHOR(S):	Justin Hickey - Bangkok Thailand - jhickey@hpcc.nectec.or.th
 * PURPOSE: 	To list the prototypes for all accessible functions in this
 *   	    	library.
-* DATE CREATED: Nov 01 2000
 * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
 *
 *   	    	This program is free software under the GPL (>=v2)
 *   	    	Read the file COPYING that comes with GRASS for details.
+*
+*****************************************************************************
+*
+* $Log$
+* Revision 1.2  2000-11-10 02:56:57  justin
+* New header style
 *
 *****************************************************************************/
 
