@@ -526,16 +526,18 @@ int G_usage_xml (void)
 					type = "string";
 					break ;
 				default:
-					type = "unknown";
+					type = "string";
 					break;
 			}
 			fprintf (stdout, "\t\t<parameter "
 				"name=\"%s\" "
 				"type=\"%s\" "
-				"required=\"%s\">\n",
+				"required=\"%s\" "
+				"multiple=\"%s\">\n",
 				opt->key,
 				type,
-				opt->required == YES ? "yes" : "no");
+				opt->required == YES ? "yes" : "no",
+				opt->multiple == YES ? "yes" : "no");
 
 			if (opt->description)
 				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t%s\n\t\t\t</description>\n",
