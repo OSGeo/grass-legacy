@@ -46,7 +46,7 @@ int main (int argc, char **argv)
     inopt->key             = "input";
     inopt->type            = TYPE_STRING;
     inopt->required        = YES;
-    inopt->gisprompt       = "old,dig,vect";
+    inopt->gisprompt       = "old,vector,vect";
     inopt->description     = "vector input map name ";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
