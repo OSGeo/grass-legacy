@@ -57,6 +57,7 @@ struct query_record {
    char Prompt[16], RIM_db_mapset[40]="";
    int Sequence_field, North_field, East_field, Vect_type_field, Map_field;
    int Number_of_records = 0;
+   int Projection;
 #else
    extern char File_name[10], *Tableinfof, RIM_db_path[100];
    extern char *Tempdumpf;
@@ -70,6 +71,7 @@ struct query_record {
    extern char Prompt[16], RIM_db_mapset[40];
    extern int Sequence_field, North_field, East_field, Vect_type_field, Map_field;
    extern int Number_of_records;
+   extern int Projection;
 #endif
 
 
