@@ -246,6 +246,25 @@ Vect_line_prune (struct line_pnts *Points)
 }
 
 /*!
+ \fn int Vect_line_prune_thresh (struct line_pnts *Points, double threshold )
+ \brief remove points in threshold
+ \return number of points in result
+ \param Points line structure
+*/
+int 
+Vect_line_prune_thresh (struct line_pnts *Points, double threshold)
+{
+    int ret;
+
+    ret = dig_prune(Points,threshold);
+
+    if ( ret < Points->n_points );
+        Points->n_points = ret;
+	
+    return ( Points->n_points );
+}
+
+/*!
  \fn int Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
 	           int direction)
  \brief appends points to the end of a Points structure. Note, this
