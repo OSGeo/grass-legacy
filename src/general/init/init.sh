@@ -30,15 +30,19 @@ if [ $GRASS_GUI = "tcltk" ] ; then
     
     # Search for a wish program
     SEARCHCOMMAND=wish
+    WISH=""
     found=0
-    WISH=`type -p $SEARCHCOMMAND`
-    if [ $? = 0 ] ; then
-    	    
-	    # Found a wish
-    	    found=1
-    else
-     WISH=
-    fi
+    
+    for i in `echo $PATH | sed 's/^:/.:/
+    	    	    		s/::/:.:/g
+				s/:$/:./
+				s/:/ /g'`
+    do
+	if [ -f $i/$SEARCHCOMMAND ] ; then
+    	    WISH=$i/$SEARCHCOMMAND
+	    found=1
+	fi
+    done
 
     #NEEDED: is wish >= wish8.0? Because wish4.2 won't work.
 
@@ -54,6 +58,7 @@ if [ $GRASS_GUI = "tcltk" ] ; then
 	echo ""
     	echo "WARNING: The wish command was not found!"
 	echo "Switching to text based interface mode"
+	sleep 2
     	
 	GRASS_GUI="text"
     fi
