@@ -23,18 +23,18 @@
 #include "Vect.h"
 #include "ogr_api.h"
 
-int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area );
+int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type );
 
 int 
 main (int argc, char *argv[])
 {
     int    i, j, layer, arg_s_num, nogeom;
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
-    int    ncols;
+    int    ncols, type;
     struct GModule *module;
     double min_area, snap;
-    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt;
-    struct Flag *list_flag, *no_clean_flag;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt;
+    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
     char   buf[2000], namebuf[2000];
     char   *namebuf2, *namebuf3;
     char   *separator;
@@ -116,12 +116,21 @@ main (int argc, char *argv[])
     min_area_opt->description = "Minimum size of area to be imported (square units). Smaller areas and "
 	                        "islands are ignored. Should be greater than snap^2.";
 
+    type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
+    type_opt->options = "point,line,boundary,centroid";
+    type_opt->answer = "";
+    type_opt->description = "Optionaly change default input type:\n"
+	      "\t point -> import area centroids as points\n"
+	      "\t line -> import area boundaries as centroids\n"
+	      "\t boundary -> import lines as area boundaries\n"
+	      "\t centroid -> import points as centroids";
+    
     snap_opt = G_define_option();
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
     snap_opt->required = NO;
     snap_opt->answer = "0.001";
-    snap_opt->description = "Snapping threshold for boundaries.";
+    snap_opt->description = "Snapping threshold for boundaries. -1 for no snap.";
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
@@ -131,10 +140,19 @@ main (int argc, char *argv[])
     no_clean_flag->key             = 'c';
     no_clean_flag->description     = "Do not clean polygons.";
     
+    z_flag = G_define_flag ();
+    z_flag->key             = 'z';
+    z_flag->description     = "Create 3D output.";
+    
+    notab_flag = G_define_flag ();
+    notab_flag->key             = 't';
+    notab_flag->description     = "Do not create attribute table.";
+
     if (G_parser (argc, argv)) exit(-1); 
 
     min_area = atof (min_area_opt->answer);
     snap = atof (snap_opt->answer);
+    type = Vect_option_to_types ( type_opt );
     
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
@@ -222,117 +240,110 @@ main (int argc, char *argv[])
 
     db_init_string (&sql);
     db_init_string (&strval);
-
-    /* Get dimension and open new vector */
-    with_z = 0;
-    for ( layer = 0; layer < nlayers; layer++ ) {
-	layer_id = layers[layer];
-
-	Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
-	Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
-
-	/* Get dimension */
-	while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
-	    /* Geometry */
-	    Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
-	    if ( Ogr_geometry == NULL ) continue;
-	    dim = OGR_G_GetCoordinateDimension ( Ogr_geometry );
-	    OGR_F_Destroy( Ogr_feature );
-	    if ( dim > 2 ) {
-		fprintf (stderr, "The layer contains 3D features, 3D vector will be created.\n");
-		with_z = 1;
-		break;
-	    }
-	}
-	if ( with_z ) /* no need to see other layers */
-	    break;
-    }
 	
     /* open output vector */
-    Vect_open_new (&Map, out_opt->answer, with_z ); 
+    if ( z_flag->answer )
+        Vect_open_new (&Map, out_opt->answer, 1 ); 
+    else 
+        Vect_open_new (&Map, out_opt->answer, 0 ); 
+
+	
     Vect_hist_command ( &Map );
 
+    with_z = 0;
     for ( layer = 0; layer < nlayers; layer++ ) {
+	char *drvname;
+	
 	fprintf (stderr, "Layer: %s\n", layer_names[layer]);
 	layer_id = layers[layer];
 
 	Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
+	drvname = (char *) OGR_Dr_GetName(Ogr_layer);
+	G_debug ( 1, "Driver: %s", drvname );
+
+	/* OGR_Dr_GetName() seems to return NULL */
+	if ( drvname && strcmp( drvname, "ESRI Shapefile") == 0 )
+	    G_warning ("There is a bug in OGR for polygons in Shapefile. Multiple outer rings in polygons "
+		       "are created without centroids");
+	
 	Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
 	
 	/* Add DB link */
-	if ( nlayers == 1 ) { /* one layer only */
-	    Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_1TABLE );
-	} else {
-	    Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_MTABLE );
-	}
-	    
-	Vect_map_add_dblink ( &Map, layer+1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
-
-	ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
-	G_debug ( 2, "%d columns\n", ncols );
-	
-	/* Create table */
-	sprintf ( buf, "create table %s (cat integer", Fi->table );
-	db_set_string ( &sql, buf);
-	for ( i = 0; i < ncols; i++ ) {
-	    Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
-	    Ogr_ftype = OGR_Fld_GetType( Ogr_field );
-	    
-	    G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
-	    
-	    /* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
-	     * allowed are: [A-Za-z][A-Za-z0-9_]*
-	     */
-	    sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
-	    namebuf2      = G_strchg(namebuf , '#', '_');
-	    namebuf3      = G_strchg(namebuf2, '-', '_');
-	    Ogr_fieldname = G_strchg(namebuf3, '.', '_');
-
-	    /** Simple 32bit integer                     OFTInteger = 0        **/
-	    /** List of 32bit integers                   OFTIntegerList = 1    **/
-	    /** Double Precision floating point          OFTReal = 2           **/
-	    /** List of doubles                          OFTRealList = 3       **/
-	    /** String of ASCII chars                    OFTString = 4         **/
-	    /** Array of strings                         OFTStringList = 5     **/
-	    /** Double byte string (unsupported)         OFTWideString = 6     **/
-	    /** List of wide strings (unsupported)       OFTWideStringList = 7 **/
-	    /** Raw Binary data (unsupported)            OFTBinary = 8         **/
-
-	    if( Ogr_ftype == OFTInteger ) { 
-		sprintf (buf, ", %s integer", Ogr_fieldname );
-	    } else if( Ogr_ftype == OFTIntegerList ) {
-		/* hack: treat as string */
-		sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
-	    } else if( Ogr_ftype == OFTReal ) { 
-		sprintf (buf, ", %s double precision", Ogr_fieldname );
-	    } else if( Ogr_ftype == OFTString ) { 
-		sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OGR_Fld_GetWidth(Ogr_field) );
-	    } else if( Ogr_ftype == OFTStringList ) {
-		/* hack: treat as string */
-		sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
-		G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
+	if ( !notab_flag->answer ) {
+	    if ( nlayers == 1 ) { /* one layer only */
+		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_1TABLE );
 	    } else {
-		G_warning ( "Column type not supported (%s)", Ogr_fieldname );
-		buf[0] = 0;
+		Fi = Vect_default_field_info ( &Map, layer+1, NULL, GV_MTABLE );
 	    }
-	    db_append_string ( &sql, buf);
-	}
-	db_append_string ( &sql, ")" );
-	G_debug ( 3, db_get_string ( &sql ) );
+		
+	    Vect_map_add_dblink ( &Map, layer+1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
-	driver = db_start_driver( Fi->driver );
-	if (driver == NULL) G_fatal_error ( "Cannot open driver %s", Fi->driver );
-	db_init_handle (&handle);
-	db_set_handle (&handle, Vect_subst_var(Fi->database,&Map), NULL);
-	if (db_open_database(driver, &handle) != DB_OK) {
-	    db_shutdown_driver(driver);
-	    G_fatal_error ( "Cannot open database %s", Fi->database );
-	}
-	if (db_execute_immediate (driver, &sql) != DB_OK ) {
-	    db_close_database(driver);
-	    db_shutdown_driver(driver);
-	    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+	    ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
+	    G_debug ( 2, "%d columns\n", ncols );
+	    
+	    /* Create table */
+	    sprintf ( buf, "create table %s (cat integer", Fi->table );
+	    db_set_string ( &sql, buf);
+	    for ( i = 0; i < ncols; i++ ) {
+		Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
+		Ogr_ftype = OGR_Fld_GetType( Ogr_field );
+		
+		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
+		
+		/* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
+		 * allowed are: [A-Za-z][A-Za-z0-9_]*
+		 */
+		sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
+		namebuf2      = G_strchg(namebuf , '#', '_');
+		namebuf3      = G_strchg(namebuf2, '-', '_');
+		Ogr_fieldname = G_strchg(namebuf3, '.', '_');
+
+		/** Simple 32bit integer                     OFTInteger = 0        **/
+		/** List of 32bit integers                   OFTIntegerList = 1    **/
+		/** Double Precision floating point          OFTReal = 2           **/
+		/** List of doubles                          OFTRealList = 3       **/
+		/** String of ASCII chars                    OFTString = 4         **/
+		/** Array of strings                         OFTStringList = 5     **/
+		/** Double byte string (unsupported)         OFTWideString = 6     **/
+		/** List of wide strings (unsupported)       OFTWideStringList = 7 **/
+		/** Raw Binary data (unsupported)            OFTBinary = 8         **/
+
+		if( Ogr_ftype == OFTInteger ) { 
+		    sprintf (buf, ", %s integer", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTIntegerList ) {
+		    /* hack: treat as string */
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
+		    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
+		} else if( Ogr_ftype == OFTReal ) { 
+		    sprintf (buf, ", %s double precision", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTString ) { 
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OGR_Fld_GetWidth(Ogr_field) );
+		} else if( Ogr_ftype == OFTStringList ) {
+		    /* hack: treat as string */
+		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
+		    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
+		} else {
+		    G_warning ( "Column type not supported (%s)", Ogr_fieldname );
+		    buf[0] = 0;
+		}
+		db_append_string ( &sql, buf);
+	    }
+	    db_append_string ( &sql, ")" );
+	    G_debug ( 3, db_get_string ( &sql ) );
+
+	    driver = db_start_driver( Fi->driver );
+	    if (driver == NULL) G_fatal_error ( "Cannot open driver %s", Fi->driver );
+	    db_init_handle (&handle);
+	    db_set_handle (&handle, Vect_subst_var(Fi->database,&Map), NULL);
+	    if (db_open_database(driver, &handle) != DB_OK) {
+		db_shutdown_driver(driver);
+		G_fatal_error ( "Cannot open database %s", Fi->database );
+	    }
+	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
+		db_close_database(driver);
+		db_shutdown_driver(driver);
+		G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+	    }
 	}
 
 	/* Import feature */
@@ -345,51 +356,60 @@ main (int argc, char *argv[])
 	    if ( Ogr_geometry == NULL ) {
 		nogeom++;
 	    } else {
-		geom ( Ogr_geometry, &Map, layer+1, cat, min_area );
+	        dim = OGR_G_GetCoordinateDimension ( Ogr_geometry );
+		if ( dim > 2 ) 
+		    with_z = 1;
+
+		geom ( Ogr_geometry, &Map, layer+1, cat, min_area, type );
 	    }
 
 	    /* Attributes */
-	    sprintf ( buf, "insert into %s values ( %d", Fi->table, cat );
-	    db_set_string ( &sql, buf);
-	    for ( i = 0; i < ncols; i++ ) { 
-		Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
-		Ogr_ftype = OGR_Fld_GetType( Ogr_field );
-		if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
-		    if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
-			sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
-		    } else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
-			db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
-			db_double_quote_string (&strval);
-			sprintf (buf, ", '%s'", db_get_string(&strval) );
-		    }
-	     
-		} else {
-		    /* G_warning ( "Column value not set" ); */
+	    if ( !notab_flag->answer ) {
+		sprintf ( buf, "insert into %s values ( %d", Fi->table, cat );
+		db_set_string ( &sql, buf);
+		for ( i = 0; i < ncols; i++ ) { 
+		    Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
+		    Ogr_ftype = OGR_Fld_GetType( Ogr_field );
+		    if( OGR_F_IsFieldSet( Ogr_feature, i ) ) {
+			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
+			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
+			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
+			    db_double_quote_string (&strval);
+			    sprintf (buf, ", '%s'", db_get_string(&strval) );
+			}
+		 
+		    } else {
+			/* G_warning ( "Column value not set" ); */
 
-		    /* TODO: change to 'NULL' once supported by dbf driver */
-		    if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
-			sprintf (buf, ", 0" );
-		    } else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
-			sprintf (buf, ", ''" );
+			/* TODO: change to 'NULL' once supported by dbf driver */
+			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
+			    sprintf (buf, ", 0" );
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) { 
+			    sprintf (buf, ", ''" );
+			}
+			/* sprintf (buf, ", NULL" ); */
 		    }
-		    /* sprintf (buf, ", NULL" ); */
+		    db_append_string ( &sql, buf);
 		}
-		db_append_string ( &sql, buf);
-	    }
-	    db_append_string ( &sql, " )" );
-	    G_debug ( 3, db_get_string ( &sql ) );
+		db_append_string ( &sql, " )" );
+		G_debug ( 3, db_get_string ( &sql ) );
 
-	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
-		db_close_database(driver);
-		db_shutdown_driver(driver);
-		G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+		if (db_execute_immediate (driver, &sql) != DB_OK ) {
+		    db_close_database(driver);
+		    db_shutdown_driver(driver);
+		    G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+		}
 	    }
 	     
 	    OGR_F_Destroy( Ogr_feature );
 	    cat++;
 	}
-	db_close_database(driver);
-	db_shutdown_driver(driver);
+	
+	if ( !notab_flag->answer ) {
+	    db_close_database(driver);
+	    db_shutdown_driver(driver);
+	}
 
 	if ( nogeom > 0 )
 	    G_warning ("%d %s without geometry.", nogeom, nogeom == 1 ? "feature" : "features" );
@@ -409,9 +429,11 @@ main (int argc, char *argv[])
 	Vect_open_update (&Map, out_opt->answer, G_mapset());
         Vect_build_partial ( &Map, GV_BUILD_BASE, stderr ); /* Downgrade topo */
 	
-        fprintf ( stderr, separator );
-	fprintf ( stderr, "Snap boundaries (threshold = %.3e):\n", snap );
-	Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr ); 
+	if ( snap >= 0 ) {
+	    fprintf ( stderr, separator );
+	    fprintf ( stderr, "Snap boundaries (threshold = %.3e):\n", snap );
+	    Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr ); 
+	}
 
 	/* It is not to clean to snap centroids, but I have seen data with 2 duplicate polygons
 	 * (as far as decimal places were printed) and centroids were not identical */
@@ -440,12 +462,22 @@ main (int argc, char *argv[])
 	Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
 
         fprintf ( stderr, separator );
-	fprintf ( stderr, "Remove dangles:\n" );
-	Vect_remove_dangles ( &Map, GV_BOUNDARY, -1, NULL, stderr ); 
+	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
+	    fprintf ( stderr, "Change boundary dangles to lines:\n" );
+	    Vect_chtype_dangles ( &Map, -1, NULL, stderr ); 
+	} else {
+	    fprintf ( stderr, "Change dangles to lines:\n" );
+	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1, NULL, stderr ); 
+	}
 
         fprintf ( stderr, separator );
-	fprintf ( stderr, "Remove bridges:\n" );
-	Vect_remove_bridges ( &Map, NULL, stderr ); 
+	if ( type & GV_BOUNDARY ) {
+	    fprintf ( stderr, "Change boundary bridges to lines:\n" );
+	    Vect_chtype_bridges ( &Map, NULL, stderr ); 
+	} else {
+	    fprintf ( stderr, "Remove bridges:\n" );
+	    Vect_remove_bridges ( &Map, NULL, stderr ); 
+	}
 	
         fprintf ( stderr, separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
@@ -453,6 +485,10 @@ main (int argc, char *argv[])
     }
 
     Vect_close ( &Map );
+
+    if (with_z && !z_flag->answer ) 
+	G_warning ( "Input data contains 3D features. Created vector is 2D only, "
+		    "use -z flag to import 3D vector.");
 
     exit(0) ;
 }

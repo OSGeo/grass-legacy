@@ -23,9 +23,9 @@
 
 /* Write geometry to output map */
 int 
-geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area )
+geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type )
 {
-    int    i, j, np, nr, ret;
+    int    i, j, np, nr, ret, otype;
     static int first = 1;
     static struct line_pnts *Points;
     struct line_pnts **IPoints;
@@ -50,7 +50,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 
     if( eType == wkbPoint ) {
          Vect_append_point ( Points, OGR_G_GetX(hGeom,0), OGR_G_GetY(hGeom,0), OGR_G_GetZ(hGeom,0) );
-         Vect_write_line ( Map, GV_POINT, Points, Cats);
+	 if ( type & GV_CENTROID ) otype = GV_CENTROID; else otype = GV_POINT; 
+         Vect_write_line ( Map, otype, Points, Cats);
     }
     else if( eType == wkbLineString )
     {
@@ -60,7 +61,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
             Vect_append_point ( Points, OGR_G_GetX(hGeom,i), 
 		    OGR_G_GetY(hGeom,i), OGR_G_GetZ(hGeom,i) );
 	}
-        Vect_write_line ( Map, GV_LINE, Points, Cats);
+	 if ( type & GV_BOUNDARY ) otype = GV_BOUNDARY; else otype = GV_LINE; 
+        Vect_write_line ( Map, otype, Points, Cats);
     }
 
     else if( eType == wkbPolygon )
@@ -90,7 +92,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    return 0;
 	}
 	
-        Vect_write_line ( Map, GV_BOUNDARY, Points, BCats);
+	if ( type & GV_LINE ) otype = GV_LINE; else otype = GV_BOUNDARY; 
+        Vect_write_line ( Map, otype, Points, BCats);
 	
 	/* Isles */
 	IPoints = (struct line_pnts **) G_malloc ( (nr-1) * sizeof (struct line_pnts *) );
@@ -111,7 +114,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    if ( size < min_area ) {
 		G_warning ( "Island size %.1e, island not imported.", size);
 	    } else { 
-                Vect_write_line ( Map, GV_BOUNDARY, IPoints[i-1], BCats);
+	        if ( type & GV_LINE ) otype = GV_LINE; else otype = GV_BOUNDARY; 
+                Vect_write_line ( Map, otype, IPoints[i-1], BCats);
 	    }
         }
 
@@ -124,7 +128,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    } else {
 		Vect_reset_line ( Points );
 		Vect_append_point ( Points, x, y, 0 );
-		Vect_write_line ( Map, GV_CENTROID, Points, Cats);
+	        if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID; 
+		Vect_write_line ( Map, otype, Points, Cats);
 	    }
 	} else if ( Points->n_points > 0 ) {
 	    if ( Points->n_points >= 2 ) { 
@@ -137,7 +142,8 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    }
 	    Vect_reset_line ( Points );
       	    Vect_append_point ( Points, x, y, 0 );
-	    Vect_write_line ( Map, GV_CENTROID, Points, Cats);
+	    if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID; 
+	    Vect_write_line ( Map, otype, Points, Cats);
 	} else { /* 0 points */
 	    G_warning ( "No centroid written for polygon with 0 vertices." );
 	} 
@@ -159,7 +165,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
         for( i = 0; i < nr; i++ ) {
             hRing = OGR_G_GetGeometryRef( hGeom, i );
 
-	    ret = geom( hRing, Map, field, cat, min_area );
+	    ret = geom( hRing, Map, field, cat, min_area, type );
 	    if ( ret == -1 ) {
 		G_warning ("Cannot write part of geometry" );
 	    }
