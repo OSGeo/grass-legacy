@@ -60,10 +60,11 @@ then
 	echo "Please read README.sockets first."
 	echo
 	echo "Usage:"
-	echo " ./README.sockets [-nf] {new|orig}"
+	echo " ./README.sockets [-n] [-f] [-m] [new|orig]"
 	echo
 	echo "   -n: Do not compile"
 	echo "   -f: Force to compile"
+	echo "   -m: Compile d.mon only"
 	echo
 	exit
 fi
@@ -98,9 +99,8 @@ done
 if [ "$cmd" = "" ]
 then
 	echo
-	echo "Missing {new|orig}"
+	echo "Using current sources"
 	echo
-	exit
 fi
 
 changed=0
@@ -121,7 +121,8 @@ then
 		echo cp $new $orig
 		cp $new $orig
 	done
-else
+elif [ "$cmd" = "orig" ]
+then
 	for i in $SOURCES
 	do
 		orig=`echo $i | sed 's/SOCKET_NEW\///'`
@@ -143,7 +144,8 @@ then
 	if [ "$cmd" = "new" ]
 	then
 		echo "It's already new driver$sources."
-	else
+	elif [ "$cmd" = "orig" ]
+	then
 		echo "It's already original driver$sources."
 	fi
 	echo
