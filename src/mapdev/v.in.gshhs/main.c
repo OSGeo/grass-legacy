@@ -150,6 +150,13 @@ exit (0);
 }
 
 /* In Info */
+/* N.B. GSHHS data is not referenced to any ellipsoid or datum. This
+ * limits its precision to several hundred metres. Hence it does not
+ * matter which ellipsoid we use in the input projection keys as the
+ * precision of the data is less than the maximum error that could be 
+ * caused by projecting using the 'wrong' ellipsoid.
+ * Anyone who understands this better than me feel free to change it.
+ * PK March 2003 */
 if( G_find_key_value("ellps", out_proj_keys) != NULL )
     sprintf(parms_in, "proj=ll ellps=%s", 
 	    G_find_key_value("ellps", out_proj_keys) );
