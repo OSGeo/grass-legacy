@@ -1,0 +1,38 @@
+The executable is
+"movieToVid"  and it's usage is
+
+	movieToVid movieFile dataDir indexDir srcHostName
+
+where
+
+o movieFile is the J Movie file you want to convert
+
+o dataDir is the cms directory where the raw data is stored.  I'm 
+not sure where it is on your system, but it's near where "wally.au",
+"wally.vid" and "wally.ofs" are.
+
+o indexDir is the cms directory where the scripts are stored (e.g.,
+"andre.script" is stored in this directory.
+
+o srcHostName is the name of the machine which serves as the cmsource.
+
+For example, on our system, data is stored on tweety.cs.berkeley.edu in
+/n/tweety/vid2/data/jpeg/jmovies and the indices are stored in
+/n/tweety/vid2/data/index.  The to convert the jpeg movie file
+"morning-news",
+I would use
+
+% movieToVid morning-news /n/tweety/vid2/data/jpeg/jmovies \
+	/n/tweety/vid2/data/index tweety.cs.berkeley.edu
+
+This will create the following files:
+ /n/tweety/vid2/data/jpeg/jmovies/morning-news.au is a sparc audio file
+ /n/tweety/vid2/data/jpeg/jmovies/morning-news.vid has the raw video data
+ /n/tweety/vid2/data/jpeg/jmovies/morning-news.ofs is the frame offset
+file for the raw video data
+ /n/tweety/vid2/data/index/morning-news.script is the script file that
+can be played in the cm player.
+
+You'll need about as much space in dataDir as the movie takes.  You can
+kill the movie file once this command completes, if you like.
+
