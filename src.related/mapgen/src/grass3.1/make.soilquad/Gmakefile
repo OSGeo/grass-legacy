@@ -1,0 +1,24 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+
+
+UNIX_BIN = $(GRAPH)/macros
+
+
+all:  $(UNIX_BIN)/make.soilquad
+
+$(UNIX_BIN)/make.soilquad: make.soilquad $(UNIX_BIN)/cal.degree $(UNIX_BIN)/get_angle soilsquad
+	cp make.soilquad $(UNIX_BIN)/make.soilquad
+	find soilsquad -print | cpio -oc | (cd ${GRAPH}/etc; cpio -idumcv)
+
+$(UNIX_BIN)/cal.degree: cal.degree
+	cp cal.degree $(UNIX_BIN)/cal.degree
+
+$(UNIX_BIN)/get_angle: get_angle.c
+	$(CC) -o $@ get_angle.c
+
+
+soilsquad:#
