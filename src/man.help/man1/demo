@@ -1,0 +1,23 @@
+.\" %W% %G%
+.TH demo 1
+.SH NAME
+demo \- Interactive graphical tour through GRASS
+.SH SYNOPSIS
+.B demo
+.SH DESCRIPTION
+\fIDemo\fR provides an interactive graphical tour through GRASS basics. The
+user works through a self guided tour using the mouse.  This program must
+be run while working inside the \fBspearfish\fR sample data base.
+.PP
+\fIDemo\fR is also a relatively involved demonstration of how to mix UNIX
+Bourne shell and UNIX commands with GRASS D and G tools.  There are numerous
+shell scripts which work together as one coherent user interface program.
+Those interested in mixing GRASS capabilities with \fIdbms, report writer,
+statistical package,\fR and other computer software capabilities will
+do well to use these programs as starting examples.   The complete set
+of shell scripts can be found in the \fBdemo\fR directory under the 
+GRASS main directory.
+.SH SEE ALSO
+\fIDINTRO[2], GRASS[1]\fR
+.SH AUTHOR
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
