@@ -1,4 +1,4 @@
-<TITLE>r.reclass</title>
+<TITLE>r.reclass</TITLE>
 
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
@@ -25,7 +25,7 @@ existing raster map layer.
 <BR>
 
 <B>r.reclass input=</B><EM>name </EM>
-<B>output=</B><EM>name </EM>[<B>title=</B><EM>name</EM>]
+<B>output=</B><EM>name </EM>[<B>TITLE=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -34,7 +34,7 @@ based on an <EM>input</EM> raster map layer.  The output
 map layer will be a reclassification of the input map layer
 based on reclass rules input to <EM>r.reclass</EM>, and can
 be treated in much the same way that raster files are
-treated.  A <EM>title</EM> for the output map layer may be
+treated.  A <EM>TITLE</EM> for the output map layer may be
 (optionally) specified by the user.
 
 
@@ -51,14 +51,14 @@ The program will be run non-interactively if the user
 specifies the <EM>name</EM> of the raster map layer to be
 reclassified, the <EM>name</EM> of an output layer to hold
 reclass rules, and (optionally) the <EM>name</EM> of a
-title for the output map:
+TITLE for the output map:
 
 
 <P>
 
 <DL>
 <DD>
-<B>r.reclass input=</B><EM>name </EM><B>output=</B><EM>name </EM>[<B>title=</B><EM>name</EM>]
+<B>r.reclass input=</B><EM>name </EM><B>output=</B><EM>name </EM>[<B>TITLE=</B><EM>name</EM>]
 </DL>
 
 
@@ -143,7 +143,7 @@ category value 3 in the reclassed map.
 
 Hitting the escape key &lt;ESC&gt; will bring up the
 following screen, which prompts the user to enter a new
-title and category label for the newly <B>reclassed</B>
+TITLE and category label for the newly <B>reclassed</B>
 categories.
 <PRE>
      ENTER NEW CATEGORY NAMES FOR THESE CATEGORIES
@@ -166,7 +166,7 @@ are created.
 <H2>NON-INTERACTIVE PROGRAM USE: RECLASS RULES</H2>
 
 In non-interactive program use, the names of an input map, output map,
-and output map title are given on the command line.
+and output map TITLE are given on the command line.
 However, the reclass rules are still read from standard input
 (i.e., from the keyboard, redirected
 from a file, or piped through another program).
@@ -175,11 +175,11 @@ from a file, or piped through another program).
 
 Once the user has specified an input raster map layer,
 output map layer name, and (optionally) output map layer
-title by typing
+TITLE by typing
 
 <DL>
 <DD>
-<B>r.reclass input=</B><EM>name </EM><B>output=</B><EM>name </EM>[<B>title=</B><EM>name</EM>]
+<B>r.reclass input=</B><EM>name </EM><B>output=</B><EM>name </EM>[<B>TITLE=</B><EM>name</EM>]
 </DL>
 
 Each line of input must have the following format:
