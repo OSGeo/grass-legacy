@@ -102,19 +102,20 @@ before you start.
 <TR><TD>s.in.mif</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>Mapinfo supported by v.in.ogr</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.in.shape</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>Shapefile supported by v.in.ogr</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.info</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>v.info</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.kcv</TD><TD>sites module</TD>				<TD bgcolor=red>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.label</TD><TD>sites module</TD>						<TD>-</TD><TD>-</TD><TD>-</TD><TD>v.label</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.makedots</TD><TD>src.contrib/SCS/sites/s.dotmap.new/cmd/do_dot.c</TD>		<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.medp</TD><TD>src.contrib/PURDUE/s.medp/main.c</TD>				<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.medp</TD><TD>src.contrib/PURDUE/s.medp/main.c</TD>	<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>The old version (GRASS 5.3) is buggy and cannot be simply updated, more work needed.</TD><TD>&nbsp</TD></TR>
 
-<TR><TD>s.normal</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.normal</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.out.ascii</TD><TD>sites module</TD>			<TD>Y</TD><TD>Y</TD><TD>Y</TD><TD>temporary for debugging</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.out.e00</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.perturb</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.probplt</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.perturb</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.probplt</TD><TD>sites module</TD>			<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>Requires Gnuplot</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.proj</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7, v.proj</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.qcount</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.qcount</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.random</TD><TD>sites module</TD>			<TD>Y</TD><TD>-</TD><TD>-</TD><TD>v.random</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.sample</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.sample</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.surf.idw</TD><TD>sites module</TD>			<TD>Y</TD><TD>Y</TD><TD>N</TD><TD>v.surf.idw</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.surf.rst</TD><TD>src/sites/s.surf.rst/main.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>merged to v.surf.rst</TD><TD>&nbsp</TD></TR>
 
@@ -260,10 +261,10 @@ before you start.
 
 <BR>
 <B>Y</B> : yes, updated <BR>
-<B>N</B> : no, not updated but necessary for 5.1/7.0 release <BR>
+<B>N</B> : no, not updated but necessary for 6.0.0 release <BR>
 <B>-</B> : no, not updated, irrelevant <BR>
-<B>X</B> : no, not updated and not expected to be updated for 5.1/7.0 release <BR>
-<B>?</B> : not sure if necessary for 5.1/7.0 release <BR>
+<B>X</B> : no, not updated and not expected to be updated for 6.0.0 release <BR>
+<B>?</B> : not sure if necessary for 6.0.0 release <BR>
 
 </TABLE>
 
