@@ -14,7 +14,7 @@
                   jaf 2/19/92
 */
 
-//-----------------A.Sh. Print_out switch added Jan.00
+/*-----------------A.Sh. Print_out switch added Jan.00*/
 
 #include "gis.h"
 #include "infx.h"

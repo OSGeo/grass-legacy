@@ -2,7 +2,7 @@
    runInfxFile.c
    run query in loop or run query once
    major modifications cfa 11/98    */
-//-------------A.Sh. Jan.00--Output switch vertical/horizontal
+/*-------------A.Sh. Jan.00--Output switch vertical/horizontal*/
    
 #include "gis.h"
 #include "infx.h"
@@ -121,7 +121,7 @@ runInfxFile(SQL_stmt, str_dist, print_out)
         
         searchdist =  atof (str_dist);
         if ( !searchdist ) { 
-          printf ("ошибка преобразования %s, есть %f \n"
+          printf ("Error converting %s, have %f \n"
           ,str_dist, searchdist); 
           exit (-1); 
         }
