@@ -28,8 +28,6 @@ int outline (void)
   double tmp_n, tmp_e;
   POINT temp;
 
-  int edge_order();
-
 
   /* convert alarm area points to data row/col verticies */
   Menu_msg("Preparing outline...");

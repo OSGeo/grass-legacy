@@ -34,7 +34,7 @@ line(cat, x0, y0, x1, y1)
 
 #ifdef DEBUG
 	fprintf(stderr,"Line %d %d %d %d\n", x0, y0, x1, y1) ;
-#endif DEBUG
+#endif
 
 	xinc = 1;
 	yinc = 1;
@@ -55,7 +55,7 @@ line(cat, x0, y0, x1, y1)
 			save_line(y0, x0, x1, 0, cat ) ;
 #ifdef DEBUG
 	fprintf(stderr," dy==0 save %d %d %d\n", y0, x0, x1) ;
-#endif DEBUG
+#endif
 	}
 	else 
 	{
@@ -68,7 +68,7 @@ line(cat, x0, y0, x1, y1)
 				save_line(y0, x0, x0, 0, cat ) ;
 #ifdef DEBUG
 	fprintf(stderr," dx>dy save %d %d %d\n", y0, x0, x0) ;
-#endif DEBUG
+#endif
 				if (res1 > res2) 
 				{
 					res2 += dx - res1;
@@ -88,7 +88,7 @@ line(cat, x0, y0, x1, y1)
 				save_line(y0, x0, x0, 0, cat ) ;
 #ifdef DEBUG
 	fprintf(stderr," dx<dy save %d %d %d\n", y0, x0, x0) ;
-#endif DEBUG
+#endif
 				if (res1 > res2) 
 				{
 					res2 += dy - res1;
@@ -107,7 +107,7 @@ line(cat, x0, y0, x1, y1)
 				save_line(y0, x0, x0, 0, cat ) ;
 #ifdef DEBUG
 	fprintf(stderr," dx<dy save %d %d %d\n", y0, x0, x0) ;
-#endif DEBUG
+#endif
 				y0 += yinc;
 				x0 += xinc;
 			} 
@@ -121,7 +121,7 @@ line(cat, x0, y0, x1, y1)
 */
 #ifdef DEBUG
 	fprintf(stderr," END   save %d %d %d\n", y0, x0, x0) ;
-#endif DEBUG
+#endif
 	}
 }
 

@@ -127,7 +127,7 @@ int D_do_conversions(struct Cell_head *window , int t,int b,int l,int r)
 	fprintf(stderr,
 		" BOT %10.1f  TOP %10.1f  LFT %10.1f  RHT %10.1f\n",
 		WIND_BOT, WIND_TOP, WIND_LEFT, WIND_RITE) ;
-#endif DEBUG
+#endif /* DEBUG */
 
 	return(0) ;
 }

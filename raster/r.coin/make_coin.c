@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "coin.h"
 
-static int cmp (long *,long *);
+static int cmp (const void *, const void *);
 
 int 
 make_coin (int verbose)
@@ -25,7 +25,6 @@ make_coin (int verbose)
     int reversed;
     char buf[512];
     int count;
-    int cmp();
 
     if (verbose)
     {
@@ -185,8 +184,10 @@ make_coin (int verbose)
   return 0;
 }
 
-static int cmp (long *a,long *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const long *a = aa;
+    const long *b = bb;
     if (*a < *b)
 	return -1;
     if (*a > *b)

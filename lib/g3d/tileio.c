@@ -267,7 +267,7 @@ G3d_getValueRegion (map, x, y, z, value, type)
 
      G3D_Map *map;
      int x, y, z;
-     char *value;
+     void *value;
      int type;
 
 {

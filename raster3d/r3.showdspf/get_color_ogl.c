@@ -4,6 +4,10 @@
 #include "vizual.h"
 
 extern GLuint Material_1_Dlist;
+
+void get_default_table();
+void get_min_max();
+
 /******************************************************************************
 int get_color_table(file, ctable):
 reads color table from file & stores values in ctable.
@@ -100,7 +104,7 @@ fprintf (stderr, "%f:%hd:%hd:%hd\n",
    
     if (ctable[0].color[0] < 0)
     {
-	return (0);
+	return;
     }
    /* all cat < the first color table entry use the first color */
     else if ((cat < cat1) || (ctable[1].color[0] < 0))
@@ -108,7 +112,7 @@ fprintf (stderr, "%f:%hd:%hd:%hd\n",
 	color[0] = color1[0];
 	color[1] = color1[1];
 	color[2] = color1[2];
-	return (0);
+	return;
     }
 /* find the categories in the color table above & below 
     this cat & interpolate the color values ****/
@@ -123,7 +127,7 @@ fprintf (stderr, "%f:%hd:%hd:%hd\n",
 	    color[0] = delta*color2[0] + (1 - delta)*color1[0];
 	    color[1] = delta*color2[1] + (1 - delta)*color1[1];
 	    color[2] = delta*color2[2] + (1 - delta)*color1[2];
-	    return (0);
+	    return;
 	}
 	cat1 = cat2;
 	color1 = color2;

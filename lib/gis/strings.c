@@ -58,27 +58,25 @@
 #include <stdlib.h>
 #include "gis.h"
 
-static char *G_strend (register char *S)
+static char *G_strend (char *S)
 {
     while (*S)
 	S++;
     return (S);
 }
 
-char *G_strcpy (register char *T,register char *F)
+char *G_strcpy (char *T, const char *F)
 {
-    register char *d = T;
+    char *d = T;
 
     while ((*d++ = *F++))
         ;
     return (T);
 }
 
-char *G_chrcpy (
-    register char *T,register char *F,
-    register int n)
+char *G_chrcpy (char *T, const char *F, int n)
 {
-    register char *d = T;
+    char *d = T;
 
     while (n--)
         *d++ = *F++;
@@ -86,11 +84,9 @@ char *G_chrcpy (
     return (T);
 }
 
-char *G_strncpy (
-    register char *T,register char *F,
-    register int n)
+char *G_strncpy (char *T, const char *F, int n)
 {
-    register char *d = T;
+    char *d = T;
 
     while (n-- && *F)
         *d++ = *F++;
@@ -98,43 +94,37 @@ char *G_strncpy (
     return (T);
 }
 
-char *G_strmov (
-    register char *T,register char *F)
+char *G_strmov (char *T, const char *F)
 {
-    register char *d = T;
+    char *d = T;
 
     while (*F)
         *d++ = *F++;
     return (T);
 }
 
-char *G_chrmov (
-    register char *T,register char *F,
-    register int n)
+char *G_chrmov (char *T, const char *F, int n)
 {
-    register char *d = T;
+    char *d = T;
 
     while (n--)
         *d++ = *F++;
     return (T);
 }
 
-char *G_strcat (
-    register char *T,register char *F)
+char *G_strcat (char *T, const char *F)
 {
     G_strcpy (G_strend (T), F);
     return (T);
 }
 
-char *G_chrcat (
-    register char *T,register char *F,
-    register int n)
+char *G_chrcat (char *T, const char *F, int n)
 {
     G_chrcpy (G_strend (T), F, n);
     return (T);
 }
 
-int G_strcasecmp(char *x,char *y)
+int G_strcasecmp(const char *x, const char *y)
 {
     int xx,yy;
 
@@ -169,11 +159,10 @@ int G_strcasecmp(char *x,char *y)
 #endif
 
 
-char *G_strstr(
-    char *mainString,
-    char *subString)
+char *G_strstr(char *mainString, const char *subString)
 {
-    char *p, *q;
+    const char *p;
+    char *q;
     int length;
 
     p = subString;
@@ -195,7 +184,7 @@ char *G_strstr(
 }
 
 
-char *G_strdup(char *string)
+char *G_strdup(const char *string)
 {
     char *p;
 
@@ -236,10 +225,11 @@ char *G_strchg(char* bug, char character, char new) {
       free(name);
   \endverbatim
 --------------------------------------------------------------------*/
-char *G_str_replace(char* buffer, char* old_str, char* new_str) 
+char *G_str_replace(char* buffer, const char* old_str, const char* new_str) 
 {
 
-	char *B, *R, *N;
+	char *B, *R;
+	const char *N;
 	char *replace;
 	int count, len;
 

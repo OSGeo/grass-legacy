@@ -25,7 +25,7 @@ find_area(xarray, yarray, num_verticies, xy, num_points)
 #ifdef DEBUG
 	fprintf(stderr,"(x,y) %.2f:%.2f %.2f:%.2f  ",
 		xarray[node], yarray[node], xarray[node+1], yarray[node+1]) ;
-#endif DEBUG
+#endif
 	/*  generate equation  */
 		delta_y = yarray[node+1] - yarray[node] ;
 		delta_x = xarray[node+1] - xarray[node] ;
@@ -37,7 +37,7 @@ find_area(xarray, yarray, num_verticies, xy, num_points)
 		}
 #ifdef DEBUG
 	fprintf(stderr,"A = %f  B = %f\n", A, B) ;
-#endif DEBUG
+#endif
 
 	/*  determine first and last row involved */
 		if (yarray[node+1] > yarray[node])
@@ -65,7 +65,7 @@ find_area(xarray, yarray, num_verticies, xy, num_points)
 
 #ifdef DEBUG
 fprintf(stderr,"first: %6d  last: %6d\n", first_row, last_row) ;
-#endif DEBUG
+#endif
 
 		if (first_row > last_row)
 			continue ;
@@ -80,7 +80,7 @@ fprintf(stderr,"first: %6d  last: %6d\n", first_row, last_row) ;
 #ifdef DEBUG
 fprintf(stderr,"%2d %2d %6.2f\n",
 	*num_points, xy[*num_points].row, xy[*num_points].col) ;
-#endif DEBUG
+#endif
 				(*num_points)++ ;
 		}
 	}
@@ -91,7 +91,7 @@ fprintf(stderr,"%2d %2d %6.2f\n",
 	fprintf(stderr,"\n") ;
 	for(row=0; row<*num_points; row++)
 		fprintf(stderr,"%2d %2d %6.2f\n", row, xy[row].row, xy[row].col) ;
-#endif DEBUG
+#endif
 }
 
 compare(element1, element2)

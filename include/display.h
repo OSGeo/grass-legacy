@@ -122,7 +122,7 @@ int D_scan_int(char *, int *);
 /* setup.c */
 int D_setup(int);
 /* tran_colr.c */
-int D_translate_color(char *);
+int D_translate_color(const char *);
 /* window.c */
 int D_new_window(char *, int, int, int, int);
 int D_set_cur_wind(char *);
