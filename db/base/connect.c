@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"

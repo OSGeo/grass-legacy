@@ -1,6 +1,7 @@
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
+#include <stdlib.h>
 
 void parse_command_line();
 void get_locations();
@@ -53,7 +54,7 @@ parse_command_line(int argc, char *argv[])
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->options     = db_driver_list();
+    driver->options     = db_list_drivers();
     driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
     driver->description = "driver name";
 
@@ -80,9 +81,9 @@ parse_command_line(int argc, char *argv[])
 }
 
 void
-get_locations (
+get_locations (locations, nlocs)
     dbString **locations;
-    int *nlocs);
+    int *nlocs;
 {
     int i,j, count;
     char *p, *colon;
