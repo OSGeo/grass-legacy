@@ -244,19 +244,19 @@ main (int argc, char *argv[])
 	/* create segmented format files for elevation layer,	*/
 	/* output layer and pattern layer (if present)		*/
 	in_name = G_tempfile();
-	in_fd = creat(in_name, 0600);
+	in_fd = creat(in_name, 0666);
 	segment_format(in_fd,nrows,ncols,
 	    submatrix_rows,submatrix_cols,lenth_data_item);
 	close(in_fd);
 	out_name = G_tempfile();
-	out_fd = creat(out_name, 0600);
+	out_fd = creat(out_name, 0666);
 	segment_format(out_fd,nrows,ncols,
 	    submatrix_rows,submatrix_cols,lenth_data_item);
 	close(out_fd);
 	if(patt_flag == 1)
 	{
 		patt_name = G_tempfile();
-		patt_fd = creat(patt_name, 0600);
+		patt_fd = creat(patt_name, 0666);
 		segment_format(patt_fd,nrows,ncols,
 		    submatrix_rows,submatrix_cols,lenth_data_item);
 		close(patt_fd);
