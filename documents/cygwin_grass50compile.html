@@ -131,9 +131,16 @@ Unpack the source code in any directory of your choice, e. g. in your home direc
 <tt>tar xzf /path/to/file/grass5.0*_src.tar.gz</tt>
 
 <h2>3. Install sunrpc/xdrlib</h2>
-You need the sun rpc (remote procedure call)
-library that contains the xdr (external data representation) library.
-<br>Download the binary file from (store into
+
+The sunrpc package contains SUN rpc (remote procedure calls) which provides
+the xdr (external data representation), a requirement for GRASS/Cygwin.
+ 
+2/2003: there is now a native cygwin package sunrpc: Sun RPC (ONC/RPC)
+libraries and utilities, which should give the same functionality. The
+package can be installed with the cygwin setup.exe (expand the "Libs"
+section).
+<P>
+Old method:  Download sunrpc package binary file from (store into
 cygwin directory) file:
 <br><a
 href="http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/"><tt>http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/sunrpc-4.0.cygwin1.bin.tar.gz</a></tt>
