@@ -1,0 +1,9 @@
+Mmain	main.c	/^main (argc, argv)$/
+abs	creat_rand.c	/^abs(n)$/
+cmp	creat_rand.c	/^cmp(n1,n2)		\/* functon to compare two integers *\/$/
+create_rand	creat_rand.c	/^create_rand(base, targets, count)$/
+execute_random	random.c	/^execute_random (targets, count, input, mapset, cat/
+get_count	count.c	/^get_count (name, mapset, cat_zero, zero, verbose)$/
+has_percent	main.c	/^has_percent(s)$/
+make_rand	creat_rand.c	/^make_rand()$/
+make_support	support.c	/^make_support (input, mapset, raster, npoints, perc/
