@@ -1,0 +1,8 @@
+#!/bin/sh
+if test "$GRAPH" = "" -o "$MNAME" = ""
+	then
+	echo "You are not in the GRASS-MAPGEN interface. PLEASE run MAPGEN!"
+	exit 1
+else
+	exit 0
+fi
