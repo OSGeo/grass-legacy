@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	int Out_proj;
 	int out_stat;
 	int ret;
-	int old_zone;
+	int old_zone, old_proj;
 	int i;
 	int stat;
 	char cmnd2[500], out_lon0[20], out_lat0[20];
@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
 
 	Out_proj = cellhd.proj;
 	old_zone = cellhd.zone;
+	old_proj = cellhd.proj;
 
 	if (access(path, 0) == 0) {
 		exist = 1;
@@ -807,7 +808,7 @@ int main(int argc, char *argv[])
 
 	G__put_window(&cellhd, "", "DEFAULT_WIND");
 	fprintf(stderr, "\nProjection information has been recorded for this location\n\n");
-	if (old_zone != zone) {
+	if ( (old_zone != zone) | (old_proj != cellhd.proj) ) {
 		fprintf(stderr, "The geographic region information in WIND is now obsolete\n");
 		fprintf(stderr, "Run g.region -d to update it.\n");
 	}
