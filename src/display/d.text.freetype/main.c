@@ -298,7 +298,7 @@ main(int argc, char **argv)
 		size = atoi(DEFAULT_SIZE);
 
 	if(!flag.c->answer)
-		fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n",
+		fprintf(stderr, "Font=<%s:%s:%s:%d>\n\n",
 				path, charset, tcolor, size);
 
 	rotation = atof(param.rotation->answer);
@@ -793,9 +793,9 @@ get_coordinates(rectinfo win, char **ans, char pixel, char percent,
 	}
 	else
 	{
-		fprintf(stdout, "Click!\n");
-		fprintf(stdout, " Left:    Place text here\n");
-		fprintf(stdout, " Right:   Quit\n");
+		fprintf(stderr, "Click!\n");
+		fprintf(stderr, " Left:    Place text here\n");
+		fprintf(stderr, " Right:   Quit\n");
 
 		R_get_location_with_pointer(x, y, &i);
 		i &= 0x0f;
