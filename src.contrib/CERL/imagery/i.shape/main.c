@@ -91,14 +91,13 @@ int main (int argc, char *argv[])
         orientations->description = "number of azimuth directions categorized";
         orientations->answer    = "1";
 
-
-/*	fdout=fopen(fileout, "w");
-	fprintf(fdout, "output of shape finding software\n\n");*/
-	fprintf(stdout, "output of shape finding software\n\n");
-	
         /* call parser */
         if(G_parser(argc, argv))
                 exit(-1);
+                
+/*	fdout=fopen(fileout, "w");
+	fprintf(fdout, "output of shape finding software\n\n");*/
+	fprintf(stdout, "output of shape finding software\n\n");
 
         /* open input cell map */
         if ((inmapset = G_find_cell(INPUT_MAP,"")) == NULL )
