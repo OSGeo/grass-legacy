@@ -1678,7 +1678,37 @@ array set Featuredir {
 	paint		{$env(GISBASE)/etc/paint/driver			.	"Device:"}
 }
 
-# this is in some form included in etc/element_list. 
+# this is in some form included in etc/element_list,
+# generated from src/general/manage/lib/Element_list:
+## @(#)Element_List	2.4  12/2/87
+# this file specifies the database elements that 
+# are processed by RENAME, REMOVE, COPY, and LIST
+#
+# format:
+# main_element:alias:description:menu text
+#    support_element:description
+#
+#cell:rast:raster:raster files
+#  cellhd:header
+#  cats:category
+#  colr:color
+#  hist:history
+#  cell_misc:misc
+#  fcell:fcell
+#  g3dcell:g3dcell
+#dig:vect:vector:binary vector files
+#  dig_att:attributes
+#  dig_plus:topology
+#  dig_cats:category
+#  dig_misc:misc
+#  reg:point registration
+#icons:icon:icon:paint icon files
+#paint/labels:labels:label:paint label files
+#site_lists:sites:site list:site list files
+#windows:region:region definition:region definition files
+#group:group:imagery group:imagery group files
+#3d.view:3dview:3D viewing parameters:3D view parameters
+#
 array set featuredir {
 	arc		arc
 	raster		cell
