@@ -3,9 +3,8 @@
 # recursive CVS add/commit with comment
 #
 # written by Markus Neteler 3/2000
-#   $Id$
-#
-# from useful hints by Bernhard Reiter
+# based on useful hints by Bernhard Reiter
+# $Id$
 
 # add files recursivly to CVS
 if [ $# = 0 -o "$1" = "" -o "$1" = "help" -o "$1" = "-h" -o "$1" = "-help" ]
@@ -23,6 +22,12 @@ then
 fi
 
 echo "Walking through the tree..., ignore CVS dirs and OBJ dirs"
+
+if test -d CVS
+then
+ echo "CVS dir is already present. Please check that."
+ exit 1
+fi
 
 #add the current directory
 current=`pwd |tr / ' '|wc -w`         # count the words in path
