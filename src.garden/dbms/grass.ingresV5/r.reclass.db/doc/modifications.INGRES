@@ -1,0 +1,19 @@
+**************************************
+r.reclass.db - Modifications for INGRES
+
+Katarina Johnsson 930415
+**************************************
+
+Name of the sub routine has been changed:
+	sqlQry <=> infxQry
+
+'\g' is added to each select statement in SQL file.
+
+ingresUnTable added (sqlQry) to read output from SQL query.
+
+Syntax for execution of SQL command modified.
+
+ingresGetKey added (sqlQry) so that SQL queries on the form
+	SELECT * from ...
+are allowed, ie the key column is extracted (assuming that it is the 
+first column) and the other columns are disregarded.
