@@ -669,7 +669,7 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/v.build.polylines"
             }            
             -separator
-            "Change projection on ASCII vector" "" {
+            "Reproject vector from other location" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.proj"
             }
             "Coordinate tranformation on ASCII vector" "" {
