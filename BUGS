@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.16 2000-09-09 11:55:18 markus Exp $
+$Id: BUGS,v 1.17 2000-09-11 19:01:08 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -19,6 +19,35 @@ CELL-Driver: colors are not correct
   Since GRASS4 did the colors right, using both GRASS4 and GRASS5
   drivers, I suspect one of the Libraries and not the XDRIVER.
   look at D_set_colors ().
+
+----------- libraries ---------------------------------------------
+From: Jaro Hofierka <hofierka@geomodel.sk>
+
+Markus Neteler wrote:
+
+> Sidenote: If I have more than around 60.000 cubes (tiles)
+> (when setting high resolution in WIND3) I regularly get this
+> error message:
+> r3.out.v5d map=3dvol out=3d.v5d
+>   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+>
+> r3.out.ascii map=3dvol > 3d.asc
+>   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+
+Markus,
+
+briefly, the problem might be in cache modes. The functions G3d_getValue () should be 
+used in a cache mode, however, we open maps using non-cache mode:
+
+ map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
+   G3D_TILE_SAME_AS_FILE,
+   G3D_NO_CACHE);
+
+Please try to change G3D_NO_CACHE parameter to G3D_USE_CACHE_DEFAULT, and 
+re-compile main.c for r3.out.ascii with G3d_getWindow() and G3d_getValue() 
+commands or previous version of r3.out.v5d. Currently I have not enough 
+time to try it.
+ Jaro
 
 
 ----------- modules ---------------------------------------------
@@ -261,7 +290,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.16  2000-09-09 11:55:18  markus
+ Revision 1.17  2000-09-11 19:01:08  markus
+ added G3D cache bug
+
+ Revision 1.16  2000/09/09 11:55:18  markus
  fixed r.los, r.info
 
  Revision 1.15  2000/09/08 21:53:37  markus
