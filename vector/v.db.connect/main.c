@@ -33,10 +33,13 @@ int main (int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt, *dbkey;
-    struct Flag *overwrite, *print;
+    struct Flag *overwrite, *print, *columns;
     dbDriver *driver;
+    dbString table_name;
+    dbTable *table;
+    dbHandle handle;
     struct field_info *fi;
-    int field, ret, num_dblinks, i;
+    int field, ret, num_dblinks, i, ncols, col;
     struct Map_info Map;
 
     /* set up the options and flags for the command line parser */
@@ -82,6 +85,10 @@ int main (int argc, char **argv)
     print->key               = 'p';
     print->description       = "print current connection parameters and exit";
 
+    columns = G_define_flag();
+    columns->key               = 'c';
+    columns->description       = "print types/names of table columns for specified field and exit";
+
     overwrite = G_define_flag();
     overwrite->key               = 'o';
     overwrite->description       = "overwrite connection parameter for certain field";
@@ -105,7 +112,7 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
-    if (print->answer)
+    if (print->answer || columns->answer)
       Vect_open_old ( &Map, inopt->answer, G_mapset());
     else
     {
@@ -113,7 +120,7 @@ int main (int argc, char **argv)
       Vect_hist_command ( &Map );
     }
 
-    if (print->answer)
+    if (print->answer || columns->answer)
     {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0)
@@ -123,18 +130,44 @@ int main (int argc, char **argv)
       }
       else /* num_dblinks > 0 */
       {
-        fprintf(stderr,"Vector map <%s> is connected by:\n", input);
-        for (i = 0; i < num_dblinks; i++) {
-          if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
-             G_fatal_error("Database connection not defined");
+        if (print->answer)
+        {
+          fprintf(stderr,"Vector map <%s> is connected by:\n", input);
+          for (i = 0; i < num_dblinks; i++) {
+            if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
+               G_fatal_error("Database connection not defined");
+            driver = db_start_driver(fi->driver);
+            if (driver == NULL)
+                G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
+            fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
+          }
+        } /* end print */
+        else /* columns */
+        {
+          if ( (fi = Vect_get_dblink( &Map, field-1)) == NULL)
+               G_fatal_error("Database connection not defined for field <%d>", field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
-              G_warning("Cannot open driver %s", fi->driver) ; /* error ? */
-          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
-        }
-      } /* else */
+                G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
+          
+          db_init_handle (&handle);
+          db_set_handle (&handle, fi->database, NULL);
+          if (db_open_database(driver, &handle) != DB_OK)
+             G_fatal_error("Cannot open database <%s>", fi->database);
+          db_init_string(&table_name);
+          db_set_string(&table_name, fi->table);
+          if(db_describe_table (driver, &table_name, &table) != DB_OK)
+             G_fatal_error("Cannot open table <%s>", fi->table);
 
-    } /* print */
+          db_close_database(driver);
+          db_shutdown_driver(driver);
+
+          ncols = db_get_table_number_of_columns(table);
+          for (col = 0; col < ncols; col++)
+	      fprintf (stdout,"%s|%s\n", db_sqltype_name(db_get_column_sqltype(db_get_table_column(table, col))), db_get_column_name(db_get_table_column(table, col)));
+        }
+      } /* end else num_dblinks */
+    } /* end print/columns */
     else /* define new dbln settings */
     {
        if (field_opt->answer && dbtable->answer && dbkey->answer
