@@ -84,6 +84,7 @@ SUBDIRS = \
 	r.topidx \
 	r.topmodel \
 	r.transect \
+	r.univar2 \
 	r.water.outlet \
 	r.watershed \
 	r.what \
