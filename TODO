@@ -1,4 +1,4 @@
-$Id: TODO,v 1.46 2000-11-03 16:52:38 markus Exp $
+$Id: TODO,v 1.47 2000-11-06 15:59:22 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -412,3 +412,10 @@ Frank Warmerdam wrote:
 >Perhaps g.region could have an additional option to extend the current    
 >region bounds based on a scan of all raster, and vector extents in the     
 >mapset (or location)?    
+
+---------------------------------------------------------------------
+Datum support:
+
+- upgrade r.proj, s.proj, v.proj
+- add datum printout for g.region -p
+- ?
