@@ -1,0 +1,16 @@
+LIST = main.o\
+	ask_files.o\
+	classify.o\
+	invert.o
+
+$(BIN)/i.maxlik: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
+
+$(LIST): global.h
+
+$(IMAGERYLIB): #
+$(GISLIB): #
+$(VASKLIB): #
+
+dump_sigs: dump_sigs.o $(IMAGERYLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ dump_sigs.o $(IMAGERYLIB) $(GISLIB)
