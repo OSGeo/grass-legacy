@@ -80,9 +80,9 @@ int eps_save (FILE *fp, char *epsf, char *name)
 int eps_draw_saved (FILE *fp, char *name, double x, double y, double scale, double rotate)
 {
     fprintf(PS.fp, "\nBeginEPSF\n");
-    fprintf(PS.fp, "%.1f %.1f translate\n", x, y);    
-    fprintf(PS.fp, "%.1f rotate\n", rotate);    
-    fprintf(PS.fp, "%.1f %.1f scale\n", scale, scale);
+    fprintf(PS.fp, "%.5f %.5f translate\n", x, y);    
+    fprintf(PS.fp, "%.5f rotate\n", rotate);    
+    fprintf(PS.fp, "%.5f %.5f scale\n", scale, scale);
     fprintf(PS.fp, "%%BeginDocument: %s\n", name);
 
     fprintf(PS.fp, "%s\n", name);
@@ -103,9 +103,9 @@ int eps_draw (FILE *fp, char *eps, double x, double y, double scale, double rota
     if ((epsfp = fopen(eps, "r")) == NULL) return (0);
 
     fprintf(PS.fp, "\nBeginEPSF\n");
-    fprintf(PS.fp, "%.1f %.1f translate\n", x, y);    
-    fprintf(PS.fp, "%.1f rotate\n", rotate);    
-    fprintf(PS.fp, "%.1f %.1f scale\n", scale, scale);
+    fprintf(PS.fp, "%.5f %.5f translate\n", x, y);    
+    fprintf(PS.fp, "%.5f rotate\n", rotate);    
+    fprintf(PS.fp, "%.5f %.5f scale\n", scale, scale);
     fprintf(PS.fp, "%%BeginDocument: %s\n", eps);
 
     while (fgets(buf, 1024, epsfp) != NULL) fprintf(fp, "%s", buf);
