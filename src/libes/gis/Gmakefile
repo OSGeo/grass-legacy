@@ -55,13 +55,11 @@ OBJ = \
 	color_write.o \
 	commas.o\
 	copy.o\
-	dalloc.o\
 	date.o\
 	datum.o\
 	dig_title.o\
 	distance.o\
 	done_msg.o\
-	eigen_tools.o\
 	endian.o\
 	env.o\
 	error.o\
@@ -96,7 +94,6 @@ OBJ = \
 	histogram.o\
 	history.o\
 	home.o\
-	ialloc.o\
 	index.o\
 	init_map.o\
 	intersect.o\
@@ -112,7 +109,6 @@ OBJ = \
 	ll_scan.o\
 	locale.o\
 	location.o\
-	lu.o\
 	mach_name.o\
 	make_colr.o\
 	make_loc.o\
@@ -168,7 +164,6 @@ OBJ = \
 	store.o\
 	strings.o\
 	strip.o\
-	svd.o\
 	system.o\
 	tempfile.o\
 	timestamp.o\
