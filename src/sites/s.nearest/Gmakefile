@@ -1,0 +1,8 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE) 
+
+PROG = $(BIN_ALPHA_CMD)/s.nearest
+
+$(PROG): s.nearest.o $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) s.nearest.o $(EXTRA_CFLAGS) $(GISLIB) $(MATHLIB)
+	mv a.out $@
