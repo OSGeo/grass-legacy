@@ -17,6 +17,7 @@
 #include "gis.h"
 #include "local_proto.h"
 #include "memory.h"
+#include <stdlib.h>
 
 static struct cost *start_cell = NULL ;
 /*  static int show(struct cost *); */
