@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.113 2001-02-21 09:54:36 markus Exp $
+                 $Id: BUGS,v 1.114 2001-02-21 17:37:06 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -173,13 +173,8 @@ g3.region:
   (being worked on by ?)  
 
 nviz2.2:
- - I have a surface with VERY small floating point values (ie 7.7e-011 etc). 
-   I've imported using r.in.ascii and all is OK in normal GRASS display.      
-   However, starting nviz you see the surface the right way up, then it flips 
-   as if all values become negative. Incr the zexagg just stretches the values
-   towards the bottom of the screen. Any suggestions?
-   (reported by Phil <P.Atkinson@cdsc.nthames.nhs.uk>)
-   Note: This bug can be easily reproduced by:
+- In flat areas the colors are too dark.
+   This bug can be easily reproduced by:
      r.mapcalc sine="sin(row()) * sin(col())"
      nviz2.2 el=sine
    (being worked on by ?)
@@ -188,6 +183,7 @@ nviz2.2:
    leads to partly dark surface:
    - large distance to surface
    - surface resolution = 1 (with 2 and less res. it's o.k.)
+   - if you hit the ambient light button, it's better
   (being worked on by ?)  
 
  - If loading a region too large for the memory available, the nviz
