@@ -668,8 +668,8 @@ if test "$pg_root" -o "$pg_includes" -o "$pg_libs"; then
 fi
 
 # Process PostgreSQL --with directives
-PQINCPATH=
 PQLIB=
+PQINCPATH=
 PQLIBPATH=
 
 if test "$pg_root"; then
@@ -876,9 +876,10 @@ AC_SUBST(USE_OPENGL)
 
 # ODBC include paths..
 ODBCINC=
+ODBCLIB=
 AC_ARG_WITH(odbc-includes,
   [  --with-odbc-includes=DIR  
-                          Specify path for ODBC header files],
+                          Specify path for ODBC library headers],
   [   
    	case "$withval" in
 	"" | "y" | "ye" | "yes" | "n" | "no")
@@ -888,19 +889,31 @@ AC_ARG_WITH(odbc-includes,
 	odbc_includes="$withval"
    ])
 
+AC_ARG_WITH(odbc-libs,
+  [  --with-odbc-libs=DIR  
+                          Specify path for ODBC library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-odbc-libs.])
+	;;
+	esac
+	odbc_libs="$withval"
+   ])
+
 if test "$odbc_includes"; then
     for dir in $odbc_includes; do
         if test -d "$dir" && test -f "$dir/sql.h"; then
-            ODBCINC="$ODBCINCPATH -I$dir"
+            ODBCINC="$ODBCINC -I$dir"
         fi
     done
 else
     for dir in $my_inc_dirs; do
         if test -d "$dir" && test -f "$dir/sql.h"; then
-            ODBCINC="$ODBCINCPATH -I$dir"
+            ODBCINC="$ODBCINC -I$dir"
 	    break
 	elif test -d "$dir/odbc" && test -f "$dir/odbc/sql.h"; then
-            ODBCINC="$ODBCINCPATH -I$dir/odbc"
+            ODBCINC="$ODBCINC -I$dir/odbc"
 	    break
         fi
     done
@@ -911,7 +924,30 @@ CPPFLAGS="$CPPFLAGS $ODBCINC"
 AC_CHECK_HEADER(sql.h,HAVE_SQL_H=1 ,ODBCINC="")
 CPPFLAGS=${ac_save_cppflags}
 
+
+AC_MSG_CHECKING(for location of odbc lib)
+if test "$odbc_libs"; then
+    for dir in $odbc_libs; do
+        if test -d "$dir" && test -f "$dir/sql.h"; then
+            ODBCLIB="$ODBCLIB -I$dir"
+        fi
+    done
+else
+    for dir in $my_lib_dirs; do
+        if test -d "$dir" && ( test -f "$dir/libodbc.a" || test -f "$dir/libodbc.so" ) ; then
+            ODBCLIB="$ODBCLIB -L$dir"
+	    break
+        elif test -d "$dir/odbc" && ( test -f "$dir/odbc/libodbc.a" || test -f "$dir/odbc/libodbc.so" ) ; then
+            ODBCLIB="$ODBCLIB -L$dir/odbc"
+	    break
+        fi
+    done
+fi
+AC_MSG_RESULT($ODBCLIB)
+
 AC_SUBST(ODBCINC)
+AC_SUBST(ODBCLIB)
+
 
 # JPEG library checking
 # Function to test for jpeg_start_compress
