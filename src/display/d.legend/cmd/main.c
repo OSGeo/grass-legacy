@@ -8,6 +8,7 @@ char **argv ;
 	char buff[512] ;
 	char map_name[64] ;
 	char window_name[64] ;
+	char *D_color_list();
 	int black ;
 	int cats_num ;
 	int color ;
@@ -26,6 +27,7 @@ char **argv ;
 	struct Colors colors ;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 	struct Range range ;
+	CELL min, max;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -38,7 +40,7 @@ char **argv ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options="red,orange,yellow,green,blue,indigo,violet,brown,gray,white,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Sets the legend's text color" ;
 
 /*
@@ -116,6 +118,7 @@ char **argv ;
 		sprintf(buff,"Range information for [%s] not available", map_name) ;
 		G_fatal_error(buff) ;
 	}
+	G_get_range_min_max (&range, &min, &max);
 
 	R_open_driver();
 
@@ -135,7 +138,7 @@ char **argv ;
 	R_set_window(t, b, l, r) ;
 
 	/* How many categories to show */
-	cats_num = range.pmax - range.nmin + 1 ;
+	cats_num = max - min + 1 ;
 
 	if (lines == 1) lines = cats_num + 1 ;
 	do_cats = cats_num > (lines - 1) ? lines - 1 : cats_num ;
@@ -159,7 +162,7 @@ char **argv ;
 	/* Draw away */
 	cur_dot_row = t + dots_per_line/2;
 	j = do_cats == cats_num ? 1 : 2 ;
-	for(i=range.nmax; j<=do_cats && i<=range.pmax; j++, i++)
+	for(i=min; j<=do_cats && i<=max; j++, i++)
 	{
 		/* White box */
 		R_standard_color(white) ;
@@ -179,7 +182,7 @@ char **argv ;
 		R_cont_rel((4-dots_per_line), 0) ;
 
 		/* Color solid box */
-		R_color(i) ;
+		D_color((CELL)i,&colors) ;
 		R_move_abs(l+4, (cur_dot_row-3)) ;
 		R_polygon_rel(x_box, y_box, 5) ;
 
@@ -201,4 +204,5 @@ char **argv ;
 	D_add_to_list(G_recreate_command()) ;
 
 	R_close_driver();
+	exit(0);
 }
