@@ -1,0 +1,66 @@
+
+
+
+export <contrib>      GRASS Reference Manual	 <contrib> export
+
+
+
+NAME
+     export - Converts a cell file into an ascii text file
+
+SYNOPSIS
+     export
+
+DESCRIPTION
+     export allows the user to convert a map layer into an ascii
+     text file suitable for export into other computer systems.
+     The export program is sensitive to the current window
+     setting. Thus the program can be used to produce an ascii
+     version of any sub-area within the full map layer area. The
+     program will prompt for the name of the cell layer to be
+     converted, as well as a "basename" for two output files. The
+     data will be stored in "basename.dat" and cell layer
+     information in "basename.txt".  Cell layer information
+     includes map name, title, projection, zone, resolution,
+     window coordinates, number of rows and columns of data, as
+     well as map layer category names.
+
+SEE ALSO
+     Mimportcell[2M], Gdumpcell[2M]
+
+AUTHOR
+     Chris Rewerts, Agricultural Engineering, Purdue University
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
