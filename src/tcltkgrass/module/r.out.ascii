@@ -1,0 +1,7 @@
+interface_build {
+    {r.out.ascii} 0
+    {Converts a raster map layer into an ASCII text file.}
+    {entry map {Input raster map(s) (name[,name,...]):} 0 +raster}
+    {entry digits {Minimum number of digits (per cell) to be printed:} 0 ""}
+    {checkbox -h {No header.} "" -h}
+}
