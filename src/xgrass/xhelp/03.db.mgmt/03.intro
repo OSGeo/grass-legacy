@@ -1,7 +1,7 @@
                       GENERAL DATABASE MANAGEMENT TOOLS
 
 The GRASS commands listed below serve basic database management functions.
-In adherence to version 4.0 naming conventions, these commands typically
+In adherence to version 4.2 naming conventions, these commands typically
 have the prefix "g.", denoting their "general purpose" use.
 
 
