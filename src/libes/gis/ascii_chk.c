@@ -1,22 +1,17 @@
 #include "gis.h"
-/**********************************************************************
- *
- *   char *
- *   G_ascii_check (buff)
- *
- *   returns buff with non_ascii characters removed, except for tabs
- *   which are turned into spaces.
- *
- *   parms:
- *      char *buff   buffer to have non-ascii characters removed
- *
- *   returns:
- *      nothing
- *
- **********************************************************************/
 
 #define TAB		011
 #define SPACE	040
+
+/*!
+ * \brief remove non-ascii characters from buffer
+ *
+ *   returns <b>string</b> with non_ascii characters removed, except for tabs
+ *   which are turned into spaces.
+ *
+ *  \param *string buffer to have non-ascii characters removed
+ *  \return int
+ */
 
 int G_ascii_check(
     char *string )
