@@ -114,7 +114,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	} else {
 	    ret = sscanf ( buf, "%d %d %d %s", &id, &fcat, &tcat, dummy);
 	    if ( ret != 3 ) {
-		G_warning ( "Wrong input: %s", buf);
+		G_warning ( "Wrong input format: %s", buf);
 		formaterr++;
 		continue;
 	    }
