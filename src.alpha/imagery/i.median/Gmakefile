@@ -1,0 +1,15 @@
+PROG = $(BIN_ALPHA_INTER)/i.composite
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+
+OBJ =\
+	main.o\
+	ask_levels.o\
+	compose.o\
+	gen_colors.o \
+	median.o
+
+$(PROG): ${OBJ} ${LIBES}
+	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+
+$(LIBES): #
