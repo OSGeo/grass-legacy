@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+<head>
 <TITLE>d.frame</TITLE>
-
+</head>
 <body bgcolor="white">
 
 <img src="grass.smlogo.gif">
@@ -67,8 +68,9 @@ subsequent drawing will occur.
 <DD>Prints the status of the user's graphics monitor and
     active display frame to standard output. Information
     includes the name and the dimensions of the current frame
-    on the graphics monitor, given in the form <EM>bottom</EM>
-    top left right</B>. This function is useful for debugging
+    on the graphics monitor, given in the form 
+    <EM>bottom&nbsp;top&nbsp;left&nbsp;right</EM>.
+    This function is useful for debugging
     output, and for determining display screen coordinates.
 </DL>
 
@@ -92,6 +94,10 @@ subsequent drawing will occur.
 If the user has created multiple display frames that overlap one another, 
 whatever the user displays in the active frame will overwrite 
 those portions of the underlying frame where these frames overlap. 
+<P>
+A frame by the name of <EM>full_screen</EM> is always present and may be 
+selected at any time. This may be useful if you would like to de-select
+all user defined frames as you might do just before taking a screenshot.
 
 <H2>SEE ALSO</H2>
 
