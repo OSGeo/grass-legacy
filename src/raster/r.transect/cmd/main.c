@@ -1,4 +1,6 @@
-/* $Id$ */
+/*
+ * $Id$
+ */
 
 #include <string.h>
 #include <stdlib.h>
@@ -13,7 +15,8 @@ int main (int argc, char *argv[])
 
     int n,err;
     int projection;
-    char *name, *mapset;
+    char *mapset;
+    char name[256];
 
     struct GModule *module;
     struct
@@ -24,6 +27,8 @@ int main (int argc, char *argv[])
 /*	struct Option *width;
 	struct Option *result; */
     } parms;
+    struct Flag *coord;
+    char coord_str[3];
 
     G_gisinit (argv[0]);
 
@@ -70,6 +75,12 @@ int main (int argc, char *argv[])
     parms.width->description = "Transect width, in cells (odd number)";
     parms.width->answer = "1";
 */
+
+    coord = G_define_flag();
+    coord->key = 'g';
+    coord->description =
+	"Output easting and northing in first two columns of four column output";
+
     if (G_parser(argc,argv))
 	exit(1);
 
@@ -84,16 +95,25 @@ int main (int argc, char *argv[])
 	exit(1);
     }
 */
-    name = parms.map->answer;
+
+    strncpy(name, parms.map->answer, 255);
     mapset = G_find_cell(name,"");
+
     if (mapset == NULL)
     {
 	fprintf (stderr, "%s: <%s> raster map not found\n",
 		G_program_name(), name);
 	exit(1);
     }
-    sprintf (command, "r.profile input='%s' output='-' null='%s' profile=", 
-		parms.map->answer, parms.null_str->answer);
+
+    if(coord->answer)  
+	strcpy(coord_str, "-g");
+    else
+	strcpy(coord_str, "");
+
+    sprintf (command, "r.profile %s input='%s' output='-' null='%s' profile=", 
+		coord_str, parms.map->answer, parms.null_str->answer);
+
     err = 0;
     for (n=0; parms.line->answers[n]; n+=4)
     {
