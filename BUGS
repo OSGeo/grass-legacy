@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.74 2000-11-11 14:51:30 markus Exp $
+$Id: BUGS,v 1.75 2000-11-12 08:52:25 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -119,10 +119,7 @@ g.help:
  - implement correct keycodes for "arrow down/up" instead of d, u
 
 g3.region:
- - after defining the 3D-region with g3.createwind (which runs o.k.),
-   the g3.region does not display the vertical resolution (top-bottom)
-   correctly. -> rounding error?
-  -> r3.info is affected as well
+ - no parser implemented yet
   (being worked on by ?)  
 
 [RC]nviz2.2:
