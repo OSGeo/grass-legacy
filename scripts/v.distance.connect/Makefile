@@ -1,13 +1,7 @@
 MODULE_TOPDIR = ../..
 
 PGM = v.distance.connect
-PROGDIR =  $(GISBASE)/scripts/
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+include $(MODULE_TOPDIR)/include/Make/Script.make
 
-default: $(PROGDIR)/$(PGM) htmlscript
-
-$(PROGDIR)/$(PGM): $(PGM)
-	if [ ! -d $(PROGDIR) ]; then mkdir $(PROGDIR); fi
-	cp $(PGM) $(PROGDIR)
-	chmod 0755 $(PROGDIR)/$(PGM)
+default: script
