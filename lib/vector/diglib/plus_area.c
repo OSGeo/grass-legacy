@@ -330,6 +330,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
 	    G_debug ( 3, "  Set line %d left side to 0", line );
 	    Line->left = 0;
 	}
+	    
         /* Find the isle this area is part of (used late below) */
 	/*
 	if ( line > 0 ) {
@@ -347,8 +348,12 @@ dig_del_area (struct Plus_head *plus, int area ) {
     line = Area->centroid;
     if ( line > 0 ) {
         Line = plus->Line[line];
-	Line->left = 0;           
-	if ( plus->do_uplist ) dig_line_add_updated ( plus, line );
+	if ( !Line ) {
+	    G_warning ( "Dead centroid (%d) registered for area (bug in the library).", line );
+	} else {
+	    Line->left = 0;           
+	    if ( plus->do_uplist ) dig_line_add_updated ( plus, line );
+	}
     }
     
     /* Find the area this area is within */
