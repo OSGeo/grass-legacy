@@ -122,7 +122,6 @@ read_lines(struct Map_info *Map )
 		    Values[idx].d3 = Points->z[0];
 		    Values[idx].count1++;
 		} else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
-		    int j, area_cat_found;
 		    
                     read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );
                     read_side_cats ( RCats, &(Values[idx].i2), &(Values[idx].count2) );

@@ -48,12 +48,6 @@ conv_units ()
 		Values[i].d1 *= sq_f; 
 	    break;
 	
-	case O_COOR: 
-	    for ( i = 0; i < vstat.rcat; i++ ) {
-		Values[i].d1 *= f;
-		Values[i].d2 *= f;
-	    }
-	    break;
     }
 
     return 0;
