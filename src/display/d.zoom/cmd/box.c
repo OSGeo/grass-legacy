@@ -123,15 +123,15 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 	}
 
 	if(quitonly==2)
-	/* ALTERNATIVE
-	 *
 	   prebutton = 2;
-	 */
-	   prebutton = 1;
 	else
 	   prebutton = button;
 
+	/* ALTERNATIVE
+	 *
 	if(prebutton==1)
+	 */
+	if(prebutton==1 || prebutton==2)
 	{
 	   north = uy1;
 	   east = ux1;
