@@ -7,6 +7,7 @@
 # Markus Neteler
 # $Id$
 
+#note: no $,. allowed:
 TAG="testbranch_5_0_0stable"
 
 #catch all modules from compile list:
