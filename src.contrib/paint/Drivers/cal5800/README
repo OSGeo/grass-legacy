@@ -1,0 +1,26 @@
+These are the paint driver routines for the Calcomp 5800
+series electrostatic color plotter. The actual interface
+to the plotter is handled by the Calcomp Universal Host
+Computer Basic Software (UHCBS) library, which is written
+in FORTRAN.
+ 
+The programmer will notice that calls to the FORTRAN
+routines are suffixed with an underscore and all 
+parameters are passed by address (e.g. plot_(&x, &y, &one)).
+The UHCBS library is dependent on FORTRAN I/O, thus the
+driver software doesn't use the normal GRASS/Unix I/O.
+The programmer must set the device in the FORTRAN open
+statement in the file plotfile.f .
+
+The Gmakefile has a reference to "-lcal". This is the
+Calcomp UHCBS library, which on our system is 
+/usr/local/lib/libcal.a . You should set it to whatever
+it should be on your system.
+
+Donald R. Newcomb
+U.S. Naval Oceanographic Office
+Stennis Space Center, MS 39522
+(601) 688-5998
+AV 485-5998, FTS 494-5998
+Internet navoceano%oacis.decnet@norda.navy.mil
+GRASSnet cerl!navoceano%oacis.decnet@norda.navy.mil
