@@ -271,7 +271,7 @@ void
 db_set_table_insert_priv_granted (table)
     dbTable *table;
 {
-    table->insert = DB_GRANTED;
+    table->priv_insert = DB_GRANTED;
 }
 
 /*!
@@ -284,7 +284,7 @@ void
 db_set_table_insert_priv_not_granted (table)
     dbTable *table;
 {
-    table->insert = DB_NOT_GRANTED;
+    table->priv_insert = DB_NOT_GRANTED;
 }
 
 /*!
@@ -297,7 +297,7 @@ int
 db_get_table_insert_priv (table)
     dbTable *table;
 {
-    return table->insert;
+    return table->priv_insert;
 }
 
 /*!
@@ -310,7 +310,7 @@ void
 db_set_table_delete_priv_granted (table)
     dbTable *table;
 {
-    table->delete = DB_GRANTED;
+    table->priv_delete = DB_GRANTED;
 }
 
 /*!
@@ -323,7 +323,7 @@ void
 db_set_table_delete_priv_not_granted (table)
     dbTable *table;
 {
-    table->delete = DB_NOT_GRANTED;
+    table->priv_delete = DB_NOT_GRANTED;
 }
 
 /*!
@@ -336,6 +336,6 @@ int
 db_get_table_delete_priv (table)
     dbTable *table;
 {
-    return table->delete;
+    return table->priv_delete;
 }
 
