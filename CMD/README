@@ -1,0 +1,61 @@
+You will find the following files/directories here
+
+	GISGEN      script which will compile GRASS
+	VERSION     current version number and date of the GRASS release
+
+	generic/    files need by gmake
+		      gmake     shell script which does compilations
+		      make.def  make variables
+		      make.tail some additional make rules
+
+	head/       gmake header file(s) for this site.
+
+	lists/      lists of programs to be compiled
+		      GRASS     standard GRASS programs
+		      local     site specific GRASS programs
+		      ...       architecture dependent GRASS programs
+
+        tmp/        next_step.* files used by GISGEN to keep track
+		    of how far along it is in the compilation. Used
+		    to restart GISGEN (after a failure) where it left
+		    off.
+	
+	utils/      contains the 'setup' script and all support scripts
+		    and files needed by 'setup'
+
+
+(1) User runs utils/setup
+
+The utils/setup command creates a gmake header file. The contents of
+this file are determined by examining the Unix system as well as asking
+the user questions. The resultant header file is named by the user
+(e.g., xxx) and place in the head/ directory. This header will contain
+site-specific gmake variables.
+
+The utils/setup command then copies the generic/gmake template to a
+standard directory (e.g. /usr/local/bin) and modifies it so it knows
+where GRASS has been installed and which header file to use.
+
+(2) User examines head/xxx file to make sure things are ok (see
+installation instructions.
+
+(3) User creates lists/local and (optionally) lists/aaa.
+
+These files contain the names of the GRASS src directories that are not
+in the standard list of GRASS programs, but which are to be compiled
+for the site. The lists/aaa file is an architecture-specific list which
+allows NFS linked source code to compile one set of programs for one
+machine, and another set for another machine. (The aaa is the ARCH
+specified in the head/xxx file created by 'setup.') Both machines would
+compile the lists/local.
+
+(4) User runs GISGEN
+
+GISGEN compiles GRASS. It creates/uses a file in tmp/ called next_step
+(or next_step.aaa if ARCH aaa was specified in the setup).
+
+If you want to start the compliation from the beginning, remove this
+next_step file (if it exists). Otherwise, leave it alone ands GISGEN
+will begin at the step specified in next_step.
+
+When complete GISGEN will put the word DONE into the next_step file.
