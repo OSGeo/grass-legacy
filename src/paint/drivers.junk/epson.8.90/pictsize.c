@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 static int first = 1;
 Ppictsize (nr, nc)
