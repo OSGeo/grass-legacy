@@ -51,6 +51,8 @@ transform_digit_file(current_file, new_file)
 
 		for(;;)
 		{
+			char buf1[100], buf2[100];
+
 			sscanf(buff, "%1c%lf%lf", &ctype, &y, &x) ;
 
 			/*  beginning of a new line */
@@ -59,7 +61,13 @@ transform_digit_file(current_file, new_file)
 
 			transform_a_into_b( x, y, &new_x, &new_y ) ;
 
+			/*  8/92  dpg
 	    		fprintf(new_file, " %12.2lf %12.2lf\n", new_y, new_x) ;
+			*/
+
+			G_format_northing (new_y, buf1, -1);
+			G_format_easting (new_x, buf2, -1);
+			fprintf(new_file, " %-12s %-12s\n", buf1, buf2);
 			
 			if (NULL == fgets(buff,128,current_file) )
 			{
