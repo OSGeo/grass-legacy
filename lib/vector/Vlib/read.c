@@ -39,6 +39,15 @@ static int (*Read_line_array[]) () =
 #endif
 };
 
+static int (*Next_line_offset_array[]) () =
+{
+   Vect_next_line_offset_nat 
+   , Vect_next_line_offset_shp 
+#ifdef HAVE_POSTGRES
+   /* , Vect_next_line_offset_post */
+#endif
+};
+
 /*
 *   returns: line type
 *           -1 on Out of memory
@@ -106,6 +115,16 @@ V2_read_line (Map, line_p, line_c, line )
     
     Line = Map->plus.Line_2d[line];
     offset = Line->offset;
+    G_debug (3, "-> V1_read_line() on offset %d", offset);
     return ( V1_read_line (Map, line_p, line_c, offset) );
+}
+
+/*
+*  Returns  next line offset
+*/
+long
+Vect_next_line_offset ( struct Map_info *Map )
+{
+    return (*Next_line_offset_array[Map->format]) (Map);
 }
 

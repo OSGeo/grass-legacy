@@ -69,6 +69,44 @@ V1_open_old_shp ( struct Map_info *Map )
   return (0);
 }
 
+/* Open old file.
+*  Map->name and Map->mapset must be set before
+*
+*  Return: 0 success
+*         -1 error
+*/
+int 
+V2_open_old_shp ( struct Map_info *Map )
+{
+    int ret;    
+    char buf[500];
+    FILE *fp;
+ 
+    /* check if topo is available */
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
+
+    if ( fp == NULL ) { /* topo file is not available */
+        G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n",
+	  	      Map->name, Map->mapset);
+	return -1;
+    }
+    
+    ret = V1_open_old_shp ( Map );
+    if ( ret != 0 ) {
+	fclose ( fp );
+        return -1;
+    }
+
+    /* load topo to memory */
+    dig_init_plus ( &(Map->plus) );
+    dig_load_plus ( &(Map->plus), fp );
+
+    fclose ( fp ); 
+	
+    return 0;
+}
+
 /* Open new file.
 *
 *  Return: 0 success
@@ -83,3 +121,4 @@ V1_open_new_shp (
     G_warning ( "V1_open_new_shp() is not implemented." );
     return (-1);
 }
+

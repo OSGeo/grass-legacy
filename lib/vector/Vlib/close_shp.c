@@ -56,7 +56,8 @@ V1_close_shp (struct Map_info *Map)
 int 
 V2_close_shp (struct Map_info *Map)
 {
-    G_warning ( "V2_close_shp() is not implemented\n" );
+    G_debug (1, "V2_close_shp()" );
+    V1_close_shp (Map);
     return -1;
 }
 

@@ -42,7 +42,7 @@ static int Open_level = 0;
 static int (*Open_old_array[][3]) () =
 {
     { open_old_dummy, V1_open_old_nat, V2_open_old_nat }
-   ,{ open_old_dummy, V1_open_old_shp }
+   ,{ open_old_dummy, V1_open_old_shp, V2_open_old_shp }
 #ifdef HAVE_POSTGRES
    ,{ open_old_dummy, V1_open_old_post }
 #endif
