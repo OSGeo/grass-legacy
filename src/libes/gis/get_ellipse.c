@@ -215,7 +215,7 @@ get_a_e2_f (const char *s1, const char *s2, double *a, double *e2, double *f)
     if (sscanf (s2, "e=%lf", e2) == 1) 
     {
         *f = (double)1.0 / - sqrt( ((double)1.0 - *e2) ) + (double)1.0;
-        return (*e2 > 0.0);
+        return (*e2 >= 0.0);
     }
 
     if (sscanf (s2, "f=1/%lf", f) == 1)
@@ -224,7 +224,7 @@ get_a_e2_f (const char *s1, const char *s2, double *a, double *e2, double *f)
 	    return 0;
 	recipf = (double)1.0/(*f);
 	*e2 = recipf + recipf - recipf * recipf;
-	return (*e2 > 0.0);
+	return (*e2 >= 0.0);
     }
 
     if (sscanf (s2, "b=%lf", &b) == 1)
@@ -238,7 +238,7 @@ get_a_e2_f (const char *s1, const char *s2, double *a, double *e2, double *f)
 	  *f = (double)1.0 / recipf;
 	  *e2 = recipf + recipf - recipf * recipf;
 	}
-	return (*e2 > 0.0);
+	return (*e2 >= 0.0);
     }
     return 0;
 }
