@@ -4,13 +4,13 @@
 static int x1, y1, x2, y2;
 static View *pick_view, *zoom_view, *main_view;
 
+static int cancel();
+static int zoom1();
+static int zoom2();
+
 zoom_box()
 {
     static int use = 1;
-    int cancel();
-    int zoom1();
-
-
     static Objects objects[]=
     {
 	MENU("Cancel",cancel,&use),
@@ -28,7 +28,6 @@ static
 zoom1(x,y,b)	/* called by Input_pointer */
 {
     static int use = 1;
-    int zoom2();
     static Objects objects[] =
     {
 	MENU("Cancel",cancel,&use),
