@@ -1,0 +1,16 @@
+EXTRA_CFLAGS	= -I../lib
+
+
+
+all:  $(BIN)/Vprune
+	
+
+#$(BIN)/prune: prune.o
+#	$(CC) $(LDFLAGS) -o $@ prune.o $(GISLIB) $(DIGLIB) $(MATHLIB)
+
+$(BIN)/Vprune: Vprune.o
+	$(CC) $(LDFLAGS) -o $@ Vprune.o $(DIGLIB) $(GISLIB) $(MATHLIB) 
+
+saber_src:
+	#load Vmake_site.c $(CFLAGS) $(DIGLIB) $(LIBTRANS) $(LIBATTS) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
+
