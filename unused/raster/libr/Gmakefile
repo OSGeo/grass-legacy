@@ -1,0 +1,6 @@
+LIBR	= $(UNUSED)/raster/libes/libr.a
+OBJS	= libr.o
+
+$(LIBR): $(OBJS)
+	$(AR)
+
