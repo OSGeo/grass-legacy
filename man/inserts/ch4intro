@@ -1,9 +1,0 @@
-.IH "4	INDEX of CONTRIBUTED PROGRAMS"
-This chapter lists code contributed primarily by other user sites.
-The code
-may have undergone limited internal testing and has not yet been beta-tested.
-These programs are in the \fIsrc.contrib\fP directory and are not compiled
-during general GRASS compilation; users must compile these programs
-separately to run them.  
-.sp 3
-\fBBe advised that these programs may not work as expected.\fP
