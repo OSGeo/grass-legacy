@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 #define integer(x) buf[x] * 256 + buf[x+1]
