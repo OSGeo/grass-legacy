@@ -1,0 +1,132 @@
+
+
+
+v.in.tiger           GRASS Reference Manual            v.in.tiger
+
+
+
+NAME
+     v.in.tiger - Imports Census Bureau line data (TIGER files)
+     to GRASS vector format.
+     (GRASS Vector Data Import Program)
+
+SYNOPSIS
+     v.in.tiger
+     v.in.tiger help
+     v.in.tiger dbname=name in1file=name in2file=name zone=value
+
+DESCRIPTION
+     v.in.tiger imports Census line data (called TIGER) and
+     creates a "master" binary vector file containing a large
+     amount of data.  Various map layers can then be created by
+     querying information from the master vector file using
+     v.db.rim or one of the Gen. shell scripts listed in the SEE
+     ALSO section, below.  The database name (dbname) given on
+     the command line will be the name of the rim data base, and
+     the master vector file in GRASS will be named
+     "dbname.Master".  The master vector file will include all
+     information from the type1 and type2 TIGER files given on
+     the command line as in1file and in2file.  If the user simply
+     types v.in.tiger on the command line, all parameters will be
+     queried using the standard GRASS parser described in the
+     manual entry for parser.
+
+COMMAND LINE OPTIONS
+     Parameters:
+
+     dbname=name       Vector/rim data name (with a maximum of 7
+                       characters).
+
+     in1file=name      TIGER type1 input file name.
+
+     in2file=name      TIGER type2 input file name.
+
+     zone=value        Universal Transverse Mercator (UTM) zone
+                       in which these data are located.
+                       Options:  -60 - 60
+
+NOTES
+     TIGER data are presented in latitude/longitude format, and
+     are converted to UTM (Universal Transverse Mercator)
+     coordinates as part of this importing routine.  The spheroid
+     used in the conversion is clark 66, as it is the most
+     consistent with the original data.
+
+     This command must be compiled separately, and requires the
+     use of rim and v.db.rim which contain FORTRAN code.  The
+     user must have access to a FORTRAN compiler in order to
+     compile and use this command, since it calls both rim and
+     v.db.rim.
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+v.in.tiger           GRASS Reference Manual            v.in.tiger
+
+
+
+     If the user does not know the UTM zone for this data input
+     file, the command m.tiger.region should be run first to
+     determine the zone.
+
+     v.support must be run separately on the output file if
+     needed.
+
+FILES
+     Source code for RIM is located under
+     $GISBASE/../src.related/rim
+
+     Source code for v.db.rim is located under
+     $GISBASE/../src.garden/grass.rim/v.db.rim
+
+     Source code for v.in.tiger is located under
+     $GISBASE/../src.garden/grass.tiger/v.in.tiger
+
+     Source code for m.tiger.region is located under
+     $GISBASE/../src.garden/grass.tiger/m.tiger.region
+
+SEE ALSO
+     Gen.Maps, Gen.tractmap, m.tiger.region, v.db.rim,
+     tiger.info.sh, and parser
+
+AUTHOR
+     Jim Hinthorne and David Satnik, GIS Lab, Central Washington
+     University, Ellensburg, WA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
