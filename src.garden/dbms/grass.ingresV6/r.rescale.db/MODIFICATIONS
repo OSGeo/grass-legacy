@@ -1,0 +1,67 @@
+****************************************
+r.rescale.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 6
+
+INGRES version specific subroutines:
+	ingresUnTable
+	sqlQry
+
+Modified and/or renamed subroutines:
+	main
+	sqlQry <=> infxQry
+
+New subroutines:
+	ingresUnTable
+	fancyDisplay (Currently not used)
+
+Modified and/or renamed include files:
+	dbrescale.h	
+
+New include files:
+	ingresUtils.h
+	displayUtils.h (Currently not used) 
+
+INGRES modifications:
+	SQL query syntax (sqlQry)        
+	'\g' added at end of SQL query (sqlQry)
+	Syntax of execution of SQL command (sqlQry)
+	Reading SQL output (sqlQry):
+		ingresUnTable added (INGRES v6 specific)
+	SQL syntax for MIN_MAX modified (sqlQry)
+
+Improvements:
+	Explanatory messages added.
+
+	The definition of intervals has been improved to avoid that the last
+	interval differs a lot in size from the others. This would be the
+	case when the integer division gives a large remainder. With the
+	improved algorithm, the difference can at most be half the size of 
+	the interval.
+
+Bug Fixes (sqlQry):
+	Ensure correct table is input to MIN_MAX.
+
+	1st argument when writing reclass rules is 'keyval' and not 'colval'.
+
+	Condition to write reclass rules is '(colval ,= curmax)' and not
+	'(keyval <= curmax)'.
+
+	Variable 'oldmax' initialized to 'mincol' and not '1'.
+	
+	Variable 'curmax' is set to 'oldmax + interval' and not 
+	'oldmas + interval + 1' when the category is incremented for 
+	writing to reclass rules file. 
+
+	The maximum category values for the las interval is set to 'maxcol'
+	and not to 'curmax + interval'.
+
+	If the MIN column value is '0' it is still included in the first
+	interval. ie 'mincol' is not changed to 1. '0' is a value in the
+	reclass column and should not be treated as 'no data'. 
+
+Remaining Bugs - r.reclass can only operate on integer columns. This should
+		 be improved so that float is accepted.
