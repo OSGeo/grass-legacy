@@ -137,7 +137,7 @@ export PATH
 # first search local libs, then in GRASS lib/
 #
 # Of course MacOSX wants it's private solution:
-if [ "$HOSTTYPE" != "macintosh" ] ; then
+if [ "$HOSTTYPE" != "macintosh" -o "$HOSTTYPE" != "powermac" ] ; then
   if [ ! "$LD_LIBRARY_PATH" ] ; then
     LD_LIBRARY_PATH=$GISBASE/lib
     export LD_LIBRARY_PATH
@@ -213,7 +213,7 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ -f "$i/netscape" ] ; then
             GRASS_HTML_BROWSER=netscape
             break
-        elif [ "$HOSTTYPE" = "macintosh" ] ; then
+        elif [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" ] ; then
             GRASS_HTML_BROWSER=open
             break
         elif [ "$HOSTTYPE" = "arm" ] ; then
