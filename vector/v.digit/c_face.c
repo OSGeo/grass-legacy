@@ -5,6 +5,8 @@
 #include <tcl.h>
 #include <tk.h>
 #include "gis.h"
+#include "Vect.h"
+#include "dbmi.h"
 #include "raster.h"
 #include "global.h"
 #include "proto.h"
@@ -126,31 +128,6 @@ c_set_on ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     return TCL_OK;
 }
 
-/* Set snapping */
-int
-c_set_snap ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
-{
-    G_debug (2, "c_set_snap()");
-    if ( argc < 3 ) {
-	G_warning ( "c_set_snap(): inicorrect number of parameters" );
-	return TCL_ERROR;
-    }
-    if ( strcmp(argv[1], "snap") == 0) {
-	Snap = atoi(argv[2]);
-    } else if ( strcmp(argv[1], "snap_mode") == 0) { 
-	Snap_mode = atoi(argv[2]);
-    } else if ( strcmp(argv[1], "snap_screen") == 0) { 
-	Snap_screen = atoi(argv[2]);
-    } else if ( strcmp(argv[1], "snap_map") == 0) { 
-	Snap_map = atof(argv[2]);
-    }
-
-    G_debug (2, "Snap = %d, Snap_mode = %d, Snap_screen = %d, Snap_map = %f", Snap, Snap_mode, 
-	         Snap_screen, Snap_map);
-    
-    return TCL_OK;
-}
-
 int
 c_tool_centre ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
@@ -158,45 +135,167 @@ c_tool_centre ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     return TCL_OK;
 }
 
-/* set line cats */
+/* create table definition in GUI */
 int
-c_set_cat ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+c_table_definition ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
-    int idx, val;
-
-    G_debug (2, "c_set_cat()");
-    if ( argc < 4 ) {
-	G_warning ( "c_set_cat(): inicorrect number of parameters" );
-	return TCL_ERROR;
-    }
+    int col, ncols, sqltype;
+    char buf[1000];
+    struct field_info *Fi;
+    dbString tabname;
+    dbDriver *driver;
+    dbHandle handle;
+    dbTable *table;
+    dbColumn *column;
     
-    idx = atoi (argv[2]);
-    val = atoi (argv[3]);
-    
-    G_debug (2, "Set %s[%d] to %d", argv[1], idx, val);
+    G_debug (2, "c_table_definition()");
 
-    if ( strcmp(argv[1], "field") == 0 ) {
-	FieldCat[idx][0] = val;
-	i_new_line_cat_set_next();
-    } else if ( strcmp(argv[1], "cat") == 0 ) {
-	FieldCat[idx][1] = val;
+    db_init_string (&tabname);
+
+    if ( Vect_get_num_dblinks ( &Map ) > 0 ) {
+        Fi = Vect_get_dblink ( &Map, 0 );
+
+	driver = db_start_driver( Fi->driver );
+	if (driver == NULL) {
+	    G_warning ( "Cannot open driver %s", Fi->driver );
+	    return TCL_OK;
+	}
+	db_init_handle (&handle);
+	db_set_handle (&handle, Vect_subst_var(Fi->database,Map.name,G_mapset()), NULL);
+	if (db_open_database(driver, &handle) != DB_OK) {
+	    G_warning ( "Cannot open database %s", Fi->database );
+	    db_shutdown_driver(driver);
+	    return TCL_OK;
+	}
+        db_init_string(&tabname);
+        db_set_string(&tabname, Fi->table);
+	if(db_describe_table (driver, &tabname, &table) != DB_OK)
+	    return TCL_OK;
+
+	ncols = db_get_table_number_of_columns(table);
+        for (col = 0; col < ncols; col++) {
+            column = db_get_table_column (table, col);
+	    sqltype = db_get_column_sqltype(column);
+	    sprintf (buf, "add_tab_col \"%s\" \"%s\" %d 0 0 0", db_get_column_name (column),
+		              db_sqltype_name(sqltype), db_get_column_length(column) );
+            Tcl_Eval ( Toolbox, buf );
+	    
+	}
     } else {
-	G_warning ( "c_set_cat(): inicorrect parameter '%s'", argv[1] );
-	return TCL_ERROR;
+        Tcl_Eval ( Toolbox, "add_tab_col cat integer 0 1 0 0" );
+        Tcl_Eval ( Toolbox, "table_buttons" );
     }
+
+    return TCL_OK;
+}
+
+/* create new table */
+int
+c_create_table ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    int field, ret;
+    struct field_info *Fi;
+    dbString sql, err;
+    dbDriver *driver;
+    dbHandle handle;
+    
+    G_debug (2, "c_create_table() field = %s key = %s cols = %s", argv[1], argv[3], argv[4] );
+    
+    Tcl_SetVar(Toolbox, "create_table_err", "1", TCL_GLOBAL_ONLY);
+    db_init_string (&sql);
+    db_init_string (&err);
+    field = atoi ( argv[1] );
+
+    Fi = Vect_default_field_info ( Map.name, field, NULL, GV_1TABLE );
+    G_debug (2, "driver = %s, database = %s",  Fi->driver, Fi->database );
+
+    driver = db_start_driver( Fi->driver );
+    if (driver == NULL) {
+	G_warning ( "Cannot open driver %s", Fi->driver );
+	db_set_string ( &err, "Cannot open driver " );
+	db_append_string ( &err, Fi->driver );
+	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string ( &err), TCL_GLOBAL_ONLY);
+	return TCL_OK;
+    }
+    db_init_handle (&handle);
+    db_set_handle (&handle, Vect_subst_var(Fi->database,Map.name,G_mapset()), NULL);
+    if (db_open_database(driver, &handle) != DB_OK) {
+	G_warning ( "Cannot open database %s", Fi->database );
+	db_set_string ( &err, "Cannot open database " );
+	db_append_string ( &err, Fi->database );
+	db_append_string ( &err, " by driver " );
+	db_append_string ( &err, Fi->driver );
+	db_append_string ( &err, db_get_error_msg() );
+        db_shutdown_driver(driver);
+	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string ( &err), TCL_GLOBAL_ONLY);
+	return TCL_OK;
+    }
+
+    db_set_string (&sql, "create table " );
+    db_append_string ( &sql, Fi->table);
+    db_append_string ( &sql, " ( ");
+    db_append_string ( &sql,  argv[4] );
+    db_append_string ( &sql, " ) ");
+    G_debug ( 2, db_get_string ( &sql ) );
+    
+    if (db_execute_immediate (driver, &sql) != DB_OK ) {
+	G_warning ( "Cannot create table: %s", db_get_string ( &sql )  );
+	db_set_string ( &err, "Cannot create table: " );
+	db_append_string ( &err, db_get_string ( &sql ) );
+	db_append_string ( &err, "\n" );
+	db_append_string ( &err, db_get_error_msg() );
+        db_close_database(driver);
+	db_shutdown_driver(driver);
+	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string ( &err), TCL_GLOBAL_ONLY);
+	return TCL_OK;
+    }
+  
+    db_close_database(driver);
+    db_shutdown_driver(driver);	
+
+    ret = Vect_map_add_dblink ( &Map, field, NULL, Fi->table, argv[3], Fi->database, Fi->driver);
+    if ( ret == -1 ) {
+	db_set_string ( &err, "Cannot add database link to vector, link for given field probably "
+		              "already exists." );
+	Tcl_SetVar(Toolbox, "create_table_msg", db_get_string ( &err), TCL_GLOBAL_ONLY);
+	return TCL_OK;
+    }
+
+    Tcl_SetVar(Toolbox, "create_table_err", "0", TCL_GLOBAL_ONLY);
     
     return TCL_OK;
 }
 
-/* set line cat mode */
+
+/* set variable */
 int
-c_set_cat_mode ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+c_var_set ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
-    G_debug (2, "c_set_cat_mode() mode = %s", argv[1] );
+    int type, code;
     
-    CatMode = atoi ( argv[1] );
+    G_debug (5, "c_var_set()");
+
+    if ( argc != 3 ) {
+	G_warning ( "c_var_set(): inicorrect number of parameters" );
+	return TCL_ERROR;
+    }
+
+    type = var_get_type_by_name ( argv[1] );
+    if ( type == -1 ) return TCL_ERROR;
+    code = var_get_code_by_name ( argv[1] );
     
-    i_set_cat_mode ();
+    switch ( type ) {
+        case VART_INT:
+	    var_seti ( code, atoi(argv[2]) );
+            break;
+        case VART_DOUBLE:
+	    var_setd ( code, atof(argv[2]) );
+            break;
+        case VART_CHAR:
+	    var_setc ( code, argv[2] );
+            break;
+    }
+
     return TCL_OK;
 }
 

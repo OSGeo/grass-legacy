@@ -53,8 +53,67 @@ typedef struct {
     int r, g, b; /* color 0-255 */
 } SYMB;
 
+/* Message type */
+#define MSG_OK 0
+
+/* Message icon */
+#define MSGI_ERROR 0
+
+/* Snapping modes */
+#define SNAP_SCREEN 0 /* Snap in screen pixels */
+#define SNAP_MAP    1 /* Snap in map units */
+
+/* Variables */
+#define VART_INT    0 
+#define VART_DOUBLE 1 
+#define VART_CHAR   2
+
+typedef struct {
+    int  code;
+    char *name;
+    int  type;
+    int    i;
+    double d;
+    char   *c;
+} VAR;
+
+#define VAR_CAT       0        /* category for next line */
+#define VARN_CAT      "cat" 
+#define VAR_FIELD     1 
+#define VARN_FIELD    "field"  /* field for next line */
+#define VAR_CAT_MODE  2  
+#define VARN_CAT_MODE "cat_mode" /* mode of cat imput */
+#define VAR_INSERT    3  
+#define VARN_INSERT   "insert" /* insert new row to table for next line (1) or not (0) */
+#define VAR_MESSAGE   4  
+#define VARN_MESSAGE  "message" /* text of message to be displayed in popup window */
+#define VAR_SNAP      5    
+#define VARN_SNAP     "snap"   /* If to snap to nearest node (1) or not (0) */
+#define VAR_SNAP_MODE    6         
+#define VARN_SNAP_MODE   "snap_mode" /* Snapping mode (screen pixels / map units) */
+#define VAR_SNAP_SCREEN  7        
+#define VARN_SNAP_SCREEN "snap_screen" /* Snapping threshold in screen pixels */
+#define VAR_SNAP_MAP     8        
+#define VARN_SNAP_MAP    "snap_map" /* Snapping threshold in map units */ 
+
+#ifdef MAIN
+VAR Variable[] = {
+    { VAR_CAT, VARN_CAT, VART_INT, 0, 0, NULL },
+    { VAR_FIELD, VARN_FIELD, VART_INT, 0, 0, NULL },
+    { VAR_CAT_MODE, VARN_CAT_MODE, VART_INT, 0, 0, NULL },
+    { VAR_INSERT, VARN_INSERT, VART_INT, 0, 0, NULL },
+    { VAR_MESSAGE, VARN_MESSAGE, VART_CHAR, 0, 0, NULL },
+    { VAR_SNAP, VARN_SNAP, VART_INT, 0, 0, NULL },
+    { VAR_SNAP_MODE, VARN_SNAP_MODE, VART_INT, 0, 0, NULL },
+    { VAR_SNAP_SCREEN, VARN_SNAP_SCREEN, VART_INT, 0, 0, NULL },
+    { VAR_SNAP_MAP, VARN_SNAP_MAP, VART_DOUBLE, 0, 0, NULL },
+    { 0, NULL, 0, 0, 0, NULL }
+};
+#else
+extern VAR Variable[];
+#endif
+
 /* Category and field set for current line to be written */
-Global int CatMode; /* mode of cat imput */
 #define CAT_MODE_NO   0 /* No category */ 
 #define CAT_MODE_MAN  1 /* Manual imput */ 
 #define CAT_MODE_NEXT 2 /* Next not yet used category of given field */
@@ -64,9 +123,6 @@ Global int CatMode; /* mode of cat imput */
 #else
   extern char *CatModeLab[];
 #endif
-
-Global int (*FieldCat)[2];
-Global int nFieldCat, aFieldCat;
 
 /* Maximum value for field */
 Global int (*MaxFieldCat)[2];
@@ -84,12 +140,6 @@ Global struct Cell_head window;
 
 Global double Scale; /* Map / xdriver */
 
-#define SNAP_SCREEN 0 /* Snap in screen pixels */
-#define SNAP_MAP    1 /* Snap in map units */
-Global int Snap;      /* If to snap to nearest node */
-Global int Snap_mode; /* Snapping mode (screen pixels / map units) */
-Global int Snap_screen; /* Snapping threshold in screen pixels */
-Global double Snap_map;    /* Snapping threshold in map units */
 
 /* Display symbology for lines and nodes */
 Global int *LineSymb; /* array of line symbology codes, starts from index 1 */

@@ -43,7 +43,7 @@ struct symb default_symb_table[] = {
     { "centroid_dupl", SYMB_CENTROID_DUPL, 255,   0, 255 }, /* magenta */
     { "node_1",     SYMB_NODE_1,     255,   0,   0 }, /* red */
     { "node_2",     SYMB_NODE_2,       0, 255,   0 }, /* green */
-    { "",           0,               255, 255, 255 }
+    { "",           0,                 0,   0,   0 }
 };
 
 /* Convert symbology  name to code */

@@ -20,7 +20,9 @@ int driver_open (void)
     int top, bot, left, right;
     double n, s, e, w;
     
+    G_debug (5, "driver_open()");
     if (R_open_driver() != 0) G_fatal_error ("No graphics device selected");
+    G_debug (5, " -> opened");
 
     D_setup (0);
     D_get_screen_window ( &top, &bot, &left, &right); 
@@ -52,7 +54,9 @@ int driver_open (void)
 
 int driver_close (void)
 {
+    G_debug (5, "driver_close()");
     R_close_driver();
+    G_debug (5, " -> closed");
     return 1;
 }
 

@@ -10,34 +10,48 @@ set prompt_middle "Middle"
 set prompt_right "Right"
 set coor ""
 
-# tool window
-#proc tool_win {} {
-#    toplevel .twin
-#    Button .twin.exit -text "Tool Window"  -command "xxx"  
-#    pack .twin.exit -side left -anchor w
-#    tkwait visibility .twin
-#}
+# GVariable stores variables by key, this variables are (should be) synchronized with
+# variables in Variable array in C (synchronization should be done somehow better). Key is
+# 'name' in VAR structure in C. Variables are initialized by var_init() on startup.
+# For key list see VARN_* in global.h
+
+# GWidget stores names of some widgets we need to access globaly, names:
+# field - field Entry for new line
+# cat - cat Entry for new line
 
 # Create new line options
 proc new_line_options { create } {
-    global field, cat 
+    global GVariable GWidget
     if { $create } {
-	frame .lineopt
-	pack .lineopt -fill x -side top
-	Label .lineopt.flab -padx 2 -pady 2 -relief sunken -anchor w -text "Field"
-	Entry .lineopt.fval -width 10 -text "" -textvariable field \
-			    -command { c_set_cat field 0 $field }
-	Label .lineopt.clab -padx 2 -pady 2 -relief sunken -anchor w -text "Category"
-	Entry .lineopt.cval -width 10 -text "" -textvariable cat \
-			    -command { c_set_cat cat 0 $cat }
-	ComboBox .lineopt.cmode -label "Mode" -width 20  -textvariable cmode \
-			-modifycmd {
-			    set mode [.lineopt.cmode getvalue]
-                            c_set_cat_mode $mode
-			 }
+	set lineopt [frame .lineopt]
+	pack $lineopt -fill x -side top
 
-	pack .lineopt.flab .lineopt.fval .lineopt.clab .lineopt.cval .lineopt.cmode \
-	     -fill x  -side left
+	set row1 [frame $lineopt.row1]
+	pack $row1 -fill x -side top
+
+	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text "Field"
+	set GWidget(field) [Entry $row1.fval -width 10 -textvariable GVariable(field) \
+			    -command { c_var_set field $GVariable(field) } ]
+	Label $row1.clab -padx 2 -pady 2 -relief sunken -anchor w -text "Category"
+	set GWidget(cat) [Entry $row1.cval -width 10 -textvariable GVariable(cat) \
+			    -command { c_var_set cat $GVariable(cat) }]
+	set GWidget(cat_mode) [ComboBox $row1.cmode -label "Mode" -width 20  -textvariable cmode \
+			-modifycmd {
+			    set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]
+                            c_var_set cat_mode $GVariable(cat_mode)
+			 }]
+
+	pack $row1.flab $GWidget(field) $row1.clab $GWidget(cat) $GWidget(cat_mode) -fill x  -side left
+
+	set row2 [frame $lineopt.row2]
+	pack $row2 -fill x -side top
+        
+        checkbutton $row2.ins -variable GVariable(insert) \
+                              -command { c_var_set insert $GVariable(insert) }
+	Label $row2.ilab -padx 2 -pady 2 -anchor w -text "Insert new record to table"
+    
+	pack $row2.ins $row2.ilab -fill x  -side left
+
     } else {
         destroy .lineopt
     }

@@ -31,7 +31,6 @@ tool_centre ( void )
     int go = 1;
 
     symb_init_gui ( );
-    i_set_snap ( );
     
     while ( go ) {
         G_debug (5, "Tool centre: Tool_next = %d", Tool_next);

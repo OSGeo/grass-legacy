@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h> 
 #include "gis.h"
 #include "Vect.h"
 #include "raster.h"
@@ -17,7 +18,7 @@
 */
 
 /* Display points */
-void display_points ( struct line_pnts *Points )
+void display_points ( struct line_pnts *Points, int flsh )
 {
     int i;
     
@@ -26,17 +27,18 @@ void display_points ( struct line_pnts *Points )
     for(i=1; i < Points->n_points; i++) {
         G_plot_line ( Points->x[i-1], Points->y[i-1], Points->x[i], Points->y[i]);
     }
-    R_flush();
+   
+    if ( flsh ) R_flush();
 }
 
 /* Display icon */
-void display_icon ( double x, double y, int icon, double angle, int size )
+void display_icon ( double x, double y, int icon, double angle, int size , int flsh )
 {
     G_debug (2, "display_icon()");
 
     G_plot_icon(x, y, icon, angle, Scale * size);
 
-    R_flush();
+    if ( flsh ) R_flush();
 }
 
 /* Display vector line 
@@ -45,7 +47,7 @@ void display_icon ( double x, double y, int icon, double angle, int size )
 *  ! This function doesn't check Symb[symb].on so that new digitized line is displayed even
 *    if its symbology is switched off (that means incorrect and user friendly)
 */
-void display_line ( int line, int color )
+void display_line ( int line, int color, int flsh )
 {
     int type, symb;
     static struct line_pnts *Points;
@@ -69,8 +71,9 @@ void display_line ( int line, int color )
 
     symb_set_driver_color ( symb );
     
-    if ( type & GV_POINTS ) display_icon ( Points->x[0], Points->y[0], G_ICON_CROSS, 0, 6);
-    else display_points ( Points );
+    if ( type & GV_POINTS ) display_icon ( Points->x[0], Points->y[0], G_ICON_CROSS, 0, 6, flsh);
+    else display_points ( Points, flsh );
+    
 }
 
 /* Redraw updated lines */
@@ -82,8 +85,9 @@ display_updated_lines ( int symb )
     for ( i = 0; i < Vect_get_num_updated_lines(&Map); i++ ) {
         line = Vect_get_updated_line( &Map, i );
         if ( !Vect_line_alive ( &Map, line ) ) continue;
-        display_line ( line, symb );
+        display_line ( line, symb, 0 );
    }
+   R_flush();
 }
 
 /* Display node, color may be given but shape and size is read from symbology table,
@@ -91,7 +95,7 @@ display_updated_lines ( int symb )
 *  
 *  color : code from SymbNumber 
 */
-void display_node ( int node, int color )
+void display_node ( int node, int color, int flsh )
 {
     int symb;
     double x, y;
@@ -105,7 +109,7 @@ void display_node ( int node, int color )
 
     symb_set_driver_color ( symb );
     Vect_get_node_coor ( &Map, node, &x, &y, NULL);
-    display_icon ( x, y, G_ICON_CROSS, 0.785, 6);
+    display_icon ( x, y, G_ICON_CROSS, 0.785, 6, flsh);
 }
    
 /* Redraw updated nodes */
@@ -120,8 +124,9 @@ display_updated_nodes ( int symb )
         node = Vect_get_updated_node( &Map, i );
 	if ( !Vect_node_alive ( &Map, node ) ) continue;
 	if ( NodeSymb[node] == SYMB_NODE_0 ) continue;
-	display_node ( node, symb );
+	display_node ( node, symb, 0);
     }
+    R_flush();
 }
 
 /* Display vector map */
@@ -129,7 +134,9 @@ void display_map ( void )
 {
     int i, n, symb;
     
+    
     G_debug (2, "display_map()");
+
 
     /* Because after resize of monitor we expect manual call to display_map()
     *  it is good to refresh D_* here */
@@ -137,12 +144,14 @@ void display_map ( void )
     
     /* Lines */
     n = Vect_get_num_lines ( &Map );
+    symb_set_driver_color ( SYMB_HIGHLIGHT );
     for(i=1; i <= n; i++) {
 	symb = LineSymb[i];
 	G_debug (2, "symb = %d", symb);
 	if ( !Symb[symb].on ) continue;
-	display_line ( i , SYMB_DEFAULT );
+	display_line ( i , SYMB_DEFAULT, 0 );
     }
+    R_flush();
     
     /* Nodes: first nodes with more than 1 line and than with 1 line, so that dangle cannot be hidden,
     *         nodes without lines (points, centroids, are not displayed) */
@@ -152,14 +161,17 @@ void display_map ( void )
 	G_debug ( 2, "node = %d NodeSymb = %d", i, NodeSymb[i]); 
 	if ( !Vect_node_alive ( &Map, i) ) continue;
 	if ( NodeSymb[i] != SYMB_NODE_1 ) continue;
-	display_node(i, NodeSymb[i] );
+	display_node(i, NodeSymb[i], 0);
     }
+    R_flush();
+
     symb_set_driver_color ( SYMB_NODE_2 );
     for(i=1; i <= n; i++) {
 	if ( !Vect_node_alive ( &Map, i) ) continue;
 	if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
-	display_node(i, NodeSymb[i]);
+	display_node(i, NodeSymb[i], 0);
     }
+    R_flush();
 }
 
 /* Display bacground */

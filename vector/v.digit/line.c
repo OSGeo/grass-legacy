@@ -3,36 +3,40 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
+#include "dbmi.h"
 #include "raster.h"
 #include "display.h"
 #include "colors.h"
+#include "form.h"
 #include "global.h"
 #include "proto.h"
 
 int 
 write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
 {
-    int i;
-    int ret;
+    int i, cat, ret;
+    static int first_form = 1;
+    char buf[2000], *form;
     struct line_cats *Cats;
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbValue value;
+    dbString sql, html;
     
     Cats = Vect_new_cats_struct ();
+    db_init_string (&sql);
+    db_init_string (&html);
     
-    if ( CatMode != CAT_MODE_NO &&  FieldCat[0][0] > 0 && FieldCat[0][1] > 0 ) {
-        Vect_cat_set ( Cats, FieldCat[0][0], FieldCat[0][1]); 
-        G_debug (2, "write field = %d cat = %d", FieldCat[0][0], FieldCat[0][1]); 
-        if ( (cat_max_get(FieldCat[0][0])) < FieldCat[0][1] ) {
-	    cat_max_set( FieldCat[0][0], FieldCat[0][1] );
+    cat = var_geti(VAR_CAT);
+    if ( var_geti(VAR_CAT_MODE) != CAT_MODE_NO &&  cat > 0 && var_geti(VAR_FIELD) > 0 ) {
+        Vect_cat_set ( Cats, var_geti(VAR_FIELD), cat ); 
+	
+        G_debug (2, "write field = %d cat = %d", var_geti(VAR_FIELD), var_geti(VAR_CAT)); 
+
+        if ( cat_max_get( var_geti(VAR_FIELD) ) < var_geti(VAR_CAT)  ) {
+	    cat_max_set( var_geti(VAR_FIELD), var_geti(VAR_CAT) );
         }
     }
-    
-    /*
-    for ( i = 0; i < Cats->n_cats; i++ ) {
-        if ( (cat_max_get(Cats->field[i])) < Cats->cat[i] ) {
-	    cat_max_set(Cats->field[i],Cats->cat[i]);
-        }
-    }
-    */
     
     ret = Vect_write_line ( Map, type, Points, Cats );
 
@@ -42,8 +46,71 @@ write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
     for ( i = 0; i < Vect_get_num_updated_nodes(Map); i++ )
 	G_debug (2, "Updated node: %d", Vect_get_updated_node( Map, i ) );
 
-    return ret;
+    if ( var_geti(VAR_CAT_MODE) != CAT_MODE_NO && var_geti(VAR_INSERT) && cat > 0 ) {
+	G_debug (2, "Insert new record" );
+        db_set_string (&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>");
+	Fi = Vect_get_field( Map, var_geti(VAR_FIELD) );
+	if ( Fi == NULL ) { 
+	    i_message ( MSG_OK, MSGI_ERROR, "Database table for this field is not defined" );
+            return -1;
+	}
+
+	/* Note: some drivers (dbf) writes date when db is closed so it is better open
+	 * and close database for each record, so that data may not be lost later */
+
+	/* First check if already exists */
+        driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+	if ( Fi == NULL ) {
+	    sprintf (buf, "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	    i_message ( MSG_OK, MSGI_ERROR, buf );
+            return -1;
+	}
+        ret = db_select_value ( driver, Fi->table, Fi->key, cat, Fi->key, &value );
+	if ( ret == -1 ) {
+            db_close_database_shutdown_driver ( driver );
+	    sprintf (buf, "Cannot select record from table %s", Fi->table );
+	    i_message ( MSG_OK, MSGI_ERROR, buf );
+            return -1;
+	}
+	if ( ret == 0 ) { /* insert new record */
+	    sprintf ( buf, "insert into %s (%s) values (%d)", Fi->table, Fi->key, cat );
+	    db_set_string ( &sql, buf);
+	    G_debug ( 2, db_get_string ( &sql ) );
+	    ret = db_execute_immediate (driver, &sql);
+	    if ( ret != DB_OK ) {	
+                db_close_database_shutdown_driver ( driver );
+	        sprintf (buf, "Cannot insert new record: %s", db_get_string(&sql) );
+	        i_message ( MSG_OK, MSGI_ERROR, buf );
+                return -1;
+	    }
+	    db_append_string (&html, "New record was created.<BR>");
+        } else { /* record already existed */
+	    db_append_string (&html, "Record for this category already existed.<BR>");
+	}
+	
+        db_close_database_shutdown_driver ( driver );
+
+	/* Open form */
+        F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, cat, NULL, NULL, 
+		                  F_EDIT, F_HTML, &form);
+	db_append_string (&html, form );
+	db_append_string (&html, "</BODY></HTML>");
     
+	/* Note: F_open() must be run first time with closed monitor, otherwise next
+	*        attempt to open driver hangs until form child process is killed */
+	if ( first_form ) driver_close();
+	F_clear ();
+	F_open ( "Attributes", db_get_string(&html) );
+	if ( first_form ) { driver_open(); first_form = 0; }
+
+        G_free (form);	
+	db_free_string (&html);
+
+	/* Reset category (this automaticaly resets cat for next not used) */
+	var_seti ( VAR_FIELD, var_geti ( VAR_FIELD ) );
+    }
+
+    return 0;
 }
 
 /* Snap to node */
@@ -54,12 +121,12 @@ int snap ( double *x, double *y )
     
     G_debug (2, "snap(): x = %f, y = %f", *x, *y); 
     
-    if ( !Snap ) return 0;
+    if ( !var_geti(VAR_SNAP) ) return 0;
     
-    if ( Snap_mode == SNAP_MAP ) {
-	thresh = Snap_map;
+    if ( var_geti(VAR_SNAP_MODE) == SNAP_MAP ) {
+	thresh = var_getd(VAR_SNAP_MAP);
     } else {
-	thresh = Scale * Snap_screen;
+	thresh = Scale * var_geti(VAR_SNAP_SCREEN);
     }
     
     node = Vect_find_node ( &Map, *x, *y, 0, thresh, 0 );
@@ -73,7 +140,7 @@ int snap ( double *x, double *y )
 /* Digitize new line */
 int new_line ( int type )
 {
-    int i, sxo, syo, sxn, syn;
+    int i, sxo = 0, syo = 0, sxn, syn;
     int button, first, line, node1, node2;
     double x, y;
     char buf[1000];
@@ -88,6 +155,7 @@ int new_line ( int type )
     sprintf ( buf, "Digitize new %s:", get_line_type_name (type) );
     i_prompt ( buf ); 
     i_prompt_buttons ( "New point", "New point", "Quit tool"); 
+    
     i_new_line_options ( 1 );
     
     driver_open();
@@ -130,19 +198,19 @@ int new_line ( int type )
 		if ( type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
 		else symb_set_driver_color ( SYMB_BOUNDARY_0 );
 
-		display_points ( Points );
+		display_points ( Points, 1);
 		sxo = D_u_to_d_col(x); syo = D_u_to_d_row (y);;
 		first = 0;
 	    } else if ( button == 2 ) { /* Undo last point */
 		if ( Points->n_points >= 1 ) {
 		    symb_set_driver_color ( SYMB_BACKGROUND ); 
-		    display_points ( Points );
+		    display_points ( Points, 1);
 		    Points->n_points--;
 
 		    if ( type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
 		    else symb_set_driver_color ( SYMB_BOUNDARY_0 );
 
-                    display_points ( Points );
+                    display_points ( Points, 1);
 		    sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
 		    syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
 		}
@@ -203,6 +271,7 @@ int delete_line (void)
     thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
     G_debug (2, "thresh = %f", thresh );
     
+    line = 0;
     first = 1;
     last_line = 0;
     sxn = COOR_NULL; syn = COOR_NULL;
@@ -217,7 +286,7 @@ int delete_line (void)
 
 	/* Display last highlighted in normal color */
 	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT );
+	    display_line ( last_line, SYMB_DEFAULT, 1);
 	}
 
 	if ( button == 0 || button == 3 ) break; /* Quit tool */
@@ -226,12 +295,12 @@ int delete_line (void)
             /* Delete last if any */
 	    if ( last_line > 0 ) { 
 		/* Erase line and nodes !!! (because if the line is not connected to any other, nodes will die */
-		display_line ( last_line, SYMB_BACKGROUND  );
+		display_line ( last_line, SYMB_BACKGROUND, 1 );
 		Vect_get_line_nodes ( &Map, line, &node1, &node2 ); 
 		G_debug (2, "delete line = %d node1 = %d node2 = %d", last_line, node1, node2);
 
-                display_node ( node1, SYMB_BACKGROUND );
-                display_node ( node2, SYMB_BACKGROUND );
+                display_node ( node1, SYMB_BACKGROUND, 1);
+                display_node ( node2, SYMB_BACKGROUND, 1);
 		
 		Vect_delete_line ( &Map, last_line ); 
 
@@ -252,7 +321,7 @@ int delete_line (void)
 	    
 	    /* Display new selected line if any */
 	    if ( line > 0 ) {
-		display_line ( line, SYMB_HIGHLIGHT );
+		display_line ( line, SYMB_HIGHLIGHT, 1);
 	    }
 	} else { /* button == 2 -> unselect */
 	    line = 0;
@@ -281,7 +350,7 @@ int delete_line (void)
 /* Move line */
 int move_line (void)
 {
-    int i, sxn, syn, sxo, syo, line, last_line, node1, node2, type;
+    int i, sxn, syn, sxo = 0, syo = 0, line, last_line, node1, node2, type;
     int button, first;
     double x, y, thresh, xo, yo;
     struct line_pnts *Points;
@@ -312,7 +381,7 @@ int move_line (void)
         } else R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
 	
 	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT );
+	    display_line ( last_line, SYMB_DEFAULT, 1);
 	}
 
 	x =  D_d_to_u_col ( sxn );
@@ -330,7 +399,7 @@ int move_line (void)
                 
                 /* Display new selected line if any */
                 if ( line > 0 ) {
-		    display_line ( line, SYMB_HIGHLIGHT );
+		    display_line ( line, SYMB_HIGHLIGHT, 1);
 
 		    /* Find the nearest point on the line */
 		    type = Vect_read_line ( &Map, Points, NULL, line );
@@ -343,10 +412,10 @@ int move_line (void)
 	        }
 		last_line = line;
 	    } else { /* Line is already selected */
-	        display_line ( last_line, SYMB_BACKGROUND );
+	        display_line ( last_line, SYMB_BACKGROUND, 1);
 		Vect_get_line_nodes ( &Map, last_line, &node1, &node2 ); 
-                display_node ( node1, SYMB_BACKGROUND );
-                display_node ( node2, SYMB_BACKGROUND );
+                display_node ( node1, SYMB_BACKGROUND, 1);
+                display_node ( node2, SYMB_BACKGROUND, 1);
 
 		type = Vect_read_line ( &Map, Points, Cats, last_line );
 		for ( i = 0; i < Points->n_points; i++ ) {
@@ -381,7 +450,7 @@ int move_line (void)
 /* Move vertex */
 int move_vertex (void)
 {
-    int sxn, syn, sxo, syo, line, last_line, last_vert, node1, node2, type, seg;
+    int sxn, syn, sxo = 0, syo = 0, line, last_line, last_vert, node1, node2, type, seg;
     int button, first;
     double x, y, thresh, xo, yo, dist;
     struct line_pnts *Points;
@@ -402,6 +471,7 @@ int move_vertex (void)
     
     first = 1; 
     last_line = 0;
+    last_vert = 0;
     sxn = COOR_NULL; syn = COOR_NULL;
     while ( 1 ) {
 	/* Get next coordinate */
@@ -412,7 +482,7 @@ int move_vertex (void)
         } else R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
 	
 	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT );
+	    display_line ( last_line, SYMB_DEFAULT, 1);
 	}
 
 	x =  D_d_to_u_col ( sxn );
@@ -428,7 +498,7 @@ int move_vertex (void)
                 
                 /* Display new selected line if any */
                 if ( line > 0 ) {
-		    display_line ( line, SYMB_HIGHLIGHT );
+		    display_line ( line, SYMB_HIGHLIGHT, 1);
 
 		    /* Find the nearest vertex on the line */
 		    type = Vect_read_line ( &Map, Points, NULL, line );
@@ -451,10 +521,10 @@ int move_vertex (void)
 		    last_vert = seg;
 	        }
 	    } else { /* Line is already selected */
-	        display_line ( last_line, SYMB_BACKGROUND );
+	        display_line ( last_line, SYMB_BACKGROUND, 1);
 		Vect_get_line_nodes ( &Map, last_line, &node1, &node2 ); 
-                display_node ( node1, SYMB_BACKGROUND );
-                display_node ( node2, SYMB_BACKGROUND );
+                display_node ( node1, SYMB_BACKGROUND, 1);
+                display_node ( node2, SYMB_BACKGROUND, 1);
 
 		type = Vect_read_line ( &Map, Points, Cats, last_line );
                 Points->x[last_vert] = Points->x[last_vert] + x - xo;

@@ -77,26 +77,6 @@ int i_set_on ( char * name, int on )
     return 1;
 }
     
-/* Set snappping */
-void i_set_snap ( void ) 
-{
-    char val[20];
-    
-    G_debug (2, "i_set_snap()");
-
-    sprintf (val, "%d", Snap);
-    Tcl_SetVar(Toolbox, "snap", val, TCL_GLOBAL_ONLY);  
-    
-    sprintf (val, "%d", Snap_mode);
-    Tcl_SetVar(Toolbox, "snap_mode", val, TCL_GLOBAL_ONLY);  
-    
-    sprintf (val, "%d", Snap_screen);
-    Tcl_SetVar(Toolbox, "snap_screen", val, TCL_GLOBAL_ONLY);  
-    
-    sprintf (val, "%f", Snap_map);
-    Tcl_SetVar(Toolbox, "snap_map", val, TCL_GLOBAL_ONLY);  
-}
-
 /* This function should be regularly called from C to get GUI requests */
 int i_update ( void ) {
     G_debug (5, "i_update");
@@ -109,13 +89,13 @@ void i_new_line_options ( int create ) {
     int i;
     char val[1000];
     
-    G_debug (5, "i_new_line_options");
+    G_debug (4, "i_new_line_options(), create = %d", create);
 
     if ( create ) {
 	Tcl_Eval ( Toolbox, "new_line_options 1" );
 
 	/* Set cat mode */
-	sprintf (val, ".lineopt.cmode configure -values [list" );
+	sprintf (val, "$GWidget(cat_mode) configure -values [list" );
 	for ( i = 0; i < CAT_MODE_COUNT; i++ ) {
 	    sprintf (val, "%s \"%s\"", val, CatModeLab[i] );
 	}
@@ -124,17 +104,14 @@ void i_new_line_options ( int create ) {
 	G_debug (2, "Cat modes: %s", val);
 	Tcl_Eval ( Toolbox, val );
 
-	sprintf (val, ".lineopt.cmode setvalue @%d", CatMode );
+	sprintf (val, "$GWidget(cat_mode) setvalue @%d", var_geti(VAR_CAT_MODE) );
 	G_debug (2, "Cat mode: %s", val);
 	Tcl_Eval ( Toolbox, val );
-
-	i_new_line_field_set ( FieldCat[0][0] );
-	i_new_line_cat_set ( FieldCat[0][1] );
     } else { 
 	Tcl_Eval ( Toolbox, "new_line_options 0" );
     }
     
-    sprintf (val, "%d", FieldCat[0][0]);
+    sprintf (val, "%d", var_geti(VAR_FIELD) );
     Tcl_SetVar(Toolbox, "field", val, TCL_GLOBAL_ONLY);  
     i_set_cat_mode ();
 }
@@ -144,49 +121,83 @@ void i_set_cat_mode ( void ) {
     
     G_debug (5, "i_set_cat_mode");
 
-    if ( CatMode == CAT_MODE_NO ) {
-	Tcl_Eval ( Toolbox, ".lineopt.fval configure -state disabled" );
+    if ( var_geti(VAR_CAT_MODE) == CAT_MODE_NO ) {
+	Tcl_Eval ( Toolbox, "$GWidget(field) configure -state disabled" );
     } else {
-	Tcl_Eval ( Toolbox, ".lineopt.fval configure -state normal" );
+	Tcl_Eval ( Toolbox, "$GWidget(field) configure -state normal" );
     }
 
-    if ( CatMode == CAT_MODE_MAN ) {
-	Tcl_Eval ( Toolbox, ".lineopt.cval configure -state normal" );
+    if ( var_geti(VAR_CAT_MODE) == CAT_MODE_MAN ) {
+	Tcl_Eval ( Toolbox, "$GWidget(cat) configure -state normal" );
     } else {
-	Tcl_Eval ( Toolbox, ".lineopt.cval configure -state disabled" );
-    }
-
-    /* set nex not used category if necessary */
-    i_new_line_cat_set_next();
-}
-
-/* set category */
-void i_new_line_cat_set ( int cat ) {
-    char val[20];    
-    
-    G_debug (5, "i_new_line_cat_set");
-    sprintf (val, "%d", cat);
-    Tcl_SetVar(Toolbox, "cat", val, TCL_GLOBAL_ONLY);  
-}
-
-/* set category to next if mode is next */
-void i_new_line_cat_set_next ( void ) {
-    int cat;
-    
-    G_debug (5, "i_new_line_cat_set_next");
-    
-    if ( CatMode == CAT_MODE_NEXT ) { /* set nex not used category */
-	cat = cat_max_get ( FieldCat[0][0] ) + 1;
-	FieldCat[0][1] = cat; /* This shoud not be here, in cat.c ? */
-        i_new_line_cat_set ( cat );
+	Tcl_Eval ( Toolbox, "$GWidget(cat) configure -state disabled" );
     }
 }
 
-/* set category */
-void i_new_line_field_set ( int field ) {
-    char val[20];    
+/* set variable */
+void i_var_seti ( int code, int i ) 
+{
+    char cmd[100], *name;    
     
-    G_debug (5, "i_new_line_field_set");
-    sprintf (val, "%d", field);
-    Tcl_SetVar(Toolbox, "field", val, TCL_GLOBAL_ONLY);  
+    G_debug (5, "i_var_seti()");
+
+    name = var_get_name_by_code ( code );
+    sprintf (cmd, "set GVariable(%s) %d", name, i);
+    G_debug (5, "cmd: %s", cmd);
+    Tcl_Eval ( Toolbox, cmd );
 }
+
+/* set variable */
+void i_var_setd ( int code, double d ) 
+{
+    char cmd[100], *name;    
+    
+    G_debug (5, "i_var_seti");
+
+    name = var_get_name_by_code ( code );
+    sprintf (cmd, "set GVariable(%s) %f", name, d);
+    G_debug (5, "cmd: %s", cmd);
+    Tcl_Eval ( Toolbox, cmd );
+}
+
+/* set variable */
+void i_var_setc ( int code, char *c ) 
+{
+    char cmd[100], *name;    
+    
+    G_debug (5, "i_var_seti");
+
+    name = var_get_name_by_code ( code );
+
+    Tcl_SetVar(Toolbox, "tmp", c, TCL_GLOBAL_ONLY);  
+
+    sprintf (cmd, "set GVariable(%s) $tmp", name );
+    G_debug (5, "cmd: %s", cmd);
+    Tcl_Eval ( Toolbox, cmd );
+}
+
+/* open GUI window with message */
+int i_message ( int type, int icon, char *msg ) 
+{
+    char *tp = "ok", *ico = "error", buf[1000];
+    
+    G_debug (5, "i_message()");
+
+    switch ( type ) {
+	case MSG_OK:
+	    tp = "ok";
+	    break;
+    }
+    switch ( icon ) {
+	case MSGI_ERROR:
+	    ico = "error";
+	    break;
+    }
+    
+    var_setc ( VAR_MESSAGE, msg);
+    sprintf ( buf, "MessageDlg .msg -type %s -icon %s -message $GVariable(message)", tp, ico );
+    Tcl_Eval ( Toolbox, buf);
+
+    return 1;
+}
+

@@ -38,15 +38,32 @@ int Tcl_AppInit(Tcl_Interp* interp)
 
     Toolbox = interp;
 
-    Tcl_CreateCommand(interp, "c_tool_centre", (Tcl_CmdProc*) c_tool_centre, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_next_tool", (Tcl_CmdProc*) c_next_tool, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_cancel", (Tcl_CmdProc*) c_cancel, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_set_color", (Tcl_CmdProc*) c_set_color, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_set_on", (Tcl_CmdProc*) c_set_on, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_set_snap", (Tcl_CmdProc*) c_set_snap, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_set_cat", (Tcl_CmdProc*) c_set_cat, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
-    Tcl_CreateCommand(interp, "c_set_cat_mode", (Tcl_CmdProc*) c_set_cat_mode, (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_tool_centre", (Tcl_CmdProc*) c_tool_centre, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_next_tool", (Tcl_CmdProc*) c_next_tool, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_cancel", (Tcl_CmdProc*) c_cancel, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_color", (Tcl_CmdProc*) c_set_color, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_set_on", (Tcl_CmdProc*) c_set_on, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_create_table", (Tcl_CmdProc*) c_create_table, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_table_definition", (Tcl_CmdProc*) c_table_definition, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
+    Tcl_CreateCommand(interp, "c_var_set", (Tcl_CmdProc*) c_var_set, (ClientData) NULL, 
+	                      (Tcl_CmdDeleteProc*) NULL);
 
+    /* Init variables */
+    var_init ();
+
+    /* Init snap */
+    var_seti ( VAR_SNAP, 1 );
+    var_seti ( VAR_SNAP_MODE, SNAP_SCREEN );
+    var_seti ( VAR_SNAP_SCREEN, 10 );
+    var_setd ( VAR_SNAP_MAP, 10 );
+    
     sprintf(buf,"%s/etc/v.digit/toolbox.tcl", G_gisbase());
     ret = Tcl_EvalFile(interp, buf);
     if ( ret == TCL_ERROR) {
@@ -56,6 +73,7 @@ int Tcl_AppInit(Tcl_Interp* interp)
             sprintf(buf,"Cannot open toolbox.\n");
         G_fatal_error(buf) ;
     }
+
     return TCL_OK;
 }
 
@@ -88,6 +106,8 @@ main (int argc, char *argv[])
    
     module = G_define_module(); 
     module->description = "Edit GRASS vector.";
+
+    G_debug (2, "Variable = %p", Variable );
  
     /* Read background commands */
     if ( bgcmd_opt->answer ) {
@@ -129,7 +149,7 @@ main (int argc, char *argv[])
 
     G_debug (1, "Map opened");
 
-    /* Init cats and maximum categories */
+    /* Init maximum categories */
     cat_init ();
 
     /* Init symbology for lines and nodes */
@@ -146,12 +166,6 @@ main (int argc, char *argv[])
     driver_close ();
 
     G_get_window(&window);
-    
-    /* Init snap */
-    Snap = 1;
-    Snap_mode = SNAP_SCREEN;
-    Snap_screen = 10;
-    Snap_map = 10;  
     
     /* Open toolbox */
     Tk_Main(0, argv, Tcl_AppInit);
