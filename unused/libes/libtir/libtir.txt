@@ -1,0 +1,270 @@
+libtir: GRASS Type-Independent Raster library
+=============================================
+
+1. Data types
+
+@   typedef union _RASTER_MAP_ROW
+@   {
+@       void  *v;
+@       CELL  *c;
+@       FCELL *f;
+@       DCELL *d;
+@   } RASTER_MAP_ROW
+
+    RASTER_MAP_ROW is a union which has pointers to all types of raster.
+    This union can be easily used for any data type without a complicated
+    type-casting.  See the following:
+    
+        void *v;
+        CELL cell;
+    
+        v = (void *)G_malloc(...);
+        ...
+        cell = (CELL)((CELL *)v)[10];
+    
+    Now you can use RASTER_MAP_ROW as follows:
+    
+        RASTER_MAP_ROW buf;
+        CELL cell;
+    
+        buf.v = (void *)G_malloc(...);
+        ...
+        cell = buf.c[10];
+    
+    
+@   typedef struct _RASTER_ROW
+@   {
+@       RASTER_MAP_TYPE type;
+@       RASTER_MAP_ROW  row;
+@   } RASTER_ROW
+    
+    RASTER_ROW has a type of raster and a RASTER_MAP_ROW buffer.  With this,
+    we can bring all required info as one variable.
+    
+    
+@   typedef struct _RASTER_ROW2
+@   {
+@       RASTER_MAP_TYPE type;
+@       RASTER_MAP_ROW  *row;
+@   } RASTER_ROW2
+    
+    Unlike RASTER_ROW, RASTER_ROW2 has a pointer to RASTER_MAP_ROW to contain
+    a whole raster map in it.
+    
+    
+@   static char *G_type_name[] = { "CELL", "FCELL", "DCELL" }
+    
+    This can be used to print a current type of raster.
+    
+    
+@   static char *G_type_spec[] = { "%%d",  "%%f",   "%%lf"  }
+    
+    This may not be used. :-)
+    
+    
+    
+2. Base functions
+    
+@   double G_get_[cfd](RASTER_MAP_ROW buf, int col)
+
+    gets double-casted col'th value from buf.
+ G_get_[cfd] represents G_get_c for CELL, G_get_f for FCELL and
+ G_get_d for DCELL respectively.
+
+    
+@   double *G_get_?s(RASTER_MAP_ROW buf, int col, int num, double *val, int idx)
+
+    puts a num of values into (double *)(val+idx) from buf[col] value.
+
+    ? means [cfd].
+    buf[col] means col'th value from buf type-independently.
+
+
+@   void G_set_?(RASTER_MAP_ROW buf, int col, double val, int num)
+
+    sets a num of cells to val from buf[col].
+
+
+@   void G_set_null_?(RASTER_MAP_ROW buf, int col, int num)
+
+    sets a num of cells to NULL from buf[col].
+
+
+@   int G_is_null_?(RASTER_MAP_ROW buf, int col)
+
+    returns whether buf[col] is NULL or not.  1 for NULL and 0 for non-NULL.
+
+
+@   int G_str_?(RASTER_MAP_ROW buf, int col, char *str, int width, int prec)
+
+    it's something like:
+
+    	sprintf(str, "%*.*f", width, prec, buf[col]);
+
+
+@   static double (*G__get_r[])(RASTER_MAP_ROW buf, int col) =
+@   {
+@    G_get_c, G_get_f, G_get_d
+@   }
+
+@   static double *(*G__get_rs[])(RASTER_MAP_ROW buf, int col, int num,
+@           double *val, int idx) =
+@   {
+@    G_get_cs, G_get_fs, G_get_ds
+@   }
+   
+@   static void (*G__set_r[])(RASTER_MAP_ROW buf, int col,
+@           double val, int num) =
+@   {
+@    G_set_c, G_set_f, G_set_d
+@   }
+   
+@   static void (*G__set_null_r[])(RASTER_MAP_ROW buf, int col, int num) =
+@   {
+@    G_set_null_c, G_set_null_f, G_set_null_d
+@   }
+   
+@   static int (*G__is_null_r[])(RASTER_MAP_ROW buf, int col) =
+@   {
+@    G_is_null_c, G_is_null_f, G_is_null_d
+@   }
+   
+@   static int (*G__str_r[])(RASTER_MAP_ROW buf, int col,
+@           char *str, int width, int prec) =
+@   {
+@    G_str_c, G_str_f, G_str_d
+@   }
+
+    With the above arrays, we don't have to worry about a type of raster.
+    It's easy to select a correct function corresponding to the type of
+    raster:
+
+    	G__*_r[buf.type](...)
+
+
+
+3. User functions
+
+    We don't need to use base functions directly.
+
+    Base functions require '[buf.type]' to select a correct function.
+    However, we already have RASTER_ROW data type which has a type of
+    raster in it.  This data type can be used to determine a type of
+    raster in a function.
+
+
+@   double G_get_r(RASTER_ROW row1, int col)
+
+    == G__get_r[row1.type](row1.row, col)
+
+    
+@   void G_set_r(RASTER_ROW row1, int col, double val)
+
+    == G__set_r[row1.type](row1.row, col, val, 1)
+
+
+@   void G_set_null_r(RASTER_ROW row1, int col)
+
+    == G__set_null_r[row1.type](row1.row, col, 1)
+
+
+@   int G_is_null_r(RASTER_ROW row1, int col)
+
+    == G__is_null_r[row1.type](row1.row, col)
+
+
+@   int G_str_r(RASTER_ROW row1, int col, char *str, int width, int prec)
+
+    == G__str_r[row1.type](row1.row, col, str, width, prec)
+
+ 
+    We also have RASTER_ROW2 data type which is able to contain all cells
+    in a map.  With this data type, we should give a row number to functions.
+
+@   double G_get_r2(RASTER_ROW2 row2, int row, int col)
+
+    == G__get_r[row2.type](row2.row[row], col)
+
+
+@   void G_set_r2(RASTER_ROW2 row2, int row, int col, double val)
+
+    == G__set_r[row2.type](row2.row[row], col, val, 1)
+
+
+@   void G_set_null_r2(RASTER_ROW2 row2, int row, int col)
+
+    == G__set_null_r[row2.type](row2.row[row], col, val, 1)
+
+
+@   int G_is_null_r2(RASTER_ROW2 row2, int row, int col)
+
+    == G__is_null_r[row2.type](row2.row[row], col)
+
+
+@   int G_str_r2(RASTER_ROW2 row2, int row, int col,
+@           char *str, int width, int prec)
+
+    == G__str_r[row2.type](row2.row[row], col, str, width, prec)
+
+
+
+    Unfortunately it may be somewhat slow to call the above functions
+    iteratively compared to a direct type-casting with a known type of
+    raster:
+
+    	void *v;
+	CELL c[100];
+	int i;
+
+	...
+	for(i=0; i<100; i++)
+		c[i] = (CELL)((CELL *)v)[i];	/* type-casting */
+
+    is faster than
+
+        RASTER_ROW buf;
+	double val[100];
+	int i;
+
+	...
+	for(i=0; i<100; i++)
+		val[i] = G_get_r(buf, i);	/* function call */
+
+    For this reason, the following functions are introduced to try to
+    reduce function calls.
+
+@   double *G_get_rs(RASTER_ROW row1, int col, int num, double *val, int idx)
+
+    == G__get_rs[row1.type](row1.row, col, num, val, idx)
+
+   
+@   void G_set_rs(RASTER_ROW row1, int col, double val, int num)
+
+    == G__set_r[row1.type](row1.row, col, val, num)
+
+
+@   void G_set_null_rs(RASTER_ROW row1, int col, int num)
+
+    == G__set_null_r[row1.type](row1.row, col, num)
+
+
+@   double *G_get_rs2(RASTER_ROW2 row2, int row, int col, int num,
+@           double *val, int idx)
+
+    == G__get_rs[row2.type](row2.row[row], col, num, val, idx)
+
+
+@   void G_set_rs2(RASTER_ROW2 row2, int row, int col, double val, int num)
+
+    == G__set_r[row2.type](row2.row[row], col, val, num)
+
+
+@   void G_set_null_rs2(RASTER_ROW2 row2, int row, int col, int num)
+
+    == G__set_null_r[row2.type](row2.row[row], col, num)
+
+
+
+4. How to use
+
+    On going
