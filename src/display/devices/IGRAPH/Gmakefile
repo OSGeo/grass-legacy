@@ -31,7 +31,6 @@ OFILES =  \
 	Raster_chr.o\
 	Raster_def.o\
 	Raster_int.o\
-	Raster_over.o\
 	Reset_clr.o \
 	Reset_clrs.o \
 	Returns.o \
@@ -43,30 +42,32 @@ $(GISBASE)/driver/IGRAPH: IGRAPH
 	mv IGRAPH $@
 	$(GMAKE) igraph_progs
 
-IGRAPH: $(OFILES) ../lib/driverlib.a
-	cc $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)  $(GISLIB)
+IGRAPH: $(OFILES) ../lib/driverlib.a $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)  $(GISLIB)
 
+../lib/driverlib.a: #
+$(GISLIB): #
 
 #Reset_clrs.o:
-#	cc Reset_clrs.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) Reset_clrs.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #
 #Color.o:
-#	cc Color.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) Color.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #	
 #Clr_table.o:
-#	cc Clr_table.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) Clr_table.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #	
 #Raster_def.o:
-#	cc Raster_def.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) Raster_def.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #	
 #Raster_over.o:
-#	cc Raster_over.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) Raster_over.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #	
 #SWITCHER.o:
-#	cc SWITCHER.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) SWITCHER.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #
 #window_act.o:
-#	cc window_act.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	$(CC) window_act.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
 #	
 #
 #Clr_table.o:	../lib/colors.h
