@@ -25,6 +25,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(DRIVERLIB) $(GISLIB)
 DEPENDENCIES = $(DRIVERLIBDEP) $(GISLIBDEP)
+HTMLPGM=pngdriver
 
 default: $(DRIVERDIR)/PNG
 	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
@@ -33,6 +34,13 @@ default: $(DRIVERDIR)/PNG
 	echo adding PNG driver to $(ETC)/monitorcap ; \
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
+	cat description.html >> $(HTMLPGM).html
+	echo "<HR>" >> $(HTMLPGM).html
+	echo "<P><a href=index.html>Help Index</a>" >> $(HTMLPGM).html
+	echo "</body></html>" >> $(HTMLPGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(HTMLPGM).html $(GISBASE)/docs/html
+
 
 $(DRIVERDIR)/PNG: $(ARCH_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(XDRLIB) $(GDLIB) $(MATHLIB)
