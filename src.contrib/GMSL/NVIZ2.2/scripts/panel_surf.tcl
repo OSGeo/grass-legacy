@@ -11,6 +11,7 @@
 # global variables set by widgets in this panel:
 #     Nv_(CurrOnly)
 #     Nv_(SurfStyle)
+#     Nv_(GridStyle)
 #     Nv_(ShadeStyle)
 #     Nv_(PolyResWidget) 
 #     Nv_(WireResWidget) 
@@ -29,6 +30,7 @@ proc mksurfPanel { BASE } {
     if {[catch {set Nv_(CurrOnly)}]} 		{set Nv_(CurrOnly) 1}
     if {[catch {set Nv_(ShadeStyle)}]} 	{set Nv_(ShadeStyle) gouraud}
     if {[catch {set Nv_(SurfStyle)}]} 	{set Nv_(SurfStyle) poly}
+    if {[catch {set Nv_(GridStyle)}]}   {set Nv_(GridStyle) grid_surf}
     if {[catch {set Nv_(TopNoZeros)}]} 	{set Nv_(TopNoZeros) 0}
     if {[catch {set Nv_(ColNoZeros)}]} 	{set Nv_(ColNoZeros) 0}
     
@@ -68,28 +70,36 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
 	-side top -fill x -ipady 5
     
     set tmp [frame $BASE.top.right]
-    ########## make buttons that control surface & drawing style ##################
-    label $tmp.style -text "Surface Style:" -anchor nw
-    radiobutton $tmp.wire -text Wire \
-	-anchor nw -value wire -variable Nv_(SurfStyle) -command set_drawmode
-    radiobutton $tmp.poly -text Polygon \
-	-anchor nw -value poly -variable Nv_(SurfStyle) -command set_drawmode
-    radiobutton $tmp.wire_poly -text Wire/Poly \
-	-anchor nw -value wire_poly -variable Nv_(SurfStyle) \
-	-command set_drawmode
-    
-    label $tmp.shading -text "Shading:" -anchor nw
-    radiobutton $tmp.flat -text Flat \
-	-anchor nw -value flat -variable Nv_(ShadeStyle) \
-	-command set_drawmode
-    radiobutton $tmp.gouraud -text Gouraud \
-	-anchor nw -value gouraud -variable Nv_(ShadeStyle) \
-	-command set_drawmode
-    
-    pack $tmp.style $tmp.poly $tmp.wire $tmp.wire_poly \
-	$tmp.shading $tmp.flat $tmp.gouraud \
-	-side top -fill x -ipady 3 -expand 1
-    
+    ########## make buttons that control surface & drawing style#############
+    menubutton $tmp.style -menu $tmp.style.m -relief raised \
+	-text "Surface Style:" -underline 0 -indicatoron 1
+    menu $tmp.style.m 
+	$tmp.style.m add radiobutton -label Wire -value wire \
+	-variable Nv_(SurfStyle) -command set_drawmode
+	$tmp.style.m add radiobutton -label Polygon -value poly \
+	-variable Nv_(SurfStyle) -command set_drawmode
+	$tmp.style.m add radiobutton -label Wire/Poly -value wire_poly \
+	-variable Nv_(SurfStyle) -command set_drawmode
+
+    menubutton $tmp.gstyle -menu $tmp.gstyle.m -relief raised \
+	-text "Grid Style:" -underline 0 -indicatoron 1
+    menu $tmp.gstyle.m
+	$tmp.gstyle.m add radiobutton -label Wire -value grid_wire \
+	-variable Nv_(GridStyle) -command set_drawmode
+	$tmp.gstyle.m add radiobutton -label "Coarse Surface" -value grid_surf \
+	-variable Nv_(GridStyle) -command set_drawmode
+
+    menubutton $tmp.shading -text "Shading:" -menu $tmp.shading.m \
+	-relief raised -underline 0 -indicatoron 1
+    menu $tmp.shading.m
+	$tmp.shading.m add radiobutton -label Flat -value flat \
+	-variable Nv_(ShadeStyle) -command set_drawmode
+	$tmp.shading.m add radiobutton -label Gouraud -value gouraud \
+	-variable Nv_(ShadeStyle) -command set_drawmode
+
+     pack $tmp.style $tmp.gstyle $tmp.shading \
+	-side top -fill x -pady 3 -expand 0
+
     ###### make widgets that control which is current surface (menu, new delete)###
     set tmp [frame $BASE.bottom.top]
     label $tmp.current -text "Current:" -anchor nw
@@ -100,7 +110,7 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
     pack $tmp.current $tmp.list -side left
     pack $tmp.delete $tmp.new -side right -expand 1
     
-    ####### make buttons that control attributes for current surface ############
+    ####### make buttons that control attributes for current surface ########
     set tmp [frame $BASE.bottom.left]
     button $tmp.draw_current -text "Draw Current" \
 	-command {Nsurf_draw_one [Nget_current surf]}
@@ -126,7 +136,7 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
     ############# manage  frames ################################################
     pack $BASE.top $BASE.bottom -side top -fill x -expand 1
     pack $BASE.top.left -side left -expand 1
-    pack $BASE.top.right -side right -expand 1
+    pack $BASE.top.right -side right -fill both -expand 1
     pack $BASE.bottom.top -side top -fill x -ipady 5 -expand 1
     pack $BASE.bottom.left -side left -expand 1
     pack $BASE.bottom.right -side top
@@ -215,6 +225,7 @@ proc Nviz_surf_save {file_hook} {
 	# surface and shade style
 	set modes [Nsurf$i get_drawmode]
 	puts $file_hook "[lindex $modes 1]"
+	puts $file_hook "[lindex $modes 2]"
 	puts $file_hook "[lindex $modes 0]"
 
 	flush $file_hook
@@ -306,8 +317,16 @@ proc Nviz_surf_load { file_hook } {
 
 	# surface, shading style
 	gets $file_hook surf_mode
+	#Add hook for grid_mode and check for old style
+	#state files that do not include
+	gets $file_hook grid_mode
+	if {$grid_mode == "gouraud" || $grid_mode == "flat"} {
+		set shade_mode $grid_mode
+		set grid_mode "grid_surf"
+	} else {
 	gets $file_hook shade_mode
-	$new_surf set_drawmode $surf_mode $shade_mode
+	}
+	$new_surf set_drawmode $surf_mode $grid_mode $shade_mode
     }
 
     # Update the interface
@@ -326,7 +345,7 @@ proc set_drawmode {} {
     
     foreach surf $L {
 	if {0 != $surf} then {
-	    Nsurf$surf set_drawmode $Nv_(SurfStyle) $Nv_(ShadeStyle)
+	    Nsurf$surf set_drawmode $Nv_(SurfStyle) $Nv_(GridStyle) $Nv_(ShadeStyle)
 	}
     }
 }
