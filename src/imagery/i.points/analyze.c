@@ -416,13 +416,6 @@ compute_transformation()
 	rms = sqrt (sum/count);
 }
 
-static
-debug (msg) char *msg;
-{
-    R_stabilize();
-    Curses_write_window (PROMPT_WINDOW, 1, 1, msg);
-    Curses_getch(0);
-}
 
 static
 to_file()
