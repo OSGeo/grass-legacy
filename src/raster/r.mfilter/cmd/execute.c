@@ -95,10 +95,17 @@ if (!silent) G_percent (count, rcount, 2);
 	col = ccount;
 	while (col--)
 	{
-	    if (!zero_only || box[mid][mid])
-		*cp++ = apply_filter (filter, box);
+	    if(zero_only)
+	    {
+		if(!box[mid][mid])
+		    *cp++ = apply_filter (filter, box);
+		else
+		    *cp++ = box[mid][mid];
+	    }
 	    else
-		*cp++ = box[mid][mid];
+	    {
+		*cp++ = apply_filter (filter, box);
+	    }
 	    for (i=0; i < size; i++)
 		box[i] += dx;
 	}
