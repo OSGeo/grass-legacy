@@ -39,6 +39,7 @@ main (int argc, char *argv[])
     
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->options = "point,line,boundary,centroid,face,kernel";
+    type_opt->answer = "point,line,boundary,centroid";
     type_opt->description = "Pairs for input and output type separated by comma:\n"
 	      "<input_type1>,<output_type1>,<input_type2>,<output_type2>,....\n"
 	      "Example1: line,boundary\n"
