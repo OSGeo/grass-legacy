@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "mapcalc.h"
 
@@ -197,7 +198,12 @@ expr_list *parse_string(const char *s)
 
 expr_list *parse_stream(FILE *fp)
 {
+	expr_list *e;
+
 	initialize_scanner_stream(fp);
-	return parse();
+	e = parse();
+	if (isatty(fileno(fp)))
+		fputs("\n", stderr);
+	return e;
 }
 

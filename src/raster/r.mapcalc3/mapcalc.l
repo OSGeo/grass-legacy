@@ -2,6 +2,7 @@
 %{
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "mapcalc.h"
 
@@ -30,10 +31,16 @@ static int get_input_string(char *buf, int max_size)
 
 static int get_input_stream(char *buf, int max_size)
 {
-	int result = fread(buf, 1, max_size, input_stream);
-	return (result <= 0)
-		? YY_NULL
-		: result;
+	if (feof(input_stream))
+		return YY_NULL;
+
+	if (isatty(fileno(input_stream)))
+		fputs("mapcalc> ", stderr);
+
+	if (!fgets(buf, max_size, input_stream))
+		return YY_NULL;
+
+	return strlen(buf);
 }
 
 #define YY_INPUT(buf,result,max_size)				\
@@ -54,6 +61,8 @@ F		[fF]
 %%
 
 {W}		;	/* ignore white space */
+
+"\\"{W}?"\n"	;	/* ignore backslash-newline */
 
 {I}"."{I}?{E}?{F}	|
 "."{I}{E}?{F}	{
@@ -137,6 +146,8 @@ F		[fF]
 
 ","		{	return ',';	}
 
+"\n\n"		{	yyterminate();	}
+
 ";"		|
 "\n"		{	return ';';	}
 
@@ -144,7 +155,7 @@ F		[fF]
 
 int yywrap(void)
 {
-    return 1;
+	return 1;
 }
 
 void initialize_scanner_string(const char *s)
@@ -157,5 +168,6 @@ void initialize_scanner_string(const char *s)
 void initialize_scanner_stream(FILE *fp)
 {
 	input_stream = fp;
+	setbuf(fp, NULL);
 }
 
