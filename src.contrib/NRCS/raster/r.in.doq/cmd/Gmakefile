@@ -1,0 +1,10 @@
+PGM    = r.in.doq
+HOME   = $(BIN_CONTRIB_CMD)
+
+LIST   =  main.o gethead.o get_newhead.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(GISLIB): #
