@@ -52,6 +52,7 @@ S-42    "towgs84=28,-121,-77" "Hungary" " "
 S-42    "towgs84=15,-130,-84" "Kazakhstan" " "
 S-42    "towgs84=24,-124,-82" "Latvia" " "
 S-42    "towgs84=28,-121,-77" "Romania" " "
+S-42    "towgs84=26,-121,-78" "Czech Republic, Slovak Republic" " "
 # http://crs.ifag.de/
 rome40  "towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68" "Italy (Peninsular Part)" "Accuracy 3-4m"
 rome40  "towgs84=-168.6,-34.0,-34.0,-0.374,-0.679,-1.379,-9.48" "Italy (Sardinia)" "Accuracy 3-4m"
@@ -70,10 +71,12 @@ potsdam "towgs84=584.8,67.0,400.3,0.105,0.013,-2.378,10.29" "Germany (West - Mid
 potsdam "towgs84=597.1,71.4,412.1,0.894,0.068,-1.563,7.58" "Germany (West - South - 47d00N to 50d20'N)" "Accuracy <1m"
 potsdam "towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.70" "Germany (Whole Country)" "Accuracy 3m"
 rd18    "towgs84=565.036,49.914,465.839,-0.4094,0.3597,-1.86854,-4.0772" "Netherlands" "Accuracy about 0.3m"
-bd72    "towgs84=-99.1,53.3,-112.5,0.419,-0.830,1.885,-1.00" "Belgium" "Accuracy about 0.3m"
-ptd73   "towgs84=-231.0,102.6,29.8,0.615,-0.198,0.881,1.79" "Portugal" " "
-ptdlx   "towgs84=-282.1,-72.2,120.0,-1.592,0.145,-0.890,-4.46" "Portugal" "Accuracy about 3m"
+bel72   "towgs84=-99.1,53.3,-112.5,0.419,-0.830,1.885,-1.00" "Belgium" "Accuracy about 0.3m"
+por73   "towgs84=-231.0,102.6,29.8,0.615,-0.198,0.881,1.79" "Portugal" " "
+lis37   "towgs84=-282.1,-72.2,120.0,-1.592,0.145,-0.890,-4.46" "Portugal" "Accuracy about 3m"
 # From GRASS datum.table file
 sam69   "towgs84=-60.0,-2.0,-41.0" "Brazil" " "
 sam69   "towgs84=-77.0,3.0,-45.0" "South America?" "Old GRASS sam69 parameters"
 nad27   "towgs84=-9.0,151.0,185.0" "Alaska & Canada" "Old GRASS a-can parameters"
+# http://www.linz.govt.nz/rcs/linz/6149/osgpol97_3.pdf
+nzgd49  "towgs84=59.47,-5.04,187.44,0.47,-0.1,1.024,-4.5993" "New Zealand" "Accuracy approx. 4m"
