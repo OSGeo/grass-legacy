@@ -1,0 +1,25 @@
+EXTRA_CFLAGS	=  $(VECT_INCLUDE) -I../libes/include
+
+TRIANGLIB = ../libes/optri/liboptri.a ../libes/sos/libsos.a ../libes/lia/liblia.a ../libes/basic/libbasic.a \
+	$(LIB_MALLOC)
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB)
+
+SOURCES = voroSupport.c \
+	  main.c
+
+OBJ =   voroSupport.o \
+	main.o
+
+
+
+PROG =   $(BIN_CONTRIB_CMD)/s.geom 
+
+all:  $(PROG)
+
+$(PROG): $(OBJ) $(LIBES)
+	rm -f a.out $@
+	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB)
+	mv a.out $@
+
+$(LIBES): #
