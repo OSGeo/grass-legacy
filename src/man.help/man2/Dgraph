@@ -1,0 +1,124 @@
+.\" %W% %G%
+.TH Dgraph 2D D-language
+.SH NAME
+Dgraph \- Tool for generating simple graphics
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dgraph
+[\fIname\fR [\fIcolor\fR]]
+.br
+.B Dgraph
+[option\*=\fIvalue\fR] [option\*=\fIvalue\fR]
+.SH DESCRIPTION
+.I Dgraph 
+draws graphics that are described either in standard input (default), or
+within the GRASS file
+.I filename
+if an input filename is identified on the command line.  If graphics
+commands are entered from standard input, a \fIctrl-d\fR
+is used to signal the end of input to \fIDgraph\fR.  Options are:
+.ns
+.TP 
+.RI name= file_name
+Name of file containing graphics commands.  This is a UNIX file name;
+specify the full pathname of the file.  If no filename is specified
+on the command line, commands are taken from within standard input.
+.br
+.ns
+.TP 
+.RI color= color
+Starting color desired for graphics. Default is \fIwhite\fR if unspecified.
+.br
+.PP
+The coordinate system used is 0-100 in x and 0-100 in y,
+regardless of window size and aspect.   The 0,0 location is the lower left
+corner of the current graphics window.  All values may be floating point.
+.PP
+The graphics language is simple, using the following commands:
+.ns
+.TP 
+# \fIcomment\fR
+A line of comment which is ignored in the processing.
+.br
+.TP 
+move \fIxpos ypos\fR
+The current location is updated to \fI(xpos,ypos)\fR.
+.br
+.TP 
+draw \fIxpos ypos\fR
+A line is drawn in the current color from the current location to the new
+location
+.I (xpos,ypos),
+which then becomes the current location.
+.br
+.TP 
+color \fIcolor\fR
+Sets the current color to that stated;  subsequent graphics will be drawn
+in the stated color, until the current color is set to a different color.
+Options are red, orange, green, blue, indigo, violet, black, white, gray,
+yellow, brown, indigo, and magenta.
+.br
+.TP 
+size \fIxper yper\fR
+Subsequent text will be drawn such that the text is
+.I xper
+percent of the window wide and
+.I yper
+percent of the window high.
+.br
+.TP 
+text \fIline-of-text\fR
+The stated text is drawn at the current location using the current color.
+.br
+.TP
+icon \fItype size x y\fR
+Draws an icon of types 0, x, or + with specified size at location x,y.
+.br
+.TP
+\fBpolygon\fR
+.ns
+.TP
+\fI  xpos ypos\fR
+.ns
+.TP
+\fI  xpos ypos\fR
+.ns
+.TP
+    .
+.ns
+.TP
+    .
+.ns
+.TP
+    .
+The coordinates appearing beneath the word 
+.I polygon,
+one pair per line, circumscribe a polygon
+which is to be filled with the current color.
+.br
+.SH EXAMPLE
+For an example, examine the macro command
+.I Dgrass.logo
+located in the GRASS command bin
+(which draws a GRASS logo by inputting \fIDgraph\fR graphics commands
+that are stored in a shell file).
+Note that the coordinates in the \fIDgrass.logo\fR macro were taken directly
+off an image drawn by hand on graph paper.
+.SH LIMITATIONS
+There are no automated ways of generating graphic images.  It is anticipated
+that GRASS user sites will write tools to convert output from a resident
+graphics editor into GRASS \fIDgraph\fR format.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+.sp
+\fIDgrass.logo[2D]\fR	Macro generating the GRASS logo
+.br
+\fIDmapgraph[2D]\fR	Tool for generating simple map graphics
+.TE
+.br
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
