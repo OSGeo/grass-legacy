@@ -3,6 +3,7 @@ all:
 	cp d.monsize/d.monsize $(GISBASE)/scripts
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
+	cp g.man2html/g.man2html $(GISBASE)/scripts
 	$(GMAKE) i.oif
 	$(GMAKE) i.spectral
 	cp i.image.mosaic/i.image.mosaic $(GISBASE)/scripts
