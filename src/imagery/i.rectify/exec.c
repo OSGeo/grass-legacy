@@ -86,4 +86,5 @@ exec_rectify ()
     }
     mail (mailfile);
     unlink (mailfile);
+    G_done_msg ("Check your mail");
 }
