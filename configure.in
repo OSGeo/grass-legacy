@@ -973,6 +973,9 @@ LOC_OPTIONAL(i.shape,FFTW,I_SHAPE,src.contrib/CERL/imagery/i.shape)
 
 AC_OUTPUT(Makefile src/CMD/head/head src/CMD/lists/optional)
 
+LOC_MSG([Copying config.status to config.status.${ARCH}])
+cp -f config.status config.status.${ARCH}
+
 # Display configuration status
 
 LOC_MSG()

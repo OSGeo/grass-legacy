@@ -97,6 +97,8 @@ all: binaries
 binaries: FORCE pre-compile do-compile
 	@ # Nothing to do - compilation is performed by the targets
 	@ # pre-compile and do-compile
+	@ # Make copies for this ARCH - Bev Wallace 1/25/02
+	cp -f error.log error.log.${ARCH}
 
 pre-compile: FORCE
 	test -d ${GISBASE} || ${MAKE_DIR_CMD} ${GISBASE}
@@ -196,6 +198,7 @@ real-install: FORCE
 	fi
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
+	${SHELL} -c "chmod -R a+rX ${INST_DIR} 2>/dev/null ; true"
 
 uninstall: FORCE
 	@ # NOTE: if anything is changed for uninstall then the same change
@@ -430,7 +433,7 @@ mostlyclean: FORCE
 	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
 	${SHELL} -c "rm -f grass*install.sh   	    	    2>/dev/null ; true"
-	${SHELL} -c "rm -f error.log                        2>/dev/null ; true"
+	${SHELL} -c "rm -f error.log error.log.${ARCH}      2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*log                   2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/core                   2>/dev/null ; true"
@@ -465,7 +468,8 @@ clean: FORCE mostlyclean
 distclean: FORCE clean
 	@ echo "Performing distclean step..."
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
-	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log               2>/dev/null ; true"
+	${SHELL} -c "rm -f config.status config.status.${ARCH}   2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/lists/optional                2>/dev/null ; true"
@@ -493,7 +497,8 @@ savebinclean: FORCE mostlyclean
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head  2>/dev/null ; true"
-	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log               2>/dev/null ; true"
+	${SHELL} -c "rm -f config.status config.status.${ARCH}   2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
 	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 
