@@ -61,21 +61,21 @@ do
 	wildcard=`echo $i | awk -F '=' '{print $2}'`
 	case $i in
 		ra=*|ras=*|rast=*)
-			rast=`g.mlist type=rast sep=, mapset=$MAPSET "$wildcard"`;;
+			rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		v=*|ve=*|vec=*|vect=*)
-			vect=`g.mlist type=vect sep=, mapset=$MAPSET "$wildcard"`;;
+			vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		i=*|ic=*|ico=*|icon=*)
-			icon=`g.mlist type=icon sep=, mapset=$MAPSET "$wildcard"`;;
+			icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		l=*|la=*|lab=*|labe=*|label=*|labels=*)
-			labels=`g.mlist type=labels sep=, mapset=$MAPSET "$wildcard"`;;
+			labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		s=*|si=*|sit=*|site=*|sites=*)
-			sites=`g.mlist type=sites sep=, mapset=$MAPSET "$wildcard"`;;
+			sites=`g.mlist type=sites sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		re=*|reg=*|regi=*|regio=*|region=*)
-			region=`g.mlist type=region sep=, mapset=$MAPSET "$wildcard"`;;
+			region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		g=*|gr=*|gro=*|grou=*|group=*)
-			group=`g.mlist type=group sep=, mapset=$MAPSET "$wildcard"`;;
+			group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$wildcard"`;;
 		3=*|3d=*|3dv=*|3dvi=*|3dvie=*|3dview=*)
-			dview=`g.mlist type=3dview sep=, mapset=$MAPSET "$wildcard"`;;
+			dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$wildcard"`;;
 	esac
 done
 
