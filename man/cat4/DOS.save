@@ -6,23 +6,23 @@ DOS.save <contrib>   GRASS Reference Manual    <contrib> DOS.save
 
 
 NAME
-     DOS.save - Stores screen images to the PC6300 MS-DOS hard
+     DOS.save -	Stores screen images to	the PC6300 MS-DOS hard
      disk.
-     (SCS GRASS Graphics File Management Program)
-     (Available for PC6300 workstations, only)
+     (SCS GRASS	Graphics File Management Program)
+     (Available	for PC6300 workstations, only)
 
 SYNOPSIS
      DOS.save
      DOS.save help
 
 DESCRIPTION
-     This program allows a user to interactively save PC6300
+     This program allows a user	to interactively save PC6300
      screen images produced by GRASS graphics display programs
-     (like d.display, d.rast, etc.) to the PC6300 hard disk.  It
+     (like d.display, d.rast, etc.)  to	the PC6300 hard	disk.  It
      will assign the extension ".GRS" to the filename given, and
-     will store the image file in the user's current DOS
-     directory.  The files are binary image files, representing
-     the red, green, and blue planes of the DEB board graphic
+     will store	the image file in the user's current DOS
+     directory.	 The files are binary image files, representing
+     the red, green, and blue planes of	the DEB	board graphic
      memory.
 
 NOTES
@@ -32,13 +32,13 @@ SEE ALSO
      DOS.delete, DOS.list, DOS.show
 
 AUTHOR
-     P.W.Carlson, USDA, SCS, NHQ-CGIS
+     P.W.Carlson, USDA,	SCS, NHQ-CGIS
 
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
-     that has not been examined or tested by the Office of GRASS
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -60,7 +60,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
