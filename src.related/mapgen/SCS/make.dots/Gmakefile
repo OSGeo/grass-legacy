@@ -1,0 +1,21 @@
+###########################################################
+#  %W%  %G%
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+
+
+
+
+
+all:  $(MAPGEN_BIN)/make.dots \
+	$(MAPGEN_BIN)/redo.dots
+
+
+$(MAPGEN_BIN)/make.dots: make.dots
+	cp make.dots $(MAPGEN_BIN)/make.dots
+
+$(MAPGEN_BIN)/redo.dots: redo.dots
+	cp redo.dots $(MAPGEN_BIN)/redo.dots
+
+make.line:#
+redo.line:#
