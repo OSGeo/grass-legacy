@@ -45,7 +45,6 @@ int Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, ch
 	              char *db, char *driver );
 int Vect_map_add_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
 	              char *db, char *driver );
-struct field_info *Vect_get_field_info (char *, char *, int);
 int Vect_read_dblinks ( char *, char *,  struct dblinks *p );
 int Vect_write_dblinks ( char *, char *,  struct dblinks *p );
 struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type );

@@ -242,54 +242,6 @@ struct field_info
 }
 
 /*!
- \fn struct field_info *Vect_get_field_info (    char *m,     char *ms,     int  field)
- \brief get information about link to database, variables are substituted by values 
- \return pointer to new field_info structure
- \param pointer to map name, pointer to mapset name, category field
-*/
-struct field_info
-*Vect_get_field_info (
-    char *m,       /* pointer to map name */		
-    char *ms,      /* pointer to mapset name */		
-    int  field)    /* category field */
-{
-    int i, nfld;
-    struct dblinks *dbl;
-    struct field_info *fi;
-    
-    G_debug (1, "Vect_get_field_info(): map = %s, mapset = %s", m, ms);
-    
-    fi = NULL;
-    dbl = Vect_new_dblinks_struct ( );
-    
-    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
-
-    nfld = Vect_read_dblinks ( m, ms, dbl );
-    if ( nfld < 0 ) return NULL;
-
-    for ( i = 0; i < dbl->n_fields; i++ ) { 
-	if ( dbl->field[i].number == field ) {
-	    fi = (struct field_info *) malloc( sizeof(struct field_info) );
-	    fi->number = field;
-	    fi->name = dbl->field[i].name;
-	    fi->table = dbl->field[i].table;
-	    fi->key = dbl->field[i].key;
-	    fi->database = Vect_subst_var(dbl->field[i].database, m, ms);
-	    fi->driver = dbl->field[i].driver;
-
-	    G_debug (1, "field name = %s, table = %s, key = %s, database = %s, driver = %s",
-		         fi->name, fi->table, fi->key, fi->database, fi->driver );
-	    break;
-        }
-    }
-
-    /* TODO: free dbl */
-
-    G_debug (1, "Field info is read");
-    return (fi);
-}
-
-/*!
  \fn int *Vect_read_dblinks ( char *m, char *ms, struct dblinks *p)
  \brief read dblinks to existing structure, variables are not substituted by values
  \return number of links read or -1 on error
