@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 Ptext (buf) char *buf;
 {
