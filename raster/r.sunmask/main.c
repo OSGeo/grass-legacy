@@ -14,14 +14,41 @@
  * GPL >= 2
  *
  * MN 2/2001: attempt to update to FP
+ * Huidae Cho 3/2001: FP update done
+ * 		      but it's somewhat slow with non-CELL maps
  *
  */
  
+/*
+#define	RASTER_VALUE_FUNC
+*/
+
+
+union RASTER_PTR
+{
+    void	*v;
+    CELL	*c;
+    FCELL	*f;
+    DCELL	*d;
+};
+
+
+#ifdef	RASTER_VALUE_FUNC
+
+double raster_value(union RASTER_PTR buf, int data_type, int col);
+
+#else
+
+#define	raster_value(buf, data_type, col)	((double)(data_type == CELL_TYPE ? buf.c[col] : (data_type == FCELL_TYPE ? buf.f[col] : buf.d[col])))
+
+#endif
+
+
 int main(int argc, char *argv[]) 
 {
     char *mapset;
     struct Cell_head window;
-    void *elevbuf, *tmpcellbuf, *outcellbuf;
+    union RASTER_PTR elevbuf, tmpbuf, outbuf;
     CELL value,value2, min, max;
     DCELL dvalue, dvalue2, dmin, dmax;
     RASTER_MAP_TYPE data_type;
@@ -118,9 +145,9 @@ int main(int argc, char *argv[])
     }
 
     data_type = G_raster_map_type(name, mapset);
-    elevbuf = G_allocate_raster_buf(data_type);
-    outcellbuf = G_allocate_raster_buf(CELL_TYPE); /* binary map */
-    tmpcellbuf = G_allocate_raster_buf(CELL_TYPE);
+    elevbuf.v = G_allocate_raster_buf(data_type);
+    tmpbuf.v  = G_allocate_raster_buf(data_type);
+    outbuf.v  = G_allocate_raster_buf(CELL_TYPE); /* binary map */
 
     if(data_type == CELL_TYPE)
     {
@@ -130,6 +157,8 @@ int main(int argc, char *argv[])
          G_fatal_error(buf);
        }
        G_get_range_min_max(&range,&min,&max);
+       dmin = (double) min;
+       dmax = (double) max;
     }
     else
     {
@@ -145,22 +174,22 @@ int main(int argc, char *argv[])
 
     while (row1 < window.rows) 
 	  {
-fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
+            fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 	    col1=0;
 	    drow=-1;
-	    if (G_get_raster_row(elev_fd, elevbuf, row1, data_type) < 0)
+	    if (G_get_raster_row(elev_fd, elevbuf.v, row1, data_type) < 0)
 	      G_fatal_error("can't read row in input elevation map");
 
 	    while (col1<window.cols)
 	      {
-		value = ((CELL *)elevbuf)[col1];
-		((CELL *)outcellbuf)[col1]=1;
+		dvalue=raster_value(elevbuf, data_type, col1);
+		outbuf.c[col1]=1;
 		OK=1;
 		east=G_col_to_easting(col1+0.5,&window);
 		north=G_row_to_northing(row1+0.5,&window);
 		east1=east;
 		north1=north;
-		if (value==0 && !zeros) OK=0;
+		if (dvalue==0.0 && !zeros) OK=0;
 		while (OK==1)
 
 			{
@@ -174,7 +203,7 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 				maxh=tan(alti)*
 				     sqrt((north1-north)*(north1-north)+
 					  (east1-east)*(east1-east));
-				if ((maxh) > (max-value))
+				if ((maxh) > (dmax-dvalue))
 					OK=0;
 				else
 				  {
@@ -182,23 +211,48 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 				  if(drow!=G_northing_to_row(north,&window))
 					{
 					drow=G_northing_to_row(north,&window);
-	    				G_get_raster_row(elev_fd, tmpcellbuf,(int) drow, data_type);
+	    				G_get_raster_row(elev_fd, tmpbuf.v,(int) drow, data_type);
 					}
-				  value2=((CELL *)tmpcellbuf)[(int)dcol];
-				  if ((value2-value)>(maxh))
+				  dvalue2=raster_value(tmpbuf, data_type, (int)dcol);
+				  if ((dvalue2-dvalue)>(maxh))
 					{
 					OK=0;
-					((CELL *)outcellbuf)[col1]=0;
+					outbuf.c[col1]=0;
 					}
 				  }
 				}
 			}	
 		col1+=1;
 	      }
-	    G_put_raster_row(output_fd, (CELL *)outcellbuf, CELL_TYPE);
+	    G_put_raster_row(output_fd, outbuf.c, CELL_TYPE);
 	    row1+=1;
 	  }
+    fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
     
- G_close_cell(output_fd);
- G_close_cell(elev_fd);
+    G_close_cell(output_fd);
+    G_close_cell(elev_fd);
+
+    exit(0);
 }
+
+#ifdef	RASTER_VALUE_FUNC
+double raster_value(union RASTER_PTR buf, int data_type, int col)
+{
+	double	retval;
+
+	switch(data_type){
+		case CELL_TYPE:
+			retval = (double) buf.c[col];
+			break;
+		case FCELL_TYPE:
+			retval = (double) buf.f[col];
+			break;
+		case DCELL_TYPE:
+			retval = (double) buf.d[col];
+			break;
+	}
+
+	return retval;
+}
+#endif
+
