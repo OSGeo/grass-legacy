@@ -48,6 +48,7 @@ int redraw(void)
 	}
 
 	R_open_driver();
+	D_setup(0);
 
 	return 0;
 }
