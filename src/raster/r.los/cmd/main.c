@@ -35,19 +35,20 @@ int
 main (int argc, char *argv[])
 {
 	int row_viewpt,col_viewpt,nrows,ncols,a,b,row,patt_flag;
-	int  segment_no,flip,xmax,ymax,sign_on_y,sign_on_x;
+	int segment_no,flip,xmax,ymax,sign_on_y,sign_on_x;
 	int submatrix_rows,submatrix_cols,lenth_data_item;
-	int new,old,patt=0,in_fd,out_fd,patt_fd=0;
+	int patt=0,in_fd,out_fd,patt_fd=0;
+	double old, new;
 	double slope_1,slope_2,max_vert_angle=0.0,color_factor;
 	char *old_mapset,*patt_mapset=NULL;
-	CELL *value;
+	FCELL *value;
 	char *search_mapset, *current_mapset;
 	char *in_name, *out_name, *patt_name=NULL;
 	struct Categories cats;
 	struct Cell_head cellhd_elev, cellhd_patt;
 	extern struct Cell_head window;
 	char buf[1024];
-	CELL *cell, data, viewpt_elev;
+	FCELL *cell, data, viewpt_elev;
 	SEGMENT seg_in, seg_out, seg_patt;
 	struct point *heads[16],*SEARCH_PT;
 	struct GModule *module;
@@ -209,7 +210,7 @@ main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 	/*  allocate buffer space for row-io to layer		*/
-	cell = G_allocate_cell_buf();
+	cell = G_allocate_raster_buf(FCELL_TYPE);
 	/*	open elevation overlay file for reading		*/
 	old = G_open_cell_old (elev_layer, old_mapset);
 	if (old < 0)
@@ -221,12 +222,8 @@ main (int argc, char *argv[])
 		exit(1);
 	}
 	
-	/*Warning needed unless module is upgraded */
-	if (G_raster_map_is_fp(elev_layer, old_mapset) == 1)
-	   G_warning("The input map <%s> is a floating point map, but r.los operates only on integer maps (FP update needed). Consider to multiply the map values by 100 or 1000.", elev_layer);
-	
 	/*	open cell layer for writing output 		*/
-	new = G_open_cell_new (out_layer);
+	new = G_open_raster_new (out_layer,FCELL_TYPE);
 	if (new < 0)
 	{
 		sprintf(buf, "%s - can't create cell file", out_layer);
@@ -249,7 +246,7 @@ main (int argc, char *argv[])
 	}
 
 	/*	parameters for map submatrices			*/
-	lenth_data_item = sizeof(CELL);
+	lenth_data_item = sizeof(FCELL);
 	submatrix_rows = nrows/4 + 1;
 	submatrix_cols = ncols/4 + 1;
 	/* create segmented format files for elevation layer,	*/
@@ -283,14 +280,14 @@ main (int argc, char *argv[])
 		segment_init(&seg_patt,patt_fd,4);
 		for(row = 0; row < nrows; row++)
 		{
-			if (G_get_map_row (patt,cell,row) < 0)
+			if (G_get_raster_row (patt,cell,row,FCELL_TYPE) < 0)
 				exit(1);
 			segment_put_row(&seg_patt,cell,row);
 		}
 	}
 	for(row = 0; row < nrows; row++)
 	{
-		if (G_get_map_row (old,cell,row) < 0)
+		if (G_get_raster_row (old,cell,row,FCELL_TYPE) < 0)
 			exit(1);
 		segment_put_row(&seg_in,cell,row);
 	}
@@ -377,8 +374,8 @@ main (int argc, char *argv[])
 		int col ;
 		segment_get_row(&seg_out,cell,row);
 		for (col=0; col < ncols; col++)
-		    if (cell[col] == 1) G_set_null_value(&cell[col], 1, CELL_TYPE);
-		if(G_put_raster_row(new, cell, CELL_TYPE) < 0)
+		    if (cell[col] == 1) G_set_null_value(&cell[col], 1, FCELL_TYPE);
+		if(G_put_raster_row(new, cell, FCELL_TYPE) < 0)
 			exit(1);
 	}
 	segment_release(&seg_in);	/* release memory	*/
