@@ -32,7 +32,7 @@ int main( int argc, char **argv )
   struct Option *opt_input;
   struct Option *opt_output;
   int scan_int;
-  double radius, area;
+  double radius;
   char input[1024], output[1024];
   char fqn_output[1024];
   char *fqn;
@@ -112,15 +112,6 @@ UTM (value 1).  Change the value \"proj\" in file \"WIND\" to either \
     G_program_name(), G_program_name() );
     G_fatal_error (msg);
     exit(1);
-   }
-
-  /* Provide warning message if both "radius" and "area" are */
-  /* greater than zero.                                      */
-  if ( (radius > 0.0)&&(area > 0.0) ) 
-   {
-    fprintf(stderr,"WARNING:\n\
-%s: Both \"radius\" and \"area\" values are valid.  The \"radius\"\n\
-value will be used for making the calculations.\n", G_program_name() );
    }
 
       /* Make sure that radius is not less than 0.0 . */
@@ -218,6 +209,7 @@ Please choose a different vector file name.\n",
     sprintf(command,"%s/bin/v.support map=%s",G_gisbase(), output );
     system(command);
    }
+  printf("Done ...\n\n");
   exit(0);
  }
 
