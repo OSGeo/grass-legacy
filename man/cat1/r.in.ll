@@ -1,7 +1,7 @@
 
 
 
-r.in.ll              GRASS Reference Manual               r.in.ll
+r.in.ll <main>       GRASS Reference Manual        <main> r.in.ll
 
 
 
@@ -60,14 +60,14 @@ COMMAND LINE OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.in.ll              GRASS Reference Manual               r.in.ll
+r.in.ll <main>       GRASS Reference Manual        <main> r.in.ll
 
 
 
@@ -126,14 +126,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.in.ll              GRASS Reference Manual               r.in.ll
+r.in.ll <main>       GRASS Reference Manual        <main> r.in.ll
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
