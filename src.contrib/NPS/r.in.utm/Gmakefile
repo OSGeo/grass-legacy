@@ -3,8 +3,10 @@ HOME=$(BIN_CONTRIB_CMD)
 
 LIST = main.o isnumber.o sph.o row_col.o utm_value.o value.o
 
-$(HOME)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB) $(ROWIOLIB)
-	$(CC) -o $@ $(LDFLAGS) $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(ROWIOLIB) $(XDRLIB)
+LIBES = $(COORCNVLIB) $(GISLIB) $(DATETIMELIB) $(ROWIOLIB) $(MATHLIB) $(XDRLIB)
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
 
 $(ROWIOLIB): # in case LIB changes
 $(COORCNVLIB): # in case LIB changes
