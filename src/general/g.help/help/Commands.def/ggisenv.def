@@ -1,0 +1,8 @@
+
+
+g.gisenv - 
+
+g.gisenv outputs the user's current GRASS variable settings, such as
+\mapset\, \location\, peripheral device drivers, etc.
+
+Manual entry for \g.gisenv\
