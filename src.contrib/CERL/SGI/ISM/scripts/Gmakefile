@@ -1,0 +1,6 @@
+
+
+
+$(BIN)/ISMcell2scat:  cell2scat
+	rm -f $@
+	cp cell2scat $@
