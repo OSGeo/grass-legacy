@@ -370,7 +370,7 @@ static void cell_values_float(
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_float(xdrs, &c[i]))
 	    {
-		G_fatal_error("cell_values_float: xdr_float failed for index %d.", n);
+		G_fatal_error("cell_values_float: xdr_float failed for index %d.", i);
 		return;
 	    } 
 
@@ -411,7 +411,7 @@ static void cell_values_double(
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_double(xdrs, &c[i]))
 	    {
-		G_fatal_error(_("cell_values_double: xdr_double failed for index %d."), n);
+		G_fatal_error(_("cell_values_double: xdr_double failed for index %d."), i);
 		return;
 	    } 
 	
