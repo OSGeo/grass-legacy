@@ -1,7 +1,7 @@
 
 
 
-d.geodesic           GRASS Reference Manual            d.geodesic
+d.geodesic <main>    GRASS Reference Manual     <main> d.geodesic
 
 
 
@@ -60,14 +60,14 @@ COMMAND LINE OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.geodesic           GRASS Reference Manual            d.geodesic
+d.geodesic <main>    GRASS Reference Manual     <main> d.geodesic
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
