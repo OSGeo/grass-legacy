@@ -41,6 +41,9 @@ tool_centre ( void )
 		/* Tool_next = TOOL_NOTHING; */ /* Draw next one once first is done */
 		new_line ();
 		break;
+	    case TOOL_DEL_LINE :
+		delete_line ();
+		break;
 	    default:
 	}
 	i_prompt ( "Select tool");

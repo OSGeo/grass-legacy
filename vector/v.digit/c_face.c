@@ -39,6 +39,8 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	Tool_next = TOOL_NEW_LINE;
     else if ( strcmp ( tl, "exit" ) == 0 )
 	Tool_next = TOOL_EXIT;
+    else if ( strcmp ( tl, "delete_line" ) == 0 )
+	Tool_next = TOOL_DEL_LINE;
     else {
 	G_warning ( "c_next_tool(): Unknown tool: %s", tl );
 	return TCL_ERROR;

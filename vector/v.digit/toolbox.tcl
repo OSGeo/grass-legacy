@@ -25,6 +25,11 @@ $bbox add -image [image create photo -file "$vdpath/new.line.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Digitize new line"
 
+$bbox add -image [image create photo -file "$vdpath/rm.line.gif"] \
+        -command "c_next_tool delete_line" \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Delete line"
+
 $bbox add -image [image create photo -file "$vdpath/stop.gif"] \
         -command "c_cancel" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 -padx 1 -pady 1 \
