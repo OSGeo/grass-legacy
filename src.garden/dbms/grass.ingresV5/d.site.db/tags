@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	buildSQL.c	/^buildSQL(table, xy, where, map, joinargs, plotargs/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+ingresUnTable	ingresUtils.c	/^void ingresUnTable(buf)$/
+plotsite	plotsite.c	/^plotsite (x,y, icon, size )$/
+runSQL	runSQL.c	/^runSQL(sqlin, map,  plotargs )$/
