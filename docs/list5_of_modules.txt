@@ -1,4 +1,4 @@
-Functionality test of GRASS 5 beta 6i
+Functionality test of GRASS 5 beta 6final
 
 $Id$
 
