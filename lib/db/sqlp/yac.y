@@ -49,7 +49,7 @@
 
 %token EQUAL
 %token SELECT FROM WHERE
-%token SELECT DISTINCT FROM WHERE
+/* %token SELECT DISTINCT FROM WHERE */
 %token DELETE
 %token INSERT INTO VALUES
 %token UPDATE SET
@@ -92,8 +92,9 @@ y_drop:
 y_select:
 		SELECT y_columns FROM y_table			{ sqpCommand(SQLP_SELECT); }
 	|	SELECT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
-	|	SELECT DISTINCT y_columns FROM y_table		{ sqpCommand(SQLP_SELECT); }
-	|	SELECT DISTINCT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
+/*	|	SELECT DISTINCT y_columns FROM y_table		{ sqpCommand(SQLP_SELECT); }
+ *	|	SELECT DISTINCT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
+ */
 	;
 	
 y_delete:
