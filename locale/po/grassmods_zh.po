@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-05 17:02+0800\n"
-"PO-Revision-Date: 2005-03-23 12:03+0800\n"
+"PO-Revision-Date: 2005-04-01 14:15+0800\n"
 "Last-Translator: zhangjun <nilarcs@gmail.com>\n"
 "Language-Team: Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -3277,249 +3277,251 @@ msgstr ""
 
 #: ../raster/r.random.surface/main.c:30
 msgid "Generates random surface(s) with spatial dependence."
-msgstr ""
+msgstr "根据空间依赖性生成随机表面"
 
 #: ../raster/r.out.arc/main.c:59
 msgid "Converts a raster map layer into an ESRI ARCGRID file."
-msgstr ""
+msgstr "将栅格图层转换为ESRI GRID文件。"
 
 #: ../raster/r.out.arc/main.c:68
 msgid "Name of an existing raster map layer"
-msgstr ""
+msgstr "已有栅格图层的名称"
 
 #: ../raster/r.out.arc/main.c:75
 msgid "Name of an output ARC-GID map (use out=- for stdout)"
-msgstr ""
+msgstr "输出的GRID的名称(out=-用于标准输出)"
 
 #: ../raster/r.out.arc/main.c:82
 msgid "Number of decimal places"
-msgstr ""
+msgstr "小数位的位数"
 
 #: ../raster/r.out.arc/main.c:91
 msgid "List one entry per line instead of full row"
-msgstr ""
+msgstr "每行只列一个值，而不是将一排值列于一行"
 
 #: ../raster/r.out.bin/main.c:69
 msgid "Exports a GRASS raster to a binary array."
-msgstr ""
+msgstr "将GRASS栅格输出为二元数组。"
 
 #: ../raster/r.out.bin/main.c:84
 msgid "Name for output binary map (use out=- for stdout)"
-msgstr ""
+msgstr "输出文件的名称(out=-用于标准输出)"
 
 #: ../raster/r.out.bin/main.c:91
 msgid "Value to write out for null"
-msgstr ""
+msgstr "用来表示NULL的值"
 
 #: ../raster/r.out.bin/main.c:99
 msgid "Export Array with GMT compatible header"
-msgstr ""
+msgstr "输出带有GMT兼容头信息的数组"
 
 #: ../raster/r.out.bin/main.c:103
 msgid "Generate BIL world and header files"
-msgstr ""
+msgstr "生成BIL world文件和头文件"
 
 #: ../raster/r.out.bin/main.c:107
 msgid "Byte Swap output"
-msgstr ""
+msgstr "字节交换输出"
 
 #: ../raster/r.out.mat/main.c:66
 msgid "Exports a GRASS raster to a binary MAT-File."
-msgstr ""
+msgstr "将GRASS栅格输出为二元MAT-File。"
 
 #: ../raster/r.out.mat/main.c:81
 msgid "Name for the output binary MAT-File"
-msgstr ""
+msgstr "输出的二元MAT-File的名称"
 
 #: ../raster/r.out.mat/main.c:85
 #: ../raster/r.in.mat/main.c:115
 msgid "Verbose mode"
-msgstr ""
+msgstr "详细模式"
 
 #: ../raster/r.out.pov/main.c:107
 msgid "Converts a raster map layer into a height-field file for POVRAY."
-msgstr ""
+msgstr "将栅格图层转换为用于POVRAY的、含有高程信息的文件。"
 
 #: ../raster/r.out.pov/main.c:122
 msgid "Name of output povray file (TGA height field file)"
-msgstr ""
+msgstr "输出的povray文件名(TGA高程文件)"
 
 #: ../raster/r.out.pov/main.c:128
 msgid "Height-field type (0=actual heights 1=normalized)"
-msgstr ""
+msgstr "高程类型(0=实际高程 1=归一化的)"
 
 #: ../raster/r.out.pov/main.c:134
 msgid "Elevation bias"
-msgstr ""
+msgstr "高程起点"
 
 #: ../raster/r.out.ppm/main.c:42
 msgid "Converts a GRASS raster file to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION."
-msgstr ""
+msgstr "以当前区域的像素分辨率，将GRASS栅格文件输出为PPM影像文件。"
 
 #: ../raster/r.out.ppm/main.c:51
 msgid "Raster input map"
-msgstr ""
+msgstr "输入的栅格图"
 
 #: ../raster/r.out.ppm/main.c:68
 msgid "Output greyscale instead of color"
-msgstr ""
+msgstr "输出灰度图而不是彩色图"
 
 #: ../raster/r.in.arc/main.c:41
 msgid "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer."
-msgstr ""
+msgstr "将ESRI ARC/INFO ASCII形式的栅格文件(GRID)转换为(二进制形式的)栅格图层。"
 
 #: ../raster/r.in.arc/main.c:48
 msgid "ARC/INFO ascii raster file (GRID) to be imported"
-msgstr ""
+msgstr "将要导入的ARC/INFO ASCII形式的栅格文件(GRID)"
 
 #: ../raster/r.in.arc/main.c:64
 msgid "Storage type for resultant raster map"
-msgstr ""
+msgstr "转换后的栅格图的存储类型"
 
 #: ../raster/r.in.bin/main.c:112
 msgid "Import a binary raster file into a GRASS raster map layer."
-msgstr ""
+msgstr "将二进制栅格文件导入到GRASS栅格图层中。"
 
 #: ../raster/r.in.bin/main.c:116
+#, fuzzy
 msgid "Signed data (high bit means negative value)"
-msgstr ""
+msgstr "带标记的数据(高位代表负值)"
 
 #: ../raster/r.in.bin/main.c:120
 msgid "Import as Floating Point Data (default: Integer)"
-msgstr ""
+msgstr "作为浮点类型的数据导入(默认：整型)"
 
 #: ../raster/r.in.bin/main.c:124
 msgid "Import as Double Precision Data (default: Integer)"
-msgstr ""
+msgstr "作为双精度类型的数据导入(默认：整型)"
 
 #: ../raster/r.in.bin/main.c:128
+#, fuzzy
 msgid "Byte Swap the Data During Import"
-msgstr ""
+msgstr "在导入过程中以字节为单位交换数据"
 
 #: ../raster/r.in.bin/main.c:132
 msgid "Get region info from GMT style header"
-msgstr ""
+msgstr "从GMT样式的头信息中获得区域信息"
 
 #: ../raster/r.in.bin/main.c:138
 msgid "Bin raster file to be imported"
-msgstr ""
+msgstr "将要导入的二进制栅格文件"
 
 #: ../raster/r.in.bin/main.c:160
 msgid "Number of bytes per cell (1, 2, 4)"
-msgstr ""
+msgstr "每个像元所占的字节数(1, 2, 4)"
 
 #: ../raster/r.in.bin/main.c:166
 msgid "Northern limit of geographic region (outer edge)"
-msgstr ""
+msgstr "北边界"
 
 #: ../raster/r.in.bin/main.c:172
 msgid "Southern limit of geographic region (outer edge)"
-msgstr ""
+msgstr "南边界"
 
 #: ../raster/r.in.bin/main.c:178
 msgid "Eastern limit of geographic region (outer edge)"
-msgstr ""
+msgstr "东边界"
 
 #: ../raster/r.in.bin/main.c:184
 msgid "Western limit of geographic region (outer edge)"
-msgstr ""
+msgstr "西边界"
 
 #: ../raster/r.in.bin/main.c:190
 msgid "Number of rows"
-msgstr ""
+msgstr "行数"
 
 #: ../raster/r.in.bin/main.c:196
 msgid "Number of columns"
-msgstr ""
+msgstr "列数"
 
 #: ../raster/r.in.bin/main.c:202
 msgid "Set Value to NULL"
-msgstr ""
+msgstr "将该值置为NULL"
 
 #: ../raster/r.in.mat/main.c:95
 msgid "Import a binary MAT-File(v4) to a GRASS raster."
-msgstr ""
+msgstr "将二进制的MAT-File(v4)导入为GRASS栅格。"
 
 #: ../raster/r.in.mat/main.c:104
 msgid "Name of an existing MAT-File(v4)"
-msgstr ""
+msgstr "已有的MAT-File(v4)的名称"
 
 #: ../raster/r.in.mat/main.c:111
 msgid "Name for the output raster map (override)"
-msgstr ""
+msgstr "输出栅格图的名称(覆盖已有文件)"
 
 #: ../vector/v.voronoi/vo_main.c:298
 #: ../vector/v.to.points/main.c:229
 msgid "Cannot copy table"
-msgstr ""
+msgstr "无法拷贝表"
 
 #: ../vector/v.voronoi/dt_main.c:119
 msgid "Cannot calculate area centroid"
-msgstr ""
+msgstr "无法计算面的质心"
 
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
-msgstr ""
+msgstr "无法读取字段信息"
 
 #: ../vector/v.surf.idw/read_sites.c:38
 #: ../vector/v.to.points/main.c:239
 #: ../vector/v.db.select/main.c:145
 #, c-format
 msgid "Cannot open database %s by driver %s"
-msgstr ""
+msgstr "无法打开数据库%s，通过驱动%s"
 
 #: ../vector/v.surf.idw/read_sites.c:45
 msgid "Column type not supported"
-msgstr ""
+msgstr "列的类型不支持"
 
 #: ../vector/v.surf.idw/read_sites.c:48
 msgid "Cannot select data from table"
-msgstr ""
+msgstr "无法从表中选取数据"
 
 #: ../vector/v.surf.idw/read_sites.c:50
 #, c-format
 msgid "%d records selected from table"
-msgstr ""
+msgstr "从表中选取了%d条记录"
 
 #: ../vector/v.surf.idw/read_sites.c:80
 #, c-format
 msgid "No record for line (cat = %d)"
-msgstr ""
+msgstr "没有线记录(类别 = %d)"
 
 #: ../vector/v.surf.idw/read_sites.c:92
 #, c-format
 msgid "%d points loaded\n"
-msgstr ""
+msgstr "载入%d个点\n"
 
 #: ../vector/v.what.rast/main.c:330
 #, c-format
 msgid "%d categories loaded from table\n"
-msgstr ""
+msgstr "从表中加载了%d个类别\n"
 
 #: ../vector/v.what.rast/main.c:331
 #, c-format
 msgid "%d categories loaded from vector\n"
-msgstr ""
+msgstr "从矢量中加载了%d个类别\n"
 
 #: ../vector/v.what.rast/main.c:332
 #, c-format
 msgid "%d categories from vector missing in table\n"
-msgstr ""
+msgstr "%d个类别在矢量中存在，但在表中不存在\n"
 
 #: ../vector/v.what.rast/main.c:333
 #, c-format
 msgid "%d duplicate categories in vector\n"
-msgstr ""
+msgstr "矢量中有%d个重复的类别\n"
 
 #: ../vector/v.what.rast/main.c:334
 #, c-format
 msgid "%d records updated\n"
-msgstr ""
+msgstr "更新了%d条记录\n"
 
 #: ../vector/v.what.rast/main.c:335
 #, c-format
 msgid "%d update errors\n"
-msgstr ""
+msgstr "%d条记录更新时出错\n"
 
 #: ../vector/v.convert/old2new.c:27
 #: ../vector/v.convert/att.c:30
@@ -3592,137 +3594,137 @@ msgstr "无法向表中插入新记录：%s"
 
 #: ../vector/v.convert/read.c:41
 msgid "Reading dig file...\n"
-msgstr ""
+msgstr "读取dig文件...\n"
 
 #: ../vector/v.convert/read.c:75
 msgid "Input file is version 3.\n"
-msgstr ""
+msgstr "输入文件的版本是3。\n"
 
 #: ../vector/v.convert/read.c:78
 msgid "Input file is version 4.\n"
-msgstr ""
+msgstr "输入文件的版本是4。\n"
 
 #: ../vector/v.convert/read.c:87
 msgid "Input file is portable.\n"
-msgstr ""
+msgstr "输入文件是可转换的。\n"
 
 #: ../vector/v.convert/read.c:89
 msgid "WARNING: Input file is not portable.We will attempt to convert anyway but conversion may fail.Please read manual for detail information."
-msgstr ""
+msgstr "警告：输入文件是不可转换的。我们尝试将其转化，但转换可能失败。请阅读手册以获得详细信息。"
 
 #: ../vector/v.convert/read.c:161
 #, c-format
 msgid "%-5d points read to memory\n"
-msgstr ""
+msgstr "%-5d个点读入内存\n"
 
 #: ../vector/v.convert/read.c:162
 #, c-format
 msgid "%-5d lines read to memory\n"
-msgstr ""
+msgstr "%-5d条线读入内存\n"
 
 #: ../vector/v.convert/read.c:164
 #, c-format
 msgid "%-5d points read and written to output\n"
-msgstr ""
+msgstr "读取%-5d个点并写入输出文件\n"
 
 #: ../vector/v.convert/read.c:165
 #, c-format
 msgid "%-5d lines read and written to output\n"
-msgstr ""
+msgstr "读取%-5d条线并写入输出文件\n"
 
 #: ../vector/v.convert/read.c:167
 #, c-format
 msgid "%-5d area boundaries read and written to output\n"
-msgstr ""
+msgstr "读取%-5d个区域的边界并写入输出文件\n"
 
 #: ../vector/v.convert/read.c:168
 #, c-format
 msgid "%-5d dead points skipped\n"
-msgstr ""
+msgstr "跳过%-5d个坏点\n"
 
 #: ../vector/v.convert/read.c:169
 #, c-format
 msgid "%-5d dead lines skipped\n"
-msgstr ""
+msgstr "跳过%-5d条坏线\n"
 
 #: ../vector/v.convert/read.c:170
 #, c-format
 msgid "%-5d dead area boundaries skipped\n"
-msgstr ""
+msgstr "跳过%-5d个坏的区域边界\n"
 
 #: ../vector/v.convert/read.c:171
 #, c-format
 msgid "%-5d elements of unknown type skipped\n"
-msgstr ""
+msgstr "跳过%-5d个未知类型的元素\n"
 
 #: ../vector/v.convert/read.c:173
 #, c-format
 msgid "%-5d elements read to memory.\n"
-msgstr ""
+msgstr "%-5d个元素读入内存。\n"
 
 #: ../vector/v.convert/read.c:212
 msgid "Reading dig_att file...\n"
-msgstr ""
+msgstr "读取dig_att文件...\n"
 
 #: ../vector/v.convert/read.c:220
 #, c-format
 msgid "Error: %s"
-msgstr ""
+msgstr "错误：%s"
 
 #: ../vector/v.convert/read.c:241
 #, c-format
 msgid "Unknown type: %c"
-msgstr ""
+msgstr "未知的类型：%c"
 
 #: ../vector/v.convert/read.c:260
 #, c-format
 msgid "%-5d point categories read\n"
-msgstr ""
+msgstr "读取%-5d个点类别\n"
 
 #: ../vector/v.convert/read.c:261
 #, c-format
 msgid "%-5d line categories read\n"
-msgstr ""
+msgstr "读取%-5d个线类别\n"
 
 #: ../vector/v.convert/read.c:262
 #, c-format
 msgid "%-5d centroids read\n"
-msgstr ""
+msgstr "读取%-5d个质心\n"
 
 #: ../vector/v.convert/read.c:263
 #, c-format
 msgid "%-5d dead point categories skipped\n"
-msgstr ""
+msgstr "跳过%-5d个坏点类别\n"
 
 #: ../vector/v.convert/read.c:264
 #, c-format
 msgid "%-5d dead line categories skipped\n"
-msgstr ""
+msgstr "跳过%-5d个坏线类别\n"
 
 #: ../vector/v.convert/read.c:265
 #, c-format
 msgid "%-5d dead centroids skipped\n"
-msgstr ""
+msgstr "跳过%-5d个坏的质心\n"
 
 #: ../vector/v.convert/read.c:266
 #, c-format
 msgid "%-5d categories of unknown type skipped\n"
-msgstr ""
+msgstr "跳过%-5d个未知类型的类别\n"
 
 #: ../vector/v.convert/read.c:268
 #, c-format
 msgid "%-5d categories read into memory.\n"
-msgstr ""
+msgstr "%-5d个类别读入内存。\n"
 
 #: ../vector/v.convert/type.c:29
 #, c-format
 msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
-msgstr ""
+msgstr "系统错误：OLD_T_NEW得到一个错误的类型代码%x"
 
 #: ../vector/v.convert/type.c:50
 #, c-format
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
-msgstr ""
+msgstr "系统错误：NEW_T_OLD得到一个错误的类型代码%x"
 
 #: ../vector/v.to.points/main.c:54
 #, c-format
