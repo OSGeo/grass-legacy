@@ -1,24 +1,26 @@
 #include "gis.h"
 #include <stdio.h>
-/*
- * char *
- * G_align_window (window, ref)
- *     struct Cell_head *window, *ref;
+
+/*!
+ * \brief align two regions
  *
- * Modifies 'window' to have the same resolution as 'ref'
- * and aligns the window edges (north, south, east, west) to
- * align with the 'ref' grid.
- * 
- * The window is enlarged, if necessary
- * The north is rounded "up", the south "down",
- * the east "right" and the west "left"
- * Lon-lon constraints are taken into consideration
+ *  Modifies the input <b>window</b> to align to
+ * <b>ref</b> region. The resolutions in <b>window</b> are set to match those
+ * in <b>ref</b> and the <b>window</b> edges (north, south, east, west) are
+ * modified to align with the grid of the <b>ref</b> region.
+ * The <b>window</b> may be enlarged if necessary to achieve the alignment.
+ * The north is rounded northward, the south southward, the east eastward and the
+ * west westward. Lon-lon constraints are taken into consideration
  * to make sure that the north doesn't go above 90 degrees (for lat/lon)
  * or that the east does "wrap" past the west, etc.
+ * This routine returns NULL if ok, otherwise it returns an error message
+ * (do NOT free this message).
  *
- * Returns: NULL if ok,
- *          error message if not (do NOT free this message).
+ *  \param window
+ *  \param ref
+ *  \return char * 
  */
+
 char *
 G_align_window (window, ref)
     struct Cell_head *window, *ref;

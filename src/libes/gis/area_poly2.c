@@ -1,4 +1,15 @@
 #include "gis.h"
+
+/*!
+ * \brief planimetric polygon area
+ *
+ *  \param x
+ *  \param y
+ *  \param n
+ *  \return int
+ */
+
+
 double G_planimetric_polygon_area(double *x,double *y,int n)
 {
     double x1,y1,x2,y2;
