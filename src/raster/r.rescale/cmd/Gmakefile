@@ -1,0 +1,8 @@
+PGM = r.rescale
+
+LIST = main.o get_range.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@
+
+$(GISLIB): #
