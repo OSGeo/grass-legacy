@@ -52,7 +52,8 @@ and run the program non-interactively.
 <P>
 Once the user indicates the starting and ending coordinates 
 of the geodesic, the line and its length (in miles) are displayed to 
-the user's graphics monitor. 
+the user's graphics monitor. If the text color is set to 
+<em>none</em>, the great circle distance is not displayed.
 
 <P>
 
@@ -69,17 +70,18 @@ the user's graphics monitor.
     indigo, violet, gray, white, black 
 <BR>
     Default: white 
-<DT><B>tcolor=</B><EM>name</B>
+<DT><B>tcolor=</B><EM>name</EM>
 <DD>Text color in which the length of the geodesic will be displayed. 
 <BR>
     Options: red, orange, yellow, green, blue, magenta, 
-    indigo, violet, gray, white, black. 
+    indigo, violet, gray, white, black, or none
+<BR>
     Default: red 
 </DL>
 
 <H2>NOTES</H2>
 
-This program works only on GRASS data bases using a longitude/latitude 
+This program works only with GRASS locations using a longitude/latitude 
 coordinate system. 
 
 <H2>SEE ALSO</H2>
