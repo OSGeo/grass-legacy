@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 	char *new_data, *key, *value, spheroid[100], *sph;
 	int j, k, in_stat, ii, npr, sph_check;
 	struct Cell_head cellhd;
-	char datum[100], dat_ellps[100], dat_params[100];
+	char datum[100], dat_ellps[100], dat_params[100]; 
 
 
 	G_gisinit(argv[0]);
@@ -137,23 +137,30 @@ int main(int argc, char *argv[])
 	}
 	switch (Out_proj) {
 	case 0:		/* No projection/units */
+	   if(!exist) {
 		/* leap frog over code, and just make sure we remove the file */
 		fprintf(stderr, "XY-location cannot be projected.\n");
 		goto write_file;
 		break;
-
+           }
 	case PROJECTION_UTM:
+	   if(!exist) {
 		sprintf(proj_name, "%s", G__projection_name(PROJECTION_UTM));
 		sprintf(proj_out, "utm");
 		break;
+           }
 	case PROJECTION_SP:
+	   if(!exist) {
 		sprintf(proj_name, "%s", G__projection_name(PROJECTION_SP));
 		sprintf(proj_out, "stp");
 		break;
+           }
 	case PROJECTION_LL:
+	   if(!exist) {
 		sprintf(proj_name, "%s", G__projection_name(PROJECTION_LL));
 		sprintf(proj_out, "ll");
 		break;
+           }
 	case PROJECTION_OTHER:
 		while (1) {
 			if (G_ask_proj_name(proj_out, proj_name) < 0) {
@@ -224,7 +231,8 @@ int main(int argc, char *argv[])
     if (sph_check > 0)
     {
         /* write out key/value pairs to out_proj_keys */
-        G_set_key_value("datum", datum, out_proj_keys);
+        if( G_strcasecmp(datum, "custom") != 0)
+            G_set_key_value("datum", datum, out_proj_keys);
         G_set_key_value("datumparams", dat_params, out_proj_keys);
         sprintf(spheroid, "%s", dat_ellps);
     }    

@@ -130,7 +130,7 @@ G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
 
     for (i = 0; i < count; i++)
     {
-	if (G_strcasecmp(name, table[i].name))
+	if (G_strcasecmp(name, table[i].name) == 0)
 	{
 	    *a = table[i].a;
 	    *e2 = table[i].e2;
@@ -172,7 +172,7 @@ G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
 
     for (i = 0; i < count; i++)
     {
-	if (G_strcasecmp(name, table[i].name))
+	if (G_strcasecmp(name, table[i].name) == 0)
 	{
 	    *a = table[i].a;
 	    *e2 = table[i].e2;
