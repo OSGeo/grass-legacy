@@ -1,8 +1,6 @@
 #  @(#)Gmakefile	2.2  6/26/87
 
 
-COORLIB = $(LIBDIR)/libcoorcnv.a
-
 IMP_OFILES = \
 	imp_main.o \
 	imp_tig.o \
@@ -18,14 +16,16 @@ CON_OFILES = \
 #all:	$(BIN_CMD)/v.in.tiger.scs $(ETC)/CFCC.code $(ETC)/scstig 
 all:	$(BIN_CMD)/v.in.tiger.scs $(ETC)/CFCC.code 
 
-$(BIN_CMD)/v.in.tiger.scs:		$(IMP_OFILES)
-	$(CC) -g  -o $@ $(IMP_OFILES) $(GISLIB) $(VASKLIB) $(COORLIB) $(VECTLIB) $(CURSES) $(MATHLIB) $(SHAREDLIB)
+$(BIN_CMD)/v.in.tiger.scs: $(IMP_OFILES) $(DEPGISLIB) $(DEPVASKLIB) $(DEPCOORCNVLIB) $(DEPVECTLIB)
+	$(CC) -g  -o $@ $(IMP_OFILES) $(GISLIB) $(VASKLIB) $(COORCNVLIB) $(VECTLIB) $(CURSES) $(MATHLIB)
 
 $(ETC)/CFCC.code: CFCC.code
 	cp CFCC.code $(GISBASE)/etc
 
 #$(ETC)/scstig:		$(CON_OFILES)
-#	cc $(LDFLAGS) -o $@ $(CON_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(MATHLIB) $(SHAREDLIB)
+#	cc $(LDFLAGS) -o $@ $(CON_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(MATHLIB)
 
 $(DEPGISLIB): #
-
+$(DEPVASKLIB): #
+$(DEPCOORCNVLIB): #
+$(DEPVECTLIB): #

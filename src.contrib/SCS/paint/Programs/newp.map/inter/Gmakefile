@@ -1,6 +1,5 @@
 PGM=p.mapinter2
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
-ICONLIB = $(LIBDIR)/libicon.a
 LIST = main.o\
 	Pmap.o\
 	ask_bg.o \
