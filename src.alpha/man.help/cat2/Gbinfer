@@ -1,0 +1,132 @@
+
+
+
+Gbinfer(2)           GRASS Reference Manual            Gbinfer(2)
+
+
+
+NAME
+     Gbinfer - Bayesian expert system development tool
+
+SYNOPSIS
+     Gbinfer [-v] input_script [output_cell_file]
+
+DESCRIPTION
+     Gbinfer is an expert system shell having an inference engine
+     based on Bayesian statistics (reasoning from past
+     experience).  It is designed for use by knowledge engineers
+     to develop expert systems for land use planning and
+     management.  Knowledge about the probable impact of a land
+     use action is reflected in conditional probabilities about
+     the impact of similar past actions.
+
+     Consistent with the syntax of Gbinfer, the knowledge
+     engineer structures an input knowledge/control script with
+     an appropriate combination of layer attributes (GRASS maps
+     such as soil.texture, slope, density, etc.) and context
+     attributes (e.g. rainfall, temperature, season, subjective
+     judgement, etc.).  Options exist for specifying a user
+     interface and a database containing prior and conditional
+     probabilities necessary to infer the value of a goal
+     attribute.  The knowledge engineer also specifies the format
+     for display of end results (map layers) in the input script.
+     New map layers--one for each possible inferred attribute
+     value--are created that contain the probability of the
+     inferred attribute value occurring in each grid cell.
+     Alternately, a single new map layer called Gbinfer (or
+     output_cell_file, if specified) is also created as output.
+     This map shows, for each grid cell, the inferred attribute
+     value that has the highest probability of occurring in each
+     grid cell, given the values of the layer and contextual
+     attributes.
+
+     Gbinfer scripts are typed into a file by the user using a
+     system editor such as vi, and then input to Gbinfer as the
+     input_script named on the command line.  For a complete
+     description of the input_script syntax, see the document
+     GRASS Tutorial: Gbinfer (forthcoming).  For example scripts
+     see the FILES section below.  The results are used to
+     generate the new map layers in the current mapset.  The
+     option -v(erbose) is described in the OPTIONS section below.
+
+     As stated above, Gbinfer scripts contain descriptions of two
+     types of input attributes. The layer type attributes are
+     actual grass cell files, with the values defined to be
+     ranges of the categories within that cell file. For example,
+     if the user chooses slope as one of the layer attributes the
+     possible values for the slope attribute might be the
+     following:
+
+
+
+
+Printed 10/16/89                                                1
+
+
+
+
+
+
+Gbinfer(2)           GRASS Reference Manual            Gbinfer(2)
+
+
+
+             flat     (slopes between 0 and 5 degrees)
+             low      (slopes between 6 and 10 degrees)
+             medium   (slopes between 11 and 30 degrees)
+             steep     (slopes greater than 31 degrees)
+
+     The contextual attributes are those that do not represent
+     cell layers, but rather, information that reflects the
+     context of the decision at hand.  For example, if the user
+     chooses rainfall amount as one of the contextual attributes
+     the possible values for the rainfall amount attribute might
+     be the following:
+
+           low       (rainfall amounts less than an inch)
+           medium   (amounts between one and three inches)
+           high       (amounts grater than three inches)
+
+     The inferred attribute values are specified along with a
+     prior probability and a table of conditional probabilities
+     which indicate the probability of that inferred attribute
+     value occurring given that an input attribute value has
+     occurred.
+
+     Gbinfer will determine the value of contextual attributes by
+     prompting the user for input. It will then open the cell
+     files corresponding to each layer attribute. Gbinfer then
+     determines the values for all layer attributes in each grid
+     cell.  Using the conditional probability tables, the prior
+     probabilities, and Bayes theorem, Gbinfer calculates the
+     output probabilities for each inferred value and writes its
+     probability of occurance as a percentage.  It also
+     determines which value is most likely to occur in that cell
+     and writes that to the output_cell_file.
+
+OPTIONS
+     -v   Provides verbose information as the program is running.
+          The information includes a listing of the symbol table
+          used by Gbinfer.
+
+SEE ALSO
+     GRASS Tutorial: Gbinfer
+
+FILES
+AUTHOR
+     Kurt Buehler, Purdue University
+
+
+
+
+
+
+
+
+
+
+
+Printed 10/16/89                                                2
+
+
+
