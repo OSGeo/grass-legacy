@@ -12,6 +12,7 @@ int distance (char **coords, struct Map_info *Map)
 {
     double x, y, d,d2;
     double n,e;
+    int vectATT_L;
     register int line,vline,seg;
     register int i, nlines; 
     char buf[1024],text[1024];
@@ -56,20 +57,25 @@ int distance (char **coords, struct Map_info *Map)
 
 	seg=dig_check_dist(Map,1,x,y,&d);
 	d=sqrt(d);
+	vectATT_L=0;
 	for(vline=1;vline<=nlines;vline++)
 	{
 	    if (LINE_ALIVE (&(Map->Line[vline])))
 	    {                        
 		seg=dig_check_dist(Map,vline,x,y,&d2);
 		d2=sqrt(d2);
-		if(d2<d) d=d2;
+		if(d2<d)
+		{
+		 d=d2;
+		 vectATT_L=V2_line_att (Map, vline);
+		}
 	    }
 
 /*
 printf("Next Line\n");
 */
 	}
-    printf("%f|%f|%s|%f\n",x,y,text,d);
+    printf("%f|%f|%s|%f|%i\n",x,y,text,d,vectATT_L);
     }
 
     return 0;

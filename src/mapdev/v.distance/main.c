@@ -1,5 +1,13 @@
 /*
+**  added vector att output MN 1/2002
 **  added coords opt MN 11/2001
+**
+**  output format usable for s.in.ascii piping
+**
+**  E|N|sitesID|dist|vect_line_ATT
+**
+**  e.g.
+**  1680949.350649|5100196.753247|31|16.854858|22002
 **
 **  v.distance
 **  J.Soimasuo 15.9.1994 
@@ -24,6 +32,7 @@ int main (int argc, char *argv[])
     struct Option *opt1, *opt2;
     struct Map_info Map;
     int level;
+    int areas_no;
 
     G_gisinit (argv[0]);
 
@@ -71,7 +80,17 @@ int main (int argc, char *argv[])
     if (2 > level)
 	G_fatal_error ("Must first run v.support on vector file");
 
+    areas_no=V2_num_areas (&Map);
+    if (areas_no > 0)
+        G_warning("Found %i areas in map - this may be confusing for the results. \
+                  Note that the module only considers vector lines and ignores these areas.", areas_no);
 
+    if( V2_num_lines (&Map) == 0)
+    {
+      Vect_close (&Map);
+      G_fatal_error("This is not a line vector map (found %i areas in map)", areas_no);
+    }
+      
     ret = distance (opt2->answers, &Map);
     Vect_close (&Map);
     exit (0);

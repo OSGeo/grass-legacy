@@ -59,10 +59,14 @@ To calculate the distance of given sites to the next road, run:
 
 <p>
 To calculate the distance of given sites to the next road and store the list
-as new sites map with distance attribute, run:
+as new sites map with distance attribute and vector attribute number, run:
 <br>
 <tt>s.out.ascii -d archsites | v.distance roads | s.in.ascii fs='|' sites=dist</tt>
 
+<br>The output structure is:
+<tt>E|N|sitesID|dist|vect_line_ATT</tt>
+<p>e.g.
+<tt>1680949.350649|5100196.753247|31|16.854858|22002</tt>
 
 
 <H2>SEE ALSO</H2>
