@@ -12,3 +12,4 @@ default: $(ARCH_INCDIR)/shapefil.h lib
 
 $(ARCH_INCDIR)/shapefil.h: shapefil.h
 	$(INSTALL) -m 644 shapefil.h $(ARCH_INCDIR)/shapefil.h
+	$(INSTALL) -m 644 shapefil.h $(ARCH_DISTDIR)/include/shapefil.h
