@@ -33,19 +33,21 @@ AC_PROG_CC
 AC_ARG_WITH(grass50,
 [  --with-grass50=DIR      absolute path to GRASS 5 CVS HEAD source directory])
 
-AC_MSG_CHECKING(for GRASS 5 CVS HEAD source code)
-if test -d "$with_grass50"; then
-    GRASS50="$with_grass50"
-    if grep cvs "${GRASS50}/src/CMD/VERSION" >/dev/null 2>&1 ; then
-        AC_MSG_RESULT("$GRASS50")
+if test ! -f ./SRCPKG; then
+    AC_MSG_CHECKING(for GRASS 5 CVS HEAD source code)
+    if test -d "$with_grass50"; then
+	GRASS50="$with_grass50"
+	if grep cvs "${GRASS50}/src/CMD/VERSION" >/dev/null 2>&1 ; then
+	    AC_MSG_RESULT("$GRASS50")
+	else
+	    AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not contain CVS HEAD version.])
+	fi
     else
-        AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not contain CVS HEAD version.])
+	AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not exist.])
     fi
-else
-    AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not exist.])
-fi
 
-AC_SUBST(GRASS50)
+    AC_SUBST(GRASS50)
+fi
 
 # Check for full floating-point support, including Infinity and NaN
 IEEEFLAG=
