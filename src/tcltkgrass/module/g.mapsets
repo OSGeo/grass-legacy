@@ -1,0 +1,7 @@
+interface_build {
+    {g.mapsets} 0
+    {Modifies access to different mapsets within a location.}
+    {entry mapset {New mapset search path:} 0 +mapset}
+    {checkbox -l {List all available mapsets under the user´s location.} "" -l}
+    {checkbox -p {Print the user's current mapset search path.} "" -p}
+}
