@@ -1119,6 +1119,7 @@ AC_SUBST(FTLIB)
 LOC_CHECK_USE(nls,NLS,USE_NLS)
 
 INTLLIB=
+HAVE_NLS=
 
 if test -n "${USE_NLS}" ; then
     AC_DEFINE(USE_NLS)
@@ -1128,9 +1129,11 @@ AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
     AC_MSG_ERROR([*** Unable to locate gettext() function.])
 ])])
 
+    HAVE_NLS=1
 fi
 
 AC_SUBST(INTLLIB)
+AC_SUBST(HAVE_NLS)
 
 # Enable C++ option
  
