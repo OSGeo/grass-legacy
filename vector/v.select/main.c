@@ -100,7 +100,7 @@ main (int argc, char *argv[])
     int    input, operator;
     int    aline, nalines;
     int    type[2], field[2];
-    int    *cats, ncats;
+    int    *cats, ncats, acats;
     char   *mapset[2], *pre[2];
     struct GModule *module;
     struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
@@ -371,14 +371,11 @@ main (int argc, char *argv[])
         
     Vect_close ( &(In[1]) ); 
 
-    if ( !(table_flag->answer) && (IFi != NULL) ) {
-	cats = (int *) G_malloc ( nalines * sizeof(int) );
-	ncats = 0;
-    }
-
     /* Write lines */
+    ncats = acats = 0;
+    cats = NULL;
     for ( aline = 1; aline <= nalines; aline++ ) {
-	int atype, cat;
+	int atype;
 
         G_debug (4, "aline = %d ALines[aline] = %d", aline, ALines[aline]);
 
@@ -388,10 +385,16 @@ main (int argc, char *argv[])
         Vect_write_line ( &Out, atype, APoints, ACats );
 	
         if ( !(table_flag->answer) && (IFi != NULL) ) {
-	    Vect_cat_get ( ACats, field[0], &cat); 
-	    if ( cat > 0 ) {
-	        cats[ncats] = cat;
-	        ncats++;
+	    int i;
+	    for ( i = 0; i < ACats->n_cats; i++ ) {
+		if ( ACats->field[i] == field[0] ) {
+		    if ( ncats == acats ) {
+			acats += 1000; 
+			cats = (int *) G_realloc ( cats, acats * sizeof(int) );
+		    }
+	            cats[ncats] = ACats->cat[i];
+	            ncats++;
+		}
 	    }
 	}
     }
