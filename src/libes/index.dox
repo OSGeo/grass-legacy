@@ -1,4 +1,7 @@
 /*! \mainpage GRASS GIS Library
+<!-- doxygenized from "GRASS 5 Programmer's Manual"
+     by M. Neteler 2/2004
+  -->
 
 <h2>GRASS 5.3 Programmer's Manual</h2>
 
@@ -18,7 +21,7 @@ an international team of programmers,
 GRASS module authors are cited within their module's source code and the 
 contributed manual pages.
 
-\copy 2000 Markus Neteler / GRASS Development Team 
+&copy; 2000 Markus Neteler / GRASS Development Team 
 Published under GNU Free Documentation License (GFDL)
 http://www.fsf.org/copyleft/fdl.html
 
@@ -27,39 +30,45 @@ software and this manual is kindly supported by Intevation GmbH,
 Osnabr&uuml;ck, Germany, who provide the GRASS CVS repository.
 
 Main web site: http://grass.itc.it
-
+<P>
+<I>Missing entries here are either not yet uploaded to CVS or simply undocumented</i>
 <ul>
-<li>D <a href="d_display.html">display library</a>
-<li>bitmap <a href="bitmap.html">bitmap library for X Window Bitmaps</a>
-<li>btree <a href="btree.html">binary tree library</a>
-<li>bwidget <a href="bwidget.html">Tcl/Tk extra library</a>
-<li>coorcnv <a href="coorcnv.html">coordinate conversion and datum support library</a> (unused)
-<li>datetime <a href="datetime.html">DateTime library</a>
-<li>dbmi<a href="dbmi.html">database management interface database drivers</a>
-<li>dig_atts <a href="dig_atts.html">library to read and write from attribute files</a>
-<li>digitizer <a href="digitizer.html">raw library for general digitizer support</a>
-<li>display <a href="display.html">library for CELL driver</a>
-<li>dlg <a href="dlg.html">library to manage DLG files</a>
-<li>dspf <a href="dspf.html">G3D display files library</a>
-<li>curses <a href="edit.html">curses (in gis/ directory)</a>
-<li>g3d <a href="g3d.html">G3D raster volume library</a>
-<li>gis<a href="gis.html">main GRASS GIS library</a>
-<li>gmath <a href="gmath.html">generic mathematical functions (matrix, fft etc., to be extended, BLAS/LAPACK library)</a>
-<li>ibtree <a href="ibtree.html">integer clone of binary tree library (btree)</a>
-<li>icon <a href="icon.html">icon library (required for PS/Paint icons, read, write, manipulate icons)</a>
-<li>image3 <a href="image3.html">extra imagery library</a>
-<li>imagery <a href="imagery.html">imagery library</a>
-<li>libimage <a href="libimage.html">image library required for SG3d/Iris, saving images in SGIs rgb-format</a>
-<li>linkm <a href="linkm.html">linked list memory manager</a>
-<li>lock <a href="lock.html">locking mechanism for GRASS monitors and files</a>
-<li>ogsf <a href="ogsf.html">openGL (R) ported gsurf library (required for NVIZ)</a>
-<li>proj <a href="proj.html">internal version of PROJ4.4.x projection library</a>
-<li>raster <a href="rastergraphicslib.html">Raster Graphics Library</a>
-<li>rowio <a href="rowio.html">row in/out library</a>
-<li>rst <a href="rst_gmsl.html">library for interpolation with regularized splines with tension </a>
-<li>segment <a href="segment.html">segment library for segmented raster reading</a>
-<li>vask <a href="vask.html">Cursor management library</a>
-<li>vect <a href="vect32.html">GRASS (4) vector library</a>
+<li>D <!-- a href="d_displaylib.html" -->display library</a> (used at all?)
+<li>bitmap <!-- a href="bitmaplib.html" -->bitmap library for X Window Bitmaps</a>
+<li>btree <!-- a href="btreelib.html" -->binary tree library</a>
+<li>bwidget <!-- a href="bwidgetlib.html" -->Tcl/Tk extra library</a>
+<li>coorcnv <!-- a href="coorcnvlib.html" -->coordinate conversion and datum support library</a> (unused)
+<li>datetime <!-- a href="datetimelib.html" -->DateTime library</a>
+<li>dbmi <!-- a href="dbmilib.html" -->database management interface database drivers</a>
+<li>dig_atts <!-- a href="dig_attslib.html" -->library to read and write from attribute files</a>
+<li>digitizer <!-- a href="digitizerlib.html" -->raw library for general digitizer support</a>
+<li>display <!-- a href="displaylib.html" -->library for CELL driver</a>
+<li>dlg <!-- a href="dlglib.html" -->library to manage DLG files</a>
+<li>dspf <!-- a href="dspflib.html" -->G3D display files library</a>
+<li>curses <!-- a href="editlib.html" -->curses (in gis/ directory)</a>
+<li>g3d <!-- a href="g3dlib.html" -->G3D raster volume library</a>
+<li>gis <a href="gislib.html">GRASS GIS library</a>, with following main subsections:
+<ul>
+ <li> <a href="gisrasterlib.html">Raster File Processing</a>
+ <li> <a href="gisvectorlib.html">GRASS Vector File Processing</a>
+ <li> <a href="gissiteslib.html">GRASS Sites File Processing</a>
+</ul>
+<li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix, fft etc., to be extended, BLAS/LAPACK library)</a>
+<li>ibtree <!-- a href="ibtreelib.html" -->integer clone of binary tree library (btree)</a>
+<li>icon <!-- a href="iconlib.html" -->icon library (required for PS/Paint icons, read, write, manipulate icons)</a>
+<li>image3 <!-- a href="image3lib.html" -->extra imagery library</a>
+<li>imagery <a href="imagerylib.html">imagery library</a>
+<li>libimage <!-- a href="libimage.html" -->image library required for SG3d/Iris, saving images in SGIs rgb-format</a>
+<li>linkm <!-- a href="linkmlib.html" -->linked list memory manager</a>
+<li>lock <!-- a href="locklib.html" -->locking mechanism for GRASS monitors and files</a>
+<li>ogsf <a href="ogsflib.html">openGL (R) ported gsurf library (required for NVIZ)</a>
+<li>proj <!-- a href="projlib.html" -->internal version of PROJ4.4.x projection library</a>
+<li>raster <!-- a href="rastergraphicslib.html" -->Raster Graphics Library</a>
+<li>rowio <!-- a href="rowiolib.html" -->row in/out library</a>
+<li>rst <!-- a href="rst_gmsllib.html" -->library for interpolation with regularized splines with tension </a>
+<li>segment <!-- a href="segmentlib.html" -->segment library for segmented raster reading</a>
+<li>vask <!-- a href="vasklib.html" -->Cursor management library</a>
+<li>vect <a href="vectlib.html">GRASS (4) vector library</a> (also used in 5.0.x/5.3.x)
 </ul>
 
 */
