@@ -26,7 +26,7 @@
 #include "gui.h"
 
 #define COLOR_OFFSET 0
-#define MAXIMAGES 100
+#define MAXIMAGES 400
 #define DEF_MAX 900
 #define DEF_MIN 600
 #define MAXVIEWS    4 
