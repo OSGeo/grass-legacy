@@ -8,7 +8,7 @@
 .br
 \fBr.report help\fR
 .br
-\fBr.report \fR[\fB-hmfq\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
+\fBr.report \fR[\fB-hmfqe\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
 [\fBpl\*=\fIvalue\fR] [\fBpw\*=\fIvalue\fR] [\fBoutput\*=\fIname\fR]
 .SH DESCRIPTION
 .I r.report
@@ -26,7 +26,7 @@ the names of raster map layers and any desired options on the
 command line, using the form
 .LP
 .RS
-\fBr.report \fR[\fB-hmfq\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
+\fBr.report \fR[\fB-hmfqe\fR] \fBmap\*=\fIname\fR[,\fIname\fR,...] [\fBunits\*=\fIname\fR[,\fIname\fR,...]] \
 [\fBpl\*=\fIvalue\fR] [\fBpw\*=\fIvalue\fR]
 .RE
 .LP
@@ -34,7 +34,7 @@ where each map \fIname\fR is the name of a raster map layer on which to report,
 each unit \fIname\fR is a unit of measure in which results are to be reported,
 the pl \fIvalue\fR gives the page length,
 the pw \fIvalue\fR gives the page width, and the (optional) flags
-\fI-h\fR, \fI-m\fR, \fI-f\fR, and \fI-q\fR have the meanings stated below.
+\fI-h\fR, \fI-e\fR\, \fI-m\fR, \fI-f\fR, and \fI-q\fR have the meanings stated below.
 
 .LP
 \fBFlags:\fR
@@ -46,6 +46,16 @@ Report on zero values, because a mask is being used.
 Use formfeeds between pages when printing report output.
 .IP \fB-q\fR 20
 Run quietly, without printing program messages to standard output.
+.IP \fB-e\fR 20
+Use scientific format for the numbers that are too long to fit in the tab
+table field if their decimal form is used.
+.IP \fB-z\fR 20
+Report only non-zero data values.  Zero data will not be reported.  However,
+for multiple map layers this means that if zero values occur in every
+map layer, they will not be reported; if non-zero category values occur
+in any map layer (along with zeros in others), the non-zero values along
+with the zero values will be reported.
+.br
 .LP
 \fBParameters:\fR
 .IP "\fBmap\*=\fIname,name,...\fR" 20
@@ -116,9 +126,11 @@ Here, \fIr.report\fR
 output is directed into the file \fIreport.file\fR.
 .SH EXAMPLE:
 .RS
+.nf
 \fBr.report  map\*=geology  units\*=miles,acres  >  report.file\fR
+.fi
 .RE
-
+.ne 30
 .in +.2i
 .TS
 box tab(X);
@@ -142,10 +154,10 @@ l l s s s s.
 MAP:Xgeology in PERMANENT
 _
 .T&
-c s s s|r r
-l|l s s|r r.
-Category InformationX X X XAcresXSquare
-#XdescriptionX X X XMiles
+c s s s|c c
+c|l s s|c c.
+Category InformationXAcresXSquare
+#XdescriptionX XMiles
 _
 .T&
 n|l s s|n|n.
@@ -162,7 +174,7 @@ n|l s s|n|n.
 _
 .T&
 c|s s s|n|n.
-TOTALX X X X65728.60X102.70
+TOTALX65728.60X102.70
 .TE
 .in -.5i
 .SH NOTES
