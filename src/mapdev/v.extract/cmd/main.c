@@ -1,6 +1,10 @@
-/* updated GRASS 5 Bill Hughes 9/99 */
-/* main.c    1.0   10/01/89
-/* main.c    1.1   1/30/91
+/* 
+  $Id$
+  
+  updated GRASS 5 Bill Hughes 9/99
+  main.c    1.0   10/01/89
+  main.c    1.1   1/30/91
+  
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *	      Provides a means of generating vector (digit) files
@@ -44,7 +48,7 @@ char  buf[1024] ;
 struct dig_head Head;
 
 
-int main (int argc, char *argv[])
+int main (int argc, char **argv)
 {
 	int i, ier, cat_index, new_cat, max_att;
 	int dissolve=0, cnt, x, y;
@@ -56,8 +60,6 @@ int main (int argc, char *argv[])
         FILE *in, *catf;
 
 
-    G_gisinit (argv[0]);
-
             /* set up the options and flags for the command line parser */
 
     d_flag = G_define_flag();
@@ -67,13 +69,6 @@ int main (int argc, char *argv[])
     n_flag = G_define_flag();
     n_flag->key              = 'n';
     n_flag->description      = "Use category names NOT numbers ";
-
-    typopt = G_define_option();
-    typopt->key              = "type";
-    typopt->type             =  TYPE_STRING;
-    typopt->required         =  YES;
-    typopt->options          =  "area,line,site";
-    typopt->description      =  "Select area, line, or site "; 
 
     inopt = G_define_option();
     inopt->key             = "input";
@@ -88,6 +83,13 @@ int main (int argc, char *argv[])
     outopt->required        =  YES;
     outopt->gisprompt       = "any,dig,vect";
     outopt->description     = "vector output map name ";
+
+    typopt = G_define_option();
+    typopt->key              = "type";
+    typopt->type             =  TYPE_STRING;
+    typopt->required         =  YES;
+    typopt->options          =  "area,line,site";
+    typopt->description      =  "Select area, line, or site "; 
 
     newopt = G_define_option();
     newopt->key              = "new";
@@ -108,6 +110,10 @@ int main (int argc, char *argv[])
     fileopt->required        =  NO;
     fileopt->description     = "Text file name for category range/list ";
 
+
+    G_gisinit (argv[0]);
+
+
        /* heeeerrrrrre's the   PARSER */
     if (G_parser (argc, argv))
         exit (-1);
@@ -118,9 +124,10 @@ int main (int argc, char *argv[])
        /* set input vector file name and mapset */
     input = inopt->answer;
     mapset = G_find_vector (input, "") ;
+    cat_index = 0;
     if (mapset == NULL)
 	{
-		sprintf(buffr,"Vector file [%s] not available in search list",
+		sprintf(buffr,"Vector file [%s] not available",
 		    input);
 		G_fatal_error(buffr) ;
 	}
@@ -195,6 +202,7 @@ int main (int argc, char *argv[])
          for (i = 0; listopt->answers[i]; i++)
             {
             scan_cats (listopt->answers[i], &x, &y);
+	    cat_index = 0;
             while (x <= y)
                {
                cat_array[cat_index] = x++; cat_index++; 
@@ -217,6 +225,7 @@ int main (int argc, char *argv[])
            if (!fgets (buffr, 39, in)) break;
            sscanf(buffr, "%s", text);
            scan_cats (text, &x, &y);
+	   cat_index = 0;
            while (x <= y)
               {
               cat_array[cat_index] = x++; cat_index++; 
