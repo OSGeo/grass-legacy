@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     ncol->description = "Node cost column" ;
 
     max_dist = G_define_option() ;
-    max_dist->key = "maxdist";
+    max_dist->key = "dmax";
     max_dist->type = TYPE_DOUBLE;
     max_dist->required = NO;
     max_dist->answer = "1000";
