@@ -1,0 +1,36 @@
+###########################################################
+
+EXTRA_CFLAGS	= -I../include
+
+SOS_LIB = libsos.a
+
+CFILES = sos.c minor.c primitive.c \
+         lambda3.c lambda3_star.c \
+         lambda4.c lambda4_star.c \
+         lambda5.c \
+         above3.c above3_star.c \
+         above4.c positive3.c in_sphere.c \
+         rho1.c rho1_num.c \
+         rho2.c rho2_num.c rho2_den.c \
+         rho3.c rho3_num.c rho3_den.c \
+         smaller.c
+
+OBJ = sos.o minor.o primitive.o \
+         lambda3.o lambda3_star.o \
+         lambda4.o lambda4_star.o \
+         lambda5.o \
+         above3.o above3_star.o \
+         above4.o positive3.o in_sphere.o \
+         rho1.o rho1_num.o \
+         rho2.o rho2_num.o rho2_den.o \
+         rho3.o rho3_num.o rho3_den.o \
+         smaller.o
+
+
+all: $(SOS_LIB)
+
+$(SOS_LIB): $(OBJ)
+	$(AR)
+
+
+
