@@ -36,12 +36,6 @@ main (int argc, char *argv[])
 		"The resulting signature file is used as input for i.maxlik, "
 		"to generate an unsupervised image classification.";
 
-    G_get_window (&window);
-    nrows = G_window_rows();
-    ncols = G_window_cols();
-
-
-    I_cluster_clear (&C);
 
     parm.group_name = G_define_option();
     parm.group_name->key = "group";
@@ -124,8 +118,13 @@ main (int argc, char *argv[])
     if (G_parser(argc,argv))
       exit(-1);
 
-    group = parm.group_name->answer; /* a required parameter */
+    G_get_window (&window);
+    nrows = G_window_rows();
+    ncols = G_window_cols();
 
+    I_cluster_clear (&C);
+
+    group = parm.group_name->answer; /* a required parameter */
     subgroup = parm.subgroup_name->answer; /* required */
 
     outsigfile = parm.out_sig->answer;
