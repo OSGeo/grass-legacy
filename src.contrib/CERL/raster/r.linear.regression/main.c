@@ -1,17 +1,18 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <signal.h>
-#include "gis.h"
-					/* main.c */ 
-					/*
+/* main.c */ 
+/*
 	r.linear.regression
 	the program has the following functions:
 	conduct usual linear regression: 
 				y=a[0]x[0]+a[1],
                             	y=a[0]x[0]+a[1]x[1]+a[2]
                            	y=a[0]x[0]+a[1]x[1]+a[2]x[2]+a[4]
-					*/
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <signal.h>
+#include "gis.h"
 
 
 double *vector();
@@ -50,22 +51,28 @@ struct
         struct Option *input, *output;
 } parm;
 
+     struct GModule *module;
 
         G_gisinit (argv[0]);
+        
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Linear regression calculation from data stored in ASCII file";
 
-						/* define the different options
-						*/
+	/* define the different options */
         parm.input = G_define_option() ;
         parm.input->key        = "input";
         parm.input->type       = TYPE_STRING;
         parm.input->required   = YES;
-        parm.input->description= "File name of imagery to be regressed";
+        parm.input->description= "ASCII file name of imagery to be regressed";
 
         parm.output = G_define_option() ;
         parm.output->key        = "output";
         parm.output->type       = TYPE_STRING;
         parm.output->required   = YES;
-        parm.output->description= "File name to hold regression result";
+        parm.output->description= "ASCII file name to hold regression result";
 
 if (G_parser(argc, argv))
                 exit(-1);

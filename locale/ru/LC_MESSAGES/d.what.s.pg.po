@@ -1,0 +1,112 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-04 14:40+0300\n"
+"PO-Revision-Date: 2002-03-04 14:40+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: getAllOpts.c:36
+msgid "Name of the table with X,Y coord.:"
+msgstr "Название таблицы с коорд. X,Y:"
+
+#: getAllOpts.c:43
+msgid "X coord. (E/W) column:"
+msgstr "X коорд. (В/З) столбец:"
+
+#: getAllOpts.c:50
+msgid "Y coord. (N/S) column:"
+msgstr "Y коорд. (С/Ю) столбец:"
+
+#: getAllOpts.c:57
+msgid "X coord. (E/W) of search:"
+msgstr "X коорд. (В/З) поиска:"
+
+#: getAllOpts.c:64
+msgid "Y coord. (N/S) of search:"
+msgstr "Y коорд. (С/Ю) поиска:"
+
+#: getAllOpts.c:72
+msgid "Radius of cursor:"
+msgstr "Радиус курсора:"
+
+#: getAllOpts.c:78 getSopts.c:73
+msgid "DB output type - [v(ert)/h(oriz)]:"
+msgstr "Формат вывода результата - [v(ert)/h(oriz)]:"
+
+#: getArea.c:25
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Кнопки:\n"
+
+#: getArea.c:26
+msgid "Left:  Select site for DB query.\n"
+msgstr "Левая: Выбрать объект для запроса БД.\n"
+
+#: getArea.c:27
+msgid ""
+"Right: Finish. \n"
+"\n"
+"\n"
+msgstr ""
+"Правая: Закончить. \n"
+"\n"
+"\n"
+
+#: getSopts.c:46
+msgid "Use [s] for query with a command file."
+msgstr "Используйте [s] для запроса через командный файл SQL."
+
+#: getSopts.c:55
+msgid "SQL query. "
+msgstr "SQL запрос."
+
+#: getSopts.c:63
+msgid "Cursor radius."
+msgstr "Радиус курсора."
+
+#: getSopts.c:96
+#, c-format
+msgid "File read error on %s\n"
+msgstr "Ошибка чтения файла на %s\n"
+
+#: main.c:62
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: runInfxFile.c:41
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Postgres:%s\n"
+
+#: runInfxFile.c:48
+#, c-format
+msgid "Error: Connecting to Postgres:%s\n"
+msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxFile.c:75
+#, c-format
+msgid ""
+"\n"
+"%d rows selected\n"
+msgstr 
+"\n"
+"%d записей выбрано\n"
+
+#: runInfxFile.c:127
+#, c-format
+msgid "Error converting %s, have %f \n"
+msgstr "Ошибка преобразования %s, есть %f \n"

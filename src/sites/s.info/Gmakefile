@@ -1,14 +1,9 @@
-
-
-LIBRARIES = $(GISLIB) $(DATETIMELIB) 
-
-PGM = $(BIN_CONTRIB_CMD)/s.info
-#PGM = ./s.info
+PGM = s.info
+LIBES = $(GISLIB) $(DATETIMELIB) 
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB) 
 
 OFILES = main.o \
 	 describe.o
 
-$(PGM): $(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
-
-
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS) 
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -2,7 +2,7 @@
 
     /* read the input map. convert non-nulls to 1 */
 
-int read_input_map (char *input, char *mapset, int quiet)
+int read_input_map (char *input, char *mapset, int quiet, int ZEROFLAG)
 {
     int fd;
     int row;
@@ -44,17 +44,35 @@ int read_input_map (char *input, char *mapset, int quiet)
 	}
 	for (col = 0; col < window.cols; col++)
 	{
-	    if(*ptr++ = !G_is_c_null_value(cell++))
+	    if (ZEROFLAG)
 	    {
-		if (minrow < 0) minrow = row;
-		maxrow = row;
-		if (col < mincol) mincol = col;
-		if (col > maxcol) maxcol = col;
-		if (!hit)
-		{
-		    count_rows_with_data++;
-		    hit = 1;
-		}
+	      if(*ptr++ = (*cell++ != 0))
+		    {
+			if (minrow < 0) minrow = row;
+			maxrow = row;
+			if (col < mincol) mincol = col;
+			if (col > maxcol) maxcol = col;
+			if (!hit)
+			{
+			    count_rows_with_data++;
+			    hit = 1;
+			}
+	      }
+	    }
+	    else /* use NULL */
+	    {
+	      if(*ptr++ = !G_is_c_null_value(cell++))
+		    {
+			if (minrow < 0) minrow = row;
+			maxrow = row;
+			if (col < mincol) mincol = col;
+			if (col > maxcol) maxcol = col;
+			if (!hit)
+			{
+			    count_rows_with_data++;
+			    hit = 1;
+			}
+	      }
 	    }
 	}
 	cell -= window.cols;

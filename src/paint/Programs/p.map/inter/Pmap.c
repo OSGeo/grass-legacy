@@ -5,7 +5,6 @@
 int 
 Pmap (char *scriptfile, int background)
 {
-    char *getenv();
     char arg[1024];
 
     sprintf (arg, "input=%s", scriptfile);

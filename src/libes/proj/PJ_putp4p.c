@@ -4,7 +4,7 @@ static const char SCCSID[]="@(#)PJ_putp4p.c	4.1	94/02/15	GIE	REL";
 #define PROJ_PARMS__ \
 	double	C_x, C_y;
 #define PJ_LIB__
-# include	<projects.h>
+# include	"projects.h"
 PROJ_HEAD(putp4p, "Putnins P4'") "\n\tPCyl., Sph.";
 PROJ_HEAD(weren, "Werenskiold I") "\n\tPCyl., Sph.";
 FORWARD(s_forward); /* spheroid */

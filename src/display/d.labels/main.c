@@ -9,6 +9,13 @@
 #include "local_proto.h"
 
 char *element = "paint/labels" ;
+/* temp panel file for save/restore ops */
+char *panel_save = NULL;
+
+static void exit_func (void) {
+	if (panel_save)
+		remove (panel_save);
+}
 
 int 
 main (int argc, char **argv)
@@ -18,6 +25,8 @@ main (int argc, char **argv)
     char *tempfile;
     FILE *in;
     int stat, option, new_file;
+
+    atexit (exit_func);
 
 	/* Initialize the GIS calls */
     G_gisinit(argv[0]) ;

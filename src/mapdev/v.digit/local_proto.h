@@ -1,3 +1,30 @@
+/*
+ * $Id$
+ */
+ 
+#ifndef V_DIGIT_LOCAL_PROTO_H
+#define V_DIGIT_LOCAL_PROTO_H
+
+#include "config.h"
+#include "digit.h"
+
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
+ */
+/*
+#define ANOTHER_BUTTON
+ */
+
+#define	LEFTB	1
+
+#ifndef ANOTHER_BUTTON
+#	define MIDDLEB	2
+#	define RIGHTB	3
+#else
+#	define MIDDLEB	3
+#	define RIGHTB	2
+#endif
+
 int print_binary_int(int);
 int print_binary_char(int);
 int change_mode(int);
@@ -136,6 +163,7 @@ int draw_default_window(double, double, double, double);
 /* mouse_yn.c */
 int mouse_yes_no(char *);
 int mouse_next_prev(char *);
+int mouse_yes_no_zoom(char *, unsigned char, struct line_pnts *);
 /* node_color.c */
 int dig_node_color(int);
 /* oplot.c */
@@ -153,7 +181,7 @@ int check_map_buttons(void);
 int check_map_generic(void);
 int check_map_ft_swtch(void);
 /* scal_window.c */
-int scal_window_w_mouse(void);
+int scal_window_w_mouse(unsigned char type, struct line_pnts *Xpoints);
 /* screen_plt.c */
 int First(double *, double *);
 int Next(double *, double *);
@@ -176,9 +204,9 @@ int calc_thresh(double);
 int map_to_dig_thresh(double);
 /* set_window.c */
 int init_window(void);
-int set_window(void);
+int set_window_w(void);
 /* slid_window.c */
-int slid_window_w_mouse(void);
+int slid_window_w_mouse(unsigned char type, struct line_pnts *Xpoints);
 /* snap.c */
 int near_zero(double);
 /* states.c */
@@ -188,11 +216,6 @@ int set_default_display(void);
 long strsplit(char [], int, char [], char []);
 /* toolbox.c */
 int Toolbox(void);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* wind_conv.c */
 int window_conversions(double, double, double, double);
 int utm_to_screen(double, double, int *, int *);
@@ -211,9 +234,9 @@ int erase_window(void);
 int Save_Disp_settings(void);
 int Restore_Disp_settings(void);
 int Zero_Disp_settings(void);
-int zoom_window(void);
-int slid_window(void);
-int scal_window(void);
+int zoom_window(unsigned char type, struct line_pnts *Xpoints);
+int slid_window(unsigned char type, struct line_pnts *Xpoints);
+int scal_window(unsigned char type, struct line_pnts *Xpoints);
 #ifdef DIG___STRUCTS___
 int area_outside_window (P_AREA *);
 int line_outside_window (P_LINE *);
@@ -224,7 +247,7 @@ int line_in_window (P_LINE *);
 int window_rout(double, double, double, double);
 int fit_window(double *, double *, double *, double *);
 
-#ifdef DIG__HEAD__FOO__
+#ifdef GRASS_DIGHEAD_H
 /* head_info.c */
 int get_head_info(int, struct dig_head *);
 #endif
@@ -232,4 +255,6 @@ int get_head_info(int, struct dig_head *);
 #ifdef GRASS_GIS_H
 /* eq.c */
 int eq_grey_colors (char *,char *,struct Colors *,int);
+#endif
+
 #endif

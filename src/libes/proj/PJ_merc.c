@@ -2,7 +2,7 @@
 static const char SCCSID[]="@(#)PJ_merc.c	4.1	94/02/15	GIE	REL";
 #endif
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(merc, "Mercator") "\n\tCyl, Sph&Ell\n\tlat_ts=";
 #define EPS10 1.e-10
 FORWARD(e_forward); /* ellipsoid */
@@ -29,10 +29,10 @@ INVERSE(s_inverse); /* spheroid */
 }
 FREEUP; if (P) pj_dalloc(P); }
 ENTRY0(merc)
-	double phits;
+	double phits=0.0;
 	int is_phits;
 
-	if (is_phits = pj_param(P->params, "tlat_ts").i) {
+	if( (is_phits = pj_param(P->params, "tlat_ts").i) ) {
 		phits = fabs(pj_param(P->params, "rlat_ts").f);
 		if (phits >= HALFPI) E_ERROR(-24);
 	}

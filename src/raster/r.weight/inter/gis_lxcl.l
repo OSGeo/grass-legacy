@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "gis_pars.h"
+#include "y.tab.h"
 #include "local_proto.h"
 #ifdef getc
 #undef getc
@@ -105,12 +105,13 @@ add    {
 		return(ADD_TKN) ;
 	}
 
-"-"     |
-for		|
-the		|
-please	|
+"-"     ;
+
+for     |
+the     |
+please  |
 to		{
-	}
+                }
 
 {N}     {
 		yylval.str_val = (char *)falloc(yyleng + 1, sizeof(char),

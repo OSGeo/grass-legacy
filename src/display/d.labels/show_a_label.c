@@ -23,7 +23,8 @@ show_a_label (char *tmp_fname)
 	FILE *infile ;
 	int t, b, l, r ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

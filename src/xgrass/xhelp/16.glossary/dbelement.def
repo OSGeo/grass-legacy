@@ -1,9 +1,0 @@
-
-
-database element - An entity within a @glossary("database",16.glossary/database.def).  In GRASS,
-database elements are the names of the UNIX directories located under
-a GRASS mapset in which GRASS data and support files are stored.
-These elements include:  cell (@glossary("cell maps",16.glossary/cellmap.def)), dig (@glossary("vector maps",16.glossary/vecmaps.def)),
-site_lists (@glossary("site maps",16.glossary/sitemap.def)), icons (p.map icon files), paint (p.map
-@glossary("label",16.glossary/label.def) files), window (@glossary("window",16.glossary/window.def) files), group (imagery group files),
-etc.

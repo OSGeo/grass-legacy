@@ -1,0 +1,45 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-02-26 13:40+0300\n"
+"PO-Revision-Date: 2002-02-26 13:40+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: getdbname.c:30 listdb.c:21
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Postgres:%s\n"
+
+#: getdbname.c:38 listdb.c:28
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr "Ошибка: connect Postgres:%s\n"
+
+#: main.c:47
+msgid "Use -l flag for list of databases."
+msgstr "Флаг -l для вывода списка БД."
+
+#: main.c:54
+msgid "Postgres server name:"
+msgstr "Сервер Postgres"
+
+#: main.c:61
+msgid "Postgres database name:"
+msgstr "БД Postgres"
+
+#: main.c:81 main.c:101
+msgid "The following databases are in the Unix catalogue:\n"
+msgstr "На сервере имеются следующие БД:\n"
+
+#: main.c:100
+msgid "This database does not exist."
+msgstr "Эта БД не существует."

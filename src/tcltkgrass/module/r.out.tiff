@@ -4,6 +4,7 @@ interface_build {
     {entry input {GRASS raster file (input):} 0 raster}
     {entry output {TIFF file (output):} 0 File}
     {checkbox -p {TIFF pallete output (8bit instead of 24bit).} "" -p}
-    {checkbox -c {Compress with LZW routine.} "" -c}
+    {checkbox -t {Output TIFF world file.} "" -t}
+    {checkbox -l {Output Tiled TIFF.} "" -l}
     {checkbox -v {Verbose mode.} "" -v}
 }

@@ -1,0 +1,15 @@
+Comment:
+
+      There seems to be no error checking in the original r.timestamp, so I
+ haven't bothered to put error checking into r3.timestamp.  Both commands
+ produce a timestamp file that's only 1 byte long if the user enters an
+ incorrectly formatted date/time, and both commands fail to inform the user
+ that anything is wrong.  The user finds out soon enough when he or she
+ tries reading the timestamp and gets the following result:
+
+ GRASS 5.0beta9 > r.timestamp bathym
+ WARNING: Invalid timestamp file for raster map bathym in mapset pelizzar
+
+ Perhaps the timestamp commands should issue warnings if they fail to
+ complete their tasks successfully, so the user will know immediately if
+ their outputs are invalid.

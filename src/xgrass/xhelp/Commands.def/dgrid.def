@@ -1,9 +1,0 @@
-
-
-d.grid - 
-
-d.grid overlays a grid of user-defined size and color in the active
-display @glossary("frame",16.glossary/graphframe.def) on the graphics monitor.  The grid will overlay, not
-overwrite, the contents of the active display frame.
-
-Manual entry for @man("d.grid")

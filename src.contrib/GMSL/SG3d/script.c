@@ -123,7 +123,7 @@ extern void _newvaltogglebutton();
 Panel *
 my_initscriptpanel()
 {
-    char *ptr, *getenv();
+    char *ptr;
     Actuator *a;
     Panel *p;
     float x=0.0, y=0.0, dy=0.5;

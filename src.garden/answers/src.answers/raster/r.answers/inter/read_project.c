@@ -188,7 +188,7 @@ read_project()
             if (strncmp (rain_layer, "none", 4) == 0)
             {
                 if (verbose)
-                    fprintf (stdout,"Rain: none\n");
+                    fprintf (stderr,"Rain: none\n");
             }
             else
             {
@@ -291,7 +291,7 @@ read_project()
             if (strncmp (chnl_slp_layer, "none", 4) == 0)
             {
                 if (verbose)
-                    fprintf (stdout,"Channel slope: none\n");
+                    fprintf (stderr,"Channel slope: none\n");
             }
             else 
             {
@@ -334,7 +334,7 @@ read_project()
         if((sscanf(readbuf,"%s  %s in %s",checkbuf,bmp_tbl[i].layer,mapset)==3) 
         && (strncmp (bmp_tbl[i].layer, "none", 4) == 0))
         {
-          if (verbose) fprintf (stdout," - %s: none\n", bmp_tbl[i].title);
+          if (verbose) fprintf (stderr," - %s: none\n", bmp_tbl[i].title);
           bmp_tbl[i].set = 0;
         }
         else 
@@ -421,8 +421,8 @@ read_project()
     }
     if(verbose)
     {
-       fprintf (stdout,"Answers input step completed\n");
-       fprintf (stdout,"\n\n");
+       fprintf (stderr,"Answers input step completed\n");
+       fprintf (stderr,"\n\n");
        hit_return(); 
     }
 

@@ -1,0 +1,18 @@
+r.fillnulls -help
+
+Description:
+  fills NULL (no data areas) in input map and stores filled
+  map to a new output map. The fill data are interpolated from
+  the no data area boundaries using s.surf.rst.
+
+Usage:
+       r.fillnulls input=name output=name
+
+
+You can use r.contour with low "step" value to check if the
+filled area have been smoothly integrated into the existing
+data.
+The script respects a user mask (MASK) if present.
+
+Markus Neteler 5/2001
+

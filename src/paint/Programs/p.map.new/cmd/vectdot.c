@@ -2,7 +2,7 @@
    dig_defines.h, some of which may collide with paint code. All
    we want here is DOT.
 */
-#include "dig_defines.h"
+#include "vect/dig_defines.h"
 
 int 
 vect_type_is_dot (int type)

@@ -1,5 +1,5 @@
 
-MYINCLUDE = ../cmd $(VECT_INCLUDE)
+MYINCLUDE = ../cmd
 #EXTRA_CFLAGS = -g -DDEBUGIO
 EXTRA_CFLAGS =  -I$(MYINCLUDE) -DDBVECT
 #FFLAGS =  -g
@@ -24,11 +24,12 @@ OBJFILES = v.db.rim.o layout.o main_menu.o mgmt_menu.o add_chng_del.o \
 	type_to_char.o vect_map.o vect_seq_map.o
 
 
-all: $(BIN_MAIN_INTER)/v.db.rim
+all: $(BIN_INTER)/v.db.rim
 
-$(BIN_MAIN_INTER)/v.db.rim:  $(OBJFILES)
-	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) \
-	$(VECTLIB) $(GISLIB) $(VASK)
+$(BIN_INTER)/v.db.rim:  $(OBJFILES)
+	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) \
+	$(VECTLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) \
+	$(DATETIMELIB)
 
 
 clear_value.c: ../cmd/clear_value.c
@@ -115,5 +116,4 @@ vect_map.c: ../cmd/vect_map.c
 	ln $? $@
 vect_seq_map.c: ../cmd/vect_seq_map.c
 	ln $? $@
-
 

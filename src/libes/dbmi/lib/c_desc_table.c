@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_describe_table (driver, name, table)
+int db_describe_table (driver, name, table)
     dbDriver *driver;
     dbString *name;
     dbTable **table;

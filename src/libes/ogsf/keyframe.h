@@ -1,4 +1,9 @@
+/*
+* $Id$
+*/
 
+#ifndef _KEYFRAME_H
+#define _KEYFRAME_H
 
 /* these have to be 1 << KF_id_index */
 
@@ -23,4 +28,4 @@
 #define KF_SPLINE 222
 #define KF_LEGAL_MODE(m) (m == KF_LINEAR || m == KF_SPLINE) 
 
-
+#endif /* _KEYFRAME_H */

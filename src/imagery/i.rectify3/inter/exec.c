@@ -16,7 +16,8 @@
 #include "global.h"
 #include "protodefs.h"
 
-int exec_rectify (struct Ref ref)
+int 
+exec_rectify (struct Ref ref)
 {
     char *name;
     char *mapset;
@@ -27,48 +28,49 @@ int exec_rectify (struct Ref ref)
     struct History hist;
     int colr_ok, hist_ok, cats_ok;
     long start_time, rectify_time, compress_time;
-    char *mailfile=NULL;
+    char *mailfile = NULL;
     char msg[100];      /* message buffer */
 
 
 /* allocate the output cell matrix */
-    cell_buf = (CELL **) G_calloc (NROWS, sizeof (CELL *));
-    n = NCOLS * sizeof (CELL);
+    cell_buf = (void **) G_calloc (NROWS, sizeof(void *));
+    n = NCOLS * G_raster_size(map_type);
     for (i=0; i < NROWS; i++)
     {
-	cell_buf[i] = (CELL *) G_malloc (n);
+	cell_buf[i] = (void *) G_malloc (n);
+	G_set_null_value(cell_buf[i], NCOLS, map_type);
     }
 
 
 /* go into background */
 /**************  DO NOT FORK OR MAIL ANYTHING 
-/**    fprintf (stderr, "\nYou will receive mail when %s is complete\n",
-/**	G_program_name());
-/**    if (G_fork()) exit(0);
+**    fprintf (stderr, "\nYou will receive mail when %s is complete\n",
+**	G_program_name());
+**    if (G_fork()) exit(0);
 *********************************************/
 
 /* note: all calls to G_tempfile() should happen after the fork */
 
 /* create a mailfile */
 /*******************************************
-/**    mailfile = G_tempfile();
-/**    unlink (mailfile);
-/**    close(creat(mailfile,0666));
+**    mailfile = G_tempfile();
+**    unlink (mailfile);
+**    close(creat(mailfile,0666));
 *******************************************/
 
 /* open stderr to /dev/null so all GRASS error messages will be
  * mailed to the user
  */
 /******************************************
-/**    freopen ("/dev/null","w",stderr);
-/**    freopen ("/dev/null","w",stdout);
+**    freopen ("/dev/null","w",stderr);
+**    freopen ("/dev/null","w",stdout);
 ******************************************/
 
 /* rectify each file */
     for (n = 0; n < ref.nfiles; n++)
     {
 	if ((i = ref_list[n]) < 0)
-	    continue;
+	  continue;
 	name   = ref.file[i].name;
 	mapset = ref.file[i].mapset;
 	result = new_name[n];
@@ -116,9 +118,9 @@ int exec_rectify (struct Ref ref)
 	    report (mailfile, name, mapset, result, (long)0, (long)0, 0);
     }
 /******************
-/**    mail (mailfile);
-/**    unlink (mailfile);
-/**    G_done_msg ("Check your mail");
+**    mail (mailfile);
+**    unlink (mailfile);
+**    G_done_msg ("Check your mail");
 ******************/
 
     G_done_msg ("All files have been rectified!");

@@ -25,12 +25,14 @@ struct G__                         /*  Structure of library globals */
     int auto_mask ;                  /* Flag denoting automatic masking      */
     CELL *mask_buf;
     char *null_buf;                  /* buffer for reading null rows         */
+    CELL *temp_buf;
     unsigned char *compressed_buf;   /* Pre/post compressed data buffer      */
     int compressed_buf_size ;        /* sizeof compressed_buf                */
     unsigned char *work_buf;         /* work data buffer                     */
     int work_buf_size ;              /* sizeof work_buf                      */
     int null_buf_size;               /* sizeof null_buf                      */
     int mask_buf_size;               /* sizeof mask_buf                      */
+    int temp_buf_size;               /* sizeof temp_buf                      */
     int want_histogram ;
 
     struct fileinfo                  /* Information for opened cell files */

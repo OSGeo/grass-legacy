@@ -1,0 +1,20 @@
+PGM=d.text.vflib
+CAPFILE=freetypecap
+OBJS=main.o
+
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
+CFLAGS+=-DVFlib `VFlib3-config --cflags`
+LDFLAGS+=`VFlib3-config --libs`
+
+all: $(BIN_CMD)/$(PGM) $(ETC)/$(CAPFILE)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
+
+$(ETC)/$(CAPFILE): $(CAPFILE)
+	cp $(CAPFILE) $(ETC)/$(CAPFILE)
+
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPGISLIB): #

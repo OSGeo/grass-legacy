@@ -56,18 +56,21 @@ main (int argc, char **argv)
 
     /* store the original file names */
     {
+	char loc[1024];
 	N_name = argv[1];
 
-	sprintf (buf, "%s/%s/%s", getenv("LOCATION"), "dig", N_name);
+	sprintf(loc, "%s/%s/%s", G_gisdbase(), G_location(), G_mapset());
+
+	sprintf (buf, "%s/%s/%s", loc, "dig", N_name);
 	N_dig_file= G_store (buf);
 
-	sprintf (buf, "%s/%s/%s", getenv("LOCATION"), "dig_plus", N_name);
+	sprintf (buf, "%s/%s/%s", loc, "dig_plus", N_name);
 	N_plus_file = G_store (buf);
 
-	sprintf (buf, "%s/%s/%s", getenv("LOCATION"), "dig_att", N_name);
+	sprintf (buf, "%s/%s/%s", loc, "dig_att", N_name);
 	N_att_file = G_store (buf);
 
-	sprintf (buf, "%s/%s/%s", getenv("LOCATION"), "reg", N_name);
+	sprintf (buf, "%s/%s/%s", loc, "reg", N_name);
 	N_coor_file = G_store (buf);
 
     }

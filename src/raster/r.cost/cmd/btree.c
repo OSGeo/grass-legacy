@@ -13,20 +13,25 @@
  *   retrieves the entry with the smallest distance value
  */
 
+
 #include "gis.h"
-#include "cost.h"
 #include "local_proto.h"
+#include "memory.h"
+#include <stdlib.h>
 
 static struct cost *start_cell = NULL ;
-static int show(struct cost *);
-static int do_quit(float,int,int);
+/*  static int show(struct cost *); */
+static int do_quit(double,int,int);
 
-struct cost *insert(float min_cost,int row,int col)
+struct cost *insert(double min_cost,int row,int col)
 {
 	struct cost *new_cell, *next_cell ;
 
-	new_cell = (struct cost *)(G_malloc(sizeof(struct cost)));
-
+/*  	new_cell = (struct cost *)(G_malloc(sizeof(struct cost))); */
+	new_cell = get();
+	if (new_cell == NULL) {
+			fprintf(stderr,"new_cell is NULL\n");
+}
 	new_cell->min_cost = min_cost;
 	new_cell->row = row;
 	new_cell->col = col;
@@ -71,12 +76,13 @@ struct cost *insert(float min_cost,int row,int col)
 		new_cell->lower = next_cell->lower ;
 		new_cell->above = next_cell ;
 		next_cell->lower = new_cell ;
+
 		return(new_cell) ;
 	}
 }
 
 
-struct cost *find(float min_cost,int row,int col)
+struct cost *find(double min_cost,int row,int col)
 {
 	struct cost *next_cell ;
 
@@ -92,6 +98,8 @@ struct cost *find(float min_cost,int row,int col)
 				next_cell = next_cell->lower ;
 				continue ;
 			}
+			fprintf(stderr, "1 ");
+			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
 		else
@@ -101,12 +109,14 @@ struct cost *find(float min_cost,int row,int col)
 				next_cell = next_cell->higher ;
 				continue ;
 			}
+			fprintf(stderr, "2 ");
+			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
 	}
 }
 
-static int do_quit(float min_cost,int row,int col)
+static int do_quit(double min_cost,int row,int col)
 {
 	fprintf(stderr,"Can't find %d,%d:%f\n", row,col,min_cost) ;
 	show_all() ;
@@ -170,19 +180,19 @@ int delete(struct cost *delete_cell)
 			if (delete_cell->above == NULL) /*   3          */
 			{
 				start_cell = NULL ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 			if (delete_cell->above->higher == delete_cell)
 			{                               /* 1            */
 				delete_cell->above->higher = NULL ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 			else
 			{                               /*  2           */
 				delete_cell->above->lower = NULL ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 		}
@@ -192,21 +202,21 @@ int delete(struct cost *delete_cell)
 			{
 				start_cell = delete_cell->lower ;
 				delete_cell->lower->above = NULL ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 			if (delete_cell->above->higher == delete_cell)
 			{                               /*    4         */
 				delete_cell->above->higher = delete_cell->lower ;
 				delete_cell->lower->above = delete_cell->above ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 			else
 			{                               /*     5        */
 				delete_cell->above->lower = delete_cell->lower ;
 				delete_cell->lower->above = delete_cell->above ;
-				G_free(delete_cell) ;
+				give(delete_cell) ;
 				return 0;
 			}
 		}
@@ -217,21 +227,21 @@ int delete(struct cost *delete_cell)
 		{
 			start_cell = delete_cell->higher ;
 			delete_cell->higher->above = NULL ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		if (delete_cell->above->higher == delete_cell)
 		{                                   /*       7      */
 			delete_cell->above->higher = delete_cell->higher ;
 			delete_cell->higher->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		else
 		{                                   /*        8     */
 			delete_cell->above->lower = delete_cell->higher ;
 			delete_cell->higher->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 	}
@@ -258,7 +268,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->higher->above = delete_cell->lower ;
 			start_cell = delete_cell->lower ;
 			delete_cell->lower->above = NULL ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		if (delete_cell->above->higher == delete_cell)
@@ -267,7 +277,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->higher->above = delete_cell->lower ;
 			delete_cell->above->higher = delete_cell->lower ;
 			delete_cell->lower->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		else
@@ -276,7 +286,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->higher->above = delete_cell->lower ;
 			delete_cell->above->lower = delete_cell->lower ;
 			delete_cell->lower->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 	}
@@ -288,7 +298,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->lower->above = delete_cell->higher ;
 			start_cell = delete_cell->higher ;
 			delete_cell->higher->above = NULL ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		if (delete_cell->above->lower == delete_cell)
@@ -297,7 +307,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->lower->above = delete_cell->higher ;
 			delete_cell->above->lower = delete_cell->higher ;
 			delete_cell->higher->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 		else
@@ -306,7 +316,7 @@ int delete(struct cost *delete_cell)
 			delete_cell->lower->above = delete_cell->higher ;
 			delete_cell->above->higher = delete_cell->higher ;
 			delete_cell->higher->above = delete_cell->above ;
-			G_free(delete_cell) ;
+			give(delete_cell) ;
 			return 0;
 		}
 	}
@@ -337,7 +347,7 @@ int show_all(void)
 	return 0;
 }
 
-static int show(struct cost *next)
+int show(struct cost *next)
 {
 	if(next == NULL)
 		return 0;

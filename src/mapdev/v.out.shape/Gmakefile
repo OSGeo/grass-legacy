@@ -1,0 +1,20 @@
+PGM =	v.out.shape
+
+OBJ =	extract.o\
+	database.o\
+	dbmi.o\
+	private.o\
+	shpopen.o\
+	dbfopen.o\
+	main.o
+
+LIBES=$(VECTLIB) $(DBMILIB) $(GISLIB) $(DIG_ATTLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPDBMILIB) $(DEPGISLIB) $(DEPDIG_ATTLIB)
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPDBMILIB): #

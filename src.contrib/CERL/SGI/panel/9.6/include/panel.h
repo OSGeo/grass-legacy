@@ -45,13 +45,11 @@ int read();
 #define PNL_INIT(x) /* nothing */
 #endif
 
-#if 0
 #ifndef FILE
 #include <stdio.h>
 #endif
 #include <string.h>
 #include <sys/types.h>
-#endif
 
 #ifndef HZ
 #include <sys/param.h>
@@ -836,7 +834,8 @@ PNL_EXTERN Charstruct *pnl_charlisttail PNL_INIT(NULL);
 				0x0f0f, 0x8787, 0xc3c3, 0xe1e1, 	\
 				0xf0f0, 0x7878, 0x3c3c, 0x1e1e, 	\
 				0x0f0f, 0x8787, 0xc3c3, 0xe1e1 }
-#ifdef 0
+/* #ifdef 0 replaced */
+#ifdef PNL_FADE_PATTERN_fine_diagonals
 /* fine diagonals */	      { 0x9999, 0xcccc, 0x6666, 0x3333, 	\
 				0x9999, 0xcccc, 0x6666, 0x3333, 	\
 				0x9999, 0xcccc, 0x6666, 0x3333, 	\

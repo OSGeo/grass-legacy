@@ -1,0 +1,10 @@
+PGM    = r.topmodel
+LIBES  = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
+SRCS   = main.c check_ready.c misc.c file_io.c topmodel.c infiltration.c
+OBJS   = main.o check_ready.o misc.o file_io.o topmodel.o infiltration.o
+
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+

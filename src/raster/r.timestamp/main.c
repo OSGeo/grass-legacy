@@ -2,6 +2,7 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *map, *date;
     struct TimeStamp ts;
     char *name;
@@ -10,6 +11,10 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+	module = G_define_module();
+    module->description =
+		"Print/add/remove a timestamp for a raster map.";
+				        
     map = G_define_option();
     map->key = "map";
     map->required = YES;
@@ -25,7 +30,7 @@ int main (int argc, char *argv[])
     date->description = "datetime, datetime1/datetime2, or none";
 
     if (G_parser(argc,argv))
-	exit(0);
+	exit(1);
 
     name = map->answer;
 
@@ -57,8 +62,14 @@ int main (int argc, char *argv[])
 	G_remove_raster_timestamp(name);
 	exit(0);
     }
+    
+    if(1 == G_scan_timestamp (&ts, date->answer))
+    {
+	G_write_raster_timestamp(name, &ts);
+	exit(0);
+    }
+    else
+ 	G_fatal_error("Invalid timestamp");
 
-    G_scan_timestamp (&ts, date->answer);
-    G_write_raster_timestamp(name, &ts);
-    exit(0);
+    return(1);
 }

@@ -5,7 +5,7 @@ static const char SCCSID[]="@(#)PJ_cea.c	4.1	94/02/15	GIE	REL";
 	double qp; \
 	double *apa;
 #define PJ_LIB__
-# include	<projects.h>
+# include	"projects.h"
 PROJ_HEAD(cea, "Equal Area Cylindrical") "\n\tCyl, Sph&Ell\n\tlat_ts=";
 # define EPS	1e-10
 FORWARD(e_forward); /* spheroid */

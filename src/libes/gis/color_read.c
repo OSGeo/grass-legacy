@@ -22,6 +22,8 @@
  *********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
+#include <string.h>
 
 static int read_colors(char *,char *,char *,struct Colors *);
 static int read_new_colors(FILE *,struct Colors *);
@@ -90,7 +92,7 @@ int G_read_colors (
 	    return 1;
     }
 
-    sprintf(buf,"color support for [%s] in mapset [%s] %s", name, mapset, err);
+    sprintf(buf,_("color support for [%s] in mapset [%s] %s"), name, mapset, err);
     G_warning (buf);
     return -1;
 }

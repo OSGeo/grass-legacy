@@ -1,0 +1,6 @@
+v.distance              Calculates a distance from a point to nearest
+                        line or point in vector layer.
+
+Janne Soimasuo, Finland
+
+1/2002: added vect attribute output as last column (Markus Neteler)

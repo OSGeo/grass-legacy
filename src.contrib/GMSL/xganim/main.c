@@ -1,4 +1,3 @@
-
 /* Written by Bill Brown, USACERL (brown@zorro.cecer.army.mil)
  * May 2-12, 1994
  * Upgraded for floating point grass Oct 1995
@@ -19,13 +18,11 @@
 */
 
 #include <stdio.h>
-#include <math.h>
-#include "gis.h"
-
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include <limits.h>
-
+#include "gis.h"
 #include "gui.h"
 
 #define COLOR_OFFSET 0
@@ -38,21 +35,17 @@
 
 static Boolean do_run();
 void change_label();
-unsigned long _get_lookup_for_color();
 short _get_Xlookup();
 char **gee_wildfiles();
 char *G__mapset_name ();
+void parse_command();
 /*char *strchr();*/
 
 
 
-XColor  *Palcol;
 Widget 	toplevel, mainwin, canvas, flabel; 
 Display *theDisplay;
-Colormap theCmap;
-XVisualInfo theVis;
-XImage *xim;
-unsigned char 	*pic_array[MAXIMAGES];
+XImage *pic_array[MAXIMAGES];
 GC           invertGC, drawGC;
 int nrows, ncols, numviews;
 int MaxColors, Top=0, Left=0;
@@ -64,14 +57,20 @@ float 	vscale, scale;  /* resampling scale factors */
 int 	irows, icols, vrows, vcols;
 int 	frames;
 
-main (argc, argv)
+int depth;
+
+extern Display *dpy;
+extern Window grwin;
+extern int scrn;
+extern Visual *use_visual;
+extern Colormap fixedcmap;
+
+int main (argc, argv)
     int  argc;
     char **argv;
 {
-    int	     	i, j, d;
+    int	     	i, j;
     int       	*sdimp, longdim;
-    char 	dummy, *p, *getenv ();
-    int 	depth;
     unsigned long blackPix, whitePix;
 
     struct gui_data cd;
@@ -91,14 +90,14 @@ main (argc, argv)
     G_gisinit (argv[0]);
     parse_command(argc, argv, vfiles, &numviews, &frames);
 
-/* debug */
-for(i=0; i<numviews; i++){
-    fprintf(stderr,"\nVIEW %d: ", i+1);
-    for(j=0; j< frames; j++){
-	fprintf(stderr,"%s ", vfiles[i][j]);
+    /* debug */
+    for(i=0; i<numviews; i++){
+	fprintf(stderr,"\nVIEW %d: ", i+1);
+	for(j=0; j< frames; j++){
+	    fprintf(stderr,"%s ", vfiles[i][j]);
+	}
     }
-}
-fprintf(stderr,"\n");
+    fprintf(stderr,"\n");
 
     vrows = G_window_rows();
     vcols = G_window_cols();
@@ -170,41 +169,6 @@ fprintf(stderr,"\n");
     cd.direction = 1;
     cd.shownames = 1;
 
-
-#ifdef DEBUG
-{  
-XVisualInfo *Vi;
-int vir, c;
-
-Vi = XGetVisualInfo(XtDisplay(toplevel), 0, NULL, &vir);
-for(c=0; c<vir; c++)
-fprintf(stderr,"%d\n", Vi[c].depth);
-
-XFree(Vi);
-
-}
-#endif
-
-    
-/*  Need to figure out XCreateImage & storage first
-    if (XMatchVisualInfo(theDisplay, DefaultScreen(theDisplay), 
-	    12, PseudoColor, &theVis)){
-	MaxColors = 4096;
-	depth = 12;
-    }
-*/
-
-    if (!XMatchVisualInfo(theDisplay, DefaultScreen(theDisplay), 
-	    8, PseudoColor, &theVis)){
-	    fprintf(stderr,"Can't get required 8-bit visual.\n");
-	    exit(0);
-    }
-    else{
-	MaxColors = 256;
-	depth = 8;
-    }
-
-
     n=0;
     XtSetArg(wargs[n],XmNtopAttachment,XmATTACH_FORM); n++;
     XtSetArg(wargs[n],XmNleftAttachment,XmATTACH_FORM); n++;
@@ -245,20 +209,27 @@ XFree(Vi);
     XtRealizeWidget(toplevel);
     set_buttons_pixmap(theDisplay, XtWindow(canvas));
 
-    if(NULL == (Palcol = (XColor *)malloc(MaxColors*sizeof(XColor)))){
-	fprintf(stderr, "Unable to allocate memory for colors\n");
-	exit(0);
-    }
+    /**************************************************************/
 
-    theCmap = XCreateColormap(theDisplay, XtWindow(canvas), 
-	    theVis.visual, AllocNone);
+    dpy = XtDisplay(canvas);
+    grwin = XtWindow(canvas);
+    scrn = DefaultScreen(dpy);
+    use_visual = DefaultVisual(dpy, scrn);
+#if 1
+    fixedcmap = XCreateColormap(dpy, grwin,
+				use_visual, AllocNone);
+#else
+    fixedcmap = DefaultColormap(dpy, scrn);
+#endif
+    fixedcmap = InitColorTableFixed(fixedcmap);
 
-    Color_table_fixed(MaxColors);
+    XtVaGetValues(canvas, XmNdepth, &depth, NULL);
 
-    XSetWindowColormap(theDisplay, XtWindow(canvas), theCmap);
-    XtVaSetValues(toplevel, XmNcolormap, theCmap, NULL);
+    XtVaSetValues(toplevel, XmNcolormap, fixedcmap, NULL);
+    XtSetWMColormapWindows(toplevel, &canvas, 1);
 
-    {
+    /**************************************************************/
+
     blackPix = _get_lookup_for_color(0, 0, 0);
     whitePix = _get_lookup_for_color(255, 255, 255);
 
@@ -272,46 +243,37 @@ XFree(Vi);
     XSetForeground(theDisplay, invertGC, whitePix);
     XSetBackground(theDisplay, invertGC, blackPix);
 
-    }
-
-    xim = XCreateImage(theDisplay, 
-		    theVis.visual, 8, ZPixmap, 0, &dummy, 
-		    ncols, nrows, 8, 0);
-
 
     for(j=0; j<MAXIMAGES; j++)
 	sprintf(frame[j],"%2d",j+1);
     
    
-  while(1) { /* wait for window */
-    XEvent      xev;
+    while(1) { /* wait for window */
+	XEvent      xev;
 
-    XNextEvent(theDisplay, &xev);
-    if(xev.type == MapNotify && xev.xmap.event == XtWindow(mainwin))
-      break;
-  }
-
-    {
+	XNextEvent(theDisplay, &xev);
+	if(xev.type == MapNotify && xev.xmap.event == XtWindow(mainwin))
+	    break;
+    }
 
     XtAppAddWorkProc(AppC, do_run, &cd);
     XtAppMainLoop(AppC);
 
-    }
-
+    return 0;
 }
 
-load_files()
+int load_files()
 {
 CELL 	*cell;
 FCELL 	*fcell;
 DCELL 	*dcell;
 void    *voidc;
-char	*tr, *tg, *tb, *tset;
+unsigned char	*tr, *tg, *tb, *tset;
 int     tsiz, coff;
 register int rowoff, row, col, vxoff, vyoff;
 int 	cnt, ret, fd;
 int	vnum;
-unsigned char  *pa;
+XImage  *pa;
 char	*mapset, name[BUFSIZ];
 struct Colors colors;
 int     rtype;
@@ -322,19 +284,19 @@ int     rtype;
      
     tsiz = G_window_cols();
 
-    if(NULL == (tr = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tr = malloc(tsiz * sizeof(char)))){
 	fprintf(stderr,"Unable to malloc.\n");
 	exit (0);
     }
-    if(NULL == (tg = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tg = malloc(tsiz * sizeof(char)))){
 	fprintf(stderr,"Unable to malloc.\n");
 	exit (0);
     }
-    if(NULL == (tb = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tb = malloc(tsiz * sizeof(char)))){
 	fprintf(stderr,"Unable to malloc.\n");
 	exit (0);
     }
-    if(NULL == (tset = (char *)malloc(tsiz * sizeof(char)))){
+    if(NULL == (tset = malloc(tsiz * sizeof(char)))){
 	fprintf(stderr,"Unable to malloc.\n");
 	exit (0);
     }
@@ -347,12 +309,11 @@ int     rtype;
 	    cnt--;
 	    break;
 	}
-	if(NULL == (pic_array[cnt] = (unsigned char *)malloc
-		     (nrows*ncols*sizeof(unsigned char)))){
-		fprintf(stderr,"Can't malloc memory for imagebuffer\n");
-		exit(1);
-	}
-	pa = pic_array[cnt];
+
+	pa = XCreateImage(theDisplay, use_visual, depth, ZPixmap,
+			  0, NULL,  ncols, nrows, 8, 0);
+	pa->data = G_malloc(nrows * pa->bytes_per_line);
+	pic_array[cnt] = pa;
 
 	for(vnum = 0; vnum < numviews; vnum++){
 	    if(icols == vcols){
@@ -421,19 +382,19 @@ int     rtype;
 		for (col = 0; col < vcols; col++){
 		    coff= (int)(col/vscale);
 		    if(!tset[coff])
-			tr[coff] = tg[coff] = tb[coff] = 255;	
-		    pa[rowoff + col + vxoff] = (unsigned char) 
-				   _get_lookup_for_color(tr[coff],
-							 tg[coff],tb[coff]);
+			tr[coff] = tg[coff] = tb[coff] = 255;
+		    XPutPixel(pa, vxoff+col, vyoff+row,
+			      _get_lookup_for_color(tr[coff],
+						    tg[coff],
+						    tb[coff]));
 		}
 	    }
 
 	    G_close_cell(fd);
 	}
 
-	xim->data = (char *)pic_array[cnt];
-	XPutImage(theDisplay, XtWindow(canvas), drawGC, xim, 0, 0, 
-		    Left, Top, ncols, nrows);
+	XPutImage(theDisplay, XtWindow(canvas), drawGC, pa, 0, 0, 
+		  Left, Top, ncols, nrows);
 	change_label(flabel, frame[cnt]);
 
     }
@@ -500,8 +461,7 @@ Drawable dr;
 	}
 
 	dr = XtWindow(canvas);
-	xim->data = (char *)pic_array[cd->curframe];
-	XPutImage(theDisplay, dr, drawGC, xim, 0, 0, 
+	XPutImage(theDisplay, dr, drawGC, pic_array[cd->curframe], 0, 0, 
 		    Left, Top, ncols, nrows);
 	/* draw labels */
 	if(cd->shownames == 1)
@@ -532,92 +492,6 @@ Drawable dr;
 
     return False; /* to keep it running */
 }
-
-
-/* ###################################################### */
-
-static int n_levels = 0 ;
-static int Red[256], Grn[256], Blu[256] ;
-
-
-Color_table_fixed(n_colors)
-	int n_colors;
-
-{
-	float 	span ;
-	int 	r, g, b ;
-	short 	R, G, B ;
-	int 	i ;
-	int 	n_levels_sq = 0 ;
-
-
-/* figure out how many equal levels of r, g, and b are possible with the
- * available colors */
-	if (n_levels == 0)
-	{
-	    for(n_levels=0; n_levels*n_levels*n_levels <= n_colors; n_levels++);
-	    n_levels-- ;
-	    n_levels_sq = n_levels * n_levels;
-	
-	    /* Create easy lookup for _get_look_for_color() */
-	    for(i=0; i<256; i++)
-	    {
-		 Red[i] = (int)((i / 256.0) * n_levels) * n_levels_sq;
-		 Grn[i] = (int)((i / 256.0) * n_levels) * n_levels;
-		 Blu[i] = (int)((i / 256.0) * n_levels);
-	    }
-	}
-
-/* Generate "fixed" color table */
-	span = 255.0 / (float)n_levels ;
-	i = 0 ;
-
-	for(r=0; r<n_levels; r++)
-	{
-		R = (int)(r * span) ;
-		for(g=0; g<n_levels; g++)
-		{
-			G = (int)(g * span) ;
-			for(b=0; b<n_levels; b++)
-			{
-				B = (int)(b * span) ;
-				reset_color(i++, R, G, B) ;
-			}
-		}
-	}
-        return(0) ;
-}
-
-/*
- * The systems color represented by "number" is set using the color component
- * intensities found in the "red", "grn", and "blu" variables.  A value of
- * 0 represents 0 intensity; a value of 255 represents 100% intensity.
- */
-
-reset_color(number, red, grn, blu)
-	int number ;
-	unsigned char red, grn, blu ;
-{
-int ret;
-
-    Palcol[number].flags = DoRed | DoGreen | DoBlue;
-    Palcol[number].red = (unsigned short)red << 8;
-    Palcol[number].green = (unsigned short)grn << 8;
-    Palcol[number].blue = (unsigned short)blu << 8;
-    ret = XAllocColor(theDisplay, theCmap, &(Palcol[number]));
-    if(!ret)
-	fprintf(stderr,"FAILED Colorindex: %d (%d %d %d)\n", 
-			number, red, grn, blu);
-}
-
-
-unsigned long _get_lookup_for_color(red, grn, blu)
-	int red, grn, blu ;
-{
-	return( Palcol[Red[red] + Grn[grn] + Blu[blu]].pixel ) ;
-}
-
-
 
 /* ###################################################### */
 char **gee_wildfiles(wildarg, element, num)
@@ -686,7 +560,7 @@ XmString xmstr;
 }
 
 /********************************************************************/
-parse_command(argc, argv, vfiles, numviews, numframes)
+void parse_command(argc, argv, vfiles, numviews, numframes)
 int argc;
 char *argv[];
 char *vfiles[MAXVIEWS][MAXIMAGES];

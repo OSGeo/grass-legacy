@@ -1,0 +1,42 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<H3>NVIZ - What's Here</H3>
+</A> <P>
+
+The <A HREF="#WhatsP">What's Here</A> panel operates like the
+<strong>GRASS</em></strong> program <em>d.what.rast</em></strong>, you
+use the mouse to mark spots on the surface that you would like more
+information about.  After clicking on the surface, data prints to the
+text box in the panel.  First, the name of the surface clicked on is
+printed then the geographical coordinates.  Next, elevation is
+bi-linearly interpolated from the current polygon resolution and this
+is printed (setting the resolution to 1 will produce the most accurate
+elevation). xy distance from previous and xyz distance from previous
+are straight line distances, whereas distance along surface and
+distance along exag surface are computed as the length of a path
+draped across the surface.  Each time you select a point, a marker is
+drawn on the surface at the point selected with a line connecting it
+to the previous point.  To stop selecting points toggle the
+<strong>What's here?</em></strong> button.  <p>
+
+<H3>
+<IMG SRC="nvimg/panel/whats.gif"> <A NAME="WhatsP">What's Here Panel</A>
+</H3> <P>
+
+<strong>Separate</em></strong> places a separating line at current
+text position.  <p>
+
+<strong>Clear</em></strong> clears text window.  <p>
+
+</BODY>
+</HTML>

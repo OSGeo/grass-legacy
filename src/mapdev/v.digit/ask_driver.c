@@ -4,6 +4,7 @@
 #include "keyboard.h"
 #include "libtrans.h"
 #include "local_proto.h"
+#include "glocale.h"
 /*
 *  Functions to ask user questions and if possible use the digitizer cursor for
 *  input.
@@ -44,15 +45,15 @@ int ask_driver_yes_no (char *quest)
     first_button = D_start_button() ;
 
 #ifdef USE_KEYS
-    _Write_info(1, "  USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT");
+    _Write_info(1, _("  USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT"));
 #else
     if (D_cursor_buttons() < 5)
-        _Write_info(1, "  USE KEYBOARD FOR INPUT");
+        _Write_info(1, _("  USE KEYBOARD FOR INPUT"));
     else
-	_Write_info(1, "  USE DIGITIZER CURSOR FOR INPUT");
+	_Write_info(1, _("  USE DIGITIZER CURSOR FOR INPUT"));
 #endif
 
-    sprintf( buf, "Key '%d' for YES   :   Key '%d' for NO",
+    sprintf( buf, _("Key '%d' for YES   :   Key '%d' for NO"),
 	first_button, first_button+1);
     _Write_info(2, buf);
 

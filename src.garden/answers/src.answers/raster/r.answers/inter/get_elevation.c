@@ -79,11 +79,11 @@ get_elevation()
             hit_return();
             G_clear_screen();
         }
-	fprintf (stdout,"%s\n", intro[i]);
+	fprintf (stderr,"%s\n", intro[i]);
     }
 
     if (complete[4] > 0)
-        fprintf (stdout,"This step has been previously completed.\n\n");
+        fprintf (stderr,"This step has been previously completed.\n\n");
 
     if ((slope_mapset) && (slope_layer[0] != 0))
     {
@@ -108,7 +108,7 @@ get_elevation()
 
     if ((aspect_mapset) && (aspect_layer[0] != 0))
     {
-        fprintf (stdout,"\n\n");
+        fprintf (stderr,"\n\n");
         sprintf(line, "Use the raster map %s in %s for ASPECT?",
         aspect_layer, aspect_mapset);
         if(G_yes(line, 1)) 

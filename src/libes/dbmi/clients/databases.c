@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -11,7 +12,8 @@ struct {
 	int l;
 } parms;
 
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle *handles;
@@ -47,11 +49,12 @@ parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *location;
     struct Flag *l;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->required 	= YES;
+    driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
     driver->description = "driver name";
 
     location 		= G_define_option();
@@ -64,10 +67,17 @@ parse_command_line(argc, argv) char *argv[];
     l 			= G_define_flag();
     l->key 		= 'l';
     l->description	= "output database location also";
-
+    
     G_disable_interactive();
-    if (G_parser(argc, argv))
-	exit(ERROR);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all databases for a given driver.";
+
+    if (argc > 1) {
+	if (G_parser(argc, argv)) exit(ERROR);
+    }
 
     parms.driver     = driver->answer;
     parms.l          = l->answer;

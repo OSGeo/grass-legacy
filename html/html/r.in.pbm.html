@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>r.in.pbm</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><B>r.in.pbm</B></EM> - Converts a PBM image file to a GRASS raster file.
+
+<BR>
+
+<EM>(GRASS Raster Data Import Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.pbm</B> [<B>-v</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+This program converts a PBM raster file to a GRASS raster map.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-v</B>
+<DD>Verbose mode.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing PBM raster file to be imported. 
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant raster map layer. 
+
+</DL>
+
+<P>
+
+The user should adjust boundary coordinates stored in the cell header
+after import using <EM>r.support</EM> or <EM>r.region</EM>.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.in.pgm.html">r.in.pgm</A></EM><BR>
+<EM><A HREF="r.in.ppm.html">r.in.ppm</A></EM><BR>
+<EM><A HREF="r.support.html">r.support</A></EM><BR>
+<EM><A HREF="r.region.html">r.region</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Glynn Clements
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -12,6 +12,7 @@
  *
  ****************************************************************/
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include <fcntl.h>
@@ -34,22 +35,30 @@ int
 main (int argc, char *argv[])
 {
 	int row_viewpt,col_viewpt,nrows,ncols,a,b,row,patt_flag;
-	int  segment_no,flip,xmax,ymax,sign_on_y,sign_on_x;
+	int segment_no,flip,xmax,ymax,sign_on_y,sign_on_x;
 	int submatrix_rows,submatrix_cols,lenth_data_item;
-	int new,old,patt=0,in_fd,out_fd,patt_fd=0;
+	int patt=0,in_fd,out_fd,patt_fd=0;
+	double old, new;
 	double slope_1,slope_2,max_vert_angle=0.0,color_factor;
 	char *old_mapset,*patt_mapset=NULL;
-	CELL *value;
+	FCELL *value;
 	char *search_mapset, *current_mapset;
 	char *in_name, *out_name, *patt_name=NULL;
 	struct Categories cats;
 	struct Cell_head cellhd_elev, cellhd_patt;
 	extern struct Cell_head window;
 	char buf[1024];
-	CELL *cell, data, viewpt_elev;
+	FCELL *cell, data, viewpt_elev;
 	SEGMENT seg_in, seg_out, seg_patt;
 	struct point *heads[16],*SEARCH_PT;
+	struct GModule *module;
 	struct Option *opt1,*opt2,*opt3,*opt5,*opt6,*opt7;
+
+	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Line-of-sight raster analysis program.";
 
 	/* Define the different options */
 
@@ -92,11 +101,9 @@ main (int argc, char *argv[])
 	opt6->key        = "max_dist";
 	opt6->type       = TYPE_DOUBLE;
 	opt6->required   = NO;
-	opt6->answer     = "100";
+	opt6->answer     = "1000";
 	opt6->options    = "0-99999" ;
 	opt6->description= "Max distance from the viewing point (meters)" ;
-
-	G_gisinit (argv[0]);
 
 	if (G_parser(argc, argv))
 		exit (-1);
@@ -119,7 +126,15 @@ main (int argc, char *argv[])
     else
         patt_flag=1;
 
-
+/* Make sure that the current projection is not lat/long */
+    if ((G_projection() == 3))
+        {
+          char msg[256];
+          sprintf(msg,"lat/long databases not (yet) supported.");
+          G_fatal_error (msg);
+          exit(1);
+        }
+                                                
     /* check if specified observer location inside window   */
     if(east<window.west || east>window.east
         || north>window.north || north<window.south)
@@ -195,7 +210,7 @@ main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 	/*  allocate buffer space for row-io to layer		*/
-	cell = G_allocate_cell_buf();
+	cell = G_allocate_raster_buf(FCELL_TYPE);
 	/*	open elevation overlay file for reading		*/
 	old = G_open_cell_old (elev_layer, old_mapset);
 	if (old < 0)
@@ -206,8 +221,9 @@ main (int argc, char *argv[])
 		G_fatal_error (buf);
 		exit(1);
 	}
+	
 	/*	open cell layer for writing output 		*/
-	new = G_open_cell_new (out_layer);
+	new = G_open_raster_new (out_layer,FCELL_TYPE);
 	if (new < 0)
 	{
 		sprintf(buf, "%s - can't create cell file", out_layer);
@@ -230,7 +246,7 @@ main (int argc, char *argv[])
 	}
 
 	/*	parameters for map submatrices			*/
-	lenth_data_item = sizeof(CELL);
+	lenth_data_item = sizeof(FCELL);
 	submatrix_rows = nrows/4 + 1;
 	submatrix_cols = ncols/4 + 1;
 	/* create segmented format files for elevation layer,	*/
@@ -264,14 +280,14 @@ main (int argc, char *argv[])
 		segment_init(&seg_patt,patt_fd,4);
 		for(row = 0; row < nrows; row++)
 		{
-			if (G_get_map_row (patt,cell,row) < 0)
+			if (G_get_raster_row (patt,cell,row,FCELL_TYPE) < 0)
 				exit(1);
 			segment_put_row(&seg_patt,cell,row);
 		}
 	}
 	for(row = 0; row < nrows; row++)
 	{
-		if (G_get_map_row (old,cell,row) < 0)
+		if (G_get_raster_row (old,cell,row,FCELL_TYPE) < 0)
 			exit(1);
 		segment_put_row(&seg_in,cell,row);
 	}
@@ -284,6 +300,7 @@ main (int argc, char *argv[])
 	viewpt_elev += obs_elev;
 	/*	DO LOS ANALYSIS FOR SIXTEEN SEGMENTS		*/
 	for(segment_no=1;segment_no<=16;segment_no++){
+		G_percent(segment_no, 16, 5);
 		sign_on_y= 1- (segment_no-1)/8 * 2;
 		if(segment_no>4 && segment_no<13)
 			sign_on_x= -1; 
@@ -357,13 +374,9 @@ main (int argc, char *argv[])
 		int col ;
 		segment_get_row(&seg_out,cell,row);
 		for (col=0; col < ncols; col++)
-		{
-			if (cell[col] == 1) cell[col] = 0;
-		}
-		if(G_put_map_row(new,cell) < 0)
-		{
+		    if (cell[col] == 1) G_set_null_value(&cell[col], 1, FCELL_TYPE);
+		if(G_put_raster_row(new, cell, FCELL_TYPE) < 0)
 			exit(1);
-		}
 	}
 	segment_release(&seg_in);	/* release memory	*/
 	segment_release(&seg_out);

@@ -4,7 +4,11 @@
 #include "dig_atts.h"
 #include "local_proto.h"
 
-static int intcompare (int *, int *);
+static int intcompare (const void *ii, const void *jj)
+{
+  const int *i = ii, *j = jj;
+  return (*i - *j);
+}
 
 void write_cats_att (FILE *fd_att, FILE *fd_cats, int n, int verbose)
 {
@@ -53,9 +57,4 @@ void write_cats_att (FILE *fd_att, FILE *fd_cats, int n, int verbose)
   if (verbose)
     G_percent (1, 1, 2);
 
-}
-
-static int intcompare (int *i, int *j)
-{
-  return (*i - *j);
 }

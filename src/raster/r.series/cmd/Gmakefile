@@ -1,0 +1,22 @@
+PGM = r.series
+
+METHODS = \
+	c_ave.o \
+	c_max.o \
+	c_min.o \
+	c_mode.o \
+	c_median.o \
+	c_stddev.o \
+	c_sum.o \
+	c_var.o \
+	c_divr.o
+
+LIST = main.o sort_cell.o $(METHODS)
+
+$(BIN_CMD)/$(PGM):  $(LIST) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+main.o:		local_proto.h
+$(METHODS):	local_proto.h
+
+$(DEPGISLIB): #

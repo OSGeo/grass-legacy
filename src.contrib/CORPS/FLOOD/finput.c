@@ -37,7 +37,7 @@ int      nsecno;
 int      nxsect;
 int      max_secno;
 
-int      truncate;
+int      itruncate;
 int      splitflow;
 FILE    *hec2_fid;
 FILE    *split_fid;
@@ -306,7 +306,7 @@ cl_parse( argc, argv )
    /* get the command line answers */
    /*------------------------------*/
    splitflow = flag.split->answer;
-   truncate  = !(flag.extend->answer);
+   itruncate  = !(flag.extend->answer);
    if ( sort != IGNORE )
       sort = check_sort( parm.sort->answer );
 
@@ -523,7 +523,7 @@ int load_data( heading )
       /* Load next cross section id */
       /*----------------------------*/
       get_value( buffer, &xsectid, secno_col );
-      if ( truncate )
+      if ( itruncate )
          secno_val[nsecno] = (double)((long)xsectid);
       else
          secno_val[nsecno] = xsectid * 1000;
@@ -606,7 +606,7 @@ int load_split( heading )
       /* Look at next cross section id */
       /*-------------------------------*/
       get_value( buffer, &xsectid, secno_col );
-      if ( truncate )
+      if ( itruncate )
          xsectid = (double)((long)xsectid);
       else
          xsectid *= 1000;
@@ -775,7 +775,7 @@ ctrl_events( mapset )
    /* that's because it may have already been set to IGNORE */
    /*-------------------------------------------------------*/
    splitflow = FALSE;
-   truncate  = TRUE;
+   itruncate  = TRUE;
 
    /*------------------------------*/
    /* Check for special conditions */
@@ -824,11 +824,11 @@ ctrl_events( mapset )
          {
             if( answer[0] == 'Y'  ||  answer[0] == 'y' )
             {
-               truncate = TRUE;
+               itruncate = TRUE;
                fprintf (stdout, "    NOTE: HEC-2 secno's will be truncated.\n" );
             }
             else if( answer[0] == 'N'  ||  answer[0] == 'n' )
-               truncate = FALSE;
+               itruncate = FALSE;
          }
 
          /*-------------------------*/
@@ -900,7 +900,7 @@ ask_events()
    /*-----------------------------------------------------------------*/
    /* See if the HEC2 secno's should be truncated to match vector map */
    /*-----------------------------------------------------------------*/
-   truncate = ask_yesno("    Truncate HEC-2 secno's?");
+   itruncate = ask_yesno("    Truncate HEC-2 secno's?");
 
    return( count );
 }

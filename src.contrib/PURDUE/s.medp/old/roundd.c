@@ -1,4 +1,5 @@
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 /*-test program
 main()
@@ -14,7 +15,6 @@ double roundd (d, i)
   int i;
 {
   char str[128];
-  double atof ();
 
   sprintf (str, "%.*f%c", i, d, NULL);
   return atof (str);

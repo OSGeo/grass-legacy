@@ -61,8 +61,7 @@ write_rast (
         for(col = 0; col < ncols; col++)
             *(row_out + col) = (DCELL) (*(data[0] + row*nn + col) * 100000);
         
-        /*G_put_map_row(fd_out,row_out);*/
-        G_put_d_raster_row(fd_out, (DCELL *)row_out); 
+        G_put_raster_row(fd_out, (DCELL *)row_out, DCELL_TYPE); 
     }
 
     G_close_cell(fd_out);

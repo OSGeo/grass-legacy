@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	}
 	if (G_is_reclass (name, G_mapset(), rname, rmapset) > 0)
 	{
-	    fprintf (stdout,"[%s] is a reclass file - can't compress/uncompress it\n", name);
+	    fprintf (stdout,"[%s] is a reclass file of map <%s> in mapset <%s> - can't compress/uncompress it\n", name, rname, rmapset);
 	    continue;
 	}
 	uncompressed = !cellhd.compressed;

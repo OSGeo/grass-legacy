@@ -1,0 +1,28 @@
+1. How to install the GRASS/Postgres ( aka pg_grass) interface modules.
+
+
+These instructions are applicable on the new style 'make install' GRASS
+compilation and installation. It is supposed you have successfully compiled
+and installed the core modules and libraries of GRASS.
+
+
+A. First, make sure Postgres libpq libraries and headers are installed in
+your system. Check them up in /usr/local/pgsql/. As for the version of 
+Postgres, these modules were tested with Postgres 6.5.2. Do not forget, 
+to access the database in pgsql you need to have appropriate permissions 
+in pg_hba.conf, and BE a user of postgres (with the same name as of GRASS). 
+As rule, postgres does not allow root to be a user, so if root holds 
+PERMANENT folders on your GRASS server, change to a user account to work 
+with pg_grass modules.
+
+B. Compile NVIZ
+
+C. Use it...
+For those being interested in starting with PostgreSQL and                      
+GRASS may try our small "tutorial":                                             
+                                                                                
+http://www.geog.uni-hannover.de/grass/projects/postgresqlgrass/first-steps.txt  
+ 
+/*
+                        alex shevlakov sixote@yahoo.com
+*/

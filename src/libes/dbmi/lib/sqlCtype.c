@@ -1,6 +1,6 @@
 #include "dbmi.h"
 
-db_sqltype_to_Ctype(sqltype)
+int db_sqltype_to_Ctype(sqltype)
     int sqltype;
 {	
     switch (sqltype)

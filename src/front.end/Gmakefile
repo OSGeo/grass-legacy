@@ -1,4 +1,4 @@
-$(ETC)/front.end: main.o $(GISLIB)
+$(ETC)/front.end: main.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

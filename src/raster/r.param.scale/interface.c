@@ -3,15 +3,15 @@
 /***       Function to get input from user and check files can be opened       ***/
 /***  									       ***/
 /***         Jo Wood, Department of Geography, V1.2, 7th February 1992         ***/
+/***				$Id$					       ***/
 /*********************************************************************************/
+
+#include <stdlib.h>
+#include <string.h>
 
 #include "param.h"
 
-interface(argc,argv) 
-
-    int	     argc;			/* Number of command line arguments.	*/
-    char    *argv[];			/* Contents of command line arguments.	*/
-
+void interface(int argc, char **argv) 
 {
     /*--------------------------------------------------------------------------*/
     /*                                 INITIALISE				*/
@@ -28,14 +28,22 @@ interface(argc,argv)
 
     struct Flag		*constr;	/* Forces quadratic through the central	*/
 					/* cell of local window if selected.	*/
+    struct GModule      *module;	/* GRASS module description */
+    char buf[128];
 
     G_gisinit (argv[0]);                /* GRASS function which MUST be called	*/
                                       	/* first to check for valid database 	*/
 					/* and mapset and prompt user for input.*/
 
+
     /*--------------------------------------------------------------------------*/
     /*                            SET PARSER OPTIONS 				*/
     /*--------------------------------------------------------------------------*/
+
+    module = G_define_module();
+    module->description =
+      "Extracts terrain parameters from a DEM. Uses a multi-scalar approach"
+      " by taking fitting quadratic parameters to any size window (via least squares)";
 
     rast_in   = G_define_option();	/* Request memory for each option.	*/
     rast_out  = G_define_option();
@@ -72,16 +80,17 @@ interface(argc,argv)
     tol2_val->description = "Curvature tolerance that defines `planar' surface";
     tol2_val->type	  = TYPE_DOUBLE;
     tol2_val->required	  = NO;
-    tol2_val->answer	  = "1.0";
+    tol2_val->answer	  = "0.0001";
 
+    sprintf(buf, "Size of processing window (odd number only, max: %i)", MAX_WSIZE);
     win_size->key	  = "size";
-    win_size->description = "Size of processing window (odd number only)";
+    win_size->description = buf;
     win_size->type	  = TYPE_INTEGER;
     win_size->required	  = NO;
     win_size->answer	  = "3";
 
     parameter->key	  = "param";
-    parameter->description= "Morphometric parameter to calculate";
+    parameter->description= "Morphometric parameter in 'size' window to calculate";
     parameter->type	  = TYPE_STRING;
     parameter->required	  = NO;
     parameter->options	  = "elev,slope,aspect,profc,planc,longc,crosc,minic,maxic,feature";
@@ -175,7 +184,7 @@ interface(argc,argv)
 
     mapset_out = G_mapset();		/* Set output to current mapset.	*/
 
-    if (G_legal_filename(rast_out_name)==NULL)
+    if (!G_legal_filename(rast_out_name))
     {
         char err[256];
         sprintf(err,"Illegal file name. Please try another.");
@@ -183,12 +192,15 @@ interface(argc,argv)
     }
     else
     {
-        if (G_find_cell2(rast_out_name,mapset_out) !=NULL)
+
+ /* commented for overall consistency */
+ /*       if (G_find_cell2(rast_out_name,mapset_out) !=NULL)
         {
             char err[256];
             sprintf(err,"Raster map [%s] exists.\nPlease try another\n",rast_out_name);
             G_fatal_error(err);
         }
+  */
     }
 
     /*--------------------------------------------------------------------------*/

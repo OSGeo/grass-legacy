@@ -4,7 +4,7 @@
 */
 
 #include <unistd.h>
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 int compress (struct Map_info *map, int tell)

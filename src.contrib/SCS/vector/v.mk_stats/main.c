@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* main.vect    1.0   4/01/91
 *
 *    Input arguements:
@@ -19,17 +18,22 @@
 
 int 
 main (int argc, char *argv[])
-
 {
     int names=1, talk=0, out=0;
     char buffr[100], dotfile[100], *mapset;
     char input[128];
     struct Option *mapopt;
     struct Flag *v_flag, *n_flag, *s_flag;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Generates statistics for vector files.";
      
-		 /* set up the options and flags for the command line parser */
+    /* set up the options and flags for the command line parser */
 
     mapopt = G_define_option();
     mapopt->key             = "map";

@@ -1,8 +1,8 @@
-#include	<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
-#include	"Vect.h"
-#include	"gis.h"
-#include	"dig_structs.h"
+#include "Vect.h"
+#include "gis.h"
 #include "vbuildlib.h"
 
 #define		DIG_DIR		"dig"
@@ -36,7 +36,7 @@ open_dig_files (char *name, FILE **fp_plus, struct Map_info *Map, struct Plus_he
     /* Kids, don't try this at home. */
     if (0 > V2__init_for_create_plus (Map, name))
 	{
-		G_fatal_error ("Cannot open input file");
+		G_fatal_error ("Cannot open input file <%s> in mapset <%s> (map doesn't exist or no write permission)", name, mapset);
 	}
 
 

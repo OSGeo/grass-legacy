@@ -116,6 +116,9 @@ struct SigSet
 
 #define SIGNATURE_TYPE_MIXED 1
 
+#define GROUPFILE "CURGROUP"
+#define SUBGROUPFILE "CURSUBGROUP"
+
 #include "imagedefs.h"
 
 #endif

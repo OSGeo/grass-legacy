@@ -1,0 +1,12 @@
+Contents
+
+ - elev4.tga is a file created by r.out.pov
+ - grass.pov is the command file for POVRAY (Persistence of Vision Raytracer)
+     -> configure for your purposes
+
+Use povray like this:
+ 
+  povray.x -Igrass.pov
+
+The result will be a data.tga file. Display it with xv or other 
+image programs.

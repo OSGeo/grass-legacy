@@ -79,7 +79,7 @@
 Program
     :    { init(); }
       Script { 
-                 check_table(&yyparse_return,verbose);
+                 check_table(&table,verbose);
                  if ( verbose ) fprintf(stderr,"\nAll input parsed.\n");
                  return(-1);
              };

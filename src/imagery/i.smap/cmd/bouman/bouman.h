@@ -62,7 +62,7 @@ int read_signatures(struct parms *, struct SigSet *);
 /* labels.c */
 int create_output_labels(struct SigSet *, struct files *);
 /* write_img.c */
-int write_img(CELL **, int, int, struct SigSet *, struct parms *, struct files *);
+int write_img(unsigned char **, int, int, struct SigSet *, struct parms *, struct files *);
 #endif
 
 /*  Look for prototypes that use the Region structure in region.h */

@@ -1,0 +1,371 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: getAllOpts.c:101 getSopts.c:102 plotCat.c:39
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:33+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:20
+msgid " where "
+msgstr ""
+
+#: buildPg.c:23
+#, c-format
+msgid "SELECT Distinct %s from %s %s %s and %s is not null"
+msgstr ""
+
+#: buildPg.c:28
+#, c-format
+msgid "SELECT Distinct %s from %s where %s is not null"
+msgstr ""
+
+#: getAllOpts.c:20 getSopts.c:31
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:21 getSopts.c:33
+msgid "old,dig,vector"
+msgstr ""
+
+#: getAllOpts.c:25
+msgid "Vector map:"
+msgstr ""
+
+#: getAllOpts.c:28 getSopts.c:39
+msgid "type"
+msgstr ""
+
+#: getAllOpts.c:32 getSopts.c:43
+msgid "area,line"
+msgstr ""
+
+#: getAllOpts.c:33 getSopts.c:44
+msgid "Select area or line."
+msgstr ""
+
+#: getAllOpts.c:36
+msgid "key"
+msgstr ""
+
+#: getAllOpts.c:40
+msgid "Column with category IDs from the table:"
+msgstr ""
+
+#: getAllOpts.c:44
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:48
+msgid "Table containing this column:"
+msgstr ""
+
+#: getAllOpts.c:51
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:55
+msgid "Query clause (e.g. obj='paved'):"
+msgstr ""
+
+#: getAllOpts.c:58 getSopts.c:55
+msgid "color"
+msgstr ""
+
+#: getAllOpts.c:62
+msgid "Color to draw selected vectors:"
+msgstr ""
+
+#: getAllOpts.c:67 getSopts.c:63
+msgid "Fill polygons"
+msgstr ""
+
+#: getAllOpts.c:71
+msgid "Without reference table, i.e., all vectors"
+msgstr ""
+
+#: getAllOpts.c:75 getSopts.c:67
+msgid "Verbose mode"
+msgstr ""
+
+#: getAllOpts.c:79 getSopts.c:71
+msgid "Create and populate PostGIS table instead"
+msgstr ""
+
+#: getAllOpts.c:85
+msgid "v.to.pg -s help"
+msgstr ""
+
+#: getAllOpts.c:90 getSopts.c:90
+msgid "white"
+msgstr ""
+
+#: getAllOpts.c:101 getSopts.c:102
+msgid "dig"
+msgstr ""
+
+#: getAllOpts.c:102
+#, c-format
+msgid "Vector map %s not found.\n"
+msgstr ""
+
+#: getSopts.c:28
+msgid "Use [s] flag to select db records using an input file."
+msgstr ""
+
+#: getSopts.c:36
+msgid "Name of existing vector file."
+msgstr ""
+
+#: getSopts.c:47
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:48
+msgid "file"
+msgstr ""
+
+#: getSopts.c:52
+msgid "SQL statements specifying selection criteria. "
+msgstr ""
+
+#: getSopts.c:59
+msgid "Color for vector draw."
+msgstr ""
+
+#: getSopts.c:77 getSopts.c:78
+msgid "help"
+msgstr ""
+
+#: getSopts.c:80 main.c:54
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:103
+#, c-format
+msgid "Vector file %s not found.\n"
+msgstr ""
+
+#: getSopts.c:107
+msgid "r"
+msgstr ""
+
+#: getSopts.c:108
+#, c-format
+msgid "File read error on %s\n"
+msgstr ""
+
+#: main.c:45 runPg.c:54 runPg.c:113 runPg.c:119
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:47
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: plotCat.c:59 runPg.c:67 runPg.c:108
+msgid "area"
+msgstr ""
+
+#: plotCat.c:100
+#, c-format
+msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','t','("
+msgstr ""
+
+#: plotCat.c:111 plotCat.c:176 plotCat.c:414
+#, c-format
+msgid "(%f,%f),"
+msgstr ""
+
+#: plotCat.c:114 plotCat.c:179 plotCat.c:418
+#, c-format
+msgid "(%f,%f)"
+msgstr ""
+
+#: plotCat.c:122 plotCat.c:188
+msgid ")')"
+msgstr ""
+
+#: plotCat.c:127 plotCat.c:251 plotCat.c:438
+#, c-format
+msgid "n_points is %d, v_att is %d, count is %d\n"
+msgstr ""
+
+#: plotCat.c:129 plotCat.c:195 plotCat.c:323 plotCat.c:440 runPg.c:94
+#: runPg.c:125 runPg.c:143
+#, c-format
+msgid ""
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: plotCat.c:136 plotCat.c:201 plotCat.c:327 plotCat.c:446
+#, c-format
+msgid "Error executing command:%sExiting.\n"
+msgstr ""
+
+#: plotCat.c:165
+#, c-format
+msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','("
+msgstr ""
+
+#: plotCat.c:193 plotCat.c:306
+#, c-format
+msgid "n_points_i is %d, v_att is %d, count is %d\n"
+msgstr ""
+
+#: plotCat.c:219
+#, c-format
+msgid ""
+"INSERT into %s_mpoly (%s, num, grass_poly) values ('%d','%d',GeometryFromText"
+"('POLYGON(("
+msgstr ""
+
+#: plotCat.c:230 plotCat.c:284 plotCat.c:416
+#, c-format
+msgid "%f %f,"
+msgstr ""
+
+#: plotCat.c:233 plotCat.c:287 plotCat.c:420
+#, c-format
+msgid "%f %f"
+msgstr ""
+
+#: plotCat.c:242 plotCat.c:297
+msgid "))',-1))"
+msgstr ""
+
+#: plotCat.c:245 plotCat.c:300
+msgid "),"
+msgstr ""
+
+#: plotCat.c:274
+msgid "("
+msgstr ""
+
+#: plotCat.c:364
+msgid "line"
+msgstr ""
+
+#: plotCat.c:372
+#, c-format
+msgid ""
+"\n"
+"WARNING: vector file [%s]-read error\n"
+msgstr ""
+
+#: plotCat.c:382
+msgid "Read error - EOF\n"
+msgstr ""
+
+#: plotCat.c:386
+msgid "Read error\n"
+msgstr ""
+
+#: plotCat.c:397
+#, c-format
+msgid "INSERT into %s_arc (%s, num, segment) values ('%d','%d','["
+msgstr ""
+
+#: plotCat.c:401
+#, c-format
+msgid ""
+"INSERT into %s_mstring (%s, num, grass_line) values ('%d','%d', "
+"GeometryFromText('LINESTRING("
+msgstr ""
+
+#: plotCat.c:431
+msgid "]')"
+msgstr ""
+
+#: plotCat.c:433
+msgid ")',-1))"
+msgstr ""
+
+#: runPg.c:45
+#, c-format
+msgid "Error opening vector map %s in mapset %s\n"
+msgstr ""
+
+#: runPg.c:52
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:56
+#, c-format
+msgid "Error Connecting to Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:71
+#, c-format
+msgid "CREATE TABLE %s_bnd (%s int4, num int2, ex bool, boundary polygon)"
+msgstr ""
+
+#: runPg.c:76
+#, c-format
+msgid "CREATE TABLE %s_mpoly (%s int4, num int2)"
+msgstr ""
+
+#: runPg.c:83
+#, c-format
+msgid "CREATE TABLE %s_arc (%s int4, num int2, segment path)"
+msgstr ""
+
+#: runPg.c:88
+#, c-format
+msgid "CREATE TABLE %s_mstring (%s int4, num int2)"
+msgstr ""
+
+#: runPg.c:98
+#, c-format
+msgid "Could not create new table:%sExiting.\n"
+msgstr ""
+
+#: runPg.c:112
+#, c-format
+msgid ""
+"SELECT AddGeometryColumn ('%s', '%s_mpoly', 'grass_poly', -1,'POLYGON',2)"
+msgstr ""
+
+#: runPg.c:118
+#, c-format
+msgid ""
+"SELECT AddGeometryColumn ('%s', '%s_mstring', 'grass_line', -1, "
+"'LINESTRING',2)"
+msgstr ""
+
+#: runPg.c:129
+#, c-format
+msgid "Could not add geometry column:%sExiting.\n"
+msgstr ""
+
+#: runPg.c:147
+#, c-format
+msgid "Error Selecting from Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:154
+#, c-format
+msgid "%d Rows\n"
+msgstr ""
+
+#: runPg.c:163 runPg.c:176
+#, c-format
+msgid "Error plotting category %d\n"
+msgstr ""
+
+#: runPg.c:191
+#, c-format
+msgid "Total number of vectors inserted = %d, with average of %d vertices\n"
+msgstr ""

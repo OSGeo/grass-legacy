@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include "matrix.h"
+#include "matrix2.h"
+
+double *solvex (a, n, m, bee)
+  int n, m;
+  double **a, *bee;
+
+/*
+ * Given the design matrix {\tt a} ($\mbox{\tt m} \times \mbox{\tt n}$) and
+ * the vector {\tt bee}, return $x\/$ such that $$ \mbox{\tt A}x \approx
+ * \mbox{\tt bee}.$$
+ */
+{
+  int i, j;
+  MAT *A;
+  VEC *b, *x, *diag;
+
+  /* sanity check */
+  if (m < n)
+    G_fatal_error ("Need m >= n to obtain least squares fit");
+
+  b = get_vec (m);
+  x = get_vec (n);
+  A = get_mat (m, n);
+  for (i = 0; i < m; ++i)
+  {
+    b->ve[i] = bee[i];
+    for (j = 0; j < n; ++j)
+      A->me[i][j] = a[i][j];
+  }
+
+  diag = get_vec (A->m);
+
+  /* QR is to be the QR factorisation of A */
+  QRfactor (A, diag);
+
+  /* solve for x */
+  QRsolve (A, diag, b, x);
+
+  return x->ve;
+}

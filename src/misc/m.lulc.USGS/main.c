@@ -34,7 +34,7 @@ int main (int argc, char *argv[])
 	struct Colors colors;
 	CELL max;
 
-	G_gisinit("Mlulc.USGS");
+	G_gisinit(argv[0]);
 
 	if ((f1 = fopen(argv[1],"rb")) == NULL) {
 		fprintf(stderr,"Cannot open USGS CTG file\n");
@@ -112,7 +112,7 @@ int Create_Grid_Cell (FILE *f1, int n, char *name, struct Cell_head *window)
 			fread((char *)utm,sizeof(int),2,f1);
 			fread((char *)value,sizeof(int),MAX_OVERLAYS,f1);
 		}	
-		G_put_map_row(fd,cells);
+		G_put_raster_row(fd, cells, CELL_TYPE);
 		north -= window->ns_res;
 	}
 	G_close_cell(fd); 

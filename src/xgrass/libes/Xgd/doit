@@ -1,6 +1,0 @@
-#!/bin/sh
-cwd=`pwd | sed -e 's:/net::'`
-gmake4.1.x
-cd /grass.src/4.1/src.x/display
-gmake4.1.x
-cd $cwd

@@ -1,0 +1,340 @@
+#!/bin/sh
+
+#######################################################
+#
+# shell name : tcltkgrass
+#
+# description : This shell is a modified copy of 
+#               $GISBASE/$ETC/GIS.sh
+#
+# copyright :
+# Welcome to GRASS 5.0 and TCLTKGRASS 
+#
+# Geographical Resources Analysis Support Systems (GRASS) 
+# is a Trademark of U.S. Army Construction Engineering
+# Research Laboratories (USACERL)
+#
+# New releases of GRASS are coordinated and produced by
+# the GRASS Development Team located at Baylor University
+# (www.baylor.edu/~grass/) and University of Hannover
+# and incorporate software  contributions from numerous sources
+#
+#######################################################
+
+#searching for wish8.x:
+SEARCHCOMMAND=wish8
+CURR_DIR=`pwd`
+
+k=0
+PATHLIST=""
+found=0
+
+SEARCHPATHS=`echo $PATH | tr -s ':' ' '`
+for i in $SEARCHPATHS ; do
+   k=`expr $k + 1`
+   cd $i > /dev/null
+   ls -1 |grep $SEARCHCOMMAND > /dev/null
+   if [ $? = 0 ]
+   then
+      #found
+      found=`expr $found + 1`
+      PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
+   fi
+done
+
+cd $CURR_DIR
+
+#now all wish8.x are stored in $PATHLIST
+#take the first and start tcltkgrass
+if [ $found -gt 0 ]
+then
+  WISH=`echo "$PATHLIST"| cut -d' ' -f1`
+else
+ echo ""
+ echo "ERROR: wish not found! Please install tcl8.x and tk8.x libraries"
+ echo "Hit key to continue."
+ exit 1
+fi
+
+
+#######################################################
+
+echo "Starting GRASS 5 ..."
+
+#grab the GRASS 5 install path from grass5 start script:
+BINPATH='##EMPTY##'
+for i in `echo $PATH | sed 's/^:/.:/
+    	    	    	    s/::/:.:/g
+			    s/:$/:./
+			    s/:/ /g'`
+do
+    if [ -f $i/grass5 ] ; then
+    	BINPATH=$i/grass5
+    fi
+done
+
+if [ $BINPATH == "##EMPTY##" ] ; then
+    echo "ERROR: grass5 script not found in path"
+    exit
+fi
+
+GISBASE=`grep GISBASE $BINPATH | head -1 | cut -d'=' -f2`
+export GISBASE
+
+TCLTKGRASSBASE=$GISBASE/tcltkgrass
+export TCLTKGRASSBASE
+
+if [ ! "$PAGER" ]
+then
+        PAGER=more
+        export PAGER
+fi
+
+#
+# get home directory, name of lockfile and gisrc file
+#
+home=`cd;pwd`
+lockfile=$home/.gislock5
+GISRC=$home/.grassrc5
+export GISRC
+
+#
+# set the GIS_LOCK variable to current process id
+#
+GIS_LOCK=$$
+export GIS_LOCK
+
+#
+# set PATH to GRASS bin, ETC to GRASS etc
+#
+ETC=$GISBASE/etc
+PATH=$GISBASE/bin:$GISBASE/scripts:$PATH
+export PATH
+
+#
+# check for concurrent use
+#
+$ETC/lock $lockfile $$
+case $? in
+ 0) ;;
+ 1)
+    echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    exit;;
+ *)
+    echo Unable to properly access $lockfile
+    echo Please notify system personel.
+    exit;;
+esac
+
+# run tset to set terminal and TERM variable
+# must tell it to output sh
+eval `SHELL=/bin/sh tset -s -Q`
+stty -tabs
+
+
+#
+# show GRASS copyright
+#
+#$WISH -file $TCLTKGRASSBASE/script/gis_intro.tcl
+
+#
+# user selects LOCATION and MAPSET  
+#
+
+echo "Please select location and mapset."
+eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
+
+# unset the MONITOR variable to force user to select one if they are going
+# to do graphics.
+
+# g.gisenv MONITOR=
+
+#
+# get gisrc into the environment
+#
+#eval `g.gisenv`
+
+if [ $LOCATION_NAME == "##NONE##" ] ; then
+#  rm -f ~/.grassrc5
+  $GISBASE/etc/set_data
+  if [ $? != 0 ]; then
+    echo "GISDBASE: $OLD_DB" > $GISRC
+    echo "LOCATION_NAME: $OLD_LOC" >> $GISRC
+    echo "MAPSET: $OLD_MAP" >> $GISRC
+    exit
+  fi
+  eval `g.gisenv`
+fi
+
+if [ $LOCATION_NAME == "##ERROR##" ] ; then
+  echo "The selected location is not a valid GRASS location"
+  exit
+fi
+
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+export LOCATION
+
+# echo $LOCATION
+
+if [ -x $home/.grassrc5 ]
+then
+	$home/.grassrc5
+elif [ -x $GISBASE/grassrc5 ]
+then
+	$GISBASE/grassrc5
+fi
+
+trap "" 2 3
+
+
+sh="`basename $SHELL`"
+case "$sh" in
+    ksh)  shellname="Korn Shell";;
+    csh)  shellname="C Shell" ;;
+    tcsh) shellname="TC Shell" ;;
+    sh)   shellname="Bourne Shell";;
+    bash) shellname="Bash Shell";;
+    *)    shellname=shell;;
+esac
+
+
+SHELLNAME=$shellname
+export SHELLNAME
+
+#TCLTKGRASS without superview (requires no binaries)
+exec $GISBASE/bin/tcltkgrass &
+
+#TCLTKGRASS with superview, but with binaries
+###exec $TCLTKGRASSBASE/bin/tcltkgrass2
+
+
+clear
+echo "Welcome to GRASS 5.0 beta9"
+echo "Geographic Resources Analysis Support System (GRASS) is Copyright,"
+echo "1999-2000 by the GRASS Development Team, and licensed under terms of the"
+echo "GNU General Public License (GPL)."
+echo ""
+echo "This GRASS 5 release is coordinated and produced by the GRASS Development"
+echo "Team headquartered at University of Hannover with worldwide support and"
+echo "further development sites located at Baylor University and the University"
+echo "of Illinois."
+echo ""
+echo "This program is distributed in the hope that it will be useful, but WITHOUT"
+echo "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or"
+echo "FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for"
+echo "more details."
+echo ""
+echo "This version running thru the $shellname ($SHELL)"
+echo "Help is available with the command:      g.help"
+echo "See the licence terms with:              g.version"
+echo "When ready to quit enter:                exit"
+
+case "$sh" in
+
+csh|tcsh)
+    HOME=$LOCATION
+    export HOME
+    cshrc=$HOME/.cshrc
+    tcshrc=$HOME/.tcshrc
+    rm -f $cshrc $tcshrc
+    echo "set home = $home" > $cshrc
+    echo "set history = 30 noclobber ignoreeof" >> $cshrc
+
+    echo "set prompt = '\\" >> $cshrc
+    echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> $cshrc
+    echo "GRASS 5.0beta9 > '" >> $cshrc
+    echo 'set BOGUS=``;unset BOGUS' >> $cshrc
+
+    if [ -r $home/.grass.cshrc ]
+    then
+	cat $home/.grass.cshrc >> $cshrc
+    fi
+
+    if [ -r $home/.cshrc ]
+    then
+	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
+    fi
+
+    if [ -r $home/.tcshrc ]
+    then
+	grep '^ *set  *mail *= *' $home/.tcshrc >> $cshrc
+    fi
+
+    if [ -r $home/.login ]
+    then
+	grep '^ *set  *mail *= *' $home/.login >> $cshrc
+    fi
+
+    echo "set path = ( $PATH ) " | sed 's/:/ /'g >> $cshrc
+
+    cp $cshrc $tcshrc
+    $ETC/run $SHELL
+
+    HOME=$home
+    export HOME
+    ;;
+
+bash)
+    USERHOME=$home      # save original home
+    HOME=$LOCATION      # save .bashrc in $LOCATION
+    export HOME
+    bashrc=$HOME/.bashrc
+    rm -f $bashrc
+    echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
+    echo "test -e ~/.alias && . ~/.alias" >> $bashrc
+    echo "umask 022" >> $bashrc
+    echo "PS1='GRASS:\w > '" >> $bashrc
+
+    if [ -r $home/.grass.bashrc ]
+    then
+        cat $home/.grass.bashrc >> $bashrc
+    fi
+
+    echo "export PATH=$PATH" >> $bashrc
+    echo "export HOME=$USERHOME" >> $bashrc # restore user home path
+
+    $ETC/run $SHELL
+    HOME=$USERHOME
+    export HOME
+    ;;
+
+*)
+
+PS1="
+Mapset <$MAPSET> in Location <$LOCATION_NAME>
+GRASS-GRID > "
+
+    export PS1
+
+    $ETC/run $SHELL
+    ;;
+esac
+
+#######################################################
+#
+# exit shell
+#
+#######################################################
+
+#
+# unset the MONITOR variable
+#
+monitor=`g.gisenv MONITOR`
+if [ "$monitor" ]
+then
+	$ETC/mon.release -v $monitor
+fi
+
+g.gisenv MONITOR=
+($ETC/clean_temp > /dev/null &)
+
+#
+# Remove lock file
+#
+rm -f $lockfile
+clear
+echo ""
+echo ""
+echo ""
+echo "                  Goodbye from GRASS GIS"
+echo ""

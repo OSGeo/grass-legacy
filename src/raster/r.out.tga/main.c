@@ -22,6 +22,7 @@ int main (int argc,char *argv[])
 {
     CELL *cell;
     struct Cell_head Window;
+    struct GModule *module;
     char *colr;
     char *in, *mapset, *outfile;
     FILE *fp;
@@ -30,6 +31,11 @@ int main (int argc,char *argv[])
     int lut;
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Exports a GRASS raster file to a 24bit TGA file";
 
     parse_command_line (argc, argv, &in, &outfile);
 

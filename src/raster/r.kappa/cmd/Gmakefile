@@ -1,6 +1,7 @@
 PGM=r.kappa
 
-LIBES= $(GISLIB) $(VASK)
+LIBES= $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 OBJS = main.o\
 	calc_kappa.o\
@@ -11,10 +12,7 @@ OBJS = main.o\
 	stats.o\
 	sum.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
 
-saber:
-	#load $(OBJS) $(LIBES)
-
-$(LIBES): #
+$(DEPLIBS): #

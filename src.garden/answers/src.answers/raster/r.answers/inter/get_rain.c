@@ -91,12 +91,12 @@ get_rain()
 
     G_clear_screen();
     for (i = 0; rain_intro[i]; i++)
-	fprintf (stdout,"%s\n", rain_intro[i]);
+	fprintf (stderr,"%s\n", rain_intro[i]);
     hit_return();
     
     G_clear_screen();
     for (i = 0; gauge_info[i]; i++)
-	fprintf (stdout,"%s\n", gauge_info[i]);
+	fprintf (stderr,"%s\n", gauge_info[i]);
     hit_return();
     G_clear_screen();
     
@@ -113,15 +113,15 @@ get_rain()
         }
      }
     G_clear_screen();
-    fprintf (stdout,"\n<Creating new rainfall event>\n\n");
+    fprintf (stderr,"\n<Creating new rainfall event>\n\n");
 
         sprintf(line, "Do you wish to use more than one rain gauge?");
         if(G_yes(line, 0)) { 
-            fprintf (stdout,"\n<Using data from more than one rain gauge.>\n");
+            fprintf (stderr,"\n<Using data from more than one rain gauge.>\n");
             num_gauges = 0;
         }
         else{
-            fprintf (stdout,"\n<Using data from one rain gauge.>\n");
+            fprintf (stderr,"\n<Using data from one rain gauge.>\n");
             num_gauges = 1;
             strcpy(rain_layer, "none");
         }
@@ -131,7 +131,7 @@ get_rain()
 
     if (num_gauges == 0)
     {
-        fprintf (stdout,"\nEnter the name of the raster map which depicts rain gauge areas.\n");
+        fprintf (stderr,"\nEnter the name of the raster map which depicts rain gauge areas.\n");
         rain_mapset = G_ask_cell_old ("",rain_layer);
         if(!rain_mapset) 
 	    return(0);
@@ -140,7 +140,7 @@ get_rain()
             return(0);
         }
         num_gauges = cat_tbl[0].cat;
-        fprintf (stdout,"\nNumber of categories found: %d\n\n", num_gauges);
+        fprintf (stderr,"\nNumber of categories found: %d\n\n", num_gauges);
 
 /* error check cats */
 
@@ -156,9 +156,9 @@ get_rain()
     {
         if(cat_tbl[i].cat != i)
         {
-            fprintf (stdout,"ERROR: Category values in <%s> do not meet expectations\n", 
+            fprintf (stderr,"ERROR: Category values in <%s> do not meet expectations\n", 
             rain_layer);
-            fprintf (stdout,"expecting category %d, but found %d\n", i, cat_tbl[i].cat);
+            fprintf (stderr,"expecting category %d, but found %d\n", i, cat_tbl[i].cat);
             croak(1, "category values should be consecutive, starting with 1");
         }
     }

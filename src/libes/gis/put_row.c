@@ -1,4 +1,26 @@
+/*
+ * $Id$
+ */
 /**********************************************************************
+ *
+ *   G_zeros_r_nulls (zeros_r_nulls)
+ *      int zeros_r_nulls	the last argument of put_data()
+ *
+ *   zeros_r_nulls > 0		zero values of buf to be written into files
+ *   				are null values by default.
+ *
+ *   zeros_r_nulls == 0		zero values are just zero itself.
+ *
+ *   zeros_r_nulls < 0		do not set. return current setting.
+ *   				1: set
+ *   				0: not set
+ *
+ *   Return setting values in all cases.
+ *
+ *   *** NOTE *** 
+ *   Use only to change a default behavior for zero of G_put_map_row[_random].
+ *
+ ********************************************************************** 
  *
  *   G_put_[f/d_]raster_row (fd, buf)
  *      int fd           file descriptor of the opened map
@@ -113,12 +135,14 @@
 #endif
 
 #include "G.h"
+#include "glocale.h"
 
 #define FCB          G__.fileinfo[fd]
 #define MIN_NULL_ROW FCB.min_null_row
 #define NULL_BUF     G__.null_buf
 #define WORK_BUF     FCB.data
 #define WINDOW       G__.window
+
 
 /* convert type "RASTER_MAP_TYPE" into index */
 #define F2I(map_type) \
@@ -127,6 +151,7 @@
 static int ERROR;
 static char *me;
 static RASTER_MAP_TYPE write_type;
+static int _zeros_r_nulls = 1;
 
 static int put_raster_data (int,void *,int,int,int,int,RASTER_MAP_TYPE);
 static int put_data (int,CELL *,int, int,int,int);
@@ -155,6 +180,14 @@ static void (*convert_and_write_FtypeOtype [3][3])() =
 #define CONVERT_AND_WRITE \
      (convert_and_write_FtypeOtype [F2I (write_type)] [F2I (FCB.map_type)])
 
+int G_zeros_r_nulls (int zeros_r_nulls)
+{
+    if (zeros_r_nulls >= 0)
+	_zeros_r_nulls = zeros_r_nulls > 0;
+
+    return _zeros_r_nulls;
+}
+
 int G_put_map_row (int fd, CELL *buf)
 {
     me = "G_put_map_row";
@@ -173,7 +206,7 @@ int G_put_map_row (int fd, CELL *buf)
 
     G_zero (NULL_BUF, FCB.cellhd.cols * sizeof(char));
 
-    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, 1))
+    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
@@ -198,7 +231,7 @@ int G_put_map_row_random (int fd, CELL *buf, int row, int col, int n)
         return -1;
 
     buf += adjust (fd, &col, &n);
-    switch(put_data (fd, buf, row, col, n, 1))
+    switch(put_data (fd, buf, row, col, n, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
@@ -574,7 +607,7 @@ static int write_error (int fd,int row)
 {
     if (FCB.io_error) return 0;
 
-    G_warning("map [%s] - unable to write row %d", FCB.name, row);
+    G_warning(_("map [%s] - unable to write row %d"), FCB.name, row);
     FCB.io_error = 1;
 
     return 0;
@@ -619,24 +652,13 @@ int G__write_data_compressed (int fd, int row, int n)
 
 {
   int nwrite;
-  int l;
-
   nwrite = FCB.nbytes * n;
 
-  l = log ((double) nwrite) / log ((double) 2);  
-  
-  if ((1 << l) > (nwrite * 3.0 / 4.0)) l--;     /* just a guess */
-
-  if (l > 16) l = 16;      
-  if (l < 9) l = 9;
-
-  G_lzw_set_bits (l);
-
-  if ((nwrite = G_lzw_write (fd, G__.work_buf, nwrite)) < 0) {
+  if ((nwrite = G_zlib_write (fd, G__.work_buf, nwrite)) < 0) {
     write_error (fd, row);
     return -1;
   }
-
+  
   return 0;
 }
 
@@ -669,8 +691,8 @@ static void set_file_pointer (int fd, int row)
 static void update_compressed_bits (int fd, int row)
 
 {
-  if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
-    FCB.compression_bits = G_lzw_max_used_bits ();
+  /* Not relevant to zlib, was with LZW -- we use -1 token */
+  FCB.compression_bits = -1;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -698,7 +720,7 @@ static int put_fp_data (int fd, void *rast, int row, int col, int n, RASTER_MAP_
   } else 
     if (compressed) set_file_pointer (fd, row);
   
-  xdrmem_create (&FCB.xdrstream, G__.work_buf,
+  xdrmem_create (&FCB.xdrstream, (caddr_t) G__.work_buf,
                  (u_int) (FCB.nbytes * FCB.cellhd.cols), XDR_ENCODE);
   xdrs = &FCB.xdrstream; /* xdr stream is initialized to write into */
   xdr_setpos (xdrs, 0);  /* G__.work_buf in 'opencell.c' */
@@ -829,12 +851,12 @@ int G__write_null_bits (int null_fd, unsigned char *flags, int row, int cols, in
    offset = (long) (size * row * sizeof(unsigned char)) ; 
    if (lseek (null_fd, offset, 0) < 0)
    {
-       G_warning("error writing null row %d\n",row);
+       G_warning(_("error writing null row %d\n"),row);
        return -1;
    }
    if (write (null_fd, flags, size) != size)
    {
-       G_warning("error writing null row %d\n",row);
+       G_warning(_("error writing null row %d\n"),row);
        return -1;
    }
    return 1;
@@ -872,13 +894,13 @@ static void convert_and_write_id (int fd, CELL *buf)
 
 static void convert_and_write_fi (int fd, FCELL *buf)
 {
-    G_warning("can't put float row into integer map"); 
+    G_warning(_("can't put float row into integer map")); 
     ERROR = 1;
 }
 
 static void convert_and_write_di (int fd, DCELL *buf)
 {
-    G_warning("can't put double row into integer map"); 
+    G_warning(_("can't put double row into integer map")); 
     ERROR = 1;
 }
 

@@ -1,0 +1,7 @@
+interface_build {
+    g.select.pg 0
+    {Selects a database to connect to.}
+    {entry host {Postgres server name:} 0 ""}
+    {entry database {Database name:} 0 ""}
+    {checkbox -l {Only list all databases} "" -l}
+}

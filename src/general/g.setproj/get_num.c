@@ -59,7 +59,7 @@ int get_x0(int indx)
 int get_y0(int indx)
 {
 	sprintf(answer, "Enter %s ", DESC[Y0]);
-	x_false = prompt_num_double(answer, TABLE[indx][Y0].deflt, 1);
+	y_false = prompt_num_double(answer, TABLE[indx][Y0].deflt, 1);
 	return (1);
 }
 

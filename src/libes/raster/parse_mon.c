@@ -6,6 +6,7 @@
 #include <string.h>
 #include "monitors.h"
 #include "raster.h"
+#include "glocale.h"
 
 static FILE *monitors = NULL;
 static struct MON_CAP cap;
@@ -25,7 +26,7 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 	gisbase = getenv ("GISBASE");
 	if (gisbase == NULL)
 	{
-		fprintf (stderr, "ERROR: GISBASE not set\n");
+		fprintf (stderr, _("ERROR: GISBASE not set\n"));
 		sleep(2);
 		exit(1);
 	}

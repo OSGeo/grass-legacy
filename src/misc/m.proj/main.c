@@ -1,6 +1,8 @@
 /* created by: Irina Kosinovsky 
    changed by: Morten Hulden <morten@ngb.se> October 1999, support for additional projections 
 */
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "geo.h"
@@ -92,7 +94,7 @@ int main(int argc, char *argv[])
 						LAT_res = LAT;
 						cur_LAT = LAT;
 						cur_LON = LON;
-						/*DMS (1); /*  convert LAT/LON to dd mm ss.ss */
+						/*DMS (1); */ /*  convert LAT/LON to dd mm ss.ss */
 					} else if (pj_do_proj(&X, &Y, &info_in, &info_out) < 0)
 						G_fatal_error("Error in pj_do_proj()");
 
@@ -101,13 +103,13 @@ int main(int argc, char *argv[])
 						NOR_res = Y;
 						cur_LAT = LAT;	/* latitude printed out with results */
 						cur_LON = LON;	/* longitude printed out with results */
-						/*DMS (1); /*  convert LAT/LON to dd mm ss.ss */
+						/*DMS (1); */ /*  convert LAT/LON to dd mm ss.ss */
 					} else {
 						LON_res = X;
 						LAT_res = Y;
 						cur_LAT = LAT_res;	/* latitude printed out with results */
 						cur_LON = LON_res;	/* longitude printed out with results */
-						/*DMS (0); /*  convert LAT_res/LON_res to dd mm ss.ss */
+						/*DMS (0); */ /*  convert LAT_res/LON_res to dd mm ss.ss */
 					}
 
 					Write_results(0);
@@ -144,7 +146,7 @@ int main(int argc, char *argv[])
 						LAT_res = LAT;
 						cur_LAT = LAT;
 						cur_LON = LON;
-						/*DMS (1); /*  convert LAT/LON to dd mm ss.ss */
+						/*DMS (1); */ /*  convert LAT/LON to dd mm ss.ss */
 					} else if (pj_do_proj(&X, &Y, &info_in, &info_out) < 0)
 						G_fatal_error("Error in pj_do_proj()");
 
@@ -153,13 +155,13 @@ int main(int argc, char *argv[])
 						NOR_res = Y;
 						cur_LAT = LAT;
 						cur_LON = LON;
-						/*DMS (1); /*  convert LAT/LON to dd mm ss.ss */
+						/*DMS (1); */ /*  convert LAT/LON to dd mm ss.ss */
 					} else {
 						LON_res = X;
 						LAT_res = Y;
 						cur_LAT = LAT_res;
 						cur_LON = LON_res;
-						/*DMS (0); /*  convert LAT_res/LON_res to dd mm ss.ss */
+						/*DMS (0); */ /*  convert LAT_res/LON_res to dd mm ss.ss */
 					}
 					Write_results(0);
 				}	/* end for loop */

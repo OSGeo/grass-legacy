@@ -11,8 +11,9 @@
 #include "display_line.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
-static int swap (register int *a,register int *b)
+static int swap (int *a, int *b)
 {
     register int tmp;
     tmp = *a;
@@ -22,8 +23,9 @@ static int swap (register int *a,register int *b)
     return 0;
 }
 
-static int order_cmp(int *a,int *b)
+static int order_cmp(const void *aa, const void *bb)
 {
+    const int *a = aa, *b = bb;
     if (bx[*a] < bx[*b])
 	return (-1);
     if (bx[*a] > bx[*b])
@@ -54,9 +56,9 @@ build_neat (struct Map_info *map)
     if (!Dig_Enabled)
 	return (-1);
     _Clear_info ();
-    _Write_info (1,"You have selected to automatically build a neat line from");
-    _Write_info (2, "the 1st four current registration points.");
-    if (!curses_yes_no_default (3, "Do you wish to proceed? ", 1))
+    _Write_info (1,_("You have selected to automatically build a neat line from"));
+    _Write_info (2, _("the 1st four current registration points."));
+    if (!curses_yes_no_default (3, _("Do you wish to proceed? "), 1))
 	return (0);
 
     
@@ -124,7 +126,7 @@ build_neat (struct Map_info *map)
     if (line < 0)
     {
 	BEEP;
-	Write_info (2, "Error creating new line.");
+	Write_info (2, _("Error creating new line."));
 	sleep (4);
 	return (-1);
     }
@@ -135,13 +137,13 @@ build_neat (struct Map_info *map)
     /* is this an area boundary that will affect neighbor areas? */
     /* if (type == AREA) */
     {  /* this shouldn't be needed */
-	if (area = check_next (map, line, RIGHT))
+	if ((area = check_next (map, line, RIGHT)))
 	    Del_area (map, area);
-	if (area = check_next (map, line, LEFT))
+	if ((area = check_next (map, line, LEFT)))
 	    Del_area (map, area);
-	if (area = check_next (map, -line, RIGHT))
+	if ((area = check_next (map, -line, RIGHT)))
 	    Del_area (map, area);
-	if (area = check_next (map, -line, LEFT))
+	if ((area = check_next (map, -line, LEFT)))
 	    Del_area (map, area);
     }
 

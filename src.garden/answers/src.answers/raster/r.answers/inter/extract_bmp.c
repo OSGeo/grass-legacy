@@ -63,7 +63,7 @@ extract_bmp(num)
     CELL *map_cell;
     CELL *mask_cell;
 
-    fprintf (stdout,"\n\nExtracting data from <%s in %s>\n\n",
+    fprintf (stderr,"\n\nExtracting data from <%s in %s>\n\n",
     bmp_tbl[num].layer, bmp_tbl[num].mapset);
 
 /* open input layer */
@@ -117,13 +117,13 @@ extract_bmp(num)
     if(datafile == 1)
     {
         ask_me = 0;
-        fprintf (stdout,"ANSWERS input data has been extracted for BMP data before.\n");
-        fprintf (stdout,"Therefore, as we extract data for the current BMP, we may\n");
-        fprintf (stdout,"encounter cells which currently have a value assigned for a\n");
-        fprintf (stdout,"BMP other than %s.\n", bmp_tbl[num].title);
-        fprintf (stdout,"By default, the previous BMP will be overwritten. If you\n");
-        fprintf (stdout,"wish, you can be given a choice if duplicate BMPs are found\n");
-        fprintf (stdout,"for a given cell.\n\n");
+        fprintf (stderr,"ANSWERS input data has been extracted for BMP data before.\n");
+        fprintf (stderr,"Therefore, as we extract data for the current BMP, we may\n");
+        fprintf (stderr,"encounter cells which currently have a value assigned for a\n");
+        fprintf (stderr,"BMP other than %s.\n", bmp_tbl[num].title);
+        fprintf (stderr,"By default, the previous BMP will be overwritten. If you\n");
+        fprintf (stderr,"wish, you can be given a choice if duplicate BMPs are found\n");
+        fprintf (stderr,"for a given cell.\n\n");
         if (G_yes("Do you wish to choose BMPs in the case of duplicates?", 0))
             ask_me = 1;
     }
@@ -136,7 +136,7 @@ extract_bmp(num)
 
 /* here starts the shameless nested loop hell */
 
-fprintf (stdout,"\nworking...");
+fprintf (stderr,"\nworking...");
 for( row = 0; row < window.rows; row++)
 {
   G_get_map_row(map_fd, map_cell, row);
@@ -230,15 +230,15 @@ ask_user(first, second, element)
     int first, second, element;
 {
     char buf[80];
-    fprintf (stdout,"\n\n");
-    fprintf (stdout,"Watershed element: %d\n", element);
-    fprintf (stdout,"This watershed element currently contains a %s\n",
+    fprintf (stderr,"\n\n");
+    fprintf (stderr,"Watershed element: %d\n", element);
+    fprintf (stderr,"This watershed element currently contains a %s\n",
     bmp_tbl[first].title);
-    fprintf (stdout,"The <%s> layer shows this element also contains a\n",
+    fprintf (stderr,"The <%s> layer shows this element also contains a\n",
     bmp_tbl[second].layer);
-    fprintf (stdout,"%s\n", bmp_tbl[second].title);
-    fprintf (stdout,"\n");
-    fprintf (stdout,"Since the element can have only one BMP,\n");
+    fprintf (stderr,"%s\n", bmp_tbl[second].title);
+    fprintf (stderr,"\n");
+    fprintf (stderr,"Since the element can have only one BMP,\n");
     sprintf(buf,"do you wish to set the element's BMP to %s?",
     bmp_tbl[second].title);
     return(G_yes(buf, 1));

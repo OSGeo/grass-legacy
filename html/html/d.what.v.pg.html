@@ -1,0 +1,142 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>d.what.v.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="d.what.v.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>d.what.v.pg</i></b> - Report database attributes associated with
+vector features.
+<br>&nbsp;
+<h2>
+<font size=+2>SYNOPSIS:</font></h2>
+<b>d.what.v.pg [-f] map=</b>name<b> tab=</b>name<b> col=</b>name<b> [color=</b>name<b>]</b>
+<br><b>&nbsp;&nbsp; [fillcolor=</b>name<b>] [hv=</b>name<b>]</b>
+<p><b>d.what.v.pg [-sf] sql=</b>file<b> map=</b>name<b> [color=</b>name<b>]
+[fillcolor=</b>name<b>]</b>
+<br><b>&nbsp;&nbsp; [hv=name]</b>
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+<b>Flags:</b>
+<br>-s&nbsp;&nbsp; Use [-s] for SQL command file input.
+<br>-f&nbsp;&nbsp; Fill polygons?
+<p><b>Parameters:</b>
+<p><b>sql</b>
+<dd>
+Name of the SQL command file</dd>
+
+<br><b>map</b>
+<dd>
+Vector map to run query on</dd>
+
+<br><b>tab</b>
+<dd>
+Postgres table with categories</dd>
+
+<br><b>col</b>
+<dd>
+Column with categories from this table</dd>
+
+<br><b>color</b>
+<dd>
+Selected lines color</dd>
+
+<dd>
+default: yellow</dd>
+
+<br><b>fillcolor</b>
+<dd>
+Selected areas color (for fill)</dd>
+
+<dd>
+options: red,orange,yellow,green,blue,indigo,white,black,brown, magenta,aqua,gray,grey</dd>
+
+<dd>
+default: gray</dd>
+
+<br><b>hv</b>
+<dd>
+Type of database output - [h/v]</dd>
+
+<dd>
+default: v</dd>
+
+<br>&nbsp;
+<p>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p><b>tab</b> is Postgres table containing column linked to vector attribute
+values, <b>col</b> - column associated with vector attribute values, <b>map</b>
+is name of an existing vector map with attribute values linked to the currently
+selected database.
+<p>Reports database attributes from the currently selected database which
+are associated with specific vector features identified using the mouse.
+The currently selected database is identified by the GRASS environment
+variable $PG_DBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS
+interface tool. If this environment variable is not set the program terminates
+with a message to the user. If the alternate form of this command is selected
+with the <i>-s</i> flag the user has greater control over the manner in
+which the attribute information is displayed.
+<p><i>d.what.v.pg</i> is used to query lines/areas with mouse. Like <i>d.what.vect</i>,
+it lists attributes and optionally fills queried areas (like v.area). It
+may be used for the UPDATE command in Postgres through the input SQL file
+(see Example 2). The idea is to prepare an arbitrary algorithm, code it
+in SQL, and then update DB with clicking on chosen polys/lines. You may
+consider this as piping&nbsp; through various filters anything you select
+on screen.
+<p>The database information can be optionally output as comma-separated
+list (horizontal) which is convenient for feeding it to other programs
+like table editors.
+<br>&nbsp;
+<p><b>EXAMPLE:</b>
+<p><b>1.</b><i> d.what.v.pg -s sql=census.sql map=census</i>
+<p>and census.sql is:
+<p><i>select slope, type_id from info_kuruma where rec_id = ?</i>
+<p><b>Result:</b> only two fields information is displayed on screen when
+the mouse is clicked upon the vector object.
+<p><b>2.</b> <i>d.what.v.pg -s sql=process.sql map=census</i>
+<p>process.sql is:
+<p><i>update census_info set type_good = '1' where rec_id = ? and info_kuruma.type_id
+= 35 and info_kuruma.rec_id = rec_id;</i>
+<p><b>Result: </b>this would only change field of the <i>census_info</i>
+table for the clicked polygon or line,
+<br>if the corresponding type taken from <i>info_kuruma</i> table is equal
+to 35 (the last limitation is a filter for any polygon/line picked from
+the map with mouse) .
+<p><b>Flags:</b> SQL select statements are input from a prepared file.
+<p><b>Parameters:</b> SQL statements specifying well formed selection criteria.
+Name of an existing vector map.
+<h2>
+BUGS</h2>
+<font size=+0>1.&nbsp;</font> Tcl-Tk modules require input "where" clause
+restricted to one rule typed without "whitespaces",
+<br>(unlike terminal input where number of subclause is not limited).
+<p>This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

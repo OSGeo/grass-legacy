@@ -1,0 +1,4 @@
+all:
+	if [ ! -d $(GISBASE)/etc/paint ]; then mkdir $(GISBASE)/etc/paint; fi
+	if [ ! -d $(GISBASE)/etc/paint/ps.devices ]; then mkdir $(GISBASE)/etc/paint/ps.devices; fi
+	${SHELL} -c "cp ps.devices/* $(GISBASE)/etc/paint/ps.devices 2>/dev/null ; true"

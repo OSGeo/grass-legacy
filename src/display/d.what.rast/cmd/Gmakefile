@@ -1,4 +1,5 @@
 LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
 PGM    = d.what.rast
 
@@ -8,9 +9,9 @@ LIST   = main.o \
 	 what.o
 
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): what.h
 
-$(LIBES): #
+$(DEPLIBS): #

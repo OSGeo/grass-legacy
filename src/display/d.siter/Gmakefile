@@ -1,5 +1,7 @@
 all:
 	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
-	cp d.siter tclsiter $(GISBASE)/scripts
-#	chmod 0755 $(GISBASE)/scripts/d.siter
-#	chmod 0755 $(GISBASE)/scripts/tclsiter
+	if [ ! -d $(GISBASE)/etc/d.siter ]; then mkdir $(GISBASE)/etc/d.siter; fi
+	cp d.siter $(GISBASE)/scripts
+	cp tclsiter.tcl $(GISBASE)/etc/d.siter
+	chmod 0755 $(GISBASE)/scripts/d.siter
+	chmod 0755 $(GISBASE)/etc/d.siter/tclsiter.tcl

@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "edit.h"
 
 main()
 {
@@ -13,7 +14,7 @@ main()
 	    fprintf (stdout,"OOPS\n");
 	    continue;
 	}
-	if(G_edit_cellhd (&cellhd, 1) >= 0)
+	if(E_edit_cellhd (&cellhd, 1) >= 0)
 	{
 	    fprintf (stdout,"ok\n");
 	}

@@ -10,6 +10,7 @@
 #include "display_line.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	YES    1
 #define	NO    2
@@ -33,12 +34,12 @@ int snap_nodes (struct Map_info *map)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	line_from = find_line_with_mouse (LINE|AREA, " Line to snap  FROM:", NULL);
+	line_from = find_line_with_mouse (LINE|AREA, _(" Line to snap  FROM:"), NULL);
 	line = line_from;
 
 	if (line_from <= 0)
 	    return (0);
-	node_num = find_node_with_mouse ( &ux2, &uy2, thresh, " Node to snap  TO:");
+	node_num = find_node_with_mouse ( &ux2, &uy2, thresh, _(" Node to snap  TO:"));
 	if ( node_num <= 0)
 	{
 	    /* reset the highlit line */
@@ -50,7 +51,7 @@ int snap_nodes (struct Map_info *map)
 
 	/* if node is on same line, warn user */
 	if (map->Line[line_from].N1 == node_num || map->Line[line_from].N2 == node_num)
-	if (!curses_yes_no_default (2, "Attempting to snap line to itself. Proceed? ", 1))
+	if (!curses_yes_no_default (2, _("Attempting to snap line to itself. Proceed? "), 1))
 	    continue;
     /* at this point Gpoints holds line point information from 
     **   find_line_with_mouse()

@@ -59,21 +59,18 @@ int main (int argc, char **argv)
 
     /* only one [-a,-1,-s] flag at a time !! */
     if ( (aflag->answer + sflag->answer + oneflag->answer) > 1 ) {
-        fprintf(stderr,"Error: only one of [-a,-1,-s] can be specified\n");
         G_usage();
-        exit(1);
+        G_fatal_error("only one of [-a,-1,-s] can be specified");
     }
 
     if ( fflag->answer && !aflag->answer ) {
-        fprintf(stderr,"Error: must specify -a when using -f\n");
         G_usage();
-        exit(1);
+        G_fatal_error("must specify -a when using -f");
     }
 
     if ( eflag->answer && !(aflag->answer || oneflag->answer) ) {
-        fprintf(stderr,"Error: must specify -a or -1 when using -e\n");
         G_usage();
-        exit(1);
+        G_fatal_error("must specify -a or -1 when using -e");
     }
 
     /* if the user wants a listing, give it to them and exit */
@@ -117,7 +114,7 @@ char *find_man_page (char *entry, int *sec)
     int section = 0;
 
     for ( section = 1; section <= MAX_SECTIONS; section++) {
-        sprintf (buf, "%s/man/%d/%s", G_gisbase(), section, entry);
+        sprintf (buf, "%s/man/man%d/%s.1", G_gisbase(), section, entry);
         if ( access(buf,0) == 0 ) {
             *sec = section;
             return buf;
@@ -131,7 +128,7 @@ int display_man_page (char *path)
     char buf[1024];
 
     if (isatty(1))
-         sprintf(buf,"more %s",path);
+         sprintf(buf,"$GRASS_PAGER %s",path);
     else 
 	 sprintf(buf,"cat %s",path);
     G_system(buf);
@@ -159,7 +156,7 @@ char *section_name (int section)
     char filename[128];
     FILE *fp;
 
-    sprintf(filename, "%s/man/%d/.class-title", G_gisbase(), section);
+    sprintf(filename, "%s/man/man%d/.class-title", G_gisbase(), section);
 
     if ((fp = fopen(filename, "r")) == NULL) {		/* couldn't open */
 	sprintf(value, "Section %d\n", section);	/* default */
@@ -221,7 +218,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
             fprintf(line,"------------------------------------------------------------------------------\n");
 	    fflush(line);
 	    fclose(line);
-            sprintf(buf,"ls -C %s/man/%d > %s", G_gisbase(), section, temp);
+            sprintf(buf,"ls -C %s/man/man%d > %s", G_gisbase(), section, temp);
             G_system(buf);
 	    sprintf(buf,"cat %s %s %s %s > %s", temp2, temp1, temp, temp1,
 		     last);
@@ -231,7 +228,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
         } 
 	else 
 	{
-            sprintf(buf,"ls %s/man/%d > %s", G_gisbase(), section, last);
+            sprintf(buf,"ls %s/man/man%d > %s", G_gisbase(), section, last);
             G_system(buf);
         }
 
@@ -239,10 +236,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
         if ( eflag ) 
 	{
             if ( stat(last,&statbuf) != 0 ) 
-	    {
-                fprintf(stderr,"Can't stat temporary file\n");
-                exit(1);
-            } 
+	        G_fatal_error("Can't stat temporary file");
 	    else 
 	    {
                 if ( statbuf.st_size > 0 ) 
@@ -282,7 +276,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
 	if(pretty)free(temp1);
 	if(pretty)free(temp2);
     if(isatty(1))
-         sprintf(buf,"more %s",tempfile);
+         sprintf(buf,"$GRASS_PAGER %s",tempfile);
     else
 	 sprintf(buf,"cat %s",tempfile);
     G_system(buf);
@@ -305,17 +299,16 @@ list_all_not_tty (int pretty, int fflag, int eflag)
     for ( section = 1; section <= MAX_SECTIONS; section++ ) {
         tempfile = G_tempfile();
         if ( pretty ) {
-            sprintf(buf,"ls -C %s/man/%d > %s", G_gisbase(), section, tempfile);
+            sprintf(buf,"ls -C %s/man/man%d > %s", G_gisbase(), section, tempfile);
         } else {
-            sprintf(buf,"ls %s/man/%d > %s", G_gisbase(), section, tempfile);
+            sprintf(buf,"ls %s/man/man%d > %s", G_gisbase(), section, tempfile);
         }
         G_system(buf);
         /* eflag ? check to see if tempfile is empty */
         if ( eflag ) {
-            if ( stat(tempfile,&statbuf) != 0 ) {
-                fprintf(stderr,"Can't stat temporary file\n");
-                exit(1);
-            } else {
+            if ( stat(tempfile,&statbuf) != 0 )
+        	G_fatal_error("Can't stat temporary file");
+            else {
                 if ( statbuf.st_size > 0 ) {
 		    if ( pretty ) {
 			fprintf(stdout, section_name(section));
@@ -324,7 +317,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 			fflush(stdout);
 		    }
 		    if(isatty(1))
-                       sprintf(buf,"more %s",tempfile);
+                       sprintf(buf,"$GRASS_PAGER %s",tempfile);
                     else
 		       sprintf(buf,"cat %s",tempfile);
                     G_system(buf);
@@ -343,7 +336,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 		fflush(stdout);
 	    }
 	    if(isatty(1))
-                 sprintf(buf,"more %s",tempfile);
+                 sprintf(buf,"$GRASS_PAGER %s",tempfile);
             else
 		 sprintf(buf,"cat %s",tempfile);
             G_system(buf);

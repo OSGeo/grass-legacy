@@ -41,7 +41,7 @@ int G_pole_in_polygon(double *x,double *y, int n)
  * roundoff error.
  */
     if (total_len < 1.0 && total_len > -1.0)
-	return 0.0;
+	return 0;
     
     return total_area >= 0.0 ? 1 : -1;
 }

@@ -1,12 +1,11 @@
 PGM=r.mask.points
-HOME=$(BIN_ALPHA_CMD)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #
 
 saber_src:
 	#load main.c $(GISLIB)

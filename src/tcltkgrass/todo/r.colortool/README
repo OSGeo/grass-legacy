@@ -1,0 +1,64 @@
+Help for r.colortool:
+
+INSTALLATION:
+
+  1. Install with gmake4.2
+            
+   - r.colortool goes in the /usr/local/grass42/bin directory
+   - utilprocs.tcl and filereqs.tcl go in the
+       /usr/local/grass42/etc/r.colortool directory
+
+  2.The Tcl8.0, Tk8.0 version of wish should be in /usr/local/bin
+
+USER GUIDE:
+
+  1. Run from your grass shell: r.colortool
+  
+  2. Use Load to load an existing colour file from the colr directory
+     of the current MAPSET.
+  
+  3. Use the 'Up' and 'Down' buttons to select the required category number.
+     At present the program can't handle colour files with an offset at
+     the start.
+      
+     ie.% 16 17
+        %%
+        1:58:235:72
+        2:225:6:199
+        %%
+
+      Categories 16 and 17 are the only two cats occurring in this raster.
+      r.colortool will only see the entries 1 and 2 and will not save changes
+      correctly.
+      The workaround is to build the new color file from scratch leaving
+      categories 1 thru 15 black.
+      Alternative is to make r.colortool smarter. All contributions are
+      welcome.
+
+  4. The current colour is shown in the lower box. To modify the current
+     colour click on 'Modify'; it is then copied to the work area - upper box.
+     The RGB sliders don't update but the correct hex value is displayed
+     next to the upper box. Use the RGB colour sliders to select the new
+     colour; once your happy click on 'Set' and the lower box will update.
+
+  5. To save the new or updated color file click on 'Save' and the requester
+     will default to the file you just loaded or you can give it a new name.
+
+
+     Its a bit clunky but it did what was required at the time. Its fairly
+     easy to modify. As I mentioned in my EMAIL it doesn't handle the color
+     range format where pairs of RGB values are used to ramp from one category
+     to another.
+
+     Some of this was hacked from an example colouredit.tk.gz in the tcl/tk world.
+     For completeness I have included it here. The author is uncertain.
+     It is called coloredit.tk. 
+     The mods were done by a year 11 student on vacation. The libraries are his and were
+     written here. His name is Michael Chamberlain. He is unavailable :-) 
+     
+      Rod Paterson     - 1997
+      aberfoyle.oz.au 
+
+------------
+Gmakefile changes 17. July 1998 by Markus Neteler 
+                                   neteler@geog.uni-hannover.de

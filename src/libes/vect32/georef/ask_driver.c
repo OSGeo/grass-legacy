@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "georef.h"
 #include "libtrans.h"
-#include "dig_inter.h"
+#include "Vect.h"
 #include "display.h"
 
 /*

@@ -7,5 +7,5 @@ OBJ = \
 	transform.o
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 

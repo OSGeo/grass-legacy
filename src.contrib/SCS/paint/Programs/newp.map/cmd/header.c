@@ -1,12 +1,12 @@
 #include "gis.h"
 #include "parms.h"
+#include <stdlib.h>
 
 int 
 header (int panel, int npanels, char *date)
 {
     char buf[1024];
     char *header_file;
-    char *getenv();
     FILE *fd;
 
     static int first = 1;

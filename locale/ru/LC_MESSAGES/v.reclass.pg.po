@@ -1,0 +1,88 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-03 13:10+0300\n"
+"PO-Revision-Date: 2002-03-03 13:10+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: getAllOpts.c:31 getSopts.c:39
+msgid "Dissolve common boundaries (default is no)."
+msgstr "Убрать общие границы (по умолчанию: нет)."
+
+#: getAllOpts.c:39 getSopts.c:48
+msgid "Name of existing vector file."
+msgstr "Название существующей векторной карты."
+
+#: getAllOpts.c:46
+msgid "Column corresponding to cats in vector map [input]"
+msgstr "Столбец категорий исходной векторной карты."
+
+#: getAllOpts.c:53
+msgid "Table containing [col]."
+msgstr "Таблица, содержащая [col]."
+
+#: getAllOpts.c:61
+msgid "Column to base reclass on."
+msgstr "Столбец, по которому производится реклассификация."
+
+#: getAllOpts.c:69
+msgid "Where clause for query (i.e., where col='paved'). "
+msgstr "Условие where для запроса (напр., where col='paved')."
+
+#: getAllOpts.c:77 getSopts.c:64
+msgid "Name of new reclass file."
+msgstr "Название новой карты рекласса."
+
+#: getAllOpts.c:85 getSopts.c:72
+msgid "Select area, line or site."
+msgstr "Выберите тип: площадь, линия или объект."
+
+#: getAllOpts.c:95
+#, c-format
+msgid "Vector file %s not found.\n"
+msgstr "Векторная карта %s не найдена.\n"
+
+#: getSopts.c:35
+msgid "Use [-s] for file SQL input."
+msgstr "Используйте [-s] для ввода через SQL файл."
+
+#: getSopts.c:56
+msgid "File with SQL command."
+msgstr "Файл команд SQL."
+
+#: getSopts.c:92
+#, c-format
+msgid "Vector map %s not found.\n"
+msgstr "Векторная карта %s не найдена.\n"
+
+#: getSopts.c:97
+#, c-format
+msgid "File read error on select file (%s)\n"
+msgstr "Ошибка чтения выбранного файла (%s)\n"
+
+#: main.c:59
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: runInfxFile.c:36
+#, c-format
+msgid "Error: Selecting from Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runInfxFile.c:43
+#, c-format
+msgid "Error: Connecting to Postgres:%s\n"
+msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxFile.c:51
+msgid "File write error on temporary file (rules)\n"
+msgstr "Ошибка записи во временный файл (с правилами)\n"

@@ -7,7 +7,9 @@ int Graph_Close (void)
 {
     extern Display *dpy;
     extern Window grwin;
+    extern Pixmap bkupmap;
 
+    XFreePixmap(dpy, bkupmap);
     XDestroyWindow(dpy, grwin);
     return (0);
 }

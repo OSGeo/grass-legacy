@@ -13,9 +13,16 @@ int main (int argc, char **argv)
 	char buff[128] ;
 	int t, b, l, r ;
         struct Option *opt1;
+        struct GModule *module;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Displays text labels formatted for use with GRASS paint (p.labels, p.map)"
+    " output to the active frame on the graphics monitor.";
 
     opt1 = G_define_option() ;
     opt1->key        = "file" ;
@@ -48,7 +55,8 @@ int main (int argc, char **argv)
 		G_fatal_error(buff) ;
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

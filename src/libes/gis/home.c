@@ -13,7 +13,9 @@
  *   NULL if can't determine
  *
  ***************************************************************/
+#include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_home ()
@@ -21,10 +23,10 @@ G_home ()
     char *home;
     char *G_home();
 
-    if (home = G__home())
+    if ((home = G__home()))
 	return home;
     
-    G_fatal_error ("unable to determine user's home directory");
+    G_fatal_error (_("unable to determine user's home directory"));
     exit(-1);
 }
 
@@ -41,7 +43,7 @@ G__home ()
 */
     if (!home)
     {
-	if(fd = G_popen ("cd; pwd","r"))
+	if((fd = G_popen ("cd; pwd","r")))
 	{
 	    if (fscanf (fd,"%s", buf) == 1)
 		home = G_store (buf);

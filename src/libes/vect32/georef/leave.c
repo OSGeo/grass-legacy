@@ -4,7 +4,7 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 #include "georef.h"
 
 int leave (void)

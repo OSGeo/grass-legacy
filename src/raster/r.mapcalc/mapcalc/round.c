@@ -6,10 +6,11 @@ round (double x)
 {
     CELL n;
 
-    if (x > HUGE || x < -HUGE)
+    if (ISNULL_D(&x) || x > HUGE || x < -HUGE)
     {
 	SETNULL(&n);
-	overflow_occurred = 1;
+	if (!ISNULL_D(&x))
+	    overflow_occurred = 1;
     }
     else if (x >= 0.0)
 	n = x + .5;

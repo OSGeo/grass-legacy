@@ -35,7 +35,7 @@ header (int unit1, int unit2)
     divider("+");
     page++;
 
-    if (page == 1 || with_headers)
+    if (page == 1 && with_headers)
     {
 	lcr ("", "RASTER MAP CATEGORY REPORT", "", buf,page_width-2);
 	pbuf(buf);

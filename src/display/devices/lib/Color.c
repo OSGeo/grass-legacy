@@ -5,9 +5,6 @@ static int first_time = 1 ;
 static int max_std_colors ;
 static int n_colors ;
 
-static int _get_color_index(int);
-static int _get_color_index_array(int *,int);
-
 int Color(int number)
 {
 	color(_get_color_index(number)) ;
@@ -21,14 +18,14 @@ int RGB_color(unsigned char r,unsigned char g,unsigned char b)
 	return 0;
 }
 
-static int _get_color_index(int number)
+int _get_color_index(int number)
 {
 	int num ;
 
 	if (first_time)
 	{
 		max_std_colors = get_max_std_colors() ;
-		n_colors = get_num_colors() ;
+		Get_num_colors(&n_colors) ;
 		first_time = 0 ;
 	}
 
@@ -48,14 +45,14 @@ static int _get_color_index(int number)
 	return 0; /* Ignore negative color requests in float mode */
 }
 
-static int _get_color_index_array( int *a, int num)
+int _get_color_index_array( int *a, int num)
 {
 	int i ;
 
 	if (first_time)
 	{
 		max_std_colors = get_max_std_colors() ;
-		n_colors = get_num_colors() ;
+		Get_num_colors(&n_colors) ;
 		first_time = 0 ;
 	}
 

@@ -1,0 +1,138 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<h3>NVIZ - Surfaces</h3>
+</A><p>
+
+Use <A HREF="#SurfaceP">Surface</A> panel options to manage surfaces
+to be drawn.  The top half of the panel contains options for drawing
+style. The bottom half is used to add and delete surfaces and change
+attributes on the current surface.  After options are set, click on
+<em>Surface</em></strong> in the <em>Movement</em></strong> panel to
+see the results.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/surf.gif"> <A NAME="SurfaceP">Surface Panel</A>
+</h3>
+
+<DL>
+
+<DT> <B>Grid Resolution</B>
+<DD> sets number of cells between grid lines when drawing wire grids
+(in both <em>fast display mode</em></strong> and
+<em>Draw</em></strong> mode).  A larger grid resolution number
+produces a more sparse grid.  <p>
+
+<DT> <B>Poly Resolution</B>
+<DD> sets number of cells to be used as dimensions of each polygon
+drawn when drawing polygons.  Each drawn polygon actually represents
+(Poly Res x Poly Res) cells.  <p>
+
+<DT> <B>Current Surface Only</B>
+<DD> Option changes effect currently selected surface only.  <P>
+
+<DT> <B>All Surfaces</B>
+<DD> Option changes effect all surfaces.  <P>
+
+<DT> <B>Surface Style</B>
+<DD> 
+	<DL>
+	<DT> <B>Polygon</B>
+	<DD> draw surface using filled polygons (most realistic). 
+
+	<DT> <B>Wire</B>
+	<DD> draw surface with a wire mesh.  This differs from the
+	mesh drawn in <em>fast display mode</em></strong> in that hidden lines
+	are not drawn.
+
+	<DT> <B>Wire/Poly</B>
+	<DD> draw surface as polygons, but with wire mesh draped over it. 
+</DL> <P>
+
+<DT> <B>Shading</B>
+<DD> 
+<DL>
+	<DT> <B>Gouraud</B>
+	<DD> smooth shade surface to blend individual cell colors together.
+
+	<DT> <B>Flat</B>
+	<DD> Surfaces are drawn with flat shading. One color for each
+	of the two triangles that form a cell. The surface will appear faceted.
+</DL> <P>
+
+<DT> <B>Current</B>
+<DD> displays name of currently selected surface. Pressing the left
+mouse button over the name causes a menu of all available surfaces to
+appear. A new current surface can be selected from this menu.  <P>
+
+<DT> <B>New</B>
+<DD> Load a new surface. This button pops up a <strong>Change
+Attribute </em></strong>window (see below) which allows the selection
+of a new map or constant for a surface.  <P>
+
+<DT> <B>Delete</B>
+<DD> Delete current surface. This merely unloads surface data. <em>
+nviz </em></strong> will not change any files that exist in your
+<strong>GRASS</em></strong> database.  <p>
+
+<DT> <B>No Zeros</B>
+<DD> do not draw surface where elevation data values are zero. The
+second <em>No Zeros </em></strong>toggle causes areas where the color
+values are zero not to be drawn.  <p>
+
+<DT> <B>Wire Color</B>
+<DD> Select a wire color for current surface with a <strong>Select
+Color </em></strong>popup (see below).  <p>
+
+<DT> <B>Position</B>
+<DD> change x, y, and z position of current surface using
+<strong>Position Surface </em></strong>popup window (see below).  <p>
+
+<DT> <B>Draw Current</B>
+<DD> render only the current surface using the given rendering
+parameters.  <P>
+
+</DL> <P>
+
+The rest of the buttons on this panel control attributes of the
+current surface.  The current value of that attribute appears to the
+right of the attribute button. Clicking on an attribute button pops up
+a <em>Change Attribute </em></strong>window (see below) which allows
+the selection of a new map or constant for that attribute.  <p>
+<DL>
+
+<DT> <B>Topography</B>
+<DD> Map or constant which controls elevation (z values) of surface.
+<p>
+
+<DT> <B>Color</B>
+<DD> Map or constant which controls surface color.  <p>
+
+<DT> <B>Mask</B>
+<DD> Map or constant which controls which areas of surface are drawn.
+<p>
+
+<DT> <B>Transparency</B>
+<DD> Map or constant which controls transparency level of surface (all
+opaque is default).  <p>
+
+<DT> <B>Shininess</B>
+<DD> Map or constant which controls shininess (reflectivity) of
+surface material.  <p>
+
+<DT> <B>Emission</B>
+<DD> Map or constant which controls light emitted from surface.  <p>
+
+</DL> <P>
+
+</BODY>
+</HTML>

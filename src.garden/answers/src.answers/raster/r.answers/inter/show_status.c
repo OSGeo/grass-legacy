@@ -30,14 +30,14 @@ show_status()
     FILE *status_fp;
 
     G_clear_screen();
-    fprintf (stdout,"\n\npreparing status report...\n\n");
+    fprintf (stderr,"\n\npreparing status report...\n\n");
 
     status_file = G_tempfile();
     status_fp = fopen (status_file, "w");
     if (!status_fp)
         croak(1, "unable to create and open tempfile for status report");
 
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
 
     fprintf(status_fp,"\n         ANSWERS on GRASS Project Current Status\n");
 
@@ -171,7 +171,7 @@ show_status()
 
     fclose(status_fp);
     
-    fprintf (stdout,"\nstatus file completed\n\n");
+    fprintf (stderr,"\nstatus file completed\n\n");
 
     hit_return();
 

@@ -110,7 +110,7 @@
     double northing_to_row(struct Cell_head *, double);
     double easting_to_col(struct Cell_head *, double);
     /* perform.c */
-    int perform_georef (int, CELL *);
+    int perform_georef (int, void *);
     /* rectify.c */
     int rectify(char *, char *, char *);
     /* report.c */
@@ -118,6 +118,6 @@
     /* target.c */
     int get_target(char *);
     /* write.c */
-    int write_matrix(int, int, int);
+    int write_matrix(int, int);
     
 #endif

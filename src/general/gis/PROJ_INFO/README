@@ -1,6 +1,0 @@
-
-The files in this directory are replacements which provide for 
-gis_set to call g.setproj automatically.  They are available for 
-use now if desired and should be installed by release 4.2.
-
- -dave gerdes

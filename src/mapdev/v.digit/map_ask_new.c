@@ -7,6 +7,7 @@
 #include "digit.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int ask_map_coor_ll (int n_points)
 {
@@ -31,27 +32,27 @@ int ask_map_coor_ll (int n_points)
 	coor_cnt = MAX_COOR - reg_cnt ;
 
 	/*  show min needed and max they can go to  */
-	sprintf(tmp,"    Enter %d - %d points :  points registered %d",
+	sprintf(tmp,_("    Enter %d - %d points :  points registered %d"),
 		(MIN_COOR > reg_cnt) ? MIN_COOR - reg_cnt : 0  , coor_cnt, reg_cnt);
 
 	V_clear();
-	V_line(1,"          MAP REGISTRATION POINTS ");
+	V_line(1,_("          MAP REGISTRATION POINTS "));
 	V_line(2, tmp);
         if (ll_ask == 2) {  /* reg file exists and is in lat/lon */
-	  V_line(3, "Coordinates should be in Latitude/Longtitude" );
-  	  V_line(5," Expected format for coordinates is dd:mm:ss.ffh");
-  	  V_line(6," where h is 'n' or 's' for Lat and 'e' or 'w' for Lon ");
-  	  V_line(7," dd, mm, ss have to be >= 0; use h to define hemisphere");
+	  V_line(3, _("Coordinates should be in Latitude/Longtitude") );
+  	  V_line(5,_(" Expected format for coordinates is dd:mm:ss.ffh"));
+  	  V_line(6,_(" where h is 'n' or 's' for Lat and 'e' or 'w' for Lon "));
+  	  V_line(7,_(" dd, mm, ss have to be >= 0; use h to define hemisphere"));
 
-	  V_line(9,"    Point #        Latitude               Longtitude");
+	  V_line(9,_("    Point #        Latitude               Longtitude"));
         }
         else {     /* Then ll_ask is 1 and user should be given a choice */
-	  V_line(3, " Enter 1 if points are in Lat/Lon and 0 otherwise:" );
+	  V_line(3, _(" Enter 1 if points are in Lat/Lon and 0 otherwise:") );
 	  V_ques ( &ll_flag, 'i', 3, 50, 2);
-  	  V_line(5,"Latitude/Longtitude points shouild be in dd:mm:ss.ffh format");
-  	  V_line(6,"where h is 'n' or 's' for Lat and 'e' or 'w' for Lon ");
-  	  V_line(7,"dd, mm, ss have to be >= 0; use h to define hemisphere");
-	  V_line(9,"    Point #     X coord (or Lat)         Y coord (or Lon)");
+  	  V_line(5,_("Latitude/Longtitude points shouild be in dd:mm:ss.ffh format"));
+  	  V_line(6,_("where h is 'n' or 's' for Lat and 'e' or 'w' for Lon "));
+  	  V_line(7,_("dd, mm, ss have to be >= 0; use h to define hemisphere"));
+	  V_line(9,_("    Point #     X coord (or Lat)         Y coord (or Lon)"));
         }
 
 
@@ -75,7 +76,7 @@ int ask_map_coor_ll (int n_points)
 		}
 	}
 
-	V_line(at_line + 2, "      Those marked by '*' are registered.");
+	V_line(at_line + 2, _("      Those marked by '*' are registered."));
 
 	V_intrpt_ok(); 
 

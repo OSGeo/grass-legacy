@@ -1,0 +1,42 @@
+***************************************************************************
+Note for SGI IRIX:
+
+You can get the GNU Tools and the GNU C compiler gcc in the IRIX tardist
+ready-to-install format from:
+
+  http://freeware.sgi.com
+
+***************************************************************************
+
+The newer GNU C compilers (gcc 2.8.1 and up) do no longer support the old 32
+bit ABI (o32 option), so that you have to compile in the new n32 format. The
+C compiler supports 64bit libraries and binaries on machines with 64bit
+architecture (IRIX64), but the GRASS vector library format currently is not
+interoperable between 32bit and 64bit. Please refer to the document
+ALPHA/README.alpha64 for compiling on 64bit platforms.
+
+You need to install the SGI back end tools (dev.sw.lib, etc.) from the
+Development Foundation CD and the Development Library CD from the IRIX 6.5
+distribution media set in order to use the GNU compiler gcc.
+
+The actual distribution (GRASS 5.0.0) should compile without problems on
+IRIX 6.5.x with the GNU compiler gcc and with the native IRIX compiler from
+SGI (MIPS PRO compiler).
+
+Compare the file REQUIREMENTS for the libraries that need to be installed
+in order to link to.
+
+The resulting binaries get very huge, because the linker flag -s to ld for
+stripping the binaries does not work (you get a core dump). You can remove
+the symbol table with the IRIX strip command like this:
+
+cd /usr/local/grass5
+find . -type f -perm 0755 -exec strip {} \;
+
+This may require root permissions. strip will give you many warnings, but i
+noticed no problems. All programs still work. Never use the -f flag to
+strip. Do not strip the binaries if you want to debug the programs later.
+
+-- 
+$Id$
+Andreas Lange, andreas.lange@rhein-main.de

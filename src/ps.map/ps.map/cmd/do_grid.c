@@ -125,7 +125,7 @@ int do_grid_numbers (void)
 	if (y + PS.grid_fontsize > last_bottom) continue;
 	if (y - PS.grid_fontsize < (int)PS.map_bot) continue;
         sprintf(num_text, "%s", format_northing(g, rounded_grid));
-	text_box_path(x, y, LEFT, CENTER, num_text, PS.grid_fontsize);
+	text_box_path(x, y, LEFT, CENTER, num_text, PS.grid_fontsize, 0);
 	set_rgb_color(WHITE);
 	fprintf(PS.fp, "F ");
 	set_rgb_color(PS.grid_numbers_color);

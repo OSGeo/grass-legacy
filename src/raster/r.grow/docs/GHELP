@@ -1,5 +1,0 @@
-Ggrow [-vb] inputlayer outputlayer
-    Grows each area by one pixel.  If user specifies the
-    -b option, result will be binary, regardless of input.
-    Otherwise, only grown pixels will be category 1, all else
-    left as in original.

@@ -1,4 +1,5 @@
-/**************************************************************
+/*
+ **************************************************************
  * db.select -cdh driver=name database=name [location=name] \
  *	      [fs=|] [vs=] [nv=null-indicator] [input=filename]
  *
@@ -26,7 +27,8 @@ struct {
 
 void parse_command_line();
 
-main(argc, argv) char *argv[];
+int
+main(int argc, char *argv[])
 {
     dbString stmt;
     dbDriver *driver;
@@ -71,7 +73,7 @@ main(argc, argv) char *argv[];
     exit(stat);
 }
 
-select (driver, stmt)
+int select (driver, stmt)
     dbDriver *driver;
     dbString *stmt;
 {
@@ -149,17 +151,19 @@ parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*h;
+    struct GModule *module;
+    
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->required 	= YES;
+    driver->required 	= NO;           /* changed to NO, RB 4/2000 */
     driver->description = "driver name";
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
-    database->required 	= YES;
+    database->required 	= NO;         /* changed to NO, RB 4/2000 */
     database->description = "database name";
 
     location 		= G_define_option();
@@ -207,8 +211,15 @@ parse_command_line(argc, argv) char *argv[];
     h->description	= "horizontal output (instead of vertical)";
 
     G_disable_interactive();
-    if(G_parser(argc, argv))
-	exit(ERROR);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Select data from database.";
+    
+    if (argc > 1) {
+	if(G_parser(argc, argv)) exit(ERROR);
+    }
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
@@ -229,6 +240,7 @@ parse_command_line(argc, argv) char *argv[];
     }
 }
 
+int
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
@@ -253,6 +265,7 @@ get_stmt(fd, stmt)
     return 1;
 }
 
+int
 stmt_is_empty(stmt)
     dbString *stmt;
 {
@@ -261,6 +274,7 @@ stmt_is_empty(stmt)
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
 
+int
 print_column_definition(column)
     dbColumn *column;
 {

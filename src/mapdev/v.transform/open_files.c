@@ -1,3 +1,18 @@
+/*
+****************************************************************************
+*
+* MODULE:       v.transform
+* AUTHOR(S):    See other files as well...
+*               Eric G. Miller <egm2@jps.net>
+* PURPOSE:      To transform a vector layer's coordinates via a set of tie
+*               points.
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 
 /*
 *  open_vect_files() - asks the user for vector filenames and opens the files with
@@ -20,64 +35,7 @@
 #include	"gis.h"
 #include	"trans.h"
 
-#define		ASCII_DIR    "dig_ascii"
 #define		ATTS_DIR      "dig_att"
-
-int 
-open_vect_files (struct file_info *Readfile, struct file_info *Writefile, struct file_info *Coordfile)
-{
-/*  check for existance of support directories  */
-	G__make_mapset_element(ASCII_DIR) ;
-
-
-/*  If the name wasn't given on the command line, ask for it  */
-	if ( Readfile->name[0] == '\0')
-		Readfile->mapset = G_ask_old( " ASCII VECTOR (DIGIT) FILE TO TRANSFORM",
-			Readfile->name, ASCII_DIR, "ascii vector") ;
-	else
-		Readfile->mapset =  G_mapset() ;
-
-	if ( ! Readfile->mapset)
-		exit(0) ;
-
-	G__file_name( Readfile->full_name, ASCII_DIR, Readfile->name, Readfile->mapset) ;
-
-/*  Now do the same for the output file  */
-
-	if ( Writefile->name[0] == '\0')
-		Writefile->mapset = G_ask_new( " FILENAME TO STORE TRANSFORMED ASCII VECTOR FILE",
-			Writefile->name, ASCII_DIR, "ascii vector") ;
-	else
-		Writefile->mapset =  G_mapset() ;
-
-	if ( ! Writefile->mapset)
-		exit(0) ;
-
-	G__file_name( Writefile->full_name, ASCII_DIR, Writefile->name, Writefile->mapset) ;
-
-/*  Open the files with appropriate modes  */
-	if ( (Readfile->fp = fopen(Readfile->full_name, "r"))  ==  NULL)
-	{
-		fprintf(stderr, "Can't open vector file : %s\n", Readfile->full_name) ;
-		exit(-1) ;
-	}
-
-	if ( (Writefile->fp = fopen(Writefile->full_name, "w"))  ==  NULL)
-	{
-		fprintf(stderr, "Can't open vector file : %s\n", Writefile->full_name) ;
-		exit(-1) ;
-	}
-
-	if ( Coordfile->name[0] != '\0')
-	if ( (Coordfile->fp = fopen(Coordfile->name, "r"))  ==  NULL)
-	{
-		fprintf(stderr, "Can't open file with coordinates : %s\n", Coordfile->name) ;
-		exit(-1) ;
-	}
-
-	return(0) ;
-}
-
 
 int 
 open_att_files (struct file_info *Readfile, struct file_info *Writefile)

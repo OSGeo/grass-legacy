@@ -34,8 +34,6 @@ struct start_pt{
          {"coor",START_PT}
     };
 
-    static int n_variables = 3;
-
     char cum_cost_layer[64];
     char cost_layer[64];
     struct start_pt *head_start_pt = NULL;
@@ -50,7 +48,7 @@ struct start_pt{
 
 #endif
 
-int process_answers(char **, struct start_pt **);
+int process_answers(char **, struct start_pt **, struct start_pt **);
 int time_to_stop(int, int);
 
 /****************END OF "GCOST_CMD_LINE.H"**********************/ 

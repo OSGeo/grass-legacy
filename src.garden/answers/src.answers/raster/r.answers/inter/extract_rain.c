@@ -43,12 +43,12 @@ extract_rain(gauges)
     CELL *mask_cell;
 
     if (gauges > 1)
-        fprintf (stdout,"\n\nExtracting ANSWERS input data from <%s in %s>\n\n",
+        fprintf (stderr,"\n\nExtracting ANSWERS input data from <%s in %s>\n\n",
         rain_layer, rain_mapset);
     else
-        fprintf (stdout,"\n\nCreating ANSWERS input data\n\n");
+        fprintf (stderr,"\n\nCreating ANSWERS input data\n\n");
 
-    fprintf (stdout,"working...\n\n");
+    fprintf (stderr,"working...\n\n");
 
     if (gauges > 1)
     {

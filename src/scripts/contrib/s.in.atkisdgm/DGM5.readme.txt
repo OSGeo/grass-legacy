@@ -1,0 +1,552 @@
+ATKIS-DGM
+________________________________________________________________________________
+
+ATKIS = Amtliches Topographisch-Kartographisches Informationssystem
+DGM   = Digitales Gelaendehoehen-Modell
+________________________________________________________________________________
+
+Inhalt
+________________________________________________________________________________
+
+	1   ...... Aufgabe und Zielsetzung
+	2   ...... Digitale Gelaendehoehen-Modelle - DGM -
+	2.1 ...... DGM 5
+	2.2 ...... DGM 50
+	3   ...... Nutzungsmoeglichkeiten
+	4   ...... Datenabgabe, Bestellung
+	5   ...... Nutzungsbedingungen
+	6   ...... Gebuehren
+	7   ...... Digitale Gelaendehoehen-Modelle Niedersachsen - Ueberblick -
+	8   ...... Information und Beratung
+	
+	Anlagen
+	A1  ...... Verschluesselung von Basishoehendaten 
+	A2  ...... Datensatzbeschreibungen
+	A2.1 ..... Kotenformat
+	A2.2 ..... DGM-Format
+	A2.3 ..... Hoehenlinienformat
+	A2.4 ..... Datenaustauschformate
+	A3  ...... Inhalte der Dateien
+	A3.1 ..... DGM 5
+	A3.2 ..... DGM 50
+
+
+________________________________________________________________________________
+
+1  Aufgabe und Zielsetzung
+________________________________________________________________________________
+
+   Die Vermessungs- und Katasterverwaltungen der Laender der Bundesrepublik 
+   Deutschland haben den gesetzlichen Auftrag, die topographischen Gegenstaende 
+   und Gelaendeformen des Landesgebietes zeitnah zu erfassen und nachzuweisen. 
+   Die Ergebnisse dieser Topographischen Landesaufnahme wurden bisher fast 
+   ausschliesslich analog in den Topographischen Landeskartenwerken der 
+   Massstaebe 1:5 000 bis 1:1 000 000 dargestellt.
+
+   Die Nachfrage unterschiedlicher Nutzer nach digitalen topographischen 
+   Informationen hat sich in den letzten Jahren staendig verstaerkt. Diesen 
+   Wuenschen entsprechend entwickelte die Arbeitsgemeinschaft der Vermessungs-
+   verwaltungen der Laender der Bundesrepublik Deutschland (AdV) als bundesweites 
+   Gemeinschaftsprojekt das Amtliche Topographisch-Kartographische Informations-
+   system (ATKIS).
+
+   Das ATKIS besteht aus dem
+   - Digitalen Landschaftsmodell (DLM), das derzeit bundesweit mit hoher 
+     Prioritaet aufgebaut wird.
+   
+   Das ATKIS-Konzept sowie Inhalt, Aufbau und Nutzungsmoeglichkeiten des an der 
+   Topographischen Karte 1:25 000 (TK 25) orientierten DLM 25 sind umfassend in 
+   einem Faltblatt beschrieben, auf das sich diese Darstellung bezieht. Hiernach
+   wurden in einer ersten, bis 1995 realisierten Aufbaustufe des DLM 25/1 
+   die topographischen Objekte nur zweidimensional nachgewiesen. Die Gelaende-
+   formen - und damit die dritte Dimension - werden in Niedersachsen zunaechst 
+   unabhaengig vom DLM 25/1 in Digitalen Gelaendehoehen-Modellen (DGM 5 und DGM 50) 
+   erfasst.
+
+   Das DGM 5 soll zu einem spaeteren Zeitpunkt in das DLM 25 integriert werden. 
+   Aufgrund seiner hohen Qualitaet kann das DGM 5 fuer Arbeiten in groesseren 
+   Massstaeben auch mit der derzeit im landesweiten Aufbau befindlichen 
+   Automatisierten Liegenschaftskarte (ALK) kombiniert werden.
+  
+   In anderen Laendern werden die digitalen Hoehendaten zum Teil unter den zum DGM 
+   synonymen Bezeichnungen DHM (Digitales Hoehenmodell) oder - im englisch-
+   sprachigen Raum - DTM (Digital Terrain Model) bzw. DEM (Digital Elevation 
+   Model) gefuehrt. 
+________________________________________________________________________________
+
+2  Digitale Gelaendehoehen-Modelle - DGM -
+________________________________________________________________________________
+
+   Digitale Gelaendehoehen-Modelle beschreiben die Gelaendeoberflaeche als Grenz-
+   flaeche zwischen dem Erdkoerper (inklusive Wasser) und der Atmosphaere durch 
+   die raeumlichen Koordinaten (Rechts, Hoch, Hoehe ueber NN) einer repraesentativen 
+   Menge von Gelaendepunkten. Damit werden Hoeheninformationen massstabsunabhaengig 
+   und datenverarbeitungsgerecht vorgehalten.
+
+   Die Niedersaechsische Vermessungs- und Katasterverwaltung stellt zwei unter-
+   schiedlich genaue und verschieden strukturierte Digitale Gelaendehoehen-Modelle 
+   bereit: das DGM 5, welches hohe Qualitaetsansprueche erfuellt und das 
+   geringeren Anforderungen genuegende DGM 50. Der gitterfoermige Aufbau beider 
+   Gelaendehoehen-Modelle ermoeglicht eine einfache Datenorganisation.
+
+
+________________________________________________________________________________
+
+2.1 DGM 5
+________________________________________________________________________________
+
+   Die Basis-Hoehendaten fuer die DGM 5-Berechnung werden gewonnen durch
+   - photogrammetrische, punktweise-digitale Hoehenauswertung von Luftbildern 
+     sowie durch zusaetzliche terrestrische Messungen in nicht einsehbaren 
+     Gebieten (z. B. Wald) oder durch
+   - Digitalisierung der analogen Hoeheninformationen (Hoehenlinien/Hoehenpunkte) 
+     vorhandener Deutscher Grundkarten 1:5 000 (DGK 5N).
+   - Laserscanner-Verfahren
+  
+   Aus den Basis-Hoehendaten wird unter Beruecksichtigung geomorphologisch 
+   praegnanter Informationen wie Geripplinien und Gelaendekanten das DGM 5 in 
+   einer standardmaessigen Gitterweite von 12,5 m x 12,5 m interpoliert. Die 
+   Geomorphologie-Informationen sind wesentliche Bestandteile des DGM 5.
+   Als zusaetzliche Informationen koennen fuer jeden Gitterpunkt die Richtung
+   und Groesse der Gelaendeneigung angegeben werden.
+
+   Die DGM 5-Punkte sind im Gauss-Krueger-Koordinatensystem bestimmt und beziehen 
+   sich auf Normal Null (NN). Das DGM 5 approximiert die Gelaendeoberflaeche in 
+   zwei Genauigkeitsstufen:
+   
+   Stufe 1 - DGM 5 (1)
+	  
+      Durch die ausschliessliche Verwendung hochqualitativer
+      Basis-Hoehendaten (entsprechend genau, zuverlaessig und
+      genuegend dicht) betraegt der durchschnittliche Abstand der 
+      Gitterpunkte zur Gelaendeoberflaeche weniger als 0,5 m.
+ 
+   Stufe 2 - DGM 5 (2)
+	
+      In Gebieten, in denen die Erfassung hochqualitativer Basis-Hoehendaten 
+      weder topographisch noch wirtschaftlich sinnvoll ist (kleinfoermiges 
+      natuerliches Gelaende, wie z. B. Duenen; kuenstliche Gelaendeformen), betraegt 
+      der durchschnittliche Abstand der Gitterpunkte zur Gelaendeoberflaeche 1,5 m.
+
+   Die beiden Genauigkeitsstufen werden durch Datendeskriptoren unterschieden.
+   Alternativ zu dem gitterfoermigen DGM 5 koennen auch die daraus abgeleiteten 
+   Hoehenlinien in digitaler Form abgegeben werden.
+
+________________________________________________________________________________
+
+2.2 DGM 50
+________________________________________________________________________________
+
+   Nutzern, fuer die die hohe Qualitaet des DGM 5 nicht erforderlich ist, steht fuer 
+   ganz Niedersachsen das DGM 50 zur Verfuegung. Es entstand durch Digitalisierung 
+   der Hoeheninformationen der Topographischen Karte 1:50 000 (TK 50) und der an-
+   schliessenden Interpolation
+   - eines 50 m-Gitters im Gauss-Krueger-Koordinatensystem sowie
+   - eines 3-Bogensekunden-Gitters in geographischen Koordinaten 
+     (3 Bogensekunden entsprechen im mittleren Niedersachsen ca. 93 m in 
+     Nord-Sued-Ausdehnung und ca. 57 m in Ost-West-Ausdehnung).
+  
+   Geomorphologie-Informationen sind dabei nur in geringem Umfang beruecksichtigt 
+   worden.
+
+   Die DGM 50-Punkte im Gauss-Krueger-Koordinatensystem sind sowohl im 2., 3. und 
+   4. Meridianstreifen bestimmt, als auch - auf Wunsch - landesweit im 
+   3. Meridianstreifen verfuegbar.
+   Die Bezugsflaeche fuer die Hoehe der DGM 50-Punkte ist Normal Null (NN).
+   Beide DGM 50-Varianten approximieren die Gelaendeoberflaeche mit einem durch-
+   schnittlichen Abstand von einigen Metern. In Einzelfaellen, besonders im Berg-
+   land, koennen Abweichungen von mehr als |10| m auftreten.
+
+________________________________________________________________________________
+
+3  Nutzungsmoeglichkeiten
+_______________________________________________________________________________
+
+   Die Nutzungsmoeglichkeiten Digitaler Gelaendehoehen-Modelle sind - auch ohne 
+   Bezug zu topographischen Lageinformationen (z. B. des DLM 25) - vielfaeltig. 
+   Sie reichen von der einfachen Auswertung und speziellen Darstellung der im 
+   DGM gespeicherten Hoeheninformationen (z. B. Hoehenlinien oder Perspektiv-
+   ansichten) bis hin zur Verschneidung der Hoehendaten mit Fachinformationen 
+   (z. B. Emissions-/Immissionsuntersuchungen).
+________________________________________________________________________________
+
+4  Datenabgabe, Bestellung
+________________________________________________________________________________
+
+   Die Koordinatentripel der Digitalen Gelaendehoehen-Modelle und ihre zugehoerigen 
+   Informationen werden wahlweise in festen oder variablen Datensaetzen auf allen 
+   gaengigen Datentraegern an Nutzer abgegeben.
+   Die kleinste Flaecheneinheit fuer die Abgabe sowohl von DGM 5- als auch von 
+   DGM 50-Daten ist 1 qkm.
+
+   Der ungefaehre Speicherbedarf pro qkm betraegt fuer das
+   DGM 5:   550 Kilobyte
+   DGM 50:   20 Kilobyte.
+
+   Die DGM-Daten sind nur bei der LGN zu beziehen. Ein Antrag ist 
+   schriftlich zu stellen und sollte folgendes enthalten:
+   - Nutzungszweck
+   - Gebietsdefinition
+   - Datenformat, Datentraeger
+   - Sonderwuensche. 
+
+________________________________________________________________________________
+
+5  Nutzungsbedingungen
+________________________________________________________________________________
+
+   Die von der LGN herausgegebenen digitalen topographischen Informationen 
+   sind gesetzlich geschuetzt. Ihre Bereitstellung und damit die Einraeumung eines 
+   Nutzungsrechts setzt die Anerkennung von Nutzungsbedingungen voraus. Diese 
+   sehen u. a. vor, dass
+   - die Nutzung der Daten auf den erlaubten Zweck beschraenkt ist,
+   - die bereitgestellten Daten nur im internen Bereich des Kunden genutzt und 
+     fuer diesen Zweck auch umgearbeitet
+      - z. B. generalisiert oder thematisch erweitert - werden duerfen,
+   - die bereitgestellten Daten nicht an Dritte weitergegeben werden duerfen,
+   - die Weitergabe umgearbeiteter Daten nur mit einer besonderen Erlaubnis 
+     (ggf. eines Vertrages) zulaessig ist, die im Falle einer gewerblichen 
+     Datennutzung ein produktabhaengiges Stueckentgelt vorsieht,
+   - ein mit der Datenbearbeitung beauftragter Subunternehmer die Daten nicht 
+     fuer seine eigenen Zwecke nutzen und nicht weitergeben darf.
+________________________________________________________________________________
+
+6  Gebuehren
+________________________________________________________________________________
+
+   Fuer die Bereitstellung der DGM 5- und DGM 50-Daten werden folgende 
+   Gebuehren erhoben (DM/qkm):
+
+
+   DGM 5
+
+   ohne Strukturinformation    mit Strukturinformation    Hoehenlinien
+   ---------------------------------------------------------------------------
+   60 DM/qkm                   100 DM/qkm                 3 DM/qkm  
+
+
+   DGM 50
+
+   Beantragte Flaeche in qkm   Gebuehren
+   ---------------------------------------------------------------------------
+   fuer den 1. - 5 000.         3 DM/qkm
+   fuer den 5 001. - 25 000.    2 DM/qkm
+   fuer den 25 001. - 50 000.   1 DM/qkm
+
+   
+   Das Mindestentgelt betraegt jeweils 200 DM.
+
+
+________________________________________________________________________________
+
+7  Digitale Gelaendehoehen-Modelle in Niedersachsen - šberblick -
+________________________________________________________________________________
+
+   +---------------------+--------------------+--------------------+
+   |                     |        DGM 5       |       DGM 50       |
+   +---------------------+--------------------+--------------------+
+   | Gitterweite         | 12,5 m x 12,5 m    | 50 m x 50 mbzw.    |
+   |                     |                    | 3" x 3"            |
+   +---------------------+--------------------+--------------------+
+   | durchschnittliche   | (1) < |0,5| m      | einige Meter       |
+   | Hoehengenauigkeit   | (2) < |1.0| m      | teilw. >|10| m     |
+   +---------------------+--------------------+--------------------+
+   | Bezugsysteme:       |                    |                    |
+   |    - Lage           |   Gauss-Krueger    |   Gauss-Krueger/   |
+   |                     |                    |   geographisch     |
+   |    - Hoehe          |   Normal Null (NN) |   Normal Null (NN) |
+   +---------------------+--------------------+--------------------+
+   | zusaetzliche Relief-| Neigung, Geo-      | -                  | 
+   | informationen       | morphologiedaten   |                    |
+   +---------------------+--------------------+--------------------+
+   | kleinste            |       1 qkm        |       1 qkm        |
+   | Abgabeeinheit       |                    |                    |
+   +---------------------+--------------------+--------------------+
+
+
+________________________________________________________________________________
+
+8. Information und Beratung
+________________________________________________________________________________
+
+
+   Fuer spezielle Fragen stehen wir Ihnen gerne zur Verfuegung.
+   Sie erreichen uns unter:
+ 
+	LGN - Landesvermessung + Geobasisinformation Niedersachsen
+	Podbielskistra˜e 331
+	30659 Hannover
+
+	Telefax (0511) 64609 - 165
+
+	Ihre Ansprechpartner 
+	Frank Gundelach, Telefon (05 11) 6 46 09 - 3 08 
+	Anita Perszewski, Telefon (05 11) 6 46 09 - 3 76 
+	Susanne Proessler, Telefon (05 11) 6 46 09 - 3 04 
+
+________________________________________________________________________________
+
+Anhang
+________________________________________________________________________________
+
+A1 Verschluesselung von Basishoehendaten zur ATKIS-DGM 5-Herstellung 
+________________________________________________________________________________
+
+   I. Basishoehendaten der Qualitaetsstufe 1 (Q1-Daten)
+     (dm-Hoehengenauigkeit, repraesentativ, zuverlaessig; hieraus wird das 
+      DGM 5 (1) abgeleitet, das die Gelaendeoberflaeche mit einem Abstand 
+      (Lot vom Gelaende auf das DGM) von <|0,5|m approximieren soll)
+
+   +-----+----------------------------+------------+
+   | KZ  | Punktart                   | Inter-     |
+   |     |                            | polations- |
+   |     |                            | punkt      |
+   +-----+----------------------------+------------+
+   | 00  | Gelaendepunkt              |   ja       |
+   +-----+----------------------------+------------+
+   | 01  | Gelaendepunkt              |   ja       |
+   |     | (Messtisch-Stationspunkt)  |            |
+   +-----+----------------------------+------------+
+   | 02  | Gelaendepunkt              |   ja       |
+   |     | (Messtisch-Wechselpunkt)   |            |
+   +-----+----------------------------+------------+
+   | 10  | Passpunkt                  |   nein     |
+   |     | (photogrammetrisch)        |            |
+   +-----+----------------------------+------------+
+   | 20  | Punkt auf Wegen, Strassen, |   nein     |
+   |     | Daemmen, Wasserstandshoehe |            |    
+   +-----+----------------------------+------------+
+   | 21  | wie KZ 20                  |   nein     |
+   +-----+----------------------------+------------+
+   | 30  | Besonderer Gelaendepunkt   |   ja       |
+   +-----+----------------------------+------------+
+   | 31  | wie 30                     |   ja       |
+   +-----+----------------------------+------------+
+   | 40  | Kontrollpunkt              |   nein     |
+   |     | (photogrammetrisch)        |            |
+   +-----+----------------------------+------------+
+   | 51  | Anfangs-/Endpunkt der Be-  |   nein     |
+   |     | grenzungslinie einer Aus-  |            |
+   |     | sparungsflaeche (A50) mit  |            |
+   |     | DGM aber ohne Hoehenlinie  |            |
+   | 52  | Zwischenpunkt einer Be-    |   nein     |       
+   |     | grenzungslinie der A50     |            |
+   +-----+----------------------------+------------+
+   | 61  | Anfangs-/Endpunkt einer    |   ja       |
+   |     | Geripplinie                |            |
+   | 62  | Zwischenpunkt in einer     |   ja       | 
+   |     | Geripplinie                |            |
+   +-----+----------------------------+------------+
+   | 71  | Anfangs-/Endpunkt der Be-  |            |
+   |     | grenzungslinie einer Aus-  |   ja,      |
+   |     | sparungsflaeche (A70) ohne |   wenn     |
+   |     | DGM und Hoehenlinie        |   Hoehe     |
+   | 72  | Zwischenpunkt einer Be-    |   vorhanden|       
+   |     | grenzungslinie der A70     |            |
+   +-----+----------------------------+------------+
+
+
+
+   +-----+----------------------------+------------+
+   | 81  | Anfangs-/Endpunkt einer    |   ja       |
+   |     | Gelaendekante              |            |
+   | 82  | Zwischenpunkt in einer     |   ja       | 
+   |     | Gelaendekante              |            |
+   +-----+----------------------------+------------+
+   | 91  | Anfangs-/Endpunkt der Be-  |   ja       |
+   |     | grenzungslinie einer Aus-  |            |
+   |     | sparungsflaeche (A90) ohne |            |
+   |     | DGM und Hoehenlinie        |            |
+   | 92  | Zwischenpunkt einer Be-    |   ja       |       
+   |     | grenzungslinie der A90     |            |
+   +-----+----------------------------+------------+
+
+   II. Basishoehendaten der Qualitaetsstufe 2 (Q2-Daten)
+     Hoehengenauigkeit  <|1|m, bedingt repraesentativ und zuverlaessig; 
+     hieraus wird das DGM 5(2) abgeleitet, das die Gelaendeoberflaeche mit 
+     einem durchschnittlichen Abstand von |1,5|m approximiert.
+
+   +-----+----------------------------+------------+
+   | KZ  | Punktart                   | Inter-     |
+   |     |                            | polations- |
+   |     |                            | punkt      |
+   +-----+----------------------------+------------+
+   | 200 | wie unter KZ 00            |   ja       |
+   +-----+----------------------------+------------+
+   | 261 | wie unter KZ 61,62         |   ja       |
+   | 262 |                            |   ja       |
+   +-----+----------------------------+------------+
+   | 281 | wie unter KZ 81,82         |   ja       |
+   | 282 |                            |   ja       |
+   +-----+----------------------------+------------+
+
+
+________________________________________________________________________________
+
+A2 Datensatzbeschreibungen
+________________________________________________________________________________
+
+A2.1 Kotenformat 
+________________________________________________________________________________
+
+   Extensions KTB und STR
+
+   1. Satz: Kommentarsatz mit dem Inhalt:
+      Format = (80A1)
+      Spalte 1-79:  DGK 5 - Nummer und -name, Tagesdatum (Vorschlag)
+      Spalte 80:    Minuszeichen (-)
+
+   Alle weiteren Saetze sind Datensaetze mit folgendem Aufbau:
+      Format = (1X,I3,3(2X,F10.2),40X)
+      Spalte  1    :  Blank ( )
+      Spalte  2- 4 :  Kennziffer der Kote (siehe 8.)
+      Spalte  5- 6 :  Blank
+      Spalte  7-16 :  Rechtswert der Kote
+      Spalte 17-18 :  Blank
+      Spalte 19-28 :  Hochwert der Kote
+      Spalte 29-30 :  Blank
+      Spalte 31-40 :  Hoehe der Kote
+      Spalte 41-80 :  Blank  
+
+    Koten der Kennzifferngruppen 50 und 70 ohne gemessene Hoehen werden
+    mit der Hoehe 9999.99 ausgegeben.
+________________________________________________________________________________
+
+A2.2 DGM-Format
+________________________________________________________________________________
+
+   Extension DGM
+
+   1. Satz: Kommentarsatz mit dem Inhalt:
+      Format = (80A1)
+      Spalte 1-80:  DGK 5 - Nummer und -name, Tagesdatum (Vorschlag)
+
+   Alle weiteren Saetze sind Datensaetze mit folgendem Aufbau:
+      Format = (I5,2(1X,F10.2),2X,I1,1X,F9.2,4(F10.2))
+      Spalte  1- 5 :  fortlaufende Nummerierung
+      Spalte  6    :  Blank
+      Spalte  7-16 :  Rechtswert des DGM-Punktes
+      Spalte 17    :  Blank
+      Spalte 18-27 :  Hochwert des DGM-Punktes 
+      Spalte 28-29 :  Blank
+      Spalte 30    :  Qualitaetsstufe (1 oder 2)
+      Spalte 31    :  Blank
+      Spalte 32-40 :  Hoehe des DGM-Punktes
+      Spalte 41-50 :  Rechtswertkomponente des Gradientenvektors (in gon)
+      Spalte 51-60 :  Hochwertkomponente des Gradientenvektors (in gon)
+      Spalte 61-70 :  Gefaellwinkel (in gon)
+      Spalte 71-80 :  Gefaellrichtung (in gon)
+
+
+________________________________________________________________________________
+    
+A2.3 Hoehenlinienformat
+________________________________________________________________________________
+
+    Extension HLB
+
+    Die Hoehenlinien werden nach folgenden Satzarten ausgegeben:
+
+    Satzart 10 : Einleitung der Hoehenliniendatei
+    Satzart 20 : Einleitung einer neuen Hoehenstufe
+    Satzart 30 : Datensaetze der Hoehenlinie
+    Satzart 50 : Ende der Hoehenliniendatei
+
+    Im allgemeinen ergibt sich hieraus folgendes Bild:
+    10,20,30...30,20,30...30,20,30....30,...,50
+
+    Die Satzarten haben im einzelnen folgenden Aufbau:
+
+      Satzart 10:
+      Spalte  1- 2 :  Satzart 10
+      Spalte  3-10 :  Dimension (NHLM)
+      Spalte 11-20 :  Additionskonstante fuer x (ADDX)
+      Spalte 21-30 :  Additionskonstante fuer y (ADDY)
+      Spalte 31-80 :  Blank
+
+      Satzart 20:
+      Spalte  1- 2 :  Satzart 20
+      Spalte  3-10 :  Anzahl der Punkte in der Linie (LHST)
+      Spalte 11-20 :  Kenng. geschlossene Linie (0=offen, 50=geschl.) (KRI)
+      Spalte 21-30 :  Hoehenstufe (HL)
+      Spalte 31-80 :  Blanks
+
+      Satzart 30:
+      Spalte  1- 2 :  Satzart 30
+      Spalte  3-10 :  laufende Nummer (N)
+      Spalte 11-20 :  x-Wert (X)
+      Spalte 21-30 :  y-Wert (Y)
+      Spalte 31-80 :  Blank
+
+      Satzart 50:
+      Spalte  1- 2 :  Satzart 50
+      Spalte  3-80 :  Blank
+
+      Folgende Werte werden in Metern mit 2 Nachkommastellen ausgegeben:
+	HL, X, Y
+
+      Folgende Werte werden ganzzahlig in Metern ausgegeben:
+	ADDX, ADDY
+
+      Die Landeskoordinaten ergeben sich wie folgt:
+	Rechtswert = X + ADDX
+	Hochwert   = Y + ADDY
+
+
+________________________________________________________________________________
+
+A2.4 Datenaustauschformate
+________________________________________________________________________________
+
+    Extension DXF und SQD
+
+    Die Datenaustauschformate DXF und SQD sind fuer Standard CAD- bzw.
+    GIS-Anwendungen, wie z.B. AutoCAD, SICAD, ArcView, usw. gedacht.
+    In diesem Rahmen soll nicht weiter auf die Formatbeschreibungen
+    eingegangen werden.
+________________________________________________________________________________
+
+A3 Inhalt der Dateien
+________________________________________________________________________________
+
+A3.1 DGM 5
+________________________________________________________________________________
+
+    Verzeichnis \DGM 5\
+
+    Bl„tter:
+    3622/20      
+    3622/21
+    3622/26
+    3622/27
+
+    ......(p).ktb  KTB-Format  Punkte
+    ......(d).ktb   - " -      DGM-Punkte
+    ......(h).hlb  PLOT in HLB-Format
+
+    ......(p).dxf  DXF-Format  Punkte
+    ......(d).dxf  DXF-Format  DGM-Punkte
+    ......(h).dxf  DXF-Format  PLOT 
+
+    ......(p).sqd  SQD-Format  Punkte
+    ......(d).sqd  SQD-Format  DGM-Punkte
+    ......(h).sqd  SQD-Format  PLOT
+
+
+________________________________________________________________________________
+
+A3.2 DGM 50
+________________________________________________________________________________
+
+    Verzeichnis \DGM 50\
+
+
+    DGM - Gitterweite 50 m 
+    ----------------------
+    DGM 50d.ktb     KTB-Format  DGM-Punkte    
+    DGM 50d.dxf     DXF-Format  DGM-Punkte
+    DGM 50d.sqd     SQD-Format  DGM-Punkte 
+
+________________________________________________________________________________
+
+Herausgeber:  LGN   Landesvermessung + Geobasisinformation Niedersachsen 1998

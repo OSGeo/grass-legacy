@@ -1,6 +1,0 @@
-
-@man("v.in.tiger") - Imports and converts line data in Census Bureau TIGER format
-to GRASS's vector format, and stores output in the user's current
-GRASS mapset.
-
-(GRASS Vector Data Import Program)

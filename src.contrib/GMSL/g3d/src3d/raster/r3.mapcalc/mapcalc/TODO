@@ -1,0 +1,14 @@
+Bug: r3.mapcalc crashes with non-cubic volumes.
+
+Reason is probably a bug in z() which obviously reads
+ew or ns instead of top-bottom.
+
+--------------------
+This r3.mapcalc implementation is partly outdated (ignoring
+several GRASS lib functions).
+
+For upgrade current r.mapcalc should be used and the 3D
+extensions merged into. That might be less work than
+fixing all the oldish code here.
+
+2/2002 MN

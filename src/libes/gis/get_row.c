@@ -77,6 +77,7 @@
  **********************************************************************/
 
 #include "config.h"
+#include "glocale.h"
 #include <rpc/types.h> /* need this for sgi */
 #include <rpc/xdr.h>
 
@@ -110,10 +111,7 @@
 #define MASK_BUF         G__.mask_buf
 #define NULL_FILE_EXISTS FCB.null_file_exists
 
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-
-#define DATA_BUF2    G__.work_buf
+#define DATA_BUF2    G__.work_buf 
 
 /*--------------------------------------------------------------------------*/
 
@@ -132,7 +130,7 @@ compute_window_row (int fd, int row, int *cellRow)
 
   /* check for row in window */
   if (row < 0 || row >= WINDOW.rows) {
-    G_warning ("[%s in %s] - read request for row %d is outside region",
+    G_warning (_("[%s in %s] - read request for row %d is outside region"),
 	     FCB.name, FCB.mapset, row);
     
     return -1;
@@ -178,19 +176,26 @@ fprintf (stderr, "   reclass\n\r");
   {
     if(G_is_c_null_value(c)) 
     {
-       c++;
-       continue;
+      if (null_is_zero)
+	*c = 0;
+      c++;
+      continue;
     }
-    v = *(c);
+    v = *c;
     if (v < min || v > max)
     {
-       if(null_is_zero)
-	   *(c)++ = 0;
-       else
-           G_set_c_null_value(c++,1);
+      if(null_is_zero)
+	*c++ = 0;
+      else
+	G_set_c_null_value(c++,1);
     }
     else
-      *(c)++ = reclass_table [v - min];
+    {
+      *c = reclass_table [v - min];
+      if(null_is_zero && G_is_c_null_value(c))
+	*c = 0;
+      c++;
+    }
   }
 }
 
@@ -225,8 +230,14 @@ read_data_fp_compressed (int fd, int row, unsigned char *data_buf, int *nbytes)
   if (lseek(fd, FCB.row_ptr[row],0) < 0) return -1;
 
   *nbytes = FCB.nbytes;
-  if (G_lzw_read (fd, data_buf, DATA_NCOLS * FCB.nbytes) != 
-      DATA_NCOLS * FCB.nbytes) 
+  /* The subtraction of offsets lets G_zlib_read know exactly
+   * how many bytes to read (which in some case may be more than
+   * the output bytes)
+   */
+  if (G_zlib_read (fd, 
+			  FCB.row_ptr[row+1] - FCB.row_ptr[row],
+	               	  data_buf, DATA_NCOLS * FCB.nbytes) !=
+		  DATA_NCOLS * FCB.nbytes)
     return -1;
 
   return 0;
@@ -390,6 +401,7 @@ cell_values_float (int fd, register unsigned char *data, register COLUMN_MAPPING
   register XDR* xdrs;
   register FCELL *c;
   register COLUMN_MAPPING cmapold;
+  char rsbbuf[40];
 
   c = (FCELL *) cell;
 
@@ -405,9 +417,13 @@ cell_values_float (int fd, register unsigned char *data, register COLUMN_MAPPING
 
 	while (cmapold++ != *cmap) /* skip */
 	  if (! xdr_float (xdrs, c)) {
-	    fprintf (stderr, 
+	    /* fprintf (stderr, 
 	      "ERROR: cell_values_f: xdr_float failed for index %d.\n", n);
-	    exit (1);
+	    exit (1); */
+	    /* Roger Bivand 17 June 2000 */
+	    sprintf(rsbbuf, "cell_values_f: xdr_float failed for index %d.", n);
+	    G_fatal_error(rsbbuf);
+	    return;
 	  } 
 	
 	cmapold--;
@@ -434,6 +450,7 @@ cell_values_double (int fd, register unsigned char *data, register COLUMN_MAPPIN
   register XDR* xdrs;
   register DCELL *c;
   register COLUMN_MAPPING cmapold;
+  char rsbbuf[40];
 
   c = (DCELL *) cell;
 
@@ -449,9 +466,13 @@ cell_values_double (int fd, register unsigned char *data, register COLUMN_MAPPIN
 
 	while (cmapold++ != *cmap) /* skip */
 	  if (! xdr_double (xdrs, c)) {
-	    fprintf (stderr, 
-	      "ERROR: cell_values_f: xdr_float failed for index %d.\n", n);
-	    exit (1);
+	    /* fprintf (stderr, 
+	      "ERROR: cell_values_d: xdr_double failed for index %d.\n", n);
+	    exit (1); */
+	    /* Roger Bivand 17 June 2000 */
+	    sprintf(rsbbuf, _("cell_values_d: xdr_double failed for index %d."), n);
+	    G_fatal_error(rsbbuf);
+	    return;
 	  } 
 	
 	cmapold--;
@@ -687,7 +708,7 @@ fprintf (stderr, "read row %d\n", r);
       G_zero_raster_buf (cell, cell_type);
 
       if (!FCB.io_error) {
-	G_warning ( "error reading %smap [%s] in mapset [%s], row %d",
+	G_warning ( _("error reading %smap [%s] in mapset [%s], row %d"),
 		 COMPRESSED ? "compressed " : "", FCB.name, FCB.mapset, r);
 	FCB.io_error = 1;
       }
@@ -744,10 +765,14 @@ G_get_raster_row_nomask (int fd, void *rast, int row, RASTER_MAP_TYPE data_type)
 
   if(FCB.reclass_flag) 
   {
-     stat = G_get_c_raster_row_nomask(fd, G__.mask_buf, row);
+     int size = G_raster_size(data_type);
+     stat = G_get_c_raster_row_nomask(fd, G__.temp_buf, row);
      if(stat<0) return stat;
      for(i=0; i<WINDOW.cols; i++)
-	G_set_raster_value_c(rast, G__.mask_buf[i], data_type);
+     {
+	G_set_raster_value_c(rast, G__.temp_buf[i], data_type);
+	rast = G_incr_void_ptr(rast, size);
+     }
      /* nulls are already embedded */
      return stat;
   }
@@ -806,7 +831,7 @@ G_get_map_row (int fd, CELL *cell, int row)
   stat = get_map_row_nomask (fd, (void *) cell, row, CELL_TYPE);
   if(stat >= 0)
   {
-      stat = embed_nulls_nomask(fd, (void *) cell, row, CELL_TYPE, 1);
+      stat = embed_nulls(fd, (void *) cell, row, CELL_TYPE, 1);
       if (FCB.reclass_flag) do_reclass_int(fd, cell, 1);
   }
   return stat;
@@ -828,10 +853,14 @@ G_get_raster_row (int fd, void *rast, int row, RASTER_MAP_TYPE data_type)
 
   if(FCB.reclass_flag) 
   {
-     stat = G_get_c_raster_row(fd, G__.mask_buf, row);
+     int size = G_raster_size(data_type);
+     stat = G_get_c_raster_row(fd, G__.temp_buf, row);
      if(stat<0) return stat;
      for(i=0; i<WINDOW.cols; i++)
-	G_set_raster_value_c(rast, G__.mask_buf[i], data_type);
+     {
+	G_set_raster_value_c(rast, G__.temp_buf[i], data_type);
+	rast = G_incr_void_ptr(rast, size);
+     }
      /* nulls are already embedded */
      return stat;
   }
@@ -982,6 +1011,13 @@ G_get_null_value_row_nomask (int fd, char *flags, int row)
             }
          }
          /* remember the null row for i for the future reference */
+	 
+	 /*bf-We should take of the size - or we get 
+	 zeros running on their own after flags convertions -A.Sh.*/
+	 FCB.NULL_ROWS[i] = (unsigned char *) realloc(FCB.NULL_ROWS[i],
+	 	sizeof(unsigned char)*G__null_bitstream_size(WINDOW.cols)+1);
+		if (FCB.NULL_ROWS[i] == NULL) G_fatal_error (_("Could not realloc buffer"));
+		
          G__convert_01_flags(flags, FCB.NULL_ROWS[i], WINDOW.cols);
 
      }  /* for loop */
@@ -1002,7 +1038,7 @@ G__open_null_read (int fd)
 {
    int null_fd;
    char dir_name[200];
-   static char *name=NULL, *mapset=NULL;
+   static char *name=NULL, *mapset=NULL, *dummy;
 
    if(NULL_FILE_EXISTS == 0) return -1;
 
@@ -1019,7 +1055,7 @@ G__open_null_read (int fd)
 			 
    sprintf(dir_name, "cell_misc/%s", name);
     
-   if (G_find_file(dir_name, NULL_FILE, mapset)==NULL)
+   if ((dummy = G_find_file(dir_name, NULL_FILE, mapset))==NULL)
    {
 /*
       G_warning ("unable to find [%s]",path);
@@ -1027,7 +1063,8 @@ G__open_null_read (int fd)
       NULL_FILE_EXISTS = 0;
       return -1;
    }
-
+   G_free (dummy);
+   
    null_fd = G_open_old (dir_name, NULL_FILE, mapset);
    if (null_fd < 0)
        return -1;
@@ -1035,7 +1072,7 @@ G__open_null_read (int fd)
    if (null_fd >= MAXFILES)
    {
        close (null_fd);
-       G_warning("Too many open raster files");
+       G_warning(_("Too many open raster files"));
        return -1;
    }
    NULL_FILE_EXISTS = 1;
@@ -1047,7 +1084,6 @@ G__read_null_bits (int null_fd, unsigned char *flags, int row, int cols, int fd)
 {
    long offset;
    int size, R;
-   char msg[200];
 
    if (compute_window_row (fd, row, &R) <= 0) 
    {
@@ -1063,12 +1099,12 @@ G__read_null_bits (int null_fd, unsigned char *flags, int row, int cols, int fd)
    offset = (long) (size * R * sizeof(unsigned char)) ;
    if (lseek (null_fd, offset, 0) < 0)
    {
-       G_warning("error reading null row %d\n",R);
+       G_warning(_("error reading null row %d\n"),R);
        return -1;
    }
    if (read (null_fd, flags, size) != size)
    {
-       G_warning("error reading null row %d\n",R);
+       G_warning(_("error reading null row %d\n"),R);
        return -1;
    }
    return 1;

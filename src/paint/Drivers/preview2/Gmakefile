@@ -1,6 +1,8 @@
 NAME=preview2
-LIBS = $(SRC)/paint/Interface/driverlib/lib.a \
+LIBES = ../../Interface/driverlib/lib.a \
 	    $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(LOCKLIB)
+DEPLIBS = ../../Interface/driverlib/lib.a \
+	    $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPLOCKLIB)
 EXTRA_CFLAGS = -DPAINT_DRIVERLIB -I../../
 
 PAINT = $(ETC)/paint
@@ -23,8 +25,8 @@ LIST =\
 
 all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
 
-$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBS) $(MATHLIB) $(XDRLIB) -o $@
+$(PAINT)/driver/$(NAME): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
 $(PAINT)/driver.sh/$(NAME): DRIVER.sh
 	cp $? $@
 	chmod +x $@
@@ -36,4 +38,4 @@ pictsize.o: P.h
 rle.o: P.h
 
 
-$(LIBS): #
+$(DEPLIBS): #

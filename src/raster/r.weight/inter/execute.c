@@ -341,7 +341,7 @@ execute (void)
 
 /* print analysis row out if saving */
 	if (saving)
-	    G_put_map_row(map_file, final_buf) ; 
+	    G_put_raster_row(map_file, final_buf, CELL_TYPE);
     }
 
     for(map=0; map<MAX_MAPS; map++)

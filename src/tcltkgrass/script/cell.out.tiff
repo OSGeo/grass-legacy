@@ -1,0 +1,586 @@
+#!/bin/sh
+############################################################
+# Script to create a tiff output file with the cell driver #
+# Reinhard Brunzema r.brunzema@web.de                      #
+# V 1.3: 10.9.2001                                         #
+############################################################
+
+STIME=1 	# Sleep time. Gives you the time to view what the script is
+						# plotting and to have an eye on messages from the used 
+						# modules. If you don't need that and if you are interested
+						# in faster plotting set STIME=0
+CELLSLEEP=2	# After plotting large maps, GRASS needs a little time 
+						# to close the D_cell file. On really HUGE maps or slow 
+						# machines you might want to raise this value.
+
+if test "$GISBASE" = ""; then
+	echo "You must be in GRASS to run this program."
+	exit
+fi
+
+argnum=$#
+if test $argnum -eq 1
+then
+	echo "This program collects several display functions to create a map that can"
+	echo "be exported using the cell driver. It first creates a preview on the"
+	echo "selected monitor, so you can (nearly) see, what you are creating."
+	echo "The maps are displayed in this order: "
+	echo "1. Baserastermap"
+	echo "2. Additonal rastermaps (can be displayed as overlays)"
+	echo "3. Vector polygons" 
+	echo "4. Vector maps"
+	echo "5. Sites"
+	echo "6. Legend"
+	echo "(7.) Additonal commmands"
+	echo
+	echo "Maps that can take an selectable argument (e.g. color, size) take it form the argument"
+	echo "line at the same position. (First map, first argument, second map secon argument...)."
+	echo "If there are more maps than arguemnts, the defaults are used to display the remaining"
+	echo "maps. Unnecassary arguments are ingnored."
+	echo
+	echo "You have the opportunity to use additonal display commands on your export file,"
+	echo "if you use the option 'Pause before exporting'."
+	exit
+fi
+
+# Save old settings
+old_GRASSW=$GRASS_WIDTH
+old_GRASSH=$GRASS_HEIGHT
+
+if [ "$old_GRASSW" = "" ]; then
+	old_GRASSW=640
+fi
+if [ "$old_GRASSH" = "" ]; then
+	old_GRASSH=480
+fi
+
+regionname=before_cell_out_tiff
+g.region save="$regionname"
+
+monitor=`d.mon -p | cut -d ":" -f2`
+#monitor="x${monitor#*x}"
+
+# Set new default for d.erase (more usefull for export)
+erasecolor="color=white"
+
+# Read the arguments and store them in variables
+for par 
+do
+	case $par in
+		erasecolor=*)
+			erasecolor=`echo $par | cut -d "=" -f2`
+			erasecolor="color=$erasecolor"
+	esac
+	
+	case $par in
+		baseraster=*)
+			baseraster=`echo $par | cut -d "=" -f2`	
+	esac
+	
+	case $par in
+		addraster=*)
+			rastermaps=`echo $par | cut -d "=" -f2`
+			echo "$rastermaps"
+	esac
+	
+	case $par in
+		-o)
+			o=-o
+		;;
+		-p)
+			p="pause"
+		;;
+		-t)
+			t="break"
+	esac
+	
+	case $par in
+		vectormaps=*)
+			vectormaps=`echo $par | cut -d "=" -f2`
+		;;
+		veccols=*)
+			veccols=`echo $par | cut -d "=" -f2`
+		;;
+		vecpols=*)
+			vecpols=`echo $par | cut -d "=" -f2`
+		;;
+		linecolor=*)
+			linecolor=`echo $par | cut -d "=" -f2`
+		;;
+		fillcolor=*)
+			fillcolor=`echo $par | cut -d "=" -f2`
+		;;
+	esac
+	
+	case $par in
+		sites=*)
+			sites=`echo $par | cut -d "=" -f2`
+		;;
+		sizes=*)
+			sizes=`echo $par | cut -d "=" -f2`
+		;;
+		sitecols*)
+			sitecols=`echo $par | cut -d "=" -f2`
+		;;
+		siteicons*)
+			siteicons=`echo $par | cut -d "=" -f2`
+	esac
+	
+	case $par in
+		cellxy=*)
+			cellxy=`echo $par | cut -d "=" -f2`
+			cellx=`echo $cellxy | cut -d "," -f1`
+			celly=`echo $cellxy | cut -d "," -f2`
+	esac
+	
+	case $par in
+		outfile=*)
+			outfile=`echo $par | cut -d "=" -f2`
+	esac
+	
+	case $par in
+		legendmap=*)
+			legendmap=`echo $par | cut -d "=" -f2`
+	esac
+	
+	case $par in
+		leg_text_color=*)
+			leg_text_color=`echo $par | cut -d "=" -f2`
+	esac
+	
+	case $par in
+		leg_lines=*)
+			leg_lines=`echo $par | cut -d "=" -f2`
+	esac
+	
+
+	
+done
+
+# Check for required parameters
+if [ -z "$t" ]; then
+
+if [ -z "$cellx" -o -z "$celly" ]; then
+	echo "Error: Size of cell driver is required"
+	exit 1
+fi
+
+if [ -z "$outfile" ]; then
+	echo "Error: Name of output file is required"
+	exit 1
+fi
+
+fi
+
+# Get the filenames
+map='map='
+IFS=",$IFS"
+
+if [ -n "$rastermaps" ]; then
+	set -- $rastermaps
+	rastercount=$#
+	rastercount=`expr $rastercount + 1`
+#	count=0
+	for rasts
+		do
+			rastermp="$rastermp $map$rasts"
+#			count=`expr $count + 1`
+		done
+fi
+
+if [ -n "$vectormaps" ]; then
+	set -- $vectormaps
+	vectorcount=$#
+	vectorcount=`expr $vectorcount + 1`
+#	count=0
+	for vects
+		do
+			vectormp="$vectormp $map$vects"
+		done
+fi
+
+if [ -n "$veccols" ]; then
+	set -- $veccols
+	count=0
+	for vectcols
+		do
+			vectorcl="$vectorcl color=$vectcols"
+			count=`expr $count + 1`
+		done
+fi
+
+if [ -n "$vecpols" ]; then
+	set -- $vecpols
+	vectorpolcount=$#
+	vectorpolcount=`expr $vectorpolcount + 1`
+#	count=0
+	for vectpols
+		do
+			vectorpolmp="$vectorpolmp $map$vectpols"
+#			count=`expr $count + 1`
+		done
+fi
+
+if [ -n "$linecolor" ]; then
+	set -- $linecolor
+	for lines
+		do
+			linecol="$linecol linecolor=$lines"
+		done
+fi
+
+if [ -n "$fillcolor" ]; then
+	set -- $fillcolor
+	for fills
+		do
+			fillcol="$fillcol fillcolor=$fills"
+		done
+fi
+
+if [ -n "$sites" ]; then
+	set -- $sites
+	sitecount=$#
+	sitecount=`expr $sitecount + 1`
+	for sitefile
+		do
+			sitemp="$sitemp sitefile=$sitefile"
+		done
+fi
+
+if [ -n "$sizes" ]; then
+	set -- $sizes
+	for sizenum
+		do
+			sitesz="$sitesz size=$sizenum"
+		done
+fi
+
+if [ -n "$sitecols" ]; then
+	set -- $sitecols
+	count=0
+	for stcols
+		do
+			sitecls="$sitecls color=$stcols"
+			count=`expr $count + 1`
+		done
+fi
+
+if [ -n "$siteicons" ]; then
+	set -- $siteicons
+	count=0
+	for sticon
+		do
+			site_icon="$site_icon type=$sticon"
+			count=`expr $count + 1`
+		done
+fi
+
+# Test output
+if [ -z "$monitor" ]; then
+	echo "No monitor for preview selected."
+	exit 1
+else
+	echo "Creating preview..."
+fi
+	# This function is used for test output on the selected
+# monitor and for final output in the cell driver
+IFS=" "
+
+d.erase "$erasecolor"
+
+# Display rastermaps
+if [ -n "$baseraster" ]; then
+	d.rast map="$baseraster"
+	echo d.rast map="$baseraster"
+fi	
+sleep "$STIME"s
+if [ -n "$rastercount" ]; then
+		count=1
+		while [ $count -lt $rastercount ]
+		do
+		echo "$rastermp"
+			rastnow=`echo $rastermp | cut -d " " -f$count` #"${rastermp[count]}"
+			if [ -n "$o" ]; then
+				echo d.rast "$rastnow" -o
+				d.rast "$rastnow" -o
+			else
+				echo d.rast "$rastnow"
+				d.rast "$rastnow"
+			fi
+			count=`expr $count + 1`
+			sleep "$STIME"s
+	done
+fi
+
+# Display vector polygons
+if [ -n "$vectorpolcount" ]; then
+	count=1
+	while [ $count -lt $vectorpolcount ]
+	do
+		vec_pol_now=`echo $vectorpolmp | cut -d " " -f$count`
+		fillcol_now=`echo $fillcol | cut -d " " -f$count`
+		linecol_now=`echo $linecol | cut -d " " -f$count`
+
+		if [ -z "$fillcol_now" ]; then
+			fillcol="fillcolor=white"
+		fi
+		if [ -z "$linecol_now"  ]; then
+			#lc=`echo $fillcol | cut -d " " -f$count` #"${fillcol[$count]#*=}"
+			linecol="linecolor=$linecol_now"
+		fi
+		echo d.area "$vec_pol_now" "$linecol_now" "$fillcol_now" 
+		d.area "$vec_pol_now" "$linecol_now" "$fillcol_now" 
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display vector maps
+if [ -n "$vectorcount" ]; then
+	count=1
+	while [ $count -lt $vectorcount ]
+	do
+		vector_now=`echo $vectormp | cut -d " " -f $count`
+		vector_cl_now=`echo $vectorcl | cut -d " " -f $count`
+		if [ -n "$vectorcl" ]; then
+			echo d.vect $vector_now $vector_cl_now
+			d.vect $vector_now $vector_cl_now
+		else
+			echo d.vect "$vector_now"
+			d.vect "$vector_now"
+		fi
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display sites
+if [ -n "$sitecount" ]; then
+	count=1
+	while [ $count -lt $sitecount ]
+	do
+		site_now=`echo $sitemp | cut -f$count`
+		sitesz_now=`echo $sitesz | cut -f$count`
+		sitecls_now=`echo $sitecls | cut -f$count`
+		site_icon_now=`echo $site_icon | cut -f$count`
+		if [ -z "$sitesz_now" ]; then
+		sitesz="size=5"
+		fi
+		if [ -z "$sitecls_now" ]; then
+			sitecls_now="color=gray"
+		fi
+		if [ -z "$site_icon_now" ]; then
+			site_icon_now="type=x"
+		fi
+		echo d.sites "$site_now" "$sitesz_now" "$sitecls_now" "$site_icon_now"
+		d.sites      "$site_now" "$sitesz_now" "$sitecls_now" "$site_icon_now"
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display legend
+if [ -n "$legendmap" ]; then
+	if [ -z "$leg_text_color" ]; then
+		leg_text_color="black"
+	fi
+	if [ -z "$leg_lines" ]; then
+		leg_lines="0"
+	fi
+	echo d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+	d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+fi
+
+# Wait for additonal plot commands
+if [ -n "$p" ]; then
+	xterm -e wait.sh
+fi
+
+if [ "$t" = "break" ] ; then
+	echo "Returning to old settings..."
+
+g.region region="$regionname"
+d.mon select="$monitor"
+
+export GRASS_WIDTH=$old_GRASSW
+export GRASS_HEIGHT=$old_GRASSH
+
+echo "Done";
+exit 0;
+fi
+
+# Prepare Cell driver
+unset GRASS_WIDTH
+unset GRASS_HEIGHT
+
+export GRASS_WIDTH="$cellx"
+export GRASS_HEIGHT="$celly"
+
+#NSRES=`g.region -p | grep nsres: | cut -d: -f 2`
+#echo "Hier: $ROW_NUM  $NSRES"
+#RESOLUTION=`expr $ROW_NUM * $NSRES`
+#RESOLUTION=`expr $RESOLUTION / $celly`
+
+echo
+echo "Saving current region settings as 'before_cell_out_tiff.'"
+echo "Use 'g.region region=before_cell_out_tiff', if the"
+echo "program aborts abnormally to return to your old region"
+echo "settings."
+echo
+
+#g.region res="$RESOLUTION" 	# This is required to avoid ugly white streams
+								# in the created output, if the Cell size is 
+								# near the number of rows.
+
+sleep 1s
+
+# Clean CELL
+g.remove rast=D_cell > /dev/null
+sleep "$STIME"s
+
+# trap "exit_func" 1 2 3 15 # Unfortunately, this doesn't work as I want it.
+# Write to D_Cell
+echo "Starting cell driver..."
+d.mon start=CELL 
+d.mon select=CELL
+
+sleep "$STIME"s
+
+echo "Plotting in D_cell..."
+
+STIME=0
+
+IFS=" "
+
+d.erase "$erasecolor"
+
+# Display rastermaps
+if [ -n "$baseraster" ]; then
+	d.rast map="$baseraster"
+	echo d.rast map="$baseraster"
+fi	
+sleep "$STIME"s
+if [ -n "$rastercount" ]; then
+		count=1
+		while [ $count -lt $rastercount ]
+		do
+		echo "$rastermp"
+			rastnow=`echo $rastermp | cut -d " " -f$count` #"${rastermp[count]}"
+			if [ -n "$o" ]; then
+				echo d.rast "$rastnow" -o
+				d.rast "$rastnow" -o
+			else
+				echo d.rast "$rastnow"
+				d.rast "$rastnow"
+			fi
+			count=`expr $count + 1`
+			sleep "$STIME"s
+	done
+fi
+
+# Display vector polygons
+if [ -n "$vectorpolcount" ]; then
+	count=1
+	while [ $count -lt $vectorpolcount ]
+	do
+		vec_pol_now=`echo $vectorpolmp | cut -d " " -f$count`
+		fillcol_now=`echo $fillcol | cut -d " " -f$count`
+		linecol_now=`echo $linecol | cut -d " " -f$count`
+
+		if [ -z "$fillcol_now" ]; then
+			fillcol="fillcolor=white"
+		fi
+		if [ -z "$linecol_now"  ]; then
+			#lc=`echo $fillcol | cut -d " " -f$count` #"${fillcol[$count]#*=}"
+			linecol="linecolor=$linecol_now"
+		fi
+		echo d.area "$vec_pol_now" "$linecol_now" "$fillcol_now" 
+		d.area "$vec_pol_now" "$linecol_now" "$fillcol_now" 
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display vector maps
+if [ -n "$vectorcount" ]; then
+	count=1
+	while [ $count -lt $vectorcount ]
+	do
+		vector_now=`echo $vectormp | cut -d " " -f $count`
+		vector_cl_now=`echo $vectorcl | cut -d " " -f $count`
+		if [ -n "$vectorcl" ]; then
+			echo d.vect $vector_now $vector_cl_now
+			d.vect $vector_now $vector_cl_now
+		else
+			echo d.vect "$vector_now"
+			d.vect "$vector_now"
+		fi
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display sites
+if [ -n "$sitecount" ]; then
+	count=1
+	while [ $count -lt $sitecount ]
+	do
+		site_now=`echo $sitemp | cut -f$count`
+		sitesz_now=`echo $sitesz | cut -f$count`
+		sitecls_now=`echo $sitecls | cut -f$count`
+		site_icon_now=`echo $site_icon | cut -f$count`
+		if [ -z "$sitesz_now" ]; then
+		sitesz="size=5"
+		fi
+		if [ -z "$sitecls_now" ]; then
+			sitecls_now="color=gray"
+		fi
+		if [ -z "$site_icon_now" ]; then
+			site_icon_now="type=x"
+		fi
+		echo d.sites "$site_now" "$sitesz_now" "$sitecls_now" "$site_icon_now"
+		d.sites      "$site_now" "$sitesz_now" "$sitecls_now" "$site_icon_now"
+		count=`expr $count + 1`
+		sleep "$STIME"s
+	done
+fi
+
+# Display legend
+if [ -n "$legendmap" ]; then
+	if [ -z "$leg_text_color" ]; then
+		leg_text_color="black"
+	fi
+	if [ -z "$leg_lines" ]; then
+		leg_lines="0"
+	fi
+	echo d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+	d.legend map="$legendmap" color="$leg_text_color" lines="$leg_lines"
+fi
+
+# Wait for additonal plot commands
+if [ -n "$p" ]; then
+	xterm -e wait.sh
+fi
+
+d.mon stop=CELL
+
+sleep "$CELLSLEEP"s	# Wait for D_cell closing.
+
+# Export as tiff
+echo "Changing to xy-projection."
+g.region raster=D_cell
+
+echo "Exporting $outfile..."
+r.out.tiff input=D_cell output="$outfile"
+sleep 1s
+
+echo "Returning to old settings..."
+
+g.region region="$regionname"
+d.mon select="$monitor"
+
+export GRASS_WIDTH=$old_GRASSW
+export GRASS_HEIGHT=$old_GRASSH
+
+echo "Done";
+exit 0;

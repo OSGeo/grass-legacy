@@ -1,6 +1,6 @@
 #include "xdr.h"
 
-db__send_int(n)
+int db__send_int(n)
     int n;
 {
     XDR xdrs;
@@ -18,6 +18,7 @@ db__send_int(n)
     return stat;
 }
 
+int
 db__recv_int (n)
     int *n;
 {
@@ -37,6 +38,7 @@ db__recv_int (n)
     return stat;
 }
 
+int
 db__send_int_array (x, n)
     int *x;
     int n;
@@ -52,7 +54,7 @@ db__send_int_array (x, n)
 	stat = DB_PROTOCOL_ERR;
     for (i = 0; stat == DB_OK && i < n; i++)
     {
-	if(!xdr_int (&xdrs, &x))
+	if(!xdr_int (&xdrs, x))
 	    stat = DB_PROTOCOL_ERR;
 	x++;
     }
@@ -67,6 +69,7 @@ db__send_int_array (x, n)
 /* returns an allocated array of ints */
 /* caller is responsible for free() */
 
+int
 db__recv_int_array (x, n)
     int **x;
     int *n;

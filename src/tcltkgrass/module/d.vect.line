@@ -1,0 +1,8 @@
+interface_build {
+    {d.vect.line} 0
+    {Draw labelled vector lines to the current display.}
+    {entry map {Vector map, required:} 0 vector}
+    {entry color {Line color [white]:} 0 color}
+    {entry catnum {List of category numbers to restrict drawing:} 1 ""}
+    {entry legend {Use a legend file:} 0 file}
+}

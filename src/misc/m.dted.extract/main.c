@@ -5,7 +5,15 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
+
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Extracts digital terrain elevation data (DTED - "
+		"levels 1 and 2) produced and supplied by the Defense Mapping Agency "
+		"(DMA) on 1/2-inch magnetic tapes.";
 
     if (!getargs(argc, argv))
 	return usage();

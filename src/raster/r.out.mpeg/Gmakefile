@@ -1,31 +1,12 @@
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
 
-
-LIBRARIES = $(GISLIB) 
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
-
-PGM = $(BIN_CONTRIB_CMD)/r.out.mpeg
-#PGM = ./r.out.mpeg
+PGM = r.out.mpeg
 
 OFILES = main.o \
 	 write.o
 
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB) -I$(INCLUDE_DIR)
 
-all: $(PGM) man
-
-$(PGM): $(OFILES) $(LIBRARIES)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB) -I$(INCLUDE_DIR)
-
-
-man: 
-	-cp doc/r.out.mpeg.man $(MDIR)/r.out.mpeg
-	-cp doc/r.out.mpeg.catman $(GISBASE)/man/$(MSEC)/r.out.mpeg
-#	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-#		$(MUTL)/man.header doc/r.out.mpeg.man  \
-#		> $(GISBASE)/man/$(MSEC)/r.out.mpeg
-
-
-
-$(GISLIB): #
+$(DEPGISLIB): #

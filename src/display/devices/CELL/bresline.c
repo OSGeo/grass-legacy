@@ -7,8 +7,6 @@
 */
 #include "cell.h"
 
-extern int SCREEN_RIGHT  ;
-
 int 
 bres_line (int x1, int y1, int x2, int y2)
 {

@@ -1,0 +1,42 @@
+12/12/94 - mk_area_pnt.c: comp_pnts function modified, so that parameters are
+			   void * instead of struct pnts *.  otherwise a warning is  
+			   generated on certain platforms. also, a declaration of 
+			   comp_pnts() is added to setup_areapoint ()'s variable list.
+
+12/12/94 - dictionary.c: index() calls changed to G_index()
+1/16/95 - manifolds.c: check_partition() - 
+		   (1) removed check on multiple
+		   themes. this was erroneous since multiple themes are not
+		   diagnostic for multiple themes, only maps and domains are.
+		   (2) fixed bubble-sort typo bug: replaced [i] with [j]
+
+1/20/95 - manifolds.c: get_manifolds() -
+		    added two routines (complete_global_manifold 
+			and _complete_global_manifold) to get_manifolds().
+			
+			in the event that needed global manifolds are ommitted from
+			the CATS file (as in NOAA data), these can be picked up
+			with these routines.  they add global manifolds (IDEN,
+			IREF, XREF, DDDS) to global_mfold if they aren't already
+			there.
+
+1/20/95 - wr_attrs.c: write_database_attributes
+			fixed bug in two places: dbpath was being prepended with a
+			"/".  this is an error and was deleted.
+
+1/24/95 - manifold.c: modified complete_global_manifold,
+		   _complete_global_manifold, and find_module to handle requested
+		   modules that are or are not required.
+
+1/24/95 - various files: added G_squeeze and G_strip calls (indiscriminately)
+           on input strings to avoid problems with incoming data with 
+		   leading or trailing white space. these calls now are employed
+		   in all cases (if i found them all) EXCEPT in cases of binary
+		   data (coords, binary attributes)
+
+1/27/95 - attributes.c: removed include dig_atts.h lines
+        - Gmakefile - added .h dependencies for .o targets
+		- v.in.sdts.c: added (int) cast to strlen
+        - fm_struct.c: changed all bzero calls to G_zero
+        - att_ff_info.c: changed all bzero calls to G_zero
+

@@ -28,4 +28,4 @@ $(PAINT)/driver.uninst/$(NAME): DRIVER.sh
 	chmod +x $@
 
 $(LIST): P.h
-$(LOCKLIB): #
+$(DEPLOCKLIB): #

@@ -52,7 +52,7 @@ int get_ref_points (void)
     switch (group.ref_equation_stat)
     {
     case -1:
-	strcat (msg, "Poorly placed referecne points.");
+	strcat (msg, "Poorly placed reference points.");
 	strcat (msg, "Can not generate the transformation equation.");
 	strcat (msg, "Run OPTION 2 again!\n");     
 	break;

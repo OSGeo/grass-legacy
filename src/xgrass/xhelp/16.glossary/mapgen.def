@@ -1,7 +1,0 @@
-
-
-map generalization - The process of reducing the detail of spatial
-features in a @glossary("map layer",16.glossary/maplayer.def).  Often undertaken in conjuction with
-a reduction in @glossary("map scale",16.glossary/scale.def).  The process can be semi-automated for
-certain kinds of data, such as  features, but requires
-more sensitive analysis for thematic maps.  See also @glossary("reclass",16.glossary/reclass.def).

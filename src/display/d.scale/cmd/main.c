@@ -1,25 +1,47 @@
+/*
+ * $Id$
+ *********************************************************************
+ *
+ * MODULE:     d.scale
+ * AUTHOR(S):  original author: James Westervelt (CERL)
+ *             added -i scale flag: Markus Neteler 3/2001
+ *
+ * PURPOSE:    display the map scale
+ * COPYRIGHT:  (C) 2001 by the GRASS Development Team
+ *
+ *             This program is free software under the GNU General Public
+ *             License (>=v2). Read the file COPYING that comes with GRASS
+ *             for details.
+ *
+ *********************************************************************/
+   
+
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
 #define MAIN
 #include "options.h"
 
-int draw_scale(int);
+extern int draw_scale(int);
 
 int main (int argc, char **argv)
 {
-	char window_name[64] ;
+	char window_name[255] ;
 	struct Cell_head window ;
 	int t, b, l, r ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse ;
+	struct Flag *mouse;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
 
-	mouse = G_define_flag() ;
-	mouse->key        = 'm';
-	mouse->description= "Use mouse to interactively place scale" ;
+	module = G_define_module();
+	module->description =
+		"Overlays a bar scale and north arrow for "
+		"the current geographic region at a user-defined "
+		"location in the active display frame.";
+
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
@@ -46,6 +68,10 @@ int main (int argc, char **argv)
 	opt3->required   = NO;
 	opt3->description= "the screen coordinates for top-left corner of label" ;
 
+	mouse = G_define_flag() ;
+	mouse->key        = 'm';
+	mouse->description= "Use mouse to interactively place scale" ;
+
 	coord_inp = 0;
 
 	if (G_parser(argc, argv) < 0)
@@ -65,7 +91,8 @@ int main (int argc, char **argv)
 	sscanf(opt3->answers[1],"%lf",&north) ;
 	if((east>0)||(north>0)) coord_inp=1;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

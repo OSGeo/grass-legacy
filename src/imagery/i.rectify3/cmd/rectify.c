@@ -28,12 +28,11 @@ int rectify (char *name, char *mapset, char *result)
     struct Cell_head cellhd, win;
     int ncols, nrows;
     int row, col;
-    int infd, outfd, elevfd;
-    CELL *cell;
+    int infd, elevfd;
+    void *rast;
     char msg[100];      /* message buffer */
     int  num_blocks, block_count;
-
-
+    char buf[64]="";
 
     /* make auxilary visiable */
     auxil = (Auxillary_Photo *) group.auxil;
@@ -54,13 +53,7 @@ int rectify (char *name, char *mapset, char *result)
     select_target_env();
     G_set_window (&target_window);
     G_set_cell_format (cellhd.format);
-    outfd = G_open_cell_new_random (result);
     select_current_env();
-    if (outfd < 0) {
-      sprintf (msg,"Can't open output file <%s>\n", result);
-      G_fatal_error (msg);
-      return 0;
-    }
 
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
@@ -69,15 +62,15 @@ int rectify (char *name, char *mapset, char *result)
 /* source image and elevation can NOT be opened for reading */
 /* simultaneously because different projections */
 /*******************************
-/**    G_set_window (&cellhd);
-/**    infd = G_open_cell_old (name, mapset);
-/**    if (infd < 0)
-/**    {
-/**	close (infd);
-/**	return 0;
-/**    }
-/**    cell = (CELL *) G_calloc (G_window_cols()+1, sizeof(CELL));
-/**    *cell = 0;
+**    G_set_window (&cellhd);
+**    infd = G_open_cell_old (name, mapset);
+**    if (infd < 0)
+**    {
+**	close (infd);
+**	return 0;
+**    }
+**    cell = (CELL *) G_calloc (G_window_cols()+1, sizeof(CELL));
+**    *cell = 0;
 *******************************/
 
 
@@ -92,6 +85,7 @@ int rectify (char *name, char *mapset, char *result)
     num_blocks = (((win.cols / NCOLS)+1) * ((win.rows / NROWS)+1));
     block_count = 0;
 
+    temp_fd=0;
     while (ncols > 0)
     {
 	if ((win.cols = ncols) > NCOLS)
@@ -110,9 +104,9 @@ int rectify (char *name, char *mapset, char *result)
 	    /* tell user about progress */
 	    /* TODO verbose flag */
             /***
-	    /** sprintf (msg, "Rectifying Block <col = %d> <row = %d> \n",
-	    /**     ncols, nrows);
-	    /** fprintf  (stderr, msg);
+	    ** sprintf (msg, "Rectifying Block <col = %d> <row = %d> \n",
+	    **     ncols, nrows);
+	    ** fprintf  (stderr, msg);
             ***/
 	    G_percent (block_count, num_blocks, 1);
 
@@ -138,9 +132,9 @@ int rectify (char *name, char *mapset, char *result)
 
 		select_current_env();
 		if (elevfd < 0) {
-		  /** TODO -- remove group.elev.
+		  /** TODO -- remove group.elev. */
 		  /** G_fatal_error ("Can't open elevation file <%s>\n", 
-		  /** group.elev.elev_map); 
+		   ** group.elev.elev_map); 
 		  **/ 
 		  return 0;
 		}
@@ -172,21 +166,23 @@ int rectify (char *name, char *mapset, char *result)
 		close (infd);
 		return 0;
 	      }
-	    cell = (CELL *) G_calloc (G_window_cols()+1, sizeof(CELL));
-	    *cell = 0;
+	    map_type = G_raster_map_type(name, mapset);
+	    rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
+	    G_set_null_value(rast, G_window_cols()+1, map_type);
 
 	    /* perform the actual data rectification */
-	    perform_georef (infd, cell);
+	    perform_georef (infd, rast);
 
 	    /* close the source imagery file and free the buffer */
 	    select_current_env();
 	    G_close_cell (infd);
-	    G_free (cell);
-	    select_current_env();
+	    G_free (rast);
+	 /*   select_current_env();*/
+	 select_target_env();
 
 
 	    /* write of the data rectified into the result file */
-	    write_matrix (outfd, row, col);
+	    write_matrix (row, col);
 
 	    nrows -= win.rows;
 	    row += win.rows;
@@ -199,12 +195,31 @@ int rectify (char *name, char *mapset, char *result)
     }
 
     select_target_env();
-    G_close_cell (outfd);
+    G_suppress_warnings(0);
+    if (cellhd.proj == 0) { /* x,y imagery */
+			cellhd.proj = target_window.proj;
+			cellhd.zone = target_window.zone;
+	}
+
+    if (target_window.proj != cellhd.proj) {
+			cellhd.proj = target_window.proj;
+			sprintf(buf,"WARNING %s@%s: projection don't match current settings.\n",name,mapset);
+			G_warning(buf);
+	}  
+
+    if (target_window.zone != cellhd.zone) {
+			cellhd.zone = target_window.zone;
+			sprintf(buf,"WARNING %s@%s: zone don't match current settings .\n",name,mapset);
+			G_warning(buf);
+	}  
+
+    G_suppress_warnings(1);
+    target_window.compressed=cellhd.compressed;
+    G_close_cell (infd); /* (pmx) 17 april 2000 */
+    write_map(result);
     select_current_env();
 
-
-    /** G_close_cell (infd); **/
-    /** G_free (cell); **/
+    G_suppress_warnings(0);
 
     return 1;
 }

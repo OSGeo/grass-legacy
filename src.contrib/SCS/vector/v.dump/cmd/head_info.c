@@ -1,7 +1,7 @@
 /*  @(#)head_info.c	2.1  6/26/87  */
 #include <stdio.h>
 #include "vask.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 int get_head_info (struct dig_head *dhead)
 {

@@ -3,7 +3,10 @@
 #include "raster.h"
 #include "local_proto.h"
 
-int measurements(int color1,int color2)
+
+FILE *output;
+
+int measurements(int color1,int color2, int s_flag, int m_flag, int k_flag)
 {
     double *x, *y;
     int npoints, nalloc;
@@ -22,6 +25,12 @@ int measurements(int color1,int color2)
     y = (double *)G_calloc (nalloc, sizeof(double));
 
 
+    /* Use stderr for TCLTK-Output */
+    if( s_flag )
+      output = stderr;
+    else
+      output = stdout;
+
 /* Set up area/distance calculations  */
     G_begin_polygon_area_calculations();
     G_begin_distance_calculations();
@@ -33,11 +42,12 @@ int measurements(int color1,int color2)
     for(;;)
     {
 	npoints = 0;
-        G_clear_screen() ;
-        fprintf (stdout, "\nButtons:\n") ;
-        fprintf (stdout, "Left:   where am i\n") ;
-        fprintf (stdout, "Middle: set FIRST vertex\n") ;
-        fprintf (stdout, "Right:  quit this\n") ;
+	if( ! s_flag )
+	  G_clear_screen() ;
+        fprintf (output, "\nButtons:\n") ;
+        fprintf (output, "Left:   where am i\n") ;
+        fprintf (output, "Middle: set FIRST vertex\n") ;
+        fprintf (output, "Right:  quit this\n") ;
 
         screen_y  = (t + b) / 2 ;
         screen_x  = (l + r) / 2 ;
@@ -48,16 +58,17 @@ int measurements(int color1,int color2)
             cur_uy = D_d_to_u_row((double)screen_y)  ;
             cur_ux = D_d_to_u_col((double)screen_x)  ;
 	    if (button == 1)
-		print_en(cur_ux, cur_uy);
+		print_en(cur_ux, cur_uy, s_flag);
             if(button == 3)
                 return(0) ;
         } while (button != 2) ;
 
 	add_point (&x, &y, &npoints, &nalloc, cur_ux, cur_uy);
-        G_clear_screen() ;
-        fprintf (stdout, "\nLeft:   where am i\n") ;
-        fprintf (stdout, "Middle: set NEXT vertex\n") ;
-        fprintf (stdout, "Right:  FINISH\n") ;
+	if( ! s_flag )
+	    G_clear_screen() ;
+        fprintf (output, "\nLeft:   where am i\n") ;
+        fprintf (output, "Middle: set NEXT vertex\n") ;
+        fprintf (output, "Right:  FINISH\n") ;
 
         R_move_abs(screen_x, screen_y) ;
         cur_screen_x = screen_x ;
@@ -74,13 +85,13 @@ int measurements(int color1,int color2)
             switch (button)
             {
             case 1:
-                print_en (ux, uy);
+                print_en (ux, uy, s_flag);
                 break ;
             case 2:
                 draw_line(screen_x,screen_y,cur_screen_x,cur_screen_y,color1,color2)  ;
 		add_point (&x, &y, &npoints, &nalloc, ux, uy);
                 length += G_distance(cur_ux, cur_uy, ux, uy) ;
-                print_length(length);
+                print_length(length, s_flag, k_flag);
                 cur_screen_x = screen_x ;
                 cur_screen_y = screen_y ;
                 cur_ux = ux ;
@@ -90,25 +101,31 @@ int measurements(int color1,int color2)
                 break ;
             }
         } while (button != 3) ;
-	R_flush();
-
-        G_clear_screen() ;
-        fprintf (stdout, "\nButtons:\n") ;
-        fprintf (stdout, "Left:   DO ANOTHER\n") ;
-        fprintf (stdout, "Middle: \n") ;
-        fprintf (stdout, "Right:  quit this\n") ;
+	R_stabilize();
+	
+	if( ! s_flag )
+	  G_clear_screen() ;
+        fprintf (output, "\nButtons:\n") ;
+        fprintf (output, "Left:   DO ANOTHER\n") ;
+        fprintf (output, "Middle: \n") ;
+        fprintf (output, "Right:  quit this\n") ;
 /*
  * 10000 is sq meters per hectare
  * 2589988 is sq meters per sq mile
  */
-        fprintf (stdout,"\n");
-        print_length(length);
+        fprintf (output,"\n");
+        print_length(length, s_flag, k_flag);
 	if (npoints > 3)
 	{
 	    area = G_area_of_polygon (x, y, npoints);
-	    fprintf (stdout,"AREA:  %10.2f hectares\n", area / 10000 ) ;
-	    fprintf (stdout,"       %10.4f square miles\n", area / 2589988.11 ) ;
-	    fprintf (stdout,"       %10.2f square meters\n", area) ;
+	    if( ! m_flag )
+	      {
+		fprintf (output,"AREA:  %10.2f hectares\n", area / 10000 ) ;
+		fprintf (output,"AREA:  %10.4f square miles\n", area / 2589988.11 ) ;
+	      }
+	    fprintf (output,"AREA:  %10.2f square meters\n", area) ;
+	    if( k_flag )
+	      fprintf (output,"AREA:   %10.4f square kilometers\n", area / 1000000 );
 	}
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
@@ -119,21 +136,34 @@ int measurements(int color1,int color2)
     return 0;
 }
 
-int print_en (double e, double n)
+int print_en (double e, double n, int s_flag)
 {
     char buf[100];
+    /* Use stderr for TCLTK-Output */
+    if( s_flag )
+      output = stderr;
+    else
+      output = stdout;
 
     G_format_easting (e, buf, G_projection());
-    fprintf (stdout, "EAST:  %s\n", buf);
+    fprintf (output, "EAST:  %s\n", buf);
     G_format_northing (n, buf, G_projection());
-    fprintf (stdout, "NORTH: %s\n", buf);
+    fprintf (output, "NORTH: %s\n", buf);
 
     return 0;
 }
 
-int print_length (double length)
+int print_length (double length, int s_flag, int k_flag)
 {
-    fprintf (stdout,"LEN:   %10.2f meters\n", length) ;
+    /* Use stderr for TCLTK-Output */
+    if( s_flag )
+      output = stderr;
+    else
+      output = stdout;
+
+    fprintf (output,"LEN:   %10.2f meters\n", length) ;
+    if( k_flag )
+      fprintf( output, "LEN:   %10.4f kilometers\n", length / 1000 );
 
     return 0;
 }

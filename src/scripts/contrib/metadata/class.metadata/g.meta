@@ -1,4 +1,4 @@
-:
+#! /bin/sh
 
 #                  ****** g.meta ********
 #    
@@ -7,6 +7,15 @@
 #
 # @(#) g.meta: creates a metadata file for GRASS map layers
 # Last revision: 5/25/94 7/14/94
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 METAHOME=`dirname ${0}`
 export METAHOME
@@ -18,14 +27,6 @@ elif [ `uname -s` = SunOS -a `uname -r | sed 's/\...*$//'` = 5 ] ; then
 else
   ECHON="echo -n"
 fi
-
-if [ -z "$GISRC" ] ; then
-  clear
-  echo "This command must be run from GRASS!"
-  echo ''
-  exit 1
-fi
-clear
 
 echo ''
 name=""

@@ -13,7 +13,7 @@ OBJ = \
 all: $(MYBTREELIB) $(MYLIBDIR)/btree.h
 
 $(MYBTREELIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 #$(MYLIBDIR)/btree.h:
 #	rm -f $@

@@ -1,5 +1,0 @@
-LIBES=$(IMAGERYLIB) $(GISLIB)
-$(BIN_MAIN_CMD)/i.grey.scale: main.o grey_scale.o $(LIBES)
-	$(CC) $(LDFLAGS) main.o grey_scale.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
-
-$(LIBES): #

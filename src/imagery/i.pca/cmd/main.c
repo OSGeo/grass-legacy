@@ -11,13 +11,25 @@
 
 */
 
-#define MAIN
-
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "globals.h"
-#include "local_proto.h"
+#include "gmath.h"
+#include <math.h>
+
+static CELL round_c (double x)
+{
+  CELL n;
+
+   if (x >= 0.0)
+       n = x + .5;
+   else
+   {
+       n = -x + .5;
+       n = -n;
+   }
+   return n;
+}
 
 int main (int argc, char *argv[])
 {
@@ -35,7 +47,7 @@ int main (int argc, char *argv[])
   double **eigmat;
   char **inp_names;
   char **out_names, temp[600];
-  int result, infd, outfd, PASSES, pass;
+  int infd, PASSES, pass;
   int *inp_file_descr;
   int scale, scale_max, scale_min;
   double min, max;
@@ -43,7 +55,13 @@ int main (int argc, char *argv[])
   CELL *rowbuf1, *rowbuf2;
   double *d_buf; /* a cell buf only double in order not to loose precision */
 
+  struct GModule *module;
   struct Option *opt1, *opt2, *opt3 ;
+
+  module = G_define_module();
+  module->description =
+	"Principal components analysis (pca) "
+	"program for image processing.";
 
   /* Define the different options */
 
@@ -67,7 +85,7 @@ int main (int argc, char *argv[])
   opt3->type       = TYPE_INTEGER;
   opt3->key_desc   = "min,max";
   opt3->required   = NO;
-  opt3->answer     = "1,255"; 
+  opt3->answer     = "0,255"; 
   opt3->description= "Rescaling range output (For no rescaling use 0,0)";
 
   /***** Start of main *****/
@@ -84,7 +102,7 @@ int main (int argc, char *argv[])
   rowbuf2 = G_allocate_cell_buf();
 
   scale = 1;
-  scale_min = 1;
+  scale_min = 0;
   scale_max =255;  /* default values */
   if(opt3->answer)
   {
@@ -96,8 +114,8 @@ int main (int argc, char *argv[])
 	if(scale_min==0) scale = 0;
 	else
 	{
-          fprintf(stderr, "Scale range length should be >0; Using default values: 1,255\n\n");
-          scale_min = 1;
+          fprintf(stderr, "Scale range length should be >0; Using default values: 0,255\n\n");
+          scale_min = 0;
           scale_max = 255;
         }
      }
@@ -188,7 +206,7 @@ int main (int argc, char *argv[])
 	     covar[k][j] = 0.;
    for (j=0 ; j<bands ; j++)
    {
-      fprintf(stdout, "Computing row number %d of covatiance matrix...", (j+1));
+      fprintf(stdout, "Computing row number %d of covariance matrix...", (j+1));
       fflush(stdout);
       for (row=0 ; row<rows ; row++)
       {
@@ -227,9 +245,9 @@ int main (int argc, char *argv[])
   */
 
   fprintf(stderr, "Ordering eigenvalues in descending order...\n");
-  egvorder(eigval,eigmat,bands);
+  egvorder2(eigval,eigmat,bands);
   fprintf(stderr, "Transposing eigen matrix...\n");
-  transpose(eigmat,bands);
+  transpose2(eigmat,bands);
 
   fprintf(stderr, "Transforming data...\n");
   /* transform(DATA,NN,eigmat,bands,outbandmax); */
@@ -284,7 +302,7 @@ int main (int argc, char *argv[])
 		       {
 		          if(pass==1)
 		          {
-		             rowbuf1[col] = round(d_buf[col] + .5);
+		             rowbuf1[col] = round_c(d_buf[col] + .5);
                              if((row==0)&&(col==0))min = max = d_buf[0];
                              if (rowbuf1[col]<min) min=d_buf[col];
                              if (rowbuf1[col]>max) max=d_buf[col];
@@ -297,13 +315,13 @@ int main (int argc, char *argv[])
 	                    /* first mapping data to 0,(new_range-1) 
 		                  and then adding new_min */
 	                       rowbuf1[col] = 
-	        	          round((new_range*(d_buf[col]-min)/old_range) + scale_min);
+	        	          round_c((new_range*(d_buf[col]-min)/old_range) + scale_min);
                           }
                        } /* writing the cell */
                    }  /* for col=0 to cols */
 	        } /* for j = 0 to bands */
 	        if(pass==PASSES)
-	           G_put_map_row( infd, rowbuf1); 
+	           G_put_raster_row( infd, rowbuf1, CELL_TYPE);
              }  /* for row = 0 to rows */
 	     G_percent(row,rows,2);
 	     if(pass==PASSES)
@@ -330,20 +348,5 @@ int main (int argc, char *argv[])
     for(i=0;i<bands;i++)
       G_unopen_cell(inp_file_descr[i]); 
   exit(0);
-}
-
-CELL 
-round (double x)
-{
-  CELL n;
-
-   if (x >= 0.0)
-       n = x + .5;
-   else
-   {
-       n = -x + .5;
-       n = -n;
-   }
-   return n;
 }
 

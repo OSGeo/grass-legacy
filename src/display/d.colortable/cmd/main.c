@@ -4,6 +4,7 @@
  *   Print a colortable for a map 
  */
 
+#include <stdlib.h>
 #include <math.h>
 #include "display.h"
 #include "gis.h"
@@ -34,12 +35,21 @@ int main(int argc, char **argv)
 	int black ;
 	int atcol ;
 	int atline ;
-	int i , count;
+	int count;
 	int t, b, l, r ;
 	int fp, new_colr;
 	int x_box[5] ;
 	int y_box[5] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"To display the color table associated with a raster "
+		"map layer.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -67,9 +77,6 @@ int main(int argc, char **argv)
 	opt4->options    = "1-1000" ;
 	opt4->description= "Number of columns" ;
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -77,11 +84,7 @@ int main(int argc, char **argv)
 	map_name = opt1->answer;
 	mapset = G_find_cell2 (map_name, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buff,"Cellfile [%s] not available", map_name);
-		G_fatal_error(buff) ;
-		exit(-1);
-	}
+		G_fatal_error("Cellfile [%s] not available", map_name) ;
 	fp = G_raster_map_is_fp(map_name, mapset);
 
 	if (opt2->answer != NULL)
@@ -122,18 +125,11 @@ int main(int argc, char **argv)
 
 	/* Make sure map is available */
 	if (G_read_colors(map_name, mapset, &colors) == -1)
-	{
-		sprintf(buff,"R_color file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-		exit(-1);
-	}
+		G_fatal_error("R_color file for [%s] not available", map_name) ;
 	if (G_read_fp_range(map_name, mapset, &fp_range) == -1)
-	{
-		sprintf(buff,"Range file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
-		exit(-1);
-	}
-	R_open_driver();
+		G_fatal_error("Range file for [%s] not available", map_name) ;
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current frame") ;

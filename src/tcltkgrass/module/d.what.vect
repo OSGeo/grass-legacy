@@ -1,6 +1,9 @@
 interface_build {
     {d.what.vect} 0
-    {Query GRASS vector files.}
+    {Query GRASS vector files with the mouse.}
     {entry map {Name of the GRASS vector file to be queried:} 0 vector}
+    {entry table {Name of database table containing attributes:} 0 ""}
+    {entry key {Name of database table key (id) column:} 0 ""}
     {checkbox -1 {Identify just one location.} "" -1}
+    {checkbox -t {Terse output.} "" -t}
 }

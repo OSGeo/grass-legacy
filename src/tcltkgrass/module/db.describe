@@ -1,0 +1,5 @@
+interface_build {
+    {db.describe} 0
+    {Describe table.}
+    {entry table {Table:} 0 ""}
+}

@@ -1,5 +1,6 @@
 #include "dbmi.h"
 #include "macros.h"
+#include <stdlib.h>
 
 int
 db_d_close_cursor()

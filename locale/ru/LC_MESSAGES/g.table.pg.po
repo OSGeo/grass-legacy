@@ -1,0 +1,35 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-02-26 13:40+0300\n"
+"PO-Revision-Date: 2002-02-26 13:40+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+
+#: infxTable.c:24
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr "Ошибка: select Potgres:%s\n"
+
+#: infxTable.c:35
+#, c-format
+msgid "Error:connect Postgres:%s\n"
+msgstr "Ошибка: connect Postgres:%s\n"
+
+#: main.c:56
+#, c-format
+msgid "Usage: %s (without arguments!).\n"
+msgstr "Запуск: %s (без аргументов!).\n"
+
+#: main.c:63
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните команду g.select.pg и выберите базу данных.\n"

@@ -3,15 +3,13 @@
 
 /* Not yet implemented - just defaults */
 
-vrml_put_view(vout, v3d)
-FILE *vout;
-struct G_3dview *v3d;
+void vrml_put_view(FILE *vout, struct G_3dview *v3d)
 {
 char tbuf[512];
 double df3[3];
 
 
-#ifdef V2.0
+#ifdef VRML2
 
     vrml_putline(vout,"view\n");
 

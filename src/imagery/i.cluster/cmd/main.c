@@ -16,6 +16,7 @@ main (int argc, char *argv[])
     struct Cell_head window;
     FILE *fd;
 
+	struct GModule *module;
     struct {
 	struct Option *group_name, *subgroup_name, *out_sig, *seed_sig,
 		      *class, *sample_interval, *iterations, *separation, 
@@ -27,6 +28,14 @@ main (int argc, char *argv[])
     } flag;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"An imagery function that generates spectral signatures for "
+		"land cover types in an image using a clustering algorithm. "
+		"The resulting signature file is used as input for i.maxlik, "
+		"to generate an unsupervised image classification.";
+
     G_get_window (&window);
     nrows = G_window_rows();
     ncols = G_window_cols();

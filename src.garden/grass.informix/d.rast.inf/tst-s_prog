@@ -1,5 +1,0 @@
-:
-# test for d.rast.inf using prebuilt SQL command file
-# DB=seco_soils, GISdb=SECO
-#
-d.rast.inf -s sql=tst_dbr.sql input=seco.soils output=seco.soils.recl

@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_fetch (cursor, position, more)
     dbCursor *cursor;
     int position;

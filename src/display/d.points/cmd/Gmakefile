@@ -2,9 +2,10 @@ PGM =d.points
 OBJ = main.o draw.o setup.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 
 $(OBJ): globals.h

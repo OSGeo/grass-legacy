@@ -1,6 +1,6 @@
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
+#include "Vect.h"
 #include "gtoa.h"
 
 int 

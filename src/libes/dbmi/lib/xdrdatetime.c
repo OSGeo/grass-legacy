@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_datetime (t)
+int db__send_datetime (t)
     dbDateTime *t;
 {
     DB_SEND_CHAR(t->current);

@@ -21,6 +21,7 @@ clump(int in_fd, int out_fd, int verbose)
     int pass;
     int nalloc;
     long cur_time;
+    int column;
 
 
     nrows = G_window_rows();
@@ -84,6 +85,8 @@ clump(int in_fd, int out_fd, int verbose)
 	    if (G_get_map_row (in_fd, cur_in+1, row) < 0)
 		G_fatal_error ("can't properly read input raster file");
 
+	    if (verbose)
+		G_percent(row, nrows, 2);
 	    X = 0;
 	    for (col = 1; col <= ncols; col++)
 	    {
@@ -210,7 +213,7 @@ clump(int in_fd, int out_fd, int verbose)
 		for (col = 1; col <= ncols; col++)
 		    out_cell[col] = index[cur_clump[col]];
 
-		if (G_put_map_row (out_fd, out_cell+1) < 0)
+		if (G_put_raster_row (out_fd, out_cell+1, CELL_TYPE) < 0)
 		    G_fatal_error ("can't properly write output raster file");
 	    */
 		col = ncols;
@@ -220,7 +223,12 @@ clump(int in_fd, int out_fd, int verbose)
 		while (col-- > 0)
 		    *temp_cell++ = index[*temp_clump++];
 
-		if (G_put_map_row (out_fd, out_cell) < 0)
+		for (column = 0; column < ncols; column++)
+		{
+		 if (out_cell[column] == 0)
+		       G_set_null_value(&out_cell[column],1,CELL_TYPE);
+		}
+		if (G_put_raster_row (out_fd, out_cell, CELL_TYPE) < 0)
 		    G_fatal_error ("can't properly write output raster file");
 	    }
 
@@ -234,7 +242,10 @@ clump(int in_fd, int out_fd, int verbose)
 	    prev_clump = temp_clump;
 	}
 	if (verbose)
+	{
+	    G_percent(row, nrows, 2);
 	    print_time (&cur_time);
+	}
     }
     return 0;
 }

@@ -1,4 +1,7 @@
-EXTRA_CFLAGS=$(USE_MTIO)
+SLIBDEPS = $(VASKLIB) $(GISLIB)
+
+EXTRA_CFLAGS=$(USE_MTIO) $(PICFLAGS)
+
 OBJ =\
 	add_cov.o\
 	advance.o\
@@ -53,9 +56,9 @@ OBJ =\
 	var.o\
 	vask_group.o
 
-all: $(IMAGERYLIB) 
+all: $(DEPIMAGERYLIB) 
 
-$(IMAGERYLIB): ${OBJ}
-	${AR}
+$(DEPIMAGERYLIB): ${OBJ}
+	$(SLIBRULE)
 
 $(OBJ): $(INCLUDE_DIR)/imagery.h $(INCLUDE_DIR)/imagedefs.h

@@ -6,7 +6,6 @@ static const char SCCSID[]="@(#)vector1.c	4.4	94/03/22	GIE	REL";
 #include "projects.h"
 	void * /* one dimension array */
 vector1(int nvals, int size) { return((void *)pj_malloc(size * nvals)); }
-
 	void /* free 2D array */
 freev2(void **v, int nrows) {
 	if (v) {

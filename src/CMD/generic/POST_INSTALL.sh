@@ -1,4 +1,25 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+# PURPOSE:  	This script will perform the last few steps of the GRASS
+#   	    	compilation and print a message for users.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
 :
+ARCH=$1
+CURR_DIR=`pwd`
+
 # copy the standard digcap file
 cp $GISBASE/etc/digcap.sample $GISBASE/etc/digcap
 
@@ -13,20 +34,13 @@ if [ ! -d $GISBASE/locks/$SERVERNAME ]; then mkdir $GISBASE/locks/$SERVERNAME ; 
 chmod -R 1777 $GISBASE/locks
 
 echo ""
-echo "GRASS GIS source code compiled successfully."
-
-# do warning about ps.map compilation:
-echo "HINT for ps.map on Linux: "
-echo "  You have to recompile this module with additional compile flag:"
-echo "  COMPILE_FLAGS = -fwritable-strings"
-echo "Add the flag in src/CMD/head/head and clean ps.map OBJ-files before"
-echo "recompiling."
+echo "GRASS GIS source code compiled."
 echo ""
-
-# talk about NVIZ
-echo "NVIZ Visualization tool:"
-echo "   Please compile it separately in"
-echo "          src.contrib/GMSL/NVIZ2.2/"
-echo "   Change to this directory. Use ./configure, gmake5 and gmakelinks5 "
-echo "   to compile the NVIZ."
-echo ""
+if grep 'Compilation error' error.log; then
+  echo ""
+  echo "* In case of errors please check following web page for hints:"
+  echo "    http://grass.itc.it/grass5/source/compilation_hints.html"
+  echo ""
+fi
+echo "* Install GRASS with (possibly as root)"
+echo "    make install"

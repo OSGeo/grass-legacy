@@ -1,5 +1,8 @@
 global map_browser
 
+global src_boot
+#set src_boot $env(GISBASE)
+
 proc grass_ls {element {mapset .}} {
     set dir [grass_element_name $element $mapset]
     if {[file isdir $dir]} {
@@ -13,10 +16,11 @@ proc grass_element_name {element {mapset .}} {
 }
 
 proc grass_file_name {element name {mapset .}} {
+    global src_boot
     if {[string compare $mapset .] == 0} {
-	    set mapset [g.gisenv MAPSET]
+	    set mapset [exec $src_boot/bin/g.gisenv MAPSET]
     }
-    return [g.gisenv GISDBASE]/[g.gisenv LOCATION_NAME]/$mapset/$element/$name
+    return [exec $src_boot/bin/g.gisenv GISDBASE]/[exec $src_boot/bin/g.gisenv LOCATION_NAME]/$mapset/$element/$name
 }
 
 proc grass_location {} {
@@ -24,15 +28,17 @@ proc grass_location {} {
 }
 
 proc g.gisenv {name} {
-    #  g.gisenv fixed in GRASS 5 beta4d
-    return [exec g.gisenv $name]
+    global src_boot
+    return [exec $src_boot/bin/g.gisenv $name]
 }
 
 proc grass_mapset_list {} {
+    global src_boot
+
     set list {}
     set location [grass_location]
 
-    foreach name [exec g.mapsets -p] {
+    foreach name [exec $src_boot/bin/g.mapsets -l] {
 	if {[file isdir $location/$name]} {
 	    lappend list $name
 	}
@@ -142,9 +148,13 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	-exportselection no                     \
 	-selectbackground LightYellow1           \
 	-yscroll "$w.main.mapsets.f.scroll set" \
+        -xscroll "$w.main.mapsets.f.scrollx set" \
 	-selectmode single
     scrollbar $w.main.mapsets.f.scroll \
 	-command "$w.main.mapsets.f.list yview"
+    scrollbar $w.main.mapsets.f.scrollx \
+        -command "$w.main.mapsets.f.list xview" \
+        -orient horizontal
 
     bind $w.main.mapsets.f.list <ButtonRelease-1> \
 	"map_browser_select_mapset  %W %y $w"
@@ -156,9 +166,13 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	-exportselection no                   \
 	-selectbackground LightYellow1         \
 	-yscroll "$w.main.files.f.scroll set" \
+        -xscroll "$w.main.files.f.scrollx set" \
 	-selectmode single
     scrollbar $w.main.files.f.scroll \
 	-command "$w.main.files.f.list yview"
+    scrollbar $w.main.files.f.scrollx \
+        -command "$w.main.files.f.list xview" \
+        -orient horizontal
 
     bind $w.main.files.f.list <ButtonRelease-1> \
 	"map_browser_select_file %W %y $w"
@@ -207,19 +221,21 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w"
     
     pack $w.filename -side top -expand yes -fill x
-    pack $w.main     -side top
+    pack $w.main     -side top -expand yes -fill both
     
-    pack $w.main.mapsets -side left
+    pack $w.main.mapsets -side left -expand yes -fill both
     pack $w.main.mapsets.label -side top
-    pack $w.main.mapsets.f -side top
-    pack $w.main.mapsets.f.list -side left
-    pack $w.main.mapsets.f.scroll -side left -expand yes -fill y
+    pack $w.main.mapsets.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.mapsets.f -side top -expand yes -fill both
+    pack $w.main.mapsets.f.list -side left -expand yes -fill both
+    pack $w.main.mapsets.f.scroll -side left -expand no -fill y
     
-    pack $w.main.files -side left
+    pack $w.main.files -side left -expand yes -fill both
     pack $w.main.files.label -side top
-    pack $w.main.files.f -side top
-    pack $w.main.files.f.list -side left
-    pack $w.main.files.f.scroll -side left -expand yes -fill y
+    pack $w.main.files.f.scrollx -side bottom -expand no -fill x
+    pack $w.main.files.f -side top -expand yes -fill both
+    pack $w.main.files.f.list -side left -expand yes -fill both
+    pack $w.main.files.f.scroll -side left -expand no -fill y
     
     pack $w.element  -side top -expand yes -fill x
     pack $w.element.menu  -side left

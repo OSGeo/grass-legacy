@@ -1,0 +1,18 @@
+PGM=v.in.dgn
+
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(GDAL_CFLAGS)
+
+OBJ = main.o
+
+#this may be configured to DGNlib:
+DGNLIB=$(GDAL_LIBS)
+
+####
+LIBES=$(VECTLIB) $(GISLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB)
+
+$(BIN_CMD)/$(PGM):  $(OBJ) $(DEPLIBS) 
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(DGNLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPVECTLIB): #
+$(DEPGISLIB): #

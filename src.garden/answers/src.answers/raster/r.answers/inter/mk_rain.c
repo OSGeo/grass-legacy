@@ -102,7 +102,7 @@ mk_rain (gauges)
     if (gauges == 0)
     {
 
-    fprintf (stdout,"\nCurrently used rainfall event: %s\n", rain_event);
+    fprintf (stderr,"\nCurrently used rainfall event: %s\n", rain_event);
     if(!G_ask_old ("Enter the name of the rainfall event:\n", rain_event,
     dirname, "rain data storage"))
         return(0);
@@ -127,12 +127,12 @@ mk_rain (gauges)
     fscanf(data1_fp, " %s\n", rain_mapset);
     fscanf(data1_fp, "gauges: %d\n", &gauges);
     
-    fprintf (stdout,"\nReading rain data file <%s>\n", rain_event);
+    fprintf (stderr,"\nReading rain data file <%s>\n", rain_event);
     if(gauges > 1)
-        fprintf (stdout,"Map: %s in %s\n", rain_layer, rain_mapset);
-    fprintf (stdout,"Number of gauges: %d\n", gauges);
-    fprintf (stdout,"\n  Data for gauge %d\n", i);
-    fprintf (stdout,"--------------------\n\n");
+        fprintf (stderr,"Map: %s in %s\n", rain_layer, rain_mapset);
+    fprintf (stderr,"Number of gauges: %d\n", gauges);
+    fprintf (stderr,"\n  Data for gauge %d\n", i);
+    fprintf (stderr,"--------------------\n\n");
     while (1) 
     {
         err = fscanf(data1_fp, "%f", &number);
@@ -174,21 +174,21 @@ mk_rain (gauges)
                 croak(1, buf);
             }
             j = 1;
-            fprintf (stdout,"\n--------------------\n\n");
+            fprintf (stderr,"\n--------------------\n\n");
             hit_return(); 
             G_clear_screen();
-            fprintf (stdout,"\n\n  Data for gauge %d\n", i);
-            fprintf (stdout,"--------------------\n\n");
+            fprintf (stderr,"\n\n  Data for gauge %d\n", i);
+            fprintf (stderr,"--------------------\n\n");
         }
         else 
         {
             f_data[i][j] = (int) (number + 0.5);
-            fprintf (stdout,"%7d   %c",  f_data[i][j], (j % 2== 0 ? '\n' : ' '));
+            fprintf (stderr,"%7d   %c",  f_data[i][j], (j % 2== 0 ? '\n' : ' '));
             j++;
         }
 
     }
-    fprintf (stdout,"--------------------\n\n");
+    fprintf (stderr,"--------------------\n\n");
 
   /* construct the top line of the predata file.
      ANSWERS doesn't want to see more than an 8 char name for event */
@@ -253,7 +253,7 @@ mk_rain (gauges)
             return(0);
         if(strlen(rain_event) > 8)
         {
-            fprintf (stdout,"\nANSWERS requires an event name of 8 letters or less.\n");
+            fprintf (stderr,"\nANSWERS requires an event name of 8 letters or less.\n");
             sleep(3);
         }
         else
@@ -295,7 +295,7 @@ mk_rain (gauges)
             data_in_fp = fopen (tmpname, "r");
             if (!data_in_fp) 
             {
-                fprintf (stdout,"\nCould not locate or open file: <%s>\n", tmpname);
+                fprintf (stderr,"\nCould not locate or open file: <%s>\n", tmpname);
                 continue;
             }
         else
@@ -307,9 +307,9 @@ mk_rain (gauges)
 
     j = i = 1;
     G_clear_screen();
-    fprintf (stdout,"\nReading rain data file <%s>\n", tmpname);
-    fprintf (stdout,"\n  Data for gauge %d\n", i);
-    fprintf (stdout,"--------------------\n\n");
+    fprintf (stderr,"\nReading rain data file <%s>\n", tmpname);
+    fprintf (stderr,"\n  Data for gauge %d\n", i);
+    fprintf (stderr,"--------------------\n\n");
     while (1) 
     {
         err = fscanf(data_in_fp, "%f", &number);
@@ -362,15 +362,15 @@ mk_rain (gauges)
 
             }
             j = 1;
-            fprintf (stdout,"\n--------------------\n\n");
+            fprintf (stderr,"\n--------------------\n\n");
             hit_return(); 
             G_clear_screen();
-            fprintf (stdout,"\n\n  Data for gauge %d\n", i);
-            fprintf (stdout,"--------------------\n\n");
+            fprintf (stderr,"\n\n  Data for gauge %d\n", i);
+            fprintf (stderr,"--------------------\n\n");
         }
         else {
             f_data[i][j] = (int) (number + 0.5);
-            fprintf (stdout,"%7d   %c",  f_data[i][j], (j % 2== 0 ? '\n' : ' '));
+            fprintf (stderr,"%7d   %c",  f_data[i][j], (j % 2== 0 ? '\n' : ' '));
             j++;
         }
     }
@@ -390,7 +390,7 @@ mk_rain (gauges)
         croak(1, buf);
     }
 
-    fprintf (stdout,"\n--------------------\n\n");
+    fprintf (stderr,"\n--------------------\n\n");
 
 
   /* construct the top line of the predata file.
@@ -447,7 +447,7 @@ mk_rain (gauges)
 
     hit_return();
     G_clear_screen();
-    fprintf (stdout,"\n\nRain gauge data preparation complete.\n");
+    fprintf (stderr,"\n\nRain gauge data preparation complete.\n");
 
     if(extract_rain(gauges))
     {
@@ -457,7 +457,7 @@ mk_rain (gauges)
     }
     else
     {
-        fprintf (stdout,"\n\nANSWERS input data creation complete.\n\n");
+        fprintf (stderr,"\n\nANSWERS input data creation complete.\n\n");
         complete[5] = 1;
     }
 

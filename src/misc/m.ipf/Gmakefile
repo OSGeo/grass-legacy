@@ -1,0 +1,13 @@
+PGM=m.ipf
+
+LIBES = $(GISLIB)  $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB)  $(DEPDATETIMELIB)
+
+LIST  = \
+	main.o \
+	elimzero.o \
+	ipf.o 
+ 
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,9 +1,17 @@
+/*
+ * Copyright (C) 1994-1995. James Darrell McCauley. (darrell@mccauley-usa.com)
+ * 	                          http://mccauley-usa.com/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include <sys/types.h> /* for getpid() */
 #include <unistd.h>
 #include <stdlib.h> 
 #include <math.h>
 #include "gis.h"
-#include "s_struct.h"
+#include "site.h"
 #include "quaddefs.h"
 
 #ifndef RAND_MAX 
@@ -11,7 +19,7 @@
 #endif
 
 #define R_INIT srand
-#define RANDOM(lo,hi) ((double)rand()/RAND_MAX*(hi-lo)+lo)
+#define RANDOM(lo,hi) ((double) rand() / (double)RAND_MAX * (hi-lo) + lo)
 
 /*
 #define R_MAX 1.0
@@ -19,24 +27,22 @@
 #define RANDOM(lo,hi) (drand48()/R_MAX*(hi-lo)+lo)
 */
 
-Z *find_quadrats ( int n, double r, struct Cell_head window,int verbose)
 /*
  * returns Z struct filled with centers of n non-overlapping circles of
  * radius r contained completely within window
  */
+SITE_XYZ *find_quadrats (int n, double r, struct Cell_head window, int verbose)
 {
   int i = 1, j, overlapped;
   unsigned k;
   double east, north, e_max, e_min, n_max, n_min;
-  Z *quads=NULL;
+  SITE_XYZ *quads=NULL;
 
-#ifndef lint
-  quads = (Z *) G_malloc (n * sizeof (Z));
-#endif
+  quads = G_alloc_site_xyz(n);
   if (quads == NULL)
     G_fatal_error ("cannot allocate memory for quadrats");
 
-   R_INIT ((int)getpid()); 
+   srand ((unsigned int)getpid()); 
   /* R_INIT (1); */
 
   e_max = window.east - r;
@@ -75,11 +81,12 @@ Z *find_quadrats ( int n, double r, struct Cell_head window,int verbose)
       if (k==2*n*n) 
         G_fatal_error("Maximum number of iterations exceeded\nTry smaller radius or smaller number of quads");
     }
-    i++;
     if (verbose)
       G_percent (i, n, 1);
     quads[i].x = east;
     quads[i].y = north;
+    i++;
   }
   return quads;
 }
+/* vim: softtabstop=2 shiftwidth=2 expandtab */

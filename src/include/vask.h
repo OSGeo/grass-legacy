@@ -53,7 +53,7 @@ struct V__
 
 	int	decimal_places;
 	char    interrupt_msg[80];
-} V__;
+};
 
 /* one of the library routines (V_call) will define this struct */
 extern struct V__ V__ ;
@@ -63,7 +63,7 @@ extern struct V__ V__ ;
 int V_float_accuracy (int);
 int V_call(void);
 int V_intrpt_ok(void);
-int V_intrpt_msg(char *);
+int V_intrpt_msg(const char *);
 int V_clear(void);
 int V_const(void *,char,int,int,int);
 int V_error(char *);
@@ -74,7 +74,3 @@ int V_ques(void *,char,int,int,int);
 int V__dump_window(void);
 int V__remove_trail(int,char *);
 int V__trim_decimal(char *);
-int V_get_old_tty(void);
-int V_get_new_tty(void);
-int V_set_old_tty(void);
-int V_set_new_tty(void);

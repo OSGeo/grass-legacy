@@ -4,4 +4,7 @@ interface_build {
     {entry input {Input raster map containing cost information:} 0 raster}
     {entry output {Output raster map:} 0 raster}
     {entry coordinate {Starting point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry null_value {Positive floating point value assigned to null cells:} 0 ""}
+    {checkbox -c {Copy input values along least cost path.} "" -c}
+    {checkbox -a {Accumulate values along path.(supercedes "copy")} "" -a}
 }

@@ -1,4 +1,3 @@
-
 /*
 *	show_driver_names() - show the names and descriptions of the digitizers
 *	from the digiticap file.
@@ -17,8 +16,9 @@
 *	and parse it.
 */
 
-#include	<stdio.h>
-#include	"bin_digit.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "bin_digit.h"
 
 #define		BUFFERSIZE	256
 #define		COMMENT_CHAR	'#'

@@ -1,0 +1,126 @@
+<TITLE>v.label</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>v.label</b></EM>  - makes a label-file from a GRASS vector.
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.label</B>
+<BR>
+<B>v.label help</B>
+<BR>
+<B>v.label</B> 
+   map=name [type=type] text=name label=name [xoffset=value] [yoffset=value]
+   [reference=name] [font=name] [size=value] [color=name]
+   [width=value] [hcolor=name] [hwidth=value] [background=name]
+   [border=name] [opaque=name] [space=value]
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.label</EM> makes a label-file from a GRASS vector file.
+Labels are read from text file which contains category and 
+label on each row separated by space. Example of text file:
+<PRE> 
+1 Kamenice
+2 Cerna Desna
+3 Bila Desna
+</PRE> 
+<BR>
+In current version only lines are labeled and label is created
+along line. 
+
+<P>
+
+<H2>PARAMETERS</H2>
+<DL>
+<DT><B>map</B>
+<DD>
+Name of a vector
+<DT><B>text</B>
+<DD>
+Full path to text file containing labels
+<DT><B>label</B>
+<DD>
+Name of a paint-label file
+<DT><B>xoffset</B>
+<DD>
+Offset label in x-direction<br>
+default: 0
+<DT><B>yoffset</B>
+<DD>
+Offset label in y-direction<br>
+default: 0
+<DT><B>reference</B>
+<DD>
+Reference position<br>
+options: center,left,right,upper,lower<br>
+default: center
+<DT><B>font</B>
+<DD>
+Font<br>
+default: standard
+<DT><B>size</B>
+<DD>
+Label size (in map-units)<br>
+options: 1-1000<br>
+default: 100
+<DT><B>color</B>
+<DD>
+Text color<br>
+options: aqua,black,blue,brown,cyan,gray,green,grey,indigo,
+magenta, orange,purple,red,violet,white,yellow<br>
+default: black
+<DT><B>width</B>
+<DD>
+Line width of text (only for p.map output)<br>
+options: 1-100<br>
+default: 1
+<DT><B>hcolor</B>
+<DD>
+Highlight color for text (only for p.map output)<br>
+options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+indigo,magenta, orange,purple,red,violet,white,yellow<br>
+default: none
+<DT><B>hwidth</B>
+<DD>
+Line width of highlight color (only for p.map output)<br>
+options: 0-100<br>
+default: 0
+<DT><B>background</B>
+<DD>
+Background color<br>
+options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+indigo,magenta, orange,purple,red,violet,white,yellow<br>
+default: none
+<DT><B>border</B>
+<DD>
+Border color<br>
+options: none,aqua,black,blue,brown,cyan,gray,green,grey,
+indigo,magenta, orange,purple,red,violet,white,yellow<br>
+default: none
+<DT><B>opaque</B>
+<DD>
+Opaque to vector (only relevant if background color is selected)<br>
+options: yes,no<br>
+default: yes
+<DT><B>space</B>
+<DD>
+Space between letters (in map-units)<br>
+options: 1-100000<br>
+default: 100
+</DL>
+
+<H2>NOTE</H2>
+Rotated labels produced by this module are supported by ps.map only.
+
+
+<H2>AUTHOR</H2>
+
+Philip Verhagen (original s.label)<br>
+Radim Blazek <br>

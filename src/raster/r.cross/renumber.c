@@ -22,7 +22,7 @@ int renumber (int in, int out, int verbose)
 	    *c = table[*c];
 	    c++;
 	}
-	if (G_put_map_row (out, cell) < 0)
+	if (G_put_raster_row (out, cell, CELL_TYPE) < 0)
 	    exit(1);
     }
     if (verbose)

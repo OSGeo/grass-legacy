@@ -1,13 +1,19 @@
+PGM=d.barscale
+
 OFILES = \
 	draw_scale.o \
+	mouse.o \
 	main.o
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(BIN_CONTRIB_CMD)/d.barscale: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(GISLIB): #
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPGISLIB): #
 
-command.o:	options.h
-main.o:	options.h
+draw_scale.o:	options.h
+main.o:		options.h
+mouse.o:	options.h

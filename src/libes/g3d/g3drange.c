@@ -101,7 +101,7 @@ G3d_readRange (name, mapset, drange) /* adapted from G_read_fp_range */
   }
 
 error:
-  if (fd > 0) fclose(fd) ;
+  if (fd > 0) close(fd);
   sprintf (buf, "can't read range file for [%s in %s]", name, mapset);
   G_warning (buf);
   return -1;
@@ -193,7 +193,7 @@ G3d_range_write (map)
   char path[4096], element[100];
 
   G3d_filename (path, G3D_RANGE_ELEMENT, map->fileName, map->mapset);
-  unlink(path);
+  remove ( path );
 
   if (writeRange (map->fileName, &(map->range)) == -1) {
     G3d_error ("G3d_closeCellNew: error in writeRange");
@@ -211,7 +211,7 @@ G3d_range_init (map)
      G3D_Map *map;
 
 {
-  G_init_fp_range (&(map->range));
+  return G_init_fp_range (&(map->range));
 }
 
 /*---------------------------------------------------------------------------*/

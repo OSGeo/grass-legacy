@@ -1,5 +1,0 @@
-You can use the program in the Diagnostic directory to debug a new driver.
-
-The driver files will go in  $GISBASE/etc/digitizers  Check file: 'Naming'
-for naming conventions of files.
-

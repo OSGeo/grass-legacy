@@ -762,7 +762,7 @@ int do_legends (void)
 	}
 	bwidth = (rbox.right-rbox.left)+tmpw+xspace;
         bheight = num_cat_labels*(tmph+yspace) + vcount*(textsize+yspace) + tsiterows+yspace*scount + (isramp)*yspace + ramptheight + gap /* gap/2 space on both sides*/ ;
-	/* bheight = bheight - yspace /* because yspace is only inbetween labels */; 
+	/* bheight = bheight - yspace */ /* because yspace is only inbetween labels */; 
 	}
 
 	if (bwidth < ramptwidth)

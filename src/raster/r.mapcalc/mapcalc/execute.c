@@ -32,7 +32,7 @@ int execute (char *result)
 		outfd = G_open_cell_new (result);
 	    if (outfd < 0)
 	    {
-		fprintf (stderr, "\nOOPS can't create cell file [%s]\n", result);
+		fprintf (stderr, "\nOOPS can't create cell file [%s] (file system full?)\n", result);
 		return 0;
 	    }
 	}
@@ -42,7 +42,7 @@ int execute (char *result)
 	    stat = G_put_c_raster_row (outfd, execute_stack[0].cell);
 	if(stat < 0)
 	{
-	    fprintf (stderr, "\nOOPS can't write cell file (row %d)\n",current_row);
+	    fprintf (stderr, "\nOOPS can't write cell file (row %d)  (file system full?)\n",current_row);
 	    G_unopen_cell (outfd);
 	    return 0;
 	}

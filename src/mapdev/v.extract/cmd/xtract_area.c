@@ -15,6 +15,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include  "gis.h"
 #include "Vect.h"
 #include "local_proto.h"
@@ -35,19 +36,18 @@ static	int   snapped = 0 ;
 int 
 xtract_area (int num_index, int num_array[], char *in_name, char *out_name, int optiond, int cat_new)
 {
-	FILE *out, *outc, *fp_plus, *outa ;
-	int cat, line, island, islanda, left, right, lcat, rcat, cat1;
-	int l_isle, r_isle, larea, rarea, latt, ratt, max_att=0;
+	FILE *outa ;
+	int left, right, lcat, rcat, cat1;
+	int l_isle, r_isle, larea, rarea, max_att=0;
         int non_cat, cat_no;
-	int day, yr, max, DEBUG, typ;
+	int day, yr, typ;
         int vect_read;
-	register int area_num, i, ii, jj, kk;
-	char  name[150], input_att_file[128], date[40], bufr[80] ;
+	register int area_num, ii, jj;
+	char  name[150], date[40];
 	char  mon[4], *mapset ;
-	char *X, *Y;
-	int n_points;
+
         double xx, yy;
-	P_AREA *Areas;
+
         P_LINE *Lines;
 
 

@@ -6,6 +6,7 @@
 #include "ginput.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static int	IORser;
 
@@ -22,7 +23,7 @@ int D_readall (int *Xraw, int *Yraw)
 
 int D_ask_if_err (void)
 {
-	if ( ! curses_yes_no( 2," Digitizer read error.  Do we continue(y,n)? ") )
+	if ( ! curses_yes_no( 2,_(" Digitizer read error.  Do we continue(y,n)? ")) )
 	  close_down(-1) ;
     return 0;
 }

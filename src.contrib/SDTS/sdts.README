@@ -1,0 +1,168 @@
+sdts.README (in moon.cecer.army.mil:/grass/incoming)
+===================================================
+
+This document describes files on the the USACERL ftp site making up the
+preliminary release of GRASS-SDTS software.  The files are:
+
+   sdts.README - this file
+   sdts_uguide.ps - GRASS-SDTS User Guide, in Postscript format
+   sdts.tar.Z - source code for GRASS-SDTS programs and FIPS 123 Library,
+				man pages, sample SDTS datasets
+
+
+   sdts.r1.tar.Z, sdts.r2.tar.Z, etc. - possible revisions of sdts.tar.Z that
+										will supercede sdts.tar.Z
+
+
+File status
+---------------
+
+The current "preliminary release" version is version 2 (sdts.r2.tar.Z). It
+incorporates fixes for several relatively minor bugs found in previous 
+versions.  Documentation for these fixes can be found in the files 
+named "change.log" located in the source directory for each program.
+
+
+Contents of sdts.tar.Z
+----------------------
+
+sdts.tar.Z contains tarred and compressed files for the following:
+
+   1. GRASS-SDTS program source code and manual pages
+
+      v.in.sdts
+      v.out.sdts
+      v.sdts.meta
+      v.sdts.meta.cp
+      v.sdts.dq.cp
+      m.sdts.read
+
+   2. FIPS 123 software library, needed to compile most of the 
+   GRASS-SDTS programs
+
+   3. sample SDTS data sets
+
+
+the directory structure of sdts.tar.Z is as follows:
+
+SDTS/
+     libes/fips123/
+                   f123inc/
+                   f123app/
+                   f123bat/
+                   f123utl/
+                  etc.
+
+     mapdev/v.in.sdts/
+                      sample_data/
+                                  samdlg3
+                                  sammsdd
+                                  samtiger
+            v.out.sdts/
+            v.sdts.meta/
+                        inter
+            v.sdts.meta.cp/
+                           cmd
+            v.sdts.dq.cp/
+                         cmd
+
+     misc/m.sdts.read/
+
+
+Installation and Compilation
+----------------------------
+
+NOTE: at the present time, you will need the gcc compiler to compile the 
+FIPS 123 Library and the various GRASS-SDTS programs that are linked to it.
+
+1. download all three files (sdts.tar.Z sdts.README, sdts_uguide.ps)
+2. uncompress sdts.tar.Z (or sdts.r1.tar.Z, etc.): 
+	
+	 zcat sdts.tar.Z   (or zcat sdts.r1.tar.Z)
+
+3. cd to src.contrib/CERL in your GRASS source tree
+4. tar -xf [path]/sdts.tar
+5. cd SDTS
+6. compile and install all programs and the FIPS 123 library by running
+gmake4.1 (or the equivalent) from the SDTS directory.
+7. when compilation is complete, run MAKELINKS from the src/CMD directory.
+
+
+
+Further information and bug reporting
+-------------------------------------
+
+For further information about the GRASS-SDTS programs and to report
+bugs, problems, and complaints, contact:
+
+David Stigberg
+USACERL
+2902 Newmark Drive
+Champaign IL 61826
+217-352-6511x7401
+fax: 217-373-7222
+email: stigberg@zorro.cecer.army.mil
+
+
+Bugs should also be reported to grassbug@zorro.cecer.army.mil.
+
+
+Additional SDTS materials and data
+-----------------------
+
+
+The SDTS Task Force at the U.S. Geological Survey is maintaining an ftp site 
+for public domain SDTS-related materials. Copies of the Standard document 
+itself (FIPS 173), including both the Topological Vector Profile and 
+Raster Profile (Parts 4 and 5), may be found there. Also available from the 
+ftp site are several articles about SDTS, source and executable versions 
+of the FIPS 123 Library, sample SDTS vector datasets exported from DLG-3, 
+DLG-E, TIGER, and GRASS, and sample digital orthophoto quad data compliant 
+with the SDTS Raster Profile.
+
+
+All the above materials may be downloaded via anonymous ftp from:
+
+	sdts.er.usgs.gov (130.11.52.170)
+
+Printed copies of the Standard and Profiles may be obtained from:
+
+	National Technical Information Service (NTIS)
+	Computer Products Office
+	5285 Port Royal Road
+	Springfield, VA 22161
+	(703) 487-4600
+
+For more information about the SDTS, you may contact:
+
+	SDTS Task Force
+	U.S. Geological Survey
+	526 National Center
+	Reston, VA 22092
+	FAX (703) 648-5542
+	email: sdts@usgs.gov
+
+Information about production SDTS datasets for DLG-3 and DLG-E data may be 
+obtained from:
+
+		U.S. Geological Survey
+		Earth Sciences Information Center
+		507 National Center
+		Reston VA 22092
+		phone: 1-800-USAMAPS
+
+For TIGER/SDTS data:
+
+		Customer Services
+		U.S. Bureau of the Census
+		Washington DC 20233-8300
+
+	general product information:
+		phone: 1-301-763-4100
+		fax: 1-301-763-4794
+
+	TIGER-specific information:
+		phone: 1-301-763-1384
+
+
+

@@ -61,6 +61,16 @@ int parse (char *line, RULE **rules, RULE **tail, struct Categories *cats)
 	{
 	case 0:
 	    save = cur ;
+            if(!strncmp(cur, "help", 4)) /* help text */
+	    {
+                fprintf (stdout, "Enter a rule in one of these formats:\n");
+                fprintf (stdout, "1 3 5      = 1   poor quality\n");
+                fprintf (stdout, "1 thru 10  = 1\n");
+                fprintf (stdout, "20 thru 50 = 2   medium quality\n");
+                state = 0;
+                cur += 4;
+                continue;
+            }
 	    if (!scan_value(&v))
 		return -1;
 	    state = 1;

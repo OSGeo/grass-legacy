@@ -1,0 +1,7 @@
+PGM=v.split
+VFILES = main.o
+
+$(BIN_CMD)/$(PGM): $(VFILES) $(DEPGISLIB) $(DEPVECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): #

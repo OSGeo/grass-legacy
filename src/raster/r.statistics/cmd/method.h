@@ -9,6 +9,7 @@
 #define KURTOSI 8       /* Kurtosis              */
 #define MIN	9	/* Minimum		 */
 #define MAX	10	/* Maximum		 */
+#define SUM	11	/* Sum  		 */
 
 struct stats
 {
@@ -42,6 +43,7 @@ struct menu
     {"kurtosis",     KURTOSI, "Kurtosis of values in specified objects"},
     {"min",	    MIN,     "Minimum of values in specified objects"},
     {"max",	    MAX,     "Maximum of values in specified objects"},
+    {"sum",	    SUM,     "Sum of values in specified objects"},    
     {0,0,0} };
 
 #else
@@ -50,10 +52,6 @@ struct menu
 
 /* main.c */
 int is_ok(char *, char *);
-/* median.c */
-long median(struct stats *);
-/* moment.c */
-int stats(double *, int, double *, double *, double *, double *, double *, double *);
 /* o_adev.c */
 int o_adev(char *, char *, char *, int, struct Categories *);
 int a_dev(double *, int, double *);
@@ -70,7 +68,7 @@ int kurt(double *, int, double *);
 int o_max(char *, char *, char *, int, struct Categories *);
 /* o_median.c */
 int o_median(char *, char *, char *, int, struct Categories *);
-/* long median(struct stats *); Prototyped in median.c */
+long median(struct stats *);
 /* o_min.c */
 int o_min(char *, char *, char *, int, struct Categories *);
 /* o_mode.c */
@@ -89,8 +87,5 @@ int o_var(char *, char *, char *, int, struct Categories *);
 int m_var(double *, int, double *);
 /* read_stats.c */
 int read_stats(FILE *, long *, long *, double *);
-/* skew.c */
-int kurt(double *, int, double *);
-int skew(double *, int, double *);
 /* write_rec.c */
 int write_reclass(FILE *, long, long, char *, int);

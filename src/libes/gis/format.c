@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
 #include <stdlib.h>
 /**********************************************************************
@@ -104,7 +105,7 @@ int G__read_row_ptrs (int fd)
     return 1;
 
 badread:
-    G_warning ( "Fail of initial read of compressed file [%s in %s]",
+    G_warning ( _("Fail of initial read of compressed file [%s in %s]"),
 	FCB.name, FCB.mapset) ;
     return -1;
 }

@@ -9,12 +9,18 @@
 int main (int argc, char *argv[])
 {
 	FILE *ascii;
+	struct GModule *module;
 	struct Option *old, *new;
 	char *mapset;
 	char errmsg[200];
 	struct Map_info Map;
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts a binary GRASS vector map layer into "
+		"an ASCII GRASS vector map layer.";
 
 	old = G_define_option();
 	old->key		= "input";

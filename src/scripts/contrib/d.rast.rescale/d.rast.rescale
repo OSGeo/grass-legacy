@@ -1,7 +1,7 @@
 #!/bin/csh -f
 # from Dr. Agustin Lobo - alobo@ija.csic.es
 
-if ($#argv == 0) then
+if ($#argv == 0 || $1 == "help" || $1 == "-h" || $1 == "-help") then
         echo ""
         echo "Raster map display with automated visualization rescaling"
         echo "depending on the histogram."
@@ -15,7 +15,7 @@ if ($#argv > 1) then
 	g.region save=provi
 	g.region rast=$argv[1]
 endif
-r.stats -cz in=$argv[1] out=a
+r.stats -cn in=$argv[1] out=a
 if ($#argv > 1) g.region provi
 awk '{tot += $2;sum +=$1 * $2; sumsq +=$1*$1*$2}\
 END {media=sum/tot;sumsq=sumsq/tot;var=sumsq-(media^2);sd=var^0.5;\

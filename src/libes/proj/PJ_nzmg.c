@@ -3,7 +3,7 @@ static const char SCCSID[]="@(#)PJ_nzmg.c	4.1	94/02/15	GIE	REL";
 #endif
 /* very loosely based upon DMA code by Bradford W. Drew */
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(nzmg, "New Zealand Map Grid") "\n\tfixed Earth";
 #define EPSLN 1e-10
 #define SEC5_TO_RAD 0.4848136811095359935899141023
@@ -11,11 +11,11 @@ PROJ_HEAD(nzmg, "New Zealand Map Grid") "\n\tfixed Earth";
 	static COMPLEX
 bf[] = {
 	{.7557853228,	0.0},
-	{.249204646,		.003371507},
+	{.249204646,	.003371507},
 	{-.001541739,	.041058560},
-	{-.10162907,		.01727609},
-	{-.26623489,		-.36249218},
-	{-.6870983,		-1.1651967} };
+	{-.10162907,	.01727609},
+	{-.26623489,	-.36249218},
+	{-.6870983,	-1.1651967} };
 	static double
 tphi[] = { 1.5627014243, .5185406398, -.03333098, -.1052906, -.0368594,
 	.007317, .01220, .00394, -.0013 },

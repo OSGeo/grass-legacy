@@ -1,28 +1,23 @@
-PBIN = /usr/tmp 
 PGM    = r.resamp.rst
-HOME   = $(BIN_CONTRIB_CMD)
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
-TREELIB = $(TREEDIR)/libtree.a
+TREELIB = $(LIBDIR)/rst_gmsl/tree/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data
-DATALIB = $(DATADIR)/libdata.a
+DATALIB = $(LIBDIR)/rst_gmsl/data/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
-INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
+INTERPFLIB = $(LIBDIR)/rst_gmsl/interp_float/libinterpfl.a
 
-EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
+EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 
 
 LIBES=$(INTERPFLIB) $(DATALIB) $(TREELIB) \
 	$(GISLIB) $(DATETIMELIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB)
+DEPLIBS=$(INTERPFLIB) $(DATALIB) $(TREELIB) \
+	$(DEPGISLIB) $(DEPDATETIMELIB) $(DEPBITMAPLIB) $(DEPLINKMLIB) $(DEPVECTLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-
-saber_src:
-	load $(CFLAGS) $(LDFLAGS) $(SRCS) $(LIBES) $(MATHLIB) $(XDRLIB) 
-
-$(LIBES): #
+$(DEPLIBS): #

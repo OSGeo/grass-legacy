@@ -1,4 +1,3 @@
-
 /* Written by Bill Brown, USACERL (brown@zorro.cecer.army.mil)
  * May 2-12, 1994
  *
@@ -17,6 +16,8 @@
  * PARTICULAR PURPOSE.
 */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "bitmaps/rewind.xbm"
 #include "bitmaps/rplay.xbm"
 #include "bitmaps/stepb.xbm"
@@ -29,8 +30,6 @@
 #include "bitmaps/rabbit.xbm"
 
 #include "gui.h"
-
-#include <stdio.h>
 
 /* callback procs */
 static void rewind_callback();

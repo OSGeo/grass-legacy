@@ -1,6 +1,7 @@
 #include "dxf2vect.h"
 
-int dxf_close_layer (int o_count)
+int
+dxf_close_layer (int o_count)
 {
     int found_flag = 0; /* Reinitilized each time */
     int count;

@@ -135,9 +135,12 @@ update_type (RASTER_MAP_TYPE *map_type, DCELL val)
 
 {
    /* check if val is not an integer number */
-   if((DCELL) ((CELL) val) != val)
+	if (make_dcell) 
+		*map_type = DCELL_TYPE;
+	else {
+   if((DCELL) ((CELL) val) != val) 
        *map_type = FCELL_TYPE;
-
+	}
    return 0;
 }
 

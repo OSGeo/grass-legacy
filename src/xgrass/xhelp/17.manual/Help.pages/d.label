@@ -1,5 +1,0 @@
-
-@man("d.label") - Creates and places text labels in the active display frame
-on the graphics monitor.
-
-(GRASS Display Program)

@@ -1,6 +1,8 @@
-/* @(#)main.c	1.1   02/28/90 */
-/* @(#)main.c	1.0   08/1/87 */
-/* purpose:  Program for converting SCS MIADS format cell data to
+/*
+ * $Id$
+ * @(#)main.c	1.1   02/28/90
+ * @(#)main.c	1.0   08/1/87
+ * purpose:  Program for converting SCS MIADS format cell data to
 *            r.in.ascii, rev 4.0 (Mimport.ll, rev3.0) input format.
 *
 *  ------Rev 4.+ arguements --------------------------------------
@@ -28,11 +30,16 @@ main (int argc, char *argv[])
 	struct Option *Nopt, *Eopt, *sizeopt;
 	int  i ;
 	int fdI, fdO;
+	struct GModule *module;
 
         G_gisinit (argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Imports SCS MIADS format raster data into GRASS raster map layer";
 
-            /* set up the options for the command line parser */
-
+        /* set up the options for the command line parser */
         inopt = G_define_option();
         inopt->key             = "input";
         inopt->type            = TYPE_STRING;

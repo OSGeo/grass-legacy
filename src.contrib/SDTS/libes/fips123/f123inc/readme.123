@@ -1,0 +1,15 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123inc/
+
+This subdirectory contains the FIPS PUB 123 Function Library include
+files stc123.h and gvd123.h which are included in the Function Library
+source code when compiled with the ANSI C Compiler.
+
+The batch file <f123dir>/f123bat/f123comp.m can be invoked to compile 
+the entire function library producing object code files in the subdirectory 
+<f123dir>/f123obj/ and source listing files in the subdirectory 
+<f123dir>/f123lst/.  Batch file <f123dir>/f123bat/f123comp.m contains 
+a compiler option (-I) to locate the include files in this subdirectory.  
+Users may find it more convenient to copy the contents of this subdirectory 
+to the subdirectory containing other ANSI C include files.

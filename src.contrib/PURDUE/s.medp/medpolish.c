@@ -136,8 +136,9 @@ static double median (		/* returns the median of arr */
 
 
 /* this if the comparison function for the qsort */
-int dblcompare (double *i, double *j)
+int dblcompare (const void *ii, const void *jj)
 {
+  const double *i = ii, *j = jj;
   if (*i - *j < 0)
     return -1;
   else if (*i - *j > 0)

@@ -1,6 +1,6 @@
 interface_build {
     {r.compress} 0
     {Compresses and decompresses raster files.}
-    {entry input {Input raster map(s) (name[,name,...]):} 0 +raster}
+    {entry map {Input raster map(s) (name[,name,...]):} 0 +raster}
     {checkbox -u {Uncompress the map.} "" -u}
 }

@@ -12,7 +12,7 @@ GLOBAL int SCREEN_BOTTOM;
 GLOBAL int SCREEN_LEFT;
 GLOBAL int SCREEN_RIGHT;
 
-GLOBAL char red_colors[256], grn_colors[256], blu_colors[256];
+GLOBAL unsigned char red_colors[256], grn_colors[256], blu_colors[256];
 
 GLOBAL View *VIEW_TITLE;
 GLOBAL View *VIEW_IMAGE;

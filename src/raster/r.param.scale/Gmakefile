@@ -4,8 +4,7 @@
 ##		 libraries.				    ##
 ##############################################################
 
-
-PROG = $(BIN_CONTRIB_CMD)/r.param.scale
+PROG = $(BIN_CMD)/r.param.scale
 #--------------------------^ Name of the GRASS module here.
 
 
@@ -15,12 +14,8 @@ PROG = $(BIN_CONTRIB_CMD)/r.param.scale
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(GISLIB) $(VASK) $(MATHLIB) $(RASTERLIB) $(DISPLAYLIB)
-#-----------^ Library necessary for all GRASS programs.
-#---------------------^ Parses keyboard input.
-#------------------------------^ For non arithmetic maths.
-#-----------------------------------------^ For raster manipulation.
-#----------------------------------------------------^ Display control.
+LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 
 INCLUDES =\
@@ -42,8 +37,6 @@ OBJ =\
 	write_cats.o	\
 	write_cols.o	\
 	find_normal.o	\
-	ludcomp.o	\
-	lubksub.o	\
 	disp_matrix.o	\
 	nrutil.o	\
 	param.o		\
@@ -55,15 +48,15 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(PROG): $(OBJ) $(LIBES)
-	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES)
+$(PROG): $(OBJ) $(DEPLIBS)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
 
 $(OBJ): $(INCLUDES)
 
 
-$(LIBES): #
+$(DEPLIBS): #
 #---^ Ignore this line (used for future additions of the library).
 
 

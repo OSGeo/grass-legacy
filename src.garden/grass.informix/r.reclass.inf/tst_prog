@@ -1,7 +1,0 @@
-#!/bin/sh
-# test for r.reclass.inf using prebuilt SQL command file 
-# This tools requires that a SELECT FILE be input
-# DB=seco_soils, GISdb=SECO
-#
-r.reclass.inf sql=tst_dbrr.sql key=grass_cat input=seco.soils output=tfact.recl label="Tfact="
-

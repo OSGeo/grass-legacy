@@ -812,6 +812,8 @@ CELL G_quant_get_cell_value ( struct Quant *q, DCELL dcellVal)
   if (! NO_FINITE_RULE)
   {
       p = G__quant_get_rule_for_d_raster_val (q, dcellVal);
+      if (!p)
+          return NO_DATA;
       return quant_interpolate (p->dLow, p->dHigh, p->cLow, p->cHigh,
 				  dcellVal);
   }

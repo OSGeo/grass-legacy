@@ -1,9 +1,0 @@
-
-
-area - A homogeneous region containing data having the same 
-@glossary("category value",16.glossary/catval.def).  An area (a.k.a., @glossary("polygon",16.glossary/polygon.def)) is formed by the series
-of @glossary("arcs",16.glossary/arc.def) outlining its perimeter.  GRASS vector format does not
-store polygons explicitly; when used to describe @glossary("vector data",16.glossary/vecdata.def), 
-therefore, areas refer to area edges.  More generally, area can refer 
-to a geographically defined region (rather than to a region defined by 
-a category value).

@@ -1,9 +1,0 @@
-
-
-band file - A digital file depicting a remotely-sensed @glossary("image",16.glossary/img.def) in
-terms of spectral reflectance values within some specific @glossary("band",16.glossary/band.def)
-on the electromagnetic spectrum.  LANDSAT Thematic Mapper (TM)
-images typically represent data in each of the seven bands, while
-LANDSAT Multispectral Scanner (MSS) images contain four bands of
-data and @glossary("SPOT",16.glossary/spot.def) color images offer three bands of data.  Panchromatic
-images represent data in terms of a single band.

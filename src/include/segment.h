@@ -51,13 +51,17 @@ int segment_address ( SEGMENT *, int, int, int *, int *);
 int segment_flush ( SEGMENT *);
 int segment_format (int, int, int, int, int, int);
 int segment_format_nofill (int, int, int, int, int, int);
-int segment_get( SEGMENT *,int *, int, int);
-int segment_get_row (SEGMENT *, CELL *, int);
+/*  int segment_get( SEGMENT *,int *, int, int); */
+int segment_get( SEGMENT *,void *, int, int);
+/*  int segment_get_row (SEGMENT *, CELL *, int); */
+int segment_get_row (SEGMENT *, void *, int);
 int segment_init ( SEGMENT *, int, int);
 int segment_pagein (SEGMENT *,int);
 int segment_pageout ( SEGMENT *,int);
-int segment_put ( SEGMENT *,int *,int,int);
-int segment_put_row (SEGMENT *,CELL *,int);
+/*  int segment_put ( SEGMENT *,int *,int,int); */
+int segment_put ( SEGMENT *,void *,int,int);
+/*  int segment_put_row (SEGMENT *,CELL *,int); */
+int segment_put_row (SEGMENT *,void *,int);
 int segment_release (SEGMENT *);
 int segment_seek ( SEGMENT *, int, int);
 int segment_setup (SEGMENT *);

@@ -1,3 +1,7 @@
+SLIBDEPS = $(GISLIB) $(RASTERLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ =\
 	get_win.o\
 	color_list.o\
@@ -9,6 +13,7 @@ OBJ =\
 	popup.o\
 	raster.o\
 	raster2.o\
+	raster_rgb.o\
 	scan_dbl.o\
 	scan_float.o\
 	scan_int.o\
@@ -16,11 +21,11 @@ OBJ =\
 	tran_colr.o\
 	window.o
 
-#all: $(LIBDIR)/colors.h $(DISPLAYLIB)
-all: $(DISPLAYLIB)
+#all: $(LIBDIR)/colors.h $(DEPDISPLAYLIB)
+all: $(DEPDISPLAYLIB)
 
-$(DISPLAYLIB): $(OBJ)
-	$(AR)
+$(DEPDISPLAYLIB): $(OBJ)
+	$(SLIBRULE)
 
 #$(LIBDIR)/colors.h: colors.h
 #	rm -f $@

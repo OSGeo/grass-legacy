@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_list_tables (names, count, system)
     dbString **names;
     int *count;

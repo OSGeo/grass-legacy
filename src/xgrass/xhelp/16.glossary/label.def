@@ -1,6 +1,0 @@
-
-
-label - A name, or other nominal code, assigned to a graphic
-representation of a feature on a map.  Labels are comprised of small
-amounts of @glossary("attribute",16.glossary/attribu.def) data (in alpha-numeric from) descriptive of
-and assigned to the graphic representation of a map feature.

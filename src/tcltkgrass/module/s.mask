@@ -1,0 +1,8 @@
+interface_build {
+    {s.mask} 0
+    {Filter a sites list with a raster mask}
+    {checkbox -r  {Use raster region} "" -r}
+    {entry input  {Name of input sites map:} 0 sites}
+    {entry output {Name of new sites file:} 0 sites}
+    {entry raster {Name of raster:} 0 raster}
+}

@@ -67,7 +67,7 @@ int interactive_version (void)
 	default: continue;
 	}
 
-	sprintf(command,"more -d %s",dumpname);
+	sprintf(command,"$GRASS_PAGER %s",dumpname);
 	system(command);
 
 	while(1)

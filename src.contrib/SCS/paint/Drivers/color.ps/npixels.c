@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define MARGINS 36 /*space allowed for margins .5 * 72 */
 Pnpixels (rows, cols)
     int *rows, *cols;
 {
-    char *getenv(), *p;
+    char *p;
 	int n;
 
     if (NULL == (p = getenv ("HEIGHT")) || sscanf(p,"%d",&n) != 1 || n <= 0)

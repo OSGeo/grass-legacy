@@ -1,6 +1,5 @@
 ###########################################################
 
-EXTRA_CFLAGS	= $(VECTLIBFLAGS) $(VECT_INCLUDE)
 
 # get_area_xy2.o
 # dig_hd.o
@@ -37,10 +36,10 @@ OBJ = \
 CFILES = 
 
 
-all:  $(VECTLIB_REAL)
+all:  $(DEPVECTLIB_REAL)
 
-$(VECTLIB_REAL): $(OBJ)
-	$(AR)
+$(DEPVECTLIB_REAL): $(OBJ)
+	$(LIBRULE)
 
 
 iprint:

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>g.stats.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="g.stats.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>g.stats.pg</i></b> - Generate a range of simple statistics for the
+values in a database column. (GRASS-RDBMS General Interface Program)
+<h2>
+SYNOPSIS</h2>
+<b>g.stats.pg</b>
+<br><b>g.stats.pg help</b>
+<br><b>g.stats.pg [-vf] table</b><i>=name</i> <b>column</b><i>=name </i>[<b>where</b><i>=clause</i>]
+<h2>
+DESCRIPTION</h2>
+<i>g.stats.pg</i> generates a series of simple statistics for a numeric
+column in the specified table of the currently selected database. The currently
+selected database is identified by the GRASS environment variable $PG_DBASE
+which is set using the command <i>g.select.pg</i>. If this environment
+variable is not set the program terminates with a message to the user.
+<i>g.stats.pg</i> generates statistics for any numeric column in the table
+specified by the user. To identify the data types for individual columns
+in a table in the currently selected database use the command <i>g.column.pg</i>
+with the <i>-v</i> flag. Statistics generated for the column include count,
+sum, average, minimum value and maximum value.
+<h2>
+COMMAND LINE OPTIONS</h2>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>table=databasetablename</b></dt>
+
+<dd>
+Name of table in currently selected database.</dd>
+
+<dt>
+<b>column=databasecolumnname</b></dt>
+
+<dd>
+Column in [table] which is numeric in type.</dd>
+
+<br><b>where</b><i>=</i><b>clause</b>
+<dd>
+Clause to select only some records from table</dd>
+</dl>
+
+<h3>
+Flags:</h3>
+<b>-v</b>
+<dd>
+Verbose output</dd>
+
+<br><b>-f</b>
+<dd>
+Use frequencies instead of min, max, mean</dd>
+<b></b>
+<p><br><b>EXAMPLE</b>
+<p><i>g.stats.pg table=utm column=ukfact</i>
+<p>Statistics for column: ukfact
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 171
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47.67
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; avg
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.28
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.49
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; min
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.00</pre>
+
+<h2>
+BUGS</h2>
+None known.
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>, <a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>, <a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

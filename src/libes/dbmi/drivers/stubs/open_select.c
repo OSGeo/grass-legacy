@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_open_select_cursor (select, cursor, mode)
     dbString *select;
     dbCursor *cursor;

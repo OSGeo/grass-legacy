@@ -1,9 +1,0 @@
-
-
-Data Base Management System (DBMS) - A systematic approach to 
-maintaining, accessing and manipulating @glossary("files",16.glossary/file.def) stored in a @glossary("database",16.glossary/database.def).
-A DBMS may consist of a single program or a collection of task-
-specific programs.  GRASS contains programs which allow it to be
-interfaced with several existing DBMS.  Typically, DBMS allow the
-user to manipulate and store multiple pieces of information (data)
-for a single point.

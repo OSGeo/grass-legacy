@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>r.quant</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>r.quant</b></EM>  - This routine produces the quantization file for a floating-point map. 
+
+<BR>
+
+<EM>(GRASS 5 Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.quant</B>
+<p>
+<b>r.quant </b>[<b>-tr</b>] <b>input=</b><em>name</em>[<em>,name...</em>] [<b>basemap=</b><em>map</em>]  [<b>fprange=</b><em>dmin,dmax</em>] [<b>range=</b><em>min,max</em>]
+
+<H2>DESCRIPTION</H2>
+
+r.quant produces the quantization file for a floating-point map.
+<P>
+<em>map=name</em>   The map for which the rules be to be created. If more than one map is specified, 
+then this implies that the floating-point range is the miniumum and maximum of all the maps together,
+ unless either basemap=map or fprange=min,max is specified. <br>
+
+<em> basemap=map </em> The quant rules of this map set the quantization. <br>
+
+<em> fprange=min,max </em>  This sets the floating-point range for the quantization. <br>
+
+<em>     -t flag</em>   Truncate floating point data <br>
+
+<em>     -r flag</em>  Round floating point data <br>
+
+<em> range=min,max </em> This sets the integer range for the quantization. Otherwise a default of 1-255 is used. 
+<p>
+<H2> Quant rules </H2>  The quant rules have to be entered interactively.
+<p>
+ If rules is specified, the input has the form: <p>
+
+              value1:value2:cat1:[cat2] <p>
+
+ where value1 and value2 are floating point values and cat1 cand cat2 are integers. If cat2 is missing, it
+ is taken to be equal to cat1. All values can be "*" which means infinity. 
+<P>
+
+
+<H2>NOTE</H2>
+It is an error for both basemap and fprange to be specified.
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.support.html">r.support</A>
+</EM>
+and
+<EM>
+<A HREF="r.null.html">r.null</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, Olga Waupotitcsh, U.S.Army Construction Engineering 
+Research Laboratory
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define REQ_KEYS 8
 
@@ -160,7 +161,7 @@ struct Cell_head *Win)
     char err_buf[80];
 
     if(NULL == (fp = G_fopen_new("3d.view",fname))){
-	sprintf(err_buf,"Unable to open %s for writing", fname);
+	sprintf(err_buf,_("Unable to open %s for writing"), fname);
 	G_warning (err_buf);
 	return(-1);
     }
@@ -249,7 +250,7 @@ struct G_3dview *View)
     {
 
 	if(NULL == (fp = G_fopen_old("3d.view",fname,mapset))){
-	    sprintf(err_buf,"Unable to open %s for reading", fname);
+	    sprintf(err_buf,_("Unable to open %s for reading"), fname);
 	    G_warning (err_buf);
 	    return(-1);
 	}
@@ -454,7 +455,7 @@ struct G_3dview *View)
 	if(!Suppress_warn){
 	    if(95 > (lap = compare_wind(&(View->vwin),&curwin))){
 
-		fprintf(stderr,"GRASS window when view was saved:\n");
+		fprintf(stderr,_("GRASS window when view was saved:\n"));
 		G_format_northing(View->vwin.north, nbuf, G_projection()) ;
 		fprintf(stderr,"north:   %s\n", nbuf);
 		G_format_northing(View->vwin.south, nbuf, G_projection()) ;
@@ -468,7 +469,7 @@ struct G_3dview *View)
 	}
     }
     else{
-	sprintf(err_buf,"Unable to open %s for reading", fname);
+	sprintf(err_buf,_("Unable to open %s for reading"), fname);
 	G_warning (err_buf);
 	return(-1);
     }
@@ -540,11 +541,11 @@ static void pr_winerr (
     switch(vis)
     {
     case 0:
-	sprintf(err_buf," Window saved in \"%s\" is completely outside of current GRASS window.", viewname);
+	sprintf(err_buf,_(" Window saved in \"%s\" is completely outside of current GRASS window."), viewname);
 	G_warning (err_buf);
 	break;
     default:
-	sprintf(err_buf," Only %d%% of window saved in \"%s\" overlaps with current GRASS window.", vis, viewname);
+	sprintf(err_buf,_(" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."), vis, viewname);
 	G_warning (err_buf);
 	break;
 

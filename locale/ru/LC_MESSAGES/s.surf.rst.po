@@ -1,0 +1,457 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Artem Popov<artemis@yandex.com>, 2002.
+#
+#: main.c:169 main.c:462
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-20 12:58+0300\n"
+"PO-Revision-Date: 2002-03-16 11:20+0300\n"
+"Last-Translator: Artem Popov<artemis@yandex.ru>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: main.c:178
+msgid ""
+"Interpolation and topographic analysis from given site data to GRASS "
+"floating point raster format using regularized spline with tension"
+msgstr "Интерполяция и топографический анализ точечных данных"
+
+#: main.c:198
+#, c-format
+msgid "%f"
+msgstr ""
+
+#: main.c:200 main.c:205 main.c:697 main.c:701
+msgid "\n"
+msgstr ""
+
+#: main.c:201
+msgid "Authors: original version L.Mitas, H.Mitasova\n"
+msgstr "Авторы: оригинальная версия L.Mitas, H.Mitasova\n"
+
+#: main.c:202
+msgid "         GRASS implementation I.Kosinovsky, D.P.Gerdes\n"
+msgstr "         Реализация GRASS I.Kosinovsky, D.P.Gerdes\n"
+
+#: main.c:203
+msgid "see references in manual page or at:\n"
+msgstr "см. ссылки в страницах руководства или на:\n"
+
+#: main.c:204
+msgid "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n"
+msgstr ""
+
+#: main.c:209
+msgid "input"
+msgstr ""
+
+#: main.c:212
+msgid "old,site_lists,sites"
+msgstr ""
+
+#: main.c:213
+msgid "Name of the site file with input x|y|%z [%sm]"
+msgstr "Имя файла с точками в формате x|y|%z [%sm]"
+
+#: main.c:216
+msgid "elev"
+msgstr ""
+
+#: main.c:219 main.c:226 main.c:233 main.c:295 main.c:302 main.c:309
+msgid "new,cell,raster"
+msgstr ""
+
+#: main.c:220
+msgid "Output z-file (elevation)"
+msgstr "Выходной Z-файл (рельеф)"
+
+#: main.c:223
+#, fuzzy
+msgid "slope"
+msgstr "Склоны"
+
+#: main.c:227
+msgid "Slope"
+msgstr "Склоны"
+
+#: main.c:230
+#, fuzzy
+msgid "aspect"
+msgstr "Экспозиция"
+
+#: main.c:234
+msgid "Aspect"
+msgstr "Экспозиция"
+
+#: main.c:237
+msgid "field"
+msgstr ""
+
+#: main.c:239 main.c:248
+msgid "1-100"
+msgstr ""
+
+#: main.c:240
+msgid "1"
+msgstr ""
+
+#: main.c:243
+msgid "decimal attribute to use for elevation (1=first)"
+msgstr "Десятичный атрибут высоты (1=первый)"
+
+#: main.c:246
+msgid "smatt"
+msgstr ""
+
+#: main.c:251
+msgid ""
+"Which fp site attribute to use for smoothing (or use smooth= for constant)"
+msgstr "Десятичный атрибут сглаживания (или smooth=постоянный)"
+
+#: main.c:254
+msgid "smooth"
+msgstr ""
+
+#: main.c:260
+msgid "Smoothing parameter"
+msgstr "Параметр сглаживания"
+
+#: main.c:263
+#, fuzzy
+msgid "tension"
+msgstr "Кривизна сплайна"
+
+#: main.c:267
+msgid "Tension"
+msgstr "Кривизна сплайна"
+
+#: main.c:270
+msgid "devi"
+msgstr ""
+
+#: main.c:273
+msgid "new,site_lists,sites"
+msgstr ""
+
+#: main.c:274
+msgid "Name of the output deviations site file"
+msgstr "Имя выходного файла искажений"
+
+#: main.c:277
+msgid "treefile"
+msgstr ""
+
+#: main.c:280 main.c:287
+msgid "new,dig,vector"
+msgstr ""
+
+#: main.c:281
+msgid "Output vector file showing segmentation"
+msgstr "Имя выходного векторного файла сегментации"
+
+#: main.c:284
+msgid "overfile"
+msgstr ""
+
+#: main.c:288
+msgid "Output vector file showing overlapping segments"
+msgstr "Имя выходного векторного файла перекрывающихся сегментов"
+
+#: main.c:292
+msgid "pcurv"
+msgstr ""
+
+#: main.c:296
+msgid "Profile curvature"
+msgstr "Искривление профиля"
+
+#: main.c:299
+msgid "tcurv"
+msgstr ""
+
+#: main.c:303
+msgid "Tangential curvature"
+msgstr "Тангенциальное искривление"
+
+#: main.c:306
+msgid "mcurv"
+msgstr ""
+
+#: main.c:310
+msgid "Mean curvature"
+msgstr "Среднее искривление"
+
+#: main.c:313
+msgid "maskmap"
+msgstr ""
+
+#: main.c:316
+msgid "old,cell,raster"
+msgstr ""
+
+#: main.c:317
+msgid "Name of the raster file used as mask"
+msgstr "Имя растрового файла-маски"
+
+#: main.c:320
+msgid "dmin"
+msgstr ""
+
+#: main.c:324
+msgid "Min distance between points (extra points ignored)"
+msgstr "Мин. расстояние между точками (лишние будут отбрасываться)"
+
+#: main.c:327
+msgid "zmult"
+msgstr ""
+
+#: main.c:331
+msgid "Conversion factor for z-values"
+msgstr "Множитель для z-значений"
+
+#: main.c:334
+msgid "segmax"
+msgstr ""
+
+#: main.c:338
+msgid "Max number of points in segment"
+msgstr "Макс. количество точек в сегменте"
+
+#: main.c:341
+msgid "npmin"
+msgstr ""
+
+#: main.c:345
+msgid "Min number of points for interpolation(>segmax)"
+msgstr "Мин. количество точек для интерполяции (>segmax)"
+
+#: main.c:349
+msgid "Output partial derivatives instead"
+msgstr "Выводить частичные производные"
+
+#: main.c:353
+msgid "Use dnorm-independent tension (experimental)"
+msgstr ""
+"Использовать dnorm-независимое растяжение (экспериментальная возможность)"
+
+#: main.c:376
+msgid "Warning -- you are not outputing any raster or site files\n"
+msgstr "Внимание -- вы не указали выходные растровые/точечные файлы\n"
+
+#: main.c:384 main.c:385 main.c:388 main.c:391 main.c:400
+#, c-format
+msgid "%lf"
+msgstr ""
+
+#: main.c:386 main.c:387 main.c:389 main.c:402
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: main.c:393
+msgid "Smoothing must be a positive value"
+msgstr "Сглаживание должно быть положительным"
+
+#: main.c:395
+msgid "Both smatt and smooth options specified - using constant"
+msgstr "Не указаны опции smatt и smooth - использую постоянную"
+
+#: main.c:407
+msgid "The computation will last too long - lower npmin is suggested"
+msgstr "Вычисление будет слишком долгим - уменьшите значение npmin"
+
+#: main.c:419
+msgid "Not enough memory for az"
+msgstr "Не хватает памяти для az"
+
+#: main.c:426
+msgid "Not enough memory for adx"
+msgstr "Не хватает памяти для adx"
+
+#: main.c:431
+msgid "Not enough memory for ady"
+msgstr "Не хватает памяти для ady"
+
+#: main.c:438
+msgid "Not enough memory for adxx"
+msgstr "Не хватает памяти для adxx"
+
+#: main.c:443
+msgid "Not enough memory for adyy"
+msgstr "Не хватает памяти для adyy"
+
+#: main.c:448
+msgid "Not enough memory for adxy"
+msgstr "Не хватает памяти для adxy"
+
+#: main.c:453
+#, fuzzy
+msgid "cannot create quaddata"
+msgstr "невозможно создать дерево"
+
+#: main.c:455
+#, fuzzy
+msgid "cannot create quadfunc"
+msgstr "невозможно создать дерево"
+
+#: main.c:457
+msgid "cannot create tree"
+msgstr "невозможно создать дерево"
+
+#: main.c:460
+#, fuzzy
+msgid "cannot create tree info"
+msgstr "невозможно создать дерево"
+
+#: main.c:462 main.c:483
+msgid "site_lists"
+msgstr ""
+
+#: main.c:465
+#, c-format
+msgid "file [%s] not found"
+msgstr "файл [%s] не найден"
+
+#: main.c:470 main.c:501 main.c:516
+#, c-format
+msgid "Cannot open %s"
+msgstr "Невозможно открыть %s"
+
+#: main.c:474
+msgid "failed to guess site format"
+msgstr "Не могу определить формат точеного файла"
+
+#: main.c:476
+msgid "failed to read site header"
+msgstr "Не могу прочитать заголовок точеного файла"
+
+#: main.c:482
+msgid ""
+"\n"
+"WARNING: old data format detected.\n"
+msgstr ""
+"\n"
+"ВНИМАНИЕ: старый формат точечного файла.\n"
+
+#: main.c:486
+#, c-format
+msgid "%sSite list [%s] cannot be used in its current format\n"
+msgstr "%sТочечный файл [%s] нельзя использовать в данной форме\n"
+
+#: main.c:487
+msgid "ERROR:\t"
+msgstr "ОШИБКА:\t"
+
+#: main.c:488
+msgid "\tIt cannot be converted to the new format "
+msgstr "\tОн не может быть преобразован в новый формат"
+
+#: main.c:489
+msgid ""
+"since it is not\n"
+"\tin the current mapset\n"
+msgstr ""
+"так как он находится\n"
+"\tв другом наборе данных\n"
+
+#: main.c:492
+msgid "Convert site file to new format?\n"
+msgstr "Преобразовать файл в новый формат?\n"
+
+#: main.c:493
+msgid "Answering yes will modify your site list file."
+msgstr "Ответ не повлияет на текущий файл."
+
+#: main.c:497
+#, c-format
+msgid "%s/etc/s.o2n.tps %s"
+msgstr ""
+
+#: main.c:506 main.c:509
+msgid "no decimal attributes found in site list"
+msgstr "десятичные атрибуты в файле не найдены"
+
+#: main.c:522
+msgid "deviations at sample points"
+msgstr ""
+
+#: main.c:524
+#, c-format
+msgid "deviations of %s [raster] at %s [sites]"
+msgstr ""
+
+#: main.c:552
+#, fuzzy
+msgid "Not enough memory for zero_array_cell"
+msgstr "Не хватает памяти для ady"
+
+#: main.c:561 main.c:574 main.c:587 main.c:601 main.c:614 main.c:627
+msgid "w+"
+msgstr ""
+
+#: main.c:563 main.c:576 main.c:589 main.c:603 main.c:616 main.c:629
+#, c-format
+msgid "Can't open temp file [%s] "
+msgstr "Не могу открыть временный файл [%s]"
+
+#: main.c:569 main.c:582 main.c:595 main.c:609 main.c:622 main.c:635
+msgid "Not enough disk space -- cannot write files"
+msgstr "Не достаточно места на диске -- не могу создать файлы"
+
+#: main.c:661 main.c:718
+msgid "Input failed"
+msgstr ""
+
+#: main.c:667 main.c:762
+#, c-format
+msgid "Not able to open vector file <%s>\n"
+msgstr "Не могу открыть векторный файл <%s>\n"
+
+#: main.c:675 main.c:770
+msgid "grass"
+msgstr ""
+
+#: main.c:676
+#, c-format
+msgid "Quad tree for %s"
+msgstr ""
+
+#: main.c:698
+msgid "Processing all selected output files \n"
+msgstr ""
+
+#: main.c:699
+#, c-format
+msgid "will require %d bytes of disk space for temp files \n"
+msgstr "потребуется %d байт дискового пространства для временных файлов\n"
+
+#: main.c:710
+#, c-format
+msgid "dnorm = %f, rescaled tension = %f\n"
+msgstr ""
+
+#: main.c:721
+msgid "Percent complete: "
+msgstr "Завершено:"
+
+#: main.c:726
+msgid "Interp_segmets failed"
+msgstr ""
+
+#: main.c:743
+msgid "Cannot write cell files -- try to increase resolution"
+msgstr "Не могу создать растровый файл -- попробуйте увеличить разрешение"
+
+#: main.c:771
+#, c-format
+msgid "Overlap segments for %s"
+msgstr "Перекрывающиеся сегменты для %s"
+
+#: main.c:832
+msgid "Out of memory"
+msgstr "Не хватает памяти"

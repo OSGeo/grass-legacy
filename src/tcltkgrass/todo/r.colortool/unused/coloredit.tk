@@ -1,0 +1,183 @@
+#!/usr/local/bin/wish -f
+#
+# Selcol lets you select a color by twiddling RGB and/or HSL values.
+#
+# $Id$
+#
+# $Log$
+# Revision 1.1  2000-11-24 18:34:14  markus
+# nice tcl colortool (comparing to d.colors)
+#
+# Revision 1.2  1992/04/10  22:55:31  sls
+# Edit via HLS as well as RGB.
+#
+# Revision 1.1  1992/03/03  00:12:48  sls
+# Initial revision
+#
+#
+
+set blue 216
+set green 236
+set red 170
+set hue 0
+set sat 0
+set light 0
+
+proc make.scale {name var to title} {
+    frame $name
+    scale $name.scale -command "update.color $var" -to $to
+    global $var
+    $name.scale set [set $var]
+    label $name.label -text $title
+    pack append $name $name.label {} $name.scale {}
+}
+
+set flag 0
+proc update.color {var value} {
+    global flag
+    if {$flag == 1} {return}
+    set flag 1
+    global $var red green blue hue sat light
+    set $var $value
+    set color [format "#%02x%02x%02x" $red $green $blue]
+    catch {.patch configure -background $color}
+    .value delete @0 end
+    .value insert 0 $color
+    if {$var == "red" || $var == "blue" || $var == "green"} {
+	rgb.changed
+    } else {
+	hsl.changed
+    }
+    set flag 0
+}
+
+proc min args {
+	set x [lindex $args 0]
+	foreach y $args {
+		if {$y < $x} {set x $y}
+	}
+	return $x
+}
+
+proc max args {
+	set x [lindex $args 0]
+	foreach y $args {
+		if {$y > $x} {set x $y}
+	}
+	return $x
+}
+
+proc floor {x} {
+	if {$x < 0} {set t [expr {0-$x}]} {set t $x}
+	set s [format %.0f $t]
+	if {$t != $x} {return "-$s"} {return $s}
+}
+
+# The code for translating from RGB to HSL and HSL to RGB is ripped
+# off from Fundamentals of Computer Graphics, Foley & Van Dam.
+
+proc rgb.changed {} {
+    global red green blue hue sat light
+    set MIN [min $red $green $blue]
+    set MAX [max $red $green $blue]
+    set light [expr {($MIN+$MAX)/2}]
+    if {$MIN == $MAX} {
+	set sat 0
+	set hue 0
+    } else {
+	if {$light < 128} {
+	    set sat [expr {(256*($MAX-$MIN))/($MAX+$MIN)}]
+	} else {
+	    set sat [expr {(256*($MAX-$MIN))/(512-$MAX-$MIN)}]
+	}
+	set d [expr {$MAX-$MIN}].0
+	set rc [expr {($MAX-$red)/$d}]
+	set gc [expr {($MAX-$green)/$d}]
+	set bc [expr {($MAX-$blue)/$d}]
+	if {$red == $MAX} {
+	    set hue [expr {$bc-$gc}]
+	} else {
+	   if {$green == $MAX} {
+		set hue [expr {2+$rc-$bc}]
+	   } else {
+		set hue [expr {4+$gc-$rc}]
+	   }
+	}
+	set hue [expr {$hue*60}]
+	if {$hue < 0} {set hue [expr {$hue+360}]}
+    }
+    set hue [format %.0f $hue]
+    .scales.hue.scale set $hue
+    .scales.sat.scale set $sat
+    .scales.light.scale set $light
+}
+
+proc value {n1 n2 hue} {
+    if {$hue > 360} {set hue [expr {$hue-360}]}
+    if {$hue < 0} {set hue [expr {$hue+360}]}
+    if {$hue < 60} {
+	set r [expr {$n1+($n2-$n1)*$hue/60}]
+    } else {
+	if {$hue < 180} {
+	    set r $n2
+	} else {
+	    if {$hue < 240} {
+		set r [expr {$n1+($n2-$n1)*(240-$hue)/60}]
+	    } else {
+		set r $n1
+	    }
+	}
+    }
+    set r [format %.0f [floor $r]]
+    return $r
+}
+
+proc hsl.changed {} {
+    global red green blue hue sat light
+    if {$light < 128} {
+	set m2 [expr {$light*(255+$sat)/256.0}]
+    } else {
+	set m2 [expr {$light+$sat-$light*$sat/256.0}]
+    }
+    set m1 [expr {2*$light-$m2}]
+    if {$sat == 0} {
+	set red $light
+	set green $light
+	set blue $light
+    }
+    set red [value $m1 $m2 [expr {$hue+120}]]
+    set green [value $m1 $m2 $hue]
+    set blue [value $m1 $m2 [expr {$hue-120}]]
+    .scales.red.scale set $red
+    .scales.green.scale set $green
+    .scales.blue.scale set $blue
+}
+
+# frame .patch -geometry 100x100
+#frame .patch
+entry .value -width 12
+bind .value <1> {%W select from @0; %W select to end; }
+
+frame .scales
+set flag 1
+make.scale .scales.red red 255 "Red"
+make.scale .scales.green green 255 "Green"
+make.scale .scales.blue blue 255 "Blue"
+make.scale .scales.hue hue 360 "Hue"
+make.scale .scales.sat sat 255 "Saturation"
+make.scale .scales.light light 255 "Lightness"
+pack append .scales .scales.red {left} .scales.green {left} .scales.blue {left}
+pack append .scales .scales.hue {left} .scales.sat {left} .scales.light {left}
+set flag 0
+
+button .quit -command {exit} -text "Quit"
+
+#pack append . .scales {} .value {fill} .patch {expand} .quit {fill expand}
+pack append . .scales {} .value {fill} .quit {fill expand}
+update
+
+#.patch configure -geometry [ format "%dx100" [ winfo width . ] ]
+
+update.color red $red
+
+

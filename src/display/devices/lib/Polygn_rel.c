@@ -15,8 +15,6 @@ Polygon_rel (int *xarray, int *yarray, int number)
 	}
 
 	incr-- ;
-	cur_x = xarray[incr] ;
-	cur_y = yarray[incr] ;
 
 	Polygon_abs(xarray, yarray, number) ;
 

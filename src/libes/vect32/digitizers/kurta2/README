@@ -1,9 +1,0 @@
-
-  There are diagnostic programs for the kurta in the sub-directory Diagnostics.
-
-  The code in the B directory is for the  ucb universe before it was
-  rewritten for the att universe.
-
-  The file DOC contains documentation for the Kurta digitizer (for programmers
-  who wish to expand the capabilities of the device driver).
-

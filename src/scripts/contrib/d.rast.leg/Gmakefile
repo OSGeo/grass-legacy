@@ -1,2 +1,3 @@
 all:
 	cp d.rast.leg $(GISBASE)/scripts
+	cp d.rast.leg2 $(GISBASE)/scripts

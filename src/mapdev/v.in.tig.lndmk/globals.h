@@ -28,6 +28,7 @@ char *mapset;
 char vect_name[50];
 char site_name[50];
 char t1buf[250];
+struct GModule *module;
 struct Flag *flag1;
 struct Flag *flag2;
 struct Option *opt1; /* t1    */
@@ -74,6 +75,7 @@ extern char *mapset;
 extern char vect_name[50];
 extern char site_name[50];
 extern char t1buf[250];
+extern struct GModule *module;
 extern struct Flag *flag1;
 extern struct Flag *flag2;
 extern struct Option *opt1; /* t1    */
@@ -100,7 +102,7 @@ extern char match_string[NMATCHES][32]; /* for matching strings */
 #endif
 
 /* areas.c */
-int cmp_int(int *, int *);
+int cmp_int(const void *, const void *);
 int do_areas(void);
 int area_yes(char *);
 int track(int);

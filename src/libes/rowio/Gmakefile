@@ -1,10 +1,12 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ=setup.o get.o forget.o release.o fileno.o put.o
 
-#all: $(ROWIOLIB) $(LIBDIR)/rowio.h
-all: $(ROWIOLIB)
+#all: $(DEPROWIOLIB) $(LIBDIR)/rowio.h
+all: $(DEPROWIOLIB)
 
-$(ROWIOLIB): $(OBJ)
-	$(AR)
+$(DEPROWIOLIB): $(OBJ)
+	$(SLIBRULE)
 
 #$(LIBDIR)/rowio.h: rowio.h
 #	rm -f $@ ; cp $? $@; chmod +r $@
@@ -16,5 +18,5 @@ put.o: $(INCLUDE_DIR)/rowio.h
 release.o: $(INCLUDE_DIR)/rowio.h
 setup.o: $(INCLUDE_DIR)/rowio.h
 
-try: $(ROWIOLIB) try.o
+try: $(DEPROWIOLIB) try.o
 	$(CC) try.o $(ROWIOLIB) -o try

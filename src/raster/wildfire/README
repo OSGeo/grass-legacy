@@ -1,0 +1,27 @@
+	  	Guide to using the WiSpS package
+
+			by Jianping Xu
+			    1/5/95
+
+This WIldfire SPread Simulation, WiSpS, package contains three GRASS 
+programs r.ros, r.spread and r.spreadpath, their manual pages, and
+a set of test data. 
+
+Contents:
+1	src/		directory containing the source code
+2	man/man/	directory containing the manual page source files
+	man/cat/	directory containing formated manual pages
+3	demolocation	"Location" directory for the test data
+4	doit		shell script to do WiSpS demo with the test data
+5	README		this text
+
+File Management:
+I suggest you put 1-2 into your software system directory, 3 to data directory
+and 4-5 to your home directory.
+
+Compilation:
+        cd src
+ 	gmake5
+
+Install the demolocation and try
+        firedemo.sh

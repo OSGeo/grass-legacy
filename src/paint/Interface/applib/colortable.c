@@ -14,10 +14,10 @@ int Pcolortable (
 	    i = TABLE_SIZE;
 	P__opcode (COLORTABLE);
 	P__sendi (i);
-	P__send (red, i);
-	P__send (grn, i);
-	P__send (blu, i);
-	P__get (table, i);
+	P__send ((char *) red, i);
+	P__send ((char *) grn, i);
+	P__send ((char *) blu, i);
+	P__get ((char *) table, i);
 
 	red += i;
 	grn += i;

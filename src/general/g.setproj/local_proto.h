@@ -25,8 +25,17 @@ int get_stp_num(void);
 int ask_fips(FILE *, int *, int *, int *);
 /* main.c */
 int min1(int, int);
+#ifdef __GNUC_MINOR__
 int leave(int) __attribute__ ((__noreturn__));
+#else
+int leave(int);
+#endif
+
+/* this is from gislib! */
 /* table.c */
 int init_table(void);
 int get_proj_index(char *);
 int init_unit_table(void);
+
+/* get_datum.c */
+int ask_datum(char *);

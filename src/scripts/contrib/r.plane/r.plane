@@ -1,3 +1,4 @@
+#!/bin/sh
 # Scripts creates a (inclined) plane.
 # User specifies - inclination
 #                - azimuth
@@ -5,8 +6,27 @@
 # 
 # set nsres and ewres, north, south etc
 
-eval `g.region -g`
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
 eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ "$1" = "-help" -o "$1" = "help" ]
+then
+ echo "r.plane:"
+ echo "Please give the value for the dip (inclination) in degrees."
+ echo "The value must be between -90 and 90 from horizontal,"
+ echo "with positive values pointing down. Real numbers are valid."
+ echo "No value results in dip=0 and  horizontal surface."
+ echo ""
+ exit
+fi
+
+eval `g.region -g`
 
 echo ""
 echo "Please give the value for the dip (inclination) in degrees."

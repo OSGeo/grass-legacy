@@ -1,0 +1,4751 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: ask.c:320 ask.c:323 ask.c:409 cats.c:505 cats.c:954 cats.c:957 cats.c:981
+#: cats.c:990 cats.c:1009 cats.c:1092 error.c:293 geo_init.c:90 geo_init.c:92
+#: geo_init.c:99 geo_init.c:101 geo_init.c:104 geo_init.c:107 geo_init.c:123
+#: geo_init.c:126 get_datum.c:38 get_ellipse.c:44 get_ellipse.c:330
+#: get_projinfo.c:14 get_projinfo.c:42 get_row.c:269 get_row.c:705
+#: get_window.c:37 get_window.c:60 history.c:155 history.c:156 list.c:154
+#: locale.c:21 locale.c:38 mapset_msc.c:35 mapset_msc.c:88 mapset_nme.c:55
+#: myname.c:28 named_colr.c:28 parser.c:1382 parser.c:1389 parser.c:1391
+#: parser.c:1393 proj3.c:131 put_window.c:17 sites.c:1137 sites.c:1175
+#: sites.c:1180 sites.c:1188 sites.c:1225 sites.c:1227 sites_title.c:33
+#: sites_title.c:42
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: adj_cellhd.c:44
+msgid "Illegal n-s resolution value"
+msgstr ""
+
+#: adj_cellhd.c:49
+msgid "Illegal row value"
+msgstr ""
+
+#: adj_cellhd.c:54
+msgid "Illegal e-w resolution value"
+msgstr ""
+
+#: adj_cellhd.c:59
+msgid "Illegal col value"
+msgstr ""
+
+#: adj_cellhd.c:66
+msgid "Illegal latitude for North"
+msgstr ""
+
+#: adj_cellhd.c:68
+msgid "Illegal latitude for South"
+msgstr ""
+
+#: adj_cellhd.c:77
+msgid "North must be north of South"
+msgstr ""
+
+#: adj_cellhd.c:79
+msgid "North must be larger than South"
+msgstr ""
+
+#: adj_cellhd.c:82
+msgid "East must be larger than West"
+msgstr ""
+
+#: adj_cellhd.c:102
+msgid "Invalid coordinates"
+msgstr ""
+
+#: alloc.c:64
+msgid "G_malloc: out of memory"
+msgstr ""
+
+#: alloc.c:78
+msgid "G_calloc: out of memory"
+msgstr ""
+
+#: alloc.c:91
+msgid "G_realloc: out of memory"
+msgstr ""
+
+#: ask.c:198
+msgid "to cancel request"
+msgstr ""
+
+#: ask.c:253
+#, c-format
+msgid "Enter a new %s file name"
+msgstr ""
+
+#: ask.c:257
+#, c-format
+msgid "Enter the name of an existing %s file"
+msgstr ""
+
+#: ask.c:260
+#, c-format
+msgid "Enter %s file name"
+msgstr ""
+
+#: ask.c:276
+#, c-format
+msgid ""
+"\n"
+"%s\n"
+msgstr ""
+
+#: ask.c:277
+#, c-format
+msgid "Enter 'list' for a list of existing %s files\n"
+msgstr ""
+
+#: ask.c:280
+msgid "Enter 'list -f' for "
+msgstr ""
+
+#: ask.c:282
+#, c-format
+msgid "a list %s"
+msgstr ""
+
+#: ask.c:284
+msgid "an extended list"
+msgstr ""
+
+#: ask.c:285 color_write.c:98 color_write.c:106 color_write.c:162
+#: color_write.c:192 color_write.c:213 error.c:285 error.c:292 list.c:204
+#: parser.c:485 percent.c:37 quant_io.c:280 readsites.c:54 window_map.c:109
+#: window_map.c:110
+msgid "\n"
+msgstr ""
+
+#: ask.c:288
+#, c-format
+msgid "Hit RETURN %s\n"
+msgstr ""
+
+#: ask.c:289
+msgid "> "
+msgstr ""
+
+#: ask.c:294
+#, c-format
+msgid "<%s>\n"
+msgstr ""
+
+#: ask.c:332
+msgid "** illegal request **\n"
+msgstr ""
+
+#: ask.c:342
+#, c-format
+msgid ""
+"\n"
+"**<%s> illegal name **\n"
+msgstr ""
+
+#: ask.c:357
+#, c-format
+msgid ""
+"\n"
+"** %s - illegal request **\n"
+msgstr ""
+
+#: ask.c:372
+#, c-format
+msgid ""
+"\n"
+"** %s - exists, select another name **\n"
+msgstr ""
+
+#: ask.c:382
+#, c-format
+msgid ""
+"\n"
+"** %s exists. ok to overwrite? "
+msgstr ""
+
+#: ask.c:396 ask.c:418
+#, c-format
+msgid ""
+"\n"
+"** %s - not found **\n"
+msgstr ""
+
+#: ask.c:400
+msgid "ask: can't happen"
+msgstr ""
+
+#: ask.c:434
+#, c-format
+msgid "%s%s%s%s"
+msgstr ""
+
+#: ask.c:437 get_datum_name.c:59 get_ell_name.c:51 get_projname.c:66
+msgid "list"
+msgstr ""
+
+#: ask_cell.c:46 ask_cell.c:55 ask_cell.c:64 ask_cell.c:73 closecell.c:185
+#: closecell.c:186 closecell.c:197 find_cell.c:30 find_cell.c:38
+#: opencell.c:274 opencell.c:402 opencell.c:413 opencell.c:420
+msgid "cell"
+msgstr ""
+
+#: ask_cell.c:46 ask_cell.c:55 ask_cell.c:64 ask_cell.c:73 closecell.c:247
+#: timestamp.c:234 timestamp.c:288
+msgid "raster"
+msgstr ""
+
+#: ask_cell.c:46 ask_cell.c:55 ask_cell.c:64 ask_cell.c:73
+msgid "with titles"
+msgstr ""
+
+#: ask_cell.c:85
+msgid "(no title)"
+msgstr ""
+
+#: ask_vctrs.c:36 ask_vctrs.c:43 ask_vctrs.c:50 ask_vctrs.c:57 cats.c:416
+#: cats.c:962 find_vect.c:30 find_vect.c:38 openvect.c:31 openvect.c:38
+msgid "dig"
+msgstr ""
+
+#: ask_vctrs.c:36 ask_vctrs.c:43 ask_vctrs.c:50 ask_vctrs.c:57 timestamp.c:252
+#: timestamp.c:298
+msgid "vector"
+msgstr ""
+
+#: auto_mask.c:33 auto_mask.c:39 auto_mask.c:49 mask_info.c:61
+msgid "MASK"
+msgstr ""
+
+#: auto_mask.c:53
+msgid "Unable to open automatic MASK file"
+msgstr ""
+
+#: cats.c:345 cats.c:925 cats.c:930 cell_title.c:21 put_title.c:25
+#: put_title.c:71
+msgid "cats"
+msgstr ""
+
+#: cats.c:348 cats.c:372 color_read.c:86 quant_io.c:158
+msgid "missing"
+msgstr ""
+
+#: cats.c:351 cats.c:375 color_read.c:89
+msgid "invalid"
+msgstr ""
+
+#: cats.c:357
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: cats.c:369 cats.c:935 dig_title.c:21
+msgid "dig_cats"
+msgstr ""
+
+#: cats.c:381
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr ""
+
+#: cats.c:428
+#, c-format
+msgid "# %ld"
+msgstr ""
+
+#: cats.c:430 color_read.c:305
+#, c-format
+msgid "%ld"
+msgstr ""
+
+#: cats.c:458
+#, c-format
+msgid "%f %f %f %f"
+msgstr ""
+
+#: cats.c:474 env.c:220 rd_cellhd.c:248 timestamp.c:64
+#, c-format
+msgid "%1s"
+msgstr ""
+
+#: cats.c:481
+msgid ""
+"%lf:%lf:%[^\n"
+"]"
+msgstr ""
+
+#: cats.c:483
+msgid ""
+"%d:%[^\n"
+"]"
+msgstr ""
+
+#: cats.c:485
+msgid ""
+"%lf:%[^\n"
+"]"
+msgstr ""
+
+#: cats.c:548
+msgid "no data"
+msgstr ""
+
+#: cats.c:951
+#, c-format
+msgid "# %ld categories\n"
+msgstr ""
+
+#: cats.c:954 cats.c:957 color_write.c:110 color_write.c:112 error.c:143
+#: get_datum_name.c:45 get_ell_name.c:37 history.c:120 history.c:121
+#: history.c:122 history.c:123 history.c:124 history.c:125 history.c:126
+#: history.c:127 history.c:130 parser.c:745 put_title.c:50 reclass.c:243
+#: sites.c:556 timestamp.c:77 try.c:9
+#, c-format
+msgid "%s\n"
+msgstr ""
+
+#: cats.c:958
+#, c-format
+msgid "%.2f %.2f %.2f %.2f\n"
+msgstr ""
+
+#: cats.c:978 cats.c:985 cats.c:987 color_write.c:85 color_write.c:142
+#: color_write.c:155
+#, c-format
+msgid "%.10f"
+msgstr ""
+
+#: cats.c:980
+#, c-format
+msgid "%s:%s\n"
+msgstr ""
+
+#: cats.c:989
+#, c-format
+msgid "%s:%s:%s\n"
+msgstr ""
+
+#: clear_scrn.c:13
+msgid "clear"
+msgstr ""
+
+#: clicker.c:15
+msgid "|/-\\"
+msgstr ""
+
+#: clicker.c:23
+#, c-format
+msgid "%1c\b"
+msgstr ""
+
+#: closecell.c:33 closecell.c:195 opencell.c:849
+msgid "f_format"
+msgstr ""
+
+#: closecell.c:34 get_row.c:101 reclass.c:5
+msgid "null"
+msgstr ""
+
+#: closecell.c:109
+#, c-format
+msgid "close %s compressed\n"
+msgstr ""
+
+#: closecell.c:110
+#, c-format
+msgid "close %s uncompressed\n"
+msgstr ""
+
+#: closecell.c:111
+#, c-format
+msgid "close %s random\n"
+msgstr ""
+
+#: closecell.c:123 closecell.c:194 closecell.c:288 closecell.c:351
+#: get_row.c:1049 histogram.c:120 histogram.c:327 histogram.c:341
+#: opencell.c:905 quant_io.c:153 quant_io.c:302 range.c:97 range.c:143
+#: range.c:236 range.c:285 range.c:317
+#, c-format
+msgid "cell_misc/%s"
+msgstr ""
+
+#: closecell.c:155 closecell.c:227
+#, c-format
+msgid "mv %s %s"
+msgstr ""
+
+#: closecell.c:157
+#, c-format
+msgid ""
+"closecell: can't move %s\n"
+"to null file %s"
+msgstr ""
+
+#: closecell.c:180
+#, c-format
+msgid "Error writing floating point format file for map %s"
+msgstr ""
+
+#: closecell.c:188 closecell.c:191 opencell.c:261 opencell.c:268
+#: opencell.c:480 opencell.c:504 opencell.c:860 opencell.c:881
+msgid "fcell"
+msgstr ""
+
+#: closecell.c:229
+#, c-format
+msgid ""
+"closecell: can't move %s\n"
+"to cell file %s"
+msgstr ""
+
+#: closecell.c:285
+msgid " can't write quant file!"
+msgstr ""
+
+#: closecell.c:289 quant_io.c:66
+msgid "f_quant"
+msgstr ""
+
+#: closecell.c:334
+msgid "Can't write f_format file for CELL maps"
+msgstr ""
+
+#: closecell.c:339 closecell.c:341 opencell.c:918
+msgid "type"
+msgstr ""
+
+#: closecell.c:339 opencell.c:922 parser.c:589
+msgid "float"
+msgstr ""
+
+#: closecell.c:341 opencell.c:920
+msgid "double"
+msgstr ""
+
+#: closecell.c:343 opencell.c:935
+msgid "byte_order"
+msgstr ""
+
+#: closecell.c:343 opencell.c:938
+msgid "xdr"
+msgstr ""
+
+#: closecell.c:347 color_write.c:186 color_write.c:210 make_colr.c:71
+#: parser.c:957 parser.c:973 parser.c:987 reclass.c:328 sites.c:660 view.c:602
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: closecell.c:348
+msgid "lzw_compression_bits"
+msgstr ""
+
+#: color_read.c:56 color_write.c:51 rm_colr.c:18
+#, c-format
+msgid "colr2/%s"
+msgstr ""
+
+#: color_read.c:63 color_write.c:55 rm_colr.c:17
+msgid "colr"
+msgstr ""
+
+#: color_read.c:95
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: color_read.c:164
+#, c-format
+msgid "%lf %lf"
+msgstr ""
+
+#: color_read.c:172
+#, c-format
+msgid "%s %s"
+msgstr ""
+
+#: color_read.c:175
+#, c-format
+msgid "shift:%lf"
+msgstr ""
+
+#: color_read.c:176
+msgid "shift:"
+msgstr ""
+
+#: color_read.c:176 color_write.c:224 color_write.c:239 get_datum.c:129
+#: get_ellipse.c:61 get_ellipse.c:86 get_ellipse.c:91 ll_format.c:104
+#: parser.c:1025 parser.c:1041 parser.c:1055 proj3.c:70 view.c:605
+#, c-format
+msgid "%lf"
+msgstr ""
+
+#: color_read.c:181
+msgid "invert"
+msgstr ""
+
+#: color_read.c:186 color_write.c:110 color_write.c:112
+#, c-format
+msgid "%%"
+msgstr ""
+
+#: color_read.c:192
+#, c-format
+msgid "nv:%d:%d:%d"
+msgstr ""
+
+#: color_read.c:198
+#, c-format
+msgid "*:%d:%d:%d"
+msgstr ""
+
+#: color_read.c:204 color_read.c:222
+#, c-format
+msgid "%ld:%d:%d:%d"
+msgstr ""
+
+#: color_read.c:209 color_read.c:229
+#, c-format
+msgid "%lf:%d:%d:%d"
+msgstr ""
+
+#: color_read.c:212 color_read.c:235
+#, c-format
+msgid "%lf:%d"
+msgstr ""
+
+#: color_read.c:322
+#, c-format
+msgid "%f %f %f"
+msgstr ""
+
+#: color_read.c:331
+#, c-format
+msgid "%d %d %d"
+msgstr ""
+
+#: color_write.c:67
+msgid "FORCE_GRASS3_COLORS"
+msgstr ""
+
+#: color_write.c:81
+#, c-format
+msgid "%% %s %s\n"
+msgstr ""
+
+#: color_write.c:87
+#, c-format
+msgid "shift:%s\n"
+msgstr ""
+
+#: color_write.c:90
+msgid "invert\n"
+msgstr ""
+
+#: color_write.c:94
+#, c-format
+msgid "nv:%d"
+msgstr ""
+
+#: color_write.c:97 color_write.c:105 color_write.c:147 color_write.c:160
+#, c-format
+msgid ":%d:%d"
+msgstr ""
+
+#: color_write.c:102
+#, c-format
+msgid "*:%d"
+msgstr ""
+
+#: color_write.c:145
+#, c-format
+msgid "%s:%d"
+msgstr ""
+
+#: color_write.c:158
+#, c-format
+msgid " %s:%d"
+msgstr ""
+
+#: color_write.c:172 color_write.c:203
+#, c-format
+msgid "#%ld first color\n"
+msgstr ""
+
+#: color_write.c:175 color_write.c:205
+#, c-format
+msgid "%d %d %d\n"
+msgstr ""
+
+#: color_write.c:180
+msgid "255 255 255\n"
+msgstr ""
+
+#: color_write.c:189 color_write.c:212
+#, c-format
+msgid " %d %d"
+msgstr ""
+
+#: color_write.c:222 color_write.c:227 color_write.c:237 color_write.c:242
+#, c-format
+msgid "%.*f"
+msgstr ""
+
+#: datum.c:132
+#, c-format
+msgid "%s/etc/datum.table"
+msgstr ""
+
+#: datum.c:134 env.c:97 error.c:193 get_ellipse.c:277 home.c:46
+#: key_value3.c:25 list.c:166 myname.c:29 open.c:183 put_title.c:63
+#: reclass.c:41 support.c:43
+msgid "r"
+msgstr ""
+
+#: datum.c:137
+#, c-format
+msgid "unable to open datum table file: %s"
+msgstr ""
+
+#: datum.c:159
+msgid "%s \"%99[^\"]\" %s dx=%lf dy=%lf dz=%lf"
+msgstr ""
+
+#: datum.c:162
+#, c-format
+msgid "error in datum table file, line %d"
+msgstr ""
+
+#: distance.c:106
+msgid "G_distance_point_to_line_segment: shouldn't happen\n"
+msgstr ""
+
+#: distance.c:107
+#, c-format
+msgid " code=%d P=(%f,%f) S=(%f,%f)(%f,%f)\n"
+msgstr ""
+
+#: done_msg.c:25
+#, c-format
+msgid "%s complete. %s\n"
+msgstr ""
+
+#: env.c:216 error.c:258 get_datum_name.c:40 get_ell_name.c:32
+#: get_projname.c:47 key_value3.c:11 list.c:85 open.c:171 put_title.c:34
+#: support.c:85
+msgid "w"
+msgstr ""
+
+#: env.c:221 key_value2.c:18
+#, c-format
+msgid "%s: %s\n"
+msgstr ""
+
+#: env.c:234
+msgid "GISRC"
+msgstr ""
+
+#: env.c:242
+msgid "GISRC - variable not set"
+msgstr ""
+
+#: env.c:261
+#, c-format
+msgid "%s not set"
+msgstr ""
+
+#: env.c:268 gisbase.c:15 gishelp.c:45 locale.c:19
+msgid "GISBASE"
+msgstr ""
+
+#: error.c:142
+#, c-format
+msgid "%s: "
+msgstr ""
+
+#: error.c:142 error.c:160 error.c:161 error.c:260
+msgid "ERROR"
+msgstr ""
+
+#: error.c:142 error.c:160 error.c:161 error.c:260
+msgid "WARNING"
+msgstr ""
+
+#: error.c:160
+#, c-format
+msgid "%s:"
+msgstr ""
+
+#: error.c:167
+msgid ""
+msgstr ""
+
+#: error.c:172
+msgid "GRASS_STDERR"
+msgstr ""
+
+#: error.c:192 progrm_nme.c:18 whoami.c:47
+msgid "?"
+msgstr ""
+
+#: error.c:193
+msgid "pwd"
+msgstr ""
+
+#: error.c:224
+#, c-format
+msgid "%s/GIS_ERROR_LOG"
+msgstr ""
+
+#: error.c:230 get_datum.c:63 get_ellipse.c:59 get_ellipse.c:83 open.c:196
+msgid "a"
+msgstr ""
+
+#: error.c:234 error.c:240
+msgid "-------------------------------------\n"
+msgstr ""
+
+#: error.c:235 error.c:236 error.c:237 error.c:238 error.c:239
+#, c-format
+msgid "%-10s %s\n"
+msgstr ""
+
+#: error.c:235
+msgid "program:"
+msgstr ""
+
+#: error.c:236
+msgid "user:"
+msgstr ""
+
+#: error.c:237
+msgid "cwd:"
+msgstr ""
+
+#: error.c:238
+msgid "date:"
+msgstr ""
+
+#: error.c:239
+msgid "error:"
+msgstr ""
+
+#: error.c:239
+msgid "warning:"
+msgstr ""
+
+#: error.c:257
+#, c-format
+msgid "mail '%s'"
+msgstr ""
+
+#: error.c:260
+#, c-format
+msgid "GIS %s: %s\n"
+msgstr ""
+
+#: error.c:293
+#, c-format
+msgid ""
+"\n"
+"%*s"
+msgstr ""
+
+#: error.c:296 parser.c:465 parser.c:518 parser.c:726 parser.c:736
+#: parser.c:744 parser.c:1520 sites.c:1170 window_map.c:109
+msgid " "
+msgstr ""
+
+#: error.c:298 unctrl.c:11
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: file_name.c:41 file_name.c:44 file_name.c:46 location.c:57 timestamp.c:233
+#: timestamp.c:241 timestamp.c:251 timestamp.c:259 timestamp.c:269
+#: timestamp.c:277 timestamp.c:287 timestamp.c:297 timestamp.c:307
+#: unix_socks.c:124 user_config.c:223
+#, c-format
+msgid "%s/%s"
+msgstr ""
+
+#: file_name.c:52 file_name.c:58 tempfile.c:61
+msgid "/"
+msgstr ""
+
+#: format.c:108
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr ""
+
+#: G_dump.c:5
+msgid "G_dump: memory allocated to G__\n"
+msgstr ""
+
+#: G_dump.c:6
+#, c-format
+msgid "Size of cell in fp maps = %d\n"
+msgstr ""
+
+#: G_dump.c:7
+#, c-format
+msgid "type for writing floating maps = %d\n"
+msgstr ""
+
+#: G_dump.c:8
+#, c-format
+msgid "current window = %p\n"
+msgstr ""
+
+#: G_dump.c:9
+#, c-format
+msgid "Flag: window set? %d\n"
+msgstr ""
+
+#: G_dump.c:10
+#, c-format
+msgid "File descriptor for automatic mask %d\n"
+msgstr ""
+
+#: G_dump.c:11
+#, c-format
+msgid "Flag denoting automatic masking %d\n"
+msgstr ""
+
+#: G_dump.c:12
+#, c-format
+msgid "CELL mask buffer %p\n"
+msgstr ""
+
+#: G_dump.c:13
+#, c-format
+msgid "buffer for reading null rows %p\n"
+msgstr ""
+
+#: G_dump.c:14
+#, c-format
+msgid "Pre/post compressed data buffer %p\n"
+msgstr ""
+
+#: G_dump.c:15
+#, c-format
+msgid "sizeof compressed_buf %d\n"
+msgstr ""
+
+#: G_dump.c:16
+#, c-format
+msgid "work data buffer %p\n"
+msgstr ""
+
+#: G_dump.c:17
+#, c-format
+msgid "sizeof work_buf %d\n"
+msgstr ""
+
+#: G_dump.c:18
+#, c-format
+msgid "sizeof null_buf %d\n"
+msgstr ""
+
+#: G_dump.c:19
+#, c-format
+msgid "sizeof mask_buf %d\n"
+msgstr ""
+
+#: G_dump.c:20
+#, c-format
+msgid "Histogram request %d\n"
+msgstr ""
+
+#: G_dump.c:22
+#, c-format
+msgid "G_dump: file #%d\n"
+msgstr ""
+
+#: G_dump.c:23
+#, c-format
+msgid "open mode = %d\n"
+msgstr ""
+
+#: G_dump.c:24
+#, c-format
+msgid "Cell header %p\n"
+msgstr ""
+
+#: G_dump.c:25
+#, c-format
+msgid "Table reclass %p\n"
+msgstr ""
+
+#: G_dump.c:26
+#, c-format
+msgid "Cell stats %p\n"
+msgstr ""
+
+#: G_dump.c:27
+#, c-format
+msgid "Range structure %p\n"
+msgstr ""
+
+#: G_dump.c:28
+#, c-format
+msgid "float Range structure %p\n"
+msgstr ""
+
+#: G_dump.c:29
+#, c-format
+msgid "max # bits used in lzw compression %d\n"
+msgstr ""
+
+#: G_dump.c:30
+#, c-format
+msgid "want histogram?  %d\n"
+msgstr ""
+
+#: G_dump.c:31
+#, c-format
+msgid "Automatic reclass flag %d\n"
+msgstr ""
+
+#: G_dump.c:32
+#, c-format
+msgid "File row addresses %p\n"
+msgstr ""
+
+#: G_dump.c:33
+#, c-format
+msgid "Data to window col mapping %p\n"
+msgstr ""
+
+#: G_dump.c:34
+#, c-format
+msgid "Data to window row constants %f,%f\n"
+msgstr ""
+
+#: G_dump.c:35
+#, c-format
+msgid "Current data row in memory %d\n"
+msgstr ""
+
+#: G_dump.c:36
+#, c-format
+msgid "Current null row in memory %d\n"
+msgstr ""
+
+#: G_dump.c:37
+#, c-format
+msgid "nbytes per cell for current row %d\n"
+msgstr ""
+
+#: G_dump.c:38
+#, c-format
+msgid "Decompressed data buffer %s\n"
+msgstr ""
+
+#: G_dump.c:39
+#, c-format
+msgid "bytes per cell %d\n"
+msgstr ""
+
+#: G_dump.c:40
+#, c-format
+msgid "type: int, float or double map %d\n"
+msgstr ""
+
+#: G_dump.c:41
+#, c-format
+msgid "Temporary name for NEW files %s\n"
+msgstr ""
+
+#: G_dump.c:42
+#, c-format
+msgid "Temporary name for NEW NULL files %s\n"
+msgstr ""
+
+#: G_dump.c:43
+#, c-format
+msgid "for existing raster maps %d\n"
+msgstr ""
+
+#: G_dump.c:44
+#, c-format
+msgid "Name of open file %s\n"
+msgstr ""
+
+#: G_dump.c:45
+#, c-format
+msgid "Mapset of open file %s\n"
+msgstr ""
+
+#: G_dump.c:46
+#, c-format
+msgid "io error warning given %d\n"
+msgstr ""
+
+#: G_dump.c:47
+#, c-format
+msgid "xdr stream for reading fp %p\n"
+msgstr ""
+
+#: G_dump.c:48
+#, c-format
+msgid "NULL_ROWS array[%d] = %p\n"
+msgstr ""
+
+#: G_dump.c:49
+#, c-format
+msgid "data buffer for reading null rows %p\n"
+msgstr ""
+
+#: G_dump.c:50
+#, c-format
+msgid "Minimum row null row number in memory %d\n"
+msgstr ""
+
+#: G_dump.c:51
+#, c-format
+msgid "Quant ptr = %p\n"
+msgstr ""
+
+#: G_dump.c:52
+msgid "G_dump: end\n"
+msgstr ""
+
+#: geo_init.c:22 proj2.c:28 proj3.c:69
+msgid "meters"
+msgstr ""
+
+#: geo_init.c:22 proj2.c:28 proj3.c:62
+msgid "meter"
+msgstr ""
+
+#: geo_init.c:23 proj2.c:30
+msgid "feet"
+msgstr ""
+
+#: geo_init.c:23 proj2.c:30 proj3.c:63
+msgid "foot"
+msgstr ""
+
+#: geo_init.c:24
+msgid "miles"
+msgstr ""
+
+#: geo_init.c:24
+msgid "mile"
+msgstr ""
+
+#: geo_init.c:25
+msgid "inches"
+msgstr ""
+
+#: geo_init.c:25 proj3.c:64
+msgid "inch"
+msgstr ""
+
+#: geo_init.c:26
+msgid "centimeters"
+msgstr ""
+
+#: geo_init.c:26
+msgid "centimeter"
+msgstr ""
+
+#: geo_init.c:27
+msgid "nanometers"
+msgstr ""
+
+#: geo_init.c:27
+msgid "nanometer"
+msgstr ""
+
+#: geo_init.c:28
+msgid "microns"
+msgstr ""
+
+#: geo_init.c:28
+msgid "micron"
+msgstr ""
+
+#: geo_init.c:29
+msgid "angstroms"
+msgstr ""
+
+#: geo_init.c:29
+msgid "angstrom"
+msgstr ""
+
+#: geo_init.c:30
+msgid "decinanometers"
+msgstr ""
+
+#: geo_init.c:30
+msgid "decinanometer"
+msgstr ""
+
+#: geo_init.c:31
+msgid "yards"
+msgstr ""
+
+#: geo_init.c:31
+msgid "yard"
+msgstr ""
+
+#: geo_init.c:32
+msgid "rods"
+msgstr ""
+
+#: geo_init.c:32
+msgid "rod"
+msgstr ""
+
+#: geo_init.c:33
+msgid "lightyears"
+msgstr ""
+
+#: geo_init.c:33
+msgid "lightyear"
+msgstr ""
+
+#: geo_init.c:34
+msgid "USfeet"
+msgstr ""
+
+#: geo_init.c:34
+msgid "USfoot"
+msgstr ""
+
+#: geo_init.c:35
+msgid "USinches"
+msgstr ""
+
+#: geo_init.c:35
+msgid "USinch"
+msgstr ""
+
+#: geo_init.c:36
+msgid "USyards"
+msgstr ""
+
+#: geo_init.c:36
+msgid "USyard"
+msgstr ""
+
+#: geo_init.c:37
+msgid "USmiles"
+msgstr ""
+
+#: geo_init.c:37
+msgid "USmile"
+msgstr ""
+
+#: geo_init.c:88
+msgid "Central Parallel [lat_0]"
+msgstr ""
+
+#: geo_init.c:89
+msgid "First Standard Parallel [lat_1]"
+msgstr ""
+
+#: geo_init.c:91
+msgid "Second Standard Parallel [lat_2]"
+msgstr ""
+
+#: geo_init.c:93
+msgid "Third Standard Parallel [lat_3]"
+msgstr ""
+
+#: geo_init.c:94
+msgid "Latitude of True Scale [lat_ts]"
+msgstr ""
+
+#: geo_init.c:95
+msgid "Angular Distance from Tangency Point [lat_b]"
+msgstr ""
+
+#: geo_init.c:96
+msgid "Latitude of New Pole [o_lat_p]"
+msgstr ""
+
+#: geo_init.c:97
+msgid "Central Meridian [lon_0]"
+msgstr ""
+
+#: geo_init.c:98
+msgid "First Standard Meridian [lon_1]"
+msgstr ""
+
+#: geo_init.c:100
+msgid "Second Standard Meridian [lon_2]"
+msgstr ""
+
+#: geo_init.c:102
+msgid "Third Standard Meridian [lon_3]"
+msgstr ""
+
+#: geo_init.c:103
+msgid "Longitude of Cartesian Origin [lon_c]"
+msgstr ""
+
+#: geo_init.c:105
+msgid "Longitude of New Pole [o_lon_p]"
+msgstr ""
+
+#: geo_init.c:106
+msgid "Azimuth angle at Cartesian Origin [alpha]"
+msgstr ""
+
+#: geo_init.c:108
+msgid "Theta Angle [theta]"
+msgstr ""
+
+#: geo_init.c:109
+msgid "Azimuth Angle of Tilt in Decimal degrees [azi]"
+msgstr ""
+
+#: geo_init.c:110
+msgid "Tilt Angle in Decimal Degrees [tilt]"
+msgstr ""
+
+#: geo_init.c:111
+msgid "Height of Viewing Point in Meters [h]"
+msgstr ""
+
+#: geo_init.c:112
+msgid "Scale Factor at the Central Meridian [k_0]"
+msgstr ""
+
+#: geo_init.c:113
+msgid "m factor [m]"
+msgstr ""
+
+#: geo_init.c:114
+msgid "M factor [M]"
+msgstr ""
+
+#: geo_init.c:115
+msgid "n factor [n]"
+msgstr ""
+
+#: geo_init.c:116
+msgid "q factor [q]"
+msgstr ""
+
+#: geo_init.c:117
+msgid "W factor [W]"
+msgstr ""
+
+#: geo_init.c:118
+msgid "False Easting [x_0]"
+msgstr ""
+
+#: geo_init.c:119
+msgid "False Northing [y_0]"
+msgstr ""
+
+#: geo_init.c:120
+msgid "Projection Zone [zone]"
+msgstr ""
+
+#: geo_init.c:121
+msgid "Satellite Number [lsat]"
+msgstr ""
+
+#: geo_init.c:122
+msgid "Satellite Path Number [path]"
+msgstr ""
+
+#: geo_init.c:124
+msgid "LOTSA [lotsa]"
+msgstr ""
+
+#: geo_init.c:125
+msgid "Both Hemispheres [no_cut]"
+msgstr ""
+
+#: geo_init.c:127
+msgid "Suppress Rotation [no_rot]"
+msgstr ""
+
+#: geo_init.c:128
+msgid "Suppress Skew [ns]"
+msgstr ""
+
+#: geo_init.c:129
+msgid "Suppress Offset from Pre-Rotated Axis [no_uoff]"
+msgstr ""
+
+#: geo_init.c:130
+msgid "Origin Convergence Angle [rot_conv]"
+msgstr ""
+
+#: geo_init.c:131
+msgid "South Hemisphere"
+msgstr ""
+
+#: geo_init.c:1463
+msgid "LL"
+msgstr ""
+
+#: geo_init.c:1465 proj2.c:45
+msgid "UTM"
+msgstr ""
+
+#: geo_init.c:1467
+msgid "STP"
+msgstr ""
+
+#: geo_init.c:1469
+msgid "AEA"
+msgstr ""
+
+#: geo_init.c:1471
+msgid "LCC"
+msgstr ""
+
+#: geo_init.c:1473
+msgid "MERC"
+msgstr ""
+
+#: geo_init.c:1475
+msgid "TMERC"
+msgstr ""
+
+#: geo_init.c:1477
+msgid "LEAC"
+msgstr ""
+
+#: geo_init.c:1479
+msgid "LAEA"
+msgstr ""
+
+#: geo_init.c:1482
+msgid "AEQD"
+msgstr ""
+
+#: geo_init.c:1484
+msgid "AIRY"
+msgstr ""
+
+#: geo_init.c:1486
+msgid "AITOFF"
+msgstr ""
+
+#: geo_init.c:1488
+msgid "ALSK"
+msgstr ""
+
+#: geo_init.c:1490
+msgid "APIAN"
+msgstr ""
+
+#: geo_init.c:1492
+msgid "AUGUST"
+msgstr ""
+
+#: geo_init.c:1494
+msgid "BACON"
+msgstr ""
+
+#: geo_init.c:1496
+msgid "BIPC"
+msgstr ""
+
+#: geo_init.c:1498
+msgid "BOGGS"
+msgstr ""
+
+#: geo_init.c:1500
+msgid "BONNE"
+msgstr ""
+
+#: geo_init.c:1502
+msgid "CASS"
+msgstr ""
+
+#: geo_init.c:1504
+msgid "CC"
+msgstr ""
+
+#: geo_init.c:1506
+msgid "CEA"
+msgstr ""
+
+#: geo_init.c:1508
+msgid "CHAMB"
+msgstr ""
+
+#: geo_init.c:1510
+msgid "COLLG"
+msgstr ""
+
+#: geo_init.c:1512
+msgid "CRAST"
+msgstr ""
+
+#: geo_init.c:1514
+msgid "DENOY"
+msgstr ""
+
+#: geo_init.c:1516
+msgid "ECK1"
+msgstr ""
+
+#: geo_init.c:1518
+msgid "ECK2"
+msgstr ""
+
+#: geo_init.c:1520
+msgid "ECK3"
+msgstr ""
+
+#: geo_init.c:1522
+msgid "ECK4"
+msgstr ""
+
+#: geo_init.c:1524
+msgid "ECK5"
+msgstr ""
+
+#: geo_init.c:1526
+msgid "ECK6"
+msgstr ""
+
+#: geo_init.c:1528
+msgid "EQC"
+msgstr ""
+
+#: geo_init.c:1530
+msgid "EQDC"
+msgstr ""
+
+#: geo_init.c:1532
+msgid "EULER"
+msgstr ""
+
+#: geo_init.c:1534
+msgid "FAHEY"
+msgstr ""
+
+#: geo_init.c:1536
+msgid "FOUC"
+msgstr ""
+
+#: geo_init.c:1538
+msgid "FOUC_S"
+msgstr ""
+
+#: geo_init.c:1540
+msgid "GALL"
+msgstr ""
+
+#: geo_init.c:1542
+msgid "GINS8"
+msgstr ""
+
+#: geo_init.c:1544
+msgid "GN_SINU"
+msgstr ""
+
+#: geo_init.c:1546
+msgid "GNOM"
+msgstr ""
+
+#: geo_init.c:1548
+msgid "GOODE"
+msgstr ""
+
+#: geo_init.c:1550
+msgid "GS48"
+msgstr ""
+
+#: geo_init.c:1552
+msgid "GS50"
+msgstr ""
+
+#: geo_init.c:1554
+msgid "HAMMER"
+msgstr ""
+
+#: geo_init.c:1556
+msgid "HATANO"
+msgstr ""
+
+#: geo_init.c:1558
+msgid "IMW_P"
+msgstr ""
+
+#: geo_init.c:1560
+msgid "KAV5"
+msgstr ""
+
+#: geo_init.c:1562
+msgid "KAV7"
+msgstr ""
+
+#: geo_init.c:1564
+msgid "LABRD"
+msgstr ""
+
+#: geo_init.c:1566
+msgid "LAGRNG"
+msgstr ""
+
+#: geo_init.c:1568
+msgid "LARR"
+msgstr ""
+
+#: geo_init.c:1570
+msgid "LASK"
+msgstr ""
+
+#: geo_init.c:1572
+msgid "LEE_OS"
+msgstr ""
+
+#: geo_init.c:1574
+msgid "LOXIM"
+msgstr ""
+
+#: geo_init.c:1576
+msgid "LSAT"
+msgstr ""
+
+#: geo_init.c:1578
+msgid "MBT_S"
+msgstr ""
+
+#: geo_init.c:1580
+msgid "MBT_FPS"
+msgstr ""
+
+#: geo_init.c:1582
+msgid "MBTFPP"
+msgstr ""
+
+#: geo_init.c:1584
+msgid "MBTFPQ"
+msgstr ""
+
+#: geo_init.c:1586
+msgid "MBTFPS"
+msgstr ""
+
+#: geo_init.c:1588
+msgid "MIL_OS"
+msgstr ""
+
+#: geo_init.c:1590
+msgid "MILL"
+msgstr ""
+
+#: geo_init.c:1592
+msgid "MPOLY"
+msgstr ""
+
+#: geo_init.c:1594
+msgid "MOLL"
+msgstr ""
+
+#: geo_init.c:1596
+msgid "MURD1"
+msgstr ""
+
+#: geo_init.c:1598
+msgid "MURD2"
+msgstr ""
+
+#: geo_init.c:1600
+msgid "MURD3"
+msgstr ""
+
+#: geo_init.c:1602
+msgid "NELL"
+msgstr ""
+
+#: geo_init.c:1604
+msgid "NELL_H"
+msgstr ""
+
+#: geo_init.c:1606
+msgid "NICOL"
+msgstr ""
+
+#: geo_init.c:1608
+msgid "NSPER"
+msgstr ""
+
+#: geo_init.c:1610
+msgid "NZMG"
+msgstr ""
+
+#: geo_init.c:1612
+msgid "OB_TRAN"
+msgstr ""
+
+#: geo_init.c:1614
+msgid "OCEA"
+msgstr ""
+
+#: geo_init.c:1616
+msgid "OEA"
+msgstr ""
+
+#: geo_init.c:1618
+msgid "OMERC"
+msgstr ""
+
+#: geo_init.c:1620
+msgid "ORTEL"
+msgstr ""
+
+#: geo_init.c:1622
+msgid "ORTHO"
+msgstr ""
+
+#: geo_init.c:1624
+msgid "PCONIC"
+msgstr ""
+
+#: geo_init.c:1626
+msgid "POLY"
+msgstr ""
+
+#: geo_init.c:1628
+msgid "PUTP1"
+msgstr ""
+
+#: geo_init.c:1630
+msgid "PUTP2"
+msgstr ""
+
+#: geo_init.c:1632
+msgid "PUTP3"
+msgstr ""
+
+#: geo_init.c:1634
+msgid "PUTP3P"
+msgstr ""
+
+#: geo_init.c:1636
+msgid "PUTP4P"
+msgstr ""
+
+#: geo_init.c:1638
+msgid "PUTP5"
+msgstr ""
+
+#: geo_init.c:1640
+msgid "PUTP5P"
+msgstr ""
+
+#: geo_init.c:1642
+msgid "PUTP6"
+msgstr ""
+
+#: geo_init.c:1644
+msgid "PUTP6P"
+msgstr ""
+
+#: geo_init.c:1646
+msgid "QUA_AUT"
+msgstr ""
+
+#: geo_init.c:1648
+msgid "ROBIN"
+msgstr ""
+
+#: geo_init.c:1650
+msgid "RPOLY"
+msgstr ""
+
+#: geo_init.c:1652
+msgid "SINU"
+msgstr ""
+
+#: geo_init.c:1654
+msgid "SOMERC"
+msgstr ""
+
+#: geo_init.c:1656
+msgid "STERE"
+msgstr ""
+
+#: geo_init.c:1658
+msgid "TCC"
+msgstr ""
+
+#: geo_init.c:1660
+msgid "TCEA"
+msgstr ""
+
+#: geo_init.c:1662
+msgid "TISSOT"
+msgstr ""
+
+#: geo_init.c:1664
+msgid "TPEQD"
+msgstr ""
+
+#: geo_init.c:1666
+msgid "TPERS"
+msgstr ""
+
+#: geo_init.c:1668
+msgid "UPS"
+msgstr ""
+
+#: geo_init.c:1670
+msgid "URM5"
+msgstr ""
+
+#: geo_init.c:1672
+msgid "URMFPS"
+msgstr ""
+
+#: geo_init.c:1674
+msgid "VANDG"
+msgstr ""
+
+#: geo_init.c:1676
+msgid "VANDG2"
+msgstr ""
+
+#: geo_init.c:1678
+msgid "VANDG3"
+msgstr ""
+
+#: geo_init.c:1680
+msgid "VANDG4"
+msgstr ""
+
+#: geo_init.c:1682
+msgid "VITK1"
+msgstr ""
+
+#: geo_init.c:1684
+msgid "WAG1"
+msgstr ""
+
+#: geo_init.c:1686
+msgid "WAG2"
+msgstr ""
+
+#: geo_init.c:1688
+msgid "WAG3"
+msgstr ""
+
+#: geo_init.c:1690
+msgid "WAG4"
+msgstr ""
+
+#: geo_init.c:1692
+msgid "WAG5"
+msgstr ""
+
+#: geo_init.c:1694
+msgid "WAG6"
+msgstr ""
+
+#: geo_init.c:1696
+msgid "WAG7"
+msgstr ""
+
+#: geo_init.c:1698
+msgid "WEREN"
+msgstr ""
+
+#: geo_init.c:1700
+msgid "WINK1"
+msgstr ""
+
+#: geo_init.c:1702
+msgid "WINK2"
+msgstr ""
+
+#: geo_init.c:1704
+msgid "WINTRI"
+msgstr ""
+
+#: geo_init.c:1706
+msgid "KROVAK"
+msgstr ""
+
+#: geo_init.c:1708
+msgid "KROVAKGIS"
+msgstr ""
+
+#: get_cellhd.c:56 get_cellhd.c:73 put_cellhd.c:22 reclass.c:184 reclass.c:292
+msgid "cellhd"
+msgstr ""
+
+#: get_cellhd.c:59 get_cellhd.c:88
+#, c-format
+msgid "Can't read header file for [%s in %s]\n"
+msgstr ""
+
+#: get_cellhd.c:61
+#, c-format
+msgid "It is a reclass of [%s in %s] "
+msgstr ""
+
+#: get_cellhd.c:64
+msgid "which is missing"
+msgstr ""
+
+#: get_cellhd.c:66
+msgid "whose header file can't be opened"
+msgstr ""
+
+#: get_cellhd.c:76
+#, c-format
+msgid "Can't open header file for [%s in %s]"
+msgstr ""
+
+#: get_cellhd.c:92
+#, c-format
+msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
+msgstr ""
+
+#: get_cellhd.c:96
+msgid "Invalid format\n"
+msgstr ""
+
+#: get_datum.c:19 get_ellipse.c:41 get_projinfo.c:5 get_window.c:60
+#: mapset_nme.c:72 myname.c:28 proj3.c:131
+msgid "PERMANENT"
+msgstr ""
+
+#: get_datum.c:56 get_ellipse.c:54
+#, c-format
+msgid "Unable to open file %s in %s"
+msgstr ""
+
+#: get_datum.c:61 get_datum_name.c:68 proj3.c:97
+msgid "datum"
+msgstr ""
+
+#: get_datum.c:66 get_ellipse.c:84
+msgid "es"
+msgstr ""
+
+#: get_datum.c:69
+msgid "f"
+msgstr ""
+
+#: get_datum.c:72
+msgid "dx"
+msgstr ""
+
+#: get_datum.c:75
+msgid "dy"
+msgstr ""
+
+#: get_datum.c:78
+msgid "dz"
+msgstr ""
+
+#: get_datum.c:83
+#, c-format
+msgid "Error reading datum shift parameters for %s from table"
+msgstr ""
+
+#: get_datum.c:88 get_ellipse.c:57 proj3.c:116
+msgid "ellps"
+msgstr ""
+
+#: get_datum.c:91
+#, c-format
+msgid "Error reading ellipsoid parameters for %s from table"
+msgstr ""
+
+#: get_datum.c:96
+#, c-format
+msgid "No ellipsoid field %s in file %s in %s"
+msgstr ""
+
+#: get_datum.c:130
+#, c-format
+msgid "invalid value: field %s in file %s in %s"
+msgstr ""
+
+#: get_datum_name.c:41 get_ell_name.c:33 get_projname.c:48
+msgid "Cannot open temp file"
+msgstr ""
+
+#: get_datum_name.c:43
+msgid "datum\n"
+msgstr ""
+
+#: get_datum_name.c:52
+msgid ""
+"\n"
+"Please specify datum name\n"
+msgstr ""
+
+#: get_datum_name.c:53
+msgid "Enter 'list' for the list of available datums\n"
+msgstr ""
+
+#: get_datum_name.c:54 get_ell_name.c:46 get_projname.c:60
+msgid "Hit RETURN to cancel request\n"
+msgstr ""
+
+#: get_datum_name.c:55 get_ell_name.c:47 get_projname.c:61
+msgid ">"
+msgstr ""
+
+#: get_datum_name.c:61 get_ell_name.c:53 get_projname.c:68 gishelp.c:50
+#, c-format
+msgid "$GRASS_PAGER %s"
+msgstr ""
+
+#: get_datum_name.c:64 get_ell_name.c:56 get_projname.c:71
+#, c-format
+msgid "cat %s"
+msgstr ""
+
+#: get_datum_name.c:70
+msgid ""
+"\n"
+"invalid datum\n"
+msgstr ""
+
+#: get_datum_name.c:75 get_ell_name.c:67 get_projname.c:84 get_projname.c:85
+#: home.c:48 list.c:198 mapset_nme.c:57 nme_in_mps.c:72 parser.c:761
+#: put_title.c:81 view.c:611 view.c:613 view.c:615 view.c:619 view.c:620
+#: view.c:621 yes.c:22
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: get_ellipse.c:58 get_ell_name.c:60 get_ell_name.c:69
+msgid "sphere"
+msgstr ""
+
+#: get_ellipse.c:62 get_ellipse.c:87
+#, c-format
+msgid "invalid a: field %s in file %s in %s"
+msgstr ""
+
+#: get_ellipse.c:75
+#, c-format
+msgid "invalid ellipsoid %s in file %s in %s"
+msgstr ""
+
+#: get_ellipse.c:92
+#, c-format
+msgid "invalid es: field %s in file %s in %s"
+msgstr ""
+
+#: get_ellipse.c:99 rd_cellhd.c:72 rd_cellhd.c:111
+msgid "proj"
+msgstr ""
+
+#: get_ellipse.c:100
+msgid "ll"
+msgstr ""
+
+#: get_ellipse.c:106
+#, c-format
+msgid "No ellipsoid info given in file %s in %s"
+msgstr ""
+
+#: get_ellipse.c:209
+#, c-format
+msgid "a=%lf"
+msgstr ""
+
+#: get_ellipse.c:215
+#, c-format
+msgid "e=%lf"
+msgstr ""
+
+#: get_ellipse.c:221
+#, c-format
+msgid "f=1/%lf"
+msgstr ""
+
+#: get_ellipse.c:230
+#, c-format
+msgid "b=%lf"
+msgstr ""
+
+#: get_ellipse.c:249
+#, c-format
+msgid "%s/etc/ellipse.table"
+msgstr ""
+
+#: get_ellipse.c:281
+#, c-format
+msgid "unable to open ellipsoid table file: %s"
+msgstr ""
+
+#: get_ellipse.c:294
+msgid "%s  \"%32[^\"]\" %s %s"
+msgstr ""
+
+#: get_ellipse.c:297 get_ellipse.c:314
+#, c-format
+msgid " %d"
+msgstr ""
+
+#: get_ellipse.c:299 get_ellipse.c:316 parser.c:312 parser.c:619 parser.c:625
+#: parser.c:636 parser.c:641 parser.c:657 parser.c:662 parser.c:862
+#: parser.c:1527
+msgid ","
+msgstr ""
+
+#: get_ellipse.c:329
+#, c-format
+msgid "Line%s%s of ellipsoid table file <%s> %s invalid"
+msgstr ""
+
+#: get_ellipse.c:330
+msgid "s"
+msgstr ""
+
+#: get_ellipse.c:330
+msgid "is"
+msgstr ""
+
+#: get_ellipse.c:330
+msgid "are"
+msgstr ""
+
+#: get_ell_name.c:35
+msgid "sphere\n"
+msgstr ""
+
+#: get_ell_name.c:44
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+
+#: get_ell_name.c:45
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr ""
+
+#: get_ell_name.c:62
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+
+#: get_projinfo.c:17 get_projinfo.c:45
+#, c-format
+msgid "%s file not found for location %s\n"
+msgstr ""
+
+#: get_projinfo.c:24 get_projinfo.c:52
+#, c-format
+msgid "ERROR in reading %s file for location %s\n"
+msgstr ""
+
+#: get_projname.c:33
+#, c-format
+msgid "%s/etc/projections"
+msgstr ""
+
+#: get_projname.c:36
+#, c-format
+msgid "%s not found"
+msgstr ""
+
+#: get_projname.c:42
+#, c-format
+msgid "ERROR in reading %s"
+msgstr ""
+
+#: get_projname.c:51
+#, c-format
+msgid "%s -- %s\n"
+msgstr ""
+
+#: get_projname.c:58
+msgid ""
+"\n"
+"\n"
+"Please specify projection name\n"
+msgstr ""
+
+#: get_projname.c:59
+msgid "Enter 'list' for the list of available projections\n"
+msgstr ""
+
+#: get_projname.c:78
+msgid ""
+"\n"
+"invalid projection\n"
+msgstr ""
+
+#: get_row.c:133 get_row.c:945
+#, c-format
+msgid "[%s in %s] - read request for row %d is outside region"
+msgstr ""
+
+#: get_row.c:165
+msgid ""
+"   reclass\n"
+"\r"
+msgstr ""
+
+#: get_row.c:269
+#, c-format
+msgid ""
+"   read_data %srow %d (nbytes %d)\n"
+"\r"
+msgstr ""
+
+#: get_row.c:269 get_row.c:705
+msgid "compressed "
+msgstr ""
+
+#: get_row.c:279
+msgid "  read_data: decompressing the row\n"
+msgstr ""
+
+#: get_row.c:293
+msgid "  read_data: decompressed!\n"
+msgstr ""
+
+#: get_row.c:417
+#, c-format
+msgid "cell_values_f: xdr_float failed for index %d."
+msgstr ""
+
+#: get_row.c:466
+#, c-format
+msgid "cell_values_d: xdr_double failed for index %d."
+msgstr ""
+
+#: get_row.c:683
+#, c-format
+msgid ""
+"get_row(%s in %s) %d: %d bytes\n"
+"\r"
+msgstr ""
+
+#: get_row.c:697
+#, c-format
+msgid "read row %d\n"
+msgstr ""
+
+#: get_row.c:704
+#, c-format
+msgid "error reading %smap [%s] in mapset [%s], row %d"
+msgstr ""
+
+#: get_row.c:1012
+msgid "Could not realloc buffer"
+msgstr ""
+
+#: get_row.c:1068 opencell.c:287
+msgid "Too many open raster files"
+msgstr ""
+
+#: get_row.c:1095 get_row.c:1100
+#, c-format
+msgid "error reading null row %d\n"
+msgstr ""
+
+#: get_window.c:37 put_window.c:17
+msgid "WIND"
+msgstr ""
+
+#: get_window.c:39
+#, c-format
+msgid ""
+"region for current mapset %s\n"
+"run \"g.region\""
+msgstr ""
+
+#: get_window.c:60
+msgid "DEFAULT_WIND"
+msgstr ""
+
+#: get_window.c:62
+#, c-format
+msgid "default region %s"
+msgstr ""
+
+#: get_window.c:83
+msgid "is not set"
+msgstr ""
+
+#: get_window.c:93
+#, c-format
+msgid ""
+"is invalid\n"
+"%s"
+msgstr ""
+
+#: gisdbase.c:15
+msgid "GISDBASE"
+msgstr ""
+
+#: gishelp.c:34
+msgid "gen_help"
+msgstr ""
+
+#: gishelp.c:44
+#, c-format
+msgid "%s/txt/%s/%s"
+msgstr ""
+
+#: gishelp.c:49
+msgid "one moment...\n"
+msgstr ""
+
+#: gishelp.c:55
+#, c-format
+msgid "No help available for command [%s]\n"
+msgstr ""
+
+#: gisinit.c:40
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr ""
+
+#: gisinit.c:45 mapset.c:47
+#, c-format
+msgid "MAPSET %s not found"
+msgstr ""
+
+#: gisinit.c:66
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr ""
+
+#: histogram.c:121 histogram.c:127 histogram.c:328 histogram.c:342
+msgid "histogram"
+msgstr ""
+
+#: histogram.c:123
+#, c-format
+msgid "Histogram for [%s in %s] missing (run r.support)"
+msgstr ""
+
+#: histogram.c:130
+#, c-format
+msgid "Can't read histogram for [%s in %s]"
+msgstr ""
+
+#: histogram.c:137
+#, c-format
+msgid "%ld:%ld"
+msgstr ""
+
+#: histogram.c:141 histogram.c:150
+#, c-format
+msgid "Invalid histogram file for [%s in %s]"
+msgstr ""
+
+#: histogram.c:175 histogram.c:196
+#, c-format
+msgid "%ld:%ld\n"
+msgstr ""
+
+#: histogram.c:331
+#, c-format
+msgid "can't create histogram for [%s in %s]"
+msgstr ""
+
+#: history.c:52 history.c:116
+msgid "hist"
+msgstr ""
+
+#: history.c:104
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr ""
+
+#: history.c:138
+#, c-format
+msgid "can't write history information for [%s]"
+msgstr ""
+
+#: history.c:154
+#, c-format
+msgid "generated by %s"
+msgstr ""
+
+#: home.c:29
+msgid "unable to determine user's home directory"
+msgstr ""
+
+#: home.c:46
+msgid "cd; pwd"
+msgstr ""
+
+#: init_map.c:33
+#, c-format
+msgid "G_random_d_initialize_0: xdr_double failed for index %d.\n"
+msgstr ""
+
+#: init_map.c:40
+#, c-format
+msgid "G_random_d_initialize_0: write failed in row %d.\n"
+msgstr ""
+
+#: init_map.c:76
+#, c-format
+msgid "G_random_f_initialize_0: xdr_float failed for index %d.\n"
+msgstr ""
+
+#: init_map.c:83
+#, c-format
+msgid "G_random_f_initialize_0: write failed in row %d.\n"
+msgstr ""
+
+#: legal_name.c:18
+msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgstr ""
+
+#: legal_name.c:24
+#, c-format
+msgid "Illegal filename. character <%c> not allowed."
+msgstr ""
+
+#: list.c:85
+msgid "$GRASS_PAGER"
+msgstr ""
+
+#: list.c:90 list.c:108
+msgid "----------------------------------------------\n"
+msgstr ""
+
+#: list.c:106
+#, c-format
+msgid "no %s files available\n"
+msgstr ""
+
+#: list.c:117
+msgid "hit RETURN to continue -->"
+msgstr ""
+
+#: list.c:144 sites.c:660 sites.c:662
+msgid "."
+msgstr ""
+
+#: list.c:162
+#, c-format
+msgid "ls %s"
+msgstr ""
+
+#: list.c:164
+#, c-format
+msgid "ls -C %s"
+msgstr ""
+
+#: list.c:172
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr ""
+
+#: list.c:181
+#, c-format
+msgid ""
+"\n"
+"%-18s %-.60s\n"
+msgstr ""
+
+#: list.c:195
+#, c-format
+msgid "%-18s %-.60s\n"
+msgstr ""
+
+#: ll_format.c:54
+msgid "dd:mm:ss{N|S}"
+msgstr ""
+
+#: ll_format.c:71
+msgid "ddd:mm:ss{E|W}"
+msgstr ""
+
+#: ll_format.c:90
+msgid "dd:mm:ss"
+msgstr ""
+
+#: ll_format.c:103 ll_format.c:118 sites.c:662 view.c:588 view.c:590
+#: view.c:592 view.c:594 view.c:596 view.c:598 view.c:600 view.c:603
+#, c-format
+msgid "%f"
+msgstr ""
+
+#: ll_format.c:116
+#, c-format
+msgid "0%f"
+msgstr ""
+
+#: ll_format.c:120
+msgid "00"
+msgstr ""
+
+#: ll_format.c:120 ll_format.c:127
+msgid "0"
+msgstr ""
+
+#: ll_format.c:121
+#, c-format
+msgid "%d:%02d:%s%c"
+msgstr ""
+
+#: ll_format.c:123
+#, c-format
+msgid "%d:%02d%c"
+msgstr ""
+
+#: ll_format.c:125
+#, c-format
+msgid "%d%c"
+msgstr ""
+
+#: ll_scan.c:46
+msgid "sn"
+msgstr ""
+
+#: ll_scan.c:51 ll_scan.c:59
+msgid "we"
+msgstr ""
+
+#: ll_scan.c:58
+#, c-format
+msgid "%se"
+msgstr ""
+
+#: ll_scan.c:75
+#, c-format
+msgid "%s%c"
+msgstr ""
+
+#: ll_scan.c:78
+msgid ""
+"%d:%d:%d.%[0123456789]%[^\n"
+"]"
+msgstr ""
+
+#: ll_scan.c:88
+msgid ""
+"%d:%d:%d%[^\n"
+"]"
+msgstr ""
+
+#: ll_scan.c:92
+msgid ""
+"%d:%d%[^\n"
+"]"
+msgstr ""
+
+#: ll_scan.c:97
+msgid ""
+"%d%[^\n"
+"]"
+msgstr ""
+
+#: locale.c:24
+msgid "/locale"
+msgstr ""
+
+#: location.c:34
+#, c-format
+msgid "LOCATION  << %s >>  not available"
+msgstr ""
+
+#: location.c:44
+msgid "LOCATION_NAME"
+msgstr ""
+
+#: lzw.c:333
+msgid "lzw_malloc: can't allocate memory"
+msgstr ""
+
+#: lzw.c:350
+msgid "lzw_realloc: can't allocate memory"
+msgstr ""
+
+#: lzw.c:747
+msgid "lzw_expand: end of input encountered prematurely\n"
+msgstr ""
+
+#: make_colr.c:43
+#, c-format
+msgid " The raster map %s@%s is empty"
+msgstr ""
+
+#: make_colr.c:51
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Color table needed for file [%s] in mapset [%s].\n"
+msgstr ""
+
+#: make_colr.c:54
+msgid ""
+"\n"
+"Please identify the type desired:\n"
+msgstr ""
+
+#: make_colr.c:55
+msgid "    1:  Random colors\n"
+msgstr ""
+
+#: make_colr.c:56
+msgid "    2:  Red, green, and blue color ramps\n"
+msgstr ""
+
+#: make_colr.c:57
+msgid "    3:  Color wave\n"
+msgstr ""
+
+#: make_colr.c:58
+msgid "    4:  Gray scale\n"
+msgstr ""
+
+#: make_colr.c:59
+msgid "    5:  Aspect\n"
+msgstr ""
+
+#: make_colr.c:60
+msgid "    6:  Rainbow colors\n"
+msgstr ""
+
+#: make_colr.c:61
+msgid "    7:  Red through yellow to green\n"
+msgstr ""
+
+#: make_colr.c:62
+msgid "    8:  Green through yellow to red\n"
+msgstr ""
+
+#: make_colr.c:63
+msgid "RETURN  quit\n"
+msgstr ""
+
+#: make_colr.c:64
+msgid ""
+"\n"
+"> "
+msgstr ""
+
+#: make_colr.c:84
+#, c-format
+msgid ""
+"\n"
+"%s invalid; Try again > "
+msgstr ""
+
+#: mapset.c:28
+msgid "MAPSET is not set"
+msgstr ""
+
+#: mapset.c:57
+msgid "MAPSET"
+msgstr ""
+
+#: mapset_msc.c:31
+msgid "mkdir "
+msgstr ""
+
+#: mapset_msc.c:65
+#, c-format
+msgid "can't make mapset element %s (%s)"
+msgstr ""
+
+#: mapset_nme.c:55
+msgid "SEARCH_PATH"
+msgstr ""
+
+#: mask_info.c:42
+#, c-format
+msgid "<%s> in mapset <%s>"
+msgstr ""
+
+#: mask_info.c:45
+msgid "none"
+msgstr ""
+
+#: mask_info.c:48
+msgid "not known"
+msgstr ""
+
+#: myname.c:28
+msgid "MYNAME"
+msgstr ""
+
+#: myname.c:35
+msgid "Unknown Location"
+msgstr ""
+
+#: named_colr.c:11 view.c:67
+msgid "white"
+msgstr ""
+
+#: named_colr.c:12 view.c:66
+msgid "black"
+msgstr ""
+
+#: named_colr.c:13 view.c:68
+msgid "red"
+msgstr ""
+
+#: named_colr.c:14
+msgid "green"
+msgstr ""
+
+#: named_colr.c:15
+msgid "blue"
+msgstr ""
+
+#: named_colr.c:16
+msgid "yellow"
+msgstr ""
+
+#: named_colr.c:17
+msgid "magenta"
+msgstr ""
+
+#: named_colr.c:18
+msgid "cyan"
+msgstr ""
+
+#: named_colr.c:19
+msgid "aqua"
+msgstr ""
+
+#: named_colr.c:20
+msgid "grey"
+msgstr ""
+
+#: named_colr.c:21
+msgid "gray"
+msgstr ""
+
+#: named_colr.c:22
+msgid "orange"
+msgstr ""
+
+#: named_colr.c:23
+msgid "brown"
+msgstr ""
+
+#: named_colr.c:24
+msgid "purple"
+msgstr ""
+
+#: named_colr.c:25
+msgid "violet"
+msgstr ""
+
+#: named_colr.c:26
+msgid "indigo"
+msgstr ""
+
+#: nme_in_mps.c:26
+#, c-format
+msgid "%s %s %s"
+msgstr ""
+
+#: nme_in_mps.c:27
+msgid "in"
+msgstr ""
+
+#: nme_in_mps.c:74
+#, c-format
+msgid "%s@%s"
+msgstr ""
+
+#: null_val.c:96
+msgid "EmbedGivenNulls: wrong data type!"
+msgstr ""
+
+#: null_val.c:117
+msgid "Null values have not been initialized. "
+msgstr ""
+
+#: null_val.c:118
+msgid "G_gisinit() must be called first. "
+msgstr ""
+
+#: null_val.c:119
+msgid "Please advise GRASS developers of this error.\n"
+msgstr ""
+
+#: null_val.c:233
+msgid "G_set_null_value: wrong data type!"
+msgstr ""
+
+#: null_val.c:354
+msgid "G_is_null_value: wrong data type!"
+msgstr ""
+
+#: null_val.c:529
+#, c-format
+msgid ""
+"G__check_null_bit: can't access index %d. Size of flags is %d (bit # is %d"
+msgstr ""
+
+#: open.c:104
+#, c-format
+msgid "G__open(r): mapset (%s) doesn't match xmapset (%s)\n"
+msgstr ""
+
+#: open.c:123
+#, c-format
+msgid "G__open(w): xmapset (%s) != G_mapset() (%s)\n"
+msgstr ""
+
+#: open.c:208
+msgid "r+"
+msgstr ""
+
+#: opencell.c:123
+#, c-format
+msgid "unable to open raster map [%s in %s]"
+msgstr ""
+
+#: opencell.c:206
+#, c-format
+msgid ""
+"unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
+"not exist"
+msgstr ""
+
+#: opencell.c:229
+#, c-format
+msgid "[%s] in mapset [%s]-format field in header file invalid"
+msgstr ""
+
+#: opencell.c:238
+#, c-format
+msgid "[%s] in mapset [%s] - in different projection than current region"
+msgstr ""
+
+#: opencell.c:245
+#, c-format
+msgid "[%s] in mapset [%s] - in different zone than current region"
+msgstr ""
+
+#: opencell.c:253
+#, c-format
+msgid "[%s] in [%s] - bytes per cell (%d) too large"
+msgstr ""
+
+#: opencell.c:466 opencell.c:490
+msgid "GRASS_FP_DOUBLE"
+msgstr ""
+
+#: opencell.c:519 sites.c:1225 sites.c:1227
+msgid "@"
+msgstr ""
+
+#: opencell.c:554
+#, c-format
+msgid "opencell: %s - illegal file name"
+msgstr ""
+
+#: opencell.c:560
+#, c-format
+msgid "opencell: %s - bad mapset"
+msgstr ""
+
+#: opencell.c:572
+msgid "G__open_raster_new: no temp files available"
+msgstr ""
+
+#: opencell.c:585
+msgid "G__open_raster_new: too many open files"
+msgstr ""
+
+#: opencell.c:652
+msgid "Can't write embedded null values for map open for random access"
+msgstr ""
+
+#: opencell.c:681
+msgid "opencell opening temp null file: no temp files available"
+msgstr ""
+
+#: opencell.c:698
+msgid "opencell: too many open files"
+msgstr ""
+
+#: opencell.c:836
+msgid "G_set_fp_type() can only be called with FCELL_TYPE or DCELL_TYPE"
+msgstr ""
+
+#: opencell.c:857 opencell.c:878
+#, c-format
+msgid "unable to find [%s] in [%s]"
+msgstr ""
+
+#: opencell.c:862 opencell.c:883
+msgid "g3dcell"
+msgstr ""
+
+#: opencell.c:909
+#, c-format
+msgid "unable to find [%s]"
+msgstr ""
+
+#: opencell.c:915
+#, c-format
+msgid "Unable to open %s"
+msgstr ""
+
+#: opencell.c:924
+#, c-format
+msgid "invalid type: field %s in file %s "
+msgstr ""
+
+#: opencell.c:939
+#, c-format
+msgid "the map %s is not xdr: byte_order: %s"
+msgstr ""
+
+#: opencell.c:951 opencell.c:969
+#, c-format
+msgid "%s - ** illegal name **"
+msgstr ""
+
+#: opencell.c:988
+msgid "G_set_quant_rules can be called only for raster maps opened for reading"
+msgstr ""
+
+#: parser.c:337
+msgid "help"
+msgstr ""
+
+#: parser.c:338
+msgid "-help"
+msgstr ""
+
+#: parser.c:339
+msgid "--help"
+msgstr ""
+
+#: parser.c:347
+msgid "--interface-description"
+msgstr ""
+
+#: parser.c:383
+#, c-format
+msgid "Sorry <%s> is not a valid option\n"
+msgstr ""
+
+#: parser.c:423 parser.c:556
+msgid "??"
+msgstr ""
+
+#: parser.c:426
+msgid ""
+"\n"
+"Description:\n"
+msgstr ""
+
+#: parser.c:427
+#, c-format
+msgid " %s\n"
+msgstr ""
+
+#: parser.c:430
+msgid ""
+"\n"
+"Usage:\n"
+" "
+msgstr ""
+
+#: parser.c:458 proj3.c:43 reclass.c:171
+msgid "name"
+msgstr ""
+
+#: parser.c:460
+msgid "value"
+msgstr ""
+
+#: parser.c:467
+msgid "["
+msgstr ""
+
+#: parser.c:469 parser.c:1522
+msgid "="
+msgstr ""
+
+#: parser.c:473
+msgid "[,"
+msgstr ""
+
+#: parser.c:475
+msgid ",...]"
+msgstr ""
+
+#: parser.c:478
+msgid "]"
+msgstr ""
+
+#: parser.c:491
+msgid ""
+"\n"
+"Flags:\n"
+msgstr ""
+
+#: parser.c:495
+#, c-format
+msgid "  -%c   %s\n"
+msgstr ""
+
+#: parser.c:505
+msgid ""
+"\n"
+"Parameters:\n"
+msgstr ""
+
+#: parser.c:509
+#, c-format
+msgid "  %*s   %s\n"
+msgstr ""
+
+#: parser.c:518
+#, c-format
+msgid "  %*s   default: %s\n"
+msgstr ""
+
+#: parser.c:531
+msgid "&amp;"
+msgstr ""
+
+#: parser.c:534
+msgid "&lt;"
+msgstr ""
+
+#: parser.c:537
+msgid "&gt;"
+msgstr ""
+
+#: parser.c:558
+msgid "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+msgstr ""
+
+#: parser.c:559
+msgid "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n"
+msgstr ""
+
+#: parser.c:561
+#, c-format
+msgid "<task name=\"%s\">\n"
+msgstr ""
+
+#: parser.c:564
+msgid ""
+"\t<description>\n"
+"\t\t"
+msgstr ""
+
+#: parser.c:566
+msgid ""
+"\n"
+"\t</description>\n"
+msgstr ""
+
+#: parser.c:586
+msgid "integer"
+msgstr ""
+
+#: parser.c:592 parser.c:595
+msgid "string"
+msgstr ""
+
+#: parser.c:598
+#, c-format
+msgid "\t<parameter name=\"%s\" type=\"%s\" required=\"%s\" multiple=\"%s\">\n"
+msgstr ""
+
+#: parser.c:605 parser.c:606
+msgid "yes"
+msgstr ""
+
+#: parser.c:605 parser.c:606
+msgid "no"
+msgstr ""
+
+#: parser.c:609 parser.c:690
+msgid ""
+"\t\t<description>\n"
+"\t\t\t"
+msgstr ""
+
+#: parser.c:611 parser.c:692
+msgid ""
+"\n"
+"\t\t</description>\n"
+msgstr ""
+
+#: parser.c:616
+msgid "\t\t<keydesc>\n"
+msgstr ""
+
+#: parser.c:622
+#, c-format
+msgid "\t\t\t<item order=\"%d\">"
+msgstr ""
+
+#: parser.c:624
+msgid "</item>\n"
+msgstr ""
+
+#: parser.c:627
+msgid "\t\t</keydesc>\n"
+msgstr ""
+
+#: parser.c:633
+msgid "age"
+msgstr ""
+
+#: parser.c:633
+msgid "element"
+msgstr ""
+
+#: parser.c:633
+msgid "prompt"
+msgstr ""
+
+#: parser.c:637
+msgid "\t\t<gisprompt "
+msgstr ""
+
+#: parser.c:640
+#, c-format
+msgid "%s=\"%s\" "
+msgstr ""
+
+#: parser.c:643
+msgid "/>\n"
+msgstr ""
+
+#: parser.c:648
+msgid ""
+"\t\t\t<default>\n"
+"\t\t\t"
+msgstr ""
+
+#: parser.c:650
+msgid ""
+"\n"
+"\t\t\t</default>\n"
+msgstr ""
+
+#: parser.c:654
+msgid "\t\t<values>\n"
+msgstr ""
+
+#: parser.c:659
+msgid "\t\t\t<value>"
+msgstr ""
+
+#: parser.c:661
+msgid "</value>\n"
+msgstr ""
+
+#: parser.c:664
+msgid "\t\t</values>\n"
+msgstr ""
+
+#: parser.c:677
+msgid "\t</parameter>\n"
+msgstr ""
+
+#: parser.c:687
+#, c-format
+msgid "\t<flag name=\"%c\">\n"
+msgstr ""
+
+#: parser.c:695
+msgid "\t</flag>\n"
+msgstr ""
+
+#: parser.c:708
+msgid "</task>\n"
+msgstr ""
+
+#: parser.c:726
+#, c-format
+msgid "  %*s   options: "
+msgstr ""
+
+#: parser.c:736 parser.c:744
+#, c-format
+msgid ""
+"\n"
+" %*s"
+msgstr ""
+
+#: parser.c:738
+#, c-format
+msgid "%s,"
+msgstr ""
+
+#: parser.c:758
+msgid ""
+"\n"
+"  "
+msgstr ""
+
+#: parser.c:773 parser.c:790
+#, c-format
+msgid "Sorry, <%c> is not a valid flag\n"
+msgstr ""
+
+#: parser.c:845
+#, c-format
+msgid "Sorry, <%s=> is ambiguous\n"
+msgstr ""
+
+#: parser.c:852
+#, c-format
+msgid "Sorry, <%s> is not a valid parameter\n"
+msgstr ""
+
+#: parser.c:937
+#, c-format
+msgid ""
+"\n"
+"Error: illegal range syntax for parameter <%s>\n"
+msgstr ""
+
+#: parser.c:939
+#, c-format
+msgid "       Presented as: %s\n"
+msgstr ""
+
+#: parser.c:942
+#, c-format
+msgid ""
+"\n"
+"Error: value <%s> out of range for parameter <%s>\n"
+msgstr ""
+
+#: parser.c:944
+#, c-format
+msgid "       Legal range: %s\n"
+msgstr ""
+
+#: parser.c:947
+#, c-format
+msgid ""
+"\n"
+"Error: Missing value for parameter <%s>\n"
+msgstr ""
+
+#: parser.c:962
+#, c-format
+msgid "%d-%d"
+msgstr ""
+
+#: parser.c:1030
+#, c-format
+msgid "%lf-%lf"
+msgstr ""
+
+#: parser.c:1107
+#, c-format
+msgid ""
+"\n"
+"ERROR: Required parameter <%s> not set:\n"
+" (%s).\n"
+msgstr ""
+
+#: parser.c:1205
+#, c-format
+msgid ""
+"\n"
+"Error: option <%s> must be provided in multiples of %d\n"
+msgstr ""
+
+#: parser.c:1207
+#, c-format
+msgid "       You provided %d items:\n"
+msgstr ""
+
+#: parser.c:1208
+#, c-format
+msgid "       %s\n"
+msgstr ""
+
+#: parser.c:1225
+msgid "Programmer error: no flags or options\n"
+msgstr ""
+
+#: parser.c:1250
+msgid ""
+"\n"
+"FLAG: Set the following flag?\n"
+msgstr ""
+
+#: parser.c:1251
+#, c-format
+msgid "    %s?"
+msgstr ""
+
+#: parser.c:1263
+#, c-format
+msgid ""
+"\n"
+"OPTION:   %s\n"
+msgstr ""
+
+#: parser.c:1264
+#, c-format
+msgid "     key: %s\n"
+msgstr ""
+
+#: parser.c:1266
+#, c-format
+msgid "  format: %s\n"
+msgstr ""
+
+#: parser.c:1268
+#, c-format
+msgid " default: %s\n"
+msgstr ""
+
+#: parser.c:1269
+#, c-format
+msgid "required: %s\n"
+msgstr ""
+
+#: parser.c:1269 parser.c:1271
+msgid "YES"
+msgstr ""
+
+#: parser.c:1269 parser.c:1271
+msgid "NO"
+msgstr ""
+
+#: parser.c:1271
+#, c-format
+msgid "multiple: %s\n"
+msgstr ""
+
+#: parser.c:1273
+#, c-format
+msgid " options: %s\n"
+msgstr ""
+
+#: parser.c:1286
+msgid "enter option > "
+msgstr ""
+
+#: parser.c:1300 parser.c:1311
+msgid "   Try again? "
+msgstr ""
+
+#: parser.c:1309
+#, c-format
+msgid "Sorry, %s is not accepted.\n"
+msgstr ""
+
+#: parser.c:1317 putenv.c:55 putenv.c:60
+#, c-format
+msgid "%s=%s"
+msgstr ""
+
+#: parser.c:1320
+#, c-format
+msgid ""
+"\n"
+"You have chosen:\n"
+"  %s\n"
+msgstr ""
+
+#: parser.c:1321
+msgid "Is this correct? "
+msgstr ""
+
+#: parser.c:1379
+msgid "to accept the default"
+msgstr ""
+
+#: parser.c:1380
+msgid "old"
+msgstr ""
+
+#: parser.c:1388
+msgid "new"
+msgstr ""
+
+#: parser.c:1390
+msgid "mapset"
+msgstr ""
+
+#: parser.c:1392
+msgid "any"
+msgstr ""
+
+#: parser.c:1396
+#, c-format
+msgid ""
+"\n"
+"PROGRAMMER ERROR: first item in gisprompt is <%s>\n"
+msgstr ""
+
+#: parser.c:1397
+msgid "        Must be either new, old, mapset, or any\n"
+msgstr ""
+
+#: parser.c:1437
+msgid "+,-./:=_"
+msgstr ""
+
+#: parser.c:1474
+msgid "'\\''"
+msgstr ""
+
+#: parser.c:1499
+msgid " -x"
+msgstr ""
+
+#: percent.c:32
+#, c-format
+msgid "%4d%%\b\b\b\b\b"
+msgstr ""
+
+#: popen.c:36 system.c:44
+msgid "/bin/sh"
+msgstr ""
+
+#: popen.c:36 system.c:44
+msgid "sh"
+msgstr ""
+
+#: popen.c:36 system.c:44
+msgid "-c"
+msgstr ""
+
+#: proj2.c:26 proj3.c:24 proj3.c:25
+msgid "units"
+msgstr ""
+
+#: proj2.c:26 proj3.c:24 proj3.c:25 proj3.c:61
+msgid "unit"
+msgstr ""
+
+#: proj2.c:32
+msgid "degrees"
+msgstr ""
+
+#: proj2.c:32
+msgid "degree"
+msgstr ""
+
+#: proj2.c:43
+msgid "x,y"
+msgstr ""
+
+#: proj2.c:47
+msgid "State Plane"
+msgstr ""
+
+#: proj2.c:49
+msgid "Latitude-Longitude"
+msgstr ""
+
+#: proj2.c:51
+msgid "Other Projection"
+msgstr ""
+
+#: proj3.c:44
+msgid "Unknown projection"
+msgstr ""
+
+#: put_cellhd.c:26
+#, c-format
+msgid "Unable to create header file for [%s]"
+msgstr ""
+
+#: putenv.c:50
+msgid "%[^=]=%1s"
+msgstr ""
+
+#: put_row.c:193
+msgid "G_put_map_row"
+msgstr ""
+
+#: put_row.c:201
+#, c-format
+msgid "%s: %s is not integer! Use G_put_[f/d_]raster_row()!"
+msgstr ""
+
+#: put_row.c:229
+msgid "G_put_map_row_random"
+msgstr ""
+
+#: put_row.c:251
+msgid "G__put_null_value_row"
+msgstr ""
+
+#: put_row.c:264
+msgid "G_put_raster_row"
+msgstr ""
+
+#: put_row.c:349
+#, c-format
+msgid ""
+"%s(mode=%d): row=%d, col=%d, n=%d (FCB.nbytes=%d)\n"
+"\r"
+msgstr ""
+
+#: put_row.c:442
+#, c-format
+msgid "row %d - after cell size reduction: nbytes %d\n"
+msgstr ""
+
+#: put_row.c:536
+#, c-format
+msgid "writing %d cells at %d bytes per cell\n"
+msgstr ""
+
+#: put_row.c:554
+#, c-format
+msgid "%s: map [%s] not open for write - request ignored"
+msgstr ""
+
+#: put_row.c:561
+#, c-format
+msgid "%s: map [%s] not open for random write - request ignored"
+msgstr ""
+
+#: put_row.c:567
+#, c-format
+msgid "%s: map [%s] not open for sequential write - request ignored"
+msgstr ""
+
+#: put_row.c:572
+#, c-format
+msgid "%s: unopened file descriptor - request ignored"
+msgstr ""
+
+#: put_row.c:610
+#, c-format
+msgid "map [%s] - unable to write row %d"
+msgstr ""
+
+#: put_row.c:742
+#, c-format
+msgid "xdr_float failed for index %d of row %d.\n"
+msgstr ""
+
+#: put_row.c:758
+#, c-format
+msgid "xdr_double failed for index %d of row %d.\n"
+msgstr ""
+
+#: put_row.c:827
+#, c-format
+msgid "unable to find a temporary null file %s"
+msgstr ""
+
+#: put_row.c:837
+msgid "G__open_null_new(): too many open files!"
+msgstr ""
+
+#: put_row.c:854 put_row.c:859
+#, c-format
+msgid "error writing null row %d\n"
+msgstr ""
+
+#: put_row.c:897
+msgid "can't put float row into integer map"
+msgstr ""
+
+#: put_row.c:903
+msgid "can't put double row into integer map"
+msgstr ""
+
+#: put_title.c:28
+#, c-format
+msgid "category information for [%s] in [%s] missing or invalid"
+msgstr ""
+
+#: put_title.c:38
+msgid "G_put_title - can't create a temp file"
+msgstr ""
+
+#: put_title.c:58
+#, c-format
+msgid "category information for [%s] in [%s] invalid"
+msgstr ""
+
+#: put_title.c:66
+msgid "G_put_title - can't reopen temp file"
+msgstr ""
+
+#: put_title.c:75
+#, c-format
+msgid "can't write category information for [%s] in [%s]"
+msgstr ""
+
+#: quant_io.c:91
+#, c-format
+msgid "The floating data range for %s@%s is empty"
+msgstr ""
+
+#: quant_io.c:100
+#, c-format
+msgid "The integer data range for %s@%s is empty"
+msgstr ""
+
+#: quant_io.c:130
+#, c-format
+msgid ""
+"G__quant_import: attempt to open quantization table for CELL_TYPE file [%s] "
+"in mapset {%s]"
+msgstr ""
+
+#: quant_io.c:142 quant_io.c:309
+#, c-format
+msgid "quant2/%s"
+msgstr ""
+
+#: quant_io.c:148
+#, c-format
+msgid "quantization file in quant2 for [%s] in mapset [%s] is empty"
+msgstr ""
+
+#: quant_io.c:167
+msgid "empty"
+msgstr ""
+
+#: quant_io.c:171
+#, c-format
+msgid "quantization file [%s] in mapset [%s] %s"
+msgstr ""
+
+#: quant_io.c:204 quant_io.c:262
+msgid "truncate"
+msgstr ""
+
+#: quant_io.c:209 quant_io.c:267
+msgid "round"
+msgstr ""
+
+#: quant_io.c:214
+#, c-format
+msgid "%lf:%lf:%d:%d"
+msgstr ""
+
+#: quant_io.c:218
+#, c-format
+msgid "*:%lf:%d"
+msgstr ""
+
+#: quant_io.c:226
+#, c-format
+msgid "%lf:*:%d"
+msgstr ""
+
+#: quant_io.c:271
+#, c-format
+msgid "*:%.20g:%d\n"
+msgstr ""
+
+#: quant_io.c:274
+#, c-format
+msgid "%.20g:*:%d\n"
+msgstr ""
+
+#: quant_io.c:278
+#, c-format
+msgid "%.20g:%.20g:%d"
+msgstr ""
+
+#: quant_io.c:279
+#, c-format
+msgid ":%d"
+msgstr ""
+
+#: quant_rw.c:74 quant_rw.c:90
+#, c-format
+msgid "G_truncate_fp_map: can't write quant rules for map %s"
+msgstr ""
+
+#: quant_rw.c:106
+#, c-format
+msgid "G_quantize_fp_map: can't read fp range for map %s"
+msgstr ""
+
+#: quant_rw.c:113
+#, c-format
+msgid "G_quantize_fp_map: raster map %s is empty"
+msgstr ""
+
+#: quant_rw.c:135
+#, c-format
+msgid "G_quantize_fp_map_range: can't write quant rules for map %s"
+msgstr ""
+
+#: quant_rw.c:154
+#, c-format
+msgid "Cannot write quant rules: map %s is integer"
+msgstr ""
+
+#: quant_rw.c:164
+#, c-format
+msgid "Cannot write quant rules for map %s"
+msgstr ""
+
+#: range.c:98 range.c:144 range.c:146 range.c:318 range.c:340
+msgid "f_range"
+msgstr ""
+
+#: range.c:153
+msgid "Too many open files"
+msgstr ""
+
+#: range.c:177
+#, c-format
+msgid "can't read f_range file for [%s in %s]"
+msgstr ""
+
+#: range.c:204
+#, c-format
+msgid "G_read_range(): can't read quant rules for fp map %s@%s"
+msgstr ""
+
+#: range.c:237 range.c:239 range.c:286 range.c:302
+msgid "range"
+msgstr ""
+
+#: range.c:248
+#, c-format
+msgid "%d%d%d%d"
+msgstr ""
+
+#: range.c:268
+#, c-format
+msgid "can't read range file for [%s in %s]"
+msgstr ""
+
+#: range.c:282
+msgid "G_write_range(): the map is floating point!"
+msgstr ""
+
+#: range.c:296
+#, c-format
+msgid "%ld %ld\n"
+msgstr ""
+
+#: range.c:303 range.c:341
+#, c-format
+msgid "can't write range file for [%s in %s]"
+msgstr ""
+
+#: rd_cellhd.c:75
+msgid "duplicate projection field"
+msgstr ""
+
+#: rd_cellhd.c:83 rd_cellhd.c:113
+msgid "zone"
+msgstr ""
+
+#: rd_cellhd.c:86
+msgid "duplicate zone field"
+msgstr ""
+
+#: rd_cellhd.c:96
+msgid "projection field missing"
+msgstr ""
+
+#: rd_cellhd.c:98
+msgid "zone field missing"
+msgstr ""
+
+#: rd_cellhd.c:116
+msgid "nort"
+msgstr ""
+
+#: rd_cellhd.c:119
+msgid "duplicate north field"
+msgstr ""
+
+#: rd_cellhd.c:125
+msgid "sout"
+msgstr ""
+
+#: rd_cellhd.c:128
+msgid "duplicate south field"
+msgstr ""
+
+#: rd_cellhd.c:134 view.c:295
+msgid "east"
+msgstr ""
+
+#: rd_cellhd.c:137
+msgid "duplicate east field"
+msgstr ""
+
+#: rd_cellhd.c:143 view.c:300
+msgid "west"
+msgstr ""
+
+#: rd_cellhd.c:146
+msgid "duplicate west field"
+msgstr ""
+
+#: rd_cellhd.c:152
+msgid "e-w "
+msgstr ""
+
+#: rd_cellhd.c:155
+msgid "duplicate e-w resolution field"
+msgstr ""
+
+#: rd_cellhd.c:163
+msgid "n-s "
+msgstr ""
+
+#: rd_cellhd.c:166
+msgid "duplicate n-s resolution field"
+msgstr ""
+
+#: rd_cellhd.c:174 view.c:305
+msgid "rows"
+msgstr ""
+
+#: rd_cellhd.c:177
+msgid "duplicate rows field"
+msgstr ""
+
+#: rd_cellhd.c:185 view.c:310
+msgid "cols"
+msgstr ""
+
+#: rd_cellhd.c:188
+msgid "duplicate cols field"
+msgstr ""
+
+#: rd_cellhd.c:196
+msgid "form"
+msgstr ""
+
+#: rd_cellhd.c:199
+msgid "duplicate format field"
+msgstr ""
+
+#: rd_cellhd.c:205
+msgid "comp"
+msgstr ""
+
+#: rd_cellhd.c:208
+msgid "duplicate compressed field"
+msgstr ""
+
+#: rd_cellhd.c:219
+msgid "north field missing"
+msgstr ""
+
+#: rd_cellhd.c:221
+msgid "south field missing"
+msgstr ""
+
+#: rd_cellhd.c:223
+msgid "west field missing"
+msgstr ""
+
+#: rd_cellhd.c:225
+msgid "east field missing"
+msgstr ""
+
+#: rd_cellhd.c:227
+msgid "cols field missing"
+msgstr ""
+
+#: rd_cellhd.c:229
+msgid "rows field missing"
+msgstr ""
+
+#: rd_cellhd.c:256
+msgid ""
+"%[^:]:%[^\n"
+"]"
+msgstr ""
+
+#: rd_cellhd.c:268
+#, c-format
+msgid "%d%1s"
+msgstr ""
+
+#: rd_cellhd.c:276
+#, c-format
+msgid "line %d: <%s>"
+msgstr ""
+
+#: rd_cellhd.c:278
+#, c-format
+msgid "<%s>"
+msgstr ""
+
+#: readsites.c:41
+msgid "Reading sites list ...                  "
+msgstr ""
+
+#: readsites.c:45
+msgid "failed to guess format"
+msgstr ""
+
+#: readsites.c:49
+#, c-format
+msgid "decimal field %i not present in sites file"
+msgstr ""
+
+#: readsites.c:55
+msgid ""
+"I'm finding records that do not have a floating point attributes (fields "
+"prefixed with '%')."
+msgstr ""
+
+#: readsites.c:60 readsites.c:69
+msgid "cannot allocate memory"
+msgstr ""
+
+#: readsites_xyz.c:76
+msgid "Unable to guess site format!"
+msgstr ""
+
+#: readsites_xyz.c:90
+msgid "No n-dims in site_list"
+msgstr ""
+
+#: readsites_xyz.c:93
+msgid "Dimension index out of range"
+msgstr ""
+
+#: readsites_xyz.c:98
+msgid "No double attributes in site_list"
+msgstr ""
+
+#: readsites_xyz.c:101
+msgid "Double attribute index out of range"
+msgstr ""
+
+#: readsites_xyz.c:106
+msgid "No string attributes in site_list"
+msgstr ""
+
+#: readsites_xyz.c:109
+msgid "String attribute index out of range"
+msgstr ""
+
+#: readsites_xyz.c:116
+msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+msgstr ""
+
+#: readsites_xyz.c:148
+msgid "Failed to convert string attribute."
+msgstr ""
+
+#: readsites_xyz.c:154
+msgid "G_readsites_xyz(): fatal programmer error!\n"
+msgstr ""
+
+#: reclass.c:38 reclass.c:255
+#, c-format
+msgid "%s/%s/cell_misc/%s/reclassed_to"
+msgstr ""
+
+#: reclass.c:119
+#, c-format
+msgid "Too many reclass categories for [%s in %s]"
+msgstr ""
+
+#: reclass.c:122
+#, c-format
+msgid "Illegal reclass format in header file for [%s in %s]"
+msgstr ""
+
+#: reclass.c:156
+msgid "reclas"
+msgstr ""
+
+#: reclass.c:167
+msgid "%[^:]:%s"
+msgstr ""
+
+#: reclass.c:169
+msgid "maps"
+msgstr ""
+
+#: reclass.c:199
+msgid "Illegal reclass request"
+msgstr ""
+
+#: reclass.c:204
+msgid "Illegal reclass type"
+msgstr ""
+
+#: reclass.c:211
+#, c-format
+msgid "Unable to create header file for [%s in %s]"
+msgstr ""
+
+#: reclass.c:216
+msgid "reclass\n"
+msgstr ""
+
+#: reclass.c:217
+#, c-format
+msgid "name: %s\n"
+msgstr ""
+
+#: reclass.c:218
+#, c-format
+msgid "mapset: %s\n"
+msgstr ""
+
+#: reclass.c:236
+msgid "0\n"
+msgstr ""
+
+#: reclass.c:239
+#, c-format
+msgid "#%ld\n"
+msgstr ""
+
+#: reclass.c:245
+#, c-format
+msgid "%ld\n"
+msgstr ""
+
+#: reclass.c:258
+msgid "a+"
+msgstr ""
+
+#: reclass.c:262
+#, c-format
+msgid "Unable to create dependency file in [%s in %s]"
+msgstr ""
+
+#: reclass.c:270 reclass.c:282
+#, c-format
+msgid "%s@%s\n"
+msgstr ""
+
+#: reclass.c:318 sites.c:404
+#, c-format
+msgid "#%d"
+msgstr ""
+
+#: remove.c:47
+#, c-format
+msgid "rm -rf '%s'"
+msgstr ""
+
+#: rename.c:38
+msgid "mv "
+msgstr ""
+
+#: set_prior.c:173
+msgid "Set_uid_to_user () failed!\n"
+msgstr ""
+
+#: set_window.c:42
+#, c-format
+msgid "G_set_window(): %s"
+msgstr ""
+
+#: set_window.c:59
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"files"
+msgstr ""
+
+#: sites.c:263
+msgid "G_site_new_struct: invalid # dims or fields\n"
+msgstr ""
+
+#: sites.c:354 sites.c:605
+msgid ""
+"%[^|]|%[^|]|%*[^\n"
+"]"
+msgstr ""
+
+#: sites.c:356 sites.c:363 sites.c:607
+#, c-format
+msgid "ERROR: ebuf %s nbuf %s\n"
+msgstr ""
+
+#: sites.c:380
+#, c-format
+msgid "%lf|"
+msgstr ""
+
+#: sites.c:408
+#, c-format
+msgid "#%f"
+msgstr ""
+
+#: sites.c:412
+#, c-format
+msgid "#%lf"
+msgstr ""
+
+#: sites.c:494
+#, c-format
+msgid "%s|%s|"
+msgstr ""
+
+#: sites.c:498
+#, c-format
+msgid "%s|"
+msgstr ""
+
+#: sites.c:504
+#, c-format
+msgid "#%d "
+msgstr ""
+
+#: sites.c:508 sites.c:512
+#, c-format
+msgid "#%g "
+msgstr ""
+
+#: sites.c:520
+#, c-format
+msgid "%%%s "
+msgstr ""
+
+#: sites.c:550
+#, c-format
+msgid "@\"%s\" "
+msgstr ""
+
+#: sites.c:552
+#, c-format
+msgid "@%s "
+msgstr ""
+
+#: sites.c:580
+msgid ""
+"\n"
+"PROGRAMMER ERROR: G_site_describe() must be called\n"
+msgstr ""
+
+#: sites.c:581 sites.c:781
+msgid "        immediately after G_fopen_sites_old()\n"
+msgstr ""
+
+#: sites.c:659
+#, c-format
+msgid "#%s "
+msgstr ""
+
+#: sites.c:733
+#, c-format
+msgid "name|%s\n"
+msgstr ""
+
+#: sites.c:735
+#, c-format
+msgid "desc|%s\n"
+msgstr ""
+
+#: sites.c:737
+#, c-format
+msgid "form|%s\n"
+msgstr ""
+
+#: sites.c:739
+#, c-format
+msgid "labels|%s\n"
+msgstr ""
+
+#: sites.c:747 sites.c:764
+#, c-format
+msgid "time|%s\n"
+msgstr ""
+
+#: sites.c:754
+msgid "Memory error in writing timestamp"
+msgstr ""
+
+#: sites.c:758
+msgid "Illegal TimeStamp string"
+msgstr ""
+
+#: sites.c:780
+msgid ""
+"\n"
+"PROGRAMMER ERROR: G_site_get_head() must be called\n"
+msgstr ""
+
+#: sites.c:805
+msgid "name|"
+msgstr ""
+
+#: sites.c:810
+msgid "desc|"
+msgstr ""
+
+#: sites.c:815
+msgid "form|"
+msgstr ""
+
+#: sites.c:820
+msgid "labels|"
+msgstr ""
+
+#: sites.c:825
+msgid "time|"
+msgstr ""
+
+#: sites.c:831
+msgid "Memory error in allocating timestamp"
+msgstr ""
+
+#: sites.c:871 wind_format.c:37
+#, c-format
+msgid "%.8f"
+msgstr ""
+
+#: sites.c:1039 sites.c:1044 sites.c:1049 sites.c:1054 sites.c:1059
+#: sites.c:1064 sites.c:1069 sites.c:1074 sites.c:1084 sites.c:1089
+#: sites_title.c:22
+msgid "site_lists"
+msgstr ""
+
+#: sites.c:1049 sites.c:1054 sites.c:1059 sites.c:1064
+msgid "site list"
+msgstr ""
+
+#: sites.c:1099 sites.c:1129
+#, c-format
+msgid "WARNING: %s needs modified for the new Sites API\n"
+msgstr ""
+
+#: sites.c:1110
+msgid ""
+"point|%[^|]|%[^|]|%[^\n"
+"]"
+msgstr ""
+
+#: sites.c:1111
+msgid ""
+"%[^|]|%[^|]|%[^\n"
+"]"
+msgstr ""
+
+#: sites.c:1137
+#, c-format
+msgid "%s|%s|%s\n"
+msgstr ""
+
+#: sites.c:1159
+msgid "|"
+msgstr ""
+
+#: sites.c:1161 sites.c:1188 sites.c:1227
+#, c-format
+msgid "%s%s%s"
+msgstr ""
+
+#: sites.c:1166 unix_socks.c:75 user_config.c:68
+#, c-format
+msgid "%s%s"
+msgstr ""
+
+#: sites.c:1175
+#, c-format
+msgid "%s%s%d "
+msgstr ""
+
+#: sites.c:1175 sites.c:1180
+msgid "#"
+msgstr ""
+
+#: sites.c:1180
+#, c-format
+msgid "%s%s%g "
+msgstr ""
+
+#: sites.c:1188
+msgid "%"
+msgstr ""
+
+#: sites.c:1225
+#, c-format
+msgid "%s%s\"%s\""
+msgstr ""
+
+#: support.c:23 support.c:68
+#, c-format
+msgid "support/%s/%s"
+msgstr ""
+
+#: system.c:50
+msgid "WARNING: can not create a new process\n"
+msgstr ""
+
+#: tempfile.c:45
+#, c-format
+msgid "%d.%d"
+msgstr ""
+
+#: tempfile.c:57
+msgid ".tmp"
+msgstr ""
+
+#: timestamp.c:100
+#, c-format
+msgid "%s / %s"
+msgstr ""
+
+#: timestamp.c:173
+#, c-format
+msgid "Can't create timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: timestamp.c:183
+#, c-format
+msgid "Invalid timestamp specified for %s map %s in mapset %s"
+msgstr ""
+
+#: timestamp.c:208
+#, c-format
+msgid "Can't open timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: timestamp.c:218
+#, c-format
+msgid "Invalid timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: timestamp.c:223
+msgid "cell_misc"
+msgstr ""
+
+#: timestamp.c:224
+msgid "dig_misc"
+msgstr ""
+
+#: timestamp.c:225 timestamp.c:270 timestamp.c:308
+msgid "grid3"
+msgstr ""
+
+#: timestamp.c:234 timestamp.c:242 timestamp.c:252 timestamp.c:260
+#: timestamp.c:270 timestamp.c:278 timestamp.c:288 timestamp.c:298
+#: timestamp.c:308
+msgid "timestamp"
+msgstr ""
+
+#: try.c:7
+#, c-format
+msgid "%s=>"
+msgstr ""
+
+#: unctrl.c:9
+#, c-format
+msgid "ctrl-%c"
+msgstr ""
+
+#: unctrl.c:13
+msgid "DEL/RUB"
+msgstr ""
+
+#: unctrl.c:15
+#, c-format
+msgid "Mctrl-%c"
+msgstr ""
+
+#: unix_socks.c:61
+msgid "/tmp/grass-"
+msgstr ""
+
+#: user_config.c:68
+msgid "/.grass"
+msgstr ""
+
+#: user_config.c:321
+#, c-format
+msgid "/%s"
+msgstr ""
+
+#: view.c:163 view.c:248 view.c:252
+msgid "3d.view"
+msgstr ""
+
+#: view.c:164
+#, c-format
+msgid "Unable to open %s for writing"
+msgstr ""
+
+#: view.c:169
+#, c-format
+msgid "# %01d.%02d\n"
+msgstr ""
+
+#: view.c:170
+#, c-format
+msgid "PGM_ID: %s\n"
+msgstr ""
+
+#: view.c:173 view.c:181
+#, c-format
+msgid "north: %f\n"
+msgstr ""
+
+#: view.c:174 view.c:182
+#, c-format
+msgid "south: %f\n"
+msgstr ""
+
+#: view.c:175 view.c:183
+#, c-format
+msgid "east: %f\n"
+msgstr ""
+
+#: view.c:176 view.c:184
+#, c-format
+msgid "west: %f\n"
+msgstr ""
+
+#: view.c:177 view.c:185
+#, c-format
+msgid "rows: %d\n"
+msgstr ""
+
+#: view.c:178 view.c:186
+#, c-format
+msgid "cols: %d\n"
+msgstr ""
+
+#: view.c:189
+#, c-format
+msgid "TO_EASTING: %f\n"
+msgstr ""
+
+#: view.c:190
+#, c-format
+msgid "TO_NORTHING: %f\n"
+msgstr ""
+
+#: view.c:191
+#, c-format
+msgid "TO_HEIGHT: %f\n"
+msgstr ""
+
+#: view.c:192
+#, c-format
+msgid "FROM_EASTING: %f\n"
+msgstr ""
+
+#: view.c:193
+#, c-format
+msgid "FROM_NORTHING: %f\n"
+msgstr ""
+
+#: view.c:194
+#, c-format
+msgid "FROM_HEIGHT: %f\n"
+msgstr ""
+
+#: view.c:195
+#, c-format
+msgid "Z_EXAG: %f\n"
+msgstr ""
+
+#: view.c:196
+#, c-format
+msgid "TWIST: %f\n"
+msgstr ""
+
+#: view.c:197
+#, c-format
+msgid "FIELD_VIEW: %f\n"
+msgstr ""
+
+#: view.c:198
+#, c-format
+msgid "MESH_FREQ: %d\n"
+msgstr ""
+
+#: view.c:199
+#, c-format
+msgid "POLY_RES: %d\n"
+msgstr ""
+
+#: view.c:200
+#, c-format
+msgid "DOAVG: %d\n"
+msgstr ""
+
+#: view.c:201
+#, c-format
+msgid "DISPLAY_TYPE: %d\n"
+msgstr ""
+
+#: view.c:202
+#, c-format
+msgid "DOZERO: %d\n"
+msgstr ""
+
+#: view.c:204
+#, c-format
+msgid "COLORGRID: %d\n"
+msgstr ""
+
+#: view.c:205
+#, c-format
+msgid "SHADING: %d\n"
+msgstr ""
+
+#: view.c:206
+#, c-format
+msgid "FRINGE: %d\n"
+msgstr ""
+
+#: view.c:207
+#, c-format
+msgid "BG_COL: %s\n"
+msgstr ""
+
+#: view.c:208
+#, c-format
+msgid "GRID_COL: %s\n"
+msgstr ""
+
+#: view.c:209
+#, c-format
+msgid "OTHER_COL: %s\n"
+msgstr ""
+
+#: view.c:210
+#, c-format
+msgid "SURFACEONLY: %d\n"
+msgstr ""
+
+#: view.c:211
+#, c-format
+msgid "LIGHTS_ON: %d\n"
+msgstr ""
+
+#: view.c:212
+#, c-format
+msgid "LIGHTPOS: %f %f %f %f\n"
+msgstr ""
+
+#: view.c:214
+#, c-format
+msgid "LIGHTCOL: %f %f %f\n"
+msgstr ""
+
+#: view.c:216
+#, c-format
+msgid "LIGHTAMBIENT: %f\n"
+msgstr ""
+
+#: view.c:217
+#, c-format
+msgid "SHINE: %f\n"
+msgstr ""
+
+#: view.c:253 view.c:472
+#, c-format
+msgid "Unable to open %s for reading"
+msgstr ""
+
+#: view.c:270
+#, c-format
+msgid "#%d.%d\n"
+msgstr ""
+
+#: view.c:279
+msgid "%[^:]:"
+msgstr ""
+
+#: view.c:281
+msgid "PGM_ID"
+msgstr ""
+
+#: view.c:282 view.c:376 view.c:381 view.c:386 view.c:391 view.c:396
+#: view.c:400 view.c:404 view.c:408 view.c:413
+#, c-format
+msgid "%*s%s"
+msgstr ""
+
+#: view.c:285
+msgid "north"
+msgstr ""
+
+#: view.c:286 view.c:291 view.c:296 view.c:301
+#, c-format
+msgid "%*s%lf"
+msgstr ""
+
+#: view.c:290
+msgid "south"
+msgstr ""
+
+#: view.c:306 view.c:311 view.c:351 view.c:355 view.c:359 view.c:372
+#, c-format
+msgid "%*s%d"
+msgstr ""
+
+#: view.c:315
+msgid "TO_EASTING"
+msgstr ""
+
+#: view.c:316 view.c:321 view.c:326 view.c:331 view.c:336 view.c:341
+#: view.c:346 view.c:363 view.c:368 view.c:429 view.c:433
+#, c-format
+msgid "%*s%f"
+msgstr ""
+
+#: view.c:320
+msgid "TO_NORTHING"
+msgstr ""
+
+#: view.c:325
+msgid "TO_HEIGHT"
+msgstr ""
+
+#: view.c:330
+msgid "FROM_EASTING"
+msgstr ""
+
+#: view.c:335
+msgid "FROM_NORTHING"
+msgstr ""
+
+#: view.c:340
+msgid "FROM_HEIGHT"
+msgstr ""
+
+#: view.c:345
+msgid "Z_EXAG"
+msgstr ""
+
+#: view.c:350
+msgid "MESH_FREQ"
+msgstr ""
+
+#: view.c:354
+msgid "POLY_RES"
+msgstr ""
+
+#: view.c:358
+msgid "DOAVG"
+msgstr ""
+
+#: view.c:362
+msgid "FIELD_VIEW"
+msgstr ""
+
+#: view.c:367
+msgid "TWIST"
+msgstr ""
+
+#: view.c:371
+msgid "DISPLAY_TYPE"
+msgstr ""
+
+#: view.c:375
+msgid "DOZERO"
+msgstr ""
+
+#: view.c:380
+msgid "COLORGRID"
+msgstr ""
+
+#: view.c:385
+msgid "FRINGE"
+msgstr ""
+
+#: view.c:390
+msgid "SHADING"
+msgstr ""
+
+#: view.c:395
+msgid "BG_COL"
+msgstr ""
+
+#: view.c:399
+msgid "GRID_COL"
+msgstr ""
+
+#: view.c:403
+msgid "OTHER_COL"
+msgstr ""
+
+#: view.c:407
+msgid "SURFACEONLY"
+msgstr ""
+
+#: view.c:412
+msgid "LIGHTS_ON"
+msgstr ""
+
+#: view.c:417
+msgid "LIGHTPOS"
+msgstr ""
+
+#: view.c:418
+#, c-format
+msgid "%*s%f%f%f%f"
+msgstr ""
+
+#: view.c:423
+msgid "LIGHTCOL"
+msgstr ""
+
+#: view.c:424
+#, c-format
+msgid "%*s%f%f%f"
+msgstr ""
+
+#: view.c:428
+msgid "LIGHTAMBIENT"
+msgstr ""
+
+#: view.c:432
+msgid "SHINE"
+msgstr ""
+
+#: view.c:458
+msgid "GRASS window when view was saved:\n"
+msgstr ""
+
+#: view.c:460
+#, c-format
+msgid "north:   %s\n"
+msgstr ""
+
+#: view.c:462
+#, c-format
+msgid "south:   %s\n"
+msgstr ""
+
+#: view.c:464
+#, c-format
+msgid "east:    %s\n"
+msgstr ""
+
+#: view.c:466
+#, c-format
+msgid "west:    %s\n"
+msgstr ""
+
+#: view.c:544
+#, c-format
+msgid " Window saved in \"%s\" is completely outside of current GRASS window."
+msgstr ""
+
+#: view.c:548
+#, c-format
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+
+#: view.c:587
+msgid "d.3d"
+msgstr ""
+
+#: view.c:616
+msgid "color"
+msgstr ""
+
+#: window_map.c:107
+#, c-format
+msgid "create window mapping (%d cols)"
+msgstr ""
+
+#: window_map.c:109
+#, c-format
+msgid "%s%ld"
+msgstr ""
+
+#: wind_scan.c:53
+#, c-format
+msgid "%lf%1s"
+msgstr ""
+
+#: wr_cellhd.c:13
+#, c-format
+msgid "proj:       %d\n"
+msgstr ""
+
+#: wr_cellhd.c:14
+#, c-format
+msgid "zone:       %d\n"
+msgstr ""
+
+#: wr_cellhd.c:17
+#, c-format
+msgid "north:      %s\n"
+msgstr ""
+
+#: wr_cellhd.c:20
+#, c-format
+msgid "south:      %s\n"
+msgstr ""
+
+#: wr_cellhd.c:23
+#, c-format
+msgid "east:       %s\n"
+msgstr ""
+
+#: wr_cellhd.c:26
+#, c-format
+msgid "west:       %s\n"
+msgstr ""
+
+#: wr_cellhd.c:28
+#, c-format
+msgid "cols:       %d\n"
+msgstr ""
+
+#: wr_cellhd.c:29
+#, c-format
+msgid "rows:       %d\n"
+msgstr ""
+
+#: wr_cellhd.c:32
+#, c-format
+msgid "e-w resol:  %s\n"
+msgstr ""
+
+#: wr_cellhd.c:35
+#, c-format
+msgid "n-s resol:  %s\n"
+msgstr ""
+
+#: wr_cellhd.c:39
+#, c-format
+msgid "format:     %d\n"
+msgstr ""
+
+#: wr_cellhd.c:40
+#, c-format
+msgid "compressed: %d\n"
+msgstr ""
+
+#: yes.c:25
+msgid "(y/n) "
+msgstr ""
+
+#: yes.c:26
+msgid "[n] "
+msgstr ""
+
+#: yes.c:26
+msgid "[y] "
+msgstr ""

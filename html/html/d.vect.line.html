@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<A NAME="d.vect.line">
+<TITLE>d.vect.line</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<B><EM>d.area</EM></B> - Draws labelled vector lines to the GRASS display<BR>
+<EM>(GRASS Display/Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>d.vect.line</B>
+<B>map</B><EM>=name</EM> 
+[<B>color</B><EM>=name|R:G:B</EM>]
+[<B>catnum</B><EM>=i[,j,k,...,n]</EM>]
+[<B>legend</B><EM>=filename|"-"</EM>]
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map</B>
+<DD>Name of existing vector map to be displayed
+
+<DT><B>color</B>
+<DD>Color desired for drawing lines. May be specified as a standard
+grass color name, or as an RGB triplet (e.g. 80:198:255).
+<DD>Default: white
+
+<DT><B>catnum</B>
+<DD>List of category numbers to restrict which lines are drawn.  Ignored
+if the <EM>legend</EM> option is used.
+
+<DT><B>legend</B>
+<DD>Name of a legend file specifying what color to use for 
+each category (see below). If "-" is specified, the legend
+will be read from standard input.
+<DD>Default: none
+</DL>
+
+<H2>DESCRIPTION</H2>
+
+Use <EM>d.vect.line</EM> to draw labelled lines from a vector map to the GRASS
+display.  By default, <EM>d.vect.line</EM> will draw all labelled lines in the
+vector map with white.  The lines drawn may be restricted via the <EM>catnum</EM>
+argument or by using a <EM>legend</EM> file.
+
+<P>
+
+The <EM>color</EM> argument may be any of the standard named GRASS colors,
+or and RGB (red, green, blue) triplet.  An RGB triplet must have the
+form <EM>&lt;num&gt;:&lt;num&gt;:&lt;num&gt;</EM> where <EM>num</EM> is
+between 0 and 255.
+
+<P>
+An optional list of category numbers may be used to restrict which lines are
+drawn (option ignored if a <EM>legend</EM> option is given).
+
+<P>
+More control can be had by creating a <EM>legend</EM> file.  At the
+time of this writing, GRASS does not have any management functions
+for specifying how vectors should be drawn, so this file must be
+created by "hand".  The easiest way to create such a file, is
+to copy the category file for the vector map, and edit it to
+contain color specifications.  The format of the <EM>legend</EM>
+file is <EM>category red green blue</EM>,
+with one entry per line.
+If a category for a map is not included
+in this file, it will not be drawn unless there is a special "default"
+entry with a category of -1.
+
+<DL>
+<DT><B>Example Legend File</B>
+<DD>
+-1 255 255 255<BR>
+1  210 198 168<BR>
+5  168 198 220<BR>
+</DL>
+
+<P>
+
+In the above, all labelled lines will be drawn in white (255, 255, 255)
+except those labelled as categories 1 or 5.  If the "default" entry
+had been omitted, then only lines labelled 1 or 5 would have been drawn.
+
+<P>
+One may place comments on any line in the legend file by starting it
+with a non-numeric character ('#' is a good choice).  Empty lines
+are ignored.
+
+<H2>NOTES</H2>
+<P>
+It is expected that the legend specification aspect of this module
+will change when an infrastructure for managing vector drawing
+styles is implemented.
+
+<H2>AUTHOR</H2>
+Eric G. Miller
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -20,9 +20,11 @@ Rules for filenames:
 #include <fcntl.h>
 #include "gis.h"
 #include "fileseq.h"
-
+#ifndef __CYGWIN__
 extern int errno;
-
+#else
+#include <errno.h>
+#endif
 #ifdef _NO_PROTO
 static int MountTape();
 static void EnterFilename();

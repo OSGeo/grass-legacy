@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 /* closedown the driver, and free the driver structure */
 /* NOTE: the management of the memory for the driver structure
@@ -8,7 +9,7 @@
  * an argument, instead of returning the pointer to allocated
  * then there would be no hidden free required
  */
-db_shutdown_driver (driver)
+int db_shutdown_driver (driver)
     dbDriver *driver;
 {
     int pid;

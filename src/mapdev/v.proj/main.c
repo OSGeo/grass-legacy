@@ -6,11 +6,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-#include  "gis.h"
+#include "gis.h"
 #include "Vect.h"
 #include "V_.h"
 #include "projects.h"
 #include "local_proto.h"
+
 #define	B_DIR  "dig"
 #define	ATT_DIR  "dig_att"
 #define	CAT_DIR  "dig_cats"
@@ -19,11 +20,7 @@
 #define UNIT_FILE "PROJ_UNITS"
 */
 
- 
- 
-int 
-main (int argc, char *argv[])
-
+int main (int argc, char *argv[])
 {
 	int i, type, cat, vect_read, stat, cnt;
 	int day, yr, Out_proj;
@@ -31,7 +28,7 @@ main (int argc, char *argv[])
 	char ctype[3];
 	char out_lon0[5], out_lat0[5];
         char answer[50], buffa[1024], buffb[1024], *value1;
-        char *mapset, *omapset, *new_data, *G_tempfile(), *gets(), *tmpfile;
+        char *mapset, *omapset, *new_data, *tmpfile;
 	char *omap_name, *map_name, *iset_name, *oset_name, *iloc_name;
         struct pj_info info_in;
         struct pj_info info_out;
@@ -39,8 +36,10 @@ main (int argc, char *argv[])
         char *gbase;
         static char *oform = (char *)0;
 	char opath[1024];
+	char *hold;
 	char att_file[100], cat_file[100], date[40], mon[4];
 	FILE *wnd;
+		struct GModule *module;
         struct Option *omapopt, *mapopt, *isetopt, *ilocopt, *ibaseopt;
         struct Key_Value *in_proj_keys, *in_unit_keys;
         struct Key_Value *out_proj_keys, *out_unit_keys;
@@ -49,40 +48,53 @@ main (int argc, char *argv[])
         struct line_pnts *Points;
         struct Map_info Map;
         struct Map_info Out_Map;
+        struct {
+        struct Flag *support,
+                    *list;               /* list files in source location */
+            } flag;
+        char buf[1024];
 
+	/* added for datum conversion */
+	char in_datum[64],out_datum[64],in_ellipse[64],out_ellipse[64];
+ 
         G_gisinit (argv[0]);
      
+		module = G_define_module();
+		module->description =
+			"Allows projection conversion of vector files (no datum transformation yet).";
+
 		 /* set up the options and flags for the command line parser */
 
         mapopt = G_define_option();
-        mapopt->key             = "map";
+        mapopt->key             = "input";
         mapopt->type            =  TYPE_STRING;
         mapopt->required        =  YES;
-        mapopt->description     = "input vector file name";
-
-        omapopt = G_define_option();
-        omapopt->key             = "out";
-        omapopt->type            =  TYPE_STRING;
-        omapopt->required        =  NO;
-        omapopt->description     = "output vector file name";
+        mapopt->description     = "input vector map";
 
         ilocopt = G_define_option();
-        ilocopt->key             =  "inloc";
+        ilocopt->key             =  "location";
         ilocopt->type            =  TYPE_STRING;
         ilocopt->required        =  YES;
-        ilocopt->description     =  "Location containing INput vector map";
+        ilocopt->description     =  "location containing input vector map";
+
+        isetopt = G_define_option();
+        isetopt->key             =  "mapset";
+        isetopt->type            =  TYPE_STRING;
+        isetopt->required        =  NO;
+        isetopt->description     =  "mapset containing input vector map";
 
         ibaseopt = G_define_option();
         ibaseopt->key             =  "dbase";
         ibaseopt->type            =  TYPE_STRING;
         ibaseopt->required        =  NO;
-        ibaseopt->description     =  "Database containing INput location";
+        ibaseopt->description     =  "path to GRASS database of input location";
 
-        isetopt = G_define_option();
-        isetopt->key             =  "set";
-        isetopt->type            =  TYPE_STRING;
-        isetopt->required        =  NO;
-        isetopt->description     =  "mapset containing INput vector map";
+        omapopt = G_define_option();
+        omapopt->key             = "output";
+        omapopt->type            =  TYPE_STRING;
+        omapopt->required        =  NO;
+        omapopt->description     = "output vector map";
+
 /*
         osetopt = G_define_option();
         osetopt->key             =  "outset";
@@ -90,6 +102,15 @@ main (int argc, char *argv[])
         osetopt->required        =  NO;
         osetopt->description     =  "mapset to contain OUTput vector map";
 */
+
+        flag.support = G_define_flag();
+        flag.support->key = 's';
+        flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
+        flag.list = G_define_flag();
+        flag.list->key = 'l';
+        flag.list->description = "List vector files in input location and exit"; 
+
  
 	   /* heeeerrrrrre's the   PARSER */
         if (G_parser (argc, argv))
@@ -185,16 +206,40 @@ main (int argc, char *argv[])
 */
 
 }
-           if (stat >= 0)
+
+
+         if (stat >= 0)  /* yes, we can access the mapset */
            {
+	     
+	     /* if requested, list the vector files in source location - MN 5/2001*/
+		if (flag.list->answer)
+		{
+		 if(isatty(0))  /* check if on command line */
+		  {
+		   fprintf(stderr, "Checking location %s, mapset %s:\n", iloc_name, iset_name);
+		   G_list_element ("dig", "vector", iset_name, 0);
+		   exit(0); /* leave v.proj after listing*/
+		  }
+		}
+
         	G__setenv ("MAPSET", iset_name);
                 /* Make sure map is available */
 	        mapset = G_find_vector (map_name, iset_name) ;
         	if (mapset == NULL)
         	{
-		    sprintf(buffb,"Vector file [%s] not available",map_name);
+		    sprintf(buffb,"Vector file [%s] in location [%s] in mapset [%s] not available",
+				    map_name, iloc_name, iset_name);
 	            G_fatal_error(buffb) ;
 	         }
+
+		/*for datum conversion find input location datum and ellipse */
+		*in_datum='\0';
+		if((hold=G_database_datum_name()))
+		   strncpy(in_datum,hold,sizeof(in_datum));
+		*in_ellipse='\0';
+		if((hold=G_database_ellipse_name()))
+		   strncpy(in_ellipse,hold,sizeof(in_ellipse));
+
            /*** Get projection info for input mapset ***/
                  in_proj_keys = G_get_projinfo();
                  if (in_proj_keys == NULL) {
@@ -238,6 +283,14 @@ main (int argc, char *argv[])
 
            select_current_env();
 
+
+	    /* for datum conversion find output location datum and ellipse */
+	    *out_datum='\0';
+	    if((hold=G_database_datum_name()))
+	       strncpy(out_datum,hold,sizeof(out_datum));
+	    *in_datum='\0';
+	    if((hold=G_database_datum_name()))
+	       strncpy(in_datum,hold,sizeof(in_datum));
 
 	     /****** get the output projection parameters ******/
            Out_proj = G_projection();
@@ -291,9 +344,12 @@ main (int argc, char *argv[])
 
         oform = "%.10f";
 
+	/* determine which do_proj function to use */
+	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
+
         /*SE*/
-        if(pj_do_proj(&HE,&HS,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HE,&HS,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         E = HE;
@@ -302,8 +358,8 @@ main (int argc, char *argv[])
         HS = Map.head.S;
 
         /*NE*/
-        if(pj_do_proj(&HE,&HN,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HE,&HN,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         N = HN;
@@ -312,8 +368,8 @@ main (int argc, char *argv[])
         else Out_Map.head.E = HE;
 
         /*SW*/
-        if(pj_do_proj(&HW,&HS,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HW,&HS,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         W = HW;
@@ -323,8 +379,8 @@ main (int argc, char *argv[])
         HW = Map.head.W;
 
         /*NW*/
-        if(pj_do_proj(&HW,&HN,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HW,&HN,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         if (HN < N) Out_Map.head.N = N;
@@ -407,8 +463,8 @@ main (int argc, char *argv[])
             {
               X = Points->x[cnt];
               Y = Points->y[cnt];
-              if(pj_do_proj(&X,&Y,&info_in,&info_out)<0) { 
-                fprintf(stderr,"Error in pj_do_proj\n");
+              if(proj_f(&X,&Y,&info_in,&info_out)<0) { 
+                fprintf(stderr,"Error in proj_f\n");
                 exit(0);
               }
               Points->x[cnt] = X;
@@ -442,7 +498,7 @@ main (int argc, char *argv[])
 	       strncmp(buffa,"P",1) == 0 )
 		 {
                  sscanf(buffa,"%s %lf %lf %d", ctype, &X, &Y, &cat);
-                 pj_do_proj(&X,&Y,&info_in,&info_out);
+                 proj_f(&X,&Y,&info_in,&info_out);
                           /* write line */
                   sprintf(buffb,"%1s %14.10f %14.10f %7d\n",ctype,X,Y,cat);
                   fputs(buffb,out1);
@@ -482,13 +538,23 @@ main (int argc, char *argv[])
 	      }
 	   }
 
+   /* If "-s" flag is passed as argument then run "v.support" on */
+   /* newly created vector file (output).                        */
+   if (flag.support->answer)
+    {
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), omap_name);
+     G_system(buf);
+     fprintf(stderr, "Done.\n");
+    }
+    else
+    {
+     fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
+                      argv[0],map_name);
+     fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
+     fprintf(stderr, "  v.support be run, before the data is usable\n");
+    }
 
-fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
-argv[0],map_name);
-fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
-fprintf(stderr, "  v.support be run, before the data is usable\n");
-
-	return 0;
+    return 0;
 }
 
 

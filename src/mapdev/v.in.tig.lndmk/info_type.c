@@ -4,6 +4,7 @@ Returns: sets results in feature_type array, and map names.
 */
 
 #include "gis.h"
+#include "site.h"
 #include "vask.h"
 #include "globals.h"
 

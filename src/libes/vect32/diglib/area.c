@@ -1,5 +1,5 @@
-#include "digit.h"
 #include <stdlib.h>
+#include "Vect.h"
 /*
 **  Written by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab
@@ -23,10 +23,13 @@
 **  -2: island  !!
 */
 
+#define ERRMSG 1000
+
 int dig_build_area_with_line (
     struct Map_info *map,
     int first_line,
-    P_AREA *Area)
+    P_AREA *Area,
+    int *errline)
 {
     register int i;
     int prev_line, next_line;
@@ -104,6 +107,8 @@ debugf ("Area space was Negative. An Island.\n");  /* ISLE */
 #ifdef DEBUG
 debugf ("Dead_end:");
 #endif
+	    if (errline != NULL)
+                *errline = next_line;
 	    return (0);		/* dead end */
 	}
 
@@ -116,6 +121,8 @@ debugf ("Dead_end:");
 #ifdef DEBUG
 debugf ("Unclosed area:");
 #endif
+	        if (errline != NULL)
+                    *errline = next_line;
 		return (0);			/* ran into a different area */
 	    }
 

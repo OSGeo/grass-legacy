@@ -10,7 +10,9 @@
  **********************************************************************/
 
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_mapset()
@@ -21,7 +23,10 @@ G_mapset()
 
     char msg[100];
 
-    m = G_getenv ("MAPSET");
+    m = G__mapset();
+    if( m == NULL )
+        G_fatal_error( _("MAPSET is not set") );
+
     if (first)
 	    first = 0;
     else if (strcmp(mapset,m) == 0)
@@ -39,9 +44,16 @@ G_mapset()
 	    break;
     */
     default:
-	    sprintf(msg,"MAPSET %s not found", mapset);
+	    sprintf(msg,_("MAPSET %s not found"), mapset);
 	    break;
     }
     G_fatal_error (msg);
     exit(-1);
 }
+
+char *
+G__mapset()
+{
+    return G__getenv("MAPSET");
+}
+

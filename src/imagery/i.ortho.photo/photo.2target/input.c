@@ -68,6 +68,7 @@ static int mouse (Objects *objects,int ax,int ay,int box)
 	    replot = 0;
 	    draw_objects (objects);
 	}
+	R_stabilize();
 	if (box)
 	    Mouse_box_anchored (ax, ay, &x, &y, &button) ;
 	else

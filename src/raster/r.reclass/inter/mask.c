@@ -30,15 +30,20 @@ main (int argc, char *argv[])
 	fprintf (stdout,"  RETURN   Exit program\n") ;
 
 	fprintf (stdout,"\n> ") ;
-      fflush(stdout);
+        fflush(stdout);
 
 	if (!G_gets(buf)) continue ;
 
 	G_strip(buf);
 	if (strcmp (buf,"1") == 0)
 	{
-	    system ("g.remove rast=MASK");
-	    sleep (1);
+	    if (system ("g.remove rast=MASK") == 0) {
+	    	sleep (1);
+	    } else {
+	    	sprintf(buf, "%s: Error removing MASK", G_program_name());
+	    	G_fatal_error(buf);
+	    	exit(1);
+	    }
 	}
 	else if (strcmp (buf,"2") == 0)
 	    makemask() ;

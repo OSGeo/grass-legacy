@@ -20,13 +20,14 @@ FILE *Nv_script_file=NULL;
  * Output a string to the current script file if one exists
  *
  */
-int
-ScriptAddString_Cmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+ScriptAddString_Cmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
   if (argc != 2) {
     Tcl_SetResult(interp, "Usage: Nv_script_add_string string",
@@ -46,13 +47,14 @@ ScriptAddString_Cmd(clientData, interp, argc, argv)
  *
  * Closes the current scriptfile if one exists.
  */
-int
-CloseScripting_Cmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+CloseScripting_Cmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
   if (argc != 1) {
     Tcl_SetResult(interp, "Usage: Nv_close_scripting",
@@ -73,13 +75,14 @@ CloseScripting_Cmd(clientData, interp, argc, argv)
  *
  * Takes one argument to turn scripting on and off. 1=on 0=off
  */
-int
-SetState_Cmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+SetState_Cmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
   int val;
   
@@ -111,13 +114,14 @@ SetState_Cmd(clientData, interp, argc, argv)
  *
  * Possibly open a new script file with the given name.
  */
-int
-SetScriptFile_Cmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+SetScriptFile_Cmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
   if (argc !=2) {
     Tcl_SetResult(interp, "Usage: Nv_set_script_file file_name",

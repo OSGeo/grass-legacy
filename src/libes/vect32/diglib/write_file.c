@@ -5,7 +5,6 @@
 
 #include	<stdio.h>
 #include	"Vect.h"
-#include	"dig_structs.h"
 
 int dig_write_plus_file(
 	FILE   *fp_plus ,

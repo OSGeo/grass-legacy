@@ -1,5 +1,0 @@
-
-@man("r.thin") - Thins non-zero cells that denote linear features in a raster
-file.
-
-(GRASS Raster Program)

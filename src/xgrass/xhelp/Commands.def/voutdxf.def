@@ -1,9 +1,0 @@
-
-
-v.out.dxf - 
-
-v.out.dxf generates an ASCII DXF (AutoCad) file from a GRASS @glossary("vector",16.glossary/vector.def)
-ASCII file.  The output file is placed in the user's current working
-directory unless the user specifies an alternate directory.
-
-Manual entry for @man("v.out.dxf")

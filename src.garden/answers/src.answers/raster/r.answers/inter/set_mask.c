@@ -58,7 +58,7 @@ set_mask()
    
     if (complete[1] != 1)
     {
-        fprintf (stdout,"\nScanning mask, creating element map and reclass rules.\n\n");
+        fprintf (stderr,"\nScanning mask, creating element map and reclass rules.\n\n");
 	data_fp = G_fopen_new(data_dir, "in_row_col");
 	if (!data_fp)
 	{
@@ -174,16 +174,16 @@ set_mask()
 	G_free_cats(&cats);
 	G_close_cell(ele_num_fd);
 	
-        fprintf (stdout,"Created new map <%s.ELEMENT> in <%s>.\n", proj_name, G_mapset());
-        fprintf (stdout,"This map can serve as a guide to ANSWERS' references to\n");
-        fprintf (stdout,"watershed elements. (raster cells are numbered sequentially,\n");
-        fprintf (stdout,"their category descriptions give row and column values).\n\n");
+        fprintf (stderr,"Created new map <%s.ELEMENT> in <%s>.\n", proj_name, G_mapset());
+        fprintf (stderr,"This map can serve as a guide to ANSWERS' references to\n");
+        fprintf (stderr,"watershed elements. (raster cells are numbered sequentially,\n");
+        fprintf (stderr,"their category descriptions give row and column values).\n\n");
 
         hit_return();
     }
 
     if (complete[1] != 1)
-        fprintf (stdout,"\nSetting current mask to watershed area.\n");
+        fprintf (stderr,"\nSetting current mask to watershed area.\n");
 
 /* build path for reclass rule file */
 

@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_d_drop_table ()
+int db_d_drop_table ()
 {
     dbString name;
     int stat;

@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
-#include "../lib/driver.h"
-
-extern Display *dpy;
-extern Window grwin;
-extern GC gc;
-extern Pixmap bkupmap;
+#include "driver.h"
 
 int Polyline_abs (int *xarray, int *yarray, int number)
 {
@@ -18,9 +13,10 @@ int Polyline_abs (int *xarray, int *yarray, int number)
         xpnts[i].x = (short) xarray[i];
         xpnts[i].y = (short) yarray[i];
     }
-    XDrawLines(dpy, grwin, gc, xpnts, number, CoordModeOrigin);
+    XDrawLines(dpy, bkupmap, gc, xpnts, number, CoordModeOrigin);
     cur_x = xarray[number - 1];
     cur_y = yarray[number - 1];
+    needs_flush = 1;
 
     return 0;
 }
@@ -37,7 +33,8 @@ int Polyline_rel (int *xarray, int *yarray, int number)
         xpnts[i].x = (short) xarray[i];
         xpnts[i].y = (short) yarray[i];
     }
-    XDrawLines(dpy, grwin, gc, xpnts, number, CoordModePrevious);
+    XDrawLines(dpy, bkupmap, gc, xpnts, number, CoordModePrevious);
+    needs_flush = 1;
 
     return 0;
 }

@@ -57,7 +57,7 @@ extract(zero, layer, mapset, datafile)
     CELL *map_cell;
     CELL *mask_cell;
 
-    fprintf (stdout,"\n\nExtracting data from <%s in %s>\n\n", layer, mapset);
+    fprintf (stderr,"\n\nExtracting data from <%s in %s>\n\n", layer, mapset);
 
 /* open input layer */
     map_fd = G_open_cell_old(layer, mapset);

@@ -1,27 +1,41 @@
 /*
 **  Written by Dave Gerdes  11/1989
 **  US Army Construction Engineering Research Lab
+**
+**  Modified by Benjamin Horner-Johnson 1998-SEP-30
+**	added flag to suppress text boxes
+**
+**  Modified by Benjamin Horner-Johnson 1998-OCT-01
+**	changed label from int to char, allowed 1 character labels
+**
+**  Modified by Benjamin Horner-Johnson 1998-OCT-06
+**	changed dxf_fgets(dxf_line,80,dxf_file) to
+**		dxf_fgets(dxf_line,256,dxf_file)
+**	changed buf[100] to buf[256] and dxf_fgets(buf,100,dxf_file) to
+**		dxf_fgets(buf,256,dxf_file)
 */
-#include "dxf2vect.h"
-#include <math.h>
+
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include <stdio.h>
+#include <math.h>
+
+#include "dxf2vect.h"
+#include "Vect.h"
 
 #ifndef PI
-#define PI  3.141592
+#define PI  3.141592654
 #endif
 
 int dxf_add_labelbox (FILE *dxf_file)
 {
-	DXF_DIG	*layer_fd, *label_fd = NULL;
-	int	count, char_cnt, label, code;
+	DXF_DIG	*layer_fd, *label_fd;
+	int	count, char_cnt, code;
+	char    label[256];			/* same size as dxf_line */
 	double  start_x, start_y, angle, theta, height, length, diag;
 	double base1, base2;
 	int arr_size = 0;
 
 	/*  initialize defaults */
-	label = 0;
 	char_cnt = 0;
 	layer_fd = NULL;
 	start_x = 0.0;
@@ -31,12 +45,13 @@ int dxf_add_labelbox (FILE *dxf_file)
 
 	while ((code = dxf_readcode (dxf_file)) > 0)
 	{
-	    dxf_fgets (dxf_line, 80, dxf_file);
+	    dxf_fgets (dxf_line, 256, dxf_file);
 
 	    switch (code) {
 		case  1: 	/* label value */
-		    char_cnt = strlen (dxf_line) - 1;
-		    label = atoi (dxf_line);
+		   /* allow 1 character labels, char_cnt - 1 didn't   BCH-J */
+		    char_cnt = strlen (dxf_line);
+		    strcpy(label,dxf_line);
 		    break;
 		case  8:	/* layer name */
 		    layer_fd = dxf_which_layer (dxf_line, DXF_LABEL_LINE);
@@ -80,7 +95,6 @@ int dxf_add_labelbox (FILE *dxf_file)
 	if (code < 0)
 	{
 	    debugf("TEXT: Error in DXF file\n");
-
 	    return (-1);
 	}
 
@@ -98,11 +112,11 @@ int dxf_add_labelbox (FILE *dxf_file)
 	    */
 	    return (0);
 	}
-	if (label == 0)
-	{
-	    debugf("TEXT: No label specified\n");
-	    return (-1);
-	}
+/*	if (label == 0) 	Don't see why label can't be 0	BCH-J
+ *	{
+ *	    debugf("TEXT: No label specified\n");
+ *	    return (-1);
+ *	}		*/
 	if (start_x == 0.0 || start_y == 0.0)
 	{
 	    debugf("TEXT: No x/y position specified\n");
@@ -119,11 +133,11 @@ int dxf_add_labelbox (FILE *dxf_file)
 	arr_size = 5;
 
 	theta = angle * PI / 180.;
-	length = char_cnt * height;
+	length = (char_cnt - 1) * height;
 
 	/* base angles for polar description of rectangle */
 	base1 = PI/2.;
-	base2 = atan2 (1., (double)char_cnt); /* == atan2 (height, length) */
+	base2 = atan2 (1., (double)(char_cnt-1));/* == atan2 (height, length) */
 	diag  = hypot (length, height);
 
 	xinfo[0] = xinfo[4] = start_x;
@@ -140,20 +154,23 @@ int dxf_add_labelbox (FILE *dxf_file)
 
 
 	/* and finally print it out in digit format */
-	
-	/* FOR BINARY FILES */
-	if(!ascii_flag->answer)
-	{
-	    Vect_copy_xy_to_pnts (Points, xinfo, yinfo, arr_size);
-	    Vect_write_line(layer_fd->Map,LINE,Points);
-	}
+	/* if "-n" flag not set  [ 1998-SEP-30 BCH-J ] */
 
-	/* OR FOR ASCII FILE */
-	else
-	{
-		fprintf (layer_fd->fd, "L  %d\n", arr_size);
-		for (count = 0; count < arr_size; count++)
-			fprintf (layer_fd->fd," %12.2f %12.2f\n", yinfo[count], xinfo[count]);
+	if(!txtbox_flag->answer) {
+	   /* FOR BINARY FILES */
+	   if(!ascii_flag->answer)
+	   {
+	       Vect_copy_xy_to_pnts (Points, xinfo, yinfo, arr_size);
+	       Vect_write_line(layer_fd->Map,LINE,Points);
+	   }
+
+	   /* OR FOR ASCII FILE */
+	   else
+	   {
+	       fprintf (layer_fd->fd, "L  %d\n", arr_size);
+	       for (count = 0; count < arr_size; count++)
+		  fprintf (layer_fd->fd," %12.2f %12.2f\n", yinfo[count], xinfo[count]);
+	   }
 	}
 	/* And add info to the label file */
 	/*
@@ -161,9 +178,10 @@ int dxf_add_labelbox (FILE *dxf_file)
 	**  3rd would be safer, and more in line w/ the way vect lines
 	** are labelled, but this is often used for PNT labelling
 	** of elevations, and the 1st point is the real location
-	fprintf (label_fd->fd, "L  %f %f %d\n",pt_array[2].x,pt_array[2].y,label);
+	** fprintf (label_fd->fd, "L  %lf %lf %d\n",pt_array[2].x,pt_array[2].y,label);
+	** Labels now characters, not integers  BCH-J
 	*/
-    fprintf (label_fd->fd, "L  %f %f %d\n",xinfo[0],yinfo[0],label);
+    fprintf (label_fd->fd, "L  %f %f %s\n",xinfo[0],yinfo[0],label);
     return (0);
 }
 
@@ -175,20 +193,22 @@ int dxf_add_labelbox (FILE *dxf_file)
 int 
 dxf_readcode (FILE *dxf_file)
 {
-    char buf[100], *p;
+    char buf[256], *p;
     int ready = 0;
 
-    if (NULL == dxf_fgets (buf, 80, dxf_file))
+    if (NULL == dxf_fgets (buf, 256, dxf_file))
 	return (-2);
     for (p = buf ; *p ; p++)
     {
 	if (*p != ' ' && *p != '\t')
 	    ready = 1;
 	if (ready)
+	{
 	    if ('0' <= *p && *p <= '9')
 		return (atoi (buf));
 	    else
 		return (-1);	/* NOT NUMERIC */
+	}
     }
     return (-1);	/* NOT NUMERIC */
 }

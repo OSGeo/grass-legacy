@@ -1,9 +1,0 @@
-
-
-d.text - 
-
-d.text draws text in the active display @glossary("frame",16.glossary/graphframe.def) on the graphics
-monitor.  Text can be provided through standard input or redirected
-from a file (using the @glossary("UNIX",16.glossary/unix.def) redirection mechanism).
-
-Manual entry for @man("d.text")

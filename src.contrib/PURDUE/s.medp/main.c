@@ -56,8 +56,14 @@ main (int argc, char **argv)
     struct Option *site, *vect, *output, *thresh, *report;
   } parm;
   extern struct Cell_head window;
-
+  struct GModule *module;
+  
   G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Median polish for a GRASS sites list.";
 
   Points = Vect_new_line_struct ();
 

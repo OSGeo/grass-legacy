@@ -86,7 +86,7 @@ compose (void)
 	    paint (out_buf, in_buf, ncols, BLU, ref.blu.min, ref.blu.max);
 	}
 
-	G_put_map_row (out_fd, out_buf);
+	G_put_raster_row (out_fd, out_buf, CELL_TYPE);
     }
     G_percent (row, nrows, 2);
 

@@ -3,6 +3,7 @@
 #include "gis.h"
 #include	"bin_digit.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
 *	show available digitizers and ask if they want to keep their current
@@ -28,7 +29,7 @@ select_digitizer (FILE *fp, char *selected_digitizer, struct driver_desc *Driver
 
 	if ( ! driver_cnt )
 	{
-		fprintf(stderr, "There are no digitizers defined in the digitcap file\n") ;
+		fprintf(stderr, _("There are no digitizers defined in the digitcap file\n")) ;
 		fprintf(stderr, "Contact your GRASS system administrator\n") ;
 		exit(-1) ;
 	}
@@ -57,11 +58,11 @@ select_digitizer (FILE *fp, char *selected_digitizer, struct driver_desc *Driver
 
 	if (default_driver)
 	{
-		fprintf (stdout," Hit return to use digitizer in brackets\n or type in number or name of other digitizer.\n\n") ;
-		fprintf (stdout," Select digitizer [%s] :  ",  selected_digitizer) ;
+		fprintf (stdout,_(" Hit return to use digitizer in brackets\n or type in number or name of other digitizer.\n\n")) ;
+		fprintf (stdout,_(" Select digitizer [%s] :  "),  selected_digitizer) ;
 	}
 	else
-		fprintf (stdout," Select digitizer by number or name :  ") ;
+		fprintf (stdout,_(" Select digitizer by number or name :  ")) ;
 	
 	
 	/*  let them select a different digitizer  */
@@ -97,8 +98,8 @@ select_digitizer (FILE *fp, char *selected_digitizer, struct driver_desc *Driver
 				return(2) ;
 		}
 	
-		fprintf (stdout," I don't know this digitizer:  [%s] . \n\n", buf) ;
-		fprintf (stdout," Select digitizer by number or name :  ") ;
+		fprintf (stdout,_(" I don't know this digitizer:  [%s] . \n\n"), buf) ;
+		fprintf (stdout,_(" Select digitizer by number or name :  ")) ;
 
 		default_driver = 0 ;
 	

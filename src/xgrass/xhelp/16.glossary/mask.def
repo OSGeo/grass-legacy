@@ -1,6 +1,0 @@
-
-
-mask - The GRASS command which creates a @glossary("raster map",16.glossary/rastmap.def) that restricts
-analysis to a particular geographic region designated by the user
-("masking out" all other areas from analysis).  This map, named MASK,
-can be altered, created or destroyed with the GRASS "mask" command.

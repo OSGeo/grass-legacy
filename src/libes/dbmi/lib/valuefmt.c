@@ -1,6 +1,6 @@
 #include "dbmi.h"
 
-db_convert_Cstring_to_value (Cstring, sqltype, value)
+int db_convert_Cstring_to_value (Cstring, sqltype, value)
     char *Cstring;
     int sqltype;
     dbValue *value;

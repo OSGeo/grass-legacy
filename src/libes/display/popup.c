@@ -24,6 +24,7 @@
  * - Number of this option is returned to the calling program.
  ***************************************************************************/
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"

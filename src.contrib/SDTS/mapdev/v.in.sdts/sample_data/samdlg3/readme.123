@@ -1,0 +1,6 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/samdlg3/
+
+This subdirectory contains sample U.S. Geological Survey Digital Line Graph 
+level 3 (DLG3) data files in SDTS format.

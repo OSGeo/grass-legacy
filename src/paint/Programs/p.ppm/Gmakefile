@@ -1,5 +1,5 @@
 PGM=p.ppm
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I$(SRC)/paint
 
 LIST  = main.o\
@@ -10,7 +10,7 @@ LIST  = main.o\
 	paint.o\
 	xalloc.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(INTERFACE) $(GISLIB): #
+$(INTERFACE) $(DEPGISLIB): #

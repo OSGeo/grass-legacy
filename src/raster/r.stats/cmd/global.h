@@ -22,7 +22,7 @@ GLOBAL char fs[2];
 GLOBAL struct Categories *labels INIT(NULL) ;
 
 /* cell_stats.c */
-int cell_stats(int [], int, int, int, int, char *);
+int cell_stats(int [], int, int, int, int, int, char *);
 /* raw_stats.c */
 int raw_stats(int [], int, int, int, int);
 /* stats.c */
@@ -31,7 +31,7 @@ int allocate_values(void);
 struct Node *NewNode(double);
 int reset_null_vals(CELL *, int);
 int update_cell_stats(CELL **, int, double);
-int node_compare(register struct Node **, register struct Node **);
+int node_compare(const void *, const void *);
 int sort_cell_stats(void);
 int print_node_count(void);
-int print_cell_stats(char *, int, int, int, char *);
+int print_cell_stats(char *, int, int, int, int, char *);

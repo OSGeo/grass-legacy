@@ -1,4 +1,4 @@
-$(BIN_CONTRIB_INTER)/m.futil: main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/m.futil: main.o $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

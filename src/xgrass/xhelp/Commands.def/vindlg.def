@@ -1,7 +1,0 @@
-
-
-v.in.dlg - 
-
-v.in.dlg converts a binary @glossary("DLG",16.glossary/dlg.def) file into a GRASS @glossary("vector",16.glossary/vector.def) file.
-
-Manual entry for @man("v.in.dlg")

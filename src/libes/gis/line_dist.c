@@ -44,8 +44,8 @@ double G_distance2_point_to_line (
     }
     else                        /* go t from x1,y1 towards x2,y2 */
     {
-	dx = dx * t + x1;
-	dy = dy * t + y1;
+	dx = x - (dx * t + x1);
+	dy = y - (dy * t + y1);
     }
     return dx*dx + dy*dy;
 }

@@ -7,11 +7,7 @@ int usage(char *);
 int main(int, char *[]);
 /* start.c */
 int main(int, char *[]);
-#ifdef ORIG
 int start_mon(char *);
-#else /* ORIG */
-int start_mon(char *,char *);
-#endif /* ORIG */
 /* status.c */
 int main(int, char *[]);
 /* stop.c */

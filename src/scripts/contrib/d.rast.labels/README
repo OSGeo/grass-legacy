@@ -1,0 +1,9 @@
+d.rast.labels labels a raster map.
+Thanks to Stefano Merler to write d.vect.labels and
+thanks to Andrea Aime to fix r.poly
+
+Cheers
+ Markus Neteler
+ neteler@itc.it
+
+11/2001

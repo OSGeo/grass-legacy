@@ -1,43 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
 #include "gis.h"
 #include "display.h"
-#include "D.h"
 #include "raster.h"
-#define MAIN
 #include "options.h"
+
+int color1;
+int color2;
+double east;
+double north;
+int use_feet;
+int do_background = 1;
 
 int main (int argc, char **argv)
 {
 	char window_name[64] ;
 	struct Cell_head window ;
 	int t, b, l, r ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse ;
+	struct Flag *mouse, *feet, *top ;
+	struct Cell_head W ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
 
-	{
-		struct Cell_head W ;
-		G_get_window(&W) ;
-		if (W.proj == PROJECTION_LL)
-		{
-			fprintf(stderr,"\nSorry, %s does now work with a latitude-longitude data base.\n",
-				argv[0]) ;
-			exit(-1) ;
-		}
-	}
+	module = G_define_module();
+	module->description =
+		"Displays a barscale on GRASS monitor.";
 
 	mouse = G_define_flag() ;
 	mouse->key        = 'm';
 	mouse->description= "Use mouse to interactively place scale" ;
+
+	feet = G_define_flag() ;
+	feet->key        = 'f';
+	feet->description= "Use feet/miles instead of meters" ;
+
+	top = G_define_flag() ;
+	top->key        = 't';
+	top->description= "Write text on top of the scale, not to the right" ;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->answer     = "black" ;
 	opt1->required   = NO ;
-	opt1->options    = D_color_list();
-	opt1->description= "Color used for the background" ;
+	opt1->description= "Color used for the background, or \"none\"" ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
@@ -56,26 +68,33 @@ int main (int argc, char **argv)
 	opt3->required   = NO;
 	opt3->description= "the screen coordinates for top-left corner of label" ;
 
-	coord_inp = 0;
-
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
 
-	color1 = D_translate_color(opt1->answer) ;
+	G_get_window(&W) ;
+	if (W.proj == PROJECTION_LL)
+		G_fatal_error("%s does not work with a latitude-longitude location",
+			      argv[0]) ;
 
+	use_feet = feet->answer ? 1 : 0;
+
+	if (opt1->answer && !strcmp ("none", opt1->answer)) {
+		do_background = 0;
+		color1 = 1;	/* dummy value */
+	}
+	else {
+		color1 = D_translate_color(opt1->answer) ;
+		if( 0 == color1 )
+			G_fatal_error ("Bad color name");
+	}
+	
 	color2 = D_translate_color(opt2->answer) ;
 
-	/*
-	G_scan_easting(opt3->answers[0], &easting, G_projection());
-	coord_inp++;
-	G_scan_northing(opt3->answers[1], &northing, G_projection());
-	coord_inp++;
-	*/
-	sscanf(opt3->answers[0],"%lf",&east) ;
-	sscanf(opt3->answers[1],"%lf",&north) ;
-	if((east>0)||(north>0)) coord_inp=1;
+	sscanf(opt3->answers[0], "%lf", &east) ;
+	sscanf(opt3->answers[1], "%lf", &north) ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;
@@ -98,14 +117,42 @@ int main (int argc, char **argv)
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 
-	/* Draw the scale */
-	draw_scale(mouse->answer) ;
+	if (!mouse->answer)
+	{
+		/* Draw the scale */
+		draw_scale(NULL, top->answer) ;
 
-	/* Add this command to list */
-	if (! mouse->answer)
+		/* Add this command to list */
 		D_add_to_list(G_recreate_command()) ;
+	}
+	else if (mouse_query(top->answer))
+	{
+		char cmdbuf[255];
+		char buffer[255];
+		
+		sprintf(cmdbuf, "%s at=%f,%f", argv[0],east, north);
+		
+		if(opt1->answer)
+		{
+			sprintf(buffer, " bcolor=%s",opt1->answer);
+			strcat(cmdbuf, buffer);
+		}
+		if(opt2->answer)
+		{
+			sprintf(buffer, " tcolor=%s",opt2->answer);
+			strcat(cmdbuf, buffer);
+		}
+		if(top->answer)
+			strcat(cmdbuf, " -t");
+		if(feet->answer)
+			strcat(cmdbuf, " -f");
+
+		/* Add this command to list */
+		D_add_to_list(cmdbuf) ;
+		return 1;
+	}
 
 	R_close_driver();
 
- 	exit(0);
+	return 0;
 }

@@ -2,15 +2,12 @@
 #### 	i.rectify3 (cmd) 
 ####
 
-PGR  	= i.rectify3
-
-HOME 	= $(BIN_MAIN_CMD)
+PGM  	= i.rectify3
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
 
-all:	$(HOME)/$(PGR)
+all:	$(BIN_CMD)/$(PGM)
 
 
 ####	object files
@@ -36,14 +33,17 @@ LIST = main.o\
 ####	object dependencies
 $(LIST): global.h rowcol.h parse.h
 
-LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+LIBES =  $(IMAGERYLIB) $(IMAGESUPLIB) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
-	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+	 $(GPROJLIB) $(COORCNVLIB) $(GISLIB)
+
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
+	 $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) \
+	 $(DEPGPROJLIB) $(DEPCOORCNVLIB) $(DEPGISLIB)
 
 
 ####	library dependencies
-$(LIBES): # in case of lib changes
+$(DEPLIBS): # in case of lib changes
 
 ####	required compile flags
 EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
@@ -53,6 +53,6 @@ EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
 

@@ -1,12 +1,12 @@
 NAME	= v.plant
 
-PROGRAM	= $(BIN_CONTRIB_INTER)/$(NAME)
+PROGRAM	= $(BIN_INTER)/$(NAME)
 
 MSEC	= 4
 MDIR	= $(SRC)/../man/man$(MSEC)
 MUTL	= $(SRC)/../man/utilities
 
-all:  $(PROGRAM) man
+all:  $(PROGRAM)
 
 $(PROGRAM): $(NAME)
 	-cp $(NAME) $(PROGRAM)

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>s.surf.idw</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>s.surf.idw</b></EM>  - Surface interpolation from sites data by
+Inverse Distance Squared Weighting.
+<BR>
+<EM>(GRASS</EM> Sites Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>s.surf.idw [-n] input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>[npoints=</B><EM>count</EM><B>]</B>
+<B>[field=</B><EM>number</EM><B>]</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.surf.idw</EM> fills a raster matrix with interpolated
+values generated from a set of irregularly spaced data
+points using numerical approximation (weighted averaging)
+techniques. The interpolated value of a cell is determined
+by values of nearby data points and the distance of the
+cell from those input points.  In comparison with other
+methods, numerical approximation allows representation of
+more complex surfaces (particularly those with anomalous
+features), restricts the spatial influence of any errors,
+and generates the interpolated surface from the data
+points.
+
+<P>
+
+This program allows the user to use a GRASS site list file,
+rather than a raster map layer, as input.
+
+<P>
+
+The program will be run non-interactively if the user
+specifies the values of needed program parameters and any
+desired optional parameter values on the command line,
+using the form:
+
+<P>
+<DL>
+<DD>
+<B>s.surf.idw [-n] input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>[npoints=</B><EM>count</EM><B>]</B>
+<B>[field=</B><EM>number</EM><B>]</B>
+</DL>
+
+Alternately, the user can simply type <B>s.surf.idw</B> on the command line, 
+without program arguments. In this case, the user will be prompted for 
+needed inputs and option choices using the standard GRASS 
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+interface.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>  
+
+<DL>
+<DT><B>-n</B>
+<DD> Don't index sites by cell. (for very large regions; uses less memory,
+but is very slow if there is a large number of sites)
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM></DT>
+<DD>Name of an input site list file that contains sites with
+one or more floating point attributes.</DD>
+
+<DT><B>output=</B><EM>name</EM></DT>
+<DD>Name to be assigned to the new output raster map layer
+containing a smooth surface generated from the known data
+values in the input site list file.</DD>
+
+<DT><B>npoints=</B><EM>count</EM></DT>
+<DD>The number of points to use for interpolation.  By
+default, the 12 nearest points are used for interpolation.
+<BR>
+Default: 12</DD>
+
+<DT><B>field=</B><EM>number</EM></DT>
+<DD>Number of floating point attribute to use for interpolation.
+<BR>
+Default: 1</DD>
+</DL>
+
+<H2>NOTES</H2>
+
+The amount of memory used by this program is related to the
+number of sites in the current region.  If the site list is 
+very dense (i.e., contains many data points), the program may
+not be able to get all the memory it needs from the
+system.  The time required to execute is related to the 
+resolution of the current region, after an initial delay 
+determined by the time taken to read the input sites file.
+
+<P>
+
+If the user has a mask set, then interpolation is only done
+for those cells that fall within the mask. However, all
+sites in the current region are used even
+if they fall outside the mask. Sites outside the current
+region are not used in the interpolation. A larger region may
+be set and a mask used to limit interpolation to a smaller area
+if it is desired to use sites from outside the region in the
+interpolation.
+<p>
+
+If more than <EM>count</EM> sites fall into one target raster cell, 
+the mean of all the site values will determine the cell value (unless
+the -n flag is specifed, in which case only the <EM>count</EM> 
+sites closest to the centre of the cell will be interpolated).
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.mask.html">r.mask</A></EM><br>
+<EM><A HREF="r.surf.contour.html">r.surf.contour</A></EM><br>
+<EM><A HREF="r.surf.idw.html">r.surf.idw</A></EM><br>
+<EM><A HREF="r.surf.idw2.html">r.surf.idw2</A></EM><br>
+<EM><A HREF="r.surf.gauss.html">r.surf.gauss</A></EM><br>
+<EM><A HREF="r.surf.fractal.html">r.surf.fractal</A></EM><br>
+<EM><A HREF="r.surf.random.html">r.surf.random</A></EM><br>
+<EM><A HREF="v.surf.rst.html">v.surf.rst</A></EM><br>
+<EM><A HREF="s.surf.rst.html">s.surf.rst</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,  
+U.S. Army Construction Engineering 
+Research Laboratory
+<BR>
+Improved algorithm (indexes sites according to cell and ignores
+sites outside current region) by Paul Kelly
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

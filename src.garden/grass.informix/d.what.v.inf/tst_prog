@@ -1,8 +1,0 @@
-:
-# test for d.vect.inf where all required command line args are provided
-# DB=tiger, GISdb=SECO
-#
-
-#d.what.v.inf map=$1 tab=feature col=record_num join=cfcc_lookup,cfcc,cfcc
-
-d.what.v.inf map=$1 tab=feature col=record_num 

@@ -12,9 +12,11 @@
 
 #define MAIN
 
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "imagery.h"
+#include "gmath.h"
 #include "globals.h"
 #include "local_proto.h"
 
@@ -29,7 +31,6 @@ int main (int argc, char *argv[])
         int NN;               /* Total number of data points */
         int nclass;           /* Number of classes */
         int samptot;          /* Total number of sample points */
-        double *DATA[MX];       /* Data structure containing image data values */
         double mu[MC][MX];      /* Mean vector for image classes */
         double w[MX][MX];       /* Within Class Covariance Matrix */
         double p[MX][MX];       /* Between class Covariance Matrix */
@@ -53,10 +54,16 @@ int main (int argc, char *argv[])
 
         int save_args();
         int error = 0 ;
+		struct GModule *module;
         struct Option *opt1, *opt2, *opt3, *opt4 ;
 
         /***** Start of main *****/
         G_gisinit(argv[0]);
+
+		module = G_define_module();
+		module->description =
+			"Canonical components analysis (cca) "
+			"program for image processing.";
 
         opt1 = G_define_option() ;
         opt1->key        = "group";
@@ -234,7 +241,6 @@ int main (int argc, char *argv[])
 
         I_free_signatures(&sigs);
         I_free_group_ref(&refs);
-        freemem(DATA,bands);
 
 	exit(0);
 }

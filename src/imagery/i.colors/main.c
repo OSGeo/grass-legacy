@@ -5,7 +5,11 @@
 #include "globals.h"
 #include "local_proto.h"
 
+#ifdef __GNUC_MINOR
 static void quit (int) __attribute__ ((__noreturn__));
+#else
+static void quit (int);
+#endif
 static int error(char *,int);
 
 int main (int argc, char *argv[])

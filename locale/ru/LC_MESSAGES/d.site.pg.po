@@ -1,0 +1,100 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-03 11:20+0300\n"
+"PO-Revision-Date: 2002-03-03 11:20+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: getAllOpts.c:32
+msgid "Table with X,Y coors:"
+msgstr "Таблица с координатами X и Y:"
+
+#: getAllOpts.c:42
+msgid "Column with X-coor:"
+msgstr "Столбец X-координат:"
+
+#: getAllOpts.c:51
+msgid "Column with Y-coor:"
+msgstr "Столбец Y-координат:"
+
+#: getAllOpts.c:60
+msgid "Column with categories:"
+msgstr "Столбец с категориями:"
+
+#: getAllOpts.c:67
+msgid "Clause for SQL query (e.g. obj='huts', num > 56, etc.):"
+msgstr "Условие для SQL запроса (напр., obj='huts', num > 56, и т.д.):"
+
+#: getAllOpts.c:74
+msgid "New site map name:"
+msgstr "Название новой карты объектов:"
+
+#: getAllOpts.c:85
+msgid ""
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
+"ack;Icon:diamond, box, plus, x; Size: 1-9. "
+msgstr ""
+"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
+"ack;Икона:diamond, box, plus, x; Размер: 1-9. "
+
+#: getSopts.c:38
+msgid "Use [s] flag to select db records using an input file."
+msgstr "Используйте флаг [s] для запроса через командный файл."
+
+#: getSopts.c:46
+msgid "SQL statements specifying selection criteria. "
+msgstr "SQL команды, задающие критерий выбора."
+
+#: getSopts.c:53
+msgid "Name of sites list to output."
+msgstr "Название списка объектов для вывода."
+
+#: getSopts.c:63
+msgid ""
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
+"ack; Icon: diamond, box, plus, x; Size: 1-9. "
+msgstr ""
+"Цвет:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,bl"
+"ack;Икона:diamond, box, plus, x; Размер: 1-9. "
+
+#: getSopts.c:84
+#, c-format
+msgid "File read error on %s\n"
+msgstr "Ошибка чтения файла %s\n"
+
+#: main.c:56
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: runInfxFile.c:54
+#, c-format
+msgid "Cannot open %s"
+msgstr "Невозможно открыть %s"
+
+#: runInfxFile.c:69
+#, c-format
+msgid "Error: Selecting from Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runInfxFile.c:76
+#, c-format
+msgid "Error: Connecting to Postgres:%s\n"
+msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxFile.c:116
+#, c-format
+msgid "Can not use the field type id %d for category\n"
+msgstr "Невозможно использовать тип поля %d для категорий\n"
+
+#: runInfxFile.c:130
+msgid "Display error(exiting..)\n"
+msgstr "Ошибка дисплея (выход..)\n"

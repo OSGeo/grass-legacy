@@ -1,8 +1,0 @@
-
-
-g.gisenv - 
-
-g.gisenv outputs the user's current GRASS variable settings, such as
-@glossary("mapset",16.glossary/mapset.def), @glossary("location",16.glossary/loc.def), peripheral device drivers, etc.
-
-Manual entry for @man("g.gisenv")

@@ -29,11 +29,18 @@ main (int argc, char *argv[])
     double maxdist,dist;
     double sum1, sum2;
     int i,n,max;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *npoints, *output;
     } parm;
 
+    G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+		"Surface generation program.";
+					        
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;
     parm.input->type       = TYPE_STRING ;
@@ -56,12 +63,18 @@ main (int argc, char *argv[])
     parm.npoints->description="Number of interpolation points";
     parm.npoints->answer = "12";
 
-
-    G_gisinit(argv[0]);
-
     if (G_parser(argc, argv))
         exit(1);
 
+/* Make sure that the current projection is not lat/long */
+    if ((G_projection() == PROJECTION_LL))
+    {
+         char msg[256];
+         sprintf(msg,"lat/long databases not supported by r.surf.idw2.\nUse r.surf.idw instead!");
+         G_fatal_error (msg);
+         exit(1);
+    }
+                            
     if (G_legal_filename(parm.output->answer) < 0)
     {
 	fprintf (stderr, "%s=%s - illegal name\n", parm.output->key, parm.output->answer);
@@ -185,7 +198,7 @@ main (int argc, char *argv[])
 	    }
 	    cell[col] = (CELL) (sum1/sum2 + 0.5);
 	}
-	G_put_map_row (fd, cell);
+	G_put_raster_row (fd, cell, CELL_TYPE);
     }
     G_free(points);
     G_free(cell);

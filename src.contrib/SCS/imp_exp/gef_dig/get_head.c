@@ -1,6 +1,7 @@
 /* %W% %G% */
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include "format.h"
 
 #define METERS_PER_INCH	0.0254
@@ -62,21 +63,21 @@ get_dig_head (gef, reg)
 	dig.map_name[0] = dig.source_date[0] = dig.other_info[0] = '\0';
 
 /* Print warning */
-        sprintf(filename,"%s\0",gef);
+        sprintf(filename,"%s",gef);
 	if ( (gef_file = fopen(filename, "r")) == NULL)
 	   {
 	   fprintf (stdout,"Can't find GEF input file <%s>\n", gef) ;
 	   return (-1);
 	   }
 
-        sprintf(filename,"%s.info\0",gef);
+        sprintf(filename,"%s.info",gef);
 	if ( (gef_info = fopen(filename, "w")) == NULL)
 	   {
 	   fprintf (stdout,"Can't open new %s info file\n", gef) ;
 	   return (-1);
 	   }
 
-	sprintf(filename,"%s/reg/%s\0",getenv("LOCATION"),reg);
+	sprintf(filename,"%s/%s/reg/%s",G_location_path(),G_mapset(),reg);
 	if ( (reg_info = fopen(filename, "w")) == NULL)
            {
 	   fprintf (stdout,"Can't create reg file  %s\n", reg) ;
@@ -565,7 +566,7 @@ fipsin(SFIPS,CFIPS,STZON)
 	char FIPSfile[60];
 	FILE *fipsfile;
 
-	sprintf(FIPSfile,"%s/etc/FIPS.code\0",getenv("GISBASE"));
+	sprintf(FIPSfile,"%s/etc/FIPS.code",getenv("GISBASE"));
 
 /* combine SFIPS and CFIPS to make lookup */
 	lookup = *SFIPS * 1000 + *CFIPS;

@@ -10,7 +10,7 @@ static int nlines = 4 ;
 static int header (int,int);
 static int show (char *,int,int);
 
-int where_am_i (int once, int have_spheroid)
+int where_am_i (int once, int have_spheroid, int decimal)
 {
 	char buffer[200] ;
 	char buf1[50], buf2[50];
@@ -41,8 +41,16 @@ int where_am_i (int once, int have_spheroid)
 			return(0) ;
 		east = D_d_to_u_col((double)screen_x) ;
 		north = D_d_to_u_row((double)screen_y) ;
+		if (decimal)
+		{
+		G_format_easting  (east,  buf1, 0);
+		G_format_northing (north, buf2, 0);
+		}
+		else
+		{
 		G_format_easting  (east,  buf1, projection);
 		G_format_northing (north, buf2, projection);
+		}		
 		if (once)
 		{
 		  fprintf (stdout,"%18s %18s %d\n", buf1, buf2, button) ;

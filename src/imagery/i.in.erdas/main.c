@@ -268,7 +268,7 @@ fprintf(stderr," %d ",*c++);
 fprintf(stderr,"\n");
 ******************************************/
 
-	if (G_put_map_row (fd, cellbuf) < 0) return (-1);
+	if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
 	free(cellbuf);
 	return (0);
 }
@@ -282,12 +282,12 @@ set_window (double firstrow, double lastrow, double firstcol, double lastcol)
 {
 	struct Cell_head window;
 
-	window.south  = -(lastrow + .5);
-	window.north  = -(firstrow - .5);
-	window.west   = firstcol - .5;
-	window.east   = lastcol  + .5;
-	window.cols   = lastcol - firstcol + 1.0;
-	window.rows   = lastrow - firstrow + 1.0;
+	window.south  = firstrow;
+	window.north  = lastrow  + 1.;
+	window.west   = firstcol;
+	window.east   = lastcol  + 1.;
+	window.cols   = lastcol - firstcol + 1.;
+	window.rows   = lastrow - firstrow + 1.;
 	window.ns_res = window.ew_res = 1.0;
 
 	window.proj   = 0;
@@ -393,7 +393,7 @@ int do16bit (int fd, unsigned char *buf, unsigned size)
 		buf[i*2+1] = tmpbuf[i*2+1];
 		}
 	
-	/*swab(tmpbuf, buf, size*2);*//*Removed APC Nov 20/1999*/
+	/*swab(tmpbuf, buf, size*2);*/ /*Removed APC Nov 20/1999*/
 	/*static void convbuf (void *buf, int ftype)*/
 	
 	return(2*n);
@@ -409,7 +409,7 @@ int do16bitS (int fd, unsigned char *buf, unsigned size)
 
 	tmpbuf = (unsigned char*)G_malloc(size*2);
 	n = read(fd,tmpbuf,size*2);
-	/*swab(tmpbuf, buf, size*2);*//*Removed APC Nov 20/1999*/
+	/*swab(tmpbuf, buf, size*2);*/ /*Removed APC Nov 20/1999*/
 	for (i=0;i<size;i++)
 		{
 		buf[i*2+1] = tmpbuf[i*2+0];
@@ -442,9 +442,14 @@ int main (int argc, char *argv[])
 	struct Option *erdasopt, *outopt, *trlopt;
 	struct Option *start_row, *start_col, *num_rows, *num_cols, *sel_bands;
 	struct Flag *headflag,*autoswapflag,*swapflag,*mapcoord;
+	struct GModule *module;
 
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates raster files from ERDAS files.";
 
 	headflag = G_define_flag();
 	headflag->key = 'l';
@@ -545,7 +550,7 @@ int main (int argc, char *argv[])
         if (!(swapflag->answer || autoswapflag->answer))
         {
         	ActuallySwap = 0;
-        	if ((erdashd.pack == 256 ) || (erdashd.pack == 512 )) // 1 or 2 byte-swapped
+        	if ((erdashd.pack == 256 ) || (erdashd.pack == 512 )) /* 1 or 2 byte-swapped*/
                 	ActuallySwap = 1 ;
          	if (erdashd.pack == 0)
          	{
@@ -610,7 +615,7 @@ int main (int argc, char *argv[])
 
 	/*Now Allocate the band arrays */
 	new= (int *) G_calloc(erdashd.nbands,sizeof(int));
-	outband= (int *) G_calloc(erdashd.nbands,sizeof(int));
+	outband= (int *) G_calloc(erdashd.nbands+1,sizeof(int));
 	
 	for (i=0;i<erdashd.nbands;i++) outband[i]=i+1;
 	outband[i]=0;	

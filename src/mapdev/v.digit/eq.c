@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)
 {
@@ -16,7 +17,7 @@ int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)
 
     G_init_cell_stats (&statf);
     if (!quiet)
-	fprintf (stderr, "Reading %s ...", name);
+	fprintf (stderr, _("Reading %s ..."), name);
     for (row = 0; row < nrows; row++)
     {
 	if (!quiet)

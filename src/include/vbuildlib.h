@@ -1,6 +1,6 @@
 /* Prototypes from src/mapdev/v.build */
 /* area.c */
-int build_all_areas(struct Map_info *);
+int build_all_areas(struct Map_info *, struct Map_info *);
 int build_area(struct Map_info *, int);
 int check_area(struct Map_info *, int, double, double);
 /* ascii_io.c */

@@ -12,7 +12,16 @@ int
 main (int argc, char **argv)
 {
 	int color ;
+	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Generates and displays simple graphics on map "
+		"layers drawn in the active graphics monitor display frame.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -43,9 +52,6 @@ main (int argc, char **argv)
 	opt4->description= "Horizontal text width as % of display frame width" ;
 */
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -56,24 +62,21 @@ main (int argc, char **argv)
 		mapset = G_find_file ("mapgraph", opt1->answer, "");
 		if (mapset == NULL)
 		{
-			fprintf (stdout,"Mapgraph file [%s] not available", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error("Mapgraph file [%s] not available", opt1->answer);
 		}
 		Infile = G_fopen_old ("mapgraph", opt1->answer, mapset);
 		if (Infile == NULL)
 		{
-			fprintf (stdout,"Graph file <%s> not available\n", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error ("Graph file <%s> not available", opt1->answer);
 		}
 		*/
 		/* using fopen instead to facilitate finding the file */
 		if ((Infile = fopen(opt1->answer,"r")) == NULL) 
 		    {
-			fprintf (stdout,"Mapgraph file [%s] not available", opt1->answer);
 			G_usage() ;
-			exit(-1) ;
+			G_fatal_error ("Mapgraph file [%s] not available", opt1->answer);
 		}
 	}
 	else
@@ -94,7 +97,8 @@ main (int argc, char **argv)
 
 	vsize = hsize = 5.0 ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

@@ -1,0 +1,16 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+cur_from_db	cur_frm_db.c	/^cur_from_db()$/
+cur_from_def	cur_frm_df.c	/^cur_from_def()$/
+cur_to_db	cur_to_db.c	/^cur_to_db()$/
+edit_window	edit.c	/^edit_window (window)$/
+from_cellhd	from_cell.c	/^from_cellhd()$/
+from_vect	from_vect.c	/^from_vect()$/
+lister	lister.c	/^lister (name, mapset, text)$/
+make_current	mke_curr.c	/^make_current (window, name)$/
+max	main.c	/^static max(a,b)$/
+modify_cur	modify_cur.c	/^modify_cur()$/
+modify_db	modify_db.c	/^modify_db()$/
+new_db	new_db.c	/^new_db()$/
+selection	main.c	/^#define selection(x) (strcmp(buf,x)==0)$/
+set_window	set.c	/^set_window (window, name)$/
+yes	yes.c	/^yes (prompt, with_default)$/

@@ -6,12 +6,12 @@
 LDFLAGS = -s
 
 
-all:  $(BIN_CONTRIB_CMD)/ISMgrd2cell $(BIN_CONTRIB_CMD)/ISMcell2grd
+all:  $(BIN_CMD)/ISMgrd2cell $(BIN_CMD)/ISMcell2grd
 
-$(BIN_CONTRIB_CMD)/ISMgrd2cell: grd2cell.o  gdread.o
+$(BIN_CMD)/ISMgrd2cell: grd2cell.o  gdread.o
 	$(FC) $(LDFLAGS) -o $@ grd2cell.o gdread.o $(GISLIB)
 
-$(BIN_CONTRIB_CMD)/ISMcell2grd: cell2grd.o  gdwrit.o cnencd.o
+$(BIN_CMD)/ISMcell2grd: cell2grd.o  gdwrit.o cnencd.o
 	$(FC) $(LDFLAGS) -o $@ cell2grd.o gdwrit.o cnencd.o $(GISLIB)
 
 #.f.o:

@@ -1,5 +1,5 @@
 name|quadrat_count_data
-desc|sites_list: pinetrees n=584 (100 quadrats of radius 6)
+desc|site_lists: pinetrees n=584 (100 quadrats of radius 6)
 64.6955|74.6453|#1 1
 0|0|#2 0
 155.694|186.192|#3 1
@@ -111,4 +111,4 @@ Lloyd (1967) "mean crowding"               	 2.68795
 Lloyd (1967) Index of patchniess           	 1.72304
 Morisita's (1959) I (variability b/n patches)	 1.72043
 -----------------------------------------------------------
-sites_list: pinetrees n=584 (100 quadrats of radius 6)
+site_lists: pinetrees n=584 (100 quadrats of radius 6)

@@ -117,6 +117,29 @@ Color_table_fixed (void)
 	assign_standard_color(AQUA,	_get_lookup_for_color(36, 238, 187)) ;
 	*/
 
+	/* by cho; 2001/08/08 */
+/* Generate lookup for "fixed" colors */
+	assign_fixed_color(RED,     _get_lookup_for_color(255,   0,   0)) ;
+	assign_fixed_color(ORANGE,  _get_lookup_for_color(255, 128,   0)) ;
+	assign_fixed_color(YELLOW,  _get_lookup_for_color(255, 255,   0)) ;
+	assign_fixed_color(GREEN,   _get_lookup_for_color(  0, 255,   0)) ;
+	assign_fixed_color(BLUE,    _get_lookup_for_color(  0,   0, 255)) ;
+	assign_fixed_color(INDIGO,  _get_lookup_for_color(  0, 128, 255)) ;
+	assign_fixed_color(VIOLET,  _get_lookup_for_color(255,   0, 255)) ;
+	assign_fixed_color(BLACK,   _get_lookup_for_color(  0,   0,   0)) ;
+	assign_fixed_color(WHITE,   _get_lookup_for_color(255, 255, 255)) ;
+	assign_fixed_color(GRAY,    _get_lookup_for_color(175, 175, 175)) ;
+	assign_fixed_color(BROWN,   _get_lookup_for_color(180,  77,  25)) ;
+	assign_fixed_color(MAGENTA, _get_lookup_for_color(255,   0, 128)) ;
+	assign_fixed_color(AQUA,    _get_lookup_for_color(100, 128, 255)) ;
+	/*
+	assign_fixed_color(INDIGO,	_get_lookup_for_color(77,  12, 225)) ;
+	assign_fixed_color(VIOLET,	_get_lookup_for_color(216,  43, 225)) ;
+	assign_fixed_color(MAGENTA,	_get_lookup_for_color(217,   5, 189)) ;
+	assign_fixed_color(AQUA,	_get_lookup_for_color(36, 238, 187)) ;
+	*/
+	/**/
+
 
 	return(0) ;
 }

@@ -1,10 +1,9 @@
 PGM=m.ll2u
-HOME=$(BIN_MAIN_CMD)
 
 LIST = main.o input.o output.o warning.o sph.o number.o
 
-$(HOME)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPCOORCNVLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(COORCNVLIB): # in case LIB changes
-$(GISLIB): # in case LIB changes
+$(DEPCOORCNVLIB): # in case LIB changes
+$(DEPGISLIB): # in case LIB changes

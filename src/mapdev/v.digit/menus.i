@@ -119,7 +119,7 @@ struct Menu_item Custom_items[] = {
     { "w - Toggle Windowing device",		'w', 1 },
     { "p - Toggle Point device",		'p', 1 },
     { "z - Toggle Digitizing device",		'z', 1 },
-    { "O - Select An Overlay Map",		'O', 1 },
+    { "O - Select An Overlay vector Map",	'O', 1 },
     { "B - Select A Backdrop CELL Map",		'B', 1 },
 /*  { "L - Select A Label Map",			'L', 0 }, */
 /*  { "",					 0,  0 }, */
@@ -203,6 +203,7 @@ struct Menu_item Window_items[] = {
     { "i - Show lines", 		'i', 1 },
     { "l - Show labeled lines", 	'l', 1 },
     { "L - Show line labels", 		'L', 1 },
+    { "U - Show unlabeled lines", 	'U', 1 },
     { "",				 0,  0 },
     { "s - Show sites", 		's', 1 },
     { "S - Show site labels", 		'S', 1 },
@@ -314,3 +315,4 @@ struct Menu_head M_color = {
     1,
     Help_color
 };
+

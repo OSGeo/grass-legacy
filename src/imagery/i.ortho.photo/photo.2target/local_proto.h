@@ -69,7 +69,11 @@ int Input_other(int (*)(void), char *);
 int Menu_msg(char *);
 int Start_mouse_in_menu(void);
 /* main.c */
+#ifdef __GNUC_MINOR__
 int quit(int) __attribute__ ((__noreturn__));
+#else
+int quit(int);
+#endif
 int error(char *, int);
 /* mark.c */
 int mark(int, int, int);
@@ -89,11 +93,6 @@ int select_current_env(void);
 int select_target_env(void);
 /* title.c */
 int display_title(View *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* view.c */
 int Configure_view(View *, char *, char *, double, double);
 int In_view(View *, int, int);

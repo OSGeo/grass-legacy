@@ -1,5 +1,0 @@
-all:
-	$(GMAKE) ../../libes/geom
-	$(GMAKE) s.geom
-	$(GMAKE) s.out.minmaxer
-	$(GMAKE) v.in.minmaxer 

@@ -47,8 +47,19 @@ main (int argc, char *argv[])
     int level, force_areas;
     char name[128];
     char command[256];
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+    
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Developed to handle DLG-3 ASCII import of data, specifically a DLG "
+    "WITHOUT category/attribute codes. DLG files with this affliction will "
+    "require a flat ASCII file having a 1 to 1 correspondence between DLG "
+    "area number and a text label. ";
+    
     setbuf (stdout, NULL);
 
 

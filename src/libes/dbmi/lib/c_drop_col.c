@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_drop_column (driver, tableName, columnName)
+int db_drop_column (driver, tableName, columnName)
     dbDriver *driver;
     dbString *tableName;
     dbString *columnName;

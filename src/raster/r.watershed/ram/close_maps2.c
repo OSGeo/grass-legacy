@@ -71,7 +71,7 @@ close_array_seg (void)
 		    cellrow[c] = bas[SEG_INDEX(bas_seg, r, c)];
 		else cellrow[c] = 0;
 	    }
-            G_put_map_row(map_fd, cellrow);
+            G_put_raster_row(map_fd, cellrow, CELL_TYPE);
         }
         G_close_cell(map_fd);
 	G_write_colors(seg_name, this_mapset, &colors);
@@ -82,7 +82,7 @@ close_array_seg (void)
 	    for (c=0; c<ncols; c++) {
 		cellrow[c] = bas[SEG_INDEX(bas_seg, r, c)];
 	    }
-            G_put_map_row(map_fd, cellrow);
+            G_put_raster_row(map_fd, cellrow, CELL_TYPE);
         }
         G_close_cell(map_fd);
 	G_write_colors(bas_name, this_mapset, &colors);
@@ -93,7 +93,7 @@ close_array_seg (void)
 	    for (c=0; c<ncols; c++) {
 		cellrow[c] = haf[SEG_INDEX(haf_seg, r, c)];
 	    }
-            G_put_map_row(map_fd, cellrow);
+            G_put_raster_row(map_fd, cellrow, CELL_TYPE);
         }
         G_close_cell(map_fd);
 	G_write_colors(haf_name, this_mapset, &colors);

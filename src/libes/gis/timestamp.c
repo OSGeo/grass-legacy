@@ -1,5 +1,38 @@
+/*
+ * $Id$
+ *
+ * provides DateTime functions for timestamp management:
+ *
+ * Authors: Michael Shapiro & Bill Brown, CERL
+ *          grid3 functions by Michael Pelizzari, LMCO
+ *            
+ * G_init_timestamp()
+ * G_set_timestamp()
+ * G_set_timestamp_range()
+ * G_format_timestamp()
+ * G_scan_timestamp()
+ * G_get_timestamps()
+ * G_read_raster_timestamp()
+ * G_remove_raster_timestamp()
+ * G_read_vector_timestamp()
+ * G_remove_vector_timestamp()
+ * G_read_grid3_timestamp()
+ * G_remove_grid3_timestamp()
+ * G_write_raster_timestamp()
+ * G_write_vector_timestamp()
+ * G_write_grid3_timestamp()
+ *
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ */
+
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 void G_init_timestamp (struct TimeStamp *ts)
 {
@@ -8,7 +41,7 @@ void G_init_timestamp (struct TimeStamp *ts)
 
 void G_set_timestamp (struct TimeStamp *ts, DateTime *dt)
 {
-    datetime_copy (&ts->dt[0], dt);
+    datetime_copy (&ts->dt[0],dt);
     ts->count = 1;
 }
 
@@ -137,7 +170,7 @@ static int write_timestamp (
     if (fd == NULL)
     {
 	G_warning (
-		"Can't create timestamp file for %s map %s in mapset %s",
+		_("Can't create timestamp file for %s map %s in mapset %s"),
 		maptype, mapname, G_mapset());
 	return -1;
     }
@@ -147,7 +180,7 @@ static int write_timestamp (
     if (stat == 0)
 	return 1;
     G_warning (
-	    "Invalid timestamp specified for %s map %s in mapset %s",
+	    _("Invalid timestamp specified for %s map %s in mapset %s"),
 	    maptype, mapname, G_mapset());
     return -2;
 }
@@ -172,7 +205,7 @@ static int read_timestamp (
     if (fd == NULL)
     {
 	G_warning (
-		"Can't open timestamp file for %s map %s in mapset %s",
+		_("Can't open timestamp file for %s map %s in mapset %s"),
 		maptype, mapname, mapset);
 	return -1;
     }
@@ -182,13 +215,14 @@ static int read_timestamp (
     if (stat == 0)
 	return 1;
     G_warning (
-	    "Invalid timestamp file for %s map %s in mapset %s",
+	    _("Invalid timestamp file for %s map %s in mapset %s"),
 	    maptype, mapname, mapset);
     return -2;
 }
 
 #define RAST_MISC "cell_misc"
 #define VECT_MISC "dig_misc"
+#define GRID3	  "grid3"
 
 int G_read_raster_timestamp (
     char *name,char *mapset,
@@ -226,6 +260,24 @@ int G_remove_vector_timestamp (char *name)
     return G_remove(element, "timestamp");
 }
 
+int G_read_grid3_timestamp (
+    char *name,char *mapset,
+    struct TimeStamp *ts)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return read_timestamp ("grid3", name, mapset, element, "timestamp", ts);
+}
+
+int G_remove_grid3_timestamp (char *name)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return G_remove(element, "timestamp");
+}
+
 int G_write_raster_timestamp (
     char *name,
     struct TimeStamp *ts)
@@ -244,4 +296,14 @@ int G_write_vector_timestamp (
 
     sprintf (element, "%s/%s", VECT_MISC, name);
     return write_timestamp ("vector", name, element, "timestamp", ts);
+}
+
+int G_write_grid3_timestamp (
+    char *name,
+    struct TimeStamp *ts)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return write_timestamp ("grid3", name, element, "timestamp", ts);
 }

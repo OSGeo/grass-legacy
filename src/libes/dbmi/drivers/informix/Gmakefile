@@ -3,8 +3,7 @@
 # the CMD/head file.
 
 
-#HOME=$(DBMIDIR)/driver
-HOME=/tmp/dbmi/driver
+DBMIDIR = $(GISBASE)/driver/db
 
 EXTRA_CFLAGS = -I$(INFORMIXDIR)/incl/esql
 
@@ -14,7 +13,8 @@ EXTRA_CFLAGS = -I$(INFORMIXDIR)/incl/esql
 
 # STUBLIB = ../libstubs.a
 
-LIB = ../../lib/libdbmi.a $(STUBLIB)
+LIBES = $(DBMILIB) $(STUBLIB)
+DEPLIBS = $(DEPDBMILIB) $(STUBLIB)
 
 OBJ = main.o	\
 	close_cur.o	\
@@ -43,11 +43,12 @@ OBJ = main.o	\
 	tbname.o	\
 	update.o
 
-$(HOME)/informix: $(HOME) $(OBJ) $(LIB)
-	esql $(LDFLAGS) -o $@ $(OBJ) $(LIB) $(XDRLIB)
+$(DBMIDIR)/informix: $(DBMIDIR) $(OBJ) $(DEPLIBS)
+	esql $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB)
 
-$(HOME):
-	-mkdir -p $(HOME)
+$(DBMIDIR):
+	-mkdir -p $(DBMIDIR)
 
 $(OBJ): $(INCLUDE_DIR)/dbmi.h globals.h
-$(LIB): #
+
+$(DEPLIBS): #

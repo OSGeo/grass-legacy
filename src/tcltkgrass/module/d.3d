@@ -11,6 +11,6 @@ interface_build {
     {entry color {Color of vector lines [gray]:} 0 3Dcolor}
     {entry box   {Color of bounding box [none]:} 0 Color}
     {checkbox -l {Display lines only.} "" -l}
-    {checkbox -0 {Show zero elevations.} "" -0}
+    {checkbox -n {Show null elevations.} "" -n}
     {checkbox -a {Calculate each corner to be an average.} "" -a}
 }

@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
+#include <string.h>
 
 int G_done_msg(char *msg)
 {
@@ -20,7 +22,7 @@ int G_done_msg(char *msg)
 		out = stderr;
 	else
 		return 1;
-	fprintf (out, "%s complete. %s\n", G_program_name(), msg);
+	fprintf (out, _("%s complete. %s\n"), G_program_name(), msg);
 
 	return 0;
 }

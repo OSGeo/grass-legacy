@@ -3,10 +3,12 @@
 #            neteler@geog.uni-hannover.de
 #
 # bugfix: 25. Nov.98/20. Jan. 1999
-# this script needs gnuplot (copy to grass42/bin/g.gnuplot)
+# this script needs gnuplot
 
 #--------------------------------------------------
-if test "$1" = ""; then
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
       echo ""
       echo "GRASS script to display spectral response at user specific "
       echo "locations in satellite images."
@@ -20,7 +22,18 @@ fi
 PARAM_NUM=$#
 
 # get y-data for gnuplot-data file
-d.where -1 |r.what input=$1,$2,$3,$4,$5,$6,$7 > /tmp/spectr.dum1
+
+i=2
+RASTERMAPS=$1
+shift
+while [ $i -le $PARAM_NUM ]
+do
+ RASTERMAPS=$RASTERMAPS,$1
+ shift
+ i=`expr $i + 1`
+done
+
+d.where -1 |r.what input=$RASTERMAPS > /tmp/spectr.dum1
 cat /tmp/spectr.dum1 | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > /tmp/spectr.dum2
 COORD="`cat /tmp/spectr.dum1 | cut -d'|' -f1,2 | tr '|' ' '`"
 NUM="`cat /tmp/spectr.dum2 |wc -l`"
@@ -68,6 +81,6 @@ echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 #fi
 
 # display it...
-g.gnuplot -persist spectrum.gnuplot
+gnuplot -persist spectrum.gnuplot
 
 rm -f spectrum.data spectrum.data.dum spectrum.gnuplot

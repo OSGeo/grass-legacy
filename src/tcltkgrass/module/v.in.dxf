@@ -1,0 +1,10 @@
+interface_build {
+    {v.in.dxf} 0
+    {Converts data in AUTOCAD format to GRASS's vector format, and stores output in the user's current GRASS mapset.}
+    {entry dxf {AUTOCAD DXF input file:} 0 file}
+    {entry lines {AUTOCAD DXF layers with line data:} 0 file}   
+    {entry labels {AUTOCAD DXF layers with label data:} 0 file}
+    {entry prefix {Prefix for resultant GRASS vector output file:} 0 vector}
+    {checkbox -a {Output to an ascii vector file (default: binary).} "" -a}
+    {checkbox -n {Suppress drawing of text outlines.} "" -n}
+}

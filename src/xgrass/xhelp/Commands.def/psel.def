@@ -1,9 +1,0 @@
-
-
-p.select - 
-
-p.select allows the user to select the device for GRASS hardcopy
-output.  The user must select a device BEFORE running the other GRASS
-hardcopy output functions (e.g., @man("p.map"), @man("p.labels"), @man("p.chart")).
-
-Manual entry for @man("p.select")

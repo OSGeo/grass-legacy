@@ -131,8 +131,9 @@ void init_edge_list (struct Map *map)
     map->edges.catlist = NULL;
 }
 
-static int cmp (struct CatEdgeList *a, struct CatEdgeList *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const struct CatEdgeList *a = aa, *b = bb;
     return (int) ( a->cat - b->cat );
 }
 

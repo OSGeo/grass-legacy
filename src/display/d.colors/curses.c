@@ -28,15 +28,11 @@ WINDOW *MESG_WIN ;
 int 
 Initialize_curses (void)
 {
-    Get_old_tty() ;
-
     initscr () ;
     raw() ;
     crmode() ;
     noecho() ;
     nonl()   ;
-
-    Get_new_tty() ;
 
     /*         newwin(NROWS, NCOLS, BEGROW, BEGCOL) ; */
     CAT_WIN  = newwin( 9, 80,  0, 0) ;

@@ -1,32 +1,32 @@
-/**************************************************************************/
-/*                                                                        */
-/*                          matrix_ops.c                                  */
-/*                                                                        */
-/*   m_add (MATRIX *a, MATRIX *b, MATRIX *c)
-/*       matrix addition (returns c = a + b)
-/*
-/*   m_copy (MATRIX *a, MATRIX *b)
-/*       matrix equivalency (return a = b).
-/*
-/*   m_inverse (MATRIX *a, MATRIX *b)
-/*       invert a square martix (puts pivot elements on main diagonal).
-/*       returns arg2 as the inverse of arg1.
-/*       This routine is based on a routine found in Andrei Rogers, "Matrix
-/*       Methods in Urban and Regional Analysis", (1971), pp. 143-153.
-/*
-/*   m_isnull (MATRIX *a)
-/*       returns 1 if matrix is null, else 0.
-/*
-/*   m_mult (MATRIX *a, MATRIX *b, MATRIX *c)
-/*       matrix multiplication (return c = a * b)
-/*
-/*   m_transpose (MATRIX *a, MATRIX *b)
-/*       returns arg2 as the transpose of arg1
-/*
-/*   m_zero (MATRIX *a)
-/*       returns arg2 zero filled 
-/*
-/**************************************************************************/
+/**************************************************************************
+*                                                                        
+*                          matrix_ops.c                                  
+*                                                                        
+*   m_add (MATRIX *a, MATRIX *b, MATRIX *c)
+*       matrix addition (returns c = a + b)
+*
+*   m_copy (MATRIX *a, MATRIX *b)
+*       matrix equivalency (return a = b).
+*
+*   m_inverse (MATRIX *a, MATRIX *b)
+*       invert a square martix (puts pivot elements on main diagonal).
+*       returns arg2 as the inverse of arg1.
+*       This routine is based on a routine found in Andrei Rogers, "Matrix
+*       Methods in Urban and Regional Analysis", (1971), pp. 143-153.
+*
+*   m_isnull (MATRIX *a)
+*       returns 1 if matrix is null, else 0.
+*
+*   m_mult (MATRIX *a, MATRIX *b, MATRIX *c)
+*       matrix multiplication (return c = a * b)
+*
+*   m_transpose (MATRIX *a, MATRIX *b)
+*       returns arg2 as the transpose of arg1
+*
+*   m_zero (MATRIX *a)
+*       returns arg2 zero filled 
+*
+**************************************************************************/
 
 #include "matrix_ops.h"
 #include <stdio.h>

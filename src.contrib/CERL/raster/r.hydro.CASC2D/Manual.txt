@@ -4,7 +4,7 @@ distributed hydrologic modeling.
 
 SYNOPSIS r.hydro.CASC2D, r.hydro.CASC2D help, 
    r.hydro.CASC2D [-toepidbuq] elevation=name time_step=value 
-   tot_time=value discharge=name outlet_east&north&slope=east,north,bedslope 
+   tot_time=value discharge=name outlet_eastNnorthNslope=east,north,bedslope 
    rain_duration=value [watershed_mask=name] [initial_depth=name]
    [storage_capacity=name] [interception_coefficient=name] [roughness_map=name]
    [Manning_n=value] [conductivity=name] [capillary=name] [porosity=name] 
@@ -100,7 +100,7 @@ INPUT
 _____TOPOGRAPHY_____
 elevation=mapname              map of elevation (DEM).
 
-outlet_east&north&slope=       easting, northing, and bed slope at the outlet
+outlet_eastNnorthNslope=       easting, northing, and bed slope at the outlet
 value,value,value              cell comma delimited.
 
 _____TIME_____
@@ -614,7 +614,7 @@ and 8-10 minutes, etc. For this example r_gage_file=rain.inp, num_of_raingages=3
 gage_time_step=120, and rain_duration=600. For state plane (SP) coordinate system 
 the eastings and northing will have to be in feet rather than meters.
 
-15) outlet_east&north&slope: These three values determine the location of the
+15) outlet_eastNnorthNslope: These three values determine the location of the
 outlet, in terms of its easting and northing, and the outlet bed slope.  One
 needs to make sure that the outlet described by its easting and northing is
 not only within the active region but also inside watershed mask.  Often times

@@ -54,7 +54,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>   /* for sleep() */
+#include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define ENV struct env
 ENV
@@ -92,7 +94,7 @@ read_env (void)
     init = 1;
     count = 0;
 
-    if (fd = open_env ("r"))
+    if ((fd = open_env ("r")))
     {
 	while (G_getl (buf, sizeof buf, fd))
 	{
@@ -120,8 +122,8 @@ static int set_env ( char *name, char *value)
     int empty;
     char *tv;
 
-/* if value is NULL convert into an unsetenv() */
-    if (!value)
+/* if value is NULL or empty string, convert into an unsetenv() */
+    if(!value || !strlen(value))
     {
 	unset_env (name);
 	return 0;
@@ -160,7 +162,7 @@ static int set_env ( char *name, char *value)
     }
 
 /* must increase the env list and add in */
-    if (n = count++)
+    if ((n = count++))
 	env = (ENV *) G_realloc ((char *) env, count * sizeof (ENV));
     else
 	env = (ENV *) G_malloc (sizeof (ENV));
@@ -211,7 +213,7 @@ static int write_env (void)
     sigint  = signal (SIGINT,  SIG_IGN);
     sigquit = signal (SIGQUIT, SIG_IGN);
 
-    if(fd = open_env ("w"))
+    if((fd = open_env ("w")))
     {
 	for (n = 0; n < count; n++)
 	    if (env[n].name && env[n].value
@@ -233,9 +235,12 @@ static FILE *open_env ( char *mode)
 
     if (!gisrc)
     {
-	fprintf (stderr, "\7ERROR: GISRC - variable not set\n");
+	/* fprintf (stderr, "\7ERROR: GISRC - variable not set\n");
 	sleep(3);
-	exit(-1);
+	exit(-1); */
+	/* Roger Bivand 17 June 2000 */
+	G_fatal_error(_("GISRC - variable not set"));
+	return(NULL);
     }
 
     return fopen (gisrc, mode);
@@ -244,13 +249,18 @@ static FILE *open_env ( char *mode)
 char *G_getenv( char *name)
 {
     char *value;
+    char rsbbuf[40]; /* RSB 17 June 2000 */
 
-    if (value = G__getenv(name))
+    if ((value = G__getenv(name)))
 	return value;
 
-    fprintf(stderr,"ERROR: %s not set\n", name);
+    /* fprintf(stderr,"ERROR: %s not set\n", name);
     sleep(3);
-    exit(-1);
+    exit(-1); */
+    /* Roger Bivand 17 June 2000 */
+    sprintf(rsbbuf, _("%s not set"), name);
+    G_fatal_error(rsbbuf);
+    return;
 }
 
 char *G__getenv ( char *name)

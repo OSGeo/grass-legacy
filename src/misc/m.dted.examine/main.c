@@ -6,8 +6,9 @@ static int count = 0;
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *tapename;
-    unsigned char buf[4096];
+    char buf[4096];
     char type[5];
     int lat_d, lat_m, lat_s;
     int lon_d, lon_m, lon_s;
@@ -19,6 +20,14 @@ main (int argc, char *argv[])
     long x;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Provides a terse description of "
+		"level 1 and 2 digital terrain elevation data (DTED) files "
+		"produced and distributed by the Defense Mapping Agency "
+		"(DMA) on 1/2-inch magnetic tapes.";
+
     tapename = G_define_option();
     tapename->key = "input";
     tapename->type = TYPE_STRING;
@@ -42,7 +51,7 @@ main (int argc, char *argv[])
 	    continue;
 	}
 	eof = 0;
-	if ((*buf) == 0252)
+	if ((*buf) == '\252')
 	{
 	    if (count == 0)
 	    {

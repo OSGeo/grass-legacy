@@ -1,6 +1,3 @@
-LIB = $(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-
 SUPPORT_FILES = db.layout tiger1.format
 SUPPORT_DIR = $(ETC)/tiger_support
 
@@ -20,8 +17,8 @@ $(ETC)/v.in.tg.rm.sh: v.in.tg.rm.sh
 	cp v.in.tg.rm.sh $(ETC)/v.in.tg.rm.sh
 	chmod +x $(ETC)/v.in.tg.rm.sh
 
-$(ETC)/c12.to.v: c12.to.v.o
-	$(CC) $(LDFLAGS) c12.to.v.o $(LIB) $(DIG_ATTLIB) $(VECTLIB) \
+$(ETC)/c12.to.v: c12.to.v.o $(DEPCOORCNVLIB) $(DEPDIG_ATTLIB) $(DEPVECTLIB) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) c12.to.v.o $(COORCNVLIB) $(DIG_ATTLIB) $(VECTLIB) \
 		$(GISLIB) $(MATHLIB) -o $@
 
 $(ETC)/tig.linefeed: linefeeds.o
@@ -35,7 +32,7 @@ files: $(SUPPORT_DIR)
 $(SUPPORT_DIR):
 	-mkdir $@
 
-$(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPCOORCNVLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

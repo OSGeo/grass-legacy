@@ -23,8 +23,15 @@ int main (int argc, char *argv[])
         {
         struct Flag *quiet;
     } flag;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Rescales histogram equalized the range of category"
+    "values in a raster map layer.";
 
     /* Define the different options */
 

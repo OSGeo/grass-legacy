@@ -9,11 +9,13 @@
    about app commands, and provide "wrapper" functions for calling
    GL from Tcl. */
 
-int Nresize_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;			/* Current interpreter. */
-     int argc;				/* Number of arguments. */
-     char **argv;			/* Argument strings. */
+int 
+Nresize_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,				/* Number of arguments. */
+    char **argv			/* Argument strings. */
+)
 {
   int w, h;
   /* one render  */
@@ -26,21 +28,24 @@ int Nresize_cmd(data, interp, argc, argv)
 }
 
 /* ARGSUSED */
-int Nfinish_cmd(dummy, interp, argc, argv)
-     ClientData dummy;			/* Not used. */
-     Tcl_Interp *interp;			/* Current interpreter. */
-     int argc;				/* Number of arguments. */
-     char **argv;			/* Argument strings. */
+int 
+Nfinish_cmd (
+    ClientData dummy,			/* Not used. */
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,				/* Number of arguments. */
+    char **argv			/* Argument strings. */
+)
 {
   gsd_finish();
   return(TCL_OK);
 }
-int
-Nset_background_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_background_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   char buf[128];
   
@@ -54,9 +59,8 @@ Nset_background_cmd (data, interp, argc, argv)
   
 }
 
-int
-tcl_color_to_int (clr)
-     char *clr;
+int 
+tcl_color_to_int (char *clr)
 {
   int r, g, b;
   int c;
@@ -69,8 +73,7 @@ tcl_color_to_int (clr)
   
 }
 char *
-int_to_tcl_color(clr)
-     int clr;
+int_to_tcl_color (int clr)
 {
   int r, g, b;
   static char c[128];

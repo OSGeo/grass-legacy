@@ -26,7 +26,8 @@ int zoom()
 	text_color       = D_translate_color(TC_WIND) ;
 	div_color        = D_translate_color(DC_WIND) ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	tell_em_to_use_mouse() ;
 	i = D_popup(
 		background_color,
@@ -43,7 +44,8 @@ int zoom()
 	switch(i)
 	{
 	case 1:
-		R_open_driver();
+		if (R_open_driver() != 0)
+			G_fatal_error ("No graphics device selected");
 		Dchoose(MAP.name) ;
 		R_close_driver();
 		G_clear_screen() ;
@@ -53,7 +55,8 @@ int zoom()
 			return 1;
 		break ;
 	case 2:
-		R_open_driver();
+		if (R_open_driver() != 0)
+			G_fatal_error ("No graphics device selected");
 		Dchoose(REF.name) ;
 		R_close_driver();
 		G_clear_screen() ;
@@ -74,7 +77,8 @@ int zoom()
 
 	show_region() ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 /* Draw cell map */
 	/* G__get_window called here because we need to read the current window

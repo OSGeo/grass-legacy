@@ -1,11 +1,12 @@
 PGM=i.zc
 
-OBJS = main.o fft.o del2g.o getg.o mult.o findzc.o
+OBJS = main.o mult.o findzc.o
 
-LIBES= $(GISLIB)
+LIBES= $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 

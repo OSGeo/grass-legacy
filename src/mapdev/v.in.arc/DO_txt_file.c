@@ -18,7 +18,7 @@ int DO_txt_file (char *fp_nam1, char *fp_nam2)
 	char    name[20];
 	char    col[5];
 
-	if ((fp1=fopen(fp_nam1,"r")) == NULL) return (-1);
+	if ((fp1=fopen(fp_nam1,"r")) == NULL) return (-3);
                 /* check first record, should contain DATAFILE ... */
 	if (!fgets(txtbuf,512,fp1)) return (-1);
         sscanf(txtbuf,"%s%*s",name);

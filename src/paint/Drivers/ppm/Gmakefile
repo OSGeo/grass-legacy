@@ -1,5 +1,6 @@
 NAME=ppm
-LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
+LIBES = ../../Interface/driverlib/lib.a $(LOCKLIB)
+DEPLIBS = ../../Interface/driverlib/lib.a $(DEPLOCKLIB)
 PAINT = $(ETC)/paint
 LIST =\
     main.o \
@@ -16,10 +17,10 @@ LIST =\
 
 all: $(PAINT)/driver.uninst/$(NAME) $(PAINT)/driver/$(NAME)
 
-$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBS) -o $@
+$(PAINT)/driver/$(NAME): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) -o $@
 $(PAINT)/driver.uninst/$(NAME): DRIVER.sh
 	cp $? $@
 	chmod +x $@
 
-$(LIBS): #
+$(DEPLIBS): #

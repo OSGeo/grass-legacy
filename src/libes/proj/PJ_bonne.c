@@ -8,7 +8,7 @@ static const char SCCSID[]="@(#)PJ_bonne.c	4.1	94/02/15	GIE	REL";
 	double m1; \
 	double *en;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(bonne, "Bonne (Werner lat_1=90)")
 	"\n\tConic Sph&Ell\n\tlat_1=";
 #define EPS10	1e-10

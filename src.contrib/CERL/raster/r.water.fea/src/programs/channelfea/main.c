@@ -1,13 +1,14 @@
 #include <string.h>
-# include <math.h>
-# include <stdlib.h>
+#include <math.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
 
 char element[64] ="r.water.fea/";
 int 
-compare (int *a, int *b)
+compare (const void *aa, const void *bb)
 {
+	const int *a = aa, *b = bb;
 	return *a - *b;
 }
 

@@ -4,7 +4,7 @@ static const char SCCSID[]="@(#)PJ_bipc.c	4.1	94/02/15	GIE	REL";
 #define PROJ_PARMS__ \
 	int	noskew;
 #define PJ_LIB__
-# include	<projects.h>
+# include	"projects.h"
 PROJ_HEAD(bipc, "Bipolar conic of western hemisphere")
 	"\n\tConic Sph.";
 # define EPS	1e-10
@@ -41,7 +41,7 @@ FORWARD(s_forward); /* spheroid */
 		tphi = sphi / cphi;
 		Az = atan2(sdlam , C45 * (tphi - cdlam));
 	}
-	if (tag = (Az > Azba)) {
+	if( (tag = (Az > Azba)) ) {
 		cdlam = cos(sdlam = lp.lam + R110);
 		sdlam = sin(sdlam);
 		z = S20 * sphi + C20 * cphi * cdlam;
@@ -93,7 +93,7 @@ INVERSE(s_inverse); /* spheroid */
 		xy.x = -xy.x * cAzc + xy.y * sAzc; 
 		xy.y = -xy.y * cAzc - t * sAzc; 
 	}
-	if (neg = (xy.x < 0.)) {
+	if( (neg = (xy.x < 0.)) ) {
 		xy.y = rhoc - xy.y;
 		s = S20;
 		c = C20;

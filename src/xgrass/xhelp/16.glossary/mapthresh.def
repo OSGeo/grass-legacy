@@ -1,6 +1,0 @@
-
-
-map threshold - The map threshold expresses the @glossary("digitizing threshold",16.glossary/digthresh.def)
-in different units.  It is expressed in units on the ground, as the
-width of the corridor surrounding each point outside of which digitized
-points will be saved.

@@ -1,4 +1,3 @@
-#include "gis.h"
 /***************************************************************
 G_lat_format (lat, buf)
     double lat;
@@ -33,6 +32,7 @@ NOTE: These routines are used by G_format_northing(), G_format_easting(), and
       are for the library only, programmers shouldn't use them.
 ***************************************************************/
 #include "gis.h"
+#include <string.h>
 
 static int format ( char *, int,int, double, char);
 static int ll_parts( double, int *,int *, double *);

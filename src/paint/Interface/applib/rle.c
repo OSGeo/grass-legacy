@@ -41,12 +41,12 @@ int Prle_end (void)
     if (as_data)
     {
 	P__opcode (DATA);
-	P__send (dbuf, nd);
+	P__send ((char *) dbuf, nd);
     }
     else
     {
 	P__opcode (RLE);
-	P__send (rbuf, nr);
+	P__send ((char *) rbuf, nr);
     }
 
     return 0;

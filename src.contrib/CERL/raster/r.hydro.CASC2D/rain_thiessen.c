@@ -7,6 +7,7 @@ RAIN_THIESSEN (
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
 /* RAINGAGE RAINFALL INTENSITY UNITS ARE IN INCHES PER HOUR. */
+    int yes_rg_mmhr,
     int **space,
     int nrg,
     int *grow,
@@ -29,7 +30,7 @@ for(j=0; j<nrows; j++)
       if(nrg==1)
       {
 		   /* Assume uniform rainfall */
-         rint[vectmp]=rgint[0]*2.54/(100.*3600.);
+         rint[vectmp]=rgint[0]*(yes_rg_mmhr? 0.001:0.0254)/3600.;
 	 continue;
       }
       mingage=0;
@@ -48,7 +49,7 @@ for(j=0; j<nrows; j++)
          }
       }
 
-      rint[vectmp]=rgint[mingage]*2.54/(100*3600.);
+      rint[vectmp]=rgint[mingage]*(yes_rg_mmhr? 0.001:0.0254)/3600.;
    }
 }
 

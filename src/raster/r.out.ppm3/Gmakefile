@@ -1,0 +1,9 @@
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
+
+PGM = r.out.ppm3
+
+OFILES = main.o 
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

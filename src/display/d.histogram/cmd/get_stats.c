@@ -46,10 +46,7 @@ int quiet)
     else
 	sprintf(buf,"r.stats -r%s%s '%s' nsteps=%d> %s\n", type==COUNT?"c":"a", quiet?"q":"", fullname, nsteps, tempfile);
     if(system(buf))
-    {
-        fprintf (stderr, "%s: ERROR running r.stats\n", G_program_name());
-        exit(1);
-    }
+        G_fatal_error ("%s: ERROR running r.stats", G_program_name());
 
     /* open temp file and read the stats into a linked list */
     fd = fopen(tempfile,"r");

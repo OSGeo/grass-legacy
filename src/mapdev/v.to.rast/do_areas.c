@@ -14,8 +14,8 @@ struct list
 } *list;
 static int nareas ;
 static int area_ok(struct Map_info *,int);
-static int compare(struct list *,struct list *);
-static int comp_double(double *, double *);
+static int compare(const void *, const void *);
+static int comp_double(const void *, const void *);
 
 int do_areas (
     struct Map_info *Map,
@@ -179,8 +179,9 @@ int sort_areas (
     return nareas;
 }
 
-static int compare (struct list *a, struct list *b)
+static int compare (const void *aa, const void *bb)
 {
+    const struct list *a = aa, *b = bb;
     if (a->size < b->size)
 	return 1;
     if (a->size > b->size)
@@ -188,8 +189,9 @@ static int compare (struct list *a, struct list *b)
     return 0;
 }
 
-static int comp_double(double *i, double *j)
+static int comp_double(const void *ii, const void *jj)
 {
+   const double *i = ii, *j = jj;
    if(*i < *j)
        return -1;
 

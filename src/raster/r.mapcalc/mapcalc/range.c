@@ -1,7 +1,7 @@
 #include "glob.h"
 #include "mapcalc.h"
 
-#define FPFMT "%.10f"
+#define FPFMT "%.6f"
 
 void print_range (char *result)
 {

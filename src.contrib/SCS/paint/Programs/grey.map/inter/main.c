@@ -1,4 +1,5 @@
 #include "gis.h"
+#include <stdlib.h>
 
 int ncolors;
 int masking_on;
@@ -12,7 +13,7 @@ main(argc,argv) char *argv[];
     FILE *scriptfd;
     char *scriptfile;
     int cf;
-    char *env, *getenv();
+    char *env;
     int n;
     int background;
 

@@ -1,3 +1,9 @@
+/*
+* $Id$
+*/
+
+#ifndef _RGBPACK_H
+#define _RGBPACK_H
 
 #define RED_MASK 0x000000FF
 #define GRN_MASK 0x0000FF00
@@ -14,3 +20,4 @@
 #define CONST_COLS 45
 #define COLUMNS     9
 
+#endif /* _RGBPACK_H */

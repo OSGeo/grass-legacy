@@ -1,12 +1,12 @@
 PGM=s.surf.idw
-HOME=$(BIN_MAIN_CMD)
 
 LIST=main.o read_sites.o
 
 LIBES=$(GISLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(DATETIMELIB): #
+$(DEPGISLIB): #
+$(DEPDATETIMELIB): #

@@ -13,6 +13,7 @@
  **********************************************************************/
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_myname()
@@ -25,13 +26,13 @@ G_myname()
     ok = 0;
 
     G__file_name (path,"","MYNAME","PERMANENT");
-    if (fd = fopen(path,"r"))
+    if ((fd = fopen(path,"r")))
     {
 	ok = G_getl(name, sizeof name, fd);
 	fclose (fd);
     }
     if (!ok)
-	strcpy(name, "Unknown Location") ;
+	strcpy(name, _("Unknown Location")) ;
 
     return name;
 }

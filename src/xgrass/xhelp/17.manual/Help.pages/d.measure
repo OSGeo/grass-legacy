@@ -1,5 +1,0 @@
-
-@man("d.measure") - Measures the lengths and areas of features drawn by
-the user in the active display frame on the graphics monitor.
-
-(GRASS Display Program)

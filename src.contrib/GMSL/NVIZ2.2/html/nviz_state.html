@@ -1,0 +1,43 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<H3>NVIZ - Nviz State</H3>
+</A> <P>
+
+It is often desirable and convenient to save some configuration of
+Nviz for use in other applications.  For example, each session of Nviz
+might require the same set of maps or other attributes.  To allow
+persistence between sessions, Nviz provides tools for saving and
+loading the current "state" of the system.  These tools are accessed
+using the <I>Load State</I> and <I>Save State</I> options under the
+<I>File</I> menu.  <P>
+
+<I>Save State</I> records the current status of Nviz, including all
+current maps, color settings, camera viewpoint, and so on into a user
+designated file.  This state file may then be reloaded at a later time
+and will restore the state of Nviz.  <I>Load State</I> queries the
+user for a state file to load and modifies the state of Nviz according
+to the state file.  Note that <I>Load State</I> does not erase the
+current state of Nviz when loading a new state.  Instead, the current
+state is augmented according to the contents of the state file.  Since
+this can sometimes cause unexpected results, it is best to either
+restart Nviz or manually reset the state of Nviz before loading a
+state file.  <P>
+
+State files are particularly useful when creating scripts for animation
+(see <A HREF="#ScriptingP">scripting</A> below).  In particular, a
+predefined Nviz state can be loaded automatically into a script by
+turning on scripting and performing the activity of loading the new
+state.  <P>
+
+</BODY>
+</HTML>

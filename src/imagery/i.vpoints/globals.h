@@ -7,6 +7,8 @@
 #  define INIT(x) = x
 #endif
 
+GLOBAL int cellmap_present;
+
 GLOBAL int SCREEN_TOP;
 GLOBAL int SCREEN_BOTTOM;
 GLOBAL int SCREEN_LEFT;
@@ -115,7 +117,7 @@ int Curses_prompt_gets(char *, char *);
 int Beep(void);
 int Curses_getch(int);
 /* debug.c */
-int debug(char *);
+int debug(char *,...);
 /* digit.c */
 int setup_digitizer(void);
 int digitizer_point(double *, double *);
@@ -126,10 +128,11 @@ int restore_under_dot(void);
 int release_under_dot(void);
 /* drawcell.c */
 int drawcell(View *, int);
+int re_fresh_rast(void);
 /* drawvect.c */
 int plotvect(void);
 int zoomvect(View *);
-int re_fresh(void);
+int re_fresh_vect(void);
 int warpvect(double [], double [], int);
 /* driver.c */
 int driver(void);
@@ -155,7 +158,11 @@ int Menu_msg(char *);
 int Start_mouse_in_menu(void);
 /* main.c */
 int main(int, char *[]);
+#ifdef __GNUC_MINOR__
 int quit(int) __attribute__ ((__noreturn__));
+#else
+int quit(int);
+#endif
 int error(char *, int);
 /* mark.c */
 int mark(int, int, int);
@@ -180,11 +187,6 @@ int select_current_env(void);
 int select_target_env(void);
 /* title.c */
 int display_title(View *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* use_plot1.c */
 int use_plot1(char *, char *);
 /* view.c */

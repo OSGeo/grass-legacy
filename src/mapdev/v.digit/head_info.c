@@ -1,5 +1,6 @@
-/*  @(#)head_info.c	2.1  6/26/87  */
 /*
+** $Id$
+**
 **  Modified Dec 1990 Dave Gerdes
 **     to set up default window on new file 
 */
@@ -7,31 +8,41 @@
 #include <string.h>
 #include "gis.h"
 #include "vask.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int get_head_info(int have_old, struct dig_head *dhead)
 {
     struct Cell_head Window;
+    char *organization;
 
     if( ! have_old)
-	    strcpy(dhead->organization, "USDA Nat. Res. Cons. Serv.") ;
+    {
+	if (getenv("GRASS_ORGANIZATION"))    /* added MN 5/2001 */
+	{
+		organization=(char *)getenv("GRASS_ORGANIZATION");
+		sprintf(dhead->organization, "%s", organization);
+	}
+	else
+		strcpy(dhead->organization, "GRASS Development Team") ;
+    }
 
     V_clear() ;
-    V_line(1,"Provide the following information:") ;
+    V_line(1,_("Provide the following information:")) ;
 
-    V_line(3,"Your organization") ;
-    V_line(4,"Todays date (mon,yr)") ;
-    V_line(5,"Your name") ;
-    V_line(6,"Map's name") ;
-    V_line(7,"Map's date") ;
-    V_line(8,"Map's scale         1:") ;
-    V_line(9,"Other info") ;
-    V_line(10,"Zone") ;
-    V_line(11,"West edge of area") ;
-    V_line(12,"South edge of area") ;
-    V_line(13,"East edge of area") ;
-    V_line(14,"North edge of area") ;
+    V_line(3,_("Your organization")) ;
+    V_line(4,_("Todays date (mon,yr)")) ;
+    V_line(5,_("Your name")) ;
+    V_line(6,_("Map's name")) ;
+    V_line(7,_("Map's date")) ;
+    V_line(8,_("Map's scale         1:")) ;
+    V_line(9,_("Other info")) ;
+    V_line(10,_("Zone")) ;
+    V_line(11,_("West edge of area")) ;
+    V_line(12,_("South edge of area")) ;
+    V_line(13,_("East edge of area")) ;
+    V_line(14,_("North edge of area")) ;
 
     V_ques( dhead->organization, 's', 3,  20, 30-1) ;
     V_ques( dhead->date,         's', 4,  20, 20-1) ;
@@ -52,6 +63,7 @@ int get_head_info(int have_old, struct dig_head *dhead)
 	dhead->S = Window.south;
 	dhead->N = Window.north;
 	dhead->E = Window.east;
+	dhead->orig_scale = 1;  /* preset new map's scale */
 #ifdef NO_PORTABLE	/* added Aug 22, 1991  -dpg */
 	dhead->portable = 0;
 #else

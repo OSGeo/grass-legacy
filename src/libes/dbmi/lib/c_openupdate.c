@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_open_update_cursor (driver, table_name, select, cursor, mode)
+int db_open_update_cursor (driver, table_name, select, cursor, mode)
     dbDriver *driver;
     dbString *table_name;
     dbString *select;

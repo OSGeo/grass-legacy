@@ -10,7 +10,7 @@ DRIVER_DIR	= $(DIG_DRIVER)/numonics
 
 COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-EXTRA_CFLAGS	= $(DIGIFLAGS)  $(VECT_INCLUDE)
+EXTRA_CFLAGS	= $(DIGITFLAGS)
 
 
 OBJ = \
@@ -61,9 +61,7 @@ mk_driver_dev:
 
 mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 #  compile driver into the program
-	$(CC) $(COMPILE_DIGIT)
-	rm -f $(DRIVER_DIR)/digit
-	mv digit $(DRIVER_DIR)/digit
+	$(CC) -o $(DRIVER_DIR)/digit $(COMPILE_DIGIT)
 
 #  'digit'  must be owned by root and have mode 06775
 #  chown  root digit
@@ -74,23 +72,18 @@ mk_driver_dig: $(OBJ) $(DRIVER_DIR)
 
 geo.reg: $(GEO_REG) $(DRIVER_DIR)
 	echo "Creating Geo.Reg"
-	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
-	rm -f $(DRIVER_DIR)/geo.reg
-	mv geo.reg $(DRIVER_DIR)/geo.reg
+	$(CC) $(LDFLAGS) -o  $(DRIVER_DIR)/geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
 #    geo.point goes to etc/dig_drivers/? and is called by geo.point in etc
 
 geo.point: $(GEO_POINT) $(DRIVER_DIR)
 #  compile driver into the program
 	echo "Creating Geo.Point"
-	$(CC) $(LDFLAGS) -o  geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(MATHLIB) $(GISLIB)  $(LOCKLIB)
-	rm -f $(DRIVER_DIR)/geo.point
-	mv geo.point $(DRIVER_DIR)/geo.point
+	$(CC) $(LDFLAGS) -o  $(DRIVER_DIR)/geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(MATHLIB) $(GISLIB)  $(LOCKLIB)
 
 
-coll_pts.o: $(VECT_INCLUDE)/digit.h  $(VECT_INCLUDE)/globals.h 
+coll_pts.o:  $(VECT_INCLUDE)/globals.h 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  $(VECT_INCLUDE)/digit.h
 dig_curses.o:  ../../v.digit/menu.h
 dig_curses.o:  ../../v.digit/curses.C
 
