@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 /* -*-c-basic-offset: 4;-*-
  *  Chained memory allocator 
  *  memory.c
@@ -35,7 +39,7 @@ int allocate()
 	data = (struct cost*)G_malloc(NUM_IN_BLOCK*sizeof(struct cost));
 
 	if (data == NULL) {
-		//G_warning(
+		/* G_warning( */
 		fprintf(stderr,"allocat(): error %s\n",strerror(errno));
 		return 0;
 	}
@@ -90,7 +94,7 @@ struct cost* get() {
 
 	if (first_free == NULL) {
 		if (allocate() < 0) {
-			//exit(1);
+			/* exit(1); */
 		}
 	}
 
@@ -98,7 +102,7 @@ struct cost* get() {
 	first_free=p->lower;
 	if (first_free->lower == NULL) {
 		if (allocate() < 0) {
-			//exit(1);
+			/* exit(1); */
 		}
 	}
 	return p;

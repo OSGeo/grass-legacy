@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -35,7 +39,13 @@ int segment_put_row (SEGMENT *SEG, void *buf,int row)
 /*  	printf("segment_put_row result = %d. ncols: %d, scols %d, size: %d, col %d, row: %d,  SEG->fd: %d\n",result,ncols,scols,size,col,row, SEG->fd); */
 	    return -1;
 	}
-	buf += size;
+
+	/* The buf variable is a void pointer and thus points to anything. */
+	/* Therefore, it's size is unknown and thus, it cannot be used for */
+	/* pointer arithmetic (some compilers treat this as an error - SGI */
+	/* MIPSPro compiler for one). Since the read command is reading in */
+	/* "size" bytes, cast the buf variable to char * before incrementing */
+	buf = ((char *) buf) + size;
     }
     if ((size = SEG->spill * SEG->len))
     {
